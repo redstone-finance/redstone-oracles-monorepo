@@ -20,6 +20,12 @@ const validArweaveResponse = {
   interval: 1000,
 };
 
+const streamrHandlers = [
+  rest.post("https://streamr.network/api/v1/login/response", (_, res) => {
+    return res();
+  }),
+];
+
 const validDenHandlers = [
   rest.get("https://d2rkt3biev1br2.cloudfront.net/state", (_, res, ctx) => {
     return res(ctx.json(validDenResponse));
@@ -27,6 +33,7 @@ const validDenHandlers = [
   rest.get("https://arweave.net/manifestTxIdByDen", (_, res, ctx) => {
     return res(ctx.json(validArweaveResponse));
   }),
+  ...streamrHandlers,
 ];
 
 export const invalidDenHandlers = [
@@ -36,6 +43,7 @@ export const invalidDenHandlers = [
   rest.get("https://arweave.net/manifestTxIdByGateway", (_, res, ctx) => {
     return res(ctx.json(validArweaveResponse));
   }),
+  ...streamrHandlers,
 ];
 
 export const timeoutDenHandlers = [
@@ -45,6 +53,7 @@ export const timeoutDenHandlers = [
   rest.get("https://arweave.net/manifestTxIdByGateway", (_, res, ctx) => {
     return res(ctx.json(validArweaveResponse));
   }),
+  ...streamrHandlers,
 ];
 
 export const invalidArweaveHandlers = [
@@ -54,6 +63,7 @@ export const invalidArweaveHandlers = [
   rest.get("https://arweave.net/manifestTxIdByDen", (_, res, ctx) => {
     return res(ctx.status(400));
   }),
+  ...streamrHandlers,
 ];
 
 export const timeoutArweaveHandlers = [
@@ -63,12 +73,7 @@ export const timeoutArweaveHandlers = [
   rest.get("https://arweave.net/manifestTxIdByDen", (_, res, ctx) => {
     return res(ctx.delay(10), ctx.json(validArweaveResponse));
   }),
-];
-
-const streamrHandlers = [
-  rest.post("https://streamr.network/api/v1/login/response", (_, res) => {
-    return res();
-  }),
+  ...streamrHandlers,
 ];
 
 export const server = setupServer(...validDenHandlers, ...streamrHandlers);
