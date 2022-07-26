@@ -1,6 +1,6 @@
 import axios from "axios";
 import { Broadcaster } from "../Broadcaster";
-import { SignedDataPackageToBroadcast } from "redstone-protocol";
+import { SignedDataPackagePlainObj } from "redstone-protocol";
 import { Consola } from "consola";
 import { stringifyError } from "../../utils/error-stringifier";
 
@@ -11,7 +11,7 @@ const logger = require("../../utils/logger")("HttpBroadcaster") as Consola;
 export class HttpBroadcaster implements Broadcaster {
   constructor(private readonly broadcasterURLs: string[]) {}
 
-  async broadcast(prices: SignedDataPackageToBroadcast[]): Promise<void> {
+  async broadcast(prices: SignedDataPackagePlainObj[]): Promise<void> {
     const promises = this.broadcasterURLs.map((url) => {
       logger.info(`Posting prices to ${url}`);
       return axios
@@ -26,7 +26,7 @@ export class HttpBroadcaster implements Broadcaster {
   }
 
   async broadcastPricePackage(
-    signedData: SignedDataPackageToBroadcast
+    signedData: SignedDataPackagePlainObj
   ): Promise<void> {
     const promises = this.broadcasterURLs.map((url) => {
       logger.info(`Posting pacakages to ${url}`);

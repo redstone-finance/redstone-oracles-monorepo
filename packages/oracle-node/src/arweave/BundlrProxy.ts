@@ -1,12 +1,9 @@
 import Bundlr from "@bundlr-network/client";
 import BundlrTransaction from "@bundlr-network/client/build/common/transaction";
 import { JWKInterface } from "arweave/node/lib/wallet";
-import { Consola } from "consola";
 import bundlrDefaults from "./bundlr-defaults.json";
 import util from "util";
 import { gzip } from "zlib";
-
-const logger = require("../utils/logger")("BundlrProxy") as Consola;
 
 export default class BundlrProxy {
   private bundlrClient: Bundlr;

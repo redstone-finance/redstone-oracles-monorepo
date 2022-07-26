@@ -27,7 +27,7 @@ import {
 } from "./broadcasters";
 import { Manifest, NodeConfig, PriceDataAfterAggregation } from "./types";
 import { fetchIp } from "./utils/ip-fetcher";
-import { SignedDataPackageToBroadcast } from "redstone-protocol";
+import { SignedDataPackagePlainObj } from "redstone-protocol";
 
 const logger = require("./utils/logger")("runner") as Consola;
 const pjson = require("../package.json") as any;
@@ -254,7 +254,7 @@ export default class NodeRunner {
 
     const aggregatedPrices: PriceDataAfterAggregation[] =
       this.pricesService!.calculateAggregatedValues(
-        Object.values(pricesBeforeAggregation), // what is the advantage of using lodash.values?
+        Object.values(pricesBeforeAggregation),
         aggregators[this.currentManifest!.priceAggregator]
       );
     NodeRunner.printAggregatedPrices(aggregatedPrices);
@@ -262,7 +262,7 @@ export default class NodeRunner {
     return aggregatedPrices;
   }
 
-  private async broadcastPrices(signedPrices: SignedDataPackageToBroadcast[]) {
+  private async broadcastPrices(signedPrices: SignedDataPackagePlainObj[]) {
     logger.info("Broadcasting prices");
     const broadcastingTrackingId = trackStart("broadcasting");
     try {
@@ -312,7 +312,7 @@ export default class NodeRunner {
   }
 
   private async broadcastEvmPricePackage(
-    singedPricesPackage: SignedDataPackageToBroadcast
+    singedPricesPackage: SignedDataPackagePlainObj
   ) {
     logger.info("Broadcasting price package");
     const packageBroadcastingTrackingId = trackStart("package-broadcasting");
@@ -327,7 +327,7 @@ export default class NodeRunner {
   }
 
   private async broadcastSignedPricePackage(
-    signedPackage: SignedDataPackageToBroadcast
+    signedPackage: SignedDataPackagePlainObj
   ) {
     const signedPackageBroadcastingTrackingId = trackStart(
       "signed-package-broadcasting"

@@ -36,15 +36,16 @@ describe("Custom URL requests route", () => {
       .expect(200);
 
     expect(response.body).toEqual({
-      signerAddress: "0x19E7E376E7C213B7E7e7e46cc70A5dD086DAff2A",
+      signerAddress:
+        "BE81W9y3zAr3KO88zrlhXZBoS7Wyyl+FmrDwtwQHWHGqOFtrG46tgJymdFTZaD/PK6A0Vtb+LEq+Kwfw+9uy8cE=",
       signature:
-        "0x0247ad69853e7693afec915122a32a687cc7553d443548075fa365d2d36410ab2c2476f65df6ada00e61370394316315803b2d48d7f4d20d6b960338a9279cd61b",
-      prices: [{ symbol: "0x8edd634f1bbd8320", value: 42 }],
+        "AketaYU+dpOv7JFRIqMqaHzHVT1ENUgHX6Nl0tNkEKssJHb2XfatoA5hNwOUMWMVgDstSNf00g1rlgM4qSec1hs=",
+      dataPoints: [{ symbol: "0x8edd634f1bbd8320", value: 42 }],
       customRequestConfig: {
         url: "https://example-custom-data-source.com/hehe",
         jsonpath: "$.A.B.C",
       },
-      timestamp: 1652662184000,
+      timestampMilliseconds: 1652662184000,
     });
   });
 

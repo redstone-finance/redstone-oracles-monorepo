@@ -1,5 +1,4 @@
 import axios from "axios";
-import _ from "lodash";
 import redstone from "redstone-api";
 import { PricesObj } from "../../types";
 import { BaseFetcher } from "../BaseFetcher";

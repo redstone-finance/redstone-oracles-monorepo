@@ -223,24 +223,26 @@ describe("NodeRunner", () => {
     expect(axios.post).toHaveBeenCalledWith("http://localhost:9000/prices", [
       {
         id: "00000000-0000-0000-0000-000000000000",
-        prices: [{ symbol: "BTC", value: 444.5 }],
+        dataPoints: [{ symbol: "BTC", value: 444.5 }],
         permawebTx: "mockBundlrTransactionId",
         provider: "mockArAddress",
         source: { coingecko: 444, uniswap: 445 },
-        timestamp: 111111111,
+        timestampMilliseconds: 111111111,
         version: "0.4",
         signature:
-          "0xa2c2b3ae7a9bf3b5d7e75a754c32d900cd8a2e822581fd492bc482d4e9ce8c20463b1169246e188e0e9e42ebe82cca40d68c0ed1a31018eee981ef9b8d8ea0c61c",
-        signerAddress: "0x19E7E376E7C213B7E7e7e46cc70A5dD086DAff2A",
+          "osKzrnqb87XX51p1TDLZAM2KLoIlgf1JK8SC1OnOjCBGOxFpJG4Yjg6eQuvoLMpA1owO0aMQGO7pge+bjY6gxhw=",
+        signerAddress:
+          "BE81W9y3zAr3KO88zrlhXZBoS7Wyyl+FmrDwtwQHWHGqOFtrG46tgJymdFTZaD/PK6A0Vtb+LEq+Kwfw+9uy8cE=",
       },
     ]);
     expect(axios.post).toHaveBeenCalledWith("http://localhost:9000/packages", {
-      timestamp: 111111111,
-      signerAddress: "0x19E7E376E7C213B7E7e7e46cc70A5dD086DAff2A",
+      timestampMilliseconds: 111111111,
+      signerAddress:
+        "BE81W9y3zAr3KO88zrlhXZBoS7Wyyl+FmrDwtwQHWHGqOFtrG46tgJymdFTZaD/PK6A0Vtb+LEq+Kwfw+9uy8cE=",
       provider: "mockArAddress",
-      prices: [{ symbol: "BTC", value: 444.5 }],
+      dataPoints: [{ symbol: "BTC", value: 444.5 }],
       signature:
-        "0xa2c2b3ae7a9bf3b5d7e75a754c32d900cd8a2e822581fd492bc482d4e9ce8c20463b1169246e188e0e9e42ebe82cca40d68c0ed1a31018eee981ef9b8d8ea0c61c",
+        "osKzrnqb87XX51p1TDLZAM2KLoIlgf1JK8SC1OnOjCBGOxFpJG4Yjg6eQuvoLMpA1owO0aMQGO7pge+bjY6gxhw=",
     });
     expect(mockBundlrProxy.uploadBundlrTransaction).not.toHaveBeenCalled();
     // TODO: cannot spy on setInterval after upgrade to jest 27.
@@ -280,18 +282,19 @@ describe("NodeRunner", () => {
     expect(axios.post).toHaveBeenCalledWith("http://localhost:9000/prices", [
       {
         id: "00000000-0000-0000-0000-000000000000",
-        prices: [{ symbol: "BTC", value: 444.5 }],
+        dataPoints: [{ symbol: "BTC", value: 444.5 }],
         source: {
           coingecko: 444,
           uniswap: 445,
         },
-        timestamp: 111111111,
+        timestampMilliseconds: 111111111,
         version: "0.4",
         permawebTx: "mockBundlrTransactionId",
         provider: "mockArAddress",
         signature:
-          "0xa2c2b3ae7a9bf3b5d7e75a754c32d900cd8a2e822581fd492bc482d4e9ce8c20463b1169246e188e0e9e42ebe82cca40d68c0ed1a31018eee981ef9b8d8ea0c61c",
-        signerAddress: "0x19E7E376E7C213B7E7e7e46cc70A5dD086DAff2A",
+          "osKzrnqb87XX51p1TDLZAM2KLoIlgf1JK8SC1OnOjCBGOxFpJG4Yjg6eQuvoLMpA1owO0aMQGO7pge+bjY6gxhw=",
+        signerAddress:
+          "BE81W9y3zAr3KO88zrlhXZBoS7Wyyl+FmrDwtwQHWHGqOFtrG46tgJymdFTZaD/PK6A0Vtb+LEq+Kwfw+9uy8cE=",
       },
     ]);
 

@@ -1,5 +1,5 @@
 import { JWKInterface } from "arweave/node/lib/wallet";
-import { SignedDataPackageToBroadcast } from "redstone-protocol";
+import { SignedDataPackagePlainObj } from "redstone-protocol";
 
 export interface Manifest {
   txId?: string; // Note, you need to set this field manually (after downloading the manifest data)
@@ -54,14 +54,6 @@ export interface Aggregator {
     price: PriceDataBeforeAggregation,
     maxPriceDeviationPercent: number
   ) => PriceDataAfterAggregation;
-}
-
-export interface Broadcaster {
-  broadcast: (prices: PriceDataSigned[]) => Promise<void>;
-  broadcastPricePackage: (
-    pricePackage: SignedDataPackageToBroadcast,
-    providerAddress: string
-  ) => Promise<void>;
 }
 
 export interface PricesObj {

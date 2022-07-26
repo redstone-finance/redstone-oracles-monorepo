@@ -1,3 +1,4 @@
+import StreamrClient from "streamr-client";
 import ArweaveProxy from "../../src/arweave/ArweaveProxy";
 import ArweaveService from "../../src/arweave/ArweaveService";
 import {
@@ -19,7 +20,7 @@ jest.mock("../../src/arweave/ArweaveProxy", () => {
   return jest.fn().mockImplementation(() => validMockArProxy);
 });
 
-jest.mock("../../src/broadcasters/streamr/StreamrProxy.ts");
+jest.mock("streamr-client");
 
 const TEST_TIMEOUT_MS = 5;
 

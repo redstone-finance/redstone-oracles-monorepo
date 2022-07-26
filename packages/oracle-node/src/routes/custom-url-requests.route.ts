@@ -56,12 +56,15 @@ export default function (app: express.Application, nodeConfig: NodeConfig) {
       const signedDataPackage = dataPackage.sign(
         nodeConfig.privateKeys.ethereumPrivateKey
       );
-      const parsedSignedDataPackage = signedDataPackage.parseToBroadcast({
+      const parsedSignedDataPackage = signedDataPackage.toObj();
+
+      const dataPackageToBroadcast = {
+        ...parsedSignedDataPackage,
         customRequestConfig,
-      });
+      };
 
       // Sending response
-      return res.json(parsedSignedDataPackage);
+      return res.json(dataPackageToBroadcast);
     } catch (e) {
       const errText = stringifyError(e);
       // TODO: improve error catching later:
