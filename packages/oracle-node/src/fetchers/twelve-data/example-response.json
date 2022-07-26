@@ -1,0 +1,27 @@
+{
+  "CHF/USD": {
+    "symbol": "CHF/USD",
+    "rate": 1.0388,
+    "timestamp": 1654289940
+  },
+  "GBP/USD": {
+    "symbol": "GBP/USD",
+    "rate": 1.24895,
+    "timestamp": 1654289940
+  },
+  "EUR/USD": {
+    "symbol": "EUR/USD",
+    "rate": 1.0719,
+    "timestamp": 1654289940
+  },
+  "JPY/USD": {
+    "symbol": "JPY/USD",
+    "rate": 0.764,
+    "timestamp": 1654289940
+  },
+  "AUD/USD": {
+    "symbol": "AUD/USD",
+    "rate": 0.7207,
+    "timestamp": 1654289940
+  }
+}

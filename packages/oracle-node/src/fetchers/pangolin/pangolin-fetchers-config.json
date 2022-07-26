@@ -1,0 +1,14 @@
+{
+  "pangolin-png": {
+    "baseToken": "PNG"
+  },
+  "pangolin-qi": {
+    "baseToken": "QI"
+  },
+  "pangolin-wavax": {
+    "baseToken": "WAVAX"
+  },
+  "pangolin-usdt": {
+    "baseToken": "USDT.e"
+  }
+}

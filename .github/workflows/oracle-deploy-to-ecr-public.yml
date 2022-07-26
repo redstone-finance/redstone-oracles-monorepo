@@ -1,0 +1,46 @@
+# This workflow configuration is used
+# to automate building a public docker image of redstone-node
+# and publishing it to the AWS ECR Public
+
+# Learn more: https://github.com/pahud/ecr-public-action
+
+name: Deploy to Amazon ECR Public
+on:
+  push:
+    branches:
+      - main
+      - push-docker-ecr-public
+    paths:
+      - packages/oracle-node/**
+      - .github/workflows/oracle-tests.yaml
+      - .github/workflows/oracle-deploy-to-ecr-public.yaml
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    name: ECR public action
+    steps:
+      - name: Get repo name
+        id: repoName
+        run: echo "::set-output name=reponame::$(echo ${{github.repository}} | cut -d '/' -f 2)"
+      - name: Get short SHA
+        id: sha
+        run: echo "::set-output name=sha7::$(echo ${GITHUB_SHA} | cut -c1-7)"
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-east-1
+      - name: Build and Push to ECR public
+        id: build-and-push
+        uses: pahud/ecr-public-action@8cd826db40befb59b0cd0b60b22a7ba72d06a7f7
+        with:
+          dockerfile: Dockerfile.public
+          context: .
+          create_repo: ecr_repo_name
+          tags: |
+            public.ecr.aws/y7v2w8b2/${{ steps.repoName.outputs.reponame }}:latest
+            public.ecr.aws/y7v2w8b2/${{ steps.repoName.outputs.reponame }}:${{ steps.sha.outputs.sha7 }}

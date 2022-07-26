@@ -1,0 +1,25 @@
+{
+  "compilerOptions": {
+    "strict": true,
+    "target": "es6",
+    "declaration": true,
+    "declarationMap": true,
+    "outDir": "./dist",
+    "module": "commonjs",
+    "resolveJsonModule": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "lib": ["es2021"],
+    "allowJs": true,
+    "incremental": true
+  },
+  "ts-node": {
+    "files": true
+  },
+  "include": ["./src", "./test"],
+  "references": [
+    {
+      "path": "../protocol"
+    }
+  ]
+}

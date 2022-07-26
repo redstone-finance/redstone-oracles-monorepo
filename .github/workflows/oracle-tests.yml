@@ -1,0 +1,24 @@
+name: CI
+on:
+  push:
+    paths:
+      - packages/oracle-node/**
+      - .github/workflows/oracle-tests.yaml
+      - .github/workflows/oracle-deploy-to-ecr-public.yaml
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: packages/oracle-node
+    steps:
+      - uses: actions/checkout@v2
+      - name: Install modules
+        run: yarn
+      - name: Build
+        run: yarn build
+      - name: Run tests
+        run: yarn test:ci
+        env:
+          NODE_ENV: test
