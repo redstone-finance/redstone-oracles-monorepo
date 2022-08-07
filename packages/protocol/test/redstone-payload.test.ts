@@ -1,11 +1,16 @@
+import { toUtf8Bytes } from "ethers/lib/utils";
 import {
   DataPackage,
   SignedDataPackage,
   NumericDataPoint,
-  serializeSignedDataPackages,
+  RedstonePayload,
 } from "../src";
+import { hexlifyWithout0xPrefix } from "../src/common/utils";
 
 const TIMESTAMP_FOR_TESTS = 1654353400000;
+const UNSIGNED_METADATA = "1.1.2#test-data-feed";
+const EXPECTED_UNSIGNED_METADATA_BYTE_SIZE = "000014"; // 20 in hex
+const REDSTONE_MARKER = "000002ed57011e0000";
 const PRIVATE_KEY_FOR_TESTS_1 =
   "0x1111111111111111111111111111111111111111111111111111111111111111";
 const PRIVATE_KEY_FOR_TESTS_2 =
@@ -24,9 +29,11 @@ describe("Fixed size data package", () => {
   beforeEach(() => {
     // Prepare data points
     const dataPoints = [
-      { symbol: "BTC", value: 42000 },
-      { symbol: "ETH", value: 2000 },
-    ].map(({ symbol, value }) => new NumericDataPoint({ symbol, value }));
+      { dataFeedId: "BTC", value: 42000 },
+      { dataFeedId: "ETH", value: 2000 },
+    ].map(
+      ({ dataFeedId, value }) => new NumericDataPoint({ dataFeedId, value })
+    );
 
     // Prepare unsigned data package
     dataPackage = new DataPackage(dataPoints, TIMESTAMP_FOR_TESTS);
@@ -39,13 +46,20 @@ describe("Fixed size data package", () => {
   });
 
   test("Should correctly serialize many signed data packages", () => {
-    const serializedHex = serializeSignedDataPackages(signedDataPackages);
+    const serializedHex = RedstonePayload.prepare(
+      signedDataPackages,
+      UNSIGNED_METADATA
+    );
+
     expect(serializedHex).toBe(
       EXPECTED_SERIALIZED_DATA_PACKAGE +
         EXPECTED_SIGNATURES[0] +
         EXPECTED_SERIALIZED_DATA_PACKAGE +
         EXPECTED_SIGNATURES[1] +
-        "0002" // data packages count
+        "0002" + // data packages count
+        hexlifyWithout0xPrefix(toUtf8Bytes(UNSIGNED_METADATA)) +
+        EXPECTED_UNSIGNED_METADATA_BYTE_SIZE +
+        REDSTONE_MARKER
     );
   });
 });

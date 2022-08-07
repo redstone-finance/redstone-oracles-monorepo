@@ -18,3 +18,9 @@ export const DEFAULT_NUM_VALUE_DECIMALS = 8;
 
 // Number of bytes reserved for data packages count
 export const DATA_PACKAGES_COUNT_BS = 2;
+
+// Number of bytes reserved for unsigned metadata byte size
+export const UNSGINED_METADATA_BYTE_SIZE_BS = 3;
+
+// RedStone marker, which will be appended in the end of each transaction
+export const REDSTONE_MARKER_HEX = "0x000002ed57011e0000";
