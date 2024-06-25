@@ -1,8 +1,8 @@
 import { WrapperBuilder } from "@redstone-finance/evm-connector";
-import { OnChainRelayerManifest } from "@redstone-finance/on-chain-relayer";
+import type { OnChainRelayerManifestInput } from "@redstone-finance/on-chain-relayer";
 import {
-  PriceFeedsAdapterWithRoundsOneSignerMock,
   PriceFeedWithRoundsMock,
+  PriceFeedsAdapterWithRoundsOneSignerMock,
 } from "@redstone-finance/on-chain-relayer/typechain-types";
 import { DataPackagesResponse } from "@redstone-finance/sdk";
 import { RedstoneCommon } from "@redstone-finance/utils";
@@ -11,14 +11,14 @@ import { BigNumber, ethers } from "ethers";
 import { formatBytes32String } from "ethers/lib/utils";
 import fs from "fs";
 import {
-  fetchDataPackages,
   GatewayInstance,
+  fetchDataPackages,
   getCacheServicePort,
 } from "./gateway-manager";
 import {
-  debug,
   ExtraEnv,
   PriceSet,
+  debug,
   printDotenv,
   printExtraEnv,
   runWithLogPrefixInBackground,
@@ -281,7 +281,7 @@ export const getConnectedSigner = (rpcUrl = "http://127.0.0.1:8545") => {
 };
 
 const createManifestFile = (
-  manifest: OnChainRelayerManifest,
+  manifest: OnChainRelayerManifestInput,
   path: string = MANIFEST_PATH
 ): void => {
   console.log("relayer manifest", manifest);
