@@ -49,5 +49,4 @@ const main = async () => {
 
 configureCleanup(stopAll);
 
-// eslint-disable-next-line @typescript-eslint/no-floating-promises
-main();
+void main();

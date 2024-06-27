@@ -15,8 +15,7 @@ const SKIPPED_SOURCES = JSON.parse(
   process.env.SKIPPED_SOURCES ?? "[]"
 ) as string[];
 
-// eslint-disable-next-line @typescript-eslint/no-floating-promises
-(async () => {
+void (async () => {
   const manifestFileName = "data-services/primary";
   const nodeWorkingTimeInMinutes = 6;
   const nodeIntervalInMilliseconds = 10000;
