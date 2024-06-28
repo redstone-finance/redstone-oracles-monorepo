@@ -1,5 +1,5 @@
+import { PriceFeedWithRounds } from "@redstone-finance/on-chain-relayer";
 import { abi as priceFeedAbi } from "@redstone-finance/on-chain-relayer/artifacts/contracts/mocks/PriceFeedWithRoundsMock.sol/PriceFeedWithRoundsMock.json";
-import { PriceFeedWithRounds } from "@redstone-finance/on-chain-relayer/typechain-types";
 import { RedstoneCommon } from "@redstone-finance/utils";
 import { ethers } from "ethers";
 import {
