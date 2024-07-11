@@ -1,7 +1,7 @@
 import axios from "axios";
 import axiosRetry from "axios-retry";
 import { DataPackages } from "./compare-data-packages";
-import { GatewayInstance, getCacheServicePort } from "./gateway-manager";
+import { GatewayInstance, getCacheServiceUrl } from "./gateway-manager";
 
 axiosRetry(axios, {
   retries: 2,
@@ -23,7 +23,7 @@ export const fetchDataPackagesFromCaches = async (
 ) => {
   const responseFromLocalCache = (
     await axios.get<DataPackages>(
-      `http://localhost:${getCacheServicePort(
+      `${getCacheServiceUrl(
         gatewayInstance,
         "direct"
       )}/data-packages/historical/mock-data-service/${timestamp}`

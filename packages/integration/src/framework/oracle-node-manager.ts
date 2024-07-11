@@ -1,7 +1,7 @@
 import { RedstoneCommon } from "@redstone-finance/utils";
 import { ChildProcess } from "child_process";
 import fs from "fs";
-import { GatewayInstance, getCacheServicePort } from "./gateway-manager";
+import { GatewayInstance, getCacheServiceUrl } from "./gateway-manager";
 import {
   PriceSet,
   debug,
@@ -135,9 +135,8 @@ const createExtraEnv = (
   manifestFileName: string,
   privateKeyIndex: number
 ) => {
-  const cacheServiceUrls = gatewayInstances.map(
-    (gatewayInstance) =>
-      `http://localhost:${getCacheServicePort(gatewayInstance, "direct")}`
+  const cacheServiceUrls = gatewayInstances.map((gatewayInstance) =>
+    getCacheServiceUrl(gatewayInstance, "direct")
   );
   const extraEnv: Record<string, string> = {
     OVERRIDE_DIRECT_CACHE_SERVICE_URLS: JSON.stringify(cacheServiceUrls),

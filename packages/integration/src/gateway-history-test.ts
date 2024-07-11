@@ -7,7 +7,7 @@ import {
   configureCleanup,
   debug,
   GatewayInstance,
-  getCacheServicePort,
+  getCacheServiceUrl,
   OracleNodeInstance,
   setMockPrices,
   startAndWaitForGateway,
@@ -45,7 +45,7 @@ const main = async () => {
   const latestResponse = await axios.get<{
     AAVE: { timestampMilliseconds: number }[];
   }>(
-    `http://localhost:${getCacheServicePort(
+    `${getCacheServiceUrl(
       gatewayInstance,
       "direct"
     )}/data-packages/latest/mock-data-service`
@@ -63,7 +63,7 @@ const main = async () => {
   const historyResponse = await axios.get<{
     AAVE: { timestampMilliseconds: number };
   }>(
-    `http://localhost:${getCacheServicePort(
+    `${getCacheServiceUrl(
       gatewayInstance,
       "direct"
     )}/data-packages/historical/mock-data-service/${lastTimestamp}`

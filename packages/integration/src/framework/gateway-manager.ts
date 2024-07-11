@@ -224,7 +224,7 @@ export const waitForDataAndDisplayIt = async (
   await runWithLogPrefix(
     "curl",
     [
-      `http://localhost:${getCacheServicePort(
+      `${getCacheServiceUrl(
         instance,
         "any"
       )}/data-packages/latest/mock-data-service`,
@@ -240,9 +240,8 @@ export const verifyPricesInCacheService = async (
 ) => {
   debug(`verifying prices, waiting for: ${JSON.stringify(expectedPrices)}`);
 
-  const gatewayUrls = gatewayInstances.map(
-    (gatewayInstance) =>
-      `http://localhost:${getCacheServicePort(gatewayInstance, "any")}`
+  const gatewayUrls = gatewayInstances.map((gatewayInstance) =>
+    getCacheServiceUrl(gatewayInstance, "any")
   );
 
   await waitForSuccess(
@@ -288,9 +287,8 @@ export const fetchDataPackages = async (
     dataPackagesIds: ["ETH", "BTC", "AAVE"],
   }
 ) => {
-  const gatewayUrls = gatewayInstances.map(
-    (gatewayInstance) =>
-      `http://localhost:${getCacheServicePort(gatewayInstance, "any")}`
+  const gatewayUrls = gatewayInstances.map((gatewayInstance) =>
+    getCacheServiceUrl(gatewayInstance, "any")
   );
   return await redstoneSDK.requestDataPackages({
     ...fetchParams,
@@ -298,7 +296,7 @@ export const fetchDataPackages = async (
   });
 };
 
-export const getCacheServicePort = (
+const getCacheServicePort = (
   gatewayInstance: GatewayInstance,
   type: "direct" | "public" | "any"
 ): string => {
@@ -328,3 +326,8 @@ export const getCacheServicePort = (
     return publicPort ?? directPort!;
   }
 };
+
+export const getCacheServiceUrl = (
+  gatewayInstance: GatewayInstance,
+  type: "direct" | "public" | "any" = "any"
+) => `http://localhost:${getCacheServicePort(gatewayInstance, type)}`;

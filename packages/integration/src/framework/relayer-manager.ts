@@ -13,7 +13,7 @@ import fs from "fs";
 import {
   GatewayInstance,
   fetchDataPackages,
-  getCacheServicePort,
+  getCacheServiceUrl,
 } from "./gateway-manager";
 import {
   ExtraEnv,
@@ -78,9 +78,8 @@ export const startRelayer = (
   config: RelayerConfig
 ) => {
   const dotenvPath = `${RELAYER_DIR}/.env.example`;
-  const cacheServiceUrls = config.cacheServiceInstances.map(
-    (gatewayInstance) =>
-      `http://localhost:${getCacheServicePort(gatewayInstance, "any")}`
+  const cacheServiceUrls = config.cacheServiceInstances.map((gatewayInstance) =>
+    getCacheServiceUrl(gatewayInstance, "any")
   );
   const rpcUrls = config.rpcUrls ?? ["http://127.0.0.1:8545"];
   createManifestFile({
