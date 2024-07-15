@@ -4,4 +4,5 @@ module.exports = {
     tsconfigRootDir: __dirname,
     sourceType: "module",
   },
+  ignorePatterns: ["sdk-test-app"],
 };

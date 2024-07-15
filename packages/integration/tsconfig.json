@@ -3,6 +3,7 @@
   "compilerOptions": {
     "outDir": "dist"
   },
+  "exclude": ["node_modules", "dist", "sdk-test-app/**"],
   "references": [
     {
       "path": "../utils/tsconfig.build.json"
