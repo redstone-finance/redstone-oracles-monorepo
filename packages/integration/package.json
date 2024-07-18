@@ -1,6 +1,6 @@
 {
   "name": "@redstone-finance/integration-tests",
-  "version": "0.5.2",
+  "version": "0.6.0",
   "description": "",
   "author": "",
   "private": true,
@@ -12,13 +12,13 @@
     "build-dev": "yarn build"
   },
   "dependencies": {
-    "@redstone-finance/cache-service": "^0.5.2",
-    "@redstone-finance/evm-connector": "^0.5.2",
-    "@redstone-finance/on-chain-relayer": "^0.5.2",
-    "@redstone-finance/oracle-node": "^0.5.2",
-    "@redstone-finance/protocol": "^0.5.2",
-    "@redstone-finance/sdk": "^0.5.2",
-    "@redstone-finance/utils": "^0.5.2",
+    "@redstone-finance/cache-service": "0.6.0",
+    "@redstone-finance/evm-connector": "0.6.0",
+    "@redstone-finance/on-chain-relayer": "0.6.0",
+    "@redstone-finance/oracle-node": "0.6.0",
+    "@redstone-finance/protocol": "0.6.0",
+    "@redstone-finance/sdk": "0.6.0",
+    "@redstone-finance/utils": "0.6.0",
     "axios": "^1.6.2",
     "axios-retry": "^4.4.0",
     "ethers": "^5.7.2"
