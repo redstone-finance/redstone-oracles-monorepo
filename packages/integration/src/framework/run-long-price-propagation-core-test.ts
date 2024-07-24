@@ -1,4 +1,3 @@
-import { consts } from "@redstone-finance/protocol";
 import { RedstoneCommon } from "@redstone-finance/utils";
 import { checkMissingDataFeeds } from "./check-missing-data-feeds";
 import { checkSourcesDeviations } from "./check-sources-deviations";
@@ -23,10 +22,6 @@ import { printAllDeviations } from "./print-all-deviations";
 export interface DeviationsPerDataFeed {
   [dataFeedId: string]: number;
 }
-
-export type DeviationsWithBigPackage = DeviationsPerDataFeed & {
-  [consts.ALL_FEEDS_KEY]?: DeviationsPerDataFeed;
-};
 
 export interface DeviationsPerSource {
   [source: string]: number;

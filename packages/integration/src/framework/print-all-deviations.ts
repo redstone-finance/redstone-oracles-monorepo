@@ -1,21 +1,11 @@
-import { consts } from "@redstone-finance/protocol";
-import { DeviationsWithBigPackage } from "./run-long-price-propagation-core-test";
+import type { DeviationsPerDataFeed } from "./run-long-price-propagation-core-test";
 
 export const printAllDeviations = (
-  deviationsPerDataFeed: DeviationsWithBigPackage,
+  deviationsPerDataFeed: DeviationsPerDataFeed,
   isBigPackage: boolean = false
 ) => {
   const dataFeeds = Object.keys(deviationsPerDataFeed);
   for (const dataFeedId of dataFeeds) {
-    if (dataFeedId === consts.ALL_FEEDS_KEY) {
-      const deviationsFromBigPackage =
-        deviationsPerDataFeed[consts.ALL_FEEDS_KEY]!;
-      printAllDeviations(
-        deviationsFromBigPackage as DeviationsWithBigPackage,
-        true
-      );
-      continue;
-    }
     const deviation = deviationsPerDataFeed[dataFeedId];
     logDeviation(dataFeedId, deviation, isBigPackage);
   }
