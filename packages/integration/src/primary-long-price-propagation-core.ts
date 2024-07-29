@@ -10,6 +10,7 @@ const DATA_FEEDS_NOT_WORKING_LOCALLY = [
   "SolvBTC_MERLIN/BTC-TWAP-60",
   "SolvBTC_BNB/BTC-TWAP-60",
   "SolvBTC.ENA/BTC-TWAP-60",
+  "LBTC_FUNDAMENTAL_1",
 ];
 const DATA_FEEDS_NOT_BROADCASTED = getNotBroadcastedDataFeeds(primaryManifest);
 const SKIPPED_SOURCES = JSON.parse(
