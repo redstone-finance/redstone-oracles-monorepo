@@ -8,6 +8,7 @@
   "scripts": {
     "run-ts": "yarn global:ts-node",
     "lint": "yarn global:eslint .",
+    "lint:fix": "yarn global:eslint --fix .",
     "build": "rm -rf dist && yarn global:tsc --build tsconfig.json",
     "build-dev": "yarn build"
   },
