@@ -1,8 +1,5 @@
 {
   "extends": "../../tsconfig-common.json",
-  "compilerOptions": {
-    "outDir": "dist"
-  },
   "exclude": ["node_modules", "dist", "sdk-test-app/**"],
   "references": [
     {
