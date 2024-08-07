@@ -2,7 +2,7 @@ import primaryManifest from "@redstone-finance/oracle-node/manifests/data-servic
 import { getNotBroadcastedDataFeeds } from "./framework/get-not-broadcasted-data-feeds";
 import { runLongPricePropagationCoreTest } from "./framework/run-long-price-propagation-core-test";
 
-const REMOVED_DATA_FEEDS: string[] = [];
+const REMOVED_DATA_FEEDS: string[] = ["__SWELL__"];
 const DATA_FEEDS_NOT_WORKING_LOCALLY = [
   "PREMIA-TWAP-60",
   "USDB-TWAP-30",
