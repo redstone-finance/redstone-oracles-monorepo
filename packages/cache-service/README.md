@@ -48,4 +48,4 @@ Use [the following link](https://github.com/redstone-finance/redstone-cache-serv
   - We will use additional hosted uptime-kuma to notify developers in case of problems
     - There are 2 ways to handle this
       - 1.  Use push monitor type with upside-down mode (push errors to the uptime-kuma service with helpful messages)
-      - 2.  Use HTTP keyword fetching, and add to cache-services some additonal `/status` endpoint
+      - 2.  Use HTTP keyword fetching, and add to cache-services some additional `/status` endpoint

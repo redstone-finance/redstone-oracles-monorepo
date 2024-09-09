@@ -9,7 +9,7 @@ The @redstone-finance/evm-connector module implements an alternative design of p
 
 ## Getting started
 
-Please refer to [documentation](https://docs.redstone.finance/docs/smart-contract-devs/get-started/redstone-core)
+Please refer to [documentation](https://docs.redstone.finance/docs/get-started/models/redstone-core)
 
 ## 👨‍💻 Development and contributions
 

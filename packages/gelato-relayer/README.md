@@ -25,7 +25,7 @@ documentation [here](https://docs.gelato.network/developer-services/web3-functio
 
 The function is an interface written for the [@redstone-finance/on-chain-relayer](../on-chain-relayer/) package.
 The documentation of the RedStone Classic model with relayer can be
-found [here](https://docs.redstone.finance/docs/smart-contract-devs/get-started/redstone-classic).
+found [here](https://docs.redstone.finance/docs/get-started/models/redstone-classic).
 
 ### Calling the function
 
