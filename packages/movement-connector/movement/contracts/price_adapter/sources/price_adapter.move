@@ -7,6 +7,7 @@ module redstone_price_adapter::price_adapter {
     use std::option::{Self, Option};
     use std::event::emit;
     use std::signer;
+    use std::vector;
 
     use aptos_framework::object::{Self, ObjectCore};
     use aptos_framework::timestamp;
@@ -23,7 +24,8 @@ module redstone_price_adapter::price_adapter {
         PriceData
     };
     use redstone_price_adapter::update_check::assert_update_time;
-    use redstone_price_adapter::redstone_sdk_conv::from_bytes_to_u64;
+    use redstone_price_adapter::redstone_sdk_conv::from_bytes_to_u256;
+    use redstone_price_adapter::redstone_sdk_feed_id_key::{Self, FeedIdKey};
 
     // === Constants ===
 
@@ -43,17 +45,14 @@ module redstone_price_adapter::price_adapter {
     const NAME: vector<u8> = b"RedstonePriceAdapter";
 
     // === Errors ===
-
-    const E_INVALID_VERSION: u64 = 0;
-    const E_TIMESTAMP_TOO_OLD: u64 = 1;
-    const E_INVALID_FEED_ID: u64 = 2;
-    const E_CALLER_NOT_A_PACKAGE_OWNER: u64 = 3;
+    const E_TIMESTAMP_TOO_OLD: u64 = 0;
+    const E_INVALID_FEED_ID: u64 = 1;
 
     // === Structs ===
 
     struct PriceAdapter has key {
         id: AUID,
-        prices: Table<u64, PriceData>
+        prices: Table<u256, PriceData>
     }
 
     #[event]
@@ -69,17 +68,84 @@ module redstone_price_adapter::price_adapter {
     public entry fun write_price(
         price_adapter_address: address, feed_id: vector<u8>, payload: vector<u8>
     ) acquires PriceAdapter {
-        write_new_price(price_adapter_address, feed_id, payload);
+        let price_adapter = borrow_global_mut<PriceAdapter>(price_adapter_address);
+        write_new_price(price_adapter, &feed_id, payload);
     }
 
-    public fun write_new_price(
-        price_adapter_address: address, feed_id: vector<u8>, payload: vector<u8>
-    ): u256 acquires PriceAdapter {
+    public entry fun write_prices(
+        price_adapter_address: address, feed_ids: vector<vector<u8>>, payload: vector<u8>
+    ) acquires PriceAdapter {
         let price_adapter = borrow_global_mut<PriceAdapter>(price_adapter_address);
+        let feed_ids_len = vector::length(&feed_ids);
+        for (i in 0..feed_ids_len) {
+            write_new_price(
+                price_adapter,
+                vector::borrow(&feed_ids, i),
+                payload
+            );
+        };
+    }
+
+    // === Public-View Functions ===
+
+    public fun price_and_timestamp(
+        price_adapter: &PriceAdapter, feed_id: vector<u8>
+    ): (u256, u64) {
+        price_data_price_and_timestamp(price_data(price_adapter, feed_id))
+    }
+
+    public fun price(price_adapter: &PriceAdapter, feed_id: vector<u8>): u256 {
+        price_data_price(price_data(price_adapter, feed_id))
+    }
+
+    public fun timestamp(
+        price_adapter: &PriceAdapter, feed_id: vector<u8>
+    ): u64 {
+        price_data_timestamp(price_data(price_adapter, feed_id))
+    }
+
+    public fun price_data(
+        price_adapter: &PriceAdapter, feed_id: vector<u8>
+    ): &PriceData {
+        let key = from_bytes_to_u256(&feed_id);
+        if (!table::contains(&price_adapter.prices, key)) {
+            abort E_INVALID_FEED_ID
+        };
+
+        table::borrow(&price_adapter.prices, key)
+    }
+
+    // === Public-Friend Functions ===
+
+    friend redstone_price_adapter::main;
+
+    public(friend) fun new(caller: &signer) {
+        let caller_address = signer::address_of(caller);
+        let constructor_ref = object::create_named_object(caller, NAME);
+        let object_signer = object::generate_signer(&constructor_ref);
+
+        move_to(
+            &object_signer,
+            PriceAdapter {
+                id: generate_auid(),
+                prices: table::new()
+            }
+        );
+
+        let object = object::object_from_constructor_ref<ObjectCore>(&constructor_ref);
+
+        object::transfer(caller, object, caller_address);
+    }
+
+    // === Private Functions ===
+
+    fun write_new_price(
+        price_adapter: &mut PriceAdapter, feed_id: &vector<u8>, payload: vector<u8>
+    ) {
+        let feed_id_key = redstone_sdk_feed_id_key::new(*feed_id);
         let timestamp_now_ms = timestamp::now_microseconds() / 1000;
-        let feed_id_key = from_bytes_to_u64(&feed_id);
         let price_write_timestamp =
-            get_price_feed_write_timestamp(price_adapter, feed_id_key);
+            get_price_feed_write_timestamp(price_adapter, &mut feed_id_key);
 
         let config: Config =
             new_config(
@@ -107,76 +173,29 @@ module redstone_price_adapter::price_adapter {
             price_adapter,
             &config,
             timestamp_now_ms,
-            feed_id,
+            &mut feed_id_key,
             payload
-        )
-    }
-
-    // === Public-View Functions ===
-
-    public fun price_and_timestamp(
-        price_adapter: &PriceAdapter, feed_id: vector<u8>
-    ): (u256, u64) {
-        price_data_price_and_timestamp(price_data(price_adapter, feed_id))
-    }
-
-    public fun price(price_adapter: &PriceAdapter, feed_id: vector<u8>): u256 {
-        price_data_price(price_data(price_adapter, feed_id))
-    }
-
-    public fun timestamp(
-        price_adapter: &PriceAdapter, feed_id: vector<u8>
-    ): u64 {
-        price_data_timestamp(price_data(price_adapter, feed_id))
-    }
-
-    public fun price_data(
-        price_adapter: &PriceAdapter, feed_id: vector<u8>
-    ): &PriceData {
-        if (!table::contains(&price_adapter.prices, from_bytes_to_u64(&feed_id))) {
-            abort E_INVALID_FEED_ID
-        };
-
-        table::borrow(&price_adapter.prices, from_bytes_to_u64(&feed_id))
-    }
-
-    // === Public-Friend Functions ===
-
-    friend redstone_price_adapter::main;
-
-    public(friend) fun new(caller: &signer) {
-        let caller_address = signer::address_of(caller);
-        let constructor_ref = object::create_named_object(caller, NAME);
-        let object_signer = object::generate_signer(&constructor_ref);
-
-        move_to(
-            &object_signer,
-            PriceAdapter {
-                id: generate_auid(),
-                prices: table::new()
-            }
         );
-
-        let object = object::object_from_constructor_ref<ObjectCore>(&constructor_ref);
-
-        object::transfer(caller, object, caller_address);
     }
-
-    // === Private Functions ===
 
     fun write_price_checked(
         price_adapter: &mut PriceAdapter,
         config: &Config,
         timestamp_now_ms: u64,
-        feed_id: vector<u8>,
+        feed_id_key: &mut FeedIdKey,
         payload: vector<u8>
     ): u256 {
         let (aggregated_value, timestamp) =
-            process_payload(config, timestamp_now_ms, feed_id, payload);
+            process_payload(
+                config,
+                timestamp_now_ms,
+                redstone_sdk_feed_id_key::feed_id(feed_id_key),
+                payload
+            );
 
         overwrite_price(
             price_adapter,
-            feed_id,
+            feed_id_key,
             aggregated_value,
             timestamp,
             timestamp_now_ms
@@ -186,37 +205,39 @@ module redstone_price_adapter::price_adapter {
     }
 
     fun get_or_create_default(
-        price_adapter: &mut PriceAdapter, feed_id: vector<u8>
+        price_adapter: &mut PriceAdapter, feed_id_key: &mut FeedIdKey
     ): &mut PriceData {
-        let feed_id_key = from_bytes_to_u64(&feed_id);
-        if (!table::contains(&price_adapter.prices, feed_id_key)) {
+        let key = redstone_sdk_feed_id_key::key(feed_id_key);
+
+        if (!table::contains(&price_adapter.prices, key)) {
+            let feed_id = *redstone_sdk_feed_id_key::feed_id(feed_id_key);
             let new_price_data = default(feed_id);
-            table::add(&mut price_adapter.prices, feed_id_key, new_price_data);
+            table::add(&mut price_adapter.prices, key, new_price_data);
         };
 
-        table::borrow_mut(&mut price_adapter.prices, feed_id_key)
+        table::borrow_mut(&mut price_adapter.prices, key)
     }
 
     fun get_price_feed_write_timestamp(
-        price_adapter: &PriceAdapter, feed_id_key: u64
+        price_adapter: &PriceAdapter, feed_id_key: &mut FeedIdKey
     ): Option<u64> {
-        if (!table::contains(&price_adapter.prices, feed_id_key)) {
+        let key = redstone_sdk_feed_id_key::key(feed_id_key);
+        if (!table::contains(&price_adapter.prices, key)) {
             return option::none()
         };
 
-        option::some(
-            write_timestamp(table::borrow(&price_adapter.prices, feed_id_key))
-        )
+        option::some(write_timestamp(table::borrow(&price_adapter.prices, key)))
     }
 
     fun overwrite_price(
         price_adapter: &mut PriceAdapter,
-        feed_id: vector<u8>,
+        feed_id_key: &mut FeedIdKey,
         aggregated_value: u256,
         timestamp: u64,
         write_timestamp: u64
     ) {
-        let price_data = get_or_create_default(price_adapter, feed_id);
+        let feed_id = *redstone_sdk_feed_id_key::feed_id(feed_id_key);
+        let price_data = get_or_create_default(price_adapter, feed_id_key);
 
         assert!(timestamp > price_data_timestamp(price_data), E_TIMESTAMP_TOO_OLD);
         update(
