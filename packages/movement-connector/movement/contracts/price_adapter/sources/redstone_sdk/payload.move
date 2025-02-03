@@ -48,16 +48,16 @@ module redstone_price_adapter::payload {
     public fun process_payload(
         config: &Config,
         timestamp_now_ms: u64,
-        feed_id: vector<u8>,
+        feed_id: &vector<u8>,
         payload: vector<u8>
     ): (u256, u64) {
         let parsed_payload = parse_raw_payload(&mut payload);
         let data_packages =
-            filter_packages_by_feed_id(&data_packages(&parsed_payload), &feed_id);
+            filter_packages_by_feed_id(&data_packages(&parsed_payload), feed_id);
 
         verify_data_packages(&data_packages, config, timestamp_now_ms);
 
-        let values = extract_values_by_feed_id(&parsed_payload, &feed_id);
+        let values = extract_values_by_feed_id(&parsed_payload, feed_id);
         let values_u256 = vector::empty();
         for (i in 0..vector::length(&values)) {
             vector::push_back(
@@ -255,7 +255,7 @@ module redstone_price_adapter::payload {
         let timestamp = 1707307760000;
 
         let (val, timestamp) = process_payload(
-            &test_config(), timestamp, feed_id, payload
+            &test_config(), timestamp, &feed_id, payload
         );
 
         assert!((val as u64) == 236389750361, (val as u64));

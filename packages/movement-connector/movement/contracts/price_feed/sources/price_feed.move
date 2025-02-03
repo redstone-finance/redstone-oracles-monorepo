@@ -4,10 +4,8 @@ module price_feed::price_feed {
     use redstone_price_adapter::price_adapter::{
         price_by_address,
         price_and_timestamp_by_address,
-        timestamp_by_address,
-        price_data_by_address
+        timestamp_by_address
     };
-    use redstone_price_adapter::price_data::PriceData;
     use std::string::{Self, String};
 
     // === Constants ===
@@ -55,8 +53,8 @@ module price_feed::price_feed {
     }
 
     #[view]
-    /// Returns ETH PriceData containg all informations, like price, timestamps.
-    public fun read_price_data(): PriceData {
-        price_data_by_address(ADAPTER_ADDRESS, FEED_ID)
+    /// Returns address of the PriceAdapter object
+    public fun price_adapter_address(): address {
+        ADAPTER_ADDRESS
     }
 }
