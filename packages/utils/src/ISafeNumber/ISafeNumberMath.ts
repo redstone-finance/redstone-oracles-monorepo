@@ -33,12 +33,17 @@ export function getMedian(numbers: ISafeNumber[]): ISafeNumber {
     throw new Error("Cannot get median value of an empty array");
   }
 
-  numbers = numbers.sort((a, b) => (a.lt(b) ? -1 : 1));
+  if (numbers.length === 1) {
+    return numbers[0];
+  }
+
+  numbers =
+    numbers.length === 2 ? numbers : numbers.sort((a, b) => (a.lt(b) ? -1 : 1));
 
   const middle = Math.floor(numbers.length / 2);
 
   if (numbers.length % 2 === 0) {
-    return numbers[middle].add(numbers[middle - 1]).div(2);
+    return numbers[middle].div(2).add(numbers[middle - 1].div(2));
   } else {
     return numbers[middle];
   }

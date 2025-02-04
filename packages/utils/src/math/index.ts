@@ -44,6 +44,11 @@ export const calculateDeviationPercent = (args: {
 export const getMedian = (numbers: ConvertibleToISafeNumber[]) =>
   ISafeNumberMath.getMedian(numbers.map(castToISafeNumber)).unsafeToNumber();
 
+export const getMedianOfBigNumbers = (numbers: BigNumberish[]) =>
+  ISafeNumberMath.getMedian(
+    numbers.map(BigNumber.from).map(castToISafeNumber)
+  ).unsafeToNumber();
+
 export class PrecisionScaler {
   readonly tokenDecimalsScaler: Decimal;
 
