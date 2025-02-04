@@ -3,6 +3,17 @@ type TimeoutCallback<T> = (
   reject: (reason?: unknown) => void
 ) => void;
 
+export const timeoutOrResult = async <T>(
+  prom: Promise<T>,
+  timeoutMS?: number,
+  customErrorMessage?: string,
+  timeoutCallback?: TimeoutCallback<T>
+): Promise<T> => {
+  return await (timeoutMS
+    ? timeout(prom, timeoutMS, customErrorMessage, timeoutCallback)
+    : prom);
+};
+
 export const timeout = async <T>(
   prom: Promise<T>,
   timeoutMS: number,

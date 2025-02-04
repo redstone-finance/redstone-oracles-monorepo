@@ -8792,10 +8792,12 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@redstone-finance/utils@workspace:packages/utils"
   dependencies:
+    "@types/lodash": "npm:^4.14.195"
     axios: "npm:^1.7.7"
     consola: "npm:^2.15.3"
     decimal.js: "npm:^10.4.3"
     ethers: "npm:^5.7.2"
+    lodash: "npm:^4.17.21"
     zod: "npm:^3.22.4"
   languageName: unknown
   linkType: soft

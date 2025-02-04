@@ -52,7 +52,9 @@ export function makeSuiKeypair(privateKey?: string): Keypair {
   }
 
   return Secp256k1Keypair.fromSecretKey(
-    isHexString(key, 32) ? arrayify(key) : key
+    isHexString(key) || isHexString(`0x${key}`)
+      ? arrayify(key, { allowMissingPrefix: true })
+      : key
   );
 }
 
