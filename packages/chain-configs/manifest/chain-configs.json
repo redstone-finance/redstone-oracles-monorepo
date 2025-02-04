@@ -869,6 +869,24 @@
       "twoDimensionalFees": true,
       "isMainnet": false
     },
+    "tacTestnet": {
+      "name": "TAC Turin",
+      "chainId": 2390,
+      "currencySymbol": "TAC",
+      "publicRpcUrls": [
+        "https://turin.rpc.tac.build",
+        "https://rpc.ankr.com/tac_turin"
+      ],
+      "avgBlockTimeMs": 4000,
+      "multicall3": {
+        "address": "0x51ebbB6F8167E39C3b867d50332c82fbd92d3861",
+        "type": "Multicall3"
+      },
+      "isAuctionModel": false,
+      "fallbackToEthMaxPriorityFeePerGas": true,
+      "twoDimensionalFees": false,
+      "isMainnet": false
+    },
     "holesky": {
       "name": "Holesky",
       "chainId": 17000,
