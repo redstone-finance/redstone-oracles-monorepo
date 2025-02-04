@@ -12,7 +12,18 @@ const config: HardhatUserConfig = {
     apiKey: {
       avalanche: "NZK513SPB5MRI2281ZFZYZW6VJIVW3XMBB",
       arbitrumOne: "47R2FXKX2VVRDA2Y12XXJEKIKGUJ1AQP3B",
+      sei: "anything",
     },
+    customChains: [
+      {
+        network: "sei",
+        chainId: 1329,
+        urls: {
+          apiURL: "https://seitrace.com/pacific-1/api",
+          browserURL: "https://seitrace.com",
+        },
+      },
+    ],
   },
   networks: {
     mainnet: {
@@ -47,6 +58,9 @@ const config: HardhatUserConfig = {
     },
     rootstock: {
       url: "https://rootstock-mainnet.public.blastapi.io",
+    },
+    sei: {
+      url: "https://evm-rpc.sei-apis.com",
     },
   },
 };
