@@ -3,12 +3,14 @@ import { RedstoneCommon } from "@redstone-finance/utils";
 import "dotenv/config";
 import {
   DEFAULT_GAS_BUDGET,
-  makeSuiClient,
   makeSuiKeypair,
   readSuiConfig,
+  SuiClientBuilder,
   SuiNetworkSchema,
   SuiPricesContractConnector,
 } from "../src";
+
+const OTHER_RPC_URL = "https://rpc.ankr.com/sui_testnet";
 
 async function main() {
   const network = RedstoneCommon.getFromEnv("NETWORK", SuiNetworkSchema);
@@ -19,7 +21,12 @@ async function main() {
     dataPackagesIds: ["BTC"],
   });
 
-  const suiClient = makeSuiClient(network);
+  const suiClient = await new SuiClientBuilder()
+    .withNetwork(network)
+    .withFullnodeUrl()
+    .withRpcUrl(OTHER_RPC_URL)
+    .buildAndVerify();
+
   const suiContractConnector = new SuiPricesContractConnector(
     suiClient,
     {

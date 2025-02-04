@@ -5,5 +5,6 @@ export * as SafeNumber from "./ISafeNumber";
 export * from "./logger";
 export * as MathUtils from "./math";
 export * from "./monitoring";
+export * as MultiExecutor from "./multi-executor";
 export * as Tx from "./tx";
 export * as RedstoneTypes from "./types";
