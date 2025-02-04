@@ -2,6 +2,7 @@ export * from "../scripts/make-price-adapter-config";
 export * from "./config";
 export * from "./network-ids";
 export * from "./PriceAdapterConfig";
+export * from "./SuiClientBuilder";
 export * from "./SuiContractAdapter";
 export * from "./SuiContractConnector";
 export * from "./SuiPricesContractAdapter";
