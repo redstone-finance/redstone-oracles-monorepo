@@ -20,6 +20,7 @@ const CHAINS_TO_SKIP_MULTICALL_ADDRESS_CHECK = [
   "zkLink",
   "Haven1 Testnet",
   "BounceBit Mainnet",
+  "TAC Turin",
   "Corn Maizenet", // first few create transactions failed leading to different address
 ];
 
