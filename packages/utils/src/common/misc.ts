@@ -14,3 +14,7 @@ export function getFilenameWithoutExtension(url: string) {
 
   return fileNameWithExtension.split(".").slice(0, -1).join(".");
 }
+
+export function getS(value: number, s = "s") {
+  return value > 1 ? s : "";
+}
