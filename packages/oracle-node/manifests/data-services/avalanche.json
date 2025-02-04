@@ -338,8 +338,15 @@
       "source": [
         "coingecko",
         "coinmarketcap",
+        "bitstamp-eur",
+        "okx-usdc",
+        "bitmart-usdt",
+        "coinbasepro-usdc",
         "trader-joe-v2-avalanche-usdc",
-        "uniswap-v3-ethereum-usdc-500"
+        "uniswap-v3-ethereum-usdc-500",
+        "aerodrome-cl-base-usdc-300",
+        "aerodrome-cl-base-usdc-500",
+        "aerodrome-cl-base-weth-500"
       ],
       "deviationCheck": {
         "deviationWithRecentValues": {
