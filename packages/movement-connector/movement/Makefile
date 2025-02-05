@@ -26,19 +26,27 @@ default-public-key:
 adapter-address:
 	$(ADAPTER_ADDRESS)
 
+fmt:
+	aptos move fmt --package-path contracts/price_feed
+	aptos move fmt --package-path contracts/price_adapter
+	aptos move fmt --package-path contracts/redstone_sdk
+
 test:
 	movement move test --package-dir contracts/price_feed
 	movement move test --package-dir contracts/price_adapter
+	movement move test --package-dir contracts/redstone_sdk
 
 build:
 	movement move build --package-dir contracts/price_feed --dev
 	movement move build --package-dir contracts/price_adapter --dev
+	movement move build --package-dir contracts/redstone_sdk --dev
 
 deploy-price-adapter:
-	movement move publish  --package-dir contracts/price_adapter --named-addresses redstone_price_adapter=default
+	movement move publish --package-dir contracts/redstone_sdk --named-addresses redstone_sdk=default
+	movement move publish --package-dir contracts/price_adapter --named-addresses redstone_price_adapter=default,redstone_sdk=default
 
 deploy-price-feed:
-	movement move publish  --package-dir contracts/price_feed --named-addresses redstone_price_adapter=default,price_feed=default,price_adapter_object_address=$(shell $(ADAPTER_ADDRESS))
+	movement move publish --package-dir contracts/price_feed --named-addresses redstone_price_adapter=default,price_feed=default,price_adapter_object_address=$(shell $(ADAPTER_ADDRESS)),redstone_sdk=default
 
 prepare-data:
 	make -C $(DATA_GENERATOR) DATA_NAME=$(DATA_NAME) prepare_data

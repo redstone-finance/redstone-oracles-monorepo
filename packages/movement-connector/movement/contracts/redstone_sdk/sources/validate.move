@@ -1,18 +1,14 @@
-module redstone_price_adapter::redstone_sdk_validate {
+module redstone_sdk::validate {
     // ==== Imports ===
 
-    use redstone_price_adapter::redstone_sdk_config::{
+    use redstone_sdk::config::{
         Config,
         signer_count_threshold,
         signers,
         max_timestamp_ahead_ms,
         max_timestamp_delay_ms
     };
-    use redstone_price_adapter::redstone_sdk_data_package::{
-        DataPackage,
-        signer_address,
-        timestamp
-    };
+    use redstone_sdk::data_package::{DataPackage, signer_address, timestamp};
     use std::vector;
 
     // === Errors ===

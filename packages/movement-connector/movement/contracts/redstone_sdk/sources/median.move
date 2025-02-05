@@ -1,4 +1,4 @@
-module redstone_price_adapter::redstone_sdk_median {
+module redstone_sdk::median {
     // === Imports ===
 
     use std::vector;

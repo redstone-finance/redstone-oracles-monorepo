@@ -13,8 +13,8 @@ module redstone_price_adapter::price_adapter {
     use aptos_framework::object::{Self, ObjectCore};
     use aptos_framework::timestamp;
 
-    use redstone_price_adapter::redstone_sdk_config::{new as new_config, Config};
-    use redstone_price_adapter::payload::process_payload;
+    use redstone_sdk::config::{new as new_config, Config};
+    use redstone_sdk::payload::process_payload;
     use redstone_price_adapter::price_data::{
         price_and_timestamp as price_data_price_and_timestamp,
         price as price_data_price,
@@ -24,9 +24,9 @@ module redstone_price_adapter::price_adapter {
         write_timestamp,
         PriceData
     };
-    use redstone_price_adapter::update_check::assert_update_time;
-    use redstone_price_adapter::redstone_sdk_conv::from_bytes_to_u256;
-    use redstone_price_adapter::redstone_sdk_feed_id_key::{Self, FeedIdKey};
+    use redstone_sdk::update_check::assert_update_time;
+    use redstone_sdk::conv::from_bytes_to_u256;
+    use redstone_sdk::feed_id_key::{Self, FeedIdKey};
 
     // === Constants ===
 
@@ -114,7 +114,7 @@ module redstone_price_adapter::price_adapter {
     fun write_new_price(
         price_adapter: &mut PriceAdapter, feed_id: &vector<u8>, payload: vector<u8>
     ) {
-        let feed_id_key = redstone_sdk_feed_id_key::new(*feed_id);
+        let feed_id_key = feed_id_key::new(*feed_id);
         let timestamp_now_ms = timestamp::now_microseconds() / 1000;
         let price_write_timestamp =
             get_price_feed_write_timestamp(price_adapter, &mut feed_id_key);
@@ -161,7 +161,7 @@ module redstone_price_adapter::price_adapter {
             process_payload(
                 config,
                 timestamp_now_ms,
-                redstone_sdk_feed_id_key::feed_id(feed_id_key),
+                feed_id_key::feed_id(feed_id_key),
                 payload
             );
 
@@ -179,10 +179,10 @@ module redstone_price_adapter::price_adapter {
     fun get_or_create_default(
         price_adapter: &mut PriceAdapter, feed_id_key: &mut FeedIdKey
     ): &mut PriceData {
-        let key = redstone_sdk_feed_id_key::key(feed_id_key);
+        let key = feed_id_key::key(feed_id_key);
 
         if (!table::contains(&price_adapter.prices, key)) {
-            let feed_id = *redstone_sdk_feed_id_key::feed_id(feed_id_key);
+            let feed_id = *feed_id_key::feed_id(feed_id_key);
             let new_price_data = default(feed_id);
             table::add(&mut price_adapter.prices, key, new_price_data);
         };
@@ -193,7 +193,7 @@ module redstone_price_adapter::price_adapter {
     fun get_price_feed_write_timestamp(
         price_adapter: &PriceAdapter, feed_id_key: &mut FeedIdKey
     ): Option<u64> {
-        let key = redstone_sdk_feed_id_key::key(feed_id_key);
+        let key = feed_id_key::key(feed_id_key);
         if (!table::contains(&price_adapter.prices, key)) {
             return option::none()
         };
@@ -208,7 +208,7 @@ module redstone_price_adapter::price_adapter {
         timestamp: u64,
         write_timestamp: u64
     ) {
-        let feed_id = *redstone_sdk_feed_id_key::feed_id(feed_id_key);
+        let feed_id = *feed_id_key::feed_id(feed_id_key);
         let price_data = get_or_create_default(price_adapter, feed_id_key);
 
         assert!(timestamp > price_data_timestamp(price_data), E_TIMESTAMP_TOO_OLD);

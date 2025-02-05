@@ -1,12 +1,12 @@
-module redstone_price_adapter::payload {
+module redstone_sdk::payload {
     // === Imports ===
 
     use std::vector;
 
-    use redstone_price_adapter::redstone_sdk_config::Config;
-    use redstone_price_adapter::redstone_sdk_conv::{from_bytes_to_u64, from_bytes_to_u256};
-    use redstone_price_adapter::redstone_sdk_crypto::recover_address;
-    use redstone_price_adapter::redstone_sdk_data_package::{
+    use redstone_sdk::config::Config;
+    use redstone_sdk::conv::{from_bytes_to_u64, from_bytes_to_u256};
+    use redstone_sdk::crypto::recover_address;
+    use redstone_sdk::data_package::{
         DataPackage,
         DataPoint,
         value,
@@ -16,11 +16,8 @@ module redstone_price_adapter::payload {
         new_data_package,
         timestamp
     };
-    use redstone_price_adapter::redstone_sdk_median::calculate_median;
-    use redstone_price_adapter::redstone_sdk_validate::{
-        verify_data_packages,
-        verify_and_trim_redstone_marker
-    };
+    use redstone_sdk::median::calculate_median;
+    use redstone_sdk::validate::{verify_data_packages, verify_and_trim_redstone_marker};
 
     // === Errors ===
 

@@ -1,4 +1,4 @@
-module redstone_price_adapter::redstone_sdk_conv {
+module redstone_sdk::conv {
     // === Imports ===
     use std::vector;
 

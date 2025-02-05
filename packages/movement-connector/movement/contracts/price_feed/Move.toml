@@ -9,11 +9,13 @@ upgrade_policy = "compatible"
 price_feed = "_"
 redstone_price_adapter = "_"
 price_adapter_object_address = "_"
+redstone_sdk = "_"
 
 [dev-addresses]
 price_feed = "0xeed"
 redstone_price_adapter = "0xede"
 price_adapter_object_address = "0xadde"
+redstone_sdk = "0xeded"
 
 [dependencies]
 price_adapter = { local = "../price_adapter" }
