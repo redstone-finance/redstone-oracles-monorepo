@@ -1606,7 +1606,8 @@
         "curve-ethereum-fdusd",
         "curve-ethereum-frax",
         "curve-ethereum-usdc",
-        "uniswap-v3-ethereum-usdt-100"
+        "uniswap-v3-ethereum-usdt-100",
+        "uniswap-v2-ethereum-usdc"
       ],
       "denomination": "USD",
       "rateFeed": false
@@ -2074,7 +2075,8 @@
         "pancake-swap-bnb-solvbtc-100",
         "pancake-swap-bnb-solvbtc-500",
         "trader-joe-v2-avalanche-solvbtc",
-        "uniswap-v3-ethereum-solvbtc-100"
+        "uniswap-v3-ethereum-solvbtc-100",
+        "uniswap-v2-ethereum-solvbtc"
       ],
       "denomination": "USD",
       "rateFeed": false
