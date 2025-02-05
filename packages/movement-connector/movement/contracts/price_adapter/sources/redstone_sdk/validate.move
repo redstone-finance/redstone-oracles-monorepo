@@ -128,9 +128,9 @@ module redstone_price_adapter::redstone_sdk_validate {
     // === Tests Functions ===
 
     #[test_only]
-    use redstone_price_adapter::redstone_sdk_config::test_config;
+    use redstone_sdk::config::test_config;
     #[test_only]
-    use redstone_price_adapter::redstone_sdk_data_package::new_data_package;
+    use redstone_sdk::data_package::new_data_package;
 
     #[test]
     fun test_trim_redstone_marker() {

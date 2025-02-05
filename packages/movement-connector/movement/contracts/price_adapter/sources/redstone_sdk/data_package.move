@@ -25,8 +25,6 @@ module redstone_price_adapter::redstone_sdk_data_package {
         DataPoint { feed_id, value }
     }
 
-    // === Public-View Functions ===
-
     public fun timestamp(data_package: &DataPackage): u64 {
         data_package.timestamp
     }
