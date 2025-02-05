@@ -27,7 +27,7 @@
     "@redstone-finance/protocol": "0.7.4",
     "@redstone-finance/utils": "0.7.4",
     "@types/lodash": "^4.14.195",
-    "axios": "^1.7.7",
+    "axios": "^1.7.9",
     "dayjs": "^1.11.12",
     "lodash": "^4.17.21",
     "zod": "^3.22.4"
