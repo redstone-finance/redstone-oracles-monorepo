@@ -19,7 +19,29 @@ module redstone_price_adapter::redstone_sdk_config {
         min_interval_between_updates_ms: u64
     }
 
-    // === Public-View Functions ===
+    // === Public Functions ===
+
+    public fun new(
+        signer_count_threshold: u8,
+        signers: vector<vector<u8>>,
+        max_timestamp_delay_ms: u64,
+        max_timestamp_ahead_ms: u64,
+        trusted_updaters: vector<address>,
+        min_interval_between_updates_ms: u64
+    ): Config {
+        let config = Config {
+            signer_count_threshold,
+            signers,
+            max_timestamp_delay_ms,
+            max_timestamp_ahead_ms,
+            trusted_updaters,
+            min_interval_between_updates_ms
+        };
+
+        check(&config);
+
+        config
+    }
 
     public fun signer_count_threshold(config: &Config): u8 {
         config.signer_count_threshold
@@ -43,33 +65,6 @@ module redstone_price_adapter::redstone_sdk_config {
 
     public fun min_interval_between_updates_ms(config: &Config): u64 {
         config.min_interval_between_updates_ms
-    }
-
-    // === Public-Friend Functions ===
-    friend redstone_price_adapter::update_check;
-    friend redstone_price_adapter::payload;
-    friend redstone_price_adapter::price_adapter;
-
-    public(friend) fun new(
-        signer_count_threshold: u8,
-        signers: vector<vector<u8>>,
-        max_timestamp_delay_ms: u64,
-        max_timestamp_ahead_ms: u64,
-        trusted_updaters: vector<address>,
-        min_interval_between_updates_ms: u64
-    ): Config {
-        let config = Config {
-            signer_count_threshold,
-            signers,
-            max_timestamp_delay_ms,
-            max_timestamp_ahead_ms,
-            trusted_updaters,
-            min_interval_between_updates_ms
-        };
-
-        check(&config);
-
-        config
     }
 
     // === Private Functions ===

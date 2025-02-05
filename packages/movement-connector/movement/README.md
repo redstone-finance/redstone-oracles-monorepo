@@ -30,11 +30,6 @@ The direct path should look like:
 ### Move code conventions
 We try to follow conventions from [here](https://aptos.dev/en/build/smart-contracts/book/coding-conventions).
 
-Differences:
-* There's added a section called `Public Functions` for functions that are public and non-mutable but are not view-only.
-  For example
-  * Functions creating structs.
-  * Functions filtering collections.
 
 ## What should be audited
 
@@ -48,14 +43,12 @@ according to the [Coding conventions](https://aptos.dev/en/build/smart-contracts
   * `// === Constants ===`
 * Interface Functions
   * `// === Public-Friend Functions ===`
-  * `// === Public-Package Functions ===`
-  * `// === Public-Mutative Functions ===`
+  * `// === Entry-Mutative Functions ===`
   * `// === Public-View Functions ===`
 * Other/Helper functions
-  * `// === Admin Functions ===`
   * `// === Public Functions ===`
+  * `// === Public-Mutative Functions ===`
   * `// === Private Functions ===`
-  * `// === Method Aliases ===`
 
 And the following **should not**:
 

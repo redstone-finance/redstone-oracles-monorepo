@@ -1,4 +1,5 @@
 module redstone_price_adapter::price_adapter {
+    // === Imports ===
     use std::string::String;
     use std::table::{Self, Table};
     use std::transaction_context;
@@ -63,58 +64,6 @@ module redstone_price_adapter::price_adapter {
         write_timestamp: u64
     }
 
-    // === Public-Mutative Functions ===
-
-    public entry fun write_price(
-        price_adapter_address: address, feed_id: vector<u8>, payload: vector<u8>
-    ) acquires PriceAdapter {
-        let price_adapter = borrow_global_mut<PriceAdapter>(price_adapter_address);
-        write_new_price(price_adapter, &feed_id, payload);
-    }
-
-    public entry fun write_prices(
-        price_adapter_address: address, feed_ids: vector<vector<u8>>, payload: vector<u8>
-    ) acquires PriceAdapter {
-        let price_adapter = borrow_global_mut<PriceAdapter>(price_adapter_address);
-        let feed_ids_len = vector::length(&feed_ids);
-        for (i in 0..feed_ids_len) {
-            write_new_price(
-                price_adapter,
-                vector::borrow(&feed_ids, i),
-                payload
-            );
-        };
-    }
-
-    // === Public-View Functions ===
-
-    public fun price_and_timestamp(
-        price_adapter: &PriceAdapter, feed_id: vector<u8>
-    ): (u256, u64) {
-        price_data_price_and_timestamp(price_data(price_adapter, feed_id))
-    }
-
-    public fun price(price_adapter: &PriceAdapter, feed_id: vector<u8>): u256 {
-        price_data_price(price_data(price_adapter, feed_id))
-    }
-
-    public fun timestamp(
-        price_adapter: &PriceAdapter, feed_id: vector<u8>
-    ): u64 {
-        price_data_timestamp(price_data(price_adapter, feed_id))
-    }
-
-    public fun price_data(
-        price_adapter: &PriceAdapter, feed_id: vector<u8>
-    ): &PriceData {
-        let key = from_bytes_to_u256(&feed_id);
-        if (!table::contains(&price_adapter.prices, key)) {
-            abort E_INVALID_FEED_ID
-        };
-
-        table::borrow(&price_adapter.prices, key)
-    }
-
     // === Public-Friend Functions ===
 
     friend redstone_price_adapter::main;
@@ -135,6 +84,29 @@ module redstone_price_adapter::price_adapter {
         let object = object::object_from_constructor_ref<ObjectCore>(&constructor_ref);
 
         object::transfer(caller, object, caller_address);
+    }
+
+    // === Entry-Mutative Functions ===
+
+    public entry fun write_price(
+        price_adapter_address: address, feed_id: vector<u8>, payload: vector<u8>
+    ) acquires PriceAdapter {
+        let price_adapter = borrow_global_mut<PriceAdapter>(price_adapter_address);
+        write_new_price(price_adapter, &feed_id, payload);
+    }
+
+    public entry fun write_prices(
+        price_adapter_address: address, feed_ids: vector<vector<u8>>, payload: vector<u8>
+    ) acquires PriceAdapter {
+        let price_adapter = borrow_global_mut<PriceAdapter>(price_adapter_address);
+        let feed_ids_len = vector::length(&feed_ids);
+        for (i in 0..feed_ids_len) {
+            write_new_price(
+                price_adapter,
+                vector::borrow(&feed_ids, i),
+                payload
+            );
+        };
     }
 
     // === Private Functions ===
@@ -259,14 +231,25 @@ module redstone_price_adapter::price_adapter {
         );
     }
 
-    // PriceFeed functions
+    fun price_data(price_adapter: &PriceAdapter, feed_id: vector<u8>): &PriceData {
+        let key = from_bytes_to_u256(&feed_id);
+        if (!table::contains(&price_adapter.prices, key)) {
+            abort E_INVALID_FEED_ID
+        };
+
+        table::borrow(&price_adapter.prices, key)
+    }
+
+    // === Public-View Functions ===
+
     #[view]
     public fun price_and_timestamp_by_address(
         price_adapter_address: address, feed_id: vector<u8>
     ): (u256, u64) acquires PriceAdapter {
         let price_adapter = borrow_global<PriceAdapter>(price_adapter_address);
+        let price_data = price_data(price_adapter, feed_id);
 
-        price_and_timestamp(price_adapter, feed_id)
+        price_data_price_and_timestamp(price_data)
     }
 
     #[view]
@@ -274,8 +257,9 @@ module redstone_price_adapter::price_adapter {
         price_adapter_address: address, feed_id: vector<u8>
     ): u256 acquires PriceAdapter {
         let price_adapter = borrow_global<PriceAdapter>(price_adapter_address);
+        let price_data = price_data(price_adapter, feed_id);
 
-        price(price_adapter, feed_id)
+        price_data_price(price_data)
     }
 
     #[view]
@@ -283,8 +267,9 @@ module redstone_price_adapter::price_adapter {
         price_adapter_address: address, feed_id: vector<u8>
     ): u64 acquires PriceAdapter {
         let price_adapter = borrow_global<PriceAdapter>(price_adapter_address);
+        let price_data = price_data(price_adapter, feed_id);
 
-        timestamp(price_adapter, feed_id)
+        price_data_timestamp(price_data)
     }
 
     #[view]
@@ -294,5 +279,10 @@ module redstone_price_adapter::price_adapter {
         let price_adapter = borrow_global<PriceAdapter>(price_adapter_address);
 
         *price_data(price_adapter, feed_id)
+    }
+
+    #[view]
+    public fun signer_count_threshold(): u8 {
+        SIGNER_COUNT_THRESHOLD
     }
 }
