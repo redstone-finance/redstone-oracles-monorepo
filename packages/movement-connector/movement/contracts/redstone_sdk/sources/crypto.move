@@ -1,11 +1,11 @@
-module redstone_price_adapter::redstone_sdk_crypto {
+module redstone_sdk::crypto {
     // === Imports ===
     use std::vector;
     use std::option;
     use aptos_std::aptos_hash::keccak256;
     use aptos_std::secp256k1;
 
-    use redstone_price_adapter::redstone_sdk_conv::from_bytes_to_u256;
+    use redstone_sdk::conv::from_bytes_to_u256;
 
     // === Errors ===
 
