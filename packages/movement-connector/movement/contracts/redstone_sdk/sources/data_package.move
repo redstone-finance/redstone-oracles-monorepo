@@ -1,4 +1,4 @@
-module redstone_price_adapter::redstone_sdk_data_package {
+module redstone_sdk::data_package {
     // === Imports ===
 
     // === Structs ===
