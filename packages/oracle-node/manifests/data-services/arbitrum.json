@@ -848,7 +848,8 @@
         "curve-ethereum-fdusd",
         "curve-ethereum-frax",
         "curve-ethereum-usdc",
-        "uniswap-v3-ethereum-usdt-100"
+        "uniswap-v3-ethereum-usdt-100",
+        "uniswap-v2-ethereum-usdc"
       ],
       "deviationCheck": {
         "deviationWithRecentValues": {
