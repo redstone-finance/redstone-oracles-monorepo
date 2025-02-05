@@ -7,9 +7,14 @@ upgrade_policy = "compatible"
 
 [addresses]
 redstone_price_adapter = "_"
+redstone_sdk = "_"
 
 [dev-addresses]
 redstone_price_adapter = "0xede"
+redstone_sdk = "0xeded"
+
+[dependencies]
+redstone_sdk = { local = "../redstone_sdk" }
 
 [dependencies.AptosFramework]
 git = "https://github.com/movementlabsxyz/aptos-core.git"

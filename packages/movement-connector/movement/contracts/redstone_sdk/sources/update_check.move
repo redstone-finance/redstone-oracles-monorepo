@@ -1,9 +1,9 @@
-module redstone_price_adapter::update_check {
+module redstone_sdk::update_check {
 
     // === Imports ===
-    use redstone_price_adapter::redstone_sdk_config::Config;
-    use redstone_price_adapter::redstone_sdk_config::trusted_updaters;
-    use redstone_price_adapter::redstone_sdk_config::min_interval_between_updates_ms;
+    use redstone_sdk::config::Config;
+    use redstone_sdk::config::trusted_updaters;
+    use redstone_sdk::config::min_interval_between_updates_ms;
     use std::vector;
 
     // === Errors ===

@@ -1,7 +1,7 @@
-module redstone_price_adapter::redstone_sdk_feed_id_key {
+module redstone_sdk::feed_id_key {
     // === Imports ===
     use std::option::{Self, Option};
-    use redstone_price_adapter::redstone_sdk_conv::from_bytes_to_u256;
+    use redstone_sdk::conv::from_bytes_to_u256;
 
     // === Structs ===
     struct FeedIdKey has drop {

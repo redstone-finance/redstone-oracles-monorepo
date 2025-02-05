@@ -1,7 +1,4 @@
 module redstone_price_adapter::price_data {
-
-    // === Imports ===
-
     // === Structs ===
 
     struct PriceData has store, copy {

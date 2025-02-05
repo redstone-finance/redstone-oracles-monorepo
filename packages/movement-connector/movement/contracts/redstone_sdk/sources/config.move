@@ -1,4 +1,4 @@
-module redstone_price_adapter::redstone_sdk_config {
+module redstone_sdk::config {
     // === Imports ===
 
     use std::vector;
