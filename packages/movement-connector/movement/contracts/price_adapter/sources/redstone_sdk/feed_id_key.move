@@ -14,6 +14,11 @@ module redstone_price_adapter::redstone_sdk_feed_id_key {
         FeedIdKey { feed_id, feed_id_key: option::none() }
     }
 
+    public fun feed_id(feed_key: &FeedIdKey): &vector<u8> {
+        &feed_key.feed_id
+    }
+
+    // === Public-Mutative Functions ===
     public fun key(feed_key: &mut FeedIdKey): u256 {
         if (option::is_none(&feed_key.feed_id_key)) {
             let key = from_bytes_to_u256(&feed_key.feed_id);
@@ -21,9 +26,5 @@ module redstone_price_adapter::redstone_sdk_feed_id_key {
         };
 
         *option::borrow(&feed_key.feed_id_key)
-    }
-
-    public fun feed_id(feed_key: &FeedIdKey): &vector<u8> {
-        &feed_key.feed_id
     }
 }

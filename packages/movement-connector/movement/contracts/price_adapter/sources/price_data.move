@@ -17,8 +17,6 @@ module redstone_price_adapter::price_data {
         PriceData { feed_id: feed_id, value: 0, timestamp: 0, write_timestamp: 0 }
     }
 
-    // === Public-View Functions ===
-
     public fun price(data: &PriceData): u256 {
         data.value
     }
@@ -39,8 +37,7 @@ module redstone_price_adapter::price_data {
         (data.value, data.timestamp)
     }
 
-    // === Public-Package Functions ===
-
+    // === Public-Mutative Functions ===
     public fun update(
         data: &mut PriceData,
         feed_id: vector<u8>,

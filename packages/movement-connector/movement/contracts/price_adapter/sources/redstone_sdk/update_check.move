@@ -10,10 +10,9 @@ module redstone_price_adapter::update_check {
 
     const E_UPDATE_TOO_SOON: u64 = 0;
 
-    // === Public-Friend Functions ===
-    friend redstone_price_adapter::price_adapter;
+    // === Public Functions ===
 
-    public(friend) fun assert_update_time(
+    public fun assert_update_time(
         config: &Config,
         last_update_timestamp_ms: u64,
         timestamp_now_ms: u64,
