@@ -17,6 +17,7 @@ import { version } from "../package.json";
 import { SuiConfig } from "./config";
 import { PriceAdapterConfig } from "./PriceAdapterConfig";
 import { SuiContractAdapter } from "./SuiContractAdapter";
+import { SuiTxDeliveryMan } from "./SuiTxDeliveryMan";
 import { PriceAdapterDataContent, PriceDataContent } from "./types";
 import {
   makeFeedIdBytes,
@@ -26,7 +27,8 @@ import {
   uint8ArrayToBcs,
 } from "./util";
 
-const GAS_UNITS_PER_FEED_WRITE = 1200n;
+const DEFAULT_GAS_MULTIPLIER_BASE = 1.4;
+const DEFAULT_MAX_TX_SEND_ATTEMPTS = 8;
 
 export class SuiPricesContractAdapter
   extends SuiContractAdapter
@@ -35,9 +37,15 @@ export class SuiPricesContractAdapter
   constructor(
     client: SuiClient,
     private readonly config: SuiConfig,
-    keypair?: Keypair
+    keypair?: Keypair,
+    deliveryMan?: SuiTxDeliveryMan
   ) {
-    super(client, keypair);
+    super(
+      client,
+      keypair,
+      deliveryMan ??
+        (keypair ? new SuiTxDeliveryMan(client, keypair) : undefined)
+    );
   }
 
   static initialize(
@@ -131,14 +139,51 @@ export class SuiPricesContractAdapter
   async writePricesFromPayloadToContract(
     paramsProvider: ContractParamsProvider
   ): Promise<string> {
+    let iterationIndex = 0;
+    const metadataTimestamp = Date.now();
     const tx = await this.prepareWritePricesTransaction(
-      paramsProvider.getDataFeedIds().length
+      paramsProvider,
+      metadataTimestamp
+    );
+
+    if (!this.deliveryMan) {
+      throw new Error("Delivery man is not set");
+    }
+
+    return await this.deliveryMan.sendTransaction(tx, async () => {
+      iterationIndex += 1;
+
+      if (
+        iterationIndex >=
+        (this.config.maxTxSendAttempts ?? DEFAULT_MAX_TX_SEND_ATTEMPTS)
+      ) {
+        return;
+      }
+
+      return await this.prepareWritePricesTransaction(
+        paramsProvider,
+        metadataTimestamp,
+        iterationIndex
+      );
+    });
+  }
+
+  private async prepareWritePricesTransaction(
+    paramsProvider: ContractParamsProvider,
+    metadataTimestamp: number,
+    iterationIndex = 0
+  ) {
+    const gasMultiplierBase =
+      this.config.gasMultiplier ?? DEFAULT_GAS_MULTIPLIER_BASE;
+
+    const tx = await this.prepareBaseTransaction(
+      gasMultiplierBase ** iterationIndex,
+      this.config.writePricesTxGasBudget
     );
 
     const dataPackagesResponse: DataPackagesResponse =
       await paramsProvider.requestDataPackages();
 
-    const metadataTimestamp = Date.now();
     const unsignedMetadata = this.getUnsignedMetadata(metadataTimestamp);
 
     paramsProvider.getDataFeedIds().forEach((feedId) => {
@@ -154,25 +199,7 @@ export class SuiPricesContractAdapter
 
       this.writePrice(tx, feedId, payload);
     });
-    return await this.sendTransaction(tx);
-  }
-
-  private async prepareWritePricesTransaction(feedIdCount: number) {
-    const estimatedGasBudget = await this.computeGasBudget(
-      GAS_UNITS_PER_FEED_WRITE * BigInt(feedIdCount)
-    );
-    if (
-      this.config.writePricesTxGasBudget &&
-      this.config.writePricesTxGasBudget < estimatedGasBudget
-    ) {
-      this.logger.warn(
-        `Estimated gas budget ${estimatedGasBudget} is higher than maximum gas budget ${this.config.writePricesTxGasBudget}`
-      );
-    }
-
-    return this.prepareTransaction(
-      this.config.writePricesTxGasBudget ?? estimatedGasBudget
-    );
+    return tx;
   }
 
   private writePrice(tx: Transaction, feedId: string, payload: string) {
