@@ -2,7 +2,6 @@ import { ContractParamsProvider, sampleRun } from "@redstone-finance/sdk";
 import { RedstoneCommon } from "@redstone-finance/utils";
 import "dotenv/config";
 import {
-  DEFAULT_GAS_BUDGET,
   makeSuiKeypair,
   readSuiConfig,
   SuiClientBuilder,
@@ -10,7 +9,10 @@ import {
   SuiPricesContractConnector,
 } from "../src";
 
-const OTHER_RPC_URL = "https://rpc.ankr.com/sui_testnet";
+const OTHER_RPC_URLS = [
+  "https://rpc.ankr.com/sui_testnet",
+  "https://sui-testnet-rpc.publicnode.com",
+];
 
 async function main() {
   const network = RedstoneCommon.getFromEnv("NETWORK", SuiNetworkSchema);
@@ -21,18 +23,15 @@ async function main() {
     dataPackagesIds: ["BTC"],
   });
 
-  const suiClient = await new SuiClientBuilder()
+  const suiClient = new SuiClientBuilder()
     .withNetwork(network)
+    .withRpcUrls(OTHER_RPC_URLS)
     .withFullnodeUrl()
-    .withRpcUrl(OTHER_RPC_URL)
-    .buildAndVerify();
+    .build();
 
   const suiContractConnector = new SuiPricesContractConnector(
     suiClient,
-    {
-      ...readSuiConfig(network),
-      writePricesTxGasBudget: 10n * DEFAULT_GAS_BUDGET,
-    },
+    readSuiConfig(network),
     makeSuiKeypair()
   );
 
