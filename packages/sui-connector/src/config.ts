@@ -12,4 +12,6 @@ export interface SuiConfig {
   packageId: string;
   priceAdapterObjectId: string;
   writePricesTxGasBudget?: bigint;
+  gasMultiplier?: number;
+  maxTxSendAttempts?: number;
 }

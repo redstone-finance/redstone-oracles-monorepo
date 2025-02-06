@@ -1,6 +1,6 @@
 import { BigNumberish } from "ethers";
 import _ from "lodash";
-import { getS } from "../common";
+import { getS, stringifyError } from "../common";
 import { getMedian, getMedianOfBigNumbers } from "../math";
 import { AsyncFn, Executor } from "./Executor";
 
@@ -21,12 +21,16 @@ export abstract class ConsensusExecutor extends Executor {
       )
       .map((s) => s.value);
 
+    const errorResults = settlements
+      .filter((s): s is PromiseRejectedResult => s.status === "rejected")
+      .map((s) => s.reason as Error);
+
     const quorum = Math.ceil(functions.length * this.quorumRatio);
     if (successfulResults.length < quorum) {
       const failedCount = settlements.length - successfulResults.length;
       throw new Error(
         `Consensus failed: got ${successfulResults.length} successful result${getS(successfulResults.length)}, ` +
-          `needed at least ${quorum} (${failedCount} failed)`
+          `needed at least ${quorum} (${failedCount} failed with ${stringifyError(new AggregateError(errorResults))})`
       );
     }
 
