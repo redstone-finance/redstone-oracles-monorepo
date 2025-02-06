@@ -5,7 +5,7 @@ import {
 } from "@redstone-finance/sui-connector";
 import { RelayerConfig } from "../config/RelayerConfig";
 
-export const getSuiContractConnector = async (relayerConfig: RelayerConfig) => {
+export const getSuiContractConnector = (relayerConfig: RelayerConfig) => {
   const {
     privateKey,
     rpcUrls,
@@ -13,15 +13,17 @@ export const getSuiContractConnector = async (relayerConfig: RelayerConfig) => {
     chainId,
     gasLimit,
     adapterContractPackageId,
+    gasMultiplier,
+    maxTxSendAttempts,
   } = relayerConfig;
   if (!adapterContractPackageId) {
     throw new Error("adapterContractPackageId is required");
   }
 
-  const suiClient = await new SuiClientBuilder()
+  const suiClient = new SuiClientBuilder()
     .withChainId(chainId)
     .withRpcUrls(rpcUrls)
-    .buildAndVerify();
+    .build();
 
   return new SuiPricesContractConnector(
     suiClient,
@@ -29,6 +31,8 @@ export const getSuiContractConnector = async (relayerConfig: RelayerConfig) => {
       packageId: adapterContractPackageId,
       priceAdapterObjectId: adapterContractAddress,
       writePricesTxGasBudget: gasLimit ? BigInt(gasLimit) : undefined,
+      gasMultiplier,
+      maxTxSendAttempts,
     },
     makeSuiKeypair(privateKey)
   );

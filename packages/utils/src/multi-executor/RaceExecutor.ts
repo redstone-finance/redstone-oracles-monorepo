@@ -8,10 +8,13 @@ export class RaceExecutor extends Executor {
   }
 
   override async execute<R>(functions: AsyncFn<R>[]): Promise<R> {
+    const date = Date.now();
     const promises = Executor.getPromises(functions);
     const winner = await (this.shouldFailWhenFastestFails
       ? Promise.race(promises)
       : Promise.any(promises));
+
+    this.logger.info(`Winner won in ${Date.now() - date} [ms]`);
 
     void Promise.allSettled(promises).then((results) => {
       const failed = results.filter((r) => r.status === "rejected");
