@@ -25,6 +25,6 @@ export async function getNonEvmContractConnector(relayerConfig: RelayerConfig) {
     case RADIX_MULTI_FEED:
       return getRadixContractConnector(relayerConfig, true);
     case SUI_MULTI_FEED:
-      return await getSuiContractConnector(relayerConfig);
+      return getSuiContractConnector(relayerConfig);
   }
 }
