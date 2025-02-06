@@ -26,6 +26,7 @@
     "@mysten/sui": "^1.21.0",
     "@redstone-finance/sdk": "0.7.4",
     "@redstone-finance/utils": "0.7.4",
+    "decimal.js": "^10.4.3",
     "dotenv": "^16.0.3",
     "lodash": "^4.17.21",
     "zod": "^3.22.4"
