@@ -166,7 +166,7 @@ describe("MultiExecutor", () => {
     const sut = makeSut(instances, config);
 
     await expect(sut.someHexFunction("1234")).rejects.toThrowError(
-      "Consensus failed: got 1 successful result, needed at least 2 (2 failed)"
+      "Consensus failed: got 1 successful result, needed at least 2 (2 failed with"
     );
   });
 
@@ -181,7 +181,7 @@ describe("MultiExecutor", () => {
     const sut = makeSut(instances, config);
 
     await expect(sut.someHexFunction("1234")).rejects.toThrowError(
-      "Consensus failed: got 2 successful results, needed at least 3 (3 failed)"
+      "Consensus failed: got 2 successful results, needed at least 3 (3 failed with"
     );
   });
 
@@ -193,7 +193,7 @@ describe("MultiExecutor", () => {
     });
 
     await expect(sut.someHexFunction("1234")).rejects.toThrowError(
-      "Consensus failed: got 3 successful results, needed at least 4 (1 failed)"
+      "Consensus failed: got 3 successful results, needed at least 4 (1 failed with"
     );
   });
 
