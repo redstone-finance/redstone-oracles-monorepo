@@ -1,38 +1,36 @@
 module redstone_sdk::conv {
     // === Imports ===
+
     use std::vector;
 
+    // === Constants ===
+
+    const HEX_BASE_SHIFT_BY: u8 = 8;
+
     // === Public Functions ===
+
     public fun from_bytes_to_u256(bytes: &vector<u8>): u256 {
+        let result = 0;
         let len = vector::length(bytes);
-        if (len == 0) return 0;
-        let value = 0u256;
-        let i = 0u64;
-        while (i < 32) {
-            let mask =
-                if (32 - i > len) 0u256
-                else (*vector::borrow(bytes, len - (32 - i)) as u256) << (
-                    8 * (31 - i) as u8
-                );
-            value = value | mask;
-            i = i + 1;
+
+        for (i in 0..len) {
+            let byte = *vector::borrow(bytes, i);
+            result = (result << HEX_BASE_SHIFT_BY) | (byte as u256);
         };
-        return value
+
+        result
     }
 
     public fun from_bytes_to_u64(bytes: &vector<u8>): u64 {
+        let result = 0;
         let len = vector::length(bytes);
-        if (len == 0) return 0;
-        let value = 0u64;
-        let i = 0u64;
-        while (i < 8) {
-            let mask =
-                if (8 - i > len) 0u64
-                else (*vector::borrow(bytes, len - (8 - i)) as u64) << (8 * (7 - i) as u8);
-            value = value | mask;
-            i = i + 1;
+
+        for (i in 0..len) {
+            let byte = *vector::borrow(bytes, i);
+            result = (result << HEX_BASE_SHIFT_BY) | (byte as u64);
         };
-        return value
+
+        result
     }
 
     // === Test Functions ===

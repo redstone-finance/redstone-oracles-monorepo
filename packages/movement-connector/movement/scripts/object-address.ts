@@ -1,6 +1,6 @@
 import { AccountAddress, createObjectAddress } from "@aptos-labs/ts-sdk";
 
-const seed = "RedstonePriceAdapter";
+const seed = "RedStonePriceAdapter";
 
 function main() {
     const scriptArgs = process.argv.slice(2);

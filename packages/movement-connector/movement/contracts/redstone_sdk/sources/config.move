@@ -4,6 +4,7 @@ module redstone_sdk::config {
     use std::vector;
 
     // === Errors ===
+
     const E_INVALID_SIGNER_COUNT_THRESHOLD: u64 = 0;
     const E_SIGNER_COUNT_THRESHOLD_CANT_BE_ZERO: u64 = 1;
     const E_SIGNERS_ARE_NOT_UNIQUE: u64 = 2;
