@@ -19,7 +19,9 @@ module redstone_sdk::validate {
     const E_INSUFFICIENT_SIGNER_COUNT: u64 = 3;
     const E_TIMESTAMP_MISMATCH: u64 = 4;
     const E_EMPTY_DATA_PACKAGES: u64 = 5;
-    const E_SIGNER_UNKNOWN_OR_DUPLICATED: u64 = 6;
+    const E_SIGNER_UNKNOWN: u64 = 6;
+    const E_SIGNER_DUPLICATED: u64 = 7;
+    const E_VECTOR_EMPTY: u64 = 8;
 
     // === Constants ===
 
@@ -60,6 +62,19 @@ module redstone_sdk::validate {
         };
     }
 
+    public fun verify_all_timestamps_are_equal(timestamps: vector<u64>): u64 {
+        assert!(!vector::is_empty(&timestamps), E_VECTOR_EMPTY);
+
+        let len = vector::length(&timestamps);
+        let ts = *vector::borrow(&timestamps, 0);
+
+        for (i in 1..len) {
+            assert!(ts == *vector::borrow(&timestamps, i), E_TIMESTAMP_MISMATCH);
+        };
+
+        ts
+    }
+
     // === Private Functions ===
 
     fun verify_timestamps_are_the_same(
@@ -93,29 +108,22 @@ module redstone_sdk::validate {
         data_packages: &vector<DataPackage>, threshold: u8, signers: &vector<vector<u8>>
     ) {
         let count = 0;
-        let signers_len = vector::length(signers);
-
-        let signers_cp = vector::empty();
-        for (i in 0..signers_len) {
-            vector::push_back(&mut signers_cp, *vector::borrow(signers, i));
-        };
+        let seen_signers = vector::empty();
 
         for (i in 0..(vector::length(data_packages) as u64)) {
             let package = vector::borrow(data_packages, i);
             let address = signer_address(package);
 
-            let (found, idx) = vector::index_of(&signers_cp, address);
+            let found_in_known_signers = vector::contains(signers, address);
+            assert!(found_in_known_signers, E_SIGNER_UNKNOWN);
 
-            assert!(found, E_SIGNER_UNKNOWN_OR_DUPLICATED);
+            let found_in_seen_signers = vector::contains(&seen_signers, address);
+            assert!(!found_in_seen_signers, E_SIGNER_DUPLICATED);
+
+            vector::push_back(&mut seen_signers, *address);
 
             count = count + 1;
-            let signers_temp = vector::empty();
-            for (j in 0..(vector::length(&signers_cp) as u64)) {
-                if (j != idx) {
-                    vector::push_back(&mut signers_temp, *vector::borrow(&signers_cp, j))
-                };
-            };
-            signers_cp = signers_temp;
+            if (count >= threshold) { return };
         };
 
         assert!(count >= threshold, E_INSUFFICIENT_SIGNER_COUNT);
@@ -255,7 +263,7 @@ module redstone_sdk::validate {
     }
 
     #[test]
-    #[expected_failure(abort_code = E_SIGNER_UNKNOWN_OR_DUPLICATED)]
+    #[expected_failure(abort_code = E_SIGNER_UNKNOWN)]
     fun test_verify_signer_count_unknown_signers() {
         let data_packages = vector[
             new_data_package(x"00", 10, vector[]),
@@ -299,7 +307,7 @@ module redstone_sdk::validate {
     }
 
     #[test]
-    #[expected_failure(abort_code = E_SIGNER_UNKNOWN_OR_DUPLICATED)]
+    #[expected_failure(abort_code = E_SIGNER_DUPLICATED)]
     fun test_verify_data_packages_fail_on_duplicated_packages() {
         let config = test_config();
         let timestamp = 1000;
@@ -357,7 +365,6 @@ module redstone_sdk::validate {
     }
 
     #[test]
-    #[expected_failure(abort_code = E_SIGNER_UNKNOWN_OR_DUPLICATED)]
     fun test_verify_data_packages_fail_on_duplicated_packages_after_threshold_met() {
         let config = test_config();
         let timestamp = 1000;

@@ -17,12 +17,16 @@ module redstone_sdk::payload {
         timestamp
     };
     use redstone_sdk::median::calculate_median;
-    use redstone_sdk::validate::{verify_data_packages, verify_and_trim_redstone_marker};
+    use redstone_sdk::validate::{
+        verify_data_packages,
+        verify_and_trim_redstone_marker,
+        verify_all_timestamps_are_equal
+    };
 
     // === Errors ===
 
     const E_DATA_INCONSISTENT: u64 = 0;
-    const E_VALUE_SIZE_EXCEEDED: u64 = 0;
+    const E_VALUE_SIZE_EXCEEDED: u64 = 1;
 
     // === Constants ===
 
@@ -45,30 +49,43 @@ module redstone_sdk::payload {
     public fun process_payload(
         config: &Config,
         timestamp_now_ms: u64,
-        feed_id: &vector<u8>,
+        feed_ids: &vector<vector<u8>>,
         payload: vector<u8>
-    ): (u256, u64) {
+    ): (vector<u256>, u64) {
+        let aggregated_values = vector::empty();
+        let timestamps = vector::empty();
+
         let parsed_payload = parse_raw_payload(&mut payload);
-        let data_packages =
-            filter_packages_by_feed_id(&data_packages(&parsed_payload), feed_id);
+        let feeds_len = vector::length(feed_ids);
 
-        verify_data_packages(&data_packages, config, timestamp_now_ms);
+        for (i in 0..feeds_len) {
+            let feed_id = vector::borrow(feed_ids, i);
+            let data_packages =
+                filter_packages_by_feed_id(&data_packages(&parsed_payload), feed_id);
 
-        let values = extract_values_by_feed_id(&parsed_payload, feed_id);
-        let values_u256 = vector::empty();
-        for (i in 0..vector::length(&values)) {
-            vector::push_back(
-                &mut values_u256, from_bytes_to_u256(vector::borrow(&values, i))
-            );
+            verify_data_packages(&data_packages, config, timestamp_now_ms);
+
+            let values = extract_values_by_feed_id(&parsed_payload, feed_id);
+            let values_u256 = vector::empty();
+            for (i in 0..vector::length(&values)) {
+                vector::push_back(
+                    &mut values_u256, from_bytes_to_u256(vector::borrow(&values, i))
+                );
+            };
+
+            let aggregated_value = calculate_median(&mut values_u256);
+            let new_package_timestamp = package_timestamp(&parsed_payload);
+
+            vector::push_back(&mut aggregated_values, aggregated_value);
+            vector::push_back(&mut timestamps, new_package_timestamp);
         };
 
-        let aggregated_value = calculate_median(&mut values_u256);
-        let new_package_timestamp = package_timestamp(&parsed_payload);
-
-        (aggregated_value, new_package_timestamp)
+        let new_package_timestamp = verify_all_timestamps_are_equal(timestamps);
+        (aggregated_values, new_package_timestamp)
     }
 
     // === Public-View Functions ===
+
     public fun package_timestamp(payload: &Payload): u64 {
         timestamp(vector::borrow(&payload.data_packages, 0))
     }
@@ -107,16 +124,23 @@ module redstone_sdk::payload {
     }
 
     fun trim_payload(payload: &mut vector<u8>): Payload {
-        let data_packages_count = trim_metadata(payload);
+        trim_metadata(payload);
+
+        let data_packages_count = trim_data_packages_count(payload);
         let data_packages = trim_data_packages(payload, data_packages_count);
+
         assert!(vector::is_empty(payload), E_DATA_INCONSISTENT);
+
         Payload { data_packages }
     }
 
-    fun trim_metadata(payload: &mut vector<u8>): u64 {
+    fun trim_metadata(payload: &mut vector<u8>) {
         let unsigned_metadata_size = trim_end(payload, UNSIGNED_METADATA_BYTE_SIZE_BS);
         let unsigned_metadata_size = from_bytes_to_u64(&unsigned_metadata_size);
         let _ = trim_end(payload, unsigned_metadata_size);
+    }
+
+    fun trim_data_packages_count(payload: &mut vector<u8>): u64 {
         let package_count = trim_end(payload, DATA_PACKAGES_COUNT_BS);
 
         from_bytes_to_u64(&package_count)
@@ -251,11 +275,44 @@ module redstone_sdk::payload {
         let feed_id = x"4554480000000000000000000000000000000000000000000000000000000000";
         let timestamp = 1707307760000;
 
-        let (val, timestamp) = process_payload(
-            &test_config(), timestamp, &feed_id, payload
-        );
+        let (vals, timestamp) =
+            process_payload(
+                &test_config(),
+                timestamp,
+                &vector[feed_id],
+                payload
+            );
 
-        assert!((val as u64) == 236389750361, (val as u64));
+        let val_0 = *vector::borrow(&vals, 0);
+        assert!(val_0 == 236389750361, (val_0 as u64));
+
+        assert!(vals == vector[236389750361], 0);
+        assert!(timestamp == 1707307760000, timestamp);
+    }
+
+    #[test]
+    fun test_process_multi_payload() {
+        let payload = SAMPLE_PAYLOAD;
+        let feed_id_1 =
+            x"4554480000000000000000000000000000000000000000000000000000000000";
+        let feed_id_2 =
+            x"4254430000000000000000000000000000000000000000000000000000000000";
+        let timestamp = 1707307760000;
+
+        let (vals, timestamp) =
+            process_payload(
+                &test_config(),
+                timestamp,
+                &vector[feed_id_1, feed_id_2],
+                payload
+            );
+
+        let val_0 = *vector::borrow(&vals, 0);
+        assert!(val_0 == 236389750361, (val_0 as u64));
+        let val_1 = *vector::borrow(&vals, 1);
+        assert!(val_1 == 4291501662498, (val_1 as u64));
+
+        assert!(vals == vector[236389750361, 4291501662498], 0);
         assert!(timestamp == 1707307760000, timestamp);
     }
 
@@ -407,7 +464,7 @@ module redstone_sdk::payload {
 
     #[test]
     fun test_trim_metadata() {
-        let prefix = x"9e0294371c";
+        let prefix = x"9e0294371c000f";
 
         let payload_metadata_bytes = x"9e0294371c000f000000";
         let payload_metadata_with_unsigned_byte = x"9e0294371c000f55000001";
@@ -422,10 +479,21 @@ module redstone_sdk::payload {
 
         for (i in 0..vector::length(&payloads)) {
             let payload = vector::borrow_mut(&mut payloads, i);
-            let metadata_count = trim_metadata(payload);
-            assert!(metadata_count == 15, metadata_count);
-            assert!(*payload == prefix, 0);
+            trim_metadata(payload);
+            assert!(*payload == prefix, i);
         };
+    }
+
+    #[test]
+    fun test_trim_data_packages_count() {
+        let prefix = x"0123456789";
+        let payload = x"0123456789000f";
+        let expected_count = 15;
+
+        let count = trim_data_packages_count(&mut payload);
+
+        assert!(count == expected_count, count);
+        assert!(payload == prefix, 0);
     }
 
     #[test]
