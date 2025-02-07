@@ -2,7 +2,9 @@
 DATA_GENERATOR=../../../packages/sdk/scripts/payload-generator
 DATA_DIR=$(DATA_GENERATOR)/data
 PUBLIC_KEY=movement config show-profiles --profile default | jq .Result.default.account
-ADAPTER_ADDRESS=yarn price-adapter-address $(shell $(PUBLIC_KEY))
+ADAPTER_ADDRESS=$(shell cat deployments/price_adapter-addresses.json | jq .contractAddress)
+FEED_ADDRESS=$(shell cat deployments/price_feed-addresses.json | jq .contractAddress)
+ADAPTER_OBJECT_ADDRESS=$(shell cat deployments/price_adapter-addresses.json | jq .objectAddress)
 
 # ignored so clean will always run
 .IGNORE: install-movement clean
@@ -46,7 +48,7 @@ deploy-price-adapter:
 	movement move publish --package-dir contracts/price_adapter --named-addresses redstone_price_adapter=default,redstone_sdk=default
 
 deploy-price-feed:
-	movement move publish --package-dir contracts/price_feed --named-addresses redstone_price_adapter=default,price_feed=default,price_adapter_object_address=$(shell $(ADAPTER_ADDRESS)),redstone_sdk=default
+	movement move publish --package-dir contracts/price_feed --named-addresses redstone_price_adapter=default,price_feed=default,price_adapter_object_address=$(ADAPTER_ADDRESS),redstone_sdk=default
 
 prepare-data:
 	make -C $(DATA_GENERATOR) DATA_NAME=$(DATA_NAME) prepare_data
@@ -55,13 +57,13 @@ data: prepare-data
 	cat $(DATA_DIR)/$(DATA_NAME).hex
 
 write-sample-data: prepare-data
-	movement move run --function-id "default::price_adapter::write_price" --args "address:$(shell $(ADAPTER_ADDRESS))" "hex:0x4554480000000000000000000000000000000000000000000000000000000000" "hex:$(shell cat $(DATA_DIR)/$(DATA_NAME).hex)"
+	movement move run --function-id "$(ADAPTER_ADDRESS)::price_adapter::write_price" --args "address:$(ADAPTER_OBJECT_ADDRESS)" "hex:0x4554480000000000000000000000000000000000000000000000000000000000" "hex:$(shell cat $(DATA_DIR)/$(DATA_NAME).hex)"
 
 read-price:
-	movement move view --function-id default::price_feed::read_price
+	movement move view --function-id $(FEED_ADDRESS)::price_feed::read_price
 
 read-price-timestamp:
-	movement move view --function-id default::price_feed::read_price_and_timestamp
+	movement move view --function-id $(FEED_ADDRESS)::price_feed::read_price_and_timestamp
 
 read-timestamp:
-	movement move view --function-id default::price_feed::read_timestamp
+	movement move view --function-id $(FEED_ADDRESS)::price_feed::read_timestamp

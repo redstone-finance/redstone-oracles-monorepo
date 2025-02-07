@@ -16,7 +16,6 @@ module price_feed::price_feed {
     const ADAPTER_ADDRESS: address = @price_adapter_object_address;
 
     // === Public-View Functions ===
-
     #[view]
     /// Returns ETH FeedId
     public fun get_data_feed_id(): String {
