@@ -3231,6 +3231,11 @@
       "denomination": "USD",
       "rateFeed": false
     },
+    "scrvUSD_FUNDAMENTAL/USD": {
+      "source": ["ethereum-evm-fetcher-curve-savings"],
+      "denomination": "USD",
+      "rateFeed": true
+    },
     "BAT": {
       "denomination": "USD",
       "rateFeed": false
