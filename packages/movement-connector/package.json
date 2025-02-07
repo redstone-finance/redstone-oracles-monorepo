@@ -10,9 +10,17 @@
     "pack-package": "yarn build && npm pack",
     "lint": "yarn global:eslint .",
     "lint:fix": "yarn global:eslint --fix .",
-    "price-adapter-address": "ts-node ./movement/scripts/object-address.ts"
+    "price-adapter-address": "yarn global:ts-node ./scripts/object-address.ts",
+    "deploy-sdk": "CONTRACT_NAME=redstone_sdk yarn global:ts-node ./scripts/deploy",
+    "deploy-price_adapter": "CONTRACT_NAME=price_adapter yarn global:ts-node ./scripts/deploy",
+    "deploy-price_feed": "CONTRACT_NAME=price_feed yarn global:ts-node ./scripts/deploy"
   },
   "dependencies": {
-    "@aptos-labs/ts-sdk": "^1.33.2"
+    "@aptos-labs/ts-sdk": "^1.33.2",
+    "@redstone-finance/sdk": "0.7.4"
+  },
+  "devDependencies": {
+    "@ledgerhq/hw-app-aptos": "^6.31.0",
+    "@ledgerhq/hw-transport-node-hid": "^6.29.5"
   }
 }
