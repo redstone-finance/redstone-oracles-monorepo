@@ -5,6 +5,8 @@ PUBLIC_KEY=movement config show-profiles --profile default | jq .Result.default.
 ADAPTER_ADDRESS=$(shell cat deployments/price_adapter-addresses.json | jq .contractAddress)
 FEED_ADDRESS=$(shell cat deployments/price_feed-addresses.json | jq .contractAddress)
 ADAPTER_OBJECT_ADDRESS=$(shell cat deployments/price_adapter-addresses.json | jq .objectAddress)
+FEED_ETH=0x4554480000000000000000000000000000000000000000000000000000000000
+FEED_BTC=0x4254430000000000000000000000000000000000000000000000000000000000
 
 # ignored so clean will always run
 .IGNORE: install-movement clean
@@ -58,6 +60,9 @@ data: prepare-data
 
 write-sample-data: prepare-data
 	movement move run --function-id "$(ADAPTER_ADDRESS)::price_adapter::write_price" --args "address:$(ADAPTER_OBJECT_ADDRESS)" "hex:0x4554480000000000000000000000000000000000000000000000000000000000" "hex:$(shell cat $(DATA_DIR)/$(DATA_NAME).hex)"
+
+write-sample-data-multi: prepare-data
+	movement move run --function-id "$(ADAPTER_ADDRESS)::price_adapter::write_prices" --args "address:$(ADAPTER_OBJECT_ADDRESS)" 'hex:["$(FEED_ETH)", "$(FEED_BTC)"]' "hex:$(shell cat $(DATA_DIR)/$(DATA_NAME).hex)"
 
 read-price:
 	movement move view --function-id $(FEED_ADDRESS)::price_feed::read_price
