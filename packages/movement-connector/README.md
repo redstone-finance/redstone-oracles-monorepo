@@ -1,21 +1,38 @@
 # movement-connector
 
+## Prelude
+
+Dedicated URL for testnet needs this custom URL: https://aptos.testnet.porto.movementlabs.xyz/v1
+Custom URL is preferred over testnet default as testnet isn't available yet.
+Use `custom` network type and provide above custom URL for tests with testnet.
+
 ### Deploying and testing
 
 [Install aptos cli](https://aptos.dev/en/build/cli) - Compile the version 3.5.0 of movement CLI.
 [Setup localnet](https://aptos.dev/en/build/cli/running-a-local-network)
 
+Ensure you have the move account config in `movement/.movement/config.yaml`.
+If not, please initiate configuration with `movement init --skip-faucet` in `movement` directory.
+
 Run deploy:
 
+- PACKAGE_ADDRESS env variable must be in a hex format and indicates on chain package address.
+  It is optional parameter, if not specified then `./movement/config.yaml` account address is used.
+  For example: `0x744ea1316e136548403df153b72ac5df49621907a882b5dddf886b1b51b8eef2` is a valid package address.
+- PRIVATE_KEY is a private key of `secp256k1` type and must be provided in hex format.
+  It is optional parameter, if not specified then `./movement/config.yaml` private key is used.
+
+All hex stirngs can be suplied with leading `0x` or without.
+
 ```sh
-NETWORK=localnet SKIP_FAUCET=true PRIVATE_KEY=... yarn deploy # this will create object_ids.json file used by other scripts. It will be only valid on localnet!
+NETWORK=localnet yarn deploy
 ```
 
-Tests:
+### Tests
 
 ```sh
-NETWORK=localnet yarn test
-NETWORK=localnet yarn sample-run
+NETWORK=localnet PACKAGE_ADDRESS=... PRIVATE_KEY=... yarn sample-run
+NETWORK=localnet PACKAGE_ADDRESS=... PRIVATE_KEY=... yarn test
 ```
 
 ### Multisig

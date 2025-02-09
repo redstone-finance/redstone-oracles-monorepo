@@ -181,3 +181,5 @@ dist
 .DS_Store
 
 .movement
+
+.coverage_map.mvcov
