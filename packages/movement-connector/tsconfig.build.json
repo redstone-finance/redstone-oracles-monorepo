@@ -1,5 +1,14 @@
 {
   "extends": "./tsconfig.json",
-  "exclude": ["node_modules", "dist", "lambda-dist", "scripts"],
-  "references": []
+  "references": [
+    {
+      "path": "../sdk/tsconfig.build.json"
+    },
+    {
+      "path": "../utils/tsconfig.build.json"
+    },
+    {
+      "path": "../oracles-smartweave-contracts/tsconfig.build.json"
+    }
+  ]
 }
