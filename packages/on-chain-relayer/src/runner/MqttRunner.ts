@@ -123,7 +123,7 @@ export class MqttRunner {
       waitMsForOtherSignersAfterMinimalSignersCountSatisfied:
         relayerConfig.mqttWaitForOtherSignersMs,
       ignoreMissingFeeds: canIgnoreMissingFeeds(relayerConfig),
-      authorizedSigners: requestParams.authorizedSigners ?? [],
+      authorizedSigners: requestParams.authorizedSigners,
     };
 
     if (_.isEqual(params, this.subscriber?.params)) {

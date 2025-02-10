@@ -41,9 +41,9 @@ export interface DataPackagesRequestParams {
    */
   maxTimestampDeviationMS?: number;
   /**
-   * accept packages only from specific signers, by default do not filter by signers
+   * accept packages only from specific signers
    */
-  authorizedSigners?: string[];
+  authorizedSigners: string[];
   /**
    * fetch from specific gateways, if not provided fetch from all publicly available gateways
    */
@@ -65,6 +65,10 @@ export interface DataPackagesRequestParams {
    * By default, packages closest to the median are returned. Setting this to true causes all packages to be returned.
    */
   disableMedianSelection?: boolean;
+  /**
+   * By default, the API returns data packages without metadata. Setting this to true causes the API to return data packages with metadata.
+   */
+  showMetadata?: boolean;
 }
 
 /**
@@ -233,14 +237,18 @@ const prepareDataPackagePromises = (
   urls: string[],
   requestDataPackagesLogger?: RequestDataPackagesLogger
 ): Promise<DataPackagesResponse>[] => {
-  if (reqParams.authorizedSigners && reqParams.authorizedSigners.length == 0) {
+  if (reqParams.authorizedSigners.length === 0) {
     throw new Error("authorizer signers array, if provided, cannot be empty");
   }
   const pathComponents = [
+    "v2",
     "data-packages",
     reqParams.historicalTimestamp ? "historical" : "latest",
     reqParams.dataServiceId,
   ];
+  if (!reqParams.showMetadata) {
+    pathComponents.push("hide-metadata");
+  }
   if (reqParams.historicalTimestamp) {
     pathComponents.push(`${reqParams.historicalTimestamp}`);
   }
@@ -281,15 +289,13 @@ const parseAndValidateDataPackagesResponse = (
     }
 
     // filter out packages with not expected signers
-    if (reqParams.authorizedSigners) {
-      dataFeedPackages = dataFeedPackages.filter((dp) => {
-        const signer = maybeGetSigner(dp);
-        if (!signer) {
-          return false;
-        }
-        return reqParams.authorizedSigners!.includes(signer);
-      });
-    }
+    dataFeedPackages = dataFeedPackages.filter((dp) => {
+      const signer = maybeGetSigner(dp);
+      if (!signer) {
+        return false;
+      }
+      return reqParams.authorizedSigners.includes(signer);
+    });
 
     if (dataFeedPackages.length === 0) {
       const message = `No data packages for the data feed: ${dataFeedId}`;
