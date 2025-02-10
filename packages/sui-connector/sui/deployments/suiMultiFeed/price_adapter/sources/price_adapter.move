@@ -14,7 +14,7 @@ use sui::table::{Self, Table};
 // === Errors ===
 
 const E_INVALID_VERSION: u64 = 0;
-const E_TIMESTAMP_STALE: u64 = 1;
+const E_TIMESTAMP_TOO_OLD: u64 = 1;
 const E_INVALID_FEED_ID: u64 = 2;
 
 // === Constants ===
@@ -156,7 +156,7 @@ public(package) fun new(
 }
 
 /// Sets version for the PriceAdapter object. Can be called only by admin.
-public(package) fun set_version(_: &AdminCap, price_adapter: &mut PriceAdapter, new_version: u8) {
+public(package) fun set_version(price_adapter: &mut PriceAdapter, _: &AdminCap, new_version: u8) {
     price_adapter.version = new_version;
 }
 
@@ -219,7 +219,7 @@ fun overwrite_price(
 ) {
     let price_data = get_or_create_default(assert_version, price_adapter, feed_id);
 
-    assert!(timestamp > price_data.timestamp(), E_TIMESTAMP_STALE);
+    assert!(timestamp > price_data.timestamp(), E_TIMESTAMP_TOO_OLD);
     price_data.update(feed_id, aggregated_value, timestamp, write_timestamp);
 
     event::emit(PriceWrite {
@@ -297,3 +297,21 @@ fun assert_version(price_adapter: &PriceAdapter): AssertVersion {
 
     AssertVersion {}
 }
+
+/// Migrations
+/*
+const E_CANT_BUMP_VERSION: u64 = 3;
+const E_VERSION_CONSTANT_INCORRECT: u64 = 4;
+
+/// Migrates to `price_adapter` object version 2
+public fun migrate_to_version_2(admin_cap: &AdminCap, price_adapter: &mut PriceAdapter) {
+    // check if we should bump the `price_adapter` version.
+    assert!(price_adapter.version == 1, E_CANT_BUMP_VERSION);
+
+    // sanity check
+    assert!(VERSION == 2, E_VERSION_CONSTANT_INCORRECT);
+
+    // set version to 2
+    price_adapter.set_version(admin_cap, VERSION);
+}
+*/
