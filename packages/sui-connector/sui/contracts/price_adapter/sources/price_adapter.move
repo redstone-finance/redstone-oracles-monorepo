@@ -298,7 +298,7 @@ fun assert_version(price_adapter: &PriceAdapter): AssertVersion {
     AssertVersion {}
 }
 
-/// Migrations
+// Migrations
 /*
 const E_CANT_BUMP_VERSION: u64 = 3;
 const E_VERSION_CONSTANT_INCORRECT: u64 = 4;
