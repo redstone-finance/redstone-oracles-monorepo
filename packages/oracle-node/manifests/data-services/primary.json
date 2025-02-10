@@ -2211,6 +2211,11 @@
       ],
       "denomination": "USD",
       "rateFeed": false
+    },
+    "egETH_FUNDAMENTAL": {
+      "source": ["ethereum-evm-fetcher-eigenpie"],
+      "denomination": "ETH",
+      "rateFeed": true
     }
   },
   "multiPointPackages": {
