@@ -191,6 +191,9 @@ export class SuiPricesContractAdapter
         dataPackagesResponse,
         feedId
       );
+      if (!dataPackages.length) {
+        return this.logger.warn(`No data packages found for "${feedId}"`);
+      }
       const payload = convertDataPackagesResponse(
         { [feedId]: dataPackages },
         "string",
