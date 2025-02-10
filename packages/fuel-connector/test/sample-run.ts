@@ -1,3 +1,4 @@
+import { getSignersForDataServiceId } from "@redstone-finance/oracles-smartweave-contracts";
 import { ContractParamsProvider, sampleRun } from "@redstone-finance/sdk";
 import { provider } from "./common/provider";
 import { readProxyContractId } from "./common/read-proxy-contract-id";
@@ -10,6 +11,7 @@ async function main() {
     dataServiceId: "redstone-primary-prod",
     uniqueSignersCount: 5,
     dataPackagesIds: ["ETH", "BTC"],
+    authorizedSigners: getSignersForDataServiceId("redstone-primary-prod"),
   });
 
   const pricesConnector = await connectPricesContract(

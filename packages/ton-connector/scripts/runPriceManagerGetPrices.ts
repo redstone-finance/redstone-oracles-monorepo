@@ -1,3 +1,4 @@
+import { getSignersForDataServiceId } from "@redstone-finance/oracles-smartweave-contracts";
 import { ContractParamsProvider } from "@redstone-finance/sdk";
 import { NetworkProvider } from "@ton/blueprint";
 import { BlueprintTonNetwork, TonPriceManager } from "../src";
@@ -15,6 +16,7 @@ export async function run(provider: NetworkProvider) {
     dataServiceId: "redstone-rapid-demo",
     uniqueSignersCount: 1,
     dataPackagesIds: ["BTC", "ETH", "BNB", "AR", "AVAX", "CELO"],
+    authorizedSigners: getSignersForDataServiceId("redstone-rapid-demo"),
   });
 
   console.log(await contract.getPricesFromPayload(paramsProvider));

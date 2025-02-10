@@ -22,6 +22,7 @@ describe("ContractParamsProvider tests", () => {
     dataServiceId: "service-1",
     uniqueSignersCount: 2,
     dataPackagesIds: ["ETH", "BTC"],
+    authorizedSigners: [],
   };
   let sut: ContractParamsProvider;
 

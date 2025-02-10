@@ -1,3 +1,7 @@
+import {
+  DataServiceIds,
+  getSignersForDataServiceId,
+} from "@redstone-finance/oracles-smartweave-contracts";
 import { requestRedstonePayload } from "../../src";
 
 const DATA_SERVICE_ID = "redstone-primary-prod";
@@ -11,6 +15,9 @@ requestRedstonePayload(
     dataPackagesIds: DATA_FEEDS,
     dataServiceId: DATA_SERVICE_ID,
     uniqueSignersCount: UNIQUE_SIGNER_COUNT,
+    authorizedSigners: getSignersForDataServiceId(
+      DATA_SERVICE_ID as DataServiceIds
+    ),
   },
   scriptArgs[0]
 )
