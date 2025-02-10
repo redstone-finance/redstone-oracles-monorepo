@@ -1,3 +1,4 @@
+import { getSignersForDataServiceId } from "@redstone-finance/oracles-smartweave-contracts";
 import { ContractParamsProvider } from "@redstone-finance/sdk";
 import { BigNumberish } from "ethers";
 import { sleep } from "fuels";
@@ -54,6 +55,7 @@ describe("Gas Usage of integrated and initialized prices contract", () => {
       dataServiceId: "redstone-primary-prod",
       uniqueSignersCount: uniqueSignerCount,
       dataPackagesIds: dataFeeds,
+      authorizedSigners: getSignersForDataServiceId("redstone-primary-prod"),
     });
 
     let gasUsage = await adapter.getPricesFromPayload(paramsProvider);

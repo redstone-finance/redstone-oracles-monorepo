@@ -55,12 +55,14 @@ First, you need to import the connector code to your project
 // Typescript
 import { TonPricesContractConnector } from "@redstone-finance/ton-connector";
 import { ContractParamsProvider } from "@redstone-finance/sdk";
+import { getSignersForDataServiceId } from "@redstone-finance/oracles-smartweave-contracts";
 
 // Javascript
 const {
   TonPricesContractConnector,
 } = require("@redstone-finance/ton-connector");
 const { ContractParamsProvider } = require("@redstone-finance/sdk");
+const { getSignersForDataServiceId } = require("@redstone-finance/oracles-smartweave-contracts");
 ```
 
 Then you can invoke the contract methods described above pointing to the
@@ -73,6 +75,7 @@ const paramsProvider = new ContractParamsProvider({
   dataServiceId: "redstone-main-demo",
   uniqueSignersCount: 1,
   dataPackagesIds: ["ETH", "BTC"],
+  authorizedSigners: getSignersForDataServiceId("redstone-main-demo"),
 });
 ```
 

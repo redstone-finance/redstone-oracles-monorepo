@@ -31,7 +31,7 @@ export const handlers = [
   "https://bad-url-2.com",
   "http://valid-cache.com",
 ].map((url) =>
-  http.get(url + "/data-packages/latest/*", ({ request }) => {
+  http.get(url + "/v2/data-packages/latest/*", ({ request }) => {
     if (new URL(request.url).origin.includes("bad-url")) {
       return new HttpResponse(null, { status: 400 });
     } else {

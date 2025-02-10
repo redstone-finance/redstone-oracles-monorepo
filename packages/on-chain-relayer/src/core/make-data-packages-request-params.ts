@@ -23,7 +23,13 @@ export function makeDataPackagesRequestParams(
     cacheServiceUrls,
     waitForAllGatewaysTimeMs,
     enableEnhancedRequestDataPackagesLogs,
+    authorizedSigners,
   } = relayerConfig;
+
+  let signers: string[] = authorizedSigners ?? [];
+  if (signers.length === 0) {
+    signers = getSignersForDataServiceId(dataServiceId as DataServiceIds);
+  }
 
   return {
     dataServiceId,
@@ -31,9 +37,7 @@ export function makeDataPackagesRequestParams(
     dataPackagesIds: dataFeedIds ?? dataPackagesNames ?? dataFeeds,
     urls: cacheServiceUrls,
     maxTimestampDeviationMS: RedstoneCommon.minToMs(3),
-    authorizedSigners: getSignersForDataServiceId(
-      dataServiceId as DataServiceIds
-    ),
+    authorizedSigners: signers,
     ignoreMissingFeed: canIgnoreMissingFeeds(relayerConfig),
     waitForAllGatewaysTimeMs,
     enableEnhancedLogs: enableEnhancedRequestDataPackagesLogs,
