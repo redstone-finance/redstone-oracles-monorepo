@@ -1,6 +1,6 @@
 {
   "name": "@redstone-finance/movement-connector",
-  "version": "0.7.4",
+  "version": "0.7.5",
   "main": "dist/src/index.js",
   "types": "dist/src/index.d.ts",
   "private": true,
@@ -22,8 +22,8 @@
   },
   "dependencies": {
     "@aptos-labs/ts-sdk": "^1.33.2",
-    "@redstone-finance/sdk": "0.7.4",
-    "@redstone-finance/utils": "0.7.4",
+    "@redstone-finance/sdk": "0.7.5",
+    "@redstone-finance/utils": "0.7.5",
     "dotenv": "^16.0.3",
     "js-yaml": "^4.1.0",
     "lodash": "^4.17.21",
@@ -32,7 +32,7 @@
   "devDependencies": {
     "@ledgerhq/hw-app-aptos": "^6.31.0",
     "@ledgerhq/hw-transport-node-hid": "^6.29.5",
-    "@redstone-finance/oracles-smartweave-contracts": "0.7.4",
+    "@redstone-finance/oracles-smartweave-contracts": "0.7.5",
     "@types/chai": "^4.3.4",
     "@types/js-yaml": "^4",
     "chai": "^4.3.10"
