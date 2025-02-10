@@ -41,7 +41,7 @@ async function main() {
     minimalOffChainSignersCount: 3,
     waitMsForOtherSignersAfterMinimalSignersCountSatisfied: 100,
     ignoreMissingFeeds: true,
-    authorizedSigners: getSignersForDataServiceId("redstone-primary-prod")!,
+    authorizedSigners: getSignersForDataServiceId("redstone-primary-prod"),
   });
 
   await dataPackageSubscriber.subscribe(() => {});

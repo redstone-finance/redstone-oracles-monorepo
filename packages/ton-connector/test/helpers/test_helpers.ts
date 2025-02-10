@@ -1,3 +1,4 @@
+import { getSignersForDataServiceId } from "@redstone-finance/oracles-smartweave-contracts";
 import { RedstonePayload } from "@redstone-finance/protocol";
 import {
   ContractParamsProvider,
@@ -53,6 +54,7 @@ export function getContractParamsProvider(
     dataServiceId: "redstone-avalanche-prod",
     uniqueSignersCount: 4,
     dataPackagesIds: dataFeeds,
+    authorizedSigners: getSignersForDataServiceId("redstone-avalanche-prod"),
   });
 }
 

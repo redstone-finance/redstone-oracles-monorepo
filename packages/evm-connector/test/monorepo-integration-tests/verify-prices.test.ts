@@ -2,7 +2,7 @@ import { expect } from "chai";
 import { BigNumber } from "ethers";
 import { formatBytes32String } from "ethers/lib/utils";
 import { ethers } from "hardhat";
-import { WrapperBuilder } from "../../src/index";
+import { MOCK_SIGNERS, WrapperBuilder } from "../../src/index";
 import { SampleForLocalhostMockTest } from "../../typechain-types";
 
 const dynamicDescribe =
@@ -31,6 +31,7 @@ dynamicDescribe("verify prices test", function () {
       uniqueSignersCount: 1,
       dataPackagesIds,
       urls: getCacheServiceUrls(),
+      authorizedSigners: MOCK_SIGNERS.map((s) => s.address),
     });
     const oracleValues =
       await wrappedContract.extractOracleValuesView(bytes32Symbols);
