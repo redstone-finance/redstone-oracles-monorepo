@@ -2197,6 +2197,31 @@
       "source": ["ethereum-evm-fetcher-curve-savings"],
       "denomination": "USD",
       "rateFeed": true
+    },
+    "BERA": {
+      "source": [
+        "binance-bnb",
+        "binance-btc",
+        "binance-fdusd",
+        "binance-usdc",
+        "binance-usdt",
+        "bingx-usdt",
+        "bitget-usdt",
+        "bitmart-usdt",
+        "bybit-usdt",
+        "coinbasepro-usd",
+        "coingecko",
+        "coinmarketcap",
+        "gate-usdt",
+        "kraken-usd",
+        "kucoin-usdt",
+        "lbank-usdt",
+        "mexc-usdt",
+        "okx-usdt",
+        "xt"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
     }
   },
   "multiPointPackages": {
