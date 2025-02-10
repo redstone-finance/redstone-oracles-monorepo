@@ -8357,9 +8357,9 @@ __metadata:
     "@aptos-labs/ts-sdk": "npm:^1.33.2"
     "@ledgerhq/hw-app-aptos": "npm:^6.31.0"
     "@ledgerhq/hw-transport-node-hid": "npm:^6.29.5"
-    "@redstone-finance/oracles-smartweave-contracts": "npm:0.7.4"
-    "@redstone-finance/sdk": "npm:0.7.4"
-    "@redstone-finance/utils": "npm:0.7.4"
+    "@redstone-finance/oracles-smartweave-contracts": "npm:0.7.5"
+    "@redstone-finance/sdk": "npm:0.7.5"
+    "@redstone-finance/utils": "npm:0.7.5"
     "@types/chai": "npm:^4.3.4"
     "@types/js-yaml": "npm:^4"
     chai: "npm:^4.3.10"
@@ -8555,13 +8555,6 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@redstone-finance/oracles-smartweave-contracts@npm:0.7.4":
-  version: 0.7.4
-  resolution: "@redstone-finance/oracles-smartweave-contracts@npm:0.7.4"
-  checksum: 10c0/fbb1122df5f93a541a1d9abd2c6568abb87077578a289111f1f11ac20d0744fbe9f1db6ddd2ad16e83961500b1862d1bfdec0700d072f736d435c6be6f70616a
-  languageName: node
-  linkType: hard
-
 "@redstone-finance/oracles-smartweave-contracts@npm:0.7.5, @redstone-finance/oracles-smartweave-contracts@workspace:packages/oracles-smartweave-contracts":
   version: 0.0.0-use.local
   resolution: "@redstone-finance/oracles-smartweave-contracts@workspace:packages/oracles-smartweave-contracts"
@@ -8577,17 +8570,6 @@ __metadata:
     warp-contracts: "npm:^1.2.47"
   languageName: unknown
   linkType: soft
-
-"@redstone-finance/protocol@npm:0.7.4":
-  version: 0.7.4
-  resolution: "@redstone-finance/protocol@npm:0.7.4"
-  dependencies:
-    decimal.js: "npm:^10.4.3"
-    ethers: "npm:^5.7.2"
-    secp256k1: "npm:^5.0.1"
-  checksum: 10c0/acfb82367bda5b3d8d65e5585f061cc19100189d7f6742203bc9daffe90f5b26c5e80cb50213ff1ce17e6bfe8096d8de8516d3e364a90933785e4b482ecc3a7c
-  languageName: node
-  linkType: hard
 
 "@redstone-finance/protocol@npm:0.7.5, @redstone-finance/protocol@workspace:packages/protocol":
   version: 0.0.0-use.local
@@ -8705,24 +8687,6 @@ __metadata:
     zod: "npm:^3.22.4"
   languageName: unknown
   linkType: soft
-
-"@redstone-finance/sdk@npm:0.7.4":
-  version: 0.7.4
-  resolution: "@redstone-finance/sdk@npm:0.7.4"
-  dependencies:
-    "@ethersproject/bytes": "npm:^5.6.1"
-    "@ethersproject/strings": "npm:^5.7.0"
-    "@redstone-finance/oracles-smartweave-contracts": "npm:0.7.4"
-    "@redstone-finance/protocol": "npm:0.7.4"
-    "@redstone-finance/utils": "npm:0.7.4"
-    "@types/lodash": "npm:^4.14.195"
-    axios: "npm:^1.7.7"
-    ethers: "npm:^5.7.2"
-    lodash: "npm:^4.17.21"
-    zod: "npm:^3.22.4"
-  checksum: 10c0/6cf1a6dbd95ee6c652f6f9d55a0574766d0b2f0687eee6eec22ee440d3582b57e93e6a73eb5205d6975e48d3a3653627fd9044731b8f39d419f9e970af2f41ee
-  languageName: node
-  linkType: hard
 
 "@redstone-finance/sdk@npm:0.7.5, @redstone-finance/sdk@workspace:packages/sdk":
   version: 0.0.0-use.local
@@ -8856,19 +8820,6 @@ __metadata:
     ethers: "npm:^5.7.2"
   languageName: unknown
   linkType: soft
-
-"@redstone-finance/utils@npm:0.7.4":
-  version: 0.7.4
-  resolution: "@redstone-finance/utils@npm:0.7.4"
-  dependencies:
-    axios: "npm:^1.7.7"
-    consola: "npm:^2.15.3"
-    decimal.js: "npm:^10.4.3"
-    ethers: "npm:^5.7.2"
-    zod: "npm:^3.22.4"
-  checksum: 10c0/7f6ad8cbf722b4a37df33964fb6b35ee52c442683867892e5627da4b92e7300724e81767faa26d9a06652adb08de47f7f707f396009dfcfa013d3fc234d11212
-  languageName: node
-  linkType: hard
 
 "@redstone-finance/utils@npm:0.7.5, @redstone-finance/utils@workspace:packages/utils":
   version: 0.0.0-use.local
@@ -14132,7 +14083,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"axios@npm:^1.7.7, axios@npm:^1.7.9":
+"axios@npm:^1.7.9":
   version: 1.7.9
   resolution: "axios@npm:1.7.9"
   dependencies:
