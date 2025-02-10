@@ -13,7 +13,6 @@
     "lint": "yarn global:eslint .",
     "lint:fix": "yarn global:eslint --fix .",
     "test": "yarn global:jest:cov",
-    "deploy": "yarn global:ts-node scripts/deploy-price-adapter.ts",
     "sample-run": "yarn global:ts-node scripts/sample-run.ts",
     "price-adapter-address": "yarn global:ts-node ./movement/scripts/object-address.ts",
     "deploy-sdk": "CONTRACT_NAME=redstone_sdk yarn global:ts-node ./scripts/deploy",
