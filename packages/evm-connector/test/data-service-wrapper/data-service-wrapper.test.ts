@@ -2,7 +2,7 @@ import { utils } from "@redstone-finance/protocol";
 import chai, { expect } from "chai";
 import chaiAsPromised from "chai-as-promised";
 import { ethers } from "hardhat";
-import { WrapperBuilder } from "../../src/index";
+import { MOCK_SIGNERS, WrapperBuilder } from "../../src/index";
 import { DataServiceWrapper } from "../../src/wrappers/DataServiceWrapper";
 import { SampleRedstoneConsumerNumericMockManyDataFeeds } from "../../typechain-types";
 import { expectedNumericValues } from "../tests-common";
@@ -33,13 +33,15 @@ const runTest = async (
   contract: SampleRedstoneConsumerNumericMockManyDataFeeds,
   urls?: string[],
   dataServiceId?: string,
-  uniqueSignersCount?: number
+  uniqueSignersCount?: number,
+  authorizedSigners?: string[]
 ) => {
   const wrappedContract = WrapperBuilder.wrap(contract).usingDataService({
     dataServiceId,
     uniqueSignersCount,
     dataPackagesIds: ["ETH", "BTC"],
     urls,
+    authorizedSigners: authorizedSigners ?? MOCK_SIGNERS.map((s) => s.address),
   });
 
   const tx = await wrappedContract.save2ValuesInStorage(dataFeedIdsB32);
@@ -109,12 +111,14 @@ describe("DataServiceWrapper", () => {
     });
 
     it("Should throw error when multiple invalid caches", async () => {
-      const expectedErrorMessage = `VM Exception while processing transaction: reverted with custom error 'SignerNotAuthorised("0xE27eB50d7dbBB5548236a88E0F0Af5126cA758CC")`;
+      const expectedErrorMessage = `VM Exception while processing transaction: reverted with custom error 'SignerNotAuthorised("0xE948D1e3cd0f894275A06ED2Dc53eA145B51CFfa")`;
       await expect(
         runTest(
           contract,
           ["http://invalid-cache.com", "http://invalid-cache.com"],
-          "mock-data-service-tests"
+          "mock-data-service-tests",
+          1,
+          ["0xE948D1e3cd0f894275A06ED2Dc53eA145B51CFfa"]
         )
       ).to.be.rejectedWith(expectedErrorMessage);
     });
@@ -125,6 +129,7 @@ describe("DataServiceWrapper", () => {
         uniqueSignersCount: 10,
         dataPackagesIds: ["ETH", "BTC"],
         urls: ["http://valid-cache.com"],
+        authorizedSigners: MOCK_SIGNERS.map((s) => s.address),
       });
       const payload = await wrapper.getRedstonePayloadForManualUsage(contract);
       await runTestWithManualPayload(contract, payload);
@@ -173,6 +178,7 @@ describe("DataServiceWrapper", () => {
     it("Should work with manual payload without passed params", async () => {
       const wrapper = new DataServiceWrapper({
         dataPackagesIds: ["ETH", "BTC"],
+        authorizedSigners: MOCK_SIGNERS.map((s) => s.address),
       });
       const payload = await wrapper.getRedstonePayloadForManualUsage(contract);
       await runTestWithManualPayload(contract, payload);
