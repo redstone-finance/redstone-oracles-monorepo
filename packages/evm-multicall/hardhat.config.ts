@@ -62,6 +62,9 @@ const config: HardhatUserConfig = {
     sei: {
       url: "https://evm-rpc.sei-apis.com",
     },
+    berachain: {
+      url: "https://rpc.berachain.com",
+    },
   },
 };
 
