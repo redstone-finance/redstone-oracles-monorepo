@@ -48,7 +48,9 @@ async function executeCommand(
       if (code === 0) {
         resolve(stdout);
       } else {
-        reject(new Error(`Process exited with code ${code}: ${stderr}`));
+        reject(
+          new Error(` ${stdout} Process exited with code ${code}: ${stderr}`)
+        );
       }
     });
   });
@@ -67,19 +69,18 @@ async function executeSuiPublish(network: string): Promise<ObjectChanges> {
       await new Promise((resolve) => setTimeout(resolve, 3000));
     }
 
-    const cmd = ["client", "publish", "--json"];
-    if (network === "testnet") {
-      cmd.push("--skip-dependency-verification");
-    }
     const deployDir = getDeployDir();
-
     console.log("===========================================================");
     console.log(`Deploying to ${network} from ${deployDir}`);
     console.log("===========================================================");
     process.chdir(deployDir);
 
-    const output = await executeCommand("sui", cmd);
+    const cmd = ["client", "publish", "--json"];
+    if (network !== "mainnet") {
+      cmd.push("--skip-dependency-verification");
+    }
 
+    const output = await executeCommand("sui", cmd);
     console.log("Output:", output);
 
     return JSON.parse(output.split("Transaction digest:")[0]) as ObjectChanges;
@@ -140,14 +141,16 @@ async function main() {
 
   const output = await executeCommand("sui", ["client", "active-env"]);
   if (!output.includes(network)) {
-    throw new Error(`Not on ${network}, network is set to ${output}`);
+    throw new Error(
+      `Not on ${network}, network is set to ${output}; Run "sui client switch --env ${network}"`
+    );
   }
 
   const publicKey = await executeCommand("sui", ["client", "active-address"]);
-  const keypairPublicKey = makeSuiKeypair().toSuiAddress();
-  if (!publicKey.includes(keypairPublicKey)) {
+  const keypairSuiAddress = makeSuiKeypair().toSuiAddress();
+  if (!publicKey.includes(keypairSuiAddress)) {
     throw new Error(
-      `Keypair address ${keypairPublicKey} != from ${publicKey} sui cli`
+      `Keypair address ${keypairSuiAddress} != from ${publicKey} sui cli; Run "sui client switch --address ${keypairSuiAddress}"`
     );
   }
 
