@@ -3225,6 +3225,30 @@
       "denomination": "USD",
       "rateFeed": false
     },
+    "BERA": {
+      "source": [
+        "binance-bnb",
+        "binance-btc",
+        "binance-fdusd",
+        "binance-usdc",
+        "binance-usdt",
+        "bingx-usdt",
+        "bitget-usdt",
+        "bitmart-usdt",
+        "bybit-usdt",
+        "coinbasepro-usd",
+        "coingecko",
+        "gate-usdt",
+        "kraken-usd",
+        "kucoin-usdt",
+        "lbank-usdt",
+        "mexc-usdt",
+        "okx-usdt",
+        "xt"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
     "scrvUSD_FUNDAMENTAL/USD": {
       "source": ["ethereum-evm-fetcher-curve-savings"],
       "denomination": "USD",
