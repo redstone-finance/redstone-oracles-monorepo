@@ -3258,6 +3258,11 @@
       "denomination": "USD",
       "rateFeed": true
     },
+    "egETH_FUNDAMENTAL": {
+      "source": ["ethereum-evm-fetcher-eigenpie"],
+      "denomination": "ETH",
+      "rateFeed": true
+    },
     "BAT": {
       "denomination": "USD",
       "rateFeed": false
