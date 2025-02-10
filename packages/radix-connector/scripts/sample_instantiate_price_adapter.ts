@@ -15,7 +15,7 @@ async function instantiate() {
     client,
     await loadAddress(`package`, PRICE_ADAPTER_NAME),
     1,
-    getSignersForDataServiceId(DATA_SERVICE_ID)!
+    getSignersForDataServiceId(DATA_SERVICE_ID)
   );
 
   const componentId = await connector.getComponentId();
