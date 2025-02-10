@@ -2305,17 +2305,6 @@
       "denomination": "USD",
       "rateFeed": false
     },
-    "INR": {
-      "source": [
-        "b2z-eth-reversed",
-        "b2z-btc-reversed",
-        "koinpark-eth-reversed",
-        "koinpark-btc-reversed",
-        "financialmodelingprep-usd"
-      ],
-      "denomination": "USD",
-      "rateFeed": false
-    },
     "JPY": {
       "source": ["twelve-data"],
       "denomination": "USD",
