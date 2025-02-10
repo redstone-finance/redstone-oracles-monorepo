@@ -70,24 +70,6 @@ export interface LocalProfileSchema {
   rest_url: string;
 }
 
-/**
- * Describes movement deploy api response config.
- */
-export interface ResponseConfigOutputSchema {
-  Result: ConfigResultsSchema;
-}
-
-export interface ConfigResultsSchema {
-  default: ConfigDefaultSchema;
-}
-
-export interface ConfigDefaultSchema {
-  has_private_key: boolean;
-  public_key: string;
-  account: string;
-  rest_url: string;
-}
-
 export interface PriceDataSchema {
   feed_id: string;
   value: string;
