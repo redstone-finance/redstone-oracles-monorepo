@@ -135,7 +135,7 @@
     "sUSDX_ETH_FUNDAMENTAL": {
       "priceFeedAddress": "0x5708d924Fc996EDee46962CdB6815f90639974e1"
     },
-    "beraETH_FUNDAMENTAL": {
+    "beraSTONE_FUNDAMENTAL": {
       "priceFeedAddress": "0x4f67Fd74cff274Ef2942223c0f3166b856410AdD"
     },
     "SWELL/ETH": {
