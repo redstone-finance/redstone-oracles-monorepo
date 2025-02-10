@@ -27,6 +27,7 @@ const createManifestConfig = (
     updateTriggers,
     adapterContractType: manifest.adapterContractType,
     adapterContractPackageId: manifest.adapterContractPackageId,
+    authorizedSigners: manifest.authorizedSigners,
   };
 };
 

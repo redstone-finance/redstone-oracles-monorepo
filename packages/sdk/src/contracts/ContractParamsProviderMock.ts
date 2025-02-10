@@ -15,6 +15,7 @@ export class ContractParamsProviderMock extends ContractParamsProvider {
       uniqueSignersCount,
       dataServiceId: "",
       dataPackagesIds: dataFeeds,
+      authorizedSigners: [],
     });
   }
 

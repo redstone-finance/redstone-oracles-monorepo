@@ -18,6 +18,7 @@ export type ManifestConfig = {
   updateConditions: Record<string, ConditionCheckNames[]>;
   adapterContractType: AdapterType;
   adapterContractPackageId?: string;
+  authorizedSigners?: string[];
 };
 export type OnChainRelayerEnv = {
   relayerIterationInterval: number;
@@ -61,4 +62,5 @@ export type OnChainRelayerEnv = {
   mqttWaitForOtherSignersMs?: number;
   mqttFallbackMaxDelayBetweenPublishesMs?: number;
   mqttFallbackCheckIntervalMs?: number;
+  authorizedSigners?: string[];
 };

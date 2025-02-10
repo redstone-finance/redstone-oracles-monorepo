@@ -1,3 +1,4 @@
+import { getSignersForDataServiceId } from "@redstone-finance/oracles-smartweave-contracts";
 import { ContractParamsProvider, sampleRun } from "@redstone-finance/sdk";
 import { RedstoneCommon } from "@redstone-finance/utils";
 import "dotenv/config";
@@ -21,6 +22,7 @@ async function main() {
     dataServiceId: "redstone-primary-prod",
     uniqueSignersCount: 3,
     dataPackagesIds: ["BTC"],
+    authorizedSigners: getSignersForDataServiceId("redstone-primary-prod"),
   });
 
   const suiClient = new SuiClientBuilder()

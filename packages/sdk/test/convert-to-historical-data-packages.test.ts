@@ -14,6 +14,7 @@ describe("convertToHistoricalDataPackagesRequestParams", () => {
     dataServiceId: "test-service",
     dataPackagesIds: ["id1", "id2"],
     uniqueSignersCount: 2,
+    authorizedSigners: [],
   };
 
   const mockRelayerConfig = {

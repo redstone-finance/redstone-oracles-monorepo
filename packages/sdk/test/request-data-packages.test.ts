@@ -9,7 +9,9 @@ import {
 import { mockSignedDataPackages } from "./mocks/mock-packages";
 import { server } from "./mocks/server";
 
-const MOCK_WALLET = ethers.Wallet.createRandom();
+const TEST_PRIVATE_KEY =
+  "0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80";
+const MOCK_WALLET = new ethers.Wallet(TEST_PRIVATE_KEY);
 
 const getReqParams = (urls?: string[]): DataPackagesRequestParams => {
   return {
@@ -17,6 +19,13 @@ const getReqParams = (urls?: string[]): DataPackagesRequestParams => {
     dataServiceId: "mock-data-service-tests",
     uniqueSignersCount: 2,
     urls: urls!,
+    authorizedSigners: [
+      // signer addresses for mock data packages returned by the server
+      "0x19E7E376E7C213B7E7e7e46cc70A5dD086DAff2A",
+      "0x00d40e37f53b10dc0D2C84733dc1744440F404f3",
+      "0xe3E26eF988eBB05Cd78C8B4eE38b7049BC689836",
+      "0x5416Ff1BaCBD144E63705c675Fb6999288E1b27d",
+    ],
   };
 };
 const SAMPLE_RESPONSE = {
@@ -145,7 +154,7 @@ describe("request-data-packages", () => {
             dataServiceId: "service-1",
             dataFeedId: "ETH",
             dataPackageId: "ETH",
-            signerAddress: "0x2",
+            signerAddress: "0x43c6AF28BBa09EB95534CC853D8887DB0Cda6226",
           },
         ],
       },
@@ -161,7 +170,7 @@ describe("request-data-packages", () => {
             dataServiceId: "service-1",
             dataFeedId: "ETH",
             dataPackageId: "ETH",
-            signerAddress: "0x2",
+            signerAddress: "0xe98fF207D73bF34959f05fb671cbcA2431012E02",
           },
         ],
       },
@@ -183,8 +192,15 @@ describe("request-data-packages", () => {
       },
     });
 
+    // signer addresses of the packages
+    const signerAddresses = [
+      "0xe98fF207D73bF34959f05fb671cbcA2431012E02",
+      "0x43c6AF28BBa09EB95534CC853D8887DB0Cda6226",
+    ];
+
     const dataPackages = await requestDataPackages({
       ...getReqParams(),
+      authorizedSigners: signerAddresses,
       urls: ["1", "2"],
       uniqueSignersCount: 1,
       dataPackagesIds: ["ETH"],
@@ -212,7 +228,7 @@ describe("request-data-packages", () => {
             dataServiceId: "service-1",
             dataFeedId: "ETH",
             dataPackageId: "ETH",
-            signerAddress: "0x2",
+            signerAddress: "0x91F4633B969a185FE457d835901FbA7251B45387",
             signature: dataPackage.toObj().signature,
           },
           {
@@ -221,16 +237,23 @@ describe("request-data-packages", () => {
             dataServiceId: "service-1",
             dataFeedId: "ETH",
             dataPackageId: "ETH",
-            signerAddress: "0x3",
+            signerAddress: "0x5C48b10B53b968bCfC85a0D1CB040857AA8d9254",
             signature: dataPackage.toObj().signature,
           },
         ],
       },
     });
 
+    // signer addresses of the packages
+    const signerAddresses = [
+      "0x91F4633B969a185FE457d835901FbA7251B45387",
+      "0x5C48b10B53b968bCfC85a0D1CB040857AA8d9254",
+    ];
+
     await expect(
       requestDataPackages({
         ...getReqParams(),
+        authorizedSigners: signerAddresses,
         uniqueSignersCount: 2,
         dataPackagesIds: ["ETH"],
         maxTimestampDeviationMS: 20_000,
@@ -242,7 +265,7 @@ describe("request-data-packages", () => {
 
   test("Should throw error for deviated timestamp", async () => {
     const axiosGetSpy = jest.spyOn(axios, "get");
-    const now = Date.now();
+    const now = 111111100000;
     const dataPackage = DataPackage.fromObj({
       dataPoints: [{ dataFeedId: "ETH", value: 20000 }],
       timestampMilliseconds: now,
@@ -258,7 +281,7 @@ describe("request-data-packages", () => {
             dataServiceId: "service-1",
             dataFeedId: "ETH",
             dataPackageId: "ETH",
-            signerAddress: "0x2",
+            signerAddress: "0x742d7Da79B0b836C2F095c9d8F7F1A2dc7C81A48",
             signature: dataPackage.toObj().signature,
           },
           {
@@ -267,16 +290,23 @@ describe("request-data-packages", () => {
             dataServiceId: "service-1",
             dataFeedId: "ETH",
             dataPackageId: "ETH",
-            signerAddress: "0x3",
+            signerAddress: "0x5537b198bB8840E8aD3088E3d732Aa1Be109b8ab",
             signature: dataPackage.toObj().signature,
           },
         ],
       },
     });
 
+    // signer addresses of the packages
+    const signerAddresses = [
+      "0x742d7Da79B0b836C2F095c9d8F7F1A2dc7C81A48",
+      "0x5537b198bB8840E8aD3088E3d732Aa1Be109b8ab",
+    ];
+
     await expect(
       requestDataPackages({
         ...getReqParams(),
+        authorizedSigners: signerAddresses,
         uniqueSignersCount: 2,
         dataPackagesIds: ["ETH"],
         maxTimestampDeviationMS: 20_000,

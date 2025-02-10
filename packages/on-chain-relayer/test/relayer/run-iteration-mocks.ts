@@ -1,4 +1,8 @@
 import {
+  DataServiceIds,
+  getSignersForDataServiceId,
+} from "@redstone-finance/oracles-smartweave-contracts";
+import {
   ContractParamsProvider,
   IContractConnector,
 } from "@redstone-finance/sdk";
@@ -74,6 +78,9 @@ export function getIterationArgsProviderMock(
           dataPackagesIds: relayerConfig.dataFeeds,
           dataServiceId: relayerConfig.dataServiceId,
           uniqueSignersCount: 1,
+          authorizedSigners: getSignersForDataServiceId(
+            relayerConfig.dataServiceId as DataServiceIds
+          ),
         },
         dataFeedsToUpdate: relayerConfig.dataFeeds,
       },

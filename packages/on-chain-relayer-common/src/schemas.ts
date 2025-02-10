@@ -65,12 +65,14 @@ export const CommonManifestSchema = z.object({
 export const OnChainRelayerManifestSchema = CommonManifestSchema.extend({
   adapterContractType: BaseAdapterTypesEnum.default(PRICE_FEEDS),
   priceFeeds: z.record(z.string(), z.string()),
+  authorizedSigners: z.array(z.string()).optional(),
 });
 
 export const MultiFeedOnChainRelayerManifestSchema =
   CommonManifestSchema.extend({
     adapterContractType: MultiFeedAdapterTypesEnum.default(MULTI_FEED),
     priceFeeds: z.record(z.string(), PriceFeedConfigSchema),
+    authorizedSigners: z.array(z.string()).optional(),
   });
 
 export const AnyOnChainRelayerManifestSchema = z.union([

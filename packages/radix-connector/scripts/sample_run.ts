@@ -1,3 +1,4 @@
+import { getSignersForDataServiceId } from "@redstone-finance/oracles-smartweave-contracts";
 import {
   ContractParamsProvider,
   convertValue,
@@ -25,6 +26,7 @@ async function main() {
     dataPackagesIds: ["ETH", "BTC", "XRD"],
     dataServiceId: DATA_SERVICE_ID,
     uniqueSignersCount: 1,
+    authorizedSigners: getSignersForDataServiceId(DATA_SERVICE_ID),
   });
 
   const client = new RadixClient(NETWORK.id, PRIVATE_KEY);
