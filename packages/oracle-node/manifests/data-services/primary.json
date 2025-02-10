@@ -399,7 +399,6 @@
     "TLOS": {
       "source": [
         "bitget-usdt",
-        "bitmart-usdt",
         "coingecko",
         "coinmarketcap",
         "gate-usdt",
