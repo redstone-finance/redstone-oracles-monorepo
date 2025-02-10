@@ -5,13 +5,14 @@
     "id": 897796746
   },
   "updateTriggers": {
-    "deviationPercentage": 1,
-    "timeSinceLastUpdateInMilliseconds": 8640000
+    "deviationPercentage": 0.5,
+    "timeSinceLastUpdateInMilliseconds": 86400000
   },
-  "adapterContract": "0xd885034730b0bdc8e4ce4d0bd0914da50cbd8928ad07ff3641eeedbd83a6aef7",
-  "adapterContractPackageId": "0xde35908646c6d500db4d4511f566b7ed9b8c56fdb9280fdc12ae36e75c58d365",
+  "adapterContract": "0x100916e39d92a1ac15b82f7dc92c3214c41751123b6a6f1e7e68c33136a7bed7",
+  "adapterContractPackageId": "0x565937034504f3c5be4889d67a05c9c57ac713998fb3dcc879fddaba0fddead0",
   "dataServiceId": "redstone-primary-prod",
   "priceFeeds": {
+    "ETH": {},
     "BTC": {
       "updateTriggersOverrides": {
         "deviationPercentage": 0.2,
