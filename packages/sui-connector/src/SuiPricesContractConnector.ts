@@ -33,7 +33,9 @@ export class SuiPricesContractConnector
   protected getTxDeliveryMan() {
     return (
       this.txDeliveryMan ??
-      SuiContractConnector.getCachedDeliveryMan(this.client, this.keypair!)
+      (this.keypair
+        ? SuiContractConnector.getCachedDeliveryMan(this.client, this.keypair)
+        : undefined)
     );
   }
 }
