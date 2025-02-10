@@ -21,10 +21,10 @@ const getValidDataPackagesResponse = () => ({
 });
 
 const handlers = [
-  http.get("http://valid-cache.com/data-packages/latest/*", () =>
+  http.get("http://valid-cache.com/v2/data-packages/latest/*", () =>
     HttpResponse.json(getValidDataPackagesResponse())
   ),
-  http.get("http://invalid-cache.com/data-packages/latest/*", () =>
+  http.get("http://invalid-cache.com/v2/data-packages/latest/*", () =>
     HttpResponse.json({
       ETH: getDataPackageResponse("ETH").map((obj) => ({
         ...obj,
@@ -36,7 +36,7 @@ const handlers = [
       })),
     })
   ),
-  http.get("http://slower-cache.com/data-packages/latest/*", async () => {
+  http.get("http://slower-cache.com/v2/data-packages/latest/*", async () => {
     await delay(200);
     return HttpResponse.json(getValidDataPackagesResponse());
   }),
