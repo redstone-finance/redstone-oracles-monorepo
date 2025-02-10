@@ -2039,7 +2039,7 @@
       "denomination": "ETH",
       "rateFeed": false
     },
-    "beraETH_FUNDAMENTAL": {
+    "beraSTONE_FUNDAMENTAL": {
       "source": ["ethereum-evm-fetcher-stake-stone-bera"],
       "denomination": "ETH",
       "rateFeed": true
