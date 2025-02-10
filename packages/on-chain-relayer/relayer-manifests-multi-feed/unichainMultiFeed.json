@@ -1,0 +1,56 @@
+{
+  "chain": {
+    "name": "unichain",
+    "id": 130
+  },
+  "adapterContract": "0xFB1267A29C0aa19daae4a483ea895862A69e4AA5",
+  "adapterContractType": "multi-feed",
+  "dataServiceId": "redstone-primary-prod",
+  "updateTriggers": {
+    "deviationPercentage": 0.5,
+    "timeSinceLastUpdateInMilliseconds": 21600000
+  },
+  "priceFeeds": {
+    "ETH": {
+      "priceFeedAddress": "0xe8D9FbC10e00ecc9f0694617075fDAF657a76FB2"
+    },
+    "BTC": {
+      "priceFeedAddress": "0xc44be6D00307c3565FDf753e852Fc003036cBc13"
+    },
+    "USDC": {
+      "priceFeedAddress": "0xD15862FC3D5407A03B696548b6902D6464A69b8c",
+      "updateTriggersOverrides": {
+        "deviationPercentage": 0.5,
+        "timeSinceLastUpdateInMilliseconds": 10800000
+      }
+    },
+    "USDT": {
+      "priceFeedAddress": "0x58fa68A373956285dDfb340EDf755246f8DfCA16",
+      "updateTriggersOverrides": {
+        "deviationPercentage": 0.5,
+        "timeSinceLastUpdateInMilliseconds": 10800000
+      }
+    },
+    "XVS": {
+      "priceFeedAddress": "0xb4fe9028A4D4D8B3d00e52341F2BB0798860532C",
+      "updateTriggersOverrides": {
+        "deviationPercentage": 1,
+        "timeSinceLastUpdateInMilliseconds": 86400000
+      }
+    },
+    "UNI": {
+      "priceFeedAddress": "0xf1454949C6dEdfb500ae63Aa6c784Aa1Dde08A6c",
+      "updateTriggersOverrides": {
+        "deviationPercentage": 1,
+        "timeSinceLastUpdateInMilliseconds": 86400000
+      }
+    },
+    "DAI": {
+      "priceFeedAddress": "0xE94c9f9A1893f23be38A5C0394E46Ac05e8a5f8C",
+      "updateTriggersOverrides": {
+        "deviationPercentage": 0.5,
+        "timeSinceLastUpdateInMilliseconds": 10800000
+      }
+    }
+  }
+}
