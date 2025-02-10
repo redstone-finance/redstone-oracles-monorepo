@@ -1,4 +1,5 @@
 import { NetworkId } from "@radixdlt/radix-engine-toolkit";
+import { getSignersForDataServiceId } from "@redstone-finance/oracles-smartweave-contracts";
 import { ContractParamsProvider } from "@redstone-finance/sdk";
 import "dotenv/config";
 import redstone from "redstone-api";
@@ -30,6 +31,7 @@ describe("Integrated and initialized prices contract", () => {
       dataServiceId: "redstone-avalanche-prod",
       uniqueSignersCount: 2,
       dataPackagesIds: ["ETH", "BTC"],
+      authorizedSigners: getSignersForDataServiceId("redstone-avalanche-prod"),
     });
 
     await adapter.writePricesFromPayloadToContract(paramsProvider);
