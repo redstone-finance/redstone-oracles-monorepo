@@ -1,12 +1,14 @@
 import {
   FUEL,
   isNonEvmAdapterType,
+  MOVEMENT_MULTI_FEED,
   RADIX,
   RADIX_MULTI_FEED,
   SUI_MULTI_FEED,
 } from "@redstone-finance/on-chain-relayer-common";
 import { RelayerConfig } from "../config/RelayerConfig";
 import { getFuelContractConnector } from "./get-fuel-contract-connector";
+import { getMovementContractConnector } from "./get-movement-contract-connector";
 import { getRadixContractConnector } from "./get-radix-contract-connector";
 import { getSuiContractConnector } from "./get-sui-contract-connector";
 
@@ -26,5 +28,7 @@ export async function getNonEvmContractConnector(relayerConfig: RelayerConfig) {
       return getRadixContractConnector(relayerConfig, true);
     case SUI_MULTI_FEED:
       return getSuiContractConnector(relayerConfig);
+    case MOVEMENT_MULTI_FEED:
+      return getMovementContractConnector(relayerConfig);
   }
 }
