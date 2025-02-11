@@ -766,6 +766,24 @@ export const chainTokenMap: ChainTokenMap = {
       decimals: 6,
     },
   },
+  berachain: {
+    NECT: {
+      address: "0x1cE0a25D13CE4d52071aE7e02Cf1F6606F4C79d3",
+      decimals: 18,
+    },
+    USDe: {
+      address: "0x5d3a1Ff2b6BAb83b63cd9AD0787074081a52ef34",
+      decimals: 18,
+    },
+    "USDC.e": {
+      address: "0x549943e04f40284185054145c6e4e9568c1d3241",
+      decimals: 6,
+    },
+    HONEY: {
+      address: "0xFCBD14DC51f0A4d49d5E53C2E0950e0bC26d0Dce",
+      decimals: 18,
+    },
+  },
 };
 
 export const allTokenSymbols: Set<string> = new Set(

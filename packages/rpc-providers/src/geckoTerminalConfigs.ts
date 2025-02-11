@@ -12,6 +12,7 @@ const networkNameMappingGecko: { [key in SupportedNetworkNames]?: string } = {
   sei: "sei-evm",
   merlin: "merlin-chain",
   blast: "blast",
+  berachain: "berachain",
 };
 
 export function mapNetworkNameToGeckoTerminalNetworkName(
