@@ -700,7 +700,11 @@
       "name": "Ink",
       "chainId": 57073,
       "currencySymbol": "ETH",
-      "publicRpcUrls": [],
+      "publicRpcUrls": [
+        "https://rpc-qnd.inkonchain.com",
+        "https://ink.drpc.org",
+        "https://rpc-gel.inkonchain.com"
+      ],
       "avgBlockTimeMs": 1000,
       "multicall3": {
         "address": "0xcA11bde05977b3631167028862bE2a173976CA11",
