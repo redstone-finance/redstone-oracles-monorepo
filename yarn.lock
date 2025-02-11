@@ -8351,7 +8351,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@redstone-finance/movement-connector@workspace:packages/movement-connector":
+"@redstone-finance/movement-connector@npm:0.7.5, @redstone-finance/movement-connector@workspace:packages/movement-connector":
   version: 0.0.0-use.local
   resolution: "@redstone-finance/movement-connector@workspace:packages/movement-connector"
   dependencies:
@@ -8440,6 +8440,7 @@ __metadata:
     "@redstone-finance/evm-connector": "npm:0.7.5"
     "@redstone-finance/fuel-connector": "npm:0.7.5"
     "@redstone-finance/internal-utils": "npm:0.7.5"
+    "@redstone-finance/movement-connector": "npm:0.7.5"
     "@redstone-finance/mqtt5-client": "npm:0.7.5"
     "@redstone-finance/on-chain-relayer-common": "npm:0.7.5"
     "@redstone-finance/oracles-smartweave-contracts": "npm:0.7.5"
@@ -8615,6 +8616,7 @@ __metadata:
     "@redstone-finance/evm-connector": "npm:0.7.5"
     "@redstone-finance/internal-utils": "npm:0.7.5"
     "@redstone-finance/monitoring-manifests": "npm:0.7.5"
+    "@redstone-finance/movement-connector": "npm:0.7.5"
     "@redstone-finance/mqtt5-client": "npm:0.7.5"
     "@redstone-finance/on-chain-relayer": "npm:0.7.5"
     "@redstone-finance/oracles-smartweave-contracts": "npm:0.7.5"
