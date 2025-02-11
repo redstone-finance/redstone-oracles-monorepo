@@ -26,6 +26,9 @@ export class MovementPricesContractAdapter
   async writePricesFromPayloadToContract(
     paramsProvider: ContractParamsProvider
   ): Promise<string> {
+    if (!this.adapter.writer) {
+      throw new Error("Adapter not set up for writes");
+    }
     const feedIdsHex = paramsProvider.getDataFeedIds().map((feedId) => {
       return hexlify(makeFeedIdBytes(feedId));
     });
