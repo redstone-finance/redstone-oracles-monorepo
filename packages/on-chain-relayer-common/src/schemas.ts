@@ -7,17 +7,20 @@ export const FUEL = "fuel";
 export const RADIX = "radix";
 export const RADIX_MULTI_FEED = `${RADIX}-${MULTI_FEED}`;
 export const SUI_MULTI_FEED = `sui-${MULTI_FEED}`;
+export const MOVEMENT_MULTI_FEED = `movement-${MULTI_FEED}`;
 
 export const MultiFeedAdapterTypesEnum = z.enum([
   MULTI_FEED,
   RADIX_MULTI_FEED,
   SUI_MULTI_FEED,
+  MOVEMENT_MULTI_FEED,
 ]);
 export const NonEvmAdapterTypesEnum = z.enum([
   FUEL,
   RADIX,
   RADIX_MULTI_FEED,
   SUI_MULTI_FEED,
+  MOVEMENT_MULTI_FEED,
 ]);
 export const BaseAdapterTypesEnum = z.enum([
   PRICE_FEEDS,
