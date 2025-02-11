@@ -7189,7 +7189,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@redstone-finance/avs-contracts@workspace:packages/avs/avs-contracts":
+"@redstone-finance/avs-contracts@npm:0.7.5, @redstone-finance/avs-contracts@workspace:packages/avs/avs-contracts":
   version: 0.0.0-use.local
   resolution: "@redstone-finance/avs-contracts@workspace:packages/avs/avs-contracts"
   dependencies:
@@ -7424,6 +7424,7 @@ __metadata:
     "@openzeppelin/contracts": "npm:^4.8.1"
     "@openzeppelin/contracts-upgradeable": "npm:^4.8.3"
     "@openzeppelin/hardhat-upgrades": "npm:^1.26.0"
+    "@redstone-finance/avs-contracts": "npm:0.7.5"
     "@redstone-finance/chain-configs": "npm:0.7.5"
     "@redstone-finance/evm-connector": "npm:0.7.5"
     "@redstone-finance/on-chain-relayer": "npm:0.7.5"
