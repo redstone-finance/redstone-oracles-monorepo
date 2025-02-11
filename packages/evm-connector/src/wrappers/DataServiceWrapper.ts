@@ -13,7 +13,7 @@ type WithRequired<T, K extends keyof T> = T & { [P in K]-?: T[P] };
 
 export type DataPackagesRequestInput = WithRequired<
   Partial<DataPackagesRequestParams>,
-  "dataPackagesIds"
+  "dataPackagesIds" | "authorizedSigners"
 >;
 
 export class DataServiceWrapper<T extends Contract> extends BaseWrapper<T> {
