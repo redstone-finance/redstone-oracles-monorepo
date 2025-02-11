@@ -56,7 +56,7 @@ function readConfig(network: Network): MovementLocalConfigSchema {
     configFileContent
   ) as MovementLocalConfigSchema;
 
-  if (config.profiles.default.network.toLowerCase() !== network) {
+  if ((config.profiles.default.network.toLowerCase() as Network) !== network) {
     throw new Error(
       `Wrong network in the config, expected ${network}, got ${config.profiles.default.network.toLowerCase()}.`
     );
@@ -110,7 +110,5 @@ function extractPrivateKey(
 }
 
 function replaceWithCustomWhenTestnet(movementNetwork: Network): Network {
-  return movementNetwork === "testnet"
-    ? ("custom" as Network)
-    : movementNetwork;
+  return movementNetwork === Network.TESTNET ? Network.CUSTOM : movementNetwork;
 }
