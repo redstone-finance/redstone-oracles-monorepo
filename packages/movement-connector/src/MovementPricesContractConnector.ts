@@ -10,7 +10,7 @@ import type {
   IContractConnector,
   IPricesContractAdapter,
 } from "@redstone-finance/sdk";
-import { loggerFactory } from "@redstone-finance/utils";
+import { loggerFactory, RedstoneCommon } from "@redstone-finance/utils";
 import {
   MovementPricesContractAdapter,
   SEED,
@@ -73,9 +73,9 @@ export class MovementPricesContractConnector
         return true;
       }
     } catch (exception) {
-      this.logger.log(`
-          Failed to validate transacton state: ${exception}.
-        `);
+      this.logger.error(
+        `Failed to validate transaction state: ${RedstoneCommon.stringifyError(exception)}`
+      );
     }
 
     return false;

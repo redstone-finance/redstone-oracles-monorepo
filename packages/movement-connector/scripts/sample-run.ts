@@ -1,4 +1,5 @@
 import { Network } from "@aptos-labs/ts-sdk";
+import { getSignersForDataServiceId } from "@redstone-finance/oracles-smartweave-contracts";
 import { ContractParamsProvider, sampleRun } from "@redstone-finance/sdk";
 import { RedstoneCommon } from "@redstone-finance/utils";
 import "dotenv/config";
@@ -21,6 +22,7 @@ async function main() {
     dataServiceId: "redstone-primary-prod",
     uniqueSignersCount: 2,
     dataPackagesIds: ["LBTC", "BTC", "ETH"],
+    authorizedSigners: getSignersForDataServiceId("redstone-primary-prod"),
   });
 
   const aptosVariables = makeAptosVariables(
