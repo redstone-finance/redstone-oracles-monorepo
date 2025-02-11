@@ -33,7 +33,7 @@ export class MovementWriteContractAdapter
     >
   ): Promise<SimpleTransaction> {
     return await this.client.transaction.build.simple({
-      sender: this.priceAdapterPackageAddress,
+      sender: this.account.accountAddress,
       data: {
         function: `${this.priceAdapterPackageAddress.toString()}::${module}::${functionName}`,
         functionArguments: functionArgument ? functionArgument : [],

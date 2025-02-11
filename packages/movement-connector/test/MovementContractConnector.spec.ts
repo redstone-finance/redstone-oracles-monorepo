@@ -1,4 +1,4 @@
-import { AccountAddress, Network } from "@aptos-labs/ts-sdk";
+import { Network } from "@aptos-labs/ts-sdk";
 import { RedstoneCommon } from "@redstone-finance/utils";
 import "dotenv/config";
 import { z } from "zod";
@@ -27,12 +27,16 @@ describe("MovementContractConnector", () => {
       packageAddress,
       privateKey
     );
+    const args = {
+      priceAdapterObjectAddress: packageAddress
+        ? packageAddress
+        : aptosVariables.account.accountAddress.toString(),
+      packageObjectAddress: aptosVariables.account.accountAddress.toString(),
+    };
     connector = new MovementPricesContractConnector(
       aptosVariables.client,
-      aptosVariables.account,
-      packageAddress
-        ? AccountAddress.from(packageAddress)
-        : aptosVariables.account.accountAddress
+      args,
+      aptosVariables.account
     );
   });
 

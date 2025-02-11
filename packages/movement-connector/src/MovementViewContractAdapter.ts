@@ -8,7 +8,7 @@ import {
 } from "@aptos-labs/ts-sdk";
 import { hexlify } from "@ethersproject/bytes";
 import { ContractData } from "@redstone-finance/sdk";
-import { loggerFactory } from "@redstone-finance/utils";
+import { loggerFactory, RedstoneCommon } from "@redstone-finance/utils";
 import { BigNumber } from "ethers";
 import { IMovementViewContractAdapter, PriceDataSchema } from "./types";
 import { makeFeedIdBytes } from "./utils";
@@ -51,6 +51,23 @@ export class MovementViewContractAdapter
   async viewContractData(feedIds: string[]): Promise<ContractData> {
     const contractData: ContractData = {};
     for (const feedId of feedIds) {
+      const data = await this.viewFeedContractData(feedId);
+      if (data === undefined) {
+        continue;
+      }
+      contractData[feedId] = {
+        lastDataPackageTimestampMS: parseInt(data.write_timestamp),
+        lastBlockTimestampMS: parseInt(data.timestamp),
+        lastValue: BigNumber.from(data.value),
+      };
+    }
+    return contractData;
+  }
+
+  private async viewFeedContractData(
+    feedId: string
+  ): Promise<PriceDataSchema | undefined> {
+    try {
       const [data] = await this.viewOnChain<PriceDataSchema[]>(
         "price_adapter",
         "price_data_by_address",
@@ -59,12 +76,14 @@ export class MovementViewContractAdapter
           MoveVector.U8(hexlify(makeFeedIdBytes(feedId))),
         ]
       );
-      contractData[feedId] = {
-        lastDataPackageTimestampMS: parseInt(data.write_timestamp),
-        lastBlockTimestampMS: parseInt(data.timestamp),
-        lastValue: BigNumber.from(data.value),
-      };
+
+      return data;
+    } catch (e) {
+      this.logger.error(
+        `"Data for FeedId ${feedId} could not be retrieved: ${RedstoneCommon.stringifyError(e)}`
+      );
     }
-    return contractData;
+
+    return undefined;
   }
 }

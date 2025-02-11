@@ -46,17 +46,20 @@ describe("MovementPricesContractAdapter", () => {
       aptosVariables.account.accountAddress,
       SEED
     );
+    const packageObjectAddress = AccountAddress.fromString(
+      aptosVariables.packageObjectAddress
+    );
 
     const contractAdapter: IMovementContractAdapter = {
       writer: new MovementWriteContractAdapter(
         aptosVariables.client,
         aptosVariables.account,
-        aptosVariables.packageObjectAddress,
+        packageObjectAddress,
         priceAdapterObjectAddress
       ),
       viewer: new MovementViewContractAdapter(
         aptosVariables.client,
-        aptosVariables.packageObjectAddress,
+        packageObjectAddress,
         priceAdapterObjectAddress
       ),
     };
@@ -65,8 +68,11 @@ describe("MovementPricesContractAdapter", () => {
 
     movementConnnector = new MovementPricesContractConnector(
       aptosVariables.client,
-      aptosVariables.account,
-      aptosVariables.packageObjectAddress
+      {
+        priceAdapterObjectAddress: aptosVariables.packageObjectAddress,
+        packageObjectAddress: aptosVariables.packageObjectAddress,
+      },
+      aptosVariables.account // todo fix
     );
   });
 
@@ -75,7 +81,7 @@ describe("MovementPricesContractAdapter", () => {
       dataServiceId: DATA_SERVICE_ID,
       dataPackagesIds: ["LBTC"],
       uniqueSignersCount: 3,
-      authorizedSigners: getSignersForDataServiceId("redstone-primary-prod"),
+      authorizedSigners: getSignersForDataServiceId(DATA_SERVICE_ID),
     });
   });
 
@@ -109,9 +115,7 @@ describe("MovementPricesContractAdapter", () => {
           dataServiceId: DATA_SERVICE_ID,
           dataPackagesIds: ["ETH", "BTC"],
           uniqueSignersCount: 1,
-          authorizedSigners: getSignersForDataServiceId(
-            "redstone-primary-prod"
-          ),
+          authorizedSigners: getSignersForDataServiceId(DATA_SERVICE_ID),
         });
 
         const digest = await priceAdapter.writePricesFromPayloadToContract(
@@ -149,7 +153,7 @@ describe("MovementPricesContractAdapter", () => {
         dataServiceId: DATA_SERVICE_ID,
         dataPackagesIds: ["LBTC", "ETH", "BTC"],
         uniqueSignersCount: 1,
-        authorizedSigners: getSignersForDataServiceId("redstone-primary-prod"),
+        authorizedSigners: getSignersForDataServiceId(DATA_SERVICE_ID),
       });
 
       const result = await priceAdapter.readPricesFromContract(
