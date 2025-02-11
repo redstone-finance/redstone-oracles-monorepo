@@ -246,11 +246,11 @@ const prepareDataPackagePromises = (
     reqParams.historicalTimestamp ? "historical" : "latest",
     reqParams.dataServiceId,
   ];
-  if (!reqParams.showMetadata) {
-    pathComponents.push("hide-metadata");
-  }
   if (reqParams.historicalTimestamp) {
     pathComponents.push(`${reqParams.historicalTimestamp}`);
+  }
+  if (!reqParams.showMetadata) {
+    pathComponents.push("hide-metadata");
   }
 
   return urls.map(async (url) => {
