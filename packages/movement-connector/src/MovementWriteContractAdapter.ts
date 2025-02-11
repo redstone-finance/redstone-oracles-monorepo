@@ -35,33 +35,17 @@ export class MovementWriteContractAdapter
     return await this.client.transaction.build.simple({
       sender: this.priceAdapterPackageAddress,
       data: {
-        function: `${this.priceAdapterPackageAddress}::${module}::${functionName}`,
+        function: `${this.priceAdapterPackageAddress.toString()}::${module}::${functionName}`,
         functionArguments: functionArgument ? functionArgument : [],
       },
     });
   }
 
-  private async verifyTransactionLength(transaction: SimpleTransaction) {
+  private verifyTransactionLength(transaction: SimpleTransaction) {
     const transactionSize = transaction.bcsToBytes().length;
     if (transactionSize > MAX_TRANSACTION_BYTE_SIZE) {
       throw new Error(
         `Expected maximum transaction size in bytes exceeded: Expected max ${MAX_TRANSACTION_BYTE_SIZE}, got ${transactionSize}.`
-      );
-    }
-  }
-
-  private async runLocalSimulationOnTransactionSubmit(
-    transaction: SimpleTransaction
-  ): Promise<void> {
-    const [userTransactionSimulation] =
-      await this.client.transaction.simulate.simple({
-        signerPublicKey: this.account.publicKey,
-        transaction,
-      });
-
-    if (!userTransactionSimulation.success) {
-      throw new Error(
-        `Simulation failed: ${userTransactionSimulation.vm_status.toString()}`
       );
     }
   }
@@ -86,9 +70,7 @@ export class MovementWriteContractAdapter
       "write_prices",
       [this.priceAdapterObjectAddress.toString(), feedIds, payload]
     );
-
     this.verifyTransactionLength(transaction);
-    this.runLocalSimulationOnTransactionSubmit(transaction);
 
     return await this.signAndPublish(transaction);
   }

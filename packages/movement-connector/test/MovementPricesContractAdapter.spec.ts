@@ -3,6 +3,7 @@ import {
   createObjectAddress,
   Network,
 } from "@aptos-labs/ts-sdk";
+import { getSignersForDataServiceId } from "@redstone-finance/oracles-smartweave-contracts";
 import { ContractParamsProvider } from "@redstone-finance/sdk";
 import { RedstoneCommon } from "@redstone-finance/utils";
 import "dotenv/config";
@@ -74,6 +75,7 @@ describe("MovementPricesContractAdapter", () => {
       dataServiceId: DATA_SERVICE_ID,
       dataPackagesIds: ["LBTC"],
       uniqueSignersCount: 3,
+      authorizedSigners: getSignersForDataServiceId("redstone-primary-prod"),
     });
   });
 
@@ -107,6 +109,9 @@ describe("MovementPricesContractAdapter", () => {
           dataServiceId: DATA_SERVICE_ID,
           dataPackagesIds: ["ETH", "BTC"],
           uniqueSignersCount: 1,
+          authorizedSigners: getSignersForDataServiceId(
+            "redstone-primary-prod"
+          ),
         });
 
         const digest = await priceAdapter.writePricesFromPayloadToContract(
@@ -144,6 +149,7 @@ describe("MovementPricesContractAdapter", () => {
         dataServiceId: DATA_SERVICE_ID,
         dataPackagesIds: ["LBTC", "ETH", "BTC"],
         uniqueSignersCount: 1,
+        authorizedSigners: getSignersForDataServiceId("redstone-primary-prod"),
       });
 
       const result = await priceAdapter.readPricesFromContract(

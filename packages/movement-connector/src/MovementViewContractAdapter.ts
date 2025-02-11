@@ -33,7 +33,7 @@ export class MovementViewContractAdapter
   ): Promise<T> {
     return await this.client.view({
       payload: {
-        function: `${this.priceAdapterPackageAddress}::${moduleName}::${functionName}`,
+        function: `${this.priceAdapterPackageAddress.toString()}::${moduleName}::${functionName}`,
         typeArguments: [],
         functionArguments: functionArguments ? functionArguments : [],
       },
