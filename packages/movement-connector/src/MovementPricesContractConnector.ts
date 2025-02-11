@@ -2,22 +2,18 @@ import {
   Account,
   AccountAddress,
   Aptos,
-  createObjectAddress,
   TransactionResponse,
-  TransactionResponseType,
 } from "@aptos-labs/ts-sdk";
 import type {
   IContractConnector,
   IPricesContractAdapter,
 } from "@redstone-finance/sdk";
 import { loggerFactory, RedstoneCommon } from "@redstone-finance/utils";
-import {
-  MovementPricesContractAdapter,
-  SEED,
-} from "./MovementPricesContractAdapter";
+import { MovementPricesContractAdapter } from "./MovementPricesContractAdapter";
 import { MovementViewContractAdapter } from "./MovementViewContractAdapter";
 import { MovementWriteContractAdapter } from "./MovementWriteContractAdapter";
 import { IMovementContractAdapter } from "./types";
+import { txCost } from "./utils";
 
 export const TIMEOUT_IN_SEC = 20;
 
@@ -25,30 +21,36 @@ export class MovementPricesContractConnector
   implements IContractConnector<IPricesContractAdapter>
 {
   private readonly logger = loggerFactory("movement-prices-contract-connector");
+  private readonly packageObjectAddress: AccountAddress;
+  private readonly priceAdapterObjectAddress: AccountAddress;
 
   constructor(
     private readonly client: Aptos,
-    private readonly account: Account,
-    private readonly packageObjectAddress: AccountAddress
-  ) {}
+    args: { packageObjectAddress: string; priceAdapterObjectAddress: string },
+    private readonly account?: Account
+  ) {
+    this.packageObjectAddress = AccountAddress.fromString(
+      args.packageObjectAddress
+    );
+    this.priceAdapterObjectAddress = AccountAddress.fromString(
+      args.priceAdapterObjectAddress
+    );
+  }
 
   getAdapter(): Promise<MovementPricesContractAdapter> {
-    const priceAdapterObjectAddress: AccountAddress = createObjectAddress(
-      this.account.accountAddress,
-      SEED
-    );
-
     const adapter: IMovementContractAdapter = {
-      writer: new MovementWriteContractAdapter(
-        this.client,
-        this.account,
-        this.packageObjectAddress,
-        priceAdapterObjectAddress
-      ),
+      writer: this.account
+        ? new MovementWriteContractAdapter(
+            this.client,
+            this.account,
+            this.packageObjectAddress,
+            this.priceAdapterObjectAddress
+          )
+        : undefined,
       viewer: new MovementViewContractAdapter(
         this.client,
         this.packageObjectAddress,
-        priceAdapterObjectAddress
+        this.priceAdapterObjectAddress
       ),
     };
 
@@ -82,15 +84,9 @@ export class MovementPricesContractConnector
   }
 
   private processCommittedTransactionCost(tx: TransactionResponse) {
-    const cost = MovementPricesContractConnector.getCost(tx);
+    const cost = txCost(tx);
     this.logger.log(
       `Transaction ${tx.hash} finished, status: COMMITTED, cost: ${cost} MOVE.`
     );
-  }
-
-  private static getCost(response: TransactionResponse): number {
-    return response.type === TransactionResponseType.Pending
-      ? 0
-      : parseInt(response.gas_used);
   }
 }

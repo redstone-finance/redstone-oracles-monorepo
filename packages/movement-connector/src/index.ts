@@ -1,3 +1,4 @@
+export * from "./AptosClientBuilder";
 export * from "./config";
 export * from "./MovementPricesContractAdapter";
 export * from "./MovementPricesContractConnector";

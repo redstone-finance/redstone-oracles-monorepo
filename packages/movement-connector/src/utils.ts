@@ -1,6 +1,5 @@
 import {
   Account,
-  AccountAddress,
   Aptos,
   AptosConfig,
   Ed25519PrivateKey,
@@ -10,10 +9,13 @@ import {
   PrivateKey,
   PrivateKeyVariants,
   Secp256k1PrivateKey,
+  TransactionResponse,
+  TransactionResponseType,
   U8,
 } from "@aptos-labs/ts-sdk";
 import * as fs from "fs";
 import * as yaml from "js-yaml";
+import { MOVE_DECIMALS } from "./consts";
 import { AptosVariables, MovementLocalConfigSchema } from "./types";
 
 export function makeFeedIdBytes(feedId: string): Uint8Array {
@@ -42,8 +44,8 @@ export function makeAptosVariables(
     ),
     account,
     packageObjectAddress: packageAddress
-      ? AccountAddress.from(packageAddress)
-      : account.accountAddress,
+      ? packageAddress
+      : account.accountAddress.toString(),
   };
 }
 
@@ -87,7 +89,7 @@ function makeAccountFromConfig(
   });
 }
 
-function makeAccountFromSecp256k1Key(privateKey: string): Account {
+export function makeAccountFromSecp256k1Key(privateKey: string): Account {
   return Account.fromPrivateKey({
     privateKey: extractPrivateKey(privateKey, PrivateKeyVariants.Secp256k1),
   });
@@ -111,4 +113,24 @@ function extractPrivateKey(
 
 function replaceWithCustomWhenTestnet(movementNetwork: Network): Network {
   return movementNetwork === Network.TESTNET ? Network.CUSTOM : movementNetwork;
+}
+
+export function octasToMove(octas: number) {
+  return octas / 10 ** MOVE_DECIMALS;
+}
+
+export function txCost(response: TransactionResponse) {
+  if (response.type === TransactionResponseType.Pending) {
+    return 0;
+  }
+
+  const gas_used = +response.gas_used;
+
+  if (!("gas_unit_price" in response)) {
+    return octasToMove(gas_used);
+  }
+
+  const gas_price = +response.gas_unit_price;
+
+  return octasToMove(gas_price * gas_used);
 }

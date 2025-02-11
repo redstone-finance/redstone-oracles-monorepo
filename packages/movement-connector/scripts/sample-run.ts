@@ -34,8 +34,11 @@ async function main() {
   const moveContractConnector: MovementPricesContractConnector =
     new MovementPricesContractConnector(
       aptosVariables.client,
-      aptosVariables.account,
-      aptosVariables.packageObjectAddress
+      {
+        packageObjectAddress: aptosVariables.packageObjectAddress,
+        priceAdapterObjectAddress: aptosVariables.packageObjectAddress,
+      },
+      aptosVariables.account
     );
 
   await sampleRun(paramsProvider, moveContractConnector);
