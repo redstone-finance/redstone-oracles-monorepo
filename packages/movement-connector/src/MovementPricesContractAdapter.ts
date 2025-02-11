@@ -16,6 +16,7 @@ export class MovementPricesContractAdapter
 {
   constructor(private readonly adapter: IMovementContractAdapter) {}
 
+  //eslint-disable-next-line @typescript-eslint/require-await
   async getPricesFromPayload(
     _paramsProvider: ContractParamsProvider
   ): Promise<BigNumberish[]> {
