@@ -1,10 +1,4 @@
-import {
-  Account,
-  AccountAddress,
-  Aptos,
-  MoveVector,
-  U8,
-} from "@aptos-labs/ts-sdk";
+import { Account, Aptos, MoveVector, U8 } from "@aptos-labs/ts-sdk";
 import { ContractData } from "@redstone-finance/sdk";
 
 /**
@@ -47,7 +41,7 @@ export interface IMovementViewContractAdapter {
  * Expects from entity to write, view and verify transactions to the chain.
  */
 export interface IMovementContractAdapter {
-  writer: IMovementWriteContractAdapter;
+  writer?: IMovementWriteContractAdapter;
   viewer: IMovementViewContractAdapter;
 }
 
@@ -80,5 +74,5 @@ export interface PriceDataSchema {
 export interface AptosVariables {
   client: Aptos;
   account: Account;
-  packageObjectAddress: AccountAddress;
+  packageObjectAddress: string;
 }
