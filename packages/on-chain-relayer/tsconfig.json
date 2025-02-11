@@ -44,6 +44,9 @@
     },
     {
       "path": "../mqtt5-client/tsconfig.build.json"
+    },
+    {
+      "path": "../movement-connector/tsconfig.build.json"
     }
   ]
 }
