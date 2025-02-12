@@ -7933,24 +7933,6 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@redstone-finance/lambda-depth-influx@workspace:packages/lambda/lambda-depth-influx":
-  version: 0.0.0-use.local
-  resolution: "@redstone-finance/lambda-depth-influx@workspace:packages/lambda/lambda-depth-influx"
-  dependencies:
-    "@aws-sdk/client-cloudwatch": "npm:^3.696.0"
-    "@aws-sdk/client-s3": "npm:^3.696.0"
-    "@redstone-finance/fetchers": "npm:0.7.5"
-    "@redstone-finance/internal-utils": "npm:0.7.5"
-    "@redstone-finance/monitoring-manifests": "npm:0.7.5"
-    "@redstone-finance/node-commons": "npm:0.7.5"
-    "@redstone-finance/sdk": "npm:0.7.5"
-    "@redstone-finance/utils": "npm:0.7.5"
-    "@types/aws-lambda": "npm:^8.10.145"
-    dotenv: "npm:^16.0.3"
-    zod: "npm:^3.22.4"
-  languageName: unknown
-  linkType: soft
-
 "@redstone-finance/lambda-deviation-monitoring@workspace:packages/lambda/lambda-deviation-monitoring":
   version: 0.0.0-use.local
   resolution: "@redstone-finance/lambda-deviation-monitoring@workspace:packages/lambda/lambda-deviation-monitoring"
@@ -8295,6 +8277,24 @@ __metadata:
     prompts: "npm:^2.4.2"
     ts-node: "npm:^10.9.2"
     typescript: "npm:^5.5.4"
+  languageName: unknown
+  linkType: soft
+
+"@redstone-finance/lambda-upload-depths@workspace:packages/lambda/lambda-depth-influx":
+  version: 0.0.0-use.local
+  resolution: "@redstone-finance/lambda-upload-depths@workspace:packages/lambda/lambda-depth-influx"
+  dependencies:
+    "@aws-sdk/client-cloudwatch": "npm:^3.696.0"
+    "@aws-sdk/client-s3": "npm:^3.696.0"
+    "@redstone-finance/fetchers": "npm:0.7.5"
+    "@redstone-finance/internal-utils": "npm:0.7.5"
+    "@redstone-finance/monitoring-manifests": "npm:0.7.5"
+    "@redstone-finance/node-commons": "npm:0.7.5"
+    "@redstone-finance/sdk": "npm:0.7.5"
+    "@redstone-finance/utils": "npm:0.7.5"
+    "@types/aws-lambda": "npm:^8.10.145"
+    dotenv: "npm:^16.0.3"
+    zod: "npm:^3.22.4"
   languageName: unknown
   linkType: soft
 
