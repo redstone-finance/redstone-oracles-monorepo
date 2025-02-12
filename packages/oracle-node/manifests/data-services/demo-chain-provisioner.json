@@ -275,7 +275,7 @@
     "eUSD": {
       "source": [
         "aerodrome-base-usdc",
-        "aerodrome-cl-base-usdc-100",
+        "aerodrome-cl-base-usdc",
         "curve-ethereum-crvfrax",
         "curve-ethereum-rsr",
         "curve-ethereum-usdc",
@@ -330,7 +330,7 @@
     },
     "ezETH": {
       "source": [
-        "aerodrome-cl-base-weth-3000",
+        "aerodrome-cl-base-weth",
         "balancer-arbitrumone-wsteth",
         "balancer-ethereum-weeth",
         "balancer-ethereum-weth",
@@ -450,14 +450,14 @@
       "source": [
         "aerodrome-base-rsr",
         "aerodrome-base-weth",
-        "aerodrome-cl-base-weth-100"
+        "aerodrome-cl-base-weth"
       ]
     },
     "USD+": {
       "source": [
         "aerodrome-base-eusd",
-        "aerodrome-cl-base-usdc-100",
-        "aerodrome-cl-base-weth-400",
+        "aerodrome-cl-base-usdc",
+        "aerodrome-cl-base-weth",
         "uniswap-v3-arbitrumone-usdc-100",
         "thruster-v3-blast-usdb-100"
       ]

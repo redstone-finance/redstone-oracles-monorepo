@@ -397,7 +397,7 @@
         "uniswap-v3-arbitrumone-weth-100",
         "uniswap-v3-ethereum-weth-100",
         "uniswap-v3-optimism-weth-100",
-        "velodrome-cl-optimism-weth-100"
+        "velodrome-cl-optimism-weth"
       ],
       "denomination": "USD",
       "rateFeed": false
@@ -735,7 +735,7 @@
     },
     "ezETH": {
       "source": [
-        "aerodrome-cl-base-weth-3000",
+        "aerodrome-cl-base-weth",
         "balancer-arbitrumone-wsteth",
         "balancer-ethereum-weeth",
         "balancer-ethereum-weth",
@@ -1101,7 +1101,7 @@
       "source": [
         "aerodrome-base-usdc",
         "aerodrome-base-weth",
-        "aerodrome-cl-base-weth-6000",
+        "aerodrome-cl-base-weth",
         "bingx-usdt",
         "bitget-usdt",
         "bitmart-usdt",
