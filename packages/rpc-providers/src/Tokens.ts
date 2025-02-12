@@ -783,6 +783,22 @@ export const chainTokenMap: ChainTokenMap = {
       address: "0xFCBD14DC51f0A4d49d5E53C2E0950e0bC26d0Dce",
       decimals: 18,
     },
+    WETH: {
+      address: "0x2F6F07CDcf3588944Bf4C42aC74ff24bF56e7590",
+      decimals: 18,
+    },
+    WBERA: {
+      address: "0x6969696969696969696969696969696969696969",
+      decimals: 18,
+    },
+    WBTC: {
+      address: "0x0555E30da8f98308EdB960aa94C0Db47230d2B9c",
+      decimals: 8,
+    },
+    sUSDe: {
+      address: "0x211Cc4DD073734dA055fbF44a2b4667d5E5fE5d2",
+      decimals: 18,
+    },
   },
 };
 

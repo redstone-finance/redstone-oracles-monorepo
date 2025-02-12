@@ -3267,6 +3267,31 @@
       "denomination": "ETH",
       "rateFeed": true
     },
+    "NECT": {
+      "source": [
+        "burrbear-berachain-honey",
+        "burrbear-berachain-usdc.e",
+        "kodiak-berachain-honey-500",
+        "kodiak-berachain-usde-500"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "HONEY": {
+      "source": [
+        "beraswap-berachain-usdc.e",
+        "beraswap-berachain-wbera",
+        "burrbear-berachain-usdc.e",
+        "kodiak-berachain-susde-500",
+        "kodiak-berachain-usdc.e-500",
+        "kodiak-berachain-usde-500",
+        "kodiak-berachain-wbera-3000",
+        "kodiak-berachain-wbtc-3000",
+        "kodiak-berachain-weth-3000"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
     "beraETH_FUNDAMENTAL/USD": {
       "source": ["berachain-evm-fetcher-dinero-branded-eth"],
       "denomination": "USD",
