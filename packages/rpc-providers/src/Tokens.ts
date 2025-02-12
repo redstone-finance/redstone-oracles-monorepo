@@ -309,6 +309,10 @@ export const chainTokenMap: ChainTokenMap = {
       address: "0x0655977FEb2f289A4aB78af67BAB0d17aAb84367",
       decimals: 18,
     },
+    USR: {
+      address: "0x66a1E37c9b0eAddca17d3662D6c05F4DECf3e110",
+      decimals: 18,
+    },
   },
   blast: {
     ETH: {
@@ -644,6 +648,10 @@ export const chainTokenMap: ChainTokenMap = {
     EUROC: {
       address: "0x60a3e35cc302bfa44cb288bc5a4f316fdb1adb42",
       decimals: 6,
+    },
+    USR: {
+      address: "0x35E5dB674D8e93a03d814FA0ADa70731efe8a4b9",
+      decimals: 18,
     },
   },
   optimism: {
