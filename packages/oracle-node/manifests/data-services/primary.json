@@ -2048,6 +2048,12 @@
       "denomination": "ETH",
       "rateFeed": true
     },
+    "beraETH_FUNDAMENTAL": {
+      "source": ["ethereum-evm-fetcher-stake-stone-bera"],
+      "denomination": "ETH",
+      "rateFeed": true,
+      "comment": "This is beraSTONE price, need to keep it because Gearbox is using old data feed name"
+    },
     "ENA": {
       "source": [
         "binance-btc",
