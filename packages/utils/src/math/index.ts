@@ -65,7 +65,7 @@ export class PrecisionScaler {
   }
 }
 
-/** Results are soreted ascending order */
+/** Results are sorted in ascending order */
 export const filterOutliers = (
   numbers: number[],
   maxDiscrepancy: number
@@ -116,8 +116,8 @@ export const filterOutliers = (
 export const weightedRandom = (weights: number[]): number => {
   let totalWeight = 0;
 
-  for (let i = 0; i < weights.length; i++) {
-    totalWeight += weights[i];
+  for (const weight of weights) {
+    totalWeight += weight;
   }
 
   let random = Math.random() * totalWeight;
