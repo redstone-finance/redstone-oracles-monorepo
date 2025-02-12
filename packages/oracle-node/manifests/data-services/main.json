@@ -1362,7 +1362,11 @@
       "rateFeed": false
     },
     "USDM": {
-      "source": ["curve-ethereum-3crv", "curve-ethereum-sdai"],
+      "source": [
+        "curve-ethereum-3crv",
+        "curve-ethereum-sdai",
+        "curve-ethereum-crvusd"
+      ],
       "denomination": "USD",
       "rateFeed": false
     },

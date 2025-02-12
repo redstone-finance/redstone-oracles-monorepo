@@ -950,7 +950,11 @@
       "rateFeed": false
     },
     "USDM": {
-      "source": ["curve-ethereum-3crv", "curve-ethereum-sdai"],
+      "source": [
+        "curve-ethereum-3crv",
+        "curve-ethereum-sdai",
+        "curve-ethereum-crvusd"
+      ],
       "deviationCheck": {
         "deviationWithRecentValues": {
           "maxPercent": 5,
