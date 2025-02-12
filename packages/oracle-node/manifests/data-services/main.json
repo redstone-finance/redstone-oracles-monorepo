@@ -3267,6 +3267,11 @@
       "denomination": "ETH",
       "rateFeed": true
     },
+    "bfBTC_FUNDAMENTAL": {
+      "source": ["bnb-evm-fetcher-bit-fi"],
+      "denomination": "BTC",
+      "rateFeed": true
+    },
     "BAT": {
       "denomination": "USD",
       "rateFeed": false
