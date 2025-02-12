@@ -2221,6 +2221,21 @@
       "denomination": "ETH",
       "rateFeed": true
     },
+    "USR": {
+      "source": [
+        "aerodrome-base-usdc",
+        "curve-ethereum-usdc",
+        "uniswap-v3-ethereum-usdc-500"
+      ],
+      "deviationCheck": {
+        "deviationWithRecentValues": {
+          "maxPercent": 5,
+          "maxDelayMilliseconds": 300000
+        }
+      },
+      "denomination": "USD",
+      "rateFeed": false
+    },
     "NECT": {
       "source": [
         "burrbear-berachain-honey",
