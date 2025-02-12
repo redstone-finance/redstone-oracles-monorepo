@@ -2220,6 +2220,11 @@
       "source": ["ethereum-evm-fetcher-eigenpie"],
       "denomination": "ETH",
       "rateFeed": true
+    },
+    "bfBTC_FUNDAMENTAL": {
+      "source": ["bnb-evm-fetcher-bit-fi"],
+      "denomination": "BTC",
+      "rateFeed": true
     }
   },
   "multiPointPackages": {
