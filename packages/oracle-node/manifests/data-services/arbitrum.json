@@ -523,13 +523,7 @@
       "rateFeed": false
     },
     "GRAIL": {
-      "source": [
-        "bingx-usdt",
-        "bitget-usdt",
-        "coingecko",
-        "coinmarketcap",
-        "gate-usdt"
-      ],
+      "source": ["bingx-usdt", "coingecko", "coinmarketcap", "gate-usdt"],
       "denomination": "USD",
       "rateFeed": false
     },
