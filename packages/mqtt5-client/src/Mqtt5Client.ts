@@ -92,7 +92,7 @@ export class Mqtt5Client implements PubSubClient {
 
       mqttClient.on("connectionSuccess", () => {
         clearTimeout(timeoutId);
-        client.logger.error("Connection successful");
+        client.logger.info("Connection successful");
         resolve(mqttClient);
       });
     });
