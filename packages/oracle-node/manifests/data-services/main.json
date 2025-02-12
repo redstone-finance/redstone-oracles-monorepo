@@ -693,7 +693,7 @@
         "uniswap-v3-arbitrumone-weth-100",
         "uniswap-v3-ethereum-weth-100",
         "uniswap-v3-optimism-weth-100",
-        "velodrome-cl-optimism-weth-100"
+        "velodrome-cl-optimism-weth"
       ],
       "denomination": "USD",
       "rateFeed": false
@@ -759,9 +759,9 @@
         "coinbasepro-usdc",
         "trader-joe-v2-avalanche-usdc",
         "uniswap-v3-ethereum-usdc-500",
-        "aerodrome-cl-base-usdc-300",
-        "aerodrome-cl-base-usdc-500",
-        "aerodrome-cl-base-weth-500"
+        "aerodrome-cl-base-usdc",
+        "aerodrome-cl-base-usdc-2",
+        "aerodrome-cl-base-weth"
       ],
       "denomination": "USD",
       "rateFeed": false
@@ -892,7 +892,7 @@
         "uniswap-v3-optimism-usdc-3000",
         "uniswap-v3-optimism-weth-3000",
         "uniswap-v3-optimism-weth-500",
-        "velodrome-cl-optimism-weth-400",
+        "velodrome-cl-optimism-weth",
         "velodrome-optimism-weth",
         "xt"
       ],
@@ -1413,7 +1413,7 @@
     "eUSD": {
       "source": [
         "aerodrome-base-usdc",
-        "aerodrome-cl-base-usdc-100",
+        "aerodrome-cl-base-usdc",
         "curve-ethereum-crvfrax",
         "curve-ethereum-rsr",
         "curve-ethereum-usdc",
@@ -1556,7 +1556,7 @@
     },
     "ezETH": {
       "source": [
-        "aerodrome-cl-base-weth-3000",
+        "aerodrome-cl-base-weth",
         "balancer-arbitrumone-wsteth",
         "balancer-ethereum-weeth",
         "balancer-ethereum-weth",
@@ -1799,7 +1799,7 @@
     "bsdETH": {
       "source": [
         "aerodrome-base-weth",
-        "aerodrome-cl-base-weth-100",
+        "aerodrome-cl-base-weth",
         "uniswap-v3-base-weth-100"
       ],
       "denomination": "USD",
@@ -1829,9 +1829,9 @@
     },
     "USD+": {
       "source": [
-        "aerodrome-cl-base-usdc-100",
-        "aerodrome-cl-base-weth-400",
-        "aerodrome-cl-base-wsteth-2500",
+        "aerodrome-cl-base-usdc",
+        "aerodrome-cl-base-weth",
+        "aerodrome-cl-base-wsteth",
         "uniswap-v3-arbitrumone-usdc-100",
         "uniswap-v3-arbitrumone-usdt-100",
         "uniswap-v3-arbitrumone-weth-500",
@@ -2108,8 +2108,8 @@
       "source": [
         "aerodrome-base-usdc",
         "aerodrome-base-weth",
-        "aerodrome-cl-base-usdc-500",
-        "aerodrome-cl-base-weth-500",
+        "aerodrome-cl-base-usdc",
+        "aerodrome-cl-base-weth",
         "curve-ethereum-wbtc",
         "uniswap-v3-base-weth-3000",
         "uniswap-v3-ethereum-usdc-3000",
@@ -2951,7 +2951,7 @@
     },
     "LBTC": {
       "source": [
-        "aerodrome-cl-base-cbbtc-100",
+        "aerodrome-cl-base-cbbtc",
         "curve-ethereum-wbtc",
         "curve-ethereum-wbtc-2",
         "pancake-swap-bnb-btcb-500",
@@ -2975,7 +2975,7 @@
       "source": [
         "aerodrome-base-usdc",
         "aerodrome-base-weth",
-        "aerodrome-cl-base-weth-6000",
+        "aerodrome-cl-base-weth",
         "bingx-usdt",
         "bitget-usdt",
         "bitmart-usdt",
