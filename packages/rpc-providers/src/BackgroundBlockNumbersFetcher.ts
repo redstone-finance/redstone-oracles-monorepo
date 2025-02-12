@@ -45,16 +45,16 @@ export class BackgroundBlockNumberFetcher {
   }
 
   getBlockNumbers(): Record<string, number | undefined> {
-    const blockNumbersPerChainid: Record<string, number | undefined> = {};
+    const blockNumbersPerChainId: Record<string, number | undefined> = {};
 
     for (const [chainId, agent] of Object.entries(this.agentPerChainId)) {
       const blockNumber = agent.getLastFreshMessageOrDefault();
 
       if (blockNumber !== undefined) {
-        blockNumbersPerChainid[chainId] = blockNumber;
+        blockNumbersPerChainId[chainId] = blockNumber;
       }
     }
 
-    return blockNumbersPerChainid;
+    return blockNumbersPerChainId;
   }
 }
