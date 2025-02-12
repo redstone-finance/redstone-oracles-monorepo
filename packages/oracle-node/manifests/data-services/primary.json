@@ -2221,6 +2221,11 @@
       "denomination": "ETH",
       "rateFeed": true
     },
+    "beraETH_FUNDAMENTAL/USD": {
+      "source": ["berachain-evm-fetcher-dinero-branded-eth"],
+      "denomination": "USD",
+      "rateFeed": true
+    },
     "bfBTC_FUNDAMENTAL": {
       "source": ["bnb-evm-fetcher-bit-fi"],
       "denomination": "BTC",
