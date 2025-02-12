@@ -3119,6 +3119,11 @@
       "denomination": "ETH",
       "rateFeed": true
     },
+    "beraETH_FUNDAMENTAL": {
+      "source": ["ethereum-evm-fetcher-stake-stone-bera"],
+      "denomination": "ETH",
+      "rateFeed": true
+    },
     "ENA": {
       "source": [
         "binance-btc",
