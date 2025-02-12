@@ -204,7 +204,7 @@
         "uniswap-v3-arbitrumone-weth-100",
         "uniswap-v3-ethereum-weth-100",
         "uniswap-v3-optimism-weth-100",
-        "velodrome-cl-optimism-weth-100"
+        "velodrome-cl-optimism-weth"
       ]
     },
     "wstETH/ETH": {
@@ -475,7 +475,7 @@
         "uniswap-v3-optimism-usdc-3000",
         "uniswap-v3-optimism-weth-3000",
         "uniswap-v3-optimism-weth-500",
-        "velodrome-cl-optimism-weth-400",
+        "velodrome-cl-optimism-weth",
         "velodrome-optimism-weth"
       ]
     },
@@ -859,7 +859,7 @@
         "curve-ethereum-rsr",
         "curve-ethereum-usdc",
         "curve-ethereum-usdc-2",
-        "aerodrome-cl-base-usdc-100"
+        "aerodrome-cl-base-usdc"
       ],
       "deviationCheck": {
         "deviationWithRecentValues": {
@@ -991,7 +991,7 @@
         "thruster-v3-blast-weth-500",
         "uniswap-v3-ethereum-weth-100",
         "uniswap-v3-ethereum-wsteth-500",
-        "aerodrome-cl-base-weth-3000"
+        "aerodrome-cl-base-weth"
       ]
     },
     "ezETH/ETH": {
@@ -1189,7 +1189,7 @@
     "bsdETH": {
       "source": [
         "aerodrome-base-weth",
-        "aerodrome-cl-base-weth-100",
+        "aerodrome-cl-base-weth",
         "uniswap-v3-base-weth-100"
       ]
     },
@@ -1216,9 +1216,9 @@
     "USD+": {
       "source": [
         "uniswap-v3-arbitrumone-weth-500",
-        "aerodrome-cl-base-usdc-100",
-        "aerodrome-cl-base-weth-400",
-        "aerodrome-cl-base-wsteth-2500",
+        "aerodrome-cl-base-usdc",
+        "aerodrome-cl-base-weth",
+        "aerodrome-cl-base-wsteth",
         "uniswap-v3-arbitrumone-usdt-100",
         "uniswap-v3-arbitrumone-usdc-100",
         "thruster-v3-blast-usdb-100"
