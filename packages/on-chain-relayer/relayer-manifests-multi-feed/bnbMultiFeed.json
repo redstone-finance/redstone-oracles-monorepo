@@ -76,6 +76,9 @@
         "deviationPercentage": 0.3,
         "timeSinceLastUpdateInMilliseconds": 900000
       }
+    },
+    "bfBTC_FUNDAMENTAL": {
+      "priceFeedAddress": "0x53E57c2acBa2f9919ff545aa595Ff691B90d36a8"
     }
   }
 }
