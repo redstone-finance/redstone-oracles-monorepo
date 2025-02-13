@@ -929,7 +929,7 @@
       "name": "Monad Testnet",
       "chainId": 10143,
       "currencySymbol": "MON",
-      "publicRpcUrls": ["https://monad-testnet.drpc.org"],
+      "publicRpcUrls": ["https://testnet-rpc.monad.xyz"],
       "avgBlockTimeMs": 1000,
       "multicall3": {
         "address": "0xcA11bde05977b3631167028862bE2a173976CA11",
