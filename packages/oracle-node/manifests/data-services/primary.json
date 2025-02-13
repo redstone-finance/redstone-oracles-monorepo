@@ -1221,6 +1221,12 @@
         "curve-ethereum-usdt",
         "curve-ethereum-weth"
       ],
+      "deviationCheck": {
+        "deviationWithRecentValues": {
+          "maxPercent": 5,
+          "maxDelayMilliseconds": 300000
+        }
+      },
       "denomination": "USD",
       "rateFeed": false
     },
@@ -1494,6 +1500,12 @@
         "uniswap-v3-arbitrumone-weth-500",
         "thruster-v3-blast-usdb-100"
       ],
+      "deviationCheck": {
+        "deviationWithRecentValues": {
+          "maxPercent": 5,
+          "maxDelayMilliseconds": 300000
+        }
+      },
       "denomination": "USD",
       "rateFeed": false
     },
@@ -1809,6 +1821,12 @@
         "pancake-swap-bnb-wbnb-500",
         "uniswap-v3-ethereum-usdt-100"
       ],
+      "deviationCheck": {
+        "deviationWithRecentValues": {
+          "maxPercent": 5,
+          "maxDelayMilliseconds": 300000
+        }
+      },
       "denomination": "USD",
       "rateFeed": false
     },
@@ -2003,6 +2021,12 @@
         "curve-ethereum-usdt",
         "pancake-swap-stable-bnb-usdt"
       ],
+      "deviationCheck": {
+        "deviationWithRecentValues": {
+          "maxPercent": 5,
+          "maxDelayMilliseconds": 300000
+        }
+      },
       "denomination": "USD",
       "rateFeed": false
     },
