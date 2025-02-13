@@ -1,5 +1,6 @@
 export * from "./AptosClientBuilder";
 export * from "./config";
+export * from "./MovementContractConnector";
 export * from "./MovementPricesContractAdapter";
 export * from "./MovementPricesContractConnector";
 export * from "./MovementViewContractAdapter";
