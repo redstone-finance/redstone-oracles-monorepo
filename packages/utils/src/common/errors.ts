@@ -78,7 +78,10 @@ export function stringifyError(e: unknown): string {
     const dataAsString = `data: ${JSON.stringify(error.response?.data)}`;
     return `${urlAsString}, ${dataAsString}, ` + stringifyStack(error.stack);
   } else if (error instanceof Error) {
-    return stringifyStack(error.stack);
+    const causeString = error.cause
+      ? ` cause: ${stringifyError(error.cause)}`
+      : "";
+    return `${stringifyStack(error.stack)}${causeString}`;
   } else if (typeof error.toJSON === "function") {
     return JSON.stringify(error.toJSON());
   } else {
