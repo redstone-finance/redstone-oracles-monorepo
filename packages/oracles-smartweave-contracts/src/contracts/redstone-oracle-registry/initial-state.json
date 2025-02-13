@@ -275,6 +275,17 @@
       "ecdsaPublicKey": "0x04d048bea3bcf01b82162703a7f59cf51d91a95a8fd3921b5a858a8ff1c1b858dd337918cb7969c695711f590779ffb9a1028d0205074f11d9fd40e905f6670d0a",
       "dateAdded": "2024-01-01"
     },
+    "0x4802Adedd012Ea9c3F9F4AA1e504508A2c1fafF3": {
+      "url": "https://redstone.finance",
+      "logo": "https://redstone.finance/assets/img/redstone-logo-full.svg",
+      "name": "redstone-megaeth-testnet",
+      "ipAddress": "0.0.0.0",
+      "dataServiceId": "redstone-megaeth-testnet",
+      "description": "Very frequent updates from the fastest sources",
+      "evmAddress": "0x4802Adedd012Ea9c3F9F4AA1e504508A2c1fafF3",
+      "ecdsaPublicKey": "0x04eb36acf54f5a99a28ae56390f6ca1cac5d0a74ebd0ce19995382d4b13861fceb7a9a7c3bb42a3a4889b2de3f44607e2058c6a7dd2da28ed2380c5505f40ad9be",
+      "dateAdded": "2024-01-01"
+    },
     "WPrl0TkGtc2zEfa-SmpDd4sh0AkyMHMGZ9rxATyDTN0": {
       "url": "https://redstone.finance",
       "logo": "https://redstone.finance/assets/img/redstone-logo-full.svg",
@@ -421,6 +432,11 @@
       "admin": "00HZS36ZwzP43q25-T_UV7pYlNXe9ChwDpNiM7A708c",
       "description": "Most popular tokens with fast updates",
       "manifestTxId": ""
+    },
+    "redstone-megaeth-testnet": {
+      "logo": "https://redstone.finance/assets/img/redstone-logo-full.svg",
+      "name": "RedStone Perun running on megaETH Testnet",
+      "description": "Fast updates on megaETH Testnet"
     },
     "redstone-external-demo-1": {
       "name": "External Provider Demo",
