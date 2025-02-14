@@ -6,7 +6,7 @@ import {
 } from "@mysten/sui/transactions";
 import { MIST_PER_SUI } from "@mysten/sui/utils";
 import { loggerFactory } from "@redstone-finance/utils";
-import { DEFAULT_GAS_BUDGET } from "./SuiContractAdapter";
+import { DEFAULT_GAS_BUDGET } from "./SuiContractUtil";
 
 const MAX_PARALLEL_TRANSACTION_COUNT = 5;
 const SPLIT_COIN_INITIAL_BALANCE = DEFAULT_GAS_BUDGET;
@@ -15,8 +15,8 @@ export class SuiTxDeliveryMan {
   protected readonly logger = loggerFactory("sui-tx-delivery-man");
 
   constructor(
-    private client: SuiClient,
-    private keypair: Keypair,
+    public client: SuiClient,
+    public keypair: Keypair,
     private executor?: ParallelTransactionExecutor
   ) {}
 

@@ -11,6 +11,7 @@ import {
   SuiNetworkSchema,
   SuiPricesContractAdapter,
 } from "../src";
+import { SuiTxDeliveryMan } from "../src/SuiTxDeliveryMan";
 
 const DATA_SERVICE_ID = "redstone-primary-prod";
 const WRITE_TEST_TIMEOUT = 20 * 1_000; // 20 secs
@@ -26,7 +27,11 @@ describe("SuiPricesContractAdapter", () => {
     config.writePricesTxGasBudget = DEFAULT_GAS_BUDGET;
     const client = makeSuiClient(network);
     const keypair = makeSuiKeypair();
-    adapter = new SuiPricesContractAdapter(client, config, keypair);
+    adapter = new SuiPricesContractAdapter(
+      client,
+      config,
+      new SuiTxDeliveryMan(client, keypair)
+    );
     suiClient = makeSuiClient(network);
   });
 

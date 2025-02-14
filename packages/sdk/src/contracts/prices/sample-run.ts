@@ -47,16 +47,19 @@ export async function sampleRun(
 
   await refreshStateCallback();
 
-  console.log(
-    `Current block number: ${await pricesConnector.getBlockNumber()}`
-  );
+  const blockNumber = await pricesConnector.getBlockNumber();
+  console.log(`Current block number: ${blockNumber}`);
 
   logHeader("Reading values from contract state...");
-  const values = await pricesAdapter.readPricesFromContract(paramsProvider);
+  const values = await pricesAdapter.readPricesFromContract(
+    paramsProvider,
+    blockNumber
+  );
 
   console.log(`Values read from contract: ${values.map(convertValue)}`);
   const readTimestamp = await pricesAdapter.readTimestampFromContract(
-    paramsProvider.getDataFeedIds()[0]
+    paramsProvider.getDataFeedIds()[0],
+    blockNumber
   );
   console.log(
     `Timestamp read from contract: ${readTimestamp} (${describeTimestamp(readTimestamp)})`
@@ -65,7 +68,10 @@ export async function sampleRun(
   if (isMultiFeedContractAdapter(pricesAdapter)) {
     console.log(
       `Price data: \n${describeContractData(
-        await pricesAdapter.readContractData(paramsProvider.getDataFeedIds())
+        await pricesAdapter.readContractData(
+          paramsProvider.getDataFeedIds(),
+          blockNumber
+        )
       )}`
     );
   }
@@ -73,14 +79,15 @@ export async function sampleRun(
   if (isExtendedPricesContractAdapter(pricesAdapter)) {
     const lastUpdateBlockTimestamp =
       await pricesAdapter.readLatestUpdateBlockTimestamp(
-        paramsProvider.getDataFeedIds()[0]
+        paramsProvider.getDataFeedIds()[0],
+        blockNumber
       );
     console.log(
       `Last update block timestamp: ${lastUpdateBlockTimestamp} (${describeTimestamp(lastUpdateBlockTimestamp!)})`
     );
 
     const uniqueSignerThreshold =
-      await pricesAdapter.getUniqueSignerThreshold();
+      await pricesAdapter.getUniqueSignerThreshold(blockNumber);
     console.log(`Unique signer count: ${uniqueSignerThreshold}`);
   }
 

@@ -14,7 +14,7 @@ export class FallbackExecutor extends Executor {
         return await timeoutOrResult(func(), this.timeoutMs);
       } catch (error) {
         this.logger.warn(
-          `Promise #${index}/${functions.length} failed: ${stringifyError(error)}`,
+          `Promise #${index} failed: ${stringifyError(error)}`,
           error
         );
         errors.push(error);
