@@ -2,16 +2,14 @@ import {
   Account,
   AccountAddress,
   Aptos,
-  EntryFunctionArgumentTypes,
+  InputGenerateTransactionPayloadData,
+  MoveFunctionId,
   MoveVector,
-  SimpleEntryFunctionArgumentTypes,
-  SimpleTransaction,
-  U8,
+  TransactionWorkerEventsEnum,
 } from "@aptos-labs/ts-sdk";
 import { loggerFactory } from "@redstone-finance/utils";
 import { IMovementWriteContractAdapter } from "./types";
-
-const MAX_TRANSACTION_BYTE_SIZE: number = 64 * 1024; // Source in here: https://github.com/movementlabsxyz/aptos-core/blob/991668fa0dac6fa5bb31b2865194c0d6292ca1b5/aptos-move/aptos-gas-schedule/src/gas_schedule/transaction.rs#L72
+import { makeFeedIdBytes } from "./utils";
 
 export class MovementWriteContractAdapter
   implements IMovementWriteContractAdapter
@@ -25,54 +23,61 @@ export class MovementWriteContractAdapter
     private readonly priceAdapterObjectAddress: AccountAddress
   ) {}
 
-  private async prepareTransaction(
-    module: string,
-    functionName: string,
-    functionArgument?: Array<
-      EntryFunctionArgumentTypes | SimpleEntryFunctionArgumentTypes
-    >
-  ): Promise<SimpleTransaction> {
-    return await this.client.transaction.build.simple({
-      sender: this.account.accountAddress,
-      data: {
-        function: `${this.priceAdapterPackageAddress.toString()}::${module}::${functionName}`,
-        functionArguments: functionArgument ? functionArgument : [],
-      },
-    });
-  }
+  async writePricesBatch(
+    payloads: { payload: string; feedId: string }[]
+  ): Promise<string> {
+    const data = [];
 
-  private verifyTransactionLength(transaction: SimpleTransaction) {
-    const transactionSize = transaction.bcsToBytes().length;
-    if (transactionSize > MAX_TRANSACTION_BYTE_SIZE) {
-      throw new Error(
-        `Expected maximum transaction size in bytes exceeded: Expected max ${MAX_TRANSACTION_BYTE_SIZE}, got ${transactionSize}.`
-      );
+    for (const { payload, feedId } of payloads) {
+      data.push({
+        function:
+          `${this.priceAdapterPackageAddress.toString()}::price_adapter::write_price` as MoveFunctionId,
+        functionArguments: [
+          this.priceAdapterObjectAddress.toString(),
+          makeFeedId(feedId),
+          makePayload(payload),
+        ],
+      });
     }
+
+    this.sendBatchTransactions(data);
+    return await this.waitForNSent(data.length);
   }
 
-  private async signAndPublish(
-    transaction: SimpleTransaction
-  ): Promise<string> {
-    const pendingTxn = await this.client.signAndSubmitTransaction({
-      signer: this.account,
-      transaction,
+  sendBatchTransactions(data: InputGenerateTransactionPayloadData[]) {
+    this.client.transaction.batch.removeAllListeners();
+    this.logger.debug(`Sending ${data.length} transactions`);
+    this.client.transaction.batch.forSingleAccount({
+      sender: this.account,
+      data,
     });
-
-    return pendingTxn.hash;
   }
 
-  async writePrices(
-    feedIds: MoveVector<MoveVector<U8>>,
-    payload: MoveVector<U8>
-  ): Promise<string> {
-    const transaction = await this.prepareTransaction(
-      "price_adapter",
-      "write_prices",
-      [this.priceAdapterObjectAddress, feedIds, payload]
-    );
-
-    this.verifyTransactionLength(transaction);
-
-    return await this.signAndPublish(transaction);
+  async waitForNSent(n: number): Promise<string> {
+    return await new Promise((resolve) => {
+      let sent = 0;
+      this.client.transaction.batch.on(
+        TransactionWorkerEventsEnum.TransactionSent,
+        (data) => {
+          sent += 1;
+          this.logger.debug(
+            `Sent transaction ${data.transactionHash}, msg: ${data.message}. ${sent}/${n}`
+          );
+          if (sent === n) {
+            resolve(data.transactionHash);
+          }
+        }
+      );
+    });
   }
+}
+
+function makeFeedId(feedId: string) {
+  const asBytes = makeFeedIdBytes(feedId);
+
+  return MoveVector.U8(asBytes);
+}
+
+function makePayload(payload: string) {
+  return MoveVector.U8(payload);
 }
