@@ -1,4 +1,4 @@
-import { Account, Aptos, MoveVector, U8 } from "@aptos-labs/ts-sdk";
+import { Account, Aptos } from "@aptos-labs/ts-sdk";
 import { ContractData } from "@redstone-finance/sdk";
 
 /**
@@ -8,12 +8,11 @@ export interface IMovementWriteContractAdapter {
   /**
    * Writes prices to the price adapter object.
    *
-   * @returns submitted transaction hash.
+   * @returns last submitted transaction hash.
    *
    */
-  writePrices(
-    feedIds: MoveVector<MoveVector<U8>>,
-    payload: MoveVector<U8>
+  writePricesBatch(
+    payloads: { feedId: string; payload: string }[]
   ): Promise<string>;
 }
 
