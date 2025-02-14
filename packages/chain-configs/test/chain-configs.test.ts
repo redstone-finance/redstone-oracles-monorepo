@@ -28,6 +28,7 @@ const CHAINS_TO_SKIP_RPC_PRESENCE_CHECK = [
   "Monad Devnet",
   "Hemi Network",
   "Unichain",
+  "megaEth Testnet",
 ];
 
 const ChainConfigs = getLocalChainConfigs();
