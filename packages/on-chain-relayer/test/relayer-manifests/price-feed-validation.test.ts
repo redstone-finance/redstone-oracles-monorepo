@@ -15,6 +15,7 @@ import {
 const INTEGRATIONS_NOT_FOR_TESTING = [
   "hemiMultiFeed", // remove once we get a publicRpc
   "unichainMultiFeed", // remove once we get a publicRpc
+  "megaEthTestnetMultiFeed", // remove once we get a publicRpc
 ];
 
 const ABI = ["function getDataFeedId() public view returns (bytes32)"];
