@@ -1,87 +1,85 @@
+// NOTE: tests in this file depend on the order in which they are performed,
+//       therefore shall be run sequentially with `-runInBand` flag.
+
 import {
-  AccountAddress,
-  createObjectAddress,
+  Account,
+  Aptos,
   Network,
+  PrivateKey,
+  PrivateKeyVariants,
+  Secp256k1PrivateKey,
 } from "@aptos-labs/ts-sdk";
 import { getSignersForDataServiceId } from "@redstone-finance/oracles-smartweave-contracts";
 import { ContractParamsProvider } from "@redstone-finance/sdk";
 import { RedstoneCommon } from "@redstone-finance/utils";
 import "dotenv/config";
-import { z } from "zod";
+import { PRICE_ADAPTER, readObjectAddress } from "../scripts/deploy-utils";
+import { makeAptos } from "../scripts/utils";
 import {
-  makeAptosVariables,
-  MovementNetworkSchema,
   MovementPricesContractAdapter,
   MovementPricesContractConnector,
-  MovementViewContractAdapter,
-  MovementWriteContractAdapter,
-  SEED,
 } from "../src";
-import { IMovementContractAdapter } from "../src/types";
+import {
+  FAKE_PRIVKEY_SECP256K1,
+  NETWORK,
+  REST_NODE_LOCAL_URL,
+} from "./helpers";
 
+const TEST_FILE_TIMEOUT = 60_000;
+const WRITE_TEST_TIMEOUT = 20_000;
+const WAIT_TS = 5_000;
+const HOUR_MS = 3_600_000;
 const DATA_SERVICE_ID = "redstone-primary-prod";
-const WRITE_TEST_TIMEOUT = 20 * 1_000; // 20 secs
+const FEED_ETH = "ETH";
+const FEED_BTC = "BTC";
+const FEED_LBTC = "LBTC";
+const DATA_PACKAGES_IDS = [FEED_ETH, FEED_BTC, FEED_LBTC];
+
+jest.setTimeout(TEST_FILE_TIMEOUT);
 
 describe("MovementPricesContractAdapter", () => {
   let priceAdapter: MovementPricesContractAdapter;
-  let contractParamsProvider: ContractParamsProvider;
-  let movementConnnector: MovementPricesContractConnector;
+  let contractParamsProviderMultiple: ContractParamsProvider;
+  let connector: MovementPricesContractConnector;
+  let aptos: Aptos;
+  let test_start_ts: number;
 
-  beforeAll(() => {
-    const network = RedstoneCommon.getFromEnv("NETWORK", MovementNetworkSchema);
-    const packageAddress = RedstoneCommon.getFromEnv(
-      "PACKAGE_ADDRESS",
-      z.optional(z.string())
-    );
-    const privateKey = RedstoneCommon.getFromEnv(
-      "PRIVATE_KEY",
-      z.optional(z.string())
-    );
-    const aptosVariables = makeAptosVariables(
-      network as Network,
-      packageAddress,
-      privateKey
-    );
-    const priceAdapterObjectAddress: AccountAddress = createObjectAddress(
-      aptosVariables.account.accountAddress,
-      SEED
-    );
-    const packageObjectAddress = AccountAddress.fromString(
-      aptosVariables.packageObjectAddress
-    );
-
-    const contractAdapter: IMovementContractAdapter = {
-      writer: new MovementWriteContractAdapter(
-        aptosVariables.client,
-        aptosVariables.account,
-        packageObjectAddress,
-        priceAdapterObjectAddress
+  beforeAll(async () => {
+    test_start_ts = Date.now();
+    aptos = makeAptos(NETWORK as Network, REST_NODE_LOCAL_URL);
+    const { contractAddress, objectAddress } = readObjectAddress(PRICE_ADAPTER);
+    const account = Account.fromPrivateKey({
+      privateKey: new Secp256k1PrivateKey(
+        PrivateKey.formatPrivateKey(
+          FAKE_PRIVKEY_SECP256K1,
+          PrivateKeyVariants.Secp256k1
+        )
       ),
-      viewer: new MovementViewContractAdapter(
-        aptosVariables.client,
-        packageObjectAddress,
-        priceAdapterObjectAddress
-      ),
-    };
-
-    priceAdapter = new MovementPricesContractAdapter(contractAdapter);
-
-    movementConnnector = new MovementPricesContractConnector(
-      aptosVariables.client,
-      {
-        priceAdapterObjectAddress: aptosVariables.packageObjectAddress,
-        packageObjectAddress: aptosVariables.packageObjectAddress,
-      },
-      aptosVariables.account // todo fix
+    });
+    const packageObjectAddress = contractAddress.toString();
+    const priceAdapterObjectAddress = objectAddress.toString();
+    connector = new MovementPricesContractConnector(
+      aptos,
+      { packageObjectAddress, priceAdapterObjectAddress },
+      account
     );
+
+    priceAdapter = await connector.getAdapter();
   });
 
-  beforeEach(() => {
-    contractParamsProvider = new ContractParamsProvider({
-      dataServiceId: DATA_SERVICE_ID,
-      dataPackagesIds: ["LBTC"],
-      uniqueSignersCount: 3,
-      authorizedSigners: getSignersForDataServiceId(DATA_SERVICE_ID),
+  describe("getPricesFromPayload", () => {
+    it("should throw an error, is not implemented", async () => {
+      let error: undefined | Error;
+      try {
+        await priceAdapter.getPricesFromPayload(contractParamsProviderMultiple);
+      } catch (e) {
+        error = e as Error;
+      }
+      expect(error).toBeDefined();
+      expect(error).toBeInstanceOf(Error);
+      if (error) {
+        expect(error.message).toEqual("Pull model not supported");
+      }
     });
   });
 
@@ -94,73 +92,44 @@ describe("MovementPricesContractAdapter", () => {
   });
 
   describe("writePricesFromPayloadToContract", () => {
-    it(
-      "should write prices from payload to contract",
-      async () => {
-        const digest = await priceAdapter.writePricesFromPayloadToContract(
-          contractParamsProvider
-        );
-        expect(typeof digest).toBe("string");
-        expect(digest.length).toBeGreaterThanOrEqual(0);
-        const success = await movementConnnector.waitForTransaction(digest);
-        expect(success).toBeTruthy();
-      },
-      WRITE_TEST_TIMEOUT
-    );
+    beforeEach(() => {
+      contractParamsProviderMultiple = new ContractParamsProvider({
+        dataServiceId: DATA_SERVICE_ID,
+        dataPackagesIds: DATA_PACKAGES_IDS,
+        uniqueSignersCount: 2,
+        authorizedSigners: getSignersForDataServiceId(DATA_SERVICE_ID),
+      });
+    });
 
     it(
       "should write prices with multiple feed IDs",
       async () => {
-        contractParamsProvider = new ContractParamsProvider({
-          dataServiceId: DATA_SERVICE_ID,
-          dataPackagesIds: ["ETH", "BTC"],
-          uniqueSignersCount: 1,
-          authorizedSigners: getSignersForDataServiceId(DATA_SERVICE_ID),
-        });
-
+        await RedstoneCommon.sleep(WAIT_TS);
         const digest = await priceAdapter.writePricesFromPayloadToContract(
-          contractParamsProvider
+          contractParamsProviderMultiple
         );
-        expect(typeof digest).toBe("string");
-        expect(digest.length).toBeGreaterThanOrEqual(0);
-        const success = await movementConnnector.waitForTransaction(digest);
-        expect(success).toBeTruthy();
+        await checkResult(digest);
       },
       WRITE_TEST_TIMEOUT
     );
   });
 
-  describe("readLatestUpdateBlockTimestamp", () => {
-    it("should read the latest update block timestamp", async () => {
-      const result = await priceAdapter.readLatestUpdateBlockTimestamp("ETH");
-      expect(result).toBeGreaterThanOrEqual(0);
-      const fullYear = new Date(result).getFullYear();
-      expect(fullYear).toBeGreaterThan(2024);
-    });
-  });
-
   describe("readPricesFromContract", () => {
-    it("should read prices from contract", async () => {
-      const result = await priceAdapter.readPricesFromContract(
-        contractParamsProvider
-      );
-      expect(result.length).toBeGreaterThan(0);
-      expect(typeof result[0] === "bigint");
-    });
-
-    it("should read prices with multiple feed IDs", async () => {
-      contractParamsProvider = new ContractParamsProvider({
+    beforeEach(() => {
+      contractParamsProviderMultiple = new ContractParamsProvider({
         dataServiceId: DATA_SERVICE_ID,
-        dataPackagesIds: ["LBTC", "ETH", "BTC"],
-        uniqueSignersCount: 1,
+        dataPackagesIds: DATA_PACKAGES_IDS,
+        uniqueSignersCount: 2,
         authorizedSigners: getSignersForDataServiceId(DATA_SERVICE_ID),
       });
+    });
 
+    it("should read prices from contract with multiple feed IDs", async () => {
       const result = await priceAdapter.readPricesFromContract(
-        contractParamsProvider
+        contractParamsProviderMultiple
       );
 
-      expect(result.length).toBe(3);
+      expect(result.length).toBe(DATA_PACKAGES_IDS.length);
       result.forEach((price) => {
         expect(typeof price === "bigint");
       });
@@ -169,4 +138,46 @@ describe("MovementPricesContractAdapter", () => {
       expect(result[1] < result[2]).toBeTruthy();
     });
   });
+
+  describe("readLatestUpdateBlockTimestamp", () => {
+    it("should read the latest update block timestamp", async () => {
+      for (const feed of DATA_PACKAGES_IDS) {
+        const result = await priceAdapter.readLatestUpdateBlockTimestamp(feed);
+        expect(result).toBeGreaterThanOrEqual(0);
+        expect(result).toBeGreaterThan(test_start_ts - HOUR_MS);
+      }
+    });
+  });
+
+  describe("readTimestampFromContract", () => {
+    it("should read contract timestamp", async () => {
+      for (const feed of DATA_PACKAGES_IDS) {
+        const result = await priceAdapter.readTimestampFromContract(feed);
+        expect(result).toBeGreaterThanOrEqual(0);
+        expect(result).toBeGreaterThan(test_start_ts - HOUR_MS);
+      }
+    });
+  });
+
+  describe("readContractData", () => {
+    it("should read contract data", async () => {
+      for (const feed of DATA_PACKAGES_IDS) {
+        const result = await priceAdapter.readTimestampFromContract(feed);
+        expect(result).toBeGreaterThanOrEqual(0);
+        expect(result).toBeGreaterThan(test_start_ts - HOUR_MS);
+      }
+    });
+  });
+
+  async function checkResult(result: string) {
+    expect(typeof result).toBe("string");
+    expect(result.length).toBeGreaterThanOrEqual(0);
+    await RedstoneCommon.sleep(WAIT_TS);
+    const receipt = await aptos.waitForTransaction({
+      transactionHash: result,
+    });
+    expect(receipt.hash).toBe(result);
+    const status = receipt.success;
+    expect(status).toBeTruthy();
+  }
 });

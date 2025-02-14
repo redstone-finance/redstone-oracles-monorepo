@@ -28,10 +28,6 @@ module redstone_price_adapter::price_adapter {
     use redstone_sdk::conv::from_bytes_to_u256;
     use redstone_sdk::feed::{Self, Feed};
 
-    // === Errors ===
-
-    const E_UNEXPECTED_RESULT_COUNT: u64 = 0;
-
     // === Constants ===
 
     const TRUSTED_UPDATERS: vector<address> = vector[];
@@ -50,8 +46,9 @@ module redstone_price_adapter::price_adapter {
     const NAME: vector<u8> = b"RedStonePriceAdapter";
 
     // === Errors ===
-    const E_TIMESTAMP_TOO_OLD: u64 = 0;
-    const E_INVALID_FEED_ID: u64 = 1;
+    const E_UNEXPECTED_RESULT_COUNT: u64 = 0;
+    const E_TIMESTAMP_TOO_OLD: u64 = 1;
+    const E_INVALID_FEED_ID: u64 = 2;
 
     // === Structs ===
 

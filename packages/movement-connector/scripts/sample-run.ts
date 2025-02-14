@@ -1,44 +1,33 @@
-import { Network } from "@aptos-labs/ts-sdk";
 import { getSignersForDataServiceId } from "@redstone-finance/oracles-smartweave-contracts";
 import { ContractParamsProvider, sampleRun } from "@redstone-finance/sdk";
-import { RedstoneCommon } from "@redstone-finance/utils";
-import "dotenv/config";
-import { z } from "zod";
-import { makeAptosVariables, MovementNetworkSchema } from "../src";
 import { MovementPricesContractConnector } from "../src/MovementPricesContractConnector";
+import { getEnvParams, readObjectAddress } from "./deploy-utils";
+import { makeAptos } from "./utils";
 
 async function main() {
-  const network = RedstoneCommon.getFromEnv("NETWORK", MovementNetworkSchema);
-  const packageAddress = RedstoneCommon.getFromEnv(
-    "PACKAGE_ADDRESS",
-    z.optional(z.string())
-  );
-  const privateKey = RedstoneCommon.getFromEnv(
-    "PRIVATE_KEY",
-    z.optional(z.string())
-  );
-
   const paramsProvider = new ContractParamsProvider({
     dataServiceId: "redstone-primary-prod",
     uniqueSignersCount: 2,
     dataPackagesIds: ["LBTC", "BTC", "ETH"],
     authorizedSigners: getSignersForDataServiceId("redstone-primary-prod"),
   });
-
-  const aptosVariables = makeAptosVariables(
-    network as Network,
-    packageAddress,
-    privateKey
+  const { account, network, url } = getEnvParams(["CONTRACT_NAME"]);
+  const aptos = makeAptos(network, url);
+  const { contractAddress, objectAddress } = readObjectAddress("price_adapter");
+  console.log(
+    "CONTRACT:",
+    contractAddress.toString(),
+    "OBJECT:",
+    objectAddress.toString()
   );
+  const packageObjectAddress = contractAddress.toString();
+  const priceAdapterObjectAddress = objectAddress.toString();
 
   const moveContractConnector: MovementPricesContractConnector =
     new MovementPricesContractConnector(
-      aptosVariables.client,
-      {
-        packageObjectAddress: aptosVariables.packageObjectAddress,
-        priceAdapterObjectAddress: aptosVariables.packageObjectAddress,
-      },
-      aptosVariables.account
+      aptos,
+      { packageObjectAddress, priceAdapterObjectAddress },
+      account
     );
 
   await sampleRun(paramsProvider, moveContractConnector);

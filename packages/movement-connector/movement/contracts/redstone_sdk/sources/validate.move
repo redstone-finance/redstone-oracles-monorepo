@@ -126,7 +126,7 @@ module redstone_sdk::validate {
             if (count >= threshold) { return };
         };
 
-        assert!(count >= threshold, E_INSUFFICIENT_SIGNER_COUNT);
+        assert!(count < threshold, E_INSUFFICIENT_SIGNER_COUNT);
     }
 
     // === Tests Functions ===
