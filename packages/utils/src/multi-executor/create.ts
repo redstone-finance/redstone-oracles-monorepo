@@ -5,8 +5,8 @@ export enum ExecutionMode {
   RACE = "race",
   FALLBACK = "fallback",
   CONSENSUS_MEDIAN = "consensus_median",
-  CONSENSUS_MODE = "consensus_mode",
-  CONSENSUS_ALL_EQUALS = "consensus_all_equals",
+  CONSENSUS_ALL_EQUAL = "consensus_all_equal",
+  AGREEMENT = "agreement",
 }
 
 export type MethodConfig<T> = {
@@ -14,14 +14,16 @@ export type MethodConfig<T> = {
 };
 
 export type MultiExecutorConfig = {
-  quorumRatio: number;
+  consensusQuorumRatio: number;
+  agreementQuorumNumber: number;
   defaultMode: ExecutionMode;
   singleExecutionTimeoutMs?: number;
   allExecutionsTimeoutMs?: number;
 };
 
 export const DEFAULT_CONFIG: MultiExecutorConfig = {
-  quorumRatio: 3 / 5,
+  agreementQuorumNumber: 2,
+  consensusQuorumRatio: 3 / 5,
   defaultMode: ExecutionMode.FALLBACK,
 };
 

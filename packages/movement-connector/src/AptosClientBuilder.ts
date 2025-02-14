@@ -13,7 +13,7 @@ export class AptosClientBuilder {
     clients: Aptos[],
     config = {
       singleExecutionTimeoutMs: SINGLE_EXECUTION_TIMEOUT_MS,
-      allExecutionTimeoutMs: ALL_EXECUTIONS_TIMEOUT_MS,
+      allExecutionsTimeoutMs: ALL_EXECUTIONS_TIMEOUT_MS,
     }
   ) {
     return MultiExecutor.create(
