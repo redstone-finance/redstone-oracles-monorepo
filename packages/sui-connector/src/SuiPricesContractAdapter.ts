@@ -1,51 +1,44 @@
 import { bcs } from "@mysten/bcs";
 import { SuiClient } from "@mysten/sui/client";
-import type { Keypair } from "@mysten/sui/cryptography";
 import { Transaction } from "@mysten/sui/transactions";
-import { SUI_CLOCK_OBJECT_ID } from "@mysten/sui/utils";
 import {
   ContractData,
   type ContractParamsProvider,
-  convertDataPackagesResponse,
-  type DataPackagesResponse,
-  extractSignedDataPackagesForFeedId,
   IMultiFeedPricesContractAdapter,
 } from "@redstone-finance/sdk";
-import { BigNumberish, utils } from "ethers";
+import { RedstoneCommon } from "@redstone-finance/utils";
+import { BigNumberish } from "ethers";
 import _ from "lodash";
-import { version } from "../package.json";
 import { SuiConfig } from "./config";
 import { PriceAdapterConfig } from "./PriceAdapterConfig";
-import { SuiContractAdapter } from "./SuiContractAdapter";
+import { SuiPricesContractReader } from "./SuiPricesContractReader";
+import { SuiPricesContractWriter } from "./SuiPricesContractWriter";
 import { SuiTxDeliveryMan } from "./SuiTxDeliveryMan";
-import { PriceAdapterDataContent, PriceDataContent } from "./types";
-import {
-  makeFeedIdBytes,
-  serialize,
-  serializeAddresses,
-  serializeSigners,
-  uint8ArrayToBcs,
-} from "./util";
-
-const DEFAULT_GAS_MULTIPLIER_BASE = 1.4;
-const DEFAULT_MAX_TX_SEND_ATTEMPTS = 8;
+import { serialize, serializeAddresses, serializeSigners } from "./util";
 
 export class SuiPricesContractAdapter
-  extends SuiContractAdapter
   implements IMultiFeedPricesContractAdapter
 {
+  private readonly reader: SuiPricesContractReader;
+  private readonly writer?: SuiPricesContractWriter;
+  private getPriceAdapterObjectDataContentMemoized = RedstoneCommon.memoize({
+    functionToMemoize: (blockNumber?: number) =>
+      this.reader.getPriceAdapterObjectDataContent(blockNumber),
+    ttl: 1_000,
+  });
+
   constructor(
     client: SuiClient,
-    private readonly config: SuiConfig,
-    keypair?: Keypair,
+    config: SuiConfig,
     deliveryMan?: SuiTxDeliveryMan
   ) {
-    super(
+    this.reader = SuiPricesContractReader.createMultiReader(
       client,
-      keypair,
-      deliveryMan ??
-        (keypair ? new SuiTxDeliveryMan(client, keypair) : undefined)
+      config.priceAdapterObjectId
     );
+    this.writer = deliveryMan
+      ? new SuiPricesContractWriter(deliveryMan, config)
+      : undefined;
   }
 
   static initialize(
@@ -94,18 +87,20 @@ export class SuiPricesContractAdapter
     ];
   }
 
-  async getUniqueSignerThreshold(): Promise<number> {
+  async getUniqueSignerThreshold(blockNumber?: number): Promise<number> {
     const priceAdapterDataContent =
-      await this.getPriceAdapterObjectDataContent();
+      await this.getPriceAdapterObjectDataContentMemoized(blockNumber);
 
     return priceAdapterDataContent.config.signer_count_threshold;
   }
 
   async readPricesFromContract(
-    paramsProvider: ContractParamsProvider
+    paramsProvider: ContractParamsProvider,
+    blockNumber?: number
   ): Promise<BigNumberish[]> {
     const contractData = await this.readContractData(
-      paramsProvider.getDataFeedIds()
+      paramsProvider.getDataFeedIds(),
+      blockNumber
     );
 
     return paramsProvider
@@ -113,17 +108,28 @@ export class SuiPricesContractAdapter
       .map((feedId) => contractData[feedId].lastValue);
   }
 
-  async readLatestUpdateBlockTimestamp(feedId: string): Promise<number> {
-    return (await this.readAnyRoundDetails(feedId)).lastBlockTimestampMS;
+  async readLatestUpdateBlockTimestamp(
+    feedId: string,
+    blockNumber?: number
+  ): Promise<number> {
+    return (await this.readAnyRoundDetails(feedId, blockNumber))
+      .lastBlockTimestampMS;
   }
 
-  async readTimestampFromContract(feedId: string): Promise<number> {
-    return (await this.readAnyRoundDetails(feedId)).lastDataPackageTimestampMS;
+  async readTimestampFromContract(
+    feedId: string,
+    blockNumber?: number
+  ): Promise<number> {
+    return (await this.readAnyRoundDetails(feedId, blockNumber))
+      .lastDataPackageTimestampMS;
   }
 
-  async readContractData(feedIds: string[]): Promise<ContractData> {
+  async readContractData(
+    feedIds: string[],
+    blockNumber?: number
+  ): Promise<ContractData> {
     const priceAdapterDataContent =
-      await this.getPriceAdapterObjectDataContent();
+      await this.getPriceAdapterObjectDataContentMemoized(blockNumber);
 
     const pricesTableId = priceAdapterDataContent.prices.id.id;
     if (!pricesTableId) {
@@ -131,90 +137,26 @@ export class SuiPricesContractAdapter
     }
 
     return _.pick(
-      await this.getContractDataFromPricesTable(pricesTableId),
+      await this.reader.getContractDataFromPricesTable(
+        pricesTableId,
+        blockNumber
+      ),
       feedIds
     );
+  }
+
+  private async readAnyRoundDetails(feedId: string, blockNumber?: number) {
+    return Object.values(await this.readContractData([feedId], blockNumber))[0];
   }
 
   async writePricesFromPayloadToContract(
     paramsProvider: ContractParamsProvider
   ): Promise<string> {
-    let iterationIndex = 0;
-    const metadataTimestamp = Date.now();
-    const tx = await this.prepareWritePricesTransaction(
-      paramsProvider,
-      metadataTimestamp
-    );
-
-    if (!this.deliveryMan) {
-      throw new Error("Delivery man is not set");
+    if (!this.writer) {
+      throw new Error("Writer is not set");
     }
 
-    return await this.deliveryMan.sendTransaction(tx, async () => {
-      iterationIndex += 1;
-
-      if (
-        iterationIndex >=
-        (this.config.maxTxSendAttempts ?? DEFAULT_MAX_TX_SEND_ATTEMPTS)
-      ) {
-        return;
-      }
-
-      return await this.prepareWritePricesTransaction(
-        paramsProvider,
-        metadataTimestamp,
-        iterationIndex
-      );
-    });
-  }
-
-  private async prepareWritePricesTransaction(
-    paramsProvider: ContractParamsProvider,
-    metadataTimestamp: number,
-    iterationIndex = 0
-  ) {
-    const gasMultiplierBase =
-      this.config.gasMultiplier ?? DEFAULT_GAS_MULTIPLIER_BASE;
-
-    const tx = await this.prepareBaseTransaction(
-      gasMultiplierBase ** iterationIndex,
-      this.config.writePricesTxGasBudget
-    );
-
-    const dataPackagesResponse: DataPackagesResponse =
-      await paramsProvider.requestDataPackages();
-
-    const unsignedMetadata = this.getUnsignedMetadata(metadataTimestamp);
-
-    paramsProvider.getDataFeedIds().forEach((feedId) => {
-      const dataPackages = extractSignedDataPackagesForFeedId(
-        dataPackagesResponse,
-        feedId
-      );
-      if (!dataPackages.length) {
-        return this.logger.warn(`No data packages found for "${feedId}"`);
-      }
-      const payload = convertDataPackagesResponse(
-        { [feedId]: dataPackages },
-        "string",
-        unsignedMetadata
-      );
-
-      this.writePrice(tx, feedId, payload);
-    });
-    return tx;
-  }
-
-  private writePrice(tx: Transaction, feedId: string, payload: string) {
-    tx.moveCall({
-      target: `${this.config.packageId}::price_adapter::write_price`,
-      arguments: [
-        tx.object(this.config.priceAdapterObjectId),
-        tx.pure(uint8ArrayToBcs(makeFeedIdBytes(feedId))),
-        tx.pure(uint8ArrayToBcs(utils.arrayify("0x" + payload))),
-        tx.object(SUI_CLOCK_OBJECT_ID), // Clock object ID
-      ],
-    });
+    return await this.writer.writePricesFromPayloadToContract(paramsProvider);
   }
 
   //eslint-disable-next-line @typescript-eslint/require-await
@@ -222,55 +164,5 @@ export class SuiPricesContractAdapter
     _paramsProvider: ContractParamsProvider
   ): Promise<BigNumberish[]> {
     throw new Error("Pull model not supported");
-  }
-
-  private async readAnyRoundDetails(feedId: string) {
-    return Object.values(await this.readContractData([feedId]))[0];
-  }
-
-  private async getPriceAdapterObjectDataContent() {
-    const object = await this.client.getObject({
-      id: this.config.priceAdapterObjectId,
-      options: { showContent: true },
-    });
-
-    if (!object.data?.content) {
-      throw new Error("Object not found or has no content");
-    }
-
-    return PriceAdapterDataContent.parse(object.data.content);
-  }
-
-  private async getContractDataFromPricesTable(pricesTableId: string) {
-    const dynamicFields = await this.client.getDynamicFields({
-      parentId: pricesTableId,
-    });
-    if (dynamicFields.data.length === 0) {
-      throw new Error("Dynamic fields not found");
-    }
-
-    const ids = dynamicFields.data.map((field) => field.objectId);
-    const result = await this.client.multiGetObjects({
-      ids,
-      options: { showContent: true },
-    });
-
-    const parsedResults = result.map(
-      (response) => PriceDataContent.parse(response.data?.content).value
-    );
-    const contractData = parsedResults.map((data) => [
-      utils.toUtf8String(data.feed_id).replace(/\0+$/, ""),
-      {
-        lastDataPackageTimestampMS: parseInt(data.timestamp),
-        lastBlockTimestampMS: parseInt(data.write_timestamp),
-        lastValue: BigInt(data.value),
-      },
-    ]);
-
-    return Object.fromEntries(contractData) as ContractData;
-  }
-
-  private getUnsignedMetadata(metadataTimestamp: number): string {
-    return `${metadataTimestamp}#${version}#data-packages-wrapper`;
   }
 }

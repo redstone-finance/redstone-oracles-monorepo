@@ -10,6 +10,8 @@ export class SuiPricesContractConnector
   extends SuiContractConnector<SuiPricesContractAdapter>
   implements IContractConnector<SuiPricesContractAdapter>
 {
+  private adapter?: SuiPricesContractAdapter;
+
   constructor(
     client: SuiClient,
     private readonly config: SuiConfig,
@@ -20,14 +22,15 @@ export class SuiPricesContractConnector
   }
 
   override getAdapter(): Promise<SuiPricesContractAdapter> {
-    return Promise.resolve(
-      new SuiPricesContractAdapter(
+    if (!this.adapter) {
+      this.adapter = new SuiPricesContractAdapter(
         this.client,
         this.config,
-        this.keypair,
         this.getTxDeliveryMan()
-      )
-    );
+      );
+    }
+
+    return Promise.resolve(this.adapter);
   }
 
   protected getTxDeliveryMan() {

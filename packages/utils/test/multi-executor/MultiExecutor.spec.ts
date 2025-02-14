@@ -35,7 +35,7 @@ describe("MultiExecutor", () => {
     someHexFunction: MultiExecutor.ExecutionMode.CONSENSUS_MEDIAN,
   };
 
-  it("Should properly pick first non-failing value", async () => {
+  it("Race should properly pick first non-failing value", async () => {
     for (const instances of [
       CLIENTS,
       CLIENTS_AND_FAILING,
@@ -56,7 +56,7 @@ describe("MultiExecutor", () => {
     }
   });
 
-  it("Should properly pick first non-failing value with timeout", async () => {
+  it("Fallback should properly pick first non-failing value with timeout", async () => {
     for (const instances of [
       CLIENTS,
       CLIENTS_AND_FAILING,
@@ -86,7 +86,7 @@ describe("MultiExecutor", () => {
     }
   });
 
-  it("Should properly pick fastest value", async () => {
+  it("Race should properly pick fastest value", async () => {
     for (const instances of [
       CLIENTS,
       FAILING_AND_CLIENTS,
@@ -105,7 +105,7 @@ describe("MultiExecutor", () => {
     }
   });
 
-  it("Should properly pick median number value", async () => {
+  it("Consensus should properly pick median number value", async () => {
     for (const instances of [
       CLIENTS,
       FAILING_AND_CLIENTS,
@@ -126,7 +126,30 @@ describe("MultiExecutor", () => {
     }
   });
 
-  it("Should properly pick median hex value", async () => {
+  it("CeilMedianConsensusExecutor should properly pick ceil of median number", async () => {
+    for (const instances of [
+      CLIENTS,
+      [CLIENTS[0], CLIENTS[1]],
+      [new MockClient(8, 0, true), CLIENTS[0], CLIENTS[1]],
+    ]) {
+      const sut = makeSut(instances, {
+        ...config,
+        someNumberFunction: new MultiExecutor.CeilMedianConsensusExecutor(
+          MultiExecutor.DEFAULT_CONFIG.consensusQuorumRatio,
+          EXEC_TIME * 2.5
+        ),
+      });
+
+      const result = await sut.someNumberFunction(345);
+      expect(result).toEqual(345001);
+
+      instances.forEach((instance) => {
+        expect(instance.calledArgs).toStrictEqual([345]);
+      });
+    }
+  });
+
+  it("Consensus should properly pick median hex value", async () => {
     for (const instances of [
       CLIENTS,
       FAILING_AND_CLIENTS,
@@ -157,7 +180,7 @@ describe("MultiExecutor", () => {
     }
   });
 
-  it("Should fail when no quorum is achieved of 3 elements", async () => {
+  it("Consensus should fail when no quorum is achieved of 3 elements", async () => {
     const instances = [
       new MockClient(1, 3 * EXEC_TIME, true),
       new MockClient(1, 0, true),
@@ -166,11 +189,11 @@ describe("MultiExecutor", () => {
     const sut = makeSut(instances, config);
 
     await expect(sut.someHexFunction("1234")).rejects.toThrowError(
-      "Consensus failed: got 1 successful result, needed at least 2 (2 failed with"
+      "Consensus failed: got 1 successful result, needed at least 2; AggregateError: 2 fails, errors: Error: 123401"
     );
   });
 
-  it("Should fail when no quorum is achieved of 5 elements", async () => {
+  it("Consensus should fail when no quorum is achieved of 5 elements", async () => {
     const instances = [
       new MockClient(7, 3 * EXEC_TIME, true),
       new MockClient(8, 0, true),
@@ -181,23 +204,23 @@ describe("MultiExecutor", () => {
     const sut = makeSut(instances, config);
 
     await expect(sut.someHexFunction("1234")).rejects.toThrowError(
-      "Consensus failed: got 2 successful results, needed at least 3 (3 failed with"
+      "Consensus failed: got 2 successful results, needed at least 3; AggregateError: 3 fails, errors: Error: 123408"
     );
   });
 
-  it("Should fail when no quorum is achieved with 100% of elements required", async () => {
+  it("Consensus should fail when no quorum is achieved with 100% of elements required", async () => {
     const instances = [...CLIENTS, new MockClient(1, 3 * EXEC_TIME, true)];
     const sut = makeSut(instances, config, {
       ...DEFAULT_CONFIG,
-      quorumRatio: 1,
+      consensusQuorumRatio: 1,
     });
 
     await expect(sut.someHexFunction("1234")).rejects.toThrowError(
-      "Consensus failed: got 3 successful results, needed at least 4 (1 failed with"
+      "Consensus failed: got 3 successful results, needed at least 4; AggregateError: 1 fail, errors: Error: 123401"
     );
   });
 
-  it("Should properly pick all equals value", async () => {
+  it("Consensus should properly pick all equals value", async () => {
     for (const instances of [
       [
         new MockClient(1, 0),
@@ -216,7 +239,7 @@ describe("MultiExecutor", () => {
     ]) {
       const sut = makeSut(instances, {
         ...config,
-        someNumberFunction: ExecutionMode.CONSENSUS_ALL_EQUALS,
+        someNumberFunction: ExecutionMode.CONSENSUS_ALL_EQUAL,
       });
 
       const result = await sut.someNumberFunction(234);
@@ -228,21 +251,104 @@ describe("MultiExecutor", () => {
     }
   });
 
-  it("Should fail when one of values is different", async () => {
+  it("Consensus should fail when one of values is different", async () => {
     const sut = makeSut(
       [new MockClient(1, 3 * EXEC_TIME, true), CLIENTS[2], CLIENTS[1]],
       {
         ...config,
-        someHexFunction: ExecutionMode.CONSENSUS_ALL_EQUALS,
+        someHexFunction: ExecutionMode.CONSENSUS_ALL_EQUAL,
       }
     );
 
     await expect(sut.someHexFunction("1234")).rejects.toThrowError(
-      `Results are not equal. Found 2 different results ["123402","123401"]`
+      `Results are not equal. Found 2 different results ["123401","123402"]`
     );
   });
 
-  it("Should properly use custom executor", async () => {
+  it("Consensus should fail when all functions fail", async () => {
+    const sut = makeSut([
+      new MockClient(1, 3 * EXEC_TIME, true),
+      new MockClient(3, 0, true),
+    ]);
+
+    await expect(sut.someHexFunction("1234")).rejects.toThrowError(
+      `All promises failed`
+    );
+  });
+
+  it("Consensus should fail when only existing function fails", async () => {
+    const sut = makeSut([new MockClient(1, 3 * EXEC_TIME, true)]);
+
+    await expect(sut.someHexFunction("1234")).rejects.toThrowError(
+      `All promises failed`
+    );
+  });
+
+  it("Consensus should fail with all execution timeouts", async () => {
+    const sut = makeSut(CLIENTS, config, {
+      ...DEFAULT_CONFIG,
+      singleExecutionTimeoutMs: EXEC_TIME - 2,
+    });
+
+    await expect(sut.someHexFunction("1234")).rejects.toThrowError(
+      `Consensus failed: got 0 successful results`
+    );
+  });
+
+  it("Consensus should fail with total executions timeout", async () => {
+    const sut = makeSut(CLIENTS, config, {
+      ...DEFAULT_CONFIG,
+      allExecutionsTimeoutMs: EXEC_TIME + 2,
+    });
+
+    await expect(sut.someHexFunction("1234")).rejects.toThrowError(
+      `Timeout error 22 [MS]`
+    );
+  });
+
+  it("Race should fail with total executions timeout", async () => {
+    const sut = makeSut(CLIENTS, config, {
+      ...DEFAULT_CONFIG,
+      allExecutionsTimeoutMs: EXEC_TIME - 2,
+    });
+
+    await expect(sut.someAsyncFunction("xxx")).rejects.toThrowError(
+      `Timeout error 18 [MS]`
+    );
+  });
+
+  it("Fallback should fail with total executions timeout", async () => {
+    const sut = makeSut(
+      CLIENTS,
+      { ...config, someAsyncFunction: ExecutionMode.FALLBACK },
+      {
+        ...DEFAULT_CONFIG,
+        allExecutionsTimeoutMs: EXEC_TIME + 2,
+      }
+    );
+
+    await expect(sut.someAsyncFunction("xxx")).rejects.toThrowError(
+      `Timeout error 22 [MS]`
+    );
+  });
+
+  it("Agreement should fail with total executions timeout", async () => {
+    const sut = makeSut(
+      CLIENTS,
+      { ...config, someNumberFunction: ExecutionMode.AGREEMENT },
+      {
+        ...DEFAULT_CONFIG,
+        allExecutionsTimeoutMs: EXEC_TIME - 2,
+        consensusQuorumRatio: 0.25,
+      }
+    );
+
+    await expect(sut.someNumberFunction(234)).rejects.toThrowError(
+      `Timeout error 18 [MS]`
+    );
+  });
+
+  it("Custom executor should pick proper value", async () => {
     for (const instances of [
       CLIENTS,
       FAILING_AND_CLIENTS,
@@ -265,33 +371,124 @@ describe("MultiExecutor", () => {
     }
   });
 
-  it("Should fail with all fallback fails with more functions", async () => {
-    const sut = makeSut([
-      new MockClient(1, 3 * EXEC_TIME, true),
-      new MockClient(3, 0, true),
-    ]);
+  it("Agreement should pick mode value", async () => {
+    for (const instances of [
+      [CLIENTS[0]],
+      [CLIENTS[0], CLIENTS[1], new MockClient(0, 0)],
+      [
+        CLIENTS[0],
+        CLIENTS[1],
+        new MockClient(0, 0),
+        new MockClient(0, EXEC_TIME * 2, false),
+        new MockClient(1, EXEC_TIME, true),
+      ],
+      [CLIENTS[0], new MockClient(0, 0), new MockClient(0, 0, true)],
+    ]) {
+      const sut = makeSut(instances, {
+        ...config,
+        someNumberFunction: ExecutionMode.AGREEMENT,
+      });
 
-    await expect(sut.someHexFunction("1234")).rejects.toThrowError(
-      `All promises failed`
-    );
+      const result = await sut.someNumberFunction(234);
+      expect(result).toEqual(234000);
+
+      instances.forEach((instance) => {
+        expect(instance.calledArgs).toStrictEqual([234]);
+      });
+    }
   });
 
-  it("Should fail with fallback fails with one function", async () => {
-    const sut = makeSut([new MockClient(1, 3 * EXEC_TIME, true)]);
+  it("Agreement should pick the fastest mode value when quorum is achieved", async () => {
+    for (const instances of [
+      [CLIENTS[0], CLIENTS[1], new MockClient(0, 0), new MockClient(1, 0)],
+      [
+        CLIENTS[0],
+        CLIENTS[1],
+        new MockClient(0, EXEC_TIME * 2.5, true),
+        new MockClient(1, 0),
+      ],
+    ]) {
+      const sut = makeSut(
+        instances,
+        {
+          ...config,
+          someNumberFunction: ExecutionMode.AGREEMENT,
+        },
+        { ...DEFAULT_CONFIG, agreementQuorumNumber: 2 }
+      );
 
-    await expect(sut.someHexFunction("1234")).rejects.toThrowError(
-      `All promises failed`
-    );
+      const result = await sut.someNumberFunction(234);
+      expect(result).toEqual(234001);
+
+      instances.forEach((instance) => {
+        expect(instance.calledArgs).toStrictEqual([234]);
+      });
+    }
   });
 
-  it("Should fail with all executions timeout", async () => {
-    const sut = makeSut(CLIENTS, config, {
-      ...DEFAULT_CONFIG,
-      allExecutionsTimeoutMs: EXEC_TIME + 2,
+  it("Agreement should pick the fastest mode value when quorum is achieved for sync values", async () => {
+    for (const instances of [
+      [CLIENTS[0], CLIENTS[1], new MockClient(0, 0), new MockClient(1, 0)],
+    ]) {
+      const sut = makeSut(
+        instances,
+        {
+          ...config,
+          someNumberFunction: ExecutionMode.AGREEMENT,
+        },
+        { ...DEFAULT_CONFIG, agreementQuorumNumber: 1 }
+      );
+
+      const result = await sut.someNumberFunction(234);
+      expect(result).toEqual(234000);
+
+      instances.forEach((instance) => {
+        expect(instance.calledArgs).toStrictEqual([234]);
+      });
+    }
+  });
+
+  it("Agreement should fail when all values are different", async () => {
+    const sut = makeSut(CLIENTS, {
+      ...config,
+      someHexFunction: ExecutionMode.AGREEMENT,
     });
 
     await expect(sut.someHexFunction("1234")).rejects.toThrowError(
-      `Timeout error 22 [MS]`
+      `Agreement failed: got max 1 equal result, needed at least 2`
+    );
+  });
+
+  it("Agreement should fail when there's only one value that fails", async () => {
+    const sut = makeSut([new MockClient(8, EXEC_TIME, true)], {
+      ...config,
+      someHexFunction: ExecutionMode.AGREEMENT,
+    });
+
+    await expect(sut.someHexFunction("1234")).rejects.toThrowError(
+      `Agreement failed: got max 0 equal results, needed at least 1; AggregateError: 1 fail, errors: Error: 123408`
+    );
+  });
+
+  it("Race should fail when there's only one value that fails", async () => {
+    const sut = makeSut([new MockClient(8, EXEC_TIME, true)], {
+      ...config,
+      someHexFunction: ExecutionMode.RACE,
+    });
+
+    await expect(sut.someHexFunction("1234")).rejects.toThrowError(
+      `All promises were rejected`
+    );
+  });
+
+  it("Consensus should fail when there's only one value that fails", async () => {
+    const sut = makeSut([new MockClient(8, EXEC_TIME, true)], {
+      ...config,
+      someHexFunction: ExecutionMode.CONSENSUS_ALL_EQUAL,
+    });
+
+    await expect(sut.someHexFunction("1234")).rejects.toThrowError(
+      `Consensus failed: got 0 successful results, needed at least 1; AggregateError: 1 fail, errors: Error: 123408`
     );
   });
 
