@@ -123,10 +123,9 @@ module redstone_sdk::validate {
             vector::push_back(&mut seen_signers, *address);
 
             count = count + 1;
-            if (count >= threshold) { return };
         };
 
-        assert!(count < threshold, E_INSUFFICIENT_SIGNER_COUNT);
+        assert!(count >= threshold, E_INSUFFICIENT_SIGNER_COUNT);
     }
 
     // === Tests Functions ===
@@ -365,6 +364,7 @@ module redstone_sdk::validate {
     }
 
     #[test]
+    #[expected_failure(abort_code = E_SIGNER_DUPLICATED)]
     fun test_verify_data_packages_fail_on_duplicated_packages_after_threshold_met() {
         let config = test_config();
         let timestamp = 1000;
