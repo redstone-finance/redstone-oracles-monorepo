@@ -2212,6 +2212,19 @@
       "denomination": "USD",
       "rateFeed": false
     },
+    "USDtb_FUNDAMENTAL": {
+      "source": ["ethereum-ethena-usdtb"],
+      "denomination": "USD",
+      "rateFeed": true,
+      "valueCapConfig": {
+        "upper": {
+          "value": 1.02
+        },
+        "lower": {
+          "value": 0.98
+        }
+      }
+    },
     "weETH/ETH_AVS": {
       "source": ["alias"],
       "denomination": "ETH",
@@ -2333,6 +2346,36 @@
       ],
       "denomination": "USD",
       "rateFeed": false
+    },
+    "LBTC_FUNDAMENTAL": {
+      "source": ["lbtc-indexer-fetcher"],
+      "deviationCheck": {
+        "deviationWithRecentValues": {
+          "maxPercent": 10,
+          "maxDelayMilliseconds": 6000000
+        }
+      },
+      "valueCapConfig": {
+        "upper": {
+          "value": 1
+        },
+        "lower": {
+          "value": 0.995
+        }
+      },
+      "denomination": "BTC",
+      "rateFeed": true
+    },
+    "LBENCH": {
+      "source": ["lbtc-indexer-fetcher"],
+      "deviationCheck": {
+        "deviationWithRecentValues": {
+          "maxPercent": 100,
+          "maxDelayMilliseconds": 6000000
+        }
+      },
+      "denomination": "BTC",
+      "rateFeed": true
     }
   },
   "multiPointPackages": {
