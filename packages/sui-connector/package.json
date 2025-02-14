@@ -22,8 +22,8 @@
     "convert-evm-private-key": "yarn global:ts-node scripts/convert-evm-private-key.ts"
   },
   "dependencies": {
-    "@mysten/bcs": "^1.2.1",
-    "@mysten/sui": "^1.21.0",
+    "@mysten/bcs": "^1.4.0",
+    "@mysten/sui": "^1.21.2",
     "@redstone-finance/sdk": "0.7.5",
     "@redstone-finance/utils": "0.7.5",
     "decimal.js": "^10.4.3",

@@ -10,11 +10,21 @@ export function roundToSignificantDigits(num: number, number = 2): number {
 }
 
 export function getFilenameWithoutExtension(url: string) {
-  const fileNameWithExtension = url.substring(url.lastIndexOf("/") + 1);
+  const filenameWithExtension = url.substring(url.lastIndexOf("/") + 1);
 
-  return fileNameWithExtension.split(".").slice(0, -1).join(".");
+  return filenameWithExtension.split(".").slice(0, -1).join(".");
 }
 
 export function getS(value: number, s = "s") {
-  return value > 1 ? s : "";
+  return value !== 1 ? s : "";
+}
+
+export function stringify<R>(result: R) {
+  try {
+    return JSON.stringify(result);
+  } catch (e) {
+    return result && typeof result.toString === "function"
+      ? result.toString()
+      : "[Unable to stringify value]";
+  }
 }
