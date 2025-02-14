@@ -4,8 +4,9 @@ import { SuiNetworkName } from "./config";
 import { getSuiNetworkName } from "./network-ids";
 import { makeSuiClient } from "./util";
 
-const SINGLE_EXECUTION_TIMEOUT_MS = 7_000;
-const ALL_EXECUTIONS_TIMEOUT_MS = 30_000;
+export const SINGLE_EXECUTION_TIMEOUT_MS = 7_000;
+export const ALL_EXECUTIONS_TIMEOUT_MS = 30_000;
+export const BLOCK_NUMBER_EXECUTION_TIMEOUT_MS = 1_500;
 
 export class SuiClientBuilder {
   private urls: string[] = [];
@@ -21,8 +22,15 @@ export class SuiClientBuilder {
     return MultiExecutor.create(
       clients,
       {
-        getChainIdentifier: MultiExecutor.ExecutionMode.CONSENSUS_ALL_EQUALS,
+        getChainIdentifier: MultiExecutor.ExecutionMode.CONSENSUS_ALL_EQUAL,
         signAndExecuteTransaction: MultiExecutor.ExecutionMode.RACE,
+        getLatestCheckpointSequenceNumber:
+          new MultiExecutor.CeilMedianConsensusExecutor(
+            MultiExecutor.DEFAULT_CONFIG.consensusQuorumRatio,
+            BLOCK_NUMBER_EXECUTION_TIMEOUT_MS
+          ),
+        getReferenceGasPrice: MultiExecutor.ExecutionMode.AGREEMENT,
+        getBalance: MultiExecutor.ExecutionMode.AGREEMENT,
       },
       { ...MultiExecutor.DEFAULT_CONFIG, ...config }
     );
@@ -54,7 +62,7 @@ export class SuiClientBuilder {
     return this;
   }
 
-  build(): SuiClient {
+  build() {
     if (!this.network) {
       throw new Error("Network not set");
     }
@@ -72,7 +80,7 @@ export class SuiClientBuilder {
     return SuiClientBuilder.makeMultiExecutor(clients);
   }
 
-  async buildAndVerify(): Promise<SuiClient> {
+  async buildAndVerify() {
     const megaClient = this.build();
 
     const chainId = await megaClient.getChainIdentifier();

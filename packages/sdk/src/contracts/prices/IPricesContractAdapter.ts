@@ -18,7 +18,8 @@ export interface IPricesContractAdapter {
   // Reads the lastly written to the contract's storage aggregated price values for the feeds passed through the
   // paramsProvider. It doesn't modify the contract's storage and also doesn't take the RedStone payload as an argument
   readPricesFromContract(
-    paramsProvider: ContractParamsProvider
+    paramsProvider: ContractParamsProvider,
+    blockNumber?: number
   ): Promise<BigNumberish[]>;
 
   // Reads the timestamp of the lastly written values to the contract's storage.
