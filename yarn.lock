@@ -5501,12 +5501,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@mysten/bcs@npm:1.2.1, @mysten/bcs@npm:^1.2.1":
-  version: 1.2.1
-  resolution: "@mysten/bcs@npm:1.2.1"
+"@mysten/bcs@npm:1.4.0, @mysten/bcs@npm:^1.4.0":
+  version: 1.4.0
+  resolution: "@mysten/bcs@npm:1.4.0"
   dependencies:
     bs58: "npm:^6.0.0"
-  checksum: 10c0/f517091c3f0fddee389e3791058ac990a89524c2bfc7e563fb13518b32a464e998d64ee9871770c5d35984195eea1ed2be4f13df65425c61bc749116aa1d06e7
+  checksum: 10c0/50696c6cd3bb14406b9c6e5ee7d23ea59668f121cc68755b63406481ce85ae5cb0c25bf74a0320d47f2f66bb60f25ad26c3d0dabfe1879012488b3a6c8eae121
   languageName: node
   linkType: hard
 
@@ -5520,12 +5520,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@mysten/sui@npm:^1.21.0":
-  version: 1.21.0
-  resolution: "@mysten/sui@npm:1.21.0"
+"@mysten/sui@npm:^1.21.2":
+  version: 1.21.2
+  resolution: "@mysten/sui@npm:1.21.2"
   dependencies:
     "@graphql-typed-document-node/core": "npm:^3.2.0"
-    "@mysten/bcs": "npm:1.2.1"
+    "@mysten/bcs": "npm:1.4.0"
     "@noble/curves": "npm:^1.4.2"
     "@noble/hashes": "npm:^1.4.0"
     "@scure/bip32": "npm:^1.4.0"
@@ -5537,7 +5537,7 @@ __metadata:
     jose: "npm:^5.6.3"
     poseidon-lite: "npm:^0.2.0"
     valibot: "npm:^0.36.0"
-  checksum: 10c0/ffe191f7ef17cb9adb33ccb587950f1d68ddfb2eb1b3e4155815c5bdadba6e16a35c7aa049915e02c4285553e1c452969d2c7384f5234100bc96a55eb9e17daf
+  checksum: 10c0/b1e7dc5f00708f204d43ecd816aa60533eb52711ead588cea8adfe316a5ff698ed60601242a0d436f5030540cb258e438859a70dfcb60959dc61dd1cfee00f3a
   languageName: node
   linkType: hard
 
@@ -8259,7 +8259,7 @@ __metadata:
   dependencies:
     "@aws-sdk/client-ssm": "npm:^3.696.0"
     "@influxdata/influxdb-client": "npm:^1.35.0"
-    "@mysten/sui": "npm:^1.21.0"
+    "@mysten/sui": "npm:^1.21.2"
     "@redstone-finance/chain-configs": "npm:0.7.5"
     "@redstone-finance/evm-multicall": "npm:0.7.5"
     "@redstone-finance/internal-utils": "npm:0.7.5"
@@ -8430,6 +8430,7 @@ __metadata:
     "@redstone-finance/internal-utils": "npm:0.7.5"
     "@redstone-finance/on-chain-relayer": "npm:0.7.5"
     "@redstone-finance/on-chain-relayer-common": "npm:0.7.5"
+    "@redstone-finance/oracles-smartweave-contracts": "npm:0.7.5"
     "@redstone-finance/sdk": "npm:0.7.5"
     "@redstone-finance/utils": "npm:0.7.5"
     dotenv: "npm:^16.0.3"
@@ -8777,9 +8778,9 @@ __metadata:
   resolution: "@redstone-finance/sui-connector@workspace:packages/sui-connector"
   dependencies:
     "@ledgerhq/hw-transport-node-hid": "npm:^6.29.5"
-    "@mysten/bcs": "npm:^1.2.1"
+    "@mysten/bcs": "npm:^1.4.0"
     "@mysten/ledgerjs-hw-app-sui": "npm:^0.4.2"
-    "@mysten/sui": "npm:^1.21.0"
+    "@mysten/sui": "npm:^1.21.2"
     "@redstone-finance/oracles-smartweave-contracts": "npm:0.7.5"
     "@redstone-finance/sdk": "npm:0.7.5"
     "@redstone-finance/utils": "npm:0.7.5"

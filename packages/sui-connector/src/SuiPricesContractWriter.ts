@@ -1,0 +1,111 @@
+import { Transaction } from "@mysten/sui/transactions";
+import { SUI_CLOCK_OBJECT_ID } from "@mysten/sui/utils";
+import {
+  ContractParamsProvider,
+  convertDataPackagesResponse,
+  DataPackagesResponse,
+  extractSignedDataPackagesForFeedId,
+} from "@redstone-finance/sdk";
+import { loggerFactory } from "@redstone-finance/utils";
+import { utils } from "ethers";
+import { version } from "../package.json";
+import { SuiContractUtil } from "./SuiContractUtil";
+import { SuiTxDeliveryMan } from "./SuiTxDeliveryMan";
+import { SuiConfig } from "./config";
+import { makeFeedIdBytes, uint8ArrayToBcs } from "./util";
+
+const DEFAULT_GAS_MULTIPLIER_BASE = 1.4;
+const DEFAULT_MAX_TX_SEND_ATTEMPTS = 8;
+
+export class SuiPricesContractWriter {
+  protected readonly logger = loggerFactory("sui-prices-writer");
+
+  constructor(
+    private readonly deliveryMan: SuiTxDeliveryMan,
+    private readonly config: SuiConfig
+  ) {}
+
+  async writePricesFromPayloadToContract(
+    paramsProvider: ContractParamsProvider
+  ) {
+    let iterationIndex = 0;
+    const metadataTimestamp = Date.now();
+    const tx = await this.prepareWritePricesTransaction(
+      paramsProvider,
+      metadataTimestamp
+    );
+
+    return await this.deliveryMan.sendTransaction(tx, async () => {
+      iterationIndex += 1;
+
+      if (
+        iterationIndex >=
+        (this.config.maxTxSendAttempts ?? DEFAULT_MAX_TX_SEND_ATTEMPTS)
+      ) {
+        return;
+      }
+
+      return await this.prepareWritePricesTransaction(
+        paramsProvider,
+        metadataTimestamp,
+        iterationIndex
+      );
+    });
+  }
+
+  private async prepareWritePricesTransaction(
+    paramsProvider: ContractParamsProvider,
+    metadataTimestamp: number,
+    iterationIndex = 0
+  ) {
+    const gasMultiplierBase =
+      this.config.gasMultiplier ?? DEFAULT_GAS_MULTIPLIER_BASE;
+
+    const tx = await SuiContractUtil.prepareBaseTransaction(
+      this.deliveryMan.client,
+      gasMultiplierBase ** iterationIndex,
+      this.config.writePricesTxGasBudget,
+      this.deliveryMan.keypair
+    );
+
+    const dataPackagesResponse: DataPackagesResponse =
+      await paramsProvider.requestDataPackages();
+
+    const unsignedMetadata =
+      SuiPricesContractWriter.getUnsignedMetadata(metadataTimestamp);
+
+    paramsProvider.getDataFeedIds().forEach((feedId) => {
+      const dataPackages = extractSignedDataPackagesForFeedId(
+        dataPackagesResponse,
+        feedId
+      );
+      if (!dataPackages.length) {
+        return this.logger.warn(`No data packages found for "${feedId}"`);
+      }
+      const payload = convertDataPackagesResponse(
+        { [feedId]: dataPackages },
+        "string",
+        unsignedMetadata
+      );
+
+      this.writePrice(tx, feedId, payload);
+    });
+    return tx;
+  }
+
+  private writePrice(tx: Transaction, feedId: string, payload: string) {
+    tx.moveCall({
+      target: `${this.config.packageId}::price_adapter::write_price`,
+      arguments: [
+        tx.object(this.config.priceAdapterObjectId),
+        tx.pure(uint8ArrayToBcs(makeFeedIdBytes(feedId))),
+        tx.pure(uint8ArrayToBcs(utils.arrayify("0x" + payload))),
+        tx.object(SUI_CLOCK_OBJECT_ID), // Clock object ID
+      ],
+    });
+  }
+
+  private static getUnsignedMetadata(metadataTimestamp: number): string {
+    return `${metadataTimestamp}#${version}#data-packages-wrapper`;
+  }
+}
