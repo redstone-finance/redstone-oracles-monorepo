@@ -1,0 +1,15 @@
+{
+  "chain": {
+    "name": "megaEthTestnet",
+    "id": 1338
+  },
+  "adapterContract": "0x6D4B25c672b950623b8482F2D41E686875dDf729",
+  "adapterContractType": "multi-feed",
+  "dataServiceId": "redstone-megaeth-testnet",
+  "updateTriggers": {},
+  "priceFeeds": {
+    "ETH": {
+      "priceFeedAddress": "0xc1F550F407cCA20D9b30c3edE469b9DA7539838d"
+    }
+  }
+}
