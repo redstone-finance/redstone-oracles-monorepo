@@ -12,12 +12,14 @@
     "pack-package": "yarn build && global:npm pack",
     "lint": "yarn global:eslint .",
     "lint:fix": "yarn global:eslint --fix .",
-    "test": "yarn global:jest:cov",
+    "prepare": "yarn global:ts-node ./scripts/prepare-test-env.ts",
+    "test": "yarn global:jest:cov --runInBand",
     "sample-run": "yarn global:ts-node scripts/sample-run.ts",
-    "price-adapter-address": "yarn global:ts-node ./movement/scripts/object-address.ts",
-    "deploy-sdk": "CONTRACT_NAME=redstone_sdk yarn global:ts-node ./scripts/deploy",
-    "deploy-price_adapter": "CONTRACT_NAME=price_adapter yarn global:ts-node ./scripts/deploy",
-    "deploy-price_feed": "CONTRACT_NAME=price_feed yarn global:ts-node ./scripts/deploy"
+    "price-adapter-address": "yarn global:ts-node ./scripts/object-address.ts",
+    "derive-address": "yarn global:ts-node ./scripts/address-derive-from-priv.ts",
+    "deploy-sdk": "CONTRACT_NAME=redstone_sdk yarn global:ts-node ./scripts/deploy-runner",
+    "deploy-price_adapter": "CONTRACT_NAME=price_adapter yarn global:ts-node ./scripts/deploy-runner",
+    "deploy-price_feed": "CONTRACT_NAME=price_feed yarn global:ts-node ./scripts/deploy-runner"
   },
   "dependencies": {
     "@aptos-labs/ts-sdk": "^1.33.2",

@@ -68,8 +68,9 @@ export class MovementWriteContractAdapter
     const transaction = await this.prepareTransaction(
       "price_adapter",
       "write_prices",
-      [this.priceAdapterObjectAddress.toString(), feedIds, payload]
+      [this.priceAdapterObjectAddress, feedIds, payload]
     );
+
     this.verifyTransactionLength(transaction);
 
     return await this.signAndPublish(transaction);
