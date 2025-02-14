@@ -1,17 +1,19 @@
-import { MoveVector } from "@aptos-labs/ts-sdk";
-import { hexlify } from "@ethersproject/bytes";
 import {
   ContractData,
   type ContractParamsProvider,
+  convertDataPackagesResponse,
+  extractSignedDataPackagesForFeedId,
   IMultiFeedPricesContractAdapter,
 } from "@redstone-finance/sdk";
+import { loggerFactory } from "@redstone-finance/utils";
 import { BigNumberish } from "ethers";
 import { IMovementContractAdapter } from "./types";
-import { feedIdHexToMoveVector, makeFeedIdBytes } from "./utils";
 
 export class MovementPricesContractAdapter
   implements IMultiFeedPricesContractAdapter
 {
+  private readonly logger = loggerFactory("movement-contract-adapter");
+
   constructor(private readonly adapter: IMovementContractAdapter) {}
 
   //eslint-disable-next-line @typescript-eslint/require-await
@@ -27,16 +29,32 @@ export class MovementPricesContractAdapter
     if (!this.adapter.writer) {
       throw new Error("Adapter not set up for writes");
     }
-    const feedIdsHex = paramsProvider.getDataFeedIds().map((feedId) => {
-      return hexlify(makeFeedIdBytes(feedId));
-    });
 
-    const payload = await paramsProvider.getPayloadHex();
+    const dataPackagesResponse = await paramsProvider.requestDataPackages();
 
-    return await this.adapter.writer.writePrices(
-      new MoveVector(feedIdsHex.map(feedIdHexToMoveVector)),
-      MoveVector.U8(payload)
-    );
+    const payloads = [];
+
+    for (const feedId of paramsProvider.getDataFeedIds()) {
+      const dataPackages = extractSignedDataPackagesForFeedId(
+        dataPackagesResponse,
+        feedId
+      );
+      if (!dataPackages.length) {
+        this.logger.warn(`No data packages found for "${feedId}"`);
+        continue;
+      }
+      const payload = convertDataPackagesResponse(
+        { [feedId]: dataPackages },
+        "string"
+      );
+
+      payloads.push({
+        payload,
+        feedId,
+      });
+    }
+
+    return await this.adapter.writer.writePricesBatch(payloads);
   }
 
   async getUniqueSignerThreshold(): Promise<number> {
