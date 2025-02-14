@@ -7,8 +7,8 @@ import { makeAptos } from "./utils";
 async function main() {
   const paramsProvider = new ContractParamsProvider({
     dataServiceId: "redstone-primary-prod",
-    uniqueSignersCount: 2,
-    dataPackagesIds: ["LBTC", "BTC", "ETH"],
+    uniqueSignersCount: 3,
+    dataPackagesIds: ["ETH", "BTC"],
     authorizedSigners: getSignersForDataServiceId("redstone-primary-prod"),
   });
   const { account, network, url } = getEnvParams(["CONTRACT_NAME"]);
