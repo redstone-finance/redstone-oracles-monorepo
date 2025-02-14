@@ -30,10 +30,10 @@ const WRITE_TEST_TIMEOUT = 20_000;
 const WAIT_TS = 5_000;
 const HOUR_MS = 3_600_000;
 const DATA_SERVICE_ID = "redstone-primary-prod";
-const FEED_ETH = "ETH";
 const FEED_BTC = "BTC";
-const FEED_LBTC = "LBTC";
-const DATA_PACKAGES_IDS = [FEED_ETH, FEED_BTC, FEED_LBTC];
+const FEED_ETH = "ETH";
+const DATA_PACKAGES_IDS = [FEED_ETH, FEED_BTC];
+const SIGNERS_COUNT = 3;
 
 jest.setTimeout(TEST_FILE_TIMEOUT);
 
@@ -96,7 +96,7 @@ describe("MovementPricesContractAdapter", () => {
       contractParamsProviderMultiple = new ContractParamsProvider({
         dataServiceId: DATA_SERVICE_ID,
         dataPackagesIds: DATA_PACKAGES_IDS,
-        uniqueSignersCount: 2,
+        uniqueSignersCount: SIGNERS_COUNT,
         authorizedSigners: getSignersForDataServiceId(DATA_SERVICE_ID),
       });
     });
@@ -119,7 +119,7 @@ describe("MovementPricesContractAdapter", () => {
       contractParamsProviderMultiple = new ContractParamsProvider({
         dataServiceId: DATA_SERVICE_ID,
         dataPackagesIds: DATA_PACKAGES_IDS,
-        uniqueSignersCount: 2,
+        uniqueSignersCount: SIGNERS_COUNT,
         authorizedSigners: getSignersForDataServiceId(DATA_SERVICE_ID),
       });
     });
@@ -135,7 +135,7 @@ describe("MovementPricesContractAdapter", () => {
       });
 
       // this would fail if ETH flipped BTC
-      expect(result[1] < result[2]).toBeTruthy();
+      expect(result[0] < result[1]).toBeTruthy();
     });
   });
 
