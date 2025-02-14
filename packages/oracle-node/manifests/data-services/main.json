@@ -3224,6 +3224,19 @@
       "denomination": "USD",
       "rateFeed": false
     },
+    "USDtb_FUNDAMENTAL": {
+      "source": ["ethereum-ethena-usdtb"],
+      "denomination": "USD",
+      "rateFeed": true,
+      "valueCapConfig": {
+        "upper": {
+          "value": 1.02
+        },
+        "lower": {
+          "value": 0.98
+        }
+      }
+    },
     "BERA": {
       "source": [
         "binance-bnb",
@@ -6742,7 +6755,7 @@
       "rateFeed": false
     },
     "LBTC_FUNDAMENTAL": {
-      "source": ["lbtc"],
+      "source": ["lbtc-indexer-fetcher"],
       "deviationCheck": {
         "deviationWithRecentValues": {
           "maxPercent": 10,
@@ -6751,7 +6764,7 @@
       },
       "valueCapConfig": {
         "upper": {
-          "value": 1.005
+          "value": 1
         },
         "lower": {
           "value": 0.995
@@ -6761,7 +6774,7 @@
       "rateFeed": true
     },
     "LBENCH": {
-      "source": ["lbtc"],
+      "source": ["lbtc-indexer-fetcher"],
       "deviationCheck": {
         "deviationWithRecentValues": {
           "maxPercent": 100,
