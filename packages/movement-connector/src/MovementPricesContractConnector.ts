@@ -4,7 +4,6 @@ import { MovementPricesContractAdapter } from "./MovementPricesContractAdapter";
 import { MovementViewContractAdapter } from "./MovementViewContractAdapter";
 import { MovementWriteContractAdapter } from "./MovementWriteContractAdapter";
 import { IMovementContractAdapter } from "./types";
-
 export class MovementPricesContractConnector extends MovementContractConnector<MovementPricesContractAdapter> {
   private readonly packageObjectAddress: AccountAddress;
   private readonly priceAdapterObjectAddress: AccountAddress;

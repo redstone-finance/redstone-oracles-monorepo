@@ -1,9 +1,9 @@
 import { AccountAddress } from "@aptos-labs/ts-sdk";
 import {
   getPriceAdapterObjectAddress,
-  makeAptos,
   objectAddressForDeployment,
-} from "./utils";
+} from "./deploy-utils";
+import { makeAptos } from "./utils";
 
 function isObjectAddressQuery(args: string[]) {
   return args.length == 2 && args[1] == "--object-address";

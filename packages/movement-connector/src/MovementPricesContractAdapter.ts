@@ -9,8 +9,6 @@ import { BigNumberish } from "ethers";
 import { IMovementContractAdapter } from "./types";
 import { feedIdHexToMoveVector, makeFeedIdBytes } from "./utils";
 
-export const SEED = "RedstonePriceAdapter";
-
 export class MovementPricesContractAdapter
   implements IMultiFeedPricesContractAdapter
 {
