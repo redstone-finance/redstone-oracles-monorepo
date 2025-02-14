@@ -8,31 +8,29 @@ FEED_ETH=0x4554480000000000000000000000000000000000000000000000000000000000
 FEED_BTC=0x4254430000000000000000000000000000000000000000000000000000000000
 
 # ignored so clean will always run
-.IGNORE: install-movement install-movement-loop clean prepare-cli
+.IGNORE: install-movement clean prepare-cli update-aptos-core-deps
 
 prepare-cli:
 	git clone https://github.com/movementlabsxyz/aptos-core.git	
 	cd aptos-core && git checkout movement-cli-v3.5.0
-	
-install-movement:
-	$(INSTALL_MOVEMENT)
 
-install-movement-loop:
+update-aptos-core-deps:
+	@echo "Updating Cargo.toml to use specific version instead of revision."
 	@cd aptos-core && \
-	n=0; while [ $$n -lt $(N) ] || [ $$? -ne 0 ]; do \
-		cargo install --locked --bin movement --path crates/aptos --profile cli; \
-		n=$$(($$n + 1)); \
-	done
+	sed -i '' 's|tonic = { git = "https://github.com/aptos-labs/tonic.git", rev = "0da1ba8b1751d6e19eb55be24cccf9ae933c666e" }|tonic = { git = "https://github.com/aptos-labs/tonic.git" }|' Cargo.toml
+
+install-movement:
+	@echo "Instaling movement-cli with cargo install."
+	@cd aptos-core && \
+	cargo install --locked --bin movement --path crates/aptos --profile cli
 
 clean:
 	rm -rf aptos-core
 
+install-cli: prepare-cli update-aptos-core-deps install-movement clean
+
 init-movement:
 	movement init --skip-faucet
-
-install-cli-brute-force: prepare-cli install-movement-loop clean
-
-install-cli: prepare-cli install-movement clean
 
 default-public-key:
 	$(PUBLIC_KEY)
