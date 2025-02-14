@@ -18,6 +18,7 @@
         "timeSinceLastUpdateInMilliseconds": 86400000
       }
     },
-    "BTC": {}
+    "BTC": {},
+    "LBTC": {}
   }
 }
