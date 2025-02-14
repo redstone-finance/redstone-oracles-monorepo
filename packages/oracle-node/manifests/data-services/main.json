@@ -3317,6 +3317,25 @@
       "denomination": "BTC",
       "rateFeed": true
     },
+    "IP": {
+      "source": [
+        "bingx-usdt",
+        "bitget-usdt",
+        "bitmart-usdt",
+        "bitrue-usdt",
+        "bybit-usdt",
+        "coinbasepro-usd",
+        "coingecko",
+        "gate-usdt",
+        "kucoin-usdt",
+        "lbank-usdt",
+        "mexc-usdt",
+        "okx-usdt",
+        "xt"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
     "BAT": {
       "denomination": "USD",
       "rateFeed": false
