@@ -8,7 +8,7 @@ Use `custom` network type and provide above custom URL for tests with testnet.
 
 ### Deploying and testing
 
-[Install aptos cli](https://aptos.dev/en/build/cli) - Compile the version 3.5.0 of movement CLI.
+[Install aptos cli](https://aptos.dev/en/build/cli) - Compile the version 3.5.0 of movement CLI or use `make install-cli`.
 [Setup localnet](https://aptos.dev/en/build/cli/running-a-local-network)
 
 Ensure you have the move account config in `movement/.movement/config.yaml`.
@@ -22,7 +22,7 @@ Run deploy:
 - PRIVATE_KEY is a private key of `secp256k1` type and must be provided in hex format.
   It is optional parameter, if not specified then `./movement/config.yaml` private key is used.
 
-All hex stirngs can be suplied with leading `0x` or without.
+All hex strings can start with leading `0x` or without.
 
 ```sh
 NETWORK=localnet yarn deploy
@@ -30,10 +30,25 @@ NETWORK=localnet yarn deploy
 
 ### Tests
 
-```sh
-NETWORK=localnet PACKAGE_ADDRESS=... PRIVATE_KEY=... yarn sample-run
-NETWORK=localnet PACKAGE_ADDRESS=... PRIVATE_KEY=... yarn test
-```
+To test MovementPricesContractAdapter i MovementPricesContractConnector follow the steps below.
+
+* Start the node locally.
+
+  ```sh
+  movement node run-localnet --force-restart --assume-yes
+  ```
+
+* Prepare node for test deploying all the required contracts. You have to do it only once until your node is running.
+
+  ```sh
+  yarn prepare
+  ```
+
+* Run the test.
+
+  ```sh
+  yarn test
+  ```
 
 ### Multisig
 
@@ -47,4 +62,4 @@ We use multisig flow implemented in the [multisig](https://github.com/movementla
 See [multisig.ts](./scripts/multisig.ts) for implementation in the typescript of the multisig transactions.
 
 ### Deployements
-We addopted the object-code-deployment model, see [object-code-deployment](https://aptos.dev/en/build/smart-contracts/deployment) and [deploy-script](./scripts/deploy.ts).
+We adopted the object-code-deployment model, see [object-code-deployment](https://aptos.dev/en/build/smart-contracts/deployment) and [deploy-script](./scripts/deploy.ts).

@@ -1,4 +1,3 @@
-
 DATA_GENERATOR=../../../packages/sdk/scripts/payload-generator
 DATA_DIR=$(DATA_GENERATOR)/data
 PUBLIC_KEY=movement config show-profiles --profile default | jq .Result.default.account
@@ -9,20 +8,31 @@ FEED_ETH=0x4554480000000000000000000000000000000000000000000000000000000000
 FEED_BTC=0x4254430000000000000000000000000000000000000000000000000000000000
 
 # ignored so clean will always run
-.IGNORE: install-movement clean
+.IGNORE: install-movement install-movement-loop clean prepare-cli
 
-install-cli: install-movement clean
-
-install-movement:
+prepare-cli:
 	git clone https://github.com/movementlabsxyz/aptos-core.git	
 	cd aptos-core && git checkout movement-cli-v3.5.0
-	cd aptos-core && cargo install --locked --bin movement --path crates/aptos --profile cli
+	
+install-movement:
+	$(INSTALL_MOVEMENT)
+
+install-movement-loop:
+	@cd aptos-core && \
+	n=0; while [ $$n -lt $(N) ] || [ $$? -ne 0 ]; do \
+		cargo install --locked --bin movement --path crates/aptos --profile cli; \
+		n=$$(($$n + 1)); \
+	done
 
 clean:
 	rm -rf aptos-core
 
 init-movement:
 	movement init --skip-faucet
+
+install-cli-brute-force: prepare-cli install-movement-loop clean
+
+install-cli: prepare-cli install-movement clean
 
 default-public-key:
 	$(PUBLIC_KEY)
