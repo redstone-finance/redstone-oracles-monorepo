@@ -58,10 +58,7 @@ export function makeSuiKeypair(privateKey?: string): Keypair {
   );
 }
 
-export function makeSuiClient(
-  network: SuiNetworkName | number,
-  url?: string
-): SuiClient {
+export function makeSuiClient(network: SuiNetworkName | number, url?: string) {
   let networkName;
   if (typeof network === "number") {
     networkName = getSuiNetworkName(network);
