@@ -1,11 +1,13 @@
 import { getSSMParameterValue } from "@redstone-finance/internal-utils";
 import { RedstoneCommon } from "@redstone-finance/utils";
 import _ from "lodash";
+import { ChainType, makeRpcUrlsSsmKey } from "./ChainType";
 
 export type FetchRpcUrlsFromSsmOpts = {
   type: "fallback" | "main";
   env: "dev" | "prod" | "staging";
   chainIds: number[];
+  chainType?: ChainType;
 };
 
 export type FetchRpcUrlsFromSsmResult = Record<number, string[] | undefined>;
@@ -30,7 +32,7 @@ export async function fetchRpcUrlsFromSsm(
     await Promise.all(
       chainIds.map(async (chainId) => {
         const rpcUrlsForChainId = await fetchRpcUrlsFromSsmByChainId(
-          chainId,
+          makeRpcUrlsSsmKey(chainId, opts.chainType),
           opts.env,
           opts.type
         );
