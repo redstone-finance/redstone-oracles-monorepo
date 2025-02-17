@@ -1002,6 +1002,86 @@
       "fallbackToEthMaxPriorityFeePerGas": true,
       "twoDimensionalFees": false,
       "isMainnet": true
+    },
+    "sui-testnet": {
+      "name": "Sui Testnet",
+      "chainId": 1282977196,
+      "chainType": "sui",
+      "currencySymbol": "SUI",
+      "publicRpcUrls": [
+        "https://rpc.ankr.com/sui_testnet",
+        "https://sui-testnet.public.blastapi.io",
+        "https://api.blockeden.xyz/sui/testnet/jBQLBdEWG4xk6fmaWshS",
+        "https://sui-testnet-endpoint.blockvision.org/",
+        "https://sui-testnet.nodeinfra.com",
+        "https://sui-testnet-rpc.publicnode.com"
+      ],
+      "avgBlockTimeMs": 1000,
+      "multicall3": {
+        "address": "",
+        "type": "Multicall3"
+      },
+      "isAuctionModel": false,
+      "fallbackToEthMaxPriorityFeePerGas": true,
+      "twoDimensionalFees": false,
+      "isMainnet": false
+    },
+    "sui": {
+      "name": "Sui",
+      "chainId": 897796746,
+      "chainType": "sui",
+      "currencySymbol": "SUI",
+      "publicRpcUrls": [
+        "https://rpc.ankr.com/sui",
+        "https://sui-mainnet.public.blastapi.io",
+        "https://1rpc.io/sui",
+        "https://api.blockeden.xyz/sui/jBQLBdEWG4xk6fmaWshS",
+        "https://sui.blockpi.network/v1/rpc/public",
+        "https://sui-mainnet-endpoint.blockvision.org/",
+        "https://go.getblock.io/5d7b382a4a5f4cb19a3fa630a8fd4439",
+        "https://endpoints.omniatech.io/v1/sui/mainnet/public"
+      ],
+      "avgBlockTimeMs": 1000,
+      "multicall3": {
+        "address": "",
+        "type": "Multicall3"
+      },
+      "isAuctionModel": false,
+      "fallbackToEthMaxPriorityFeePerGas": true,
+      "twoDimensionalFees": false,
+      "isMainnet": true
+    },
+    "movement-testnet": {
+      "name": "Movement Testnet",
+      "chainId": 177,
+      "chainType": "movement",
+      "currencySymbol": "MOVE",
+      "publicRpcUrls": ["https://aptos.testnet.porto.movementlabs.xyz/v1"],
+      "avgBlockTimeMs": 1000,
+      "multicall3": {
+        "address": "",
+        "type": "Multicall3"
+      },
+      "isAuctionModel": false,
+      "fallbackToEthMaxPriorityFeePerGas": true,
+      "twoDimensionalFees": false,
+      "isMainnet": false
+    },
+    "radix-stokenet": {
+      "name": "Radix Stokenet",
+      "chainId": 2,
+      "chainType": "radix",
+      "currencySymbol": "XRD",
+      "publicRpcUrls": ["https://stokenet.radixdlt.com"],
+      "avgBlockTimeMs": 1000,
+      "multicall3": {
+        "address": "",
+        "type": "Multicall3"
+      },
+      "isAuctionModel": false,
+      "fallbackToEthMaxPriorityFeePerGas": true,
+      "twoDimensionalFees": false,
+      "isMainnet": false
     }
   },
   "temporaryConfigUpdates": {

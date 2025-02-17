@@ -1,8 +1,11 @@
 import { z } from "zod";
 import chainConfigs from "../manifest/chain-configs.json";
 
+import { ChainTypeSchema } from "./ChainType";
+
 export const ChainConfigSchema = z.object({
   chainId: z.number().positive(),
+  chainType: ChainTypeSchema.default("evm"),
   name: z.string(),
   publicRpcUrls: z.string().url().array(),
   currencySymbol: z.string(),
