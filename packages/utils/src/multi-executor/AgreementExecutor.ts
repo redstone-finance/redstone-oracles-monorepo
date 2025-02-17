@@ -11,7 +11,7 @@ export class AgreementExecutor extends ParallelExecutor {
 
   protected override aggregate<R>(results: R[]): R {
     const modes = ParallelExecutor.getModes(results);
-    this.logger.info(`Found modes: ${stringify(modes)}`);
+    this.logger.debug(`Found modes: ${stringify(modes)}`);
 
     if (!modes) {
       throw new Error(
