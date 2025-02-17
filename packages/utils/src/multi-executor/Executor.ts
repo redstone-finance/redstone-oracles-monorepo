@@ -22,4 +22,5 @@ export abstract class Executor {
  * add rpc curated list
  * change getModes to return single element (max or sth)
  * RateExecutor can inherit from ParallelExecutor
+ * Promise batching
  */
