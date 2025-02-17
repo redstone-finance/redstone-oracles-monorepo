@@ -98,12 +98,13 @@ export class MultiExecutorFactory<T extends object> {
     key: keyof T,
     promises: (() => Promise<unknown>)[]
   ) {
-    const idf = Math.floor(Math.random() * 9000) + 1000;
     const mode = this.getMethodMode(key);
-    this.logger.info(
-      `[${idf} ${stringify(key)}] Executing ${promises.length} promise${getS(promises.length)}` +
+    this.logger.debug(
+      `[${stringify(key)}] Executing ${promises.length} promise${getS(promises.length)}` +
         ` with ${typeof mode === "string" ? mode : typeof mode}` +
-        ` and totalExecutionTimeout: ${this.config.allExecutionsTimeoutMs} [ms]`
+        this.config.allExecutionsTimeoutMs
+        ? ` and totalExecutionTimeout: ${this.config.allExecutionsTimeoutMs} [ms]`
+        : ""
     );
 
     const result = this.getExecutor(mode).execute(promises);
@@ -111,9 +112,7 @@ export class MultiExecutorFactory<T extends object> {
       result,
       this.config.allExecutionsTimeoutMs
     );
-    this.logger.debug(
-      `[${idf} ${stringify(key)}] Returning '${stringify(value)}'`
-    );
+    this.logger.debug(`[${stringify(key)}] Returning '${stringify(value)}'`);
     return value;
   }
 }
