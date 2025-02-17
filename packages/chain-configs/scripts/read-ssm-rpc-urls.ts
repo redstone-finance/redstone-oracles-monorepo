@@ -1,12 +1,18 @@
 import { RedstoneCommon } from "@redstone-finance/utils";
 import chalk from "chalk";
 import { z } from "zod";
-import { fetchRpcUrlsFromSsm, getLocalChainConfigs } from "../src";
+import {
+  ChainType,
+  fetchParsedRpcUrlsFromSsmByChainId,
+  getLocalChainConfigs,
+  makeRpcUrlsSsmKey,
+} from "../src";
 
 export type RpcUrlsPerChain = {
   [name: string]: {
     chainId: number;
     rpcUrls: string[];
+    chainType?: ChainType;
   };
 };
 
@@ -22,14 +28,7 @@ export const readSsmRpcUrls = async (
   const chainConfigs = getLocalChainConfigs();
   const rpcUrlsPerChain: RpcUrlsPerChain = {};
 
-  const chainIds = Object.values(chainConfigs).map((c) => c.chainId);
-  const rpcUrls = await fetchRpcUrlsFromSsm({
-    chainIds: chainIds,
-    type: isFallback ? "fallback" : "main",
-    env,
-  });
-
-  for (const { name, chainId } of Object.values(chainConfigs)) {
+  for (const { name, chainId, chainType } of Object.values(chainConfigs)) {
     if (
       name === "hardhat" ||
       (specificChainId && chainId !== specificChainId)
@@ -37,13 +36,15 @@ export const readSsmRpcUrls = async (
       continue;
     }
     try {
-      if (!rpcUrls[chainId]) {
-        throw new Error("missing rpc url in ssm");
-      }
+      const rpcUrls = await fetchParsedRpcUrlsFromSsmByChainId(
+        makeRpcUrlsSsmKey(chainId, chainType),
+        env,
+        isFallback ? "fallback" : "main"
+      );
 
       rpcUrlsPerChain[name] = {
         chainId,
-        rpcUrls: rpcUrls[chainId],
+        rpcUrls,
       };
     } catch (e) {
       console.log(
