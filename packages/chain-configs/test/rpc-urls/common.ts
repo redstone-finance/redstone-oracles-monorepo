@@ -2,7 +2,12 @@ import { loggerFactory, RedstoneCommon } from "@redstone-finance/utils";
 import chai from "chai";
 import { ethers } from "ethers";
 import { RpcUrlsPerChain } from "../../scripts/read-ssm-rpc-urls";
-import { getChainConfigByChainId, getLocalChainConfigs } from "../../src";
+import {
+  ChainConfig,
+  getChainConfigByChainId,
+  getLocalChainConfigs,
+  isEvmChainType,
+} from "../../src";
 
 const RETRY_CONFIG: Omit<RedstoneCommon.RetryConfig, "fn"> = {
   maxRetries: 3,
@@ -11,16 +16,17 @@ const RETRY_CONFIG: Omit<RedstoneCommon.RetryConfig, "fn"> = {
 const logger = loggerFactory("chain-config/rpc-urls");
 
 export const validateNetworkRpcUrls = (rpcUrlsPerChain: RpcUrlsPerChain) => {
-  for (const [name, { chainId, rpcUrls }] of Object.entries(rpcUrlsPerChain)) {
+  for (const [name, { chainId, rpcUrls, chainType }] of Object.entries(
+    rpcUrlsPerChain
+  )) {
     describe(`Network Validation for ${name} (${chainId})`, function () {
       before(function () {
         const chainConfig = getChainConfigByChainId(
           getLocalChainConfigs(),
-          chainId
+          chainId,
+          chainType
         );
-        if (chainConfig.disabled) {
-          this.skip();
-        }
+        skipIfDisabledOrNotSupported(this, chainConfig);
       });
 
       for (const rpcUrl of rpcUrls) {
@@ -67,16 +73,17 @@ export const validateBlockNumberAgreementBetweenRpcs = (
   rpcUrlsPerChain: RpcUrlsPerChain,
   tolerance: number
 ) => {
-  for (const [name, { chainId, rpcUrls }] of Object.entries(rpcUrlsPerChain)) {
+  for (const [name, { chainId, rpcUrls, chainType }] of Object.entries(
+    rpcUrlsPerChain
+  )) {
     describe(`Block Number Agreement Validation for ${name} (${chainId})`, function () {
       before(function () {
         const chainConfig = getChainConfigByChainId(
           getLocalChainConfigs(),
-          chainId
+          chainId,
+          chainType
         );
-        if (chainConfig.disabled) {
-          this.skip();
-        }
+        skipIfDisabledOrNotSupported(this, chainConfig);
       });
 
       let blockNumbers: { rpcUrl: string; blockNumber: number | null }[] = [];
@@ -141,3 +148,12 @@ const getRpcHost = (rpcUrl: string): string => {
   const url = new URL(rpcUrl);
   return url.host;
 };
+
+export function skipIfDisabledOrNotSupported(
+  subject: { skip: () => void },
+  chainConfig: ChainConfig
+) {
+  if (chainConfig.disabled || !isEvmChainType(chainConfig.chainType)) {
+    subject.skip();
+  }
+}

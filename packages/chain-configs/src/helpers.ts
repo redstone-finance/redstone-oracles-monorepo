@@ -6,6 +6,7 @@ import {
 } from "@redstone-finance/evm-multicall";
 import { RedstoneCommon } from "@redstone-finance/utils";
 import { Contract, Wallet } from "ethers";
+import { ChainType, conformsToChainType } from "./ChainType";
 import { ChainConfig, ChainConfigs } from "./schemes";
 
 export function getChainConfig(
@@ -41,11 +42,15 @@ export function getNetworkName(
 
 export function getChainConfigByChainId(
   chainConfigs: ChainConfigs,
-  chainId: number
+  chainId: number,
+  chainType?: ChainType
 ) {
   return RedstoneCommon.assertThenReturn(
-    Object.values(chainConfigs).find((c) => c.chainId === chainId),
-    `Failed to getChainConfigByChainId chainConfig not defined for ${chainId}`
+    Object.values(chainConfigs).find(
+      (c) =>
+        c.chainId === chainId && conformsToChainType(c.chainType, chainType)
+    ),
+    `Failed to getChainConfigByChainId chainConfig not defined for ${chainId}${chainType ? ` (chainType: ${chainType})` : ""}`
   );
 }
 
