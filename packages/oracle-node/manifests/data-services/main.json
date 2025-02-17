@@ -2087,7 +2087,7 @@
     },
     "SolvBTC.BBN_FUNDAMENTAL": {
       "source": ["ethereum-evm-fetcher-curve-rate-provider"],
-      "denomination": "BTC",
+      "denomination": "SolvBTC",
       "rateFeed": true
     },
     "fBOMB": {
