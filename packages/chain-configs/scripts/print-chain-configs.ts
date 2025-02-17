@@ -1,3 +1,4 @@
+import "dotenv/config";
 import { fetchChainConfigs } from "../src";
 
 const main = async () => {
