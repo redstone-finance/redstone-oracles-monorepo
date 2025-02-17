@@ -13,13 +13,16 @@ const validatePublicRpcUrls = () => {
   const chainConfigs = getLocalChainConfigs();
   const rpcUrlsPerChain: RpcUrlsPerChain = {};
 
-  for (const { name, chainId, publicRpcUrls } of Object.values(chainConfigs)) {
+  for (const { name, chainId, publicRpcUrls, chainType } of Object.values(
+    chainConfigs
+  )) {
     if (name === "hardhat" || CHAINS_TO_SKIP_RPC_CHECK.includes(name)) {
       continue;
     }
     rpcUrlsPerChain[name] = {
       chainId,
       rpcUrls: publicRpcUrls,
+      chainType,
     };
   }
 
