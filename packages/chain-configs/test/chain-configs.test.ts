@@ -6,9 +6,11 @@ import {
   ChainConfig,
   ChainConfigSchema,
   getLocalChainConfigs,
+  isEvmChainType,
   REDSTONE_MULTICALL3_ADDRESS,
   STANDARD_MULTICALL3_ADDRESS,
 } from "../src";
+import { skipIfDisabledOrNotSupported } from "./rpc-urls/common";
 
 const RETRY_CONFIG: Omit<RedstoneCommon.RetryConfig, "fn"> = {
   maxRetries: 2,
@@ -52,12 +54,19 @@ describe("Validate chain configs", () => {
   });
 });
 
+function shouldCheckMulticall(chainConfig: ChainConfig) {
+  return (
+    isEvmChainType(chainConfig.chainType) &&
+    !CHAINS_TO_SKIP_MULTICALL_ADDRESS_CHECK.includes(chainConfig.name)
+  );
+}
+
 describe("Validate multicall3", () => {
   it(`Each redstone multicall3 should have the same address`, function () {
     for (const chainConfig of Object.values(ChainConfigs)) {
       if (
         chainConfig.multicall3.type === "RedstoneMulticall3" &&
-        !CHAINS_TO_SKIP_MULTICALL_ADDRESS_CHECK.includes(chainConfig.name)
+        shouldCheckMulticall(chainConfig)
       ) {
         chai
           .expect(
@@ -73,7 +82,7 @@ describe("Validate multicall3", () => {
     for (const chainConfig of Object.values(ChainConfigs)) {
       if (
         chainConfig.multicall3.type === "Multicall3" &&
-        !CHAINS_TO_SKIP_MULTICALL_ADDRESS_CHECK.includes(chainConfig.name)
+        shouldCheckMulticall(chainConfig)
       ) {
         chai
           .expect(
@@ -94,9 +103,7 @@ describe("Validate multicall3", () => {
     }
 
     it(`Chain config for chain ${chainConfig.name} (${chainConfig.chainId}) should have a valid multicall3 address`, async function () {
-      if (chainConfig.disabled) {
-        this.skip();
-      }
+      skipIfDisabledOrNotSupported(this, chainConfig);
       try {
         await verifyMulticallAddress(chainConfig);
       } catch (e) {

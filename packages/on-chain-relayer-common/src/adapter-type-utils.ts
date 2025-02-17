@@ -22,7 +22,7 @@ export function isMultiFeedAdapterType(
 }
 
 export function isNonEvmAdapterType(
-  adapterContractType: AdapterType
+  adapterContractType?: AdapterType
 ): adapterContractType is NonEvmAdapterType {
   return NonEvmAdapterTypesEnum.safeParse(adapterContractType).success;
 }
@@ -42,7 +42,7 @@ export function getRpcUrlsPathComponent(
   adapterType?: AdapterType
 ) {
   let pathComponent = `${chainId}`;
-  if (adapterType && isNonEvmAdapterType(adapterType)) {
+  if (isNonEvmAdapterType(adapterType)) {
     pathComponent = `${getNonEvmNetworkName(adapterType)}/${pathComponent}`;
   }
   return pathComponent;
