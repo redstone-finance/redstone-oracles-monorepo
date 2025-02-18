@@ -11,7 +11,9 @@ import {
   requestDataPackages,
 } from "../src";
 
+// eslint-disable-next-line @typescript-eslint/no-unsafe-return
 jest.mock("../src/request-data-packages", () => ({
+  ...jest.requireActual("../src/request-data-packages"),
   requestDataPackages: jest
     .fn()
     .mockResolvedValue(mockSignedDataPackagesResponse),
@@ -81,5 +83,27 @@ describe("ContractParamsProvider tests", () => {
     const result = await sut.requestDataPackages();
     expect(requestDataPackages).toHaveBeenCalledWith(mockRequestParams);
     expect(result).toBe(mockSignedDataPackagesResponse);
+  });
+
+  it("should process known feeds into payload", async () => {
+    const overrideIds = ["ETH", "BTC", "missing0", "missing1"];
+    sut = new ContractParamsProvider(mockRequestParams, undefined, overrideIds);
+
+    const missing: string[] = [];
+    const expectedMissing = ["missing0", "missing1"];
+
+    const notMissing: string[] = [];
+    const expectedNotMissing = ["ETH", "BTC"];
+
+    await sut.prepareContractCallPayloads({
+      onFeedMissing: (feedId) => missing.push(feedId),
+      onFeedPayload: (feedId, _) => {
+        notMissing.push(feedId);
+        return Promise.resolve();
+      },
+    });
+
+    expect(missing).toStrictEqual(expectedMissing);
+    expect(notMissing).toStrictEqual(expectedNotMissing);
   });
 });
