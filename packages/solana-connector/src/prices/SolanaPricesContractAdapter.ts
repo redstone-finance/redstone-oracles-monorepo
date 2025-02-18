@@ -1,10 +1,10 @@
 import {
   ContractParamsProvider,
-  convertDataPackagesResponse,
   IExtendedPricesContractAdapter,
 } from "@redstone-finance/sdk";
 import { BigNumberish } from "ethers";
 
+import { loggerFactory } from "@redstone-finance/utils";
 import {
   Connection,
   Keypair,
@@ -16,6 +16,8 @@ import { PriceAdapterContract } from "../PriceContractAdapter";
 export class SolanaPricesContractAdapter
   implements IExtendedPricesContractAdapter
 {
+  protected readonly logger = loggerFactory("solana-prices-writer");
+
   private contract: PriceAdapterContract;
   constructor(
     readonly connection: Connection,
@@ -44,23 +46,20 @@ export class SolanaPricesContractAdapter
   async writePricesFromPayloadToContract(
     paramsProvider: ContractParamsProvider
   ): Promise<string | BigNumberish[]> {
-    const dataPackages = await paramsProvider.requestDataPackages();
-
     const tx = new Transaction();
 
-    for (const [feedId, dataPackage] of Object.entries(dataPackages)) {
-      const payload = convertDataPackagesResponse(
-        { [feedId]: dataPackage },
-        "bytes"
-      );
-      const ix = await this.contract.writePriceIx(
-        this.keypair.publicKey,
-        feedId,
-        payload
-      );
-
-      tx.add(ix);
-    }
+    await paramsProvider.prepareContractCallPayloads({
+      onFeedPayload: async (feedId, payload) => {
+        const ix = await this.contract.writePriceIx(
+          this.keypair.publicKey,
+          feedId,
+          payload
+        );
+        tx.add(ix);
+      },
+      onFeedMissing: (feedId) =>
+        this.logger.warn(`No data packages found for "${feedId}"`),
+    });
 
     return await sendAndConfirmTransaction(this.connection, tx, [this.keypair]);
   }
