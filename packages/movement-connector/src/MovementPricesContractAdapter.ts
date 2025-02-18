@@ -1,8 +1,6 @@
 import {
   ContractData,
   type ContractParamsProvider,
-  convertDataPackagesResponse,
-  extractSignedDataPackagesForFeedId,
   IMultiFeedPricesContractAdapter,
 } from "@redstone-finance/sdk";
 import { loggerFactory } from "@redstone-finance/utils";
@@ -30,29 +28,15 @@ export class MovementPricesContractAdapter
       throw new Error("Adapter not set up for writes");
     }
 
-    const dataPackagesResponse = await paramsProvider.requestDataPackages();
-
-    const payloads = [];
-
-    for (const feedId of paramsProvider.getDataFeedIds()) {
-      const dataPackages = extractSignedDataPackagesForFeedId(
-        dataPackagesResponse,
-        feedId
-      );
-      if (!dataPackages.length) {
-        this.logger.warn(`No data packages found for "${feedId}"`);
-        continue;
-      }
-      const payload = convertDataPackagesResponse(
-        { [feedId]: dataPackages },
-        "string"
-      );
-
-      payloads.push({
-        payload,
-        feedId,
-      });
-    }
+    const payloads: { feedId: string; payload: string }[] = [];
+    await paramsProvider.prepareContractCallPayloads({
+      onFeedPayload: (feedId, payload) => {
+        payloads.push({ feedId, payload });
+        return Promise.resolve();
+      },
+      onFeedMissing: (feedId) =>
+        this.logger.warn(`No data packages found for "${feedId}"`),
+    });
 
     return await this.adapter.writer.writePricesBatch(payloads);
   }
