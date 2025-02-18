@@ -1,14 +1,8 @@
 import { Transaction } from "@mysten/sui/transactions";
 import { SUI_CLOCK_OBJECT_ID } from "@mysten/sui/utils";
-import {
-  ContractParamsProvider,
-  convertDataPackagesResponse,
-  DataPackagesResponse,
-  extractSignedDataPackagesForFeedId,
-} from "@redstone-finance/sdk";
+import { ContractParamsProvider } from "@redstone-finance/sdk";
 import { loggerFactory } from "@redstone-finance/utils";
 import { utils } from "ethers";
-import { version } from "../package.json";
 import { SuiContractUtil } from "./SuiContractUtil";
 import { SuiTxDeliveryMan } from "./SuiTxDeliveryMan";
 import { SuiConfig } from "./config";
@@ -68,28 +62,16 @@ export class SuiPricesContractWriter {
       this.deliveryMan.keypair
     );
 
-    const dataPackagesResponse: DataPackagesResponse =
-      await paramsProvider.requestDataPackages();
-
-    const unsignedMetadata =
-      SuiPricesContractWriter.getUnsignedMetadata(metadataTimestamp);
-
-    paramsProvider.getDataFeedIds().forEach((feedId) => {
-      const dataPackages = extractSignedDataPackagesForFeedId(
-        dataPackagesResponse,
-        feedId
-      );
-      if (!dataPackages.length) {
-        return this.logger.warn(`No data packages found for "${feedId}"`);
-      }
-      const payload = convertDataPackagesResponse(
-        { [feedId]: dataPackages },
-        "string",
-        unsignedMetadata
-      );
-
-      this.writePrice(tx, feedId, payload);
+    await paramsProvider.prepareContractCallPayloads({
+      onFeedPayload: (feedId, payload) => {
+        this.writePrice(tx, feedId, payload);
+        return Promise.resolve();
+      },
+      onFeedMissing: (feedId) =>
+        this.logger.warn(`No data packages found for "${feedId}"`),
+      metadataTimestamp,
     });
+
     return tx;
   }
 
@@ -103,9 +85,5 @@ export class SuiPricesContractWriter {
         tx.object(SUI_CLOCK_OBJECT_ID), // Clock object ID
       ],
     });
-  }
-
-  private static getUnsignedMetadata(metadataTimestamp: number): string {
-    return `${metadataTimestamp}#${version}#data-packages-wrapper`;
   }
 }
