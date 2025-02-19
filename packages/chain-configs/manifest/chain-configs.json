@@ -523,7 +523,7 @@
       "currencySymbol": "BERA",
       "publicRpcUrls": [
         "https://bartio.rpc.berachain.com",
-        "https://bera-testnet.nodeinfra.com",
+        "https://berachain-testnet-rpc.publicnode.com",
         "https://bartio.drpc.org"
       ],
       "avgBlockTimeMs": 4000,
@@ -1086,9 +1086,6 @@
   },
   "temporaryConfigUpdates": {
     "expirationTimestamp": "2024-12-27T10:00:00Z",
-    "sonic": {
-      "disabled": true
-    },
     "berachain-testnet": {
       "disabled": true
     }
