@@ -8257,6 +8257,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@redstone-finance/lambda-redstone-txs-indexer@workspace:packages/lambda/lambda-redstone-txs-indexer"
   dependencies:
+    "@aptos-labs/ts-sdk": "npm:^1.33.2"
     "@aws-sdk/client-ssm": "npm:^3.696.0"
     "@influxdata/influxdb-client": "npm:^1.35.0"
     "@mysten/sui": "npm:^1.21.2"
@@ -8264,6 +8265,7 @@ __metadata:
     "@redstone-finance/evm-multicall": "npm:0.8.0"
     "@redstone-finance/internal-utils": "npm:0.8.0"
     "@redstone-finance/monitoring-manifests": "npm:0.8.0"
+    "@redstone-finance/movement-connector": "npm:0.8.0"
     "@redstone-finance/on-chain-relayer-common": "npm:0.8.0"
     "@redstone-finance/protocol": "npm:0.8.0"
     "@redstone-finance/rpc-providers": "npm:0.8.0"
