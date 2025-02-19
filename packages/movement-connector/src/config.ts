@@ -1,5 +1,6 @@
 import { Network } from "@aptos-labs/ts-sdk";
 import { z } from "zod";
+import { TransactionConfig } from "./types";
 
 export const MovementNetworkSchema = z.enum([
   "mainnet",
@@ -25,3 +26,8 @@ export function movementNetworkSchemaToAptosNetwork(
 
   return Network.LOCAL;
 }
+
+export const TRANSACTION_DEFAULT_CONFIG: TransactionConfig = {
+  writePriceOctasTxGasBudget: 100_000,
+  maxTxSendAttempts: 3,
+};

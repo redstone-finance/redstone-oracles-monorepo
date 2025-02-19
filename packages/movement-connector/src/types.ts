@@ -75,3 +75,11 @@ export interface AptosVariables {
   account: Account;
   packageObjectAddress: string;
 }
+
+/**
+ * Provides the Movement chain transaction configuration.
+ */
+export interface TransactionConfig {
+  writePriceOctasTxGasBudget: number;
+  maxTxSendAttempts: number;
+}
