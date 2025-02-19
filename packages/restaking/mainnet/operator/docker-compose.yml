@@ -1,6 +1,6 @@
 services:
   operator-attester:
-    image: public.ecr.aws/y7v2w8b2/avs-othentic-client:4fb59875
+    image: public.ecr.aws/y7v2w8b2/avs-othentic-client:4fe497a6
     platform: linux/amd64
     command:
       [
@@ -18,10 +18,12 @@ services:
         "--l2-chain",
         "base",
         "--p2p.datadir",
-        ".othentic/data/p2p"
+        ".othentic/data/p2p",
+        # "--announced-addresses",
+        # "${ANNOUNCED_ADDRESSES}",
       ]
     env_file:
       - .env
   operator-validation-api:
-    image: public.ecr.aws/y7v2w8b2/avs-validation-api:4fb59875
+    image: public.ecr.aws/y7v2w8b2/avs-validation-api:4fe497a6
     platform: linux/amd64
