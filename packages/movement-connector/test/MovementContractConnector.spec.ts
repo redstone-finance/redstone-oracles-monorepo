@@ -33,7 +33,7 @@ describe("MovementPricesContractConnector", () => {
       REST_FAUCET_LOCALNET_URL
     );
     const { contractAddress: contractAddress, objectAddress } =
-      readObjectAddress(PRICE_ADAPTER);
+      readObjectAddress(PRICE_ADAPTER, NETWORK);
     account = Account.fromPrivateKey({
       privateKey: new Secp256k1PrivateKey(
         PrivateKey.formatPrivateKey(
