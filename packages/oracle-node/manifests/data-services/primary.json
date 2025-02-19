@@ -2376,6 +2376,11 @@
       },
       "denomination": "BTC",
       "rateFeed": true
+    },
+    "vIP_FUNDAMENTAL": {
+      "source": ["story-evm-fetcher-verio"],
+      "denomination": "IP",
+      "rateFeed": true
     }
   },
   "multiPointPackages": {
