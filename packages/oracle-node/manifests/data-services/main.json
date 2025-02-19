@@ -85,7 +85,6 @@
     },
     "USDC": {
       "source": [
-        "balancer-arbitrumone-usdt",
         "balancer-ethereum-usdt",
         "binance-usdt",
         "bitget-usdt",
@@ -109,7 +108,6 @@
       "source": [
         "camelot-v3-arbitrumone-usdc",
         "curve-arbitrumone-usdt",
-        "uniswap-v3-arbitrumone-arb-3000",
         "uniswap-v3-arbitrumone-arb-500",
         "uniswap-v3-arbitrumone-dai-500",
         "uniswap-v3-arbitrumone-usdc-100",
@@ -690,7 +688,6 @@
         "balancer-ethereum-weth",
         "balancer-ethereum-weth-2",
         "camelot-v3-arbitrumone-weth",
-        "curve-ethereum-wbtc",
         "uniswap-v3-arbitrumone-weth-100",
         "uniswap-v3-ethereum-weth-100",
         "uniswap-v3-optimism-weth-100",
@@ -744,7 +741,6 @@
         "gate-usdt",
         "okx-usdt",
         "trader-joe-v1-avalanche-wavax",
-        "trader-joe-v2-avalanche-wavax",
         "xt"
       ],
       "denomination": "USD",
@@ -758,7 +754,6 @@
         "okx-usdc",
         "bitmart-usdt",
         "coinbasepro-usdc",
-        "trader-joe-v2-avalanche-usdc",
         "uniswap-v3-ethereum-usdc-500",
         "aerodrome-cl-base-usdc",
         "aerodrome-cl-base-usdc-2",
@@ -818,15 +813,11 @@
     },
     "GHO": {
       "source": [
-        "balancer-arbitrumone-usdc",
-        "balancer-arbitrumone-usdt",
         "balancer-ethereum-usdc",
         "balancer-ethereum-usdt",
         "coingecko",
         "curve-ethereum-crvusd",
-        "curve-ethereum-usde",
-        "curve-ethereum-wbtc",
-        "curve-ethereum-wsteth"
+        "curve-ethereum-usde"
       ],
       "denomination": "USD",
       "rateFeed": false
@@ -1417,7 +1408,6 @@
         "aerodrome-cl-base-usdc",
         "curve-ethereum-crvfrax",
         "curve-ethereum-rsr",
-        "curve-ethereum-usdc",
         "curve-ethereum-usdc-2"
       ],
       "denomination": "USD",
@@ -1539,7 +1529,6 @@
     "rsETH": {
       "source": [
         "balancer-arbitrumone-weth",
-        "balancer-ethereum-ethx",
         "balancer-ethereum-weth",
         "camelot-v3-arbitrumone-weth",
         "camelot-v3-arbitrumone-wsteth",
@@ -1562,7 +1551,6 @@
         "balancer-ethereum-weeth",
         "balancer-ethereum-weth",
         "camelot-v3-arbitrumone-weth",
-        "curve-ethereum-weth",
         "thruster-v3-blast-weth-3000",
         "thruster-v3-blast-weth-500",
         "uniswap-v3-ethereum-weth-100",
@@ -1604,9 +1592,7 @@
         "curve-ethereum-dai",
         "curve-ethereum-fdusd",
         "curve-ethereum-frax",
-        "curve-ethereum-usdc",
-        "uniswap-v3-ethereum-usdt-100",
-        "uniswap-v2-ethereum-usdc"
+        "uniswap-v3-ethereum-usdt-100"
       ],
       "denomination": "USD",
       "rateFeed": false
@@ -1833,10 +1819,7 @@
         "aerodrome-cl-base-usdc",
         "aerodrome-cl-base-weth",
         "aerodrome-cl-base-wsteth",
-        "uniswap-v3-arbitrumone-usdc-100",
-        "uniswap-v3-arbitrumone-usdt-100",
-        "uniswap-v3-arbitrumone-weth-500",
-        "thruster-v3-blast-usdb-100"
+        "uniswap-v3-arbitrumone-usdc-100"
       ],
       "denomination": "USD",
       "rateFeed": false
@@ -1974,9 +1957,7 @@
     },
     "ISEI": {
       "source": [
-        "dragonswap-sei-usdc",
         "dragonswap-sei-wsei",
-        "dragonswap-v2-sei-wsei-3000",
         "dragonswap-v2-sei-wsei-500",
         "jellyverse-sei-wsei"
       ],
@@ -2052,8 +2033,6 @@
     },
     "SolvBTC": {
       "source": [
-        "curve-ethereum-wbtc",
-        "dodoex-bnb-btcb",
         "pancake-swap-bnb-btcb-500",
         "thena-bnb-btcb",
         "trader-joe-v2-avalanche-btc.b",
@@ -2069,9 +2048,6 @@
     },
     "SolvBTC.BBN": {
       "source": [
-        "curve-ethereum-solvbtc",
-        "dodoex-bnb-solvbtc",
-        "pancake-swap-bnb-solvbtc-100",
         "pancake-swap-bnb-solvbtc-500",
         "trader-joe-v2-avalanche-solvbtc",
         "uniswap-v3-ethereum-solvbtc-100",
@@ -2115,7 +2091,6 @@
         "uniswap-v3-base-weth-3000",
         "uniswap-v3-ethereum-usdc-3000",
         "uniswap-v3-ethereum-wbtc-100",
-        "uniswap-v3-ethereum-wbtc-500",
         "uniswap-v3-ethereum-weth-3000"
       ],
       "denomination": "USD",
@@ -2931,7 +2906,6 @@
         "bingx-usdt",
         "coingecko",
         "pancake-swap-bnb-usdt-100",
-        "pancake-swap-bnb-wbnb-500",
         "uniswap-v3-ethereum-usdt-100"
       ],
       "denomination": "USD",
@@ -2956,7 +2930,6 @@
         "curve-ethereum-wbtc",
         "curve-ethereum-wbtc-2",
         "pancake-swap-bnb-btcb-500",
-        "uniswap-v3-ethereum-cbbtc-500",
         "uniswap-v3-ethereum-wbtc-500"
       ],
       "denomination": "USD",

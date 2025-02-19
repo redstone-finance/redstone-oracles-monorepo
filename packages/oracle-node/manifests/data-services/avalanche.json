@@ -168,7 +168,6 @@
     },
     "USDC": {
       "source": [
-        "balancer-arbitrumone-usdt",
         "balancer-ethereum-usdt",
         "binance-usdt",
         "bitget-usdt",
@@ -282,7 +281,6 @@
         "gate-usdt",
         "okx-usdt",
         "trader-joe-v1-avalanche-wavax",
-        "trader-joe-v2-avalanche-wavax",
         "xt"
       ],
       "denomination": "USD",
@@ -342,7 +340,6 @@
         "okx-usdc",
         "bitmart-usdt",
         "coinbasepro-usdc",
-        "trader-joe-v2-avalanche-usdc",
         "uniswap-v3-ethereum-usdc-500",
         "aerodrome-cl-base-usdc",
         "aerodrome-cl-base-usdc-2",
@@ -533,7 +530,6 @@
         "coingecko",
         "coinmarketcap",
         "pancake-swap-bnb-usdt-100",
-        "pancake-swap-bnb-wbnb-500",
         "uniswap-v3-ethereum-usdt-100"
       ],
       "denomination": "USD",

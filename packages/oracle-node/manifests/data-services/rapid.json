@@ -183,7 +183,6 @@
         "okx-usdc",
         "bitmart-usdt",
         "coinbasepro-usdc",
-        "trader-joe-v2-avalanche-usdc",
         "uniswap-v3-ethereum-usdc-500",
         "aerodrome-cl-base-usdc",
         "aerodrome-cl-base-usdc-2",
@@ -218,7 +217,6 @@
     },
     "USDC": {
       "source": [
-        "balancer-arbitrumone-usdt",
         "balancer-ethereum-usdt",
         "binance-usdt",
         "bitget-usdt",
@@ -348,7 +346,6 @@
         "bingx-usdt",
         "coingecko",
         "pancake-swap-bnb-usdt-100",
-        "pancake-swap-bnb-wbnb-500",
         "uniswap-v3-ethereum-usdt-100"
       ]
     }
