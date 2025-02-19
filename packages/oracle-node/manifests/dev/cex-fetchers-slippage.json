@@ -19,13 +19,13 @@
         "mexc-usdt",
         "okx-usdt",
         "gate-usdt",
-        "coinbasepro-usd",
+        "coinbase-usd",
         "binanceusdm-usdt",
         "bitmart-usdt",
         "kraken-usdt",
         "lbank-usdt",
         "bitrue-usdt",
-        "bitfinex2-usd",
+        "bitfinex-usd",
         "bitstamp-usd",
         "binancecoinm-usd",
         "band",
@@ -45,12 +45,12 @@
         "mexc-usdt",
         "okx-usdt",
         "gate-usdt",
-        "coinbasepro-usd",
+        "coinbase-usd",
         "binanceusdm-usdt",
         "bitmart-usdt",
         "lbank-usdt",
         "bitrue-usdt",
-        "bitfinex2-usd",
+        "bitfinex-usd",
         "bitstamp-usd",
         "binancecoinm-usd",
         "band",
@@ -69,7 +69,7 @@
         "kucoin-eur",
         "okx-eur",
         "gate-usd",
-        "coinbasepro-usd",
+        "coinbase-usd",
         "kraken-eur",
         "bitstamp-usd",
         "coingecko",
@@ -80,7 +80,7 @@
         "uniswap-v3-ethereum-on-chain-weth-3000",
         "uniswap-v3-ethereum-on-chain-usdc-100",
         "uniswap-v3-ethereum-on-chain-weth-500",
-        "bitfinex2"
+        "bitfinex"
       ]
     },
     "BNB": {
@@ -109,14 +109,14 @@
         "mexc-usdt",
         "okx-usdt",
         "gate-usdt",
-        "coinbasepro-eur",
+        "coinbase-eur",
         "binanceusdm-usdt",
         "bitmart-usdt",
         "kraken-usdt",
         "lbank-usdt",
         "bitrue-usdt",
         "bitstamp-usd",
-        "bitfinex2",
+        "bitfinex",
         "coingecko",
         "curve-dai",
         "kaiko",
@@ -136,13 +136,13 @@
         "mexc-usdt",
         "okx-usdt",
         "gate-usdt",
-        "coinbasepro-usd",
+        "coinbase-usd",
         "binanceusdm-usdt",
         "bitmart-usdt",
         "kraken-usd",
         "lbank-usdt",
         "bitrue-usdt",
-        "bitfinex2-usd",
+        "bitfinex-usd",
         "bitstamp-usd",
         "binancecoinm-usd",
         "coingecko",
@@ -157,13 +157,13 @@
         "mexc-usdt",
         "okx-usdt",
         "gate-usdt",
-        "coinbasepro-usd",
+        "coinbase-usd",
         "binanceusdm-usdt",
         "bitmart-usdt",
         "kraken-usd",
         "lbank-usdt",
         "bitrue-usdt",
-        "bitfinex2-usd",
+        "bitfinex-usd",
         "bitstamp-usd",
         "binancecoinm-usd",
         "coingecko",
@@ -178,7 +178,7 @@
         "mexc-usdt",
         "okx-usdt",
         "gate-usdt",
-        "coinbasepro-usd",
+        "coinbase-usd",
         "binanceusdm-usdt",
         "bitmart-usdt",
         "kraken-usd",
@@ -198,21 +198,21 @@
         "mexc-usdt",
         "okx-usdt",
         "gate-usdt",
-        "coinbasepro-usd",
+        "coinbase-usd",
         "binanceusdm-usdt",
         "bitmart-usdt",
         "lbank-usdt",
         "bitrue-usdt",
         "bitstamp-usd",
         "binancecoinm-usd",
-        "bitfinex2",
+        "bitfinex",
         "coingecko",
         "kraken",
         "bingx-usdt"
       ]
     },
     "BUSD": {
-      "source": ["binance-usdt", "coinbasepro-usd", "bitrue-usdt", "coingecko"]
+      "source": ["binance-usdt", "coinbase-usd", "bitrue-usdt", "coingecko"]
     },
     "SOL": {
       "source": [
@@ -222,13 +222,13 @@
         "mexc-usdt",
         "okx-usdt",
         "gate-usdt",
-        "coinbasepro-usd",
+        "coinbase-usd",
         "binanceusdm-usdt",
         "bitmart-usdt",
         "kraken-usd",
         "lbank-usdt",
         "bitrue-usdt",
-        "bitfinex2-usd",
+        "bitfinex-usd",
         "bitstamp-usd",
         "binancecoinm-usd",
         "bingx",
@@ -245,13 +245,13 @@
         "mexc-usdt",
         "okx-usdt",
         "gate-usdt",
-        "coinbasepro-usd",
+        "coinbase-usd",
         "binanceusdm-usdt",
         "bitmart-usdt",
         "kraken-usd",
         "lbank-usdt",
         "bitrue-usdt",
-        "bitfinex2-usd",
+        "bitfinex-usd",
         "bitstamp-usd",
         "binancecoinm-usd",
         "coingecko",
@@ -266,7 +266,7 @@
         "mexc-usdt",
         "okx-usdt",
         "gate-usdt",
-        "coinbasepro-usd",
+        "coinbase-usd",
         "bitmart-usdt",
         "kraken-usd",
         "lbank-usdt",
@@ -290,7 +290,7 @@
         "kraken-usd",
         "lbank-usdt",
         "bitrue-usdt",
-        "bitfinex2-usd",
+        "bitfinex-usd",
         "binancecoinm-usd",
         "kaiko-v2",
         "bingx-usdt"
@@ -303,12 +303,12 @@
         "mexc-usdt",
         "okx-usdt",
         "gate-usdt",
-        "coinbasepro-usd",
+        "coinbase-usd",
         "bitmart-usdt",
         "kraken-usd",
         "lbank-usdt",
         "bitrue-usdt",
-        "bitfinex2-usd",
+        "bitfinex-usd",
         "bitstamp-usd",
         "coingecko",
         "curve-usdc",
@@ -325,13 +325,13 @@
         "mexc-usdt",
         "okx-usdt",
         "gate-usdt",
-        "coinbasepro-usd",
+        "coinbase-usd",
         "binanceusdm-usdt",
         "bitmart-usdt",
         "kraken-usdt",
         "lbank-usdt",
         "bitrue-usdt",
-        "bitfinex2-usd",
+        "bitfinex-usd",
         "bitstamp-usd",
         "binancecoinm-usd",
         "coingecko",
@@ -346,7 +346,7 @@
         "mexc-usdt",
         "okx-usdt",
         "gate-usdt",
-        "coinbasepro-usd",
+        "coinbase-usd",
         "binanceusdm-usdt",
         "bitmart-usdt",
         "kraken-usd",
@@ -355,7 +355,7 @@
         "bitstamp-usd",
         "binancecoinm-usd",
         "bingx",
-        "bitfinex2",
+        "bitfinex",
         "coingecko",
         "kaiko",
         "bingx-usdt"
@@ -369,13 +369,13 @@
         "mexc-usdt",
         "okx-usdt",
         "gate-usdt",
-        "coinbasepro-usd",
+        "coinbase-usd",
         "binanceusdm-usdt",
         "bitmart-usdt",
         "kraken-usd",
         "lbank-usdt",
         "bitrue-usdt",
-        "bitfinex2-usd",
+        "bitfinex-usd",
         "bitstamp-usd",
         "binancecoinm-usd",
         "bingx",
@@ -393,7 +393,7 @@
         "mexc-usdt",
         "okx-usdt",
         "gate-usdt",
-        "coinbasepro-usd",
+        "coinbase-usd",
         "bitmart-usdt",
         "kraken-usd",
         "bitstamp-btc",
@@ -412,14 +412,14 @@
         "mexc-usdt",
         "okx-usdt",
         "gate-usdt",
-        "coinbasepro-usd",
+        "coinbase-usd",
         "binanceusdm-usdt",
         "bitmart-usdt",
         "kraken-usd",
         "lbank-usdt",
         "bitrue-usdt",
         "binancecoinm-usd",
-        "bitfinex2",
+        "bitfinex",
         "bingx",
         "coingecko",
         "xt",
@@ -434,7 +434,7 @@
         "mexc-usdt",
         "okx-usdt",
         "gate-usdt",
-        "coinbasepro-usd",
+        "coinbase-usd",
         "binanceusdm-usdt",
         "bitmart-usdt",
         "kraken-usd",
@@ -443,7 +443,7 @@
         "bitstamp-usd",
         "binancecoinm-usd",
         "bingx",
-        "bitfinex2",
+        "bitfinex",
         "coingecko",
         "uniswap-v3-ethereum-on-chain-weth-3000",
         "xt",
@@ -457,7 +457,7 @@
         "gate-usdt",
         "lbank-usdt",
         "bitrue-usdt",
-        "bitfinex2-usd",
+        "bitfinex-usd",
         "coingecko"
       ]
     },
@@ -481,12 +481,12 @@
         "mexc-usdt",
         "okx-usdt",
         "gate-usdt",
-        "coinbasepro-usd",
+        "coinbase-usd",
         "binanceusdm-usdt",
         "bitmart-usdt",
         "lbank-usdt",
         "bitrue-usdt",
-        "bitfinex2-usd",
+        "bitfinex-usd",
         "binancecoinm-usd",
         "coingecko",
         "kraken",
@@ -502,7 +502,7 @@
         "binanceusdm-usdt",
         "kraken-usdt",
         "bitrue-usdt",
-        "bitfinex2-usd",
+        "bitfinex-usd",
         "coingecko"
       ]
     },
@@ -514,13 +514,13 @@
         "mexc-usdt",
         "okx-usdt",
         "gate-usdt",
-        "coinbasepro-usd",
+        "coinbase-usd",
         "binanceusdm-usdt",
         "bitmart-usdt",
         "kraken-usd",
         "lbank-usdt",
         "bitrue-usdt",
-        "bitfinex2-usd",
+        "bitfinex-usd",
         "binancecoinm-usd",
         "coingecko",
         "bingx-usdt"
@@ -534,7 +534,7 @@
         "mexc-usdt",
         "okx-usdt",
         "gate-usdt",
-        "coinbasepro-usd",
+        "coinbase-usd",
         "binanceusdm-usdt",
         "bitmart-usdt",
         "kraken-usd",
@@ -542,7 +542,7 @@
         "bitrue-usdt",
         "bitstamp-usd",
         "binancecoinm-usd",
-        "bitfinex2",
+        "bitfinex",
         "coingecko",
         "bingx-usdt"
       ]
@@ -555,13 +555,13 @@
         "mexc-usdt",
         "okx-usdt",
         "gate-usdt",
-        "coinbasepro-usd",
+        "coinbase-usd",
         "binanceusdm-usdt",
         "bitmart-usdt",
         "kraken-usd",
         "lbank-usdt",
         "bitrue-usdt",
-        "bitfinex2-usd",
+        "bitfinex-usd",
         "binancecoinm-usd",
         "coingecko",
         "bingx-usdt"
@@ -575,12 +575,12 @@
         "mexc-usdt",
         "okx-usdt",
         "gate-usdt",
-        "coinbasepro-usd",
+        "coinbase-usd",
         "binanceusdm-usdt",
         "bitmart-usdt",
         "lbank-usdt",
         "bitrue-usdt",
-        "bitfinex2-usd",
+        "bitfinex-usd",
         "bitstamp-usd",
         "binancecoinm-usd",
         "coingecko",
@@ -596,7 +596,7 @@
         "mexc-usdt",
         "okx-usdt",
         "gate-usdt",
-        "coinbasepro-usd",
+        "coinbase-usd",
         "binanceusdm-usdt",
         "bitmart-usdt",
         "kraken-usd",
@@ -604,7 +604,7 @@
         "bitrue-usdt",
         "bitstamp-usd",
         "binancecoinm-usd",
-        "bitfinex2",
+        "bitfinex",
         "coingecko",
         "bingx-usdt"
       ]
@@ -617,7 +617,7 @@
         "mexc-usdt",
         "okx-usdt",
         "gate-usdt",
-        "coinbasepro-usd",
+        "coinbase-usd",
         "binanceusdm-usdt",
         "bitmart-usdt",
         "kraken-usd",
@@ -634,13 +634,13 @@
         "mexc-usdt",
         "okx-usdt",
         "gate-usdt",
-        "coinbasepro-usd",
+        "coinbase-usd",
         "binanceusdm-usdt",
         "bitmart-usdt",
         "kraken-usd",
         "lbank-usdt",
         "bitrue-usdt",
-        "bitfinex2-usd",
+        "bitfinex-usd",
         "binancecoinm-usd",
         "coingecko",
         "bingx-usdt"
@@ -654,7 +654,7 @@
         "mexc-usdt",
         "okx-usdt",
         "gate-usdt",
-        "coinbasepro-usd",
+        "coinbase-usd",
         "binanceusdm-usdt",
         "bitmart-usdt",
         "kraken-usd",
@@ -662,7 +662,7 @@
         "bitrue-usdt",
         "bitstamp-usd",
         "binancecoinm-usd",
-        "bitfinex2",
+        "bitfinex",
         "coingecko",
         "kaiko",
         "uniswap-v3-ethereum-on-chain-weth-3000",
@@ -700,7 +700,7 @@
         "lbank-usdt",
         "bitrue-usdt",
         "bingx",
-        "coinbasepro",
+        "coinbase",
         "coingecko",
         "bingx-usdt"
       ]
@@ -792,7 +792,7 @@
         "kucoin-usdt",
         "mexc-usdt",
         "gate-usdt",
-        "coinbasepro-usd",
+        "coinbase-usd",
         "binanceusdm-usdt",
         "bitmart-usdt",
         "kraken-usd",
@@ -887,7 +887,7 @@
     },
     "EUROC": {
       "source": [
-        "coinbasepro-usd",
+        "coinbase-usd",
         "kraken-usd",
         "bitstamp-eur",
         "coingecko",
@@ -909,13 +909,13 @@
         "mexc-usdt",
         "okx-usdt",
         "gate-usdt",
-        "coinbasepro-usd",
+        "coinbase-usd",
         "binanceusdm-usdt",
         "bitmart-usdt",
         "kraken-usd",
         "lbank-usdt",
         "bitrue-usdt",
-        "bitfinex2-usd",
+        "bitfinex-usd",
         "bitstamp-usd",
         "bingx",
         "coingecko",
@@ -972,13 +972,13 @@
         "mexc-usdt",
         "okx-usdt",
         "gate-usdt",
-        "coinbasepro-usd",
+        "coinbase-usd",
         "binanceusdm-usdt",
         "bitmart-usdt",
         "kraken-usd",
         "lbank-usdt",
         "bitrue-usdt",
-        "bitfinex2-usd",
+        "bitfinex-usd",
         "bingx",
         "coingecko",
         "uniswap-v3-arbitrum-on-chain-weth-500",
@@ -993,7 +993,7 @@
         "mexc-usdt",
         "okx-usdt",
         "gate-usdt",
-        "coinbasepro-usd",
+        "coinbase-usd",
         "binanceusdm-usdt",
         "bitmart-usdt",
         "kraken-usd",
@@ -1031,7 +1031,7 @@
         "binance-usdt",
         "okx-usdt",
         "gate-usdt",
-        "coinbasepro-usd",
+        "coinbase-usd",
         "kraken-usd",
         "bitrue-usdt",
         "coingecko",
@@ -1087,13 +1087,13 @@
         "mexc-usdt",
         "okx-usdt",
         "gate-usdt",
-        "coinbasepro-usd",
+        "coinbase-usd",
         "binanceusdm-usdt",
         "bitmart-usdt",
         "kraken-usd",
         "lbank-usdt",
         "bitrue-usdt",
-        "bitfinex2-usd",
+        "bitfinex-usd",
         "balancer-ethereum-weth",
         "coingecko",
         "xt",
@@ -1130,13 +1130,13 @@
         "mexc-usdt",
         "okx-usdt",
         "gate-usdt",
-        "coinbasepro-usd",
+        "coinbase-usd",
         "binanceusdm-usdt",
         "bitmart-usdt",
         "kraken-usd",
         "lbank-usdt",
         "bitrue-usdt",
-        "bitfinex2-usd",
+        "bitfinex-usd",
         "xt",
         "bingx-usdt"
       ]
@@ -1240,7 +1240,7 @@
         "mexc-usdt",
         "okx-usdt",
         "gate-usdt",
-        "coinbasepro-usd",
+        "coinbase-usd",
         "binanceusdm-usdt",
         "bitmart-usdt",
         "lbank-usdt",
@@ -1271,13 +1271,13 @@
         "kucoin-usdt",
         "mexc-usdt",
         "gate-usdt",
-        "coinbasepro-usd",
+        "coinbase-usd",
         "binanceusdm-usdt",
         "bitmart-usdt",
         "kraken-usd",
         "lbank-usdt",
         "bitrue-usdt",
-        "bitfinex2-usd",
+        "bitfinex-usd",
         "bingx",
         "coingecko",
         "xt",
@@ -1297,7 +1297,7 @@
         "kraken-usd",
         "lbank-usdt",
         "bitrue-usdt",
-        "bitfinex2-usd",
+        "bitfinex-usd",
         "bingx",
         "coingecko",
         "bingx-usdt"
@@ -1311,13 +1311,13 @@
         "mexc-usdt",
         "okx-usdt",
         "gate-usdt",
-        "coinbasepro-usd",
+        "coinbase-usd",
         "binanceusdm-usdt",
         "bitmart-btc",
         "kraken-usd",
         "lbank-usdt",
         "bitrue-usdt",
-        "bitfinex2-usd",
+        "bitfinex-usd",
         "bitstamp-usd",
         "bingx",
         "coingecko",
@@ -1334,13 +1334,13 @@
         "mexc-usdt",
         "okx-usdt",
         "gate-usdt",
-        "coinbasepro-usd",
+        "coinbase-usd",
         "binanceusdm-usdt",
         "bitmart-usdt",
         "kraken-usd",
         "lbank-usdt",
         "bitrue-usdt",
-        "bitfinex2-usd",
+        "bitfinex-usd",
         "bitstamp-usd",
         "binancecoinm-usd",
         "bingx",
@@ -1357,7 +1357,7 @@
         "mexc-usdt",
         "okx-usdt",
         "gate-usdt",
-        "coinbasepro-usd",
+        "coinbase-usd",
         "binanceusdm-usdt",
         "bitmart-usdt",
         "kraken-usd",
@@ -1475,7 +1475,7 @@
         "bitmart-usdt",
         "lbank-usdt",
         "bitrue-usdt",
-        "bitfinex2-usd",
+        "bitfinex-usd",
         "bingx",
         "bitget",
         "coingecko",
@@ -1543,7 +1543,7 @@
         "twelve-data",
         "ecb",
         "kraken",
-        "bitfinex2"
+        "bitfinex"
       ]
     },
     "EUR": {
@@ -2232,7 +2232,7 @@
         "kucoin-usdt",
         "mexc-usdt",
         "gate-usdt",
-        "coinbasepro-usd",
+        "coinbase-usd",
         "bitmart-usdt",
         "lbank-usdt",
         "bitrue-usdt",
@@ -2250,12 +2250,12 @@
         "mexc-usdt",
         "okx-usdt",
         "gate-usdt",
-        "coinbasepro-usd",
+        "coinbase-usd",
         "binanceusdm-usdt",
         "bitmart-usdt",
         "kraken-usd",
         "bitrue-usdt",
-        "bitfinex2-usd",
+        "bitfinex-usd",
         "bitstamp-usd",
         "bingx-usdt"
       ]
@@ -2268,7 +2268,7 @@
         "mexc-usdt",
         "okx-usdt",
         "gate-usdt",
-        "coinbasepro-usd",
+        "coinbase-usd",
         "binanceusdm-usdt",
         "bitmart-usdt",
         "kraken-usd",
@@ -2286,13 +2286,13 @@
         "mexc-usdt",
         "okx-usdt",
         "gate-usdt",
-        "coinbasepro-usd",
+        "coinbase-usd",
         "binanceusdm-usdt",
         "bitmart-usdt",
         "kraken-usd",
         "lbank-usdt",
         "bitrue-usdt",
-        "bitfinex2-usd",
+        "bitfinex-usd",
         "binancecoinm-usd",
         "bingx-usdt"
       ]
@@ -2305,13 +2305,13 @@
         "mexc-usdt",
         "okx-usdt",
         "gate-usdt",
-        "coinbasepro-usd",
+        "coinbase-usd",
         "binanceusdm-usdt",
         "bitmart-btc",
         "kraken-usd",
         "lbank-usdt",
         "bitrue-usdt",
-        "bitfinex2-usd",
+        "bitfinex-usd",
         "bingx-usdt"
       ]
     },
@@ -2323,12 +2323,12 @@
         "mexc-usdt",
         "okx-usdt",
         "gate-usdt",
-        "coinbasepro-usd",
+        "coinbase-usd",
         "binanceusdm-usdt",
         "bitmart-usdt",
         "kraken-usd",
         "bitrue-usdt",
-        "bitfinex2-usd",
+        "bitfinex-usd",
         "bitstamp-usd",
         "bingx-usdt"
       ]
@@ -2341,7 +2341,7 @@
         "mexc-usdt",
         "okx-usdt",
         "gate-usdt",
-        "coinbasepro-usd",
+        "coinbase-usd",
         "binanceusdm-usdt",
         "bitmart-usdt",
         "kraken-usd",
@@ -2359,13 +2359,13 @@
         "mexc-usdt",
         "okx-usdt",
         "gate-usdt",
-        "coinbasepro-usd",
+        "coinbase-usd",
         "binanceusdm-usdt",
         "bitmart-usdt",
         "kraken-usd",
         "lbank-usdt",
         "bitrue-usdt",
-        "bitfinex2-usd",
+        "bitfinex-usd",
         "bitstamp-usd",
         "bingx-usdt"
       ]
@@ -2376,7 +2376,7 @@
         "kucoin-usdt",
         "mexc-usdt",
         "gate-usdt",
-        "coinbasepro-usd",
+        "coinbase-usd",
         "binanceusdm-usdt",
         "kraken-usd",
         "lbank-usdt",
@@ -2390,7 +2390,7 @@
         "mexc-usdt",
         "okx-usdt",
         "gate-usdt",
-        "coinbasepro-usd",
+        "coinbase-usd",
         "binanceusdm-usdt",
         "bitmart-usdt",
         "kraken-usd",
@@ -2413,7 +2413,7 @@
         "bitmart-usdt",
         "lbank-usdt",
         "bitrue-usdt",
-        "bitfinex2-usd",
+        "bitfinex-usd",
         "bingx-usdt"
       ]
     },
@@ -2425,12 +2425,12 @@
         "mexc-usdt",
         "okx-usdt",
         "gate-usdt",
-        "coinbasepro-usd",
+        "coinbase-usd",
         "binanceusdm-usdt",
         "bitmart-usdt",
         "kraken-usd",
         "bitrue-usdt",
-        "bitfinex2-usd",
+        "bitfinex-usd",
         "bitstamp-usd",
         "bingx-usdt"
       ]
@@ -2441,10 +2441,10 @@
         "kucoin-usdt",
         "mexc-usdt",
         "gate-usdt",
-        "coinbasepro-usd",
+        "coinbase-usd",
         "binanceusdm-usdt",
         "lbank-usdt",
-        "bitfinex2-usd"
+        "bitfinex-usd"
       ]
     },
     "MANA": {
@@ -2455,7 +2455,7 @@
         "mexc-usdt",
         "okx-usdt",
         "gate-usdt",
-        "coinbasepro-usd",
+        "coinbase-usd",
         "binanceusdm-usdt",
         "bitmart-usdt",
         "kraken-usd",
@@ -2473,7 +2473,7 @@
         "mexc-usdt",
         "okx-usdt",
         "gate-usdt",
-        "coinbasepro-usd",
+        "coinbase-usd",
         "binanceusdm-usdt",
         "bitmart-usdt",
         "kraken-usd",
@@ -2490,13 +2490,13 @@
         "mexc-usdt",
         "okx-usdt",
         "gate-usdt",
-        "coinbasepro-usd",
+        "coinbase-usd",
         "binanceusdm-usdt",
         "bitmart-usdt",
         "kraken-usd",
         "lbank-usdt",
         "bitrue-usdt",
-        "bitfinex2-usd",
+        "bitfinex-usd",
         "bitstamp-usd",
         "bingx-usdt"
       ]
@@ -2509,13 +2509,13 @@
         "mexc-usdt",
         "okx-usdt",
         "gate-usdt",
-        "coinbasepro-usd",
+        "coinbase-usd",
         "binanceusdm-usdt",
         "bitmart-usdt",
         "kraken-usd",
         "lbank-usdt",
         "bitrue-usdt",
-        "bitfinex2-usd",
+        "bitfinex-usd",
         "bitstamp-usd",
         "binancecoinm-usd",
         "bingx-usdt"
@@ -2543,7 +2543,7 @@
         "kucoin-usdt",
         "okx-usdt",
         "gate-usdt",
-        "coinbasepro-usd",
+        "coinbase-usd",
         "binanceusdm-usdt",
         "bitmart-usdt",
         "kraken-usd",
@@ -2560,13 +2560,13 @@
         "mexc-usdt",
         "okx-usdt",
         "gate-usdt",
-        "coinbasepro-usd",
+        "coinbase-usd",
         "binanceusdm-usdt",
         "bitmart-usdt",
         "kraken-usd",
         "lbank-usdt",
         "bitrue-usdt",
-        "bitfinex2-usd",
+        "bitfinex-usd",
         "bitstamp-usd",
         "bingx-usdt"
       ]
@@ -2579,7 +2579,7 @@
         "mexc-usdt",
         "okx-usdt",
         "gate-usdt",
-        "coinbasepro-usd",
+        "coinbase-usd",
         "binanceusdm-usdt",
         "bitmart-usdt",
         "kraken-usd",
@@ -2596,13 +2596,13 @@
         "mexc-usdt",
         "okx-usdt",
         "gate-usdt",
-        "coinbasepro-usd",
+        "coinbase-usd",
         "binanceusdm-usdt",
         "bitmart-usdt",
         "kraken-usd",
         "lbank-usdt",
         "bitrue-usdt",
-        "bitfinex2-usd",
+        "bitfinex-usd",
         "bingx-usdt"
       ]
     },
@@ -2614,7 +2614,7 @@
         "mexc-usdt",
         "okx-usdt",
         "gate-usdt",
-        "coinbasepro-usd",
+        "coinbase-usd",
         "binanceusdm-usdt",
         "bitmart-usdt",
         "kraken-usd",
@@ -2647,7 +2647,7 @@
         "mexc-usdt",
         "okx-usdt",
         "gate-usdt",
-        "coinbasepro-usd",
+        "coinbase-usd",
         "binanceusdm-usdt",
         "bitmart-usdt",
         "kraken-usd",
@@ -2666,12 +2666,12 @@
         "mexc-usdt",
         "okx-usdt",
         "gate-usdt",
-        "coinbasepro-usd",
+        "coinbase-usd",
         "binanceusdm-usdt",
         "bitmart-usdt",
         "kraken-usd",
         "bitrue-usdt",
-        "bitfinex2-usd",
+        "bitfinex-usd",
         "bitstamp-usd",
         "binancecoinm-usd",
         "bingx-usdt"
@@ -2689,7 +2689,7 @@
         "bitmart-btc",
         "lbank-usdt",
         "bitrue-usdt",
-        "bitfinex2-usd",
+        "bitfinex-usd",
         "bingx-usdt"
       ]
     },
@@ -2699,12 +2699,12 @@
         "kucoin-usdt",
         "mexc-usdt",
         "gate-usdt",
-        "coinbasepro-usd",
+        "coinbase-usd",
         "binanceusdm-usdt",
         "bitmart-usdt",
         "lbank-usdt",
         "bitrue-usdt",
-        "bitfinex2-usd",
+        "bitfinex-usd",
         "bingx-usdt"
       ]
     },
@@ -2715,7 +2715,7 @@
         "mexc-usdt",
         "okx-usdt",
         "gate-usdt",
-        "coinbasepro-usd",
+        "coinbase-usd",
         "binanceusdm-usdt",
         "bitmart-usdt",
         "kraken-usd",
@@ -2732,7 +2732,7 @@
         "mexc-usdt",
         "okx-usdt",
         "gate-usdt",
-        "coinbasepro-usd",
+        "coinbase-usd",
         "binanceusdm-usdt",
         "bitmart-usdt",
         "kraken-usd",
@@ -2763,13 +2763,13 @@
         "mexc-usdt",
         "okx-usdt",
         "gate-usdt",
-        "coinbasepro-usd",
+        "coinbase-usd",
         "binanceusdm-usdt",
         "bitmart-usdt",
         "kraken-usd",
         "lbank-usdt",
         "bitrue-usdt",
-        "bitfinex2-usd",
+        "bitfinex-usd",
         "bitstamp-usd",
         "binancecoinm-usd",
         "bingx-usdt"
@@ -2783,7 +2783,7 @@
         "mexc-usdt",
         "okx-usdt",
         "gate-usdt",
-        "coinbasepro-usd",
+        "coinbase-usd",
         "binanceusdm-usdt",
         "bitmart-usdt",
         "kraken-usd",
@@ -2800,7 +2800,7 @@
         "kucoin-usdt",
         "mexc-usdt",
         "gate-usdt",
-        "coinbasepro-usd",
+        "coinbase-usd",
         "binanceusdm-usdt",
         "bitmart-usdt",
         "kraken-usd",
@@ -2827,7 +2827,7 @@
         "kucoin-usdt",
         "mexc-usdt",
         "gate-usdt",
-        "coinbasepro-usd",
+        "coinbase-usd",
         "binanceusdm-usdt",
         "bitmart-usdt",
         "lbank-usdt"
@@ -2852,7 +2852,7 @@
         "mexc-usdt",
         "okx-usdt",
         "gate-usdt",
-        "coinbasepro-usd",
+        "coinbase-usd",
         "binanceusdm-usdt",
         "kraken-usd",
         "lbank-usdt",
@@ -2867,7 +2867,7 @@
         "kucoin-usdt",
         "mexc-usdt",
         "gate-usdt",
-        "coinbasepro-usd",
+        "coinbase-usd",
         "binanceusdm-usdt",
         "bitmart-usdt",
         "kraken-usd",
@@ -2883,7 +2883,7 @@
         "mexc-usdt",
         "okx-usdt",
         "gate-usdt",
-        "coinbasepro-usd",
+        "coinbase-usd",
         "binanceusdm-usdt",
         "bitmart-usdt",
         "bitrue-usdt",
@@ -2923,12 +2923,12 @@
         "kucoin-usdt",
         "mexc-usdt",
         "gate-usdt",
-        "coinbasepro-usd",
+        "coinbase-usd",
         "binanceusdm-usdt",
         "bitmart-usdt",
         "kraken-usd",
         "bitrue-usdt",
-        "bitfinex2-usd",
+        "bitfinex-usd",
         "bingx-usdt"
       ]
     },
@@ -2938,7 +2938,7 @@
         "bitget-usdt",
         "okx-usdt",
         "gate-usdt",
-        "coinbasepro-usd",
+        "coinbase-usd",
         "bitmart-usdt",
         "bingx-usdt"
       ]
@@ -2948,7 +2948,7 @@
         "binance-usdt",
         "mexc-usdt",
         "gate-usdt",
-        "coinbasepro-usd",
+        "coinbase-usd",
         "bitrue-usdt"
       ]
     },
@@ -2960,7 +2960,7 @@
         "mexc-usdt",
         "okx-usdt",
         "gate-usdt",
-        "coinbasepro-usd",
+        "coinbase-usd",
         "binanceusdm-usdt",
         "kraken-usd",
         "bitrue-usdt",
@@ -2975,13 +2975,13 @@
         "mexc-usdt",
         "okx-usdt",
         "gate-usdt",
-        "coinbasepro-usd",
+        "coinbase-usd",
         "binanceusdm-usdt",
         "bitmart-usdt",
         "kraken-usd",
         "lbank-usdt",
         "bitrue-usdt",
-        "bitfinex2-usd",
+        "bitfinex-usd",
         "bingx-usdt"
       ]
     },
@@ -3004,7 +3004,7 @@
         "kucoin-usdt",
         "okx-usdt",
         "gate-usdt",
-        "coinbasepro-usd",
+        "coinbase-usd",
         "bitmart-usdt",
         "bitrue-usdt",
         "bingx-usdt"
@@ -3027,7 +3027,7 @@
         "mexc-usdt",
         "okx-usdt",
         "gate-usdt",
-        "coinbasepro-usd",
+        "coinbase-usd",
         "bitmart-usdt",
         "lbank-usdt",
         "bitrue-usdt"
@@ -3069,7 +3069,7 @@
         "gate-usdt",
         "bitmart-usdt",
         "bitrue-usdt",
-        "bitfinex2-usd",
+        "bitfinex-usd",
         "bingx-usdt"
       ]
     },
@@ -3093,7 +3093,7 @@
         "mexc-usdt",
         "okx-usdt",
         "gate-usdt",
-        "coinbasepro-usd",
+        "coinbase-usd",
         "bitmart-usdt",
         "kraken-usd",
         "lbank-usdt",
@@ -3109,7 +3109,7 @@
         "mexc-usdt",
         "okx-usdt",
         "gate-usdt",
-        "coinbasepro-usd",
+        "coinbase-usd",
         "binanceusdm-usdt",
         "bitmart-usdt",
         "kraken-usd",
@@ -3128,7 +3128,7 @@
         "gate-usdt",
         "bitmart-usdt",
         "kraken-usd",
-        "bitfinex2-usd",
+        "bitfinex-usd",
         "bingx-usdt"
       ]
     },
@@ -3177,7 +3177,7 @@
         "kucoin-usdt",
         "mexc-usdt",
         "gate-usdt",
-        "coinbasepro-usd",
+        "coinbase-usd",
         "binanceusdm-usdt",
         "kraken-usd",
         "bitrue-usdt",
@@ -3196,7 +3196,7 @@
         "kucoin-btc",
         "okx-usdt",
         "gate-usdt",
-        "coinbasepro-usd",
+        "coinbase-usd",
         "kraken-usd",
         "bitrue-usdt",
         "bingx-usdt"
@@ -3209,7 +3209,7 @@
         "kucoin-usdt",
         "mexc-usdt",
         "gate-usdt",
-        "coinbasepro-usd",
+        "coinbase-usd",
         "binanceusdm-usdt",
         "bitmart-usdt",
         "kraken-usd",
@@ -3236,7 +3236,7 @@
         "kucoin-usdt",
         "mexc-usdt",
         "gate-usdt",
-        "coinbasepro-usd",
+        "coinbase-usd",
         "binanceusdm-usdt",
         "kraken-usd",
         "lbank-usdt",
@@ -3262,7 +3262,7 @@
         "mexc-usdt",
         "okx-usdt",
         "gate-usdt",
-        "coinbasepro-usd",
+        "coinbase-usd",
         "binanceusdm-usdt",
         "bitmart-usdt",
         "kraken-usd",
@@ -3277,7 +3277,7 @@
         "binance-usdt",
         "mexc-usdt",
         "gate-usdt",
-        "coinbasepro-usd",
+        "coinbase-usd",
         "bitmart-usdt",
         "kraken-usd",
         "bingx-usdt"
@@ -3290,7 +3290,7 @@
         "mexc-usdt",
         "okx-usdt",
         "gate-usdt",
-        "coinbasepro-usd",
+        "coinbase-usd",
         "kraken-usd",
         "bitrue-usdt",
         "bingx-usdt"
@@ -3302,9 +3302,9 @@
         "mexc-usdt",
         "okx-usdt",
         "gate-usdt",
-        "coinbasepro-usd",
+        "coinbase-usd",
         "bitrue-usdt",
-        "bitfinex2-usd",
+        "bitfinex-usd",
         "bingx-usdt"
       ]
     },
@@ -3317,7 +3317,7 @@
         "bitmart-usdt",
         "lbank-usdt",
         "bitrue-usdt",
-        "bitfinex2-usd"
+        "bitfinex-usd"
       ]
     },
     "SNT": {
@@ -3327,7 +3327,7 @@
         "mexc-usdt",
         "okx-usdt",
         "gate-usdt",
-        "coinbasepro-usd",
+        "coinbase-usd",
         "binanceusdm-usdt",
         "bitrue-eth",
         "bingx-usdt"
@@ -3341,7 +3341,7 @@
         "mexc-usdt",
         "okx-usdt",
         "gate-usdt",
-        "coinbasepro-usd",
+        "coinbase-usd",
         "binanceusdm-usdt",
         "bitmart-usdt",
         "kraken-usd",
@@ -3406,7 +3406,7 @@
         "kucoin-usdt",
         "mexc-usdt",
         "gate-usdt",
-        "coinbasepro-usd",
+        "coinbase-usd",
         "binanceusdm-usdt",
         "bitrue-usdt",
         "bingx-usdt"
@@ -3433,7 +3433,7 @@
         "mexc-usdt",
         "okx-usdt",
         "gate-usdt",
-        "coinbasepro-usd",
+        "coinbase-usd",
         "binanceusdm-usdt",
         "bitmart-usdt",
         "kraken-usd",
@@ -3449,7 +3449,7 @@
         "kucoin-usdt",
         "okx-usdt",
         "gate-usdt",
-        "coinbasepro-usd",
+        "coinbase-usd",
         "binanceusdm-usdt",
         "bitmart-usdt",
         "kraken-usd",
@@ -3467,7 +3467,7 @@
         "okx-usdt",
         "gate-usdt",
         "bitrue-usdt",
-        "bitfinex2-usd",
+        "bitfinex-usd",
         "bingx-usdt"
       ]
     },
@@ -3479,7 +3479,7 @@
         "mexc-usdt",
         "okx-usdt",
         "gate-usdt",
-        "coinbasepro-usd",
+        "coinbase-usd",
         "binanceusdm-usdt",
         "bitmart-usdt",
         "bitrue-usdt",
@@ -3495,7 +3495,7 @@
         "mexc-usdt",
         "okx-usdt",
         "gate-usdt",
-        "coinbasepro-usd",
+        "coinbase-usd",
         "binanceusdm-usdt",
         "bitmart-usdt",
         "kraken-usd",
@@ -3511,7 +3511,7 @@
         "kucoin-usdt",
         "mexc-usdt",
         "gate-usdt",
-        "coinbasepro-usd",
+        "coinbase-usd",
         "binanceusdm-usdt",
         "bitmart-usdt",
         "kraken-usd",
@@ -3528,7 +3528,7 @@
         "mexc-usdt",
         "okx-usdt",
         "gate-usdt",
-        "coinbasepro-usd",
+        "coinbase-usd",
         "binanceusdm-usdt",
         "bitmart-usdt",
         "kraken-usd",
@@ -3548,7 +3548,7 @@
         "kucoin-usdt",
         "okx-usdt",
         "gate-usdt",
-        "coinbasepro-usd",
+        "coinbase-usd",
         "binanceusdm-usdt",
         "bitmart-usdc",
         "bitrue-usdt",
@@ -3556,7 +3556,7 @@
       ]
     },
     "PNG": {
-      "source": ["mexc-usdt", "gate-usdt", "coinbasepro-usd"]
+      "source": ["mexc-usdt", "gate-usdt", "coinbase-usd"]
     },
     "RUNE": {
       "source": [
@@ -3618,7 +3618,7 @@
         "kucoin-usdt",
         "mexc-usdt",
         "gate-usdt",
-        "coinbasepro-usd",
+        "coinbase-usd",
         "bitmart-usdt",
         "lbank-usdt",
         "bitrue-usdt",
@@ -3639,7 +3639,7 @@
       ]
     },
     "PLU": {
-      "source": ["kucoin-usdt", "coinbasepro-usd", "bitfinex2-usd"]
+      "source": ["kucoin-usdt", "coinbase-usd", "bitfinex-usd"]
     },
     "FET": {
       "source": [
@@ -3649,13 +3649,13 @@
         "mexc-usdt",
         "okx-usdt",
         "gate-usdt",
-        "coinbasepro-usd",
+        "coinbase-usd",
         "binanceusdm-usdt",
         "bitmart-usdt",
         "kraken-usd",
         "lbank-usdt",
         "bitrue-usdt",
-        "bitfinex2-usd",
+        "bitfinex-usd",
         "bitstamp-usd",
         "bingx-usdt"
       ]
@@ -3677,7 +3677,7 @@
         "kucoin-usdt",
         "mexc-usdt",
         "gate-usdt",
-        "coinbasepro-usd",
+        "coinbase-usd",
         "binanceusdm-usdt",
         "bitmart-usdt",
         "kraken-usd",
@@ -3691,7 +3691,7 @@
         "bitget-usdt",
         "kucoin-usdt",
         "gate-usdt",
-        "coinbasepro-usd",
+        "coinbase-usd",
         "binanceusdm-usdt",
         "kraken-usd",
         "bitrue-usdt",
@@ -3706,7 +3706,7 @@
         "mexc-usdt",
         "okx-usdt",
         "gate-usdt",
-        "coinbasepro-usd",
+        "coinbase-usd",
         "binanceusdm-usdt",
         "bitmart-usdt",
         "bitrue-usdt",
@@ -3750,7 +3750,7 @@
         "mexc-usdt",
         "okx-usdt",
         "gate-usdt",
-        "coinbasepro-usd",
+        "coinbase-usd",
         "binanceusdm-usdt",
         "kraken-usd",
         "lbank-usdt",
@@ -3765,7 +3765,7 @@
         "kucoin-usdt",
         "mexc-usdt",
         "gate-usdt",
-        "coinbasepro-usd",
+        "coinbase-usd",
         "binanceusdm-usdt",
         "bitmart-usdt",
         "kraken-usd",
@@ -3781,7 +3781,7 @@
         "gate-usdt",
         "binanceusdm-usdt",
         "bitmart-usdt",
-        "bitfinex2-usd",
+        "bitfinex-usd",
         "bingx-usdt"
       ]
     },
@@ -3823,7 +3823,7 @@
         "kucoin-usdt",
         "mexc-usdt",
         "gate-usdt",
-        "coinbasepro-usd",
+        "coinbase-usd",
         "bingx-usdt"
       ]
     },
@@ -3835,7 +3835,7 @@
         "mexc-usdt",
         "okx-usdt",
         "gate-usdt",
-        "coinbasepro-usd",
+        "coinbase-usd",
         "binanceusdm-usdt",
         "bitmart-usdt",
         "kraken-usd",
@@ -3854,7 +3854,7 @@
         "bitmart-usdt",
         "lbank-usdt",
         "bitrue-usdt",
-        "bitfinex2-usd",
+        "bitfinex-usd",
         "bingx-usdt"
       ]
     },
@@ -3892,7 +3892,7 @@
         "kucoin-usdt",
         "mexc-usdt",
         "gate-usdt",
-        "coinbasepro-usd",
+        "coinbase-usd",
         "binanceusdm-usdt",
         "bitmart-usdt",
         "kraken-usd",
@@ -3919,7 +3919,7 @@
         "kucoin-usdt",
         "mexc-usdt",
         "gate-usdt",
-        "coinbasepro-usd",
+        "coinbase-usd",
         "binanceusdm-usdt",
         "kraken-usd",
         "bitrue-usdt",
@@ -3933,7 +3933,7 @@
         "kucoin-usdt",
         "mexc-usdt",
         "gate-usdt",
-        "coinbasepro-usd",
+        "coinbase-usd",
         "binanceusdm-usdt",
         "lbank-usdt",
         "bitrue-usdt",
@@ -3971,7 +3971,7 @@
         "bitget-usdt",
         "kucoin-usdt",
         "gate-usdt",
-        "coinbasepro-usd",
+        "coinbase-usd",
         "binanceusdm-usdt",
         "bitmart-usdt",
         "kraken-usd",
@@ -4024,7 +4024,7 @@
         "mexc-usdt",
         "okx-usdt",
         "gate-usdt",
-        "coinbasepro-usd",
+        "coinbase-usd",
         "binanceusdm-usdt",
         "bitmart-usdt",
         "kraken-usd",
@@ -4037,7 +4037,7 @@
       "source": [
         "mexc-usdt",
         "gate-usdt",
-        "coinbasepro-usd",
+        "coinbase-usd",
         "bitmart-usdt",
         "kraken-usd",
         "bitrue-usdt"
@@ -4062,7 +4062,7 @@
         "kucoin-usdt",
         "gate-usdt",
         "bitrue-usdt",
-        "bitfinex2-usd",
+        "bitfinex-usd",
         "bingx-usdt"
       ]
     },
@@ -4098,7 +4098,7 @@
         "mexc-usdt",
         "okx-usdt",
         "gate-usdt",
-        "coinbasepro-usd",
+        "coinbase-usd",
         "binanceusdm-usdt",
         "bitmart-usdt",
         "kraken-usd",
@@ -4115,7 +4115,7 @@
         "bitmart-usdt",
         "bitrue-usdt",
         "bitrue-eth",
-        "bitfinex2-usd"
+        "bitfinex-usd"
       ]
     },
     "WRX": {
@@ -4138,7 +4138,7 @@
         "binance-usdt",
         "mexc-usdt",
         "gate-usdt",
-        "coinbasepro-usd",
+        "coinbase-usd",
         "bitmart-usdt",
         "bitrue-usdt"
       ]
@@ -4162,19 +4162,19 @@
         "mexc-usdt",
         "okx-usdt",
         "gate-usdt",
-        "coinbasepro-usd",
+        "coinbase-usd",
         "binanceusdm-usdt",
         "bitmart-usdt",
         "kraken-usd",
         "lbank-usdt",
         "bitrue-usdt",
-        "bitfinex2-usd",
+        "bitfinex-usd",
         "bitstamp-usd",
         "bingx-usdt"
       ]
     },
     "DNT": {
-      "source": ["binance-usdt", "gate-eth", "coinbasepro-usd"]
+      "source": ["binance-usdt", "gate-eth", "coinbase-usd"]
     },
     "DODO": {
       "source": [
@@ -4195,7 +4195,7 @@
         "bitget-usdt",
         "kucoin-usdt",
         "gate-usdt",
-        "coinbasepro-usd",
+        "coinbase-usd",
         "bitrue-usdt",
         "bingx-usdt"
       ]
@@ -4238,7 +4238,7 @@
         "kucoin-usdt",
         "mexc-usdt",
         "gate-usdt",
-        "coinbasepro-usd",
+        "coinbase-usd",
         "binanceusdm-usdt",
         "bitmart-usdt",
         "kraken-usd",
@@ -4253,7 +4253,7 @@
         "mexc-usdt",
         "okx-usdt",
         "gate-usdt",
-        "coinbasepro-usd",
+        "coinbase-usd",
         "kraken-usd",
         "lbank-usdt",
         "bitrue-usdt",
@@ -4265,15 +4265,15 @@
         "binance-usdt",
         "kucoin-usdt",
         "gate-usdt",
-        "coinbasepro-usd",
+        "coinbase-usd",
         "kraken-usd",
         "bitrue-usdt",
-        "bitfinex2-usd",
+        "bitfinex-usd",
         "bingx-usdt"
       ]
     },
     "KAN": {
-      "source": ["okx-usdt", "bitfinex2-usd"]
+      "source": ["okx-usdt", "bitfinex-usd"]
     },
     "VELO": {
       "source": [
@@ -4282,7 +4282,7 @@
         "mexc-usdt",
         "okx-usdt",
         "gate-usdt",
-        "coinbasepro-usd",
+        "coinbase-usd",
         "bitmart-usdt",
         "lbank-usdt",
         "bitrue-usdt"
@@ -4295,12 +4295,12 @@
         "kucoin-usdt",
         "mexc-usdt",
         "gate-usdt",
-        "coinbasepro-usd",
+        "coinbase-usd",
         "bitmart-usdt",
         "kraken-usd",
         "lbank-usdt",
         "bitrue-usdt",
-        "bitfinex2-usd",
+        "bitfinex-usd",
         "bitstamp-usd",
         "bingx-usdt"
       ]
@@ -4321,7 +4321,7 @@
         "kucoin-usdt",
         "mexc-usdt",
         "gate-usdt",
-        "coinbasepro-usd",
+        "coinbase-usd",
         "bitmart-usdt",
         "lbank-usdt",
         "bitrue-usdt",
@@ -4335,7 +4335,7 @@
         "kucoin-usdt",
         "mexc-usdt",
         "gate-usdt",
-        "coinbasepro-usd",
+        "coinbase-usd",
         "binanceusdm-usdt",
         "bitmart-usdt",
         "kraken-usd",
@@ -4351,7 +4351,7 @@
         "kucoin-usdt",
         "mexc-usdt",
         "gate-usdt",
-        "coinbasepro-usd",
+        "coinbase-usd",
         "binanceusdm-usdt",
         "bitmart-usdt",
         "kraken-usd",
@@ -4364,13 +4364,13 @@
         "binance-usdt",
         "mexc-usdt",
         "gate-usdt",
-        "coinbasepro-usd",
+        "coinbase-usd",
         "kraken-usd",
         "bitrue-usdt"
       ]
     },
     "CRPT": {
-      "source": ["kucoin-usdt", "gate-usdt", "coinbasepro-usd"]
+      "source": ["kucoin-usdt", "gate-usdt", "coinbase-usd"]
     },
     "NFT": {
       "source": [
@@ -4388,7 +4388,7 @@
         "kucoin-usdt",
         "okx-usdt",
         "gate-usdt",
-        "coinbasepro-usd",
+        "coinbase-usd",
         "bitrue-usdt",
         "bingx-usdt"
       ]
@@ -4425,7 +4425,7 @@
         "kucoin-usdt",
         "mexc-usdt",
         "gate-usdt",
-        "coinbasepro-usd",
+        "coinbase-usd",
         "kraken-usd",
         "lbank-usdt",
         "bitrue-usdt"
@@ -4487,7 +4487,7 @@
         "bitget-usdt",
         "mexc-usdt",
         "gate-usdt",
-        "coinbasepro-usd",
+        "coinbase-usd",
         "kraken-usd",
         "lbank-usdt",
         "bitrue-usdt",
@@ -4538,7 +4538,7 @@
         "kucoin-usdt",
         "mexc-usdt",
         "gate-usdt",
-        "coinbasepro-usd",
+        "coinbase-usd",
         "binanceusdm-usdt",
         "bitmart-usdt",
         "lbank-usdt",
@@ -4587,7 +4587,7 @@
         "bitget-usdt",
         "kucoin-usdt",
         "gate-usdt",
-        "coinbasepro-usd",
+        "coinbase-usd",
         "bitmart-usdt",
         "kraken-usd",
         "bingx-usdt"
@@ -4611,7 +4611,7 @@
         "bitget-usdt",
         "kucoin-usdt",
         "gate-usdt",
-        "coinbasepro-usd",
+        "coinbase-usd",
         "binanceusdm-usdt",
         "bitmart-usdt",
         "kraken-usd",
@@ -4631,7 +4631,7 @@
         "kucoin-usdt",
         "mexc-usdt",
         "gate-usdt",
-        "coinbasepro-usd",
+        "coinbase-usd",
         "binanceusdm-usdt",
         "bitmart-usdt",
         "lbank-usdt",
@@ -4660,7 +4660,7 @@
         "kucoin-usdt",
         "okx-usdt",
         "gate-usdt",
-        "coinbasepro-usd",
+        "coinbase-usd",
         "lbank-usdt",
         "bitrue-usdt",
         "bingx-usdt"
@@ -4677,11 +4677,11 @@
         "bitget-usdt",
         "mexc-usdt",
         "gate-usdt",
-        "coinbasepro-usd",
+        "coinbase-usd",
         "bitmart-usdt",
         "kraken-usd",
         "bitrue-usdt",
-        "bitfinex2-usd",
+        "bitfinex-usd",
         "bingx-usdt"
       ]
     },
@@ -4692,10 +4692,10 @@
       "source": ["mexc-usdt"]
     },
     "LYM": {
-      "source": ["kucoin-usdt", "gate-usdt", "bitfinex2-usd"]
+      "source": ["kucoin-usdt", "gate-usdt", "bitfinex-usd"]
     },
     "PNK": {
-      "source": ["mexc-usdt", "gate-usdt", "bitfinex2-usd", "bingx-usdt"]
+      "source": ["mexc-usdt", "gate-usdt", "bitfinex-usd", "bingx-usdt"]
     },
     "EURS": {},
     "AMPL": {
@@ -4724,7 +4724,7 @@
         "mexc-usdt",
         "okx-usdt",
         "gate-usdt",
-        "coinbasepro-usd",
+        "coinbase-usd",
         "binanceusdm-usdt",
         "bitmart-usdt",
         "kraken-usd",
@@ -4733,7 +4733,7 @@
       ]
     },
     "KEEP": {
-      "source": ["binance-usdt", "mexc-usdt", "coinbasepro-usd", "kraken-usd"]
+      "source": ["binance-usdt", "mexc-usdt", "coinbase-usd", "kraken-usd"]
     },
     "CLV": {
       "source": [
@@ -4742,7 +4742,7 @@
         "mexc-usdt",
         "okx-usdt",
         "gate-usdt",
-        "coinbasepro-usd",
+        "coinbase-usd",
         "kraken-usd",
         "bitrue-usdt",
         "bingx-usdt"
@@ -4754,7 +4754,7 @@
         "bitget-usdt",
         "mexc-usdt",
         "gate-usdt",
-        "coinbasepro-usd",
+        "coinbase-usd",
         "binanceusdm-usdt",
         "kraken-usd",
         "lbank-usdt",
@@ -4769,7 +4769,7 @@
         "bitget-usdt",
         "mexc-usdt",
         "gate-usdt",
-        "coinbasepro-usd",
+        "coinbase-usd",
         "lbank-usdt",
         "bitrue-usdt",
         "bingx-usdt"
@@ -4779,9 +4779,9 @@
       "source": [
         "mexc-usdt",
         "gate-usdt",
-        "coinbasepro-usd",
+        "coinbase-usd",
         "bitrue-usdt",
-        "bitfinex2-usd",
+        "bitfinex-usd",
         "bitstamp-usd",
         "bingx-usdt"
       ]
@@ -4794,13 +4794,13 @@
         "mexc-usdt",
         "okx-usdt",
         "gate-usdt",
-        "coinbasepro-usd",
+        "coinbase-usd",
         "bitrue-usdt",
         "bingx-usdt"
       ]
     },
     "AIOZ": {
-      "source": ["kucoin-usdt", "gate-usdt", "coinbasepro-usd", "bingx-usdt"]
+      "source": ["kucoin-usdt", "gate-usdt", "coinbase-usd", "bingx-usdt"]
     },
     "LOOM": {
       "source": [
@@ -4809,7 +4809,7 @@
         "kucoin-usdt",
         "mexc-usdt",
         "gate-usdt",
-        "coinbasepro-usd",
+        "coinbase-usd",
         "binanceusdm-usdt",
         "bitmart-usdt",
         "bitrue-usdt",
@@ -4834,7 +4834,7 @@
         "bitget-usdt",
         "kucoin-usdt",
         "gate-usdt",
-        "coinbasepro-usd",
+        "coinbase-usd",
         "bingx-usdt"
       ]
     },
@@ -4847,7 +4847,7 @@
         "kucoin-usdt",
         "okx-usdt",
         "gate-usdt",
-        "coinbasepro-usd",
+        "coinbase-usd",
         "bitmart-usdt",
         "kraken-usd"
       ]
@@ -4893,7 +4893,7 @@
         "mexc-usdt",
         "okx-usdt",
         "gate-usdt",
-        "coinbasepro-usd",
+        "coinbase-usd",
         "bitrue-usdt"
       ]
     },
@@ -5005,7 +5005,7 @@
         "bitget-usdt",
         "kucoin-usdt",
         "gate-usdt",
-        "coinbasepro-usd",
+        "coinbase-usd",
         "binanceusdm-usdt",
         "bitrue-usdt",
         "bingx-usdt"
@@ -5130,7 +5130,7 @@
         "binance-usdt",
         "kucoin-usdt",
         "gate-usdt",
-        "coinbasepro-usd",
+        "coinbase-usd",
         "binanceusdm-usdt",
         "bitrue-usdt",
         "bingx-usdt"
@@ -5167,7 +5167,7 @@
       ]
     },
     "RRT": {
-      "source": ["bitfinex2-usd"]
+      "source": ["bitfinex-usd"]
     },
     "RBTC": {},
     "EURT": {
@@ -5198,13 +5198,13 @@
       "source": ["bitmart-btc"]
     },
     "QTF": {
-      "source": ["bitfinex2-usd"]
+      "source": ["bitfinex-usd"]
     },
     "PLANETS": {
       "source": ["mexc-usdt", "bitmart-usdt"]
     },
     "FCL": {
-      "source": ["bitfinex2-usd"]
+      "source": ["bitfinex-usd"]
     },
     "REVV": {
       "source": [
@@ -5223,7 +5223,7 @@
         "kucoin-usdt",
         "mexc-usdt",
         "gate-usdt",
-        "coinbasepro-usd",
+        "coinbase-usd",
         "lbank-usdt",
         "bitrue-usdt",
         "bingx-usdt"
@@ -5248,7 +5248,7 @@
         "mexc-usdt",
         "okx-usdt",
         "gate-usdt",
-        "coinbasepro-usd",
+        "coinbase-usd",
         "binanceusdm-usdt",
         "bitmart-usdt",
         "kraken-usd",
@@ -5266,7 +5266,7 @@
         "mexc-usdt",
         "okx-usdt",
         "gate-usdt",
-        "coinbasepro-usd",
+        "coinbase-usd",
         "binanceusdm-usdt",
         "bitmart-usdt",
         "kraken-usd",
@@ -5277,13 +5277,13 @@
       ]
     },
     "AVT": {
-      "source": ["gate-usdt", "coinbasepro-usd", "bitrue-usdt"]
+      "source": ["gate-usdt", "coinbase-usd", "bitrue-usdt"]
     },
     "PRO": {
-      "source": ["mexc-usdt", "coinbasepro-usd", "bitrue-usdt"]
+      "source": ["mexc-usdt", "coinbase-usd", "bitrue-usdt"]
     },
     "MUSD": {
-      "source": ["coinbasepro-usd"]
+      "source": ["coinbase-usd"]
     },
     "LQTY": {
       "source": [
@@ -5293,7 +5293,7 @@
         "mexc-usdt",
         "okx-usdt",
         "gate-usdt",
-        "coinbasepro-usd",
+        "coinbase-usd",
         "binanceusdm-usdt",
         "bitmart-usdt",
         "lbank-usdt",
@@ -5308,7 +5308,7 @@
         "kucoin-usdt",
         "mexc-usdt",
         "gate-usdt",
-        "coinbasepro-usd",
+        "coinbase-usd",
         "bitmart-usdt",
         "kraken-usd",
         "lbank-usdt",
@@ -5317,16 +5317,11 @@
       ]
     },
     "DDX": {
-      "source": ["coinbasepro-usd"]
+      "source": ["coinbase-usd"]
     },
     "CHSB": {},
     "UST": {
-      "source": [
-        "binance-usdt",
-        "coinbasepro-usd",
-        "kraken-usd",
-        "bitfinex2-usd"
-      ]
+      "source": ["binance-usdt", "coinbase-usd", "kraken-usd", "bitfinex-usd"]
     },
     "SNOB": {},
     "DYP": {
@@ -5334,7 +5329,7 @@
         "kucoin-usdt",
         "mexc-usdt",
         "gate-usdt",
-        "coinbasepro-usd",
+        "coinbase-usd",
         "bitrue-usdt"
       ]
     },
@@ -5393,20 +5388,20 @@
       "source": ["binance-usdt", "mexc-usdt", "okx-usdt", "gate-usdt"]
     },
     "NEST": {
-      "source": ["mexc-usdt", "gate-usdt", "coinbasepro-usd", "kraken-usd"]
+      "source": ["mexc-usdt", "gate-usdt", "coinbase-usd", "kraken-usd"]
     },
     "AST": {
       "source": [
         "binance-usdt",
         "okx-usdt",
         "gate-usdt",
-        "coinbasepro-usd",
+        "coinbase-usd",
         "bitmart-usdt",
         "bingx-usdt"
       ]
     },
     "ABT": {
-      "source": ["bitget-usdt", "gate-usdt", "coinbasepro-usd"]
+      "source": ["bitget-usdt", "gate-usdt", "coinbase-usd"]
     },
     "GT": {
       "source": ["gate-usdt", "lbank-usdt"]
@@ -5559,7 +5554,7 @@
       "source": [
         "binance-usdt",
         "gate-usdt",
-        "coinbasepro-usd",
+        "coinbase-usd",
         "kraken-usd",
         "bitrue-usdt"
       ]
@@ -5580,7 +5575,7 @@
       "source": [
         "mexc-usdt",
         "gate-usdt",
-        "coinbasepro-usd",
+        "coinbase-usd",
         "bitrue-usdt",
         "bingx-usdt"
       ]
@@ -5592,7 +5587,7 @@
         "kucoin-usdt",
         "mexc-usdt",
         "gate-usdt",
-        "coinbasepro-usd",
+        "coinbase-usd",
         "binanceusdm-usdt",
         "bitmart-usdt",
         "kraken-usd",
@@ -5661,7 +5656,7 @@
     },
     "MHC": {},
     "GUSD": {
-      "source": ["coinbasepro-usd", "bitstamp-usd"]
+      "source": ["coinbase-usd", "bitstamp-usd"]
     },
     "MIOTA": {},
     "LUNA": {
@@ -5711,7 +5706,7 @@
       "source": ["gate-usdt"]
     },
     "ALEPH": {
-      "source": ["kucoin-usdt", "mexc-usdt", "gate-usdt", "coinbasepro-usd"]
+      "source": ["kucoin-usdt", "mexc-usdt", "gate-usdt", "coinbase-usd"]
     },
     "ALEX": {
       "source": [
@@ -5863,7 +5858,7 @@
         "mexc-usdt",
         "okx-usdt",
         "gate-usdt",
-        "coinbasepro-usd",
+        "coinbase-usd",
         "binanceusdm-usdt",
         "bitmart-usdt",
         "kraken-usd",
@@ -5884,7 +5879,7 @@
         "mexc-usdt",
         "okx-usdt",
         "gate-usdt",
-        "coinbasepro-usd",
+        "coinbase-usd",
         "bitmart-usdt",
         "kraken-usd",
         "lbank-usdt",
@@ -5911,7 +5906,7 @@
       ]
     },
     "NU": {
-      "source": ["binance-usdt", "coinbasepro-usd"]
+      "source": ["binance-usdt", "coinbase-usd"]
     },
     "DAG": {
       "source": ["kucoin-usdt", "mexc-usdt", "gate-usdt", "bitrue-usdt"]
@@ -5950,7 +5945,7 @@
         "kucoin-eth",
         "mexc-usdt",
         "gate-usdt",
-        "coinbasepro-usd",
+        "coinbase-usd",
         "bitrue-usdt"
       ]
     },
@@ -5968,7 +5963,7 @@
         "binance-usdt",
         "mexc-usdt",
         "gate-usdt",
-        "coinbasepro-usd",
+        "coinbase-usd",
         "bingx-usdt"
       ]
     },
@@ -5976,7 +5971,7 @@
       "source": [
         "kucoin-usdt",
         "gate-usdt",
-        "coinbasepro-usd",
+        "coinbase-usd",
         "bitrue-usdt",
         "bingx-usdt"
       ]
@@ -6003,7 +5998,7 @@
         "binance-usdt",
         "bitget-usdt",
         "gate-usdt",
-        "coinbasepro-usd",
+        "coinbase-usd",
         "binanceusdm-usdt",
         "kraken-usd",
         "bitrue-usdt",
@@ -6043,7 +6038,7 @@
         "bitget-usdt",
         "kucoin-usdt",
         "gate-usdt",
-        "coinbasepro-usd",
+        "coinbase-usd",
         "bitmart-btc",
         "bitrue-usdt",
         "bitstamp-usd"
@@ -6102,7 +6097,7 @@
         "mexc-usdt",
         "okx-usdt",
         "gate-usdt",
-        "coinbasepro-usd",
+        "coinbase-usd",
         "binanceusdm-usdt",
         "bitmart-usdt",
         "lbank-usdt",
@@ -6112,7 +6107,7 @@
     },
     "DOLA": {},
     "RGT": {
-      "source": ["binance-usdt", "gate-usdt", "coinbasepro-usd"]
+      "source": ["binance-usdt", "gate-usdt", "coinbase-usd"]
     },
     "CBAT": {},
     "GXC": {},
@@ -6129,7 +6124,7 @@
       "source": ["gate-usdt"]
     },
     "LCX": {
-      "source": ["coinbasepro-usd", "kraken-usd", "bitrue-usdt"]
+      "source": ["coinbase-usd", "kraken-usd", "bitrue-usdt"]
     },
     "COCOS": {
       "source": ["binance-usdt", "binanceusdm-usdt"]
@@ -6141,7 +6136,7 @@
         "bitget-usdt",
         "mexc-usdt",
         "gate-usdt",
-        "coinbasepro-usd",
+        "coinbase-usd",
         "binanceusdm-usdt",
         "kraken-usd",
         "bitrue-usdt",
@@ -6186,7 +6181,7 @@
         "kucoin-usdt",
         "mexc-usdt",
         "gate-usdt",
-        "coinbasepro-usd",
+        "coinbase-usd",
         "kraken-usd",
         "lbank-usdt",
         "bitrue-usdt",
@@ -6231,7 +6226,7 @@
         "kucoin-usdt",
         "mexc-usdt",
         "gate-usdt",
-        "coinbasepro-usd",
+        "coinbase-usd",
         "binanceusdm-usdt",
         "bitmart-usdt",
         "kraken-usd",
@@ -6291,13 +6286,13 @@
       ]
     },
     "GYEN": {
-      "source": ["coinbasepro-usd"]
+      "source": ["coinbase-usd"]
     },
     "TNB": {
       "source": ["binance-eth"]
     },
     "COVAL": {
-      "source": ["gate-usdt", "coinbasepro-usd"]
+      "source": ["gate-usdt", "coinbase-usd"]
     },
     "SAITO": {
       "source": ["gate-usdt", "bitrue-usdt"]
@@ -6383,7 +6378,7 @@
       "source": ["binance-eth", "gate-usdt"]
     },
     "KRL": {
-      "source": ["kucoin-usdt", "gate-usdt", "coinbasepro-usd"]
+      "source": ["kucoin-usdt", "gate-usdt", "coinbase-usd"]
     },
     "SIX": {
       "source": ["mexc-usdt"]
@@ -6425,7 +6420,7 @@
       "source": ["binance-usdt"]
     },
     "INV": {
-      "source": ["mexc-usdt", "gate-usdt", "coinbasepro-usd", "bitrue-usdt"]
+      "source": ["mexc-usdt", "gate-usdt", "coinbase-usd", "bitrue-usdt"]
     },
     "XFUND": {},
     "ZMT": {
@@ -6445,7 +6440,7 @@
     },
     "ZB": {},
     "SYLO": {
-      "source": ["kucoin-usdt", "gate-usdt", "coinbasepro-usd", "bitrue-usdt"]
+      "source": ["kucoin-usdt", "gate-usdt", "coinbase-usd", "bitrue-usdt"]
     },
     "KIN": {
       "source": [
@@ -6457,7 +6452,7 @@
       ]
     },
     "NCT": {
-      "source": ["mexc-usdt", "gate-usdt", "coinbasepro-usd"]
+      "source": ["mexc-usdt", "gate-usdt", "coinbase-usd"]
     },
     "DCN": {},
     "GOF": {
@@ -6626,7 +6621,7 @@
         "mexc-usdt",
         "okx-usdt",
         "gate-usdt",
-        "coinbasepro-usd",
+        "coinbase-usd",
         "binanceusdm-usdt",
         "bitmart-usdt",
         "lbank-usdt",
@@ -6698,7 +6693,7 @@
         "mexc-usdt",
         "okx-usdt",
         "gate-usdt",
-        "coinbasepro-usd",
+        "coinbase-usd",
         "binanceusdm-usdt",
         "bitmart-usdt",
         "kraken-usd",
@@ -6808,13 +6803,13 @@
         "mexc-usdt",
         "okx-usdt",
         "gate-usdt",
-        "coinbasepro-usd",
+        "coinbase-usd",
         "binanceusdm-usdt",
         "bitmart-usdt",
         "kraken-usd",
         "lbank-usdt",
         "bitrue-usdt",
-        "bitfinex2-usd",
+        "bitfinex-usd",
         "bitstamp-usd",
         "bingx-usdt"
       ]
@@ -6858,7 +6853,7 @@
         "kucoin-usdt",
         "mexc-usdt",
         "gate-usdt",
-        "coinbasepro-usd",
+        "coinbase-usd",
         "bitmart-usdt",
         "lbank-usdt",
         "bitrue-usdt",
@@ -6871,12 +6866,12 @@
         "mexc-usdt",
         "okx-usdt",
         "gate-usdt",
-        "coinbasepro-usd",
+        "coinbase-usd",
         "bitmart-usdt",
         "kraken-usd",
         "lbank-usdt",
         "bitrue-usdt",
-        "bitfinex2-usd",
+        "bitfinex-usd",
         "bitstamp-usd",
         "bingx-usdt"
       ]
@@ -6934,7 +6929,7 @@
         "mexc-usdt",
         "okx-usdt",
         "gate-usdt",
-        "coinbasepro-usd",
+        "coinbase-usd",
         "binanceusdm-usdt",
         "bitmart-usdt",
         "kraken-usd",
@@ -6965,7 +6960,7 @@
         "mexc-usdt",
         "okx-usdt",
         "gate-usdt",
-        "coinbasepro-usd",
+        "coinbase-usd",
         "binanceusdm-usdt",
         "bitmart-usdt",
         "kraken-usd",
@@ -6998,7 +6993,7 @@
         "mexc-usdt",
         "okx-usdt",
         "gate-usdt",
-        "coinbasepro-usd",
+        "coinbase-usd",
         "binanceusdm-usdt",
         "bitmart-usdt",
         "kraken-usd",
@@ -7041,7 +7036,7 @@
       ]
     },
     "POLY": {
-      "source": ["binance-usdt", "coinbasepro-usd"]
+      "source": ["binance-usdt", "coinbase-usd"]
     },
     "EVER": {
       "source": ["kucoin-usdt", "mexc-usdt", "gate-usdt", "bitrue-usdt"]
@@ -7052,7 +7047,7 @@
         "bitget-usdt",
         "mexc-usdt",
         "gate-usdt",
-        "coinbasepro-usd",
+        "coinbase-usd",
         "kraken-usd",
         "bitrue-usdt"
       ]
@@ -7073,10 +7068,10 @@
       ]
     },
     "BTRST": {
-      "source": ["gate-usdt", "coinbasepro-usd", "bitrue-usdt"]
+      "source": ["gate-usdt", "coinbase-usd", "bitrue-usdt"]
     },
     "AXL": {
-      "source": ["gate-usdt", "coinbasepro-usd", "kraken-usd"]
+      "source": ["gate-usdt", "coinbase-usd", "kraken-usd"]
     },
     "HEX": {
       "source": ["bitget-usdt", "mexc-usdt", "bitrue-usdt"]
@@ -7086,7 +7081,7 @@
     "WBNB": {},
     "BTTOLD": {},
     "BGB": {
-      "source": ["bitget-usdt", "mexc-usdt", "bitfinex2-usd"]
+      "source": ["bitget-usdt", "mexc-usdt", "bitfinex-usd"]
     },
     "XRD": {
       "source": [
@@ -7095,7 +7090,7 @@
         "mexc-usdt",
         "gate-usdt",
         "bitmart-usdt",
-        "bitfinex2-usd",
+        "bitfinex-usd",
         "bingx-usdt"
       ]
     },
@@ -7158,7 +7153,7 @@
         "mexc-usdt",
         "okx-usdt",
         "gate-usdt",
-        "coinbasepro-usd",
+        "coinbase-usd",
         "bitmart-usdt",
         "bitrue-usdt",
         "bingx-usdt"
@@ -7171,7 +7166,7 @@
         "kucoin-usdt",
         "mexc-usdt",
         "gate-usdt",
-        "coinbasepro-usd",
+        "coinbase-usd",
         "binanceusdm-usdt",
         "bitmart-usdt",
         "kraken-usd",
@@ -7185,7 +7180,7 @@
         "bitget-usdt",
         "mexc-usdt",
         "gate-usdt",
-        "coinbasepro-usd",
+        "coinbase-usd",
         "bitrue-usdt",
         "bingx-usdt"
       ]
@@ -7196,7 +7191,7 @@
         "bitget-usdt",
         "mexc-usdt",
         "gate-usdt",
-        "coinbasepro-usd"
+        "coinbase-usd"
       ]
     },
     "VVS": {
@@ -7256,7 +7251,7 @@
         "mexc-usdt",
         "okx-usdt",
         "gate-usdt",
-        "coinbasepro-usd",
+        "coinbase-usd",
         "binanceusdm-usdt",
         "bitmart-usdt",
         "kraken-usd",
@@ -7291,7 +7286,7 @@
         "kucoin-usdt",
         "mexc-usdt",
         "gate-usdt",
-        "coinbasepro-usd",
+        "coinbase-usd",
         "kraken-usd",
         "bitrue-usdt",
         "bingx-usdt"
@@ -7299,7 +7294,7 @@
     },
     "VBG": {},
     "DESO": {
-      "source": ["gate-usdt", "coinbasepro-usd", "lbank-usdt", "bitrue-usdt"]
+      "source": ["gate-usdt", "coinbase-usd", "lbank-usdt", "bitrue-usdt"]
     },
     "AVINOC": {
       "source": ["bitmart-usdt"]
@@ -7335,7 +7330,7 @@
         "kucoin-usdt",
         "mexc-usdt",
         "gate-usdt",
-        "coinbasepro-usd",
+        "coinbase-usd",
         "binanceusdm-usdt",
         "bitmart-usdt",
         "lbank-usdt",
@@ -7350,7 +7345,7 @@
         "mexc-usdt",
         "okx-usdt",
         "gate-usdt",
-        "coinbasepro-usd",
+        "coinbase-usd",
         "binanceusdm-usdt",
         "bitmart-usdt",
         "kraken-usd",
@@ -7428,7 +7423,7 @@
       ]
     },
     "CCD": {
-      "source": ["kucoin-usdt", "mexc-usdt", "bitfinex2-usd"]
+      "source": ["kucoin-usdt", "mexc-usdt", "bitfinex-usd"]
     },
     "DEL": {
       "source": ["mexc-usdt"]
@@ -7523,7 +7518,7 @@
         "kucoin-usdt",
         "mexc-usdt",
         "gate-usdt",
-        "coinbasepro-usd",
+        "coinbase-usd",
         "binanceusdm-usdt",
         "bitmart-usdt",
         "lbank-usdt",
@@ -7564,7 +7559,7 @@
         "kucoin-usdt",
         "mexc-usdt",
         "okx-usdt",
-        "coinbasepro-usd",
+        "coinbase-usd",
         "bitmart-usdt",
         "bitstamp-usd",
         "bingx-usdt"
@@ -7667,7 +7662,7 @@
         "bitget-usdt",
         "mexc-usdt",
         "gate-usdt",
-        "coinbasepro-usd",
+        "coinbase-usd",
         "bitmart-usdt",
         "kraken-usd",
         "lbank-usdt",
@@ -7713,7 +7708,7 @@
         "kucoin-usdt",
         "mexc-usdt",
         "gate-usdt",
-        "coinbasepro-usd",
+        "coinbase-usd",
         "bitmart-usdt",
         "kraken-usd",
         "bitrue-usdt",
@@ -7748,7 +7743,7 @@
         "bitget-usdt",
         "kucoin-usdt",
         "gate-usdt",
-        "coinbasepro-usd",
+        "coinbase-usd",
         "bitmart-usdt",
         "bitrue-usdt",
         "bingx-usdt"
@@ -7832,7 +7827,7 @@
         "kucoin-usdt",
         "mexc-usdt",
         "gate-usdt",
-        "coinbasepro-usd",
+        "coinbase-usd",
         "bitmart-usdt",
         "bitrue-usdt",
         "bingx-usdt"
@@ -7862,7 +7857,7 @@
         "kucoin-usdt",
         "mexc-usdt",
         "gate-usdt",
-        "coinbasepro-usd",
+        "coinbase-usd",
         "bingx-usdt"
       ]
     },
@@ -7924,7 +7919,7 @@
         "mexc-usdt",
         "okx-usdt",
         "gate-usdt",
-        "coinbasepro-usd",
+        "coinbase-usd",
         "binanceusdm-usdt",
         "bitmart-usdt",
         "kraken-usd",
@@ -7943,7 +7938,7 @@
         "kucoin-usdt",
         "mexc-usdt",
         "gate-usdt",
-        "coinbasepro-usd"
+        "coinbase-usd"
       ]
     },
     "USDK": {},
@@ -7968,7 +7963,7 @@
         "kucoin-usdt",
         "mexc-usdt",
         "gate-usdt",
-        "bitfinex2-usd",
+        "bitfinex-usd",
         "bingx-usdt"
       ]
     },
@@ -7986,7 +7981,7 @@
       "source": ["okx-usdt", "bingx-usdt"]
     },
     "DEXT": {
-      "source": ["coinbasepro-usd", "bitrue-usdt"]
+      "source": ["coinbase-usd", "bitrue-usdt"]
     },
     "VOXEL": {
       "source": [
@@ -7994,7 +7989,7 @@
         "bitget-usdt",
         "kucoin-usdt",
         "gate-usdt",
-        "coinbasepro-usd",
+        "coinbase-usd",
         "bitrue-usdt",
         "bingx-usdt"
       ]

@@ -15,12 +15,12 @@
       "source": [
         "binance-usdt",
         "bingx-usdt",
-        "bitfinex2-usd",
+        "bitfinex-usd",
         "bitget-usdt",
         "bitmart-usdt",
         "bitrue-usdt",
         "bitstamp-usd",
-        "coinbasepro-usd",
+        "coinbase-usd",
         "gate-usdt",
         "kraken-usd",
         "kucoin-usdt",
@@ -33,12 +33,12 @@
       "source": [
         "binance-usdt",
         "bingx-usdt",
-        "bitfinex2-usd",
+        "bitfinex-usd",
         "bitget-usdt",
         "bitmart-usdt",
         "bitrue-usdt",
         "bitstamp-usd",
-        "coinbasepro-usd",
+        "coinbase-usd",
         "kraken-usd",
         "kucoin-usdt",
         "lbank-usdt",
@@ -48,9 +48,9 @@
     },
     "USDT": {
       "source": [
-        "bitfinex2-usd",
+        "bitfinex-usd",
         "bitstamp-usd",
-        "coinbasepro-usd",
+        "coinbase-usd",
         "gate-usd",
         "kraken-usd"
       ],
@@ -90,10 +90,10 @@
         "bitstamp-usd",
         "kaiko-v2",
         "kraken-usd",
-        "coinbasepro-btc-reversed",
+        "coinbase-btc-reversed",
         "bitstamp-btc-reversed",
         "kraken-usdt-reversed",
-        "coinbasepro-usdt-reversed",
+        "coinbase-usdt-reversed",
         "binance-usdc",
         "bitget-usdt-reversed",
         "okx-btc-reversed"
@@ -105,10 +105,10 @@
         "bitstamp-usd",
         "financialmodelingprep-usd",
         "kraken-usd",
-        "coinbasepro-btc-reversed",
+        "coinbase-btc-reversed",
         "bitstamp-btc-reversed",
         "kraken-usdt-reversed",
-        "bitfinex2-btc-reversed"
+        "bitfinex-btc-reversed"
       ]
     },
     "XVS": {
@@ -135,11 +135,11 @@
       "source": [
         "binance-usdt",
         "bingx-usdt",
-        "bitfinex2-usd",
+        "bitfinex-usd",
         "bitget-usdt",
         "bitmart-usdt",
         "bitrue-usdt",
-        "coinbasepro-usd",
+        "coinbase-usd",
         "gate-usdt",
         "kraken-usd",
         "kucoin-usdt",
@@ -165,7 +165,7 @@
         "bitget-usdt",
         "bitmart-usdt",
         "bitrue-usdt",
-        "coinbasepro-usd",
+        "coinbase-usd",
         "gate-usdt",
         "kraken-usd",
         "kucoin-usdt",
@@ -189,9 +189,9 @@
     "TIA": {
       "source": [
         "binance-usdt",
-        "bitfinex2-usd",
+        "bitfinex-usd",
         "bitget-usdt",
-        "coinbasepro-usd",
+        "coinbase-usd",
         "gate-usdt",
         "kucoin-usdt",
         "okx-usdt",
@@ -213,13 +213,13 @@
     "DAI": {
       "source": [
         "bingx-usdt",
-        "bitfinex2-usd",
+        "bitfinex-usd",
         "bitget-usdt",
         "bitmart-usdt",
         "bitrue-usdt",
         "bitstamp-usd",
         "bybit-usdt",
-        "coinbasepro-usd",
+        "coinbase-usd",
         "curve-ethereum-usdt",
         "gate-usdt",
         "kraken-usd",
