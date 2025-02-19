@@ -14,9 +14,9 @@
         "binance",
         "binancecoinm",
         "binanceusdm",
-        "bitfinex2",
+        "bitfinex",
         "chainlink",
-        "coinbasepro",
+        "coinbase",
         "coingecko",
         "kraken",
         "kucoin",
@@ -25,14 +25,14 @@
       ]
     },
     "USDT": {
-      "source": ["bitfinex2", "coinbasepro", "coingecko", "kaiko", "kraken"]
+      "source": ["bitfinex", "coinbase", "coingecko", "kaiko", "kraken"]
     },
     "USDC": {
       "source": [
         "balancer-ethereum-usdt",
         "binance",
         "binanceusdm",
-        "bitfinex2",
+        "bitfinex",
         "coingecko",
         "kraken",
         "kucoin",
