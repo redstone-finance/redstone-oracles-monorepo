@@ -2930,7 +2930,8 @@
         "curve-ethereum-wbtc",
         "curve-ethereum-wbtc-2",
         "pancake-swap-bnb-btcb-500",
-        "uniswap-v3-ethereum-wbtc-500"
+        "uniswap-v3-ethereum-wbtc-500",
+        "kodiak-berachain-wbtc-500"
       ],
       "denomination": "USD",
       "rateFeed": false
@@ -3263,7 +3264,8 @@
       "source": [
         "aerodrome-base-usdc",
         "curve-ethereum-usdc",
-        "uniswap-v3-ethereum-usdc-500"
+        "uniswap-v3-ethereum-usdc-500",
+        "curve-ethereum-gho"
       ],
       "denomination": "USD",
       "rateFeed": false
