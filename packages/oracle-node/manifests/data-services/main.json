@@ -13,7 +13,6 @@
   "tokens": {
     "ETH": {
       "source": [
-        "band",
         "binance-usdt",
         "bingx-usdt",
         "bitfinex-usd",
@@ -23,7 +22,6 @@
         "bitstamp-usd",
         "coinbase-usd",
         "coingecko",
-        "dia",
         "gate-usdt",
         "kaiko-v2",
         "kraken-usd",
@@ -37,7 +35,6 @@
     },
     "BTC": {
       "source": [
-        "band",
         "binance-usdt",
         "bingx-usdt",
         "bitfinex-usd",
