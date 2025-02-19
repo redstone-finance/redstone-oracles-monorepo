@@ -47,7 +47,10 @@ describe("MovementPricesContractAdapter", () => {
   beforeAll(async () => {
     test_start_ts = Date.now();
     aptos = makeAptos(NETWORK as Network, REST_NODE_LOCALNET_URL);
-    const { contractAddress, objectAddress } = readObjectAddress(PRICE_ADAPTER);
+    const { contractAddress, objectAddress } = readObjectAddress(
+      PRICE_ADAPTER,
+      NETWORK
+    );
     const account = Account.fromPrivateKey({
       privateKey: new Secp256k1PrivateKey(
         PrivateKey.formatPrivateKey(

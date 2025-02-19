@@ -1,3 +1,4 @@
+import { Network } from "@aptos-labs/ts-sdk";
 import "dotenv/config";
 import {
   deploy,
@@ -11,12 +12,17 @@ import {
 import { makeAptos } from "./utils";
 
 async function main() {
-  const { contractName, account, network, url } = getEnvParams();
+  const {
+    contractName,
+    account,
+    network = Network.LOCAL,
+    url,
+  } = getEnvParams();
   const aptos = makeAptos(network, url);
 
   switch (contractName) {
     case REDSTONE_SDK:
-      await deploy(aptos, account, contractName);
+      await deploy(aptos, account, contractName, network);
       break;
 
     case PRICE_ADAPTER:
@@ -24,15 +30,19 @@ async function main() {
         aptos,
         account,
         contractName,
-        readDepAddresses([REDSTONE_SDK])
+        network,
+        readDepAddresses([REDSTONE_SDK], network)
       );
       break;
 
     case PRICE_FEED: {
-      const depsAddresses = readDepAddresses([REDSTONE_SDK, PRICE_ADAPTER]);
+      const depsAddresses = readDepAddresses(
+        [REDSTONE_SDK, PRICE_ADAPTER],
+        network
+      );
       depsAddresses["price_adapter_object_address"] =
         getPriceAdapterObjectAddress(depsAddresses[PRICE_ADAPTER]!);
-      await deploy(aptos, account, contractName, depsAddresses);
+      await deploy(aptos, account, contractName, network, depsAddresses);
       break;
     }
   }
