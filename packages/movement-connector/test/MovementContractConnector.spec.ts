@@ -15,8 +15,8 @@ import { MovementPricesContractConnector } from "../src/MovementPricesContractCo
 import {
   FAKE_PRIVKEY_SECP256K1,
   NETWORK,
-  REST_FAUCET_LOCAL_URL,
-  REST_NODE_LOCAL_URL,
+  REST_FAUCET_LOCALNET_URL,
+  REST_NODE_LOCALNET_URL,
 } from "./helpers";
 
 const WAIT_MS = 5_000;
@@ -29,8 +29,8 @@ describe("MovementPricesContractConnector", () => {
   beforeAll(() => {
     aptos = makeAptos(
       NETWORK as Network,
-      REST_NODE_LOCAL_URL,
-      REST_FAUCET_LOCAL_URL
+      REST_NODE_LOCALNET_URL,
+      REST_FAUCET_LOCALNET_URL
     );
     const { contractAddress: contractAddress, objectAddress } =
       readObjectAddress(PRICE_ADAPTER);

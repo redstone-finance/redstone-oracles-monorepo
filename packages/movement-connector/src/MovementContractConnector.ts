@@ -16,6 +16,7 @@ export class MovementContractConnector<Adapter>
   getAdapter(): Promise<Adapter> {
     throw new Error("getAdapter is not implemented");
   }
+
   async getBlockNumber(): Promise<number> {
     return Number((await this.client.getLedgerInfo()).block_height);
   }
