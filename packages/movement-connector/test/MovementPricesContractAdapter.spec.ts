@@ -22,7 +22,7 @@ import {
 import {
   FAKE_PRIVKEY_SECP256K1,
   NETWORK,
-  REST_NODE_LOCAL_URL,
+  REST_NODE_LOCALNET_URL,
 } from "./helpers";
 
 const TEST_FILE_TIMEOUT = 60_000;
@@ -46,7 +46,7 @@ describe("MovementPricesContractAdapter", () => {
 
   beforeAll(async () => {
     test_start_ts = Date.now();
-    aptos = makeAptos(NETWORK as Network, REST_NODE_LOCAL_URL);
+    aptos = makeAptos(NETWORK as Network, REST_NODE_LOCALNET_URL);
     const { contractAddress, objectAddress } = readObjectAddress(PRICE_ADAPTER);
     const account = Account.fromPrivateKey({
       privateKey: new Secp256k1PrivateKey(
