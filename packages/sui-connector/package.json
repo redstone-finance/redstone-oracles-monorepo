@@ -1,6 +1,6 @@
 {
   "name": "@redstone-finance/sui-connector",
-  "version": "0.7.5",
+  "version": "0.8.0",
   "main": "dist/src/index.js",
   "types": "dist/src/index.d.ts",
   "scripts": {
@@ -24,8 +24,8 @@
   "dependencies": {
     "@mysten/bcs": "^1.4.0",
     "@mysten/sui": "^1.21.2",
-    "@redstone-finance/sdk": "0.7.5",
-    "@redstone-finance/utils": "0.7.5",
+    "@redstone-finance/sdk": "0.8.0",
+    "@redstone-finance/utils": "0.8.0",
     "decimal.js": "^10.4.3",
     "dotenv": "^16.0.3",
     "lodash": "^4.17.21",
@@ -34,7 +34,7 @@
   "devDependencies": {
     "@ledgerhq/hw-transport-node-hid": "^6.29.5",
     "@mysten/ledgerjs-hw-app-sui": "^0.4.2",
-    "@redstone-finance/oracles-smartweave-contracts": "0.7.5",
+    "@redstone-finance/oracles-smartweave-contracts": "0.8.0",
     "@types/chai": "^4.3.4",
     "chai": "^4.3.10",
     "secp256k1": "^5.0.1"
