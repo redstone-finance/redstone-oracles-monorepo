@@ -41,10 +41,10 @@
         "bitstamp-usd",
         "kaiko-v2",
         "kraken-usd",
-        "coinbasepro-btc-reversed",
+        "coinbase-btc-reversed",
         "bitstamp-btc-reversed",
         "kraken-usdt-reversed",
-        "coinbasepro-usdt-reversed",
+        "coinbase-usdt-reversed",
         "binance-usdc",
         "bitget-usdt-reversed",
         "okx-btc-reversed"
@@ -56,10 +56,10 @@
         "bitstamp-usd",
         "financialmodelingprep-usd",
         "kraken-usd",
-        "coinbasepro-btc-reversed",
+        "coinbase-btc-reversed",
         "bitstamp-btc-reversed",
         "kraken-usdt-reversed",
-        "bitfinex2-btc-reversed"
+        "bitfinex-btc-reversed"
       ]
     },
     "AVAX": {

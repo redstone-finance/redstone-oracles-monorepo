@@ -1,7 +1,7 @@
 {
   "interval": 60000,
   "priceAggregator": "median",
-  "defaultSource": ["coinbasepro"],
+  "defaultSource": ["coinbase"],
   "sourceTimeout": 50000,
   "deviationCheck": {
     "deviationWithRecentValues": {
