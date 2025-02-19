@@ -3349,6 +3349,11 @@
       "denomination": "USD",
       "rateFeed": false
     },
+    "vIP_FUNDAMENTAL": {
+      "source": ["story-evm-fetcher-verio"],
+      "denomination": "IP",
+      "rateFeed": true
+    },
     "BAT": {
       "denomination": "USD",
       "rateFeed": false
