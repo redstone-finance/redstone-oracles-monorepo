@@ -1,3 +1,4 @@
+import { Network } from "@aptos-labs/ts-sdk";
 import { getSignersForDataServiceId } from "@redstone-finance/oracles-smartweave-contracts";
 import { ContractParamsProvider, sampleRun } from "@redstone-finance/sdk";
 import { TRANSACTION_DEFAULT_CONFIG } from "../src";
@@ -12,9 +13,16 @@ async function main() {
     dataPackagesIds: ["ETH", "BTC"],
     authorizedSigners: getSignersForDataServiceId("redstone-primary-prod"),
   });
-  const { account, network, url } = getEnvParams(["CONTRACT_NAME"]);
+  const {
+    account,
+    network = Network.LOCAL,
+    url,
+  } = getEnvParams(["CONTRACT_NAME"]);
   const aptos = makeAptos(network, url);
-  const { contractAddress, objectAddress } = readObjectAddress("price_adapter");
+  const { contractAddress, objectAddress } = readObjectAddress(
+    "price_adapter",
+    network
+  );
   const packageObjectAddress = contractAddress.toString();
   const priceAdapterObjectAddress = objectAddress.toString();
 

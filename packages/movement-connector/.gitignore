@@ -183,3 +183,6 @@ dist
 .movement
 
 .coverage_map.mvcov
+
+# local deployment data
+movement/deployments/local*

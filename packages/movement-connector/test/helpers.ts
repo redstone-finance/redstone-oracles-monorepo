@@ -75,13 +75,14 @@ export class TestHelper {
     this.isPrepared = true;
     await this.foundAccount();
     await RedstoneCommon.sleep(1000);
-    await deploy(this.client, this.account, REDSTONE_SDK);
+    await deploy(this.client, this.account, REDSTONE_SDK, NETWORK);
     await RedstoneCommon.sleep(1000);
     await deploy(
       this.client,
       this.account,
       PRICE_ADAPTER,
-      readDepAddresses([REDSTONE_SDK])
+      NETWORK,
+      readDepAddresses([REDSTONE_SDK], NETWORK)
     );
   }
 }
