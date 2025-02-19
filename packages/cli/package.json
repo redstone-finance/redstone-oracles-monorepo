@@ -1,6 +1,6 @@
 {
   "name": "@redstone-finance/cli",
-  "version": "0.7.5",
+  "version": "0.8.0",
   "main": "dist/index.js",
   "exports": "./dist/index.js",
   "types": "dist/index.d.ts",
@@ -34,7 +34,7 @@
     "@nomiclabs/hardhat-etherscan": "^3.1.7",
     "@openzeppelin/contracts-upgradeable": "^4.8.3",
     "@openzeppelin/hardhat-upgrades": "^1.26.0",
-    "@redstone-finance/on-chain-relayer": "0.7.5",
+    "@redstone-finance/on-chain-relayer": "0.8.0",
     "chai": "^4.3.10",
     "chai-as-promised": "^7.1.1",
     "chalk": "^4.1.2",
@@ -43,7 +43,7 @@
     "prompts": "^2.4.2"
   },
   "devDependencies": {
-    "@redstone-finance/contract-deployments": "0.7.5",
+    "@redstone-finance/contract-deployments": "0.8.0",
     "@typechain/ethers-v5": "^10.2.0",
     "@typechain/hardhat": "^6.1.2",
     "@types/chai": "^4.3.4",
