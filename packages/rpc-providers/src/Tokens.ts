@@ -807,6 +807,10 @@ export const chainTokenMap: ChainTokenMap = {
       address: "0x211Cc4DD073734dA055fbF44a2b4667d5E5fE5d2",
       decimals: 18,
     },
+    LBTC: {
+      address: "0xecAc9C5F704e954931349Da37F60E39f515c11c1",
+      decimals: 8,
+    },
   },
 };
 
