@@ -33,17 +33,17 @@ export const ContractNameSchema = z.enum([
 
 type NamedAddresses = { [p: string]: AccountAddress | undefined };
 
-function readAddress(contractName: string) {
+function readAddress(contractName: string, networkName: string) {
   const content = JSON.parse(
-    fs.readFileSync(getJsonAddressesFile(contractName), "utf-8")
+    fs.readFileSync(getJsonAddressesFile(contractName, networkName), "utf-8")
   ) as { contractAddress: string };
 
   return AccountAddress.fromString(content.contractAddress);
 }
 
-export function readDepAddresses(deps: string[]) {
+export function readDepAddresses(deps: string[], networkName: string) {
   return Object.fromEntries(
-    deps.map((dep) => [dep, readAddress(dep)])
+    deps.map((dep) => [dep, readAddress(dep, networkName)])
   ) as NamedAddresses;
 }
 
@@ -67,14 +67,18 @@ export function getJsonBuildFile(
 
 export function getJsonAddressesFile(
   contractName: string,
+  networkName: string,
   outputBuildDir = "./movement/deployments/"
 ) {
-  return path.join(outputBuildDir, `${contractName}-addresses.json`);
+  return path.join(
+    outputBuildDir,
+    `${networkName}-${contractName}-addresses.json`
+  );
 }
 
-export function readObjectAddress(contractName: string) {
+export function readObjectAddress(contractName: string, networkName: string) {
   const content = JSON.parse(
-    fs.readFileSync(getJsonAddressesFile(contractName), "utf-8")
+    fs.readFileSync(getJsonAddressesFile(contractName, networkName), "utf-8")
   ) as { contractAddress: string; objectAddress: string };
 
   return {
@@ -173,6 +177,7 @@ export async function deploy(
   aptos: Aptos,
   account: Account,
   contractName: string,
+  networkName: string,
   namedAddresses: NamedAddresses = {}
 ) {
   const { builder, contractAddress, metadataBytes, bytecode } =
@@ -203,7 +208,7 @@ export async function deploy(
   console.log(output);
 
   fs.writeFileSync(
-    getJsonAddressesFile(contractName),
+    getJsonAddressesFile(contractName, networkName),
     JSON.stringify(output, null, 2)
   );
 }
