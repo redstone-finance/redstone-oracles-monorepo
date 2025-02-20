@@ -22,7 +22,7 @@ const createManifestConfig = (
     adapterContractAddress: manifest.adapterContract,
     dataServiceId: manifest.dataServiceId,
     dataFeeds: Object.keys(manifest.priceFeeds),
-    dataPackagesNames: manifest.dataPacakgesNames,
+    dataPackagesNames: manifest.dataPackagesNames,
     updateConditions,
     updateTriggers,
     adapterContractType: manifest.adapterContractType,
