@@ -104,9 +104,9 @@
       "chainId": 137,
       "currencySymbol": "POL",
       "publicRpcUrls": [
-        "https://polygon.llamarpc.com",
-        "https://rpc.ankr.com/polygon",
         "https://polygon-mainnet.public.blastapi.io",
+        "https://rpc.ankr.com/polygon",
+        "https://polygon.llamarpc.com",
         "https://rpc-mainnet.matic.quiknode.pro"
       ],
       "avgBlockTimeMs": 2000,
