@@ -207,13 +207,6 @@
         "timeSinceLastUpdateInMilliseconds": 86400000
       }
     },
-    "USDtb_FUNDAMENTAL": {
-      "priceFeedAddress": "0x692F045EFaC629a4d3C54DE4d8dDb1D225b5A976",
-      "updateTriggersOverrides": {
-        "deviationPercentage": 0.2,
-        "timeSinceLastUpdateInMilliseconds": 86400000
-      }
-    },
     "HLScope_FUNDAMENTAL": {
       "priceFeedAddress": "0x1f14a50bA904A28CF6088e71B6a15561074398d7",
       "updateTriggersOverrides": {
