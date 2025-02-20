@@ -3003,7 +3003,15 @@
       "rateFeed": true
     },
     "HYPE": {
-      "source": ["hyperliquid-api-fetcher"],
+      "source": [
+        "bitget-usdt",
+        "coingecko",
+        "coinmarketcap",
+        "gate-usdt",
+        "hyperliquid-api-fetcher",
+        "kucoin-usdt",
+        "xt"
+      ],
       "denomination": "USDC",
       "rateFeed": false
     },
