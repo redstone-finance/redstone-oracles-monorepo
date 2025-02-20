@@ -29,7 +29,6 @@ const CHAINS_TO_SKIP_MULTICALL_ADDRESS_CHECK = [
 const CHAINS_TO_SKIP_RPC_PRESENCE_CHECK = [
   "Monad Devnet",
   "Hemi Network",
-  "Unichain",
   "megaEth Testnet",
 ];
 
