@@ -2,14 +2,14 @@
   "adapterContractType": "movement-multi-feed",
   "chain": {
     "name": "testnet",
-    "id": 177
+    "id": 250
   },
   "updateTriggers": {
     "deviationPercentage": 1,
     "timeSinceLastUpdateInMilliseconds": 86400000
   },
-  "adapterContract": "0x7091fd28b2f84fcda3a883939612d8328c79c33227723390b5e3dc43fc6d53fc",
-  "adapterContractPackageId": "0xdb02e093e6cd1c6d9f67dadabf3f192cb74bd07d1aa6c5ae5a5423a782839b80",
+  "adapterContract": "0xdcfedff05914e01657ba03b597ba343c9fbdf2b3b35fedbfb33f4c8dfcd624a9",
+  "adapterContractPackageId": "0x5e23c9da7dc5d607d935d5989e81aca925d3267793f041cb3f199ea1f28fb24f",
   "dataServiceId": "redstone-primary-prod",
   "priceFeeds": {
     "ETH": {

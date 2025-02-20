@@ -1071,10 +1071,10 @@
     },
     "movement-testnet": {
       "name": "Movement Testnet",
-      "chainId": 177,
+      "chainId": 250,
       "chainType": "movement",
       "currencySymbol": "MOVE",
-      "publicRpcUrls": ["https://aptos.testnet.porto.movementlabs.xyz/v1"],
+      "publicRpcUrls": ["https://aptos.testnet.bardock.movementlabs.xyz/v1"],
       "avgBlockTimeMs": 1000,
       "multicall3": {
         "address": "",
