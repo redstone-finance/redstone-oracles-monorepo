@@ -1,0 +1,25 @@
+{
+  "chain": {
+    "name": "polygon",
+    "id": 137
+  },
+  "adapterContract": "0xcDC943EB780B66d4FECB019B041413A5a5188791",
+  "adapterContractType": "multi-feed",
+  "dataServiceId": "redstone-primary-prod",
+  "updateTriggers": {
+    "deviationPercentage": 0.1,
+    "timeSinceLastUpdateInMilliseconds": 86400000
+  },
+  "priceFeeds": {
+    "HLScope_FUNDAMENTAL": {
+      "priceFeedAddress": "0x780fe28dBac08eBa781de833A5E860C86D524251",
+      "updateTriggersOverrides": {
+        "deviationPercentage": 0.5,
+        "timeSinceLastUpdateInMilliseconds": 86400000
+      }
+    },
+    "ACRED_FUNDAMENTAL": {
+      "priceFeedAddress": "0xBF4Fa84B5433660a4194B5FbaF41c3d11B47ed77"
+    }
+  }
+}
