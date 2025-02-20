@@ -3329,6 +3329,11 @@
       "denomination": "USD",
       "rateFeed": false
     },
+    "ACRED_FUNDAMENTAL": {
+      "source": ["securitize-api"],
+      "denomination": "USD",
+      "rateFeed": true
+    },
     "vIP_FUNDAMENTAL": {
       "source": ["story-evm-fetcher-verio"],
       "denomination": "IP",
