@@ -206,6 +206,34 @@
         "deviationPercentage": 0.5,
         "timeSinceLastUpdateInMilliseconds": 86400000
       }
+    },
+    "USDtb_FUNDAMENTAL": {
+      "priceFeedAddress": "0x692F045EFaC629a4d3C54DE4d8dDb1D225b5A976",
+      "updateTriggersOverrides": {
+        "deviationPercentage": 0.2,
+        "timeSinceLastUpdateInMilliseconds": 86400000
+      }
+    },
+    "HLScope_FUNDAMENTAL": {
+      "priceFeedAddress": "0x1f14a50bA904A28CF6088e71B6a15561074398d7",
+      "updateTriggersOverrides": {
+        "deviationPercentage": 0.5,
+        "timeSinceLastUpdateInMilliseconds": 86400000
+      }
+    },
+    "ACRED_FUNDAMENTAL": {
+      "priceFeedAddress": "0xD6BcbbC87bFb6c8964dDc73DC3EaE6d08865d51C",
+      "updateTriggersOverrides": {
+        "deviationPercentage": 0.1,
+        "timeSinceLastUpdateInMilliseconds": 86400000
+      }
+    },
+    "USUAL": {
+      "priceFeedAddress": "0x2240AE461B34CC56D654ba5FA5830A243Ca54840",
+      "updateTriggersOverrides": {
+        "deviationPercentage": 0.5,
+        "timeSinceLastUpdateInMilliseconds": 86400000
+      }
     }
   }
 }
