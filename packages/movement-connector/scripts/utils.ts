@@ -10,7 +10,7 @@ import { AptosLedger, signTx } from "./ledger-utils";
 
 export function makeAptos(
   network: Network = Network.CUSTOM,
-  rpcUrl: string = "https://aptos.testnet.porto.movementlabs.xyz/v1",
+  rpcUrl: string = "https://aptos.testnet.bardock.movementlabs.xyz/v1",
   faucetUrl?: string
 ): Aptos {
   const config = new AptosConfig({

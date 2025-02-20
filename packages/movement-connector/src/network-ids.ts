@@ -1,7 +1,7 @@
 import { Network } from "@aptos-labs/ts-sdk";
 
 export const MOVEMENT_NETWORK_IDS: { [p: number]: Network } = {
-  177: Network.TESTNET,
+  250: Network.TESTNET,
   126: Network.MAINNET,
 };
 
@@ -10,7 +10,7 @@ export function getFullnodeUrl(network: Network) {
     case Network.MAINNET:
       return "https://mainnet.movementnetwork.xyz/v1";
     case Network.TESTNET:
-      return "https://aptos.testnet.porto.movementlabs.xyz/v1";
+      return "https://aptos.testnet.bardock.movementlabs.xyz/v1";
     default:
       throw new Error(`Network ${network} not supported`);
   }

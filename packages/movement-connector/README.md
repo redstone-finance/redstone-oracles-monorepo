@@ -2,7 +2,7 @@
 
 ## Prelude
 
-Dedicated URL for testnet needs this custom URL: https://aptos.testnet.porto.movementlabs.xyz/v1
+Dedicated URL for testnet needs this custom URL: "https://aptos.testnet.bardock.movementlabs.xyz/v1"
 Custom URL is preferred over testnet default as testnet isn't available yet.
 Use `custom` network type and provide above custom URL for tests with testnet.
 
