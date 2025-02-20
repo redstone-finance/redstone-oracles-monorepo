@@ -12,6 +12,7 @@ import { RedstoneCommon } from "@redstone-finance/utils";
 import { execSync } from "child_process";
 import "dotenv/config";
 import fs from "fs";
+import { EOL } from "os";
 import path from "path";
 import { z } from "zod";
 import {
@@ -207,8 +208,7 @@ export async function deploy(
 
   console.log(output);
 
-  fs.writeFileSync(
-    getJsonAddressesFile(contractName, networkName),
-    JSON.stringify(output, null, 2)
-  );
+  const jsonFile = getJsonAddressesFile(contractName, networkName);
+  fs.writeFileSync(jsonFile, JSON.stringify(output, null, 2));
+  fs.appendFileSync(jsonFile, EOL);
 }

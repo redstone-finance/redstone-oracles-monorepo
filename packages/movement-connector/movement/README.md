@@ -73,7 +73,7 @@ Dependencies needed:
 To run on the testnet follow these steps:
 * if you dont have movement cli installed install it
 * if you dont have movement initialized init it
-  * set network to 'custom' and paste 'https://aptos.testnet.porto.movementlabs.xyz/v1' as a network rpc
+  * set network to 'custom' and paste "https://aptos.testnet.bardock.movementlabs.xyz/v1" as a network rpc
 * deploy adapter and price-feed
 * write sample data & read sample data from the feed
 ```sh
