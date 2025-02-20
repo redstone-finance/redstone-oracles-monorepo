@@ -1,9 +1,9 @@
 DATA_GENERATOR=../../../packages/sdk/scripts/payload-generator
 DATA_DIR=$(DATA_GENERATOR)/data
 PUBLIC_KEY=movement config show-profiles --profile default | jq .Result.default.account
-ADAPTER_ADDRESS=$(shell cat deployments/price_adapter-addresses.json | jq .contractAddress)
-FEED_ADDRESS=$(shell cat deployments/price_feed-addresses.json | jq .contractAddress)
-ADAPTER_OBJECT_ADDRESS=$(shell cat deployments/price_adapter-addresses.json | jq .objectAddress)
+ADAPTER_ADDRESS=$(shell cat deployments/custom-price_adapter-addresses.json | jq .contractAddress)
+FEED_ADDRESS=$(shell cat deployments/custom-price_feed-addresses.json | jq .contractAddress)
+ADAPTER_OBJECT_ADDRESS=$(shell cat deployments/custom-price_adapter-addresses.json | jq .objectAddress)
 FEED_ETH=0x4554480000000000000000000000000000000000000000000000000000000000
 FEED_BTC=0x4254430000000000000000000000000000000000000000000000000000000000
 
