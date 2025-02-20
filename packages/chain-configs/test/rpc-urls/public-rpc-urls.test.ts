@@ -5,7 +5,6 @@ import { validateNetworkRpcUrls } from "./common";
 const CHAINS_TO_SKIP_RPC_CHECK = [
   "Monad Devnet",
   "Hemi Network",
-  "Unichain",
   "megaEth Testnet",
 ];
 
