@@ -1010,7 +1010,11 @@
       "name": "Unichain",
       "chainId": 130,
       "currencySymbol": "ETH",
-      "publicRpcUrls": [],
+      "publicRpcUrls": [
+        "https://unichain-rpc.publicnode.com",
+        "https://unichain.drpc.org",
+        "https://unichain.api.onfinality.io/public"
+      ],
       "avgBlockTimeMs": 1000,
       "multicall3": {
         "address": "0xcA11bde05977b3631167028862bE2a173976CA11",
