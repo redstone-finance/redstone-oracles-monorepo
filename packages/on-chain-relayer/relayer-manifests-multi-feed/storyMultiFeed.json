@@ -22,6 +22,12 @@
     },
     "USDT": {
       "priceFeedAddress": "0x7A9b672fc20b5C89D6774514052b3e0899E5E263"
+    },
+    "IP": {
+      "priceFeedAddress": "0x7fd911AFeb30a8444BE8317fb9e61b592b313ad9"
+    },
+    "vIP_FUNDAMENTAL": {
+      "priceFeedAddress": "0xb81131B6368b3F0a83af09dB4E39Ac23DA96C2Db"
     }
   }
 }
