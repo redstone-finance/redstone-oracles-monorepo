@@ -1,0 +1,18 @@
+{
+  "chain": {
+    "name": "avalanche",
+    "id": 43114
+  },
+  "adapterContract": "0x3587a73AA02519335A8a6053a97657BECe0bC2Cc",
+  "adapterContractType": "multi-feed",
+  "dataServiceId": "redstone-primary-prod",
+  "updateTriggers": {
+    "deviationPercentage": 0.1,
+    "timeSinceLastUpdateInMilliseconds": 86400000
+  },
+  "priceFeeds": {
+    "ACRED_FUNDAMENTAL": {
+      "priceFeedAddress": "0x4BAD96DD1C7D541270a0C92e1D4e5f12EEEA7a57"
+    }
+  }
+}
