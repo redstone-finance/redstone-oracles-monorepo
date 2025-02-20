@@ -6780,17 +6780,6 @@
       },
       "denomination": "BTC",
       "rateFeed": true
-    },
-    "LBENCH": {
-      "source": ["lbtc-indexer-fetcher"],
-      "deviationCheck": {
-        "deviationWithRecentValues": {
-          "maxPercent": 100,
-          "maxDelayMilliseconds": 6000000
-        }
-      },
-      "denomination": "BTC",
-      "rateFeed": true
     }
   }
 }
