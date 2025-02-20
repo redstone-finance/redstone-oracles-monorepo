@@ -7189,40 +7189,6 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@redstone-finance/avs-contracts@npm:0.8.0, @redstone-finance/avs-contracts@workspace:packages/avs/avs-contracts":
-  version: 0.0.0-use.local
-  resolution: "@redstone-finance/avs-contracts@workspace:packages/avs/avs-contracts"
-  dependencies:
-    "@ethersproject/abi": "npm:^5.6.3"
-    "@ethersproject/providers": "npm:^5.6.8"
-    "@nomicfoundation/hardhat-chai-matchers": "npm:^1.0.6"
-    "@nomicfoundation/hardhat-network-helpers": "npm:^1.0.9"
-    "@nomicfoundation/hardhat-toolbox": "npm:^2.0.2"
-    "@nomicfoundation/hardhat-verify": "npm:^1.0.0"
-    "@nomiclabs/hardhat-ethers": "npm:^2.0.6"
-    "@nomiclabs/hardhat-etherscan": "npm:^3.1.7"
-    "@openzeppelin/contracts": "npm:^4.8.1"
-    "@openzeppelin/hardhat-upgrades": "npm:^1.26.0"
-    "@redstone-finance/rpc-providers": "npm:0.8.0"
-    "@redstone-finance/utils": "npm:0.8.0"
-    "@typechain/ethers-v5": "npm:^10.2.0"
-    "@typechain/hardhat": "npm:^6.1.2"
-    "@types/chai": "npm:^4.3.4"
-    "@types/mocha": "npm:^10.0.1"
-    "@types/node": "npm:^20.14.12"
-    "@types/sinon-chai": "npm:^3.2.12"
-    chai: "npm:^4.3.10"
-    dotenv: "npm:^16.0.3"
-    ethers: "npm:^5.7.2"
-    hardhat: "npm:^2.17.2"
-    hardhat-gas-reporter: "npm:^1.0.9"
-    solidity-coverage: "npm:^0.8.12"
-    ts-node: "npm:^10.9.2"
-    typechain: "npm:^8.1.1"
-    typescript: "npm:^5.5.4"
-  languageName: unknown
-  linkType: soft
-
 "@redstone-finance/cache-service@npm:0.8.0, @redstone-finance/cache-service@workspace:packages/cache-service":
   version: 0.0.0-use.local
   resolution: "@redstone-finance/cache-service@workspace:packages/cache-service"
@@ -7424,7 +7390,6 @@ __metadata:
     "@openzeppelin/contracts": "npm:^4.8.1"
     "@openzeppelin/contracts-upgradeable": "npm:^4.8.3"
     "@openzeppelin/hardhat-upgrades": "npm:^1.26.0"
-    "@redstone-finance/avs-contracts": "npm:0.8.0"
     "@redstone-finance/chain-configs": "npm:0.8.0"
     "@redstone-finance/evm-connector": "npm:0.8.0"
     "@redstone-finance/on-chain-relayer": "npm:0.8.0"
