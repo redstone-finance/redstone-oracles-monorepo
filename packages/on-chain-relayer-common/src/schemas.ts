@@ -62,7 +62,7 @@ export const CommonManifestSchema = z.object({
   adapterContractType: AdapterTypesEnum,
   dataServiceId: z.string(),
   priceFeeds: z.record(z.string(), z.any()),
-  dataPacakgesNames: z.array(z.string()).optional(),
+  dataPackagesNames: z.array(z.string()).optional(),
 });
 
 export const OnChainRelayerManifestSchema = CommonManifestSchema.extend({
