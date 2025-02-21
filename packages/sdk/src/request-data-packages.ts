@@ -276,62 +276,60 @@ const parseAndValidateDataPackagesResponse = (
   const requestedDataFeedIds = reqParams.dataPackagesIds;
 
   for (const dataFeedId of requestedDataFeedIds) {
-    let dataFeedPackages = responseData[dataFeedId];
+    try {
+      let dataFeedPackages = responseData[dataFeedId];
 
-    if (!dataFeedPackages) {
-      const message = `Requested data feed id is not included in response: ${dataFeedId}`;
-
-      if (reqParams.ignoreMissingFeed) {
-        requestDataPackagesLogger?.feedIsMissing(message);
-        continue;
-      }
-      throw new Error(message);
-    }
-
-    // filter out packages with not expected signers
-    dataFeedPackages = dataFeedPackages.filter((dp) => {
-      const signer = maybeGetSigner(dp);
-      if (!signer) {
-        return false;
-      }
-      return reqParams.authorizedSigners.includes(signer);
-    });
-
-    if (dataFeedPackages.length === 0) {
-      const message = `No data packages for the data feed: ${dataFeedId}`;
-      if (reqParams.ignoreMissingFeed) {
-        requestDataPackagesLogger?.feedIsMissing(message);
-        continue;
-      } else {
+      if (!dataFeedPackages) {
+        const message = `Requested data feed id is not included in response: ${dataFeedId}`;
         throw new Error(message);
       }
-    } else if (dataFeedPackages.length < reqParams.uniqueSignersCount) {
-      throw new Error(
-        `Too few unique signers for the data feed: ${dataFeedId}. ` +
-          `Expected: ${reqParams.uniqueSignersCount}. ` +
-          `Received: ${dataFeedPackages.length}`
-      );
-    }
 
-    const signedDataPackages = dataFeedPackages.map((dp) =>
-      SignedDataPackage.fromObj(dp)
-    );
-    const timestamp = checkAndGetSameTimestamp(signedDataPackages);
-    if (reqParams.maxTimestampDeviationMS) {
-      const deviation = Math.abs(Date.now() - timestamp);
-      if (deviation > reqParams.maxTimestampDeviationMS) {
-        throw new Error(
-          `Timestamp deviation exceeded - timestamp: ${timestamp}, deviation: ${deviation}, max deviation: ${reqParams.maxTimestampDeviationMS}`
-        );
+      // filter out packages with not expected signers
+      dataFeedPackages = dataFeedPackages.filter((dp) => {
+        const signer = maybeGetSigner(dp);
+        if (!signer) {
+          return false;
+        }
+        return reqParams.authorizedSigners.includes(signer);
+      });
+
+      if (dataFeedPackages.length === 0) {
+        const message = `No data packages for the data feed: ${dataFeedId}`;
+        throw new Error(message);
+      } else if (dataFeedPackages.length < reqParams.uniqueSignersCount) {
+        const message =
+          `Too few unique signers for the data feed: ${dataFeedId}. ` +
+          `Expected: ${reqParams.uniqueSignersCount}. ` +
+          `Received: ${dataFeedPackages.length}`;
+        throw new Error(message);
+      }
+
+      const signedDataPackages = dataFeedPackages.map((dp) =>
+        SignedDataPackage.fromObj(dp)
+      );
+      const timestamp = checkAndGetSameTimestamp(signedDataPackages);
+      if (reqParams.maxTimestampDeviationMS) {
+        const deviation = Math.abs(Date.now() - timestamp);
+        if (deviation > reqParams.maxTimestampDeviationMS) {
+          const message = `Timestamp deviation exceeded - timestamp: ${timestamp}, deviation: ${deviation}, max deviation: ${reqParams.maxTimestampDeviationMS}`;
+          throw new Error(message);
+        }
+      }
+
+      parsedResponse[dataFeedId] = reqParams.disableMedianSelection
+        ? signedDataPackages
+        : pickDataFeedPackagesClosestToMedian(
+            dataFeedPackages,
+            reqParams.uniqueSignersCount
+          );
+    } catch (e) {
+      if (reqParams.ignoreMissingFeed) {
+        requestDataPackagesLogger?.feedIsMissing((e as Error).message);
+        continue;
+      } else {
+        throw e;
       }
     }
-
-    parsedResponse[dataFeedId] = reqParams.disableMedianSelection
-      ? signedDataPackages
-      : pickDataFeedPackagesClosestToMedian(
-          dataFeedPackages,
-          reqParams.uniqueSignersCount
-        );
   }
 
   return parsedResponse;
@@ -375,7 +373,7 @@ export const getDataPackagesTimestamp = (
 
 export const checkAndGetSameTimestamp = (dataPackages: SignedDataPackage[]) => {
   if (!dataPackages.length) {
-    throw new Error("No data packages");
+    throw new Error("No data packages for unique timestamp calculation");
   }
 
   const timestamps = dataPackages.map(

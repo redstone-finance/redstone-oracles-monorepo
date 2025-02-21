@@ -382,6 +382,41 @@ describe("request-data-packages", () => {
     expect(result).toMatchObject({});
   });
 
+  test("Should not throw an error if ignoreMissingFeed set - package too old", async () => {
+    const axiosGetSpy = jest.spyOn(axios, "get");
+    const dataPackage = DataPackage.fromObj({
+      dataPoints: [{ dataFeedId: "BTC", value: 20000 }],
+      timestampMilliseconds: 1654353400000,
+      dataPackageId: "BTC",
+    }).sign(MOCK_WALLET.privateKey);
+
+    axiosGetSpy.mockResolvedValueOnce({
+      data: {
+        BTC: [
+          {
+            dataPoints: [{ dataFeedId: "BTC", value: 20000 }],
+            timestampMilliseconds: 1654353400000,
+            dataServiceId: "service-1",
+            dataFeedId: "ETH",
+            dataPackageId: "ETH",
+            signerAddress: "0x2",
+            signature: dataPackage.toObj().signature,
+          },
+        ],
+      },
+    });
+
+    const result = await requestDataPackages({
+      ...getReqParams(),
+      uniqueSignersCount: 1,
+      dataPackagesIds: ["BTC"],
+      authorizedSigners: [MOCK_WALLET.address],
+      maxTimestampDeviationMS: 1,
+      ignoreMissingFeed: true,
+    });
+    expect(result).toMatchObject({});
+  });
+
   test("Should omit packages signed by not authorized signers, but pass through correctly signed", async () => {
     const axiosGetSpy = jest.spyOn(axios, "get");
     const signedDataPackageByAuthorizedSigner = DataPackage.fromObj({
