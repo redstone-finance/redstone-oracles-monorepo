@@ -345,6 +345,25 @@
         "okx-usdt",
         "xt"
       ]
+    },
+    "BTC": {
+      "source": [
+        "binance-usdt",
+        "bingx-usdt",
+        "bitfinex-usd",
+        "bitget-usdt",
+        "bitmart-usdt",
+        "bitrue-usdt",
+        "bitstamp-usd",
+        "coinbase-usd",
+        "coingecko",
+        "kaiko-v2",
+        "kraken-usd",
+        "kucoin-usdt",
+        "lbank-usdt",
+        "okx-usdt",
+        "xt"
+      ]
     }
   }
 }
