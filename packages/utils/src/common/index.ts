@@ -15,6 +15,7 @@ export * from "./numbers";
 export * from "./objects";
 export * from "./p-throttle";
 export * from "./retry";
+export * from "./SetWithTTL";
 export * from "./simple-cache";
 export * from "./time";
 export * from "./zod-helpers";
