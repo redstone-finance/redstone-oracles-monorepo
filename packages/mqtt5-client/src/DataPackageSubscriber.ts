@@ -95,6 +95,7 @@ export class DataPackageSubscriber {
     number,
     Record<string, SignedDataPackage[] | undefined>
   >();
+  private scheduledPublishes = new RedstoneCommon.SetWithTTL();
   private lastPublishedState: LastPublishedFeedState;
   private circuitBreaker?: RateLimitsCircuitBreaker;
   fallbackInterval?: NodeJS.Timeout;
@@ -331,18 +332,21 @@ export class DataPackageSubscriber {
       this.logger.debug(
         `Got packages from all signers timestamp=${packageTimestamp}, will try to publish instantly`
       );
-      return this.publish(entryForTimestamp, packageTimestamp);
+      return this.publish(packageTimestamp);
     }
 
-    if (this.canSchedulePublish(entryForTimestamp)) {
+    const key = packageTimestamp.toString();
+    if (
+      this.canSchedulePublish(entryForTimestamp) &&
+      !this.scheduledPublishes.has(key)
+    ) {
       this.logger.debug(
         `Got packages from enough authorized signers timestamp=${packageTimestamp}, will try to publish in ${this.params.waitMsForOtherSignersAfterMinimalSignersCountSatisfied} [ms]`
       );
-      // this can be scheduled multiple times, but this is okay, because lastPublishedTimestamp will protect from publishing multiple times
-      setTimeout(
-        () => this.publish(entryForTimestamp, packageTimestamp),
-        this.params.waitMsForOtherSignersAfterMinimalSignersCountSatisfied
-      );
+      this.scheduledPublishes.add(key, Date.now());
+      setTimeout(() => {
+        this.publish(packageTimestamp);
+      }, this.params.waitMsForOtherSignersAfterMinimalSignersCountSatisfied);
     }
   }
 
@@ -372,13 +376,17 @@ export class DataPackageSubscriber {
     });
   }
 
-  private publish(
-    entryForTimestamp: Record<string, SignedDataPackage[] | undefined>,
-    packageTimestamp: number
-  ) {
+  private publish(packageTimestamp: number) {
+    const entryForTimestamp = this.packagesPerTimestamp.get(packageTimestamp);
+    if (!entryForTimestamp) {
+      this.logger.warn(
+        `No packages available for timestamp=${packageTimestamp}`
+      );
+      return;
+    }
+
     const packagesToPublish: DataPackagesResponse =
       this.preparePackagesBeforePublish(entryForTimestamp);
-
     const packageIdsToPublish = Object.keys(packagesToPublish);
 
     if (packageIdsToPublish.length === 0) {
@@ -449,5 +457,7 @@ export class DataPackageSubscriber {
         this.packagesPerTimestamp.delete(timestamp);
       }
     }
+
+    this.scheduledPublishes.removeOlderThen(Date.now());
   }
 }
