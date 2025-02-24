@@ -6761,6 +6761,25 @@
     "LAZIO": {
       "denomination": "USD",
       "rateFeed": false
+    },
+    "LBTC_FUNDAMENTAL": {
+      "source": ["lbtc-indexer-fetcher"],
+      "deviationCheck": {
+        "deviationWithRecentValues": {
+          "maxPercent": 10,
+          "maxDelayMilliseconds": 6000000
+        }
+      },
+      "valueCapConfig": {
+        "upper": {
+          "value": 1
+        },
+        "lower": {
+          "value": 0.995
+        }
+      },
+      "denomination": "BTC",
+      "rateFeed": true
     }
   }
 }
