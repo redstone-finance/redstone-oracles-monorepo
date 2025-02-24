@@ -1,13 +1,14 @@
-import { Account, AccountAddress, Aptos } from "@aptos-labs/ts-sdk";
-import { MovementContractConnector } from "./MovementContractConnector";
-import { MovementOptionsContractUtil } from "./MovementOptionsContractUtil";
+import { Account, Aptos } from "@aptos-labs/ts-sdk";
+import { MovementContractConnector } from "../MovementContractConnector";
+import { MovementOptionsContractUtil } from "../MovementOptionsContractUtil";
+import { IMovementContractAdapter, TransactionConfig } from "../types";
+import { MovementPriceAdapterContractViewer } from "./MovementPriceAdapterContractViewer";
+import { MovementPriceAdapterContractWriter } from "./MovementPriceAdapterContractWriter";
 import { MovementPricesContractAdapter } from "./MovementPricesContractAdapter";
-import { MovementViewContractAdapter } from "./MovementViewContractAdapter";
-import { MovementWriteContractAdapter } from "./MovementWriteContractAdapter";
-import { IMovementContractAdapter, TransactionConfig } from "./types";
+
 export class MovementPricesContractConnector extends MovementContractConnector<MovementPricesContractAdapter> {
-  private readonly packageObjectAddress: AccountAddress;
-  private readonly priceAdapterObjectAddress: AccountAddress;
+  private readonly packageObjectAddress: string;
+  private readonly priceAdapterObjectAddress: string;
 
   constructor(
     client: Aptos,
@@ -16,18 +17,14 @@ export class MovementPricesContractConnector extends MovementContractConnector<M
     private readonly config?: TransactionConfig
   ) {
     super(client);
-    this.packageObjectAddress = AccountAddress.fromString(
-      args.packageObjectAddress
-    );
-    this.priceAdapterObjectAddress = AccountAddress.fromString(
-      args.priceAdapterObjectAddress
-    );
+    this.packageObjectAddress = args.packageObjectAddress;
+    this.priceAdapterObjectAddress = args.priceAdapterObjectAddress;
   }
 
   override getAdapter(): Promise<MovementPricesContractAdapter> {
     const adapter: IMovementContractAdapter = {
       writer: this.account
-        ? new MovementWriteContractAdapter(
+        ? new MovementPriceAdapterContractWriter(
             this.client,
             this.account,
             this.packageObjectAddress,
@@ -36,7 +33,7 @@ export class MovementPricesContractConnector extends MovementContractConnector<M
             this.config
           )
         : undefined,
-      viewer: new MovementViewContractAdapter(
+      viewer: new MovementPriceAdapterContractViewer(
         this.client,
         this.packageObjectAddress,
         this.priceAdapterObjectAddress

@@ -1,27 +1,29 @@
 import {
   Account,
-  AccountAddress,
   Aptos,
   InputGenerateTransactionPayloadData,
   MoveFunctionId,
   MoveVector,
 } from "@aptos-labs/ts-sdk";
 import { loggerFactory, RedstoneCommon } from "@redstone-finance/utils";
-import { TRANSACTION_DEFAULT_CONFIG } from "./config";
-import { MovementOptionsContractUtil } from "./MovementOptionsContractUtil";
-import { IMovementWriteContractAdapter, TransactionConfig } from "./types";
-import { makeFeedIdBytes } from "./utils";
+import { TRANSACTION_DEFAULT_CONFIG } from "../config";
+import { MovementOptionsContractUtil } from "../MovementOptionsContractUtil";
+import {
+  IMovementPriceAdapterContractWriter,
+  TransactionConfig,
+} from "../types";
+import { makeFeedIdBytes } from "../utils";
 
-export class MovementWriteContractAdapter
-  implements IMovementWriteContractAdapter
+export class MovementPriceAdapterContractWriter
+  implements IMovementPriceAdapterContractWriter
 {
   protected readonly logger = loggerFactory("movement-write-contract-adapter");
 
   constructor(
     private readonly client: Aptos,
     private readonly account: Account,
-    private readonly priceAdapterPackageAddress: AccountAddress,
-    private readonly priceAdapterObjectAddress: AccountAddress,
+    private readonly priceAdapterPackageAddress: string,
+    private readonly priceAdapterObjectAddress: string,
     private readonly optionsProvider: MovementOptionsContractUtil,
     private readonly config: TransactionConfig = TRANSACTION_DEFAULT_CONFIG
   ) {}

@@ -13,20 +13,21 @@
     "lint": "yarn global:eslint .",
     "lint:fix": "yarn global:eslint --fix .",
     "prepare": "yarn global:ts-node ./scripts/prepare-test-env.ts",
+    "transfer": "yarn global:ts-node ./scripts/transfer.ts",
     "test": "yarn global:jest:cov --runInBand",
     "sample-run": "yarn global:ts-node scripts/sample-run.ts",
     "price-adapter-address": "yarn global:ts-node ./scripts/object-address.ts",
     "derive-address": "yarn global:ts-node ./scripts/address-derive-from-priv.ts",
     "deploy-sdk": "CONTRACT_NAME=redstone_sdk yarn global:ts-node ./scripts/deploy-runner",
     "deploy-price_adapter": "CONTRACT_NAME=price_adapter yarn global:ts-node ./scripts/deploy-runner",
-    "deploy-price_feed": "CONTRACT_NAME=price_feed yarn global:ts-node ./scripts/deploy-runner"
+    "deploy-price_feed": "CONTRACT_NAME=price_feed yarn global:ts-node ./scripts/deploy-runner",
+    "ledger-utils": "yarn global:ts-node scripts/ledger/ledger-utils.ts"
   },
   "dependencies": {
-    "@aptos-labs/ts-sdk": "^1.33.2",
+    "@aptos-labs/ts-sdk": "1.33.2",
     "@redstone-finance/sdk": "0.8.0",
     "@redstone-finance/utils": "0.8.0",
     "dotenv": "^16.0.3",
-    "js-yaml": "^4.1.0",
     "lodash": "^4.17.21",
     "zod": "^3.22.4"
   },
@@ -35,8 +36,8 @@
     "@ledgerhq/hw-transport-node-hid": "^6.29.5",
     "@redstone-finance/oracles-smartweave-contracts": "0.8.0",
     "@types/chai": "^4.3.4",
-    "@types/js-yaml": "^4",
-    "chai": "^4.3.10"
+    "chai": "^4.3.10",
+    "prompts": "^2.4.2"
   },
   "files": [
     "dist/src/**/*"

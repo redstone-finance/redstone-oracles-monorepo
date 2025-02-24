@@ -5,7 +5,7 @@ import {
 } from "@redstone-finance/sdk";
 import { loggerFactory } from "@redstone-finance/utils";
 import { BigNumberish } from "ethers";
-import { IMovementContractAdapter } from "./types";
+import { IMovementContractAdapter } from "../types";
 
 export class MovementPricesContractAdapter
   implements IMultiFeedPricesContractAdapter

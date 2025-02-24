@@ -4,7 +4,7 @@ import { ContractData } from "@redstone-finance/sdk";
 /**
  * Expects from entity to write prices on chain.
  */
-export interface IMovementWriteContractAdapter {
+export interface IMovementPriceAdapterContractWriter {
   /**
    * Writes prices to the price adapter object.
    *
@@ -17,7 +17,7 @@ export interface IMovementWriteContractAdapter {
 /**
  * Expects from entity to view specific parameters on the chain.
  */
-export interface IMovementViewContractAdapter {
+export interface IMovementPriceAdapterViewer {
   /**
    * Allows to view the signer threshold set for the price adapter object.
    *
@@ -38,8 +38,8 @@ export interface IMovementViewContractAdapter {
  * Expects from entity to write, view and verify transactions to the chain.
  */
 export interface IMovementContractAdapter {
-  writer?: IMovementWriteContractAdapter;
-  viewer: IMovementViewContractAdapter;
+  writer?: IMovementPriceAdapterContractWriter;
+  viewer: IMovementPriceAdapterViewer;
 }
 
 /**

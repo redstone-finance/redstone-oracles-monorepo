@@ -4,9 +4,6 @@ import {
   Aptos,
   createObjectAddress,
   HexInput,
-  PrivateKey,
-  PrivateKeyVariants,
-  Secp256k1PrivateKey,
 } from "@aptos-labs/ts-sdk";
 import { RedstoneCommon } from "@redstone-finance/utils";
 import { execSync } from "child_process";
@@ -16,6 +13,7 @@ import { EOL } from "os";
 import path from "path";
 import { z } from "zod";
 import {
+  makeAptosAccount,
   MovementNetworkSchema,
   movementNetworkSchemaToAptosNetwork,
 } from "../src";
@@ -84,7 +82,9 @@ export function readObjectAddress(contractName: string, networkName: string) {
 
   return {
     contractAddress: AccountAddress.fromString(content.contractAddress),
-    objectAddress: AccountAddress.fromString(content.objectAddress),
+    objectAddress: content.objectAddress
+      ? AccountAddress.fromString(content.objectAddress)
+      : undefined,
   };
 }
 
@@ -93,15 +93,9 @@ export function getEnvParams(skip?: string[]) {
   const contractName = skipEnv.includes("CONTRACT_NAME")
     ? ""
     : RedstoneCommon.getFromEnv("CONTRACT_NAME", ContractNameSchema);
-  const key = skipEnv.includes("PRIVATE_KEY")
-    ? ""
-    : PrivateKey.formatPrivateKey(
-        RedstoneCommon.getFromEnv("PRIVATE_KEY"),
-        PrivateKeyVariants.Secp256k1
-      );
-  const account = Account.fromPrivateKey({
-    privateKey: new Secp256k1PrivateKey(key),
-  });
+  const account = skipEnv.includes("PRIVATE_KEY")
+    ? undefined
+    : makeAptosAccount();
   const networkSchema = skipEnv.includes("NETWORK")
     ? ""
     : RedstoneCommon.getFromEnv("NETWORK", z.optional(MovementNetworkSchema));
@@ -110,7 +104,7 @@ export function getEnvParams(skip?: string[]) {
     : undefined;
   const url = skipEnv.includes("REST_URL")
     ? ""
-    : RedstoneCommon.getFromEnv("REST_URL", z.optional(z.string()));
+    : RedstoneCommon.getFromEnv("REST_URL", z.string().url().optional());
 
   return { contractName, account, network, url };
 }

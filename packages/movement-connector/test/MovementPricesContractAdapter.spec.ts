@@ -1,14 +1,7 @@
 // NOTE: tests in this file depend on the order in which they are performed,
 //       therefore shall be run sequentially with `-runInBand` flag.
 
-import {
-  Account,
-  Aptos,
-  Network,
-  PrivateKey,
-  PrivateKeyVariants,
-  Secp256k1PrivateKey,
-} from "@aptos-labs/ts-sdk";
+import { Aptos, Network } from "@aptos-labs/ts-sdk";
 import { getSignersForDataServiceId } from "@redstone-finance/oracles-smartweave-contracts";
 import { ContractParamsProvider } from "@redstone-finance/sdk";
 import { RedstoneCommon } from "@redstone-finance/utils";
@@ -16,6 +9,7 @@ import "dotenv/config";
 import { PRICE_ADAPTER, readObjectAddress } from "../scripts/deploy-utils";
 import { makeAptos } from "../scripts/utils";
 import {
+  makeAptosAccount,
   MovementPricesContractAdapter,
   MovementPricesContractConnector,
 } from "../src";
@@ -51,16 +45,9 @@ describe("MovementPricesContractAdapter", () => {
       PRICE_ADAPTER,
       NETWORK
     );
-    const account = Account.fromPrivateKey({
-      privateKey: new Secp256k1PrivateKey(
-        PrivateKey.formatPrivateKey(
-          FAKE_PRIVKEY_SECP256K1,
-          PrivateKeyVariants.Secp256k1
-        )
-      ),
-    });
+    const account = makeAptosAccount(FAKE_PRIVKEY_SECP256K1);
     const packageObjectAddress = contractAddress.toString();
-    const priceAdapterObjectAddress = objectAddress.toString();
+    const priceAdapterObjectAddress = objectAddress!.toString();
     connector = new MovementPricesContractConnector(
       aptos,
       { packageObjectAddress, priceAdapterObjectAddress },
