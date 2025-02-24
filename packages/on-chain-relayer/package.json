@@ -85,6 +85,12 @@
     "typechain": "^8.1.1",
     "typescript": "^5.5.4"
   },
+  "overrides": {
+    "elliptic": "^6.6.1"
+  },
+  "resolutions": {
+    "elliptic": "^6.6.1"
+  },
   "files": [
     "dist/src/*",
     "contracts"

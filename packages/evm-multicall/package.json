@@ -45,5 +45,11 @@
   },
   "publishConfig": {
     "access": "public"
+  },
+  "overrides": {
+    "elliptic": "^6.6.1"
+  },
+  "resolutions": {
+    "elliptic": "^6.6.1"
   }
 }

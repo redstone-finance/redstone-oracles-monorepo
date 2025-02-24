@@ -22,6 +22,12 @@
   "devDependencies": {
     "@types/secp256k1": "^4.0.6"
   },
+  "overrides": {
+    "elliptic": "^6.6.1"
+  },
+  "resolutions": {
+    "elliptic": "^6.6.1"
+  },
   "publishConfig": {
     "access": "public"
   }

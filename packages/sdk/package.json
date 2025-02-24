@@ -30,6 +30,12 @@
   "devDependencies": {
     "msw": "^2.4.10"
   },
+  "overrides": {
+    "elliptic": "^6.6.1"
+  },
+  "resolutions": {
+    "elliptic": "^6.6.1"
+  },
   "publishConfig": {
     "access": "public"
   }
