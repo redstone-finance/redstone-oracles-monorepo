@@ -23,7 +23,7 @@
   },
   "dependencies": {
     "@coral-xyz/anchor": "^0.30.1",
-    "@redstone-finance/sdk": "0.8.0"
+    "@redstone-finance/sdk": "workspace:*"
   },
   "devDependencies": {
     "@babel/core": "^7.23.2",
