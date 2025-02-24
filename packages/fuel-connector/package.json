@@ -21,7 +21,7 @@
     "run-node": "fuel-core run --db-type in-memory --debug"
   },
   "dependencies": {
-    "@redstone-finance/sdk": "0.8.0",
+    "@redstone-finance/sdk": "workspace:*",
     "fuels": "^0.97.0"
   },
   "devDependencies": {
