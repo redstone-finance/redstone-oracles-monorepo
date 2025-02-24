@@ -89,6 +89,12 @@
     "ts-node": "^10.9.2",
     "typescript": "^5.5.4"
   },
+  "overrides": {
+    "elliptic": "^6.6.1"
+  },
+  "resolutions": {
+    "elliptic": "^6.6.1"
+  },
   "private": true,
   "workspaces": {
     "packages": [
