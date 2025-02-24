@@ -6,17 +6,27 @@ import {
   Serializer,
   SimpleTransaction,
 } from "@aptos-labs/ts-sdk";
+import { RedstoneCommon } from "@redstone-finance/utils";
+import { z } from "zod";
 import { AptosLedger, signTx } from "./ledger-utils";
+
+const DEFAULT_TESTNET_RPC_URL =
+  "https://aptos.testnet.bardock.movementlabs.xyz/v1";
+const DEFAULT_TESTNET_FAUCET_URL =
+  "https://faucet.testnet.bardock.movementnetwork.xyz";
 
 export function makeAptos(
   network: Network = Network.CUSTOM,
-  rpcUrl: string = "https://aptos.testnet.bardock.movementlabs.xyz/v1",
+  rpcUrl?: string,
   faucetUrl?: string
 ): Aptos {
   const config = new AptosConfig({
     network,
-    fullnode: rpcUrl,
-    faucet: faucetUrl,
+    fullnode:
+      rpcUrl ??
+      RedstoneCommon.getFromEnv("REST_URL", z.string().url().optional()) ??
+      DEFAULT_TESTNET_RPC_URL,
+    faucet: faucetUrl ?? DEFAULT_TESTNET_FAUCET_URL,
   });
   return new Aptos(config);
 }

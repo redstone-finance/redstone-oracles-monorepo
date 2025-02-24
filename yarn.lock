@@ -309,7 +309,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@aptos-labs/ts-sdk@npm:^1.33.2":
+"@aptos-labs/ts-sdk@npm:1.33.2":
   version: 1.33.2
   resolution: "@aptos-labs/ts-sdk@npm:1.33.2"
   dependencies:
@@ -8222,7 +8222,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@redstone-finance/lambda-redstone-txs-indexer@workspace:packages/lambda/lambda-redstone-txs-indexer"
   dependencies:
-    "@aptos-labs/ts-sdk": "npm:^1.33.2"
+    "@aptos-labs/ts-sdk": "npm:1.33.2"
     "@aws-sdk/client-ssm": "npm:^3.696.0"
     "@influxdata/influxdb-client": "npm:^1.35.0"
     "@mysten/sui": "npm:^1.21.2"
@@ -8340,18 +8340,17 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@redstone-finance/movement-connector@workspace:packages/movement-connector"
   dependencies:
-    "@aptos-labs/ts-sdk": "npm:^1.33.2"
+    "@aptos-labs/ts-sdk": "npm:1.33.2"
     "@ledgerhq/hw-app-aptos": "npm:^6.31.0"
     "@ledgerhq/hw-transport-node-hid": "npm:^6.29.5"
     "@redstone-finance/oracles-smartweave-contracts": "npm:0.8.0"
     "@redstone-finance/sdk": "npm:0.8.0"
     "@redstone-finance/utils": "npm:0.8.0"
     "@types/chai": "npm:^4.3.4"
-    "@types/js-yaml": "npm:^4"
     chai: "npm:^4.3.10"
     dotenv: "npm:^16.0.3"
-    js-yaml: "npm:^4.1.0"
     lodash: "npm:^4.17.21"
+    prompts: "npm:^2.4.2"
     zod: "npm:^3.22.4"
   languageName: unknown
   linkType: soft
@@ -11234,13 +11233,6 @@ __metadata:
     expect: "npm:^29.0.0"
     pretty-format: "npm:^29.0.0"
   checksum: 10c0/49c1f0fa20e45b1dfd69aea8af667a8be30e210f00673c365d504ca285cf9040d8f4861dd89657640af5f4a49eadcadc08907b5cf82eda28afea8ddd3dda8390
-  languageName: node
-  linkType: hard
-
-"@types/js-yaml@npm:^4":
-  version: 4.0.9
-  resolution: "@types/js-yaml@npm:4.0.9"
-  checksum: 10c0/24de857aa8d61526bbfbbaa383aa538283ad17363fcd5bb5148e2c7f604547db36646440e739d78241ed008702a8920665d1add5618687b6743858fae00da211
   languageName: node
   linkType: hard
 
