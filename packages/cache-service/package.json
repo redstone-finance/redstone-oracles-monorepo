@@ -69,6 +69,12 @@
     "typescript": "^5.5.4",
     "webpack": "^5.89.0"
   },
+  "overrides": {
+    "elliptic": "^6.6.1"
+  },
+  "resolutions": {
+    "elliptic": "^6.6.1"
+  },
   "publishConfig": {
     "access": "public"
   }
