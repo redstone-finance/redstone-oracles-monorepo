@@ -18,9 +18,9 @@
   "dependencies": {
     "@ethersproject/bytes": "^5.6.1",
     "@ethersproject/strings": "^5.7.0",
-    "@redstone-finance/oracles-smartweave-contracts": "0.8.0",
-    "@redstone-finance/protocol": "0.8.0",
-    "@redstone-finance/utils": "0.8.0",
+    "@redstone-finance/oracles-smartweave-contracts": "workspace:*",
+    "@redstone-finance/protocol": "workspace:*",
+    "@redstone-finance/utils": "workspace:*",
     "@types/lodash": "^4.14.195",
     "axios": "^1.7.9",
     "ethers": "^5.7.2",

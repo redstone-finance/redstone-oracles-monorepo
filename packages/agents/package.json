@@ -15,7 +15,7 @@
     "lint:fix": "yarn global:eslint --fix ."
   },
   "dependencies": {
-    "@redstone-finance/utils": "0.8.0",
+    "@redstone-finance/utils": "workspace:*",
     "node-schedule": "^2.1.1"
   },
   "devDependencies": {
