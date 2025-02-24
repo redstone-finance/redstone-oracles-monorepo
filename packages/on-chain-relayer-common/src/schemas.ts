@@ -65,18 +65,42 @@ export const CommonManifestSchema = z.object({
   dataPackagesNames: z.array(z.string()).optional(),
 });
 
-export const OnChainRelayerManifestSchema = CommonManifestSchema.extend({
+export const CommonManifestSchemaStrict = CommonManifestSchema.extend({
+  chain: ChainSchema.strict(),
+  updateTriggers: UpdateTriggersSchema.strict(),
+}).strict();
+
+const OnChainRelayerManifestExtension = {
   adapterContractType: BaseAdapterTypesEnum.default(PRICE_FEEDS),
   priceFeeds: z.record(z.string(), z.string()),
   authorizedSigners: z.array(z.string()).optional(),
-});
+};
+
+const MultiFeedOnChainRelayerManifestExtension = {
+  adapterContractType: MultiFeedAdapterTypesEnum.default(MULTI_FEED),
+  priceFeeds: z.record(z.string(), PriceFeedConfigSchema),
+  authorizedSigners: z.array(z.string()).optional(),
+};
+
+const MultiFeedOnChainRelayerManifestExtensionStrict = {
+  priceFeeds: z.record(z.string(), PriceFeedConfigSchema.strict()),
+};
+
+export const OnChainRelayerManifestSchema = CommonManifestSchema.extend(
+  OnChainRelayerManifestExtension
+);
 
 export const MultiFeedOnChainRelayerManifestSchema =
-  CommonManifestSchema.extend({
-    adapterContractType: MultiFeedAdapterTypesEnum.default(MULTI_FEED),
-    priceFeeds: z.record(z.string(), PriceFeedConfigSchema),
-    authorizedSigners: z.array(z.string()).optional(),
-  });
+  CommonManifestSchema.extend(MultiFeedOnChainRelayerManifestExtension);
+
+export const OnChainRelayerManifestSchemaStrict =
+  CommonManifestSchemaStrict.extend(OnChainRelayerManifestExtension).strict();
+
+export const MultiFeedOnChainRelayerManifestSchemaStrict =
+  CommonManifestSchemaStrict.extend({
+    ...MultiFeedOnChainRelayerManifestExtension,
+    ...MultiFeedOnChainRelayerManifestExtensionStrict,
+  }).strict();
 
 export const AnyOnChainRelayerManifestSchema = z.union([
   OnChainRelayerManifestSchema,
