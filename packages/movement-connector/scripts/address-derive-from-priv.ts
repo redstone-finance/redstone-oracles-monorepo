@@ -1,23 +1,21 @@
-import {
-  Account,
-  PrivateKey,
-  PrivateKeyVariants,
-  Secp256k1PrivateKey,
-} from "@aptos-labs/ts-sdk";
+import { PrivateKeyVariants, SigningScheme } from "@aptos-labs/ts-sdk";
+import "dotenv/config";
+import { hexlify } from "ethers/lib/utils";
+import { makeAptosAccount } from "../src";
 
 function main() {
-  const scriptArgs = process.argv.slice(2);
-  if (!scriptArgs.length) {
-    console.error(
-      `Please provide the private key in secp256k1 format as a hex string.`
-    );
-  }
-  const account = Account.fromPrivateKey({
-    privateKey: new Secp256k1PrivateKey(
-      PrivateKey.formatPrivateKey(scriptArgs[0], PrivateKeyVariants.Secp256k1)
-    ),
-  });
-  console.log(`Derived Address is: [ ${account.accountAddress.toString()} ]`);
+  const account = makeAptosAccount();
+  const variant =
+    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+    account.signingScheme === SigningScheme.SingleKey
+      ? PrivateKeyVariants.Secp256k1
+      : PrivateKeyVariants.Ed25519;
+  console.log(
+    `${variant} Derived Address: ${account.accountAddress.toString()}`
+  );
+  console.log(
+    `${variant} Derived Public Key: ${hexlify(account.publicKey.toString())}`
+  );
 }
 
 void main();

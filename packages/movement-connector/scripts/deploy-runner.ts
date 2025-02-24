@@ -18,6 +18,9 @@ async function main() {
     network = Network.LOCAL,
     url,
   } = getEnvParams();
+  if (!account) {
+    throw new Error("Account not derived");
+  }
   const aptos = makeAptos(network, url);
 
   switch (contractName) {

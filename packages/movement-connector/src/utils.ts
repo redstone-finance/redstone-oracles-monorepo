@@ -10,6 +10,8 @@ import {
   TransactionResponseType,
   U8,
 } from "@aptos-labs/ts-sdk";
+import { RedstoneCommon } from "@redstone-finance/utils";
+import { z } from "zod";
 import { MOVE_DECIMALS } from "./consts";
 
 export function makeFeedIdBytes(feedId: string): Uint8Array {
@@ -40,16 +42,29 @@ export function txCost(response: TransactionResponse) {
   return octasToMove(gas_price * gas_used);
 }
 
-export function makeAccountFromSecp256k1Key(privateKey: string): Account {
+export function makeAptosAccount(
+  privateKey?: string,
+  variant?: PrivateKeyVariants
+) {
+  privateKey ??= RedstoneCommon.getFromEnv(
+    "PRIVATE_KEY",
+    z.string().optional()
+  );
+  if (!privateKey) {
+    throw new Error("privateKey not set");
+  }
+  variant ??=
+    RedstoneCommon.getFromEnv(
+      "PRIVATE_KEY_SCHEMA",
+      z.nativeEnum(PrivateKeyVariants).optional()
+    ) ?? PrivateKeyVariants.Secp256k1;
+
   return Account.fromPrivateKey({
-    privateKey: extractPrivateKey(privateKey, PrivateKeyVariants.Secp256k1),
+    privateKey: extractPrivateKey(privateKey, variant),
   });
 }
 
-function extractPrivateKey(
-  key: HexInput,
-  keyType: PrivateKeyVariants
-): Ed25519PrivateKey | Secp256k1PrivateKey {
+function extractPrivateKey(key: HexInput, keyType: PrivateKeyVariants) {
   switch (keyType) {
     case PrivateKeyVariants.Ed25519:
       return new Ed25519PrivateKey(
