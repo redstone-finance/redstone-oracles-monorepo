@@ -50,6 +50,12 @@
     "@ton/sandbox": "^0.17.0",
     "@ton/test-utils": "^0.4.2"
   },
+  "overrides": {
+    "elliptic": "^6.6.1"
+  },
+  "resolutions": {
+    "elliptic": "^6.6.1"
+  },
   "files": [
     "dist/src/**/*",
     "dist/wrappers/**/*"
