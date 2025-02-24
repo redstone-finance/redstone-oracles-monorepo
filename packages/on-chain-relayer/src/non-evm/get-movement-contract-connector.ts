@@ -1,7 +1,7 @@
 import {
   AptosClientBuilder,
   MovementPricesContractConnector,
-  makeAccountFromSecp256k1Key,
+  makeAptosAccount,
 } from "@redstone-finance/movement-connector";
 import { RelayerConfig } from "../config/RelayerConfig";
 
@@ -22,7 +22,7 @@ export const getMovementContractConnector = (relayerConfig: RelayerConfig) => {
     .withRpcUrls(rpcUrls)
     .build();
 
-  const account = makeAccountFromSecp256k1Key(privateKey);
+  const account = makeAptosAccount(privateKey);
 
   return new MovementPricesContractConnector(
     aptosClient,
