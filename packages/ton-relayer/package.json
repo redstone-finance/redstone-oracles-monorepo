@@ -20,6 +20,12 @@
     "dotenv": "^16.0.3",
     "ethers": "^5.7.2"
   },
+  "overrides": {
+    "elliptic": "^6.6.1"
+  },
+  "resolutions": {
+    "elliptic": "^6.6.1"
+  },
   "publishConfig": {
     "access": "public"
   }

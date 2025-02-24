@@ -26,6 +26,12 @@
   "devDependencies": {
     "node-jq": "^4.2.2"
   },
+  "overrides": {
+    "elliptic": "^6.6.1"
+  },
+  "resolutions": {
+    "elliptic": "^6.6.1"
+  },
   "files": [
     "dist/src/**/*"
   ],
