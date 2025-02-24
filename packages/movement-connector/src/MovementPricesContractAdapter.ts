@@ -38,7 +38,7 @@ export class MovementPricesContractAdapter
         this.logger.warn(`No data packages found for "${feedId}"`),
     });
 
-    return await this.adapter.writer.writePricesBatch(payloads);
+    return await this.adapter.writer.writePrices(payloads);
   }
 
   async getUniqueSignerThreshold(): Promise<number> {

@@ -11,9 +11,7 @@ export interface IMovementWriteContractAdapter {
    * @returns last submitted transaction hash.
    *
    */
-  writePricesBatch(
-    payloads: { feedId: string; payload: string }[]
-  ): Promise<string>;
+  writePrices(payloads: { feedId: string; payload: string }[]): Promise<string>;
 }
 
 /**
