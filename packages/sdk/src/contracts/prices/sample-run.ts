@@ -181,7 +181,7 @@ export function describeContractData(data: ContractData) {
 }
 
 export function isExtendedPricesContractAdapter(
-  priceAdapter: unknown
+  priceAdapter: IPricesContractAdapter
 ): priceAdapter is IExtendedPricesContractAdapter {
   const adapter = priceAdapter as IExtendedPricesContractAdapter;
 
@@ -192,7 +192,7 @@ export function isExtendedPricesContractAdapter(
 }
 
 export function isMultiFeedContractAdapter(
-  priceAdapter: unknown
+  priceAdapter: IPricesContractAdapter
 ): priceAdapter is IMultiFeedPricesContractAdapter {
   const adapter = priceAdapter as IMultiFeedPricesContractAdapter;
 
