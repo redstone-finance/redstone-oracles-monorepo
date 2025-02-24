@@ -13,9 +13,9 @@
     "lint:fix": "yarn global:eslint --fix ."
   },
   "dependencies": {
-    "@redstone-finance/sdk": "0.8.0",
-    "@redstone-finance/starknet-connector": "0.8.0",
-    "@redstone-finance/utils": "0.8.0",
+    "@redstone-finance/sdk": "workspace:*",
+    "@redstone-finance/starknet-connector": "workspace:*",
+    "@redstone-finance/utils": "workspace:*",
     "dotenv": "^16.0.3",
     "ethers": "^5.7.2"
   },
