@@ -2272,6 +2272,11 @@
       },
       "denomination": "BTC",
       "rateFeed": true
+    },
+    "HybridBTC.pendle_FUNDAMENTAL": {
+      "source": ["ethereum-evm-fetcher-hybrid-bitcoin-pendle"],
+      "denomination": "WBTC",
+      "rateFeed": true
     }
   },
   "multiPointPackages": {
