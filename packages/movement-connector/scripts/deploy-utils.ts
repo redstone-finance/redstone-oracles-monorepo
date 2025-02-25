@@ -13,7 +13,6 @@ import { EOL } from "os";
 import path from "path";
 import { z } from "zod";
 import {
-  makeAptosAccount,
   MovementNetworkSchema,
   movementNetworkSchemaToAptosNetwork,
 } from "../src";
@@ -24,15 +23,19 @@ export const OUTPUT_BUILD_DIR = "./movement/build/";
 export const PRICE_ADAPTER = "price_adapter";
 export const REDSTONE_SDK = "redstone_sdk";
 export const PRICE_FEED = "price_feed";
-export const ContractNameSchema = z.enum([
+export const ContractNameEnum = z.enum([
   REDSTONE_SDK,
   PRICE_ADAPTER,
   PRICE_FEED,
 ]);
+export type ContractName = z.infer<typeof ContractNameEnum>;
 
 type NamedAddresses = { [p: string]: AccountAddress | undefined };
 
-function readAddress(contractName: string, networkName: string) {
+export function readAddress(
+  contractName = getEnvContractName(),
+  networkName = getEnvNetwork()
+) {
   const content = JSON.parse(
     fs.readFileSync(getJsonAddressesFile(contractName, networkName), "utf-8")
   ) as { contractAddress: string };
@@ -40,7 +43,10 @@ function readAddress(contractName: string, networkName: string) {
   return AccountAddress.fromString(content.contractAddress);
 }
 
-export function readDepAddresses(deps: string[], networkName: string) {
+export function readDepAddresses(
+  deps: ContractName[],
+  networkName = getEnvNetwork()
+) {
   return Object.fromEntries(
     deps.map((dep) => [dep, readAddress(dep, networkName)])
   ) as NamedAddresses;
@@ -75,7 +81,10 @@ export function getJsonAddressesFile(
   );
 }
 
-export function readObjectAddress(contractName: string, networkName: string) {
+export function readObjectAddress(
+  contractName: string,
+  networkName = getEnvNetwork()
+) {
   const content = JSON.parse(
     fs.readFileSync(getJsonAddressesFile(contractName, networkName), "utf-8")
   ) as { contractAddress: string; objectAddress: string };
@@ -88,25 +97,13 @@ export function readObjectAddress(contractName: string, networkName: string) {
   };
 }
 
-export function getEnvParams(skip?: string[]) {
-  const skipEnv = skip ? skip : [];
-  const contractName = skipEnv.includes("CONTRACT_NAME")
-    ? ""
-    : RedstoneCommon.getFromEnv("CONTRACT_NAME", ContractNameSchema);
-  const account = skipEnv.includes("PRIVATE_KEY")
-    ? undefined
-    : makeAptosAccount();
-  const networkSchema = skipEnv.includes("NETWORK")
-    ? ""
-    : RedstoneCommon.getFromEnv("NETWORK", z.optional(MovementNetworkSchema));
-  const network = networkSchema
-    ? movementNetworkSchemaToAptosNetwork(networkSchema)
-    : undefined;
-  const url = skipEnv.includes("REST_URL")
-    ? ""
-    : RedstoneCommon.getFromEnv("REST_URL", z.string().url().optional());
-
-  return { contractName, account, network, url };
+export function getEnvNetwork() {
+  return RedstoneCommon.getFromEnv(
+    "NETWORK",
+    MovementNetworkSchema.optional().transform((networkName) =>
+      movementNetworkSchemaToAptosNetwork(networkName)
+    )
+  );
 }
 
 export async function objectAddressForDeployment(
@@ -124,16 +121,19 @@ export function getPriceAdapterObjectAddress(creator: AccountAddress) {
   return createObjectAddress(creator, "RedStonePriceAdapter");
 }
 
-async function setUpDeploy(
+export async function setUpDeploy(
   aptos: Aptos,
-  account: Account,
+  accountAddress: AccountAddress,
   contractName: string,
-  namedAddresses: NamedAddresses
+  namedAddresses: NamedAddresses,
+  currentObjectAddress?: AccountAddress
 ) {
   const builder = new MovementPackageTxBuilder(aptos);
-  const contractAddress = AccountAddress.fromString(
-    await objectAddressForDeployment(aptos, account.accountAddress)
-  );
+  const contractAddress =
+    currentObjectAddress ??
+    AccountAddress.fromString(
+      await objectAddressForDeployment(aptos, accountAddress)
+    );
 
   console.log(`Compiling code for ${contractAddress.toString()}`);
   execSync(`mkdir -p ${OUTPUT_BUILD_DIR}`, {
@@ -172,11 +172,16 @@ export async function deploy(
   aptos: Aptos,
   account: Account,
   contractName: string,
-  networkName: string,
-  namedAddresses: NamedAddresses = {}
+  namedAddresses: NamedAddresses = {},
+  networkName = getEnvNetwork()
 ) {
   const { builder, contractAddress, metadataBytes, bytecode } =
-    await setUpDeploy(aptos, account, contractName, namedAddresses);
+    await setUpDeploy(
+      aptos,
+      account.accountAddress,
+      contractName,
+      namedAddresses
+    );
 
   console.log(`Doing actions as account: ${account.accountAddress.toString()}`);
   console.log(`Object address for deployment: ${contractAddress.toString()}`);
@@ -205,4 +210,31 @@ export async function deploy(
   const jsonFile = getJsonAddressesFile(contractName, networkName);
   fs.writeFileSync(jsonFile, JSON.stringify(output, null, 2));
   fs.appendFileSync(jsonFile, EOL);
+}
+
+export function prepareDepAddresses(
+  contractName = getEnvContractName(),
+  networkName = getEnvNetwork()
+) {
+  switch (contractName) {
+    case REDSTONE_SDK:
+      return {};
+
+    case PRICE_ADAPTER:
+      return readDepAddresses([REDSTONE_SDK], networkName);
+
+    case PRICE_FEED: {
+      const depsAddresses = readDepAddresses(
+        [REDSTONE_SDK, PRICE_ADAPTER],
+        networkName
+      );
+      depsAddresses["price_adapter_object_address"] =
+        getPriceAdapterObjectAddress(depsAddresses[PRICE_ADAPTER]!);
+      return depsAddresses;
+    }
+  }
+}
+
+export function getEnvContractName() {
+  return RedstoneCommon.getFromEnv("CONTRACT_NAME", ContractNameEnum);
 }

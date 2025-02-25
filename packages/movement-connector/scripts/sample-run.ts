@@ -1,9 +1,8 @@
-import { Network } from "@aptos-labs/ts-sdk";
 import { getSignersForDataServiceId } from "@redstone-finance/oracles-smartweave-contracts";
 import { ContractParamsProvider, sampleRun } from "@redstone-finance/sdk";
-import { MovementPricesContractConnector } from "../src";
+import { makeAptosAccount, MovementPricesContractConnector } from "../src";
 import { MovementPriceFeedContractConnector } from "../src/price_feed/MovementPriceFeedContractConnector";
-import { getEnvParams, readObjectAddress } from "./deploy-utils";
+import { readObjectAddress } from "./deploy-utils";
 import { makeAptos } from "./utils";
 
 async function main() {
@@ -13,21 +12,11 @@ async function main() {
     dataPackagesIds: ["ETH", "BTC"],
     authorizedSigners: getSignersForDataServiceId("redstone-primary-prod"),
   });
-  const {
-    account,
-    network = Network.LOCAL,
-    url,
-  } = getEnvParams(["CONTRACT_NAME"]);
-  const aptos = makeAptos(network, url);
+  const aptos = makeAptos();
+  const account = makeAptosAccount();
 
-  const { contractAddress, objectAddress } = readObjectAddress(
-    "price_adapter",
-    network
-  );
-  const { contractAddress: feedAddress } = readObjectAddress(
-    "price_feed",
-    network
-  );
+  const { contractAddress, objectAddress } = readObjectAddress("price_adapter");
+  const { contractAddress: feedAddress } = readObjectAddress("price_feed");
   const packageObjectAddress = contractAddress.toString();
   const priceAdapterObjectAddress = objectAddress!.toString();
   console.log(

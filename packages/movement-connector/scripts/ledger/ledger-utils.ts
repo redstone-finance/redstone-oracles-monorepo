@@ -1,4 +1,5 @@
 import {
+  AccountAddress,
   AccountAuthenticatorEd25519,
   AnyRawTransaction,
   Ed25519PublicKey,
@@ -21,11 +22,20 @@ export async function makeAptosLedger() {
   return aptos;
 }
 
+export async function makeAptosAccountAddress(
+  aptosLedger: AptosLedger,
+  accountId = 0
+) {
+  const data = await getLedgerData(aptosLedger, accountId);
+
+  return AccountAddress.from(data.address);
+}
+
 const getDerivationPath = (accountId: number) =>
   `m/44'/637'/${accountId}'/0'/0'`;
 
 /// returns public key of the ledger account
-export const getPublicKey = async (aptos: Aptos, accountId = 0) => {
+export const getLedgerData = async (aptos: AptosLedger, accountId = 0) => {
   const result = await aptos.getAddress(getDerivationPath(accountId));
 
   return {
@@ -37,7 +47,7 @@ export const getPublicKey = async (aptos: Aptos, accountId = 0) => {
 
 /// Signs tx as a ledger account. Returns authenticator to be used while submitting tx to the network.
 export const signTx = async (
-  aptos: Aptos,
+  aptos: AptosLedger,
   tx: AnyRawTransaction,
   accountId = 0
 ) => {
@@ -48,7 +58,7 @@ export const signTx = async (
   );
 
   const signature = new Ed25519Signature(signed.signature);
-  const publicKey = await getPublicKey(aptos);
+  const data = await getLedgerData(aptos);
 
-  return new AccountAuthenticatorEd25519(publicKey.ed, signature);
+  return new AccountAuthenticatorEd25519(data.ed, signature);
 };
