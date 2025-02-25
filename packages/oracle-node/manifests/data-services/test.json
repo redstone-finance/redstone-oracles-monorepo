@@ -1,0 +1,18 @@
+{
+  "interval": 1000,
+  "priceAggregator": "median",
+  "defaultSource": ["coingecko"],
+  "sourceTimeout": 2000,
+  "minValidSourcesPercentage": 1,
+  "deviationCheck": {
+    "deviationWithRecentValues": {
+      "maxPercent": 30,
+      "maxDelayMilliseconds": 300000
+    }
+  },
+  "tokens": {
+    "HybridBTC.pendle_FUNDAMENTAL": {
+      "source": ["ethereum-evm-fetcher-hybrid-bitcoin-pendle"]
+    }
+  }
+}

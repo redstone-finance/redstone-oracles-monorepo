@@ -3277,6 +3277,11 @@
       "denomination": "USD",
       "rateFeed": false
     },
+    "HybridBTC.pendle_FUNDAMENTAL": {
+      "source": ["ethereum-evm-fetcher-hybrid-bitcoin-pendle"],
+      "denomination": "WBTC",
+      "rateFeed": true
+    },
     "BAT": {
       "denomination": "USD",
       "rateFeed": false
