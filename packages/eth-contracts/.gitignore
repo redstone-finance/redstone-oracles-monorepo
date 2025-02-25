@@ -15,3 +15,5 @@ typechain-types
 .openzeppelin/unknown-*.json
 
 hardhat-deployed-contracts.json
+
+.tmp
