@@ -66,7 +66,7 @@ export class MovementPackageTxBuilder {
   }
 
   public async objectUpgradeTxPayload(
-    multisigAddress: AccountAddress,
+    multiSigAddress: AccountAddress,
     objectAddress: AccountAddress,
     metadata: HexInput,
     code: Array<HexInput>
@@ -74,7 +74,7 @@ export class MovementPackageTxBuilder {
     const moveCode = new MoveVector(code.map(MoveVector.U8));
 
     return await generateTransactionPayload({
-      multisigAddress,
+      multisigAddress: multiSigAddress,
       function: objectCodeDeploymentCall("upgrade"),
       functionArguments: [MoveVector.U8(metadata), moveCode, objectAddress],
       abi: {

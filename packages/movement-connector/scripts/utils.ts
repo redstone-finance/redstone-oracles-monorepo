@@ -7,8 +7,9 @@ import {
   SimpleTransaction,
 } from "@aptos-labs/ts-sdk";
 import { RedstoneCommon } from "@redstone-finance/utils";
+import prompts from "prompts";
 import { z } from "zod";
-import { AptosLedger, signTx } from "./ledger-utils";
+import { AptosLedger, signTx } from "./ledger/ledger-utils";
 
 const DEFAULT_TESTNET_RPC_URL =
   "https://aptos.testnet.bardock.movementlabs.xyz/v1";
@@ -66,9 +67,10 @@ export async function handleTx(
 export async function handleTxAsLedger(
   aptos: Aptos,
   aptosLedger: AptosLedger,
-  tx: SimpleTransaction
+  tx: SimpleTransaction,
+  accountId = 0
 ) {
-  const auth = await signTx(aptosLedger, tx);
+  const auth = await signTx(aptosLedger, tx, accountId);
 
   const result = await aptos.transaction.submit.simple({
     transaction: tx,
@@ -76,4 +78,30 @@ export async function handleTxAsLedger(
   });
 
   console.log(result);
+}
+
+export async function promptForConfirmation() {
+  const response = await prompts(
+    [
+      {
+        type: "toggle",
+        name: "confirm",
+        message: "Proceed?",
+        initial: false,
+        active: "yes",
+        inactive: "no",
+      },
+    ],
+    {
+      onCancel: () => {
+        console.log("\n❌ Operation aborted by user.");
+        process.exit(1);
+      },
+    }
+  );
+
+  if (!response.confirm) {
+    console.log("Operation cancelled.");
+    process.exit(0);
+  }
 }

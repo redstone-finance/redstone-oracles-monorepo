@@ -14,7 +14,7 @@ export const FAKE_PRIVKEY_SECP256K1 =
   "0xd53edc737401d6abaa44e6a17f4e33c5a29deb6bbaac7fa6cbd3bebe83d9e081";
 export const REST_NODE_LOCALNET_URL = "http://127.0.0.1:8080/v1";
 export const REST_FAUCET_LOCALNET_URL = "http://127.0.0.1:8081";
-export const NETWORK = "local";
+export const NETWORK = Network.LOCAL;
 
 export class TestHelper {
   private isPrepared = false;
@@ -64,14 +64,14 @@ export class TestHelper {
     this.isPrepared = true;
     await this.fundAccount();
     await RedstoneCommon.sleep(1000);
-    await deploy(this.client, this.account, REDSTONE_SDK, NETWORK);
+    await deploy(this.client, this.account, REDSTONE_SDK, {}, NETWORK);
     await RedstoneCommon.sleep(1000);
     await deploy(
       this.client,
       this.account,
       PRICE_ADAPTER,
-      NETWORK,
-      readDepAddresses([REDSTONE_SDK], NETWORK)
+      readDepAddresses([REDSTONE_SDK], NETWORK),
+      NETWORK
     );
   }
 }
