@@ -10,8 +10,10 @@ import { RedstoneCommon } from "@redstone-finance/utils";
 import "dotenv/config";
 import { PRICE_ADAPTER, readObjectAddress } from "../scripts/deploy-utils";
 import { makeAptos } from "../scripts/utils";
-import { MovementPricesContractAdapter } from "../src/price_adapter/MovementPricesContractAdapter";
-import { MovementPricesContractConnector } from "../src/price_adapter/MovementPricesContractConnector";
+import {
+  MovementPricesContractAdapter,
+  MovementPricesContractConnector,
+} from "../src";
 import {
   FAKE_PRIVKEY_SECP256K1,
   NETWORK,

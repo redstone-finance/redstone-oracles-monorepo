@@ -12,15 +12,15 @@ export const MovementNetworkSchema = z.enum([
 export type MovementNetworkName = z.infer<typeof MovementNetworkSchema>;
 
 export function movementNetworkSchemaToAptosNetwork(
-  networkName: MovementNetworkName
+  networkName?: MovementNetworkName
 ): Network {
-  if (networkName.includes("testnet") || networkName.includes("custom")) {
+  if (networkName?.includes("testnet") || networkName?.includes("custom")) {
     return Network.CUSTOM;
   }
-  if (networkName.includes("devnet")) {
+  if (networkName?.includes("devnet")) {
     return Network.DEVNET;
   }
-  if (networkName.includes("mainnet")) {
+  if (networkName?.includes("mainnet")) {
     return Network.MAINNET;
   }
 
