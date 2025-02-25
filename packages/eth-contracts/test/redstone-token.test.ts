@@ -21,7 +21,7 @@ describe("RedStone token", () => {
 
   it("Should not init contract with too high total supply", async () => {
     const ContractFactory = await ethers.getContractFactory("RedstoneToken");
-    const tooBigSupply = ethers.utils.parseEther("50000000").add(1);
+    const tooBigSupply = ethers.utils.parseEther("1000000000").add(1);
     await expect(
       ContractFactory.deploy(tooBigSupply)
     ).to.be.revertedWithCustomError(
@@ -71,7 +71,7 @@ describe("RedStone token", () => {
   });
 
   it("Should not mint more than max supply", async () => {
-    const max = ethers.utils.parseEther("50000000");
+    const max = ethers.utils.parseEther("1000000000");
 
     const tx = await contract.mint(minterAddr, max.sub(1000));
     await tx.wait();
