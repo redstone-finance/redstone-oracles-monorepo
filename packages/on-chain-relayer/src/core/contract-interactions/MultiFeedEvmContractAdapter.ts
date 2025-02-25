@@ -66,10 +66,10 @@ export class MultiFeedEvmContractAdapter extends EvmContractAdapter<MultiFeedAda
     return dataFromContract;
   }
 
-  private getLastUpdateDetailsForManyFromContract = async (
+  private async getLastUpdateDetailsForManyFromContract(
     feedIds: string[],
     blockNumber: number
-  ): Promise<LastRoundDetails[]> => {
+  ): Promise<LastRoundDetails[]> {
     const dataFeedsAsBytes32 = feedIds.map(utils.formatBytes32String);
     const contractOutput: MultiFeedAdapterWithoutRounds.LastUpdateDetailsStructOutput[] =
       await this.adapterContract.getLastUpdateDetailsUnsafeForMany(
@@ -84,5 +84,5 @@ export class MultiFeedEvmContractAdapter extends EvmContractAdapter<MultiFeedAda
       lastBlockTimestampMS: lastRoundDetails.blockTimestamp.toNumber() * 1000,
       lastValue: lastRoundDetails.value,
     }));
-  };
+  }
 }
