@@ -9,7 +9,7 @@ import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
  * @dev Standard implementation of ERC20 for Redstone token
  */
 contract RedstoneToken is ERC20 {
-  uint256 public constant MAX_SUPPLY = 50_000_000e18;
+  uint256 public constant MAX_SUPPLY = 1_000_000_000e18;
 
   error CanNotMintMoreThanMaxSupply();
   error OnlyMinterCanMint();
