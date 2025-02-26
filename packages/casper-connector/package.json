@@ -24,7 +24,7 @@
     "ethers": "^5.7.2"
   },
   "devDependencies": {
-    "node-jq": "^4.2.2"
+    "node-jq": "^6.0.0"
   },
   "overrides": {
     "elliptic": "^6.6.1"
