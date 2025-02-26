@@ -40,7 +40,7 @@
   },
   "devDependencies": {
     "@atlantis-l/radix-tool": "^0.8.9",
-    "node-jq": "^4.2.2",
+    "node-jq": "^6.0.0",
     "redstone-api": "^0.4.12",
     "zod": "^3.22.4"
   },
