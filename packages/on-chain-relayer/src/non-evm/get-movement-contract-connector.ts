@@ -1,6 +1,7 @@
 import {
   AptosClientBuilder,
   MovementPricesContractConnector,
+  configFromOptionals,
   makeAptosAccount,
 } from "@redstone-finance/movement-connector";
 import { RelayerConfig } from "../config/RelayerConfig";
@@ -12,6 +13,8 @@ export const getMovementContractConnector = (relayerConfig: RelayerConfig) => {
     adapterContractAddress,
     chainId,
     adapterContractPackageId,
+    gasLimit,
+    maxTxSendAttempts,
   } = relayerConfig;
   if (!adapterContractPackageId) {
     throw new Error("adapterContractPackageId is required");
@@ -30,6 +33,7 @@ export const getMovementContractConnector = (relayerConfig: RelayerConfig) => {
       packageObjectAddress: adapterContractPackageId,
       priceAdapterObjectAddress: adapterContractAddress,
     },
-    account
+    account,
+    configFromOptionals(gasLimit, maxTxSendAttempts)
   );
 };
