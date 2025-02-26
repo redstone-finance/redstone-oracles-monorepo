@@ -2,8 +2,8 @@ import { Aptos, AptosConfig, Network } from "@aptos-labs/ts-sdk";
 import { MultiExecutor } from "@redstone-finance/utils";
 import { chainIdtoMovementNetwork, getFullnodeUrl } from "./network-ids";
 
-const SINGLE_EXECUTION_TIMEOUT_MS = 7_000;
-const ALL_EXECUTIONS_TIMEOUT_MS = 30_000;
+export const SINGLE_EXECUTION_TIMEOUT_MS = 7_000;
+export const ALL_EXECUTIONS_TIMEOUT_MS = 30_000;
 
 export class AptosClientBuilder {
   private urls: string[] = [];

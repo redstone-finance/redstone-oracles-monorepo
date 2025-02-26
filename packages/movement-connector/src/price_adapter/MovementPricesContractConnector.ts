@@ -1,14 +1,13 @@
 import { Account, Aptos } from "@aptos-labs/ts-sdk";
 import { MovementContractConnector } from "../MovementContractConnector";
 import { MovementOptionsContractUtil } from "../MovementOptionsContractUtil";
-import { IMovementContractAdapter, TransactionConfig } from "../types";
+import { TransactionConfig } from "../types";
 import { MovementPriceAdapterContractViewer } from "./MovementPriceAdapterContractViewer";
 import { MovementPriceAdapterContractWriter } from "./MovementPriceAdapterContractWriter";
 import { MovementPricesContractAdapter } from "./MovementPricesContractAdapter";
 
 export class MovementPricesContractConnector extends MovementContractConnector<MovementPricesContractAdapter> {
-  private readonly packageObjectAddress: string;
-  private readonly priceAdapterObjectAddress: string;
+  private readonly adapter: MovementPricesContractAdapter;
 
   constructor(
     client: Aptos,
@@ -17,29 +16,27 @@ export class MovementPricesContractConnector extends MovementContractConnector<M
     private readonly config?: TransactionConfig
   ) {
     super(client);
-    this.packageObjectAddress = args.packageObjectAddress;
-    this.priceAdapterObjectAddress = args.priceAdapterObjectAddress;
-  }
 
-  override getAdapter(): Promise<MovementPricesContractAdapter> {
-    const adapter: IMovementContractAdapter = {
+    this.adapter = new MovementPricesContractAdapter({
       writer: this.account
-        ? new MovementPriceAdapterContractWriter(
+        ? MovementPriceAdapterContractWriter.createMultiWriter(
             this.client,
             this.account,
-            this.packageObjectAddress,
-            this.priceAdapterObjectAddress,
+            args.packageObjectAddress,
+            args.priceAdapterObjectAddress,
             new MovementOptionsContractUtil(this.client),
             this.config
           )
         : undefined,
-      viewer: new MovementPriceAdapterContractViewer(
+      viewer: MovementPriceAdapterContractViewer.createMultiReader(
         this.client,
-        this.packageObjectAddress,
-        this.priceAdapterObjectAddress
+        args.packageObjectAddress,
+        args.priceAdapterObjectAddress
       ),
-    };
+    });
+  }
 
-    return Promise.resolve(new MovementPricesContractAdapter(adapter));
+  override async getAdapter(): Promise<MovementPricesContractAdapter> {
+    return await Promise.resolve(this.adapter);
   }
 }

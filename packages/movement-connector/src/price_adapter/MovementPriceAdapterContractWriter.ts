@@ -5,7 +5,15 @@ import {
   MoveFunctionId,
   MoveVector,
 } from "@aptos-labs/ts-sdk";
-import { loggerFactory, RedstoneCommon } from "@redstone-finance/utils";
+import {
+  loggerFactory,
+  MultiExecutor,
+  RedstoneCommon,
+} from "@redstone-finance/utils";
+import {
+  ALL_EXECUTIONS_TIMEOUT_MS,
+  SINGLE_EXECUTION_TIMEOUT_MS,
+} from "../AptosClientBuilder";
 import { TRANSACTION_DEFAULT_CONFIG } from "../config";
 import { MovementOptionsContractUtil } from "../MovementOptionsContractUtil";
 import {
@@ -27,6 +35,39 @@ export class MovementPriceAdapterContractWriter
     private readonly optionsProvider: MovementOptionsContractUtil,
     private readonly config: TransactionConfig = TRANSACTION_DEFAULT_CONFIG
   ) {}
+
+  static createMultiWriter(
+    client: Aptos,
+    account: Account,
+    priceAdapterPackageAddress: string,
+    priceAdapterObjectAddress: string,
+    optionsProvider: MovementOptionsContractUtil,
+    config: TransactionConfig = TRANSACTION_DEFAULT_CONFIG
+  ) {
+    const clients =
+      "__instances" in client ? (client.__instances as Aptos[]) : [client];
+
+    return MultiExecutor.create(
+      clients.map(
+        (client) =>
+          new MovementPriceAdapterContractWriter(
+            client,
+            account,
+            priceAdapterPackageAddress,
+            priceAdapterObjectAddress,
+            optionsProvider,
+            config
+          )
+      ),
+      {},
+      {
+        ...MultiExecutor.DEFAULT_CONFIG,
+        defaultMode: MultiExecutor.ExecutionMode.FALLBACK,
+        singleExecutionTimeoutMs: SINGLE_EXECUTION_TIMEOUT_MS,
+        allExecutionsTimeoutMs: ALL_EXECUTIONS_TIMEOUT_MS,
+      }
+    );
+  }
 
   async writePrices(
     payloads: { payload: string; feedId: string }[]
