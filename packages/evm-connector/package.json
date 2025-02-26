@@ -20,7 +20,6 @@
     "preversion": "yarn build"
   },
   "dependencies": {
-    "@chainlink/contracts": "^0.6.1",
     "@openzeppelin/contracts": "^4.8.1",
     "@redstone-finance/protocol": "workspace:*",
     "@redstone-finance/sdk": "workspace:*",
