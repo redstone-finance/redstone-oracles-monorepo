@@ -1,3 +1,4 @@
+import { MultiExecutor } from "..";
 import { getS, stringify, timeoutOrResult } from "../common";
 import { loggerFactory } from "../logger";
 import { AgreementExecutor } from "./AgreementExecutor";
@@ -61,8 +62,16 @@ export class MultiExecutorFactory<T extends object> {
         const key = prop as keyof T;
         const method = target[key];
 
-        if (typeof method !== "function") {
+        if (Object(method) !== method) {
           return method;
+        }
+
+        if (typeof method !== "function") {
+          return MultiExecutor.create(
+            that.instances.map((instance) => instance[key] as object),
+            that.methodConfig,
+            that.config
+          );
         }
 
         if (

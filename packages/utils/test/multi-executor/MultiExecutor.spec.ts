@@ -35,6 +35,12 @@ describe("MultiExecutor", () => {
     someHexFunction: MultiExecutor.ExecutionMode.CONSENSUS_MEDIAN,
   };
 
+  it("Should be able to pick primitive property", () => {
+    const sut = makeSut(CLIENTS);
+
+    expect(sut.that.property).toEqual(12);
+  });
+
   it("Race should properly pick first non-failing value", async () => {
     for (const instances of [
       CLIENTS,
@@ -45,7 +51,7 @@ describe("MultiExecutor", () => {
     ]) {
       const sut = makeSut(instances);
 
-      const result = await sut.someAsyncFunction("xxx");
+      const result = await sut.that.that.someAsyncFunction("xxx");
       expect(result).toEqual("0#xxx");
 
       instances.forEach((instance, index) => {
@@ -75,7 +81,8 @@ describe("MultiExecutor", () => {
         }
       );
 
-      const result = await sut.someAsyncFunction("xxx");
+      const result =
+        await sut.that.that.that.that.that.someAsyncFunction("xxx");
       expect(result).toEqual("1#xxx");
 
       instances.forEach((instance, index) => {
@@ -96,7 +103,7 @@ describe("MultiExecutor", () => {
     ]) {
       const sut = makeSut(instances, config);
 
-      const result = await sut.someAsyncFunction("xxx");
+      const result = await sut.that.someAsyncFunction("xxx");
       expect(result).toEqual("1#xxx");
 
       instances.forEach((instance) => {
@@ -117,7 +124,7 @@ describe("MultiExecutor", () => {
     ]) {
       const sut = makeSut(instances, config);
 
-      const result = await sut.someNumberFunction(345);
+      const result = await sut.that.someNumberFunction(345);
       expect(result).toEqual(345001);
 
       instances.forEach((instance) => {
@@ -140,7 +147,7 @@ describe("MultiExecutor", () => {
         ),
       });
 
-      const result = await sut.someNumberFunction(345);
+      const result = await sut.that.someNumberFunction(345);
       expect(result).toEqual(345001);
 
       instances.forEach((instance) => {
@@ -161,13 +168,13 @@ describe("MultiExecutor", () => {
     ]) {
       const sut = makeSut(instances, config);
 
-      const result = await sut.someHexFunction("0x1234");
+      const result = await sut.that.someHexFunction("0x1234");
       expect(result).toEqual(BigNumber.from("0x123401").toNumber());
 
-      const result2 = await sut.someHexFunction("0x1fffffffffff");
+      const result2 = await sut.that.someHexFunction("0x1fffffffffff");
       expect(result2).toEqual(BigNumber.from("0x1fffffffffff01").toNumber());
 
-      const result3 = await sut.someHexFunction("1234");
+      const result3 = await sut.that.someHexFunction("1234");
       expect(result3).toEqual(BigNumber.from("123401").toNumber());
 
       instances.forEach((instance) => {
@@ -188,7 +195,7 @@ describe("MultiExecutor", () => {
     ];
     const sut = makeSut(instances, config);
 
-    await expect(sut.someHexFunction("1234")).rejects.toThrowError(
+    await expect(sut.that.someHexFunction("1234")).rejects.toThrowError(
       "Consensus failed: got 1 successful result, needed at least 2; AggregateError: 2 fails, errors: Error: 123401"
     );
   });
@@ -203,7 +210,7 @@ describe("MultiExecutor", () => {
     ];
     const sut = makeSut(instances, config);
 
-    await expect(sut.someHexFunction("1234")).rejects.toThrowError(
+    await expect(sut.that.someHexFunction("1234")).rejects.toThrowError(
       "Consensus failed: got 2 successful results, needed at least 3; AggregateError: 3 fails, errors: Error: 123408"
     );
   });
@@ -215,7 +222,7 @@ describe("MultiExecutor", () => {
       consensusQuorumRatio: 1,
     });
 
-    await expect(sut.someHexFunction("1234")).rejects.toThrowError(
+    await expect(sut.that.someHexFunction("1234")).rejects.toThrowError(
       "Consensus failed: got 3 successful results, needed at least 4; AggregateError: 1 fail, errors: Error: 123401"
     );
   });
@@ -242,7 +249,7 @@ describe("MultiExecutor", () => {
         someNumberFunction: ExecutionMode.CONSENSUS_ALL_EQUAL,
       });
 
-      const result = await sut.someNumberFunction(234);
+      const result = await sut.that.someNumberFunction(234);
       expect(result).toEqual(234001);
 
       instances.forEach((instance) => {
@@ -260,7 +267,7 @@ describe("MultiExecutor", () => {
       }
     );
 
-    await expect(sut.someHexFunction("1234")).rejects.toThrowError(
+    await expect(sut.that.someHexFunction("1234")).rejects.toThrowError(
       `Results are not equal. Found 2 different results ["123401","123402"]`
     );
   });
@@ -271,7 +278,7 @@ describe("MultiExecutor", () => {
       new MockClient(3, 0, true),
     ]);
 
-    await expect(sut.someHexFunction("1234")).rejects.toThrowError(
+    await expect(sut.that.someHexFunction("1234")).rejects.toThrowError(
       `All promises failed`
     );
   });
@@ -279,7 +286,7 @@ describe("MultiExecutor", () => {
   it("Consensus should fail when only existing function fails", async () => {
     const sut = makeSut([new MockClient(1, 3 * EXEC_TIME, true)]);
 
-    await expect(sut.someHexFunction("1234")).rejects.toThrowError(
+    await expect(sut.that.someHexFunction("1234")).rejects.toThrowError(
       `All promises failed`
     );
   });
@@ -290,7 +297,7 @@ describe("MultiExecutor", () => {
       singleExecutionTimeoutMs: EXEC_TIME - 2,
     });
 
-    await expect(sut.someHexFunction("1234")).rejects.toThrowError(
+    await expect(sut.that.someHexFunction("1234")).rejects.toThrowError(
       `Consensus failed: got 0 successful results`
     );
   });
@@ -301,7 +308,7 @@ describe("MultiExecutor", () => {
       allExecutionsTimeoutMs: EXEC_TIME + 2,
     });
 
-    await expect(sut.someHexFunction("1234")).rejects.toThrowError(
+    await expect(sut.that.someHexFunction("1234")).rejects.toThrowError(
       `Timeout error 22 [MS]`
     );
   });
@@ -312,7 +319,7 @@ describe("MultiExecutor", () => {
       allExecutionsTimeoutMs: EXEC_TIME - 2,
     });
 
-    await expect(sut.someAsyncFunction("xxx")).rejects.toThrowError(
+    await expect(sut.that.someAsyncFunction("xxx")).rejects.toThrowError(
       `Timeout error 18 [MS]`
     );
   });
@@ -327,7 +334,7 @@ describe("MultiExecutor", () => {
       }
     );
 
-    await expect(sut.someAsyncFunction("xxx")).rejects.toThrowError(
+    await expect(sut.that.someAsyncFunction("xxx")).rejects.toThrowError(
       `Timeout error 22 [MS]`
     );
   });
@@ -343,7 +350,7 @@ describe("MultiExecutor", () => {
       }
     );
 
-    await expect(sut.someNumberFunction(234)).rejects.toThrowError(
+    await expect(sut.that.someNumberFunction(234)).rejects.toThrowError(
       `Timeout error 18 [MS]`
     );
   });
@@ -362,7 +369,7 @@ describe("MultiExecutor", () => {
         someHexFunction: new CustomExecutor(),
       });
 
-      const result = await sut.someHexFunction("0x1234");
+      const result = await sut.that.someHexFunction("0x1234");
       expect(result).toEqual("0x123402");
 
       instances.forEach((instance) => {
@@ -389,7 +396,7 @@ describe("MultiExecutor", () => {
         someNumberFunction: ExecutionMode.AGREEMENT,
       });
 
-      const result = await sut.someNumberFunction(234);
+      const result = await sut.that.someNumberFunction(234);
       expect(result).toEqual(234000);
 
       instances.forEach((instance) => {
@@ -417,7 +424,7 @@ describe("MultiExecutor", () => {
         { ...DEFAULT_CONFIG, agreementQuorumNumber: 2 }
       );
 
-      const result = await sut.someNumberFunction(234);
+      const result = await sut.that.someNumberFunction(234);
       expect(result).toEqual(234001);
 
       instances.forEach((instance) => {
@@ -439,7 +446,7 @@ describe("MultiExecutor", () => {
         { ...DEFAULT_CONFIG, agreementQuorumNumber: 1 }
       );
 
-      const result = await sut.someNumberFunction(234);
+      const result = await sut.that.someNumberFunction(234);
       expect(result).toEqual(234000);
 
       instances.forEach((instance) => {
@@ -454,7 +461,7 @@ describe("MultiExecutor", () => {
       someHexFunction: ExecutionMode.AGREEMENT,
     });
 
-    await expect(sut.someHexFunction("1234")).rejects.toThrowError(
+    await expect(sut.that.someHexFunction("1234")).rejects.toThrowError(
       `Agreement failed: got max 1 equal result, needed at least 2`
     );
   });
@@ -465,7 +472,7 @@ describe("MultiExecutor", () => {
       someHexFunction: ExecutionMode.AGREEMENT,
     });
 
-    await expect(sut.someHexFunction("1234")).rejects.toThrowError(
+    await expect(sut.that.someHexFunction("1234")).rejects.toThrowError(
       `Agreement failed: got max 0 equal results, needed at least 1; AggregateError: 1 fail, errors: Error: 123408`
     );
   });
@@ -476,7 +483,7 @@ describe("MultiExecutor", () => {
       someHexFunction: ExecutionMode.RACE,
     });
 
-    await expect(sut.someHexFunction("1234")).rejects.toThrowError(
+    await expect(sut.that.someHexFunction("1234")).rejects.toThrowError(
       `All promises were rejected`
     );
   });
@@ -487,7 +494,7 @@ describe("MultiExecutor", () => {
       someHexFunction: ExecutionMode.CONSENSUS_ALL_EQUAL,
     });
 
-    await expect(sut.someHexFunction("1234")).rejects.toThrowError(
+    await expect(sut.that.someHexFunction("1234")).rejects.toThrowError(
       `Consensus failed: got 0 successful results, needed at least 1; AggregateError: 1 fail, errors: Error: 123408`
     );
   });
