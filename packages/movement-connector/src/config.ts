@@ -31,3 +31,19 @@ export const TRANSACTION_DEFAULT_CONFIG: TransactionConfig = {
   writePriceOctasTxGasBudget: 100_000,
   maxTxSendAttempts: 3,
 };
+
+export function configFromOptionals(
+  writePriceOctasTxGasBudgetOptional?: number,
+  maxTxSendAttemptsOptional?: number
+) {
+  const writePriceOctasTxGasBudget =
+    writePriceOctasTxGasBudgetOptional ??
+    TRANSACTION_DEFAULT_CONFIG.writePriceOctasTxGasBudget;
+  const maxTxSendAttempts =
+    maxTxSendAttemptsOptional ?? TRANSACTION_DEFAULT_CONFIG.maxTxSendAttempts;
+
+  return {
+    writePriceOctasTxGasBudget,
+    maxTxSendAttempts,
+  };
+}
