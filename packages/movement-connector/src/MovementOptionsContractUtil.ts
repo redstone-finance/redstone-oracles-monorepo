@@ -10,7 +10,8 @@ export class MovementOptionsContractUtil {
 
   async prepareTransactionOptions(
     writePriceOctasTxGasBudget: number,
-    iteration: number = 0
+    iteration: number = 0,
+    accountSequenceNumber?: number
   ): Promise<InputGenerateTransactionOptions | undefined> {
     const gasUnitPrice = await this.computeGasPrice(iteration);
     if (!gasUnitPrice) {
@@ -24,6 +25,7 @@ export class MovementOptionsContractUtil {
     return {
       maxGasAmount,
       gasUnitPrice,
+      accountSequenceNumber,
     };
   }
 
