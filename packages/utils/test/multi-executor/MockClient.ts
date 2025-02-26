@@ -6,11 +6,17 @@ export type OneOfTypes = string | number;
 export class MockClient {
   calledArgs: OneOfTypes[] = [];
 
+  public property = 12;
+
+  public that: MockClient;
+
   constructor(
     protected ident: number,
     protected execTime: number,
     protected isFailing: boolean = false
-  ) {}
+  ) {
+    this.that = this;
+  }
 
   async someAsyncFunction(arg: OneOfTypes) {
     this.calledArgs.push(arg);
