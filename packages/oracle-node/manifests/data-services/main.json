@@ -1540,7 +1540,9 @@
         "curve-ethereum-dai",
         "curve-ethereum-fdusd",
         "curve-ethereum-frax",
-        "uniswap-v3-ethereum-usdt-100"
+        "uniswap-v3-ethereum-usdt-100",
+        "uniswap-v4-ethereum-usdt-100",
+        "uniswap-v3-ethereum-mnt-3000"
       ],
       "denomination": "USD",
       "rateFeed": false
@@ -2034,6 +2036,7 @@
         "uniswap-v3-ethereum-usdc-3000",
         "uniswap-v3-ethereum-wbtc-100",
         "uniswap-v3-ethereum-weth-3000",
+        "uniswap-v3-base-usdc-500",
         "curve-ethereum-weth"
       ],
       "denomination": "USD",
