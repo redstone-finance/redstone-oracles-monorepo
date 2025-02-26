@@ -781,7 +781,9 @@
         "balancer-ethereum-usdt",
         "coingecko",
         "curve-ethereum-crvusd",
-        "curve-ethereum-usde"
+        "curve-ethereum-usde",
+        "curve-ethereum-weth",
+        "curve-ethereum-cbbtc"
       ],
       "denomination": "USD",
       "rateFeed": false
@@ -2031,7 +2033,8 @@
         "uniswap-v3-base-weth-3000",
         "uniswap-v3-ethereum-usdc-3000",
         "uniswap-v3-ethereum-wbtc-100",
-        "uniswap-v3-ethereum-weth-3000"
+        "uniswap-v3-ethereum-weth-3000",
+        "curve-ethereum-weth"
       ],
       "denomination": "USD",
       "rateFeed": false
