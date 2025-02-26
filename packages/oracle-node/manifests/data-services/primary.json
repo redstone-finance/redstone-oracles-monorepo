@@ -2270,7 +2270,7 @@
           "value": 1
         },
         "lower": {
-          "value": 0.995
+          "value": 1
         }
       },
       "denomination": "BTC",
