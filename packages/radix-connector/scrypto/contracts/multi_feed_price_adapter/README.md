@@ -68,9 +68,9 @@ There is also needed `signer_count_threshold` to be passed.
 #### ⨗ get_prices
 
 ```rust
-pub fn get_prices(&self, feed_ids: FeedIds, payload: Payload) -> (u64, Vec<Decimal>)
+pub fn get_prices(&self, feed_ids: Vec<Vec<u8>>, payload: Vec<u8>) -> (u64, Vec<Decimal>)
 
-pub fn get_prices_raw(&self, feed_ids: FeedIds, payload: Payload) -> (u64, Vec<U256Digits>)
+pub fn get_prices_raw(&self, feed_ids: Vec<Vec<u8>>, payload: Payload) -> (u64, Vec<RedStoneValue>)
 ```
 
 The function processes on-chain the `payload` passed as an argument
@@ -82,9 +82,9 @@ That function doesn't modify the contract's storage.
 #### ⨒ write_prices
 
 ```rust
-pub fn write_prices(&mut self, feed_ids: FeedIds, payload: Payload) -> (u64, Vec<Decimal>)
+pub fn write_prices(&mut self, feed_ids: Vec<Vec<u8>>, payload: Payload) -> (u64, Vec<Decimal>)
 
-pub fn write_prices_raw(&mut self, feed_ids: FeedIds, payload: Payload) -> (u64, Vec<U256Digits>)
+pub fn write_prices_raw(&mut self, feed_ids: Vec<Vec<u8>>, payload: Payload) -> (u64, Vec<RedStoneValue>)
 ```
 
 Besides on-the-fly processing, there is also a function that processes the `payload` on-chain.
@@ -98,9 +98,9 @@ That function modifies the contract's storage.
 #### ⨗ read_prices
 
 ```rust
-pub fn read_prices(&self, feed_ids: FeedIds) -> Vec<Decimal>
+pub fn read_prices(&self, feed_ids: Vec<Vec<u8>>) -> Vec<Decimal>
 
-pub fn read_prices_raw(&self, feed_ids: FeedIds) -> Vec<U256Digits>
+pub fn read_prices_raw(&self, feed_ids: Vec<Vec<u8>>) -> Vec<RedStoneValue>
 ```
 
 The function reads the values persisting in the contract's storage and returns an array corresponding to the

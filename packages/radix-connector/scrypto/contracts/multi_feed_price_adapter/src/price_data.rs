@@ -1,12 +1,12 @@
 use common::{
-    decimals::{AsAsciiStr, ToRedStoneDecimal},
-    types::U256Digits,
+    decimals::ToRedStoneDecimal,
+    redstone::{network::error::Error, Value},
 };
 use scrypto::{math::Decimal, prelude::*};
 
 #[derive(ScryptoSbor, Copy, Clone, Debug)]
 pub struct PriceDataRaw {
-    pub price: U256Digits,
+    pub price: Value,
     pub timestamp: u64,
     pub latest_update_timestamp: u64,
 }
@@ -18,12 +18,12 @@ pub struct PriceData {
     pub latest_update_timestamp: u64,
 }
 
-impl ToRedStoneDecimal<PriceData> for PriceDataRaw {
-    fn to_redstone_decimal(&self, feed_id: &impl AsAsciiStr) -> PriceData {
-        PriceData {
-            price: self.price.to_redstone_decimal(feed_id),
-            timestamp: self.timestamp,
-            latest_update_timestamp: self.latest_update_timestamp,
-        }
+impl ToRedStoneDecimal<PriceData> for (usize, PriceDataRaw) {
+    fn to_redstone_decimal(self) -> Result<PriceData, Error> {
+        Ok(PriceData {
+            price: (self.0, self.1.price).to_redstone_decimal()?,
+            timestamp: self.1.timestamp,
+            latest_update_timestamp: self.1.latest_update_timestamp,
+        })
     }
 }
