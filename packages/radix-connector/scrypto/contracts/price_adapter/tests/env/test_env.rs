@@ -1,9 +1,7 @@
-use common::{
-    test_helpers::env::{run_env::PriceAdapterRunEnv, run_mode::RunMode},
-    types::*,
-};
+use common::redstone::Value;
 use price_adapter::price_adapter::price_adapter_test::PriceAdapter;
-use scrypto::{prelude::U256, time::Instant};
+use redstone_testing::env::run_env::{PriceAdapterRunEnv, RunMode};
+use scrypto::time::Instant;
 use scrypto_test::{
     environment::TestEnvironment,
     ledger_simulator::CompileProfile::Fast,
@@ -19,7 +17,7 @@ pub(crate) struct PriceAdapterTestEnv {
 impl PriceAdapterRunEnv for PriceAdapterTestEnv {
     type State = ();
 
-    fn instantiate(unique_signer_count: u8, signers: Signers, timestamp: Option<u64>) -> Self {
+    fn instantiate(unique_signer_count: u8, signers: Vec<Vec<u8>>, timestamp: Option<u64>) -> Self {
         let mut env = TestEnvironment::new();
 
         if timestamp.is_some() {
@@ -50,20 +48,19 @@ impl PriceAdapterRunEnv for PriceAdapterTestEnv {
         self.price_adapter.read_timestamp(&mut self.env).unwrap()
     }
 
-    fn read_prices(&mut self, feed_ids: FeedIds) -> Vec<U256> {
+    fn read_prices(&mut self, feed_ids: Vec<Vec<u8>>) -> Vec<Value> {
         self.price_adapter
             .read_prices_raw(feed_ids, &mut self.env)
             .unwrap()
-            .into_t()
     }
 
     fn process_payload(
         &mut self,
         run_mode: RunMode,
-        payload: Payload,
-        feed_ids: FeedIds,
+        payload: Vec<u8>,
+        feed_ids: Vec<Vec<u8>>,
         _timestamp: u64,
-    ) -> (u64, Vec<U256>) {
+    ) -> (u64, Vec<Value>) {
         let (timestamp, values) = match run_mode {
             RunMode::Get => self
                 .price_adapter
@@ -74,21 +71,11 @@ impl PriceAdapterRunEnv for PriceAdapterTestEnv {
         }
         .unwrap();
 
-        (timestamp, values.into_t())
+        (timestamp, values)
     }
 
     fn increase_time(&mut self) {
         let ct = self.env.get_current_time().seconds_since_unix_epoch;
         self.env.set_current_time(Instant::new(ct + 1));
-    }
-}
-
-pub(crate) trait IntoT<T> {
-    fn into_t(self) -> T;
-}
-
-impl IntoT<Vec<U256>> for Vec<U256Digits> {
-    fn into_t(self) -> Vec<U256> {
-        self.iter().map(|&d| U256::from_digits(d)).collect()
     }
 }

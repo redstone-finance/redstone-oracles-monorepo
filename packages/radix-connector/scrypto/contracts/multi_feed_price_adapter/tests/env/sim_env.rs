@@ -1,13 +1,8 @@
-use common::{
-    test_helpers::{
-        env::{helpers::make_feed_ids, run_env::PriceAdapterRunEnv, run_mode::RunMode},
-        into_t::IntoT,
-    },
-    types::*,
-};
+use common::redstone::Value;
+use core::fmt::Debug;
 use multi_feed_price_adapter::multi_feed_price_adapter::multi_feed_price_adapter_test::MultiFeedPriceAdapterState;
+use redstone_testing::env::run_env::{PriceAdapterRunEnv, RunMode};
 use scrypto_test::prelude::*;
-use std::fmt::Debug;
 
 const PRICE_ADAPTER: &str = "MultiFeedPriceAdapter";
 const ENTRY_POINT_INSTANTIATE: &str = "instantiate_with_mock_timestamp";
@@ -25,7 +20,7 @@ pub(crate) struct MultiFeedPriceAdapterSimEnv {
 impl PriceAdapterRunEnv for MultiFeedPriceAdapterSimEnv {
     type State = MultiFeedPriceAdapterState;
 
-    fn instantiate(unique_signer_count: u8, signers: Signers, timestamp: Option<u64>) -> Self {
+    fn instantiate(unique_signer_count: u8, signers: Vec<Vec<u8>>, timestamp: Option<u64>) -> Self {
         let mut ledger = LedgerSimulatorBuilder::new().build();
         let (public_key, _private_key, _) = ledger.new_allocated_account();
         let package_address = ledger.compile_and_publish(this_package!());
@@ -59,8 +54,8 @@ impl PriceAdapterRunEnv for MultiFeedPriceAdapterSimEnv {
     }
 
     fn read_timestamp(&mut self, feed_id: Option<&str>) -> u64 {
-        let feed_ids = make_feed_ids(vec![feed_id.unwrap()]);
-        let price_data = self.call_method::<Vec<(U256Digits, u64, u64)>>(
+        let feed_ids: Vec<Vec<u8>> = vec![feed_id.unwrap().into()];
+        let price_data = self.call_method::<Vec<(Value, u64, u64)>>(
             ENTRY_POINT_READ_PRICE_DATA,
             manifest_args!(feed_ids),
         );
@@ -68,19 +63,18 @@ impl PriceAdapterRunEnv for MultiFeedPriceAdapterSimEnv {
         price_data.first().unwrap().1
     }
 
-    fn read_prices(&mut self, feed_ids: FeedIds) -> Vec<U256> {
-        self.call_method::<Vec<U256Digits>>(ENTRY_POINT_READ_PRICES, manifest_args!(feed_ids))
-            .into_t()
+    fn read_prices(&mut self, feed_ids: Vec<Vec<u8>>) -> Vec<Value> {
+        self.call_method(ENTRY_POINT_READ_PRICES, manifest_args!(feed_ids))
     }
 
     fn process_payload(
         &mut self,
         run_mode: RunMode,
-        payload: Payload,
-        feed_ids: FeedIds,
+        payload: Vec<u8>,
+        feed_ids: Vec<Vec<u8>>,
         _timestamp: u64,
-    ) -> (u64, Vec<U256>) {
-        let (timestamp, values): (_, Vec<U256Digits>) = self.call_method(
+    ) -> (u64, Vec<Value>) {
+        let (timestamp, values): (_, Vec<Value>) = self.call_method(
             if run_mode == RunMode::Get {
                 ENTRY_POINT_GET_PRICES
             } else {
@@ -89,7 +83,7 @@ impl PriceAdapterRunEnv for MultiFeedPriceAdapterSimEnv {
             manifest_args!(feed_ids, payload),
         );
 
-        (timestamp, values.into_t())
+        (timestamp, values)
     }
 
     fn increase_time(&mut self) {

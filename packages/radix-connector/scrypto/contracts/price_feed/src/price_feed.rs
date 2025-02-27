@@ -1,17 +1,17 @@
-use crate::types::*;
+use common::redstone::Value as RedStoneValue;
 use scrypto::prelude::*;
 
 #[blueprint]
 mod price_adapter {
     struct PriceFeed {
         price_adapter_address: Global<AnyComponent>,
-        feed_id: FeedId,
+        feed_id: Vec<u8>,
     }
 
     impl PriceFeed {
         pub fn instantiate(
             price_adapter_address: Global<AnyComponent>,
-            feed_id: FeedId,
+            feed_id: Vec<u8>,
         ) -> Global<PriceFeed> {
             Self {
                 price_adapter_address,
@@ -26,7 +26,7 @@ mod price_adapter {
             self.call_for_price_and_timestamp("read_price_and_timestamp")
         }
 
-        pub fn read_price_and_timestamp_raw(&self) -> (U256Digits, u64) {
+        pub fn read_price_and_timestamp_raw(&self) -> (RedStoneValue, u64) {
             self.call_for_price_and_timestamp("read_price_and_timestamp_raw")
         }
 

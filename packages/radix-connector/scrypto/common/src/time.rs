@@ -27,10 +27,7 @@ impl Time {
 impl From<Option<u64>> for Time {
     fn from(value: Option<u64>) -> Self {
         match value {
-            #[cfg(any(feature = "real_network_test", not(feature = "real_network")))]
             Some(value) => Self::Mock(value),
-            #[cfg(not(any(feature = "real_network_test", not(feature = "real_network"))))]
-            Some(_) => Self::System,
             None => Self::System,
         }
     }
