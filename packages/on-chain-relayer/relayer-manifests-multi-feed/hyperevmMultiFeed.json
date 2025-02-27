@@ -1,0 +1,81 @@
+{
+  "chain": {
+    "name": "hyperevm",
+    "id": 999
+  },
+  "adapterContract": "0x24c8964338Deb5204B096039147B8e8C3AEa42Cc",
+  "adapterContractType": "multi-feed",
+  "dataServiceId": "redstone-primary-prod",
+  "updateTriggers": {
+    "deviationPercentage": 0.5,
+    "timeSinceLastUpdateInMilliseconds": 21600000
+  },
+  "priceFeeds": {
+    "HYPE": {
+      "priceFeedAddress": "0xa8a94Da411425634e3Ed6C331a32ab4fd774aa43"
+    },
+    "BTC": {
+      "priceFeedAddress": "0x3587a73AA02519335A8a6053a97657BECe0bC2Cc"
+    },
+    "ETH": {
+      "priceFeedAddress": "0x4BAD96DD1C7D541270a0C92e1D4e5f12EEEA7a57"
+    },
+    "SOL": {
+      "priceFeedAddress": "0x3fd49f2146FE0e10c4AE7E3fE04b3d5126385Ac4"
+    },
+    "wstETH_FUNDAMENTAL": {
+      "priceFeedAddress": "0x197225B3B017eb9b72Ac356D6B3c267d0c04c57c"
+    },
+    "weETH_FUNDAMENTAL": {
+      "priceFeedAddress": "0xbbF121624c3b85C929Ac83872bf6c86b0976A55e"
+    },
+    "swETH_FUNDAMENTAL": {
+      "priceFeedAddress": "0x09639692CE6ff12A06CA3AE9A24b3Aae4CD80DC8"
+    },
+    "STONE": {
+      "priceFeedAddress": "0x83c6f7F61A55Fc7A1337AbD45733AD9c1c68076D"
+    },
+    "rswETH_FUNDAMENTAL": {
+      "priceFeedAddress": "0x3401DAF2b1f150Ef0c709Cc0283b5F2e55c3DF29"
+    },
+    "ezETH_FUNDAMENTAL": {
+      "priceFeedAddress": "0x6A1c87d11dDe3D1d52c24f8EC59B91019f14170D"
+    },
+    "rsETH_FUNDAMENTAL": {
+      "priceFeedAddress": "0x84AD474c33c9cCefB1a2D8b77Bdd88bDc592f96b"
+    },
+    "pufETH_FUNDAMENTAL": {
+      "priceFeedAddress": "0xe7f71d6a24EBc391f5ee57B867ED429EB7Bd74f4"
+    },
+    "LBTC_FUNDAMENTAL": {
+      "priceFeedAddress": "0x65eD6a4ac085620eE943c0B15525C4428D23e4Db"
+    },
+    "SolvBTC": {
+      "priceFeedAddress": "0x24eDD61cdA334bFf871A80DEB135073a7d7a9187"
+    },
+    "WBTC": {
+      "priceFeedAddress": "0xddE3b77040cee3387C0cA661d1b619C3acA203b0"
+    },
+    "eBTC/WBTC": {
+      "priceFeedAddress": "0x8B4736f5eaD8ed579Ecf65a13F9c1E8B44dEdF20"
+    },
+    "USDC": {
+      "priceFeedAddress": "0x4C89968338b75551243C99B452c84a01888282fD"
+    },
+    "USDT": {
+      "priceFeedAddress": "0x5e21f6530f656A38caE4F55500944753F662D184"
+    },
+    "USDe": {
+      "priceFeedAddress": "0xcA727511c9d542AAb9eF406d24E5bbbE4567c22d"
+    },
+    "sUSDe_FUNDAMENTAL": {
+      "priceFeedAddress": "0x29D295409d5A20b2C851df18054D32A442791346"
+    },
+    "USR": {
+      "priceFeedAddress": "0x29d2fEC890B037B2d34f061F9a50f76F85ddBcAE"
+    },
+    "cbBTC": {
+      "priceFeedAddress": "0xC9e11c60e24BEF478cC999fA9fA2d89cC098A86e"
+    }
+  }
+}
