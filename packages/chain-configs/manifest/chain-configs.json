@@ -320,10 +320,10 @@
       "chainId": 56,
       "currencySymbol": "BNB",
       "publicRpcUrls": [
+        "https://bscrpc.com",
         "https://binance.llamarpc.com",
         "https://bsc-dataseed.bnbchain.org",
         "https://bsc-pokt.nodies.app",
-        "https://bscrpc.com",
         "https://binance.nodereal.io",
         "https://1rpc.io/bnb"
       ],
