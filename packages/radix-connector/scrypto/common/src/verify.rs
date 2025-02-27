@@ -1,47 +1,31 @@
-use crate::{
-    price_adapter_error::PriceAdapterError,
-    types::{process_signers, Signers},
-};
-use redstone::network::{assert::Assert, error::Error};
+use redstone::{contract::verification::*, SignerAddress};
 
-pub fn verify_timestamps(
-    current_timestamp: u64,
-    data_timestamp: u64,
-    latest_update_timestamp: Option<u64>,
-    latest_data_timestamp: u64,
-) {
-    data_timestamp.assert_or_revert(
-        |&ts| ts > latest_data_timestamp,
-        |_| Error::contract_error(PriceAdapterError::TimestampMustBeGreaterThanBefore),
-    );
+pub fn verify_signers_config(signers: &Vec<Vec<u8>>, signer_count_threshold: u8) {
+    let addresses: Vec<SignerAddress> = signers
+        .iter()
+        .map(|signer| (signer.clone()).into())
+        .collect();
 
-    current_timestamp.assert_or_revert(
-        |&ts| latest_update_timestamp.is_none() || ts > latest_update_timestamp.unwrap(),
-        |_| {
-            Error::contract_error(
-                PriceAdapterError::CurrentTimestampMustBeGreaterThanLatestUpdateTimestamp,
-            )
-        },
-    );
+    redstone::contract::verification::verify_signers_config(
+        addresses.as_slice(),
+        signer_count_threshold,
+    )
+    .unwrap_or_else(|err| panic!("{}", err));
 }
 
-pub fn verify_signers(
-    signer_count_threshold: u8,
-    allowed_signer_addresses: Signers,
-) -> Vec<Vec<u8>> {
-    // TODO: make check signers are unique
-
-    let signers = process_signers(allowed_signer_addresses);
-
-    signers.len().assert_or_revert(
-        |&v| v > 0usize,
-        |_| Error::contract_error(PriceAdapterError::SignersMustNotBeEmpty),
-    );
-
-    signer_count_threshold.assert_or_revert(
-        |&v| (v as usize) <= signers.len(),
-        |&v| Error::contract_error(PriceAdapterError::WrongSignerCountThresholdValue(v)),
-    );
-
-    signers
+pub fn verify_update(
+    current_timestamp: u64,
+    latest_update_timestamp: Option<u64>,
+    previous_timestamp: u64,
+    timestamp: u64,
+) {
+    UpdateTimestampVerifier::Untrusted
+        .verify_timestamp(
+            current_timestamp.into(),
+            latest_update_timestamp.map(|v| v.into()),
+            0.into(),
+            previous_timestamp.into(),
+            timestamp.into(),
+        )
+        .unwrap_or_else(|err| panic!("{}", err));
 }
