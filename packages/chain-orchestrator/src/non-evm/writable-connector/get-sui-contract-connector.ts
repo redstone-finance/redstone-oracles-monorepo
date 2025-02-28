@@ -3,9 +3,11 @@ import {
   SuiClientBuilder,
   SuiPricesContractConnector,
 } from "@redstone-finance/sui-connector";
-import { RelayerConfig } from "../config/RelayerConfig";
+import { PartialRelayerConfig } from "./partial-relayer-config";
 
-export const getSuiContractConnector = (relayerConfig: RelayerConfig) => {
+export const getSuiContractConnector = (
+  relayerConfig: PartialRelayerConfig
+) => {
   const {
     privateKey,
     rpcUrls,
