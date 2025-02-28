@@ -1,4 +1,3 @@
-import { RedstoneOraclesState } from "@redstone-finance/oracles-smartweave-contracts";
 import {
   DataPackage,
   DataPoint,
@@ -6,6 +5,7 @@ import {
   consts,
   utils,
 } from "@redstone-finance/protocol";
+import { RedstoneOraclesState } from "@redstone-finance/sdk";
 import { ethers } from "ethers";
 
 export const MOCK_PRIVATE_KEY =
@@ -96,8 +96,6 @@ export const mockOracleRegistryState: RedstoneOraclesState = {
     },
   },
   contractAdmins: [],
-  canEvolve: true,
-  evolve: null,
 };
 
 export const MOCK_SIGNATURE =
