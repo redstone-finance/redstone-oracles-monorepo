@@ -1,16 +1,8 @@
 import { z } from "zod";
 
-export const NonEvmChainTypeSchema = z.enum([
-  "sui",
-  "movement",
-  "radix",
-  "fuel",
-]);
-export const ChainTypeSchema = z.enum([
-  "evm",
-  ...NonEvmChainTypeSchema.options,
-]);
-export type ChainType = z.infer<typeof ChainTypeSchema>;
+export const NonEvmChainTypeEnum = z.enum(["sui", "movement", "radix", "fuel"]);
+export const ChainTypeEnum = z.enum(["evm", ...NonEvmChainTypeEnum.options]);
+export type ChainType = z.infer<typeof ChainTypeEnum>;
 
 export function isEvmChainType(chainType?: string) {
   return !chainType || chainType === "evm";
