@@ -23,6 +23,10 @@
     "lodash": "^4.17.21",
     "zod": "^3.22.4"
   },
+  "devDependencies": {
+    "@types/sinon": "^10.0.15",
+    "sinon": "^18.0.0"
+  },
   "overrides": {
     "elliptic": "^6.6.1"
   },

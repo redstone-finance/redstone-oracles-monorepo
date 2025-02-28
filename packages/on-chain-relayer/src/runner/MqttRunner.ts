@@ -12,7 +12,11 @@ import {
   DataPackagesResponseCache,
   getDataPackagesTimestamp,
 } from "@redstone-finance/sdk";
-import { loggerFactory, RedstoneCommon } from "@redstone-finance/utils";
+import {
+  loggerFactory,
+  OperationQueue,
+  RedstoneCommon,
+} from "@redstone-finance/utils";
 import _ from "lodash";
 import { RelayerConfig } from "../config/RelayerConfig";
 import {
@@ -21,7 +25,6 @@ import {
 } from "../core/make-data-packages-request-params";
 import { ContractFacade } from "../facade/ContractFacade";
 import { getContractFacade } from "../facade/get-contract-facade";
-import { OperationQueue } from "./OperationQueue";
 import { runIteration } from "./run-iteration";
 
 export class MqttRunner {

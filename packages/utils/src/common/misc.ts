@@ -23,7 +23,9 @@ export function stringify<R>(result: R) {
   try {
     return JSON.stringify(result);
   } catch (e) {
-    return result && typeof result.toString === "function"
+    return result !== undefined &&
+      result !== null &&
+      typeof result.toString === "function"
       ? result.toString()
       : "[Unable to stringify value]";
   }

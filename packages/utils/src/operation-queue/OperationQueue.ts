@@ -1,4 +1,4 @@
-import { loggerFactory } from "@redstone-finance/utils";
+import { loggerFactory } from "../logger";
 
 export type Operation = () => Promise<void>;
 
@@ -42,7 +42,7 @@ export class OperationQueue {
       const { id, operation } = this.queue.shift()!;
       this.activeOperations.add(id);
       try {
-        this.logger.debug(`Running for ---> [${id}]`);
+        this.logger.debug(`Running for [${id}]`);
         await operation();
       } catch (error) {
         this.logger.error(`Operation for [${id}] failed:`, error);

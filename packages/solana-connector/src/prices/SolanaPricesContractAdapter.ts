@@ -48,18 +48,19 @@ export class SolanaPricesContractAdapter
   ): Promise<string | BigNumberish[]> {
     const tx = new Transaction();
 
-    await paramsProvider.prepareContractCallPayloads({
-      onFeedPayload: async (feedId, payload) => {
-        const ix = await this.contract.writePriceIx(
-          this.keypair.publicKey,
-          feedId,
-          payload
-        );
-        tx.add(ix);
-      },
-      onFeedMissing: (feedId) =>
-        this.logger.warn(`No data packages found for "${feedId}"`),
-    });
+    const { payloads } = ContractParamsProvider.extractMissingValues(
+      await paramsProvider.prepareSplitPayloads(),
+      this.logger
+    );
+
+    for (const [feedId, payload] of Object.entries(payloads)) {
+      const ix = await this.contract.writePriceIx(
+        this.keypair.publicKey,
+        feedId,
+        payload
+      );
+      tx.add(ix);
+    }
 
     return await sendAndConfirmTransaction(this.connection, tx, [this.keypair]);
   }
