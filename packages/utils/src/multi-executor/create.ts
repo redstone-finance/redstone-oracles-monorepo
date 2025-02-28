@@ -42,3 +42,17 @@ export function create<T extends object>(
     config
   ).createProxy();
 }
+
+export function createForSubInstances<T extends object, U extends object>(
+  subject: T,
+  callback: (arg: T) => U,
+  methodConfig: MethodConfig<U> = {},
+  config: MultiExecutorConfig = DEFAULT_CONFIG
+) {
+  const instances =
+    "__instances" in subject
+      ? (subject.__instances as T[]).map(callback)
+      : [callback(subject)];
+
+  return create(instances, methodConfig, config);
+}

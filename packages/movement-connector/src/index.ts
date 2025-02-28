@@ -3,6 +3,7 @@ export * from "./config";
 export * from "./consts";
 export * from "./MovementContractConnector";
 export * from "./MovementContractViewer";
+export * from "./MovementTxDeliveryMan";
 export * from "./price_adapter/MovementPriceAdapterContractViewer";
 export * from "./price_adapter/MovementPriceAdapterContractWriter";
 export * from "./price_adapter/MovementPricesContractAdapter";

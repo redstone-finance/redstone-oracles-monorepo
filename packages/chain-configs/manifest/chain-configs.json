@@ -1078,7 +1078,10 @@
       "chainId": 250,
       "chainType": "movement",
       "currencySymbol": "MOVE",
-      "publicRpcUrls": ["https://aptos.testnet.bardock.movementlabs.xyz/v1"],
+      "publicRpcUrls": [
+        "https://aptos.testnet.bardock.movementlabs.xyz/v1",
+        "https://rpc.sentio.xyz/movement-testnet/v1"
+      ],
       "avgBlockTimeMs": 1000,
       "multicall3": {
         "address": "",

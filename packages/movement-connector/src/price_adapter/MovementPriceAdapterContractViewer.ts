@@ -12,13 +12,10 @@ import {
   SINGLE_EXECUTION_TIMEOUT_MS,
 } from "../AptosClientBuilder";
 import { MovementContractViewer } from "../MovementContractViewer";
-import { IMovementPriceAdapterViewer, PriceDataSchema } from "../types";
+import { PriceDataSchema } from "../types";
 import { makeFeedIdBytes } from "../utils";
 
-export class MovementPriceAdapterContractViewer
-  extends MovementContractViewer
-  implements IMovementPriceAdapterViewer
-{
+export class MovementPriceAdapterContractViewer extends MovementContractViewer {
   protected readonly logger = loggerFactory(
     "movement-price-adapter-contract-viewer"
   );
@@ -36,18 +33,14 @@ export class MovementPriceAdapterContractViewer
     priceAdapterPackageAddress: string,
     priceAdapterObjectAddress: string
   ) {
-    const clients =
-      "__instances" in client ? (client.__instances as Aptos[]) : [client];
-
-    return MultiExecutor.create(
-      clients.map(
-        (client) =>
-          new MovementPriceAdapterContractViewer(
-            client,
-            priceAdapterPackageAddress,
-            priceAdapterObjectAddress
-          )
-      ),
+    return MultiExecutor.createForSubInstances(
+      client,
+      (client) =>
+        new MovementPriceAdapterContractViewer(
+          client,
+          priceAdapterPackageAddress,
+          priceAdapterObjectAddress
+        ),
       {},
       {
         ...MultiExecutor.DEFAULT_CONFIG,

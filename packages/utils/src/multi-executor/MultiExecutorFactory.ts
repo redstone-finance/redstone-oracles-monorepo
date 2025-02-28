@@ -111,9 +111,9 @@ export class MultiExecutorFactory<T extends object> {
     this.logger.debug(
       `[${stringify(key)}] Executing ${promises.length} promise${getS(promises.length)}` +
         ` with ${typeof mode === "string" ? mode : typeof mode}` +
-        this.config.allExecutionsTimeoutMs
-        ? ` and totalExecutionTimeout: ${this.config.allExecutionsTimeoutMs} [ms]`
-        : ""
+        (this.config.allExecutionsTimeoutMs
+          ? ` and totalExecutionTimeout: ${this.config.allExecutionsTimeoutMs} [ms]`
+          : "")
     );
 
     const result = this.getExecutor(mode).execute(promises);

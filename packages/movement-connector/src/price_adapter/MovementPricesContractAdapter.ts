@@ -1,18 +1,22 @@
 import {
   ContractData,
-  type ContractParamsProvider,
+  ContractParamsProvider,
   IMultiFeedPricesContractAdapter,
 } from "@redstone-finance/sdk";
 import { loggerFactory } from "@redstone-finance/utils";
 import { BigNumberish } from "ethers";
-import { IMovementContractAdapter } from "../types";
+import { MovementPriceAdapterContractViewer } from "./MovementPriceAdapterContractViewer";
+import { MovementPriceAdapterContractWriter } from "./MovementPriceAdapterContractWriter";
 
 export class MovementPricesContractAdapter
   implements IMultiFeedPricesContractAdapter
 {
   private readonly logger = loggerFactory("movement-contract-adapter");
 
-  constructor(private readonly adapter: IMovementContractAdapter) {}
+  constructor(
+    private readonly viewer: MovementPriceAdapterContractViewer,
+    private readonly writer?: MovementPriceAdapterContractWriter
+  ) {}
 
   //eslint-disable-next-line @typescript-eslint/require-await
   async getPricesFromPayload(
@@ -24,25 +28,30 @@ export class MovementPricesContractAdapter
   async writePricesFromPayloadToContract(
     paramsProvider: ContractParamsProvider
   ): Promise<string> {
-    if (!this.adapter.writer) {
+    if (!this.writer) {
       throw new Error("Adapter not set up for writes");
     }
 
-    const payloads: { feedId: string; payload: string }[] = [];
-    await paramsProvider.prepareContractCallPayloads({
-      onFeedPayload: (feedId, payload) => {
-        payloads.push({ feedId, payload });
-        return Promise.resolve();
-      },
-      onFeedMissing: (feedId) =>
-        this.logger.warn(`No data packages found for "${feedId}"`),
-    });
+    const unsignedMetadataArgs = {
+      withUnsignedMetadata: true,
+      metadataTimestamp: Date.now(),
+    };
 
-    return await this.adapter.writer.writePrices(payloads);
+    const { payloads } = ContractParamsProvider.extractMissingValues(
+      await paramsProvider.prepareSplitPayloads(unsignedMetadataArgs),
+      this.logger
+    );
+
+    return await this.writer.writePrices(payloads, (feedId) =>
+      ContractParamsProvider.copyForFeedId(
+        paramsProvider,
+        feedId
+      ).getPayloadHex(true, unsignedMetadataArgs)
+    );
   }
 
   async getUniqueSignerThreshold(): Promise<number> {
-    return await this.adapter.viewer.viewUniqueSignerThreshold();
+    return await this.viewer.viewUniqueSignerThreshold();
   }
 
   async readPricesFromContract(
@@ -66,7 +75,7 @@ export class MovementPricesContractAdapter
   }
 
   async readContractData(feedIds: string[]): Promise<ContractData> {
-    return await this.adapter.viewer.viewContractData(feedIds);
+    return await this.viewer.viewContractData(feedIds);
   }
 
   private async readAnyRoundDetails(feedId: string) {
