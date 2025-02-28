@@ -1,0 +1,38 @@
+{
+  "name": "@redstone-finance/chain-orchestrator",
+  "version": "0.8.0",
+  "main": "dist/src/index.js",
+  "exports": "./dist/src/index.js",
+  "types": "dist/src/index.d.ts",
+  "license": "MIT",
+  "scripts": {
+    "run-ts": "yarn global:ts-node",
+    "clean": "rm -rf dist",
+    "build": "yarn build-deps && yarn global:tsc --build tsconfig.build.json",
+    "build-dev": "yarn build-deps && yarn global:tsc --build tsconfig.json",
+    "build-deps": "",
+    "lint": "yarn global:eslint .",
+    "lint:fix": "yarn global:eslint --fix .",
+    "preversion": "yarn build",
+    "test": ""
+  },
+  "dependencies": {
+    "@redstone-finance/chain-configs": "workspace:*",
+    "@redstone-finance/evm-connector": "workspace:*",
+    "@redstone-finance/fuel-connector": "workspace:*",
+    "@redstone-finance/internal-utils": "workspace:*",
+    "@redstone-finance/monitoring-manifests": "workspace:*",
+    "@redstone-finance/movement-connector": "workspace:*",
+    "@redstone-finance/on-chain-relayer-common": "workspace:*",
+    "@redstone-finance/radix-connector": "workspace:*",
+    "@redstone-finance/rpc-providers": "workspace:*",
+    "@redstone-finance/sui-connector": "workspace:*",
+    "@redstone-finance/utils": "workspace:*",
+    "ethers": "^5.7.2",
+    "lodash": "^4.17.21",
+    "zod": "^3.22.4"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

@@ -35,7 +35,6 @@ export {
 } from "./facade/get-iteration-args-provider";
 export { MultiFeedNonEvmContractFacade } from "./facade/MultiFeedNonEvmContractFacade";
 export { NonEvmContractFacade } from "./facade/NonEvmContractFacade";
-export { getChainTypeFromAdapterType } from "./non-evm/get-chain-type";
 export { runIteration, type IterationLogger } from "./runner/run-iteration";
 export type {
   ContractData,

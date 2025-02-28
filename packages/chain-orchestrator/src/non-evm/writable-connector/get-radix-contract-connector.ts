@@ -3,10 +3,10 @@ import {
   PriceAdapterRadixContractConnector,
   RadixClient,
 } from "@redstone-finance/radix-connector";
-import { RelayerConfig } from "../config/RelayerConfig";
+import { PartialRelayerConfig } from "./partial-relayer-config";
 
 export const getRadixContractConnector = (
-  relayerConfig: RelayerConfig,
+  relayerConfig: PartialRelayerConfig,
   isMultiFeed: boolean = false
 ) => {
   const { privateKey, adapterContractAddress, chainId } = relayerConfig;
