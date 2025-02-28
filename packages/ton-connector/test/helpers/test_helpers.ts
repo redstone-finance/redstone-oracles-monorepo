@@ -1,8 +1,8 @@
-import { getSignersForDataServiceId } from "@redstone-finance/oracles-smartweave-contracts";
 import { RedstonePayload } from "@redstone-finance/protocol";
 import {
   ContractParamsProvider,
   ContractParamsProviderMock,
+  getPreloadedSignersForDataServiceId,
 } from "@redstone-finance/sdk";
 import { MathUtils, RedstoneCommon } from "@redstone-finance/utils";
 import { compile } from "@ton/blueprint";
@@ -54,7 +54,9 @@ export function getContractParamsProvider(
     dataServiceId: "redstone-avalanche-prod",
     uniqueSignersCount: 4,
     dataPackagesIds: dataFeeds,
-    authorizedSigners: getSignersForDataServiceId("redstone-avalanche-prod"),
+    authorizedSigners: getPreloadedSignersForDataServiceId(
+      "redstone-avalanche-prod"
+    ),
   });
 }
 

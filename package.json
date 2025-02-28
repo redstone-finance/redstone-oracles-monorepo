@@ -23,7 +23,7 @@
     "lint:markdown": "markdownlint-cli2 packages/**/*.md",
     "lint:markdown:fix": "markdownlint-cli2 packages/**/*.md --fix",
     "lint:yarn-lock": "lockfile-lint --path yarn.lock --allowed-hosts npm yarn github.com --allowed-schemes \"https:\" \"git+https:\" \"npm:\" \"workspace:\" \"patch:\"",
-    "test:all": "EXCLUDE='{@redstone-finance/oracles-smartweave-contracts,@redstone-finance/fuel-connector}' yarn global:run-all-parallel test",
+    "test:all": "EXCLUDE='{@redstone-finance/fuel-connector}' yarn global:run-all-parallel test",
     "version:all": "lerna version --no-push --no-git-tag-version",
     "publish:all": "lerna publish from-git",
     "syncpack:fix-mismatches": "syncpack fix-mismatches --types !local",
