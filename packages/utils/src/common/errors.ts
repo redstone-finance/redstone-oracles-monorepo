@@ -59,35 +59,39 @@ const stringifyStack = (stack: string | undefined): string => {
 };
 
 export function stringifyError(e: unknown): string {
-  const error = e as
-    | AggregateError
-    | AxiosError
-    | undefined
-    | Error
-    | { toJSON: () => string };
+  try {
+    const error = e as
+      | AggregateError
+      | AxiosError
+      | undefined
+      | Error
+      | { toJSON: () => string };
 
-  if (error === undefined) {
-    return "undefined";
-  } else if (error instanceof AggregateError) {
-    const errorMessages: string[] = error.errors.map(stringifyError);
-    return `AggregateError: ${error.message ? error.message : "<no message>"}, errors: ${errorMessages.join(
-      "; "
-    )}`;
-  } else if (axios.isAxiosError<unknown>(error)) {
-    const urlAsString = `url: ${JSON.stringify(error.config?.url)}`;
-    const dataAsString = `data: ${JSON.stringify(error.response?.data)}`;
-    return `${urlAsString}, ${dataAsString}, ` + stringifyStack(error.stack);
-  } else if (error instanceof Error) {
-    const causeString = error.cause
-      ? ` cause: ${stringifyError(error.cause)}`
-      : "";
-    return `${stringifyStack(error.stack)}${causeString}`;
-  } else if (typeof error.toJSON === "function") {
-    return JSON.stringify(error.toJSON());
-  } else {
-    return `Error couldn't be handled by the stringifyError function: ${String(
-      e
-    )}`;
+    if (error === undefined) {
+      return "undefined";
+    } else if (error instanceof AggregateError) {
+      const errorMessages: string[] = error.errors.map(stringifyError);
+      return `AggregateError: ${error.message ? error.message : "<no message>"}, errors: ${errorMessages.join(
+        "; "
+      )}`;
+    } else if (axios.isAxiosError<unknown>(error)) {
+      const urlAsString = `url: ${JSON.stringify(error.config?.url)}`;
+      const dataAsString = `data: ${JSON.stringify(error.response?.data)}`;
+      return `${urlAsString}, ${dataAsString}, ` + stringifyStack(error.stack);
+    } else if (error instanceof Error) {
+      const causeString = error.cause
+        ? ` cause: ${stringifyError(error.cause)}`
+        : "";
+      return `${stringifyStack(error.stack)}${causeString}`;
+    } else if (typeof error.toJSON === "function") {
+      return JSON.stringify(error.toJSON());
+    } else {
+      return `Error couldn't be handled by the stringifyError function: ${String(
+        e
+      )}`;
+    }
+  } catch (handlingError) {
+    return `StringifyError thrown error: ${String(handlingError)} when stringifying error :${String(e)}`;
   }
 }
 
