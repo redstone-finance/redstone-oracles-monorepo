@@ -2,10 +2,8 @@ import { toBase64 } from "@mysten/bcs";
 import { Transaction } from "@mysten/sui/transactions";
 import "dotenv/config";
 import { makeSuiClient, SuiNetworkName } from "../../src";
+import { MULTI_SIG_ADDRESS } from "./const";
 import { makeBaseTx } from "./make-base-tx";
-
-export const MULTI_SIG_ADDRESS =
-  "0x2fb6aa8a4bdedb65c0979747e954cd92ede02ecd8d401b1df4be9f9d81c4b8b1";
 
 export async function generateTransactionData(
   creator: (tx: Transaction, network: SuiNetworkName) => void,

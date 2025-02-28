@@ -1,5 +1,5 @@
+import _ from "lodash";
 import { SuiNetworkName } from "./config";
-
 /// A numeric result of invoking SuiClient.getChainIdentifier method
 /// same as for `sui_getChainIdentifier` API method
 export const SUI_NETWORK_IDS: { [p: number]: SuiNetworkName } = {
@@ -10,4 +10,8 @@ export const SUI_NETWORK_IDS: { [p: number]: SuiNetworkName } = {
 
 export function getSuiNetworkName(chainId: number): SuiNetworkName {
   return SUI_NETWORK_IDS[chainId] ?? "localnet";
+}
+
+export function getSuiChainId(network: SuiNetworkName) {
+  return Number(_.findKey(SUI_NETWORK_IDS, (v) => v === network)!);
 }

@@ -8,8 +8,8 @@
     "deviationPercentage": 0.5,
     "timeSinceLastUpdateInMilliseconds": 86400000
   },
-  "adapterContract": "0x100916e39d92a1ac15b82f7dc92c3214c41751123b6a6f1e7e68c33136a7bed7",
-  "adapterContractPackageId": "0x565937034504f3c5be4889d67a05c9c57ac713998fb3dcc879fddaba0fddead0",
+  "adapterContract": "0x22794c3a37c5320e5acb6b9cdba6e256bc08867e9de8afd2a4b5d8ea7061fea3",
+  "adapterContractPackageId": "0xc14f5281c41da172c1b72d07e3ae79e9ad1f12b6444b7bd23343b63bcf43ee46",
   "dataServiceId": "redstone-primary-prod",
   "priceFeeds": {
     "ETH": {},
@@ -18,6 +18,7 @@
         "deviationPercentage": 0.2,
         "timeSinceLastUpdateInMilliseconds": 86400000
       }
-    }
+    },
+    "LBTC_FUNDAMENTAL": {}
   }
 }
