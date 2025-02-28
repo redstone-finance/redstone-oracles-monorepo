@@ -8167,6 +8167,27 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@redstone-finance/chain-orchestrator@workspace:*, @redstone-finance/chain-orchestrator@workspace:packages/chain-orchestrator":
+  version: 0.0.0-use.local
+  resolution: "@redstone-finance/chain-orchestrator@workspace:packages/chain-orchestrator"
+  dependencies:
+    "@redstone-finance/chain-configs": "workspace:*"
+    "@redstone-finance/evm-connector": "workspace:*"
+    "@redstone-finance/fuel-connector": "workspace:*"
+    "@redstone-finance/internal-utils": "workspace:*"
+    "@redstone-finance/monitoring-manifests": "workspace:*"
+    "@redstone-finance/movement-connector": "workspace:*"
+    "@redstone-finance/on-chain-relayer-common": "workspace:*"
+    "@redstone-finance/radix-connector": "workspace:*"
+    "@redstone-finance/rpc-providers": "workspace:*"
+    "@redstone-finance/sui-connector": "workspace:*"
+    "@redstone-finance/utils": "workspace:*"
+    ethers: "npm:^5.7.2"
+    lodash: "npm:^4.17.21"
+    zod: "npm:^3.22.4"
+  languageName: unknown
+  linkType: soft
+
 "@redstone-finance/classic-updates-number-checker@workspace:packages/classic-updates-number-checker":
   version: 0.0.0-use.local
   resolution: "@redstone-finance/classic-updates-number-checker@workspace:packages/classic-updates-number-checker"
@@ -9170,10 +9191,10 @@ __metadata:
   dependencies:
     "@influxdata/influxdb-client": "npm:^1.35.0"
     "@redstone-finance/chain-configs": "workspace:*"
+    "@redstone-finance/chain-orchestrator": "workspace:*"
     "@redstone-finance/internal-utils": "workspace:*"
     "@redstone-finance/monitoring-manifests": "workspace:*"
     "@redstone-finance/on-chain-relayer-common": "workspace:*"
-    "@redstone-finance/redstone-monitoring": "workspace:*"
     "@redstone-finance/rpc-providers": "workspace:*"
     "@redstone-finance/utils": "workspace:*"
     ethers: "npm:^5.7.2"
@@ -9215,7 +9236,6 @@ __metadata:
   resolution: "@redstone-finance/monitoring-manifests@workspace:packages/monitoring-manifests"
   dependencies:
     "@redstone-finance/internal-utils": "workspace:*"
-    "@redstone-finance/on-chain-relayer": "workspace:*"
     "@redstone-finance/on-chain-relayer-common": "workspace:*"
     "@redstone-finance/utils": "workspace:*"
     axios: "npm:^1.7.9"
@@ -9310,18 +9330,15 @@ __metadata:
     "@openzeppelin/contracts-upgradeable": "npm:^4.8.3"
     "@openzeppelin/hardhat-upgrades": "npm:^1.26.0"
     "@redstone-finance/chain-configs": "workspace:*"
+    "@redstone-finance/chain-orchestrator": "workspace:*"
     "@redstone-finance/evm-connector": "workspace:*"
-    "@redstone-finance/fuel-connector": "workspace:*"
     "@redstone-finance/internal-utils": "workspace:*"
-    "@redstone-finance/movement-connector": "workspace:*"
     "@redstone-finance/mqtt5-client": "workspace:*"
     "@redstone-finance/on-chain-relayer-common": "workspace:*"
     "@redstone-finance/oracles-smartweave-contracts": "workspace:*"
     "@redstone-finance/protocol": "workspace:*"
-    "@redstone-finance/radix-connector": "workspace:*"
     "@redstone-finance/rpc-providers": "workspace:*"
     "@redstone-finance/sdk": "workspace:*"
-    "@redstone-finance/sui-connector": "workspace:*"
     "@redstone-finance/utils": "workspace:*"
     "@typechain/ethers-v5": "npm:^10.2.0"
     "@typechain/hardhat": "npm:^6.1.2"
@@ -9478,18 +9495,16 @@ __metadata:
     "@nomiclabs/hardhat-ethers": "npm:^2.0.6"
     "@nomiclabs/hardhat-etherscan": "npm:^3.1.7"
     "@redstone-finance/chain-configs": "workspace:*"
+    "@redstone-finance/chain-orchestrator": "workspace:*"
     "@redstone-finance/evm-connector": "workspace:*"
     "@redstone-finance/internal-utils": "workspace:*"
     "@redstone-finance/monitoring-manifests": "workspace:*"
-    "@redstone-finance/movement-connector": "workspace:*"
     "@redstone-finance/mqtt5-client": "workspace:*"
     "@redstone-finance/on-chain-relayer": "workspace:*"
     "@redstone-finance/oracles-smartweave-contracts": "workspace:*"
     "@redstone-finance/protocol": "workspace:*"
-    "@redstone-finance/radix-connector": "workspace:*"
     "@redstone-finance/rpc-providers": "workspace:*"
     "@redstone-finance/sdk": "workspace:*"
-    "@redstone-finance/sui-connector": "workspace:*"
     "@redstone-finance/utils": "workspace:*"
     "@typechain/ethers-v5": "npm:^10.2.0"
     "@typechain/hardhat": "npm:^6.1.2"
