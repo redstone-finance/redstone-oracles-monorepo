@@ -20,7 +20,6 @@
     "@nomicfoundation/hardhat-viem": "^2.0.0",
     "@redstone-finance/evm-connector": "workspace:*",
     "@redstone-finance/on-chain-relayer": "workspace:*",
-    "@redstone-finance/oracles-smartweave-contracts": "workspace:*",
     "@redstone-finance/sdk": "workspace:*",
     "erc7412": "^0.2.3",
     "ethers": "^5.7.2",

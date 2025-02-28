@@ -1,6 +1,8 @@
 import type { AnchorProvider } from "@coral-xyz/anchor";
-import { getSignersForDataServiceId } from "@redstone-finance/oracles-smartweave-contracts";
-import { requestRedstonePayload } from "@redstone-finance/sdk";
+import {
+  getPreloadedSignersForDataServiceId,
+  requestRedstonePayload,
+} from "@redstone-finance/sdk";
 
 export interface PriceData {
   feedId: string;
@@ -26,7 +28,7 @@ export const makePayload = async (dataPackagesIds: Array<string>) => {
       dataPackagesIds,
       dataServiceId: DATA_SERVICE_ID,
       uniqueSignersCount: UNIQUE_SIGNER_COUNT,
-      authorizedSigners: getSignersForDataServiceId(DATA_SERVICE_ID),
+      authorizedSigners: getPreloadedSignersForDataServiceId(DATA_SERVICE_ID),
     },
     "bytes"
   );

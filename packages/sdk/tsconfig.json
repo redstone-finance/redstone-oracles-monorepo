@@ -1,12 +1,9 @@
 {
   "extends": "../../tsconfig-common.json",
-  "include": ["**/*", "package.json"],
+  "include": ["**/*", "package.json", "src/registry/initial-state.json"],
   "references": [
     {
       "path": "../protocol/tsconfig.build.json"
-    },
-    {
-      "path": "../oracles-smartweave-contracts/tsconfig.build.json"
     },
     {
       "path": "../utils/tsconfig.build.json"

@@ -1,7 +1,7 @@
-import { getSignersForDataServiceId } from "@redstone-finance/oracles-smartweave-contracts";
 import {
   DataPackagesRequestParams,
   DataPackagesResponseCache,
+  getPreloadedSignersForDataServiceId,
   isConforming,
   isSubsetOf,
 } from "../src";
@@ -13,7 +13,9 @@ describe("DataPackagesResponseCache tests", () => {
     dataServiceId: "redstone-primary-prod",
     dataPackagesIds: ["ETH", "BTC"],
     uniqueSignersCount: 2,
-    authorizedSigners: getSignersForDataServiceId("redstone-primary-prod"),
+    authorizedSigners: getPreloadedSignersForDataServiceId(
+      "redstone-primary-prod"
+    ),
   };
 
   beforeEach(() => {
@@ -62,7 +64,8 @@ describe("isConforming tests", () => {
     dataPackagesIds: ["ETH"],
     uniqueSignersCount: 1,
     ignoreMissingFeed: true,
-    authorizedSigners: getSignersForDataServiceId("redstone-main-demo"),
+    authorizedSigners:
+      getPreloadedSignersForDataServiceId("redstone-main-demo"),
   };
 
   it("should return true if ignoreMissingFeed is true", () => {

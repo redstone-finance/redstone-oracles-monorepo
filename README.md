@@ -21,7 +21,6 @@ You can learn more at https://docs.redstone.finance
 - [evm-connector](packages/evm-connector/) (@redstone-finance/evm-connector)
 - [protocol](packages/protocol/) (@redstone-finance/protocol)
 - [sdk](packages/sdk/) (@redstone-finance/sdk)
-- [oracles-smartweave-contracts](packages/oracles-smartweave-contracts) (@redstone-finance/oracles-smartweave-contracts)
 - [eth-contracts](packages/eth-contracts/) (Implementation of RedStone token with vesting, locking, and disputes
   resolution protocol)
 

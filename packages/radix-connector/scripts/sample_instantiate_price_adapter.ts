@@ -1,4 +1,4 @@
-import { getSignersForDataServiceId } from "@redstone-finance/oracles-smartweave-contracts";
+import { getPreloadedSignersForDataServiceId } from "@redstone-finance/sdk";
 import { PriceAdapterRadixContractDeployer, RadixClient } from "../src";
 import {
   DATA_SERVICE_ID,
@@ -15,7 +15,7 @@ async function instantiate() {
     client,
     await loadAddress(`package`, PRICE_ADAPTER_NAME),
     1,
-    getSignersForDataServiceId(DATA_SERVICE_ID)
+    getPreloadedSignersForDataServiceId(DATA_SERVICE_ID)
   );
 
   const componentId = await connector.getComponentId();

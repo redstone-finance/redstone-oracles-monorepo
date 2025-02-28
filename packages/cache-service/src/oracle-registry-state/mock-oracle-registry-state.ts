@@ -1,4 +1,4 @@
-import { RedstoneOraclesState } from "@redstone-finance/oracles-smartweave-contracts";
+import { RedstoneOraclesState } from "@redstone-finance/sdk";
 
 export const mockOraclesState: RedstoneOraclesState = {
   nodes: {
@@ -36,8 +36,6 @@ export const mockOraclesState: RedstoneOraclesState = {
       dateAdded: "2024-01-01",
     },
   },
-  evolve: null,
-  canEvolve: true,
   dataServices: {
     "mock-data-service": {
       name: "RedStone TWAPs demo",
