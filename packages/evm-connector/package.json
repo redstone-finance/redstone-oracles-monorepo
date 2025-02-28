@@ -49,7 +49,7 @@
     "chai": "^4.3.10",
     "chai-as-promised": "^7.1.1",
     "esbuild": "^0.19.9",
-    "hardhat": "^2.17.2",
+    "hardhat": "^2.22.14",
     "hardhat-gas-reporter": "^1.0.9",
     "http-server": "^14.1.1",
     "msw": "^2.4.10",
