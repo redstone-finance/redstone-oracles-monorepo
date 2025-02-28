@@ -35,7 +35,7 @@
     "@types/node": "^20.14.12",
     "@types/sinon": "^10.0.15",
     "chai": "^4.3.10",
-    "hardhat": "^2.17.2",
+    "hardhat": "^2.22.14",
     "hardhat-gas-reporter": "^1.0.9",
     "sinon": "^18.0.0",
     "solidity-coverage": "^0.8.12",
