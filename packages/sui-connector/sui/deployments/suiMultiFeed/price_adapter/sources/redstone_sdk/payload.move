@@ -63,15 +63,12 @@ public fun process_payload(
     let aggregated_value = calculate_median(
         &mut values.map!(|bytes| from_bytes_to_u256(&bytes)),
     );
-    let new_package_timestamp = package_timestamp(&parsed_payload);
+    let new_package_timestamp = data_packages[0].timestamp();
 
     (aggregated_value, new_package_timestamp)
 }
 
 // === Public-View Functions ===
-public fun package_timestamp(payload: &Payload): u64 {
-    timestamp(&payload.data_packages[0])
-}
 
 public fun extract_values_by_feed_id(payload: &Payload, feed_id: &vector<u8>): vector<vector<u8>> {
     payload
