@@ -1,6 +1,8 @@
 import { hexlify } from "@ethersproject/bytes";
 import { toUtf8Bytes } from "@ethersproject/strings/lib/utf8";
+import { RedstoneLogger } from "@redstone-finance/utils";
 import { arrayify } from "ethers/lib/utils";
+import _ from "lodash";
 import { version } from "../../package.json";
 import {
   convertDataPackagesResponse,
@@ -10,12 +12,17 @@ import {
   requestDataPackages,
 } from "../index";
 
-export type ContractCallPayload = {
-  payload: string;
-  feedId: string;
+export const DEFAULT_COMPONENT_NAME = "data-packages-wrapper";
+
+export type SplitPayloads<T> = {
+  [p: string]: T;
 };
 
-export const DEFAULT_COMPONENT = "data-packages-wrapper";
+type UnsignedMetadataArgs = {
+  withUnsignedMetadata: boolean;
+  metadataTimestamp?: number;
+  componentName?: string;
+};
 
 export class ContractParamsProvider {
   constructor(
@@ -24,16 +31,34 @@ export class ContractParamsProvider {
     private readonly overrideRequestParamsPackagesIds?: string[]
   ) {}
 
+  static copyForFeedId(paramsProvider: ContractParamsProvider, feedId: string) {
+    return new ContractParamsProvider(
+      paramsProvider.requestParams,
+      paramsProvider.cache,
+      [feedId]
+    );
+  }
+
   static hexlifyFeedIds(feedIds: string[]) {
     return feedIds.map((feed) => hexlify(toUtf8Bytes(feed)));
   }
 
-  async getPayloadHex(withPrefix = true): Promise<string> {
-    return (withPrefix ? "0x" : "") + (await this.requestPayload());
+  async getPayloadHex(
+    withPrefix = true,
+    unsignedMetadataArgs?: UnsignedMetadataArgs
+  ): Promise<string> {
+    return (
+      (withPrefix ? "0x" : "") +
+      (await this.requestPayload(unsignedMetadataArgs))
+    );
   }
 
-  async getPayloadData(): Promise<number[]> {
-    return Array.from(arrayify(await this.getPayloadHex(true)));
+  async getPayloadData(
+    unsignedMetadataArgs?: UnsignedMetadataArgs
+  ): Promise<number[]> {
+    return Array.from(
+      arrayify(await this.getPayloadHex(true, unsignedMetadataArgs))
+    );
   }
 
   getHexlifiedFeedIds(): string[] {
@@ -66,18 +91,18 @@ export class ContractParamsProvider {
     return await requestDataPackages(this.requestParams);
   }
 
-  protected async requestPayload(): Promise<string> {
-    return convertDataPackagesResponse(await this.requestDataPackages());
+  protected async requestPayload(unsignedMetadataArgs?: UnsignedMetadataArgs) {
+    return convertDataPackagesResponse(
+      await this.requestDataPackages(),
+      "string",
+      ContractParamsProvider.getUnsignedMetadata(unsignedMetadataArgs)
+    );
   }
 
-  async prepareContractCallPayloads(args: {
-    onFeedPayload: (feedId: string, payload: string) => Promise<void>;
-    onFeedMissing: (feedId: string) => void;
-    metadataTimestamp?: number;
-    component?: string;
-  }) {
-    const { onFeedMissing, onFeedPayload, metadataTimestamp, component } = args;
+  async prepareSplitPayloads(unsignedMetadataArgs?: UnsignedMetadataArgs) {
     const dataPackagesResponse = await this.requestDataPackages();
+
+    const result: SplitPayloads<string | undefined> = {};
 
     for (const feedId of this.getDataFeedIds()) {
       const dataPackages = extractSignedDataPackagesForFeedId(
@@ -86,27 +111,45 @@ export class ContractParamsProvider {
       );
 
       if (!dataPackages.length) {
-        onFeedMissing(feedId);
+        result[feedId] = undefined;
         continue;
       }
 
-      const payload = convertDataPackagesResponse(
+      result[feedId] = convertDataPackagesResponse(
         { [feedId]: dataPackages },
         "string",
-        ContractParamsProvider.getUnsignedMetadata(
-          metadataTimestamp ?? Date.now(),
-          component
-        )
+        ContractParamsProvider.getUnsignedMetadata(unsignedMetadataArgs)
       );
-
-      await onFeedPayload(feedId, payload);
     }
+
+    return result;
   }
 
-  static getUnsignedMetadata(
-    metadataTimestamp: number,
-    component: string = DEFAULT_COMPONENT
+  static extractMissingValues<K>(
+    payloads: SplitPayloads<K | undefined>,
+    logger?: RedstoneLogger
   ) {
-    return `${metadataTimestamp}#${version}#${component}`;
+    const missingFeedIds = _.keys(
+      _.pickBy(payloads, (value: K | undefined) => value === undefined)
+    );
+
+    const filteredPayloads = _.omitBy(
+      payloads,
+      (value) => value === undefined
+    ) as SplitPayloads<K>;
+
+    if (missingFeedIds.length) {
+      logger?.warn(`No data packages found for [${missingFeedIds.toString()}]`);
+    }
+
+    return { missingFeedIds, payloads: filteredPayloads };
+  }
+
+  static getUnsignedMetadata(args?: UnsignedMetadataArgs) {
+    if (!args) {
+      return;
+    }
+
+    return `${args.metadataTimestamp ?? Date.now()}#${version}#${args.componentName ?? DEFAULT_COMPONENT_NAME}`;
   }
 }
