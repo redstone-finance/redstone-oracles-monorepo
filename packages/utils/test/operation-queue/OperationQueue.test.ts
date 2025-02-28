@@ -1,7 +1,6 @@
-import { RedstoneCommon } from "@redstone-finance/utils";
-import { assert } from "chai";
 import sinon from "sinon";
-import { OperationQueue } from "../../src/runner/OperationQueue";
+import { OperationQueue } from "../../src";
+import { sleep } from "../../src/common";
 
 const OP_TIME_MS = 20;
 const WAIT_FOR_OP_MS = OP_TIME_MS + 5;
@@ -17,9 +16,9 @@ describe("OperationQueue tests", () => {
     const operation = makeOperationSpy();
     sut.enqueue("op1", operation);
 
-    await RedstoneCommon.sleep(WAIT_FOR_OP_MS);
+    await sleep(WAIT_FOR_OP_MS);
 
-    assert.isTrue(operation.called);
+    expect(operation.called).toBeTruthy();
   });
 
   it("should replace an existing operation in the queue", async () => {
@@ -31,12 +30,12 @@ describe("OperationQueue tests", () => {
     sut.enqueue("op2", operation2);
     sut.enqueue("op2", operation3);
 
-    await RedstoneCommon.sleep(OP_TIME_MS + WAIT_FOR_OP_MS);
+    await sleep(OP_TIME_MS + WAIT_FOR_OP_MS);
 
-    assert.isTrue(operation1.called);
-    assert.isFalse(operation2.called);
-    assert.isTrue(operation3.called);
-    assert.isTrue(operation1.calledBefore(operation3));
+    expect(operation1.called).toBeTruthy();
+    expect(operation2.called).toBeFalsy();
+    expect(operation3.called).toBeTruthy();
+    expect(operation1.calledBefore(operation3)).toBeTruthy();
   });
 
   it("should not replace an active operation", async () => {
@@ -46,12 +45,12 @@ describe("OperationQueue tests", () => {
     sut.enqueue("op1", operation1);
     const result = sut.enqueue("op1", operation2);
 
-    assert.isFalse(result);
+    expect(result).toBeFalsy();
 
-    await RedstoneCommon.sleep(WAIT_FOR_OP_MS);
+    await sleep(WAIT_FOR_OP_MS);
 
-    assert.isTrue(operation1.called);
-    assert.isFalse(operation2.called);
+    expect(operation1.called).toBeTruthy();
+    expect(operation2.called).toBeFalsy();
   });
 
   it("should process operations in order", async () => {
@@ -61,24 +60,24 @@ describe("OperationQueue tests", () => {
     sut.enqueue("op1", operation1);
     sut.enqueue("op2", operation2);
 
-    await RedstoneCommon.sleep(WAIT_FOR_OP_MS);
+    await sleep(WAIT_FOR_OP_MS);
 
-    assert.isTrue(operation1.calledBefore(operation2));
-    assert.isTrue(operation2.called);
+    expect(operation1.calledBefore(operation2)).toBeTruthy();
+    expect(operation2.called).toBeTruthy();
   });
 
   it("should handle operation errors gracefully", async () => {
     const failingOperation = sinon.fake.rejects(new Error("Test error"));
     sut.enqueue("op1", failingOperation);
 
-    await RedstoneCommon.sleep(WAIT_FOR_OP_MS);
+    await sleep(WAIT_FOR_OP_MS);
 
-    assert(failingOperation.threw);
+    expect(failingOperation.threw).toBeTruthy();
   });
 
   function makeOperationSpy() {
     return sinon.fake(async () => {
-      await RedstoneCommon.sleep(OP_TIME_MS);
+      await sleep(OP_TIME_MS);
     });
   }
 });

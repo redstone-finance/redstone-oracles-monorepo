@@ -1,6 +1,6 @@
 import { Account, Aptos } from "@aptos-labs/ts-sdk";
 import { MovementContractConnector } from "../MovementContractConnector";
-import { MovementOptionsContractUtil } from "../MovementOptionsContractUtil";
+import { MovementTxDeliveryMan } from "../MovementTxDeliveryMan";
 import { TransactionConfig } from "../types";
 import { MovementPriceAdapterContractViewer } from "./MovementPriceAdapterContractViewer";
 import { MovementPriceAdapterContractWriter } from "./MovementPriceAdapterContractWriter";
@@ -12,31 +12,32 @@ export class MovementPricesContractConnector extends MovementContractConnector<M
   constructor(
     client: Aptos,
     args: { packageObjectAddress: string; priceAdapterObjectAddress: string },
-    private readonly account?: Account,
-    private readonly config?: TransactionConfig
+    account?: Account,
+    config?: TransactionConfig
   ) {
     super(client);
 
-    this.adapter = new MovementPricesContractAdapter({
-      writer: this.account
-        ? MovementPriceAdapterContractWriter.createMultiWriter(
-            this.client,
-            this.account,
-            args.packageObjectAddress,
-            args.priceAdapterObjectAddress,
-            new MovementOptionsContractUtil(this.client),
-            this.config
-          )
-        : undefined,
-      viewer: MovementPriceAdapterContractViewer.createMultiReader(
+    const txDeliveryMan = account
+      ? new MovementTxDeliveryMan(client, account, config)
+      : undefined;
+
+    this.adapter = new MovementPricesContractAdapter(
+      MovementPriceAdapterContractViewer.createMultiReader(
         this.client,
         args.packageObjectAddress,
         args.priceAdapterObjectAddress
       ),
-    });
+      txDeliveryMan
+        ? new MovementPriceAdapterContractWriter(
+            txDeliveryMan,
+            args.packageObjectAddress,
+            args.priceAdapterObjectAddress
+          )
+        : undefined
+    );
   }
 
-  override async getAdapter(): Promise<MovementPricesContractAdapter> {
-    return await Promise.resolve(this.adapter);
+  override getAdapter(): Promise<MovementPricesContractAdapter> {
+    return Promise.resolve(this.adapter);
   }
 }
