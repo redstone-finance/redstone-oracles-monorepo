@@ -1,8 +1,6 @@
 import { hexlify } from "ethers/lib/utils";
-import {
-  getMultiSigPublicKey,
-  MULTI_SIG_PK_HEXES,
-} from "./get-multi-sig-address";
+import { MULTI_SIG_PK_HEXES } from "./const";
+import { getMultiSigPublicKey } from "./get-multi-sig-address";
 
 function combineSignatures(pkHexes: string[], signatures: string[]) {
   const multiSigPublicKey = getMultiSigPublicKey(pkHexes);

@@ -297,21 +297,3 @@ fun assert_version(price_adapter: &PriceAdapter): AssertVersion {
 
     AssertVersion {}
 }
-
-/// Migrations
-/*
-const E_CANT_BUMP_VERSION: u64 = 3;
-const E_VERSION_CONSTANT_INCORRECT: u64 = 4;
-
-/// Migrates to `price_adapter` object version 2
-public fun migrate_to_version_2(admin_cap: &AdminCap, price_adapter: &mut PriceAdapter) {
-    // check if we should bump the `price_adapter` version.
-    assert!(price_adapter.version == 1, E_CANT_BUMP_VERSION);
-
-    // sanity check
-    assert!(VERSION == 2, E_VERSION_CONSTANT_INCORRECT);
-
-    // set version to 2
-    price_adapter.set_version(admin_cap, VERSION);
-}
-*/

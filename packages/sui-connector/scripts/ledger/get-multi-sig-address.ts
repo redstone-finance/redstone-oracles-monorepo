@@ -2,11 +2,7 @@ import { toBase64 } from "@mysten/bcs";
 import { Ed25519PublicKey } from "@mysten/sui/keypairs/ed25519";
 import { MultiSigPublicKey } from "@mysten/sui/multisig";
 import { hexlify } from "ethers/lib/utils";
-
-const THRESHOLD_FACTOR = 2 / 3;
-export const MULTI_SIG_PK_HEXES = [
-  "0x480d1e346aed775cfc97446ab43f87670b3499e5a0a9e222d84d4d4e3aa8ca22",
-];
+import { MULTI_SIG_PK_HEXES, THRESHOLD_FACTOR } from "./const";
 
 export function getMultiSigPublicKey(pkHexes: string[]) {
   const pks = pkHexes.map((pkHex) =>
