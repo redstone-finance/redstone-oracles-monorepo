@@ -1,10 +1,8 @@
 import { DataPackagesWrapper } from "@redstone-finance/evm-connector";
 import {
   DataServiceIds,
-  getSignersForDataServiceId,
-} from "@redstone-finance/oracles-smartweave-contracts";
-import {
   getDataPackagesTimestamp,
+  getPreloadedSignersForDataServiceId,
   requestDataPackages,
 } from "@redstone-finance/sdk";
 import { Adapter } from "erc7412";
@@ -33,7 +31,7 @@ export class RedstoneAdapter implements Adapter {
       dataServiceId,
       uniqueSignersCount,
       maxTimestampDeviationMS: MAX_TIMESTAMP_DEVIATION,
-      authorizedSigners: getSignersForDataServiceId(
+      authorizedSigners: getPreloadedSignersForDataServiceId(
         dataServiceId as DataServiceIds
       ),
     });

@@ -1,7 +1,7 @@
 import {
   DataServiceIds,
-  getSignersForDataServiceId,
-} from "@redstone-finance/oracles-smartweave-contracts";
+  getPreloadedSignersForDataServiceId,
+} from "@redstone-finance/sdk";
 import { RedstoneCommon } from "@redstone-finance/utils";
 import { DEFAULT_GAS_BUDGET, PriceAdapterConfig } from "../src";
 
@@ -12,7 +12,7 @@ export function makeSuiDeployConfig(
     signerCountThreshold: 3,
     maxTimestampDelayMs: RedstoneCommon.minToMs(3),
     maxTimestampAheadMs: RedstoneCommon.minToMs(1),
-    signers: getSignersForDataServiceId(dataServiceId),
+    signers: getPreloadedSignersForDataServiceId(dataServiceId),
     trustedUpdaters: [
       "0xbd288ccf0f92df315f7b212e5481f4f2b469f6c61c0d58a16e616eb2e0341f9c",
       "0xfcb82d9138f1aed43fd1259c94fe20890c2f48297dc673d354efd9f9572f0319",

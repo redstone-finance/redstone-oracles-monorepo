@@ -9,9 +9,6 @@
       "path": "../utils/tsconfig.build.json"
     },
     {
-      "path": "../oracles-smartweave-contracts/tsconfig.build.json"
-    },
-    {
       "path": "../chain-configs/tsconfig.build.json"
     }
   ]

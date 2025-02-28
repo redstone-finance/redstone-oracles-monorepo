@@ -1,8 +1,8 @@
 import {
   DataServiceIds,
-  getSignersForDataServiceId,
-} from "@redstone-finance/oracles-smartweave-contracts";
-import { requestRedstonePayload } from "../../src";
+  getPreloadedSignersForDataServiceId,
+  requestRedstonePayload,
+} from "../../src";
 
 const DATA_SERVICE_ID = "redstone-primary-prod";
 const DATA_FEEDS = ["BTC", "ETH"];
@@ -15,7 +15,7 @@ requestRedstonePayload(
     dataPackagesIds: DATA_FEEDS,
     dataServiceId: DATA_SERVICE_ID,
     uniqueSignersCount: UNIQUE_SIGNER_COUNT,
-    authorizedSigners: getSignersForDataServiceId(
+    authorizedSigners: getPreloadedSignersForDataServiceId(
       DATA_SERVICE_ID as DataServiceIds
     ),
   },

@@ -45,7 +45,6 @@
     "@redstone-finance/internal-utils": "workspace:*",
     "@redstone-finance/mqtt5-client": "workspace:*",
     "@redstone-finance/on-chain-relayer-common": "workspace:*",
-    "@redstone-finance/oracles-smartweave-contracts": "workspace:*",
     "@redstone-finance/protocol": "workspace:*",
     "@redstone-finance/rpc-providers": "workspace:*",
     "@redstone-finance/sdk": "workspace:*",

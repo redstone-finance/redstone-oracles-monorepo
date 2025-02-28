@@ -37,7 +37,6 @@
     "@ledgerhq/hw-transport-node-hid": "^6.29.5",
     "@mysten/ledgerjs-hw-app-sui": "^0.4.2",
     "@redstone-finance/chain-configs": "workspace:*",
-    "@redstone-finance/oracles-smartweave-contracts": "workspace:*",
     "@types/chai": "^4.3.4",
     "chai": "^4.3.10",
     "secp256k1": "^5.0.1",

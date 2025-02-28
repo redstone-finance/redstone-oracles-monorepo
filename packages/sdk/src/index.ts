@@ -4,6 +4,7 @@ import {
   SignedDataPackage,
   SignedDataPackagePlainObj,
 } from "@redstone-finance/protocol";
+import { default as redstoneOraclesInitialState } from "./registry/initial-state.json";
 import {
   DataPackagesRequestParams,
   DataPackagesResponse,
@@ -82,3 +83,4 @@ export * from "./request-data-packages";
 export * from "./simple-relayer/IPriceManagerContractAdapter";
 export * from "./simple-relayer/IPriceRoundsFeedContractAdapter";
 export * from "./simple-relayer/start-simple-relayer";
+export { redstoneOraclesInitialState };
