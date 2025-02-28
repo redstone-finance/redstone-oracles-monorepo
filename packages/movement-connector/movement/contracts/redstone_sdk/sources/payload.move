@@ -74,7 +74,7 @@ module redstone_sdk::payload {
             };
 
             let aggregated_value = calculate_median(&mut values_u256);
-            let new_package_timestamp = package_timestamp(&parsed_payload);
+            let new_package_timestamp = timestamp(vector::borrow(&data_packages, 0));
 
             vector::push_back(&mut aggregated_values, aggregated_value);
             vector::push_back(&mut timestamps, new_package_timestamp);
@@ -85,10 +85,6 @@ module redstone_sdk::payload {
     }
 
     // === Public-View Functions ===
-
-    public fun package_timestamp(payload: &Payload): u64 {
-        timestamp(vector::borrow(&payload.data_packages, 0))
-    }
 
     public fun extract_values_by_feed_id(
         payload: &Payload, feed_id: &vector<u8>
