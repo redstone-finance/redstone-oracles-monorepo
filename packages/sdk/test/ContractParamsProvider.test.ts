@@ -89,21 +89,14 @@ describe("ContractParamsProvider tests", () => {
     const overrideIds = ["ETH", "BTC", "missing0", "missing1"];
     sut = new ContractParamsProvider(mockRequestParams, undefined, overrideIds);
 
-    const missing: string[] = [];
     const expectedMissing = ["missing0", "missing1"];
-
-    const notMissing: string[] = [];
     const expectedNotMissing = ["ETH", "BTC"];
 
-    await sut.prepareContractCallPayloads({
-      onFeedMissing: (feedId) => missing.push(feedId),
-      onFeedPayload: (feedId, _) => {
-        notMissing.push(feedId);
-        return Promise.resolve();
-      },
-    });
+    const splitPayloads = await sut.prepareSplitPayloads();
+    const { payloads, missingFeedIds } =
+      ContractParamsProvider.extractMissingValues(splitPayloads);
 
-    expect(missing).toStrictEqual(expectedMissing);
-    expect(notMissing).toStrictEqual(expectedNotMissing);
+    expect(missingFeedIds).toStrictEqual(expectedMissing);
+    expect(Object.keys(payloads)).toStrictEqual(expectedNotMissing);
   });
 });
