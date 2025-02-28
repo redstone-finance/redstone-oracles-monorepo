@@ -16,17 +16,14 @@ export class SuiPricesContractReader {
   ) {}
 
   static createMultiReader(client: SuiClient, priceAdapterObjectId: string) {
-    const clients =
-      "__instances" in client ? (client.__instances as SuiClient[]) : [client];
+    return MultiExecutor.createForSubInstances(
+      client,
 
-    return MultiExecutor.create(
-      clients.map(
-        (client) =>
-          new SuiPricesContractReader(
-            new SuiReader(client),
-            priceAdapterObjectId
-          )
-      ),
+      (client) =>
+        new SuiPricesContractReader(
+          new SuiReader(client),
+          priceAdapterObjectId
+        ),
       {},
       {
         ...MultiExecutor.DEFAULT_CONFIG,

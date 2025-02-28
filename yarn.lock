@@ -9694,11 +9694,13 @@ __metadata:
   resolution: "@redstone-finance/utils@workspace:packages/utils"
   dependencies:
     "@types/lodash": "npm:^4.14.195"
+    "@types/sinon": "npm:^10.0.15"
     axios: "npm:^1.7.9"
     consola: "npm:^2.15.3"
     decimal.js: "npm:^10.4.3"
     ethers: "npm:^5.7.2"
     lodash: "npm:^4.17.21"
+    sinon: "npm:^18.0.0"
     zod: "npm:^3.22.4"
   languageName: unknown
   linkType: soft
@@ -13078,21 +13080,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/sinon@npm:*":
+"@types/sinon@npm:*, @types/sinon@npm:^10.0.15":
   version: 10.0.20
   resolution: "@types/sinon@npm:10.0.20"
   dependencies:
     "@types/sinonjs__fake-timers": "npm:*"
   checksum: 10c0/8c523a3ac2bf5bd48a481cb340b3db0176b65d1190a9dfac41044ad47ae7e2c3f6ad40a564dc831c5adf3b4ab4d983cc4993b4053217afe11b3985875b9f3fee
-  languageName: node
-  linkType: hard
-
-"@types/sinon@npm:^10.0.15":
-  version: 10.0.16
-  resolution: "@types/sinon@npm:10.0.16"
-  dependencies:
-    "@types/sinonjs__fake-timers": "npm:*"
-  checksum: 10c0/c2d291615b0839e1b0d8eaab406f1e75f768550eb441850560312a96650f1ca443b4c8336d083f25cfa4aa18b7930f6e055cb17b08262e2c0810daf4ffbc202e
   languageName: node
   linkType: hard
 

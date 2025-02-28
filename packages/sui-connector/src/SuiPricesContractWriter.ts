@@ -62,14 +62,18 @@ export class SuiPricesContractWriter {
       this.deliveryMan.keypair
     );
 
-    await paramsProvider.prepareContractCallPayloads({
-      onFeedPayload: (feedId, payload) => {
-        this.writePrice(tx, feedId, payload);
-        return Promise.resolve();
-      },
-      onFeedMissing: (feedId) =>
-        this.logger.warn(`No data packages found for "${feedId}"`),
+    const unsignedMetadataArgs = {
+      withUnsignedMetadata: true,
       metadataTimestamp,
+    };
+
+    const { payloads } = ContractParamsProvider.extractMissingValues(
+      await paramsProvider.prepareSplitPayloads(unsignedMetadataArgs),
+      this.logger
+    );
+
+    Object.entries(payloads).forEach(([feedId, payload]) => {
+      this.writePrice(tx, feedId, payload);
     });
 
     return tx;
