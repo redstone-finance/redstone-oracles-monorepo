@@ -25,6 +25,7 @@ const EMPTY_GELATO_ENV: OnChainRelayerEnv = {
   oevResolveAuctionTimeout: 2000,
   oevVerifyGasPriceDisabled: false,
   waitForAllGatewaysTimeMs: 5000,
+  includeAdditionalFeedsForGasOptimization: true,
 };
 
 export async function fetchManifestAndSetUpEnv(env: IterationArgsProviderEnv) {
