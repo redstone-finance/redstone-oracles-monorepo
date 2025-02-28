@@ -1,11 +1,6 @@
-import {
-  Aptos,
-  InputGenerateTransactionOptions,
-  Network,
-} from "@aptos-labs/ts-sdk";
+import { Aptos, Network } from "@aptos-labs/ts-sdk";
 import { makeAptos } from "../scripts/utils";
-import { TRANSACTION_DEFAULT_CONFIG } from "../src";
-import { DEFAULT_BROADCAST_BUCKETS } from "../src/consts";
+import { DEFAULT_BROADCAST_BUCKETS, TRANSACTION_DEFAULT_CONFIG } from "../src";
 import { MovementOptionsContractUtil } from "../src/MovementOptionsContractUtil";
 import { NETWORK, REST_NODE_LOCALNET_URL } from "./helpers";
 
@@ -21,17 +16,12 @@ describe("MovementOptionContractUtil", () => {
 
   describe("prepareTransactionOptions", () => {
     it("should prepare transaction option for default settings with required parameters", async () => {
-      const adapter = new MovementOptionsContractUtil(aptos);
-
-      const options: InputGenerateTransactionOptions | undefined =
-        await adapter.prepareTransactionOptions(
+      const options =
+        await MovementOptionsContractUtil.prepareTransactionOptions(
+          aptos,
           TRANSACTION_DEFAULT_CONFIG.writePriceOctasTxGasBudget
         );
 
-      expect(options).toBeDefined();
-      if (!options) {
-        return; // above expect will throw.
-      }
       expect(options.gasUnitPrice).toBeGreaterThanOrEqual(
         TEST_DEFAULT_LOCALNET_MOVE_PRICE
       );
@@ -47,37 +37,30 @@ describe("MovementOptionContractUtil", () => {
 
     describe("prepareTransactionOptions", () => {
       it("should prepare transaction option for default settings skipping accountSequanceNumber and expireTimestamp parameters", async () => {
-        const adapter = new MovementOptionsContractUtil(aptos);
+        const options =
+          await MovementOptionsContractUtil.prepareTransactionOptions(
+            aptos,
+            TRANSACTION_DEFAULT_CONFIG.writePriceOctasTxGasBudget
+          );
 
-        const options = await adapter.prepareTransactionOptions(
-          TRANSACTION_DEFAULT_CONFIG.writePriceOctasTxGasBudget
-        );
-
-        expect(options).toBeDefined();
-        if (!options) {
-          return; // above expect will throw.
-        }
         expect(options.accountSequenceNumber).toBeUndefined();
         expect(options.expireTimestamp).toBeUndefined();
       });
     });
 
     it("should prepare transaction options for specific settings for multiple iterations", async () => {
-      const adapter = new MovementOptionsContractUtil(aptos);
-
       for (
         let iteration = 0;
         iteration < DEFAULT_BROADCAST_BUCKETS.length;
         iteration++
       ) {
-        const options = await adapter.prepareTransactionOptions(
-          TEST_DEFAULT_LOCALNET_GAS_BUDGET,
-          iteration
-        );
-        expect(options).toBeDefined();
-        if (!options) {
-          return; // above expect will throw.
-        }
+        const options =
+          await MovementOptionsContractUtil.prepareTransactionOptions(
+            aptos,
+            TEST_DEFAULT_LOCALNET_GAS_BUDGET,
+            iteration
+          );
+
         expect(options.accountSequenceNumber).toBeUndefined();
         expect(options.expireTimestamp).toBeUndefined();
         expect(options.gasUnitPrice).toBeGreaterThanOrEqual(
@@ -93,13 +76,14 @@ describe("MovementOptionContractUtil", () => {
       }
     });
 
-    it("should fail to prepare transaction options for specific settings for iteration exhausting prioritization buckets size", async () => {
-      const adapter = new MovementOptionsContractUtil(aptos);
-      const options = await adapter.prepareTransactionOptions(
-        TEST_DEFAULT_LOCALNET_GAS_BUDGET,
-        DEFAULT_BROADCAST_BUCKETS.length
-      );
-      expect(options).toBeUndefined();
+    test("should fail to prepare transaction options for specific settings for iteration exhausting prioritization buckets size", async () => {
+      await expect(() =>
+        MovementOptionsContractUtil.prepareTransactionOptions(
+          aptos,
+          TEST_DEFAULT_LOCALNET_GAS_BUDGET,
+          DEFAULT_BROADCAST_BUCKETS.length
+        )
+      ).rejects.toThrowError("Failed to compute gas price");
     });
   });
 });

@@ -1,148 +1,57 @@
+import { MoveFunctionId, MoveVector } from "@aptos-labs/ts-sdk";
+import { SplitPayloads } from "@redstone-finance/sdk";
 import {
-  Account,
-  Aptos,
-  InputGenerateTransactionPayloadData,
-  MoveFunctionId,
-  MoveVector,
-} from "@aptos-labs/ts-sdk";
-import {
-  loggerFactory,
-  MultiExecutor,
-  RedstoneCommon,
-} from "@redstone-finance/utils";
-import {
-  ALL_EXECUTIONS_TIMEOUT_MS,
-  SINGLE_EXECUTION_TIMEOUT_MS,
-} from "../AptosClientBuilder";
-import { TRANSACTION_DEFAULT_CONFIG } from "../config";
-import { MovementOptionsContractUtil } from "../MovementOptionsContractUtil";
-import {
-  IMovementPriceAdapterContractWriter,
-  TransactionConfig,
-} from "../types";
+  MovementTransactionData,
+  MovementTxDeliveryMan,
+} from "../MovementTxDeliveryMan";
 import { makeFeedIdBytes } from "../utils";
 
-export class MovementPriceAdapterContractWriter
-  implements IMovementPriceAdapterContractWriter
-{
-  protected readonly logger = loggerFactory("movement-write-contract-adapter");
-
+export class MovementPriceAdapterContractWriter {
   constructor(
-    private readonly client: Aptos,
-    private readonly account: Account,
+    private readonly txDeliveryMan: MovementTxDeliveryMan,
     private readonly priceAdapterPackageAddress: string,
-    private readonly priceAdapterObjectAddress: string,
-    private readonly optionsProvider: MovementOptionsContractUtil,
-    private readonly config: TransactionConfig = TRANSACTION_DEFAULT_CONFIG
+    private readonly priceAdapterObjectAddress: string
   ) {}
 
-  static createMultiWriter(
-    client: Aptos,
-    account: Account,
-    priceAdapterPackageAddress: string,
-    priceAdapterObjectAddress: string,
-    optionsProvider: MovementOptionsContractUtil,
-    config: TransactionConfig = TRANSACTION_DEFAULT_CONFIG
-  ) {
-    const clients =
-      "__instances" in client ? (client.__instances as Aptos[]) : [client];
-
-    return MultiExecutor.create(
-      clients.map(
-        (client) =>
-          new MovementPriceAdapterContractWriter(
-            client,
-            account,
-            priceAdapterPackageAddress,
-            priceAdapterObjectAddress,
-            optionsProvider,
-            config
-          )
-      ),
-      {},
-      {
-        ...MultiExecutor.DEFAULT_CONFIG,
-        defaultMode: MultiExecutor.ExecutionMode.FALLBACK,
-        singleExecutionTimeoutMs: SINGLE_EXECUTION_TIMEOUT_MS,
-        allExecutionsTimeoutMs: ALL_EXECUTIONS_TIMEOUT_MS,
-      }
-    );
-  }
-
   async writePrices(
-    payloads: { payload: string; feedId: string }[]
-  ): Promise<string> {
-    let hash;
-
-    for (const { payload, feedId } of payloads) {
-      try {
-        hash = await this.retrySendTransaction({
-          function:
-            `${this.priceAdapterPackageAddress.toString()}::price_adapter::write_price` as MoveFunctionId,
-          functionArguments: [
-            this.priceAdapterObjectAddress.toString(),
-            makeFeedId(feedId),
-            makePayload(payload),
-          ],
-        });
-      } catch (e) {
-        this.logger.error(
-          `Write price for feed: ${feedId} failed with message: ${RedstoneCommon.stringifyError(e)}`
+    payloads: SplitPayloads<string>,
+    deferredDataRequest?: (feedId: string) => Promise<string>
+  ) {
+    const data = Object.entries(payloads).map(async ([feedId, payload]) => {
+      const data: MovementTransactionData =
+        await this.makeWritePriceTransactionData(
+          feedId,
+          Promise.resolve(payload)
         );
+
+      if (deferredDataRequest) {
+        data.deferredDataProvider = () =>
+          this.makeWritePriceTransactionData(
+            feedId,
+            deferredDataRequest(feedId)
+          );
       }
-    }
 
-    if (!hash) {
-      throw new Error("No transaction committed with success.");
-    }
-
-    return hash;
-  }
-
-  private async retrySendTransaction(
-    data: InputGenerateTransactionPayloadData
-  ) {
-    for (let i = 0; i < this.config.maxTxSendAttempts; i++) {
-      try {
-        return await this.trySendTransaction(data, i);
-      } catch {
-        this.logger.info(`Retrying ${i + 1} time to send transaction.`);
-      }
-    }
-    throw new Error(`${this.config.maxTxSendAttempts} attempts unsuccessful.`);
-  }
-
-  private async trySendTransaction(
-    data: InputGenerateTransactionPayloadData,
-    iteration: number
-  ) {
-    const options = await this.optionsProvider.prepareTransactionOptions(
-      this.config.writePriceOctasTxGasBudget,
-      iteration
-    );
-
-    const transaction = await this.client.transaction.build.simple({
-      sender: this.account.accountAddress,
-      data,
-      options,
+      return data;
     });
 
-    const pendingTransaction =
-      await this.client.transaction.signAndSubmitTransaction({
-        transaction,
-        signer: this.account,
-      });
+    return await this.txDeliveryMan.sendBatchTransactions(data);
+  }
 
-    const candidateTransaction =
-      await this.client.transaction.waitForTransaction({
-        transactionHash: pendingTransaction.hash,
-      });
-
-    if (!candidateTransaction.success) {
-      throw new Error(`Transaction ${candidateTransaction.hash} failed.`);
-    }
-
-    return candidateTransaction.hash;
+  private async makeWritePriceTransactionData(
+    feedId: string,
+    payload: Promise<string>
+  ) {
+    const fun = `${this.priceAdapterPackageAddress.toString()}::price_adapter::write_price`;
+    return {
+      identifier: `Write ${feedId} price: ${fun}`,
+      function: fun as MoveFunctionId,
+      functionArguments: [
+        this.priceAdapterObjectAddress.toString(),
+        makeFeedId(feedId),
+        makePayload(await payload),
+      ],
+    };
   }
 }
 

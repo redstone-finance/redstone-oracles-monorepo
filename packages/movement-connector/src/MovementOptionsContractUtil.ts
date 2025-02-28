@@ -4,44 +4,46 @@ import { DEFAULT_BROADCAST_BUCKETS } from "./consts";
 import { octasToMove } from "./utils";
 
 export class MovementOptionsContractUtil {
-  protected readonly logger = loggerFactory("movement-options-contract-util");
+  protected static readonly logger = loggerFactory(
+    "movement-options-contract-util"
+  );
 
-  constructor(private readonly client: Aptos) {}
-
-  async prepareTransactionOptions(
+  static async prepareTransactionOptions(
+    client: Aptos,
     writePriceOctasTxGasBudget: number,
     iteration: number = 0,
-    accountSequenceNumber?: number
-  ): Promise<InputGenerateTransactionOptions | undefined> {
-    const gasUnitPrice = await this.computeGasPrice(iteration);
+    accountSequenceNumber?: bigint
+  ) {
+    const gasUnitPrice = await this.computeGasPrice(client, iteration);
     if (!gasUnitPrice) {
-      return;
+      throw new Error("Failed to compute gas price");
     }
     const maxGasAmount = Math.floor(writePriceOctasTxGasBudget / gasUnitPrice);
-    this.logger.info(
-      `Max Gas Amount: ${maxGasAmount} units, Max Gas Price: ${octasToMove(maxGasAmount * gasUnitPrice)} Move, Gas Unit Price: [ ${gasUnitPrice} Octas, ${octasToMove(gasUnitPrice)} Move ]`
+    this.logger.debug(
+      `Max Gas Amount: ${maxGasAmount} units, Max Gas Price: ${octasToMove(maxGasAmount * gasUnitPrice)} Move, Gas Unit Price: ${gasUnitPrice} Octas`
     );
 
     return {
       maxGasAmount,
       gasUnitPrice,
       accountSequenceNumber,
-    };
+    } as InputGenerateTransactionOptions;
   }
 
-  private async computeGasPrice(
+  private static async computeGasPrice(
+    client: Aptos,
     iteration: number
   ): Promise<number | undefined> {
     const date = Date.now();
-    const { gas_estimate: gasStandardPrice } =
-      await this.client.getGasPriceEstimation();
-    this.logger.info(
-      `Reference gas standard price: ${gasStandardPrice} Octas fetched in ${Date.now() - date} [ms]`
+    const { gas_estimate: gasPriceEstimation } =
+      await client.getGasPriceEstimation();
+    this.logger.debug(
+      `Reference gas standard price: ${gasPriceEstimation} Octas fetched in ${Date.now() - date} [ms]`
     );
 
     return iteration === 0
-      ? gasStandardPrice
-      : findMatchInPriorityBuckets(gasStandardPrice, iteration);
+      ? gasPriceEstimation
+      : findMatchInPriorityBuckets(gasPriceEstimation, iteration);
   }
 }
 
