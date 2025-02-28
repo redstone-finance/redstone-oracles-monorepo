@@ -1,4 +1,4 @@
-import { getSignersForDataServiceId } from "@redstone-finance/oracles-smartweave-contracts";
+import { getPreloadedSignersForDataServiceId } from "@redstone-finance/sdk";
 import { ethers } from "ethers";
 import { WrapperBuilder } from "../src/index";
 
@@ -20,7 +20,9 @@ const builder = new WrapperBuilder(contract);
 const contractWrapped = builder.usingDataService({
   dataPackagesIds: ["pufETH/ETH"],
   dataServiceId: "redstone-primary-prod",
-  authorizedSigners: getSignersForDataServiceId("redstone-primary-prod"),
+  authorizedSigners: getPreloadedSignersForDataServiceId(
+    "redstone-primary-prod"
+  ),
 });
 
 async function populateTx() {

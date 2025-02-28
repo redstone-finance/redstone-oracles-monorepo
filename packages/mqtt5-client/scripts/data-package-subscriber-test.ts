@@ -1,4 +1,4 @@
-import { getSignersForDataServiceId } from "@redstone-finance/oracles-smartweave-contracts";
+import { getPreloadedSignersForDataServiceId } from "@redstone-finance/sdk";
 import { DataPackageSubscriber, Mqtt5Client, MultiPubSubClient } from "../src";
 import { calculateTopicCountPerConnection } from "../src/topics";
 
@@ -41,7 +41,9 @@ async function main() {
     minimalOffChainSignersCount: 3,
     waitMsForOtherSignersAfterMinimalSignersCountSatisfied: 100,
     ignoreMissingFeeds: true,
-    authorizedSigners: getSignersForDataServiceId("redstone-primary-prod"),
+    authorizedSigners: getPreloadedSignersForDataServiceId(
+      "redstone-primary-prod"
+    ),
   });
 
   await dataPackageSubscriber.subscribe(() => {});
