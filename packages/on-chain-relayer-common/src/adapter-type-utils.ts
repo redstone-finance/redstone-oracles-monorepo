@@ -33,8 +33,17 @@ export function isNonEvmConfig(config: {
   return isNonEvmAdapterType(config.adapterContractType);
 }
 
+export function getChainType(adapterType?: AdapterType) {
+  return isNonEvmAdapterType(adapterType)
+    ? getNonEvmNetworkName(adapterType)
+    : undefined;
+}
+
 export function getNonEvmNetworkName(adapterType: NonEvmAdapterType) {
-  return adapterType.replace(`-${MULTI_FEED}`, "");
+  return adapterType.replace(`-${MULTI_FEED}`, "") as
+    | "radix"
+    | "sui"
+    | "movement";
 }
 
 export function getRpcUrlsPathComponent(
