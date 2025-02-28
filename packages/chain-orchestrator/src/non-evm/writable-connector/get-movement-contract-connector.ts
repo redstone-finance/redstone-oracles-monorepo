@@ -4,9 +4,12 @@ import {
   configFromOptionals,
   makeAptosAccount,
 } from "@redstone-finance/movement-connector";
-import { RelayerConfig } from "../config/RelayerConfig";
 
-export const getMovementContractConnector = (relayerConfig: RelayerConfig) => {
+import { PartialRelayerConfig } from "./partial-relayer-config";
+
+export const getMovementContractConnector = (
+  relayerConfig: PartialRelayerConfig
+) => {
   const {
     privateKey,
     rpcUrls,

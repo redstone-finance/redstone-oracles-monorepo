@@ -2,13 +2,13 @@ import {
   getChainConfigByChainId,
   getLocalChainConfigs,
 } from "@redstone-finance/chain-configs";
+import { getChainTypeFromAdapterType } from "@redstone-finance/chain-orchestrator";
 import { describe, test } from "mocha";
 import {
   readClassicManifests,
   readMultiFeedManifests,
   readNonEvmManifests,
 } from "../../scripts/read-manifests";
-import { getChainTypeFromAdapterType } from "../../src";
 
 describe("Chain config presence", () => {
   test("There should be a chain config for each chain used in relayer manifests", () => {
