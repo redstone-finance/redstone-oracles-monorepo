@@ -13,6 +13,7 @@
   "dataServiceId": "redstone-primary-prod",
   "priceFeeds": {
     "LBTC": {},
+    "LBTC_FUNDAMENTAL": {},
     "ETH": {},
     "BTC": {}
   }

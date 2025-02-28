@@ -46,7 +46,7 @@ const main = async (accountId = 0) => {
   ) as string;
   console.log(tx);
   const signed = await sui.signTransaction(getDerivationPath(accountId), tx);
-  console.log("Signed Transaction:");
+  console.log("Signature to combine:");
 
   console.log(
     toSerializedSignature({
