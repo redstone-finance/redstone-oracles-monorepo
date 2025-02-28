@@ -63,4 +63,5 @@ export type OnChainRelayerEnv = {
   mqttFallbackMaxDelayBetweenPublishesMs?: number;
   mqttFallbackCheckIntervalMs?: number;
   authorizedSigners?: string[];
+  includeAdditionalFeedsForGasOptimization: boolean;
 };

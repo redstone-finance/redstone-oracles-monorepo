@@ -199,6 +199,10 @@ export const readManifestAndEnv = () => {
       "MQTT_FALLBACK_CHECK_INTERVAL_MS",
       z.number().optional()
     ),
+    includeAdditionalFeedsForGasOptimization: RedstoneCommon.getFromEnv(
+      "INCLUDE_ADDITIONAL_FEEDS_FOR_GAS_OPTIMIZATION",
+      z.boolean().default(true)
+    ),
   };
 
   return { manifest, env };

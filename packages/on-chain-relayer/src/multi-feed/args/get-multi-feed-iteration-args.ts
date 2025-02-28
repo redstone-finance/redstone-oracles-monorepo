@@ -56,11 +56,15 @@ function addExtraFeedsAndMessagesToUpdateParams(
       [...(iterationArgs.args as MultiFeedUpdatePricesArgs).dataFeedsToUpdate],
     ],
   });
-  const message = addExtraFeedsToUpdateParams(
-    relayerConfig,
-    iterationArgs.args as MultiFeedUpdatePricesArgs
-  );
-  messages.push({ message });
+
+  if (relayerConfig.includeAdditionalFeedsForGasOptimization) {
+    const message = addExtraFeedsToUpdateParams(
+      relayerConfig,
+      iterationArgs.args as MultiFeedUpdatePricesArgs
+    );
+    messages.push({ message });
+  }
+
   messages.push({
     message: "Data feeds to be updated:",
     args: [
