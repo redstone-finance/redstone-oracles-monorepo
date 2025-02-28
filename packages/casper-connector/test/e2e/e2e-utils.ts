@@ -1,5 +1,7 @@
-import { getSignersForDataServiceId } from "@redstone-finance/oracles-smartweave-contracts";
-import { ContractParamsProvider } from "@redstone-finance/sdk";
+import {
+  ContractParamsProvider,
+  getPreloadedSignersForDataServiceId,
+} from "@redstone-finance/sdk";
 import { BigNumber, BigNumberish } from "ethers";
 import fs from "fs";
 import path from "node:path";
@@ -19,7 +21,7 @@ export function makeContractParamsProvider(
     dataServiceId: DATA_SERVICE_ID,
     uniqueSignersCount: uniqueSignerCount,
     dataPackagesIds: dataFeeds,
-    authorizedSigners: getSignersForDataServiceId(DATA_SERVICE_ID),
+    authorizedSigners: getPreloadedSignersForDataServiceId(DATA_SERVICE_ID),
   });
 }
 
