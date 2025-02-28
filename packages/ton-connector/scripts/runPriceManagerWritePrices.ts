@@ -1,5 +1,7 @@
-import { getSignersForDataServiceId } from "@redstone-finance/oracles-smartweave-contracts";
-import { ContractParamsProvider } from "@redstone-finance/sdk";
+import {
+  ContractParamsProvider,
+  getPreloadedSignersForDataServiceId,
+} from "@redstone-finance/sdk";
 import { NetworkProvider } from "@ton/blueprint";
 import { BlueprintTonNetwork, TonPriceManager } from "../src";
 import { config } from "../src/config";
@@ -17,7 +19,9 @@ export async function run(provider: NetworkProvider) {
     dataServiceId: "redstone-avalanche-prod",
     uniqueSignersCount: 4,
     dataPackagesIds: ["BTC", "ETH", "USDT", "AVAX"],
-    authorizedSigners: getSignersForDataServiceId("redstone-avalanche-prod"),
+    authorizedSigners: getPreloadedSignersForDataServiceId(
+      "redstone-avalanche-prod"
+    ),
   });
 
   console.log(await contract.writePricesFromPayloadToContract(paramsProvider));
