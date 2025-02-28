@@ -2,8 +2,10 @@
 //       therefore shall be run sequentially with `-runInBand` flag.
 
 import { Aptos, Network } from "@aptos-labs/ts-sdk";
-import { getSignersForDataServiceId } from "@redstone-finance/oracles-smartweave-contracts";
-import { ContractParamsProvider } from "@redstone-finance/sdk";
+import {
+  ContractParamsProvider,
+  getPreloadedSignersForDataServiceId,
+} from "@redstone-finance/sdk";
 import { RedstoneCommon } from "@redstone-finance/utils";
 import "dotenv/config";
 import { PRICE_ADAPTER } from "../scripts/contract-name-enum";
@@ -88,7 +90,7 @@ describe("MovementPricesContractAdapter", () => {
         dataServiceId: DATA_SERVICE_ID,
         dataPackagesIds: DATA_PACKAGES_IDS,
         uniqueSignersCount: SIGNERS_COUNT,
-        authorizedSigners: getSignersForDataServiceId(DATA_SERVICE_ID),
+        authorizedSigners: getPreloadedSignersForDataServiceId(DATA_SERVICE_ID),
       });
     });
 
@@ -111,7 +113,7 @@ describe("MovementPricesContractAdapter", () => {
         dataServiceId: DATA_SERVICE_ID,
         dataPackagesIds: DATA_PACKAGES_IDS,
         uniqueSignersCount: SIGNERS_COUNT,
-        authorizedSigners: getSignersForDataServiceId(DATA_SERVICE_ID),
+        authorizedSigners: getPreloadedSignersForDataServiceId(DATA_SERVICE_ID),
       });
     });
 

@@ -1,5 +1,8 @@
-import { getSignersForDataServiceId } from "@redstone-finance/oracles-smartweave-contracts";
-import { ContractParamsProvider, sampleRun } from "@redstone-finance/sdk";
+import {
+  ContractParamsProvider,
+  getPreloadedSignersForDataServiceId,
+  sampleRun,
+} from "@redstone-finance/sdk";
 import { makeAptosAccount, MovementPricesContractConnector } from "../src";
 import { MovementPriceFeedContractConnector } from "../src/price_feed/MovementPriceFeedContractConnector";
 import { PRICE_ADAPTER, PRICE_FEED } from "./contract-name-enum";
@@ -11,7 +14,9 @@ async function main() {
     dataServiceId: "redstone-primary-prod",
     uniqueSignersCount: 3,
     dataPackagesIds: ["ETH", "BTC"],
-    authorizedSigners: getSignersForDataServiceId("redstone-primary-prod"),
+    authorizedSigners: getPreloadedSignersForDataServiceId(
+      "redstone-primary-prod"
+    ),
   });
   const aptos = makeAptos();
   const account = makeAptosAccount();

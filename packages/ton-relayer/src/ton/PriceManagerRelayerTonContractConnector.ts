@@ -1,6 +1,6 @@
-import { getSignersForDataServiceId } from "@redstone-finance/oracles-smartweave-contracts";
 import {
   ContractParamsProvider,
+  getPreloadedSignersForDataServiceId,
   IContractConnector,
   IPriceManagerContractAdapter,
   IPricesContractAdapter,
@@ -29,7 +29,7 @@ export class PriceManagerRelayerTonContractConnector
       dataServiceId: DATA_SERVICE_ID,
       uniqueSignersCount: UNIQUE_SIGNER_COUNT,
       dataPackagesIds: DATA_FEEDS,
-      authorizedSigners: getSignersForDataServiceId(DATA_SERVICE_ID),
+      authorizedSigners: getPreloadedSignersForDataServiceId(DATA_SERVICE_ID),
     });
   }
 

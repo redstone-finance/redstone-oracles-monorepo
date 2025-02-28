@@ -1,9 +1,9 @@
-import { getSignersForDataServiceId } from "@redstone-finance/oracles-smartweave-contracts";
 import {
   ContractParamsProvider,
   IContractConnector,
   IPriceManagerContractAdapter,
   IPriceRoundsFeedContractAdapter,
+  getPreloadedSignersForDataServiceId,
 } from "@redstone-finance/sdk";
 import {
   PriceRoundsAdapterStarknetContractConnector,
@@ -28,7 +28,7 @@ export class ContractConnectorFactory {
         dataServiceId: DATA_SERVICE_ID,
         uniqueSignersCount: UNIQUE_SIGNER_COUNT,
         dataPackagesIds: DATA_FEEDS,
-        authorizedSigners: getSignersForDataServiceId(DATA_SERVICE_ID),
+        authorizedSigners: getPreloadedSignersForDataServiceId(DATA_SERVICE_ID),
       }),
       config.maxEthFee
     );
