@@ -6713,6 +6713,25 @@
       "denomination": "USD",
       "rateFeed": false
     },
+    "stBTC_POR": {
+      "source": ["stbtc-indexer-fetcher"],
+      "deviationCheck": {
+        "deviationWithRecentValues": {
+          "maxPercent": 10,
+          "maxDelayMilliseconds": 6000000
+        }
+      },
+      "valueCapConfig": {
+        "upper": {
+          "value": 1
+        },
+        "lower": {
+          "value": 0.995
+        }
+      },
+      "denomination": "BTC",
+      "rateFeed": true
+    },
     "LBTC_FUNDAMENTAL": {
       "source": ["lbtc-indexer-fetcher"],
       "deviationCheck": {
@@ -6726,7 +6745,7 @@
           "value": 1
         },
         "lower": {
-          "value": 0.995
+          "value": 1
         }
       },
       "denomination": "BTC",

@@ -2239,6 +2239,25 @@
       "denomination": "USD",
       "rateFeed": true
     },
+    "stBTC_POR": {
+      "source": ["stbtc-indexer-fetcher"],
+      "deviationCheck": {
+        "deviationWithRecentValues": {
+          "maxPercent": 10,
+          "maxDelayMilliseconds": 6000000
+        }
+      },
+      "valueCapConfig": {
+        "upper": {
+          "value": 1
+        },
+        "lower": {
+          "value": 1
+        }
+      },
+      "denomination": "BTC",
+      "rateFeed": true
+    },
     "vIP_FUNDAMENTAL": {
       "source": ["story-evm-fetcher-verio"],
       "denomination": "IP",
