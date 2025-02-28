@@ -15,9 +15,6 @@
     },
     {
       "path": "../evm-connector/tsconfig.build.json"
-    },
-    {
-      "path": "../oracles-smartweave-contracts/tsconfig.build.json"
     }
   ]
 }
