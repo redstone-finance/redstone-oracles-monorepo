@@ -576,6 +576,34 @@
       ],
       "denomination": "USD",
       "rateFeed": false
+    },
+    "BRETT": {
+      "source": [
+        "aerodrome-cl-base-weth",
+        "bitget-usdt",
+        "bybit-usdt",
+        "gate-usdt",
+        "kucoin-usdt",
+        "lbank-usdt",
+        "uniswap-v3-base-weth-10000",
+        "xt"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "DEGEN": {
+      "source": [
+        "bingx-usdt",
+        "bitget-usdt",
+        "bitmart-usdt",
+        "bybit-usdt",
+        "gate-usdt",
+        "kucoin-usdt",
+        "lbank-usdt",
+        "okx-usdt"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
     }
   },
   "multiPointPackages": {
@@ -637,7 +665,9 @@
       "XRP",
       "LTC",
       "FDUSD",
-      "BNB"
+      "BNB",
+      "BRETT",
+      "DEGEN"
     ]
   }
 }
