@@ -653,6 +653,10 @@ export const chainTokenMap: ChainTokenMap = {
       address: "0x35E5dB674D8e93a03d814FA0ADa70731efe8a4b9",
       decimals: 18,
     },
+    BRETT: {
+      address: "0x532f27101965dd16442E59d40670FaF5eBB142E4",
+      decimals: 18,
+    },
   },
   optimism: {
     USDC: {
