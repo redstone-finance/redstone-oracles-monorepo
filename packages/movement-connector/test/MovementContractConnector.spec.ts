@@ -8,7 +8,8 @@ import {
 } from "@aptos-labs/ts-sdk";
 import { RedstoneCommon } from "@redstone-finance/utils";
 import "dotenv/config";
-import { PRICE_ADAPTER, readObjectAddress } from "../scripts/deploy-utils";
+import { PRICE_ADAPTER } from "../scripts/contract-name-enum";
+import { readObjectAddress } from "../scripts/deploy-utils";
 import { makeAptos } from "../scripts/utils";
 import {
   MovementPricesContractAdapter,

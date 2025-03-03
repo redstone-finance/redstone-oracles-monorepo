@@ -6,9 +6,10 @@ import {
   SimpleTransaction,
 } from "@aptos-labs/ts-sdk";
 import fs from "fs";
-import { getEnvContractName, readAddress } from "../deploy-utils";
+import { getTransactionJsonPath, readAddress } from "../deploy-utils";
+import { getEnvContractName } from "../get-env";
 import { MovementPackageTxBuilder } from "../package";
-import { MULTI_SIG_ADDRESS, TRANSACTION_JSON_PATH } from "./const";
+import { MULTI_SIG_ADDRESS, MULTI_SIG_UPGRADE_TX_ID } from "./const";
 import { executeAsLedger } from "./execute-as-ledger";
 
 async function executeTransaction(
@@ -43,7 +44,11 @@ async function executeTransaction(
 
 async function main() {
   await executeAsLedger((aptos, signerAddress) =>
-    executeTransaction(aptos, signerAddress, TRANSACTION_JSON_PATH)
+    executeTransaction(
+      aptos,
+      signerAddress,
+      getTransactionJsonPath(MULTI_SIG_UPGRADE_TX_ID)
+    )
   );
 }
 
