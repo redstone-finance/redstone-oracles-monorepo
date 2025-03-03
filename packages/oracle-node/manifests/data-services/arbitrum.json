@@ -774,6 +774,20 @@
       "denomination": "USD",
       "rateFeed": false
     },
+    "MNT": {
+      "source": [
+        "bingx-usdt",
+        "bitmart-usdt",
+        "bybit-btc",
+        "bybit-usdt",
+        "gate-usdt",
+        "kraken-usd",
+        "kucoin-usdt",
+        "uniswap-v3-ethereum-weth-3000"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
     "crvUSD": {
       "source": [
         "curve-arbitrumone-frax",
@@ -1170,7 +1184,8 @@
       "SATS",
       "AERO",
       "BRETT",
-      "DEGEN"
+      "DEGEN",
+      "MNT"
     ]
   }
 }
