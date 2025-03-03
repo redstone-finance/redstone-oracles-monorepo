@@ -8,10 +8,15 @@ import {
 } from "@aptos-labs/ts-sdk";
 import {
   loggerFactory,
+  MultiExecutor,
   OperationQueue,
   RedstoneCommon,
 } from "@redstone-finance/utils";
 import _ from "lodash";
+import {
+  ALL_EXECUTIONS_TIMEOUT_MS,
+  SINGLE_EXECUTION_TIMEOUT_MS,
+} from "./AptosClientBuilder";
 import { TRANSACTION_DEFAULT_CONFIG } from "./config";
 import { MovementOptionsContractUtil } from "./MovementOptionsContractUtil";
 import { TransactionConfig } from "./types";
@@ -27,6 +32,8 @@ export type MovementTransactionData = InputGenerateTransactionPayloadData & {
   identifier: string;
   deferredDataProvider?: DeferredDataProvider;
 };
+
+const BLOCK_NUMBER_EXECUTION_TIMEOUT_MS = 2_000;
 
 export class MovementTxDeliveryMan {
   private readonly logger = loggerFactory("movement-tx-delivery-man");
@@ -44,6 +51,29 @@ export class MovementTxDeliveryMan {
     private readonly account: Account,
     private readonly config: TransactionConfig = TRANSACTION_DEFAULT_CONFIG
   ) {}
+
+  static createMultiTxDeliveryMan(
+    client: Aptos,
+    account: Account,
+    config: TransactionConfig = TRANSACTION_DEFAULT_CONFIG
+  ) {
+    return MultiExecutor.createForSubInstances(
+      client,
+      (client) => new MovementTxDeliveryMan(client, account, config),
+      {
+        getSequenceNumber: new MultiExecutor.CeilMedianConsensusExecutor(
+          MultiExecutor.DEFAULT_CONFIG.consensusQuorumRatio,
+          BLOCK_NUMBER_EXECUTION_TIMEOUT_MS
+        ),
+      },
+      {
+        ...MultiExecutor.DEFAULT_CONFIG,
+        defaultMode: MultiExecutor.ExecutionMode.FALLBACK,
+        singleExecutionTimeoutMs: SINGLE_EXECUTION_TIMEOUT_MS,
+        allExecutionsTimeoutMs: ALL_EXECUTIONS_TIMEOUT_MS,
+      }
+    );
+  }
 
   async sendBatchTransactions(data: Promise<MovementTransactionData>[]) {
     let hash = undefined;
