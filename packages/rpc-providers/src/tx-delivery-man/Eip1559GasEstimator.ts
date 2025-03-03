@@ -17,32 +17,32 @@ export type Eip1559Fee = {
 export class Eip1559GasEstimator implements GasEstimator<Eip1559Fee> {
   constructor(readonly opts: TxDeliveryOptsValidated) {}
 
-  // if we succed to fetch real priority fee let's replace it as default
-  private lastUsedPriorityFee = 1_000_000_000;
+  private maxPriorityFeePerGas = 1_000_000_000;
 
   /** this is reasonable (ether.js is not reasonable) fallback if gasOracle is not set */
   async getFees(provider: providers.JsonRpcProvider): Promise<Eip1559Fee> {
     const lastBlock = await provider.getBlock("latest");
-    const maxPriorityFeePerGas = this.useDefaultFor0OrUpdateDefault(
-      await this.estimatePriorityFee(provider)
-    );
+    await this.refreshLastUsedPriorityFee(provider);
 
     const baseFee = Math.round(unsafeBnToNumber(lastBlock.baseFeePerGas!));
-    const maxFeePerGas = baseFee + maxPriorityFeePerGas;
+    const maxFeePerGas = baseFee + this.maxPriorityFeePerGas;
 
     const fee: Eip1559Fee = {
       maxFeePerGas,
-      maxPriorityFeePerGas,
+      maxPriorityFeePerGas: this.maxPriorityFeePerGas,
     };
 
     return fee;
   }
 
-  private useDefaultFor0OrUpdateDefault(maxPriorityFeePerGas: number) {
-    if (maxPriorityFeePerGas !== 0) {
-      this.lastUsedPriorityFee = maxPriorityFeePerGas;
+  private async refreshLastUsedPriorityFee(
+    provider: providers.JsonRpcProvider
+  ) {
+    const newPriorityFee = await this.estimatePriorityFee(provider);
+
+    if (newPriorityFee !== 0) {
+      this.maxPriorityFeePerGas = newPriorityFee;
     }
-    return this.lastUsedPriorityFee;
   }
 
   /**
