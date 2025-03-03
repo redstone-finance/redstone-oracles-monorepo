@@ -1,18 +1,14 @@
 import { AccountAddress, Aptos } from "@aptos-labs/ts-sdk";
 import fs from "fs";
 import {
-  getEnvContractName,
-  getEnvNetwork,
+  getTransactionJsonPath,
   prepareDepAddresses,
   readAddress,
   setUpDeploy,
 } from "../deploy-utils";
+import { getEnvContractName, getEnvNetwork } from "../get-env";
 import { MovementPackageTxBuilder } from "../package";
-import {
-  LEDGER_ACCOUNT_ID,
-  MULTI_SIG_ADDRESS,
-  TRANSACTION_JSON_PATH,
-} from "./const";
+import { LEDGER_ACCOUNT_ID, MULTI_SIG_ADDRESS } from "./const";
 import { executeAsLedger } from "./execute-as-ledger";
 import { MultiSigTxBuilder } from "./MultiSigTxBuilder";
 
@@ -34,7 +30,7 @@ async function proposeUpgrade(
   );
 
   fs.writeFileSync(
-    TRANSACTION_JSON_PATH,
+    getTransactionJsonPath(),
     JSON.stringify({
       metadataBytes,
       bytecode,
@@ -55,7 +51,13 @@ async function proposeUpgrade(
 }
 
 async function main() {
-  await executeAsLedger(proposeUpgrade, LEDGER_ACCOUNT_ID);
+  const response = await executeAsLedger(proposeUpgrade, LEDGER_ACCOUNT_ID);
+
+  console.log(
+    `Transaction ${response.hash} created;\n` +
+      `Visit the explorer, find the '0x1::multisig_account::CreateTransaction' event's 'sequence_number'\n` +
+      `and set 'TX_ID' value in consts.ts file and in the\n${getTransactionJsonPath()} file.`
+  );
 }
 
 void main();

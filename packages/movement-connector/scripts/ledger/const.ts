@@ -1,5 +1,3 @@
-import path from "path";
-
 export const LEDGER_ACCOUNT_ID = 0;
 // Addresses here, not public keys - use `yarn ledger-utils` to derive the current one
 
@@ -10,10 +8,6 @@ export const SIGNER_ADDRESSES = [
 export const SIGNER_COUNT_THRESHOLD_FACTOR = 2 / 3;
 
 export const MULTI_SIG_ADDRESS =
-  "0x2d3e67253deebe8c13f583be2363b88a6fdf579882ceb144e04ff3c33ae76b76";
+  "0xd8a7ccae3ac968e19c7c9668149daa6e7e84b82a6438d34a3944a5a5568fef4d";
 
-export const TRANSACTION_JSON_PATH = path.join(
-  __dirname,
-  "..",
-  "transaction.json"
-);
+export const MULTI_SIG_UPGRADE_TX_ID = 1;

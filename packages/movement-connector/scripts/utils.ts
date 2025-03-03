@@ -25,7 +25,7 @@ export function makeAptos(
     network,
     fullnode:
       rpcUrl ??
-      RedstoneCommon.getFromEnv("REST_URL", z.string().url().optional()) ??
+      RedstoneCommon.getFromEnv("RPC_URL", z.string().url().optional()) ??
       DEFAULT_TESTNET_RPC_URL,
     faucet: faucetUrl ?? DEFAULT_TESTNET_FAUCET_URL,
   });
@@ -78,6 +78,8 @@ export async function handleTxAsLedger(
   });
 
   console.log(result);
+
+  return result;
 }
 
 export async function promptForConfirmation() {

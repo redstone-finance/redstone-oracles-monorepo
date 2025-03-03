@@ -13,7 +13,10 @@ export async function executeAsLedger(
   const aptosLedger = await makeAptosLedger();
   const aptos = makeAptos();
   const data = await getLedgerData(aptosLedger, accountId);
+  await aptos.getAccountInfo({
+    accountAddress: AccountAddress.from(data.address),
+  });
   const tx = await txCreator(aptos, AccountAddress.from(data.address));
 
-  await handleTxAsLedger(aptos, aptosLedger, tx, accountId);
+  return await handleTxAsLedger(aptos, aptosLedger, tx, accountId);
 }

@@ -1,11 +1,7 @@
 import { Account, Aptos, Network } from "@aptos-labs/ts-sdk";
 import { loggerFactory, RedstoneCommon } from "@redstone-finance/utils";
-import {
-  deploy,
-  PRICE_ADAPTER,
-  readDepAddresses,
-  REDSTONE_SDK,
-} from "../scripts/deploy-utils";
+import { PRICE_ADAPTER, REDSTONE_SDK } from "../scripts/contract-name-enum";
+import { deploy, prepareDepAddresses } from "../scripts/deploy-utils";
 import { makeAptos } from "../scripts/utils";
 import { makeAptosAccount, OCTAS_PER_MOVE } from "../src";
 
@@ -64,13 +60,19 @@ export class TestHelper {
     this.isPrepared = true;
     await this.fundAccount();
     await RedstoneCommon.sleep(1000);
-    await deploy(this.client, this.account, REDSTONE_SDK, {}, NETWORK);
+    await deploy(
+      this.client,
+      this.account,
+      REDSTONE_SDK,
+      prepareDepAddresses(REDSTONE_SDK, NETWORK),
+      NETWORK
+    );
     await RedstoneCommon.sleep(1000);
     await deploy(
       this.client,
       this.account,
       PRICE_ADAPTER,
-      readDepAddresses([REDSTONE_SDK], NETWORK),
+      prepareDepAddresses(PRICE_ADAPTER, NETWORK),
       NETWORK
     );
   }

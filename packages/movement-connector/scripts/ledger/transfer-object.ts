@@ -1,6 +1,7 @@
 import { Account, AccountAddress, Aptos } from "@aptos-labs/ts-sdk";
 import { makeAptosAccount } from "../../src";
-import { getEnvContractName, readAddress } from "../deploy-utils";
+import { readAddress } from "../deploy-utils";
+import { getEnvContractName } from "../get-env";
 import { MovementPackageTxBuilder } from "../package";
 import { handleTx, makeAptos, promptForConfirmation } from "../utils";
 import { MULTI_SIG_ADDRESS } from "./const";

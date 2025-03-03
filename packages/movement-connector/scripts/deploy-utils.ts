@@ -5,30 +5,23 @@ import {
   createObjectAddress,
   HexInput,
 } from "@aptos-labs/ts-sdk";
-import { RedstoneCommon } from "@redstone-finance/utils";
 import { execSync } from "child_process";
 import "dotenv/config";
 import fs from "fs";
 import { EOL } from "os";
 import path from "path";
-import { z } from "zod";
 import {
-  MovementNetworkSchema,
-  movementNetworkSchemaToAptosNetwork,
-} from "../src";
+  ContractName,
+  PRICE_ADAPTER,
+  PRICE_FEED,
+  REDSTONE_SDK,
+} from "./contract-name-enum";
+import { getEnvContractName, getEnvDeployDir, getEnvNetwork } from "./get-env";
+import { MULTI_SIG_ADDRESS } from "./ledger/const";
 import { MovementPackageTxBuilder } from "./package";
 import { handleTx, objectSeed } from "./utils";
 
-export const OUTPUT_BUILD_DIR = "./movement/build/";
-export const PRICE_ADAPTER = "price_adapter";
-export const REDSTONE_SDK = "redstone_sdk";
-export const PRICE_FEED = "price_feed";
-export const ContractNameEnum = z.enum([
-  REDSTONE_SDK,
-  PRICE_ADAPTER,
-  PRICE_FEED,
-]);
-export type ContractName = z.infer<typeof ContractNameEnum>;
+export const OUTPUT_BUILD_DIR = "./build/";
 
 type NamedAddresses = { [p: string]: AccountAddress | undefined };
 
@@ -65,20 +58,18 @@ export function getPackageBytesToPublish(moduleFile: string) {
 
 export function getJsonBuildFile(
   contractName: string,
+  deployDir: string = getEnvDeployDir(),
   outputBuildDir = OUTPUT_BUILD_DIR
 ) {
-  return path.join(outputBuildDir, `${contractName}.json`);
+  return path.join(deployDir, outputBuildDir, `${contractName}.json`);
 }
 
 export function getJsonAddressesFile(
   contractName: string,
   networkName: string,
-  outputBuildDir = "./movement/deployments/"
+  deployDir = getEnvDeployDir()
 ) {
-  return path.join(
-    outputBuildDir,
-    `${networkName}-${contractName}-addresses.json`
-  );
+  return path.join(deployDir, `${networkName}-${contractName}-addresses.json`);
 }
 
 export function readObjectAddress(
@@ -95,15 +86,6 @@ export function readObjectAddress(
       ? AccountAddress.fromString(content.objectAddress)
       : undefined,
   };
-}
-
-export function getEnvNetwork() {
-  return RedstoneCommon.getFromEnv(
-    "NETWORK",
-    MovementNetworkSchema.optional().transform((networkName) =>
-      movementNetworkSchemaToAptosNetwork(networkName)
-    )
-  );
 }
 
 export async function objectAddressForDeployment(
@@ -126,7 +108,8 @@ export async function setUpDeploy(
   accountAddress: AccountAddress,
   contractName: string,
   namedAddresses: NamedAddresses,
-  currentObjectAddress?: AccountAddress
+  currentObjectAddress?: AccountAddress,
+  deployDir = getEnvDeployDir()
 ) {
   const builder = new MovementPackageTxBuilder(aptos);
   const contractAddress =
@@ -136,14 +119,11 @@ export async function setUpDeploy(
     );
 
   console.log(`Compiling code for ${contractAddress.toString()}`);
-  execSync(`mkdir -p ${OUTPUT_BUILD_DIR}`, {
-    stdio: ["inherit", "inherit", "inherit"],
-  });
   namedAddresses[contractName] = contractAddress;
   namedAddresses["redstone_price_adapter"] = namedAddresses[PRICE_ADAPTER];
   compileCodeForDeployment(contractName, namedAddresses);
   const { metadataBytes, bytecode } = getPackageBytesToPublish(
-    getJsonBuildFile(contractName)
+    getJsonBuildFile(contractName, deployDir)
   );
 
   return {
@@ -157,13 +137,17 @@ export async function setUpDeploy(
 function compileCodeForDeployment(
   contractName: string,
   namedAddresses: NamedAddresses,
+  deployDir = getEnvDeployDir(),
   outputBuildDir = OUTPUT_BUILD_DIR
 ) {
   const namedAddressesParam = Object.entries(namedAddresses)
     .filter(([_, value]) => !!value)
     .map(([key, value]) => `${key}=${value!.toString()}`)
     .join(",");
-  const cmd = `movement move build-publish-payload --package-dir ./movement/contracts/${contractName} --named-addresses ${namedAddressesParam} --json-output-file ${getJsonBuildFile(contractName, outputBuildDir)} --assume-yes`;
+  execSync(`mkdir -p ${path.join(deployDir, outputBuildDir)}`, {
+    stdio: ["inherit", "inherit", "inherit"],
+  });
+  const cmd = `movement move build-publish-payload --package-dir ${deployDir}/${contractName} --named-addresses ${namedAddressesParam} --json-output-file ${getJsonBuildFile(contractName, deployDir, outputBuildDir)} --assume-yes`;
   console.log(cmd);
   execSync(cmd, { stdio: ["inherit", "inherit", "inherit"] });
 }
@@ -173,14 +157,17 @@ export async function deploy(
   account: Account,
   contractName: string,
   namedAddresses: NamedAddresses = {},
-  networkName = getEnvNetwork()
+  networkName = getEnvNetwork(),
+  deployDir = getEnvDeployDir()
 ) {
   const { builder, contractAddress, metadataBytes, bytecode } =
     await setUpDeploy(
       aptos,
       account.accountAddress,
       contractName,
-      namedAddresses
+      namedAddresses,
+      undefined,
+      deployDir
     );
 
   console.log(`Doing actions as account: ${account.accountAddress.toString()}`);
@@ -235,6 +222,14 @@ export function prepareDepAddresses(
   }
 }
 
-export function getEnvContractName() {
-  return RedstoneCommon.getFromEnv("CONTRACT_NAME", ContractNameEnum);
-}
+export const getTransactionJsonPath = (
+  txId?: number,
+  contractName = getEnvContractName(),
+  network = getEnvNetwork()
+) =>
+  path.join(
+    __dirname,
+    "..",
+    getEnvDeployDir(),
+    `${network}-${contractName}-${MULTI_SIG_ADDRESS}-upgrade-${txId}.json`
+  );
