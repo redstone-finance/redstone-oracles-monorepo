@@ -1,4 +1,4 @@
-import { SuiClient } from "@mysten/sui/client";
+import { PaginatedTransactionResponse, SuiClient } from "@mysten/sui/client";
 import { RedstoneCommon } from "@redstone-finance/utils";
 
 export class SuiReader {
@@ -72,31 +72,51 @@ export class SuiReader {
     objectId: string,
     checkpointNumber: number
   ) {
-    const transactions = await this.client.queryTransactionBlocks({
-      filter: {
-        InputObject: objectId,
-      },
-      options: {
-        showObjectChanges: true,
-      },
-    });
+    let cursor = undefined;
 
-    if (!transactions.data.length) {
-      return;
+    do {
+      const transactions = await this.client.queryTransactionBlocks({
+        filter: {
+          ChangedObject: objectId,
+        },
+        options: {
+          showObjectChanges: true,
+        },
+        cursor,
+      });
+
+      const result = SuiReader.checkPage(
+        transactions,
+        checkpointNumber,
+        objectId
+      );
+
+      if (result) {
+        return result;
+      }
+
+      cursor = transactions.nextCursor;
+    } while (cursor);
+
+    return undefined;
+  }
+
+  static checkPage(
+    transactions: PaginatedTransactionResponse,
+    checkpointNumber: number,
+    objectId: string
+  ) {
+    for (const tx of transactions.data) {
+      if (Number(tx.checkpoint) <= checkpointNumber) {
+        const objectChange = tx.objectChanges?.find(
+          (change) => "objectId" in change && change.objectId === objectId
+        );
+        if (objectChange !== undefined) {
+          return Number(objectChange.version);
+        }
+      }
     }
 
-    const targetTx = transactions.data.find(
-      (tx) => Number(tx.checkpoint) <= checkpointNumber
-    );
-
-    if (!targetTx) {
-      return;
-    }
-
-    const objectChange = targetTx.objectChanges?.find(
-      (change) => "objectId" in change && change.objectId === objectId
-    );
-
-    return objectChange ? Number(objectChange.version) : undefined;
+    return undefined;
   }
 }
