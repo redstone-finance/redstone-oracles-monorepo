@@ -19,7 +19,12 @@ export class AptosClientBuilder {
     return MultiExecutor.create(
       clients,
       {
-        signAndSubmitTransaction: MultiExecutor.ExecutionMode.RACE,
+        transaction: {
+          signAndSubmitTransaction: MultiExecutor.ExecutionMode.RACE,
+          waitForTransaction: MultiExecutor.ExecutionMode.RACE,
+        },
+        getAccountInfo: MultiExecutor.ExecutionMode.AGREEMENT,
+        getAccountAPTAmount: MultiExecutor.ExecutionMode.AGREEMENT,
       },
       { ...MultiExecutor.DEFAULT_CONFIG, ...config }
     );

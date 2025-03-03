@@ -18,7 +18,7 @@ export class MovementPricesContractConnector extends MovementContractConnector<M
     super(client);
 
     const txDeliveryMan = account
-      ? new MovementTxDeliveryMan(client, account, config)
+      ? MovementTxDeliveryMan.createMultiTxDeliveryMan(client, account, config)
       : undefined;
 
     this.adapter = new MovementPricesContractAdapter(
