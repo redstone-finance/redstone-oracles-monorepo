@@ -9,19 +9,36 @@ import {
 import { Executor } from "./Executor";
 import { FallbackExecutor } from "./FallbackExecutor";
 import { RaceExecutor } from "./RaceExecutor";
-import { ExecutionMode, MethodConfig, MultiExecutorConfig } from "./create";
+import {
+  ExecutionMode,
+  MultiExecutorConfig,
+  NestedMethodConfig,
+} from "./create";
 
 export class MultiExecutorFactory<T extends object> {
   private logger = loggerFactory("multi-executor-proxy");
 
   constructor(
     private instances: T[],
-    private methodConfig: MethodConfig<T>,
+    private methodConfig: NestedMethodConfig<T>,
     private config: MultiExecutorConfig
   ) {}
 
   private getMethodMode(methodName: keyof T) {
-    return this.methodConfig[methodName] ?? this.config.defaultMode;
+    const mode = this.methodConfig[methodName];
+    if (mode instanceof Executor) {
+      return mode;
+    }
+    if (typeof mode === "string") {
+      return mode as ExecutionMode;
+    }
+    if (mode === undefined) {
+      return this.config.defaultMode;
+    }
+
+    throw new Error(
+      `Unexpected NestedMethodConfig for function ${methodName.toString()}`
+    );
   }
 
   private getExecutor(mode: ExecutionMode | Executor): Executor {
@@ -69,7 +86,7 @@ export class MultiExecutorFactory<T extends object> {
         if (typeof method !== "function") {
           return MultiExecutor.create(
             that.instances.map((instance) => instance[key] as object),
-            that.methodConfig,
+            that.methodConfig[key] ?? {},
             that.config
           );
         }

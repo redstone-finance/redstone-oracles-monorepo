@@ -9,8 +9,8 @@ export enum ExecutionMode {
   AGREEMENT = "agreement",
 }
 
-export type MethodConfig<T> = {
-  [K in keyof T]?: ExecutionMode | Executor;
+export type NestedMethodConfig<T> = {
+  [K in keyof T]?: NestedMethodConfig<T[K]> | ExecutionMode | Executor;
 };
 
 export type MultiExecutorConfig = {
@@ -29,7 +29,7 @@ export const DEFAULT_CONFIG: MultiExecutorConfig = {
 
 export function create<T extends object>(
   instances: T[],
-  methodConfig: MethodConfig<T> = {},
+  methodConfig: NestedMethodConfig<T> = {},
   config: MultiExecutorConfig = DEFAULT_CONFIG
 ): T {
   if (!instances.length) {
@@ -46,7 +46,7 @@ export function create<T extends object>(
 export function createForSubInstances<T extends object, U extends object>(
   subject: T,
   callback: (arg: T) => U,
-  methodConfig: MethodConfig<U> = {},
+  methodConfig: NestedMethodConfig<U> = {},
   config: MultiExecutorConfig = DEFAULT_CONFIG
 ) {
   const instances =
