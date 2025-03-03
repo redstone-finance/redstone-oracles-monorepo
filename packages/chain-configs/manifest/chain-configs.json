@@ -301,8 +301,8 @@
       "chainId": 11155111,
       "currencySymbol": "ETH",
       "publicRpcUrls": [
-        "https://1rpc.io/sepolia",
         "https://ethereum-sepolia-rpc.publicnode.com",
+        "https://1rpc.io/sepolia",
         "https://rpc-sepolia.rockx.com"
       ],
       "etherScanApi": "https://api-sepolia.etherscan.io",
