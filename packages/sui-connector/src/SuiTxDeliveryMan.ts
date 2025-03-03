@@ -20,16 +20,26 @@ export class SuiTxDeliveryMan {
     private executor?: ParallelTransactionExecutor
   ) {}
 
+  async tryExecuteTransaction(tx: Transaction) {
+    const executor = this.getExecutor();
+    try {
+      return await executor.executeTransaction(tx, {
+        showEffects: true,
+        showBalanceChanges: true,
+        showInput: true,
+      });
+    } catch (e) {
+      await executor.resetCache();
+      throw e;
+    }
+  }
+
   async sendTransaction(
     tx: Transaction,
     repeatedTransactionCreator?: () => Promise<Transaction | undefined>
   ): Promise<string> {
     const date = Date.now();
-    const { digest, data } = await this.getExecutor().executeTransaction(tx, {
-      showEffects: true,
-      showBalanceChanges: true,
-      showInput: true,
-    });
+    const { digest, data } = await this.tryExecuteTransaction(tx);
 
     const { status, success } = SuiTxDeliveryMan.getSuccess(data);
     const cost = SuiTxDeliveryMan.getCost(data);
