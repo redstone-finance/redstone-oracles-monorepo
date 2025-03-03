@@ -6,6 +6,7 @@ import {
 import { DataPackagesResponse } from "@redstone-finance/sdk";
 import { loggerFactory, RedstoneCommon } from "@redstone-finance/utils";
 import axios from "axios";
+import { randomUUID } from "crypto";
 import { BigNumber, providers, Signer, Transaction } from "ethers";
 import {
   defaultAbiCoder,
@@ -60,13 +61,20 @@ const runOevAuction = async (
 
   const chainIdHex = `0x${chainId.toString(16)}`;
   const body = JSON.stringify({
-    adapter: adapterContractAddress,
-    updatePayload: txDeliveryCalldata,
-    signature: await signer.signMessage(
-      `${chainIdHex}:${adapterContractAddress}:${txDeliveryCalldata}`
-    ),
-    earlyReturn: true,
-    chainId: chainIdHex,
+    jsonrpc: "2.0",
+    id: randomUUID(),
+    method: "atlas_redstoneAuction",
+    params: [
+      {
+        adapter: adapterContractAddress,
+        updatePayload: txDeliveryCalldata,
+        signature: await signer.signMessage(
+          `${chainIdHex}:${adapterContractAddress}:${txDeliveryCalldata}`
+        ),
+        earlyReturn: true,
+        chainId: chainIdHex,
+      },
+    ],
   });
   try {
     const response = await axios.post<string[]>(oevAuctionUrl, body, {
