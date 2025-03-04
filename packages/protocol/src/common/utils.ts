@@ -103,5 +103,18 @@ export function useDefaultIfUndefined<T>(
   value: T | undefined,
   defaultValue: T
 ): T {
-  return value === undefined ? defaultValue : value;
+  return value ?? defaultValue;
 }
+
+// the concat utility from ethers 6 returns hex string instead of byte array, so we copied ethers 5 version instead
+export const concat = (items: Uint8Array[]): Uint8Array => {
+  const length = items.reduce((acc, item) => acc + item.length, 0);
+  const result = new Uint8Array(length);
+
+  items.reduce((offset, item) => {
+    result.set(item, offset);
+    return offset + item.length;
+  }, 0);
+
+  return result;
+};
