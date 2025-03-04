@@ -29,7 +29,7 @@ export class SuiTxDeliveryMan {
         showInput: true,
       });
     } catch (e) {
-      await executor.resetCache();
+      this.initialize();
       throw e;
     }
   }
@@ -70,14 +70,18 @@ export class SuiTxDeliveryMan {
       return this.executor;
     }
 
+    this.initialize();
+
+    return this.executor!;
+  }
+
+  private initialize() {
     this.executor = new ParallelTransactionExecutor({
       client: this.client,
       signer: this.keypair,
       initialCoinBalance: SPLIT_COIN_INITIAL_BALANCE,
       maxPoolSize: MAX_PARALLEL_TRANSACTION_COUNT,
     });
-
-    return this.executor;
   }
 
   static getSuccess(response: SuiTransactionBlockResponse) {
