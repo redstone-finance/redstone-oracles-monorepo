@@ -2,8 +2,8 @@ import {
   fetchChainConfigs,
   fetchParsedRpcUrlsFromSsmByChainId,
   getChainConfigByChainId,
+  type Env,
 } from "@redstone-finance/chain-configs";
-import { MonitoringEnv } from "@redstone-finance/monitoring-manifests";
 import { MegaProviderBuilder } from "@redstone-finance/rpc-providers";
 import { RedstoneCommon } from "@redstone-finance/utils";
 import { providers } from "ethers";
@@ -15,7 +15,7 @@ const DEFAULT_CONFIG = {
 
 export const getProvider = async (
   chainId: number | string,
-  env: MonitoringEnv,
+  env: Env,
   config = DEFAULT_CONFIG
 ): Promise<providers.Provider> => {
   return await getProviderWithRpcUrls(
