@@ -2,7 +2,7 @@ import { isMultiFeedAdapterType } from "@redstone-finance/on-chain-relayer-commo
 import {
   DataPackagesRequestParams,
   DataServiceIds,
-  getPreloadedSignersForDataServiceId,
+  getSignersForDataServiceId,
 } from "@redstone-finance/sdk";
 import { RedstoneCommon } from "@redstone-finance/utils";
 import { RelayerConfig } from "../config/RelayerConfig";
@@ -28,9 +28,7 @@ export function makeDataPackagesRequestParams(
 
   let signers: string[] = authorizedSigners ?? [];
   if (signers.length === 0) {
-    signers = getPreloadedSignersForDataServiceId(
-      dataServiceId as DataServiceIds
-    );
+    signers = getSignersForDataServiceId(dataServiceId as DataServiceIds);
   }
 
   return {

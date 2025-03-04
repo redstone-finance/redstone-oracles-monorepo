@@ -2,7 +2,7 @@ import { RedstonePayload } from "@redstone-finance/protocol";
 import {
   ContractParamsProvider,
   ContractParamsProviderMock,
-  getPreloadedSignersForDataServiceId,
+  getSignersForDataServiceId,
 } from "@redstone-finance/sdk";
 import { MathUtils, RedstoneCommon } from "@redstone-finance/utils";
 import { compile } from "@ton/blueprint";
@@ -54,9 +54,7 @@ export function getContractParamsProvider(
     dataServiceId: "redstone-avalanche-prod",
     uniqueSignersCount: 4,
     dataPackagesIds: dataFeeds,
-    authorizedSigners: getPreloadedSignersForDataServiceId(
-      "redstone-avalanche-prod"
-    ),
+    authorizedSigners: getSignersForDataServiceId("redstone-avalanche-prod"),
   });
 }
 

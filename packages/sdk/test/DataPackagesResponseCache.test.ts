@@ -1,7 +1,7 @@
 import {
   DataPackagesRequestParams,
   DataPackagesResponseCache,
-  getPreloadedSignersForDataServiceId,
+  getSignersForDataServiceId,
   isConforming,
   isSubsetOf,
 } from "../src";
@@ -13,9 +13,7 @@ describe("DataPackagesResponseCache tests", () => {
     dataServiceId: "redstone-primary-prod",
     dataPackagesIds: ["ETH", "BTC"],
     uniqueSignersCount: 2,
-    authorizedSigners: getPreloadedSignersForDataServiceId(
-      "redstone-primary-prod"
-    ),
+    authorizedSigners: getSignersForDataServiceId("redstone-primary-prod"),
   };
 
   beforeEach(() => {
@@ -64,8 +62,7 @@ describe("isConforming tests", () => {
     dataPackagesIds: ["ETH"],
     uniqueSignersCount: 1,
     ignoreMissingFeed: true,
-    authorizedSigners:
-      getPreloadedSignersForDataServiceId("redstone-main-demo"),
+    authorizedSigners: getSignersForDataServiceId("redstone-main-demo"),
   };
 
   it("should return true if ignoreMissingFeed is true", () => {

@@ -1,6 +1,6 @@
 import {
   ContractParamsProvider,
-  getPreloadedSignersForDataServiceId,
+  getSignersForDataServiceId,
 } from "@redstone-finance/sdk";
 import { NetworkProvider } from "@ton/blueprint";
 import { BlueprintTonNetwork, TonPriceManager } from "../src";
@@ -18,9 +18,7 @@ export async function run(provider: NetworkProvider) {
     dataServiceId: "redstone-rapid-demo",
     uniqueSignersCount: 1,
     dataPackagesIds: ["BTC", "ETH", "BNB", "AR", "AVAX", "CELO"],
-    authorizedSigners: getPreloadedSignersForDataServiceId(
-      "redstone-rapid-demo"
-    ),
+    authorizedSigners: getSignersForDataServiceId("redstone-rapid-demo"),
   });
 
   console.log(await contract.getPricesFromPayload(paramsProvider));

@@ -2,7 +2,7 @@ import { DataPackagesWrapper } from "@redstone-finance/evm-connector";
 import {
   DataServiceIds,
   getDataPackagesTimestamp,
-  getPreloadedSignersForDataServiceId,
+  getSignersForDataServiceId,
   requestDataPackages,
 } from "@redstone-finance/sdk";
 import { Adapter } from "erc7412";
@@ -31,7 +31,7 @@ export class RedstoneAdapter implements Adapter {
       dataServiceId,
       uniqueSignersCount,
       maxTimestampDeviationMS: MAX_TIMESTAMP_DEVIATION,
-      authorizedSigners: getPreloadedSignersForDataServiceId(
+      authorizedSigners: getSignersForDataServiceId(
         dataServiceId as DataServiceIds
       ),
     });
