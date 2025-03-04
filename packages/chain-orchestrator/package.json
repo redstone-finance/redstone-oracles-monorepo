@@ -21,7 +21,6 @@
     "@redstone-finance/evm-connector": "workspace:*",
     "@redstone-finance/fuel-connector": "workspace:*",
     "@redstone-finance/internal-utils": "workspace:*",
-    "@redstone-finance/monitoring-manifests": "workspace:*",
     "@redstone-finance/movement-connector": "workspace:*",
     "@redstone-finance/on-chain-relayer-common": "workspace:*",
     "@redstone-finance/radix-connector": "workspace:*",

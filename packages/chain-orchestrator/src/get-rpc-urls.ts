@@ -1,12 +1,14 @@
-import { fetchParsedRpcUrlsFromSsmByChainId } from "@redstone-finance/chain-configs";
-import { MonitoringEnv } from "@redstone-finance/monitoring-manifests";
+import {
+  Env,
+  fetchParsedRpcUrlsFromSsmByChainId,
+} from "@redstone-finance/chain-configs";
 import {
   AdapterType,
   getRpcUrlsPathComponent,
 } from "@redstone-finance/on-chain-relayer-common";
 
-async function fetchRpcUrls(pathComponent: string, env: MonitoringEnv) {
-  if (env === MonitoringEnv.dev) {
+async function fetchRpcUrls(pathComponent: string, env: Env) {
+  if (env === "dev") {
     return await fetchParsedRpcUrlsFromSsmByChainId(pathComponent, env);
   }
 
@@ -14,15 +16,12 @@ async function fetchRpcUrls(pathComponent: string, env: MonitoringEnv) {
     return await fetchParsedRpcUrlsFromSsmByChainId(pathComponent, env);
   } catch {
     // for monitoring CI
-    return await fetchParsedRpcUrlsFromSsmByChainId(
-      pathComponent,
-      MonitoringEnv.dev
-    );
+    return await fetchParsedRpcUrlsFromSsmByChainId(pathComponent, "dev");
   }
 }
 
 export async function getRpcUrls(
-  env: MonitoringEnv,
+  env: Env,
   chainId: number,
   adapterType?: AdapterType
 ) {

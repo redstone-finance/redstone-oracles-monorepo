@@ -3,9 +3,12 @@ import { RedstoneCommon } from "@redstone-finance/utils";
 import _ from "lodash";
 import { ChainType, makeRpcUrlsSsmKey } from "./ChainType";
 
+export type Env = "prod" | "dev" | "staging";
+
+export type NodeType = "fallback" | "main";
 export type FetchRpcUrlsFromSsmOpts = {
-  type: "fallback" | "main";
-  env: "dev" | "prod" | "staging";
+  type: NodeType;
+  env: Env;
   chainIds: number[];
   chainType?: ChainType;
 };
@@ -49,8 +52,8 @@ export async function fetchRpcUrlsFromSsm(
 
 export async function fetchRpcUrlsFromSsmByChainId(
   chainId: number | string,
-  env: FetchRpcUrlsFromSsmOpts["env"],
-  type: FetchRpcUrlsFromSsmOpts["type"] = "main"
+  env: Env,
+  type: NodeType = "main"
 ): Promise<string | undefined> {
   try {
     const path = `/${env}/rpc/${chainId}/${type === "fallback" ? "fallback/" : ""}urls`;
@@ -72,8 +75,8 @@ export async function fetchRpcUrlsFromSsmByChainId(
 
 export async function fetchParsedRpcUrlsFromSsmByChainId(
   chainId: number | string,
-  env: FetchRpcUrlsFromSsmOpts["env"],
-  type: FetchRpcUrlsFromSsmOpts["type"] = "main"
+  env: Env,
+  type: NodeType = "main"
 ) {
   const ssmRpcUrls = await fetchRpcUrlsFromSsmByChainId(chainId, env, type);
   if (!ssmRpcUrls) {
