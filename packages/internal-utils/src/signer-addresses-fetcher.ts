@@ -8,8 +8,7 @@ interface Nodes {
 }
 
 export const getSignerAddresses = async (dataServiceId: string) => {
-  const path =
-    "packages/oracles-smartweave-contracts/src/contracts/redstone-oracle-registry/initial-state.json";
+  const path = "packages/sdk/src/registry/initial-state.json";
 
   const signerAddresses: Array<string> = [];
 
