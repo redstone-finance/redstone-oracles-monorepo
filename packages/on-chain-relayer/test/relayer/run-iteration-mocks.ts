@@ -1,7 +1,7 @@
 import {
   ContractParamsProvider,
   DataServiceIds,
-  getPreloadedSignersForDataServiceId,
+  getSignersForDataServiceId,
   IContractConnector,
 } from "@redstone-finance/sdk";
 import { BigNumber } from "ethers";
@@ -76,7 +76,7 @@ export function getIterationArgsProviderMock(
           dataPackagesIds: relayerConfig.dataFeeds,
           dataServiceId: relayerConfig.dataServiceId,
           uniqueSignersCount: 1,
-          authorizedSigners: getPreloadedSignersForDataServiceId(
+          authorizedSigners: getSignersForDataServiceId(
             relayerConfig.dataServiceId as DataServiceIds
           ),
         },
