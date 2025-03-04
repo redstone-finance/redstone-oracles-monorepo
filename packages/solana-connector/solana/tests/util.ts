@@ -1,6 +1,6 @@
 import type { AnchorProvider } from "@coral-xyz/anchor";
 import {
-  getPreloadedSignersForDataServiceId,
+  getSignersForDataServiceId,
   requestRedstonePayload,
 } from "@redstone-finance/sdk";
 
@@ -28,7 +28,7 @@ export const makePayload = async (dataPackagesIds: Array<string>) => {
       dataPackagesIds,
       dataServiceId: DATA_SERVICE_ID,
       uniqueSignersCount: UNIQUE_SIGNER_COUNT,
-      authorizedSigners: getPreloadedSignersForDataServiceId(DATA_SERVICE_ID),
+      authorizedSigners: getSignersForDataServiceId(DATA_SERVICE_ID),
     },
     "bytes"
   );

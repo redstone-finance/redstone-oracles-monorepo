@@ -1,4 +1,4 @@
-import { getPreloadedSignersForDataServiceId } from "@redstone-finance/sdk";
+import { getSignersForDataServiceId } from "@redstone-finance/sdk";
 import {
   MultiFeedPriceAdapterRadixContractDeployer,
   RadixClient,
@@ -18,7 +18,7 @@ async function instantiate() {
     client,
     await loadAddress(`package`, MULTI_FEED_PRICE_ADAPTER_NAME),
     1,
-    getPreloadedSignersForDataServiceId(DATA_SERVICE_ID)
+    getSignersForDataServiceId(DATA_SERVICE_ID)
   );
 
   const componentId = await connector.getComponentId();
