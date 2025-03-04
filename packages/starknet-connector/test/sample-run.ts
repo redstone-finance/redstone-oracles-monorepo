@@ -1,6 +1,6 @@
 import {
   ContractParamsProvider,
-  getPreloadedSignersForDataServiceId,
+  getSignersForDataServiceId,
   sampleRun,
 } from "@redstone-finance/sdk";
 import {
@@ -16,9 +16,7 @@ async function main(config: StarknetConfig) {
     dataServiceId: "redstone-avalanche-prod",
     uniqueSignersCount: 1,
     dataPackagesIds: ["ETH", "BTC"],
-    authorizedSigners: getPreloadedSignersForDataServiceId(
-      "redstone-avalanche-prod"
-    ),
+    authorizedSigners: getSignersForDataServiceId("redstone-avalanche-prod"),
   });
   const account = getAccount(config);
   const pricesConnector = new PriceAdapterStarknetContractConnector(

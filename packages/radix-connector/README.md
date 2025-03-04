@@ -43,14 +43,14 @@ First, you need to import the connector code to your project
 ```ts
 // Typescript
 import {PriceAdapterRadixContractConnector, RadixClient} from "@redstone-finance/radix-connector";
-import {ContractParamsProvider, getPreloadedSignersForDataServiceId} from "@redstone-finance/sdk";
+import {ContractParamsProvider, getSignersForDataServiceId} from "@redstone-finance/sdk";
 
 // Javascript
 const {
   PriceAdapterRadixContractConnector,
   RadixClient
 } = require("@redstone-finance/radix-connector");
-const {ContractParamsProvider, getPreloadedSignersForDataServiceId} = require("@redstone-finance/sdk");
+const {ContractParamsProvider, getSignersForDataServiceId} = require("@redstone-finance/sdk");
 ```
 
 Then you can invoke the contract methods described above pointing to the
@@ -66,7 +66,7 @@ const paramsProvider = new ContractParamsProvider({
   dataServiceId: "redstone-main-demo",
   uniqueSignersCount: 1,
   dataPackagesIds: ["ETH", "BTC"],
-  authorizedSigners: getPreloadedSignersForDataServiceId("redstone-main-demo"),
+  authorizedSigners: getSignersForDataServiceId("redstone-main-demo"),
 });
 ```
 

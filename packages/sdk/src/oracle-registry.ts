@@ -54,16 +54,6 @@ export const getDataServiceIdForSigner = (
   throw new Error(`Data service not found for ${signerAddress}`);
 };
 
-export const getSignersForDataServiceId = (
-  oracleState: RedstoneOraclesState,
-  dataServiceId: string
-) =>
-  Object.values(oracleState.nodes)
-    .filter((node) => node.dataServiceId === dataServiceId)
-    .map((node) => node.evmAddress);
-
-// retro-fitted from oracles-smartweave-contract package
-// adds caching, throws and in general is kinda messy :)
 const preloadedSigners = new Map<
   DataServiceIds,
   { internal: string[]; all: string[] }
@@ -89,7 +79,7 @@ const preloadedSigners = new Map<
   });
 });
 
-export function getPreloadedSignersForDataServiceId(
+export function getSignersForDataServiceId(
   dataServiceId: DataServiceIds,
   allowExternalSigners: boolean = false
 ): string[] {

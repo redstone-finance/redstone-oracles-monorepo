@@ -43,12 +43,11 @@ In the case when you want to verify package signature on your own it you can use
 
 ```typescript
 import { recoverSignerAddress } from "@redstone-finance/protocol";
-import { getOracleRegistryState, getSignersForDataServiceId } from "@redstone-finance/sdk";
+import { getSignersForDataServiceId } from "@redstone-finance/sdk";
 
 // well-known RedStone primary node addresses
 // you can pass this list to requestDataPackages method above to perform validation automatically
-const oracleRegistry = await getOracleRegistryState();
-const redstonePrimaryNodesAddresses = getSignersForDataServiceId(oracleRegistry, "redstone-primary-prod");
+const redstonePrimaryNodesAddresses = getSignersForDataServiceId("redstone-primary-prod");
 
 const signerAddress = recoverSignerAddress(dataPackage);
 if (redstonePrimaryNodesAddresses.includes(signerAddress)) {

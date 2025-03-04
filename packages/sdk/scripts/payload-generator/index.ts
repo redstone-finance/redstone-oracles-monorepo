@@ -1,6 +1,6 @@
 import {
   DataServiceIds,
-  getPreloadedSignersForDataServiceId,
+  getSignersForDataServiceId,
   requestRedstonePayload,
 } from "../../src";
 
@@ -15,7 +15,7 @@ requestRedstonePayload(
     dataPackagesIds: DATA_FEEDS,
     dataServiceId: DATA_SERVICE_ID,
     uniqueSignersCount: UNIQUE_SIGNER_COUNT,
-    authorizedSigners: getPreloadedSignersForDataServiceId(
+    authorizedSigners: getSignersForDataServiceId(
       DATA_SERVICE_ID as DataServiceIds
     ),
   },

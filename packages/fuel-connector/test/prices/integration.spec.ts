@@ -1,6 +1,6 @@
 import {
   ContractParamsProvider,
-  getPreloadedSignersForDataServiceId,
+  getSignersForDataServiceId,
 } from "@redstone-finance/sdk";
 import "dotenv/config";
 import redstone from "redstone-api";
@@ -27,9 +27,7 @@ describe("Integrated and initialized prices contract", () => {
       dataServiceId: "redstone-primary-prod",
       uniqueSignersCount: 2,
       dataPackagesIds: ["ETH", "BTC"],
-      authorizedSigners: getPreloadedSignersForDataServiceId(
-        "redstone-primary-prod"
-      ),
+      authorizedSigners: getSignersForDataServiceId("redstone-primary-prod"),
     });
 
     await adapter.writePricesFromPayloadToContract(paramsProvider);
