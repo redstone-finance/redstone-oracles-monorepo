@@ -1,5 +1,7 @@
-import { fetchParsedRpcUrlsFromSsmByChainId } from "@redstone-finance/chain-configs";
-import { MonitoringEnv } from "@redstone-finance/monitoring-manifests";
+import {
+  Env,
+  fetchParsedRpcUrlsFromSsmByChainId,
+} from "@redstone-finance/chain-configs";
 import {
   AdapterType,
   getRpcUrlsPathComponent,
@@ -20,7 +22,7 @@ const ALL_RPC_TIMEOUT_MILLISECONDS = 40_000;
 
 export const getBalanceProvider = async (
   chainId: number,
-  env: MonitoringEnv,
+  env: Env,
   adapterType?: AdapterType
 ): Promise<BalanceProvider | undefined> => {
   if (isNonEvmAdapterType(adapterType)) {

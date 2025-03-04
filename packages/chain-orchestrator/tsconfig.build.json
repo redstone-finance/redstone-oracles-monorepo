@@ -24,9 +24,6 @@
       "path": "../on-chain-relayer-common/tsconfig.build.json"
     },
     {
-      "path": "../monitoring-manifests/tsconfig.build.json"
-    },
-    {
       "path": "../chain-configs/tsconfig.build.json"
     },
     {
