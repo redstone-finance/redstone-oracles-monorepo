@@ -2258,6 +2258,25 @@
       "denomination": "BTC",
       "rateFeed": true
     },
+    "enzoBTC_POR": {
+      "source": ["enzobtc-indexer-fetcher"],
+      "deviationCheck": {
+        "deviationWithRecentValues": {
+          "maxPercent": 10,
+          "maxDelayMilliseconds": 6000000
+        }
+      },
+      "valueCapConfig": {
+        "upper": {
+          "value": 1
+        },
+        "lower": {
+          "value": 1
+        }
+      },
+      "denomination": "BTC",
+      "rateFeed": true
+    },
     "vIP_FUNDAMENTAL": {
       "source": ["story-evm-fetcher-verio"],
       "denomination": "IP",
