@@ -3,7 +3,7 @@ import {
   IContractConnector,
   IPriceManagerContractAdapter,
   IPriceRoundsFeedContractAdapter,
-  getPreloadedSignersForDataServiceId,
+  getSignersForDataServiceId,
 } from "@redstone-finance/sdk";
 import {
   PriceRoundsAdapterStarknetContractConnector,
@@ -28,7 +28,7 @@ export class ContractConnectorFactory {
         dataServiceId: DATA_SERVICE_ID,
         uniqueSignersCount: UNIQUE_SIGNER_COUNT,
         dataPackagesIds: DATA_FEEDS,
-        authorizedSigners: getPreloadedSignersForDataServiceId(DATA_SERVICE_ID),
+        authorizedSigners: getSignersForDataServiceId(DATA_SERVICE_ID),
       }),
       config.maxEthFee
     );

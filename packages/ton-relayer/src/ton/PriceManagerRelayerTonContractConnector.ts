@@ -1,6 +1,6 @@
 import {
   ContractParamsProvider,
-  getPreloadedSignersForDataServiceId,
+  getSignersForDataServiceId,
   IContractConnector,
   IPriceManagerContractAdapter,
   IPricesContractAdapter,
@@ -29,7 +29,7 @@ export class PriceManagerRelayerTonContractConnector
       dataServiceId: DATA_SERVICE_ID,
       uniqueSignersCount: UNIQUE_SIGNER_COUNT,
       dataPackagesIds: DATA_FEEDS,
-      authorizedSigners: getPreloadedSignersForDataServiceId(DATA_SERVICE_ID),
+      authorizedSigners: getSignersForDataServiceId(DATA_SERVICE_ID),
     });
   }
 

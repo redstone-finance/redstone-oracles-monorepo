@@ -53,7 +53,7 @@ import {
   makeCasperConnection,
 } from "@redstone-finance/casper-connector";
 // or: import { PriceRelayAdapterCasperContractConnector } from "@redstone-finance/casper-connector";
-import { ContractParamsProvider, getPreloadedSignersForDataServiceId } from "@redstone-finance/sdk";
+import { ContractParamsProvider, getSignersForDataServiceId } from "@redstone-finance/sdk";
 
 // Javascript
 const {
@@ -61,7 +61,7 @@ const {
   makeCasperConnection,
   // or: PriceRelayAdapterCasperContractConnector
 } = require("@redstone-finance/casper-connector");
-const { ContractParamsProvider, getPreloadedSignersForDataServiceId } = require("@redstone-finance/sdk");
+const { ContractParamsProvider, getSignersForDataServiceId } = require("@redstone-finance/sdk");
 ```
 
 Then you can invoke the contract methods described above pointing to the
@@ -82,7 +82,7 @@ const paramsProvider = new ContractParamsProvider({
   dataServiceId: "redstone-main-demo",
   uniqueSignersCount: 1,
   dataPackagesIds: ["ETH", "BTC"],
-  authorizedSigners: getPreloadedSignersForDataServiceId("redstone-main-demo"),
+  authorizedSigners: getSignersForDataServiceId("redstone-main-demo"),
 });
 ```
 

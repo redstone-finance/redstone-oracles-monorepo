@@ -3,7 +3,7 @@ import {
   convertValue,
   describeContractData,
   describeTimestamp,
-  getPreloadedSignersForDataServiceId,
+  getSignersForDataServiceId,
   sampleRun,
 } from "@redstone-finance/sdk";
 import {
@@ -26,7 +26,7 @@ async function main() {
     dataPackagesIds: ["ETH", "BTC", "XRD"],
     dataServiceId: DATA_SERVICE_ID,
     uniqueSignersCount: 1,
-    authorizedSigners: getPreloadedSignersForDataServiceId(DATA_SERVICE_ID),
+    authorizedSigners: getSignersForDataServiceId(DATA_SERVICE_ID),
   });
 
   const client = new RadixClient(NETWORK.id, PRIVATE_KEY);
