@@ -1,7 +1,7 @@
 import { SuiClient } from "@mysten/sui/client";
 import {
   ContractParamsProvider,
-  getPreloadedSignersForDataServiceId,
+  getSignersForDataServiceId,
 } from "@redstone-finance/sdk";
 import { RedstoneCommon } from "@redstone-finance/utils";
 import "dotenv/config";
@@ -42,7 +42,7 @@ describe("SuiPricesContractAdapter", () => {
       dataServiceId: DATA_SERVICE_ID,
       dataPackagesIds: ["LBTC"],
       uniqueSignersCount: 3,
-      authorizedSigners: getPreloadedSignersForDataServiceId(DATA_SERVICE_ID),
+      authorizedSigners: getSignersForDataServiceId(DATA_SERVICE_ID),
     });
   });
 
@@ -77,8 +77,7 @@ describe("SuiPricesContractAdapter", () => {
           dataServiceId: DATA_SERVICE_ID,
           dataPackagesIds: ["ETH", "BTC"],
           uniqueSignersCount: 3,
-          authorizedSigners:
-            getPreloadedSignersForDataServiceId(DATA_SERVICE_ID),
+          authorizedSigners: getSignersForDataServiceId(DATA_SERVICE_ID),
         });
 
         const result = await adapter.writePricesFromPayloadToContract(
@@ -113,7 +112,7 @@ describe("SuiPricesContractAdapter", () => {
         dataServiceId: DATA_SERVICE_ID,
         dataPackagesIds: ["LBTC", "ETH", "BTC"],
         uniqueSignersCount: 3,
-        authorizedSigners: getPreloadedSignersForDataServiceId(DATA_SERVICE_ID),
+        authorizedSigners: getSignersForDataServiceId(DATA_SERVICE_ID),
       });
 
       const result = await adapter.readPricesFromContract(
