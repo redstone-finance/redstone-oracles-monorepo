@@ -1,4 +1,4 @@
-import { getPreloadedSignersForDataServiceId } from "@redstone-finance/sdk";
+import { getSignersForDataServiceId } from "@redstone-finance/sdk";
 import { DataPackageSubscriber, Mqtt5Client, MultiPubSubClient } from "../src";
 import { calculateTopicCountPerConnection } from "../src/topics";
 
@@ -41,9 +41,7 @@ async function main() {
     minimalOffChainSignersCount: 3,
     waitMsForOtherSignersAfterMinimalSignersCountSatisfied: 100,
     ignoreMissingFeeds: true,
-    authorizedSigners: getPreloadedSignersForDataServiceId(
-      "redstone-primary-prod"
-    ),
+    authorizedSigners: getSignersForDataServiceId("redstone-primary-prod"),
   });
 
   await dataPackageSubscriber.subscribe(() => {});

@@ -1,6 +1,6 @@
 import {
   ContractParamsProvider,
-  getPreloadedSignersForDataServiceId,
+  getSignersForDataServiceId,
   sampleRun,
 } from "@redstone-finance/sdk";
 import { makeAptosAccount, MovementPricesContractConnector } from "../src";
@@ -14,9 +14,7 @@ async function main() {
     dataServiceId: "redstone-primary-prod",
     uniqueSignersCount: 3,
     dataPackagesIds: ["ETH", "BTC"],
-    authorizedSigners: getPreloadedSignersForDataServiceId(
-      "redstone-primary-prod"
-    ),
+    authorizedSigners: getSignersForDataServiceId("redstone-primary-prod"),
   });
   const aptos = makeAptos();
   const account = makeAptosAccount();

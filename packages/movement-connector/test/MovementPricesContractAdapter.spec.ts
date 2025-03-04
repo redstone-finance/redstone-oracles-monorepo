@@ -4,7 +4,7 @@
 import { Aptos, Network } from "@aptos-labs/ts-sdk";
 import {
   ContractParamsProvider,
-  getPreloadedSignersForDataServiceId,
+  getSignersForDataServiceId,
 } from "@redstone-finance/sdk";
 import { RedstoneCommon } from "@redstone-finance/utils";
 import "dotenv/config";
@@ -90,7 +90,7 @@ describe("MovementPricesContractAdapter", () => {
         dataServiceId: DATA_SERVICE_ID,
         dataPackagesIds: DATA_PACKAGES_IDS,
         uniqueSignersCount: SIGNERS_COUNT,
-        authorizedSigners: getPreloadedSignersForDataServiceId(DATA_SERVICE_ID),
+        authorizedSigners: getSignersForDataServiceId(DATA_SERVICE_ID),
       });
     });
 
@@ -113,7 +113,7 @@ describe("MovementPricesContractAdapter", () => {
         dataServiceId: DATA_SERVICE_ID,
         dataPackagesIds: DATA_PACKAGES_IDS,
         uniqueSignersCount: SIGNERS_COUNT,
-        authorizedSigners: getPreloadedSignersForDataServiceId(DATA_SERVICE_ID),
+        authorizedSigners: getSignersForDataServiceId(DATA_SERVICE_ID),
       });
     });
 
