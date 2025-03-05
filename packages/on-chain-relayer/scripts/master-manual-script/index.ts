@@ -1,5 +1,8 @@
 import { getSSMParameterValue } from "@redstone-finance/internal-utils";
-import { AdapterType } from "@redstone-finance/on-chain-relayer-common";
+import {
+  AdapterType,
+  ManifestReading,
+} from "@redstone-finance/on-chain-relayer-common";
 import { RedstoneCommon } from "@redstone-finance/utils";
 import { z } from "zod";
 import { runIteration } from "../../src";
@@ -7,10 +10,6 @@ import { config, ConsciouslyInvoked } from "../../src/config/config";
 import { clearCachedRelayerProvider } from "../../src/core/contract-interactions/get-relayer-provider";
 import { clearCachedTxDeliveryMan } from "../../src/core/TxDeliveryManSingleton";
 import { getContractFacade } from "../../src/facade/get-contract-facade";
-import {
-  readClassicManifests,
-  readMultiFeedManifests,
-} from "../read-manifests";
 import { relayerNameToManualKeyArn } from "./relayer-name-to-manual-key";
 
 const relayersToSkipFromEnv = RedstoneCommon.getFromEnv(
@@ -102,8 +101,8 @@ async function setUpEnvVariables(
 
 async function main() {
   const relayersToSkip = [...defaultRelayersToSkip, ...relayersToSkipFromEnv];
-  const classicManifests = readClassicManifests();
-  const multiFeedManifests = readMultiFeedManifests();
+  const classicManifests = ManifestReading.readClassicManifests();
+  const multiFeedManifests = ManifestReading.readMultiFeedManifests();
   const manifests = { ...classicManifests, ...multiFeedManifests };
 
   for (const [manifestName, { chain, adapterContractType }] of Object.entries(

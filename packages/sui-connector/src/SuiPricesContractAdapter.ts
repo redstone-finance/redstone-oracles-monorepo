@@ -87,6 +87,10 @@ export class SuiPricesContractAdapter
     ];
   }
 
+  getSignerAddress() {
+    return Promise.resolve(this.writer?.getSignerAddress());
+  }
+
   async getUniqueSignerThreshold(blockNumber?: number): Promise<number> {
     const priceAdapterDataContent =
       await this.getPriceAdapterObjectDataContentMemoized(blockNumber);

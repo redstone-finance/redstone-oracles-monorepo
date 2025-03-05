@@ -23,6 +23,10 @@ export class FuelPricesContractAdapter
     private gasLimit: number
   ) {}
 
+  getSignerAddress() {
+    return Promise.resolve(this.contract.account?.address.toString());
+  }
+
   async getUniqueSignerThreshold(): Promise<number> {
     return (
       await this.contract.functions.get_unique_signer_threshold().get()

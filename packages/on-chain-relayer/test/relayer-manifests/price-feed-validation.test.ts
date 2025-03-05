@@ -2,15 +2,13 @@ import {
   getChainConfigByChainId,
   getLocalChainConfigs,
 } from "@redstone-finance/chain-configs";
+import { ManifestReading } from "@redstone-finance/on-chain-relayer-common";
 import { MegaProviderBuilder } from "@redstone-finance/rpc-providers";
 import { RedstoneCommon } from "@redstone-finance/utils";
 import { expect } from "chai";
 import { Bytes, Contract, ContractFunction, providers, utils } from "ethers";
 import { describe, test } from "mocha";
-import {
-  readClassicManifests,
-  readMultiFeedManifests,
-} from "../../scripts/read-manifests";
+import path from "path";
 
 const INTEGRATIONS_NOT_FOR_TESTING = [
   "hemiMultiFeed", // remove once we get a publicRpc
@@ -86,7 +84,9 @@ const checkDataFeedIdInContract = async (
 };
 
 describe("Price feed contract should return the same dataFeedId as in relayer manifest", () => {
-  const classicManifests = readClassicManifests();
+  const classicManifests = ManifestReading.readClassicManifests(
+    path.join(__dirname, "../..")
+  );
   for (const [name, manifest] of Object.entries(classicManifests)) {
     test(name, async () => {
       for (const [dataFeedId, priceFeedAddress] of Object.entries(
@@ -105,7 +105,9 @@ describe("Price feed contract should return the same dataFeedId as in relayer ma
     });
   }
 
-  const mutliFeedManifests = readMultiFeedManifests();
+  const mutliFeedManifests = ManifestReading.readMultiFeedManifests(
+    path.join(__dirname, "../..")
+  );
   for (const [name, manifest] of Object.entries(mutliFeedManifests)) {
     if (INTEGRATIONS_NOT_FOR_TESTING.includes(name)) {
       continue;

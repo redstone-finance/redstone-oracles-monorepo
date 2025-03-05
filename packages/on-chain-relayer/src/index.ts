@@ -21,20 +21,22 @@ export type {
 export { makeRelayerConfig } from "./config/make-relayer-config";
 export type { OnChainRelayerEnv, RelayerConfig } from "./config/RelayerConfig";
 export type { EvmContractAdapter } from "./core/contract-interactions/EvmContractAdapter";
-export { EvmContractConnector } from "./core/contract-interactions/EvmContractConnector";
+export type { EvmContractConnector } from "./core/contract-interactions/EvmContractConnector";
 export type { IRedstoneContractAdapter } from "./core/contract-interactions/IRedstoneContractAdapter";
 export { prepareLinkedListLocationsForMentoAdapterReport } from "./custom-integrations/mento/mento-utils";
 export type { ContractFacade } from "./facade/ContractFacade";
-export { EvmContractFacade } from "./facade/EvmContractFacade";
-export type { RedstoneEvmContract } from "./facade/EvmContractFacade";
-export { getEvmContract } from "./facade/get-evm-contract";
-export { getEvmContractAdapter } from "./facade/get-evm-contract-adapter";
+export { EvmContractFacade } from "./facade/evm/EvmContractFacade";
+export type { RedstoneEvmContract } from "./facade/evm/EvmContractFacade";
+export { getEvmContract } from "./facade/evm/get-evm-contract";
+export { getEvmContractAdapter } from "./facade/evm/get-evm-contract-adapter";
+export { getEvmContractConnector } from "./facade/evm/get-evm-contract-connector";
 export {
   getIterationArgsProvider,
   type IterationArgsProvider,
 } from "./facade/get-iteration-args-provider";
-export { MultiFeedNonEvmContractFacade } from "./facade/MultiFeedNonEvmContractFacade";
-export { NonEvmContractFacade } from "./facade/NonEvmContractFacade";
+export { MultiFeedNonEvmContractFacade } from "./facade/non-evm/MultiFeedNonEvmContractFacade";
+export { NonEvmContractFacade } from "./facade/non-evm/NonEvmContractFacade";
+export { fetchOrParseManifest } from "./fetch-or-parse-manifest";
 export { runIteration, type IterationLogger } from "./runner/run-iteration";
 export type {
   ContractData,

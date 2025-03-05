@@ -13,6 +13,10 @@ import {
 import { ContractData, ShouldUpdateContext } from "../../src/types";
 
 class ContractAdapterMock implements IRedstoneContractAdapter {
+  getSignerAddress(): Promise<string | undefined> {
+    return Promise.resolve(undefined);
+  }
+
   getUniqueSignerThreshold(_blockNumber?: number): Promise<number> {
     return Promise.resolve(1);
   }

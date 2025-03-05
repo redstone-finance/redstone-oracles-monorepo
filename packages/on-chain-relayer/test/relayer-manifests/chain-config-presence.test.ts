@@ -3,23 +3,24 @@ import {
   getLocalChainConfigs,
 } from "@redstone-finance/chain-configs";
 import { getChainTypeFromAdapterType } from "@redstone-finance/chain-orchestrator";
+import { ManifestReading } from "@redstone-finance/on-chain-relayer-common";
 import { describe, test } from "mocha";
-import {
-  readClassicManifests,
-  readMultiFeedManifests,
-  readNonEvmManifests,
-} from "../../scripts/read-manifests";
+import path from "path";
 
 describe("Chain config presence", () => {
   test("There should be a chain config for each chain used in relayer manifests", () => {
     const chainIds: Set<number> = new Set();
 
-    const classicManifests = readClassicManifests();
+    const classicManifests = ManifestReading.readClassicManifests(
+      path.join(__dirname, "../..")
+    );
     for (const manifest of Object.values(classicManifests)) {
       chainIds.add(manifest.chain.id);
     }
 
-    const multiFeedManifests = readMultiFeedManifests();
+    const multiFeedManifests = ManifestReading.readMultiFeedManifests(
+      path.join(__dirname, "../..")
+    );
     for (const manifest of Object.values(multiFeedManifests)) {
       chainIds.add(manifest.chain.id);
     }
@@ -30,7 +31,9 @@ describe("Chain config presence", () => {
   });
 
   test("There should be a chain config for each chain used in non-evm relayer manifests", () => {
-    const nonEvmManifests = readNonEvmManifests();
+    const nonEvmManifests = ManifestReading.readNonEvmManifests(
+      path.join(__dirname, "../..")
+    );
 
     for (const manifest of Object.values(nonEvmManifests)) {
       getChainConfigByChainId(

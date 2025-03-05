@@ -8,6 +8,7 @@ export * from "./conversions";
 export * from "./env";
 export * from "./errors";
 export * from "./fetch-with-fallback";
+export * from "./fs-path-safe";
 export * from "./js-utils";
 export * from "./memoize";
 export * from "./misc";

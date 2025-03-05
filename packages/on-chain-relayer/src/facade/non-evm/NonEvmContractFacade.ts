@@ -5,8 +5,8 @@ import {
 } from "@redstone-finance/sdk";
 import { BigNumber } from "ethers";
 import { zip } from "lodash";
-import { ContractData } from "../types";
-import { ContractFacade } from "./ContractFacade";
+import { ContractData } from "../../types";
+import { ContractFacade } from "../ContractFacade";
 
 export class NonEvmContractFacade extends ContractFacade {
   async getLatestRoundContractData(

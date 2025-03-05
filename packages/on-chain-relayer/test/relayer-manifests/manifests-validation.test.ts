@@ -1,26 +1,23 @@
 import {
+  ManifestReading,
   MultiFeedOnChainRelayerManifestSchemaStrict,
   OnChainRelayerManifestSchemaStrict,
 } from "@redstone-finance/on-chain-relayer-common";
 import { RedstoneCommon } from "@redstone-finance/utils";
 import { describe, test } from "mocha";
-import {
-  readClassicManifests,
-  readMultiFeedManifests,
-  readNonEvmManifests,
-} from "../../scripts/read-manifests";
+import path from "path";
 
 const RELAYERS_DATA = {
   classic: {
-    readManifests: readClassicManifests,
+    readManifests: ManifestReading.readClassicManifests,
     schema: OnChainRelayerManifestSchemaStrict,
   },
   multiFeed: {
-    readManifests: readMultiFeedManifests,
+    readManifests: ManifestReading.readMultiFeedManifests,
     schema: MultiFeedOnChainRelayerManifestSchemaStrict,
   },
   nonEvm: {
-    readManifests: readNonEvmManifests,
+    readManifests: ManifestReading.readNonEvmManifests,
     schema: MultiFeedOnChainRelayerManifestSchemaStrict,
   },
 };
@@ -28,7 +25,7 @@ const RELAYERS_DATA = {
 function tryParseManifests(type: keyof typeof RELAYERS_DATA) {
   const { readManifests, schema } = RELAYERS_DATA[type];
 
-  const manifests = readManifests();
+  const manifests = readManifests(path.join(__dirname, "../.."));
   for (const [relayerName, manifest] of Object.entries(manifests)) {
     try {
       schema.strict().parse(manifest);

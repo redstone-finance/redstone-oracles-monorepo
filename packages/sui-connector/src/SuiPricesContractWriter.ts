@@ -19,6 +19,10 @@ export class SuiPricesContractWriter {
     private readonly config: SuiConfig
   ) {}
 
+  getSignerAddress() {
+    return this.deliveryMan.keypair.toSuiAddress();
+  }
+
   async writePricesFromPayloadToContract(
     paramsProvider: ContractParamsProvider
   ) {

@@ -39,6 +39,8 @@ export interface IExtendedPricesContractAdapter extends IPricesContractAdapter {
     feedId?: string,
     blockNumber?: number
   ): Promise<number | undefined>;
+
+  getSignerAddress(): Promise<string | undefined>;
 }
 
 export interface IMultiFeedPricesContractAdapter

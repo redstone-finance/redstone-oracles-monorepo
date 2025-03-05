@@ -2,7 +2,7 @@ import { ContractParamsProvider } from "@redstone-finance/sdk";
 import { loggerFactory, RedstoneCommon, Tx } from "@redstone-finance/utils";
 import { RelayerConfig } from "../../config/RelayerConfig";
 import { updateUsingOevAuction } from "../../custom-integrations/fastlane/update-using-oev-auction";
-import { RedstoneEvmContract } from "../../facade/EvmContractFacade";
+import { RedstoneEvmContract } from "../../facade/evm/EvmContractFacade";
 import { RelayerTxDeliveryManContext } from "./RelayerTxDeliveryManContext";
 
 export class OevTxDeliveryMan implements Tx.ITxDeliveryMan {
