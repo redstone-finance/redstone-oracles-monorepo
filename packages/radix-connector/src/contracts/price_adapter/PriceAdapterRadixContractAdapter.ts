@@ -13,6 +13,10 @@ export class PriceAdapterRadixContractAdapter
   extends RadixContractAdapter
   implements IExtendedPricesContractAdapter
 {
+  async getSignerAddress() {
+    return await this.client.getAccountAddress();
+  }
+
   async getPricesFromPayload(
     paramsProvider: ContractParamsProvider
   ): Promise<BigNumberish[]> {

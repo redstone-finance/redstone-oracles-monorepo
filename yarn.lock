@@ -9032,6 +9032,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@redstone-finance/on-chain-relayer-common@workspace:packages/on-chain-relayer-common"
   dependencies:
+    "@redstone-finance/utils": "workspace:*"
     zod: "npm:^3.22.4"
   languageName: unknown
   linkType: soft
@@ -9040,6 +9041,8 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@redstone-finance/on-chain-relayer-manual-scripts@workspace:packages/on-chain-relayer-manual-scripts"
   dependencies:
+    "@redstone-finance/chain-configs": "workspace:*"
+    "@redstone-finance/chain-orchestrator": "workspace:*"
     "@redstone-finance/evm-connector": "workspace:*"
     "@redstone-finance/internal-utils": "workspace:*"
     "@redstone-finance/on-chain-relayer": "workspace:*"
