@@ -5,7 +5,7 @@ import chaiAsPromised from "chai-as-promised";
 import { Wallet } from "ethers";
 import { parseUnits } from "ethers/lib/utils";
 import { ethers } from "hardhat";
-import { EvmContractConnector } from "../../src";
+import { getEvmContractConnector } from "../../src";
 import { MentoEvmContractAdapter } from "../../src/core/contract-interactions/MentoEvmContractAdapter";
 import { PriceFeedsEvmContractAdapter } from "../../src/core/contract-interactions/PriceFeedsEvmContractAdapter";
 import { getTxDeliveryMan } from "../../src/core/TxDeliveryManSingleton";
@@ -49,7 +49,7 @@ describe("update-prices", () => {
     );
 
     // Update prices
-    const contractAdapter = await new EvmContractConnector(
+    const contractAdapter = await getEvmContractConnector(
       ethers.provider,
       new PriceFeedsEvmContractAdapter(
         priceFeedsAdapter,
@@ -103,7 +103,7 @@ describe("update-prices", () => {
     await mentoAdapter.setSortedOraclesAddress(sortedOracles.address);
 
     // Update prices
-    const contractAdapter = await new EvmContractConnector(
+    const contractAdapter = await getEvmContractConnector(
       ethers.provider,
       new MentoEvmContractAdapter(
         mentoAdapter,

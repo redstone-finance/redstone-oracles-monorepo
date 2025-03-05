@@ -3,10 +3,10 @@ import {
   Web3FunctionResult,
 } from "@gelatonetwork/web3-functions-sdk";
 import {
-  EvmContractConnector,
   EvmContractFacade,
   getEvmContract,
   getEvmContractAdapter,
+  getEvmContractConnector,
   IRedstoneContractAdapter,
   makeRelayerConfig,
   RelayerConfig,
@@ -36,7 +36,7 @@ export class GelatoRunner {
     return await new Promise((resolve, reject) => {
       const logger = new GelatoLogger();
       const deliveryMan = new GelatoDeliveryMan(resolve, logger);
-      const connector = new EvmContractConnector(
+      const connector = getEvmContractConnector(
         provider,
         getEvmContractAdapter(
           config,

@@ -118,7 +118,7 @@ export class RadixClient {
     );
   }
 
-  protected async getAccountAddress() {
+  async getAccountAddress() {
     return await RadixEngineToolkit.Derive.virtualAccountAddressFromPublicKey(
       this.getPublicKey(),
       this.networkId

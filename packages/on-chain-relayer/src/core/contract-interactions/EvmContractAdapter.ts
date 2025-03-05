@@ -1,6 +1,6 @@
 import { ContractParamsProvider } from "@redstone-finance/sdk";
 import { Tx } from "@redstone-finance/utils";
-import { RedstoneEvmContract } from "../../facade/EvmContractFacade";
+import { RedstoneEvmContract } from "../../facade/evm/EvmContractFacade";
 import { ContractData } from "../../types";
 import { IRedstoneContractAdapter } from "./IRedstoneContractAdapter";
 import { RelayerTxDeliveryManContext } from "./RelayerTxDeliveryManContext";
@@ -12,6 +12,10 @@ export abstract class EvmContractAdapter<Contract extends RedstoneEvmContract>
     public adapterContract: Contract,
     protected txDeliveryMan: Tx.ITxDeliveryMan
   ) {}
+
+  getSignerAddress(): Promise<string | undefined> {
+    return this.adapterContract.signer.getAddress();
+  }
 
   abstract makeUpdateTx(
     paramsProvider: ContractParamsProvider,
@@ -34,12 +38,18 @@ export abstract class EvmContractAdapter<Contract extends RedstoneEvmContract>
     const metadataTimestamp = Date.now();
     const updateTx = await this.makeUpdateTx(paramsProvider, metadataTimestamp);
 
-    await this.txDeliveryMan.deliver(updateTx, {
+    const result = (await this.txDeliveryMan.deliver(updateTx, {
       deferredCallData: () =>
         this.makeUpdateTx(paramsProvider, metadataTimestamp).then(
           (tx) => tx.data
         ),
       paramsProvider,
-    } as RelayerTxDeliveryManContext);
+    } as RelayerTxDeliveryManContext)) as { hash: string };
+
+    if ("hash" in result) {
+      return result.hash;
+    } else {
+      return;
+    }
   }
 }

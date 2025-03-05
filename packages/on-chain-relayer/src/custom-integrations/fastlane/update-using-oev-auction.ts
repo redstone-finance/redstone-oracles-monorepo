@@ -15,7 +15,7 @@ import {
 } from "ethers/lib/utils";
 import { RedstoneAdapterBase } from "../../../typechain-types";
 import { RelayerConfig } from "../../config/RelayerConfig";
-import { RedstoneEvmContract } from "../../facade/EvmContractFacade";
+import { RedstoneEvmContract } from "../../facade/evm/EvmContractFacade";
 
 const logger = loggerFactory("update-using-oev-auction");
 

@@ -1,6 +1,6 @@
 import { IMultiFeedPricesContractAdapter } from "@redstone-finance/sdk";
-import { ContractData } from "../types";
-import { ContractFacade } from "./ContractFacade";
+import { ContractData } from "../../types";
+import { ContractFacade } from "../ContractFacade";
 
 export class MultiFeedNonEvmContractFacade extends ContractFacade {
   async getLatestRoundContractData(
