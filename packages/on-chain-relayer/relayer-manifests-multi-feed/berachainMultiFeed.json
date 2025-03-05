@@ -40,10 +40,18 @@
       }
     },
     "sUSDe_FUNDAMENTAL": {
-      "priceFeedAddress": "0x197225B3B017eb9b72Ac356D6B3c267d0c04c57c"
+      "priceFeedAddress": "0x197225B3B017eb9b72Ac356D6B3c267d0c04c57c",
+      "updateTriggersOverrides": {
+        "deviationPercentage": 0.15,
+        "timeSinceLastUpdateInMilliseconds": 86400000
+      }
     },
     "USDe": {
-      "priceFeedAddress": "0xbbF121624c3b85C929Ac83872bf6c86b0976A55e"
+      "priceFeedAddress": "0xbbF121624c3b85C929Ac83872bf6c86b0976A55e",
+      "updateTriggersOverrides": {
+        "deviationPercentage": 0.15,
+        "timeSinceLastUpdateInMilliseconds": 86400000
+      }
     },
     "eBTC/WBTC": {
       "priceFeedAddress": "0x09639692CE6ff12A06CA3AE9A24b3Aae4CD80DC8"
