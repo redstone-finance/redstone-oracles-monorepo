@@ -36,7 +36,7 @@ const fetchChainConfigsWithCache = RedstoneCommon.memoize({
 });
 
 export async function fetchChainConfigs(): Promise<ChainConfigs> {
-  const config = getRemoteMonitoringManifestConfigFromEnv();
+  const config = await getRemoteMonitoringManifestConfigFromEnv();
 
   if (config.shouldUseLocal) {
     return getLocalChainConfigs();
