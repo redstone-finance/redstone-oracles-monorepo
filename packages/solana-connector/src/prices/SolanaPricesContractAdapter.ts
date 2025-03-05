@@ -26,6 +26,10 @@ export class SolanaPricesContractAdapter
     this.contract = new PriceAdapterContract(connection, keypair);
   }
 
+  getSignerAddress() {
+    return Promise.resolve(this.keypair.publicKey.toString());
+  }
+
   async getUniqueSignerThreshold(): Promise<number> {
     return await this.contract.getUniqueSignerThreshold();
   }
