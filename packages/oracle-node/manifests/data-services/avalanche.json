@@ -604,6 +604,17 @@
       ],
       "denomination": "USD",
       "rateFeed": false
+    },
+    "aUSD": {
+      "source": [
+        "curve-ethereum-frax",
+        "trader-joe-v2-avalanche-deusd",
+        "trader-joe-v2-avalanche-usdc",
+        "trader-joe-v2-avalanche-usdt",
+        "trader-joe-v2-avalanche-wavax"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
     }
   },
   "multiPointPackages": {
@@ -667,7 +678,8 @@
       "FDUSD",
       "BNB",
       "BRETT",
-      "DEGEN"
+      "DEGEN",
+      "aUSD"
     ]
   }
 }
