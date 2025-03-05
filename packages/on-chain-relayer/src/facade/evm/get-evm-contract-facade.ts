@@ -3,15 +3,15 @@ import { TxDeliveryManSupportedProviders } from "@redstone-finance/rpc-providers
 import { DataPackagesResponseCache } from "@redstone-finance/sdk";
 import { Tx } from "@redstone-finance/utils";
 import { Signer, Wallet } from "ethers";
-import { RelayerConfig } from "../config/RelayerConfig";
-import { EvmContractConnector } from "../core/contract-interactions/EvmContractConnector";
-import { getRelayerProvider } from "../core/contract-interactions/get-relayer-provider";
-import { OevTxDeliveryMan } from "../core/contract-interactions/OevTxDeliveryMan";
-import { getTxDeliveryMan } from "../core/TxDeliveryManSingleton";
+import { RelayerConfig } from "../../config/RelayerConfig";
+import { getRelayerProvider } from "../../core/contract-interactions/get-relayer-provider";
+import { OevTxDeliveryMan } from "../../core/contract-interactions/OevTxDeliveryMan";
+import { getTxDeliveryMan } from "../../core/TxDeliveryManSingleton";
+import { RelayerDataInfluxService } from "../RelayerDataInfluxService";
 import { EvmContractFacade, RedstoneEvmContract } from "./EvmContractFacade";
 import { getEvmContract } from "./get-evm-contract";
 import { getEvmContractAdapter } from "./get-evm-contract-adapter";
-import { RelayerDataInfluxService } from "./RelayerDataInfluxService";
+import { getEvmContractConnector } from "./get-evm-contract-connector";
 
 export const getEvmContractFacade = (
   relayerConfig: RelayerConfig,
@@ -36,7 +36,7 @@ export const getEvmContractFacade = (
   );
 
   return new EvmContractFacade(
-    new EvmContractConnector(provider, adapter),
+    getEvmContractConnector(provider, adapter),
     cache
   );
 };
