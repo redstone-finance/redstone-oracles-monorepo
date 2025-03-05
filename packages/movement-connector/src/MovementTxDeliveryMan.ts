@@ -75,6 +75,10 @@ export class MovementTxDeliveryMan {
     );
   }
 
+  getSignerAddress() {
+    return this.account.accountAddress;
+  }
+
   async sendBatchTransactions(data: Promise<MovementTransactionData>[]) {
     let hash = undefined;
     for (const input of data) {

@@ -18,6 +18,10 @@ export class MovementPricesContractAdapter
     private readonly writer?: MovementPriceAdapterContractWriter
   ) {}
 
+  getSignerAddress() {
+    return Promise.resolve(this.writer?.getSignerAddress().toString());
+  }
+
   //eslint-disable-next-line @typescript-eslint/require-await
   async getPricesFromPayload(
     _paramsProvider: ContractParamsProvider
