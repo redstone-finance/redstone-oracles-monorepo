@@ -8431,7 +8431,6 @@ __metadata:
     "@redstone-finance/utils": "workspace:*"
     "@types/aws-lambda": "npm:^8.10.145"
     axios: "npm:^1.7.9"
-    zod: "npm:^3.22.4"
   languageName: unknown
   linkType: soft
 

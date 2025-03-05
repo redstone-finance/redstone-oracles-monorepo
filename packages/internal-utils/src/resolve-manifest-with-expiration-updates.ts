@@ -2,7 +2,6 @@ import { loggerFactory, RedstoneCommon } from "@redstone-finance/utils";
 import dayjs from "dayjs";
 import _ from "lodash";
 import { z } from "zod";
-import { getSSMParamWithEnvFallback } from "./aws/params";
 
 export type GenericMonitoringManifest<T = unknown> = {
   defaultConfig: T;
@@ -36,15 +35,14 @@ export function resolveMonitoringManifest<T>(
 }
 
 const logger = loggerFactory("remote-monitoring-manifest-config");
-export async function getRemoteMonitoringManifestConfigFromEnv(): Promise<
+export function getRemoteMonitoringManifestConfigFromEnv():
   | { shouldUseLocal: true }
   | {
       shouldUseLocal: false;
       manifestsHosts: string[];
       manifestsApiKey: string;
       manifestsGitRef: string;
-    }
-> {
+    } {
   // this is hack to ease testing locally use only for that
   if (
     RedstoneCommon.getFromEnv(
@@ -62,11 +60,14 @@ export async function getRemoteMonitoringManifestConfigFromEnv(): Promise<
     "MONITORING_MANIFESTS_HOSTNAMES",
     z.array(z.string())
   );
+  const manifestsApiKey = RedstoneCommon.getFromEnv(
+    "MONITORING_MANIFESTS_APIKEY",
+    z.string()
+  );
   const manifestsGitRef = RedstoneCommon.getFromEnv(
     "MONITORING_MANIFESTS_GITREF",
     z.string().default("main")
   );
-  const manifestsApiKey = await getRemoteMonitoringManifestsApiKey();
 
   return {
     shouldUseLocal: false,
@@ -74,21 +75,6 @@ export async function getRemoteMonitoringManifestConfigFromEnv(): Promise<
     manifestsApiKey,
     manifestsGitRef,
   };
-}
-
-async function getRemoteMonitoringManifestsApiKey() {
-  const manifestApiKeySSM = RedstoneCommon.getFromEnv(
-    "MONITORING_MANIFESTS_APIKEY_SSM",
-    z.string().optional()
-  );
-
-  const apiKey = await getSSMParamWithEnvFallback(
-    manifestApiKeySSM,
-    "MONITORING_MANIFESTS_APIKEY",
-    z.string()
-  );
-
-  return apiKey!;
 }
 
 function parseExpirationTimestamp(
