@@ -12,5 +12,7 @@ export interface IRedstoneContractAdapter {
 
   writePricesFromPayloadToContract(
     paramsProvider: ContractParamsProvider
-  ): Promise<void>;
+  ): Promise<unknown>;
+
+  getSignerAddress(): Promise<string | undefined>;
 }

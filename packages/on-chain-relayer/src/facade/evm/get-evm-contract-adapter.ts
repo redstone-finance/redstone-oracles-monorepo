@@ -5,11 +5,11 @@ import {
   MentoAdapterBase,
   MultiFeedAdapterWithoutRounds,
   RedstoneAdapterBase,
-} from "../../typechain-types";
-import { EvmContractAdapter } from "../core/contract-interactions/EvmContractAdapter";
-import { MentoEvmContractAdapter } from "../core/contract-interactions/MentoEvmContractAdapter";
-import { MultiFeedEvmContractAdapter } from "../core/contract-interactions/MultiFeedEvmContractAdapter";
-import { PriceFeedsEvmContractAdapter } from "../core/contract-interactions/PriceFeedsEvmContractAdapter";
+} from "../../../typechain-types";
+import { EvmContractAdapter } from "../../core/contract-interactions/EvmContractAdapter";
+import { MentoEvmContractAdapter } from "../../core/contract-interactions/MentoEvmContractAdapter";
+import { MultiFeedEvmContractAdapter } from "../../core/contract-interactions/MultiFeedEvmContractAdapter";
+import { PriceFeedsEvmContractAdapter } from "../../core/contract-interactions/PriceFeedsEvmContractAdapter";
 import { RedstoneEvmContract } from "./EvmContractFacade";
 
 const emptyTxDeliveryMan: Tx.ITxDeliveryMan = {
