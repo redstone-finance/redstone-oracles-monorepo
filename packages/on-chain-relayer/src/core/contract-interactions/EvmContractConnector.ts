@@ -10,15 +10,21 @@ export class EvmContractConnector<Adapter extends IRedstoneContractAdapter>
     private adapter: Adapter
   ) {}
 
-  getAdapter(): Promise<Adapter> {
+  getAdapter() {
     return Promise.resolve(this.adapter);
   }
 
-  getBlockNumber(): Promise<number> {
+  getBlockNumber() {
     return this.provider.getBlockNumber();
   }
 
-  waitForTransaction(_txId: string): Promise<boolean> {
-    return Promise.resolve(true);
+  async waitForTransaction(txId: string) {
+    const receipt = await this.provider.waitForTransaction(txId);
+
+    return receipt.status === 1;
+  }
+
+  async getNormalizedBalance(address: string, blockNumber?: number) {
+    return (await this.provider.getBalance(address, blockNumber)).toBigInt();
   }
 }
