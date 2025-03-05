@@ -7,7 +7,7 @@
   "adapterContractType": "price-feeds",
   "dataServiceId": "redstone-primary-prod",
   "updateTriggers": {
-    "deviationPercentage": 0.25,
+    "deviationPercentage": 0.15,
     "timeSinceLastUpdateInMilliseconds": 86400000
   },
   "priceFeeds": {
