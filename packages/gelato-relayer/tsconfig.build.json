@@ -4,9 +4,6 @@
   "references": [
     {
       "path": "../on-chain-relayer/tsconfig.build.json"
-    },
-    {
-      "path": "../evm-connector/tsconfig.build.json"
     }
   ]
 }

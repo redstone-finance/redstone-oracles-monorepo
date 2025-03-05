@@ -13,6 +13,10 @@ export class MovementPriceAdapterContractWriter {
     private readonly priceAdapterObjectAddress: string
   ) {}
 
+  getSignerAddress() {
+    return this.txDeliveryMan.getSignerAddress();
+  }
+
   async writePrices(
     payloads: SplitPayloads<string>,
     deferredDataRequest?: (feedId: string) => Promise<string>
