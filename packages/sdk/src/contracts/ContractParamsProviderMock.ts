@@ -1,5 +1,3 @@
-import { hexlify } from "@ethersproject/bytes";
-import { toUtf8Bytes } from "@ethersproject/strings/lib/utf8";
 import { ContractParamsProvider } from "./ContractParamsProvider";
 
 export class ContractParamsProviderMock extends ContractParamsProvider {
@@ -23,10 +21,7 @@ export class ContractParamsProviderMock extends ContractParamsProvider {
     return Promise.resolve(this.fileReader(this.filePath).toString());
   }
 
-  override getHexlifiedFeedIds(): string[] {
-    return (
-      this.overriddenFeedIds?.map((feed) => hexlify(toUtf8Bytes(feed))) ||
-      super.getHexlifiedFeedIds()
-    );
+  override getDataFeedIds(): string[] {
+    return this.overriddenFeedIds ?? super.getDataFeedIds();
   }
 }
