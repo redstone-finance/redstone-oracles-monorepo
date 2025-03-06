@@ -2,8 +2,8 @@ import { NetworkId } from "@radixdlt/radix-engine-toolkit";
 import { ContractParamsProviderMock } from "@redstone-finance/sdk";
 import { BigNumber } from "ethers";
 import {
+  MultiFeedPriceAdapterRadixContractConnector,
   PriceAdapterRadixContractAdapter,
-  PriceAdapterRadixContractConnector,
   RadixClient,
 } from "../src";
 import { transactionCommittedDetails } from "./__mocks__/transactions";
@@ -32,16 +32,16 @@ describe("PriceAdapterRadixContractAdapter tests", () => {
   beforeEach(async () => {
     mockDefaultValues();
 
-    sut = await new PriceAdapterRadixContractConnector(
+    sut = await new MultiFeedPriceAdapterRadixContractConnector(
       new RadixClient(NetworkId.Stokenet, { secp256k1: MOCK_PRIVATE_KEY }),
       MOCK_COMPONENT_ID
     ).getAdapter();
   });
 
   it("readTimestampFromContract should return proper values from state", async () => {
-    const timestamp = await sut.readTimestampFromContract();
+    const timestamp = await sut.readTimestampFromContract("XRD");
 
-    expect(timestamp).toBe(1724834030000);
+    expect(timestamp).toBe(1741258279000);
   });
 
   it("readPricesFromContract should return proper value from the state", async () => {
@@ -49,8 +49,8 @@ describe("PriceAdapterRadixContractAdapter tests", () => {
 
     const prices = await sut.readPricesFromContract(paramsProvider);
     expect(prices).toStrictEqual([
-      BigNumber.from("0x394de62046"),
-      BigNumber.from("0x05601841c5f4"),
+      BigNumber.from("0x35786397e2"),
+      BigNumber.from("0x084d466cdd35"),
     ]);
   });
 
@@ -74,8 +74,8 @@ describe("PriceAdapterRadixContractAdapter tests", () => {
 
     const prices = await sut.getPricesFromPayload(paramsProvider);
     expect(prices).toStrictEqual([
-      BigNumber.from("0x3ccb1063c0"),
-      BigNumber.from("0x05a9b5e1a910"),
+      BigNumber.from("0x353c482368"),
+      BigNumber.from("0x084721beb603"),
     ]);
   });
 
@@ -85,7 +85,7 @@ describe("PriceAdapterRadixContractAdapter tests", () => {
     transactionCommittedDetails.mockResolvedValueOnce(
       transactionCommittedDetailsMock([
         "5c2100",
-        "5c2020020a04510467573d0000000000000000000000000000000000000000000000000000000a04a8ec2a3993060000000000000000000000000000000000000000000000000000",
+        "5c202102012007200000000000000000000000000000000000000000000000000000003540817c9b012007200000000000000000000000000000000000000000000000000000084845ba3b74",
         "5c2100",
       ])
     );
@@ -93,8 +93,8 @@ describe("PriceAdapterRadixContractAdapter tests", () => {
     sut.readMode = "CallReadMethod";
     const prices = await sut.readPricesFromContract(paramsProvider);
     expect(prices).toStrictEqual([
-      BigNumber.from("0x3d57670451"),
-      BigNumber.from("0x0693392aeca8"),
+      BigNumber.from("0x3540817c9b"),
+      BigNumber.from("0x084845ba3b74"),
     ]);
   });
 
@@ -103,8 +103,8 @@ describe("PriceAdapterRadixContractAdapter tests", () => {
 
     const prices = await sut.writePricesFromPayloadToContract(paramsProvider);
     expect(prices).toStrictEqual([
-      BigNumber.from("0x3ccb1063c0"),
-      BigNumber.from("0x05a9b5e1a910"),
+      BigNumber.from("0x353c482368"),
+      BigNumber.from("0x084721beb603"),
     ]);
   });
 });
