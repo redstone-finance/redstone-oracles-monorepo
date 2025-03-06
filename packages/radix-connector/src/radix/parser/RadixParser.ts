@@ -3,6 +3,7 @@ import {
   RadixEngineToolkit,
   SerializationMode,
   Value,
+  ValueKind,
 } from "@radixdlt/radix-engine-toolkit";
 import { BigNumber } from "ethers";
 import { GeneratedConverter, SerializableManifestValue } from "./generated";
@@ -20,6 +21,8 @@ interface ObjInterface {
 }
 
 export type U256Digits = { elements: { value: bigint }[] };
+
+const U256_VALUE_SIZE = 32;
 
 export class RadixParser {
   static async decodeSborHex(hex: string, networkId = NetworkId.Stokenet) {
@@ -49,11 +52,25 @@ export class RadixParser {
       return undefined;
     }
 
-    const simpleObject =
+    if (obj.kind == ValueKind.Blob && obj.value.length === U256_VALUE_SIZE) {
+      const value = BigNumber.from(obj.value);
+      return asKeyName ? value.toHexString() : value;
+    }
+
+    let simpleObject: unknown =
       (obj as unknown as { value?: unknown }).value ??
       (obj as unknown as { fields?: Value[] }).fields?.map((field) =>
-        RadixParser.extractValue(field)
+        RadixParser.extractValue(field, asKeyName)
       );
+
+    // Unwrapping simple objects like `struct XXX(YYY)`
+    if (
+      obj.kind === ValueKind.Tuple &&
+      obj.fields.length === 1 &&
+      Array.isArray(simpleObject)
+    ) {
+      simpleObject = simpleObject[0];
+    }
 
     if (simpleObject !== undefined) {
       return simpleObject;
@@ -121,6 +138,19 @@ export class RadixParser {
       return RadixParser.makeSerializableManifestValue(
         obj.value as unknown as ObjInterface
       );
+    }
+
+    if (
+      obj.hex &&
+      obj.element_kind === "U8" &&
+      (!obj.kind || obj.kind === "Bytes")
+    ) {
+      return {
+        kind: "Blob",
+        value: {
+          value: obj.hex,
+        },
+      };
     }
 
     if (obj.kind === "Tuple" && Array.isArray(obj.value)) {
