@@ -1,7 +1,6 @@
 import { SuiClient } from "@mysten/sui/client";
-import { ContractData } from "@redstone-finance/sdk";
+import { ContractData, ContractParamsProvider } from "@redstone-finance/sdk";
 import { MultiExecutor } from "@redstone-finance/utils";
-import { utils } from "ethers";
 import {
   ALL_EXECUTIONS_TIMEOUT_MS,
   SINGLE_EXECUTION_TIMEOUT_MS,
@@ -53,7 +52,7 @@ export class SuiPricesContractReader {
     );
 
     const contractData = parsedResults.map((data) => [
-      utils.toUtf8String(data.feed_id).replace(/\0+$/, ""),
+      ContractParamsProvider.unhexlifyFeedId(data.feed_id),
       {
         lastDataPackageTimestampMS: parseInt(data.timestamp),
         lastBlockTimestampMS: parseInt(data.write_timestamp),

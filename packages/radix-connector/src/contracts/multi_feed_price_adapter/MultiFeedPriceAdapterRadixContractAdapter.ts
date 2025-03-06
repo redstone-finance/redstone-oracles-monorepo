@@ -3,7 +3,7 @@ import {
   ContractParamsProvider,
   IMultiFeedPricesContractAdapter,
 } from "@redstone-finance/sdk";
-import { BigNumber, BigNumberish, utils } from "ethers";
+import { BigNumber, BigNumberish } from "ethers";
 import _ from "lodash";
 import { PriceAdapterRadixContractAdapter } from "../price_adapter/PriceAdapterRadixContractAdapter";
 import { ReadPricesRadixMethod } from "../price_adapter/methods/ReadPricesRadixMethod";
@@ -83,7 +83,7 @@ export class MultiFeedPriceAdapterRadixContractAdapter
 
     return Object.fromEntries(
       Object.entries(priceMap).map(([feedId, data]) => [
-        utils.toUtf8String(feedId),
+        ContractParamsProvider.unhexlifyFeedId(feedId),
         MultiFeedPriceAdapterRadixContractAdapter.convertRawToLastDetails(data),
       ])
     );
