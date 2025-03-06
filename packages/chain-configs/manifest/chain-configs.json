@@ -916,7 +916,7 @@
       "currencySymbol": "ETH",
       "publicRpcUrls": [
         "https://rpc.ankr.com/eth_holesky",
-        "https://rpc.holesky.ethpandaops.io"
+        "https://ethereum-holesky-rpc.publicnode.com"
       ],
       "avgBlockTimeMs": 14000,
       "multicall3": {
