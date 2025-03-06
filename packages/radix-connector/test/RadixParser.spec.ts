@@ -1,6 +1,16 @@
-import { Value } from "@radixdlt/radix-engine-toolkit";
+import { ValueKind } from "@radixdlt/radix-engine-toolkit";
 import { BigNumber } from "ethers";
+import { arrayify } from "ethers/lib/utils";
 import { RadixParser } from "../src/radix/parser/RadixParser";
+import {
+  expectArray,
+  expectToBe,
+  expectTupleOfBigIntAndArray,
+  expectTupleOfBigIntAndTwoInts,
+  expectU256Digits,
+  expectValue,
+  u256Digits,
+} from "./expect";
 
 describe("RadixParser tests", () => {
   it("should decode getPrices SBOR response with hex values", async () => {
@@ -10,15 +20,66 @@ describe("RadixParser tests", () => {
     const timestamp = 1724672890000n;
     const priceValues = ["0x3FD5C81B8E", "0x5CFEC9F0A58"];
 
-    const values = expectTupleOfBigIntAndArray<{
-      kind: string;
-      value: Value[];
-    }>(result, timestamp, "String");
+    const values = expectTupleOfBigIntAndArray(
+      result,
+      timestamp,
+      ValueKind.String
+    );
     expect(values.map((value) => value.value)).toStrictEqual(priceValues);
 
     expect(RadixParser.extractValue(result)).toStrictEqual([
       timestamp,
       priceValues,
+    ]);
+  });
+
+  it("should decode getPrices SBOR response with Bytes values", async () => {
+    const result = await RadixParser.decodeSborHex(
+      "5c21020ab095bc6695010000202003072000000000000000000000000000000000000000000000000000000032e32c08c6072000000000000000000000000000000000000000000000000000000819ea69b200072000000000000000000000000000000000000000000000000000000000000d6358"
+    );
+    const timestamp = 1741185390000n;
+    const priceValues = [218559678662n, 8907400000000n, 877400n];
+
+    const values = expectTupleOfBigIntAndArray(
+      result,
+      timestamp,
+      ValueKind.Blob
+    );
+
+    expect(values.map((value) => BigNumber.from(value.value))).toStrictEqual(
+      priceValues.map((value) => BigNumber.from(value))
+    );
+
+    expect(RadixParser.extractValue(result)).toStrictEqual([
+      timestamp,
+      priceValues.map(BigNumber.from),
+    ]);
+  });
+
+  it("should decode getPrices SBOR response with Value(Bytes) values", async () => {
+    const result = await RadixParser.decodeSborHex(
+      "5c21020af01dd26a9501000020210301200720000000000000000000000000000000000000000000000000000000352fd7b036012007200000000000000000000000000000000000000000000000000000083fe1a326830120072000000000000000000000000000000000000000000000000000000000000d6b70"
+    );
+    const timestamp = 1741253910000n;
+    const priceValues = [228435931190n, 9070461527683n, 879472n];
+
+    const values = expectTupleOfBigIntAndArray(
+      result,
+      timestamp,
+      ValueKind.Tuple
+    );
+
+    expect(
+      values.map((value) => {
+        expectToBe(value, ValueKind.Tuple);
+        expectToBe(value.fields[0], ValueKind.Blob);
+        return BigNumber.from(value.fields[0].value);
+      })
+    ).toStrictEqual(priceValues.map((value) => BigNumber.from(value)));
+
+    expect(RadixParser.extractValue(result)).toStrictEqual([
+      timestamp,
+      priceValues.map(BigNumber.from),
     ]);
   });
 
@@ -29,10 +90,11 @@ describe("RadixParser tests", () => {
     const timestamp = 1724767110000n;
     const priceValues = [261104886720n, 6226459076880n];
 
-    const values = expectTupleOfBigIntAndArray<{
-      kind: string;
-      elements: Value[];
-    }>(result, timestamp, "Array");
+    const values = expectTupleOfBigIntAndArray(
+      result,
+      timestamp,
+      ValueKind.Array
+    );
 
     expect(values.map((value) => value.elements)).toStrictEqual(
       priceValues.map(u256Digits)
@@ -52,7 +114,7 @@ describe("RadixParser tests", () => {
     const timestamp = 1734534880000n;
     const blockTimestamp = 1734534890000n;
 
-    const priceData = expectArray<Value>(result, "Tuple");
+    const priceData = expectArray(result, ValueKind.Tuple);
     prices.forEach((price, index) =>
       expectTupleOfBigIntAndTwoInts(
         priceData[index],
@@ -77,7 +139,7 @@ describe("RadixParser tests", () => {
 
     expectValue(
       result,
-      "String",
+      ValueKind.String,
       "component_tdx_2_1cr4nqdcv473tq99cszuqucpywz6gasvaq8h8ftzuvql57q684j8xur"
     );
   });
@@ -96,38 +158,29 @@ describe("RadixParser tests", () => {
       "2c59617248994d12816ee1fa77ce0a64eeb456bf",
       "83cba8c619fb629b81a65c2e67fe15cf3e3c9747",
       "f786a909d559f5dee2dc6706d8e5a81728a39ae9",
-    ];
+    ].map((value) => arrayify("0x" + value));
 
     const obj = JSON.parse(json) as unknown[];
     const result = obj.map(RadixParser.makeManifestValue);
 
     expect(result.length).toBe(obj.length);
-    expectValue(result[0], "U8", signerCountThreshold);
+    expectValue(result[0], ValueKind.U8, signerCountThreshold);
 
-    const signers = expectArray<{ kind: string; value: string }>(
-      result[1],
-      "String"
-    );
+    const signers = expectArray(result[1], ValueKind.Blob);
 
     expect(signers.map((value) => value.value)).toStrictEqual(signerValues);
-
-    const values = result[2] as {
-      kind: string;
-      entries: {
-        key: Value;
-        value: Value;
-      }[];
-    };
+    expectToBe(result[2], ValueKind.Map);
+    const values = result[2];
 
     const btc = values.entries[0];
     const eth = values.entries[1];
 
-    expectU256(btc.key, 4346947n);
-    expectU256(btc.value, btcPrice);
-    expectU256(eth.key, 4543560n);
-    expectU256(eth.value, ethPrice);
+    expectU256Digits(btc.key, 4346947n);
+    expectU256Digits(btc.value, btcPrice);
+    expectU256Digits(eth.key, 4543560n);
+    expectU256Digits(eth.value, ethPrice);
 
-    expectValue(result[3], "U64", timestamp);
+    expectValue(result[3], ValueKind.U64, timestamp);
 
     expect(result.map((res) => RadixParser.extractValue(res))).toStrictEqual([
       signerCountThreshold,
@@ -140,76 +193,3 @@ describe("RadixParser tests", () => {
     ]);
   });
 });
-
-function expectTupleOfBigIntAndArray<ArrayElementType extends { kind: string }>(
-  obj: Value,
-  bigintValue: bigint,
-  type: string
-) {
-  expect(obj.kind).toBe("Tuple");
-  const fields = (obj as { fields: Value[] }).fields;
-
-  expect(fields.length).toBe(2);
-  expectValue(fields[0], "U64", bigintValue);
-
-  return expectArray<ArrayElementType>(fields[1], type);
-}
-
-function expectTupleOfBigIntAndTwoInts(
-  obj: Value,
-  bigintValue: bigint,
-  v1: bigint,
-  v2: bigint
-) {
-  expect(obj.kind).toBe("Tuple");
-  const fields = (obj as { fields: Value[] }).fields;
-
-  expect(fields.length).toBe(3);
-  expectU256(fields[0], bigintValue);
-  expectValue(fields[1], "U64", v1);
-  expectValue(fields[2], "U64", v2);
-}
-
-function expectValue<T>(value: Value, type: string, expectedValue: T) {
-  expect(value).toStrictEqual({ kind: type, value: expectedValue });
-  expect(RadixParser.extractValue(value)).toBe(expectedValue);
-}
-
-function expectU256(value: Value, expectedValue: bigint) {
-  const castedValue = value as { kind: string; elements: unknown[] };
-
-  expect(castedValue.kind).toStrictEqual("Array");
-  expect(castedValue.elements).toStrictEqual(u256Digits(expectedValue));
-  expect(RadixParser.extractValue(value)).toStrictEqual(
-    BigNumber.from(expectedValue)
-  );
-}
-
-function expectArray<ArrayElementType extends { kind: string }>(
-  value: Value,
-  type: string
-) {
-  const castedValue = value as unknown as {
-    kind: string;
-    elementValueKind: string;
-    elements: ArrayElementType[];
-  };
-
-  // expect(castedValue.elementValueKind).toBe(type);
-  expect(castedValue.kind).toBe("Array");
-  castedValue.elements.forEach((element) => expect(element.kind).toBe(type));
-
-  return castedValue.elements;
-}
-
-function u256Digits(value: bigint) {
-  return [
-    { kind: "U64", value },
-    { kind: "U64", value: 0n },
-    { kind: "U64", value: 0n },
-    {
-      kind: "U64",
-      value: 0n,
-    },
-  ];
-}
