@@ -1,6 +1,7 @@
-import { hexlify } from "@ethersproject/bytes";
+import { BytesLike, hexlify } from "@ethersproject/bytes";
 import { toUtf8Bytes } from "@ethersproject/strings/lib/utf8";
 import { RedstoneLogger } from "@redstone-finance/utils";
+import { utils } from "ethers";
 import { arrayify } from "ethers/lib/utils";
 import _ from "lodash";
 import { version } from "../../package.json";
@@ -39,8 +40,25 @@ export class ContractParamsProvider {
     );
   }
 
-  static hexlifyFeedIds(feedIds: string[]) {
-    return feedIds.map((feed) => hexlify(toUtf8Bytes(feed)));
+  static hexlifyFeedIds(
+    feedIds: string[],
+    allowMissingPrefix?: boolean,
+    padRightSize?: number
+  ) {
+    return feedIds
+      .map((feed) => hexlify(toUtf8Bytes(feed)), { allowMissingPrefix })
+      .map((value) =>
+        padRightSize
+          ? value.padEnd(
+              padRightSize * 2 + (value.startsWith("0x") ? 2 : 0),
+              "0"
+            )
+          : value
+      );
+  }
+
+  static unhexlifyFeedId(hexlifiedFeedId: BytesLike) {
+    return utils.toUtf8String(hexlifiedFeedId).replace(/\0+$/, "");
   }
 
   async getPayloadHex(
@@ -61,8 +79,15 @@ export class ContractParamsProvider {
     );
   }
 
-  getHexlifiedFeedIds(): string[] {
-    return ContractParamsProvider.hexlifyFeedIds(this.getDataFeedIds());
+  getHexlifiedFeedIds(
+    allowMissingPrefix?: boolean,
+    padRightSize?: number
+  ): string[] {
+    return ContractParamsProvider.hexlifyFeedIds(
+      this.getDataFeedIds(),
+      allowMissingPrefix,
+      padRightSize
+    );
   }
 
   getDataFeedIds(): string[] {

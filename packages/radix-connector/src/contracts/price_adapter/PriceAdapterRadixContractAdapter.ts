@@ -53,7 +53,7 @@ export class PriceAdapterRadixContractAdapter
         await this.client.readValue(this.componentId, "prices");
 
       return paramsProvider
-        .getHexlifiedFeedIds()
+        .getHexlifiedFeedIds(false, 32)
         .map((feedId) => priceMap[feedId]);
     } else {
       return await this.client.call(
@@ -65,7 +65,7 @@ export class PriceAdapterRadixContractAdapter
     }
   }
 
-  async readTimestampFromContract(): Promise<number> {
+  async readTimestampFromContract(_feedId?: string): Promise<number> {
     if (this.readMode === "ReadFromStorage") {
       return Number(await this.client.readValue(this.componentId, "timestamp"));
     } else {
