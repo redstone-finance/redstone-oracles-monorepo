@@ -1,7 +1,4 @@
 export * from "./contracts/badge_creator/BadgeCreatorRadixContractConnector";
-export * from "./contracts/multi_feed_price_adapter/MultiFeedPriceAdapterRadixContractAdapter";
-export * from "./contracts/multi_feed_price_adapter/MultiFeedPriceAdapterRadixContractConnector";
-export * from "./contracts/multi_feed_price_adapter/MultiFeedPriceAdapterRadixContractDeployer";
 export * from "./contracts/price_adapter/PriceAdapterRadixContractAdapter";
 export * from "./contracts/price_adapter/PriceAdapterRadixContractConnector";
 export * from "./contracts/price_adapter/PriceAdapterRadixContractDeployer";

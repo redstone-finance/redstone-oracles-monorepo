@@ -6,7 +6,6 @@ import {
   FUEL,
   MOVEMENT_MULTI_FEED,
   NonEvmAdapterType,
-  RADIX,
   RADIX_MULTI_FEED,
   SUI_MULTI_FEED,
 } from "@redstone-finance/on-chain-relayer-common";
@@ -33,7 +32,6 @@ export function getBaseNonEvmContractConnector(
           .build()
       );
     case FUEL:
-    case RADIX:
     case RADIX_MULTI_FEED:
       throw new Error(`Not supported for ${adapterType}`);
   }
