@@ -6,7 +6,7 @@ use scrypto_test::prelude::*;
 
 const PRICE_ADAPTER: &str = "PriceAdapter";
 const ENTRY_POINT_INSTANTIATE: &str = "instantiate_with_mock_timestamp";
-const ENTRY_POINT_READ_TIMESTAMP: &str = "read_timestamp";
+const ENTRY_POINT_READ_PRICE_DATA: &str = "read_price_data_raw";
 const ENTRY_POINT_READ_PRICES: &str = "read_prices_raw";
 const ENTRY_POINT_GET_PRICES: &str = "get_prices_raw";
 const ENTRY_POINT_WRITE_PRICES: &str = "write_prices_raw";
@@ -53,8 +53,14 @@ impl PriceAdapterRunEnv for PriceAdapterSimEnv {
             .component_state::<PriceAdapterState>(self.component)
     }
 
-    fn read_timestamp(&mut self, _feed_id: Option<&str>) -> u64 {
-        self.call_method(ENTRY_POINT_READ_TIMESTAMP, manifest_args!())
+    fn read_timestamp(&mut self, feed_id: Option<&str>) -> u64 {
+        let feed_ids: Vec<Vec<u8>> = vec![feed_id.unwrap().into()];
+        let price_data = self.call_method::<Vec<(Value, u64, u64)>>(
+            ENTRY_POINT_READ_PRICE_DATA,
+            manifest_args!(feed_ids),
+        );
+
+        price_data.first().unwrap().1
     }
 
     fn read_prices(&mut self, feed_ids: Vec<Vec<u8>>) -> Vec<Value> {

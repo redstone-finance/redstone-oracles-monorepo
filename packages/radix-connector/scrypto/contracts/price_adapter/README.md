@@ -50,7 +50,7 @@ section below.
 ### PriceAdapter
 
 - Sample oracle contract that consumes _RedStone Oracles_ data
-  [price_adapter.rs](src/price_adapter.rs) written in scrypto version `1.3.0`.
+[price_adapter.rs](src/price_adapter.rs) written in scrypto version `1.3.0`.
 
 #### ⨐ instantiate
 
@@ -98,9 +98,9 @@ That function modifies the contract's storage.
 #### ⨗ read_prices
 
 ```rust
-pub fn read_prices(&self, feed_ids: FeedIds) -> Vec<Decimal>
+pub fn read_prices(&self, feed_ids: Vec<Vec<u8>>) -> Vec<Decimal>
 
-pub fn read_prices_raw(&self, feed_ids: FeedIds) -> Vec<U256Digits>
+pub fn read_prices_raw(&self, feed_ids: Vec<Vec<u8>>) -> Vec<RedStoneValue>
 ```
 
 The function reads the values persisting in the contract's storage and returns an array corresponding to the
