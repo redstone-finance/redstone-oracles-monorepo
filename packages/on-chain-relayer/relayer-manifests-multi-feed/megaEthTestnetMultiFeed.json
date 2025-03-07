@@ -1,7 +1,7 @@
 {
   "chain": {
     "name": "megaEthTestnet",
-    "id": 1338
+    "id": 6342
   },
   "adapterContract": "0x6D4B25c672b950623b8482F2D41E686875dDf729",
   "adapterContractType": "multi-feed",
