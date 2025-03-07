@@ -7,7 +7,7 @@ import {
   sampleRun,
 } from "@redstone-finance/sdk";
 import {
-  MultiFeedPriceAdapterRadixContractConnector,
+  PriceAdapterRadixContractConnector,
   PriceFeedRadixContractConnector,
   RadixClient,
 } from "../src";
@@ -15,8 +15,8 @@ import {
   DATA_SERVICE_ID,
   FEED_ID,
   loadAddress,
-  MULTI_FEED_PRICE_ADAPTER_NAME,
   NETWORK,
+  PRICE_ADAPTER_NAME,
   PRIVATE_KEY,
   PROXY_NAME,
 } from "./constants";
@@ -31,9 +31,9 @@ async function main() {
 
   const client = new RadixClient(NETWORK.id, PRIVATE_KEY);
 
-  const connector = new MultiFeedPriceAdapterRadixContractConnector(
+  const connector = new PriceAdapterRadixContractConnector(
     client,
-    await loadAddress(`component`, MULTI_FEED_PRICE_ADAPTER_NAME)
+    await loadAddress(`component`, PRICE_ADAPTER_NAME)
   );
   const priceAdapter = await connector.getAdapter();
 
