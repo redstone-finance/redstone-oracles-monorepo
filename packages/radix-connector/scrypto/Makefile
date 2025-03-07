@@ -1,12 +1,11 @@
-MULTI_FEED_PRICE_ADAPTER=multi_feed_price_adapter
-PRICE_ADAPTER=multi_feed_price_adapter
+PRICE_ADAPTER=price_adapter
 PRICE_FEED=price_feed
 PROXY=proxy
 BADGE_CREATOR=badge_creator
 
-CONTRACT ?= $(MULTI_FEED_PRICE_ADAPTER)
+CONTRACT ?= $(PRICE_ADAPTER)
 
-CONTRACTS := $(PRICE_ADAPTER) $(PRICE_FEED) $(MULTI_FEED_PRICE_ADAPTER) $(PROXY) $(BADGE_CREATOR)
+CONTRACTS := $(PRICE_ADAPTER) $(PRICE_FEED) $(PROXY) $(BADGE_CREATOR)
 CONTRACTS_DIR=./contracts
 CONTRACT_DIR=$(CONTRACTS_DIR)/$(CONTRACT)
 DEPLOYED_DIR=$(CONTRACT_DIR)/deployed
@@ -87,10 +86,7 @@ update_data: prepare_data
 	resim set-current-time "$(shell date -u +'%Y-%m-%dT%H:%M:%SZ')"
 
 deploy_adapter: publish-price_adapter
-	make instantiate-PriceAdapter TMF_PATH=$(CONTRACTS_DIR)/$(PRICE_ADAPTER)/manifests/instantiate.rtm ACCOUNT=$(ACCOUNT) PRICE_ADAPTER=$(PACKAGE_ADDRESS) 
-
-deploy_multi_feed_adapter: publish-multi_feed_price_adapter
-	make instantiate-MultiFeedPriceAdapter TMF_PATH=$(CONTRACTS_DIR)/$(MULTI_FEED_PRICE_ADAPTER)/manifests/instantiate_with_mock_time.rtm ACCOUNT=$(ACCOUNT) MULTI_FEED_PRICE_ADAPTER_ADDRESS=$(PACKAGE_ADDRESS) MOCK_TIME=1740569340u64
+	make instantiate-PriceAdapter TMF_PATH=$(CONTRACTS_DIR)/$(PRICE_ADAPTER)/manifests/instantiate_with_mock_time.rtm ACCOUNT=$(ACCOUNT) PRICE_ADAPTER_ADDRESS=$(PACKAGE_ADDRESS) MOCK_TIME=1740569340u64
 
 deploy_feed: publish-price_feed
 	make instantiate-PriceFeed TMF_PATH=./$(CONTRACTS_DIR)/$(PRICE_FEED)/manifests/instantiate.rtm DEPLOYED_DIR=$(CONTRACTS_DIR)/$(PRICE_FEED)/deployed/ ACCOUNT=$(ACCOUNT) PRICE_FEED=$(PRICE_FEED_ADDRESS) PRICE_ADAPTER_COMPONENT_ADDRESS=$(COMPONENT_ADDRESS)
@@ -108,16 +104,16 @@ get_prices:
 	make call-get_prices ARGS="ETH,BTC $(PAYLOAD)" | sed -n '/Outputs:/,/Balance Changes:/p' | sed '/Balance Changes:/d'
 
 write_prices:
-	ACCOUNT=$(ACCOUNT) COMPONENT_ADDRESS=$(COMPONENT_ADDRESS) PAYLOAD=$(PAYLOAD) resim run $(CONTRACTS_DIR)/$(MULTI_FEED_PRICE_ADAPTER)/manifests/write_prices.rtm
+	ACCOUNT=$(ACCOUNT) COMPONENT_ADDRESS=$(COMPONENT_ADDRESS) PAYLOAD=$(PAYLOAD) resim run $(CONTRACTS_DIR)/$(PRICE_ADAPTER)/manifests/write_prices.rtm
 
 read_prices:
-	ACCOUNT=$(ACCOUNT) COMPONENT_ADDRESS=$(COMPONENT_ADDRESS) resim run $(CONTRACTS_DIR)/$(MULTI_FEED_PRICE_ADAPTER)/manifests/read_prices.rtm  | sed -n '/Outputs:/,/Balance Changes:/p' | sed '/Balance Changes:/d'
+	ACCOUNT=$(ACCOUNT) COMPONENT_ADDRESS=$(COMPONENT_ADDRESS) resim run $(CONTRACTS_DIR)/$(PRICE_ADAPTER)/manifests/read_prices.rtm  | sed -n '/Outputs:/,/Balance Changes:/p' | sed '/Balance Changes:/d'
 
 read_timestamp:
-	ACCOUNT=$(ACCOUNT) COMPONENT_ADDRESS=$(COMPONENT_ADDRESS) resim run $(CONTRACTS_DIR)/$(MULTI_FEED_PRICE_ADAPTER)/manifests/read_timestamp.rtm | sed -n '/Outputs:/,/Balance Changes:/p' | sed '/Balance Changes:/d'
+	ACCOUNT=$(ACCOUNT) COMPONENT_ADDRESS=$(COMPONENT_ADDRESS) resim run $(CONTRACTS_DIR)/$(PRICE_ADAPTER)/manifests/read_timestamp.rtm | sed -n '/Outputs:/,/Balance Changes:/p' | sed '/Balance Changes:/d'
 
 read_price_and_timestamp:
-	ACCOUNT=$(ACCOUNT) COMPONENT_ADDRESS=$(COMPONENT_ADDRESS) resim run $(CONTRACTS_DIR)/$(MULTI_FEED_PRICE_ADAPTER)/manifests/read_price_and_timestamp.rtm | sed -n '/Outputs:/,/Balance Changes:/p' | sed '/Balance Changes:/d'
+	ACCOUNT=$(ACCOUNT) COMPONENT_ADDRESS=$(COMPONENT_ADDRESS) resim run $(CONTRACTS_DIR)/$(PRICE_ADAPTER)/manifests/read_price_and_timestamp.rtm | sed -n '/Outputs:/,/Balance Changes:/p' | sed '/Balance Changes:/d'
 
 read_price_and_timestamp_proxy:
 	ACCOUNT=$(ACCOUNT) PROXY_ADDRESS=$(PROXY_COMPONENT) resim run $(CONTRACTS_DIR)/$(PROXY)/manifests/read_price_and_timestamp.rtm  | sed -n '/Outputs:/,/Balance Changes:/p' | sed '/Balance Changes:/d'

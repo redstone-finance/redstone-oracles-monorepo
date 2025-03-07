@@ -6,7 +6,7 @@ CALL_METHOD
 ;
 
 CALL_FUNCTION
-    Address("${MULTI_FEED_PRICE_ADAPTER_ADDRESS}")
+    Address("${PRICE_ADAPTER_ADDRESS}")
     "MultiFeedPriceAdapter"
     "instantiate_with_mock_timestamp"
     1u8
