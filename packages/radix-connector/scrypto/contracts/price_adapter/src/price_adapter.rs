@@ -1,3 +1,4 @@
+use crate::price_data::{PriceData, PriceDataRaw};
 use common::{
     decimals::{ToRedStoneDecimal, ToRedStoneDecimals},
     process_payload::process_payload,
@@ -13,9 +14,7 @@ mod price_adapter {
     struct PriceAdapter {
         signer_count_threshold: u8,
         signers: Vec<Vec<u8>>,
-        prices: HashMap<FeedId, RedStoneValue>,
-        timestamp: u64,
-        latest_update_timestamp: Option<u64>,
+        prices: HashMap<FeedId, PriceDataRaw>,
         time: Time,
     }
 
@@ -38,7 +37,7 @@ mod price_adapter {
         ) -> Global<PriceAdapter> {
             Self::make_instance(
                 signer_count_threshold,
-                allowed_signer_addresses.clone(),
+                allowed_signer_addresses,
                 timestamp_mock.into(),
             )
         }
@@ -56,7 +55,7 @@ mod price_adapter {
         }
 
         pub fn get_prices(&self, feed_ids: Vec<Vec<u8>>, payload: Vec<u8>) -> (u64, Vec<Decimal>) {
-            let (timestamp, values) = self.get_prices_raw(feed_ids, payload);
+            let (timestamp, values) = self.get_prices_raw(feed_ids.clone(), payload);
 
             (
                 timestamp,
@@ -94,8 +93,10 @@ mod price_adapter {
         }
 
         pub fn read_prices_raw(&self, feed_ids: Vec<Vec<u8>>) -> Vec<RedStoneValue> {
-            let feeds = feed_ids.into_iter().map(|x| x.into()).collect::<Vec<_>>();
-            read_prices_data(&self.prices, &feeds).expect("Should be able to read data")
+            self.read_price_data_raw(feed_ids)
+                .iter()
+                .map(|&d| d.price)
+                .collect()
         }
 
         pub fn read_prices(&self, feed_ids: Vec<Vec<u8>>) -> Vec<Decimal> {
@@ -106,26 +107,39 @@ mod price_adapter {
                 .expect("Price should be in conversion range")
         }
 
+        pub fn read_price_data_raw(&self, feed_ids: Vec<Vec<u8>>) -> Vec<PriceDataRaw> {
+            let feeds = feed_ids.into_iter().map(|x| x.into()).collect::<Vec<_>>();
+            read_prices_data(&self.prices, &feeds).expect("Should be able to read data")
+        }
+
+        pub fn read_price_data(&self, feed_ids: Vec<Vec<u8>>) -> Vec<PriceData> {
+            self.read_price_data_raw(feed_ids)
+                .into_iter()
+                .enumerate()
+                .to_redstone_decimals()
+                .expect("Price should be in conversion range")
+        }
+
         pub fn read_price_and_timestamp_raw(&self, feed_id: Vec<u8>) -> (RedStoneValue, u64) {
-            (
-                *read_price_data(&self.prices, &feed_id.into(), 0)
-                    .expect("Should be able to read data"),
-                self.timestamp,
-            )
+            let data = read_price_data(&self.prices, &feed_id.into(), 0)
+                .expect("Should be able to read data");
+
+            (data.price, data.timestamp)
         }
 
         pub fn read_price_and_timestamp(&self, feed_id: Vec<u8>) -> (Decimal, u64) {
-            let data = self.read_price_and_timestamp_raw(feed_id);
+            let data = self.read_price_and_timestamp_raw(feed_id.clone());
 
-            (data.0.to_redstone_decimal().unwrap(), data.1)
+            (
+                data.0
+                    .to_redstone_decimal()
+                    .expect("Price should be in conversion range"),
+                data.1,
+            )
         }
 
-        pub fn read_timestamp(&self) -> u64 {
-            self.timestamp
-        }
-
-        pub fn read_latest_update_timestamp(&self) -> Option<u64> {
-            self.latest_update_timestamp
+        pub fn read_timestamp(&self, feed_id: Vec<u8>) -> u64 {
+            self.read_price_and_timestamp(feed_id).1
         }
 
         fn process_payload(
@@ -150,21 +164,32 @@ mod price_adapter {
             let (timestamp, values) = self.process_payload(feed_ids.clone(), payload);
             let current_timestamp = self.time.get_current_in_ms();
 
-            verify_update(
-                current_timestamp,
-                self.latest_update_timestamp,
-                self.timestamp,
-                timestamp,
-            );
+            feed_ids
+                .into_iter()
+                .map(|v| v.into())
+                .zip(values.clone())
+                .for_each(|(feed_id, value)| {
+                    let old_price_data = self.prices.get(&feed_id);
 
-            self.latest_update_timestamp = Some(current_timestamp);
-            self.timestamp = timestamp;
-            self.prices.extend(
-                feed_ids
-                    .into_iter()
-                    .zip(values.clone())
-                    .map(|(key, value)| (key.into(), value)),
-            );
+                    if let Some(price_data) = old_price_data {
+                        verify_update(
+                            current_timestamp,
+                            Some(price_data.latest_update_timestamp),
+                            price_data.timestamp,
+                            timestamp,
+                        );
+                    }
+
+                    _ = &self.prices.insert(
+                        feed_id,
+                        PriceDataRaw {
+                            price: value,
+                            timestamp,
+                            latest_update_timestamp: current_timestamp,
+                        },
+                    );
+                });
+
             self.time.maybe_increase(1);
 
             (timestamp, values)
@@ -181,8 +206,6 @@ mod price_adapter {
                 signer_count_threshold,
                 signers: allowed_signer_addresses,
                 prices: hashmap!(),
-                timestamp: 0,
-                latest_update_timestamp: None,
                 time,
             }
             .instantiate()

@@ -2,7 +2,6 @@
 resolver = "2"
 members = [
     "common",
-    "contracts/multi_feed_price_adapter",
     "contracts/price_adapter",
     "contracts/price_feed",
     "contracts/proxy",

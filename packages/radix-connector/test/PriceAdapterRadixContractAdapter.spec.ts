@@ -2,8 +2,8 @@ import { NetworkId } from "@radixdlt/radix-engine-toolkit";
 import { ContractParamsProviderMock } from "@redstone-finance/sdk";
 import { BigNumber } from "ethers";
 import {
-  MultiFeedPriceAdapterRadixContractConnector,
   PriceAdapterRadixContractAdapter,
+  PriceAdapterRadixContractConnector,
   RadixClient,
 } from "../src";
 import { transactionCommittedDetails } from "./__mocks__/transactions";
@@ -32,7 +32,7 @@ describe("PriceAdapterRadixContractAdapter tests", () => {
   beforeEach(async () => {
     mockDefaultValues();
 
-    sut = await new MultiFeedPriceAdapterRadixContractConnector(
+    sut = await new PriceAdapterRadixContractConnector(
       new RadixClient(NetworkId.Stokenet, { secp256k1: MOCK_PRIVATE_KEY }),
       MOCK_COMPONENT_ID
     ).getAdapter();

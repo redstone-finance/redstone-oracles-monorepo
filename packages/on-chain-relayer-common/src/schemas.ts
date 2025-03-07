@@ -17,7 +17,6 @@ export const MultiFeedAdapterTypesEnum = z.enum([
 ]);
 export const NonEvmAdapterTypesEnum = z.enum([
   FUEL,
-  RADIX,
   RADIX_MULTI_FEED,
   SUI_MULTI_FEED,
   MOVEMENT_MULTI_FEED,

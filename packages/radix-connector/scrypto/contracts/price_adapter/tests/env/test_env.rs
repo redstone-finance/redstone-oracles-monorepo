@@ -44,8 +44,15 @@ impl PriceAdapterRunEnv for PriceAdapterTestEnv {
 
     fn state(&self) -> Self::State {}
 
-    fn read_timestamp(&mut self, _feed_id: Option<&str>) -> u64 {
-        self.price_adapter.read_timestamp(&mut self.env).unwrap()
+    fn read_timestamp(&mut self, feed_id: Option<&str>) -> u64 {
+        let feed_ids = vec![feed_id.unwrap().into()];
+
+        self.price_adapter
+            .read_price_data(feed_ids, &mut self.env)
+            .unwrap()
+            .first()
+            .unwrap()
+            .timestamp
     }
 
     fn read_prices(&mut self, feed_ids: Vec<Vec<u8>>) -> Vec<Value> {

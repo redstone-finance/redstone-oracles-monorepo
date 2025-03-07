@@ -14,7 +14,6 @@ export const NETWORK = {
 
 export const FEED_ID = "XRD";
 export const DATA_SERVICE_ID = "redstone-primary-prod";
-export const MULTI_FEED_PRICE_ADAPTER_NAME = "multi_feed_price_adapter";
 export const PRICE_ADAPTER_NAME = "price_adapter";
 export const PRICE_FEED_NAME = "price_feed";
 export const PROXY_NAME = "proxy";

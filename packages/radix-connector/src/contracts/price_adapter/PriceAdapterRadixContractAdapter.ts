@@ -1,17 +1,20 @@
 import {
+  ContractData,
   ContractParamsProvider,
-  IExtendedPricesContractAdapter,
+  IMultiFeedPricesContractAdapter,
 } from "@redstone-finance/sdk";
-import { BigNumberish } from "ethers";
+import { BigNumber, BigNumberish } from "ethers";
+import _ from "lodash";
 import { RadixContractAdapter } from "../../radix/RadixContractAdapter";
 import { GetPricesRadixMethod } from "./methods/GetPricesRadixMethod";
+import { ReadPriceDataRadixMethod } from "./methods/ReadPriceDataRadixMethod";
 import { ReadPricesRadixMethod } from "./methods/ReadPricesRadixMethod";
 import { ReadTimestampRadixMethod } from "./methods/ReadTimestampRadixMethod";
 import { WritePricesRadixMethod } from "./methods/WritePricesRadixMethod";
 
 export class PriceAdapterRadixContractAdapter
   extends RadixContractAdapter
-  implements IExtendedPricesContractAdapter
+  implements IMultiFeedPricesContractAdapter
 {
   async getSignerAddress() {
     return await this.client.getAccountAddress();
@@ -45,16 +48,19 @@ export class PriceAdapterRadixContractAdapter
     ).values;
   }
 
-  async readPricesFromContract(
-    paramsProvider: ContractParamsProvider
-  ): Promise<BigNumberish[]> {
+  async getUniqueSignerThreshold(): Promise<number> {
+    return Number(
+      await this.client.readValue(this.componentId, "signer_count_threshold")
+    );
+  }
+
+  async readPricesFromContract(paramsProvider: ContractParamsProvider) {
     if (this.readMode === "ReadFromStorage") {
-      const priceMap: { [p: string]: BigNumberish } =
-        await this.client.readValue(this.componentId, "prices");
+      const priceData = await this.readPriceData();
 
       return paramsProvider
-        .getHexlifiedFeedIds(false, 32)
-        .map((feedId) => priceMap[feedId]);
+        .getDataFeedIds()
+        .map((feedId) => priceData[feedId].lastValue);
     } else {
       return await this.client.call(
         new ReadPricesRadixMethod(
@@ -65,28 +71,69 @@ export class PriceAdapterRadixContractAdapter
     }
   }
 
-  async readTimestampFromContract(_feedId?: string): Promise<number> {
+  async readTimestampFromContract(feedId?: string) {
     if (this.readMode === "ReadFromStorage") {
-      return Number(await this.client.readValue(this.componentId, "timestamp"));
+      const priceData = await this.readPriceData();
+
+      return Number(priceData[feedId!].lastDataPackageTimestampMS);
     } else {
       return Number(
-        await this.client.call(new ReadTimestampRadixMethod(this.componentId))
+        await this.client.call(
+          new ReadTimestampRadixMethod(this.componentId, feedId)
+        )
       );
     }
   }
 
-  async getUniqueSignerThreshold(): Promise<number> {
-    return Number(
-      await this.client.readValue(this.componentId, "signer_count_threshold")
+  async readLatestUpdateBlockTimestamp(
+    feedId?: string
+  ): Promise<number | undefined> {
+    const priceData = await this.readPriceData();
+
+    return priceData[feedId!].lastBlockTimestampMS;
+  }
+
+  async readContractData(feedIds: string[]): Promise<ContractData> {
+    if (this.readMode === "ReadFromStorage") {
+      const priceData = await this.readPriceData();
+
+      return _.pick(priceData, feedIds);
+    } else {
+      const priceData = await this.client.call(
+        new ReadPriceDataRadixMethod(this.componentId, feedIds)
+      );
+
+      return Object.fromEntries(
+        _.zip(
+          feedIds,
+          priceData.map(
+            PriceAdapterRadixContractAdapter.convertRawToLastDetails
+          )
+        )
+      ) as ContractData;
+    }
+  }
+
+  private async readPriceData(): Promise<ContractData> {
+    const priceMap: {
+      [p: string]: [BigNumberish, BigNumberish, BigNumberish];
+    } = await this.client.readValue(this.componentId, "prices");
+
+    return Object.fromEntries(
+      Object.entries(priceMap).map(([feedId, data]) => [
+        ContractParamsProvider.unhexlifyFeedId(feedId),
+        PriceAdapterRadixContractAdapter.convertRawToLastDetails(data),
+      ])
     );
   }
 
-  async readLatestUpdateBlockTimestamp(): Promise<number | undefined> {
-    const value = await this.client.readValue(
-      this.componentId,
-      "latest_update_timestamp"
-    );
-
-    return value ? Number(value) : (value as undefined);
+  static convertRawToLastDetails(
+    data: [BigNumberish, BigNumberish, BigNumberish]
+  ) {
+    return {
+      lastDataPackageTimestampMS: Number(data[2]),
+      lastBlockTimestampMS: Number(data[1]),
+      lastValue: BigNumber.from(data[0]),
+    };
   }
 }

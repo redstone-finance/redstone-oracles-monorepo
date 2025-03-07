@@ -927,16 +927,6 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "685a9ac4b61f4e728e1d2c6a7844609c16527aeb5e6c865915c08e619c16410f"
 
 [[package]]
-name = "multi_feed_price_adapter"
-version = "1.0.0"
-dependencies = [
- "common",
- "redstone_testing",
- "scrypto",
- "scrypto-test",
-]
-
-[[package]]
 name = "num-bigint"
 version = "0.4.6"
 source = "registry+https://github.com/rust-lang/crates.io-index"
