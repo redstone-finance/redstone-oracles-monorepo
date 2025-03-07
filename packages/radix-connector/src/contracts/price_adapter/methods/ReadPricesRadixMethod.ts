@@ -21,4 +21,8 @@ export class ReadPricesRadixMethod extends ValueRadixInvocation<
   override getParams(): Value[] {
     return [makeFeedIds(this.dataFeedIds)];
   }
+
+  override interpret(value: unknown): BigNumberish[] {
+    return value as BigNumberish[];
+  }
 }

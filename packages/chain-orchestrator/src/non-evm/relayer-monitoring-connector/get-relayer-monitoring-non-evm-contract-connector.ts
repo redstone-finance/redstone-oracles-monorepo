@@ -7,12 +7,10 @@ import {
   FUEL,
   isNonEvmConfig,
   MOVEMENT_MULTI_FEED,
-  RADIX,
   RADIX_MULTI_FEED,
   SUI_MULTI_FEED,
 } from "@redstone-finance/on-chain-relayer-common";
 import {
-  MultiFeedPriceAdapterRadixContractConnector,
   PriceAdapterRadixContractConnector,
   RadixClient,
 } from "@redstone-finance/radix-connector";
@@ -32,10 +30,8 @@ export function getRelayerMonitoringNonEvmContractConnector(
   }
 
   switch (relayerManifest.adapterContractType) {
-    case RADIX:
-      return getRadixContractConnector(rpcUrls, relayerManifest);
     case RADIX_MULTI_FEED:
-      return getRadixContractConnector(rpcUrls, relayerManifest, true);
+      return getRadixContractConnector(rpcUrls, relayerManifest);
     case SUI_MULTI_FEED:
       return getSuiContractConnector(rpcUrls, relayerManifest);
     case MOVEMENT_MULTI_FEED:
@@ -49,16 +45,14 @@ export function getRelayerMonitoringNonEvmContractConnector(
 
 function getRadixContractConnector(
   rpcUrls: string[],
-  relayerManifest: AnyOnChainRelayerManifest,
-  isMultiFeed: boolean = false
+  relayerManifest: AnyOnChainRelayerManifest
 ) {
   const client = new RadixClient(relayerManifest.chain.id);
 
-  return new (
-    isMultiFeed
-      ? MultiFeedPriceAdapterRadixContractConnector
-      : PriceAdapterRadixContractConnector
-  )(client, relayerManifest.adapterContract);
+  return new PriceAdapterRadixContractConnector(
+    client,
+    relayerManifest.adapterContract
+  );
 }
 
 function getSuiContractConnector(
