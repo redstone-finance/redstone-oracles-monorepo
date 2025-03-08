@@ -1,6 +1,8 @@
 use common::redstone::Value as RedStoneValue;
 use scrypto::prelude::*;
 
+const DESCRIPTION: &str = "RedStone Price Feed";
+
 #[blueprint]
 mod price_adapter {
     struct PriceFeed {
@@ -20,6 +22,18 @@ mod price_adapter {
             .instantiate()
             .prepare_to_globalize(OwnerRole::None)
             .globalize()
+        }
+
+        pub fn get_decimals(&self) -> u8 {
+            8
+        }
+
+        pub fn get_feed_id(&self) -> Vec<u8> {
+            self.feed_id.clone()
+        }
+
+        pub fn get_description(&self) -> String {
+            DESCRIPTION.into()
         }
 
         pub fn read_price_and_timestamp(&self) -> (Decimal, u64) {
