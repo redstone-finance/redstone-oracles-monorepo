@@ -1,7 +1,8 @@
 import { DataPackagesWrapper } from "@redstone-finance/evm-connector";
-import { ContractParamsProvider, isSubsetOf } from "@redstone-finance/sdk";
+import { ContractParamsProvider } from "@redstone-finance/sdk";
 import { loggerFactory, Tx } from "@redstone-finance/utils";
 import { utils } from "ethers";
+import _ from "lodash";
 import { MultiFeedAdapterWithoutRounds } from "../../../typechain-types";
 import { ContractData, LastRoundDetails } from "../../types";
 import { EvmContractAdapter } from "./EvmContractAdapter";
@@ -17,11 +18,12 @@ export class MultiFeedEvmContractAdapter extends EvmContractAdapter<MultiFeedAda
     let dataFeedsAsBytes32 = dataFeedsToUpdate.map(utils.formatBytes32String);
     const dataPackages = await paramsProvider.requestDataPackages();
     const dataPackagesFeeds = Object.keys(dataPackages);
+    const diff = _.difference(dataFeedsToUpdate, dataPackagesFeeds);
 
     //TODO: Multifeed won't work with medium data packages.
-    if (!isSubsetOf(new Set(dataPackagesFeeds), new Set(dataFeedsToUpdate))) {
+    if (diff.length) {
       logger.log(
-        `Missing some feeds in the response, will update only for [${dataPackagesFeeds.toString()}]`,
+        `Missing some feeds in the response: [${diff.toString()}], will update only for [${dataPackagesFeeds.toString()}]`,
         {
           dataFeedsToUpdate,
           dataPackagesFeeds,

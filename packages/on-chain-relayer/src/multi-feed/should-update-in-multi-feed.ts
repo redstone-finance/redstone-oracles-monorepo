@@ -1,4 +1,6 @@
+import { RedstoneCommon } from "@redstone-finance/utils";
 import { RelayerConfig } from "../config/RelayerConfig";
+import { canIgnoreMissingFeeds } from "../core/make-data-packages-request-params";
 import { checkConditionByName } from "../core/update-conditions/check-condition-by-name";
 import { checkIfDataPackageTimestampIsNewer } from "../core/update-conditions/data-packages-timestamp";
 import {
@@ -13,35 +15,52 @@ export const shouldUpdateInMultiFeed = async (
 ): Promise<ShouldUpdateResponse> => {
   const dataFeedsToUpdate: string[] = [];
   const warningMessages: IterationArgsMessage[] = [];
+  const infoMessages: IterationArgsMessage[] = [];
   const dataFeedsDeviationRatios: Record<string, number> = {};
   const heartbeatUpdates: Set<number> = new Set();
   const pictogram = config.runWithMqtt ? "ℹ️" : "⛔";
+  const missingDataFeedIds = [];
   for (const [dataFeedId, updateConditions] of Object.entries(
     config.updateConditions
   )) {
     if (!Object.keys(context.dataPackages).includes(dataFeedId)) {
-      warningMessages.push({
-        message: `${pictogram}Data package for feed: ${dataFeedId} is missing in the datasource${pictogram}`,
-      });
+      missingDataFeedIds.push(dataFeedId);
       continue;
     }
     let shouldUpdatePrices = false;
     for (const conditionName of updateConditions) {
-      const conditionCheck = await checkConditionByName(
-        conditionName,
-        dataFeedId,
-        context,
-        config
-      );
-      shouldUpdatePrices ||= conditionCheck.shouldUpdatePrices;
-      warningMessages.push(...conditionCheck.messages);
-      if (conditionCheck.maxDeviationRatio) {
-        dataFeedsDeviationRatios[dataFeedId] = conditionCheck.maxDeviationRatio;
-      }
-      if (conditionCheck.shouldUpdatePrices && conditionName === "time") {
-        heartbeatUpdates.add(
-          config.updateTriggers[dataFeedId].timeSinceLastUpdateInMilliseconds!
+      try {
+        const conditionCheck = await checkConditionByName(
+          conditionName,
+          dataFeedId,
+          context,
+          config
         );
+        shouldUpdatePrices ||= conditionCheck.shouldUpdatePrices;
+        if (conditionCheck.shouldUpdatePrices) {
+          warningMessages.push(...conditionCheck.messages);
+        } else {
+          infoMessages.push(...conditionCheck.messages);
+        }
+
+        if (conditionCheck.maxDeviationRatio) {
+          dataFeedsDeviationRatios[dataFeedId] =
+            conditionCheck.maxDeviationRatio;
+        }
+        if (conditionCheck.shouldUpdatePrices && conditionName === "time") {
+          heartbeatUpdates.add(
+            config.updateTriggers[dataFeedId].timeSinceLastUpdateInMilliseconds!
+          );
+        }
+      } catch (error) {
+        if (canIgnoreMissingFeeds(config)) {
+          warningMessages.push({
+            message: `${pictogram} ${dataFeedId}/${conditionName}: ${RedstoneCommon.stringifyError(error)}`,
+            args: [error],
+          });
+        } else {
+          throw error;
+        }
       }
     }
 
@@ -57,10 +76,17 @@ export const shouldUpdateInMultiFeed = async (
     }
   }
 
+  if (missingDataFeedIds.length) {
+    warningMessages.unshift({
+      message: `${pictogram}Missing data package for feed${RedstoneCommon.getS(missingDataFeedIds.length)}: ${missingDataFeedIds.toString()}${pictogram}`,
+      args: [{ missingDataFeedIds }],
+    });
+  }
+
   return {
     dataFeedsToUpdate,
     dataFeedsDeviationRatios,
     heartbeatUpdates: Array.from(heartbeatUpdates),
-    messages: warningMessages,
+    messages: [...warningMessages, ...infoMessages],
   };
 };
