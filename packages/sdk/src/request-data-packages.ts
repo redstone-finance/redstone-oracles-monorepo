@@ -131,7 +131,7 @@ export const calculateHistoricalPackagesTimestamp = (
 export const requestDataPackages = async (
   reqParams: DataPackagesRequestParams
 ): Promise<DataPackagesResponse> => {
-  if (reqParams.dataPackagesIds.length < 1) {
+  if (!reqParams.dataPackagesIds.length) {
     throw new Error("Please provide at least one dataFeed");
   }
   try {
@@ -237,7 +237,7 @@ const prepareDataPackagePromises = (
   urls: string[],
   requestDataPackagesLogger?: RequestDataPackagesLogger
 ): Promise<DataPackagesResponse>[] => {
-  if (reqParams.authorizedSigners.length === 0) {
+  if (!reqParams.authorizedSigners.length) {
     throw new Error("authorizer signers array, if provided, cannot be empty");
   }
   const pathComponents = [
@@ -264,6 +264,50 @@ const prepareDataPackagePromises = (
   });
 };
 
+function validateDataPackagesResponse(
+  dataFeedPackages: SignedDataPackagePlainObj[] | undefined,
+  reqParams: DataPackagesRequestParams,
+  dataFeedId: string
+) {
+  if (!dataFeedPackages) {
+    const message = `Requested data feed id is not included in response: ${dataFeedId}`;
+    throw new Error(message);
+  }
+
+  // filter out packages with not expected signers
+  dataFeedPackages = dataFeedPackages.filter((dp) => {
+    const signer = maybeGetSigner(dp);
+    return signer ? reqParams.authorizedSigners.includes(signer) : false;
+  });
+
+  if (dataFeedPackages.length === 0) {
+    const message = `No data packages for the data feed: ${dataFeedId}`;
+    throw new Error(message);
+  } else if (dataFeedPackages.length < reqParams.uniqueSignersCount) {
+    const message =
+      `Too few unique signers for the data feed: ${dataFeedId}. ` +
+      `Expected: ${reqParams.uniqueSignersCount}. ` +
+      `Received: ${dataFeedPackages.length}`;
+    throw new Error(message);
+  }
+
+  const signedDataPackages = dataFeedPackages.map((dp) =>
+    SignedDataPackage.fromObj(dp)
+  );
+
+  const timestamp = checkAndGetSameTimestamp(signedDataPackages); // Needs to be before "if", because it checks the timestamps and throws
+
+  if (reqParams.maxTimestampDeviationMS) {
+    const deviation = Math.abs(Date.now() - timestamp);
+    if (deviation > reqParams.maxTimestampDeviationMS) {
+      const message = `Timestamp deviation exceeded - timestamp: ${timestamp}, deviation: ${deviation}, max deviation: ${reqParams.maxTimestampDeviationMS}`;
+      throw new Error(message);
+    }
+  }
+
+  return signedDataPackages;
+}
+
 const parseAndValidateDataPackagesResponse = (
   responseData: unknown,
   reqParams: DataPackagesRequestParams,
@@ -277,55 +321,22 @@ const parseAndValidateDataPackagesResponse = (
 
   for (const dataFeedId of requestedDataFeedIds) {
     try {
-      let dataFeedPackages = responseData[dataFeedId];
-
-      if (!dataFeedPackages) {
-        const message = `Requested data feed id is not included in response: ${dataFeedId}`;
-        throw new Error(message);
-      }
-
-      // filter out packages with not expected signers
-      dataFeedPackages = dataFeedPackages.filter((dp) => {
-        const signer = maybeGetSigner(dp);
-        if (!signer) {
-          return false;
-        }
-        return reqParams.authorizedSigners.includes(signer);
-      });
-
-      if (dataFeedPackages.length === 0) {
-        const message = `No data packages for the data feed: ${dataFeedId}`;
-        throw new Error(message);
-      } else if (dataFeedPackages.length < reqParams.uniqueSignersCount) {
-        const message =
-          `Too few unique signers for the data feed: ${dataFeedId}. ` +
-          `Expected: ${reqParams.uniqueSignersCount}. ` +
-          `Received: ${dataFeedPackages.length}`;
-        throw new Error(message);
-      }
-
-      const signedDataPackages = dataFeedPackages.map((dp) =>
-        SignedDataPackage.fromObj(dp)
+      const dataFeedPackagesResponse = responseData[dataFeedId];
+      const dataFeedPackages = validateDataPackagesResponse(
+        dataFeedPackagesResponse,
+        reqParams,
+        dataFeedId
       );
-      const timestamp = checkAndGetSameTimestamp(signedDataPackages);
-      if (reqParams.maxTimestampDeviationMS) {
-        const deviation = Math.abs(Date.now() - timestamp);
-        if (deviation > reqParams.maxTimestampDeviationMS) {
-          const message = `Timestamp deviation exceeded - timestamp: ${timestamp}, deviation: ${deviation}, max deviation: ${reqParams.maxTimestampDeviationMS}`;
-          throw new Error(message);
-        }
-      }
 
       parsedResponse[dataFeedId] = reqParams.disableMedianSelection
-        ? signedDataPackages
+        ? dataFeedPackages
         : pickDataFeedPackagesClosestToMedian(
-            dataFeedPackages,
+            dataFeedPackages.map((dp) => dp.toObj()),
             reqParams.uniqueSignersCount
           );
     } catch (e) {
       if (reqParams.ignoreMissingFeed) {
         requestDataPackagesLogger?.feedIsMissing((e as Error).message);
-        continue;
       } else {
         throw e;
       }
