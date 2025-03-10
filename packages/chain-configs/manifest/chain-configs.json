@@ -1125,8 +1125,8 @@
     }
   },
   "temporaryConfigUpdates": {
-    "expirationTimestamp": "2025-02-24T12:00:00Z",
-    "b2": {
+    "expirationTimestamp": "2025-03-11T12:00:00Z",
+    "zircuit": {
       "disabled": true
     }
   }
