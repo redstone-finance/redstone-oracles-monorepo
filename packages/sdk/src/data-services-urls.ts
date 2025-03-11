@@ -32,7 +32,7 @@ export const REDSTONE_DATA_SERVICES_URLS: Partial<Record<string, string[]>> = {
 export const resolveDataServiceUrls = (dataServiceId: string): string[] => {
   const urls = REDSTONE_DATA_SERVICES_URLS[dataServiceId];
   if (!urls) {
-    throw Error(
+    throw new Error(
       `Data service ${dataServiceId} is not configured by RedStone protocol`
     );
   }
