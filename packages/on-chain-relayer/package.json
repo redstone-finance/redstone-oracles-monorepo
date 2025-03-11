@@ -36,7 +36,7 @@
     "preversion": "yarn build"
   },
   "dependencies": {
-    "@chainlink/contracts": "1.1.1",
+    "@chainlink/contracts": "1.2.0",
     "@openzeppelin/contracts": "^4.8.1",
     "@openzeppelin/contracts-upgradeable": "^4.8.3",
     "@redstone-finance/chain-configs": "workspace:*",
