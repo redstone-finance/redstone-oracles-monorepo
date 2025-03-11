@@ -22,8 +22,8 @@ The direct path should look like:
 
 * General assumptions [programs/README.md](./programs/README.md)
 * PriceAdapter [programs/price-adapter/README.md](./programs/price-adapter/README.md)
-* General [RedStone Blockchain Oracles docs](https://docs.redstone.finance/docs/get-started/data-formatting-processing/)
-  * Especially [The push model docs](https://docs.redstone.finance/docs/get-started/models/redstone-push/)
+* General [RedStone Blockchain Oracles docs](https://docs.redstone.finance/docs/architecture/#data-formatting--processing)
+  * Especially [The push model docs](https://docs.redstone.finance/docs/dapps/redstone-push/)
 
 
 ## What should be audited
