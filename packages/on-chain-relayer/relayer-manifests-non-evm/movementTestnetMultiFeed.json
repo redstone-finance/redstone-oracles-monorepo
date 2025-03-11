@@ -5,19 +5,14 @@
     "id": 250
   },
   "updateTriggers": {
-    "deviationPercentage": 1,
+    "deviationPercentage": 0.5,
     "timeSinceLastUpdateInMilliseconds": 86400000
   },
   "adapterContract": "0xdcfedff05914e01657ba03b597ba343c9fbdf2b3b35fedbfb33f4c8dfcd624a9",
   "adapterContractPackageId": "0x5e23c9da7dc5d607d935d5989e81aca925d3267793f041cb3f199ea1f28fb24f",
   "dataServiceId": "redstone-primary-prod",
   "priceFeeds": {
-    "ETH": {
-      "updateTriggersOverrides": {
-        "deviationPercentage": 0.5,
-        "timeSinceLastUpdateInMilliseconds": 86400000
-      }
-    },
+    "ETH": {},
     "BTC": {},
     "LBTC": {}
   }
