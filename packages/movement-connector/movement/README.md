@@ -24,8 +24,8 @@ The direct path should look like:
 * General assumptions [contracts/README.md](./contracts/README.md)
 * PriceAdapter [contracts/price_adapter/README.md](./contracts/price_adapter/README.md)
 * PriceFeed [contracts/price_feed/sources/price_feed.move](./contracts/price_feed/sources/price_feed.move)
-* General [RedStone Blockchain Oracles docs](https://docs.redstone.finance/docs/get-started/data-formatting-processing/)
-  * Especially [The push model docs](https://docs.redstone.finance/docs/get-started/models/redstone-push/):
+* General [RedStone Blockchain Oracles docs](https://docs.redstone.finance/docs/architecture/#data-formatting--processing)
+  * Especially [The push model docs](https://docs.redstone.finance/docs/dapps/redstone-push/):
 
 ### Move code conventions
 We try to follow conventions from [here](https://aptos.dev/en/build/smart-contracts/book/coding-conventions).
