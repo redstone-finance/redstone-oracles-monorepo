@@ -2305,6 +2305,11 @@
       ],
       "denomination": "USD",
       "rateFeed": false
+    },
+    "BCAP_FUNDAMENTAL": {
+      "source": ["securitize-api"],
+      "denomination": "USD",
+      "rateFeed": true
     }
   },
   "multiPointPackages": {
