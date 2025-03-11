@@ -1,21 +1,20 @@
 # RedStone Oracles integration with Radix
 
 <!-- TOC -->
-
-- [RedStone Oracles integration with Radix](#redstone-oracles-integration-with-radix)
-  -[💡 How RedStone Oracles work with Radix](#-how-redstone-oracles-work-with-radix)
-  -[✨ General parameter type disclaimer](#-general-parameter-type-disclaimer)
-  -[📄 Blueprints](#-blueprints)
-  -[PriceAdapter](#priceadapter)
-  - [⨐ instantiate](#-instantiate)
-  - [⨗ get_prices](#-get_prices)
-  - [⨒ write_prices](#-write_prices)
-  - [⨗ read_prices](#-read_prices)
-  - [∮ read_timestamp](#-read_timestamp)
-      -[📖 Sample payload](#-sample-payload)
-      -[⚠ Possible transaction failures](#-possible-transaction-failures)
-      -[🙋‍Contact](#contact)
-
+* [RedStone Oracles integration with Radix](#redstone-oracles-integration-with-radix)
+  * [💡 How RedStone Oracles work with Radix](#-how-redstone-oracles-work-with-radix)
+  * [✨ General parameter type disclaimer](#-general-parameter-type-disclaimer)
+  * [📄 Blueprints](#-blueprints)
+    * [PriceAdapter](#priceadapter)
+      * [⨐ instantiate](#-instantiate)
+      * [⨗ get_prices](#-get_prices)
+      * [⨒ write_prices](#-write_prices)
+      * [⨗ read_prices](#-read_prices)
+      * [∮ read_timestamp](#-read_timestamp)
+      * [⨗ read_price_data](#-read_price_data)
+  * [📖 Sample payload](#-sample-payload)
+  * [⚠ Possible transaction failures](#-possible-transaction-failures)
+  * [🙋‍Contact](#contact)
 <!-- TOC -->
 
 ## 💡 How RedStone Oracles work with Radix
@@ -120,6 +119,23 @@ Returns the timestamp of data last saved/written to the contract's storage by us
 
 That function doesn't modify the contract's storage.
 
+#### ⨗ read_price_data
+
+```rust
+pub fn read_price_data(&self, feed_ids: Vec<Vec<u8>>) -> Vec<PriceData>
+
+pub fn read_price_data_raw(&self, feed_ids: Vec<Vec<u8>>) -> Vec<PriceDataRaw>
+```
+
+The function reads the values persisting in the contract's storage and returns an array of price data
+corresponding to the passed `feed_ids`.
+The function doesn't modify the storage and can read only aggregated values of the `feed_ids` saved by
+using `write_prices` function.
+
+That function doesn't modify the contract's storage.
+
+See the [price_data.rs](./src/price_data.rs) file.
+
 ## 📖 Sample payload
 
 See [here](../../README.md#preparing-sample-data), how to generate it.
@@ -132,10 +148,8 @@ defined [here](../../../src/radix/utils.ts).
 
 The transaction could have returned an error, one of the defined below:
 
-- in the [redstone](../../rust-sdk/src/network/error.rs) library, or see
-  in [docs](https://docs.redstone.finance/rust/redstone/crypto_secp256k1,network_radix/redstone/network/error/enum.Error.html)
-
-- Price Adapter [specific](r_error.rs)
+- in the [redstone](https://github.com/redstone-finance/rust-sdk/blob/2.0.0/crates/redstone/src/network/error.rs) library
+- in Price Adapter [specific](../../common/src/price_adapter_error.rs)
 
 ## 🙋‍Contact
 
