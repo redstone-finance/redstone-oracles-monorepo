@@ -22,17 +22,17 @@ export class CronAgent<R> {
   private inProgress = false;
   private schedulerTask?: Job;
 
-  constructor(private args: CronAgentArgs<R>) {
+  constructor(private readonly args: CronAgentArgs<R>) {
     this.cachedValue = { cachedAt: 0 };
     this.logger = loggerFactory(`agent-${args.name}`);
   }
 
   /**
    * Will block until first iteration will resolve or reject
-   * Return false if rejected, true if succeded (you can implement own retry logic if needed)
+   * Return false if rejected, true if succeeded (you can implement own retry logic if needed)
    */
   async start() {
-    let hasSucceded = true;
+    let hasSucceeded = true;
 
     try {
       await this.executeJobAndSaveResults();
@@ -40,7 +40,7 @@ export class CronAgent<R> {
       this.logger.error(
         `Failed to initialize agent with first value error=${RedstoneCommon.stringifyError(e)}`
       );
-      hasSucceded = false;
+      hasSucceeded = false;
     }
 
     if (this.schedulerTask) {
@@ -60,7 +60,7 @@ export class CronAgent<R> {
       }
     });
 
-    return hasSucceded;
+    return hasSucceeded;
   }
 
   stop() {
