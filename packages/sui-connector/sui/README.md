@@ -14,7 +14,7 @@
 
 * The repository: https://github.com/redstone-finance/redstone-oracles-monorepo
 * The CommitId: [will be prepared for the particular version]
-* Path: [packages/sui-connector/sui-contracts](./contracts)
+* Path: [packages/sui-connector/sui/contracts](./contracts)
 
 The direct path should look like:
 [https://github.com/redstone-finance/redstone-oracles-monorepo/tree/[COMMIT_ID]/packages/sui-connector/sui/contracts](https://github.com/redstone-finance/redstone-oracles-monorepo/tree/main/packages/sui-connector/sui/contracts)
@@ -24,8 +24,8 @@ The direct path should look like:
 * General assumptions [contracts/README.md](./contracts/README.md)
 * PriceAdapter [contracts/price_adapter/README.md](./contracts/price_adapter/README.md)
 * PriceFeed [contracts/price_feed/sources/price_feed.move](./contracts/price_feed/sources/price_feed.move)
-* General [RedStone Blockchain Oracles docs](https://docs.redstone.finance/docs/get-started/data-formatting-processing/)
-  * Especially [The push model docs](https://docs.redstone.finance/docs/get-started/models/redstone-push/):
+* General [RedStone Blockchain Oracles docs](https://docs.redstone.finance/docs/architecture/#data-formatting--processing)
+  * Especially [The push model docs](https://docs.redstone.finance/docs/dapps/redstone-push/):
 
 ### Move code conventions
 We try to follow conventions from [here](https://docs.sui.io/concepts/sui-move-concepts/conventions).
