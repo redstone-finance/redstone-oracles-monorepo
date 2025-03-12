@@ -2306,6 +2306,26 @@
       "denomination": "USD",
       "rateFeed": false
     },
+    "COMP": {
+      "source": [
+        "binance-usdt",
+        "bingx-usdt",
+        "bitfinex-usd",
+        "bitget-usdt",
+        "bitmart-usdt",
+        "bybit-usdt",
+        "gate-usdt",
+        "kraken-usd",
+        "kucoin-usdt",
+        "lbank-usdt",
+        "mexc-usdt",
+        "okx-usdt",
+        "uniswap-v3-ethereum-weth-3000",
+        "uniswap-v3-ethereum-weth-10000"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
     "BCAP_FUNDAMENTAL": {
       "source": ["securitize-api"],
       "denomination": "USD",
