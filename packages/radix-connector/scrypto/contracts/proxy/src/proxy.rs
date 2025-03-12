@@ -18,13 +18,10 @@ mod proxy {
 
     impl Proxy {
         pub fn instantiate(
-            owner_badge: NonFungibleGlobalId,
-            man_badge: NonFungibleGlobalId,
+            owner_role: OwnerRole,
+            manager_role: AccessRule,
             contract_global_address: Option<Global<AnyComponent>>,
         ) -> Global<Proxy> {
-            let owner_role = OwnerRole::Fixed(rule!(require(owner_badge)));
-            let man_rule = rule!(require(man_badge));
-
             info!("[Proxy] instantiate()");
             Self {
                 contract_global_address,
@@ -32,7 +29,7 @@ mod proxy {
             .instantiate()
             .prepare_to_globalize(owner_role)
             .roles(roles! {
-                proxy_man_auth => man_rule;
+                proxy_man_auth => manager_role;
             })
             .globalize()
         }
