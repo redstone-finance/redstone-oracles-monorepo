@@ -3,15 +3,13 @@
     "name": "megaEthTestnet",
     "id": 6342
   },
-  "adapterContract": "0x6D4B25c672b950623b8482F2D41E686875dDf729",
+  "adapterContract": "0xD962A6544bB645EA2f1678034788261E9417e9BC",
   "adapterContractType": "multi-feed",
-  "dataServiceId": "redstone-megaeth-testnet",
-  "updateTriggers": {
-    "timeSinceLastUpdateInMilliseconds": 1000
-  },
+  "dataServiceId": "redstone-primary-prod",
+  "updateTriggers": {},
   "priceFeeds": {
     "ETH": {
-      "priceFeedAddress": "0xc1F550F407cCA20D9b30c3edE469b9DA7539838d"
+      "priceFeedAddress": "0xbEb886F1A51803d7e9FD4514a91E89b81F4fdE58"
     }
   }
 }
