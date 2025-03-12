@@ -3,7 +3,7 @@ import {
   CommonRelayerManifest,
   MultiFeedOnChainRelayerManifest,
   OnChainRelayerManifest,
-} from "../..";
+} from "../schemas";
 import {
   MANIFEST_TYPE_MULTI_FEED,
   MANIFEST_TYPE_NON_EVM,
