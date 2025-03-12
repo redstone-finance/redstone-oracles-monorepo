@@ -3,7 +3,7 @@ import {
   MultiFeedOnChainRelayerManifestSchema,
   OnChainRelayerManifest,
   OnChainRelayerManifestSchema,
-} from "../..";
+} from "../schemas";
 import { getOnChainRelayerBasePath, readData } from "./read-utils";
 
 export type ManifestType =

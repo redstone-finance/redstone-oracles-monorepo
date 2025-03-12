@@ -1,5 +1,5 @@
 import { getHttpV4Endpoint } from "@orbs-network/ton-access";
-import { KeyPair } from "@ton/crypto/dist/primitives/nacl";
+import { KeyPair } from "@ton/crypto";
 import {
   Address,
   Contract,
