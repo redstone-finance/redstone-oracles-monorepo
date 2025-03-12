@@ -313,6 +313,14 @@ export const chainTokenMap: ChainTokenMap = {
       address: "0x66a1E37c9b0eAddca17d3662D6c05F4DECf3e110",
       decimals: 18,
     },
+    frxUSD: {
+      address: "0xCAcd6fd266aF91b8AeD52aCCc382b4e165586E29",
+      decimals: 18,
+    },
+    "sUSDS_FUNDAMENTAL/USD": {
+      address: "0xa3931d71877C0E7a3148CB7Eb4463524FEc27fbD",
+      decimals: 18,
+    },
     COMP: {
       address: "0xc00e94Cb662C3520282E6f5717214004A7f26888",
       decimals: 18,
@@ -818,6 +826,20 @@ export const chainTokenMap: ChainTokenMap = {
     LBTC: {
       address: "0xecAc9C5F704e954931349Da37F60E39f515c11c1",
       decimals: 8,
+    },
+  },
+  fraxtal: {
+    frxUSD: {
+      address: "0xFc00000000000000000000000000000000000001",
+      decimals: 18,
+    },
+    USDT: {
+      address: "0x4d15EA9C2573ADDAeD814e48C148b5262694646A",
+      decimals: 6,
+    },
+    sUSDe: {
+      address: "0x211Cc4DD073734dA055fbF44a2b4667d5E5fE5d2",
+      decimals: 18,
     },
   },
 };
