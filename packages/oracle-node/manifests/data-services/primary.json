@@ -2326,6 +2326,27 @@
       "denomination": "USD",
       "rateFeed": false
     },
+    "sUSDS_FUNDAMENTAL/USD": {
+      "source": ["ethereum-evm-fetcher-savings-usds"],
+      "denomination": "USD",
+      "rateFeed": true
+    },
+    "frxUSD": {
+      "source": [
+        "curve-ethereum-susds_fundamental/usd",
+        "curve-ethereum-usde",
+        "curve-ethereum-frax",
+        "curve-fraxtal-usdt",
+        "curve-fraxtal-susde"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "sfrxUSD_FUNDAMENTAL": {
+      "source": ["ethereum-evm-fetcher-staked-frxusd"],
+      "denomination": "frxUSD",
+      "rateFeed": true
+    },
     "BCAP_FUNDAMENTAL": {
       "source": ["securitize-api"],
       "denomination": "USD",
