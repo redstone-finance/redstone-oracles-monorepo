@@ -37,11 +37,8 @@ Do audit
 * [price_adapter](./contracts/price_adapter) - see [general assumptions](contracts/README.md#price-adapter)
 * [price_feed](./contracts/price_feed) - see [general assumptions](contracts/README.md#price-feed)
 * [badge_creator](./contracts/badge_creator) - see [general assumptions](contracts/README.md#badge-creator)
+* [proxy](./contracts/proxy) - see [general assumptions](contracts/README.md#proxy)
 
-
-Do not audit
-
-* [proxy](./contracts/proxy) - as it taken from the official Radix examples
 
 ### Rust files
 
