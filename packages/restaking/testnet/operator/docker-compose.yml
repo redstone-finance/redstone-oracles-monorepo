@@ -2,8 +2,7 @@ services:
   operator-attester:
     image: public.ecr.aws/y7v2w8b2/avs-othentic-client:4fe497a6
     platform: linux/amd64
-    command:
-      [
+    command: [
         "node",
         "attester",
         "/dns/test-aggregator1-p2p.b.redstone.finance/tcp/3000/p2p/12D3KooWBNFG1QjuF3UKAKvqhdXcxh9iBmj88cM5eU2EK5Pa91KB",
@@ -24,6 +23,8 @@ services:
       ]
     env_file:
       - .env
+    volumes:
+      - .othentic:/app/.othentic
   operator-validation-api:
     image: public.ecr.aws/y7v2w8b2/avs-validation-api:4fe497a6
     platform: linux/amd64
