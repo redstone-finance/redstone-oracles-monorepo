@@ -5,7 +5,7 @@ members = [
     "contracts/price_adapter",
     "contracts/price_feed",
     "contracts/proxy",
-    "contracts/badge_creator"
+    "contracts/badge_creator",
 ]
 
 [profile.release]
