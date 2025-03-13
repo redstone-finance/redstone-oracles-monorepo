@@ -1,4 +1,4 @@
-import { InfluxDB, Point } from "@influxdata/influxdb-client";
+import { InfluxDB, Point, WriteOptions } from "@influxdata/influxdb-client";
 import { BucketsAPI } from "@influxdata/influxdb-client-apis";
 import { RedstoneCommon } from "@redstone-finance/utils";
 
@@ -18,13 +18,17 @@ export interface InfluxAuthParams {
 }
 
 export class InfluxService {
-  private readonly influx;
+  protected readonly influx;
 
-  public constructor(protected authParams: InfluxAuthParams) {
+  public constructor(
+    protected authParams: InfluxAuthParams,
+    timeout?: number,
+    protected writeOptions?: Partial<WriteOptions>
+  ) {
     this.influx = new InfluxDB({
       token: this.authParams.token,
       url: this.authParams.url,
-      timeout: 30000,
+      timeout: timeout ?? 30000,
     });
   }
 
@@ -85,7 +89,8 @@ export class InfluxService {
     return this.influx.getWriteApi(
       this.authParams.orgName,
       this.authParams.bucketName,
-      "ms"
+      "ms",
+      this.writeOptions
     );
   }
 
