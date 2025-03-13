@@ -1,7 +1,11 @@
-import { ChainConfig, isEvmChainType } from "@redstone-finance/chain-configs";
+import {
+  ChainConfig,
+  isNonEvmChainType,
+} from "@redstone-finance/chain-configs";
 import { MegaProviderBuilder } from "@redstone-finance/rpc-providers";
 import { EvmBlockchainService } from "./EvmBlockchainService";
 import { getNonEvmBlockchainService } from "./get-non-evm-blockchain-service";
+import { unsupportedParam } from "./unsupported-param";
 
 const SINGLE_RPC_TIMEOUT_MILLISECONDS = 10_000;
 const ALL_RPC_TIMEOUT_MILLISECONDS = 60_000;
@@ -10,7 +14,7 @@ export function getBlockchainService(
   rpcUrls: string[],
   chainConfig: ChainConfig
 ) {
-  if (!isEvmChainType(chainConfig.chainType)) {
+  if (isNonEvmChainType(chainConfig.chainType)) {
     return getNonEvmBlockchainService(
       rpcUrls,
       chainConfig.chainType,
@@ -43,6 +47,6 @@ export function getBlockchainService(
     }
 
     default:
-      throw new Error(`Unsupported adapter type: ${chainConfig.chainType}`);
+      unsupportedParam(chainConfig.chainType);
   }
 }
