@@ -72,6 +72,28 @@ export class RadixApiClient {
     return (await this.apiClient.status.getCurrent()).ledger_state.epoch;
   }
 
+  async getTransactions(
+    fromEpochNumber: number,
+    atEpochNumber: number,
+    addresses: string[],
+    cursor?: string | null
+  ) {
+    return await this.apiClient.stream.innerClient.streamTransactions({
+      streamTransactionsRequest: {
+        cursor,
+        at_ledger_state: { epoch: atEpochNumber },
+        from_ledger_state: { epoch: fromEpochNumber },
+        affected_global_entities_filter: addresses,
+        opt_ins: {
+          raw_hex: true,
+          affected_global_entities: true,
+          receipt_costing_parameters: true,
+          receipt_fee_summary: true,
+        },
+      },
+    });
+  }
+
   async getStateFields(componentId: string, fieldNames?: string[]) {
     const res =
       await this.apiClient.state.getEntityDetailsVaultAggregated(componentId);

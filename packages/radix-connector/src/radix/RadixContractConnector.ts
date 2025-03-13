@@ -1,7 +1,7 @@
 import { IContractConnector } from "@redstone-finance/sdk";
 import { RadixClient } from "./RadixClient";
 
-export abstract class RadixContractConnector<Adapter>
+export class RadixContractConnector<Adapter>
   implements IContractConnector<Adapter>
 {
   constructor(
@@ -9,7 +9,9 @@ export abstract class RadixContractConnector<Adapter>
     protected componentId?: string
   ) {}
 
-  abstract getAdapter(): Promise<Adapter>;
+  getAdapter(): Promise<Adapter> {
+    throw new Error("getAdapter is not implemented");
+  }
 
   async getBlockNumber(): Promise<number> {
     return await this.client.getCurrentEpochNumber();
