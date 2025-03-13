@@ -1,12 +1,14 @@
-import { ChainType } from "@redstone-finance/chain-configs";
+import { NonEvmChainType } from "@redstone-finance/chain-configs";
 import { AptosClientBuilder } from "@redstone-finance/movement-connector";
+import { RadixClient } from "@redstone-finance/radix-connector";
 import { SuiClientBuilder } from "@redstone-finance/sui-connector";
 import { MovementBlockchainService } from "./MovementBlockchainService";
+import { RadixBlockchainService } from "./RadixBlockchainService";
 import { SuiBlockchainService } from "./SuiBlockchainService";
 
 export function getNonEvmBlockchainService(
   rpcUrls: string[],
-  chainType: ChainType,
+  chainType: NonEvmChainType,
   chainId: number
 ) {
   switch (chainType) {
@@ -24,7 +26,11 @@ export function getNonEvmBlockchainService(
         .build();
       return new MovementBlockchainService(aptosClient);
     }
-    default:
+    case "radix": {
+      const radixClient = new RadixClient(chainId);
+      return new RadixBlockchainService(radixClient);
+    }
+    case "fuel":
       throw new Error(`chain type ${chainType} not supported`);
   }
 }
