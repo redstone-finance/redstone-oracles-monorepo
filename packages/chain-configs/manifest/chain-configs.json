@@ -624,8 +624,8 @@
       "chainId": 534352,
       "currencySymbol": "ETH",
       "publicRpcUrls": [
-        "https://scroll.drpc.org",
         "https://rpc.scroll.io",
+        "https://scroll.drpc.org",
         "https://1rpc.io/scroll",
         "https://scroll-mainnet.public.blastapi.io",
         "https://scroll-mainnet.chainstacklabs.com"
