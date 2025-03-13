@@ -37,6 +37,12 @@
     },
     "USDC": {
       "priceFeedAddress": "0x3587a73AA02519335A8a6053a97657BECe0bC2Cc"
+    },
+    "frxUSD": {
+      "priceFeedAddress": "0xC3346631E0A9720582fB9CAbdBEA22BC2F57741b"
+    },
+    "sfrxUSD_FUNDAMENTAL": {
+      "priceFeedAddress": "0xebE443E20ADf302B59419648c4dbA0c7299cf1A2"
     }
   }
 }
