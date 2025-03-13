@@ -5,18 +5,14 @@
     "id": 2
   },
   "updateTriggers": {
-    "deviationPercentage": 1,
+    "deviationPercentage": 0.5,
     "timeSinceLastUpdateInMilliseconds": 86400000
   },
   "adapterContract": "component_tdx_2_1cpxme8mxer08a9npvqrpac5y6fdrkx5hmt98x0u6uq9npkytqes3lp",
   "dataServiceId": "redstone-primary-prod",
   "priceFeeds": {
     "XRD": {
-      "priceFeedAddress": "component_tdx_2_1czch5r83ge90emwz0x80svn347fq3yeptam0g0q6tlfmw00vq4jye0",
-      "updateTriggersOverrides": {
-        "deviationPercentage": 0.5,
-        "timeSinceLastUpdateInMilliseconds": 86400000
-      }
+      "priceFeedAddress": "component_tdx_2_1czch5r83ge90emwz0x80svn347fq3yeptam0g0q6tlfmw00vq4jye0"
     },
     "ETH": {},
     "BTC": {}

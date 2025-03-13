@@ -1,3 +1,4 @@
+import { StreamTransactionsResponse } from "@radixdlt/babylon-gateway-api-sdk";
 import {
   defaultValidationConfig,
   generateRandomNonce,
@@ -64,6 +65,31 @@ export class RadixClient {
 
   async getCurrentEpochNumber() {
     return await this.apiClient.getCurrentEpochNumber();
+  }
+
+  async getTransactions(
+    fromEpochNumber: number,
+    toEpochNumber: number,
+    addresses: string[]
+  ) {
+    let accumulatedResult: StreamTransactionsResponse | undefined = undefined;
+    do {
+      const result = await this.apiClient.getTransactions(
+        fromEpochNumber,
+        toEpochNumber + 1, // +1 because it's "<" relation
+        addresses,
+        accumulatedResult?.next_cursor
+      );
+
+      if (!accumulatedResult) {
+        accumulatedResult = result;
+      } else {
+        accumulatedResult.next_cursor = result.next_cursor;
+        accumulatedResult.items.push(...result.items);
+      }
+    } while (accumulatedResult.next_cursor);
+
+    return accumulatedResult;
   }
 
   async waitForCommit(

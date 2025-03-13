@@ -42,7 +42,7 @@ export class PriceAdapterRadixContractAdapter
         new WritePricesRadixMethod(
           this.componentId,
           paramsProvider.getDataFeedIds(),
-          await paramsProvider.getPayloadData()
+          await paramsProvider.getPayloadData({ withUnsignedMetadata: true })
         )
       )
     ).values;
