@@ -51,6 +51,13 @@
         "deviationPercentage": 0.5,
         "timeSinceLastUpdateInMilliseconds": 10800000
       }
+    },
+    "COMP": {
+      "priceFeedAddress": "0xb81131B6368b3F0a83af09dB4E39Ac23DA96C2Db",
+      "updateTriggersOverrides": {
+        "deviationPercentage": 1,
+        "timeSinceLastUpdateInMilliseconds": 86400000
+      }
     }
   }
 }
