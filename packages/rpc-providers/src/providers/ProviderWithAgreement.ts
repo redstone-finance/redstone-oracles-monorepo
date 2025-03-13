@@ -265,7 +265,12 @@ export class ProviderWithAgreement extends ProviderWithFallback {
   ) {
     const prevBlockResult = this.lastBlockNumberForProvider[providerIdentifier];
 
-    if (prevBlockResult) {
+    RedstoneCommon.assert(
+      blockNumber > 0,
+      `provider=${providerIdentifier} returned block_number=${blockNumber}, block_number must be > 0`
+    );
+
+    if (RedstoneCommon.isDefined(prevBlockResult)) {
       const { blockNumber: prevBlockNumber } = prevBlockResult;
       RedstoneCommon.assert(
         prevBlockNumber <= blockNumber,
