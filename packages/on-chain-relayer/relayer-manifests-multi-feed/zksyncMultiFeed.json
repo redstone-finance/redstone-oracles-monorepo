@@ -13,6 +13,13 @@
   "priceFeeds": {
     "XVS": {
       "priceFeedAddress": "0xca4793Eeb7a837E30884279b3D557970E444EBDe"
+    },
+    "BCAP_FUNDAMENTAL": {
+      "priceFeedAddress": "0x0eF2418216476Ab5264821070B8c24b6B458F796",
+      "updateTriggersOverrides": {
+        "deviationPercentage": 0.1,
+        "timeSinceLastUpdateInMilliseconds": 86400000
+      }
     }
   }
 }
