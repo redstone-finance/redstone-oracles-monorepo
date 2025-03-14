@@ -1,4 +1,5 @@
 import { IContractConnector } from "@redstone-finance/sdk";
+import { utils } from "ethers";
 import { RadixClient } from "./RadixClient";
 
 export class RadixContractConnector<Adapter>
@@ -19,5 +20,11 @@ export class RadixContractConnector<Adapter>
 
   async waitForTransaction(transactionId: string): Promise<boolean> {
     return await this.client.waitForCommit(transactionId);
+  }
+
+  async getNormalizedBalance(address: string) {
+    return utils
+      .parseEther(await this.client.getXRDBalance(address))
+      .toBigInt();
   }
 }
