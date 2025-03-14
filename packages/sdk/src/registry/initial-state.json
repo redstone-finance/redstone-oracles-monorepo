@@ -319,15 +319,15 @@
       "ecdsaPublicKey": "0x040da4fe87038cf59484ec5a183c8da8e04d4ab31a3a73f4a72c1ce3b0ff9048a4e53dc954cff85d986881b8c8066e0281661eae1b8393cfc342c241233fa11616",
       "dateAdded": "2024-01-01"
     },
-    "iNSySDPdkm7c-yf6VBZTf-g0LRmh53H6Y0KrfwBcncI": {
+    "0x781b100A6e6cd36e9a224254855A59e49C915909": {
       "url": "https://kaiko.com/",
-      "logo": "https://redstone.finance/assets/img/redstone-logo-full.svg",
+      "logo": "https://raw.githubusercontent.com/redstone-finance/redstone-images/main/providers/kaiko/logo.png",
       "name": "kaiko-demo-1",
       "ipAddress": "0.0.0.0",
       "dataServiceId": "kaiko-demo-1",
       "description": "Data feeds provided by Kaiko",
-      "evmAddress": "0xC92Fb6e9383BCC90f8299AfA519ac6bf7606A9F0",
-      "ecdsaPublicKey": "0x04a4e9489e8e36206427cda107c566702de435055b83235dd787601af4a35f7fcd1b0347dba277a111c3ab756cfd87202f1986797472a1603581dc5c15a954dfe4",
+      "evmAddress": "0x781b100A6e6cd36e9a224254855A59e49C915909",
+      "ecdsaPublicKey": "0x04b8dc4891cb527e93e041b6caf594b97c1c388bac226d6c79117668629314a0df270582ec3cf497842e711dba7b6ab061b75e3c2a6e882e1691ed862f4f204f8e",
       "dateAdded": "2024-01-01"
     },
     "0x6318eE5BC5070150b7ab2688fc2C9c1Bf958B72c": {
@@ -466,7 +466,7 @@
     },
     "kaiko-demo-1": {
       "name": "Kaiko Demo 1 Node",
-      "logo": "https://redstone.finance/assets/img/redstone-logo-full.svg",
+      "logo": "https://raw.githubusercontent.com/redstone-finance/redstone-images/main/providers/kaiko/logo.png",
       "description": "Data feeds provided by Kaiko to staging env"
     },
     "kudasaijp-demo-1": {
