@@ -67,6 +67,17 @@ export class RadixClient {
     return await this.apiClient.getCurrentEpochNumber();
   }
 
+  async getXRDBalance(address: string) {
+    const addressBook = await RadixEngineToolkit.Utils.knownAddresses(
+      this.networkId
+    );
+
+    return await this.apiClient.getBalance(
+      address,
+      addressBook.resourceAddresses.xrd
+    );
+  }
+
   async getTransactions(
     fromEpochNumber: number,
     toEpochNumber: number,

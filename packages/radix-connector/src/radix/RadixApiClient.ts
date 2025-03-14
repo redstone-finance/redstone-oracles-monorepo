@@ -72,6 +72,24 @@ export class RadixApiClient {
     return (await this.apiClient.status.getCurrent()).ledger_state.epoch;
   }
 
+  async getBalance(address: string, resourceAddress: string): Promise<string> {
+    const response =
+      await this.apiClient.state.innerClient.entityFungibleResourceVaultPage({
+        stateEntityFungibleResourceVaultsPageRequest: {
+          address,
+          resource_address: resourceAddress,
+        },
+      });
+
+    if (response.items.length !== 1) {
+      throw new Error(
+        `Unexpected response items length: ${response.items.length}`
+      );
+    }
+
+    return response.items[0].amount;
+  }
+
   async getTransactions(
     fromEpochNumber: number,
     atEpochNumber: number,
