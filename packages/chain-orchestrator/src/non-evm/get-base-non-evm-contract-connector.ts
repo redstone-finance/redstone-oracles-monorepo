@@ -10,6 +10,10 @@ import {
   SUI_MULTI_FEED,
 } from "@redstone-finance/on-chain-relayer-common";
 import {
+  RadixClient,
+  RadixContractConnector,
+} from "@redstone-finance/radix-connector";
+import {
   SuiClientBuilder,
   SuiContractConnector,
 } from "@redstone-finance/sui-connector";
@@ -31,8 +35,9 @@ export function getBaseNonEvmContractConnector(
           .withRpcUrls(rpcUrls)
           .build()
       );
-    case FUEL:
     case RADIX_MULTI_FEED:
+      return new RadixContractConnector(new RadixClient(chainId));
+    case FUEL:
       throw new Error(`Not supported for ${adapterType}`);
   }
 }
