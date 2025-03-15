@@ -2263,12 +2263,19 @@
     },
     "LBTC_FUNDAMENTAL": {
       "source": ["lbtc-indexer-fetcher"],
-      "deviationCheck": {
-        "deviationWithRecentValues": {
-          "maxPercent": 10,
-          "maxDelayMilliseconds": 6000000
+      "valueCapConfig": {
+        "upper": {
+          "value": 1
+        },
+        "lower": {
+          "value": 1
         }
       },
+      "denomination": "BTC",
+      "rateFeed": true
+    },
+    "mBTC_POR": {
+      "source": ["mbtc-indexer-fetcher"],
       "valueCapConfig": {
         "upper": {
           "value": 1
