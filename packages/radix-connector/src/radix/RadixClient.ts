@@ -162,6 +162,10 @@ export class RadixClient {
     );
   }
 
+  getPublicKeyHex() {
+    return this.signer?.publicKeyHex();
+  }
+
   protected getPublicKey() {
     if (!this.signer) {
       throw new Error("No signer or private key passed");

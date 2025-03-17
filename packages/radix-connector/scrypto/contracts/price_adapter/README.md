@@ -37,6 +37,8 @@ the [RedStone docs](https://docs.redstone.finance/docs/introduction)
   the functions may fail when one of the values is overflowing the `Decimal` range `/ 10 ** 8` which is `~2 ** 165`.
 * In that case you should use one `*._raw` function which returning values are encoded as `U256Digits`,
   represented each as four `u64`'s, to be properly represented in SBOR.
+* The functions with `_trusted` suffix require proof-resource in the calling manifest
+  (its address can be taken by using `get_trusted_updater_resource` function)
 * The `payload` value is a `Vec` of `u8`s representing the serialized RedStone payload.
 
 📚 See RedStone data-packing: https://docs.redstone.finance/img/payload.png and the [Sample payload](#-sample-payload)
@@ -84,6 +86,10 @@ That function doesn't modify the contract's storage.
 pub fn write_prices(&mut self, feed_ids: Vec<Vec<u8>>, payload: Payload) -> (u64, Vec<Decimal>)
 
 pub fn write_prices_raw(&mut self, feed_ids: Vec<Vec<u8>>, payload: Payload) -> (u64, Vec<RedStoneValue>)
+
+pub fn write_prices_trusted(&mut self, feed_ids: Vec<Vec<u8>>, payload: Payload) -> (u64, Vec<Decimal>)
+
+pub fn write_prices_raw_trusted(&mut self, feed_ids: Vec<Vec<u8>>, payload: Payload) -> (u64, Vec<RedStoneValue>)
 ```
 
 Besides on-the-fly processing, there is also a function that processes the `payload` on-chain.
@@ -91,6 +97,11 @@ This function saves the aggregated values to the contract's storage and returns 
 The values persist in the contract's storage and then can be read by using `read_prices` function.
 The timestamp of the saved data can be retrieved using the `read_timestamp` function.
 The function also returns the saved timestamp and price values.
+
+The functions without `_trusted` suffix are subjects for checking the min time interval between updates -
+by default set to 40 seconds.
+The functions with `_trusted` suffix require proof-resource in the calling manifest
+(its address can be taken by using `get_trusted_updater_resource` function)
 
 That function modifies the contract's storage.
 

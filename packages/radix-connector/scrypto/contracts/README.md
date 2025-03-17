@@ -11,7 +11,7 @@
 ## Price Adapter
 
 * The [Price Adapter](./price_adapter/README.md) component is updated from one or more off-chain processes
-* The data are written to [`PriceData`](./price_adapter/src/price_data.rs) objects
+* The data are written to [`PriceDataRaw`](./price_adapter/src/price_data.rs) objects
 * The component can be read by one of the non-mutating functions
 * Logic update requires changing the code and version, but the blueprints cannot be upgraded for the current Radix
 version, so will be redeployed
