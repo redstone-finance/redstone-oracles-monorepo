@@ -3,18 +3,53 @@ use common::{
     decimals::{ToRedStoneDecimal, ToRedStoneDecimals},
     process_payload::process_payload,
     read_price_data::{read_price_data, read_prices_data},
-    redstone::{FeedId, Value as RedStoneValue},
+    redstone::{
+        contract::verification::UpdateTimestampVerifier::{Trusted, Untrusted},
+        contract::verification::*,
+        FeedId, Value as RedStoneValue,
+    },
     time::Time,
     verify::{verify_signers_config, verify_update},
 };
 use scrypto::prelude::*;
 
+const MIN_TIME_BETWEEN_UPDATES_MS: u64 = 40_000;
+const MAX_TIMESTAMP_DELAY_MS: Option<u64> = None; // uses default value
+const MAX_TIMESTAMP_AHEAD_MS: Option<u64> = None; // uses default value
+
+#[derive(ScryptoSbor, NonFungibleData)]
+pub struct Updater {}
+
 #[blueprint]
 mod price_adapter {
+    enable_method_auth! {
+        roles {
+            trusted_updater_auth => updatable_by: [];
+        },
+        methods {
+            write_prices_trusted => restrict_to: [trusted_updater_auth, OWNER];
+            write_prices_raw_trusted => restrict_to: [trusted_updater_auth, OWNER];
+            write_prices => PUBLIC;
+            write_prices_raw => PUBLIC;
+            get_prices => PUBLIC;
+            get_prices_raw => PUBLIC;
+            get_unique_signer_threshold => PUBLIC;
+            read_price_and_timestamp => PUBLIC;
+            read_price_and_timestamp_raw => PUBLIC;
+            read_price_data => PUBLIC;
+            read_price_data_raw => PUBLIC;
+            read_prices => PUBLIC;
+            read_prices_raw => PUBLIC;
+            read_timestamp => PUBLIC;
+            get_trusted_updater_resource => PUBLIC;
+        }
+    }
+
     struct PriceAdapter {
         signer_count_threshold: u8,
         signers: Vec<Vec<u8>>,
         prices: HashMap<FeedId, PriceDataRaw>,
+        trusted_updater_resource: Option<ResourceAddress>,
         time: Time,
     }
 
@@ -26,7 +61,26 @@ mod price_adapter {
             Self::make_instance(
                 signer_count_threshold,
                 allowed_signer_addresses,
+                None,
                 Time::System,
+            )
+        }
+
+        pub fn instantiate_with_trusted_updaters(
+            signer_count_threshold: u8,
+            allowed_signer_addresses: Vec<Vec<u8>>,
+            trusted_updaters: Vec<String>,
+        ) -> (Global<PriceAdapter>, Bucket) {
+            let (updater_badge_resource, badges) = Self::make_updater_resources(&trusted_updaters);
+
+            (
+                Self::make_instance(
+                    signer_count_threshold,
+                    allowed_signer_addresses,
+                    Some(updater_badge_resource),
+                    Time::System,
+                ),
+                badges,
             )
         }
 
@@ -38,12 +92,17 @@ mod price_adapter {
             Self::make_instance(
                 signer_count_threshold,
                 allowed_signer_addresses,
+                None,
                 timestamp_mock.into(),
             )
         }
 
         pub fn get_unique_signer_threshold(&self) -> u8 {
             self.signer_count_threshold
+        }
+
+        pub fn get_trusted_updater_resource(&self) -> Option<ResourceAddress> {
+            self.trusted_updater_resource
         }
 
         pub fn get_prices_raw(
@@ -57,14 +116,7 @@ mod price_adapter {
         pub fn get_prices(&self, feed_ids: Vec<Vec<u8>>, payload: Vec<u8>) -> (u64, Vec<Decimal>) {
             let (timestamp, values) = self.get_prices_raw(feed_ids.clone(), payload);
 
-            (
-                timestamp,
-                values
-                    .into_iter()
-                    .enumerate()
-                    .to_redstone_decimals()
-                    .expect("Price should be in conversion range"),
-            )
+            (timestamp, Self::convert_to_redstone_decimals(values))
         }
 
         pub fn write_prices_raw(
@@ -72,7 +124,7 @@ mod price_adapter {
             feed_ids: Vec<Vec<u8>>,
             payload: Vec<u8>,
         ) -> (u64, Vec<RedStoneValue>) {
-            self.process_payload_and_write(feed_ids, payload)
+            self.process_payload_and_write(feed_ids, payload, Untrusted)
         }
 
         pub fn write_prices(
@@ -80,16 +132,27 @@ mod price_adapter {
             feed_ids: Vec<Vec<u8>>,
             payload: Vec<u8>,
         ) -> (u64, Vec<Decimal>) {
-            let (timestamp, values) = self.write_prices_raw(feed_ids, payload);
+            let (timestamp, values) = self.process_payload_and_write(feed_ids, payload, Untrusted);
 
-            (
-                timestamp,
-                values
-                    .into_iter()
-                    .enumerate()
-                    .to_redstone_decimals()
-                    .expect("Price should be in conversion range"),
-            )
+            (timestamp, Self::convert_to_redstone_decimals(values))
+        }
+
+        pub fn write_prices_raw_trusted(
+            &mut self,
+            feed_ids: Vec<Vec<u8>>,
+            payload: Vec<u8>,
+        ) -> (u64, Vec<RedStoneValue>) {
+            self.process_payload_and_write(feed_ids, payload, Trusted)
+        }
+
+        pub fn write_prices_trusted(
+            &mut self,
+            feed_ids: Vec<Vec<u8>>,
+            payload: Vec<u8>,
+        ) -> (u64, Vec<Decimal>) {
+            let (timestamp, values) = self.process_payload_and_write(feed_ids, payload, Trusted);
+
+            (timestamp, Self::convert_to_redstone_decimals(values))
         }
 
         pub fn read_prices_raw(&self, feed_ids: Vec<Vec<u8>>) -> Vec<RedStoneValue> {
@@ -100,11 +163,7 @@ mod price_adapter {
         }
 
         pub fn read_prices(&self, feed_ids: Vec<Vec<u8>>) -> Vec<Decimal> {
-            self.read_prices_raw(feed_ids)
-                .into_iter()
-                .enumerate()
-                .to_redstone_decimals()
-                .expect("Price should be in conversion range")
+            Self::convert_to_redstone_decimals(self.read_prices_raw(feed_ids))
         }
 
         pub fn read_price_data_raw(&self, feed_ids: Vec<Vec<u8>>) -> Vec<PriceDataRaw> {
@@ -113,11 +172,7 @@ mod price_adapter {
         }
 
         pub fn read_price_data(&self, feed_ids: Vec<Vec<u8>>) -> Vec<PriceData> {
-            self.read_price_data_raw(feed_ids)
-                .into_iter()
-                .enumerate()
-                .to_redstone_decimals()
-                .expect("Price should be in conversion range")
+            Self::convert_to_redstone_decimals(self.read_price_data_raw(feed_ids))
         }
 
         pub fn read_price_and_timestamp_raw(&self, feed_id: Vec<u8>) -> (RedStoneValue, u64) {
@@ -153,6 +208,8 @@ mod price_adapter {
                 self.signers.clone(),
                 feed_ids,
                 payload,
+                MAX_TIMESTAMP_DELAY_MS,
+                MAX_TIMESTAMP_AHEAD_MS,
             )
         }
 
@@ -160,6 +217,7 @@ mod price_adapter {
             &mut self,
             feed_ids: Vec<Vec<u8>>,
             payload: Vec<u8>,
+            verifier: UpdateTimestampVerifier,
         ) -> (u64, Vec<RedStoneValue>) {
             let (timestamp, values) = self.process_payload(feed_ids.clone(), payload);
             let current_timestamp = self.time.get_current_in_ms();
@@ -175,8 +233,10 @@ mod price_adapter {
                         verify_update(
                             current_timestamp,
                             Some(price_data.latest_update_timestamp),
+                            MIN_TIME_BETWEEN_UPDATES_MS,
                             price_data.timestamp,
                             timestamp,
+                            &verifier,
                         );
                     }
 
@@ -198,19 +258,46 @@ mod price_adapter {
         fn make_instance(
             signer_count_threshold: u8,
             allowed_signer_addresses: Vec<Vec<u8>>,
+            trusted_updater_resource: Option<ResourceAddress>,
             time: Time,
         ) -> Global<PriceAdapter> {
             verify_signers_config(&allowed_signer_addresses, signer_count_threshold);
 
-            Self {
+            let price_adapter = Self {
                 signer_count_threshold,
                 signers: allowed_signer_addresses,
                 prices: hashmap!(),
+                trusted_updater_resource,
                 time,
             }
             .instantiate()
-            .prepare_to_globalize(OwnerRole::None)
+            .prepare_to_globalize(OwnerRole::None);
+
+            match trusted_updater_resource {
+                Some(res) => price_adapter.roles(roles!(
+                    trusted_updater_auth => rule!(require(res));
+                )),
+                _ => price_adapter,
+            }
             .globalize()
+        }
+
+        fn make_updater_resources(trusted_updaters: &[String]) -> (ResourceAddress, Bucket) {
+            let badges_bucket =
+                ResourceBuilder::new_string_non_fungible(OwnerRole::None)
+                    .metadata(metadata!(init { "name" => "Trusted Updater Badge", locked; }))
+                    .mint_initial_supply(trusted_updaters.iter().map(|address| {
+                        (StringNonFungibleLocalId::new(address).unwrap(), Updater {})
+                    }));
+
+            (badges_bucket.resource_address(), badges_bucket.into())
+        }
+
+        fn convert_to_redstone_decimals<T: ToRedStoneDecimal<D>, D>(values: Vec<T>) -> Vec<D> {
+            values
+                .into_iter()
+                .to_redstone_decimals()
+                .expect("Price should be in conversio range")
         }
     }
 }
