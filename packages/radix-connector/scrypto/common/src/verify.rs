@@ -16,14 +16,16 @@ pub fn verify_signers_config(signers: &Vec<Vec<u8>>, signer_count_threshold: u8)
 pub fn verify_update(
     current_timestamp: u64,
     latest_update_timestamp: Option<u64>,
+    min_time_between_updates: u64,
     previous_timestamp: u64,
     timestamp: u64,
+    verifier: &UpdateTimestampVerifier,
 ) {
-    UpdateTimestampVerifier::Untrusted
+    verifier
         .verify_timestamp(
             current_timestamp.into(),
             latest_update_timestamp.map(|v| v.into()),
-            0.into(),
+            min_time_between_updates.into(),
             previous_timestamp.into(),
             timestamp.into(),
         )
