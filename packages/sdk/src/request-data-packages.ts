@@ -82,6 +82,28 @@ export interface ValuesForDataFeeds {
   [dataFeedId: string]: BigNumber | undefined;
 }
 
+export enum DataFeedPackageErrorType {
+  MissingDataFeed = "MissingDataFeed",
+  NoDataPackages = "NoDataPackages",
+  TooFewSigners = "TooFewSigners",
+}
+
+export class DataFeedPackageError extends Error {
+  public dataFeedId: string;
+  public errorType: DataFeedPackageErrorType;
+
+  constructor(
+    message: string,
+    dataFeedId: string,
+    errorType: DataFeedPackageErrorType
+  ) {
+    super(message);
+    this.dataFeedId = dataFeedId;
+    this.errorType = errorType;
+    Object.setPrototypeOf(this, DataFeedPackageError.prototype);
+  }
+}
+
 export const SignedDataPackageSchema = z.object({
   dataPoints: z
     .array(
@@ -159,6 +181,10 @@ export const requestDataPackages = async (
     const errMessage = `Request failed: ${JSON.stringify({
       reqParams,
     })}, Original error: ${RedstoneCommon.stringifyError(e)}`;
+    if (e instanceof AggregateError) {
+      e.message = errMessage;
+      throw e;
+    }
     throw new Error(errMessage);
   }
 };
@@ -271,7 +297,11 @@ function validateDataPackagesResponse(
 ) {
   if (!dataFeedPackages) {
     const message = `Requested data feed id is not included in response: ${dataFeedId}`;
-    throw new Error(message);
+    throw new DataFeedPackageError(
+      message,
+      dataFeedId,
+      DataFeedPackageErrorType.MissingDataFeed
+    );
   }
 
   // filter out packages with not expected signers
@@ -282,13 +312,21 @@ function validateDataPackagesResponse(
 
   if (dataFeedPackages.length === 0) {
     const message = `No data packages for the data feed: ${dataFeedId}`;
-    throw new Error(message);
+    throw new DataFeedPackageError(
+      message,
+      dataFeedId,
+      DataFeedPackageErrorType.NoDataPackages
+    );
   } else if (dataFeedPackages.length < reqParams.uniqueSignersCount) {
     const message =
       `Too few unique signers for the data feed: ${dataFeedId}. ` +
       `Expected: ${reqParams.uniqueSignersCount}. ` +
       `Received: ${dataFeedPackages.length}`;
-    throw new Error(message);
+    throw new DataFeedPackageError(
+      message,
+      dataFeedId,
+      DataFeedPackageErrorType.TooFewSigners
+    );
   }
 
   const signedDataPackages = dataFeedPackages.map((dp) =>
