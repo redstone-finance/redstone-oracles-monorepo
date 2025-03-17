@@ -1,13 +1,15 @@
 import { RadixClient } from "../../radix/RadixClient";
 import { PriceAdapterRadixContractConnector } from "./PriceAdapterRadixContractConnector";
 import { PriceAdapterInstantiateRadixFunction } from "./methods/PriceAdapterInstantiateRadixFunction";
+import { PriceAdapterInstantiateWithTrustedUpdatersRadixFunction } from "./methods/PriceAdapterInstantiateWithTrustedUpdatersRadixFunction";
 
 export class PriceAdapterRadixContractDeployer extends PriceAdapterRadixContractConnector {
   constructor(
     client: RadixClient,
     private packageId: string,
     private signerCountThreshold: number,
-    private signers: string[]
+    private signers: string[],
+    private trustedUpdaters?: string[]
   ) {
     super(client);
   }
@@ -24,11 +26,18 @@ export class PriceAdapterRadixContractDeployer extends PriceAdapterRadixContract
 
   private async instantiate() {
     return await this.client.call(
-      new PriceAdapterInstantiateRadixFunction(
-        this.packageId,
-        this.signerCountThreshold,
-        this.signers
-      )
+      this.trustedUpdaters?.length
+        ? new PriceAdapterInstantiateWithTrustedUpdatersRadixFunction(
+            this.packageId,
+            this.signerCountThreshold,
+            this.signers,
+            this.trustedUpdaters
+          )
+        : new PriceAdapterInstantiateRadixFunction(
+            this.packageId,
+            this.signerCountThreshold,
+            this.signers
+          )
     );
   }
 }
