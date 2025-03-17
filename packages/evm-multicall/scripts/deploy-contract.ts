@@ -13,15 +13,14 @@ async function deployRedstoneMulticall() {
   const wallet = new ethers.Wallet(privKey).connect(hre.ethers.provider);
 
   console.log("deploy start");
-  const deployed = await hre.ethers.deployContract(
+  const contractFactory = await hre.ethers.getContractFactory(
     "RedstoneMulticall3",
     wallet
   );
+  const deployed = await contractFactory.deploy();
 
-  await deployed.deployTransaction.wait();
-  console.log(`address=${deployed.address}`);
-
-  console.log(`deploy_tx=${JSON.stringify(deployed.deployTransaction)}`);
+  console.log(`deploy_tx= ${JSON.stringify(deployed.deployTransaction)}`);
+  console.log(`address= ${deployed.address}`);
 }
 
 void deployRedstoneMulticall();
