@@ -2358,6 +2358,11 @@
       "source": ["securitize-api"],
       "denomination": "USD",
       "rateFeed": true
+    },
+    "ylstETH_FUNDAMENTAL": {
+      "source": ["ethereum-evm-fetcher-cian"],
+      "denomination": "ETH",
+      "rateFeed": true
     }
   },
   "multiPointPackages": {
