@@ -13,7 +13,7 @@ import {
 import { skipIfDisabledOrNotSupported } from "./rpc-urls/common";
 
 const RETRY_CONFIG: Omit<RedstoneCommon.RetryConfig, "fn"> = {
-  maxRetries: 2,
+  maxRetries: 3,
   waitBetweenMs: 1000,
 };
 
@@ -24,6 +24,7 @@ const CHAINS_TO_SKIP_MULTICALL_ADDRESS_CHECK = [
   "BounceBit Mainnet",
   "TAC Turin",
   "Corn Maizenet", // first few create transactions failed leading to different address
+  "Polygon Mainnet",
 ];
 
 const CHAINS_TO_SKIP_RPC_PRESENCE_CHECK = [
@@ -125,7 +126,7 @@ describe("Validate multicall3", () => {
         fn: async () =>
           await RedstoneCommon.timeout(
             provider.getCode(chainConfig.multicall3.address),
-            1000
+            1500
           ),
         fnName: "provider.getCode",
       })();

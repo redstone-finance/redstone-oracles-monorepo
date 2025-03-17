@@ -71,8 +71,9 @@
       "etherScanApi": "https://api.snowtrace.io",
       "avgBlockTimeMs": 2000,
       "multicall3": {
-        "address": "0xcA11bde05977b3631167028862bE2a173976CA11",
-        "type": "Multicall3"
+        "address": "0xaD6CC5a465E5c8284a49eC9eD10EFE275460678c",
+        "type": "RedstoneMulticall3",
+        "gasLimitPerCall": 1000000
       },
       "isAuctionModel": false,
       "twoDimensionalFees": false,
@@ -92,8 +93,9 @@
       ],
       "avgBlockTimeMs": 2000,
       "multicall3": {
-        "address": "0xcA11bde05977b3631167028862bE2a173976CA11",
-        "type": "Multicall3"
+        "address": "0xaD6CC5a465E5c8284a49eC9eD10EFE275460678c",
+        "type": "RedstoneMulticall3",
+        "gasLimitPerCall": 1000000
       },
       "isAuctionModel": false,
       "twoDimensionalFees": false,
@@ -111,8 +113,9 @@
       ],
       "avgBlockTimeMs": 2000,
       "multicall3": {
-        "address": "0xcA11bde05977b3631167028862bE2a173976CA11",
-        "type": "Multicall3"
+        "address": "0x52f530e1d42BdFeF939729C341Ed714698a993f7",
+        "type": "RedstoneMulticall3",
+        "gasLimitPerCall": 1000000
       },
       "isAuctionModel": false,
       "twoDimensionalFees": false,
@@ -126,8 +129,9 @@
       "etherScanApi": "https://api.celoscan.io",
       "avgBlockTimeMs": 5000,
       "multicall3": {
-        "address": "0xcA11bde05977b3631167028862bE2a173976CA11",
-        "type": "Multicall3"
+        "address": "0xaD6CC5a465E5c8284a49eC9eD10EFE275460678c",
+        "type": "RedstoneMulticall3",
+        "gasLimitPerCall": 1000000
       },
       "isAuctionModel": true,
       "twoDimensionalFees": false,
@@ -145,8 +149,9 @@
       ],
       "avgBlockTimeMs": 5000,
       "multicall3": {
-        "address": "0xcA11bde05977b3631167028862bE2a173976CA11",
-        "type": "Multicall3"
+        "address": "0xaD6CC5a465E5c8284a49eC9eD10EFE275460678c",
+        "type": "RedstoneMulticall3",
+        "gasLimitPerCall": 1000000
       },
       "isAuctionModel": false,
       "twoDimensionalFees": false,
@@ -181,8 +186,9 @@
       ],
       "avgBlockTimeMs": 6000,
       "multicall3": {
-        "address": "0xcA11bde05977b3631167028862bE2a173976CA11",
-        "type": "Multicall3"
+        "address": "0xaD6CC5a465E5c8284a49eC9eD10EFE275460678c",
+        "type": "RedstoneMulticall3",
+        "gasLimitPerCall": 1000000
       },
       "isAuctionModel": false,
       "twoDimensionalFees": false,
@@ -200,8 +206,9 @@
       ],
       "avgBlockTimeMs": 10000,
       "multicall3": {
-        "address": "0xcA11bde05977b3631167028862bE2a173976CA11",
-        "type": "Multicall3"
+        "address": "0xaD6CC5a465E5c8284a49eC9eD10EFE275460678c",
+        "type": "RedstoneMulticall3",
+        "gasLimitPerCall": 1000000
       },
       "isAuctionModel": false,
       "twoDimensionalFees": false,
@@ -220,8 +227,9 @@
       ],
       "avgBlockTimeMs": 2000,
       "multicall3": {
-        "address": "0xcA11bde05977b3631167028862bE2a173976CA11",
-        "type": "Multicall3"
+        "address": "0xaD6CC5a465E5c8284a49eC9eD10EFE275460678c",
+        "type": "RedstoneMulticall3",
+        "gasLimitPerCall": 1000000
       },
       "isAuctionModel": false,
       "twoDimensionalFees": false,
@@ -268,8 +276,9 @@
       ],
       "avgBlockTimeMs": 2000,
       "multicall3": {
-        "address": "0xcA11bde05977b3631167028862bE2a173976CA11",
-        "type": "Multicall3"
+        "address": "0xaD6CC5a465E5c8284a49eC9eD10EFE275460678c",
+        "type": "RedstoneMulticall3",
+        "gasLimitPerCall": 1000000
       },
       "isAuctionModel": false,
       "fallbackToEthMaxPriorityFeePerGas": true,
@@ -397,8 +406,9 @@
       ],
       "avgBlockTimeMs": 6000,
       "multicall3": {
-        "address": "0xcA11bde05977b3631167028862bE2a173976CA11",
-        "type": "Multicall3"
+        "address": "0xaD6CC5a465E5c8284a49eC9eD10EFE275460678c",
+        "type": "RedstoneMulticall3",
+        "gasLimitPerCall": 1000000
       },
       "isAuctionModel": true,
       "twoDimensionalFees": false,
@@ -411,8 +421,9 @@
       "publicRpcUrls": ["https://rpc.frax.com"],
       "avgBlockTimeMs": 2000,
       "multicall3": {
-        "address": "0xcA11bde05977b3631167028862bE2a173976CA11",
-        "type": "Multicall3"
+        "address": "0xaD6CC5a465E5c8284a49eC9eD10EFE275460678c",
+        "type": "RedstoneMulticall3",
+        "gasLimitPerCall": 1000000
       },
       "isAuctionModel": false,
       "twoDimensionalFees": false,
@@ -430,8 +441,9 @@
       ],
       "avgBlockTimeMs": 3000,
       "multicall3": {
-        "address": "0xcA11bde05977b3631167028862bE2a173976CA11",
-        "type": "Multicall3"
+        "address": "0xaD6CC5a465E5c8284a49eC9eD10EFE275460678c",
+        "type": "RedstoneMulticall3",
+        "gasLimitPerCall": 1000000
       },
       "isAuctionModel": false,
       "twoDimensionalFees": false,
@@ -449,8 +461,9 @@
       ],
       "avgBlockTimeMs": 2500,
       "multicall3": {
-        "address": "0xcA11bde05977b3631167028862bE2a173976CA11",
-        "type": "Multicall3"
+        "address": "0xaD6CC5a465E5c8284a49eC9eD10EFE275460678c",
+        "type": "RedstoneMulticall3",
+        "gasLimitPerCall": 1000000
       },
       "isAuctionModel": true,
       "twoDimensionalFees": false,
@@ -463,8 +476,9 @@
       "publicRpcUrls": ["https://rpc.gobob.xyz"],
       "avgBlockTimeMs": 2500,
       "multicall3": {
-        "address": "0xcA11bde05977b3631167028862bE2a173976CA11",
-        "type": "Multicall3"
+        "address": "0xaD6CC5a465E5c8284a49eC9eD10EFE275460678c",
+        "type": "RedstoneMulticall3",
+        "gasLimitPerCall": 1000000
       },
       "isAuctionModel": false,
       "fallbackToEthMaxPriorityFeePerGas": true,
@@ -495,8 +509,9 @@
       "publicRpcUrls": ["https://real.drpc.org"],
       "avgBlockTimeMs": 2000,
       "multicall3": {
-        "address": "0xcA11bde05977b3631167028862bE2a173976CA11",
-        "type": "Multicall3"
+        "address": "0xaD6CC5a465E5c8284a49eC9eD10EFE275460678c",
+        "type": "RedstoneMulticall3",
+        "gasLimitPerCall": 1000000
       },
       "isAuctionModel": false,
       "twoDimensionalFees": false,
@@ -612,8 +627,9 @@
       ],
       "avgBlockTimeMs": 2000,
       "multicall3": {
-        "address": "0xcA11bde05977b3631167028862bE2a173976CA11",
-        "type": "Multicall3"
+        "address": "0xaD6CC5a465E5c8284a49eC9eD10EFE275460678c",
+        "type": "RedstoneMulticall3",
+        "gasLimitPerCall": 1000000
       },
       "isAuctionModel": false,
       "twoDimensionalFees": false,
@@ -632,8 +648,9 @@
       ],
       "avgBlockTimeMs": 3000,
       "multicall3": {
-        "address": "0xcA11bde05977b3631167028862bE2a173976CA11",
-        "type": "Multicall3"
+        "address": "0xaD6CC5a465E5c8284a49eC9eD10EFE275460678c",
+        "type": "RedstoneMulticall3",
+        "gasLimitPerCall": 1000000
       },
       "isAuctionModel": false,
       "twoDimensionalFees": false,
@@ -690,8 +707,9 @@
       "publicRpcUrls": [],
       "avgBlockTimeMs": 12000,
       "multicall3": {
-        "address": "0xcA11bde05977b3631167028862bE2a173976CA11",
-        "type": "Multicall3"
+        "address": "0xaD6CC5a465E5c8284a49eC9eD10EFE275460678c",
+        "type": "RedstoneMulticall3",
+        "gasLimitPerCall": 1000000
       },
       "isAuctionModel": false,
       "fallbackToEthMaxPriorityFeePerGas": true,
@@ -726,8 +744,9 @@
       ],
       "avgBlockTimeMs": 1000,
       "multicall3": {
-        "address": "0xcA11bde05977b3631167028862bE2a173976CA11",
-        "type": "Multicall3"
+        "address": "0xaD6CC5a465E5c8284a49eC9eD10EFE275460678c",
+        "type": "RedstoneMulticall3",
+        "gasLimitPerCall": 1000000
       },
       "isAuctionModel": false,
       "fallbackToEthMaxPriorityFeePerGas": true,
@@ -761,8 +780,9 @@
       ],
       "avgBlockTimeMs": 24000,
       "multicall3": {
-        "address": "0xcA11bde05977b3631167028862bE2a173976CA11",
-        "type": "Multicall3"
+        "address": "0xaD6CC5a465E5c8284a49eC9eD10EFE275460678c",
+        "type": "RedstoneMulticall3",
+        "gasLimitPerCall": 1000000
       },
       "isAuctionModel": false,
       "fallbackToEthMaxPriorityFeePerGas": true,
@@ -779,8 +799,9 @@
       ],
       "avgBlockTimeMs": 60000,
       "multicall3": {
-        "address": "0xcA11bde05977b3631167028862bE2a173976CA11",
-        "type": "Multicall3"
+        "address": "0x0871f732A0DaAFe1E6a80A862878648a86dE1298",
+        "type": "RedstoneMulticall3",
+        "gasLimitPerCall": 1000000
       },
       "isAuctionModel": false,
       "fallbackToEthMaxPriorityFeePerGas": true,
@@ -816,8 +837,9 @@
       ],
       "avgBlockTimeMs": 2000,
       "multicall3": {
-        "address": "0xcA11bde05977b3631167028862bE2a173976CA11",
-        "type": "Multicall3"
+        "address": "0xaD6CC5a465E5c8284a49eC9eD10EFE275460678c",
+        "type": "RedstoneMulticall3",
+        "gasLimitPerCall": 1000000
       },
       "isAuctionModel": false,
       "twoDimensionalFees": false,
@@ -843,11 +865,17 @@
       "name": "Sonic Network",
       "chainId": 146,
       "currencySymbol": "S",
-      "publicRpcUrls": ["https://rpc.soniclabs.com"],
+      "publicRpcUrls": [
+        "https://rpc.soniclabs.com",
+        "https://rpc.ankr.com/sonic_mainnet",
+        "https://sonic-rpc.publicnode.com",
+        "https://sonic.drpc.org"
+      ],
       "avgBlockTimeMs": 700,
       "multicall3": {
-        "address": "0xcA11bde05977b3631167028862bE2a173976CA11",
-        "type": "Multicall3"
+        "address": "0xaD6CC5a465E5c8284a49eC9eD10EFE275460678c",
+        "type": "RedstoneMulticall3",
+        "gasLimitPerCall": 1000000
       },
       "isAuctionModel": false,
       "fallbackToEthMaxPriorityFeePerGas": true,
@@ -1017,8 +1045,9 @@
       ],
       "avgBlockTimeMs": 1000,
       "multicall3": {
-        "address": "0xcA11bde05977b3631167028862bE2a173976CA11",
-        "type": "Multicall3"
+        "address": "0xaD6CC5a465E5c8284a49eC9eD10EFE275460678c",
+        "type": "RedstoneMulticall3",
+        "gasLimitPerCall": 1000000
       },
       "isAuctionModel": false,
       "fallbackToEthMaxPriorityFeePerGas": true,
@@ -1115,8 +1144,9 @@
       "publicRpcUrls": ["https://rpc.hyperliquid.xyz/evm"],
       "avgBlockTimeMs": 2000,
       "multicall3": {
-        "address": "0xcA11bde05977b3631167028862bE2a173976CA11",
-        "type": "Multicall3"
+        "address": "0xaD6CC5a465E5c8284a49eC9eD10EFE275460678c",
+        "type": "RedstoneMulticall3",
+        "gasLimitPerCall": 1000000
       },
       "isAuctionModel": false,
       "fallbackToEthMaxPriorityFeePerGas": true,
