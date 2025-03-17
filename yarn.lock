@@ -9014,9 +9014,12 @@ __metadata:
   dependencies:
     "@redstone-finance/chain-configs": "workspace:*"
     "@redstone-finance/http-client": "workspace:*"
+    "@redstone-finance/protocol": "workspace:*"
     "@redstone-finance/rpc-providers": "workspace:*"
     "@redstone-finance/utils": "workspace:*"
     dotenv: "npm:^16.0.3"
+    ethers: "npm:^5.7.2"
+    ethers-v6: "npm:ethers@6.13.5"
     zod: "npm:^3.22.4"
   languageName: unknown
   linkType: soft
