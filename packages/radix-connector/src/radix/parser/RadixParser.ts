@@ -118,6 +118,22 @@ export class RadixParser {
   private static makeSerializableManifestValue(
     obj: ObjInterface
   ): SerializableManifestValue {
+    if (
+      obj.kind == "Enum" &&
+      "type_name" in obj &&
+      "variant_name" in obj &&
+      obj.type_name === "Option"
+    ) {
+      if (obj.variant_name === "Some" && obj.fields?.length) {
+        return RadixParser.makeSerializableManifestValue(obj.fields[0]);
+      } else {
+        return {
+          kind: undefined,
+          value: undefined,
+        } as unknown as SerializableManifestValue;
+      }
+    }
+
     if (obj.kind === "Array" && !obj.elements) {
       if (Array.isArray(obj.value)) {
         /// a number-digits representation

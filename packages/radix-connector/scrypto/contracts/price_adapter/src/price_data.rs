@@ -20,10 +20,16 @@ pub struct PriceData {
 
 impl ToRedStoneDecimal<PriceData> for (usize, PriceDataRaw) {
     fn to_redstone_decimal(self) -> Result<PriceData, Error> {
+        self.1.to_redstone_decimal()
+    }
+}
+
+impl ToRedStoneDecimal<PriceData> for PriceDataRaw {
+    fn to_redstone_decimal(self) -> Result<PriceData, Error> {
         Ok(PriceData {
-            price: (self.0, self.1.price).to_redstone_decimal()?,
-            timestamp: self.1.timestamp,
-            latest_update_timestamp: self.1.latest_update_timestamp,
+            price: self.price.to_redstone_decimal()?,
+            timestamp: self.timestamp,
+            latest_update_timestamp: self.latest_update_timestamp,
         })
     }
 }

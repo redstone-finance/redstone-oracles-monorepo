@@ -11,6 +11,7 @@ import { ReadPriceDataRadixMethod } from "./methods/ReadPriceDataRadixMethod";
 import { ReadPricesRadixMethod } from "./methods/ReadPricesRadixMethod";
 import { ReadTimestampRadixMethod } from "./methods/ReadTimestampRadixMethod";
 import { WritePricesRadixMethod } from "./methods/WritePricesRadixMethod";
+import { WritePricesTrustedRadixMethod } from "./methods/WritePricesTrustedRadixMethod";
 
 export class PriceAdapterRadixContractAdapter
   extends RadixContractAdapter
@@ -37,13 +38,33 @@ export class PriceAdapterRadixContractAdapter
   async writePricesFromPayloadToContract(
     paramsProvider: ContractParamsProvider
   ): Promise<string | BigNumberish[]> {
+    const resourceAddress: string | undefined = await this.client.readValue(
+      this.componentId,
+      "trusted_updater_resource"
+    );
+    const publicKeyHex = this.client.getPublicKeyHex();
+
     return (
       await this.client.call(
-        new WritePricesRadixMethod(
-          this.componentId,
-          paramsProvider.getDataFeedIds(),
-          await paramsProvider.getPayloadData({ withUnsignedMetadata: true })
-        )
+        resourceAddress && publicKeyHex
+          ? new WritePricesTrustedRadixMethod(
+              this.componentId,
+              paramsProvider.getDataFeedIds(),
+              await paramsProvider.getPayloadData({
+                withUnsignedMetadata: true,
+              }),
+              {
+                resourceAddress,
+                localId: `<${publicKeyHex}>`,
+              }
+            )
+          : new WritePricesRadixMethod(
+              this.componentId,
+              paramsProvider.getDataFeedIds(),
+              await paramsProvider.getPayloadData({
+                withUnsignedMetadata: true,
+              })
+            )
       )
     ).values;
   }
