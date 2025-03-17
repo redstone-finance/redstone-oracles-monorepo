@@ -3310,6 +3310,11 @@
       "denomination": "USD",
       "rateFeed": false
     },
+    "KING_FUNDAMENTAL": {
+      "source": ["ethereum-evm-fetcher-king-protocol"],
+      "denomination": "USD",
+      "rateFeed": true
+    },
     "COMP": {
       "source": [
         "binance-usdt",
