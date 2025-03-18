@@ -17,7 +17,9 @@ const TRANSACTION_COMMITTED_DETAILS_MOCK = transactionCommittedDetailsMock([
 
 export function mockDefaultValues() {
   getEntityDetailsVaultAggregated.mockResolvedValue(STATE_MOCK);
-  getCurrent.mockResolvedValue({ ledger_state: { epoch: 100 } });
+  getCurrent.mockResolvedValue({
+    ledger_state: { epoch: 100, state_version: 12345678 },
+  });
   transactionSubmit.mockResolvedValue(TRANSACTION_SUBMIT_MOCK);
   transactionStatus.mockResolvedValue(TRANSACTION_STATUS_MOCK);
   transactionCommittedDetails.mockResolvedValue(
