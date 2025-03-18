@@ -1528,6 +1528,11 @@
       "denomination": "ETH",
       "rateFeed": true
     },
+    "cmETH_FUNDAMENTAL": {
+      "source": ["ethereum-evm-fetcher-mantle-cmeth"],
+      "denomination": "ETH",
+      "rateFeed": true
+    },
     "ISEI": {
       "source": [
         "dragonswap-sei-wsei",
