@@ -69,15 +69,22 @@ export class PriceAdapterRadixContractAdapter
     ).values;
   }
 
-  async getUniqueSignerThreshold(): Promise<number> {
+  async getUniqueSignerThreshold(stateVersion?: number): Promise<number> {
     return Number(
-      await this.client.readValue(this.componentId, "signer_count_threshold")
+      await this.client.readValue(
+        this.componentId,
+        "signer_count_threshold",
+        stateVersion
+      )
     );
   }
 
-  async readPricesFromContract(paramsProvider: ContractParamsProvider) {
+  async readPricesFromContract(
+    paramsProvider: ContractParamsProvider,
+    stateVersion?: number
+  ) {
     if (this.readMode === "ReadFromStorage") {
-      const priceData = await this.readPriceData();
+      const priceData = await this.readPriceData(stateVersion);
 
       return paramsProvider
         .getDataFeedIds()
@@ -92,9 +99,9 @@ export class PriceAdapterRadixContractAdapter
     }
   }
 
-  async readTimestampFromContract(feedId?: string) {
+  async readTimestampFromContract(feedId?: string, stateVersion?: number) {
     if (this.readMode === "ReadFromStorage") {
-      const priceData = await this.readPriceData();
+      const priceData = await this.readPriceData(stateVersion);
 
       return Number(priceData[feedId!].lastDataPackageTimestampMS);
     } else {
@@ -107,16 +114,20 @@ export class PriceAdapterRadixContractAdapter
   }
 
   async readLatestUpdateBlockTimestamp(
-    feedId?: string
+    feedId?: string,
+    stateVersion?: number
   ): Promise<number | undefined> {
-    const priceData = await this.readPriceData();
+    const priceData = await this.readPriceData(stateVersion);
 
     return priceData[feedId!].lastBlockTimestampMS;
   }
 
-  async readContractData(feedIds: string[]): Promise<ContractData> {
+  async readContractData(
+    feedIds: string[],
+    stateVersion?: number
+  ): Promise<ContractData> {
     if (this.readMode === "ReadFromStorage") {
-      const priceData = await this.readPriceData();
+      const priceData = await this.readPriceData(stateVersion);
 
       return _.pick(priceData, feedIds);
     } else {
@@ -135,10 +146,10 @@ export class PriceAdapterRadixContractAdapter
     }
   }
 
-  private async readPriceData(): Promise<ContractData> {
+  private async readPriceData(stateVersion?: number): Promise<ContractData> {
     const priceMap: {
       [p: string]: [BigNumberish, BigNumberish, BigNumberish];
-    } = await this.client.readValue(this.componentId, "prices");
+    } = await this.client.readValue(this.componentId, "prices", stateVersion);
 
     return Object.fromEntries(
       Object.entries(priceMap).map(([feedId, data]) => [
