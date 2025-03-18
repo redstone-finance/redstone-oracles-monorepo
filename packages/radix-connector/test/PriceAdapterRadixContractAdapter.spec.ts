@@ -33,7 +33,9 @@ describe("PriceAdapterRadixContractAdapter tests", () => {
     mockDefaultValues();
 
     sut = await new PriceAdapterRadixContractConnector(
-      new RadixClient(NetworkId.Stokenet, { secp256k1: MOCK_PRIVATE_KEY }),
+      new RadixClient(NetworkId.Stokenet, undefined, {
+        secp256k1: MOCK_PRIVATE_KEY,
+      }),
       MOCK_COMPONENT_ID
     ).getAdapter();
   });

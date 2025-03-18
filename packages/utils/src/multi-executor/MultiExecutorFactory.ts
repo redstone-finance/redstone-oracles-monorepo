@@ -138,7 +138,7 @@ export class MultiExecutorFactory<T extends object> {
       result,
       this.config.allExecutionsTimeoutMs
     );
-    this.logger.debug(`[${stringify(key)}] Returning '${stringify(value)}'`);
+    this.logger.debug(`[${stringify(key)}] Returning ${stringify(value)}`);
     return value;
   }
 }

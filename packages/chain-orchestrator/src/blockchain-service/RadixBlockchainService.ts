@@ -16,13 +16,13 @@ export class RadixBlockchainService extends NonEvmBlockchainService {
   }
 
   async getTransactions(
-    fromEpochNumber: number,
-    toEpochNumber: number,
+    fromStateVersion: number,
+    toStateVersion: number,
     addresses: string[]
   ) {
     return await this.client.getTransactions(
-      fromEpochNumber,
-      toEpochNumber,
+      fromStateVersion,
+      toStateVersion,
       addresses
     );
   }

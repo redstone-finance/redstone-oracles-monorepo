@@ -16,6 +16,11 @@ import { RadixTransaction } from "./RadixTransaction";
 
 const ALLOWED_FORWARD_EPOCH_COUNT = 100;
 
+export interface RadixPrivateKey {
+  ed25519?: string;
+  secp256k1?: string;
+}
+
 export class RadixClient {
   protected readonly logger = loggerFactory("RadixClient");
   protected readonly signer?: PrivateKey;
@@ -23,14 +28,15 @@ export class RadixClient {
 
   constructor(
     protected networkId = NetworkId.Stokenet,
-    privateKey?: { ed25519?: string; secp256k1?: string },
+    rpcUrl?: string,
+    privateKey?: RadixPrivateKey,
     applicationName = "RedStone Radix Connector"
   ) {
     this.signer = RadixClient.makeSigner(privateKey);
-    this.apiClient = new RadixApiClient(applicationName, networkId);
+    this.apiClient = new RadixApiClient(applicationName, networkId, rpcUrl);
   }
 
-  static makeSigner(privateKey?: { ed25519?: string; secp256k1?: string }) {
+  static makeSigner(privateKey?: RadixPrivateKey) {
     if (privateKey?.ed25519) {
       return new PrivateKey.Ed25519(privateKey.ed25519);
     }
@@ -57,37 +63,50 @@ export class RadixClient {
     return transaction.interpret(output) as T;
   }
 
-  async readValue<T>(componentId: string, fieldName: string) {
-    return (await this.apiClient.getStateFields(componentId, [fieldName]))[
-      fieldName
-    ] as T;
+  async readValue<T>(
+    componentId: string,
+    fieldName: string,
+    stateVersion?: number
+  ) {
+    return (
+      await this.apiClient.getStateFields(
+        componentId,
+        [fieldName],
+        stateVersion
+      )
+    )[fieldName] as T;
   }
 
   async getCurrentEpochNumber() {
     return await this.apiClient.getCurrentEpochNumber();
   }
 
-  async getXRDBalance(address: string) {
+  async getCurrentStateVersion() {
+    return await this.apiClient.getCurrentStateVersion();
+  }
+
+  async getXRDBalance(address: string, stateVersion?: number) {
     const addressBook = await RadixEngineToolkit.Utils.knownAddresses(
       this.networkId
     );
 
     return await this.apiClient.getBalance(
       address,
-      addressBook.resourceAddresses.xrd
+      addressBook.resourceAddresses.xrd,
+      stateVersion
     );
   }
 
   async getTransactions(
-    fromEpochNumber: number,
-    toEpochNumber: number,
+    fromStateVersion: number,
+    toStateVersion: number,
     addresses: string[]
   ) {
     let accumulatedResult: StreamTransactionsResponse | undefined = undefined;
     do {
       const result = await this.apiClient.getTransactions(
-        fromEpochNumber,
-        toEpochNumber + 1, // +1 because it's "<" relation
+        fromStateVersion,
+        toStateVersion + 1, // +1 because it's "<" relation
         addresses,
         accumulatedResult?.next_cursor
       );

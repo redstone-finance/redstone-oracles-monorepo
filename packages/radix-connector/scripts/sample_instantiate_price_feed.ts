@@ -1,16 +1,16 @@
-import { PriceFeedRadixContractDeployer, RadixClient } from "../src";
+import { PriceFeedRadixContractDeployer } from "../src";
 import {
   FEED_ID,
   loadAddress,
-  NETWORK,
+  makeRadixClient,
   PRICE_ADAPTER_NAME,
   PRICE_FEED_NAME,
-  PRIVATE_KEY,
   saveAddress,
 } from "./constants";
 
 async function instantiate() {
-  const client = new RadixClient(NETWORK.id, PRIVATE_KEY);
+  const client = makeRadixClient();
+
   const connector = new PriceFeedRadixContractDeployer(
     client,
     await loadAddress(`package`, PRICE_FEED_NAME),

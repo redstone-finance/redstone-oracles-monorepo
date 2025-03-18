@@ -1,13 +1,8 @@
-import { BadgeCreatorRadixContractConnector, RadixClient } from "../src";
-import {
-  BADGE_CREATOR_NAME,
-  loadAddress,
-  NETWORK,
-  PRIVATE_KEY,
-} from "./constants";
+import { BadgeCreatorRadixContractConnector } from "../src";
+import { BADGE_CREATOR_NAME, loadAddress, makeRadixClient } from "./constants";
 
 async function createBadges() {
-  const client = new RadixClient(NETWORK.id, PRIVATE_KEY);
+  const client = makeRadixClient();
 
   const connector = new BadgeCreatorRadixContractConnector(
     client,

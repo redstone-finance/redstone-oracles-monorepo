@@ -15,16 +15,16 @@ export class RadixContractConnector<Adapter>
   }
 
   async getBlockNumber(): Promise<number> {
-    return await this.client.getCurrentEpochNumber();
+    return await this.client.getCurrentStateVersion();
   }
 
   async waitForTransaction(transactionId: string): Promise<boolean> {
     return await this.client.waitForCommit(transactionId);
   }
 
-  async getNormalizedBalance(address: string) {
+  async getNormalizedBalance(address: string, blockNumber?: number) {
     return utils
-      .parseEther(await this.client.getXRDBalance(address))
+      .parseEther(await this.client.getXRDBalance(address, blockNumber))
       .toBigInt();
   }
 }
