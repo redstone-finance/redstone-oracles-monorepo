@@ -7,16 +7,19 @@ describe("RedStone token", () => {
   let contract: RedstoneToken;
   let minter: Signer;
   let other: Signer;
+  let yetAnother: Signer;
   let minterAddr: string;
   let otherAddr: string;
+  let yetAnotherAddr: string;
 
   beforeEach(async () => {
     const ContractFactory = await ethers.getContractFactory("RedstoneToken");
     contract = await ContractFactory.deploy(1000);
     await contract.deployed();
-    [minter, other] = await ethers.getSigners();
+    [minter, other, yetAnother] = await ethers.getSigners();
     minterAddr = await minter.getAddress();
     otherAddr = await other.getAddress();
+    yetAnotherAddr = await yetAnother.getAddress();
   });
 
   it("Should not init contract with too high total supply", async () => {
@@ -83,12 +86,14 @@ describe("RedStone token", () => {
   });
 
   it("Should properly update minter ", async () => {
+    // Propose
     const proposalTx = await contract.proposeNewMinter(otherAddr);
     await proposalTx.wait();
     expect(proposalTx).to.emit(contract, "MinterProposal").withArgs(otherAddr);
     expect(await contract.minter()).to.equal(minterAddr);
     expect(await contract.proposedMinter()).to.equal(otherAddr);
 
+    // Accept
     const acceptRoleTx = await contract.connect(other).acceptMinterRole();
     await acceptRoleTx.wait();
     expect(acceptRoleTx).to.emit(contract, "MinterUpdate").withArgs(otherAddr);
@@ -96,6 +101,34 @@ describe("RedStone token", () => {
     expect(await contract.proposedMinter()).to.equal(
       ethers.constants.AddressZero
     );
+
+    // Mint only from a new minter
+    await expect(contract.mint(otherAddr, 100)).to.be.revertedWith(
+      "OnlyMinterCanMint"
+    );
+    const tx = await contract.connect(other).mint(otherAddr, 42);
+    await tx.wait();
+    expect(await contract.balanceOf(otherAddr)).to.equal(42);
+  });
+
+  it("Should properly propose another address before acceptance", async () => {
+    // First proposal
+    const proposalTx = await contract.proposeNewMinter(otherAddr);
+    await proposalTx.wait();
+    expect(await contract.minter()).to.equal(minterAddr);
+    expect(await contract.proposedMinter()).to.equal(otherAddr);
+
+    // Second proposal
+    const proposalTx2 = await contract.proposeNewMinter(yetAnotherAddr);
+    await proposalTx2.wait();
+
+    // Only second addr should be able to accpet minter role
+    await expect(contract.connect(other).acceptMinterRole()).to.be.revertedWith(
+      "OnlyProposedMinterCanAcceptMinterRole"
+    );
+    const acceptRoleTx = await contract.connect(yetAnother).acceptMinterRole();
+    await acceptRoleTx.wait();
+    expect(await contract.minter()).to.equal(yetAnotherAddr);
   });
 
   it("Should not propose new minter from an unauthorized account", async () => {
