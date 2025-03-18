@@ -4,12 +4,14 @@ import "dotenv/config";
 import fs from "fs";
 import path from "path";
 import { z } from "zod";
+import { RadixClientBuilder } from "../src";
 
 const SCRYPTO_DIR = `../scrypto`;
 
 export const NETWORK = {
   id: NetworkId.Stokenet,
   name: "stokenet",
+  basePath: undefined,
 };
 
 export const FEED_ID = "XRD";
@@ -78,4 +80,12 @@ function formatAddressFilename(
   entityType: "component" | "package"
 ) {
   return `${clientName ? `${clientName}.` : ""}${NETWORK.name}.${entityType}.addr`;
+}
+
+export function makeRadixClient() {
+  return new RadixClientBuilder()
+    .withNetworkId(NETWORK.id)
+    .withNetworkBasePath(NETWORK.basePath)
+    .withPrivateKey(PRIVATE_KEY)
+    .build();
 }

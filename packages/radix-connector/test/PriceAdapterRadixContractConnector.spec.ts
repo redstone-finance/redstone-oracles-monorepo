@@ -20,7 +20,9 @@ describe("PriceAdapterRadixContractConnector tests", () => {
     mockDefaultValues();
 
     sut = new PriceAdapterRadixContractDeployer(
-      new RadixClient(NetworkId.Stokenet, { ed25519: MOCK_PRIVATE_KEY }),
+      new RadixClient(NetworkId.Stokenet, undefined, {
+        ed25519: MOCK_PRIVATE_KEY,
+      }),
       MOCK_PACKAGE_ID,
       1,
       [
@@ -56,7 +58,7 @@ describe("PriceAdapterRadixContractConnector tests", () => {
 
   it("PriceAdapterRadixContractConnector should return block number", async () => {
     const result = await sut.getBlockNumber();
-    expect(result).toBe(100);
+    expect(result).toBe(12345678);
   });
 
   it("PriceAdapterRadixContractConnector should wait for successful transaction", async () => {
