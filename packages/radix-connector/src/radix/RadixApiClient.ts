@@ -1,5 +1,6 @@
 import {
   GatewayApiClient,
+  LedgerStateSelector,
   StateEntityDetailsResponseComponentDetails,
 } from "@radixdlt/babylon-gateway-api-sdk";
 import { Convert, NetworkId, Value } from "@radixdlt/radix-engine-toolkit";
@@ -10,11 +11,13 @@ export class RadixApiClient {
 
   constructor(
     applicationName: string,
-    private networkId = NetworkId.Stokenet
+    private networkId = NetworkId.Stokenet,
+    basePath?: string
   ) {
     this.apiClient = GatewayApiClient.initialize({
       applicationName,
       networkId,
+      basePath,
     });
   }
 
@@ -69,15 +72,28 @@ export class RadixApiClient {
   }
 
   async getCurrentEpochNumber() {
-    return (await this.apiClient.status.getCurrent()).ledger_state.epoch;
+    return (await this.getCurrentLedgerState()).epoch;
   }
 
-  async getBalance(address: string, resourceAddress: string): Promise<string> {
+  async getCurrentStateVersion() {
+    return (await this.getCurrentLedgerState()).state_version;
+  }
+
+  private async getCurrentLedgerState() {
+    return (await this.apiClient.status.getCurrent()).ledger_state;
+  }
+
+  async getBalance(
+    address: string,
+    resourceAddress: string,
+    stateVersion?: number
+  ): Promise<string> {
     const response =
       await this.apiClient.state.innerClient.entityFungibleResourceVaultPage({
         stateEntityFungibleResourceVaultsPageRequest: {
           address,
           resource_address: resourceAddress,
+          at_ledger_state: RadixApiClient.makeLedgerState(stateVersion),
         },
       });
 
@@ -91,16 +107,16 @@ export class RadixApiClient {
   }
 
   async getTransactions(
-    fromEpochNumber: number,
-    atEpochNumber: number,
+    fromStateVersion: number,
+    atStateVersion: number,
     addresses: string[],
     cursor?: string | null
   ) {
     return await this.apiClient.stream.innerClient.streamTransactions({
       streamTransactionsRequest: {
         cursor,
-        at_ledger_state: { epoch: atEpochNumber },
-        from_ledger_state: { epoch: fromEpochNumber },
+        from_ledger_state: RadixApiClient.makeLedgerState(fromStateVersion),
+        at_ledger_state: RadixApiClient.makeLedgerState(atStateVersion),
         affected_global_entities_filter: addresses,
         opt_ins: {
           raw_hex: true,
@@ -112,9 +128,16 @@ export class RadixApiClient {
     });
   }
 
-  async getStateFields(componentId: string, fieldNames?: string[]) {
-    const res =
-      await this.apiClient.state.getEntityDetailsVaultAggregated(componentId);
+  async getStateFields(
+    componentId: string,
+    fieldNames?: string[],
+    stateVersion?: number
+  ) {
+    const res = await this.apiClient.state.getEntityDetailsVaultAggregated(
+      componentId,
+      undefined,
+      RadixApiClient.makeLedgerState(stateVersion)
+    );
     const state = (
       res.details as unknown as StateEntityDetailsResponseComponentDetails
     ).state as { fields: { field_name: string }[] };
@@ -128,5 +151,11 @@ export class RadixApiClient {
     ]);
 
     return Object.fromEntries(entries) as { [p: string]: Value };
+  }
+
+  private static makeLedgerState(stateVersion?: number) {
+    return stateVersion !== undefined
+      ? ({ state_version: stateVersion } as LedgerStateSelector)
+      : undefined;
   }
 }

@@ -69,13 +69,23 @@ describe("RadixApiClient", () => {
     expect(getCurrent).toHaveBeenCalled();
   });
 
+  it("should get current state number", async () => {
+    const result = await sut.getCurrentStateVersion();
+    expect(result).toBe(12345678);
+    expect(getCurrent).toHaveBeenCalled();
+  });
+
   it("should get state fields", async () => {
-    const result = await sut.getStateFields("mockComponentId", [
-      "signer_count_threshold",
-    ]);
+    const result = await sut.getStateFields(
+      "mockComponentId",
+      ["signer_count_threshold"],
+      12370000
+    );
     expect(result).toEqual({ signer_count_threshold: 1 });
     expect(getEntityDetailsVaultAggregated).toHaveBeenCalledWith(
-      "mockComponentId"
+      "mockComponentId",
+      undefined,
+      { state_version: 12370000 }
     );
   });
 });
