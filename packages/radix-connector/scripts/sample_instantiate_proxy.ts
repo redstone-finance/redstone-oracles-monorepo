@@ -1,12 +1,11 @@
 import { RedstoneCommon } from "@redstone-finance/utils";
-import { ProxyRadixContractDeployer, RadixClient } from "../src";
+import { ProxyRadixContractDeployer } from "../src";
 import { NonFungibleGlobalIdInput } from "../src/radix/utils";
 import {
   FEED_ID,
   loadAddress,
-  NETWORK,
+  makeRadixClient,
   PRICE_FEED_NAME,
-  PRIVATE_KEY,
   PROXY_NAME,
   saveAddress,
 } from "./constants";
@@ -22,7 +21,7 @@ const MAN_BADGE: () => NonFungibleGlobalIdInput = () => ({
 });
 
 async function instantiate() {
-  const client = new RadixClient(NETWORK.id, PRIVATE_KEY);
+  const client = makeRadixClient();
 
   const connector = new ProxyRadixContractDeployer(
     client,

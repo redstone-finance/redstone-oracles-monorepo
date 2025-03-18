@@ -1,6 +1,6 @@
 import { NonEvmChainType } from "@redstone-finance/chain-configs";
 import { AptosClientBuilder } from "@redstone-finance/movement-connector";
-import { RadixClient } from "@redstone-finance/radix-connector";
+import { RadixClientBuilder } from "@redstone-finance/radix-connector";
 import { SuiClientBuilder } from "@redstone-finance/sui-connector";
 import { MovementBlockchainService } from "./MovementBlockchainService";
 import { RadixBlockchainService } from "./RadixBlockchainService";
@@ -27,7 +27,10 @@ export function getNonEvmBlockchainService(
       return new MovementBlockchainService(aptosClient);
     }
     case "radix": {
-      const radixClient = new RadixClient(chainId);
+      const radixClient = new RadixClientBuilder()
+        .withNetworkId(chainId)
+        .withRpcUrls(rpcUrls)
+        .build();
       return new RadixBlockchainService(radixClient);
     }
     case "fuel":

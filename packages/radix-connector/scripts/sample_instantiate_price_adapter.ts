@@ -1,16 +1,15 @@
 import { getSignersForDataServiceId } from "@redstone-finance/sdk";
-import { PriceAdapterRadixContractDeployer, RadixClient } from "../src";
+import { PriceAdapterRadixContractDeployer } from "../src";
 import {
   DATA_SERVICE_ID,
   loadAddress,
-  NETWORK,
+  makeRadixClient,
   PRICE_ADAPTER_NAME,
-  PRIVATE_KEY,
   saveAddress,
 } from "./constants";
 
 async function instantiate() {
-  const client = new RadixClient(NETWORK.id, PRIVATE_KEY);
+  const client = makeRadixClient();
   const connector = new PriceAdapterRadixContractDeployer(
     client,
     await loadAddress(`package`, PRICE_ADAPTER_NAME),

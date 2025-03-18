@@ -9,15 +9,13 @@ import {
 import {
   PriceAdapterRadixContractConnector,
   PriceFeedRadixContractConnector,
-  RadixClient,
 } from "../src";
 import {
   DATA_SERVICE_ID,
   FEED_ID,
   loadAddress,
-  NETWORK,
+  makeRadixClient,
   PRICE_ADAPTER_NAME,
-  PRIVATE_KEY,
   PROXY_NAME,
 } from "./constants";
 
@@ -29,7 +27,7 @@ async function main() {
     authorizedSigners: getSignersForDataServiceId(DATA_SERVICE_ID),
   });
 
-  const client = new RadixClient(NETWORK.id, PRIVATE_KEY);
+  const client = makeRadixClient();
 
   const connector = new PriceAdapterRadixContractConnector(
     client,

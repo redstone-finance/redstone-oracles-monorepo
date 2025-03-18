@@ -12,7 +12,7 @@ import {
 } from "@redstone-finance/on-chain-relayer-common";
 import {
   PriceAdapterRadixContractConnector,
-  RadixClient,
+  RadixClientBuilder,
 } from "@redstone-finance/radix-connector";
 import {
   SuiClientBuilder,
@@ -47,7 +47,10 @@ function getRadixContractConnector(
   rpcUrls: string[],
   relayerManifest: AnyOnChainRelayerManifest
 ) {
-  const client = new RadixClient(relayerManifest.chain.id);
+  const client = new RadixClientBuilder()
+    .withNetworkId(relayerManifest.chain.id)
+    .withRpcUrls(rpcUrls)
+    .build();
 
   return new PriceAdapterRadixContractConnector(
     client,
