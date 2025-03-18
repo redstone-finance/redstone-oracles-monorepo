@@ -103,7 +103,8 @@ describe("RedStone token", () => {
     );
 
     // Mint only from a new minter
-    await expect(contract.mint(otherAddr, 100)).to.be.revertedWith(
+    await expect(contract.mint(otherAddr, 100)).to.be.revertedWithCustomError(
+      contract,
       "OnlyMinterCanMint"
     );
     const tx = await contract.connect(other).mint(otherAddr, 42);
@@ -122,8 +123,11 @@ describe("RedStone token", () => {
     const proposalTx2 = await contract.proposeNewMinter(yetAnotherAddr);
     await proposalTx2.wait();
 
-    // Only second addr should be able to accpet minter role
-    await expect(contract.connect(other).acceptMinterRole()).to.be.revertedWith(
+    // Only second addr should be able to accept minter role
+    await expect(
+      contract.connect(other).acceptMinterRole()
+    ).to.be.revertedWithCustomError(
+      contract,
       "OnlyProposedMinterCanAcceptMinterRole"
     );
     const acceptRoleTx = await contract.connect(yetAnother).acceptMinterRole();
