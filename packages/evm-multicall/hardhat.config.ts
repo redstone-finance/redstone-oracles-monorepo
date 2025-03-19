@@ -65,6 +65,9 @@ const config: HardhatUserConfig = {
     berachain: {
       url: "https://rpc.berachain.com",
     },
+    berachainTestnet: {
+      url: "https://bepolia.rpc.berachain.com",
+    },
   },
 };
 
