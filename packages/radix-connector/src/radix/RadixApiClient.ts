@@ -83,7 +83,7 @@ export class RadixApiClient {
     return (await this.apiClient.status.getCurrent()).ledger_state;
   }
 
-  async getBalance(
+  async getFungibleBalance(
     address: string,
     resourceAddress: string,
     stateVersion?: number
@@ -98,12 +98,33 @@ export class RadixApiClient {
       });
 
     if (response.items.length !== 1) {
-      throw new Error(
-        `Unexpected response items length: ${response.items.length}`
-      );
+      return "0";
     }
 
     return response.items[0].amount;
+  }
+
+  async getNonFungibleBalance(
+    address: string,
+    resourceAddress: string,
+    stateVersion?: number
+  ) {
+    const response =
+      await this.apiClient.state.innerClient.entityNonFungibleResourceVaultPage(
+        {
+          stateEntityNonFungibleResourceVaultsPageRequest: {
+            address,
+            resource_address: resourceAddress,
+            at_ledger_state: RadixApiClient.makeLedgerState(stateVersion),
+          },
+        }
+      );
+
+    if (response.items.length !== 1) {
+      return 0;
+    }
+
+    return response.items[0].total_count;
   }
 
   async getTransactions(

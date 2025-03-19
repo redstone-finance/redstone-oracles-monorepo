@@ -26,14 +26,16 @@ export function stringify<R>(result: R) {
     return result;
   }
 
+  if (result === undefined || result === null) {
+    return String(result);
+  }
+
   try {
     if (
-      result !== undefined &&
-      result !== null &&
-      (typeof result === "number" ||
-        typeof result === "boolean" ||
-        typeof result === "bigint" ||
-        typeof result === "symbol")
+      typeof result === "number" ||
+      typeof result === "boolean" ||
+      typeof result === "bigint" ||
+      typeof result === "symbol"
     ) {
       return String(result);
     }
@@ -41,15 +43,13 @@ export function stringify<R>(result: R) {
     return unescapeString(JSON.stringify(result));
   } catch (e) {
     if (
-      result !== undefined &&
-      result !== null &&
       typeof result.toString === "function" &&
       result.toString !== Object.prototype.toString
     ) {
       return unescapeString(result.toString());
     }
 
-    if (result !== undefined && result !== null && typeof result === "object") {
+    if (typeof result === "object") {
       try {
         const properties = Object.entries(result).map(([key, value]) => {
           if (typeof value === "object" && value !== null) {

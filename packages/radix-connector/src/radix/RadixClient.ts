@@ -10,6 +10,7 @@ import {
   TransactionHeader,
 } from "@radixdlt/radix-engine-toolkit";
 import { loggerFactory, RedstoneCommon } from "@redstone-finance/utils";
+import { hexlify } from "ethers/lib/utils";
 import { RadixApiClient } from "./RadixApiClient";
 import { RadixInvocation } from "./RadixInvocation";
 import { RadixTransaction } from "./RadixTransaction";
@@ -17,8 +18,8 @@ import { RadixTransaction } from "./RadixTransaction";
 const ALLOWED_FORWARD_EPOCH_COUNT = 100;
 
 export interface RadixPrivateKey {
-  ed25519?: string;
-  secp256k1?: string;
+  scheme: "secp256k1" | "ed25519";
+  value: string;
 }
 
 export class RadixClient {
@@ -37,15 +38,22 @@ export class RadixClient {
   }
 
   static makeSigner(privateKey?: RadixPrivateKey) {
-    if (privateKey?.ed25519) {
-      return new PrivateKey.Ed25519(privateKey.ed25519);
+    if (!privateKey) {
+      return;
     }
 
-    if (privateKey?.secp256k1) {
-      return new PrivateKey.Secp256k1(privateKey.secp256k1);
+    switch (privateKey.scheme) {
+      case "ed25519":
+        return new PrivateKey.Ed25519(privateKey.value);
+      case "secp256k1":
+        return new PrivateKey.Secp256k1(privateKey.value);
     }
+  }
 
-    return undefined;
+  static async getAddressDataHex(addressString: string) {
+    const entity = await RadixEngineToolkit.Address.decode(addressString);
+
+    return hexlify(entity.data).substring(2);
   }
 
   async call<T>(
@@ -89,10 +97,21 @@ export class RadixClient {
     const addressBook = await RadixEngineToolkit.Utils.knownAddresses(
       this.networkId
     );
-
-    return await this.apiClient.getBalance(
+    return await this.apiClient.getFungibleBalance(
       address,
       addressBook.resourceAddresses.xrd,
+      stateVersion
+    );
+  }
+
+  async getResourceBalance(
+    address: string,
+    resourceAddress: string,
+    stateVersion?: number
+  ) {
+    return await this.apiClient.getNonFungibleBalance(
+      address,
+      resourceAddress,
       stateVersion
     );
   }
