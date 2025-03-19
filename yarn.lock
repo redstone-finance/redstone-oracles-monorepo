@@ -9228,6 +9228,7 @@ __metadata:
     "@redstone-finance/monitoring-manifests": "workspace:*"
     "@redstone-finance/mqtt5-client": "workspace:*"
     "@redstone-finance/on-chain-relayer": "workspace:*"
+    "@redstone-finance/on-chain-relayer-common": "workspace:*"
     "@redstone-finance/protocol": "workspace:*"
     "@redstone-finance/rpc-providers": "workspace:*"
     "@redstone-finance/sdk": "workspace:*"
