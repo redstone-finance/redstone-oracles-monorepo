@@ -58,7 +58,7 @@ export class RadixClientBuilder {
     return this;
   }
 
-  withPrivateKey(privateKey: RadixPrivateKey) {
+  withPrivateKey(privateKey?: RadixPrivateKey) {
     this.privateKey = privateKey;
 
     return this;
