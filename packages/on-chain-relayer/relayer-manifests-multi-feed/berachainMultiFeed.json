@@ -126,6 +126,13 @@
         "deviationPercentage": 0.5,
         "timeSinceLastUpdateInMilliseconds": 21600000
       }
+    },
+    "ylstETH_FUNDAMENTAL": {
+      "priceFeedAddress": "0x607eb00a05b849A663C909285337e51C2C6F58d0",
+      "updateTriggersOverrides": {
+        "deviationPercentage": 0.5,
+        "timeSinceLastUpdateInMilliseconds": 21600000
+      }
     }
   }
 }
