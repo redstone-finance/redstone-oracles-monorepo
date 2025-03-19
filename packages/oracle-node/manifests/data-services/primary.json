@@ -1291,6 +1291,7 @@
         "bitmart-usdt",
         "bybit-usdt",
         "gate-usdt",
+        "mexc-usdt",
         "xt"
       ],
       "denomination": "USD",
@@ -1518,6 +1519,7 @@
         "gate-usdt",
         "kucoin-usdt",
         "lbank-usdt",
+        "mexc-usdt",
         "xt"
       ],
       "denomination": "USD",
