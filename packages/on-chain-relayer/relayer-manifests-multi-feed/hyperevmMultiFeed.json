@@ -76,6 +76,9 @@
     },
     "cbBTC": {
       "priceFeedAddress": "0xC9e11c60e24BEF478cC999fA9fA2d89cC098A86e"
+    },
+    "cmETH_FUNDAMENTAL": {
+      "priceFeedAddress": "0x5C4c8d6f6Bf79B718F3e8399AaBdFEd01cB7e48f"
     }
   }
 }
