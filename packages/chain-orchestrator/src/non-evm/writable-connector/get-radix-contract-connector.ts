@@ -13,7 +13,7 @@ export const getRadixContractConnector = (
   const client = new RadixClientBuilder()
     .withNetworkId(chainId)
     .withRpcUrls(rpcUrls)
-    .withPrivateKey({ ed25519: privateKey })
+    .withPrivateKey({ scheme: "secp256k1", value: privateKey })
     .build();
 
   return new PriceAdapterRadixContractConnector(client, adapterContractAddress);

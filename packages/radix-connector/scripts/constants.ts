@@ -4,7 +4,7 @@ import "dotenv/config";
 import fs from "fs";
 import path from "path";
 import { z } from "zod";
-import { RadixClientBuilder } from "../src";
+import { RadixClientBuilder, RadixPrivateKey } from "../src";
 
 const SCRYPTO_DIR = `../scrypto`;
 
@@ -25,9 +25,18 @@ export const IS_CI = RedstoneCommon.getFromEnv(
   "IS_CI",
   z.boolean().default(false)
 );
-export const PRIVATE_KEY = {
-  ed25519: IS_CI ? "" : RedstoneCommon.getFromEnv("PRIVATE_KEY"),
-};
+
+const PRIVATE_KEY_VALUE = IS_CI ? "" : RedstoneCommon.getFromEnv("PRIVATE_KEY");
+const PRIVATE_KEY_SCHEME = RedstoneCommon.getFromEnv(
+  "PRIVATE_KEY_SCHEME",
+  z.enum(["secp256k1", "ed25519"]).default("secp256k1")
+);
+export const PRIVATE_KEY: RadixPrivateKey | undefined = IS_CI
+  ? undefined
+  : {
+      scheme: PRIVATE_KEY_SCHEME,
+      value: PRIVATE_KEY_VALUE,
+    };
 
 export async function loadAddress(
   entityType: "component" | "package",

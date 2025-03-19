@@ -25,19 +25,29 @@ export class PriceAdapterRadixContractDeployer extends PriceAdapterRadixContract
   }
 
   private async instantiate() {
+    if (!this.trustedUpdaters?.length) {
+      return await this.client.call(
+        new PriceAdapterInstantiateRadixFunction(
+          this.packageId,
+          this.signerCountThreshold,
+          this.signers
+        )
+      );
+    }
+
+    const updaters = await Promise.all(
+      this.trustedUpdaters.map(async (addressString) => {
+        return await RadixClient.getAddressDataHex(addressString);
+      })
+    );
+
     return await this.client.call(
-      this.trustedUpdaters?.length
-        ? new PriceAdapterInstantiateWithTrustedUpdatersRadixFunction(
-            this.packageId,
-            this.signerCountThreshold,
-            this.signers,
-            this.trustedUpdaters
-          )
-        : new PriceAdapterInstantiateRadixFunction(
-            this.packageId,
-            this.signerCountThreshold,
-            this.signers
-          )
+      new PriceAdapterInstantiateWithTrustedUpdatersRadixFunction(
+        this.packageId,
+        this.signerCountThreshold,
+        this.signers,
+        updaters
+      )
     );
   }
 }

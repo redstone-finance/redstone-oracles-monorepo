@@ -3,6 +3,8 @@ import { RadixContractConnector } from "../../radix/RadixContractConnector";
 import { PriceAdapterRadixContractAdapter } from "./PriceAdapterRadixContractAdapter";
 
 export class PriceAdapterRadixContractConnector extends RadixContractConnector<PriceAdapterRadixContractAdapter> {
+  private adapter?: PriceAdapterRadixContractAdapter;
+
   constructor(client: RadixClient, componentId?: string) {
     super(client, componentId);
   }
@@ -13,9 +15,11 @@ export class PriceAdapterRadixContractConnector extends RadixContractConnector<P
   }
 
   override async getAdapter() {
-    return new PriceAdapterRadixContractAdapter(
+    this.adapter ??= new PriceAdapterRadixContractAdapter(
       this.client,
       await this.getComponentId()
     );
+
+    return this.adapter;
   }
 }
