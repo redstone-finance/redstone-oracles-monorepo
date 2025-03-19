@@ -21,7 +21,8 @@ describe("PriceAdapterRadixContractConnector tests", () => {
 
     sut = new PriceAdapterRadixContractDeployer(
       new RadixClient(NetworkId.Stokenet, undefined, {
-        ed25519: MOCK_PRIVATE_KEY,
+        scheme: "ed25519",
+        value: MOCK_PRIVATE_KEY,
       }),
       MOCK_PACKAGE_ID,
       1,
