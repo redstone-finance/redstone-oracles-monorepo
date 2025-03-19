@@ -43,6 +43,13 @@
     },
     "sfrxUSD_FUNDAMENTAL": {
       "priceFeedAddress": "0xebE443E20ADf302B59419648c4dbA0c7299cf1A2"
+    },
+    "mBTC_POR": {
+      "priceFeedAddress": "0xb67047eDF6204F4C81333248dA71F8387050790C",
+      "updateTriggersOverrides": {
+        "deviationPercentage": 1,
+        "timeSinceLastUpdateInMilliseconds": 86400000
+      }
     }
   }
 }
