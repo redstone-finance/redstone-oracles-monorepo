@@ -20,6 +20,9 @@
         "deviationPercentage": 0.1,
         "timeSinceLastUpdateInMilliseconds": 86400000
       }
+    },
+    "mBTC_POR": {
+      "priceFeedAddress": "0x7994862A9A3663284D740c1B15BC858b39bDcD4F"
     }
   }
 }
