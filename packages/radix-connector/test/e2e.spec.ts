@@ -30,17 +30,17 @@ describe("Integrated and initialized prices contract", () => {
 
     const adapter = await connector.getAdapter();
     const paramsProvider = new ContractParamsProvider({
-      dataServiceId: "redstone-avalanche-prod",
+      dataServiceId: "redstone-primary-prod",
       uniqueSignersCount: 2,
       dataPackagesIds: ["ETH", "BTC"],
-      authorizedSigners: getSignersForDataServiceId("redstone-avalanche-prod"),
+      authorizedSigners: getSignersForDataServiceId("redstone-primary-prod"),
     });
 
     await adapter.writePricesFromPayloadToContract(paramsProvider);
     const prices = (await adapter.readPricesFromContract(paramsProvider)).map(
       Number
     );
-    const timestamp = await adapter.readTimestampFromContract();
+    const timestamp = await adapter.readTimestampFromContract("ETH");
 
     const localTimestamp = Date.now();
 
