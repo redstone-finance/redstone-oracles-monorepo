@@ -5,7 +5,9 @@ import {
 } from "@redstone-finance/sdk";
 import { BigNumber, BigNumberish } from "ethers";
 import _ from "lodash";
+import { RadixClient } from "../../radix/RadixClient";
 import { RadixContractAdapter } from "../../radix/RadixContractAdapter";
+import { NonFungibleGlobalIdInput } from "../../radix/utils";
 import { GetPricesRadixMethod } from "./methods/GetPricesRadixMethod";
 import { ReadPriceDataRadixMethod } from "./methods/ReadPriceDataRadixMethod";
 import { ReadPricesRadixMethod } from "./methods/ReadPricesRadixMethod";
@@ -17,6 +19,8 @@ export class PriceAdapterRadixContractAdapter
   extends RadixContractAdapter
   implements IMultiFeedPricesContractAdapter
 {
+  private trustedUpdaterProofBadge?: NonFungibleGlobalIdInput;
+
   async getSignerAddress() {
     return await this.client.getAccountAddress();
   }
@@ -38,35 +42,69 @@ export class PriceAdapterRadixContractAdapter
   async writePricesFromPayloadToContract(
     paramsProvider: ContractParamsProvider
   ): Promise<string | BigNumberish[]> {
-    const resourceAddress: string | undefined = await this.client.readValue(
-      this.componentId,
-      "trusted_updater_resource"
-    );
-    const publicKeyHex = this.client.getPublicKeyHex();
-
+    const proofBadge = await this.getTrustedUpdaterProofBadge();
+    const payloadData = await paramsProvider.getPayloadData({
+      withUnsignedMetadata: true,
+    });
     return (
       await this.client.call(
-        resourceAddress && publicKeyHex
+        proofBadge
           ? new WritePricesTrustedRadixMethod(
               this.componentId,
               paramsProvider.getDataFeedIds(),
-              await paramsProvider.getPayloadData({
-                withUnsignedMetadata: true,
-              }),
-              {
-                resourceAddress,
-                localId: `<${publicKeyHex}>`,
-              }
+              payloadData,
+              proofBadge
             )
           : new WritePricesRadixMethod(
               this.componentId,
               paramsProvider.getDataFeedIds(),
-              await paramsProvider.getPayloadData({
-                withUnsignedMetadata: true,
-              })
+              payloadData
             )
       )
     ).values;
+  }
+
+  private async getTrustedUpdaterProofBadge() {
+    if (this.trustedUpdaterProofBadge) {
+      return this.trustedUpdaterProofBadge;
+    }
+
+    const accountAddress = await this.client.getAccountAddress();
+    const trustedUpdaterProofBadge =
+      await this.getTrustedUpdaterResourceBadge(accountAddress);
+
+    if (!trustedUpdaterProofBadge) {
+      return;
+    }
+
+    const amount = await this.client.getResourceBalance(
+      accountAddress,
+      trustedUpdaterProofBadge.resourceAddress
+    );
+    if (!amount) {
+      return;
+    }
+
+    this.trustedUpdaterProofBadge = trustedUpdaterProofBadge;
+
+    return this.trustedUpdaterProofBadge;
+  }
+
+  async getTrustedUpdaterResourceBadge(accountAddress: string) {
+    const resourceAddress: string | undefined = await this.client.readValue(
+      this.componentId,
+      "trusted_updater_resource"
+    );
+    if (!resourceAddress) {
+      return;
+    }
+
+    const accountDataHex = await RadixClient.getAddressDataHex(accountAddress);
+
+    return {
+      resourceAddress,
+      localId: `<${accountDataHex}>`,
+    } as NonFungibleGlobalIdInput;
   }
 
   async getUniqueSignerThreshold(stateVersion?: number): Promise<number> {

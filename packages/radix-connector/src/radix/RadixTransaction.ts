@@ -2,6 +2,7 @@ import { ManifestBuilder } from "@radixdlt/radix-engine-toolkit";
 import { CreateProofOfNonFungiblesRadixMethod } from "../methods/CreateProofOfNonFungiblesRadixMethod";
 import { DepositBatchRadixMethod } from "../methods/DepositBatchRadixMethod";
 import { LockFeeRadixMethod } from "../methods/LockFeeRadixMethod";
+import { TryDepositBatchOrAbortRadixMethod } from "../methods/TryDepositBatchOrAbortRadixMethod";
 import { DEFAULT_TRANSACTION_XRD_FEE } from "./constants";
 import { RadixInvocation } from "./RadixInvocation";
 import { NonFungibleGlobalIdInput } from "./utils";
@@ -63,5 +64,20 @@ export class ProvingRadixTransaction extends RadixTransaction {
       ...super.getInitMethods(),
       new CreateProofOfNonFungiblesRadixMethod(this.account, this.proofBadge),
     ];
+  }
+}
+
+export class TransferRadixTransaction extends RadixTransaction {
+  constructor(
+    fromAccount: string,
+    private toAccount: string,
+    transferMethods: RadixInvocation<unknown>[],
+    fee = DEFAULT_TRANSACTION_XRD_FEE
+  ) {
+    super(fromAccount, transferMethods, fee);
+  }
+
+  override getFinalMethods(): RadixInvocation<unknown>[] {
+    return [new TryDepositBatchOrAbortRadixMethod(this.toAccount)];
   }
 }
