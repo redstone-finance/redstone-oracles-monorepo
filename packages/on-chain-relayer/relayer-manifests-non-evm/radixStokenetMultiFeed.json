@@ -12,7 +12,7 @@
   "dataServiceId": "redstone-primary-prod",
   "priceFeeds": {
     "XRD": {
-      "priceFeedAddress": "component_tdx_2_1czch5r83ge90emwz0x80svn347fq3yeptam0g0q6tlfmw00vq4jye0"
+      "priceFeedAddress": "component_tdx_2_1cq9s3f2dvgw7zuc8h57qzz968t4kp75xnjh5rhsnpf0n6etus7vd5y"
     },
     "ETH": {},
     "BTC": {}
