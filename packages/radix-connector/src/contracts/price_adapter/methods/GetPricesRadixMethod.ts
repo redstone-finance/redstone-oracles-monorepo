@@ -4,22 +4,24 @@ import { RadixInvocation } from "../../../radix/RadixInvocation";
 import { RadixTransaction } from "../../../radix/RadixTransaction";
 import { makeBytes, makeFeedIds } from "../../../radix/utils";
 
-export class GetPricesRadixMethod extends RadixInvocation<{
-  timestamp: number;
+export interface PricesAndTimestamp {
   values: BigNumberish[];
-}> {
+  timestamp: number;
+}
+
+export class GetPricesRadixMethod extends RadixInvocation<PricesAndTimestamp> {
   constructor(
     componentId: string,
     private dataFeedIds: string[],
     private payloadBytes: number[],
-    private fee = dataFeedIds.length,
+    protected fee = dataFeedIds.length,
     name: string = "get_prices_raw"
   ) {
     super(componentId, name);
   }
 
-  override getDedicatedTransaction(account: string) {
-    return new RadixTransaction(account, [this], this.fee);
+  override getDedicatedTransaction(account: string, maxFeeOverride?: number) {
+    return new RadixTransaction(account, [this], maxFeeOverride ?? this.fee);
   }
 
   override getParams(): Value[] {

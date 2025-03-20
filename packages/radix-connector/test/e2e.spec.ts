@@ -12,6 +12,7 @@ import {
   PRIVATE_KEY,
 } from "../scripts/constants";
 import { PriceAdapterRadixContractConnector, RadixClient } from "../src";
+import { RadixApiClient } from "../src/radix/RadixApiClient";
 
 jest.setTimeout(10 * 60000);
 jest.unmock("@radixdlt/babylon-gateway-api-sdk");
@@ -22,7 +23,11 @@ describe("Integrated and initialized prices contract", () => {
       return console.log("Skipping in CI env");
     }
 
-    const client = new RadixClient(NetworkId.Stokenet, undefined, PRIVATE_KEY);
+    const client = new RadixClient(
+      new RadixApiClient(),
+      NetworkId.Stokenet,
+      PRIVATE_KEY
+    );
     const connector = new PriceAdapterRadixContractConnector(
       client,
       await loadAddress("component", PRICE_ADAPTER_NAME)
