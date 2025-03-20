@@ -5,6 +5,7 @@ import {
   PriceAdapterRadixContractAdapter,
   PriceAdapterRadixContractConnector,
   RadixClient,
+  RadixSigner,
 } from "../src";
 import { RadixApiClient } from "../src/radix/RadixApiClient";
 import { transactionCommittedDetails } from "./__mocks__/transactions";
@@ -34,10 +35,14 @@ describe("PriceAdapterRadixContractAdapter tests", () => {
     mockDefaultValues();
 
     sut = await new PriceAdapterRadixContractConnector(
-      new RadixClient(new RadixApiClient(), NetworkId.Stokenet, {
-        scheme: "ed25519",
-        value: MOCK_PRIVATE_KEY,
-      }),
+      new RadixClient(
+        new RadixApiClient(),
+        NetworkId.Stokenet,
+        new RadixSigner({
+          scheme: "ed25519",
+          value: MOCK_PRIVATE_KEY,
+        })
+      ),
       MOCK_COMPONENT_ID
     ).getAdapter();
   });

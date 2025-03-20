@@ -29,6 +29,17 @@ const PRIVATE_KEY_VALUE = RedstoneCommon.getFromEnv(
   "PRIVATE_KEY",
   z.string().optional()
 );
+
+export const ADDITIONAL_SIGNERS: RadixPrivateKey[] | undefined =
+  RedstoneCommon.getFromEnv("SIGNERS", z.optional(z.array(z.string())))?.map(
+    (priv) => {
+      return {
+        scheme: "ed25519",
+        value: priv,
+      };
+    }
+  );
+
 const PRIVATE_KEY_SCHEME = RedstoneCommon.getFromEnv(
   "PRIVATE_KEY_SCHEME",
   z.enum(["secp256k1", "ed25519"]).default("secp256k1")
@@ -94,11 +105,12 @@ function formatAddressFilename(
   return `${clientNameString}${NETWORK.name}.${entityType}.addr`;
 }
 
-export function makeRadixClient() {
+export function makeRadixClient(networkId?: number) {
   return new RadixClientBuilder()
-    .withNetworkId(NETWORK.id)
+    .withNetworkId(networkId ?? NETWORK.id)
     .withNetworkBasePath(NETWORK.basePath)
     .withPrivateKey(PRIVATE_KEY)
+    .withAdditionalSigners(ADDITIONAL_SIGNERS)
     .withClientConfig({ ...DEFAULT_RADIX_CLIENT_CONFIG, maxFeeXrd: 1 })
     .build();
 }
