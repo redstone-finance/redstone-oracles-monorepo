@@ -37,9 +37,10 @@ describe("RadixApiClient", () => {
         opt_ins: { receipt_output: true },
       },
     });
-    expect(result).toEqual([
-      [1724672890000n, ["0x3FD5C81B8E", "0x5CFEC9F0A58"]],
-    ]);
+    expect(result).toStrictEqual({
+      values: [[1724672890000n, ["0x3FD5C81B8E", "0x5CFEC9F0A58"]]],
+      feePaid: "1.23",
+    });
   });
 
   it("should submit a transaction", async () => {

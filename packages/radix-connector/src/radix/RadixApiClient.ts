@@ -75,13 +75,16 @@ export class RadixApiClient {
       hex: string;
     }[];
 
-    return (
-      await Promise.all(
-        output.map((object) =>
-          RadixParser.decodeSborHex(object.hex, this.networkId)
+    return {
+      values: (
+        await Promise.all(
+          output.map((object) =>
+            RadixParser.decodeSborHex(object.hex, this.networkId)
+          )
         )
-      )
-    ).map((value) => RadixParser.extractValue(value));
+      ).map((value) => RadixParser.extractValue(value)),
+      feePaid: receipt.transaction.fee_paid,
+    };
   }
 
   async submitTransaction(compiledTransaction: Uint8Array) {

@@ -16,6 +16,7 @@ import {
   ALLOWED_FORWARD_EPOCH_COUNT,
   DEFAULT_RADIX_CLIENT_CONFIG,
   MAX_TIP_PERCENTAGE,
+  TX_WAIT_POLL_DELAY_MS,
 } from "./RadixClientConfig";
 import { RadixInvocation } from "./RadixInvocation";
 import { RadixTransaction } from "./RadixTransaction";
@@ -92,6 +93,10 @@ export class RadixClient {
         if (result) {
           return await this.interpret<T>(transactionHash.id, transaction);
         }
+
+        this.logger.log(
+          `Iteration #${iterationIndex} didn't finish with success.`
+        );
       } catch (e) {
         this.logger.error(RedstoneCommon.stringifyError(e));
       }
@@ -107,8 +112,11 @@ export class RadixClient {
     transaction: RadixTransaction
   ) {
     const output = await this.apiClient.getTransactionDetails(transactionId);
+    this.logger.log(
+      `Transaction ${transactionId} is COMMITTED; feePaid: ${output.feePaid} XRD`
+    );
 
-    return transaction.interpret(output) as T;
+    return transaction.interpret(output.values) as T;
   }
 
   async readValue<T>(
@@ -181,15 +189,26 @@ export class RadixClient {
     return accumulatedResult;
   }
 
-  async waitForCommit(transactionId: string, pollDelayMs = 500) {
+  async waitForCommit(
+    transactionId: string,
+    pollDelayMs = TX_WAIT_POLL_DELAY_MS
+  ) {
     try {
-      return await this.performWaitingForCommit(
+      const result = await this.performWaitingForCommit(
         transactionId,
         pollDelayMs,
         this.config.maxTxWaitingTimeMs / pollDelayMs
       );
+
+      if (!result) {
+        this.logger.warn(
+          `Transaction ${transactionId} was not committed during ${this.config.maxTxWaitingTimeMs} [ms]`
+        );
+      }
+
+      return result;
     } catch (e) {
-      this.logger.error(e);
+      this.logger.error(RedstoneCommon.stringifyError(e));
 
       return false;
     }
@@ -203,7 +222,7 @@ export class RadixClient {
     for (let i = 0; i < pollAttempts; i++) {
       const statusOutput =
         await this.apiClient.getTransactionStatus(transactionId);
-      const logMessage = `Transaction ${transactionId} is ${statusOutput.status}`;
+      const logMessage = `Transaction ${transactionId} is ${statusOutput.status.toUpperCase()}`;
       switch (statusOutput.status) {
         case "Pending":
         case "CommitPendingOutcomeUnknown": {
@@ -211,12 +230,12 @@ export class RadixClient {
           break;
         }
         case "CommittedSuccess": {
-          this.logger.log(logMessage);
+          this.logger.debug(logMessage);
           return true;
         }
         case "CommittedFailure":
           throw new Error(
-            `Transaction ${transactionId} failed: ${statusOutput.errorMessage}`
+            `Transaction ${transactionId} is FAILED: ${statusOutput.errorMessage}`
           );
         default:
           this.logger.log(logMessage);
@@ -224,9 +243,7 @@ export class RadixClient {
       await RedstoneCommon.sleep(pollDelayMs);
     }
 
-    throw new Error(
-      `Transaction ${transactionId} was not committed during ${pollDelayMs * pollAttempts} [ms]`
-    );
+    return false;
   }
 
   async getAccountAddress() {
