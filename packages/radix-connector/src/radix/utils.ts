@@ -3,7 +3,10 @@ import {
   address,
   array,
   enumeration,
+  hash,
+  NetworkId,
   nonFungibleLocalId,
+  RadixEngineToolkit,
   tuple,
   u8,
   Value,
@@ -14,6 +17,61 @@ import { arrayify } from "ethers/lib/utils";
 export interface NonFungibleGlobalIdInput {
   resourceAddress: string;
   localId: string;
+}
+
+export function makeOwnerNoneRole() {
+  return enumeration(0);
+}
+
+export function publicKeyHash(pk: string) {
+  const pkHash = hash(Buffer.from(pk, "hex")).subarray(-29);
+  return Buffer.from(pkHash).toString("hex");
+}
+
+export async function edResource(networkId: number) {
+  const addressBook = await RadixEngineToolkit.Utils.knownAddresses(networkId);
+  return addressBook.resourceAddresses.ed25519SignatureVirtualBadge;
+}
+
+export async function makeEdSignatureResource(
+  pkHash: string,
+  networkId: number
+) {
+  return enumeration(
+    0,
+    makeNonFungibleGlobalId({
+      resourceAddress: await edResource(networkId),
+      localId: `[${pkHash}]`,
+    })
+  );
+}
+
+export async function makeMultisigAccessRule(
+  threshold: number,
+  publicKeys: string[],
+  networkId: number = NetworkId.Stokenet
+) {
+  const pkHashes = publicKeys.map(publicKeyHash);
+
+  const resources = [];
+  for (const pkHash of pkHashes) {
+    resources.push(await makeEdSignatureResource(pkHash, networkId));
+  }
+
+  return enumeration(
+    2,
+    enumeration(
+      0,
+      enumeration(
+        2,
+        {
+          kind: ValueKind.U8,
+          value: threshold,
+        },
+        array(ValueKind.Enum, ...resources)
+      )
+    )
+  );
 }
 
 export function makeNonFungibleGlobalId(input: NonFungibleGlobalIdInput) {
