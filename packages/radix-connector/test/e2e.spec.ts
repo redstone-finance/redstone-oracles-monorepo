@@ -10,7 +10,11 @@ import {
   PRICE_ADAPTER_NAME,
   PRIVATE_KEY,
 } from "../scripts/constants";
-import { PriceAdapterRadixContractConnector, RadixClient } from "../src";
+import {
+  PriceAdapterRadixContractConnector,
+  RadixClient,
+  RadixSigner,
+} from "../src";
 import { RadixApiClient } from "../src/radix/RadixApiClient";
 
 jest.setTimeout(10 * 60000);
@@ -25,7 +29,7 @@ describe("Integrated and initialized prices contract", () => {
     const client = new RadixClient(
       new RadixApiClient(),
       NetworkId.Stokenet,
-      PRIVATE_KEY
+      new RadixSigner(PRIVATE_KEY)
     );
     const connector = new PriceAdapterRadixContractConnector(
       client,
