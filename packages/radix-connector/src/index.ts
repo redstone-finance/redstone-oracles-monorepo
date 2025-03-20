@@ -12,6 +12,7 @@ export * from "./radix/RadixClient";
 export * from "./radix/RadixClientBuilder";
 export {
   DEFAULT_RADIX_CLIENT_CONFIG,
+  TX_WAIT_POLL_DELAY_MS,
   type RadixClientConfig,
 } from "./radix/RadixClientConfig";
 export * from "./radix/RadixContractAdapter";
