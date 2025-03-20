@@ -75,7 +75,7 @@ export class CronAgent<R> {
   getLastFreshMessageOrFail(): R {
     if (this.isStale() || !this.cachedValue.value) {
       throw new Error(
-        `Cached data is stale or not populated cachedAt=${this.cachedValue.cachedAt} maxDataTTL=${this.args.maxDataTTL} cache_age=${Date.now() - this.cachedValue.cachedAt}`
+        `Cached data is stale or not populated cachedAt=${this.cachedValue.cachedAt} maxDataTTL=${this.args.maxDataTTL} cacheAge=${Date.now() - this.cachedValue.cachedAt}`
       );
     }
     return this.cachedValue.value;
