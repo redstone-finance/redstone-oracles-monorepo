@@ -19,13 +19,16 @@ export const getRadixContractConnector = (
     expectedTxDeliveryTimeInMS,
   } = relayerConfig;
 
-  const clientConfig = DEFAULT_RADIX_CLIENT_CONFIG;
-  clientConfig.tipMultiplier = gasMultiplier ?? clientConfig.tipMultiplier;
-  clientConfig.maxFeeXrd = gasLimit ?? clientConfig.maxFeeXrd;
-  clientConfig.maxTxSendAttempts =
-    maxTxSendAttempts ?? clientConfig.maxTxSendAttempts;
-  clientConfig.maxTxWaitingTimeMs =
-    expectedTxDeliveryTimeInMS ?? clientConfig.maxTxWaitingTimeMs;
+  const clientConfig = {
+    ...DEFAULT_RADIX_CLIENT_CONFIG,
+    tipMultiplier: gasMultiplier ?? DEFAULT_RADIX_CLIENT_CONFIG.tipMultiplier,
+    maxFeeXrd: gasLimit ?? DEFAULT_RADIX_CLIENT_CONFIG.maxFeeXrd,
+    maxTxSendAttempts:
+      maxTxSendAttempts ?? DEFAULT_RADIX_CLIENT_CONFIG.maxTxSendAttempts,
+    maxTxWaitingTimeMs:
+      expectedTxDeliveryTimeInMS ??
+      DEFAULT_RADIX_CLIENT_CONFIG.maxTxWaitingTimeMs,
+  };
 
   const client = new RadixClientBuilder()
     .withNetworkId(chainId)

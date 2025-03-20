@@ -71,9 +71,11 @@ export class RadixClient {
     invocationProvider: () => Promise<RadixInvocation<T>>,
     proofResourceId?: string
   ) {
-    let iterationIndex = 0;
-
-    do {
+    for (
+      let iterationIndex = 0;
+      iterationIndex < this.config.maxTxSendAttempts;
+      iterationIndex++
+    ) {
       try {
         const invocation = await invocationProvider();
         const transaction = invocation.getDedicatedTransaction(
@@ -93,8 +95,7 @@ export class RadixClient {
       } catch (e) {
         this.logger.error(RedstoneCommon.stringifyError(e));
       }
-      iterationIndex++;
-    } while (iterationIndex <= this.config.maxTxSendAttempts);
+    }
 
     throw new Error(
       `No transaction success found in ${this.config.maxTxSendAttempts} iteration${RedstoneCommon.getS(this.config.maxTxSendAttempts)}`
