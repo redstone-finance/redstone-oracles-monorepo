@@ -4,7 +4,6 @@ import {
   generateRandomNonce,
   NetworkId,
   NotarizedTransaction,
-  PrivateKey,
   RadixEngineToolkit,
   TransactionBuilder,
   TransactionHeader,
@@ -19,38 +18,18 @@ import {
   TX_WAIT_POLL_DELAY_MS,
 } from "./RadixClientConfig";
 import { RadixInvocation } from "./RadixInvocation";
+import { RadixSigner } from "./RadixSigner";
 import { RadixTransaction } from "./RadixTransaction";
-
-export interface RadixPrivateKey {
-  scheme: "secp256k1" | "ed25519";
-  value: string;
-}
 
 export class RadixClient {
   protected readonly logger = loggerFactory("RadixClient");
-  protected readonly signer?: PrivateKey;
 
   constructor(
     protected readonly apiClient: RadixApiClient,
     protected networkId = NetworkId.Stokenet,
-    readonly privateKey: RadixPrivateKey | undefined,
+    protected readonly signer: RadixSigner | undefined,
     protected config = DEFAULT_RADIX_CLIENT_CONFIG
-  ) {
-    this.signer = RadixClient.makeSigner(privateKey);
-  }
-
-  private static makeSigner(privateKey?: RadixPrivateKey) {
-    if (!privateKey) {
-      return;
-    }
-
-    switch (privateKey.scheme) {
-      case "ed25519":
-        return new PrivateKey.Ed25519(privateKey.value);
-      case "secp256k1":
-        return new PrivateKey.Secp256k1(privateKey.value);
-    }
-  }
+  ) {}
 
   static async getAddressDataHex(addressString: string) {
     const entity = await RadixEngineToolkit.Address.decode(addressString);
@@ -290,12 +269,13 @@ export class RadixClient {
     };
 
     const notarizedTransaction: NotarizedTransaction =
-      await TransactionBuilder.new().then((builder) =>
-        builder
+      await TransactionBuilder.new().then((builder) => {
+        const tx = builder
           .header(transactionHeader)
-          .manifest(transaction.getManifest())
-          .notarize(this.signer!)
-      );
+          .manifest(transaction.getManifest());
+
+        return this.signer!.sign(tx);
+      });
 
     await RadixEngineToolkit.NotarizedTransaction.staticallyValidate(
       notarizedTransaction,

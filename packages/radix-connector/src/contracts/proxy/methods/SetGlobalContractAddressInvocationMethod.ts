@@ -1,13 +1,11 @@
 import { address } from "@radixdlt/radix-engine-toolkit";
 import { VoidRadixInvocation } from "../../../radix/RadixInvocation";
-import { ProvingRadixTransaction } from "../../../radix/RadixTransaction";
-import { NonFungibleGlobalIdInput } from "../../../radix/utils";
+import { RadixTransaction } from "../../../radix/RadixTransaction";
 
 export class SetGlobalContractAddressInvocationMethod extends VoidRadixInvocation {
   constructor(
     componentId: string,
-    private contractGlobalAddress: string,
-    private proofBadge: NonFungibleGlobalIdInput
+    private contractGlobalAddress: string
   ) {
     super(componentId, "set_contract_global_address");
   }
@@ -17,6 +15,6 @@ export class SetGlobalContractAddressInvocationMethod extends VoidRadixInvocatio
   }
 
   override getDedicatedTransaction(account: string) {
-    return new ProvingRadixTransaction(account, [this], this.proofBadge);
+    return new RadixTransaction(account, [this]);
   }
 }

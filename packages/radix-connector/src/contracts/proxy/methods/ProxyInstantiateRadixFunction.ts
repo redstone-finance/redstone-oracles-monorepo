@@ -1,17 +1,12 @@
-import { address } from "@radixdlt/radix-engine-toolkit";
+import { address, Value } from "@radixdlt/radix-engine-toolkit";
 import { RadixFunction } from "../../../radix/RadixInvocation";
 import { RadixTransaction } from "../../../radix/RadixTransaction";
-import {
-  makeNonFungibleGlobalId,
-  makeOption,
-  NonFungibleGlobalIdInput,
-} from "../../../radix/utils";
+import { makeOption, makeOwnerNoneRole } from "../../../radix/utils";
 
 export class ProxyInstantiateRadixFunction extends RadixFunction<string> {
   constructor(
     packageId: string,
-    private ownerBadge: NonFungibleGlobalIdInput,
-    private managerBadge: NonFungibleGlobalIdInput,
+    private multiSigAccessRule: Value,
     private globalContractAddress?: string
   ) {
     super(packageId, "instantiate", "Proxy");
@@ -19,8 +14,8 @@ export class ProxyInstantiateRadixFunction extends RadixFunction<string> {
 
   override getParams() {
     return [
-      makeNonFungibleGlobalId(this.ownerBadge),
-      makeNonFungibleGlobalId(this.managerBadge),
+      makeOwnerNoneRole(),
+      this.multiSigAccessRule,
       makeOption(address, this.globalContractAddress),
     ];
   }
