@@ -1,5 +1,6 @@
+import { NetworkId } from "@radixdlt/radix-engine-toolkit";
 import { RadixClient } from "../../radix/RadixClient";
-import { NonFungibleGlobalIdInput } from "../../radix/utils";
+import { makeMultisigAccessRule } from "../../radix/utils";
 import { ProxyInstantiateRadixFunction } from "./methods/ProxyInstantiateRadixFunction";
 import { ProxyRadixContractConnector } from "./ProxyRadixContractConnector";
 
@@ -7,9 +8,10 @@ export class ProxyRadixContractDeployer extends ProxyRadixContractConnector {
   constructor(
     client: RadixClient,
     private packageId: string,
-    private ownerBadge: NonFungibleGlobalIdInput,
-    private manBadge: NonFungibleGlobalIdInput,
-    private contractGlobalAddress?: string
+    private threshold: number,
+    private multisignaturePublicKeys: string[],
+    private contractGlobalAddress?: string,
+    private networkId: number = NetworkId.Stokenet
   ) {
     super(client);
   }
@@ -28,8 +30,11 @@ export class ProxyRadixContractDeployer extends ProxyRadixContractConnector {
     return await this.client.call(
       new ProxyInstantiateRadixFunction(
         this.packageId,
-        this.ownerBadge,
-        this.manBadge,
+        await makeMultisigAccessRule(
+          this.threshold,
+          this.multisignaturePublicKeys,
+          this.networkId
+        ),
         this.contractGlobalAddress
       )
     );

@@ -26,7 +26,8 @@
     "sample-instantiate-proxy": "yarn global:ts-node scripts/sample_instantiate_proxy.ts",
     "sample-create_badges": "yarn global:ts-node scripts/sample_create_badges.ts",
     "sample-change_proxy_address": "yarn global:ts-node scripts/sample_change_proxy_address.ts",
-    "sample-run": "yarn global:ts-node scripts/sample_run.ts"
+    "sample-run": "yarn global:ts-node scripts/sample_run.ts",
+    "manifest": "yarn global:ts-node scripts/access-rule-utils.ts"
   },
   "dependencies": {
     "@radixdlt/babylon-gateway-api-sdk": "^1.10.1",
