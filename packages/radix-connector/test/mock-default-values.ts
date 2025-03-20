@@ -31,6 +31,7 @@ export function transactionCommittedDetailsMock(values: string[]) {
   return {
     transaction: {
       transaction_status: "CommittedSuccess",
+      fee_paid: "1.23",
       receipt: {
         output: values.map((hex) => ({
           hex,

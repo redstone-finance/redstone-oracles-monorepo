@@ -35,6 +35,6 @@ export class RadixPackageDeployer extends RadixClient {
     const output = await this.apiClient.getTransactionDetails(transactionId);
     console.debug(output);
 
-    return (output[1] as string[])[0];
+    return (output.values[1] as string[])[0];
   }
 }
