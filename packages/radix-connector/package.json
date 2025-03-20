@@ -13,7 +13,6 @@
     "pack-package": "yarn build && npm pack",
     "lint": "yarn global:eslint .",
     "lint:fix": "yarn global:eslint --fix .",
-    "test-ci": "IS_CI=true yarn global:jest",
     "test": "yarn global:jest",
     "test-e2e": "yarn global:jest e2e.spec.ts",
     "coverage": "yarn global:jest:cov --coveragePathIgnorePatterns=\"src/index.ts\" --coveragePathIgnorePatterns=\"src/radix/parser/generated/converter.ts\"",
@@ -39,6 +38,8 @@
   },
   "devDependencies": {
     "@atlantis-l/radix-tool": "^0.8.9",
+    "@redstone-finance/utils": "workspace:*",
+    "dotenv": "^16.0.3",
     "node-jq": "^6.0.0",
     "redstone-api": "^0.4.12",
     "secp256k1": "^5.0.1",
