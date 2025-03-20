@@ -1,6 +1,7 @@
 import { RedstoneCommon } from "@redstone-finance/utils";
+import "dotenv/config";
+import { z } from "zod";
 import { ProxyRadixContractConnector } from "../src";
-import { NonFungibleGlobalIdInput } from "../src/radix/utils";
 import {
   FEED_ID,
   loadAddress,
@@ -9,13 +10,9 @@ import {
   PROXY_NAME,
 } from "./constants";
 
-const MAN_BADGE: () => NonFungibleGlobalIdInput = () => ({
-  resourceAddress: RedstoneCommon.getFromEnv("MAN_BADGE_RESOURCE_ADDRESS"),
-  localId: RedstoneCommon.getFromEnv("MAN_BADGE_LOCAL_ID"),
-});
-
 async function changeProxyAddress() {
-  const client = makeRadixClient();
+  const networkId = RedstoneCommon.getFromEnv("NETWORK_ID", z.number());
+  const client = makeRadixClient(networkId);
 
   const connector = new ProxyRadixContractConnector(
     client,
@@ -24,8 +21,7 @@ async function changeProxyAddress() {
 
   const adapter = await connector.getAdapter();
   await adapter.setContractGlobalAddress(
-    await loadAddress(`component`, PRICE_FEED_NAME, FEED_ID),
-    MAN_BADGE()
+    await loadAddress(`component`, PRICE_FEED_NAME, FEED_ID)
   );
 }
 
