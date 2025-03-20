@@ -17,3 +17,4 @@ export {
 } from "./radix/RadixClientConfig";
 export * from "./radix/RadixContractAdapter";
 export * from "./radix/RadixContractConnector";
+export * from "./radix/RadixSigner";
