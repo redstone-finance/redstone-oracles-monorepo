@@ -377,9 +377,7 @@ export class ProviderWithAgreement extends ProviderWithFallback {
                   this.agreementConfig.numberOfProvidersThatHaveToAgree
                 } agreeing providers at block ${electedBlockNumber}. ${
                   healthyProviders.length - errors.length
-                } providers responded with success. Result map: ${mapToString(
-                  results
-                )}`
+                } providers responded with success.`
               )
             );
           }
@@ -432,9 +430,6 @@ export class ProviderWithAgreement extends ProviderWithFallback {
     }
   }
 }
-
-const mapToString = (map: Map<unknown, unknown>) =>
-  JSON.stringify(Object.fromEntries(map.entries()));
 
 // We are passing op as function instead of promise to measure also synchronous operation time
 async function withDebugLog<T>(
