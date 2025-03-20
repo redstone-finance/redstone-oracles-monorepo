@@ -841,6 +841,10 @@ export const chainTokenMap: ChainTokenMap = {
       address: "0x211Cc4DD073734dA055fbF44a2b4667d5E5fE5d2",
       decimals: 18,
     },
+    FXS: {
+      address: "0xFc00000000000000000000000000000000000002",
+      decimals: 18,
+    },
   },
 };
 
