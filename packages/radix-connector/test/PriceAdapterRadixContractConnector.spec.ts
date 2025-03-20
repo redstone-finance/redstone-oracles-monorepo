@@ -1,5 +1,6 @@
 import { NetworkId } from "@radixdlt/radix-engine-toolkit";
 import { PriceAdapterRadixContractDeployer, RadixClient } from "../src";
+import { RadixApiClient } from "../src/radix/RadixApiClient";
 import {
   transactionCommittedDetails,
   transactionStatus,
@@ -20,7 +21,7 @@ describe("PriceAdapterRadixContractConnector tests", () => {
     mockDefaultValues();
 
     sut = new PriceAdapterRadixContractDeployer(
-      new RadixClient(NetworkId.Stokenet, undefined, {
+      new RadixClient(new RadixApiClient(), NetworkId.Stokenet, {
         scheme: "ed25519",
         value: MOCK_PRIVATE_KEY,
       }),

@@ -3,7 +3,7 @@ import { CreateProofOfNonFungiblesRadixMethod } from "../methods/CreateProofOfNo
 import { DepositBatchRadixMethod } from "../methods/DepositBatchRadixMethod";
 import { LockFeeRadixMethod } from "../methods/LockFeeRadixMethod";
 import { TryDepositBatchOrAbortRadixMethod } from "../methods/TryDepositBatchOrAbortRadixMethod";
-import { DEFAULT_TRANSACTION_XRD_FEE } from "./constants";
+import { DEFAULT_TRANSACTION_XRD_FEE } from "./RadixClientConfig";
 import { RadixInvocation } from "./RadixInvocation";
 import { NonFungibleGlobalIdInput } from "./utils";
 

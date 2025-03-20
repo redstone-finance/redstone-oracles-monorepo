@@ -1,5 +1,6 @@
 import { RedstoneCommon } from "@redstone-finance/utils";
 import { readFileSync } from "node:fs";
+import { RadixApiClient } from "../src/radix/RadixApiClient";
 import { RadixPackageDeployer } from "./RadixPackageDeployer";
 import {
   getContractFilename,
@@ -12,8 +13,8 @@ const DEFAULT_DEPLOY_FEE_LOCK = 200;
 
 async function deploy(contractName: string) {
   const client = new RadixPackageDeployer(
+    new RadixApiClient(NETWORK.id, NETWORK.basePath),
     NETWORK.id,
-    NETWORK.basePath,
     PRIVATE_KEY
   );
 

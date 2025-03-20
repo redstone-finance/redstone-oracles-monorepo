@@ -4,7 +4,11 @@ import "dotenv/config";
 import fs from "fs";
 import path from "path";
 import { z } from "zod";
-import { RadixClientBuilder, RadixPrivateKey } from "../src";
+import {
+  DEFAULT_RADIX_CLIENT_CONFIG,
+  RadixClientBuilder,
+  RadixPrivateKey,
+} from "../src";
 
 const SCRYPTO_DIR = `../scrypto`;
 
@@ -96,5 +100,6 @@ export function makeRadixClient() {
     .withNetworkId(NETWORK.id)
     .withNetworkBasePath(NETWORK.basePath)
     .withPrivateKey(PRIVATE_KEY)
+    .withClientConfig({ ...DEFAULT_RADIX_CLIENT_CONFIG, maxFeeXrd: 1 })
     .build();
 }
