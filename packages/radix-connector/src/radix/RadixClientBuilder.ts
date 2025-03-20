@@ -1,40 +1,15 @@
-import { MultiExecutor } from "@redstone-finance/utils";
+import { RadixApiClient } from "./RadixApiClient";
 import { RadixClient, RadixPrivateKey } from "./RadixClient";
-
-export const SINGLE_EXECUTION_TIMEOUT_MS = 7_000;
-export const ALL_EXECUTIONS_TIMEOUT_MS = 30_000;
-export const BLOCK_NUMBER_EXECUTION_TIMEOUT_MS = 1_500;
+import {
+  DEFAULT_RADIX_CLIENT_CONFIG,
+  RadixClientConfig,
+} from "./RadixClientConfig";
 
 export class RadixClientBuilder {
   private urls: string[] = [];
   private networkId?: number;
   private privateKey?: RadixPrivateKey;
-
-  private static makeMultiExecutor(
-    clients: RadixClient[],
-    config = {
-      singleExecutionTimeoutMs: SINGLE_EXECUTION_TIMEOUT_MS,
-      allExecutionTimeoutMs: ALL_EXECUTIONS_TIMEOUT_MS,
-    }
-  ) {
-    const ceilMedianConsensusExecutor =
-      new MultiExecutor.CeilMedianConsensusExecutor(
-        MultiExecutor.DEFAULT_CONFIG.consensusQuorumRatio,
-        BLOCK_NUMBER_EXECUTION_TIMEOUT_MS
-      );
-    return MultiExecutor.create(
-      clients,
-      {
-        getCurrentStateVersion: ceilMedianConsensusExecutor,
-        getCurrentEpochNumber: ceilMedianConsensusExecutor,
-        call: MultiExecutor.ExecutionMode.RACE,
-        waitForCommit: MultiExecutor.ExecutionMode.RACE,
-        readValue: MultiExecutor.ExecutionMode.AGREEMENT,
-        getXRDBalance: MultiExecutor.ExecutionMode.AGREEMENT,
-      },
-      { ...MultiExecutor.DEFAULT_CONFIG, ...config }
-    );
-  }
+  private clientConfig = DEFAULT_RADIX_CLIENT_CONFIG;
 
   withNetworkBasePath(basePath?: string) {
     return basePath ? this.withRpcUrl(basePath) : this;
@@ -64,17 +39,27 @@ export class RadixClientBuilder {
     return this;
   }
 
+  withClientConfig(config: RadixClientConfig) {
+    this.clientConfig = config;
+
+    return this;
+  }
+
   build() {
     if (!this.networkId) {
       throw new Error("Network not set");
     }
 
-    const clients = this.urls.length
-      ? this.urls.map(
-          (url) => new RadixClient(this.networkId, url, this.privateKey)
-        )
-      : [new RadixClient(this.networkId, undefined, this.privateKey)];
+    const urls: (string | undefined)[] = this.urls.length
+      ? this.urls
+      : [undefined];
+    const apiClient = RadixApiClient.makeMultiExecutor(urls);
 
-    return RadixClientBuilder.makeMultiExecutor(clients);
+    return new RadixClient(
+      apiClient,
+      this.networkId,
+      this.privateKey,
+      this.clientConfig
+    );
   }
 }

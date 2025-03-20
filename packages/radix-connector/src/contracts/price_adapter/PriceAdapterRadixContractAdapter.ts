@@ -7,8 +7,12 @@ import { BigNumber, BigNumberish } from "ethers";
 import _ from "lodash";
 import { RadixClient } from "../../radix/RadixClient";
 import { RadixContractAdapter } from "../../radix/RadixContractAdapter";
+import { RadixInvocation } from "../../radix/RadixInvocation";
 import { NonFungibleGlobalIdInput } from "../../radix/utils";
-import { GetPricesRadixMethod } from "./methods/GetPricesRadixMethod";
+import {
+  GetPricesRadixMethod,
+  PricesAndTimestamp,
+} from "./methods/GetPricesRadixMethod";
 import { ReadPriceDataRadixMethod } from "./methods/ReadPriceDataRadixMethod";
 import { ReadPricesRadixMethod } from "./methods/ReadPricesRadixMethod";
 import { ReadTimestampRadixMethod } from "./methods/ReadTimestampRadixMethod";
@@ -42,69 +46,36 @@ export class PriceAdapterRadixContractAdapter
   async writePricesFromPayloadToContract(
     paramsProvider: ContractParamsProvider
   ): Promise<string | BigNumberish[]> {
-    const proofBadge = await this.getTrustedUpdaterProofBadge();
+    const metadataTimestamp = Date.now();
+    const provider = async () =>
+      await this.getWritePricesMethod(paramsProvider, metadataTimestamp);
+
+    return (await this.client.callWithProvider<PricesAndTimestamp>(provider))
+      .values;
+  }
+
+  private async getWritePricesMethod(
+    paramsProvider: ContractParamsProvider,
+    metadataTimestamp?: number
+  ): Promise<RadixInvocation<PricesAndTimestamp>> {
     const payloadData = await paramsProvider.getPayloadData({
       withUnsignedMetadata: true,
+      metadataTimestamp,
     });
-    return (
-      await this.client.call(
-        proofBadge
-          ? new WritePricesTrustedRadixMethod(
-              this.componentId,
-              paramsProvider.getDataFeedIds(),
-              payloadData,
-              proofBadge
-            )
-          : new WritePricesRadixMethod(
-              this.componentId,
-              paramsProvider.getDataFeedIds(),
-              payloadData
-            )
-      )
-    ).values;
-  }
 
-  private async getTrustedUpdaterProofBadge() {
-    if (this.trustedUpdaterProofBadge) {
-      return this.trustedUpdaterProofBadge;
-    }
-
-    const accountAddress = await this.client.getAccountAddress();
-    const trustedUpdaterProofBadge =
-      await this.getTrustedUpdaterResourceBadge(accountAddress);
-
-    if (!trustedUpdaterProofBadge) {
-      return;
-    }
-
-    const amount = await this.client.getResourceBalance(
-      accountAddress,
-      trustedUpdaterProofBadge.resourceAddress
-    );
-    if (!amount) {
-      return;
-    }
-
-    this.trustedUpdaterProofBadge = trustedUpdaterProofBadge;
-
-    return this.trustedUpdaterProofBadge;
-  }
-
-  async getTrustedUpdaterResourceBadge(accountAddress: string) {
-    const resourceAddress: string | undefined = await this.client.readValue(
-      this.componentId,
-      "trusted_updater_resource"
-    );
-    if (!resourceAddress) {
-      return;
-    }
-
-    const accountDataHex = await RadixClient.getAddressDataHex(accountAddress);
-
-    return {
-      resourceAddress,
-      localId: `<${accountDataHex}>`,
-    } as NonFungibleGlobalIdInput;
+    const proofBadge = await this.getTrustedUpdaterProofBadge();
+    return proofBadge
+      ? new WritePricesTrustedRadixMethod(
+          this.componentId,
+          paramsProvider.getDataFeedIds(),
+          payloadData,
+          proofBadge
+        )
+      : new WritePricesRadixMethod(
+          this.componentId,
+          paramsProvider.getDataFeedIds(),
+          payloadData
+        );
   }
 
   async getUniqueSignerThreshold(stateVersion?: number): Promise<number> {
@@ -205,5 +176,50 @@ export class PriceAdapterRadixContractAdapter
       lastBlockTimestampMS: Number(data[1]),
       lastValue: BigNumber.from(data[0]),
     };
+  }
+
+  /// Badges
+
+  async getTrustedUpdaterResourceBadge(accountAddress: string) {
+    const resourceAddress: string | undefined = await this.client.readValue(
+      this.componentId,
+      "trusted_updater_resource"
+    );
+    if (!resourceAddress) {
+      return;
+    }
+
+    const accountDataHex = await RadixClient.getAddressDataHex(accountAddress);
+
+    return {
+      resourceAddress,
+      localId: `<${accountDataHex}>`,
+    } as NonFungibleGlobalIdInput;
+  }
+
+  private async getTrustedUpdaterProofBadge() {
+    this.trustedUpdaterProofBadge ??= await this.makeTrustedUpdaterProofBadge();
+
+    return this.trustedUpdaterProofBadge;
+  }
+
+  private async makeTrustedUpdaterProofBadge() {
+    const accountAddress = await this.client.getAccountAddress();
+    const trustedUpdaterProofBadge =
+      await this.getTrustedUpdaterResourceBadge(accountAddress);
+
+    if (!trustedUpdaterProofBadge) {
+      return;
+    }
+
+    const amount = await this.client.getResourceBalance(
+      accountAddress,
+      trustedUpdaterProofBadge.resourceAddress
+    );
+    if (!amount) {
+      return;
+    }
+
+    return trustedUpdaterProofBadge;
   }
 }

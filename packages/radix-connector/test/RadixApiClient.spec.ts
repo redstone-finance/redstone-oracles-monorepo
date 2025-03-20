@@ -20,7 +20,7 @@ describe("RadixApiClient", () => {
   beforeAll(mockDefaultValues);
 
   beforeEach(() => {
-    sut = new RadixApiClient("TestApp");
+    sut = new RadixApiClient();
   });
 
   it("should get transaction details", async () => {

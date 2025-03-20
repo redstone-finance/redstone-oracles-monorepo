@@ -12,10 +12,13 @@ import {
 import { loggerFactory, RedstoneCommon } from "@redstone-finance/utils";
 import { hexlify } from "ethers/lib/utils";
 import { RadixApiClient } from "./RadixApiClient";
+import {
+  ALLOWED_FORWARD_EPOCH_COUNT,
+  DEFAULT_RADIX_CLIENT_CONFIG,
+  MAX_TIP_PERCENTAGE,
+} from "./RadixClientConfig";
 import { RadixInvocation } from "./RadixInvocation";
 import { RadixTransaction } from "./RadixTransaction";
-
-const ALLOWED_FORWARD_EPOCH_COUNT = 100;
 
 export interface RadixPrivateKey {
   scheme: "secp256k1" | "ed25519";
@@ -25,19 +28,17 @@ export interface RadixPrivateKey {
 export class RadixClient {
   protected readonly logger = loggerFactory("RadixClient");
   protected readonly signer?: PrivateKey;
-  protected readonly apiClient: RadixApiClient;
 
   constructor(
+    protected readonly apiClient: RadixApiClient,
     protected networkId = NetworkId.Stokenet,
-    rpcUrl?: string,
-    privateKey?: RadixPrivateKey,
-    applicationName = "RedStone Radix Connector"
+    readonly privateKey: RadixPrivateKey | undefined,
+    protected config = DEFAULT_RADIX_CLIENT_CONFIG
   ) {
     this.signer = RadixClient.makeSigner(privateKey);
-    this.apiClient = new RadixApiClient(applicationName, networkId, rpcUrl);
   }
 
-  static makeSigner(privateKey?: RadixPrivateKey) {
+  private static makeSigner(privateKey?: RadixPrivateKey) {
     if (!privateKey) {
       return;
     }
@@ -60,13 +61,51 @@ export class RadixClient {
     method: RadixInvocation<T>,
     proofResourceId?: string
   ): Promise<T> {
-    const transaction = method.getDedicatedTransaction(
-      await this.getAccountAddress(),
+    return await this.callWithProvider(
+      () => Promise.resolve(method),
       proofResourceId
     );
-    const transactionId = await this.callTransaction(transaction);
-    await this.waitForCommit(transactionId.id);
-    const output = await this.apiClient.getTransactionDetails(transactionId.id);
+  }
+
+  async callWithProvider<T>(
+    invocationProvider: () => Promise<RadixInvocation<T>>,
+    proofResourceId?: string
+  ) {
+    let iterationIndex = 0;
+
+    do {
+      try {
+        const invocation = await invocationProvider();
+        const transaction = invocation.getDedicatedTransaction(
+          await this.getAccountAddress(),
+          this.config.maxFeeXrd,
+          proofResourceId
+        );
+        const transactionHash = await this.callTransaction(
+          transaction,
+          iterationIndex
+        );
+        const result = await this.waitForCommit(transactionHash.id);
+
+        if (result) {
+          return await this.interpret<T>(transactionHash.id, transaction);
+        }
+      } catch (e) {
+        this.logger.error(RedstoneCommon.stringifyError(e));
+      }
+      iterationIndex++;
+    } while (iterationIndex <= this.config.maxTxSendAttempts);
+
+    throw new Error(
+      `No transaction success found in ${this.config.maxTxSendAttempts} iteration${RedstoneCommon.getS(this.config.maxTxSendAttempts)}`
+    );
+  }
+
+  private async interpret<T>(
+    transactionId: string,
+    transaction: RadixTransaction
+  ) {
+    const output = await this.apiClient.getTransactionDetails(transactionId);
 
     return transaction.interpret(output) as T;
   }
@@ -141,16 +180,12 @@ export class RadixClient {
     return accumulatedResult;
   }
 
-  async waitForCommit(
-    transactionId: string,
-    pollDelayMs = 500,
-    pollAttempts = 60000 / pollDelayMs
-  ) {
+  async waitForCommit(transactionId: string, pollDelayMs = 500) {
     try {
       return await this.performWaitingForCommit(
         transactionId,
         pollDelayMs,
-        pollAttempts
+        this.config.maxTxWaitingTimeMs / pollDelayMs
       );
     } catch (e) {
       this.logger.error(e);
@@ -167,8 +202,8 @@ export class RadixClient {
     for (let i = 0; i < pollAttempts; i++) {
       const statusOutput =
         await this.apiClient.getTransactionStatus(transactionId);
-      const logMessage = `Transaction ${transactionId} is ${statusOutput.intent_status}`;
-      switch (statusOutput.intent_status) {
+      const logMessage = `Transaction ${transactionId} is ${statusOutput.status}`;
+      switch (statusOutput.status) {
         case "Pending":
         case "CommitPendingOutcomeUnknown": {
           this.logger.debug(logMessage);
@@ -180,7 +215,7 @@ export class RadixClient {
         }
         case "CommittedFailure":
           throw new Error(
-            `Transaction ${transactionId} failed: ${statusOutput.error_message}`
+            `Transaction ${transactionId} failed: ${statusOutput.errorMessage}`
           );
         default:
           this.logger.log(logMessage);
@@ -212,7 +247,19 @@ export class RadixClient {
     return this.signer.publicKey();
   }
 
-  private async callTransaction(transaction: RadixTransaction) {
+  private getTipPercentage(iterationIndex = 0) {
+    return Math.floor(
+      Math.min(
+        100 * (this.config.tipMultiplier ** iterationIndex - 1),
+        MAX_TIP_PERCENTAGE
+      )
+    );
+  }
+
+  private async callTransaction(
+    transaction: RadixTransaction,
+    iterationIndex = 0
+  ) {
     const currentEpochNumber = await this.apiClient.getCurrentEpochNumber();
     const transactionHeader: TransactionHeader = {
       networkId: this.networkId,
@@ -221,7 +268,7 @@ export class RadixClient {
       nonce: generateRandomNonce(),
       notaryPublicKey: this.getPublicKey(),
       notaryIsSignatory: true,
-      tipPercentage: 0,
+      tipPercentage: this.getTipPercentage(iterationIndex),
     };
 
     const notarizedTransaction: NotarizedTransaction =
@@ -254,7 +301,10 @@ export class RadixClient {
         notarizedTransaction
       );
 
-    await this.apiClient.submitTransaction(compiled);
+    const duplicate = await this.apiClient.submitTransaction(compiled);
+    if (duplicate) {
+      this.logger.info(`Transaction ${transactionId.id} was a duplicate`);
+    }
 
     return transactionId;
   }

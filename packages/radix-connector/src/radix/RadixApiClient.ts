@@ -4,18 +4,52 @@ import {
   StateEntityDetailsResponseComponentDetails,
 } from "@radixdlt/babylon-gateway-api-sdk";
 import { Convert, NetworkId, Value } from "@radixdlt/radix-engine-toolkit";
+import { MultiExecutor } from "@redstone-finance/utils";
 import { RadixParser } from "./parser/RadixParser";
+
+const APPLICATION_NAME = "RedStone Radix Connector";
+
+const SINGLE_EXECUTION_TIMEOUT_MS = 7_000;
+const ALL_EXECUTIONS_TIMEOUT_MS = 30_000;
+const BLOCK_NUMBER_EXECUTION_TIMEOUT_MS = 1_500;
 
 export class RadixApiClient {
   readonly apiClient: GatewayApiClient;
 
+  static makeMultiExecutor(
+    urls: (string | undefined)[],
+    networkId = NetworkId.Stokenet,
+    config = {
+      singleExecutionTimeoutMs: SINGLE_EXECUTION_TIMEOUT_MS,
+      allExecutionTimeoutMs: ALL_EXECUTIONS_TIMEOUT_MS,
+    }
+  ): RadixApiClient {
+    const ceilMedianConsensusExecutor =
+      new MultiExecutor.CeilMedianConsensusExecutor(
+        MultiExecutor.DEFAULT_CONFIG.consensusQuorumRatio,
+        BLOCK_NUMBER_EXECUTION_TIMEOUT_MS
+      );
+    return MultiExecutor.create(
+      urls.map((url) => new RadixApiClient(networkId, url)),
+      {
+        getCurrentStateVersion: ceilMedianConsensusExecutor,
+        getCurrentEpochNumber: ceilMedianConsensusExecutor,
+        submitTransaction: MultiExecutor.ExecutionMode.RACE,
+        getTransactionStatus: MultiExecutor.ExecutionMode.AGREEMENT,
+        getFungibleBalance: MultiExecutor.ExecutionMode.AGREEMENT,
+        getNonFungibleBalance: MultiExecutor.ExecutionMode.AGREEMENT,
+        getStateFields: MultiExecutor.ExecutionMode.AGREEMENT,
+      },
+      { ...MultiExecutor.DEFAULT_CONFIG, ...config }
+    );
+  }
+
   constructor(
-    applicationName: string,
     private networkId = NetworkId.Stokenet,
     basePath?: string
   ) {
     this.apiClient = GatewayApiClient.initialize({
-      applicationName,
+      applicationName: APPLICATION_NAME,
       networkId,
       basePath,
     });
@@ -64,11 +98,14 @@ export class RadixApiClient {
   }
 
   async getTransactionStatus(transactionId: string) {
-    return await this.apiClient.transaction.innerClient.transactionStatus({
-      transactionStatusRequest: {
-        intent_hash: transactionId,
-      },
-    });
+    const result =
+      await this.apiClient.transaction.innerClient.transactionStatus({
+        transactionStatusRequest: {
+          intent_hash: transactionId,
+        },
+      });
+
+    return { status: result.intent_status, errorMessage: result.error_message };
   }
 
   async getCurrentEpochNumber() {
@@ -97,11 +134,16 @@ export class RadixApiClient {
         },
       });
 
-    if (response.items.length !== 1) {
-      return "0";
+    switch (response.items.length) {
+      case 0:
+        return "0";
+      case 1:
+        return response.items[0].amount;
+      default:
+        throw new Error(
+          `Unexpected item count: ${response.items.length} for ${resourceAddress}`
+        );
     }
-
-    return response.items[0].amount;
   }
 
   async getNonFungibleBalance(
@@ -120,11 +162,16 @@ export class RadixApiClient {
         }
       );
 
-    if (response.items.length !== 1) {
-      return 0;
+    switch (response.items.length) {
+      case 0:
+        return 0;
+      case 1:
+        return response.items[0].total_count;
+      default:
+        throw new Error(
+          `Unexpected item count: ${response.items.length} for ${resourceAddress}`
+        );
     }
-
-    return response.items[0].total_count;
   }
 
   async getTransactions(

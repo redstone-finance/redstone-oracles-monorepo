@@ -10,5 +10,9 @@ export * from "./contracts/proxy/ProxyRadixContractConnector";
 export * from "./contracts/proxy/ProxyRadixContractDeployer";
 export * from "./radix/RadixClient";
 export * from "./radix/RadixClientBuilder";
+export {
+  DEFAULT_RADIX_CLIENT_CONFIG,
+  type RadixClientConfig,
+} from "./radix/RadixClientConfig";
 export * from "./radix/RadixContractAdapter";
 export * from "./radix/RadixContractConnector";
