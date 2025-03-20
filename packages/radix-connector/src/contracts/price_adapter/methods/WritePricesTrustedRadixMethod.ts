@@ -19,7 +19,12 @@ export class WritePricesTrustedRadixMethod extends GetPricesRadixMethod {
     );
   }
 
-  override getDedicatedTransaction(account: string) {
-    return new ProvingRadixTransaction(account, [this], this.proofBadge);
+  override getDedicatedTransaction(account: string, maxFeeOverride?: number) {
+    return new ProvingRadixTransaction(
+      account,
+      [this],
+      this.proofBadge,
+      maxFeeOverride ?? this.fee
+    );
   }
 }
