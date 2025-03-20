@@ -25,22 +25,20 @@ export const PRICE_FEED_NAME = "price_feed";
 export const PROXY_NAME = "proxy";
 export const BADGE_CREATOR_NAME = "badge_creator";
 
-export const IS_CI = RedstoneCommon.getFromEnv(
-  "IS_CI",
-  z.boolean().default(false)
+const PRIVATE_KEY_VALUE = RedstoneCommon.getFromEnv(
+  "PRIVATE_KEY",
+  z.string().optional()
 );
-
-const PRIVATE_KEY_VALUE = IS_CI ? "" : RedstoneCommon.getFromEnv("PRIVATE_KEY");
 const PRIVATE_KEY_SCHEME = RedstoneCommon.getFromEnv(
   "PRIVATE_KEY_SCHEME",
   z.enum(["secp256k1", "ed25519"]).default("secp256k1")
 );
-export const PRIVATE_KEY: RadixPrivateKey | undefined = IS_CI
-  ? undefined
-  : {
+export const PRIVATE_KEY: RadixPrivateKey | undefined = PRIVATE_KEY_VALUE
+  ? {
       scheme: PRIVATE_KEY_SCHEME,
       value: PRIVATE_KEY_VALUE,
-    };
+    }
+  : undefined;
 
 export async function loadAddress(
   entityType: "component" | "package",
@@ -92,7 +90,8 @@ function formatAddressFilename(
   clientName: string | undefined,
   entityType: "component" | "package"
 ) {
-  return `${clientName ? `${clientName}.` : ""}${NETWORK.name}.${entityType}.addr`;
+  const clientNameString = clientName ? `${clientName}.` : "";
+  return `${clientNameString}${NETWORK.name}.${entityType}.addr`;
 }
 
 export function makeRadixClient() {
