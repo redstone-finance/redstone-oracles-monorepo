@@ -10,4 +10,5 @@ export type PartialRelayerConfig = {
   gasLimit?: number;
   gasMultiplier?: number;
   maxTxSendAttempts?: number;
+  expectedTxDeliveryTimeInMS?: number;
 };

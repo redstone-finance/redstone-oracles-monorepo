@@ -1,5 +1,5 @@
 import { array, str, Value, ValueKind } from "@radixdlt/radix-engine-toolkit";
-import { DEFAULT_INSTANTIATE_XRD_FEE } from "../../../radix/constants";
+import { DEFAULT_INSTANTIATE_XRD_FEE } from "../../../radix/RadixClientConfig";
 import { PriceAdapterInstantiateRadixFunction } from "./PriceAdapterInstantiateRadixFunction";
 
 export class PriceAdapterInstantiateWithTrustedUpdatersRadixFunction extends PriceAdapterInstantiateRadixFunction {

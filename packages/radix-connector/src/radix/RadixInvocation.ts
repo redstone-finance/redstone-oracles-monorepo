@@ -24,6 +24,7 @@ export abstract class RadixInvocation<T> {
   // eslint-disable-next-line @typescript-eslint/class-methods-use-this
   getDedicatedTransaction(
     _account: string,
+    _maxFeeOverride?: number,
     _proofResourceId?: string
   ): RadixTransaction {
     throw new Error("This method cannot by called directly");
