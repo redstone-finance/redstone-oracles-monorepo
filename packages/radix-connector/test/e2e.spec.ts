@@ -6,7 +6,6 @@ import {
 import "dotenv/config";
 import redstone from "redstone-api";
 import {
-  IS_CI,
   loadAddress,
   PRICE_ADAPTER_NAME,
   PRIVATE_KEY,
@@ -19,8 +18,8 @@ jest.unmock("@radixdlt/babylon-gateway-api-sdk");
 
 describe("Integrated and initialized prices contract", () => {
   it("write_prices should write the price data that can be read then", async () => {
-    if (IS_CI) {
-      return console.log("Skipping in CI env");
+    if (!PRIVATE_KEY) {
+      return console.log("Skipping when no PRIVATE_KEY provided");
     }
 
     const client = new RadixClient(
