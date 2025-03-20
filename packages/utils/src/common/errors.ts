@@ -41,21 +41,18 @@ export const assertWithLog = (condition: boolean, errMsg: string) => {
   }
 };
 
-const STACK_LENGTH = 200;
-
 let debug: boolean | undefined;
 
-const stringifyStack = (stack: string | undefined): string => {
+const showStack = (stack: string | undefined): string => {
   if (!stack) {
     return "";
   }
   debug ??= getLogLevel() >= LogLevel.Debug;
 
   if (debug) {
-    return stack;
+    return stack + ";";
   }
-  const suffix = stack.length > STACK_LENGTH ? "..." : "";
-  return stack.substring(0, STACK_LENGTH - suffix.length) + suffix;
+  return "";
 };
 
 export function stringifyError(e: unknown): string {
@@ -77,12 +74,12 @@ export function stringifyError(e: unknown): string {
     } else if (axios.isAxiosError<unknown>(error)) {
       const urlAsString = `url: ${JSON.stringify(error.config?.url)}`;
       const dataAsString = `data: ${JSON.stringify(error.response?.data)}`;
-      return `${urlAsString}, ${dataAsString}, ` + stringifyStack(error.stack);
+      return `${urlAsString}, ${dataAsString}, ${error.message}, ${showStack(error.stack)}`;
     } else if (error instanceof Error) {
       const causeString = error.cause
         ? ` cause: ${stringifyError(error.cause)}`
         : "";
-      return `${stringifyStack(error.stack)}${causeString}`;
+      return `${error.message} ${showStack(error.stack)} ${causeString}`;
     } else if (typeof error.toJSON === "function") {
       return JSON.stringify(error.toJSON());
     } else {

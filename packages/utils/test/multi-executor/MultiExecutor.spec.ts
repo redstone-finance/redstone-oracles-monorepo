@@ -195,7 +195,7 @@ describe("MultiExecutor", () => {
     const sut = makeSut(instances, config);
 
     await expect(sut.someHexFunction("1234")).rejects.toThrowError(
-      "Consensus failed: got 1 successful result, needed at least 2; AggregateError: 2 fails, errors: Error: 123401"
+      "Consensus failed: got 1 successful result, needed at least 2; AggregateError: 2 fails, errors: 123401"
     );
   });
 
@@ -210,7 +210,7 @@ describe("MultiExecutor", () => {
     const sut = makeSut(instances, config);
 
     await expect(sut.someHexFunction("1234")).rejects.toThrowError(
-      "Consensus failed: got 2 successful results, needed at least 3; AggregateError: 3 fails, errors: Error: 123408"
+      "Consensus failed: got 2 successful results, needed at least 3; AggregateError: 3 fails, errors: 123408"
     );
   });
 
@@ -222,7 +222,7 @@ describe("MultiExecutor", () => {
     });
 
     await expect(sut.someHexFunction("1234")).rejects.toThrowError(
-      "Consensus failed: got 3 successful results, needed at least 4; AggregateError: 1 fail, errors: Error: 123401"
+      "Consensus failed: got 3 successful results, needed at least 4; AggregateError: 1 fail, errors: 123401"
     );
   });
 
@@ -472,7 +472,7 @@ describe("MultiExecutor", () => {
     });
 
     await expect(sut.someHexFunction("1234")).rejects.toThrowError(
-      `Agreement failed: got max 0 equal results, needed at least 1; AggregateError: 1 fail, errors: Error: 123408`
+      `Agreement failed: got max 0 equal results, needed at least 1; AggregateError: 1 fail, errors: 123408`
     );
   });
 
@@ -494,7 +494,7 @@ describe("MultiExecutor", () => {
     });
 
     await expect(sut.someHexFunction("1234")).rejects.toThrowError(
-      `Consensus failed: got 0 successful results, needed at least 1; AggregateError: 1 fail, errors: Error: 123408`
+      `Consensus failed: got 0 successful results, needed at least 1; AggregateError: 1 fail, errors: 123408`
     );
   });
 
@@ -536,7 +536,7 @@ describe("MultiExecutor", () => {
     );
 
     await expect(sut.someHexFunction("1")).rejects.toThrowError(
-      `Consensus failed: got 1 successful result, needed at least 3; AggregateError: 3 fails, errors: Error: 100`
+      `Consensus failed: got 1 successful result, needed at least 3; AggregateError: 3 fails, errors: 100`
     );
   });
 
