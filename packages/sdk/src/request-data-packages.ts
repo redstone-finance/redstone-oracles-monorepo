@@ -69,6 +69,11 @@ export interface DataPackagesRequestParams {
    * By default, the API returns data packages without metadata. Setting this to true causes the API to return data packages with metadata.
    */
   showMetadata?: boolean;
+  /**
+   * If set to true, errors encountered during data package validation will be aggregated
+   * and thrown as a single AggregateError instead of failing on the first error.
+   */
+  aggregateErrors?: boolean;
 }
 
 /**
@@ -88,6 +93,11 @@ export enum DataFeedPackageErrorType {
   TooFewSigners = "TooFewSigners",
 }
 
+/*
+ * IMPORTANT: Monitoring depends on this error.
+ * Any changes to DataFeedPackageError (or its attributes) must be accompanied
+ * by a review of the monitoring logic to ensure that they still behave correctly.
+ */
 export class DataFeedPackageError extends Error {
   public dataFeedId: string;
   public errorType: DataFeedPackageErrorType;
@@ -100,7 +110,6 @@ export class DataFeedPackageError extends Error {
     super(message);
     this.dataFeedId = dataFeedId;
     this.errorType = errorType;
-    Object.setPrototypeOf(this, DataFeedPackageError.prototype);
   }
 }
 
@@ -357,6 +366,7 @@ const parseAndValidateDataPackagesResponse = (
 
   const requestedDataFeedIds = reqParams.dataPackagesIds;
 
+  const errors = [];
   for (const dataFeedId of requestedDataFeedIds) {
     try {
       const dataFeedPackagesResponse = responseData[dataFeedId];
@@ -375,10 +385,16 @@ const parseAndValidateDataPackagesResponse = (
     } catch (e) {
       if (reqParams.ignoreMissingFeed) {
         requestDataPackagesLogger?.feedIsMissing((e as Error).message);
+      } else if (reqParams.aggregateErrors) {
+        errors.push(e);
       } else {
         throw e;
       }
     }
+  }
+
+  if (errors.length > 0) {
+    throw new AggregateError(errors);
   }
 
   return parsedResponse;
