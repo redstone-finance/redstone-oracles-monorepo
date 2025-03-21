@@ -61,7 +61,7 @@ export class RadixClientBuilder {
     const urls: (string | undefined)[] = this.urls.length
       ? this.urls
       : [undefined];
-    const apiClient = RadixApiClient.makeMultiExecutor(urls);
+    const apiClient = RadixApiClient.makeMultiExecutor(urls, this.networkId);
 
     const signer = this.privateKey
       ? new RadixSigner(this.privateKey, this.additionalSigners)
