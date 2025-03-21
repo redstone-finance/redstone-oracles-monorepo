@@ -8863,6 +8863,21 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@redstone-finance/lambda-redstone-status@workspace:packages/lambda/lambda-redstone-status":
+  version: 0.0.0-use.local
+  resolution: "@redstone-finance/lambda-redstone-status@workspace:packages/lambda/lambda-redstone-status"
+  dependencies:
+    "@aws-sdk/client-cloudwatch": "npm:^3.696.0"
+    "@aws-sdk/client-cloudwatch-logs": "npm:^3.696.0"
+    "@aws-sdk/client-ecs": "npm:^3.696.0"
+    "@aws-sdk/client-s3": "npm:^3.696.0"
+    "@types/aws-lambda": "npm:^8.10.145"
+    dotenv: "npm:^16.0.3"
+    ethers: "npm:^5.7.2"
+    zod: "npm:^3.22.4"
+  languageName: unknown
+  linkType: soft
+
 "@redstone-finance/lambda-redstone-txs-indexer@workspace:packages/lambda/lambda-redstone-txs-indexer":
   version: 0.0.0-use.local
   resolution: "@redstone-finance/lambda-redstone-txs-indexer@workspace:packages/lambda/lambda-redstone-txs-indexer"
