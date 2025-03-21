@@ -17,6 +17,7 @@
     "test-e2e": "yarn global:jest e2e.spec.ts",
     "coverage": "yarn global:jest:cov --coveragePathIgnorePatterns=\"src/index.ts\" --coveragePathIgnorePatterns=\"src/radix/parser/generated/converter.ts\"",
     "convert-keys": "yarn global:ts-node scripts/convert-keys.ts",
+    "transfer-xrd": "yarn global:ts-node scripts/transfer-xrd.ts",
     "sample-deploy_price_adapter": "make -C scrypto build-price_adapter && CONTRACT_NAME=price_adapter yarn global:ts-node scripts/sample_deploy.ts",
     "sample-deploy-price_feed": "make -C scrypto build-price_feed && CONTRACT_NAME=price_feed yarn global:ts-node scripts/sample_deploy.ts",
     "sample-deploy-proxy": "make -C scrypto build-proxy && CONTRACT_NAME=proxy yarn global:ts-node scripts/sample_deploy.ts",
