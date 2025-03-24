@@ -1,7 +1,7 @@
 import { address, Value } from "@radixdlt/radix-engine-toolkit";
 import { RadixFunction } from "../../../radix/RadixInvocation";
 import { RadixTransaction } from "../../../radix/RadixTransaction";
-import { makeOption, makeOwnerNoneRole } from "../../../radix/utils";
+import { makeOption, makeOwnerUpdatableRole } from "../../../radix/utils";
 
 export class ProxyInstantiateRadixFunction extends RadixFunction<string> {
   constructor(
@@ -14,7 +14,7 @@ export class ProxyInstantiateRadixFunction extends RadixFunction<string> {
 
   override getParams() {
     return [
-      makeOwnerNoneRole(),
+      makeOwnerUpdatableRole(this.multiSigAccessRule),
       this.multiSigAccessRule,
       makeOption(address, this.globalContractAddress),
     ];

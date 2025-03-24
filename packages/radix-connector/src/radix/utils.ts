@@ -19,8 +19,8 @@ export interface NonFungibleGlobalIdInput {
   localId: string;
 }
 
-export function makeOwnerNoneRole() {
-  return enumeration(0);
+export function makeOwnerUpdatableRole(accessRule: Value) {
+  return enumeration(2, accessRule);
 }
 
 export function publicKeyHash(pk: string) {
