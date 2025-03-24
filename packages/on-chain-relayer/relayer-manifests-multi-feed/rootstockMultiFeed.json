@@ -25,6 +25,20 @@
     },
     "ETH": {
       "priceFeedAddress": "0x3401DAF2b1f150Ef0c709Cc0283b5F2e55c3DF29"
+    },
+    "SolvBTC/BTC": {
+      "priceFeedAddress": "0xFB1267A29C0aa19daae4a483ea895862A69e4AA5",
+      "updateTriggersOverrides": {
+        "deviationPercentage": 0.5,
+        "timeSinceLastUpdateInMilliseconds": 21600000
+      }
+    },
+    "SolvBTC.BBN/BTC": {
+      "priceFeedAddress": "0x368eE51E47a594fe1E9908b48228748a30BC7ca4",
+      "updateTriggersOverrides": {
+        "deviationPercentage": 0.5,
+        "timeSinceLastUpdateInMilliseconds": 21600000
+      }
     }
   }
 }
