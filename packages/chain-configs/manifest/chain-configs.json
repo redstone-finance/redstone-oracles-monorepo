@@ -22,8 +22,7 @@
       "publicRpcUrls": [
         "https://ethereum-rpc.publicnode.com",
         "https://eth.drpc.org",
-        "https://eth.llamarpc.com",
-        "https://rpc.ankr.com/eth"
+        "https://eth.llamarpc.com"
       ],
       "etherScanApi": "https://api.etherscan.io",
       "avgBlockTimeMs": 12000,
@@ -87,7 +86,6 @@
         "https://mainnet.optimism.io",
         "https://optimism.publicnode.com",
         "https://optimism-mainnet.public.blastapi.io",
-        "https://rpc.ankr.com/optimism",
         "https://1rpc.io/op",
         "https://optimism.drpc.org"
       ],
@@ -329,7 +327,6 @@
       "chainId": 56,
       "currencySymbol": "BNB",
       "publicRpcUrls": [
-        "https://bscrpc.com",
         "https://binance.llamarpc.com",
         "https://bsc-dataseed.bnbchain.org",
         "https://bsc-pokt.nodies.app",
@@ -491,7 +488,7 @@
       "currencySymbol": "ETH",
       "publicRpcUrls": [
         "https://sepolia.blast.io",
-        "https://blast-sepolia.drpc.org"
+        "https://endpoints.omniatech.io/v1/blast/sepolia/public"
       ],
       "avgBlockTimeMs": 2000,
       "multicall3": {
@@ -584,11 +581,7 @@
       "name": "zkSync",
       "chainId": 324,
       "currencySymbol": "ETH",
-      "publicRpcUrls": [
-        "https://mainnet.era.zksync.io",
-        "https://zksync.drpc.org",
-        "https://1rpc.io/zksync2-era"
-      ],
+      "publicRpcUrls": ["https://mainnet.era.zksync.io"],
       "avgBlockTimeMs": 1200,
       "multicall3": {
         "address": "0xF9cda624FBC7e059355ce98a31693d299FACd963",
@@ -638,7 +631,6 @@
       "publicRpcUrls": [
         "https://rpc.scroll.io",
         "https://scroll.drpc.org",
-        "https://1rpc.io/scroll",
         "https://scroll-mainnet.public.blastapi.io",
         "https://scroll-mainnet.chainstacklabs.com"
       ],
@@ -904,7 +896,6 @@
       "currencySymbol": "tRBTC",
       "publicRpcUrls": [
         "https://rootstock-testnet.public.blastapi.io",
-        "https://rootstock-testnet.drpc.org",
         "https://public-node.testnet.rsk.co"
       ],
       "avgBlockTimeMs": 25000,
@@ -939,8 +930,9 @@
       "chainId": 17000,
       "currencySymbol": "ETH",
       "publicRpcUrls": [
-        "https://rpc.ankr.com/eth_holesky",
-        "https://ethereum-holesky-rpc.publicnode.com"
+        "https://ethereum-holesky-rpc.publicnode.com",
+        "https://holesky.gateway.tenderly.co",
+        "https://holesky.drpc.org"
       ],
       "avgBlockTimeMs": 14000,
       "multicall3": {
