@@ -11,7 +11,7 @@ import {
   SignedDataPackagePlainObj,
   consts,
 } from "@redstone-finance/protocol";
-import { ethers } from "ethers";
+import { Wallet } from "ethers-v6";
 import request from "supertest";
 import { AppModule } from "../../src/app.module";
 import {
@@ -604,7 +604,7 @@ describe("Data packages (e2e)", () => {
   });
 
   describe("allowExternalSigners", () => {
-    const EXTERNAL_SIGNER_WALLET = ethers.Wallet.createRandom();
+    const EXTERNAL_SIGNER_WALLET = Wallet.createRandom();
     const EXTERNAL_SIGNER = EXTERNAL_SIGNER_WALLET.address;
     const DATA_SERVICE_ID = "mock-data-service-1";
 
