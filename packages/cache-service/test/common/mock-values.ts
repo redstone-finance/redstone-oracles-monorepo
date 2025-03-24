@@ -6,12 +6,12 @@ import {
   utils,
 } from "@redstone-finance/protocol";
 import { RedstoneOraclesState } from "@redstone-finance/sdk";
-import { ethers } from "ethers";
+import { Wallet } from "ethers-v6";
 
 export const MOCK_PRIVATE_KEY =
   "0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80";
 
-export const mockSigner = new ethers.Wallet(MOCK_PRIVATE_KEY);
+export const mockSigner = new Wallet(MOCK_PRIVATE_KEY);
 export const MOCK_DATA_SERVICE_ID = "mock-data-service-1";
 
 export const MOCK_SIGNER_ADDRESS = "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266"; // is equal to mockSigner.address
