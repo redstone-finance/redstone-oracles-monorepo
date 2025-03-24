@@ -71,11 +71,11 @@ describe("Prices contract", () => {
       ) => {
         await adapter.writePricesFromPayloadToContract(paramsProvider);
 
-        const newParamsPovider =
+        const newParamsProvider =
           createContractParamsProviderMock("3sig_ETH_BTC_newer");
-        newParamsPovider.overriddenFeedIds = ["BTC"];
+        newParamsProvider.overriddenFeedIds = ["BTC"];
 
-        await adapter.writePricesFromPayloadToContract(newParamsPovider);
+        await adapter.writePricesFromPayloadToContract(newParamsProvider);
         return await adapter.readPricesFromContract(paramsProvider);
       }
     );
