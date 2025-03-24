@@ -8987,6 +8987,7 @@ __metadata:
     "@redstone-finance/on-chain-relayer-common": "workspace:*"
     "@redstone-finance/utils": "workspace:*"
     axios: "npm:^1.7.9"
+    dotenv: "npm:^16.0.3"
     lodash: "npm:^4.17.21"
     zod: "npm:^3.22.4"
   languageName: unknown
