@@ -8695,7 +8695,6 @@ __metadata:
   dependencies:
     "@redstone-finance/chain-configs": "workspace:*"
     "@redstone-finance/internal-utils": "workspace:*"
-    "@redstone-finance/rpc-providers": "workspace:*"
     "@redstone-finance/utils": "workspace:*"
     "@types/aws-lambda": "npm:^8.10.145"
     axios: "npm:^1.7.9"
