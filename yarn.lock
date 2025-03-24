@@ -7836,7 +7836,7 @@ __metadata:
     class-transformer: "npm:^0.5.1"
     class-validator: "npm:^0.14.0"
     dotenv: "npm:^16.0.3"
-    ethers: "npm:^5.7.2"
+    ethers-v6: "npm:ethers@6.13.5"
     graphql: "npm:^16.8.1"
     graphql-request: "npm:^5.2.0"
     mongodb-memory-server: "npm:^9.1.6"
