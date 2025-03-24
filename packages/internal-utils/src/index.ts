@@ -7,6 +7,7 @@ export * from "./aws/s3";
 export * from "./config-checks";
 export * from "./influx/influxdb-config";
 export * from "./influx/InfluxService";
+export * from "./json-utils";
 export * from "./manifests";
 export * from "./monorepo-fetcher";
 export * from "./outlier-detection";
