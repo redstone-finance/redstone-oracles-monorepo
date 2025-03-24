@@ -11,7 +11,7 @@ FEED_BTC=0x4254430000000000000000000000000000000000000000000000000000000000
 .IGNORE: install-movement clean prepare-cli update-aptos-core-deps
 
 prepare-cli:
-	git clone https://github.com/movementlabsxyz/aptos-core.git	
+	git clone https://github.com/movementlabsxyz/aptos-core.git
 	cd aptos-core && git checkout movement-cli-v3.5.0
 
 update-aptos-core-deps:
@@ -20,7 +20,7 @@ update-aptos-core-deps:
 	sed -i '' 's|tonic = { git = "https://github.com/aptos-labs/tonic.git", rev = "0da1ba8b1751d6e19eb55be24cccf9ae933c666e" }|tonic = { git = "https://github.com/aptos-labs/tonic.git" }|' Cargo.toml
 
 install-movement:
-	@echo "Instaling movement-cli with cargo install."
+	@echo "Installing movement-cli with cargo install."
 	@cd aptos-core && \
 	cargo install --locked --bin movement --path crates/aptos --profile cli
 

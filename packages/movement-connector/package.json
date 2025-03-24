@@ -12,7 +12,7 @@
     "pack-package": "yarn build && global:npm pack",
     "lint": "yarn global:eslint .",
     "lint:fix": "yarn global:eslint --fix .",
-    "test": "yarn global:jest:cov --runInBand",
+    "run-contract-tests": "yarn global:jest:cov --runInBand",
     "sample-run": "yarn global:ts-node scripts/sample-run.ts",
     "price-adapter-address": "yarn global:ts-node ./scripts/object-address.ts",
     "derive-address": "yarn global:ts-node ./scripts/address-derive-from-priv.ts",
