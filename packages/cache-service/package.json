@@ -39,7 +39,7 @@
     "class-transformer": "^0.5.1",
     "class-validator": "^0.14.0",
     "dotenv": "^16.0.3",
-    "ethers": "^5.7.2",
+    "ethers-v6": "npm:ethers@6.13.5",
     "mongoose": "^7.6.3",
     "nestjs-pino": "^3.1.1",
     "pako": "^2.1.0",

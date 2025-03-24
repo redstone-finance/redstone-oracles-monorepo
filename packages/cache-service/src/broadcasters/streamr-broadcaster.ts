@@ -1,13 +1,13 @@
 import { Injectable, Logger } from "@nestjs/common";
 import { SignedDataPackagePlainObj } from "@redstone-finance/protocol";
 import { RedstoneCommon } from "@redstone-finance/utils";
-import { Wallet, providers, utils } from "ethers";
+import { formatEther, JsonRpcProvider, parseEther, Wallet } from "ethers-v6";
 import {
-  StreamPermission,
-  StreamrClient,
   compressMsg,
   doesStreamExist,
   getStreamIdForNodeByEvmAddress,
+  StreamPermission,
+  StreamrClient,
 } from "../common/streamr";
 import config from "../config";
 import { CachedDataPackage } from "../data-packages/data-packages.model";
@@ -138,15 +138,15 @@ export class StreamrBroadcaster implements DataPackagesBroadcaster {
 
   private async assertEnoughMaticBalance() {
     this.logger.log("Checking MATIC balance");
-    const provider = new providers.JsonRpcProvider(POLYGON_RPC.rpc, {
+    const provider = new JsonRpcProvider(POLYGON_RPC.rpc, {
       name: POLYGON_RPC.name,
       chainId: POLYGON_RPC.chainId,
     });
     const balance = await provider.getBalance(this.address);
 
-    if (!balance.gte(utils.parseEther(MINIMAL_MATIC_BALANCE))) {
+    if (balance < parseEther(MINIMAL_MATIC_BALANCE)) {
       throw new Error(
-        `MATIC balance is too low for creating a new stream: ${utils.formatEther(
+        `MATIC balance is too low for creating a new stream: ${formatEther(
           balance
         )}`
       );
