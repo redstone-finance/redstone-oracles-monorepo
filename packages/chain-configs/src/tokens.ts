@@ -669,6 +669,10 @@ export const chainTokenMap: ChainTokenMap = {
       address: "0x532f27101965dd16442E59d40670FaF5eBB142E4",
       decimals: 18,
     },
+    BIO: {
+      address: "0x226A2FA2556C48245E57cd1cbA4C6c9e67077DD2",
+      decimals: 18,
+    },
   },
   optimism: {
     USDC: {
