@@ -3086,14 +3086,15 @@
     },
     "BIO": {
       "source": [
+        "aerodrome-cl-base-weth",
+        "binance-fdusd",
         "binance-usdt",
-        "gate-usdt",
-        "okx-usdt",
+        "bitmart-usdt",
         "bitget-usdt",
         "bitrue-usdt",
-        "binance-fdusd",
-        "bitmart-usdt",
+        "gate-usdt",
         "kucoin-usdt",
+        "okx-usdt",
         "uniswap-v3-ethereum-weth-3000"
       ],
       "denomination": "USD",
