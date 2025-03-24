@@ -7,7 +7,7 @@ import {
 import { RedstoneCommon } from "@redstone-finance/utils";
 import { Contract, Wallet } from "ethers";
 import { ChainType, conformsToChainType } from "./ChainType";
-import { ChainConfig, ChainConfigs } from "./schemes";
+import { ChainConfig, ChainConfigs } from "./schemas";
 
 export function getChainConfig(
   chainConfigs: ChainConfigs,

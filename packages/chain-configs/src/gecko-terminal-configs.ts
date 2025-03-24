@@ -1,6 +1,8 @@
-import { SupportedNetworkNames } from "@redstone-finance/chain-configs";
+import { SupportedNetworkNames } from "./schemas";
 
-const networkNameMappingGecko: { [key in SupportedNetworkNames]?: string } = {
+const networkToGeckoTerminalNameMap: {
+  [key in SupportedNetworkNames]?: string;
+} = {
   ethereum: "eth",
   arbitrumOne: "arbitrum",
   avalanche: "avax",
@@ -19,8 +21,8 @@ const networkNameMappingGecko: { [key in SupportedNetworkNames]?: string } = {
 export function mapNetworkNameToGeckoTerminalNetworkName(
   networkName: SupportedNetworkNames
 ): string | undefined {
-  return networkNameMappingGecko[networkName];
+  return networkToGeckoTerminalNameMap[networkName];
 }
 
 export const allGeckoSupportedNetworkNames: SupportedNetworkNames[] =
-  Object.keys(networkNameMappingGecko) as SupportedNetworkNames[];
+  Object.keys(networkToGeckoTerminalNameMap) as SupportedNetworkNames[];
