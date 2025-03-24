@@ -1,6 +1,6 @@
 services:
   operator-attester:
-    image: public.ecr.aws/y7v2w8b2/avs-othentic-client:4fe497a6
+    image: public.ecr.aws/y7v2w8b2/avs-othentic-client:7f923436
     platform: linux/amd64
     command: [
         "node",
@@ -25,6 +25,8 @@ services:
       - .env
     volumes:
       - .othentic:/app/.othentic
+    ports:
+      - "3000:3000"
   operator-validation-api:
     image: public.ecr.aws/y7v2w8b2/avs-validation-api:4fe497a6
     platform: linux/amd64
