@@ -5,7 +5,7 @@ import {
 } from "@redstone-finance/internal-utils";
 import { RedstoneCommon } from "@redstone-finance/utils";
 import localChainConfigsManifest from "../manifest/chain-configs.json";
-import { ChainConfigs, ChainConfigsById, ChainConfigsSchema } from "./schemes";
+import { ChainConfigs, ChainConfigsById, ChainConfigsSchema } from "./schemas";
 
 export const fetchChainConfigsWithAxios = async (
   manifestsHosts: string[],
