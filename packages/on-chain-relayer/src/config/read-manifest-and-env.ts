@@ -1,21 +1,11 @@
+import { readJsonFile } from "@redstone-finance/internal-utils";
 import { AnyOnChainRelayerManifestSchema } from "@redstone-finance/on-chain-relayer-common";
 import { RedstoneCommon } from "@redstone-finance/utils";
 import "dotenv/config";
-import fs from "fs";
 import { z } from "zod";
 import { OnChainRelayerEnv } from "./RelayerConfig";
 
 const DEFAULT_WAIT_FOR_ALL_GATEWAYS_TIME = 1000;
-
-// copy of method from oracle-node. Probably should be moved to some common package
-const readJSON = <T>(path: string): T => {
-  const content = fs.readFileSync(path, "utf-8");
-  try {
-    return JSON.parse(content) as T;
-  } catch (e) {
-    throw new Error(`File "${path}" does not contain a valid JSON`);
-  }
-};
 
 const readManifest = () => {
   const overriddenManifest = RedstoneCommon.getFromEnv(
@@ -26,7 +16,7 @@ const readManifest = () => {
     return overriddenManifest;
   }
   const manifestPath = RedstoneCommon.getFromEnv("MANIFEST_FILE", z.string());
-  const manifestObject = readJSON(manifestPath);
+  const manifestObject = readJsonFile(manifestPath);
   return AnyOnChainRelayerManifestSchema.parse(manifestObject);
 };
 
