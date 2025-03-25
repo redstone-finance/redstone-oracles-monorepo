@@ -10,7 +10,8 @@ import { PriceFeedBase } from "../../typechain-types";
 const PRICE_FEED_ADDRESS = "";
 
 void (async () => {
-  const provider = getRelayerProvider(config(ConsciouslyInvoked));
+  const relayerConfig = await config(ConsciouslyInvoked);
+  const provider = getRelayerProvider(relayerConfig);
   const priceFeedContract = new Contract(
     PRICE_FEED_ADDRESS,
     abi,

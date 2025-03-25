@@ -1,20 +1,30 @@
-import { PutObjectCommand, S3Client } from "@aws-sdk/client-s3";
-import { AWS_REGION } from "./aws";
+import { S3 } from "@aws-sdk/client-s3";
 
-const s3 = new S3Client({ region: AWS_REGION });
+const s3 = new S3({ region: "eu-west-1" });
 
 export const writeS3Object = async (
   bucketName: string,
   path: string,
-  data: string
+  data: unknown
 ) => {
-  await s3.send(
-    new PutObjectCommand({
-      Bucket: bucketName,
-      Key: path,
-      Body: data,
-    })
-  );
+  const params = {
+    Bucket: bucketName,
+    Key: path,
+    ContentType: "application/json",
+    Body: JSON.stringify(data, null, 2) + "\n",
+  };
+  await s3.putObject(params);
+};
 
-  return `https://${bucketName}.s3.${AWS_REGION}.amazonaws.com/${path}`;
+export const readS3Object = async <T>(
+  bucketName: string,
+  bucketKey: string
+): Promise<T | undefined> => {
+  const params = {
+    Bucket: bucketName,
+    Key: bucketKey,
+  };
+  const data = await s3.getObject(params);
+  const contentAsString = await data.Body?.transformToString("utf-8");
+  return contentAsString ? (JSON.parse(contentAsString) as T) : undefined;
 };

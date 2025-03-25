@@ -1,3 +1,3 @@
 import { runRelayer } from "./run-relayer";
 
-runRelayer();
+void runRelayer();

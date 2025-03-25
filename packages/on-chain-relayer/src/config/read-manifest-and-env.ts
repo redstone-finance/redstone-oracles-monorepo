@@ -1,4 +1,4 @@
-import { readJsonFile } from "@redstone-finance/internal-utils";
+import { readJsonFile, readS3Object } from "@redstone-finance/internal-utils";
 import { AnyOnChainRelayerManifestSchema } from "@redstone-finance/on-chain-relayer-common";
 import { RedstoneCommon } from "@redstone-finance/utils";
 import "dotenv/config";
@@ -7,7 +7,7 @@ import { OnChainRelayerEnv } from "./RelayerConfig";
 
 const DEFAULT_WAIT_FOR_ALL_GATEWAYS_TIME = 1000;
 
-const readManifest = () => {
+const readManifest = async () => {
   const overriddenManifest = RedstoneCommon.getFromEnv(
     "MANIFEST_OVERRIDE",
     AnyOnChainRelayerManifestSchema.optional()
@@ -15,13 +15,50 @@ const readManifest = () => {
   if (overriddenManifest) {
     return overriddenManifest;
   }
+  const { remoteManifestBucketName, remoteManifestBucketKey } =
+    getManifestBucketParams();
+  if (remoteManifestBucketName && remoteManifestBucketKey) {
+    return await fetchManifestFromS3(
+      remoteManifestBucketName,
+      remoteManifestBucketKey
+    );
+  }
   const manifestPath = RedstoneCommon.getFromEnv("MANIFEST_FILE", z.string());
   const manifestObject = readJsonFile(manifestPath);
   return AnyOnChainRelayerManifestSchema.parse(manifestObject);
 };
 
-export const readManifestAndEnv = () => {
-  const manifest = readManifest();
+const getManifestBucketParams = () => {
+  const remoteManifestBucketName = RedstoneCommon.getFromEnv(
+    "REMOTE_MANIFEST_S3_BUCKET_NAME",
+    z.string().optional()
+  );
+  const remoteManifestBucketKey = RedstoneCommon.getFromEnv(
+    "REMOTE_MANIFEST_S3_BUCKET_KEY",
+    z.string().optional()
+  );
+  return { remoteManifestBucketName, remoteManifestBucketKey };
+};
+
+const fetchManifestFromS3 = async (
+  remoteManifestBucketName: string,
+  remoteManifestBucketKey: string
+) => {
+  try {
+    const manifestAsString = await readS3Object(
+      remoteManifestBucketName,
+      remoteManifestBucketKey
+    );
+    return AnyOnChainRelayerManifestSchema.parse(manifestAsString);
+  } catch (error) {
+    throw new Error(
+      `Cannot fetch manifest from S3, ${RedstoneCommon.stringifyError(error)}`
+    );
+  }
+};
+
+export const readManifestAndEnv = async () => {
+  const manifest = await readManifest();
 
   const env: OnChainRelayerEnv = {
     disableCustomGasOracle: RedstoneCommon.getFromEnv(
