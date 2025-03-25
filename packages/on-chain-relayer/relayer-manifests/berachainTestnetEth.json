@@ -7,9 +7,9 @@
     "deviationPercentage": 0.1,
     "timeSinceLastUpdateInMilliseconds": 86400000
   },
-  "adapterContract": "0x12b582610173CdbF76A73BA03a31B34591b5b58E",
+  "adapterContract": "0x06877FC483a93114be8A9a2C0aE4E8F734B3571d",
   "dataServiceId": "redstone-primary-prod",
   "priceFeeds": {
-    "ETH": "0x12b582610173CdbF76A73BA03a31B34591b5b58E"
+    "ETH": "0x06877FC483a93114be8A9a2C0aE4E8F734B3571d"
   }
 }
