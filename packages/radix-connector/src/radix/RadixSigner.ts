@@ -1,14 +1,25 @@
 import {
+  NotarizedTransaction,
   PrivateKey,
+  PublicKey,
   TransactionBuilderIntentSignaturesStep,
 } from "@radixdlt/radix-engine-toolkit";
+
+export interface IRadixSigner {
+  asyncSign: (
+    step: TransactionBuilderIntentSignaturesStep
+  ) => Promise<NotarizedTransaction>;
+  publicKey: () => Promise<PublicKey>;
+  publicKeyHex: () => Promise<string>;
+  getNotarySigner: () => PrivateKey | undefined;
+}
 
 export interface RadixPrivateKey {
   scheme: "secp256k1" | "ed25519";
   value: string;
 }
 
-export class RadixSigner {
+export class RadixSigner implements IRadixSigner {
   private readonly notarySigner: PrivateKey;
   private readonly additionalSigners?: PrivateKey[];
   constructor(
@@ -19,6 +30,16 @@ export class RadixSigner {
     this.additionalSigners = additionalSignerKeys?.map(RadixSigner.makeSigner);
   }
 
+  public async asyncSign(
+    signatureStep: TransactionBuilderIntentSignaturesStep
+  ) {
+    for (const signer of this.additionalSigners ?? []) {
+      signatureStep = signatureStep.sign(signer);
+    }
+
+    return await signatureStep.notarize(this.notarySigner);
+  }
+
   private static makeSigner(privateKey: RadixPrivateKey) {
     switch (privateKey.scheme) {
       case "ed25519":
@@ -27,21 +48,12 @@ export class RadixSigner {
         return new PrivateKey.Secp256k1(privateKey.value);
     }
   }
-
-  public sign(signatureStep: TransactionBuilderIntentSignaturesStep) {
-    for (const signer of this.additionalSigners ?? []) {
-      signatureStep = signatureStep.sign(signer);
-    }
-
-    return signatureStep.notarize(this.notarySigner);
-  }
-
   public publicKeyHex() {
-    return this.notarySigner.publicKeyHex();
+    return Promise.resolve(this.notarySigner.publicKeyHex());
   }
 
   public publicKey() {
-    return this.notarySigner.publicKey();
+    return Promise.resolve(this.notarySigner.publicKey());
   }
 
   public getNotarySigner() {

@@ -2,11 +2,11 @@ import { StreamTransactionsResponse } from "@radixdlt/babylon-gateway-api-sdk";
 import {
   defaultValidationConfig,
   generateRandomNonce,
+  Intent,
   NetworkId,
   NotarizedTransaction,
   RadixEngineToolkit,
   TransactionBuilder,
-  TransactionHeader,
 } from "@radixdlt/radix-engine-toolkit";
 import { loggerFactory, RedstoneCommon } from "@redstone-finance/utils";
 import { hexlify } from "ethers/lib/utils";
@@ -18,7 +18,7 @@ import {
   TX_WAIT_POLL_DELAY_MS,
 } from "./RadixClientConfig";
 import { RadixInvocation } from "./RadixInvocation";
-import { RadixSigner } from "./RadixSigner";
+import { IRadixSigner } from "./RadixSigner";
 import { RadixTransaction } from "./RadixTransaction";
 
 export class RadixClient {
@@ -27,7 +27,7 @@ export class RadixClient {
   constructor(
     protected readonly apiClient: RadixApiClient,
     protected networkId = NetworkId.Stokenet,
-    protected readonly signer: RadixSigner | undefined,
+    protected readonly signer: IRadixSigner | undefined,
     protected config = DEFAULT_RADIX_CLIENT_CONFIG
   ) {}
 
@@ -227,13 +227,39 @@ export class RadixClient {
 
   async getAccountAddress() {
     return await RadixEngineToolkit.Derive.virtualAccountAddressFromPublicKey(
-      this.getPublicKey(),
+      await this.getPublicKey(),
       this.networkId
     );
   }
 
   getPublicKeyHex() {
     return this.signer?.publicKeyHex();
+  }
+
+  async getTrasanctionHeader(iterationIndex = 0) {
+    const currentEpochNumber = await this.apiClient.getCurrentEpochNumber();
+    return {
+      networkId: this.networkId,
+      startEpochInclusive: currentEpochNumber,
+      endEpochExclusive: currentEpochNumber + ALLOWED_FORWARD_EPOCH_COUNT,
+      nonce: generateRandomNonce(),
+      notaryPublicKey: await this.getPublicKey(),
+      notaryIsSignatory: true,
+      tipPercentage: this.getTipPercentage(iterationIndex),
+    };
+  }
+
+  async compileTransactionToIntent(
+    transaction: RadixTransaction,
+    iterationIndex = 0
+  ) {
+    const transactionIntent: Intent = {
+      header: await this.getTrasanctionHeader(iterationIndex),
+      manifest: transaction.getManifest(),
+      message: { kind: "None" },
+    };
+
+    return await RadixEngineToolkit.Intent.compile(transactionIntent);
   }
 
   protected getPublicKey() {
@@ -257,16 +283,7 @@ export class RadixClient {
     transaction: RadixTransaction,
     iterationIndex = 0
   ) {
-    const currentEpochNumber = await this.apiClient.getCurrentEpochNumber();
-    const transactionHeader: TransactionHeader = {
-      networkId: this.networkId,
-      startEpochInclusive: currentEpochNumber,
-      endEpochExclusive: currentEpochNumber + ALLOWED_FORWARD_EPOCH_COUNT,
-      nonce: generateRandomNonce(),
-      notaryPublicKey: this.getPublicKey(),
-      notaryIsSignatory: true,
-      tipPercentage: this.getTipPercentage(iterationIndex),
-    };
+    const transactionHeader = await this.getTrasanctionHeader(iterationIndex);
 
     const notarizedTransaction: NotarizedTransaction =
       await TransactionBuilder.new().then((builder) => {
@@ -274,9 +291,13 @@ export class RadixClient {
           .header(transactionHeader)
           .manifest(transaction.getManifest());
 
-        return this.signer!.sign(tx);
+        return this.signer!.asyncSign(tx);
       });
 
+    return await this.submitTransaction(notarizedTransaction);
+  }
+
+  async submitTransaction(notarizedTransaction: NotarizedTransaction) {
     await RadixEngineToolkit.NotarizedTransaction.staticallyValidate(
       notarizedTransaction,
       defaultValidationConfig(this.networkId)
@@ -305,5 +326,9 @@ export class RadixClient {
     }
 
     return transactionId;
+  }
+
+  getNotarySigner() {
+    return this.signer?.getNotarySigner();
   }
 }

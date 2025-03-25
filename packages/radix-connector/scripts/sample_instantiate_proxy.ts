@@ -13,8 +13,8 @@ import {
 
 const THRESHOLD = 2;
 const MULTI_SIG_PUBLIC_KEYS = [
-  "609775fbf61f4b59562c394359f661e4559c654e63a776de7c23f590e7602988",
-  "b7f48ccce7f2aea73282dcd3cf70aeb9541acdcc1291525d4180c1f08977099a",
+  "9ce1116c806bc08ca5b5a4d4c2a415905f957a239a3b8eab3bae64e5bb4428cf",
+  "0e680a9b8b4d140ba6b5f06b45fc1a3206d0c690657e811a4f3ba1124b66f85b",
 ];
 
 async function instantiate() {
