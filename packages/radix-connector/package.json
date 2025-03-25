@@ -28,7 +28,11 @@
     "sample-create_badges": "yarn global:ts-node scripts/sample_create_badges.ts",
     "sample-change_proxy_address": "yarn global:ts-node scripts/sample_change_proxy_address.ts",
     "sample-run": "yarn global:ts-node scripts/sample_run.ts",
-    "manifest": "yarn global:ts-node scripts/access-rule-utils.ts"
+    "ledger-public-key": "yarn global:ts-node scripts/ledger/public-key.ts",
+    "change-proxy-address-tx": "yarn global:ts-node scripts/ledger/change-address-tx.ts",
+    "decompile-intent": "yarn global:ts-node scripts/ledger/decompile-into-intent.ts",
+    "sign-intent": "yarn global:ts-node scripts/ledger/sign-intent.ts",
+    "combine-signatures": "yarn global:ts-node scripts/ledger/combine-signatures.ts"
   },
   "dependencies": {
     "@radixdlt/babylon-gateway-api-sdk": "^1.10.1",
@@ -40,6 +44,8 @@
   },
   "devDependencies": {
     "@atlantis-l/radix-tool": "^0.8.9",
+    "@ledgerhq/hw-app-aptos": "^6.31.0",
+    "@ledgerhq/hw-transport-node-hid": "^6.29.5",
     "@redstone-finance/utils": "workspace:*",
     "dotenv": "^16.0.3",
     "node-jq": "^6.0.0",
