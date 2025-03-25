@@ -286,6 +286,17 @@
       "ecdsaPublicKey": "0x04eb36acf54f5a99a28ae56390f6ca1cac5d0a74ebd0ce19995382d4b13861fceb7a9a7c3bb42a3a4889b2de3f44607e2058c6a7dd2da28ed2380c5505f40ad9be",
       "dateAdded": "2024-01-01"
     },
+    "0xA4CcC693371D3270DFBE914f51E1D3a3184A2Cdc": {
+      "url": "https://redstone.finance",
+      "logo": "https://redstone.finance/assets/img/redstone-logo-full.svg",
+      "name": "redstone-perun-demo-1",
+      "ipAddress": "0.0.0.0",
+      "dataServiceId": "redstone-perun-demo-1",
+      "description": "Most popular tokens with frequent updates",
+      "evmAddress": "0xA4CcC693371D3270DFBE914f51E1D3a3184A2Cdc",
+      "ecdsaPublicKey": "0x0414dbb123a833de852fa2166856f972fc925a8499498bb47501c3da2a716616c4e5102d8b48b785de821934d518c1d1282979f1103148e8b11526ca1fd03cd4e1",
+      "dateAdded": "2024-01-01"
+    },
     "WPrl0TkGtc2zEfa-SmpDd4sh0AkyMHMGZ9rxATyDTN0": {
       "url": "https://redstone.finance",
       "logo": "https://redstone.finance/assets/img/redstone-logo-full.svg",
@@ -448,6 +459,11 @@
       "logo": "https://redstone.finance/assets/img/redstone-logo-full.svg",
       "name": "RedStone Perun running on megaETH Testnet",
       "description": "Fast updates on megaETH Testnet"
+    },
+    "redstone-perun-demo-1": {
+      "logo": "https://redstone.finance/assets/img/redstone-logo-full.svg",
+      "name": "redstone-perun-demo-1",
+      "description": "RedStone Perun running dev node"
     },
     "redstone-external-demo-1": {
       "name": "External Provider Demo",
