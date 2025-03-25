@@ -22,7 +22,7 @@ async function main() {
   console.log("EVM Compressed Public Key:", uncompressedPublicKey);
 
   console.log(
-    `Radix Public Key and EVM Compressed public key ${client.getPublicKeyHex() == uncompressedPublicKey ? "are EQUAL <3" : "are NOT equal ;("}`
+    `Radix Public Key and EVM Compressed public key ${(await client.getPublicKeyHex()) == uncompressedPublicKey ? "are EQUAL <3" : "are NOT equal ;("}`
   );
 }
 
