@@ -1,7 +1,7 @@
 import { getSSMParameterValue } from "@redstone-finance/internal-utils";
 import assert from "assert";
 import { ethers } from "ethers";
-import * as hre from "hardhat";
+import hre from "hardhat";
 
 const SSM_MULTICALL_PRIVATE_KEY_NAME =
   "arn:aws:ssm:eu-west-1:272838863926:parameter/prod/multicall-deployer/private-key/good-one";
