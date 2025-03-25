@@ -16,13 +16,6 @@ export type FetchRpcUrlsFromSsmOpts = {
 export type FetchRpcUrlsFromSsmResult = Record<number, string[] | undefined>;
 
 const BATCH_SIZE = 10;
-const RETRY_CONFIG: Omit<RedstoneCommon.RetryConfig, "fn"> = {
-  maxRetries: 3,
-  waitBetweenMs: 1000,
-  backOff: {
-    backOffBase: 2,
-  },
-};
 
 export async function fetchRpcUrlsFromSsm(
   opts: FetchRpcUrlsFromSsmOpts
@@ -59,12 +52,9 @@ export async function fetchRpcUrlsFromSsmByChainId(
     const path = `/${env}/rpc/${chainId}/${type === "fallback" ? "fallback/" : ""}urls`;
     const region = type === "fallback" ? "eu-north-1" : undefined;
 
-    return await RedstoneCommon.retry({
-      fn: () => getSSMParameterValue(path, region),
-      ...RETRY_CONFIG,
-    })();
+    return await getSSMParameterValue(path, region);
   } catch (e) {
-    if ((e as Error).name !== "ParameterNotFound") {
+    if ((e as { name?: string }).name !== "ParameterNotFound") {
       throw new Error(
         `Failed to get rpcUrls for chainId=${chainId}: ${RedstoneCommon.stringifyError(e)}`
       );
