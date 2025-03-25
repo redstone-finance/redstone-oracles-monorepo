@@ -581,16 +581,6 @@
       "denomination": "USD",
       "rateFeed": false
     },
-    "CANTO": {
-      "source": [
-        "canto-canto-atom",
-        "canto-canto-eth",
-        "canto-canto-note",
-        "coingecko"
-      ],
-      "denomination": "USD",
-      "rateFeed": false
-    },
     "GMX": {
       "source": [
         "binance-usdt",
@@ -1397,16 +1387,6 @@
       "source": ["ethereum-evm-fetcher-savings-dai"],
       "denomination": "USD",
       "rateFeed": true
-    },
-    "NOTE": {
-      "source": ["canto-canto-usdc"],
-      "denomination": "USD",
-      "rateFeed": false
-    },
-    "cNOTE": {
-      "source": ["canto-evm-fetcher-cnote"],
-      "denomination": "USD",
-      "rateFeed": false
     },
     "LAB.m": {
       "source": ["aperture-swap-manta-weth-500"],

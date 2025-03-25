@@ -670,17 +670,6 @@
       "denomination": "USD",
       "rateFeed": false
     },
-    "CANTO": {
-      "source": [
-        "canto-canto-atom",
-        "canto-canto-eth",
-        "canto-canto-note",
-        "coingecko",
-        "coinmarketcap"
-      ],
-      "denomination": "USD",
-      "rateFeed": false
-    },
     "XAU": {
       "source": ["financialmodelingprep-usd", "finhub-usd", "twelve-data"],
       "denomination": "USD",
@@ -1006,22 +995,6 @@
       },
       "denomination": "USD",
       "rateFeed": true
-    },
-    "NOTE": {
-      "source": ["canto-canto-usdc"],
-      "deviationCheck": {
-        "deviationWithRecentValues": {
-          "maxPercent": 5,
-          "maxDelayMilliseconds": 300000
-        }
-      },
-      "denomination": "USD",
-      "rateFeed": false
-    },
-    "cNOTE": {
-      "source": ["canto-evm-fetcher-cnote"],
-      "denomination": "USD",
-      "rateFeed": false
     },
     "LAB.m": {
       "source": ["aperture-swap-manta-weth-500"],
