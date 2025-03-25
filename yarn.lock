@@ -9224,6 +9224,8 @@ __metadata:
   resolution: "@redstone-finance/radix-connector@workspace:packages/radix-connector"
   dependencies:
     "@atlantis-l/radix-tool": "npm:^0.8.9"
+    "@ledgerhq/hw-app-aptos": "npm:^6.31.0"
+    "@ledgerhq/hw-transport-node-hid": "npm:^6.29.5"
     "@radixdlt/babylon-gateway-api-sdk": "npm:^1.10.1"
     "@radixdlt/radix-engine-toolkit": "npm:^1.0.5"
     "@redstone-finance/sdk": "workspace:*"
