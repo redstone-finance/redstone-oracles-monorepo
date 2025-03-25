@@ -4,14 +4,16 @@ import { readManifestAndEnv } from "./read-manifest-and-env";
 
 export const ConsciouslyInvoked = Symbol("ConsciouslyInvoked");
 
-export const config = (isInvokedConsciously?: typeof ConsciouslyInvoked) => {
+export const config = async (
+  isInvokedConsciously?: typeof ConsciouslyInvoked
+) => {
   if (isInvokedConsciously !== ConsciouslyInvoked) {
     throw new Error(
       "config() function must be invoked consciously from the relayer running function"
     );
   }
 
-  const { manifest, env } = readManifestAndEnv();
+  const { manifest, env } = await readManifestAndEnv();
   const relayerConfig = makeRelayerConfig(manifest, env);
 
   try {
