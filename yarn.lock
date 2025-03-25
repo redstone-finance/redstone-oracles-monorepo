@@ -8534,7 +8534,6 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@redstone-finance/lambda-clients-tvs-tvl@workspace:packages/lambda/lambda-clients-tvs-tvl"
   dependencies:
-    "@aws-sdk/client-s3": "npm:^3.696.0"
     "@redstone-finance/internal-utils": "workspace:*"
     "@redstone-finance/utils": "workspace:*"
     dotenv: "npm:^16.0.3"
@@ -8647,7 +8646,7 @@ __metadata:
   resolution: "@redstone-finance/lambda-hard-limits@workspace:packages/lambda/lambda-hard-limits"
   dependencies:
     "@aws-sdk/client-cloudwatch": "npm:^3.696.0"
-    "@aws-sdk/client-s3": "npm:^3.696.0"
+    "@redstone-finance/internal-utils": "workspace:*"
     "@redstone-finance/sdk": "workspace:*"
     "@types/aws-lambda": "npm:^8.10.145"
     dotenv: "npm:^16.0.3"
