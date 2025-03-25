@@ -4,8 +4,8 @@ import { timelyOverrideSinceLastUpdate } from "./config/timely-override-since-la
 import { AsyncTaskRunner } from "./runner/AsyncTaskRunner";
 import { MqttRunner } from "./runner/MqttRunner";
 
-export const runRelayer = () => {
-  const relayerConfig = config(ConsciouslyInvoked);
+export const runRelayer = async () => {
+  const relayerConfig = await config(ConsciouslyInvoked);
 
   const logger = loggerFactory("relayer/run");
 
