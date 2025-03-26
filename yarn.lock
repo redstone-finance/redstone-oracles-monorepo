@@ -5293,14 +5293,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@knowyourrpc/sdk@npm:0.5.0":
-  version: 0.5.0
-  resolution: "@knowyourrpc/sdk@npm:0.5.0"
+"@knowyourrpc/sdk@npm:0.5.1":
+  version: 0.5.1
+  resolution: "@knowyourrpc/sdk@npm:0.5.1"
   dependencies:
     "@ethersproject/wallet": "npm:^5.7.0"
     express: "npm:^4.18.2"
     node-fetch: "npm:^2.6.12"
-  checksum: 10c0/56f17199226503b59a6d55a273af6ce38fcb50ef238cedcaea1baba1e65e9b260288518269fcfffd664a9ad8fb598ea8dc596eb72d96b24169cfb67cb2a12f2b
+  checksum: 10c0/663723242096f9e0151242c430475c12e24a7a4ab34c52b670d915bb68d1129d8f25e286db87f26e4f2d08c6e197c8c5cd91dc34231fe2c114a989dddb29e293
   languageName: node
   linkType: hard
 
@@ -8414,7 +8414,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@redstone-finance/kyr-proxy@workspace:packages/kyr-proxy"
   dependencies:
-    "@knowyourrpc/sdk": "npm:0.5.0"
+    "@knowyourrpc/sdk": "npm:0.5.1"
     "@redstone-finance/chain-configs": "workspace:*"
     "@redstone-finance/utils": "workspace:*"
     dotenv: "npm:^16.0.3"
