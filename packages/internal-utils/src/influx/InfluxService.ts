@@ -1,5 +1,5 @@
 import { InfluxDB, Point, WriteOptions } from "@influxdata/influxdb-client";
-import { BucketsAPI } from "@influxdata/influxdb-client-apis";
+import { BucketsAPI, DeleteAPI } from "@influxdata/influxdb-client-apis";
 import { RedstoneCommon } from "@redstone-finance/utils";
 
 export const RETRY_CONFIG: Omit<RedstoneCommon.RetryConfig, "fn"> = {
@@ -15,6 +15,12 @@ export interface InfluxAuthParams {
   token: string;
   bucketName: string;
   orgName: string;
+}
+
+export interface InfluxDeleteBody {
+  start: string;
+  stop: string;
+  predicate: string;
 }
 
 export class InfluxService {
@@ -68,6 +74,16 @@ export class InfluxService {
     requestData.forEach((data) => writeApi.writePoint(data));
 
     await writeApi.close();
+  }
+
+  async delete(body: InfluxDeleteBody) {
+    console.log("*** DELETE DATA ***");
+    const deleteApi = new DeleteAPI(this.influx);
+    await deleteApi.postDelete({
+      org: this.authParams.orgName,
+      bucket: this.authParams.bucketName,
+      body,
+    });
   }
 
   async getBucketRetentionPeriod(): Promise<number> {
