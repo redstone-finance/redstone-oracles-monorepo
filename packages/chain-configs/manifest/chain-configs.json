@@ -1125,6 +1125,22 @@
       "twoDimensionalFees": false,
       "isMainnet": false
     },
+    "radix": {
+      "name": "Radix Mainnet",
+      "chainId": 1,
+      "chainType": "radix",
+      "currencySymbol": "XRD",
+      "publicRpcUrls": ["https://mainnet.radixdlt.com"],
+      "avgBlockTimeMs": 1000,
+      "multicall3": {
+        "address": "",
+        "type": "Multicall3"
+      },
+      "isAuctionModel": false,
+      "fallbackToEthMaxPriorityFeePerGas": true,
+      "twoDimensionalFees": false,
+      "isMainnet": true
+    },
     "hyperevm": {
       "name": "HyperEVM",
       "chainId": 999,
