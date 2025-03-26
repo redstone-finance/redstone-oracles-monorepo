@@ -1,0 +1,18 @@
+{
+  "adapterContractType": "radix-multi-feed",
+  "chain": {
+    "name": "mainnet",
+    "id": 1
+  },
+  "updateTriggers": {
+    "deviationPercentage": 0.5,
+    "timeSinceLastUpdateInMilliseconds": 86400000
+  },
+  "adapterContract": "component_rdx1czqnepgv885lusz0sq93nnwkdgzr8mpzy9vs2pudk4tv7h6c37x6ps",
+  "dataServiceId": "redstone-primary-prod",
+  "priceFeeds": {
+    "XRD": {
+      "priceFeedAddress": "component_rdx1crn9mt3resprthr625wu3hr4twvd8rccj4t6mx29y8rw4t6kzz7ke0"
+    }
+  }
+}
