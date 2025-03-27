@@ -21,11 +21,15 @@ export class OevTxDeliveryMan implements Tx.ITxDeliveryMan {
     try {
       await this.updateUsingOevAction(txDeliveryCall, context.paramsProvider);
     } catch (error) {
-      this.logger.error(
-        `Failed to update using OEV auction, proceeding with standard update, error: ${RedstoneCommon.stringifyError(error)}`
-      );
+      if (context.paramsProvider.shouldOevUseFallbackAfterFailing === false) {
+        this.logger.log("Skipping as update was optional");
+      } else {
+        this.logger.info(
+          `Failed to update using OEV auction, proceeding with standard update`
+        );
 
-      await this.fallbackDeliveryMan.deliver(txDeliveryCall, context);
+        await this.fallbackDeliveryMan.deliver(txDeliveryCall, context);
+      }
     }
   }
 

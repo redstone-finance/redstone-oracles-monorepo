@@ -29,14 +29,20 @@ export class ContractParamsProvider {
   constructor(
     public readonly requestParams: DataPackagesRequestParams,
     private readonly cache?: DataPackagesResponseCache,
-    private readonly overrideRequestParamsPackagesIds?: string[]
+    private readonly overrideRequestParamsPackagesIds?: string[],
+    public readonly shouldOevUseFallbackAfterFailing?: boolean
   ) {}
 
-  static copyForFeedId(paramsProvider: ContractParamsProvider, feedId: string) {
+  static copyForFeedId(
+    paramsProvider: ContractParamsProvider,
+    feedId: string,
+    shouldOevUseFallbackAfterFailing?: boolean
+  ) {
     return new ContractParamsProvider(
       paramsProvider.requestParams,
       paramsProvider.cache,
-      [feedId]
+      [feedId],
+      shouldOevUseFallbackAfterFailing
     );
   }
 

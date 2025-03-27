@@ -60,6 +60,7 @@ const runOevAuction = async (
   const { adapterContractAddress, chainId } = relayerConfig;
 
   const chainIdHex = `0x${chainId.toString(16)}`;
+  const earlyReturn = true;
   const body = JSON.stringify({
     jsonrpc: "2.0",
     id: randomUUID(),
@@ -69,9 +70,9 @@ const runOevAuction = async (
         adapter: adapterContractAddress,
         updatePayload: txDeliveryCalldata,
         signature: await signer.signMessage(
-          `${chainIdHex}:${adapterContractAddress}:${txDeliveryCalldata}`
+          `${chainIdHex}:${adapterContractAddress}:${txDeliveryCalldata}:${earlyReturn}`
         ),
-        earlyReturn: true,
+        earlyReturn: earlyReturn,
         chainId: chainIdHex,
       },
     ],
@@ -82,6 +83,7 @@ const runOevAuction = async (
     });
     return response.data;
   } catch (error) {
+    logOevAuctionError(error);
     throw new Error(
       `OEV auction failed: ${RedstoneCommon.stringifyError(error)}`
     );
@@ -262,4 +264,17 @@ const areAlmostEqual = (num1: number, num2: number) => {
     Math.abs(num1 - num2) <=
     threshold * Math.max(Math.abs(num1), Math.abs(num2))
   );
+};
+
+const logOevAuctionError = (error: unknown) => {
+  if (
+    axios.isAxiosError<{ error: { code: number } }>(error) &&
+    error.response?.data.error.code === -32600
+  ) {
+    logger.log("No bids in OEV auction");
+  } else {
+    logger.error(
+      `OEV auction failed with unknown error: ${RedstoneCommon.stringifyError(error)}`
+    );
+  }
 };
