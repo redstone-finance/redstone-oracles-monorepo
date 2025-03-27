@@ -28,7 +28,6 @@ const privateKeyOverride = RedstoneCommon.getFromEnv(
 );
 
 const defaultRelayersToSkip = [
-  "cadenceCantoTestnet",
   "sepoliaAngleAgeur",
   "sepoliaVenusXvs",
   "venusBnbTestnet",
