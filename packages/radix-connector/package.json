@@ -27,6 +27,7 @@
     "sample-instantiate-proxy": "yarn global:ts-node scripts/sample_instantiate_proxy.ts",
     "sample-create_badges": "yarn global:ts-node scripts/sample_create_badges.ts",
     "sample-change_proxy_address": "yarn global:ts-node scripts/sample_change_proxy_address.ts",
+    "sample-change_proxy_manager": "yarn global:ts-node scripts/sample_change_proxy_manager.ts",
     "sample-run": "yarn global:ts-node scripts/sample_run.ts",
     "ledger-public-key": "yarn global:ts-node scripts/ledger/public-key.ts",
     "change-proxy-address-tx": "yarn global:ts-node scripts/ledger/change-address-tx.ts",
