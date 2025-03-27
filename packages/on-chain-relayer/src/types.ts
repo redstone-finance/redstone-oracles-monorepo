@@ -44,6 +44,7 @@ export type UpdatePricesArgs = {
   blockTag: number;
   updateRequestParams: DataPackagesRequestParams;
   dataFeedsToUpdate: string[];
+  shouldOevUseFallbackAfterFailing?: boolean;
 };
 
 export type MultiFeedUpdatePricesArgs = UpdatePricesArgs & {

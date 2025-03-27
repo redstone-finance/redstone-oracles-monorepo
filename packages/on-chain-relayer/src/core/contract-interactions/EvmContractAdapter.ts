@@ -44,12 +44,8 @@ export abstract class EvmContractAdapter<Contract extends RedstoneEvmContract>
           (tx) => tx.data
         ),
       paramsProvider,
-    } as RelayerTxDeliveryManContext)) as { hash: string };
+    } as RelayerTxDeliveryManContext)) as { hash: string } | undefined;
 
-    if ("hash" in result) {
-      return result.hash;
-    } else {
-      return;
-    }
+    return result?.hash;
   }
 }

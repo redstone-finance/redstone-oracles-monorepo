@@ -82,7 +82,8 @@ export abstract class ContractFacade {
     const result = await adapter.writePricesFromPayloadToContract(
       this.getContractParamsProvider(
         args.updateRequestParams,
-        args.dataFeedsToUpdate
+        args.dataFeedsToUpdate,
+        args.shouldOevUseFallbackAfterFailing
       )
     );
 
@@ -99,8 +100,14 @@ export abstract class ContractFacade {
 
   getContractParamsProvider(
     requestParams: DataPackagesRequestParams,
-    feedIds?: string[]
+    feedIds?: string[],
+    shouldOevUseFallbackAfterFailing?: boolean
   ): ContractParamsProvider {
-    return new ContractParamsProvider(requestParams, this.cache, feedIds);
+    return new ContractParamsProvider(
+      requestParams,
+      this.cache,
+      feedIds,
+      shouldOevUseFallbackAfterFailing
+    );
   }
 }
