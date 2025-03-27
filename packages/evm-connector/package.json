@@ -15,7 +15,7 @@
     "test": "hardhat test",
     "build-esm": "yarn clean && yarn build && esbuild test-browser-compatibility/test-script.js --outfile=test-browser-compatibility/browser-bundle.js --format=esm --bundle=true",
     "run-in-browser": "yarn build-esm && http-server test-browser-compatibility",
-    "test-browser-compatibility": "yarn build-esm && ts-node test-browser-compatibility.ts",
+    "test-browser-compatibility": "yarn build-esm && yarn global:ts-node test-browser-compatibility.ts",
     "benchmark": "hardhat test benchmarks/run-benchmarks.ts",
     "preversion": "yarn build"
   },
@@ -43,7 +43,6 @@
     "@types/chai-as-promised": "^7.1.5",
     "@types/http-server": "^0.12.4",
     "@types/mocha": "^10.0.1",
-    "@types/node": "^20.14.12",
     "@types/puppeteer": "^7.0.4",
     "@types/sinon-chai": "^3.2.12",
     "chai": "^4.3.10",
@@ -55,9 +54,7 @@
     "msw": "^2.4.10",
     "puppeteer": "^23.5.3",
     "solidity-coverage": "^0.8.12",
-    "ts-node": "^10.9.2",
-    "typechain": "^8.1.1",
-    "typescript": "^5.5.4"
+    "typechain": "^8.1.1"
   },
   "overrides": {
     "elliptic": "^6.6.1"
