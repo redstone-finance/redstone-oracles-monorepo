@@ -21,7 +21,7 @@ import {
 
 async function main() {
   const paramsProvider = new ContractParamsProvider({
-    dataPackagesIds: ["ETH", "BTC", "XRD"],
+    dataPackagesIds: ["XRD"],
     dataServiceId: DATA_SERVICE_ID,
     uniqueSignersCount: 1,
     authorizedSigners: getSignersForDataServiceId(DATA_SERVICE_ID),

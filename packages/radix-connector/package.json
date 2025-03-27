@@ -32,7 +32,8 @@
     "change-proxy-address-tx": "yarn global:ts-node scripts/ledger/change-address-tx.ts",
     "decompile-intent": "yarn global:ts-node scripts/ledger/decompile-into-intent.ts",
     "sign-intent": "yarn global:ts-node scripts/ledger/sign-intent.ts",
-    "combine-signatures": "yarn global:ts-node scripts/ledger/combine-signatures.ts"
+    "combine-signatures": "yarn global:ts-node scripts/ledger/combine-signatures.ts",
+    "public-keys-to-address": "yarn global:ts-node scripts/account-address.ts"
   },
   "dependencies": {
     "@radixdlt/babylon-gateway-api-sdk": "^1.10.1",
