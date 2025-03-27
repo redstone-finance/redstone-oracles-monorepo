@@ -34,15 +34,12 @@
     "@types/chai": "^4.3.4",
     "@types/chai-as-promised": "^7.1.5",
     "@types/mocha": "^10.0.1",
-    "@types/node": "^20.14.12",
     "@types/sinon-chai": "^3.2.12",
     "chai": "^4.3.10",
     "hardhat": "^2.22.14",
     "hardhat-gas-reporter": "^1.0.9",
     "solidity-coverage": "^0.8.12",
-    "ts-node": "^10.9.2",
-    "typechain": "^8.1.1",
-    "typescript": "^5.5.4"
+    "typechain": "^8.1.1"
   },
   "overrides": {
     "elliptic": "^6.6.1"
