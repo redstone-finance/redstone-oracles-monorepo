@@ -32,16 +32,13 @@
     "@types/chai": "^4.3.4",
     "@types/lodash": "^4.14.195",
     "@types/mocha": "^10.0.1",
-    "@types/node": "^20.14.12",
     "@types/sinon": "^10.0.15",
     "chai": "^4.3.10",
     "hardhat": "^2.22.14",
     "hardhat-gas-reporter": "^1.0.9",
     "sinon": "^18.0.0",
     "solidity-coverage": "^0.8.12",
-    "ts-node": "^10.9.2",
-    "typechain": "^8.1.1",
-    "typescript": "^5.5.4"
+    "typechain": "^8.1.1"
   },
   "publishConfig": {
     "access": "public"
