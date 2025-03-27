@@ -37,7 +37,6 @@
     "redstone-api": "^0.4.12",
     "toml": "^3.0.0",
     "ts-mocha": "^10.0.0",
-    "typescript": "^5.5.4",
     "zod": "^3.22.4"
   },
   "files": [
