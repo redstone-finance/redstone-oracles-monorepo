@@ -64,14 +64,15 @@
     "supertest": "^6.2.3",
     "ts-loader": "^9.2.3",
     "tsconfig-paths": "4.0.0",
-    "typescript": "^5.5.4",
     "webpack": "^5.89.0"
   },
   "overrides": {
-    "elliptic": "^6.6.1"
+    "elliptic": "^6.6.1",
+    "node-datachannel": "0.25.0"
   },
   "resolutions": {
-    "elliptic": "^6.6.1"
+    "elliptic": "^6.6.1",
+    "node-datachannel": "0.25.0"
   },
   "publishConfig": {
     "access": "public"
