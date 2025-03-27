@@ -8,16 +8,10 @@ import {
 } from "@redstone-finance/on-chain-relayer-common";
 
 async function fetchRpcUrls(pathComponent: string, env: Env) {
-  if (env === "dev") {
-    return await fetchParsedRpcUrlsFromSsmByChainId(pathComponent, env);
-  }
-
-  try {
-    return await fetchParsedRpcUrlsFromSsmByChainId(pathComponent, env);
-  } catch {
-    // for monitoring CI
-    return await fetchParsedRpcUrlsFromSsmByChainId(pathComponent, "dev");
-  }
+  return await fetchParsedRpcUrlsFromSsmByChainId(
+    pathComponent,
+    process.env.IS_CI ? "dev" : env
+  );
 }
 
 export async function getRpcUrls(
