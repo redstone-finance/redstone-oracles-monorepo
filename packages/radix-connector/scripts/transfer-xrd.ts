@@ -23,8 +23,8 @@ async function transfer(toAddress: string, amount: number) {
 
 async function main() {
   await transfer(
-    "account_rdx1687dkg4a7v7qmhrad347kt5zrpsmpnqzcafuq9lzzau98l357hqqr7",
-    10
+    "account_rdx128gpzlt9rf25wmuds5x6z8004g88eyltx4cgpxzua3kyw6hh93lrls",
+    2485
   );
 }
 
