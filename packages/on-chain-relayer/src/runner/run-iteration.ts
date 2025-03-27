@@ -32,7 +32,7 @@ export const runIteration = async (
 
   logger.log(message, messages);
 
-  if (iterationArgs.shouldUpdatePrices) {
+  if (iterationArgs.shouldUpdatePrices || relayerConfig.oevAuctionUrl) {
     iterationArgs.additionalUpdateMessages?.forEach(({ message, args }) =>
       logger.log(message, args)
     );
