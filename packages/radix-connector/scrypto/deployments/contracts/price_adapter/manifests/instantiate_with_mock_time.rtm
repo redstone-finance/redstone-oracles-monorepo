@@ -1,0 +1,15 @@
+CALL_METHOD
+    # Own account address
+    Address("${ACCOUNT}")
+    "lock_fee"
+    Decimal("5000")
+;
+
+CALL_FUNCTION
+    Address("${PRICE_ADAPTER_ADDRESS}")
+    "MultiFeedPriceAdapter"
+    "instantiate_with_mock_timestamp"
+    1u8
+    Array<Bytes>(Bytes("8BB8F32Df04c8b654987DAaeD53D6B6091e3B774"),Bytes("dEB22f54738d54976C4c0fe5ce6d408E40d88499"),Bytes("51Ce04Be4b3E32572C4Ec9135221d0691Ba7d202"),Bytes("DD682daEC5A90dD295d14DA4b0bec9281017b5bE"),Bytes("9c5AE89C4Af6aA32cE58588DBaF90d18a855B6de"))
+    Some(${MOCK_TIME})
+;

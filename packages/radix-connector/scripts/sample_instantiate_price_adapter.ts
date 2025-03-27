@@ -7,24 +7,24 @@ import {
   makeRadixClient,
   PRICE_ADAPTER_NAME,
   saveAddress,
+  TRUSTED_UPDATERS,
 } from "./constants";
 
 async function instantiate() {
   const client = makeRadixClient();
-  const trustedUpdaters = [await client.getAccountAddress()];
   const connector = new PriceAdapterRadixContractDeployer(
     client,
     await loadAddress(`package`, PRICE_ADAPTER_NAME),
     1,
     getSignersForDataServiceId(DATA_SERVICE_ID),
-    trustedUpdaters
+    TRUSTED_UPDATERS
   );
 
   const componentId = await connector.getComponentId();
   console.log(componentId);
 
   await saveAddress("component", PRICE_ADAPTER_NAME, componentId);
-  await distributeTrustedUpdaterBadges(connector, trustedUpdaters, client);
+  await distributeTrustedUpdaterBadges(connector, TRUSTED_UPDATERS, client);
 }
 
 async function distributeTrustedUpdaterBadges(
@@ -32,6 +32,7 @@ async function distributeTrustedUpdaterBadges(
   trustedUpdaters: string[],
   client: RadixClient
 ) {
+  console.log(`Trusted updaters: ${trustedUpdaters.toString()}`);
   const priceAdapter = await connector.getAdapter();
   for (const updater of trustedUpdaters) {
     const badge = await priceAdapter.getTrustedUpdaterResourceBadge(updater);

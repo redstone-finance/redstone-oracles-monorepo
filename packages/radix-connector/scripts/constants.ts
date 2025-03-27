@@ -10,13 +10,27 @@ import {
   RadixPrivateKey,
 } from "../src";
 
-const SCRYPTO_DIR = `../scrypto`;
+const DEPLOYMENT_DIR = RedstoneCommon.getFromEnv(
+  "DEPLOYMENT_DIR",
+  z.string().default("")
+);
+const SCRYPTO_DIR = `../scrypto/${DEPLOYMENT_DIR}`;
 
-export const NETWORK = {
-  id: NetworkId.Stokenet,
-  name: "stokenet",
-  basePath: undefined,
-};
+export const TRUSTED_UPDATERS =
+  RedstoneCommon.getFromEnv(
+    "TRUSTED_UPDATERS",
+    z.array(z.string()).optional()
+  ) ?? [];
+
+const NETWORK_ID = RedstoneCommon.getFromEnv(
+  "NETWORK_ID",
+  z.number().optional()
+);
+
+export const NETWORK =
+  NETWORK_ID === NetworkId.Mainnet
+    ? { id: NetworkId.Mainnet, name: "mainnet", basePath: undefined }
+    : { id: NetworkId.Stokenet, name: "stokenet", basePath: undefined };
 
 export const FEED_ID = "XRD";
 export const DATA_SERVICE_ID = "redstone-primary-prod";

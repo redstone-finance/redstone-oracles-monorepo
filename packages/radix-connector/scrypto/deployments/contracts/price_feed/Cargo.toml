@@ -1,0 +1,17 @@
+[package]
+name = "price_feed"
+version = "1.0.0"
+edition = "2021"
+
+[dependencies]
+scrypto = { version = "^1.3.0" }
+common = { path = "../../common" }
+
+[features]
+default = []
+
+[lib]
+crate-type = ["cdylib", "lib"]
+
+[package.metadata.scripts]
+publish = "resim publish ."
