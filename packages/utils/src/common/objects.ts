@@ -19,7 +19,7 @@ export function getRequiredPropValue<T = unknown>(
   return obj[prop] as T;
 }
 
-export function isDefined(value: unknown) {
+export function isDefined<T>(value: T): value is NonNullable<T> {
   return value !== null && value !== undefined;
 }
 
