@@ -39,8 +39,7 @@
     "@redstone-finance/chain-configs": "workspace:*",
     "@types/chai": "^4.3.4",
     "chai": "^4.3.10",
-    "secp256k1": "^5.0.1",
-    "typescript": "^5.5.4"
+    "secp256k1": "^5.0.1"
   },
   "files": [
     "dist/src/**/*"
