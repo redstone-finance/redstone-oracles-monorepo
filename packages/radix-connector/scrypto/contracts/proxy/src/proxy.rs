@@ -4,7 +4,7 @@ use scrypto::prelude::*;
 mod proxy {
     enable_method_auth! {
         roles {
-            proxy_man_auth => updatable_by: [];
+            proxy_man_auth => updatable_by: [proxy_man_auth];
         },
         methods {
             set_contract_global_address => restrict_to: [proxy_man_auth, OWNER];

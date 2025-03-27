@@ -7,6 +7,7 @@ import {
   NetworkId,
   nonFungibleLocalId,
   RadixEngineToolkit,
+  str,
   tuple,
   u8,
   Value,
@@ -17,6 +18,14 @@ import { arrayify } from "ethers/lib/utils";
 export interface NonFungibleGlobalIdInput {
   resourceAddress: string;
   localId: string;
+}
+
+export function makeSetRolaArg(metadataName: string, newAccessRule: Value) {
+  return [
+    enumeration(0), // enum ModuleId::Main = 0,
+    str(metadataName),
+    newAccessRule,
+  ];
 }
 
 export function makeOwnerUpdatableRole(accessRule: Value) {
