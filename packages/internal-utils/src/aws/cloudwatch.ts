@@ -1,9 +1,11 @@
 import {
   CloudWatch,
   CloudWatchClient,
+  ListTagsForResourceCommand,
   PutMetricDataCommand,
   StandardUnit,
   StateValue,
+  Tag,
 } from "@aws-sdk/client-cloudwatch";
 import { AWS_REGION } from "./aws";
 
@@ -52,4 +54,26 @@ export async function setAlarmState(
     StateValue: state,
     StateReason: `Alarm state set to ${state} by lambda function`,
   });
+}
+
+export async function getAlarmTags(
+  alarmArn: string
+): Promise<Record<string, string>> {
+  const { Tags } = await cloudWatchClient.send(
+    new ListTagsForResourceCommand({
+      ResourceARN: alarmArn,
+    })
+  );
+
+  if (!Tags) {
+    return {};
+  }
+
+  return Object.fromEntries(
+    Tags.filter(isTagDefined).map((tag) => [tag.Key!, tag.Value!])
+  );
+}
+
+function isTagDefined(tag: Tag) {
+  return tag.Key !== undefined && tag.Value !== undefined;
 }
