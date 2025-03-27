@@ -1,0 +1,14 @@
+CALL_METHOD
+    # Own account address
+    Address("account_sim1c956qr3kxlgypxwst89j9yf24tjc7zxd4up38x37zr6q4jxdx9rhma")
+    "lock_fee"
+    Decimal("5000")
+;
+
+CALL_FUNCTION
+    Address("${PRICE_FEED}")
+    "PriceFeed"
+    "instantiate"
+    Address("${PRICE_ADAPTER_COMPONENT_ADDRESS}")
+    Bytes("4554480000000000000000000000000000000000000000000000000000000000")
+;
