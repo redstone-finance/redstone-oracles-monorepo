@@ -3,6 +3,8 @@ import chainConfigs from "../manifest/chain-configs.json";
 
 import { ChainTypeEnum } from "./ChainType";
 
+export { chainConfigs };
+
 export const ChainConfigSchema = z.object({
   chainId: z.number().positive(),
   chainType: ChainTypeEnum.default("evm"),
@@ -43,6 +45,31 @@ export type ChainConfig = z.infer<typeof ChainConfigSchema>;
 export type ChainConfigs = z.infer<typeof ChainConfigsSchema>;
 export type ChainConfigsById = z.infer<typeof ChainConfigsByIdSchema>;
 export type SupportedNetworkNames = keyof typeof chainConfigs.defaultConfig;
+
+export const SupportedNetworkNamesSchema = z.custom<SupportedNetworkNames>(
+  (val): val is SupportedNetworkNames => {
+    return (
+      typeof val === "string" &&
+      Object.keys(chainConfigs.defaultConfig).includes(val)
+    );
+  },
+  {
+    message: "Value must be a valid network name",
+  }
+);
+
+export const TokenMapSchema = z.record(
+  z.string(),
+  z.object({
+    address: z.string(),
+    decimals: z.number().int().nonnegative(),
+  })
+);
+
+export const ChainTokenMapSchema = z.record(
+  SupportedNetworkNamesSchema,
+  TokenMapSchema.optional()
+);
 
 export const STANDARD_MULTICALL3_ADDRESS =
   "0xcA11bde05977b3631167028862bE2a173976CA11";
