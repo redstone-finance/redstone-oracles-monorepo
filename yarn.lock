@@ -9034,6 +9034,12 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@redstone-finance/node-remote-config@workspace:packages/node-remote-config":
+  version: 0.0.0-use.local
+  resolution: "@redstone-finance/node-remote-config@workspace:packages/node-remote-config"
+  languageName: unknown
+  linkType: soft
+
 "@redstone-finance/on-chain-relayer-common@workspace:*, @redstone-finance/on-chain-relayer-common@workspace:packages/on-chain-relayer-common":
   version: 0.0.0-use.local
   resolution: "@redstone-finance/on-chain-relayer-common@workspace:packages/on-chain-relayer-common"
