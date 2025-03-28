@@ -4404,24 +4404,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@gnosis.pm/safe-contracts@npm:^1.3.0":
-  version: 1.3.0
-  resolution: "@gnosis.pm/safe-contracts@npm:1.3.0"
-  peerDependencies:
-    ethers: ^5.1.4
-  checksum: 10c0/0254781997dbd3cbc5478e25e0ebee9a13396f73a13728228855bcacf9350e867c9a2c2002f8870646b7279495e19d52454b9980acb2380e9af9d372b5da4036
-  languageName: node
-  linkType: hard
-
-"@gnosis.pm/safe-deployments@npm:^1.19.0":
-  version: 1.19.0
-  resolution: "@gnosis.pm/safe-deployments@npm:1.19.0"
-  dependencies:
-    semver: "npm:^7.3.7"
-  checksum: 10c0/4f601dfa6fe8891a04fbf0aa2e89098b443583a23babb76828142eef9dd133e87b769b339c1f1397fad1b266f605572e738e9fafad19363dc618b5421d722b6a
-  languageName: node
-  linkType: hard
-
 "@gql.tada/cli-utils@npm:1.6.3":
   version: 1.6.3
   resolution: "@gql.tada/cli-utils@npm:1.6.3"
@@ -7971,8 +7953,6 @@ __metadata:
     "@ethersproject/abi": "npm:^5.6.3"
     "@ethersproject/constants": "npm:^5.7.0"
     "@ethersproject/providers": "npm:^5.6.8"
-    "@gnosis.pm/safe-contracts": "npm:^1.3.0"
-    "@gnosis.pm/safe-deployments": "npm:^1.19.0"
     "@matterlabs/hardhat-zksync": "npm:^0.2.0"
     "@matterlabs/hardhat-zksync-deploy": "npm:^0.11.0"
     "@matterlabs/hardhat-zksync-ethers": "npm:^0.0.1-beta.2"
@@ -8014,9 +7994,10 @@ __metadata:
   resolution: "@redstone-finance/contract-deployments@workspace:packages/contract-deployments"
   dependencies:
     "@ethersproject/abi": "npm:^5.6.3"
+    "@ethersproject/address": "npm:^5.7.0"
+    "@ethersproject/constants": "npm:^5.7.0"
+    "@ethersproject/contracts": "npm:^5.7.0"
     "@ethersproject/providers": "npm:^5.6.8"
-    "@gnosis.pm/safe-contracts": "npm:^1.3.0"
-    "@gnosis.pm/safe-deployments": "npm:^1.19.0"
     "@ledgerhq/hw-app-eth": "npm:6.42.1"
     "@ledgerhq/hw-transport-node-hid": "npm:^6.29.5"
     "@nomicfoundation/hardhat-chai-matchers": "npm:^1.0.6"
@@ -8032,6 +8013,7 @@ __metadata:
     "@redstone-finance/chain-configs": "workspace:*"
     "@redstone-finance/evm-connector": "workspace:*"
     "@redstone-finance/on-chain-relayer": "workspace:*"
+    "@redstone-finance/on-chain-relayer-common": "workspace:*"
     "@redstone-finance/protocol": "workspace:*"
     "@redstone-finance/rpc-providers": "workspace:*"
     "@redstone-finance/sdk": "workspace:*"
@@ -8042,6 +8024,7 @@ __metadata:
     "@types/diff": "npm:^6.0.0"
     "@types/lodash": "npm:^4.14.195"
     "@types/mocha": "npm:^10.0.1"
+    "@types/semver": "npm:^7.7.0"
     axios: "npm:^1.7.9"
     chai: "npm:^4.3.10"
     chalk: "npm:^4.1.2"
@@ -8051,6 +8034,7 @@ __metadata:
     hardhat: "npm:^2.22.14"
     hardhat-gas-reporter: "npm:^1.0.9"
     prompts: "npm:^2.4.2"
+    semver: "npm:^7.7.0"
     solidity-coverage: "npm:^0.8.12"
     typechain: "npm:^8.1.1"
     zod: "npm:^3.22.4"
@@ -12637,6 +12621,13 @@ __metadata:
   version: 3.0.1
   resolution: "@types/seedrandom@npm:3.0.1"
   checksum: 10c0/b9be192c99b25d7d5d93928e6106f1baff86a4ced33c7b9f94609c659c5d8cb657b70683c74798f83e12caf75af072d3e4f2608ab57a01c897c512fe991f6c9a
+  languageName: node
+  linkType: hard
+
+"@types/semver@npm:^7.7.0":
+  version: 7.7.0
+  resolution: "@types/semver@npm:7.7.0"
+  checksum: 10c0/6b5f65f647474338abbd6ee91a6bbab434662ddb8fe39464edcbcfc96484d388baad9eb506dff217b6fc1727a88894930eb1f308617161ac0f376fe06be4e1ee
   languageName: node
   linkType: hard
 
@@ -30415,6 +30406,15 @@ __metadata:
   bin:
     semver: bin/semver.js
   checksum: 10c0/88f33e148b210c153873cb08cfe1e281d518aaa9a666d4d148add6560db5cd3c582f3a08ccb91f38d5f379ead256da9931234ed122057f40bb5766e65e58adaf
+  languageName: node
+  linkType: hard
+
+"semver@npm:^7.7.0":
+  version: 7.7.1
+  resolution: "semver@npm:7.7.1"
+  bin:
+    semver: bin/semver.js
+  checksum: 10c0/fd603a6fb9c399c6054015433051bdbe7b99a940a8fb44b85c2b524c4004b023d7928d47cb22154f8d054ea7ee8597f586605e05b52047f048278e4ac56ae958
   languageName: node
   linkType: hard
 
