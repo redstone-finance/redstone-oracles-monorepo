@@ -209,6 +209,17 @@
       "ecdsaPublicKey": "0x04f23aa199aeda6e55628e0ec88194c47713ba260898aae4483fb2f166c7e29b1664f817922059736358de71bdf374b3354db58d15f928a6fac9d1f61e284019b7",
       "dateAdded": "2024-01-01"
     },
+    "0xe5a346d2EEEc95f7b563b6862732b291E7F96C74": {
+      "name": "redstone-primary-prod-kudasaijp-1",
+      "description": "Data feeds from primary redstone nodes - KudasaiJP node 1",
+      "logo": "https://raw.githubusercontent.com/redstone-finance/redstone-images/main/providers/kudasaijp/logo_orange.svg",
+      "dataServiceId": "redstone-primary-prod",
+      "evmAddress": "0xe5a346d2EEEc95f7b563b6862732b291E7F96C74",
+      "url": "https://kudasai.co.jp",
+      "ipAddress": "0.0.0.0",
+      "ecdsaPublicKey": "0x04b6aae64a76ff84882ab79997b912b9d0bbdff2800309364e7f319f227a19dad0aa4711df944ee445cf8d18c2c5946a10595d25c5939e728c72a727f43ec9af40",
+      "dateAdded": "2025-03-28"
+    },
     "ckah_Yc4ZhzQbx27Lgo1Ad1yePneQdkusER_c49KVK0": {
       "name": "redstone-arbitrum-prod-node-1",
       "description": "Data feeds from arbitrum redstone nodes - prod 1",
