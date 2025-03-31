@@ -1,8 +1,16 @@
-import { GetParameterCommand, SSMClient } from "@aws-sdk/client-ssm";
+import {
+  GetParameterCommand,
+  GetParametersCommand,
+  SSMClient,
+} from "@aws-sdk/client-ssm";
+import { RedstoneCommon } from "@redstone-finance/utils";
+import _ from "lodash";
 import { AWS_REGION } from "./aws";
 import { readS3Object } from "./s3";
 
 const ssmClient = new SSMClient({ region: AWS_REGION });
+// limit enforced by ssm
+const MAX_SSM_BATCH_SIZE = 10;
 
 export const getSSMParameterValue = async (
   parameterName: string,
@@ -15,6 +23,56 @@ export const getSSMParameterValue = async (
   });
 
   return (await client.send(command)).Parameter?.Value;
+};
+
+export type SSMParameterValuesResponse = Record<string, string | undefined>;
+
+export const getSSMParameterValues = async (
+  parameterNames: string[],
+  region?: string
+): Promise<SSMParameterValuesResponse> => {
+  const client = region ? new SSMClient({ region }) : ssmClient;
+
+  const parameterNamesChunks = _.chunk(parameterNames, MAX_SSM_BATCH_SIZE);
+
+  let collectedParameters: SSMParameterValuesResponse = {};
+
+  // let's avoid rate limits by not using Promise.all
+  for (const parameterNameChunk of parameterNamesChunks) {
+    const paramsForChunk = await getSSMParameterValuesBatch(
+      client,
+      parameterNameChunk
+    );
+
+    collectedParameters = { ...collectedParameters, ...paramsForChunk };
+  }
+
+  return collectedParameters;
+};
+
+const getSSMParameterValuesBatch = async (
+  ssmClient: SSMClient,
+  parameterNames: string[]
+): Promise<SSMParameterValuesResponse> => {
+  const command = new GetParametersCommand({
+    Names: parameterNames,
+    WithDecryption: true,
+  });
+  const response = await ssmClient.send(command);
+
+  if (!RedstoneCommon.isDefined(response.Parameters)) {
+    return {};
+  }
+
+  const collectedParameters: SSMParameterValuesResponse = {};
+
+  for (const ssmParameter of response.Parameters) {
+    if (RedstoneCommon.isDefined(ssmParameter.Value)) {
+      collectedParameters[ssmParameter.Name!] = ssmParameter.Value;
+    }
+  }
+
+  return collectedParameters;
 };
 
 export const getS3ConfigurationValue = async <T>() => {
