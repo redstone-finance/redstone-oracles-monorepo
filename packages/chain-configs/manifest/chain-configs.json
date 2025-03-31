@@ -1142,6 +1142,22 @@
       "fallbackToEthMaxPriorityFeePerGas": true,
       "twoDimensionalFees": false,
       "isMainnet": true
+    },
+    "poseidonTestnet": {
+      "name": "Poseidon Testnet",
+      "chainId": 31911,
+      "currencySymbol": "ETH",
+      "publicRpcUrls": ["https://poseidon-testnet.rpc.caldera.xyz/http"],
+      "avgBlockTimeMs": 2000,
+      "multicall3": {
+        "address": "0xaD6CC5a465E5c8284a49eC9eD10EFE275460678c",
+        "type": "RedstoneMulticall3",
+        "gasLimitPerCall": 1000000
+      },
+      "isAuctionModel": false,
+      "fallbackToEthMaxPriorityFeePerGas": true,
+      "twoDimensionalFees": false,
+      "isMainnet": false
     }
   },
   "temporaryConfigUpdates": {
