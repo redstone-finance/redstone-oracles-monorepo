@@ -44,7 +44,6 @@ function getManualKeySSMName(manifestName: string) {
   const encodedManifestName = manifestName
     .replace(/fundamental/g, "-fundamental")
     .replace(/Testnet/g, "-testnet")
-    .replace(/cadenceCanto/g, "canto/cadence")
     .replace(/abracadabraKava/g, "kava/abracadabra")
     // Insert a slash before the first uppercase letter
     .replace(/([A-Z])/, "/$1")
@@ -57,9 +56,6 @@ function getManualKeySSMName(manifestName: string) {
       // Otherwise, replace the uppercase letter with hyphen + lowercase
       return `-${p2.toLowerCase()}`;
     });
-  if (encodedManifestName.includes("cadence")) {
-    return `/prod/on-chain-relayer/${encodedManifestName}/private-key`;
-  }
   if (encodedManifestName.includes("abracadabra")) {
     return `/prod/on-chain-relayer/${encodedManifestName}`;
   }

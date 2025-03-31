@@ -7,7 +7,6 @@ const networkToGeckoTerminalNameMap: {
   arbitrumOne: "arbitrum",
   avalanche: "avax",
   optimism: "optimism",
-  canto: "canto",
   base: "base",
   bnb: "bsc",
   manta: "manta-pacific",
