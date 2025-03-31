@@ -1,5 +1,8 @@
 import { BlockTag, TransactionRequest } from "@ethersproject/abstract-provider";
-import { getLocalChainConfigsByChainId } from "@redstone-finance/chain-configs";
+import {
+  getChainKey,
+  getLocalChainConfigsByChainIdAndType,
+} from "@redstone-finance/chain-configs";
 import { RedstoneCommon, loggerFactory } from "@redstone-finance/utils";
 import { providers } from "ethers";
 import { Deferrable } from "ethers/lib/utils";
@@ -7,7 +10,7 @@ import { z } from "zod";
 import { Multicall3Request, safeExecuteMulticall3 } from "./Multicall3Caller";
 import { MulticallBuffer } from "./MulticallBuffer";
 
-const chainConfigPerChainId = getLocalChainConfigsByChainId();
+const chainConfigPerChainIdAndType = getLocalChainConfigsByChainIdAndType();
 
 async function prepareMulticall3Request(
   tx: Deferrable<TransactionRequest>,
@@ -19,7 +22,8 @@ async function prepareMulticall3Request(
     allowFailure: true,
   };
 
-  const multicall3Info = chainConfigPerChainId[chainId].multicall3;
+  const multicall3Info =
+    chainConfigPerChainIdAndType[getChainKey(chainId, "evm")].multicall3;
 
   if (multicall3Info.type === "RedstoneMulticall3") {
     call.gasLimit = multicall3Info.gasLimitPerCall;
