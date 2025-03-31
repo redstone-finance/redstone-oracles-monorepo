@@ -68,6 +68,9 @@ const config: HardhatUserConfig = {
     berachainTestnet: {
       url: "https://bepolia.rpc.berachain.com",
     },
+    poseidonTestnet: {
+      url: "https://poseidon-testnet.rpc.caldera.xyz/http",
+    },
   },
 };
 
