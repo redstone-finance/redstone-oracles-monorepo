@@ -18,7 +18,9 @@ export function isNonEvmChainType(
 }
 
 export function makeRpcUrlsSsmKey(chainId: number, chainType?: ChainType) {
-  return isEvmChainType(chainType) ? chainId : `${chainType}/${chainId}`;
+  return isEvmChainType(chainType)
+    ? chainId.toString()
+    : `${chainType}/${chainId}`;
 }
 
 export function conformsToChainType(left?: ChainType, right?: ChainType) {

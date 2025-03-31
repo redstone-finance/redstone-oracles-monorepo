@@ -45,14 +45,3 @@ export function getNonEvmNetworkName(adapterType: NonEvmAdapterType) {
     | "sui"
     | "movement";
 }
-
-export function getRpcUrlsPathComponent(
-  chainId: number,
-  adapterType?: AdapterType
-) {
-  let pathComponent = `${chainId}`;
-  if (isNonEvmAdapterType(adapterType)) {
-    pathComponent = `${getNonEvmNetworkName(adapterType)}/${pathComponent}`;
-  }
-  return pathComponent;
-}
