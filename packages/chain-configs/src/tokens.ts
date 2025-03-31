@@ -1,4 +1,4 @@
-import { chainTokenMap } from "./chain-token-map";
+import { getChainTokenMap } from "./chain-token-map";
 import { SupportedNetworkNames } from "./schemas";
 
 type TokenInfo = {
@@ -11,7 +11,7 @@ export function getTokenInfo(
   networkName: SupportedNetworkNames,
   symbol: string
 ): TokenInfo {
-  const networkTokens = chainTokenMap[networkName];
+  const networkTokens = getChainTokenMap()[networkName];
   if (!networkTokens) {
     throw new Error(`Chain ${networkName} not found in chainTokenMap`);
   }
@@ -40,7 +40,7 @@ export type ChainTokenMap = {
 };
 
 export const allTokenSymbols: Set<string> = new Set(
-  Object.values(chainTokenMap)
+  Object.values(getChainTokenMap())
     .flatMap((tokenMap) => Object.keys(tokenMap))
     .map((symbol) => symbol.toLowerCase())
 );
