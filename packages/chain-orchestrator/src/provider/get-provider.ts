@@ -20,7 +20,7 @@ export const getProvider = async (
 ): Promise<providers.Provider> => {
   return await getProviderWithRpcUrls(
     chainId,
-    await fetchParsedRpcUrlsFromSsmByChainId(chainId, env),
+    await fetchParsedRpcUrlsFromSsmByChainId(Number(chainId), env),
     config
   );
 };

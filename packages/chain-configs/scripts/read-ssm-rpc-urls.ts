@@ -5,7 +5,6 @@ import {
   ChainType,
   fetchParsedRpcUrlsFromSsmByChainId,
   getLocalChainConfigs,
-  makeRpcUrlsSsmKey,
 } from "../src";
 
 export type RpcUrlsPerChain = {
@@ -28,7 +27,7 @@ export const readSsmRpcUrls = async (
   const chainConfigs = getLocalChainConfigs();
   const rpcUrlsPerChain: RpcUrlsPerChain = {};
 
-  for (const { name, chainId, chainType } of Object.values(chainConfigs)) {
+  for (const { name, chainId } of Object.values(chainConfigs)) {
     if (
       name === "hardhat" ||
       (specificChainId && chainId !== specificChainId)
@@ -37,7 +36,7 @@ export const readSsmRpcUrls = async (
     }
     try {
       const rpcUrls = await fetchParsedRpcUrlsFromSsmByChainId(
-        makeRpcUrlsSsmKey(chainId, chainType),
+        chainId,
         env,
         isFallback ? "fallback" : "main"
       );
@@ -49,7 +48,7 @@ export const readSsmRpcUrls = async (
     } catch (e) {
       console.log(
         chalk.yellow(
-          `${isFallback ? "Fallback" : "Main"} Rpc urls for chain ${name} (${chainId}) not present in ${env} SSM error=${RedstoneCommon.stringifyError(e)}`
+          `${isFallback ? "Fallback" : "Main"} Rpc urls for chain ${name} (${chainId}) not present in ${env} error=${RedstoneCommon.stringifyError(e)}`
         )
       );
     }

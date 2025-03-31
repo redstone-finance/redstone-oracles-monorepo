@@ -4,23 +4,27 @@ import {
 } from "@redstone-finance/chain-configs";
 import {
   AdapterType,
-  getRpcUrlsPathComponent,
+  getNonEvmNetworkName,
+  isNonEvmAdapterType,
 } from "@redstone-finance/on-chain-relayer-common";
-
-async function fetchRpcUrls(pathComponent: string, env: Env) {
-  return await fetchParsedRpcUrlsFromSsmByChainId(
-    pathComponent,
-    process.env.IS_CI ? "dev" : env
-  );
-}
 
 export async function getRpcUrls(
   env: Env,
   chainId: number,
   adapterType?: AdapterType
 ) {
-  const pathComponent = getRpcUrlsPathComponent(chainId, adapterType);
-  const ssmRpcUrls = await fetchRpcUrls(pathComponent, env);
+  const chainType =
+    adapterType && isNonEvmAdapterType(adapterType)
+      ? getNonEvmNetworkName(adapterType)
+      : undefined;
+
+  const ssmRpcUrls = await fetchParsedRpcUrlsFromSsmByChainId(
+    chainId,
+    env,
+    "main",
+    chainType
+  );
+
   if (!ssmRpcUrls.length) {
     throw new Error(
       `No RPC URLS defined for chain id ${chainId} on ${env} AWS SSM.`

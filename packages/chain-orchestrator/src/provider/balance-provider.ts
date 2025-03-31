@@ -5,7 +5,6 @@ import {
 import {
   AdapterType,
   getNonEvmNetworkName,
-  getRpcUrlsPathComponent,
   isNonEvmAdapterType,
 } from "@redstone-finance/on-chain-relayer-common";
 import { BigNumber } from "ethers";
@@ -31,8 +30,10 @@ export const getBalanceProvider = async (
 ): Promise<BalanceProvider | undefined> => {
   if (isNonEvmAdapterType(adapterType)) {
     const rpcUrls = await fetchParsedRpcUrlsFromSsmByChainId(
-      getRpcUrlsPathComponent(chainId, adapterType),
-      env
+      chainId,
+      env,
+      "main",
+      getNonEvmNetworkName(adapterType)
     );
     return await getBalanceProviderWithRpcUrls(chainId, rpcUrls, adapterType);
   } else {

@@ -1,6 +1,5 @@
-import { getSSMParameterValue } from "@redstone-finance/internal-utils";
+import { getSSMParameterValues } from "@redstone-finance/internal-utils";
 import { RedstoneCommon } from "@redstone-finance/utils";
-import _ from "lodash";
 import { ChainType, makeRpcUrlsSsmKey } from "./ChainType";
 
 export type Env = "prod" | "dev" | "staging";
@@ -15,63 +14,55 @@ export type FetchRpcUrlsFromSsmOpts = {
 
 export type FetchRpcUrlsFromSsmResult = Record<number, string[] | undefined>;
 
-const BATCH_SIZE = 10;
-
 export async function fetchRpcUrlsFromSsm(
   opts: FetchRpcUrlsFromSsmOpts
 ): Promise<FetchRpcUrlsFromSsmResult> {
-  const chainIdsChunks = _.chunk(opts.chainIds, BATCH_SIZE);
+  const ssmPathToChainId: Record<string, number | undefined> = {};
+  for (const chainId of opts.chainIds) {
+    const ssmPath = `/${opts.env}/rpc/${makeRpcUrlsSsmKey(chainId, opts.chainType)}/${opts.type === "fallback" ? "fallback/" : ""}urls`;
+    ssmPathToChainId[ssmPath] = chainId;
+  }
 
-  const result: Record<number, string[]> = {};
+  const region = opts.type === "fallback" ? "eu-north-1" : undefined;
+  const ssmParamsResponse = await getSSMParameterValues(
+    Object.keys(ssmPathToChainId),
+    region
+  );
 
-  for (const chainIds of chainIdsChunks) {
-    await Promise.all(
-      chainIds.map(async (chainId) => {
-        const rpcUrlsForChainId = await fetchRpcUrlsFromSsmByChainId(
-          makeRpcUrlsSsmKey(chainId, opts.chainType),
-          opts.env,
-          opts.type
-        );
+  const result: FetchRpcUrlsFromSsmResult = {};
 
-        if (rpcUrlsForChainId) {
-          result[chainId] = JSON.parse(rpcUrlsForChainId) as string[];
-        }
-      })
-    );
+  for (const [ssmPath, value] of Object.entries(ssmParamsResponse)) {
+    if (value) {
+      try {
+        result[ssmPathToChainId[ssmPath]!] = JSON.parse(value) as string[];
+      } catch {
+        /* we want to treat invalid json as missing to avoid failing all rpcs because of the single one */
+      }
+    }
   }
 
   return result;
 }
 
-export async function fetchRpcUrlsFromSsmByChainId(
-  chainId: number | string,
-  env: Env,
-  type: NodeType = "main"
-): Promise<string | undefined> {
-  try {
-    const path = `/${env}/rpc/${chainId}/${type === "fallback" ? "fallback/" : ""}urls`;
-    const region = type === "fallback" ? "eu-north-1" : undefined;
-
-    return await getSSMParameterValue(path, region);
-  } catch (e) {
-    if ((e as { name?: string }).name !== "ParameterNotFound") {
-      throw new Error(
-        `Failed to get rpcUrls for chainId=${chainId}: ${RedstoneCommon.stringifyError(e)}`
-      );
-    }
-    return undefined;
-  }
-}
-
 export async function fetchParsedRpcUrlsFromSsmByChainId(
-  chainId: number | string,
+  chainId: number,
   env: Env,
-  type: NodeType = "main"
+  type: NodeType = "main",
+  chainType: ChainType = "evm"
 ) {
-  const ssmRpcUrls = await fetchRpcUrlsFromSsmByChainId(chainId, env, type);
-  if (!ssmRpcUrls) {
-    throw new Error(`${env} RPC URLs not found for ${chainId}`);
+  const ssmRpcUrls = await fetchRpcUrlsFromSsm({
+    chainIds: [chainId],
+    env,
+    type,
+    chainType,
+  });
+  const rpcUrlsForChain = ssmRpcUrls[chainId];
+
+  if (!RedstoneCommon.isDefined(rpcUrlsForChain)) {
+    throw new Error(
+      `${env} RPC URLs not found for ${chainId}, or failed to parse`
+    );
   }
 
-  return JSON.parse(ssmRpcUrls) as string[];
+  return rpcUrlsForChain;
 }
