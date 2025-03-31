@@ -1,4 +1,8 @@
-import { ContractParamsProvider, sampleRun } from "@redstone-finance/sdk";
+import {
+  ContractParamsProvider,
+  getSignersForDataServiceId,
+  sampleRun,
+} from "@redstone-finance/sdk";
 import { RedstoneCommon } from "@redstone-finance/utils";
 import { Keypair } from "@solana/web3.js";
 import dotenv from "dotenv";
@@ -15,6 +19,7 @@ async function main() {
     dataPackagesIds: ["ETH"],
     dataServiceId: "redstone-primary-prod",
     uniqueSignersCount: 3,
+    authorizedSigners: getSignersForDataServiceId("redstone-primary-prod"),
   });
   const connection = connectionTo(url);
   const keypair = Keypair.fromSecretKey(hexToU8Array(secret));
