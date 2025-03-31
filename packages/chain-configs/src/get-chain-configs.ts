@@ -5,7 +5,12 @@ import {
 } from "@redstone-finance/internal-utils";
 import { RedstoneCommon } from "@redstone-finance/utils";
 import localChainConfigsManifest from "../manifest/chain-configs.json";
-import { ChainConfigs, ChainConfigsById, ChainConfigsSchema } from "./schemas";
+import { ChainType } from "./ChainType";
+import {
+  ChainConfigs,
+  ChainConfigsByIdAndType,
+  ChainConfigsSchema,
+} from "./schemas";
 
 export const fetchChainConfigsWithAxios = async (
   manifestsHosts: string[],
@@ -56,21 +61,41 @@ const LOCAL_CHAIN_CONFIGS = ChainConfigsSchema.parse(
   resolveMonitoringManifest(localChainConfigsManifest)
 );
 
-const LOCAL_CHAIN_CONFIGS_BY_CHAIN_ID =
-  groupChainConfigsById(LOCAL_CHAIN_CONFIGS);
+const LOCAL_CHAIN_CONFIGS_BY_CHAIN_ID_AND_TYPE =
+  groupChainConfigsByIdAndType(LOCAL_CHAIN_CONFIGS);
 
-export function getLocalChainConfigsByChainId(): ChainConfigsById {
-  return LOCAL_CHAIN_CONFIGS_BY_CHAIN_ID;
+export function getLocalChainConfigsByChainIdAndType(): ChainConfigsByIdAndType {
+  return LOCAL_CHAIN_CONFIGS_BY_CHAIN_ID_AND_TYPE;
 }
 
 export function getLocalChainConfigs(): ChainConfigs {
   return LOCAL_CHAIN_CONFIGS;
 }
 
-function groupChainConfigsById(chainConfigs: ChainConfigs): ChainConfigsById {
+export function getChainKey(chainId: number, chainType: ChainType) {
+  return `${chainType}/${chainId}`;
+}
+
+function groupChainConfigsByIdAndType(
+  chainConfigs: ChainConfigs
+): ChainConfigsByIdAndType {
+  assertNoDuplicates(chainConfigs);
   const entries = Object.values(chainConfigs).map((chain) => [
-    chain.chainId,
+    getChainKey(chain.chainId, chain.chainType),
     chain,
   ]);
-  return Object.fromEntries(entries) as ChainConfigsById;
+  return Object.fromEntries(entries) as ChainConfigsByIdAndType;
+}
+
+function assertNoDuplicates(chainConfigs: ChainConfigs) {
+  const networkNamesByKey: Record<string, string> = {};
+  Object.entries(chainConfigs).map(([name, chain]) => {
+    const key = getChainKey(chain.chainId, chain.chainType);
+    if (networkNamesByKey[key]) {
+      throw new Error(
+        `Invalid chain config. Chains: ${name} and ${networkNamesByKey[key]} both have the same type (${chain.chainType}) and id (${chain.chainId})`
+      );
+    }
+    networkNamesByKey[key] = name;
+  });
 }
