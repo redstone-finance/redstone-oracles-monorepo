@@ -1,6 +1,7 @@
 import { BlockTag } from "@ethersproject/abstract-provider";
 import {
-  getLocalChainConfigsByChainId,
+  getChainKey,
+  getLocalChainConfigsByChainIdAndType,
   getMulticall3,
 } from "@redstone-finance/chain-configs";
 import { loggerFactory, RedstoneCommon } from "@redstone-finance/utils";
@@ -30,7 +31,7 @@ function rawMulticall3(
 }
 
 const logger = loggerFactory("multicall3");
-const chainConfigsByChainId = getLocalChainConfigsByChainId();
+const chainConfigsByChainIdAndType = getLocalChainConfigsByChainIdAndType();
 
 /** [TURBO IMPORTANT] this function MUST NOT throw errors */
 export async function safeExecuteMulticall3(
@@ -45,11 +46,11 @@ export async function safeExecuteMulticall3(
     chainId = (await provider.getNetwork()).chainId;
     const multicall3Contract = getMulticall3(
       {
-        chainId: chainId,
+        chainId,
         overrideAddress: multicallAddress,
         signerOrProvider: provider,
       },
-      chainConfigsByChainId[chainId]
+      chainConfigsByChainIdAndType[getChainKey(chainId, "evm")]
     );
     return await rawMulticall3(multicall3Contract, call3s, blockTag);
   } catch (e) {
