@@ -42,7 +42,7 @@ export class PriceAdapterContract {
     return await this.program.methods
       .writePrice(
         Array.from(makeFeedIdBytes(feedId)),
-        Buffer.from(JSON.parse(payload) as number[])
+        Buffer.from(payload, "hex")
       )
       .accountsStrict({
         user,
