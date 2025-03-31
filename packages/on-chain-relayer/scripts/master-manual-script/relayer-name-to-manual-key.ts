@@ -4,7 +4,6 @@ export const relayerNameToManualKeyArn: Record<string, string> = {
   arbitrumPremia: "/prod/on-chain-relayer/arbitrum/premia/private-key",
   b2MultiPriceFeed:
     "/prod/on-chain-relayer/b2/multi-price-feed/manual/private_key",
-  cadenceCantoCnote: "/prod/on-chain-relayer/canto/cnote/manual/private-key",
   ethereumEtherfiWeeth:
     "/prod/on-chain-relayer/ethereum/etherfi/weeth/manual/private_key",
   ethereumEtherfiWeetheth:
