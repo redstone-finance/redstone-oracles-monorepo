@@ -22,7 +22,7 @@ export function getTokenInfo(
   }
   const token = networkTokens[symbol];
   const tokenInfo: TokenInfo = {
-    symbol: symbol,
+    symbol,
     ...token,
   };
   return tokenInfo;
@@ -39,8 +39,11 @@ export type ChainTokenMap = {
   [networkName in SupportedNetworkNames]?: TokenMap;
 };
 
-export const allTokenSymbols: Set<string> = new Set(
-  Object.values(getChainTokenMap())
-    .flatMap((tokenMap) => Object.keys(tokenMap))
-    .map((symbol) => symbol.toLowerCase())
-);
+let allTokenSymbols: Set<string> | null = null;
+
+export const getAllTokenSymbols = (): Set<string> =>
+  (allTokenSymbols ??= new Set(
+    Object.values(getChainTokenMap())
+      .flatMap((tokenMap) => Object.keys(tokenMap))
+      .map((symbol) => symbol.toLowerCase())
+  ));
