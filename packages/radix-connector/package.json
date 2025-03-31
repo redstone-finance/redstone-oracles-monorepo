@@ -34,7 +34,8 @@
     "decompile-intent": "yarn global:ts-node scripts/ledger/decompile-into-intent.ts",
     "sign-intent": "yarn global:ts-node scripts/ledger/sign-intent.ts",
     "combine-signatures": "yarn global:ts-node scripts/ledger/combine-signatures.ts",
-    "public-keys-to-address": "yarn global:ts-node scripts/account-address.ts"
+    "public-keys-to-address": "yarn global:ts-node scripts/account-address.ts",
+    "transfer-multisig-tx": "yarn global:ts-node scripts/ledger/transfer-multisig-tx.ts"
   },
   "dependencies": {
     "@radixdlt/babylon-gateway-api-sdk": "^1.10.1",
