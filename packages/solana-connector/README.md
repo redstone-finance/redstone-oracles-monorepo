@@ -3,7 +3,7 @@
 ## Deploying and testing
 
 ### Requirements
-Before use you will need:
+Before use, you will need:
 * rust
 * solana-cli
 * anchor-cli
@@ -15,7 +15,7 @@ Before use you will need:
 * npm 10.9.0
 * node v18.20.5
 
-All instalation steps are described [here](https://solana.com/docs/intro/installation#install-dependencies)
+All installation steps are described [here](https://solana.com/docs/intro/installation#install-dependencies)
 
 ### Build and run contract tests
 
@@ -26,7 +26,7 @@ make lint
 make test
 ```
 
-### Run deploy
+### Run deployment
 
 Fill envs in file .env. See .env.example for reference.
 

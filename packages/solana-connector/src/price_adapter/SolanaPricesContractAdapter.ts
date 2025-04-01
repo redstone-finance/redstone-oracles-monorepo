@@ -11,19 +11,20 @@ import {
   sendAndConfirmTransaction,
   Transaction,
 } from "@solana/web3.js";
-import { PriceAdapterContract } from "../PriceContractAdapter";
+import { PriceAdapterContract } from "../PriceAdapterContract";
 
 export class SolanaPricesContractAdapter
   implements IExtendedPricesContractAdapter
 {
-  protected readonly logger = loggerFactory("solana-prices-writer");
+  protected readonly logger = loggerFactory("solana-price-adapter");
 
   private contract: PriceAdapterContract;
   constructor(
     readonly connection: Connection,
-    readonly keypair: Keypair
+    readonly keypair: Keypair,
+    idl: unknown
   ) {
-    this.contract = new PriceAdapterContract(connection, keypair);
+    this.contract = new PriceAdapterContract(connection, keypair, idl);
   }
 
   getSignerAddress() {

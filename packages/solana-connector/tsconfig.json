@@ -8,12 +8,5 @@
       "path": "../sdk/tsconfig.build.json"
     }
   ],
-  "include": [
-    "solana/target/idl/*.json",
-    "solana/target/types/*.ts",
-    "src/**/*",
-    "test/**/*",
-    "*",
-    "package.json"
-  ]
+  "include": ["src/**/*", "scripts/**/*", "*", "package.json"]
 }
