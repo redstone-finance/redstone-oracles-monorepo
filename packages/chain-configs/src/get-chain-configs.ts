@@ -9,6 +9,7 @@ import { ChainType } from "./ChainType";
 import {
   ChainConfigs,
   ChainConfigsByIdAndType,
+  ChainConfigsInput,
   ChainConfigsSchema,
 } from "./schemas";
 
@@ -21,7 +22,7 @@ export const fetchChainConfigsWithAxios = async (
     const manifestUrl = `https://${manifestsHost}/redstone-finance/redstone-monorepo-priv/${gitref}/packages/chain-configs/manifest/chain-configs.json`;
     try {
       const response = await RedstoneCommon.axiosGetWithRetries<
-        GenericMonitoringManifest<ChainConfigs>
+        GenericMonitoringManifest<ChainConfigsInput>
       >(manifestUrl, { maxRetries: 2, headers: { apikey } });
       return response.data;
     } catch (e) {

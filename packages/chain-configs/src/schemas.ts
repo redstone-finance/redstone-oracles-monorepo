@@ -44,6 +44,7 @@ export const ChainConfigsByIdAndTypeSchema = z.record(
   ChainConfigSchema
 );
 
+export type ChainConfigsInput = z.input<typeof ChainConfigsSchema>;
 export type ChainConfig = z.infer<typeof ChainConfigSchema>;
 export type ChainConfigs = z.infer<typeof ChainConfigsSchema>;
 export type ChainConfigsByIdAndType = z.infer<
