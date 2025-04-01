@@ -8,19 +8,18 @@ export type NodeType = "fallback" | "main";
 export type FetchRpcUrlsFromSsmOpts = {
   type: NodeType;
   env: Env;
-  chainIds: number[];
-  chainType?: ChainType;
+  chainIdsWithType: string[];
 };
 
-export type FetchRpcUrlsFromSsmResult = Record<number, string[] | undefined>;
+export type FetchRpcUrlsFromSsmResult = Record<string, string[] | undefined>;
 
 export async function fetchRpcUrlsFromSsm(
   opts: FetchRpcUrlsFromSsmOpts
 ): Promise<FetchRpcUrlsFromSsmResult> {
-  const ssmPathToChainId: Record<string, number | undefined> = {};
-  for (const chainId of opts.chainIds) {
-    const ssmPath = `/${opts.env}/rpc/${makeRpcUrlsSsmKey(chainId, opts.chainType)}/${opts.type === "fallback" ? "fallback/" : ""}urls`;
-    ssmPathToChainId[ssmPath] = chainId;
+  const ssmPathToChainId: Record<string, string | undefined> = {};
+  for (const chainIdWithType of opts.chainIdsWithType) {
+    const ssmPath = `/${opts.env}/rpc/${chainIdWithType}/${opts.type === "fallback" ? "fallback/" : ""}urls`;
+    ssmPathToChainId[ssmPath] = chainIdWithType;
   }
 
   const region = opts.type === "fallback" ? "eu-north-1" : undefined;
@@ -51,10 +50,9 @@ export async function fetchParsedRpcUrlsFromSsmByChainId(
   chainType: ChainType = "evm"
 ) {
   const ssmRpcUrls = await fetchRpcUrlsFromSsm({
-    chainIds: [chainId],
+    chainIdsWithType: [makeRpcUrlsSsmKey(chainId, chainType)],
     env,
     type,
-    chainType,
   });
   const rpcUrlsForChain = ssmRpcUrls[chainId];
 
