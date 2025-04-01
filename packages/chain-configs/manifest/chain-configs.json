@@ -606,6 +606,7 @@
         "type": "RedstoneMulticall3",
         "gasLimitPerCall": 1000000
       },
+      "fallbackToEthMaxPriorityFeePerGas": true,
       "isAuctionModel": false,
       "twoDimensionalFees": false,
       "isMainnet": true
