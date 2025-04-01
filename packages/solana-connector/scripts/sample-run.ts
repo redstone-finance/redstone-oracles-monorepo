@@ -3,17 +3,12 @@ import {
   getSignersForDataServiceId,
   sampleRun,
 } from "@redstone-finance/sdk";
-import { RedstoneCommon } from "@redstone-finance/utils";
-import { Keypair } from "@solana/web3.js";
-import dotenv from "dotenv";
+import "dotenv/config";
 import { SolanaContractConnector } from "../src";
-import { connectionTo } from "../src/PriceContractAdapter";
-import { hexToU8Array } from "../src/utils";
+import { connectToCluster, readIdl, readKeyPair } from "./utils";
 
 async function main() {
-  dotenv.config();
-  const url = RedstoneCommon.getFromEnv("URL");
-  const secret = RedstoneCommon.getFromEnv("PRIVATE_KEY");
+  const connection = connectToCluster();
 
   const paramsProvider = new ContractParamsProvider({
     dataPackagesIds: ["ETH"],
@@ -21,12 +16,11 @@ async function main() {
     uniqueSignersCount: 3,
     authorizedSigners: getSignersForDataServiceId("redstone-primary-prod"),
   });
-  const connection = connectionTo(url);
-  const keypair = Keypair.fromSecretKey(hexToU8Array(secret));
 
   const solanaContractConnector = new SolanaContractConnector(
     connection,
-    keypair
+    readKeyPair(),
+    readIdl()
   );
 
   await sampleRun(paramsProvider, solanaContractConnector);
