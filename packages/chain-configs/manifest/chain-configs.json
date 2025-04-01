@@ -1035,10 +1035,8 @@
       "chainType": "sui",
       "currencySymbol": "SUI",
       "publicRpcUrls": [
-        "https://rpc.ankr.com/sui_testnet",
         "https://sui-testnet.public.blastapi.io",
         "https://api.blockeden.xyz/sui/testnet/jBQLBdEWG4xk6fmaWshS",
-        "https://sui-testnet-endpoint.blockvision.org/",
         "https://sui-testnet.nodeinfra.com",
         "https://sui-testnet-rpc.publicnode.com"
       ],

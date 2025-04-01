@@ -6,7 +6,7 @@ import {
   AllEqualConsensusExecutor,
   MedianConsensusExecutor,
 } from "./ConsensusExecutor";
-import { Executor } from "./Executor";
+import { AsyncFn, Executor } from "./Executor";
 import { FallbackExecutor } from "./FallbackExecutor";
 import { RaceExecutor } from "./RaceExecutor";
 import {
@@ -120,10 +120,7 @@ export class MultiExecutorFactory<T extends object> {
     });
   }
 
-  private async performExecuting(
-    key: keyof T,
-    promises: (() => Promise<unknown>)[]
-  ) {
+  private async performExecuting(key: keyof T, promises: AsyncFn<unknown>[]) {
     const mode = this.getMethodMode(key);
     this.logger.debug(
       `[${stringify(key)}] Executing ${promises.length} promise${getS(promises.length)}` +
