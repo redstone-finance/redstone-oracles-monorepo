@@ -2,7 +2,6 @@ import {
   fetchChainConfigs,
   getChainConfigByChainId,
 } from "@redstone-finance/chain-configs";
-
 import {
   ContractParamsProvider,
   getSignersForDataServiceId,
