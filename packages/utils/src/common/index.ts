@@ -19,4 +19,5 @@ export * from "./retry";
 export * from "./SetWithTTL";
 export * from "./simple-cache";
 export * from "./time";
+export * from "./wait-for-block-number";
 export * from "./zod-helpers";
