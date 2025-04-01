@@ -66,12 +66,14 @@ export const waitForSuccess = async (
   cond: () => Promise<boolean>,
   count: number,
   errorMessage: string,
-  sleepTimeMs = 5000
+  sleepTimeMs = 5000,
+  description = ""
 ) => {
   let waitCounter = 0;
   while (!(await cond())) {
     if (++waitCounter < count) {
-      logger.log(`Waiting ${sleepTimeMs} [ms]...`);
+      const logPrefix = description ? `[${description}] ` : "";
+      logger.log(`${logPrefix}Waiting ${sleepTimeMs} [ms]...`);
       await sleep(sleepTimeMs);
     } else {
       throw new Error(errorMessage);
