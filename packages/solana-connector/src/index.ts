@@ -1,2 +1,2 @@
-export * from "./prices/SolanaPricesContractAdapter";
+export * from "./price_adapter/SolanaPricesContractAdapter";
 export * from "./SolanaContractConnector";

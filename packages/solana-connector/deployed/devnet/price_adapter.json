@@ -1,0 +1,217 @@
+{
+  "address": "CvFXyHhjA5QBm1BVMibkZXT12rCq78GZPMzK5tWSagB",
+  "metadata": {
+    "name": "price_adapter",
+    "version": "0.1.0",
+    "spec": "0.1.0",
+    "description": "Created with Anchor"
+  },
+  "instructions": [
+    {
+      "name": "price",
+      "discriminator": [
+        129,
+        85,
+        239,
+        229,
+        61,
+        225,
+        218,
+        20
+      ],
+      "accounts": [
+        {
+          "name": "price_account"
+        }
+      ],
+      "args": [
+        {
+          "name": "_feed_id",
+          "type": {
+            "array": [
+              "u8",
+              32
+            ]
+          }
+        }
+      ],
+      "returns": {
+        "array": [
+          "u8",
+          32
+        ]
+      }
+    },
+    {
+      "name": "price_and_timestamp",
+      "discriminator": [
+        230,
+        155,
+        166,
+        78,
+        30,
+        69,
+        210,
+        82
+      ],
+      "accounts": [
+        {
+          "name": "price_account"
+        }
+      ],
+      "args": [
+        {
+          "name": "_feed_id",
+          "type": {
+            "array": [
+              "u8",
+              32
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "timestamp",
+      "discriminator": [
+        254,
+        134,
+        231,
+        242,
+        239,
+        5,
+        62,
+        108
+      ],
+      "accounts": [
+        {
+          "name": "price_account"
+        }
+      ],
+      "args": [
+        {
+          "name": "_feed_id",
+          "type": {
+            "array": [
+              "u8",
+              32
+            ]
+          }
+        }
+      ],
+      "returns": "u64"
+    },
+    {
+      "name": "unique_signers_count",
+      "discriminator": [
+        101,
+        24,
+        86,
+        157,
+        116,
+        46,
+        226,
+        31
+      ],
+      "accounts": [],
+      "args": [],
+      "returns": "u8"
+    },
+    {
+      "name": "write_price",
+      "discriminator": [
+        16,
+        186,
+        120,
+        224,
+        118,
+        178,
+        161,
+        152
+      ],
+      "accounts": [
+        {
+          "name": "user",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "price_account",
+          "writable": true
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": [
+        {
+          "name": "feed_id",
+          "type": {
+            "array": [
+              "u8",
+              32
+            ]
+          }
+        },
+        {
+          "name": "payload",
+          "type": "bytes"
+        }
+      ]
+    }
+  ],
+  "accounts": [
+    {
+      "name": "PriceData",
+      "discriminator": [
+        232,
+        113,
+        193,
+        231,
+        133,
+        209,
+        206,
+        154
+      ]
+    }
+  ],
+  "types": [
+    {
+      "name": "PriceData",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "feed_id",
+            "type": {
+              "array": [
+                "u8",
+                32
+              ]
+            }
+          },
+          {
+            "name": "value",
+            "type": {
+              "array": [
+                "u8",
+                32
+              ]
+            }
+          },
+          {
+            "name": "timestamp",
+            "type": "u64"
+          },
+          {
+            "name": "write_timestamp",
+            "type": {
+              "option": "u64"
+            }
+          }
+        ]
+      }
+    }
+  ]
+}
