@@ -17,9 +17,8 @@ jest.spyOn(Convert.Uint8Array, "toHexString");
 describe("RadixApiClient", () => {
   let sut: RadixApiClient;
 
-  beforeAll(mockDefaultValues);
-
   beforeEach(() => {
+    mockDefaultValues();
     sut = new RadixApiClient();
   });
 
@@ -70,7 +69,7 @@ describe("RadixApiClient", () => {
     expect(getCurrent).toHaveBeenCalled();
   });
 
-  it("should get current state number", async () => {
+  it("should get current state version", async () => {
     const result = await sut.getCurrentStateVersion();
     expect(result).toBe(12345678);
     expect(getCurrent).toHaveBeenCalled();
@@ -80,13 +79,13 @@ describe("RadixApiClient", () => {
     const result = await sut.getStateFields(
       "mockComponentId",
       ["signer_count_threshold"],
-      12370000
+      12345678
     );
     expect(result).toEqual({ signer_count_threshold: 1 });
     expect(getEntityDetailsVaultAggregated).toHaveBeenCalledWith(
       "mockComponentId",
       undefined,
-      { state_version: 12370000 }
+      { state_version: 12345678 }
     );
   });
 });
