@@ -97,7 +97,9 @@ export class Eip1559GasEstimator implements GasEstimator<Eip1559Fee> {
     newestBlock: "pending" | "latest"
   ): Promise<FeeHistoryResponse> {
     return (await provider.send("eth_feeHistory", [
-      "0x" + this.opts.numberOfBlocksForFeeHistory.toString(16),
+      this.opts.enforceDecimalNumberOfBlocksForFeeHistory
+        ? this.opts.numberOfBlocksForFeeHistory
+        : "0x" + this.opts.numberOfBlocksForFeeHistory.toString(16),
       newestBlock,
       [this.opts.percentileOfPriorityFee],
     ])) as FeeHistoryResponse;
