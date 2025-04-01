@@ -72,8 +72,12 @@ export class SuiReader {
     objectId: string,
     checkpointNumber: number
   ) {
-    let cursor = undefined;
+    await RedstoneCommon.waitForBlockNumber(
+      () => this.client.getLatestCheckpointSequenceNumber().then(Number),
+      checkpointNumber
+    );
 
+    let cursor = undefined;
     do {
       const transactions = await this.client.queryTransactionBlocks({
         filter: {

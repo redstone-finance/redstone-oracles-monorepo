@@ -4,7 +4,7 @@ import {
   StateEntityDetailsResponseComponentDetails,
 } from "@radixdlt/babylon-gateway-api-sdk";
 import { Convert, NetworkId, Value } from "@radixdlt/radix-engine-toolkit";
-import { MultiExecutor } from "@redstone-finance/utils";
+import { MultiExecutor, RedstoneCommon } from "@redstone-finance/utils";
 import { RadixParser } from "./parser/RadixParser";
 
 const APPLICATION_NAME = "RedStone Radix Connector";
@@ -128,12 +128,14 @@ export class RadixApiClient {
     resourceAddress: string,
     stateVersion?: number
   ): Promise<string> {
+    const atLedgerState = await this.waitForLedgerState(stateVersion);
+
     const response =
       await this.apiClient.state.innerClient.entityFungibleResourceVaultPage({
         stateEntityFungibleResourceVaultsPageRequest: {
           address,
           resource_address: resourceAddress,
-          at_ledger_state: RadixApiClient.makeLedgerState(stateVersion),
+          at_ledger_state: atLedgerState,
         },
       });
 
@@ -154,13 +156,15 @@ export class RadixApiClient {
     resourceAddress: string,
     stateVersion?: number
   ) {
+    const atLedgerState = await this.waitForLedgerState(stateVersion);
+
     const response =
       await this.apiClient.state.innerClient.entityNonFungibleResourceVaultPage(
         {
           stateEntityNonFungibleResourceVaultsPageRequest: {
             address,
             resource_address: resourceAddress,
-            at_ledger_state: RadixApiClient.makeLedgerState(stateVersion),
+            at_ledger_state: atLedgerState,
           },
         }
       );
@@ -183,11 +187,18 @@ export class RadixApiClient {
     addresses: string[],
     cursor?: string | null
   ) {
+    RedstoneCommon.assertWithLog(
+      atStateVersion >= fromStateVersion,
+      `atStateVersion must be >= fromStateVersion`
+    );
+
+    const atLedgerState = await this.waitForLedgerState(atStateVersion);
+
     return await this.apiClient.stream.innerClient.streamTransactions({
       streamTransactionsRequest: {
         cursor,
-        from_ledger_state: RadixApiClient.makeLedgerState(fromStateVersion),
-        at_ledger_state: RadixApiClient.makeLedgerState(atStateVersion),
+        from_ledger_state: { state_version: fromStateVersion },
+        at_ledger_state: atLedgerState,
         affected_global_entities_filter: addresses,
         opt_ins: {
           raw_hex: true,
@@ -204,10 +215,11 @@ export class RadixApiClient {
     fieldNames?: string[],
     stateVersion?: number
   ) {
+    const ledgerState = await this.waitForLedgerState(stateVersion);
     const res = await this.apiClient.state.getEntityDetailsVaultAggregated(
       componentId,
       undefined,
-      RadixApiClient.makeLedgerState(stateVersion)
+      ledgerState
     );
     const state = (
       res.details as unknown as StateEntityDetailsResponseComponentDetails
@@ -224,9 +236,16 @@ export class RadixApiClient {
     return Object.fromEntries(entries) as { [p: string]: Value };
   }
 
-  private static makeLedgerState(stateVersion?: number) {
-    return stateVersion !== undefined
-      ? ({ state_version: stateVersion } as LedgerStateSelector)
-      : undefined;
+  private async waitForLedgerState(stateVersion?: number) {
+    await RedstoneCommon.waitForBlockNumber(
+      () => this.getCurrentStateVersion(),
+      stateVersion
+    );
+
+    if (!stateVersion) {
+      return undefined;
+    }
+
+    return { state_version: stateVersion } as LedgerStateSelector;
   }
 }
