@@ -7,7 +7,6 @@
     "jest.config.ts",
     "solana"
   ],
-  "include": ["solana/target/idl/*.json", "solana/target/types/*.ts"],
   "references": [
     {
       "path": "../protocol/tsconfig.build.json"
