@@ -3,19 +3,20 @@ import {
   IPricesContractAdapter,
 } from "@redstone-finance/sdk";
 import { Connection, Keypair } from "@solana/web3.js";
-import { SolanaPricesContractAdapter } from "./prices/SolanaPricesContractAdapter";
+import { SolanaPricesContractAdapter } from "./price_adapter/SolanaPricesContractAdapter";
 
 export class SolanaContractConnector
   implements IContractConnector<IPricesContractAdapter>
 {
   constructor(
     readonly connection: Connection,
-    readonly keypair: Keypair
+    readonly keypair: Keypair,
+    readonly idl: unknown
   ) {}
 
   getAdapter(): Promise<SolanaPricesContractAdapter> {
     return Promise.resolve(
-      new SolanaPricesContractAdapter(this.connection, this.keypair)
+      new SolanaPricesContractAdapter(this.connection, this.keypair, this.idl)
     );
   }
 
