@@ -10,6 +10,15 @@
   "priceFeeds": {
     "ETH": {
       "priceFeedAddress": "0xbEb886F1A51803d7e9FD4514a91E89b81F4fdE58"
+    },
+    "BTC": {
+      "priceFeedAddress": "0x9E3a99f75A475e678072218e0c1fDF9a2E121945"
+    },
+    "USDT": {
+      "priceFeedAddress": "0xBE9BbDBDa0785f3853591B15960982047da09BbE"
+    },
+    "USDC": {
+      "priceFeedAddress": "0x5e1C611b77ee1703B306C181aDa73227cFe66F60"
     }
   }
 }
