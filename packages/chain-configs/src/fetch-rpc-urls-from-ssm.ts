@@ -49,16 +49,17 @@ export async function fetchParsedRpcUrlsFromSsmByChainId(
   type: NodeType = "main",
   chainType: ChainType = "evm"
 ) {
+  const chainIdWithType = makeRpcUrlsSsmKey(chainId, chainType);
   const ssmRpcUrls = await fetchRpcUrlsFromSsm({
-    chainIdsWithType: [makeRpcUrlsSsmKey(chainId, chainType)],
+    chainIdsWithType: [chainIdWithType],
     env,
     type,
   });
-  const rpcUrlsForChain = ssmRpcUrls[chainId];
+  const rpcUrlsForChain = ssmRpcUrls[chainIdWithType];
 
   if (!RedstoneCommon.isDefined(rpcUrlsForChain)) {
     throw new Error(
-      `${env} RPC URLs not found for ${chainId}, or failed to parse`
+      `${env} RPC URLs not found for ${chainIdWithType}, or failed to parse`
     );
   }
 
