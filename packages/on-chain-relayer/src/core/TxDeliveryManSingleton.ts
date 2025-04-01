@@ -19,6 +19,8 @@ export const getTxDeliveryMan = (
     maxAttempts: relayerConfig.maxTxSendAttempts,
     isAuctionModel: relayerConfig.isAuctionModel,
     forceDisableCustomGasOracle: relayerConfig.disableCustomGasOracle,
+    enforceDecimalNumberOfBlocksForFeeHistory:
+      relayerConfig.enforceDecimalNumberOfBlocksForFeeHistory,
   });
   return deliveryMan;
 };

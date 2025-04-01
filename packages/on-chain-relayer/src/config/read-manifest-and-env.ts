@@ -230,6 +230,13 @@ export const readManifestAndEnv = async () => {
       "INCLUDE_ADDITIONAL_FEEDS_FOR_GAS_OPTIMIZATION",
       z.boolean().default(true)
     ),
+    // By default it is set to "0x2" string hex value, for tac turin testnet
+    // rpcs were only accepting this parameter as a decimal number, such case
+    // may come up again in which we should set this env var to true
+    enforceDecimalNumberOfBlocksForFeeHistory: RedstoneCommon.getFromEnv(
+      "ENFORCE_DECIMAL_NUMBER_OF_BLOCKS_FOR_FEE_HISTORY",
+      z.boolean().optional()
+    ),
   };
 
   return { manifest, env };

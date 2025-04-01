@@ -106,6 +106,11 @@ export type TxDeliveryOpts = {
   numberOfBlocksForFeeHistory?: number;
 
   /**
+   * Pass numberOfBlocksForFeeHistory as decimal number instead of hex string
+   */
+  enforceDecimalNumberOfBlocksForFeeHistory?: boolean;
+
+  /**
    * Should be set to true if chain doesn't support EIP1559
    */
   isAuctionModel?: boolean;
@@ -133,6 +138,7 @@ export const DEFAULT_TX_DELIVERY_OPTS = {
   twoDimensionalFees: false,
   gasOracleTimeout: 5_000,
   forceDisableCustomGasOracle: false,
+  enforceDecimalNumberOfBlocksForFeeHistory: false,
   numberOfBlocksForFeeHistory: 2,
   logger: logger.log.bind(logger),
 };
