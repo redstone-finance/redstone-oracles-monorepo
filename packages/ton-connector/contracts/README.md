@@ -1,21 +1,21 @@
-# RedStone Oracles integration with TON
+# RedStone integration with TON
 
-## 💡 How RedStone oracles work with TON
+## 💡 How RedStone work with TON
 
-_RedStone Oracles_ use an alternative design of providing oracle data to smart contracts. Instead of constantly
+_RedStone_ use an alternative design of providing oracle data to smart contracts. Instead of constantly
 persisting data on the contract's storage (by data providers), the information is brought on-chain only when needed
 (by end users).
 Until that moment data remains in the decentralised cache layer, which is powered by RedStone light cache gateways and
 streamr data broadcasting protocol. Data is transferred to the contract by end users, who should attach signed data
 packages to their function invocations. The information integrity is verified on-chain through signature checking.
 
-To learn more about _RedStone Oracles_ design, go to the [RedStone docs](https://docs.redstone.finance/docs/introduction)
+To learn more about _RedStone_ design, go to the [RedStone docs](https://docs.redstone.finance/docs/introduction)
 
 ## 📄 Smart Contracts
 
 ### price_manager.fc vel Prices
 
-- Sample oracle contract that consumes RedStone oracles data [price_manager.fc](price_manager.fc) written in
+- Sample oracle contract that consumes RedStone data [price_manager.fc](price_manager.fc) written in
   FunC. It requires [TVM Upgrade 2023.07](https://docs.ton.org/learn/tvm-instructions/tvm-upgrade-2023-07).
 
 #### ⨐ initial data
