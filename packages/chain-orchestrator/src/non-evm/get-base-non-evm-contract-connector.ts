@@ -7,6 +7,7 @@ import {
   MOVEMENT_MULTI_FEED,
   NonEvmAdapterType,
   RADIX_MULTI_FEED,
+  SOLANA_MULTI_FEED,
   SUI_MULTI_FEED,
 } from "@redstone-finance/on-chain-relayer-common";
 import {
@@ -42,6 +43,8 @@ export function getBaseNonEvmContractConnector(
           .withRpcUrls(rpcUrls)
           .build()
       );
+    case SOLANA_MULTI_FEED:
+      throw new Error("Not implemented");
     case FUEL:
       throw new Error(`Not supported for ${adapterType}`);
   }

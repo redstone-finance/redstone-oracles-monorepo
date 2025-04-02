@@ -43,5 +43,6 @@ export function getNonEvmNetworkName(adapterType: NonEvmAdapterType) {
   return adapterType.replace(`-${MULTI_FEED}`, "") as
     | "radix"
     | "sui"
-    | "movement";
+    | "movement"
+    | "solana";
 }

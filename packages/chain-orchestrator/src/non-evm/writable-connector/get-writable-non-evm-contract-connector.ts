@@ -3,6 +3,7 @@ import {
   isNonEvmAdapterType,
   MOVEMENT_MULTI_FEED,
   RADIX_MULTI_FEED,
+  SOLANA_MULTI_FEED,
   SUI_MULTI_FEED,
 } from "@redstone-finance/on-chain-relayer-common";
 import { getFuelContractConnector } from "./get-fuel-contract-connector";
@@ -29,5 +30,7 @@ export async function getWritableNonEvmContractConnector(
       return getSuiContractConnector(relayerConfig);
     case MOVEMENT_MULTI_FEED:
       return getMovementContractConnector(relayerConfig);
+    case SOLANA_MULTI_FEED:
+      throw new Error("Not implemented");
   }
 }
