@@ -79,5 +79,10 @@ export const waitForSuccess = async (
       throw new Error(errorMessage);
     }
   }
+
+  if (!waitCounter) {
+    return;
+  }
+
   logger.log(`${logPrefix}Did wait ${sleepTimeMs * waitCounter} [ms] in total`);
 };
