@@ -19,6 +19,9 @@
     },
     "USDC": {
       "priceFeedAddress": "0x98ECE0D516f891a35278E3186772fb1545b274eB"
+    },
+    "TON": {
+      "priceFeedAddress": "0xD3A0C347b07Fd45F41270D557089B389Fa735C3d"
     }
   }
 }
