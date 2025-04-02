@@ -74,7 +74,8 @@ export class SuiReader {
   ) {
     await RedstoneCommon.waitForBlockNumber(
       () => this.client.getLatestCheckpointSequenceNumber().then(Number),
-      checkpointNumber
+      checkpointNumber,
+      `findLatestVersion ${objectId} at ${checkpointNumber}`
     );
 
     let cursor = undefined;
