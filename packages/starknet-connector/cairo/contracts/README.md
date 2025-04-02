@@ -1,8 +1,8 @@
-# RedStone oracles integration with Starknet
+# RedStone integration with Starknet
 
 <!-- TOC -->
--[RedStone oracles integration with Starknet](#redstone-oracles-integration-with-starknet)
-- [💡 How RedStone oracles work with Starknet](#-how-redstone-oracles-work-with-starknet)
+-[RedStone integration with Starknet](#redstone-integration-with-starknet)
+- [💡 How RedStone work with Starknet](#-how-redstone-work-with-starknet)
   - [📄 Smart Contracts](#-smart-contracts)
     - [Price adapter](#price-adapter)
     - [⨐ constructor](#-constructor)
@@ -14,22 +14,22 @@
   - [🙋‍Contact](#contact)
 <!-- TOC -->
 
-## 💡 How RedStone oracles work with Starknet
+## 💡 How RedStone work with Starknet
 
-_RedStone Oracles_ use an alternative design of providing oracle data to smart contracts. Instead of constantly
+_RedStone_ use an alternative design of providing oracle data to smart contracts. Instead of constantly
 persisting data on the contract's storage (by data providers), the information is brought on-chain only when needed
 (by end users). Until that moment data remains in the decentralized cache layer, which is powered by RedStone light
 cache gateways and streamr data broadcasting protocol. Data is transferred to the contract by end users, who should
 attach signed data packages to their function invocations. The information integrity is verified on-chain through
 signature checking.
 
-To learn more about _RedStone Oracles_ design, go to the [RedStone docs](https://docs.redstone.finance/docs/introduction)
+To learn more about _RedStone_ design, go to the [RedStone docs](https://docs.redstone.finance/docs/introduction)
 
 ## 📄 Smart Contracts
 
 ### Price adapter
 
-- Sample oracle contract that consumes RedStone oracles
+- Sample oracle contract that consumes RedStone
   data - [price_adapter.cairo](./price_adapter/src/price_adapter.cairo) written in cairo version
   2.6.3.
 
