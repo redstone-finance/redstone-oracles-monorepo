@@ -1,9 +1,9 @@
-# RedStone Oracles integration with Casper
+# RedStone integration with Casper
 
 <!-- TOC -->
 
-- [RedStone Oracles integration with Casper](#redstone-oracles-integration-with-casper)
-  - [💡 How RedStone Oracles work with Casper](#-how-redstone-oracles-work-with-casper)
+- [RedStone integration with Casper](#redstone-integration-with-casper)
+  - [💡 How RedStone work with Casper](#-how-redstone-work-with-casper)
   - [✨ General parameter disclaimer](#-general-parameter-disclaimer)
   - [📄 Smart Contracts](#-smart-contracts)
     - [Price Adapter](#price-adapter)
@@ -29,16 +29,16 @@
 
 <!-- TOC -->
 
-## 💡 How RedStone Oracles work with Casper
+## 💡 How RedStone work with Casper
 
-_RedStone Oracles_ use an alternative design of providing oracle data to smart contracts. Instead of constantly
+_RedStone_ use an alternative design of providing oracle data to smart contracts. Instead of constantly
 persisting data on the contract's storage (by data providers), the information is brought on-chain only when needed
 (by end users). Until that moment data remains in the decentralized cache layer, which is powered by RedStone light
 cache gateways and streamr data broadcasting protocol. Data is transferred to the contract by end users, who should
 attach signed data packages to their function invocations. The information integrity is verified on-chain through
 signature checking.
 
-To learn more about _RedStone Oracles_ design, go to
+To learn more about _RedStone_ design, go to
 the [RedStone docs](https://docs.redstone.finance/docs/introduction)
 
 ## ✨ General parameter disclaimer
@@ -65,7 +65,7 @@ constants.
 
 ### [Price Adapter](price_adapter)
 
-Sample oracle contract that consumes _RedStone Oracles_ data, written in Rust.
+Sample oracle contract that consumes _RedStone_ data, written in Rust.
 The example-testnet address of the implementation is exposed in the [DEPLOYED.hex](price_adapter/DEPLOYED.hex) file.
 
 ☔ Due to the method calling limitations in the TypeScript Casper SDK,

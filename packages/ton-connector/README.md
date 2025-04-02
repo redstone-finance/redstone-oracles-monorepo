@@ -15,7 +15,7 @@ is powered by RedStone light cache gateways and streamr data broadcasting protoc
 network by end users. The information integrity is verified on-chain through signature checking.
 
 Here also you can find the description of
-the [whole RedStone Oracle model](https://docs.redstone.finance/docs/introduction).
+the [whole RedStone model](https://docs.redstone.finance/docs/introduction).
 
 - [👨‍💻 Code structure](#-code-structure)
 - [🔥 Connecting to the contract](#-connecting-to-the-contract)
