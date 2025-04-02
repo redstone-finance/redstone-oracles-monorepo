@@ -1,8 +1,8 @@
-# RedStone Blockchain Oracles integration with Solana
+# RedStone Blockchain integration with Solana
 
 <!-- TOC -->
-* [RedStone Blockchain Oracles integration with Solana](#redstone-blockchain-oracles-integration-with-solana)
-  * [💡 How RedStone Blockchain Oracles work with Solana](#-how-redstone-blockchain-oracles-work-with-solana)
+* [RedStone Blockchain integration with Solana](#redstone-blockchain-integration-with-solana)
+  * [💡 How RedStone Blockchain work with Solana](#-how-redstone-work-with-solana)
   * [✨ General parameter type disclaimer](#-general-parameter-type-disclaimer)
   * [📄 Contracts](#-contracts)
     * [PriceAdapter](#priceadapter)
@@ -14,9 +14,9 @@
   * [🙋‍Contact](#contact)
 <!-- TOC -->
 
-## 💡 How RedStone Blockchain Oracles work with Solana
+## 💡 How RedStone work with Solana
 
-_RedStone Blockchain Oracles_ use an alternative design of providing oracle data to smart contracts. Instead of constantly
+_RedStone_ use an alternative design of providing oracle data to smart contracts. Instead of constantly
 persisting data on the contract's storage (by data providers), the information is brought on-chain only when needed
 (by end users).
 Until that moment data remains in the decentralized cache layer, which is powered by RedStone light cache gateways and
@@ -24,7 +24,7 @@ streamr data broadcasting protocol. Data is transferred to the contract by end u
 packages to their function invocations. The information integrity is verified on-chain through signature checking
 by using `anchor_lang::solana_program::secp256k1_recover::secp256k1_recover` function.
 
-To learn more about _RedStone Blockchain Oracles_ design, go to
+To learn more about _RedStone_ design, go to
 the [RedStone docs](https://docs.redstone.finance/docs/introduction)
 
 ## ✨ General parameter type disclaimer
@@ -40,7 +40,7 @@ the [RedStone docs](https://docs.redstone.finance/docs/introduction)
 
 ### PriceAdapter
 
-- Sample oracle contract that consumes _RedStone Oracles_ data [`src/lib.rs`](src/lib.rs) written in Rust.
+- Sample oracle contract that consumes _RedStone_ data [`src/lib.rs`](src/lib.rs) written in Rust.
 
 #### ⨐ initializer
 

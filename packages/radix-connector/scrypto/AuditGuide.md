@@ -24,7 +24,7 @@ The direct path should look like:
 * PriceAdapter [contracts/price_adapter/README.md](./contracts/price_adapter/README.md)
 * PriceFeed [contracts/price_feed/src/price_feed.rs](./contracts/price_feed/src/price_feed.rs)
 * RedStone Rust SDK [https://github.com/redstone-finance/rust-sdk](https://github.com/redstone-finance/rust-sdk/tree/2.0.0)
-* General [RedStone Blockchain Oracles docs](https://docs.redstone.finance/docs/architecture/#data-formatting--processing)
+* General [RedStone Blockchain oracles docs](https://docs.redstone.finance/docs/architecture/#data-formatting--processing)
   * Especially [The push model docs](https://docs.redstone.finance/docs/dapps/redstone-push/):
 
 ## What should be audited

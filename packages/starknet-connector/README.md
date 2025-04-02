@@ -42,7 +42,7 @@ You can
 read [here](https://github.com/redstone-finance/redstone-oracles-monorepo/blob/main/packages/starknet-connector/cairo/src/contracts/README.md)
 how the contract works.
 Here also you can find the description of
-the [whole RedStone Oracle model](https://docs.redstone.finance/docs/introduction).
+the [whole RedStone model](https://docs.redstone.finance/docs/introduction).
 
 #### 2. Connecting to the contract
 
