@@ -215,7 +215,10 @@ export class RadixApiClient {
     fieldNames?: string[],
     stateVersion?: number
   ) {
-    const ledgerState = await this.waitForLedgerState(stateVersion);
+    const ledgerState = await this.waitForLedgerState(
+      stateVersion,
+      `getStateFields ${fieldNames?.toString()} in ${stateVersion}`
+    );
     const res = await this.apiClient.state.getEntityDetailsVaultAggregated(
       componentId,
       undefined,
@@ -236,10 +239,14 @@ export class RadixApiClient {
     return Object.fromEntries(entries) as { [p: string]: Value };
   }
 
-  private async waitForLedgerState(stateVersion?: number) {
+  private async waitForLedgerState(
+    stateVersion: number | undefined,
+    description?: string
+  ) {
     await RedstoneCommon.waitForBlockNumber(
       () => this.getCurrentStateVersion(),
-      stateVersion
+      stateVersion,
+      description
     );
 
     if (!stateVersion) {
