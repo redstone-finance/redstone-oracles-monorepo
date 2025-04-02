@@ -1,5 +1,6 @@
 import { readJsonFile, readS3Object } from "@redstone-finance/internal-utils";
 import { AnyOnChainRelayerManifestSchema } from "@redstone-finance/on-chain-relayer-common";
+import { NewestBlockTypeEnum } from "@redstone-finance/rpc-providers";
 import { RedstoneCommon } from "@redstone-finance/utils";
 import "dotenv/config";
 import { z } from "zod";
@@ -236,6 +237,10 @@ export const readManifestAndEnv = async () => {
     enforceDecimalNumberOfBlocksForFeeHistory: RedstoneCommon.getFromEnv(
       "ENFORCE_DECIMAL_NUMBER_OF_BLOCKS_FOR_FEE_HISTORY",
       z.boolean().optional()
+    ),
+    newestBlockForFeeHistory: RedstoneCommon.getFromEnv(
+      "NEWEST_BLOCK_FOR_FEE_HISTORY",
+      NewestBlockTypeEnum.optional()
     ),
   };
 
