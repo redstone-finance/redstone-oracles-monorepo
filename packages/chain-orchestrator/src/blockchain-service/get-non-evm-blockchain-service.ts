@@ -33,6 +33,9 @@ export function getNonEvmBlockchainService(
         .build();
       return new RadixBlockchainService(radixClient);
     }
+    case "solana": {
+      throw new Error("Not implemented");
+    }
     case "fuel":
       throw new Error(`chain type ${chainType} not supported`);
   }
