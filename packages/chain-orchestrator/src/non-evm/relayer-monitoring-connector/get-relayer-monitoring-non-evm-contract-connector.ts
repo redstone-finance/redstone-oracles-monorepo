@@ -8,6 +8,7 @@ import {
   isNonEvmConfig,
   MOVEMENT_MULTI_FEED,
   RADIX_MULTI_FEED,
+  SOLANA_MULTI_FEED,
   SUI_MULTI_FEED,
 } from "@redstone-finance/on-chain-relayer-common";
 import {
@@ -36,6 +37,8 @@ export function getRelayerMonitoringNonEvmContractConnector(
       return getSuiContractConnector(rpcUrls, relayerManifest);
     case MOVEMENT_MULTI_FEED:
       return getMovementContractConnector(rpcUrls, relayerManifest);
+    case SOLANA_MULTI_FEED:
+      throw new Error("Not implemented");
     case FUEL:
       throw new Error(
         `${relayerManifest.adapterContractType} is not supported in monitoring`

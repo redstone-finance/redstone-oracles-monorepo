@@ -1,6 +1,12 @@
 import { z } from "zod";
 
-export const NonEvmChainTypeEnum = z.enum(["sui", "movement", "radix", "fuel"]);
+export const NonEvmChainTypeEnum = z.enum([
+  "sui",
+  "movement",
+  "radix",
+  "solana",
+  "fuel",
+]);
 export type NonEvmChainType = z.infer<typeof NonEvmChainTypeEnum>;
 export const ChainTypeEnum = z.enum(["evm", ...NonEvmChainTypeEnum.options]);
 export type ChainType = z.infer<typeof ChainTypeEnum>;
