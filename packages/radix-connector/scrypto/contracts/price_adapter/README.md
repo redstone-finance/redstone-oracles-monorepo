@@ -1,8 +1,8 @@
-# RedStone Oracles integration with Radix
+# RedStone integration with Radix
 
 <!-- TOC -->
-* [RedStone Oracles integration with Radix](#redstone-oracles-integration-with-radix)
-  * [💡 How RedStone Oracles work with Radix](#-how-redstone-oracles-work-with-radix)
+* [RedStone integration with Radix](#redstone-integration-with-radix)
+  * [💡 How RedStone work with Radix](#-how-redstone-work-with-radix)
   * [✨ General parameter type disclaimer](#-general-parameter-type-disclaimer)
   * [📄 Blueprints](#-blueprints)
     * [PriceAdapter](#priceadapter)
@@ -17,16 +17,16 @@
   * [🙋‍Contact](#contact)
 <!-- TOC -->
 
-## 💡 How RedStone Oracles work with Radix
+## 💡 How RedStone work with Radix
 
-_RedStone Oracles_ use an alternative design of providing oracle data to smart contracts. Instead of constantly
+_RedStone_ use an alternative design of providing oracle data to smart contracts. Instead of constantly
 persisting data on the contract's storage (by data providers), the information is brought on-chain only when needed
 (by end users).
 Until that moment data remains in the decentralized cache layer, which is powered by RedStone light cache gateways and
 streamr data broadcasting protocol. Data is transferred to the contract by end users, who should attach signed data
 packages to their function invocations. The information integrity is verified on-chain through signature checking.
 
-To learn more about _RedStone Oracles_ design, go to
+To learn more about _RedStone_ design, go to
 the [RedStone docs](https://docs.redstone.finance/docs/introduction)
 
 ## ✨ General parameter type disclaimer
@@ -50,7 +50,7 @@ section below.
 
 ### PriceAdapter
 
-- Sample oracle contract that consumes _RedStone Oracles_ data
+- Sample oracle contract that consumes _RedStone_ data
 [price_adapter.rs](src/price_adapter.rs) written in scrypto version `1.3.0`.
 
 #### ⨐ instantiate

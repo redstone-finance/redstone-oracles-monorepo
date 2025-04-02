@@ -1,17 +1,16 @@
-# *RedStone Oracles* Radix connector
+# *RedStone* Radix connector
 
-## Stage 1 - in-depth analysis from the point of view of *RedStone Oracles* protocol
+## Stage 1 - in-depth analysis from the point of view of *RedStone* protocol
 
 <!-- TOC -->
 
-* [*RedStone Oracles* Radix connector](#redstone-oracles-radix-connector)
-  * [Stage 1 - in-depth analysis from the point of view of *RedStone
-      Oracles* protocol](#stage-1---in-depth-analysis-from-the-point-of-view-of-redstone-oracles-protocol)
+* [*RedStone* Radix connector](#redstone-radix-connector)
+  * [Stage 1 - in-depth analysis from the point of view of *RedStone* protocol](#stage-1---in-depth-analysis-from-the-point-of-view-of-redstone-protocol)
     * [Available data types and language features](#available-data-types-and-language-features)
     * [Available cryptographic functions](#available-cryptographic-functions)
     * [The gas cost structure](#the-gas-cost-structure)
       * [The specification extract](#the-specification-extract)
-    * [The best way of attaching *RedStone Oracles* payload](#the-best-way-of-attaching-redstone-oracles-payload)
+    * [The best way of attaching *RedStone* payload](#the-best-way-of-attaching-redstone-payload)
     * [Available timestamp details in the context of transaction](#available-timestamp-details-in-the-context-of-transaction)
     * [Cost comparison with clutterfish update](#cost-comparison-with-clutterfish-update)
 
@@ -43,7 +42,7 @@ There are two important Rust crates that are dependencies for developing bluepri
 * `radix-common` - a library of common types and functions shared by all layers of the Radix stack.
 
 The `radix-common` crate provides also implementation of the `U256` type, which is composed of 4 `u64` parts.
-These implementations ensure overflow-free computations on *RedStone Oracles* objects and
+These implementations ensure overflow-free computations on *RedStone* objects and
 allow for constructing these types using a list of bytes (`u8`).
 <br />
 <br />
@@ -93,7 +92,7 @@ The current protocol defined parameters can be found here: https://docs.radixdlt
 <br />
 <br />
 
-### The best way of attaching *RedStone Oracles* payload
+### The best way of attaching *RedStone* payload
 
 In Radix, SBOR (originally standing for “Scrypto Binary-Friendly Object Representation”) is the serialization format
 used for communication between actors in the engine and for storing state.
@@ -111,7 +110,7 @@ The SBOR Manifest supports a variety of fundamental data types, including:
 * Enums and tuples derived from known types,
 * Arrays and maps.
 
-In the context of *RedStone Oracles*, the payload is defined as a list of bytes, which can be transferred directly
+In the context of *RedStone*, the payload is defined as a list of bytes, which can be transferred directly
 to the ledger. This is because arrays, vectors, and U8 values have their corresponding SBOR encoders implemented.
 
 However, `U256` values do not have a direct SBOR encoder and must instead be transferred in a digit-based format,

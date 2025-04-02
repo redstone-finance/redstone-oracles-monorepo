@@ -1,21 +1,21 @@
-# RedStone Oracles integration with Fuel
+# RedStone integration with Fuel
 
-## 💡 How RedStone Oracles work with Fuel
+## 💡 How RedStone work with Fuel
 
-_RedStone Oracles_ use an alternative design of providing oracle data to smart contracts. Instead of constantly
+_RedStone_ use an alternative design of providing oracle data to smart contracts. Instead of constantly
 persisting data on the contract's storage (by data providers), the information is brought on-chain only when needed
 (by end users).
 Until that moment data remains in the decentralized cache layer, which is powered by RedStone light cache gateways and
 streamr data broadcasting protocol. Data is transferred to the contract by end users, who should attach signed data
 packages to their function invocations. The information integrity is verified on-chain through signature checking.
 
-To learn more about _RedStone Oracles_ design, go to the [RedStone docs](https://docs.redstone.finance/docs/introduction)
+To learn more about _RedStone_ design, go to the [RedStone docs](https://docs.redstone.finance/docs/introduction)
 
 ## 📄 Smart Contracts
 
 ### Prices.sway
 
-- Sample oracle contract that consumes _RedStone Oracles_ data [prices.sw](src/prices.sw) written in sway version
+- Sample oracle contract that consumes _RedStone_ data [prices.sw](src/prices.sw) written in sway version
   `0.64.0`.
 
 #### Parameters

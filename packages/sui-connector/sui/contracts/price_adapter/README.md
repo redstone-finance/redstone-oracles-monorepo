@@ -1,8 +1,8 @@
-# RedStone Blockchain Oracles integration with SUI
+# RedStone Blockchain integration with SUI
 
 <!-- TOC -->
-* [RedStone Blockchain Oracles integration with SUI](#redstone-blockchain-oracles-integration-with-sui)
-  * [💡 How RedStone Blockchain Oracles work with SUI](#-how-redstone-blockchain-oracles-work-with-sui)
+* [RedStone Blockchain integration with SUI](#redstone-blockchain-integration-with-sui)
+  * [💡 How RedStone Blockchain work with SUI](#-how-redstone-blockchain-work-with-sui)
   * [✨ General parameter type disclaimer](#-general-parameter-type-disclaimer)
   * [📄 Contracts](#-contracts)
     * [PriceAdapter](#priceadapter)
@@ -16,9 +16,9 @@
   * [🙋‍Contact](#contact)
 <!-- TOC -->
 
-## 💡 How RedStone Blockchain Oracles work with SUI
+## 💡 How RedStone Blockchain work with SUI
 
-_RedStone Blockchain Oracles_ use an alternative design of providing oracle data to smart contracts. Instead of constantly
+_RedStone_ use an alternative design of providing oracle data to smart contracts. Instead of constantly
 persisting data on the contract's storage (by data providers), the information is brought on-chain only when needed
 (by end users).
 Until that moment data remains in the decentralized cache layer, which is powered by RedStone light cache gateways and
@@ -26,7 +26,7 @@ streamr data broadcasting protocol. Data is transferred to the contract by end u
 packages to their function invocations. The information integrity is verified on-chain through signature checking
 by using `sui::ecdsa_k1::secp256k1_ecrecover` function.
 
-To learn more about _RedStone Blockchain Oracles_ design, go to
+To learn more about _RedStone_ design, go to
 the [RedStone docs](https://docs.redstone.finance/docs/introduction)
 
 ## ✨ General parameter type disclaimer
@@ -42,7 +42,7 @@ the [RedStone docs](https://docs.redstone.finance/docs/introduction)
 
 ### PriceAdapter
 
-- Sample oracle contract that consumes _RedStone Oracles_ data [`sources/main.move`](sources/main.move) written in Move
+- Sample oracle contract that consumes _RedStone_ data [`sources/main.move`](sources/main.move) written in Move
   version `1.39.0`.
 
 #### ⨐ initializer
