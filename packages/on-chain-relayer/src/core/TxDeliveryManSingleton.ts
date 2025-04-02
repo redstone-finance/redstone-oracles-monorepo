@@ -21,6 +21,7 @@ export const getTxDeliveryMan = (
     forceDisableCustomGasOracle: relayerConfig.disableCustomGasOracle,
     enforceDecimalNumberOfBlocksForFeeHistory:
       relayerConfig.enforceDecimalNumberOfBlocksForFeeHistory,
+    newestBlockForFeeHistory: relayerConfig.newestBlockForFeeHistory,
   });
   return deliveryMan;
 };

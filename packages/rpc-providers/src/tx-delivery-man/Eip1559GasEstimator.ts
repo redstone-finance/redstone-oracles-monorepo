@@ -54,7 +54,7 @@ export class Eip1559GasEstimator implements GasEstimator<Eip1559Fee> {
   private async estimatePriorityFee(
     provider: providers.JsonRpcProvider
   ): Promise<number> {
-    const feeHistory = await this.getFeeHistory(provider, "pending");
+    const feeHistory = await this.getFeeHistory(provider);
 
     const rewardsPerBlockForPercentile = feeHistory.reward
       .flat()
@@ -93,14 +93,13 @@ export class Eip1559GasEstimator implements GasEstimator<Eip1559Fee> {
   }
 
   private async getFeeHistory(
-    provider: providers.JsonRpcProvider,
-    newestBlock: "pending" | "latest"
+    provider: providers.JsonRpcProvider
   ): Promise<FeeHistoryResponse> {
     return (await provider.send("eth_feeHistory", [
       this.opts.enforceDecimalNumberOfBlocksForFeeHistory
         ? this.opts.numberOfBlocksForFeeHistory
         : "0x" + this.opts.numberOfBlocksForFeeHistory.toString(16),
-      newestBlock,
+      this.opts.newestBlockForFeeHistory,
       [this.opts.percentileOfPriorityFee],
     ])) as FeeHistoryResponse;
   }

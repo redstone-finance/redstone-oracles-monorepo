@@ -2,6 +2,7 @@ import {
   AdapterType,
   UpdateTriggers,
 } from "@redstone-finance/on-chain-relayer-common";
+import { NewestBlockType } from "@redstone-finance/rpc-providers";
 
 export type RelayerConfig = OnChainRelayerEnv & ManifestConfig;
 
@@ -65,4 +66,5 @@ export type OnChainRelayerEnv = {
   authorizedSigners?: string[];
   includeAdditionalFeedsForGasOptimization: boolean;
   enforceDecimalNumberOfBlocksForFeeHistory?: boolean;
+  newestBlockForFeeHistory?: NewestBlockType;
 };

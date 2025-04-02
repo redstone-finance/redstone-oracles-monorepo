@@ -6,6 +6,7 @@ import {
 import { loggerFactory, RedstoneCommon, Tx } from "@redstone-finance/utils";
 import { BigNumber, providers, utils } from "ethers";
 import _ from "lodash";
+import { z } from "zod";
 import { EthersError, isEthersError } from "../common";
 import {
   AuctionModelFee,
@@ -57,6 +58,9 @@ export type GasOracleFn = (
   opts: TxDeliveryOptsValidated,
   attempt: number
 ) => Promise<FeeStructure>;
+
+export const NewestBlockTypeEnum = z.enum(["latest", "pending"]);
+export type NewestBlockType = z.infer<typeof NewestBlockTypeEnum>;
 
 export type TxDeliveryOpts = {
   /**
@@ -111,6 +115,11 @@ export type TxDeliveryOpts = {
   enforceDecimalNumberOfBlocksForFeeHistory?: boolean;
 
   /**
+   * Block to start fetching the fee history data from
+   */
+  newestBlockForFeeHistory?: NewestBlockType;
+
+  /**
    * Should be set to true if chain doesn't support EIP1559
    */
   isAuctionModel?: boolean;
@@ -140,6 +149,7 @@ export const DEFAULT_TX_DELIVERY_OPTS = {
   forceDisableCustomGasOracle: false,
   enforceDecimalNumberOfBlocksForFeeHistory: false,
   numberOfBlocksForFeeHistory: 2,
+  newestBlockForFeeHistory: "pending",
   logger: logger.log.bind(logger),
 };
 
