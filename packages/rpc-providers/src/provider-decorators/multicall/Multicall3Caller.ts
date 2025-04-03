@@ -66,13 +66,11 @@ export async function safeExecuteMulticall3(
         call3s.map((call3) => safeFallbackCall(provider, call3, blockTag))
       );
     } else {
-      logger.error(
-        `Whole multicall3 chainId=${chainId} failed. Will not fallback. Error: ${RedstoneCommon.stringifyError(e)}`
-      );
+      const errorDescription = `Whole multicall3 chainId=${chainId} failed. Will not fallback. Error: ${RedstoneCommon.stringifyError(e)}`;
 
       return call3s.map(() => ({
         returnData: "0x",
-        fallbackRejectReason: `Whole multicall3 chainId=${chainId} failed. Will not fallback.`,
+        fallbackRejectReason: new Error(errorDescription),
         success: false,
       }));
     }
