@@ -7,7 +7,7 @@ use crate::instructions::*;
 use anchor_lang::prelude::*;
 use state::{FeedIdBs, ValueBs};
 
-declare_id!("CvFXyHhjA5QBm1BVMibkZXT12rCq78GZPMzK5tWSagB");
+declare_id!("9UhuVvbfzV7fh6bBkwQoqoKJV1C4hB9u5dfRAwURR2aC");
 
 #[program]
 pub mod price_adapter {
