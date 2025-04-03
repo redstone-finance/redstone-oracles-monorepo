@@ -1,0 +1,48 @@
+{
+  "interval": 60000,
+  "priceAggregator": "median",
+  "sourceTimeout": 20000,
+  "deviationCheck": {
+    "deviationWithRecentValues": {
+      "maxPercent": 25,
+      "maxDelayMilliseconds": 300000
+    }
+  },
+  "tokens": {
+    "ETH": {
+      "source": [
+        "binance",
+        "binancecoinm",
+        "binanceusdm",
+        "bitfinex",
+        "chainlink",
+        "coinbase",
+        "coingecko",
+        "kraken",
+        "kucoin",
+        "lbank",
+        "okx"
+      ]
+    },
+    "USDT": {
+      "source": ["bitfinex", "coinbase", "coingecko", "kaiko", "kraken"]
+    },
+    "USDC": {
+      "source": [
+        "balancer-ethereum-usdt",
+        "binance",
+        "binanceusdm",
+        "bitfinex",
+        "coingecko",
+        "kraken",
+        "kucoin",
+        "lbank",
+        "okx",
+        "uniswap-v3-ethereum-dai-100",
+        "uniswap-v3-ethereum-usdt-100",
+        "uniswap-v3-ethereum-dai-500",
+        "uniswap-v3-ethereum-usdt-500"
+      ]
+    }
+  }
+}
