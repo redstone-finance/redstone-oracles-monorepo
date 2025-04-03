@@ -4,8 +4,8 @@ import {
   sampleRun,
 } from "@redstone-finance/sdk";
 import "dotenv/config";
-import { SolanaContractConnector } from "../src";
-import { connectToCluster, readIdl, readKeyPair } from "./utils";
+import { connectToCluster, SolanaContractConnector } from "../src";
+import { readKeypair } from "./utils";
 
 async function main() {
   const connection = connectToCluster();
@@ -19,8 +19,8 @@ async function main() {
 
   const solanaContractConnector = new SolanaContractConnector(
     connection,
-    readKeyPair(),
-    readIdl()
+    "CvFXyHhjA5QBm1BVMibkZXT12rCq78GZPMzK5tWSagB",
+    readKeypair()
   );
 
   await sampleRun(paramsProvider, solanaContractConnector);
