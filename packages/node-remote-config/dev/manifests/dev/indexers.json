@@ -1,0 +1,68 @@
+{
+  "interval": 60000,
+  "priceAggregator": "median",
+  "defaultSource": ["coingecko"],
+  "sourceTimeout": 7000,
+  "minValidSourcesPercentage": 1,
+  "deviationCheck": {
+    "deviationWithRecentValues": {
+      "maxPercent": 30,
+      "maxDelayMilliseconds": 300000
+    }
+  },
+  "tokens": {
+    "LBTC_FUNDAMENTAL": {
+      "source": ["lbtc-indexer-fetcher"],
+      "denomination": "BTC",
+      "rateFeed": true
+    },
+    "stBTC_POR": {
+      "source": ["stbtc-indexer-fetcher"],
+      "denomination": "BTC",
+      "rateFeed": true
+    },
+    "enzoBTC_POR": {
+      "source": ["enzobtc-indexer-fetcher"],
+      "denomination": "BTC",
+      "rateFeed": true
+    },
+    "USDtb_FUNDAMENTAL": {
+      "source": ["ethereum-ethena-usdtb"],
+      "denomination": "USD",
+      "rateFeed": true
+    },
+    "USDC": {
+      "source": [
+        "balancer-arbitrumone-usdt",
+        "balancer-ethereum-usdt",
+        "binance-usdt",
+        "bitget-usdt",
+        "bitmart-usdt",
+        "bitrue-usdt",
+        "bitstamp-usd",
+        "kraken-usdt",
+        "kucoin-usdt",
+        "lbank-usdt",
+        "okx-usdt"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "USDT": {
+      "source": ["bitstamp-usd", "coinbasepro-usd", "gate-usd", "kraken-usd"],
+      "deviationCheck": {
+        "deviationWithRecentValues": {
+          "maxPercent": 5,
+          "maxDelayMilliseconds": 300000
+        }
+      },
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "BUIDL_FUNDAMENTAL": {
+      "source": ["securitize-api"],
+      "denomination": "USD",
+      "rateFeed": true
+    }
+  }
+}
