@@ -1,34 +1,24 @@
 import {
+  ContractData,
   ContractParamsProvider,
-  IExtendedPricesContractAdapter,
+  IMultiFeedPricesContractAdapter,
 } from "@redstone-finance/sdk";
-import { BigNumberish } from "ethers";
-
 import { loggerFactory } from "@redstone-finance/utils";
-import {
-  Connection,
-  Keypair,
-  sendAndConfirmTransaction,
-  Transaction,
-} from "@solana/web3.js";
+import { BigNumberish } from "ethers";
 import { PriceAdapterContract } from "../PriceAdapterContract";
 
 export class SolanaPricesContractAdapter
-  implements IExtendedPricesContractAdapter
+  implements IMultiFeedPricesContractAdapter
 {
   protected readonly logger = loggerFactory("solana-price-adapter");
 
-  private contract: PriceAdapterContract;
-  constructor(
-    readonly connection: Connection,
-    readonly keypair: Keypair,
-    idl: unknown
-  ) {
-    this.contract = new PriceAdapterContract(connection, keypair, idl);
-  }
+  constructor(private contract: PriceAdapterContract) {}
 
   getSignerAddress() {
-    return Promise.resolve(this.keypair.publicKey.toString());
+    const pk = this.contract.program.provider.publicKey;
+    return pk
+      ? Promise.resolve(pk.toString())
+      : Promise.reject(new Error("Signer required"));
   }
 
   async getUniqueSignerThreshold(): Promise<number> {
@@ -38,7 +28,9 @@ export class SolanaPricesContractAdapter
   async readLatestUpdateBlockTimestamp(
     feedId?: string
   ): Promise<number | undefined> {
-    if (feedId === undefined) return undefined;
+    if (!feedId) {
+      return undefined;
+    }
     const priceData = await this.contract.getPriceData(feedId);
 
     return priceData.writeTimestamp?.toNumber();
@@ -50,24 +42,18 @@ export class SolanaPricesContractAdapter
 
   async writePricesFromPayloadToContract(
     paramsProvider: ContractParamsProvider
-  ): Promise<string | BigNumberish[]> {
-    const tx = new Transaction();
-
+  ) {
     const { payloads } = ContractParamsProvider.extractMissingValues(
       await paramsProvider.prepareSplitPayloads(),
       this.logger
     );
 
+    let tx = "";
     for (const [feedId, payload] of Object.entries(payloads)) {
-      const ix = await this.contract.writePriceIx(
-        this.keypair.publicKey,
-        feedId,
-        payload
-      );
-      tx.add(ix);
+      tx = await this.contract.writePrice(feedId, payload);
     }
 
-    return await sendAndConfirmTransaction(this.connection, tx, [this.keypair]);
+    return tx;
   }
 
   async readPricesFromContract(
@@ -84,6 +70,25 @@ export class SolanaPricesContractAdapter
     const priceData = await this.contract.getPriceData(feedId);
 
     return priceData.timestamp.toNumber();
+  }
+
+  async readContractData(feedIds: string[]): Promise<ContractData> {
+    const promises = await Promise.allSettled(
+      feedIds.map((feedId) => this.contract.getPriceData(feedId))
+    );
+
+    const values = promises
+      .filter((result) => result.status === "fulfilled")
+      .map((result) => [
+        ContractParamsProvider.unhexlifyFeedId(result.value.feedId),
+        {
+          lastDataPackageTimestampMS: result.value.timestamp.toNumber(),
+          lastBlockTimestampMS: result.value.writeTimestamp?.toNumber() ?? 0,
+          lastValue: toNumber(result.value.value),
+        },
+      ]);
+
+    return Object.fromEntries(values) as ContractData;
   }
 }
 

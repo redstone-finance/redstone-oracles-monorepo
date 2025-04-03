@@ -9,6 +9,7 @@ import {
 import { getFuelContractConnector } from "./get-fuel-contract-connector";
 import { getMovementContractConnector } from "./get-movement-contract-connector";
 import { getRadixContractConnector } from "./get-radix-contract-connector";
+import { getSolanaContractConnector } from "./get-solana-contract-connector";
 import { getSuiContractConnector } from "./get-sui-contract-connector";
 import { PartialRelayerConfig } from "./partial-relayer-config";
 
@@ -31,6 +32,6 @@ export async function getWritableNonEvmContractConnector(
     case MOVEMENT_MULTI_FEED:
       return getMovementContractConnector(relayerConfig);
     case SOLANA_MULTI_FEED:
-      throw new Error("Not implemented");
+      return getSolanaContractConnector(relayerConfig);
   }
 }
