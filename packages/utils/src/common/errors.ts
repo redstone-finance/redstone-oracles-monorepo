@@ -1,5 +1,6 @@
 import axios, { AxiosError } from "axios";
 import { LogLevel } from "consola";
+import { ethers } from "ethers";
 import { getLogLevel, loggerFactory } from "../logger";
 
 export function assert(value: unknown, errMsg: string): asserts value {
@@ -55,6 +56,34 @@ const showStack = (stack: string | undefined): string => {
   return "";
 };
 
+const ethers_5_7_errorCodes: string[] = Object.values(ethers.errors);
+
+function isEthers_5_7_Error(error: unknown): error is Ethers_5_7_Error {
+  return (
+    typeof error === "object" &&
+    error !== null &&
+    "code" in error &&
+    typeof error.code === "string" &&
+    ethers_5_7_errorCodes.includes(error.code)
+  );
+}
+
+const ethers_5_7_ErrorProps = [
+  "code",
+  "reason",
+  "url",
+  "requestBody",
+  "timeout",
+  "method",
+  "address",
+  "args",
+  "errorSignature",
+] as const;
+
+type Ethers_5_7_Error = {
+  [K in (typeof ethers_5_7_ErrorProps)[number]]?: string | number;
+};
+
 export function stringifyError(e: unknown): string {
   try {
     const error = e as
@@ -62,7 +91,8 @@ export function stringifyError(e: unknown): string {
       | AxiosError
       | undefined
       | Error
-      | { toJSON: () => string };
+      | { toJSON: () => string }
+      | Ethers_5_7_Error;
 
     if (error === undefined) {
       return "undefined";
@@ -75,6 +105,16 @@ export function stringifyError(e: unknown): string {
       const urlAsString = `url: ${JSON.stringify(error.config?.url)}`;
       const dataAsString = `data: ${JSON.stringify(error.response?.data)}`;
       return `${urlAsString}, ${dataAsString}, ${error.message}, ${showStack(error.stack)}`;
+    } else if (isEthers_5_7_Error(error)) {
+      return (
+        "[Ethers 5.7 Error]" +
+        ethers_5_7_ErrorProps
+          .filter((prop) => Object.prototype.hasOwnProperty.call(error, prop))
+          .map((prop) => {
+            return `[${prop}: ${error[prop]}]`;
+          })
+          .join("")
+      );
     } else if (error instanceof Error) {
       const causeString = error.cause
         ? ` cause: ${stringifyError(error.cause)}`
