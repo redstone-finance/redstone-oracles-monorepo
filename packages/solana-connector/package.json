@@ -13,7 +13,7 @@
     "build-dev": "yarn global:tsc --build tsconfig.json",
     "lint": "yarn global:eslint .",
     "lint:fix": "yarn global:eslint --fix .",
-    "test": "yarn global:jest:cov",
+    "test": "yarn global:jest:cov --passWithNoTests",
     "preversion": "yarn build",
     "pack-package": "yarn build && cd dist && npm pack",
     "sample-run": "yarn global:ts-node scripts/sample-run.ts",
