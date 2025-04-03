@@ -1,0 +1,34 @@
+{
+  "interval": 10000,
+  "priceAggregator": "median",
+  "defaultSource": ["coingecko"],
+  "sourceTimeout": 8000,
+  "deviationCheck": {
+    "deviationWithRecentValues": {
+      "maxPercent": 25,
+      "maxDelayMilliseconds": 300000
+    }
+  },
+  "tokens": {
+    "BTC": {
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "ETH": {
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "BNB": {
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "USDT": {
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "USDC": {
+      "denomination": "USD",
+      "rateFeed": false
+    }
+  }
+}
