@@ -7896,6 +7896,7 @@ __metadata:
     "@redstone-finance/on-chain-relayer-common": "workspace:*"
     "@redstone-finance/radix-connector": "workspace:*"
     "@redstone-finance/rpc-providers": "workspace:*"
+    "@redstone-finance/solana-connector": "workspace:*"
     "@redstone-finance/sui-connector": "workspace:*"
     "@redstone-finance/utils": "workspace:*"
     ethers: "npm:^5.7.2"
@@ -9311,7 +9312,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@redstone-finance/solana-connector@workspace:packages/solana-connector":
+"@redstone-finance/solana-connector@workspace:*, @redstone-finance/solana-connector@workspace:packages/solana-connector":
   version: 0.0.0-use.local
   resolution: "@redstone-finance/solana-connector@workspace:packages/solana-connector"
   dependencies:

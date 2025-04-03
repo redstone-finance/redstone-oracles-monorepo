@@ -1,8 +1,8 @@
 import fs from "fs";
-import { readKeyPair } from "./utils";
+import { readKeypair } from "./utils";
 
 export function createKeypairFile(resultFilePath = "solana-keypair.json") {
-  const keypair = readKeyPair();
+  const keypair = readKeypair();
 
   fs.writeFileSync(
     resultFilePath,
