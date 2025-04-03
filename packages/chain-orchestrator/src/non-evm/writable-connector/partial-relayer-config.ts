@@ -2,6 +2,7 @@ import { AdapterType } from "@redstone-finance/on-chain-relayer-common";
 
 export type PartialRelayerConfig = {
   chainId: number;
+  chainName: string;
   adapterContractAddress: string;
   adapterContractType: AdapterType;
   adapterContractPackageId?: string;

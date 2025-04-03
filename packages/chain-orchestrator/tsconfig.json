@@ -21,6 +21,9 @@
       "path": "../radix-connector/tsconfig.build.json"
     },
     {
+      "path": "../solana-connector/tsconfig.build.json"
+    },
+    {
       "path": "../sui-connector/tsconfig.build.json"
     },
     {
