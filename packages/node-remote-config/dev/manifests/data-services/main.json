@@ -1819,6 +1819,23 @@
       "denomination": "USD",
       "rateFeed": false
     },
+    "PRIME_ECHELON": {
+      "source": [
+        "bingx-usdt",
+        "bitget-usdt",
+        "bitmart-usdt",
+        "bitrue-usdt",
+        "bybit-usdt",
+        "coinbase-usd",
+        "gate-usdt",
+        "kraken-usd",
+        "uniswap-v3-ethereum-weth-10000",
+        "uniswap-v3-ethereum-weth-3000",
+        "xt"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
     "GM_ATOM_WETH_USDC": {
       "source": ["arbitrum-evm-fetcher-gmx"],
       "denomination": "USD",
@@ -6807,6 +6824,16 @@
       },
       "denomination": "BTC",
       "rateFeed": true
+    },
+    "iBERA": {
+      "source": ["beraswap-berachain-wbera", "kodiak-berachain-wbera-500"],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "iBGT": {
+      "source": ["kodiak-berachain-wbera-3000", "bulla-berachain-wbera"],
+      "denomination": "USD",
+      "rateFeed": false
     }
   }
 }
