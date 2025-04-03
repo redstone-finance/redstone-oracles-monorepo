@@ -18,10 +18,9 @@ export class EvmContractConnector<Adapter extends IRedstoneContractAdapter>
     return this.provider.getBlockNumber();
   }
 
-  async waitForTransaction(txId: string) {
-    const receipt = await this.provider.waitForTransaction(txId);
-
-    return receipt.status === 1;
+  /** In case in EVM transaction is already await in TxDeliveryMan so there is no sens in waiting for it again */
+  waitForTransaction(_txId: string) {
+    return Promise.resolve(true);
   }
 
   async getNormalizedBalance(address: string, blockNumber?: number) {
