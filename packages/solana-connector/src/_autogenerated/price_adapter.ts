@@ -5,7 +5,7 @@
  * IDL can be found at `target/idl/price_adapter.json`.
  */
 export type PriceAdapter = {
-  address: "CvFXyHhjA5QBm1BVMibkZXT12rCq78GZPMzK5tWSagB";
+  address: string;
   metadata: {
     name: "priceAdapter";
     version: "0.1.0";
