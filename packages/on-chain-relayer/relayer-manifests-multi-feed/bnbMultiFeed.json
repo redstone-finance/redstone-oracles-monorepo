@@ -79,6 +79,15 @@
     },
     "bfBTC_FUNDAMENTAL": {
       "priceFeedAddress": "0x53E57c2acBa2f9919ff545aa595Ff691B90d36a8"
+    },
+    "sUSDe_FUNDAMENTAL": {
+      "priceFeedAddress": "0x5ED849a45B4608952161f45483F4B95BCEa7f8f0"
+    },
+    "USDe": {
+      "priceFeedAddress": "0x0d9b42a2a73Ec528759701D0B70Ccf974a327EBb"
+    },
+    "sUSDe": {
+      "priceFeedAddress": "0x3401DAF2b1f150Ef0c709Cc0283b5F2e55c3DF29"
     }
   }
 }
