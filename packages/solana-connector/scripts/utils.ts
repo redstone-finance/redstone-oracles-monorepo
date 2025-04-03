@@ -1,47 +1,18 @@
 import { RedstoneCommon } from "@redstone-finance/utils";
-import {
-  Cluster,
-  clusterApiUrl,
-  Connection,
-  Keypair,
-  LAMPORTS_PER_SOL,
-} from "@solana/web3.js";
+import { Cluster, Connection, LAMPORTS_PER_SOL } from "@solana/web3.js";
 import { readFileSync } from "fs";
 import path from "node:path";
 import { z } from "zod";
+import { makeKeypair } from "../src/utils";
 
 export const PRICE_ADAPTER_NAME = "price_adapter";
 
-const BYTE_LENGTHS = {
-  PRIVATE_KEY: 32,
-  SECRET_KEY: 64,
-};
-
-export function readKeyPair() {
+export function readKeypair() {
   const privateKey = RedstoneCommon.getFromEnv(
     "PRIVATE_KEY",
     z.array(z.number().gte(0).lte(255))
   );
-
-  const privateKeyBuffer = Buffer.from(privateKey);
-
-  const isValidLength =
-    privateKeyBuffer.length === BYTE_LENGTHS.PRIVATE_KEY ||
-    privateKeyBuffer.length === BYTE_LENGTHS.SECRET_KEY;
-
-  if (!isValidLength) {
-    throw new Error(
-      `Invalid private key length: ${privateKeyBuffer.length} bytes. Expected ${BYTE_LENGTHS.PRIVATE_KEY} or ${BYTE_LENGTHS.SECRET_KEY} bytes.`
-    );
-  }
-
-  if (privateKeyBuffer.length === BYTE_LENGTHS.PRIVATE_KEY) {
-    // Using pure private key to derive full keypair
-    return Keypair.fromSeed(privateKeyBuffer);
-  } else {
-    // Using full secret key (which contains both private and public keys)
-    return Keypair.fromSecretKey(privateKeyBuffer);
-  }
+  return makeKeypair(privateKey);
 }
 
 export function readCluster() {
@@ -53,10 +24,6 @@ export function readCluster() {
 
 export function makeConnection(apiUrl: string) {
   return new Connection(apiUrl, "confirmed");
-}
-
-export function connectToCluster(cluster?: Cluster) {
-  return new Connection(clusterApiUrl(cluster ?? readCluster()), "confirmed");
 }
 
 export function readIdl(cluster?: Cluster) {
