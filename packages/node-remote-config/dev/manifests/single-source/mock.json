@@ -1,0 +1,20 @@
+{
+  "interval": 5000,
+  "priceAggregator": "median",
+  "defaultSource": ["mock"],
+  "sourceTimeout": 50000,
+  "deviationCheck": {
+    "deviationWithRecentValues": {
+      "maxPercent": 25,
+      "maxDelayMilliseconds": 300000
+    }
+  },
+  "tokens": {
+    "ETH": {},
+    "BTC": {},
+    "AAVE": {}
+  },
+  "multiPointPackages": {
+    "___COOL_TOKENS___": ["ETH", "BTC"]
+  }
+}

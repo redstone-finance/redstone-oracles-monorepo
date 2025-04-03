@@ -1,0 +1,359 @@
+{
+  "interval": 10000,
+  "priceAggregator": "median",
+  "sourceTimeout": 50000,
+  "minValidSourcesPercentage": 10,
+  "deviationCheck": {
+    "deviationWithRecentValues": {
+      "maxPercent": 25,
+      "maxDelayMilliseconds": 300000
+    }
+  },
+  "defaultSource": ["coingecko"],
+  "tokens": {
+    "ETH": {
+      "source": [
+        "binance-usdt",
+        "binancecoinm-usd",
+        "binanceusdm-usdt",
+        "bitfinex-usd",
+        "bitget-usdt",
+        "bitmart-usdt",
+        "bingx-usdt",
+        "bitrue-usdt",
+        "bitstamp-usd",
+        "coinbase-usd",
+        "kraken-usd",
+        "kucoin-usdt",
+        "lbank-usdt",
+        "mexc-usdt",
+        "okx-usdt",
+        "bybit-usdt",
+
+        "binance",
+        "binancecoinm",
+        "binanceusdm",
+        "bitfinex",
+        "bitget",
+        "bitmart",
+        "bingx",
+        "bitrue",
+        "bitstamp",
+        "coinbase",
+        "kraken",
+        "kucoin",
+        "lbank",
+        "mexc",
+        "okx"
+      ]
+    },
+    "BTC": {
+      "source": [
+        "binance-usdt",
+        "binancecoinm-usd",
+        "binanceusdm-usdt",
+        "bingx-usdt",
+        "bitfinex-usd",
+        "bitget-usdt",
+        "bitrue-usdt",
+        "bitmart-usdt",
+        "bitstamp-usd",
+        "coinbase-usd",
+        "gate-usdt",
+        "kraken-usd",
+        "kucoin-usdt",
+        "lbank-usdt",
+        "mexc-usdt",
+        "okx-usdt",
+        "bybit-usdt",
+
+        "binance",
+        "binancecoinm",
+        "binanceusdm",
+        "bingx",
+        "bitfinex",
+        "bitget",
+        "bitrue",
+        "bitmart",
+        "bitstamp",
+        "coinbase",
+        "gate",
+        "kraken",
+        "kucoin",
+        "lbank",
+        "mexc",
+        "okx"
+      ]
+    },
+    "USDT": {
+      "source": [
+        "bitstamp-usd",
+        "coinbase-usd",
+        "bitstamp",
+        "coinbase",
+        "bybit-eur"
+      ]
+    },
+    "BNB": {
+      "source": [
+        "binance-usdt",
+        "binancecoinm-usd",
+        "binanceusdm-usdt",
+        "bitget-usdt",
+        "bitmart-usdt",
+        "gate-usdt",
+        "kucoin-usdt",
+        "mexc-usdt",
+        "lbank-usdt",
+        "okx-usdt",
+        "bybit-usdt",
+
+        "binance",
+        "binancecoinm",
+        "binanceusdm",
+        "bitget",
+        "bitmart",
+        "gate",
+        "kucoin",
+        "mexc",
+        "lbank",
+        "okx"
+      ]
+    },
+    "USDC": {
+      "source": [
+        "balancer-ethereum-usdt",
+        "binance-usdt",
+        "binanceusdm-usdt",
+        "bitget-usdt",
+        "bitmart-usdt",
+        "bitrue-usdt",
+        "bitstamp-usd",
+        "curve-ethereum-usdt",
+        "gate-usdt",
+        "kraken-usdt",
+        "kucoin-usdt",
+        "lbank-usdt",
+        "mexc-usdt",
+        "okx-usdt",
+        "bybit-usdt",
+
+        "binance",
+        "binanceusdm",
+        "bitget",
+        "bitmart",
+        "bitrue",
+        "bitstamp",
+        "gate",
+        "kraken",
+        "kucoin",
+        "lbank",
+        "mexc",
+        "okx"
+      ]
+    },
+    "XRP": {
+      "source": [
+        "binance-usdt",
+        "binancecoinm-usd",
+        "binanceusdm-usdt",
+        "bitfinex-usd",
+        "bitstamp-usd",
+        "kraken-usd",
+        "kucoin-usdt",
+        "lbank-usdt",
+        "okx-usdt",
+        "bybit-usdt",
+
+        "binance",
+        "binancecoinm",
+        "binanceusdm",
+        "bitfinex",
+        "bitstamp",
+        "kraken",
+        "kucoin",
+        "lbank",
+        "okx"
+      ]
+    },
+    "ADA": {
+      "source": [
+        "binance-usdt",
+        "binancecoinm-usd",
+        "binanceusdm-usdt",
+        "bitfinex-usd",
+        "coinbase-usd",
+        "kraken-usd",
+        "kucoin-usdt",
+        "okx-usdt",
+        "bybit-usdt",
+
+        "binance",
+        "binancecoinm",
+        "binanceusdm",
+        "bitfinex",
+        "coinbase",
+        "kraken",
+        "kucoin",
+        "okx"
+      ]
+    },
+    "MATIC": {
+      "source": [
+        "binance-usdt",
+        "binanceusdm-usdt",
+        "coinbase-usd",
+        "kraken-usd",
+        "kucoin-usdt",
+        "lbank-usdt",
+        "okx-usdt",
+        "bybit-usdt",
+
+        "binance",
+        "binanceusdm",
+        "coinbase",
+        "kraken",
+        "kucoin",
+        "lbank",
+        "okx"
+      ]
+    },
+    "DOGE": {
+      "source": [
+        "binance-usdt",
+        "binancecoinm-usd",
+        "binanceusdm-usdt",
+        "bitfinex-usd",
+        "coinbase-usd",
+        "kraken-usd",
+        "kucoin-usdt",
+        "lbank-usdt",
+        "okx-usdt",
+        "bybit-usdt",
+
+        "binance-usdt",
+        "binancecoinm-usd",
+        "binanceusdm-usdt",
+        "bitfinex-usd",
+        "coinbase-usd",
+        "kraken-usd",
+        "kucoin-usdt",
+        "lbank-usdt",
+        "okx-usdt"
+      ]
+    },
+    "SOL": {
+      "source": [
+        "binance-usdt",
+        "binanceusdm-usdt",
+        "bingx-usdt",
+        "bitfinex-usd",
+        "bitget-usdt",
+        "bitstamp-usd",
+        "coinbase-usd",
+        "gate-usdt",
+        "kraken-usd",
+        "kucoin-usdt",
+        "lbank-usdt",
+        "mexc-usdt",
+        "okx-usdt",
+        "bybit-usdt",
+
+        "binance",
+        "binanceusdm",
+        "bingx",
+        "bitfinex",
+        "bitget",
+        "bitstamp",
+        "coinbase",
+        "gate",
+        "kraken",
+        "kucoin",
+        "lbank",
+        "mexc",
+        "okx"
+      ]
+    },
+    "DOT": {
+      "source": [
+        "binance-usdt",
+        "binancecoinm-usd",
+        "binanceusdm-usdt",
+        "bitfinex-usd",
+        "coinbase-usd",
+        "kraken-usd",
+        "kucoin-usdt",
+        "lbank-usdt",
+        "okx-usdt",
+        "bybit-usdt",
+
+        "binance",
+        "binancecoinm",
+        "binanceusdm",
+        "bitfinex",
+        "coinbase",
+        "kraken",
+        "kucoin",
+        "lbank",
+        "okx"
+      ]
+    },
+    "SHIB": {
+      "source": [
+        "binance-usdt",
+        "bitget-usdt",
+        "bitrue-usdt",
+        "coinbase-usd",
+        "gate-usdt",
+        "kraken-usd",
+        "kucoin-usdt",
+        "lbank-usdt",
+        "mexc-usdt",
+        "okx-usdt",
+        "bybit-usdt",
+
+        "binance",
+        "bitget",
+        "bitrue",
+        "coinbase",
+        "gate",
+        "kraken",
+        "kucoin",
+        "lbank",
+        "mexc",
+        "okx"
+      ]
+    },
+    "TRX": {
+      "source": [
+        "binance-usdt",
+        "bitget-usdt",
+        "bitrue-usdt",
+        "gate-usdt",
+        "kucoin-usdt",
+        "lbank-usdt",
+        "mexc-usdt"
+      ]
+    },
+    "DAI": {
+      "source": [
+        "bitget-usdt",
+        "bitmart-usdt",
+        "bitrue-usdt",
+        "coinbase-usd",
+        "curve-ethereum-usdt",
+        "kraken-usdt",
+        "mexc-usdt",
+        "bybit-usdt",
+
+        "binance",
+        "bitget",
+        "bitrue",
+        "gate",
+        "kucoin",
+        "lbank",
+        "mexc"
+      ]
+    }
+  }
+}

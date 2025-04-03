@@ -1,0 +1,48 @@
+{
+  "interval": 10000,
+  "priceAggregator": "median",
+  "defaultSource": ["mock"],
+  "sourceTimeout": 50000,
+  "deviationCheck": {
+    "deviationWithRecentValues": {
+      "maxPercent": 30,
+      "maxDelayMilliseconds": 300000
+    }
+  },
+  "tokens": {
+    "ETH": {
+      "source": ["binance", "kraken", "coingecko", "mock"]
+    },
+    "USDT": {
+      "source": ["coingecko", "mock"],
+      "deviationCheck": {
+        "deviationWithRecentValues": {
+          "maxPercent": 5,
+          "maxDelayMilliseconds": 300000
+        }
+      }
+    },
+    "PNG": {},
+    "AVAX": {},
+    "LINK": {},
+    "BTC": {},
+    "QI": {},
+    "USDC": {
+      "deviationCheck": {
+        "deviationWithRecentValues": {
+          "maxPercent": 5,
+          "maxDelayMilliseconds": 300000
+        }
+      }
+    },
+    "sAVAX": {},
+    "YY_AAVE_AVAX": {},
+    "PNG_AVAX_USDC_LP": {},
+    "PNG_AVAX_USDT_LP": {},
+    "PNG_AVAX_ETH_LP": {},
+    "YY_PNG_AVAX_USDC_LP": {},
+    "YY_PNG_AVAX_ETH_LP": {},
+    "XAVA": {},
+    "YYAV3SA1": {}
+  }
+}
