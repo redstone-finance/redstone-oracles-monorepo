@@ -1,6 +1,7 @@
 import { RedstoneCommon } from "@redstone-finance/utils";
 import { Cluster, Connection, PublicKey } from "@solana/web3.js";
-import { balanceFromSol, balanceToSol, connectToCluster } from "./utils";
+import { connectToCluster } from "../src";
+import { balanceFromSol, balanceToSol } from "./utils";
 
 async function maybeFundWithAirdrop(
   cluster: "devnet" | "testnet" | "mainnet-beta",
