@@ -3,7 +3,7 @@ import path from "node:path";
 
 const MAX_FETCHER_CONFIG_NESTING_DEPTH = 20;
 
-export const NODE_CONFIG_BASE_PATH = "node-remote-config";
+export const NODE_CONFIG_BASE_PATH = "node-remote-config/dev";
 
 export function findRemoteConfigOrThrow() {
   const startDir = process.cwd();
