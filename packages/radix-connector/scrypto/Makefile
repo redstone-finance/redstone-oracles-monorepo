@@ -64,7 +64,12 @@ call-%:
 
 test: clippy
 	@for contract in $(CONTRACTS); do \
-		cargo test --package  $$contract; \
+		if [ "$$contract" = "$(PRICE_ADAPTER)" ]; then \
+			FEATURES="--features mock-time"; \
+		else \
+			FEATURES=""; \
+		fi; \
+		MOCK_TIME=true cargo test $$FEATURES --package $$contract; \
 	done
 
 clippy: prepare
