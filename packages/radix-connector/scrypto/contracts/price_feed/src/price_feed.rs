@@ -1,4 +1,4 @@
-use common::redstone::Value as RedStoneValue;
+use common::{decimals::REDSTONE_DECIMALS_EXP, redstone::Value as RedStoneValue};
 use scrypto::prelude::*;
 
 const DESCRIPTION: &str = "RedStone Price Feed";
@@ -25,7 +25,7 @@ mod price_adapter {
         }
 
         pub fn get_decimals(&self) -> u8 {
-            8
+            REDSTONE_DECIMALS_EXP
         }
 
         pub fn get_feed_id(&self) -> Vec<u8> {
