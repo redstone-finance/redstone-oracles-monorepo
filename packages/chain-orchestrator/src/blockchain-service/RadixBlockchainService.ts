@@ -1,6 +1,7 @@
 import {
   RadixClient,
   RadixContractConnector,
+  TransactionStatusFilter,
 } from "@redstone-finance/radix-connector";
 import { NonEvmBlockchainService } from "./NonEvmBlockchainService";
 
@@ -18,12 +19,14 @@ export class RadixBlockchainService extends NonEvmBlockchainService {
   async getTransactions(
     fromStateVersion: number,
     toStateVersion: number,
-    addresses: string[]
+    addresses: string[],
+    transaction_status?: TransactionStatusFilter
   ) {
     return await this.client.getTransactions(
       fromStateVersion,
       toStateVersion,
-      addresses
+      addresses,
+      transaction_status
     );
   }
 }
