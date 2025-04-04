@@ -48,12 +48,7 @@ export class SolanaPricesContractAdapter
       this.logger
     );
 
-    let tx = "";
-    for (const [feedId, payload] of Object.entries(payloads)) {
-      tx = await this.contract.writePrice(feedId, payload);
-    }
-
-    return tx;
+    return await this.contract.writePrices(payloads);
   }
 
   async readPricesFromContract(
