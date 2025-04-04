@@ -1,5 +1,8 @@
 import { readJsonFile, readS3Object } from "@redstone-finance/internal-utils";
-import { AnyOnChainRelayerManifestSchema } from "@redstone-finance/on-chain-relayer-common";
+import {
+  AnyOnChainRelayerManifest,
+  AnyOnChainRelayerManifestSchema,
+} from "@redstone-finance/on-chain-relayer-common";
 import { NewestBlockTypeEnum } from "@redstone-finance/rpc-providers";
 import { RedstoneCommon } from "@redstone-finance/utils";
 import "dotenv/config";
@@ -46,11 +49,11 @@ const fetchManifestFromS3 = async (
   remoteManifestBucketKey: string
 ) => {
   try {
-    const manifestAsString = await readS3Object(
+    const manifest = await readS3Object<AnyOnChainRelayerManifest>(
       remoteManifestBucketName,
       remoteManifestBucketKey
     );
-    return AnyOnChainRelayerManifestSchema.parse(manifestAsString);
+    return AnyOnChainRelayerManifestSchema.parse(manifest);
   } catch (error) {
     throw new Error(
       `Cannot fetch manifest from S3, ${RedstoneCommon.stringifyError(error)}`

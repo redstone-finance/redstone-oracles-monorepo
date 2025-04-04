@@ -28,9 +28,6 @@
         "deviationPercentage": 0.5,
         "timeSinceLastUpdateInMilliseconds": 10800000
       }
-    },
-    "USDT": {},
-    "weETH": {},
-    "apxETH/ETH": {}
+    }
   }
 }
