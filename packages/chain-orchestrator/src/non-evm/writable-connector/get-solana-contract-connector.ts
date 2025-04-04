@@ -8,12 +8,12 @@ import { PartialRelayerConfig } from "./partial-relayer-config";
 export const getSolanaContractConnector = (
   relayerConfig: PartialRelayerConfig
 ) => {
-  const { privateKey, adapterContractAddress, chainName, rpcUrls } =
+  const { privateKey, adapterContractAddress, chainId, rpcUrls } =
     relayerConfig;
 
   const keypair = makeKeypair(privateKey);
   const connection = new SolanaConnectionBuilder()
-    .withChainName(chainName)
+    .withChainId(chainId)
     .withRpcUrls(rpcUrls)
     .build();
 
