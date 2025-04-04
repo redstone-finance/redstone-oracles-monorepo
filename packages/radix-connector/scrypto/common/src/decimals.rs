@@ -3,7 +3,8 @@ pub use redstone::network::as_str::AsAsciiStr;
 use redstone::{network::error::Error, Value};
 use scrypto::math::Decimal;
 
-const REDSTONE_DECIMALS: u64 = 10u64.pow(8);
+pub const REDSTONE_DECIMALS_EXP: u8 = 8;
+pub const REDSTONE_DECIMALS: u64 = 10u64.pow(REDSTONE_DECIMALS_EXP as u32);
 
 pub trait ToRedStoneDecimal<D> {
     fn to_redstone_decimal(self) -> Result<D, Error>;
