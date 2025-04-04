@@ -20,6 +20,7 @@ import {
 import { RadixInvocation } from "./RadixInvocation";
 import { IRadixSigner } from "./RadixSigner";
 import { RadixTransaction } from "./RadixTransaction";
+import { TransactionStatusFilter } from "./types";
 
 export class RadixClient {
   protected readonly logger = loggerFactory("RadixClient");
@@ -146,7 +147,8 @@ export class RadixClient {
   async getTransactions(
     fromStateVersion: number,
     toStateVersion: number,
-    addresses: string[]
+    addresses: string[],
+    transaction_status?: TransactionStatusFilter
   ) {
     let accumulatedResult: StreamTransactionsResponse | undefined = undefined;
     do {
@@ -154,7 +156,8 @@ export class RadixClient {
         fromStateVersion,
         toStateVersion + 1, // +1 because it's "<" relation
         addresses,
-        accumulatedResult?.next_cursor
+        accumulatedResult?.next_cursor,
+        transaction_status
       );
 
       if (!accumulatedResult) {
