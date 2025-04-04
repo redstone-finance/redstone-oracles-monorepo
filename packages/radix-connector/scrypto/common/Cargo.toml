@@ -9,6 +9,7 @@ redstone = { git = "https://github.com/redstone-finance/rust-sdk", tag = "2.0.0"
 
 [features]
 default = []
+mock-time = []
 
 [lib]
 crate-type = ["cdylib", "lib"]
