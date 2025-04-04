@@ -3,14 +3,14 @@ import { Cluster, Connection, LAMPORTS_PER_SOL } from "@solana/web3.js";
 import { readFileSync } from "fs";
 import path from "node:path";
 import { z } from "zod";
-import { makeKeypair } from "../src/utils";
+import { makeKeypair } from "../src";
 
 export const PRICE_ADAPTER_NAME = "price_adapter";
 
 export function readKeypair() {
   const privateKey = RedstoneCommon.getFromEnv(
     "PRIVATE_KEY",
-    z.array(z.number().gte(0).lte(255))
+    z.array(z.number().gte(0).lte(255)).or(z.string())
   );
   return makeKeypair(privateKey);
 }
