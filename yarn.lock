@@ -8930,6 +8930,7 @@ __metadata:
     axios: "npm:^1.7.9"
     dotenv: "npm:^16.0.3"
     ethers: "npm:^5.7.2"
+    lodash: "npm:^4.17.21"
     prompts: "npm:^2.4.2"
   languageName: unknown
   linkType: soft
