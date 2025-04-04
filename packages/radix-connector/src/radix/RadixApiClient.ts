@@ -6,6 +6,7 @@ import {
 import { Convert, NetworkId, Value } from "@radixdlt/radix-engine-toolkit";
 import { MultiExecutor, RedstoneCommon } from "@redstone-finance/utils";
 import { RadixParser } from "./parser/RadixParser";
+import { TransactionStatusFilter } from "./types";
 
 const APPLICATION_NAME = "RedStone Radix Connector";
 
@@ -185,7 +186,8 @@ export class RadixApiClient {
     fromStateVersion: number,
     atStateVersion: number,
     addresses: string[],
-    cursor?: string | null
+    cursor?: string | null,
+    transaction_status?: TransactionStatusFilter
   ) {
     RedstoneCommon.assertWithLog(
       atStateVersion >= fromStateVersion,
@@ -206,6 +208,7 @@ export class RadixApiClient {
           receipt_costing_parameters: true,
           receipt_fee_summary: true,
         },
+        transaction_status_filter: transaction_status,
       },
     });
   }
