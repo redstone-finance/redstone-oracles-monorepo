@@ -3,33 +3,37 @@ use scrypto::prelude::*;
 #[derive(ScryptoSbor)]
 pub enum Time {
     System,
+    #[cfg(feature = "mock-time")]
     Mock(u64),
 }
 
 impl Time {
+    #[inline(always)]
     pub fn get_current_in_ms(&self) -> u64 {
-        let time = match self {
-            Time::Mock(seconds) => *seconds,
-            _ => get_current_time(),
-        };
-
-        time * 1000
+        #[cfg(feature = "mock-time")]
+        if let Time::Mock(seconds) = self {
+            return *seconds * 1000;
+        }
+        get_current_time() * 1000
     }
 
-    pub fn maybe_increase(&mut self, seconds: u64) {
-        match self {
-            Time::Mock(previous) => *self = Time::Mock(*previous + seconds),
-            _ => return,
+    #[inline(always)]
+    pub fn maybe_increase(&mut self, _seconds: u64) {
+        #[cfg(feature = "mock-time")]
+        if let Time::Mock(previous) = self {
+            *self = Time::Mock(*previous + _seconds);
         }
     }
 }
 
 impl From<Option<u64>> for Time {
-    fn from(value: Option<u64>) -> Self {
-        match value {
-            Some(value) => Self::Mock(value),
-            None => Self::System,
+    fn from(_value: Option<u64>) -> Self {
+        #[cfg(feature = "mock-time")]
+        if let Some(value) = _value {
+            return Self::Mock(value);
         }
+
+        Self::System
     }
 }
 
