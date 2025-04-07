@@ -6,7 +6,6 @@ import {
   HttpStatus,
   Param,
   Post,
-  Query,
   ServiceUnavailableException,
   UsePipes,
   ValidationPipe,
@@ -15,8 +14,6 @@ import config from "../config";
 import {
   BulkPostRequestBody,
   DataPackagesResponse,
-  DataPackagesStatsResponse,
-  GetDataPackagesStatsQuery,
 } from "./data-packages.interface";
 import { DataPackagesService } from "./data-packages.service";
 
@@ -85,29 +82,6 @@ export abstract class BaseDataPackagesController {
       false,
       this.allowExternalSigners
     );
-  }
-
-  @Get("stats/:PERIOD")
-  // eslint-disable-next-line @typescript-eslint/class-methods-use-this
-  async getStats(
-    @Query() query: GetDataPackagesStatsQuery,
-    @Param("PERIOD") period: string
-  ): Promise<DataPackagesStatsResponse> {
-    if (query["api-key"] !== config.apiKeyForAccessToAdminRoutes) {
-      throw new HttpException(
-        {
-          status: HttpStatus.UNAUTHORIZED,
-          error: "Incorrect api-key query param",
-        },
-        HttpStatus.UNAUTHORIZED
-      );
-    }
-
-    const now = Date.now();
-    return await DataPackagesService.getDataPackagesStats({
-      fromTimestamp: now - Number(period),
-      toTimestamp: now,
-    });
   }
 
   @Post("bulk")
