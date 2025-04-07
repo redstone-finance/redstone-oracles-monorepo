@@ -9,7 +9,7 @@
   ],
   "references": [
     {
-      "path": "../protocol/tsconfig.build.json"
+      "path": "../chain-configs/tsconfig.build.json"
     },
     {
       "path": "../sdk/tsconfig.build.json"
