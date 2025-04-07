@@ -204,7 +204,7 @@ export class RadixClient {
     for (let i = 0; i < pollAttempts; i++) {
       const statusOutput =
         await this.apiClient.getTransactionStatus(transactionId);
-      const logMessage = `Transaction ${transactionId} is ${statusOutput.status.toUpperCase()}`;
+      const logMessage = `Transaction ${transactionId} is ${statusOutput.status}`;
       switch (statusOutput.status) {
         case "Pending":
         case "CommitPendingOutcomeUnknown": {

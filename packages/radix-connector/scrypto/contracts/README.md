@@ -2,11 +2,34 @@
 
 <!-- TOC -->
 * [Radix Blueprints — general assumptions](#radix-blueprints--general-assumptions)
+  * [Important disclaimer](#important-disclaimer)
   * [Price Adapter](#price-adapter)
   * [Proxy](#proxy)
   * [Price Feed](#price-feed)
-  * [Badge Creator](#badge-creator)
 <!-- TOC -->
+
+## Important disclaimer
+
+We assume the PriceFeed component proxy's ID won't change and
+that's **the only recommended way of getting data** for the particular feed id.
+
+For example, to read the `XYZ` price value use:
+
+```rust
+call_method(proxy_address, "read_price_and_timestamp", XYZ_vec_data)
+```
+
+or
+```rust
+call_method(proxy_address, "get_description")
+```
+
+for getting description.
+
+Available methods correspond to the [PriceFeed](#price-feed) contract.
+
+⚠️⚠️ The other calling way, especially with reading the state, is forbidden and may lead to **unexpected results**,
+due to changed adapter's logic (component re-instantiated) or the proxied object address. ⚠️⚠️
 
 ## Price Adapter
 
@@ -32,6 +55,3 @@ and the proxied address inside the [Price Feed](#price-feed) will be changed by 
 * We assume the **PriceFeed component proxy's ID won't change** and that's the **only recommended** way
   of getting data for the particular feed id.
 
-## Badge Creator
-
-* Creates badges to be passed to the [`Proxy`](#proxy) component instantiating, for example.
