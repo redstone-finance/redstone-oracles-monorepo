@@ -8414,6 +8414,8 @@ __metadata:
     dayjs: "npm:^1.11.12"
     lodash: "npm:^4.17.21"
     zod: "npm:^3.22.4"
+  bin:
+    calculate-dir-hash: ./dist/src/cli/calculate-dir-hash.js
   languageName: unknown
   linkType: soft
 
