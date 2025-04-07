@@ -13,10 +13,20 @@ export const makeFeedIdBytes = (feedId: string) => {
 export const makePriceSeed = () => {
   return Buffer.from("price".padEnd(32, "\0"));
 };
+
 const BYTE_LENGTHS = {
   PRIVATE_KEY: 32,
   SECRET_KEY: 64,
 };
+
+export function makeMockKeypair() {
+  const mockSeed: number[] = [
+    1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21,
+    22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32,
+  ];
+
+  return makeKeypair(mockSeed);
+}
 
 export function makeKeypair(privateKeyInput: number[] | string) {
   let privateKey: ArrayLike<number>;
