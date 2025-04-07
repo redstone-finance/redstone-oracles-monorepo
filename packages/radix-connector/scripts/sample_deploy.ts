@@ -1,7 +1,7 @@
 import { RedstoneCommon } from "@redstone-finance/utils";
 import { readFileSync } from "node:fs";
+import { RadixSigner } from "../src";
 import { RadixApiClient } from "../src/radix/RadixApiClient";
-import { RadixSigner } from "../src/radix/RadixSigner";
 import { RadixPackageDeployer } from "./RadixPackageDeployer";
 import {
   getContractFilename,
