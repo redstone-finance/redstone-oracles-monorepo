@@ -2,12 +2,11 @@
 PRICE_ADAPTER=price_adapter
 PRICE_FEED=price_feed
 PROXY=proxy
-BADGE_CREATOR=badge_creator
 DEPLOYMENT_DIR ?= .
 
 CONTRACT ?= $(PRICE_ADAPTER)
 
-CONTRACTS := $(PRICE_ADAPTER) $(PRICE_FEED) $(PROXY) $(BADGE_CREATOR)
+CONTRACTS := $(PRICE_ADAPTER) $(PRICE_FEED) $(PROXY)
 CONTRACTS_DIR=$(DEPLOYMENT_DIR)/contracts
 CONTRACT_DIR=$(CONTRACTS_DIR)/$(CONTRACT)
 DEPLOYED_DIR=$(CONTRACT_DIR)/deployed
@@ -18,7 +17,6 @@ PRICE_FEED_ADDRESS=$(shell cat $(CONTRACTS_DIR)/$(PRICE_FEED)/deployed/package.r
 PRICE_FEED_COMPONENT=$(shell cat $(CONTRACTS_DIR)/$(PRICE_FEED)/deployed/component.resim.addr)
 PROXY_ADDRESS=$(shell cat $(CONTRACTS_DIR)/$(PROXY)/deployed/package.resim.addr)
 PROXY_COMPONENT=$(shell cat $(CONTRACTS_DIR)/$(PROXY)/deployed/component.resim.addr)
-BADGE_CREATOR_ADDRESS=$(shell cat $(CONTRACTS_DIR)/$(BADGE_CREATOR)/deployed/package.resim.addr)
 
 ACCOUNT=$(shell resim show | sed -n 's/Component Address.*\(account_[a-zA-Z0-9]*\).*/\1/p')
 OWNER_BADGE=$(shell resim show | sed -n 's/.*\(resource_[a-zA-Z0-9]*\).*: 1 Owner Badge/\1\:\#1\#/p')
@@ -128,5 +126,3 @@ read_price_and_timestamp_proxy:
 show:
 	resim show
 
-create_badges: publish
-	resim call-function $(BADGE_CREATOR_ADDRESS) "BadgeCreator" create_badges
