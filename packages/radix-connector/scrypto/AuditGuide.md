@@ -5,6 +5,7 @@
   * [Repository](#repository)
   * [Code description](#code-description)
   * [What should be audited](#what-should-be-audited)
+    * [Blueprints & libraries](#blueprints--libraries)
     * [Rust files](#rust-files)
     * [Other files](#other-files)
 <!-- TOC -->
@@ -36,7 +37,6 @@ Do audit
 * [common](./common) - a helper library & RedStone Rust SDK adapter
 * [price_adapter](./contracts/price_adapter) - see [general assumptions](contracts/README.md#price-adapter)
 * [price_feed](./contracts/price_feed) - see [general assumptions](contracts/README.md#price-feed)
-* [badge_creator](./contracts/badge_creator) - see [general assumptions](contracts/README.md#badge-creator)
 * [proxy](./contracts/proxy) - see [general assumptions](contracts/README.md#proxy)
 
 
