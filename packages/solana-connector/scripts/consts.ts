@@ -1,0 +1,2 @@
+export const RDS_PROGRAM_ADDRESS =
+  "rds8J7VKqLQgzDr7vS59dkQga3B1BotgFy8F7LSLC74";

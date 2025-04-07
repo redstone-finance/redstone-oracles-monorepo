@@ -1,15 +1,29 @@
 import {
+  fetchChainConfigs,
+  getChainConfigByChainId,
+} from "@redstone-finance/chain-configs";
+import {
   ContractParamsProvider,
   getSignersForDataServiceId,
   sampleRun,
 } from "@redstone-finance/sdk";
 import "dotenv/config";
-import { connectToCluster, SolanaContractConnector } from "../src";
-import { RDS_PROGRAM_ADDRESS } from "./sample-deploy";
-import { readKeypair } from "./utils";
+import _ from "lodash";
+import {
+  CLUSTER_NAMES,
+  SolanaConnectionBuilder,
+  SolanaContractConnector,
+} from "../src";
+import { RDS_PROGRAM_ADDRESS } from "./consts";
+import { readCluster, readKeypair } from "./utils";
 
 async function main() {
-  const connection = connectToCluster();
+  const rpcUrls = getChainConfigByChainId(
+    await fetchChainConfigs(),
+    Number(_.findKey(CLUSTER_NAMES, (c) => c === readCluster())!),
+    "solana"
+  ).publicRpcUrls;
+  const connection = new SolanaConnectionBuilder().withRpcUrls(rpcUrls).build();
 
   const paramsProvider = new ContractParamsProvider({
     dataPackagesIds: ["ETH", "BTC"],
