@@ -43,12 +43,7 @@ export class SolanaPricesContractAdapter
   async writePricesFromPayloadToContract(
     paramsProvider: ContractParamsProvider
   ) {
-    const { payloads } = ContractParamsProvider.extractMissingValues(
-      await paramsProvider.prepareSplitPayloads(),
-      this.logger
-    );
-
-    return await this.contract.writePrices(payloads);
+    return await this.contract.writePrices(paramsProvider);
   }
 
   async readPricesFromContract(
