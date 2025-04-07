@@ -426,63 +426,6 @@ describe("Data packages (e2e)", () => {
         expect(outlierPackage).toBeUndefined();
       });
 
-      it("/data-packages/stats (GET) - should work properly with a valid api key", async () => {
-        // Sending request for stats
-        const mockDataPackage = mockDataPackages[0];
-        await DataPackage.insertMany([
-          {
-            ...mockDataPackage,
-            timestampMilliseconds: Date.now(),
-            isSignatureValid: true,
-            dataFeedId: "BTC",
-            dataPackageId: "BTC",
-            dataServiceId: "mock-data-service-1",
-            signerAddress: "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
-          },
-          {
-            ...mockDataPackage,
-            timestampMilliseconds: Date.now(),
-            isSignatureValid: true,
-            dataFeedId: "BTC",
-            dataPackageId: "BTC",
-            dataServiceId: "mock-data-service-1",
-            signerAddress: "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
-          },
-        ]);
-
-        const response = await request(httpServer)
-          .get(`${version}/data-packages/stats/${7200 * 1000}`)
-          .query({
-            "api-key": "test-api-key",
-          })
-          .expect(200);
-
-        // Response validation
-        expect(response.body).toEqual(
-          expect.objectContaining({
-            "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266": {
-              dataServiceId: "mock-data-service-1",
-              verifiedDataPackagesCount: 2,
-              nodeName: "Mock node 1",
-            },
-          })
-        );
-      });
-
-      it("/data-packages/stats (GET) - should fail for an invalid api key", async () => {
-        await request(httpServer)
-          .get(`${version}/data-packages/stats/1`)
-          .send({ "api-key": "2" })
-          .expect(400);
-
-        await request(httpServer)
-          .get(`${version}/data-packages/stats/1`)
-          .query({
-            "api-key": "invalid-api-key",
-          })
-          .expect(401);
-      });
-
       describe("cache", () => {
         it("/data-packages/latest (GET) - should serve cached result", async () => {
           const dpTimestamp = mockDataPackages[0].timestampMilliseconds;

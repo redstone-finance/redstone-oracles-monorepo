@@ -66,7 +66,7 @@ export class StreamrBroadcaster implements DataPackagesBroadcaster {
       this.logger.log("Broadcasting data packages to streamr");
       await this.streamrClient.publish(
         {
-          streamId: streamId,
+          streamId,
         },
         compressMsg(dataToBroadcast)
       );

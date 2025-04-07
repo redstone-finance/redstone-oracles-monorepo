@@ -70,19 +70,6 @@ export class GetLatestDataPackagesQuery {
   format?: ResponseFormat;
 }
 
-export class GetDataPackagesStatsQuery {
-  @IsString()
-  "api-key": string;
-}
-
 export interface DataPackagesResponse {
   [dataPackageId: string]: CachedDataPackage[] | undefined;
-}
-
-export interface DataPackagesStatsResponse {
-  [signerAddress: string]: {
-    verifiedDataPackagesCount: number;
-    nodeName: string;
-    dataServiceId: string;
-  };
 }
