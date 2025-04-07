@@ -432,6 +432,26 @@ describe("MultiExecutor", () => {
     }
   });
 
+  it("Agreement should pick the fastest value when only 2 clients are defined", async () => {
+    for (const instances of [[CLIENTS[2], CLIENTS[1]]]) {
+      const sut = makeSut(
+        instances,
+        {
+          ...config,
+          someNumberFunction: ExecutionMode.AGREEMENT,
+        },
+        { ...DEFAULT_CONFIG, agreementQuorumNumber: 2 }
+      );
+
+      const result = await sut.someNumberFunction(234);
+      expect(result).toEqual(234001);
+
+      instances.forEach((instance) => {
+        expect(instance.calledArgs).toStrictEqual([234]);
+      });
+    }
+  });
+
   it("Agreement should pick the fastest mode value when quorum is achieved for sync values", async () => {
     for (const instances of [
       [CLIENTS[0], CLIENTS[1], new MockClient(0, 0), new MockClient(1, 0)],
