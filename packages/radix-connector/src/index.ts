@@ -1,4 +1,3 @@
-export * from "./contracts/badge_creator/BadgeCreatorRadixContractConnector";
 export * from "./contracts/price_adapter/PriceAdapterRadixContractAdapter";
 export * from "./contracts/price_adapter/PriceAdapterRadixContractConnector";
 export * from "./contracts/price_adapter/PriceAdapterRadixContractDeployer";
