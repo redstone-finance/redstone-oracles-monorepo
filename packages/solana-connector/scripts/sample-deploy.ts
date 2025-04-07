@@ -2,12 +2,10 @@ import { execSync } from "child_process";
 import "dotenv/config";
 import path from "node:path";
 import { setTimeout } from "timers/promises";
+import { RDS_PROGRAM_ADDRESS } from "./consts";
 import { createKeypairFile } from "./create-keypair-file";
 import { getAccountInfo } from "./get-account-info";
 import { PRICE_ADAPTER_NAME, readCluster } from "./utils";
-
-export const RDS_PROGRAM_ADDRESS =
-  "rds8J7VKqLQgzDr7vS59dkQga3B1BotgFy8F7LSLC74";
 
 async function deploy() {
   const cluster = readCluster();
