@@ -4,6 +4,7 @@ import { readFileSync } from "fs";
 import path from "node:path";
 import { z } from "zod";
 import { makeKeypair } from "../src";
+import { readCluster } from "../src/utils";
 
 export const PRICE_ADAPTER_NAME = "price_adapter";
 
@@ -13,13 +14,6 @@ export function readKeypair() {
     z.array(z.number().gte(0).lte(255)).or(z.string())
   );
   return makeKeypair(privateKey);
-}
-
-export function readCluster() {
-  return RedstoneCommon.getFromEnv(
-    "CLUSTER",
-    z.enum(["devnet", "testnet", "mainnet-beta"])
-  );
 }
 
 export function makeConnection(apiUrl: string) {
