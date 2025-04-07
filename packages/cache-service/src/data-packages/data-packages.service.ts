@@ -1,5 +1,4 @@
 import {
-  BadRequestException,
   HttpException,
   Injectable,
   Logger,
@@ -25,7 +24,6 @@ import { getOracleState } from "../utils/get-oracle-state";
 import {
   BulkPostRequestBody,
   DataPackagesResponse,
-  DataPackagesStatsResponse,
   ReceivedDataPackage,
 } from "./data-packages.interface";
 import {
@@ -34,11 +32,6 @@ import {
   DataPackageDocumentAggregated,
   DataPackageDocumentMostRecentAggregated,
 } from "./data-packages.model";
-
-export interface StatsRequestParams {
-  fromTimestamp: number;
-  toTimestamp: number;
-}
 
 @Injectable()
 export class DataPackagesService implements OnModuleInit {
@@ -425,48 +418,6 @@ export class DataPackagesService implements OnModuleInit {
     );
   }
 
-  static async getDataPackagesStats(
-    statsRequestParams: StatsRequestParams
-  ): Promise<DataPackagesStatsResponse> {
-    const { fromTimestamp, toTimestamp } = statsRequestParams;
-
-    if (toTimestamp - fromTimestamp > 7_200_000) {
-      throw new BadRequestException(
-        "Too big search period. Can not be bigger than 7_200_000 ms"
-      );
-    }
-
-    const oraclesState = await getOracleState();
-    const nodes = Object.values(oraclesState.nodes);
-
-    const countsPerNode = await Promise.all(
-      nodes.map(async (node) => {
-        const count = await DataPackage.countDocuments({
-          $and: [
-            { timestampMilliseconds: { $gte: new Date(fromTimestamp) } },
-            { timestampMilliseconds: { $lte: new Date(toTimestamp) } },
-            { dataServiceId: node.dataServiceId },
-            { signerAddress: node.evmAddress },
-            { isSignatureValid: true },
-          ],
-        });
-        return { node, count };
-      })
-    );
-
-    const stats: DataPackagesStatsResponse = {};
-
-    for (const countPerNode of countsPerNode) {
-      stats[countPerNode.node.evmAddress] = {
-        dataServiceId: countPerNode.node.dataServiceId,
-        verifiedDataPackagesCount: countPerNode.count,
-        nodeName: countPerNode.node.name,
-      };
-    }
-
-    return stats;
-  }
-
   static verifyRequester(body: BulkPostRequestBody) {
     return UniversalSigner.recoverSigner(
       body.dataPackages,
@@ -535,8 +486,9 @@ export class DataPackagesService implements OnModuleInit {
     const filtered: DataPackagesResponse = {};
 
     for (const [key, packages] of Object.entries(response)) {
-      if (!packages) continue;
-
+      if (!packages) {
+        continue;
+      }
       filtered[key] = packages.map((pkg) => ({
         ...pkg,
         dataPoints: pkg.dataPoints.map((point) => ({
@@ -561,8 +513,9 @@ export class DataPackagesService implements OnModuleInit {
     const filtered: DataPackagesResponse = {};
 
     for (const [key, packages] of Object.entries(dataPackages)) {
-      if (!packages) continue;
-
+      if (!packages) {
+        continue;
+      }
       const filteredPackages = packages.filter((pkg) => {
         return allowedSigners
           .map((x) => x.toLowerCase())
