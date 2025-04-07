@@ -1,4 +1,3 @@
-import { AnchorProvider, Wallet } from "@coral-xyz/anchor";
 import {
   IContractConnector,
   IPricesContractAdapter,
@@ -20,11 +19,8 @@ export class SolanaContractConnector
 
   getAdapter(): Promise<SolanaPricesContractAdapter> {
     if (!this.adapter) {
-      const contract = new PriceAdapterContract(
-        new AnchorProvider(
-          this.connection,
-          this.keypair ? new Wallet(this.keypair) : Wallet.local()
-        ),
+      const contract = PriceAdapterContract.createMultiContract(
+        this.connection,
         this.address,
         this.keypair
       );
@@ -38,18 +34,7 @@ export class SolanaContractConnector
     return this.connection.getBlockHeight();
   }
 
-  async waitForTransaction(txId: string): Promise<boolean> {
-    const latestBlockHash = await this.connection.getLatestBlockhash();
-
-    const x = await this.connection.confirmTransaction(
-      {
-        blockhash: latestBlockHash.blockhash,
-        lastValidBlockHeight: latestBlockHash.lastValidBlockHeight,
-        signature: txId,
-      },
-      "confirmed"
-    );
-
-    return x.value.err === null;
+  waitForTransaction(_txId: string): Promise<boolean> {
+    return Promise.resolve(true);
   }
 }
