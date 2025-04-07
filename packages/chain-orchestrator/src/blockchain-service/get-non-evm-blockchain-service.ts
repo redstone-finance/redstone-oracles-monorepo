@@ -1,9 +1,11 @@
 import { NonEvmChainType } from "@redstone-finance/chain-configs";
 import { AptosClientBuilder } from "@redstone-finance/movement-connector";
 import { RadixClientBuilder } from "@redstone-finance/radix-connector";
+import { SolanaConnectionBuilder } from "@redstone-finance/solana-connector";
 import { SuiClientBuilder } from "@redstone-finance/sui-connector";
 import { MovementBlockchainService } from "./MovementBlockchainService";
 import { RadixBlockchainService } from "./RadixBlockchainService";
+import { SolanaBlockchainService } from "./SolanaBlockchainService";
 import { SuiBlockchainService } from "./SuiBlockchainService";
 
 export function getNonEvmBlockchainService(
@@ -34,7 +36,11 @@ export function getNonEvmBlockchainService(
       return new RadixBlockchainService(radixClient);
     }
     case "solana": {
-      throw new Error("Not implemented");
+      const connection = new SolanaConnectionBuilder()
+        .withChainId(chainId)
+        .withRpcUrls(rpcUrls)
+        .build();
+      return new SolanaBlockchainService(connection);
     }
     case "fuel":
       throw new Error(`chain type ${chainType} not supported`);
