@@ -1,0 +1,9 @@
+{
+  "USD": {
+    "tokens": {
+      "C3M": {
+        "alternativeBaseSymbol": "C3M.PAR"
+      }
+    }
+  }
+}
