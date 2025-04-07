@@ -11,11 +11,12 @@ import "dotenv/config";
 import _ from "lodash";
 import {
   CLUSTER_NAMES,
+  readCluster,
   SolanaConnectionBuilder,
   SolanaContractConnector,
 } from "../src";
 import { RDS_PROGRAM_ADDRESS } from "./consts";
-import { readCluster, readKeypair } from "./utils";
+import { readKeypair } from "./utils";
 
 async function main() {
   const rpcUrls = getChainConfigByChainId(
