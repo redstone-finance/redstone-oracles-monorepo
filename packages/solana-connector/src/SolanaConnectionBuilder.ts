@@ -1,4 +1,5 @@
-import { Cluster } from "@solana/web3.js";
+import { MultiExecutor } from "@redstone-finance/utils";
+import { Cluster, Connection } from "@solana/web3.js";
 import { connectToCluster } from "./utils";
 
 export const CLUSTER_NAMES: { [p: number]: Cluster } = {
@@ -7,9 +8,35 @@ export const CLUSTER_NAMES: { [p: number]: Cluster } = {
   3: "devnet",
 };
 
+export const SINGLE_EXECUTION_TIMEOUT_MS = 7_000;
+export const ALL_EXECUTIONS_TIMEOUT_MS = 30_000;
+const BLOCK_NUMBER_EXECUTION_TIMEOUT_MS = 1_500;
+
 export class SolanaConnectionBuilder {
   private cluster!: Cluster;
   private rpcUrls?: string[];
+
+  static createMultiConnection(
+    rpcUrls: string[],
+    config = {
+      singleExecutionTimeoutMs: SINGLE_EXECUTION_TIMEOUT_MS,
+      allExecutionTimeoutMs: ALL_EXECUTIONS_TIMEOUT_MS,
+    }
+  ) {
+    const ceilMedianConsensusExecutor =
+      new MultiExecutor.CeilMedianConsensusExecutor(
+        MultiExecutor.DEFAULT_CONFIG.consensusQuorumRatio,
+        BLOCK_NUMBER_EXECUTION_TIMEOUT_MS
+      );
+
+    return MultiExecutor.create(
+      rpcUrls.map((url) => new Connection(url, "confirmed")),
+      {
+        getBlockHeight: ceilMedianConsensusExecutor,
+      },
+      { ...MultiExecutor.DEFAULT_CONFIG, ...config }
+    );
+  }
 
   withRpcUrls(rpcUrls: string[]) {
     this.rpcUrls = rpcUrls;
@@ -24,6 +51,10 @@ export class SolanaConnectionBuilder {
   }
 
   build() {
-    return connectToCluster(this.cluster);
+    if (!this.rpcUrls?.length) {
+      return connectToCluster(this.cluster);
+    }
+
+    return SolanaConnectionBuilder.createMultiConnection(this.rpcUrls);
   }
 }
