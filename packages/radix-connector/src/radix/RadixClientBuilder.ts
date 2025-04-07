@@ -10,7 +10,6 @@ export class RadixClientBuilder {
   private urls: string[] = [];
   private networkId?: number;
   private privateKey?: RadixPrivateKey;
-  private additionalSigners?: RadixPrivateKey[];
   private clientConfig = DEFAULT_RADIX_CLIENT_CONFIG;
 
   withNetworkBasePath(basePath?: string) {
@@ -41,12 +40,6 @@ export class RadixClientBuilder {
     return this;
   }
 
-  withAdditionalSigners(additionalSigners?: RadixPrivateKey[]) {
-    this.additionalSigners = additionalSigners;
-
-    return this;
-  }
-
   withClientConfig(config: RadixClientConfig) {
     this.clientConfig = config;
 
@@ -64,7 +57,7 @@ export class RadixClientBuilder {
     const apiClient = RadixApiClient.makeMultiExecutor(urls, this.networkId);
 
     const signer = this.privateKey
-      ? new RadixSigner(this.privateKey, this.additionalSigners)
+      ? new RadixSigner(this.privateKey)
       : undefined;
 
     return new RadixClient(
