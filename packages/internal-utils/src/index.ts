@@ -5,6 +5,7 @@ export * from "./aws/error-logger";
 export * from "./aws/params";
 export * from "./aws/s3";
 export * from "./config-checks";
+export * from "./hash-utils";
 export * from "./influx/influxdb-config";
 export * from "./influx/InfluxService";
 export * from "./json-utils";

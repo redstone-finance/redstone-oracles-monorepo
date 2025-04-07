@@ -1,0 +1,34 @@
+{
+  "ethereum": {
+    "USDT-100": {
+      "USDe": {
+        "baseTokenIndex": 0,
+        "quotedTokenIndex": 1,
+        "poolId": "0xba237801c29850b7ec134aa77d19855d48f9e01dee08f21945502c2a8b377e16",
+        "fee": 100,
+        "tickSpacing": 1,
+        "hooks": "0x0000000000000000000000000000000000000000"
+      }
+    },
+    "ETH-3000": {
+      "WBTC": {
+        "baseTokenIndex": 1,
+        "quotedTokenIndex": 0,
+        "poolId": "0x54c72c46df32f2cc455e84e41e191b26ed73a29452cdd3d82f511097af9f427e",
+        "fee": 3000,
+        "tickSpacing": 60,
+        "hooks": "0x0000000000000000000000000000000000000000"
+      }
+    },
+    "USDC-3000": {
+      "WBTC": {
+        "baseTokenIndex": 0,
+        "quotedTokenIndex": 1,
+        "poolId": "0xb98437c7ba28c6590dd4e1cc46aa89eed181f97108e5b6221730d41347bc817f",
+        "fee": 3000,
+        "tickSpacing": 60,
+        "hooks": "0x0000000000000000000000000000000000000000"
+      }
+    }
+  }
+}

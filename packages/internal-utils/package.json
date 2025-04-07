@@ -34,5 +34,8 @@
   },
   "publishConfig": {
     "access": "public"
+  },
+  "bin": {
+    "calculate-dir-hash": "./dist/src/cli/calculate-dir-hash.js"
   }
 }
