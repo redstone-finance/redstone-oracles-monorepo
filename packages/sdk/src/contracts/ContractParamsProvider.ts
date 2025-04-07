@@ -38,10 +38,22 @@ export class ContractParamsProvider {
     feedId: string,
     shouldOevUseFallbackAfterFailing?: boolean
   ) {
+    return ContractParamsProvider.copyForFeedIds(
+      paramsProvider,
+      [feedId],
+      shouldOevUseFallbackAfterFailing
+    );
+  }
+
+  static copyForFeedIds(
+    paramsProvider: ContractParamsProvider,
+    feedIds: string[],
+    shouldOevUseFallbackAfterFailing?: boolean
+  ) {
     return new ContractParamsProvider(
       paramsProvider.requestParams,
       paramsProvider.cache,
-      [feedId],
+      feedIds,
       shouldOevUseFallbackAfterFailing
     );
   }
