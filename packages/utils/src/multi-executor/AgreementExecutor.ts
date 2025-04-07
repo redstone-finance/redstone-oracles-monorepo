@@ -62,6 +62,8 @@ export class AgreementExecutor extends ParallelExecutor {
   }
 
   private getQuorum(totalLength: number) {
-    return Math.min(Math.max(totalLength, 1), this.quorumNumber);
+    return totalLength <= this.quorumNumber
+      ? Math.min(1, this.quorumNumber)
+      : this.quorumNumber;
   }
 }
