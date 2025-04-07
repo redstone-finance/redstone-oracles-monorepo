@@ -16,6 +16,11 @@ import {
   RadixClientBuilder,
 } from "@redstone-finance/radix-connector";
 import {
+  makeMockKeypair,
+  SolanaConnectionBuilder,
+  SolanaContractConnector,
+} from "@redstone-finance/solana-connector";
+import {
   SuiClientBuilder,
   SuiPricesContractConnector,
 } from "@redstone-finance/sui-connector";
@@ -38,7 +43,7 @@ export function getRelayerMonitoringNonEvmContractConnector(
     case MOVEMENT_MULTI_FEED:
       return getMovementContractConnector(rpcUrls, relayerManifest);
     case SOLANA_MULTI_FEED:
-      throw new Error("Not implemented");
+      return getSolanaContractConnector(rpcUrls, relayerManifest);
     case FUEL:
       throw new Error(
         `${relayerManifest.adapterContractType} is not supported in monitoring`
@@ -58,6 +63,24 @@ function getRadixContractConnector(
   return new PriceAdapterRadixContractConnector(
     client,
     relayerManifest.adapterContract
+  );
+}
+
+function getSolanaContractConnector(
+  rpcUrls: string[],
+  relayerManifest: AnyOnChainRelayerManifest
+) {
+  const connection = new SolanaConnectionBuilder()
+    .withChainId(relayerManifest.chain.id)
+    .withRpcUrls(rpcUrls)
+    .build();
+
+  const keypair = makeMockKeypair();
+
+  return new SolanaContractConnector(
+    connection,
+    relayerManifest.adapterContract,
+    keypair
   );
 }
 
