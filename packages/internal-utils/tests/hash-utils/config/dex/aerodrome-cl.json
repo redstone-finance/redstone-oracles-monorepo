@@ -1,0 +1,104 @@
+{
+  "base": {
+    "WETH": {
+      "bsdETH": {
+        "baseTokenIndex": 1,
+        "quotedTokenIndex": 0,
+        "poolId": "0x2ae9DF02539887d4EbcE0230168a302d34784c82",
+        "tickSpacing": 1
+      },
+      "USD+": {
+        "baseTokenIndex": 1,
+        "quotedTokenIndex": 0,
+        "poolId": "0x4D69971CCd4A636c403a3C1B00c85e99bB9B5606",
+        "tickSpacing": 100
+      },
+      "AERO": {
+        "baseTokenIndex": 1,
+        "quotedTokenIndex": 0,
+        "poolId": "0x82321f3BEB69f503380D6B233857d5C43562e2D0",
+        "tickSpacing": 200
+      },
+      "cbBTC": {
+        "baseTokenIndex": 1,
+        "quotedTokenIndex": 0,
+        "poolId": "0x70aCDF2Ad0bf2402C957154f944c19Ef4e1cbAE1",
+        "tickSpacing": 100
+      },
+      "EUROC": {
+        "baseTokenIndex": 1,
+        "quotedTokenIndex": 0,
+        "poolId": "0x5d4e504eb4c526995e0cc7a6e327fda75d8b52b5",
+        "tickSpacing": 100
+      },
+      "ezETH": {
+        "baseTokenIndex": 0,
+        "quotedTokenIndex": 1,
+        "poolId": "0xdc7ead706795eda3feda08ad519d9452badf2c0d",
+        "tickSpacing": 1
+      },
+      "BRETT": {
+        "baseTokenIndex": 1,
+        "quotedTokenIndex": 0,
+        "poolId": "0x4e829F8A5213c42535AB84AA40BD4aDCCE9cBa02",
+        "tickSpacing": 200
+      },
+      "BIO": {
+        "baseTokenIndex": 0,
+        "quotedTokenIndex": 1,
+        "poolId": "0x222cCBE78890A4d9Ef8d22d7FC1B968Be0F2c653",
+        "tickSpacing": 100
+      }
+    },
+    "USDC": {
+      "USD+": {
+        "baseTokenIndex": 1,
+        "quotedTokenIndex": 0,
+        "poolId": "0x0c1A09d5D0445047DA3Ab4994262b22404288A3B",
+        "tickSpacing": 1
+      },
+      "eUSD": {
+        "baseTokenIndex": 1,
+        "quotedTokenIndex": 0,
+        "poolId": "0x988702fe529a3461ec7fd09eea3f962856709fd9",
+        "tickSpacing": 1
+      },
+      "EUROC": {
+        "baseTokenIndex": 0,
+        "quotedTokenIndex": 1,
+        "poolId": "0xc5e51044eb7318950b1afb044fccfb25782c48c1",
+        "tickSpacing": 1
+      },
+      "cbBTC": {
+        "baseTokenIndex": 1,
+        "quotedTokenIndex": 0,
+        "poolId": "0x4e962BB3889Bf030368F56810A9c96B83CB3E778",
+        "tickSpacing": 100
+      }
+    },
+    "USDC-2": {
+      "EUROC": {
+        "baseTokenIndex": 0,
+        "quotedTokenIndex": 1,
+        "poolId": "0xe846373c1a92b167b4e9cd5d8e4d6b1db9e90ec7",
+        "tickSpacing": 50
+      }
+    },
+    "wstETH": {
+      "USD+": {
+        "baseTokenIndex": 0,
+        "quotedTokenIndex": 1,
+        "poolId": "0xa01A2513E95263b9BaCe60B573ce874E1e7a5246",
+        "tickSpacing": 200
+      }
+    },
+    "cbBTC": {
+      "LBTC": {
+        "baseTokenIndex": 1,
+        "quotedTokenIndex": 0,
+        "poolId": "0xa44d3bb767d953711ea4bce8c0f01f4d7d299af6",
+        "tickSpacing": 1
+      }
+    }
+  }
+}
