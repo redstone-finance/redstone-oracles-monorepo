@@ -15,6 +15,10 @@ import {
   RadixContractConnector,
 } from "@redstone-finance/radix-connector";
 import {
+  SolanaConnectionBuilder,
+  SolanaContractConnector,
+} from "@redstone-finance/solana-connector";
+import {
   SuiClientBuilder,
   SuiContractConnector,
 } from "@redstone-finance/sui-connector";
@@ -44,7 +48,12 @@ export function getBaseNonEvmContractConnector(
           .build()
       );
     case SOLANA_MULTI_FEED:
-      throw new Error("Not implemented");
+      return new SolanaContractConnector(
+        new SolanaConnectionBuilder()
+          .withChainId(chainId)
+          .withRpcUrls(rpcUrls)
+          .build()
+      );
     case FUEL:
       throw new Error(`Not supported for ${adapterType}`);
   }
