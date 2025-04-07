@@ -1,6 +1,7 @@
+import { RedstoneCommon } from "@redstone-finance/utils";
 import { Cluster, clusterApiUrl, Connection, Keypair } from "@solana/web3.js";
 import { arrayify } from "ethers/lib/utils";
-import { readCluster } from "../scripts/utils";
+import { z } from "zod";
 
 export function hexToU8Array(hex: string): Uint8Array {
   return Uint8Array.from(Buffer.from(hex, "hex"));
@@ -29,14 +30,7 @@ export function makeMockKeypair() {
 }
 
 export function makeKeypair(privateKeyInput: number[] | string) {
-  let privateKey: ArrayLike<number>;
-
-  if (typeof privateKeyInput === "string") {
-    privateKey = arrayify(privateKeyInput);
-  } else {
-    privateKey = privateKeyInput;
-  }
-
+  const privateKey = arrayify(privateKeyInput);
   const privateKeyBuffer = Buffer.from(privateKey);
 
   const isValidLength =
@@ -60,4 +54,11 @@ export function makeKeypair(privateKeyInput: number[] | string) {
 
 export function connectToCluster(cluster?: Cluster) {
   return new Connection(clusterApiUrl(cluster ?? readCluster()), "confirmed");
+}
+
+export function readCluster() {
+  return RedstoneCommon.getFromEnv(
+    "CLUSTER",
+    z.enum(["devnet", "testnet", "mainnet-beta"])
+  );
 }

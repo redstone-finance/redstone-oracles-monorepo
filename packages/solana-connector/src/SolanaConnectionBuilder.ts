@@ -2,7 +2,7 @@ import { MultiExecutor } from "@redstone-finance/utils";
 import { Cluster, Connection } from "@solana/web3.js";
 import { connectToCluster } from "./utils";
 
-export const CLUSTER_NAMES: { [p: number]: Cluster } = {
+export const CLUSTER_NAMES: { [chainId: number]: Cluster } = {
   1: "mainnet-beta",
   2: "testnet",
   3: "devnet",
