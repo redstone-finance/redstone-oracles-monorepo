@@ -42,15 +42,15 @@ export const assertWithLog = (condition: boolean, errMsg: string) => {
   }
 };
 
-let debug: boolean | undefined;
+let trace: boolean | undefined;
 
 const showStack = (stack: string | undefined): string => {
   if (!stack) {
     return "";
   }
-  debug ??= getLogLevel() >= LogLevel.Debug;
+  trace ??= getLogLevel() >= LogLevel.Trace;
 
-  if (debug) {
+  if (trace) {
     return stack + ";";
   }
   return "";
