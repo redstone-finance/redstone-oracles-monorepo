@@ -37,22 +37,11 @@ export const DATA_SERVICE_ID = "redstone-primary-prod";
 export const PRICE_ADAPTER_NAME = "price_adapter";
 export const PRICE_FEED_NAME = "price_feed";
 export const PROXY_NAME = "proxy";
-export const BADGE_CREATOR_NAME = "badge_creator";
 
 const PRIVATE_KEY_VALUE = RedstoneCommon.getFromEnv(
   "PRIVATE_KEY",
   z.string().optional()
 );
-
-export const ADDITIONAL_SIGNERS: RadixPrivateKey[] | undefined =
-  RedstoneCommon.getFromEnv("SIGNERS", z.optional(z.array(z.string())))?.map(
-    (priv) => {
-      return {
-        scheme: "ed25519",
-        value: priv,
-      };
-    }
-  );
 
 const PRIVATE_KEY_SCHEME = RedstoneCommon.getFromEnv(
   "PRIVATE_KEY_SCHEME",
@@ -124,7 +113,6 @@ export function makeRadixClient(networkId?: number) {
     .withNetworkId(networkId ?? NETWORK.id)
     .withNetworkBasePath(NETWORK.basePath)
     .withPrivateKey(PRIVATE_KEY)
-    .withAdditionalSigners(ADDITIONAL_SIGNERS)
     .withClientConfig({ ...DEFAULT_RADIX_CLIENT_CONFIG, maxFeeXrd: 1 })
     .build();
 }
