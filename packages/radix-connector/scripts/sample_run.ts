@@ -23,7 +23,7 @@ async function main() {
   const paramsProvider = new ContractParamsProvider({
     dataPackagesIds: ["XRD"],
     dataServiceId: DATA_SERVICE_ID,
-    uniqueSignersCount: 1,
+    uniqueSignersCount: 3,
     authorizedSigners: getSignersForDataServiceId(DATA_SERVICE_ID),
   });
 
