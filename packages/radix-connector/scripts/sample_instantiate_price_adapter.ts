@@ -10,12 +10,14 @@ import {
   TRUSTED_UPDATERS,
 } from "./constants";
 
+const SIGNER_COUNT_THRESHOLD = 3;
+
 async function instantiate() {
   const client = makeRadixClient();
   const connector = new PriceAdapterRadixContractDeployer(
     client,
     await loadAddress(`package`, PRICE_ADAPTER_NAME),
-    1,
+    SIGNER_COUNT_THRESHOLD,
     getSignersForDataServiceId(DATA_SERVICE_ID),
     TRUSTED_UPDATERS
   );
