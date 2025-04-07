@@ -84,7 +84,7 @@ type Ethers_5_7_Error = {
   [K in (typeof ethers_5_7_ErrorProps)[number]]?: string | number;
 };
 
-export function stringifyError(e: unknown): string {
+export function stringifyError(e: unknown, noStack = false): string {
   try {
     const error = e as
       | AggregateError
@@ -97,14 +97,17 @@ export function stringifyError(e: unknown): string {
     if (error === undefined) {
       return "undefined";
     } else if (error instanceof AggregateError) {
-      const errorMessages: string[] = error.errors.map(stringifyError);
+      const errorMessages: string[] = error.errors.map((e) =>
+        stringifyError(e, noStack)
+      );
       return `AggregateError: ${error.message ? error.message : "<no message>"}, errors: ${errorMessages.join(
         "; "
       )}`;
     } else if (axios.isAxiosError<unknown>(error)) {
       const urlAsString = `url: ${JSON.stringify(error.config?.url)}`;
       const dataAsString = `data: ${JSON.stringify(error.response?.data)}`;
-      return `${urlAsString}, ${dataAsString}, ${error.message}, ${showStack(error.stack)}`;
+      const message = `${urlAsString}, ${dataAsString}, ${error.message}`;
+      return noStack ? message : `${message}, ${showStack(error.stack)}`;
     } else if (isEthers_5_7_Error(error)) {
       return (
         "[Ethers 5.7 Error]" +
@@ -117,8 +120,11 @@ export function stringifyError(e: unknown): string {
       );
     } else if (error instanceof Error) {
       const causeString = error.cause
-        ? ` cause: ${stringifyError(error.cause)}`
+        ? ` cause: ${stringifyError(error.cause, noStack)}`
         : "";
+      if (noStack) {
+        return `${error.message} ${causeString}`;
+      }
       return `${error.message} ${showStack(error.stack)} ${causeString}`;
     } else if (typeof error.toJSON === "function") {
       return JSON.stringify(error.toJSON());
