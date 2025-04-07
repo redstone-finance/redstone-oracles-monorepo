@@ -2,7 +2,7 @@ import {
   IContractConnector,
   IPricesContractAdapter,
 } from "@redstone-finance/sdk";
-import { Connection, Keypair } from "@solana/web3.js";
+import { Connection, Keypair, PublicKey } from "@solana/web3.js";
 import { SolanaPricesContractAdapter } from "./price_adapter/SolanaPricesContractAdapter";
 import { PriceAdapterContract } from "./PriceAdapterContract";
 
@@ -13,11 +13,14 @@ export class SolanaContractConnector
 
   constructor(
     private readonly connection: Connection,
-    private readonly address: string,
+    private readonly address?: string,
     private readonly keypair?: Keypair
   ) {}
 
   getAdapter(): Promise<SolanaPricesContractAdapter> {
+    if (!this.address) {
+      throw new Error("Adapter address not set");
+    }
     if (!this.adapter) {
       const contract = PriceAdapterContract.createMultiContract(
         this.connection,
@@ -36,5 +39,10 @@ export class SolanaContractConnector
 
   waitForTransaction(_txId: string): Promise<boolean> {
     return Promise.resolve(true);
+  }
+
+  async getNormalizedBalance(address: string, _blockNumber?: number) {
+    const balance = await this.connection.getBalance(new PublicKey(address));
+    return BigInt(balance) * BigInt(10 ** 9);
   }
 }
