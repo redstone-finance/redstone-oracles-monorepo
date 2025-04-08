@@ -11,4 +11,8 @@ export interface IContractConnector<Adapter> {
     address: string,
     blockNumber?: number
   ) => Promise<bigint>;
+
+  transfer?: (toAddress: string, amount: number) => Promise<void>;
+
+  getSignerAddress?: () => Promise<string>;
 }

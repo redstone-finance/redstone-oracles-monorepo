@@ -4,6 +4,9 @@
   "references": [
     {
       "path": "../utils/tsconfig.build.json"
+    },
+    {
+      "path": "../chain-configs/tsconfig.build.json"
     }
   ]
 }
