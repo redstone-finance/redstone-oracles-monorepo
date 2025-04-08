@@ -1149,7 +1149,8 @@
         "uniswap-v3-ethereum-usdt-100",
         "uniswap-v4-ethereum-usdt-100",
         "uniswap-v3-ethereum-mnt-3000",
-        "curve-ethereum-usdt"
+        "curve-ethereum-usdt",
+        "uniswap-v3-ethereum-usdc-100"
       ],
       "deviationCheck": {
         "deviationWithRecentValues": {
