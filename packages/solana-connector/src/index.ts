@@ -1,6 +1,6 @@
 export * from "./config";
+export * from "./price_adapter/AnchorReadonlyProvider";
 export * from "./price_adapter/SolanaPricesContractAdapter";
-export * from "./solana/AnchorReadonlyProvider";
 export * from "./SolanaConnectionBuilder";
 export * from "./SolanaContractConnector";
 export * from "./SolanaTxDeliveryMan";
