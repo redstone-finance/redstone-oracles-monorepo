@@ -8365,6 +8365,7 @@ __metadata:
     dotenv: "npm:^16.0.3"
     lodash: "npm:^4.17.21"
     node-schedule: "npm:^2.1.1"
+    zod: "npm:^3.22.4"
   languageName: unknown
   linkType: soft
 
