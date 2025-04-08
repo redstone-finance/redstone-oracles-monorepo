@@ -1,0 +1,17 @@
+{
+  "interval": 15000,
+  "priceAggregator": "median",
+  "defaultSource": ["chainlink"],
+  "sourceTimeout": 50000,
+  "deviationCheck": {
+    "deviationWithRecentValues": {
+      "maxPercent": 25,
+      "maxDelayMilliseconds": 300000
+    }
+  },
+  "tokens": {
+    "ETH": {},
+    "AAVE": {},
+    "UNI": {}
+  }
+}

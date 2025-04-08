@@ -1,0 +1,30 @@
+{
+  "interval": 60000,
+  "priceAggregator": "median",
+  "sourceTimeout": 50000,
+  "deviationCheck": {
+    "deviationWithRecentValues": {
+      "maxPercent": 25,
+      "maxDelayMilliseconds": 300000
+    }
+  },
+  "defaultSource": ["coinmarketcap"],
+  "tokens": {
+    "ETH": {},
+    "USDT": {},
+    "PNG": {},
+    "AVAX": {},
+    "LINK": {},
+    "BTC": {},
+    "QI": {},
+    "USDC": {},
+    "PTP": {},
+    "XAVA": {},
+    "GMX": {},
+    "JOE": {},
+    "OHM": {},
+    "STETH": {},
+    "wstETH": {},
+    "SWETH": {}
+  }
+}

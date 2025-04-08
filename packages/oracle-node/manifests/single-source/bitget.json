@@ -1,0 +1,20 @@
+{
+  "interval": 60000,
+  "priceAggregator": "median",
+  "defaultSource": ["bitget"],
+  "sourceTimeout": 50000,
+  "deviationCheck": {
+    "deviationWithRecentValues": {
+      "maxPercent": 25,
+      "maxDelayMilliseconds": 300000
+    }
+  },
+  "tokens": {
+    "JOE": {},
+    "PLS": {},
+    "BNB": {},
+    "CRV": {},
+    "AAVE": {},
+    "STETH": {}
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "interval": 15000,
+  "priceAggregator": "median",
+  "defaultSource": ["ecb"],
+  "sourceTimeout": 50000,
+  "deviationCheck": {
+    "deviationWithRecentValues": {
+      "maxPercent": 25,
+      "maxDelayMilliseconds": 300000
+    }
+  },
+  "tokens": {
+    "EUR": {},
+    "JPY": {},
+    "GBP": {},
+    "AUD": {},
+    "CHF": {}
+  }
+}

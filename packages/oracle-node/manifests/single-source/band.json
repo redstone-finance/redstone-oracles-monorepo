@@ -1,0 +1,13 @@
+{
+  "interval": 15000,
+  "priceAggregator": "median",
+  "defaultSource": ["band"],
+  "sourceTimeout": 50000,
+  "maxPriceDeviationPercent": 25,
+  "tokens": {
+    "BTC": {},
+    "ETH": {},
+    "AAVE": {},
+    "UNI": {}
+  }
+}

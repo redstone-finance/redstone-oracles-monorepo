@@ -1,0 +1,18 @@
+{
+  "interval": 3000,
+  "priceAggregator": "median",
+  "defaultSource": ["gate-usdt"],
+  "sourceTimeout": 3000,
+  "deviationCheck": {
+    "deviationWithRecentValues": {
+      "maxPercent": 25,
+      "maxDelayMilliseconds": 300000
+    }
+  },
+  "tokens": {
+    "MNT": {},
+    "CANTO": {},
+    "BNB": {},
+    "USDT": { "source": ["coingecko"] }
+  }
+}

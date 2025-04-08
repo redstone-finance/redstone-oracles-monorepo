@@ -1,0 +1,25 @@
+{
+  "interval": 10000,
+  "priceAggregator": "median",
+  "defaultSource": ["kaiko-v2"],
+  "sourceTimeout": 5000,
+  "deviationCheck": {
+    "deviationWithRecentValues": {
+      "maxPercent": 25,
+      "maxDelayMilliseconds": 300000
+    }
+  },
+  "tokens": {
+    "ETH": {},
+    "AAVE": {},
+    "UNI": {},
+    "USDT": {},
+    "AVAX": {},
+    "LINK": {},
+    "BTC": {},
+    "USDC": {},
+    "XAVA": {},
+    "EUR": {},
+    "STETH": {}
+  }
+}

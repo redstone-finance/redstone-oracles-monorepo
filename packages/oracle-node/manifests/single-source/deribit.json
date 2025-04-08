@@ -1,0 +1,16 @@
+{
+  "interval": 15000,
+  "priceAggregator": "median",
+  "defaultSource": ["deribit"],
+  "sourceTimeout": 50000,
+  "deviationCheck": {
+    "deviationWithRecentValues": {
+      "maxPercent": 25,
+      "maxDelayMilliseconds": 300000
+    }
+  },
+  "tokens": {
+    "ETHDVOL": {},
+    "BTCDVOL": {}
+  }
+}

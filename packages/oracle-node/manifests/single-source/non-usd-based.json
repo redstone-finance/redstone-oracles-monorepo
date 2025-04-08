@@ -1,0 +1,32 @@
+{
+  "interval": 60000,
+  "priceAggregator": "median",
+  "defaultSource": ["non-usd-based"],
+  "sourceTimeout": 50000,
+  "deviationCheck": {
+    "deviationWithRecentValues": {
+      "maxPercent": 25,
+      "maxDelayMilliseconds": 300000
+    }
+  },
+  "tokens": {
+    "VST": {
+      "source": ["coingecko"]
+    },
+    "ETH": {
+      "source": ["coingecko"]
+    },
+    "VST/ETH": {},
+    "USDC": {
+      "source": ["coingecko"]
+    },
+    "USDT": {
+      "source": ["coingecko"]
+    },
+    "DAI": {
+      "source": ["coingecko"]
+    },
+    "USDC.USDT": {},
+    "USDC.DAI": {}
+  }
+}

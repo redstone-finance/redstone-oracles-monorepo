@@ -1,0 +1,21 @@
+{
+  "interval": 15000,
+  "priceAggregator": "median",
+  "defaultSource": ["uniswap-v2-ethereum-weth"],
+  "sourceTimeout": 50000,
+  "deviationCheck": {
+    "deviationWithRecentValues": {
+      "maxPercent": 25,
+      "maxDelayMilliseconds": 300000
+    }
+  },
+  "tokens": {
+    "DAI": {},
+    "ETH": {
+      "source": ["coingecko"]
+    },
+    "USDT": {
+      "source": ["coingecko"]
+    }
+  }
+}
