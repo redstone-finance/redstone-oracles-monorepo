@@ -328,7 +328,7 @@ function validateDataPackagesResponse(
     );
   } else if (dataFeedPackages.length < reqParams.uniqueSignersCount) {
     const message =
-      `Too few unique signers for the data feed: ${dataFeedId}. ` +
+      `Too few data packages with unique signers for the data feed: ${dataFeedId}. ` +
       `Expected: ${reqParams.uniqueSignersCount}. ` +
       `Received: ${dataFeedPackages.length}`;
     throw new DataFeedPackageError(
