@@ -22,7 +22,8 @@ async function assertTxWillBeDelivered(
   const call = convertToTxDeliveryCall(
     await counter.populateTransaction["inc"]()
   );
-  await deliveryMan.deliver(call);
+  const waitForTransaction = await deliveryMan.deliver(call);
+  await waitForTransaction();
   expect(await counter.getCount()).to.eq(expectedCounterValue);
 }
 
@@ -150,7 +151,7 @@ describe("TxDeliveryMan", () => {
       connectProvider(fallbackProvider);
 
       await expect(assertTxWillBeDelivered(deliveryMan, counter)).rejectedWith(
-        "All promises were rejected"
+        "Transaction was mined but reverted with error OR we failed to fetch it"
       );
     });
 
