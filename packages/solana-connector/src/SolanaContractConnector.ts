@@ -45,7 +45,7 @@ export class SolanaContractConnector
   }
 
   getBlockNumber(): Promise<number> {
-    return this.connection.getBlockHeight();
+    return this.connection.getSlot("finalized");
   }
 
   waitForTransaction(_txId: string): Promise<boolean> {
