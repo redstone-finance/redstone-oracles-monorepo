@@ -29,6 +29,7 @@ enum TransactionBroadcastErrorResult {
   Underpriced,
   UnknownError,
   InsufficientFunds,
+  AlreadyKnown,
 }
 
 type DeliveryManTx =
@@ -184,7 +185,10 @@ export class TxDelivery {
     this.gasLimitEstimator = new GasLimitEstimator(this.opts);
   }
 
-  public async deliver(call: Tx.TxDeliveryCall): Promise<TransactionResponse> {
+  /** Returns undefined if nonce of sending account was bumped, by different process */
+  public async deliver(
+    call: Tx.TxDeliveryCall
+  ): Promise<TransactionResponse | undefined> {
     RedstoneCommon.assert(
       this.attempt === 1,
       "TxDelivery.deliver can be called only once per instance"
@@ -209,8 +213,10 @@ export class TxDelivery {
         );
 
         switch (broadcastErrorResult) {
+          case TransactionBroadcastErrorResult.AlreadyKnown:
+            break;
           case TransactionBroadcastErrorResult.AlreadyDelivered:
-            return result!;
+            return result;
           case TransactionBroadcastErrorResult.Underpriced:
             tx = await this.updateTxParamsForNextAttempt(tx);
             // skip sleeping
@@ -233,7 +239,7 @@ export class TxDelivery {
       }
 
       await this.waitForTxMining();
-      const wasDelivered = await this.isDelivered(tx, result);
+      const wasDelivered = await this.hasNonceIncreased(tx);
 
       if (wasDelivered) {
         return result;
@@ -266,17 +272,18 @@ export class TxDelivery {
     return result;
   }
 
-  private async isDelivered(
-    tx: DeliveryManTx,
-    result: TransactionResponse
-  ): Promise<boolean> {
+  private async hasNonceIncreased(tx: DeliveryManTx): Promise<boolean> {
     const address = await this.signer.getAddress();
-    const currentNonce = await this.provider.getTransactionCount(address);
+
+    const currentNonce = await this.provider.getTransactionCount(
+      address,
+      "latest" // this is the default, but to be explicit
+    );
 
     if (currentNonce > tx.nonce) {
       // transaction was already delivered because nonce increased
       this.opts.logger(
-        `Transaction ${result.hash} mined, nonce changed: ${tx.nonce} => ${currentNonce}`
+        `Transaction mined, nonce changed: ${tx.nonce} => ${currentNonce}`
       );
 
       return true;
@@ -305,12 +312,16 @@ export class TxDelivery {
       "Unknown non ethers error"
     );
 
-    if (TxDelivery.isNonceExpiredError(ethersError)) {
+    if (TxDelivery.isAlreadyKnownError(ethersError)) {
+      this.opts.logger("Transaction already known");
+      return TransactionBroadcastErrorResult.AlreadyKnown;
+    } else if (TxDelivery.isNonceExpiredError(ethersError)) {
       // if not by us, then it was delivered by someone else
       if (!result) {
-        throw new Error(
+        this.opts.logger(
           `Transaction with same nonce ${nonce} was delivered by someone else`
         );
+        return TransactionBroadcastErrorResult.AlreadyDelivered;
       } else {
         // it means that in meantime between check if transaction is delivered and sending new transaction
         // previous transaction was already delivered by (maybe) us
@@ -397,6 +408,12 @@ export class TxDelivery {
       e.message.includes("invalid nonce") ||
       e.message.includes("invalid sequence") ||
       e.code === ErrorCode.NONCE_EXPIRED
+    );
+  }
+
+  private static isAlreadyKnownError(e: EthersError) {
+    return (
+      e.message.includes("already known") && e.code === ErrorCode.SERVER_ERROR
     );
   }
 
