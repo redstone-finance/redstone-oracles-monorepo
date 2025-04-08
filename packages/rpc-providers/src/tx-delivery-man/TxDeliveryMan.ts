@@ -15,6 +15,8 @@ export type TxDeliveryManSupportedProviders =
   | ProviderWithFallback;
 
 const logger = loggerFactory("TxDeliveryMan");
+const WAITING_FOR_CONFIRMATION_TIMEOUT = 60_000;
+const CONFIRMATION_COUNT = 1;
 
 export class TxDeliveryMan implements Tx.ITxDeliveryMan {
   private providers: readonly providers.JsonRpcProvider[];
@@ -37,15 +39,13 @@ export class TxDeliveryMan implements Tx.ITxDeliveryMan {
    * @param context {deferredCallData {() => Promise<string>}} - if passed is called first time on second attempt.
    * During first attempt callData from txDeliveryCall is used.
    * @returns {TransactionResponse}
-   * Because we are sending concurrently many requests
-   * returned transaction response doesn't have to be transaction which is actually included in chain.
-   * When transaction returns it means that it was mined, however could have still reverted. Use `.wait` to
-   * get more context.
+   * We are relying on soft confirmations from rpc providers.
+   * For strong confirmations (1 block) you have to call result of this function.
    */
   async deliver(
     txDeliveryCall: Tx.TxDeliveryCall,
     context: Tx.TxDeliveryManContext = {}
-  ): Promise<TransactionResponse> {
+  ): Promise<() => Promise<TransactionReceipt>> {
     const deliveryPromises = this.providers.map(async (provider) => {
       const deliveryInProgress = this.txDeliveriesInProgress.get(provider);
 
@@ -66,40 +66,22 @@ export class TxDeliveryMan implements Tx.ITxDeliveryMan {
       }
     });
 
-    const fastestDelivery = await Promise.any(deliveryPromises);
+    await Promise.any(deliveryPromises);
 
-    const result = { ...fastestDelivery, wait: buildWaitFn(deliveryPromises) };
-    this.logTxResponse(result);
+    const txReceiptPromise = this.waitForTransaction(deliveryPromises);
+    this.logTxResponse(txReceiptPromise);
 
-    return result;
+    return () => txReceiptPromise;
   }
 
-  private logTxResponse(transactionResponse: TransactionResponse) {
-    const getTxReceiptDesc = (receipt: TransactionReceipt) => {
-      return `Transaction ${receipt.transactionHash} mined with SUCCESS(status: ${
-        receipt.status
-      }) in block #${receipt.blockNumber}[tx index: ${
-        receipt.transactionIndex
-      }]. gas_used=${receipt.gasUsed.toString()} effective_gas_price=${receipt.effectiveGasPrice.toString()}`;
-    };
-
-    // is not using await to not block the main function
-    transactionResponse
-      .wait()
-      .then((receipt) => logger.log(getTxReceiptDesc(receipt), { receipt }))
+  private logTxResponse(txReceipt: Promise<TransactionReceipt>) {
+    txReceipt
+      .then((receipt) => logger.log(getTxReceiptDesc(receipt)))
       .catch((error) =>
         logger.error(
-          `Failed to await transaction ${RedstoneCommon.stringifyError(error)}`
+          `Failed to wait for transaction minting ${RedstoneCommon.stringifyError(error)}`
         )
       );
-
-    logger.log(
-      `Transaction tx delivered hash=${transactionResponse.hash} gasLimit=${String(
-        transactionResponse.gasLimit
-      )} gasPrice=${transactionResponse.gasPrice?.toString()} maxFeePerGas=${String(
-        transactionResponse.maxFeePerGas
-      )} maxPriorityFeePerGas=${String(transactionResponse.maxPriorityFeePerGas)}`
-    );
   }
 
   private createAndDeliverNewPackage(
@@ -122,18 +104,59 @@ export class TxDeliveryMan implements Tx.ITxDeliveryMan {
 
     return deliveryPromise;
   }
+
+  async waitForTransaction(
+    deliveryPromises: Promise<TransactionResponse | undefined>[]
+  ) {
+    const receipts = (
+      await Promise.allSettled(
+        deliveryPromises.map(async (txResponsePromise, index) => {
+          const txResponse = await txResponsePromise;
+          if (txResponse) {
+            return await this.providers[index].waitForTransaction(
+              txResponse.hash,
+              CONFIRMATION_COUNT,
+              WAITING_FOR_CONFIRMATION_TIMEOUT
+            );
+          }
+          return undefined;
+        })
+      )
+    )
+      .filter((result) => result.status === "fulfilled")
+      .filter((result) => RedstoneCommon.isDefined(result.value))
+      .map((result) => result.value) as TransactionReceipt[];
+
+    const hashes = Array.from(new Set(receipts.map((r) => r.transactionHash)));
+
+    if (hashes.length === 0) {
+      throw new Error(
+        `Transaction was mined but reverted with error OR we failed to fetch it. Possible transactions: ${hashes.join(", ")}`
+      );
+    }
+
+    if (hashes.length > 1) {
+      throw new Error(
+        `Network between rpcs is forked - received more than one successful receipts (${receipts.length}). Possible transactions: ${hashes.join(", ")}`
+      );
+    }
+
+    return receipts[0];
+  }
 }
 
-export function extractProviders(
+function extractProviders(
   provider: TxDeliveryManSupportedProviders
 ): readonly ethers.providers.JsonRpcProvider[] {
   if (
     provider instanceof ProviderWithFallback ||
     provider instanceof ProviderWithAgreement
   ) {
-    return provider.providers as ethers.providers.JsonRpcProvider[];
+    return Object.freeze(
+      provider.providers
+    ) as ethers.providers.JsonRpcProvider[];
   }
-  return [provider];
+  return Object.freeze([provider]);
 }
 
 function createTxDelivery(
@@ -154,36 +177,10 @@ function createTxDelivery(
   );
 }
 
-function buildWaitFn(deliveryPromises: Promise<TransactionResponse>[]) {
-  return async (confirmations?: number) => {
-    const receipts = (
-      await Promise.allSettled(
-        deliveryPromises.map((txResponse) =>
-          txResponse.then((txResponse) =>
-            RedstoneCommon.timeout(txResponse.wait(confirmations), 10_000)
-          )
-        )
-      )
-    )
-      .filter((result) => result.status === "fulfilled")
-      .map((result) => result.value);
-
-    if (receipts.length > 1) {
-      const hashes = Array.from(
-        new Set(receipts.map((r) => r.transactionHash))
-      );
-      if (hashes.length === 1) {
-        return receipts[0];
-      }
-      throw new Error(
-        `Network between rpcs is forked - received more than one successful receipts (${receipts.length}). Possible transactions: ${hashes.join(", ")}`
-      );
-    } else if (receipts.length === 0) {
-      throw new Error(
-        "Transaction was mined but reverted with error OR we failed to fetch it"
-      );
-    } else {
-      return receipts[0];
-    }
-  };
-}
+const getTxReceiptDesc = (receipt: TransactionReceipt) => {
+  return `Transaction ${receipt.transactionHash} mined with SUCCESS(status: ${
+    receipt.status
+  }) in block #${receipt.blockNumber}[tx index: ${
+    receipt.transactionIndex
+  }]. gas_used=${receipt.gasUsed.toString()} effective_gas_price=${receipt.effectiveGasPrice.toString()} confirmations=${receipt.confirmations}`;
+};

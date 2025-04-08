@@ -27,6 +27,13 @@ export const RETRY_CONFIG: Omit<RedstoneCommon.RetryConfig, "fn"> = {
   waitBetweenMs: 1000,
 };
 
+/**
+ * Since we're relying on an agreement provider,
+ * there’s a chance one provider might be one(or more) blocks ahead of the others.
+ * When awaiting the transaction, we wait only for the fastest provider, and then we verify the state in the next iteration.
+ * If we're working with an outdated state based on the median block number,
+ * we’ll trigger another transaction update to stay "current" - it is better to trigger extra transaction, then delay whole iteration
+ */
 const getProvider = (chainId: number): providers.Provider => {
   const { publicRpcUrls, name } = getChainConfigByChainId(
     getLocalChainConfigs(),
