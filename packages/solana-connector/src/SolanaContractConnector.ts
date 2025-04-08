@@ -3,8 +3,10 @@ import {
   IPricesContractAdapter,
 } from "@redstone-finance/sdk";
 import { Connection, Keypair, PublicKey } from "@solana/web3.js";
+import { DEFAULT_SOLANA_CONFIG } from "./config";
+import { PriceAdapterContract } from "./price_adapter/PriceAdapterContract";
 import { SolanaPricesContractAdapter } from "./price_adapter/SolanaPricesContractAdapter";
-import { PriceAdapterContract } from "./PriceAdapterContract";
+import { SolanaTxDeliveryMan } from "./SolanaTxDeliveryMan";
 
 export class SolanaContractConnector
   implements IContractConnector<IPricesContractAdapter>
@@ -24,10 +26,18 @@ export class SolanaContractConnector
     if (!this.adapter) {
       const contract = PriceAdapterContract.createMultiContract(
         this.connection,
-        this.address,
-        this.keypair
+        this.address
       );
-      this.adapter = new SolanaPricesContractAdapter(contract);
+
+      const txDeliveryMan = this.keypair
+        ? SolanaTxDeliveryMan.createMultiTxDeliveryMan(
+            this.connection,
+            this.keypair,
+            DEFAULT_SOLANA_CONFIG
+          )
+        : undefined;
+
+      this.adapter = new SolanaPricesContractAdapter(contract, txDeliveryMan);
     }
 
     return Promise.resolve(this.adapter);
