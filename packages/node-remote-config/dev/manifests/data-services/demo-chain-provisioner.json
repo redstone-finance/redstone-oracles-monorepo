@@ -363,7 +363,8 @@
         "curve-ethereum-frax",
         "curve-ethereum-usdc",
         "uniswap-v3-ethereum-usdt-100",
-        "uniswap-v2-ethereum-usdc"
+        "uniswap-v2-ethereum-usdc",
+        "uniswap-v3-ethereum-usdc-100"
       ],
       "deviationCheck": {
         "deviationWithRecentValues": {
