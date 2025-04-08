@@ -22,7 +22,7 @@ import {
 
 export type TransactionInstructionsCreator<T> = (inputs: T[]) => Promise<
   {
-    ix: TransactionInstruction;
+    instruction: TransactionInstruction;
     id: T;
   }[]
 >;
@@ -66,6 +66,10 @@ export class SolanaTxDeliveryMan {
     return new SolanaTxDeliveryMan(multiProvider, keypair, config);
   }
 
+  public getPublicKey() {
+    return this.keypair.publicKey;
+  }
+
   private async sendTransactionsWithRetry<T>(
     txIds: T[],
     creator: TransactionInstructionsCreator<T>,
@@ -101,8 +105,8 @@ export class SolanaTxDeliveryMan {
     };
 
     const transactionsToSend = await creator(txIds);
-    const promises = transactionsToSend.map(({ id, ix }) =>
-      sendAndConfirm(id, ix)
+    const promises = transactionsToSend.map(({ id, instruction }) =>
+      sendAndConfirm(id, instruction)
     );
     await Promise.allSettled(promises);
 
