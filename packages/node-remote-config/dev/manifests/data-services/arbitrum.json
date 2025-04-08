@@ -813,7 +813,8 @@
         "uniswap-v3-ethereum-usdt-100",
         "uniswap-v4-ethereum-usdt-100",
         "uniswap-v3-ethereum-mnt-3000",
-        "curve-ethereum-usdt"
+        "curve-ethereum-usdt",
+        "uniswap-v3-ethereum-usdc-100"
       ],
       "deviationCheck": {
         "deviationWithRecentValues": {
@@ -1092,6 +1093,48 @@
       ],
       "denomination": "USD",
       "rateFeed": false
+    },
+    "SUI": {
+      "source": [
+        "binance-btc",
+        "binance-usdc",
+        "binance-usdt",
+        "bitget-usdt",
+        "bitmart-usdt",
+        "bingx-usdt",
+        "bybit-usdc",
+        "bybit-usdt",
+        "gate-usdt",
+        "kucoin-usdt",
+        "kraken-usd",
+        "lbank-usdt",
+        "mexc-usdt",
+        "okx-usdc",
+        "okx-usdt",
+        "xt"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "GM_GMX_GMX": {
+      "source": ["arbitrum-evm-fetcher-gmx"],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "GM_SOL_SOL": {
+      "source": ["arbitrum-evm-fetcher-gmx"],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "GM_SUI_WETH_USDC": {
+      "source": ["arbitrum-evm-fetcher-gmx"],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "GM_SEI_WETH_USDC": {
+      "source": ["arbitrum-evm-fetcher-gmx"],
+      "denomination": "USD",
+      "rateFeed": false
     }
   },
   "multiPointPackages": {
@@ -1186,7 +1229,12 @@
       "AERO",
       "BRETT",
       "DEGEN",
-      "MNT"
+      "MNT",
+      "SUI",
+      "GM_GMX_GMX",
+      "GM_SOL_SOL",
+      "GM_SUI_WETH_USDC",
+      "GM_SEI_WETH_USDC"
     ]
   }
 }
