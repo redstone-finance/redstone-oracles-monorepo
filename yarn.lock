@@ -9181,6 +9181,7 @@ __metadata:
     "@types/lodash": "npm:^4.14.195"
     "@types/node-schedule": "npm:^2.1.0"
     "@types/prompts": "npm:^2.4.2"
+    "@types/xml2js": "npm:^0.4.11"
     arweave: "npm:^1.14.4"
     axios: "npm:^1.7.9"
     decimal.js: "npm:^10.4.3"
@@ -9192,6 +9193,7 @@ __metadata:
     node-schedule: "npm:^2.1.1"
     prompts: "npm:^2.4.2"
     sort-deep-object-arrays: "npm:^1.1.2"
+    xml2js: "npm:^0.4.23"
     zod: "npm:^3.22.4"
   languageName: unknown
   linkType: soft
@@ -13057,6 +13059,15 @@ __metadata:
   dependencies:
     "@types/node": "npm:*"
   checksum: 10c0/e9af279b984c4a04ab53295a40aa95c3e9685f04888df5c6920860d1dd073fcc57c7bd33578a04b285b2c655a0b52258d34bee0a20569dca8defb8393e1e5d29
+  languageName: node
+  linkType: hard
+
+"@types/xml2js@npm:^0.4.11":
+  version: 0.4.14
+  resolution: "@types/xml2js@npm:0.4.14"
+  dependencies:
+    "@types/node": "npm:*"
+  checksum: 10c0/06776e7f7aec55a698795e60425417caa7d7db3ff680a7b4ccaae1567c5fec28ff49b9975e9a0d74ff4acb8f4a43730501bbe64f9f761d784c6476ba4db12e13
   languageName: node
   linkType: hard
 
