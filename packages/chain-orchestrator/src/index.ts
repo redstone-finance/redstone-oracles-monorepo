@@ -5,6 +5,7 @@ export * from "./blockchain-service/IBlockchainService";
 export * from "./blockchain-service/MovementBlockchainService";
 export * from "./blockchain-service/NonEvmBlockchainService";
 export * from "./blockchain-service/RadixBlockchainService";
+export * from "./blockchain-service/SolanaBlockchainService";
 export * from "./blockchain-service/SuiBlockchainService";
 export * from "./blockchain-service/unsupported-param";
 export * from "./get-rpc-urls";
