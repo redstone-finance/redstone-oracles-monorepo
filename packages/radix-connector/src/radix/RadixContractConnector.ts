@@ -27,4 +27,12 @@ export class RadixContractConnector<Adapter>
       .parseEther(await this.client.getXRDBalance(address, blockNumber))
       .toBigInt();
   }
+
+  async transfer(toAddress: string, amount: number) {
+    return await this.client.transfer(toAddress, amount);
+  }
+
+  async getSignerAddress() {
+    return await this.client.getAccountAddress();
+  }
 }

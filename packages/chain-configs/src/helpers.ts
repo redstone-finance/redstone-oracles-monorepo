@@ -28,10 +28,13 @@ export function getChainConfigUnsafe(
 
 export function getNetworkName(
   chainConfigs: ChainConfigs,
-  chainId: number | string
+  chainId: number | string,
+  chainType?: ChainType
 ): string {
   const networkName = Object.entries(chainConfigs).find(
-    ([_, v]) => v.chainId === Number(chainId)
+    ([_, v]) =>
+      v.chainId === Number(chainId) &&
+      conformsToChainType(v.chainType, chainType)
   )?.[0];
   RedstoneCommon.assert(
     networkName,

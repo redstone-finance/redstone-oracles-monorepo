@@ -15,6 +15,7 @@ export * from "./misc";
 export * from "./numbers";
 export * from "./objects";
 export * from "./p-throttle";
+export * from "./private-key";
 export * from "./retry";
 export * from "./SetWithTTL";
 export * from "./simple-cache";

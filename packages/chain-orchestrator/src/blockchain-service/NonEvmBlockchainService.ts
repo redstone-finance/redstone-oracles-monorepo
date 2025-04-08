@@ -17,6 +17,20 @@ export abstract class NonEvmBlockchainService implements IBlockchainService {
     );
   }
 
+  async transfer(toAddress: string, amount: number) {
+    if (!this.connector.transfer) {
+      throw new Error("Method not implemented.");
+    }
+    await this.connector.transfer(toAddress, amount);
+  }
+
+  getSignerAddress(): Promise<string> {
+    if (!this.connector.getSignerAddress) {
+      throw new Error("Method not implemented.");
+    }
+    return this.connector.getSignerAddress();
+  }
+
   getBlockNumber(): Promise<number> {
     return this.connector.getBlockNumber();
   }
