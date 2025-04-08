@@ -8861,9 +8861,11 @@ __metadata:
   resolution: "@redstone-finance/lambda-multi-top-up@workspace:packages/lambda/lambda-multi-top-up"
   dependencies:
     "@redstone-finance/chain-configs": "workspace:*"
+    "@redstone-finance/chain-orchestrator": "workspace:*"
     "@redstone-finance/evm-multicall": "workspace:*"
     "@redstone-finance/internal-utils": "workspace:*"
     "@redstone-finance/lambda-wallets-balances-notifier": "workspace:*"
+    "@redstone-finance/on-chain-relayer-common": "workspace:*"
     "@redstone-finance/rpc-providers": "workspace:*"
     "@redstone-finance/utils": "workspace:*"
     "@types/aws-lambda": "npm:^8.10.145"
@@ -9091,6 +9093,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@redstone-finance/on-chain-relayer-common@workspace:packages/on-chain-relayer-common"
   dependencies:
+    "@redstone-finance/chain-configs": "workspace:*"
     "@redstone-finance/utils": "workspace:*"
     zod: "npm:^3.22.4"
   languageName: unknown

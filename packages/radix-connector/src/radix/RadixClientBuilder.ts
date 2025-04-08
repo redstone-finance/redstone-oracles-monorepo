@@ -1,15 +1,16 @@
+import { RedstoneCommon } from "@redstone-finance/utils";
 import { RadixApiClient } from "./RadixApiClient";
 import { RadixClient } from "./RadixClient";
 import {
   DEFAULT_RADIX_CLIENT_CONFIG,
   RadixClientConfig,
 } from "./RadixClientConfig";
-import { RadixPrivateKey, RadixSigner } from "./RadixSigner";
+import { RadixSigner } from "./RadixSigner";
 
 export class RadixClientBuilder {
   private urls: string[] = [];
   private networkId?: number;
-  private privateKey?: RadixPrivateKey;
+  private privateKey?: RedstoneCommon.PrivateKey;
   private clientConfig = DEFAULT_RADIX_CLIENT_CONFIG;
 
   withNetworkBasePath(basePath?: string) {
@@ -34,7 +35,7 @@ export class RadixClientBuilder {
     return this;
   }
 
-  withPrivateKey(privateKey?: RadixPrivateKey) {
+  withPrivateKey(privateKey?: RedstoneCommon.PrivateKey) {
     this.privateKey = privateKey;
 
     return this;
