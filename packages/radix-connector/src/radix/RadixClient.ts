@@ -10,6 +10,7 @@ import {
 } from "@radixdlt/radix-engine-toolkit";
 import { loggerFactory, RedstoneCommon } from "@redstone-finance/utils";
 import { hexlify } from "ethers/lib/utils";
+import { TransferXRDRadixMethod } from "../methods/TransferXRDRadixMethod";
 import { RadixApiClient } from "./RadixApiClient";
 import {
   ALLOWED_FORWARD_EPOCH_COUNT,
@@ -40,21 +41,24 @@ export class RadixClient {
 
   async call<T>(
     method: RadixInvocation<T>,
-    proofResourceId?: string
+    proofResourceId?: string,
+    maxTxSendAttempts = this.config.maxTxSendAttempts
   ): Promise<T> {
     return await this.callWithProvider(
       () => Promise.resolve(method),
-      proofResourceId
+      proofResourceId,
+      maxTxSendAttempts
     );
   }
 
   async callWithProvider<T>(
     invocationProvider: () => Promise<RadixInvocation<T>>,
-    proofResourceId?: string
+    proofResourceId?: string,
+    maxTxSendAttempts = this.config.maxTxSendAttempts
   ) {
     for (
       let iterationIndex = 0;
-      iterationIndex < this.config.maxTxSendAttempts;
+      iterationIndex < maxTxSendAttempts;
       iterationIndex++
     ) {
       try {
@@ -329,6 +333,24 @@ export class RadixClient {
     }
 
     return transactionId;
+  }
+
+  async transfer(toAddress: string, amount: number) {
+    const addressBook = await RadixEngineToolkit.Utils.knownAddresses(
+      this.networkId
+    );
+    const fromAddress = await this.getAccountAddress();
+
+    await this.call(
+      new TransferXRDRadixMethod(
+        fromAddress,
+        toAddress,
+        addressBook.resourceAddresses.xrd,
+        amount
+      ),
+      undefined,
+      1
+    );
   }
 
   getNotarySigner() {

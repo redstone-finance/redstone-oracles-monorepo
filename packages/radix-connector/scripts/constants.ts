@@ -4,11 +4,7 @@ import "dotenv/config";
 import fs from "fs";
 import path from "path";
 import { z } from "zod";
-import {
-  DEFAULT_RADIX_CLIENT_CONFIG,
-  RadixClientBuilder,
-  RadixPrivateKey,
-} from "../src";
+import { DEFAULT_RADIX_CLIENT_CONFIG, RadixClientBuilder } from "../src";
 
 const DEPLOYMENT_DIR = RedstoneCommon.getFromEnv(
   "DEPLOYMENT_DIR",
@@ -47,12 +43,13 @@ const PRIVATE_KEY_SCHEME = RedstoneCommon.getFromEnv(
   "PRIVATE_KEY_SCHEME",
   z.enum(["secp256k1", "ed25519"]).default("secp256k1")
 );
-export const PRIVATE_KEY: RadixPrivateKey | undefined = PRIVATE_KEY_VALUE
-  ? {
-      scheme: PRIVATE_KEY_SCHEME,
-      value: PRIVATE_KEY_VALUE,
-    }
-  : undefined;
+export const PRIVATE_KEY: RedstoneCommon.PrivateKey | undefined =
+  PRIVATE_KEY_VALUE
+    ? {
+        scheme: PRIVATE_KEY_SCHEME,
+        value: PRIVATE_KEY_VALUE,
+      }
+    : undefined;
 
 export async function loadAddress(
   entityType: "component" | "package",
