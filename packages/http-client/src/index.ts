@@ -119,4 +119,9 @@ export class HttpClient {
   post<R>(urlSuffix: string, body: unknown, config: AxiosRequestConfig) {
     return this.axiosInstance.post<R>(urlSuffix, body, config);
   }
+
+  getStream(urlSuffix: string, config: AxiosRequestConfig = {}) {
+    config.responseType = "stream";
+    return this.axiosInstance.get(urlSuffix, config);
+  }
 }
