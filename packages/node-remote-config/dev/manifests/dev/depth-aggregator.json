@@ -1248,26 +1248,6 @@
     "ETH_ELE": {
       "source": ["flashbots-data-api", "beaconchain-api"]
     },
-    "SolvBTC.ENA": {
-      "source": ["dodoex-bnb-solvbtc", "pancake-swap-arbitrumone-solvbtc-500"],
-      "valueCapConfig": {
-        "upper": {
-          "token": "BTC",
-          "multiplier": 1.01
-        }
-      }
-    },
-    "SolvBTC.ENA/BTC": {
-      "source": ["non-usd-based"],
-      "valueCapConfig": {
-        "upper": {
-          "value": 1.01
-        }
-      }
-    },
-    "SolvBTC.ENA/BTC-TWAP-60": {
-      "source": ["twap-local-redstone-primary-prod"]
-    },
     "SEI": {
       "source": [
         "binance-usdt",

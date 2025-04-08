@@ -1436,36 +1436,6 @@
       "denomination": "ETH",
       "rateFeed": false
     },
-    "SolvBTC.ENA": {
-      "source": [
-        "dodoex-bnb-solvbtc",
-        "pancake-swap-arbitrumone-solvbtc-500",
-        "pancake-swap-bnb-solvbtc-500"
-      ],
-      "valueCapConfig": {
-        "upper": {
-          "token": "BTC",
-          "multiplier": 1.01
-        }
-      },
-      "denomination": "USD",
-      "rateFeed": false
-    },
-    "SolvBTC.ENA/BTC": {
-      "source": ["non-usd-based"],
-      "valueCapConfig": {
-        "upper": {
-          "value": 1.01
-        }
-      },
-      "denomination": "BTC",
-      "rateFeed": false
-    },
-    "SolvBTC.ENA/BTC-TWAP-60": {
-      "source": ["twap-local-redstone-primary-prod"],
-      "denomination": "BTC",
-      "rateFeed": false
-    },
     "SEI": {
       "source": [
         "binance-usdt",
