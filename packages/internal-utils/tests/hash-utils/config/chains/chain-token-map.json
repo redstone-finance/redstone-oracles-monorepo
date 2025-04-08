@@ -416,10 +416,6 @@
       "address": "0x498bf2b1e120fed3ad3d42ea2165e9b73f99c1e5",
       "decimals": 18
     },
-    "SolvBTC.ENA": {
-      "address": "0xaFAfd68AFe3fe65d376eEC9Eab1802616cFacCb8",
-      "decimals": 18
-    },
     "USD+": {
       "address": "0xe80772Eaf6e2E18B651F160Bc9158b2A5caFCA65",
       "decimals": 6
@@ -678,10 +674,6 @@
   "bnb": {
     "BTCB": {
       "address": "0x7130d2A12B9BCbFAe4f2634d864A1Ee1Ce3Ead9c",
-      "decimals": 18
-    },
-    "SolvBTC.ENA": {
-      "address": "0x53E63a31fD1077f949204b94F431bCaB98F72BCE",
       "decimals": 18
     },
     "SolvBTC": {
