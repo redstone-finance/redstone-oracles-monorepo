@@ -4,6 +4,7 @@ import {
   PublicKey,
   TransactionBuilderIntentSignaturesStep,
 } from "@radixdlt/radix-engine-toolkit";
+import { RedstoneCommon } from "@redstone-finance/utils";
 
 export interface IRadixSigner {
   asyncSign: (
@@ -14,17 +15,12 @@ export interface IRadixSigner {
   getNotarySigner: () => PrivateKey | undefined;
 }
 
-export interface RadixPrivateKey {
-  scheme: "secp256k1" | "ed25519";
-  value: string;
-}
-
 export class RadixSigner implements IRadixSigner {
   private readonly notarySigner: PrivateKey;
   private readonly additionalSigners?: PrivateKey[];
   constructor(
-    notaryKey: RadixPrivateKey,
-    additionalSignerKeys?: RadixPrivateKey[]
+    notaryKey: RedstoneCommon.PrivateKey,
+    additionalSignerKeys?: RedstoneCommon.PrivateKey[]
   ) {
     this.notarySigner = RadixSigner.makeSigner(notaryKey);
     this.additionalSigners = additionalSignerKeys?.map(RadixSigner.makeSigner);
@@ -40,7 +36,7 @@ export class RadixSigner implements IRadixSigner {
     return await signatureStep.notarize(this.notarySigner);
   }
 
-  private static makeSigner(privateKey: RadixPrivateKey) {
+  private static makeSigner(privateKey: RedstoneCommon.PrivateKey) {
     switch (privateKey.scheme) {
       case "ed25519":
         return new PrivateKey.Ed25519(privateKey.value);
