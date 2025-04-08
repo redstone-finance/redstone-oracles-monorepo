@@ -38,14 +38,12 @@ export abstract class EvmContractAdapter<Contract extends RedstoneEvmContract>
     const metadataTimestamp = Date.now();
     const updateTx = await this.makeUpdateTx(paramsProvider, metadataTimestamp);
 
-    const result = (await this.txDeliveryMan.deliver(updateTx, {
+    return await this.txDeliveryMan.deliver(updateTx, {
       deferredCallData: () =>
         this.makeUpdateTx(paramsProvider, metadataTimestamp).then(
           (tx) => tx.data
         ),
       paramsProvider,
-    } as RelayerTxDeliveryManContext)) as { hash: string } | undefined;
-
-    return result?.hash;
+    } as RelayerTxDeliveryManContext);
   }
 }
