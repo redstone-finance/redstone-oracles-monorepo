@@ -26,7 +26,8 @@ export class SolanaContractConnector
     if (!this.adapter) {
       const contract = PriceAdapterContract.createMultiContract(
         this.connection,
-        this.address
+        this.address,
+        this.keypair?.publicKey
       );
 
       const txDeliveryMan = this.keypair
