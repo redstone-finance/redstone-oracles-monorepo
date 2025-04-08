@@ -8899,8 +8899,7 @@ __metadata:
   dependencies:
     "@aws-sdk/client-ssm": "npm:^3.696.0"
     "@redstone-finance/utils": "workspace:*"
-    "@types/ed25519": "npm:^0.0.3"
-    ed25519: "npm:^0.0.5"
+    elliptic: "npm:^6.6.1"
     ethers: "npm:^5.7.2"
     zod: "npm:^3.22.4"
   languageName: unknown
@@ -12279,15 +12278,6 @@ __metadata:
     "@types/docker-modem": "npm:*"
     "@types/node": "npm:*"
   checksum: 10c0/8700bf91ad88e25ab5b2088e3e3e797cc81012af7b81cc208fb066a0a7ef50bac27f0f113cbc065be4eaadb6f407d3826ba3faca67be8ada9d593162fd558114
-  languageName: node
-  linkType: hard
-
-"@types/ed25519@npm:^0.0.3":
-  version: 0.0.3
-  resolution: "@types/ed25519@npm:0.0.3"
-  dependencies:
-    "@types/node": "npm:*"
-  checksum: 10c0/7386b0816be01669b9f734cb8feb1b29b8f52966aafba4ff71a88db9fb840464c425aea59c99c67fd886c32358431d81a3dcc86d53f30d7b6dc8691bbe665116
   languageName: node
   linkType: hard
 
@@ -18552,17 +18542,6 @@ __metadata:
     jsbn: "npm:~0.1.0"
     safer-buffer: "npm:^2.1.0"
   checksum: 10c0/6cf168bae1e2dad2e46561d9af9cbabfbf5ff592176ad4e9f0f41eaaf5fe5e10bb58147fe0a804de62b1ee9dad42c28810c88d652b21b6013c47ba8efa274ca1
-  languageName: node
-  linkType: hard
-
-"ed25519@npm:^0.0.5":
-  version: 0.0.5
-  resolution: "ed25519@npm:0.0.5"
-  dependencies:
-    bindings: "npm:^1.5.0"
-    nan: "npm:^2.14.1"
-    node-gyp: "npm:latest"
-  checksum: 10c0/53d4d891bb64acfb902555b8e8035808deefe7af6eafc7c6906c2091ec134bfbf3bf49e12d8e518d934ac316b654d058dc935b3a4aa1cc1859dc17fff670e688
   languageName: node
   linkType: hard
 
@@ -26969,15 +26948,6 @@ __metadata:
   version: 2.0.0
   resolution: "mute-stream@npm:2.0.0"
   checksum: 10c0/2cf48a2087175c60c8dcdbc619908b49c07f7adcfc37d29236b0c5c612d6204f789104c98cc44d38acab7b3c96f4a3ec2cfdc4934d0738d876dbefa2a12c69f4
-  languageName: node
-  linkType: hard
-
-"nan@npm:^2.14.1":
-  version: 2.22.2
-  resolution: "nan@npm:2.22.2"
-  dependencies:
-    node-gyp: "npm:latest"
-  checksum: 10c0/971f963b8120631880fa47a389c71b00cadc1c1b00ef8f147782a3f4387d4fc8195d0695911272d57438c11562fb27b24c4ae5f8c05d5e4eeb4478ba51bb73c5
   languageName: node
   linkType: hard
 
