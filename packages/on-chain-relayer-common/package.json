@@ -15,6 +15,7 @@
     "preversion": "yarn build"
   },
   "dependencies": {
+    "@redstone-finance/chain-configs": "workspace:*",
     "@redstone-finance/utils": "workspace:*",
     "zod": "^3.22.4"
   },
