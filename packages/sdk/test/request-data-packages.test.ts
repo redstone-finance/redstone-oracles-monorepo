@@ -112,7 +112,7 @@ describe("request-data-packages", () => {
         uniqueSignersCount: 5,
       })
     ).rejects.toThrow(
-      "Too few unique signers for the data feed: BTC. Expected: 5. Received: 4"
+      "Too few data packages with unique signers for the data feed: BTC. Expected: 5. Received: 4"
     );
   });
 
@@ -495,7 +495,7 @@ describe("request-data-packages", () => {
         dataPackagesIds: ["ETH"],
         authorizedSigners: [MOCK_WALLET.address],
       })
-    ).rejects.toThrowError(/Too few unique signers/);
+    ).rejects.toThrowError(/Too few data packages with unique signers/);
   });
 
   test("Should reject when payload does not follow schema", async () => {
