@@ -5,14 +5,18 @@ import {
 } from "@redstone-finance/sdk";
 import { loggerFactory } from "@redstone-finance/utils";
 import { BigNumberish } from "ethers";
-import { PriceAdapterContract } from "../PriceAdapterContract";
+import { SolanaTxDeliveryMan } from "../SolanaTxDeliveryMan";
+import { PriceAdapterContract } from "./PriceAdapterContract";
 
 export class SolanaPricesContractAdapter
   implements IMultiFeedPricesContractAdapter
 {
   protected readonly logger = loggerFactory("solana-price-adapter");
 
-  constructor(private contract: PriceAdapterContract) {}
+  constructor(
+    private contract: PriceAdapterContract,
+    private readonly txDeliveryMan?: SolanaTxDeliveryMan
+  ) {}
 
   getSignerAddress() {
     const pk = this.contract.program.provider.publicKey;
@@ -43,7 +47,50 @@ export class SolanaPricesContractAdapter
   async writePricesFromPayloadToContract(
     paramsProvider: ContractParamsProvider
   ) {
-    return await this.contract.writePrices(paramsProvider);
+    if (!this.txDeliveryMan) {
+      throw new Error("Can't write prices, TxDeliveryMan not set");
+    }
+
+    const metadataTimestamp = Date.now();
+
+    const txSignatures = await this.txDeliveryMan.sendTransactions(
+      paramsProvider.getDataFeedIds(),
+      (feedIds) => this.retryFetch(paramsProvider, feedIds, metadataTimestamp)
+    );
+
+    this.logger.log(`Sent transactions [${txSignatures.toString()}].`);
+    return txSignatures[txSignatures.length - 1];
+  }
+
+  private async retryFetch(
+    paramsProvider: ContractParamsProvider,
+    feedIds: string[],
+    metadataTimestamp: number
+  ) {
+    this.logger.debug(`Fetching payloads for [${feedIds.toString()}].`);
+    const provider = ContractParamsProvider.copyForFeedIds(
+      paramsProvider,
+      feedIds
+    );
+
+    const { payloads } = ContractParamsProvider.extractMissingValues(
+      await provider.prepareSplitPayloads({
+        metadataTimestamp,
+        withUnsignedMetadata: true,
+      }),
+      this.logger
+    );
+
+    return await Promise.all(
+      Object.entries(payloads).map(async ([feedId, payload]) => ({
+        instruction: await this.contract.writePriceTx(
+          this.txDeliveryMan!.getPublicKey(),
+          feedId,
+          payload
+        ),
+        id: feedId,
+      }))
+    );
   }
 
   async readPricesFromContract(
