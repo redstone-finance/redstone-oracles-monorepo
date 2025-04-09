@@ -29,7 +29,7 @@ import { runIteration } from "./run-iteration";
 
 export class MqttRunner {
   private subscriber?: DataPackageSubscriber;
-  private queue = new OperationQueue();
+  private readonly queue = new OperationQueue();
   private readonly logger = loggerFactory("relayer/mqtt-runner");
   private readonly rateLimitCircuitBreaker = new RateLimitsCircuitBreaker(
     1_000,
@@ -130,9 +130,8 @@ export class MqttRunner {
     };
 
     if (_.isEqual(params, this.subscriber?.params)) {
-      return this.logger.debug(
-        "Params remain unchanged, doesn't need to resubscribe"
-      );
+      this.logger.debug("Params remain unchanged, doesn't need to resubscribe");
+      return;
     }
 
     this.logger.info("Subscribing...", params);
@@ -163,9 +162,10 @@ export class MqttRunner {
       !relayerConfig.mqttFallbackCheckIntervalMs ||
       !relayerConfig.mqttFallbackMaxDelayBetweenPublishesMs
     ) {
-      return this.logger.warn(
+      this.logger.warn(
         `Fallback IS NOT enabled. mqttFallbackCheckIntervalMs or mqttFallbackMaxDelayBetweenPublishesMs is missing`
       );
+      return;
     }
 
     this.subscriber!.enableFallback(
