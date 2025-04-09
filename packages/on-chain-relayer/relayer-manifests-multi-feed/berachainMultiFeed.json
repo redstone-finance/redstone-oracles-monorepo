@@ -133,6 +133,27 @@
         "deviationPercentage": 0.5,
         "timeSinceLastUpdateInMilliseconds": 21600000
       }
+    },
+    "pufETH_FUNDAMENTAL": {
+      "priceFeedAddress": "0x65640Cf8900adF5fD4E9b19B69791f0EaF8b2FF4",
+      "updateTriggersOverrides": {
+        "deviationPercentage": 0.5,
+        "timeSinceLastUpdateInMilliseconds": 21600000
+      }
+    },
+    "iBERA": {
+      "priceFeedAddress": "0xC9e11c60e24BEF478cC999fA9fA2d89cC098A86e",
+      "updateTriggersOverrides": {
+        "deviationPercentage": 0.5,
+        "timeSinceLastUpdateInMilliseconds": 3600000
+      }
+    },
+    "iBGT": {
+      "priceFeedAddress": "0x243507C8C114618d7C8AD94b51118dB7b4e32ECe",
+      "updateTriggersOverrides": {
+        "deviationPercentage": 0.5,
+        "timeSinceLastUpdateInMilliseconds": 3600000
+      }
     }
   }
 }
