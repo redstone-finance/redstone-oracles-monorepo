@@ -1135,6 +1135,27 @@
       "source": ["arbitrum-evm-fetcher-gmx"],
       "denomination": "USD",
       "rateFeed": false
+    },
+    "KAITO": {
+      "source": [
+        "binance-usdc",
+        "binance-usdt",
+        "bingx-usdt",
+        "bitget-usdt",
+        "bitmart-usdt",
+        "bitrue-usdt",
+        "coinbase-usd",
+        "coingecko",
+        "gate-usdt",
+        "kraken-usd",
+        "kucoin-usdt",
+        "lbank-usdt",
+        "mexc-usdt",
+        "okx-usdt",
+        "xt"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
     }
   },
   "multiPointPackages": {
@@ -1234,7 +1255,8 @@
       "GM_GMX_GMX",
       "GM_SOL_SOL",
       "GM_SUI_WETH_USDC",
-      "GM_SEI_WETH_USDC"
+      "GM_SEI_WETH_USDC",
+      "KAITO"
     ]
   }
 }
