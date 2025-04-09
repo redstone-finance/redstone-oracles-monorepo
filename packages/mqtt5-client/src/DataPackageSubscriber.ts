@@ -5,6 +5,8 @@ import {
 import {
   DataPackagesResponse,
   pickDataFeedPackagesClosestToMedian,
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  type requestDataPackages,
   SignedDataPackageSchema,
 } from "@redstone-finance/sdk";
 import { loggerFactory, RedstoneCommon } from "@redstone-finance/utils";
@@ -95,8 +97,8 @@ export class DataPackageSubscriber {
     number,
     Record<string, SignedDataPackage[] | undefined>
   >();
-  private scheduledPublishes = new RedstoneCommon.SetWithTTL();
-  private lastPublishedState: LastPublishedFeedState;
+  private readonly scheduledPublishes = new RedstoneCommon.SetWithTTL();
+  private readonly lastPublishedState: LastPublishedFeedState;
   private circuitBreaker?: RateLimitsCircuitBreaker;
   fallbackInterval?: NodeJS.Timeout;
 
@@ -332,7 +334,8 @@ export class DataPackageSubscriber {
       this.logger.debug(
         `Got packages from all signers timestamp=${packageTimestamp}, will try to publish instantly`
       );
-      return this.publish(packageTimestamp);
+      this.publish(packageTimestamp);
+      return;
     }
 
     const key = packageTimestamp.toString();
@@ -398,9 +401,10 @@ export class DataPackageSubscriber {
     );
 
     if (!this.subscribeCallback) {
-      return this.logger.warn(
+      this.logger.warn(
         `subscribeCallback is undefined - have already unsubscribed?`
       );
+      return;
     }
 
     this.subscribeCallback(packagesToPublish);
