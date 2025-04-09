@@ -52,8 +52,10 @@ export class SolanaContractConnector
     return Promise.resolve(true);
   }
 
-  async getNormalizedBalance(address: string, _blockNumber?: number) {
-    const balance = await this.connection.getBalance(new PublicKey(address));
+  async getNormalizedBalance(address: string, slot?: number) {
+    const balance = await this.connection.getBalance(new PublicKey(address), {
+      minContextSlot: slot,
+    });
     return BigInt(balance) * BigInt(10 ** 9);
   }
 }

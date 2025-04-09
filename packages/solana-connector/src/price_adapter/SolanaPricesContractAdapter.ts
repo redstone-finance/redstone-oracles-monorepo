@@ -25,17 +25,18 @@ export class SolanaPricesContractAdapter
       : Promise.reject(new Error("Signer required"));
   }
 
-  async getUniqueSignerThreshold(): Promise<number> {
-    return await this.contract.getUniqueSignerThreshold();
+  async getUniqueSignerThreshold(slot?: number): Promise<number> {
+    return await this.contract.getUniqueSignerThreshold(slot);
   }
 
   async readLatestUpdateBlockTimestamp(
-    feedId?: string
+    feedId?: string,
+    slot?: number
   ): Promise<number | undefined> {
     if (!feedId) {
       return undefined;
     }
-    const priceData = await this.contract.getPriceData(feedId);
+    const priceData = await this.contract.getPriceData(feedId, slot);
 
     return priceData.writeTimestamp?.toNumber();
   }
@@ -94,24 +95,31 @@ export class SolanaPricesContractAdapter
   }
 
   async readPricesFromContract(
-    paramsProvider: ContractParamsProvider
+    paramsProvider: ContractParamsProvider,
+    slot?: number
   ): Promise<BigNumberish[]> {
     const feedIds = paramsProvider.getDataFeedIds();
     const promises = await Promise.all(
-      feedIds.map((feedId) => this.contract.getPriceData(feedId))
+      feedIds.map((feedId) => this.contract.getPriceData(feedId, slot))
     );
     return promises.map((priceData) => BigInt(toNumber(priceData.value)));
   }
 
-  async readTimestampFromContract(feedId: string): Promise<number> {
-    const priceData = await this.contract.getPriceData(feedId);
+  async readTimestampFromContract(
+    feedId: string,
+    slot?: number
+  ): Promise<number> {
+    const priceData = await this.contract.getPriceData(feedId, slot);
 
     return priceData.timestamp.toNumber();
   }
 
-  async readContractData(feedIds: string[]): Promise<ContractData> {
+  async readContractData(
+    feedIds: string[],
+    slot?: number
+  ): Promise<ContractData> {
     const promises = await Promise.allSettled(
-      feedIds.map((feedId) => this.contract.getPriceData(feedId))
+      feedIds.map((feedId) => this.contract.getPriceData(feedId, slot))
     );
 
     const values = promises

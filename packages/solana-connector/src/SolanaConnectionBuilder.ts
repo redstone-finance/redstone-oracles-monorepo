@@ -10,7 +10,7 @@ export const CLUSTER_NAMES: { [chainId: number]: Cluster } = {
 
 export const SINGLE_EXECUTION_TIMEOUT_MS = 7_000;
 export const ALL_EXECUTIONS_TIMEOUT_MS = 30_000;
-const BLOCK_NUMBER_EXECUTION_TIMEOUT_MS = 1_500;
+export const BLOCK_NUMBER_EXECUTION_TIMEOUT_MS = 1_500;
 
 export class SolanaConnectionBuilder {
   private cluster!: Cluster;
@@ -33,6 +33,7 @@ export class SolanaConnectionBuilder {
       rpcUrls.map((url) => new Connection(url, "confirmed")),
       {
         getBlockHeight: ceilMedianConsensusExecutor,
+        getSlot: ceilMedianConsensusExecutor,
       },
       { ...MultiExecutor.DEFAULT_CONFIG, ...config }
     );
