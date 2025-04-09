@@ -1524,6 +1524,7 @@
         "uniswap-v4-ethereum-usdt-100",
         "uniswap-v3-ethereum-mnt-3000",
         "curve-ethereum-usdt",
+        "pancake-swap-bnb-usdt-100",
         "uniswap-v3-ethereum-usdc-100"
       ],
       "denomination": "USD",
