@@ -1157,6 +1157,24 @@
       ],
       "denomination": "USD",
       "rateFeed": false
+    },
+    "SEI": {
+      "source": [
+        "binance-usdt",
+        "bingx-usdt",
+        "bitget-usdt",
+        "bitmart-usdt",
+        "bitrue-usdt",
+        "bybit-usdt",
+        "coinbase-usd",
+        "gate-usdt",
+        "kraken-usd",
+        "kucoin-usdt",
+        "lbank-usdt",
+        "xt"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
     }
   },
   "multiPointPackages": {
@@ -1257,7 +1275,8 @@
       "GM_SOL_SOL",
       "GM_SUI_WETH_USDC",
       "GM_SEI_WETH_USDC",
-      "KAITO"
+      "KAITO",
+      "SEI"
     ]
   }
 }
