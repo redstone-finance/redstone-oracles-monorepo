@@ -234,6 +234,13 @@
         "deviationPercentage": 0.1,
         "timeSinceLastUpdateInMilliseconds": 86400000
       }
+    },
+    "PRIME_ECHELON": {
+      "priceFeedAddress": "0xC328CDf06CBc77134B84e1f6ed452774947146b6",
+      "updateTriggersOverrides": {
+        "deviationPercentage": 1,
+        "timeSinceLastUpdateInMilliseconds": 86400000
+      }
     }
   }
 }
