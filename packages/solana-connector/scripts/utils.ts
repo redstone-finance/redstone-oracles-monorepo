@@ -1,12 +1,9 @@
 import { RedstoneCommon } from "@redstone-finance/utils";
-import { Cluster, Connection, LAMPORTS_PER_SOL } from "@solana/web3.js";
-import { readFileSync } from "fs";
-import path from "node:path";
+import { Connection, LAMPORTS_PER_SOL } from "@solana/web3.js";
 import { z } from "zod";
 import { makeKeypair } from "../src";
-import { readCluster } from "../src/utils";
 
-export const PRICE_ADAPTER_NAME = "price_adapter";
+export const CONTRACT_NAME = "price_adapter";
 
 export function readKeypair() {
   const privateKey = RedstoneCommon.getFromEnv(
@@ -16,23 +13,16 @@ export function readKeypair() {
   return makeKeypair(privateKey);
 }
 
-export function makeConnection(apiUrl: string) {
-  return new Connection(apiUrl, "confirmed");
+export function readUrl() {
+  return RedstoneCommon.getFromEnv("URL", z.string().url());
 }
 
-export function readIdl(cluster?: Cluster) {
-  const value = readFileSync(
-    path.join(
-      __dirname,
-      "..",
-      "deployed",
-      cluster ?? readCluster(),
-      `${PRICE_ADAPTER_NAME}.json`
-    ),
-    "utf8"
-  );
+export function readDeployDir() {
+  return RedstoneCommon.getFromEnv("DEPLOY_DIR", z.string().default("solana"));
+}
 
-  return JSON.parse(value) as unknown;
+export function makeConnection(apiUrl = readUrl()) {
+  return new Connection(apiUrl, "confirmed");
 }
 
 export function balanceFromSol(balance: number) {

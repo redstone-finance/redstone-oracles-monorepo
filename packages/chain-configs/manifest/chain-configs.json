@@ -1157,6 +1157,22 @@
       "twoDimensionalFees": false,
       "isMainnet": false
     },
+    "solana-mainnet": {
+      "name": "Solana Mainnet",
+      "chainId": 1,
+      "chainType": "solana",
+      "currencySymbol": "SOL",
+      "publicRpcUrls": ["https://api.mainnet-beta.solana.com"],
+      "avgBlockTimeMs": 1000,
+      "multicall3": {
+        "address": "",
+        "type": "Multicall3"
+      },
+      "isAuctionModel": false,
+      "fallbackToEthMaxPriorityFeePerGas": true,
+      "twoDimensionalFees": false,
+      "isMainnet": false
+    },
     "hyperevm": {
       "name": "HyperEVM",
       "chainId": 999,
