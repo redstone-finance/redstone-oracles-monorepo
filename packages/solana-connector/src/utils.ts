@@ -20,12 +20,6 @@ const BYTE_LENGTHS = {
   SECRET_KEY: 64,
 };
 
-export function makeMockKeypair() {
-  const mockSeed: number[] = Array.from({ length: BYTE_LENGTHS.PRIVATE_KEY });
-
-  return makeKeypair(mockSeed);
-}
-
 export function makeKeypair(privateKeyInput: number[] | string) {
   const privateKey = arrayify(privateKeyInput, { allowMissingPrefix: true });
   const privateKeyBuffer = Buffer.from(privateKey);
