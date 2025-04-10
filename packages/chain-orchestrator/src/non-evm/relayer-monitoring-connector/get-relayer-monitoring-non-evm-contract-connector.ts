@@ -16,7 +16,6 @@ import {
   RadixClientBuilder,
 } from "@redstone-finance/radix-connector";
 import {
-  makeMockKeypair,
   SolanaConnectionBuilder,
   SolanaContractConnector,
 } from "@redstone-finance/solana-connector";
@@ -75,12 +74,9 @@ function getSolanaContractConnector(
     .withRpcUrls(rpcUrls)
     .build();
 
-  const keypair = makeMockKeypair();
-
   return new SolanaContractConnector(
     connection,
-    relayerManifest.adapterContract,
-    keypair
+    relayerManifest.adapterContract
   );
 }
 
