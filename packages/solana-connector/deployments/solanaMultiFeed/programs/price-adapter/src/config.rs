@@ -19,7 +19,7 @@ pub const SOLANA_CONFIG: Config = Config {
 pub struct Config {
     pub signer_count_threshold: u8,
     pub signers: [SignerAddressBs; 5],
-    pub trusted_updaters: [Pubkey; 1],
+    pub trusted_updaters: [Pubkey; 3],
     pub max_timestamp_delay_ms: u64,
     pub max_timestamp_ahead_ms: u64,
     pub min_interval_between_updates_ms: u64,
@@ -33,9 +33,17 @@ const REDSTONE_PRIMARY_PROD_ALLOWED_SIGNERS: [SignerAddressBs; 5] = [
     hex!("9c5ae89c4af6aa32ce58588dbaf90d18a855b6de"),
 ];
 
-const TRUSTED_UPDATERS: [Pubkey; 1] = [Pubkey::new_from_array(hex!(
-    "f7a8654c99499d762eccafd584e8b16ab5119c162611f7c99f70d2d781fb3931"
-))];
+const TRUSTED_UPDATERS: [Pubkey; 3] = [
+    Pubkey::new_from_array(hex!(
+        "b4e73475beda3eca111c79ccc60c1a0d89f8196296b5496152681cbd14e7e43c"
+    )),
+    Pubkey::new_from_array(hex!(
+        "f3b5b7044e1b342d0bf326929622247d18b225e6a8f15f224601d5549666ae5a"
+    )),
+    Pubkey::new_from_array(hex!(
+        "69a55bf8821ef3655be7b47902a1866cf9aef506d6b3b86221c35bcdfe323903"
+    )),
+];
 
 impl Config {
     pub fn redstone_signers(&self) -> Vec<SignerAddress> {
