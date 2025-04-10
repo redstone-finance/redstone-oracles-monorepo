@@ -8,6 +8,7 @@ import {
   sampleRun,
 } from "@redstone-finance/sdk";
 import "dotenv/config";
+import { hexlify } from "ethers/lib/utils";
 import _ from "lodash";
 import {
   CLUSTER_NAMES,
@@ -19,6 +20,9 @@ import { RDS_PROGRAM_ADDRESS } from "./consts";
 import { readKeypair } from "./utils";
 
 async function main() {
+  const keypair = readKeypair();
+  console.log("Public key:", hexlify(keypair.publicKey.toBytes()));
+
   const rpcUrls = getChainConfigByChainId(
     await fetchChainConfigs(),
     Number(_.findKey(CLUSTER_NAMES, (c) => c === readCluster())!),
@@ -36,7 +40,7 @@ async function main() {
   const solanaContractConnector = new SolanaContractConnector(
     connection,
     RDS_PROGRAM_ADDRESS,
-    readKeypair()
+    keypair
   );
 
   await sampleRun(paramsProvider, solanaContractConnector);

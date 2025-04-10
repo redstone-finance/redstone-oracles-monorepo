@@ -34,7 +34,7 @@ const REDSTONE_PRIMARY_PROD_ALLOWED_SIGNERS: [SignerAddressBs; 5] = [
 ];
 
 const TRUSTED_UPDATERS: [Pubkey; 1] = [Pubkey::new_from_array(hex!(
-    "5566853a727cdde13350fa618d1b5f21397ec5d8099f8963c56743119478e86f"
+    "f7a8654c99499d762eccafd584e8b16ab5119c162611f7c99f70d2d781fb3931"
 ))];
 
 impl Config {

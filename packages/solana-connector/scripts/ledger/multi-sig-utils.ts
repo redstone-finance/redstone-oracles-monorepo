@@ -28,7 +28,7 @@ export class SquadsMultisig {
     const vaultPda = this.vaultPda();
 
     console.log(
-      `VaultPda ${vaultPda.toBase58()}, dont forget to top up with some Sol`
+      `VaultPda ${vaultPda.toBase58()}, do not forget to top up with some Sol`
     );
 
     const transactionIndex = transactionIdx
