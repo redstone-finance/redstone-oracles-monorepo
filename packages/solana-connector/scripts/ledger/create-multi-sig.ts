@@ -1,4 +1,3 @@
-import { RedstoneCommon } from "@redstone-finance/utils";
 import { Keypair, PublicKey } from "@solana/web3.js";
 import * as multisig from "@sqds/multisig";
 import "dotenv/config";
@@ -8,8 +7,7 @@ import { MULTI_SIG_PUBLIC_KEYS, THRESHOLD } from "./config";
 const { Permissions } = multisig.types;
 
 async function createMultiSig() {
-  const url = RedstoneCommon.getFromEnv("URL");
-  const connection = makeConnection(url);
+  const connection = makeConnection();
   const creator = readKeypair();
   const createKey = Keypair.generate();
 
