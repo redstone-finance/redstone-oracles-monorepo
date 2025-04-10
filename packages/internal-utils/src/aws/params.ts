@@ -92,7 +92,7 @@ export const secretsToEnv = async (): Promise<void> => {
     .map(async ([key, value]) => {
       const envVariable = key.replace("_ARN", "");
       if (envVariable === "" || !value || value === "") {
-        return await Promise.resolve();
+        return;
       }
 
       const secret = await getSSMParameterValue(value);
@@ -100,10 +100,6 @@ export const secretsToEnv = async (): Promise<void> => {
         process.env[envVariable] = secret;
       }
     });
-
-  if (promises.length === 0) {
-    return await Promise.resolve();
-  }
 
   try {
     await Promise.all(promises);
