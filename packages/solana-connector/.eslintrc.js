@@ -4,5 +4,5 @@ module.exports = {
     tsconfigRootDir: __dirname,
     sourceType: "module",
   },
-  ignorePatterns: ["solana"],
+  ignorePatterns: ["solana", "deployments"],
 };
