@@ -4,7 +4,7 @@ import "dotenv/config";
 import { hexlify } from "ethers/lib/utils";
 import { z } from "zod";
 import { RadixClient } from "../../src";
-import { SetRolaRadixInvocation } from "../../src/contracts/proxy/methods/ChangeManagerRole";
+import { SetRoleRadixInvocation } from "../../src/contracts/proxy/methods/ChangeManagerRole";
 import { makeMultisigAccessRule } from "../../src/radix/utils";
 import {
   FEED_ID,
@@ -18,7 +18,7 @@ const MULTI_SIG_PUBLIC_KEYS = [""];
 
 export async function getTx(client: RadixClient, networkId: number) {
   const componentId = await loadAddress(`component`, PROXY_NAME, FEED_ID);
-  const invocation = new SetRolaRadixInvocation(
+  const invocation = new SetRoleRadixInvocation(
     componentId,
     "proxy_man_auth",
     await makeMultisigAccessRule(THRESHOLD, MULTI_SIG_PUBLIC_KEYS, networkId)
