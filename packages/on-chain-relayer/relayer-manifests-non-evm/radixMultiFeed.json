@@ -12,7 +12,7 @@
   "dataServiceId": "redstone-primary-prod",
   "priceFeeds": {
     "XRD": {
-      "priceFeedAddress": "component_rdx1crfvwcm8x29rwdsxv5yjz0872852farnfqm35knj26nm2rlwearsyc"
+      "priceFeedAddress": "component_rdx1cqjuuz74q7x9fk7r55sf2kkpd7cde83y0h3vsdlr6x96px0fgqdqz4"
     }
   }
 }
