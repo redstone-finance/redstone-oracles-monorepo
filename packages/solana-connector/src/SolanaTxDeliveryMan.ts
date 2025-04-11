@@ -40,7 +40,7 @@ export class SolanaTxDeliveryMan {
   ) {
     if (!this.provider.sendAndConfirm) {
       throw new Error(
-        "Required method by `SolanaTxDeliveryMan` `sendAndConfirm` method is not implemented by `provider`."
+        "Required method by `SolanaTxDeliveryMan` `sendAndConfirm` method is not implemented by `provider`"
       );
     }
   }
@@ -85,10 +85,10 @@ export class SolanaTxDeliveryMan {
     this.logger.info(
       `Sending transactions, attempt ${iterationIndex + 1}/${this.config.maxTxAttempts}`
     );
-    this.logger.info(`Trying to send transactions for ${txIds.toString()}.`);
+    this.logger.info(`Trying to send transactions for ${txIds.toString()}`);
 
     const failedTxs: string[] = [];
-    const successfullTxs: TransactionSignature[] = [];
+    const successfulTxs: TransactionSignature[] = [];
 
     const sendAndConfirmWrapper = async (
       id: string,
@@ -96,7 +96,7 @@ export class SolanaTxDeliveryMan {
     ) => {
       try {
         const signature = await this.sendAndConfirm(id, instruction);
-        successfullTxs.push(signature);
+        successfulTxs.push(signature);
       } catch (err) {
         failedTxs.push(id);
         this.logger.error(
@@ -117,17 +117,17 @@ export class SolanaTxDeliveryMan {
         creator,
         iterationIndex + 1
       );
-      successfullTxs.push(...txSignatures);
+      successfulTxs.push(...txSignatures);
     }
 
-    return successfullTxs;
+    return successfulTxs;
   }
 
   async sendTransactions(
     txIds: string[],
     ixCreator: TransactionInstructionsCreator
   ) {
-    return await this.sendTransactionsWithRetry(txIds, ixCreator, 0);
+    return await this.sendTransactionsWithRetry(txIds, ixCreator);
   }
 
   private async wrapWithGas(ix: TransactionInstruction, iteration = 0) {
@@ -152,9 +152,12 @@ export class SolanaTxDeliveryMan {
       ix,
     ];
 
-    this.logger.info(
-      `Setting transaction compute units to ${computeUnits}; Additional cost of transaction: ${computeUnits * priorityFeeUnitPriceCostInMicroLamports} microLamports`
-    );
+    this.logger.debug(`Setting transaction compute units to ${computeUnits}`);
+    if (priorityFeeUnitPriceCostInMicroLamports) {
+      this.logger.info(
+        `Additional cost of transaction: ${computeUnits * priorityFeeUnitPriceCostInMicroLamports} microLamports.`
+      );
+    }
 
     const message = new TransactionMessage({
       payerKey: this.keypair.publicKey,
@@ -189,7 +192,7 @@ export class SolanaTxDeliveryMan {
     const finalFeePerUnit = Math.min(fee, this.config.maxPricePerComputeUnit);
 
     this.logger.info(
-      `RecentFee: ${recentFee}, calculated fee by iteration: ${priorityFeeUnitPriceCostInMicroLamports}.`
+      `RecentFee: ${recentFee}, calculated fee by iteration: ${priorityFeeUnitPriceCostInMicroLamports}`
     );
     this.logger.info(
       `Max price per compute unit: ${this.config.maxPricePerComputeUnit}`
@@ -230,7 +233,7 @@ export class SolanaTxDeliveryMan {
         return status === "confirmed" || status == "finalized";
       },
       RETRY_COUNT,
-      `Could not confirm transaction ${txSignature} for ${id}.`,
+      `Could not confirm transaction ${txSignature} for ${id}`,
       RETRY_WAIT_TIME_MS,
       "SolanaTxDeliveryMan getSignatureStatus"
     );
