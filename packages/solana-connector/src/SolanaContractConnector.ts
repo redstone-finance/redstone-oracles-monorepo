@@ -16,7 +16,8 @@ export class SolanaContractConnector
   constructor(
     private readonly connection: Connection,
     private readonly address?: string,
-    private readonly keypair?: Keypair
+    private readonly keypair?: Keypair,
+    private readonly config = DEFAULT_SOLANA_CONFIG
   ) {}
 
   getAdapter(): Promise<SolanaPricesContractAdapter> {
@@ -34,7 +35,7 @@ export class SolanaContractConnector
         ? SolanaTxDeliveryMan.createMultiTxDeliveryMan(
             this.connection,
             this.keypair,
-            DEFAULT_SOLANA_CONFIG
+            this.config
           )
         : undefined;
 
