@@ -9173,6 +9173,7 @@ __metadata:
     "@redstone-finance/agents": "workspace:*"
     "@redstone-finance/chain-configs": "workspace:*"
     "@redstone-finance/fetchers": "workspace:*"
+    "@redstone-finance/internal-utils": "workspace:*"
     "@redstone-finance/mqtt5-client": "workspace:*"
     "@redstone-finance/node-commons": "workspace:*"
     "@redstone-finance/protocol": "workspace:*"
