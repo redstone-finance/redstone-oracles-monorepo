@@ -3,7 +3,7 @@ import {
   ContractParamsProvider,
   IMultiFeedPricesContractAdapter,
 } from "@redstone-finance/sdk";
-import { loggerFactory } from "@redstone-finance/utils";
+import { loggerFactory, RedstoneCommon } from "@redstone-finance/utils";
 import { BigNumberish } from "ethers";
 import { SolanaTxDeliveryMan } from "../SolanaTxDeliveryMan";
 import { PriceAdapterContract } from "./PriceAdapterContract";
@@ -59,7 +59,9 @@ export class SolanaPricesContractAdapter
       (feedIds) => this.retryFetch(paramsProvider, feedIds, metadataTimestamp)
     );
 
-    this.logger.log(`Sent transactions [${txSignatures.toString()}].`);
+    this.logger.log(
+      `Sent ${txSignatures.length} transaction${RedstoneCommon.getS(txSignatures.length)}: [${txSignatures.toString()}]`
+    );
     return txSignatures[txSignatures.length - 1];
   }
 
