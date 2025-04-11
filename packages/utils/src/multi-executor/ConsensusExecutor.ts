@@ -38,7 +38,7 @@ export abstract class ConsensusExecutor extends ParallelExecutor {
   }
 
   private getQuorum(totalLength: number) {
-    return Math.ceil(totalLength * this.quorumRatio);
+    return totalLength <= 2 ? 1 : Math.ceil(totalLength * this.quorumRatio);
   }
 }
 

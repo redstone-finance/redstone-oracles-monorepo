@@ -127,12 +127,7 @@ export class SolanaTxDeliveryMan {
     txIds: string[],
     ixCreator: TransactionInstructionsCreator
   ) {
-    const txSignatures = await this.sendTransactionsWithRetry(
-      txIds,
-      ixCreator,
-      0
-    );
-    return txSignatures;
+    return await this.sendTransactionsWithRetry(txIds, ixCreator, 0);
   }
 
   private async wrapWithGas(ix: TransactionInstruction, iteration = 0) {
@@ -157,9 +152,8 @@ export class SolanaTxDeliveryMan {
       ix,
     ];
 
-    this.logger.info(`Setting transaction compute units to ${computeUnits}`);
     this.logger.info(
-      `Additional cost of transaction := ${computeUnits * priorityFeeUnitPriceCostInMicroLamports} microLamports.`
+      `Setting transaction compute units to ${computeUnits}; Additional cost of transaction: ${computeUnits * priorityFeeUnitPriceCostInMicroLamports} microLamports`
     );
 
     const message = new TransactionMessage({
