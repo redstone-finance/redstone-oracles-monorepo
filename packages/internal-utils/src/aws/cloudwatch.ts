@@ -17,7 +17,7 @@ export async function sendMetrics(
   metricName: string,
   values: {
     value: number;
-    dimensions: {
+    dimensions?: {
       Name: string;
       Value: string;
     }[];
@@ -77,3 +77,13 @@ export async function getAlarmTags(
 function isTagDefined(tag: Tag) {
   return tag.Key !== undefined && tag.Value !== undefined;
 }
+
+export const sendHealthcheckMetric = async (healthcheckMetricName?: string) => {
+  const METRICS_NAMESPACE = "Health-Check-Metrics";
+  if (!healthcheckMetricName) {
+    return;
+  }
+  const start = Date.now();
+  await sendMetrics(METRICS_NAMESPACE, healthcheckMetricName, [{ value: 1 }]);
+  console.info(`Sent healthcheck metric in ${Date.now() - start}ms`);
+};
