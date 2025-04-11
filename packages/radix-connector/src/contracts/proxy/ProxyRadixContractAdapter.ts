@@ -1,6 +1,6 @@
 import { Value } from "@radixdlt/radix-engine-toolkit";
 import { RadixContractAdapter } from "../../radix/RadixContractAdapter";
-import { SetRolaRadixInvocation } from "./methods/ChangeManagerRole";
+import { SetRoleRadixInvocation } from "./methods/ChangeManagerRole";
 import { SetGlobalContractAddressInvocationMethod } from "./methods/SetGlobalContractAddressInvocationMethod";
 
 export class ProxyFeedRadixContractAdapter extends RadixContractAdapter {
@@ -12,7 +12,7 @@ export class ProxyFeedRadixContractAdapter extends RadixContractAdapter {
 
   public async changeManagerAccessRule(newAccessRule: Value) {
     await this.client.call(
-      new SetRolaRadixInvocation(
+      new SetRoleRadixInvocation(
         this.componentId,
         "proxy_man_auth",
         newAccessRule
