@@ -14,7 +14,7 @@ import {
 } from "../constants";
 
 const THRESHOLD = 2;
-const MULTI_SIG_PUBLIC_KEYS = [""]; // ed public keys hex without 0x prefix
+const MULTI_SIG_PUBLIC_KEYS = [""];
 
 export async function getTx(client: RadixClient, networkId: number) {
   const componentId = await loadAddress(`component`, PROXY_NAME, FEED_ID);
