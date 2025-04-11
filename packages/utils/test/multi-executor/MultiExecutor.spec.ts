@@ -41,7 +41,7 @@ describe("MultiExecutor", () => {
     expect(sut.that.property).toEqual(12);
   });
 
-  it("Race should properly pick first non-failing value", async () => {
+  it("Fallback should properly pick first non-failing value", async () => {
     for (const instances of [
       CLIENTS,
       CLIENTS_AND_FAILING,
@@ -195,7 +195,7 @@ describe("MultiExecutor", () => {
     const sut = makeSut(instances, config);
 
     await expect(sut.someHexFunction("1234")).rejects.toThrowError(
-      "Consensus failed: got 1 successful result, needed at least 2; AggregateError: 2 fails, errors: 123401"
+      "Consensus failed: got 1 successful result, needed at least 2; AggregateError: 2 fails, errors: ERROR: 123401"
     );
   });
 
@@ -210,7 +210,7 @@ describe("MultiExecutor", () => {
     const sut = makeSut(instances, config);
 
     await expect(sut.someHexFunction("1234")).rejects.toThrowError(
-      "Consensus failed: got 2 successful results, needed at least 3; AggregateError: 3 fails, errors: 123408"
+      "Consensus failed: got 2 successful results, needed at least 3; AggregateError: 3 fails, errors: ERROR: 123408"
     );
   });
 
@@ -222,7 +222,7 @@ describe("MultiExecutor", () => {
     });
 
     await expect(sut.someHexFunction("1234")).rejects.toThrowError(
-      "Consensus failed: got 3 successful results, needed at least 4; AggregateError: 1 fail, errors: 123401"
+      "Consensus failed: got 3 successful results, needed at least 4; AggregateError: 1 fail, errors: ERROR: 123401"
     );
   });
 
@@ -242,6 +242,7 @@ describe("MultiExecutor", () => {
         new MockClient(2, 2 * EXEC_TIME, true),
       ],
       [CLIENTS[1]],
+      [CLIENTS[1], new MockClient(1, EXEC_TIME)],
     ]) {
       const sut = makeSut(instances, {
         ...config,
@@ -433,7 +434,10 @@ describe("MultiExecutor", () => {
   });
 
   it("Agreement should pick the fastest value when only 2 clients are defined", async () => {
-    for (const instances of [[CLIENTS[2], CLIENTS[1]]]) {
+    for (const instances of [
+      [CLIENTS[2], CLIENTS[1]],
+      [new MockClient(8, 0, true), CLIENTS[1]],
+    ]) {
       const sut = makeSut(
         instances,
         {
@@ -442,6 +446,22 @@ describe("MultiExecutor", () => {
         },
         { ...DEFAULT_CONFIG, agreementQuorumNumber: 2 }
       );
+
+      const result = await sut.someNumberFunction(234);
+      expect(result).toEqual(234001);
+
+      instances.forEach((instance) => {
+        expect(instance.calledArgs).toStrictEqual([234]);
+      });
+    }
+  });
+
+  it("Consensus should pick the only value when one of 2 clients fails", async () => {
+    for (const instances of [[new MockClient(8, 0, true), CLIENTS[1]]]) {
+      const sut = makeSut(instances, {
+        ...config,
+        someNumberFunction: ExecutionMode.CONSENSUS_ALL_EQUAL,
+      });
 
       const result = await sut.someNumberFunction(234);
       expect(result).toEqual(234001);
@@ -492,7 +512,7 @@ describe("MultiExecutor", () => {
     });
 
     await expect(sut.someHexFunction("1234")).rejects.toThrowError(
-      `Agreement failed: got max 0 equal results, needed at least 1; AggregateError: 1 fail, errors: 123408`
+      `Agreement failed: got max 0 equal results, needed at least 1; AggregateError: 1 fail, errors: ERROR: 123408`
     );
   });
 
@@ -502,9 +522,15 @@ describe("MultiExecutor", () => {
       someHexFunction: ExecutionMode.RACE,
     });
 
-    await expect(sut.someHexFunction("1234")).rejects.toThrowError(
-      `All promises were rejected`
-    );
+    try {
+      await sut.someHexFunction("1234");
+    } catch (e) {
+      const aggregatedError = e as AggregateError;
+
+      expect(aggregatedError.message).toEqual("All promises were rejected");
+      expect(aggregatedError.errors.length).toEqual(1);
+      expect(aggregatedError.errors[0]).toEqual(new Error("ERROR: 123408"));
+    }
   });
 
   it("Consensus should fail when there's only one value that fails", async () => {
@@ -514,7 +540,7 @@ describe("MultiExecutor", () => {
     });
 
     await expect(sut.someHexFunction("1234")).rejects.toThrowError(
-      `Consensus failed: got 0 successful results, needed at least 1; AggregateError: 1 fail, errors: 123408`
+      `Consensus failed: got 0 successful results, needed at least 1; AggregateError: 1 fail, errors: ERROR: 123408`
     );
   });
 
@@ -556,7 +582,7 @@ describe("MultiExecutor", () => {
     );
 
     await expect(sut.someHexFunction("1")).rejects.toThrowError(
-      `Consensus failed: got 1 successful result, needed at least 3; AggregateError: 3 fails, errors: 100`
+      `Consensus failed: got 1 successful result, needed at least 3; AggregateError: 3 fails, errors: ERROR: 100`
     );
   });
 

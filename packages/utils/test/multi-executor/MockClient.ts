@@ -35,7 +35,7 @@ export class MockClient {
 
     const result = 1000 * arg + this.ident;
     if (this.isFailing) {
-      throw new Error(`${result}`);
+      throw new Error(`ERROR: ${result}`);
     }
 
     return result;
@@ -46,7 +46,7 @@ export class MockClient {
 
     const result = arg + hexlify(this.ident).substring(2);
     if (this.isFailing) {
-      throw new Error(`${result}`);
+      throw new Error(`ERROR: ${result}`);
     }
 
     return result;
