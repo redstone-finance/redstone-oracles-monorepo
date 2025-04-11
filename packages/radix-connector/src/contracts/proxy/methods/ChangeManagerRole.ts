@@ -1,9 +1,9 @@
 import { ManifestBuilder, Value } from "@radixdlt/radix-engine-toolkit";
 import { VoidRadixInvocation } from "../../../radix/RadixInvocation";
 import { RadixTransaction } from "../../../radix/RadixTransaction";
-import { makeSetRolaArg } from "../../../radix/utils";
+import { makeSetRoleArg } from "../../../radix/utils";
 
-export class SetRolaRadixInvocation extends VoidRadixInvocation {
+export class SetRoleRadixInvocation extends VoidRadixInvocation {
   constructor(
     componentId: string,
     subject: string,
@@ -16,7 +16,7 @@ export class SetRolaRadixInvocation extends VoidRadixInvocation {
     return builder.callRoleAssignmentMethod(
       this.subject,
       "set",
-      makeSetRolaArg(this.name, this.newAccessRule)
+      makeSetRoleArg(this.name, this.newAccessRule)
     );
   }
 
