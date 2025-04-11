@@ -20,10 +20,13 @@ import {
   SINGLE_EXECUTION_TIMEOUT_MS,
 } from "./SolanaConnectionBuilder";
 
-export type TransactionInstructionsCreator<T> = (inputs: T[]) => Promise<
+const RETRY_COUNT = 10;
+const RETRY_WAIT_TIME_MS = 400;
+
+export type TransactionInstructionsCreator = (inputs: string[]) => Promise<
   {
     instruction: TransactionInstruction;
-    id: T;
+    id: string;
   }[]
 >;
 
@@ -51,9 +54,9 @@ export class SolanaTxDeliveryMan {
       connection,
       (conn) => new AnchorProvider(conn, new Wallet(keypair)),
       {
-        sendAndConfirm: MultiExecutor.ExecutionMode.RACE,
         connection: {
           getLatestBlockhash: MultiExecutor.ExecutionMode.AGREEMENT,
+          sendTransaction: MultiExecutor.ExecutionMode.RACE,
         },
       },
       {
@@ -70,9 +73,9 @@ export class SolanaTxDeliveryMan {
     return this.keypair.publicKey;
   }
 
-  private async sendTransactionsWithRetry<T>(
-    txIds: T[],
-    creator: TransactionInstructionsCreator<T>,
+  private async sendTransactionsWithRetry(
+    txIds: string[],
+    creator: TransactionInstructionsCreator,
     iterationIndex = 0
   ) {
     if (iterationIndex >= this.config.maxTxAttempts) {
@@ -84,29 +87,27 @@ export class SolanaTxDeliveryMan {
     );
     this.logger.info(`Trying to send transactions for ${txIds.toString()}.`);
 
-    const failedTxs: T[] = [];
+    const failedTxs: string[] = [];
     const successfullTxs: TransactionSignature[] = [];
 
-    const sendAndConfirm = async (
-      id: T,
+    const sendAndConfirmWrapper = async (
+      id: string,
       instruction: TransactionInstruction
     ) => {
       try {
-        const signature = await this.provider.sendAndConfirm!(
-          await this.wrapWithGas(instruction, iterationIndex)
-        );
+        const signature = await this.sendAndConfirm(id, instruction);
         successfullTxs.push(signature);
       } catch (err) {
         failedTxs.push(id);
         this.logger.error(
-          `Failed transaction for ${RedstoneCommon.stringify(id)}, ${RedstoneCommon.stringifyError(err)}.`
+          `Failed transaction for ${id}, ${RedstoneCommon.stringifyError(err)}.`
         );
       }
     };
 
     const transactionsToSend = await creator(txIds);
     const promises = transactionsToSend.map(({ id, instruction }) =>
-      sendAndConfirm(id, instruction)
+      sendAndConfirmWrapper(id, instruction)
     );
     await Promise.allSettled(promises);
 
@@ -122,9 +123,9 @@ export class SolanaTxDeliveryMan {
     return successfullTxs;
   }
 
-  async sendTransactions<T>(
-    txIds: T[],
-    ixCreator: TransactionInstructionsCreator<T>
+  async sendTransactions(
+    txIds: string[],
+    ixCreator: TransactionInstructionsCreator
   ) {
     const txSignatures = await this.sendTransactionsWithRetry(
       txIds,
@@ -202,5 +203,42 @@ export class SolanaTxDeliveryMan {
     this.logger.info(`Setting transaction cost per unit to ${finalFeePerUnit}`);
 
     return finalFeePerUnit;
+  }
+
+  private async sendAndConfirm(
+    id: string,
+    instruction: TransactionInstruction,
+    iterationIndex = 0
+  ) {
+    const tx = await this.wrapWithGas(instruction, iterationIndex);
+    tx.sign([this.keypair]);
+
+    const signature = await this.provider.connection.sendTransaction(tx, {
+      skipPreflight: true,
+    });
+
+    await this.waitForTransaction(signature, id);
+
+    return signature;
+  }
+
+  private async waitForTransaction(txSignature: string, id: string) {
+    await RedstoneCommon.waitForSuccess(
+      async () => {
+        const result =
+          await this.provider.connection.getSignatureStatus(txSignature);
+        if (result.value !== null && result.value.err !== null) {
+          throw new Error(RedstoneCommon.stringify(result.value.err));
+        }
+
+        const status = result.value?.confirmationStatus;
+
+        return status === "confirmed" || status == "finalized";
+      },
+      RETRY_COUNT,
+      `Could not confirm transaction ${txSignature} for ${id}.`,
+      RETRY_WAIT_TIME_MS,
+      "SolanaTxDeliveryMan getSignatureStatus"
+    );
   }
 }
