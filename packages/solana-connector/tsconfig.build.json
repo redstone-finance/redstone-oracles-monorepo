@@ -5,7 +5,8 @@
     "dist",
     "**/*spec.ts",
     "jest.config.ts",
-    "solana"
+    "solana",
+    "deployments"
   ],
   "references": [
     {

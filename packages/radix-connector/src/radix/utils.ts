@@ -20,7 +20,7 @@ export interface NonFungibleGlobalIdInput {
   localId: string;
 }
 
-export function makeSetRolaArg(metadataName: string, newAccessRule: Value) {
+export function makeSetRoleArg(metadataName: string, newAccessRule: Value) {
   return [
     enumeration(0), // enum ModuleId::Main = 0,
     str(metadataName),
