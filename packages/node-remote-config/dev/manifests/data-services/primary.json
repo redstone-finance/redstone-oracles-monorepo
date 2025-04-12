@@ -103,7 +103,6 @@
         "bitmart-usdt",
         "bitrue-usdt",
         "bybit-usdt",
-        "coinbase-usd",
         "coingecko",
         "coinmarketcap",
         "curve-ethereum-usdt",
@@ -143,7 +142,6 @@
         "curve-ethereum-usdc-multi-block",
         "fraxswap-ethereum-fxs",
         "fraxswap-ethereum-weth",
-        "uniswap-v3-ethereum-fxs-10000",
         "uniswap-v3-ethereum-usdc-500"
       ],
       "deviationCheck": {
@@ -227,7 +225,6 @@
     },
     "SWETH": {
       "source": [
-        "balancer-ethereum-weth-multi-block",
         "pancake-swap-ethereum-weth-500-multi-block",
         "uniswap-v3-ethereum-weth-500-multi-block"
       ],
@@ -598,9 +595,7 @@
         "coingecko",
         "coinmarketcap",
         "bitstamp-eur",
-        "okx-usdc",
         "bitmart-usdt",
-        "coinbase-usdc",
         "uniswap-v3-ethereum-usdc-500",
         "aerodrome-cl-base-usdc",
         "aerodrome-cl-base-usdc-2",
@@ -671,7 +666,7 @@
       "rateFeed": false
     },
     "XAU": {
-      "source": ["financialmodelingprep-usd", "finhub-usd", "twelve-data"],
+      "source": ["financialmodelingprep-usd", "twelve-data"],
       "denomination": "USD",
       "rateFeed": false
     },
@@ -727,11 +722,7 @@
       "rateFeed": false
     },
     "agEUR": {
-      "source": [
-        "curve-ethereum-euroc",
-        "uniswap-v3-arbitrumone-usdc.e-500",
-        "uniswap-v3-ethereum-usdc-3000"
-      ],
+      "source": ["curve-ethereum-euroc", "uniswap-v3-ethereum-usdc-3000"],
       "deviationCheck": {
         "deviationWithRecentValues": {
           "maxPercent": 5,
@@ -859,7 +850,6 @@
         "bitget-usdt",
         "bitmart-usdt",
         "bitrue-usdt",
-        "coinbase-usd",
         "gate-usdt",
         "kucoin-usdt",
         "lbank-usdt",
@@ -876,7 +866,6 @@
         "bitget-usdt",
         "bitmart-usdt",
         "bitrue-usdt",
-        "coinbase-usd",
         "gate-usdt",
         "kraken-usd",
         "kucoin-usdt",
@@ -1399,7 +1388,6 @@
       "source": [
         "aerodrome-cl-base-usdc",
         "aerodrome-cl-base-weth",
-        "aerodrome-cl-base-wsteth",
         "uniswap-v3-arbitrumone-usdc-100"
       ],
       "deviationCheck": {
@@ -1737,7 +1725,6 @@
     },
     "aUSD": {
       "source": [
-        "curve-ethereum-frax",
         "trader-joe-v2-avalanche-deusd",
         "trader-joe-v2-avalanche-usdc",
         "trader-joe-v2-avalanche-usdt",
@@ -1910,7 +1897,6 @@
         "bitmart-usdt",
         "bitrue-usdt",
         "bybit-usdt",
-        "coinbase-usd",
         "gate-usdt",
         "kucoin-usdt",
         "lbank-usdt"
@@ -1971,8 +1957,7 @@
         "bitrue-usdt",
         "gate-usdt",
         "kucoin-usdt",
-        "okx-usdt",
-        "uniswap-v3-ethereum-weth-3000"
+        "okx-usdt"
       ],
       "denomination": "USD",
       "rateFeed": false
