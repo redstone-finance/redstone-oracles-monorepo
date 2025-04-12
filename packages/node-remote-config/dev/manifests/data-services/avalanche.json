@@ -73,7 +73,6 @@
     },
     "PNG": {
       "source": [
-        "coinbase-usd",
         "coingecko",
         "coinmarketcap",
         "gate-usdt"
@@ -143,7 +142,6 @@
       "source": [
         "binance-usdt",
         "bitrue-usdt",
-        "coinbase-usd",
         "kucoin-usdt",
         "lbank-usdt",
         "xt"
@@ -295,7 +293,6 @@
         "bitmart-usdt",
         "bitrue-usdt",
         "bybit-usdt",
-        "coinbase-usd",
         "coingecko",
         "curve-ethereum-usdt",
         "gate-usdt",
@@ -346,9 +343,7 @@
         "coingecko",
         "coinmarketcap",
         "bitstamp-eur",
-        "okx-usdc",
         "bitmart-usdt",
-        "coinbase-usdc",
         "uniswap-v3-ethereum-usdc-500",
         "aerodrome-cl-base-usdc",
         "aerodrome-cl-base-usdc-2",
@@ -494,7 +489,6 @@
         "binance-usdt",
         "bitget-usdt",
         "bitmart-usdt",
-        "coinbase-usd",
         "gate-usdt",
         "kucoin-usdt",
         "lbank-usdt",
@@ -596,8 +590,6 @@
         "bingx-usdt",
         "bybit-usdc",
         "bybit-usdt",
-        "coinbase-usd",
-        "coinbase-usdt",
         "gate-usdt",
         "kucoin-usdt",
         "lbank-usdt",
@@ -679,7 +671,6 @@
         "curve-ethereum-usdc-multi-block",
         "fraxswap-ethereum-fxs",
         "fraxswap-ethereum-weth",
-        "uniswap-v3-ethereum-fxs-10000",
         "uniswap-v3-ethereum-usdc-500"
       ],
       "deviationCheck": {
@@ -709,7 +700,6 @@
     },
     "aUSD": {
       "source": [
-        "curve-ethereum-frax",
         "trader-joe-v2-avalanche-deusd",
         "trader-joe-v2-avalanche-usdc",
         "trader-joe-v2-avalanche-usdt",
