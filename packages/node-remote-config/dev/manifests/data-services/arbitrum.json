@@ -199,7 +199,6 @@
         "bitmart-usdt",
         "bitrue-usdt",
         "bybit-usdt",
-        "coinbase-usd",
         "coingecko",
         "curve-ethereum-usdt",
         "gate-usdt",
@@ -238,7 +237,6 @@
         "curve-ethereum-usdc-multi-block",
         "fraxswap-ethereum-fxs",
         "fraxswap-ethereum-weth",
-        "uniswap-v3-ethereum-fxs-10000",
         "uniswap-v3-ethereum-usdc-500"
       ],
       "deviationCheck": {
@@ -412,7 +410,6 @@
         "binance-usdt",
         "bitget-usdt",
         "bitmart-usdt",
-        "coinbase-usd",
         "gate-usdt",
         "kucoin-usdt",
         "lbank-usdt",
@@ -494,7 +491,6 @@
         "bingx-usdt",
         "bitget-usdt",
         "bitmart-usdt",
-        "coinbase-usd",
         "gate-usdt",
         "lbank-usdt",
         "okx-usdt",
@@ -547,7 +543,6 @@
     },
     "SWETH": {
       "source": [
-        "balancer-ethereum-weth-multi-block",
         "pancake-swap-ethereum-weth-500-multi-block",
         "uniswap-v3-ethereum-weth-500-multi-block"
       ],
@@ -683,7 +678,6 @@
         "bitget-usdt",
         "bitmart-usdt",
         "bitrue-usdt",
-        "coinbase-usd",
         "gate-usdt",
         "kraken-usd",
         "kucoin-usdt",
@@ -1038,8 +1032,6 @@
         "bingx-usdt",
         "bybit-usdc",
         "bybit-usdt",
-        "coinbase-usd",
-        "coinbase-usdt",
         "gate-usdt",
         "kucoin-usdt",
         "lbank-usdt",
@@ -1058,7 +1050,6 @@
         "bitmart-usdt",
         "bitrue-usdt",
         "bybit-usdt",
-        "coinbase-usd",
         "gate-usdt",
         "kraken-usd",
         "kucoin-usdt",
