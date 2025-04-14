@@ -1,11 +1,10 @@
 import { SolanaContractConnector } from "@redstone-finance/solana-connector";
-import { loggerFactory } from "@redstone-finance/utils";
 import { ConfirmedSignatureInfo, Connection, PublicKey } from "@solana/web3.js";
 import { NonEvmBlockchainService } from "./NonEvmBlockchainService";
 
-export class SolanaBlockchainService extends NonEvmBlockchainService {
-  private readonly logger = loggerFactory("solana-blockchain-service");
+const TRANSACTION_FETCHING_BATCH_SIZE = 1000;
 
+export class SolanaBlockchainService extends NonEvmBlockchainService {
   constructor(private connection: Connection) {
     super(new SolanaContractConnector(connection));
   }
@@ -17,20 +16,28 @@ export class SolanaBlockchainService extends NonEvmBlockchainService {
   }
 
   async getBlockWithTransactions(slot: number) {
-    const block = await this.connection.getBlock(slot, {
+    return await this.connection.getBlock(slot, {
       maxSupportedTransactionVersion: 0,
       transactionDetails: "full",
     });
-
-    return block;
   }
 
   async getTransactions(fromSlot: number, toSlot: number, addresses: string[]) {
+    const [fromSlotSignatures, toSlotSignatures] = await Promise.all([
+      await this.connection.getBlockSignatures(fromSlot),
+      await this.connection.getBlockSignatures(toSlot),
+    ]);
+    const fromSlotSignature = fromSlotSignatures.signatures[0];
+    const toSlotSignature =
+      toSlotSignatures.signatures[toSlotSignatures.signatures.length - 1];
+
     const allSignatures: ConfirmedSignatureInfo[] = [];
     for (const address of addresses) {
       allSignatures.push(
-        ...(await this.connection.getSignaturesForAddress(
-          new PublicKey(address)
+        ...(await this.getAllSignatureInfos(
+          address,
+          fromSlotSignature,
+          toSlotSignature
         ))
       );
     }
@@ -46,5 +53,33 @@ export class SolanaBlockchainService extends NonEvmBlockchainService {
     );
 
     return await Promise.all(transactionDetailsPromises);
+  }
+
+  private async getAllSignatureInfos(
+    address: string,
+    minTransactionSignature: string,
+    maxTransactionSignature: string
+  ): Promise<ConfirmedSignatureInfo[]> {
+    const result = await this.connection.getSignaturesForAddress(
+      new PublicKey(address),
+      {
+        limit: TRANSACTION_FETCHING_BATCH_SIZE,
+        before: maxTransactionSignature,
+        until: minTransactionSignature,
+      }
+    );
+
+    if (result.length === TRANSACTION_FETCHING_BATCH_SIZE) {
+      return [
+        ...result,
+        ...(await this.getAllSignatureInfos(
+          address,
+          minTransactionSignature,
+          result[0].signature
+        )),
+      ];
+    } else {
+      return result;
+    }
   }
 }
