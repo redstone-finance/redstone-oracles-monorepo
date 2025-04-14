@@ -20,8 +20,7 @@ import {
   SINGLE_EXECUTION_TIMEOUT_MS,
 } from "./SolanaConnectionBuilder";
 
-const RETRY_COUNT = 10;
-const RETRY_WAIT_TIME_MS = 400;
+const RETRY_WAIT_TIME_MS = 500;
 
 export type TransactionInstructionsCreator = (inputs: string[]) => Promise<
   {
@@ -95,7 +94,11 @@ export class SolanaTxDeliveryMan {
       instruction: TransactionInstruction
     ) => {
       try {
-        const signature = await this.sendAndConfirm(id, instruction);
+        const signature = await this.sendAndConfirm(
+          id,
+          instruction,
+          iterationIndex
+        );
         successfulTxs.push(signature);
       } catch (err) {
         failedTxs.push(id);
@@ -232,7 +235,7 @@ export class SolanaTxDeliveryMan {
 
         return status === "confirmed" || status == "finalized";
       },
-      RETRY_COUNT,
+      Math.ceil(this.config.expectedTxDeliveryTimeMs / RETRY_WAIT_TIME_MS),
       `Could not confirm transaction ${txSignature} for ${id}`,
       RETRY_WAIT_TIME_MS,
       "SolanaTxDeliveryMan getSignatureStatus"
