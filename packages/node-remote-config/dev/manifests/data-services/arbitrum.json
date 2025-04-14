@@ -975,6 +975,7 @@
     "EIGEN": {
       "source": [
         "binance-usdt",
+        "binance-usdc",
         "bingx-usdt",
         "bitget-usdt",
         "bitmart-usdt",
@@ -983,6 +984,7 @@
         "gate-usdt",
         "kraken-usd",
         "kucoin-usdt",
+        "mexc-usdt",
         "lbank-usdt",
         "okx-usdt",
         "xt"
