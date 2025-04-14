@@ -4,6 +4,7 @@ export const DEFAULT_SOLANA_CONFIG: SolanaConfig = {
   maxPricePerComputeUnit: 100_000_000,
   gasMultiplier: 5.5,
   maxTxAttempts: 5,
+  expectedTxDeliveryTimeMs: 5_000,
 };
 
 export interface SolanaConfig {
@@ -11,12 +12,14 @@ export interface SolanaConfig {
   maxPricePerComputeUnit: number;
   gasMultiplier: number;
   maxTxAttempts: number;
+  expectedTxDeliveryTimeMs: number;
 }
 
 export function createSolanaConfig(args: {
   gasLimit?: number;
   gasMultiplier?: number;
   maxTxSendAttempts?: number;
+  expectedTxDeliveryTimeMs?: number;
 }) {
   const gasMultiplier =
     args.gasMultiplier ?? DEFAULT_SOLANA_CONFIG.gasMultiplier;
@@ -25,11 +28,15 @@ export function createSolanaConfig(args: {
   const maxPricePerComputeUnit = args.gasLimit
     ? Math.floor(args.gasLimit / DEFAULT_SOLANA_CONFIG.maxComputeUnits)
     : DEFAULT_SOLANA_CONFIG.maxPricePerComputeUnit;
+  const expectedTxDeliveryTimeMs =
+    args.expectedTxDeliveryTimeMs ??
+    DEFAULT_SOLANA_CONFIG.expectedTxDeliveryTimeMs;
 
   return {
     ...DEFAULT_SOLANA_CONFIG,
     gasMultiplier,
     maxPricePerComputeUnit,
     maxTxAttempts,
+    expectedTxDeliveryTimeMs,
   };
 }

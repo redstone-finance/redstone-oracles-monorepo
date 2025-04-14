@@ -17,12 +17,14 @@ export const getSolanaContractConnector = (
     gasLimit,
     gasMultiplier,
     maxTxSendAttempts,
+    expectedTxDeliveryTimeInMS,
   } = relayerConfig;
 
   const solanaConfig = createSolanaConfig({
     gasLimit,
     gasMultiplier,
     maxTxSendAttempts,
+    expectedTxDeliveryTimeMs: expectedTxDeliveryTimeInMS,
   });
   const keypair = makeKeypair(privateKey);
   const connection = new SolanaConnectionBuilder()
