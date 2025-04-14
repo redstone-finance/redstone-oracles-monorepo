@@ -2077,6 +2077,7 @@
     "EIGEN": {
       "source": [
         "binance-usdt",
+        "binance-usdc",
         "bingx-usdt",
         "bitget-usdt",
         "bitmart-usdt",
@@ -2085,6 +2086,7 @@
         "gate-usdt",
         "kraken-usd",
         "kucoin-usdt",
+        "mexc-usdt",
         "lbank-usdt",
         "okx-usdt",
         "xt"
@@ -6784,6 +6786,44 @@
     },
     "iBGT": {
       "source": ["kodiak-berachain-wbera-3000", "bulla-berachain-wbera"],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "PROMPT": {
+      "source": [
+        "bingx-usdt",
+        "bitget-usdt",
+        "bitmart-usdt",
+        "bitrue-usdt",
+        "coinbase-usd",
+        "gate-usdt",
+        "kraken-usd",
+        "kucoin-usdt",
+        "lbank-usdt",
+        "mexc-usdt",
+        "okx-usdt",
+        "uniswap-v3-base-usdc-3000",
+        "uniswap-v3-ethereum-usdc-3000",
+        "xt"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "BABY": {
+      "source": [
+        "binance-usdc",
+        "binance-usdt",
+        "bitget-usdt",
+        "bitmart-usdt",
+        "bitrue-usdt",
+        "bybit-usdt",
+        "gate-usdt",
+        "kucoin-usdt",
+        "lbank-usdt",
+        "mexc-usdt",
+        "okx-usdt",
+        "xt"
+      ],
       "denomination": "USD",
       "rateFeed": false
     }
