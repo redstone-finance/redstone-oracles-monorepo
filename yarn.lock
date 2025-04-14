@@ -8913,6 +8913,8 @@ __metadata:
     "@aws-sdk/client-cloudwatch-logs": "npm:^3.696.0"
     "@aws-sdk/client-ecs": "npm:^3.696.0"
     "@aws-sdk/client-s3": "npm:^3.696.0"
+    "@redstone-finance/monitoring-manifests": "workspace:*"
+    "@redstone-finance/sdk": "workspace:*"
     "@types/aws-lambda": "npm:^8.10.145"
     dotenv: "npm:^16.0.3"
     ethers: "npm:^5.7.2"
