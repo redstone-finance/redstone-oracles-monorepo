@@ -98,6 +98,7 @@ export class PriceAdapterContract {
 
   public async getUniqueSignerThreshold(slot?: number): Promise<number> {
     await this.waitForSlot(slot, `getUniqueSignerThreshold`);
+
     return (await this.program.methods
       .uniqueSignersCount()
       .view({ minContextSlot: slot })) as number;
