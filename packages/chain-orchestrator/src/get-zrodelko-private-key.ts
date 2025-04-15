@@ -5,7 +5,7 @@ import { RedstoneCommon } from "@redstone-finance/utils";
 export async function getNonEvmZrodelkoPrivateKey(
   env: Env,
   chainType: NonEvmChainType
-): Promise<RedstoneCommon.PrivateKey | undefined> {
+): Promise<RedstoneCommon.PrivateKey> {
   const ssmPath = `/${env}/${chainType}/zrodelko/private-key`;
   const privateKey = await getSSMParameterValue(ssmPath);
   switch (chainType) {
