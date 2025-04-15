@@ -71,10 +71,7 @@ export class SolanaPricesContractAdapter
     metadataTimestamp: number
   ) {
     this.logger.debug(`Fetching payloads for [${feedIds.toString()}].`);
-    const provider = ContractParamsProvider.copyForFeedIds(
-      paramsProvider,
-      feedIds
-    );
+    const provider = paramsProvider.copyForFeedIds(feedIds);
 
     const { payloads } = ContractParamsProvider.extractMissingValues(
       await provider.prepareSplitPayloads({
@@ -139,7 +136,7 @@ export class SolanaPricesContractAdapter
   }
 }
 
-function toNumber(values: number[]): number {
+export function toNumber(values: number[]): number {
   let result = 0;
   for (const value of values) {
     result = result * 256 + value;

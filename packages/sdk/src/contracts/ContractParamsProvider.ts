@@ -33,26 +33,17 @@ export class ContractParamsProvider {
     public readonly shouldOevUseFallbackAfterFailing?: boolean
   ) {}
 
-  static copyForFeedId(
-    paramsProvider: ContractParamsProvider,
-    feedId: string,
-    shouldOevUseFallbackAfterFailing?: boolean
-  ) {
-    return ContractParamsProvider.copyForFeedIds(
-      paramsProvider,
-      [feedId],
-      shouldOevUseFallbackAfterFailing
-    );
+  copyForFeedId(feedId: string, shouldOevUseFallbackAfterFailing?: boolean) {
+    return this.copyForFeedIds([feedId], shouldOevUseFallbackAfterFailing);
   }
 
-  static copyForFeedIds(
-    paramsProvider: ContractParamsProvider,
+  copyForFeedIds(
     feedIds: string[],
     shouldOevUseFallbackAfterFailing?: boolean
   ) {
     return new ContractParamsProvider(
-      paramsProvider.requestParams,
-      paramsProvider.cache,
+      this.requestParams,
+      this.cache,
       feedIds,
       shouldOevUseFallbackAfterFailing
     );
