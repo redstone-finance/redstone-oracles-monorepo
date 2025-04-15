@@ -47,10 +47,9 @@ export class MovementPricesContractAdapter
     );
 
     return await this.writer.writePrices(payloads, (feedId) =>
-      ContractParamsProvider.copyForFeedId(
-        paramsProvider,
-        feedId
-      ).getPayloadHex(true, unsignedMetadataArgs)
+      paramsProvider
+        .copyForFeedId(feedId)
+        .getPayloadHex(true, unsignedMetadataArgs)
     );
   }
 
