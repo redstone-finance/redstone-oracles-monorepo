@@ -7898,7 +7898,7 @@ __metadata:
   dependencies:
     "@noble/hashes": "npm:^1.3.3"
     "@redstone-finance/sdk": "workspace:*"
-    axios: "npm:^1.7.9"
+    axios: "npm:^1.8.4"
     casper-js-sdk: "npm:^2.15.5"
     ethers: "npm:^5.7.2"
     node-jq: "npm:^6.0.0"
@@ -7985,7 +7985,7 @@ __metadata:
     "@types/chai": "npm:^4.3.4"
     "@types/mocha": "npm:^10.0.1"
     "@types/prompts": "npm:^2.4.2"
-    axios: "npm:^1.7.9"
+    axios: "npm:^1.8.4"
     chai: "npm:^4.3.10"
     chai-as-promised: "npm:^7.1.1"
     chalk: "npm:^4.1.2"
@@ -8079,7 +8079,7 @@ __metadata:
     "@types/lodash": "npm:^4.14.195"
     "@types/mocha": "npm:^10.0.1"
     "@types/semver": "npm:^7.7.0"
-    axios: "npm:^1.7.9"
+    axios: "npm:^1.8.4"
     chai: "npm:^4.3.10"
     chalk: "npm:^4.1.2"
     diff: "npm:^7.0.0"
@@ -8217,7 +8217,7 @@ __metadata:
     "@types/mocha": "npm:^10.0.1"
     "@types/puppeteer": "npm:^7.0.4"
     "@types/sinon-chai": "npm:^3.2.12"
-    axios: "npm:^1.7.9"
+    axios: "npm:^1.8.4"
     chai: "npm:^4.3.10"
     chai-as-promised: "npm:^7.1.1"
     esbuild: "npm:^0.19.9"
@@ -8279,7 +8279,7 @@ __metadata:
     "@types/prompts": "npm:^2.4.2"
     "@types/supertest": "npm:^2.0.12"
     "@types/uuid": "npm:^8.3.0"
-    axios: "npm:^1.7.9"
+    axios: "npm:^1.8.4"
     bybit-api: "npm:^3.10.18"
     cron-parser: "npm:^4.8.1"
     dateformat: "npm:^4.5.1"
@@ -8336,7 +8336,7 @@ __metadata:
     "@types/chai": "npm:^4.3.4"
     "@types/mocha": "npm:^10.0.1"
     "@types/sinon-chai": "npm:^3.2.12"
-    axios: "npm:^1.7.9"
+    axios: "npm:^1.8.4"
     chai: "npm:^4.3.10"
     dotenv: "npm:^16.0.3"
     ethers: "npm:^5.7.2"
@@ -8373,7 +8373,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@redstone-finance/http-client@workspace:packages/http-client"
   dependencies:
-    axios: "npm:^1.7.9"
+    axios: "npm:^1.8.4"
     axios-retry: "npm:^4.5.0"
   languageName: unknown
   linkType: soft
@@ -8391,7 +8391,7 @@ __metadata:
     "@redstone-finance/protocol": "workspace:*"
     "@redstone-finance/sdk": "workspace:*"
     "@redstone-finance/utils": "workspace:*"
-    axios: "npm:^1.7.9"
+    axios: "npm:^1.8.4"
     axios-retry: "npm:^4.5.0"
     ethers: "npm:^5.7.2"
   languageName: unknown
@@ -8411,7 +8411,7 @@ __metadata:
     "@redstone-finance/protocol": "workspace:*"
     "@redstone-finance/utils": "workspace:*"
     "@types/lodash": "npm:^4.14.195"
-    axios: "npm:^1.7.9"
+    axios: "npm:^1.8.4"
     dayjs: "npm:^1.11.12"
     lodash: "npm:^4.17.21"
     zod: "npm:^3.22.4"
@@ -8451,7 +8451,7 @@ __metadata:
     "@redstone-finance/monitoring-manifests": "workspace:*"
     "@redstone-finance/utils": "workspace:*"
     "@types/aws-lambda": "npm:^8.10.145"
-    axios: "npm:^1.7.9"
+    axios: "npm:^1.8.4"
     uuid-random: "npm:^1.3.2"
     zod: "npm:^3.22.4"
   languageName: unknown
@@ -8464,7 +8464,7 @@ __metadata:
     "@redstone-finance/internal-utils": "workspace:*"
     "@redstone-finance/utils": "workspace:*"
     "@types/aws-lambda": "npm:^8.10.145"
-    axios: "npm:^1.7.9"
+    axios: "npm:^1.8.4"
     dotenv: "npm:^16.0.3"
   languageName: unknown
   linkType: soft
@@ -8479,7 +8479,7 @@ __metadata:
     "@redstone-finance/protocol": "workspace:*"
     "@redstone-finance/sdk": "workspace:*"
     "@types/aws-lambda": "npm:^8.10.145"
-    axios: "npm:^1.7.9"
+    axios: "npm:^1.8.4"
     lodash: "npm:^4.17.21"
     string-to-stream: "npm:^3.0.1"
   languageName: unknown
@@ -8499,7 +8499,7 @@ __metadata:
     "@types/lodash": "npm:^4.14.195"
     "@types/supertest": "npm:^2.0.12"
     arweave: "npm:^1.14.4"
-    axios: "npm:^1.7.9"
+    axios: "npm:^1.8.4"
     cors: "npm:^2.8.5"
     csv-file-to-json: "npm:^4.0.5"
     deep-sort-object: "npm:^1.0.2"
@@ -8537,7 +8537,7 @@ __metadata:
     "@redstone-finance/monitoring-manifests": "workspace:*"
     "@redstone-finance/utils": "workspace:*"
     "@types/aws-lambda": "npm:^8.10.145"
-    axios: "npm:^1.7.9"
+    axios: "npm:^1.8.4"
     dotenv: "npm:^16.0.3"
     zod: "npm:^3.22.4"
   languageName: unknown
@@ -8590,7 +8590,7 @@ __metadata:
     "@redstone-finance/sdk": "workspace:*"
     "@redstone-finance/utils": "workspace:*"
     "@types/aws-lambda": "npm:^8.10.145"
-    axios: "npm:^1.7.9"
+    axios: "npm:^1.8.4"
     date-fns: "npm:^3.6.0"
     date-fns-tz: "npm:^3.1.3"
     dotenv: "npm:^16.0.3"
@@ -8606,7 +8606,7 @@ __metadata:
     "@redstone-finance/monitoring-manifests": "workspace:*"
     "@redstone-finance/utils": "workspace:*"
     "@types/aws-lambda": "npm:^8.10.145"
-    axios: "npm:^1.7.9"
+    axios: "npm:^1.8.4"
     zod: "npm:^3.22.4"
   languageName: unknown
   linkType: soft
@@ -8663,7 +8663,7 @@ __metadata:
     "@redstone-finance/sdk": "workspace:*"
     "@redstone-finance/utils": "workspace:*"
     "@types/aws-lambda": "npm:^8.10.145"
-    axios: "npm:^1.7.9"
+    axios: "npm:^1.8.4"
     dotenv: "npm:^16.0.3"
     zod: "npm:^3.22.4"
   languageName: unknown
@@ -8687,7 +8687,7 @@ __metadata:
   resolution: "@redstone-finance/lambda-http-multi-call@workspace:packages/lambda/lambda-http-multi-call"
   dependencies:
     "@types/aws-lambda": "npm:^8.10.145"
-    axios: "npm:^1.7.9"
+    axios: "npm:^1.8.4"
   languageName: unknown
   linkType: soft
 
@@ -8736,7 +8736,7 @@ __metadata:
     "@redstone-finance/internal-utils": "workspace:*"
     "@redstone-finance/utils": "workspace:*"
     "@types/aws-lambda": "npm:^8.10.145"
-    axios: "npm:^1.7.9"
+    axios: "npm:^1.8.4"
     lodash: "npm:^4.17.21"
   languageName: unknown
   linkType: soft
@@ -8750,7 +8750,7 @@ __metadata:
     "@redstone-finance/monitoring-manifests": "workspace:*"
     "@redstone-finance/utils": "workspace:*"
     "@types/aws-lambda": "npm:^8.10.145"
-    axios: "npm:^1.7.9"
+    axios: "npm:^1.8.4"
     zod: "npm:^3.22.4"
   languageName: unknown
   linkType: soft
@@ -8794,7 +8794,7 @@ __metadata:
     "@redstone-finance/internal-utils": "workspace:*"
     "@redstone-finance/utils": "workspace:*"
     "@types/aws-lambda": "npm:^8.10.145"
-    axios: "npm:^1.7.9"
+    axios: "npm:^1.8.4"
     dotenv: "npm:^16.0.3"
     zod: "npm:^3.22.4"
   languageName: unknown
@@ -8823,7 +8823,7 @@ __metadata:
     "@redstone-finance/sdk": "workspace:*"
     "@redstone-finance/utils": "workspace:*"
     "@types/aws-lambda": "npm:^8.10.145"
-    axios: "npm:^1.7.9"
+    axios: "npm:^1.8.4"
     dotenv: "npm:^16.0.3"
     ethers: "npm:^5.7.2"
     zod: "npm:^3.22.4"
@@ -8870,7 +8870,7 @@ __metadata:
     "@redstone-finance/utils": "workspace:*"
     "@types/aws-lambda": "npm:^8.10.145"
     "@types/inquirer": "npm:^9.0.7"
-    axios: "npm:^1.7.9"
+    axios: "npm:^1.8.4"
     dotenv: "npm:^16.0.3"
     ethers: "npm:^5.7.2"
     inquirer: "npm:^8.2.6"
@@ -8937,7 +8937,7 @@ __metadata:
     "@redstone-finance/protocol": "workspace:*"
     "@redstone-finance/utils": "workspace:*"
     "@types/aws-lambda": "npm:^8.10.145"
-    axios: "npm:^1.7.9"
+    axios: "npm:^1.8.4"
     dotenv: "npm:^16.0.3"
     ethers: "npm:^5.7.2"
     lodash: "npm:^4.17.21"
@@ -8969,7 +8969,7 @@ __metadata:
   dependencies:
     "@redstone-finance/internal-utils": "workspace:*"
     "@redstone-finance/utils": "workspace:*"
-    axios: "npm:^1.7.9"
+    axios: "npm:^1.8.4"
     ethers: "npm:^5.7.2"
   languageName: unknown
   linkType: soft
@@ -9029,7 +9029,7 @@ __metadata:
     "@redstone-finance/internal-utils": "workspace:*"
     "@redstone-finance/on-chain-relayer-common": "workspace:*"
     "@redstone-finance/utils": "workspace:*"
-    axios: "npm:^1.7.9"
+    axios: "npm:^1.8.4"
     dotenv: "npm:^16.0.3"
     lodash: "npm:^4.17.21"
     zod: "npm:^3.22.4"
@@ -9187,7 +9187,7 @@ __metadata:
     "@types/prompts": "npm:^2.4.2"
     "@types/xml2js": "npm:^0.4.11"
     arweave: "npm:^1.14.4"
-    axios: "npm:^1.7.9"
+    axios: "npm:^1.8.4"
     decimal.js: "npm:^10.4.3"
     ethereumjs-util: "npm:^7.0.10"
     ethers: "npm:^5.7.2"
@@ -9270,7 +9270,7 @@ __metadata:
     "@radixdlt/radix-engine-toolkit": "npm:^1.0.5"
     "@redstone-finance/sdk": "workspace:*"
     "@redstone-finance/utils": "workspace:*"
-    axios: "npm:^1.7.9"
+    axios: "npm:^1.8.4"
     dotenv: "npm:^16.0.3"
     ethers: "npm:^5.7.2"
     lodash: "npm:^4.17.21"
@@ -9309,7 +9309,7 @@ __metadata:
     "@types/chai": "npm:^4.3.4"
     "@types/lodash": "npm:^4.14.195"
     "@types/mocha": "npm:^10.0.1"
-    axios: "npm:^1.7.9"
+    axios: "npm:^1.8.4"
     axios-debug-log: "npm:^1.0.0"
     chai: "npm:^4.3.10"
     dayjs: "npm:^1.11.12"
@@ -9350,7 +9350,7 @@ __metadata:
     "@types/lodash": "npm:^4.14.195"
     "@types/mocha": "npm:^10.0.1"
     "@types/sinon": "npm:^10.0.15"
-    axios: "npm:^1.7.9"
+    axios: "npm:^1.8.4"
     chai: "npm:^4.3.10"
     ethers: "npm:^5.7.2"
     hardhat: "npm:^2.22.14"
@@ -9374,7 +9374,7 @@ __metadata:
     "@redstone-finance/protocol": "workspace:*"
     "@redstone-finance/utils": "workspace:*"
     "@types/lodash": "npm:^4.14.195"
-    axios: "npm:^1.7.9"
+    axios: "npm:^1.8.4"
     ethers: "npm:^5.7.2"
     lodash: "npm:^4.17.21"
     msw: "npm:^2.4.10"
@@ -9506,7 +9506,7 @@ __metadata:
   dependencies:
     "@types/lodash": "npm:^4.14.195"
     "@types/sinon": "npm:^10.0.15"
-    axios: "npm:^1.7.9"
+    axios: "npm:^1.8.4"
     consola: "npm:^2.15.3"
     decimal.js: "npm:^10.4.3"
     ethers: "npm:^5.7.2"
@@ -15209,14 +15209,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"axios@npm:^1.7.9":
-  version: 1.7.9
-  resolution: "axios@npm:1.7.9"
+"axios@npm:^1.8.4":
+  version: 1.8.4
+  resolution: "axios@npm:1.8.4"
   dependencies:
     follow-redirects: "npm:^1.15.6"
     form-data: "npm:^4.0.0"
     proxy-from-env: "npm:^1.1.0"
-  checksum: 10c0/b7a41e24b59fee5f0f26c1fc844b45b17442832eb3a0fb42dd4f1430eb4abc571fe168e67913e8a1d91c993232bd1d1ab03e20e4d1fee8c6147649b576fc1b0b
+  checksum: 10c0/450993c2ba975ffccaf0d480b68839a3b2435a5469a71fa2fb0b8a55cdb2c2ae47e609360b9c1e2b2534b73dfd69e2733a1cf9f8215bee0bcd729b72f801b0ce
   languageName: node
   linkType: hard
 
