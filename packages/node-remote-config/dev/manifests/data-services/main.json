@@ -6826,6 +6826,21 @@
       ],
       "denomination": "USD",
       "rateFeed": false
+    },
+    "tacETH_FUNDAMENTAL": {
+      "source": ["ethereum-evm-fetcher-turtle-tac"],
+      "denomination": "ETH",
+      "rateFeed": true
+    },
+    "tacUSD_FUNDAMENTAL": {
+      "source": ["ethereum-evm-fetcher-turtle-tac"],
+      "denomination": "USD",
+      "rateFeed": true
+    },
+    "tacBTC_FUNDAMENTAL": {
+      "source": ["ethereum-evm-fetcher-turtle-tac"],
+      "denomination": "BTC",
+      "rateFeed": true
     }
   }
 }
