@@ -32,8 +32,8 @@ export class InfluxService {
     protected writeOptions?: Partial<WriteOptions>
   ) {
     this.influx = new InfluxDB({
-      token: this.authParams.token,
-      url: this.authParams.url,
+      token: authParams.token,
+      url: authParams.url,
       timeout: timeout ?? 30000,
     });
   }
