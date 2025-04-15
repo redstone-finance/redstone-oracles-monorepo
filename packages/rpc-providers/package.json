@@ -26,7 +26,7 @@
     "@redstone-finance/chain-configs": "workspace:*",
     "@redstone-finance/evm-multicall": "workspace:*",
     "@redstone-finance/utils": "workspace:*",
-    "axios": "^1.7.9",
+    "axios": "^1.8.4",
     "ethers": "^5.7.2",
     "lodash": "^4.17.21",
     "zod": "^3.22.4"
