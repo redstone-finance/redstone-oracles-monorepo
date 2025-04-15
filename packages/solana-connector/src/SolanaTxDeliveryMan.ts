@@ -1,4 +1,3 @@
-import { AnchorProvider, Provider, Wallet } from "@coral-xyz/anchor";
 import {
   loggerFactory,
   MultiExecutor,
@@ -33,30 +32,22 @@ export class SolanaTxDeliveryMan {
   private readonly logger = loggerFactory("solana-tx-delivery-man");
 
   constructor(
-    private readonly provider: Provider,
+    private readonly connection: Connection,
     private readonly keypair: Keypair,
     private readonly config: SolanaConfig
-  ) {
-    if (!this.provider.sendAndConfirm) {
-      throw new Error(
-        "Required method by `SolanaTxDeliveryMan` `sendAndConfirm` method is not implemented by `provider`"
-      );
-    }
-  }
+  ) {}
 
   static createMultiTxDeliveryMan(
     connection: Connection,
     keypair: Keypair,
     config: SolanaConfig
   ) {
-    const multiProvider = MultiExecutor.createForSubInstances(
+    const multiConnection = MultiExecutor.createForSubInstances(
       connection,
-      (conn) => new AnchorProvider(conn, new Wallet(keypair)),
+      (conn) => conn,
       {
-        connection: {
-          getLatestBlockhash: MultiExecutor.ExecutionMode.AGREEMENT,
-          sendTransaction: MultiExecutor.ExecutionMode.RACE,
-        },
+        getLatestBlockhash: MultiExecutor.ExecutionMode.AGREEMENT,
+        sendTransaction: MultiExecutor.ExecutionMode.RACE,
       },
       {
         ...MultiExecutor.DEFAULT_CONFIG,
@@ -65,7 +56,7 @@ export class SolanaTxDeliveryMan {
       }
     );
 
-    return new SolanaTxDeliveryMan(multiProvider, keypair, config);
+    return new SolanaTxDeliveryMan(multiConnection, keypair, config);
   }
 
   public getPublicKey() {
@@ -75,10 +66,13 @@ export class SolanaTxDeliveryMan {
   private async sendTransactionsWithRetry(
     txIds: string[],
     creator: TransactionInstructionsCreator,
-    iterationIndex = 0
+    iterationIndex = 0,
+    errors: unknown[] = []
   ) {
     if (iterationIndex >= this.config.maxTxAttempts) {
-      throw new Error(`Max attempts reached: ${this.config.maxTxAttempts}`);
+      throw new Error(
+        `Max attempts reached: ${this.config.maxTxAttempts}. ${RedstoneCommon.stringifyError(new AggregateError(errors))}`
+      );
     }
 
     this.logger.info(
@@ -101,6 +95,7 @@ export class SolanaTxDeliveryMan {
         );
         successfulTxs.push(signature);
       } catch (err) {
+        errors.push(err);
         failedTxs.push(id);
         this.logger.error(
           `Failed transaction for ${id}, ${RedstoneCommon.stringifyError(err)}.`
@@ -118,7 +113,8 @@ export class SolanaTxDeliveryMan {
       const txSignatures = await this.sendTransactionsWithRetry(
         failedTxs,
         creator,
-        iterationIndex + 1
+        iterationIndex + 1,
+        errors
       );
       successfulTxs.push(...txSignatures);
     }
@@ -155,7 +151,7 @@ export class SolanaTxDeliveryMan {
       ix,
     ];
 
-    this.logger.debug(`Setting transaction compute units to ${computeUnits}`);
+    this.logger.info(`Setting transaction compute units to ${computeUnits}`);
     if (priorityFeeUnitPriceCostInMicroLamports) {
       this.logger.info(
         `Additional cost of transaction: ${computeUnits * priorityFeeUnitPriceCostInMicroLamports} microLamports.`
@@ -164,8 +160,7 @@ export class SolanaTxDeliveryMan {
 
     const message = new TransactionMessage({
       payerKey: this.keypair.publicKey,
-      recentBlockhash: (await this.provider.connection.getLatestBlockhash())
-        .blockhash,
+      recentBlockhash: (await this.connection.getLatestBlockhash()).blockhash,
       instructions,
     }).compileToV0Message();
 
@@ -179,7 +174,7 @@ export class SolanaTxDeliveryMan {
     const writableKeys = ix.keys
       .filter((meta) => meta.isWritable)
       .map((meta) => meta.pubkey);
-    const fees = await this.provider.connection.getRecentPrioritizationFees({
+    const fees = await this.connection.getRecentPrioritizationFees({
       lockedWritableAccounts: [this.keypair.publicKey, ...writableKeys],
     });
 
@@ -213,7 +208,7 @@ export class SolanaTxDeliveryMan {
     const tx = await this.wrapWithGas(instruction, iterationIndex);
     tx.sign([this.keypair]);
 
-    const signature = await this.provider.connection.sendTransaction(tx, {
+    const signature = await this.connection.sendTransaction(tx, {
       skipPreflight: true,
     });
 
@@ -225,8 +220,7 @@ export class SolanaTxDeliveryMan {
   private async waitForTransaction(txSignature: string, id: string) {
     await RedstoneCommon.waitForSuccess(
       async () => {
-        const result =
-          await this.provider.connection.getSignatureStatus(txSignature);
+        const result = await this.connection.getSignatureStatus(txSignature);
         if (result.value !== null && result.value.err !== null) {
           throw new Error(RedstoneCommon.stringify(result.value.err));
         }
