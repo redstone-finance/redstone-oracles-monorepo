@@ -9398,7 +9398,9 @@ __metadata:
     "@types/chai": "npm:^4.3.4"
     "@types/mocha": "npm:^10.0.1"
     "@types/prompts": "npm:^2.4.2"
+    bs58: "npm:^6.0.0"
     chai: "npm:^4.3.10"
+    litesvm: "npm:^0.2.0"
     mocha: "npm:^10.2.0"
     prettier: "npm:^3.2.5"
     prompts: "npm:^2.4.2"
@@ -25265,6 +25267,67 @@ __metadata:
     "@ethersproject/providers": ^5.2.0
     "@ethersproject/wallet": ^5.2.0
   checksum: 10c0/0a3f0d90d039ab52c86bb9cd6d71aaf6ebe5656b320d98ffe439d87e2db20b1b2254636647caa1113b6738d64f462c771bed507beb20c373b9f0eb2b77a7f39f
+  languageName: node
+  linkType: hard
+
+"litesvm-darwin-arm64@npm:0.2.0":
+  version: 0.2.0
+  resolution: "litesvm-darwin-arm64@npm:0.2.0"
+  conditions: os=darwin & cpu=arm64
+  languageName: node
+  linkType: hard
+
+"litesvm-darwin-universal@npm:0.2.0":
+  version: 0.2.0
+  resolution: "litesvm-darwin-universal@npm:0.2.0"
+  conditions: os=darwin
+  languageName: node
+  linkType: hard
+
+"litesvm-darwin-x64@npm:0.2.0":
+  version: 0.2.0
+  resolution: "litesvm-darwin-x64@npm:0.2.0"
+  conditions: os=darwin & cpu=x64
+  languageName: node
+  linkType: hard
+
+"litesvm-linux-x64-gnu@npm:0.2.0":
+  version: 0.2.0
+  resolution: "litesvm-linux-x64-gnu@npm:0.2.0"
+  conditions: os=linux & cpu=x64 & libc=glibc
+  languageName: node
+  linkType: hard
+
+"litesvm-linux-x64-musl@npm:0.2.0":
+  version: 0.2.0
+  resolution: "litesvm-linux-x64-musl@npm:0.2.0"
+  conditions: os=linux & cpu=x64 & libc=musl
+  languageName: node
+  linkType: hard
+
+"litesvm@npm:^0.2.0":
+  version: 0.2.0
+  resolution: "litesvm@npm:0.2.0"
+  dependencies:
+    "@solana/web3.js": "npm:^1.68.0"
+    bs58: "npm:^4.0.1"
+    litesvm-darwin-arm64: "npm:0.2.0"
+    litesvm-darwin-universal: "npm:0.2.0"
+    litesvm-darwin-x64: "npm:0.2.0"
+    litesvm-linux-x64-gnu: "npm:0.2.0"
+    litesvm-linux-x64-musl: "npm:0.2.0"
+  dependenciesMeta:
+    litesvm-darwin-arm64:
+      optional: true
+    litesvm-darwin-universal:
+      optional: true
+    litesvm-darwin-x64:
+      optional: true
+    litesvm-linux-x64-gnu:
+      optional: true
+    litesvm-linux-x64-musl:
+      optional: true
+  checksum: 10c0/b2fde793288f307556638f2b38ffb6c23dcc27030ffb0702e068b3cd4718332c75417aa13bde5fe5c1f7e24ad16f156ff807a5ed8aacd9140c687be88a31caa0
   languageName: node
   linkType: hard
 
