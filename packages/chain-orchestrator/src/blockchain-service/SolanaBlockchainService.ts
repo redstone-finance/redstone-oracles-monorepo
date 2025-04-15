@@ -1,10 +1,13 @@
 import { SolanaContractConnector } from "@redstone-finance/solana-connector";
+import { loggerFactory, RedstoneCommon } from "@redstone-finance/utils";
 import { ConfirmedSignatureInfo, Connection, PublicKey } from "@solana/web3.js";
 import { NonEvmBlockchainService } from "./NonEvmBlockchainService";
 
 const TRANSACTION_FETCHING_BATCH_SIZE = 1000;
 
 export class SolanaBlockchainService extends NonEvmBlockchainService {
+  private logger = loggerFactory("solana-blockchain-service");
+
   constructor(private connection: Connection) {
     super(new SolanaContractConnector(connection));
   }
@@ -23,13 +26,21 @@ export class SolanaBlockchainService extends NonEvmBlockchainService {
   }
 
   async getTransactions(fromSlot: number, toSlot: number, addresses: string[]) {
-    const [fromSlotSignatures, toSlotSignatures] = await Promise.all([
-      await this.connection.getBlockSignatures(fromSlot),
-      await this.connection.getBlockSignatures(toSlot),
-    ]);
-    const fromSlotSignature = fromSlotSignatures.signatures[0];
-    const toSlotSignature =
-      toSlotSignatures.signatures[toSlotSignatures.signatures.length - 1];
+    let fromSlotSignature, toSlotSignature;
+
+    try {
+      const [fromSlotSignatures, toSlotSignatures] = await Promise.all([
+        await this.connection.getBlockSignatures(fromSlot),
+        await this.connection.getBlockSignatures(toSlot),
+      ]);
+      fromSlotSignature = fromSlotSignatures.signatures[0];
+      toSlotSignature =
+        toSlotSignatures.signatures[toSlotSignatures.signatures.length - 1];
+    } catch (error) {
+      this.logger.warn(
+        `Slot is missing, using latest ${TRANSACTION_FETCHING_BATCH_SIZE} signatures; ${RedstoneCommon.stringifyError(error)}`
+      );
+    }
 
     const allSignatures: ConfirmedSignatureInfo[] = [];
     for (const address of addresses) {
@@ -57,8 +68,8 @@ export class SolanaBlockchainService extends NonEvmBlockchainService {
 
   private async getAllSignatureInfos(
     address: string,
-    minTransactionSignature: string,
-    maxTransactionSignature: string
+    minTransactionSignature?: string,
+    maxTransactionSignature?: string
   ): Promise<ConfirmedSignatureInfo[]> {
     const result = await this.connection.getSignaturesForAddress(
       new PublicKey(address),
@@ -69,17 +80,19 @@ export class SolanaBlockchainService extends NonEvmBlockchainService {
       }
     );
 
-    if (result.length === TRANSACTION_FETCHING_BATCH_SIZE) {
-      return [
-        ...result,
-        ...(await this.getAllSignatureInfos(
-          address,
-          minTransactionSignature,
-          result[0].signature
-        )),
-      ];
-    } else {
-      return result;
+    if (
+      result.length === TRANSACTION_FETCHING_BATCH_SIZE &&
+      (minTransactionSignature || maxTransactionSignature)
+    ) {
+      const previousSignatures = await this.getAllSignatureInfos(
+        address,
+        minTransactionSignature,
+        result[0].signature
+      );
+
+      result.push(...previousSignatures);
     }
+
+    return result;
   }
 }
