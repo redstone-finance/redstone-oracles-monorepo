@@ -24,7 +24,7 @@
     "@redstone-finance/protocol": "workspace:*",
     "@redstone-finance/sdk": "workspace:*",
     "@redstone-finance/utils": "workspace:*",
-    "axios": "^1.7.9",
+    "axios": "^1.8.4",
     "ethers": "^5.7.2"
   },
   "devDependencies": {
