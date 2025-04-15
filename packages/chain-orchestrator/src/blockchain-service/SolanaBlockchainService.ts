@@ -82,7 +82,8 @@ export class SolanaBlockchainService extends NonEvmBlockchainService {
 
     if (
       result.length === TRANSACTION_FETCHING_BATCH_SIZE &&
-      (minTransactionSignature || maxTransactionSignature)
+      minTransactionSignature &&
+      maxTransactionSignature
     ) {
       const previousSignatures = await this.getAllSignatureInfos(
         address,
