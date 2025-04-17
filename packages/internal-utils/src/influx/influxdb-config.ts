@@ -10,6 +10,8 @@ export interface InfluxConfig {
   token: string;
 }
 
+const INFLUX_PARAMS_AWS_REGION = "eu-west-1";
+
 export function toInfluxAuthParams(config: InfluxConfig): InfluxAuthParams {
   return {
     url: config.url,
@@ -21,10 +23,12 @@ export function toInfluxAuthParams(config: InfluxConfig): InfluxAuthParams {
 
 export async function fetchAnalyticsInfluxConfig(): Promise<InfluxConfig> {
   const influxDbUrlPromise = getSSMParameterValue(
-    process.env.INFLUXDB_URL_SSM_PATH ?? "/dev/influxdb/url"
+    process.env.INFLUXDB_URL_SSM_PATH ?? "/dev/influxdb/url",
+    INFLUX_PARAMS_AWS_REGION
   );
   const influxDbTokenPromise = getSSMParameterValue(
-    process.env.INFLUXDB_TOKEN_SSM_PATH ?? "/dev/influxdb/token"
+    process.env.INFLUXDB_TOKEN_SSM_PATH ?? "/dev/influxdb/token",
+    INFLUX_PARAMS_AWS_REGION
   );
 
   return {
@@ -35,10 +39,13 @@ export async function fetchAnalyticsInfluxConfig(): Promise<InfluxConfig> {
 
 export async function fetchManagedInfluxConfig(): Promise<InfluxConfig> {
   const influxDbUrlPromise = getSSMParameterValue(
-    process.env.MANAGED_INFLUXDB_URL_SSM_PATH ?? "/dev/influxdb/managed-url"
+    process.env.MANAGED_INFLUXDB_URL_SSM_PATH ?? "/dev/influxdb/managed-url",
+    INFLUX_PARAMS_AWS_REGION
   );
   const influxDbTokenPromise = getSSMParameterValue(
-    process.env.MANAGED_INFLUXDB_TOKEN_SSM_PATH ?? "/dev/influxdb/managed-token"
+    process.env.MANAGED_INFLUXDB_TOKEN_SSM_PATH ??
+      "/dev/influxdb/managed-token",
+    INFLUX_PARAMS_AWS_REGION
   );
 
   return {
