@@ -22,7 +22,7 @@ export async function fetchRpcUrlsFromSsm(
     ssmPathToChainId[ssmPath] = chainIdWithType;
   }
 
-  const region = opts.type === "fallback" ? "eu-north-1" : undefined;
+  const region = opts.type === "fallback" ? "eu-north-1" : "eu-west-1";
   const ssmParamsResponse = await getSSMParameterValues(
     Object.keys(ssmPathToChainId),
     region
