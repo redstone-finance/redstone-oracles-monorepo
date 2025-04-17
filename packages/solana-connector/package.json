@@ -27,7 +27,8 @@
     "set-authority-as-ledger": "yarn global:ts-node scripts/ledger/set-authority-as-ledger.ts",
     "set-authority-as-multi-sig": "yarn global:ts-node scripts/ledger/set-authority-as-multi-sig.ts",
     "ledger-get-public-key": "yarn global:ts-node scripts/ledger/ledger-get-public-key.ts",
-    "convert-public-key": "yarn global:ts-node scripts/convert-public-key.ts"
+    "convert-public-key": "yarn global:ts-node scripts/convert-public-key.ts",
+    "transfer-sol": "yarn global:ts-node scripts/transfer-sol.ts"
   },
   "dependencies": {
     "@coral-xyz/anchor": "0.30.1",
