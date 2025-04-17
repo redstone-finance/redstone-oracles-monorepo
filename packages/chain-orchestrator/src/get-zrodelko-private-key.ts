@@ -7,7 +7,7 @@ export async function getNonEvmZrodelkoPrivateKey(
   chainType: NonEvmChainType
 ): Promise<RedstoneCommon.PrivateKey> {
   const ssmPath = `/${env}/${chainType}/zrodelko/private-key`;
-  const privateKey = await getSSMParameterValue(ssmPath);
+  const privateKey = await getSSMParameterValue(ssmPath, "eu-west-1");
   switch (chainType) {
     case "radix": {
       return {
