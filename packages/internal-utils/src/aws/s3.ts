@@ -1,11 +1,11 @@
-import { S3 } from "@aws-sdk/client-s3";
-
-const s3 = new S3({ region: "eu-west-1" });
+import { getS3 } from "./aws-clients";
+import { DEFAULT_AWS_REGION } from "./region";
 
 export const writeS3Object = async (
   bucketName: string,
   path: string,
-  data: unknown
+  data: unknown,
+  region?: string
 ) => {
   const params = {
     Bucket: bucketName,
@@ -13,18 +13,19 @@ export const writeS3Object = async (
     ContentType: "application/json",
     Body: JSON.stringify(data, null, 2) + "\n",
   };
-  await s3.putObject(params);
+  await getS3(region).putObject(params);
 };
 
 export const readS3Object = async <T>(
   bucketName: string,
-  bucketKey: string
+  bucketKey: string,
+  region = DEFAULT_AWS_REGION
 ): Promise<T | undefined> => {
   const params = {
     Bucket: bucketName,
     Key: bucketKey,
   };
-  const data = await s3.getObject(params);
+  const data = await getS3(region).getObject(params);
   const contentAsString = await data.Body?.transformToString("utf-8");
   return contentAsString ? (JSON.parse(contentAsString) as T) : undefined;
 };
