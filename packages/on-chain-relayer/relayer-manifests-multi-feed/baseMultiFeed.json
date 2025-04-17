@@ -63,18 +63,13 @@
       }
     },
     "KAITO": {
-      "priceFeedAddress": "0x3fd49f2146FE0e10c4AE7E3fE04b3d5126385Ac4",
-      "updateTriggersOverrides": {
-        "deviationPercentage": 0.5,
-        "timeSinceLastUpdateInMilliseconds": 86400000
-      }
+      "priceFeedAddress": "0x3fd49f2146FE0e10c4AE7E3fE04b3d5126385Ac4"
     },
     "PRIME_ECHELON": {
-      "priceFeedAddress": "0x197225B3B017eb9b72Ac356D6B3c267d0c04c57c",
-      "updateTriggersOverrides": {
-        "deviationPercentage": 0.5,
-        "timeSinceLastUpdateInMilliseconds": 86400000
-      }
+      "priceFeedAddress": "0x197225B3B017eb9b72Ac356D6B3c267d0c04c57c"
+    },
+    "PROMPT": {
+      "priceFeedAddress": "0xbbF121624c3b85C929Ac83872bf6c86b0976A55e"
     }
   }
 }
