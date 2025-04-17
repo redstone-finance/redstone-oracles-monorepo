@@ -1,23 +1,25 @@
 import { PublicKey } from "@solana/web3.js";
-import { RDS_PROGRAM_ADDRESS } from "../consts";
 import { makeConnection } from "../utils";
 import { SquadsMultisig } from "./multi-sig-utils";
 
 export const LEDGER_ACCOUNT = 3;
 export const THRESHOLD = 2;
 export const MULTI_SIG_PUBLIC_KEYS = [
-  "879ecebdbf87aa1c34a4f798f1c1a3b7dd33cd2303d40475418f14e70600fe49",
-  "d4569413c8a7352735410efe7cfcdc9f952b498bf4aa5237c5014e2f80f3f49c",
+  "b3cf8140d542beba4ac7b492afbc427a5441e643ff6631c9423ba7892dc2cf96",
+  "c31f0e40ec3c164388a270bf0790f8d3da165d53436019663c8d643051edaab2",
+  "dd8c421c0c5753deea9865e51d6c1c52e9fe28265cc2a06bc841b3a6c48058a2",
 ];
 
 export const SQUAD_ADDRESS = new PublicKey(
-  "9iJemhhVyJJtGVCSvhpgczVF47ALwDuP85asyjFVeqyv"
+  "5khdVsyvPCDfbz1id1VBFVKHABKQWKrhPYEo4sZGnyfh"
 );
 
-export const PROGRAM_ID = new PublicKey(RDS_PROGRAM_ADDRESS);
+export const PROGRAM_ID = new PublicKey(
+  "REDSTBDUecGjwXd6YGPzHSvEUBHQqVRfCcjUVgPiHsr"
+);
 
 export const TEMP_AUTHORITY = new PublicKey(
-  "6kNKna8xNBU5rxWWBn6jNLkTzBn7sfeHaH3HsjxTZyqp"
+  "Co5UYi6GPzN1a7j9jKohzcSjhmGyq53k5bsJzEtkQqee"
 );
 
 export function makeSquads() {
