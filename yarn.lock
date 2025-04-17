@@ -8285,9 +8285,9 @@ __metadata:
     dateformat: "npm:^4.5.1"
     decimal.js: "npm:^10.4.3"
     download: "npm:^8.0.0"
-    ecb-euro-exchange-rates: "npm:^2.0.0"
     ethereum-waffle: "npm:^4.0.10"
     ethers: "npm:^5.7.2"
+    fast-xml-parser: "npm:^4.4.1"
     jest-mock-extended: "npm:^3.0.4"
     lodash: "npm:^4.17.21"
     luxon: "npm:^3.3.0"
@@ -9185,7 +9185,7 @@ __metadata:
     "@types/lodash": "npm:^4.14.195"
     "@types/node-schedule": "npm:^2.1.0"
     "@types/prompts": "npm:^2.4.2"
-    "@types/xml2js": "npm:^0.4.11"
+    "@types/xml2js": "npm:^0.4.14"
     arweave: "npm:^1.14.4"
     axios: "npm:^1.8.4"
     decimal.js: "npm:^10.4.3"
@@ -9197,7 +9197,7 @@ __metadata:
     node-schedule: "npm:^2.1.1"
     prompts: "npm:^2.4.2"
     sort-deep-object-arrays: "npm:^1.1.2"
-    xml2js: "npm:^0.4.23"
+    xml2js: "npm:^0.6.2"
     zod: "npm:^3.22.4"
   languageName: unknown
   linkType: soft
@@ -13068,7 +13068,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/xml2js@npm:^0.4.11":
+"@types/xml2js@npm:^0.4.14":
   version: 0.4.14
   resolution: "@types/xml2js@npm:0.4.14"
   dependencies:
@@ -18542,16 +18542,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"ecb-euro-exchange-rates@npm:^2.0.0":
-  version: 2.0.2
-  resolution: "ecb-euro-exchange-rates@npm:2.0.2"
-  dependencies:
-    axios: "npm:^0.27.2"
-    xml2js: "npm:^0.4.23"
-  checksum: 10c0/078641ae289046627f4efb88ae5f35d02234f8b03b6f78114ac8f8966739a9e5cd8d900ae06d9f6e75c2122f1b3802a8af09b93a49a6029ead85d60f3ae881b3
-  languageName: node
-  linkType: hard
-
 "ecc-jsbn@npm:~0.1.1":
   version: 0.1.2
   resolution: "ecc-jsbn@npm:0.1.2"
@@ -20433,6 +20423,17 @@ __metadata:
   bin:
     fxparser: src/cli/cli.js
   checksum: 10c0/7f334841fe41bfb0bf5d920904ccad09cefc4b5e61eaf4c225bf1e1bb69ee77ef2147d8942f783ee8249e154d1ca8a858e10bda78a5d78b8bed3f48dcee9bf33
+  languageName: node
+  linkType: hard
+
+"fast-xml-parser@npm:^4.4.1":
+  version: 4.5.3
+  resolution: "fast-xml-parser@npm:4.5.3"
+  dependencies:
+    strnum: "npm:^1.1.1"
+  bin:
+    fxparser: src/cli/cli.js
+  checksum: 10c0/bf9ccadacfadc95f6e3f0e7882a380a7f219cf0a6f96575149f02cb62bf44c3b7f0daee75b8ff3847bcfd7fbcb201e402c71045936c265cf6d94b141ec4e9327
   languageName: node
   linkType: hard
 
@@ -32166,6 +32167,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"strnum@npm:^1.1.1":
+  version: 1.1.2
+  resolution: "strnum@npm:1.1.2"
+  checksum: 10c0/a0fce2498fa3c64ce64a40dada41beb91cabe3caefa910e467dc0518ef2ebd7e4d10f8c2202a6104f1410254cae245066c0e94e2521fb4061a5cb41831952392
+  languageName: node
+  linkType: hard
+
 "strong-log-transformer@npm:2.1.0, strong-log-transformer@npm:^2.1.0":
   version: 2.1.0
   resolution: "strong-log-transformer@npm:2.1.0"
@@ -35422,13 +35430,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"xml2js@npm:^0.4.23":
-  version: 0.4.23
-  resolution: "xml2js@npm:0.4.23"
+"xml2js@npm:^0.6.2":
+  version: 0.6.2
+  resolution: "xml2js@npm:0.6.2"
   dependencies:
     sax: "npm:>=0.6.0"
     xmlbuilder: "npm:~11.0.0"
-  checksum: 10c0/a3f41c9afc46d5bd0bea4070e5108777b605fd5ce2ebb978a68fd4c75513978ad5939f8135664ffea6f1adb342f391b1ba1584ed7955123b036e9ab8a1d26566
+  checksum: 10c0/e98a84e9c172c556ee2c5afa0fc7161b46919e8b53ab20de140eedea19903ed82f7cd5b1576fb345c84f0a18da1982ddf65908129b58fc3d7cbc658ae232108f
   languageName: node
   linkType: hard
 
