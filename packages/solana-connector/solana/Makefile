@@ -14,10 +14,10 @@ fmt-check: prepare
 lint: clippy fmt-check
 
 build-verifiable:
-	anchor build --verifiable
+	RUSTUP_TOOLCHAIN=nightly-2025-04-14 anchor build --verifiable
 
 build:
-	anchor build
+	RUSTUP_TOOLCHAIN=nightly-2025-04-14 anchor build
 
 test: build
-	anchor test
+	RUSTUP_TOOLCHAIN=nightly-2025-04-14 anchor test
