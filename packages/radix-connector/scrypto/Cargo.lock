@@ -1445,8 +1445,8 @@ dependencies = [
 
 [[package]]
 name = "redstone"
-version = "2.0.0-pre"
-source = "git+https://github.com/redstone-finance/rust-sdk?tag=2.0.0#35a303985376b82523f86dcfa31fc1c6df64f3d8"
+version = "2.0.1"
+source = "git+https://github.com/redstone-finance/rust-sdk?tag=2.0.1#4a2c1f218bf3b0923bbf9e78b7396d160df88824"
 dependencies = [
  "derive-getters",
  "getrandom",
@@ -1460,7 +1460,7 @@ dependencies = [
 [[package]]
 name = "redstone_testing"
 version = "0.1.0"
-source = "git+https://github.com/redstone-finance/rust-sdk?tag=2.0.0#35a303985376b82523f86dcfa31fc1c6df64f3d8"
+source = "git+https://github.com/redstone-finance/rust-sdk?tag=2.0.1#4a2c1f218bf3b0923bbf9e78b7396d160df88824"
 dependencies = [
  "paste",
  "redstone",
