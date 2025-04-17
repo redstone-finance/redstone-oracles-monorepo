@@ -9285,6 +9285,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@redstone-finance/redstone-monitoring@workspace:packages/monitoring"
   dependencies:
+    "@aws-sdk/client-s3": "npm:^3.696.0"
     "@ethersproject/abi": "npm:^5.6.3"
     "@ethersproject/providers": "npm:^5.6.8"
     "@nomicfoundation/hardhat-chai-matchers": "npm:^1.0.6"
