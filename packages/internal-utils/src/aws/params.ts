@@ -5,10 +5,9 @@ import {
 } from "@aws-sdk/client-ssm";
 import { RedstoneCommon } from "@redstone-finance/utils";
 import _ from "lodash";
-import { AWS_REGION } from "./aws";
+import { getSsmClient } from "./aws-clients";
 import { readS3Object } from "./s3";
 
-const ssmClient = new SSMClient({ region: AWS_REGION });
 // limit enforced by ssm
 const MAX_SSM_BATCH_SIZE = 10;
 
@@ -16,7 +15,7 @@ export const getSSMParameterValue = async (
   parameterName: string,
   region?: string
 ) => {
-  const client = region ? new SSMClient({ region }) : ssmClient;
+  const client = getSsmClient(region);
   const command = new GetParameterCommand({
     Name: parameterName,
     WithDecryption: true,
@@ -31,7 +30,7 @@ export const getSSMParameterValues = async (
   parameterNames: string[],
   region?: string
 ): Promise<SSMParameterValuesResponse> => {
-  const client = region ? new SSMClient({ region }) : ssmClient;
+  const client = getSsmClient(region);
 
   const parameterNamesChunks = _.chunk(parameterNames, MAX_SSM_BATCH_SIZE);
 
