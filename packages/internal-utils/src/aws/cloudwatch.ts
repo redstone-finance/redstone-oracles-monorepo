@@ -1,16 +1,11 @@
 import {
-  CloudWatch,
-  CloudWatchClient,
   ListTagsForResourceCommand,
   PutMetricDataCommand,
   StandardUnit,
   StateValue,
   Tag,
 } from "@aws-sdk/client-cloudwatch";
-import { AWS_REGION } from "./aws";
-
-const cloudWatchClient = new CloudWatchClient({ region: AWS_REGION });
-const cloudwatch = new CloudWatch({ region: AWS_REGION });
+import { getCloudwatch, getCloudWatchClient } from "./aws-clients";
 
 export async function sendMetrics(
   namespace: string,
@@ -22,7 +17,8 @@ export async function sendMetrics(
       Value: string;
     }[];
   }[] = [],
-  unit = StandardUnit.Count
+  unit = StandardUnit.Count,
+  region?: string
 ) {
   const params = {
     MetricData: values.map(({ value, dimensions }) => {
@@ -39,7 +35,7 @@ export async function sendMetrics(
   const command = new PutMetricDataCommand(params);
 
   try {
-    await cloudWatchClient.send(command);
+    await getCloudWatchClient(region).send(command);
   } catch (error) {
     console.error("Error sending metric data:", error);
   }
@@ -47,9 +43,10 @@ export async function sendMetrics(
 
 export async function setAlarmState(
   alarmName: string,
-  state: StateValue = StateValue.INSUFFICIENT_DATA
+  state: StateValue = StateValue.INSUFFICIENT_DATA,
+  region?: string
 ) {
-  return await cloudwatch.setAlarmState({
+  return await getCloudwatch(region).setAlarmState({
     AlarmName: alarmName,
     StateValue: state,
     StateReason: `Alarm state set to ${state} by lambda function`,
@@ -57,9 +54,10 @@ export async function setAlarmState(
 }
 
 export async function getAlarmTags(
-  alarmArn: string
+  alarmArn: string,
+  region?: string
 ): Promise<Record<string, string>> {
-  const { Tags } = await cloudWatchClient.send(
+  const { Tags } = await getCloudWatchClient(region).send(
     new ListTagsForResourceCommand({
       ResourceARN: alarmArn,
     })

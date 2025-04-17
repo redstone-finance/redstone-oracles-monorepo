@@ -5,21 +5,13 @@ import {
   ListClustersCommand,
   ListServicesCommand,
 } from "@aws-sdk/client-ecs";
-
-const region = "eu-west-1";
-const ecsClient = new ECSClient({
-  region,
-});
+import { getEcsClient } from "./aws-clients";
 
 export class AwsEcs {
-  constructor(private readonly client = ecsClient) {}
+  constructor(private readonly client: ECSClient) {}
 
   static forRegion(region: string) {
-    return new AwsEcs(
-      new ECSClient({
-        region,
-      })
-    );
+    return new AwsEcs(getEcsClient(region));
   }
 
   async listClusters(): Promise<string[]> {
