@@ -5,7 +5,7 @@ export const DEFAULT_SOLANA_CONFIG: SolanaConfig = {
   gasMultiplier: 4,
   maxTxAttempts: 8,
   expectedTxDeliveryTimeMs: 7_000,
-  useAggressiveGasOracle: false,
+  useAggressiveGasOracle: true,
 };
 
 export interface SolanaConfig {
