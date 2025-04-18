@@ -1,4 +1,5 @@
 import {
+  ChainType,
   getChainConfigByChainId,
   getLocalChainConfigs,
 } from "@redstone-finance/chain-configs";
@@ -27,6 +28,10 @@ export const RETRY_CONFIG: Omit<RedstoneCommon.RetryConfig, "fn"> = {
   waitBetweenMs: 1000,
 };
 
+function getChainConfig(chainId: number, chainType?: ChainType) {
+  return getChainConfigByChainId(getLocalChainConfigs(), chainId, chainType);
+}
+
 /**
  * Since we're relying on an agreement provider,
  * there’s a chance one provider might be one(or more) blocks ahead of the others.
@@ -35,10 +40,8 @@ export const RETRY_CONFIG: Omit<RedstoneCommon.RetryConfig, "fn"> = {
  * we’ll trigger another transaction update to stay "current" - it is better to trigger extra transaction, then delay whole iteration
  */
 const getProvider = (chainId: number): providers.Provider => {
-  const { publicRpcUrls, name } = getChainConfigByChainId(
-    getLocalChainConfigs(),
-    chainId
-  );
+  const { publicRpcUrls, name } = getChainConfig(chainId);
+
   return new MegaProviderBuilder({
     rpcUrls: publicRpcUrls,
     network: {
@@ -99,7 +102,9 @@ describe("Price feed contract should return the same dataFeedId as in relayer ma
       for (const [dataFeedId, priceFeedAddress] of Object.entries(
         manifest.priceFeeds
       )) {
-        if (priceFeedAddress !== "__NO_FEED__") {
+        const config = getChainConfig(manifest.chain.id);
+
+        if (priceFeedAddress !== "__NO_FEED__" && !config.disabled) {
           expect(
             await checkDataFeedIdInContract(
               dataFeedId,
@@ -123,7 +128,9 @@ describe("Price feed contract should return the same dataFeedId as in relayer ma
       for (const [dataFeedId, { priceFeedAddress }] of Object.entries(
         manifest.priceFeeds
       )) {
-        if (priceFeedAddress) {
+        const config = getChainConfig(manifest.chain.id);
+
+        if (priceFeedAddress && !config.disabled) {
           expect(
             await checkDataFeedIdInContract(
               dataFeedId,
