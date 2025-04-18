@@ -60,7 +60,7 @@ export class SolanaPricesContractAdapter
     );
 
     this.logger.log(
-      `Sent ${txSignatures.length} transaction${RedstoneCommon.getS(txSignatures.length)}: [${txSignatures.toString()}]`
+      `FINISHED ${txSignatures.length} transaction${RedstoneCommon.getS(txSignatures.length)}: [${txSignatures.toString()}]`
     );
     return txSignatures[txSignatures.length - 1];
   }

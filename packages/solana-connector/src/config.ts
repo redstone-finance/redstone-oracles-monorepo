@@ -1,10 +1,11 @@
 // default config results in maximum fee of 0.02 Sol
 export const DEFAULT_SOLANA_CONFIG: SolanaConfig = {
-  maxComputeUnits: 200_000,
-  maxPricePerComputeUnit: 100_000_000,
-  gasMultiplier: 5.5,
-  maxTxAttempts: 5,
-  expectedTxDeliveryTimeMs: 5_000,
+  maxComputeUnits: 120_000,
+  maxPricePerComputeUnit: 10_000_000, // max price is 10M * 120k = 0.0012 SOL
+  gasMultiplier: 4,
+  maxTxAttempts: 8,
+  expectedTxDeliveryTimeMs: 7_000,
+  useAggressiveGasOracle: false,
 };
 
 export interface SolanaConfig {
@@ -13,6 +14,7 @@ export interface SolanaConfig {
   gasMultiplier: number;
   maxTxAttempts: number;
   expectedTxDeliveryTimeMs: number;
+  useAggressiveGasOracle: boolean;
 }
 
 export function createSolanaConfig(args: {
@@ -20,23 +22,26 @@ export function createSolanaConfig(args: {
   gasMultiplier?: number;
   maxTxSendAttempts?: number;
   expectedTxDeliveryTimeMs?: number;
+  useAggressiveGasOracle?: boolean;
 }) {
   const gasMultiplier =
     args.gasMultiplier ?? DEFAULT_SOLANA_CONFIG.gasMultiplier;
   const maxTxAttempts =
     args.maxTxSendAttempts ?? DEFAULT_SOLANA_CONFIG.maxTxAttempts;
-  const maxPricePerComputeUnit = args.gasLimit
-    ? Math.floor(args.gasLimit / DEFAULT_SOLANA_CONFIG.maxComputeUnits)
-    : DEFAULT_SOLANA_CONFIG.maxPricePerComputeUnit;
+  const maxComputeUnits =
+    args.gasLimit ?? DEFAULT_SOLANA_CONFIG.maxComputeUnits;
   const expectedTxDeliveryTimeMs =
     args.expectedTxDeliveryTimeMs ??
     DEFAULT_SOLANA_CONFIG.expectedTxDeliveryTimeMs;
+  const useAggressiveGasOracle =
+    args.useAggressiveGasOracle ?? DEFAULT_SOLANA_CONFIG.useAggressiveGasOracle;
 
   return {
     ...DEFAULT_SOLANA_CONFIG,
     gasMultiplier,
-    maxPricePerComputeUnit,
+    maxComputeUnits,
     maxTxAttempts,
     expectedTxDeliveryTimeMs,
+    useAggressiveGasOracle,
   };
 }
