@@ -1,0 +1,17 @@
+{
+  "adapterContractType": "solana-multi-feed",
+  "chain": {
+    "name": "solana-testnet",
+    "id": 2
+  },
+  "updateTriggers": {
+    "deviationPercentage": 0.2,
+    "timeSinceLastUpdateInMilliseconds": 86400000
+  },
+  "adapterContract": "REDTpbZvzvoULHbd76sebshnsPUKxc2FcUNh9AviQti",
+  "dataServiceId": "redstone-primary-prod",
+  "priceFeeds": {
+    "ETH": {},
+    "BTC": {}
+  }
+}
