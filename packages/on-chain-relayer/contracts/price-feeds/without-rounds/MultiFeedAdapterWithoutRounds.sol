@@ -2,7 +2,7 @@
 
 pragma solidity ^0.8.17;
 
-import {RedstoneConsumerNumericBase, RedstoneDefaultsLib} from "@redstone-finance/evm-connector/contracts/core/RedstoneConsumerNumericBase.sol";
+import {RedstoneConsumerNumericBase} from "@redstone-finance/evm-connector/contracts/core/RedstoneConsumerNumericBase.sol";
 import {IMultiFeedAdapter} from "../interfaces/IMultiFeedAdapter.sol";
 import {IPriceCalculator} from "../../custom-integrations/layerbank/IPriceCalculator.sol";
 import {ILToken} from "../../custom-integrations/layerbank/ILToken.sol";

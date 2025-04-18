@@ -1,4 +1,5 @@
 import "@nomiclabs/hardhat-ethers";
+import "@nomiclabs/hardhat-solhint";
 import "@openzeppelin/hardhat-upgrades";
 import "@typechain/hardhat";
 import "dotenv/config";
