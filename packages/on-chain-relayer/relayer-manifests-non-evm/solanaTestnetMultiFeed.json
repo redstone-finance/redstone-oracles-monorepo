@@ -5,7 +5,7 @@
     "id": 2
   },
   "updateTriggers": {
-    "deviationPercentage": 0.5,
+    "deviationPercentage": 0.2,
     "timeSinceLastUpdateInMilliseconds": 86400000
   },
   "adapterContract": "rds8J7VKqLQgzDr7vS59dkQga3B1BotgFy8F7LSLC74",
