@@ -1045,7 +1045,6 @@
         "type": "Multicall3"
       },
       "isAuctionModel": false,
-      "fallbackToEthMaxPriorityFeePerGas": true,
       "twoDimensionalFees": false,
       "isMainnet": false
     },
@@ -1070,7 +1069,6 @@
         "type": "Multicall3"
       },
       "isAuctionModel": false,
-      "fallbackToEthMaxPriorityFeePerGas": true,
       "twoDimensionalFees": false,
       "isMainnet": true
     },
@@ -1089,7 +1087,6 @@
         "type": "Multicall3"
       },
       "isAuctionModel": false,
-      "fallbackToEthMaxPriorityFeePerGas": true,
       "twoDimensionalFees": false,
       "isMainnet": false
     },
@@ -1105,7 +1102,6 @@
         "type": "Multicall3"
       },
       "isAuctionModel": false,
-      "fallbackToEthMaxPriorityFeePerGas": true,
       "twoDimensionalFees": false,
       "isMainnet": false
     },
@@ -1121,7 +1117,6 @@
         "type": "Multicall3"
       },
       "isAuctionModel": false,
-      "fallbackToEthMaxPriorityFeePerGas": true,
       "twoDimensionalFees": false,
       "isMainnet": true
     },
@@ -1137,7 +1132,6 @@
         "type": "Multicall3"
       },
       "isAuctionModel": false,
-      "fallbackToEthMaxPriorityFeePerGas": true,
       "twoDimensionalFees": false,
       "isMainnet": false
     },
@@ -1153,7 +1147,6 @@
         "type": "Multicall3"
       },
       "isAuctionModel": false,
-      "fallbackToEthMaxPriorityFeePerGas": true,
       "twoDimensionalFees": false,
       "isMainnet": false
     },
@@ -1169,9 +1162,8 @@
         "type": "Multicall3"
       },
       "isAuctionModel": false,
-      "fallbackToEthMaxPriorityFeePerGas": true,
       "twoDimensionalFees": false,
-      "isMainnet": false
+      "isMainnet": true
     },
     "hyperevm": {
       "name": "HyperEVM",
