@@ -2,7 +2,6 @@
 
 pragma solidity ^0.8.17;
 
-import {IRedstoneAdapter} from "../core/IRedstoneAdapter.sol";
 import {AuthorisedMockSignersBase} from "@redstone-finance/evm-connector/contracts/mocks/AuthorisedMockSignersBase.sol";
 import {MergedPriceFeedAdapterWithoutRounds} from "../price-feeds/without-rounds/MergedPriceFeedAdapterWithoutRounds.sol";
 
