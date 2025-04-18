@@ -66,13 +66,13 @@ describe("SolanaPricesContractAdapter tests", () => {
     ).rejects.toThrow("code: 1101");
   });
 
-  it("writePricesFromPayloadToContract can update feed price after 4 tx confirmation errors", async () => {
+  it("writePricesFromPayloadToContract can update feed price after 7 tx confirmation errors", async () => {
     const { priceAdapter, state } = getSolanaPricesContractAdapter("trusted");
     const { timestamp, provider, price } = testSample("default");
 
     state
       .setClock(timestamp)
-      .thenDontSubmitAndErrorFor(4)
+      .thenDontSubmitAndErrorFor(DEFAULT_SOLANA_CONFIG.maxTxAttempts - 1)
       .thenSubmit()
       .thenTransactionStatus("confirmed");
 
@@ -84,11 +84,13 @@ describe("SolanaPricesContractAdapter tests", () => {
     expect(data.lastDataPackageTimestampMS).toBe(timestamp);
   });
 
-  it("writePricesFromPayloadToContract can't update feed price after 5 failed submission attempts", async () => {
+  it("writePricesFromPayloadToContract can't update feed price after 8 failed submission attempts", async () => {
     const { priceAdapter, state } = getSolanaPricesContractAdapter("trusted");
     const { timestamp, provider } = testSample("default");
 
-    state.setClock(timestamp).thenDontSubmitAndErrorFor(5);
+    state
+      .setClock(timestamp)
+      .thenDontSubmitAndErrorFor(DEFAULT_SOLANA_CONFIG.maxTxAttempts);
 
     await expect(
       async () => await priceAdapter.writePricesFromPayloadToContract(provider)
@@ -99,7 +101,9 @@ describe("SolanaPricesContractAdapter tests", () => {
     const { priceAdapter, state } = getSolanaPricesContractAdapter("trusted");
     const { timestamp, provider } = testSample("default");
 
-    state.setClock(timestamp).thenDontSubmitAndErrorFor(5);
+    state
+      .setClock(timestamp)
+      .thenDontSubmitAndErrorFor(DEFAULT_SOLANA_CONFIG.maxTxAttempts);
 
     await expect(
       async () => await priceAdapter.writePricesFromPayloadToContract(provider)
@@ -107,7 +111,7 @@ describe("SolanaPricesContractAdapter tests", () => {
 
     const fees = state.fees;
 
-    expect(fees).toStrictEqual([0, 6, 31, 167, 916]);
+    expect(fees).toStrictEqual([1, 4, 16, 64, 256, 1024, 4096, 16384]);
   });
 
   it("writePricesFromPayloadToContract should bump fee upon network congestion errors", async () => {
@@ -116,7 +120,7 @@ describe("SolanaPricesContractAdapter tests", () => {
 
     state
       .setClock(timestamp)
-      .thenDontSubmitAndErrorFor(5)
+      .thenDontSubmitAndErrorFor(DEFAULT_SOLANA_CONFIG.maxTxAttempts)
       .thenSetRecentFee([1000])
       .thenSetRecentFee([1100])
       .thenSetRecentFee([1200])
@@ -128,7 +132,9 @@ describe("SolanaPricesContractAdapter tests", () => {
 
     const fees = state.fees;
 
-    expect(fees).toStrictEqual([0, 1000, 1100, 1200, 1000]);
+    expect(fees).toStrictEqual([
+      1000, 1100, 1200, 1000, 256, 1024, 4096, 16384,
+    ]);
   });
 
   it("writePricesFromPayloadToContract cant update if there is less than required signers", async () => {

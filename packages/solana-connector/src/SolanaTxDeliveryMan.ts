@@ -12,8 +12,10 @@ import {
   TransactionSignature,
   VersionedTransaction,
 } from "@solana/web3.js";
-import _ from "lodash";
 import { SolanaConfig } from "./config";
+import { AggressiveSolanaGasOracle } from "./gas-oracles/AggressiveSolanaGasOracle";
+import { ISolanaGasOracle } from "./gas-oracles/ISolanaGasOracle";
+import { RegularSolanaGasOracle } from "./gas-oracles/RegularSolanaGasOracle";
 import {
   ALL_EXECUTIONS_TIMEOUT_MS,
   SINGLE_EXECUTION_TIMEOUT_MS,
@@ -30,12 +32,17 @@ export type TransactionInstructionsCreator = (inputs: string[]) => Promise<
 
 export class SolanaTxDeliveryMan {
   private readonly logger = loggerFactory("solana-tx-delivery-man");
+  private readonly gasOracle: ISolanaGasOracle;
 
   constructor(
     private readonly connection: Connection,
     private readonly keypair: Keypair,
     private readonly config: SolanaConfig
-  ) {}
+  ) {
+    this.gasOracle = config.useAggressiveGasOracle
+      ? new AggressiveSolanaGasOracle(connection, config)
+      : new RegularSolanaGasOracle(connection, config);
+  }
 
   static createMultiTxDeliveryMan(
     connection: Connection,
@@ -76,9 +83,8 @@ export class SolanaTxDeliveryMan {
     }
 
     this.logger.info(
-      `Sending transactions, attempt ${iterationIndex + 1}/${this.config.maxTxAttempts}`
+      `Sending transaction${RedstoneCommon.getS(txIds.length)} for [${txIds.toString()}]${iterationIndex ? `; Attempt #${iterationIndex + 1}/${this.config.maxTxAttempts}` : ""}`
     );
-    this.logger.info(`Trying to send transactions for ${txIds.toString()}`);
 
     const failedTxs: string[] = [];
     const successfulTxs: TransactionSignature[] = [];
@@ -98,7 +104,7 @@ export class SolanaTxDeliveryMan {
         errors.push(err);
         failedTxs.push(id);
         this.logger.error(
-          `Failed transaction for ${id}, ${RedstoneCommon.stringifyError(err)}.`
+          `Failed transaction for ${id}, ${RedstoneCommon.stringifyError(err)}`
         );
       }
     };
@@ -131,10 +137,14 @@ export class SolanaTxDeliveryMan {
 
   private async wrapWithGas(ix: TransactionInstruction, iteration = 0) {
     const computeUnits = this.config.maxComputeUnits;
-    const priorityFeeUnitPriceCostInMicroLamports = await this.getFee(
-      ix,
-      iteration
-    );
+    const writableKeys = ix.keys
+      .filter((meta) => meta.isWritable)
+      .map((meta) => meta.pubkey);
+    const priorityFeeUnitPriceCostInMicroLamports =
+      await this.gasOracle.getPriorityFeePerUnit(
+        [this.keypair.publicKey, ...writableKeys],
+        iteration
+      );
 
     const computeUnitsInstruction = ComputeBudgetProgram.setComputeUnitLimit({
       units: computeUnits,
@@ -151,10 +161,10 @@ export class SolanaTxDeliveryMan {
       ix,
     ];
 
-    this.logger.info(`Setting transaction compute units to ${computeUnits}`);
+    this.logger.debug(`Setting transaction compute units to ${computeUnits}`);
     if (priorityFeeUnitPriceCostInMicroLamports) {
       this.logger.info(
-        `Additional cost of transaction: ${computeUnits * priorityFeeUnitPriceCostInMicroLamports} microLamports.`
+        `Additional cost of transaction: ${computeUnits * priorityFeeUnitPriceCostInMicroLamports} microLamports`
       );
     }
 
@@ -165,39 +175,6 @@ export class SolanaTxDeliveryMan {
     }).compileToV0Message();
 
     return new VersionedTransaction(message);
-  }
-
-  private async getFee(ix: TransactionInstruction, iteration = 0) {
-    if (iteration === 0) {
-      return 0;
-    }
-    const writableKeys = ix.keys
-      .filter((meta) => meta.isWritable)
-      .map((meta) => meta.pubkey);
-    const fees = await this.connection.getRecentPrioritizationFees({
-      lockedWritableAccounts: [this.keypair.publicKey, ...writableKeys],
-    });
-
-    const recentFee = _.maxBy(fees, (fee) => fee.slot)?.prioritizationFee;
-    const priorityFeeUnitPriceCostInMicroLamports = Math.ceil(
-      this.config.gasMultiplier ** iteration
-    );
-
-    const fee = recentFee
-      ? Math.max(recentFee, priorityFeeUnitPriceCostInMicroLamports)
-      : priorityFeeUnitPriceCostInMicroLamports;
-
-    const finalFeePerUnit = Math.min(fee, this.config.maxPricePerComputeUnit);
-
-    this.logger.info(
-      `RecentFee: ${recentFee}, calculated fee by iteration: ${priorityFeeUnitPriceCostInMicroLamports}`
-    );
-    this.logger.info(
-      `Max price per compute unit: ${this.config.maxPricePerComputeUnit}`
-    );
-    this.logger.info(`Setting transaction cost per unit to ${finalFeePerUnit}`);
-
-    return finalFeePerUnit;
   }
 
   private async sendAndConfirm(
