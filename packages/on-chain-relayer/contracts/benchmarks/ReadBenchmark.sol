@@ -64,14 +64,14 @@ contract ReadBenchmark {
 
       mstore(freeSlot, SIG)
 
-      let success := staticcall(
+      pop(staticcall(
         5000, // estimated gas cost for this function
         0xCf7Ed3AccA5a467e9e704C703E8D87F634fB0Fc9,
         freeSlot,
         0x04,
         freeSlot,
         0x20
-      )
+      ))
       // we don't have to handle error, cause underlying function never fails
 
       value := mload(freeSlot)

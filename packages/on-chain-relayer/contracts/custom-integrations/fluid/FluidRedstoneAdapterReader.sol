@@ -2,8 +2,6 @@
 
 pragma solidity ^0.8.17;
 
-import {IFluidOracle} from "./IFluidOracle.sol";
-
 /**
  * This contract illustrates the cheapest possible way to read from FluidOracleRedstoneAdapter contract
  * Gas reduced in comparison to FluidOracleRedstoneAdapter(address).readExchangeRate - less ~2230 gas (total cost = ~5321 (with call included))
