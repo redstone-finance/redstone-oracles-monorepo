@@ -245,7 +245,8 @@
         "curve-ethereum-usdc-multi-block",
         "fraxswap-ethereum-fxs",
         "fraxswap-ethereum-weth",
-        "uniswap-v3-ethereum-usdc-500"
+        "uniswap-v3-ethereum-usdc-500",
+        "uniswap-v3-ethereum-dai-500"
       ],
       "deviationCheck": {
         "deviationWithRecentValues": {
