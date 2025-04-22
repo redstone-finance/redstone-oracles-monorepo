@@ -30,7 +30,13 @@ export class SolanaConnectionBuilder {
       );
 
     return MultiExecutor.create(
-      rpcUrls.map((url) => new Connection(url, "confirmed")),
+      rpcUrls.map(
+        (url) =>
+          new Connection(url, {
+            commitment: "confirmed",
+            wsEndpoint: "",
+          })
+      ),
       {
         getBlockHeight: ceilMedianConsensusExecutor,
         getSlot: ceilMedianConsensusExecutor,

@@ -15,10 +15,10 @@ export class SuiPricesContractConnector
   constructor(
     client: SuiClient,
     private readonly config: SuiConfig,
-    private readonly keypair?: Keypair,
+    keypair?: Keypair,
     private readonly txDeliveryMan?: SuiTxDeliveryMan
   ) {
-    super(client);
+    super(client, keypair);
   }
 
   override getAdapter(): Promise<SuiPricesContractAdapter> {
