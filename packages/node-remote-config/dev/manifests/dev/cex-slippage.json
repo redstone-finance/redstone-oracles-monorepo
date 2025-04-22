@@ -731,7 +731,8 @@
         "coingecko",
         "curve-usdc-frax-multi-block",
         "fraxswap-on-chain-fxs",
-        "uniswap-v3-ethereum-on-chain-fxs-10000"
+        "uniswap-v3-ethereum-on-chain-fxs-10000",
+        "uniswap-v3-ethereum-dai-500"
       ]
     },
     "VST": {
