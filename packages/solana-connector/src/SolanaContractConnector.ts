@@ -2,7 +2,14 @@ import {
   IContractConnector,
   IPricesContractAdapter,
 } from "@redstone-finance/sdk";
-import { Connection, Keypair, PublicKey } from "@solana/web3.js";
+import {
+  Connection,
+  Keypair,
+  PublicKey,
+  sendAndConfirmTransaction,
+  SystemProgram,
+  Transaction,
+} from "@solana/web3.js";
 import { DEFAULT_SOLANA_CONFIG } from "./config";
 import { PriceAdapterContract } from "./price_adapter/PriceAdapterContract";
 import { SolanaPricesContractAdapter } from "./price_adapter/SolanaPricesContractAdapter";
@@ -58,5 +65,30 @@ export class SolanaContractConnector
       minContextSlot: slot,
     });
     return BigInt(balance) * BigInt(10 ** 9);
+  }
+
+  async transfer(toAddress: string, amountInSol: number) {
+    if (!this.keypair) {
+      throw new Error("Private Key was not provided.");
+    }
+    amountInSol = amountInSol * 10 ** 9;
+    const transaction = new Transaction().add(
+      SystemProgram.transfer({
+        fromPubkey: this.keypair.publicKey,
+        toPubkey: new PublicKey(toAddress),
+        lamports: amountInSol,
+      })
+    );
+
+    await sendAndConfirmTransaction(this.connection, transaction, [
+      this.keypair,
+    ]);
+  }
+
+  getSignerAddress() {
+    if (!this.keypair) {
+      throw new Error("Private Key was not provided.");
+    }
+    return Promise.resolve(this.keypair.publicKey.toBase58());
   }
 }
