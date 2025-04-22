@@ -1,8 +1,14 @@
 import { NonEvmChainType } from "@redstone-finance/chain-configs";
 import { AptosClientBuilder } from "@redstone-finance/movement-connector";
 import { RadixClientBuilder } from "@redstone-finance/radix-connector";
-import { SolanaConnectionBuilder } from "@redstone-finance/solana-connector";
-import { SuiClientBuilder } from "@redstone-finance/sui-connector";
+import {
+  makeKeypair as makeSolanaKeypair,
+  SolanaConnectionBuilder,
+} from "@redstone-finance/solana-connector";
+import {
+  makeSuiKeypair,
+  SuiClientBuilder,
+} from "@redstone-finance/sui-connector";
 import { RedstoneCommon } from "@redstone-finance/utils";
 import { MovementBlockchainService } from "./MovementBlockchainService";
 import { RadixBlockchainService } from "./RadixBlockchainService";
@@ -21,7 +27,8 @@ export function getNonEvmBlockchainService(
         .withChainId(chainId)
         .withRpcUrls(rpcUrls)
         .build();
-      return new SuiBlockchainService(suiClient);
+      const keypair = privateKey ? makeSuiKeypair(privateKey.value) : undefined;
+      return new SuiBlockchainService(suiClient, keypair);
     }
     case "movement": {
       const aptosClient = new AptosClientBuilder()
@@ -43,7 +50,10 @@ export function getNonEvmBlockchainService(
         .withChainId(chainId)
         .withRpcUrls(rpcUrls)
         .build();
-      return new SolanaBlockchainService(connection);
+      const keypair = privateKey
+        ? makeSolanaKeypair(privateKey.value)
+        : undefined;
+      return new SolanaBlockchainService(connection, undefined, keypair);
     }
     case "fuel":
       throw new Error(`chain type ${chainType} not supported`);
