@@ -79,6 +79,9 @@
     },
     "cmETH_FUNDAMENTAL": {
       "priceFeedAddress": "0x5C4c8d6f6Bf79B718F3e8399AaBdFEd01cB7e48f"
+    },
+    "sUSDe": {
+      "priceFeedAddress": "0x243507C8C114618d7C8AD94b51118dB7b4e32ECe"
     }
   }
 }
