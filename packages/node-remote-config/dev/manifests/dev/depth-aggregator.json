@@ -9,7 +9,7 @@
   "deviationCheck": {
     "deviationWithRecentValues": {
       "maxPercent": 30,
-      "maxDelayMilliseconds": 300000
+      "maxDelayMilliseconds": 120000
     }
   },
   "tokens": {
@@ -43,7 +43,7 @@
       "deviationCheck": {
         "deviationWithRecentValues": {
           "maxPercent": 5,
-          "maxDelayMilliseconds": 300000
+          "maxDelayMilliseconds": 120000
         }
       }
     },
@@ -61,7 +61,7 @@
       "deviationCheck": {
         "deviationWithRecentValues": {
           "maxPercent": 5,
-          "maxDelayMilliseconds": 300000
+          "maxDelayMilliseconds": 120000
         }
       }
     },
@@ -119,7 +119,7 @@
       "deviationCheck": {
         "deviationWithRecentValues": {
           "maxPercent": 5,
-          "maxDelayMilliseconds": 300000
+          "maxDelayMilliseconds": 120000
         }
       }
     },
@@ -151,7 +151,7 @@
       "deviationCheck": {
         "deviationWithRecentValues": {
           "maxPercent": 5,
-          "maxDelayMilliseconds": 300000
+          "maxDelayMilliseconds": 120000
         }
       }
     },
@@ -259,7 +259,7 @@
       "deviationCheck": {
         "deviationWithRecentValues": {
           "maxPercent": 5,
-          "maxDelayMilliseconds": 300000
+          "maxDelayMilliseconds": 120000
         }
       }
     },
@@ -280,7 +280,7 @@
       "deviationCheck": {
         "deviationWithRecentValues": {
           "maxPercent": 5,
-          "maxDelayMilliseconds": 300000
+          "maxDelayMilliseconds": 120000
         }
       }
     },
@@ -314,7 +314,7 @@
       "deviationCheck": {
         "deviationWithRecentValues": {
           "maxPercent": 5,
-          "maxDelayMilliseconds": 300000
+          "maxDelayMilliseconds": 120000
         }
       }
     },
@@ -326,7 +326,7 @@
       "deviationCheck": {
         "deviationWithRecentValues": {
           "maxPercent": 5,
-          "maxDelayMilliseconds": 300000
+          "maxDelayMilliseconds": 120000
         }
       }
     },
@@ -612,7 +612,7 @@
       "deviationCheck": {
         "deviationWithRecentValues": {
           "maxPercent": 5,
-          "maxDelayMilliseconds": 300000
+          "maxDelayMilliseconds": 120000
         }
       }
     },
@@ -699,7 +699,7 @@
       "deviationCheck": {
         "deviationWithRecentValues": {
           "maxPercent": 5,
-          "maxDelayMilliseconds": 300000
+          "maxDelayMilliseconds": 120000
         }
       }
     },
@@ -712,7 +712,7 @@
       "deviationCheck": {
         "deviationWithRecentValues": {
           "maxPercent": 5,
-          "maxDelayMilliseconds": 300000
+          "maxDelayMilliseconds": 120000
         }
       }
     },
@@ -866,7 +866,7 @@
       "deviationCheck": {
         "deviationWithRecentValues": {
           "maxPercent": 5,
-          "maxDelayMilliseconds": 300000
+          "maxDelayMilliseconds": 120000
         }
       }
     },
@@ -913,7 +913,7 @@
       "deviationCheck": {
         "deviationWithRecentValues": {
           "maxPercent": 5,
-          "maxDelayMilliseconds": 300000
+          "maxDelayMilliseconds": 120000
         }
       }
     },
@@ -952,7 +952,7 @@
       "deviationCheck": {
         "deviationWithRecentValues": {
           "maxPercent": 5,
-          "maxDelayMilliseconds": 300000
+          "maxDelayMilliseconds": 120000
         }
       }
     },
@@ -963,7 +963,7 @@
       "deviationCheck": {
         "deviationWithRecentValues": {
           "maxPercent": 5,
-          "maxDelayMilliseconds": 300000
+          "maxDelayMilliseconds": 120000
         }
       }
     },
@@ -1093,7 +1093,7 @@
       "deviationCheck": {
         "deviationWithRecentValues": {
           "maxPercent": 5,
-          "maxDelayMilliseconds": 300000
+          "maxDelayMilliseconds": 120000
         }
       }
     },
@@ -1104,7 +1104,7 @@
       "deviationCheck": {
         "deviationWithRecentValues": {
           "maxPercent": 5,
-          "maxDelayMilliseconds": 300000
+          "maxDelayMilliseconds": 120000
         }
       }
     },
@@ -1121,7 +1121,7 @@
       "deviationCheck": {
         "deviationWithRecentValues": {
           "maxPercent": 5,
-          "maxDelayMilliseconds": 300000
+          "maxDelayMilliseconds": 120000
         }
       }
     },
@@ -1132,7 +1132,7 @@
       "deviationCheck": {
         "deviationWithRecentValues": {
           "maxPercent": 5,
-          "maxDelayMilliseconds": 300000
+          "maxDelayMilliseconds": 120000
         }
       }
     },
@@ -1419,7 +1419,7 @@
       "deviationCheck": {
         "deviationWithRecentValues": {
           "maxPercent": 5,
-          "maxDelayMilliseconds": 300000
+          "maxDelayMilliseconds": 120000
         }
       }
     },
@@ -1433,7 +1433,7 @@
       "deviationCheck": {
         "deviationWithRecentValues": {
           "maxPercent": 5,
-          "maxDelayMilliseconds": 300000
+          "maxDelayMilliseconds": 120000
         }
       }
     },
