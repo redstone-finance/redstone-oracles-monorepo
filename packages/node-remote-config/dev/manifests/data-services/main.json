@@ -6,7 +6,7 @@
   "deviationCheck": {
     "deviationWithRecentValues": {
       "maxPercent": 25,
-      "maxDelayMilliseconds": 300000
+      "maxDelayMilliseconds": 120000
     }
   },
   "defaultSource": [
@@ -2875,7 +2875,7 @@
       "deviationCheck": {
         "deviationWithRecentValues": {
           "maxPercent": 9007199254740991,
-          "maxDelayMilliseconds": 300000
+          "maxDelayMilliseconds": 120000
         }
       },
       "denomination": "USD",
