@@ -313,7 +313,7 @@ abstract contract RedstoneConsumerBase is CalldataExtractor {
     uint256[] memory aggregatedValues = new uint256[](valuesForDataFeeds.length);
     uint256 uniqueSignersThreshold = getUniqueSignersThreshold();
 
-    for (uint256 dataFeedIndex = 0; dataFeedIndex < valuesForDataFeeds.length; dataFeedIndex++) {
+    for (uint256 dataFeedIndex = 0; dataFeedIndex < valuesForDataFeeds.length;) {
       if (uniqueSignerCountForDataFeedIds[dataFeedIndex] < uniqueSignersThreshold) {
         revert InsufficientNumberOfUniqueSigners(
           uniqueSignerCountForDataFeedIds[dataFeedIndex],
@@ -321,6 +321,9 @@ abstract contract RedstoneConsumerBase is CalldataExtractor {
       }
       uint256 aggregatedValueForDataFeedId = aggregateValues(valuesForDataFeeds[dataFeedIndex]);
       aggregatedValues[dataFeedIndex] = aggregatedValueForDataFeedId;
+      unchecked {
+         dataFeedIndex++;
+      }
     }
 
     return aggregatedValues;
