@@ -1214,8 +1214,8 @@
     }
   },
   "temporaryConfigUpdates": {
-    "expirationTimestamp": "2025-04-19T12:00:00+02:00",
-    "citreaTestnet": {
+    "expirationTimestamp": "2025-04-30T12:00:00+02:00",
+    "celo-baklava": {
       "disabled": true
     }
   }
