@@ -6,5 +6,6 @@ export * from "./price_adapter/PriceAdapterContract";
 export * from "./price_adapter/SolanaPricesContractAdapter";
 export * from "./SolanaConnectionBuilder";
 export * from "./SolanaContractConnector";
+export * from "./SolanaRustSdkErrorHandler";
 export * from "./SolanaTxDeliveryMan";
 export * from "./utils";

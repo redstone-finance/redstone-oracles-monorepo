@@ -20,6 +20,7 @@ import {
   ALL_EXECUTIONS_TIMEOUT_MS,
   SINGLE_EXECUTION_TIMEOUT_MS,
 } from "./SolanaConnectionBuilder";
+import { SolanaRustSdkErrroHandler } from "./SolanaRustSdkErrorHandler";
 
 const RETRY_WAIT_TIME_MS = 500;
 
@@ -199,6 +200,9 @@ export class SolanaTxDeliveryMan {
       async () => {
         const result = await this.connection.getSignatureStatus(txSignature);
         if (result.value !== null && result.value.err !== null) {
+          if (SolanaRustSdkErrroHandler.canSkipError(result.value.err)) {
+            return true;
+          }
           throw new Error(RedstoneCommon.stringify(result.value.err));
         }
 
