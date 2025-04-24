@@ -24,12 +24,14 @@ export const loggerFactory = (moduleName: string): RedstoneLogger => {
       ? new JSONReporter()
       : new FancyReporter();
 
-    return consola
+    const logger = consola
       .create({
         reporters: [mainReporter],
         level: getLogLevel(),
       })
       .withTag(moduleName);
+
+    return createSanitizedLogger(logger);
   } else {
     return console;
   }
