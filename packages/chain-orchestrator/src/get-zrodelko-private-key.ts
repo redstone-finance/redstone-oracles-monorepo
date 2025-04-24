@@ -2,7 +2,7 @@ import { Env, NonEvmChainType } from "@redstone-finance/chain-configs";
 import { getSSMParameterValue } from "@redstone-finance/internal-utils";
 import { RedstoneCommon } from "@redstone-finance/utils";
 
-const ed25519Chains = ["radix", "solana", "sui"];
+const ed25519Chains = ["radix", "solana", "sui", "movement"];
 
 export async function getNonEvmZrodelkoPrivateKey(
   env: Env,
