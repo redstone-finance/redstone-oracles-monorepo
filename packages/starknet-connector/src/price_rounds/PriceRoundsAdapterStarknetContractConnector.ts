@@ -1,10 +1,10 @@
 import {
   ContractParamsProvider,
   IContractConnector,
-  IPriceManagerContractAdapter,
 } from "@redstone-finance/sdk";
 import { ProviderInterface } from "starknet";
 import { StarknetContractConnector } from "../StarknetContractConnector";
+import { IPriceManagerContractAdapter } from "./IPriceManagerContractAdapter";
 import { PriceRoundsAdapterStarknetContractAdapter } from "./PriceRoundsAdapterStarknetContractAdapter";
 import price_rounds_adapter_abi from "./price_rounds_adapter_abi.json";
 
