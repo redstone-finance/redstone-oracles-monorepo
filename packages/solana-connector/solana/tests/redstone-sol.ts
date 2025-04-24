@@ -1,6 +1,6 @@
 import * as anchor from "@coral-xyz/anchor";
 import { Program, ProgramError } from "@coral-xyz/anchor";
-import { PriceAdapter } from "../target/types/price_adapter";
+import { RedstoneSolanaPriceAdapter } from "../target/types/redstone_solana_price_adapter";
 import { expect } from "chai";
 import {
   printComputeUnitsUsed,
@@ -13,7 +13,7 @@ describe("redstone-sol", () => {
   const provider = anchor.AnchorProvider.env();
   anchor.setProvider(provider);
 
-  const program = anchor.workspace.PriceAdapter as Program<PriceAdapter>;
+  const program = anchor.workspace.RedstoneSolanaPriceAdapter as Program<RedstoneSolanaPriceAdapter>;
 
   const feedIds = [
     "AVAX",

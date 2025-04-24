@@ -5,7 +5,7 @@ resolution = true
 skip-lint = false
 
 [programs.localnet]
-price-adapter = "7ivV97oED3baoFikEVxat7fqcAqUVPvXv4MkPR3tMPBv"
+redstone-solana-price-adapter = "7ivV97oED3baoFikEVxat7fqcAqUVPvXv4MkPR3tMPBv"
 
 [registry]
 url = "https://api.apr.dev"
