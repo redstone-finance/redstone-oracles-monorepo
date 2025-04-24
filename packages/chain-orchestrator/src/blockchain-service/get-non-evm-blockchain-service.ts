@@ -35,7 +35,7 @@ export function getNonEvmBlockchainService(
         .withChainId(chainId)
         .withRpcUrls(rpcUrls)
         .build();
-      return new MovementBlockchainService(aptosClient);
+      return new MovementBlockchainService(aptosClient, privateKey);
     }
     case "radix": {
       const radixClient = new RadixClientBuilder()
