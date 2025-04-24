@@ -1,12 +1,12 @@
 [package]
-name = "price-adapter"
+name = "redstone-solana-price-adapter"
 version = "1.0.0"
-description = "RedStone Price Adapter"
+description = "RedStone Solana Price Adapter"
 edition = "2021"
 
 [lib]
 crate-type = ["cdylib", "lib"]
-name = "price_adapter"
+name = "redstone_solana_price_adapter"
 
 [features]
 default = []
