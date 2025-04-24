@@ -220,6 +220,50 @@
       "ecdsaPublicKey": "0x04b6aae64a76ff84882ab79997b912b9d0bbdff2800309364e7f319f227a19dad0aa4711df944ee445cf8d18c2c5946a10595d25c5939e728c72a727f43ec9af40",
       "dateAdded": "2025-03-28"
     },
+    "0x04d938651ba3E1313c625244Cb01f0930Afa388B": {
+      "name": "redstone-primary-prod-teb-1",
+      "description": "Data feeds from primary redstone nodes - TEB node 1",
+      "logo": "https://raw.githubusercontent.com/redstone-finance/redstone-images/main/providers/teb/logo.png",
+      "dataServiceId": "redstone-primary-prod",
+      "evmAddress": "0x04d938651ba3E1313c625244Cb01f0930Afa388B",
+      "url": "https://x.com/tebplace",
+      "ipAddress": "0.0.0.0",
+      "ecdsaPublicKey": "0x042dceb02d066a0d4628727da91a2879fa22d4ee6c96db87c08241c7e1bc3ffea857a537764ab9e30fca3696bc6920bb7a5ff49e97d0529a708706954c5fe2e226",
+      "dateAdded": "2025-04-23"
+    },
+    "0x82991bBD3b77De53f9D1ceA88F1B8021f27B557F": {
+      "name": "redstone-primary-prod-undefined-labs-1",
+      "description": "Data feeds from primary redstone nodes - Undefined Labs node 1",
+      "logo": "https://raw.githubusercontent.com/redstone-finance/redstone-images/main/providers/undefined_labs/logo.png",
+      "dataServiceId": "redstone-primary-prod",
+      "evmAddress": "0x82991bBD3b77De53f9D1ceA88F1B8021f27B557F",
+      "url": "https://undefinedlabs.xyz",
+      "ipAddress": "0.0.0.0",
+      "ecdsaPublicKey": "0x04e564132c4fba2edf868e9a09fd6fd5c44246d543536db38b06807d4de3e7a5798ac2e0b27997bd748f30edb93bcf70ece026cac67229f576a3c9b754a23642da",
+      "dateAdded": "2025-04-23"
+    },
+    "0xE6540844F0aE3eC499d365De1f594b2A7c2860E7": {
+      "name": "redstone-primary-prod-alchemy-1",
+      "description": "Data feeds from primary redstone nodes - Alchemy node 1",
+      "logo": "https://raw.githubusercontent.com/redstone-finance/redstone-images/main/providers/alchemy/logo.png",
+      "dataServiceId": "redstone-primary-prod",
+      "evmAddress": "0xE6540844F0aE3eC499d365De1f594b2A7c2860E7",
+      "url": "https://www.alchemy.com",
+      "ipAddress": "0.0.0.0",
+      "ecdsaPublicKey": "0x04e6bb9d55466da4503c12ab4a0d4c671792fa3b4b4c6b1d6e6ea816c7bfcb1cab70b32a027eabbd486ca7c335ce63d9ed7ab6309cd95c2be13a78a8e960f316d3",
+      "dateAdded": "2025-04-23"
+    },
+    "0xaB4C37FC34E814e61eC09aE9CE8652CE24EfE53f": {
+      "name": "redstone-primary-prod-kaiko-1",
+      "description": "Data feeds from primary redstone nodes - Kaiko node 1",
+      "logo": "https://raw.githubusercontent.com/redstone-finance/redstone-images/main/providers/kaiko/logo.png",
+      "dataServiceId": "redstone-primary-prod",
+      "evmAddress": "0xaB4C37FC34E814e61eC09aE9CE8652CE24EfE53f",
+      "url": "https://kaiko.com/",
+      "ipAddress": "0.0.0.0",
+      "ecdsaPublicKey": "0x04f1b0e6f15cd00f16f3cfec40bf7facdba5b49624c5ad71c4dd55b0428c03479ac6d17219fbad7f5c8b7b48a2a05de3647c6843d0044d81e6c68f6a4b0e21447d",
+      "dateAdded": "2025-04-23"
+    },
     "ckah_Yc4ZhzQbx27Lgo1Ad1yePneQdkusER_c49KVK0": {
       "name": "redstone-arbitrum-prod-node-1",
       "description": "Data feeds from arbitrum redstone nodes - prod 1",
@@ -330,50 +374,6 @@
       "ecdsaPublicKey": "0x0494635bf9e9841d5d4fb5fe62c7da5786d519b4e63cbbde9092b3d4555f480547abbf0ba4bc5dcfd97d22b5b154ae969110b662bbfb700447d7e6f9ee8f86cd69",
       "dateAdded": "2025-01-01"
     },
-    "DKWS99CPmosyDcejUMVs-QlhuOV4i8bL1D9A6TeZipQ": {
-      "url": "https://bwarelabs.com/",
-      "logo": "https://raw.githubusercontent.com/bwarelabs/brand-assets/main/infra-token/svg/infra-token-circle.svg",
-      "name": "bwarelabs-demo-1",
-      "ipAddress": "0.0.0.0",
-      "dataServiceId": "bwarelabs-demo-1",
-      "description": "Data feeds provided by Bware Labs",
-      "evmAddress": "0x4564a9FdB414c320C74C908f60c204e486eC1e2a",
-      "ecdsaPublicKey": "0x040da4fe87038cf59484ec5a183c8da8e04d4ab31a3a73f4a72c1ce3b0ff9048a4e53dc954cff85d986881b8c8066e0281661eae1b8393cfc342c241233fa11616",
-      "dateAdded": "2024-01-01"
-    },
-    "0x781b100A6e6cd36e9a224254855A59e49C915909": {
-      "url": "https://kaiko.com/",
-      "logo": "https://raw.githubusercontent.com/redstone-finance/redstone-images/main/providers/kaiko/logo.png",
-      "name": "kaiko-demo-1",
-      "ipAddress": "0.0.0.0",
-      "dataServiceId": "kaiko-demo-1",
-      "description": "Data feeds provided by Kaiko",
-      "evmAddress": "0x781b100A6e6cd36e9a224254855A59e49C915909",
-      "ecdsaPublicKey": "0x04b8dc4891cb527e93e041b6caf594b97c1c388bac226d6c79117668629314a0df270582ec3cf497842e711dba7b6ab061b75e3c2a6e882e1691ed862f4f204f8e",
-      "dateAdded": "2024-01-01"
-    },
-    "0x6318eE5BC5070150b7ab2688fc2C9c1Bf958B72c": {
-      "url": "https://kudasai.co.jp",
-      "logo": "https://raw.githubusercontent.com/redstone-finance/redstone-images/main/providers/kudasaijp/logo_orange.svg",
-      "name": "kudasaijp-demo-1",
-      "ipAddress": "0.0.0.0",
-      "dataServiceId": "kudasaijp-demo-1",
-      "description": "Data feeds provided by KudasaiJP",
-      "evmAddress": "0x6318eE5BC5070150b7ab2688fc2C9c1Bf958B72c",
-      "ecdsaPublicKey": "0x04923b515ca55308a9a6f5cac7ccf6cafbc1fda73700a081b1d1114e20e3c0a89c9fe388b6e62fade1243bd30895ac0473a9642756be38e3619aad5c9b890e0cc3",
-      "dateAdded": "2024-01-01"
-    },
-    "0x01922465ccaa8b14A1CDF84BeC16fFA0A7CD2b9d": {
-      "url": "https://x.com/tebplace",
-      "logo": "https://raw.githubusercontent.com/redstone-finance/redstone-images/main/providers/teb/logo.png",
-      "name": "teb-demo-1",
-      "ipAddress": "0.0.0.0",
-      "dataServiceId": "teb-demo-1",
-      "description": "Data feeds provided by TEB",
-      "evmAddress": "0x01922465ccaa8b14A1CDF84BeC16fFA0A7CD2b9d",
-      "ecdsaPublicKey": "0x0446b99cd91967222a16d5220ed10a5d743d517655a80f4eda8b52a817f77de7d237f0c474ef28859f347cc001b910dc74de03181880408d40aa37ae5329dda384",
-      "dateAdded": "2024-01-01"
-    },
     "0xA73880D5550f712f1820fF3e157BD64ea7Bc7040": {
       "url": "https://auros.global",
       "logo": "https://raw.githubusercontent.com/redstone-finance/redstone-images/main/providers/auros/logo.png",
@@ -383,17 +383,6 @@
       "description": "Data feeds provided by Auros",
       "evmAddress": "0xCA5C81a36C21583b8488a3327F4023EaE6B5e02b",
       "ecdsaPublicKey": "0x04bdc7d5c223b8dbe77aab4c3fc7a84b90ec1848b50d9cc52ca762c42eebd3215b0d62bcd86adecc834d093104028edad060f446cbcfeef8b0131dbeee8a6ed42f",
-      "dateAdded": "2024-01-01"
-    },
-    "0x8B3b593Fc46A071753768f0001023B776b15f98c": {
-      "url": "https://undefinedlabs.xyz",
-      "logo": "https://raw.githubusercontent.com/redstone-finance/redstone-images/main/providers/undefined_labs/logo.png",
-      "name": "undefined-labs-demo-1",
-      "ipAddress": "0.0.0.0",
-      "dataServiceId": "undefined-labs-demo-1",
-      "description": "Data feeds provided by Undefined Labs",
-      "evmAddress": "0x8B3b593Fc46A071753768f0001023B776b15f98c",
-      "ecdsaPublicKey": "0x04cb5aeb6a7ac2b00c00ee4d1b1f55560a68571242e246182c00be4db667c71118dcb973c031bad5ca260282af7f15fab7aaee41e28ca0b395d5a8d2bffd684658",
       "dateAdded": "2024-01-01"
     }
   },
@@ -486,35 +475,10 @@
       "logo": "https://redstone.finance/assets/img/redstone-logo-full.svg",
       "description": "Data feeds from external providers, staging node"
     },
-    "bwarelabs-demo-1": {
-      "name": "Bware Labs Demo",
-      "logo": "https://raw.githubusercontent.com/bwarelabs/brand-assets/main/infra-token/svg/infra-token-circle.svg",
-      "description": "Data feeds provided by Bware Labs"
-    },
-    "kaiko-demo-1": {
-      "name": "Kaiko Demo 1 Node",
-      "logo": "https://raw.githubusercontent.com/redstone-finance/redstone-images/main/providers/kaiko/logo.png",
-      "description": "Data feeds provided by Kaiko to staging env"
-    },
-    "kudasaijp-demo-1": {
-      "name": "KudasaiJP Demo 1 Node",
-      "logo": "https://raw.githubusercontent.com/redstone-finance/redstone-images/main/providers/kudasaijp/logo_orange.svg",
-      "description": "Data feeds provided by KudasaiJP to staging env"
-    },
-    "teb-demo-1": {
-      "name": "TEB Demo 1 Node",
-      "logo": "https://raw.githubusercontent.com/redstone-finance/redstone-images/main/providers/teb/logo.png",
-      "description": "Data feeds provided by TEB to staging env"
-    },
     "auros-demo-1": {
       "name": "Auros Demo 1 Node",
       "logo": "https://raw.githubusercontent.com/redstone-finance/redstone-images/main/providers/auros/logo.png",
       "description": "Data feeds provided by Auros to staging env"
-    },
-    "undefined-labs-demo-1": {
-      "name": "Undefined Labs 1 Node",
-      "logo": "https://raw.githubusercontent.com/redstone-finance/redstone-images/main/providers/undefined_labs/logo.png",
-      "description": "Data feeds provided by Undefined Labs to staging env"
     }
   },
   "contractAdmins": [
