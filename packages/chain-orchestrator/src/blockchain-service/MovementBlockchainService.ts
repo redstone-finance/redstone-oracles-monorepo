@@ -6,8 +6,11 @@ import { NonEvmBlockchainService } from "./NonEvmBlockchainService";
 export class MovementBlockchainService extends NonEvmBlockchainService {
   private readonly logger = loggerFactory("movement-blockchain-service");
 
-  constructor(private client: Aptos) {
-    super(new MovementContractConnector(client));
+  constructor(
+    private client: Aptos,
+    privateKey?: RedstoneCommon.PrivateKey
+  ) {
+    super(new MovementContractConnector(client, privateKey));
   }
 
   async getTimeForBlock(blockHeight: number) {
