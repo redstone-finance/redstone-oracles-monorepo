@@ -2310,32 +2310,6 @@
       "denomination": "ETH",
       "rateFeed": true
     },
-    "enzoBTC_POR": {
-      "source": ["enzobtc-indexer-fetcher"],
-      "valueCapConfig": {
-        "upper": {
-          "value": 1
-        },
-        "lower": {
-          "value": 1
-        }
-      },
-      "denomination": "BTC",
-      "rateFeed": true
-    },
-    "stBTC_POR": {
-      "source": ["stbtc-indexer-fetcher"],
-      "valueCapConfig": {
-        "upper": {
-          "value": 1
-        },
-        "lower": {
-          "value": 1
-        }
-      },
-      "denomination": "BTC",
-      "rateFeed": true
-    },
     "iBERA": {
       "source": ["beraswap-berachain-wbera", "kodiak-berachain-wbera-500"],
       "denomination": "USD",
