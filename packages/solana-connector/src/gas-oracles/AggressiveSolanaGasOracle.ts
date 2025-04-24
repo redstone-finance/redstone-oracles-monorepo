@@ -23,13 +23,15 @@ export class AggressiveSolanaGasOracle implements ISolanaGasOracle {
     const fees = await this.connection.getRecentPrioritizationFees({
       lockedWritableAccounts,
     });
-
-    const percentile =
+    const prioritizationFees = fees.map((entry) => entry.prioritizationFee);
+    const percentileForUse =
       BASE_PRIORITY_FEE_PERCENTILE +
       iterationIndex * PRIORITY_FEE_PERCENTILE_STEP;
+    this.logPercentiles(prioritizationFees, percentileForUse);
+
     const recentPriorityFeePercentile = calculatePercentile(
-      fees.map((entry) => entry.prioritizationFee),
-      percentile
+      prioritizationFees,
+      percentileForUse
     );
     const iterationGasMultiplier = this.config.gasMultiplier ** iterationIndex;
     const maxRecentPriorityFee =
@@ -43,7 +45,7 @@ export class AggressiveSolanaGasOracle implements ISolanaGasOracle {
     this.logger.info(
       [
         `Priority fee per unit: ${priorityFee}`,
-        `${percentile}th Priority Fee Percentile: ${recentPriorityFeePercentile}`,
+        `${percentileForUse}th Priority Fee Percentile: ${recentPriorityFeePercentile}`,
         iterationIndex
           ? `iterationGasMultiplier in iteration #${iterationIndex}: ${iterationGasMultiplier}`
           : "",
@@ -53,6 +55,28 @@ export class AggressiveSolanaGasOracle implements ISolanaGasOracle {
     );
 
     return priorityFee;
+  }
+
+  private logPercentiles(
+    prioritizationFees: number[],
+    percentileForUse: number
+  ) {
+    const step = 1;
+    const startPercentile = BASE_PRIORITY_FEE_PERCENTILE;
+    const percentiles = Array.from(
+      {
+        length: 1 + Math.ceil((100 - startPercentile) / step),
+      },
+      (_, index) => [
+        startPercentile + index * step,
+        calculatePercentile(prioritizationFees, startPercentile + index * step),
+      ]
+    );
+
+    this.logger.log(`Current prioritization fee percentiles:`, {
+      percentileForUse,
+      percentiles: Object.fromEntries(percentiles) as { [p: number]: number },
+    });
   }
 }
 
