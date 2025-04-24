@@ -16,16 +16,6 @@
       "denomination": "BTC",
       "rateFeed": true
     },
-    "stBTC_POR": {
-      "source": ["stbtc-indexer-fetcher"],
-      "denomination": "BTC",
-      "rateFeed": true
-    },
-    "enzoBTC_POR": {
-      "source": ["enzobtc-indexer-fetcher"],
-      "denomination": "BTC",
-      "rateFeed": true
-    },
     "USDtb_FUNDAMENTAL": {
       "source": ["ethereum-ethena-usdtb"],
       "denomination": "USD",
