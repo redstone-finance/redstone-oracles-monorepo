@@ -9452,7 +9452,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@redstone-finance/starknet-connector@workspace:*, @redstone-finance/starknet-connector@workspace:packages/starknet-connector":
+"@redstone-finance/starknet-connector@workspace:packages/starknet-connector":
   version: 0.0.0-use.local
   resolution: "@redstone-finance/starknet-connector@workspace:packages/starknet-connector"
   dependencies:
@@ -9460,18 +9460,6 @@ __metadata:
     dotenv: "npm:^16.0.3"
     ethers: "npm:^5.7.2"
     starknet: "npm:^6.6.6"
-  languageName: unknown
-  linkType: soft
-
-"@redstone-finance/starknet-relayer@workspace:packages/starknet-relayer":
-  version: 0.0.0-use.local
-  resolution: "@redstone-finance/starknet-relayer@workspace:packages/starknet-relayer"
-  dependencies:
-    "@redstone-finance/sdk": "workspace:*"
-    "@redstone-finance/starknet-connector": "workspace:*"
-    "@redstone-finance/utils": "workspace:*"
-    dotenv: "npm:^16.0.3"
-    ethers: "npm:^5.7.2"
   languageName: unknown
   linkType: soft
 
@@ -9510,7 +9498,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@redstone-finance/ton-connector@workspace:*, @redstone-finance/ton-connector@workspace:packages/ton-connector":
+"@redstone-finance/ton-connector@workspace:packages/ton-connector":
   version: 0.0.0-use.local
   resolution: "@redstone-finance/ton-connector@workspace:packages/ton-connector"
   dependencies:
@@ -9526,18 +9514,6 @@ __metadata:
     "@ton/sandbox": "npm:^0.17.0"
     "@ton/test-utils": "npm:^0.4.2"
     "@ton/ton": "npm:^13.11.1"
-    dotenv: "npm:^16.0.3"
-    ethers: "npm:^5.7.2"
-  languageName: unknown
-  linkType: soft
-
-"@redstone-finance/ton-relayer@workspace:packages/ton-relayer":
-  version: 0.0.0-use.local
-  resolution: "@redstone-finance/ton-relayer@workspace:packages/ton-relayer"
-  dependencies:
-    "@redstone-finance/sdk": "workspace:*"
-    "@redstone-finance/ton-connector": "workspace:*"
-    "@redstone-finance/utils": "workspace:*"
     dotenv: "npm:^16.0.3"
     ethers: "npm:^5.7.2"
   languageName: unknown

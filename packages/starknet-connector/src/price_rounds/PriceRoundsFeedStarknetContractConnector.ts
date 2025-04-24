@@ -1,9 +1,7 @@
-import {
-  IContractConnector,
-  IPriceRoundsFeedContractAdapter,
-} from "@redstone-finance/sdk";
+import { IContractConnector } from "@redstone-finance/sdk";
 import { ProviderInterface } from "starknet";
 import { StarknetContractConnector } from "../StarknetContractConnector";
+import { IPriceRoundsFeedContractAdapter } from "./IPriceRoundsFeedContractAdapter";
 import { PriceRoundsFeedStarknetContractAdapter } from "./PriceRoundsFeedStarknetContractAdapter";
 import price_rounds_feed_abi from "./price_rounds_feed_abi.json";
 
