@@ -3,7 +3,7 @@ import { Connection, LAMPORTS_PER_SOL } from "@solana/web3.js";
 import { z } from "zod";
 import { makeKeypair } from "../src";
 
-export const CONTRACT_NAME = "price_adapter";
+export const CONTRACT_NAME = "redstone_solana_price_adapter";
 
 export function readKeypair() {
   const privateKey = RedstoneCommon.getFromEnv(

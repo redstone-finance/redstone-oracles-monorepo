@@ -8,7 +8,10 @@ import {
 } from "./LiteSVMConnection";
 
 function programPath() {
-  return path.join(__dirname, "../solana/target/deploy/price_adapter.so");
+  return path.join(
+    __dirname,
+    "../solana/target/deploy/redstone_solana_price_adapter.so"
+  );
 }
 
 function publicToDummyKeypair(publicKey: Uint8Array) {
