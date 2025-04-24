@@ -1,11 +1,11 @@
-import {
-  ContractParamsProvider,
-  IPriceManagerContractAdapter,
-  PriceManagerMetadata,
-} from "@redstone-finance/sdk";
+import { ContractParamsProvider } from "@redstone-finance/sdk";
 import { Contract } from "starknet";
 import { FEE_MULTIPLIER } from "../StarknetContractConnector";
 import { getNumberFromStarknetResult } from "../starknet-utils";
+import {
+  IPriceManagerContractAdapter,
+  PriceManagerMetadata,
+} from "./IPriceManagerContractAdapter";
 
 interface RoundData {
   payload_timestamp: number;

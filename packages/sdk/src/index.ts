@@ -80,7 +80,4 @@ export * from "./fetch-data-packages";
 export * from "./oracle-registry";
 export * from "./pick-closest-to-median";
 export * from "./request-data-packages";
-export * from "./simple-relayer/IPriceManagerContractAdapter";
-export * from "./simple-relayer/IPriceRoundsFeedContractAdapter";
-export * from "./simple-relayer/start-simple-relayer";
 export { redstoneOraclesInitialState };
