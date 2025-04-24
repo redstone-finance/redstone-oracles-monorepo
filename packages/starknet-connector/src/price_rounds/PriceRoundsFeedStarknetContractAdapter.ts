@@ -1,8 +1,8 @@
+import { Contract } from "starknet";
 import {
   IPriceRoundsFeedContractAdapter,
   PriceFeedRoundData,
-} from "@redstone-finance/sdk";
-import { Contract } from "starknet";
+} from "./IPriceRoundsFeedContractAdapter";
 
 export class PriceRoundsFeedStarknetContractAdapter
   implements IPriceRoundsFeedContractAdapter
