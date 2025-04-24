@@ -1182,16 +1182,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "price-adapter"
-version = "1.0.0"
-dependencies = [
- "anchor-lang",
- "hex-literal",
- "rand 0.8.5",
- "redstone",
-]
-
-[[package]]
 name = "primitive-types"
 version = "0.13.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -1355,6 +1345,16 @@ dependencies = [
  "derive-getters",
  "getrandom 0.2.15",
  "primitive-types",
+]
+
+[[package]]
+name = "redstone-solana-price-adapter"
+version = "1.0.0"
+dependencies = [
+ "anchor-lang",
+ "hex-literal",
+ "rand 0.8.5",
+ "redstone",
 ]
 
 [[package]]

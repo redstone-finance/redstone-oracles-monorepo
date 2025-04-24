@@ -10,7 +10,7 @@ use state::{FeedIdBs, ValueBs};
 declare_id!("rds8J7VKqLQgzDr7vS59dkQga3B1BotgFy8F7LSLC74");
 
 #[program]
-pub mod price_adapter {
+pub mod redstone_solana_price_adapter {
     use super::*;
     use crate::config::SOLANA_CONFIG;
     use util::debug_msg;
