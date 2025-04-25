@@ -17,7 +17,7 @@
     "clean:all": "yarn global:run-all-deps-parallel clean",
     "clean:build": "cd $INIT_CWD && yarn clean && yarn build",
     "lint:all": "yarn global:run-all-parallel lint",
-    "lint:fix:all": "yarn global:run-all-parallel lint:fix",
+    "lint:all:fix": "yarn global:run-all-parallel lint:fix",
     "lint:configs": "yarn global:prettier --check **/.eslintrc.js **/package.json **/tsconfig*.json lerna.json .prettierrc.mjs .github/**/*.yml .vscode/settings.json",
     "lint:configs:fix": "yarn global:prettier --write **/.eslintrc.js **/package.json **/tsconfig*.json lerna.json .prettierrc.mjs .github/**/*.yml .vscode/settings.json",
     "lint:markdown": "markdownlint-cli2 packages/**/*.md",
