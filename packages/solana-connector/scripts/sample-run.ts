@@ -7,9 +7,11 @@ import {
   getSignersForDataServiceId,
   sampleRun,
 } from "@redstone-finance/sdk";
+import { RedstoneCommon } from "@redstone-finance/utils";
 import "dotenv/config";
 import { hexlify } from "ethers/lib/utils";
 import _ from "lodash";
+import z from "zod";
 import {
   CLUSTER_NAMES,
   readCluster,
@@ -17,17 +19,12 @@ import {
   SolanaContractConnector,
 } from "../src";
 import { RDS_PROGRAM_ADDRESS } from "./consts";
-import { readKeypair } from "./utils";
+import { readKeypair, readUrl } from "./utils";
 
 async function main() {
   const keypair = readKeypair();
   console.log("Public key:", hexlify(keypair.publicKey.toBytes()));
-
-  const rpcUrls = getChainConfigByChainId(
-    await fetchChainConfigs(),
-    Number(_.findKey(CLUSTER_NAMES, (c) => c === readCluster())!),
-    "solana"
-  ).publicRpcUrls;
+  const rpcUrls = await getRpcUrls();
   const connection = new SolanaConnectionBuilder().withRpcUrls(rpcUrls).build();
 
   const paramsProvider = new ContractParamsProvider({
@@ -44,6 +41,23 @@ async function main() {
   );
 
   await sampleRun(paramsProvider, solanaContractConnector);
+}
+
+async function getRpcUrls() {
+  if (
+    RedstoneCommon.getFromEnv(
+      "OVERRIDE_URLS_BY_ENV",
+      z.boolean().default(false)
+    )
+  ) {
+    return [readUrl()];
+  }
+
+  return getChainConfigByChainId(
+    await fetchChainConfigs(),
+    Number(_.findKey(CLUSTER_NAMES, (c) => c === readCluster())!),
+    "solana"
+  ).publicRpcUrls;
 }
 
 void main();

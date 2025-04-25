@@ -2,15 +2,15 @@
  * Program IDL in camelCase format in order to be used in JS/TS.
  *
  * Note that this is only a type helper and is not the actual IDL. The original
- * IDL can be found at `target/idl/price_adapter.json`.
+ * IDL can be found at `target/idl/redstone_solana_price_adapter.json`.
  */
-export type PriceAdapter = {
+export type RedstoneSolanaPriceAdapter = {
   address: string;
   metadata: {
-    name: "priceAdapter";
-    version: "0.1.0";
+    name: "redstoneSolanaPriceAdapter";
+    version: "1.0.0";
     spec: "0.1.0";
-    description: "Created with Anchor";
+    description: "RedStone Solana Price Adapter";
   };
   instructions: [
     {
@@ -139,6 +139,20 @@ export type PriceAdapter = {
             name: "writeTimestamp";
             type: {
               option: "u64";
+            };
+          },
+          {
+            name: "writeSlotNumber";
+            type: "u64";
+          },
+          {
+            name: "decimals";
+            type: "u8";
+          },
+          {
+            name: "reserved";
+            type: {
+              array: ["u8", 64];
             };
           },
         ];
