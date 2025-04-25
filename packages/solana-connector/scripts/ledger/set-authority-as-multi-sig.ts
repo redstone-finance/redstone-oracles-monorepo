@@ -1,4 +1,3 @@
-import { RedstoneCommon } from "@redstone-finance/utils";
 import {
   AddressLookupTableAccount,
   Connection,
@@ -270,8 +269,7 @@ async function handleAction(
 }
 
 async function main() {
-  const url = RedstoneCommon.getFromEnv("URL");
-  const connection = makeConnection(url);
+  const connection = makeConnection();
 
   const functionType = (
     await prompts({

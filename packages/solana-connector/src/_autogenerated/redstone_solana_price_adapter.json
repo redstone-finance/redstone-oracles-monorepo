@@ -1,10 +1,10 @@
 {
   "address": "",
   "metadata": {
-    "name": "price_adapter",
-    "version": "0.1.0",
+    "name": "redstone_solana_price_adapter",
+    "version": "1.0.0",
     "spec": "0.1.0",
-    "description": "Created with Anchor"
+    "description": "RedStone Solana Price Adapter"
   },
   "instructions": [
     {
@@ -208,6 +208,23 @@
             "name": "write_timestamp",
             "type": {
               "option": "u64"
+            }
+          },
+          {
+            "name": "write_slot_number",
+            "type": "u64"
+          },
+          {
+            "name": "decimals",
+            "type": "u8"
+          },
+          {
+            "name": "_reserved",
+            "type": {
+              "array": [
+                "u8",
+                64
+              ]
             }
           }
         ]
