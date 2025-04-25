@@ -32,7 +32,6 @@ pub struct WritePrice<'info> {
 
 pub fn write_price(ctx: Context<WritePrice>, feed_id: FeedIdBs, payload: Vec<u8>) -> Result<()> {
     let feed_id = feed_id.into();
-    // block_timestamp as milis
     let block_timestamp = current_time_as_millis()?;
 
     let config = SOLANA_CONFIG.redstone_config(feed_id, block_timestamp)?;
@@ -55,6 +54,7 @@ pub fn write_price(ctx: Context<WritePrice>, feed_id: FeedIdBs, payload: Vec<u8>
     price_account.timestamp = processed_payload.timestamp.as_millis();
     price_account.feed_id = feed_id.into();
     price_account.write_timestamp = Some(block_timestamp.as_millis());
+    price_account.write_slot_number = Clock::get()?.slot;
 
     debug_msg(|| {
         format!(
