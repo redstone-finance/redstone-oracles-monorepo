@@ -1,4 +1,3 @@
-import { RedstoneCommon } from "@redstone-finance/utils";
 import "dotenv/config";
 import { makeConnection } from "../utils";
 import { LEDGER_ACCOUNT, makeSquads, PROGRAM_ID } from "./config";
@@ -6,8 +5,7 @@ import { makeSolana } from "./ledger-utils";
 import { createSetUpgradeAuthorityTx } from "./transfer-ownership";
 
 async function transferOwnershipFromLedger() {
-  const url = RedstoneCommon.getFromEnv("URL");
-  const connection = makeConnection(url);
+  const connection = makeConnection();
   const solanaLedger = await makeSolana(LEDGER_ACCOUNT);
   const pk = await solanaLedger.getPublicKey();
   const squadsUtils = makeSquads();
