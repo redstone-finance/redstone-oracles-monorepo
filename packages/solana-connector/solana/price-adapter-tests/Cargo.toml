@@ -1,0 +1,27 @@
+[workspace]
+
+[package]
+name = "price-adapter-tests"
+version = "1.0.0"
+description = "RedStone Price Adapter"
+edition = "2021"
+
+[lib]
+name = "price_adapter_tests"
+
+[features]
+
+[dependencies]
+litesvm = { version = "0.6.1" }
+rand = { version = "0.8.4", features = ["std"] }
+redstone_testing = { git = "https://github.com/redstone-finance/rust-sdk", tag="redstone-testing-v0.2.0" }
+solana-keypair = "2.2.0"
+solana-signer = "2.2.0"
+solana-clock = "2.2.0"
+solana-pubkey = "2.2.0"
+solana-transaction = "2.2.0"
+solana-instruction = "2.2.0"
+solana-message = "2.2.0"
+solana-signature = "2.2.0"
+hex = "0.4.3"
+borsh = "0.9.3"

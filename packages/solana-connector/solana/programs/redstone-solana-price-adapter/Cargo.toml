@@ -24,3 +24,4 @@ redstone = { git = "https://github.com/redstone-finance/rust-sdk", tag = "2.0.1"
 
 [dev-dependencies]
 rand = { version = "0.8.4", features = ["std"] }
+
