@@ -9,17 +9,14 @@ import { makeConnection, readKeypair } from "./utils";
 
 import "dotenv/config";
 
-async function transferSol() {
+async function transferSol(receiver: string, amount = 0.001) {
   const connection = makeConnection();
   const keypair = readKeypair();
-
-  const args = process.argv.slice(2);
-  const receiver = args[0];
 
   const ix = SystemProgram.transfer({
     fromPubkey: keypair.publicKey,
     toPubkey: new PublicKey(receiver),
-    lamports: LAMPORTS_PER_SOL / 1_000,
+    lamports: Math.floor(LAMPORTS_PER_SOL * amount),
   });
 
   const msg = new TransactionMessage({
@@ -34,4 +31,11 @@ async function transferSol() {
   console.log(await connection.sendTransaction(tx));
 }
 
-void transferSol();
+async function main() {
+  const args = process.argv.slice(2);
+  const receiver = args[0];
+
+  await transferSol(receiver, 2);
+}
+
+void main();
