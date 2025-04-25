@@ -21,6 +21,9 @@ export interface MetadataPerSource {
 
   /** Info about current bid, ask prices and volume. Defined only for sources that allow retrieval of this data */
   tradeInfo?: TradeData;
+
+  /** Any values used to calculate final price */
+  intermediateValues?: Record<string, unknown>;
 }
 
 export interface SlippageData {
