@@ -78,3 +78,28 @@ describe("timeout", () => {
     ).rejects.toThrow("Custom reject");
   });
 });
+
+describe("interval", () => {
+  describe("intervalToCronFormat", () => {
+    it("should convert to CronFormat when interval equals 1 second", () => {
+      const interval = 1000;
+      expect(RedstoneCommon.intervalMsToCronFormat(interval)).toEqual(
+        "*/1 * * * * *"
+      );
+    });
+
+    it("should convert to CronFormat when interval smaller than 1 minute", () => {
+      const interval = 5000;
+      expect(RedstoneCommon.intervalMsToCronFormat(interval)).toEqual(
+        "*/5 * * * * *"
+      );
+    });
+
+    it("should convert to CronFormat when interval equals 1 minute", () => {
+      const interval = 60000;
+      expect(RedstoneCommon.intervalMsToCronFormat(interval)).toEqual(
+        "0 * * * * *"
+      );
+    });
+  });
+});
