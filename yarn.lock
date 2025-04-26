@@ -8408,6 +8408,17 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@redstone-finance/healthcheck@workspace:*, @redstone-finance/healthcheck@workspace:packages/healthcheck":
+  version: 0.0.0-use.local
+  resolution: "@redstone-finance/healthcheck@workspace:packages/healthcheck"
+  dependencies:
+    "@redstone-finance/utils": "workspace:*"
+    "@types/node-schedule": "npm:^2.1.0"
+    dotenv: "npm:^16.0.3"
+    node-schedule: "npm:^2.1.1"
+  languageName: unknown
+  linkType: soft
+
 "@redstone-finance/http-client@workspace:*, @redstone-finance/http-client@workspace:packages/http-client":
   version: 0.0.0-use.local
   resolution: "@redstone-finance/http-client@workspace:packages/http-client"
@@ -9216,6 +9227,7 @@ __metadata:
     "@redstone-finance/agents": "workspace:*"
     "@redstone-finance/chain-configs": "workspace:*"
     "@redstone-finance/fetchers": "workspace:*"
+    "@redstone-finance/healthcheck": "workspace:*"
     "@redstone-finance/internal-utils": "workspace:*"
     "@redstone-finance/mqtt5-client": "workspace:*"
     "@redstone-finance/node-commons": "workspace:*"

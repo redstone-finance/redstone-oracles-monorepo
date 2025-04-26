@@ -14,12 +14,35 @@ const MAX_DEPTH = 5;
 
 export type RedstoneLogger = Consola | Console;
 
+const LogTypeToLevel: { [key: string]: LogLevel } = {
+  Fatal: LogLevel.Fatal,
+  Error: LogLevel.Error,
+  Warn: LogLevel.Warn,
+  Log: LogLevel.Log,
+  Info: LogLevel.Info,
+  Success: LogLevel.Success,
+  Debug: LogLevel.Debug,
+  Trace: LogLevel.Trace,
+  Silent: LogLevel.Silent,
+  Verbose: LogLevel.Verbose,
+};
+
+let customLogLevels: undefined | null | Record<string, LogLevel> = undefined;
+
 export const loggerFactory = (moduleName: string): RedstoneLogger => {
   if (isNodeRuntime()) {
+    if (customLogLevels === undefined) {
+      customLogLevels = parseLogLevels();
+    }
     const enableJsonLogs = getFromEnv(
       "REDSTONE_FINANCE_ENABLE_JSON_LOGS",
       z.boolean().default(DEFAULT_ENABLE_JSON_LOGS)
     );
+    const defaultLogLevel = getLogLevel();
+    const logLevel = customLogLevels
+      ? getCustomLogLevel(moduleName, customLogLevels, defaultLogLevel)
+      : defaultLogLevel;
+
     const mainReporter = enableJsonLogs
       ? new JSONReporter()
       : new FancyReporter();
@@ -27,7 +50,7 @@ export const loggerFactory = (moduleName: string): RedstoneLogger => {
     const logger = consola
       .create({
         reporters: [mainReporter],
-        level: getLogLevel(),
+        level: logLevel,
       })
       .withTag(moduleName);
 
@@ -57,6 +80,20 @@ export function createSanitizedLogger(logger: RedstoneLogger): RedstoneLogger {
     }
   });
   return sanitizedLogger;
+}
+
+function getCustomLogLevel(
+  moduleName: string,
+  logLevels: Record<string, LogLevel>,
+  defaultLogLevel: LogLevel
+): LogLevel {
+  if (logLevels[moduleName]) {
+    return logLevels[moduleName];
+  }
+  if (logLevels["*"]) {
+    return logLevels["*"];
+  }
+  return defaultLogLevel;
 }
 
 function sanitize(
@@ -109,4 +146,37 @@ export function sanitizeLogMessage(message: string): string {
       return match;
     }
   });
+}
+
+function parseLogLevels(): Record<string, LogLevel> | null {
+  const levels: Record<string, LogLevel> = {};
+
+  const env = getFromEnv("NODE_ENV", z.string().optional());
+  if (env !== "test") {
+    // custom log levels possible only in a test env
+    return null;
+  }
+
+  // example format: runner:Error,HealthCheck:Debug,PricesFetcher:Info,*:Silent
+  // "*" sets log level for all the other modules.
+  // if "*" is not specified - REDSTONE_FINANCE_LOG_LEVEL will be used.
+  const customLogLevels = getFromEnv(
+    "CUSTOM_LOG_LEVELS",
+    z.string().optional()
+  );
+  if (!customLogLevels) {
+    return null;
+  }
+
+  customLogLevels.split(",").forEach((item) => {
+    const [module, level] = item.split(":");
+
+    if (!Object.prototype.hasOwnProperty.call(LogTypeToLevel, level)) {
+      throw new Error(`Unknown log level ${level} for ${module}`);
+    }
+
+    levels[module] = LogTypeToLevel[level];
+  });
+
+  return levels;
 }
