@@ -10,3 +10,5 @@ Dockerfile
 *.log
 .vscode
 terraform
+healthcheck.txt.tmp
+healthcheck.txt
