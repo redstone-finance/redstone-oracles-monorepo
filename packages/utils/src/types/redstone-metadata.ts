@@ -26,11 +26,18 @@ export interface MetadataPerSource {
   intermediateValues?: Record<string, unknown>;
 }
 
-export interface SlippageData {
-  slippageAsPercent: string;
-  direction: TradeDirections;
-  simulationValueInUsd: string;
-}
+export type SlippageData =
+  | {
+      isSuccess: true;
+      slippageAsPercent: string;
+      direction: TradeDirections;
+      simulationValueInUsd: string;
+    }
+  | {
+      isSuccess: false;
+      direction: TradeDirections;
+      simulationValueInUsd: string;
+    };
 
 export interface DepthData {
   percentage: number;
