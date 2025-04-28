@@ -14,3 +14,91 @@
 * Logic update requires changing the code.
   * Still, **the account [`PriceData`](./redstone-solana-price-adapter/src/state.rs) ID remains unchanged**
   and is readable.
+
+
+## Usage
+Example of reading price data of a feed. To get account address of the `price_info` you can use following snipet:
+
+```ts
+const PROGRAM_ID = new PublicKey("REDSTBDUecGjwXd6YGPzHSvEUBHQqVRfCcjUVgPiHsr")
+const FEED_ID = "ETH"
+
+const makeFeedIdBytes = (feedId: string) => {
+    return Buffer.from(feedId.padEnd(32, "\0"));
+};
+
+const makePriceSeed = () => {
+    return Buffer.from("price".padEnd(32, "\0"));
+};
+const seeds = [
+    makePriceSeed(),
+    makeFeedIdBytes(FEED_ID)
+]
+const address =web3.PublicKey.findProgramAddressSync(
+    seeds
+    PROGRAM_ID
+)[0];
+```
+
+Once you have it, you can read from it like that:
+
+```rust
+use anchor_lang::prelude::*;
+use anchor_lang::Discriminator;
+
+#[account]
+pub struct PriceData {
+    pub feed_id: [u8; 32],
+    pub value: [u8; 32],
+    pub timestamp: u64,
+    pub write_timestamp: Option<u64>,
+    pub update_slot: u64m
+    pub decimals: u8,
+    _reserved: [u8; 64]
+}
+
+
+fn redstone_value_to_price(raw_be_value: [u8; 32]) -> Result<u64> {
+    if !raw_be_value.iter().take(24).all(|&v| v == 0) {
+        warn!("Price overflow u64");
+        return Err(...); // OVERFLOW
+    }
+
+    u64::from_be_bytes(raw_be_value[24..].try_into().unwrap())
+}
+
+#[program]
+pub mod test_x {
+    use super::*;
+    pub fn initialize(ctx: Context<Initialize>) -> Result<()> {
+        let price_data: PriceData = account_deserialize(&ctx.accounts.price_info);
+
+        let value = redstone_value_to_price(price_data.value)
+        msg!("FeedId: {:?}, {:?}", price_data.feed_id, value);
+        Ok(())
+    }
+}
+pub fn account_deserialize<T: AccountDeserialize + Discriminator>(
+    account: &AccountInfo<'_>,
+) -> T {
+    let data = account.clone().data.borrow().to_owned();
+    let discriminator = data.get(..8).unwrap();
+    if discriminator != T::discriminator() {
+        panic!(
+            "Expected discriminator for account {:?} ({:?}) is different from received {:?}",
+            account.key(),
+            T::discriminator(),
+            discriminator
+        );
+    }
+    let mut data: &[u8] = &data;
+    T::try_deserialize(&mut data).unwrap()
+}
+
+#[derive(Accounts)]
+pub struct Initialize<'info> {
+    /// CHECK: ...
+    #[account()]
+    pub price_info: AccountInfo<'info>,
+}
+```
