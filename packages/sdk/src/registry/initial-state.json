@@ -384,6 +384,17 @@
       "evmAddress": "0xCA5C81a36C21583b8488a3327F4023EaE6B5e02b",
       "ecdsaPublicKey": "0x04bdc7d5c223b8dbe77aab4c3fc7a84b90ec1848b50d9cc52ca762c42eebd3215b0d62bcd86adecc834d093104028edad060f446cbcfeef8b0131dbeee8a6ed42f",
       "dateAdded": "2024-01-01"
+    },
+    "0x6e8428aEcE9c0bBF06e07c21282Df98DfdFc99dB": {
+      "url": "https://keyrock.com",
+      "logo": "https://raw.githubusercontent.com/redstone-finance/redstone-images/main/providers/keyrock/logo.png",
+      "name": "keyrock-demo-1",
+      "ipAddress": "0.0.0.0",
+      "dataServiceId": "keyrock-demo-1",
+      "description": "Data feeds provided by Keyrock",
+      "evmAddress": "0x6e8428aEcE9c0bBF06e07c21282Df98DfdFc99dB",
+      "ecdsaPublicKey": "0x04584dfb2a92d6c3ab860b208d586e5d10464a97e0d2e07dd5c4e90aa3646f8f0108e14f2e47278971fcaa8c79bfa5a36f3adce8710f8732a621d3dc70b59fa804",
+      "dateAdded": "2024-01-01"
     }
   },
   "evolve": null,
@@ -479,6 +490,11 @@
       "name": "Auros Demo 1 Node",
       "logo": "https://raw.githubusercontent.com/redstone-finance/redstone-images/main/providers/auros/logo.png",
       "description": "Data feeds provided by Auros to staging env"
+    },
+    "keyrock-demo-1": {
+      "name": "Keyrock Demo 1 Node",
+      "logo": "https://raw.githubusercontent.com/redstone-finance/redstone-images/main/providers/keyrock/logo.png",
+      "description": "Data feeds provided by Keyrock to staging env"
     }
   },
   "contractAdmins": [
