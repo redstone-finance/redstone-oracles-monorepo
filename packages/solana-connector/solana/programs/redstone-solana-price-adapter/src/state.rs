@@ -4,7 +4,7 @@ pub type FeedIdBs = [u8; 32];
 pub type ValueBs = [u8; 32];
 
 const RESERVED_BYTE_SIZE: usize = 64;
-const REDSTONE_DECIMALS_EXP: u8 = 8;
+pub const REDSTONE_DECIMALS_EXP: u8 = 8;
 
 #[account]
 pub struct PriceData {
