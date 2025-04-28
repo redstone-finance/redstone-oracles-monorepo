@@ -1,4 +1,4 @@
-import { loggerFactory } from "@redstone-finance/utils";
+import { loggerFactory, RedstoneCommon } from "@redstone-finance/utils";
 import {
   DataPackagesResponse,
   getResponseTimestamp,
@@ -7,7 +7,7 @@ import {
 export class RequestDataPackagesLogger {
   private readonly initialDate: number;
   private readonly particularResponses: (DataPackagesResponse | undefined)[];
-  private readonly particularErrors: (Error | undefined)[];
+  private readonly particularErrors: unknown[];
   private readonly particularTimes: (number | undefined)[];
 
   constructor(
@@ -27,7 +27,7 @@ export class RequestDataPackagesLogger {
   }
 
   didReceiveError(error: unknown, index: number) {
-    this.particularErrors[index] = error as Error;
+    this.particularErrors[index] = error;
     this.particularTimes[index] = Date.now() - this.initialDate;
   }
 
@@ -51,7 +51,9 @@ export class RequestDataPackagesLogger {
       {
         particularTimestamps,
         particularTimes: this.particularTimes,
-        particularErrors: this.particularErrors.map((e) => e?.message),
+        particularErrors: this.particularErrors.map((e) =>
+          RedstoneCommon.stringifyError(e)
+        ),
         collectedResponsesLength: collectedResponses.length,
         collectedErrorsLength: collectedErrors.length,
       }
@@ -80,7 +82,9 @@ export class RequestDataPackagesLogger {
 
   willReject() {
     this.logger.error("Rejecting...", {
-      particularErrors: this.particularErrors.map((e) => e?.message),
+      particularErrors: this.particularErrors.map((e) =>
+        RedstoneCommon.stringifyError(e)
+      ),
     });
   }
 
