@@ -1,6 +1,6 @@
 use crate::config::SOLANA_CONFIG;
 use crate::{
-    state::PriceData,
+    state::{PriceData, REDSTONE_DECIMALS_EXP},
     util::{current_time_as_millis, debug_msg, make_price_seed},
     FeedIdBs,
 };
@@ -55,6 +55,7 @@ pub fn write_price(ctx: Context<WritePrice>, feed_id: FeedIdBs, payload: Vec<u8>
     price_account.feed_id = feed_id.into();
     price_account.write_timestamp = Some(block_timestamp.as_millis());
     price_account.write_slot_number = Clock::get()?.slot;
+    price_account.decimals = REDSTONE_DECIMALS_EXP;
 
     debug_msg(|| {
         format!(
