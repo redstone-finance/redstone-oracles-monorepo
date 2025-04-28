@@ -21,6 +21,4 @@ function combineSignatures(pkHexes: string[], signatures: string[]) {
   return multiSigAddress;
 }
 
-combineSignatures(MULTI_SIG_PK_HEXES, [
-  "ALnD0WOCu+oC6lCu1ouFzOM6d4RIgWp2n7RwJ5F6iLmTnS/0wR8a7M46oc6QwfsafM0szve/wMKsHxYgAlbTpARIDR40au13XPyXRGq0P4dnCzSZ5aCp4iLYTU1OOqjKIg==",
-]);
+combineSignatures(MULTI_SIG_PK_HEXES, [""]);
