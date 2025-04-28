@@ -48,7 +48,7 @@ mod price_adapter {
     struct PriceAdapter {
         signer_count_threshold: u8,
         signers: Vec<Vec<u8>>,
-        prices: HashMap<FeedId, PriceDataRaw>,
+        prices: KeyValueStore<FeedId, PriceDataRaw>,
         trusted_updater_resource: Option<ResourceAddress>,
         time: Time,
     }
@@ -266,7 +266,7 @@ mod price_adapter {
             let price_adapter = Self {
                 signer_count_threshold,
                 signers: allowed_signer_addresses,
-                prices: hashmap!(),
+                prices: KeyValueStore::new(),
                 trusted_updater_resource,
                 time,
             }
