@@ -1974,7 +1974,67 @@
       "denomination": "percentage",
       "rateFeed": false
     },
+    "BUIDL_I_ETHEREUM_FUNDAMENTAL": {
+      "source": ["securitize-api"],
+      "denomination": "USD",
+      "rateFeed": true
+    },
+    "BUIDL_I_ETHEREUM_DAILY_INTEREST_ACCRUAL": {
+      "source": ["securitize-api"],
+      "denomination": "percentage",
+      "rateFeed": false
+    },
+    "BUIDL_ARBITRUM_FUNDAMENTAL": {
+      "source": ["securitize-api"],
+      "denomination": "USD",
+      "rateFeed": true
+    },
+    "BUIDL_ARBITRUM_DAILY_INTEREST_ACCRUAL": {
+      "source": ["securitize-api"],
+      "denomination": "percentage",
+      "rateFeed": false
+    },
+    "BUIDL_OPTIMISM_FUNDAMENTAL": {
+      "source": ["securitize-api"],
+      "denomination": "USD",
+      "rateFeed": true
+    },
+    "BUIDL_OPTIMISM_DAILY_INTEREST_ACCRUAL": {
+      "source": ["securitize-api"],
+      "denomination": "percentage",
+      "rateFeed": false
+    },
+    "BUIDL_AVALANCHE_FUNDAMENTAL": {
+      "source": ["securitize-api"],
+      "denomination": "USD",
+      "rateFeed": true
+    },
+    "BUIDL_AVALANCHE_DAILY_INTEREST_ACCRUAL": {
+      "source": ["securitize-api"],
+      "denomination": "percentage",
+      "rateFeed": false
+    },
+    "BUIDL_POLYGON_FUNDAMENTAL": {
+      "source": ["securitize-api"],
+      "denomination": "USD",
+      "rateFeed": true
+    },
+    "BUIDL_POLYGON_DAILY_INTEREST_ACCRUAL": {
+      "source": ["securitize-api"],
+      "denomination": "percentage",
+      "rateFeed": false
+    },
     "HLScope_FUNDAMENTAL": {
+      "source": ["securitize-api"],
+      "denomination": "USD",
+      "rateFeed": true
+    },
+    "ACRED_FUNDAMENTAL": {
+      "source": ["securitize-api"],
+      "denomination": "USD",
+      "rateFeed": true
+    },
+    "BCAP_FUNDAMENTAL": {
       "source": ["securitize-api"],
       "denomination": "USD",
       "rateFeed": true
@@ -2176,11 +2236,6 @@
       "denomination": "USD",
       "rateFeed": false
     },
-    "ACRED_FUNDAMENTAL": {
-      "source": ["securitize-api"],
-      "denomination": "USD",
-      "rateFeed": true
-    },
     "vIP_FUNDAMENTAL": {
       "source": ["story-evm-fetcher-verio"],
       "denomination": "IP",
@@ -2299,11 +2354,6 @@
     "sfrxUSD_FUNDAMENTAL": {
       "source": ["ethereum-evm-fetcher-staked-frxusd"],
       "denomination": "frxUSD",
-      "rateFeed": true
-    },
-    "BCAP_FUNDAMENTAL": {
-      "source": ["securitize-api"],
-      "denomination": "USD",
       "rateFeed": true
     },
     "ylstETH_FUNDAMENTAL": {
