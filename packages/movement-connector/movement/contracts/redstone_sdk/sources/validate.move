@@ -22,6 +22,7 @@ module redstone_sdk::validate {
     const E_SIGNER_UNKNOWN: u64 = 6;
     const E_SIGNER_DUPLICATED: u64 = 7;
     const E_VECTOR_EMPTY: u64 = 8;
+    const E_FEED_ID_DUPLICATED: u64 = 9;
 
     // === Constants ===
 
@@ -75,6 +76,21 @@ module redstone_sdk::validate {
         ts
     }
 
+    public fun verify_feed_ids_are_different(
+        feed_ids: &vector<vector<u8>>
+    ) {
+        let len = vector::length(feed_ids);
+
+        for (j in 0..len) {
+            for (i in (j + 1)..len) {
+                assert!(
+                    *vector::borrow(feed_ids, i) != *vector::borrow(feed_ids, j),
+                    E_FEED_ID_DUPLICATED
+                );
+            }
+        }
+    }
+
     // === Private Functions ===
 
     fun verify_timestamps_are_the_same(
@@ -110,7 +126,7 @@ module redstone_sdk::validate {
         let count = 0;
         let seen_signers = vector::empty();
 
-        for (i in 0..(vector::length(data_packages) as u64)) {
+        for (i in 0..vector::length(data_packages)) {
             let package = vector::borrow(data_packages, i);
             let address = signer_address(package);
 
@@ -388,5 +404,28 @@ module redstone_sdk::validate {
         ];
 
         verify_data_packages(&data_packages, &config, 1000)
+    }
+
+    #[test]
+    fun test_verify_feed_ids_are_different() {
+        verify_feed_ids_are_different(&vector[]);
+        verify_feed_ids_are_different(&vector[x"455448"]);
+        verify_feed_ids_are_different(&vector[x"455448", x"425443"]);
+        verify_feed_ids_are_different(&vector[x"455448", x"425443", x"424242"]);
+        verify_feed_ids_are_different(&vector[x"455448", x"45544800"]);
+    }
+
+    #[test]
+    #[expected_failure]
+    fun test_verify_feed_ids_are_different_first_repeated() {
+        verify_feed_ids_are_different(&vector[x"455448", x"425443", x"455448"]);
+    }
+
+    #[test]
+    #[expected_failure]
+    fun test_verify_feed_ids_are_different_any_repeated() {
+        verify_feed_ids_are_different(
+            &vector[x"455448", x"425443", x"425443", x"424242"]
+        );
     }
 }

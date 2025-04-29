@@ -41,15 +41,12 @@ export class MovementPricesContractAdapter
       metadataTimestamp: Date.now(),
     };
 
-    const { payloads } = ContractParamsProvider.extractMissingValues(
-      await paramsProvider.prepareSplitPayloads(unsignedMetadataArgs),
-      this.logger
-    );
+    const payload = paramsProvider.getPayloadHex(true, unsignedMetadataArgs);
 
-    return await this.writer.writePrices(payloads, (feedId) =>
-      paramsProvider
-        .copyForFeedId(feedId)
-        .getPayloadHex(true, unsignedMetadataArgs)
+    return await this.writer.writeAllPrices(
+      paramsProvider.getDataFeedIds(),
+      payload,
+      () => paramsProvider.getPayloadHex(true, unsignedMetadataArgs)
     );
   }
 

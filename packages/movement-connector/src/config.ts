@@ -28,7 +28,7 @@ export function movementNetworkSchemaToAptosNetwork(
 }
 
 export const TRANSACTION_DEFAULT_CONFIG: TransactionConfig = {
-  writePriceOctasTxGasBudget: 100_000,
+  writePriceOctasTxGasBudget: 100_000_000,
   maxTxSendAttempts: 5,
 };
 

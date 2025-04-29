@@ -2,6 +2,7 @@ import { Account, Aptos, Network } from "@aptos-labs/ts-sdk";
 import { loggerFactory, RedstoneCommon } from "@redstone-finance/utils";
 import { PRICE_ADAPTER, REDSTONE_SDK } from "../scripts/contract-name-enum";
 import { deploy, prepareDepAddresses } from "../scripts/deploy-utils";
+import { getEnvDeployDir } from "../scripts/get-env";
 import { makeAptos } from "../scripts/utils";
 import { makeAptosAccount, OCTAS_PER_MOVE } from "../src";
 
@@ -65,6 +66,8 @@ export class TestHelper {
       this.account,
       REDSTONE_SDK,
       prepareDepAddresses(REDSTONE_SDK, NETWORK),
+      undefined,
+      getEnvDeployDir(),
       NETWORK
     );
     await RedstoneCommon.sleep(1000);
@@ -73,6 +76,8 @@ export class TestHelper {
       this.account,
       PRICE_ADAPTER,
       prepareDepAddresses(PRICE_ADAPTER, NETWORK),
+      undefined,
+      getEnvDeployDir(),
       NETWORK
     );
   }

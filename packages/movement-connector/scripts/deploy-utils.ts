@@ -157,8 +157,9 @@ export async function deploy(
   account: Account,
   contractName: string,
   namedAddresses: NamedAddresses = {},
-  networkName = getEnvNetwork(),
-  deployDir = getEnvDeployDir()
+  currentObjectAddress: AccountAddress | undefined = undefined,
+  deployDir = getEnvDeployDir(),
+  networkName = getEnvNetwork()
 ) {
   const { builder, contractAddress, metadataBytes, bytecode } =
     await setUpDeploy(
@@ -166,7 +167,7 @@ export async function deploy(
       account.accountAddress,
       contractName,
       namedAddresses,
-      undefined,
+      currentObjectAddress,
       deployDir
     );
 
@@ -174,11 +175,18 @@ export async function deploy(
   console.log(`Object address for deployment: ${contractAddress.toString()}`);
 
   console.log("Publishing package");
-  const publishTx = await builder.objectPublishTx(
-    account.accountAddress,
-    metadataBytes,
-    bytecode
-  );
+  const publishTx = currentObjectAddress
+    ? await builder.objectUpgradeTx(
+        account.accountAddress,
+        currentObjectAddress,
+        metadataBytes,
+        bytecode
+      )
+    : await builder.objectPublishTx(
+        account.accountAddress,
+        metadataBytes,
+        bytecode
+      );
 
   await handleTx(aptos, publishTx, account);
 

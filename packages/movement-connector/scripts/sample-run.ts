@@ -13,7 +13,7 @@ async function main() {
   const paramsProvider = new ContractParamsProvider({
     dataServiceId: "redstone-primary-prod",
     uniqueSignersCount: 3,
-    dataPackagesIds: ["ETH", "BTC"],
+    dataPackagesIds: ["ETH"],
     authorizedSigners: getSignersForDataServiceId("redstone-primary-prod"),
   });
   const aptos = makeAptos();

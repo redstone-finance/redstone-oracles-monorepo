@@ -30,7 +30,9 @@ module redstone_price_adapter::price_adapter {
 
     // === Constants ===
 
-    const TRUSTED_UPDATERS: vector<address> = vector[];
+    const TRUSTED_UPDATERS: vector<address> = vector[
+        @0x854e583484be0872838778f8754da6beae1de83544f3815c35cb482876eabaa1
+    ];
     const SIGNER_COUNT_THRESHOLD: u8 = 3;
     const ALLOWED_SIGNERS: vector<vector<u8>> = vector[
         x"8BB8F32Df04c8b654987DAaeD53D6B6091e3B774",
@@ -93,94 +95,81 @@ module redstone_price_adapter::price_adapter {
         price_adapter_address: address, feed_id: vector<u8>, payload: vector<u8>
     ) acquires PriceAdapter {
         let price_adapter = borrow_global_mut<PriceAdapter>(price_adapter_address);
-        write_new_price(price_adapter, &feed_id, payload);
+
+        write_new_prices(price_adapter, &vector[feed_id], payload);
     }
 
     public entry fun write_prices(
         price_adapter_address: address, feed_ids: vector<vector<u8>>, payload: vector<u8>
     ) acquires PriceAdapter {
         let price_adapter = borrow_global_mut<PriceAdapter>(price_adapter_address);
-        let feed_ids_len = vector::length(&feed_ids);
-        for (i in 0..feed_ids_len) {
-            write_new_price(
-                price_adapter,
-                vector::borrow(&feed_ids, i),
-                payload
-            );
-        };
+
+        write_new_prices(price_adapter, &feed_ids, payload);
     }
 
     // === Private Functions ===
 
-    fun write_new_price(
-        price_adapter: &mut PriceAdapter, feed_id: &vector<u8>, payload: vector<u8>
+    fun write_new_prices(
+        price_adapter: &mut PriceAdapter,
+        feed_ids: &vector<vector<u8>>,
+        payload: vector<u8>
     ) {
-        let feed = feed::new(*feed_id);
         let timestamp_now_ms = timestamp::now_microseconds() / 1000;
-        let price_write_timestamp =
-            get_price_feed_write_timestamp(price_adapter, &mut feed);
+        let (aggregated_values, timestamp) =
+            process_payload_for_feed_ids(timestamp_now_ms, feed_ids, payload);
+        let sender = transaction_context::sender();
 
+        let feed_ids_len = vector::length(feed_ids);
+        for (i in 0..feed_ids_len) {
+            let feed_id = vector::borrow(feed_ids, i);
+            let feed = feed::new(*feed_id);
+            let price_write_timestamp =
+                get_price_feed_write_timestamp(price_adapter, &mut feed);
+
+            option::for_each(
+                price_write_timestamp,
+                |write_timestamp| {
+                    assert_update_time(
+                        &TRUSTED_UPDATERS,
+                        MIN_INTERVAL_BETWEEN_UPDATES,
+                        write_timestamp,
+                        timestamp_now_ms,
+                        sender
+                    );
+                }
+            );
+
+            let aggregated_value = vector::borrow(&aggregated_values, i);
+
+            overwrite_price(
+                price_adapter,
+                &mut feed,
+                *aggregated_value,
+                timestamp,
+                timestamp_now_ms
+            );
+        }
+    }
+
+    fun process_payload_for_feed_ids(
+        timestamp_now_ms: u64, feed_ids: &vector<vector<u8>>, payload: vector<u8>
+    ): (vector<u256>, u64) {
         let config: Config =
             new_config(
                 SIGNER_COUNT_THRESHOLD,
                 ALLOWED_SIGNERS,
                 MAX_TIMESTAMP_DELAY_MS,
-                MAX_TIMESTAMP_AHEAD_MS,
-                TRUSTED_UPDATERS,
-                MIN_INTERVAL_BETWEEN_UPDATES
+                MAX_TIMESTAMP_AHEAD_MS
             );
 
-        option::for_each(
-            price_write_timestamp,
-            |write_timestamp| {
-                assert_update_time(
-                    &config,
-                    write_timestamp,
-                    timestamp_now_ms,
-                    transaction_context::sender()
-                );
-            }
-        );
-
-        write_price_checked(
-            price_adapter,
-            &config,
-            timestamp_now_ms,
-            &mut feed,
-            payload
-        );
-    }
-
-    fun write_price_checked(
-        price_adapter: &mut PriceAdapter,
-        config: &Config,
-        timestamp_now_ms: u64,
-        feed: &mut Feed,
-        payload: vector<u8>
-    ): u256 {
-        let expected_aggregated_values_len: u64 = 1;
         let (aggregated_values, timestamp) =
-            process_payload(
-                config,
-                timestamp_now_ms,
-                &vector[*feed::feed_id(feed)],
-                payload
-            );
+            process_payload(&config, timestamp_now_ms, feed_ids, payload);
         assert!(
-            vector::length(&aggregated_values) == expected_aggregated_values_len,
+            vector::length(&aggregated_values) == vector::length(feed_ids),
             E_UNEXPECTED_RESULT_COUNT
         );
-        let aggregated_value = *vector::borrow(&aggregated_values, 0);
 
-        overwrite_price(
-            price_adapter,
-            feed,
-            aggregated_value,
-            timestamp,
-            timestamp_now_ms
-        );
-
-        aggregated_value
+        (aggregated_values, timestamp)
     }
 
     fun get_or_create_default(
