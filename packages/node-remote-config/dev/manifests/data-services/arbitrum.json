@@ -634,7 +634,6 @@
         "balancer-arbitrumone-weth",
         "balancer-ethereum-weth",
         "camelot-v3-arbitrumone-weth",
-        "camelot-v3-arbitrumone-wsteth",
         "curve-ethereum-sfrxeth",
         "curve-ethereum-weeth",
         "uniswap-v3-ethereum-weth-500"
