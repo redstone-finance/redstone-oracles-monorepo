@@ -249,8 +249,6 @@
     "tacBTC_FUNDAMENTAL": {
       "priceFeedAddress": "0x0A6FD5820f797e517297fEFf90AaEcD8e2Dc77b3"
     },
-    "swETH_FUNDAMENTAL": {
-      "priceFeedAddress": "0x061bB36F8b67bB922937C102092498dcF4619F86"
-    }
+    "swETH_FUNDAMENTAL": {}
   }
 }
