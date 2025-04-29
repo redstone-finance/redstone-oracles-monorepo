@@ -1979,7 +1979,7 @@
       "denomination": "USD",
       "rateFeed": true
     },
-    "BUIDL_I_ETHEREUM_DAILY_INTEREST_ACCRUAL": {
+    "BUIDL_I_ETHEREUM_DAILY_ACCRUAL": {
       "source": ["securitize-api"],
       "denomination": "percentage",
       "rateFeed": false
@@ -1989,7 +1989,7 @@
       "denomination": "USD",
       "rateFeed": true
     },
-    "BUIDL_ARBITRUM_DAILY_INTEREST_ACCRUAL": {
+    "BUIDL_ARBITRUM_DAILY_ACCRUAL": {
       "source": ["securitize-api"],
       "denomination": "percentage",
       "rateFeed": false
@@ -1999,7 +1999,7 @@
       "denomination": "USD",
       "rateFeed": true
     },
-    "BUIDL_OPTIMISM_DAILY_INTEREST_ACCRUAL": {
+    "BUIDL_OPTIMISM_DAILY_ACCRUAL": {
       "source": ["securitize-api"],
       "denomination": "percentage",
       "rateFeed": false
@@ -2009,7 +2009,7 @@
       "denomination": "USD",
       "rateFeed": true
     },
-    "BUIDL_AVALANCHE_DAILY_INTEREST_ACCRUAL": {
+    "BUIDL_AVALANCHE_DAILY_ACCRUAL": {
       "source": ["securitize-api"],
       "denomination": "percentage",
       "rateFeed": false
@@ -2019,17 +2019,32 @@
       "denomination": "USD",
       "rateFeed": true
     },
-    "BUIDL_POLYGON_DAILY_INTEREST_ACCRUAL": {
+    "BUIDL_POLYGON_DAILY_ACCRUAL": {
       "source": ["securitize-api"],
       "denomination": "percentage",
       "rateFeed": false
     },
-    "HLScope_FUNDAMENTAL": {
+    "BUIDL_SOLANA_FUNDAMENTAL": {
       "source": ["securitize-api"],
       "denomination": "USD",
       "rateFeed": true
     },
+    "BUIDL_SOLANA_DAILY_ACCRUAL": {
+      "source": ["securitize-api"],
+      "denomination": "percentage",
+      "rateFeed": false
+    },
     "ACRED_FUNDAMENTAL": {
+      "source": ["securitize-api"],
+      "denomination": "USD",
+      "rateFeed": true
+    },
+    "ACRED_SOLANA_FUNDAMENTAL": {
+      "source": ["securitize-api"],
+      "denomination": "USD",
+      "rateFeed": true
+    },
+    "HLScope_FUNDAMENTAL": {
       "source": ["securitize-api"],
       "denomination": "USD",
       "rateFeed": true
