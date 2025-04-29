@@ -104,7 +104,6 @@
       "currencySymbol": "POL",
       "publicRpcUrls": [
         "https://polygon-mainnet.public.blastapi.io",
-        "https://rpc.ankr.com/polygon",
         "https://polygon-rpc.com",
         "https://rpc-mainnet.matic.quiknode.pro"
       ],
@@ -934,7 +933,6 @@
       "chainId": 80002,
       "currencySymbol": "POL",
       "publicRpcUrls": [
-        "https://rpc.ankr.com/polygon_amoy",
         "https://rpc-amoy.polygon.technology"
       ],
       "avgBlockTimeMs": 20000,
