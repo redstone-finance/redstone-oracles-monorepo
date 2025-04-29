@@ -20,8 +20,10 @@ module redstone_sdk::payload {
     use redstone_sdk::validate::{
         verify_data_packages,
         verify_and_trim_redstone_marker,
-        verify_all_timestamps_are_equal
+        verify_all_timestamps_are_equal,
+        verify_feed_ids_are_different
     };
+    use redstone_sdk::vector::{trim_end, copy_last_n};
 
     // === Errors ===
 
@@ -38,6 +40,8 @@ module redstone_sdk::payload {
     const DATA_FEED_ID_BS: u64 = 32;
     const TIMESTAMP_BS: u64 = 6;
 
+    const MAX_VALUE_SIZE: u64 = 32;
+
     // === Structs ===
 
     struct Payload has copy, drop {
@@ -52,20 +56,22 @@ module redstone_sdk::payload {
         feed_ids: &vector<vector<u8>>,
         payload: vector<u8>
     ): (vector<u256>, u64) {
-        let aggregated_values = vector::empty();
-        let timestamps = vector::empty();
+        verify_feed_ids_are_different(feed_ids);
 
         let parsed_payload = parse_raw_payload(&mut payload);
-        let feeds_len = vector::length(feed_ids);
+        let data_packages = &data_packages(&parsed_payload);
 
+        let aggregated_values = vector::empty();
+        let timestamps = vector::empty();
+        let feeds_len = vector::length(feed_ids);
         for (i in 0..feeds_len) {
             let feed_id = vector::borrow(feed_ids, i);
-            let data_packages =
-                filter_packages_by_feed_id(&data_packages(&parsed_payload), feed_id);
+            let filtered_data_packages =
+                filter_packages_by_feed_id(data_packages, feed_id);
 
-            verify_data_packages(&data_packages, config, timestamp_now_ms);
+            verify_data_packages(&filtered_data_packages, config, timestamp_now_ms);
 
-            let values = extract_values_by_feed_id(&parsed_payload, feed_id);
+            let values = extract_values_by_feed_id(&filtered_data_packages, feed_id);
             let values_u256 = vector::empty();
             for (i in 0..vector::length(&values)) {
                 vector::push_back(
@@ -74,36 +80,19 @@ module redstone_sdk::payload {
             };
 
             let aggregated_value = calculate_median(&mut values_u256);
-            let new_package_timestamp = timestamp(vector::borrow(&data_packages, 0));
+            let new_package_timestamp =
+                timestamp(vector::borrow(&filtered_data_packages, 0));
 
             vector::push_back(&mut aggregated_values, aggregated_value);
             vector::push_back(&mut timestamps, new_package_timestamp);
         };
 
         let new_package_timestamp = verify_all_timestamps_are_equal(timestamps);
+
         (aggregated_values, new_package_timestamp)
     }
 
     // === Public-View Functions ===
-
-    public fun extract_values_by_feed_id(
-        payload: &Payload, feed_id: &vector<u8>
-    ): vector<vector<u8>> {
-        let data_packages = data_packages(payload);
-        let values = vector::empty();
-
-        for (i in 0..vector::length(&data_packages)) {
-            let data_points = data_points(vector::borrow(&data_packages, i));
-            for (j in 0..vector::length(data_points)) {
-                let data_point = vector::borrow(data_points, j);
-                if (feed_id(data_point) == feed_id) {
-                    vector::push_back(&mut values, *value(data_point));
-                };
-            };
-        };
-
-        values
-    }
 
     public fun data_packages(payload: &Payload): vector<DataPackage> {
         payload.data_packages
@@ -153,15 +142,19 @@ module redstone_sdk::payload {
 
     fun trim_data_package(payload: &mut vector<u8>): DataPackage {
         let signature = trim_end(payload, SIGNATURE_BS);
-        let tmp = *payload;
-        let data_point_count = trim_data_point_count(payload);
-        let value_size = trim_data_point_value_size(payload);
+
+        let meta_size = DATA_POINT_VALUE_BYTE_SIZE_BS + DATA_POINTS_COUNT_BS;
+        let meta_bytes = &mut copy_last_n(payload, meta_size);
+        let data_point_count = trim_data_point_count(meta_bytes);
+        let value_size = trim_data_point_value_size(meta_bytes);
+
+        let size = data_point_count * (value_size + DATA_FEED_ID_BS) + TIMESTAMP_BS
+            + meta_size;
+        let signable_bytes = &copy_last_n(payload, size);
+        let signer_address = recover_address(signable_bytes, &signature);
+
+        let _ = trim_end(payload, meta_size);
         let timestamp = trim_timestamp(payload);
-        let size =
-            data_point_count * (value_size + DATA_FEED_ID_BS)
-                + DATA_POINT_VALUE_BYTE_SIZE_BS + TIMESTAMP_BS + DATA_POINTS_COUNT_BS;
-        let signable_bytes = trim_end(&mut tmp, size);
-        let signer_address = recover_address(&signable_bytes, &signature);
         let data_points = trim_data_points(payload, data_point_count, value_size);
 
         new_data_package(signer_address, timestamp, data_points)
@@ -169,17 +162,21 @@ module redstone_sdk::payload {
 
     fun trim_data_point_count(payload: &mut vector<u8>): u64 {
         let data_point_count = trim_end(payload, DATA_POINTS_COUNT_BS);
+
         from_bytes_to_u64(&data_point_count)
     }
 
     fun trim_data_point_value_size(payload: &mut vector<u8>): u64 {
-        let value_size = trim_end(payload, DATA_POINT_VALUE_BYTE_SIZE_BS);
-        assert!(vector::length(&value_size) <= 32, E_VALUE_SIZE_EXCEEDED);
-        from_bytes_to_u64(&value_size)
+        let value_size_vec = trim_end(payload, DATA_POINT_VALUE_BYTE_SIZE_BS);
+        let value_size = from_bytes_to_u64(&value_size_vec);
+        assert!(value_size <= MAX_VALUE_SIZE, E_VALUE_SIZE_EXCEEDED);
+
+        value_size
     }
 
     fun trim_timestamp(payload: &mut vector<u8>): u64 {
         let timestamp = trim_end(payload, TIMESTAMP_BS);
+
         from_bytes_to_u64(&timestamp)
     }
 
@@ -197,7 +194,26 @@ module redstone_sdk::payload {
     fun trim_data_point(payload: &mut vector<u8>, value_size: u64): DataPoint {
         let value = trim_end(payload, value_size);
         let feed_id = trim_end(payload, DATA_FEED_ID_BS);
+
         new_data_point(feed_id, value)
+    }
+
+    fun extract_values_by_feed_id(
+        data_packages: &vector<DataPackage>, feed_id: &vector<u8>
+    ): vector<vector<u8>> {
+        let values = vector::empty();
+
+        for (i in 0..vector::length(data_packages)) {
+            let data_points = data_points(vector::borrow(data_packages, i));
+            for (j in 0..vector::length(data_points)) {
+                let data_point = vector::borrow(data_points, j);
+                if (feed_id(data_point) == feed_id) {
+                    vector::push_back(&mut values, *value(data_point));
+                };
+            };
+        };
+
+        values
     }
 
     fun data_points_contains_feed_id(
@@ -224,24 +240,6 @@ module redstone_sdk::payload {
         };
 
         filtered_packages
-    }
-
-    fun trim_end(v: &mut vector<u8>, len: u64): vector<u8> {
-        let v_len = vector::length(v);
-        if (len >= v_len) {
-            // If len is greater than or equal to the vector length,
-            // return the entire vector and leave the original empty
-            let result = *v;
-            *v = vector::empty();
-            result
-        } else {
-            // Otherwise, split off the last 'len' elements
-            let split_index = v_len - len;
-            let result = vector::slice(v, split_index, v_len);
-            *v = vector::slice(v, 0, split_index);
-
-            result
-        }
     }
 
     // === Tests Functions ===
@@ -438,27 +436,6 @@ module redstone_sdk::payload {
     }
 
     #[test]
-    fun test_trim_end() {
-        let payload = x"000002ed57011e0000";
-        let sizes_to_trim = vector[1000, 0, 1, 5];
-        let expected_payloads = vector[x"", x"000002ed57011e0000", x"000002ed57011e00", x"000002ed"];
-        let expected_trimmeds = vector[x"000002ed57011e0000", x"", x"00", x"57011e0000"];
-
-        let testcases_count = vector::length(&sizes_to_trim);
-        assert!(testcases_count == vector::length(&expected_payloads), 101);
-        assert!(testcases_count == vector::length(&expected_trimmeds), 102);
-
-        for (i in 0..testcases_count) {
-            test_trim_end_testcase(
-                payload,
-                *vector::borrow(&expected_payloads, i),
-                *vector::borrow(&expected_trimmeds, i),
-                *vector::borrow(&sizes_to_trim, i)
-            );
-        };
-    }
-
-    #[test]
     fun test_trim_metadata() {
         let prefix = x"9e0294371c000f";
 
@@ -531,19 +508,6 @@ module redstone_sdk::payload {
         assert!(filtered_len == 1, filtered_len);
         let ts = timestamp(vector::borrow(&filtered, 0));
         assert!(ts == 4, ts);
-    }
-
-    #[test_only]
-    fun test_trim_end_testcase(
-        payload: vector<u8>,
-        expected_payload: vector<u8>,
-        expected_trimmed: vector<u8>,
-        size_to_trim: u64
-    ) {
-        let trimmed = trim_end(&mut payload, size_to_trim);
-
-        assert!(trimmed == expected_trimmed, 0);
-        assert!(payload == expected_payload, 0);
     }
 
     #[test_only]

@@ -39,19 +39,20 @@ adapter-address:
 	$(ADAPTER_ADDRESS)
 
 fmt:
-	aptos move fmt --package-path contracts/price_feed
-	aptos move fmt --package-path contracts/price_adapter
 	aptos move fmt --package-path contracts/redstone_sdk
+	aptos move fmt --package-path contracts/price_adapter
+	aptos move fmt --package-path contracts/price_feed
 
 test:
-	movement move test --package-dir contracts/price_feed
-	movement move test --package-dir contracts/price_adapter
 	movement move test --package-dir contracts/redstone_sdk
+	movement move test --package-dir contracts/price_adapter
+	movement move test --package-dir contracts/price_feed
+
 
 build:
-	movement move build --package-dir contracts/price_feed --dev
-	movement move build --package-dir contracts/price_adapter --dev
 	movement move build --package-dir contracts/redstone_sdk --dev
+	movement move build --package-dir contracts/price_adapter --dev
+	movement move build --package-dir contracts/price_feed --dev
 
 deploy-price-adapter:
 	movement move publish --package-dir contracts/redstone_sdk --named-addresses redstone_sdk=default

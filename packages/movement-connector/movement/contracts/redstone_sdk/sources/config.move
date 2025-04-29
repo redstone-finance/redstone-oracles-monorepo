@@ -15,9 +15,7 @@ module redstone_sdk::config {
         signer_count_threshold: u8,
         signers: vector<vector<u8>>,
         max_timestamp_delay_ms: u64,
-        max_timestamp_ahead_ms: u64,
-        trusted_updaters: vector<address>,
-        min_interval_between_updates_ms: u64
+        max_timestamp_ahead_ms: u64
     }
 
     // === Public Functions ===
@@ -26,17 +24,13 @@ module redstone_sdk::config {
         signer_count_threshold: u8,
         signers: vector<vector<u8>>,
         max_timestamp_delay_ms: u64,
-        max_timestamp_ahead_ms: u64,
-        trusted_updaters: vector<address>,
-        min_interval_between_updates_ms: u64
+        max_timestamp_ahead_ms: u64
     ): Config {
         let config = Config {
             signer_count_threshold,
             signers,
             max_timestamp_delay_ms,
-            max_timestamp_ahead_ms,
-            trusted_updaters,
-            min_interval_between_updates_ms
+            max_timestamp_ahead_ms
         };
 
         check(&config);
@@ -58,14 +52,6 @@ module redstone_sdk::config {
 
     public fun max_timestamp_ahead_ms(config: &Config): u64 {
         config.max_timestamp_ahead_ms
-    }
-
-    public fun trusted_updaters(config: &Config): vector<address> {
-        config.trusted_updaters
-    }
-
-    public fun min_interval_between_updates_ms(config: &Config): u64 {
-        config.min_interval_between_updates_ms
     }
 
     // === Private Functions ===
@@ -100,9 +86,7 @@ module redstone_sdk::config {
                 x"12470f7aba85c8b81d63137dd5925d6ee114952b"
             ],
             15 * 60 * 1000,
-            3 * 60 * 1000,
-            vector[],
-            0
+            3 * 60 * 1000
         )
     }
 
@@ -116,9 +100,7 @@ module redstone_sdk::config {
                 x"109b4a318a4f5ddcbca6349b45f881b4137deafb"
             ],
             max_timestamp_delay_ms: 15 * 60 * 1000,
-            max_timestamp_ahead_ms: 3 * 60 * 1000,
-            trusted_updaters: vector[],
-            min_interval_between_updates_ms: 0
+            max_timestamp_ahead_ms: 3 * 60 * 1000
         };
 
         check(&config);
@@ -134,9 +116,7 @@ module redstone_sdk::config {
                 x"109b4a318a4f5ddcbca6349b45f881b4137deafb"
             ],
             max_timestamp_delay_ms: 15 * 60 * 1000,
-            max_timestamp_ahead_ms: 3 * 60 * 1000,
-            trusted_updaters: vector[],
-            min_interval_between_updates_ms: 0
+            max_timestamp_ahead_ms: 3 * 60 * 1000
         };
 
         check(&config);

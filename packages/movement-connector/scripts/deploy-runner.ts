@@ -1,6 +1,8 @@
+import { RedstoneCommon } from "@redstone-finance/utils";
 import "dotenv/config";
+import { z } from "zod";
 import { makeAptosAccount } from "../src";
-import { deploy, prepareDepAddresses } from "./deploy-utils";
+import { deploy, prepareDepAddresses, readAddress } from "./deploy-utils";
 import { getEnvContractName } from "./get-env";
 import { makeAptos } from "./utils";
 
@@ -9,7 +11,21 @@ async function main() {
   const aptos = makeAptos();
   const account = makeAptosAccount();
 
-  await deploy(aptos, account, contractName, prepareDepAddresses(contractName));
+  const isUpgrade = RedstoneCommon.getFromEnv(
+    "IS_UPGRADE",
+    z.boolean().default(false)
+  );
+  const currentObjectAddress = isUpgrade
+    ? readAddress(contractName)
+    : undefined;
+
+  await deploy(
+    aptos,
+    account,
+    contractName,
+    prepareDepAddresses(contractName),
+    currentObjectAddress
+  );
 }
 
 void main();

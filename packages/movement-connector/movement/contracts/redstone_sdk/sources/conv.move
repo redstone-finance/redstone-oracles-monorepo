@@ -3,6 +3,10 @@ module redstone_sdk::conv {
 
     use std::vector;
 
+    // === Errors ===
+
+    const E_OVERFLOW: u64 = 0;
+
     // === Constants ===
 
     const HEX_BASE_SHIFT_BY: u8 = 8;
@@ -12,6 +16,7 @@ module redstone_sdk::conv {
     public fun from_bytes_to_u256(bytes: &vector<u8>): u256 {
         let result = 0;
         let len = vector::length(bytes);
+        assert!(len <= 32, E_OVERFLOW);
 
         for (i in 0..len) {
             let byte = *vector::borrow(bytes, i);
@@ -24,6 +29,7 @@ module redstone_sdk::conv {
     public fun from_bytes_to_u64(bytes: &vector<u8>): u64 {
         let result = 0;
         let len = vector::length(bytes);
+        assert!(len <= 8, E_OVERFLOW);
 
         for (i in 0..len) {
             let byte = *vector::borrow(bytes, i);

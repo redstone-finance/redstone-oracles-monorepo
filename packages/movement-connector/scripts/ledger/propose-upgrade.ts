@@ -15,15 +15,15 @@ import { MultiSigTxBuilder } from "./MultiSigTxBuilder";
 async function proposeUpgrade(
   aptos: Aptos,
   sender: AccountAddress,
-  contractName = getEnvContractName(),
-  networkName = getEnvNetwork()
+  signerAddress: AccountAddress = AccountAddress.from(MULTI_SIG_ADDRESS),
+  networkName = getEnvNetwork(),
+  contractName = getEnvContractName()
 ) {
-  const multiSigAddress = AccountAddress.from(MULTI_SIG_ADDRESS);
   const contractAddress = readAddress(contractName, networkName);
 
   const { bytecode, metadataBytes } = await setUpDeploy(
     aptos,
-    multiSigAddress,
+    signerAddress,
     contractName,
     prepareDepAddresses(contractName),
     contractAddress
@@ -37,11 +37,11 @@ async function proposeUpgrade(
     })
   );
 
-  console.log("Upgrading package as multi-sig");
+  console.log(`Upgrading package as ${signerAddress.toString()}`);
   const upgradeTxPayload = await new MovementPackageTxBuilder(
     aptos
   ).objectUpgradeTxPayload(
-    multiSigAddress,
+    signerAddress,
     contractAddress,
     metadataBytes,
     bytecode
@@ -51,7 +51,9 @@ async function proposeUpgrade(
 }
 
 async function main() {
-  const response = await executeAsLedger(proposeUpgrade, LEDGER_ACCOUNT_ID);
+  const response = await executeAsLedger(async (aptos, signerAddress) => {
+    return await proposeUpgrade(aptos, signerAddress);
+  }, LEDGER_ACCOUNT_ID);
 
   console.log(
     `Transaction ${response.hash} created;\n` +
