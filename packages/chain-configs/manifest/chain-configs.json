@@ -932,9 +932,7 @@
       "name": "Polygon Amoy",
       "chainId": 80002,
       "currencySymbol": "POL",
-      "publicRpcUrls": [
-        "https://rpc-amoy.polygon.technology"
-      ],
+      "publicRpcUrls": ["https://rpc-amoy.polygon.technology"],
       "avgBlockTimeMs": 20000,
       "multicall3": {
         "address": "0xcA11bde05977b3631167028862bE2a173976CA11",
