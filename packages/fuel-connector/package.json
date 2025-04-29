@@ -30,7 +30,7 @@
     "@redstone-finance/utils": "workspace:*",
     "dotenv": "^16.0.3",
     "ethers": "^5.7.2",
-    "redstone-api": "^0.4.12",
+    "redstone-api": "^0.4.13",
     "toml": "^3.0.0",
     "zod": "^3.22.4"
   },
