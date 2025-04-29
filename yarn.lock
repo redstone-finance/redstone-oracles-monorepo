@@ -8348,7 +8348,7 @@ __metadata:
     dotenv: "npm:^16.0.3"
     ethers: "npm:^5.7.2"
     fuels: "npm:^0.97.0"
-    redstone-api: "npm:^0.4.12"
+    redstone-api: "npm:^0.4.13"
     toml: "npm:^3.0.0"
     zod: "npm:^3.22.4"
   languageName: unknown
@@ -9328,7 +9328,7 @@ __metadata:
     ethers: "npm:^5.7.2"
     lodash: "npm:^4.17.21"
     node-jq: "npm:^6.0.0"
-    redstone-api: "npm:^0.4.12"
+    redstone-api: "npm:^0.4.13"
     secp256k1: "npm:^5.0.1"
     zod: "npm:^3.22.4"
   languageName: unknown
@@ -9372,7 +9372,7 @@ __metadata:
     hardhat: "npm:^2.22.14"
     hardhat-gas-reporter: "npm:^1.0.9"
     lodash: "npm:^4.17.21"
-    redstone-api: "npm:^0.4.12"
+    redstone-api: "npm:^0.4.13"
     solidity-coverage: "npm:^0.8.12"
     typechain: "npm:^8.1.1"
     zod: "npm:^3.22.4"
@@ -9458,7 +9458,7 @@ __metadata:
     mocha: "npm:^10.2.0"
     prettier: "npm:^3.2.5"
     prompts: "npm:^2.4.2"
-    redstone-api: "npm:^0.4.12"
+    redstone-api: "npm:^0.4.13"
     toml: "npm:^3.0.0"
     ts-mocha: "npm:^10.0.0"
     zod: "npm:^3.22.4"
@@ -30106,9 +30106,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"redstone-api@npm:^0.4.12":
-  version: 0.4.12
-  resolution: "redstone-api@npm:0.4.12"
+"redstone-api@npm:^0.4.13":
+  version: 0.4.13
+  resolution: "redstone-api@npm:0.4.13"
   dependencies:
     ar-gql: "npm:^0.0.6"
     arweave: "npm:^1.10.16"
@@ -30117,7 +30117,7 @@ __metadata:
     deep-sort-object: "npm:^1.0.2"
     lodash: "npm:^4.17.21"
     pako: "npm:^2.0.3"
-  checksum: 10c0/f5197289a3c05c81741f5fe8f21ad8e898aa91a616045d9684c93b0af38f4fe375dd07d8bb2a9f71278ddbd10be7a3c3703a6fd00859f69e71a7f5add1349f44
+  checksum: 10c0/5c718c35e81fe781168bcbd9890fde24021409841fd06be409ea2f84364e30c03f7f87753157dda783aa6af8f94fe2d85f205598231271010c51a2cb4bc6518e
   languageName: node
   linkType: hard
 
