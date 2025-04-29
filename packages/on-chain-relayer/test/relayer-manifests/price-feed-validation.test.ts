@@ -117,10 +117,10 @@ describe("Price feed contract should return the same dataFeedId as in relayer ma
     });
   }
 
-  const mutliFeedManifests = ManifestReading.readMultiFeedManifests(
+  const multiFeedManifests = ManifestReading.readMultiFeedManifests(
     path.join(__dirname, "../..")
   );
-  for (const [name, manifest] of Object.entries(mutliFeedManifests)) {
+  for (const [name, manifest] of Object.entries(multiFeedManifests)) {
     if (INTEGRATIONS_NOT_FOR_TESTING.includes(name)) {
       continue;
     }
