@@ -2360,7 +2360,7 @@
         "curve-ethereum-frax",
         "curve-fraxtal-usdt",
         "curve-fraxtal-susde",
-        "fraxswap-fraxtal-fxs"
+        "fraxswap-fraxtal-wfrax"
       ],
       "denomination": "USD",
       "rateFeed": false
