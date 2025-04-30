@@ -9455,6 +9455,7 @@ __metadata:
     bs58: "npm:^6.0.0"
     chai: "npm:^4.3.10"
     litesvm: "npm:^0.2.0"
+    markdown-table-ts: "npm:1.0.3"
     mocha: "npm:^10.2.0"
     prettier: "npm:^3.2.5"
     prompts: "npm:^2.4.2"
@@ -26044,6 +26045,13 @@ __metadata:
   bin:
     markdown-it: bin/markdown-it.mjs
   checksum: 10c0/9a6bb444181d2db7016a4173ae56a95a62c84d4cbfb6916a399b11d3e6581bf1cc2e4e1d07a2f022ae72c25f56db90fbe1e529fca16fbf9541659dc53480d4b4
+  languageName: node
+  linkType: hard
+
+"markdown-table-ts@npm:1.0.3":
+  version: 1.0.3
+  resolution: "markdown-table-ts@npm:1.0.3"
+  checksum: 10c0/75dd3e97bd2bdeeed0e7b0f011ef388389a0da5c1113c5dc065ff91a0b5d56284e4101322d8c895a3ff67803e8b009997f591fa1139c1b2b928b13ea98f8f2cf
   languageName: node
   linkType: hard
 
