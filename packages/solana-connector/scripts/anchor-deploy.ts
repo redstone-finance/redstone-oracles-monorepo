@@ -3,7 +3,7 @@ import "dotenv/config";
 import path from "node:path";
 import { setTimeout } from "timers/promises";
 import { readCluster } from "../src";
-import { RDS_PROGRAM_ADDRESS } from "./consts";
+import { readProgramAddress } from "./consts";
 import { getAccountInfo } from "./get-account-info";
 import { CONTRACT_NAME, readDeployDir } from "./utils";
 import { writeKeypairToFile } from "./write-keypair-to-file";
@@ -48,7 +48,7 @@ async function deploy(
 }
 
 async function main() {
-  await deploy(RDS_PROGRAM_ADDRESS);
+  await deploy(readProgramAddress(readCluster()));
 
   await setTimeout(15_000); // wait 15 seconds before continuing
 }

@@ -2,7 +2,7 @@ import { execSync } from "child_process";
 import "dotenv/config";
 import { setTimeout } from "timers/promises";
 import { readCluster } from "../src";
-import { RDS_PROGRAM_ADDRESS } from "./consts";
+import { readProgramAddress } from "./consts";
 import { getAccountInfo } from "./get-account-info";
 import { CONTRACT_NAME, readDeployDir, readUrl } from "./utils";
 import { writeKeypairToFile } from "./write-keypair-to-file";
@@ -33,7 +33,7 @@ async function verifyProgram(
 }
 
 async function main() {
-  await verifyProgram(RDS_PROGRAM_ADDRESS);
+  await verifyProgram(readProgramAddress(readCluster()));
 
   await setTimeout(15_000); // wait 15 seconds before continuing
 }
