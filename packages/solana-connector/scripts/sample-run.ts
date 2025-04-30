@@ -18,7 +18,7 @@ import {
   SolanaConnectionBuilder,
   SolanaContractConnector,
 } from "../src";
-import { RDS_PROGRAM_ADDRESS } from "./consts";
+import { readProgramAddress } from "./consts";
 import { readKeypair, readUrl } from "./utils";
 
 async function main() {
@@ -36,7 +36,7 @@ async function main() {
 
   const solanaContractConnector = new SolanaContractConnector(
     connection,
-    RDS_PROGRAM_ADDRESS,
+    readProgramAddress(readCluster()),
     keypair
   );
 
