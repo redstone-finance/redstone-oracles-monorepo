@@ -249,6 +249,27 @@
     "tacBTC_FUNDAMENTAL": {
       "priceFeedAddress": "0x0A6FD5820f797e517297fEFf90AaEcD8e2Dc77b3"
     },
-    "swETH_FUNDAMENTAL": {}
+    "swETH_FUNDAMENTAL": {},
+    "BUIDL_DAILY_INTEREST_ACCRUAL": {
+      "priceFeedAddress": "0x9c303927dC4939692CC60641D6ceABa9185d687a",
+      "updateTriggersOverrides": {
+        "deviationPercentage": 0.1,
+        "timeSinceLastUpdateInMilliseconds": 86400000
+      }
+    },
+    "BUIDL_I_ETHEREUM_FUNDAMENTAL": {
+      "priceFeedAddress": "0xf2db7b3455077Fb177215d45D62d441DF3C17bf3",
+      "updateTriggersOverrides": {
+        "deviationPercentage": 0.1,
+        "timeSinceLastUpdateInMilliseconds": 86400000
+      }
+    },
+    "BUIDL_I_ETHEREUM_DAILY_ACCRUAL": {
+      "priceFeedAddress": "0xd6156F8177aA1a6E0c5278CE437A9BDB32F203ef",
+      "updateTriggersOverrides": {
+        "deviationPercentage": 0.1,
+        "timeSinceLastUpdateInMilliseconds": 86400000
+      }
+    }
   }
 }

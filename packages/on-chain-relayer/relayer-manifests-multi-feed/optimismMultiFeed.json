@@ -13,6 +13,20 @@
   "priceFeeds": {
     "XVS": {
       "priceFeedAddress": "0x414F8f961969A8131AbE53294600c6C515E68f81"
+    },
+    "BUIDL_OPTIMISM_FUNDAMENTAL": {
+      "priceFeedAddress": "0xb81131B6368b3F0a83af09dB4E39Ac23DA96C2Db",
+      "updateTriggersOverrides": {
+        "deviationPercentage": 0.1,
+        "timeSinceLastUpdateInMilliseconds": 86400000
+      }
+    },
+    "BUIDL_OPTIMISM_DAILY_ACCRUAL": {
+      "priceFeedAddress": "0x24c8964338Deb5204B096039147B8e8C3AEa42Cc",
+      "updateTriggersOverrides": {
+        "deviationPercentage": 0.1,
+        "timeSinceLastUpdateInMilliseconds": 86400000
+      }
     }
   }
 }
