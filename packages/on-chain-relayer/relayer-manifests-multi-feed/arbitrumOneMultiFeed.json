@@ -43,6 +43,20 @@
         "deviationPercentage": 1,
         "timeSinceLastUpdateInMilliseconds": 86400000
       }
+    },
+    "BUIDL_ARBITRUM_FUNDAMENTAL": {
+      "priceFeedAddress": "0xa8a94Da411425634e3Ed6C331a32ab4fd774aa43",
+      "updateTriggersOverrides": {
+        "deviationPercentage": 0.1,
+        "timeSinceLastUpdateInMilliseconds": 86400000
+      }
+    },
+    "BUIDL_ARBITRUM_DAILY_ACCRUAL": {
+      "priceFeedAddress": "0x3587a73AA02519335A8a6053a97657BECe0bC2Cc",
+      "updateTriggersOverrides": {
+        "deviationPercentage": 0.1,
+        "timeSinceLastUpdateInMilliseconds": 86400000
+      }
     }
   }
 }
