@@ -13,6 +13,12 @@
   "priceFeeds": {
     "ACRED_FUNDAMENTAL": {
       "priceFeedAddress": "0x4BAD96DD1C7D541270a0C92e1D4e5f12EEEA7a57"
+    },
+    "BUIDL_AVALANCHE_FUNDAMENTAL": {
+      "priceFeedAddress": "0xebE443E20ADf302B59419648c4dbA0c7299cf1A2"
+    },
+    "BUIDL_AVALANCHE_DAILY_ACCRUAL": {
+      "priceFeedAddress": "0xB89Cc2Ce1CaD0d26Fed6794C1f4cF4b28684624A"
     }
   }
 }
