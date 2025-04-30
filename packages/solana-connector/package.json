@@ -28,7 +28,8 @@
     "set-authority-as-multi-sig": "yarn global:ts-node scripts/ledger/set-authority-as-multi-sig.ts",
     "ledger-get-public-key": "yarn global:ts-node scripts/ledger/ledger-get-public-key.ts",
     "convert-public-key": "yarn global:ts-node scripts/convert-public-key.ts",
-    "transfer-sol": "yarn global:ts-node scripts/transfer-sol.ts"
+    "transfer-sol": "yarn global:ts-node scripts/transfer-sol.ts",
+    "make-feed-table": "yarn global:ts-node scripts/make-feed-table.ts"
   },
   "dependencies": {
     "@coral-xyz/anchor": "0.30.1",
@@ -48,6 +49,7 @@
     "bs58": "^6.0.0",
     "chai": "^4.3.10",
     "litesvm": "^0.2.0",
+    "markdown-table-ts": "1.0.3",
     "mocha": "^10.2.0",
     "prettier": "^3.2.5",
     "prompts": "^2.4.2",
