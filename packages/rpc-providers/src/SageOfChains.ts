@@ -1,53 +1,97 @@
 import { Provider } from "@ethersproject/providers";
-import { ChainConfig } from "@redstone-finance/chain-configs";
+import {
+  ChainConfig,
+  ChainTypeEnum,
+  getChainKey,
+  getLocalChainConfigsByChainIdAndType,
+} from "@redstone-finance/chain-configs";
 import { loggerFactory, RedstoneCommon } from "@redstone-finance/utils";
-
-type ProviderWithChainConfig = {
-  provider: Provider;
-  chainConfig: ChainConfig;
-};
 
 const logger = loggerFactory("SageOfChains");
 
 export class SageOfChains {
-  chainIdToProvider: Partial<Record<number, ProviderWithChainConfig>> = {};
+  chainTypeAndIdToProviderFactory: Record<
+    string,
+    (chainConfig: ChainConfig) => Provider
+  > = {};
 
-  constructor(private readonly providersWithConfig: ProviderWithChainConfig[]) {
-    for (const providerWithConfig of providersWithConfig) {
-      this.chainIdToProvider[providerWithConfig.chainConfig.chainId] =
-        providerWithConfig;
-    }
-  }
-
-  getProviderWithConfigByChainId(chainId: number): ProviderWithChainConfig {
-    return RedstoneCommon.assertThenReturn(
-      this.chainIdToProvider[chainId],
-      `SageOfChains don't have information about chainId=${chainId}`
+  constructor(
+    allSupportedChainIds: string[],
+    private readonly providerFactory: (chainConfig: ChainConfig) => Provider
+  ) {
+    allSupportedChainIds.forEach((chainId) =>
+      this.fillProviderFactoryByChainTypeAndId(chainId)
     );
   }
 
-  getProviderByChainId(chainId: number): Provider {
-    return this.getProviderWithConfigByChainId(chainId).provider;
+  private fillProviderFactoryByChainTypeAndId(chainId: string) {
+    const chainTypeAndId = getChainKey(Number(chainId), ChainTypeEnum.enum.evm);
+    this.chainTypeAndIdToProviderFactory[chainTypeAndId] = this.providerFactory;
+  }
+
+  getProviderByChainTypeAndId(chainTypeAndId: string): Provider {
+    const providerFactory =
+      this.chainTypeAndIdToProviderFactory[chainTypeAndId];
+    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+    if (!providerFactory) {
+      throw new Error(
+        `SageOfChains: missing provider factory for ${chainTypeAndId}`
+      );
+    }
+    const chainConfig =
+      SageOfChains.getChainConfigByChainTypeAndId(chainTypeAndId);
+    return providerFactory(chainConfig);
+  }
+
+  private static getChainConfigByChainTypeAndId(chainTypeAndId: string) {
+    const chainConfigs = getLocalChainConfigsByChainIdAndType();
+    const chainConfig = chainConfigs[chainTypeAndId];
+    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+    if (!chainConfig) {
+      throw new Error(
+        `SageOfChains: missing local chain config for ${chainTypeAndId}`
+      );
+    }
+    return chainConfig;
+  }
+
+  getProvidersForRequiredChainIds(
+    requiredChainIds: number[]
+  ): [string, Provider][] {
+    return requiredChainIds.map((chainId) => {
+      const chainTypeAndId = getChainKey(
+        Number(chainId),
+        ChainTypeEnum.enum.evm
+      );
+      return [chainTypeAndId, this.getProviderByChainTypeAndId(chainTypeAndId)];
+    });
   }
 
   async getBlockNumbersPerChain(
     timeout: number
   ): Promise<Record<number, number>> {
     const chainIdToBlockTuplesResults = await Promise.allSettled(
-      this.providersWithConfig.map(async ({ provider, chainConfig }) => [
-        chainConfig.chainId,
-        await getBlockNumberWithRetries(provider, timeout),
-      ])
+      Object.entries(this.chainTypeAndIdToProviderFactory).map(
+        async ([chainTypeAndId, providerFactory]) => {
+          const chainConfig =
+            SageOfChains.getChainConfigByChainTypeAndId(chainTypeAndId);
+          const provider = providerFactory(chainConfig);
+          const blockNumber = await getBlockNumberWithRetries(
+            provider,
+            timeout
+          );
+          return [chainTypeAndId, blockNumber];
+        }
+      )
     );
-
     const chainIdToBlockTuples = chainIdToBlockTuplesResults
       .map((result, index) => {
         if (result.status === "fulfilled") {
           return result.value;
         }
         logger.log(
-          `Failed to fetch blockNumber for chainId=${
-            this.providersWithConfig[index].chainConfig.chainId
+          `Failed to fetch blockNumber for ${
+            Object.keys(this.chainTypeAndIdToProviderFactory)[index]
           } after 2 retries: ${RedstoneCommon.stringifyError(result.reason)}`
         );
         return false;
