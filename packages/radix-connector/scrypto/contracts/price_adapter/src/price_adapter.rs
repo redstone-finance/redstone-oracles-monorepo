@@ -4,11 +4,13 @@ use common::{
     process_payload::process_payload,
     read_price_data::{read_price_data, read_prices_data},
     redstone::{
-        contract::verification::UpdateTimestampVerifier::{Trusted, Untrusted},
-        contract::verification::*,
+        contract::verification::{
+            UpdateTimestampVerifier::{Trusted, Untrusted},
+            *,
+        },
         FeedId, Value as RedStoneValue,
     },
-    time::Time,
+    time,
     verify::{verify_signers_config, verify_update},
 };
 use scrypto::prelude::*;
@@ -50,7 +52,6 @@ mod price_adapter {
         signers: Vec<Vec<u8>>,
         prices: KeyValueStore<FeedId, PriceDataRaw>,
         trusted_updater_resource: Option<ResourceAddress>,
-        time: Time,
     }
 
     impl PriceAdapter {
@@ -58,12 +59,7 @@ mod price_adapter {
             signer_count_threshold: u8,
             allowed_signer_addresses: Vec<Vec<u8>>,
         ) -> Global<PriceAdapter> {
-            Self::make_instance(
-                signer_count_threshold,
-                allowed_signer_addresses,
-                None,
-                Time::System,
-            )
+            Self::make_instance(signer_count_threshold, allowed_signer_addresses, None)
         }
 
         pub fn instantiate_with_trusted_updaters(
@@ -78,22 +74,8 @@ mod price_adapter {
                     signer_count_threshold,
                     allowed_signer_addresses,
                     Some(updater_badge_resource),
-                    Time::System,
                 ),
                 badges,
-            )
-        }
-
-        pub fn instantiate_with_mock_timestamp(
-            signer_count_threshold: u8,
-            allowed_signer_addresses: Vec<Vec<u8>>,
-            timestamp_mock: Option<u64>,
-        ) -> Global<PriceAdapter> {
-            Self::make_instance(
-                signer_count_threshold,
-                allowed_signer_addresses,
-                None,
-                timestamp_mock.into(),
             )
         }
 
@@ -203,7 +185,7 @@ mod price_adapter {
             payload: Vec<u8>,
         ) -> (u64, Vec<RedStoneValue>) {
             process_payload(
-                self.time.get_current_in_ms(),
+                time::get_current_time_in_ms(),
                 self.signer_count_threshold,
                 self.signers.clone(),
                 feed_ids,
@@ -220,7 +202,7 @@ mod price_adapter {
             verifier: UpdateTimestampVerifier,
         ) -> (u64, Vec<RedStoneValue>) {
             let (timestamp, values) = self.process_payload(feed_ids.clone(), payload);
-            let current_timestamp = self.time.get_current_in_ms();
+            let current_timestamp = time::get_current_time_in_ms();
 
             feed_ids
                 .into_iter()
@@ -250,8 +232,6 @@ mod price_adapter {
                     );
                 });
 
-            self.time.maybe_increase(1);
-
             (timestamp, values)
         }
 
@@ -259,7 +239,6 @@ mod price_adapter {
             signer_count_threshold: u8,
             allowed_signer_addresses: Vec<Vec<u8>>,
             trusted_updater_resource: Option<ResourceAddress>,
-            time: Time,
         ) -> Global<PriceAdapter> {
             verify_signers_config(&allowed_signer_addresses, signer_count_threshold);
 
@@ -268,7 +247,6 @@ mod price_adapter {
                 signers: allowed_signer_addresses,
                 prices: KeyValueStore::new(),
                 trusted_updater_resource,
-                time,
             }
             .instantiate()
             .prepare_to_globalize(OwnerRole::None);
@@ -297,7 +275,7 @@ mod price_adapter {
             values
                 .into_iter()
                 .to_redstone_decimals()
-                .expect("Price should be in conversio range")
+                .expect("Price should be in conversion range")
         }
     }
 }
