@@ -1,6 +1,7 @@
-use common::redstone::Value;
+use core::{cell::RefCell, ops::DerefMut};
+
 use price_adapter::price_adapter::price_adapter_test::PriceAdapter;
-use redstone_testing::env::run_env::{PriceAdapterRunEnv, RunMode};
+use redstone_testing::{env::PriceAdapterRunEnv, redstone::Value, signer::ContractUpdateSigner};
 use scrypto::time::Instant;
 use scrypto_test::{
     environment::TestEnvironment,
@@ -10,45 +11,49 @@ use scrypto_test::{
 };
 
 pub(crate) struct PriceAdapterTestEnv {
-    env: TestEnvironment<InMemorySubstateDatabase>,
-    price_adapter: PriceAdapter,
+    env: RefCell<TestEnvironment<InMemorySubstateDatabase>>,
+    price_adapter: Option<PriceAdapter>,
 }
 
 impl PriceAdapterRunEnv for PriceAdapterTestEnv {
-    type State = ();
-
-    fn instantiate(unique_signer_count: u8, signers: Vec<Vec<u8>>, timestamp: Option<u64>) -> Self {
-        let mut env = TestEnvironment::new();
-
-        if timestamp.is_some() {
-            env.set_current_time(Instant::new(timestamp.unwrap() as i64));
-            let epoch = env.get_current_epoch();
-            env.set_current_epoch(epoch.next().unwrap());
-            env.set_current_time(Instant::new(timestamp.unwrap() as i64));
-        }
-
+    fn initialize(&mut self, signers: Vec<Vec<u8>>, unique_signer_threshold: u8) {
         let package_address =
-            PackageFactory::compile_and_publish(this_package!(), &mut env, Fast).unwrap();
+            PackageFactory::compile_and_publish(this_package!(), self.env.get_mut(), Fast).unwrap();
 
-        let price_adapter = PriceAdapter::instantiate_with_mock_timestamp(
-            unique_signer_count,
+        let (price_adapter, _) = PriceAdapter::instantiate_with_trusted_updaters(
+            unique_signer_threshold,
             signers,
-            timestamp,
+            vec![],
             package_address,
-            &mut env,
+            self.env.get_mut(),
         )
         .unwrap();
 
-        Self { env, price_adapter }
+        self.price_adapter = Some(price_adapter);
     }
 
-    fn state(&self) -> Self::State {}
+    fn set_time_to(&mut self, to: std::time::Duration) {
+        self.env
+            .get_mut()
+            .set_current_time(Instant::new(to.as_secs() as i64));
+        let epoch = self.env.get_mut().get_current_epoch();
+        self.env.get_mut().set_current_epoch(epoch.next().unwrap());
+    }
+
+    fn unique_signer_threshold(&self) -> u8 {
+        let mut env = self.env.borrow_mut();
+        self.price_adapter
+            .unwrap()
+            .get_unique_signer_threshold(env.deref_mut())
+            .unwrap()
+    }
 
     fn read_timestamp(&mut self, feed_id: Option<&str>) -> u64 {
         let feed_ids = vec![feed_id.unwrap().into()];
 
         self.price_adapter
-            .read_price_data(feed_ids, &mut self.env)
+            .unwrap()
+            .read_price_data(feed_ids, self.env.get_mut())
             .unwrap()
             .first()
             .unwrap()
@@ -57,32 +62,73 @@ impl PriceAdapterRunEnv for PriceAdapterTestEnv {
 
     fn read_prices(&mut self, feed_ids: Vec<Vec<u8>>) -> Vec<Value> {
         self.price_adapter
-            .read_prices_raw(feed_ids, &mut self.env)
             .unwrap()
+            .read_prices_raw(feed_ids, self.env.get_mut())
+            .unwrap()
+    }
+
+    fn read_prices_and_timestamp(&mut self, feed_ids: Vec<Vec<u8>>) -> (Vec<Value>, u64) {
+        let prices = self
+            .price_adapter
+            .unwrap()
+            .read_prices_raw(feed_ids.clone(), self.env.get_mut())
+            .unwrap();
+        let timestamp = self
+            .price_adapter
+            .unwrap()
+            .read_timestamp(feed_ids[0].clone(), self.env.get_mut())
+            .unwrap();
+
+        (prices, timestamp)
     }
 
     fn process_payload(
         &mut self,
-        run_mode: RunMode,
         payload: Vec<u8>,
         feed_ids: Vec<Vec<u8>>,
-        _timestamp: u64,
-    ) -> (u64, Vec<Value>) {
-        let (timestamp, values) = match run_mode {
-            RunMode::Get => self
-                .price_adapter
-                .get_prices_raw(feed_ids, payload, &mut self.env),
-            RunMode::Write => self
-                .price_adapter
-                .write_prices_raw(feed_ids, payload, &mut self.env),
+        signer: ContractUpdateSigner,
+    ) {
+        if matches!(signer, ContractUpdateSigner::Trusted) {
+            self.price_adapter
+                .unwrap()
+                .write_prices_raw_trusted(feed_ids, payload, self.env.get_mut())
+                .unwrap();
+            return;
         }
-        .unwrap();
-
-        (timestamp, values)
+        self.price_adapter
+            .unwrap()
+            .write_prices_raw(feed_ids, payload, self.env.get_mut())
+            .unwrap();
     }
 
-    fn increase_time(&mut self) {
-        let ct = self.env.get_current_time().seconds_since_unix_epoch;
-        self.env.set_current_time(Instant::new(ct + 1));
+    fn process_payload_get(
+        &mut self,
+        _payload: Vec<u8>,
+        _feed_ids: Vec<Vec<u8>>,
+        _signer: ContractUpdateSigner,
+    ) -> (Vec<Value>, u64) {
+        todo!()
+    }
+
+    fn increase_time_by(&mut self, by: std::time::Duration) {
+        let ct = self
+            .env
+            .get_mut()
+            .get_current_time()
+            .seconds_since_unix_epoch;
+        self.env
+            .get_mut()
+            .set_current_time(Instant::new(ct + by.as_secs() as i64));
+    }
+}
+
+impl PriceAdapterTestEnv {
+    pub fn new() -> Self {
+        let mut env = RefCell::new(TestEnvironment::new());
+        env.get_mut().disable_auth_module();
+        Self {
+            env,
+            price_adapter: None,
+        }
     }
 }
