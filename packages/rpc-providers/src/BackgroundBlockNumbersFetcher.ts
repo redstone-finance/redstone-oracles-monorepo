@@ -4,7 +4,7 @@ import { RedstoneCommon } from "@redstone-finance/utils";
 
 export type BackgroundBlockNumbersFetcherOpts = {
   /** [chainId,getBlockNumber] */
-  blockNumbersFetchers: [string, IGetBlockNumber][];
+  blockNumbersFetchers: [number, IGetBlockNumber][];
   timeout: number;
   maxTTL: number;
   cronExpression: string;
