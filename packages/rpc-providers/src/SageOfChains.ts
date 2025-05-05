@@ -57,13 +57,10 @@ export class SageOfChains {
 
   getProvidersForRequiredChainIds(
     requiredChainIds: number[]
-  ): [string, Provider][] {
+  ): [number, Provider][] {
     return requiredChainIds.map((chainId) => {
-      const chainTypeAndId = getChainKey(
-        Number(chainId),
-        ChainTypeEnum.enum.evm
-      );
-      return [chainTypeAndId, this.getProviderByChainTypeAndId(chainTypeAndId)];
+      const chainTypeAndId = getChainKey(chainId, ChainTypeEnum.enum.evm);
+      return [chainId, this.getProviderByChainTypeAndId(chainTypeAndId)];
     });
   }
 
@@ -80,7 +77,7 @@ export class SageOfChains {
             provider,
             timeout
           );
-          return [chainTypeAndId, blockNumber];
+          return [chainConfig.chainId, blockNumber];
         }
       )
     );
