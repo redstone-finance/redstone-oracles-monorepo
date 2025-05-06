@@ -2906,10 +2906,12 @@
     },
     "HYPE": {
       "source": [
+        "bingx-usdt",
         "bitget-usdt",
         "gate-usdt",
         "hyperliquid-api-fetcher",
         "kucoin-usdt",
+        "mexc-usdt",
         "xt"
       ],
       "denomination": "USDC",
@@ -6949,6 +6951,15 @@
     },
     "GM_SEI_WETH_USDC": {
       "source": ["arbitrum-evm-fetcher-gmx"],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "UBTC": {
+      "source": [
+        "hyperliquid-api-fetcher",
+        "hyperswap-hyperevm-whype-3000",
+        "laminar-hyperevm-whype-3000"
+      ],
       "denomination": "USD",
       "rateFeed": false
     }
