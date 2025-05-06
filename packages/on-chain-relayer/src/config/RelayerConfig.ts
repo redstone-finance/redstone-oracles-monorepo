@@ -67,4 +67,5 @@ export type OnChainRelayerEnv = {
   includeAdditionalFeedsForGasOptimization: boolean;
   enforceDecimalNumberOfBlocksForFeeHistory?: boolean;
   newestBlockForFeeHistory?: NewestBlockType;
+  isPausedUntil?: Date;
 };
