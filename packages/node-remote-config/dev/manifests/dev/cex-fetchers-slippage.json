@@ -1188,18 +1188,6 @@
     "apxETH/ETH": {
       "source": ["non-usd-based"]
     },
-    "arbJnrLLP": {
-      "source": ["arbitrum-evm-fetcher"]
-    },
-    "arbMzeLLP": {
-      "source": ["arbitrum-evm-fetcher"]
-    },
-    "arbSnrLLP": {
-      "source": ["arbitrum-evm-fetcher"]
-    },
-    "LVL": {
-      "source": ["bitget-usdt", "mexc-usdt", "coingecko"]
-    },
     "CELO/EUR": {
       "source": ["non-usd-based"]
     },

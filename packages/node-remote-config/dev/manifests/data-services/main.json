@@ -1056,26 +1056,6 @@
       "denomination": "WBTC",
       "rateFeed": true
     },
-    "arbJnrLLP": {
-      "source": ["arbitrum-evm-fetcher-level-finance"],
-      "denomination": "USD",
-      "rateFeed": false
-    },
-    "arbMzeLLP": {
-      "source": ["arbitrum-evm-fetcher-level-finance"],
-      "denomination": "USD",
-      "rateFeed": false
-    },
-    "arbSnrLLP": {
-      "source": ["arbitrum-evm-fetcher-level-finance"],
-      "denomination": "USD",
-      "rateFeed": false
-    },
-    "LVL": {
-      "source": ["coingecko"],
-      "denomination": "USD",
-      "rateFeed": false
-    },
     "CELO/EUR": {
       "source": ["non-usd-based"],
       "denomination": "EUR",
