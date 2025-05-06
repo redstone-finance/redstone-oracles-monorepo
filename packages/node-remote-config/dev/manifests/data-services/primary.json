@@ -2313,15 +2313,7 @@
         "ethereum-ethena-usdtb"
       ],
       "denomination": "USD",
-      "rateFeed": true,
-      "valueCapConfig": {
-        "upper": {
-          "value": 1.02
-        },
-        "lower": {
-          "value": 0.98
-        }
-      }
+      "rateFeed": true
     },
     "weETH/ETH_AVS": {
       "source": [
