@@ -642,7 +642,8 @@
       },
       "isAuctionModel": false,
       "twoDimensionalFees": false,
-      "isMainnet": false
+      "isMainnet": false,
+      "disabled": true
     },
     "bounceBit": {
       "name": "BounceBit Mainnet",
