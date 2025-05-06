@@ -111,13 +111,6 @@ abstract contract RedstoneAdapterBase is RedstoneConsumerNumericBase, IRedstoneA
    * @param receivedTimestampMilliseconds Timestamp from a data package
    */
   function validateTimestamp(uint256 receivedTimestampMilliseconds) public view virtual override {
-    // It means that we are in the special view context and we can skip validation of the
-    // timestamp. It can be useful for calling view functions, as they can not modify the contract
-    // state to pass the timestamp validation below
-    if (msg.sender == address(0)) {
-      return;
-    }
-
     uint256 expectedDataPackageTimestamp = getDataTimestampFromLatestUpdate();
     if (receivedTimestampMilliseconds != expectedDataPackageTimestamp) {
       revert DataPackageTimestampMismatch(
