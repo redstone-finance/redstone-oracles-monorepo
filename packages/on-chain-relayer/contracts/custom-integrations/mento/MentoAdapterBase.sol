@@ -247,4 +247,15 @@ abstract contract MentoAdapterBase is RedstoneAdapterBase, Initializable {
     (uint256 medianRate, ) = getSortedOracles().medianRate(tokenAddress);
     return convertMentoValueToRedstoneValue(medianRate);
   }
+
+  function validateTimestamp(uint256 receivedTimestampMilliseconds) public view virtual override {
+    // It means that we are in the special view context and we can skip validation of the
+    // timestamp. It can be useful for calling view functions, as they can not modify the contract
+    // state to pass the timestamp validation below
+    if (msg.sender == address(0)) {
+      return;
+    }
+    super.validateTimestamp(receivedTimestampMilliseconds);
+  }
+
 }
