@@ -457,35 +457,6 @@
       "denomination": "USD",
       "rateFeed": false
     },
-    "arbJnrLLP": {
-      "source": [
-        "arbitrum-evm-fetcher-level-finance"
-      ],
-      "denomination": "USD",
-      "rateFeed": false
-    },
-    "arbMzeLLP": {
-      "source": [
-        "arbitrum-evm-fetcher-level-finance"
-      ],
-      "denomination": "USD",
-      "rateFeed": false
-    },
-    "arbSnrLLP": {
-      "source": [
-        "arbitrum-evm-fetcher-level-finance"
-      ],
-      "denomination": "USD",
-      "rateFeed": false
-    },
-    "LVL": {
-      "source": [
-        "coingecko",
-        "coinmarketcap"
-      ],
-      "denomination": "USD",
-      "rateFeed": false
-    },
     "MAGIC": {
       "source": [
         "binance-usdt",
@@ -1284,7 +1255,6 @@
       "GRAIL",
       "JOE",
       "LINK",
-      "LVL",
       "MAGIC",
       "MOO_GMX",
       "NEAR",
@@ -1315,9 +1285,6 @@
       "YY_WOMBEX_GLP",
       "YY_WOMBEX_USDC.e",
       "YY_WOMBEX_USDT",
-      "arbJnrLLP",
-      "arbMzeLLP",
-      "arbSnrLLP",
       "crvUSD",
       "ezETH",
       "frxETH",
