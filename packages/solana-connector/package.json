@@ -29,7 +29,8 @@
     "ledger-get-public-key": "yarn global:ts-node scripts/ledger/ledger-get-public-key.ts",
     "convert-public-key": "yarn global:ts-node scripts/convert-public-key.ts",
     "transfer-sol": "yarn global:ts-node scripts/transfer-sol.ts",
-    "make-feed-table": "yarn global:ts-node scripts/make-feed-table.ts"
+    "make-feed-table": "yarn global:ts-node scripts/make-feed-table.ts",
+    "show-multi-sig-tx-details": "yarn global:ts-node scripts/ledger/show-multi-sig-tx-details.ts"
   },
   "dependencies": {
     "@coral-xyz/anchor": "0.30.1",

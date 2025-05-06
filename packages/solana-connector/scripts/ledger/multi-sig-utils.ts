@@ -102,6 +102,13 @@ export class SquadsMultisig {
     });
   }
 
+  async txInfo(txIdx: number) {
+    return await multisig.accounts.VaultTransaction.fromAccountAddress(
+      this.connection,
+      this.txPda(txIdx)
+    );
+  }
+
   vaultPda() {
     const [vaultPda] = multisig.getVaultPda({
       multisigPda: this.multisigPda,
@@ -109,6 +116,15 @@ export class SquadsMultisig {
     });
 
     return vaultPda;
+  }
+
+  txPda(txIdx: number) {
+    const [transactionPda] = multisig.getTransactionPda({
+      multisigPda: this.multisigPda,
+      index: BigInt(txIdx),
+    });
+
+    return transactionPda;
   }
 
   multisigAddress() {
