@@ -2353,6 +2353,11 @@
       "denomination": "USD",
       "rateFeed": true
     },
+    "sUSDS_FUNDAMENTAL": {
+      "source": ["ethereum-evm-fetcher-savings-usds"],
+      "denomination": "USDS",
+      "rateFeed": true
+    },
     "frxUSD": {
       "source": [
         "curve-ethereum-susds_fundamental/usd",
