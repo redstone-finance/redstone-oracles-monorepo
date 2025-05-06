@@ -245,6 +245,14 @@ export const readManifestAndEnv = async () => {
       "NEWEST_BLOCK_FOR_FEE_HISTORY",
       NewestBlockTypeEnum.optional()
     ),
+    isPausedUntil: RedstoneCommon.getFromEnv(
+      "IS_PAUSED_UNTIL",
+      z
+        .string()
+        .datetime({ offset: true }) // timezone offset
+        .transform((isoString) => new Date(isoString))
+        .optional()
+    ),
   };
 
   return { manifest, env };
