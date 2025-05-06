@@ -8434,6 +8434,8 @@ __metadata:
   dependencies:
     "@redstone-finance/cache-service": "workspace:*"
     "@redstone-finance/evm-connector": "workspace:*"
+    "@redstone-finance/internal-utils": "workspace:*"
+    "@redstone-finance/monitoring-manifests": "workspace:*"
     "@redstone-finance/node-commons": "workspace:*"
     "@redstone-finance/on-chain-relayer": "workspace:*"
     "@redstone-finance/oracle-node": "workspace:*"
@@ -8444,6 +8446,7 @@ __metadata:
     axios: "npm:^1.8.4"
     axios-retry: "npm:^4.5.0"
     ethers: "npm:^5.7.2"
+    zod: "npm:^3.22.4"
   languageName: unknown
   linkType: soft
 
