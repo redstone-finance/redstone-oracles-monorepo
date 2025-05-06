@@ -1837,10 +1837,12 @@
     },
     "HYPE": {
       "source": [
+        "bingx-usdt",
         "bitget-usdt",
         "gate-usdt",
         "hyperliquid-api-fetcher",
         "kucoin-usdt",
+        "mexc-usdt",
         "xt"
       ],
       "denomination": "USDC",
@@ -2479,6 +2481,15 @@
       "source": ["ethereum-evm-fetcher-turtle-tac"],
       "denomination": "BTC",
       "rateFeed": true
+    },
+    "UBTC": {
+      "source": [
+        "hyperliquid-api-fetcher",
+        "hyperswap-hyperevm-whype-3000",
+        "laminar-hyperevm-whype-3000"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
     }
   },
   "multiPointPackages": {
