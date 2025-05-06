@@ -1504,7 +1504,8 @@
         "rated-network"
       ],
       "denomination": "ETH",
-      "rateFeed": false
+      "rateFeed": false,
+      "minValidSourcesPercentage": 100
     },
     "ETH_ELE": {
       "source": [
@@ -1512,7 +1513,8 @@
         "flashbots-data-api"
       ],
       "denomination": "ETH",
-      "rateFeed": false
+      "rateFeed": false,
+      "minValidSourcesPercentage": 100
     },
     "SEI": {
       "source": [
