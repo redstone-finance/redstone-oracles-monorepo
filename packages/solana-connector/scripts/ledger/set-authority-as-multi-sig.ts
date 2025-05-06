@@ -212,6 +212,12 @@ async function handleApprove(
   const member = await signerPublicKey(signer);
   const ix = await squad.approve(member, transactionIdx);
 
+  const txInfo = await squad.txInfo(Number(transactionIdx));
+
+  console.log(`Transaction to apporve:`, txInfo);
+  console.log(`Account Keys:`, txInfo.message.accountKeys);
+  console.log(`Instructions: `, txInfo.message.instructions);
+
   const tx = await getTx(connection, ix, member);
   await sign(signer, tx);
   return tx;
