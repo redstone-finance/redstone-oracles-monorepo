@@ -2277,27 +2277,11 @@
     },
     "LBTC_FUNDAMENTAL": {
       "source": ["lbtc-indexer-fetcher"],
-      "valueCapConfig": {
-        "upper": {
-          "value": 1
-        },
-        "lower": {
-          "value": 1
-        }
-      },
       "denomination": "BTC",
       "rateFeed": true
     },
     "mBTC_POR": {
       "source": ["mbtc-indexer-fetcher"],
-      "valueCapConfig": {
-        "upper": {
-          "value": 1
-        },
-        "lower": {
-          "value": 1
-        }
-      },
       "denomination": "BTC",
       "rateFeed": true
     },
