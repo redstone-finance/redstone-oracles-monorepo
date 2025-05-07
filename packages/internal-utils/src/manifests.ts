@@ -12,6 +12,3 @@ export type Manifests = Record<
     version?: number;
   }
 >;
-
-export const DEFAULT_ALL_RELAYER_MANIFESTS_URL =
-  "https://p6s64pjzub.execute-api.eu-west-1.amazonaws.com/dev/execute";
