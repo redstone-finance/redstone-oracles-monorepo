@@ -61,7 +61,7 @@ export abstract class ParallelExecutor extends Executor {
             didFinish ||= this.handleResults(
               successfulResults,
               errorResults,
-              promises,
+              promises.length,
               resolve,
               reject
             );
@@ -73,7 +73,7 @@ export abstract class ParallelExecutor extends Executor {
   private handleResults<R>(
     successfulResults: R[],
     errorResults: unknown[],
-    settlements: Promise<R>[],
+    totalLength: number,
     resolve: (value: PromiseLike<R> | R) => void,
     reject: (reason?: unknown) => void
   ) {
@@ -81,7 +81,7 @@ export abstract class ParallelExecutor extends Executor {
       const isEnough = this.verifySettlements(
         successfulResults,
         errorResults,
-        settlements.length
+        totalLength
       );
 
       if (isEnough) {

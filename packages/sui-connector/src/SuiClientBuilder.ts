@@ -16,7 +16,7 @@ export class SuiClientBuilder {
     clients: SuiClient[],
     config = {
       singleExecutionTimeoutMs: SINGLE_EXECUTION_TIMEOUT_MS,
-      allExecutionTimeoutMs: ALL_EXECUTIONS_TIMEOUT_MS,
+      allExecutionsTimeoutMs: ALL_EXECUTIONS_TIMEOUT_MS,
     }
   ) {
     return MultiExecutor.create(

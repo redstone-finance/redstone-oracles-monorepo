@@ -120,12 +120,11 @@ export function stringifyError(e: unknown, noStack = false): string {
       );
     } else if (error instanceof Error) {
       const causeString = error.cause
-        ? ` cause: ${stringifyError(error.cause, noStack)}`
+        ? `cause: ${stringifyError(error.cause, noStack)}`
         : "";
-      if (noStack) {
-        return `${error.message} ${causeString}`;
-      }
-      return `${error.message} ${showStack(error.stack)} ${causeString}`;
+      return [error.message, noStack ? "" : showStack(error.stack), causeString]
+        .filter((str) => str.length > 0)
+        .join(" ");
     } else if (typeof error.toJSON === "function") {
       return JSON.stringify(error.toJSON());
     } else {
