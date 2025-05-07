@@ -11,7 +11,8 @@ export interface IRedstoneContractAdapter {
   ): Promise<ContractData>;
 
   writePricesFromPayloadToContract(
-    paramsProvider: ContractParamsProvider
+    paramsProvider: ContractParamsProvider,
+    canOmitFallbackAfterFailing?: boolean
   ): Promise<unknown>;
 
   getSignerAddress(): Promise<string | undefined>;
