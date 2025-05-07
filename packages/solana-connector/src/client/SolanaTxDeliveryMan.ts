@@ -1,8 +1,4 @@
-import {
-  loggerFactory,
-  MultiExecutor,
-  RedstoneCommon,
-} from "@redstone-finance/utils";
+import { loggerFactory, RedstoneCommon } from "@redstone-finance/utils";
 import {
   ComputeBudgetProgram,
   Connection,
@@ -12,17 +8,20 @@ import {
   TransactionSignature,
   VersionedTransaction,
 } from "@solana/web3.js";
-import { SolanaConfig } from "./config";
-import { AggressiveSolanaGasOracle } from "./gas-oracles/AggressiveSolanaGasOracle";
-import { ISolanaGasOracle } from "./gas-oracles/ISolanaGasOracle";
-import { RegularSolanaGasOracle } from "./gas-oracles/RegularSolanaGasOracle";
-import {
-  ALL_EXECUTIONS_TIMEOUT_MS,
-  SINGLE_EXECUTION_TIMEOUT_MS,
-} from "./SolanaConnectionBuilder";
-import { SolanaRustSdkErrroHandler } from "./SolanaRustSdkErrorHandler";
+import { SolanaConfig } from "../config";
+import { AggressiveSolanaGasOracle } from "../gas-oracles/AggressiveSolanaGasOracle";
+import { ISolanaGasOracle } from "../gas-oracles/ISolanaGasOracle";
+import { RegularSolanaGasOracle } from "../gas-oracles/RegularSolanaGasOracle";
+import { SolanaRustSdkErrroHandler } from "../price_adapter/SolanaRustSdkErrorHandler";
 
 const RETRY_WAIT_TIME_MS = 500;
+const RETRY_CONFIG: Omit<RedstoneCommon.RetryConfig, "fn"> = {
+  maxRetries: 6,
+  waitBetweenMs: RETRY_WAIT_TIME_MS,
+  backOff: {
+    backOffBase: 1.5,
+  },
+};
 
 export type TransactionInstructionsCreator = (inputs: string[]) => Promise<
   {
@@ -45,30 +44,15 @@ export class SolanaTxDeliveryMan {
       : new RegularSolanaGasOracle(connection, config);
   }
 
-  static createMultiTxDeliveryMan(
-    connection: Connection,
-    keypair: Keypair,
-    config: SolanaConfig
-  ) {
-    const multiConnection = MultiExecutor.createForSubInstances(
-      connection,
-      (conn) => conn,
-      {
-        getLatestBlockhash: MultiExecutor.ExecutionMode.AGREEMENT,
-        sendTransaction: MultiExecutor.ExecutionMode.RACE,
-      },
-      {
-        ...MultiExecutor.DEFAULT_CONFIG,
-        singleExecutionTimeoutMs: SINGLE_EXECUTION_TIMEOUT_MS,
-        allExecutionsTimeoutMs: ALL_EXECUTIONS_TIMEOUT_MS,
-      }
-    );
-
-    return new SolanaTxDeliveryMan(multiConnection, keypair, config);
-  }
-
   public getPublicKey() {
     return this.keypair.publicKey;
+  }
+
+  async sendTransactions(
+    txIds: string[],
+    ixCreator: TransactionInstructionsCreator
+  ) {
+    return await this.sendTransactionsWithRetry(txIds, ixCreator);
   }
 
   private async sendTransactionsWithRetry(
@@ -129,13 +113,6 @@ export class SolanaTxDeliveryMan {
     return successfulTxs;
   }
 
-  async sendTransactions(
-    txIds: string[],
-    ixCreator: TransactionInstructionsCreator
-  ) {
-    return await this.sendTransactionsWithRetry(txIds, ixCreator);
-  }
-
   private async wrapWithGas(ix: TransactionInstruction, iteration = 0) {
     const computeUnits = this.config.maxComputeUnits;
     const writableKeys = ix.keys
@@ -171,11 +148,20 @@ export class SolanaTxDeliveryMan {
 
     const message = new TransactionMessage({
       payerKey: this.keypair.publicKey,
-      recentBlockhash: (await this.connection.getLatestBlockhash()).blockhash,
+      recentBlockhash: (await this.getLatestBlockhash()).blockhash,
       instructions,
     }).compileToV0Message();
 
     return new VersionedTransaction(message);
+  }
+
+  private async getLatestBlockhash() {
+    return await RedstoneCommon.retry({
+      fn: () => this.connection.getLatestBlockhash(),
+      fnName: "getLatestBlockhash",
+      logger: (message) => this.logger.info(message),
+      ...RETRY_CONFIG,
+    })();
   }
 
   private async sendAndConfirm(
@@ -213,7 +199,7 @@ export class SolanaTxDeliveryMan {
       Math.ceil(this.config.expectedTxDeliveryTimeMs / RETRY_WAIT_TIME_MS),
       `Could not confirm transaction ${txSignature} for ${id}`,
       RETRY_WAIT_TIME_MS,
-      "SolanaTxDeliveryMan getSignatureStatus"
+      `getSignatureStatus ${txSignature}`
     );
   }
 }
