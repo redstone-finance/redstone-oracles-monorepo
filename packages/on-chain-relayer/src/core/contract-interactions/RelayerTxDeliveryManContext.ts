@@ -3,5 +3,5 @@ import { Tx } from "@redstone-finance/utils";
 
 export type RelayerTxDeliveryManContext = Tx.TxDeliveryManContext & {
   paramsProvider: ContractParamsProvider;
-  shouldOevUseFallbackAfterFailing: boolean;
+  canOmitFallbackAfterFailing?: boolean;
 };

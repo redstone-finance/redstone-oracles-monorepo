@@ -33,7 +33,8 @@ export abstract class EvmContractAdapter<Contract extends RedstoneEvmContract>
   }
 
   async writePricesFromPayloadToContract(
-    paramsProvider: ContractParamsProvider
+    paramsProvider: ContractParamsProvider,
+    canOmitFallbackAfterFailing?: boolean
   ) {
     const metadataTimestamp = Date.now();
     const updateTx = await this.makeUpdateTx(paramsProvider, metadataTimestamp);
@@ -44,6 +45,7 @@ export abstract class EvmContractAdapter<Contract extends RedstoneEvmContract>
           (tx) => tx.data
         ),
       paramsProvider,
+      canOmitFallbackAfterFailing,
     } as RelayerTxDeliveryManContext);
   }
 }
