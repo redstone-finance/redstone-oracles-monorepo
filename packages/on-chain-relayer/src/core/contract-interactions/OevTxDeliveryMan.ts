@@ -21,7 +21,7 @@ export class OevTxDeliveryMan implements Tx.ITxDeliveryMan {
     try {
       await this.updateUsingOevAction(txDeliveryCall, context.paramsProvider);
     } catch (error) {
-      if (context.paramsProvider.shouldOevUseFallbackAfterFailing === false) {
+      if (context.canOmitFallbackAfterFailing) {
         this.logger.log("Skipping as update was optional");
       } else {
         this.logger.info(
