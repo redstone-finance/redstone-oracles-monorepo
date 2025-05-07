@@ -223,6 +223,14 @@ export class LiteSVMConnection extends Connection {
     });
   }
 
+  override getMultipleAccountsInfo(
+    publicKeys: PublicKey[]
+  ): Promise<(AccountInfo<Buffer> | null)[]> {
+    return Promise.all(
+      publicKeys.map((publicKey) => this.getAccountInfo(publicKey))
+    );
+  }
+
   override simulateTransaction(
     transactionOrMessage: VersionedTransaction | Transaction | Message
   ): Promise<RpcResponseAndContext<SimulatedTransactionResponse>> {
