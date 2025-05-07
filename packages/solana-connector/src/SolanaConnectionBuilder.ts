@@ -20,7 +20,7 @@ export class SolanaConnectionBuilder {
     rpcUrls: string[],
     config = {
       singleExecutionTimeoutMs: SINGLE_EXECUTION_TIMEOUT_MS,
-      allExecutionTimeoutMs: ALL_EXECUTIONS_TIMEOUT_MS,
+      allExecutionsTimeoutMs: ALL_EXECUTIONS_TIMEOUT_MS,
     }
   ) {
     const ceilMedianConsensusExecutor =
@@ -40,6 +40,8 @@ export class SolanaConnectionBuilder {
       {
         getBlockHeight: ceilMedianConsensusExecutor,
         getSlot: ceilMedianConsensusExecutor,
+        getLatestBlockhash: MultiExecutor.ExecutionMode.AGREEMENT,
+        sendTransaction: MultiExecutor.ExecutionMode.RACE,
       },
       { ...MultiExecutor.DEFAULT_CONFIG, ...config }
     );

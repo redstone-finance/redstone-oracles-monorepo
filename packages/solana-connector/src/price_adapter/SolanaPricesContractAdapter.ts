@@ -2,10 +2,13 @@ import {
   ContractData,
   ContractParamsProvider,
   IMultiFeedPricesContractAdapter,
+  SplitPayloads,
 } from "@redstone-finance/sdk";
 import { loggerFactory, RedstoneCommon } from "@redstone-finance/utils";
+import { PublicKey } from "@solana/web3.js";
 import { BigNumberish } from "ethers";
-import { SolanaTxDeliveryMan } from "../SolanaTxDeliveryMan";
+import _ from "lodash";
+import { SolanaTxDeliveryMan } from "../client/SolanaTxDeliveryMan";
 import { PriceAdapterContract } from "./PriceAdapterContract";
 
 export class SolanaPricesContractAdapter
@@ -56,7 +59,12 @@ export class SolanaPricesContractAdapter
 
     const txSignatures = await this.txDeliveryMan.sendTransactions(
       paramsProvider.getDataFeedIds(),
-      (feedIds) => this.retryFetch(paramsProvider, feedIds, metadataTimestamp)
+      (feedIds) =>
+        this.fetchTransactionInstructionsWithData(
+          paramsProvider,
+          feedIds,
+          metadataTimestamp
+        )
     );
 
     this.logger.log(
@@ -65,11 +73,15 @@ export class SolanaPricesContractAdapter
     return txSignatures[txSignatures.length - 1];
   }
 
-  private async retryFetch(
+  private async fetchTransactionInstructionsWithData(
     paramsProvider: ContractParamsProvider,
     feedIds: string[],
     metadataTimestamp: number
   ) {
+    if (!this.txDeliveryMan) {
+      throw new Error("Can't write prices, TxDeliveryMan not set");
+    }
+
     this.logger.debug(`Fetching payloads for [${feedIds.toString()}].`);
     const provider = paramsProvider.copyForFeedIds(feedIds);
 
@@ -81,16 +93,44 @@ export class SolanaPricesContractAdapter
       this.logger
     );
 
-    return await Promise.all(
-      Object.entries(payloads).map(async ([feedId, payload]) => ({
-        instruction: await this.contract.writePriceTx(
-          this.txDeliveryMan!.getPublicKey(),
-          feedId,
-          payload
-        ),
-        id: feedId,
-      }))
+    const publicKey = this.txDeliveryMan.getPublicKey();
+    return await this.makeTransactionInstructions(payloads, publicKey, feedIds);
+  }
+
+  private async makeTransactionInstructions(
+    payloads: SplitPayloads<string>,
+    publicKey: PublicKey,
+    feedIds: string[]
+  ) {
+    const payloadEntries = Object.entries(payloads);
+
+    const instructionSettledResults = await Promise.allSettled(
+      payloadEntries.map(([feedId, payload]) =>
+        this.contract.writePriceTx(publicKey, feedId, payload)
+      )
     );
+
+    const transactionInstructions = _.zip(
+      payloadEntries,
+      instructionSettledResults
+    )
+      .map(([payloadEntry, settledPromise]) =>
+        settledPromise?.status === "fulfilled" && payloadEntry?.length
+          ? {
+              instruction: settledPromise.value,
+              id: payloadEntry[0],
+            }
+          : undefined
+      )
+      .filter((i) => i !== undefined);
+
+    if (transactionInstructions.length !== feedIds.length) {
+      this.logger.error(
+        `Failed to write ${feedIds.length - transactionInstructions.length} prices to contract.`
+      );
+    }
+
+    return transactionInstructions;
   }
 
   async readPricesFromContract(

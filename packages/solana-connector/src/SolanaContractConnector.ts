@@ -10,10 +10,10 @@ import {
   SystemProgram,
   Transaction,
 } from "@solana/web3.js";
+import { SolanaTxDeliveryMan } from "./client/SolanaTxDeliveryMan";
 import { DEFAULT_SOLANA_CONFIG } from "./config";
 import { PriceAdapterContract } from "./price_adapter/PriceAdapterContract";
 import { SolanaPricesContractAdapter } from "./price_adapter/SolanaPricesContractAdapter";
-import { SolanaTxDeliveryMan } from "./SolanaTxDeliveryMan";
 
 export class SolanaContractConnector
   implements IContractConnector<IPricesContractAdapter>
@@ -39,11 +39,7 @@ export class SolanaContractConnector
       );
 
       const txDeliveryMan = this.keypair
-        ? SolanaTxDeliveryMan.createMultiTxDeliveryMan(
-            this.connection,
-            this.keypair,
-            this.config
-          )
+        ? new SolanaTxDeliveryMan(this.connection, this.keypair, this.config)
         : undefined;
 
       this.adapter = new SolanaPricesContractAdapter(contract, txDeliveryMan);

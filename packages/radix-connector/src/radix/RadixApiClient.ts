@@ -22,7 +22,7 @@ export class RadixApiClient {
     networkId = NetworkId.Stokenet,
     config = {
       singleExecutionTimeoutMs: SINGLE_EXECUTION_TIMEOUT_MS,
-      allExecutionTimeoutMs: ALL_EXECUTIONS_TIMEOUT_MS,
+      allExecutionsTimeoutMs: ALL_EXECUTIONS_TIMEOUT_MS,
     }
   ): RadixApiClient {
     const ceilMedianConsensusExecutor =
