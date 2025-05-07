@@ -1,7 +1,7 @@
 import {
   SkippableRustSdkError,
   SolanaRustSdkErrroHandler,
-} from "../src/SolanaRustSdkErrorHandler";
+} from "../src/price_adapter/SolanaRustSdkErrorHandler";
 
 function makeInstructionError(code: number) {
   return {
