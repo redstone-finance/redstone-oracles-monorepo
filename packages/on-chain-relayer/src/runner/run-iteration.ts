@@ -1,4 +1,8 @@
-import { loggerFactory, sendHealthcheckPing } from "@redstone-finance/utils";
+import {
+  loggerFactory,
+  RedstoneCommon,
+  sendHealthcheckPing,
+} from "@redstone-finance/utils";
 import _ from "lodash";
 import { isPaused } from "../config/is_paused";
 import { RelayerConfig } from "../config/RelayerConfig";
@@ -41,13 +45,26 @@ export const runIteration = async (
 
   logger.log(message, messages);
 
-  if (iterationArgs.shouldUpdatePrices || relayerConfig.oevAuctionUrl) {
+  if (
+    iterationArgs.shouldUpdatePrices ||
+    shouldForceUpdateInEachIteration(relayerConfig)
+  ) {
     iterationArgs.additionalUpdateMessages?.forEach(({ message, args }) =>
       logger.log(message, args)
     );
 
-    await contractFacade.updatePrices(iterationArgs.args);
+    await contractFacade.updatePrices(
+      iterationArgs.args,
+      !iterationArgs.shouldUpdatePrices
+    );
   }
 
   return iterationArgs.shouldUpdatePrices;
 };
+
+function shouldForceUpdateInEachIteration(relayerConfig: RelayerConfig) {
+  return (
+    RedstoneCommon.isDefined(relayerConfig.oevAuctionUrl) &&
+    relayerConfig.oevAuctionUrl.length
+  );
+}

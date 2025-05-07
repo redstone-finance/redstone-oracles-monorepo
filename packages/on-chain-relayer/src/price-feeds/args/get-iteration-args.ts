@@ -24,8 +24,6 @@ export const getIterationArgs = async (
       blockTag: context.blockTag,
       updateRequestParams,
       dataFeedsToUpdate: relayerConfig.dataFeeds,
-      shouldOevUseFallbackAfterFailing:
-        shouldUpdatePrices && relayerConfig.oevAuctionUrl !== undefined,
     },
   };
 };

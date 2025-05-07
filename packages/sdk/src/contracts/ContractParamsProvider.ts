@@ -29,24 +29,15 @@ export class ContractParamsProvider {
   constructor(
     public readonly requestParams: DataPackagesRequestParams,
     private readonly cache?: DataPackagesResponseCache,
-    private readonly overrideRequestParamsPackagesIds?: string[],
-    public readonly shouldOevUseFallbackAfterFailing?: boolean
+    private readonly overrideRequestParamsPackagesIds?: string[]
   ) {}
 
-  copyForFeedId(feedId: string, shouldOevUseFallbackAfterFailing?: boolean) {
-    return this.copyForFeedIds([feedId], shouldOevUseFallbackAfterFailing);
+  copyForFeedId(feedId: string) {
+    return this.copyForFeedIds([feedId]);
   }
 
-  copyForFeedIds(
-    feedIds: string[],
-    shouldOevUseFallbackAfterFailing?: boolean
-  ) {
-    return new ContractParamsProvider(
-      this.requestParams,
-      this.cache,
-      feedIds,
-      shouldOevUseFallbackAfterFailing
-    );
+  copyForFeedIds(feedIds: string[]) {
+    return new ContractParamsProvider(this.requestParams, this.cache, feedIds);
   }
 
   static hexlifyFeedIds(

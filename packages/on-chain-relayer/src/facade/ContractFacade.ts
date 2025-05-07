@@ -76,15 +76,18 @@ export abstract class ContractFacade {
     ).getUniqueSignerThreshold(blockTag);
   }
 
-  async updatePrices(args: UpdatePricesArgs): Promise<void> {
+  async updatePrices(
+    args: UpdatePricesArgs,
+    canOmitFallbackAfterFailing?: boolean
+  ): Promise<void> {
     const adapter = await this.connector.getAdapter();
 
     const result = await adapter.writePricesFromPayloadToContract(
       this.getContractParamsProvider(
         args.updateRequestParams,
-        args.dataFeedsToUpdate,
-        args.shouldOevUseFallbackAfterFailing
-      )
+        args.dataFeedsToUpdate
+      ),
+      canOmitFallbackAfterFailing
     );
 
     if (typeof result === "string") {
@@ -100,14 +103,8 @@ export abstract class ContractFacade {
 
   getContractParamsProvider(
     requestParams: DataPackagesRequestParams,
-    feedIds?: string[],
-    shouldOevUseFallbackAfterFailing?: boolean
+    feedIds?: string[]
   ): ContractParamsProvider {
-    return new ContractParamsProvider(
-      requestParams,
-      this.cache,
-      feedIds,
-      shouldOevUseFallbackAfterFailing
-    );
+    return new ContractParamsProvider(requestParams, this.cache, feedIds);
   }
 }
