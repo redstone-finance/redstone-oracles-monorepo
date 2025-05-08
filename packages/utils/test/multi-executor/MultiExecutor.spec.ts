@@ -585,17 +585,17 @@ describe("MultiExecutor", () => {
       `Consensus failed: got 1 successful result, needed at least 3; AggregateError: 3 fails, errors: ERROR: 100`
     );
   });
-
-  function makeSut(
-    instances: MockClient[],
-    methodConfig: NestedMethodConfig<MockClient> = {},
-    config: MultiExecutorConfig = DEFAULT_CONFIG
-  ) {
-    instances.forEach((client) => (client.calledArgs = []));
-
-    return MultiExecutor.create(instances, methodConfig, config);
-  }
 });
+
+export function makeSut<T extends MockClient>(
+  instances: T[],
+  methodConfig: NestedMethodConfig<T> = {},
+  config: MultiExecutorConfig = DEFAULT_CONFIG
+) {
+  instances.forEach((client) => (client.calledArgs = []));
+
+  return MultiExecutor.create(instances, methodConfig, config);
+}
 
 class CustomExecutor extends Executor {
   // eslint-disable-next-line @typescript-eslint/class-methods-use-this
