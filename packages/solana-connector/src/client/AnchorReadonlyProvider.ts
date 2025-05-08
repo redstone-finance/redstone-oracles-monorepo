@@ -10,11 +10,14 @@ import {
   TransactionMessage,
   VersionedTransaction,
 } from "@solana/web3.js";
+import { SolanaClient } from "./SolanaClient";
+import { getRecentBlockhash } from "./get-recent-blockhash";
 
 export class AnchorReadonlyProvider implements Provider {
   constructor(
     readonly connection: Connection,
-    readonly accountForSimulations?: PublicKey
+    private readonly client: SolanaClient,
+    private readonly accountForSimulations?: PublicKey
   ) {}
 
   async simulate(
@@ -46,7 +49,11 @@ export class AnchorReadonlyProvider implements Provider {
     if ("version" in tx) {
       return tx;
     }
-    tx.recentBlockhash = (await this.connection.getLatestBlockhash()).blockhash;
+
+    tx.recentBlockhash = await getRecentBlockhash(
+      this.client,
+      "getVersionedTransaction"
+    );
     tx.feePayer = await this.findSomeAccountWithSol();
     const instructions = TransactionMessage.decompile(
       tx.compileMessage()

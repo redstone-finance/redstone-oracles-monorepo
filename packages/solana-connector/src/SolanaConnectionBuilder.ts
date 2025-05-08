@@ -12,6 +12,12 @@ export const SINGLE_EXECUTION_TIMEOUT_MS = 7_000;
 export const ALL_EXECUTIONS_TIMEOUT_MS = 30_000;
 export const BLOCK_NUMBER_EXECUTION_TIMEOUT_MS = 1_500;
 
+export const ceilMedianConsensusExecutor =
+  new MultiExecutor.CeilMedianConsensusExecutor(
+    MultiExecutor.DEFAULT_CONFIG.consensusQuorumRatio,
+    BLOCK_NUMBER_EXECUTION_TIMEOUT_MS
+  );
+
 export class SolanaConnectionBuilder {
   private cluster!: Cluster;
   private rpcUrls?: string[];
@@ -23,18 +29,12 @@ export class SolanaConnectionBuilder {
       allExecutionsTimeoutMs: ALL_EXECUTIONS_TIMEOUT_MS,
     }
   ) {
-    const ceilMedianConsensusExecutor =
-      new MultiExecutor.CeilMedianConsensusExecutor(
-        MultiExecutor.DEFAULT_CONFIG.consensusQuorumRatio,
-        BLOCK_NUMBER_EXECUTION_TIMEOUT_MS
-      );
-
     return MultiExecutor.create(
       rpcUrls.map(
         (url) =>
           new Connection(url, {
             commitment: "confirmed",
-            wsEndpoint: "",
+            wsEndpoint: undefined,
           })
       ),
       {

@@ -11,7 +11,7 @@ export class MockClient {
   public that: MockClient;
 
   constructor(
-    protected ident: number,
+    public ident: number,
     protected execTime: number,
     protected isFailing: boolean = false
   ) {
@@ -52,7 +52,7 @@ export class MockClient {
     return result;
   }
 
-  private async invoke(arg: OneOfTypes) {
+  protected async invoke(arg: OneOfTypes) {
     this.calledArgs.push(arg);
     if (this.execTime) {
       await RedstoneCommon.sleep(this.execTime);
