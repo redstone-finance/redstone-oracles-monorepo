@@ -4,7 +4,8 @@ import { ParallelExecutor } from "./ParallelExecutor";
 export class AgreementExecutor extends ParallelExecutor {
   constructor(
     private quorumNumber: number,
-    timeoutMs?: number
+    timeoutMs: number | undefined,
+    protected shouldResolveUnagreedToUndefined = false
   ) {
     super(timeoutMs);
   }
@@ -20,9 +21,15 @@ export class AgreementExecutor extends ParallelExecutor {
     }
 
     if (modes.length !== 1) {
-      this.logger.warn(
-        `Multiple modes found (were the returning promises sync?): ${stringify(modes)}`
+      (this.shouldResolveUnagreedToUndefined
+        ? this.logger.info
+        : this.logger.warn)(
+        `Multiple modes found (shouldResolveUnagreedToUndefined = ${this.shouldResolveUnagreedToUndefined}; were the returning promises sync?): ${stringify(modes)}`
       );
+
+      if (this.shouldResolveUnagreedToUndefined) {
+        return undefined as R;
+      }
     }
 
     return modes[0].item;
@@ -52,6 +59,10 @@ export class AgreementExecutor extends ParallelExecutor {
     this.logger.debug("Successful results:", successfulResults);
 
     const failedCount = errorResults.length;
+    if (this.shouldResolveUnagreedToUndefined) {
+      return true; // Will be resolved to undefined
+    }
+
     throw new Error(
       `Agreement failed: got max ${maxCount} equal result${getS(maxCount)}, ` +
         `needed at least ${quorum}` +
