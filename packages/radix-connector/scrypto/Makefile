@@ -33,7 +33,7 @@ TIMESTAMP=$(shell cat $(DATA_DIR)/data/$(DATA_NAME).time | node-jq -r ".timestam
 
 prepare:
 	@rustup target add wasm32-unknown-unknown
-	cargo install wasm-bindgen-cli wasm-pack
+	cargo install wasm-bindgen-cli wasm-pack --locked
 
 build: $(foreach contract, $(CONTRACTS), build-$(contract))
 
