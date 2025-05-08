@@ -88,6 +88,9 @@
     },
     "sUSDe": {
       "priceFeedAddress": "0x3401DAF2b1f150Ef0c709Cc0283b5F2e55c3DF29"
+    },
+    "USD1": {
+      "priceFeedAddress": "0x6A1c87d11dDe3D1d52c24f8EC59B91019f14170D"
     }
   }
 }

@@ -86,6 +86,13 @@
         "deviationPercentage": 0.5,
         "timeSinceLastUpdateInMilliseconds": 86400000
       }
+    },
+    "wstETH/stETH": {
+      "priceFeedAddress": "0xC3346631E0A9720582fB9CAbdBEA22BC2F57741b",
+      "updateTriggersOverrides": {
+        "deviationPercentage": 0.5,
+        "timeSinceLastUpdateInMilliseconds": 86400000
+      }
     }
   }
 }
