@@ -6,14 +6,14 @@ import {
   AllEqualConsensusExecutor,
   MedianConsensusExecutor,
 } from "./ConsensusExecutor";
-import { AsyncFn, Executor } from "./Executor";
-import { FallbackExecutor } from "./FallbackExecutor";
-import { RaceExecutor } from "./RaceExecutor";
 import {
   ExecutionMode,
   MultiExecutorConfig,
   NestedMethodConfig,
 } from "./create";
+import { AsyncFn, Executor } from "./Executor";
+import { FallbackExecutor } from "./FallbackExecutor";
+import { RaceExecutor } from "./RaceExecutor";
 
 export class MultiExecutorFactory<T extends object> {
   private logger = loggerFactory("multi-executor-proxy");

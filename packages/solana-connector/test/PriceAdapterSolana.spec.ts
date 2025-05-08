@@ -1,6 +1,8 @@
 import {
+  AnchorReadonlyProvider,
   DEFAULT_SOLANA_CONFIG,
   PriceAdapterContract,
+  SolanaClient,
   SolanaPricesContractAdapter,
   SolanaTxDeliveryMan,
 } from "../src";
@@ -12,18 +14,24 @@ function getSolanaPricesContractAdapter(trusted: "trusted" | "untrusted") {
     setUpEnv();
   const signer = trusted === "trusted" ? trustedSigner : untrustedSigner;
 
+  const client = new SolanaClient(connection);
   const contractAdapter = new PriceAdapterContract(
-    connection,
     programId.toBase58(),
-    signer.publicKey
+    new AnchorReadonlyProvider(connection, client, signer.publicKey),
+    client
   );
 
   const priceAdapter = new SolanaPricesContractAdapter(
     contractAdapter,
-    new SolanaTxDeliveryMan(connection, signer, {
-      ...DEFAULT_SOLANA_CONFIG,
-      useAggressiveGasOracle: false,
-    })
+    new SolanaTxDeliveryMan(
+      connection,
+      signer,
+      {
+        ...DEFAULT_SOLANA_CONFIG,
+        useAggressiveGasOracle: false,
+      },
+      client
+    )
   );
 
   return {
