@@ -1,4 +1,4 @@
-import { NonEvmChainType } from "@redstone-finance/chain-configs";
+import { ChainType, NonEvmChainType } from "@redstone-finance/chain-configs";
 import { z } from "zod";
 import {
   AdapterType,
@@ -42,4 +42,11 @@ export function getChainType(adapterType?: AdapterType) {
 
 export function getNonEvmNetworkName(adapterType: NonEvmAdapterType) {
   return adapterType.replace(`-${MULTI_FEED}`, "") as NonEvmChainType;
+}
+
+export function getAdapterType(chainType: ChainType) {
+  if (chainType === "evm") {
+    return "multi-feed";
+  }
+  return chainType.concat(`-${MULTI_FEED}`) as AdapterType;
 }
