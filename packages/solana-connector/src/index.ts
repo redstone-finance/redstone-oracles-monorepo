@@ -1,4 +1,5 @@
 export * from "./client/AnchorReadonlyProvider";
+export * from "./client/get-recent-blockhash";
 export * from "./client/SolanaClient";
 export * from "./client/SolanaTxDeliveryMan";
 export * from "./config";
