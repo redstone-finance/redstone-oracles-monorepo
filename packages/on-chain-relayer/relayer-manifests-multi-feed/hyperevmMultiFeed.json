@@ -82,6 +82,9 @@
     },
     "sUSDe": {
       "priceFeedAddress": "0x243507C8C114618d7C8AD94b51118dB7b4e32ECe"
+    },
+    "UBTC": {
+      "priceFeedAddress": "0x7d05cd5159F38694A7D4dBf58957146a63c8Ad5A"
     }
   }
 }
