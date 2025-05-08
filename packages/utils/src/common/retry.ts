@@ -63,7 +63,7 @@ export function retry<T extends (...args: any[]) => Promise<unknown>>(
 }
 
 export const waitForSuccess = async (
-  cond: () => Promise<boolean>,
+  cond: (iterationIndex?: number) => Promise<boolean>,
   count: number,
   errorMessage: string,
   sleepTimeMs = 5000,
@@ -71,9 +71,9 @@ export const waitForSuccess = async (
 ) => {
   const logPrefix = description ? `[${description}] ` : "";
   let waitCounter = 0;
-  while (!(await cond())) {
+  while (!(await cond(waitCounter))) {
     if (++waitCounter < count) {
-      logger.info(`${logPrefix}Waiting ${sleepTimeMs} [ms]...`);
+      logger.debug(`${logPrefix}Waiting ${sleepTimeMs} [ms]...`);
       await sleep(sleepTimeMs);
     } else {
       throw new Error(errorMessage);
