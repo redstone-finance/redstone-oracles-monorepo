@@ -13,15 +13,8 @@ import { AggressiveSolanaGasOracle } from "../gas-oracles/AggressiveSolanaGasOra
 import { ISolanaGasOracle } from "../gas-oracles/ISolanaGasOracle";
 import { RegularSolanaGasOracle } from "../gas-oracles/RegularSolanaGasOracle";
 import { SolanaRustSdkErrroHandler } from "../price_adapter/SolanaRustSdkErrorHandler";
-
-const RETRY_WAIT_TIME_MS = 500;
-const RETRY_CONFIG: Omit<RedstoneCommon.RetryConfig, "fn"> = {
-  maxRetries: 6,
-  waitBetweenMs: RETRY_WAIT_TIME_MS,
-  backOff: {
-    backOffBase: 1.5,
-  },
-};
+import { SOLANA_SLOT_TIME_INTERVAL_MS, SolanaClient } from "./SolanaClient";
+import { getRecentBlockhash } from "./get-recent-blockhash";
 
 export type TransactionInstructionsCreator = (inputs: string[]) => Promise<
   {
@@ -37,7 +30,8 @@ export class SolanaTxDeliveryMan {
   constructor(
     private readonly connection: Connection,
     private readonly keypair: Keypair,
-    private readonly config: SolanaConfig
+    private readonly config: SolanaConfig,
+    private readonly client: SolanaClient
   ) {
     this.gasOracle = config.useAggressiveGasOracle
       ? new AggressiveSolanaGasOracle(connection, config)
@@ -145,23 +139,18 @@ export class SolanaTxDeliveryMan {
         `Additional cost of transaction: ${computeUnits * priorityFeeUnitPriceCostInMicroLamports} microLamports`
       );
     }
+    const recentBlockhash = await getRecentBlockhash(
+      this.client,
+      "wrapWithGas"
+    );
 
     const message = new TransactionMessage({
       payerKey: this.keypair.publicKey,
-      recentBlockhash: (await this.getLatestBlockhash()).blockhash,
+      recentBlockhash,
       instructions,
     }).compileToV0Message();
 
     return new VersionedTransaction(message);
-  }
-
-  private async getLatestBlockhash() {
-    return await RedstoneCommon.retry({
-      fn: () => this.connection.getLatestBlockhash(),
-      fnName: "getLatestBlockhash",
-      logger: (message) => this.logger.info(message),
-      ...RETRY_CONFIG,
-    })();
   }
 
   private async sendAndConfirm(
@@ -184,21 +173,21 @@ export class SolanaTxDeliveryMan {
   private async waitForTransaction(txSignature: string, id: string) {
     await RedstoneCommon.waitForSuccess(
       async () => {
-        const result = await this.connection.getSignatureStatus(txSignature);
-        if (result.value !== null && result.value.err !== null) {
-          if (SolanaRustSdkErrroHandler.canSkipError(result.value.err)) {
+        const result = await this.client.getSignatureStatus(txSignature);
+        if (result.error) {
+          if (SolanaRustSdkErrroHandler.canSkipError(result.error)) {
             return true;
           }
-          throw new Error(RedstoneCommon.stringify(result.value.err));
+          throw new Error(RedstoneCommon.stringify(result.error));
         }
 
-        const status = result.value?.confirmationStatus;
-
-        return status === "confirmed" || status == "finalized";
+        return result.isFinished;
       },
-      Math.ceil(this.config.expectedTxDeliveryTimeMs / RETRY_WAIT_TIME_MS),
+      Math.floor(
+        this.config.expectedTxDeliveryTimeMs / SOLANA_SLOT_TIME_INTERVAL_MS
+      ),
       `Could not confirm transaction ${txSignature} for ${id}`,
-      RETRY_WAIT_TIME_MS,
+      SOLANA_SLOT_TIME_INTERVAL_MS,
       `getSignatureStatus ${txSignature}`
     );
   }
