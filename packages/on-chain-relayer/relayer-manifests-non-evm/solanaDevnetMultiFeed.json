@@ -12,6 +12,7 @@
   "dataServiceId": "redstone-primary-prod",
   "priceFeeds": {
     "ETH": {},
-    "BTC": {}
+    "BTC": {},
+    "sUSDS_FUNDAMENTAL": {}
   }
 }
