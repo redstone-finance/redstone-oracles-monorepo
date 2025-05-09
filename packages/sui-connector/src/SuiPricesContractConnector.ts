@@ -22,13 +22,11 @@ export class SuiPricesContractConnector
   }
 
   override getAdapter(): Promise<SuiPricesContractAdapter> {
-    if (!this.adapter) {
-      this.adapter = new SuiPricesContractAdapter(
-        this.client,
-        this.config,
-        this.getTxDeliveryMan()
-      );
-    }
+    this.adapter ??= new SuiPricesContractAdapter(
+      this.client,
+      this.config,
+      this.getTxDeliveryMan()
+    );
 
     return Promise.resolve(this.adapter);
   }

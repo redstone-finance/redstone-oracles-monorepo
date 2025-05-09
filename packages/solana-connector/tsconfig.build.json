@@ -13,6 +13,9 @@
       "path": "../chain-configs/tsconfig.build.json"
     },
     {
+      "path": "../utils/tsconfig.build.json"
+    },
+    {
       "path": "../sdk/tsconfig.build.json"
     }
   ]

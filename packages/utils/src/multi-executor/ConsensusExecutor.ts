@@ -4,9 +4,9 @@ import { getS, stringifyError } from "../common";
 import { getMedian, getMedianOfBigNumbers } from "../math";
 import { ParallelExecutor } from "./ParallelExecutor";
 
-export abstract class ConsensusExecutor extends ParallelExecutor {
+export abstract class ConsensusExecutor<R> extends ParallelExecutor<R> {
   constructor(
-    private quorumRatio: number,
+    private readonly quorumRatio: number,
     timeoutMs?: number
   ) {
     super(timeoutMs);
@@ -42,8 +42,8 @@ export abstract class ConsensusExecutor extends ParallelExecutor {
   }
 }
 
-export class AllEqualConsensusExecutor extends ConsensusExecutor {
-  override aggregate<R>(results: R[]): R {
+export class AllEqualConsensusExecutor<R> extends ConsensusExecutor<R> {
+  override aggregate(results: R[]): R {
     const unique = _.uniqWith(results, (left, right) => _.isEqual(left, right));
     if (unique.length > 1) {
       throw new Error(
@@ -55,8 +55,8 @@ export class AllEqualConsensusExecutor extends ConsensusExecutor {
   }
 }
 
-export class MedianConsensusExecutor extends ConsensusExecutor {
-  override aggregate<R>(results: R[]): R {
+export class MedianConsensusExecutor<R> extends ConsensusExecutor<R> {
+  override aggregate(results: R[]): R {
     return MedianConsensusExecutor.getMedian(results);
   }
 
