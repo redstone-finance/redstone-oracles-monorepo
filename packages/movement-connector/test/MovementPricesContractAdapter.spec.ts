@@ -128,7 +128,9 @@ describe("MovementPricesContractAdapter", () => {
       });
 
       // this would fail if ETH flipped BTC
-      expect(result[0] < result[1]).toBeTruthy();
+      expect(
+        BigInt(String(result[0])) < BigInt(String(result[1]))
+      ).toBeTruthy();
     });
   });
 
