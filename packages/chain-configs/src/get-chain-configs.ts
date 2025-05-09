@@ -77,6 +77,10 @@ export function getChainKey(chainId: number, chainType: ChainType) {
   return `${chainType}/${chainId}`;
 }
 
+export function getChainIdFromChainKey(chainTypeAndId: string) {
+  return chainTypeAndId.split("/")[1];
+}
+
 function groupChainConfigsByIdAndType(
   chainConfigs: ChainConfigs
 ): ChainConfigsByIdAndType {
