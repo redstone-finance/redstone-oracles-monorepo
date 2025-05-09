@@ -1,16 +1,16 @@
 import { getS, stringify, stringifyError } from "../common";
 import { ParallelExecutor } from "./ParallelExecutor";
 
-export class AgreementExecutor extends ParallelExecutor {
+export class AgreementExecutor<R> extends ParallelExecutor<R> {
   constructor(
-    private quorumNumber: number,
+    private readonly quorumNumber: number,
     timeoutMs: number | undefined,
     protected shouldResolveUnagreedToUndefined = false
   ) {
     super(timeoutMs);
   }
 
-  protected override aggregate<R>(results: R[]): R {
+  public override aggregate(results: R[]): R {
     const modes = ParallelExecutor.getModes(results);
     this.logger.debug(`Found modes: ${stringify(modes)}`);
 
@@ -35,7 +35,7 @@ export class AgreementExecutor extends ParallelExecutor {
     return modes[0].item;
   }
 
-  protected verifySettlements<R>(
+  public verifySettlements(
     successfulResults: R[],
     errorResults: unknown[],
     totalLength: number
