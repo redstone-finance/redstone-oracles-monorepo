@@ -2,12 +2,12 @@ import _ from "lodash";
 import { getS } from "../common";
 import { AsyncFn, Executor } from "./Executor";
 
-export class RaceExecutor extends Executor {
-  constructor(private shouldFailWhenFastestFails: boolean = false) {
+export class RaceExecutor<R> extends Executor<R> {
+  constructor(private readonly shouldFailWhenFastestFails: boolean = false) {
     super();
   }
 
-  override async execute<R>(functions: AsyncFn<R>[]): Promise<R> {
+  override async execute(functions: AsyncFn<R>[]): Promise<R> {
     const date = Date.now();
     const indexedPromises = Executor.getPromises(functions).map(
       (promise, index) => promise.then((result) => ({ index, result }))
