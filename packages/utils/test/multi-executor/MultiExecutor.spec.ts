@@ -597,9 +597,9 @@ export function makeSut<T extends MockClient>(
   return MultiExecutor.create(instances, methodConfig, config);
 }
 
-class CustomExecutor extends Executor {
+class CustomExecutor<R> extends Executor<R> {
   // eslint-disable-next-line @typescript-eslint/class-methods-use-this
-  async execute<R>(promiseCreators: AsyncFn<R>[]): Promise<R> {
+  async execute(promiseCreators: AsyncFn<R>[]): Promise<R> {
     let result = undefined;
     for (const promiseCreator of promiseCreators) {
       try {
