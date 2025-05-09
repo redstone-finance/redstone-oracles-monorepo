@@ -13,15 +13,16 @@ import {
 } from "./create";
 import { AsyncFn, Executor } from "./Executor";
 import { FallbackExecutor } from "./FallbackExecutor";
+import { MultiAgreementExecutor } from "./MultiAgreementExecutor";
 import { RaceExecutor } from "./RaceExecutor";
 
 export class MultiExecutorFactory<T extends object> {
-  private logger = loggerFactory("multi-executor-proxy");
+  private readonly logger = loggerFactory("multi-executor-proxy");
 
   constructor(
-    private instances: T[],
-    private methodConfig: NestedMethodConfig<T>,
-    private config: MultiExecutorConfig
+    private readonly instances: T[],
+    private readonly methodConfig: NestedMethodConfig<T>,
+    private readonly config: MultiExecutorConfig
   ) {}
 
   private getMethodMode(methodName: keyof T) {
@@ -41,31 +42,42 @@ export class MultiExecutorFactory<T extends object> {
     );
   }
 
-  private getExecutor(mode: ExecutionMode | Executor): Executor {
+  private getExecutor<R>(mode: ExecutionMode | Executor<R>): Executor<R> {
     if (mode instanceof Executor) {
       return mode;
     }
 
     switch (mode) {
       case ExecutionMode.RACE:
-        return new RaceExecutor();
+        return new RaceExecutor<R>();
       case ExecutionMode.FALLBACK:
         return new FallbackExecutor(this.config.singleExecutionTimeoutMs);
       case ExecutionMode.CONSENSUS_MEDIAN:
-        return new MedianConsensusExecutor(
+        return new MedianConsensusExecutor<R>(
           this.config.consensusQuorumRatio,
           this.config.singleExecutionTimeoutMs
         );
       case ExecutionMode.CONSENSUS_ALL_EQUAL:
-        return new AllEqualConsensusExecutor(
+        return new AllEqualConsensusExecutor<R>(
           this.config.consensusQuorumRatio,
           this.config.singleExecutionTimeoutMs
         );
       case ExecutionMode.AGREEMENT:
-        return new AgreementExecutor(
+        return new AgreementExecutor<R>(
           this.config.agreementQuorumNumber,
           this.config.singleExecutionTimeoutMs
         );
+      case ExecutionMode.MULTI_AGREEMENT:
+        // in this case we now R is an array
+        return new MultiAgreementExecutor<unknown[]>(
+          this.config.agreementQuorumNumber,
+          this.config.singleExecutionTimeoutMs,
+          this.config.multiAgreementShouldResolveUnagreedToUndefined
+        ) as unknown as Executor<R>;
+      default:
+        return ((_: never) => {
+          throw new Error("impossible");
+        })(mode);
     }
   }
 
@@ -120,7 +132,7 @@ export class MultiExecutorFactory<T extends object> {
     });
   }
 
-  private async performExecuting(key: keyof T, promises: AsyncFn<unknown>[]) {
+  private async performExecuting<R>(key: keyof T, promises: AsyncFn<R>[]) {
     const mode = this.getMethodMode(key);
     this.logger.debug(
       `[${stringify(key)}] Executing ${promises.length} promise${getS(promises.length)}` +
@@ -130,7 +142,7 @@ export class MultiExecutorFactory<T extends object> {
           : "")
     );
 
-    const result = this.getExecutor(mode).execute(promises);
+    const result = this.getExecutor<R>(mode).execute(promises);
     const value = await timeoutOrResult(
       result,
       this.config.allExecutionsTimeoutMs
