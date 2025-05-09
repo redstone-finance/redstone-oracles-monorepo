@@ -21,6 +21,16 @@ const createMockLogger = () => {
 describe("Logger Sanitization Logic", () => {
   describe("sanitizeValue", () => {
     test("should sanitize HTTPS URLs in strings", () => {
+      const url =
+        '{"urls":["https://api.example.com/v1/data?key=secret123","http://api.example.com/v1/data?key=backup456"]}';
+      const sanitized = sanitizeValue(url) as string;
+      expect(sanitized).not.toContain("secret123");
+      expect(sanitized).toBe(
+        '{"urls":["https://api.example.com/...t123","http://api.example.com/...p456"]}'
+      );
+    });
+
+    test("should sanitize HTTPS URLs in strings", () => {
       const url = "API call to https://api.example.com/v1/data?key=secret123";
       const sanitized = sanitizeValue(url) as string;
       expect(sanitized).not.toContain("secret123");
