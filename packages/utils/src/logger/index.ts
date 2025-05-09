@@ -133,7 +133,7 @@ export function sanitizeValue<T>(value: T): T {
 
 export function sanitizeLogMessage(message: string): string {
   // Regex to find HTTP, HTTPS, and WSS URLs in a log message
-  const urlRegex = /(https?|wss):\/\/[^\s]+/g;
+  const urlRegex = /(https?|wss):\/\/[A-Za-z0-9\-._~:/?#[\]@!$&'()*+,;=%]+/g;
 
   return message.replace(urlRegex, (match) => {
     try {
