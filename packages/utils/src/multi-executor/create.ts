@@ -7,10 +7,16 @@ export enum ExecutionMode {
   CONSENSUS_MEDIAN = "consensus_median",
   CONSENSUS_ALL_EQUAL = "consensus_all_equal",
   AGREEMENT = "agreement",
+  MULTI_AGREEMENT = "multi_agreement",
 }
 
 export type NestedMethodConfig<T> = {
-  [K in keyof T]?: NestedMethodConfig<T[K]> | ExecutionMode | Executor;
+  [K in keyof T]?:
+    | NestedMethodConfig<T[K]>
+    | (T[K] extends unknown[]
+        ? ExecutionMode
+        : Exclude<ExecutionMode, ExecutionMode.MULTI_AGREEMENT>)
+    | Executor<unknown>;
 };
 
 export type MultiExecutorConfig = {
@@ -19,12 +25,14 @@ export type MultiExecutorConfig = {
   defaultMode: ExecutionMode;
   singleExecutionTimeoutMs?: number;
   allExecutionsTimeoutMs?: number;
+  multiAgreementShouldResolveUnagreedToUndefined: boolean;
 };
 
 export const DEFAULT_CONFIG: MultiExecutorConfig = {
   agreementQuorumNumber: 2,
   consensusQuorumRatio: 3 / 5,
   defaultMode: ExecutionMode.FALLBACK,
+  multiAgreementShouldResolveUnagreedToUndefined: false,
 };
 
 export function create<T extends object>(

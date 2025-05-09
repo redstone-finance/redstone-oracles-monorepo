@@ -2,7 +2,7 @@ import _ from "lodash";
 import { stringify, stringifyError } from "../common";
 import { AsyncFn, Executor } from "./Executor";
 
-export abstract class ParallelExecutor extends Executor {
+export abstract class ParallelExecutor<R> extends Executor<R> {
   protected constructor(protected timeoutMs?: number) {
     super();
   }
@@ -25,15 +25,15 @@ export abstract class ParallelExecutor extends Executor {
     return counts.filter((c) => c.count === maxCount);
   }
 
-  protected abstract verifySettlements<R>(
+  protected abstract verifySettlements(
     successfulResults: R[],
     errorResults: unknown[],
     totalLength: number
   ): boolean;
 
-  protected abstract aggregate<R>(results: R[]): R;
+  protected abstract aggregate(results: R[]): R;
 
-  override async execute<R>(functions: AsyncFn<R>[]): Promise<R> {
+  override async execute(functions: AsyncFn<R>[]): Promise<R> {
     return await new Promise((resolve, reject) => {
       const promises = Executor.getPromises(functions, this.timeoutMs);
 
@@ -70,7 +70,7 @@ export abstract class ParallelExecutor extends Executor {
     });
   }
 
-  private handleResults<R>(
+  private handleResults(
     successfulResults: R[],
     errorResults: unknown[],
     totalLength: number,
