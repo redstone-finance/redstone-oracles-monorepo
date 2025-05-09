@@ -17,7 +17,7 @@ export class AnchorReadonlyProvider implements Provider {
   constructor(
     readonly connection: Connection,
     private readonly client: SolanaClient,
-    private readonly accountForSimulations?: PublicKey
+    readonly publicKey?: PublicKey
   ) {}
 
   async simulate(
@@ -69,8 +69,8 @@ export class AnchorReadonlyProvider implements Provider {
   }
 
   async findSomeAccountWithSol() {
-    if (this.accountForSimulations) {
-      return this.accountForSimulations;
+    if (this.publicKey) {
+      return this.publicKey;
     }
 
     const account = await this.connection.getSlotLeader();
