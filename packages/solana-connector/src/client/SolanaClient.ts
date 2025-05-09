@@ -22,12 +22,13 @@ export class SolanaClient {
         getBlockhash: MultiExecutor.ExecutionMode.AGREEMENT,
         getSignatureStatus: MultiExecutor.ExecutionMode.AGREEMENT,
         getAccountInfo: MultiExecutor.ExecutionMode.AGREEMENT,
-        getMultipleAccountsInfo: MultiExecutor.ExecutionMode.AGREEMENT,
+        getMultipleAccountsInfo: MultiExecutor.ExecutionMode.MULTI_AGREEMENT,
       },
       {
         ...MultiExecutor.DEFAULT_CONFIG,
         singleExecutionTimeoutMs: SINGLE_EXECUTION_TIMEOUT_MS,
         allExecutionsTimeoutMs: ALL_EXECUTIONS_TIMEOUT_MS,
+        multiAgreementShouldResolveUnagreedToUndefined: true,
       }
     );
   }
@@ -115,7 +116,7 @@ export class SolanaClient {
 
   private async waitForSlot(slot?: number, description?: string) {
     if (!slot) {
-      return;
+      return undefined;
     }
 
     await RedstoneCommon.waitForBlockNumber(
