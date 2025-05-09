@@ -14,6 +14,7 @@ export class SageOfChains {
     string,
     (chainConfig: ChainConfig) => Provider
   > = {};
+  chainTypeAndIdToProvider: Record<string, Provider | undefined> = {};
 
   constructor(
     allSupportedChainIds: string[],
@@ -30,6 +31,10 @@ export class SageOfChains {
   }
 
   getProviderByChainTypeAndId(chainTypeAndId: string): Provider {
+    const providerCached = this.chainTypeAndIdToProvider[chainTypeAndId];
+    if (providerCached) {
+      return providerCached;
+    }
     const providerFactory =
       this.chainTypeAndIdToProviderFactory[chainTypeAndId];
     // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
@@ -40,7 +45,9 @@ export class SageOfChains {
     }
     const chainConfig =
       SageOfChains.getChainConfigByChainTypeAndId(chainTypeAndId);
-    return providerFactory(chainConfig);
+    const provider = providerFactory(chainConfig);
+    this.chainTypeAndIdToProvider[chainTypeAndId] = provider;
+    return provider;
   }
 
   private static getChainConfigByChainTypeAndId(chainTypeAndId: string) {
