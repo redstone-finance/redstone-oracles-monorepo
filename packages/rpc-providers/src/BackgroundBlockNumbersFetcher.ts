@@ -3,8 +3,8 @@ import { CronAgent } from "@redstone-finance/agents";
 import { RedstoneCommon } from "@redstone-finance/utils";
 
 export type BackgroundBlockNumbersFetcherOpts = {
-  /** [chainId,getBlockNumber] */
-  blockNumbersFetchers: [number, IGetBlockNumber][];
+  /** [chainTypeAndId,getBlockNumber] */
+  blockNumbersFetchers: [string, IGetBlockNumber][];
   timeout: number;
   maxTTL: number;
   cronExpression: string;

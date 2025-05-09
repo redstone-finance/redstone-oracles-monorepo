@@ -64,16 +64,16 @@ export class SageOfChains {
 
   getProvidersForRequiredChainIds(
     requiredChainIds: number[]
-  ): [number, Provider][] {
+  ): [string, Provider][] {
     return requiredChainIds.map((chainId) => {
       const chainTypeAndId = getChainKey(chainId, ChainTypeEnum.enum.evm);
-      return [chainId, this.getProviderByChainTypeAndId(chainTypeAndId)];
+      return [chainTypeAndId, this.getProviderByChainTypeAndId(chainTypeAndId)];
     });
   }
 
   async getBlockNumbersPerChain(
     timeout: number
-  ): Promise<Record<number, number>> {
+  ): Promise<Record<string, number>> {
     const chainIdToBlockTuplesResults = await Promise.allSettled(
       Object.entries(this.chainTypeAndIdToProviderFactory).map(
         async ([chainTypeAndId, providerFactory]) => {
@@ -84,7 +84,7 @@ export class SageOfChains {
             provider,
             timeout
           );
-          return [chainConfig.chainId, blockNumber];
+          return [chainTypeAndId, blockNumber];
         }
       )
     );
@@ -100,7 +100,7 @@ export class SageOfChains {
         );
         return false;
       })
-      .filter((r) => !!r) as [number, number][];
+      .filter((r) => !!r) as [string, number][];
 
     return Object.fromEntries(chainIdToBlockTuples);
   }
