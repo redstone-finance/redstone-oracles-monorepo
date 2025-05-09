@@ -1218,11 +1218,14 @@
     }
   },
   "temporaryConfigUpdates": {
-    "expirationTimestamp": "2025-04-30T12:00:00+02:00",
+    "expirationTimestamp": "2025-05-15T12:00:00+02:00",
     "celo-baklava": {
       "disabled": true
     },
     "blast-sepolia": {
+      "disabled": true
+    },
+    "haven1Testnet": {
       "disabled": true
     }
   }
