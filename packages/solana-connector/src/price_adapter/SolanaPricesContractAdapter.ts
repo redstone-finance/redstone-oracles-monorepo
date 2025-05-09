@@ -22,7 +22,7 @@ export class SolanaPricesContractAdapter
   ) {}
 
   getSignerAddress() {
-    const pk = this.contract.program.provider.publicKey;
+    const pk = this.txDeliveryMan?.getPublicKey();
     return pk
       ? Promise.resolve(pk.toString())
       : Promise.reject(new Error("Signer required"));
