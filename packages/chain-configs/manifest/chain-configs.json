@@ -48,8 +48,9 @@
       "etherScanApi": "https://api.arbiscan.io",
       "avgBlockTimeMs": 250,
       "multicall3": {
-        "address": "0xcA11bde05977b3631167028862bE2a173976CA11",
-        "type": "Multicall3"
+        "address": "0xaD6CC5a465E5c8284a49eC9eD10EFE275460678c",
+        "type": "RedstoneMulticall3",
+        "gasLimitPerCall": 1000000
       },
       "isAuctionModel": false,
       "twoDimensionalFees": true,
@@ -255,8 +256,9 @@
       "publicRpcUrls": ["https://node.mainnet.etherlink.com"],
       "avgBlockTimeMs": 6000,
       "multicall3": {
-        "address": "0xcA11bde05977b3631167028862bE2a173976CA11",
-        "type": "Multicall3"
+        "address": "0xaD6CC5a465E5c8284a49eC9eD10EFE275460678c",
+        "type": "RedstoneMulticall3",
+        "gasLimitPerCall": 1000000
       },
       "isAuctionModel": true,
       "twoDimensionalFees": true,
@@ -294,8 +296,9 @@
       ],
       "avgBlockTimeMs": 2000,
       "multicall3": {
-        "address": "0xcA11bde05977b3631167028862bE2a173976CA11",
-        "type": "Multicall3"
+        "address": "0xaD6CC5a465E5c8284a49eC9eD10EFE275460678c",
+        "type": "RedstoneMulticall3",
+        "gasLimitPerCall": 1000000
       },
       "isAuctionModel": true,
       "twoDimensionalFees": true,
@@ -569,8 +572,9 @@
       "publicRpcUrls": ["https://mainnet.era.zksync.io"],
       "avgBlockTimeMs": 1200,
       "multicall3": {
-        "address": "0xF9cda624FBC7e059355ce98a31693d299FACd963",
-        "type": "Multicall3"
+        "address": "0x4a87b5ce9f56f353a4d6808BA3c012083912b8f2",
+        "type": "RedstoneMulticall3",
+        "gasLimitPerCall": 1000000
       },
       "isAuctionModel": false,
       "fallbackToEthMaxPriorityFeePerGas": true,
@@ -584,8 +588,9 @@
       "publicRpcUrls": ["https://rpc.zklink.io"],
       "avgBlockTimeMs": 1000,
       "multicall3": {
-        "address": "0x825267E0fA5CAe92F98540828a54198dcB3Eaeb5",
-        "type": "Multicall3"
+        "address": "0x4a87b5ce9f56f353a4d6808BA3c012083912b8f2",
+        "type": "RedstoneMulticall3",
+        "gasLimitPerCall": 1000000
       },
       "isAuctionModel": false,
       "twoDimensionalFees": true,
@@ -998,8 +1003,9 @@
       ],
       "avgBlockTimeMs": 2500,
       "multicall3": {
-        "address": "0xcA11bde05977b3631167028862bE2a173976CA11",
-        "type": "Multicall3"
+        "address": "0xaD6CC5a465E5c8284a49eC9eD10EFE275460678c",
+        "type": "RedstoneMulticall3",
+        "gasLimitPerCall": 1000000
       },
       "isAuctionModel": false,
       "fallbackToEthMaxPriorityFeePerGas": true,

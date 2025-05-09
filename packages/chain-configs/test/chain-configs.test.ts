@@ -25,6 +25,8 @@ const CHAINS_TO_SKIP_MULTICALL_ADDRESS_CHECK = [
   "TAC Turin",
   "Corn Maizenet", // first few create transactions failed leading to different address
   "Polygon Mainnet",
+  "zkSync",
+  "zkLink",
 ];
 
 const CHAINS_TO_SKIP_RPC_PRESENCE_CHECK = [
