@@ -31,9 +31,8 @@ export class SquadsMultisig {
       `VaultPda ${vaultPda.toBase58()}, do not forget to top up with some Sol`
     );
 
-    const transactionIndex = transactionIdx
-      ? transactionIdx
-      : (await this.multisigTransactionIndex()) + 1n;
+    const transactionIndex =
+      transactionIdx ?? (await this.multisigTransactionIndex()) + 1n;
 
     console.log(
       `Create new squads transaction with index = ${transactionIndex}`
@@ -56,9 +55,8 @@ export class SquadsMultisig {
   }
 
   async propose(member: PublicKey, transactionIdx: bigint | undefined) {
-    const transactionIndex = transactionIdx
-      ? transactionIdx
-      : await this.multisigTransactionIndex();
+    const transactionIndex =
+      transactionIdx ?? (await this.multisigTransactionIndex());
 
     console.log(`Proposing transaction with index = ${transactionIndex}`);
 
@@ -70,9 +68,8 @@ export class SquadsMultisig {
   }
 
   async approve(member: PublicKey, transactionIdx: bigint | undefined) {
-    const transactionIndex = transactionIdx
-      ? transactionIdx
-      : await this.multisigTransactionIndex();
+    const transactionIndex =
+      transactionIdx ?? (await this.multisigTransactionIndex());
 
     console.log(
       `Approving squads transaction with index = ${transactionIndex}`
@@ -86,9 +83,8 @@ export class SquadsMultisig {
   }
 
   async execute(member: PublicKey, transactionIdx: bigint | undefined) {
-    const transactionIndex = transactionIdx
-      ? transactionIdx
-      : await this.multisigTransactionIndex();
+    const transactionIndex =
+      transactionIdx ?? (await this.multisigTransactionIndex());
 
     console.log(
       `Executing squads transaction with index = ${transactionIndex}`

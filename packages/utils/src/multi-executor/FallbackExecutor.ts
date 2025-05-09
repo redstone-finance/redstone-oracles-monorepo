@@ -1,12 +1,12 @@
 import { stringifyError, timeoutOrResult } from "../common";
 import { AsyncFn, Executor } from "./Executor";
 
-export class FallbackExecutor extends Executor {
+export class FallbackExecutor<R> extends Executor<R> {
   constructor(private readonly timeoutMs?: number) {
     super();
   }
 
-  public async execute<R>(functions: AsyncFn<R>[]): Promise<R> {
+  public async execute(functions: AsyncFn<R>[]): Promise<R> {
     const errors = [];
 
     for (const [index, func] of functions.entries()) {
