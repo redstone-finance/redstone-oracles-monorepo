@@ -3,14 +3,14 @@ import { loggerFactory } from "../logger";
 
 export type AsyncFn<R> = () => Promise<R>;
 
-export abstract class Executor {
+export abstract class Executor<R> {
   protected readonly logger = loggerFactory("executor");
 
   static getPromises<R>(functions: AsyncFn<R>[], timeoutMs?: number) {
     return functions.map((func) => timeoutOrResult(func(), timeoutMs));
   }
 
-  abstract execute<R>(functions: AsyncFn<R>[]): Promise<R>;
+  abstract execute(functions: AsyncFn<R>[]): Promise<R>;
 }
 
 /** TODO: Possible extensions

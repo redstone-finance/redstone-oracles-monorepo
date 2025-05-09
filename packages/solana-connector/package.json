@@ -9,8 +9,9 @@
   "license": "MIT",
   "scripts": {
     "clean": "rm -rf dist",
-    "build": "yarn global:tsc --build tsconfig.build.json",
-    "build-dev": "yarn global:tsc --build tsconfig.json",
+    "build": "yarn build-deps && yarn global:tsc --build tsconfig.build.json",
+    "build-dev": "yarn build-deps && yarn global:tsc --build tsconfig.json",
+    "build-deps": "yarn --cwd ../evm-multicall build",
     "lint": "yarn global:eslint .",
     "lint:fix": "yarn global:eslint --fix .",
     "test": "make build -C solana && yarn global:jest:cov",
@@ -34,7 +35,9 @@
   },
   "dependencies": {
     "@coral-xyz/anchor": "0.30.1",
-    "@redstone-finance/sdk": "workspace:*"
+    "@redstone-finance/sdk": "workspace:*",
+    "@redstone-finance/utils": "workspace:*",
+    "@solana/web3.js": "^1.98.2"
   },
   "devDependencies": {
     "@babel/core": "^7.23.2",

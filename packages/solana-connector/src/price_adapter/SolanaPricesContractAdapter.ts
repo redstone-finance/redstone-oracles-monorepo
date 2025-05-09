@@ -138,10 +138,13 @@ export class SolanaPricesContractAdapter
     slot?: number
   ): Promise<BigNumberish[]> {
     const feedIds = paramsProvider.getDataFeedIds();
-    const promises = await Promise.all(
-      feedIds.map((feedId) => this.contract.getPriceData(feedId, slot))
-    );
-    return promises.map((priceData) => BigInt(toNumber(priceData.value)));
+    const priceData = await this.contract.getMultiplePriceData(feedIds, slot);
+    const missingFeedIndex = priceData.indexOf(undefined);
+    if (missingFeedIndex >= 0) {
+      throw new Error(`Missing value for ${feedIds[missingFeedIndex]}`);
+    }
+
+    return priceData.map((priceData) => BigInt(toNumber(priceData!.value)));
   }
 
   async readTimestampFromContract(
@@ -157,18 +160,19 @@ export class SolanaPricesContractAdapter
     feedIds: string[],
     slot?: number
   ): Promise<ContractData> {
-    const promises = await Promise.allSettled(
-      feedIds.map((feedId) => this.contract.getPriceData(feedId, slot))
+    const multipleResult = await this.contract.getMultiplePriceData(
+      feedIds,
+      slot
     );
 
-    const values = promises
-      .filter((result) => result.status === "fulfilled")
+    const values = multipleResult
+      .filter((result) => result !== undefined)
       .map((result) => [
-        ContractParamsProvider.unhexlifyFeedId(result.value.feedId),
+        ContractParamsProvider.unhexlifyFeedId(result.feedId),
         {
-          lastDataPackageTimestampMS: result.value.timestamp.toNumber(),
-          lastBlockTimestampMS: result.value.writeTimestamp?.toNumber() ?? 0,
-          lastValue: toNumber(result.value.value),
+          lastDataPackageTimestampMS: result.timestamp.toNumber(),
+          lastBlockTimestampMS: result.writeTimestamp?.toNumber() ?? 0,
+          lastValue: toNumber(result.value),
         },
       ]);
 
