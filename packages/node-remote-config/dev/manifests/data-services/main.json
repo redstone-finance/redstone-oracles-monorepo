@@ -2163,6 +2163,7 @@
     "SolvBTC": {
       "source": [
         "pancake-swap-bnb-btcb-500",
+        "pancake-swap-bnb-btcb-100",
         "thena-bnb-btcb",
         "trader-joe-v2-avalanche-btc.b",
         "uniswap-v3-ethereum-wbtc-500"
@@ -7194,7 +7195,8 @@
     "iBERA": {
       "source": [
         "beraswap-berachain-wbera",
-        "kodiak-berachain-wbera-500"
+        "kodiak-berachain-wbera-500",
+        "kodiak-berachain-ibgt-3000"
       ],
       "denomination": "USD",
       "rateFeed": false
