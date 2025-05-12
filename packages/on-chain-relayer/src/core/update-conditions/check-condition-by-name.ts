@@ -4,6 +4,7 @@ import {
   getDataPackagesTimestamp,
   getLastRoundDetails,
 } from "@redstone-finance/sdk";
+import { RedstoneCommon } from "@redstone-finance/utils";
 import { ConditionCheckNames, RelayerConfig } from "../../config/RelayerConfig";
 import { ConditionCheckResponse, ShouldUpdateContext } from "../../types";
 import { makeDataPackagesRequestParams } from "../make-data-packages-request-params";
@@ -46,6 +47,9 @@ export const checkConditionByName = async (
         config,
         () => fetchHistoricalDataPackages(dataFeedId, context, config)
       );
+
+    default:
+      return RedstoneCommon.unsupportedParam(name);
   }
 };
 

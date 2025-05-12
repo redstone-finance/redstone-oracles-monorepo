@@ -1,4 +1,8 @@
-import { MathUtils, RedstoneTypes } from "@redstone-finance/utils";
+import {
+  MathUtils,
+  RedstoneCommon,
+  RedstoneTypes,
+} from "@redstone-finance/utils";
 import axios from "axios";
 import { resolveDataServiceUrls } from "./data-services-urls";
 
@@ -79,8 +83,6 @@ export const aggregateValues = (
     case "median":
       return MathUtils.getMedian(plainValues);
     default:
-      throw new Error(
-        `Unsupported aggregationAlgorithm ${String(aggregationAlgorithm)}`
-      );
+      return RedstoneCommon.unsupportedParam(aggregationAlgorithm);
   }
 };
