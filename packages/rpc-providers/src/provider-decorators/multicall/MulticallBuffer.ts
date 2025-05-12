@@ -20,7 +20,7 @@ export class MulticallBuffer {
     private readonly maxCallDataSize: number
   ) {}
 
-  private _state = new Map<number, CallEntry[]>();
+  private readonly _state = new Map<number, CallEntry[]>();
 
   push(blockTag: BlockTag | undefined, entry: CallEntry) {
     const blockId = blockTagToBlockId(blockTag);
@@ -90,14 +90,14 @@ export class MulticallBuffer {
   }
 }
 
-function blockTagToBlockId(cand?: BlockTag): number {
-  switch (cand) {
+function blockTagToBlockId(candidate?: BlockTag): number {
+  switch (candidate) {
     case undefined:
     case "earliest":
     case "latest":
     case "pending":
       return -1;
     default:
-      return convertBlockTagToNumber(cand);
+      return convertBlockTagToNumber(candidate);
   }
 }

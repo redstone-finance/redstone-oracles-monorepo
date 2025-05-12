@@ -57,5 +57,7 @@ export function getNonEvmBlockchainService(
     }
     case "fuel":
       throw new Error(`chain type ${chainType} not supported`);
+    default:
+      return RedstoneCommon.unsupportedParam(chainType);
   }
 }
