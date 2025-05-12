@@ -10,7 +10,9 @@ import {
 import prompts from "prompts";
 
 import "dotenv/config";
-import { makeConnection, readKeypair } from "../utils";
+import path from "path";
+import { PROGRAM_SO_FILE } from "../consts";
+import { makeConnection, readDeployDir, readKeypair } from "../utils";
 import {
   LEDGER_ACCOUNT,
   PROGRAM_ID,
@@ -20,8 +22,24 @@ import {
 import { makeSolana, SolanaLedgerSigner } from "./ledger-utils";
 import { SquadsMultisig } from "./multi-sig-utils";
 import { createSetUpgradeAuthority } from "./transfer-ownership";
+import {
+  checkUpgradeTransaction,
+  createUpgradeInstruction,
+} from "./upgrade-from-buffer";
 
 type FunctionType = "createVaultTx" | "propose" | "approve" | "execute";
+type InstructionType =
+  | {
+      type: "set-authority";
+      newAuthorityAddress: PublicKey;
+      programId: PublicKey;
+    }
+  | {
+      type: "upgrade-from-buffer";
+      bufferAccount: PublicKey;
+      spillAccount: PublicKey;
+      programId: PublicKey;
+    };
 
 type Signer =
   | {
@@ -39,11 +57,61 @@ async function signerPublicKey(signer: Signer) {
   }
   return (await signer.signer.getPublicKey()).ed;
 }
+
 async function sign(signer: Signer, tx: VersionedTransaction) {
   if (signer.type === "local") {
     return tx.sign([signer.signer]);
   }
   await signer.signer.signTransaction(tx);
+}
+
+async function promptInstructionType(functionType: FunctionType) {
+  if (functionType !== "createVaultTx" && functionType !== "approve") {
+    return undefined;
+  }
+
+  const type = (
+    await prompts({
+      type: "select",
+      name: "selectInstruction",
+      message: "Select instruction to create or approve",
+      choices: [
+        { title: "set-new-authority", value: "set-new-authority" },
+        { title: "upgrade-from-buffer", value: "upgrade-from-buffer" },
+      ],
+    })
+  ).selectInstruction as InstructionType;
+
+  const programId = await promptProgramId();
+
+  switch (type.type) {
+    case "set-authority":
+      return { ...(await promptNewAuthority()), programId } as InstructionType;
+    case "upgrade-from-buffer":
+      return {
+        ...(await promptUpgradeFromBuffer()),
+        programId,
+      } as InstructionType;
+  }
+}
+
+async function promptUpgradeFromBuffer() {
+  const bufferAccount = await prompts({
+    type: "text",
+    name: "bufferAccount",
+    message: "Buffer account with new program data address",
+  });
+  const spillAccount = await prompts({
+    type: "text",
+    name: "spillAccount",
+    message: "Account which will be reimbursed for the rent",
+  });
+
+  return {
+    type: "upgrade-from-buffer",
+    bufferAccount: new PublicKey(bufferAccount.bufferAccount as string),
+    spillAccount: new PublicKey(spillAccount.spillAccount as string),
+  };
 }
 
 async function promptTxIdx(squad: SquadsMultisig, functionType: FunctionType) {
@@ -88,21 +156,31 @@ async function promptSigner(): Promise<Signer> {
 }
 
 async function promptConfirm(
+  connection: Connection,
   squad: SquadsMultisig,
   transactionIdx: bigint,
   functionType: FunctionType,
-  newAuthorityAddress: PublicKey | undefined,
-  programId: PublicKey | undefined
+  instructionType: InstructionType | undefined
 ) {
+  if (
+    functionType === "approve" &&
+    instructionType?.type === "upgrade-from-buffer"
+  ) {
+    await checkUpgradeTransaction(
+      connection,
+      squad,
+      await squad.txInfo(Number(transactionIdx)),
+      instructionType.bufferAccount,
+      path.join(readDeployDir(), PROGRAM_SO_FILE)
+    );
+  }
+
   const messageArr = [
-    `Performing step '${functionType}' of setting new authority as multisig: ${squad.multisigAddress().toBase58()}.`,
+    `Performing step '${functionType}' as multisig: ${squad.multisigAddress().toBase58()}.`,
     `Transaction idx: ${transactionIdx}.`,
   ];
-  if (newAuthorityAddress !== undefined) {
-    messageArr.push(`New authority: ${newAuthorityAddress.toBase58()}.`);
-  }
-  if (programId !== undefined) {
-    messageArr.push(`ProgramId: ${programId.toBase58()}.`);
+  if (instructionType?.programId !== undefined) {
+    messageArr.push(`ProgramId: ${instructionType.programId.toBase58()}.`);
   }
   messageArr.push(`Do you wish to continue?`);
 
@@ -120,11 +198,7 @@ async function promptConfirm(
   }
 }
 
-async function promptNewAuthority(functionType: FunctionType) {
-  if (functionType !== "createVaultTx") {
-    return undefined;
-  }
-
+async function promptNewAuthority() {
   const newAuthorityPrompt = await prompts({
     type: "text",
     name: "newAuthorityAddress",
@@ -132,14 +206,15 @@ async function promptNewAuthority(functionType: FunctionType) {
     initial: TEMP_AUTHORITY.toBase58(),
   });
 
-  return new PublicKey(newAuthorityPrompt.newAuthorityAddress as string);
+  return {
+    type: "set-authority",
+    newAuthorityAddress: new PublicKey(
+      newAuthorityPrompt.newAuthorityAddress as string
+    ),
+  };
 }
 
-async function promptProgramId(functionType: FunctionType) {
-  if (functionType !== "createVaultTx") {
-    return undefined;
-  }
-
+async function promptProgramId() {
   const programIdPrompt = await prompts({
     type: "text",
     name: "programId",
@@ -164,23 +239,40 @@ async function getTx(
 
   return new VersionedTransaction(message);
 }
+
+function getInstruction(
+  squad: SquadsMultisig,
+  instructionType: InstructionType
+) {
+  if (instructionType.type === "set-authority") {
+    return createSetUpgradeAuthority(
+      instructionType.programId,
+      squad.vaultPda(),
+      instructionType.newAuthorityAddress
+    );
+  } else {
+    return createUpgradeInstruction(
+      squad.vaultPda(),
+      instructionType.programId,
+      instructionType.bufferAccount,
+      instructionType.spillAccount
+    );
+  }
+}
+
 async function handleCreateVaultTx(
   connection: Connection,
   squad: SquadsMultisig,
   transactionIdx: bigint,
-  newAuthorityAddress: PublicKey,
-  signer: Signer,
-  programId: PublicKey
+  instructionType: InstructionType,
+  signer: Signer
 ) {
   const member = await signerPublicKey(signer);
-  const setAuthorityIx = createSetUpgradeAuthority(
-    programId,
-    squad.vaultPda(),
-    newAuthorityAddress
-  );
+  const innerIx = getInstruction(squad, instructionType);
+
   const ix = await squad.createVaultTransaction(
     member,
-    setAuthorityIx,
+    innerIx,
     transactionIdx
   );
 
@@ -212,12 +304,6 @@ async function handleApprove(
   const member = await signerPublicKey(signer);
   const ix = await squad.approve(member, transactionIdx);
 
-  const txInfo = await squad.txInfo(Number(transactionIdx));
-
-  console.log(`Transaction to apporve:`, txInfo);
-  console.log(`Account Keys:`, txInfo.message.accountKeys);
-  console.log(`Instructions: `, txInfo.message.instructions);
-
   const tx = await getTx(connection, ix, member);
   await sign(signer, tx);
   return tx;
@@ -247,9 +333,8 @@ async function handleAction(
   squad: SquadsMultisig,
   functionType: FunctionType,
   transactionIdx: bigint,
-  newAuthorityAddress: PublicKey | undefined,
-  signer: Signer,
-  programId: PublicKey | undefined
+  instructionType: InstructionType | undefined,
+  signer: Signer
 ) {
   const tx = await (async () => {
     switch (functionType) {
@@ -258,9 +343,8 @@ async function handleAction(
           connection,
           squad,
           transactionIdx,
-          newAuthorityAddress!,
-          signer,
-          programId!
+          instructionType!,
+          signer
         );
       case "approve":
         return await handleApprove(connection, squad, transactionIdx, signer);
@@ -291,6 +375,8 @@ async function main() {
     })
   ).selectFunction as FunctionType;
 
+  const instructionData = await promptInstructionType(functionType);
+
   const squadAddressPrompt = await prompts({
     type: "text",
     name: "multisigAddress",
@@ -301,20 +387,17 @@ async function main() {
     squadAddressPrompt.multisigAddress as string
   );
 
-  const newAuthorityAddress = await promptNewAuthority(functionType);
-  const programId = await promptProgramId(functionType);
-
   const squadUtils = new SquadsMultisig(squadAddress, connection);
   const transactionIdx = await promptTxIdx(squadUtils, functionType);
 
   const signer = await promptSigner();
 
   await promptConfirm(
+    connection,
     squadUtils,
     transactionIdx,
     functionType,
-    newAuthorityAddress,
-    programId
+    instructionData
   );
 
   const txSignature = await handleAction(
@@ -322,9 +405,8 @@ async function main() {
     squadUtils,
     functionType,
     transactionIdx,
-    newAuthorityAddress,
-    signer,
-    programId
+    instructionData,
+    signer
   );
 
   console.log(`Transaction submitted: ${txSignature}`);
