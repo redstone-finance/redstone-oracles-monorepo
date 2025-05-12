@@ -1749,14 +1749,6 @@
       "denomination": "USD",
       "rateFeed": false
     },
-    "PRIME": {
-      "source": [
-        "trader-joe-v2-avalanche-wavax",
-        "uniswap-v3-arbitrumone-weth-3000"
-      ],
-      "denomination": "USD",
-      "rateFeed": false
-    },
     "PRIME_ECHELON": {
       "source": [
         "bingx-usdt",
