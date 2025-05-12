@@ -80,12 +80,12 @@ async function promptInstructionType(functionType: FunctionType) {
         { title: "upgrade-from-buffer", value: "upgrade-from-buffer" },
       ],
     })
-  ).selectInstruction as InstructionType;
+  ).selectInstruction as "set-new-authority" | "upgrade-from-buffer";
 
   const programId = await promptProgramId();
 
-  switch (type.type) {
-    case "set-authority":
+  switch (type) {
+    case "set-new-authority":
       return { ...(await promptNewAuthority()), programId } as InstructionType;
     case "upgrade-from-buffer":
       return {
