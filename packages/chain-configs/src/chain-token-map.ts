@@ -11,16 +11,16 @@ let chainTokenMap: ChainTokenMap | null = null;
 
 function readAndValidateChainTokenMapConfig(): ChainTokenMap {
   if (!chainTokenMap) {
-    const chainTokenMapConfigPath = findRemoteConfigOrThrow();
-    const config = readJsonFile<ChainTokenMap>(
-      `${chainTokenMapConfigPath}/chains/chain-token-map.json`
-    );
     try {
+      const chainTokenMapConfigPath = findRemoteConfigOrThrow();
+      const config = readJsonFile<ChainTokenMap>(
+        `${chainTokenMapConfigPath}/chains/chain-token-map.json`
+      );
       RedstoneCommon.zodAssert<ChainTokenMap>(ChainTokenMapSchema, config);
+      chainTokenMap = config;
     } catch (error) {
       terminateWithNodeRemoteConfigError(RedstoneCommon.stringifyError(error));
     }
-    chainTokenMap = config;
   }
   return chainTokenMap;
 }
