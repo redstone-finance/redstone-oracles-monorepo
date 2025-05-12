@@ -16,7 +16,11 @@ import { readKeypair } from "./utils";
 
 async function main() {
   const keypair = readKeypair();
-  console.log("Public key:", hexlify(keypair.publicKey.toBytes()));
+  console.log(
+    "Public key:",
+    hexlify(keypair.publicKey.toBytes()),
+    keypair.publicKey.toBase58()
+  );
   const rpcUrls = await getRpcUrls();
   const connection = new SolanaConnectionBuilder().withRpcUrls(rpcUrls).build();
 
