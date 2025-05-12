@@ -42,6 +42,8 @@ export class RadixSigner implements IRadixSigner {
         return new PrivateKey.Ed25519(privateKey.value);
       case "secp256k1":
         return new PrivateKey.Secp256k1(privateKey.value);
+      default:
+        return RedstoneCommon.unsupportedParam(privateKey.scheme);
     }
   }
   public publicKeyHex() {
