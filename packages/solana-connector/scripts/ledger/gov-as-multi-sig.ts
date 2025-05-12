@@ -9,6 +9,7 @@ import {
 } from "@solana/web3.js";
 import prompts from "prompts";
 
+import { RedstoneCommon } from "@redstone-finance/utils";
 import "dotenv/config";
 import path from "path";
 import { PROGRAM_SO_FILE } from "../consts";
@@ -352,6 +353,8 @@ async function handleAction(
         return await handlePropose(connection, squad, transactionIdx, signer);
       case "execute":
         return await handleExecute(connection, squad, transactionIdx, signer);
+      default:
+        return RedstoneCommon.unsupportedParam(functionType);
     }
   })();
 
