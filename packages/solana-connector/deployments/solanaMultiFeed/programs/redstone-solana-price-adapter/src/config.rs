@@ -11,9 +11,9 @@ pub const SOLANA_CONFIG: Config = Config {
     signer_count_threshold: 3,
     signers: REDSTONE_PRIMARY_PROD_ALLOWED_SIGNERS,
     trusted_updaters: TRUSTED_UPDATERS,
-    max_timestamp_ahead_ms: 3 * 60 * 1_000,
+    max_timestamp_ahead_ms: 1 * 60 * 1_000,
     max_timestamp_delay_ms: 3 * 60 * 1_000,
-    min_interval_between_updates_ms: 40_000,
+    min_interval_between_updates_ms: 2 * 24 * 60 * 60 * 1_000, // 2 days
 };
 
 pub struct Config {
@@ -41,7 +41,7 @@ const TRUSTED_UPDATERS: [Pubkey; 3] = [
         "f3b5b7044e1b342d0bf326929622247d18b225e6a8f15f224601d5549666ae5a"
     )),
     Pubkey::new_from_array(hex!(
-        "69a55bf8821ef3655be7b47902a1866cf9aef506d6b3b86221c35bcdfe323903"
+        "95e4929b52fbb5aae833a6a8794bba2702c289cec853ffa2b05d18235ac81126"
     )),
 ];
 
