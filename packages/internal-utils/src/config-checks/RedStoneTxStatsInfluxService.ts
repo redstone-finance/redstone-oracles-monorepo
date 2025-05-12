@@ -34,15 +34,16 @@ export class RedStoneTxStatsInfluxService extends InfluxService {
       |> filter(fn: (r) => r["_measurement"] == "${TXS_MEASUREMENT}")
       |> filter(fn: (r) => r["_field"] == "gasUsed" or r["_field"] == "gasPrice") 
       |> filter(fn: (r) => r["chainId"] == "${chainId}" and r["isFailed"] != "true")
-      |> filter(fn: (r) => strings.toLower(v: r["sender"]) == "${walletAddress.toLowerCase()}")
-      |> filter(fn: (r) => strings.toLower(v: r["contract"]) == "${contractAddress.toLowerCase()}")
+      // performing strings.toLower makes the query extremely slow (~100 times) use 'or' operator instead
+      |> filter(fn: (r) => r["sender"] == "${walletAddress.toLowerCase()}" or r["sender"] == "${walletAddress}")
+      |> filter(fn: (r) => r["contract"] == "${contractAddress.toLowerCase()}" or r["contract"] == "${contractAddress}")
       |> pivot(rowKey:["_time"], columnKey: ["_field"], valueColumn: "_value")
       |> map(fn: (r) => ({ r with gasCost: float(v: r.gasUsed) * float(v: r.gasPrice) }))
       |> sort(columns: ["_time"], desc: true)
       |> limit(n: ${limit})
       |> yield(name: "result")
       `;
-    const responseRows = (await this.query(query, `import "strings"`)) as {
+    const responseRows = (await this.query(query)) as {
       gasCost: number;
       _time: string;
     }[];
