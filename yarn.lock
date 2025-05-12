@@ -9239,6 +9239,7 @@ __metadata:
     ethereumjs-util: "npm:^7.0.10"
     ethers: "npm:^5.7.2"
     jest-mock-extended: "npm:^3.0.4"
+    jszip: "npm:^3.10.1"
     lodash: "npm:^4.17.21"
     msw: "npm:^2.4.10"
     node-schedule: "npm:^2.1.1"
