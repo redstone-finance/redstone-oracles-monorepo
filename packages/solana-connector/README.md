@@ -34,3 +34,18 @@ Fill envs in file .env. See .env.example for reference.
 NETWORK=localnet yarn sample-deploy
 NETWORK=localnet yarn sample-run
 ```
+
+
+### Upgrading program
+
+1. Create buffer with new program-data
+2. Transfer ownership of buffer to multisig
+3. Upgrade program to use the new buffer
+
+```sh
+solana program write-buffer <PROGRAM_FILEPATH> 
+# > Buffer: BUFFER_ADDRESS
+solana account <BUFFER_ADDRESS> # shows data of the new buffer account
+solana program set-buffer-authority <BUFFER_ADDRESS> --new-buffer-authority <NEW_BUFFER_AUTHORITY> # NEW_BUFFER_AUTHORITY = Multisig Vault Pda
+yarn gov-as-multi-sig # multi sig upgrade procedure
+```
