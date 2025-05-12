@@ -139,7 +139,9 @@ export class SolanaPricesContractAdapter
   ): Promise<BigNumberish[]> {
     const feedIds = paramsProvider.getDataFeedIds();
     const priceData = await this.contract.getMultiplePriceData(feedIds, slot);
-    const missingFeedIndex = priceData.indexOf(undefined);
+    const missingFeedIndex = priceData.findIndex(
+      (value) => !RedstoneCommon.isDefined(value)
+    );
     if (missingFeedIndex >= 0) {
       throw new Error(`Missing value for ${feedIds[missingFeedIndex]}`);
     }
@@ -166,7 +168,7 @@ export class SolanaPricesContractAdapter
     );
 
     const values = multipleResult
-      .filter((result) => result !== undefined)
+      .filter(RedstoneCommon.isDefined)
       .map((result) => [
         ContractParamsProvider.unhexlifyFeedId(result.feedId),
         {
