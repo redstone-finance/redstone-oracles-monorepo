@@ -6,17 +6,14 @@ import {
   VersionedTransaction,
 } from "@solana/web3.js";
 import "dotenv/config";
-
-const BPF_UPGRADE_LOADER_ID = new PublicKey(
-  "BPFLoaderUpgradeab1e11111111111111111111111"
-);
+import { BPF_UPGRADEABLE_LOADER } from "../consts";
 
 export function createSetUpgradeAuthority(
   programId: PublicKey,
   upgradeAuthority: PublicKey,
   newUpgradeAuthority: PublicKey
 ) {
-  const bpfUpgradableLoaderId = BPF_UPGRADE_LOADER_ID;
+  const bpfUpgradableLoaderId = BPF_UPGRADEABLE_LOADER;
 
   const [programDataAddress] = PublicKey.findProgramAddressSync(
     [programId.toBuffer()],
