@@ -23,16 +23,16 @@
     "verify-program": "yarn global:ts-node scripts/verify-program.ts",
     "run-node": "echo todo",
     "test-contracts": "cd solana && yarn run ts-mocha -p ../tsconfig.json -t 1000000 tests/**/*.ts",
-    "ledger-utils": "yarn global:ts-node scripts/ledger/ledger-utils.ts",
     "create-multi-sig": "yarn global:ts-node scripts/ledger/create-multi-sig.ts",
     "set-authority": "yarn global:ts-node scripts/ledger/set-authority.ts",
     "set-authority-as-ledger": "yarn global:ts-node scripts/ledger/set-authority-as-ledger.ts",
-    "set-authority-as-multi-sig": "yarn global:ts-node scripts/ledger/set-authority-as-multi-sig.ts",
+    "gov-as-multi-sig": "yarn global:ts-node scripts/ledger/gov-as-multi-sig.ts",
     "ledger-get-public-key": "yarn global:ts-node scripts/ledger/ledger-get-public-key.ts",
     "convert-public-key": "yarn global:ts-node scripts/convert-public-key.ts",
     "transfer-sol": "yarn global:ts-node scripts/transfer-sol.ts",
     "make-feed-table": "yarn global:ts-node scripts/make-feed-table.ts",
-    "show-multi-sig-tx-details": "yarn global:ts-node scripts/ledger/show-multi-sig-tx-details.ts"
+    "show-multi-sig-tx-details": "yarn global:ts-node scripts/ledger/show-multi-sig-tx-details.ts",
+    "write-buffer": "yarn global:ts-node scripts/write-program-buffer.ts"
   },
   "dependencies": {
     "@coral-xyz/anchor": "0.30.1",
