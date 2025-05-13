@@ -33,8 +33,6 @@ async function main() {
       "MANTA",
       "ezETH",
       "ZKL",
-      "BBUSD",
-      "BBTC",
       "GHO",
     ],
     uniqueSignersCount: 2,
