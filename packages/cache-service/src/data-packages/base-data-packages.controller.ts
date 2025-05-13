@@ -45,7 +45,7 @@ export abstract class BaseDataPackagesController {
     await BaseDataPackagesController.validateDataServiceId(dataServiceId);
     return await this.dataPackagesService.getLatestDataPackagesWithSameTimestampWithCache(
       dataServiceId,
-      false,
+      true,
       this.allowExternalSigners
     );
   }
@@ -58,7 +58,7 @@ export abstract class BaseDataPackagesController {
     await BaseDataPackagesController.validateDataServiceId(dataServiceId);
     return await this.dataPackagesService.getLatestDataPackagesWithCache(
       dataServiceId,
-      false,
+      true,
       this.allowExternalSigners
     );
   }
@@ -79,7 +79,7 @@ export abstract class BaseDataPackagesController {
     return await DataPackagesService.getDataPackagesByTimestamp(
       dataServiceId,
       Number(timestamp),
-      false,
+      true,
       this.allowExternalSigners
     );
   }
