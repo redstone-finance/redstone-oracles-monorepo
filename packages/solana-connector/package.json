@@ -53,6 +53,7 @@
     "@types/prompts": "^2.4.2",
     "bs58": "^6.0.0",
     "chai": "^4.3.10",
+    "dotenv": "^16.0.3",
     "litesvm": "^0.2.0",
     "markdown-table-ts": "1.0.3",
     "mocha": "^10.2.0",
