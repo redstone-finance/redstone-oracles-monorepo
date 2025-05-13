@@ -650,21 +650,6 @@
       "isMainnet": false,
       "disabled": true
     },
-    "bounceBit": {
-      "name": "BounceBit Mainnet",
-      "chainId": 6001,
-      "currencySymbol": "BB",
-      "publicRpcUrls": ["https://fullnode-mainnet.bouncebitapi.com"],
-      "avgBlockTimeMs": 3500,
-      "multicall3": {
-        "address": "0xaD6CC5a465E5c8284a49eC9eD10EFE275460678c",
-        "type": "RedstoneMulticall3",
-        "gasLimitPerCall": 1000000
-      },
-      "isAuctionModel": false,
-      "twoDimensionalFees": false,
-      "isMainnet": true
-    },
     "hemiTestnet": {
       "name": "Hemi Sepolia",
       "chainId": 743111,

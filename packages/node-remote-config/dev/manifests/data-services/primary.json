@@ -1648,20 +1648,6 @@
       "denomination": "deUSD",
       "rateFeed": true
     },
-    "BBUSD": {
-      "source": [
-        "bouncebit-evm-fetcher-bouncebit"
-      ],
-      "denomination": "USD",
-      "rateFeed": false
-    },
-    "BBTC": {
-      "source": [
-        "bouncebit-evm-fetcher-bouncebit"
-      ],
-      "denomination": "USD",
-      "rateFeed": false
-    },
     "CESR": {
       "source": [
         "coindesk-cesr"

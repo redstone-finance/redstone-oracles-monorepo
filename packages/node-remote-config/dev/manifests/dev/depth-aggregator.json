@@ -1437,16 +1437,6 @@
         }
       }
     },
-    "BBUSD": {
-      "source": [
-        "bouncebit-evm-fetcher-bouncebit"
-      ]
-    },
-    "BBTC": {
-      "source": [
-        "bouncebit-evm-fetcher-bouncebit"
-      ]
-    },
     "CESR": {
       "source": [
         "coindesk-cesr"
