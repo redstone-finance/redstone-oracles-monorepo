@@ -66,9 +66,9 @@ export interface DataPackagesRequestParams {
    */
   disableMedianSelection?: boolean;
   /**
-   * By default, the API returns data packages without metadata. Setting this to true causes the API to return data packages with metadata.
+   * By default, the API returns data packages without metadata. Setting this to false causes the API to return data packages with metadata.
    */
-  showMetadata?: boolean;
+  hideMetadata?: boolean;
   /**
    * If set to true, errors encountered during data package validation will be aggregated
    * and thrown as a single AggregateError instead of failing on the first error.
@@ -284,8 +284,8 @@ const prepareDataPackagePromises = (
   if (reqParams.historicalTimestamp) {
     pathComponents.push(`${reqParams.historicalTimestamp}`);
   }
-  if (!reqParams.showMetadata) {
-    pathComponents.push("hide-metadata");
+  if (reqParams.hideMetadata === false) {
+    pathComponents.push("show-metadata");
   }
 
   return urls.map(async (url) => {
