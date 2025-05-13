@@ -9451,6 +9451,7 @@ __metadata:
     "@types/prompts": "npm:^2.4.2"
     bs58: "npm:^6.0.0"
     chai: "npm:^4.3.10"
+    dotenv: "npm:^16.0.3"
     litesvm: "npm:^0.2.0"
     markdown-table-ts: "npm:1.0.3"
     mocha: "npm:^10.2.0"

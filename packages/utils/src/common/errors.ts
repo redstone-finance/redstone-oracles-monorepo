@@ -112,10 +112,8 @@ export function stringifyError(e: unknown, noStack = false): string {
       return (
         "[Ethers 5.7 Error]" +
         ethers_5_7_ErrorProps
-          .filter((prop) => Object.prototype.hasOwnProperty.call(error, prop))
-          .map((prop) => {
-            return `[${prop}: ${error[prop]}]`;
-          })
+          .filter((prop) => Object.hasOwn(error, prop))
+          .map((prop) => `[${prop}: ${error[prop]}]`)
           .join("")
       );
     } else if (error instanceof Error) {

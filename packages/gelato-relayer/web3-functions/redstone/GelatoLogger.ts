@@ -16,10 +16,10 @@ export class GelatoLogger implements IterationLogger {
     this.messages.push({ message, args });
   }
 
-  private static REPLACE_PATTERNS = [
+  private static readonly REPLACE_PATTERNS = [
     ['"', ""],
     [" has passed to update prices: ", " "],
-    [" to be updated. ", " "],
+    [" to be updated: ", " "],
     ["Value has ", ""],
     ["not", "Not"],
     ["Time in fallback mode:", "FlMd"],
@@ -27,6 +27,7 @@ export class GelatoLogger implements IterationLogger {
     [" AND Historical", ",H"],
     ["deviated enough", "devEngh"],
     ["enough time", "enghTm"],
+    ["Enough time", "enghTm"],
     ["update prices according to cron expr", "updCron"],
     ...[
       "dataFeedId",
@@ -87,8 +88,7 @@ export class GelatoLogger implements IterationLogger {
         if (Array.isArray(arg)) {
           return arg.forEach((a) => GelatoLogger.consoleLog(a));
         }
-
-        GelatoLogger.consoleLog(arg);
+        return GelatoLogger.consoleLog(arg);
       });
     });
   }

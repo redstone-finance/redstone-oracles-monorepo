@@ -90,8 +90,8 @@ export const checkValueDeviationCondition = (
     shouldUpdatePrices,
     maxDeviationRatio: maxDeviation / minDeviationPercentage!,
     warningMessage: shouldUpdatePrices
-      ? `Value has deviated enough to be updated. ${logTrace.toString()}`
-      : `Value has not deviated enough to be updated. ${logTrace.toString()}`,
+      ? `Value has deviated enough to be updated: ${dataFeedId} ${logTrace.toString()}`
+      : `Value has not deviated enough to be updated: ${dataFeedId} ${logTrace.toString()}`,
   };
 };
 
@@ -105,49 +105,32 @@ const calculateDeviation = (
   });
 
 class ValueDeviationLogTrace {
-  private perDataFeedId: Record<
-    string,
-    | {
-        valueFromContract: number;
-        valuesFromNode: number[];
-        timestamp: number;
-      }
-    | undefined
-  > = {};
-  private deviationLogs: {
+  private dataFeedId: string = "";
+  private valueFromContract: number = -1;
+  private readonly valuesFromNode: number[] = [];
+  private timestamp: number = -1;
+  private readonly deviationLogs: {
     maxDeviation: string;
     thresholdDeviation: string;
     dataFeedId?: string;
   }[] = [];
-  private warnings: string[] = [];
+  private readonly warnings: string[] = [];
 
   addPerDataFeedLog(
     timestamp: number,
     valueFromContract: number,
     dataPoint: INumericDataPoint
   ) {
-    const dataFeedId = dataPoint.dataFeedId;
-    const perData = this.perDataFeedId[dataFeedId];
-    if (!perData) {
-      this.perDataFeedId[dataFeedId] = {
-        valueFromContract: valueFromContract,
-        valuesFromNode: [dataPoint.value],
-        timestamp,
-      };
-    } else {
-      perData.valuesFromNode.push(dataPoint.value);
-    }
+    this.dataFeedId = dataPoint.dataFeedId;
+    this.valueFromContract = valueFromContract;
+    this.timestamp = timestamp;
+    this.valuesFromNode.push(dataPoint.value);
   }
 
-  addDeviationInfo(
-    maxDeviation: number,
-    thresholdDeviation: number,
-    dataFeedId?: string
-  ) {
+  addDeviationInfo(maxDeviation: number, thresholdDeviation: number) {
     this.deviationLogs.push({
       maxDeviation: maxDeviation.toFixed(4),
       thresholdDeviation: thresholdDeviation.toFixed(4),
-      dataFeedId,
     });
   }
 
@@ -157,8 +140,10 @@ class ValueDeviationLogTrace {
 
   toString(): string {
     return JSON.stringify({
-      ...this.perDataFeedId,
-      ...this.deviationLogs,
+      valueFromContract: this.valueFromContract,
+      timestamp: this.timestamp,
+      valuesFromNode: this.valuesFromNode,
+      deviationLogs: this.deviationLogs,
       ...(this.warnings.length ? { warnings: this.warnings } : {}),
     });
   }

@@ -32,7 +32,7 @@ describe("time-condition", () => {
     );
     expect(shouldUpdatePrices).to.be.true;
     expect(messages[0].message).to.match(
-      /Enough time passed to updated prices/
+      /Enough time has passed to update prices/
     );
   });
 });
