@@ -61,7 +61,8 @@ async function signerPublicKey(signer: Signer) {
 
 async function sign(signer: Signer, tx: VersionedTransaction) {
   if (signer.type === "local") {
-    return tx.sign([signer.signer]);
+    tx.sign([signer.signer]);
+    return;
   }
   await signer.signer.signTransaction(tx);
 }
