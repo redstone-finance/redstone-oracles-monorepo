@@ -1,5 +1,10 @@
 import { MultiExecutor } from "..";
-import { getS, stringify, timeoutOrResult, unsupportedParam } from "../common";
+import {
+  getS,
+  stringify,
+  throwUnsupportedParamError,
+  timeoutOrResult,
+} from "../common";
 import { loggerFactory } from "../logger";
 import { AgreementExecutor } from "./AgreementExecutor";
 import {
@@ -75,7 +80,7 @@ export class MultiExecutorFactory<T extends object> {
           this.config.multiAgreementShouldResolveUnagreedToUndefined
         ) as unknown as Executor<R>;
       default:
-        return unsupportedParam(mode);
+        return throwUnsupportedParamError(mode);
     }
   }
 
