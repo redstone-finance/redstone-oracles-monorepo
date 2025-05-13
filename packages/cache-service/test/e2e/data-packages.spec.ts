@@ -516,9 +516,9 @@ describe("Data packages (e2e)", () => {
       jest.spyOn(Date, "now").mockImplementation(() => baseTimestamp);
     });
 
-    it("should include metadata when no hide-metadata", async () => {
+    it("should include metadata when show-metadata is provided", async () => {
       const response = await request(httpServer)
-        .get(`/v2/data-packages/latest/mock-data-service-1`)
+        .get(`/v2/data-packages/latest/mock-data-service-1/show-metadata`)
         .expect(200);
 
       expect(response.body.BTC[0].dataPoints[0]).toHaveProperty("metadata");

@@ -24,6 +24,9 @@ const handlers = [
   http.get("http://valid-cache.com/v2/data-packages/latest/*", () =>
     HttpResponse.json(getValidDataPackagesResponse())
   ),
+  http.get("http://valid-cache.com/data-packages/latest/*", () =>
+    HttpResponse.json(getValidDataPackagesResponse())
+  ),
   http.get("http://invalid-cache.com/v2/data-packages/latest/*", () =>
     HttpResponse.json({
       ETH: getDataPackageResponse("ETH").map((obj) => ({
