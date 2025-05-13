@@ -1,0 +1,20 @@
+{
+  "chain": {
+    "name": "fraxtal",
+    "id": 252
+  },
+  "adapterContract": "0xF6de0Bbe3b277A7C1d56139e4084e917AAaA74d2",
+  "adapterContractType": "multi-feed",
+  "dataServiceId": "redstone-primary-prod",
+  "updateTriggers": {
+    "deviationPercentage": 0.5,
+    "timeSinceLastUpdateInMilliseconds": 21600000
+  },
+  "priceFeeds": {
+    "BTC": {},
+    "CRV": {},
+    "ETH": {},
+    "FRAX": {},
+    "FXS": {}
+  }
+}
