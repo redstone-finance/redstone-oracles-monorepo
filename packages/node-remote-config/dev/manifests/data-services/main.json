@@ -3181,6 +3181,26 @@
       "denomination": "USD",
       "rateFeed": true
     },
+    "VANECK_ETHEREUM_FUNDAMENTAL": {
+      "source": ["securitize-api"],
+      "denomination": "USD",
+      "rateFeed": true
+    },
+    "VANECK_AVALANCHE_FUNDAMENTAL": {
+      "source": ["securitize-api"],
+      "denomination": "USD",
+      "rateFeed": true
+    },
+    "VANECK_BNB_FUNDAMENTAL": {
+      "source": ["securitize-api"],
+      "denomination": "USD",
+      "rateFeed": true
+    },
+    "VANECK_SOLANA_FUNDAMENTAL": {
+      "source": ["securitize-api"],
+      "denomination": "USD",
+      "rateFeed": true
+    },
     "egETH_FUNDAMENTAL": {
       "source": ["ethereum-evm-fetcher-eigenpie"],
       "denomination": "ETH",
