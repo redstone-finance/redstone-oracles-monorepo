@@ -27,43 +27,32 @@ const HISTORICAL_TIMESTAMP = 1726124100000;
 describe("Path construction in requestDataPackages", () => {
   const testScenarios = [
     {
-      params: { showMetadata: true, historicalTimestamp: undefined },
-      expectedPaths: [
-        "/v2/data-packages/latest/:dataServiceId",
-        "/data-packages/latest/:dataServiceId",
-      ],
+      params: { hideMetadata: false, historicalTimestamp: undefined },
+      expectedPaths: ["/data-packages/latest/:dataServiceId/show-metadata"],
     },
     {
-      params: { showMetadata: false, historicalTimestamp: undefined },
-      expectedPaths: [
-        "/v2/data-packages/latest/:dataServiceId/hide-metadata",
-        "/data-packages/latest/:dataServiceId/hide-metadata",
-      ],
+      params: { historicalTimestamp: undefined },
+      expectedPaths: ["/data-packages/latest/:dataServiceId"],
     },
     {
-      params: { showMetadata: true, historicalTimestamp: HISTORICAL_TIMESTAMP },
+      params: {
+        hideMetadata: false,
+        historicalTimestamp: HISTORICAL_TIMESTAMP,
+      },
       expectedPaths: [
-        "/v2/data-packages/historical/:dataServiceId/:timestamp",
-        "/data-packages/historical/:dataServiceId/:timestamp",
+        "/data-packages/historical/:dataServiceId/:timestamp/show-metadata",
       ],
     },
     {
       params: {
-        showMetadata: false,
+        hideMetadata: false,
         historicalTimestamp: HISTORICAL_TIMESTAMP,
       },
-      expectedPaths: [
-        "/v2/data-packages/historical/:dataServiceId/:timestamp/hide-metadata",
-        "/data-packages/historical/:dataServiceId/:timestamp/hide-metadata",
-      ],
+      expectedPaths: ["/data-packages/historical/:dataServiceId/:timestamp"],
     },
   ];
 
-  const baseUrlVariations = [
-    "http://valid-cache.com",
-    "http://valid-cache.com/v2",
-    "",
-  ];
+  const baseUrlVariations = ["http://valid-cache.com/v2", ""];
 
   testScenarios.forEach(({ params, expectedPaths }) => {
     describe(`Scenario: ${JSON.stringify(params)}`, () => {
