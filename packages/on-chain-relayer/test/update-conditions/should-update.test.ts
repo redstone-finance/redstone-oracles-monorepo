@@ -185,6 +185,8 @@ describe("should-update", () => {
       },
       relayerConfig
     );
-    expect(messages[0].message).to.match(/Enough time passed to updated price/);
+    expect(messages[0].message).to.match(
+      /Enough time has passed to update prices/
+    );
   });
 });

@@ -15,7 +15,8 @@ export const cronCondition = (
       cronExpression,
       currentTimestamp,
       lastUpdateTimestamp,
-      config
+      config,
+      dataFeedId
     );
 
     shouldUpdatePrices ||= cronCheck.shouldUpdatePrices;
@@ -33,7 +34,8 @@ const checkCronCondition = (
   cronExpression: string,
   currentTimestamp: number,
   lastUpdateTimestamp: number,
-  config: RelayerConfig
+  config: RelayerConfig,
+  dataFeedId: string
 ) => {
   const interval = parseExpression(cronExpression, {
     // We move current time a bit back for the case with fallback
@@ -50,15 +52,14 @@ const checkCronCondition = (
   const shouldUpdatePrices = lastExpectedUpdateTime > lastUpdateTimestamp;
 
   const logTrace = JSON.stringify({
-    type: "cron",
     timeSinceLastUpdate: currentTimestamp - lastUpdateTimestamp,
     timeSinceLastExpectedUpdate: currentTimestamp - lastExpectedUpdateTime,
     timeToNextExpectedUpdate: nextExpectedUpdateTime - currentTimestamp,
   });
 
   const warningMessage = shouldUpdatePrices
-    ? `Should update prices according to cron expr: ${logTrace}`
-    : `Should not update prices according to cron expr: ${logTrace}`;
+    ? `Should update prices according to cron expr: ${dataFeedId} ${logTrace}`
+    : `Should not update prices according to cron expr: ${dataFeedId} ${logTrace}`;
 
   return {
     shouldUpdatePrices,
