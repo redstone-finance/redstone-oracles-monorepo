@@ -1636,18 +1636,17 @@
     },
     "deUSD_FUNDAMENTAL": {
       "source": [
-        "ethereum-evm-fetcher-elixir"
+        "mixed-evm-fetcher-elixir-deusd"
       ],
       "denomination": "USD",
-      "rateFeed": true,
-      "valueCapConfig": {
-        "upper": {
-          "value": 1.03
-        },
-        "lower": {
-          "value": 0.98
-        }
-      }
+      "rateFeed": true
+    },
+    "sdeUSD_FUNDAMENTAL": {
+      "source": [
+        "ethereum-evm-fetcher-elixir"
+      ],
+      "denomination": "deUSD",
+      "rateFeed": true
     },
     "BBUSD": {
       "source": [
