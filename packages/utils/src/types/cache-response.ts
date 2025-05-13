@@ -8,7 +8,7 @@ export interface DataPackageFromGateway {
   dataPoints: {
     dataFeedId: string;
     value: number;
-    metadata: Record<string, unknown>;
+    metadata?: Record<string, unknown>;
   }[];
   dataServiceId: string;
   dataPackageId: string;
