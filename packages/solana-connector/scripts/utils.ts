@@ -32,3 +32,13 @@ export function balanceFromSol(balance: number) {
 export function balanceToSol(balance: number) {
   return balance / LAMPORTS_PER_SOL;
 }
+
+export function getSolanaVerifyBaseParams(deployDir: string, address: string) {
+  return (
+    `https://github.com/redstone-finance/redstone-oracles-monorepo ` +
+    `--mount-path packages/solana-connector/${deployDir} ` +
+    `--library-name ${CONTRACT_NAME} ` +
+    `-u  ${readUrl()} ` +
+    `--program-id ${address} `
+  );
+}

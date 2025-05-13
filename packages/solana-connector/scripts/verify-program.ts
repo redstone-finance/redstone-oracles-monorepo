@@ -4,7 +4,7 @@ import { setTimeout } from "timers/promises";
 import { readCluster } from "../src";
 import { readProgramAddress } from "./consts";
 import { getAccountInfo } from "./get-account-info";
-import { CONTRACT_NAME, readDeployDir, readUrl } from "./utils";
+import { getSolanaVerifyBaseParams, readDeployDir } from "./utils";
 import { writeKeypairToFile } from "./write-keypair-to-file";
 
 async function verifyProgram(
@@ -18,12 +18,9 @@ async function verifyProgram(
   const deployCmds = [
     `cd ${deployDir}`,
     `solana-verify verify-from-repo --current-dir ` +
-      `https://github.com/redstone-finance/redstone-oracles-monorepo ` +
-      `--mount-path packages/solana-connector/${deployDir} ` +
-      `--library-name ${CONTRACT_NAME} ` +
+      getSolanaVerifyBaseParams(deployDir, address) +
       (cluster === "mainnet-beta" ? " --remote " : "") +
       `--keypair ${pkData.filename} ` +
-      `-u  ${readUrl()} ` +
       `--program-id ${address} `,
   ];
 
