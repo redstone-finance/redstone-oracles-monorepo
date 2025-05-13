@@ -8,14 +8,6 @@ exports[`Data packages (e2e) API  /data-packages/historical/mock-data-service-1 
     "dataPoints": [
       {
         "dataFeedId": "XD",
-        "metadata": {
-          "sources": {
-            "exchange_1": "1.19",
-            "exchange_2": "1.20",
-            "exchange_3": "1.21",
-          },
-          "type": "HEX_BIG_INT",
-        },
         "value": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAcnDgA=",
       },
       {
@@ -39,14 +31,6 @@ exports[`Data packages (e2e) API  /data-packages/historical/mock-data-service-1 
     "dataPoints": [
       {
         "dataFeedId": "XD",
-        "metadata": {
-          "sources": {
-            "exchange_1": "1.19",
-            "exchange_2": "1.20",
-            "exchange_3": "1.21",
-          },
-          "type": "HEX_BIG_INT",
-        },
         "value": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAcnDgA=",
       },
       {
@@ -70,14 +54,6 @@ exports[`Data packages (e2e) API  /data-packages/historical/mock-data-service-1 
     "dataPoints": [
       {
         "dataFeedId": "XD",
-        "metadata": {
-          "sources": {
-            "exchange_1": "1.19",
-            "exchange_2": "1.20",
-            "exchange_3": "1.21",
-          },
-          "type": "HEX_BIG_INT",
-        },
         "value": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAcnDgA=",
       },
       {
@@ -101,14 +77,6 @@ exports[`Data packages (e2e) API  /data-packages/historical/mock-data-service-1 
     "dataPoints": [
       {
         "dataFeedId": "XD",
-        "metadata": {
-          "sources": {
-            "exchange_1": "1.19",
-            "exchange_2": "1.20",
-            "exchange_3": "1.21",
-          },
-          "type": "HEX_BIG_INT",
-        },
         "value": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAcnDgA=",
       },
       {
@@ -132,14 +100,6 @@ exports[`Data packages (e2e) API  /data-packages/historical/mock-data-service-1 
     "dataPoints": [
       {
         "dataFeedId": "XD",
-        "metadata": {
-          "sources": {
-            "exchange_1": "1.19",
-            "exchange_2": "1.20",
-            "exchange_3": "1.21",
-          },
-          "type": "HEX_BIG_INT",
-        },
         "value": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAcnDgA=",
       },
       {
@@ -168,14 +128,6 @@ exports[`Data packages (e2e) API /v2 /data-packages/historical/mock-data-service
     "dataPoints": [
       {
         "dataFeedId": "XD",
-        "metadata": {
-          "sources": {
-            "exchange_1": "1.19",
-            "exchange_2": "1.20",
-            "exchange_3": "1.21",
-          },
-          "type": "HEX_BIG_INT",
-        },
         "value": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAcnDgA=",
       },
       {
@@ -199,14 +151,6 @@ exports[`Data packages (e2e) API /v2 /data-packages/historical/mock-data-service
     "dataPoints": [
       {
         "dataFeedId": "XD",
-        "metadata": {
-          "sources": {
-            "exchange_1": "1.19",
-            "exchange_2": "1.20",
-            "exchange_3": "1.21",
-          },
-          "type": "HEX_BIG_INT",
-        },
         "value": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAcnDgA=",
       },
       {
@@ -230,14 +174,6 @@ exports[`Data packages (e2e) API /v2 /data-packages/historical/mock-data-service
     "dataPoints": [
       {
         "dataFeedId": "XD",
-        "metadata": {
-          "sources": {
-            "exchange_1": "1.19",
-            "exchange_2": "1.20",
-            "exchange_3": "1.21",
-          },
-          "type": "HEX_BIG_INT",
-        },
         "value": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAcnDgA=",
       },
       {
@@ -261,14 +197,6 @@ exports[`Data packages (e2e) API /v2 /data-packages/historical/mock-data-service
     "dataPoints": [
       {
         "dataFeedId": "XD",
-        "metadata": {
-          "sources": {
-            "exchange_1": "1.19",
-            "exchange_2": "1.20",
-            "exchange_3": "1.21",
-          },
-          "type": "HEX_BIG_INT",
-        },
         "value": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAcnDgA=",
       },
       {
@@ -292,14 +220,6 @@ exports[`Data packages (e2e) API /v2 /data-packages/historical/mock-data-service
     "dataPoints": [
       {
         "dataFeedId": "XD",
-        "metadata": {
-          "sources": {
-            "exchange_1": "1.19",
-            "exchange_2": "1.20",
-            "exchange_3": "1.21",
-          },
-          "type": "HEX_BIG_INT",
-        },
         "value": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAcnDgA=",
       },
       {
