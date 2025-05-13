@@ -21,6 +21,7 @@
     "write-simultaneously": "yarn global:ts-node scripts/write-simultaneously.ts",
     "anchor-deploy": "yarn global:ts-node scripts/anchor-deploy.ts",
     "verify-program": "yarn global:ts-node scripts/verify-program.ts",
+    "verify-program-as-multi-sig": "yarn global:ts-node scripts/ledger/verify-program-as-multi-sig.ts",
     "run-node": "echo todo",
     "test-contracts": "cd solana && yarn run ts-mocha -p ../tsconfig.json -t 1000000 tests/**/*.ts",
     "create-multi-sig": "yarn global:ts-node scripts/ledger/create-multi-sig.ts",
