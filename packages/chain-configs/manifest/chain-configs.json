@@ -1212,6 +1212,9 @@
     },
     "haven1Testnet": {
       "disabled": true
+    },
+    "hemiTestnet": {
+      "disabled": true
     }
   }
 }
