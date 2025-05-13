@@ -47,7 +47,7 @@ describe("fallback-time-condition", () => {
     );
     expect(shouldUpdatePrices).to.be.true;
     expect(messages[0].message).to.match(
-      /Time in fallback mode: Enough time passed to updated prices/
+      /Time in fallback mode: Enough time has passed to update prices/
     );
   });
 });

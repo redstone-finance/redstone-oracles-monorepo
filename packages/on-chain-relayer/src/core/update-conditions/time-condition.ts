@@ -22,14 +22,13 @@ export const timeUpdateCondition = (
   const timeDiff = currentTimestamp - lastUpdateTimestamp;
   const shouldUpdatePrices = timeDiff >= updatePriceInterval;
   const logTrace = JSON.stringify({
-    dataFeedId,
     timeDiff,
     updatePriceInterval,
   });
 
   const warningMessage = shouldUpdatePrices
-    ? `Enough time passed to updated prices: ${logTrace}`
-    : `Not enough time has passed to update prices: ${logTrace}`;
+    ? `Enough time has passed to update prices: ${dataFeedId} ${logTrace}`
+    : `Not enough time has passed to update prices: ${dataFeedId} ${logTrace}`;
 
   return {
     shouldUpdatePrices,
