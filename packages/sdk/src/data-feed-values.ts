@@ -83,6 +83,6 @@ export const aggregateValues = (
     case "median":
       return MathUtils.getMedian(plainValues);
     default:
-      return RedstoneCommon.unsupportedParam(aggregationAlgorithm);
+      return RedstoneCommon.throwUnsupportedParamError(aggregationAlgorithm);
   }
 };
