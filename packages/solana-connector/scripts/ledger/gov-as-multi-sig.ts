@@ -3,6 +3,7 @@ import {
   Connection,
   Keypair,
   PublicKey,
+  Transaction,
   TransactionInstruction,
   TransactionMessage,
   VersionedTransaction,
@@ -40,6 +41,11 @@ type InstructionType =
       bufferAccount: PublicKey;
       spillAccount: PublicKey;
       programId: PublicKey;
+    }
+  | {
+      type: "raw-transaction";
+      base64Transaction: string;
+      programId: undefined;
     };
 
 type Signer =
@@ -80,21 +86,53 @@ async function promptInstructionType(functionType: FunctionType) {
       choices: [
         { title: "set-new-authority", value: "set-new-authority" },
         { title: "upgrade-from-buffer", value: "upgrade-from-buffer" },
+        { title: "raw-transaction", value: "raw-transaction" },
       ],
     })
-  ).selectInstruction as "set-new-authority" | "upgrade-from-buffer";
-
-  const programId = await promptProgramId();
+  ).selectInstruction as
+    | "set-new-authority"
+    | "upgrade-from-buffer"
+    | "raw-transaction";
 
   switch (type) {
-    case "set-new-authority":
+    case "set-new-authority": {
+      const programId = await promptProgramId();
+
       return { ...(await promptNewAuthority()), programId } as InstructionType;
-    case "upgrade-from-buffer":
+    }
+    case "upgrade-from-buffer": {
+      const programId = await promptProgramId();
+
       return {
         ...(await promptUpgradeFromBuffer()),
         programId,
       } as InstructionType;
+    }
+    case "raw-transaction": {
+      if (functionType === "approve") {
+        return undefined;
+      }
+
+      return {
+        ...(await promptRawTransaction()),
+      } as InstructionType;
+    }
+    default:
+      return RedstoneCommon.throwUnsupportedParamError(type);
   }
+}
+
+async function promptRawTransaction() {
+  const base64Transaction = await prompts({
+    type: "text",
+    name: "base64Transaction",
+    message: "Base64 encoded transaction",
+  });
+
+  return {
+    type: "raw-transaction",
+    base64Transaction: base64Transaction.base64Transaction as string,
+  };
 }
 
 async function promptUpgradeFromBuffer() {
@@ -246,20 +284,32 @@ function getInstruction(
   squad: SquadsMultisig,
   instructionType: InstructionType
 ) {
-  if (instructionType.type === "set-authority") {
-    return createSetUpgradeAuthority(
-      instructionType.programId,
-      squad.vaultPda(),
-      instructionType.newAuthorityAddress
-    );
-  } else {
-    return createUpgradeInstruction(
-      squad.vaultPda(),
-      instructionType.programId,
-      instructionType.bufferAccount,
-      instructionType.spillAccount
-    );
+  const type = instructionType.type;
+  switch (type) {
+    case "set-authority":
+      return createSetUpgradeAuthority(
+        instructionType.programId,
+        squad.vaultPda(),
+        instructionType.newAuthorityAddress
+      );
+    case "upgrade-from-buffer":
+      return createUpgradeInstruction(
+        squad.vaultPda(),
+        instructionType.programId,
+        instructionType.bufferAccount,
+        instructionType.spillAccount
+      );
+    case "raw-transaction":
+      return getLastInstruction(instructionType.base64Transaction);
+    default:
+      return RedstoneCommon.throwUnsupportedParamError(type);
   }
+}
+
+function getLastInstruction(base64Transaction: string) {
+  const tx = Transaction.from(Buffer.from(base64Transaction, "base64"));
+
+  return tx.instructions.at(-1)!;
 }
 
 async function handleCreateVaultTx(
