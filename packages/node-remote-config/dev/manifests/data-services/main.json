@@ -1867,16 +1867,6 @@
       "denomination": "ETH",
       "rateFeed": false
     },
-    "BBUSD": {
-      "source": ["bouncebit-evm-fetcher-bouncebit"],
-      "denomination": "USD",
-      "rateFeed": false
-    },
-    "BBTC": {
-      "source": ["bouncebit-evm-fetcher-bouncebit"],
-      "denomination": "USD",
-      "rateFeed": false
-    },
     "USD3": {
       "source": [
         "curve-ethereum-sdai",
