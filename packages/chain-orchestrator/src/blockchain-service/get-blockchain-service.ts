@@ -44,5 +44,5 @@ export function getBlockchainService(
       chainConfig.chainId
     );
   }
-  return RedstoneCommon.unsupportedParam(chainConfig.chainType);
+  return RedstoneCommon.throwUnsupportedParamError(chainConfig.chainType);
 }

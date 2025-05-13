@@ -354,7 +354,7 @@ async function handleAction(
       case "execute":
         return await handleExecute(connection, squad, transactionIdx, signer);
       default:
-        return RedstoneCommon.unsupportedParam(functionType);
+        return RedstoneCommon.throwUnsupportedParamError(functionType);
     }
   })();
 

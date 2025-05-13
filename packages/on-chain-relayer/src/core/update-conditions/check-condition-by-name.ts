@@ -49,7 +49,7 @@ export const checkConditionByName = async (
       );
 
     default:
-      return RedstoneCommon.unsupportedParam(name);
+      return RedstoneCommon.throwUnsupportedParamError(name);
   }
 };
 
