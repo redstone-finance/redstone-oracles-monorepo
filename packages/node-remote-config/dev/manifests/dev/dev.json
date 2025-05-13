@@ -10,23 +10,14 @@
     }
   },
   "tokens": {
-    "BTC": {
-      "denomination": "USD",
-      "rateFeed": false
-    },
-    "ETH": {
-      "denomination": "USD",
-      "rateFeed": false
-    },
-    "BNB": {
-      "denomination": "USD",
-      "rateFeed": false
-    },
     "USDT": {
-      "denomination": "USD",
-      "rateFeed": false
-    },
-    "USDC": {
+      "source": ["kraken-usd"],
+      "deviationCheck": {
+        "deviationWithRecentValues": {
+          "maxPercent": 5,
+          "maxDelayMilliseconds": 120000
+        }
+      },
       "denomination": "USD",
       "rateFeed": false
     }

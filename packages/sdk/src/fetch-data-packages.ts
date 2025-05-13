@@ -5,17 +5,20 @@ import { resolveDataServiceUrls } from "./data-services-urls";
 type FetchDataPackagesArgs = {
   dataServiceId: string;
   gatewayUrls?: string[];
+  getMetadata?: boolean;
 };
 
 export const fetchDataPackages = async ({
   dataServiceId,
   gatewayUrls,
+  getMetadata,
 }: FetchDataPackagesArgs): Promise<RedstoneTypes.DataPackageFromGatewayResponse> => {
   const resolvedGatewayUrls =
     gatewayUrls ?? resolveDataServiceUrls(dataServiceId);
 
   const urls = resolvedGatewayUrls.map(
-    (baseUrl) => `${baseUrl}/data-packages/latest/${dataServiceId}`
+    (baseUrl) =>
+      `${baseUrl}/v2/data-packages/latest/${dataServiceId}${getMetadata ? "/show-metadata" : ""}`
   );
 
   const responseFromGateway =
