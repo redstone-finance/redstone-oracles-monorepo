@@ -57,7 +57,7 @@ const getDataPackagesFromGateway = async (
   dataServiceId: string
 ): Promise<GatewayResponse> => {
   const response = await axios.get<GatewayResponse>(
-    `${url}/data-packages/latest/${dataServiceId}`
+    `${url}/v2/data-packages/latest/${dataServiceId}`
   );
 
   if (typeof response.data === "string") {
