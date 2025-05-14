@@ -144,7 +144,8 @@ export function simplifyErrorMessage(error: unknown) {
       const pattern = "Original error: AggregateError: <no message>, errors:";
       const patternPos = errorString.indexOf(pattern);
       const startIndex = patternPos !== -1 ? patternPos + pattern.length : 0;
-      const endIndex = errorString.indexOf("\n", startIndex);
+      const endPos = errorString.indexOf("\n", startIndex);
+      const endIndex = endPos === -1 ? errorString.length : endPos;
       const shortenedError = errorString.substring(startIndex, endIndex).trim();
 
       errorMessages.add(shortenedError);
