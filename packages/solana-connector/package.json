@@ -33,10 +33,14 @@
     "transfer-sol": "yarn global:ts-node scripts/transfer-sol.ts",
     "make-feed-table": "yarn global:ts-node scripts/make-feed-table.ts",
     "show-multi-sig-tx-details": "yarn global:ts-node scripts/ledger/show-multi-sig-tx-details.ts",
-    "write-buffer": "yarn global:ts-node scripts/write-program-buffer.ts"
+    "write-buffer": "yarn global:ts-node scripts/write-program-buffer.ts",
+    "update-mmetadata-authority": "yarn global:ts-node scripts/update-metadata-authority.ts"
   },
   "dependencies": {
     "@coral-xyz/anchor": "0.30.1",
+    "@metaplex-foundation/mpl-token-metadata": "^3.4.0",
+    "@metaplex-foundation/umi": "^1.2.0",
+    "@metaplex-foundation/umi-bundle-defaults": "^1.2.0",
     "@redstone-finance/sdk": "workspace:*",
     "@redstone-finance/utils": "workspace:*",
     "@solana/web3.js": "^1.98.2"
