@@ -124,6 +124,16 @@ describe("MultiAgreementExecutor", () => {
         new ArrayMockClient(["D", "B", "C"], 2, EXEC_TIME),
         new ArrayMockClient(["E", "B", "C"], 2, 3 * EXEC_TIME),
       ],
+      [
+        new ArrayMockClient([], 0, EXEC_TIME),
+        new ArrayMockClient(["D", "B", "C"], 2, 2 * EXEC_TIME),
+        new ArrayMockClient(["E", "B", "C"], 2, 3 * EXEC_TIME),
+      ],
+      [
+        new ArrayMockClient(ABC, 0, EXEC_TIME * 2),
+        new ArrayMockClient(["D", "B", "C"], 2, EXEC_TIME, true),
+        new ArrayMockClient(["E", "B", "C"], 2, 3 * EXEC_TIME),
+      ],
     ]) {
       const sut = makeSut(instances, config, {
         ...DEFAULT_CONFIG,

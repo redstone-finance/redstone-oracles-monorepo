@@ -72,7 +72,7 @@ export class AgreementExecutor<R> extends ParallelExecutor<R> {
     );
   }
 
-  private getQuorum(totalLength: number) {
+  protected getQuorum(totalLength: number) {
     return totalLength <= this.quorumNumber
       ? Math.min(1, this.quorumNumber)
       : this.quorumNumber;
