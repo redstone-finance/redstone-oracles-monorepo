@@ -1,16 +1,21 @@
 import { RedstoneCommon } from "@redstone-finance/utils";
 import { Connection, LAMPORTS_PER_SOL } from "@solana/web3.js";
+import { arrayify } from "ethers/lib/utils";
 import { z } from "zod";
 import { makeKeypair } from "../src";
 
 export const CONTRACT_NAME = "redstone_solana_price_adapter";
 
-export function readKeypair() {
-  const privateKey = RedstoneCommon.getFromEnv(
+export function readKeypairBytes() {
+  const keypair = RedstoneCommon.getFromEnv(
     "PRIVATE_KEY",
     z.array(z.number().gte(0).lte(255)).or(z.string())
   );
-  return makeKeypair(privateKey);
+  return arrayify(keypair, { allowMissingPrefix: true });
+}
+
+export function readKeypair() {
+  return makeKeypair(readKeypairBytes());
 }
 
 export function readUrl() {
