@@ -20,7 +20,7 @@ const BYTE_LENGTHS = {
   SECRET_KEY: 64,
 };
 
-export function makeKeypair(privateKeyInput: number[] | string) {
+export function makeKeypair(privateKeyInput: number[] | string | Uint8Array) {
   const privateKey = arrayify(privateKeyInput, { allowMissingPrefix: true });
   const privateKeyBuffer = Buffer.from(privateKey);
 
