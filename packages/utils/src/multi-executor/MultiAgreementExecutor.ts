@@ -1,4 +1,5 @@
 import _ from "lodash";
+import { getS } from "../common";
 import { AgreementExecutor } from "./AgreementExecutor";
 
 /* That class is used to execute multiple agreements in parallel and then aggregate the result point by point.
@@ -33,10 +34,19 @@ export class MultiAgreementExecutor<
     errorResults: unknown[],
     totalLength: number
   ) {
-    if (
-      successfulResults.length + errorResults.length <
-      this.getQuorum(totalLength)
-    ) {
+    const quorum = this.getQuorum(totalLength);
+    if (successfulResults.length < quorum) {
+      if (successfulResults.length + errorResults.length === totalLength) {
+        throw new Error(
+          `MultiAgreement failed: got ${successfulResults.length} successful result${getS(successfulResults.length)}, ` +
+            `needed at least ${quorum}`
+        );
+      }
+
+      this.logger.debug(
+        `Returning, still doesn't have enough of ${quorum} results: ${successfulResults.length} successes + ${errorResults.length} errors`
+      );
+
       return false;
     }
 
