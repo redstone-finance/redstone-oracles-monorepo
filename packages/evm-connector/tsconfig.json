@@ -1,6 +1,7 @@
 {
   "extends": "../../tsconfig-common.json",
   "include": ["**/*", "package.json"],
+  "exclude": ["dist", "test-browser-compatibility/browser-bundle.js"],
   "references": [
     {
       "path": "../protocol/tsconfig.build.json"
