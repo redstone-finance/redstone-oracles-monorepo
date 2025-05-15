@@ -15,10 +15,10 @@ export async function run(provider: NetworkProvider) {
   ).getAdapter();
 
   const paramsProvider = new ContractParamsProvider({
-    dataServiceId: "redstone-rapid-demo",
+    dataServiceId: "redstone-primary-demo",
     uniqueSignersCount: 1,
     dataPackagesIds: ["BTC", "ETH", "BNB", "AR", "AVAX", "CELO"],
-    authorizedSigners: getSignersForDataServiceId("redstone-rapid-demo"),
+    authorizedSigners: getSignersForDataServiceId("redstone-primary-demo"),
   });
 
   console.log(await contract.getPricesFromPayload(paramsProvider));
