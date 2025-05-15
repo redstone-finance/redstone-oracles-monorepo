@@ -351,13 +351,6 @@ checks the limitations and prepares the data to be sent to the contract as descr
 The image below contains data for `2` feeds times `2` unique signers:\
 ![sample-serialization.png](../assets/sample-serialization.png)
 
-### Sample payload
-
-The sample data passed to the contract deployed for the showroom/sample can be fetched by using:
-https://d33trozg86ya9x.cloudfront.net/data-packages/payload?unique-signers-count=1&data-service-id=redstone-rapid-demo&data-feeds=ETH,BTC&format=hex
-That's an example endpoint for `redstone-rapid-demo` data-service id, also for the sample value of the signer-address
-that can be used for the initializer (`0xf786a909D559F5Dee2dc6706d8e5A81728a39aE9`)
-
 📟 You can use: [Makefile](../../sdk/scripts/payload-generator/Makefile) by
 invoking `make DATA_NAME=[name] prepare_data` or
 directly from the [payload-generator](../../sdk/scripts/payload-generator) environment directory where `[name]`
