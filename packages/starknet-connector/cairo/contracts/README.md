@@ -47,10 +47,6 @@ To be counted to achieve the `signer_count_threshold`, the signer signing the pa
 should be one of the `signer_addresses` passed in the constructor.
 There is also needed `signer_count_threshold` to be passed.
 
-📖
-The [sample/showroom](https://sepolia.starkscan.co/contract/0x0037b17a782f5a0134bd21faf200f35c96b436dc3af51f5534aa69fd4261bec9)
-contract deployed uses single value `0xf786a909D559F5Dee2dc6706d8e5A81728a39aE9`
-as a signer address (of the `redstone-rapid-demo` data service) and `1` as `signer_count_threshold`.
 
 In the function parameters below, each `feed_id` is a cairo-represented string, so that's a `felt252` corresponding to
 the string written in cairo:
