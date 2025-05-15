@@ -4,6 +4,8 @@
     "node_modules",
     "dist",
     "test",
+    "test-browser-compatibility",
+    "test-*.ts",
     "**/*spec.ts",
     "benchmarks",
     "hardhat.config.ts"
