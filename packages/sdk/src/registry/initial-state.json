@@ -11,28 +11,6 @@
       "ecdsaPublicKey": "0x04009dd87eb41d96ce8ad94aa22ea8b0ba4ac20c45e42f71726d6b180f93c3f298e333ae7591fe1c9d88234575639be9e81e35ba2fe5ad2c2260f07db49ccb9d0d",
       "dateAdded": "2024-01-01"
     },
-    "Yba8IVc_01bFxutKNJAZ7CmTD5AVi2GcWXf1NajPAsc": {
-      "url": "https://redstone.finance",
-      "logo": "https://redstone.finance/assets/img/redstone-logo-full.svg",
-      "name": "redstone-stocks",
-      "ipAddress": "0.0.0.0",
-      "dataServiceId": "redstone-stocks-demo",
-      "evmAddress": "0x926E370fD53c23f8B71ad2B3217b227E41A92b12",
-      "description": "Stocks, ETFs, Livestocks, Metals, Energies...",
-      "ecdsaPublicKey": "0x04a628e8c2ef7d3b768b75404a48adcd667d0d59ae457bf19552ff670d2c95630480752e90b0c9fe8127feeb9e8f9e694919c730327bd368c985f1a5b26c2d60ba",
-      "dateAdded": "2024-01-01"
-    },
-    "zYqPZuALSPa_f5Agvf8g2JHv94cqMn9aBtnH7GFHbuA": {
-      "url": "https://redstone.finance",
-      "logo": "https://redstone.finance/assets/img/redstone-logo-full.svg",
-      "name": "redstone-rapid",
-      "ipAddress": "0.0.0.0",
-      "dataServiceId": "redstone-rapid-demo",
-      "evmAddress": "0xf786a909D559F5Dee2dc6706d8e5A81728a39aE9",
-      "description": "Most popular tokens with frequent updates",
-      "ecdsaPublicKey": "0x041d45589c5055c867e857d8437e7d5745027d0a455801bc78cc856840510e76d8ffe578296a11a03e744d7a953e0f1e36c3a93f74268859e480203ab4d2f5718e",
-      "dateAdded": "2024-01-01"
-    },
     "f1Ipos2fVPbxPVO65GBygkMyW0tkAhp2hdprRPPBBN8": {
       "url": "https://redstone.finance",
       "logo": "https://redstone.finance/assets/img/redstone-logo-full.svg",
@@ -406,20 +384,6 @@
       "admin": "I-5rWUehEv-MjdK9gFw09RxfSLQX9DIHxG614Wf8qo0",
       "description": "Main RedStone Provider with all available tokens.",
       "manifestTxId": "kXYM3AezlROPoEDCt_802-k9ZxeceAWzHtrERmR2zEg"
-    },
-    "redstone-rapid-demo": {
-      "logo": "https://redstone.finance/assets/img/redstone-logo-full.svg",
-      "name": "RedStone Rapid Demo",
-      "admin": "zYqPZuALSPa_f5Agvf8g2JHv94cqMn9aBtnH7GFHbuA",
-      "description": "Most popular tokens with frequent updates",
-      "manifestTxId": "5iQ5tPebRcdB4OjLZvaCMftREpP_P-V-F0J0WAgyLFI"
-    },
-    "redstone-stocks-demo": {
-      "logo": "https://redstone.finance/assets/img/redstone-logo-full.svg",
-      "name": "RedStone Stocks Demo",
-      "admin": "Yba8IVc_01bFxutKNJAZ7CmTD5AVi2GcWXf1NajPAsc",
-      "description": "Stocks, ETFs, Livestocks, Metals, Energies...",
-      "manifestTxId": "MmWSoOPdKoyRlJ7Qhrvp3odBu0881Ou379e19SxDxKg"
     },
     "redstone-avalanche-demo": {
       "logo": "https://redstone.finance/assets/img/redstone-logo-full.svg",
