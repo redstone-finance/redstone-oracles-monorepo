@@ -20,7 +20,8 @@
     "zod": "^3.22.4"
   },
   "files": [
-    "dist/src/*"
+    "src",
+    "dist"
   ],
   "publishConfig": {
     "access": "public"
