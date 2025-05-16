@@ -54,6 +54,10 @@
   "resolutions": {
     "elliptic": "^6.6.1"
   },
+  "files": [
+    "web3-functions",
+    "dist"
+  ],
   "publishConfig": {
     "access": "public"
   }
