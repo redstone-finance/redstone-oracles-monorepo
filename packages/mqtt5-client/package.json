@@ -22,6 +22,10 @@
     "aws-iot-device-sdk-v2": "^1.21.1",
     "lodash": "^4.17.21"
   },
+  "files": [
+    "src",
+    "dist"
+  ],
   "publishConfig": {
     "access": "public"
   }

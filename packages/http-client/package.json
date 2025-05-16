@@ -17,6 +17,10 @@
     "axios": "^1.8.4",
     "axios-retry": "^4.5.0"
   },
+  "files": [
+    "src",
+    "dist"
+  ],
   "publishConfig": {
     "access": "public"
   }
