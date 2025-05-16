@@ -57,8 +57,9 @@
     "elliptic": "^6.6.1"
   },
   "files": [
-    "dist/src/**/*",
-    "dist/wrappers/**/*"
+    "src",
+    "dist",
+    "wrappers"
   ],
   "publishConfig": {
     "access": "public"
