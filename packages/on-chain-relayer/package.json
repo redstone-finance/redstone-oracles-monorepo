@@ -86,7 +86,8 @@
     "elliptic": "^6.6.1"
   },
   "files": [
-    "dist/src/*",
+    "src",
+    "dist",
     "contracts"
   ],
   "publishConfig": {

@@ -74,6 +74,10 @@
     "elliptic": "^6.6.1",
     "node-datachannel": "0.25.0"
   },
+  "files": [
+    "src",
+    "dist"
+  ],
   "publishConfig": {
     "access": "public"
   }
