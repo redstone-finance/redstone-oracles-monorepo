@@ -1,5 +1,5 @@
 {
-  "extends": "./tsconfig.json",
+  "extends": ["./tsconfig.json", "../../tsconfig-build-common.json"],
   "exclude": ["node_modules", "dist", "test", "**/*spec.ts", "**/*.json"],
   "references": [
     {

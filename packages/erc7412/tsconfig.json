@@ -1,11 +1,6 @@
 {
   "extends": "../../tsconfig-common.json",
-  "include": [
-    "**/*",
-    "package.json",
-    "src/**/*.json",
-    "artifacts/**/*.sol/*.json"
-  ],
+  "include": ["**/*", "src/**/*.json", "artifacts/**/*.sol/*.json"],
   "references": [
     {
       "path": "../on-chain-relayer/tsconfig.build.json"

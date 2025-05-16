@@ -21,6 +21,10 @@
   "devDependencies": {
     "@types/node-schedule": "^2.1.0"
   },
+  "files": [
+    "src",
+    "dist"
+  ],
   "publishConfig": {
     "access": "public"
   }

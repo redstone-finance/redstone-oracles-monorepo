@@ -33,6 +33,10 @@
   "resolutions": {
     "elliptic": "^6.6.1"
   },
+  "files": [
+    "src",
+    "dist"
+  ],
   "publishConfig": {
     "access": "public"
   }

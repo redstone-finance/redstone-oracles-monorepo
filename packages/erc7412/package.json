@@ -49,13 +49,18 @@
     "@pythnetwork/pyth-sdk-solidity": "^2.2.1",
     "viem": "^1.21.4"
   },
-  "publishConfig": {
-    "access": "public"
-  },
   "overrides": {
     "elliptic": "^6.6.1"
   },
   "resolutions": {
     "elliptic": "^6.6.1"
+  },
+  "files": [
+    "src",
+    "dist",
+    "typechain-types"
+  ],
+  "publishConfig": {
+    "access": "public"
   }
 }
