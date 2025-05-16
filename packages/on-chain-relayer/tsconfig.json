@@ -1,8 +1,7 @@
 {
   "extends": "../../tsconfig-common.json",
   "include": [
-    "**/*.ts",
-    "package.json",
+    "**/*",
     "src/**/*.json",
     "artifacts/**/*.sol/*.json",
     "relayer-manifests/*.json",

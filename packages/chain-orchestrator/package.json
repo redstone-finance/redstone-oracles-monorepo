@@ -32,6 +32,10 @@
     "lodash": "^4.17.21",
     "zod": "^3.22.4"
   },
+  "files": [
+    "src",
+    "dist"
+  ],
   "publishConfig": {
     "access": "public"
   }
