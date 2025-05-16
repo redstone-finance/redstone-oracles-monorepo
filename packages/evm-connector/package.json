@@ -64,8 +64,10 @@
     "elliptic": "^6.6.1"
   },
   "files": [
-    "dist/**/*",
-    "contracts/**/*"
+    "src",
+    "dist",
+    "contracts",
+    "typechain-types"
   ],
   "publishConfig": {
     "access": "public"
