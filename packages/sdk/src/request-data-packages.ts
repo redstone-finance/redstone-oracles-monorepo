@@ -411,6 +411,7 @@ function sendRequestToGateway(url: string, pathComponents: string[]) {
     .concat(pathComponents)
     .join("/");
 
+  console.log(`ROBAL - request ${sanitizedUrl}`);
   return axios.get<Record<string, SignedDataPackagePlainObj[]>>(sanitizedUrl, {
     timeout: GET_REQUEST_TIMEOUT,
   });

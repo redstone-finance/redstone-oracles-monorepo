@@ -1,6 +1,5 @@
 {
   "extends": "../../tsconfig-common.json",
-  "include": ["**/*", "package.json"],
   "references": [
     {
       "path": "../utils/tsconfig.build.json"
