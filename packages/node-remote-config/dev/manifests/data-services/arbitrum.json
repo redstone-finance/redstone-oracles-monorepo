@@ -414,7 +414,6 @@
     "BAL": {
       "source": [
         "balancer-ethereum-weth",
-        "binance-usdt",
         "bitget-usdt",
         "bitmart-usdt",
         "gate-usdt",
@@ -671,11 +670,9 @@
         "balancer-arbitrumone-wsteth",
         "balancer-ethereum-weeth",
         "balancer-ethereum-weth",
-        "camelot-v3-arbitrumone-weth",
         "thruster-v3-blast-weth-3000",
         "thruster-v3-blast-weth-500",
-        "uniswap-v3-ethereum-weth-100",
-        "uniswap-v3-ethereum-wsteth-500"
+        "uniswap-v3-ethereum-weth-100"
       ],
       "denomination": "USD",
       "rateFeed": false
