@@ -1,26 +1,12 @@
 import { loggerFactory, RedstoneCommon } from "@redstone-finance/utils";
 import { scheduleJob } from "node-schedule";
 import { promises as fs } from "node:fs";
-
-export enum HealthStatus {
-  healthy = "healthy",
-  unhealthy = "unhealthy",
-  unknown = "unknown",
-}
-
-export type HealthCheckResult = {
-  errors: string[];
-  status: HealthStatus;
-};
-
-export type HealthCheckResults = {
-  status: HealthStatus;
-  results: Record<string, HealthCheckResult>;
-};
-
-export interface HealthCheck {
-  check(fireDate: Date): Promise<HealthCheckResult>;
-}
+import {
+  HealthStatus,
+  type HealthCheck,
+  type HealthCheckResult,
+  type HealthCheckResults,
+} from "./common";
 
 const logger = loggerFactory("HealthMonitor");
 
@@ -41,7 +27,7 @@ const logger = loggerFactory("HealthMonitor");
  *    - Writes the status to disk atomically.
  */
 export class HealthMonitor {
-  // note: this need to be hardcoded, as it is the value assumed by the Dockerfile.
+  // note: this needs to be hardcoded, as it is the value assumed by the Dockerfile.
   private readonly healthcheckFile = "healthcheck.txt";
 
   constructor(
@@ -53,14 +39,20 @@ export class HealthMonitor {
   }
 
   private async runChecks(fireDate: Date): Promise<void> {
-    logger.debug(`Running health checks`);
-    const data = await this.collectHealthData(fireDate);
-    if (data.status !== HealthStatus.healthy) {
-      logger.warn(
-        `Health check status: ${data.status}, errors: ${JSON.stringify(data.results)}`
+    try {
+      logger.debug(`Running health checks`);
+      const data = await this.collectHealthData(fireDate);
+      if (data.status !== HealthStatus.healthy) {
+        logger.warn(
+          `Health check status: ${data.status}, errors: ${JSON.stringify(data.results)}`
+        );
+      }
+      await this.atomicWriteStateFile(data.status);
+    } catch (e) {
+      logger.error(
+        `Error while running health checks: ${RedstoneCommon.stringifyError(e)}`
       );
     }
-    await this.atomicWriteStateFile(data.status);
   }
 
   private async collectHealthData(fireDate: Date): Promise<HealthCheckResults> {
@@ -112,18 +104,4 @@ export class HealthMonitor {
     // ...then atomically rename into place
     await fs.rename(tmpPath, this.healthcheckFile);
   }
-}
-
-export function healthy(): Promise<HealthCheckResult> {
-  return Promise.resolve({
-    errors: [],
-    status: HealthStatus.healthy,
-  });
-}
-
-export function unhealthy(errors: string[]): Promise<HealthCheckResult> {
-  return Promise.resolve({
-    errors,
-    status: HealthStatus.unhealthy,
-  });
 }

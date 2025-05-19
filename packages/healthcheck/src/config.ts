@@ -1,5 +1,6 @@
 import { RedstoneCommon } from "@redstone-finance/utils";
 import { z } from "zod";
+import { HealthCheck, HealthMonitor, ResourcesHealthCheck } from "./monitor";
 
 export const healthcheckConfig = () =>
   Object.freeze({
@@ -12,3 +13,18 @@ export const healthcheckConfig = () =>
       z.number().default(95)
     ),
   });
+
+export function enableWithDefaultConfig() {
+  const hcConfig = healthcheckConfig();
+  if (hcConfig.enabled) {
+    const healthChecks = new Map<string, HealthCheck>();
+    healthChecks.set(
+      "resources-healthcheck",
+      new ResourcesHealthCheck({
+        memoryPercent: hcConfig.memoryUsagePercentThreshold,
+        gracePeriodMs: RedstoneCommon.minToMs(5),
+      })
+    );
+    new HealthMonitor(healthChecks, 10_000);
+  }
+}
