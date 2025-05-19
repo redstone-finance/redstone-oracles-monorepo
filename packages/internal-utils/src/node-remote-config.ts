@@ -3,22 +3,42 @@ import fs from "node:fs";
 import path from "node:path";
 import { z } from "zod";
 
-const MAX_FETCHER_CONFIG_NESTING_DEPTH = 20;
+const MAX_REMOTE_CONFIG_NESTING_DEPTH = 20;
 
-export const getNodeConfigBasePath = () => {
+export const REMOTE_CONFIG_SIGNATURES_FOLDER = "signatures";
+
+export enum OracleNodeEnv {
+  Dev = "dev",
+  Prod = "prod",
+  ProdFallback = "prod-fallback",
+  ProdRedStone = "prod-redstone",
+  ProdRedStoneFallback = "prod-redstone-fallback",
+}
+
+export function getSignaturesRepositoryPath(nodeEnv = OracleNodeEnv.Dev) {
+  const remoteConfigPath = findRemoteConfigOrThrow(nodeEnv);
+  return path.join(
+    remoteConfigPath,
+    "..",
+    REMOTE_CONFIG_SIGNATURES_FOLDER,
+    nodeEnv
+  );
+}
+
+export const getNodeConfigBasePath = (nodeEnv = OracleNodeEnv.Dev) => {
   return RedstoneCommon.getFromEnv(
     "USE_REMOTE_CONFIG",
     z.boolean().default(false)
   )
     ? "node-remote-config"
-    : "node-remote-config/dev";
+    : `node-remote-config/${nodeEnv}`;
 };
 
-export function findRemoteConfigOrThrow() {
+export function findRemoteConfigOrThrow(configType = OracleNodeEnv.Dev) {
   const startDir = process.cwd();
   let dir = startDir;
-  for (let i = 0; i < MAX_FETCHER_CONFIG_NESTING_DEPTH; i++) {
-    const candidate = path.join(dir, getNodeConfigBasePath());
+  for (let i = 0; i < MAX_REMOTE_CONFIG_NESTING_DEPTH; i++) {
+    const candidate = path.join(dir, getNodeConfigBasePath(configType));
     if (fs.existsSync(candidate) && fs.statSync(candidate).isDirectory()) {
       return candidate;
     }
