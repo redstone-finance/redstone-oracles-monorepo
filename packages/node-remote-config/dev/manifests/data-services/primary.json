@@ -1087,11 +1087,9 @@
         "balancer-arbitrumone-wsteth",
         "balancer-ethereum-weeth",
         "balancer-ethereum-weth",
-        "camelot-v3-arbitrumone-weth",
         "thruster-v3-blast-weth-3000",
         "thruster-v3-blast-weth-500",
-        "uniswap-v3-ethereum-weth-100",
-        "uniswap-v3-ethereum-wsteth-500"
+        "uniswap-v3-ethereum-weth-100"
       ],
       "denomination": "USD",
       "rateFeed": false
@@ -1473,7 +1471,6 @@
     },
     "ISEI": {
       "source": [
-        "dragonswap-sei-wsei",
         "dragonswap-v2-sei-wsei-500",
         "jellyverse-sei-wsei"
       ],
@@ -1493,8 +1490,7 @@
     "pzETH": {
       "source": [
         "curve-ethereum-ezeth",
-        "curve-ethereum-wsteth",
-        "uniswap-v3-ethereum-wsteth-100"
+        "curve-ethereum-wsteth"
       ],
       "denomination": "USD",
       "rateFeed": false
@@ -1578,8 +1574,7 @@
       "source": [
         "pancake-swap-bnb-solvbtc-500",
         "trader-joe-v2-avalanche-solvbtc",
-        "uniswap-v3-ethereum-solvbtc-100",
-        "uniswap-v2-ethereum-solvbtc"
+        "uniswap-v3-ethereum-solvbtc-100"
       ],
       "upper": {
         "token": "BTC",
@@ -1608,7 +1603,6 @@
     },
     "pumpBTC": {
       "source": [
-        "balancer-ethereum-wbtc",
         "curve-ethereum-wbtc",
         "uniswap-v3-ethereum-wbtc-500"
       ],
@@ -1861,7 +1855,6 @@
     },
     "USDX": {
       "source": [
-        "balancer-arbitrumone-usdt",
         "curve-ethereum-usdt",
         "pancake-swap-stable-bnb-usdt"
       ],
@@ -1948,7 +1941,6 @@
     },
     "BIO": {
       "source": [
-        "aerodrome-cl-base-weth",
         "binance-fdusd",
         "binance-usdt",
         "bitmart-usdt",
@@ -2491,7 +2483,6 @@
       "source": [
         "pancake-swap-bnb-usdt-100",
         "pancake-swap-bnb-wbnb-500",
-        "uniswap-v3-ethereum-weth-3000",
         "uniswap-v3-ethereum-usdc-100",
         "uniswap-v3-ethereum-usdt-100"
       ],
