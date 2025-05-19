@@ -1,7 +1,12 @@
 import { loggerFactory } from "@redstone-finance/utils";
 import * as os from "node:os";
 import * as v8 from "node:v8";
-import { HealthCheck, HealthCheckResult, healthy, unhealthy } from "./index";
+import {
+  type HealthCheck,
+  type HealthCheckResult,
+  healthy,
+  unhealthy,
+} from "./common";
 
 export interface ResourceThresholds {
   memoryPercent: number;

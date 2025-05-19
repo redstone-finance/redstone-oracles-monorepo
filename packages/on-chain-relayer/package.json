@@ -42,6 +42,7 @@
     "@redstone-finance/chain-configs": "workspace:*",
     "@redstone-finance/chain-orchestrator": "workspace:*",
     "@redstone-finance/evm-connector": "workspace:*",
+    "@redstone-finance/healthcheck": "workspace:*",
     "@redstone-finance/internal-utils": "workspace:*",
     "@redstone-finance/mqtt5-client": "workspace:*",
     "@redstone-finance/on-chain-relayer-common": "workspace:*",

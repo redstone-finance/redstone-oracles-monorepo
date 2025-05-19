@@ -1,7 +1,6 @@
 {
   "name": "@redstone-finance/healthcheck",
   "version": "0.8.0",
-  "private": true,
   "main": "dist/src/index.js",
   "exports": "./dist/src/index.js",
   "types": "dist/src/index.d.ts",
@@ -23,5 +22,12 @@
   },
   "devDependencies": {
     "@types/node-schedule": "^2.1.0"
+  },
+  "files": [
+    "src",
+    "dist"
+  ],
+  "publishConfig": {
+    "access": "public"
   }
 }
