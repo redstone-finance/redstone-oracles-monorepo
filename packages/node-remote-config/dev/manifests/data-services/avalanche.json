@@ -440,7 +440,6 @@
     "BAL": {
       "source": [
         "balancer-ethereum-weth",
-        "binance-usdt",
         "bitget-usdt",
         "bitmart-usdt",
         "gate-usdt",
