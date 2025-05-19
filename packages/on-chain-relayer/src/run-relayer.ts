@@ -1,3 +1,4 @@
+import { RedstoneHealthcheck } from "@redstone-finance/healthcheck";
 import { loggerFactory } from "@redstone-finance/utils";
 import { config, ConsciouslyInvoked } from "./config/config";
 import { timelyOverrideSinceLastUpdate } from "./config/timely-override-since-last-update";
@@ -24,6 +25,8 @@ export const runRelayer = async () => {
       relayerConfig.temporaryUpdatePriceInterval
     );
   }
+
+  RedstoneHealthcheck.enableWithDefaultConfig();
 
   if (relayerConfig.runWithMqtt) {
     void MqttRunner.run(relayerConfig);

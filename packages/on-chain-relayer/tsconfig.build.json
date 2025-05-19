@@ -38,6 +38,9 @@
     },
     {
       "path": "../chain-orchestrator/tsconfig.build.json"
+    },
+    {
+      "path": "../healthcheck/tsconfig.build.json"
     }
   ]
 }

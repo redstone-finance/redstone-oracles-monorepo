@@ -1,2 +1,1 @@
-export * from "./config";
-export * from "./monitor";
+export * as RedstoneHealthcheck from "./all";
