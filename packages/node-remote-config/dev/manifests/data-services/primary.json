@@ -1470,10 +1470,7 @@
       "rateFeed": true
     },
     "ISEI": {
-      "source": [
-        "dragonswap-v2-sei-wsei-500",
-        "jellyverse-sei-wsei"
-      ],
+      "source": ["dragonswap-v2-sei-wsei-500", "jellyverse-sei-wsei"],
       "denomination": "USD",
       "rateFeed": false
     },
@@ -1488,10 +1485,7 @@
       "rateFeed": true
     },
     "pzETH": {
-      "source": [
-        "curve-ethereum-ezeth",
-        "curve-ethereum-wsteth"
-      ],
+      "source": ["curve-ethereum-ezeth", "curve-ethereum-wsteth"],
       "denomination": "USD",
       "rateFeed": false
     },
@@ -1602,10 +1596,7 @@
       "rateFeed": true
     },
     "pumpBTC": {
-      "source": [
-        "curve-ethereum-wbtc",
-        "uniswap-v3-ethereum-wbtc-500"
-      ],
+      "source": ["curve-ethereum-wbtc", "uniswap-v3-ethereum-wbtc-500"],
       "denomination": "USD",
       "rateFeed": false
     },
@@ -1854,10 +1845,7 @@
       "rateFeed": true
     },
     "USDX": {
-      "source": [
-        "curve-ethereum-usdt",
-        "pancake-swap-stable-bnb-usdt"
-      ],
+      "source": ["curve-ethereum-usdt", "pancake-swap-stable-bnb-usdt"],
       "deviationCheck": {
         "deviationWithRecentValues": {
           "maxPercent": 5,
@@ -2043,22 +2031,22 @@
       "denomination": "USD",
       "rateFeed": true
     },
-    "VANECK_ETHEREUM_FUNDAMENTAL": {
+    "VBILL_ETHEREUM_FUNDAMENTAL": {
       "source": ["securitize-api"],
       "denomination": "USD",
       "rateFeed": true
     },
-    "VANECK_AVALANCHE_FUNDAMENTAL": {
+    "VBILL_AVALANCHE_FUNDAMENTAL": {
       "source": ["securitize-api"],
       "denomination": "USD",
       "rateFeed": true
     },
-    "VANECK_BNB_FUNDAMENTAL": {
+    "VBILL_BNB_FUNDAMENTAL": {
       "source": ["securitize-api"],
       "denomination": "USD",
       "rateFeed": true
     },
-    "VANECK_SOLANA_FUNDAMENTAL": {
+    "VBILL_SOLANA_FUNDAMENTAL": {
       "source": ["securitize-api"],
       "denomination": "USD",
       "rateFeed": true
