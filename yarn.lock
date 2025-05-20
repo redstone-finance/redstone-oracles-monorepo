@@ -9579,6 +9579,7 @@ __metadata:
     "@redstone-finance/chain-configs": "workspace:*"
     "@redstone-finance/chain-orchestrator": "workspace:*"
     "@redstone-finance/evm-connector": "workspace:*"
+    "@redstone-finance/healthcheck": "workspace:*"
     "@redstone-finance/internal-utils": "workspace:*"
     "@redstone-finance/monitoring-manifests": "workspace:*"
     "@redstone-finance/mqtt5-client": "workspace:*"
