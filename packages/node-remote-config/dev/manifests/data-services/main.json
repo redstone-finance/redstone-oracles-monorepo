@@ -3542,28 +3542,28 @@
       "denomination": "USD",
       "rateFeed": true
     },
-    "VANECK_ETHEREUM_FUNDAMENTAL": {
+    "VBILL_ETHEREUM_FUNDAMENTAL": {
       "source": [
         "securitize-api"
       ],
       "denomination": "USD",
       "rateFeed": true
     },
-    "VANECK_AVALANCHE_FUNDAMENTAL": {
+    "VBILL_AVALANCHE_FUNDAMENTAL": {
       "source": [
         "securitize-api"
       ],
       "denomination": "USD",
       "rateFeed": true
     },
-    "VANECK_BNB_FUNDAMENTAL": {
+    "VBILL_BNB_FUNDAMENTAL": {
       "source": [
         "securitize-api"
       ],
       "denomination": "USD",
       "rateFeed": true
     },
-    "VANECK_SOLANA_FUNDAMENTAL": {
+    "VBILL_SOLANA_FUNDAMENTAL": {
       "source": [
         "securitize-api"
       ],
