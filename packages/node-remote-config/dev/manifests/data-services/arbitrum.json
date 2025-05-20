@@ -1331,7 +1331,9 @@
       "GM_SUI_WETH_USDC",
       "GM_SEI_WETH_USDC",
       "KAITO",
-      "SEI"
+      "SEI",
+      "USD+",
+      "EUROC"
     ]
   }
 }
