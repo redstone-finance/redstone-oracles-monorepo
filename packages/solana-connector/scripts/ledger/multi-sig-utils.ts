@@ -5,6 +5,7 @@ import {
   TransactionMessage,
 } from "@solana/web3.js";
 import * as multisig from "@sqds/multisig";
+import { types } from "@sqds/multisig";
 
 export class SquadsMultisig {
   constructor(
@@ -18,6 +19,36 @@ export class SquadsMultisig {
       this.multisigPda
     );
     return BigInt(Number(multisigInfo.transactionIndex));
+  }
+
+  async addMembers(
+    feePayer: PublicKey,
+    newMembers: PublicKey[],
+    newThreshold: number
+  ) {
+    const actions = newMembers.map(
+      (newMember) =>
+        ({
+          __kind: "AddMember",
+          newMember: {
+            key: newMember,
+            permissions: types.Permissions.all(),
+          },
+        }) as types.ConfigAction
+    );
+    actions.push({ __kind: "ChangeThreshold", newThreshold });
+
+    const transactionIndex = (await this.multisigTransactionIndex()) + 1n;
+
+    console.log(`Config actions:`, actions);
+
+    return multisig.instructions.configTransactionCreate({
+      multisigPda: this.multisigPda,
+      transactionIndex,
+      creator: feePayer,
+      rentPayer: feePayer,
+      actions,
+    });
   }
 
   async createVaultTransaction(
@@ -95,6 +126,22 @@ export class SquadsMultisig {
       multisigPda: this.multisigPda,
       transactionIndex,
       member,
+    });
+  }
+
+  async execute_config(member: PublicKey, transactionIdx: bigint | undefined) {
+    const transactionIndex =
+      transactionIdx ?? (await this.multisigTransactionIndex());
+
+    console.log(
+      `Executing squads transaction with index = ${transactionIndex}`
+    );
+
+    return multisig.instructions.configTransactionExecute({
+      multisigPda: this.multisigPda,
+      transactionIndex,
+      member,
+      rentPayer: member,
     });
   }
 
