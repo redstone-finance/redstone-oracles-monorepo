@@ -1137,6 +1137,35 @@
       ],
       "denomination": "USD",
       "rateFeed": false
+    },
+    "USD+": {
+      "source": [
+        "aerodrome-cl-base-usdc",
+        "aerodrome-cl-base-weth",
+        "uniswap-v3-arbitrumone-usdc-100"
+      ],
+      "deviationCheck": {
+        "deviationWithRecentValues": {
+          "maxPercent": 5,
+          "maxDelayMilliseconds": 120000
+        }
+      },
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "EUROC": {
+      "source": [
+        "coingecko",
+        "coinmarketcap",
+        "bitstamp-eur",
+        "bitmart-usdt",
+        "uniswap-v3-ethereum-usdc-500",
+        "aerodrome-cl-base-usdc",
+        "aerodrome-cl-base-usdc-2",
+        "aerodrome-cl-base-weth"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
     }
   },
   "multiPointPackages": {
