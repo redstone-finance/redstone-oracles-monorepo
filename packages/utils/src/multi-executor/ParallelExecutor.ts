@@ -1,6 +1,6 @@
 import _ from "lodash";
-import { stringify, stringifyError } from "../common";
-import { AsyncFn, Executor } from "./Executor";
+import { stringify } from "../common";
+import { Executor, FnBox } from "./Executor";
 
 export abstract class ParallelExecutor<R> extends Executor<R> {
   protected constructor(protected timeoutMs?: number) {
@@ -33,28 +33,20 @@ export abstract class ParallelExecutor<R> extends Executor<R> {
 
   protected abstract aggregate(results: R[]): R;
 
-  override async execute(functions: AsyncFn<R>[]): Promise<R> {
+  override async execute(functions: FnBox<R>[]): Promise<R> {
     return await new Promise((resolve, reject) => {
       const promises = Executor.getPromises(functions, this.timeoutMs);
 
       const successfulResults: R[] = [];
       const errorResults: unknown[] = [];
-      const date = Date.now();
       let didFinish = false;
 
-      promises.forEach((result, index) => {
+      promises.forEach((result) => {
         result
           .then((result) => {
-            this.logger.debug(
-              `Promise #${index} returns ${stringify(result)} in ${Date.now() - date} [ms]`
-            );
             successfulResults.push(result);
           })
           .catch((error) => {
-            this.logger.warn(
-              `Promise #${index} failed: ${stringifyError(error)} in ${Date.now() - date} [ms]`,
-              error
-            );
             errorResults.push(error);
           })
           .finally(() => {

@@ -1,10 +1,11 @@
+import "dotenv/config";
 import { BigNumber } from "ethers";
 import { MultiExecutor } from "../../src";
 import {
-  AsyncFn,
   DEFAULT_CONFIG,
   ExecutionMode,
   Executor,
+  FnBox,
   MultiExecutorConfig,
   NestedMethodConfig,
 } from "../../src/multi-executor";
@@ -599,11 +600,11 @@ export function makeSut<T extends MockClient>(
 
 class CustomExecutor<R> extends Executor<R> {
   // eslint-disable-next-line @typescript-eslint/class-methods-use-this
-  async execute(promiseCreators: AsyncFn<R>[]): Promise<R> {
+  async execute(functions: FnBox<R>[]): Promise<R> {
     let result = undefined;
-    for (const promiseCreator of promiseCreators) {
+    for (const func of functions) {
       try {
-        result = await promiseCreator();
+        result = await Executor.execFn(func);
       } catch {
         /* empty */
       }

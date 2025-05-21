@@ -41,7 +41,7 @@ export class RadixApiClient {
         getNonFungibleBalance: MultiExecutor.ExecutionMode.AGREEMENT,
         getStateFields: MultiExecutor.ExecutionMode.AGREEMENT,
       },
-      { ...MultiExecutor.DEFAULT_CONFIG, ...config }
+      { descriptions: urls, ...MultiExecutor.DEFAULT_CONFIG, ...config }
     );
   }
 
