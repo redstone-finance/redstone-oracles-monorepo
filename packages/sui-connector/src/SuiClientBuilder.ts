@@ -1,4 +1,4 @@
-import { getFullnodeUrl, SuiClient } from "@mysten/sui/client";
+import { getFullnodeUrl } from "@mysten/sui/client";
 import { MultiExecutor, RedstoneCommon } from "@redstone-finance/utils";
 import { SuiNetworkName } from "./config";
 import { getSuiNetworkName } from "./network-ids";
@@ -13,14 +13,15 @@ export class SuiClientBuilder {
   private network?: SuiNetworkName;
 
   private static makeMultiExecutor(
-    clients: SuiClient[],
+    network: SuiNetworkName,
+    urls: string[],
     config = {
       singleExecutionTimeoutMs: SINGLE_EXECUTION_TIMEOUT_MS,
       allExecutionsTimeoutMs: ALL_EXECUTIONS_TIMEOUT_MS,
     }
   ) {
     return MultiExecutor.create(
-      clients,
+      urls.map((url) => makeSuiClient(network, url)),
       {
         getChainIdentifier: MultiExecutor.ExecutionMode.CONSENSUS_ALL_EQUAL,
         signAndExecuteTransaction: MultiExecutor.ExecutionMode.RACE,
@@ -32,7 +33,7 @@ export class SuiClientBuilder {
         getReferenceGasPrice: MultiExecutor.ExecutionMode.AGREEMENT,
         getBalance: MultiExecutor.ExecutionMode.AGREEMENT,
       },
-      { ...MultiExecutor.DEFAULT_CONFIG, ...config }
+      { descriptions: urls, ...MultiExecutor.DEFAULT_CONFIG, ...config }
     );
   }
 
@@ -75,9 +76,7 @@ export class SuiClientBuilder {
       return makeSuiClient(this.network, this.urls[0]);
     }
 
-    const clients = this.urls.map((url) => makeSuiClient(this.network!, url));
-
-    return SuiClientBuilder.makeMultiExecutor(clients);
+    return SuiClientBuilder.makeMultiExecutor(this.network, this.urls);
   }
 
   async buildAndVerify() {
