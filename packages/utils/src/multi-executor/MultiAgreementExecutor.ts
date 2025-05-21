@@ -46,7 +46,6 @@ export class MultiAgreementExecutor<
       this.logger.debug(
         `Returning, still doesn't have enough of ${quorum} results: ${successfulResults.length} successes + ${errorResults.length} errors`
       );
-
       return false;
     }
 

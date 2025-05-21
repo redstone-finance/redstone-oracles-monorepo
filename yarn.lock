@@ -6780,11 +6780,11 @@ __metadata:
   linkType: hard
 
 "@noble/curves@npm:^1.0.0":
-  version: 1.9.0
-  resolution: "@noble/curves@npm:1.9.0"
+  version: 1.9.1
+  resolution: "@noble/curves@npm:1.9.1"
   dependencies:
     "@noble/hashes": "npm:1.8.0"
-  checksum: 10c0/a76d57444b4d136f43363eb19229d990df15a00fb0e2efbf08a7a4cbaee655f73e46eb29b6ad07b8749be5f7b890c0a7a06a19f4324a4b149b06b3da1def8593
+  checksum: 10c0/39c84dbfecdca80cfde2ecea4b06ef2ec1255a4df40158d22491d1400057a283f57b2b26c8b1331006e6e061db791f31d47764961c239437032e2f45e8888c1e
   languageName: node
   linkType: hard
 
@@ -8991,6 +8991,17 @@ __metadata:
     "@redstone-finance/internal-utils": "workspace:*"
     "@redstone-finance/utils": "workspace:*"
     dotenv: "npm:^16.0.3"
+    zod: "npm:^3.22.4"
+  languageName: unknown
+  linkType: soft
+
+"@redstone-finance/lambda-kms-decrypt-monitor@workspace:packages/lambda/lambda-kms-decrypt-monitor":
+  version: 0.0.0-use.local
+  resolution: "@redstone-finance/lambda-kms-decrypt-monitor@workspace:packages/lambda/lambda-kms-decrypt-monitor"
+  dependencies:
+    "@redstone-finance/internal-utils": "workspace:*"
+    "@redstone-finance/utils": "workspace:*"
+    "@types/aws-lambda": "npm:^8.10.145"
     zod: "npm:^3.22.4"
   languageName: unknown
   linkType: soft
