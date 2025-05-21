@@ -1,22 +1,17 @@
-import { stringifyError, timeoutOrResult } from "../common";
-import { AsyncFn, Executor } from "./Executor";
+import { Executor, FnBox } from "./Executor";
 
 export class FallbackExecutor<R> extends Executor<R> {
   constructor(private readonly timeoutMs?: number) {
     super();
   }
 
-  public async execute(functions: AsyncFn<R>[]): Promise<R> {
+  public async execute(functions: FnBox<R>[]): Promise<R> {
     const errors = [];
 
-    for (const [index, func] of functions.entries()) {
+    for (const func of functions) {
       try {
-        return await timeoutOrResult(func(), this.timeoutMs);
+        return await Executor.execFn(func, this.timeoutMs);
       } catch (error) {
-        this.logger.warn(
-          `Promise #${index} failed: ${stringifyError(error)}`,
-          error
-        );
         errors.push(error);
       }
     }
