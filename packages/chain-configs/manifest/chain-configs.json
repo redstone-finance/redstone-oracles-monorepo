@@ -362,12 +362,13 @@
       "twoDimensionalFees": false,
       "isMainnet": false
     },
-    "celo-baklava": {
-      "name": "Celo baklava",
-      "chainId": 62320,
+    "celo-alfajores": {
+      "name": "Celo Alfajores Testnet",
+      "chainId": 44787,
       "currencySymbol": "CELO",
-      "publicRpcUrls": ["https://baklava-forno.celo-testnet.org"],
-      "avgBlockTimeMs": 5000,
+      "publicRpcUrls": ["https://alfajores-forno.celo-testnet.org"],
+      "etherScanApi": "https://api-alfajores.celoscan.io",
+      "avgBlockTimeMs": 1000,
       "multicall3": {
         "address": "0xaD6CC5a465E5c8284a49eC9eD10EFE275460678c",
         "type": "RedstoneMulticall3",
