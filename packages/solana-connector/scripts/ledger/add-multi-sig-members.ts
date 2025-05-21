@@ -16,7 +16,7 @@ const NEW_MEMBERS = [
 ];
 const NEW_THRESHOLD = 2;
 
-async function add_member(
+async function addMember(
   squadAddress: PublicKey,
   members: PublicKey[],
   newThreshold: number
@@ -40,4 +40,4 @@ async function add_member(
   console.log(await connection.sendTransaction(tx));
 }
 
-void add_member(SQUAD_ADDRESS, NEW_MEMBERS, NEW_THRESHOLD);
+void addMember(SQUAD_ADDRESS, NEW_MEMBERS, NEW_THRESHOLD);
