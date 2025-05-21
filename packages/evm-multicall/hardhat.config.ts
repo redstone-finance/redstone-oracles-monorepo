@@ -35,8 +35,8 @@ const config: HardhatUserConfig = {
     avalanche: {
       url: "https://api.avax.network/ext/bc/C/rpc",
     },
-    celo_baklava: {
-      url: "https://baklava-forno.celo-testnet.org",
+    celo_alfajores: {
+      url: "https://alfajores-forno.celo-testnet.org",
     },
     merlin: {
       url: "https://rpc.merlinchain.io",
