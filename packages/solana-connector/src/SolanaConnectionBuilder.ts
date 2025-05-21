@@ -22,7 +22,7 @@ export class SolanaConnectionBuilder {
   private cluster!: Cluster;
   private rpcUrls?: string[];
 
-  static createMultiConnection(
+  private static createMultiConnection(
     rpcUrls: string[],
     config = {
       singleExecutionTimeoutMs: SINGLE_EXECUTION_TIMEOUT_MS,
@@ -43,7 +43,7 @@ export class SolanaConnectionBuilder {
         getLatestBlockhash: MultiExecutor.ExecutionMode.AGREEMENT,
         sendTransaction: MultiExecutor.ExecutionMode.RACE,
       },
-      { ...MultiExecutor.DEFAULT_CONFIG, ...config }
+      { descriptions: rpcUrls, ...MultiExecutor.DEFAULT_CONFIG, ...config }
     );
   }
 
