@@ -1,3 +1,4 @@
+import _ from "lodash";
 import { MultiExecutor } from "..";
 import {
   getS,
@@ -16,7 +17,7 @@ import {
   MultiExecutorConfig,
   NestedMethodConfig,
 } from "./create";
-import { AsyncFn, Executor } from "./Executor";
+import { Executor, FnBox } from "./Executor";
 import { FallbackExecutor } from "./FallbackExecutor";
 import { MultiAgreementExecutor } from "./MultiAgreementExecutor";
 import { RaceExecutor } from "./RaceExecutor";
@@ -87,7 +88,10 @@ export class MultiExecutorFactory<T extends object> {
   createProxy(): T {
     // eslint-disable-next-line @typescript-eslint/no-this-alias
     const that = this;
-    Object.assign(this.instances[0], { __instances: this.instances });
+    Object.assign(this.instances[0], {
+      __instances: this.instances,
+      __descriptions: this.config.descriptions,
+    });
 
     return new Proxy(this.instances[0], {
       get(target: T, prop: string | symbol): unknown {
@@ -111,15 +115,18 @@ export class MultiExecutorFactory<T extends object> {
           method.toString().includes("Promise")
         ) {
           return async function (...args: unknown[]): Promise<unknown> {
-            const promises = that.instances.map(
-              (instance) => () =>
+            const promises = _.map(that.instances, (instance, index) => ({
+              name: method.name,
+              description: that.config.descriptions?.[index],
+              index,
+              fn: () =>
                 Promise.resolve(
                   (instance[key] as (...args: unknown[]) => unknown).call(
                     instance,
                     ...args
                   )
-                )
-            );
+                ),
+            }));
 
             return await that.performExecuting(key, promises);
           };
@@ -135,17 +142,17 @@ export class MultiExecutorFactory<T extends object> {
     });
   }
 
-  private async performExecuting<R>(key: keyof T, promises: AsyncFn<R>[]) {
+  private async performExecuting<R>(key: keyof T, functions: FnBox<R>[]) {
     const mode = this.getMethodMode(key);
     this.logger.debug(
-      `[${stringify(key)}] Executing ${promises.length} promise${getS(promises.length)}` +
+      `[${stringify(key)}] Executing ${functions.length} promise${getS(functions.length)}` +
         ` with ${typeof mode === "string" ? mode : typeof mode}` +
         (this.config.allExecutionsTimeoutMs
           ? ` and totalExecutionTimeout: ${this.config.allExecutionsTimeoutMs} [ms]`
           : "")
     );
 
-    const result = this.getExecutor<R>(mode).execute(promises);
+    const result = this.getExecutor<R>(mode).execute(functions);
     const value = await timeoutOrResult(
       result,
       this.config.allExecutionsTimeoutMs
