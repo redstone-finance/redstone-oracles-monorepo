@@ -129,7 +129,7 @@ export class SquadsMultisig {
     });
   }
 
-  async execute_config(member: PublicKey, transactionIdx: bigint | undefined) {
+  async executeConfig(member: PublicKey, transactionIdx: bigint | undefined) {
     const transactionIndex =
       transactionIdx ?? (await this.multisigTransactionIndex());
 
