@@ -26,6 +26,7 @@ export type MultiExecutorConfig = {
   singleExecutionTimeoutMs?: number;
   allExecutionsTimeoutMs?: number;
   multiAgreementShouldResolveUnagreedToUndefined: boolean;
+  descriptions?: (string | undefined)[];
 };
 
 export const DEFAULT_CONFIG: MultiExecutorConfig = {
@@ -62,5 +63,11 @@ export function createForSubInstances<T extends object, U extends object>(
       ? (subject.__instances as T[]).map(callback)
       : [callback(subject)];
 
-  return create(instances, methodConfig, config);
+  const descriptions =
+    config.descriptions ??
+    ("__descriptions" in subject
+      ? (subject.__descriptions as (string | undefined)[] | undefined)
+      : undefined);
+
+  return create(instances, methodConfig, { descriptions, ...config });
 }
