@@ -1,13 +1,13 @@
 {
   "chain": {
-    "name": "Celo Baklava Testnet",
-    "id": 62320
+    "name": "Celo Alfajores Testnet",
+    "id": 44787
   },
   "updateTriggers": {
     "timeSinceLastUpdateInMilliseconds": 250000,
     "deviationPercentage": 0.2
   },
-  "adapterContract": "0x6E0b50972117d50E3a18Fa8317c0D70B1edC3bFE",
+  "adapterContract": "0x9913a8E9e3157A84B1aA2d5538BDd6cc090Bd843",
   "adapterContractType": "mento",
   "dataServiceId": "redstone-primary-prod",
   "priceFeeds": {
