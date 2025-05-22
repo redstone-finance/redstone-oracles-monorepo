@@ -1,4 +1,5 @@
-import { RedstoneCommon } from "@redstone-finance/utils";
+import { NetworkId } from "@radixdlt/radix-engine-toolkit";
+import { MultiExecutor, RedstoneCommon } from "@redstone-finance/utils";
 import { RadixApiClient } from "./RadixApiClient";
 import { RadixClient } from "./RadixClient";
 import {
@@ -7,11 +8,43 @@ import {
 } from "./RadixClientConfig";
 import { RadixSigner } from "./RadixSigner";
 
+const SINGLE_EXECUTION_TIMEOUT_MS = 7_000;
+const ALL_EXECUTIONS_TIMEOUT_MS = 30_000;
+const BLOCK_NUMBER_EXECUTION_TIMEOUT_MS = 1_500;
+
 export class RadixClientBuilder {
   private urls: string[] = [];
   private networkId?: number;
   private privateKey?: RedstoneCommon.PrivateKey;
   private clientConfig = DEFAULT_RADIX_CLIENT_CONFIG;
+
+  private static makeMultiExecutor(
+    urls: (string | undefined)[],
+    networkId = NetworkId.Stokenet,
+    config = {
+      singleExecutionTimeoutMs: SINGLE_EXECUTION_TIMEOUT_MS,
+      allExecutionsTimeoutMs: ALL_EXECUTIONS_TIMEOUT_MS,
+    }
+  ): RadixApiClient {
+    const ceilMedianConsensusExecutor =
+      new MultiExecutor.CeilMedianConsensusExecutor(
+        MultiExecutor.DEFAULT_CONFIG.consensusQuorumRatio,
+        BLOCK_NUMBER_EXECUTION_TIMEOUT_MS
+      );
+    return MultiExecutor.create(
+      urls.map((url) => new RadixApiClient(networkId, url)),
+      {
+        getCurrentStateVersion: ceilMedianConsensusExecutor,
+        getCurrentEpochNumber: ceilMedianConsensusExecutor,
+        submitTransaction: MultiExecutor.ExecutionMode.RACE,
+        getTransactionStatus: MultiExecutor.ExecutionMode.AGREEMENT,
+        getFungibleBalance: MultiExecutor.ExecutionMode.AGREEMENT,
+        getNonFungibleBalance: MultiExecutor.ExecutionMode.AGREEMENT,
+        getStateFields: MultiExecutor.ExecutionMode.AGREEMENT,
+      },
+      MultiExecutor.makeRpcUrlsBasedConfig(urls, `radix/${networkId}`, config)
+    );
+  }
 
   withNetworkBasePath(basePath?: string) {
     return basePath ? this.withRpcUrl(basePath) : this;
@@ -55,7 +88,10 @@ export class RadixClientBuilder {
     const urls: (string | undefined)[] = this.urls.length
       ? this.urls
       : [undefined];
-    const apiClient = RadixApiClient.makeMultiExecutor(urls, this.networkId);
+    const apiClient = RadixClientBuilder.makeMultiExecutor(
+      urls,
+      this.networkId
+    );
 
     const signer = this.privateKey
       ? new RadixSigner(this.privateKey)
