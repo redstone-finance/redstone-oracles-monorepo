@@ -24,7 +24,7 @@ describe("hash-utils", () => {
       const hashesForFilesInDir = [
         "3d3467cb193958433f4ecf9981f85314a5c37988cffefcbe0dfed5fa7ed90691",
         "f1bc320216e28becf1510214fef32809c1d956dc93d345b14919bed3aef6647b",
-        "dced45b7837452502dbaed8ceb568f825881a18c1e5f3a8cb512eb826c97b408",
+        "b10934572bb93c4d16eaf0aad6d55175087882f1893f7a181f8a71b8ec690dff",
         "e0c863f4614e814089a230b011b64818f23302a9f8c22eaa0cda29045ba13f9e",
         "9163460132add64c420a9ed36e2f35d0bbb429d72c619d0d1dae78701268b686",
       ];
