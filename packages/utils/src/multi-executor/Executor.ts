@@ -1,14 +1,6 @@
 import { stringify, stringifyError, timeoutOrResult } from "../common";
 import { loggerFactory } from "../logger";
-
-export type AsyncFn<R> = () => Promise<R>;
-
-export type FnBox<R> = {
-  fn: AsyncFn<R>;
-  index: number;
-  name: string;
-  description?: string;
-};
+import { FnBox } from "./FnBox";
 
 const logger = loggerFactory("executor");
 
@@ -16,27 +8,51 @@ export abstract class Executor<R> {
   protected readonly logger = logger;
 
   static getPromises<R>(functions: FnBox<R>[], timeoutMs?: number) {
-    return functions.map((func) => this.execFn(func, timeoutMs));
+    const result = functions
+      .filter((func) => !func.delegate?.isQuarantined?.(func))
+      .map((func) => this.execFn(func, timeoutMs));
+
+    if (!result.length) {
+      throw new Error("All functions are quarantined. Cannot execute them!");
+    }
+
+    return result;
   }
 
   static async execFn<R>(func: FnBox<R>, timeoutMs?: number) {
-    const date = Date.now();
-    const prefix = (result: string) =>
-      `[${func.name}] Promise #${func.index} ${result} in ${Date.now() - date} [ms]`;
-    const suffix = func.description ? ` (${func.description})` : "";
+    const { prefix, message, suffix } = this.makeLogData(func);
+
+    if (func.delegate?.isQuarantined?.(func)) {
+      throw new Error(
+        `${prefix} tried to execute quarantined function... ${suffix}`
+      );
+    }
 
     try {
       const result = await timeoutOrResult(func.fn(), timeoutMs, "timed out");
-      logger.debug(`${prefix("returns")}: ${stringify(result)}${suffix}`);
+      logger.debug(`${message("returns")}: ${stringify(result)}${suffix}`);
+      func.delegate?.didSucceed?.(func, result);
+
       return result;
     } catch (error) {
       logger.warn(
-        `${prefix("failed")}: ${stringifyError(error)}${suffix}`,
+        `${message("failed")}: ${stringifyError(error)}${suffix}`,
         error
       );
+      func.delegate?.didFail?.(func, error);
 
       throw error;
     }
+  }
+
+  private static makeLogData<R>(func: FnBox<R>) {
+    const date = Date.now();
+    const prefix = `[${func.name}] Promise #${func.index}`;
+    const message = (result: string) =>
+      `${prefix} ${result} in ${Date.now() - date} [ms]`;
+    const suffix = func.description ? ` (${func.description})` : "";
+
+    return { prefix, message, suffix };
   }
 
   abstract execute(functions: FnBox<R>[]): Promise<R>;
@@ -45,7 +61,6 @@ export abstract class Executor<R> {
 /** TODO: Possible extensions
  * implement config overrides for methods
  * implement quorumRatio/Number as functions
- * add rpc curated list
  * change getModes to return single element (max or sth)
  * RaceExecutor can inherit from ParallelExecutor
  * Promise batching

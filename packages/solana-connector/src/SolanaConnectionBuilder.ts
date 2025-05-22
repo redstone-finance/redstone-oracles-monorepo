@@ -1,12 +1,7 @@
 import { MultiExecutor } from "@redstone-finance/utils";
 import { Cluster, Connection } from "@solana/web3.js";
+import { getSolanaChainId, getSolanaCluster } from "./network-ids";
 import { connectToCluster } from "./utils";
-
-export const CLUSTER_NAMES: { [chainId: number]: Cluster } = {
-  1: "mainnet-beta",
-  2: "testnet",
-  3: "devnet",
-};
 
 export const SINGLE_EXECUTION_TIMEOUT_MS = 7_000;
 export const ALL_EXECUTIONS_TIMEOUT_MS = 30_000;
@@ -24,6 +19,7 @@ export class SolanaConnectionBuilder {
 
   private static createMultiConnection(
     rpcUrls: string[],
+    cluster: Cluster,
     config = {
       singleExecutionTimeoutMs: SINGLE_EXECUTION_TIMEOUT_MS,
       allExecutionsTimeoutMs: ALL_EXECUTIONS_TIMEOUT_MS,
@@ -43,7 +39,11 @@ export class SolanaConnectionBuilder {
         getLatestBlockhash: MultiExecutor.ExecutionMode.AGREEMENT,
         sendTransaction: MultiExecutor.ExecutionMode.RACE,
       },
-      { descriptions: rpcUrls, ...MultiExecutor.DEFAULT_CONFIG, ...config }
+      MultiExecutor.makeRpcUrlsBasedConfig(
+        rpcUrls,
+        `solana/${getSolanaChainId(cluster)}`,
+        config
+      )
     );
   }
 
@@ -54,7 +54,7 @@ export class SolanaConnectionBuilder {
   }
 
   withChainId(chainId: number) {
-    this.cluster = CLUSTER_NAMES[chainId];
+    this.cluster = getSolanaCluster(chainId);
 
     return this;
   }
@@ -64,6 +64,9 @@ export class SolanaConnectionBuilder {
       return connectToCluster(this.cluster);
     }
 
-    return SolanaConnectionBuilder.createMultiConnection(this.rpcUrls);
+    return SolanaConnectionBuilder.createMultiConnection(
+      this.rpcUrls,
+      this.cluster
+    );
   }
 }
