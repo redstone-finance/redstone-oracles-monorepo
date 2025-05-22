@@ -1,5 +1,5 @@
 import { Transaction, UpgradePolicy } from "@mysten/sui/transactions";
-import { execSync } from "node:child_process";
+import { execSync } from "child_process";
 import {
   DEFAULT_GAS_BUDGET,
   getDeployDir,
