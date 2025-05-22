@@ -6,11 +6,12 @@ import { runIteration } from "./run-iteration";
 import { RelayerConfig } from "../config/RelayerConfig";
 
 export class AsyncTaskRunner {
-  static run(relayerConfig: RelayerConfig, logger: RedstoneLogger) {
+  static async run(relayerConfig: RelayerConfig, logger: RedstoneLogger) {
+    const contractFacade = await getContractFacade(relayerConfig);
+
     const task = new AsyncTask(
       "Relayer task",
       async () => {
-        const contractFacade = await getContractFacade(relayerConfig);
         return await runIteration(contractFacade, relayerConfig);
       },
       (error) =>
