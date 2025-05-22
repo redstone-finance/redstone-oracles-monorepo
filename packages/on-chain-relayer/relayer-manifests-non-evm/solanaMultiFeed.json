@@ -30,6 +30,12 @@
         "deviationPercentage": 0.1,
         "timeSinceLastUpdateInMilliseconds": 86400000
       }
+    },
+    "VBILL_SOLANA_FUNDAMENTAL": {
+      "updateTriggersOverrides": {
+        "deviationPercentage": 0.1,
+        "timeSinceLastUpdateInMilliseconds": 86400000
+      }
     }
   }
 }
