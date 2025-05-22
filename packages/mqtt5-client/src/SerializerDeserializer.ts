@@ -1,4 +1,4 @@
-import * as zlib from "node:zlib";
+import { deflateSync, inflateSync } from "zlib";
 
 interface SerializerDeserializer<T = unknown> {
   serialize(data: T): Buffer;
@@ -8,11 +8,11 @@ interface SerializerDeserializer<T = unknown> {
 // if the payloads are bigger than 1KB we should use async version
 export class DeflateJson implements SerializerDeserializer {
   serialize(data: unknown): Buffer {
-    return zlib.deflateSync(JSON.stringify(data));
+    return deflateSync(JSON.stringify(data));
   }
 
   deserialize(buffer: Buffer): unknown {
-    return JSON.parse(zlib.inflateSync(buffer).toString("utf-8"));
+    return JSON.parse(inflateSync(buffer).toString("utf-8"));
   }
 }
 

@@ -1,16 +1,10 @@
 import { RedstoneCommon } from "@redstone-finance/utils";
-import * as nodeSchedule from "node-schedule";
-import { promises as fs } from "node:fs";
-import {
-  HealthCheck,
-  HealthMonitor,
-  HealthStatus,
-  healthy,
-  unhealthy,
-} from "../src";
+import { promises as fs } from "fs";
+import nodeSchedule from "node-schedule";
+import { RedstoneHealthcheck } from "../src";
 
 jest.mock("node-schedule");
-jest.mock("node:fs", () => ({
+jest.mock("fs", () => ({
   promises: {
     writeFile: jest.fn(),
     rename: jest.fn(),
@@ -52,7 +46,7 @@ describe("HealthMonitor", () => {
   describe("constructor", () => {
     it("should schedule health checks with correct interval", () => {
       const intervalMs = 5000;
-      new HealthMonitor(new Map(), intervalMs);
+      new RedstoneHealthcheck.HealthMonitor(new Map(), intervalMs);
 
       expect(RedstoneCommon.intervalMsToCronFormat).toHaveBeenCalledWith(
         intervalMs
@@ -68,12 +62,12 @@ describe("HealthMonitor", () => {
     const mockDate = new Date();
 
     it("should handle healthy checks", async () => {
-      const mockHealthCheck: HealthCheck = {
-        check: jest.fn().mockResolvedValue(healthy()),
+      const mockHealthCheck: RedstoneHealthcheck.HealthCheck = {
+        check: jest.fn().mockResolvedValue(RedstoneHealthcheck.healthy()),
       };
 
       const checks = new Map([["test", mockHealthCheck]]);
-      new HealthMonitor(checks, 5000);
+      new RedstoneHealthcheck.HealthMonitor(checks, 5000);
       // eslint-disable-next-line @typescript-eslint/no-unsafe-return
       mockTimeout.mockImplementation((promise) => promise);
 
@@ -84,7 +78,7 @@ describe("HealthMonitor", () => {
 
       expect(mockWriteFile).toHaveBeenCalledWith(
         "healthcheck.txt.tmp",
-        HealthStatus.healthy,
+        RedstoneHealthcheck.HealthStatus.healthy,
         { encoding: "utf8" }
       );
       expect(mockRename).toHaveBeenCalledWith(
@@ -94,12 +88,14 @@ describe("HealthMonitor", () => {
     });
 
     it("should handle unhealthy checks", async () => {
-      const mockHealthCheck: HealthCheck = {
-        check: jest.fn().mockResolvedValue(unhealthy(["Error occurred"])),
+      const mockHealthCheck: RedstoneHealthcheck.HealthCheck = {
+        check: jest
+          .fn()
+          .mockResolvedValue(RedstoneHealthcheck.unhealthy(["Error occurred"])),
       };
 
       const checks = new Map([["test", mockHealthCheck]]);
-      new HealthMonitor(checks, 5000);
+      new RedstoneHealthcheck.HealthMonitor(checks, 5000);
       // eslint-disable-next-line @typescript-eslint/no-unsafe-return
       mockTimeout.mockImplementation((promise) => promise);
 
@@ -110,18 +106,18 @@ describe("HealthMonitor", () => {
 
       expect(mockWriteFile).toHaveBeenCalledWith(
         "healthcheck.txt.tmp",
-        HealthStatus.unhealthy,
+        RedstoneHealthcheck.HealthStatus.unhealthy,
         { encoding: "utf8" }
       );
     });
 
     it("should handle timeout errors", async () => {
-      const mockHealthCheck: HealthCheck = {
-        check: jest.fn().mockResolvedValue(healthy()),
+      const mockHealthCheck: RedstoneHealthcheck.HealthCheck = {
+        check: jest.fn().mockResolvedValue(RedstoneHealthcheck.healthy()),
       };
 
       const checks = new Map([["test", mockHealthCheck]]);
-      new HealthMonitor(checks, 5000);
+      new RedstoneHealthcheck.HealthMonitor(checks, 5000);
       mockTimeout.mockRejectedValue(new Error("Timeout"));
 
       // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment,@typescript-eslint/no-unsafe-member-access
@@ -131,24 +127,26 @@ describe("HealthMonitor", () => {
 
       expect(mockWriteFile).toHaveBeenCalledWith(
         "healthcheck.txt.tmp",
-        HealthStatus.unhealthy,
+        RedstoneHealthcheck.HealthStatus.unhealthy,
         { encoding: "utf8" }
       );
     });
 
     it("should handle multiple checks with mixed results", async () => {
-      const healthyCheck: HealthCheck = {
-        check: jest.fn().mockResolvedValue(healthy()),
+      const healthyCheck: RedstoneHealthcheck.HealthCheck = {
+        check: jest.fn().mockResolvedValue(RedstoneHealthcheck.healthy()),
       };
-      const unhealthyCheck: HealthCheck = {
-        check: jest.fn().mockResolvedValue(unhealthy(["Error"])),
+      const unhealthyCheck: RedstoneHealthcheck.HealthCheck = {
+        check: jest
+          .fn()
+          .mockResolvedValue(RedstoneHealthcheck.unhealthy(["Error"])),
       };
 
       const checks = new Map([
         ["healthy", healthyCheck],
         ["unhealthy", unhealthyCheck],
       ]);
-      new HealthMonitor(checks, 5000);
+      new RedstoneHealthcheck.HealthMonitor(checks, 5000);
       // eslint-disable-next-line @typescript-eslint/no-unsafe-return
       mockTimeout.mockImplementation((promise) => promise);
 
@@ -159,7 +157,7 @@ describe("HealthMonitor", () => {
 
       expect(mockWriteFile).toHaveBeenCalledWith(
         "healthcheck.txt.tmp",
-        HealthStatus.unhealthy,
+        RedstoneHealthcheck.HealthStatus.unhealthy,
         { encoding: "utf8" }
       );
     });

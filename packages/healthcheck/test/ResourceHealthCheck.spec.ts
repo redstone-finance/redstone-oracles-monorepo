@@ -1,28 +1,25 @@
-import {
-  healthy,
-  ResourcesHealthCheck,
-  ResourceThresholds,
-  unhealthy,
-} from "../src";
+import { RedstoneHealthcheck } from "../src";
 
 const mockV8HeapStats = jest.fn();
 
-jest.mock("node:v8", () => ({
+jest.mock("v8", () => ({
   // note: the wrapping fn prevents from hoisting error.
   // eslint-disable-next-line @typescript-eslint/no-unsafe-return
   getHeapStatistics: () => mockV8HeapStats(),
 }));
 
 describe("ResourcesHealthCheck", () => {
-  let healthCheck: ResourcesHealthCheck;
-  const defaultThresholds: ResourceThresholds = {
+  let healthCheck: RedstoneHealthcheck.ResourcesHealthCheck;
+  const defaultThresholds: RedstoneHealthcheck.ResourceThresholds = {
     memoryPercent: 70,
     gracePeriodMs: 1000,
   };
 
   beforeEach(() => {
     jest.clearAllMocks();
-    healthCheck = new ResourcesHealthCheck(defaultThresholds);
+    healthCheck = new RedstoneHealthcheck.ResourcesHealthCheck(
+      defaultThresholds
+    );
   });
 
   function mockMemUsage(percentage: number) {
@@ -39,7 +36,7 @@ describe("ResourcesHealthCheck", () => {
       const result = await healthCheck.check(new Date());
 
       expect(mockV8HeapStats).toHaveBeenCalled();
-      expect(result).toEqual(await healthy());
+      expect(result).toEqual(await RedstoneHealthcheck.healthy());
     });
 
     it("should return healthy on first threshold exceed", async () => {
@@ -48,7 +45,7 @@ describe("ResourcesHealthCheck", () => {
       const result = await healthCheck.check(new Date());
 
       expect(mockV8HeapStats).toHaveBeenCalled();
-      expect(result).toEqual(await healthy());
+      expect(result).toEqual(await RedstoneHealthcheck.healthy());
     });
 
     it("should return healthy when within grace period", async () => {
@@ -61,7 +58,7 @@ describe("ResourcesHealthCheck", () => {
       const result = await healthCheck.check(laterTime);
 
       expect(mockV8HeapStats).toHaveBeenCalled();
-      expect(result).toEqual(await healthy());
+      expect(result).toEqual(await RedstoneHealthcheck.healthy());
     });
 
     it("should return unhealthy when exceeding grace period", async () => {
@@ -75,7 +72,7 @@ describe("ResourcesHealthCheck", () => {
 
       expect(mockV8HeapStats).toHaveBeenCalledTimes(2);
       expect(result).toEqual(
-        await unhealthy([
+        await RedstoneHealthcheck.unhealthy([
           expect.stringContaining("Mem usage exceeded for"),
         ] as string[])
       );
@@ -93,7 +90,7 @@ describe("ResourcesHealthCheck", () => {
       const result = await healthCheck.check(new Date(now.getTime() + 1000));
 
       expect(mockV8HeapStats).toHaveBeenCalledTimes(3);
-      expect(result).toEqual(await healthy());
+      expect(result).toEqual(await RedstoneHealthcheck.healthy());
     });
   });
 });

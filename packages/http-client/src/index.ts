@@ -1,7 +1,7 @@
 import axios, { AxiosError, AxiosInstance, AxiosRequestConfig } from "axios";
 import axiosRetry, { isNetworkError, isRetryableError } from "axios-retry";
-import { Agent as HttpAgent } from "node:http";
-import { Agent as HttpsAgent } from "node:https";
+import { Agent as HttpAgent } from "http";
+import { Agent as HttpsAgent } from "https";
 
 export type HttpClientOptions = {
   /**
