@@ -17,7 +17,6 @@ export class SuiPricesContractReader {
   static createMultiReader(client: SuiClient, priceAdapterObjectId: string) {
     return MultiExecutor.createForSubInstances(
       client,
-
       (client) =>
         new SuiPricesContractReader(
           new SuiReader(client),

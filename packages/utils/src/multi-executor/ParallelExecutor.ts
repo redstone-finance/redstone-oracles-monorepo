@@ -1,6 +1,7 @@
 import _ from "lodash";
 import { stringify } from "../common";
-import { Executor, FnBox } from "./Executor";
+import { Executor } from "./Executor";
+import { FnBox } from "./FnBox";
 
 export abstract class ParallelExecutor<R> extends Executor<R> {
   protected constructor(protected timeoutMs?: number) {

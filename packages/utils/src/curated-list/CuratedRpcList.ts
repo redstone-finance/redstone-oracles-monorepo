@@ -1,10 +1,7 @@
-import {
-  MathUtils,
-  RedstoneCommon,
-  RedstoneLogger,
-  loggerFactory,
-} from "@redstone-finance/utils";
 import { z } from "zod";
+import { assert, getFromEnv } from "../common";
+import { loggerFactory, RedstoneLogger } from "../logger";
+import { weightedRandom } from "../math";
 
 type Score = {
   callsCount: number;
@@ -19,13 +16,13 @@ type ScoreReport = {
 
 const CuratedRpcListConfigSchema = z.object({
   resetQuarantineInterval: z.number().default(() =>
-    RedstoneCommon.getFromEnv(
+    getFromEnv(
       "RPC_CURATED_LIST_RESET_QUARANTINE_INTERVAL",
       z.number().default(60_000) // every 1 min
     )
   ),
   evaluationInterval: z.number().default(() =>
-    RedstoneCommon.getFromEnv(
+    getFromEnv(
       "RPC_CURATED_LIST_EVALUATION_INTERVAL",
       z.number().default(30_000) // every 30 seconds
     )
@@ -35,7 +32,7 @@ const CuratedRpcListConfigSchema = z.object({
     .min(0)
     .max(1)
     .default(() =>
-      RedstoneCommon.getFromEnv(
+      getFromEnv(
         "RPC_CURATED_LIST_MAX_ERROR_RATE",
         z.number().default(0.15) // 15%
       )
@@ -53,16 +50,16 @@ export class CuratedRpcList {
   state: { [rpcIdentifier: RpcIdentifier]: Score } = {};
   logger: RedstoneLogger;
 
-  constructor(config: CuratedRpcListConfig, chainId: number) {
+  constructor(config: CuratedRpcListConfig, chainId: number | string) {
     this.config = CuratedRpcListConfigSchema.parse(config);
-    RedstoneCommon.assert(
+    assert(
       this.config.minimalProvidersCount <= this.config.rpcIdentifiers.length,
       `A minimalProvidersCount can't be bigger than supplied rpcs list length`
     );
     this.logger = loggerFactory(`curated-rpc-list-${chainId}`);
 
     for (const rpc of config.rpcIdentifiers) {
-      RedstoneCommon.assert(
+      assert(
         !this.state[rpc],
         `You have passed duplicated rpc identifier=${rpc} to curated rpc list`
       );
@@ -130,7 +127,7 @@ export class CuratedRpcList {
       (v) => 1 / v[1].quarantineCounter
     );
 
-    const index = MathUtils.weightedRandom(weights);
+    const index = weightedRandom(weights);
 
     if (index >= 0) {
       providersInQuarantine[index][1].inQuarantine = false;

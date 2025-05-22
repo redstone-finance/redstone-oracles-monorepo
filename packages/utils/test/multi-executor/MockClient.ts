@@ -12,8 +12,8 @@ export class MockClient {
 
   constructor(
     public ident: number,
-    protected execTime: number,
-    protected isFailing: boolean = false
+    public execTime: number,
+    public isFailing: boolean = false
   ) {
     this.that = this;
   }

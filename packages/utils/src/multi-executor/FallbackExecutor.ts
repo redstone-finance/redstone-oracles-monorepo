@@ -1,4 +1,5 @@
-import { Executor, FnBox } from "./Executor";
+import { Executor } from "./Executor";
+import { FnBox } from "./FnBox";
 
 export class FallbackExecutor<R> extends Executor<R> {
   constructor(private readonly timeoutMs?: number) {

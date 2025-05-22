@@ -1,40 +1,10 @@
-import { Executor } from "./Executor";
+import _ from "lodash";
 import { MultiExecutorFactory } from "./MultiExecutorFactory";
-
-export enum ExecutionMode {
-  RACE = "race",
-  FALLBACK = "fallback",
-  CONSENSUS_MEDIAN = "consensus_median",
-  CONSENSUS_ALL_EQUAL = "consensus_all_equal",
-  AGREEMENT = "agreement",
-  MULTI_AGREEMENT = "multi_agreement",
-}
-
-export type NestedMethodConfig<T> = {
-  [K in keyof T]?:
-    | NestedMethodConfig<T[K]>
-    | (T[K] extends unknown[]
-        ? ExecutionMode
-        : Exclude<ExecutionMode, ExecutionMode.MULTI_AGREEMENT>)
-    | Executor<unknown>;
-};
-
-export type MultiExecutorConfig = {
-  consensusQuorumRatio: number;
-  agreementQuorumNumber: number;
-  defaultMode: ExecutionMode;
-  singleExecutionTimeoutMs?: number;
-  allExecutionsTimeoutMs?: number;
-  multiAgreementShouldResolveUnagreedToUndefined: boolean;
-  descriptions?: (string | undefined)[];
-};
-
-export const DEFAULT_CONFIG: MultiExecutorConfig = {
-  agreementQuorumNumber: 2,
-  consensusQuorumRatio: 3 / 5,
-  defaultMode: ExecutionMode.FALLBACK,
-  multiAgreementShouldResolveUnagreedToUndefined: false,
-};
+import {
+  DEFAULT_CONFIG,
+  MultiExecutorConfig,
+  NestedMethodConfig,
+} from "./config";
 
 export function create<T extends object>(
   instances: T[],
@@ -63,11 +33,8 @@ export function createForSubInstances<T extends object, U extends object>(
       ? (subject.__instances as T[]).map(callback)
       : [callback(subject)];
 
-  const descriptions =
-    config.descriptions ??
-    ("__descriptions" in subject
-      ? (subject.__descriptions as (string | undefined)[] | undefined)
-      : undefined);
+  const baseConfig = "__config" in subject ? subject.__config : undefined;
+  const mergedConfig = baseConfig ? _.assign({}, baseConfig, config) : config;
 
-  return create(instances, methodConfig, { descriptions, ...config });
+  return create(instances, methodConfig, mergedConfig);
 }
