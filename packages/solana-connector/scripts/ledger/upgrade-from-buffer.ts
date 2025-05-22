@@ -5,7 +5,7 @@ import {
   SYSVAR_RENT_PUBKEY,
   TransactionInstruction,
 } from "@solana/web3.js";
-import * as multisig from "@sqds/multisig";
+import { type accounts } from "@sqds/multisig";
 import "dotenv/config";
 import fs from "fs";
 import { BPF_UPGRADEABLE_LOADER } from "../consts";
@@ -54,7 +54,7 @@ export function createUpgradeInstruction(
 export async function checkUpgradeTransaction(
   connection: Connection,
   squads: SquadsMultisig,
-  vaultTransaction: multisig.accounts.VaultTransaction,
+  vaultTransaction: accounts.VaultTransaction,
   expectedBufferAccount: PublicKey,
   programBytesFile: string
 ) {
