@@ -1,9 +1,5 @@
-import chai, { expect } from "chai";
-import chaiAsPromised from "chai-as-promised";
 import Sinon from "sinon";
-import { CuratedRpcList } from "../../src/providers/CuratedRpcList";
-
-chai.use(chaiAsPromised);
+import { CuratedRpcList } from "../../src";
 
 const createList = (
   rpcIdentifiers: string[],
@@ -38,7 +34,7 @@ describe("Curated rpc list", () => {
     list.scoreRpc("A", { error: true });
     list.scoreRpc("B", { error: true });
 
-    expect(list.getBestProviders()).to.deep.equal(["A", "B"]);
+    expect(list.getBestProviders()).toStrictEqual(["A", "B"]);
   });
 
   it("after first evaluation bad rpcs should be move to quarantine", () => {
@@ -48,7 +44,7 @@ describe("Curated rpc list", () => {
     list.scoreRpc("B", { error: true });
     clock.tick(10);
 
-    expect(list.getBestProviders()).to.deep.equal(["A"]);
+    expect(list.getBestProviders()).toStrictEqual(["A"]);
   });
 
   it("after first evaluation bad rpcs should be move to quarantine 51% error rate", () => {
@@ -60,7 +56,7 @@ describe("Curated rpc list", () => {
     list.scoreRpc("B", { error: true });
     clock.tick(10);
 
-    expect(list.getBestProviders()).to.deep.equal(["A"]);
+    expect(list.getBestProviders()).toStrictEqual(["A"]);
   });
 
   it("should return all providers not crossing error count", () => {
@@ -75,7 +71,7 @@ describe("Curated rpc list", () => {
     list.scoreRpc("C", { error: true });
     clock.tick(10);
 
-    expect(list.getBestProviders()).to.deep.equal(["A", "B"]);
+    expect(list.getBestProviders()).toStrictEqual(["A", "B"]);
   });
 
   it("should free one rpc from quarantine after given time", () => {
@@ -83,27 +79,27 @@ describe("Curated rpc list", () => {
 
     list.scoreRpc("B", { error: true });
     clock.tick(10);
-    expect(list.getBestProviders()).to.deep.equal(["A"]);
+    expect(list.getBestProviders()).toStrictEqual(["A"]);
     clock.tick(90);
-    expect(list.getBestProviders()).to.deep.equal(["A", "B"]);
+    expect(list.getBestProviders()).toStrictEqual(["A", "B"]);
   });
 
-  it("should free one rpc from qurantine when minimalProvidersCount is not satisfied", () => {
+  it("should free one rpc from quarantine when minimalProvidersCount is not satisfied", () => {
     const list = createList(["A", "B"], 0.1, 2);
 
     list.scoreRpc("A", { error: false });
     list.scoreRpc("B", { error: true });
     clock.tick(10);
-    expect(list.getBestProviders()).to.deep.equal(["A", "B"]);
+    expect(list.getBestProviders()).toStrictEqual(["A", "B"]);
   });
 
-  it("should free two rpcs from qurantine when minimalProvidersCount is not satisfied", () => {
+  it("should free two rpcs from quarantine when minimalProvidersCount is not satisfied", () => {
     const list = createList(["A", "B"], 0.1, 2);
 
     list.scoreRpc("A", { error: true });
     list.scoreRpc("B", { error: true });
     clock.tick(10);
-    expect(list.getBestProviders()).to.deep.equal(["A", "B"]);
+    expect(list.getBestProviders()).toStrictEqual(["A", "B"]);
   });
 
   it("rpc after qurantine has clear state", () => {
@@ -113,7 +109,7 @@ describe("Curated rpc list", () => {
     clock.tick(100);
     list.scoreRpc("A", { error: false });
 
-    expect(list.getBestProviders()).to.deep.equal(["A"]);
+    expect(list.getBestProviders()).toStrictEqual(["A"]);
   });
 
   it("rpc after evaluation has clear state", () => {
@@ -125,20 +121,20 @@ describe("Curated rpc list", () => {
     list.scoreRpc("A", { error: true });
     clock.tick(10);
 
-    expect(list.getBestProviders()).to.deep.equal([]);
+    expect(list.getBestProviders()).toStrictEqual([]);
   });
 
   it("throw on duplicated providers", () => {
-    expect(() => createList(["A", "A"])).to.throw(/duplicated rpc/);
+    expect(() => createList(["A", "A"])).toThrow(/duplicated rpc/);
   });
 
   it("work when rpc is evaluated before score", () => {
     const list = createList(["A", "B"], 0.1, 1);
     list.evaluateRpcScore("A");
-    expect(list.getBestProviders()).deep.equal(["A", "B"]);
+    expect(list.getBestProviders()).toStrictEqual(["A", "B"]);
   });
 
-  it("should reset rpcs based on weighted propability (quarnatineCounter)", () => {
+  it("should reset rpcs based on weighted probability (quarantineCounter)", () => {
     const rpcs = ["A", "B", "C", "D"];
     const list = createList(rpcs, 0.1, 1);
 
@@ -160,15 +156,14 @@ describe("Curated rpc list", () => {
       putEveryRpcToQuarantine();
       list.freeOneRpcFromQuarantine();
       const picked = list.getBestProviders();
-      expect(picked.length).to.eq(1);
+      expect(picked.length).toEqual(1);
       pickedCounter[picked[0]] += 1;
     }
 
     function assertPickedPercentage(rpc: string, expectedPercentage: number) {
-      expect((pickedCounter[rpc] / iterations) * 100).to.be.closeTo(
-        expectedPercentage,
-        15
-      );
+      expect(
+        Math.abs(pickedCounter[rpc] / iterations) * 100 - expectedPercentage
+      ).toBeLessThanOrEqual(15);
     }
 
     assertPickedPercentage("A", 40);

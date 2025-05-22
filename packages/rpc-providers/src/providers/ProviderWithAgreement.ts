@@ -1,14 +1,15 @@
 import { BlockTag, TransactionRequest } from "@ethersproject/abstract-provider";
 import { Deferrable } from "@ethersproject/properties";
 import {
+  CuratedRpcList,
+  loggerFactory,
   RedstoneCommon,
   RedstoneLogger,
-  loggerFactory,
+  RpcIdentifier,
 } from "@redstone-finance/utils";
 import { BigNumber, providers, utils } from "ethers";
 import _ from "lodash";
 import { convertBlockTagToNumber, getProviderNetworkInfo } from "../common";
-import { CuratedRpcList, RpcIdentifier } from "./CuratedRpcList";
 import {
   ProviderWithFallback,
   ProviderWithFallbackConfig,
