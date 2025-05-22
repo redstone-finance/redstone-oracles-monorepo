@@ -1,7 +1,7 @@
 import {} from "@redstone-finance/sdk";
 import { Keypair, LAMPORTS_PER_SOL, PublicKey } from "@solana/web3.js";
 import { LiteSVM } from "litesvm";
-import path from "node:path";
+import path from "path";
 import {
   ConnectionStateScenario,
   LiteSVMConnection,

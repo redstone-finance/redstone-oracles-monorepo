@@ -1,5 +1,5 @@
 import { ContractParamsProviderMock } from "@redstone-finance/sdk";
-import * as fs from "fs";
+import fs from "fs";
 import path from "path";
 
 export const SAMPLE_PACKAGES_TIMESTAMP = 1744563500000;

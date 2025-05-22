@@ -1,6 +1,6 @@
 import { loggerFactory, RedstoneCommon } from "@redstone-finance/utils";
+import { promises as fs } from "fs";
 import { scheduleJob } from "node-schedule";
-import { promises as fs } from "node:fs";
 import {
   HealthStatus,
   type HealthCheck,

@@ -1,6 +1,6 @@
 import { loggerFactory } from "@redstone-finance/utils";
-import * as os from "node:os";
-import * as v8 from "node:v8";
+import os from "os";
+import v8 from "v8";
 import {
   type HealthCheck,
   type HealthCheckResult,

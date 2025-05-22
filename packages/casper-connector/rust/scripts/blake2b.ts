@@ -1,4 +1,4 @@
-import * as process from "process";
+import process from "process";
 import { casperBlake2b } from "../../src/casper/casper-blake2b";
 
 const dataChunks: Buffer[] = [];
