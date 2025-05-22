@@ -1,5 +1,5 @@
 import { Keypair, PublicKey } from "@solana/web3.js";
-import * as multisig from "@sqds/multisig";
+import multisig from "@sqds/multisig";
 import "dotenv/config";
 import { makeConnection, readKeypair } from "../utils";
 import { MULTI_SIG_PUBLIC_KEYS, THRESHOLD } from "./config";

@@ -1,8 +1,14 @@
-import * as erc7412 from "erc7412";
-import * as viem from "viem";
+import { EIP7412 } from "erc7412";
+import {
+  encodeFunctionData,
+  parseAbi,
+  type Hex,
+  type PublicClient,
+  type TransactionRequest,
+} from "viem";
 import { RedstoneAdapter } from "../src/RedstoneERC7412Adapter";
 
-const multicall3Abi = viem.parseAbi([
+const multicall3Abi = parseAbi([
   "struct Call { address target; bytes callData; }",
   "struct Call3 { address target; bool allowFailure; bytes callData; }",
   "struct Call3Value { address target; bool allowFailure; uint256 value; bytes callData; }",
@@ -14,26 +20,26 @@ const multicall3Abi = viem.parseAbi([
 
 // taken from erc7412 package
 type ERC7412TransactionRequest = Pick<
-  viem.TransactionRequest,
+  TransactionRequest,
   "to" | "data" | "value"
 >;
 
 export async function generate7412CompatibleCall(
-  client: viem.PublicClient,
-  to: viem.Hex,
-  from: viem.Hex,
-  callData: viem.Hex,
-  multicallAddress: viem.Hex
+  client: PublicClient,
+  to: Hex,
+  from: Hex,
+  callData: Hex,
+  multicallAddress: Hex
 ): Promise<ERC7412TransactionRequest> {
   // function which instructs how to build multicall tx if needed
   function makeMulticall(calls: ERC7412TransactionRequest[]) {
-    const ret = viem.encodeFunctionData({
+    const ret = encodeFunctionData({
       abi: multicall3Abi,
       functionName: "aggregate3Value",
       args: [
         calls.map((call) => ({
-          target: call.to as viem.Hex,
-          callData: call.data as viem.Hex,
+          target: call.to as Hex,
+          callData: call.data as Hex,
           allowFailure: false,
           value: call.value ?? 0n,
         })),
@@ -53,7 +59,7 @@ export async function generate7412CompatibleCall(
     };
   }
 
-  const converter = new erc7412.EIP7412([new RedstoneAdapter()], makeMulticall);
+  const converter = new EIP7412([new RedstoneAdapter()], makeMulticall);
 
   // will call static code and pack original tx with price feed update call in single multicall if price is stale
   // do nothing if price is fresh

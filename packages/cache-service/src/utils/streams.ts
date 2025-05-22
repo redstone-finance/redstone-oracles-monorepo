@@ -1,5 +1,4 @@
-import * as Stream from "stream";
-import { Duplex } from "stream";
+import { Duplex, Stream } from "stream";
 
 // To have the bytes returned as an octet-stream there's needed to convert it to a writable stream
 // and to pipe it to a response as for StreamableFile - to avoid nest's converting the response to JSON,

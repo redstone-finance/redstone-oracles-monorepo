@@ -8,7 +8,7 @@ import { MathUtils, RedstoneCommon } from "@redstone-finance/utils";
 import { compile } from "@ton/blueprint";
 import { BigNumber } from "ethers";
 import { arrayify, hexlify } from "ethers/lib/utils";
-import * as fs from "fs";
+import fs from "fs";
 import path from "path";
 import { createTestNetwork } from "./sandbox_helpers";
 
