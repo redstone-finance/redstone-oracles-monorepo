@@ -270,6 +270,13 @@
         "deviationPercentage": 0.1,
         "timeSinceLastUpdateInMilliseconds": 86400000
       }
+    },
+    "VBILL_ETHEREUM_FUNDAMENTAL": {
+      "priceFeedAddress": "0xA569E68B5D110F2A255482c2997DFDBe1b2ab912",
+      "updateTriggersOverrides": {
+        "deviationPercentage": 0.1,
+        "timeSinceLastUpdateInMilliseconds": 86400000
+      }
     }
   }
 }
