@@ -1,7 +1,7 @@
 import { getFullnodeUrl } from "@mysten/sui/client";
 import { MultiExecutor, RedstoneCommon } from "@redstone-finance/utils";
 import { SuiNetworkName } from "./config";
-import { getSuiNetworkName } from "./network-ids";
+import { getSuiChainId, getSuiNetworkName } from "./network-ids";
 import { makeSuiClient } from "./util";
 
 export const SINGLE_EXECUTION_TIMEOUT_MS = 7_000;
@@ -33,7 +33,11 @@ export class SuiClientBuilder {
         getReferenceGasPrice: MultiExecutor.ExecutionMode.AGREEMENT,
         getBalance: MultiExecutor.ExecutionMode.AGREEMENT,
       },
-      { descriptions: urls, ...MultiExecutor.DEFAULT_CONFIG, ...config }
+      MultiExecutor.makeRpcUrlsBasedConfig(
+        urls,
+        `sui/${getSuiChainId(network)}`,
+        config
+      )
     );
   }
 
