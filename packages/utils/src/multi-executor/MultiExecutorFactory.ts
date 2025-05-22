@@ -1,4 +1,3 @@
-import _ from "lodash";
 import { MultiExecutor } from "..";
 import {
   getS,
@@ -12,15 +11,16 @@ import {
   AllEqualConsensusExecutor,
   MedianConsensusExecutor,
 } from "./ConsensusExecutor";
+import { Executor } from "./Executor";
+import { FallbackExecutor } from "./FallbackExecutor";
+import { FnBox } from "./FnBox";
+import { MultiAgreementExecutor } from "./MultiAgreementExecutor";
+import { RaceExecutor } from "./RaceExecutor";
 import {
   ExecutionMode,
   MultiExecutorConfig,
   NestedMethodConfig,
-} from "./create";
-import { Executor, FnBox } from "./Executor";
-import { FallbackExecutor } from "./FallbackExecutor";
-import { MultiAgreementExecutor } from "./MultiAgreementExecutor";
-import { RaceExecutor } from "./RaceExecutor";
+} from "./config";
 
 export class MultiExecutorFactory<T extends object> {
   private readonly logger = loggerFactory("multi-executor-proxy");
@@ -90,7 +90,7 @@ export class MultiExecutorFactory<T extends object> {
     const that = this;
     Object.assign(this.instances[0], {
       __instances: this.instances,
-      __descriptions: this.config.descriptions,
+      __config: this.config,
     });
 
     return new Proxy(this.instances[0], {
@@ -98,7 +98,10 @@ export class MultiExecutorFactory<T extends object> {
         const key = prop as keyof T;
         const method = target[key];
 
-        if (Object(method) !== method) {
+        if (
+          Object(method) !== method ||
+          ["__instances", "__config"].includes(key as string)
+        ) {
           return method;
         }
 
@@ -115,20 +118,18 @@ export class MultiExecutorFactory<T extends object> {
           method.toString().includes("Promise")
         ) {
           return async function (...args: unknown[]): Promise<unknown> {
-            const promises = _.map(that.instances, (instance, index) => ({
-              name: method.name,
-              description: that.config.descriptions?.[index],
-              index,
-              fn: () =>
-                Promise.resolve(
-                  (instance[key] as (...args: unknown[]) => unknown).call(
-                    instance,
-                    ...args
-                  )
-                ),
-            }));
+            const functions = that.instances.map((instance, index) =>
+              MultiExecutorFactory.makeFnBox(
+                method.name,
+                that.config,
+                index,
+                instance,
+                key,
+                args
+              )
+            );
 
-            return await that.performExecuting(key, promises);
+            return await that.performExecuting(key, functions);
           };
         }
 
@@ -140,6 +141,29 @@ export class MultiExecutorFactory<T extends object> {
         };
       },
     });
+  }
+
+  private static makeFnBox<T>(
+    name: string,
+    config: MultiExecutorConfig,
+    index: number,
+    instance: T,
+    key: keyof T,
+    args: unknown[]
+  ): FnBox<unknown> {
+    return {
+      name,
+      description: config.descriptions?.[index],
+      index,
+      delegate: config.delegate,
+      fn: () =>
+        Promise.resolve(
+          (instance[key] as (...args: unknown[]) => unknown).call(
+            instance,
+            ...args
+          )
+        ),
+    };
   }
 
   private async performExecuting<R>(key: keyof T, functions: FnBox<R>[]) {

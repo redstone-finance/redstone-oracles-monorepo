@@ -7,7 +7,6 @@ import { MqttRunner } from "./runner/MqttRunner";
 
 export const runRelayer = async () => {
   const relayerConfig = await config(ConsciouslyInvoked);
-
   const logger = loggerFactory("relayer/run");
 
   logger.log(
@@ -31,6 +30,6 @@ export const runRelayer = async () => {
   if (relayerConfig.runWithMqtt) {
     void MqttRunner.run(relayerConfig);
   } else {
-    AsyncTaskRunner.run(relayerConfig, logger);
+    void AsyncTaskRunner.run(relayerConfig, logger);
   }
 };
