@@ -6,7 +6,12 @@ import {
   requestDataPackages,
 } from "@redstone-finance/sdk";
 import { Adapter } from "erc7412";
-import * as viem from "viem";
+import {
+  decodeAbiParameters,
+  encodeAbiParameters,
+  type Address,
+  type Hex,
+} from "viem";
 
 const MAX_TIMESTAMP_DEVIATION = 180_000;
 
@@ -17,14 +22,13 @@ export class RedstoneAdapter implements Adapter {
 
   async fetchOffchainData(
     _client: unknown,
-    requester: viem.Address,
-    data: viem.Hex
-  ): Promise<viem.Hex> {
-    const [feedId, uniqueSignersCount, dataServiceId] =
-      viem.decodeAbiParameters(
-        [{ type: "bytes32" }, { type: "uint8" }, { type: "string" }],
-        data
-      ) as [string, number, string];
+    _requester: Address,
+    data: Hex
+  ): Promise<Hex> {
+    const [feedId, uniqueSignersCount, dataServiceId] = decodeAbiParameters(
+      [{ type: "bytes32" }, { type: "uint8" }, { type: "string" }],
+      data
+    ) as [string, number, string];
 
     const dataPackages = await requestDataPackages({
       dataPackagesIds: [bytes32ToString(feedId)],
@@ -41,7 +45,7 @@ export class RedstoneAdapter implements Adapter {
     ).prepareRedstonePayload(true);
 
     const dataTimestamp = BigInt(getDataPackagesTimestamp(dataPackages));
-    const encodedDataTimestamp = viem.encodeAbiParameters(
+    const encodedDataTimestamp = encodeAbiParameters(
       [{ type: "uint256" }],
       [dataTimestamp]
     );

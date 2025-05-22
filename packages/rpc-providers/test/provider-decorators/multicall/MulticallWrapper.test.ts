@@ -5,7 +5,7 @@ import {
 import chai, { expect } from "chai";
 import chaiAsPromised from "chai-as-promised";
 import { BigNumber, Contract, ContractFactory, Wallet, ethers } from "ethers";
-import * as hardhat from "hardhat";
+import hardhat from "hardhat";
 import Sinon from "sinon";
 import {
   MulticallDecorator,

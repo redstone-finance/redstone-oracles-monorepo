@@ -1,7 +1,7 @@
 import chai, { expect } from "chai";
 import chaiAsPromised from "chai-as-promised";
 import { providers, Signer, Wallet } from "ethers";
-import * as hardhat from "hardhat";
+import hardhat from "hardhat";
 import Sinon, * as sinon from "sinon";
 import { CallCacheDecorator } from "../../src/provider-decorators/CacheCallDecorator";
 import { ProviderWithAgreement } from "../../src/providers/ProviderWithAgreement";
