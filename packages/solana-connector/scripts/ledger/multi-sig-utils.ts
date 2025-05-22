@@ -4,8 +4,13 @@ import {
   TransactionInstruction,
   TransactionMessage,
 } from "@solana/web3.js";
-import * as multisig from "@sqds/multisig";
-import { types } from "@sqds/multisig";
+import {
+  accounts,
+  getTransactionPda,
+  getVaultPda,
+  instructions,
+  types,
+} from "@sqds/multisig";
 
 export class SquadsMultisig {
   constructor(
@@ -14,7 +19,7 @@ export class SquadsMultisig {
   ) {}
 
   async multisigTransactionIndex() {
-    const multisigInfo = await multisig.accounts.Multisig.fromAccountAddress(
+    const multisigInfo = await accounts.Multisig.fromAccountAddress(
       this.connection,
       this.multisigPda
     );
@@ -42,7 +47,7 @@ export class SquadsMultisig {
 
     console.log(`Config actions:`, actions);
 
-    return multisig.instructions.configTransactionCreate({
+    return instructions.configTransactionCreate({
       multisigPda: this.multisigPda,
       transactionIndex,
       creator: feePayer,
@@ -75,7 +80,7 @@ export class SquadsMultisig {
       instructions: [ix],
     });
 
-    return multisig.instructions.vaultTransactionCreate({
+    return instructions.vaultTransactionCreate({
       multisigPda: this.multisigPda,
       transactionIndex,
       creator: member,
@@ -91,7 +96,7 @@ export class SquadsMultisig {
 
     console.log(`Proposing transaction with index = ${transactionIndex}`);
 
-    return multisig.instructions.proposalCreate({
+    return instructions.proposalCreate({
       multisigPda: this.multisigPda,
       transactionIndex,
       creator: member,
@@ -106,7 +111,7 @@ export class SquadsMultisig {
       `Approving squads transaction with index = ${transactionIndex}`
     );
 
-    return multisig.instructions.proposalApprove({
+    return instructions.proposalApprove({
       multisigPda: this.multisigPda,
       transactionIndex,
       member,
@@ -121,7 +126,7 @@ export class SquadsMultisig {
       `Executing squads transaction with index = ${transactionIndex}`
     );
 
-    return await multisig.instructions.vaultTransactionExecute({
+    return await instructions.vaultTransactionExecute({
       connection: this.connection,
       multisigPda: this.multisigPda,
       transactionIndex,
@@ -137,7 +142,7 @@ export class SquadsMultisig {
       `Executing squads transaction with index = ${transactionIndex}`
     );
 
-    return multisig.instructions.configTransactionExecute({
+    return instructions.configTransactionExecute({
       multisigPda: this.multisigPda,
       transactionIndex,
       member,
@@ -146,14 +151,14 @@ export class SquadsMultisig {
   }
 
   async txInfo(txIdx: number) {
-    return await multisig.accounts.VaultTransaction.fromAccountAddress(
+    return await accounts.VaultTransaction.fromAccountAddress(
       this.connection,
       this.txPda(txIdx)
     );
   }
 
   vaultPda() {
-    const [vaultPda] = multisig.getVaultPda({
+    const [vaultPda] = getVaultPda({
       multisigPda: this.multisigPda,
       index: 0,
     });
@@ -162,7 +167,7 @@ export class SquadsMultisig {
   }
 
   txPda(txIdx: number) {
-    const [transactionPda] = multisig.getTransactionPda({
+    const [transactionPda] = getTransactionPda({
       multisigPda: this.multisigPda,
       index: BigInt(txIdx),
     });

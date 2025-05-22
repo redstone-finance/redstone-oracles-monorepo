@@ -2,8 +2,8 @@ import {
   ContractParamsProvider,
   IPricesContractAdapter,
 } from "@redstone-finance/sdk";
+import assert from "assert";
 import { BigNumber, BigNumberish } from "ethers";
-import assert from "node:assert";
 import { casperBlake2b } from "../../casper/casper-blake2b";
 import { CasperContractAdapter } from "../CasperContractAdapter";
 import { RunMode } from "../RunMode";
