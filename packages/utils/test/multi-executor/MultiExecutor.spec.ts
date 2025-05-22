@@ -2,6 +2,7 @@ import "dotenv/config";
 import { BigNumber } from "ethers";
 import { MultiExecutor } from "../../src";
 import {
+  CeilMedianConsensusExecutor,
   DEFAULT_CONFIG,
   ExecutionMode,
   Executor,
@@ -30,10 +31,10 @@ const FAILING_AND_CLIENTS_AND_FAILING = [
 ];
 
 describe("MultiExecutor", () => {
-  const config: MultiExecutor.NestedMethodConfig<MockClient> = {
-    someAsyncFunction: MultiExecutor.ExecutionMode.RACE,
-    someNumberFunction: MultiExecutor.ExecutionMode.CONSENSUS_MEDIAN,
-    someHexFunction: MultiExecutor.ExecutionMode.CONSENSUS_MEDIAN,
+  const config: NestedMethodConfig<MockClient> = {
+    someAsyncFunction: ExecutionMode.RACE,
+    someNumberFunction: ExecutionMode.CONSENSUS_MEDIAN,
+    someHexFunction: ExecutionMode.CONSENSUS_MEDIAN,
   };
 
   it("Should be able to pick primitive property", () => {
@@ -141,8 +142,8 @@ describe("MultiExecutor", () => {
     ]) {
       const sut = makeSut(instances, {
         ...config,
-        someNumberFunction: new MultiExecutor.CeilMedianConsensusExecutor(
-          MultiExecutor.DEFAULT_CONFIG.consensusQuorumRatio,
+        someNumberFunction: new CeilMedianConsensusExecutor(
+          DEFAULT_CONFIG.consensusQuorumRatio,
           EXEC_TIME * 2.5
         ),
       });
