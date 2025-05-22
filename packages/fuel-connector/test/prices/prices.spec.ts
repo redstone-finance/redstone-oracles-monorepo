@@ -4,7 +4,7 @@ import {
   IPricesContractAdapter,
 } from "@redstone-finance/sdk";
 import { BigNumberish } from "ethers";
-import * as fs from "fs";
+import fs from "fs";
 import path from "path";
 import {
   SAMPLE_PACKAGES_TIMESTAMP,

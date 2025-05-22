@@ -1,6 +1,6 @@
+import assert from "assert";
 import { Contracts, RuntimeArgs } from "casper-js-sdk";
 import { hexlify } from "ethers/lib/utils";
-import assert from "node:assert";
 import { ICasperConnection } from "../casper/ICasperConnection";
 import { VersionedCasperContract } from "./VersionedCasperContract";
 
