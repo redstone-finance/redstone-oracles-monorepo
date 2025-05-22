@@ -1,7 +1,7 @@
 import { Transaction } from "@mysten/sui/transactions";
 import { SUI_FRAMEWORK_ADDRESS } from "@mysten/sui/utils";
 import { RedstoneCommon } from "@redstone-finance/utils";
-import assert from "node:assert";
+import assert from "assert";
 import {
   DEFAULT_GAS_BUDGET,
   makeSuiClient,

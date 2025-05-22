@@ -1,5 +1,5 @@
 import { RedstoneCommon, loggerFactory } from "@redstone-finance/utils";
-import * as awsIot from "aws-iot-device-sdk-v2";
+import { auth, iot, mqtt, mqtt5 } from "aws-iot-device-sdk-v2";
 import { randomUUID } from "crypto";
 import { PubSubClient, PubSubPayload } from "./PubSubClient";
 import {
@@ -12,13 +12,13 @@ export type Mqtt5ClientConfig = {
   authorization:
     | { type: "AWSSigV4" }
     | { type: "Cert"; privateKey: string; cert: string };
-  qos?: awsIot.mqtt5.QoS;
+  qos?: mqtt5.QoS;
   connectionTimeoutMs?: number;
   messageExpireTimeMs?: number;
 };
 
 const DEFAULT_CONFIG = {
-  qos: awsIot.mqtt.QoS.AtMostOnce,
+  qos: mqtt.QoS.AtMostOnce,
   connectionTimeoutMs: 10_000,
   messageExpireTimeMs: RedstoneCommon.minToMs(60),
 };
@@ -33,9 +33,9 @@ export type SubscribeCallback = (
 ) => unknown;
 
 export class Mqtt5Client implements PubSubClient {
-  private logger = loggerFactory("mqtt5-client");
-  private _mqtt!: awsIot.mqtt5.Mqtt5Client;
-  private config: Required<Mqtt5ClientConfig>;
+  private readonly logger = loggerFactory("mqtt5-client");
+  private _mqtt!: mqtt5.Mqtt5Client;
+  private readonly config: Required<Mqtt5ClientConfig>;
   private onMessageCallback?: SubscribeCallback;
 
   private constructor(config: Mqtt5ClientConfig) {
@@ -57,14 +57,14 @@ export class Mqtt5Client implements PubSubClient {
         sessionExpiryIntervalSeconds: 3600,
       })
       .withOfflineQueueBehavior(
-        awsIot.mqtt5.ClientOperationQueueBehavior.FailAllOnDisconnect
+        mqtt5.ClientOperationQueueBehavior.FailAllOnDisconnect
       )
-      .withSessionBehavior(awsIot.mqtt5.ClientSessionBehavior.RejoinPostSuccess)
-      .withRetryJitterMode(awsIot.mqtt5.RetryJitterType.Full);
+      .withSessionBehavior(mqtt5.ClientSessionBehavior.RejoinPostSuccess)
+      .withRetryJitterMode(mqtt5.RetryJitterType.Full);
 
     const clientConfig = mqttClientBuilder.build();
 
-    const mqttClient = new awsIot.mqtt5.Mqtt5Client(clientConfig);
+    const mqttClient = new mqtt5.Mqtt5Client(clientConfig);
 
     mqttClient.start();
 
@@ -102,19 +102,18 @@ export class Mqtt5Client implements PubSubClient {
 
   private static createMqttBuilderWithAuthorization(
     config: Mqtt5ClientConfig
-  ): awsIot.iot.AwsIotMqtt5ClientConfigBuilder {
+  ): iot.AwsIotMqtt5ClientConfigBuilder {
     if (config.authorization.type === "AWSSigV4") {
-      const credentialsProvider =
-        awsIot.auth.AwsCredentialsProvider.newDefault();
+      const credentialsProvider = auth.AwsCredentialsProvider.newDefault();
 
-      return awsIot.iot.AwsIotMqtt5ClientConfigBuilder.newWebsocketMqttBuilderWithSigv4Auth(
+      return iot.AwsIotMqtt5ClientConfigBuilder.newWebsocketMqttBuilderWithSigv4Auth(
         config.endpoint,
         {
           credentialsProvider,
         }
       );
     } else {
-      return awsIot.iot.AwsIotMqtt5ClientConfigBuilder.newDirectMqttBuilderWithMtlsFromMemory(
+      return iot.AwsIotMqtt5ClientConfigBuilder.newDirectMqttBuilderWithMtlsFromMemory(
         config.endpoint,
         config.authorization.cert,
         config.authorization.privateKey
@@ -194,9 +193,7 @@ export class Mqtt5Client implements PubSubClient {
     if (
       unsubscribeResponses
         .flatMap((response) => response.reasonCodes)
-        .some(
-          (reasonCode) => reasonCode !== awsIot.mqtt5.UnsubackReasonCode.Success
-        )
+        .some((reasonCode) => reasonCode !== mqtt5.UnsubackReasonCode.Success)
     ) {
       throw new Error(`Failed to unsubscribe to topics=${topics.join(", ")}`);
     }
@@ -217,7 +214,7 @@ export class Mqtt5Client implements PubSubClient {
 
       if (
         subscriptionResult.reasonCodes.some(
-          (reasonCode) => reasonCode > awsIot.mqtt5.SubackReasonCode.GrantedQoS2
+          (reasonCode) => reasonCode > mqtt5.SubackReasonCode.GrantedQoS2
         )
       ) {
         await this.unsubscribe(topics).catch((e) =>

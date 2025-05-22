@@ -1,6 +1,6 @@
 import fs from "fs";
-import path from "node:path";
-import * as toml from "toml";
+import path from "path";
+import toml from "toml";
 
 export function readProxyContractId(contractName: string = "contract_prices") {
   const tomlData = toml.parse(
