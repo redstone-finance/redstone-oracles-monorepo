@@ -4,46 +4,14 @@ import {
   StateEntityDetailsResponseComponentDetails,
 } from "@radixdlt/babylon-gateway-api-sdk";
 import { Convert, NetworkId, Value } from "@radixdlt/radix-engine-toolkit";
-import { MultiExecutor, RedstoneCommon } from "@redstone-finance/utils";
+import { RedstoneCommon } from "@redstone-finance/utils";
 import { RadixParser } from "./parser/RadixParser";
 import { TransactionStatusFilter } from "./types";
 
 const APPLICATION_NAME = "RedStone Radix Connector";
 
-const SINGLE_EXECUTION_TIMEOUT_MS = 7_000;
-const ALL_EXECUTIONS_TIMEOUT_MS = 30_000;
-const BLOCK_NUMBER_EXECUTION_TIMEOUT_MS = 1_500;
-
 export class RadixApiClient {
   readonly apiClient: GatewayApiClient;
-
-  static makeMultiExecutor(
-    urls: (string | undefined)[],
-    networkId = NetworkId.Stokenet,
-    config = {
-      singleExecutionTimeoutMs: SINGLE_EXECUTION_TIMEOUT_MS,
-      allExecutionsTimeoutMs: ALL_EXECUTIONS_TIMEOUT_MS,
-    }
-  ): RadixApiClient {
-    const ceilMedianConsensusExecutor =
-      new MultiExecutor.CeilMedianConsensusExecutor(
-        MultiExecutor.DEFAULT_CONFIG.consensusQuorumRatio,
-        BLOCK_NUMBER_EXECUTION_TIMEOUT_MS
-      );
-    return MultiExecutor.create(
-      urls.map((url) => new RadixApiClient(networkId, url)),
-      {
-        getCurrentStateVersion: ceilMedianConsensusExecutor,
-        getCurrentEpochNumber: ceilMedianConsensusExecutor,
-        submitTransaction: MultiExecutor.ExecutionMode.RACE,
-        getTransactionStatus: MultiExecutor.ExecutionMode.AGREEMENT,
-        getFungibleBalance: MultiExecutor.ExecutionMode.AGREEMENT,
-        getNonFungibleBalance: MultiExecutor.ExecutionMode.AGREEMENT,
-        getStateFields: MultiExecutor.ExecutionMode.AGREEMENT,
-      },
-      { descriptions: urls, ...MultiExecutor.DEFAULT_CONFIG, ...config }
-    );
-  }
 
   constructor(
     private networkId = NetworkId.Stokenet,
