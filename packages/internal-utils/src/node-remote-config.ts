@@ -1,6 +1,6 @@
 import { RedstoneCommon } from "@redstone-finance/utils";
-import fs from "node:fs";
-import path from "node:path";
+import fs from "fs";
+import path from "path";
 import { z } from "zod";
 
 const MAX_REMOTE_CONFIG_NESTING_DEPTH = 20;

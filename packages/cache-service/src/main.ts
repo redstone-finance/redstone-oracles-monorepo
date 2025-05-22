@@ -1,6 +1,6 @@
 import { NestFactory } from "@nestjs/core";
 import { json, urlencoded } from "express";
-import * as http from "http";
+import http from "http";
 import { Logger, LoggerErrorInterceptor } from "nestjs-pino";
 import { AppModule } from "./app.module";
 import config from "./config";

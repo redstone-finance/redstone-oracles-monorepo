@@ -1,7 +1,7 @@
 import chai from "chai";
 import chaiAsPromised from "chai-as-promised";
-import * as hardhat from "hardhat";
-import * as viem from "viem";
+import hardhat from "hardhat";
+import { encodeFunctionData } from "viem";
 import { generate7412CompatibleCall } from "../src/generate7412CompatibleCall";
 
 chai.use(chaiAsPromised);
@@ -19,7 +19,7 @@ describe("erc7412 redstone feed show case", () => {
     const publicClient = await hardhat.viem.getPublicClient();
 
     // encode call data call (this could be call to another contract, which call BTCFeed)
-    const callData = viem.encodeFunctionData({
+    const callData = encodeFunctionData({
       functionName: "latestAnswer",
       abi: btcPriceFeed.abi,
     });

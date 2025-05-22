@@ -1,10 +1,10 @@
 import { Web3FunctionHardhat } from "@gelatonetwork/web3-functions-sdk/hardhat-plugin";
 import { expect } from "chai";
 import hre from "hardhat";
-import * as args from "./userArgs.json";
+import args from "./userArgs.json";
 
 import { Web3FunctionResultCallData } from "@gelatonetwork/web3-functions-sdk";
-import * as fs from "node:fs";
+import fs from "fs";
 import path from "path";
 
 const { w3f } = hre;

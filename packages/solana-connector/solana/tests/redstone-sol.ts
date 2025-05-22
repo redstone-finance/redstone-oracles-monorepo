@@ -1,19 +1,25 @@
-import * as anchor from "@coral-xyz/anchor";
-import { Program, ProgramError } from "@coral-xyz/anchor";
-import { RedstoneSolanaPriceAdapter } from "../target/types/redstone_solana_price_adapter";
-import { expect } from "chai";
 import {
-  printComputeUnitsUsed,
+  AnchorProvider,
+  setProvider,
+  web3,
+  workspace,
+  type Program,
+} from "@coral-xyz/anchor";
+import { expect } from "chai";
+import { RedstoneSolanaPriceAdapter } from "../target/types/redstone_solana_price_adapter";
+import {
+  makeFeedIdBytes,
   makePayload,
   makePriceSeed,
-  makeFeedIdBytes,
+  printComputeUnitsUsed,
 } from "./util";
 
 describe("redstone-sol", () => {
-  const provider = anchor.AnchorProvider.env();
-  anchor.setProvider(provider);
+  const provider = AnchorProvider.env();
+  setProvider(provider);
 
-  const program = anchor.workspace.RedstoneSolanaPriceAdapter as Program<RedstoneSolanaPriceAdapter>;
+  const program =
+    workspace.RedstoneSolanaPriceAdapter as Program<RedstoneSolanaPriceAdapter>;
 
   const feedIds = [
     "AVAX",
@@ -29,12 +35,12 @@ describe("redstone-sol", () => {
     "EUR",
   ];
 
-  let pdas: { [id: string] : anchor.web3.PublicKey } = {};
-  const systemProgram = anchor.web3.SystemProgram.programId;
+  const pdas: { [id: string]: web3.PublicKey } = {};
+  const systemProgram = web3.SystemProgram.programId;
 
   before(async () => {
     for (const feedId of feedIds) {
-      pdas[feedId] = anchor.web3.PublicKey.findProgramAddressSync(
+      pdas[feedId] = web3.PublicKey.findProgramAddressSync(
         [makePriceSeed(), makeFeedIdBytes(feedId)],
         program.programId
       )[0];
@@ -57,9 +63,14 @@ describe("redstone-sol", () => {
 
       await printComputeUnitsUsed(provider, tx);
 
-      const priceAccountData = await program.account.priceData.fetch(priceAccount);
+      const priceAccountData =
+        await program.account.priceData.fetch(priceAccount);
 
-      expect(Buffer.from(priceAccountData.feedId).toString("utf8").replace(/\0+$/, "")).to.equal(feedId);
+      expect(
+        Buffer.from(priceAccountData.feedId)
+          .toString("utf8")
+          .replace(/\0+$/, "")
+      ).to.equal(feedId);
       expect(priceAccountData.value).to.not.equal("0");
 
       console.log(`${feedId}: ${JSON.stringify(priceAccountData)}`);

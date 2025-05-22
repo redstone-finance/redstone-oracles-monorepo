@@ -1,5 +1,5 @@
 import { Contract, Wallet, providers } from "ethers";
-import * as hardhat from "hardhat";
+import hardhat from "hardhat";
 import { Counter } from "../typechain-types";
 
 const TEST_PRIVATE_KEY =

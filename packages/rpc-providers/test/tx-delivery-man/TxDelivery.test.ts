@@ -4,7 +4,7 @@ import { ErrorCode } from "@ethersproject/logger";
 import chai, { expect } from "chai";
 import chaiAsPromised from "chai-as-promised";
 import { BigNumber, BytesLike, Transaction, ethers } from "ethers";
-import * as hardhat from "hardhat";
+import hardhat from "hardhat";
 import _ from "lodash";
 import Sinon from "sinon";
 import { TxDelivery, TxDeliveryOpts, convertToTxDeliveryCall } from "../../src";

@@ -1,7 +1,7 @@
+import assert from "assert";
 import axios from "axios";
 import { Keys } from "casper-js-sdk";
-import assert from "node:assert";
-import path from "node:path";
+import path from "path";
 import { CasperConfig } from "./casper/CasperConfig";
 import { CasperConnection } from "./casper/CasperConnection";
 

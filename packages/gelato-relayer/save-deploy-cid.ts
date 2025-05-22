@@ -1,5 +1,5 @@
-import * as fs from "node:fs";
-import * as readline from "readline";
+import fs from "fs";
+import readline from "readline";
 
 const OUTPUT_FILE = "web3-function_redstone.deployed";
 
