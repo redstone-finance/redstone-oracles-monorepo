@@ -1,5 +1,8 @@
-import { MultiExecutor } from "../../src";
 import { DEFAULT_CONFIG } from "../../src/multi-executor";
+import {
+  ExecutionMode,
+  NestedMethodConfig,
+} from "../../src/multi-executor/config";
 import { MockClient } from "./MockClient";
 import { makeSut } from "./MultiExecutor.spec";
 
@@ -35,8 +38,8 @@ const CLIENTS = [
 ];
 
 describe("MultiAgreementExecutor", () => {
-  const config: MultiExecutor.NestedMethodConfig<ArrayMockClient> = {
-    someArrayFunction: MultiExecutor.ExecutionMode.MULTI_AGREEMENT,
+  const config: NestedMethodConfig<ArrayMockClient> = {
+    someArrayFunction: ExecutionMode.MULTI_AGREEMENT,
   };
 
   it("MultiAgreement should pick mode value", async () => {

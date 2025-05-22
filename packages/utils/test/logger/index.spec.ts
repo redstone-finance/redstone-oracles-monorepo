@@ -1,5 +1,5 @@
 import { Consola } from "consola";
-import { createSanitizedLogger, sanitizeValue } from "../../src/logger/index";
+import { createSanitizedLogger, sanitizeValue } from "../../src";
 
 const createMockLogger = () => {
   const capturedArgs: unknown[][] = [];

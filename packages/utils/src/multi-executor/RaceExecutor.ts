@@ -1,6 +1,7 @@
 import _ from "lodash";
 import { getS } from "../common";
-import { Executor, FnBox } from "./Executor";
+import { Executor } from "./Executor";
+import { FnBox } from "./FnBox";
 
 export class RaceExecutor<R> extends Executor<R> {
   constructor(private readonly shouldFailWhenFastestFails: boolean = false) {
