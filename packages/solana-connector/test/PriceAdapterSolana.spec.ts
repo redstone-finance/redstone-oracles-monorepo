@@ -122,7 +122,7 @@ describe("SolanaPricesContractAdapter tests", () => {
 
     const fees = state.fees;
 
-    expect(fees).toStrictEqual([1, 4, 16, 64, 256, 1024, 4096, 16384]);
+    expect(fees).toStrictEqual([1, 2, 4, 8, 16, 32, 64, 128]);
   });
 
   it("writePricesFromPayloadToContract should bump fee upon network congestion errors", async () => {
@@ -143,9 +143,7 @@ describe("SolanaPricesContractAdapter tests", () => {
 
     const fees = state.fees;
 
-    expect(fees).toStrictEqual([
-      1000, 1100, 1200, 1000, 256, 1024, 4096, 16384,
-    ]);
+    expect(fees).toStrictEqual([1000, 2200, 4800, 8000, 16, 32, 64, 128]);
   });
 
   it("writePricesFromPayloadToContract cant update if there is less than required signers", async () => {
