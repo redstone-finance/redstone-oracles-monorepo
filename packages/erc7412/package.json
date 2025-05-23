@@ -26,6 +26,7 @@
     "node-gyp": "^10.0.1"
   },
   "devDependencies": {
+    "@babel/preset-typescript": "^7.23.2",
     "@ethersproject/abi": "^5.6.3",
     "@ethersproject/providers": "^5.6.8",
     "@nomicfoundation/hardhat-chai-matchers": "^1.0.6",
@@ -38,6 +39,7 @@
     "@types/chai": "^4.3.4",
     "@types/mocha": "^10.0.1",
     "chai": "^4.3.10",
+    "chai-as-promised": "^7.1.1",
     "hardhat": "^2.22.14",
     "hardhat-gas-reporter": "^1.0.9",
     "solidity-coverage": "^0.8.12",
