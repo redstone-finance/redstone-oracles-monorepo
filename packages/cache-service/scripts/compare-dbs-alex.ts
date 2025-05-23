@@ -272,19 +272,13 @@ function groupDataPackages(
 
   for (const dataPackage of dataPackages) {
     const { timestampMilliseconds, signerAddress } = dataPackage;
-    if (!result[timestampMilliseconds]) {
-      result[timestampMilliseconds] = {};
-    }
+    result[timestampMilliseconds] ??= {};
 
     for (const dataPoint of dataPackage.dataPoints) {
       const { dataFeedId, value } = dataPoint;
-      if (!result[timestampMilliseconds][dataFeedId]) {
-        result[timestampMilliseconds][dataFeedId] = {};
-      }
+      result[timestampMilliseconds][dataFeedId] ??= {};
 
-      if (!result[timestampMilliseconds][dataFeedId][signerAddress]) {
-        result[timestampMilliseconds][dataFeedId][signerAddress] = [];
-      }
+      result[timestampMilliseconds][dataFeedId][signerAddress] ??= [];
 
       result[timestampMilliseconds][dataFeedId][signerAddress].push({
         value: value as number,
@@ -305,7 +299,7 @@ async function queryDataPackages(
         $gte: interval.startTimestamp,
         $lte: interval.endTimestamp,
       },
-      dataServiceId: dataServiceId,
+      dataServiceId,
       ...(ANALYZE_ONLY_BIG_PACKAGES
         ? { dataFeedId: consts.ALL_FEEDS_KEY }
         : {}),

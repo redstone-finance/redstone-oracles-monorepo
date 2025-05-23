@@ -110,12 +110,12 @@ export const validateBlockNumberAgreementBetweenRpcs = (
           } else {
             return { rpcUrl: "", blockNumber: null };
           }
-        }) as { rpcUrl: string; blockNumber: number | null }[];
+        });
 
         maxBlockNumber = Math.max(
           ...blockNumbers
-            .filter((b) => b.blockNumber !== null)
-            .map((b) => b.blockNumber as number)
+            .map((b) => b.blockNumber)
+            .filter(RedstoneCommon.isDefined)
         );
       });
 
@@ -124,12 +124,12 @@ export const validateBlockNumberAgreementBetweenRpcs = (
 
         it(`should validate block number agreement for RPC: ${host}`, function () {
           const currentBlock = blockNumbers.find((b) => b.rpcUrl === rpcUrl);
-          if (!currentBlock || currentBlock.blockNumber === null) {
+          if (!RedstoneCommon.isDefined(currentBlock?.blockNumber)) {
             throw new Error(`Failed to fetch block number for RPC: ${host}`);
           }
 
           const blockNumberDifference = Math.abs(
-            currentBlock.blockNumber - (maxBlockNumber as number)
+            currentBlock.blockNumber - maxBlockNumber!
           );
 
           chai

@@ -62,13 +62,13 @@ async function main() {
     dataPackagesBySigner
   )) {
     console.log(`\n\n\n==== ${signerAddress} ====`);
-    const sortedDataPackages = dataPackages.sort(
+    dataPackages.sort(
       (a, b) => b.timestampMilliseconds - a.timestampMilliseconds
     );
 
     let lastTimestamp = 0;
     const prevValues: { [id: string]: string | number } = {};
-    for (const dataPackage of sortedDataPackages) {
+    for (const dataPackage of dataPackages) {
       const timestamp = dataPackage.timestampMilliseconds;
       const diff = lastTimestamp ? lastTimestamp - timestamp : undefined;
       lastTimestamp = timestamp;

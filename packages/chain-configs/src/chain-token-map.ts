@@ -4,8 +4,18 @@ import {
   terminateWithNodeRemoteConfigError,
 } from "@redstone-finance/internal-utils";
 import { RedstoneCommon } from "@redstone-finance/utils";
-import { ChainTokenMapSchema } from "./schemas";
-import { ChainTokenMap } from "./tokens";
+import { ChainTokenMapSchema, type SupportedNetworkNames } from "./schemas";
+
+export type TokenMap = {
+  [symbol: string]: {
+    address: string;
+    decimals: number;
+  };
+};
+
+export type ChainTokenMap = {
+  [networkName in SupportedNetworkNames]?: TokenMap;
+};
 
 let chainTokenMap: ChainTokenMap | null = null;
 

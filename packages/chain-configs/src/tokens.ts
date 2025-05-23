@@ -28,17 +28,6 @@ export function getTokenInfo(
   return tokenInfo;
 }
 
-export type TokenMap = {
-  [symbol: string]: {
-    address: string;
-    decimals: number;
-  };
-};
-
-export type ChainTokenMap = {
-  [networkName in SupportedNetworkNames]?: TokenMap;
-};
-
 let allTokenSymbols: Set<string> | null = null;
 
 export const getAllTokenSymbols = (): Set<string> =>

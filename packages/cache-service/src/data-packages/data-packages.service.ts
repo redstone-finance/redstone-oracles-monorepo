@@ -207,9 +207,7 @@ export class DataPackagesService implements OnModuleInit {
     for (const dataPackage of groupedDataPackages) {
       const { _id, ...rest } = dataPackage;
       const dataPackageId = _id.dataPackageId;
-      if (!fetchedPackagesPerDataFeed[dataPackageId]) {
-        fetchedPackagesPerDataFeed[dataPackageId] = [];
-      }
+      fetchedPackagesPerDataFeed[dataPackageId] ??= [];
 
       fetchedPackagesPerDataFeed[dataPackageId].push({
         ...rest,
