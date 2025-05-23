@@ -46,13 +46,12 @@
     "@types/mocha": "^10.0.1",
     "@types/sinon": "^10.0.15",
     "chai": "^4.3.10",
+    "chai-as-promised": "^7.1.1",
     "hardhat": "^2.22.14",
     "hardhat-gas-reporter": "^1.0.9",
     "sinon": "^18.0.0",
     "solidity-coverage": "^0.8.12",
-    "ts-node": "^10.9.2",
-    "typechain": "^8.1.1",
-    "typescript": "^5.5.4"
+    "typechain": "^8.1.1"
   },
   "overrides": {
     "elliptic": "^6.6.1"
