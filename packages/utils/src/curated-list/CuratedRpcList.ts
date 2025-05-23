@@ -37,6 +37,11 @@ const CuratedRpcListConfigSchema = z.object({
         z.number().default(0.15) // 15%
       )
     ),
+  extendedLogs: z
+    .boolean()
+    .default(() =>
+      getFromEnv("RPC_CURATED_LIST_EXTENDED_LOGS", z.boolean().default(false))
+    ),
   rpcIdentifiers: z.string().array().min(1),
   minimalProvidersCount: z.number(),
 });
@@ -92,8 +97,8 @@ export class CuratedRpcList {
     if (errorRate > this.config.maxErrorRate) {
       stats.inQuarantine = true;
       stats.quarantineCounter += 1;
-      this.logger.debug(
-        `Sending provider with identifier=${rpc} to quarantine errorRate=${errorRate.toFixed(
+      (this.config.extendedLogs ? this.logger.info : this.logger.debug)(
+        `Sending provider with identifier=${rpc} to quarantine; errorRate=${errorRate.toFixed(
           2
         )}`
       );
@@ -131,7 +136,7 @@ export class CuratedRpcList {
 
     if (index >= 0) {
       providersInQuarantine[index][1].inQuarantine = false;
-      this.logger.debug(
+      (this.config.extendedLogs ? this.logger.info : this.logger.debug)(
         `Releasing provider identifier=${providersInQuarantine[index][0]} from quarantine`
       );
     }
