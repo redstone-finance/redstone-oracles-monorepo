@@ -31,9 +31,9 @@ function getProvider(
   retryBySingleCalls = true
 ) {
   return MulticallDecorator(providerFabric, {
-    autoResolveInterval: autoResolveInterval,
+    autoResolveInterval,
     maxCallsCount: bufferSize,
-    maxCallDataSize: maxCallDataSize,
+    maxCallDataSize,
     multicallAddress,
     retryBySingleCalls,
   })();

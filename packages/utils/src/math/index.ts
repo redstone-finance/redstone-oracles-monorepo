@@ -94,8 +94,9 @@ export const filterOutliers = (
       const lastElementValue = sortedNumbers[endIndex - 1];
 
       if (lastElementValue - firstElementValue < maxDiscrepancy) {
-        if (endIndex - startIndex > bestGroup.endIndex - bestGroup.startIndex)
+        if (endIndex - startIndex > bestGroup.endIndex - bestGroup.startIndex) {
           bestGroup = { startIndex, endIndex };
+        }
       }
     }
   }
