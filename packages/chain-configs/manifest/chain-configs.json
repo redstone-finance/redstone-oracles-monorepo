@@ -1204,8 +1204,8 @@
     }
   },
   "temporaryConfigUpdates": {
-    "expirationTimestamp": "2025-05-17T12:00:00+02:00",
-    "manta": {
+    "expirationTimestamp": "2025-05-24T12:00:00+02:00",
+    "merlin": {
       "disabled": true
     }
   }
