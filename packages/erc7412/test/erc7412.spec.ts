@@ -7,7 +7,7 @@ import { generate7412CompatibleCall } from "../src/generate7412CompatibleCall";
 chai.use(chaiAsPromised);
 
 describe("erc7412 redstone feed show case", () => {
-  it("should set price for erc7412 redstone feed and retrive it from cache", async () => {
+  it("should set price for erc7412 redstone feed and retrieve it from cache", async () => {
     // deploy erc7412 redstone price feed
     const btcPriceFeed = await hardhat.viem.deployContract("BTCFeed");
 
