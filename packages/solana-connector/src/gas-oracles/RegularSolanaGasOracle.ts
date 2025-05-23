@@ -4,7 +4,9 @@ import _ from "lodash";
 import { SolanaConfig } from "../config";
 import { ISolanaGasOracle } from "./ISolanaGasOracle";
 
-const NUMBER_OF_LAST_SLOTS = 50; // 50 * 400ms = 20 sec
+const BASE_PRIORITY_FEE_PERCENTILE = 80;
+const PRIORITY_FEE_PERCENTILE_STEP = 5;
+const MIN_DEFAULT_PRIORITY_FEE = 1; // microLamport
 
 export class RegularSolanaGasOracle implements ISolanaGasOracle {
   private readonly logger = loggerFactory("solana-gas-oracle");
@@ -15,41 +17,76 @@ export class RegularSolanaGasOracle implements ISolanaGasOracle {
   ) {}
 
   async getPriorityFeePerUnit(
-    lockedWritableAccounts: PublicKey[],
-    iterationIndex = 0
-  ) {
+    iterationIndex: number,
+    lockedWritableAccounts: PublicKey[]
+  ): Promise<number> {
     const fees = await this.connection.getRecentPrioritizationFees({
       lockedWritableAccounts,
     });
+    const prioritizationFees = fees.map((entry) => entry.prioritizationFee);
+    const percentileForUse =
+      BASE_PRIORITY_FEE_PERCENTILE +
+      iterationIndex * PRIORITY_FEE_PERCENTILE_STEP;
+    this.logPercentiles(prioritizationFees, percentileForUse);
 
-    let recentFee: number | undefined;
-    const maxSlot = _.maxBy(fees, (fee) => fee.slot);
-    if (maxSlot) {
-      const lastFees = _.filter(
-        fees,
-        (entry) => entry.slot >= maxSlot.slot - NUMBER_OF_LAST_SLOTS
-      );
-      const maxFeeSlot = _.maxBy(lastFees, (entry) => entry.prioritizationFee);
-      recentFee = maxFeeSlot?.prioritizationFee;
-    }
-    const priorityFeeUnitPriceCostInMicroLamports = Math.ceil(
-      this.config.gasMultiplier ** iterationIndex
+    const recentPriorityFeePercentile = calculatePercentile(
+      prioritizationFees,
+      percentileForUse
     );
+    const iterationGasMultiplier = this.config.gasMultiplier ** iterationIndex;
+    const maxRecentPriorityFee =
+      recentPriorityFeePercentile || MIN_DEFAULT_PRIORITY_FEE;
 
-    const fee = recentFee
-      ? Math.max(recentFee, priorityFeeUnitPriceCostInMicroLamports)
-      : priorityFeeUnitPriceCostInMicroLamports;
-
-    const finalFeePerUnit = Math.min(fee, this.config.maxPricePerComputeUnit);
+    const priorityFee = Math.min(
+      Math.ceil(maxRecentPriorityFee * iterationGasMultiplier),
+      this.config.maxPricePerComputeUnit
+    );
 
     this.logger.info(
-      `RecentFee: ${recentFee}, calculated fee by iteration: ${priorityFeeUnitPriceCostInMicroLamports}`
+      [
+        `Priority fee per unit: ${priorityFee}`,
+        `${percentileForUse}th Priority Fee Percentile: ${recentPriorityFeePercentile}`,
+        iterationIndex
+          ? `iterationGasMultiplier in iteration #${iterationIndex}: ${iterationGasMultiplier}`
+          : "",
+      ]
+        .filter((s) => s !== "")
+        .join("; ")
     );
-    this.logger.info(
-      `Max price per compute unit: ${this.config.maxPricePerComputeUnit}`
-    );
-    this.logger.info(`Setting transaction cost per unit to ${finalFeePerUnit}`);
 
-    return finalFeePerUnit;
+    return priorityFee;
   }
+
+  private logPercentiles(
+    prioritizationFees: number[],
+    percentileForUse: number
+  ) {
+    const step = 1;
+    const startPercentile = BASE_PRIORITY_FEE_PERCENTILE;
+    const percentiles = Array.from(
+      {
+        length: 1 + Math.ceil((100 - startPercentile) / step),
+      },
+      (_, index) => [
+        startPercentile + index * step,
+        calculatePercentile(prioritizationFees, startPercentile + index * step),
+      ]
+    );
+
+    this.logger.log(`Current prioritization fee percentiles:`, {
+      percentileForUse,
+      percentiles: Object.fromEntries(percentiles) as { [p: number]: number },
+    });
+  }
+}
+
+function calculatePercentile(data: number[], percentile: number) {
+  if (data.length === 0) {
+    return undefined;
+  }
+
+  const sortedData = _.sortBy(data);
+  const index = Math.ceil((Math.min(percentile, 100) / 100) * data.length) - 1;
+
+  return sortedData[index];
 }
