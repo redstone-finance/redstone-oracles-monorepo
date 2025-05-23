@@ -113,10 +113,10 @@ export class SolanaTxDeliveryMan {
       .filter((meta) => meta.isWritable)
       .map((meta) => meta.pubkey);
     const priorityFeeUnitPriceCostInMicroLamports =
-      await this.gasOracle.getPriorityFeePerUnit(
-        [this.keypair.publicKey, ...writableKeys],
-        iteration
-      );
+      await this.gasOracle.getPriorityFeePerUnit(iteration, [
+        this.keypair.publicKey,
+        ...writableKeys,
+      ]);
 
     const computeUnitsInstruction = ComputeBudgetProgram.setComputeUnitLimit({
       units: computeUnits,

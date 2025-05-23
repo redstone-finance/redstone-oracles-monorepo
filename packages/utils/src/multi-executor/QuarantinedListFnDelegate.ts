@@ -20,6 +20,7 @@ export class QuarantinedListFnDelegate implements FnDelegate {
       {
         rpcIdentifiers: identifiers,
         minimalProvidersCount,
+        extendedLogs: true,
       },
       chainId
     );
