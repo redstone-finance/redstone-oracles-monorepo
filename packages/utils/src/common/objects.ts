@@ -23,6 +23,10 @@ export function isDefined<T>(value: T): value is NonNullable<T> {
   return value !== null && value !== undefined;
 }
 
+export function isTruthy<T>(value: T): value is NonNullable<T> {
+  return !!value;
+}
+
 export const ensureInitialized = <T>(
   o: Partial<Record<string, T>>,
   key: string,
