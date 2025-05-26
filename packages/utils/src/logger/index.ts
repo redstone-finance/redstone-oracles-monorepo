@@ -131,6 +131,10 @@ export function sanitizeValue<T>(value: T): T {
   return sanitize(value, seen) as T;
 }
 
+function sanitizePathComponent(value: string) {
+  return value.length > 4 ? `...${value.slice(-4)}` : value;
+}
+
 export function sanitizeLogMessage(message: string): string {
   // Regex to find HTTP, HTTPS, and WSS URLs in a log message
   const urlRegex = /(https?|wss):\/\/[A-Za-z0-9\-._~:/?#[\]@!$&'()*+,;=%]+/g;
@@ -138,10 +142,14 @@ export function sanitizeLogMessage(message: string): string {
   return message.replace(urlRegex, (match) => {
     try {
       const parsedUrl = new URL(match);
-      const protocol = parsedUrl.protocol;
-      const host = parsedUrl.hostname;
-      const lastFour = match.slice(-4);
-      return `${protocol}//${host}/...${lastFour}`;
+      parsedUrl.password = "";
+      parsedUrl.username = "";
+      parsedUrl.pathname = parsedUrl.search
+        ? sanitizePathComponent(parsedUrl.search)
+        : sanitizePathComponent(parsedUrl.pathname);
+      parsedUrl.search = "";
+
+      return parsedUrl.toString().replace(/\/+$/, "");
     } catch (err) {
       return match;
     }
