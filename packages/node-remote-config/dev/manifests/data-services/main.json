@@ -6933,6 +6933,11 @@
       ],
       "denomination": "USD",
       "rateFeed": false
+    },
+    "mHYPE_FUNDAMENTAL": {
+      "source": ["hyperevm-evm-fetcher-hyperpie"],
+      "denomination": "HYPE",
+      "rateFeed": true
     }
   }
 }
