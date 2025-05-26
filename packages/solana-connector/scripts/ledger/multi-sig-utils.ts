@@ -6,6 +6,7 @@ import {
 } from "@solana/web3.js";
 import {
   accounts,
+  getProposalPda,
   getTransactionPda,
   getVaultPda,
   instructions,
@@ -173,6 +174,15 @@ export class SquadsMultisig {
     });
 
     return transactionPda;
+  }
+
+  proposalPda(txIdx: number) {
+    const [propPda] = getProposalPda({
+      multisigPda: this.multisigPda,
+      transactionIndex: BigInt(txIdx),
+    });
+
+    return propPda;
   }
 
   multisigAddress() {
