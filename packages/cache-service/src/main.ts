@@ -1,4 +1,8 @@
+import "dotenv/config";
+// note: this line is intentional, otherwise linter changes the order of imports
+// dotenv/config MUST be a very first import.
 import { NestFactory } from "@nestjs/core";
+import { RedstoneHealthcheck } from "@redstone-finance/healthcheck";
 import { json, urlencoded } from "express";
 import http from "http";
 import { Logger, LoggerErrorInterceptor } from "nestjs-pino";
@@ -10,6 +14,7 @@ const KEEP_ALIVE_TIMEOUT_IN_MILLISECONDS =
   config.keepAliveTimeoutInSeconds * 1000;
 
 async function bootstrap() {
+  RedstoneHealthcheck.enableWithDefaultConfig();
   const app = await NestFactory.create(AppModule);
   app.use(json({ limit: REQUEST_SIZE_LIMIT }));
   app.use(urlencoded({ extended: true, limit: REQUEST_SIZE_LIMIT }));

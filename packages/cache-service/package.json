@@ -32,6 +32,7 @@
     "@nestjs/mongoose": "^11.0.0",
     "@nestjs/platform-express": "^11.0.0",
     "@nestjs/schedule": "^5.0.1",
+    "@redstone-finance/healthcheck": "workspace:*",
     "@redstone-finance/internal-utils": "workspace:*",
     "@redstone-finance/protocol": "workspace:*",
     "@redstone-finance/sdk": "workspace:*",
