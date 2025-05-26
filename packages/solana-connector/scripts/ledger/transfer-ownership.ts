@@ -5,7 +5,6 @@ import {
   TransactionMessage,
   VersionedTransaction,
 } from "@solana/web3.js";
-import "dotenv/config";
 import { BPF_UPGRADEABLE_LOADER } from "../consts";
 
 export function createSetUpgradeAuthority(

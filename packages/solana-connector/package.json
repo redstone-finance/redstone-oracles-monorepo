@@ -49,6 +49,7 @@
     "@babel/preset-typescript": "^7.23.2",
     "@ledgerhq/hw-app-solana": "^7.2.4",
     "@ledgerhq/hw-transport-node-hid": "^6.29.5",
+    "@metaplex-foundation/beet": "0.7.2",
     "@metaplex-foundation/mpl-token-metadata": "^3.4.0",
     "@metaplex-foundation/umi": "^1.2.0",
     "@metaplex-foundation/umi-bundle-defaults": "^1.2.0",
