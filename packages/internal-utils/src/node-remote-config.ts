@@ -15,6 +15,24 @@ export enum OracleNodeEnv {
   ProdRedStoneFallback = "prod-redstone-fallback",
 }
 
+export const ORACLE_ENVS_WITH_SIG_VERIFICATION = [
+  OracleNodeEnv.Prod,
+  OracleNodeEnv.ProdFallback,
+];
+
+export function isOracleNodeEnv(v: unknown): v is OracleNodeEnv {
+  return (
+    typeof v === "string" &&
+    Object.values(OracleNodeEnv).includes(v as OracleNodeEnv)
+  );
+}
+
+export function parseOracleNodeEnv(
+  raw: string | undefined
+): OracleNodeEnv | undefined {
+  return isOracleNodeEnv(raw) ? raw : undefined;
+}
+
 export function getSignaturesRepositoryPath(nodeEnv = OracleNodeEnv.Dev) {
   const remoteConfigPath = findRemoteConfigOrThrow(nodeEnv);
   return path.join(
