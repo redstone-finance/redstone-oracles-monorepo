@@ -23,8 +23,7 @@ describe("Logger Sanitization Logic", () => {
     test("should sanitize HTTPS URLs in strings", () => {
       const url =
         '{"urls":["https://api.example.com/v1/data?key=secret123","http://api.example.com/v1/data?key=backup456"]}';
-      const sanitized = sanitizeValue(url) as string;
-      expect(sanitized).not.toContain("secret123");
+      const sanitized = sanitizeValue(url);
       expect(sanitized).toBe(
         '{"urls":["https://api.example.com/...t123","http://api.example.com/...p456"]}'
       );
@@ -32,23 +31,62 @@ describe("Logger Sanitization Logic", () => {
 
     test("should sanitize HTTPS URLs in strings", () => {
       const url = "API call to https://api.example.com/v1/data?key=secret123";
-      const sanitized = sanitizeValue(url) as string;
-      expect(sanitized).not.toContain("secret123");
+      const sanitized = sanitizeValue(url);
       expect(sanitized).toBe("API call to https://api.example.com/...t123");
     });
 
     test("should sanitize HTTP URLs in strings", () => {
       const url = "API call to http://api.example.com/v1/data?key=secret123";
-      const sanitized = sanitizeValue(url) as string;
-      expect(sanitized).not.toContain("secret123");
+      const sanitized = sanitizeValue(url);
       expect(sanitized).toBe("API call to http://api.example.com/...t123");
     });
 
     test("should sanitize WSS URLs in strings", () => {
       const url = "API call to wss://api.example.com/v1/data?key=secret123";
-      const sanitized = sanitizeValue(url) as string;
-      expect(sanitized).not.toContain("secret123");
+      const sanitized = sanitizeValue(url);
       expect(sanitized).toBe("API call to wss://api.example.com/...t123");
+    });
+
+    test("should sanitize HTTP URLs in strings without search", () => {
+      const url =
+        "API call to https://code-knowledge-style.solana-mainnet.quiknode.pro/05d4dab7c08e082805d4dab7c08e0828248fec4c";
+      const sanitized = sanitizeValue(url);
+      expect(sanitized).toBe(
+        "API call to https://code-knowledge-style.solana-mainnet.quiknode.pro/...ec4c"
+      );
+    });
+
+    test("must not change HTTPS URLs in strings without secret", () => {
+      const url = "API call to https://api.testnet.solana.com";
+      const sanitized = sanitizeValue(url);
+      expect(sanitized).toBe("API call to https://api.testnet.solana.com");
+    });
+
+    test("must not change URLs in strings without secret in first item", () => {
+      const url =
+        '{"urls":["https://api.testnet.solana.com","http://api.example.com/v1/data?key=backup456"]}';
+      const sanitized = sanitizeValue(url);
+      expect(sanitized).toBe(
+        '{"urls":["https://api.testnet.solana.com","http://api.example.com/...p456"]}'
+      );
+    });
+
+    test("must not change URLs in strings without secret in second item", () => {
+      const url =
+        '{"urls":["https://api.example.com/v1/data?key=secret123","https://api.testnet.solana.com"]}';
+      const sanitized = sanitizeValue(url);
+      expect(sanitized).toBe(
+        '{"urls":["https://api.example.com/...t123","https://api.testnet.solana.com"]}'
+      );
+    });
+
+    test("must not change URLs in strings without secret in both items", () => {
+      const url =
+        '{"urls":["https://api.example.com","https://api.testnet.solana.com"]}';
+      const sanitized = sanitizeValue(url);
+      expect(sanitized).toBe(
+        '{"urls":["https://api.example.com","https://api.testnet.solana.com"]}'
+      );
     });
 
     test("should sanitize URLs in nested objects", () => {
@@ -61,9 +99,6 @@ describe("Logger Sanitization Logic", () => {
         },
       };
       const sanitized = sanitizeValue(obj);
-      expect(JSON.stringify(sanitized)).not.toContain("secret123");
-      expect(JSON.stringify(sanitized)).not.toContain("backup456");
-      expect(JSON.stringify(sanitized)).not.toContain("websocket789");
       expect(JSON.stringify(sanitized)).toBe(
         JSON.stringify({
           operation: "data-fetch",
@@ -83,10 +118,6 @@ describe("Logger Sanitization Logic", () => {
         "wss://socket.example.com/connect?token=websocket789",
       ];
       const sanitized = sanitizeValue(arr);
-
-      expect(JSON.stringify(sanitized)).not.toContain("secret123");
-      expect(JSON.stringify(sanitized)).not.toContain("backup456");
-      expect(JSON.stringify(sanitized)).not.toContain("websocket789");
       expect(JSON.stringify(sanitized)).toBe(
         JSON.stringify([
           "https://api1.example.com/...t123",
@@ -124,8 +155,7 @@ describe("Logger Sanitization Logic", () => {
       expect(argsReceived.length).toBe(2);
       expect(argsReceived[0]).toBe("Connecting to: ");
 
-      const sanitizedUrlArg = argsReceived[1] as string;
-      expect(sanitizedUrlArg).not.toContain("123456");
+      const sanitizedUrlArg = argsReceived[1];
       expect(sanitizedUrlArg).toBe("https://example.com/...3456");
     });
 
@@ -163,13 +193,11 @@ describe("Logger Sanitization Logic", () => {
         httpUrl: string;
         wssUrl: string;
       };
-      expect(sanitizedObj.httpsUrl).not.toContain("abcxyz");
       expect(sanitizedObj.httpsUrl).toBe("https://api.test.com/...cxyz");
       expect(sanitizedObj.httpUrl).toBe("http://api.test.com/...cxyz");
       expect(sanitizedObj.wssUrl).toBe("wss://socket.test.com/...cxyz");
 
       const sanitizedArr = argsReceived[2] as string[];
-      expect(sanitizedArr[0]).not.toContain("123456");
       expect(sanitizedArr[0]).toBe("https://backup.net/...3456");
       expect(sanitizedArr[1]).toBe("http://backup.net/...3456");
       expect(sanitizedArr[2]).toBe("wss://socket.net/...3456");
