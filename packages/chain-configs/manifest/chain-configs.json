@@ -687,8 +687,8 @@
       "chainId": 1301,
       "currencySymbol": "ETH",
       "publicRpcUrls": [
-        "https://sepolia.unichain.org",
-        "https://unichain-sepolia-rpc.publicnode.com"
+        "https://unichain-sepolia-rpc.publicnode.com",
+        "https://sepolia.unichain.org"
       ],
       "avgBlockTimeMs": 2000,
       "multicall3": {
