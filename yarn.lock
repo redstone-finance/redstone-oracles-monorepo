@@ -6142,7 +6142,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@metaplex-foundation/beet@npm:>=0.1.0":
+"@metaplex-foundation/beet@npm:0.7.2, @metaplex-foundation/beet@npm:>=0.1.0":
   version: 0.7.2
   resolution: "@metaplex-foundation/beet@npm:0.7.2"
   dependencies:
@@ -9738,6 +9738,7 @@ __metadata:
     "@coral-xyz/anchor": "npm:0.30.1"
     "@ledgerhq/hw-app-solana": "npm:^7.2.4"
     "@ledgerhq/hw-transport-node-hid": "npm:^6.29.5"
+    "@metaplex-foundation/beet": "npm:0.7.2"
     "@metaplex-foundation/mpl-token-metadata": "npm:^3.4.0"
     "@metaplex-foundation/umi": "npm:^1.2.0"
     "@metaplex-foundation/umi-bundle-defaults": "npm:^1.2.0"
