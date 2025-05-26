@@ -12,6 +12,10 @@ export const healthcheckConfig = () =>
       "HEALTHCHECK_MEMORY_USAGE_PERCENT_THRESHOLD",
       z.number().default(95)
     ),
+    intervalMs: RedstoneCommon.getFromEnv(
+      "HEALTHCHECK_RUN_INTERVAL_MS",
+      z.number().default(10_000)
+    ),
   });
 
 export function enableWithDefaultConfig() {
@@ -25,6 +29,6 @@ export function enableWithDefaultConfig() {
         gracePeriodMs: RedstoneCommon.minToMs(5),
       })
     );
-    new HealthMonitor(healthChecks, 10_000);
+    new HealthMonitor(healthChecks, hcConfig.intervalMs);
   }
 }
