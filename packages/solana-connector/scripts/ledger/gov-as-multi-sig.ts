@@ -1,7 +1,6 @@
 import {
   AddressLookupTableAccount,
   Connection,
-  Keypair,
   PublicKey,
   Transaction,
   TransactionInstruction,
@@ -14,6 +13,7 @@ import { RedstoneCommon } from "@redstone-finance/utils";
 import "dotenv/config";
 import path from "path";
 import { PROGRAM_SO_FILE } from "../consts";
+import { parseTransaction } from "../tx-checks/check-tx";
 import { makeConnection, readDeployDir, readKeypair } from "../utils";
 import {
   LEDGER_ACCOUNT,
@@ -21,8 +21,9 @@ import {
   SQUAD_ADDRESS,
   TEMP_AUTHORITY,
 } from "./config";
-import { makeSolana, SolanaLedgerSigner } from "./ledger-utils";
+import { makeSolana } from "./ledger-utils";
 import { SquadsMultisig } from "./multi-sig-utils";
+import { sign, Signer, signerPublicKey } from "./signer";
 import { createSetUpgradeAuthority } from "./transfer-ownership";
 import {
   checkUpgradeTransaction,
@@ -47,31 +48,6 @@ type InstructionType =
       base64Transaction: string;
       programId: undefined;
     };
-
-type Signer =
-  | {
-      type: "local";
-      signer: Keypair;
-    }
-  | {
-      type: "ledger";
-      signer: SolanaLedgerSigner;
-    };
-
-async function signerPublicKey(signer: Signer) {
-  if (signer.type === "local") {
-    return signer.signer.publicKey;
-  }
-  return (await signer.signer.getPublicKey()).ed;
-}
-
-async function sign(signer: Signer, tx: VersionedTransaction) {
-  if (signer.type === "local") {
-    tx.sign([signer.signer]);
-    return;
-  }
-  await signer.signer.signTransaction(tx);
-}
 
 async function promptInstructionType(functionType: FunctionType) {
   if (functionType !== "createVaultTx" && functionType !== "approve") {
@@ -329,6 +305,7 @@ async function handleCreateVaultTx(
   );
 
   const tx = await getTx(connection, ix, member);
+  await parseTransaction(tx, connection, squad);
   await sign(signer, tx);
   return tx;
 }
@@ -343,6 +320,7 @@ async function handlePropose(
   const ix = await squad.propose(member, transactionIdx);
 
   const tx = await getTx(connection, ix, member);
+  await parseTransaction(tx, connection, squad);
   await sign(signer, tx);
   return tx;
 }
@@ -357,6 +335,7 @@ async function handleApprove(
   const ix = await squad.approve(member, transactionIdx);
 
   const tx = await getTx(connection, ix, member);
+  await parseTransaction(tx, connection, squad);
   await sign(signer, tx);
   return tx;
 }
@@ -376,6 +355,8 @@ async function handleExecute(
     member,
     ixInfo.lookupTableAccounts
   );
+
+  await parseTransaction(tx, connection, squad);
   await sign(signer, tx);
   return tx;
 }
