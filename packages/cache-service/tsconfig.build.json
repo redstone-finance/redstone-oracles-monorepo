@@ -21,6 +21,9 @@
     },
     {
       "path": "../internal-utils/tsconfig.build.json"
+    },
+    {
+      "path": "../healthcheck/tsconfig.build.json"
     }
   ]
 }
