@@ -25,6 +25,8 @@ export const MAINNET_BOOK = {
         "hex"
       )
     ),
+    new PublicKey("E3XSRMLWqYaJf8L7WHfvTq5m1DoP7mD8k9zxb9TpZMmP"),
+    new PublicKey("7sUFQsjXX28VttZaKsYfE2kpNjEguav649hbtcnPZZCJ"),
   ],
   adapterAddress: new PublicKey("REDSTBDUecGjwXd6YGPzHSvEUBHQqVRfCcjUVgPiHsr"),
   adapterProgramDataAddress: new PublicKey(

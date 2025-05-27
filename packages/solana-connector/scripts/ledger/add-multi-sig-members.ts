@@ -1,18 +1,18 @@
 import {
-  Keypair,
   PublicKey,
   TransactionMessage,
   VersionedTransaction,
 } from "@solana/web3.js";
 import "dotenv/config";
+import { parseTransaction } from "../tx-checks/check-tx";
 import { makeConnection } from "../utils";
 import { LEDGER_ACCOUNT, SQUAD_ADDRESS } from "./config";
 import { makeSolana } from "./ledger-utils";
 import { SquadsMultisig } from "./multi-sig-utils";
 
 const NEW_MEMBERS = [
-  Keypair.generate().publicKey,
-  Keypair.generate().publicKey,
+  new PublicKey("E3XSRMLWqYaJf8L7WHfvTq5m1DoP7mD8k9zxb9TpZMmP"),
+  new PublicKey("7sUFQsjXX28VttZaKsYfE2kpNjEguav649hbtcnPZZCJ"),
 ];
 const NEW_THRESHOLD = 2;
 
@@ -36,6 +36,7 @@ async function addMember(
     }).compileToV0Message()
   );
 
+  await parseTransaction(tx, connection, squadUtils);
   await solanaLedger.signTransaction(tx);
   console.log(await connection.sendTransaction(tx));
 }

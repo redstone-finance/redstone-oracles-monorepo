@@ -4,6 +4,7 @@ import {
   VersionedTransaction,
 } from "@solana/web3.js";
 import "dotenv/config";
+import { parseTransaction } from "../tx-checks/check-tx";
 import { makeConnection } from "../utils";
 import { LEDGER_ACCOUNT, SQUAD_ADDRESS } from "./config";
 import { makeSolana } from "./ledger-utils";
@@ -25,6 +26,7 @@ async function executeConfigTx(squadAddress: PublicKey) {
     }).compileToV0Message()
   );
 
+  await parseTransaction(tx, connection, squadUtils);
   await solanaLedger.signTransaction(tx);
   console.log(await connection.sendTransaction(tx));
 }
