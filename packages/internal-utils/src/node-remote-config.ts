@@ -6,6 +6,7 @@ import { z } from "zod";
 const MAX_REMOTE_CONFIG_NESTING_DEPTH = 20;
 
 export const REMOTE_CONFIG_SIGNATURES_FOLDER = "signatures";
+export const NODE_REMOTE_CONFIG_FOLDER = "node-remote-config";
 
 export enum OracleNodeEnv {
   Dev = "dev",
@@ -48,8 +49,8 @@ export const getNodeConfigBasePath = (nodeEnv = OracleNodeEnv.Dev) => {
     "USE_REMOTE_CONFIG",
     z.boolean().default(false)
   )
-    ? "node-remote-config"
-    : `node-remote-config/${nodeEnv}`;
+    ? NODE_REMOTE_CONFIG_FOLDER
+    : path.join(NODE_REMOTE_CONFIG_FOLDER, nodeEnv);
 };
 
 export function findRemoteConfigOrThrow(configType = OracleNodeEnv.Dev) {
