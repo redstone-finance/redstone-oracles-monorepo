@@ -5938,20 +5938,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@matterlabs/hardhat-zksync-ethers@npm:^0.2.1":
-  version: 0.2.1
-  resolution: "@matterlabs/hardhat-zksync-ethers@npm:0.2.1"
+"@matterlabs/hardhat-zksync-ethers@npm:^0.0.1-beta.2":
+  version: 0.0.1-beta.2
+  resolution: "@matterlabs/hardhat-zksync-ethers@npm:0.0.1-beta.2"
   dependencies:
-    "@matterlabs/hardhat-zksync-deploy": "npm:^0.11.0"
-    "@matterlabs/hardhat-zksync-solc": "npm:^1.2.1"
-    "@nomiclabs/hardhat-ethers": "npm:^2.2.3"
-    chai: "npm:^4.3.4"
-    chalk: "npm:^4.1.2"
-    hardhat: "npm:^2.14.0"
+    chalk: "npm:5.3.0"
   peerDependencies:
-    ethers: ^6.12.2
-    zksync-ethers: ^6.8.0
-  checksum: 10c0/361026605abf264763916a7a8c42cb8c9f45c05a56bbbddb8ffaeff587f8cd0ce00ea8df8781d713e4129dd99242c0a09913a4e5bdfbbb647eabe682c97a6432
+    ethers: ^6.7.1
+    zksync-ethers: ^6.0.0
+  checksum: 10c0/642e372be20875b9e9fe0439e973220fdbe6e22a9da6f78abfd6ea63f0bbd4cfd3d3157b693075a8cfde79d29d5f14c37d34eb872b4c5f445f86d981bd99fdc1
   languageName: node
   linkType: hard
 
@@ -7385,7 +7380,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@nomiclabs/hardhat-ethers@npm:^2.0.6, @nomiclabs/hardhat-ethers@npm:^2.2.1, @nomiclabs/hardhat-ethers@npm:^2.2.3":
+"@nomiclabs/hardhat-ethers@npm:^2.0.6, @nomiclabs/hardhat-ethers@npm:^2.2.1":
   version: 2.2.3
   resolution: "@nomiclabs/hardhat-ethers@npm:2.2.3"
   peerDependencies:
@@ -8438,7 +8433,7 @@ __metadata:
     "@ethersproject/providers": "npm:^5.6.8"
     "@matterlabs/hardhat-zksync": "npm:^0.2.0"
     "@matterlabs/hardhat-zksync-deploy": "npm:^0.11.0"
-    "@matterlabs/hardhat-zksync-ethers": "npm:^0.2.1"
+    "@matterlabs/hardhat-zksync-ethers": "npm:^0.0.1-beta.2"
     "@matterlabs/hardhat-zksync-node": "npm:^0.2.0"
     "@matterlabs/hardhat-zksync-solc": "npm:^1.2.1"
     "@matterlabs/hardhat-zksync-upgradable": "npm:^0.5.1"
@@ -17241,6 +17236,13 @@ __metadata:
     ansi-styles: "npm:^4.1.0"
     supports-color: "npm:^7.1.0"
   checksum: 10c0/3787bd65ecd98ab3a1acc3b4f71d006268a675875e49ee6ea75fb54ba73d268b97544368358c18c42445e408e076ae8ad5cec8fbad36942a2c7ac654883dc61e
+  languageName: node
+  linkType: hard
+
+"chalk@npm:5.3.0":
+  version: 5.3.0
+  resolution: "chalk@npm:5.3.0"
+  checksum: 10c0/8297d436b2c0f95801103ff2ef67268d362021b8210daf8ddbe349695333eb3610a71122172ff3b0272f1ef2cf7cc2c41fdaa4715f52e49ffe04c56340feed09
   languageName: node
   linkType: hard
 
