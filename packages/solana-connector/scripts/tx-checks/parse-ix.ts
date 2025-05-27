@@ -61,11 +61,22 @@ function parseMultisigConfigActions(
   const addedAccounts = actions
     .filter((a) => a.__kind === "AddMember")
     .map((a) => a.newMember.key);
+  const removedAccounts = actions
+    .filter((a) => a.__kind === "RemoveMember")
+    .map((a) => a.oldMember);
+
   const details: Record<string, unknown> = {};
 
   if (addedAccounts.length !== 0) {
     assertWarnAllKnown(addedAccounts, book);
     details.addedAccounts = addedAccounts.map((m) => getNameFromBook(book, m));
+  }
+
+  if (removedAccounts.length !== 0) {
+    assertWarnAllKnown(removedAccounts, book);
+    details.removedAccounts = removedAccounts.map((m) =>
+      getNameFromBook(book, m)
+    );
   }
 
   const threshold = actions.filter((a) => a.__kind === "ChangeThreshold");
@@ -75,7 +86,8 @@ function parseMultisigConfigActions(
   }
 
   const otherActions = actions.filter(
-    (a) => a.__kind !== "AddMember" && a.__kind !== "ChangeThreshold"
+    (a) =>
+      !["AddMember", "ChangeThreshold", "ChangeThreshold"].includes(a.__kind)
   );
   assertWarn(
     otherActions.length === 0,
