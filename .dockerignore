@@ -11,3 +11,5 @@ terraform
 **/healthcheck.txt.tmp
 **/healthcheck.txt
 **/*.tsbuildinfo
+packages/oracle-node/config_*
+packages/oracle-node/node-remote-config
