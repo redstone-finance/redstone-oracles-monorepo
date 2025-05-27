@@ -28,6 +28,9 @@ export const MAINNET_BOOK = {
     new PublicKey("E3XSRMLWqYaJf8L7WHfvTq5m1DoP7mD8k9zxb9TpZMmP"),
     new PublicKey("7sUFQsjXX28VttZaKsYfE2kpNjEguav649hbtcnPZZCJ"),
   ],
+  oldMultisigMember: new PublicKey(
+    "Fuq9VAhDahfaXodDne3zjmzYWZ7L92tmWSF7gPHVVXi1"
+  ),
   adapterAddress: new PublicKey("REDSTBDUecGjwXd6YGPzHSvEUBHQqVRfCcjUVgPiHsr"),
   adapterProgramDataAddress: new PublicKey(
     "DBojaNYj7iaUscLSwUaUtr7r7NVkz8t8TPyJfYDaD4ia"
