@@ -178,7 +178,6 @@
       "currencySymbol": "CANTO",
       "publicRpcUrls": [
         "https://canto.slingshot.finance",
-        "https://mainnode.plexnode.org:8545",
         "https://canto-rpc.ansybl.io"
       ],
       "avgBlockTimeMs": 6000,
