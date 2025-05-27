@@ -36,6 +36,7 @@
     "write-buffer": "yarn global:ts-node scripts/write-program-buffer.ts",
     "update-metadata-authority": "yarn global:ts-node scripts/update-metadata-authority.ts",
     "add-multi-sig-members": "yarn global:ts-node scripts/ledger/add-multi-sig-members.ts",
+    "remove-multi-sig-members": "yarn global:ts-node scripts/ledger/remove-multi-sig-members.ts",
     "execute-config-tx": "yarn global:ts-node scripts/ledger/execute-config-tx.ts"
   },
   "dependencies": {
