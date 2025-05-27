@@ -388,6 +388,7 @@
       "source": [
         "balancer-arbitrumone-wsteth",
         "balancer-ethereum-wsteth",
+        "balancer-v3-ethereum-waethweth",
         "curve-ethereum-eth"
       ],
       "denomination": "USD",
@@ -462,6 +463,7 @@
       "source": [
         "balancer-arbitrumone-weth",
         "balancer-ethereum-weth",
+        "balancer-v3-ethereum-waethweth",
         "curve-ethereum-reth"
       ],
       "denomination": "USD",
