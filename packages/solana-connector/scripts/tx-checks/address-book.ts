@@ -23,7 +23,15 @@ export const KNOWN_PROGRAMS = {
   otterVerify: new PublicKey("verifycLy8mB96wd9wqq3WDXQwM4oU6r42Th37Db9fC"),
 };
 
-export function addressNameMap(cluster: Cluster): Record<string, string> {
+export function reverseBook(book: Record<string, string>) {
+  const reversed: Record<string, string> = {};
+  for (const [key, value] of Object.entries(book)) {
+    reversed[value] = key;
+  }
+  return reversed;
+}
+
+export function addressNameMap(cluster: Cluster) {
   let book: Record<string, unknown>;
 
   switch (cluster) {

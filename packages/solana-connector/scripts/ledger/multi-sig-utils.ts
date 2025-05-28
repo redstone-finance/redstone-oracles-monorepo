@@ -86,10 +86,12 @@ export class SquadsMultisig {
 
   async createVaultTransaction(
     member: PublicKey,
-    ix: TransactionInstruction,
+    ix: TransactionInstruction | TransactionInstruction[],
     transactionIdx: bigint | undefined
   ) {
     const vaultPda = this.vaultPda();
+
+    const ixs = Array.isArray(ix) ? ix : [ix];
 
     console.log(
       `VaultPda ${vaultPda.toBase58()}, do not forget to top up with some Sol`
@@ -105,7 +107,7 @@ export class SquadsMultisig {
     const transactionMessage = new TransactionMessage({
       payerKey: vaultPda,
       recentBlockhash: (await this.connection.getLatestBlockhash()).blockhash,
-      instructions: [ix],
+      instructions: ixs,
     });
 
     return instructions.vaultTransactionCreate({
