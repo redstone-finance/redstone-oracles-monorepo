@@ -253,6 +253,17 @@
       "ecdsaPublicKey": "0x04f1b0e6f15cd00f16f3cfec40bf7facdba5b49624c5ad71c4dd55b0428c03479ac6d17219fbad7f5c8b7b48a2a05de3647c6843d0044d81e6c68f6a4b0e21447d",
       "dateAdded": "2025-04-23"
     },
+    "0xd0C9878c72C4B8B062378713801Ca7b19117269f": {
+      "name": "redstone-primary-prod-auros-1",
+      "description": "Data feeds from primary redstone nodes - Auros node 1",
+      "logo": "https://raw.githubusercontent.com/redstone-finance/redstone-images/main/providers/auros/logo.png",
+      "dataServiceId": "redstone-primary-prod",
+      "evmAddress": "0xd0C9878c72C4B8B062378713801Ca7b19117269f",
+      "url": "https://auros.global",
+      "ipAddress": "0.0.0.0",
+      "ecdsaPublicKey": "0x0431f5b2d7cf66b1d1fb7fdfd9333515ca508ec399872ef43f00ec63704a1ca9b7858ab86e3b6d3bb8c1571472b568054f44d13eafad959f7c25f202dedac8ff54",
+      "dateAdded": "2025-05-28"
+    },
     "ckah_Yc4ZhzQbx27Lgo1Ad1yePneQdkusER_c49KVK0": {
       "name": "redstone-arbitrum-prod-node-1",
       "description": "Data feeds from arbitrum redstone nodes - prod 1",
@@ -340,39 +351,6 @@
       "evmAddress": "0xA4CcC693371D3270DFBE914f51E1D3a3184A2Cdc",
       "ecdsaPublicKey": "0x0414dbb123a833de852fa2166856f972fc925a8499498bb47501c3da2a716616c4e5102d8b48b785de821934d518c1d1282979f1103148e8b11526ca1fd03cd4e1",
       "dateAdded": "2024-01-01"
-    },
-    "WPrl0TkGtc2zEfa-SmpDd4sh0AkyMHMGZ9rxATyDTN0": {
-      "url": "https://redstone.finance",
-      "logo": "https://redstone.finance/assets/img/redstone-logo-full.svg",
-      "name": "redstone-external-demo-1",
-      "ipAddress": "0.0.0.0",
-      "dataServiceId": "redstone-external-demo-1",
-      "description": "Data feeds from external providers, staging node",
-      "evmAddress": "0x8e959CBA422cC14AAE2b1d36970293E955a05fA8",
-      "ecdsaPublicKey": "0x04910c377ce317764b79b05769d5a911caa2e513485f64b261a38f7e6107d5368d41c346c8e3d6fd9ea0158e91e6df622721413820f760e7031dab4aef544f2de5",
-      "dateAdded": "2025-01-01"
-    },
-    "HJTZ-0JAX-FrM1Lh6v-jNUWJQu6BSN8jFffI4ipqefI": {
-      "url": "https://redstone.finance",
-      "logo": "https://redstone.finance/assets/img/redstone-logo-full.svg",
-      "name": "redstone-external-demo-2",
-      "ipAddress": "0.0.0.0",
-      "dataServiceId": "redstone-external-demo-2",
-      "description": "Data feeds from external providers, staging node",
-      "evmAddress": "0x1f9D87e3aE042B2A3311D72eC6f44A89B24CEed8",
-      "ecdsaPublicKey": "0x0494635bf9e9841d5d4fb5fe62c7da5786d519b4e63cbbde9092b3d4555f480547abbf0ba4bc5dcfd97d22b5b154ae969110b662bbfb700447d7e6f9ee8f86cd69",
-      "dateAdded": "2025-01-01"
-    },
-    "0xA73880D5550f712f1820fF3e157BD64ea7Bc7040": {
-      "url": "https://auros.global",
-      "logo": "https://raw.githubusercontent.com/redstone-finance/redstone-images/main/providers/auros/logo.png",
-      "name": "auros-demo-1",
-      "ipAddress": "0.0.0.0",
-      "dataServiceId": "auros-demo-1",
-      "description": "Data feeds provided by Auros",
-      "evmAddress": "0xCA5C81a36C21583b8488a3327F4023EaE6B5e02b",
-      "ecdsaPublicKey": "0x04bdc7d5c223b8dbe77aab4c3fc7a84b90ec1848b50d9cc52ca762c42eebd3215b0d62bcd86adecc834d093104028edad060f446cbcfeef8b0131dbeee8a6ed42f",
-      "dateAdded": "2024-01-01"
     }
   },
   "evolve": null,
@@ -439,21 +417,6 @@
       "logo": "https://redstone.finance/assets/img/redstone-logo-full.svg",
       "name": "redstone-perun-demo-1",
       "description": "RedStone Perun running dev node"
-    },
-    "redstone-external-demo-1": {
-      "name": "External Provider Demo",
-      "logo": "https://redstone.finance/assets/img/redstone-logo-full.svg",
-      "description": "Data feeds from external providers, staging node"
-    },
-    "redstone-external-demo-2": {
-      "name": "External Provider Demo",
-      "logo": "https://redstone.finance/assets/img/redstone-logo-full.svg",
-      "description": "Data feeds from external providers, staging node"
-    },
-    "auros-demo-1": {
-      "name": "Auros Demo 1 Node",
-      "logo": "https://raw.githubusercontent.com/redstone-finance/redstone-images/main/providers/auros/logo.png",
-      "description": "Data feeds provided by Auros to staging env"
     }
   },
   "contractAdmins": [
