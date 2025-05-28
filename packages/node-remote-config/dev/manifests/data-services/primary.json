@@ -203,7 +203,6 @@
         "camelot-v3-arbitrumone-weth",
         "uniswap-v3-arbitrumone-weth-100",
         "uniswap-v3-ethereum-weth-100",
-        "uniswap-v3-optimism-weth-100",
         "velodrome-cl-optimism-weth"
       ],
       "denomination": "USD",
@@ -225,10 +224,7 @@
       "rateFeed": true
     },
     "SWETH": {
-      "source": [
-        "pancake-swap-ethereum-weth-500-multi-block",
-        "uniswap-v3-ethereum-weth-500-multi-block"
-      ],
+      "source": ["uniswap-v3-ethereum-weth-500-multi-block"],
       "denomination": "USD",
       "rateFeed": false
     },
@@ -367,8 +363,7 @@
         "bybit-usdt",
         "gate-usdt",
         "kraken-usd",
-        "kucoin-usdt",
-        "uniswap-v3-ethereum-weth-3000"
+        "kucoin-usdt"
       ],
       "denomination": "USD",
       "rateFeed": false
@@ -386,7 +381,6 @@
     },
     "ETHx": {
       "source": [
-        "balancer-arbitrumone-wsteth",
         "balancer-ethereum-wsteth",
         "balancer-v3-ethereum-waethweth",
         "curve-ethereum-eth"
@@ -461,7 +455,6 @@
     "osETH": {
       "priceAggregator": "depth",
       "source": [
-        "balancer-arbitrumone-weth",
         "balancer-ethereum-weth",
         "balancer-v3-ethereum-waethweth",
         "curve-ethereum-reth"
@@ -536,7 +529,6 @@
         "okx-usdt",
         "uniswap-v3-optimism-usdc-3000",
         "uniswap-v3-optimism-weth-3000",
-        "uniswap-v3-optimism-weth-500",
         "velodrome-cl-optimism-weth",
         "velodrome-optimism-weth",
         "xt"
@@ -1174,7 +1166,6 @@
         "thruster-blast-weth",
         "thruster-v3-blast-susde-500",
         "thruster-v3-blast-usde-500",
-        "thruster-v3-blast-weth-3000",
         "thruster-v3-blast-weth-500"
       ],
       "deviationCheck": {
@@ -1302,7 +1293,7 @@
       "rateFeed": false
     },
     "SolvBTC_MERLIN": {
-      "source": ["merlinswap-merlin-m-btc", "merlinswap-merlin-m-btc-2"],
+      "source": ["merlinswap-merlin-m-btc"],
       "valueCapConfig": {
         "upper": {
           "token": "BTC",
@@ -1546,7 +1537,6 @@
     "SolvBTC": {
       "source": [
         "pancake-swap-bnb-btcb-500",
-        "pancake-swap-bnb-btcb-100",
         "thena-bnb-btcb",
         "trader-joe-v2-avalanche-btc.b",
         "uniswap-v3-ethereum-wbtc-500"
@@ -1598,7 +1588,7 @@
       "rateFeed": true
     },
     "pumpBTC": {
-      "source": ["curve-ethereum-wbtc", "uniswap-v3-ethereum-wbtc-500"],
+      "source": ["curve-ethereum-wbtc"],
       "denomination": "USD",
       "rateFeed": false
     },
@@ -1612,7 +1602,7 @@
         "aerodrome-base-cbbtc",
         "aerodrome-base-weth",
         "aerodrome-base-wsteth",
-        "velodrome-optimism-weth"
+        "velodrome-optimism-wsteth"
       ],
       "denomination": "USD",
       "rateFeed": false
@@ -1706,7 +1696,7 @@
         "trader-joe-v2-avalanche-usdc",
         "trader-joe-v2-avalanche-usdt",
         "trader-joe-v2-avalanche-wavax",
-        "uniswap-v3-ethereum-usdc-500"
+        "uniswap-v4-ethereum-usdc-500"
       ],
       "denomination": "USD",
       "rateFeed": false
@@ -2317,9 +2307,7 @@
         "kucoin-usdt",
         "lbank-usdt",
         "mexc-usdt",
-        "okx-usdt",
-        "uniswap-v3-ethereum-weth-3000",
-        "uniswap-v3-ethereum-weth-10000"
+        "okx-usdt"
       ],
       "denomination": "USD",
       "rateFeed": false
