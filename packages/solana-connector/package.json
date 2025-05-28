@@ -36,6 +36,7 @@
     "write-buffer": "yarn global:ts-node scripts/write-program-buffer.ts",
     "update-metadata-authority": "yarn global:ts-node scripts/update-metadata-authority.ts",
     "add-multi-sig-members": "yarn global:ts-node scripts/ledger/add-multi-sig-members.ts",
+    "manage-limits": "yarn global:ts-node scripts/ledger/manage-limits.ts",
     "remove-multi-sig-members": "yarn global:ts-node scripts/ledger/remove-multi-sig-members.ts",
     "execute-config-tx": "yarn global:ts-node scripts/ledger/execute-config-tx.ts"
   },
@@ -60,6 +61,9 @@
     "@types/chai": "^4.3.4",
     "@types/mocha": "^10.0.1",
     "@types/prompts": "^2.4.2",
+    "@wormhole-foundation/sdk": "^0.14.0",
+    "@wormhole-foundation/sdk-definitions-ntt": "0.4.0",
+    "@wormhole-foundation/sdk-solana-ntt": "^0.4.0",
     "bs58": "^6.0.0",
     "chai": "^4.3.10",
     "dotenv": "^16.0.3",
