@@ -9,7 +9,6 @@
       "types": "./dist/src/run-relayer",
       "default": "./dist/src/run-relayer.js"
     },
-    "./scripts/read-manifests": "./scripts/read-manifests",
     "./artifacts/*": "./artifacts/*",
     "./typechain-types": "./typechain-types"
   },
@@ -55,7 +54,7 @@
     "dotenv": "^16.0.3",
     "ethers": "^5.7.2",
     "lodash": "^4.17.21",
-    "toad-scheduler": "^2.2.0",
+    "toad-scheduler": "^3.1.0",
     "zod": "^3.22.4"
   },
   "devDependencies": {

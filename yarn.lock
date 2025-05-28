@@ -10304,7 +10304,7 @@ __metadata:
     msw: "npm:^2.4.10"
     sinon: "npm:^18.0.0"
     solidity-coverage: "npm:^0.8.12"
-    toad-scheduler: "npm:^2.2.0"
+    toad-scheduler: "npm:^3.1.0"
     typechain: "npm:^8.1.1"
     zod: "npm:^3.22.4"
   languageName: unknown
@@ -19604,6 +19604,13 @@ __metadata:
     "@types/luxon": "npm:~3.4.0"
     luxon: "npm:~3.5.0"
   checksum: 10c0/ca5fbfb0d54a77ff4a293ad7bd0e67872915985d739fa4b72ecfaae72db1918f542469a1a6638af4c5a280753443ba308dd04382fe8dcc07d29bd7922856ea94
+  languageName: node
+  linkType: hard
+
+"croner@npm:^8.1.2":
+  version: 8.1.2
+  resolution: "croner@npm:8.1.2"
+  checksum: 10c0/9ce614c9ef5eb7c2106ff6a5f0cc2dcfe5dd69aff7792fefdc7bd79e7901b498ecd477dcfa790a1db0e46cb3b385f13f6bf870d072f11323ae9d44d8b040c878
   languageName: node
   linkType: hard
 
@@ -35919,10 +35926,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"toad-scheduler@npm:^2.2.0":
-  version: 2.3.0
-  resolution: "toad-scheduler@npm:2.3.0"
-  checksum: 10c0/3493dc607a776dd10ff923de38a45f29e6aaa27145b5ad5081b29a35d5ee06a1c5177e6cfcdba5808acdad0b2f1d1f7483bd4004cd7580fc4fe3bf99d1e71170
+"toad-scheduler@npm:^3.1.0":
+  version: 3.1.0
+  resolution: "toad-scheduler@npm:3.1.0"
+  dependencies:
+    croner: "npm:^8.1.2"
+  checksum: 10c0/0a9fe6deb7e60ab1fed98d3e92525aa8a47587e8d130084db624b2d9a5985e3cc193d2323345b981d5385d041a25ee15590d00f63b6ca7dc89b9b932e91a28aa
   languageName: node
   linkType: hard
 

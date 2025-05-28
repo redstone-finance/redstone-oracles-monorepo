@@ -1,5 +1,5 @@
 import { RedstoneHealthcheck } from "@redstone-finance/healthcheck";
-import { loggerFactory } from "@redstone-finance/utils";
+import { loggerFactory, RedstoneCommon } from "@redstone-finance/utils";
 import { config, ConsciouslyInvoked } from "./config/config";
 import { timelyOverrideSinceLastUpdate } from "./config/timely-override-since-last-update";
 import { AsyncTaskRunner } from "./runner/AsyncTaskRunner";
@@ -26,6 +26,13 @@ export const runRelayer = async () => {
   }
 
   RedstoneHealthcheck.enableWithDefaultConfig();
+
+  process.on("unhandledRejection", (reason) => {
+    logger.error(
+      "THIS PATH SHOULD NEVER HAVE HAPPENED, CHECK FLOATING PROMISES!\n" +
+        `Unhandled Rejection at: ${RedstoneCommon.stringifyError(reason)}`
+    );
+  });
 
   if (relayerConfig.runWithMqtt) {
     void MqttRunner.run(relayerConfig);
