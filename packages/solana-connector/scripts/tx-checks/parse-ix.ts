@@ -1,8 +1,10 @@
 import { Connection, PublicKey } from "@solana/web3.js";
 import { accounts, generated, types } from "@sqds/multisig";
+import { asChainId, chainIdToChain } from "@wormhole-foundation/sdk";
 import "dotenv/config";
+import { hexlify } from "ethers/lib/utils";
 import { SquadsMultisig } from "../ledger/multi-sig-utils";
-import { KNOWN_PROGRAMS, SYSTEM_ACCOUNTS } from "./address-book";
+import { KNOWN_PROGRAMS, reverseBook, SYSTEM_ACCOUNTS } from "./address-book";
 
 const {
   configTransactionCreateStruct,
@@ -13,6 +15,8 @@ const {
 } = generated;
 const { transactionMessageBeet } = types;
 const { Proposal, ConfigTransaction } = accounts;
+
+const DECIMALS = 9;
 
 const INSTRUCTION_BOOK = {
   multisigCreateVaultTx: [48, 250, 78, 168, 208, 226, 218, 211],
@@ -25,7 +29,46 @@ const INSTRUCTION_BOOK = {
   transferAuthority: [4, 0, 0, 0],
   closeBuffer: [5, 0, 0, 0],
   verifyProgram: [175, 175, 109, 31, 13, 152, 155, 237],
+  outboundLimitInstruction: [218, 8, 1, 204, 167, 233, 10, 158],
+  inboundLimitInstruction: [45, 97, 172, 137, 164, 31, 209, 89],
+  pauseInstruction: [91, 60, 125, 192, 176, 225, 166, 218],
+  setPeerInstruction: [32, 70, 184, 229, 200, 115, 227, 177],
 };
+
+function checkProgram(
+  expected: PublicKey,
+  accounts: PublicKey[],
+  programIdx: number,
+  label: string
+) {
+  assertWarn(
+    accounts[programIdx].toBase58() === expected.toBase58(),
+    `❗ transaction should use ${label} program.`
+  );
+}
+
+function leBytesToBigInt(bytes: Uint8Array): bigint {
+  let result = 0n;
+  for (let i = bytes.length - 1; i >= 0; i--) {
+    result = (result << 8n) + BigInt(bytes[i]);
+  }
+  return result;
+}
+
+function splitLimitNumber(value: bigint, decimals: number) {
+  const factor = 10n ** BigInt(decimals);
+  const whole = value / factor;
+  const fraction = value % factor;
+  return { whole, fraction };
+}
+
+function parseLimits(leBytes: Uint8Array) {
+  const limit = leBytesToBigInt(leBytes);
+
+  const { whole, fraction } = splitLimitNumber(limit, DECIMALS);
+
+  return `${whole}.${fraction.toString().padStart(DECIMALS, "0")}`;
+}
 
 function assertWarn(x: boolean, msg: string) {
   if (!x) {
@@ -159,10 +202,11 @@ function parseUpgradeTx(
   accountIdxs: number[],
   accounts: PublicKey[]
 ): Promise<InstructionLog> {
-  assertWarn(
-    accounts[programIdx].toBase58() ===
-      SYSTEM_ACCOUNTS.bpfLoaderUpgradeable.toBase58(),
-    "❗ Upgrade tx should use bpfLoaderUpgradeable program."
+  checkProgram(
+    SYSTEM_ACCOUNTS.bpfLoaderUpgradeable,
+    accounts,
+    programIdx,
+    "bpfLoaderUpgradeable"
   );
 
   assertWarn(
@@ -198,10 +242,7 @@ async function parseMultisigApproveTx(
   accounts: PublicKey[]
 ): Promise<InstructionLog> {
   const _deserialized = proposalApproveStruct.deserialize(ix);
-  assertWarn(
-    accounts[programIdx].toBase58() === KNOWN_PROGRAMS.squadAddress.toBase58(),
-    "❗ Multisig transactions should use squad program."
-  );
+  checkProgram(KNOWN_PROGRAMS.squadAddress, accounts, programIdx, "squad");
 
   const proposalAccount = await Proposal.fromAccountAddress(
     connection,
@@ -238,10 +279,8 @@ async function parseCreateVaultTx(
   accounts: PublicKey[]
 ): Promise<InstructionLog> {
   const deserialized = vaultTransactionCreateStruct.deserialize(ix);
-  assertWarn(
-    accounts[programIdx].toBase58() === KNOWN_PROGRAMS.squadAddress.toBase58(),
-    "❗ Multisig transactions should use squad program."
-  );
+
+  checkProgram(KNOWN_PROGRAMS.squadAddress, accounts, programIdx, "squad");
 
   const txIdx = (await squadUtils.multisigTransactionIndex()) + 1n;
   const txPda = squadUtils.txPda(Number(txIdx));
@@ -294,10 +333,7 @@ function parseCreateConfigTx(
   _accountIdxs: number[],
   accounts: PublicKey[]
 ): Promise<InstructionLog> {
-  assertWarn(
-    accounts[programIdx].toBase58() === KNOWN_PROGRAMS.squadAddress.toBase58(),
-    "❗ Multisig transactions should use squad program."
-  );
+  checkProgram(KNOWN_PROGRAMS.squadAddress, accounts, programIdx, "squad");
 
   const deserialized = configTransactionCreateStruct.deserialize(ix);
   const actions = deserialized[0].args.actions;
@@ -320,10 +356,7 @@ async function parseExecuteConfigTx(
   accountIdxs: number[],
   accounts: PublicKey[]
 ): Promise<InstructionLog> {
-  assertWarn(
-    accounts[programIdx].toBase58() === KNOWN_PROGRAMS.squadAddress.toBase58(),
-    "❗ Multisig transactions should use squad program."
-  );
+  checkProgram(KNOWN_PROGRAMS.squadAddress, accounts, programIdx, "squad");
 
   assertWarnAllKnown(accounts, book);
 
@@ -362,10 +395,12 @@ function parseTransferAuthority(
     accountIdxs.length === 3,
     `❗ Transfer Authority expects 3 accounts got: ${accountIdxs.length}`
   );
-  assertWarn(
-    accounts[programIdx].toBase58() ===
-      SYSTEM_ACCOUNTS.bpfLoaderUpgradeable.toBase58(),
-    "❗ Transfer Authority should use bpfLoaderUpgradeable program."
+
+  checkProgram(
+    SYSTEM_ACCOUNTS.bpfLoaderUpgradeable,
+    accounts,
+    programIdx,
+    "bpfLoaderUpgradeable"
   );
 
   const of = getNameFromBook(book, accounts[accountIdxs[0]]);
@@ -389,10 +424,8 @@ async function parseExecuteVaultTx(
 ): Promise<InstructionLog> {
   const _deserialized = vaultTransactionExecuteStruct.deserialize(ix);
 
-  assertWarn(
-    accounts[programIdx].toBase58() === KNOWN_PROGRAMS.squadAddress.toBase58(),
-    "❗ Multisig transactions should use squad program."
-  );
+  checkProgram(KNOWN_PROGRAMS.squadAddress, accounts, programIdx, "squad");
+
   const proposalAccount = await Proposal.fromAccountAddress(
     connection,
     accounts[accountIdxs[1]]
@@ -438,10 +471,9 @@ async function parseMultisigProposeTx(
     accountIdxs.length === 2,
     "❗ Propose tx expects only proposal account and multisig account"
   );
-  assertWarn(
-    accounts[programIdx].toBase58() === KNOWN_PROGRAMS.squadAddress.toBase58(),
-    "❗ Multisig transactions should use squad program."
-  );
+
+  checkProgram(KNOWN_PROGRAMS.squadAddress, accounts, programIdx, "squad");
+
   const proposalPda = squadUtils.proposalPda(Number(txId));
   const proposalFromTx = accounts[accountIdxs[1]];
   book[squadUtils.proposalPda(Number(txId)).toBase58()] =
@@ -475,10 +507,11 @@ function parseCloseBufferTx(
   accountIdxs: number[],
   accounts: PublicKey[]
 ): Promise<InstructionLog> {
-  assertWarn(
-    accounts[programIdx].toBase58() ===
-      SYSTEM_ACCOUNTS.bpfLoaderUpgradeable.toBase58(),
-    "❗ Close buffer transaction should use bpfLoaderUpgradeable program"
+  checkProgram(
+    SYSTEM_ACCOUNTS.bpfLoaderUpgradeable,
+    accounts,
+    programIdx,
+    "bpfLoaderUpgradeable"
   );
   assertWarn(
     accountIdxs.length === 3,
@@ -496,6 +529,126 @@ function parseCloseBufferTx(
   });
 }
 
+function parsePauseIx(
+  _connection: Connection,
+  _squadUtils: SquadsMultisig,
+  book: Record<string, string>,
+  ix: Buffer,
+  programIdx: number,
+  _accountIdxs: number[],
+  accounts: PublicKey[]
+): Promise<InstructionLog> {
+  const reversedBook = reverseBook(book);
+
+  checkProgram(
+    new PublicKey(reversedBook["nttProgram"]),
+    accounts,
+    programIdx,
+    "ntt"
+  );
+
+  assertWarnAllKnown(accounts, book);
+  const paused = ix[8] !== 0;
+
+  return Promise.resolve({
+    type: "PauseNtt",
+    details: { paused },
+  });
+}
+
+function parseInboundLimits(
+  _connection: Connection,
+  _squadUtils: SquadsMultisig,
+  book: Record<string, string>,
+  ix: Buffer,
+  programIdx: number,
+  _accountIdxs: number[],
+  accounts: PublicKey[]
+): Promise<InstructionLog> {
+  const reversedBook = reverseBook(book);
+
+  checkProgram(
+    new PublicKey(reversedBook["nttProgram"]),
+    accounts,
+    programIdx,
+    "ntt"
+  );
+
+  const inboudLimitBs = ix.subarray(8, 16);
+  const chainBs = ix.subarray(16);
+
+  const chainNumber = Number(leBytesToBigInt(chainBs));
+  const chain = chainIdToChain(asChainId(chainNumber));
+
+  return Promise.resolve({
+    type: "InboundLimits",
+    details: { inboudLimit: parseLimits(inboudLimitBs), chain },
+  });
+}
+
+function parseOutboundLimits(
+  _connection: Connection,
+  _squadUtils: SquadsMultisig,
+  book: Record<string, string>,
+  ix: Buffer,
+  programIdx: number,
+  _accountIdxs: number[],
+  accounts: PublicKey[]
+): Promise<InstructionLog> {
+  const reversedBook = reverseBook(book);
+
+  checkProgram(
+    new PublicKey(reversedBook["nttProgram"]),
+    accounts,
+    programIdx,
+    "ntt"
+  );
+
+  const outboundLimitBs = ix.subarray(8);
+
+  return Promise.resolve({
+    type: "OutboundLimits",
+    details: { outboundLimit: parseLimits(outboundLimitBs) },
+  });
+}
+
+function parseSetPeer(
+  _connection: Connection,
+  _squadUtils: SquadsMultisig,
+  book: Record<string, string>,
+  ix: Buffer,
+  programIdx: number,
+  _accountIdxs: number[],
+  accounts: PublicKey[]
+): Promise<InstructionLog> {
+  const reversedBook = reverseBook(book);
+
+  checkProgram(
+    new PublicKey(reversedBook["nttProgram"]),
+    accounts,
+    programIdx,
+    "ntt"
+  );
+
+  const chainBs = ix.subarray(8, 10);
+  const addressBs = ix.subarray(10, 42);
+  const inboudLimitBs = ix.subarray(42, 50);
+  const decimals = ix[50];
+
+  const chainNumber = Number(leBytesToBigInt(chainBs));
+  const chain = chainIdToChain(asChainId(chainNumber));
+
+  return Promise.resolve({
+    type: "SetPeer",
+    details: {
+      chain,
+      address: hexlify(addressBs),
+      inboudLimit: parseLimits(inboudLimitBs),
+      decimals,
+    },
+  });
+}
+
 function parseVerifyProgram(
   _connection: Connection,
   _squadUtils: SquadsMultisig,
@@ -505,10 +658,8 @@ function parseVerifyProgram(
   accountIdxs: number[],
   accounts: PublicKey[]
 ): Promise<InstructionLog> {
-  assertWarn(
-    accounts[programIdx].toBase58() === KNOWN_PROGRAMS.otterVerify.toBase58(),
-    "❗ Verify should use otterVerify program"
-  );
+  checkProgram(KNOWN_PROGRAMS.otterVerify, accounts, programIdx, "otterVerify");
+
   book[accounts[accountIdxs[0]].toBase58()] = "otter-build-params";
 
   const buildParams = getNameFromBook(book, accounts[accountIdxs[0]]);
@@ -575,6 +726,13 @@ export function matchInstruction(data: Buffer) {
     [Buffer.from(INSTRUCTION_BOOK.multisigExecuteVaultTx), parseExecuteVaultTx],
     [Buffer.from(INSTRUCTION_BOOK.multisigProposeTx), parseMultisigProposeTx],
     [Buffer.from(INSTRUCTION_BOOK.verifyProgram), parseVerifyProgram],
+    [Buffer.from(INSTRUCTION_BOOK.inboundLimitInstruction), parseInboundLimits],
+    [
+      Buffer.from(INSTRUCTION_BOOK.outboundLimitInstruction),
+      parseOutboundLimits,
+    ],
+    [Buffer.from(INSTRUCTION_BOOK.pauseInstruction), parsePauseIx],
+    [Buffer.from(INSTRUCTION_BOOK.setPeerInstruction), parseSetPeer],
   ];
 
   const matched = discriminatorMatches.find(([expected, _]) =>
