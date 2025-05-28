@@ -317,8 +317,7 @@
         "uniswap-v3-arbitrumone-weth-500",
         "uniswap-v3-ethereum-weth-3000",
         "uniswap-v3-ethereum-weth-500",
-        "uniswap-v4-ethereum-usdc-3000",
-        "uniswap-v4-ethereum-eth-3000"
+        "uniswap-v4-ethereum-usdt-3000"
       ],
       "denomination": "USD",
       "rateFeed": false
@@ -1597,13 +1596,7 @@
       "rateFeed": false
     },
     "MODE": {
-      "source": [
-        "bitmart-usdt",
-        "bybit-usdt",
-        "gate-usdt",
-        "mexc-usdt",
-        "xt"
-      ],
+      "source": ["bitmart-usdt", "bybit-usdt", "gate-usdt", "mexc-usdt", "xt"],
       "denomination": "USD",
       "rateFeed": false
     },
@@ -6157,12 +6150,7 @@
       "rateFeed": false
     },
     "XRD": {
-      "source": [
-        "bitfinex-usd",
-        "gate-eth",
-        "gate-usdt",
-        "kucoin-usdt"
-      ],
+      "source": ["bitfinex-usd", "gate-eth", "gate-usdt", "kucoin-usdt"],
       "denomination": "USD",
       "rateFeed": false
     },

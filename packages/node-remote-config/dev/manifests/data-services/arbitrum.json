@@ -356,8 +356,7 @@
         "uniswap-v3-arbitrumone-weth-500",
         "uniswap-v3-ethereum-weth-3000",
         "uniswap-v3-ethereum-weth-500",
-        "uniswap-v4-ethereum-usdc-3000",
-        "uniswap-v4-ethereum-eth-3000"
+        "uniswap-v4-ethereum-usdt-3000"
       ],
       "skipBroadcasting": true,
       "denomination": "USD",
