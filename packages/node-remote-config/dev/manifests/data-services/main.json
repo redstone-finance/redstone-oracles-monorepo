@@ -994,8 +994,7 @@
         "gate-usdt",
         "kucoin-usdt",
         "lbank-usdt",
-        "okx-usdt",
-        "xt"
+        "okx-usdt"
       ],
       "denomination": "USD",
       "rateFeed": false
@@ -1784,7 +1783,6 @@
     },
     "MODE": {
       "source": [
-        "bitget-usdt",
         "bitmart-usdt",
         "bybit-usdt",
         "gate-usdt",
@@ -1898,7 +1896,6 @@
         "bybit-usdc",
         "bybit-usdt",
         "gate-usdt",
-        "kucoin-usdt",
         "lbank-usdt",
         "okx-usdt",
         "xt"
@@ -6576,7 +6573,6 @@
     "XRD": {
       "source": [
         "bitfinex-usd",
-        "bitget-usdt",
         "gate-eth",
         "gate-usdt",
         "kucoin-usdt"
