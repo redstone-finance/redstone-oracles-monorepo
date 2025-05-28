@@ -412,8 +412,7 @@
         "gate-usdt",
         "kucoin-usdt",
         "lbank-usdt",
-        "okx-usdt",
-        "xt"
+        "okx-usdt"
       ],
       "denomination": "USD",
       "rateFeed": false
