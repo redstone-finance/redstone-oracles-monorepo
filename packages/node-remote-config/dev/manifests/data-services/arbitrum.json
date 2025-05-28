@@ -373,7 +373,6 @@
         "camelot-v3-arbitrumone-weth",
         "uniswap-v3-arbitrumone-weth-100",
         "uniswap-v3-ethereum-weth-100",
-        "uniswap-v3-optimism-weth-100",
         "velodrome-cl-optimism-weth"
       ],
       "denomination": "USD",
@@ -504,10 +503,7 @@
       "rateFeed": false
     },
     "SWETH": {
-      "source": [
-        "pancake-swap-ethereum-weth-500-multi-block",
-        "uniswap-v3-ethereum-weth-500-multi-block"
-      ],
+      "source": ["uniswap-v3-ethereum-weth-500-multi-block"],
       "denomination": "USD",
       "rateFeed": false
     },
@@ -578,7 +574,6 @@
     },
     "ETHx": {
       "source": [
-        "balancer-arbitrumone-wsteth",
         "balancer-ethereum-wsteth",
         "balancer-v3-ethereum-waethweth",
         "curve-ethereum-eth"
@@ -754,8 +749,7 @@
         "bybit-usdt",
         "gate-usdt",
         "kraken-usd",
-        "kucoin-usdt",
-        "uniswap-v3-ethereum-weth-3000"
+        "kucoin-usdt"
       ],
       "denomination": "USD",
       "rateFeed": false
