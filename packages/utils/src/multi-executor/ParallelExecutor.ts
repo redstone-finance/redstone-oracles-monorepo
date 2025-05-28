@@ -35,13 +35,13 @@ export abstract class ParallelExecutor<R> extends Executor<R> {
   protected abstract aggregate(results: R[]): R;
 
   override async execute(functions: FnBox<R>[]): Promise<R> {
+    const promises = Executor.getPromises(functions, this.timeoutMs);
+
+    const successfulResults: R[] = [];
+    const errorResults: unknown[] = [];
+    let didFinish = false;
+
     return await new Promise((resolve, reject) => {
-      const promises = Executor.getPromises(functions, this.timeoutMs);
-
-      const successfulResults: R[] = [];
-      const errorResults: unknown[] = [];
-      let didFinish = false;
-
       promises.forEach((result) => {
         result
           .then((result) => {
