@@ -1,9 +1,9 @@
 import { PublicKey } from "@solana/web3.js";
 
 export const DEVNET_BOOK = {
-  multisig: new PublicKey("5khdVsyvPCDfbz1id1VBFVKHABKQWKrhPYEo4sZGnyfh"),
+  multisig: new PublicKey("J7KrpqfQdP9tD2PRceoHvzkH6YE9cCbSgYWoSe98APqC"),
   multisigVaultPda: new PublicKey(
-    "4dqCrMWfio5HU2nsNxAhB1MqcJ1grWFbU7juHR4qUpX1"
+    "Hfg9jQyDFwd1XK2bfkSf8wJnChTKJgKuWpHRn3Cbak4g"
   ),
   multisigMembers: [
     new PublicKey(
@@ -26,4 +26,5 @@ export const DEVNET_BOOK = {
     ),
   ],
   adapterAddress: new PublicKey("REDuYsnEucMweattdv4xQCYdU1i8Q2W92kdayrpY9rA"),
+  nttProgram: new PublicKey("NTtmvKU9dYM3hvKJq4tnrAkSRCqb82R6uTGkLUqY66K"),
 };
