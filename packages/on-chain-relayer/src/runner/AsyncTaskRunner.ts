@@ -1,9 +1,8 @@
 import { RedstoneCommon, RedstoneLogger } from "@redstone-finance/utils";
 import { AsyncTask, SimpleIntervalJob, ToadScheduler } from "toad-scheduler";
+import { RelayerConfig } from "../config/RelayerConfig";
 import { getContractFacade } from "../facade/get-contract-facade";
 import { runIteration } from "./run-iteration";
-
-import { RelayerConfig } from "../config/RelayerConfig";
 
 export class AsyncTaskRunner {
   static async run(relayerConfig: RelayerConfig, logger: RedstoneLogger) {
@@ -11,9 +10,7 @@ export class AsyncTaskRunner {
 
     const task = new AsyncTask(
       "Relayer task",
-      async () => {
-        return await runIteration(contractFacade, relayerConfig);
-      },
+      async () => await runIteration(contractFacade, relayerConfig),
       (error) =>
         logger.log(
           "Unhandled error occurred during iteration:",
