@@ -249,7 +249,13 @@
     "tacBTC_FUNDAMENTAL": {
       "priceFeedAddress": "0x0A6FD5820f797e517297fEFf90AaEcD8e2Dc77b3"
     },
-    "swETH_FUNDAMENTAL": {},
+    "swETH_FUNDAMENTAL": {
+      "priceFeedAddress": "0x061bB36F8b67bB922937C102092498dcF4619F86",
+      "updateTriggersOverrides": {
+        "deviationPercentage": 0.5,
+        "timeSinceLastUpdateInMilliseconds": 21600000
+      }
+    },
     "BUIDL_DAILY_INTEREST_ACCRUAL": {
       "priceFeedAddress": "0x9c303927dC4939692CC60641D6ceABa9185d687a",
       "updateTriggersOverrides": {
