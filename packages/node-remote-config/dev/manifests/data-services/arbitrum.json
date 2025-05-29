@@ -1159,6 +1159,19 @@
       ],
       "denomination": "USD",
       "rateFeed": false
+    },
+    "LBTC": {
+      "source": [
+        "aerodrome-cl-base-cbbtc",
+        "curve-ethereum-wbtc",
+        "curve-ethereum-wbtc-2",
+        "pancake-swap-bnb-btcb-500",
+        "uniswap-v3-ethereum-wbtc-500",
+        "kodiak-berachain-wbtc-500",
+        "uniswap-v3-ethereum-wbtc-100"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
     }
   },
   "multiPointPackages": {
@@ -1257,7 +1270,8 @@
       "KAITO",
       "SEI",
       "USD+",
-      "EUROC"
+      "EUROC",
+      "LBTC"
     ]
   }
 }
