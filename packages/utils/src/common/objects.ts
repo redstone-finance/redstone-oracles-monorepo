@@ -19,6 +19,24 @@ export function getRequiredPropValue<T = unknown>(
   return obj[prop] as T;
 }
 
+export function isEmpty<T>(value: T): value is NonNullable<T> {
+  return isDefined(value) && value !== "";
+}
+
+export function useDefaultIfEmpty<T>(
+  value: T | null | undefined,
+  defaultValue: T
+): T {
+  return isEmpty(value) ? value : defaultValue;
+}
+
+export async function fetchDefaultIfEmpty<T>(
+  value: T | null | undefined,
+  defaultValueFetcher: () => Promise<T>
+): Promise<T> {
+  return isEmpty(value) ? value : await defaultValueFetcher();
+}
+
 export function isDefined<T>(value: T): value is NonNullable<T> {
   return value !== null && value !== undefined;
 }
