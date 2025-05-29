@@ -573,7 +573,6 @@
     "ETHx": {
       "source": [
         "balancer-ethereum-wsteth",
-        "balancer-v3-ethereum-waethweth",
         "curve-ethereum-eth"
       ],
       "denomination": "USD",
