@@ -28,7 +28,7 @@ async function getBlockhash(client: SolanaClient, description: string) {
   try {
     return await client.getBlockhash(undefined, desc);
   } catch (err) {
-    logger.warn(`${desc} ${RedstoneCommon.stringify(err)}`);
+    logger.info(`${desc} ${RedstoneCommon.stringifyError(err)}`);
     const slotNumber = await client.getSlot();
 
     return await client.getBlockhash(slotNumber, desc);
