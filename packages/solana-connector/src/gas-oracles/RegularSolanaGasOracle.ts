@@ -1,6 +1,7 @@
 import { loggerFactory } from "@redstone-finance/utils";
-import { Connection, PublicKey } from "@solana/web3.js";
+import { PublicKey } from "@solana/web3.js";
 import _ from "lodash";
+import { SolanaClient } from "../client/SolanaClient";
 import { SolanaConfig } from "../config";
 import { ISolanaGasOracle } from "./ISolanaGasOracle";
 
@@ -12,7 +13,7 @@ export class RegularSolanaGasOracle implements ISolanaGasOracle {
   private readonly logger = loggerFactory("solana-gas-oracle");
 
   constructor(
-    private readonly connection: Connection,
+    private readonly client: SolanaClient,
     private readonly config: SolanaConfig
   ) {}
 
@@ -20,7 +21,7 @@ export class RegularSolanaGasOracle implements ISolanaGasOracle {
     iterationIndex: number,
     lockedWritableAccounts: PublicKey[]
   ): Promise<number> {
-    const fees = await this.connection.getRecentPrioritizationFees({
+    const fees = await this.client.getRecentPrioritizationFees({
       lockedWritableAccounts,
     });
     const prioritizationFees = fees.map((entry) => entry.prioritizationFee);
