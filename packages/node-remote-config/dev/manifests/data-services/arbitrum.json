@@ -571,10 +571,7 @@
       "rateFeed": false
     },
     "ETHx": {
-      "source": [
-        "balancer-ethereum-wsteth",
-        "curve-ethereum-eth"
-      ],
+      "source": ["balancer-ethereum-wsteth", "curve-ethereum-eth"],
       "denomination": "USD",
       "rateFeed": false
     },
@@ -1171,6 +1168,23 @@
       ],
       "denomination": "USD",
       "rateFeed": false
+    },
+    "cbBTC": {
+      "source": [
+        "aerodrome-base-usdc",
+        "aerodrome-base-weth",
+        "aerodrome-cl-base-usdc",
+        "aerodrome-cl-base-weth",
+        "curve-ethereum-wbtc",
+        "uniswap-v3-base-weth-3000",
+        "uniswap-v3-ethereum-usdc-3000",
+        "uniswap-v3-ethereum-wbtc-100",
+        "uniswap-v3-ethereum-weth-3000",
+        "uniswap-v3-base-usdc-500",
+        "curve-ethereum-weth"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
     }
   },
   "multiPointPackages": {
@@ -1270,7 +1284,8 @@
       "SEI",
       "USD+",
       "EUROC",
-      "LBTC"
+      "LBTC",
+      "cbBTC"
     ]
   }
 }
