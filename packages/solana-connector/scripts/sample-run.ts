@@ -22,7 +22,10 @@ async function main() {
     keypair.publicKey.toBase58()
   );
   const rpcUrls = await getRpcUrls();
-  const connection = new SolanaConnectionBuilder().withRpcUrls(rpcUrls).build();
+  const connection = new SolanaConnectionBuilder()
+    .withCluster(readCluster())
+    .withRpcUrls(rpcUrls)
+    .build();
 
   const paramsProvider = new ContractParamsProvider({
     dataPackagesIds: ["ETH", "BTC"],

@@ -1,6 +1,13 @@
-import { web3 } from "@coral-xyz/anchor";
 import { MultiExecutor, RedstoneCommon } from "@redstone-finance/utils";
-import { AccountInfo, Connection, PublicKey } from "@solana/web3.js";
+import {
+  AccountInfo,
+  ConfirmOptions,
+  Connection,
+  GetRecentPrioritizationFeesConfig,
+  PublicKey,
+  SendOptions,
+  VersionedTransaction,
+} from "@solana/web3.js";
 import {
   ALL_EXECUTIONS_TIMEOUT_MS,
   ceilMedianConsensusExecutor,
@@ -23,6 +30,7 @@ export class SolanaClient {
         getSignatureStatus: MultiExecutor.ExecutionMode.AGREEMENT,
         getAccountInfo: MultiExecutor.ExecutionMode.AGREEMENT,
         getMultipleAccountsInfo: MultiExecutor.ExecutionMode.MULTI_AGREEMENT,
+        sendTransaction: MultiExecutor.ExecutionMode.RACE,
       },
       {
         ...MultiExecutor.DEFAULT_CONFIG,
@@ -90,7 +98,7 @@ export class SolanaClient {
   }
 
   async viewMethod<T>(
-    method: { view: (options?: web3.ConfirmOptions) => Promise<unknown> },
+    method: { view: (options?: ConfirmOptions) => Promise<unknown> },
     slot?: number,
     description?: string
   ) {
@@ -110,8 +118,21 @@ export class SolanaClient {
     };
   }
 
-  getSlot() {
-    return this.connection.getSlot();
+  async getSlot() {
+    return await this.connection.getSlot();
+  }
+
+  async getRecentPrioritizationFees(
+    config?: GetRecentPrioritizationFeesConfig
+  ) {
+    return await this.connection.getRecentPrioritizationFees(config);
+  }
+
+  async sendTransaction(
+    transaction: VersionedTransaction,
+    options?: SendOptions
+  ) {
+    return await this.connection.sendTransaction(transaction, options);
   }
 
   private async waitForSlot(slot?: number, description?: string) {
