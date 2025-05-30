@@ -1,7 +1,6 @@
 import { loggerFactory, RedstoneCommon } from "@redstone-finance/utils";
 import {
   ComputeBudgetProgram,
-  Connection,
   Keypair,
   TransactionInstruction,
   TransactionMessage,
@@ -28,14 +27,13 @@ export class SolanaTxDeliveryMan {
   private readonly gasOracle: ISolanaGasOracle;
 
   constructor(
-    private readonly connection: Connection,
-    private readonly keypair: Keypair,
+    private readonly client: SolanaClient,
     private readonly config: SolanaConfig,
-    private readonly client: SolanaClient
+    private readonly keypair: Keypair
   ) {
     this.gasOracle = config.useAggressiveGasOracle
-      ? new AggressiveSolanaGasOracle(connection, config)
-      : new RegularSolanaGasOracle(connection, config);
+      ? new AggressiveSolanaGasOracle(config)
+      : new RegularSolanaGasOracle(client, config);
   }
 
   public getPublicKey() {
@@ -144,13 +142,11 @@ export class SolanaTxDeliveryMan {
       "wrapWithGas"
     );
 
-    const message = new TransactionMessage({
+    return new TransactionMessage({
       payerKey: this.keypair.publicKey,
       recentBlockhash,
       instructions,
-    }).compileToV0Message();
-
-    return new VersionedTransaction(message);
+    });
   }
 
   private async sendAndConfirm(
@@ -158,10 +154,12 @@ export class SolanaTxDeliveryMan {
     instruction: TransactionInstruction,
     iterationIndex = 0
   ) {
-    const tx = await this.wrapWithGas(instruction, iterationIndex);
+    const message = await this.wrapWithGas(instruction, iterationIndex);
+    const tx = new VersionedTransaction(message.compileToV0Message());
+
     tx.sign([this.keypair]);
 
-    const signature = await this.connection.sendTransaction(tx, {
+    const signature = await this.client.sendTransaction(tx, {
       skipPreflight: true,
     });
 

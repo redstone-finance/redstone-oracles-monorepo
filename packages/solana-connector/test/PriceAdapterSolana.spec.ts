@@ -24,13 +24,12 @@ function getSolanaPricesContractAdapter(trusted: "trusted" | "untrusted") {
   const priceAdapter = new SolanaPricesContractAdapter(
     contractAdapter,
     new SolanaTxDeliveryMan(
-      connection,
-      signer,
+      client,
       {
         ...DEFAULT_SOLANA_CONFIG,
         useAggressiveGasOracle: false,
       },
-      client
+      signer
     )
   );
 
