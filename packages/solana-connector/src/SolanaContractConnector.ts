@@ -44,12 +44,7 @@ export class SolanaContractConnector
       const contract = new PriceAdapterContract(this.address, provider, client);
 
       const txDeliveryMan = this.keypair
-        ? new SolanaTxDeliveryMan(
-            this.connection,
-            this.keypair,
-            this.config,
-            client
-          )
+        ? new SolanaTxDeliveryMan(client, this.config, this.keypair)
         : undefined;
 
       this.adapter = new SolanaPricesContractAdapter(contract, txDeliveryMan);
