@@ -30,14 +30,13 @@ export class SolanaConnectionBuilder {
         (url) =>
           new Connection(url, {
             commitment: "confirmed",
-            wsEndpoint: undefined,
+            disableRetryOnRateLimit: true,
           })
       ),
       {
         getBlockHeight: ceilMedianConsensusExecutor,
         getSlot: ceilMedianConsensusExecutor,
         getLatestBlockhash: MultiExecutor.ExecutionMode.AGREEMENT,
-        sendTransaction: MultiExecutor.ExecutionMode.RACE,
       },
       MultiExecutor.makeRpcUrlsBasedConfig(
         rpcUrls,
@@ -53,10 +52,14 @@ export class SolanaConnectionBuilder {
     return this;
   }
 
-  withChainId(chainId: number) {
-    this.cluster = getSolanaCluster(chainId);
+  withCluster(cluster: Cluster) {
+    this.cluster = cluster;
 
     return this;
+  }
+
+  withChainId(chainId: number) {
+    return this.withCluster(getSolanaCluster(chainId));
   }
 
   build() {
