@@ -150,7 +150,7 @@ export function sanitizeLogMessage(message: string): string {
       parsedUrl.search = "";
 
       return parsedUrl.toString().replace(/\/+$/, "");
-    } catch (err) {
+    } catch (_err) {
       return match;
     }
   });
@@ -179,7 +179,7 @@ function parseLogLevels(): Record<string, LogLevel> | null {
   customLogLevels.split(",").forEach((item) => {
     const [module, level] = item.split(":");
 
-    if (!Object.prototype.hasOwnProperty.call(LogTypeToLevel, level)) {
+    if (!Object.hasOwn(LogTypeToLevel, level)) {
       throw new Error(`Unknown log level ${level} for ${module}`);
     }
 

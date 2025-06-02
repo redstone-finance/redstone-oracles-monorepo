@@ -1,7 +1,9 @@
 import _ from "lodash";
 
 export function roundToSignificantDigits(num: number, number = 2): number {
-  if (num === 0) return 0;
+  if (num === 0) {
+    return 0;
+  }
 
   const d = Math.ceil(Math.log10(num < 0 ? -num : num));
   const power = number - d;
@@ -41,7 +43,7 @@ export function stringify<R>(result: R) {
     }
 
     return unescapeString(JSON.stringify(result));
-  } catch (e) {
+  } catch (_e) {
     if (
       typeof result.toString === "function" &&
       result.toString !== Object.prototype.toString

@@ -67,7 +67,7 @@ export async function testReadTimestampFromContract(
   expect(timestamp).toEqual(2233);
 }
 
-export async function testWriteProcesFromPayloadToContract(
+export async function testWriteProcessFromPayloadToContract(
   connection: jest.Mocked<ICasperConnection>,
   adapter: PriceAdapterCasperContractAdapter
 ) {
