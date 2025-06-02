@@ -997,6 +997,26 @@
       "twoDimensionalFees": false,
       "isMainnet": true
     },
+    "storyTestnet": {
+      "name": "Story Aeneid Testnet",
+      "chainId": 1315,
+      "currencySymbol": "IP",
+      "publicRpcUrls": [
+        "https://aeneid.storyrpc.io",
+        "https://evmrpc-t.story.nodestake.org",
+        "https://rpc.ankr.com/story_aeneid_testnet"
+      ],
+      "avgBlockTimeMs": 2200,
+      "multicall3": {
+        "address": "0xaD6CC5a465E5c8284a49eC9eD10EFE275460678c",
+        "type": "RedstoneMulticall3",
+        "gasLimitPerCall": 1000000
+      },
+      "isAuctionModel": false,
+      "fallbackToEthMaxPriorityFeePerGas": true,
+      "twoDimensionalFees": false,
+      "isMainnet": false
+    },
     "unichain": {
       "name": "Unichain",
       "chainId": 130,
