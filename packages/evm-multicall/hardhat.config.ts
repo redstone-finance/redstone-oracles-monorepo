@@ -71,6 +71,9 @@ const config: HardhatUserConfig = {
     poseidonTestnet: {
       url: "https://poseidon-testnet.rpc.caldera.xyz/http",
     },
+    storyTestnet: {
+      url: "https://aeneid.storyrpc.io",
+    },
   },
 };
 
