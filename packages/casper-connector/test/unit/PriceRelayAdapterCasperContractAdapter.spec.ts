@@ -31,7 +31,7 @@ import {
   testGetPricesFromPayload,
   testReadPricesFromContract,
   testReadTimestampFromContract,
-  testWriteProcesFromPayloadToContract,
+  testWriteProcessFromPayloadToContract,
 } from "./common-test-methods";
 
 describe("PriceRelayAdapterCasperContractAdapter", () => {
@@ -57,7 +57,7 @@ describe("PriceRelayAdapterCasperContractAdapter", () => {
   });
 
   it("writePricesFromPayloadToContract should callEntrypoint ENTRY_POINT_WRITE_PRICES", async () => {
-    await testWriteProcesFromPayloadToContract(connection, adapter);
+    await testWriteProcessFromPayloadToContract(connection, adapter);
   });
 
   it("readTimestampFromContract should queryContractData of wrappedAdapter about STORAGE_KEY_TIMESTAMP", async () => {

@@ -6,7 +6,7 @@ import { RedstoneEvmContract } from "../../facade/evm/EvmContractFacade";
 import { RelayerTxDeliveryManContext } from "./RelayerTxDeliveryManContext";
 
 export class OevTxDeliveryMan implements Tx.ITxDeliveryMan {
-  private logger = loggerFactory("updatePrices/oev");
+  private readonly logger = loggerFactory("updatePrices/oev");
 
   constructor(
     private readonly fallbackDeliveryMan: Tx.ITxDeliveryMan,
@@ -20,7 +20,7 @@ export class OevTxDeliveryMan implements Tx.ITxDeliveryMan {
   ) {
     try {
       await this.updateUsingOevAction(txDeliveryCall, context.paramsProvider);
-    } catch (error) {
+    } catch (_error) {
       if (context.canOmitFallbackAfterFailing) {
         this.logger.log("Skipping as update was optional");
       } else {
