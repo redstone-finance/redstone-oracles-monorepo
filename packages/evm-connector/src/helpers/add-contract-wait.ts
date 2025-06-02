@@ -8,49 +8,48 @@ export const addContractWait = (
   tx: TransactionResponse
 ) => {
   const wait = tx.wait.bind(tx);
-  tx.wait = (confirmations?: number) => {
-    return wait(confirmations).then((receipt: ContractReceipt) => {
-      receipt.events = receipt.logs.map((log: Log) => {
-        const event = <Event>deepCopy(log);
-        let parsed: LogDescription | undefined;
-        try {
-          parsed = contract.interface.parseLog(log);
-        } catch (e) {
-          // ignore
-        }
+  tx.wait = async (confirmations?: number) => {
+    const receipt: ContractReceipt = await wait(confirmations);
+    receipt.events = receipt.logs.map((log: Log) => {
+      const event = <Event>deepCopy(log);
+      let parsed: LogDescription | undefined;
+      try {
+        parsed = contract.interface.parseLog(log);
+      } catch (_e) {
+        // ignore
+      }
 
-        // Successfully parsed the event log; include it
-        if (parsed) {
-          event.args = parsed.args;
-          event.decode = (data: BytesLike, topics?: Array<string>) => {
-            return contract.interface.decodeEventLog(
-              parsed.eventFragment,
-              data,
-              topics
-            );
-          };
-          event.event = parsed.name;
-          event.eventSignature = parsed.signature;
-        }
+      // Successfully parsed the event log; include it
+      if (parsed) {
+        event.args = parsed.args;
+        event.decode = (data: BytesLike, topics?: Array<string>) => {
+          return contract.interface.decodeEventLog(
+            parsed.eventFragment,
+            data,
+            topics
+          );
+        };
+        event.event = parsed.name;
+        event.eventSignature = parsed.signature;
+      }
 
-        // Useful operations
-        event.removeListener = () => {
-          return contract.provider;
-        };
-        event.getBlock = () => {
-          return contract.provider.getBlock(receipt.blockHash);
-        };
-        event.getTransaction = () => {
-          return contract.provider.getTransaction(receipt.transactionHash);
-        };
-        event.getTransactionReceipt = () => {
-          return Promise.resolve(receipt);
-        };
+      // Useful operations
+      event.removeListener = () => {
+        return contract.provider;
+      };
+      event.getBlock = () => {
+        return contract.provider.getBlock(receipt.blockHash);
+      };
+      event.getTransaction = () => {
+        return contract.provider.getTransaction(receipt.transactionHash);
+      };
+      event.getTransactionReceipt = () => {
+        return Promise.resolve(receipt);
+      };
 
-        return event;
-      });
-
-      return receipt;
+      return event;
     });
+
+    return receipt;
   };
 };

@@ -74,14 +74,14 @@ export function contractDataMock<T>(
 export function callEntrypointMock(
   expectedAdapter: CasperContractAdapter,
   expectedEntryPoint: string,
-  expectedCsprAmount: number,
+  _expectedCsprAmount: number,
   runtimeArgsCheck: (runtimeArgs: RuntimeArgs) => void,
   value: string = "OK"
 ) {
   return (
     contract: Contracts.Contract,
     entryPoint: string,
-    csprAmount: number,
+    _csprAmount: number,
     runtimeArgs: RuntimeArgs
   ) => {
     expect(entryPoint).toEqual(expectedEntryPoint);

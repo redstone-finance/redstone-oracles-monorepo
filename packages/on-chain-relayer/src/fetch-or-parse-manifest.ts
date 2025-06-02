@@ -24,7 +24,7 @@ async function fetchManifestFromUrls(manifestUrls: string[]) {
       if (manifestData) {
         break;
       }
-    } catch (e) {
+    } catch (_e) {
       loggerFactory("fetch-or-parse-manifest").warn(
         `Error fetching manifest from url: ${url}`
       );
