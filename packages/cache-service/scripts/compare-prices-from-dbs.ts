@@ -18,9 +18,9 @@ interface TimestampIntervals {
   endTimestamp: number;
 }
 
-/* 
+/*
   Because we want to compare big time periods e.g. 14 days
-  we need to split it into one day batches. 
+  we need to split it into one day batches.
   If you want to compare shorter periods than 1 day define DAYS = 1,
   and BATCH_SIZE_MILLISECONDS to expected time period e.g. 1 hour.
 */
