@@ -42,7 +42,13 @@ export class RadixClientBuilder {
         getNonFungibleBalance: MultiExecutor.ExecutionMode.AGREEMENT,
         getStateFields: MultiExecutor.ExecutionMode.AGREEMENT,
       },
-      MultiExecutor.makeRpcUrlsBasedConfig(urls, `radix/${networkId}`, config)
+      MultiExecutor.makeBaseConfig(
+        MultiExecutor.QuarantinedListFnDelegate.getCachedConfig(
+          urls,
+          `radix/${networkId}`
+        ),
+        config
+      )
     );
   }
 
