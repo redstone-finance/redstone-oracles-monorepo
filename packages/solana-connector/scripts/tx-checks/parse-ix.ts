@@ -162,7 +162,7 @@ async function parseTxAtIndex(
       inner.push(log);
     }
     return { type: "TransactionAtIndex", details: { txId }, inner };
-  } catch (e) {
+  } catch (_e) {
     const txPda = squadUtils.txPda(txId);
     const configTx = await ConfigTransaction.fromAccountAddress(
       connection,

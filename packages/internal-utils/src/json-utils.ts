@@ -5,7 +5,9 @@ export const readJsonFile = <T = unknown>(path: string): T => {
   try {
     return JSON.parse(content) as T;
   } catch (e) {
-    throw new Error(`File "${path}" does not contain a valid JSON`);
+    throw new Error(`File "${path}" does not contain a valid JSON`, {
+      cause: e,
+    });
   }
 };
 
