@@ -24,7 +24,7 @@ export const getFromEnv: GetFromEnvType = <T = string>(
   if (parseAsJSON && envValue) {
     try {
       envValueParsed = JSON.parse(envValue);
-    } catch (e) {
+    } catch (_e) {
       // ignore, if value cannot be parsed as a JSON it will be treated as a string
     }
   }
