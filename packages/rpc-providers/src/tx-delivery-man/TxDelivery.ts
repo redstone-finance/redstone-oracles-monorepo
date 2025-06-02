@@ -425,7 +425,7 @@ export class TxDelivery {
     // some gas oracles relies on this fallback mechanism
     try {
       return await this.getFeeFromGasOracle(this.provider);
-    } catch (e) {
+    } catch (_e) {
       return await this.feeEstimator.getFees(this.provider);
     }
   }
