@@ -253,6 +253,14 @@ export const readManifestAndEnv = async () => {
         .transform((isoString) => new Date(isoString))
         .optional()
     ),
+    feedsSplit: RedstoneCommon.getFromEnv(
+      "FEEDS_SPLIT",
+      z.array(z.array(z.string())).optional()
+    ),
+    splitAllFeeds: RedstoneCommon.getFromEnv(
+      "SPLIT_ALL_FEEDS",
+      z.boolean().optional()
+    ),
   };
 
   return { manifest, env };

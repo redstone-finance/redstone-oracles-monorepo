@@ -68,4 +68,6 @@ export type OnChainRelayerEnv = {
   enforceDecimalNumberOfBlocksForFeeHistory?: boolean;
   newestBlockForFeeHistory?: NewestBlockType;
   isPausedUntil?: Date;
+  feedsSplit?: string[][];
+  splitAllFeeds?: boolean;
 };

@@ -72,22 +72,17 @@ export const makePriceFeedsUpdateConditions = (
     updateConditions[dataFeedId] = [];
     updateTriggers[dataFeedId] = {};
 
-    if (deviationPercentage) {
-      updateConditions[dataFeedId].push("value-deviation");
-      updateTriggers[dataFeedId].deviationPercentage =
-        priceFeedsDeviationOverrides?.[dataFeedId] ?? deviationPercentage;
-    }
-
-    if (timeSinceLastUpdateInMilliseconds) {
-      updateConditions[dataFeedId].push("time");
-      updateTriggers[dataFeedId].timeSinceLastUpdateInMilliseconds =
-        timeSinceLastUpdateInMilliseconds;
-    }
-
-    if (cron && cron.length > 0) {
-      updateConditions[dataFeedId].push("cron");
-      updateTriggers[dataFeedId].cron = cron;
-    }
+    updateConditionsAndTriggersForFeed(
+      dataFeedId,
+      updateConditions,
+      updateTriggers,
+      {
+        deviationPercentage:
+          priceFeedsDeviationOverrides?.[dataFeedId] ?? deviationPercentage,
+        timeSinceLastUpdateInMilliseconds,
+        cron,
+      }
+    );
   }
 
   return {
@@ -124,21 +119,16 @@ export const makeMultiFeedUpdateConditions = (
       ? dataFeedUpdateTriggers.cron
       : manifest.updateTriggers.cron;
 
-    if (deviationPercentage) {
-      updateConditions[dataFeedId].push("value-deviation");
-      updateTriggers[dataFeedId].deviationPercentage = deviationPercentage;
-    }
-
-    if (timeSinceLastUpdateInMilliseconds) {
-      updateConditions[dataFeedId].push("time");
-      updateTriggers[dataFeedId].timeSinceLastUpdateInMilliseconds =
-        timeSinceLastUpdateInMilliseconds;
-    }
-
-    if (cron && cron.length > 0) {
-      updateConditions[dataFeedId].push("cron");
-      updateTriggers[dataFeedId].cron = cron;
-    }
+    updateConditionsAndTriggersForFeed(
+      dataFeedId,
+      updateConditions,
+      updateTriggers,
+      {
+        deviationPercentage,
+        timeSinceLastUpdateInMilliseconds,
+        cron,
+      }
+    );
   }
 
   return {
@@ -146,3 +136,29 @@ export const makeMultiFeedUpdateConditions = (
     updateTriggers,
   };
 };
+
+function updateConditionsAndTriggersForFeed(
+  dataFeedId: string,
+  updateConditions: Record<string, ConditionCheckNames[]>,
+  updateTriggers: Record<string, UpdateTriggers>,
+  feedUpdateTriggers: UpdateTriggers
+) {
+  const { deviationPercentage, timeSinceLastUpdateInMilliseconds, cron } =
+    feedUpdateTriggers;
+
+  if (deviationPercentage) {
+    updateConditions[dataFeedId].push("value-deviation");
+    updateTriggers[dataFeedId].deviationPercentage = deviationPercentage;
+  }
+
+  if (timeSinceLastUpdateInMilliseconds) {
+    updateConditions[dataFeedId].push("time");
+    updateTriggers[dataFeedId].timeSinceLastUpdateInMilliseconds =
+      timeSinceLastUpdateInMilliseconds;
+  }
+
+  if (cron && cron.length > 0) {
+    updateConditions[dataFeedId].push("cron");
+    updateTriggers[dataFeedId].cron = cron;
+  }
+}
