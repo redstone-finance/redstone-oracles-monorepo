@@ -938,10 +938,7 @@
       "rateFeed": false
     },
     "ETHx": {
-      "source": [
-        "balancer-ethereum-wsteth",
-        "curve-ethereum-eth"
-      ],
+      "source": ["balancer-ethereum-wsteth", "curve-ethereum-eth"],
       "denomination": "USD",
       "rateFeed": false
     },
@@ -1005,10 +1002,7 @@
       "rateFeed": false
     },
     "osETH": {
-      "source": [
-        "balancer-ethereum-weth",
-        "curve-ethereum-reth"
-      ],
+      "source": ["balancer-ethereum-weth", "curve-ethereum-reth"],
       "denomination": "USD",
       "rateFeed": false
     },
@@ -6924,6 +6918,25 @@
         "xt"
       ],
       "denomination": "USD",
+      "rateFeed": false
+    },
+    "wstHYPE_FUNDAMENTAL": {
+      "source": ["hyperevm-evm-fetcher-staked-hype"],
+      "denomination": "stHYPE",
+      "rateFeed": true
+    },
+    "stHYPE": {
+      "source": [
+        "hyperswap-hyperevm-whype-100",
+        "kittenswap-hyperevm-whype-200",
+        "valantis-hyperevm-whype"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "stHYPE/HYPE": {
+      "source": ["non-usd-based"],
+      "denomination": "HYPE",
       "rateFeed": false
     }
   }
