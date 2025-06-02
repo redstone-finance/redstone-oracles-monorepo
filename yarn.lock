@@ -9704,6 +9704,16 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@redstone-finance/lambda-ecs-restarter-by-s3-update@workspace:packages/lambda/lambda-ecs-restarter-by-s3-update":
+  version: 0.0.0-use.local
+  resolution: "@redstone-finance/lambda-ecs-restarter-by-s3-update@workspace:packages/lambda/lambda-ecs-restarter-by-s3-update"
+  dependencies:
+    "@aws-sdk/client-ecs": "npm:^3.696.0"
+    "@redstone-finance/utils": "workspace:*"
+    "@types/aws-lambda": "npm:^8.10.145"
+  languageName: unknown
+  linkType: soft
+
 "@redstone-finance/lambda-ecs-services-monitoring@workspace:packages/lambda/lambda-ecs-services-monitoring":
   version: 0.0.0-use.local
   resolution: "@redstone-finance/lambda-ecs-services-monitoring@workspace:packages/lambda/lambda-ecs-services-monitoring"
