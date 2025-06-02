@@ -7358,6 +7358,20 @@
       ],
       "denomination": "HYPE",
       "rateFeed": true
+    },
+    "FUEL": {
+      "source": [
+        "bingx-usdt",
+        "bitget-usdt",
+        "bitmart-usdt",
+        "bybit-usdt",
+        "gate-usdt",
+        "kucoin-usdt",
+        "mexc-usdt",
+        "xt"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
     }
   }
 }
