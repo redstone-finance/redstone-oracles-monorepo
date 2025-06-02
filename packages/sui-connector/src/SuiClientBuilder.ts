@@ -33,9 +33,11 @@ export class SuiClientBuilder {
         getReferenceGasPrice: MultiExecutor.ExecutionMode.AGREEMENT,
         getBalance: MultiExecutor.ExecutionMode.AGREEMENT,
       },
-      MultiExecutor.makeRpcUrlsBasedConfig(
-        urls,
-        `sui/${getSuiChainId(network)}`,
+      MultiExecutor.makeBaseConfig(
+        MultiExecutor.QuarantinedListFnDelegate.getCachedConfig(
+          urls,
+          `sui/${getSuiChainId(network)}`
+        ),
         config
       )
     );
