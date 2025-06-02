@@ -38,9 +38,11 @@ export class SolanaConnectionBuilder {
         getSlot: ceilMedianConsensusExecutor,
         getLatestBlockhash: MultiExecutor.ExecutionMode.AGREEMENT,
       },
-      MultiExecutor.makeRpcUrlsBasedConfig(
-        rpcUrls,
-        `solana/${getSolanaChainId(cluster)}`,
+      MultiExecutor.makeBaseConfig(
+        MultiExecutor.QuarantinedListFnDelegate.getCachedConfig(
+          rpcUrls,
+          `solana/${getSolanaChainId(cluster)}`
+        ),
         config
       )
     );

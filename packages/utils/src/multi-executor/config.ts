@@ -1,8 +1,6 @@
 import _ from "lodash";
-import { isDefined } from "../common";
 import { Executor } from "./Executor";
 import { FnDelegate } from "./FnBox";
-import { QuarantinedListFnDelegate } from "./QuarantinedListFnDelegate";
 
 export enum ExecutionMode {
   RACE = "race",
@@ -29,6 +27,9 @@ export type MultiExecutorConfig = {
   singleExecutionTimeoutMs?: number;
   allExecutionsTimeoutMs?: number;
   multiAgreementShouldResolveUnagreedToUndefined: boolean;
+} & FnDelegateConfig;
+
+export type FnDelegateConfig = {
   descriptions?: (string | undefined)[];
   delegate?: FnDelegate;
 };
@@ -40,20 +41,9 @@ export const DEFAULT_CONFIG: MultiExecutorConfig = {
   multiAgreementShouldResolveUnagreedToUndefined: false,
 };
 
-export function makeRpcUrlsBasedConfig(
-  rpcUrls: (string | undefined)[],
-  chainId: string,
+export function makeBaseConfig(
+  fnDelegateConfig: FnDelegateConfig,
   otherConfig: Partial<MultiExecutorConfig>
 ): MultiExecutorConfig {
-  return _.assign(
-    {
-      descriptions: rpcUrls,
-      delegate: new QuarantinedListFnDelegate(
-        rpcUrls.filter(isDefined),
-        chainId
-      ),
-    },
-    DEFAULT_CONFIG,
-    otherConfig
-  );
+  return _.assign({}, fnDelegateConfig, DEFAULT_CONFIG, otherConfig);
 }
