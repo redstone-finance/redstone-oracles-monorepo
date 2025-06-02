@@ -32,6 +32,10 @@ export class PriceAdapterContract {
     feedIds: string[],
     slot?: number
   ): Promise<(PriceData | undefined)[]> {
+    if (feedIds.length === 1) {
+      return [await this.getPriceData(feedIds[0], slot)];
+    }
+
     const accounts = feedIds.map((feedId) =>
       PriceAdapterContract.getPriceDataAccount(this.program.programId, feedId)
     );
