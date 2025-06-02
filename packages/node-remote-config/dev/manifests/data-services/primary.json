@@ -1287,7 +1287,7 @@
       "valueCapConfig": {
         "upper": {
           "token": "BTC",
-          "multiplier": 1.01
+          "multiplier": 1.02
         }
       },
       "denomination": "USD",
