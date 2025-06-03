@@ -3,11 +3,11 @@
  */
 export class CubicInterpolation {
   constructor(
-    private xs: number[],
-    private ys: number[],
-    private firstSlope: number,
-    private lastSlope: number,
-    private fun: (x: number) => number
+    private readonly xs: number[],
+    private readonly ys: number[],
+    private readonly firstSlope: number,
+    private readonly lastSlope: number,
+    private readonly fun: (x: number) => number
   ) {}
 
   /**
@@ -125,20 +125,21 @@ const createInterpolant = (
   // sorting points
   const [sortedXs, sortedYs] = sortPoints(xs, ys);
 
-  // monotonicity check
-  if (!isMonotonic(sortedYs)) {
+  // monotonicity checks
+  if (!isMonotonic(sortedYs, false)) {
     throw new Error("The given points are not monotonic");
+  }
+  if (!isMonotonic(sortedXs, true)) {
+    throw new Error("The xs array cannot have duplicates");
   }
 
   // consecutive differences and slopes
-  const dys = [],
-    dxs = [],
-    ms = [];
+  const dxs = [];
+  const ms = [];
   for (let i = 0; i < sortedXs.length - 1; i++) {
     const dx = sortedXs[i + 1] - sortedXs[i];
     const dy = sortedYs[i + 1] - sortedYs[i];
     dxs[i] = dx;
-    dys[i] = dy;
     ms[i] = dy / dx;
   }
 
@@ -197,17 +198,17 @@ const sortPoints = (xs: number[], ys: number[]): [number[], number[]] => {
 /**
  * Whether the given list of values is monotonic.
  */
-const isMonotonic = (ys: number[]) => {
-  if (ys.length < 2) {
+const isMonotonic = (seq: number[], strict: boolean) => {
+  if (seq.length < 2) {
     return true;
   }
 
   // direction of monotonicity
   let direction: "increasing" | "decreasing" | "undefined" = "undefined";
 
-  let previous = ys[0];
-  for (let i = 1; i < ys.length; i++) {
-    const current = ys[i];
+  let previous = seq[0];
+  for (let i = 1; i < seq.length; i++) {
+    const current = seq[i];
 
     // check monotonicity
     if (current > previous) {
@@ -220,6 +221,8 @@ const isMonotonic = (ys: number[]) => {
         return false;
       }
       direction = "decreasing";
+    } else if (strict) {
+      return false;
     }
 
     previous = current;
