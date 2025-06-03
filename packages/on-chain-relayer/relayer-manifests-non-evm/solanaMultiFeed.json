@@ -27,8 +27,8 @@
     },
     "ACRED_SOLANA_FUNDAMENTAL": {
       "updateTriggersOverrides": {
-        "deviationPercentage": 0.1,
-        "timeSinceLastUpdateInMilliseconds": 86400000
+        "deviationPercentage": 0.01,
+        "timeSinceLastUpdateInMilliseconds": 590000
       }
     },
     "VBILL_SOLANA_FUNDAMENTAL": {
