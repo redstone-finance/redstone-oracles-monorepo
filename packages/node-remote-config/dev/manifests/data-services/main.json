@@ -6938,6 +6938,11 @@
       "source": ["non-usd-based"],
       "denomination": "HYPE",
       "rateFeed": false
+    },
+    "gMON_TESTNET_FUNDAMENTAL": {
+      "source": ["monad-testnet-evm-fetcher-gmon"],
+      "denomination": "MON",
+      "rateFeed": true
     }
   }
 }
