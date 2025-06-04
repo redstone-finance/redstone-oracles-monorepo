@@ -85,6 +85,9 @@
     },
     "UBTC": {
       "priceFeedAddress": "0x7d05cd5159F38694A7D4dBf58957146a63c8Ad5A"
+    },
+    "mHYPE_FUNDAMENTAL": {
+      "priceFeedAddress": "0xa42a6568f1df29ef95DDDF440c41e48D4cfB310E"
     }
   }
 }
