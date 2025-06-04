@@ -22,6 +22,9 @@
     },
     "USDC": {
       "priceFeedAddress": "0xC3346631E0A9720582fB9CAbdBEA22BC2F57741b"
+    },
+    "gMON_TESTNET_FUNDAMENTAL": {
+      "priceFeedAddress": "0xebE443E20ADf302B59419648c4dbA0c7299cf1A2"
     }
   }
 }
