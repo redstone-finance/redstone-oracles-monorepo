@@ -1238,11 +1238,8 @@
     }
   },
   "temporaryConfigUpdates": {
-    "expirationTimestamp": "2025-05-24T12:00:00+02:00",
-    "merlin": {
-      "disabled": true
-    },
-    "b2": {
+    "expirationTimestamp": "2025-06-09T12:00:00+02:00",
+    "hyperevm": {
       "disabled": true
     }
   }
