@@ -372,13 +372,12 @@ export class ProviderWithAgreement extends ProviderWithFallback {
             resolve(pickResponseWithMostVotes(results));
           } else {
             reject(
-              new AggregateError(
+              this.createAgreementError(
                 errors,
-                `operation=${operationName} Failed to find at least ${
-                  this.agreementConfig.numberOfProvidersThatHaveToAgree
-                } agreeing providers at block ${electedBlockNumber}. ${
-                  healthyProviders.length - errors.length
-                } providers responded with success.`
+                operationName,
+                electedBlockNumber,
+                healthyProviders,
+                results
               )
             );
           }
@@ -406,6 +405,29 @@ export class ProviderWithAgreement extends ProviderWithFallback {
       // eslint-disable-next-line @typescript-eslint/no-misused-promises
       healthyProviders.forEach(executeOperationOnProvider);
     });
+  }
+
+  private createAgreementError(
+    errors: Error[],
+    operationName: string,
+    electedBlockNumber: number,
+    healthyProviders: readonly ProviderWithIdentifier[],
+    results: Map<string, number>
+  ): AggregateError {
+    const successfulResponsesCount = healthyProviders.length - errors.length;
+
+    let extraMessage = "";
+    // we attach additional debug log in case of disagreeing providers
+    if (
+      successfulResponsesCount >= this.agreementConfig.minimalProvidersCount
+    ) {
+      extraMessage = `Providers results: ${JSON.stringify(Object.fromEntries(results.entries()))}`;
+    }
+
+    return new AggregateError(
+      errors,
+      `operation=${operationName} Failed to find at least ${this.agreementConfig.numberOfProvidersThatHaveToAgree} agreeing providers at block ${electedBlockNumber}; ${successfulResponsesCount} providers responded with success; ${extraMessage}`
+    );
   }
 
   private async executeOperation(
