@@ -41,8 +41,8 @@ export type SlippageData =
 
 export interface DepthData {
   percentage: number;
-  direction: TradeDirections;
   valueInUsd: number;
+  direction: TradeDirections;
 }
 
 export interface TradeData {
