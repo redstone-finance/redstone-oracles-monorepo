@@ -7338,7 +7338,8 @@
       "source": [
         "hyperliquid-api-fetcher",
         "hyperswap-hyperevm-whype-3000",
-        "laminar-hyperevm-whype-3000"
+        "laminar-hyperevm-whype-3000",
+        "kittenswap-hyperevm-whype-2500"
       ],
       "denomination": "USD",
       "rateFeed": false
