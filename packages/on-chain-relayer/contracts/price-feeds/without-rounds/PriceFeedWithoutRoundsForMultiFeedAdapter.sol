@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: BUSL-1.1
 pragma solidity ^0.8.17;
 
-import {MultiFeedAdapterWithoutRounds} from "./MultiFeedAdapterWithoutRounds.sol";
+import {IMultiFeedAdapter} from "../interfaces/IMultiFeedAdapter.sol";
 import {PriceFeedWithoutRounds} from "./PriceFeedWithoutRounds.sol";
 import {SafeCast} from "@openzeppelin/contracts/utils/math/SafeCast.sol";
 
@@ -21,7 +21,7 @@ abstract contract PriceFeedWithoutRoundsForMultiFeedAdapter is PriceFeedWithoutR
   {
     roundId = latestRound();
 
-    MultiFeedAdapterWithoutRounds multiAdapter = MultiFeedAdapterWithoutRounds(address(getPriceFeedAdapter()));
+    IMultiFeedAdapter multiAdapter = IMultiFeedAdapter(address(getPriceFeedAdapter()));
 
     (/* uint256 lastDataTimestamp */, uint256 lastBlockTimestamp, uint256 lastValue) = multiAdapter.getLastUpdateDetails(getDataFeedId());
 
