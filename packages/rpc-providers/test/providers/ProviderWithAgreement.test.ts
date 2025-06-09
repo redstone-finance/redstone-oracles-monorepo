@@ -146,12 +146,12 @@ describe("ProviderWithAgreement", () => {
         counter.getCount({
           blockTag: currentBlockNumber,
         })
-      ).rejectedWith("Failed to find at least 2 agreeing");
+      ).rejectedWith(/Failed to find at least 2 agreeing/);
       await expect(
         counter.getCount({
           blockTag: currentBlockNumber,
         })
-      ).rejectedWith("Failed to find at least 2 agreeing");
+      ).rejectedWith(/Failed to find at least 2 agreeing/);
 
       expect(callSpy.getCalls().length).to.eq(2);
       expect(callBehindCacheSpy.getCalls().length).to.eq(2);
@@ -229,7 +229,7 @@ describe("ProviderWithAgreement", () => {
           blockTag: await providerWithAgreement.getBlockNumber(),
         })
       ).rejectedWith(
-        "Failed to find at least 2 agreeing providers at block 24."
+        /Failed to find at least 2 agreeing providers at block 24/
       );
     });
 
@@ -262,7 +262,7 @@ describe("ProviderWithAgreement", () => {
           blockTag: await providerWithAgreement.getBlockNumber(),
         })
       ).rejectedWith(
-        "Failed to find at least 2 agreeing providers at block 29."
+        /Failed to find at least 2 agreeing providers at block 29/
       );
     });
 
@@ -311,7 +311,7 @@ describe("ProviderWithAgreement", () => {
       const counter = contract.connect(signer.connect(providerWithAgreement));
 
       await expect(counter.getCountPlusOne({ blockTag })).rejectedWith(
-        "Failed to find at least 2 agreeing providers"
+        /Failed to find at least 2 agreeing providers/
       );
     });
   });
@@ -341,7 +341,7 @@ describe("ProviderWithAgreement", () => {
           await expect(
             testAgreementAlgo(["2", "2", "1"], "2", 3, operation)
           ).rejectedWith(
-            "Failed to find at least 3 agreeing providers at block 1."
+            /Failed to find at least 3 agreeing providers at block 1/
           );
         });
 
@@ -396,7 +396,7 @@ describe("ProviderWithAgreement", () => {
         await expect(
           testAgreementAlgo(["error", "2"], "", 2, operation)
         ).rejectedWith(
-          "Failed to find at least 2 agreeing providers at block 1."
+          /Failed to find at least 2 agreeing providers at block 1/
         );
       });
 
@@ -404,7 +404,7 @@ describe("ProviderWithAgreement", () => {
         await expect(
           testAgreementAlgo(["1", "2"], "", 2, operation)
         ).rejectedWith(
-          "Failed to find at least 2 agreeing providers at block 1."
+          /Failed to find at least 2 agreeing providers at block 1/
         );
       });
 
@@ -417,7 +417,7 @@ describe("ProviderWithAgreement", () => {
             operation
           )
         ).rejectedWith(
-          "Failed to find at least 2 agreeing providers at block 1."
+          /Failed to find at least 2 agreeing providers at block 1/
         );
       });
     });
@@ -453,7 +453,7 @@ describe("ProviderWithAgreement", () => {
       expect(result).to.eq("0x");
       expect(callSpy.callCount).to.eq(1);
 
-      // put to qurantine after error
+      // put to quarantine after error
       agreementProvider.curatedRpcList?.evaluateRpcScore("2");
 
       await agreementProvider.call(
@@ -465,7 +465,7 @@ describe("ProviderWithAgreement", () => {
       );
       expect(callSpy.callCount).to.eq(1);
 
-      // free broken provider from qurantine and use it again
+      // free broken provider from quarantine and use it again
       agreementProvider.curatedRpcList?.freeOneRpcFromQuarantine();
 
       await agreementProvider.call(
