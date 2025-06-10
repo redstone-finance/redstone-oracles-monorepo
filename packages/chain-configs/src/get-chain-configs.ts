@@ -8,6 +8,7 @@ import localChainConfigsManifest from "../manifest/chain-configs.json";
 import { ChainType } from "./ChainType";
 import {
   ChainConfigs,
+  ChainConfigsById,
   ChainConfigsByIdAndType,
   ChainConfigsInput,
   ChainConfigsSchema,
@@ -62,15 +63,32 @@ const LOCAL_CHAIN_CONFIGS = ChainConfigsSchema.parse(
   resolveMonitoringManifest(localChainConfigsManifest)
 );
 
+export function getLocalChainConfigs(): ChainConfigs {
+  return LOCAL_CHAIN_CONFIGS;
+}
+
+function groupChainConfigsByNetworkId(
+  chainConfigs: ChainConfigs
+): ChainConfigsById {
+  const entries = Object.values(chainConfigs).map((chain) => [
+    chain.networkId,
+    chain,
+  ]);
+  return Object.fromEntries(entries) as ChainConfigsById;
+}
+
+const LOCAL_CHAIN_CONFIGS_BY_NETWORK_ID =
+  groupChainConfigsByNetworkId(LOCAL_CHAIN_CONFIGS);
+
+export function getLocalChainConfigsByNetworkId(): ChainConfigsById {
+  return LOCAL_CHAIN_CONFIGS_BY_NETWORK_ID;
+}
+
 const LOCAL_CHAIN_CONFIGS_BY_CHAIN_ID_AND_TYPE =
   groupChainConfigsByIdAndType(LOCAL_CHAIN_CONFIGS);
 
 export function getLocalChainConfigsByChainIdAndType(): ChainConfigsByIdAndType {
   return LOCAL_CHAIN_CONFIGS_BY_CHAIN_ID_AND_TYPE;
-}
-
-export function getLocalChainConfigs(): ChainConfigs {
-  return LOCAL_CHAIN_CONFIGS;
 }
 
 export function getChainKey(chainId: number, chainType: ChainType) {

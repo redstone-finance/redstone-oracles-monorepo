@@ -1,6 +1,6 @@
 import { getSSMParameterValues } from "@redstone-finance/internal-utils";
 import { RedstoneCommon } from "@redstone-finance/utils";
-import { ChainType, makeRpcUrlsSsmKey } from "./ChainType";
+import { NetworkId } from "./schemas";
 
 export type Env = "prod" | "dev" | "staging";
 
@@ -8,7 +8,7 @@ export type NodeType = "fallback" | "main";
 export type FetchRpcUrlsFromSsmOpts = {
   type: NodeType;
   env: Env;
-  chainIdsWithType: string[];
+  networkIds: NetworkId[];
 };
 
 export type FetchRpcUrlsFromSsmResult = Record<string, string[] | undefined>;
@@ -16,15 +16,15 @@ export type FetchRpcUrlsFromSsmResult = Record<string, string[] | undefined>;
 export async function fetchRpcUrlsFromSsm(
   opts: FetchRpcUrlsFromSsmOpts
 ): Promise<FetchRpcUrlsFromSsmResult> {
-  const ssmPathToChainId: Record<string, string | undefined> = {};
-  for (const chainIdWithType of opts.chainIdsWithType) {
-    const ssmPath = `/${opts.env}/rpc/${chainIdWithType}/${opts.type === "fallback" ? "fallback/" : ""}urls`;
-    ssmPathToChainId[ssmPath] = chainIdWithType;
+  const ssmPathToNetworkId: Record<string, NetworkId> = {};
+  for (const networkId of opts.networkIds) {
+    const ssmPath = `/${opts.env}/rpc/${networkId}/${opts.type === "fallback" ? "fallback/" : ""}urls`;
+    ssmPathToNetworkId[ssmPath] = networkId;
   }
 
   const region = opts.type === "fallback" ? "eu-north-1" : "eu-west-1";
   const ssmParamsResponse = await getSSMParameterValues(
-    Object.keys(ssmPathToChainId),
+    Object.keys(ssmPathToNetworkId),
     region
   );
 
@@ -33,7 +33,7 @@ export async function fetchRpcUrlsFromSsm(
   for (const [ssmPath, value] of Object.entries(ssmParamsResponse)) {
     if (value) {
       try {
-        result[ssmPathToChainId[ssmPath]!] = JSON.parse(value) as string[];
+        result[ssmPathToNetworkId[ssmPath]] = JSON.parse(value) as string[];
       } catch {
         /* we want to treat invalid json as missing to avoid failing all rpcs because of the single one */
       }
@@ -43,23 +43,21 @@ export async function fetchRpcUrlsFromSsm(
   return result;
 }
 
-export async function fetchParsedRpcUrlsFromSsmByChainId(
-  chainId: number,
+export async function fetchParsedRpcUrlsFromSsmByNetworkId(
+  networkId: NetworkId,
   env: Env,
-  type: NodeType = "main",
-  chainType: ChainType = "evm"
+  type: NodeType = "main"
 ) {
-  const chainIdWithType = makeRpcUrlsSsmKey(chainId, chainType);
   const ssmRpcUrls = await fetchRpcUrlsFromSsm({
-    chainIdsWithType: [chainIdWithType],
+    networkIds: [networkId],
     env,
     type,
   });
-  const rpcUrlsForChain = ssmRpcUrls[chainIdWithType];
+  const rpcUrlsForChain = ssmRpcUrls[networkId];
 
   if (!RedstoneCommon.isDefined(rpcUrlsForChain)) {
     throw new Error(
-      `${env} RPC URLs not found for ${chainIdWithType}, or failed to parse`
+      `${env} RPC URLs not found for ${networkId}, or failed to parse`
     );
   }
 

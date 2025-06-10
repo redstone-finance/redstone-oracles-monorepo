@@ -4,9 +4,10 @@ import { ethers } from "ethers";
 import { RpcUrlsPerChain } from "../../scripts/read-ssm-rpc-urls";
 import {
   ChainConfig,
-  getChainConfigByChainId,
+  deconstructNetworkId,
+  getChainConfigByNetworkId,
   getLocalChainConfigs,
-  isEvmChainType,
+  isNonEvmNetworkId,
 } from "../../src";
 
 const RETRY_CONFIG: Omit<RedstoneCommon.RetryConfig, "fn"> = {
@@ -16,18 +17,19 @@ const RETRY_CONFIG: Omit<RedstoneCommon.RetryConfig, "fn"> = {
 const logger = loggerFactory("chain-config/rpc-urls");
 
 export const validateNetworkRpcUrls = (rpcUrlsPerChain: RpcUrlsPerChain) => {
-  for (const [name, { chainId, rpcUrls, chainType }] of Object.entries(
+  for (const [name, { networkId, rpcUrls }] of Object.entries(
     rpcUrlsPerChain
   )) {
-    describe(`Network Validation for ${name} (${chainId})`, function () {
+    describe(`Network Validation for ${name} (${networkId})`, function () {
       before(function () {
-        const chainConfig = getChainConfigByChainId(
+        const chainConfig = getChainConfigByNetworkId(
           getLocalChainConfigs(),
-          chainId,
-          chainType
+          networkId
         );
         skipIfDisabledOrNotSupported(this, chainConfig);
       });
+
+      const { chainId } = deconstructNetworkId(networkId);
 
       for (const rpcUrl of rpcUrls) {
         const host = getRpcHost(rpcUrl);
@@ -41,7 +43,7 @@ export const validateNetworkRpcUrls = (rpcUrlsPerChain: RpcUrlsPerChain) => {
             logger: logger.log,
           })();
 
-          chai.expect(fetchedChainId, `Wrong chainId`).to.eq(chainId);
+          chai.expect(fetchedChainId, `Wrong networkId`).to.eq(chainId);
         });
       }
     });
@@ -73,15 +75,14 @@ export const validateBlockNumberAgreementBetweenRpcs = (
   rpcUrlsPerChain: RpcUrlsPerChain,
   tolerance: number
 ) => {
-  for (const [name, { chainId, rpcUrls, chainType }] of Object.entries(
+  for (const [name, { networkId, rpcUrls }] of Object.entries(
     rpcUrlsPerChain
   )) {
-    describe(`Block Number Agreement Validation for ${name} (${chainId})`, function () {
+    describe(`Block Number Agreement Validation for ${name} (${networkId})`, function () {
       before(function () {
-        const chainConfig = getChainConfigByChainId(
+        const chainConfig = getChainConfigByNetworkId(
           getLocalChainConfigs(),
-          chainId,
-          chainType
+          networkId
         );
         skipIfDisabledOrNotSupported(this, chainConfig);
       });
@@ -153,7 +154,7 @@ export function skipIfDisabledOrNotSupported(
   subject: { skip: () => void },
   chainConfig: ChainConfig
 ) {
-  if (chainConfig.disabled || !isEvmChainType(chainConfig.chainType)) {
+  if (chainConfig.disabled || isNonEvmNetworkId(chainConfig.networkId)) {
     subject.skip();
   }
 }

@@ -1,6 +1,7 @@
 import {
+  constructNetworkId,
   fetchChainConfigs,
-  getChainConfigByChainId,
+  getChainConfigByNetworkId,
 } from "@redstone-finance/chain-configs";
 import {
   ContractParamsProvider,
@@ -20,10 +21,9 @@ import {
 
 async function main() {
   const network = RedstoneCommon.getFromEnv("NETWORK", SuiNetworkSchema);
-  const rpcUrls = getChainConfigByChainId(
+  const rpcUrls = getChainConfigByNetworkId(
     await fetchChainConfigs(),
-    getSuiChainId(network),
-    "sui"
+    constructNetworkId(getSuiChainId(network), "sui")
   ).publicRpcUrls;
 
   const paramsProvider = new ContractParamsProvider({

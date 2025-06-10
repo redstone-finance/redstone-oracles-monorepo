@@ -6,7 +6,10 @@ import {
   validateNetworkRpcUrls,
 } from "./common";
 
-const chainId = RedstoneCommon.getFromEnv("CHAIN_ID", z.number().optional());
+const networkid = RedstoneCommon.getFromEnv(
+  "NETWORK_ID",
+  z.string().optional()
+);
 const blockNumberDiffTolerance = 5;
 
 describe("SSM Main Rpc Urls Validation", function () {
@@ -14,7 +17,7 @@ describe("SSM Main Rpc Urls Validation", function () {
     if (!process.env.TEST_RPC) {
       this.skip();
     }
-    const rpcUrlsPerChain = await readSsmRpcUrls(false, chainId);
+    const rpcUrlsPerChain = await readSsmRpcUrls(false, networkid);
     validateNetworkRpcUrls(rpcUrlsPerChain);
     validateBlockNumberAgreementBetweenRpcs(
       rpcUrlsPerChain,
@@ -29,7 +32,7 @@ describe("SSM Fallback Rpc Urls Validation", function () {
     if (!process.env.TEST_RPC) {
       this.skip();
     }
-    const rpcUrlsPerChain = await readSsmRpcUrls(true, chainId);
+    const rpcUrlsPerChain = await readSsmRpcUrls(true, networkid);
     validateNetworkRpcUrls(rpcUrlsPerChain);
     validateBlockNumberAgreementBetweenRpcs(
       rpcUrlsPerChain,
