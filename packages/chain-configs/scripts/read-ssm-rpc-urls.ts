@@ -2,16 +2,15 @@ import { RedstoneCommon } from "@redstone-finance/utils";
 import chalk from "chalk";
 import { z } from "zod";
 import {
-  ChainType,
-  fetchParsedRpcUrlsFromSsmByChainId,
+  fetchParsedRpcUrlsFromSsmByNetworkId,
   getLocalChainConfigs,
+  NetworkId,
 } from "../src";
 
 export type RpcUrlsPerChain = {
   [name: string]: {
-    chainId: number;
+    networkId: NetworkId;
     rpcUrls: string[];
-    chainType?: ChainType;
   };
 };
 
@@ -22,33 +21,33 @@ const env = RedstoneCommon.getFromEnv(
 
 export const readSsmRpcUrls = async (
   isFallback: boolean,
-  specificChainId?: number
+  specificNetworkId?: NetworkId
 ): Promise<RpcUrlsPerChain> => {
   const chainConfigs = getLocalChainConfigs();
   const rpcUrlsPerChain: RpcUrlsPerChain = {};
 
-  for (const { name, chainId } of Object.values(chainConfigs)) {
+  for (const { name, networkId } of Object.values(chainConfigs)) {
     if (
       name === "hardhat" ||
-      (specificChainId && chainId !== specificChainId)
+      (specificNetworkId && networkId !== specificNetworkId)
     ) {
       continue;
     }
     try {
-      const rpcUrls = await fetchParsedRpcUrlsFromSsmByChainId(
-        chainId,
+      const rpcUrls = await fetchParsedRpcUrlsFromSsmByNetworkId(
+        networkId,
         env,
         isFallback ? "fallback" : "main"
       );
 
       rpcUrlsPerChain[name] = {
-        chainId,
+        networkId,
         rpcUrls,
       };
     } catch (e) {
       console.log(
         chalk.yellow(
-          `${isFallback ? "Fallback" : "Main"} Rpc urls for chain ${name} (${chainId}) not present in ${env} error=${RedstoneCommon.stringifyError(e)}`
+          `${isFallback ? "Fallback" : "Main"} Rpc urls for chain ${name} (${networkId}) not present in ${env} error=${RedstoneCommon.stringifyError(e)}`
         )
       );
     }

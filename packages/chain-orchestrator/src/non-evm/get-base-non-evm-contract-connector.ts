@@ -1,15 +1,8 @@
+import { NonEvmChainType } from "@redstone-finance/chain-configs";
 import {
   AptosClientBuilder,
   MovementContractConnector,
 } from "@redstone-finance/movement-connector";
-import {
-  FUEL,
-  MOVEMENT_MULTI_FEED,
-  NonEvmAdapterType,
-  RADIX_MULTI_FEED,
-  SOLANA_MULTI_FEED,
-  SUI_MULTI_FEED,
-} from "@redstone-finance/on-chain-relayer-common";
 import {
   RadixClientBuilder,
   RadixContractConnector,
@@ -22,39 +15,42 @@ import {
   SuiClientBuilder,
   SuiContractConnector,
 } from "@redstone-finance/sui-connector";
+import { RedstoneCommon } from "@redstone-finance/utils";
 
 export function getBaseNonEvmContractConnector(
-  adapterType: NonEvmAdapterType,
+  chainType: NonEvmChainType,
   chainId: number,
   rpcUrls: string[]
 ) {
-  switch (adapterType) {
-    case SUI_MULTI_FEED:
+  switch (chainType) {
+    case "sui":
       return new SuiContractConnector(
         new SuiClientBuilder().withChainId(chainId).withRpcUrls(rpcUrls).build()
       );
-    case MOVEMENT_MULTI_FEED:
+    case "movement":
       return new MovementContractConnector(
         new AptosClientBuilder()
           .withChainId(chainId)
           .withRpcUrls(rpcUrls)
           .build()
       );
-    case RADIX_MULTI_FEED:
+    case "radix":
       return new RadixContractConnector(
         new RadixClientBuilder()
           .withNetworkId(chainId)
           .withRpcUrls(rpcUrls)
           .build()
       );
-    case SOLANA_MULTI_FEED:
+    case "solana":
       return new SolanaContractConnector(
         new SolanaConnectionBuilder()
           .withChainId(chainId)
           .withRpcUrls(rpcUrls)
           .build()
       );
-    case FUEL:
-      throw new Error(`Not supported for ${adapterType}`);
+    case "fuel":
+      throw new Error(`Not supported for ${chainType}`);
+    default:
+      return RedstoneCommon.throwUnsupportedParamError(chainType);
   }
 }

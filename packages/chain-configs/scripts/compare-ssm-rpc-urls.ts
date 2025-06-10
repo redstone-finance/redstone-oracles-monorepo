@@ -1,26 +1,20 @@
 import chalk from "chalk";
-import { readSsmRpcUrls } from "./read-ssm-rpc-urls";
-
-interface RpcUrlSet {
-  [key: string]: {
-    chainId: number;
-    rpcUrls: string[];
-  };
-}
+import { NetworkId } from "../src";
+import { readSsmRpcUrls, RpcUrlsPerChain } from "./read-ssm-rpc-urls";
 
 const compareRpcUrlSets = (
-  set1: RpcUrlSet,
-  set2: RpcUrlSet,
+  set1: RpcUrlsPerChain,
+  set2: RpcUrlsPerChain,
   setName1: string,
   setName2: string,
-  skipChainIds: number[]
+  skipNetworkIds: NetworkId[]
 ) => {
   for (const chain in set1) {
-    const chainId = set1[chain].chainId;
+    const networkId = set1[chain].networkId;
 
-    if (skipChainIds.includes(chainId)) {
+    if (skipNetworkIds.includes(networkId)) {
       console.log(
-        chalk.yellow(`Skipping chain ${chain} with chainId ${chainId}`)
+        chalk.yellow(`Skipping chain ${chain} with networkId ${networkId}`)
       );
       continue;
     }
@@ -54,8 +48,8 @@ const compareRpcUrlSets = (
 };
 
 const compareRpcUrls = async (
-  readSsmRpcUrlsFunction: (isFallback: boolean) => Promise<RpcUrlSet>,
-  skipChainIds: number[]
+  readSsmRpcUrlsFunction: (isFallback: boolean) => Promise<RpcUrlsPerChain>,
+  skipNetworkIds: NetworkId[]
 ) => {
   try {
     const mainRpcUrls = await readSsmRpcUrlsFunction(false);
@@ -66,7 +60,7 @@ const compareRpcUrls = async (
       fallbackRpcUrls,
       "Main RPC URLs",
       "Fallback RPC URLs",
-      skipChainIds
+      skipNetworkIds
     );
 
     compareRpcUrlSets(
@@ -74,12 +68,12 @@ const compareRpcUrls = async (
       mainRpcUrls,
       "Fallback RPC URLs",
       "Main RPC URLs",
-      skipChainIds
+      skipNetworkIds
     );
   } catch (error) {
     console.error("Error fetching RPC URLs:", error);
   }
 };
 
-const skipChainIds: number[] = [];
-void compareRpcUrls(readSsmRpcUrls, skipChainIds);
+const skipNetworkIds: NetworkId[] = [];
+void compareRpcUrls(readSsmRpcUrls, skipNetworkIds);

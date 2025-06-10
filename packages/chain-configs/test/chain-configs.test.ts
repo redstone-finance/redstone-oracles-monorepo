@@ -6,7 +6,7 @@ import {
   ChainConfig,
   ChainConfigSchema,
   getLocalChainConfigs,
-  isEvmChainType,
+  isEvmNetworkId,
   REDSTONE_MULTICALL3_ADDRESS,
   STANDARD_MULTICALL3_ADDRESS,
 } from "../src";
@@ -58,7 +58,7 @@ describe("Validate chain configs", () => {
 
 function shouldCheckMulticall(chainConfig: ChainConfig) {
   return (
-    isEvmChainType(chainConfig.chainType) &&
+    isEvmNetworkId(chainConfig.networkId) &&
     !CHAINS_TO_SKIP_MULTICALL_ADDRESS_CHECK.includes(chainConfig.name)
   );
 }
@@ -104,13 +104,13 @@ describe("Validate multicall3", () => {
       continue;
     }
 
-    it(`Chain config for chain ${chainConfig.name} (${chainConfig.chainId}) should have a valid multicall3 address`, async function () {
+    it(`Chain config for chain ${chainConfig.name} (${chainConfig.networkId}) should have a valid multicall3 address`, async function () {
       skipIfDisabledOrNotSupported(this, chainConfig);
       try {
         await verifyMulticallAddress(chainConfig);
       } catch (e) {
         console.log(
-          `multicall verification failed for ${chainConfig.name} (${chainConfig.chainId}), error ${RedstoneCommon.stringifyError(e)} `
+          `multicall verification failed for ${chainConfig.name} (${chainConfig.networkId}), error ${RedstoneCommon.stringifyError(e)} `
         );
         throw e;
       }

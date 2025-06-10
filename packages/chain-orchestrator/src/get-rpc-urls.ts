@@ -1,6 +1,7 @@
 import {
+  constructNetworkId,
   Env,
-  fetchParsedRpcUrlsFromSsmByChainId,
+  fetchParsedRpcUrlsFromSsmByNetworkId,
 } from "@redstone-finance/chain-configs";
 import {
   AdapterType,
@@ -18,11 +19,10 @@ export async function getRpcUrls(
       ? getNonEvmNetworkName(adapterType)
       : undefined;
 
-  const ssmRpcUrls = await fetchParsedRpcUrlsFromSsmByChainId(
-    chainId,
+  const ssmRpcUrls = await fetchParsedRpcUrlsFromSsmByNetworkId(
+    constructNetworkId(chainId, chainType),
     env,
-    "main",
-    chainType
+    "main"
   );
 
   if (!ssmRpcUrls.length) {

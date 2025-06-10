@@ -46,7 +46,6 @@ export async function safeExecuteMulticall3(
     chainId = (await provider.getNetwork()).chainId;
     const multicall3Contract = getMulticall3(
       {
-        chainId,
         overrideAddress: multicallAddress,
         signerOrProvider: provider,
       },

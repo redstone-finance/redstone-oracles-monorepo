@@ -1,13 +1,33 @@
 import { z } from "zod";
 import chainConfigs from "../manifest/chain-configs.json";
-
-import { ChainTypeEnum } from "./ChainType";
+import {
+  ChainTypeEnum,
+  NonEvmChainType,
+  NonEvmChainTypeEnum,
+} from "./ChainType";
 
 export { chainConfigs };
+
+const baseNetworkIdSchema = z.union([
+  z.number(),
+  z
+    .string()
+    .regex(/^[1-9]\d*$/)
+    .transform(Number), // turns `${number}` into number
+  z
+    .string()
+    .regex(
+      new RegExp(`^(${NonEvmChainTypeEnum.options.join("|")})/([1-9]\\d*)$`)
+    ),
+]);
+export const NetworkIdSchema: z.ZodType<NetworkId> =
+  baseNetworkIdSchema as z.ZodType<NetworkId>;
+export type NetworkId = `${NonEvmChainType}/${number}` | number;
 
 export const ChainConfigSchema = z.object({
   chainId: z.number().positive(),
   chainType: ChainTypeEnum.default("evm"),
+  networkId: NetworkIdSchema,
   name: z.string(),
   publicRpcUrls: z.string().url().array(),
   currencySymbol: z.string(),
@@ -43,6 +63,7 @@ export const ChainConfigsByIdAndTypeSchema = z.record(
   z.string(),
   ChainConfigSchema
 );
+export const ChainConfigsByIdSchema = z.record(z.string(), ChainConfigSchema);
 
 export type ChainConfigsInput = z.input<typeof ChainConfigsSchema>;
 export type ChainConfig = z.infer<typeof ChainConfigSchema>;
@@ -50,6 +71,7 @@ export type ChainConfigs = z.infer<typeof ChainConfigsSchema>;
 export type ChainConfigsByIdAndType = z.infer<
   typeof ChainConfigsByIdAndTypeSchema
 >;
+export type ChainConfigsById = z.infer<typeof ChainConfigsByIdSchema>;
 export type SupportedNetworkNames = keyof typeof chainConfigs.defaultConfig;
 
 export const SupportedNetworkNamesSchema = z.custom<SupportedNetworkNames>(
