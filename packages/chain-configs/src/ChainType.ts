@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { NetworkId } from "./schemas";
 
 export const NonEvmChainTypeEnum = z.enum([
   "sui",
@@ -12,10 +13,20 @@ export type NonEvmChainType = z.infer<typeof NonEvmChainTypeEnum>;
 export const ChainTypeEnum = z.enum(["evm", ...NonEvmChainTypeEnum.options]);
 export type ChainType = z.infer<typeof ChainTypeEnum>;
 
+export function isEvmNetworkId(networkId: NetworkId): networkId is number {
+  return typeof networkId === "number";
+}
+
 export function isEvmChainType(
   chainType?: string
 ): chainType is Exclude<ChainType, NonEvmChainType> {
   return !chainType || chainType === "evm";
+}
+
+export function isNonEvmNetworkId(
+  networkId: NetworkId
+): networkId is `${NonEvmChainType}/${number}` {
+  return !isEvmNetworkId(networkId);
 }
 
 export function isNonEvmChainType(
@@ -24,12 +35,40 @@ export function isNonEvmChainType(
   return !isEvmChainType(chainType);
 }
 
-export function makeRpcUrlsSsmKey(chainId: number, chainType?: ChainType) {
-  return isEvmChainType(chainType)
-    ? chainId.toString()
-    : `${chainType}/${chainId}`;
-}
-
 export function conformsToChainType(left?: ChainType, right?: ChainType) {
   return (left ?? "evm") === (right ?? "evm");
+}
+
+export function deconstructNetworkId(networkId: NetworkId): {
+  chainId: number;
+  chainType: ChainType;
+} {
+  if (typeof networkId === "number") {
+    return {
+      chainType: "evm",
+      chainId: networkId,
+    };
+  }
+
+  const [chainTypeStr, chainIdStr] = networkId.split("/");
+
+  const chainType = NonEvmChainTypeEnum.parse(chainTypeStr);
+
+  const chainId = Number(chainIdStr);
+  if (Number.isNaN(chainId) || chainId < 1) {
+    throw new Error(`Invalid chainId in networkId: ${chainIdStr}`);
+  }
+
+  return { chainType, chainId };
+}
+
+export function constructNetworkId(
+  chainId: number,
+  chainType?: ChainType
+): NetworkId {
+  if (!chainType || chainType == "evm") {
+    return chainId;
+  }
+
+  return `${chainType}/${chainId}`;
 }
