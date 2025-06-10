@@ -660,12 +660,19 @@
     "XRP": {
       "source": [
         "binance-usdt",
+        "bingx-usdt",
+        "bitget-usdt",
         "bitfinex-usd",
         "bitstamp-usd",
+        "bybit-usdt",
+        "coinbase-usd",
+        "gate-usdt",
         "kraken-usd",
         "kucoin-usdt",
         "lbank-usdt",
-        "okx-usdt"
+        "mexc-usdt",
+        "okx-usdt",
+        "xt"
       ],
       "denomination": "USD",
       "rateFeed": false
@@ -677,11 +684,13 @@
         "bitfinex-usd",
         "bitget-usdt",
         "bitstamp-usd",
+        "bybit-usdt",
         "coinbase-usd",
         "gate-usdt",
         "kraken-usd",
         "kucoin-usdt",
         "lbank-usdt",
+        "mexc-usdt",
         "okx-usdt",
         "xt"
       ],
@@ -1617,6 +1626,7 @@
         "binance-bnb-reversed",
         "binance-btc-reversed",
         "binance-eth-reversed",
+        "binance-sol-reversed",
         "binance-xrp-reversed",
         "bingx-usdt",
         "coingecko",
@@ -2487,6 +2497,11 @@
       "source": ["monad-testnet-evm-fetcher-gmon"],
       "denomination": "MON",
       "rateFeed": true
+    },
+    "AO": {
+      "source": ["bybit-usdt", "mexc-usdt", "gate-usdt", "lbank-usdt"],
+      "denomination": "USD",
+      "rateFeed": false
     }
   },
   "multiPointPackages": {
