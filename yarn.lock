@@ -10022,6 +10022,7 @@ __metadata:
     dotenv: "npm:^16.0.3"
     ethers: "npm:^5.7.2"
     inquirer: "npm:^8.2.6"
+    prompts: "npm:^2.4.2"
     zod: "npm:^3.22.4"
   languageName: unknown
   linkType: soft
@@ -10061,6 +10062,7 @@ __metadata:
     "@aws-sdk/client-cloudwatch-logs": "npm:^3.696.0"
     "@aws-sdk/client-ecs": "npm:^3.696.0"
     "@aws-sdk/client-s3": "npm:^3.696.0"
+    "@redstone-finance/chain-configs": "workspace:*"
     "@redstone-finance/monitoring-manifests": "workspace:*"
     "@redstone-finance/sdk": "workspace:*"
     "@types/aws-lambda": "npm:^8.10.145"
@@ -10074,6 +10076,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@redstone-finance/lambda-redstone-txs-indexer@workspace:packages/lambda/lambda-redstone-txs-indexer"
   dependencies:
+    "@aptos-labs/ts-sdk": "npm:1.33.2"
     "@aws-sdk/client-ssm": "npm:^3.696.0"
     "@influxdata/influxdb-client": "npm:^1.35.0"
     "@redstone-finance/chain-configs": "workspace:*"
@@ -10090,6 +10093,7 @@ __metadata:
     ethers: "npm:^5.7.2"
     lodash: "npm:^4.17.21"
     prompts: "npm:^2.4.2"
+    zod: "npm:^3.22.4"
   languageName: unknown
   linkType: soft
 
