@@ -1,6 +1,7 @@
 import {
+  constructNetworkId,
   fetchChainConfigs,
-  fetchParsedRpcUrlsFromSsmByChainId,
+  fetchParsedRpcUrlsFromSsmByNetworkId,
   getChainConfigByChainId,
   type Env,
 } from "@redstone-finance/chain-configs";
@@ -20,7 +21,10 @@ export const getProvider = async (
 ): Promise<providers.Provider> => {
   return await getProviderWithRpcUrls(
     chainId,
-    await fetchParsedRpcUrlsFromSsmByChainId(Number(chainId), env),
+    await fetchParsedRpcUrlsFromSsmByNetworkId(
+      constructNetworkId(Number(chainId)),
+      env
+    ),
     config
   );
 };

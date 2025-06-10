@@ -7,7 +7,7 @@ import {
 import { RedstoneCommon } from "@redstone-finance/utils";
 import { Contract, Wallet } from "ethers";
 import { ChainType, conformsToChainType } from "./ChainType";
-import { ChainConfig, ChainConfigs } from "./schemas";
+import { ChainConfig, ChainConfigs, NetworkId } from "./schemas";
 
 export function getChainConfig(
   chainConfigs: ChainConfigs,
@@ -28,37 +28,29 @@ export function getChainConfigUnsafe(
 
 export function getNetworkName(
   chainConfigs: ChainConfigs,
-  chainId: number | string,
-  chainType?: ChainType
+  networkId: NetworkId
 ): string {
   const networkName = Object.entries(chainConfigs).find(
-    ([_, v]) =>
-      v.chainId === Number(chainId) &&
-      conformsToChainType(v.chainType, chainType)
+    ([_, v]) => v.networkId === networkId
   )?.[0];
   RedstoneCommon.assert(
     networkName,
-    `Couldn't find network for chain_id=${chainId}`
+    `Couldn't find network for network id=${networkId}`
   );
   return networkName;
 }
 
-export function getChainConfigByChainId(
+export function getChainConfigByNetworkId(
   chainConfigs: ChainConfigs,
-  chainId: number,
-  chainType?: ChainType
+  networkId: NetworkId
 ) {
   return RedstoneCommon.assertThenReturn(
-    Object.values(chainConfigs).find(
-      (c) =>
-        c.chainId === chainId && conformsToChainType(c.chainType, chainType)
-    ),
-    `Failed to getChainConfigByChainId chainConfig not defined for ${chainId}${chainType ? ` (chainType: ${chainType})` : ""}`
+    Object.values(chainConfigs).find((c) => c.networkId === networkId),
+    `Failed to getChainConfigByNetworkId chainConfig not defined for ${networkId}`
   );
 }
 
 export type Multicall3Options = {
-  chainId: number;
   overrideAddress?: string;
   signerOrProvider: Wallet | Provider;
 };
@@ -87,4 +79,18 @@ export function getMulticall3(
   } else {
     throw new Error(`Unknown multicall3.type=${String(multicall3)}`);
   }
+}
+
+export function getChainConfigByChainId(
+  chainConfigs: ChainConfigs,
+  chainId: number,
+  chainType?: ChainType
+) {
+  return RedstoneCommon.assertThenReturn(
+    Object.values(chainConfigs).find(
+      (c) =>
+        c.chainId === chainId && conformsToChainType(c.chainType, chainType)
+    ),
+    `Failed to getChainConfigByChainId chainConfig not defined for ${chainId}${chainType ? ` (chainType: ${chainType})` : ""}`
+  );
 }
