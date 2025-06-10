@@ -1,6 +1,7 @@
 import {
+  constructNetworkId,
   fetchChainConfigs,
-  getChainConfigByChainId,
+  getChainConfigByNetworkId,
 } from "@redstone-finance/chain-configs";
 import { RedstoneCommon } from "@redstone-finance/utils";
 import "dotenv/config";
@@ -19,9 +20,11 @@ export async function getRpcUrls() {
     return [readUrl()];
   }
 
-  return getChainConfigByChainId(
+  return getChainConfigByNetworkId(
     await fetchChainConfigs(),
-    Number(_.findKey(CLUSTER_NAMES, (c) => c === readCluster())!),
-    "solana"
+    constructNetworkId(
+      Number(_.findKey(CLUSTER_NAMES, (c) => c === readCluster())!),
+      "solana"
+    )
   ).publicRpcUrls;
 }

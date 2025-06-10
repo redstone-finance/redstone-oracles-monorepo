@@ -33,10 +33,10 @@ const addProblematicNetwork = (
 
 const printRpcUrls = async (): Promise<void> => {
   try {
-    const [mainRpcUrlsPerChain, fallbackRpcUrlsPerChain]: [
-      Record<string, { chainId: number; rpcUrls: string[] }>,
-      Record<string, { chainId: number; rpcUrls: string[] }>,
-    ] = await Promise.all([readSsmRpcUrls(false), readSsmRpcUrls(true)]);
+    const [mainRpcUrlsPerChain, fallbackRpcUrlsPerChain] = await Promise.all([
+      readSsmRpcUrls(false),
+      readSsmRpcUrls(true),
+    ]);
     const problematicMainnetNetworks: Array<{
       name: string;
       problems: string[];
@@ -47,13 +47,13 @@ const printRpcUrls = async (): Promise<void> => {
     }> = [];
     const testNetworks: string[] = [];
 
-    for (const [name, { chainId, rpcUrls }] of Object.entries(
+    for (const [name, { networkId, rpcUrls }] of Object.entries(
       mainRpcUrlsPerChain
     )) {
       console.log(
         "\n---------------------------------------------------------------------\n"
       );
-      console.log(`${name} (${chainId}): `);
+      console.log(`${name} (${networkId}): `);
 
       const issues: string[] = [];
 
