@@ -342,11 +342,7 @@
       "rateFeed": false
     },
     "PREMIA": {
-      "source": [
-        "camelot-v3-arbitrumone-weth",
-        "sushiswap-ethereum-weth",
-        "uniswap-v3-arbitrumone-weth-3000"
-      ],
+      "source": ["camelot-v3-arbitrumone-weth", "sushiswap-ethereum-weth"],
       "denomination": "USD",
       "rateFeed": false
     },
@@ -870,11 +866,7 @@
       "rateFeed": false
     },
     "USDM": {
-      "source": [
-        "curve-ethereum-3crv",
-        "curve-ethereum-sdai",
-        "curve-ethereum-crvusd"
-      ],
+      "source": ["curve-ethereum-3crv", "curve-ethereum-sdai"],
       "deviationCheck": {
         "deviationWithRecentValues": {
           "maxPercent": 5,
@@ -1064,7 +1056,6 @@
         "balancer-ethereum-weth",
         "camelot-v3-arbitrumone-weth",
         "curve-ethereum-sfrxeth",
-        "curve-ethereum-weeth",
         "uniswap-v3-ethereum-weth-500"
       ],
       "denomination": "USD",
@@ -1713,7 +1704,6 @@
         "curve-ethereum-wbtc-2",
         "pancake-swap-bnb-btcb-500",
         "uniswap-v3-ethereum-wbtc-500",
-        "kodiak-berachain-wbtc-500",
         "uniswap-v3-ethereum-wbtc-100"
       ],
       "denomination": "USD",
