@@ -7,7 +7,7 @@
   "types": "dist/src/index.d.ts",
   "license": "MIT",
   "scripts": {
-    "clean": "rm -rf dist",
+    "clean": "yarn global:ts-clean",
     "run-script": "npx blueprint run --testnet --mnemonic",
     "build": "yarn global:tsc --build tsconfig.build.json",
     "build-dev": "yarn global:tsc --build tsconfig.json",
