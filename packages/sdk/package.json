@@ -7,7 +7,7 @@
   "license": "MIT",
   "scripts": {
     "test": "yarn global:jest:cov",
-    "clean": "rm -rf dist",
+    "clean": "yarn global:ts-clean",
     "build": "yarn global:tsc --build tsconfig.build.json",
     "build-dev": "yarn global:tsc --build tsconfig.json",
     "preversion": "yarn build",
