@@ -6,7 +6,6 @@ import {
 import { RedstoneCommon } from "@redstone-finance/utils";
 import "dotenv/config";
 import {
-  DEFAULT_GAS_BUDGET,
   makeSuiClient,
   makeSuiKeypair,
   readSuiConfig,
@@ -26,13 +25,12 @@ describe("SuiPricesContractAdapter", () => {
   beforeAll(() => {
     const network = RedstoneCommon.getFromEnv("NETWORK", SuiNetworkSchema);
     const config = readSuiConfig(network);
-    config.writePricesTxGasBudget = DEFAULT_GAS_BUDGET;
     const client = makeSuiClient(network);
     const keypair = makeSuiKeypair();
     adapter = new SuiPricesContractAdapter(
       client,
       config,
-      new SuiTxDeliveryMan(client, keypair)
+      new SuiTxDeliveryMan(client, keypair, config)
     );
     suiClient = makeSuiClient(network);
   });
