@@ -35,7 +35,11 @@ export class SuiPricesContractConnector
     return (
       this.txDeliveryMan ??
       (this.keypair
-        ? SuiContractConnector.getCachedDeliveryMan(this.client, this.keypair)
+        ? SuiContractConnector.getCachedDeliveryMan(
+            this.client,
+            this.keypair,
+            this.config
+          )
         : undefined)
     );
   }
