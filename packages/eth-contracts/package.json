@@ -7,7 +7,7 @@
   "private": true,
   "license": "MIT",
   "scripts": {
-    "clean": "rm -rf dist",
+    "clean": "yarn global:ts-hardhat-clean",
     "test": "hardhat test",
     "build": "yarn compile && yarn global:tsc --build",
     "compile": "hardhat compile"

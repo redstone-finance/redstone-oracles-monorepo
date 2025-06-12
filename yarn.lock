@@ -9085,6 +9085,7 @@ __metadata:
     "@parity/hardhat-polkadot": "npm:^0.1.5"
     "@redstone-finance/contract-deployments": "workspace:*"
     "@redstone-finance/evm-connector": "workspace:*"
+    "@redstone-finance/on-chain-relayer": "workspace:*"
     "@redstone-finance/on-chain-relayer-common": "workspace:*"
     "@redstone-finance/utils": "workspace:*"
     "@typechain/ethers-v5": "npm:^10.2.0"

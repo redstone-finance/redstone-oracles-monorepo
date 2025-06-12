@@ -7,7 +7,7 @@
   "license": "MIT",
   "scripts": {
     "run-ts": "yarn global:ts-node",
-    "clean": "rm -rf dist",
+    "clean": "yarn global:ts-hardhat-clean",
     "build": "yarn build-deps && yarn global:tsc --build tsconfig.build.json",
     "build-dev": "yarn build-deps && yarn global:tsc --build tsconfig.json",
     "build-deps": "yarn --cwd ../evm-multicall build",

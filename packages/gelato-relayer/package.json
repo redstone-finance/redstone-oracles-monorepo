@@ -4,7 +4,7 @@
   "description": "RedStone Relayer based on Gelato Web3 Functions",
   "repository": "https://github.com/redstone-finance/redstone-oracles-monorepo",
   "scripts": {
-    "clean": "rm -rf dist cache",
+    "clean": "yarn global:ts-hardhat-clean",
     "build": "yarn compile && yarn global:tsc --build tsconfig.build.json",
     "build-dev": "yarn compile && yarn global:tsc --build tsconfig.json",
     "compile": "yarn compile-deps && hardhat compile",
