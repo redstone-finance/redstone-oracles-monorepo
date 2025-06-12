@@ -4,7 +4,7 @@
   "main": "dist/src/index.js",
   "types": "dist/src/index.d.ts",
   "scripts": {
-    "clean": "rm -rf dist",
+    "clean": "yarn global:ts-clean",
     "build": "yarn global:tsc --build tsconfig.build.json",
     "build-dev": "yarn global:tsc --build tsconfig.json",
     "preversion": "yarn build",
