@@ -8,9 +8,6 @@ import { SuiTxDeliveryMan } from "./SuiTxDeliveryMan";
 import { SuiConfig } from "./config";
 import { makeFeedIdBytes, uint8ArrayToBcs } from "./util";
 
-const DEFAULT_GAS_MULTIPLIER_BASE = 1.4;
-const DEFAULT_MAX_TX_SEND_ATTEMPTS = 8;
-
 export class SuiPricesContractWriter {
   protected readonly logger = loggerFactory("sui-prices-writer");
 
@@ -26,29 +23,21 @@ export class SuiPricesContractWriter {
   async writePricesFromPayloadToContract(
     paramsProvider: ContractParamsProvider
   ) {
-    let iterationIndex = 0;
     const metadataTimestamp = Date.now();
     const tx = await this.prepareWritePricesTransaction(
       paramsProvider,
       metadataTimestamp
     );
 
-    return await this.deliveryMan.sendTransaction(tx, async () => {
-      iterationIndex += 1;
-
-      if (
-        iterationIndex >=
-        (this.config.maxTxSendAttempts ?? DEFAULT_MAX_TX_SEND_ATTEMPTS)
-      ) {
-        return;
-      }
-
-      return await this.prepareWritePricesTransaction(
-        paramsProvider,
-        metadataTimestamp,
-        iterationIndex
-      );
-    });
+    return await this.deliveryMan.sendTransaction(
+      tx,
+      async (iterationIndex) =>
+        await this.prepareWritePricesTransaction(
+          paramsProvider,
+          metadataTimestamp,
+          iterationIndex
+        )
+    );
   }
 
   private async prepareWritePricesTransaction(
@@ -56,12 +45,9 @@ export class SuiPricesContractWriter {
     metadataTimestamp: number,
     iterationIndex = 0
   ) {
-    const gasMultiplierBase =
-      this.config.gasMultiplier ?? DEFAULT_GAS_MULTIPLIER_BASE;
-
     const tx = await SuiContractUtil.prepareBaseTransaction(
       this.deliveryMan.client,
-      gasMultiplierBase ** iterationIndex,
+      this.config.gasMultiplier ** iterationIndex,
       this.config.writePricesTxGasBudget,
       this.deliveryMan.keypair
     );
