@@ -5,8 +5,9 @@ import {
   Transaction,
 } from "@mysten/sui/transactions";
 import { MIST_PER_SUI } from "@mysten/sui/utils";
-import { loggerFactory } from "@redstone-finance/utils";
+import { loggerFactory, RedstoneCommon } from "@redstone-finance/utils";
 import { DEFAULT_GAS_BUDGET } from "./SuiContractUtil";
+import { SuiConfig } from "./config";
 
 const MAX_PARALLEL_TRANSACTION_COUNT = 5;
 const SPLIT_COIN_INITIAL_BALANCE = DEFAULT_GAS_BUDGET;
@@ -17,34 +18,56 @@ export class SuiTxDeliveryMan {
   constructor(
     public client: SuiClient,
     public keypair: Keypair,
+    private config: SuiConfig,
     private executor?: ParallelTransactionExecutor
   ) {}
 
-  async tryExecuteTransaction(tx: Transaction) {
-    const executor = this.getExecutor();
+  async sendTransaction(
+    tx: Transaction,
+    repeatedTransactionCreator: (
+      iterationIndex: number
+    ) => Promise<Transaction>,
+    iterationIndex = 0
+  ): Promise<string> {
     try {
-      return await executor.executeTransaction(tx, {
-        showEffects: true,
-        showBalanceChanges: true,
-        showInput: true,
-      });
+      (iterationIndex ? this.logger.info : this.logger.debug)(
+        `Iteration #${iterationIndex} started`
+      );
+
+      return await RedstoneCommon.timeout(
+        this.performExecutingTx(tx),
+        this.config.expectedTxDeliveryTimeInMs
+      );
     } catch (e) {
-      this.initialize();
-      throw e;
+      const nextIterationIndex = iterationIndex + 1;
+      this.logger.error(
+        `Iteration #${iterationIndex} FAILED: ${RedstoneCommon.stringifyError(e)}`
+      );
+
+      if (nextIterationIndex >= this.config.maxTxSendAttempts) {
+        throw e;
+      }
+
+      const tx = await repeatedTransactionCreator(nextIterationIndex);
+      return await this.sendTransaction(
+        tx,
+        repeatedTransactionCreator,
+        nextIterationIndex
+      );
     }
   }
 
-  async sendTransaction(
-    tx: Transaction,
-    repeatedTransactionCreator?: () => Promise<Transaction | undefined>
-  ): Promise<string> {
+  private async performExecutingTx(tx: Transaction) {
     const date = Date.now();
-    const { digest, data } = await this.tryExecuteTransaction(tx);
+    const { digest, data } = await this.executeTxWithExecutor(
+      tx,
+      this.getExecutor()
+    );
 
-    const { status, success } = SuiTxDeliveryMan.getSuccess(data);
+    const { status, success, error } = SuiTxDeliveryMan.getStatus(data);
     const cost = SuiTxDeliveryMan.getCost(data);
     this.logger.log(
-      `Transaction ${digest} finished in ${Date.now() - date} [ms], status: ${status.toUpperCase()}${success ? "" : ` (${data.effects!.status.error})`}, cost: ${cost} SUI`,
+      `Transaction ${digest} finished in ${Date.now() - date} [ms], status: ${status.toUpperCase()}, cost: ${cost} SUI`,
       {
         errors: data.errors,
         gasUsed: data.effects!.gasUsed,
@@ -52,43 +75,53 @@ export class SuiTxDeliveryMan {
       }
     );
 
-    if (!success && repeatedTransactionCreator) {
-      const tx = await repeatedTransactionCreator();
-
-      if (!tx) {
-        return digest;
-      }
-
-      return await this.sendTransaction(tx, repeatedTransactionCreator);
+    if (!success) {
+      throw new Error(error);
     }
 
     return digest;
   }
 
-  private getExecutor() {
-    if (this.executor) {
-      return this.executor;
+  private async executeTxWithExecutor(
+    tx: Transaction,
+    executor: ParallelTransactionExecutor
+  ) {
+    try {
+      return await executor.executeTransaction(tx, {
+        showEffects: true,
+        showBalanceChanges: true,
+        showInput: true,
+      });
+    } catch (e) {
+      this.logger.warn("Reinitializing gas objects...");
+      this.initializeExecutor();
+      throw e;
     }
-
-    this.initialize();
-
-    return this.executor!;
   }
 
-  private initialize() {
-    this.executor = new ParallelTransactionExecutor({
+  private getExecutor() {
+    return this.executor ?? this.initializeExecutor();
+  }
+
+  private initializeExecutor() {
+    const executor = new ParallelTransactionExecutor({
       client: this.client,
       signer: this.keypair,
       initialCoinBalance: SPLIT_COIN_INITIAL_BALANCE,
       maxPoolSize: MAX_PARALLEL_TRANSACTION_COUNT,
     });
+
+    this.executor = executor;
+
+    return executor;
   }
 
-  static getSuccess(response: SuiTransactionBlockResponse) {
+  static getStatus(response: SuiTransactionBlockResponse) {
     const status = response.effects!.status.status;
+    const error = response.effects?.status.error;
     const success = status === "success";
 
-    return { status, success };
+    return { status, success, error };
   }
 
   private static getCost(response: SuiTransactionBlockResponse) {

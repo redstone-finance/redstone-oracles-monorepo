@@ -1,4 +1,5 @@
 import {
+  makeSuiConfig,
   makeSuiKeypair,
   SuiClientBuilder,
   SuiPricesContractConnector,
@@ -17,6 +18,7 @@ export const getSuiContractConnector = (
     adapterContractPackageId,
     gasMultiplier,
     maxTxSendAttempts,
+    expectedTxDeliveryTimeInMS,
   } = relayerConfig;
   if (!adapterContractPackageId) {
     throw new Error("adapterContractPackageId is required");
@@ -27,15 +29,18 @@ export const getSuiContractConnector = (
     .withRpcUrls(rpcUrls)
     .build();
 
+  const config = makeSuiConfig({
+    packageId: adapterContractPackageId,
+    priceAdapterObjectId: adapterContractAddress,
+    writePricesTxGasBudget: gasLimit ? BigInt(gasLimit) : undefined,
+    gasMultiplier,
+    maxTxSendAttempts,
+    expectedTxDeliveryTimeInMs: expectedTxDeliveryTimeInMS,
+  });
+
   return new SuiPricesContractConnector(
     suiClient,
-    {
-      packageId: adapterContractPackageId,
-      priceAdapterObjectId: adapterContractAddress,
-      writePricesTxGasBudget: gasLimit ? BigInt(gasLimit) : undefined,
-      gasMultiplier,
-      maxTxSendAttempts,
-    },
+    config,
     makeSuiKeypair(privateKey)
   );
 };

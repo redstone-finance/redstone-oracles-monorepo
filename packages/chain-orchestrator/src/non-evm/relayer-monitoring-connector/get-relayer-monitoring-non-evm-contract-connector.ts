@@ -20,6 +20,7 @@ import {
   SolanaContractConnector,
 } from "@redstone-finance/solana-connector";
 import {
+  makeSuiConfig,
   SuiClientBuilder,
   SuiPricesContractConnector,
 } from "@redstone-finance/sui-connector";
@@ -93,10 +94,13 @@ function getSuiContractConnector(
     .withRpcUrls(rpcUrls)
     .build();
 
-  return new SuiPricesContractConnector(suiClient, {
-    packageId: relayerManifest.adapterContractPackageId,
-    priceAdapterObjectId: relayerManifest.adapterContract,
-  });
+  return new SuiPricesContractConnector(
+    suiClient,
+    makeSuiConfig({
+      packageId: relayerManifest.adapterContractPackageId,
+      priceAdapterObjectId: relayerManifest.adapterContract,
+    })
+  );
 }
 
 function getMovementContractConnector(

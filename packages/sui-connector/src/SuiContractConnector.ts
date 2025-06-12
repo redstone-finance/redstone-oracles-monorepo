@@ -4,6 +4,7 @@ import { Transaction } from "@mysten/sui/transactions";
 import { MIST_PER_SUI } from "@mysten/sui/utils";
 import type { IContractConnector } from "@redstone-finance/sdk";
 import { SuiTxDeliveryMan } from "./SuiTxDeliveryMan";
+import { SuiConfig } from "./config";
 
 export class SuiContractConnector<Adapter>
   implements IContractConnector<Adapter>
@@ -41,14 +42,19 @@ export class SuiContractConnector<Adapter>
       },
     });
 
-    return SuiTxDeliveryMan.getSuccess(response).success;
+    return SuiTxDeliveryMan.getStatus(response).success;
   }
 
-  protected static getCachedDeliveryMan(client: SuiClient, keypair: Keypair) {
+  protected static getCachedDeliveryMan(
+    client: SuiClient,
+    keypair: Keypair,
+    config: SuiConfig
+  ) {
     const cacheKey = keypair.getPublicKey().toSuiPublicKey();
     SuiContractConnector.txDeliveryManCache[cacheKey] ??= new SuiTxDeliveryMan(
       client,
-      keypair
+      keypair,
+      config
     );
 
     return SuiContractConnector.txDeliveryManCache[cacheKey];
