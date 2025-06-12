@@ -7,7 +7,7 @@ import { arrayify, isHexString } from "ethers/lib/utils";
 import fs from "fs";
 import path from "path";
 import { z } from "zod";
-import { SuiConfig, SuiNetworkName } from "./config";
+import { makeSuiConfig, SuiNetworkName } from "./config";
 import { getSuiNetworkName } from "./network-ids";
 
 interface Ids {
@@ -33,16 +33,16 @@ function getIdsFilePath(network: string) {
   );
 }
 
-export function readIds(network: SuiNetworkName): Ids {
+export function readIds(network: SuiNetworkName) {
   return JSON.parse(fs.readFileSync(getIdsFilePath(network), "utf8")) as Ids;
 }
 
-export function saveIds(ids: Ids, network: SuiNetworkName): void {
+export function saveIds(ids: Ids, network: SuiNetworkName) {
   fs.writeFileSync(getIdsFilePath(network), JSON.stringify(ids, null, 4));
 }
 
-export function readSuiConfig(network: SuiNetworkName): SuiConfig {
-  return readIds(network);
+export function readSuiConfig(network: SuiNetworkName) {
+  return makeSuiConfig(readIds(network));
 }
 
 export function makeSuiKeypair(privateKey?: string): Keypair {
