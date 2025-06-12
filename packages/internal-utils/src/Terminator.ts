@@ -4,9 +4,9 @@ import { loggerFactory } from "@redstone-finance/utils";
 const logger = loggerFactory("Terminator");
 
 export enum ExitCodes {
-  ManifestConfigError = 1,
-  NodeRemoteConfigError = 2,
-  RpcsConfigError = 3,
+  ManifestConfigError = 101,
+  NodeRemoteConfigError = 102,
+  RpcsConfigError = 103,
   RestartConfigExitCode = 100,
 }
 
