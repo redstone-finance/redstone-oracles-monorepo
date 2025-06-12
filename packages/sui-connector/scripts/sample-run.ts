@@ -1,9 +1,4 @@
 import {
-  constructNetworkId,
-  fetchChainConfigs,
-  getChainConfigByNetworkId,
-} from "@redstone-finance/chain-configs";
-import {
   ContractParamsProvider,
   getSignersForDataServiceId,
   sampleRun,
@@ -11,21 +6,17 @@ import {
 import { RedstoneCommon } from "@redstone-finance/utils";
 import "dotenv/config";
 import {
-  getSuiChainId,
   makeSuiKeypair,
   readSuiConfig,
   SuiClientBuilder,
   SuiNetworkSchema,
   SuiPricesContractConnector,
 } from "../src";
+import { getRpcUrls } from "./get-rpc-urls";
 
 async function main() {
   const network = RedstoneCommon.getFromEnv("NETWORK", SuiNetworkSchema);
-  const rpcUrls = getChainConfigByNetworkId(
-    await fetchChainConfigs(),
-    constructNetworkId(getSuiChainId(network), "sui")
-  ).publicRpcUrls;
-
+  const rpcUrls = await getRpcUrls(network);
   const paramsProvider = new ContractParamsProvider({
     dataServiceId: "redstone-primary-prod",
     uniqueSignersCount: 3,
