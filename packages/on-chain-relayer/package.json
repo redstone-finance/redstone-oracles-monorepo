@@ -18,7 +18,7 @@
     "build": "yarn compile && yarn build-deps && yarn global:tsc --build tsconfig.build.json",
     "build-dev": "yarn compile && yarn build-deps && yarn global:tsc --build tsconfig.json",
     "build-deps": "yarn --cwd ../evm-multicall build",
-    "clean": "rm -rf dist artifacts cache typechain-types",
+    "clean": "yarn global:ts-hardhat-clean",
     "bundle": "ENTRYPOINT=src/main.ts yarn global:rollup -c ../../rollup.config.mjs",
     "start": "node dist/src/main.js",
     "start:dev": "yarn global:ts-node src/main.ts",

@@ -9,7 +9,7 @@
     "run-ts": "yarn global:ts-node",
     "build": "yarn global:tsc --build tsconfig.build.json",
     "build-dev": "yarn global:tsc --build tsconfig.json",
-    "clean": "rm -rf dist",
+    "clean": "yarn global:ts-clean",
     "lint": "yarn global:eslint .",
     "lint:fix": "yarn global:eslint --fix .",
     "preversion": "yarn build"
