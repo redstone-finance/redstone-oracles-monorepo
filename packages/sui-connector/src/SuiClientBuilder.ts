@@ -25,6 +25,7 @@ export class SuiClientBuilder {
       {
         getChainIdentifier: MultiExecutor.ExecutionMode.CONSENSUS_ALL_EQUAL,
         signAndExecuteTransaction: MultiExecutor.ExecutionMode.RACE,
+        executeTransactionBlock: MultiExecutor.ExecutionMode.RACE,
         getLatestCheckpointSequenceNumber:
           new MultiExecutor.CeilMedianConsensusExecutor(
             MultiExecutor.DEFAULT_CONFIG.consensusQuorumRatio,
@@ -32,6 +33,8 @@ export class SuiClientBuilder {
           ),
         getReferenceGasPrice: MultiExecutor.ExecutionMode.AGREEMENT,
         getBalance: MultiExecutor.ExecutionMode.AGREEMENT,
+        waitForTransaction: MultiExecutor.ExecutionMode.AGREEMENT,
+        getTransactionBlock: MultiExecutor.ExecutionMode.AGREEMENT,
       },
       MultiExecutor.makeBaseConfig(
         MultiExecutor.QuarantinedListFnDelegate.getCachedConfig(

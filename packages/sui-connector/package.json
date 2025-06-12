@@ -14,6 +14,7 @@
     "test": "yarn global:jest:cov",
     "deploy": "yarn global:ts-node scripts/deploy-price-adapter.ts",
     "sample-run": "yarn global:ts-node scripts/sample-run.ts",
+    "write-simultaneously": "yarn global:ts-node scripts/write-simultaneously.ts",
     "ledger-utils": "yarn global:ts-node scripts/ledger/ledger-utils.ts",
     "get-multi-sig-address": "yarn global:ts-node scripts/ledger/get-multi-sig-address.ts",
     "transfer-object": "yarn global:ts-node scripts/ledger/transfer-object.ts",
@@ -24,8 +25,8 @@
     "convert-evm-private-key": "yarn global:ts-node scripts/convert-evm-private-key.ts"
   },
   "dependencies": {
-    "@mysten/bcs": "^1.4.0",
-    "@mysten/sui": "^1.21.2",
+    "@mysten/bcs": "^1.6.2",
+    "@mysten/sui": "^1.31.0",
     "@redstone-finance/sdk": "workspace:*",
     "@redstone-finance/utils": "workspace:*",
     "decimal.js": "^10.4.3",
