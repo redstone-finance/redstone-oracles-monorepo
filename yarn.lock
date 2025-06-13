@@ -10252,6 +10252,7 @@ __metadata:
     "@redstone-finance/protocol": "workspace:*"
     "@redstone-finance/rpc-providers": "workspace:*"
     "@redstone-finance/utils": "workspace:*"
+    decimal.js: "npm:^10.4.3"
     dotenv: "npm:^16.0.3"
     ethers: "npm:^5.7.2"
     ethers-v6: "npm:ethers@6.13.5"
