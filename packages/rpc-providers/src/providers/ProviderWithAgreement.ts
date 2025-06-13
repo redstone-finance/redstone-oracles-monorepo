@@ -30,11 +30,26 @@ interface ProviderWithAgreementSpecificConfig {
   ) => number;
   enableRpcCuratedList: boolean;
   requireExplicitBlockTag: boolean;
+  pickResultIfErrorFnPerContract?: PickResultIfErrorFnPerContract;
 }
 
 export type ProviderWithAgreementConfig = Partial<
   ProviderWithAgreementSpecificConfig & ProviderWithFallbackConfig
 >;
+
+export type PickResultIfErrorFnPerContract = Record<
+  string,
+  PickResultIfErrorFn
+>;
+
+type PickResultIfErrorFn = (
+  blockNumberPerResult: Map<string, number>
+) => string | null;
+
+interface ResultWithBlockNumberPerResult {
+  result: string;
+  blockNumberFromProvider: number;
+}
 
 const DEFAULT_ELECT_BLOCK_FN = (blockNumbers: number[]): number => {
   blockNumbers.sort((a, b) => a - b);
@@ -246,8 +261,12 @@ export class ProviderWithAgreement extends ProviderWithFallback {
       "When using providerWithAgreement, blockTag has to be passed explicitly"
     );
     blockTag ??= await this.getBlockNumber();
-    const getBalance = ({ provider }: ProviderWithIdentifier) =>
-      provider.getBalance(address, blockTag).then((r) => r.toString());
+    const getBalance = async ({ provider }: ProviderWithIdentifier) => ({
+      result: await provider
+        .getBalance(address, blockTag)
+        .then((r) => r.toString()),
+      blockNumberFromProvider: Number(blockTag.toString()),
+    });
 
     const agreedResult = await this.executeWithAgreement(
       getBalance,
@@ -296,10 +315,8 @@ export class ProviderWithAgreement extends ProviderWithFallback {
       { provider, identifier }: ProviderWithIdentifier,
       shouldAbort: () => boolean
     ) => {
-      while (
-        !shouldAbort() &&
-        (await provider.getBlockNumber()) < electedBlockNumber
-      ) {
+      const blockNumberFromProvider = await provider.getBlockNumber();
+      while (!shouldAbort() && blockNumberFromProvider < electedBlockNumber) {
         await RedstoneCommon.sleep(500);
       }
       if (shouldAbort()) {
@@ -308,29 +325,37 @@ export class ProviderWithAgreement extends ProviderWithFallback {
         );
       }
 
-      return await provider.call(transaction, electedBlockTag);
+      return {
+        result: await provider.call(transaction, electedBlockTag),
+        blockNumberFromProvider,
+      };
     };
 
     const agreedResult = await this.executeWithAgreement(
       syncThenCall,
       "call",
-      electedBlockNumber
+      electedBlockNumber,
+      this.agreementConfig.pickResultIfErrorFnPerContract?.[
+        transaction.to as string
+      ]
     );
 
-    return agreedResult.toString();
+    return agreedResult;
   }
 
   private executeWithAgreement(
     operation: (
       provider: ProviderWithIdentifier,
       shouldAbort: () => boolean
-    ) => Promise<string>,
+    ) => Promise<ResultWithBlockNumberPerResult>,
     operationName: string,
-    electedBlockNumber: number
-  ) {
+    electedBlockNumber: number,
+    pickResultIfErrorFn?: PickResultIfErrorFn
+  ): Promise<string> {
     return new Promise<string>((resolve, reject) => {
       const errors: Error[] = [];
       const results = new Map<string, number>();
+      const blockNumberPerResult = new Map<string, number>();
       let globalAbort = false;
       let finishedProvidersCount = 0;
 
@@ -344,20 +369,36 @@ export class ProviderWithAgreement extends ProviderWithFallback {
           operationName
         );
 
-        const currentResultCount = results.get(currentResult);
+        const currentResultCount = results.get(currentResult.result);
+
+        // handle block number separately because it is for hyperevm hack
+        const currentBlockNumber = blockNumberPerResult.get(
+          currentResult.result
+        );
+        if (currentBlockNumber) {
+          blockNumberPerResult.set(
+            currentResult.result,
+            Math.max(currentBlockNumber, currentResult.blockNumberFromProvider)
+          );
+        } else {
+          blockNumberPerResult.set(
+            currentResult.result,
+            currentResult.blockNumberFromProvider
+          );
+        }
 
         if (currentResultCount) {
-          results.set(currentResult, currentResultCount + 1);
+          results.set(currentResult.result, currentResultCount + 1);
           // we have found satisfying number of same responses
           if (
             currentResultCount + 1 >=
             this.agreementConfig.numberOfProvidersThatHaveToAgree
           ) {
             globalAbort = true;
-            resolve(currentResult);
+            resolve(currentResult.result);
           }
         } else {
-          results.set(currentResult, 1);
+          results.set(currentResult.result, 1);
         }
       };
 
@@ -371,6 +412,15 @@ export class ProviderWithAgreement extends ProviderWithFallback {
           ) {
             resolve(pickResponseWithMostVotes(results));
           } else {
+            if (pickResultIfErrorFn) {
+              const result = pickResultIfErrorFn(blockNumberPerResult);
+              if (result) {
+                this.logger.log(
+                  `USED HYPEREVM HACK FOR AGREEMENT PROVIDER - picked results which are close enough to other, results: ${JSON.stringify(Object.fromEntries(results))}, blockNumberPerResult: ${JSON.stringify(Object.fromEntries(blockNumberPerResult))}, result: ${result}`
+                );
+                return resolve(result);
+              }
+            }
             reject(
               this.createAgreementError(
                 errors,
@@ -434,7 +484,7 @@ export class ProviderWithAgreement extends ProviderWithFallback {
     operation: (
       provider: ProviderWithIdentifier,
       shouldAbort: () => boolean
-    ) => Promise<string>,
+    ) => Promise<ResultWithBlockNumberPerResult>,
     provider: ProviderWithIdentifier,
     globalAbort: () => boolean,
     operationName: string
