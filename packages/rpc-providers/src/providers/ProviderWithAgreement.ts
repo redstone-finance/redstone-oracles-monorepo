@@ -504,7 +504,7 @@ export class ProviderWithAgreement extends ProviderWithFallback {
   }
 }
 
-// We are passing op as function instead of promise to measure also synchronous operation time
+// We are passing op as a function instead of promise to measure also synchronous operation time
 async function withDebugLog<T>(
   op: () => Promise<T>,
   opts = {
@@ -525,7 +525,7 @@ async function withDebugLog<T>(
   } catch (e) {
     opts.logger.debug(`${opts.description}`, {
       duration: performance.now() - start,
-      error: "error",
+      error: RedstoneCommon.stringifyError(e),
     });
     throw e;
   }
