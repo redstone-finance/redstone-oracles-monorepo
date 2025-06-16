@@ -157,12 +157,10 @@ describe("runIteration tests", () => {
       "performRequestingDataPackages"
     );
 
-    await runIteration(
-      facade,
-      relayerConfig,
-      loggerStub as unknown as RedstoneLogger,
+    await runIteration(facade, relayerConfig, {
+      logger: loggerStub as unknown as RedstoneLogger,
       iterationArgsProvider,
-      sendHealthcheckPingStub
-    );
+      sendHealthcheckPingCallback: sendHealthcheckPingStub,
+    });
   }
 });
