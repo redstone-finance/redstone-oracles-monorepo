@@ -1,13 +1,18 @@
-import { Env, NonEvmChainType } from "@redstone-finance/chain-configs";
+import {
+  deconstructNetworkId,
+  Env,
+  NetworkId,
+} from "@redstone-finance/chain-configs";
 import { getSSMParameterValue } from "@redstone-finance/internal-utils";
 import { RedstoneCommon } from "@redstone-finance/utils";
 
 const ed25519Chains = ["radix", "solana", "sui", "movement"];
 
 export async function getNonEvmZrodelkoPrivateKey(
-  env: Env,
-  chainType: NonEvmChainType
+  networkId: NetworkId,
+  env: Env
 ): Promise<RedstoneCommon.PrivateKey> {
+  const { chainType } = deconstructNetworkId(networkId);
   const ssmPath = `/${env}/${chainType}/zrodelko/private-key`;
   const privateKey = await getSSMParameterValue(ssmPath, "eu-west-1");
   if (!privateKey) {
