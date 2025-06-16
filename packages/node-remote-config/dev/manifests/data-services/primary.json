@@ -649,7 +649,7 @@
       "rateFeed": false
     },
     "XAU": {
-      "source": ["financialmodelingprep-usd", "twelve-data"],
+      "source": ["alltick-api", "financialmodelingprep-usd", "twelve-data"],
       "denomination": "USD",
       "rateFeed": false
     },
