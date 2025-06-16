@@ -1618,7 +1618,7 @@
       "source": ["twelve-data", "yf-unofficial"]
     },
     "XAU": {
-      "source": ["twelve-data", "finhub-usd"]
+      "source": ["alltick-api", "financialmodelingprep-usd", "twelve-data"]
     },
     "SILVER": {
       "source": ["twelve-data", "yf-unofficial"]

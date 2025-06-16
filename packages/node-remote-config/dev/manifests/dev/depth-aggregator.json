@@ -604,7 +604,7 @@
       ]
     },
     "XAU": {
-      "source": ["twelve-data", "finhub-usd", "financialmodelingprep-usd"]
+      "source": ["alltick-api", "financialmodelingprep-usd", "twelve-data"]
     },
     "XRP": {
       "source": [
