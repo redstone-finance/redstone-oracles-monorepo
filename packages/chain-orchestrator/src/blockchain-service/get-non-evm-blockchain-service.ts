@@ -1,4 +1,7 @@
-import { NonEvmChainType } from "@redstone-finance/chain-configs";
+import {
+  deconstructNetworkId,
+  NetworkId,
+} from "@redstone-finance/chain-configs";
 import { AptosClientBuilder } from "@redstone-finance/movement-connector";
 import { RadixClientBuilder } from "@redstone-finance/radix-connector";
 import {
@@ -16,11 +19,11 @@ import { SolanaBlockchainService } from "./SolanaBlockchainService";
 import { SuiBlockchainService } from "./SuiBlockchainService";
 
 export function getNonEvmBlockchainService(
+  networkId: NetworkId,
   rpcUrls: string[],
-  chainType: NonEvmChainType,
-  chainId: number,
   privateKey?: RedstoneCommon.PrivateKey
 ) {
+  const { chainType, chainId } = deconstructNetworkId(networkId);
   switch (chainType) {
     case "sui": {
       const suiClient = new SuiClientBuilder()
@@ -56,7 +59,11 @@ export function getNonEvmBlockchainService(
       return new SolanaBlockchainService(connection, undefined, keypair);
     }
     case "fuel":
-      throw new Error(`chain type ${chainType} not supported`);
+      throw new Error(`Not supported for ${chainType}`);
+    case "evm":
+      throw new Error(
+        `Evm networkId ${networkId} got passed to non-evm blockchain service builder.`
+      );
     default:
       return RedstoneCommon.throwUnsupportedParamError(chainType);
   }

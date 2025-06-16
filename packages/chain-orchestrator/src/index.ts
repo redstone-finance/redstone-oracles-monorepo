@@ -7,7 +7,6 @@ export * from "./blockchain-service/NonEvmBlockchainService";
 export * from "./blockchain-service/RadixBlockchainService";
 export * from "./blockchain-service/SolanaBlockchainService";
 export * from "./blockchain-service/SuiBlockchainService";
-export * from "./get-rpc-urls";
 export * from "./get-zrodelko-private-key";
 export * from "./non-evm/get-base-non-evm-contract-connector";
 export * from "./non-evm/get-chain-type-from-adapter-type";

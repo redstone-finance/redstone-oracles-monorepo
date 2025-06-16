@@ -1,11 +1,10 @@
 import {
-  constructNetworkId,
   Env,
   fetchParsedRpcUrlsFromSsmByNetworkId,
+  NetworkId,
 } from "@redstone-finance/chain-configs";
 import {
   AdapterType,
-  getNonEvmNetworkName,
   isNonEvmAdapterType,
 } from "@redstone-finance/on-chain-relayer-common";
 import { BigNumber } from "ethers";
@@ -25,24 +24,24 @@ const SINGLE_RPC_TIMEOUT_MILLISECONDS = 10_000;
 const ALL_RPC_TIMEOUT_MILLISECONDS = 40_000;
 
 export const getBalanceProvider = async (
-  chainId: number,
+  networkId: NetworkId,
   env: Env,
   adapterType?: AdapterType
 ): Promise<BalanceProvider | undefined> => {
   if (isNonEvmAdapterType(adapterType)) {
     const rpcUrls = await fetchParsedRpcUrlsFromSsmByNetworkId(
-      constructNetworkId(chainId, getNonEvmNetworkName(adapterType)),
+      networkId,
       env,
       "main"
     );
-    return await getBalanceProviderWithRpcUrls(chainId, rpcUrls, adapterType);
+    return await getBalanceProviderWithRpcUrls(networkId, rpcUrls, adapterType);
   } else {
-    return await getProviderMemoized(chainId, env);
+    return await getProviderMemoized(networkId, env);
   }
 };
 
 export async function getBalanceProviderWithRpcUrls(
-  chainId: number,
+  networkId: NetworkId,
   rpcUrls: string[],
   adapterType?: AdapterType
 ): Promise<BalanceProvider | undefined> {
@@ -51,14 +50,10 @@ export async function getBalanceProviderWithRpcUrls(
   }
 
   if (isNonEvmAdapterType(adapterType)) {
-    return getNonEvmBlockchainService(
-      rpcUrls,
-      getNonEvmNetworkName(adapterType),
-      chainId
-    );
+    return getNonEvmBlockchainService(networkId, rpcUrls);
   } else {
     return new EvmBlockchainService(
-      await getProviderWithRpcUrls(chainId, rpcUrls, {
+      await getProviderWithRpcUrls(networkId, rpcUrls, {
         singleProviderOperationTimeout: SINGLE_RPC_TIMEOUT_MILLISECONDS,
         allProvidersOperationTimeout: ALL_RPC_TIMEOUT_MILLISECONDS,
       })

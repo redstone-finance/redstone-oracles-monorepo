@@ -11,7 +11,7 @@ export type FetchRpcUrlsFromSsmOpts = {
   networkIds: NetworkId[];
 };
 
-export type FetchRpcUrlsFromSsmResult = Record<string, string[] | undefined>;
+export type FetchRpcUrlsFromSsmResult = Record<NetworkId, string[] | undefined>;
 
 export async function fetchRpcUrlsFromSsm(
   opts: FetchRpcUrlsFromSsmOpts
