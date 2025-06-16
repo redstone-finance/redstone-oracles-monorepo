@@ -5,13 +5,18 @@ export const writeS3Object = async (
   bucketName: string,
   path: string,
   data: unknown,
-  region?: string
+  region?: string,
+  stringifyData = true
 ) => {
+  const parsedData = stringifyData
+    ? JSON.stringify(data, null, 2) + "\n"
+    : (data as string);
+
   const params = {
     Bucket: bucketName,
     Key: path,
     ContentType: "application/json",
-    Body: JSON.stringify(data, null, 2) + "\n",
+    Body: parsedData,
   };
   await getS3(region).putObject(params);
 };
