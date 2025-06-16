@@ -10199,6 +10199,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@redstone-finance/monitoring-manifests@workspace:packages/monitoring-manifests"
   dependencies:
+    "@redstone-finance/chain-configs": "workspace:*"
     "@redstone-finance/internal-utils": "workspace:*"
     "@redstone-finance/on-chain-relayer-common": "workspace:*"
     "@redstone-finance/utils": "workspace:*"
