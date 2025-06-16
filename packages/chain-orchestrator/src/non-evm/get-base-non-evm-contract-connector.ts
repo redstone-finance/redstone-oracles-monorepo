@@ -1,4 +1,7 @@
-import { NonEvmChainType } from "@redstone-finance/chain-configs";
+import {
+  deconstructNetworkId,
+  NetworkId,
+} from "@redstone-finance/chain-configs";
 import {
   AptosClientBuilder,
   MovementContractConnector,
@@ -18,10 +21,10 @@ import {
 import { RedstoneCommon } from "@redstone-finance/utils";
 
 export function getBaseNonEvmContractConnector(
-  chainType: NonEvmChainType,
-  chainId: number,
+  networkId: NetworkId,
   rpcUrls: string[]
 ) {
+  const { chainId, chainType } = deconstructNetworkId(networkId);
   switch (chainType) {
     case "sui":
       return new SuiContractConnector(
@@ -50,6 +53,10 @@ export function getBaseNonEvmContractConnector(
       );
     case "fuel":
       throw new Error(`Not supported for ${chainType}`);
+    case "evm":
+      throw new Error(
+        `Evm networkId ${networkId} got passed to non-evm contract connector builder.`
+      );
     default:
       return RedstoneCommon.throwUnsupportedParamError(chainType);
   }
