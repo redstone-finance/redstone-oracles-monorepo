@@ -22,12 +22,10 @@ export class MockGelatoRunner extends GelatoRunner {
     config: RelayerConfig,
     logger: GelatoLogger
   ) {
-    return runIteration(
-      new MockContractFacade(connector),
-      config,
+    return runIteration(new MockContractFacade(connector), config, {
       logger,
-      getIterationArgsProviderFromContext(this.context)
-    );
+      iterationArgsProvider: getIterationArgsProviderFromContext(this.context),
+    });
   }
 }
 
