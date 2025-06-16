@@ -10,6 +10,8 @@ import { splitRelayerConfig } from "./config/split-relayer-config";
 import { timelyOverrideSinceLastUpdate } from "./config/timely-override-since-last-update";
 import { AsyncTaskRunner } from "./runner/AsyncTaskRunner";
 import { MqttRunner } from "./runner/MqttRunner";
+import { IterationOptions } from "./runner/run-iteration";
+import { SendHealthcheckPingCollector } from "./SendHealthcheckPingCollector";
 
 export const runRelayer = async () => {
   const relayerConfig = await config(ConsciouslyInvoked);
@@ -25,16 +27,34 @@ export const runRelayer = async () => {
   );
 
   const configs = splitRelayerConfig(relayerConfig);
-  if (configs[0] !== relayerConfig) {
-    logger.log(
-      `Splitting relayer config into ${configs.length} configs: [${configs.map((config) => `[${config.dataFeeds.toString()}]`).toString()}]`
-    );
+  if (configs[0] === relayerConfig) {
+    run(relayerConfig, logger);
+
+    return;
   }
 
-  configs.forEach((config) => run(config, logger));
+  const sendHealtcheckPingCollector = new SendHealthcheckPingCollector(
+    configs.length,
+    relayerConfig.healthcheckPingUrl
+  );
+
+  logger.log(
+    `Splitting relayer config into ${configs.length} configs: [${configs.map((config) => `[${config.dataFeeds.toString()}]`).toString()}]`
+  );
+
+  configs.forEach((config, index) =>
+    run(config, logger, {
+      sendHealthcheckPingCallback:
+        sendHealtcheckPingCollector.sendHealthcheckPing(index),
+    })
+  );
 };
 
-function run(relayerConfig: RelayerConfig, logger: RedstoneLogger) {
+function run(
+  relayerConfig: RelayerConfig,
+  logger: RedstoneLogger,
+  iterationOptionsOverride: Partial<IterationOptions> = {}
+) {
   if (relayerConfig.temporaryUpdatePriceInterval !== -1) {
     timelyOverrideSinceLastUpdate(
       relayerConfig,
@@ -50,9 +70,10 @@ function run(relayerConfig: RelayerConfig, logger: RedstoneLogger) {
         `Unhandled Rejection at: ${RedstoneCommon.stringifyError(reason)}`
     );
   });
+
   if (relayerConfig.runWithMqtt) {
-    void MqttRunner.run(relayerConfig);
+    void MqttRunner.run(relayerConfig, iterationOptionsOverride);
   } else {
-    void AsyncTaskRunner.run(relayerConfig, logger);
+    void AsyncTaskRunner.run(relayerConfig, logger, iterationOptionsOverride);
   }
 }

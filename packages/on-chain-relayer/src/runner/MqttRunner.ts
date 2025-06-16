@@ -25,7 +25,7 @@ import {
 } from "../core/make-data-packages-request-params";
 import { ContractFacade } from "../facade/ContractFacade";
 import { getContractFacade } from "../facade/get-contract-facade";
-import { runIteration } from "./run-iteration";
+import { IterationOptions, runIteration } from "./run-iteration";
 
 export class MqttRunner {
   private subscriber?: DataPackageSubscriber;
@@ -39,10 +39,14 @@ export class MqttRunner {
   constructor(
     private readonly client: MultiPubSubClient,
     private readonly contractFacade: ContractFacade,
-    private readonly cache: DataPackagesResponseCache
+    private readonly cache: DataPackagesResponseCache,
+    private readonly iterationOptionsOverride: Partial<IterationOptions>
   ) {}
 
-  static async run(relayerConfig: RelayerConfig) {
+  static async run(
+    relayerConfig: RelayerConfig,
+    iterationOptionsOverride: Partial<IterationOptions>
+  ) {
     if (
       !relayerConfig.mqttEndpoint ||
       !relayerConfig.mqttUpdateSubscriptionIntervalMs
@@ -67,7 +71,12 @@ export class MqttRunner {
       MqttTopics.calculateTopicCountPerConnection()
     );
 
-    const runner = new MqttRunner(multiClient, contractFacade, cache);
+    const runner = new MqttRunner(
+      multiClient,
+      contractFacade,
+      cache,
+      iterationOptionsOverride
+    );
     await runner.updateSubscription(relayerConfig);
 
     if (relayerConfig.mqttUpdateSubscriptionIntervalMs > 0) {
@@ -204,7 +213,11 @@ export class MqttRunner {
   ) {
     try {
       this.cache.update(dataPackagesResponse, requestParams);
-      await runIteration(this.contractFacade, relayerConfig);
+      await runIteration(
+        this.contractFacade,
+        relayerConfig,
+        this.iterationOptionsOverride
+      );
     } catch (error) {
       this.logger.error(
         "Unhandled error occurred during iteration:",

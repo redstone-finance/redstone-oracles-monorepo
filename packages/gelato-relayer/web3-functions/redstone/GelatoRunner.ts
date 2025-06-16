@@ -68,7 +68,7 @@ export class GelatoRunner {
     return runIteration(
       new EvmContractFacade(connector, new DataPackagesResponseCache()),
       config,
-      logger
+      { logger }
     );
   }
 

@@ -7,20 +7,41 @@ import _ from "lodash";
 import { isPaused } from "../config/is_paused";
 import { RelayerConfig } from "../config/RelayerConfig";
 import { ContractFacade } from "../facade/ContractFacade";
-import { getIterationArgsProvider } from "../facade/get-iteration-args-provider";
+import {
+  getIterationArgsProvider,
+  IterationArgsProvider,
+} from "../facade/get-iteration-args-provider";
 
 export type IterationLogger = {
   log(message: string, ...args: unknown[]): void;
   warn?: (message: string, ...args: unknown[]) => void;
 };
 
+export type IterationOptions = {
+  logger: IterationLogger;
+  iterationArgsProvider: IterationArgsProvider;
+  sendHealthcheckPingCallback: (healthcheckPingUrl?: string) => Promise<void>;
+};
+
+const defaultLogger = loggerFactory("relayer/run-iteration");
+
+const defaultIterationOptions = (relayerConfig: RelayerConfig) =>
+  ({
+    logger: defaultLogger,
+    iterationArgsProvider: getIterationArgsProvider(relayerConfig),
+    sendHealthcheckPingCallback: sendHealthcheckPing,
+  }) as IterationOptions;
+
 export const runIteration = async (
   contractFacade: ContractFacade,
   relayerConfig: RelayerConfig,
-  logger: IterationLogger = loggerFactory("relayer/run-iteration"),
-  iterationArgsProvider = getIterationArgsProvider(relayerConfig),
-  sendHealthcheckPingCallback = sendHealthcheckPing
+  options: Partial<IterationOptions> = {}
 ) => {
+  const { logger, iterationArgsProvider, sendHealthcheckPingCallback } = {
+    ...defaultIterationOptions(relayerConfig),
+    ...options,
+  };
+
   if (isPaused(relayerConfig)) {
     (logger.warn ?? logger.log)(
       `Relayer is paused until ${relayerConfig.isPausedUntil?.toString()}`
