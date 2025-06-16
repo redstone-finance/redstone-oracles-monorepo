@@ -1,10 +1,8 @@
 import {
   ChainConfig,
-  isEvmChainType,
-  isNonEvmChainType,
+  isNonEvmNetworkId,
 } from "@redstone-finance/chain-configs";
 import { MegaProviderBuilder } from "@redstone-finance/rpc-providers";
-import { RedstoneCommon } from "@redstone-finance/utils";
 import { EvmBlockchainService } from "./EvmBlockchainService";
 import { getNonEvmBlockchainService } from "./get-non-evm-blockchain-service";
 
@@ -15,34 +13,28 @@ export function getBlockchainService(
   rpcUrls: string[],
   chainConfig: ChainConfig
 ) {
-  if (isEvmChainType(chainConfig.chainType)) {
-    const provider = new MegaProviderBuilder({
-      timeout: SINGLE_RPC_TIMEOUT_MILLISECONDS,
-      throttleLimit: 1,
-      network: {
-        name: `name-${chainConfig.chainId}`,
-        chainId: chainConfig.chainId,
-      },
-      rpcUrls,
-    })
-      .fallback(
-        {
-          allProvidersOperationTimeout: ALL_RPC_TIMEOUT_MILLISECONDS,
-          singleProviderOperationTimeout: SINGLE_RPC_TIMEOUT_MILLISECONDS,
-          chainConfig,
-        },
-        rpcUrls.length > 1
-      )
-      .build();
+  if (isNonEvmNetworkId(chainConfig.networkId)) {
+    return getNonEvmBlockchainService(chainConfig.networkId, rpcUrls);
+  }
 
-    return new EvmBlockchainService(provider);
-  }
-  if (isNonEvmChainType(chainConfig.chainType)) {
-    return getNonEvmBlockchainService(
-      rpcUrls,
-      chainConfig.chainType,
-      chainConfig.chainId
-    );
-  }
-  return RedstoneCommon.throwUnsupportedParamError(chainConfig.chainType);
+  const provider = new MegaProviderBuilder({
+    timeout: SINGLE_RPC_TIMEOUT_MILLISECONDS,
+    throttleLimit: 1,
+    network: {
+      name: `name-${chainConfig.chainId}`,
+      chainId: chainConfig.chainId,
+    },
+    rpcUrls,
+  })
+    .fallback(
+      {
+        allProvidersOperationTimeout: ALL_RPC_TIMEOUT_MILLISECONDS,
+        singleProviderOperationTimeout: SINGLE_RPC_TIMEOUT_MILLISECONDS,
+        chainConfig,
+      },
+      rpcUrls.length > 1
+    )
+    .build();
+
+  return new EvmBlockchainService(provider);
 }
