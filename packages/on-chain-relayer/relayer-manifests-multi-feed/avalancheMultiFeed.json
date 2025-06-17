@@ -22,6 +22,13 @@
     },
     "VBILL_AVALANCHE_FUNDAMENTAL": {
       "priceFeedAddress": "0x53E57c2acBa2f9919ff545aa595Ff691B90d36a8"
+    },
+    "weETH_FUNDAMENTAL": {
+      "priceFeedAddress": "0x0d9b42a2a73Ec528759701D0B70Ccf974a327EBb",
+      "updateTriggersOverrides": {
+        "deviationPercentage": 0.5,
+        "timeSinceLastUpdateInMilliseconds": 86400000
+      }
     }
   }
 }
