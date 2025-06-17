@@ -70,6 +70,13 @@
     },
     "PROMPT": {
       "priceFeedAddress": "0xbbF121624c3b85C929Ac83872bf6c86b0976A55e"
+    },
+    "sUSDX_BNB_FUNDAMENTAL": {
+      "priceFeedAddress": "0x09639692CE6ff12A06CA3AE9A24b3Aae4CD80DC8",
+      "updateTriggersOverrides": {
+        "deviationPercentage": 0.5,
+        "timeSinceLastUpdateInMilliseconds": 21600000
+      }
     }
   }
 }
