@@ -6943,6 +6943,22 @@
       "source": ["bybit-usdt", "mexc-usdt", "gate-usdt", "lbank-usdt"],
       "denomination": "USD",
       "rateFeed": false
+    },
+    "SPK": {
+      "source": [
+        "binance-usdt",
+        "binance-usdc",
+        "bingx-usdt",
+        "mexc-usdt",
+        "gate-usdt",
+        "bitget-usdt",
+        "lbank-usdt",
+        "kucoin-usdt",
+        "bybit-usdt",
+        "xt"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
     }
   }
 }
