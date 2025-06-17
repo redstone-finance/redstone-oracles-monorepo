@@ -15,7 +15,6 @@
       "source": [
         "binance-usdt",
         "bingx-usdt",
-        "bitfinex-usd",
         "bitget-usdt",
         "bitmart-usdt",
         "bitrue-usdt",
@@ -144,7 +143,6 @@
       "source": [
         "binance-usdt",
         "bingx-usdt",
-        "bitfinex-usd",
         "bitget-usdt",
         "bitmart-usdt",
         "bitrue-usdt",
@@ -178,7 +176,6 @@
         "binance-usdt",
         "bingx-usdt",
         "bitget-usdt",
-        "bitfinex-usd",
         "bitstamp-usd",
         "bybit-usdt",
         "coinbase-usd",
@@ -209,7 +206,6 @@
     "DAI": {
       "source": [
         "bingx-usdt",
-        "bitfinex-usd",
         "bitget-usdt",
         "bitmart-usdt",
         "bitrue-usdt",
@@ -268,7 +264,6 @@
       "source": [
         "binance-usdt",
         "bingx-usdt",
-        "bitfinex-usd",
         "bitget-usdt",
         "bitmart-usdt",
         "bitstamp-usd",
@@ -288,7 +283,6 @@
       "source": [
         "binance-usdt",
         "bingx-usdt",
-        "bitfinex-usd",
         "bitget-usdt",
         "bitmart-usdt",
         "bitstamp-usd",
@@ -388,7 +382,6 @@
       "source": [
         "binance-usdt",
         "bingx-usdt",
-        "bitfinex-usd",
         "bitget-usdt",
         "bitmart-usdt",
         "bitstamp-usd",
@@ -516,7 +509,6 @@
       "source": [
         "binance-usdt",
         "bingx-usdt",
-        "bitfinex-usd",
         "bitget-usdt",
         "bitstamp-usd",
         "bybit-usdt",
@@ -728,7 +720,6 @@
     "AAVE": {
       "source": [
         "binance-usdt",
-        "bitfinex-usd",
         "bitget-usdt",
         "bitmart-usdt",
         "coinbase-usd",
@@ -927,7 +918,6 @@
         "binance-fdusd",
         "binance-usdt",
         "bingx-usdt",
-        "bitfinex-usd",
         "bitget-usdt",
         "bitmart-usdt",
         "bybit-usdc",
