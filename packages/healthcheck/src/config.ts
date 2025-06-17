@@ -18,17 +18,22 @@ export const healthcheckConfig = () =>
     ),
   });
 
-export function enableWithDefaultConfig() {
+/**
+ * Enables health check monitoring with a default memory usage check
+ * @param additionalChecks - additional checks to be attached
+ */
+export function enableWithDefaultConfig(
+  additionalChecks: Map<string, HealthCheck> = new Map()
+) {
   const hcConfig = healthcheckConfig();
   if (hcConfig.enabled) {
-    const healthChecks = new Map<string, HealthCheck>();
-    healthChecks.set(
+    additionalChecks.set(
       "resources-healthcheck",
       new ResourcesHealthCheck({
         memoryPercent: hcConfig.memoryUsagePercentThreshold,
         gracePeriodMs: RedstoneCommon.minToMs(5),
       })
     );
-    new HealthMonitor(healthChecks, hcConfig.intervalMs);
+    new HealthMonitor(additionalChecks, hcConfig.intervalMs);
   }
 }
