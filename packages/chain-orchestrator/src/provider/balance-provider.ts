@@ -1,6 +1,7 @@
 import {
   Env,
   fetchParsedRpcUrlsFromSsmByNetworkId,
+  isNonEvmNetworkId,
   NetworkId,
 } from "@redstone-finance/chain-configs";
 import {
@@ -28,7 +29,7 @@ export const getBalanceProvider = async (
   env: Env,
   adapterType?: AdapterType
 ): Promise<BalanceProvider | undefined> => {
-  if (isNonEvmAdapterType(adapterType)) {
+  if (isNonEvmAdapterType(adapterType) || isNonEvmNetworkId(networkId)) {
     const rpcUrls = await fetchParsedRpcUrlsFromSsmByNetworkId(
       networkId,
       env,
@@ -49,7 +50,7 @@ export async function getBalanceProviderWithRpcUrls(
     return;
   }
 
-  if (isNonEvmAdapterType(adapterType)) {
+  if (isNonEvmAdapterType(adapterType) || isNonEvmNetworkId(networkId)) {
     return getNonEvmBlockchainService(networkId, rpcUrls);
   } else {
     return new EvmBlockchainService(
