@@ -17,7 +17,6 @@
       "source": [
         "binance-usdt",
         "bingx-usdt",
-        "bitfinex-usd",
         "bitget-usdt",
         "bitmart-usdt",
         "bitrue-usdt",
@@ -36,7 +35,6 @@
       "source": [
         "binance-usdt",
         "bingx-usdt",
-        "bitfinex-usd",
         "bitget-usdt",
         "bitmart-usdt",
         "bitrue-usdt",
@@ -131,7 +129,6 @@
       "source": [
         "binance-usdt",
         "bingx-usdt",
-        "bitfinex-usd",
         "bitget-usdt",
         "bitmart-usdt",
         "bitrue-usdt",
@@ -186,7 +183,6 @@
     "TIA": {
       "source": [
         "binance-usdt",
-        "bitfinex-usd",
         "bitget-usdt",
         "coinbase-usd",
         "gate-usdt",
@@ -210,7 +206,6 @@
     "DAI": {
       "source": [
         "bingx-usdt",
-        "bitfinex-usd",
         "bitget-usdt",
         "bitmart-usdt",
         "bitrue-usdt",
