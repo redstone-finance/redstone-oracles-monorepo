@@ -2536,6 +2536,28 @@
       ],
       "denomination": "USD",
       "rateFeed": false
+    },
+    "SUI": {
+      "source": [
+        "binance-btc",
+        "binance-usdc",
+        "binance-usdt",
+        "bitget-usdt",
+        "bitmart-usdt",
+        "bingx-usdt",
+        "bybit-usdc",
+        "bybit-usdt",
+        "gate-usdt",
+        "kucoin-usdt",
+        "kraken-usd",
+        "lbank-usdt",
+        "mexc-usdt",
+        "okx-usdc",
+        "okx-usdt",
+        "xt"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
     }
   },
   "multiPointPackages": {
