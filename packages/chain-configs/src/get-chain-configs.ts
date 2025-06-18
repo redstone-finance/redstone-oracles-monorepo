@@ -5,11 +5,9 @@ import {
 } from "@redstone-finance/internal-utils";
 import { RedstoneCommon } from "@redstone-finance/utils";
 import localChainConfigsManifest from "../manifest/chain-configs.json";
-import { ChainType } from "./ChainType";
 import {
   ChainConfigs,
   ChainConfigsById,
-  ChainConfigsByIdAndType,
   ChainConfigsInput,
   ChainConfigsSchema,
 } from "./schemas";
@@ -82,43 +80,4 @@ const LOCAL_CHAIN_CONFIGS_BY_NETWORK_ID =
 
 export function getLocalChainConfigsByNetworkId(): ChainConfigsById {
   return LOCAL_CHAIN_CONFIGS_BY_NETWORK_ID;
-}
-
-const LOCAL_CHAIN_CONFIGS_BY_CHAIN_ID_AND_TYPE =
-  groupChainConfigsByIdAndType(LOCAL_CHAIN_CONFIGS);
-
-export function getLocalChainConfigsByChainIdAndType(): ChainConfigsByIdAndType {
-  return LOCAL_CHAIN_CONFIGS_BY_CHAIN_ID_AND_TYPE;
-}
-
-export function getChainKey(chainId: number, chainType: ChainType) {
-  return `${chainType}/${chainId}`;
-}
-
-export function getChainIdFromChainKey(chainTypeAndId: string) {
-  return chainTypeAndId.split("/")[1];
-}
-
-function groupChainConfigsByIdAndType(
-  chainConfigs: ChainConfigs
-): ChainConfigsByIdAndType {
-  assertNoDuplicates(chainConfigs);
-  const entries = Object.values(chainConfigs).map((chain) => [
-    getChainKey(chain.chainId, chain.chainType),
-    chain,
-  ]);
-  return Object.fromEntries(entries) as ChainConfigsByIdAndType;
-}
-
-function assertNoDuplicates(chainConfigs: ChainConfigs) {
-  const networkNamesByKey: Record<string, string> = {};
-  Object.entries(chainConfigs).map(([name, chain]) => {
-    const key = getChainKey(chain.chainId, chain.chainType);
-    if (networkNamesByKey[key]) {
-      throw new Error(
-        `Invalid chain config. Chains: ${name} and ${networkNamesByKey[key]} both have the same type (${chain.chainType}) and id (${chain.chainId})`
-      );
-    }
-    networkNamesByKey[key] = name;
-  });
 }
