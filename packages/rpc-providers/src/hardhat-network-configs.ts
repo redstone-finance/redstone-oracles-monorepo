@@ -1,4 +1,7 @@
-import { getLocalChainConfigs } from "@redstone-finance/chain-configs";
+import {
+  getLocalChainConfigs,
+  isEvmNetworkId,
+} from "@redstone-finance/chain-configs";
 
 const ChainConfigs = getLocalChainConfigs();
 const chainNames = Object.keys(ChainConfigs);
@@ -40,7 +43,11 @@ export const hardhatNetworksConfig = (
   const networks: NetworksUserConfig = {};
 
   for (const [chainName, config] of Object.entries(ChainConfigs)) {
-    if (config.publicRpcUrls.length === 0 || chainName === "hardhat") {
+    if (
+      config.publicRpcUrls.length === 0 ||
+      chainName === "hardhat" ||
+      !isEvmNetworkId(config.networkId)
+    ) {
       continue;
     }
 
@@ -52,7 +59,7 @@ export const hardhatNetworksConfig = (
 
     networks[CHAIN_NAME_TO_HARDHAT_NETWORK_NAME[chainName] ?? chainName] = {
       name: config.name,
-      chainId: config.chainId,
+      chainId: config.networkId,
       url: rpcUrl,
       etherScanApi: config.etherScanApi,
       accounts,
