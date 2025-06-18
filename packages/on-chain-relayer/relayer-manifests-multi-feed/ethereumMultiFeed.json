@@ -283,6 +283,13 @@
         "deviationPercentage": 0.1,
         "timeSinceLastUpdateInMilliseconds": 86400000
       }
+    },
+    "SPK": {
+      "priceFeedAddress": "0xF2448DC04B1d3f1767D6f7C03da8a3933bdDD697",
+      "updateTriggersOverrides": {
+        "deviationPercentage": 1,
+        "timeSinceLastUpdateInMilliseconds": 86400000
+      }
     }
   }
 }
