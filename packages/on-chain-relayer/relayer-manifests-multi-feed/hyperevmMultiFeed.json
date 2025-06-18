@@ -3,13 +3,13 @@
     "name": "hyperevm",
     "id": 999
   },
-  "adapterContract": "0x24c8964338Deb5204B096039147B8e8C3AEa42Cc",
-  "adapterContractType": "multi-feed",
-  "dataServiceId": "redstone-primary-prod",
   "updateTriggers": {
     "deviationPercentage": 0.5,
     "timeSinceLastUpdateInMilliseconds": 21600000
   },
+  "adapterContract": "0x24c8964338Deb5204B096039147B8e8C3AEa42Cc",
+  "adapterContractType": "multi-feed",
+  "dataServiceId": "redstone-primary-prod",
   "priceFeeds": {
     "HYPE": {
       "priceFeedAddress": "0xa8a94Da411425634e3Ed6C331a32ab4fd774aa43"
@@ -88,6 +88,9 @@
     },
     "mHYPE_FUNDAMENTAL": {
       "priceFeedAddress": "0xa42a6568f1df29ef95DDDF440c41e48D4cfB310E"
+    },
+    "stHYPE/HYPE": {
+      "priceFeedAddress": "0xEC34D1Cf550dda751ff20cD4eCC7FF9219551B04"
     }
   }
 }
