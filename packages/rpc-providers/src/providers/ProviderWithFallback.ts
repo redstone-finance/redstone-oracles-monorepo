@@ -7,7 +7,8 @@ import {
 } from "@ethersproject/providers";
 import {
   ChainConfig,
-  getChainConfigByChainId,
+  constructNetworkId,
+  getChainConfigByNetworkId,
   getLocalChainConfigs,
 } from "@redstone-finance/chain-configs";
 import { RedstoneCommon, loggerFactory } from "@redstone-finance/utils";
@@ -83,7 +84,10 @@ export class ProviderWithFallback
     this.chainId = getProviderNetworkInfo(this.providers[0]).chainId;
     this.chainConfig =
       config.chainConfig ??
-      getChainConfigByChainId(getLocalChainConfigs(), this.chainId);
+      getChainConfigByNetworkId(
+        getLocalChainConfigs(),
+        constructNetworkId(this.chainId)
+      );
 
     // assign begin values to have deterministic behavior
     for (

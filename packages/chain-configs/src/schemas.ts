@@ -59,18 +59,14 @@ export const ChainConfigSchema = z.object({
 });
 
 export const ChainConfigsSchema = z.record(z.string(), ChainConfigSchema);
-export const ChainConfigsByIdAndTypeSchema = z.record(
-  z.string(),
+export const ChainConfigsByIdSchema = z.record(
+  NetworkIdSchema,
   ChainConfigSchema
 );
-export const ChainConfigsByIdSchema = z.record(z.string(), ChainConfigSchema);
 
 export type ChainConfigsInput = z.input<typeof ChainConfigsSchema>;
 export type ChainConfig = z.infer<typeof ChainConfigSchema>;
 export type ChainConfigs = z.infer<typeof ChainConfigsSchema>;
-export type ChainConfigsByIdAndType = z.infer<
-  typeof ChainConfigsByIdAndTypeSchema
->;
 export type ChainConfigsById = z.infer<typeof ChainConfigsByIdSchema>;
 export type SupportedNetworkNames = keyof typeof chainConfigs.defaultConfig;
 
