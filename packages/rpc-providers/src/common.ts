@@ -1,6 +1,7 @@
 import { BlockTag } from "@ethersproject/abstract-provider";
 import { ErrorCode } from "@ethersproject/logger";
 import { Point } from "@influxdata/influxdb-client";
+import { NetworkId } from "@redstone-finance/chain-configs";
 import { providers } from "ethers";
 
 export type ReportMetricFn = (message: Point) => void;
@@ -47,7 +48,9 @@ export function getProviderNetworkInfo(
 }
 
 /** In fact it is sync function cause our provider has static assigned network id */
-export async function getProviderChainId(provider: providers.Provider) {
+export async function getProviderNetworkId(
+  provider: providers.Provider
+): Promise<NetworkId> {
   const network = await provider.getNetwork();
   return network.chainId;
 }
