@@ -18,6 +18,10 @@ function combineSignatures(pkHexes: string[], signatures: string[]) {
     multiSigPublicKeyHex,
   });
 
+  console.log(
+    `Then run 'sui client execute-signed-tx --tx-bytes $(cat TRANSACTION_DATA) --signatures ${multiSigSignature}'`
+  );
+
   return multiSigAddress;
 }
 
