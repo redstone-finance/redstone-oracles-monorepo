@@ -17,9 +17,9 @@
     "write-simultaneously": "yarn global:ts-node scripts/write-simultaneously.ts",
     "ledger-utils": "yarn global:ts-node scripts/ledger/ledger-utils.ts",
     "get-multi-sig-address": "yarn global:ts-node scripts/ledger/get-multi-sig-address.ts",
-    "transfer-object": "yarn global:ts-node scripts/ledger/transfer-object.ts",
+    "transfer-object": "yarn global:ts-node scripts/ledger/transfer-object.ts > TRANSACTION_DATA",
     "combine-signatures": "yarn global:ts-node scripts/ledger/combine-signatures.ts",
-    "update-config": "yarn global:ts-node scripts/ledger/update-config.ts",
+    "update-config": "yarn global:ts-node scripts/ledger/update-config.ts > TRANSACTION_DATA",
     "upgrade-package": "yarn global:ts-node scripts/ledger/upgrade-package.ts",
     "convert-public-keys": "yarn global:ts-node scripts/convert-public-keys.ts",
     "convert-evm-private-key": "yarn global:ts-node scripts/convert-evm-private-key.ts"
