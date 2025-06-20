@@ -7,10 +7,11 @@ import {
 } from "@mysten/sui/cryptography";
 import { Ed25519PublicKey } from "@mysten/sui/keypairs/ed25519";
 import { hexlify } from "ethers/lib/utils";
+import { LEDGER_ACCOUNT } from "./const";
 
 const getDerivationPath = (accountId: number) => `44'/784'/${accountId}'/0'/0'`;
 
-const getPublicKey = async (sui: Sui, accountId = 0) => {
+const getPublicKey = async (sui: Sui, accountId = LEDGER_ACCOUNT) => {
   const result = await sui.getPublicKey(getDerivationPath(accountId));
 
   return {
@@ -28,7 +29,7 @@ async function makeSui() {
   return sui;
 }
 
-const main = async (accountId = 0) => {
+const main = async (accountId = LEDGER_ACCOUNT) => {
   const sui = await makeSui();
   const publicKey = await getPublicKey(sui, accountId);
   console.log(publicKey);
