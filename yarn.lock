@@ -9422,8 +9422,11 @@ __metadata:
   resolution: "@redstone-finance/lambda-chainlink-influx-synchronizer@workspace:packages/lambda/lambda-chainlink-influx-synchronizer"
   dependencies:
     "@influxdata/influxdb-client": "npm:^1.35.0"
+    "@redstone-finance/chain-configs": "workspace:*"
+    "@redstone-finance/chain-orchestrator": "workspace:*"
     "@redstone-finance/internal-utils": "workspace:*"
     "@redstone-finance/utils": "workspace:*"
+    dotenv: "npm:^16.0.3"
     ethers: "npm:^5.7.2"
     lodash: "npm:^4.17.21"
   languageName: unknown
@@ -9826,6 +9829,21 @@ __metadata:
     elliptic: "npm:^6.6.1"
     ethers: "npm:^5.7.2"
     zod: "npm:^3.22.4"
+  languageName: unknown
+  linkType: soft
+
+"@redstone-finance/lambda-pyth-influx-synchronizer@workspace:packages/lambda/lambda-pyth-influx-synchronizer":
+  version: 0.0.0-use.local
+  resolution: "@redstone-finance/lambda-pyth-influx-synchronizer@workspace:packages/lambda/lambda-pyth-influx-synchronizer"
+  dependencies:
+    "@influxdata/influxdb-client": "npm:^1.35.0"
+    "@redstone-finance/chain-configs": "workspace:*"
+    "@redstone-finance/chain-orchestrator": "workspace:*"
+    "@redstone-finance/internal-utils": "workspace:*"
+    "@redstone-finance/utils": "workspace:*"
+    dotenv: "npm:^16.0.3"
+    ethers: "npm:^5.7.2"
+    lodash: "npm:^4.17.21"
   languageName: unknown
   linkType: soft
 
