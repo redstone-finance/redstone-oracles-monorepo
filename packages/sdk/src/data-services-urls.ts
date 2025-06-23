@@ -11,6 +11,14 @@ const PROD_GWS = [
   "https://oracle-gateway-2.a.redstone.finance",
 ];
 
+const SUPPORTS_ONLY_LATEST_DATA = new Set([
+  "https://oracle-gateway-1.a.redstone.vip",
+  "https://oracle-gateway-1.a.redstone.finance",
+  "https://oracle-gateway-1.b.redstone.vip",
+  "https://oracle-gateway-1.b.redstone.finance",
+  "https://read-ext-oracle-gateway.b.redstone.finance",
+]);
+
 export const REDSTONE_DATA_SERVICES_URLS: Partial<Record<string, string[]>> = {
   "redstone-primary-prod": PROD_GWS,
   "redstone-avalanche-prod": PROD_GWS,
@@ -28,7 +36,10 @@ export const REDSTONE_DATA_SERVICES_URLS: Partial<Record<string, string[]>> = {
   "auros-demo-1": STAGING_GWS,
 };
 
-export const resolveDataServiceUrls = (dataServiceId: string): string[] => {
+export const resolveDataServiceUrls = (
+  dataServiceId: string,
+  historical: boolean = false
+): string[] => {
   const urls = REDSTONE_DATA_SERVICES_URLS[dataServiceId];
   if (!urls) {
     throw new Error(
@@ -36,5 +47,7 @@ export const resolveDataServiceUrls = (dataServiceId: string): string[] => {
     );
   }
 
-  return urls;
+  return urls.filter(
+    (url) => !historical || !SUPPORTS_ONLY_LATEST_DATA.has(url)
+  );
 };

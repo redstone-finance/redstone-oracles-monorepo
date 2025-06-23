@@ -403,7 +403,13 @@ const parseAndValidateDataPackagesResponse = (
 const getUrlsForDataServiceId = (
   reqParams: DataPackagesRequestParams
 ): string[] => {
-  return reqParams.urls ?? resolveDataServiceUrls(reqParams.dataServiceId);
+  return (
+    reqParams.urls ??
+    resolveDataServiceUrls(
+      reqParams.dataServiceId,
+      !!reqParams.historicalTimestamp
+    )
+  );
 };
 
 function sendRequestToGateway(url: string, pathComponents: string[]) {
