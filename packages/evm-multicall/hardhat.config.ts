@@ -13,6 +13,7 @@ const config: HardhatUserConfig = {
       avalanche: "NZK513SPB5MRI2281ZFZYZW6VJIVW3XMBB",
       arbitrumOne: "47R2FXKX2VVRDA2Y12XXJEKIKGUJ1AQP3B",
       sei: "anything",
+      katana: "anything",
     },
     customChains: [
       {
@@ -21,6 +22,14 @@ const config: HardhatUserConfig = {
         urls: {
           apiURL: "https://seitrace.com/pacific-1/api",
           browserURL: "https://seitrace.com",
+        },
+      },
+      {
+        network: "katana",
+        chainId: 747474,
+        urls: {
+          apiURL: "https://explorer.katanarpc.com/api",
+          browserURL: "https://explorer.katanarpc.com",
         },
       },
     ],
@@ -73,6 +82,9 @@ const config: HardhatUserConfig = {
     },
     storyTestnet: {
       url: "https://aeneid.storyrpc.io",
+    },
+    katana: {
+      url: "https://rpc.katana.network",
     },
   },
 };
