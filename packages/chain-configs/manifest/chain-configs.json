@@ -1305,6 +1305,22 @@
       "isAuctionModel": false,
       "twoDimensionalFees": false,
       "isMainnet": false
+    },
+    "katana": {
+      "name": "Katana",
+      "networkId": 747474,
+      "chainId": 747474,
+      "currencySymbol": "ETH",
+      "publicRpcUrls": ["https://rpc.katana.network"],
+      "avgBlockTimeMs": 1000,
+      "multicall3": {
+        "address": "0xaD6CC5a465E5c8284a49eC9eD10EFE275460678c",
+        "type": "RedstoneMulticall3",
+        "gasLimitPerCall": 1000000
+      },
+      "isAuctionModel": false,
+      "twoDimensionalFees": false,
+      "isMainnet": true
     }
   },
   "temporaryConfigUpdates": {
