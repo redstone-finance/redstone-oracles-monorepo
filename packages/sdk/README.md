@@ -9,7 +9,11 @@ The most common use case is to fetch data packages for off-chain consumption. If
 We provide a single method that can be used to fetch and validate packages
 
 ```typescript
-import { requestDataPackages } from "@redstone-finance/sdk";
+import {
+  requestDataPackages,
+  getSignersForDataServiceId,
+  getOracleRegistryStateSync,
+} from "@redstone-finance/sdk";
 
 // fetch data packages from RedStone DDL based on provided fetch configuration.
 const dataPackages = await requestDataPackages({
@@ -26,12 +30,10 @@ const dataPackages = await requestDataPackages({
   // (optional, default: no filter) filter out old packages
   maxTimestampDeviationMS: 60 * 1000,
   // (optional, default: no filter) accept packages only from specific signers, by default signatures are not verified. RedStone gateway won't return packages not signed by RedStone nodes, but you may still want to use this filter if you use your own gateway or want higher level of security (e.g. stay immune to man-in-the-middle attacks)
-  authorizedSigners: ["0x00000000000000000000000000000001"],
-  // (optional, default: public gateways) fetch from specific gateways, if not provided fetch from all publicly available gateways
-  urls: ["https://my-private-gateway1", "https://my-private-gateway2"],
-  // (optional, default fetch latest data) fetch packages from specific moment (unix timestamp in milliseconds), most of the time this value should be multiple of 10000 (10 sec)
-  // in this mode first response is returned to the user
-  historicalTimestamp: 1726124100000,
+  authorizedSigners: getSignersForDataServiceId(
+    getOracleRegistryStateSync(),
+    "redstone-primary-prod"
+  ),
   // (optional, default: false) do not throw error in case of missing or filtered-out token
   ignoreMissingFeed: true,
 });
@@ -47,7 +49,9 @@ import { getSignersForDataServiceId } from "@redstone-finance/sdk";
 
 // well-known RedStone primary node addresses
 // you can pass this list to requestDataPackages method above to perform validation automatically
-const redstonePrimaryNodesAddresses = getSignersForDataServiceId("redstone-primary-prod");
+const redstonePrimaryNodesAddresses = getSignersForDataServiceId(
+  "redstone-primary-prod"
+);
 
 const signerAddress = recoverSignerAddress(dataPackage);
 if (redstonePrimaryNodesAddresses.includes(signerAddress)) {
