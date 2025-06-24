@@ -1,0 +1,23 @@
+{
+  "chain": {
+    "name": "kava",
+    "id": 2222
+  },
+  "adapterContract": "0x7B9630Cf5d062fcD90b3BD00a44E1B424FeC25da",
+  "adapterContractType": "multi-feed",
+  "dataServiceId": "redstone-primary-prod",
+  "updateTriggers": {
+    "deviationPercentage": 0.5,
+    "timeSinceLastUpdateInMilliseconds": 3600000
+  },
+  "priceFeeds": {
+    "BTC": {},
+    "ETH": {},
+    "USDT": {
+      "updateTriggersOverrides": {
+        "deviationPercentage": 0.2,
+        "timeSinceLastUpdateInMilliseconds": 3600000
+      }
+    }
+  }
+}
