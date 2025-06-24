@@ -66,7 +66,7 @@ export class IterationsHealthCheck implements HealthCheck {
   }
 
   registerIteration() {
-    logger.debug("Registering iteration");
+    logger.info("Registering iteration");
     this.iterationsDescTimes.unshift(Date.now());
   }
 
