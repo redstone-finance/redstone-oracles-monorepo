@@ -2668,7 +2668,7 @@
       "source": [
         "ethereum-evm-fetcher-turtle-tac"
       ],
-      "denomination": "USD",
+      "denomination": "USDC",
       "rateFeed": true
     },
     "tacBTC_FUNDAMENTAL": {
