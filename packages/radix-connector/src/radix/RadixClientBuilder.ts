@@ -1,5 +1,11 @@
-import { NetworkId } from "@radixdlt/radix-engine-toolkit";
-import { MultiExecutor, RedstoneCommon } from "@redstone-finance/utils";
+import { NetworkId as RadixNetworkId } from "@radixdlt/radix-engine-toolkit";
+import {
+  ChainTypeEnum,
+  deconstructNetworkId,
+  MultiExecutor,
+  NetworkId,
+  RedstoneCommon,
+} from "@redstone-finance/utils";
 import { RadixApiClient } from "./RadixApiClient";
 import { RadixClient } from "./RadixClient";
 import {
@@ -20,7 +26,7 @@ export class RadixClientBuilder {
 
   private static makeMultiExecutor(
     urls: (string | undefined)[],
-    networkId = NetworkId.Stokenet,
+    networkId = RadixNetworkId.Stokenet,
     config = {
       singleExecutionTimeoutMs: SINGLE_EXECUTION_TIMEOUT_MS,
       allExecutionsTimeoutMs: ALL_EXECUTIONS_TIMEOUT_MS,
@@ -56,8 +62,15 @@ export class RadixClientBuilder {
     return basePath ? this.withRpcUrl(basePath) : this;
   }
 
-  withNetworkId(networkId: number) {
-    this.networkId = networkId;
+  withNetworkId(networkId: NetworkId) {
+    const { chainType, chainId } = deconstructNetworkId(networkId);
+    if (chainType !== ChainTypeEnum.Enum.radix) {
+      throw new Error(
+        `Non-radix networkId ${networkId} passed to RadixClientBuilder.`
+      );
+    }
+
+    this.networkId = chainId;
 
     return this;
   }

@@ -7,6 +7,7 @@ export * from "./logger";
 export * as MathUtils from "./math";
 export * from "./monitoring";
 export * as MultiExecutor from "./multi-executor";
+export * from "./NetworkId";
 export * from "./operation-queue/OperationQueue";
 export * as Tx from "./tx";
 export * as RedstoneTypes from "./types";
