@@ -11,9 +11,6 @@
     }
   },
   "tokens": {
-    "VST": {
-      "source": ["curve-arbitrumone-frax-multi-block"]
-    },
     "USDC": {
       "source": [
         "balancer-arbitrumone-usdt",

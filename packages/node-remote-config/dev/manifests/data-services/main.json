@@ -571,11 +571,6 @@
       "denomination": "USD",
       "rateFeed": false
     },
-    "VST": {
-      "source": ["curve-arbitrumone-frax-multi-block"],
-      "denomination": "USD",
-      "rateFeed": false
-    },
     "OHM": {
       "source": [
         "coingecko",
@@ -682,11 +677,6 @@
     "CMP": {
       "source": ["coingecko", "xt"],
       "denomination": "USD",
-      "rateFeed": false
-    },
-    "VST/ETH": {
-      "source": ["non-usd-based"],
-      "denomination": "ETH",
       "rateFeed": false
     },
     "JOE": {
@@ -1702,11 +1692,6 @@
     },
     "GM_ETH_WETHe": {
       "source": ["avalanche-evm-fetcher-gmx"],
-      "denomination": "USD",
-      "rateFeed": false
-    },
-    "YY_STG_S*USDC": {
-      "source": ["arbitrum-evm-fetcher-yield-yak"],
       "denomination": "USD",
       "rateFeed": false
     },
