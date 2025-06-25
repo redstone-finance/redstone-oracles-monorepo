@@ -20,12 +20,12 @@ describe("Eip1559GasEstimator", () => {
       };
 
       expect(scaler.scaleFees(inputFees, 1)).to.deep.equal({
-        maxFeePerGas: 6,
+        maxFeePerGas: 5,
         maxPriorityFeePerGas: 4,
       });
 
       expect(scaler.scaleFees(inputFees, 4)).to.deep.equal({
-        maxFeePerGas: 3 * 2 ** 4,
+        maxFeePerGas: 3 + (2 * 2 ** 4 - 2),
         maxPriorityFeePerGas: 2 * 2 ** 4,
       });
 
@@ -61,7 +61,7 @@ describe("Eip1559GasEstimator", () => {
           1
         )
       ).to.deep.equal({
-        maxFeePerGas: 0.2e9,
+        maxFeePerGas: 0.1e9,
         maxPriorityFeePerGas: 0,
       });
 
@@ -74,7 +74,7 @@ describe("Eip1559GasEstimator", () => {
           5
         )
       ).to.deep.equal({
-        maxFeePerGas: 0.1e9 * 2 ** 5,
+        maxFeePerGas: 0.1e9,
         maxPriorityFeePerGas: 0,
       });
     });
