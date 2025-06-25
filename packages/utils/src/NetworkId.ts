@@ -1,5 +1,4 @@
 import { z } from "zod";
-import { NetworkId } from "./schemas";
 
 export const NonEvmChainTypeEnum = z.enum([
   "sui",
@@ -12,6 +11,22 @@ export const NonEvmChainTypeEnum = z.enum([
 export type NonEvmChainType = z.infer<typeof NonEvmChainTypeEnum>;
 export const ChainTypeEnum = z.enum(["evm", ...NonEvmChainTypeEnum.options]);
 export type ChainType = z.infer<typeof ChainTypeEnum>;
+
+const baseNetworkIdSchema = z.union([
+  z.number(),
+  z
+    .string()
+    .regex(/^[1-9]\d*$/)
+    .transform(Number), // turns `${number}` into number
+  z
+    .string()
+    .regex(
+      new RegExp(`^(${NonEvmChainTypeEnum.options.join("|")})/([1-9]\\d*)$`)
+    ),
+]);
+export const NetworkIdSchema: z.ZodType<NetworkId> =
+  baseNetworkIdSchema as z.ZodType<NetworkId>;
+export type NetworkId = `${NonEvmChainType}/${number}` | number;
 
 export function isEvmNetworkId(networkId: NetworkId): networkId is number {
   return typeof networkId === "number";

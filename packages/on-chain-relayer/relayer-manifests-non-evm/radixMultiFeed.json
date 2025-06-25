@@ -1,8 +1,8 @@
 {
-  "adapterContractType": "radix-multi-feed",
+  "adapterContractType": "multi-feed",
   "chain": {
     "name": "mainnet",
-    "id": 1
+    "id": "radix/1"
   },
   "updateTriggers": {
     "deviationPercentage": 0.5,

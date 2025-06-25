@@ -1,8 +1,6 @@
-import {
-  ChainConfig,
-  isNonEvmNetworkId,
-} from "@redstone-finance/chain-configs";
+import { ChainConfig } from "@redstone-finance/chain-configs";
 import { MegaProviderBuilder } from "@redstone-finance/rpc-providers";
+import { isNonEvmNetworkId } from "@redstone-finance/utils";
 import { EvmBlockchainService } from "./EvmBlockchainService";
 import { getNonEvmBlockchainService } from "./get-non-evm-blockchain-service";
 
