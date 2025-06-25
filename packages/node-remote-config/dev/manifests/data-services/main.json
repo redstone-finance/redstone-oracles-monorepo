@@ -2979,15 +2979,16 @@
       "source": [
         "binance-usdc",
         "binance-usdt",
+        "bingx-usdt",
         "bitget-usdt",
         "bitmart-usdt",
         "bybit-usdt",
         "gate-usdt",
         "kraken-eur",
         "kraken-usd",
-        "kraken-usdc",
-        "kraken-usdt",
         "kucoin-usdt",
+        "lbank-usdt",
+        "mexc-usdt",
         "okx-usdt",
         "xt"
       ],
@@ -6959,6 +6960,194 @@
       ],
       "denomination": "USD",
       "rateFeed": false
+    },
+    "PYUSD": {
+      "source": [
+        "bingx-usdt",
+        "bitget-usdt",
+        "bitmart-usdt",
+        "bybit-usdt",
+        "gate-usdt",
+        "kraken-usd",
+        "kucoin-usdt",
+        "okx-usdt",
+        "uniswap-v3-ethereum-usdt-100"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "hwHLP_FUNDAMENTAL": {
+      "source": ["hyperevm-evm-fetcher-hyperwave"],
+      "denomination": "USDC",
+      "rateFeed": true
+    },
+    "SHIB": {
+      "source": [
+        "binance-usdc",
+        "binance-usdt",
+        "bingx-usdt",
+        "bitget-usdt",
+        "bitmart-usdt",
+        "bitrue-usdt",
+        "bybit-usdt",
+        "gate-usdt",
+        "kraken-usd",
+        "kucoin-usdt",
+        "lbank-usdt",
+        "mexc-usdt",
+        "okx-usdt"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "PEPE": {
+      "source": [
+        "binance-usdc",
+        "binance-usdt",
+        "bingx-usdt",
+        "bitget-usdt",
+        "bitmart-usdt",
+        "bitrue-usdt",
+        "bybit-usdt",
+        "gate-usdt",
+        "kraken-usd",
+        "kucoin-usdt",
+        "lbank-usdt",
+        "mexc-usdt",
+        "okx-usdt",
+        "xt"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "WIF": {
+      "source": [
+        "binance-usdc",
+        "binance-usdt",
+        "bingx-usdt",
+        "bitget-usdt",
+        "bitmart-usdt",
+        "bybit-usdt",
+        "gate-usdt",
+        "kraken-usd",
+        "kucoin-usdt",
+        "lbank-usdt",
+        "mexc-usdt",
+        "okx-usdt",
+        "xt"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "BONK": {
+      "source": [
+        "binance-usdc",
+        "binance-usdt",
+        "bybit-usdt",
+        "okx-usdt",
+        "bitget-usdt",
+        "mexc-usdt",
+        "gate-usdt",
+        "kucoin-usdt",
+        "bingx-usdt",
+        "kraken-usd",
+        "bitmart-usdt",
+        "lbank-usdt",
+        "xt"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "FLOKI": {
+      "source": [
+        "binance-usdc",
+        "binance-usdt",
+        "bingx-usdt",
+        "bitget-usdt",
+        "bitmart-usdt",
+        "bybit-usdt",
+        "gate-usdt",
+        "kraken-usd",
+        "kucoin-usdt",
+        "lbank-usdt",
+        "mexc-usdt",
+        "okx-usdt",
+        "xt"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "MEW": {
+      "source": [
+        "bingx-usdt",
+        "bitget-usdt",
+        "bitmart-usdt",
+        "bitrue-usdt",
+        "bybit-usdt",
+        "gate-usdt",
+        "kraken-usd",
+        "kucoin-usdt",
+        "lbank-usdt",
+        "mexc-usdt",
+        "okx-usdt",
+        "xt"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "MOG": {
+      "source": [
+        "bingx-usdt",
+        "bitget-usdt",
+        "bitmart-usdt",
+        "bybit-usdt",
+        "gate-usdt",
+        "kraken-usd",
+        "kucoin-usdt",
+        "mexc-usdt",
+        "uniswap-v2-ethereum-weth",
+        "xt"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "PENGU": {
+      "source": [
+        "binance-usdc",
+        "binance-usdt",
+        "bingx-usdt",
+        "bitget-usdt",
+        "bitmart-usdt",
+        "gate-usdt",
+        "kraken-usd",
+        "kucoin-usdt",
+        "lbank-usdt",
+        "mexc-usdt",
+        "okx-usdt",
+        "xt"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "XAUt": {
+      "source": [
+        "bybit-usdt",
+        "okx-usdt",
+        "bitget-usdt",
+        "mexc-usdt",
+        "gate-usdt",
+        "bingx-usdt",
+        "bitmart-usdt",
+        "bitrue-usdt",
+        "xt"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "USR_FUNDAMENTAL": {
+      "source": ["ethereum-evm-fetcher-reserve"],
+      "denomination": "USD",
+      "rateFeed": true
     }
   }
 }

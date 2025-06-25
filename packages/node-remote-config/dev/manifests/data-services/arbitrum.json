@@ -899,15 +899,18 @@
     },
     "SHIB": {
       "source": [
+        "binance-usdc",
         "binance-usdt",
+        "bingx-usdt",
         "bitget-usdt",
+        "bitmart-usdt",
         "bitrue-usdt",
         "bybit-usdt",
-        "coinbase-usd",
         "gate-usdt",
         "kraken-usd",
         "kucoin-usdt",
         "lbank-usdt",
+        "mexc-usdt",
         "okx-usdt"
       ],
       "denomination": "USD",
