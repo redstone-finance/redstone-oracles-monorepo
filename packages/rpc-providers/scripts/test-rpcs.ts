@@ -1,5 +1,4 @@
 import {
-  constructNetworkId,
   getChainConfigByNetworkId,
   getLocalChainConfigs,
 } from "@redstone-finance/chain-configs";
@@ -32,7 +31,7 @@ const electBlock = (
 
   const { avgBlockTimeMs } = getChainConfigByNetworkId(
     getLocalChainConfigs(),
-    constructNetworkId(chainId)
+    chainId
   );
   const acceptableBlockDiff = Math.ceil(
     ACCEPTABLE_BLOCK_DIFF_IN_MS / avgBlockTimeMs

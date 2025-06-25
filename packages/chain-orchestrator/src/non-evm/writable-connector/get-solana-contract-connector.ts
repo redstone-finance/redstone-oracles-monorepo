@@ -12,7 +12,7 @@ export const getSolanaContractConnector = (
   const {
     privateKey,
     adapterContractAddress,
-    chainId,
+    networkId,
     rpcUrls,
     gasLimit,
     gasMultiplier,
@@ -28,7 +28,7 @@ export const getSolanaContractConnector = (
   });
   const keypair = makeKeypair(privateKey);
   const connection = new SolanaConnectionBuilder()
-    .withChainId(chainId)
+    .withNetworkId(networkId)
     .withRpcUrls(rpcUrls)
     .build();
 
