@@ -15,7 +15,6 @@ const SUPPORTS_ONLY_LATEST_DATA = new Set([
   "https://oracle-gateway-1.a.redstone.vip",
   "https://oracle-gateway-1.a.redstone.finance",
   "https://oracle-gateway-1.b.redstone.vip",
-  "https://oracle-gateway-1.b.redstone.finance",
   "https://read-ext-oracle-gateway.b.redstone.finance",
 ]);
 
