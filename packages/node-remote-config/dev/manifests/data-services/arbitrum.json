@@ -833,13 +833,6 @@
       "denomination": "USD",
       "rateFeed": false
     },
-    "YY_STG_S*USDC": {
-      "source": [
-        "arbitrum-evm-fetcher-yield-yak"
-      ],
-      "denomination": "USD",
-      "rateFeed": false
-    },
     "YY_STG_S*USDT": {
       "source": [
         "arbitrum-evm-fetcher-yield-yak"
@@ -1326,7 +1319,6 @@
       "USDT",
       "USDe",
       "WOO",
-      "YY_STG_S*USDC",
       "YY_STG_S*USDT",
       "YY_STG_S*ETH",
       "YY_WOMBEX_DAI",

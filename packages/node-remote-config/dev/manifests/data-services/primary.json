@@ -13,13 +13,6 @@
     }
   },
   "tokens": {
-    "VST": {
-      "source": [
-        "curve-arbitrumone-frax-multi-block"
-      ],
-      "denomination": "USD",
-      "rateFeed": false
-    },
     "USDC": {
       "source": [
         "balancer-ethereum-usdt",

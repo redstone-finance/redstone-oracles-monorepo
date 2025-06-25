@@ -12,7 +12,6 @@ const CHAIN_NAME_TO_HARDHAT_NETWORK_NAME: {
 } = {
   ethereum: "mainnet",
   "ethereum-sepolia": "sepolia",
-  "re.al": "real",
   "blast-sepolia": "blast-testnet",
   "bnb-testnet": "bscTestnet",
 };
