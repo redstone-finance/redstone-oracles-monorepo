@@ -9,6 +9,10 @@ import { TxDeliveryOptsValidated, unsafeBnToNumber } from "./TxDelivery";
 
 type FeeHistoryResponse = { reward: string[] };
 
+// es stated in eth spec max increase is 12.5% per block
+// however this fee is refunded anyway, so we are okey with having bigger margin
+const BASE_FEE_SCALER = 2;
+
 export type Eip1559Fee = {
   maxFeePerGas: number;
   maxPriorityFeePerGas: number;
@@ -24,7 +28,9 @@ export class Eip1559GasEstimator implements GasEstimator<Eip1559Fee> {
     const lastBlock = await provider.getBlock("latest");
     await this.refreshLastUsedPriorityFee(provider);
 
-    const baseFee = Math.round(unsafeBnToNumber(lastBlock.baseFeePerGas!));
+    const baseFee = Math.round(
+      unsafeBnToNumber(lastBlock.baseFeePerGas!) * BASE_FEE_SCALER
+    );
     const maxFeePerGas = baseFee + this.maxPriorityFeePerGas;
 
     const fee: Eip1559Fee = {
@@ -109,7 +115,9 @@ export class Eip1559GasEstimator implements GasEstimator<Eip1559Fee> {
     const maxPriorityFeePerGas = Math.round(
       currentFees.maxPriorityFeePerGas * multipleBy
     );
-    const maxFeePerGas = Math.round(currentFees.maxFeePerGas * multipleBy);
+    const maxPriorityFeePerGasDiff =
+      maxPriorityFeePerGas - currentFees.maxPriorityFeePerGas;
+    const maxFeePerGas = currentFees.maxFeePerGas + maxPriorityFeePerGasDiff;
 
     const scaledFees: Eip1559Fee = {
       maxPriorityFeePerGas,
@@ -117,7 +125,7 @@ export class Eip1559GasEstimator implements GasEstimator<Eip1559Fee> {
     };
 
     this.opts.logger(
-      `Scaling fees (multiplier=${multipleBy}) to ${JSON.stringify(scaledFees)}`
+      `Scaling fees (multiplier=${multipleBy}) to maxFeePerGas=${maxFeePerGas} maxPriorityFeePerGas=${maxPriorityFeePerGas}`
     );
 
     return scaledFees;

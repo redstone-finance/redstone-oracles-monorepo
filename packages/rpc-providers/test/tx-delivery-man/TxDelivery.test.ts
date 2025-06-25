@@ -168,7 +168,7 @@ describe("TxDelivery", () => {
 
       expect(parseTxForComparison(sendStub.firstCall.args[0])).to.deep.equal({
         nonce: 1,
-        maxFeePerGas: "2375000000",
+        maxFeePerGas: "3250000000",
         maxPriorityFeePerGas: "1500000000",
         gasLimit: "210000",
       });
@@ -176,7 +176,7 @@ describe("TxDelivery", () => {
       expect(parseTxForComparison(sendStub.secondCall.args[0])).to.deep.equal({
         nonce: 1,
         gasLimit: "210000",
-        maxFeePerGas: "2671875000",
+        maxFeePerGas: (3250000000 + (1687500000 - 1500000000)).toString(),
         maxPriorityFeePerGas: "1687500000",
       });
     });
@@ -245,14 +245,14 @@ describe("TxDelivery", () => {
 
       expect(parseTxForComparison(sendStub.firstCall.args[0])).to.deep.equal({
         nonce: 1,
-        maxFeePerGas: "2375000000",
+        maxFeePerGas: "3250000000",
         maxPriorityFeePerGas: "1500000000",
         gasLimit: "49321",
       });
 
       expect(parseTxForComparison(sendStub.secondCall.args[0])).to.deep.equal({
         nonce: 1,
-        maxFeePerGas: "2671875000",
+        maxFeePerGas: (3250000000 + (1687500000 - 1500000000)).toString(),
         maxPriorityFeePerGas: "1687500000",
         gasLimit: "54253",
       });
