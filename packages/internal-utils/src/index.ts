@@ -1,4 +1,5 @@
 export * from "./aws/cloudwatch";
+export * from "./aws/DynamoDbService";
 export * from "./aws/ecs";
 export * from "./aws/lambda";
 export * from "./aws/params";

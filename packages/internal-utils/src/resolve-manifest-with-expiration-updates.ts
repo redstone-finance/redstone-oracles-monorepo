@@ -8,6 +8,11 @@ export type GenericMonitoringManifest<T = unknown> = {
   temporaryConfigUpdates?: { expirationTimestamp?: string };
 };
 
+interface HostnameData {
+  hostname: string;
+  hasVersionInfo: boolean;
+}
+
 const DAY_IN_MS = 24 * 3600 * 1000;
 const MAX_EXPIRATION_PERIOD = 7 * DAY_IN_MS;
 
@@ -40,6 +45,7 @@ export function getRemoteMonitoringManifestConfigFromEnv():
   | {
       shouldUseLocal: false;
       manifestsHosts: string[];
+      manifestsVersionHosts: string[];
       manifestsApiKey: string;
       manifestsGitRef: string;
     } {
@@ -56,9 +62,14 @@ export function getRemoteMonitoringManifestConfigFromEnv():
     return { shouldUseLocal: true };
   }
 
-  const manifestsHosts = RedstoneCommon.getFromEnv(
+  const manifestsHostsData = RedstoneCommon.getFromEnv(
     "MONITORING_MANIFESTS_HOSTNAMES",
-    z.array(z.string())
+    z.array(
+      z.object({
+        hostname: z.string(),
+        hasVersionInfo: z.boolean().default(false),
+      })
+    )
   );
   const manifestsApiKey = RedstoneCommon.getFromEnv(
     "MONITORING_MANIFESTS_APIKEY",
@@ -71,10 +82,17 @@ export function getRemoteMonitoringManifestConfigFromEnv():
 
   return {
     shouldUseLocal: false,
-    manifestsHosts,
+    manifestsHosts: getManifestHostnames(manifestsHostsData),
+    manifestsVersionHosts: getManifestHostnames(
+      manifestsHostsData.filter(({ hasVersionInfo }) => hasVersionInfo)
+    ),
     manifestsApiKey,
     manifestsGitRef,
   };
+}
+
+function getManifestHostnames(hostnamesData: HostnameData[]): string[] {
+  return hostnamesData.map(({ hostname }) => hostname);
 }
 
 function parseExpirationTimestamp(
