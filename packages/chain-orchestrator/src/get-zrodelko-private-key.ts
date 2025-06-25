@@ -1,10 +1,10 @@
+import { Env } from "@redstone-finance/chain-configs";
+import { getSSMParameterValue } from "@redstone-finance/internal-utils";
 import {
   deconstructNetworkId,
-  Env,
   NetworkId,
-} from "@redstone-finance/chain-configs";
-import { getSSMParameterValue } from "@redstone-finance/internal-utils";
-import { RedstoneCommon } from "@redstone-finance/utils";
+  RedstoneCommon,
+} from "@redstone-finance/utils";
 
 const ed25519Chains = ["radix", "solana", "sui", "movement"];
 

@@ -52,7 +52,7 @@ export function getEvmContractAdapter(
 
     default:
       throw new Error(
-        `adapterContractType ${relayerConfig.adapterContractType} is not supported`
+        `Unsupported adapter type ${relayerConfig.adapterContractType}`
       );
   }
 }

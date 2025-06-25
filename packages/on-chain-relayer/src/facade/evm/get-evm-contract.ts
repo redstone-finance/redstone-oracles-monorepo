@@ -46,8 +46,6 @@ export function getEvmContract(
     }
 
     default:
-      throw new Error(
-        `adapterContractType ${adapterContractType} is not supported`
-      );
+      throw new Error(`Unsupported adapter type ${adapterContractType}.`);
   }
 }

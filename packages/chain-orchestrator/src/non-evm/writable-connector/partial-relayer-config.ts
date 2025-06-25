@@ -1,7 +1,8 @@
 import { AdapterType } from "@redstone-finance/on-chain-relayer-common";
+import { NetworkId } from "@redstone-finance/utils";
 
 export type PartialRelayerConfig = {
-  chainId: number;
+  networkId: NetworkId;
   chainName: string;
   adapterContractAddress: string;
   adapterContractType: AdapterType;

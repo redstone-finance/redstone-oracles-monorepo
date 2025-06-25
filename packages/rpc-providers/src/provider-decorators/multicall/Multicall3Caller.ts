@@ -1,6 +1,5 @@
 import { BlockTag } from "@ethersproject/abstract-provider";
 import {
-  constructNetworkId,
   getChainConfigByNetworkId,
   getLocalChainConfigs,
   getMulticall3,
@@ -50,7 +49,7 @@ export async function safeExecuteMulticall3(
         overrideAddress: multicallAddress,
         signerOrProvider: provider,
       },
-      getChainConfigByNetworkId(chainConfigs, constructNetworkId(chainId))
+      getChainConfigByNetworkId(chainConfigs, chainId)
     );
     return await rawMulticall3(multicall3Contract, call3s, blockTag);
   } catch (e) {

@@ -1,8 +1,8 @@
 {
-  "adapterContractType": "solana-multi-feed",
+  "adapterContractType": "multi-feed",
   "chain": {
     "name": "solana-mainnet",
-    "id": 1
+    "id": "solana/1"
   },
   "updateTriggers": {
     "deviationPercentage": 0.2,

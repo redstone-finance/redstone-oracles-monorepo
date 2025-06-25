@@ -1,8 +1,8 @@
 {
-  "adapterContractType": "radix-multi-feed",
+  "adapterContractType": "multi-feed",
   "chain": {
     "name": "stokenet",
-    "id": 2
+    "id": "radix/2"
   },
   "updateTriggers": {
     "deviationPercentage": 0.5,

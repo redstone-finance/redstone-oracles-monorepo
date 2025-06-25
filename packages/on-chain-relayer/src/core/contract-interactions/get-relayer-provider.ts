@@ -1,11 +1,12 @@
 import {
-  getChainConfigByChainId,
+  getChainConfigByNetworkId,
   getLocalChainConfigs,
 } from "@redstone-finance/chain-configs";
 import {
   MegaProviderBuilder,
   ProviderDecorators,
 } from "@redstone-finance/rpc-providers";
+import { constructNetworkId, isEvmNetworkId } from "@redstone-finance/utils";
 import { providers } from "ethers";
 import { RelayerConfig } from "../../config/RelayerConfig";
 
@@ -21,9 +22,9 @@ const electBlock = (
   const firstBlockNumber = sortedBlockNumber.at(-1)!;
   const secondBlockNumber = sortedBlockNumber.at(-2);
 
-  const { avgBlockTimeMs } = getChainConfigByChainId(
+  const { avgBlockTimeMs } = getChainConfigByNetworkId(
     getLocalChainConfigs(),
-    chainId
+    constructNetworkId(chainId)
   );
   const acceptableBlockDiff = Math.ceil(
     ACCEPTABLE_BLOCK_DIFF_IN_MS / avgBlockTimeMs
@@ -43,14 +44,19 @@ export const getRelayerProvider = (relayerConfig: RelayerConfig) => {
     return cachedProvider;
   }
 
-  const { rpcUrls, chainName, chainId, ethersPollingIntervalInMs } =
+  const { rpcUrls, chainName, networkId, ethersPollingIntervalInMs } =
     relayerConfig;
+  if (!isEvmNetworkId(networkId)) {
+    throw new Error(
+      `Non-evm networkId ${networkId} passed to evm relayer provider`
+    );
+  }
 
   cachedProvider = new MegaProviderBuilder({
     rpcUrls,
     timeout: relayerConfig.singleProviderOperationTimeout,
     throttleLimit: 1,
-    network: { name: chainName, chainId },
+    network: { name: chainName, chainId: networkId },
     pollingInterval: ethersPollingIntervalInMs,
   })
     .agreement(

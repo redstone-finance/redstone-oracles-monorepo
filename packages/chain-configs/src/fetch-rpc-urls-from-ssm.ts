@@ -1,6 +1,5 @@
 import { getSSMParameterValues } from "@redstone-finance/internal-utils";
-import { RedstoneCommon } from "@redstone-finance/utils";
-import { NetworkId } from "./schemas";
+import { NetworkId, RedstoneCommon } from "@redstone-finance/utils";
 
 export type Env = "prod" | "dev" | "staging";
 

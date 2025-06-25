@@ -14,7 +14,7 @@ export const getMovementContractConnector = (
     privateKey,
     rpcUrls,
     adapterContractAddress,
-    chainId,
+    networkId,
     adapterContractPackageId,
     gasLimit,
     maxTxSendAttempts,
@@ -24,7 +24,7 @@ export const getMovementContractConnector = (
   }
 
   const aptosClient = new AptosClientBuilder()
-    .withChainId(chainId)
+    .withNetworkId(networkId)
     .withRpcUrls(rpcUrls)
     .build();
 
