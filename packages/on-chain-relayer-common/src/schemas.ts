@@ -1,3 +1,4 @@
+import { NetworkIdSchema } from "@redstone-finance/utils";
 import { z } from "zod";
 
 export const PRICE_FEEDS = "price-feeds";
@@ -34,12 +35,12 @@ export const AdapterTypesEnum = z.enum([
   ...MultiFeedAdapterTypesEnum.options,
   ...NonEvmAdapterTypesEnum.options,
 ]);
+
 export type AdapterType = z.infer<typeof AdapterTypesEnum>;
-export type NonEvmAdapterType = z.infer<typeof NonEvmAdapterTypesEnum>;
 
 export const ChainSchema = z.object({
   name: z.string(),
-  id: z.number(),
+  id: NetworkIdSchema,
 });
 
 export const UpdateTriggersSchema = z.object({

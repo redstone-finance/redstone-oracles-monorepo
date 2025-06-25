@@ -56,7 +56,7 @@ export class RelayerDataInfluxService
     // Setting tags
     point.tag("functionSignature", "");
     point.tag("functionType", "relayer-dry-run");
-    point.tag("chainId", String(relayerConfig.chainId));
+    point.tag("networkId", String(relayerConfig.networkId));
     point.tag("adapterName", basename(relayerConfig.manifestFile, ".json"));
     point.tag("chainName", String(relayerConfig.chainName));
     point.tag("dataServiceId", relayerConfig.dataServiceId);

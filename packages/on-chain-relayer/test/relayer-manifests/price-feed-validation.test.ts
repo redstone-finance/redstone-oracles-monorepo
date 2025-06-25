@@ -1,11 +1,14 @@
 import {
-  ChainType,
-  getChainConfigByChainId,
+  getChainConfigByNetworkId,
   getLocalChainConfigs,
 } from "@redstone-finance/chain-configs";
 import { ManifestReading } from "@redstone-finance/on-chain-relayer-common";
 import { MegaProviderBuilder } from "@redstone-finance/rpc-providers";
-import { RedstoneCommon } from "@redstone-finance/utils";
+import {
+  isEvmNetworkId,
+  NetworkId,
+  RedstoneCommon,
+} from "@redstone-finance/utils";
 import { expect } from "chai";
 import { Bytes, Contract, ContractFunction, providers, utils } from "ethers";
 import { describe, test } from "mocha";
@@ -28,8 +31,8 @@ export const RETRY_CONFIG: Omit<RedstoneCommon.RetryConfig, "fn"> = {
   waitBetweenMs: 1000,
 };
 
-function getChainConfig(chainId: number, chainType?: ChainType) {
-  return getChainConfigByChainId(getLocalChainConfigs(), chainId, chainType);
+function getChainConfig(networkId: NetworkId) {
+  return getChainConfigByNetworkId(getLocalChainConfigs(), networkId);
 }
 
 /**
@@ -39,13 +42,16 @@ function getChainConfig(chainId: number, chainType?: ChainType) {
  * If we're working with an outdated state based on the median block number,
  * we’ll trigger another transaction update to stay "current" - it is better to trigger extra transaction, then delay whole iteration
  */
-const getProvider = (chainId: number): providers.Provider => {
-  const { publicRpcUrls, name } = getChainConfig(chainId);
+const getProvider = (networkId: NetworkId): providers.Provider => {
+  const { publicRpcUrls, name } = getChainConfig(networkId);
+  if (!isEvmNetworkId(networkId)) {
+    throw new Error("This test supports only evm chains.");
+  }
 
   return new MegaProviderBuilder({
     rpcUrls: publicRpcUrls,
     network: {
-      chainId,
+      chainId: networkId,
       name,
     },
     ...CONNECTION_INFO,
@@ -66,9 +72,9 @@ const getProvider = (chainId: number): providers.Provider => {
 const checkDataFeedIdInContract = async (
   dataFeedId: string,
   address: string,
-  chainId: number
+  networkId: NetworkId
 ) => {
-  const contract = new Contract(address, ABI, getProvider(chainId));
+  const contract = new Contract(address, ABI, getProvider(networkId));
   try {
     const dataFeedIdFromContractAsBytes = await RedstoneCommon.retry({
       fn: () => (contract.getDataFeedId as ContractFunction<Bytes>)(),

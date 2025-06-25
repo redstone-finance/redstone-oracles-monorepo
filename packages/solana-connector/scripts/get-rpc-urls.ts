@@ -1,9 +1,8 @@
 import {
-  constructNetworkId,
   fetchChainConfigs,
   getChainConfigByNetworkId,
 } from "@redstone-finance/chain-configs";
-import { RedstoneCommon } from "@redstone-finance/utils";
+import { constructNetworkId, RedstoneCommon } from "@redstone-finance/utils";
 import "dotenv/config";
 import _ from "lodash";
 import z from "zod";

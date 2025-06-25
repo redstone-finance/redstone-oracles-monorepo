@@ -3,6 +3,7 @@ import {
   UpdateTriggers,
 } from "@redstone-finance/on-chain-relayer-common";
 import { NewestBlockType } from "@redstone-finance/rpc-providers";
+import { NetworkId } from "@redstone-finance/utils";
 
 export type RelayerConfig = OnChainRelayerEnv & ManifestConfig;
 
@@ -10,7 +11,7 @@ export type ConditionCheckNames = "time" | "value-deviation" | "cron";
 
 export type ManifestConfig = {
   chainName: string;
-  chainId: number;
+  networkId: NetworkId;
   adapterContractAddress: string;
   dataServiceId: string;
   dataFeeds: string[];

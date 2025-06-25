@@ -1,5 +1,11 @@
 import { getFullnodeUrl } from "@mysten/sui/client";
-import { MultiExecutor, RedstoneCommon } from "@redstone-finance/utils";
+import {
+  ChainTypeEnum,
+  deconstructNetworkId,
+  MultiExecutor,
+  NetworkId,
+  RedstoneCommon,
+} from "@redstone-finance/utils";
 import { SuiNetworkName } from "./config";
 import { getSuiChainId, getSuiNetworkName } from "./network-ids";
 import { makeSuiClient } from "./util";
@@ -52,7 +58,14 @@ export class SuiClientBuilder {
     return this;
   }
 
-  withChainId(chainId: number) {
+  withNetworkId(networkId: NetworkId) {
+    const { chainType, chainId } = deconstructNetworkId(networkId);
+    if (chainType !== ChainTypeEnum.Enum.sui) {
+      throw new Error(
+        `Non-sui networkId ${networkId} passed to SuiClientBuilder.`
+      );
+    }
+
     return this.withNetwork(getSuiNetworkName(chainId));
   }
 

@@ -1,13 +1,16 @@
-import { loggerFactory, RedstoneCommon } from "@redstone-finance/utils";
+import {
+  deconstructNetworkId,
+  isNonEvmNetworkId,
+  loggerFactory,
+  RedstoneCommon,
+} from "@redstone-finance/utils";
 import chai from "chai";
 import { ethers } from "ethers";
 import { RpcUrlsPerChain } from "../../scripts/read-ssm-rpc-urls";
 import {
   ChainConfig,
-  deconstructNetworkId,
   getChainConfigByNetworkId,
   getLocalChainConfigs,
-  isNonEvmNetworkId,
 } from "../../src";
 
 const RETRY_CONFIG: Omit<RedstoneCommon.RetryConfig, "fn"> = {

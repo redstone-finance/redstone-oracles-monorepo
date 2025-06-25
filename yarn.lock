@@ -9884,7 +9884,6 @@ __metadata:
   resolution: "@redstone-finance/lambda-chainlink-influx-synchronizer@workspace:packages/lambda/lambda-chainlink-influx-synchronizer"
   dependencies:
     "@influxdata/influxdb-client": "npm:^1.35.0"
-    "@redstone-finance/chain-configs": "workspace:*"
     "@redstone-finance/chain-orchestrator": "workspace:*"
     "@redstone-finance/internal-utils": "workspace:*"
     "@redstone-finance/utils": "workspace:*"
@@ -10192,7 +10191,6 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@redstone-finance/lambda-monitoring-avs@workspace:packages/lambda/lambda-monitoring-avs"
   dependencies:
-    "@redstone-finance/chain-configs": "workspace:*"
     "@redstone-finance/redstone-monitoring": "workspace:*"
     "@redstone-finance/utils": "workspace:*"
     dotenv: "npm:^16.0.3"
@@ -10299,7 +10297,6 @@ __metadata:
   resolution: "@redstone-finance/lambda-pyth-influx-synchronizer@workspace:packages/lambda/lambda-pyth-influx-synchronizer"
   dependencies:
     "@influxdata/influxdb-client": "npm:^1.35.0"
-    "@redstone-finance/chain-configs": "workspace:*"
     "@redstone-finance/chain-orchestrator": "workspace:*"
     "@redstone-finance/internal-utils": "workspace:*"
     "@redstone-finance/utils": "workspace:*"
@@ -10435,7 +10432,6 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@redstone-finance/monitoring-manifests@workspace:packages/monitoring-manifests"
   dependencies:
-    "@redstone-finance/chain-configs": "workspace:*"
     "@redstone-finance/internal-utils": "workspace:*"
     "@redstone-finance/on-chain-relayer-common": "workspace:*"
     "@redstone-finance/utils": "workspace:*"
@@ -10507,7 +10503,6 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@redstone-finance/on-chain-relayer-common@workspace:packages/on-chain-relayer-common"
   dependencies:
-    "@redstone-finance/chain-configs": "workspace:*"
     "@redstone-finance/utils": "workspace:*"
     zod: "npm:^3.22.4"
   languageName: unknown
@@ -10548,7 +10543,6 @@ __metadata:
     "@openzeppelin/contracts": "npm:^4.8.1"
     "@openzeppelin/contracts-upgradeable": "npm:^4.8.3"
     "@openzeppelin/hardhat-upgrades": "npm:^1.26.0"
-    "@redstone-finance/chain-configs": "workspace:*"
     "@redstone-finance/chain-orchestrator": "workspace:*"
     "@redstone-finance/evm-connector": "workspace:*"
     "@redstone-finance/healthcheck": "workspace:*"
