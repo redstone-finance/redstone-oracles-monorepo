@@ -1,7 +1,7 @@
 import { BlockTag } from "@ethersproject/abstract-provider";
 import { ErrorCode } from "@ethersproject/logger";
 import { Point } from "@influxdata/influxdb-client";
-import { NetworkId } from "@redstone-finance/chain-configs";
+import { NetworkId } from "@redstone-finance/utils";
 import { providers } from "ethers";
 
 export type ReportMetricFn = (message: Point) => void;
