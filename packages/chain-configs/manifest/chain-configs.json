@@ -510,25 +510,6 @@
       "isMainnet": false,
       "disabled": true
     },
-    "re.al": {
-      "name": "re.al",
-      "networkId": 111188,
-      "chainId": 111188,
-      "currencySymbol": "reETH",
-      "publicRpcUrls": [
-        "https://rpc.realforreal.gelato.digital",
-        "https://tangible-real.gateway.tenderly.co"
-      ],
-      "avgBlockTimeMs": 2000,
-      "multicall3": {
-        "address": "0xaD6CC5a465E5c8284a49eC9eD10EFE275460678c",
-        "type": "RedstoneMulticall3",
-        "gasLimitPerCall": 1000000
-      },
-      "isAuctionModel": false,
-      "twoDimensionalFees": false,
-      "isMainnet": true
-    },
     "merlin": {
       "name": "Merlin Mainnet",
       "networkId": 4200,

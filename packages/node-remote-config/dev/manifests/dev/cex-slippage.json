@@ -735,9 +735,6 @@
         "uniswap-v3-ethereum-dai-500"
       ]
     },
-    "VST": {
-      "source": ["lbank-usdt", "curve-frax-vst-multi-block"]
-    },
     "OHM": {
       "source": [
         "bitrue-usdt",
@@ -864,9 +861,6 @@
         "coingecko",
         "xt"
       ]
-    },
-    "VST/ETH": {
-      "source": ["non-usd-based"]
     },
     "JOE": {
       "source": [
