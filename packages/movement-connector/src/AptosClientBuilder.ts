@@ -1,5 +1,10 @@
 import { Aptos, AptosConfig, Network } from "@aptos-labs/ts-sdk";
-import { MultiExecutor } from "@redstone-finance/utils";
+import {
+  ChainTypeEnum,
+  deconstructNetworkId,
+  MultiExecutor,
+  NetworkId,
+} from "@redstone-finance/utils";
 import { chainIdtoMovementNetwork, getFullnodeUrl } from "./network-ids";
 
 export const SINGLE_EXECUTION_TIMEOUT_MS = 12_000;
@@ -30,8 +35,15 @@ export class AptosClientBuilder {
     );
   }
 
-  public withChainId(id: number) {
-    this.network = chainIdtoMovementNetwork(id);
+  public withNetworkId(networkId: NetworkId) {
+    const { chainType, chainId } = deconstructNetworkId(networkId);
+    if (chainType !== ChainTypeEnum.Enum.movement) {
+      throw new Error(
+        `Non-movement networkId ${networkId} passed to AptosClientBuilder.`
+      );
+    }
+
+    this.network = chainIdtoMovementNetwork(chainId);
 
     return this;
   }

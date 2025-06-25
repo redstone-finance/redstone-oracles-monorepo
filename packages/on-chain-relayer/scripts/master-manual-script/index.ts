@@ -3,7 +3,7 @@ import {
   AdapterType,
   ManifestReading,
 } from "@redstone-finance/on-chain-relayer-common";
-import { RedstoneCommon } from "@redstone-finance/utils";
+import { NetworkId, RedstoneCommon } from "@redstone-finance/utils";
 import { z } from "zod";
 import { runIteration } from "../../src";
 import { config, ConsciouslyInvoked } from "../../src/config/config";
@@ -69,7 +69,7 @@ function clearCache() {
 
 async function setUpEnvVariables(
   manifestName: string,
-  chainId: number,
+  networkId: NetworkId,
   adapterContractType: AdapterType
 ) {
   process.env.MANIFEST_FILE = `./relayer-manifests${adapterContractType === "multi-feed" ? "-multi-feed" : ""}/${manifestName}.json`;
@@ -85,10 +85,10 @@ async function setUpEnvVariables(
   }
   try {
     process.env.RPC_URLS = await getSSMParameterValue(
-      `/prod/rpc/${chainId}/urls`
+      `/prod/rpc/${networkId}/urls`
     );
   } catch {
-    console.log(`📛Failed to fetch rpc urls: /prod/rpc/${chainId}/urls📛`);
+    console.log(`📛Failed to fetch rpc urls: /prod/rpc/${networkId}/urls📛`);
     return false;
   }
   return true;

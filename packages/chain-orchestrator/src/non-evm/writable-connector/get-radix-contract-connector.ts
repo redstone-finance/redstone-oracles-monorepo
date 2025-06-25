@@ -11,7 +11,7 @@ export const getRadixContractConnector = (
   const {
     privateKey,
     adapterContractAddress,
-    chainId,
+    networkId,
     rpcUrls,
     gasLimit,
     gasMultiplier,
@@ -31,7 +31,7 @@ export const getRadixContractConnector = (
   };
 
   const client = new RadixClientBuilder()
-    .withNetworkId(chainId)
+    .withNetworkId(networkId)
     .withRpcUrls(rpcUrls)
     .withClientConfig(clientConfig)
     .withPrivateKey({ scheme: "secp256k1", value: privateKey })

@@ -1,8 +1,8 @@
 {
-  "adapterContractType": "sui-multi-feed",
+  "adapterContractType": "multi-feed",
   "chain": {
     "name": "mainnet",
-    "id": 897796746
+    "id": "sui/897796746"
   },
   "updateTriggers": {
     "deviationPercentage": 0.5,

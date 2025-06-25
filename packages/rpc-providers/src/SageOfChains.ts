@@ -2,10 +2,13 @@ import { Provider } from "@ethersproject/providers";
 import {
   ChainConfig,
   getLocalChainConfigsByNetworkId,
+} from "@redstone-finance/chain-configs";
+import {
+  loggerFactory,
   NetworkId,
   NetworkIdSchema,
-} from "@redstone-finance/chain-configs";
-import { loggerFactory, RedstoneCommon } from "@redstone-finance/utils";
+  RedstoneCommon,
+} from "@redstone-finance/utils";
 
 const logger = loggerFactory("SageOfChains");
 

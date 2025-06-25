@@ -1,10 +1,9 @@
-import { RedstoneCommon } from "@redstone-finance/utils";
+import { NetworkId, RedstoneCommon } from "@redstone-finance/utils";
 import chalk from "chalk";
 import { z } from "zod";
 import {
   fetchParsedRpcUrlsFromSsmByNetworkId,
   getLocalChainConfigs,
-  NetworkId,
 } from "../src";
 
 export type RpcUrlsPerChain = {

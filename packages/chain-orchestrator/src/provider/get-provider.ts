@@ -2,12 +2,14 @@ import {
   fetchChainConfigs,
   fetchParsedRpcUrlsFromSsmByNetworkId,
   getChainConfigByNetworkId,
-  isEvmNetworkId,
-  NetworkId,
   type Env,
 } from "@redstone-finance/chain-configs";
 import { MegaProviderBuilder } from "@redstone-finance/rpc-providers";
-import { RedstoneCommon } from "@redstone-finance/utils";
+import {
+  isEvmNetworkId,
+  NetworkId,
+  RedstoneCommon,
+} from "@redstone-finance/utils";
 import { providers } from "ethers";
 
 const DEFAULT_CONFIG = {
