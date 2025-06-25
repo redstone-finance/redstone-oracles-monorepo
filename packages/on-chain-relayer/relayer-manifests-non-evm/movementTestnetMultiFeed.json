@@ -1,8 +1,8 @@
 {
-  "adapterContractType": "movement-multi-feed",
+  "adapterContractType": "multi-feed",
   "chain": {
     "name": "testnet",
-    "id": 250
+    "id": "movement/250"
   },
   "updateTriggers": {
     "deviationPercentage": 0.2,

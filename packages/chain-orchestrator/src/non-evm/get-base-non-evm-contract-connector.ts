@@ -1,8 +1,4 @@
 import {
-  deconstructNetworkId,
-  NetworkId,
-} from "@redstone-finance/chain-configs";
-import {
   AptosClientBuilder,
   MovementContractConnector,
 } from "@redstone-finance/movement-connector";
@@ -18,36 +14,43 @@ import {
   SuiClientBuilder,
   SuiContractConnector,
 } from "@redstone-finance/sui-connector";
-import { RedstoneCommon } from "@redstone-finance/utils";
+import {
+  deconstructNetworkId,
+  NetworkId,
+  RedstoneCommon,
+} from "@redstone-finance/utils";
 
 export function getBaseNonEvmContractConnector(
   networkId: NetworkId,
   rpcUrls: string[]
 ) {
-  const { chainId, chainType } = deconstructNetworkId(networkId);
+  const { chainType } = deconstructNetworkId(networkId);
   switch (chainType) {
     case "sui":
       return new SuiContractConnector(
-        new SuiClientBuilder().withChainId(chainId).withRpcUrls(rpcUrls).build()
+        new SuiClientBuilder()
+          .withNetworkId(networkId)
+          .withRpcUrls(rpcUrls)
+          .build()
       );
     case "movement":
       return new MovementContractConnector(
         new AptosClientBuilder()
-          .withChainId(chainId)
+          .withNetworkId(networkId)
           .withRpcUrls(rpcUrls)
           .build()
       );
     case "radix":
       return new RadixContractConnector(
         new RadixClientBuilder()
-          .withNetworkId(chainId)
+          .withNetworkId(networkId)
           .withRpcUrls(rpcUrls)
           .build()
       );
     case "solana":
       return new SolanaContractConnector(
         new SolanaConnectionBuilder()
-          .withChainId(chainId)
+          .withNetworkId(networkId)
           .withRpcUrls(rpcUrls)
           .build()
       );

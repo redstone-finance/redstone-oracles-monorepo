@@ -1,6 +1,5 @@
 import { BlockTag, TransactionRequest } from "@ethersproject/abstract-provider";
 import {
-  constructNetworkId,
   getChainConfigByNetworkId,
   getLocalChainConfigs,
 } from "@redstone-finance/chain-configs";
@@ -25,7 +24,7 @@ async function prepareMulticall3Request(
 
   const multicall3Info = getChainConfigByNetworkId(
     chainConfigs,
-    constructNetworkId(chainId)
+    chainId
   ).multicall3;
 
   if (multicall3Info.type === "RedstoneMulticall3") {

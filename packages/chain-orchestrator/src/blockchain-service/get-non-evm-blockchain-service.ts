@@ -1,7 +1,3 @@
-import {
-  deconstructNetworkId,
-  NetworkId,
-} from "@redstone-finance/chain-configs";
 import { AptosClientBuilder } from "@redstone-finance/movement-connector";
 import { RadixClientBuilder } from "@redstone-finance/radix-connector";
 import {
@@ -12,7 +8,11 @@ import {
   makeSuiKeypair,
   SuiClientBuilder,
 } from "@redstone-finance/sui-connector";
-import { RedstoneCommon } from "@redstone-finance/utils";
+import {
+  deconstructNetworkId,
+  NetworkId,
+  RedstoneCommon,
+} from "@redstone-finance/utils";
 import { MovementBlockchainService } from "./MovementBlockchainService";
 import { RadixBlockchainService } from "./RadixBlockchainService";
 import { SolanaBlockchainService } from "./SolanaBlockchainService";
@@ -23,11 +23,11 @@ export function getNonEvmBlockchainService(
   rpcUrls: string[],
   privateKey?: RedstoneCommon.PrivateKey
 ) {
-  const { chainType, chainId } = deconstructNetworkId(networkId);
+  const { chainType } = deconstructNetworkId(networkId);
   switch (chainType) {
     case "sui": {
       const suiClient = new SuiClientBuilder()
-        .withChainId(chainId)
+        .withNetworkId(networkId)
         .withRpcUrls(rpcUrls)
         .build();
       const keypair = privateKey ? makeSuiKeypair(privateKey.value) : undefined;
@@ -35,14 +35,14 @@ export function getNonEvmBlockchainService(
     }
     case "movement": {
       const aptosClient = new AptosClientBuilder()
-        .withChainId(chainId)
+        .withNetworkId(networkId)
         .withRpcUrls(rpcUrls)
         .build();
       return new MovementBlockchainService(aptosClient, privateKey);
     }
     case "radix": {
       const radixClient = new RadixClientBuilder()
-        .withNetworkId(chainId)
+        .withNetworkId(networkId)
         .withRpcUrls(rpcUrls)
         .withPrivateKey(privateKey)
         .build();
@@ -50,7 +50,7 @@ export function getNonEvmBlockchainService(
     }
     case "solana": {
       const connection = new SolanaConnectionBuilder()
-        .withChainId(chainId)
+        .withNetworkId(networkId)
         .withRpcUrls(rpcUrls)
         .build();
       const keypair = privateKey

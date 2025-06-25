@@ -4,7 +4,11 @@ import {
   safeExecuteMulticall3,
 } from "@redstone-finance/rpc-providers";
 import { DataPackagesResponse } from "@redstone-finance/sdk";
-import { loggerFactory, RedstoneCommon } from "@redstone-finance/utils";
+import {
+  isEvmNetworkId,
+  loggerFactory,
+  RedstoneCommon,
+} from "@redstone-finance/utils";
 import axios from "axios";
 import { randomUUID } from "crypto";
 import { BigNumber, providers, Signer, Transaction } from "ethers";
@@ -57,9 +61,12 @@ const runOevAuction = async (
   txDeliveryCalldata: string
 ) => {
   const oevAuctionUrl = relayerConfig.oevAuctionUrl!;
-  const { adapterContractAddress, chainId } = relayerConfig;
+  const { adapterContractAddress, networkId } = relayerConfig;
+  if (!isEvmNetworkId(networkId)) {
+    throw new Error("Non-evm networkId is not supported in fastlane.");
+  }
 
-  const chainIdHex = `0x${chainId.toString(16)}`;
+  const chainIdHex = `0x${networkId.toString(16)}`;
   const earlyReturn = true;
   const body = JSON.stringify({
     jsonrpc: "2.0",

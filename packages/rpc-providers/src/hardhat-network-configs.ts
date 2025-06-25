@@ -1,7 +1,5 @@
-import {
-  getLocalChainConfigs,
-  isEvmNetworkId,
-} from "@redstone-finance/chain-configs";
+import { getLocalChainConfigs } from "@redstone-finance/chain-configs";
+import { isEvmNetworkId } from "@redstone-finance/utils";
 
 const ChainConfigs = getLocalChainConfigs();
 const chainNames = Object.keys(ChainConfigs);

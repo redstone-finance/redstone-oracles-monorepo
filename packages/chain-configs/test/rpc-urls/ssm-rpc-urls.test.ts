@@ -1,5 +1,4 @@
-import { RedstoneCommon } from "@redstone-finance/utils";
-import { z } from "zod";
+import { NetworkIdSchema, RedstoneCommon } from "@redstone-finance/utils";
 import { readSsmRpcUrls } from "../../scripts/read-ssm-rpc-urls";
 import {
   validateBlockNumberAgreementBetweenRpcs,
@@ -8,7 +7,7 @@ import {
 
 const networkid = RedstoneCommon.getFromEnv(
   "NETWORK_ID",
-  z.string().optional()
+  NetworkIdSchema.optional()
 );
 const blockNumberDiffTolerance = 5;
 

@@ -1,4 +1,4 @@
-import { RedstoneCommon } from "@redstone-finance/utils";
+import { isEvmNetworkId, RedstoneCommon } from "@redstone-finance/utils";
 import chai from "chai";
 import { providers } from "ethers";
 import { z } from "zod";
@@ -6,7 +6,6 @@ import {
   ChainConfig,
   ChainConfigSchema,
   getLocalChainConfigs,
-  isEvmNetworkId,
   REDSTONE_MULTICALL3_ADDRESS,
   STANDARD_MULTICALL3_ADDRESS,
 } from "../src";

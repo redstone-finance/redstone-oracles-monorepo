@@ -13,7 +13,7 @@ export const getSuiContractConnector = (
     privateKey,
     rpcUrls,
     adapterContractAddress,
-    chainId,
+    networkId,
     gasLimit,
     adapterContractPackageId,
     gasMultiplier,
@@ -25,7 +25,7 @@ export const getSuiContractConnector = (
   }
 
   const suiClient = new SuiClientBuilder()
-    .withChainId(chainId)
+    .withNetworkId(networkId)
     .withRpcUrls(rpcUrls)
     .build();
 

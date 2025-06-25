@@ -2,15 +2,7 @@ import {
   AptosClientBuilder,
   MovementPricesContractConnector,
 } from "@redstone-finance/movement-connector";
-import {
-  AnyOnChainRelayerManifest,
-  FUEL,
-  isNonEvmConfig,
-  MOVEMENT_MULTI_FEED,
-  RADIX_MULTI_FEED,
-  SOLANA_MULTI_FEED,
-  SUI_MULTI_FEED,
-} from "@redstone-finance/on-chain-relayer-common";
+import { AnyOnChainRelayerManifest } from "@redstone-finance/on-chain-relayer-common";
 import {
   PriceAdapterRadixContractConnector,
   RadixClientBuilder,
@@ -24,30 +16,33 @@ import {
   SuiClientBuilder,
   SuiPricesContractConnector,
 } from "@redstone-finance/sui-connector";
+import { deconstructNetworkId, RedstoneCommon } from "@redstone-finance/utils";
 
 export function getRelayerMonitoringNonEvmContractConnector(
   relayerManifest: AnyOnChainRelayerManifest,
   rpcUrls: string[]
 ) {
-  if (!isNonEvmConfig(relayerManifest)) {
-    throw new Error(
-      `${relayerManifest.adapterContractType} is not supported for non-evm`
-    );
-  }
+  const { chainType } = deconstructNetworkId(relayerManifest.chain.id);
 
-  switch (relayerManifest.adapterContractType) {
-    case RADIX_MULTI_FEED:
+  switch (chainType) {
+    case "radix":
       return getRadixContractConnector(rpcUrls, relayerManifest);
-    case SUI_MULTI_FEED:
+    case "sui":
       return getSuiContractConnector(rpcUrls, relayerManifest);
-    case MOVEMENT_MULTI_FEED:
+    case "movement":
       return getMovementContractConnector(rpcUrls, relayerManifest);
-    case SOLANA_MULTI_FEED:
+    case "solana":
       return getSolanaContractConnector(rpcUrls, relayerManifest);
-    case FUEL:
+    case "fuel":
       throw new Error(
         `${relayerManifest.adapterContractType} is not supported in monitoring`
       );
+    case "evm":
+      throw new Error(
+        `Evm relayer config with networkId: ${relayerManifest.chain.id} got passed to non-evm blockchain service builder.`
+      );
+    default:
+      return RedstoneCommon.throwUnsupportedParamError(chainType);
   }
 }
 
@@ -71,7 +66,7 @@ function getSolanaContractConnector(
   relayerManifest: AnyOnChainRelayerManifest
 ) {
   const connection = new SolanaConnectionBuilder()
-    .withChainId(relayerManifest.chain.id)
+    .withNetworkId(relayerManifest.chain.id)
     .withRpcUrls(rpcUrls)
     .build();
 
@@ -90,7 +85,7 @@ function getSuiContractConnector(
   }
 
   const suiClient = new SuiClientBuilder()
-    .withChainId(relayerManifest.chain.id)
+    .withNetworkId(relayerManifest.chain.id)
     .withRpcUrls(rpcUrls)
     .build();
 
@@ -111,7 +106,7 @@ function getMovementContractConnector(
     throw new Error("adapterContractPackageId is required");
   }
   const aptosClient = new AptosClientBuilder()
-    .withChainId(relayerManifest.chain.id)
+    .withNetworkId(relayerManifest.chain.id)
     .withRpcUrls(rpcUrls)
     .build();
 

@@ -18,7 +18,7 @@ const createManifestConfig = (
   const { updateConditions, updateTriggers } = makeUpdateConditions(manifest);
   return {
     chainName: manifest.chain.name,
-    chainId: manifest.chain.id,
+    networkId: manifest.chain.id,
     adapterContractAddress: manifest.adapterContract,
     dataServiceId: manifest.dataServiceId,
     dataFeeds: Object.keys(manifest.priceFeeds),

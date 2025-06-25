@@ -4,10 +4,14 @@ import {
   Multicall3Abi,
   RedstoneMulticall3Abi,
 } from "@redstone-finance/evm-multicall";
-import { RedstoneCommon } from "@redstone-finance/utils";
+import {
+  ChainType,
+  conformsToChainType,
+  NetworkId,
+  RedstoneCommon,
+} from "@redstone-finance/utils";
 import { Contract, Wallet } from "ethers";
-import { ChainType, conformsToChainType } from "./ChainType";
-import { ChainConfig, ChainConfigs, NetworkId } from "./schemas";
+import { ChainConfig, ChainConfigs } from "./schemas";
 
 export function getChainConfig(
   chainConfigs: ChainConfigs,

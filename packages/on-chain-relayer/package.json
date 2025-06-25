@@ -38,7 +38,6 @@
     "@chainlink/contracts": "1.2.0",
     "@openzeppelin/contracts": "^4.8.1",
     "@openzeppelin/contracts-upgradeable": "^4.8.3",
-    "@redstone-finance/chain-configs": "workspace:*",
     "@redstone-finance/chain-orchestrator": "workspace:*",
     "@redstone-finance/evm-connector": "workspace:*",
     "@redstone-finance/healthcheck": "workspace:*",

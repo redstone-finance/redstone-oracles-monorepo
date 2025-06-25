@@ -7,7 +7,6 @@ import {
 } from "@ethersproject/providers";
 import {
   ChainConfig,
-  constructNetworkId,
   getChainConfigByNetworkId,
   getLocalChainConfigs,
 } from "@redstone-finance/chain-configs";
@@ -84,10 +83,7 @@ export class ProviderWithFallback
     this.chainId = getProviderNetworkInfo(this.providers[0]).chainId;
     this.chainConfig =
       config.chainConfig ??
-      getChainConfigByNetworkId(
-        getLocalChainConfigs(),
-        constructNetworkId(this.chainId)
-      );
+      getChainConfigByNetworkId(getLocalChainConfigs(), this.chainId);
 
     // assign begin values to have deterministic behavior
     for (

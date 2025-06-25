@@ -1,5 +1,5 @@
+import { NetworkId } from "@redstone-finance/utils";
 import chalk from "chalk";
-import { NetworkId } from "../src";
 import { readSsmRpcUrls, RpcUrlsPerChain } from "./read-ssm-rpc-urls";
 
 const compareRpcUrlSets = (

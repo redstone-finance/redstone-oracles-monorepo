@@ -1,11 +1,4 @@
-import {
-  FUEL,
-  isNonEvmAdapterType,
-  MOVEMENT_MULTI_FEED,
-  RADIX_MULTI_FEED,
-  SOLANA_MULTI_FEED,
-  SUI_MULTI_FEED,
-} from "@redstone-finance/on-chain-relayer-common";
+import { deconstructNetworkId, RedstoneCommon } from "@redstone-finance/utils";
 import { getFuelContractConnector } from "./get-fuel-contract-connector";
 import { getMovementContractConnector } from "./get-movement-contract-connector";
 import { getRadixContractConnector } from "./get-radix-contract-connector";
@@ -16,22 +9,24 @@ import { PartialRelayerConfig } from "./partial-relayer-config";
 export async function getWritableNonEvmContractConnector(
   relayerConfig: PartialRelayerConfig
 ) {
-  if (!isNonEvmAdapterType(relayerConfig.adapterContractType)) {
-    throw new Error(
-      `${relayerConfig.adapterContractType} is not supported for non-evm`
-    );
-  }
+  const { chainType } = deconstructNetworkId(relayerConfig.networkId);
 
-  switch (relayerConfig.adapterContractType) {
-    case FUEL:
+  switch (chainType) {
+    case "fuel":
       return await getFuelContractConnector(relayerConfig);
-    case RADIX_MULTI_FEED:
+    case "radix":
       return getRadixContractConnector(relayerConfig);
-    case SUI_MULTI_FEED:
+    case "sui":
       return getSuiContractConnector(relayerConfig);
-    case MOVEMENT_MULTI_FEED:
+    case "movement":
       return getMovementContractConnector(relayerConfig);
-    case SOLANA_MULTI_FEED:
+    case "solana":
       return getSolanaContractConnector(relayerConfig);
+    case "evm":
+      throw new Error(
+        `Evm relayer config with networkId: ${relayerConfig.networkId} got passed to non-evm blockchain service builder.`
+      );
+    default:
+      return RedstoneCommon.throwUnsupportedParamError(chainType);
   }
 }
