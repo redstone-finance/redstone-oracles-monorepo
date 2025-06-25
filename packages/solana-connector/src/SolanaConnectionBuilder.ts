@@ -1,4 +1,9 @@
-import { MultiExecutor } from "@redstone-finance/utils";
+import {
+  ChainTypeEnum,
+  deconstructNetworkId,
+  MultiExecutor,
+  NetworkId,
+} from "@redstone-finance/utils";
 import { Cluster, Connection } from "@solana/web3.js";
 import { getSolanaChainId, getSolanaCluster } from "./network-ids";
 import { connectToCluster } from "./utils";
@@ -60,7 +65,14 @@ export class SolanaConnectionBuilder {
     return this;
   }
 
-  withChainId(chainId: number) {
+  withNetworkId(networkId: NetworkId) {
+    const { chainType, chainId } = deconstructNetworkId(networkId);
+    if (chainType !== ChainTypeEnum.Enum.solana) {
+      throw new Error(
+        `Non-solana networkId ${networkId} passed to SolanaConnectionBuilder.`
+      );
+    }
+
     return this.withCluster(getSolanaCluster(chainId));
   }
 
