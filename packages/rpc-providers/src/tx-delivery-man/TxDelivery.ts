@@ -319,26 +319,26 @@ export class TxDelivery {
       // if not by us, then it was delivered by someone else
       if (!result) {
         this.opts.logger(
-          `Transaction with same nonce ${nonce} was delivered by someone else`
+          `Transaction with same nonce ${nonce} was delivered by someone else orginalError=${RedstoneCommon.stringifyError(ethersError)}`
         );
         return TransactionBroadcastErrorResult.AlreadyDelivered;
       } else {
         // it means that in meantime between check if transaction is delivered and sending new transaction
         // previous transaction was already delivered by (maybe) us
         this.opts.logger(
-          `Nonce expired error: Transaction hash=${result.hash} nonce=${nonce} mined`
+          `Nonce expired error: Transaction hash=${result.hash} nonce=${nonce} mined orginalError=${RedstoneCommon.stringifyError(ethersError)}`
         );
         return TransactionBroadcastErrorResult.AlreadyDelivered;
       }
       // if underpriced then bump fee and skip sleeping
     } else if (TxDelivery.isUnderpricedError(ethersError)) {
       this.opts.logger(
-        "Underpriced error occurred, trying with scaled fees without sleep"
+        `Underpriced error occurred, trying with scaled fees without sleep orginalError=${RedstoneCommon.stringifyError(ethersError)}`
       );
       return TransactionBroadcastErrorResult.Underpriced;
     } else if (TxDelivery.isInsufficientFundsError(ethersError)) {
       this.opts.logger(
-        "Insufficient funds error occurred, updater doesn't have enough tokens"
+        `Insufficient funds error occurred, updater doesn't have enough tokens orginalError=${RedstoneCommon.stringifyError(ethersError)}`
       );
       return TransactionBroadcastErrorResult.InsufficientFunds;
     }
