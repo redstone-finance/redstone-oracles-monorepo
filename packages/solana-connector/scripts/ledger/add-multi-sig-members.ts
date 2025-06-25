@@ -11,8 +11,7 @@ import { makeSolana } from "./ledger-utils";
 import { SquadsMultisig } from "./multi-sig-utils";
 
 const NEW_MEMBERS = [
-  new PublicKey("E3XSRMLWqYaJf8L7WHfvTq5m1DoP7mD8k9zxb9TpZMmP"),
-  new PublicKey("7sUFQsjXX28VttZaKsYfE2kpNjEguav649hbtcnPZZCJ"),
+  new PublicKey("BDE2fFGSPvxv2aAqd7Naf48ZbsTGoLFF9kNiUKmVWvkC"),
 ];
 const NEW_THRESHOLD = 2;
 
