@@ -1,7 +1,10 @@
 import { Provider } from "@ethersproject/abstract-provider";
 import { CronAgent } from "@redstone-finance/agents";
-import { NetworkId, NetworkIdSchema } from "@redstone-finance/chain-configs";
-import { RedstoneCommon } from "@redstone-finance/utils";
+import {
+  NetworkId,
+  NetworkIdSchema,
+  RedstoneCommon,
+} from "@redstone-finance/utils";
 
 export type BackgroundBlockNumbersFetcherOpts = {
   /** [chainTypeAndId,getBlockNumber] */

@@ -23,7 +23,7 @@ export class RedStoneTxStatsInfluxService extends InfluxService {
   }
 
   async getTransactionStats(
-    chainId: number,
+    networkId: string,
     walletAddress: string,
     contractAddress: string,
     daysRange = 30,
@@ -33,7 +33,7 @@ export class RedStoneTxStatsInfluxService extends InfluxService {
       |> range(start: -${daysRange}d)
       |> filter(fn: (r) => r["_measurement"] == "${TXS_MEASUREMENT}")
       |> filter(fn: (r) => r["_field"] == "gasUsed" or r["_field"] == "gasPrice") 
-      |> filter(fn: (r) => r["chainId"] == "${chainId}" and r["isFailed"] != "true")
+      |> filter(fn: (r) => r["networkId"] == "${networkId}" and r["isFailed"] != "true")
       // performing strings.toLower makes the query extremely slow (~100 times) use 'or' operator instead
       |> filter(fn: (r) => r["sender"] == "${walletAddress.toLowerCase()}" or r["sender"] == "${walletAddress}")
       |> filter(fn: (r) => r["contract"] == "${contractAddress.toLowerCase()}" or r["contract"] == "${contractAddress}")

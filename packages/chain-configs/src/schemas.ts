@@ -1,28 +1,8 @@
+import { ChainTypeEnum, NetworkIdSchema } from "@redstone-finance/utils";
 import { z } from "zod";
 import chainConfigs from "../manifest/chain-configs.json";
-import {
-  ChainTypeEnum,
-  NonEvmChainType,
-  NonEvmChainTypeEnum,
-} from "./ChainType";
 
 export { chainConfigs };
-
-const baseNetworkIdSchema = z.union([
-  z.number(),
-  z
-    .string()
-    .regex(/^[1-9]\d*$/)
-    .transform(Number), // turns `${number}` into number
-  z
-    .string()
-    .regex(
-      new RegExp(`^(${NonEvmChainTypeEnum.options.join("|")})/([1-9]\\d*)$`)
-    ),
-]);
-export const NetworkIdSchema: z.ZodType<NetworkId> =
-  baseNetworkIdSchema as z.ZodType<NetworkId>;
-export type NetworkId = `${NonEvmChainType}/${number}` | number;
 
 export const ChainConfigSchema = z.object({
   chainId: z.number().positive(),

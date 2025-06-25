@@ -1,10 +1,9 @@
-import chai from "chai";
 import {
   ChainType,
   deconstructNetworkId,
   NetworkId,
   NetworkIdSchema,
-} from "../src";
+} from "../../src";
 
 describe("NetworkIdSchema", () => {
   const stringNumeralCases = ["5", "1", "56"];
@@ -36,7 +35,7 @@ describe("NetworkIdSchema", () => {
   describe("should parse valid NetworkId values", () => {
     validCases.forEach((value) => {
       it(`accepts ${JSON.stringify(value)}`, () => {
-        chai.expect(() => NetworkIdSchema.parse(value)).to.not.throw();
+        expect(() => NetworkIdSchema.parse(value)).not.toThrow();
       });
     });
   });
@@ -44,7 +43,7 @@ describe("NetworkIdSchema", () => {
   describe("should reject invalid NetworkId values", () => {
     invalidCases.forEach((value) => {
       it(`rejects ${JSON.stringify(value)}`, () => {
-        chai.expect(() => NetworkIdSchema.parse(value)).to.throw();
+        expect(() => NetworkIdSchema.parse(value)).toThrow();
       });
     });
   });
@@ -52,8 +51,8 @@ describe("NetworkIdSchema", () => {
   describe("should parse string numerals into numbers", () => {
     stringNumeralCases.forEach((value) => {
       it(`parses ${JSON.stringify(value)} into number`, () => {
-        chai.expect(NetworkIdSchema.parse(value)).to.deep.equal(Number(value));
-        chai.expect(typeof NetworkIdSchema.parse(value) === "number");
+        expect(NetworkIdSchema.parse(value)).toStrictEqual(Number(value));
+        expect(typeof NetworkIdSchema.parse(value) === "number");
       });
     });
   });
@@ -74,7 +73,7 @@ describe("deconstructNetworkId", () => {
     evmCases.forEach((value) => {
       it(`parses ${JSON.stringify(value)} as evm`, () => {
         const result = deconstructNetworkId(value);
-        chai.expect(result).to.deep.equal({
+        expect(result).toStrictEqual({
           chainType: "evm",
           chainId: Number(value),
         });
@@ -86,7 +85,7 @@ describe("deconstructNetworkId", () => {
     nonEvmCases.forEach(({ input, expected }) => {
       it(`parses ${input} to { chainType: ${expected.chainType}, chainId: ${expected.chainId} }`, () => {
         const result = deconstructNetworkId(input);
-        chai.expect(result).to.deep.equal(expected);
+        expect(result).toStrictEqual(expected);
       });
     });
   });
@@ -101,7 +100,7 @@ describe("deconstructNetworkId", () => {
 
     invalidCases.forEach((input) => {
       it(`throws on invalid networkId: ${input}`, () => {
-        chai.expect(() => deconstructNetworkId(input as NetworkId)).to.throw();
+        expect(() => deconstructNetworkId(input as NetworkId)).toThrow();
       });
     });
   });
