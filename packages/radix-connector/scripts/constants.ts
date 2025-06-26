@@ -108,7 +108,7 @@ function formatAddressFilename(
 export function makeRadixClient(networkId?: number) {
   return new RadixClientBuilder()
     .withNetworkId(networkId ?? NETWORK.id)
-    .withNetworkBasePath(NETWORK.basePath)
+    .withRpcUrl(NETWORK.basePath)
     .withPrivateKey(PRIVATE_KEY)
     .withClientConfig({ ...DEFAULT_RADIX_CLIENT_CONFIG, maxFeeXrd: 1 })
     .build();

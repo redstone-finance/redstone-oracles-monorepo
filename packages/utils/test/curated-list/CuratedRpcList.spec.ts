@@ -80,7 +80,7 @@ describe("Curated rpc list", () => {
     list.scoreRpc("B", { error: true });
     clock.tick(10);
     expect(list.getBestProviders()).toStrictEqual(["A"]);
-    clock.tick(90);
+    clock.tick(100);
     expect(list.getBestProviders()).toStrictEqual(["A", "B"]);
   });
 
@@ -102,11 +102,11 @@ describe("Curated rpc list", () => {
     expect(list.getBestProviders()).toStrictEqual(["A", "B"]);
   });
 
-  it("rpc after qurantine has clear state", () => {
+  it("rpc after quarantine has clear state", () => {
     const list = createList(["A"], 0.9, 0);
 
     list.scoreRpc("A", { error: true });
-    clock.tick(100);
+    clock.tick(110);
     list.scoreRpc("A", { error: false });
 
     expect(list.getBestProviders()).toStrictEqual(["A"]);

@@ -1,10 +1,6 @@
 import { SuiClient } from "@mysten/sui/client";
 import { ContractData, ContractParamsProvider } from "@redstone-finance/sdk";
 import { MultiExecutor } from "@redstone-finance/utils";
-import {
-  ALL_EXECUTIONS_TIMEOUT_MS,
-  SINGLE_EXECUTION_TIMEOUT_MS,
-} from "./SuiClientBuilder";
 import { SuiReader } from "./SuiReader";
 import { PriceAdapterDataContent, PriceDataContent } from "./types";
 
@@ -26,8 +22,8 @@ export class SuiPricesContractReader {
       {
         ...MultiExecutor.DEFAULT_CONFIG,
         defaultMode: MultiExecutor.ExecutionMode.AGREEMENT,
-        singleExecutionTimeoutMs: SINGLE_EXECUTION_TIMEOUT_MS,
-        allExecutionsTimeoutMs: ALL_EXECUTIONS_TIMEOUT_MS,
+        singleExecutionTimeoutMs: MultiExecutor.SINGLE_EXECUTION_TIMEOUT_MS,
+        allExecutionsTimeoutMs: MultiExecutor.ALL_EXECUTIONS_TIMEOUT_MS,
       }
     );
   }

@@ -1,89 +1,35 @@
-import {
-  ChainTypeEnum,
-  deconstructNetworkId,
-  MultiExecutor,
-  NetworkId,
-} from "@redstone-finance/utils";
+import { ChainTypeEnum, MultiExecutor } from "@redstone-finance/utils";
 import { Cluster, Connection } from "@solana/web3.js";
 import { getSolanaChainId, getSolanaCluster } from "./network-ids";
 import { connectToCluster } from "./utils";
 
-export const SINGLE_EXECUTION_TIMEOUT_MS = 7_000;
-export const ALL_EXECUTIONS_TIMEOUT_MS = 30_000;
-export const BLOCK_NUMBER_EXECUTION_TIMEOUT_MS = 1_500;
-
-export const ceilMedianConsensusExecutor =
-  new MultiExecutor.CeilMedianConsensusExecutor(
-    MultiExecutor.DEFAULT_CONFIG.consensusQuorumRatio,
-    BLOCK_NUMBER_EXECUTION_TIMEOUT_MS
-  );
-
-export class SolanaConnectionBuilder {
-  private cluster!: Cluster;
-  private rpcUrls?: string[];
-
-  private static createMultiConnection(
-    rpcUrls: string[],
-    cluster: Cluster,
-    config = {
-      singleExecutionTimeoutMs: SINGLE_EXECUTION_TIMEOUT_MS,
-      allExecutionsTimeoutMs: ALL_EXECUTIONS_TIMEOUT_MS,
-    }
-  ) {
-    return MultiExecutor.create(
-      rpcUrls.map(
-        (url) =>
-          new Connection(url, {
-            commitment: "confirmed",
-            disableRetryOnRateLimit: true,
-          })
-      ),
-      {
-        getBlockHeight: ceilMedianConsensusExecutor,
-        getSlot: ceilMedianConsensusExecutor,
-        getLatestBlockhash: MultiExecutor.ExecutionMode.AGREEMENT,
-      },
-      MultiExecutor.makeBaseConfig(
-        MultiExecutor.QuarantinedListFnDelegate.getCachedConfig(
-          rpcUrls,
-          `solana/${getSolanaChainId(cluster)}`
-        ),
-        config
-      )
-    );
-  }
-
-  withRpcUrls(rpcUrls: string[]) {
-    this.rpcUrls = rpcUrls;
-
-    return this;
-  }
+export class SolanaConnectionBuilder extends MultiExecutor.ClientBuilder<Connection> {
+  protected override chainType = ChainTypeEnum.Enum.solana;
 
   withCluster(cluster: Cluster) {
-    this.cluster = cluster;
-
-    return this;
+    return this.withChainId(getSolanaChainId(cluster));
   }
 
-  withNetworkId(networkId: NetworkId) {
-    const { chainType, chainId } = deconstructNetworkId(networkId);
-    if (chainType !== ChainTypeEnum.Enum.solana) {
-      throw new Error(
-        `Non-solana networkId ${networkId} passed to SolanaConnectionBuilder.`
-      );
+  build(): Connection {
+    if (!this.chainId) {
+      throw new Error("Network not set");
     }
 
-    return this.withCluster(getSolanaCluster(chainId));
-  }
-
-  build() {
-    if (!this.rpcUrls?.length) {
-      return connectToCluster(this.cluster);
+    if (!this.urls.length) {
+      return connectToCluster(getSolanaCluster(this.chainId));
     }
 
-    return SolanaConnectionBuilder.createMultiConnection(
-      this.rpcUrls,
-      this.cluster
+    return this.makeMultiExecutor(
+      (url) =>
+        new Connection(url, {
+          commitment: "confirmed",
+          disableRetryOnRateLimit: true,
+        }),
+      {
+        getBlockHeight: SolanaConnectionBuilder.blockNumberConsensusExecutor,
+        getSlot: SolanaConnectionBuilder.blockNumberConsensusExecutor,
+        getLatestBlockhash: MultiExecutor.ExecutionMode.AGREEMENT,
+      }
     );
   }
 }
