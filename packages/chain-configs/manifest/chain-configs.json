@@ -914,6 +914,22 @@
       "twoDimensionalFees": true,
       "isMainnet": false
     },
+    "tac": {
+      "name": "TAC Mainnet",
+      "networkId": 239,
+      "chainId": 239,
+      "currencySymbol": "TAC",
+      "publicRpcUrls": ["https://rpc.ankr.com/tac", "https://rpc.tac.build"],
+      "avgBlockTimeMs": 1300,
+      "multicall3": {
+        "address": "0xaD6CC5a465E5c8284a49eC9eD10EFE275460678c",
+        "type": "RedstoneMulticall3",
+        "gasLimitPerCall": 1000000
+      },
+      "isAuctionModel": false,
+      "twoDimensionalFees": false,
+      "isMainnet": true
+    },
     "tacTestnet": {
       "name": "TAC Turin",
       "networkId": 2390,
