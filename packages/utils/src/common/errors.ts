@@ -82,7 +82,7 @@ const ethers_5_7_ErrorProps = [
 
 type Ethers_5_7_Error = {
   [K in (typeof ethers_5_7_ErrorProps)[number]]?: string | number;
-};
+} & Error;
 
 export function stringifyError(e: unknown, noStack = false): string {
   try {
@@ -114,7 +114,8 @@ export function stringifyError(e: unknown, noStack = false): string {
         ethers_5_7_ErrorProps
           .filter((prop) => Object.hasOwn(error, prop))
           .map((prop) => `[${prop}: ${error[prop]}]`)
-          .join("")
+          .join("") +
+        showStack(error.stack)
       );
     } else if (error instanceof Error) {
       const causeString = error.cause
