@@ -27,6 +27,7 @@ export const getSuiContractConnector = (
   const suiClient = new SuiClientBuilder()
     .withNetworkId(networkId)
     .withRpcUrls(rpcUrls)
+    .withQuarantineEnabled()
     .build();
 
   const config = makeSuiConfig({

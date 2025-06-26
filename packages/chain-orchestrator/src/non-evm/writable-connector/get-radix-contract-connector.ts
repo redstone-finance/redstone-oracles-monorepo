@@ -35,6 +35,7 @@ export const getRadixContractConnector = (
     .withRpcUrls(rpcUrls)
     .withClientConfig(clientConfig)
     .withPrivateKey({ scheme: "secp256k1", value: privateKey })
+    .withQuarantineEnabled()
     .build();
 
   return new PriceAdapterRadixContractConnector(client, adapterContractAddress);
