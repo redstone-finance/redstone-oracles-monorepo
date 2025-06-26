@@ -8,11 +8,7 @@ import {
   SendOptions,
   VersionedTransaction,
 } from "@solana/web3.js";
-import {
-  ALL_EXECUTIONS_TIMEOUT_MS,
-  ceilMedianConsensusExecutor,
-  SINGLE_EXECUTION_TIMEOUT_MS,
-} from "../SolanaConnectionBuilder";
+import { SolanaConnectionBuilder } from "../SolanaConnectionBuilder";
 
 export const SOLANA_SLOT_TIME_INTERVAL_MS = 400;
 
@@ -24,7 +20,7 @@ export class SolanaClient {
       connection,
       (conn) => new SolanaClient(conn),
       {
-        getSlot: ceilMedianConsensusExecutor,
+        getSlot: SolanaConnectionBuilder.blockNumberConsensusExecutor,
         viewMethod: MultiExecutor.ExecutionMode.AGREEMENT,
         getBlockhash: MultiExecutor.ExecutionMode.AGREEMENT,
         getSignatureStatus: MultiExecutor.ExecutionMode.AGREEMENT,
@@ -34,8 +30,8 @@ export class SolanaClient {
       },
       {
         ...MultiExecutor.DEFAULT_CONFIG,
-        singleExecutionTimeoutMs: SINGLE_EXECUTION_TIMEOUT_MS,
-        allExecutionsTimeoutMs: ALL_EXECUTIONS_TIMEOUT_MS,
+        singleExecutionTimeoutMs: MultiExecutor.SINGLE_EXECUTION_TIMEOUT_MS,
+        allExecutionsTimeoutMs: MultiExecutor.ALL_EXECUTIONS_TIMEOUT_MS,
         multiAgreementShouldResolveUnagreedToUndefined: true,
       }
     );
@@ -145,7 +141,9 @@ export class SolanaClient {
       slot,
       `${description ?? ""} in slot ${slot}`,
       SOLANA_SLOT_TIME_INTERVAL_MS,
-      Math.floor(SINGLE_EXECUTION_TIMEOUT_MS / SOLANA_SLOT_TIME_INTERVAL_MS)
+      Math.floor(
+        MultiExecutor.SINGLE_EXECUTION_TIMEOUT_MS / SOLANA_SLOT_TIME_INTERVAL_MS
+      )
     );
 
     return { minContextSlot: slot };

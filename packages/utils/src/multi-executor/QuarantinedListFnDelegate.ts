@@ -1,4 +1,4 @@
-import { isDefined } from "../common";
+import { NetworkId } from "../NetworkId";
 import { CuratedRpcList } from "../curated-list";
 import { FnBox, FnDelegate } from "./FnBox";
 import { FnDelegateConfig } from "./config";
@@ -15,13 +15,12 @@ export class QuarantinedListFnDelegate implements FnDelegate {
     [p: string]: FnDelegateConfig | undefined;
   } = {};
 
-  static getCachedConfig(rpcUrls: (string | undefined)[], chainId: string) {
-    const urls = rpcUrls.filter(isDefined);
-    const key = [chainId, ...urls].join("|");
+  static getCachedConfig(rpcUrls: string[], networkId: NetworkId) {
+    const key = [networkId, ...rpcUrls].join("|");
 
     this.configCache[key] ??= {
-      descriptions: urls,
-      delegate: new QuarantinedListFnDelegate(urls, chainId),
+      descriptions: rpcUrls,
+      delegate: new QuarantinedListFnDelegate(rpcUrls, networkId),
     };
 
     return this.configCache[key];
@@ -29,7 +28,7 @@ export class QuarantinedListFnDelegate implements FnDelegate {
 
   constructor(
     identifiers: string[],
-    chainId: string,
+    networkId: NetworkId,
     minimalProvidersCount = MIN_PROVIDER_COUNT
   ) {
     this.lastListUpdateTimestamp = 0;
@@ -40,7 +39,7 @@ export class QuarantinedListFnDelegate implements FnDelegate {
         minimalProvidersCount,
         extendedLogs: true,
       },
-      chainId
+      networkId
     );
   }
 

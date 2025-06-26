@@ -30,7 +30,7 @@ export async function writeSimultaneously() {
   const network = RedstoneCommon.getFromEnv("NETWORK", SuiNetworkSchema);
   const rpcUrls = await getRpcUrls(network);
   const suiClient = new SuiClientBuilder()
-    .withNetwork(network)
+    .withSuiNetwork(network)
     .withRpcUrls(rpcUrls)
     .build();
 

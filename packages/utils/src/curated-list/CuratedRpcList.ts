@@ -2,6 +2,7 @@ import { z } from "zod";
 import { assert, getFromEnv } from "../common";
 import { loggerFactory, RedstoneLogger } from "../logger";
 import { weightedRandom } from "../math";
+import { NetworkId } from "../NetworkId";
 
 type Score = {
   callsCount: number;
@@ -55,13 +56,16 @@ export class CuratedRpcList {
   state: { [rpcIdentifier: RpcIdentifier]: Score } = {};
   logger: RedstoneLogger;
 
-  constructor(config: CuratedRpcListConfig, chainId: number | string) {
+  freeFromQuarantineTimer?: NodeJS.Timeout;
+  evaluationTimer?: NodeJS.Timeout;
+
+  constructor(config: CuratedRpcListConfig, networkId: NetworkId) {
     this.config = CuratedRpcListConfigSchema.parse(config);
     assert(
       this.config.minimalProvidersCount <= this.config.rpcIdentifiers.length,
       `A minimalProvidersCount can't be bigger than supplied rpcs list length`
     );
-    this.logger = loggerFactory(`curated-rpc-list-${chainId}`);
+    this.logger = loggerFactory(`curated-rpc-list-${networkId}`);
 
     for (const rpc of config.rpcIdentifiers) {
       assert(
@@ -75,20 +79,40 @@ export class CuratedRpcList {
         quarantineCounter: 0,
       };
     }
+  }
 
-    setInterval(() => {
-      this.config.rpcIdentifiers.map((rpc) => this.evaluateRpcScore(rpc));
-    }, this.config.evaluationInterval);
+  private updateFreeFromQuarantineTimer() {
+    if (this.getProvidersInQuarantine().length === 0) {
+      clearInterval(this.freeFromQuarantineTimer);
+      this.freeFromQuarantineTimer = undefined;
 
-    setInterval(
+      return;
+    }
+
+    this.freeFromQuarantineTimer ??= setInterval(
       () => this.freeOneRpcFromQuarantine(),
       this.config.resetQuarantineInterval
     );
   }
 
+  private updateEvaluationTimer() {
+    if (this.getCalledProviders().length === 0) {
+      clearInterval(this.evaluationTimer);
+      this.evaluationTimer = undefined;
+
+      return;
+    }
+
+    this.evaluationTimer ??= setInterval(() => {
+      this.config.rpcIdentifiers.map((rpc) => this.evaluateRpcScore(rpc));
+    }, this.config.evaluationInterval);
+  }
+
   scoreRpc(rpc: RpcIdentifier, score: ScoreReport): void {
     this.state[rpc].callsCount += 1;
     this.state[rpc].errorsCount += score.error ? 1 : 0;
+
+    this.updateEvaluationTimer();
   }
 
   evaluateRpcScore(rpc: RpcIdentifier): void {
@@ -97,14 +121,20 @@ export class CuratedRpcList {
     if (errorRate > this.config.maxErrorRate) {
       stats.inQuarantine = true;
       stats.quarantineCounter += 1;
+      const index = this.config.rpcIdentifiers.indexOf(rpc);
       (this.config.extendedLogs ? this.logger.info : this.logger.debug)(
         `Sending provider with identifier=${rpc} to quarantine; errorRate=${errorRate.toFixed(
           2
-        )}`
+        )}; index: ${index}`,
+        { errorRate, rpc, index, quarantined: true }
       );
+
+      this.updateFreeFromQuarantineTimer();
     }
     stats.callsCount = 0;
     stats.errorsCount = 0;
+
+    this.updateEvaluationTimer();
   }
 
   getBestProviders(): RpcIdentifier[] {
@@ -116,7 +146,9 @@ export class CuratedRpcList {
       this.logger.warn(
         `Not enough healthy providers, have to release one from quarantine`
       );
+
       this.freeOneRpcFromQuarantine();
+
       return this.getBestProviders();
     }
 
@@ -124,9 +156,7 @@ export class CuratedRpcList {
   }
 
   freeOneRpcFromQuarantine(): void {
-    const providersInQuarantine = Object.entries(this.state).filter(
-      ([_, { inQuarantine }]) => inQuarantine
-    );
+    const providersInQuarantine = this.getProvidersInQuarantine();
 
     const weights = providersInQuarantine.map(
       (v) => 1 / v[1].quarantineCounter
@@ -136,9 +166,31 @@ export class CuratedRpcList {
 
     if (index >= 0) {
       providersInQuarantine[index][1].inQuarantine = false;
+
+      const rpc = providersInQuarantine[index][0];
+      const rpcIndex = this.config.rpcIdentifiers.indexOf(rpc);
       (this.config.extendedLogs ? this.logger.info : this.logger.debug)(
-        `Releasing provider identifier=${providersInQuarantine[index][0]} from quarantine`
+        `Releasing provider identifier=${rpc} from quarantine`,
+        {
+          rpc,
+          index: rpcIndex,
+          quarantined: false,
+        }
       );
+
+      this.updateFreeFromQuarantineTimer();
     }
+  }
+
+  private getProvidersInQuarantine() {
+    return Object.entries(this.state).filter(
+      ([_, { inQuarantine }]) => inQuarantine
+    );
+  }
+
+  private getCalledProviders() {
+    return Object.entries(this.state).filter(
+      ([_, { callsCount }]) => callsCount > 0
+    );
   }
 }
