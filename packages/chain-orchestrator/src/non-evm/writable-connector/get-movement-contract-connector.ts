@@ -26,6 +26,7 @@ export const getMovementContractConnector = (
   const aptosClient = new AptosClientBuilder()
     .withNetworkId(networkId)
     .withRpcUrls(rpcUrls)
+    .withQuarantineEnabled()
     .build();
 
   const account = makeAptosAccount(privateKey);

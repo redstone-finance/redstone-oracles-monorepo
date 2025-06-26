@@ -25,7 +25,7 @@ async function main() {
   });
 
   const suiClient = new SuiClientBuilder()
-    .withNetwork(network)
+    .withSuiNetwork(network)
     .withRpcUrls(rpcUrls)
     .withFullnodeUrl()
     .build();
