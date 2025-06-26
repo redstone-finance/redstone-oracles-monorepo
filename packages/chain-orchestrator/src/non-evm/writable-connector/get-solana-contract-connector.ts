@@ -30,6 +30,7 @@ export const getSolanaContractConnector = (
   const connection = new SolanaConnectionBuilder()
     .withNetworkId(networkId)
     .withRpcUrls(rpcUrls)
+    .withQuarantineEnabled()
     .build();
 
   return new SolanaContractConnector(
