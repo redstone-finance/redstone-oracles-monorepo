@@ -21,8 +21,10 @@
     },
     "LBTC_FUNDAMENTAL": {},
     "USDT": {
-      "deviationPercentage": 0.1,
-      "timeSinceLastUpdateInMilliseconds": 9000
+      "updateTriggersOverrides": {
+        "deviationPercentage": 0.05,
+        "timeSinceLastUpdateInMilliseconds": 9000
+      }
     }
   }
 }
