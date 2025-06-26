@@ -1,28 +1,30 @@
 import { Aptos, AptosConfig, Network } from "@aptos-labs/ts-sdk";
-import {
-  ChainTypeEnum,
-  deconstructNetworkId,
-  MultiExecutor,
-  NetworkId,
-} from "@redstone-finance/utils";
+import { ChainTypeEnum, MultiExecutor } from "@redstone-finance/utils";
 import { chainIdtoMovementNetwork, getFullnodeUrl } from "./network-ids";
 
 export const SINGLE_EXECUTION_TIMEOUT_MS = 12_000;
 export const ALL_EXECUTIONS_TIMEOUT_MS = 30_000;
 
-export class AptosClientBuilder {
-  private urls: string[] = [];
-  private network?: Network;
+export class AptosClientBuilder extends MultiExecutor.ClientBuilder<Aptos> {
+  protected override chainType = ChainTypeEnum.Enum.movement;
 
-  private static makeMultiExecutor(
-    clients: Aptos[],
-    config = {
-      singleExecutionTimeoutMs: SINGLE_EXECUTION_TIMEOUT_MS,
-      allExecutionsTimeoutMs: ALL_EXECUTIONS_TIMEOUT_MS,
+  build() {
+    if (!this.chainId) {
+      throw new Error("Network not set");
     }
-  ) {
-    return MultiExecutor.create(
-      clients,
+
+    if (!this.urls.length) {
+      this.urls.push(getFullnodeUrl(chainIdtoMovementNetwork(this.chainId)));
+    }
+
+    return this.makeMultiExecutor(
+      (url) =>
+        new Aptos(
+          new AptosConfig({
+            network: Network.CUSTOM,
+            fullnode: url,
+          })
+        ),
       {
         transaction: {
           signAndSubmitTransaction: MultiExecutor.ExecutionMode.RACE,
@@ -31,55 +33,10 @@ export class AptosClientBuilder {
         getAccountInfo: MultiExecutor.ExecutionMode.AGREEMENT,
         getAccountAPTAmount: MultiExecutor.ExecutionMode.AGREEMENT,
       },
-      { ...MultiExecutor.DEFAULT_CONFIG, ...config }
+      {
+        singleExecutionTimeoutMs: SINGLE_EXECUTION_TIMEOUT_MS,
+        allExecutionsTimeoutMs: ALL_EXECUTIONS_TIMEOUT_MS,
+      }
     );
-  }
-
-  public withNetworkId(networkId: NetworkId) {
-    const { chainType, chainId } = deconstructNetworkId(networkId);
-    if (chainType !== ChainTypeEnum.Enum.movement) {
-      throw new Error(
-        `Non-movement networkId ${networkId} passed to AptosClientBuilder.`
-      );
-    }
-
-    this.network = chainIdtoMovementNetwork(chainId);
-
-    return this;
-  }
-
-  public withRpcUrls(urls: string[]) {
-    this.urls.push(...urls);
-
-    return this;
-  }
-
-  public build() {
-    if (!this.network) {
-      throw new Error("Network not set");
-    }
-
-    if (!this.urls.length) {
-      this.urls.push(getFullnodeUrl(this.network));
-    }
-
-    // As per https://docs.movementnetwork.xyz/devs/interactonchain/tsSdk#configuration we set network to CUSTOM one.
-    this.network = Network.CUSTOM;
-
-    const clients = this.urls.map(
-      (url) =>
-        new Aptos(
-          new AptosConfig({
-            network: this.network,
-            fullnode: url,
-          })
-        )
-    );
-
-    if (clients.length === 1) {
-      return clients[0];
-    }
-
-    return AptosClientBuilder.makeMultiExecutor(clients);
   }
 }
