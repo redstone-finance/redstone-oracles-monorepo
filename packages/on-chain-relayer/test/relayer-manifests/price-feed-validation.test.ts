@@ -99,53 +99,55 @@ const checkDataFeedIdInContract = async (
   }
 };
 
-describe("Price feed contract should return the same dataFeedId as in relayer manifest", () => {
-  const classicManifests = ManifestReading.readClassicManifests(
-    path.join(__dirname, "../..")
-  );
-  for (const [name, manifest] of Object.entries(classicManifests)) {
-    test(name, async () => {
-      for (const [dataFeedId, priceFeedAddress] of Object.entries(
-        manifest.priceFeeds
-      )) {
-        const config = getChainConfig(manifest.chain.id);
+if (process.env.RUN_NONDETERMINISTIC_TESTS) {
+  describe("Price feed contract should return the same dataFeedId as in relayer manifest", () => {
+    const classicManifests = ManifestReading.readClassicManifests(
+      path.join(__dirname, "../..")
+    );
+    for (const [name, manifest] of Object.entries(classicManifests)) {
+      test(name, async () => {
+        for (const [dataFeedId, priceFeedAddress] of Object.entries(
+          manifest.priceFeeds
+        )) {
+          const config = getChainConfig(manifest.chain.id);
 
-        if (priceFeedAddress !== "__NO_FEED__" && !config.disabled) {
-          expect(
-            await checkDataFeedIdInContract(
-              dataFeedId,
-              priceFeedAddress,
-              manifest.chain.id
-            )
-          ).to.be.true;
+          if (priceFeedAddress !== "__NO_FEED__" && !config.disabled) {
+            expect(
+              await checkDataFeedIdInContract(
+                dataFeedId,
+                priceFeedAddress,
+                manifest.chain.id
+              )
+            ).to.be.true;
+          }
         }
-      }
-    });
-  }
-
-  const multiFeedManifests = ManifestReading.readMultiFeedManifests(
-    path.join(__dirname, "../..")
-  );
-  for (const [name, manifest] of Object.entries(multiFeedManifests)) {
-    if (INTEGRATIONS_NOT_FOR_TESTING.includes(name)) {
-      continue;
+      });
     }
-    test(name, async () => {
-      for (const [dataFeedId, { priceFeedAddress }] of Object.entries(
-        manifest.priceFeeds
-      )) {
-        const config = getChainConfig(manifest.chain.id);
 
-        if (priceFeedAddress && !config.disabled) {
-          expect(
-            await checkDataFeedIdInContract(
-              dataFeedId,
-              priceFeedAddress,
-              manifest.chain.id
-            )
-          ).to.be.true;
-        }
+    const multiFeedManifests = ManifestReading.readMultiFeedManifests(
+      path.join(__dirname, "../..")
+    );
+    for (const [name, manifest] of Object.entries(multiFeedManifests)) {
+      if (INTEGRATIONS_NOT_FOR_TESTING.includes(name)) {
+        continue;
       }
-    });
-  }
-});
+      test(name, async () => {
+        for (const [dataFeedId, { priceFeedAddress }] of Object.entries(
+          manifest.priceFeeds
+        )) {
+          const config = getChainConfig(manifest.chain.id);
+
+          if (priceFeedAddress && !config.disabled) {
+            expect(
+              await checkDataFeedIdInContract(
+                dataFeedId,
+                priceFeedAddress,
+                manifest.chain.id
+              )
+            ).to.be.true;
+          }
+        }
+      });
+    }
+  });
+}
