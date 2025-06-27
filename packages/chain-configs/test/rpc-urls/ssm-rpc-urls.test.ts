@@ -5,7 +5,7 @@ import {
   validateNetworkRpcUrls,
 } from "./common";
 
-const networkid = RedstoneCommon.getFromEnv(
+const networkId = RedstoneCommon.getFromEnv(
   "NETWORK_ID",
   NetworkIdSchema.optional()
 );
@@ -16,7 +16,7 @@ describe("SSM Main Rpc Urls Validation", function () {
     if (!process.env.TEST_RPC) {
       this.skip();
     }
-    const rpcUrlsPerChain = await readSsmRpcUrls(false, networkid);
+    const rpcUrlsPerChain = await readSsmRpcUrls(false, networkId);
     validateNetworkRpcUrls(rpcUrlsPerChain);
     validateBlockNumberAgreementBetweenRpcs(
       rpcUrlsPerChain,
@@ -31,7 +31,7 @@ describe("SSM Fallback Rpc Urls Validation", function () {
     if (!process.env.TEST_RPC) {
       this.skip();
     }
-    const rpcUrlsPerChain = await readSsmRpcUrls(true, networkid);
+    const rpcUrlsPerChain = await readSsmRpcUrls(true, networkId);
     validateNetworkRpcUrls(rpcUrlsPerChain);
     validateBlockNumberAgreementBetweenRpcs(
       rpcUrlsPerChain,
