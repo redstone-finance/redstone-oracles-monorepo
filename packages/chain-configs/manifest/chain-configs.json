@@ -198,7 +198,8 @@
       },
       "isAuctionModel": false,
       "twoDimensionalFees": false,
-      "isMainnet": true
+      "isMainnet": true,
+      "disabled": true
     },
     "manta": {
       "name": "Manta Pacific Mainnet",
@@ -860,7 +861,6 @@
       "currencySymbol": "S",
       "publicRpcUrls": [
         "https://rpc.soniclabs.com",
-        "https://rpc.ankr.com/sonic_mainnet",
         "https://sonic-rpc.publicnode.com",
         "https://sonic.drpc.org"
       ],
