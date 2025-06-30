@@ -169,7 +169,8 @@
         "uniswap-v3-ethereum-usdc-500",
         "aerodrome-cl-base-usdc",
         "aerodrome-cl-base-usdc-2",
-        "aerodrome-cl-base-weth"
+        "aerodrome-cl-base-weth",
+        "trader-joe-v2-avalanche-usdc"
       ]
     },
     "EUROC/EUR": {
