@@ -9838,6 +9838,7 @@ __metadata:
     "@ardrive/turbo-sdk": "npm:^1.2.0"
     "@aws-sdk/client-ssm": "npm:^3.696.0"
     "@irys/sdk": "npm:^0.2.0"
+    "@redstone-finance/internal-utils": "workspace:*"
     "@redstone-finance/protocol": "workspace:*"
     "@redstone-finance/sdk": "workspace:*"
     "@types/aws-lambda": "npm:^8.10.145"
