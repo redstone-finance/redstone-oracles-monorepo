@@ -215,8 +215,7 @@
         "lbank-usdt",
         "mento",
         "okx-usdt",
-        "uniswap-v3-ethereum-dai-100",
-        "gemini-usd"
+        "uniswap-v3-ethereum-dai-100"
       ]
     },
     "DAI": {

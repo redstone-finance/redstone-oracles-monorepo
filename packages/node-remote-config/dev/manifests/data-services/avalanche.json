@@ -39,8 +39,7 @@
         "coinmarketcap",
         "gate-usd",
         "kaiko-v2",
-        "kraken-usd",
-        "gemini-usd"
+        "kraken-usd"
       ],
       "deviationCheck": {
         "deviationWithRecentValues": {
@@ -168,8 +167,7 @@
         "kucoin-usdt",
         "lbank-usdt",
         "okx-usdt",
-        "uniswap-v3-ethereum-dai-100",
-        "gemini-usd"
+        "uniswap-v3-ethereum-dai-100"
       ],
       "deviationCheck": {
         "deviationWithRecentValues": {
