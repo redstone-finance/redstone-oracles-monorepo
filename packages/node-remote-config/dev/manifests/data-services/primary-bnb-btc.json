@@ -25,7 +25,8 @@
         "kraken-usdt",
         "kucoin-usdt",
         "okx-usdt",
-        "uniswap-v3-ethereum-dai-100"
+        "uniswap-v3-ethereum-dai-100",
+        "gemini-usd"
       ],
       "deviationCheck": {
         "deviationWithRecentValues": {
