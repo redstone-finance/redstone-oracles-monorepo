@@ -12,6 +12,7 @@ describe("NetworkIdSchema", () => {
     ...stringNumeralCases,
     5,
     1,
+    "001", // This is considered OK because it represents a number 1 after all (even if it had a really bad formatting day)
     "solana/1",
     "movement/999",
     "radix/3",
@@ -19,13 +20,15 @@ describe("NetworkIdSchema", () => {
   ];
 
   const invalidCases = [
+    -1,
+    2.5,
+    0,
     "evm/1",
+    "evm/2.5",
     "arbitrum/5",
-    "01",
     "solana/-1",
     "żaba",
     "sui/",
-    "movement/01",
     "fuel/abc",
     {},
     null,
