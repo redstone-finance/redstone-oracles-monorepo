@@ -72,7 +72,8 @@
         "pancake-swap-ethereum-weth-100",
         "uniswap-v3-arbitrumone-weth-100",
         "uniswap-v3-ethereum-weth-100",
-        "uniswap-v3-optimism-weth-100"
+        "uniswap-v3-optimism-weth-100",
+        "aerodrome-cl-base-weth"
       ]
     },
     "wstETH_FUNDAMENTAL": {
