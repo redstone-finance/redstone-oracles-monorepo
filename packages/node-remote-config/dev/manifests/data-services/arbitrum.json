@@ -118,7 +118,6 @@
         "coinbase-btc-reversed",
         "bitstamp-btc-reversed",
         "kraken-usdt-reversed",
-        "coinbase-usdt-reversed",
         "binance-usdc",
         "bitget-usdt-reversed",
         "okx-btc-reversed"
@@ -564,7 +563,6 @@
         "curve-ethereum-wsteth",
         "curve-ethereum-wsteth-2",
         "pancake-swap-ethereum-weth-500",
-        "uniswap-v3-arbitrumone-weth-500",
         "uniswap-v3-ethereum-weth-100",
         "uniswap-v3-ethereum-weth-500"
       ],
@@ -604,8 +602,7 @@
         "balancer-arbitrumone-weth",
         "balancer-ethereum-weth",
         "camelot-v3-arbitrumone-weth",
-        "curve-ethereum-sfrxeth",
-        "uniswap-v3-ethereum-weth-500"
+        "curve-ethereum-sfrxeth"
       ],
       "denomination": "USD",
       "rateFeed": false
@@ -661,8 +658,7 @@
         "balancer-ethereum-weeth",
         "balancer-ethereum-weth",
         "thruster-v3-blast-weth-3000",
-        "thruster-v3-blast-weth-500",
-        "uniswap-v3-ethereum-weth-100"
+        "thruster-v3-blast-weth-500"
       ],
       "denomination": "USD",
       "rateFeed": false
@@ -749,7 +745,6 @@
     },
     "crvUSD": {
       "source": [
-        "curve-arbitrumone-frax",
         "curve-arbitrumone-wbtc",
         "curve-arbitrumone-weth",
         "curve-ethereum-crv",
