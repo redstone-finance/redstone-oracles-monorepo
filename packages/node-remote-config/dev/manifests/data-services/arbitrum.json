@@ -372,7 +372,8 @@
         "camelot-v3-arbitrumone-weth",
         "uniswap-v3-arbitrumone-weth-100",
         "uniswap-v3-ethereum-weth-100",
-        "velodrome-cl-optimism-weth"
+        "velodrome-cl-optimism-weth",
+        "aerodrome-cl-base-weth"
       ],
       "denomination": "USD",
       "rateFeed": false
@@ -1149,7 +1150,8 @@
         "uniswap-v3-ethereum-usdc-500",
         "aerodrome-cl-base-usdc",
         "aerodrome-cl-base-usdc-2",
-        "aerodrome-cl-base-weth"
+        "aerodrome-cl-base-weth",
+        "trader-joe-v2-avalanche-usdc"
       ],
       "denomination": "USD",
       "rateFeed": false
