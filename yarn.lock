@@ -10307,6 +10307,18 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@redstone-finance/lambda-pythnet-influx-synchronizer@workspace:packages/lambda/lambda-pythnet-influx-synchronizer":
+  version: 0.0.0-use.local
+  resolution: "@redstone-finance/lambda-pythnet-influx-synchronizer@workspace:packages/lambda/lambda-pythnet-influx-synchronizer"
+  dependencies:
+    "@influxdata/influxdb-client": "npm:^1.35.0"
+    "@redstone-finance/internal-utils": "workspace:*"
+    "@redstone-finance/utils": "workspace:*"
+    ethers: "npm:^5.7.2"
+    lodash: "npm:^4.17.21"
+  languageName: unknown
+  linkType: soft
+
 "@redstone-finance/lambda-redstone-status@workspace:packages/lambda/lambda-redstone-status":
   version: 0.0.0-use.local
   resolution: "@redstone-finance/lambda-redstone-status@workspace:packages/lambda/lambda-redstone-status"
