@@ -98,7 +98,6 @@
         "coinbase-btc-reversed",
         "bitstamp-btc-reversed",
         "kraken-usdt-reversed",
-        "coinbase-usdt-reversed",
         "binance-usdc",
         "bitget-usdt-reversed",
         "okx-btc-reversed"
@@ -142,7 +141,6 @@
         "bitget-usdt",
         "bitmart-usdt",
         "bitrue-usdt",
-        "coinbase-usd",
         "gate-usdt",
         "kraken-usd",
         "kucoin-usdt",
