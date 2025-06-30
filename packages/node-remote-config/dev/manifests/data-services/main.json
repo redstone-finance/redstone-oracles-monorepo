@@ -57,7 +57,8 @@
         "coingecko",
         "gate-usd",
         "kaiko-v2",
-        "kraken-usd"
+        "kraken-usd",
+        "gemini-usd"
       ],
       "denomination": "USD",
       "rateFeed": false
@@ -91,7 +92,8 @@
         "kucoin-usdt",
         "lbank-usdt",
         "okx-usdt",
-        "uniswap-v3-ethereum-dai-100"
+        "uniswap-v3-ethereum-dai-100",
+        "gemini-usd"
       ],
       "denomination": "USD",
       "rateFeed": false
