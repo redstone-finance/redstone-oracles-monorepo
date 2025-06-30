@@ -12,21 +12,17 @@ export type NonEvmChainType = z.infer<typeof NonEvmChainTypeEnum>;
 export const ChainTypeEnum = z.enum(["evm", ...NonEvmChainTypeEnum.options]);
 export type ChainType = z.infer<typeof ChainTypeEnum>;
 
-const baseNetworkIdSchema = z.union([
-  z.number(),
+const networkNumberSchema = z.coerce.number().int().positive();
+
+export const NetworkIdSchema = z.union([
+  networkNumberSchema,
   z
     .string()
-    .regex(/^[1-9]\d*$/)
-    .transform(Number), // turns `${number}` into number
-  z
-    .string()
-    .regex(
-      new RegExp(`^(${NonEvmChainTypeEnum.options.join("|")})/([1-9]\\d*)$`)
-    ),
+    .transform((s) => s.split("/"))
+    .pipe(z.tuple([NonEvmChainTypeEnum, networkNumberSchema]))
+    .transform(([str, num]) => `${str}/${num}` as const),
 ]);
-export const NetworkIdSchema: z.ZodType<NetworkId> =
-  baseNetworkIdSchema as z.ZodType<NetworkId>;
-export type NetworkId = `${NonEvmChainType}/${number}` | number;
+export type NetworkId = z.infer<typeof NetworkIdSchema>;
 
 export function isEvmNetworkId(networkId: NetworkId): networkId is number {
   return typeof networkId === "number";
