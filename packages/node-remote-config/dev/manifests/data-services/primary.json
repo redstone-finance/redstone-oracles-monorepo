@@ -422,7 +422,6 @@
         "curve-ethereum-wsteth",
         "curve-ethereum-wsteth-2",
         "pancake-swap-ethereum-weth-500",
-        "uniswap-v3-arbitrumone-weth-500",
         "uniswap-v3-ethereum-weth-100",
         "uniswap-v3-ethereum-weth-500"
       ],
@@ -501,7 +500,6 @@
         "bitget-usdt",
         "bitmart-usdt",
         "bitrue-usdt",
-        "coinbase-usd",
         "gate-usdt",
         "kucoin-usdt",
         "okx-usdt",
@@ -981,7 +979,6 @@
         "bitget-usdt",
         "bitmart-usdt",
         "bitrue-usdt",
-        "coinbase-usd",
         "gate-usdt",
         "kraken-usd",
         "kucoin-usdt",
@@ -1001,7 +998,6 @@
         "coinbase-btc-reversed",
         "bitstamp-btc-reversed",
         "kraken-usdt-reversed",
-        "coinbase-usdt-reversed",
         "binance-usdc",
         "bitget-usdt-reversed",
         "okx-btc-reversed"
@@ -1037,8 +1033,7 @@
         "balancer-arbitrumone-weth",
         "balancer-ethereum-weth",
         "camelot-v3-arbitrumone-weth",
-        "curve-ethereum-sfrxeth",
-        "uniswap-v3-ethereum-weth-500"
+        "curve-ethereum-sfrxeth"
       ],
       "denomination": "USD",
       "rateFeed": false
@@ -1055,8 +1050,7 @@
         "balancer-ethereum-weeth",
         "balancer-ethereum-weth",
         "thruster-v3-blast-weth-3000",
-        "thruster-v3-blast-weth-500",
-        "uniswap-v3-ethereum-weth-100"
+        "thruster-v3-blast-weth-500"
       ],
       "denomination": "USD",
       "rateFeed": false
@@ -1073,7 +1067,6 @@
     },
     "crvUSD": {
       "source": [
-        "curve-arbitrumone-frax",
         "curve-arbitrumone-wbtc",
         "curve-arbitrumone-weth",
         "curve-ethereum-crv",
@@ -1204,7 +1197,6 @@
         "bitget-usdt",
         "bitmart-usdt",
         "bitrue-usdt",
-        "coinbase-usd",
         "gate-usdt",
         "kraken-usd",
         "kucoin-usdt",
@@ -1456,8 +1448,7 @@
       "source": [
         "curve-ethereum-sdai",
         "curve-ethereum-susde",
-        "curve-ethereum-scrvusd_fundamental/usd",
-        "curve-ethereum-usdm"
+        "curve-ethereum-scrvusd_fundamental/usd"
       ],
       "deviationCheck": {
         "deviationWithRecentValues": {
@@ -1524,7 +1515,6 @@
     "SolvBTC.BBN": {
       "source": [
         "pancake-swap-bnb-solvbtc-500",
-        "trader-joe-v2-avalanche-solvbtc",
         "uniswap-v3-ethereum-solvbtc-100"
       ],
       "upper": {
@@ -2324,7 +2314,6 @@
         "bitmart-usdt",
         "bitrue-usdt",
         "bybit-usdt",
-        "coinbase-usd",
         "gate-usdt",
         "kraken-usd",
         "uniswap-v3-ethereum-weth-10000",
@@ -2340,14 +2329,12 @@
         "bitget-usdt",
         "bitmart-usdt",
         "bitrue-usdt",
-        "coinbase-usd",
         "gate-usdt",
         "kraken-usd",
         "kucoin-usdt",
         "lbank-usdt",
         "mexc-usdt",
         "okx-usdt",
-        "uniswap-v3-base-usdc-3000",
         "uniswap-v3-ethereum-usdc-3000",
         "xt"
       ],
