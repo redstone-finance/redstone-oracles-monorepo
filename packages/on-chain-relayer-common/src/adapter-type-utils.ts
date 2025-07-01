@@ -1,8 +1,6 @@
-import { z } from "zod";
 import {
   AdapterType,
   AnyOnChainRelayerManifest,
-  MultiFeedAdapterTypesEnum,
   MultiFeedOnChainRelayerManifest,
 } from "./schemas";
 
@@ -12,8 +10,6 @@ export function isMultiFeedRelayerManifest(
   return isMultiFeedAdapterType(manifest.adapterContractType);
 }
 
-export function isMultiFeedAdapterType(
-  adapterContractType: AdapterType
-): adapterContractType is z.infer<typeof MultiFeedAdapterTypesEnum> {
-  return MultiFeedAdapterTypesEnum.safeParse(adapterContractType).success;
+export function isMultiFeedAdapterType(adapterContractType: AdapterType) {
+  return adapterContractType === "multi-feed";
 }
