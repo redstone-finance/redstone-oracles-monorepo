@@ -6,7 +6,7 @@ import {
   MegaProviderBuilder,
   ProviderDecorators,
 } from "@redstone-finance/rpc-providers";
-import { constructNetworkId, isEvmNetworkId } from "@redstone-finance/utils";
+import { isEvmNetworkId } from "@redstone-finance/utils";
 import { providers } from "ethers";
 import { RelayerConfig } from "../../config/RelayerConfig";
 
@@ -24,7 +24,7 @@ const electBlock = (
 
   const { avgBlockTimeMs } = getChainConfigByNetworkId(
     getLocalChainConfigs(),
-    constructNetworkId(chainId)
+    chainId
   );
   const acceptableBlockDiff = Math.ceil(
     ACCEPTABLE_BLOCK_DIFF_IN_MS / avgBlockTimeMs

@@ -7,7 +7,6 @@ import {
 } from "@redstone-finance/utils";
 
 export type BackgroundBlockNumbersFetcherOpts = {
-  /** [chainTypeAndId,getBlockNumber] */
   blockNumbersFetchers: [NetworkId, IGetBlockNumber][];
   timeout: number;
   maxTTL: number;
