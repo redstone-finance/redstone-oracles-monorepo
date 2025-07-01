@@ -1,5 +1,6 @@
 import { Provider } from "@ethersproject/providers";
 import { AdapterType } from "@redstone-finance/on-chain-relayer-common";
+import { RedstoneCommon } from "@redstone-finance/utils";
 import { Contract, Signer } from "ethers";
 import { abi as redstoneAdapterABI } from "../../../artifacts/contracts/core/RedstoneAdapterBase.sol/RedstoneAdapterBase.json";
 import { abi as mentoAdapterABI } from "../../../artifacts/contracts/custom-integrations/mento/MentoAdapterBase.sol/MentoAdapterBase.json";
@@ -46,6 +47,6 @@ export function getEvmContract(
     }
 
     default:
-      throw new Error(`Unsupported adapter type ${adapterContractType}.`);
+      return RedstoneCommon.throwUnsupportedParamError(adapterContractType);
   }
 }
