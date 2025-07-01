@@ -70,10 +70,8 @@ export class SageOfChains {
     });
   }
 
-  async getBlockNumbersPerChain(
-    timeout: number
-  ): Promise<Record<string, number>> {
-    const chainIdToBlockTuplesResults = await Promise.allSettled(
+  async getBlockNumbersPerChain(timeout: number) {
+    const networkIdToBlockTuplesResults = await Promise.allSettled(
       Object.entries(this.networkIdToProviderFactory).map(
         async ([networkId, providerFactory]) => {
           const chainConfig = SageOfChains.getChainConfig(
@@ -88,7 +86,7 @@ export class SageOfChains {
         }
       )
     );
-    const chainIdToBlockTuples = chainIdToBlockTuplesResults
+    const networkIdToBlockTuples = networkIdToBlockTuplesResults
       .map((result, index) => {
         if (result.status === "fulfilled") {
           return result.value;
@@ -102,7 +100,7 @@ export class SageOfChains {
       })
       .filter((r) => !!r) as [string, number][];
 
-    return Object.fromEntries(chainIdToBlockTuples);
+    return Object.fromEntries(networkIdToBlockTuples);
   }
 }
 
