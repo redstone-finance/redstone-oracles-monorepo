@@ -4,12 +4,7 @@ import {
   Multicall3Abi,
   RedstoneMulticall3Abi,
 } from "@redstone-finance/evm-multicall";
-import {
-  ChainType,
-  conformsToChainType,
-  NetworkId,
-  RedstoneCommon,
-} from "@redstone-finance/utils";
+import { NetworkId, RedstoneCommon } from "@redstone-finance/utils";
 import { Contract, Wallet } from "ethers";
 import { ChainConfig, ChainConfigs } from "./schemas";
 
@@ -83,18 +78,4 @@ export function getMulticall3(
   } else {
     throw new Error(`Unknown multicall3.type=${String(multicall3)}`);
   }
-}
-
-export function getChainConfigByChainId(
-  chainConfigs: ChainConfigs,
-  chainId: number,
-  chainType?: ChainType
-) {
-  return RedstoneCommon.assertThenReturn(
-    Object.values(chainConfigs).find(
-      (c) =>
-        c.chainId === chainId && conformsToChainType(c.chainType, chainType)
-    ),
-    `Failed to getChainConfigByChainId chainConfig not defined for ${chainId}${chainType ? ` (chainType: ${chainType})` : ""}`
-  );
 }

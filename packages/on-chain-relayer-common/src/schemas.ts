@@ -4,37 +4,8 @@ import { z } from "zod";
 export const PRICE_FEEDS = "price-feeds";
 export const MENTO = "mento";
 export const MULTI_FEED = "multi-feed";
-export const FUEL = "fuel";
-export const RADIX = "radix";
-export const RADIX_MULTI_FEED = `${RADIX}-${MULTI_FEED}`;
-export const SUI_MULTI_FEED = `sui-${MULTI_FEED}`;
-export const MOVEMENT_MULTI_FEED = `movement-${MULTI_FEED}`;
-export const SOLANA_MULTI_FEED = `solana-${MULTI_FEED}`;
 
-export const MultiFeedAdapterTypesEnum = z.enum([
-  MULTI_FEED,
-  RADIX_MULTI_FEED,
-  SUI_MULTI_FEED,
-  MOVEMENT_MULTI_FEED,
-  SOLANA_MULTI_FEED,
-]);
-export const NonEvmAdapterTypesEnum = z.enum([
-  FUEL,
-  RADIX_MULTI_FEED,
-  SUI_MULTI_FEED,
-  MOVEMENT_MULTI_FEED,
-  SOLANA_MULTI_FEED,
-]);
-export const BaseAdapterTypesEnum = z.enum([
-  PRICE_FEEDS,
-  MENTO,
-  ...NonEvmAdapterTypesEnum.options,
-]);
-export const AdapterTypesEnum = z.enum([
-  ...BaseAdapterTypesEnum.options,
-  ...MultiFeedAdapterTypesEnum.options,
-  ...NonEvmAdapterTypesEnum.options,
-]);
+export const AdapterTypesEnum = z.enum([PRICE_FEEDS, MENTO, MULTI_FEED]);
 
 export type AdapterType = z.infer<typeof AdapterTypesEnum>;
 
@@ -74,13 +45,13 @@ export const CommonManifestSchemaStrict = CommonManifestSchema.extend({
 }).strict();
 
 const OnChainRelayerManifestExtension = {
-  adapterContractType: BaseAdapterTypesEnum.default(PRICE_FEEDS),
+  adapterContractType: AdapterTypesEnum.default(PRICE_FEEDS),
   priceFeeds: z.record(z.string(), z.string()),
   authorizedSigners: z.array(z.string()).optional(),
 };
 
 const MultiFeedOnChainRelayerManifestExtension = {
-  adapterContractType: MultiFeedAdapterTypesEnum.default(MULTI_FEED),
+  adapterContractType: AdapterTypesEnum.default(MULTI_FEED),
   priceFeeds: z.record(z.string(), PriceFeedConfigSchema),
   authorizedSigners: z.array(z.string()).optional(),
 };

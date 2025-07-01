@@ -19,8 +19,8 @@ export function getBlockchainService(
     timeout: SINGLE_RPC_TIMEOUT_MILLISECONDS,
     throttleLimit: 1,
     network: {
-      name: `name-${chainConfig.chainId}`,
-      chainId: chainConfig.chainId,
+      name: `name-${chainConfig.networkId}`,
+      chainId: chainConfig.networkId,
     },
     rpcUrls,
   })
