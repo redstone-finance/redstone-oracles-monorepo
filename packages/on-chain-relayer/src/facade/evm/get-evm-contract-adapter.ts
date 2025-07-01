@@ -1,6 +1,6 @@
 import { AdapterType } from "@redstone-finance/on-chain-relayer-common";
 import { TxDeliveryCall } from "@redstone-finance/rpc-providers";
-import { Tx } from "@redstone-finance/utils";
+import { RedstoneCommon, Tx } from "@redstone-finance/utils";
 import {
   MentoAdapterBase,
   MultiFeedAdapterWithoutRounds,
@@ -51,8 +51,8 @@ export function getEvmContractAdapter(
     }
 
     default:
-      throw new Error(
-        `Unsupported adapter type ${relayerConfig.adapterContractType}`
+      return RedstoneCommon.throwUnsupportedParamError(
+        relayerConfig.adapterContractType
       );
   }
 }
