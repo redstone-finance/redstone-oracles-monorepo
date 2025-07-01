@@ -926,6 +926,7 @@
         "type": "RedstoneMulticall3",
         "gasLimitPerCall": 1000000
       },
+      "decimalNumberOfBlocksForFeeHistory": true,
       "isAuctionModel": false,
       "fallbackToEthMaxPriorityFeePerGas": true,
       "twoDimensionalFees": false,
@@ -945,6 +946,7 @@
         "address": "0x51ebbB6F8167E39C3b867d50332c82fbd92d3861",
         "type": "Multicall3"
       },
+      "decimalNumberOfBlocksForFeeHistory": true,
       "isAuctionModel": false,
       "fallbackToEthMaxPriorityFeePerGas": true,
       "twoDimensionalFees": false,

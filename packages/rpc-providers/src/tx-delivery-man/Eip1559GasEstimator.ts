@@ -1,4 +1,5 @@
 import {
+  ChainConfig,
   getChainConfigByNetworkId,
   getLocalChainConfigs,
 } from "@redstone-finance/chain-configs";
@@ -60,7 +61,14 @@ export class Eip1559GasEstimator implements GasEstimator<Eip1559Fee> {
   private async estimatePriorityFee(
     provider: providers.JsonRpcProvider
   ): Promise<number> {
-    const feeHistory = await this.getFeeHistory(provider);
+    const networkId = await getProviderNetworkId(provider);
+
+    const chainConfig = getChainConfigByNetworkId(
+      getLocalChainConfigs(),
+      networkId
+    );
+
+    const feeHistory = await this.getFeeHistory(provider, chainConfig);
 
     const rewardsPerBlockForPercentile = feeHistory.reward
       .flat()
@@ -78,13 +86,6 @@ export class Eip1559GasEstimator implements GasEstimator<Eip1559Fee> {
       return maxRewardsPerBlockForPercentile;
     }
 
-    const networkId = await getProviderNetworkId(provider);
-
-    const chainConfig = getChainConfigByNetworkId(
-      getLocalChainConfigs(),
-      networkId
-    );
-
     if (chainConfig.fallbackToEthMaxPriorityFeePerGas) {
       const ethMaxPriorityFeePerGasResult = Number(
         await provider.send("eth_maxPriorityFeePerGas", [])
@@ -99,10 +100,11 @@ export class Eip1559GasEstimator implements GasEstimator<Eip1559Fee> {
   }
 
   private async getFeeHistory(
-    provider: providers.JsonRpcProvider
+    provider: providers.JsonRpcProvider,
+    chainConfig: ChainConfig
   ): Promise<FeeHistoryResponse> {
     return (await provider.send("eth_feeHistory", [
-      this.opts.enforceDecimalNumberOfBlocksForFeeHistory
+      chainConfig.decimalNumberOfBlocksForFeeHistory
         ? this.opts.numberOfBlocksForFeeHistory
         : "0x" + this.opts.numberOfBlocksForFeeHistory.toString(16),
       this.opts.newestBlockForFeeHistory,
