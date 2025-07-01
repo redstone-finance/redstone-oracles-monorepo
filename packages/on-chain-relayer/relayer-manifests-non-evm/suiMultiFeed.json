@@ -15,16 +15,10 @@
     "ETH": {},
     "BTC": {
       "updateTriggersOverrides": {
-        "deviationPercentage": 0.05,
+        "deviationPercentage": 0.2,
         "timeSinceLastUpdateInMilliseconds": 86400000
       }
     },
-    "LBTC_FUNDAMENTAL": {},
-    "USDT": {
-      "updateTriggersOverrides": {
-        "deviationPercentage": 0.05,
-        "timeSinceLastUpdateInMilliseconds": 9000
-      }
-    }
+    "LBTC_FUNDAMENTAL": {}
   }
 }
