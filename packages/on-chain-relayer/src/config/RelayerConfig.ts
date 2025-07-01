@@ -66,7 +66,6 @@ export type OnChainRelayerEnv = {
   mqttFallbackCheckIntervalMs?: number;
   authorizedSigners?: string[];
   includeAdditionalFeedsForGasOptimization: boolean;
-  enforceDecimalNumberOfBlocksForFeeHistory?: boolean;
   newestBlockForFeeHistory?: NewestBlockType;
   isPausedUntil?: Date;
   feedsSplit?: string[][];

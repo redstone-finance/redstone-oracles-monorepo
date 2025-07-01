@@ -111,11 +111,6 @@ export type TxDeliveryOpts = {
   numberOfBlocksForFeeHistory?: number;
 
   /**
-   * Pass numberOfBlocksForFeeHistory as decimal number instead of hex string
-   */
-  enforceDecimalNumberOfBlocksForFeeHistory?: boolean;
-
-  /**
    * Block to start fetching the fee history data from
    */
   newestBlockForFeeHistory?: NewestBlockType;
@@ -148,7 +143,6 @@ export const DEFAULT_TX_DELIVERY_OPTS = {
   twoDimensionalFees: false,
   gasOracleTimeout: 5_000,
   forceDisableCustomGasOracle: false,
-  enforceDecimalNumberOfBlocksForFeeHistory: false,
   numberOfBlocksForFeeHistory: 2,
   newestBlockForFeeHistory: "pending",
   logger: logger.log.bind(logger),
