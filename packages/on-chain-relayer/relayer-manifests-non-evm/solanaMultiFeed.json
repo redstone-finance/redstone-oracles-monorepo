@@ -12,7 +12,12 @@
   "dataServiceId": "redstone-primary-prod",
   "priceFeeds": {
     "ETH": {},
-    "BTC": {},
+    "BTC": {
+      "updateTriggersOverrides": {
+        "deviationPercentage": 0.05,
+        "timeSinceLastUpdateInMilliseconds": 86400000
+      }
+    },
     "BUIDL_SOLANA_FUNDAMENTAL": {
       "updateTriggersOverrides": {
         "deviationPercentage": 0.1,
@@ -35,6 +40,12 @@
       "updateTriggersOverrides": {
         "deviationPercentage": 0.1,
         "timeSinceLastUpdateInMilliseconds": 86400000
+      }
+    },
+    "USDT": {
+      "updateTriggersOverrides": {
+        "deviationPercentage": 0.05,
+        "timeSinceLastUpdateInMilliseconds": 9000
       }
     }
   }
