@@ -24,6 +24,12 @@ export const ChainConfigSchema = z.object({
    * Be aware that some of the chains accepts 0 as tip if blocks are empty or don't use tips at all and always returns 0 from eth_feeHistory - in such a cases this value should be left to default
    */
   fallbackToEthMaxPriorityFeePerGas: z.boolean().default(false),
+  /**
+   * By default number of blocks for fee history calculation in deliveryMan
+   * is set to "0x2" string hex value, this makes it 2 numeral value.
+   * For now Tac specific but more chains may come with this issue.
+   */
+  decimalNumberOfBlocksForFeeHistory: z.boolean().default(false),
   multicall3: z
     .object({
       address: z.string(),
