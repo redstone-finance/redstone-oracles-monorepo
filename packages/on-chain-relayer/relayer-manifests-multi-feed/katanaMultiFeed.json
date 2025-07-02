@@ -43,6 +43,9 @@
     },
     "aUSD": {
       "priceFeedAddress": "0x53bB139e962ee0AC6477F40D0352e8dAF0480b70"
+    },
+    "SUI": {
+      "priceFeedAddress": "0x98ECE0D516f891a35278E3186772fb1545b274eB"
     }
   }
 }
