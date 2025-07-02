@@ -91,6 +91,21 @@
     },
     "stHYPE/HYPE": {
       "priceFeedAddress": "0xEC34D1Cf550dda751ff20cD4eCC7FF9219551B04"
+    },
+    "hwHLP_FUNDAMENTAL": {
+      "priceFeedAddress": "0xC328CDf06CBc77134B84e1f6ed452774947146b6"
+    },
+    "USR_FUNDAMENTAL": {
+      "priceFeedAddress": "0xa275809f06944c00E308FE764b0559ED84481042"
+    },
+    "XAU": {
+      "priceFeedAddress": "0xB5d303b9F984e42EB5E3C00Bdf733A309c654630"
+    },
+    "XAUt": {
+      "priceFeedAddress": "0xA3A75Fd9f19bd334605f59527552DBC6c7f6fD88"
+    },
+    "stHYPE": {
+      "priceFeedAddress": "0x4cEC96A68cb9A979621b104F3C94884be1a66da0"
     }
   }
 }
