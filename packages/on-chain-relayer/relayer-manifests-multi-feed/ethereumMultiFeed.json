@@ -290,6 +290,13 @@
         "deviationPercentage": 1,
         "timeSinceLastUpdateInMilliseconds": 86400000
       }
+    },
+    "hwHLP_FUNDAMENTAL": {
+      "priceFeedAddress": "0x03138081aeD44E2E0Eb10361Ee41D84EDD22a05f",
+      "updateTriggersOverrides": {
+        "deviationPercentage": 1,
+        "timeSinceLastUpdateInMilliseconds": 86400000
+      }
     }
   }
 }
