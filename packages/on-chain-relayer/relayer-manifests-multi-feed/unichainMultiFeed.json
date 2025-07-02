@@ -8,14 +8,22 @@
   "dataServiceId": "redstone-primary-prod",
   "updateTriggers": {
     "deviationPercentage": 0.5,
-    "timeSinceLastUpdateInMilliseconds": 21600000
+    "timeSinceLastUpdateInMilliseconds": 86400000
   },
   "priceFeeds": {
     "ETH": {
-      "priceFeedAddress": "0xe8D9FbC10e00ecc9f0694617075fDAF657a76FB2"
+      "priceFeedAddress": "0xe8D9FbC10e00ecc9f0694617075fDAF657a76FB2",
+      "updateTriggersOverrides": {
+        "deviationPercentage": 0.5,
+        "timeSinceLastUpdateInMilliseconds": 21600000
+      }
     },
     "BTC": {
-      "priceFeedAddress": "0xc44be6D00307c3565FDf753e852Fc003036cBc13"
+      "priceFeedAddress": "0xc44be6D00307c3565FDf753e852Fc003036cBc13",
+      "updateTriggersOverrides": {
+        "deviationPercentage": 0.5,
+        "timeSinceLastUpdateInMilliseconds": 21600000
+      }
     },
     "USDC": {
       "priceFeedAddress": "0xD15862FC3D5407A03B696548b6902D6464A69b8c",
@@ -60,39 +68,22 @@
       }
     },
     "wstETH/ETH": {
-      "priceFeedAddress": "0x24c8964338Deb5204B096039147B8e8C3AEa42Cc",
-      "updateTriggersOverrides": {
-        "deviationPercentage": 0.5,
-        "timeSinceLastUpdateInMilliseconds": 86400000
-      }
+      "priceFeedAddress": "0x24c8964338Deb5204B096039147B8e8C3AEa42Cc"
     },
     "rsETH_FUNDAMENTAL": {
-      "priceFeedAddress": "0x85C4F855Bc0609D2584405819EdAEa3aDAbfE97D",
-      "updateTriggersOverrides": {
-        "deviationPercentage": 0.5,
-        "timeSinceLastUpdateInMilliseconds": 86400000
-      }
+      "priceFeedAddress": "0x85C4F855Bc0609D2584405819EdAEa3aDAbfE97D"
     },
     "weETH_FUNDAMENTAL": {
-      "priceFeedAddress": "0xBf3bA2b090188B40eF83145Be0e9F30C6ca63689",
-      "updateTriggersOverrides": {
-        "deviationPercentage": 0.5,
-        "timeSinceLastUpdateInMilliseconds": 86400000
-      }
+      "priceFeedAddress": "0xBf3bA2b090188B40eF83145Be0e9F30C6ca63689"
     },
     "ezETH_FUNDAMENTAL": {
-      "priceFeedAddress": "0xa0f2EF6ceC437a4e5F6127d6C51E1B0d3A746911",
-      "updateTriggersOverrides": {
-        "deviationPercentage": 0.5,
-        "timeSinceLastUpdateInMilliseconds": 86400000
-      }
+      "priceFeedAddress": "0xa0f2EF6ceC437a4e5F6127d6C51E1B0d3A746911"
     },
     "wstETH/stETH": {
-      "priceFeedAddress": "0xC3346631E0A9720582fB9CAbdBEA22BC2F57741b",
-      "updateTriggersOverrides": {
-        "deviationPercentage": 0.5,
-        "timeSinceLastUpdateInMilliseconds": 86400000
-      }
+      "priceFeedAddress": "0xC3346631E0A9720582fB9CAbdBEA22BC2F57741b"
+    },
+    "USR_FUNDAMENTAL": {
+      "priceFeedAddress": "0xbbF121624c3b85C929Ac83872bf6c86b0976A55e"
     }
   }
 }
