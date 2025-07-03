@@ -1325,8 +1325,8 @@
     }
   },
   "temporaryConfigUpdates": {
-    "expirationTimestamp": "2025-06-26T16:01:00+02:00",
-    "merlin": {
+    "expirationTimestamp": "2025-07-04T12:01:00+02:00",
+    "solana-testnet": {
       "disabled": true
     }
   }
