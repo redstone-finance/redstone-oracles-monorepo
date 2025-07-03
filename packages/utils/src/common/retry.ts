@@ -5,11 +5,10 @@ import { sleep } from "./time";
 const logger = loggerFactory("retry");
 
 export type RetryConfig<
-  T extends (...args: unknown[]) => Promise<unknown> = (
-    ...args: unknown[]
-  ) => Promise<unknown>,
+  P extends unknown[] = [],
+  R extends Promise<unknown> = Promise<unknown>,
 > = {
-  fn: T;
+  fn: (...args: P) => R;
   fnName?: string;
   maxRetries: number;
   waitBetweenMs?: number;
@@ -19,21 +18,20 @@ export type RetryConfig<
   };
 };
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export function retry<T extends (...args: any[]) => Promise<unknown>>(
-  config: RetryConfig<T>
+export function retry<P extends unknown[], R extends Promise<unknown>>(
+  config: RetryConfig<P, R>
 ) {
   if (config.maxRetries === 0) {
     throw new Error(
       `Setting 'config.maxRetries' to 0 will never call the underlying function`
     );
   }
-  return async (...args: Parameters<T>): Promise<Awaited<ReturnType<T>>> => {
+  return async (...args: P): Promise<Awaited<R>> => {
     const fnName = config.fnName ?? config.fn.name;
     const errors = [];
     for (let i = 0; i < config.maxRetries; i++) {
       try {
-        return await (config.fn(...args) as Promise<ReturnType<T>>);
+        return await config.fn(...args);
       } catch (e) {
         errors.push(e);
 
