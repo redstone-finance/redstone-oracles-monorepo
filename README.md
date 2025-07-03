@@ -24,6 +24,13 @@ You can learn more at https://docs.redstone.finance
 - [eth-contracts](packages/eth-contracts/) (Implementation of RedStone token with vesting, locking, and disputes
   resolution protocol)
 
+## Configure development environment
+
+- install nvm `brew install nvm` and select node 22 `nvm use 22`
+- enable corepack feature of node `corepack enable`
+- install dependencies `yarn`
+- build everything `yarn build:all`
+
 ## 🙋‍♂️ Contact
 
 Please feel free to contact us on [Discord](https://redstone.finance/discord) or email to core@redstone.finance.
