@@ -2733,6 +2733,30 @@
       "source": ["ethereum-evm-fetcher-reserve"],
       "denomination": "USD",
       "rateFeed": true
+    },
+    "SUSHI": {
+      "source": [
+        "binance-usdc",
+        "binance-usdt",
+        "bingx-usdt",
+        "bitget-usdt",
+        "bitmart-usdt",
+        "bybit-usdt",
+        "gate-usdt",
+        "kraken-usd",
+        "kucoin-usdt",
+        "lbank-usdt",
+        "mexc-usdt",
+        "okx-usdt",
+        "xt"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "stHYPE_LP_FUNDAMENTAL": {
+      "source": ["hyperevm-evm-fetcher-valantis-lp"],
+      "denomination": "HYPE",
+      "rateFeed": true
     }
   },
   "multiPointPackages": {
