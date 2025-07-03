@@ -652,22 +652,6 @@
       "twoDimensionalFees": false,
       "isMainnet": true
     },
-    "haven1Testnet": {
-      "name": "Haven1 Testnet",
-      "networkId": 810,
-      "chainId": 810,
-      "currencySymbol": "H1",
-      "publicRpcUrls": ["https://testnet-rpc.haven1.org"],
-      "avgBlockTimeMs": 6000,
-      "multicall3": {
-        "address": "0x34E53CC3D178Cf10BDF40bf94144444c246003CB",
-        "type": "Multicall3"
-      },
-      "isAuctionModel": false,
-      "twoDimensionalFees": false,
-      "isMainnet": false,
-      "disabled": true
-    },
     "hemiTestnet": {
       "name": "Hemi Sepolia",
       "networkId": 743111,
