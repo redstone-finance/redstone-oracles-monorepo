@@ -32,7 +32,6 @@ const defaultRelayersToSkip = [
   "sepoliaVenusXvs",
   "venusBnbTestnet",
   "optimismDevMultiFeed",
-  "haven1Testnet",
   "sepoliaMultiFeed",
   "blastTestnet",
 ];
