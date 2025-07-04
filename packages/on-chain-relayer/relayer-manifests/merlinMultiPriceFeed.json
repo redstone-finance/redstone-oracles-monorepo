@@ -10,7 +10,6 @@
   "adapterContract": "0x7C1DAAE7BB0688C9bfE3A918A4224041c7177256",
   "dataServiceId": "redstone-primary-prod",
   "priceFeeds": {
-    "BTC": "__NO_FEED__",
-    "SolvBTC_MERLIN/BTC-TWAP-60": "__NO_FEED__"
+    "BTC": "__NO_FEED__"
   }
 }
