@@ -83,7 +83,7 @@ export class SolanaPricesContractAdapter
     }
 
     this.logger.debug(`Fetching payloads for [${feedIds.toString()}].`);
-    const provider = paramsProvider.copyForFeedIds(feedIds);
+    const provider = paramsProvider.copyWithOverriddenFeedIds(feedIds);
 
     const { payloads } = ContractParamsProvider.extractMissingValues(
       await provider.prepareSplitPayloads({
