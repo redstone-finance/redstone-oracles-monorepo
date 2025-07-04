@@ -1,4 +1,3 @@
-import { ContractParamsProvider } from "@redstone-finance/sdk";
 import { loggerFactory, RedstoneCommon, Tx } from "@redstone-finance/utils";
 import { RelayerConfig } from "../../config/RelayerConfig";
 import { updateUsingOevAuction } from "../../custom-integrations/fastlane/update-using-oev-auction";
@@ -19,30 +18,38 @@ export class OevTxDeliveryMan implements Tx.ITxDeliveryMan {
     context: RelayerTxDeliveryManContext
   ) {
     try {
-      await this.updateUsingOevAction(txDeliveryCall, context.paramsProvider);
-    } catch (_error) {
+      await this.updateUsingOevAuction(txDeliveryCall);
+      this.logger.log(
+        "Update using oev auction has finished. Proceeding with a standard update"
+      );
+      if (context.deferredCallData) {
+        txDeliveryCall.data = await context.deferredCallData();
+      }
+      await this.fallbackDeliveryMan.deliver(txDeliveryCall, context);
+      this.logger.log("Standard update has finished");
+    } catch (e) {
+      this.logger.error(
+        `Failed to update using oev auction: ${RedstoneCommon.stringifyError(e)}`
+      );
       if (context.canOmitFallbackAfterFailing) {
         this.logger.log("Skipping as update was optional");
       } else {
-        this.logger.info(
+        this.logger.warn(
           `Failed to update using OEV auction, proceeding with standard update`
         );
-
+        if (context.deferredCallData) {
+          txDeliveryCall.data = await context.deferredCallData();
+        }
         await this.fallbackDeliveryMan.deliver(txDeliveryCall, context);
       }
     }
   }
 
-  private async updateUsingOevAction(
-    txDeliveryCall: Tx.TxDeliveryCall,
-    paramsProvider: ContractParamsProvider | undefined
-  ) {
+  private async updateUsingOevAuction(txDeliveryCall: Tx.TxDeliveryCall) {
     const updateUsingOevAuctionPromise = updateUsingOevAuction(
       this.relayerConfig,
       txDeliveryCall.data,
-      await this.adapterContract.provider.getBlockNumber(),
-      this.adapterContract,
-      await paramsProvider!.requestDataPackages()
+      this.adapterContract
     );
     const timeout = this.relayerConfig.oevTotalTimeout;
 
