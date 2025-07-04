@@ -43,13 +43,14 @@ export type OnChainRelayerEnv = {
   fallbackSkipDeviationBasedFrequentUpdates: boolean;
   disableCustomGasOracle: boolean;
   temporaryUpdatePriceInterval: number;
-  getBlockNumberTimeout?: number;
+  getBlockNumberTimeout: number;
   useMulticallProvider: boolean;
   multiFeedAdditionalUpdatesDeviationThreshold?: number;
   multiFeedSyncHeartbeats?: boolean;
   oevAuctionUrl?: string;
   oevResolveAuctionTimeout: number;
   oevTotalTimeout: number;
+  oevAuctionVerificationTimeout?: number;
   oevVerifyGasPriceDisabled: boolean;
   enableEnhancedRequestDataPackagesLogs?: boolean;
   waitForAllGatewaysTimeMs?: number;
