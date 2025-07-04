@@ -36,8 +36,15 @@ export class ContractParamsProvider {
     return this.copyForFeedIds([feedId]);
   }
 
-  copyForFeedIds(feedIds: string[]) {
+  copyWithOverriddenFeedIds(feedIds: string[]) {
     return new ContractParamsProvider(this.requestParams, this.cache, feedIds);
+  }
+
+  copyForFeedIds(feedIds: string[]) {
+    return new ContractParamsProvider(
+      { ...this.requestParams, dataPackagesIds: feedIds },
+      this.cache
+    );
   }
 
   static hexlifyFeedIds(
