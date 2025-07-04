@@ -1,4 +1,5 @@
 import { ContractParamsProvider } from "@redstone-finance/sdk";
+import { UpdatePricesOptions } from "../../facade/ContractFacade";
 import { ContractData } from "../../types";
 
 export interface IRedstoneContractAdapter {
@@ -12,7 +13,7 @@ export interface IRedstoneContractAdapter {
 
   writePricesFromPayloadToContract(
     paramsProvider: ContractParamsProvider,
-    canOmitFallbackAfterFailing?: boolean
+    options?: UpdatePricesOptions
   ): Promise<unknown>;
 
   getSignerAddress(): Promise<string | undefined>;

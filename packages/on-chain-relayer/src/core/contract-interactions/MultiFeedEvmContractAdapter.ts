@@ -4,12 +4,21 @@ import { loggerFactory, Tx } from "@redstone-finance/utils";
 import { utils } from "ethers";
 import _ from "lodash";
 import { MultiFeedAdapterWithoutRounds } from "../../../typechain-types";
+import { UpdatePricesOptions } from "../../facade/ContractFacade";
 import { ContractData, LastRoundDetails } from "../../types";
 import { EvmContractAdapter } from "./EvmContractAdapter";
 
 const logger = loggerFactory("updatePrices/multi-feed");
 
 export class MultiFeedEvmContractAdapter extends EvmContractAdapter<MultiFeedAdapterWithoutRounds> {
+  constructor(
+    adapterContract: MultiFeedAdapterWithoutRounds,
+    txDeliveryMan: Tx.ITxDeliveryMan,
+    private shouldUpdateAllFeedsInBaseIteration?: boolean
+  ) {
+    super(adapterContract, txDeliveryMan);
+  }
+
   async makeUpdateTx(
     paramsProvider: ContractParamsProvider,
     metadataTimestamp: number
@@ -48,6 +57,15 @@ export class MultiFeedEvmContractAdapter extends EvmContractAdapter<MultiFeedAda
     );
 
     return txCall;
+  }
+
+  protected override getBaseIterationTxParamsProvider(
+    paramsProvider: ContractParamsProvider,
+    options?: UpdatePricesOptions
+  ): ContractParamsProvider {
+    return options && this.shouldUpdateAllFeedsInBaseIteration
+      ? paramsProvider.copyForFeedIds(options.allFeedIds)
+      : super.getBaseIterationTxParamsProvider(paramsProvider, options);
   }
 
   override async readLatestRoundContractData(

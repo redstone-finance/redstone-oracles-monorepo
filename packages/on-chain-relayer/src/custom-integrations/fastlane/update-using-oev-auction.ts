@@ -1,23 +1,13 @@
 import { JsonRpcProvider } from "@ethersproject/providers";
 import {
-  Multicall3Request,
-  safeExecuteMulticall3,
-} from "@redstone-finance/rpc-providers";
-import { DataPackagesResponse } from "@redstone-finance/sdk";
-import {
   isEvmNetworkId,
   loggerFactory,
   RedstoneCommon,
 } from "@redstone-finance/utils";
 import axios from "axios";
 import { randomUUID } from "crypto";
-import { BigNumber, providers, Signer, Transaction } from "ethers";
-import {
-  defaultAbiCoder,
-  formatBytes32String,
-  parseTransaction,
-} from "ethers/lib/utils";
-import { RedstoneAdapterBase } from "../../../typechain-types";
+import { providers, Signer, Transaction } from "ethers";
+import { parseTransaction } from "ethers/lib/utils";
 import { RelayerConfig } from "../../config/RelayerConfig";
 import { RedstoneEvmContract } from "../../facade/evm/EvmContractFacade";
 
@@ -26,33 +16,47 @@ const logger = loggerFactory("update-using-oev-auction");
 export const updateUsingOevAuction = async (
   relayerConfig: RelayerConfig,
   txDeliveryCalldata: string,
-  blockTag: number,
-  adapterContract: RedstoneEvmContract,
-  dataPackagesResponse: DataPackagesResponse
+  adapterContract: RedstoneEvmContract
 ) => {
   logger.log(`Updating using OEV auction`);
   const start = Date.now();
-  const signedTransactions = await runOevAuction(
+  const { id, result } = await runOevAuction(
     relayerConfig,
     adapterContract.signer,
     txDeliveryCalldata
   );
+  const auctionFinished = Date.now();
   logger.log(
-    `Received signed oev transactions: ${JSON.stringify(signedTransactions)}`
+    `Received signed oev id: ${id}, transactions ${result.length} in ${auctionFinished - start}ms `
   );
-  await Promise.any(
-    signedTransactions.map((tx) =>
-      verifyFastlaneResponse(
-        adapterContract.provider as providers.JsonRpcProvider,
-        tx,
-        blockTag,
-        adapterContract as RedstoneAdapterBase,
-        dataPackagesResponse,
-        relayerConfig
-      )
+  const verificationTimeout =
+    relayerConfig.oevAuctionVerificationTimeout ??
+    1.5 * relayerConfig.getBlockNumberTimeout;
+
+  const verificationPromises = result.map((tx) =>
+    verifyFastlaneResponse(
+      adapterContract.provider as providers.JsonRpcProvider,
+      tx,
+      relayerConfig
     )
   );
-  logger.log(`OEV auction successfully completed in ${Date.now() - start}ms`);
+
+  await RedstoneCommon.timeout(
+    Promise.any(verificationPromises),
+    verificationTimeout,
+    `Verification of the OEV auction didn't finish in ${verificationTimeout} [ms].`
+  );
+
+  const finish = Date.now();
+  logger.log(
+    `OEV auction successfully completed in ${finish - start}ms, verification took ${finish - auctionFinished}ms`
+  );
+};
+
+type OevAuctionResponse = {
+  jsonrpc: string;
+  id: number;
+  result: string[];
 };
 
 const runOevAuction = async (
@@ -85,7 +89,7 @@ const runOevAuction = async (
     ],
   });
   try {
-    const response = await axios.post<string[]>(oevAuctionUrl, body, {
+    const response = await axios.post<OevAuctionResponse>(oevAuctionUrl, body, {
       timeout: relayerConfig.oevResolveAuctionTimeout,
     });
     return response.data;
@@ -100,27 +104,11 @@ const runOevAuction = async (
 const verifyFastlaneResponse = async (
   provider: JsonRpcProvider,
   tx: string,
-  blockTag: number,
-  adapterContract: RedstoneAdapterBase,
-  dataPackagesResponse: DataPackagesResponse,
   relayerConfig: RelayerConfig
 ) => {
   const decodedTx = parseTransaction(tx);
   logger.log(`Decoded transaction from FastLane: ${JSON.stringify(decodedTx)}`);
   void tryToPropagateTransaction(provider, tx);
-  const checkIfTransactionUpdatesPricePromise = checkIfTransactionUpdatesPrice(
-    provider,
-    decodedTx,
-    blockTag,
-    adapterContract,
-    dataPackagesResponse,
-    relayerConfig
-  ).catch((error) => {
-    logger.log(
-      `Failed to check if transaction updates price: ${RedstoneCommon.stringifyError(error)}`
-    );
-    throw error;
-  });
   const waitForTransactionToMintPromise = waitForTransactionMint(
     provider,
     decodedTx
@@ -140,11 +128,7 @@ const verifyFastlaneResponse = async (
     );
     throw error;
   });
-  await Promise.all([
-    checkIfTransactionUpdatesPricePromise,
-    waitForTransactionToMintPromise,
-    checkGasPricePromise,
-  ]);
+  await Promise.all([waitForTransactionToMintPromise, checkGasPricePromise]);
 };
 
 const tryToPropagateTransaction = async (
@@ -164,87 +148,16 @@ const waitForTransactionMint = async (
   provider: providers.JsonRpcProvider,
   decodedTx: Transaction
 ) => {
-  logger.log("Waiting for transaction with oev to mint");
+  const start = Date.now();
+  logger.log(`Waiting for transaction with oev to mint`);
   const receipt = await provider.waitForTransaction(decodedTx.hash!);
   if (receipt.status !== 1) {
-    throw new Error("Fastlane transaction failed");
+    throw new Error(`Fastlane transaction failed after ${Date.now() - start}`);
   } else {
-    logger.log(`OEV transaction: ${decodedTx.hash} minted`);
-  }
-};
-
-const checkIfTransactionUpdatesPrice = async (
-  provider: JsonRpcProvider,
-  decodedTx: Transaction,
-  blockTag: number,
-  adapterContract: RedstoneAdapterBase,
-  dataPackagesResponse: DataPackagesResponse,
-  relayerConfig: RelayerConfig
-) => {
-  const priceUpdateRequest: Multicall3Request = {
-    target: decodedTx.to!,
-    allowFailure: false,
-    callData: decodedTx.data,
-  };
-  const { dataFeeds } = relayerConfig;
-  const calldata = adapterContract.interface.encodeFunctionData(
-    "getValuesForDataFeeds",
-    [dataFeeds.map(formatBytes32String)]
-  );
-
-  const priceCheckRequest: Multicall3Request = {
-    target: adapterContract.address,
-    allowFailure: false,
-    callData: calldata,
-  };
-  const result = await safeExecuteMulticall3(
-    provider,
-    [priceUpdateRequest, priceCheckRequest],
-    false,
-    blockTag
-  );
-  const priceResult = defaultAbiCoder.decode(
-    ["uint256[]"],
-    result[1].returnData
-  );
-  const contractDecimals = Math.pow(10, 8);
-  const dataFeedIdsWithPricesFromContract = (priceResult[0] as BigNumber[]).map(
-    (price, i) => {
-      return {
-        dataFeedId: dataFeeds[i],
-        price: price.toNumber() / contractDecimals,
-      };
-    }
-  );
-  for (const dataFeedIdWithPriceFromContract of dataFeedIdsWithPricesFromContract) {
-    const dataPackagesFromGateway =
-      dataPackagesResponse[dataFeedIdWithPriceFromContract.dataFeedId];
-    if (!dataPackagesFromGateway) {
-      const errorMessage = `There are no data packages for ${dataFeedIdWithPriceFromContract.dataFeedId}`;
-      logger.error(errorMessage);
-      throw new Error(errorMessage);
-    }
-    const valuesFromGateway = dataPackagesFromGateway.map(
-      (dp) =>
-        Math.round(Number(dp.toObj().dataPoints[0].value) * contractDecimals) /
-        contractDecimals
+    logger.log(
+      `OEV transaction: ${decodedTx.hash} minted, took: ${Date.now() - start}ms`
     );
-    const averageValueFromGateway =
-      valuesFromGateway.reduce((value1, value2) => value1 + value2, 0) /
-      valuesFromGateway.length;
-    // minor discrepancies may occur between Solidity and gateway-provided numbers due to precision differences
-    if (
-      !areAlmostEqual(
-        averageValueFromGateway,
-        dataFeedIdWithPriceFromContract.price
-      )
-    ) {
-      const errorMessage = `FastLane transaction does not update price for: ${dataFeedIdWithPriceFromContract.dataFeedId}, value from simulation: ${dataFeedIdWithPriceFromContract.price}, value from expected update: ${averageValueFromGateway}`;
-      logger.error(errorMessage);
-      throw new Error(errorMessage);
-    }
   }
-  logger.log(`FastLane transaction: ${decodedTx.hash} updates price`);
 };
 
 const verifyGasPrice = async (
@@ -263,14 +176,6 @@ const verifyGasPrice = async (
       throw new Error("FastLane transaction gasPrice too low");
     }
   }
-};
-
-const areAlmostEqual = (num1: number, num2: number) => {
-  const threshold = 0.00001; // 0.001% difference threshold
-  return (
-    Math.abs(num1 - num2) <=
-    threshold * Math.max(Math.abs(num1), Math.abs(num2))
-  );
 };
 
 const logOevAuctionError = (error: unknown) => {

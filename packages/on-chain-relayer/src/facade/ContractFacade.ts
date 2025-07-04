@@ -11,6 +11,11 @@ import { IRedstoneContractAdapter } from "../core/contract-interactions/IRedston
 import { makeDataPackagesRequestParams } from "../core/make-data-packages-request-params";
 import { ContractData, ShouldUpdateContext, UpdatePricesArgs } from "../types";
 
+export type UpdatePricesOptions = {
+  canOmitFallbackAfterFailing?: boolean;
+  allFeedIds: string[];
+};
+
 export abstract class ContractFacade {
   private readonly logger = loggerFactory("contract-facade");
 
@@ -78,7 +83,7 @@ export abstract class ContractFacade {
 
   async updatePrices(
     args: UpdatePricesArgs,
-    canOmitFallbackAfterFailing?: boolean
+    options?: UpdatePricesOptions
   ): Promise<void> {
     const adapter = await this.connector.getAdapter();
 
@@ -87,7 +92,7 @@ export abstract class ContractFacade {
         args.updateRequestParams,
         args.dataFeedsToUpdate
       ),
-      canOmitFallbackAfterFailing
+      options
     );
 
     if (typeof result === "string") {

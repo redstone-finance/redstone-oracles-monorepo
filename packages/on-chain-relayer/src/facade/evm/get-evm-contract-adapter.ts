@@ -6,6 +6,7 @@ import {
   MultiFeedAdapterWithoutRounds,
   RedstoneAdapterBase,
 } from "../../../typechain-types";
+import { isOevRelayerConfig } from "../../config/is-oev-relayer-config";
 import { EvmContractAdapter } from "../../core/contract-interactions/EvmContractAdapter";
 import { MentoEvmContractAdapter } from "../../core/contract-interactions/MentoEvmContractAdapter";
 import { MultiFeedEvmContractAdapter } from "../../core/contract-interactions/MultiFeedEvmContractAdapter";
@@ -23,6 +24,7 @@ export function getEvmContractAdapter(
   relayerConfig: {
     adapterContractType: AdapterType;
     mentoMaxDeviationAllowed?: number;
+    oevAuctionUrl?: string;
   },
   adapterContract: RedstoneEvmContract,
   txDeliveryMan = emptyTxDeliveryMan
@@ -31,7 +33,8 @@ export function getEvmContractAdapter(
     case "multi-feed": {
       return new MultiFeedEvmContractAdapter(
         adapterContract as MultiFeedAdapterWithoutRounds,
-        txDeliveryMan
+        txDeliveryMan,
+        isOevRelayerConfig(relayerConfig)
       );
     }
 

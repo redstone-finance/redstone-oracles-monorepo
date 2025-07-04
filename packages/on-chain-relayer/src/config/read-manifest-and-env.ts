@@ -170,6 +170,10 @@ export const readManifestAndEnv = async () => {
       "OEV_RESOLVE_AUCTION_TIMEOUT_MS",
       z.number().default(2000)
     ),
+    oevAuctionVerificationTimeout: RedstoneCommon.getFromEnv(
+      "OEV_AUCTION_VERIFICATION_TIMEOUT",
+      z.number().optional()
+    ),
     oevTotalTimeout: RedstoneCommon.getFromEnv(
       "OEV_TOTAL_TIMEOUT_MS",
       z.number().default(10000)

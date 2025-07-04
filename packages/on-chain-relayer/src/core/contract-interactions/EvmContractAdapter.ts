@@ -1,5 +1,6 @@
 import { ContractParamsProvider } from "@redstone-finance/sdk";
 import { Tx } from "@redstone-finance/utils";
+import { UpdatePricesOptions } from "../../facade/ContractFacade";
 import { RedstoneEvmContract } from "../../facade/evm/EvmContractFacade";
 import { ContractData } from "../../types";
 import { IRedstoneContractAdapter } from "./IRedstoneContractAdapter";
@@ -34,18 +35,32 @@ export abstract class EvmContractAdapter<Contract extends RedstoneEvmContract>
 
   async writePricesFromPayloadToContract(
     paramsProvider: ContractParamsProvider,
-    canOmitFallbackAfterFailing?: boolean
+    options?: UpdatePricesOptions
   ) {
     const metadataTimestamp = Date.now();
-    const updateTx = await this.makeUpdateTx(paramsProvider, metadataTimestamp);
+    const baseParamsProvider = this.getBaseIterationTxParamsProvider(
+      paramsProvider,
+      options
+    );
+    const updateTx = await this.makeUpdateTx(
+      baseParamsProvider,
+      metadataTimestamp
+    );
 
     return await this.txDeliveryMan.deliver(updateTx, {
       deferredCallData: () =>
         this.makeUpdateTx(paramsProvider, metadataTimestamp).then(
           (tx) => tx.data
         ),
-      paramsProvider,
-      canOmitFallbackAfterFailing,
+      paramsProvider: baseParamsProvider,
+      canOmitFallbackAfterFailing: options?.canOmitFallbackAfterFailing,
     } as RelayerTxDeliveryManContext);
+  }
+
+  protected getBaseIterationTxParamsProvider(
+    paramsProvider: ContractParamsProvider,
+    _options?: UpdatePricesOptions
+  ) {
+    return paramsProvider;
   }
 }

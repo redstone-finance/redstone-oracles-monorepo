@@ -25,6 +25,7 @@ const EMPTY_GELATO_ENV: OnChainRelayerEnv = {
   oevTotalTimeout: 10000,
   oevResolveAuctionTimeout: 2000,
   oevVerifyGasPriceDisabled: false,
+  getBlockNumberTimeout: 1000,
   waitForAllGatewaysTimeMs: 5000,
   includeAdditionalFeedsForGasOptimization: true,
 };

@@ -1,9 +1,6 @@
-import {
-  loggerFactory,
-  RedstoneCommon,
-  sendHealthcheckPing,
-} from "@redstone-finance/utils";
+import { loggerFactory, sendHealthcheckPing } from "@redstone-finance/utils";
 import _ from "lodash";
+import { isOevRelayerConfig } from "../config/is-oev-relayer-config";
 import { isPaused } from "../config/is_paused";
 import { RelayerConfig } from "../config/RelayerConfig";
 import { ContractFacade } from "../facade/ContractFacade";
@@ -74,18 +71,15 @@ export const runIteration = async (
       logger.log(message, args)
     );
 
-    await contractFacade.updatePrices(
-      iterationArgs.args,
-      !iterationArgs.shouldUpdatePrices
-    );
+    await contractFacade.updatePrices(iterationArgs.args, {
+      canOmitFallbackAfterFailing: !iterationArgs.shouldUpdatePrices,
+      allFeedIds: relayerConfig.dataFeeds,
+    });
   }
 
   return iterationArgs.shouldUpdatePrices;
 };
 
 function shouldForceUpdateInEachIteration(relayerConfig: RelayerConfig) {
-  return (
-    RedstoneCommon.isDefined(relayerConfig.oevAuctionUrl) &&
-    relayerConfig.oevAuctionUrl.length
-  );
+  return isOevRelayerConfig(relayerConfig);
 }
