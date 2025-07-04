@@ -14,7 +14,7 @@
     "ETH": {},
     "BTC": {
       "updateTriggersOverrides": {
-        "deviationPercentage": 0.05,
+        "deviationPercentage": 0.2,
         "timeSinceLastUpdateInMilliseconds": 86400000
       }
     },
@@ -40,12 +40,6 @@
       "updateTriggersOverrides": {
         "deviationPercentage": 0.1,
         "timeSinceLastUpdateInMilliseconds": 86400000
-      }
-    },
-    "USDT": {
-      "updateTriggersOverrides": {
-        "deviationPercentage": 0.05,
-        "timeSinceLastUpdateInMilliseconds": 9000
       }
     }
   }
