@@ -28,6 +28,16 @@ export class ContractParamsProviderMock extends ContractParamsProvider {
       this.requestParams.uniqueSignersCount
     );
   }
+
+  override copyWithOverriddenFeedIds(dataFeeds: string[]) {
+    return new ContractParamsProviderMock(
+      dataFeeds,
+      this.filePath,
+      this.fileReader,
+      this.requestParams.uniqueSignersCount
+    );
+  }
+
   protected override requestPayload(): Promise<string> {
     return Promise.resolve(this.fileReader(this.filePath).toString());
   }
