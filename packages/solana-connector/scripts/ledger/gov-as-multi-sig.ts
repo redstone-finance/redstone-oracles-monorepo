@@ -13,7 +13,6 @@ import { RedstoneCommon } from "@redstone-finance/utils";
 import "dotenv/config";
 import path from "path";
 import { PROGRAM_SO_FILE } from "../consts";
-import { parseTransaction } from "../tx-checks/check-tx";
 import { makeConnection, readDeployDir, readKeypair } from "../utils";
 import {
   LEDGER_ACCOUNT,
@@ -305,7 +304,7 @@ async function handleCreateVaultTx(
   );
 
   const tx = await getTx(connection, ix, member);
-  await parseTransaction(tx, connection, squad);
+
   await sign(signer, tx);
   return tx;
 }
@@ -320,7 +319,7 @@ async function handlePropose(
   const ix = await squad.propose(member, transactionIdx);
 
   const tx = await getTx(connection, ix, member);
-  await parseTransaction(tx, connection, squad);
+
   await sign(signer, tx);
   return tx;
 }
@@ -335,7 +334,7 @@ async function handleApprove(
   const ix = await squad.approve(member, transactionIdx);
 
   const tx = await getTx(connection, ix, member);
-  await parseTransaction(tx, connection, squad);
+
   await sign(signer, tx);
   return tx;
 }
@@ -356,7 +355,6 @@ async function handleExecute(
     ixInfo.lookupTableAccounts
   );
 
-  await parseTransaction(tx, connection, squad);
   await sign(signer, tx);
   return tx;
 }
