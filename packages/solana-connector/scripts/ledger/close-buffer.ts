@@ -6,7 +6,6 @@ import {
 } from "@solana/web3.js";
 import "dotenv/config";
 import { BPF_UPGRADEABLE_LOADER } from "../consts";
-import { parseTransaction } from "../tx-checks/check-tx";
 import { makeConnection } from "../utils";
 import { LEDGER_ACCOUNT, makeSquads } from "./config";
 import { makeSolana } from "./ledger-utils";
@@ -48,7 +47,6 @@ async function main(buffer: PublicKey, recipient: PublicKey) {
   });
 
   const tx = new VersionedTransaction(message.compileToV0Message());
-  await parseTransaction(tx, connection, squad);
   await ledger.signTransaction(tx);
 
   console.log(await connection.sendTransaction(tx));
