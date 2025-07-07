@@ -76,18 +76,10 @@ export class HttpClient {
     if (isNode) {
       /** https://nodejs.org/api/http.html#new-agentoptions */
       this.httpsAgent = new HttpsAgent({
-        maxSockets: httpClientOptions.maxSockets,
-        maxTotalSockets: httpClientOptions.maxTotalSockets,
-        keepAlive: true,
-        keepAliveMsecs: httpClientOptions.keepAliveMsecs,
-        scheduling: httpClientOptions.scheduling,
+        ...httpClientOptions,
       });
       this.httpAgent = new HttpAgent({
-        maxSockets: httpClientOptions.maxSockets,
-        maxTotalSockets: httpClientOptions.maxTotalSockets,
-        keepAlive: true,
-        keepAliveMsecs: httpClientOptions.keepAliveMsecs,
-        scheduling: httpClientOptions.scheduling,
+        ...httpClientOptions,
       });
     }
 
