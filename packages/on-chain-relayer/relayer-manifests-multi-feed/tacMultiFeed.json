@@ -22,6 +22,12 @@
     },
     "TON": {
       "priceFeedAddress": "0x26FB59e5562405F42f55661f790fA1Bd2F410A3d"
+    },
+    "USDT": {
+      "priceFeedAddress": "0xb67047eDF6204F4C81333248dA71F8387050790C"
+    },
+    "tsTON_FUNDAMENTAL": {
+      "priceFeedAddress": "0xb9D0073aCb296719C26a8BF156e4b599174fe1d5"
     }
   }
 }
