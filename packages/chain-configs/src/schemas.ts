@@ -1,12 +1,10 @@
-import { ChainTypeEnum, NetworkIdSchema } from "@redstone-finance/utils";
+import { NetworkIdSchema } from "@redstone-finance/utils";
 import { z } from "zod";
 import chainConfigs from "../manifest/chain-configs.json";
 
 export { chainConfigs };
 
 export const ChainConfigSchema = z.object({
-  chainId: z.number().positive(),
-  chainType: ChainTypeEnum.default("evm"),
   networkId: NetworkIdSchema,
   name: z.string(),
   publicRpcUrls: z.string().url().array(),
