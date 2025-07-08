@@ -3,6 +3,12 @@
 pragma solidity ^0.8.17;
 
 interface IMultiFeedAdapter {
+
+  event ValueUpdate(uint256 value, bytes32 dataFeedId, uint256 updatedAt);
+  event UpdateSkipDueToBlockTimestamp(bytes32 dataFeedId);
+  event UpdateSkipDueToDataTimestamp(bytes32 dataFeedId);
+  event UpdateSkipDueToInvalidValue(bytes32 dataFeedId);
+
   function updateDataFeedsValuesPartial(bytes32[] memory dataFeedsIds) external;
 
   function getLastUpdateDetails(bytes32 dataFeedId) external view returns (uint256 lastDataTimestamp, uint256 lastBlockTimestamp, uint256 lastValue);
