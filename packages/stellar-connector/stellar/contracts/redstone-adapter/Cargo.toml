@@ -1,0 +1,16 @@
+[package]
+name = "redstone-adapter"
+version = "0.0.0"
+edition = "2021"
+publish = false
+
+[lib]
+crate-type = ["lib", "cdylib"]
+doctest = false
+
+[dependencies]
+soroban-sdk = { workspace = true, features = ["alloc"] }
+redstone = { git = "https://github.com/redstone-finance/rust-sdk", tag = "2.1.0-pre", default-features = false, features = ["soroban"] }
+
+[dev-dependencies]
+soroban-sdk = { workspace = true, features = ["testutils"] }
