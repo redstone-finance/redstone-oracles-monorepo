@@ -35,11 +35,6 @@ abstract contract MultiFeedAdapterWithoutRounds is RedstoneConsumerNumericBase, 
   error BlockTimestampTooLarge(uint256 blockTimestamp);
   error InvalidLastUpdateDetails(bytes32 dataFeedId, uint256 lastDataTimestamp, uint256 lastBlockTimestamp, uint256 lastValue);
 
-  event ValueUpdate(uint256 value, bytes32 dataFeedId, uint256 updatedAt);
-  event UpdateSkipDueToBlockTimestamp(bytes32 dataFeedId);
-  event UpdateSkipDueToDataTimestamp(bytes32 dataFeedId);
-  event UpdateSkipDueToInvalidValue(bytes32 dataFeedId);
-
   // This struct uses exactly one storage slot (32 bytes)
   struct DataFeedDetails {
     uint48 dataTimestamp;
