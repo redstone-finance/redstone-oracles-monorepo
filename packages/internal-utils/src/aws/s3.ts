@@ -21,6 +21,24 @@ export const writeS3Object = async (
   await getS3(region).putObject(params);
 };
 
+export const writeDownloadableS3Object = async (
+  bucketName: string,
+  path: string,
+  data: unknown,
+  contentType: string,
+  region?: string
+) => {
+  const params = {
+    Bucket: bucketName,
+    Key: path,
+    ContentType: contentType,
+    Body: data as string,
+    ContentDisposition: `attachment; filename="${path.split("/").pop()}"`,
+  };
+
+  await getS3(region).putObject(params);
+};
+
 export const readS3Object = async <T>(
   bucketName: string,
   bucketKey: string,
