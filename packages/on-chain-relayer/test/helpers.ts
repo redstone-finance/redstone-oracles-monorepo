@@ -1,4 +1,5 @@
 import { time } from "@nomicfoundation/hardhat-network-helpers";
+import { SignerWithAddress } from "@nomiclabs/hardhat-ethers/signers";
 import { WrapperBuilder } from "@redstone-finance/evm-connector";
 import {
   DataPackage,
@@ -14,7 +15,7 @@ import {
 } from "@redstone-finance/sdk";
 import { BigNumber, Contract, Signer } from "ethers";
 import { formatBytes32String } from "ethers/lib/utils";
-import { ethers } from "hardhat";
+import { ethers, network } from "hardhat";
 import { FactoryOptions } from "hardhat/types";
 import { RelayerConfig } from "../src";
 import { MockSortedOracles } from "../typechain-types";
@@ -231,3 +232,31 @@ export const originalDateNow = Date.now;
 export const restoreOriginalSystemTime = () => {
   Date.now = originalDateNow;
 };
+
+export async function getImpersonatedSigner(
+  address: string
+): Promise<SignerWithAddress> {
+  const initialFunds = ethers.utils.parseEther("1");
+  await network.provider.send("hardhat_setBalance", [
+    address,
+    ethers.utils.hexValue(initialFunds),
+  ]);
+  await network.provider.request({
+    method: "hardhat_impersonateAccount",
+    params: [address],
+  });
+  return await ethers.getSigner(address);
+}
+
+export function permutations<T>(list: T[]): T[][] {
+  if (list.length <= 1) return [list];
+
+  const result: T[][] = [];
+  for (let i = 0; i < list.length; i++) {
+    const tails = permutations(list.filter((_element, index) => i !== index));
+    for (const tail of tails) {
+      result.push([list[i], ...tail]);
+    }
+  }
+  return result;
+}
