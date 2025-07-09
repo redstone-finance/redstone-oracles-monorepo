@@ -9,7 +9,6 @@ import { TxDeliveryCall } from "@redstone-finance/rpc-providers";
 import { Tx } from "@redstone-finance/utils";
 import chai, { expect } from "chai";
 import chaiAsPromised from "chai-as-promised";
-import { BigNumber } from "ethers";
 import { parseUnits } from "ethers/lib/utils";
 import { ethers, upgrades } from "hardhat";
 import Sinon from "sinon";
@@ -329,12 +328,12 @@ describe("MentoAdapter", () => {
       BTC: {
         lastDataPackageTimestampMS: proposedTimestamp,
         lastBlockTimestampMS: timestampMilliseconds,
-        lastValue: BigNumber.from(1 * 10 ** 8),
+        lastValue: 100_000_000n,
       },
       ETH: {
         lastDataPackageTimestampMS: proposedTimestamp,
         lastBlockTimestampMS: timestampMilliseconds,
-        lastValue: BigNumber.from(2 * 10 ** 8),
+        lastValue: 200_000_000n,
       },
     });
   });
