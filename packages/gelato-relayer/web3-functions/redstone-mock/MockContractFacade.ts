@@ -7,7 +7,6 @@ import {
   ContractParamsProvider,
   DataPackagesRequestParams,
 } from "@redstone-finance/sdk";
-import { BigNumber } from "ethers";
 
 export class MockContractFacade extends EvmContractFacade {
   override getUniqueSignersThresholdFromContract(
@@ -23,7 +22,7 @@ export class MockContractFacade extends EvmContractFacade {
   ): Promise<ContractData> {
     return Promise.resolve({
       ETH: {
-        lastValue: BigNumber.from(20000),
+        lastValue: 20000n,
         lastBlockTimestampMS: 1654353399000,
         lastDataPackageTimestampMS: 1654353400000,
       },

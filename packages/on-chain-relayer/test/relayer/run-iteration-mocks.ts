@@ -4,7 +4,6 @@ import {
   getSignersForDataServiceId,
   IContractConnector,
 } from "@redstone-finance/sdk";
-import { BigNumber } from "ethers";
 import {
   IRedstoneContractAdapter,
   IterationArgsMessage,
@@ -29,12 +28,12 @@ class ContractAdapterMock implements IRedstoneContractAdapter {
       ETH: {
         lastDataPackageTimestampMS: 1732026000000,
         lastBlockTimestampMS: 1732026163000,
-        lastValue: BigNumber.from(30000),
+        lastValue: 30000n,
       },
       BTC: {
         lastDataPackageTimestampMS: 1732026000000,
         lastBlockTimestampMS: 1732026163000,
-        lastValue: BigNumber.from(90000),
+        lastValue: 90000n,
       },
     });
   }

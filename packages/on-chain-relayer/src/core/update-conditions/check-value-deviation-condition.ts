@@ -4,7 +4,7 @@ import {
   getDataPackagesTimestamp,
 } from "@redstone-finance/sdk";
 import { MathUtils } from "@redstone-finance/utils";
-import { BigNumber, utils } from "ethers";
+import { utils } from "ethers";
 
 import { RelayerConfig } from "../../config/RelayerConfig";
 
@@ -43,7 +43,7 @@ const verifyDataPackagesAreDisjoint = (dataPackages: DataPackagesResponse) => {
 export const checkValueDeviationCondition = (
   dataFeedId: string,
   dataPackages: DataPackagesResponse,
-  valueFromContract: BigNumber,
+  valueFromContract: bigint,
   config: RelayerConfig
 ) => {
   const logTrace = new ValueDeviationLogTrace();

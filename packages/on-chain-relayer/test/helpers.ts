@@ -33,7 +33,7 @@ interface DataPoint {
 }
 
 export const createNumberFromContract = (number: number, decimals = 8) =>
-  BigNumber.from(number * 10 ** decimals);
+  BigNumber.from(number * 10 ** decimals).toBigInt();
 
 export const dataFeedsIds = [ethDataFeed, btcDataFeed];
 
@@ -153,7 +153,7 @@ export const getDataPackagesResponse = async (
 
 export class ContractParamsProviderMock extends ContractParamsProvider {
   constructor(
-    private dataPoints: INumericDataPoint[] = DEFAULT_DATA_POINTS,
+    private readonly dataPoints: INumericDataPoint[] = DEFAULT_DATA_POINTS,
     overrideRequestParamsPackagesIds?: string[],
     cache?: DataPackagesResponseCache
   ) {
@@ -188,9 +188,7 @@ export const getMultiPointDataPackagesResponse = async (
     };
     const privateKey = mockWallet.privateKey;
     const signedDataPackage = mockDataPackage.dataPackage.sign(privateKey);
-    if (!signedDataPackages[dataPackageId]) {
-      signedDataPackages[dataPackageId] = [];
-    }
+    signedDataPackages[dataPackageId] ??= [];
     signedDataPackages[dataPackageId].push(signedDataPackage);
   }
   return signedDataPackages;
@@ -249,7 +247,9 @@ export async function getImpersonatedSigner(
 }
 
 export function permutations<T>(list: T[]): T[][] {
-  if (list.length <= 1) return [list];
+  if (list.length <= 1) {
+    return [list];
+  }
 
   const result: T[][] = [];
   for (let i = 0; i < list.length; i++) {

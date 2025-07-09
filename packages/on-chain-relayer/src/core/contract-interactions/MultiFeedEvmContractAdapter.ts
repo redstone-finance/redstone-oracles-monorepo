@@ -102,7 +102,7 @@ export class MultiFeedEvmContractAdapter extends EvmContractAdapter<MultiFeedAda
     return contractOutput.map((lastRoundDetails) => ({
       lastDataPackageTimestampMS: lastRoundDetails.dataTimestamp.toNumber(),
       lastBlockTimestampMS: lastRoundDetails.blockTimestamp.toNumber() * 1000,
-      lastValue: lastRoundDetails.value,
+      lastValue: lastRoundDetails.value.toBigInt(),
     }));
   }
 }

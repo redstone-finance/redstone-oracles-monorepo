@@ -140,7 +140,9 @@ const tokenAddressToValue = async (
   if (redstoneOracleIndex == -1) {
     return undefined;
   }
-  return rates[1][redstoneOracleIndex].div(BigNumber.from(10).pow(16));
+  return rates[1][redstoneOracleIndex]
+    .div(BigNumber.from(10).pow(16))
+    .toBigInt();
 };
 
 const dataFeedToTokenAddress = (
