@@ -9675,6 +9675,7 @@ __metadata:
     "@nomiclabs/hardhat-etherscan": "npm:^3.1.7"
     "@openzeppelin/contracts": "npm:^4.8.1"
     "@redstone-finance/on-chain-relayer": "workspace:*"
+    "@redstone-finance/protocol": "workspace:*"
     "@redstone-finance/rpc-providers": "workspace:*"
     "@tsconfig/recommended": "npm:1.0.2"
     "@typechain/ethers-v5": "npm:^10.2.0"

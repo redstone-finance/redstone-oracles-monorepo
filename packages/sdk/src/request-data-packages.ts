@@ -4,7 +4,6 @@ import {
 } from "@redstone-finance/protocol";
 import { RedstoneCommon } from "@redstone-finance/utils";
 import axios from "axios";
-import { BigNumber } from "ethers";
 import { z } from "zod";
 import { resolveDataServiceUrls } from "./data-services-urls";
 import { pickDataFeedPackagesClosestToMedian } from "./pick-closest-to-median";
@@ -84,7 +83,7 @@ export interface DataPackagesResponse {
 }
 
 export interface ValuesForDataFeeds {
-  [dataFeedId: string]: BigNumber | undefined;
+  [dataFeedId: string]: bigint | undefined;
 }
 
 export enum DataFeedPackageErrorType {
