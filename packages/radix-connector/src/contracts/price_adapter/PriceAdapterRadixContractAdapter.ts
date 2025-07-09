@@ -174,7 +174,7 @@ export class PriceAdapterRadixContractAdapter
     return {
       lastDataPackageTimestampMS: Number(data[2]),
       lastBlockTimestampMS: Number(data[1]),
-      lastValue: BigNumber.from(data[0]),
+      lastValue: BigNumber.from(data[0]).toBigInt(),
     };
   }
 
