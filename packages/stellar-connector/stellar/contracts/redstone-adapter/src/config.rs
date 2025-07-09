@@ -7,13 +7,14 @@ use redstone::{
 };
 use soroban_sdk::Env;
 
+// TODO: make use of the fields that start with underscore
 pub const STELLAR_CONFIG: Config = Config {
     signer_count_threshold: 1,
     signers: REDSTONE_PRIMARY_PROD_ALLOWED_SIGNERS,
-    // trusted_updaters: TRUSTED_UPDATERS,
+    _trusted_updaters: TRUSTED_UPDATERS,
     max_timestamp_ahead_ms: 30 * 60 * 1_000,
     max_timestamp_delay_ms: 30 * 60 * 1_000,
-    // min_interval_between_updates_ms: 40_000,
+    _min_interval_between_updates_ms: 40_000,
 };
 
 const REDSTONE_PRIMARY_PROD_ALLOWED_SIGNERS: [SignerAddressBs; 5] = [
@@ -39,17 +40,17 @@ const REDSTONE_PRIMARY_PROD_ALLOWED_SIGNERS: [SignerAddressBs; 5] = [
     ],
 ];
 
-// const TRUSTED_UPDATERS: [[u8; 32]; 0] = [];
+const TRUSTED_UPDATERS: [[u8; 32]; 0] = [];
 
 pub type SignerAddressBs = [u8; 20];
 
 pub struct Config {
     pub signer_count_threshold: u8,
     pub signers: [SignerAddressBs; 5],
-    // pub trusted_updaters: [[u8; 32]; 0],
+    pub _trusted_updaters: [[u8; 32]; 0],
     pub max_timestamp_delay_ms: u64,
     pub max_timestamp_ahead_ms: u64,
-    // pub min_interval_between_updates_ms: u64,
+    pub _min_interval_between_updates_ms: u64,
 }
 
 impl Config {
@@ -74,8 +75,4 @@ impl Config {
         )?;
         Ok((config, crypto).into())
     }
-
-    // pub fn trusted_updaters(&self) -> &[[u8; 32]] {
-    //     &self.trusted_updaters
-    // }
 }
