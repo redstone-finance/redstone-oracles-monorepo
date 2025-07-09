@@ -70,20 +70,4 @@ describe("check-value-deviation-condition", () => {
     expect(warningMessage).to.match(/Value has deviated enough to be/);
     expect(warningMessage).not.to.match(/Deviation in fallback mode:/);
   });
-
-  // it("should return true if value diff bigger than expected - medium packages", async () => {
-  //   const dataPackages = await getMultiPointDataPackagesResponse("ETH/BTC");
-  //   const biggerValueDiff: ValuesForDataFeeds = {
-  //     ETH: createNumberFromContract(1230.99),
-  //     BTC: createNumberFromContract(13011.68),
-  //   };
-  //   const { shouldUpdatePrices, warningMessage } = checkValueDeviationCondition(
-  //     dataPackages,
-  //     biggerValueDiff,
-  //     relayerConfig
-  //   );
-  //   expect(shouldUpdatePrices).to.be.true;
-  //   expect(warningMessage).to.match(/Value has deviated enough to be/);
-  //   expect(warningMessage).not.to.match(/Deviation in fallback mode:/);
-  // });
 });
