@@ -9,6 +9,8 @@ use soroban_sdk::{contract, contractimpl, symbol_short, Bytes, Env, Symbol};
 
 const VALUE: Symbol = symbol_short!("VALUE");
 const TIMESTAMP: Symbol = symbol_short!("TIMESTAMP");
+const TTL_TRESHOLD: u32 = 50;
+const TTL_EXTEND_TO: u32 = 10_000;
 
 #[contract]
 pub struct Contract;
@@ -29,7 +31,7 @@ impl Contract {
 
         env.storage().instance().set(&TIMESTAMP, &timestamp);
         env.storage().instance().set(&VALUE, &value);
-        env.storage().instance().extend_ttl(50, 10000);
+        env.storage().instance().extend_ttl(TTL_TRESHOLD, TTL_EXTEND_TO);
 
         (timestamp, value)
     }
