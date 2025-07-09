@@ -1,10 +1,9 @@
-import { BigNumber } from "ethers";
 import _ from "lodash";
 
 export type LastRoundDetails = {
   lastDataPackageTimestampMS: number;
   lastBlockTimestampMS: number;
-  lastValue: BigNumber;
+  lastValue: bigint;
 };
 
 export type ContractData = {
@@ -21,7 +20,7 @@ export function getLastRoundDetails(
     lastRoundDetails = {
       lastBlockTimestampMS: 0,
       lastDataPackageTimestampMS: 0,
-      lastValue: BigNumber.from(0),
+      lastValue: 0n,
     };
 
     if (updateBaseObject) {
