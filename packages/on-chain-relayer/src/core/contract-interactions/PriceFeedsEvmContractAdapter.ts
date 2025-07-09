@@ -5,7 +5,7 @@ import {
   ValuesForDataFeeds,
 } from "@redstone-finance/sdk";
 import { RedstoneCommon, Tx } from "@redstone-finance/utils";
-import { BigNumber, utils } from "ethers";
+import { utils } from "ethers";
 import { RedstoneAdapterBase } from "../../../typechain-types";
 import { ContractData } from "../../types";
 import { EvmContractAdapter } from "./EvmContractAdapter";
@@ -60,7 +60,7 @@ export class PriceFeedsEvmContractAdapter<
       lastRoundParams[dataFeedId] = {
         lastBlockTimestampMS,
         lastDataPackageTimestampMS,
-        lastValue: valuesFromContract[dataFeedId] ?? BigNumber.from(0),
+        lastValue: valuesFromContract[dataFeedId] ?? 0n,
       };
     }
 
@@ -75,7 +75,8 @@ export class PriceFeedsEvmContractAdapter<
       });
     const dataFeedsValues: ValuesForDataFeeds = {};
     for (const [index, dataFeedId] of dataFeeds.entries()) {
-      dataFeedsValues[dataFeedId] = valuesFromContractAsBigNumber[index];
+      dataFeedsValues[dataFeedId] =
+        valuesFromContractAsBigNumber[index].toBigInt();
     }
     return dataFeedsValues;
   }
