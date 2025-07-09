@@ -66,7 +66,7 @@ export class MovementPriceAdapterContractViewer extends MovementContractViewer {
       contractData[feedId] = {
         lastDataPackageTimestampMS: parseInt(data.write_timestamp),
         lastBlockTimestampMS: parseInt(data.timestamp),
-        lastValue: BigNumber.from(data.value),
+        lastValue: BigNumber.from(data.value).toBigInt(),
       };
     }
     return contractData;

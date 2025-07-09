@@ -57,10 +57,7 @@ describe("PriceAdapterRadixContractAdapter tests", () => {
     const paramsProvider = makeContractParamsProviderMock();
 
     const prices = await sut.readPricesFromContract(paramsProvider);
-    expect(prices).toStrictEqual([
-      BigNumber.from("0x35786397e2"),
-      BigNumber.from("0x084d466cdd35"),
-    ]);
+    expect(prices).toStrictEqual([229653059554n, 9127987043637n]);
   });
 
   it("readTimestampFromContractWithMethod should return proper value by using method", async () => {
