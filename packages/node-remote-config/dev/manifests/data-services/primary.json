@@ -1252,32 +1252,6 @@
       "denomination": "USD",
       "rateFeed": false
     },
-    "SolvBTC_MERLIN": {
-      "source": ["merlinswap-merlin-m-btc"],
-      "valueCapConfig": {
-        "upper": {
-          "token": "BTC",
-          "multiplier": 1.02
-        }
-      },
-      "denomination": "USD",
-      "rateFeed": false
-    },
-    "SolvBTC_MERLIN/BTC": {
-      "source": ["non-usd-based"],
-      "valueCapConfig": {
-        "upper": {
-          "value": 1.01
-        }
-      },
-      "denomination": "BTC",
-      "rateFeed": false
-    },
-    "SolvBTC_MERLIN/BTC-TWAP-60": {
-      "source": ["twap-local-redstone-primary-prod"],
-      "denomination": "BTC",
-      "rateFeed": false
-    },
     "KES": {
       "source": [
         "alphavantage-usd",
@@ -1396,21 +1370,6 @@
       "denomination": "USD",
       "rateFeed": false
     },
-    "ZKL": {
-      "source": [
-        "bingx-usdt",
-        "bitget-usdt",
-        "bitmart-usdt",
-        "bybit-usdt",
-        "gate-usdt",
-        "kucoin-usdt",
-        "lbank-usdt",
-        "mexc-usdt",
-        "xt"
-      ],
-      "denomination": "USD",
-      "rateFeed": false
-    },
     "mETH_FUNDAMENTAL": {
       "source": ["ethereum-evm-fetcher-mantle-lsp-staking"],
       "denomination": "ETH",
@@ -1450,7 +1409,8 @@
       "source": [
         "curve-ethereum-sdai",
         "curve-ethereum-susde",
-        "curve-ethereum-scrvusd_fundamental/usd"
+        "curve-ethereum-scrvusd_fundamental/usd",
+        "curve-ethereum-susds_fundamental/usd"
       ],
       "deviationCheck": {
         "deviationWithRecentValues": {
@@ -2755,6 +2715,26 @@
     },
     "stHYPE_LP_FUNDAMENTAL": {
       "source": ["hyperevm-evm-fetcher-valantis-lp"],
+      "denomination": "HYPE",
+      "rateFeed": true
+    },
+    "hbUSDT_FUNDAMENTAL": {
+      "source": ["hyperevm-evm-fetcher-hyperbeat-hbusdt"],
+      "denomination": "USD",
+      "rateFeed": true
+    },
+    "hbHYPE_FUNDAMENTAL": {
+      "source": ["hyperevm-evm-fetcher-hyperbeat"],
+      "denomination": "HYPE",
+      "rateFeed": true
+    },
+    "hbBTC_FUNDAMENTAL": {
+      "source": ["hyperevm-evm-fetcher-hyperbeat"],
+      "denomination": "BTC",
+      "rateFeed": true
+    },
+    "kHYPE_FUNDAMENTAL": {
+      "source": ["hyperevm-evm-fetcher-kinetiq"],
       "denomination": "HYPE",
       "rateFeed": true
     }
