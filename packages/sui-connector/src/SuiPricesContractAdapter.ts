@@ -7,7 +7,6 @@ import {
   IMultiFeedPricesContractAdapter,
 } from "@redstone-finance/sdk";
 import { RedstoneCommon } from "@redstone-finance/utils";
-import { BigNumberish } from "ethers";
 import _ from "lodash";
 import { SuiConfig } from "./config";
 import { PriceAdapterConfig } from "./PriceAdapterConfig";
@@ -101,7 +100,7 @@ export class SuiPricesContractAdapter
   async readPricesFromContract(
     paramsProvider: ContractParamsProvider,
     blockNumber?: number
-  ): Promise<BigNumberish[]> {
+  ): Promise<bigint[]> {
     const contractData = await this.readContractData(
       paramsProvider.getDataFeedIds(),
       blockNumber
@@ -166,7 +165,7 @@ export class SuiPricesContractAdapter
   //eslint-disable-next-line @typescript-eslint/require-await
   async getPricesFromPayload(
     _paramsProvider: ContractParamsProvider
-  ): Promise<BigNumberish[]> {
+  ): Promise<bigint[]> {
     throw new Error("Pull model not supported");
   }
 }
