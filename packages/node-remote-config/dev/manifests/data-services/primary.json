@@ -2713,11 +2713,6 @@
       "denomination": "USD",
       "rateFeed": false
     },
-    "stHYPE_LP_FUNDAMENTAL": {
-      "source": ["hyperevm-evm-fetcher-valantis-lp"],
-      "denomination": "HYPE",
-      "rateFeed": true
-    },
     "hbUSDT_FUNDAMENTAL": {
       "source": ["hyperevm-evm-fetcher-hyperbeat-hbusdt"],
       "denomination": "USD",
