@@ -8,7 +8,7 @@ import { extractNumbers } from "../starknet-utils";
 export class PriceFeedStarknetContractAdapter
   implements IPriceFeedContractAdapter
 {
-  constructor(private contract: Contract) {}
+  constructor(private readonly contract: Contract) {}
 
   async getPriceAndTimestamp(): Promise<PriceAndTimestamp> {
     const response = await this.contract.call("read_price_and_timestamp");
@@ -16,7 +16,7 @@ export class PriceFeedStarknetContractAdapter
 
     return {
       value: values[0],
-      timestamp: values[1],
+      timestamp: Number(values[1]),
     };
   }
 }

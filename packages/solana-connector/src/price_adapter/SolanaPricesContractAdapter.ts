@@ -6,7 +6,6 @@ import {
 } from "@redstone-finance/sdk";
 import { loggerFactory, RedstoneCommon } from "@redstone-finance/utils";
 import { PublicKey } from "@solana/web3.js";
-import { BigNumberish } from "ethers";
 import _ from "lodash";
 import { SolanaTxDeliveryMan } from "../client/SolanaTxDeliveryMan";
 import { PriceAdapterContract } from "./PriceAdapterContract";
@@ -44,7 +43,7 @@ export class SolanaPricesContractAdapter
     return priceData.writeTimestamp?.toNumber();
   }
 
-  getPricesFromPayload(_: ContractParamsProvider): Promise<BigNumberish[]> {
+  getPricesFromPayload(_: ContractParamsProvider): Promise<bigint[]> {
     throw new Error("Pull model not supported");
   }
 
@@ -136,7 +135,7 @@ export class SolanaPricesContractAdapter
   async readPricesFromContract(
     paramsProvider: ContractParamsProvider,
     slot?: number
-  ): Promise<BigNumberish[]> {
+  ): Promise<bigint[]> {
     const feedIds = paramsProvider.getDataFeedIds();
     const priceData = await this.contract.getMultiplePriceData(feedIds, slot);
     const missingFeedIndex = priceData.findIndex(

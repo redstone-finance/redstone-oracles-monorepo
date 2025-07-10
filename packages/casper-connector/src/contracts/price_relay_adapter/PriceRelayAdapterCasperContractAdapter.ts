@@ -1,6 +1,6 @@
 import { ContractParamsProvider } from "@redstone-finance/sdk";
 import { RuntimeArgs } from "casper-js-sdk";
-import { BigNumber, BigNumberish } from "ethers";
+import { BigNumber } from "ethers";
 import { casperBlake2b } from "../../casper/casper-blake2b";
 import { RunMode } from "../RunMode";
 import { RuntimeArgsFactory } from "../RuntimeArgsFactory";
@@ -20,7 +20,7 @@ export class PriceRelayAdapterCasperContractAdapter extends PriceAdapterCasperCo
 
   override async readPricesFromContract(
     paramsProvider: ContractParamsProvider
-  ): Promise<BigNumberish[]> {
+  ): Promise<bigint[]> {
     return await (
       await this.getWrappedContractAdapter()
     ).readPricesFromContract(paramsProvider);
@@ -34,7 +34,7 @@ export class PriceRelayAdapterCasperContractAdapter extends PriceAdapterCasperCo
 
   override async getPricesFromPayload(
     paramsProvider: ContractParamsProvider
-  ): Promise<BigNumberish[]> {
+  ): Promise<bigint[]> {
     const payloadHex = await paramsProvider.getPayloadHex(false);
     const feedIds = paramsProvider.getHexlifiedFeedIds();
 
@@ -142,7 +142,8 @@ export class PriceRelayAdapterCasperContractAdapter extends PriceAdapterCasperCo
 
     return computedValues
       .filter((obj) => obj.feedIds.join(",") === dataFeedIds.join(","))
-      .reverse()[0].values as BigNumber[];
+      .reverse()[0]
+      .values.map((bn) => BigNumber.from(bn).toBigInt());
   }
 
   private async getWrappedContractAdapter(): Promise<PriceAdapterCasperContractAdapter> {
