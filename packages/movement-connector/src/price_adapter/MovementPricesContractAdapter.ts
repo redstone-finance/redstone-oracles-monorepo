@@ -4,7 +4,6 @@ import {
   IMultiFeedPricesContractAdapter,
 } from "@redstone-finance/sdk";
 import { loggerFactory } from "@redstone-finance/utils";
-import { BigNumberish } from "ethers";
 import { MovementPriceAdapterContractViewer } from "./MovementPriceAdapterContractViewer";
 import { MovementPriceAdapterContractWriter } from "./MovementPriceAdapterContractWriter";
 
@@ -25,7 +24,7 @@ export class MovementPricesContractAdapter
   //eslint-disable-next-line @typescript-eslint/require-await
   async getPricesFromPayload(
     _paramsProvider: ContractParamsProvider
-  ): Promise<BigNumberish[]> {
+  ): Promise<bigint[]> {
     throw new Error("Pull model not supported");
   }
 
@@ -56,7 +55,7 @@ export class MovementPricesContractAdapter
 
   async readPricesFromContract(
     paramsProvider: ContractParamsProvider
-  ): Promise<BigNumberish[]> {
+  ): Promise<bigint[]> {
     const contractData = await this.readContractData(
       paramsProvider.getDataFeedIds()
     );
