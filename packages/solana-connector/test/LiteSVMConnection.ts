@@ -1,3 +1,4 @@
+import { RedstoneCommon } from "@redstone-finance/utils";
 import {
   AccountInfo,
   BlockhashWithExpiryBlockHeight,
@@ -51,6 +52,8 @@ function transactionStatus(status: Status) {
         },
         context: DUMMY_CONTEXT,
       };
+    default:
+      return RedstoneCommon.throwUnsupportedParamError(status);
   }
 }
 
@@ -108,25 +111,25 @@ export class ConnectionStateScenario {
   getFee() {
     const fee = this.recentFees.shift();
 
-    return fee === undefined ? [DEFAULT_FEE] : fee;
+    return fee ?? [DEFAULT_FEE];
   }
 
   shouldSubmit() {
     const submit = this.submitTransaction.shift();
 
-    return submit === undefined ? true : submit;
+    return submit ?? true;
   }
 
   shouldUpdateBlockHash() {
     const update = this.updateBlockHash.shift();
 
-    return update === undefined ? true : update;
+    return update ?? true;
   }
 
   status() {
     const status = this.signatureStatus.shift();
 
-    return transactionStatus(status === undefined ? "confirmed" : status);
+    return transactionStatus(status ?? "confirmed");
   }
 
   setClock(timestampMilliseconds: number) {
@@ -174,13 +177,13 @@ export class LiteSVMConnection extends Connection {
     return Promise.resolve(Number(this.state.svm.getSlotHistory().newest()));
   }
 
-  override getSignatureStatus(
+  override async getSignatureStatus(
     signature: string
   ): Promise<RpcResponseAndContext<SignatureStatus | null>> {
     const tx = this.state.svm.getTransaction(bs58.decode(signature));
 
     if (tx instanceof FailedTransactionMetadata) {
-      return Promise.resolve({
+      return await Promise.resolve({
         context: DUMMY_CONTEXT,
         value: {
           confirmations: 100,
@@ -191,7 +194,7 @@ export class LiteSVMConnection extends Connection {
       });
     }
 
-    return Promise.resolve(this.state.status());
+    return await Promise.resolve(this.state.status());
   }
 
   override getRecentPrioritizationFees(): Promise<RecentPrioritizationFees[]> {
@@ -231,7 +234,7 @@ export class LiteSVMConnection extends Connection {
     );
   }
 
-  override simulateTransaction(
+  override async simulateTransaction(
     transactionOrMessage: VersionedTransaction | Transaction | Message
   ): Promise<RpcResponseAndContext<SimulatedTransactionResponse>> {
     if (transactionOrMessage instanceof Message) {
@@ -242,7 +245,7 @@ export class LiteSVMConnection extends Connection {
       this.state.svm.simulateTransaction(transactionOrMessage);
 
     if (simulationResult instanceof FailedTransactionMetadata) {
-      return Promise.resolve({
+      return await Promise.resolve({
         context: DUMMY_CONTEXT,
         value: {
           err: simulationResult.err(),
@@ -251,7 +254,7 @@ export class LiteSVMConnection extends Connection {
       });
     }
 
-    return Promise.resolve({
+    return await Promise.resolve({
       context: DUMMY_CONTEXT,
       value: {
         err: null,
@@ -274,7 +277,7 @@ export class LiteSVMConnection extends Connection {
     });
   }
 
-  override sendTransaction(
+  override async sendTransaction(
     transaction: VersionedTransaction | Transaction
   ): Promise<TransactionSignature> {
     if (transaction instanceof Transaction) {
@@ -283,12 +286,12 @@ export class LiteSVMConnection extends Connection {
     this.state.priorityFeesSet(transaction);
 
     if (!this.state.shouldSubmit()) {
-      return Promise.resolve(DUMMY_SIGNATURE);
+      return await Promise.resolve(DUMMY_SIGNATURE);
     }
     const response = this.state.svm.sendTransaction(transaction);
 
     if (response instanceof TransactionMetadata) {
-      return Promise.resolve(bs58.encode(response.signature()));
+      return await Promise.resolve(bs58.encode(response.signature()));
     } else {
       throw new Error(response.err().toString());
     }

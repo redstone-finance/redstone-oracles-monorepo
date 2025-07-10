@@ -65,7 +65,7 @@ export abstract class RadixFunction<T> extends ValueRadixInvocation<T> {
   protected constructor(
     packageAddress: string,
     name: string,
-    private blueprintName: string
+    private readonly blueprintName: string
   ) {
     super(packageAddress, name);
   }
