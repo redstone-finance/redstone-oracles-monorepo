@@ -144,8 +144,8 @@
       "dateAdded": "2025-05-22"
     },
     "R4ih95AvybIzz3uKuEmpBee17J73CGkSk4bvzU_IZ_I": {
-      "name": "redstone-primary-prod-node-1",
-      "description": "Data feeds from primary redstone nodes - prod node 1",
+      "name": "redstone-primary-prod-altair",
+      "description": "Data feeds from primary redstone nodes - prod altair",
       "logo": "https://redstone.finance/assets/img/redstone-logo-full.svg",
       "dataServiceId": "redstone-primary-prod",
       "evmAddress": "0x8BB8F32Df04c8b654987DAaeD53D6B6091e3B774",
@@ -155,8 +155,8 @@
       "dateAdded": "2024-01-01"
     },
     "WM9CHZ6CKf95z47krdOFFKX6kuOusBlyIVSJmcjdrEQ": {
-      "name": "redstone-primary-prod-node-2",
-      "description": "Data feeds from primary redstone nodes - prod node 2",
+      "name": "redstone-primary-prod-wayfarer",
+      "description": "Data feeds from primary redstone nodes - prod wayfarer",
       "logo": "https://redstone.finance/assets/img/redstone-logo-full.svg",
       "dataServiceId": "redstone-primary-prod",
       "evmAddress": "0xdEB22f54738d54976C4c0fe5ce6d408E40d88499",
@@ -166,8 +166,8 @@
       "dateAdded": "2024-01-01"
     },
     "9syjTFZp0__CsqnMjKEo6sjl6_yRWYm7TQjcD0hFEN8": {
-      "name": "redstone-primary-prod-node-3",
-      "description": "Data feeds from primary redstone nodes - prod node 3",
+      "name": "redstone-primary-prod-morpheus",
+      "description": "Data feeds from primary redstone nodes - prod morpheus",
       "logo": "https://redstone.finance/assets/img/redstone-logo-full.svg",
       "dataServiceId": "redstone-primary-prod",
       "evmAddress": "0x51Ce04Be4b3E32572C4Ec9135221d0691Ba7d202",
@@ -177,8 +177,8 @@
       "dateAdded": "2024-01-01"
     },
     "4dRTLZeJPaDMhGE2jUndt-3KIOQxO6Y_BCV-3KIiPhI": {
-      "name": "redstone-primary-prod-node-4",
-      "description": "Data feeds from primary redstone nodes - prod node 4",
+      "name": "redstone-primary-prod-ciri",
+      "description": "Data feeds from primary redstone nodes - prod ciri",
       "logo": "https://redstone.finance/assets/img/redstone-logo-full.svg",
       "dataServiceId": "redstone-primary-prod",
       "evmAddress": "0xDD682daEC5A90dD295d14DA4b0bec9281017b5bE",
