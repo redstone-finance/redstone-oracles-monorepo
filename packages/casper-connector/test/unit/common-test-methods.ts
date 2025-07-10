@@ -47,7 +47,10 @@ export async function testReadPricesFromContract(
   const values = await adapter.readPricesFromContract(
     makeContractParamsProviderMock()
   );
-  expect(values).toStrictEqual([BigNumber.from(12345), BigNumber.from(54321)]);
+  expect(values.map(BigNumber.from)).toStrictEqual([
+    BigNumber.from(12345),
+    BigNumber.from(54321),
+  ]);
 }
 
 export async function testReadTimestampFromContract(
@@ -108,7 +111,10 @@ export async function testGetPricesFromPayload(
     makeContractParamsProviderMock()
   );
 
-  expect(prices).toStrictEqual([BigNumber.from(12345), BigNumber.from(54321)]);
+  expect(prices.map(BigNumber.from)).toStrictEqual([
+    BigNumber.from(12345),
+    BigNumber.from(54321),
+  ]);
 }
 
 function getComputedValuesContractDictionaryMock(

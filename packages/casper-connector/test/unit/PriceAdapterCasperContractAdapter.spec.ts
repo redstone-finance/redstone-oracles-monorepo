@@ -62,7 +62,7 @@ describe("PriceAdapterCasperContractAdapter tests", () => {
     const values = await adapter.readPricesFromContract(
       makeContractParamsProviderMock(["ETH", "AVAX", "BTC"])
     );
-    expect(values).toStrictEqual([
+    expect(values.map(BigNumber.from)).toStrictEqual([
       BigNumber.from(12345),
       BigNumber.from(0),
       BigNumber.from(54321),
