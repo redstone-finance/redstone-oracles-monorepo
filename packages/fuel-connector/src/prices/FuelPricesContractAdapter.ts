@@ -3,7 +3,6 @@ import {
   IExtendedPricesContractAdapter,
 } from "@redstone-finance/sdk";
 import { loggerFactory } from "@redstone-finance/utils";
-import { BigNumberish } from "ethers";
 import {
   BN,
   formatUnits,
@@ -20,7 +19,7 @@ export class FuelPricesContractAdapter
 {
   constructor(
     public contract: FuelPricesContract,
-    private gasLimit: number
+    private readonly gasLimit: number
   ) {}
 
   getSignerAddress() {
@@ -35,7 +34,7 @@ export class FuelPricesContractAdapter
 
   async getPricesFromPayload(
     paramsProvider: ContractParamsProvider
-  ): Promise<BigNumberish[]> {
+  ): Promise<bigint[]> {
     return this.extractNumbers(
       (await this.callGetPrices(paramsProvider)).value[0]
     );
@@ -52,7 +51,7 @@ export class FuelPricesContractAdapter
 
   async writePricesFromPayloadToContract(
     paramsProvider: ContractParamsProvider
-  ): Promise<BigNumberish[]> {
+  ): Promise<bigint[]> {
     return this.extractNumbers(
       (await this.callWritePrices(paramsProvider)).value
     );
@@ -73,7 +72,7 @@ export class FuelPricesContractAdapter
 
   async readPricesFromContract(
     paramsProvider: ContractParamsProvider
-  ): Promise<BigNumberish[]> {
+  ): Promise<bigint[]> {
     return this.extractNumbers(
       (await this.callReadPrices(paramsProvider)).value
     );
@@ -122,7 +121,7 @@ export class FuelPricesContractAdapter
     return result;
   }
 
-  protected extractNumbers(result: Vec<Option<BN>>): BigNumberish[] {
+  protected extractNumbers(result: Vec<Option<BN>>): bigint[] {
     return result.map((num) => (num ? BigInt(num.toHex()) : 0n));
   }
 

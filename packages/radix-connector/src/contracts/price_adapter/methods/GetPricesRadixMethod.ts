@@ -1,19 +1,18 @@
 import { Value } from "@radixdlt/radix-engine-toolkit";
-import { BigNumberish } from "ethers";
 import { RadixInvocation } from "../../../radix/RadixInvocation";
 import { RadixTransaction } from "../../../radix/RadixTransaction";
 import { makeBytes, makeFeedIds } from "../../../radix/utils";
 
 export interface PricesAndTimestamp {
-  values: BigNumberish[];
+  values: bigint[];
   timestamp: number;
 }
 
 export class GetPricesRadixMethod extends RadixInvocation<PricesAndTimestamp> {
   constructor(
     componentId: string,
-    private dataFeedIds: string[],
-    private payloadBytes: number[],
+    private readonly dataFeedIds: string[],
+    private readonly payloadBytes: number[],
     protected fee = dataFeedIds.length,
     name: string = "get_prices_raw"
   ) {
@@ -31,7 +30,7 @@ export class GetPricesRadixMethod extends RadixInvocation<PricesAndTimestamp> {
   override interpret(value: unknown[]) {
     return {
       timestamp: value[0] as number,
-      values: value[1] as BigNumberish[],
+      values: value[1] as bigint[],
     };
   }
 }

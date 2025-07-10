@@ -1,15 +1,12 @@
 import { Value } from "@radixdlt/radix-engine-toolkit";
-import { BigNumberish } from "ethers";
 import { ValueRadixInvocation } from "../../../radix/RadixInvocation";
 import { RadixTransaction } from "../../../radix/RadixTransaction";
 import { makeFeedIds } from "../../../radix/utils";
 
-export class ReadPricesRadixMethod extends ValueRadixInvocation<
-  BigNumberish[]
-> {
+export class ReadPricesRadixMethod extends ValueRadixInvocation<bigint[]> {
   constructor(
     componentId: string,
-    private dataFeedIds: string[]
+    private readonly dataFeedIds: string[]
   ) {
     super(componentId, "read_prices_raw");
   }
@@ -20,9 +17,5 @@ export class ReadPricesRadixMethod extends ValueRadixInvocation<
 
   override getParams(): Value[] {
     return [makeFeedIds(this.dataFeedIds)];
-  }
-
-  override interpret(value: unknown): BigNumberish[] {
-    return value as BigNumberish[];
   }
 }
