@@ -106,6 +106,18 @@
     },
     "stHYPE": {
       "priceFeedAddress": "0x4cEC96A68cb9A979621b104F3C94884be1a66da0"
+    },
+    "hbUSDT_FUNDAMENTAL": {
+      "priceFeedAddress": "0x96572d32d699cE463Fdf36610273CC76B7d83f9b"
+    },
+    "hbHYPE_FUNDAMENTAL": {
+      "priceFeedAddress": "0xDb924A25BfF353f98B066F692c38C3cFacb3a601"
+    },
+    "hbBTC_FUNDAMENTAL": {
+      "priceFeedAddress": "0x9ED559c2Ad1562aE8e919691A84A3320f547B248"
+    },
+    "kHYPE_FUNDAMENTAL": {
+      "priceFeedAddress": "0xFfe5F5e9e18b88FBdD7e28d4A583a111C874fB47"
     }
   }
 }
