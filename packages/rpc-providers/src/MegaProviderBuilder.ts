@@ -70,6 +70,7 @@ export class MegaProviderBuilder {
           url: rpcUrl,
           timeout: this.options.timeout,
           throttleLimit: this.options.throttleLimit,
+          throttleCallback: () => Promise.resolve(false), // blocks ethersJs retries on 429 responses - caused memory leak due to long retry-again in RPC (hypeRPC) api rate limit exceeded response
         },
         this.options.network
       );
