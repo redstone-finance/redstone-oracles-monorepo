@@ -5,6 +5,10 @@ export function getNumberFromStarknetResult(value: Result | BigNumberish) {
   return Number(value);
 }
 
-export function extractNumbers(response: Result): number[] {
-  return (response as Result[]).map(getNumberFromStarknetResult);
+function getBigIntFromStarknetResult(value: Result | BigNumberish) {
+  return BigInt(Number(value));
+}
+
+export function extractNumbers(response: Result): bigint[] {
+  return (response as Result[]).map(getBigIntFromStarknetResult);
 }
