@@ -3,7 +3,7 @@ import {
   IPricesContractAdapter,
 } from "@redstone-finance/sdk";
 import assert from "assert";
-import { BigNumber, BigNumberish } from "ethers";
+import { BigNumber } from "ethers";
 import { casperBlake2b } from "../../casper/casper-blake2b";
 import { CasperContractAdapter } from "../CasperContractAdapter";
 import { RunMode } from "../RunMode";
@@ -23,7 +23,7 @@ export class PriceAdapterCasperContractAdapter
 
   async writePricesFromPayloadToContract(
     paramsProvider: ContractParamsProvider
-  ): Promise<string | BigNumberish[]> {
+  ): Promise<string | bigint[]> {
     const payloadHex = await paramsProvider.getPayloadHex(false);
     const feedIds = paramsProvider.getHexlifiedFeedIds();
 
@@ -38,7 +38,7 @@ export class PriceAdapterCasperContractAdapter
 
   getPricesFromPayload(
     _paramsProvider: ContractParamsProvider
-  ): Promise<BigNumberish[]> {
+  ): Promise<bigint[]> {
     throw new Error(
       "Method not supported. Use price_relay_adapter contract instead"
     );
@@ -54,7 +54,7 @@ export class PriceAdapterCasperContractAdapter
 
   async readPricesFromContract(
     paramsProvider: ContractParamsProvider
-  ): Promise<BigNumberish[]> {
+  ): Promise<bigint[]> {
     const results = await Promise.allSettled(
       paramsProvider.requestParams.dataPackagesIds.map((feedId) =>
         this.readPriceValue(feedId)
@@ -64,9 +64,11 @@ export class PriceAdapterCasperContractAdapter
     return results.map((result) => {
       switch (result.status) {
         case "fulfilled":
-          return (result as PromiseFulfilledResult<BigNumber>).value;
+          return BigNumber.from(
+            (result as PromiseFulfilledResult<BigNumber>).value
+          ).toBigInt();
         default:
-          return BigNumber.from(0);
+          return 0n;
       }
     });
   }
@@ -82,7 +84,7 @@ export class PriceAdapterCasperContractAdapter
       payloadHex.length / 2 <= RuntimeArgsFactory.CHUNK_SIZE_BYTES,
       `Payload length (currently: ${payloadHex.length / 2}) must not exceed ${
         RuntimeArgsFactory.CHUNK_SIZE_BYTES
-      } bytes. 
+      } bytes.
       Use price_relay_adapter contract instead`
     );
     const runtimeArgs = RuntimeArgsFactory.makePayloadRuntimeArgs(
