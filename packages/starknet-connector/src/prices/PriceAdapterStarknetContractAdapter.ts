@@ -9,7 +9,7 @@ import { extractNumbers, getNumberFromStarknetResult } from "../starknet-utils";
 export class PriceAdapterStarknetContractAdapter
   implements IPricesContractAdapter
 {
-  constructor(private contract: Contract) {}
+  constructor(private readonly contract: Contract) {}
 
   async writePricesFromPayloadToContract(
     paramsProvider: ContractParamsProvider
@@ -28,7 +28,7 @@ export class PriceAdapterStarknetContractAdapter
 
   async getPricesFromPayload(
     paramsProvider: ContractParamsProvider
-  ): Promise<number[]> {
+  ): Promise<bigint[]> {
     return extractNumbers(
       await this.contract.call("get_prices", [
         paramsProvider.getHexlifiedFeedIds(),
@@ -39,7 +39,7 @@ export class PriceAdapterStarknetContractAdapter
 
   async readPricesFromContract(
     paramsProvider: ContractParamsProvider
-  ): Promise<number[]> {
+  ): Promise<bigint[]> {
     return extractNumbers(
       await this.contract.call("read_prices", [
         paramsProvider.getHexlifiedFeedIds(),

@@ -1,5 +1,4 @@
 import { ContractParamsProvider } from "@redstone-finance/sdk";
-import { BigNumberish } from "ethers";
 import {
   FuelPricesContractAdapter,
   FuelPricesContractConnector,
@@ -19,20 +18,26 @@ export class GasUsageFuelPricesContractConnector extends FuelPricesContractConne
 class GasUsageFuelPricesContractAdapter extends FuelPricesContractAdapter {
   override async getPricesFromPayload(
     paramsProvider: ContractParamsProvider
-  ): Promise<BigNumberish[]> {
-    return [(await this.callGetPrices(paramsProvider)).gasUsed.toNumber()];
+  ): Promise<bigint[]> {
+    return [
+      BigInt((await this.callGetPrices(paramsProvider)).gasUsed.toNumber()),
+    ];
   }
 
   override async writePricesFromPayloadToContract(
     paramsProvider: ContractParamsProvider
-  ): Promise<BigNumberish[]> {
-    return [(await this.callWritePrices(paramsProvider)).gasUsed.toNumber()];
+  ): Promise<bigint[]> {
+    return [
+      BigInt((await this.callWritePrices(paramsProvider)).gasUsed.toNumber()),
+    ];
   }
 
   override async readPricesFromContract(
     paramsProvider: ContractParamsProvider
-  ): Promise<BigNumberish[]> {
-    return [(await this.callReadPrices(paramsProvider)).gasUsed.toNumber()];
+  ): Promise<bigint[]> {
+    return [
+      BigInt((await this.callReadPrices(paramsProvider)).gasUsed.toNumber()),
+    ];
   }
 
   override async readTimestampFromContract(): Promise<number> {

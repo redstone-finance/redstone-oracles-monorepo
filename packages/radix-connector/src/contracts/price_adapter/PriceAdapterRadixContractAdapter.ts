@@ -31,7 +31,7 @@ export class PriceAdapterRadixContractAdapter
 
   async getPricesFromPayload(
     paramsProvider: ContractParamsProvider
-  ): Promise<BigNumberish[]> {
+  ): Promise<bigint[]> {
     return (
       await this.client.call(
         new GetPricesRadixMethod(
@@ -45,7 +45,7 @@ export class PriceAdapterRadixContractAdapter
 
   async writePricesFromPayloadToContract(
     paramsProvider: ContractParamsProvider
-  ): Promise<string | BigNumberish[]> {
+  ): Promise<string | bigint[]> {
     const metadataTimestamp = Date.now();
     const provider = async () =>
       await this.getWritePricesMethod(paramsProvider, metadataTimestamp);
@@ -91,7 +91,7 @@ export class PriceAdapterRadixContractAdapter
   async readPricesFromContract(
     paramsProvider: ContractParamsProvider,
     stateVersion?: number
-  ) {
+  ): Promise<bigint[]> {
     if (this.readMode === "ReadFromStorage") {
       const priceData = await this.readPriceData(stateVersion);
 
@@ -186,7 +186,7 @@ export class PriceAdapterRadixContractAdapter
       "trusted_updater_resource"
     );
     if (!resourceAddress) {
-      return;
+      return undefined;
     }
 
     const accountDataHex = await RadixClient.getAddressDataHex(accountAddress);
@@ -209,7 +209,7 @@ export class PriceAdapterRadixContractAdapter
       await this.getTrustedUpdaterResourceBadge(accountAddress);
 
     if (!trustedUpdaterProofBadge) {
-      return;
+      return undefined;
     }
 
     const amount = await this.client.getResourceBalance(
@@ -217,7 +217,7 @@ export class PriceAdapterRadixContractAdapter
       trustedUpdaterProofBadge.resourceAddress
     );
     if (!amount) {
-      return;
+      return undefined;
     }
 
     return trustedUpdaterProofBadge;
