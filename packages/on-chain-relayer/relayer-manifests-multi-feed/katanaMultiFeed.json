@@ -46,6 +46,9 @@
     },
     "SUI": {
       "priceFeedAddress": "0x98ECE0D516f891a35278E3186772fb1545b274eB"
+    },
+    "SUSHI": {
+      "priceFeedAddress": "0xb81131B6368b3F0a83af09dB4E39Ac23DA96C2Db"
     }
   }
 }
