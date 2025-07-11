@@ -10333,6 +10333,7 @@ __metadata:
     "@redstone-finance/internal-utils": "workspace:*"
     "@redstone-finance/monitoring-manifests": "workspace:*"
     "@redstone-finance/sdk": "workspace:*"
+    "@redstone-finance/utils": "workspace:*"
     "@types/aws-lambda": "npm:^8.10.145"
     dotenv: "npm:^16.0.3"
     ethers: "npm:^5.7.2"
