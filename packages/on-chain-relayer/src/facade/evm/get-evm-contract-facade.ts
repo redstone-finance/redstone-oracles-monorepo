@@ -3,7 +3,7 @@ import { TxDeliveryManSupportedProviders } from "@redstone-finance/rpc-providers
 import { DataPackagesResponseCache } from "@redstone-finance/sdk";
 import { Tx } from "@redstone-finance/utils";
 import { Signer, Wallet } from "ethers";
-import { isOevRelayerConfig } from "../../config/is-oev-relayer-config";
+import { isOevRelayerConfig } from "../../config/relayer-config-checks";
 import { RelayerConfig } from "../../config/RelayerConfig";
 import { getRelayerProvider } from "../../core/contract-interactions/get-relayer-provider";
 import { OevTxDeliveryMan } from "../../core/contract-interactions/OevTxDeliveryMan";
