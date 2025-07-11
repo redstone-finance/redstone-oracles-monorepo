@@ -1,16 +1,21 @@
 import { AdapterType } from "@redstone-finance/on-chain-relayer-common";
 import { TxDeliveryCall } from "@redstone-finance/rpc-providers";
-import { RedstoneCommon, Tx } from "@redstone-finance/utils";
+import { NetworkId, RedstoneCommon, Tx } from "@redstone-finance/utils";
 import {
+  IStylusAdapter,
   MentoAdapterBase,
   MultiFeedAdapterWithoutRounds,
   RedstoneAdapterBase,
 } from "../../../typechain-types";
-import { isOevRelayerConfig } from "../../config/is-oev-relayer-config";
+import {
+  isArbitrumStylusRelayerConfig,
+  isOevRelayerConfig,
+} from "../../config/relayer-config-checks";
 import { EvmContractAdapter } from "../../core/contract-interactions/EvmContractAdapter";
 import { MentoEvmContractAdapter } from "../../core/contract-interactions/MentoEvmContractAdapter";
 import { MultiFeedEvmContractAdapter } from "../../core/contract-interactions/MultiFeedEvmContractAdapter";
 import { PriceFeedsEvmContractAdapter } from "../../core/contract-interactions/PriceFeedsEvmContractAdapter";
+import { StylusContractAdapter } from "../../core/contract-interactions/StylusContractAdapter";
 import { RedstoneEvmContract } from "./EvmContractFacade";
 
 const emptyTxDeliveryMan: Tx.ITxDeliveryMan = {
@@ -22,6 +27,7 @@ const emptyTxDeliveryMan: Tx.ITxDeliveryMan = {
 
 export function getEvmContractAdapter(
   relayerConfig: {
+    networkId?: NetworkId;
     adapterContractType: AdapterType;
     mentoMaxDeviationAllowed?: number;
     oevAuctionUrl?: string;
@@ -31,6 +37,13 @@ export function getEvmContractAdapter(
 ): EvmContractAdapter<RedstoneEvmContract> {
   switch (relayerConfig.adapterContractType) {
     case "multi-feed": {
+      if (isArbitrumStylusRelayerConfig(relayerConfig)) {
+        return new StylusContractAdapter(
+          adapterContract as IStylusAdapter & MultiFeedAdapterWithoutRounds,
+          txDeliveryMan
+        );
+      }
+
       return new MultiFeedEvmContractAdapter(
         adapterContract as MultiFeedAdapterWithoutRounds,
         txDeliveryMan,
