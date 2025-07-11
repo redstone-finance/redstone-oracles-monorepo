@@ -10869,6 +10869,22 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@redstone-finance/stylus-connector@workspace:packages/stylus-connector":
+  version: 0.0.0-use.local
+  resolution: "@redstone-finance/stylus-connector@workspace:packages/stylus-connector"
+  dependencies:
+    "@babel/core": "npm:^7.23.2"
+    "@babel/preset-typescript": "npm:^7.23.2"
+    "@redstone-finance/sdk": "workspace:*"
+    "@redstone-finance/utils": "workspace:*"
+    "@types/mocha": "npm:^10.0.1"
+    dotenv: "npm:^16.0.3"
+    ethers: "npm:^5.7.2"
+    mocha: "npm:^10.2.0"
+    prettier: "npm:^3.2.5"
+  languageName: unknown
+  linkType: soft
+
 "@redstone-finance/sui-connector@workspace:*, @redstone-finance/sui-connector@workspace:packages/sui-connector":
   version: 0.0.0-use.local
   resolution: "@redstone-finance/sui-connector@workspace:packages/sui-connector"
