@@ -1,24 +1,12 @@
-import { isEvmNetworkId } from "@redstone-finance/utils";
 import chai from "chai";
 import { z } from "zod";
 import {
-  ChainConfig,
   ChainConfigSchema,
   getLocalChainConfigs,
   REDSTONE_MULTICALL3_ADDRESS,
   STANDARD_MULTICALL3_ADDRESS,
 } from "../src";
-
-const CHAINS_TO_SKIP_MULTICALL_ADDRESS_CHECK = [
-  "zkSync",
-  "zkLink",
-  "TAC Turin",
-  "Corn Maizenet", // first few create transactions failed leading to different address
-  "Polygon Mainnet",
-  "Westend Asset Hub",
-  "zkSync",
-  "zkLink",
-];
+import { skipIfDisabledOrNotSupported } from "./rpc-urls/common";
 
 const CHAINS_TO_SKIP_RPC_PRESENCE_CHECK = [
   "Monad Devnet",
@@ -47,20 +35,11 @@ describe("Validate chain configs", () => {
   });
 });
 
-function shouldCheckMulticall(chainConfig: ChainConfig) {
-  return (
-    isEvmNetworkId(chainConfig.networkId) &&
-    !CHAINS_TO_SKIP_MULTICALL_ADDRESS_CHECK.includes(chainConfig.name)
-  );
-}
-
 describe("Validate multicall3", () => {
   it(`Each redstone multicall3 should have the same address`, function () {
     for (const chainConfig of Object.values(ChainConfigs)) {
-      if (
-        chainConfig.multicall3.type === "RedstoneMulticall3" &&
-        shouldCheckMulticall(chainConfig)
-      ) {
+      if (chainConfig.multicall3.type === "RedstoneMulticall3") {
+        skipIfDisabledOrNotSupported(this, chainConfig);
         chai
           .expect(
             chainConfig.multicall3.address,
@@ -73,10 +52,8 @@ describe("Validate multicall3", () => {
 
   it(`Each standard multicall3 should have the same address`, function () {
     for (const chainConfig of Object.values(ChainConfigs)) {
-      if (
-        chainConfig.multicall3.type === "Multicall3" &&
-        shouldCheckMulticall(chainConfig)
-      ) {
+      if (chainConfig.multicall3.type === "Multicall3") {
+        skipIfDisabledOrNotSupported(this, chainConfig);
         chai
           .expect(
             chainConfig.multicall3.address,

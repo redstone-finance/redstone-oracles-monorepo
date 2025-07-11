@@ -1,7 +1,7 @@
 import { loggerFactory, sendHealthcheckPing } from "@redstone-finance/utils";
 import _ from "lodash";
-import { isOevRelayerConfig } from "../config/is-oev-relayer-config";
 import { isPaused } from "../config/is_paused";
+import { isOevRelayerConfig } from "../config/relayer-config-checks";
 import { RelayerConfig } from "../config/RelayerConfig";
 import { ContractFacade } from "../facade/ContractFacade";
 import {

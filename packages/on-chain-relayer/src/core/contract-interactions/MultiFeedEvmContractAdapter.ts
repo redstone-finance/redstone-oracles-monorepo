@@ -5,12 +5,11 @@ import { utils } from "ethers";
 import _ from "lodash";
 import { MultiFeedAdapterWithoutRounds } from "../../../typechain-types";
 import { UpdatePricesOptions } from "../../facade/ContractFacade";
-import { ContractData, LastRoundDetails } from "../../types";
-import { EvmContractAdapter } from "./EvmContractAdapter";
+import { MultiFeedEvmContractAdapterBase } from "./MultiFeedEvmContractAdapterBase";
 
 const logger = loggerFactory("updatePrices/multi-feed");
 
-export class MultiFeedEvmContractAdapter extends EvmContractAdapter<MultiFeedAdapterWithoutRounds> {
+export class MultiFeedEvmContractAdapter extends MultiFeedEvmContractAdapterBase<MultiFeedAdapterWithoutRounds> {
   constructor(
     adapterContract: MultiFeedAdapterWithoutRounds,
     txDeliveryMan: Tx.ITxDeliveryMan,
@@ -66,43 +65,5 @@ export class MultiFeedEvmContractAdapter extends EvmContractAdapter<MultiFeedAda
     return options && this.shouldUpdateAllFeedsInBaseIteration
       ? paramsProvider.copyForFeedIds(options.allFeedIds)
       : super.getBaseIterationTxParamsProvider(paramsProvider, options);
-  }
-
-  override async readLatestRoundContractData(
-    feedIds: string[],
-    blockNumber: number
-  ): Promise<ContractData> {
-    const dataFromContract: ContractData = {};
-
-    const lastRoundDetails = await this.getLastUpdateDetailsForManyFromContract(
-      feedIds,
-      blockNumber
-    );
-
-    for (const [index, dataFeedId] of feedIds.entries()) {
-      dataFromContract[dataFeedId] = lastRoundDetails[index];
-    }
-
-    return dataFromContract;
-  }
-
-  private async getLastUpdateDetailsForManyFromContract(
-    feedIds: string[],
-    blockNumber: number
-  ): Promise<LastRoundDetails[]> {
-    const dataFeedsAsBytes32 = feedIds.map(utils.formatBytes32String);
-    const contractOutput: MultiFeedAdapterWithoutRounds.LastUpdateDetailsStructOutput[] =
-      await this.adapterContract.getLastUpdateDetailsUnsafeForMany(
-        dataFeedsAsBytes32,
-        {
-          blockTag: blockNumber,
-        }
-      );
-
-    return contractOutput.map((lastRoundDetails) => ({
-      lastDataPackageTimestampMS: lastRoundDetails.dataTimestamp.toNumber(),
-      lastBlockTimestampMS: lastRoundDetails.blockTimestamp.toNumber() * 1000,
-      lastValue: lastRoundDetails.value.toBigInt(),
-    }));
   }
 }

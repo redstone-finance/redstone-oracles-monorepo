@@ -1224,6 +1224,21 @@
       "twoDimensionalFees": false,
       "isMainnet": true
     },
+    "Arbitrum Sepolia": {
+      "name": "Arbitrum Sepolia",
+      "networkId": "421614",
+      "chainId": 421614,
+      "currencySymbol": "ETH",
+      "publicRpcUrls": ["https://sepolia-rollup.arbitrum.io/rpc"],
+      "avgBlockTimeMs": 1000,
+      "multicall3": {
+        "address": "",
+        "type": "Multicall3"
+      },
+      "isAuctionModel": false,
+      "twoDimensionalFees": false,
+      "isMainnet": false
+    },
     "hyperevm": {
       "name": "HyperEVM",
       "networkId": 999,
