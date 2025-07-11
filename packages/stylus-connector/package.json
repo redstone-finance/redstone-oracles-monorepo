@@ -1,0 +1,35 @@
+{
+  "name": "@redstone-finance/stylus-connector",
+  "private": true,
+  "version": "0.8.0",
+  "description": "A tool to inject RedStone data into Stylus compatible smart contracts",
+  "main": "dist/src/index.js",
+  "exports": "./dist/src/index.js",
+  "types": "dist/src/index.d.ts",
+  "license": "MIT",
+  "scripts": {
+    "clean": "yarn global:ts-clean",
+    "build": "yarn build-deps && yarn global:tsc --build tsconfig.build.json",
+    "build-dev": "yarn build-deps && yarn global:tsc --build tsconfig.json",
+    "build-deps": "yarn --cwd ../evm-multicall build",
+    "lint": "yarn global:eslint .",
+    "lint:fix": "yarn global:eslint --fix .",
+    "sample-run": "yarn global:ts-node scripts/sample-run.ts"
+  },
+  "dependencies": {
+    "@redstone-finance/sdk": "workspace:*",
+    "@redstone-finance/utils": "workspace:*",
+    "ethers": "^5.7.2"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.23.2",
+    "@babel/preset-typescript": "^7.23.2",
+    "@types/mocha": "^10.0.1",
+    "dotenv": "^16.0.3",
+    "mocha": "^10.2.0",
+    "prettier": "^3.2.5"
+  },
+  "files": [
+    "dist/src/**/*"
+  ]
+}
