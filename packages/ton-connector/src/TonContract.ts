@@ -32,7 +32,7 @@ export class TonContract extends Ton implements Contract {
 
   protected getAltApiContractProvider(provider: ContractProvider) {
     return this.shouldUseOldApi
-      ? this.oldApi?.provider(this.address, null) ?? provider
+      ? (this.oldApi?.provider(this.address, null) ?? provider)
       : provider;
   }
 }
