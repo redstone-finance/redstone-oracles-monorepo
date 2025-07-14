@@ -9933,6 +9933,21 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@redstone-finance/lambda-cex-dex-source-finder@workspace:packages/lambda/lambda-cex-dex-source-finder":
+  version: 0.0.0-use.local
+  resolution: "@redstone-finance/lambda-cex-dex-source-finder@workspace:packages/lambda/lambda-cex-dex-source-finder"
+  dependencies:
+    "@redstone-finance/chain-configs": "workspace:*"
+    "@redstone-finance/fetchers": "workspace:*"
+    "@redstone-finance/internal-utils": "workspace:*"
+    "@redstone-finance/utils": "workspace:*"
+    "@types/aws-lambda": "npm:^8.10.145"
+    axios: "npm:^1.8.4"
+    ccxt: "npm:^4.4.89"
+    lodash: "npm:^4.17.21"
+  languageName: unknown
+  linkType: soft
+
 "@redstone-finance/lambda-chainlink-influx-synchronizer@workspace:packages/lambda/lambda-chainlink-influx-synchronizer":
   version: 0.0.0-use.local
   resolution: "@redstone-finance/lambda-chainlink-influx-synchronizer@workspace:packages/lambda/lambda-chainlink-influx-synchronizer"
@@ -10166,19 +10181,6 @@ __metadata:
     "@redstone-finance/protocol": "workspace:*"
     "@redstone-finance/sdk": "workspace:*"
     "@redstone-finance/utils": "workspace:*"
-  languageName: unknown
-  linkType: soft
-
-"@redstone-finance/lambda-liquidity-pools-monitoring@workspace:packages/lambda/lambda-liquidity-pools-monitoring":
-  version: 0.0.0-use.local
-  resolution: "@redstone-finance/lambda-liquidity-pools-monitoring@workspace:packages/lambda/lambda-liquidity-pools-monitoring"
-  dependencies:
-    "@redstone-finance/chain-configs": "workspace:*"
-    "@redstone-finance/internal-utils": "workspace:*"
-    "@redstone-finance/utils": "workspace:*"
-    "@types/aws-lambda": "npm:^8.10.145"
-    axios: "npm:^1.8.4"
-    lodash: "npm:^4.17.21"
   languageName: unknown
   linkType: soft
 
@@ -18861,6 +18863,15 @@ __metadata:
   dependencies:
     nofilter: "npm:^3.1.0"
   checksum: 10c0/709d4378067e663107b3d63a02d123a7b33e28946b4c5cc40c102f2f0ba13b072a79adc4369bb87a4e743399fce45deec30463fc84d363ab7cb39192d0fe5f30
+  languageName: node
+  linkType: hard
+
+"ccxt@npm:^4.4.89":
+  version: 4.4.89
+  resolution: "ccxt@npm:4.4.89"
+  dependencies:
+    ws: "npm:^8.8.1"
+  checksum: 10c0/cb866f445bbcc776cad57790ac00b5b2e2fa112b3217f6081224bf6ddbb343d97c4d6bc1583b8b7af6a0ac5c27d5cd59dd50b2bb75b38112c508b31082f49056
   languageName: node
   linkType: hard
 
