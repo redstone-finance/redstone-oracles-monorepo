@@ -3,7 +3,6 @@
     "hardhat": {
       "name": "hardhat",
       "networkId": 31337,
-      "chainId": 31337,
       "currencySymbol": "ETH",
       "publicRpcUrls": ["http://localhost:1337"],
       "avgBlockTimeMs": 12000,
@@ -19,7 +18,6 @@
     "ethereum": {
       "name": "Ethereum Mainnet",
       "networkId": 1,
-      "chainId": 1,
       "currencySymbol": "ETH",
       "publicRpcUrls": [
         "https://ethereum-rpc.publicnode.com",
@@ -40,7 +38,6 @@
     "arbitrumOne": {
       "name": "Arbitrum One",
       "networkId": 42161,
-      "chainId": 42161,
       "currencySymbol": "ETH",
       "publicRpcUrls": [
         "https://arb1.arbitrum.io/rpc",
@@ -62,7 +59,6 @@
     "avalanche": {
       "name": "Avalanche Network",
       "networkId": 43114,
-      "chainId": 43114,
       "currencySymbol": "AVAX",
       "publicRpcUrls": [
         "https://api.avax.network/ext/bc/C/rpc",
@@ -85,7 +81,6 @@
     "optimism": {
       "name": "Optimism",
       "networkId": 10,
-      "chainId": 10,
       "currencySymbol": "ETH",
       "publicRpcUrls": [
         "https://mainnet.optimism.io",
@@ -107,7 +102,6 @@
     "polygon": {
       "name": "Polygon Mainnet",
       "networkId": 137,
-      "chainId": 137,
       "currencySymbol": "POL",
       "publicRpcUrls": [
         "https://polygon-mainnet.public.blastapi.io",
@@ -127,7 +121,6 @@
     "celo": {
       "name": "Celo Mainnet",
       "networkId": 42220,
-      "chainId": 42220,
       "currencySymbol": "CELO",
       "publicRpcUrls": ["https://forno.celo.org"],
       "etherScanApi": "https://api.celoscan.io",
@@ -144,7 +137,6 @@
     "base": {
       "name": "Base Mainnet",
       "networkId": 8453,
-      "chainId": 8453,
       "currencySymbol": "ETH",
       "publicRpcUrls": [
         "https://base.publicnode.com",
@@ -165,7 +157,6 @@
     "base-sepolia": {
       "name": "Base Sepolia",
       "networkId": 84532,
-      "chainId": 84532,
       "currencySymbol": "ETH",
       "publicRpcUrls": [
         "https://base-sepolia-rpc.publicnode.com",
@@ -184,7 +175,6 @@
     "canto": {
       "name": "Canto",
       "networkId": 7700,
-      "chainId": 7700,
       "currencySymbol": "CANTO",
       "publicRpcUrls": [
         "https://canto.gravitychain.io",
@@ -204,7 +194,6 @@
     "manta": {
       "name": "Manta Pacific Mainnet",
       "networkId": 169,
-      "chainId": 169,
       "currencySymbol": "ETH",
       "publicRpcUrls": [
         "https://pacific-rpc.manta.network/http",
@@ -225,7 +214,6 @@
     "blast": {
       "name": "Blast Mainnet",
       "networkId": 81457,
-      "chainId": 81457,
       "currencySymbol": "ETH",
       "publicRpcUrls": [
         "https://rpc.blast.io",
@@ -247,7 +235,6 @@
     "etherlink-ghostnet": {
       "name": "Etherlink Ghostnet",
       "networkId": 128123,
-      "chainId": 128123,
       "currencySymbol": "XTZ",
       "publicRpcUrls": [
         "https://node.ghostnet.etherlink.com",
@@ -265,7 +252,6 @@
     "etherlink": {
       "name": "Etherlink Mainnet",
       "networkId": 42793,
-      "chainId": 42793,
       "currencySymbol": "XTZ",
       "publicRpcUrls": ["https://node.mainnet.etherlink.com"],
       "avgBlockTimeMs": 6000,
@@ -281,7 +267,6 @@
     "mode": {
       "name": "Mode Mainnet",
       "networkId": 34443,
-      "chainId": 34443,
       "currencySymbol": "ETH",
       "publicRpcUrls": [
         "https://mainnet.mode.network/",
@@ -301,7 +286,6 @@
     "mantle": {
       "name": "Mantle",
       "networkId": 5000,
-      "chainId": 5000,
       "currencySymbol": "MNT",
       "publicRpcUrls": [
         "https://rpc.mantle.xyz",
@@ -323,7 +307,6 @@
     "ethereum-sepolia": {
       "name": "Ethereum Sepolia",
       "networkId": 11155111,
-      "chainId": 11155111,
       "currencySymbol": "ETH",
       "publicRpcUrls": [
         "https://ethereum-sepolia-rpc.publicnode.com",
@@ -343,7 +326,6 @@
     "bnb": {
       "name": "Binance chain",
       "networkId": 56,
-      "chainId": 56,
       "currencySymbol": "BNB",
       "publicRpcUrls": [
         "https://1rpc.io/bnb",
@@ -366,7 +348,6 @@
     "bnb-testnet": {
       "name": "Binance chain testnet",
       "networkId": 97,
-      "chainId": 97,
       "currencySymbol": "tBNB",
       "publicRpcUrls": [
         "https://bsc-testnet.public.blastapi.io",
@@ -384,7 +365,6 @@
     "celo-alfajores": {
       "name": "Celo Alfajores Testnet",
       "networkId": 44787,
-      "chainId": 44787,
       "currencySymbol": "CELO",
       "publicRpcUrls": ["https://alfajores-forno.celo-testnet.org"],
       "etherScanApi": "https://api-alfajores.celoscan.io",
@@ -401,7 +381,6 @@
     "kava": {
       "name": "Kava",
       "networkId": 2222,
-      "chainId": 2222,
       "currencySymbol": "KAVA",
       "publicRpcUrls": [
         "https://evm.kava.io",
@@ -423,7 +402,6 @@
     "fraxtal": {
       "name": "Fraxtal Mainnet",
       "networkId": 252,
-      "chainId": 252,
       "currencySymbol": "frxETH",
       "publicRpcUrls": ["https://rpc.frax.com"],
       "avgBlockTimeMs": 2000,
@@ -440,7 +418,6 @@
     "linea": {
       "name": "Linea Mainnet",
       "networkId": 59144,
-      "chainId": 59144,
       "currencySymbol": "ETH",
       "publicRpcUrls": [
         "https://linea.drpc.org",
@@ -460,7 +437,6 @@
     "b2": {
       "name": "B2 Mainnet",
       "networkId": 223,
-      "chainId": 223,
       "currencySymbol": "BTC",
       "publicRpcUrls": [
         "https://rpc.bsquared.network",
@@ -481,7 +457,6 @@
     "bob": {
       "name": "BOB Mainnet",
       "networkId": 60808,
-      "chainId": 60808,
       "currencySymbol": "ETH",
       "publicRpcUrls": ["https://rpc.gobob.xyz"],
       "avgBlockTimeMs": 2500,
@@ -498,7 +473,6 @@
     "blast-sepolia": {
       "name": "Blast sepolia",
       "networkId": 168587773,
-      "chainId": 168587773,
       "currencySymbol": "ETH",
       "publicRpcUrls": ["https://sepolia.blast.io"],
       "avgBlockTimeMs": 2000,
@@ -514,7 +488,6 @@
     "merlin": {
       "name": "Merlin Mainnet",
       "networkId": 4200,
-      "chainId": 4200,
       "currencySymbol": "BTC",
       "publicRpcUrls": [
         "https://rpc.merlinchain.io",
@@ -533,7 +506,6 @@
     "sei": {
       "name": "Sei Mainnet",
       "networkId": 1329,
-      "chainId": 1329,
       "currencySymbol": "SEI",
       "publicRpcUrls": ["https://evm-rpc.sei-apis.com"],
       "avgBlockTimeMs": 500,
@@ -549,7 +521,6 @@
     "berachain-testnet": {
       "name": "Berachain Testnet",
       "networkId": 80069,
-      "chainId": 80069,
       "currencySymbol": "BERA",
       "publicRpcUrls": ["https://bepolia.rpc.berachain.com"],
       "avgBlockTimeMs": 2000,
@@ -565,7 +536,6 @@
     "cyber": {
       "name": "Cyber",
       "networkId": 7560,
-      "chainId": 7560,
       "currencySymbol": "ETH",
       "publicRpcUrls": ["https://cyber.alt.technology"],
       "avgBlockTimeMs": 2000,
@@ -581,7 +551,6 @@
     "zksync": {
       "name": "zkSync",
       "networkId": 324,
-      "chainId": 324,
       "currencySymbol": "ETH",
       "publicRpcUrls": ["https://mainnet.era.zksync.io"],
       "avgBlockTimeMs": 1200,
@@ -598,7 +567,6 @@
     "zkLink": {
       "name": "zkLink",
       "networkId": 810180,
-      "chainId": 810180,
       "currencySymbol": "ETH",
       "publicRpcUrls": ["https://rpc.zklink.io"],
       "avgBlockTimeMs": 1000,
@@ -614,7 +582,6 @@
     "zircuit": {
       "name": "Zircuit Mainnet",
       "networkId": 48900,
-      "chainId": 48900,
       "currencySymbol": "ETH",
       "publicRpcUrls": [
         "https://zircuit-mainnet.drpc.org",
@@ -634,7 +601,6 @@
     "scroll": {
       "name": "Scroll",
       "networkId": 534352,
-      "chainId": 534352,
       "currencySymbol": "ETH",
       "publicRpcUrls": [
         "https://rpc.scroll.io",
@@ -655,7 +621,6 @@
     "hemiTestnet": {
       "name": "Hemi Sepolia",
       "networkId": 743111,
-      "chainId": 743111,
       "currencySymbol": "ETH",
       "publicRpcUrls": ["https://testnet.rpc.hemi.network/rpc"],
       "avgBlockTimeMs": 12000,
@@ -671,7 +636,6 @@
     "hemi": {
       "name": "Hemi Network",
       "networkId": 43111,
-      "chainId": 43111,
       "currencySymbol": "ETH",
       "publicRpcUrls": ["https://rpc.hemi.network/rpc"],
       "avgBlockTimeMs": 12000,
@@ -688,7 +652,6 @@
     "unichainTestnet": {
       "name": "Unichain Sepolia",
       "networkId": 1301,
-      "chainId": 1301,
       "currencySymbol": "ETH",
       "publicRpcUrls": [
         "https://unichain-sepolia-rpc.publicnode.com",
@@ -706,7 +669,6 @@
     "ink": {
       "name": "Ink",
       "networkId": 57073,
-      "chainId": 57073,
       "currencySymbol": "ETH",
       "publicRpcUrls": [
         "https://rpc-qnd.inkonchain.com",
@@ -727,7 +689,6 @@
     "inkSepolia": {
       "name": "Ink Sepolia",
       "networkId": 763373,
-      "chainId": 763373,
       "currencySymbol": "ETH",
       "publicRpcUrls": ["https://rpc-gel-sepolia.inkonchain.com"],
       "avgBlockTimeMs": 1000,
@@ -743,7 +704,6 @@
     "taiko": {
       "name": "Taiko Mainnet",
       "networkId": 167000,
-      "chainId": 167000,
       "currencySymbol": "ETH",
       "publicRpcUrls": [
         "https://rpc.mainnet.taiko.xyz",
@@ -765,7 +725,6 @@
     "corn": {
       "name": "Corn Maizenet",
       "networkId": 21000000,
-      "chainId": 21000000,
       "currencySymbol": "BTCN",
       "publicRpcUrls": [
         "https://rpc.ankr.com/corn_maizenet",
@@ -785,7 +744,6 @@
     "cornTestnet": {
       "name": "Corn Testnet",
       "networkId": 21000001,
-      "chainId": 21000001,
       "currencySymbol": "BTCN",
       "publicRpcUrls": [
         "https://testnet-rpc.usecorn.com",
@@ -805,7 +763,6 @@
     "swellchain": {
       "name": "Swellchain",
       "networkId": 1923,
-      "chainId": 1923,
       "currencySymbol": "ETH",
       "publicRpcUrls": [
         "https://swell-mainnet.alt.technology",
@@ -825,7 +782,6 @@
     "hyperliquidTestnet": {
       "name": "Hyperliquid Testnet",
       "networkId": 998,
-      "chainId": 998,
       "currencySymbol": "HYPE",
       "publicRpcUrls": ["https://rpc.hyperliquid-testnet.xyz/evm"],
       "avgBlockTimeMs": 2000,
@@ -841,7 +797,6 @@
     "sonic": {
       "name": "Sonic Network",
       "networkId": 146,
-      "chainId": 146,
       "currencySymbol": "S",
       "publicRpcUrls": [
         "https://rpc.soniclabs.com",
@@ -862,7 +817,6 @@
     "rootstock": {
       "name": "Rootstock Mainnet",
       "networkId": 30,
-      "chainId": 30,
       "currencySymbol": "RBTC",
       "publicRpcUrls": [
         "https://rootstock-mainnet.public.blastapi.io",
@@ -883,7 +837,6 @@
     "rootstockTestnet": {
       "name": "Rootstock Testnet",
       "networkId": 31,
-      "chainId": 31,
       "currencySymbol": "tRBTC",
       "publicRpcUrls": [
         "https://rootstock-testnet.public.blastapi.io",
@@ -901,7 +854,6 @@
     "tac": {
       "name": "TAC Mainnet",
       "networkId": 239,
-      "chainId": 239,
       "currencySymbol": "TAC",
       "publicRpcUrls": ["https://rpc.ankr.com/tac", "https://rpc.tac.build"],
       "avgBlockTimeMs": 1300,
@@ -919,7 +871,6 @@
     "tacTestnet": {
       "name": "TAC Turin",
       "networkId": 2390,
-      "chainId": 2390,
       "currencySymbol": "TAC",
       "publicRpcUrls": [
         "https://turin.rpc.tac.build",
@@ -939,7 +890,6 @@
     "holesky": {
       "name": "Holesky",
       "networkId": 17000,
-      "chainId": 17000,
       "currencySymbol": "ETH",
       "publicRpcUrls": [
         "https://ethereum-holesky-rpc.publicnode.com",
@@ -958,7 +908,6 @@
     "amoy": {
       "name": "Polygon Amoy",
       "networkId": 80002,
-      "chainId": 80002,
       "currencySymbol": "POL",
       "publicRpcUrls": ["https://rpc-amoy.polygon.technology"],
       "avgBlockTimeMs": 20000,
@@ -973,7 +922,6 @@
     "megaEthTestnet": {
       "name": "megaEth Testnet",
       "networkId": 6342,
-      "chainId": 6342,
       "currencySymbol": "megaETH",
       "publicRpcUrls": ["https://carrot.megaeth.com/rpc"],
       "avgBlockTimeMs": 1000,
@@ -988,7 +936,6 @@
     "monadTestnet": {
       "name": "Monad Testnet",
       "networkId": 10143,
-      "chainId": 10143,
       "currencySymbol": "MON",
       "publicRpcUrls": ["https://testnet-rpc.monad.xyz"],
       "avgBlockTimeMs": 1000,
@@ -1003,7 +950,6 @@
     "berachain": {
       "name": "Berachain",
       "networkId": 80094,
-      "chainId": 80094,
       "currencySymbol": "BERA",
       "publicRpcUrls": ["https://rpc.berachain.com"],
       "avgBlockTimeMs": 2000,
@@ -1019,7 +965,6 @@
     "story": {
       "name": "Story",
       "networkId": 1514,
-      "chainId": 1514,
       "currencySymbol": "IP",
       "publicRpcUrls": [
         "https://mainnet.storyrpc.io",
@@ -1040,7 +985,6 @@
     "storyTestnet": {
       "name": "Story Aeneid Testnet",
       "networkId": 1315,
-      "chainId": 1315,
       "currencySymbol": "IP",
       "publicRpcUrls": [
         "https://aeneid.storyrpc.io",
@@ -1061,7 +1005,6 @@
     "unichain": {
       "name": "Unichain",
       "networkId": 130,
-      "chainId": 130,
       "currencySymbol": "ETH",
       "publicRpcUrls": [
         "https://unichain-rpc.publicnode.com",
@@ -1082,8 +1025,6 @@
     "sui-testnet": {
       "name": "Sui Testnet",
       "networkId": "sui/1282977196",
-      "chainId": 1282977196,
-      "chainType": "sui",
       "currencySymbol": "SUI",
       "publicRpcUrls": [
         "https://sui-testnet.public.blastapi.io",
@@ -1103,8 +1044,6 @@
     "sui": {
       "name": "Sui",
       "networkId": "sui/897796746",
-      "chainId": 897796746,
-      "chainType": "sui",
       "currencySymbol": "SUI",
       "publicRpcUrls": [
         "https://rpc.ankr.com/sui",
@@ -1128,8 +1067,6 @@
     "movement-testnet": {
       "name": "Movement Testnet",
       "networkId": "movement/250",
-      "chainId": 250,
-      "chainType": "movement",
       "currencySymbol": "MOVE",
       "publicRpcUrls": [
         "https://aptos.testnet.bardock.movementlabs.xyz/v1",
@@ -1147,8 +1084,6 @@
     "radix-stokenet": {
       "name": "Radix Stokenet",
       "networkId": "radix/2",
-      "chainId": 2,
-      "chainType": "radix",
       "currencySymbol": "XRD",
       "publicRpcUrls": ["https://stokenet.radixdlt.com"],
       "avgBlockTimeMs": 1000,
@@ -1163,8 +1098,6 @@
     "radix": {
       "name": "Radix Mainnet",
       "networkId": "radix/1",
-      "chainId": 1,
-      "chainType": "radix",
       "currencySymbol": "XRD",
       "publicRpcUrls": ["https://mainnet.radixdlt.com"],
       "avgBlockTimeMs": 1000,
@@ -1179,8 +1112,6 @@
     "solana-devnet": {
       "name": "Solana Devnet",
       "networkId": "solana/3",
-      "chainId": 3,
-      "chainType": "solana",
       "currencySymbol": "SOL",
       "publicRpcUrls": ["https://api.devnet.solana.com"],
       "avgBlockTimeMs": 1000,
@@ -1195,8 +1126,6 @@
     "solana-testnet": {
       "name": "Solana Testnet",
       "networkId": "solana/2",
-      "chainId": 2,
-      "chainType": "solana",
       "currencySymbol": "SOL",
       "publicRpcUrls": ["https://api.testnet.solana.com"],
       "avgBlockTimeMs": 1000,
@@ -1211,8 +1140,6 @@
     "solana-mainnet": {
       "name": "Solana Mainnet",
       "networkId": "solana/1",
-      "chainId": 1,
-      "chainType": "solana",
       "currencySymbol": "SOL",
       "publicRpcUrls": ["https://api.mainnet-beta.solana.com"],
       "avgBlockTimeMs": 1000,
@@ -1242,7 +1169,6 @@
     "hyperevm": {
       "name": "HyperEVM",
       "networkId": 999,
-      "chainId": 999,
       "currencySymbol": "HYPE",
       "publicRpcUrls": ["https://rpc.hyperliquid.xyz/evm"],
       "avgBlockTimeMs": 2000,
@@ -1259,7 +1185,6 @@
     "poseidonTestnet": {
       "name": "Poseidon Testnet",
       "networkId": 31911,
-      "chainId": 31911,
       "currencySymbol": "ETH",
       "publicRpcUrls": ["https://poseidon-testnet.rpc.caldera.xyz/http"],
       "avgBlockTimeMs": 2000,
@@ -1276,7 +1201,6 @@
     "citreaTestnet": {
       "name": "Citrea Testnet",
       "networkId": 5115,
-      "chainId": 5115,
       "currencySymbol": "cBTC",
       "publicRpcUrls": ["https://rpc.testnet.citrea.xyz"],
       "avgBlockTimeMs": 2000,
@@ -1292,7 +1216,6 @@
     "westendHub": {
       "name": "Westend Asset Hub",
       "networkId": 420420421,
-      "chainId": 420420421,
       "currencySymbol": "WND",
       "publicRpcUrls": ["https://westend-asset-hub-eth-rpc.polkadot.io"],
       "avgBlockTimeMs": 10000,
@@ -1308,7 +1231,6 @@
     "katana": {
       "name": "Katana",
       "networkId": 747474,
-      "chainId": 747474,
       "currencySymbol": "ETH",
       "publicRpcUrls": ["https://rpc.katana.network"],
       "avgBlockTimeMs": 1000,
