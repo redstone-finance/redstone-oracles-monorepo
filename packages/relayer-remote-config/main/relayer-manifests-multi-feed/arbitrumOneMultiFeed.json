@@ -1,0 +1,83 @@
+{
+  "chain": {
+    "name": "arbitrumOne",
+    "id": 42161
+  },
+  "adapterContract": "0x89e60b56efD70a1D4FBBaE947bC33cae41e37A72",
+  "adapterContractType": "multi-feed",
+  "dataServiceId": "redstone-primary-prod",
+  "updateTriggers": {
+    "deviationPercentage": 0.5,
+    "timeSinceLastUpdateInMilliseconds": 86400000
+  },
+  "priceFeeds": {
+    "eUSD": {
+      "priceFeedAddress": "0xa41107f9259bB835275eaCaAd8048307B80D7c00"
+    },
+    "ETH+/ETH": {
+      "priceFeedAddress": "0xCfd39de761508A7aCb8C931b959127a1D9d0B3D4"
+    },
+    "USDX": {
+      "priceFeedAddress": "0xb81131B6368b3F0a83af09dB4E39Ac23DA96C2Db",
+      "updateTriggersOverrides": {
+        "deviationPercentage": 0.5,
+        "timeSinceLastUpdateInMilliseconds": 21600000
+      }
+    },
+    "sUSDX_ARB_FUNDAMENTAL": {
+      "priceFeedAddress": "0x24c8964338Deb5204B096039147B8e8C3AEa42Cc",
+      "updateTriggersOverrides": {
+        "deviationPercentage": 0.5,
+        "timeSinceLastUpdateInMilliseconds": 21600000
+      }
+    },
+    "sUSDe_RATE_PROVIDER": {
+      "priceFeedAddress": "0x3A236F67Fce401D87D7215695235e201966576E4",
+      "updateTriggersOverrides": {
+        "timeSinceLastUpdateInMilliseconds": 86400000
+      }
+    },
+    "XVS": {
+      "priceFeedAddress": "0xd9a66Ff1D660aD943F48e9c606D09eA672f312E8",
+      "updateTriggersOverrides": {
+        "deviationPercentage": 1,
+        "timeSinceLastUpdateInMilliseconds": 86400000
+      }
+    },
+    "BUIDL_ARBITRUM_FUNDAMENTAL": {
+      "priceFeedAddress": "0xa8a94Da411425634e3Ed6C331a32ab4fd774aa43",
+      "updateTriggersOverrides": {
+        "deviationPercentage": 0.1,
+        "timeSinceLastUpdateInMilliseconds": 86400000
+      }
+    },
+    "BUIDL_ARBITRUM_DAILY_ACCRUAL": {
+      "priceFeedAddress": "0x3587a73AA02519335A8a6053a97657BECe0bC2Cc",
+      "updateTriggersOverrides": {
+        "deviationPercentage": 0.1,
+        "timeSinceLastUpdateInMilliseconds": 86400000
+      }
+    },
+    "USDC": {
+      "priceFeedAddress": "0x4BAD96DD1C7D541270a0C92e1D4e5f12EEEA7a57"
+    },
+    "USDT": {
+      "priceFeedAddress": "0x3fd49f2146FE0e10c4AE7E3fE04b3d5126385Ac4"
+    },
+    "ETH": {
+      "priceFeedAddress": "0x197225B3B017eb9b72Ac356D6B3c267d0c04c57c"
+    },
+    "BTC": {
+      "priceFeedAddress": "0xbbF121624c3b85C929Ac83872bf6c86b0976A55e"
+    },
+    "ARB": {
+      "priceFeedAddress": "0x09639692CE6ff12A06CA3AE9A24b3Aae4CD80DC8"
+    },
+    "weETH_FUNDAMENTAL": {
+      "priceFeedAddress": "0x83c6f7F61A55Fc7A1337AbD45733AD9c1c68076D"
+    },
+    "wstETH/stETH": {
+      "priceFeedAddress": "0x3401DAF2b1f150Ef0c709Cc0283b5F2e55c3DF29"
+    }
+  }
+}
