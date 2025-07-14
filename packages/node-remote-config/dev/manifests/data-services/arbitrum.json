@@ -214,8 +214,7 @@
         "gate-usdt",
         "kraken-usd",
         "lbank-usdt",
-        "okx-usdt",
-        "xt"
+        "okx-usdt"
       ],
       "deviationCheck": {
         "deviationWithRecentValues": {
@@ -1145,7 +1144,6 @@
       "source": [
         "coingecko",
         "coinmarketcap",
-        "bitstamp-eur",
         "bitmart-usdt",
         "uniswap-v3-ethereum-usdc-500",
         "aerodrome-cl-base-usdc",
