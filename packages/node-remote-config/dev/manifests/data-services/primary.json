@@ -102,8 +102,7 @@
         "gate-usdt",
         "kraken-usd",
         "lbank-usdt",
-        "okx-usdt",
-        "xt"
+        "okx-usdt"
       ],
       "deviationCheck": {
         "deviationWithRecentValues": {
@@ -566,7 +565,6 @@
       "source": [
         "coingecko",
         "coinmarketcap",
-        "bitstamp-eur",
         "bitmart-usdt",
         "uniswap-v3-ethereum-usdc-500",
         "aerodrome-cl-base-usdc",
@@ -1682,8 +1680,7 @@
         "bitget-usdt",
         "bitrue-usdt",
         "gate-usdt",
-        "lbank-usdt",
-        "xt"
+        "lbank-usdt"
       ],
       "denomination": "USD",
       "rateFeed": false
@@ -1703,8 +1700,7 @@
         "gate-usdt",
         "kraken-usd",
         "kucoin-usdt",
-        "okx-usdt",
-        "xt"
+        "okx-usdt"
       ],
       "denomination": "USDC",
       "rateFeed": false
@@ -2682,9 +2678,7 @@
         "mexc-usdt",
         "gate-usdt",
         "bingx-usdt",
-        "bitmart-usdt",
-        "bitrue-usdt",
-        "xt"
+        "bitrue-usdt"
       ],
       "denomination": "USD",
       "rateFeed": false
