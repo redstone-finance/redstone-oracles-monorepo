@@ -1,0 +1,16 @@
+{
+  "chain": {
+    "name": "berachain",
+    "id": 80094
+  },
+  "adapterContract": "0x1b0FDa12D125B864756Bbf191ad20eaB10915a6F",
+  "adapterContractType": "price-feeds",
+  "dataServiceId": "redstone-primary-prod",
+  "updateTriggers": {
+    "deviationPercentage": 0.25,
+    "timeSinceLastUpdateInMilliseconds": 86400000
+  },
+  "priceFeeds": {
+    "LBTC_FUNDAMENTAL": "0x1b0FDa12D125B864756Bbf191ad20eaB10915a6F"
+  }
+}
