@@ -7113,6 +7113,11 @@
       "source": ["hyperevm-evm-fetcher-kinetiq"],
       "denomination": "HYPE",
       "rateFeed": true
+    },
+    "kHYPE_FUNDAMENTAL/USD": {
+      "source": ["hyperevm-evm-fetcher-kinetiq"],
+      "denomination": "USD",
+      "rateFeed": true
     }
   }
 }
