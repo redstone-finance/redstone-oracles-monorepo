@@ -1,0 +1,30 @@
+{
+  "chain": {
+    "name": "fraxtal",
+    "id": 252
+  },
+  "adapterContract": "0xF6de0Bbe3b277A7C1d56139e4084e917AAaA74d2",
+  "adapterContractType": "multi-feed",
+  "dataServiceId": "redstone-primary-prod",
+  "updateTriggers": {
+    "deviationPercentage": 0.5,
+    "timeSinceLastUpdateInMilliseconds": 21600000
+  },
+  "priceFeeds": {
+    "BTC": {
+      "priceFeedAddress": "0x8dd2D85C7c28F43F965AE4d9545189C7D022ED0e"
+    },
+    "CRV": {
+      "priceFeedAddress": "0x6C5090e85a65038ca6AB207CDb9e7a897cb33e4d"
+    },
+    "ETH": {
+      "priceFeedAddress": "0x89e60b56efD70a1D4FBBaE947bC33cae41e37A72"
+    },
+    "FRAX": {
+      "priceFeedAddress": "0xa41107f9259bB835275eaCaAd8048307B80D7c00"
+    },
+    "FXS": {
+      "priceFeedAddress": "0xbf228a9131AB3BB8ca8C7a4Ad574932253D99Cd1"
+    }
+  }
+}
