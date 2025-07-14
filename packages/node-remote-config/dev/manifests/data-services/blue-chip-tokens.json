@@ -224,8 +224,7 @@
         "gate-usdt",
         "kraken-usd",
         "lbank-usdt",
-        "okx-usdt",
-        "xt"
+        "okx-usdt"
       ],
       "deviationCheck": {
         "deviationWithRecentValues": {
