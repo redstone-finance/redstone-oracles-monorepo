@@ -1,0 +1,69 @@
+{
+  "chain": {
+    "name": "mantle",
+    "id": 5000
+  },
+  "adapterContract": "0xd9a66Ff1D660aD943F48e9c606D09eA672f312E8",
+  "adapterContractType": "multi-feed",
+  "dataServiceId": "redstone-primary-prod",
+  "updateTriggers": {
+    "deviationPercentage": 0.5,
+    "timeSinceLastUpdateInMilliseconds": 86400000
+  },
+  "priceFeeds": {
+    "mETH_FUNDAMENTAL": {
+      "priceFeedAddress": "0x9b2C948dbA5952A1f5Ab6fA16101c1392b8da1ab"
+    },
+    "USDC": {
+      "priceFeedAddress": "0x1bB8f2dF000553E5Af2AEd5c42FEd3a73cd5144b"
+    },
+    "WBTC": {
+      "priceFeedAddress": "0x76A495b0bFfb53ef3F0E94ef0763e03cE410835C"
+    },
+    "aUSD": {
+      "priceFeedAddress": "0xb81131B6368b3F0a83af09dB4E39Ac23DA96C2Db"
+    },
+    "USDe": {
+      "priceFeedAddress": "0x3DFA26B9A15D37190bB8e50aE093730DcA88973E",
+      "updateTriggersOverrides": {
+        "deviationPercentage": 0.2,
+        "timeSinceLastUpdateInMilliseconds": 86400000
+      }
+    },
+    "sUSDe": {
+      "priceFeedAddress": "0xd6a987Ff6323F658D04da16c36CE00960137a115",
+      "updateTriggersOverrides": {
+        "deviationPercentage": 0.2,
+        "timeSinceLastUpdateInMilliseconds": 86400000
+      }
+    },
+    "MNT": {
+      "priceFeedAddress": "0xed1f0df0b88889e5eA19c768613cDf3DbBF3d2a7",
+      "updateTriggersOverrides": {
+        "deviationPercentage": 0.5,
+        "timeSinceLastUpdateInMilliseconds": 3600000
+      }
+    },
+    "ETH": {
+      "priceFeedAddress": "0xFc34806fbD673c21c1AEC26d69AA247F1e69a2C6",
+      "updateTriggersOverrides": {
+        "deviationPercentage": 0.5,
+        "timeSinceLastUpdateInMilliseconds": 3600000
+      }
+    },
+    "wstETH/stETH": {
+      "priceFeedAddress": "0xE8d850331faAbb277a24C09d91aabb68fb808748",
+      "updateTriggersOverrides": {
+        "deviationPercentage": 0.5,
+        "timeSinceLastUpdateInMilliseconds": 3600000
+      }
+    },
+    "USDT": {
+      "priceFeedAddress": "0x3A236F67Fce401D87D7215695235e201966576E4",
+      "updateTriggersOverrides": {
+        "deviationPercentage": 0.25,
+        "timeSinceLastUpdateInMilliseconds": 86400000
+      }
+    }
+  }
+}

@@ -1,0 +1,48 @@
+{
+  "chain": {
+    "name": "poseidonTestnet",
+    "id": 31911
+  },
+  "adapterContract": "0x26FB59e5562405F42f55661f790fA1Bd2F410A3d",
+  "adapterContractType": "multi-feed",
+  "dataServiceId": "redstone-primary-prod",
+  "updateTriggers": {
+    "deviationPercentage": 0.5,
+    "timeSinceLastUpdateInMilliseconds": 21600000
+  },
+  "priceFeeds": {
+    "ETH": {
+      "priceFeedAddress": "0xf1454949C6dEdfb500ae63Aa6c784Aa1Dde08A6c"
+    },
+    "BTC": {
+      "priceFeedAddress": "0xE94c9f9A1893f23be38A5C0394E46Ac05e8a5f8C"
+    },
+    "wstETH": {
+      "priceFeedAddress": "0xb67047eDF6204F4C81333248dA71F8387050790C"
+    },
+    "SolvBTC": {
+      "priceFeedAddress": "0xE23eCA12D7D2ED3829499556F6dCE06642AFd990"
+    },
+    "USDC": {
+      "priceFeedAddress": "0x31a36CdF4465ba61ce78F5CDbA26FDF8ec361803"
+    },
+    "USDX": {
+      "priceFeedAddress": "0xe8D9FbC10e00ecc9f0694617075fDAF657a76FB2"
+    },
+    "sUSDe": {
+      "priceFeedAddress": "0xDd87FD0FD6F68AcB6897d05fCf31F3AB1165a49F"
+    },
+    "deUSD": {
+      "priceFeedAddress": "0xE5E307A3aEDf4e8eF60E1bfCc9ccD477dFad93ce"
+    },
+    "wUSDM": {
+      "priceFeedAddress": "0x53bB139e962ee0AC6477F40D0352e8dAF0480b70"
+    },
+    "SOL": {
+      "priceFeedAddress": "0xeEE1A6072626D83f005ECD5b86eAd5e638a2e640"
+    },
+    "STONE": {
+      "priceFeedAddress": "0x55e5eCA2A70Ce7E3ea74B84157c12Cf34545D6F6"
+    }
+  }
+}

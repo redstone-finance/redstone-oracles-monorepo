@@ -10762,6 +10762,12 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@redstone-finance/relayer-remote-config@workspace:packages/relayer-remote-config":
+  version: 0.0.0-use.local
+  resolution: "@redstone-finance/relayer-remote-config@workspace:packages/relayer-remote-config"
+  languageName: unknown
+  linkType: soft
+
 "@redstone-finance/rpc-providers@workspace:*, @redstone-finance/rpc-providers@workspace:packages/rpc-providers":
   version: 0.0.0-use.local
   resolution: "@redstone-finance/rpc-providers@workspace:packages/rpc-providers"

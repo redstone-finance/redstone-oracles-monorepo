@@ -1,0 +1,27 @@
+{
+  "chain": {
+    "name": "tacTestnet",
+    "id": 2390
+  },
+  "adapterContract": "0xDd87FD0FD6F68AcB6897d05fCf31F3AB1165a49F",
+  "adapterContractType": "multi-feed",
+  "dataServiceId": "redstone-primary-prod",
+  "updateTriggers": {
+    "deviationPercentage": 0.5,
+    "timeSinceLastUpdateInMilliseconds": 21600000
+  },
+  "priceFeeds": {
+    "ETH": {
+      "priceFeedAddress": "0x1b0FDa12D125B864756Bbf191ad20eaB10915a6F"
+    },
+    "BTC": {
+      "priceFeedAddress": "0x0bE6929FD4ad87347e97A525DB6ac8E884FCDCeC"
+    },
+    "USDC": {
+      "priceFeedAddress": "0x98ECE0D516f891a35278E3186772fb1545b274eB"
+    },
+    "TON": {
+      "priceFeedAddress": "0xD3A0C347b07Fd45F41270D557089B389Fa735C3d"
+    }
+  }
+}
