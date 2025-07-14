@@ -28,6 +28,9 @@
     },
     "tsTON_FUNDAMENTAL": {
       "priceFeedAddress": "0xb9D0073aCb296719C26a8BF156e4b599174fe1d5"
+    },
+    "wstETH/ETH": {
+      "priceFeedAddress": "0xE23eCA12D7D2ED3829499556F6dCE06642AFd990"
     }
   }
 }
