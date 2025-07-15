@@ -21,6 +21,4 @@ export const relayerNameToManualKeyArn: Record<string, string> = {
   swell: "/prod/on-chain-relayer/ethereum/swell/manual/private_key",
   arbitrumOneMultiFeed:
     "/prod/on-chain-relayer/arbitrum/multi-feed/manual/private-key",
-  zkLinkMultiFeed:
-    "/prod/on-chain-relayer/zklink/multi-feed/manual/private-key",
 };
