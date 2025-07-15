@@ -10226,6 +10226,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@redstone-finance/lambda-monitoring-avs@workspace:packages/lambda/lambda-monitoring-avs"
   dependencies:
+    "@redstone-finance/monitoring-manifests": "workspace:*"
     "@redstone-finance/redstone-monitoring": "workspace:*"
     "@redstone-finance/utils": "workspace:*"
     dotenv: "npm:^16.0.3"
