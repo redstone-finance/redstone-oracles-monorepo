@@ -118,6 +118,9 @@
     },
     "kHYPE_FUNDAMENTAL": {
       "priceFeedAddress": "0xFfe5F5e9e18b88FBdD7e28d4A583a111C874fB47"
+    },
+    "kHYPE_FUNDAMENTAL/USD": {
+      "priceFeedAddress": "0x82721e2C5Ef2DF1796B09728376361892b155594"
     }
   }
 }
