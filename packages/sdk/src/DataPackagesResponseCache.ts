@@ -6,7 +6,7 @@ import {
 } from "./request-data-packages";
 
 export class DataPackagesResponseCache {
-  private logger = loggerFactory("data-packages-response-cache");
+  private readonly logger = loggerFactory("data-packages-response-cache");
 
   private response?: DataPackagesResponse;
   private requestParams?: DataPackagesRequestParams;
@@ -67,7 +67,7 @@ export class DataPackagesResponseCache {
       return undefined;
     }
 
-    return filterDataPackages(this.response, requestParams.dataPackagesIds);
+    return filterDataPackages(this.response, requestParams.dataPackagesIds!);
   }
 }
 
