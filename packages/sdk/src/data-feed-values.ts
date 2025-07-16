@@ -1,10 +1,10 @@
-import {
-  MathUtils,
-  RedstoneCommon,
-  RedstoneTypes,
-} from "@redstone-finance/utils";
-import axios from "axios";
+import { MathUtils, RedstoneCommon } from "@redstone-finance/utils";
 import { resolveDataServiceUrls } from "./data-services-urls";
+import {
+  getSignersForDataServiceId,
+  type DataServiceIds,
+} from "./oracle-registry";
+import { requestDataPackages } from "./request-data-packages";
 
 export interface GetDataFeedValuesInput {
   aggregationAlgorithm?: "median" | "min" | "max"; // median by default
@@ -13,7 +13,6 @@ export interface GetDataFeedValuesInput {
 }
 
 export type GetDataFeedValuesOutput = Record<string, number | undefined>;
-type GatewayResponse = RedstoneTypes.DataPackageFromGatewayResponse;
 
 const DEFAULT_DATA_SERVICE_ID = "redstone-main-demo";
 const DEFAULT_AGGREGATION_ALGORITHM = "median";
@@ -26,21 +25,24 @@ export const getDataFeedValues = async (
     args.aggregationAlgorithm ?? DEFAULT_AGGREGATION_ALGORITHM;
   const gatewayUrls = args.gatewayUrls ?? resolveDataServiceUrls(dataServiceId);
 
-  const dataPackagesPerFeed = await Promise.any<GatewayResponse>(
-    gatewayUrls.map((url) => getDataPackagesFromGateway(url, dataServiceId))
-  );
+  const packages = await requestDataPackages({
+    dataServiceId,
+    uniqueSignersCount: 1,
+    authorizedSigners: getSignersForDataServiceId(
+      dataServiceId as DataServiceIds
+    ),
+    urls: gatewayUrls,
+  });
 
   const result: GetDataFeedValuesOutput = {};
 
-  for (const [dataPackageId, dataPackages] of Object.entries(
-    dataPackagesPerFeed
-  )) {
+  for (const [dataPackageId, dataPackages] of Object.entries(packages)) {
     if (isMultiPointDataPackageId(dataPackageId)) {
       continue;
     }
     const dataFeedId = dataPackageId;
     const plainValues = dataPackages!.map((dp) =>
-      Number(dp.dataPoints[0].value)
+      Number(dp.dataPackage.dataPoints[0].value)
     );
 
     result[dataFeedId] = aggregateValues(plainValues, aggregationAlgorithm);
@@ -51,25 +53,6 @@ export const getDataFeedValues = async (
 
 const isMultiPointDataPackageId = (dataPackageId: string) =>
   dataPackageId.startsWith("__") && dataPackageId.endsWith("__");
-
-const getDataPackagesFromGateway = async (
-  url: string,
-  dataServiceId: string
-): Promise<GatewayResponse> => {
-  const response = await axios.get<GatewayResponse>(
-    `${url}/v2/data-packages/latest/${dataServiceId}`
-  );
-
-  if (typeof response.data === "string") {
-    throw new Error(
-      `Failed to fetch data package from ${url}. Data service ID responded with: ${String(
-        response.data
-      )}`
-    );
-  }
-
-  return response.data;
-};
 
 export const aggregateValues = (
   plainValues: number[],

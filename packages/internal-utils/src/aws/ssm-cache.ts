@@ -8,18 +8,16 @@ interface SsmCacheEnvConfig {
 
 let ssmCacheEnv: SsmCacheEnvConfig | undefined;
 const ssmCacheEnvConfig = () => {
-  if (!ssmCacheEnv) {
-    ssmCacheEnv = Object.freeze({
-      cacheSsmParameters: RedstoneCommon.getFromEnv(
-        "CACHE_SSM_PARAMETERS",
-        z.boolean().default(false)
-      ),
-      ssmCacheTime: RedstoneCommon.getFromEnv(
-        "SSM_CACHE_TIME",
-        z.number().default(5 * 60 * 1000)
-      ),
-    });
-  }
+  ssmCacheEnv ??= Object.freeze({
+    cacheSsmParameters: RedstoneCommon.getFromEnv(
+      "CACHE_SSM_PARAMETERS",
+      z.boolean().default(false)
+    ),
+    ssmCacheTime: RedstoneCommon.getFromEnv(
+      "SSM_CACHE_TIME",
+      z.number().default(5 * 60 * 1000)
+    ),
+  });
 
   return ssmCacheEnv;
 };

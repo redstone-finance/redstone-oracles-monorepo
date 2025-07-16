@@ -56,7 +56,7 @@ export class PriceAdapterCasperContractAdapter
     paramsProvider: ContractParamsProvider
   ): Promise<bigint[]> {
     const results = await Promise.allSettled(
-      paramsProvider.requestParams.dataPackagesIds.map((feedId) =>
+      paramsProvider.requestParams.dataPackagesIds!.map((feedId) =>
         this.readPriceValue(feedId)
       )
     );
