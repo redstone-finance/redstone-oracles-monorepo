@@ -164,7 +164,7 @@ async function fetchDataPackages(
       startTimestamp: timestampIntervals.startTimestamp,
       endTimestamp: timestampIntervals.endTimestamp,
       dataFeedId: consts.ALL_FEEDS_KEY,
-      dataServiceId: dataServiceId,
+      dataServiceId,
     });
     console.log(`Fetched ${dataPackages.length} data packages`);
     await mongoConnection.disconnect();

@@ -120,6 +120,7 @@ describe("request-data-packages", () => {
     const dataPackages = await requestDataPackages({
       ...getReqParams(),
       dataPackagesIds: ["ETH"],
+      returnAllPackages: false,
     });
 
     expect(dataPackages["ETH"]!.length).toBe(2);
@@ -132,6 +133,7 @@ describe("request-data-packages", () => {
       ...getReqParams(),
       uniqueSignersCount: 1,
       dataPackagesIds: ["ETH"],
+      returnAllPackages: false,
     });
 
     expect(dataPackages["ETH"]!.length).toBe(1);
@@ -143,6 +145,7 @@ describe("request-data-packages", () => {
       ...getReqParams(),
       uniqueSignersCount: 4,
       dataPackagesIds: ["ETH"],
+      returnAllPackages: false,
     });
 
     expect(dataPackages["ETH"]!.length).toBe(4);
@@ -215,6 +218,7 @@ describe("request-data-packages", () => {
       urls: ["1", "2"],
       uniqueSignersCount: 1,
       dataPackagesIds: ["ETH"],
+      returnAllPackages: false,
     });
 
     expect(dataPackages["ETH"]![0].dataPackage.timestampMilliseconds).toBe(
@@ -267,6 +271,7 @@ describe("request-data-packages", () => {
         authorizedSigners: signerAddresses,
         uniqueSignersCount: 2,
         dataPackagesIds: ["ETH"],
+        returnAllPackages: false,
         maxTimestampDeviationMS: 20_000,
       })
     ).rejects.toThrowError(
@@ -320,6 +325,7 @@ describe("request-data-packages", () => {
         authorizedSigners: signerAddresses,
         uniqueSignersCount: 2,
         dataPackagesIds: ["ETH"],
+        returnAllPackages: false,
         maxTimestampDeviationMS: 20_000,
       })
     ).rejects.toThrowError(/Timestamp deviation exceeded/);
@@ -354,6 +360,7 @@ describe("request-data-packages", () => {
         ...getReqParams(),
         uniqueSignersCount: 1,
         dataPackagesIds: ["ETH"],
+        returnAllPackages: false,
         authorizedSigners: ["fake_signer"],
       })
     ).rejects.toThrowError(/No data packages for the data feed: ETH/);
@@ -387,6 +394,7 @@ describe("request-data-packages", () => {
       ...getReqParams(),
       uniqueSignersCount: 1,
       dataPackagesIds: ["BTC"],
+      returnAllPackages: false,
       authorizedSigners: [MOCK_WALLET.address],
       ignoreMissingFeed: true,
     });
@@ -421,6 +429,7 @@ describe("request-data-packages", () => {
       ...getReqParams(),
       uniqueSignersCount: 1,
       dataPackagesIds: ["BTC"],
+      returnAllPackages: false,
       authorizedSigners: [MOCK_WALLET.address],
       maxTimestampDeviationMS: 1,
       ignoreMissingFeed: true,
@@ -481,6 +490,7 @@ describe("request-data-packages", () => {
       ...getReqParams(),
       uniqueSignersCount: 1,
       dataPackagesIds: ["ETH"],
+      returnAllPackages: false,
       authorizedSigners: [MOCK_WALLET.address],
     });
 
@@ -493,6 +503,7 @@ describe("request-data-packages", () => {
         ...getReqParams(),
         uniqueSignersCount: 2,
         dataPackagesIds: ["ETH"],
+        returnAllPackages: false,
         authorizedSigners: [MOCK_WALLET.address],
       })
     ).rejects.toThrowError(/Too few data packages with unique signers/);
@@ -521,6 +532,7 @@ describe("request-data-packages", () => {
         ...getReqParams(),
         uniqueSignersCount: 4,
         dataPackagesIds: ["ETH"],
+        returnAllPackages: false,
       })
     ).rejects.toThrowError(/Zod validation error/);
   });
@@ -543,6 +555,7 @@ describe("request-data-packages", () => {
         urls: ["1", "2", "3"],
         uniqueSignersCount: 1,
         dataPackagesIds: ["ETH"],
+        returnAllPackages: false,
       });
 
       const timePassed = performance.now() - start;
@@ -562,6 +575,7 @@ describe("request-data-packages", () => {
         urls: ["1", "2", "3"],
         uniqueSignersCount: 1,
         dataPackagesIds: ["ETH"],
+        returnAllPackages: false,
       });
 
       const timePassed = performance.now() - start;
@@ -584,6 +598,7 @@ describe("request-data-packages", () => {
         urls: ["1", "2", "3"],
         uniqueSignersCount: 1,
         dataPackagesIds: ["ETH"],
+        returnAllPackages: false,
       });
 
       const timePassed = performance.now() - start;
@@ -608,6 +623,7 @@ describe("request-data-packages", () => {
         urls: ["1", "2", "3"],
         uniqueSignersCount: 1,
         dataPackagesIds: ["ETH"],
+        returnAllPackages: false,
       });
 
       const timePassed = performance.now() - start;
@@ -630,6 +646,7 @@ describe("request-data-packages", () => {
         urls: ["1", "2", "3"],
         uniqueSignersCount: 1,
         dataPackagesIds: ["ETH"],
+        returnAllPackages: false,
       });
 
       await expect(packagesPromise).rejects.toThrowError(/timeout/);
@@ -667,6 +684,7 @@ describe("request-data-packages", () => {
         urls: ["1", "2", "3"],
         uniqueSignersCount: 1,
         dataPackagesIds: ["ETH"],
+        returnAllPackages: false,
       });
 
       const timePassed = performance.now() - start;

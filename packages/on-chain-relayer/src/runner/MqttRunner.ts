@@ -148,7 +148,10 @@ export class MqttRunner {
     await this.subscriber?.unsubscribe();
     this.subscriber?.disableFallback();
 
-    this.subscriber = new DataPackageSubscriber(this.client, params);
+    this.subscriber = new DataPackageSubscriber(this.client, {
+      ...params,
+      dataPackageIds: params.dataPackageIds!,
+    });
     this.maybeEnableFallback(relayerConfig, requestParams);
     this.subscriber.enableCircuitBreaker(this.rateLimitCircuitBreaker);
 

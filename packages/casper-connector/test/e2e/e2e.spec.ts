@@ -63,7 +63,7 @@ describe.skip("E2E tests", () => {
       await pricesRelayAdapter.getPricesFromPayload(paramsProvider);
     verifyReturnedValues(
       values,
-      paramsProvider.requestParams.dataPackagesIds.length
+      paramsProvider.requestParams.dataPackagesIds!.length
     );
   });
 
@@ -100,7 +100,7 @@ describe.skip("E2E tests", () => {
 
     verifyReturnedValues(
       values,
-      paramsProvider.requestParams.dataPackagesIds.length,
+      paramsProvider.requestParams.dataPackagesIds!.length,
       timestamp
     );
 

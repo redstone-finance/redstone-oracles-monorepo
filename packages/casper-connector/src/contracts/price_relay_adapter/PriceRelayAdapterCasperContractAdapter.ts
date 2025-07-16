@@ -52,7 +52,7 @@ export class PriceRelayAdapterCasperContractAdapter extends PriceAdapterCasperCo
 
     return await this.extractComputedValues(
       hash,
-      paramsProvider.requestParams.dataPackagesIds
+      paramsProvider.requestParams.dataPackagesIds!
     );
   }
 
