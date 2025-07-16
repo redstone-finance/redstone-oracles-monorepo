@@ -42,7 +42,11 @@ export class ContractParamsProvider {
 
   copyForFeedIds(feedIds: string[]) {
     return new ContractParamsProvider(
-      { ...this.requestParams, dataPackagesIds: feedIds },
+      {
+        ...this.requestParams,
+        dataPackagesIds: feedIds,
+        returnAllPackages: false,
+      },
       this.cache
     );
   }
@@ -100,7 +104,7 @@ export class ContractParamsProvider {
   getDataFeedIds(): string[] {
     return (
       this.overrideRequestParamsPackagesIds ??
-      this.requestParams.dataPackagesIds
+      this.requestParams.dataPackagesIds!
     );
   }
 
@@ -179,7 +183,7 @@ export class ContractParamsProvider {
 
   static getUnsignedMetadata(args?: UnsignedMetadataArgs) {
     if (!args) {
-      return;
+      return undefined;
     }
 
     return `${args.metadataTimestamp ?? Date.now()}#${version}#${args.componentName ?? DEFAULT_COMPONENT_NAME}`;
