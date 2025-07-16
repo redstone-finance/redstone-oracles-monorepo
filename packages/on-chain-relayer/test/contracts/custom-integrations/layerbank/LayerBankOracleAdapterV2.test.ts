@@ -3,7 +3,7 @@ import { WrapperBuilder } from "@redstone-finance/evm-connector";
 import chai, { expect } from "chai";
 import chaiAsPromised from "chai-as-promised";
 import { ethers } from "hardhat";
-import { LayerBankOracleAdapterV1 } from "../../../../typechain-types";
+import { LayerBankOracleAdapterV2 } from "../../../../typechain-types";
 
 chai.use(chaiAsPromised);
 
@@ -14,7 +14,6 @@ const defaultTestValues = {
   "LAB.m": 42,
   wstETH: 42,
   STONE: 42,
-  wUSDM: 1,
   MANTA: 424444,
 };
 
@@ -25,13 +24,12 @@ const assetAddresses = {
   "LAB.m": "0x20A512dbdC0D006f46E6cA11329034Eb3d18c997",
   wstETH: "0x2FE3AD97a60EB7c79A976FC18Bb5fFD07Dd94BA5",
   STONE: "0xEc901DA9c68E90798BbBb74c11406A32A70652C3",
-  wUSDM: "0xbdAd407F77f44F7Da6684B416b1951ECa461FB07",
   MANTA: "0x95CeF13441Be50d20cA4558CC0a27B601aC544E5",
 };
 const invalidAddress = "0x1234567891BE50D20ca4558Cc0A27b6123456789";
 
-describe("LayerBankOracleAdapterV1", () => {
-  let layerBankAdapter: LayerBankOracleAdapterV1;
+describe("LayerBankOracleAdapterV2", () => {
+  let layerBankAdapter: LayerBankOracleAdapterV2;
 
   // This function uses 18 decimals, all LayerBank feeds have 18 decimals as well
   const formatDecimals = (value: number) =>
@@ -58,10 +56,10 @@ describe("LayerBankOracleAdapterV1", () => {
   };
 
   beforeEach(async () => {
-    const LayerBankOracleAdapterV1Factory = await ethers.getContractFactory(
-      "LayerBankOracleAdapterV1Mock"
+    const LayerBankOracleAdapterV2Factory = await ethers.getContractFactory(
+      "LayerBankOracleAdapterV2Mock"
     );
-    layerBankAdapter = await LayerBankOracleAdapterV1Factory.deploy();
+    layerBankAdapter = await LayerBankOracleAdapterV2Factory.deploy();
     await layerBankAdapter.deployed();
   });
 
@@ -76,7 +74,7 @@ describe("LayerBankOracleAdapterV1", () => {
 
   it("Should fail trying to update any feed with 0 value", async () => {
     await expect(
-      updatePrices({ ...defaultTestValues, wUSDM: 0 })
+      updatePrices({ ...defaultTestValues, wstETH: 0 })
     ).to.be.revertedWithCustomError(
       layerBankAdapter,
       "DataFeedValueCannotBeZero"
