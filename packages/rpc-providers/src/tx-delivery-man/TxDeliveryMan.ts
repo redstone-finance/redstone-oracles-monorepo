@@ -19,16 +19,16 @@ const WAITING_FOR_CONFIRMATION_TIMEOUT = 60_000;
 const CONFIRMATION_COUNT = 1;
 
 export class TxDeliveryMan implements Tx.ITxDeliveryMan {
-  private providers: readonly providers.JsonRpcProvider[];
-  private txDeliveriesInProgress = new Map<
+  private readonly providers: readonly providers.JsonRpcProvider[];
+  private readonly txDeliveriesInProgress = new Map<
     providers.JsonRpcProvider,
     boolean
   >();
 
   constructor(
     provider: TxDeliveryManSupportedProviders,
-    private signer: TxDeliverySigner,
-    private opts: TxDeliveryOpts
+    private readonly signer: TxDeliverySigner,
+    private readonly opts: TxDeliveryOpts
   ) {
     this.providers = extractProviders(provider);
   }

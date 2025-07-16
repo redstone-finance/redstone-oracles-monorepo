@@ -15,7 +15,7 @@ export function makeDataPackagesRequestParams(
   relayerConfig: RelayerConfig,
   uniqueSignersThreshold: number,
   dataFeedIds?: string[]
-) {
+): DataPackagesRequestParams {
   const {
     dataServiceId,
     dataFeeds,
@@ -41,5 +41,5 @@ export function makeDataPackagesRequestParams(
     ignoreMissingFeed: canIgnoreMissingFeeds(relayerConfig),
     waitForAllGatewaysTimeMs,
     enableEnhancedLogs: enableEnhancedRequestDataPackagesLogs,
-  } as DataPackagesRequestParams;
+  };
 }
