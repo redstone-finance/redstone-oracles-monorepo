@@ -17,8 +17,6 @@ contract LayerBankOracleAdapterV2 is LayerBankOracleAdapterV1 {
       return WST_ETH_ID;
     } else if (asset == STONE_ASSET) {
       return STONE_ID;
-    } else if (asset == W_USDM_ASSET) {
-      return W_USDM_ID;
     } else if (asset == MANTA_ASSET) {
       return MANTA_ID;
     } else if (asset == ETH_ASSET) {
@@ -37,6 +35,5 @@ contract LayerBankOracleAdapterV2 is LayerBankOracleAdapterV1 {
     dataFeedIds[4] = WST_ETH_ID;
     dataFeedIds[5] = STONE_ID;
     dataFeedIds[6] = MANTA_ID;
-    // dataFeedIds[7] = W_USDM_ID;
   }
 }
