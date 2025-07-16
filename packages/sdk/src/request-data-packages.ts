@@ -16,7 +16,7 @@ export const HISTORICAL_DATA_PACKAGES_DENOMINATOR_MS = 10000;
 /**
  * defines behavior of {@link requestDataPackages} method
  */
-export interface DataPackagesRequestParams {
+type DataPackagesRequestParamsInternal = {
   /**
    * for production environment most of the time "redstone-primary-prod" is appropriate
    */
@@ -24,7 +24,11 @@ export interface DataPackagesRequestParams {
   /**
    * array of tokens to fetch
    */
-  dataPackagesIds: string[];
+  dataPackagesIds?: string[];
+  /**
+   * if true dataPackagesIds can be omitted and all packages are returned
+   */
+  returnAllPackages?: boolean;
   /**
    * ensure minimum number of signers for each token
    * - 'uniqueSignersCount' packages closest to median of all fetched packages are returned (value 2 is recommended for prod nodes)
@@ -73,7 +77,20 @@ export interface DataPackagesRequestParams {
    * and thrown as a single AggregateError instead of failing on the first error.
    */
   aggregateErrors?: boolean;
-}
+};
+
+type DataPackagesQuery =
+  | {
+      dataPackagesIds: string[];
+      returnAllPackages?: false;
+    }
+  | {
+      dataPackagesIds?: never;
+      returnAllPackages?: true;
+    };
+
+export type DataPackagesRequestParams = DataPackagesRequestParamsInternal &
+  DataPackagesQuery;
 
 /**
  * represents per-feed response from DDL
@@ -161,7 +178,7 @@ export const calculateHistoricalPackagesTimestamp = (
 export const requestDataPackages = async (
   reqParams: DataPackagesRequestParams
 ): Promise<DataPackagesResponse> => {
-  if (!reqParams.dataPackagesIds.length) {
+  if (!reqParams.returnAllPackages && !reqParams.dataPackagesIds?.length) {
     throw new Error("Please provide at least one dataFeed");
   }
   try {
@@ -272,7 +289,7 @@ const prepareDataPackagePromises = (
   requestDataPackagesLogger?: RequestDataPackagesLogger
 ): Promise<DataPackagesResponse>[] => {
   if (!reqParams.authorizedSigners.length) {
-    throw new Error("authorizer signers array, if provided, cannot be empty");
+    throw new Error("Authorized signers array cannot be empty");
   }
   const pathComponents = [
     "v2",
@@ -363,7 +380,9 @@ const parseAndValidateDataPackagesResponse = (
 
   RedstoneCommon.zodAssert<GwResponse>(GwResponseSchema, responseData);
 
-  const requestedDataFeedIds = reqParams.dataPackagesIds;
+  const requestedDataFeedIds = reqParams.returnAllPackages
+    ? Object.keys(responseData)
+    : reqParams.dataPackagesIds!;
 
   const errors = [];
   for (const dataFeedId of requestedDataFeedIds) {
