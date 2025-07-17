@@ -86,7 +86,7 @@ type DataPackagesQuery =
     }
   | {
       dataPackagesIds?: never;
-      returnAllPackages?: true;
+      returnAllPackages: true;
     };
 
 export type DataPackagesRequestParams = DataPackagesRequestParamsInternal &
@@ -178,7 +178,7 @@ export const calculateHistoricalPackagesTimestamp = (
 export const requestDataPackages = async (
   reqParams: DataPackagesRequestParams
 ): Promise<DataPackagesResponse> => {
-  if (!reqParams.returnAllPackages && !reqParams.dataPackagesIds?.length) {
+  if (!reqParams.returnAllPackages && !reqParams.dataPackagesIds.length) {
     throw new Error("Please provide at least one dataFeed");
   }
   try {
@@ -382,7 +382,7 @@ const parseAndValidateDataPackagesResponse = (
 
   const requestedDataFeedIds = reqParams.returnAllPackages
     ? Object.keys(responseData)
-    : reqParams.dataPackagesIds!;
+    : reqParams.dataPackagesIds;
 
   const errors = [];
   for (const dataFeedId of requestedDataFeedIds) {
