@@ -4,8 +4,11 @@ extern crate alloc;
 mod config;
 mod test;
 
-use redstone::{core::process_payload, TimestampMillis};
-use soroban_sdk::{contract, contractimpl, contracttype, Bytes, Env, String, Vec, U256};
+use core::str;
+use redstone::{
+    contract::verification::UpdateTimestampVerifier, core::process_payload, TimestampMillis,
+};
+use soroban_sdk::{contract, contractimpl, contracttype, Address, Bytes, Env, String, Vec, U256};
 
 use self::config::{STELLAR_CONFIG, TTL_EXTEND_TO_2_DAYS, TTL_THRESHOLD_5_MINUTES};
 
@@ -28,18 +31,46 @@ impl Contract {
         get_prices_from_payload(env, &feed_ids, &payload)
     }
 
-    pub fn write_prices(env: &Env, feed_ids: Vec<String>, payload: Bytes) -> (u64, Vec<U256>) {
+    pub fn write_prices(
+        env: &Env,
+        updater: Address,
+        feed_ids: Vec<String>,
+        payload: Bytes,
+    ) -> (u64, Vec<U256>) {
+        updater.require_auth();
+        let updater: [u8; 56] = string_to_bytes(&updater.to_string());
+        let verifier = UpdateTimestampVerifier::verifier(
+            &str::from_utf8(&updater).unwrap(),
+            &STELLAR_CONFIG.trusted_updaters,
+        );
+
         let (package_timestamp, prices) = get_prices_from_payload(env, &feed_ids, &payload);
         let write_timestamp = env.ledger().timestamp() * MS_IN_SEC;
 
         let db = env.storage().persistent();
         for (feed_id, price) in feed_ids.into_iter().zip(prices.iter()) {
-            let price_data = PriceData {
+            let old_price_data: Option<PriceData> = db.get(&feed_id);
+            let new_price_data = PriceData {
                 price,
                 package_timestamp,
                 write_timestamp,
             };
-            db.set(&feed_id, &price_data);
+
+            verifier
+                .verify_timestamp(
+                    new_price_data.write_timestamp.into(),
+                    old_price_data.as_ref().map(|pd| pd.write_timestamp.into()),
+                    STELLAR_CONFIG.min_interval_between_updates_ms.into(),
+                    old_price_data
+                        .as_ref()
+                        .map(|pd| pd.package_timestamp)
+                        .unwrap_or_default()
+                        .into(),
+                    new_price_data.package_timestamp.into(),
+                )
+                .unwrap();
+
+            db.set(&feed_id, &new_price_data);
             db.extend_ttl(&feed_id, TTL_THRESHOLD_5_MINUTES, TTL_EXTEND_TO_2_DAYS);
         }
 
@@ -78,13 +109,7 @@ impl Contract {
 fn get_prices_from_payload(env: &Env, feed_ids: &Vec<String>, payload: &Bytes) -> (u64, Vec<U256>) {
     let feed_ids = feed_ids
         .into_iter()
-        .map(|id| {
-            let mut value = [0u8; 32];
-            let len = id.len() as usize;
-            assert!(len <= value.len());
-            id.copy_into_slice(&mut value[..len]);
-            value.into()
-        })
+        .map(|id| string_to_bytes(&id).into())
         .collect();
     let block_timestamp = TimestampMillis::from_millis(env.ledger().timestamp() * MS_IN_SEC);
 
@@ -100,4 +125,12 @@ fn get_prices_from_payload(env: &Env, feed_ids: &Vec<String>, payload: &Bytes) -
     }
 
     (result.timestamp.as_millis(), prices)
+}
+
+fn string_to_bytes<const N: usize>(string: &String) -> [u8; N] {
+    let mut bytes = [0u8; N];
+    let len = string.len() as usize;
+    assert!(len <= bytes.len());
+    string.copy_into_slice(&mut bytes[..len]);
+    bytes
 }
