@@ -9459,6 +9459,7 @@ __metadata:
     ethers: "npm:^5.7.2"
     hardhat: "npm:^2.22.14"
     hardhat-gas-reporter: "npm:^1.0.9"
+    lodash: "npm:^4.17.21"
     prompts: "npm:^2.4.2"
     semver: "npm:^7.7.0"
     solidity-coverage: "npm:^0.8.12"
