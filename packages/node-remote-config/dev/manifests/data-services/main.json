@@ -7123,6 +7123,19 @@
       "source": ["hyperevm-evm-fetcher-kinetiq"],
       "denomination": "USD",
       "rateFeed": true
+    },
+    "TAC": {
+      "source": [
+        "bingx-usdt",
+        "bitget-usdt",
+        "bitmart-usdt",
+        "bybit-usdt",
+        "kraken-usd",
+        "mexc-usdt",
+        "pancake-swap-bnb-usd1-500"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
     }
   }
 }
