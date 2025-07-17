@@ -1,0 +1,18 @@
+{
+  "chain": {
+    "name": "etherlink",
+    "id": 42793
+  },
+  "updateTriggers": {
+    "deviationPercentage": 0.5,
+    "timeSinceLastUpdateInMilliseconds": 86400000
+  },
+  "adapterContract": "0xFB1267A29C0aa19daae4a483ea895862A69e4AA5",
+  "adapterContractType": "multi-feed",
+  "dataServiceId": "redstone-primary-prod",
+  "priceFeeds": {
+    "LBTC": {
+      "priceFeedAddress": "0x5ED849a45B4608952161f45483F4B95BCEa7f8f0"
+    }
+  }
+}
