@@ -246,7 +246,7 @@
         "type": "Multicall3"
       },
       "isAuctionModel": true,
-      "twoDimensionalFees": true,
+      "twoDimensionalFees": false,
       "isMainnet": false
     },
     "etherlink": {
