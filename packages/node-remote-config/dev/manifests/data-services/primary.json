@@ -1892,6 +1892,13 @@
       "denomination": "USDe",
       "rateFeed": true
     },
+    "bmTON_FUNDAMENTAL": {
+      "source": [
+        "ton-staked"
+      ],
+      "denomination": "TON",
+      "rateFeed": true
+    },
     "stS_FUNDAMENTAL": {
       "source": [
         "sonic-evm-fetcher-beets"
