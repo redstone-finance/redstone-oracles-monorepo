@@ -126,6 +126,11 @@ export class MqttRunner {
       );
     }
 
+    RedstoneCommon.assert(
+      requestParams.dataPackagesIds,
+      "property dataPackageIds is required in mqtt"
+    );
+
     const params = {
       dataServiceId: requestParams.dataServiceId,
       dataPackageIds: requestParams.dataPackagesIds,
@@ -150,7 +155,6 @@ export class MqttRunner {
 
     this.subscriber = new DataPackageSubscriber(this.client, {
       ...params,
-      dataPackageIds: params.dataPackageIds!,
     });
     this.maybeEnableFallback(relayerConfig, requestParams);
     this.subscriber.enableCircuitBreaker(this.rateLimitCircuitBreaker);
