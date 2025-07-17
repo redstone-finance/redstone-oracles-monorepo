@@ -62,6 +62,7 @@ write_prices: prepare_data
 	  --cost \
 	  -- \
 	  write_prices \
+	  --updater `stellar keys address $(ACCOUNT)`\
 	  --feed_ids '[ $(FEED_IDS) ]' \
 	  --payload $(DATA_CAT)
 
