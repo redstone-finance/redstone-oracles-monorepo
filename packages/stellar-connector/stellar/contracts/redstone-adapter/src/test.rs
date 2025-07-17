@@ -9,6 +9,7 @@ fn test_write_prices() {
     let mut ledger = Env::default().to_ledger_snapshot();
     ledger.timestamp = 1752486200;
     let env = Env::from_ledger_snapshot(ledger);
+    env.mock_all_auths();
 
     let contract_id = env.register(Contract, ());
     let client = ContractClient::new(&env, &contract_id);
@@ -16,7 +17,7 @@ fn test_write_prices() {
 
     let btc = String::from_str(&env, "BTC");
     let eth = String::from_str(&env, "ETH");
-    let words = client.write_prices(&vec![&env, btc, eth], &payload);
+    let words = client.write_prices(&client.address, &vec![&env, btc, eth], &payload);
     assert_eq!(
         words,
         (
@@ -35,6 +36,7 @@ fn test_read_price_data() {
     let mut ledger = Env::default().to_ledger_snapshot();
     ledger.timestamp = 1752486205;
     let env = Env::from_ledger_snapshot(ledger);
+    env.mock_all_auths();
 
     let contract_id = env.register(Contract, ());
     let client = ContractClient::new(&env, &contract_id);
@@ -42,7 +44,11 @@ fn test_read_price_data() {
 
     let btc = String::from_str(&env, "BTC");
     let eth = String::from_str(&env, "ETH");
-    client.write_prices(&vec![&env, btc.clone(), eth.clone()], &payload);
+    client.write_prices(
+        &client.address,
+        &vec![&env, btc.clone(), eth.clone()],
+        &payload,
+    );
     let data = client.read_price_data(&vec![&env, btc, eth]);
     assert_eq!(
         data,
