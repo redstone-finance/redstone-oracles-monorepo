@@ -32,6 +32,7 @@ export const getDataFeedValues = async (
       dataServiceId as DataServiceIds
     ),
     urls: gatewayUrls,
+    returnAllPackages: true,
   });
 
   const result: GetDataFeedValuesOutput = {};
