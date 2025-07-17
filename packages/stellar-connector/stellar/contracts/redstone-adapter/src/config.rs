@@ -8,6 +8,17 @@ use redstone::{
 };
 use soroban_sdk::Env;
 
+pub struct Config {
+    pub signer_count_threshold: u8,
+    pub signers: [SignerAddressBs; 5],
+    pub trusted_updaters: [&'static str; 0],
+    pub max_timestamp_delay_ms: u64,
+    pub max_timestamp_ahead_ms: u64,
+    pub min_interval_between_updates_ms: u64,
+}
+
+pub type SignerAddressBs = [u8; 20];
+
 // Values below are expressed in number of ledgers (1 ledger == 5 seconds)
 pub const TTL_THRESHOLD_5_MINUTES: u32 = 60;
 pub const TTL_EXTEND_TO_2_DAYS: u32 = 35_000;
@@ -16,10 +27,10 @@ pub const TTL_EXTEND_TO_2_DAYS: u32 = 35_000;
 pub const STELLAR_CONFIG: Config = Config {
     signer_count_threshold: 1,
     signers: REDSTONE_PRIMARY_PROD_ALLOWED_SIGNERS,
-    _trusted_updaters: TRUSTED_UPDATERS,
+    trusted_updaters: TRUSTED_UPDATERS,
     max_timestamp_ahead_ms: 30 * 60 * 1_000,
     max_timestamp_delay_ms: 30 * 60 * 1_000,
-    _min_interval_between_updates_ms: 40_000,
+    min_interval_between_updates_ms: 40_000,
 };
 
 const REDSTONE_PRIMARY_PROD_ALLOWED_SIGNERS: [SignerAddressBs; 5] = [
@@ -45,18 +56,7 @@ const REDSTONE_PRIMARY_PROD_ALLOWED_SIGNERS: [SignerAddressBs; 5] = [
     ],
 ];
 
-const TRUSTED_UPDATERS: [[u8; 32]; 0] = [];
-
-pub type SignerAddressBs = [u8; 20];
-
-pub struct Config {
-    pub signer_count_threshold: u8,
-    pub signers: [SignerAddressBs; 5],
-    pub _trusted_updaters: [[u8; 32]; 0],
-    pub max_timestamp_delay_ms: u64,
-    pub max_timestamp_ahead_ms: u64,
-    pub _min_interval_between_updates_ms: u64,
-}
+const TRUSTED_UPDATERS: [&str; 0] = [];
 
 impl Config {
     pub fn redstone_signers(&self) -> Vec<SignerAddress> {
