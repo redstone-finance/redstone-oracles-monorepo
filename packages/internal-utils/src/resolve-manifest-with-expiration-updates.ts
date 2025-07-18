@@ -2,6 +2,7 @@ import { loggerFactory, RedstoneCommon } from "@redstone-finance/utils";
 import dayjs from "dayjs";
 import _ from "lodash";
 import { z } from "zod";
+import { getSSMParamWithEnvFallback } from "./aws/params";
 
 export type GenericMonitoringManifest<T = unknown> = {
   defaultConfig: T;
@@ -40,7 +41,7 @@ export function resolveMonitoringManifest<T>(
 }
 
 const logger = loggerFactory("remote-monitoring-manifest-config");
-export function getRemoteMonitoringManifestConfigFromEnv():
+export async function getRemoteMonitoringManifestConfigFromEnv(): Promise<
   | { shouldUseLocal: true }
   | {
       shouldUseLocal: false;
@@ -48,7 +49,8 @@ export function getRemoteMonitoringManifestConfigFromEnv():
       manifestsVersionHosts: string[];
       manifestsApiKey: string;
       manifestsGitRef: string;
-    } {
+    }
+> {
   // this is hack to ease testing locally use only for that
   if (
     RedstoneCommon.getFromEnv(
@@ -71,13 +73,22 @@ export function getRemoteMonitoringManifestConfigFromEnv():
       })
     )
   );
-  const manifestsApiKey = RedstoneCommon.getFromEnv(
-    "MONITORING_MANIFESTS_APIKEY",
+  const manifestsApiKeyPath = RedstoneCommon.getFromEnv(
+    "MONITORING_MANIFESTS_APIKEY_PATH",
     z.string()
   );
   const manifestsGitRef = RedstoneCommon.getFromEnv(
     "MONITORING_MANIFESTS_GITREF",
     z.string().default("main")
+  );
+
+  const manifestsApiKey = await getSSMParamWithEnvFallback(
+    manifestsApiKeyPath,
+    "MONITORING_MANIFESTS_APIKEY"
+  );
+  RedstoneCommon.assert(
+    manifestsApiKey,
+    "Failed to fetch manifest api key from SSM"
   );
 
   return {
