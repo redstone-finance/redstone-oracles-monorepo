@@ -11,7 +11,7 @@ use redstone::{
 };
 use soroban_sdk::{contract, contractimpl, contracttype, Address, Bytes, Env, String, Vec, U256};
 
-use self::config::{STELLAR_CONFIG, TTL_EXTEND_TO_2_DAYS, TTL_THRESHOLD_5_MINUTES};
+use self::config::{STELLAR_CONFIG, TTL_EXTEND_TO, TTL_THRESHOLD};
 
 const MS_IN_SEC: u64 = 1_000;
 
@@ -70,7 +70,7 @@ impl Contract {
                 .unwrap();
 
             db.set(&feed_id, &new_price_data);
-            db.extend_ttl(&feed_id, TTL_THRESHOLD_5_MINUTES, TTL_EXTEND_TO_2_DAYS);
+            db.extend_ttl(&feed_id, TTL_THRESHOLD, TTL_EXTEND_TO);
         }
 
         (package_timestamp, prices)
