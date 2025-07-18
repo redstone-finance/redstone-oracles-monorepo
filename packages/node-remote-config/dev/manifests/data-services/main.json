@@ -214,22 +214,6 @@
       "denomination": "USD",
       "rateFeed": false
     },
-    "SHIB": {
-      "source": [
-        "binance-usdt",
-        "bitget-usdt",
-        "bitrue-usdt",
-        "bybit-usdt",
-        "coinbase-usd",
-        "gate-usdt",
-        "kraken-usd",
-        "kucoin-usdt",
-        "lbank-usdt",
-        "okx-usdt"
-      ],
-      "denomination": "USD",
-      "rateFeed": false
-    },
     "TRX": {
       "source": [
         "binance-usdt",
@@ -778,21 +762,6 @@
       "source": ["non-usd-based"],
       "decimals": 14,
       "denomination": "DAI",
-      "rateFeed": false
-    },
-    "PEPE": {
-      "source": [
-        "binance-usdt",
-        "bitget-usdt",
-        "bitrue-usdt",
-        "gate-usdt",
-        "kraken-usd",
-        "kucoin-usdt",
-        "lbank-usdt",
-        "okx-usdt",
-        "uniswap-v3-ethereum-weth-3000"
-      ],
-      "denomination": "USD",
       "rateFeed": false
     },
     "ARB": {
@@ -5987,10 +5956,6 @@
       "denomination": "USD",
       "rateFeed": false
     },
-    "FLOKI": {
-      "denomination": "USD",
-      "rateFeed": false
-    },
     "ENS": {
       "denomination": "USD",
       "rateFeed": false
@@ -7135,6 +7100,11 @@
         "mexc-usdt",
         "pancake-swap-bnb-usd1-500"
       ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "URANIUM": {
+      "source": ["metals-api", "metal-price-api"],
       "denomination": "USD",
       "rateFeed": false
     }
