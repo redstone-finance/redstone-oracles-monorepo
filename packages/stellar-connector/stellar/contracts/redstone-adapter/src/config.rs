@@ -7,6 +7,10 @@ use redstone::{
 };
 use soroban_sdk::Env;
 
+// Values below are expressed in number of ledgers (1 ledger == 5 seconds)
+pub const TTL_THRESHOLD_5_MINUTES: u32 = 60;
+pub const TTL_EXTEND_TO_2_DAYS: u32 = 35_000;
+
 // TODO: make use of the fields that start with underscore
 pub const STELLAR_CONFIG: Config = Config {
     signer_count_threshold: 1,
@@ -61,14 +65,14 @@ impl Config {
     pub fn redstone_config<'a>(
         &'a self,
         env: &'a Env,
-        feed_id: FeedId,
+        feed_ids: Vec<FeedId>,
         block_timestamp: TimestampMillis,
     ) -> Result<SorobanRedStoneConfig<'a>, Error> {
         let crypto = SorobanCrypto::new(env);
         let config = RedstoneConfig::try_new(
             self.signer_count_threshold,
             self.redstone_signers(),
-            [feed_id].into(),
+            feed_ids,
             block_timestamp,
             Some(self.max_timestamp_delay_ms.into()),
             Some(self.max_timestamp_ahead_ms.into()),
