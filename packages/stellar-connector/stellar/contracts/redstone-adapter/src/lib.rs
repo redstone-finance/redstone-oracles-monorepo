@@ -7,10 +7,13 @@ mod test;
 use core::str;
 
 use redstone::{
-    contract::verification::UpdateTimestampVerifier, core::process_payload,
+    contract::verification::UpdateTimestampVerifier, core::process_payload, network::error::Error,
     soroban::helpers::ToBytes, TimestampMillis,
 };
-use soroban_sdk::{contract, contractimpl, contracttype, Address, Bytes, Env, String, Vec, U256};
+use soroban_sdk::{
+    contract, contractimpl, contracttype, storage::Persistent, Address, Bytes, Env, String, Vec,
+    U256,
+};
 
 use self::config::{STELLAR_CONFIG, TTL_EXTEND_TO, TTL_THRESHOLD};
 
@@ -51,27 +54,12 @@ impl Contract {
 
         let db = env.storage().persistent();
         for (feed_id, price) in feed_ids.into_iter().zip(prices.iter()) {
-            let old_price_data: Option<PriceData> = db.get(&feed_id);
-            let new_price_data = PriceData {
+            let price_data = PriceData {
                 price,
                 package_timestamp,
                 write_timestamp,
             };
-
-            verifier
-                .verify_timestamp(
-                    new_price_data.write_timestamp.into(),
-                    old_price_data.as_ref().map(|pd| pd.write_timestamp.into()),
-                    STELLAR_CONFIG.min_interval_between_updates_ms.into(),
-                    old_price_data
-                        .as_ref()
-                        .map(|pd| pd.package_timestamp.into()),
-                    new_price_data.package_timestamp.into(),
-                )
-                .unwrap();
-
-            db.set(&feed_id, &new_price_data);
-            db.extend_ttl(&feed_id, TTL_THRESHOLD, TTL_EXTEND_TO);
+            update_feed(&db, &verifier, &feed_id, &price_data).unwrap();
         }
 
         (package_timestamp, prices)
@@ -125,4 +113,28 @@ fn get_prices_from_payload(env: &Env, feed_ids: &Vec<String>, payload: &Bytes) -
     }
 
     (result.timestamp.as_millis(), prices)
+}
+
+fn update_feed(
+    db: &Persistent,
+    verifier: &UpdateTimestampVerifier,
+    feed_id: &String,
+    price_data: &PriceData,
+) -> Result<(), Error> {
+    let old_price_data: Option<PriceData> = db.get(feed_id);
+
+    verifier.verify_timestamp(
+        price_data.write_timestamp.into(),
+        old_price_data.as_ref().map(|pd| pd.write_timestamp.into()),
+        STELLAR_CONFIG.min_interval_between_updates_ms.into(),
+        old_price_data
+            .as_ref()
+            .map(|pd| pd.package_timestamp.into()),
+        price_data.package_timestamp.into(),
+    )?;
+
+    db.set(feed_id, price_data);
+    db.extend_ttl(feed_id, TTL_THRESHOLD, TTL_EXTEND_TO);
+
+    Ok(())
 }
