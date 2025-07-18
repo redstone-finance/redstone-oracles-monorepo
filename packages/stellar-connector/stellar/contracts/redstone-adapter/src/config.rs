@@ -19,9 +19,10 @@ pub struct Config {
 
 pub type SignerAddressBs = [u8; 20];
 
+pub const FEED_TTL_SECS: u32 = 2 * 24 * 60 * 60;
 // Values below are expressed in number of ledgers (1 ledger == 5 seconds)
-pub const TTL_THRESHOLD_5_MINUTES: u32 = 60;
-pub const TTL_EXTEND_TO_2_DAYS: u32 = 35_000;
+pub const TTL_THRESHOLD: u32 = FEED_TTL_SECS / 5;
+pub const TTL_EXTEND_TO: u32 = FEED_TTL_SECS * 3 / 10;
 
 // TODO: make use of the fields that start with underscore
 pub const STELLAR_CONFIG: Config = Config {
