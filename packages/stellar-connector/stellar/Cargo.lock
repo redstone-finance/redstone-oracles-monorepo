@@ -1041,11 +1041,12 @@ dependencies = [
 [[package]]
 name = "redstone"
 version = "2.0.2"
-source = "git+https://github.com/redstone-finance/rust-sdk?tag=2.1.0-pre#7bf92b4d404125dfe4f5b454bf6c2790197a1510"
+source = "git+https://github.com/redstone-finance/rust-sdk?tag=2.1.0-pre2#65f99b03fcc633e291d3ec214527a79a7b3ff0ad"
 dependencies = [
  "alloy-primitives",
  "derive-getters",
  "soroban-sdk",
+ "thiserror 2.0.12",
 ]
 
 [[package]]
@@ -1381,7 +1382,7 @@ dependencies = [
  "serde_with",
  "soroban-env-common",
  "soroban-env-host",
- "thiserror",
+ "thiserror 1.0.69",
 ]
 
 [[package]]
@@ -1434,7 +1435,7 @@ checksum = "a4ad0867aec99770ed614fedbec7ac4591791df162ff9e548ab7ebd07cd23a9c"
 dependencies = [
  "base64 0.13.1",
  "stellar-xdr",
- "thiserror",
+ "thiserror 1.0.69",
  "wasmparser",
 ]
 
@@ -1451,7 +1452,7 @@ dependencies = [
  "soroban-spec",
  "stellar-xdr",
  "syn 2.0.104",
- "thiserror",
+ "thiserror 1.0.69",
 ]
 
 [[package]]
@@ -1497,7 +1498,7 @@ checksum = "5e3aa3ed00e70082cb43febc1c2afa5056b9bb3e348bbb43d0cd0aa88a611144"
 dependencies = [
  "crate-git-revision",
  "data-encoding",
- "thiserror",
+ "thiserror 1.0.69",
 ]
 
 [[package]]
@@ -1556,7 +1557,16 @@ version = "1.0.69"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "b6aaf5339b578ea85b50e080feb250a3e8ae8cfcdff9a461c9ec2904bc923f52"
 dependencies = [
- "thiserror-impl",
+ "thiserror-impl 1.0.69",
+]
+
+[[package]]
+name = "thiserror"
+version = "2.0.12"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "567b8a2dae586314f7be2a752ec7474332959c6460e02bde30d702a66d488708"
+dependencies = [
+ "thiserror-impl 2.0.12",
 ]
 
 [[package]]
@@ -1564,6 +1574,17 @@ name = "thiserror-impl"
 version = "1.0.69"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "4fee6c4efc90059e10f81e6d42c60a18f76588c3d74cb83a0b242a2b6c7504c1"
+dependencies = [
+ "proc-macro2",
+ "quote",
+ "syn 2.0.104",
+]
+
+[[package]]
+name = "thiserror-impl"
+version = "2.0.12"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "7f7cf42b4507d8ea322120659672cf1b9dbb93f8f2d4ecfd6e51350ff5b17a1d"
 dependencies = [
  "proc-macro2",
  "quote",

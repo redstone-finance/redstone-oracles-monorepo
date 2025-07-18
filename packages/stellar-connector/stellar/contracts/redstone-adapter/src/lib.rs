@@ -6,7 +6,8 @@ mod test;
 
 use core::str;
 use redstone::{
-    contract::verification::UpdateTimestampVerifier, core::process_payload, TimestampMillis,
+    contract::verification::UpdateTimestampVerifier, core::process_payload,
+    soroban::helpers::ToBytes, TimestampMillis,
 };
 use soroban_sdk::{contract, contractimpl, contracttype, Address, Bytes, Env, String, Vec, U256};
 
@@ -38,7 +39,7 @@ impl Contract {
         payload: Bytes,
     ) -> (u64, Vec<U256>) {
         updater.require_auth();
-        let updater: [u8; 56] = string_to_bytes(&updater.to_string());
+        let updater: [u8; 56] = updater.to_string().to_bytes();
         let verifier = UpdateTimestampVerifier::verifier(
             &str::from_utf8(&updater).unwrap(),
             &STELLAR_CONFIG.trusted_updaters,
@@ -63,9 +64,7 @@ impl Contract {
                     STELLAR_CONFIG.min_interval_between_updates_ms.into(),
                     old_price_data
                         .as_ref()
-                        .map(|pd| pd.package_timestamp)
-                        .unwrap_or_default()
-                        .into(),
+                        .map(|pd| pd.package_timestamp.into()),
                     new_price_data.package_timestamp.into(),
                 )
                 .unwrap();
@@ -109,7 +108,7 @@ impl Contract {
 fn get_prices_from_payload(env: &Env, feed_ids: &Vec<String>, payload: &Bytes) -> (u64, Vec<U256>) {
     let feed_ids = feed_ids
         .into_iter()
-        .map(|id| string_to_bytes(&id).into())
+        .map(|id| id.to_bytes().into())
         .collect();
     let block_timestamp = TimestampMillis::from_millis(env.ledger().timestamp() * MS_IN_SEC);
 
@@ -125,12 +124,4 @@ fn get_prices_from_payload(env: &Env, feed_ids: &Vec<String>, payload: &Bytes) -
     }
 
     (result.timestamp.as_millis(), prices)
-}
-
-fn string_to_bytes<const N: usize>(string: &String) -> [u8; N] {
-    let mut bytes = [0u8; N];
-    let len = string.len() as usize;
-    assert!(len <= bytes.len());
-    string.copy_into_slice(&mut bytes[..len]);
-    bytes
 }
