@@ -5,7 +5,7 @@ members = [
 ]
 
 [workspace.dependencies]
-redstone = { git = "https://github.com/redstone-finance/rust-sdk", tag = "2.1.0-pre", default-features = false }
+redstone = { git = "https://github.com/redstone-finance/rust-sdk", tag = "2.1.0-pre2", default-features = false }
 soroban-sdk = "22.0.8"
 
 [profile.release]
