@@ -933,6 +933,7 @@
         "curve-ethereum-eusd",
         "curve-ethereum-rsr",
         "curve-ethereum-weth",
+        "curve-ethereum-weth-2",
         "uniswap-v3-ethereum-weth-500"
       ],
       "denomination": "USD",
