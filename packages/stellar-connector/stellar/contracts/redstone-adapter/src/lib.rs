@@ -25,7 +25,7 @@ pub struct Contract;
 #[contractimpl]
 impl Contract {
     pub fn get_prices(env: &Env, feed_ids: Vec<String>, payload: Bytes) -> (u64, Vec<U256>) {
-        get_prices_from_payload(&env, &feed_ids, &payload)
+        get_prices_from_payload(env, &feed_ids, &payload)
     }
 
     pub fn write_prices(env: &Env, feed_ids: Vec<String>, payload: Bytes) -> (u64, Vec<U256>) {
@@ -95,7 +95,7 @@ fn get_prices_from_payload(env: &Env, feed_ids: &Vec<String>, payload: &Bytes) -
 
     let mut prices = Vec::new(env);
     for value in result.values {
-        let price = U256::from_be_bytes(&env, &Bytes::from_array(&env, &value.0));
+        let price = U256::from_be_bytes(env, &Bytes::from_array(env, &value.0));
         prices.push_back(price);
     }
 
