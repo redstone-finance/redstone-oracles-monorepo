@@ -2750,6 +2750,11 @@
       ],
       "denomination": "USD",
       "rateFeed": false
+    },
+    "URANIUM": {
+      "source": ["metals-api", "metal-price-api"],
+      "denomination": "USD",
+      "rateFeed": false
     }
   },
   "multiPointPackages": {
