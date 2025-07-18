@@ -5,6 +5,7 @@ mod config;
 mod test;
 
 use core::str;
+
 use redstone::{
     contract::verification::UpdateTimestampVerifier, core::process_payload,
     soroban::helpers::ToBytes, TimestampMillis,
