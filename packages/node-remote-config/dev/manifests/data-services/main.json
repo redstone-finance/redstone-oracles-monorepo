@@ -216,25 +216,6 @@
       "denomination": "USD",
       "rateFeed": false
     },
-    "SHIB": {
-      "source": [
-        "binance-usdc",
-        "binance-usdt",
-        "bingx-usdt",
-        "bitget-usdt",
-        "bitmart-usdt",
-        "bitrue-usdt",
-        "bybit-usdt",
-        "gate-usdt",
-        "kraken-usd",
-        "kucoin-usdt",
-        "lbank-usdt",
-        "mexc-usdt",
-        "okx-usdt"
-      ],
-      "denomination": "USD",
-      "rateFeed": false
-    },
     "TRX": {
       "source": [
         "binance-usdt",
@@ -831,26 +812,6 @@
       ],
       "decimals": 14,
       "denomination": "DAI",
-      "rateFeed": false
-    },
-    "PEPE": {
-      "source": [
-        "binance-usdc",
-        "binance-usdt",
-        "bingx-usdt",
-        "bitget-usdt",
-        "bitmart-usdt",
-        "bitrue-usdt",
-        "bybit-usdt",
-        "gate-usdt",
-        "kraken-usd",
-        "kucoin-usdt",
-        "lbank-usdt",
-        "mexc-usdt",
-        "okx-usdt",
-        "xt"
-      ],
-      "denomination": "USD",
       "rateFeed": false
     },
     "ARB": {
@@ -6418,25 +6379,6 @@
       "denomination": "USD",
       "rateFeed": false
     },
-    "FLOKI": {
-      "source": [
-        "binance-usdc",
-        "binance-usdt",
-        "bingx-usdt",
-        "bitget-usdt",
-        "bitmart-usdt",
-        "bybit-usdt",
-        "gate-usdt",
-        "kraken-usd",
-        "kucoin-usdt",
-        "lbank-usdt",
-        "mexc-usdt",
-        "okx-usdt",
-        "xt"
-      ],
-      "denomination": "USD",
-      "rateFeed": false
-    },
     "ENS": {
       "denomination": "USD",
       "rateFeed": false
@@ -7401,6 +7343,45 @@
       "denomination": "USDC",
       "rateFeed": true
     },
+    "SHIB": {
+      "source": [
+        "binance-usdc",
+        "binance-usdt",
+        "bingx-usdt",
+        "bitget-usdt",
+        "bitmart-usdt",
+        "bitrue-usdt",
+        "bybit-usdt",
+        "gate-usdt",
+        "kraken-usd",
+        "kucoin-usdt",
+        "lbank-usdt",
+        "mexc-usdt",
+        "okx-usdt"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "PEPE": {
+      "source": [
+        "binance-usdc",
+        "binance-usdt",
+        "bingx-usdt",
+        "bitget-usdt",
+        "bitmart-usdt",
+        "bitrue-usdt",
+        "bybit-usdt",
+        "gate-usdt",
+        "kraken-usd",
+        "kucoin-usdt",
+        "lbank-usdt",
+        "mexc-usdt",
+        "okx-usdt",
+        "xt"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
     "WIF": {
       "source": [
         "binance-usdc",
@@ -7434,6 +7415,25 @@
         "kraken-usd",
         "bitmart-usdt",
         "lbank-usdt",
+        "xt"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "FLOKI": {
+      "source": [
+        "binance-usdc",
+        "binance-usdt",
+        "bingx-usdt",
+        "bitget-usdt",
+        "bitmart-usdt",
+        "bybit-usdt",
+        "gate-usdt",
+        "kraken-usd",
+        "kucoin-usdt",
+        "lbank-usdt",
+        "mexc-usdt",
+        "okx-usdt",
         "xt"
       ],
       "denomination": "USD",
@@ -7574,6 +7574,14 @@
         "kraken-usd",
         "mexc-usdt",
         "pancake-swap-bnb-usd1-500"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "URANIUM": {
+      "source": [
+        "metals-api",
+        "metal-price-api"
       ],
       "denomination": "USD",
       "rateFeed": false
