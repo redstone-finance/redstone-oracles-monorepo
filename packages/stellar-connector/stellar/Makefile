@@ -6,22 +6,46 @@ FEED_IDS="$(FEED_ID)", "ETH"
 
 WASM_TARGET=wasm32v1-none
 CONTRACT=redstone_adapter
+NIGHTLY=nightly-2025-04-29
 
 NETWORK=testnet
 ACCOUNT=stellar
 ADAPTER_ID=
 
-install:
+.PHONY: fmt check test build clippy build all-checks
+
+setup-env:
 	rustup target add $(WASM_TARGET)
+	rustup toolchain install $(NIGHTLY) --component rustfmt,clippy
+	cargo install cargo-machete --locked
+
+unused-deps:
+	cargo machete --with-metadata
+
+fix-unused-deps:
+	cargo machete --fix
+
+fmt:
+	cargo +$(NIGHTLY) fmt --all
+
+check:
+	cargo +$(NIGHTLY) fmt --all --check
+
+clippy:
+	cargo clippy --all-targets --all-features -- --no-deps -D warnings
+
+test:
+	cargo test --all-targets --all-features
+
+all-checks: check clippy test build unused-deps
+
+fix-all: fmt fix-unused-deps all-checks
 
 account:
 	stellar keys generate --global $(ACCOUNT) --network $(NETWORK) --fund
 
-build: install
+build: setup-env
 	stellar contract build
-
-test:
-	cargo test
 
 deploy: build
 	stellar contract deploy \
