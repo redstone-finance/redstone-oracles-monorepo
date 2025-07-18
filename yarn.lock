@@ -9821,6 +9821,7 @@ __metadata:
   dependencies:
     "@knowyourrpc/sdk": "npm:0.5.2"
     "@redstone-finance/chain-configs": "workspace:*"
+    "@redstone-finance/internal-utils": "workspace:*"
     "@redstone-finance/utils": "workspace:*"
     dotenv: "npm:^16.0.3"
     zod: "npm:^3.22.4"
