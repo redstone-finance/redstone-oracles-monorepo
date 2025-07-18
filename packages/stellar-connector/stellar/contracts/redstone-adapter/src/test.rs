@@ -1,7 +1,8 @@
 #![cfg(test)]
 
-use super::*;
 use soroban_sdk::{vec, Bytes, Env, String, U256};
+
+use super::*;
 
 #[test]
 fn test_write_prices() {

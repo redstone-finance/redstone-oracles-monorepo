@@ -1,4 +1,5 @@
 use alloc::vec::Vec;
+
 use redstone::{
     core::config::Config as RedstoneConfig,
     network::error::Error,
