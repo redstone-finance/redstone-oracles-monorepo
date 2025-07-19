@@ -1260,8 +1260,8 @@
     }
   },
   "temporaryConfigUpdates": {
-    "expirationTimestamp": "2025-07-04T12:01:00+02:00",
-    "solana-testnet": {
+    "expirationTimestamp": "2025-07-20T12:01:00+02:00",
+    "hyperevm": {
       "disabled": true
     }
   }
