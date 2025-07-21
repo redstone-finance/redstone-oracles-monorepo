@@ -2120,7 +2120,13 @@
       "rateFeed": false
     },
     "XAU": {
-      "source": ["alltick-api", "financialmodelingprep-usd", "twelve-data"],
+      "source": [
+        "alltick-api",
+        "financialmodelingprep-usd",
+        "metals-api",
+        "metal-price-api",
+        "twelve-data"
+      ],
       "denomination": "USD",
       "rateFeed": false
     },
