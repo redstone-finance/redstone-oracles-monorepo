@@ -464,7 +464,7 @@
       "rateFeed": false
     },
     "GRAIL": {
-      "source": ["bingx-usdt", "coingecko", "coinmarketcap", "gate-usdt"],
+      "source": ["coingecko", "coinmarketcap", "gate-usdt"],
       "denomination": "USD",
       "rateFeed": false
     },
@@ -591,8 +591,7 @@
       "source": [
         "balancer-ethereum-ezeth",
         "balancer-ethereum-weeth",
-        "curve-ethereum-weeth",
-        "pancake-swap-ethereum-weth-500"
+        "curve-ethereum-weeth"
       ],
       "denomination": "USD",
       "rateFeed": false
@@ -993,7 +992,6 @@
         "bybit-usdt",
         "gate-usdt",
         "kucoin-usdt",
-        "lbank-usdt",
         "okx-usdt",
         "xt"
       ],
@@ -1174,7 +1172,6 @@
         "aerodrome-cl-base-weth",
         "curve-ethereum-wbtc",
         "uniswap-v3-base-weth-3000",
-        "uniswap-v3-ethereum-usdc-3000",
         "uniswap-v3-ethereum-wbtc-100",
         "uniswap-v3-ethereum-weth-3000",
         "uniswap-v3-base-usdc-500",
