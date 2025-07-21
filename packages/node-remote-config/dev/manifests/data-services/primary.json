@@ -636,7 +636,13 @@
       "rateFeed": false
     },
     "XAU": {
-      "source": ["alltick-api", "financialmodelingprep-usd", "twelve-data"],
+      "source": [
+        "alltick-api",
+        "financialmodelingprep-usd",
+        "metals-api",
+        "metal-price-api",
+        "twelve-data"
+      ],
       "denomination": "USD",
       "rateFeed": false
     },
@@ -2670,13 +2676,13 @@
     },
     "XAUt": {
       "source": [
-        "bybit-usdt",
-        "okx-usdt",
-        "bitget-usdt",
-        "mexc-usdt",
-        "gate-usdt",
         "bingx-usdt",
-        "bitrue-usdt"
+        "bitget-usdt",
+        "bitrue-usdt",
+        "bybit-usdt",
+        "gate-usdt",
+        "mexc-usdt",
+        "okx-usdt"
       ],
       "denomination": "USD",
       "rateFeed": false
