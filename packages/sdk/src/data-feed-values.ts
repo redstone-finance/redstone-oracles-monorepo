@@ -43,7 +43,7 @@ export const getDataFeedValues = async (
     }
     const dataFeedId = dataPackageId;
     const plainValues = dataPackages!.map((dp) =>
-      Number(dp.dataPackage.dataPoints[0].value)
+      Number(dp.dataPackage.dataPoints[0].toObj().value)
     );
 
     result[dataFeedId] = aggregateValues(plainValues, aggregationAlgorithm);
