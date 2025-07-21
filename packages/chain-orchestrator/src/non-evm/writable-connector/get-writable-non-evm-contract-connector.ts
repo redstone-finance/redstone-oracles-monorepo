@@ -18,10 +18,8 @@ export async function getWritableNonEvmContractConnector(
       return getRadixContractConnector(relayerConfig);
     case "sui":
       return getSuiContractConnector(relayerConfig);
-    case "aptos":
-      return getMovementContractConnector(relayerConfig, "aptos");
     case "movement":
-      return getMovementContractConnector(relayerConfig, "movement");
+      return getMovementContractConnector(relayerConfig);
     case "solana":
       return getSolanaContractConnector(relayerConfig);
     case "evm":
