@@ -1,4 +1,7 @@
-import { AptosClientBuilder } from "@redstone-finance/movement-connector";
+import {
+  AptosClientBuilder,
+  MovementClientBuilder,
+} from "@redstone-finance/movement-connector";
 import { RadixClientBuilder } from "@redstone-finance/radix-connector";
 import {
   makeKeypair as makeSolanaKeypair,
@@ -34,6 +37,13 @@ export function getNonEvmBlockchainService(
       return new SuiBlockchainService(suiClient, keypair);
     }
     case "movement": {
+      const movementClient = new MovementClientBuilder()
+        .withNetworkId(networkId)
+        .withRpcUrls(rpcUrls)
+        .build();
+      return new MovementBlockchainService(movementClient, privateKey);
+    }
+    case "aptos": {
       const aptosClient = new AptosClientBuilder()
         .withNetworkId(networkId)
         .withRpcUrls(rpcUrls)

@@ -1,5 +1,6 @@
 import {
   AptosClientBuilder,
+  MovementClientBuilder,
   MovementContractConnector,
 } from "@redstone-finance/movement-connector";
 import {
@@ -34,6 +35,13 @@ export function getBaseNonEvmContractConnector(
           .build()
       );
     case "movement":
+      return new MovementContractConnector(
+        new MovementClientBuilder()
+          .withNetworkId(networkId)
+          .withRpcUrls(rpcUrls)
+          .build()
+      );
+    case "aptos":
       return new MovementContractConnector(
         new AptosClientBuilder()
           .withNetworkId(networkId)

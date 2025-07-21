@@ -2,7 +2,7 @@
   "adapterContractType": "multi-feed",
   "chain": {
     "name": "testnet",
-    "id": "movement/2"
+    "id": "aptos/2"
   },
   "updateTriggers": {
     "deviationPercentage": 0.2,

@@ -6,7 +6,7 @@ import {
   RedstoneCommon,
 } from "@redstone-finance/utils";
 
-const ed25519Chains = ["radix", "solana", "sui", "movement"];
+const ed25519Chains = ["radix", "solana", "sui", "movement", "aptos"];
 
 export async function getNonEvmZrodelkoPrivateKey(
   networkId: NetworkId,
