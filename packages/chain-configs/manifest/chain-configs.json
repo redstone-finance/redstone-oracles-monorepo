@@ -1083,7 +1083,7 @@
     },
     "aptos-testnet": {
       "name": "Aptos Testnet",
-      "networkId": "movement/2",
+      "networkId": "aptos/2",
       "currencySymbol": "APT",
       "publicRpcUrls": ["https://api.testnet.aptoslabs.com/v1"],
       "avgBlockTimeMs": 130,

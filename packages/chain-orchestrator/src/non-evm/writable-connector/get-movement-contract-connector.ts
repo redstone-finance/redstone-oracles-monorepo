@@ -1,5 +1,6 @@
 import {
   AptosClientBuilder,
+  MovementClientBuilder,
   MovementPricesContractConnector,
   configFromOptionals,
   makeAptosAccount,
@@ -8,7 +9,8 @@ import {
 import { PartialRelayerConfig } from "./partial-relayer-config";
 
 export const getMovementContractConnector = (
-  relayerConfig: PartialRelayerConfig
+  relayerConfig: PartialRelayerConfig,
+  adapterType: "aptos" | "movement"
 ) => {
   const {
     privateKey,
@@ -23,7 +25,11 @@ export const getMovementContractConnector = (
     throw new Error("adapterContractPackageId is required");
   }
 
-  const aptosClient = new AptosClientBuilder()
+  const aptosClient = (
+    adapterType === "aptos"
+      ? new AptosClientBuilder()
+      : new MovementClientBuilder()
+  )
     .withNetworkId(networkId)
     .withRpcUrls(rpcUrls)
     .withQuarantineEnabled()
