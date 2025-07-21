@@ -75,7 +75,7 @@ export async function getRemoteMonitoringManifestConfigFromEnv(): Promise<
   );
   const manifestsApiKeyPath = RedstoneCommon.getFromEnv(
     "MONITORING_MANIFESTS_APIKEY_PATH",
-    z.string()
+    z.string().optional()
   );
   const manifestsGitRef = RedstoneCommon.getFromEnv(
     "MONITORING_MANIFESTS_GITREF",
