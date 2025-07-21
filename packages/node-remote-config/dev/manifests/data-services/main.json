@@ -890,7 +890,7 @@
       "rateFeed": false
     },
     "agEUR": {
-      "source": ["curve-ethereum-euroc", "uniswap-v3-ethereum-usdc-3000"],
+      "source": ["curve-ethereum-euroc"],
       "denomination": "USD",
       "rateFeed": false
     },
@@ -1063,7 +1063,7 @@
       "rateFeed": false
     },
     "GRAIL": {
-      "source": ["bingx-usdt", "coingecko", "gate-usdt"],
+      "source": ["coingecko", "coinmarketcap", "gate-usdt"],
       "denomination": "USD",
       "rateFeed": false
     },
@@ -1109,7 +1109,6 @@
         "kucoin-usdt",
         "lbank-usdt",
         "okx-usdt",
-        "uniswap-v3-ethereum-weth-10000",
         "uniswap-v3-ethereum-weth-3000",
         "xt"
       ],
@@ -1336,7 +1335,6 @@
       "source": [
         "ambient-blast-eth",
         "ringswap-blast-fwweth",
-        "thruster-blast-weth",
         "thruster-v3-blast-susde-500",
         "thruster-v3-blast-usde-500",
         "thruster-v3-blast-weth-500"
@@ -1442,8 +1440,7 @@
       "source": [
         "balancer-ethereum-ezeth",
         "balancer-ethereum-weeth",
-        "curve-ethereum-weeth",
-        "pancake-swap-ethereum-weth-500"
+        "curve-ethereum-weeth"
       ],
       "denomination": "USD",
       "rateFeed": false
@@ -1750,8 +1747,7 @@
       "source": [
         "curve-ethereum-dai",
         "curve-ethereum-usdc",
-        "curve-ethereum-usdt",
-        "trader-joe-v2-avalanche-usdc"
+        "curve-ethereum-usdt"
       ],
       "denomination": "USD",
       "rateFeed": false
@@ -1769,7 +1765,6 @@
     "SolvBTC": {
       "source": [
         "pancake-swap-bnb-btcb-500",
-        "thena-bnb-btcb",
         "trader-joe-v2-avalanche-btc.b",
         "uniswap-v3-ethereum-wbtc-500"
       ],
@@ -1822,7 +1817,6 @@
         "aerodrome-cl-base-weth",
         "curve-ethereum-wbtc",
         "uniswap-v3-base-weth-3000",
-        "uniswap-v3-ethereum-usdc-3000",
         "uniswap-v3-ethereum-wbtc-100",
         "uniswap-v3-ethereum-weth-3000",
         "uniswap-v3-base-usdc-500",
@@ -1873,7 +1867,6 @@
     },
     "aUSD": {
       "source": [
-        "trader-joe-v2-avalanche-deusd",
         "trader-joe-v2-avalanche-usdc",
         "trader-joe-v2-avalanche-usdt",
         "trader-joe-v2-avalanche-wavax",
@@ -1944,7 +1937,6 @@
         "bybit-usdt",
         "gate-usdt",
         "kucoin-usdt",
-        "lbank-usdt",
         "okx-usdt",
         "xt"
       ],
@@ -6778,7 +6770,6 @@
       "source": [
         "hyperliquid-api-fetcher",
         "hyperswap-hyperevm-whype-3000",
-        "laminar-hyperevm-whype-3000",
         "kittenswap-hyperevm-whype-2500"
       ],
       "denomination": "USD",
