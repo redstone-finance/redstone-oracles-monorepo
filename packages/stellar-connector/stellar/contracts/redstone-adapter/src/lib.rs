@@ -7,17 +7,21 @@ mod test;
 use core::str;
 
 use redstone::{
-    contract::verification::UpdateTimestampVerifier, core::process_payload, network::error::Error,
-    soroban::helpers::ToBytes, TimestampMillis,
+    contract::verification::UpdateTimestampVerifier, core::process_payload,
+    network::error::Error as RedStoneError, soroban::helpers::ToBytes, TimestampMillis,
 };
 use soroban_sdk::{
-    contract, contractimpl, contracttype, storage::Persistent, Address, Bytes, Env, String, Vec,
-    U256,
+    contract, contractimpl, contracttype,
+    storage::Persistent,
+    xdr::{ScErrorCode, ScErrorType},
+    Address, Bytes, Env, Error, String, Vec, U256,
 };
 
 use self::config::{STELLAR_CONFIG, TTL_EXTEND_TO, TTL_THRESHOLD};
 
 const MS_IN_SEC: u64 = 1_000;
+const MISSING_FEED_ENTRY: Error =
+    Error::from_type_and_code(ScErrorType::Storage, ScErrorCode::MissingValue);
 
 #[derive(Debug, Clone)]
 #[contracttype]
@@ -32,8 +36,13 @@ pub struct Contract;
 
 #[contractimpl]
 impl Contract {
-    pub fn get_prices(env: &Env, feed_ids: Vec<String>, payload: Bytes) -> (u64, Vec<U256>) {
+    pub fn get_prices(
+        env: &Env,
+        feed_ids: Vec<String>,
+        payload: Bytes,
+    ) -> Result<(u64, Vec<U256>), Error> {
         get_prices_from_payload(env, &feed_ids, &payload)
+            .map_err(|e| Error::from_contract_error(e.code().into()))
     }
 
     pub fn write_prices(
@@ -41,13 +50,14 @@ impl Contract {
         updater: Address,
         feed_ids: Vec<String>,
         payload: Bytes,
-    ) -> (u64, Vec<U256>) {
+    ) -> Result<(u64, Vec<U256>), Error> {
         updater.require_auth();
 
         let verifier =
             UpdateTimestampVerifier::verifier(&updater, &STELLAR_CONFIG.trusted_updaters(env));
 
-        let (package_timestamp, prices) = get_prices_from_payload(env, &feed_ids, &payload);
+        let (package_timestamp, prices) = get_prices_from_payload(env, &feed_ids, &payload)
+            .map_err(|e| Error::from_contract_error(e.code().into()))?;
         let write_timestamp = env.ledger().timestamp() * MS_IN_SEC;
 
         let db = env.storage().persistent();
@@ -57,38 +67,43 @@ impl Contract {
                 package_timestamp,
                 write_timestamp,
             };
-            update_feed(&db, &verifier, &feed_id, &price_data).unwrap();
+            update_feed(&db, &verifier, &feed_id, &price_data)
+                .map_err(|e| Error::from_contract_error(e.code().into()))?;
         }
 
-        (package_timestamp, prices)
+        Ok((package_timestamp, prices))
     }
 
-    pub fn read_prices(env: &Env, feed_ids: Vec<String>) -> Vec<U256> {
+    pub fn read_prices(env: &Env, feed_ids: Vec<String>) -> Result<Vec<U256>, Error> {
         let mut prices = Vec::new(env);
 
         let db = env.storage().persistent();
         for feed_id in feed_ids {
-            let price_data: PriceData = db.get(&feed_id).unwrap();
+            let price_data: PriceData = db.get(&feed_id).ok_or(MISSING_FEED_ENTRY)?;
             prices.push_back(price_data.price);
         }
 
-        prices
+        Ok(prices)
     }
 
-    pub fn read_timestamp(env: &Env, feed_id: String) -> u64 {
-        let price_data: PriceData = env.storage().persistent().get(&feed_id).unwrap();
-        price_data.package_timestamp
+    pub fn read_timestamp(env: &Env, feed_id: String) -> Result<u64, Error> {
+        let price_data: PriceData = env
+            .storage()
+            .persistent()
+            .get(&feed_id)
+            .ok_or(MISSING_FEED_ENTRY)?;
+        Ok(price_data.package_timestamp)
     }
 
-    pub fn read_price_data(env: &Env, feed_ids: Vec<String>) -> Vec<PriceData> {
+    pub fn read_price_data(env: &Env, feed_ids: Vec<String>) -> Result<Vec<PriceData>, Error> {
         let mut price_data = Vec::new(env);
 
         let db = env.storage().persistent();
         for feed_id in feed_ids {
-            price_data.push_back(db.get(&feed_id).unwrap());
+            price_data.push_back(db.get(&feed_id).ok_or(MISSING_FEED_ENTRY)?);
         }
 
-        price_data
+        Ok(price_data)
     }
 
     pub fn unique_signer_threshold(_: &Env) -> u64 {
@@ -96,7 +111,11 @@ impl Contract {
     }
 }
 
-fn get_prices_from_payload(env: &Env, feed_ids: &Vec<String>, payload: &Bytes) -> (u64, Vec<U256>) {
+fn get_prices_from_payload(
+    env: &Env,
+    feed_ids: &Vec<String>,
+    payload: &Bytes,
+) -> Result<(u64, Vec<U256>), RedStoneError> {
     let feed_ids = feed_ids
         .into_iter()
         .map(|id| id.to_bytes().into())
@@ -106,7 +125,7 @@ fn get_prices_from_payload(env: &Env, feed_ids: &Vec<String>, payload: &Bytes) -
     let mut config = STELLAR_CONFIG
         .redstone_config(env, feed_ids, block_timestamp)
         .unwrap();
-    let result = process_payload(&mut config, payload.to_alloc_vec()).unwrap();
+    let result = process_payload(&mut config, payload.to_alloc_vec())?;
 
     let mut prices = Vec::new(env);
     for value in result.values {
@@ -114,7 +133,7 @@ fn get_prices_from_payload(env: &Env, feed_ids: &Vec<String>, payload: &Bytes) -
         prices.push_back(price);
     }
 
-    (result.timestamp.as_millis(), prices)
+    Ok((result.timestamp.as_millis(), prices))
 }
 
 fn update_feed(
@@ -122,7 +141,7 @@ fn update_feed(
     verifier: &UpdateTimestampVerifier,
     feed_id: &String,
     price_data: &PriceData,
-) -> Result<(), Error> {
+) -> Result<(), RedStoneError> {
     let old_price_data: Option<PriceData> = db.get(feed_id);
 
     verifier.verify_timestamp(
