@@ -9,9 +9,10 @@ crate-type = ["lib", "cdylib"]
 doctest = false
 
 [dependencies]
+hex-literal = { workspace = true }
 redstone = { workspace = true, features = ["soroban"] }
 soroban-sdk = { workspace = true, features = ["alloc"] }
-hex-literal = { workspace = true }
 
 [dev-dependencies]
+redstone_testing = { workspace = true }
 soroban-sdk = { workspace = true, features = ["testutils"] }
