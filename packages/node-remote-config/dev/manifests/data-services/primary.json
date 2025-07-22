@@ -2722,7 +2722,7 @@
       "rateFeed": false
     },
     "hbUSDT_FUNDAMENTAL": {
-      "source": ["hyperevm-evm-fetcher-hyperbeat-hbusdt"],
+      "source": ["hyperevm-evm-fetcher-hyperbeat-oracle"],
       "denomination": "USD",
       "rateFeed": true
     },
@@ -2768,6 +2768,25 @@
       "source": ["flash-trade-api"],
       "denomination": "USD",
       "rateFeed": true
+    },
+    "lstHYPE_FUNDAMENTAL": {
+      "source": ["hyperevm-evm-fetcher-hyperbeat-oracle"],
+      "denomination": "HYPE",
+      "rateFeed": true
+    },
+    "kHYPE": {
+      "source": [
+        "hyperswap-hyperevm-whype-100",
+        "project-x-hyperevm-whype-100",
+        "valantis-hyperevm-whype"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "kHYPE/HYPE": {
+      "source": ["non-usd-based"],
+      "denomination": "HYPE",
+      "rateFeed": false
     }
   },
   "multiPointPackages": {
