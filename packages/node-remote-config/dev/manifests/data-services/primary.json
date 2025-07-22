@@ -638,6 +638,7 @@
     "XAU": {
       "source": [
         "alltick-api",
+        "commodity-price-api",
         "financialmodelingprep-usd",
         "metals-api",
         "metal-price-api",
@@ -2760,7 +2761,7 @@
       "rateFeed": false
     },
     "URANIUM": {
-      "source": ["metals-api", "metal-price-api"],
+      "source": ["commodity-price-api", "metals-api", "metal-price-api"],
       "denomination": "USD",
       "rateFeed": false
     },
