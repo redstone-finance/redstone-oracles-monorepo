@@ -49,8 +49,6 @@
     "zod": "^3.22.4"
   },
   "devDependencies": {
-    "@babel/core": "^7.23.2",
-    "@babel/preset-typescript": "^7.23.2",
     "@ledgerhq/hw-app-solana": "^7.2.4",
     "@ledgerhq/hw-transport-node-hid": "^6.29.5",
     "@metaplex-foundation/beet": "0.7.2",
