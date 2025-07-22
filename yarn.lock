@@ -7776,6 +7776,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@noble/curves@npm:^1.9.2":
+  version: 1.9.4
+  resolution: "@noble/curves@npm:1.9.4"
+  dependencies:
+    "@noble/hashes": "npm:1.8.0"
+  checksum: 10c0/c5ac42bf0c4ac822ee7c107f7b5647140a4209bce6929cdf21a38bc575be8aa91c130c4d4bea5a8a3100c53728fc0c6757382f005779cd14b10ea9a00f1a4592
+  languageName: node
+  linkType: hard
+
 "@noble/curves@npm:~1.3.0":
   version: 1.3.0
   resolution: "@noble/curves@npm:1.3.0"
@@ -10924,6 +10933,19 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@redstone-finance/stellar-connector@workspace:packages/stellar-connector":
+  version: 0.0.0-use.local
+  resolution: "@redstone-finance/stellar-connector@workspace:packages/stellar-connector"
+  dependencies:
+    "@redstone-finance/sdk": "workspace:*"
+    "@redstone-finance/utils": "workspace:*"
+    "@stellar/stellar-sdk": "npm:v14.0.0-rc.3"
+    dotenv: "npm:^16.0.3"
+    lodash: "npm:^4.17.21"
+    zod: "npm:^3.22.4"
+  languageName: unknown
+  linkType: soft
+
 "@redstone-finance/stylus-connector@workspace:packages/stylus-connector":
   version: 0.0.0-use.local
   resolution: "@redstone-finance/stylus-connector@workspace:packages/stylus-connector"
@@ -13379,6 +13401,43 @@ __metadata:
   version: 1.0.1
   resolution: "@stablelib/wipe@npm:1.0.1"
   checksum: 10c0/c5a54f769c286a5b3ecff979471dfccd4311f2e84a959908e8c0e3aa4eed1364bd9707f7b69d1384b757e62cc295c221fa27286c7f782410eb8a690f30cfd796
+  languageName: node
+  linkType: hard
+
+"@stellar/js-xdr@npm:^3.1.2":
+  version: 3.1.2
+  resolution: "@stellar/js-xdr@npm:3.1.2"
+  checksum: 10c0/eaa1fc9341b1d1bcaf5c616b9bc0a6dc9a6c7ef7a477f6f6b4cb4206a947cdd3c7e06395ba7be30f6137179eec5f206d75b3ed66fdfe5e2ac54553b7a353130c
+  languageName: node
+  linkType: hard
+
+"@stellar/stellar-base@npm:^14.0.0-rc.2":
+  version: 14.0.0-rc.2
+  resolution: "@stellar/stellar-base@npm:14.0.0-rc.2"
+  dependencies:
+    "@noble/curves": "npm:^1.9.2"
+    "@stellar/js-xdr": "npm:^3.1.2"
+    base32.js: "npm:^0.1.0"
+    bignumber.js: "npm:^9.3.0"
+    buffer: "npm:^6.0.3"
+    sha.js: "npm:^2.3.6"
+  checksum: 10c0/f86763652cf4cfa28c59ddb396cc5ab815a7e12a606f38fdf4809c5353caed4ad55ef06c0ee7e7f6e179fdd65a98f644095af7258c5f51d80aad8b6142297b84
+  languageName: node
+  linkType: hard
+
+"@stellar/stellar-sdk@npm:v14.0.0-rc.3":
+  version: 14.0.0-rc.3
+  resolution: "@stellar/stellar-sdk@npm:14.0.0-rc.3"
+  dependencies:
+    "@stellar/stellar-base": "npm:^14.0.0-rc.2"
+    axios: "npm:^1.8.4"
+    bignumber.js: "npm:^9.3.1"
+    eventsource: "npm:^2.0.2"
+    feaxios: "npm:^0.0.23"
+    randombytes: "npm:^2.1.0"
+    toml: "npm:^3.0.0"
+    urijs: "npm:^1.19.1"
+  checksum: 10c0/2622d36872e21b76ea8f8e39c48032d9f5757503d472b3d722046083cee5931c9930ec4564cf3af2a7551f1c864191191262c3380d984ce0105a3812cc7d26d2
   languageName: node
   linkType: hard
 
@@ -17813,6 +17872,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"base32.js@npm:^0.1.0":
+  version: 0.1.0
+  resolution: "base32.js@npm:0.1.0"
+  checksum: 10c0/d5f520f8082193850df798a0a64c528eb56b25d507daa94393c39342cc07c41e1e8e3fae71dc318e397b9e28cee800548f582493018d46962b20fce8735efaad
+  languageName: node
+  linkType: hard
+
 "base64-js@npm:^1.0.2, base64-js@npm:^1.2.0, base64-js@npm:^1.3.0, base64-js@npm:^1.3.1, base64-js@npm:^1.5.1":
   version: 1.5.1
   resolution: "base64-js@npm:1.5.1"
@@ -17903,6 +17969,13 @@ __metadata:
   version: 9.3.0
   resolution: "bignumber.js@npm:9.3.0"
   checksum: 10c0/f54a79cd6fc98552ac0510c1cd9381650870ae443bdb20ba9b98e3548188d941506ac3c22a9f9c69b2cc60da9be5700e87d3f54d2825310a8b2ae999dfd6d99d
+  languageName: node
+  linkType: hard
+
+"bignumber.js@npm:^9.3.1":
+  version: 9.3.1
+  resolution: "bignumber.js@npm:9.3.1"
+  checksum: 10c0/61342ba5fe1c10887f0ecf5be02ff6709271481aff48631f86b4d37d55a99b87ce441cfd54df3d16d10ee07ceab7e272fc0be430c657ffafbbbf7b7d631efb75
   languageName: node
   linkType: hard
 
@@ -23208,6 +23281,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"feaxios@npm:^0.0.23":
+  version: 0.0.23
+  resolution: "feaxios@npm:0.0.23"
+  dependencies:
+    is-retry-allowed: "npm:^3.0.0"
+  checksum: 10c0/e82204eba05ecf9744fc6ae15b7db725888e8ffaf883c17fe84a5118d141d717ea0704d21764d1566c528b574013d5fd2cc1a6601dbc4bdbedfbf662d621f176
+  languageName: node
+  linkType: hard
+
 "fecha@npm:^4.2.0":
   version: 4.2.3
   resolution: "fecha@npm:4.2.3"
@@ -26362,6 +26444,13 @@ __metadata:
   version: 2.2.0
   resolution: "is-retry-allowed@npm:2.2.0"
   checksum: 10c0/013be4f8a0a06a49ed1fe495242952e898325d496202a018f6f9fb3fb9ac8fe3b957a9bd62463d68299ae35dbbda680473c85a9bcefca731b49d500d3ccc08ff
+  languageName: node
+  linkType: hard
+
+"is-retry-allowed@npm:^3.0.0":
+  version: 3.0.0
+  resolution: "is-retry-allowed@npm:3.0.0"
+  checksum: 10c0/7dc52fb51c7b1767c4710e8cafed9887cfeae515a02195e9a11868fd851e601a4456e638fdc9b184a73c483d305cac46e76583edd16d78c82d7db169d3974fe9
   languageName: node
   linkType: hard
 
@@ -34253,7 +34342,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"sha.js@npm:^2.4.0, sha.js@npm:^2.4.11, sha.js@npm:^2.4.8":
+"sha.js@npm:^2.3.6, sha.js@npm:^2.4.0, sha.js@npm:^2.4.11, sha.js@npm:^2.4.8":
   version: 2.4.12
   resolution: "sha.js@npm:2.4.12"
   dependencies:
@@ -37739,6 +37828,13 @@ __metadata:
   dependencies:
     punycode: "npm:^2.1.0"
   checksum: 10c0/4ef57b45aa820d7ac6496e9208559986c665e49447cb072744c13b66925a362d96dd5a46c4530a6b8e203e5db5fe849369444440cb22ecfc26c679359e5dfa3c
+  languageName: node
+  linkType: hard
+
+"urijs@npm:^1.19.1":
+  version: 1.19.11
+  resolution: "urijs@npm:1.19.11"
+  checksum: 10c0/96e15eea5b41a99361d506e4d8fcc64dc43f334bd5fd34e08261467b6954b97a6b45929a8d6c79e2dc76aadfd6ca950e0f4bd7f3c0757a08978429634d07eda1
   languageName: node
   linkType: hard
 

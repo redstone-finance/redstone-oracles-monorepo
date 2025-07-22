@@ -11,6 +11,7 @@ doctest = false
 [dependencies]
 redstone = { workspace = true, features = ["soroban"] }
 soroban-sdk = { workspace = true, features = ["alloc"] }
+hex-literal = { workspace = true }
 
 [dev-dependencies]
 soroban-sdk = { workspace = true, features = ["testutils"] }
