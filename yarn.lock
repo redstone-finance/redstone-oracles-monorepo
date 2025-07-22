@@ -2281,7 +2281,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@babel/core@npm:^7.11.6, @babel/core@npm:^7.12.3, @babel/core@npm:^7.23.2":
+"@babel/core@npm:^7.11.6, @babel/core@npm:^7.12.3":
   version: 7.23.2
   resolution: "@babel/core@npm:7.23.2"
   dependencies:
@@ -9688,8 +9688,6 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@redstone-finance/fuel-connector@workspace:packages/fuel-connector"
   dependencies:
-    "@babel/core": "npm:^7.23.2"
-    "@babel/preset-typescript": "npm:^7.23.2"
     "@redstone-finance/sdk": "workspace:*"
     "@redstone-finance/utils": "workspace:*"
     dotenv: "npm:^16.0.3"
@@ -10886,8 +10884,6 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@redstone-finance/solana-connector@workspace:packages/solana-connector"
   dependencies:
-    "@babel/core": "npm:^7.23.2"
-    "@babel/preset-typescript": "npm:^7.23.2"
     "@coral-xyz/anchor": "npm:0.30.1"
     "@ledgerhq/hw-app-solana": "npm:^7.2.4"
     "@ledgerhq/hw-transport-node-hid": "npm:^6.29.5"
@@ -10950,14 +10946,10 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@redstone-finance/stylus-connector@workspace:packages/stylus-connector"
   dependencies:
-    "@babel/core": "npm:^7.23.2"
-    "@babel/preset-typescript": "npm:^7.23.2"
     "@redstone-finance/sdk": "workspace:*"
     "@redstone-finance/utils": "workspace:*"
-    "@types/mocha": "npm:^10.0.1"
     dotenv: "npm:^16.0.3"
     ethers: "npm:^5.7.2"
-    mocha: "npm:^10.2.0"
   languageName: unknown
   linkType: soft
 
