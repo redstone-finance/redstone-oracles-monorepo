@@ -1,0 +1,19 @@
+{
+  "extends": ["./tsconfig.json", "../../tsconfig-build-common.json"],
+  "exclude": [
+    "node_modules",
+    "dist",
+    "**/*spec.ts",
+    "jest.config.ts",
+    "stellar",
+    "deployments"
+  ],
+  "references": [
+    {
+      "path": "../utils/tsconfig.build.json"
+    },
+    {
+      "path": "../sdk/tsconfig.build.json"
+    }
+  ]
+}

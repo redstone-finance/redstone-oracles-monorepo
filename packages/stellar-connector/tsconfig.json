@@ -1,0 +1,12 @@
+{
+  "extends": "../../tsconfig-common.json",
+  "include": ["src/**/*", "scripts/**/*", "test/**/*", "jest.config.ts"],
+  "references": [
+    {
+      "path": "../utils/tsconfig.build.json"
+    },
+    {
+      "path": "../sdk/tsconfig.build.json"
+    }
+  ]
+}
