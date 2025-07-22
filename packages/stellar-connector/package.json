@@ -1,0 +1,35 @@
+{
+  "name": "@redstone-finance/stellar-connector",
+  "private": true,
+  "version": "0.8.0",
+  "description": "A tool to inject RedStone data into Stellar compatible smart contracts",
+  "main": "dist/src/index.js",
+  "exports": "./dist/src/index.js",
+  "types": "dist/src/index.d.ts",
+  "license": "MIT",
+  "scripts": {
+    "clean": "yarn global:ts-clean",
+    "build": "yarn global:tsc --build tsconfig.build.json",
+    "build-dev": "yarn global:tsc --build tsconfig.json",
+    "lint": "yarn global:eslint .",
+    "lint:fix": "yarn global:eslint --fix .",
+    "test": "yarn global:jest:cov --passWithNoTests",
+    "preversion": "yarn build",
+    "pack-package": "yarn build && cd dist && npm pack",
+    "sample-run": "yarn global:ts-node scripts/sample-run.ts",
+    "sample-deploy": "make build -C stellar && yarn global:ts-node scripts/sample-deploy.ts"
+  },
+  "dependencies": {
+    "@redstone-finance/sdk": "workspace:*",
+    "@redstone-finance/utils": "workspace:*",
+    "@stellar/stellar-sdk": "v14.0.0-rc.3",
+    "lodash": "^4.17.21",
+    "zod": "^3.22.4"
+  },
+  "devDependencies": {
+    "dotenv": "^16.0.3"
+  },
+  "files": [
+    "dist/src/**/*"
+  ]
+}
