@@ -7043,6 +7043,16 @@
       "denomination": "USD",
       "rateFeed": true
     },
+    "RLP_FUNDAMENTAL": {
+      "source": ["ethereum-evm-fetcher-resolv-price-provider"],
+      "denomination": "USD",
+      "rateFeed": true
+    },
+    "wstUSR_FUNDAMENTAL": {
+      "source": ["ethereum-evm-fetcher-resolv"],
+      "denomination": "USR",
+      "rateFeed": true
+    },
     "SUSHI": {
       "source": [
         "binance-usdc",
