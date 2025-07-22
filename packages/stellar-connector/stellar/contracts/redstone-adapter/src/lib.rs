@@ -41,8 +41,7 @@ impl Contract {
         feed_ids: Vec<String>,
         payload: Bytes,
     ) -> Result<(u64, Vec<U256>), Error> {
-        get_prices_from_payload(env, &feed_ids, &payload)
-            .map_err(|e| Error::from_contract_error(e.code().into()))
+        get_prices_from_payload(env, &feed_ids, &payload).map_err(error_from_redstone_error)
     }
 
     pub fn write_prices(
@@ -56,8 +55,8 @@ impl Contract {
         let verifier =
             UpdateTimestampVerifier::verifier(&updater, &STELLAR_CONFIG.trusted_updaters(env));
 
-        let (package_timestamp, prices) = get_prices_from_payload(env, &feed_ids, &payload)
-            .map_err(|e| Error::from_contract_error(e.code().into()))?;
+        let (package_timestamp, prices) =
+            get_prices_from_payload(env, &feed_ids, &payload).map_err(error_from_redstone_error)?;
         let write_timestamp = env.ledger().timestamp() * MS_IN_SEC;
 
         let db = env.storage().persistent();
@@ -68,7 +67,7 @@ impl Contract {
                 write_timestamp,
             };
             update_feed(&db, &verifier, &feed_id, &price_data)
-                .map_err(|e| Error::from_contract_error(e.code().into()))?;
+                .map_err(error_from_redstone_error)?;
         }
 
         Ok((package_timestamp, prices))
@@ -158,4 +157,8 @@ fn update_feed(
     db.extend_ttl(feed_id, TTL_THRESHOLD, TTL_EXTEND_TO);
 
     Ok(())
+}
+
+fn error_from_redstone_error(error: RedStoneError) -> Error {
+    Error::from_contract_error(error.code().into())
 }
