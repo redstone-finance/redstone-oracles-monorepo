@@ -1,5 +1,6 @@
 import {
   AptosClientBuilder,
+  MovementClientBuilder,
   MovementPricesContractConnector,
 } from "@redstone-finance/movement-connector";
 import { AnyOnChainRelayerManifest } from "@redstone-finance/on-chain-relayer-common";
@@ -29,8 +30,10 @@ export function getRelayerMonitoringNonEvmContractConnector(
       return getRadixContractConnector(rpcUrls, relayerManifest);
     case "sui":
       return getSuiContractConnector(rpcUrls, relayerManifest);
+    case "aptos":
+      return getMovementContractConnector(rpcUrls, relayerManifest, "aptos");
     case "movement":
-      return getMovementContractConnector(rpcUrls, relayerManifest);
+      return getMovementContractConnector(rpcUrls, relayerManifest, "movement");
     case "solana":
       return getSolanaContractConnector(rpcUrls, relayerManifest);
     case "fuel":
@@ -100,12 +103,17 @@ function getSuiContractConnector(
 
 function getMovementContractConnector(
   rpcUrls: string[],
-  relayerManifest: AnyOnChainRelayerManifest
+  relayerManifest: AnyOnChainRelayerManifest,
+  adapterType: "aptos" | "movement"
 ) {
   if (!relayerManifest.adapterContractPackageId) {
     throw new Error("adapterContractPackageId is required");
   }
-  const aptosClient = new AptosClientBuilder()
+  const aptosClient = (
+    adapterType === "aptos"
+      ? new AptosClientBuilder()
+      : new MovementClientBuilder()
+  )
     .withNetworkId(relayerManifest.chain.id)
     .withRpcUrls(rpcUrls)
     .build();
