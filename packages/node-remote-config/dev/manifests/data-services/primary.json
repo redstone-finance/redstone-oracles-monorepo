@@ -2753,6 +2753,11 @@
       "source": ["metals-api", "metal-price-api"],
       "denomination": "USD",
       "rateFeed": false
+    },
+    "FLP.1_FUNDAMENTAL": {
+      "source": ["flash-trade-api"],
+      "denomination": "USD",
+      "rateFeed": true
     }
   },
   "multiPointPackages": {
