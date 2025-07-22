@@ -7584,6 +7584,7 @@
     },
     "URANIUM": {
       "source": [
+        "commodity-price-api",
         "metals-api",
         "metal-price-api"
       ],
