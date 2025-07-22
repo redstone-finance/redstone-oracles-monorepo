@@ -43,11 +43,9 @@ impl Contract {
         payload: Bytes,
     ) -> (u64, Vec<U256>) {
         updater.require_auth();
-        let updater: [u8; 56] = updater.to_string().to_bytes();
-        let verifier = UpdateTimestampVerifier::verifier(
-            &str::from_utf8(&updater).unwrap(),
-            &STELLAR_CONFIG.trusted_updaters,
-        );
+
+        let verifier =
+            UpdateTimestampVerifier::verifier(&updater, &STELLAR_CONFIG.trusted_updaters(env));
 
         let (package_timestamp, prices) = get_prices_from_payload(env, &feed_ids, &payload);
         let write_timestamp = env.ledger().timestamp() * MS_IN_SEC;
@@ -91,6 +89,10 @@ impl Contract {
         }
 
         price_data
+    }
+
+    pub fn unique_signer_threshold(_: &Env) -> u64 {
+        STELLAR_CONFIG.signer_count_threshold as u64
     }
 }
 
