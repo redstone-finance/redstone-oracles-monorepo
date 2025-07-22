@@ -26,7 +26,7 @@ impl PriceAdapterRunEnv for TestContract {
     }
 
     fn unique_signer_threshold(&self) -> u8 {
-        STELLAR_CONFIG.signer_count_threshold
+        self.0.unique_signer_threshold().try_into().unwrap()
     }
 
     fn initialize(&mut self, _signers: Vec<Vec<u8>>, _unique_signer_threshold: u8) {}
