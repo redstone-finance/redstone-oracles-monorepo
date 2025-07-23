@@ -1,0 +1,13 @@
+{
+  "chain": {
+    "name": "merlin",
+    "id": 4200
+  },
+  "adapterContract": "0x04c95F154cf2D8945Bc00F22F4da6C2155C8B156",
+  "adapterContractType": "multi-feed",
+  "dataServiceId": "redstone-primary-prod",
+  "updateTriggers": {},
+  "priceFeeds": {
+    "MERL": {}
+  }
+}
