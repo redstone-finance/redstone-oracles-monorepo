@@ -1,22 +1,57 @@
-const DEV_GWS = [
-  "https://oracle-gateway-1.b.redstone.vip",
-  "https://oracle-gateway-1.b.redstone.finance",
-];
+type Gateway = {
+  url: string;
+  historical: boolean;
+  metadata: boolean;
+};
 
-const STAGING_GWS = ["https://read-ext-oracle-gateway.b.redstone.finance"];
+// GCP gateways don't support metadata, AWS prod1 doesn't support historical data
+const allReadGateways: Record<string, Gateway> = {
+  dev1_gcp: {
+    url: "https://oracle-gateway-1.b.redstone.vip",
+    historical: true,
+    metadata: false,
+  },
+  dev1_aws: {
+    url: "https://oracle-gateway-1.b.redstone.finance",
+    historical: true,
+    metadata: true,
+  },
+  prod1_gcp: {
+    url: "https://oracle-gateway-1.a.redstone.vip",
+    historical: true,
+    metadata: false,
+  },
+  prod1_aws: {
+    url: "https://oracle-gateway-1.a.redstone.finance",
+    historical: false,
+    metadata: true,
+  },
+  prod2_aws: {
+    url: "https://oracle-gateway-2.a.redstone.finance",
+    historical: true,
+    metadata: true,
+  },
+  local: {
+    url: "http://localhost:3000",
+    historical: true,
+    metadata: true,
+  },
+  unit_tests: {
+    url: "http://valid-cache.com",
+    historical: true,
+    metadata: true,
+  },
+};
+
+const DEV_GWS = [allReadGateways.dev_aws, allReadGateways.dev_gcp];
 
 const PROD_GWS = [
-  "https://oracle-gateway-1.a.redstone.vip",
-  "https://oracle-gateway-1.a.redstone.finance",
-  "https://oracle-gateway-2.a.redstone.finance",
+  allReadGateways.prod1_gcp,
+  allReadGateways.prod1_aws,
+  allReadGateways.prod2_aws,
 ];
 
-const SUPPORTS_ONLY_LATEST_DATA = new Set([
-  "https://oracle-gateway-1.a.redstone.finance",
-  "https://read-ext-oracle-gateway.b.redstone.finance",
-]);
-
-export const REDSTONE_DATA_SERVICES_URLS: Partial<Record<string, string[]>> = {
+const REDSTONE_DATA_SERVICES_URLS: Partial<Record<string, Gateway[]>> = {
   "redstone-primary-prod": PROD_GWS,
   "redstone-avalanche-prod": PROD_GWS,
   "redstone-arbitrum-prod": PROD_GWS,
@@ -25,26 +60,26 @@ export const REDSTONE_DATA_SERVICES_URLS: Partial<Record<string, string[]>> = {
   "redstone-fast-demo": DEV_GWS,
   "redstone-avalanche-demo": DEV_GWS,
   "redstone-arbitrum-demo": DEV_GWS,
-  "mock-data-service": ["http://localhost:3000"],
-  "mock-data-service-tests": ["http://valid-cache.com"],
-  "redstone-external-demo-1": STAGING_GWS,
-  "kudasaijp-demo-1": STAGING_GWS,
-  "teb-demo-1": STAGING_GWS,
-  "auros-demo-1": STAGING_GWS,
+  "mock-data-service": [allReadGateways.local],
+  "mock-data-service-tests": [allReadGateways.unit_tests],
 };
 
 export const resolveDataServiceUrls = (
   dataServiceId: string,
-  historical: boolean = false
+  opts?: { historical?: boolean; metadata?: boolean }
 ): string[] => {
-  const urls = REDSTONE_DATA_SERVICES_URLS[dataServiceId];
-  if (!urls) {
+  const gateways = REDSTONE_DATA_SERVICES_URLS[dataServiceId];
+  if (!gateways) {
     throw new Error(
       `Data service ${dataServiceId} is not configured by RedStone protocol`
     );
   }
 
-  return urls.filter(
-    (url) => !historical || !SUPPORTS_ONLY_LATEST_DATA.has(url)
-  );
+  return gateways
+    .filter(
+      (gateway) =>
+        (!opts?.historical || gateway.historical) &&
+        (!opts?.metadata || gateway.metadata)
+    )
+    .map((gw) => gw.url);
 };
