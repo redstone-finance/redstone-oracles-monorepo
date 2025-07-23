@@ -423,10 +423,10 @@ const getUrlsForDataServiceId = (
 ): string[] => {
   return (
     reqParams.urls ??
-    resolveDataServiceUrls(
-      reqParams.dataServiceId,
-      !!reqParams.historicalTimestamp
-    )
+    resolveDataServiceUrls(reqParams.dataServiceId, {
+      historical: !!reqParams.historicalTimestamp,
+      metadata: reqParams.hideMetadata === false,
+    })
   );
 };
 
