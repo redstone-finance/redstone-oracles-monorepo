@@ -5,7 +5,7 @@ type Gateway = {
 };
 
 // GCP gateways don't support metadata, AWS prod1 doesn't support historical data
-const allReadGateways: Record<string, Gateway> = {
+const allReadGateways = {
   dev1_gcp: {
     url: "https://oracle-gateway-1.b.redstone.vip",
     historical: true,
@@ -43,7 +43,7 @@ const allReadGateways: Record<string, Gateway> = {
   },
 };
 
-const DEV_GWS = [allReadGateways.dev_aws, allReadGateways.dev_gcp];
+const DEV_GWS = [allReadGateways.dev1_aws, allReadGateways.dev1_gcp];
 
 const PROD_GWS = [
   allReadGateways.prod1_gcp,
