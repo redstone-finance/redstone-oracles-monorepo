@@ -121,6 +121,18 @@
     },
     "kHYPE_FUNDAMENTAL/USD": {
       "priceFeedAddress": "0x82721e2C5Ef2DF1796B09728376361892b155594"
+    },
+    "RLP_FUNDAMENTAL": {
+      "priceFeedAddress": "0xd6156F8177aA1a6E0c5278CE437A9BDB32F203ef"
+    },
+    "lstHYPE_FUNDAMENTAL": {
+      "priceFeedAddress": "0xA569E68B5D110F2A255482c2997DFDBe1b2ab912"
+    },
+    "kHYPE": {
+      "priceFeedAddress": "0xF2448DC04B1d3f1767D6f7C03da8a3933bdDD697"
+    },
+    "kHYPE/HYPE": {
+      "priceFeedAddress": "0x3519B2f175D22a4dFA0595c291fEfe0945F0656d"
     }
   }
 }
