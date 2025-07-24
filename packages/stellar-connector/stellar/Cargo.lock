@@ -1095,6 +1095,7 @@ dependencies = [
 name = "redstone-adapter"
 version = "0.0.0"
 dependencies = [
+ "hex",
  "hex-literal 1.0.0",
  "redstone 2.0.2",
  "redstone_testing",

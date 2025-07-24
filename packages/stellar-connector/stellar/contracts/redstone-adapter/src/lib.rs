@@ -17,7 +17,10 @@ use soroban_sdk::{
     Address, Bytes, BytesN, Env, Error, String, Vec, U256,
 };
 
-use self::config::{STELLAR_CONFIG, TTL_EXTEND_TO, TTL_THRESHOLD};
+use self::config::{
+    CONTRACT_TTL_EXTEND_TO, CONTRACT_TTL_THRESHOLD, FEED_TTL_EXTEND_TO, FEED_TTL_THRESHOLD,
+    STELLAR_CONFIG,
+};
 
 const MS_IN_SEC: u64 = 1_000;
 const MISSING_STORAGE_ENTRY: Error =
@@ -85,6 +88,10 @@ impl Contract {
         payload: Bytes,
     ) -> Result<(u64, Vec<U256>), Error> {
         updater.require_auth();
+
+        env.storage()
+            .instance()
+            .extend_ttl(CONTRACT_TTL_THRESHOLD, CONTRACT_TTL_EXTEND_TO);
 
         let verifier =
             UpdateTimestampVerifier::verifier(&updater, &STELLAR_CONFIG.trusted_updaters(env));
@@ -193,7 +200,7 @@ fn update_feed(
     )?;
 
     db.set(db_key, price_data);
-    db.extend_ttl(db_key, TTL_THRESHOLD, TTL_EXTEND_TO);
+    db.extend_ttl(db_key, FEED_TTL_THRESHOLD, FEED_TTL_EXTEND_TO);
 
     Ok(())
 }
