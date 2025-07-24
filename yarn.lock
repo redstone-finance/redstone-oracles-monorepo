@@ -9287,7 +9287,7 @@ __metadata:
     "@redstone-finance/evm-connector": "workspace:*"
     "@redstone-finance/fuel-connector": "workspace:*"
     "@redstone-finance/internal-utils": "workspace:*"
-    "@redstone-finance/movement-connector": "workspace:*"
+    "@redstone-finance/move-connector": "workspace:*"
     "@redstone-finance/on-chain-relayer-common": "workspace:*"
     "@redstone-finance/radix-connector": "workspace:*"
     "@redstone-finance/rpc-providers": "workspace:*"
@@ -10514,9 +10514,9 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@redstone-finance/movement-connector@workspace:*, @redstone-finance/movement-connector@workspace:packages/movement-connector":
+"@redstone-finance/move-connector@workspace:*, @redstone-finance/move-connector@workspace:packages/move-connector":
   version: 0.0.0-use.local
-  resolution: "@redstone-finance/movement-connector@workspace:packages/movement-connector"
+  resolution: "@redstone-finance/move-connector@workspace:packages/move-connector"
   dependencies:
     "@aptos-labs/ts-sdk": "npm:1.33.2"
     "@ledgerhq/hw-app-aptos": "npm:^6.31.0"
