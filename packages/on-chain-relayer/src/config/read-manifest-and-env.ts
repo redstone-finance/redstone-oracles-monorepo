@@ -64,7 +64,29 @@ const fetchManifestFromS3 = async (
 export const readManifestAndEnv = async () => {
   const manifest = await readManifest();
 
+  let gasLimit = RedstoneCommon.getFromEnv(
+    "GAS_LIMIT",
+    z.number().positive().int().optional()
+  );
+
+  const numberOfFeeds = Object.keys(manifest.priceFeeds).length;
+  const gasLimitPerFeed = RedstoneCommon.getFromEnv(
+    "GAS_LIMIT_PER_FEED",
+    z.number().positive().int().optional()
+  );
+
+  if (gasLimit && gasLimitPerFeed) {
+    throw new Error(
+      "GAS_LIMIT and GAS_LIMIT_PER_FEED cannot be set at the same time"
+    );
+  }
+
+  if (gasLimitPerFeed) {
+    gasLimit = numberOfFeeds * gasLimitPerFeed;
+  }
+
   const env: OnChainRelayerEnv = {
+    gasLimit,
     disableCustomGasOracle: RedstoneCommon.getFromEnv(
       "DISABLE_CUSTOM_GAS_ORACLE",
       z.boolean().default(false)
@@ -82,10 +104,6 @@ export const readManifestAndEnv = async () => {
       z.number().default(20_000)
     ),
     privateKey: RedstoneCommon.getFromEnv("PRIVATE_KEY", z.string().min(16)),
-    gasLimit: RedstoneCommon.getFromEnv(
-      "GAS_LIMIT",
-      z.number().positive().int().optional()
-    ),
     gasMultiplier: RedstoneCommon.getFromEnv(
       "GAS_MULTIPLIER",
       z.number().optional()
