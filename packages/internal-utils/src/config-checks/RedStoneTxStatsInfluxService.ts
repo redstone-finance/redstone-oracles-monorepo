@@ -32,7 +32,7 @@ export class RedStoneTxStatsInfluxService extends InfluxService {
     const query = `
       |> range(start: -${daysRange}d)
       |> filter(fn: (r) => r["_measurement"] == "${TXS_MEASUREMENT}")
-      |> filter(fn: (r) => r["_field"] == "gasUsed" or r["_field"] == "gasPrice") 
+      |> filter(fn: (r) => r["_field"] == "gasUsed" or r["_field"] == "gasPrice")
       |> filter(fn: (r) => r["networkId"] == "${networkId}" and r["isFailed"] != "true")
       // performing strings.toLower makes the query extremely slow (~100 times) use 'or' operator instead
       |> filter(fn: (r) => r["sender"] == "${walletAddress.toLowerCase()}" or r["sender"] == "${walletAddress}")
