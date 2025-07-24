@@ -1,6 +1,6 @@
 import { deconstructNetworkId, RedstoneCommon } from "@redstone-finance/utils";
 import { getFuelContractConnector } from "./get-fuel-contract-connector";
-import { getMovementContractConnector } from "./get-movement-contract-connector";
+import { getMoveContractConnector } from "./get-move-contract-connector";
 import { getRadixContractConnector } from "./get-radix-contract-connector";
 import { getSolanaContractConnector } from "./get-solana-contract-connector";
 import { getSuiContractConnector } from "./get-sui-contract-connector";
@@ -19,9 +19,8 @@ export async function getWritableNonEvmContractConnector(
     case "sui":
       return getSuiContractConnector(relayerConfig);
     case "aptos":
-      return getMovementContractConnector(relayerConfig, "aptos");
     case "movement":
-      return getMovementContractConnector(relayerConfig, "movement");
+      return getMoveContractConnector(relayerConfig, chainType);
     case "solana":
       return getSolanaContractConnector(relayerConfig);
     case "evm":
