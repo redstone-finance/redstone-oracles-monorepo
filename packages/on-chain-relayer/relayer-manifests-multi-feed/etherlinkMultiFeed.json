@@ -13,6 +13,9 @@
   "priceFeeds": {
     "LBTC": {
       "priceFeedAddress": "0x5ED849a45B4608952161f45483F4B95BCEa7f8f0"
+    },
+    "URANIUM": {
+      "priceFeedAddress": "0xb81131B6368b3F0a83af09dB4E39Ac23DA96C2Db"
     }
   }
 }
