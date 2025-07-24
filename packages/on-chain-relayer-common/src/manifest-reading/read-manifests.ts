@@ -1,16 +1,14 @@
 import _ from "lodash";
 import {
   CommonRelayerManifest,
-  MultiFeedOnChainRelayerManifest,
-  OnChainRelayerManifest,
-} from "../schemas";
-import {
   MANIFEST_TYPE_MULTI_FEED,
   MANIFEST_TYPE_NON_EVM,
   MANIFEST_TYPE_PRICE_FEEDS,
   ManifestType,
-  readAnyManifest,
-} from "./read-manifest";
+  MultiFeedOnChainRelayerManifest,
+  OnChainRelayerManifest,
+} from "../schemas";
+import { readAnyManifest } from "./read-manifest";
 import {
   getOnChainRelayerBasePath,
   readManifestFiles,
