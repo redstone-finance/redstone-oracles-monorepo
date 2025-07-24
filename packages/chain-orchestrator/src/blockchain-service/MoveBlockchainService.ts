@@ -1,16 +1,16 @@
 import { Aptos } from "@aptos-labs/ts-sdk";
-import { MovementContractConnector } from "@redstone-finance/movement-connector";
+import { MoveContractConnector } from "@redstone-finance/move-connector";
 import { loggerFactory, RedstoneCommon } from "@redstone-finance/utils";
 import { NonEvmBlockchainService } from "./NonEvmBlockchainService";
 
-export class MovementBlockchainService extends NonEvmBlockchainService {
+export class MoveBlockchainService extends NonEvmBlockchainService {
   private readonly logger = loggerFactory("movement-blockchain-service");
 
   constructor(
     private client: Aptos,
     privateKey?: RedstoneCommon.PrivateKey
   ) {
-    super(new MovementContractConnector(client, privateKey));
+    super(new MoveContractConnector(client, privateKey));
   }
 
   async getTimeForBlock(blockHeight: number) {
