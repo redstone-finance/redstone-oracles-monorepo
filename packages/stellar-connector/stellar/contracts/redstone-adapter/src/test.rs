@@ -27,7 +27,7 @@ use soroban_sdk::{
 use self::test_contract::TestContract;
 use crate::{
     config::{FEED_TTL_EXTEND_TO, FEED_TTL_SECS, FEED_TTL_THRESHOLD, STELLAR_CONFIG},
-    Contract, ContractClient, DataKey,
+    Contract, ContractClient,
 };
 
 #[test]
@@ -173,7 +173,7 @@ fn write_prices(client: &ContractClient, sample: Sample) {
     );
 
     env.as_contract(&client.address, || {
-        let ttl = env.storage().persistent().get_ttl(&DataKey::PriceData(btc));
+        let ttl = env.storage().persistent().get_ttl(&btc);
         assert!(ttl >= FEED_TTL_SECS / 5);
     });
 }
