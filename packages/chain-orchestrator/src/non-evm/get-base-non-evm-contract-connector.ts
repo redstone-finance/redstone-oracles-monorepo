@@ -1,8 +1,8 @@
 import {
   AptosClientBuilder,
+  MoveContractConnector,
   MovementClientBuilder,
-  MovementContractConnector,
-} from "@redstone-finance/movement-connector";
+} from "@redstone-finance/move-connector";
 import {
   RadixClientBuilder,
   RadixContractConnector,
@@ -35,14 +35,14 @@ export function getBaseNonEvmContractConnector(
           .build()
       );
     case "movement":
-      return new MovementContractConnector(
+      return new MoveContractConnector(
         new MovementClientBuilder()
           .withNetworkId(networkId)
           .withRpcUrls(rpcUrls)
           .build()
       );
     case "aptos":
-      return new MovementContractConnector(
+      return new MoveContractConnector(
         new AptosClientBuilder()
           .withNetworkId(networkId)
           .withRpcUrls(rpcUrls)
