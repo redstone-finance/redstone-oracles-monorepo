@@ -3,6 +3,7 @@ import {
   GetParametersCommand,
   SSMClient,
 } from "@aws-sdk/client-ssm";
+import * as ArnParser from "@aws-sdk/util-arn-parser";
 import { RedstoneCommon } from "@redstone-finance/utils";
 import _ from "lodash";
 import { getSsmClient } from "./aws-clients";
@@ -17,10 +18,15 @@ import {
 // limit enforced by ssm
 const MAX_SSM_BATCH_SIZE = 10;
 
-const getParameterValue = async (parameterName: string, region?: string) => {
-  const client = getSsmClient(region);
+const getParameterValue = async (
+  parameterNameOrArn: string,
+  region?: string
+) => {
+  const ssmRegion = region ?? getRegionFromArn(parameterNameOrArn);
+
+  const client = getSsmClient(ssmRegion);
   const command = new GetParameterCommand({
-    Name: parameterName,
+    Name: parameterNameOrArn,
     WithDecryption: true,
   });
 
@@ -28,16 +34,16 @@ const getParameterValue = async (parameterName: string, region?: string) => {
 };
 
 export const getSSMParameterValue = async (
-  parameterName: string,
+  parameterNameOrArn: string,
   region?: string
 ) => {
-  const cachedValue = getFromSsmCache(parameterName);
+  const cachedValue = getFromSsmCache(parameterNameOrArn);
   if (cachedValue !== undefined) {
     return cachedValue;
   }
 
-  const value = await getParameterValue(parameterName, region);
-  saveToSsmCache(parameterName, value);
+  const value = await getParameterValue(parameterNameOrArn, region);
+  saveToSsmCache(parameterNameOrArn, value);
 
   return value;
 };
@@ -45,13 +51,18 @@ export const getSSMParameterValue = async (
 export type SSMParameterValuesResponse = Record<string, string | undefined>;
 
 export const getSSMParameterValues = async (
-  parameterNames: string[],
+  parameterNamesOrArns: string[],
   region?: string
 ): Promise<SSMParameterValuesResponse> => {
-  const client = getSsmClient(region);
+  if (parameterNamesOrArns.length === 0) {
+    return {};
+  }
 
-  const cachedParameters = getManyFromSsmCache(parameterNames);
-  const parametersToFetch = parameterNames.filter(
+  const ssmRegion = region ?? getRegionFromArn(parameterNamesOrArns[0]);
+  const client = getSsmClient(ssmRegion);
+
+  const cachedParameters = getManyFromSsmCache(parameterNamesOrArns);
+  const parametersToFetch = parameterNamesOrArns.filter(
     (name) => !(name in cachedParameters)
   );
 
@@ -136,16 +147,25 @@ export const secretsToEnv = async (): Promise<void> => {
 };
 
 export const getSSMParamWithEnvFallback = async (
-  parameterName: string | undefined,
+  parameterNameOrArn: string | undefined,
   envVarName: string,
   region?: string
 ) => {
-  if (parameterName) {
-    const value = await getSSMParameterValue(parameterName, region);
+  if (parameterNameOrArn) {
+    const value = await getSSMParameterValue(parameterNameOrArn, region);
     if (value !== undefined) {
       return value;
     }
   }
 
   return RedstoneCommon.getFromEnv(envVarName);
+};
+
+const getRegionFromArn = (arnOrName: string) => {
+  if (!ArnParser.validate(arnOrName)) {
+    return undefined;
+  }
+
+  const parsed = ArnParser.parse(arnOrName);
+  return parsed.region;
 };
