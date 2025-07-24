@@ -1,0 +1,52 @@
+{
+  "name": "@redstone-finance/move-connector",
+  "version": "0.8.0",
+  "main": "dist/src/index.js",
+  "types": "dist/src/index.d.ts",
+  "private": true,
+  "scripts": {
+    "clean": "yarn global:ts-clean",
+    "build": "yarn global:tsc --build tsconfig.build.json",
+    "build-dev": "yarn global:tsc --build tsconfig.json",
+    "preversion": "yarn build",
+    "pack-package": "yarn build && global:npm pack",
+    "lint": "yarn global:eslint .",
+    "lint:fix": "yarn global:eslint --fix .",
+    "run-contract-tests": "yarn global:jest:cov --runInBand",
+    "sample-run": "yarn global:ts-node scripts/sample-run.ts",
+    "price-adapter-address": "yarn global:ts-node ./scripts/object-address.ts",
+    "derive-address": "yarn global:ts-node ./scripts/address-derive-from-priv.ts",
+    "deploy-sdk": "CONTRACT_NAME=redstone_sdk yarn global:ts-node ./scripts/deploy-runner",
+    "upgrade-sdk": "CONTRACT_NAME=redstone_sdk IS_UPGRADE=true yarn global:ts-node ./scripts/deploy-runner",
+    "deploy-price_adapter": "CONTRACT_NAME=price_adapter yarn global:ts-node ./scripts/deploy-runner",
+    "upgrade-price_adapter": "CONTRACT_NAME=price_adapter IS_UPGRADE=true yarn global:ts-node ./scripts/deploy-runner",
+    "deploy-price_feed": "CONTRACT_NAME=price_feed yarn global:ts-node ./scripts/deploy-runner",
+    "prepare": "yarn global:ts-node ./scripts/prepare-test-env.ts",
+    "transfer-coins": "yarn global:ts-node scripts/transfer-coins.ts",
+    "get-ledger-data": "yarn global:ts-node scripts/ledger/get-ledger-data.ts",
+    "set-up-multi-sig": "yarn global:ts-node  scripts/ledger/set-up-multi-sig.ts",
+    "transfer-object": "yarn global:ts-node  scripts/ledger/transfer-object.ts",
+    "propose-upgrade": "yarn global:ts-node  scripts/ledger/propose-upgrade.ts",
+    "approve-transaction": "yarn global:ts-node  scripts/ledger/approve-transaction.ts",
+    "execute-transaction": "yarn global:ts-node  scripts/ledger/execute-transaction.ts"
+  },
+  "dependencies": {
+    "@aptos-labs/ts-sdk": "1.33.2",
+    "@redstone-finance/sdk": "workspace:*",
+    "@redstone-finance/utils": "workspace:*",
+    "dotenv": "^16.0.3",
+    "lodash": "^4.17.21",
+    "zod": "^3.22.4"
+  },
+  "devDependencies": {
+    "@ledgerhq/hw-app-aptos": "^6.31.0",
+    "@ledgerhq/hw-transport-node-hid": "^6.29.5",
+    "@types/chai": "^4.3.4",
+    "@types/prompts": "^2.4.2",
+    "chai": "^4.3.10",
+    "prompts": "^2.4.2"
+  },
+  "files": [
+    "dist/src/**/*"
+  ]
+}

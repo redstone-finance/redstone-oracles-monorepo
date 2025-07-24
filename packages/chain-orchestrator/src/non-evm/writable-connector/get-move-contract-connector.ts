@@ -1,14 +1,14 @@
 import {
   AptosClientBuilder,
-  MovementClientBuilder,
-  MovementPricesContractConnector,
   configFromOptionals,
   makeAptosAccount,
-} from "@redstone-finance/movement-connector";
+  MovementClientBuilder,
+  MovePricesContractConnector,
+} from "@redstone-finance/move-connector";
 
 import { PartialRelayerConfig } from "./partial-relayer-config";
 
-export const getMovementContractConnector = (
+export const getMoveContractConnector = (
   relayerConfig: PartialRelayerConfig,
   adapterType: "aptos" | "movement"
 ) => {
@@ -37,7 +37,7 @@ export const getMovementContractConnector = (
 
   const account = makeAptosAccount(privateKey);
 
-  return new MovementPricesContractConnector(
+  return new MovePricesContractConnector(
     aptosClient,
     {
       packageObjectAddress: adapterContractPackageId,
