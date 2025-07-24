@@ -30,27 +30,35 @@ export class StellarContractAdapter implements IMultiFeedPricesContractAdapter {
     this.rpcClient = new StellarRpcClient(rpc);
   }
 
-  async init(admin: Keypair) {
+  async init(admin: string) {
     const admin_addr = xdr.ScVal.scvAddress(
-      xdr.ScAddress.scAddressTypeAccount(admin.xdrAccountId())
+      xdr.ScAddress.scAddressTypeAccount(
+        Keypair.fromPublicKey(admin).xdrAccountId()
+      )
     );
     const operation = this.contract.call("init", admin_addr);
+
     const submitResponse = await this.rpcClient.executeOperation(
       operation,
       this.keypair
     );
+
     await this.rpcClient.waitForTx(submitResponse.hash);
   }
 
-  async changeAdmin(admin: Keypair) {
+  async changeAdmin(newAdmin: string) {
     const admin_addr = xdr.ScVal.scvAddress(
-      xdr.ScAddress.scAddressTypeAccount(admin.xdrAccountId())
+      xdr.ScAddress.scAddressTypeAccount(
+        Keypair.fromPublicKey(newAdmin).xdrAccountId()
+      )
     );
     const operation = this.contract.call("change_admin", admin_addr);
+
     const submitResponse = await this.rpcClient.executeOperation(
       operation,
       this.keypair
     );
+
     await this.rpcClient.waitForTx(submitResponse.hash);
   }
 
