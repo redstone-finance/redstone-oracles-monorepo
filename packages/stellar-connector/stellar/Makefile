@@ -48,11 +48,43 @@ build: setup-env
 	stellar contract build
 
 deploy: build
-	stellar contract deploy \
+	adapter_id=`stellar contract deploy \
 	  --wasm target/$(WASM_TARGET)/release/$(CONTRACT).wasm \
 	  --source $(ACCOUNT) \
 	  --network $(NETWORK) \
-	  --alias $(CONTRACT)
+	  --alias $(CONTRACT)` && \
+	stellar contract invoke \
+	  --id $${adapter_id} \
+	  --source $(ACCOUNT) \
+	  --network $(NETWORK) \
+	  --cost \
+	  -- \
+	  init \
+	  --admin $(ACCOUNT) && \
+	echo "ADAPTER_ID: $${adapter_id}"
+
+upgrade: build
+	hash=`stellar contract upload \
+	  --wasm target/$(WASM_TARGET)/release/$(CONTRACT).wasm \
+	  --source $(ACCOUNT) \
+	  --network $(NETWORK)` && \
+	stellar contract invoke \
+	  --id $(ADAPTER_ID) \
+	  --source $(ACCOUNT) \
+	  --network $(NETWORK) \
+	  --cost \
+	  -- \
+	  upgrade \
+	  --new_wasm_hash $${hash}
+
+check_version:
+	stellar contract invoke \
+	  --id $(ADAPTER_ID) \
+	  --source $(ACCOUNT) \
+	  --network $(NETWORK) \
+	  --cost \
+	  -- \
+	  version
 
 write_prices: prepare_data
 	stellar contract invoke \
@@ -62,7 +94,7 @@ write_prices: prepare_data
 	  --cost \
 	  -- \
 	  write_prices \
-	  --updater `stellar keys address $(ACCOUNT)`\
+	  --updater `stellar keys address $(ACCOUNT)` \
 	  --feed_ids '[ $(FEED_IDS) ]' \
 	  --payload $(DATA_CAT)
 
