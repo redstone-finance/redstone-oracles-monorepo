@@ -14,7 +14,7 @@ export class ContractDeployer {
     this.rpcClient = new StellarRpcClient(rpc);
   }
 
-  async deploy(admin: Keypair) {
+  async deploy(admin: string) {
     const wasmHash = await this.upload();
     const contractId = await this.createContract(wasmHash);
     await this.initContract(contractId, admin);
@@ -55,12 +55,13 @@ export class ContractDeployer {
     return Address.fromScVal(res.returnValue!);
   }
 
-  async initContract(contractId: Address, admin: Keypair) {
+  async initContract(contractId: Address, admin: string) {
     const adapter = new StellarContractAdapter(
       this.rpc,
       this.keypair,
       contractId.toString()
     );
+
     await adapter.init(admin);
   }
 }

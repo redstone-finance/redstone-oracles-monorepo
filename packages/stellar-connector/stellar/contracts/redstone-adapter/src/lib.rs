@@ -25,6 +25,7 @@ use self::config::{
 const MS_IN_SEC: u64 = 1_000;
 const MISSING_STORAGE_ENTRY: Error =
     Error::from_type_and_code(ScErrorType::Storage, ScErrorCode::MissingValue);
+const ADMIN_KEY: &&str = &"admin";
 
 #[derive(Debug, Clone)]
 #[contracttype]
@@ -34,27 +35,30 @@ pub struct PriceData {
     write_timestamp: u64,
 }
 
-#[contracttype]
-#[derive(Debug, Clone)]
-enum DataKey {
-    Admin,
-    PriceData(String),
-}
-
 #[contract]
 pub struct Contract;
 
 #[contractimpl]
 impl Contract {
     pub fn init(env: &Env, admin: Address) -> Result<(), Error> {
-        admin.require_auth();
-        if env.storage().instance().has(&DataKey::Admin) {
+        if env.storage().instance().has(ADMIN_KEY) {
             return Err(Error::from_type_and_code(
                 ScErrorType::Storage,
                 ScErrorCode::ExistingValue,
             ));
         }
-        env.storage().instance().set(&DataKey::Admin, &admin);
+        env.storage().instance().set(ADMIN_KEY, &admin);
+        Ok(())
+    }
+
+    pub fn change_admin(env: &Env, new_admin: Address) -> Result<(), Error> {
+        let admin: Address = env
+            .storage()
+            .instance()
+            .get(ADMIN_KEY)
+            .ok_or(MISSING_STORAGE_ENTRY)?;
+        admin.require_auth();
+        env.storage().instance().set(ADMIN_KEY, &new_admin);
         Ok(())
     }
 
@@ -62,15 +66,11 @@ impl Contract {
         let admin: Address = env
             .storage()
             .instance()
-            .get(&DataKey::Admin)
+            .get(ADMIN_KEY)
             .ok_or(MISSING_STORAGE_ENTRY)?;
         admin.require_auth();
         env.deployer().update_current_contract_wasm(new_wasm_hash);
         Ok(())
-    }
-
-    pub fn version(env: &Env) -> String {
-        String::from_str(env, env!("CARGO_PKG_VERSION"))
     }
 
     pub fn get_prices(
@@ -107,7 +107,7 @@ impl Contract {
                 package_timestamp,
                 write_timestamp,
             };
-            update_feed(&db, &DataKey::PriceData(feed_id), &verifier, &price_data)
+            update_feed(&db, &verifier, &feed_id, &price_data)
                 .map_err(error_from_redstone_error)?;
         }
 
@@ -119,9 +119,7 @@ impl Contract {
 
         let db = env.storage().persistent();
         for feed_id in feed_ids {
-            let price_data: PriceData = db
-                .get(&DataKey::PriceData(feed_id))
-                .ok_or(MISSING_STORAGE_ENTRY)?;
+            let price_data: PriceData = db.get(&feed_id).ok_or(MISSING_STORAGE_ENTRY)?;
             prices.push_back(price_data.price);
         }
 
@@ -132,7 +130,7 @@ impl Contract {
         let price_data: PriceData = env
             .storage()
             .persistent()
-            .get(&DataKey::PriceData(feed_id))
+            .get(&feed_id)
             .ok_or(MISSING_STORAGE_ENTRY)?;
         Ok(price_data.package_timestamp)
     }
@@ -142,9 +140,7 @@ impl Contract {
 
         let db = env.storage().persistent();
         for feed_id in feed_ids {
-            let feed_data = db
-                .get(&DataKey::PriceData(feed_id))
-                .ok_or(MISSING_STORAGE_ENTRY)?;
+            let feed_data = db.get(&feed_id).ok_or(MISSING_STORAGE_ENTRY)?;
             price_data.push_back(feed_data);
         }
 
@@ -183,11 +179,11 @@ fn get_prices_from_payload(
 
 fn update_feed(
     db: &Persistent,
-    db_key: &DataKey,
     verifier: &UpdateTimestampVerifier,
+    feed_id: &String,
     price_data: &PriceData,
 ) -> Result<(), RedStoneError> {
-    let old_price_data: Option<PriceData> = db.get(db_key);
+    let old_price_data: Option<PriceData> = db.get(feed_id);
 
     verifier.verify_timestamp(
         price_data.write_timestamp.into(),
@@ -199,8 +195,8 @@ fn update_feed(
         price_data.package_timestamp.into(),
     )?;
 
-    db.set(db_key, price_data);
-    db.extend_ttl(db_key, FEED_TTL_THRESHOLD, FEED_TTL_EXTEND_TO);
+    db.set(feed_id, price_data);
+    db.extend_ttl(feed_id, FEED_TTL_THRESHOLD, FEED_TTL_EXTEND_TO);
 
     Ok(())
 }
