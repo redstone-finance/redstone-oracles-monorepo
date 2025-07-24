@@ -21,7 +21,7 @@
       "path": "../sui-connector/tsconfig.build.json"
     },
     {
-      "path": "../movement-connector/tsconfig.build.json"
+      "path": "../move-connector/tsconfig.build.json"
     },
     {
       "path": "../on-chain-relayer-common/tsconfig.build.json"
