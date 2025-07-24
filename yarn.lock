@@ -2089,6 +2089,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@aws-sdk/util-arn-parser@npm:^3.696.0":
+  version: 3.804.0
+  resolution: "@aws-sdk/util-arn-parser@npm:3.804.0"
+  dependencies:
+    tslib: "npm:^2.6.2"
+  checksum: 10c0/b6d4c883ec2949fa40552fe8573c9c32af07c92c1bd94a27d978aa14d37b005be95392069d6b882ba977484f4dd0371792296fb2516f5d7601be5102888ee9ee
+  languageName: node
+  linkType: hard
+
 "@aws-sdk/util-dynamodb@npm:3.821.0":
   version: 3.821.0
   resolution: "@aws-sdk/util-dynamodb@npm:3.821.0"
@@ -9808,6 +9817,7 @@ __metadata:
     "@aws-sdk/client-s3": "npm:^3.696.0"
     "@aws-sdk/client-ssm": "npm:^3.696.0"
     "@aws-sdk/lib-dynamodb": "npm:^3.696.0"
+    "@aws-sdk/util-arn-parser": "npm:^3.696.0"
     "@influxdata/influxdb-client": "npm:^1.35.0"
     "@influxdata/influxdb-client-apis": "npm:^1.35.0"
     "@redstone-finance/protocol": "workspace:*"
