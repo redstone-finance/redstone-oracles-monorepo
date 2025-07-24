@@ -10,7 +10,7 @@ async function sampleDeploy() {
 
   const deployer = new ContractDeployer(server, keypair, WASM_FILEPATH);
 
-  const deployResult = await deployer.deploy(keypair);
+  const deployResult = await deployer.deploy(keypair.publicKey());
 
   console.log(`🚀 contract deployed at: ${deployResult.contractId}`);
   saveAdapterId(deployResult.contractId);
