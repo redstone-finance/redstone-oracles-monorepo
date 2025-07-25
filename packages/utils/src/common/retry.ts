@@ -18,6 +18,14 @@ export type RetryConfig<
   };
 };
 
+export class UnrecoverableError extends Error {
+  unrecoverable?: boolean = true;
+}
+
+export class UnrecoverableAggregateError extends AggregateError {
+  unrecoverable?: boolean = true;
+}
+
 export function retry<P extends unknown[], R extends Promise<unknown>>(
   config: RetryConfig<P, R>
 ) {
@@ -29,20 +37,25 @@ export function retry<P extends unknown[], R extends Promise<unknown>>(
   return async (...args: P): Promise<Awaited<R>> => {
     const fnName = config.fnName ?? config.fn.name;
     const errors = [];
-    for (let i = 0; i < config.maxRetries; i++) {
+    let i = 0;
+    while (i < config.maxRetries) {
       try {
         return await config.fn(...args);
       } catch (e) {
+        ++i;
         errors.push(e);
 
         config.logger?.(
-          `Retry ${i + 1}/${config.maxRetries}; Function ${fnName} failed. ${stringifyError(e)}`
+          `Retry ${i}/${config.maxRetries}; Function ${fnName} failed. ${stringifyError(e)}`
         );
 
+        if ((e as UnrecoverableError).unrecoverable) {
+          break;
+        }
         // don't wait in the last iteration
-        if (config.waitBetweenMs && i !== config.maxRetries - 1) {
+        if (config.waitBetweenMs && i !== config.maxRetries) {
           const sleepTimeBackOffMultiplier = config.backOff
-            ? Math.pow(config.backOff.backOffBase, i)
+            ? Math.pow(config.backOff.backOffBase, i - 1)
             : 1;
           const sleepTime = config.waitBetweenMs * sleepTimeBackOffMultiplier;
           config.logger?.(
@@ -55,7 +68,7 @@ export function retry<P extends unknown[], R extends Promise<unknown>>(
     }
     throw new AggregateError(
       errors,
-      `Retry failed after ${config.maxRetries} attempts of ${fnName}`
+      `Retry failed after ${i} attempts of ${fnName}`
     );
   };
 }
