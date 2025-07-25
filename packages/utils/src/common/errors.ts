@@ -2,10 +2,17 @@ import axios, { AxiosError } from "axios";
 import { LogLevel } from "consola";
 import { ethers } from "ethers";
 import { getLogLevel, loggerFactory } from "../logger";
+import { UnrecoverableError } from "./retry";
 
-export function assert(value: unknown, errMsg: string): asserts value {
+export function assert(
+  value: unknown,
+  errMsg: string,
+  unrecoverable: boolean = false
+): asserts value {
   if (!value) {
-    throw new Error(`Assertion failed: ${errMsg}`);
+    throw new (unrecoverable ? UnrecoverableError : Error)(
+      `Assertion failed: ${errMsg}`
+    );
   }
 }
 
