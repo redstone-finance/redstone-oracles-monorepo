@@ -2398,7 +2398,7 @@
     },
     "LBTC_FUNDAMENTAL": {
       "source": [
-        "lbtc-indexer-fetcher"
+        "lombard-lbtc"
       ],
       "denomination": "BTC",
       "rateFeed": true
