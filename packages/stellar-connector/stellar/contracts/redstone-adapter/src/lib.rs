@@ -6,34 +6,25 @@ mod test;
 
 use core::str;
 
+use common::{
+    PriceData, CONTRACT_TTL_EXTEND_TO_LEDGERS, CONTRACT_TTL_THRESHOLD_LEDGERS,
+    MISSING_STORAGE_ENTRY,
+};
 use redstone::{
     contract::verification::UpdateTimestampVerifier, core::process_payload,
     network::error::Error as RedStoneError, soroban::helpers::ToBytes, TimestampMillis,
 };
 use soroban_sdk::{
-    contract, contractimpl, contracttype,
+    contract, contractimpl,
     storage::Persistent,
     xdr::{ScErrorCode, ScErrorType},
     Address, Bytes, BytesN, Env, Error, String, Vec, U256,
 };
 
-use self::config::{
-    CONTRACT_TTL_EXTEND_TO, CONTRACT_TTL_THRESHOLD, FEED_TTL_EXTEND_TO, FEED_TTL_THRESHOLD,
-    STELLAR_CONFIG,
-};
+use self::config::{FEED_TTL_EXTEND_TO, FEED_TTL_THRESHOLD, STELLAR_CONFIG};
 
 const MS_IN_SEC: u64 = 1_000;
-const MISSING_STORAGE_ENTRY: Error =
-    Error::from_type_and_code(ScErrorType::Storage, ScErrorCode::MissingValue);
 const ADMIN_KEY: &&str = &"admin";
-
-#[derive(Debug, Clone)]
-#[contracttype]
-pub struct PriceData {
-    price: U256,
-    package_timestamp: u64,
-    write_timestamp: u64,
-}
 
 #[contract]
 pub struct Contract;
@@ -47,7 +38,9 @@ impl Contract {
                 ScErrorCode::ExistingValue,
             ));
         }
+
         env.storage().instance().set(ADMIN_KEY, &admin);
+
         Ok(())
     }
 
@@ -57,8 +50,10 @@ impl Contract {
             .instance()
             .get(ADMIN_KEY)
             .ok_or(MISSING_STORAGE_ENTRY)?;
+
         admin.require_auth();
         env.storage().instance().set(ADMIN_KEY, &new_admin);
+
         Ok(())
     }
 
@@ -68,8 +63,10 @@ impl Contract {
             .instance()
             .get(ADMIN_KEY)
             .ok_or(MISSING_STORAGE_ENTRY)?;
+
         admin.require_auth();
         env.deployer().update_current_contract_wasm(new_wasm_hash);
+
         Ok(())
     }
 
@@ -89,9 +86,10 @@ impl Contract {
     ) -> Result<(u64, Vec<U256>), Error> {
         updater.require_auth();
 
-        env.storage()
-            .instance()
-            .extend_ttl(CONTRACT_TTL_THRESHOLD, CONTRACT_TTL_EXTEND_TO);
+        env.storage().instance().extend_ttl(
+            CONTRACT_TTL_THRESHOLD_LEDGERS,
+            CONTRACT_TTL_EXTEND_TO_LEDGERS,
+        );
 
         let verifier =
             UpdateTimestampVerifier::verifier(&updater, &STELLAR_CONFIG.trusted_updaters(env));
@@ -132,7 +130,18 @@ impl Contract {
             .persistent()
             .get(&feed_id)
             .ok_or(MISSING_STORAGE_ENTRY)?;
+
         Ok(price_data.package_timestamp)
+    }
+
+    pub fn read_price_data_for_feed(env: &Env, feed_id: String) -> Result<PriceData, Error> {
+        let price_data: PriceData = env
+            .storage()
+            .persistent()
+            .get(&feed_id)
+            .ok_or(MISSING_STORAGE_ENTRY)?;
+
+        Ok(price_data)
     }
 
     pub fn read_price_data(env: &Env, feed_ids: Vec<String>) -> Result<Vec<PriceData>, Error> {

@@ -20,11 +20,7 @@ pub struct Config {
 
 pub type SignerAddressBs = [u8; 20];
 
-pub const CONTRACT_TTL_SECS: u32 = 7 * 24 * 60 * 60;
 pub const FEED_TTL_SECS: u32 = 2 * 24 * 60 * 60;
-// Values below are expressed in number of ledgers (1 ledger == 5 seconds)
-pub const CONTRACT_TTL_THRESHOLD: u32 = CONTRACT_TTL_SECS / 5;
-pub const CONTRACT_TTL_EXTEND_TO: u32 = CONTRACT_TTL_SECS * 3 / 10;
 pub const FEED_TTL_THRESHOLD: u32 = FEED_TTL_SECS / 5;
 pub const FEED_TTL_EXTEND_TO: u32 = FEED_TTL_SECS * 3 / 10;
 
