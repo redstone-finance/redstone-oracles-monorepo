@@ -13,5 +13,3 @@ redstone_sdk="0xedeed"
 git = "https://github.com/movementlabsxyz/aptos-core.git"
 rev = "movement"
 subdir = "aptos-move/framework/aptos-framework"
-
-[dev-dependencies]
