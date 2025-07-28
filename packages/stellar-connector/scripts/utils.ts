@@ -49,3 +49,27 @@ export function loadAdapterId(dir = OUTPUT_DIR) {
 
   return readFileSync(filepath).toString("utf-8");
 }
+
+export function savePriceFeedId(
+  priceFeedContractId: string,
+  feedId: string,
+  dir = OUTPUT_DIR
+) {
+  const network = readNetwork();
+  const filepath = path.join(dir, `price-feed-${feedId}.${network}`);
+
+  writeFileSync(filepath, priceFeedContractId);
+
+  console.log(`✅ Id saved to ${filepath}`);
+}
+
+export function loadPriceFeedId(feedId: string, dir = OUTPUT_DIR) {
+  const network = readNetwork();
+  const filepath = path.join(dir, `price-feed-${feedId}.${network}`);
+
+  return readFileSync(filepath).toString("utf-8");
+}
+
+export function wasmFilePath(contractName: "redstone_adapter" | "price_feed") {
+  return `./stellar/target/wasm32v1-none/release/${contractName}.wasm`;
+}
