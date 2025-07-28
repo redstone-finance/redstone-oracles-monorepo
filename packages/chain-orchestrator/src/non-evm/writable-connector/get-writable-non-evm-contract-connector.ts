@@ -23,6 +23,8 @@ export async function getWritableNonEvmContractConnector(
       return getMoveContractConnector(relayerConfig, chainType);
     case "solana":
       return getSolanaContractConnector(relayerConfig);
+    case "stellar":
+      throw new Error(`Not supported for ${chainType}`);
     case "evm":
       throw new Error(
         `Evm relayer config with networkId: ${relayerConfig.networkId} got passed to non-evm blockchain service builder.`
