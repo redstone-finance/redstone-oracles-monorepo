@@ -6613,15 +6613,7 @@
       "rateFeed": false
     },
     "LBTC_FUNDAMENTAL": {
-      "source": ["lbtc-indexer-fetcher"],
-      "valueCapConfig": {
-        "upper": {
-          "value": 1
-        },
-        "lower": {
-          "value": 1
-        }
-      },
+      "source": ["lombard-lbtc"],
       "denomination": "BTC",
       "rateFeed": true
     },
