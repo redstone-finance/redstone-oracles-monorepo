@@ -68,6 +68,7 @@ export function getNonEvmBlockchainService(
         : undefined;
       return new SolanaBlockchainService(connection, undefined, keypair);
     }
+    case "stellar":
     case "fuel":
       throw new Error(`Not supported for ${chainType}`);
     case "evm":
