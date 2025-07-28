@@ -9,6 +9,7 @@ crate-type = ["lib", "cdylib"]
 doctest = false
 
 [dependencies]
+common = { workspace = true }
 hex-literal = { workspace = true }
 redstone = { workspace = true, features = ["soroban"] }
 soroban-sdk = { workspace = true, features = ["alloc"] }

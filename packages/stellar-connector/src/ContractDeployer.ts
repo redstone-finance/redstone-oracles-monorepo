@@ -1,6 +1,5 @@
 import { Address, Keypair, Operation, rpc } from "@stellar/stellar-sdk";
 import { readFileSync } from "fs";
-import { StellarContractAdapter } from "./StellarContractAdapter";
 import { StellarRpcClient } from "./StellarRpcClient";
 
 export class ContractDeployer {
@@ -8,16 +7,14 @@ export class ContractDeployer {
 
   constructor(
     private readonly rpc: rpc.Server,
-    private readonly keypair: Keypair,
-    private readonly wasmPath: string
+    private readonly keypair: Keypair
   ) {
     this.rpcClient = new StellarRpcClient(rpc);
   }
 
-  async deploy(admin: string) {
-    const wasmHash = await this.upload();
+  async deploy(wasmPath: string) {
+    const wasmHash = await this.upload(wasmPath);
     const contractId = await this.createContract(wasmHash);
-    await this.initContract(contractId, admin);
 
     return {
       wasmHash: wasmHash.toString("hex"),
@@ -25,8 +22,8 @@ export class ContractDeployer {
     };
   }
 
-  async upload() {
-    const wasmBuffer = readFileSync(this.wasmPath);
+  async upload(wasmPath: string) {
+    const wasmBuffer = readFileSync(wasmPath);
 
     const uploadOperation = Operation.uploadContractWasm({ wasm: wasmBuffer });
     const submitionResult = await this.rpcClient.executeOperation(
@@ -53,15 +50,5 @@ export class ContractDeployer {
     const res = await this.rpcClient.waitForTx(submitionResult.hash);
 
     return Address.fromScVal(res.returnValue!);
-  }
-
-  async initContract(contractId: Address, admin: string) {
-    const adapter = new StellarContractAdapter(
-      this.rpc,
-      this.keypair,
-      contractId.toString()
-    );
-
-    await adapter.init(admin);
   }
 }

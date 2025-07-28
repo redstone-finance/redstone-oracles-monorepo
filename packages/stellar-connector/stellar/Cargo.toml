@@ -1,10 +1,13 @@
 [workspace]
 resolver = "2"
 members = [
+  "common",
   "contracts/*",
 ]
 
 [workspace.dependencies]
+common = { path = "common" }
+
 hex = "0.4.3"
 hex-literal = { version = "1.0.0" }
 redstone = { git = "https://github.com/redstone-finance/rust-sdk", tag = "2.1.0-pre2", default-features = false }
