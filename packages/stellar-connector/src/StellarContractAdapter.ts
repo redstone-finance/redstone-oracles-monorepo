@@ -5,6 +5,7 @@ import {
 } from "@redstone-finance/sdk";
 import { loggerFactory } from "@redstone-finance/utils";
 import {
+  Address,
   Contract,
   Keypair,
   rpc,
@@ -22,7 +23,7 @@ export class StellarContractAdapter implements IMultiFeedPricesContractAdapter {
   private readonly rpcClient: StellarRpcClient;
 
   constructor(
-    private readonly rpc: rpc.Server,
+    rpc: rpc.Server,
     private readonly keypair: Keypair,
     contractAddress: string
   ) {
@@ -31,12 +32,8 @@ export class StellarContractAdapter implements IMultiFeedPricesContractAdapter {
   }
 
   async init(admin: string) {
-    const admin_addr = xdr.ScVal.scvAddress(
-      xdr.ScAddress.scAddressTypeAccount(
-        Keypair.fromPublicKey(admin).xdrAccountId()
-      )
-    );
-    const operation = this.contract.call("init", admin_addr);
+    const adminAddr = xdr.ScVal.scvAddress(new Address(admin).toScAddress());
+    const operation = this.contract.call("init", adminAddr);
 
     const submitResponse = await this.rpcClient.executeOperation(
       operation,
@@ -47,12 +44,12 @@ export class StellarContractAdapter implements IMultiFeedPricesContractAdapter {
   }
 
   async changeAdmin(newAdmin: string) {
-    const admin_addr = xdr.ScVal.scvAddress(
+    const adminAddr = xdr.ScVal.scvAddress(
       xdr.ScAddress.scAddressTypeAccount(
         Keypair.fromPublicKey(newAdmin).xdrAccountId()
       )
     );
-    const operation = this.contract.call("change_admin", admin_addr);
+    const operation = this.contract.call("change_admin", adminAddr);
 
     const submitResponse = await this.rpcClient.executeOperation(
       operation,
@@ -71,11 +68,10 @@ export class StellarContractAdapter implements IMultiFeedPricesContractAdapter {
   async getUniqueSignerThreshold(_blockNumber?: number) {
     const operation = this.contract.call("unique_signer_threshold");
 
-    const tx = await this.rpcClient.transactionFromOperation(
+    const sim = await this.rpcClient.simulateOperation(
       operation,
       this.keypair.publicKey()
     );
-    const sim = await this.rpcClient.simulateTransaction(tx);
 
     return Number(scValToNative(sim.result!.retval));
   }
@@ -142,11 +138,11 @@ export class StellarContractAdapter implements IMultiFeedPricesContractAdapter {
       feedIds.map((id) => xdr.ScVal.scvString(id))
     );
     const operation = this.contract.call("read_price_data", feedIdsScVal);
-    const tx = await this.rpcClient.transactionFromOperation(
+
+    const sim = await this.rpcClient.simulateOperation(
       operation,
       this.keypair.publicKey()
     );
-    const sim = await this.rpcClient.simulateTransaction(tx);
 
     const vec = sim.result!.retval.vec()!;
 
