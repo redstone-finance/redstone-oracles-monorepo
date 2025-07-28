@@ -16,7 +16,7 @@ export const NETWORK = Network.LOCAL;
 export class TestHelper {
   private isPrepared = false;
   private readonly logger = loggerFactory(
-    "movement-prices-contract-connector-tests"
+    "move-prices-contract-connector-tests"
   );
 
   static makeLocal(): TestHelper {

@@ -34,7 +34,7 @@ const SIGNERS_COUNT = 3;
 
 jest.setTimeout(TEST_FILE_TIMEOUT);
 
-describe("MovementPricesContractAdapter", () => {
+describe("MovePricesContractAdapter", () => {
   let priceAdapter: MovePricesContractAdapter;
   let contractParamsProviderMultiple: ContractParamsProvider;
   let connector: MovePricesContractConnector;

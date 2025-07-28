@@ -8,7 +8,7 @@ import {
 import fs from "fs";
 import { getTransactionJsonPath, readAddress } from "../deploy-utils";
 import { getEnvContractName } from "../get-env";
-import { MovementPackageTxBuilder } from "../package";
+import { MovePackageTxBuilder } from "../package";
 import { MULTI_SIG_ADDRESS, MULTI_SIG_UPGRADE_TX_ID } from "./const";
 import { executeAsLedger } from "./execute-as-ledger";
 
@@ -24,9 +24,7 @@ async function executeTransaction(
     fs.readFileSync(transactionJsonPath, "utf8")
   ) as { bytecode: HexInput[]; metadataBytes: HexInput };
 
-  const payload = await new MovementPackageTxBuilder(
-    aptos
-  ).objectUpgradeTxPayload(
+  const payload = await new MovePackageTxBuilder(aptos).objectUpgradeTxPayload(
     multiSigAddress,
     contractAddress,
     metadataBytes,

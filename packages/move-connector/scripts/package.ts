@@ -14,7 +14,7 @@ function objectCodeDeploymentCall(call: string): MoveFunctionId {
   return `0x1::object_code_deployment::${call}`;
 }
 
-export class MovementPackageTxBuilder {
+export class MovePackageTxBuilder {
   constructor(private readonly aptos: Aptos) {}
 
   public async objectPublishTx(
