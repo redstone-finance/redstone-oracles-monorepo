@@ -7033,16 +7033,8 @@
     },
     "LBTC_FUNDAMENTAL": {
       "source": [
-        "lbtc-indexer-fetcher"
+        "lombard-lbtc"
       ],
-      "valueCapConfig": {
-        "upper": {
-          "value": 1
-        },
-        "lower": {
-          "value": 1
-        }
-      },
       "denomination": "BTC",
       "rateFeed": true
     },
