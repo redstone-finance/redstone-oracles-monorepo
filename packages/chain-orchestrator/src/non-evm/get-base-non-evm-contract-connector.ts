@@ -62,6 +62,7 @@ export function getBaseNonEvmContractConnector(
           .withRpcUrls(rpcUrls)
           .build()
       );
+    case "stellar":
     case "fuel":
       throw new Error(`Not supported for ${chainType}`);
     case "evm":

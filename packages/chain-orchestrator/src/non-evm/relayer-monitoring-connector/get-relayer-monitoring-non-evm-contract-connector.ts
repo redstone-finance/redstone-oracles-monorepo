@@ -35,6 +35,7 @@ export function getRelayerMonitoringNonEvmContractConnector(
       return getMoveContractConnector(rpcUrls, relayerManifest, chainType);
     case "solana":
       return getSolanaContractConnector(rpcUrls, relayerManifest);
+    case "stellar":
     case "fuel":
       throw new Error(
         `${relayerManifest.adapterContractType} is not supported in monitoring`
