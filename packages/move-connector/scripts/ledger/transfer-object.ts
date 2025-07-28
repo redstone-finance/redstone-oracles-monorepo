@@ -2,13 +2,13 @@ import { Account, AccountAddress, Aptos } from "@aptos-labs/ts-sdk";
 import { makeAptosAccount } from "../../src";
 import { readAddress } from "../deploy-utils";
 import { getEnvContractName } from "../get-env";
-import { MovementPackageTxBuilder } from "../package";
+import { MovePackageTxBuilder } from "../package";
 import { handleTx, makeAptos, promptForConfirmation } from "../utils";
 import { MULTI_SIG_ADDRESS } from "./const";
 
 async function transferObject(
   aptos: Aptos,
-  builder: MovementPackageTxBuilder,
+  builder: MovePackageTxBuilder,
   account: Account,
   multiSigAddress: AccountAddress,
   objectAddress: AccountAddress
@@ -24,7 +24,7 @@ async function transferObject(
 async function main() {
   const aptos = makeAptos();
   const account = makeAptosAccount();
-  const builder = new MovementPackageTxBuilder(aptos);
+  const builder = new MovePackageTxBuilder(aptos);
   const objectAddress = readAddress();
   const contractName = getEnvContractName();
 
