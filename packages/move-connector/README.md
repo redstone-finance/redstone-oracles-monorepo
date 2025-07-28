@@ -11,16 +11,16 @@ Use `custom` network type and provide above custom URL for tests with testnet.
 [Install aptos cli](https://aptos.dev/en/build/cli) - Compile the version 3.5.0 of movement CLI or use `make install-cli`.
 [Setup localnet](https://aptos.dev/en/build/cli/running-a-local-network)
 
-Ensure you have the move account config in `movement/.movement/config.yaml`.
-If not, please initiate configuration with `movement init --skip-faucet` in `movement` directory.
+Ensure you have the move account config in `move/.movement/config.yaml`.
+If not, please initiate configuration with `movement init --skip-faucet` in `move` directory.
 
 Run deploy:
 
 - PACKAGE_ADDRESS env variable must be in a hex format and indicates on chain package address.
-  It is optional parameter, if not specified then `./movement/config.yaml` account address is used.
+  It is optional parameter, if not specified then `.movement/config.yaml` account address is used.
   For example: `0x744ea1316e136548403df153b72ac5df49621907a882b5dddf886b1b51b8eef2` is a valid package address.
 - PRIVATE_KEY is a private key of `secp256k1` type and must be provided in hex format.
-  It is optional parameter, if not specified then `./movement/config.yaml` private key is used.
+  It is optional parameter, if not specified then `.movement/config.yaml` private key is used.
 
 All hex strings can start with leading `0x` or without.
 

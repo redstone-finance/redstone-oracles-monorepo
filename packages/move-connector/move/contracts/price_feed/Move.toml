@@ -20,7 +20,6 @@ redstone_sdk = "0xeded"
 [dependencies]
 price_adapter = { local = "../price_adapter" }
 
-
 [dependencies.AptosFramework]
 git = "https://github.com/movementlabsxyz/aptos-core.git"
 rev = "movement"

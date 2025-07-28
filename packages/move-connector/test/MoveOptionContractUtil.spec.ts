@@ -7,7 +7,7 @@ import { NETWORK, REST_NODE_LOCALNET_URL } from "./helpers";
 const TEST_DEFAULT_LOCALNET_MOVE_PRICE = 100;
 const TEST_DEFAULT_LOCALNET_GAS_BUDGET = 100_000;
 
-describe("MovementOptionContractUtil", () => {
+describe("MoveOptionContractUtil", () => {
   let aptos: Aptos;
 
   beforeAll(() => {

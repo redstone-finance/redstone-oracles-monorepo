@@ -7,7 +7,7 @@ import {
   setUpDeploy,
 } from "../deploy-utils";
 import { getEnvContractName, getEnvNetwork } from "../get-env";
-import { MovementPackageTxBuilder } from "../package";
+import { MovePackageTxBuilder } from "../package";
 import { LEDGER_ACCOUNT_ID, MULTI_SIG_ADDRESS } from "./const";
 import { executeAsLedger } from "./execute-as-ledger";
 import { MultiSigTxBuilder } from "./MultiSigTxBuilder";
@@ -38,7 +38,7 @@ async function proposeUpgrade(
   );
 
   console.log(`Upgrading package as ${signerAddress.toString()}`);
-  const upgradeTxPayload = await new MovementPackageTxBuilder(
+  const upgradeTxPayload = await new MovePackageTxBuilder(
     aptos
   ).objectUpgradeTxPayload(
     signerAddress,

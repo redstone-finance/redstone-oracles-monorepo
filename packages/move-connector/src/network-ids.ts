@@ -1,4 +1,6 @@
-enum Network {
+import { Network } from "@aptos-labs/ts-sdk";
+
+enum AptosAndMovementNetwork {
   APTOS_MAINNET = "aptos-mainnet",
   APTOS_TESTNET = "aptos-testnet",
 
@@ -8,28 +10,39 @@ enum Network {
   CUSTOM = "custom",
 }
 
-export const NETWORK_ID: { [p: number]: Network } = {
-  1: Network.APTOS_MAINNET,
-  2: Network.APTOS_TESTNET,
-  126: Network.MOVEMENT_MAINNET,
-  250: Network.MOVEMENT_TESTNET,
+export const NETWORK_ID: { [p: number]: AptosAndMovementNetwork } = {
+  1: AptosAndMovementNetwork.APTOS_MAINNET,
+  2: AptosAndMovementNetwork.APTOS_TESTNET,
+  126: AptosAndMovementNetwork.MOVEMENT_MAINNET,
+  250: AptosAndMovementNetwork.MOVEMENT_TESTNET,
 };
 
-export function getFullnodeUrl(network: Network) {
+export function getFullnodeUrl(network: AptosAndMovementNetwork) {
   switch (network) {
-    case Network.MOVEMENT_MAINNET:
+    case AptosAndMovementNetwork.MOVEMENT_MAINNET:
       return "https://mainnet.movementnetwork.xyz/v1";
-    case Network.MOVEMENT_TESTNET:
+    case AptosAndMovementNetwork.MOVEMENT_TESTNET:
       return "https://aptos.testnet.bardock.movementlabs.xyz/v1";
-    case Network.APTOS_MAINNET:
+    case AptosAndMovementNetwork.APTOS_MAINNET:
       return "https://api.mainnet.aptoslabs.com/v1";
-    case Network.APTOS_TESTNET:
+    case AptosAndMovementNetwork.APTOS_TESTNET:
       return "https://api.testnet.aptoslabs.com/v1";
     default:
       throw new Error(`Network ${network} not supported`);
   }
 }
 
-export function chainIdtoMovementNetwork(chainId: number) {
+export function chainIdtoUrl(chainId: number) {
   return NETWORK_ID[chainId] ?? Network.CUSTOM;
+}
+
+export function chainIdToNetwork(chainId: number): Network {
+  switch (chainId) {
+    case 1:
+      return Network.MAINNET;
+    case 2:
+      return Network.TESTNET;
+    default:
+      return Network.CUSTOM;
+  }
 }
