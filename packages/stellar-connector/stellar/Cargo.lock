@@ -276,6 +276,13 @@ dependencies = [
 ]
 
 [[package]]
+name = "common"
+version = "0.0.0"
+dependencies = [
+ "soroban-sdk",
+]
+
+[[package]]
 name = "const-hex"
 version = "1.14.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -955,6 +962,14 @@ dependencies = [
 ]
 
 [[package]]
+name = "price-feed"
+version = "0.0.0"
+dependencies = [
+ "common",
+ "soroban-sdk",
+]
+
+[[package]]
 name = "primeorder"
 version = "0.13.6"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -1095,6 +1110,7 @@ dependencies = [
 name = "redstone-adapter"
 version = "0.0.0"
 dependencies = [
+ "common",
  "hex",
  "hex-literal 1.0.0",
  "redstone 2.0.2",
