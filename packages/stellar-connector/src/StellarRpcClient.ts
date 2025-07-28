@@ -86,4 +86,13 @@ export class StellarRpcClient {
       .setTimeout(30)
       .build();
   }
+
+  async simulateOperation(
+    operation: xdr.Operation<Operation.InvokeHostFunction>,
+    sender: string
+  ) {
+    const tx = await this.transactionFromOperation(operation, sender);
+
+    return await this.simulateTransaction(tx);
+  }
 }
