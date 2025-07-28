@@ -22,6 +22,9 @@ export class UnrecoverableError extends Error {
   unrecoverable?: boolean = true;
 }
 
+export const isErrorUnrecoverable = (err: Error): err is UnrecoverableError =>
+  !!(err as UnrecoverableError).unrecoverable;
+
 export class UnrecoverableAggregateError extends AggregateError {
   unrecoverable?: boolean = true;
 }
@@ -49,7 +52,7 @@ export function retry<P extends unknown[], R extends Promise<unknown>>(
           `Retry ${i}/${config.maxRetries}; Function ${fnName} failed. ${stringifyError(e)}`
         );
 
-        if ((e as UnrecoverableError).unrecoverable) {
+        if (isErrorUnrecoverable(e as Error)) {
           break;
         }
         // don't wait in the last iteration
