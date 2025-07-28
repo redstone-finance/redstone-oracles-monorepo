@@ -14,10 +14,10 @@
 
 * The repository: https://github.com/redstone-finance/redstone-oracles-monorepo
 * The CommitId: [will be prepared for the particular version]
-* Path: [packages/move-connector/movement/contracts](./contracts)
+* Path: [packages/move-connector/move/contracts](./contracts)
 
 The direct path should look like:
-[https://github.com/redstone-finance/redstone-oracles-monorepo/tree/[COMMIT_ID]/packages/move-connector/movement/contracts](https://github.com/redstone-finance/redstone-oracles-monorepo/tree/main/packages/move-connector/movement/contracts)
+[https://github.com/redstone-finance/redstone-oracles-monorepo/tree/[COMMIT_ID]/packages/move-connector/move/contracts](https://github.com/redstone-finance/redstone-oracles-monorepo/tree/main/packages/move-connector/move/contracts)
 
 ## Code description
 

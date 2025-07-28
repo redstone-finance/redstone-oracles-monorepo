@@ -21,7 +21,7 @@ import {
 
 const WAIT_MS = 5_000;
 
-describe("MovementPricesContractConnector", () => {
+describe("MovePricesContractConnector", () => {
   let connector: MovePricesContractConnector;
   let aptos: Aptos;
   let account: Account;

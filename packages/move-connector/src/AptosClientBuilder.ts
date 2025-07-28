@@ -1,6 +1,6 @@
-import { Aptos, AptosConfig, Network } from "@aptos-labs/ts-sdk";
+import { Aptos, AptosConfig } from "@aptos-labs/ts-sdk";
 import { ChainTypeEnum, MultiExecutor } from "@redstone-finance/utils";
-import { chainIdtoMovementNetwork, getFullnodeUrl } from "./network-ids";
+import { chainIdToNetwork, chainIdtoUrl } from "./network-ids";
 
 export const SINGLE_EXECUTION_TIMEOUT_MS = 12_000;
 export const ALL_EXECUTIONS_TIMEOUT_MS = 30_000;
@@ -12,15 +12,17 @@ abstract class BaseClientBuilder extends MultiExecutor.ClientBuilder<Aptos> {
     }
 
     if (!this.urls.length) {
-      this.urls.push(getFullnodeUrl(chainIdtoMovementNetwork(this.chainId)));
+      this.urls.push(chainIdtoUrl(this.chainId));
     }
 
+    const network = chainIdToNetwork(this.chainId);
+
     return this.makeMultiExecutor(
-      (url) =>
+      (fullnode) =>
         new Aptos(
           new AptosConfig({
-            network: Network.CUSTOM,
-            fullnode: url,
+            network,
+            fullnode,
           })
         ),
       {
