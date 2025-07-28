@@ -18,7 +18,7 @@ import {
 } from "./contract-name-enum";
 import { getEnvContractName, getEnvDeployDir, getEnvNetwork } from "./get-env";
 import { MULTI_SIG_ADDRESS } from "./ledger/const";
-import { MovementPackageTxBuilder } from "./package";
+import { MovePackageTxBuilder } from "./package";
 import { handleTx, objectSeed } from "./utils";
 
 export const OUTPUT_BUILD_DIR = "./build/";
@@ -111,7 +111,7 @@ export async function setUpDeploy(
   currentObjectAddress?: AccountAddress,
   deployDir = getEnvDeployDir()
 ) {
-  const builder = new MovementPackageTxBuilder(aptos);
+  const builder = new MovePackageTxBuilder(aptos);
   const contractAddress =
     currentObjectAddress ??
     AccountAddress.fromString(
