@@ -1,17 +1,10 @@
+import { IPriceFeedContractAdapter } from "@redstone-finance/sdk";
 import { loggerFactory } from "@redstone-finance/utils";
-import {
-  Address,
-  Contract,
-  Keypair,
-  rpc,
-  scValToBigInt,
-  scValToNative,
-  xdr,
-} from "@stellar/stellar-sdk";
-import { lastRoundDetailsFromXdrMap } from "./ContractData";
+import { Contract, Keypair, rpc } from "@stellar/stellar-sdk";
 import { StellarRpcClient } from "./StellarRpcClient";
+import * as XdrUtils from "./XdrUtils";
 
-export class StellarPriceFeed {
+export class StellarPriceFeed implements IPriceFeedContractAdapter {
   private readonly logger = loggerFactory("stellar-price-feed");
 
   private readonly contract: Contract;
@@ -26,11 +19,26 @@ export class StellarPriceFeed {
     this.rpcClient = new StellarRpcClient(rpc);
   }
 
+  async getPriceAndTimestamp() {
+    return await this.readPriceAndTimestamp();
+  }
+
+  async getDescription() {
+    const operation = this.contract.call("description");
+    const sim = await this.rpcClient.simulateOperation(operation, this.sender);
+
+    return XdrUtils.parsePrimitiveFromSimulation(sim, String);
+  }
+
+  async getDataFeedId() {
+    return await this.feedId();
+  }
+
   async init(feedId: string, adapterContractId: string, keypair: Keypair) {
     const operation = this.contract.call(
       "init",
-      xdr.ScVal.scvString(feedId),
-      xdr.ScVal.scvAddress(new Address(adapterContractId).toScAddress())
+      XdrUtils.stringToScVal(feedId),
+      XdrUtils.addressToScVal(adapterContractId)
     );
 
     const submitResponse = await this.rpcClient.executeOperation(
@@ -45,44 +53,41 @@ export class StellarPriceFeed {
     const operation = this.contract.call("decimals");
     const sim = await this.rpcClient.simulateOperation(operation, this.sender);
 
-    return Number(scValToNative(sim.result!.retval));
+    return XdrUtils.parsePrimitiveFromSimulation(sim, Number);
+  }
+
+  async feedId() {
+    const operation = this.contract.call("feed_id");
+    const sim = await this.rpcClient.simulateOperation(operation, this.sender);
+
+    return XdrUtils.parsePrimitiveFromSimulation(sim, String);
   }
 
   async readPrice() {
     const operation = this.contract.call("read_price");
     const sim = await this.rpcClient.simulateOperation(operation, this.sender);
 
-    return scValToBigInt(sim.result!.retval);
+    return XdrUtils.parseBigIntFromSimulation(sim);
   }
 
   async readTimestamp() {
     const operation = this.contract.call("read_timestamp");
     const sim = await this.rpcClient.simulateOperation(operation, this.sender);
 
-    return Number(scValToNative(sim.result!.retval));
+    return XdrUtils.parsePrimitiveFromSimulation(sim, Number);
   }
 
   async readPriceAndTimestamp() {
     const operation = this.contract.call("read_price_and_timestamp");
     const sim = await this.rpcClient.simulateOperation(operation, this.sender);
 
-    const vec = sim.result!.retval.vec()!;
-
-    const price = scValToBigInt(vec[0]);
-    const timestamp = Number(scValToNative(vec[1]));
-
-    return {
-      price,
-      timestamp,
-    };
+    return XdrUtils.parseReadPriceAndTimestampSimulation(sim);
   }
 
   async readPriceData() {
     const operation = this.contract.call("read_price_data");
     const sim = await this.rpcClient.simulateOperation(operation, this.sender);
 
-    const map = sim.result!.retval.map()!;
-
-    return lastRoundDetailsFromXdrMap(map);
+    return XdrUtils.parseReadSinglePriceDataSimulation(sim);
   }
 }

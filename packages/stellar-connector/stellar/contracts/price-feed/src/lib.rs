@@ -7,11 +7,12 @@ use common::{
 };
 use soroban_sdk::{
     contract, contractclient, contractimpl, contracttype,
-    xdr::{ScErrorCode, ScErrorType},
-    Address, Env, Error, String, U256,
+    xdr::{ScErrorCode, ScErrorType, ToXdr},
+    Address, Bytes, Env, Error, String, U256,
 };
 
 const DECIMALS: u64 = 8;
+const DESCRIPTION_PREFIX: &[u8; 24] = b"RedStone Price Feed for ";
 
 #[contractclient(name = "AdapterContractClient")]
 pub trait AdapterContract {
@@ -49,6 +50,24 @@ impl PriceFeed {
         DECIMALS
     }
 
+    pub fn description(env: &Env) -> Result<String, Error> {
+        let feed_id = Self::feed_id(env)?;
+
+        let mut description_bytes = Bytes::new(env);
+
+        description_bytes.extend_from_array(DESCRIPTION_PREFIX);
+        description_bytes.append(&feed_id.to_xdr(env));
+
+        Ok(String::from_bytes(env, &description_bytes.to_alloc_vec()))
+    }
+
+    pub fn feed_id(env: &Env) -> Result<String, Error> {
+        env.storage()
+            .instance()
+            .get(&DataKey::FeedId)
+            .ok_or(MISSING_STORAGE_ENTRY)
+    }
+
     pub fn read_price(env: &Env) -> Result<U256, Error> {
         Ok(Self::read_price_data(env)?.price)
     }
@@ -66,15 +85,11 @@ impl PriceFeed {
     pub fn read_price_data(env: &Env) -> Result<PriceData, Error> {
         extend_instace_storage(env);
 
+        let feed_id = Self::feed_id(env)?;
         let adapter_address: Address = env
             .storage()
             .instance()
             .get(&DataKey::AdapterAddress)
-            .ok_or(MISSING_STORAGE_ENTRY)?;
-        let feed_id: String = env
-            .storage()
-            .instance()
-            .get(&DataKey::FeedId)
             .ok_or(MISSING_STORAGE_ENTRY)?;
 
         let client = AdapterContractClient::new(env, &adapter_address);
