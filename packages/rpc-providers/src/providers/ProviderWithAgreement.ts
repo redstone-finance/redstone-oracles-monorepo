@@ -315,9 +315,13 @@ export class ProviderWithAgreement extends ProviderWithFallback {
       { provider, identifier }: ProviderWithIdentifier,
       shouldAbort: () => boolean
     ) => {
-      const blockNumberFromProvider = await provider.getBlockNumber();
+      let blockNumberFromProvider = await provider.getBlockNumber();
       while (!shouldAbort() && blockNumberFromProvider < electedBlockNumber) {
+        this.logger.info(
+          `Waiting for provider ${identifier} to sync to ${electedBlockNumber} block number - current block number ${blockNumberFromProvider}`
+        );
         await RedstoneCommon.sleep(500);
+        blockNumberFromProvider = await provider.getBlockNumber();
       }
       if (shouldAbort()) {
         throw new Error(
