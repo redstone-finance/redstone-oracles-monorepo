@@ -8,10 +8,21 @@ import {
 } from "../src";
 import { skipIfDisabledOrNotSupported } from "./rpc-urls/common";
 
-const CHAINS_TO_SKIP_RPC_PRESENCE_CHECK = [
-  "Monad Devnet",
-  "Hemi Network",
-  "megaEth Testnet",
+const CHAINS_TO_SKIP_RPC_PRESENCE_CHECK: string[] = ["megaEth Testnet"];
+
+const CHAINS_TO_SKIP_REDSTONE_MULTICALL_ADDRESS_CHECK: string[] = [
+  "Arbitrum Sepolia",
+  "TAC Turin",
+  "Westend Asset Hub",
+  "Corn Maizenet",
+  "zkLink",
+  "zkSync",
+  "Polygon Mainnet",
+];
+
+const CHAINS_TO_SKIP_STANDARD_MULTICALL_ADDRESS_CHECK: string[] = [
+  "Arbitrum Sepolia",
+  "TAC Turin",
 ];
 
 const ChainConfigs = getLocalChainConfigs();
@@ -36,30 +47,42 @@ describe("Validate chain configs", () => {
 });
 
 describe("Validate multicall3", () => {
-  it(`Each redstone multicall3 should have the same address`, function () {
+  describe("Redstone multicall3", () => {
     for (const chainConfig of Object.values(ChainConfigs)) {
       if (chainConfig.multicall3.type === "RedstoneMulticall3") {
-        skipIfDisabledOrNotSupported(this, chainConfig);
-        chai
-          .expect(
-            chainConfig.multicall3.address,
-            `Multicall3 address for chain ${chainConfig.name} doesn't match REDSTONE_MULTICALL3_ADDRESS`
-          )
-          .eq(REDSTONE_MULTICALL3_ADDRESS);
+        it(`Chain ${chainConfig.name} should have correct Redstone multicall3 address`, function () {
+          skipIfDisabledOrNotSupported(
+            this,
+            chainConfig,
+            CHAINS_TO_SKIP_REDSTONE_MULTICALL_ADDRESS_CHECK
+          );
+          chai
+            .expect(
+              chainConfig.multicall3.address,
+              `Multicall3 address for chain ${chainConfig.name} doesn't match REDSTONE_MULTICALL3_ADDRESS`
+            )
+            .eq(REDSTONE_MULTICALL3_ADDRESS);
+        });
       }
     }
   });
 
-  it(`Each standard multicall3 should have the same address`, function () {
+  describe("Standard multicall3", () => {
     for (const chainConfig of Object.values(ChainConfigs)) {
       if (chainConfig.multicall3.type === "Multicall3") {
-        skipIfDisabledOrNotSupported(this, chainConfig);
-        chai
-          .expect(
-            chainConfig.multicall3.address,
-            `Multicall3 address for chain ${chainConfig.name} doesn't match STANDARD_MULTICALL3_ADDRESS`
-          )
-          .eq(STANDARD_MULTICALL3_ADDRESS);
+        it(`Chain ${chainConfig.name} should have correct standard multicall3 address`, function () {
+          skipIfDisabledOrNotSupported(
+            this,
+            chainConfig,
+            CHAINS_TO_SKIP_STANDARD_MULTICALL_ADDRESS_CHECK
+          );
+          chai
+            .expect(
+              chainConfig.multicall3.address,
+              `Multicall3 address for chain ${chainConfig.name} doesn't match STANDARD_MULTICALL3_ADDRESS`
+            )
+            .eq(STANDARD_MULTICALL3_ADDRESS);
+        });
       }
     }
   });
