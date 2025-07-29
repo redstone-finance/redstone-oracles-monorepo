@@ -116,6 +116,10 @@ export const readManifestAndEnv = async () => {
       "HEALTHCHECK_PING_URL",
       z.string().url().optional()
     ),
+    healthcheckMetricName: RedstoneCommon.getFromEnv(
+      "HEALTHCHECK_METRIC_NAME",
+      z.string().optional()
+    ),
     expectedTxDeliveryTimeInMS: RedstoneCommon.getFromEnv(
       "EXPECTED_TX_DELIVERY_TIME_IN_MS",
       z.number().int().positive()
