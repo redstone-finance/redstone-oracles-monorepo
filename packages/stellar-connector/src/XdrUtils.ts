@@ -1,0 +1,157 @@
+import {
+  Address,
+  rpc,
+  scValToBigInt,
+  scValToNative,
+  xdr,
+} from "@stellar/stellar-sdk";
+
+const PRICE_KEY = xdr.ScVal.scvSymbol("price");
+const PACKAGE_TIMESTAMP_KEY = xdr.ScVal.scvSymbol("package_timestamp");
+const WRITE_TIMESTAMP_KEY = xdr.ScVal.scvSymbol("write_timestamp");
+
+function expectValue<T>(val: T | null | undefined, name: string) {
+  if (val === null || val === undefined) {
+    throw new Error(`Expected ${name} to be defined.`);
+  }
+
+  return val;
+}
+
+export function numbersToScvBytes(val: number[]) {
+  return xdr.ScVal.scvBytes(Buffer.from(val));
+}
+
+export function stringToScVal(val: string) {
+  return xdr.ScVal.scvString(val);
+}
+
+export function mapArrayToScVec<T>(array: T[], mapFn: (val: T) => xdr.ScVal) {
+  return xdr.ScVal.scvVec(array.map(mapFn));
+}
+
+export function addressToScVal(address: string) {
+  return xdr.ScVal.scvAddress(new Address(address).toScAddress());
+}
+
+export function parseSimValAs<T>(
+  sim: rpc.Api.SimulateTransactionSuccessResponse,
+  parseFn: (val: xdr.ScVal) => T
+) {
+  const retVal = expectValue(sim.result, "simulationResult").retval;
+
+  return parseFn(retVal);
+}
+
+export function parseReadPriceAndTimestampSimulation(
+  sim: rpc.Api.SimulateTransactionSuccessResponse
+) {
+  return parseSimValAs(sim, (val) => {
+    const vec = expectValue<xdr.ScVal[]>(val.vec(), "simRetValAsVec");
+
+    return parsePriceAndTimestamp(vec);
+  });
+}
+
+export function parseGetPricesSimulation(
+  sim: rpc.Api.SimulateTransactionSuccessResponse
+) {
+  return parseSimValAs(sim, (val) => {
+    const vec = expectValue<xdr.ScVal[]>(val.vec(), "simRetValAsVec");
+
+    return parseGetPrices(vec);
+  });
+}
+
+export function parseReadPriceDataSimulation(
+  sim: rpc.Api.SimulateTransactionSuccessResponse
+) {
+  return parseSimValAs(sim, (val) => {
+    const vec = expectValue<xdr.ScVal[]>(val.vec(), "simRetValAsVec");
+
+    return vec.map((val) =>
+      lastRoundDetailsFromXdrMap(expectValue(val.map(), "valAsMap"))
+    );
+  });
+}
+
+export function parseReadSinglePriceDataSimulation(
+  sim: rpc.Api.SimulateTransactionSuccessResponse
+) {
+  return parseSimValAs(sim, (val) => {
+    const map = expectValue(val.map(), "simRetValAsMap");
+
+    return lastRoundDetailsFromXdrMap(map);
+  });
+}
+
+export function parsePrimitiveFromSimulation<P>(
+  sim: rpc.Api.SimulateTransactionSuccessResponse,
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  transform: (val: any) => P
+) {
+  return parseSimValAs(sim, (val) => transform(scValToNative(val)));
+}
+
+export function parseBigIntFromSimulation(
+  sim: rpc.Api.SimulateTransactionSuccessResponse
+) {
+  return parseSimValAs(sim, (val) => scValToBigInt(val));
+}
+
+export function lastRoundDetailsFromXdrMap(map: xdr.ScMapEntry[]) {
+  const price = scValToBigInt(
+    expectValue(findVal(map, PRICE_KEY), "PRICE_KEY in map").val()
+  );
+
+  const packageTimestamp = Number(
+    scValToNative(
+      expectValue(
+        findVal(map, PACKAGE_TIMESTAMP_KEY),
+        "PACKAGE_TIMESTAMP_KEY in map"
+      ).val()
+    )
+  );
+  const writeTimestamp = Number(
+    scValToNative(
+      expectValue(
+        findVal(map, WRITE_TIMESTAMP_KEY),
+        "WRITE_TIMESTAMP_KEY in map"
+      ).val()
+    )
+  );
+
+  return {
+    lastDataPackageTimestampMS: packageTimestamp,
+    lastBlockTimestampMS: writeTimestamp,
+    lastValue: price,
+  };
+}
+
+export function findVal(map: xdr.ScMapEntry[], key: xdr.ScVal) {
+  return map.find((entry) => entry.key().toXDR().equals(key.toXDR()));
+}
+
+export function parsePriceAndTimestamp(values: xdr.ScVal[]) {
+  const value = scValToBigInt(values[0]);
+  const timestamp = Number(scValToNative(values[1]));
+
+  if (Number.isNaN(timestamp)) {
+    throw new Error("Unexpected type");
+  }
+
+  return {
+    value,
+    timestamp,
+  };
+}
+
+export function parseGetPrices(values: xdr.ScVal[]) {
+  const timestamp = Number(scValToNative(values[0]));
+  const prices = expectValue(values[1].vec(), "PricesAsVec").map(scValToBigInt);
+
+  return {
+    timestamp,
+    prices,
+  };
+}
