@@ -4,17 +4,10 @@ import {
   IMultiFeedPricesContractAdapter,
 } from "@redstone-finance/sdk";
 import { loggerFactory } from "@redstone-finance/utils";
-import {
-  Address,
-  Contract,
-  Keypair,
-  rpc,
-  scValToNative,
-  xdr,
-} from "@stellar/stellar-sdk";
+import { Contract, Keypair, rpc } from "@stellar/stellar-sdk";
 import _ from "lodash";
-import { lastRoundDetailsFromXdrMap, parseReturnValue } from "./ContractData";
 import { StellarRpcClient } from "./StellarRpcClient";
+import * as XdrUtils from "./XdrUtils";
 
 export class StellarContractAdapter implements IMultiFeedPricesContractAdapter {
   private readonly logger = loggerFactory("stellar-price-adapter");
@@ -32,7 +25,7 @@ export class StellarContractAdapter implements IMultiFeedPricesContractAdapter {
   }
 
   async init(admin: string) {
-    const adminAddr = xdr.ScVal.scvAddress(new Address(admin).toScAddress());
+    const adminAddr = XdrUtils.addressToScVal(admin);
     const operation = this.contract.call("init", adminAddr);
 
     const submitResponse = await this.rpcClient.executeOperation(
@@ -44,11 +37,7 @@ export class StellarContractAdapter implements IMultiFeedPricesContractAdapter {
   }
 
   async changeAdmin(newAdmin: string) {
-    const adminAddr = xdr.ScVal.scvAddress(
-      xdr.ScAddress.scAddressTypeAccount(
-        Keypair.fromPublicKey(newAdmin).xdrAccountId()
-      )
-    );
+    const adminAddr = XdrUtils.addressToScVal(newAdmin);
     const operation = this.contract.call("change_admin", adminAddr);
 
     const submitResponse = await this.rpcClient.executeOperation(
@@ -73,7 +62,7 @@ export class StellarContractAdapter implements IMultiFeedPricesContractAdapter {
       this.keypair.publicKey()
     );
 
-    return Number(scValToNative(sim.result!.retval));
+    return XdrUtils.parsePrimitiveFromSimulation(sim, Number);
   }
 
   async readLatestUpdateBlockTimestamp(feedId: string, _blockNumber?: number) {
@@ -90,21 +79,18 @@ export class StellarContractAdapter implements IMultiFeedPricesContractAdapter {
       ...(await this.prepareCallArgs(paramsProvider))
     );
 
-    const submitResponse = await this.rpcClient.executeOperation(
+    const sim = await this.rpcClient.simulateOperation(
       operation,
-      this.keypair
+      this.keypair.publicKey()
     );
-    const resp = await this.rpcClient.waitForTx(submitResponse.hash);
 
-    return parseReturnValue(resp.returnValue!.vec()!).prices;
+    return XdrUtils.parseGetPricesSimulation(sim).prices;
   }
 
   async writePricesFromPayloadToContract(
     paramsProvider: ContractParamsProvider
   ) {
-    const updater = xdr.ScVal.scvAddress(
-      xdr.ScAddress.scAddressTypeAccount(this.keypair.xdrAccountId())
-    );
+    const updater = XdrUtils.addressToScVal(this.keypair.publicKey());
 
     const operation = this.contract.call(
       "write_prices",
@@ -134,8 +120,9 @@ export class StellarContractAdapter implements IMultiFeedPricesContractAdapter {
   }
 
   async getContractData(feedIds: string[]) {
-    const feedIdsScVal = xdr.ScVal.scvVec(
-      feedIds.map((id) => xdr.ScVal.scvString(id))
+    const feedIdsScVal = XdrUtils.mapArrayToScVec(
+      feedIds,
+      XdrUtils.stringToScVal
     );
     const operation = this.contract.call("read_price_data", feedIdsScVal);
 
@@ -144,19 +131,19 @@ export class StellarContractAdapter implements IMultiFeedPricesContractAdapter {
       this.keypair.publicKey()
     );
 
-    const vec = sim.result!.retval.vec()!;
-
-    return vec.map((data) => lastRoundDetailsFromXdrMap(data.map()!));
+    return XdrUtils.parseReadPriceDataSimulation(sim);
   }
 
   async prepareCallArgs(paramsProvider: ContractParamsProvider) {
-    const feedIdsScVal = xdr.ScVal.scvVec(
-      paramsProvider.getDataFeedIds().map((id) => xdr.ScVal.scvString(id))
+    const feedIdsScVal = XdrUtils.mapArrayToScVec(
+      paramsProvider.getDataFeedIds(),
+      XdrUtils.stringToScVal
     );
 
-    const payloadScVal = xdr.ScVal.scvBytes(
-      Buffer.from(await paramsProvider.getPayloadData())
+    const payloadScVal = XdrUtils.numbersToScvBytes(
+      await paramsProvider.getPayloadData()
     );
+
     return [feedIdsScVal, payloadScVal];
   }
 }
