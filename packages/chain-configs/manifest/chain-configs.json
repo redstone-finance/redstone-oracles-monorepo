@@ -605,8 +605,7 @@
       "publicRpcUrls": [
         "https://rpc.scroll.io",
         "https://scroll.drpc.org",
-        "https://scroll-mainnet.public.blastapi.io",
-        "https://scroll-mainnet.chainstacklabs.com"
+        "https://scroll-mainnet.public.blastapi.io"
       ],
       "avgBlockTimeMs": 3000,
       "multicall3": {
@@ -800,8 +799,7 @@
       "currencySymbol": "S",
       "publicRpcUrls": [
         "https://rpc.soniclabs.com",
-        "https://sonic-rpc.publicnode.com",
-        "https://sonic.drpc.org"
+        "https://sonic-rpc.publicnode.com"
       ],
       "avgBlockTimeMs": 700,
       "multicall3": {
@@ -820,7 +818,6 @@
       "currencySymbol": "RBTC",
       "publicRpcUrls": [
         "https://rootstock-mainnet.public.blastapi.io",
-        "https://rootstock.drpc.org",
         "https://public-node.rsk.co",
         "https://mycrypto.rsk.co"
       ],
@@ -1028,7 +1025,6 @@
       "currencySymbol": "SUI",
       "publicRpcUrls": [
         "https://sui-testnet.public.blastapi.io",
-        "https://api.blockeden.xyz/sui/testnet/jBQLBdEWG4xk6fmaWshS",
         "https://sui-testnet.nodeinfra.com",
         "https://sui-testnet-rpc.publicnode.com"
       ],
@@ -1049,10 +1045,8 @@
         "https://rpc.ankr.com/sui",
         "https://sui-mainnet.public.blastapi.io",
         "https://1rpc.io/sui",
-        "https://api.blockeden.xyz/sui/jBQLBdEWG4xk6fmaWshS",
         "https://sui.blockpi.network/v1/rpc/public",
         "https://sui-mainnet-endpoint.blockvision.org/",
-        "https://go.getblock.io/5d7b382a4a5f4cb19a3fa630a8fd4439",
         "https://endpoints.omniatech.io/v1/sui/mainnet/public"
       ],
       "avgBlockTimeMs": 1000,
