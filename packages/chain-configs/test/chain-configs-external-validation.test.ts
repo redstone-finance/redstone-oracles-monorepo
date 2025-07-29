@@ -9,6 +9,8 @@ const RETRY_CONFIG: Omit<RedstoneCommon.RetryConfig, "fn"> = {
   waitBetweenMs: 1000,
 };
 
+const CHAINS_TO_SKIP_EXTERNAL_CONFIG: string[] = ["Arbitrum Sepolia"];
+
 const ChainConfigs = getLocalChainConfigs();
 
 if (process.env.RUN_NONDETERMINISTIC_TESTS) {
@@ -22,7 +24,11 @@ if (process.env.RUN_NONDETERMINISTIC_TESTS) {
       }
 
       it(`Chain config for chain ${chainConfig.name} (${chainConfig.networkId}) should have a valid multicall3 address`, async function () {
-        skipIfDisabledOrNotSupported(this, chainConfig);
+        skipIfDisabledOrNotSupported(
+          this,
+          chainConfig,
+          CHAINS_TO_SKIP_EXTERNAL_CONFIG
+        );
         try {
           await verifyMulticallAddress(chainConfig);
         } catch (e) {
