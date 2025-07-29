@@ -29,7 +29,7 @@ export const validateNetworkRpcUrls = (rpcUrlsPerChain: RpcUrlsPerChain) => {
           getLocalChainConfigs(),
           networkId
         );
-        skipIfDisabledOrNotSupported(this, chainConfig);
+        skipIfDisabledOrNotSupported(this, chainConfig, CHAINS_TO_SKIP_CHECK);
       });
 
       const { chainId } = deconstructNetworkId(networkId);
@@ -87,7 +87,7 @@ export const validateBlockNumberAgreementBetweenRpcs = (
           getLocalChainConfigs(),
           networkId
         );
-        skipIfDisabledOrNotSupported(this, chainConfig);
+        skipIfDisabledOrNotSupported(this, chainConfig, CHAINS_TO_SKIP_CHECK);
       });
 
       let blockNumbers: { rpcUrl: string; blockNumber: number | null }[] = [];
@@ -155,23 +155,16 @@ const getRpcHost = (rpcUrl: string): string => {
 
 export function skipIfDisabledOrNotSupported(
   subject: { skip: () => void },
-  chainConfig: ChainConfig
+  chainConfig: ChainConfig,
+  chainsToSkip: string[] = []
 ) {
   if (
     chainConfig.disabled ||
     isNonEvmNetworkId(chainConfig.networkId) ||
-    CHAINS_TO_SKIP_MULTICALL_ADDRESS_CHECK.includes(chainConfig.name)
+    chainsToSkip.includes(chainConfig.name)
   ) {
     subject.skip();
   }
 }
 
-const CHAINS_TO_SKIP_MULTICALL_ADDRESS_CHECK = [
-  "TAC Turin",
-  "Corn Maizenet", // first few create transactions failed leading to different address
-  "Polygon Mainnet",
-  "Westend Asset Hub",
-  "zkSync",
-  "zkLink",
-  "Arbitrum Sepolia",
-];
+const CHAINS_TO_SKIP_CHECK: string[] = [];
