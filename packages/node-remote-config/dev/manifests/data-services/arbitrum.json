@@ -601,7 +601,8 @@
         "balancer-arbitrumone-weth",
         "balancer-ethereum-weth",
         "camelot-v3-arbitrumone-weth",
-        "curve-ethereum-sfrxeth"
+        "curve-ethereum-sfrxeth",
+        "uniswap-v3-ethereum-wsteth-500"
       ],
       "denomination": "USD",
       "rateFeed": false
