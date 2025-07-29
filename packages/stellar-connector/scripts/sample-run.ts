@@ -3,8 +3,10 @@ import {
   getSignersForDataServiceId,
   sampleRun,
 } from "@redstone-finance/sdk";
-import { rpc } from "@stellar/stellar-sdk";
-import { StellarContractConnector, StellarPriceFeed } from "../src";
+import {
+  StellarPriceAdapterContractConnector,
+  StellarPriceFeedContractConnector,
+} from "../src";
 import { FEEDS } from "./consts";
 import {
   loadAdapterId,
@@ -13,34 +15,17 @@ import {
   makeServer,
 } from "./utils";
 
-async function readPriceFeed(server: rpc.Server, feed: string, sender: string) {
-  const priceFeedId = loadPriceFeedId(feed);
-
-  const priceFeed = new StellarPriceFeed(server, priceFeedId, sender);
-
-  const decimals = await priceFeed.decimals();
-  const priceData = await priceFeed.readPriceData();
-  const timestamp = await priceFeed.readTimestamp();
-  const price = await priceFeed.readPrice();
-  const priceAndTimestamp = await priceFeed.readPriceAndTimestamp();
-
-  console.log(`===Reading price feed for ${feed}===`);
-  console.log({
-    price,
-    decimals,
-    priceAndTimestamp,
-    timestamp,
-    priceData,
-  });
-}
-
 async function main() {
   const server = makeServer();
   const keypair = makeKeypair();
 
   const adapterId = loadAdapterId();
 
-  const connector = new StellarContractConnector(server, keypair, adapterId);
+  const connector = new StellarPriceAdapterContractConnector(
+    server,
+    keypair,
+    adapterId
+  );
 
   const paramsProvider = new ContractParamsProvider({
     dataPackagesIds: FEEDS,
@@ -49,11 +34,13 @@ async function main() {
     authorizedSigners: getSignersForDataServiceId("redstone-primary-prod"),
   });
 
-  await sampleRun(paramsProvider, connector);
+  const ethPriceFeedConnector = new StellarPriceFeedContractConnector(
+    server,
+    loadPriceFeedId("ETH"),
+    keypair.publicKey()
+  );
 
-  for (const feed of FEEDS) {
-    await readPriceFeed(server, feed, keypair.publicKey());
-  }
+  await sampleRun(paramsProvider, connector, ethPriceFeedConnector);
 }
 
 void main().catch((err) => console.log(err));
