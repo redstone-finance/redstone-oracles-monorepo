@@ -1,31 +1,19 @@
-import {
-  IContractConnector,
-  IPricesContractAdapter,
-} from "@redstone-finance/sdk";
+import { IContractConnector } from "@redstone-finance/sdk";
 import { loggerFactory } from "@redstone-finance/utils";
-import { Keypair, rpc } from "@stellar/stellar-sdk";
-import { StellarContractAdapter } from "./StellarContractAdapter";
+import { rpc } from "@stellar/stellar-sdk";
 import { StellarRpcClient } from "./StellarRpcClient";
 
-export class StellarContractConnector
-  implements IContractConnector<IPricesContractAdapter>
+export abstract class StellarContractConnector<Adapter>
+  implements IContractConnector<Adapter>
 {
   private readonly logger = loggerFactory("stellar-price-connector");
-  private readonly adapter: StellarContractAdapter;
   private readonly rpcClient: StellarRpcClient;
 
-  constructor(
-    private readonly rpc: rpc.Server,
-    keypair: Keypair,
-    contractAddress: string
-  ) {
+  constructor(private readonly rpc: rpc.Server) {
     this.rpcClient = new StellarRpcClient(rpc);
-    this.adapter = new StellarContractAdapter(rpc, keypair, contractAddress);
   }
 
-  async getAdapter() {
-    return await Promise.resolve(this.adapter);
-  }
+  abstract getAdapter(): Promise<Adapter>;
 
   async getBlockNumber() {
     return (await this.rpc.getLatestLedger()).sequence;
