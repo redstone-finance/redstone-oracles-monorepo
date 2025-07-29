@@ -1,8 +1,10 @@
 import { RedstoneHealthcheck } from "@redstone-finance/healthcheck";
+import { sendHealthcheckMetric } from "@redstone-finance/internal-utils";
 import {
   loggerFactory,
   RedstoneCommon,
   RedstoneLogger,
+  sendHealthcheckPing,
 } from "@redstone-finance/utils";
 import { config, ConsciouslyInvoked } from "./config/config";
 import { RelayerConfig } from "./config/RelayerConfig";
@@ -11,7 +13,7 @@ import { timelyOverrideSinceLastUpdate } from "./config/timely-override-since-la
 import { AsyncTaskRunner } from "./runner/AsyncTaskRunner";
 import { MqttRunner } from "./runner/MqttRunner";
 import { IterationOptions } from "./runner/run-iteration";
-import { SendHealthcheckPingCollector } from "./SendHealthcheckPingCollector";
+import { SendHealthcheckCollector } from "./SendHealthcheckCollector";
 
 export const runRelayer = async () => {
   const relayerConfig = await config(ConsciouslyInvoked);
@@ -28,14 +30,24 @@ export const runRelayer = async () => {
 
   const configs = splitRelayerConfig(relayerConfig);
   if (configs[0] === relayerConfig) {
-    run(relayerConfig, logger);
+    run(relayerConfig, logger, {
+      sendHealthcheckPingCallback: sendHealthcheckPing,
+      sendHealthcheckMetricCallback: sendHealthcheckMetric,
+    });
 
     return;
   }
 
-  const sendHealtcheckPingCollector = new SendHealthcheckPingCollector(
+  const sendHealthcheckPingCollector = new SendHealthcheckCollector(
     configs.length,
-    relayerConfig.healthcheckPingUrl
+    relayerConfig.healthcheckPingUrl,
+    sendHealthcheckPing
+  );
+
+  const sendHealthcheckMetricCollector = new SendHealthcheckCollector(
+    configs.length,
+    relayerConfig.healthcheckMetricName,
+    sendHealthcheckMetric
   );
 
   logger.log(
@@ -45,7 +57,9 @@ export const runRelayer = async () => {
   configs.forEach((config, index) =>
     run(config, logger, {
       sendHealthcheckPingCallback:
-        sendHealtcheckPingCollector.sendHealthcheckPing(index),
+        sendHealthcheckPingCollector.sendHealthcheck(index),
+      sendHealthcheckMetricCallback:
+        sendHealthcheckMetricCollector.sendHealthcheck(index),
     })
   );
 };

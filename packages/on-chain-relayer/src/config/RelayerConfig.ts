@@ -28,6 +28,7 @@ export type OnChainRelayerEnv = {
   privateKey: string;
   gasLimit?: number;
   healthcheckPingUrl?: string;
+  healthcheckMetricName?: string;
   expectedTxDeliveryTimeInMS: number;
   twoDimensionalFees: boolean;
   fallbackOffsetInMilliseconds: number;
