@@ -1,4 +1,6 @@
-import { ISafeNumber, SafeZero, calculateSum, getMedian } from ".";
+import { ISafeNumber } from "./ISafeNumber";
+import { SafeZero } from "./ISafeNumberFactory";
+import { calculateSum, getMedian } from "./ISafeNumberMath";
 
 export type WeightedValue = {
   value: ISafeNumber;
