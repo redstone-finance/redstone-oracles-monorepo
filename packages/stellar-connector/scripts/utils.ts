@@ -23,7 +23,7 @@ export function readNetwork() {
 }
 
 export function makeServer() {
-  const server = new rpc.Server(readUrl());
+  const server = new rpc.Server(readUrl(), { allowHttp: true });
 
   return server;
 }
