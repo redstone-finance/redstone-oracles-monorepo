@@ -23,7 +23,7 @@ export interface MetadataPerSource {
   tradeInfo?: TradeData;
 
   /** Any values used to calculate final price */
-  intermediateValues?: Record<string, unknown>;
+  intermediateValues?: Record<string, string>;
 }
 
 export type SlippageData =
