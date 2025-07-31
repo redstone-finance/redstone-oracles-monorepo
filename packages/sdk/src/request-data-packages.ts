@@ -48,6 +48,11 @@ type DataPackagesRequestParamsInternal = {
    */
   authorizedSigners: string[];
   /**
+   * when returning multiple feeds signature verification is a heavy operation
+   * with this flag signature verification is skipped and left to the caller
+   */
+  skipSignatureVerification?: boolean;
+  /**
    * fetch from specific gateways, if not provided fetch from all publicly available gateways
    */
   urls?: string[];
@@ -149,6 +154,7 @@ export const SignedDataPackageSchema = z.object({
     .min(1),
   timestampMilliseconds: z.number(),
   signature: z.string(),
+  signerAddress: z.string().optional(),
   dataPackageId: z.string(),
 });
 
@@ -316,7 +322,7 @@ const prepareDataPackagePromises = (
 };
 
 function validateDataPackagesResponse(
-  dataFeedPackages: SignedDataPackagePlainObj[] | undefined,
+  dataFeedPackages: GwResponse[string] | undefined,
   reqParams: DataPackagesRequestParams,
   dataFeedId: string
 ) {
@@ -331,7 +337,9 @@ function validateDataPackagesResponse(
 
   // filter out packages with not expected signers
   dataFeedPackages = dataFeedPackages.filter((dp) => {
-    const signer = maybeGetSigner(dp);
+    const signer = reqParams.skipSignatureVerification
+      ? dp.signerAddress
+      : maybeGetSigner(dp);
     return signer ? reqParams.authorizedSigners.includes(signer) : false;
   });
 

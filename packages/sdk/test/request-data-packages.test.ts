@@ -1,4 +1,5 @@
 import { DataPackage } from "@redstone-finance/protocol";
+import { RedstoneCommon } from "@redstone-finance/utils";
 import axios from "axios";
 import { ethers } from "ethers";
 import {
@@ -114,6 +115,21 @@ describe("request-data-packages", () => {
     ).rejects.toThrow(
       "Too few data packages with unique signers for the data feed: BTC. Expected: 5. Received: 4"
     );
+  });
+
+  test("Should honor skipSignatureVerification param", async () => {
+    const dataPackages = (
+      await requestDataPackages({
+        ...getReqParams(),
+        dataPackagesIds: ["ETH"],
+        skipSignatureVerification: true,
+        authorizedSigners: ["0x1"],
+        uniqueSignersCount: 1,
+        returnAllPackages: false,
+      })
+    )["ETH"];
+    expect(RedstoneCommon.isDefined(dataPackages));
+    expect(dataPackages!.length).toBe(1);
   });
 
   test("Should get two data packages closest to median", async () => {
