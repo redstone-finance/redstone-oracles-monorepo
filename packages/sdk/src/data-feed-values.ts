@@ -33,6 +33,7 @@ export const getDataFeedValues = async (
     ),
     urls: gatewayUrls,
     returnAllPackages: true,
+    skipSignatureVerification: true,
   });
 
   const result: GetDataFeedValuesOutput = {};
