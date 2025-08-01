@@ -26,6 +26,7 @@
     "@redstone-finance/radix-connector": "workspace:*",
     "@redstone-finance/rpc-providers": "workspace:*",
     "@redstone-finance/solana-connector": "workspace:*",
+    "@redstone-finance/stellar-connector": "workspace:*",
     "@redstone-finance/sui-connector": "workspace:*",
     "@redstone-finance/utils": "workspace:*",
     "ethers": "^5.7.2",
