@@ -3,6 +3,7 @@ import { getFuelContractConnector } from "./get-fuel-contract-connector";
 import { getMoveContractConnector } from "./get-move-contract-connector";
 import { getRadixContractConnector } from "./get-radix-contract-connector";
 import { getSolanaContractConnector } from "./get-solana-contract-connector";
+import { getStellarContractConnector } from "./get-stellar-contract-connector";
 import { getSuiContractConnector } from "./get-sui-contract-connector";
 import { PartialRelayerConfig } from "./partial-relayer-config";
 
@@ -24,7 +25,7 @@ export async function getWritableNonEvmContractConnector(
     case "solana":
       return getSolanaContractConnector(relayerConfig);
     case "stellar":
-      throw new Error(`Not supported for ${chainType}`);
+      return getStellarContractConnector(relayerConfig);
     case "evm":
       throw new Error(
         `Evm relayer config with networkId: ${relayerConfig.networkId} got passed to non-evm blockchain service builder.`

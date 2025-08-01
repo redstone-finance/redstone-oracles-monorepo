@@ -1,8 +1,7 @@
 import {
-  AptosClientBuilder,
   configFromOptionals,
   makeAptosAccount,
-  MovementClientBuilder,
+  MoveClientBuilder,
   MovePricesContractConnector,
 } from "@redstone-finance/move-connector";
 
@@ -25,11 +24,7 @@ export const getMoveContractConnector = (
     throw new Error("adapterContractPackageId is required");
   }
 
-  const aptosClient = (
-    adapterType === "aptos"
-      ? new AptosClientBuilder()
-      : new MovementClientBuilder()
-  )
+  const aptosClient = MoveClientBuilder.getInstance(adapterType)
     .withNetworkId(networkId)
     .withRpcUrls(rpcUrls)
     .withQuarantineEnabled()
