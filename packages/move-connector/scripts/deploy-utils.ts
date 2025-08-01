@@ -227,6 +227,8 @@ export function prepareDepAddresses(
         getPriceAdapterObjectAddress(depsAddresses[PRICE_ADAPTER]!);
       return depsAddresses;
     }
+    default:
+      throw new Error(`Unsupported deploy: ${contractName}`);
   }
 }
 
