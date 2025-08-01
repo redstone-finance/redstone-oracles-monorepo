@@ -1,6 +1,9 @@
+import { RedstoneCommon } from "@redstone-finance/utils";
+import "dotenv/config";
 import { z } from "zod";
 
-export const PRICE_FEED_SUFFIX = "";
+export const PRICE_FEED_SUFFIX =
+  RedstoneCommon.getFromEnv("PRICE_FEED_SUFFIX", z.string().optional()) ?? "";
 
 export const PRICE_ADAPTER = `price_adapter`;
 export const REDSTONE_SDK = `redstone_sdk`;

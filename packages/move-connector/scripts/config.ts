@@ -3,7 +3,7 @@ import { z } from "zod";
 export const MoveNetworkSchema = z.enum([
   "movement-mainnet",
   "movement-testnet",
-  "movememt-devnet",
+  "movement-devnet",
   "aptos-mainnet",
   "aptos-testnet",
   "aptos-devnet",
