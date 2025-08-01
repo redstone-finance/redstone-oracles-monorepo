@@ -853,22 +853,6 @@
       "denomination": "USD",
       "rateFeed": false
     },
-    "USDM": {
-      "source": ["curve-ethereum-3crv", "curve-ethereum-sdai"],
-      "deviationCheck": {
-        "deviationWithRecentValues": {
-          "maxPercent": 5,
-          "maxDelayMilliseconds": 120000
-        }
-      },
-      "denomination": "USD",
-      "rateFeed": false
-    },
-    "wUSDM": {
-      "source": ["ethereum-evm-fetcher-mountain-protocol"],
-      "denomination": "USD",
-      "rateFeed": true
-    },
     "MANTA": {
       "source": [
         "binance-usdt",
