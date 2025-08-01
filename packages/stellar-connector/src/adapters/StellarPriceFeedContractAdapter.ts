@@ -1,23 +1,16 @@
 import { IPriceFeedContractAdapter } from "@redstone-finance/sdk";
-import { loggerFactory } from "@redstone-finance/utils";
-import { Contract, Keypair, rpc } from "@stellar/stellar-sdk";
-import { StellarRpcClient } from "./StellarRpcClient";
-import * as XdrUtils from "./XdrUtils";
+import { Contract, Keypair } from "@stellar/stellar-sdk";
+import { StellarRpcClient } from "../stellar/StellarRpcClient";
+import * as XdrUtils from "../XdrUtils";
 
-export class StellarPriceFeed implements IPriceFeedContractAdapter {
-  private readonly logger = loggerFactory("stellar-price-feed");
-
-  private readonly contract: Contract;
-  private readonly rpcClient: StellarRpcClient;
-
+export class StellarPriceFeedContractAdapter
+  implements IPriceFeedContractAdapter
+{
   constructor(
-    rpc: rpc.Server,
-    contractAddress: string,
+    private readonly rpcClient: StellarRpcClient,
+    private readonly contract: Contract,
     private readonly sender: string
-  ) {
-    this.contract = new Contract(contractAddress);
-    this.rpcClient = new StellarRpcClient(rpc);
-  }
+  ) {}
 
   async getPriceAndTimestamp() {
     return await this.readPriceAndTimestamp();

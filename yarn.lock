@@ -9301,6 +9301,7 @@ __metadata:
     "@redstone-finance/radix-connector": "workspace:*"
     "@redstone-finance/rpc-providers": "workspace:*"
     "@redstone-finance/solana-connector": "workspace:*"
+    "@redstone-finance/stellar-connector": "workspace:*"
     "@redstone-finance/sui-connector": "workspace:*"
     "@redstone-finance/utils": "workspace:*"
     ethers: "npm:^5.7.2"
@@ -10941,7 +10942,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@redstone-finance/stellar-connector@workspace:packages/stellar-connector":
+"@redstone-finance/stellar-connector@workspace:*, @redstone-finance/stellar-connector@workspace:packages/stellar-connector":
   version: 0.0.0-use.local
   resolution: "@redstone-finance/stellar-connector@workspace:packages/stellar-connector"
   dependencies:

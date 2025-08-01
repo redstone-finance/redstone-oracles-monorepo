@@ -8,7 +8,6 @@ export * from "./blockchain-service/RadixBlockchainService";
 export * from "./blockchain-service/SolanaBlockchainService";
 export * from "./blockchain-service/SuiBlockchainService";
 export * from "./get-zrodelko-private-key";
-export * from "./non-evm/get-base-non-evm-contract-connector";
 export * from "./non-evm/relayer-monitoring-connector/get-relayer-monitoring-non-evm-contract-connector";
 export * from "./non-evm/writable-connector/get-fuel-contract-connector";
 export * from "./non-evm/writable-connector/get-move-contract-connector";
