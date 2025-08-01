@@ -658,7 +658,8 @@
         "balancer-ethereum-weeth",
         "balancer-ethereum-weth",
         "thruster-v3-blast-weth-3000",
-        "thruster-v3-blast-weth-500"
+        "thruster-v3-blast-weth-500",
+        "uniswap-v4-arbitrumone-eth-500"
       ],
       "denomination": "USD",
       "rateFeed": false
