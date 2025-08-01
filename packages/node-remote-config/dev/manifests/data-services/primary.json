@@ -1101,7 +1101,8 @@
         "balancer-ethereum-weeth",
         "balancer-ethereum-weth",
         "thruster-v3-blast-weth-3000",
-        "thruster-v3-blast-weth-500"
+        "thruster-v3-blast-weth-500",
+        "uniswap-v4-arbitrumone-eth-500"
       ],
       "denomination": "USD",
       "rateFeed": false
@@ -2463,7 +2464,8 @@
         "curve-ethereum-frax",
         "curve-fraxtal-usdt",
         "curve-fraxtal-susde",
-        "fraxswap-fraxtal-wfrax"
+        "fraxswap-fraxtal-wfrax",
+        "curve-ethereum-crvusd"
       ],
       "denomination": "USD",
       "rateFeed": false
