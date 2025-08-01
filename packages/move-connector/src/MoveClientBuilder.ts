@@ -1,11 +1,24 @@
 import { Aptos, AptosConfig } from "@aptos-labs/ts-sdk";
-import { ChainTypeEnum, MultiExecutor } from "@redstone-finance/utils";
+import {
+  ChainType,
+  ChainTypeEnum,
+  MultiExecutor,
+  RedstoneCommon,
+} from "@redstone-finance/utils";
 import { chainIdToNetwork, chainIdtoUrl } from "./network-ids";
 
-export const SINGLE_EXECUTION_TIMEOUT_MS = 12_000;
-export const ALL_EXECUTIONS_TIMEOUT_MS = 30_000;
+export abstract class MoveClientBuilder extends MultiExecutor.ClientBuilder<Aptos> {
+  static getInstance(chainType: Extract<ChainType, "movement" | "aptos">) {
+    switch (chainType) {
+      case ChainTypeEnum.Enum.aptos:
+        return new AptosClientBuilder();
+      case ChainTypeEnum.Enum.movement:
+        return new MovementClientBuilder();
+      default:
+        return RedstoneCommon.throwUnsupportedParamError(chainType);
+    }
+  }
 
-abstract class BaseClientBuilder extends MultiExecutor.ClientBuilder<Aptos> {
   build() {
     if (!this.chainId) {
       throw new Error("Network not set");
@@ -34,17 +47,17 @@ abstract class BaseClientBuilder extends MultiExecutor.ClientBuilder<Aptos> {
         getAccountAPTAmount: MultiExecutor.ExecutionMode.AGREEMENT,
       },
       {
-        singleExecutionTimeoutMs: SINGLE_EXECUTION_TIMEOUT_MS,
-        allExecutionsTimeoutMs: ALL_EXECUTIONS_TIMEOUT_MS,
+        singleExecutionTimeoutMs: MultiExecutor.SINGLE_EXECUTION_TIMEOUT_MS,
+        allExecutionsTimeoutMs: MultiExecutor.ALL_EXECUTIONS_TIMEOUT_MS,
       }
     );
   }
 }
 
-export class AptosClientBuilder extends BaseClientBuilder {
+class AptosClientBuilder extends MoveClientBuilder {
   protected override chainType = ChainTypeEnum.Enum.aptos;
 }
 
-export class MovementClientBuilder extends BaseClientBuilder {
+class MovementClientBuilder extends MoveClientBuilder {
   protected override chainType = ChainTypeEnum.Enum.movement;
 }

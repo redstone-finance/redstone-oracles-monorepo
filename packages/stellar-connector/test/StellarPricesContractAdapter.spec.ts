@@ -2,13 +2,12 @@ import {
   ContractParamsProvider,
   getSignersForDataServiceId,
 } from "@redstone-finance/sdk";
-import { RedstoneCommon } from "@redstone-finance/utils";
-import { Keypair, rpc } from "@stellar/stellar-sdk";
-import { z } from "zod";
-import { wasmFilePath } from "../scripts/utils";
+import { Contract, Keypair } from "@stellar/stellar-sdk";
+import { makeServer, wasmFilePath } from "../scripts/utils";
 import {
-  ContractDeployer,
-  StellarContractAdapter,
+  makeKeypair,
+  StellarContractDeployer,
+  StellarPricesContractAdapter,
   StellarRpcClient,
 } from "../src";
 
@@ -16,8 +15,8 @@ const DATA_SERVICE_ID = "redstone-primary-prod";
 const DEPLOY_CONTRACT_TIMEOUT_MS = 20 * 1_000;
 const WRITE_TEST_TIMEOUT_MS = 20 * 1_000;
 
-describe("StellarContractAdapter", () => {
-  let adapter: StellarContractAdapter;
+describe("StellarPricesContractAdapter", () => {
+  let adapter: StellarPricesContractAdapter;
   let client: StellarRpcClient;
   let keypair: Keypair;
 
@@ -25,19 +24,20 @@ describe("StellarContractAdapter", () => {
   let paramsTwoFeeds: ContractParamsProvider;
 
   beforeAll(async () => {
-    const rpcUrl = RedstoneCommon.getFromEnv("RPC_URL", z.string().url());
-    const server = new rpc.Server(rpcUrl, { allowHttp: true });
+    const server = makeServer();
+    keypair = makeKeypair();
+    client = new StellarRpcClient(server);
 
-    const privateKey = RedstoneCommon.getFromEnv("PRIVATE_KEY", z.string());
-    keypair = Keypair.fromSecret(privateKey);
-
-    const deployer = new ContractDeployer(server, keypair);
+    const deployer = new StellarContractDeployer(client, keypair);
     const { contractId: adapterId } = await deployer.deploy(
       wasmFilePath("redstone_adapter")
     );
 
-    client = new StellarRpcClient(server);
-    adapter = new StellarContractAdapter(server, keypair, adapterId);
+    adapter = new StellarPricesContractAdapter(
+      client,
+      new Contract(adapterId),
+      keypair
+    );
 
     await adapter.init(keypair.publicKey());
   }, DEPLOY_CONTRACT_TIMEOUT_MS);
