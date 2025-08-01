@@ -1,5 +1,6 @@
 import { getSSMParameterValues } from "@redstone-finance/internal-utils";
 import { NetworkId, RedstoneCommon } from "@redstone-finance/utils";
+import { z } from "zod";
 
 export type Env = "prod" | "dev" | "staging";
 
@@ -16,8 +17,12 @@ export async function fetchRpcUrlsFromSsm(
   opts: FetchRpcUrlsFromSsmOpts
 ): Promise<FetchRpcUrlsFromSsmResult> {
   const ssmPathToNetworkId: Record<string, NetworkId> = {};
+  const rpcEnv = RedstoneCommon.getFromEnv(
+    "RPC_ENV_OVERRIDE",
+    z.string().default(opts.env)
+  );
   for (const networkId of opts.networkIds) {
-    const ssmPath = `/${opts.env}/rpc/${networkId}/${opts.type === "fallback" ? "fallback/" : ""}urls`;
+    const ssmPath = `/${rpcEnv}/rpc/${networkId}/${opts.type === "fallback" ? "fallback/" : ""}urls`;
     ssmPathToNetworkId[ssmPath] = networkId;
   }
 
