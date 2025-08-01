@@ -35,9 +35,6 @@
     "deUSD": {
       "priceFeedAddress": "0xE5E307A3aEDf4e8eF60E1bfCc9ccD477dFad93ce"
     },
-    "wUSDM": {
-      "priceFeedAddress": "0x53bB139e962ee0AC6477F40D0352e8dAF0480b70"
-    },
     "SOL": {
       "priceFeedAddress": "0xeEE1A6072626D83f005ECD5b86eAd5e638a2e640"
     },
