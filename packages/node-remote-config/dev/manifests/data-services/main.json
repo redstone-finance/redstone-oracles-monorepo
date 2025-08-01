@@ -1206,16 +1206,6 @@
       "denomination": "USD",
       "rateFeed": false
     },
-    "USDM": {
-      "source": ["curve-ethereum-3crv", "curve-ethereum-sdai"],
-      "denomination": "USD",
-      "rateFeed": false
-    },
-    "wUSDM": {
-      "source": ["ethereum-evm-fetcher-mountain-protocol"],
-      "denomination": "USD",
-      "rateFeed": true
-    },
     "MANTA": {
       "source": [
         "binance-usdt",
