@@ -1,0 +1,24 @@
+[package]
+name = "price_adapter"
+version = "1.0.0"
+authors = ["redstone"]
+license="GPL"
+upgrade_policy = "compatible"
+
+[addresses]
+redstone_price_adapter = "_"
+redstone_sdk = "_"
+
+[dev-addresses]
+redstone_price_adapter = "0xede"
+redstone_sdk = "0xeded"
+
+[dependencies]
+redstone_sdk = { local = "../redstone_sdk" }
+
+[dependencies.AptosFramework]
+git = "https://github.com/movementlabsxyz/aptos-core.git"
+rev = "movement"
+subdir = "aptos-move/framework/aptos-framework"
+
+[dev-dependencies]
