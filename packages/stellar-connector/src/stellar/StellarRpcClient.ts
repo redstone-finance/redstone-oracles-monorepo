@@ -1,4 +1,4 @@
-import { loggerFactory, RedstoneCommon } from "@redstone-finance/utils";
+import { RedstoneCommon } from "@redstone-finance/utils";
 import {
   Account,
   BASE_FEE,
@@ -19,12 +19,10 @@ const RETRY_CONFIG: Omit<RedstoneCommon.RetryConfig, "fn"> = {
 };
 
 export class StellarRpcClient {
-  private readonly logger = loggerFactory("stellar-price-connector");
-
-  constructor(private readonly rpc: rpc.Server) {}
+  constructor(private readonly server: rpc.Server) {}
 
   async getAccount(publicKey: string): Promise<Account> {
-    const accountResponse = await this.rpc.getAccount(publicKey);
+    const accountResponse = await this.server.getAccount(publicKey);
 
     return new Account(
       accountResponse.accountId(),
@@ -32,15 +30,19 @@ export class StellarRpcClient {
     );
   }
 
+  async getBlockNumber() {
+    return (await this.server.getLatestLedger()).sequence;
+  }
+
   async waitForTx(hash: string) {
     return await RedstoneCommon.retry({
       fn: async () => {
-        const response = await this.rpc.getTransaction(hash);
+        const response = await this.server.getTransaction(hash);
         if (response.status === rpc.Api.GetTransactionStatus.SUCCESS) {
           return response;
         }
         throw new Error(
-          `Transaction did not succedd: ${hash}, status: ${response.status}`
+          `Transaction did not succeed: ${hash}, status: ${response.status}`
         );
       },
       ...RETRY_CONFIG,
@@ -48,13 +50,14 @@ export class StellarRpcClient {
   }
 
   async simulateTransaction(transaction: Transaction) {
-    const sim = await this.rpc.simulateTransaction(transaction);
+    const sim = await this.server.simulateTransaction(transaction);
 
     if (!rpc.Api.isSimulationSuccess(sim)) {
       throw new Error(
         `Simulation failed: ${RedstoneCommon.stringifyError(sim.error)}`
       );
     }
+
     return sim;
   }
 
@@ -71,7 +74,7 @@ export class StellarRpcClient {
     const assembled = rpc.assembleTransaction(transaction, sim).build();
     assembled.sign(keypair);
 
-    return await this.rpc.sendTransaction(assembled);
+    return await this.server.sendTransaction(assembled);
   }
 
   async transactionFromOperation(
@@ -80,7 +83,7 @@ export class StellarRpcClient {
   ) {
     return new TransactionBuilder(await this.getAccount(sender), {
       fee: BASE_FEE,
-      networkPassphrase: (await this.rpc.getNetwork()).passphrase,
+      networkPassphrase: (await this.server.getNetwork()).passphrase,
     })
       .addOperation(operation)
       .setTimeout(30)

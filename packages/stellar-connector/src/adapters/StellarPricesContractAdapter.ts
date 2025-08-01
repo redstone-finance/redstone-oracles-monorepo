@@ -3,28 +3,29 @@ import {
   ContractParamsProvider,
   IMultiFeedPricesContractAdapter,
 } from "@redstone-finance/sdk";
-import { loggerFactory } from "@redstone-finance/utils";
-import { Contract, Keypair, rpc } from "@stellar/stellar-sdk";
+import { Contract, Keypair } from "@stellar/stellar-sdk";
 import _ from "lodash";
-import { StellarRpcClient } from "./StellarRpcClient";
-import * as XdrUtils from "./XdrUtils";
+import { StellarRpcClient } from "../stellar/StellarRpcClient";
+import * as XdrUtils from "../XdrUtils";
 
-export class StellarContractAdapter implements IMultiFeedPricesContractAdapter {
-  private readonly logger = loggerFactory("stellar-price-adapter");
+// TODO: remove it after switching to getContractData instead of simulating
+const MOCK_TESTNET_ACCOUNT_ID =
+  "GAZBYVTHAPTE423VKHTN3T7L2UHHSVRQQPPVXMUQRWDF576ATL47MJI2";
 
-  private readonly contract: Contract;
-  private readonly rpcClient: StellarRpcClient;
-
+export class StellarPricesContractAdapter
+  implements IMultiFeedPricesContractAdapter
+{
   constructor(
-    rpc: rpc.Server,
-    private readonly keypair: Keypair,
-    contractAddress: string
-  ) {
-    this.contract = new Contract(contractAddress);
-    this.rpcClient = new StellarRpcClient(rpc);
-  }
+    private readonly rpcClient: StellarRpcClient,
+    private readonly contract: Contract,
+    private readonly keypair?: Keypair
+  ) {}
 
   async init(admin: string) {
+    if (!this.keypair) {
+      throw new Error("Keypair is missing");
+    }
+
     const adminAddr = XdrUtils.addressToScVal(admin);
     const operation = this.contract.call("init", adminAddr);
 
@@ -37,6 +38,10 @@ export class StellarContractAdapter implements IMultiFeedPricesContractAdapter {
   }
 
   async changeAdmin(newAdmin: string) {
+    if (!this.keypair) {
+      throw new Error("Keypair is missing");
+    }
+
     const adminAddr = XdrUtils.addressToScVal(newAdmin);
     const operation = this.contract.call("change_admin", adminAddr);
 
@@ -59,7 +64,7 @@ export class StellarContractAdapter implements IMultiFeedPricesContractAdapter {
 
     const sim = await this.rpcClient.simulateOperation(
       operation,
-      this.keypair.publicKey()
+      this.getPublicKey()
     );
 
     return XdrUtils.parsePrimitiveFromSimulation(sim, Number);
@@ -69,8 +74,12 @@ export class StellarContractAdapter implements IMultiFeedPricesContractAdapter {
     return (await this.getContractData([feedId]))[0].lastBlockTimestampMS;
   }
 
-  async getSignerAddress() {
-    return await Promise.resolve(this.keypair.publicKey());
+  getSignerAddress() {
+    return Promise.resolve(this.getPublicKey());
+  }
+
+  private getPublicKey() {
+    return this.keypair?.publicKey() ?? MOCK_TESTNET_ACCOUNT_ID;
   }
 
   async getPricesFromPayload(paramsProvider: ContractParamsProvider) {
@@ -81,7 +90,7 @@ export class StellarContractAdapter implements IMultiFeedPricesContractAdapter {
 
     const sim = await this.rpcClient.simulateOperation(
       operation,
-      this.keypair.publicKey()
+      this.getPublicKey()
     );
 
     return XdrUtils.parseGetPricesSimulation(sim).prices;
@@ -90,6 +99,10 @@ export class StellarContractAdapter implements IMultiFeedPricesContractAdapter {
   async writePricesFromPayloadToContract(
     paramsProvider: ContractParamsProvider
   ) {
+    if (!this.keypair) {
+      throw new Error("Keypair is missing");
+    }
+
     const updater = XdrUtils.addressToScVal(this.keypair.publicKey());
 
     const operation = this.contract.call(
@@ -128,7 +141,7 @@ export class StellarContractAdapter implements IMultiFeedPricesContractAdapter {
 
     const sim = await this.rpcClient.simulateOperation(
       operation,
-      this.keypair.publicKey()
+      this.getPublicKey()
     );
 
     return XdrUtils.parseReadPriceDataSimulation(sim);

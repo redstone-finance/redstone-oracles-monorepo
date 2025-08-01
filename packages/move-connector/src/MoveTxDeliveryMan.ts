@@ -13,10 +13,6 @@ import {
   RedstoneCommon,
 } from "@redstone-finance/utils";
 import _ from "lodash";
-import {
-  ALL_EXECUTIONS_TIMEOUT_MS,
-  SINGLE_EXECUTION_TIMEOUT_MS,
-} from "./AptosClientBuilder";
 import { TRANSACTION_DEFAULT_CONFIG } from "./config";
 import { MoveOptionsContractUtil } from "./MoveOptionsContractUtil";
 import { TransactionConfig } from "./types";
@@ -69,8 +65,8 @@ export class MoveTxDeliveryMan {
       {
         ...MultiExecutor.DEFAULT_CONFIG,
         defaultMode: MultiExecutor.ExecutionMode.FALLBACK,
-        singleExecutionTimeoutMs: SINGLE_EXECUTION_TIMEOUT_MS,
-        allExecutionsTimeoutMs: ALL_EXECUTIONS_TIMEOUT_MS,
+        singleExecutionTimeoutMs: MultiExecutor.SINGLE_EXECUTION_TIMEOUT_MS,
+        allExecutionsTimeoutMs: MultiExecutor.ALL_EXECUTIONS_TIMEOUT_MS,
       }
     );
   }

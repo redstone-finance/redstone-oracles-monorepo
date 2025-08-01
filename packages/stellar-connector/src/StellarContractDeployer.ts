@@ -1,16 +1,12 @@
-import { Address, Keypair, Operation, rpc } from "@stellar/stellar-sdk";
+import { Address, Keypair, Operation } from "@stellar/stellar-sdk";
 import { readFileSync } from "fs";
-import { StellarRpcClient } from "./StellarRpcClient";
+import { StellarRpcClient } from "./stellar/StellarRpcClient";
 
-export class ContractDeployer {
-  private readonly rpcClient: StellarRpcClient;
-
+export class StellarContractDeployer {
   constructor(
-    private readonly rpc: rpc.Server,
+    private readonly rpcClient: StellarRpcClient,
     private readonly keypair: Keypair
-  ) {
-    this.rpcClient = new StellarRpcClient(rpc);
-  }
+  ) {}
 
   async deploy(wasmPath: string) {
     const wasmHash = await this.upload(wasmPath);
@@ -26,11 +22,11 @@ export class ContractDeployer {
     const wasmBuffer = readFileSync(wasmPath);
 
     const uploadOperation = Operation.uploadContractWasm({ wasm: wasmBuffer });
-    const submitionResult = await this.rpcClient.executeOperation(
+    const submissionResult = await this.rpcClient.executeOperation(
       uploadOperation,
       this.keypair
     );
-    const res = await this.rpcClient.waitForTx(submitionResult.hash);
+    const res = await this.rpcClient.waitForTx(submissionResult.hash);
 
     return res.returnValue!.bytes();
   }
@@ -43,11 +39,11 @@ export class ContractDeployer {
       address,
     });
 
-    const submitionResult = await this.rpcClient.executeOperation(
+    const submissionResult = await this.rpcClient.executeOperation(
       createOperation,
       this.keypair
     );
-    const res = await this.rpcClient.waitForTx(submitionResult.hash);
+    const res = await this.rpcClient.waitForTx(submissionResult.hash);
 
     return Address.fromScVal(res.returnValue!);
   }

@@ -1,6 +1,5 @@
 {
   "name": "@redstone-finance/solana-connector",
-  "private": true,
   "version": "0.8.0",
   "description": "A tool to inject RedStone data into Solana compatible smart contracts",
   "main": "dist/src/index.js",
@@ -77,5 +76,8 @@
   },
   "files": [
     "dist/src/**/*"
-  ]
+  ],
+  "publishConfig": {
+    "access": "public"
+  }
 }

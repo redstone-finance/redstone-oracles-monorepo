@@ -1,6 +1,5 @@
 import {
-  AptosClientBuilder,
-  MovementClientBuilder,
+  MoveClientBuilder,
   MovePricesContractConnector,
 } from "@redstone-finance/move-connector";
 import { AnyOnChainRelayerManifest } from "@redstone-finance/on-chain-relayer-common";
@@ -12,6 +11,10 @@ import {
   SolanaConnectionBuilder,
   SolanaContractConnector,
 } from "@redstone-finance/solana-connector";
+import {
+  PriceAdapterStellarContractConnector,
+  StellarClientBuilder,
+} from "@redstone-finance/stellar-connector";
 import {
   makeSuiConfig,
   SuiClientBuilder,
@@ -36,6 +39,7 @@ export function getRelayerMonitoringNonEvmContractConnector(
     case "solana":
       return getSolanaContractConnector(rpcUrls, relayerManifest);
     case "stellar":
+      return getStellarContractConnector(rpcUrls, relayerManifest);
     case "fuel":
       throw new Error(
         `${relayerManifest.adapterContractType} is not supported in monitoring`
@@ -109,11 +113,7 @@ function getMoveContractConnector(
   if (!relayerManifest.adapterContractPackageId) {
     throw new Error("adapterContractPackageId is required");
   }
-  const aptosClient = (
-    adapterType === "aptos"
-      ? new AptosClientBuilder()
-      : new MovementClientBuilder()
-  )
+  const aptosClient = MoveClientBuilder.getInstance(adapterType)
     .withNetworkId(relayerManifest.chain.id)
     .withRpcUrls(rpcUrls)
     .build();
@@ -122,4 +122,19 @@ function getMoveContractConnector(
     packageObjectAddress: relayerManifest.adapterContractPackageId,
     priceAdapterObjectAddress: relayerManifest.adapterContract,
   });
+}
+
+function getStellarContractConnector(
+  rpcUrls: string[],
+  relayerManifest: AnyOnChainRelayerManifest
+) {
+  const client = new StellarClientBuilder()
+    .withNetworkId(relayerManifest.chain.id)
+    .withRpcUrls(rpcUrls)
+    .build();
+
+  return new PriceAdapterStellarContractConnector(
+    client,
+    relayerManifest.adapterContract
+  );
 }

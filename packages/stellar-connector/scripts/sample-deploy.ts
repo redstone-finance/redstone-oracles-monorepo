@@ -1,31 +1,34 @@
-import { Keypair, rpc } from "@stellar/stellar-sdk";
+import { Contract, Keypair } from "@stellar/stellar-sdk";
 import {
-  ContractDeployer,
-  StellarContractAdapter,
-  StellarPriceFeed,
+  StellarClientBuilder,
+  StellarContractDeployer,
+  StellarPriceFeedContractAdapter,
+  StellarPricesContractAdapter,
+  StellarRpcClient,
+  makeKeypair,
 } from "../src";
 import { FEEDS } from "./consts";
 import {
-  makeKeypair,
-  makeServer,
+  readNetwork,
+  readUrl,
   saveAdapterId,
   savePriceFeedId,
   wasmFilePath,
 } from "./utils";
 
 async function deployAdapter(
-  deployer: ContractDeployer,
-  server: rpc.Server,
+  deployer: StellarContractDeployer,
+  client: StellarRpcClient,
   keypair: Keypair
 ) {
   const adapterDeployResult = await deployer.deploy(
     wasmFilePath("redstone_adapter")
   );
 
-  await new StellarContractAdapter(
-    server,
-    keypair,
-    adapterDeployResult.contractId
+  await new StellarPricesContractAdapter(
+    client,
+    new Contract(adapterDeployResult.contractId),
+    keypair
   ).init(keypair.publicKey());
 
   console.log(
@@ -37,8 +40,8 @@ async function deployAdapter(
 }
 
 async function deployPriceFeed(
-  deployer: ContractDeployer,
-  server: rpc.Server,
+  deployer: StellarContractDeployer,
+  rpcClient: StellarRpcClient,
   keypair: Keypair,
   adapterAddress: string,
   feedId: string
@@ -46,9 +49,9 @@ async function deployPriceFeed(
   const priceFeedDeployResult = await deployer.deploy(
     wasmFilePath("price_feed")
   );
-  await new StellarPriceFeed(
-    server,
-    priceFeedDeployResult.contractId,
+  await new StellarPriceFeedContractAdapter(
+    rpcClient,
+    new Contract(priceFeedDeployResult.contractId),
     keypair.publicKey()
   ).init(feedId, adapterAddress, keypair);
 
@@ -59,15 +62,18 @@ async function deployPriceFeed(
 }
 
 async function sampleDeploy() {
-  const server = makeServer();
   const keypair = makeKeypair();
 
-  const deployer = new ContractDeployer(server, keypair);
+  const client = new StellarClientBuilder()
+    .withStellarNetwork(readNetwork())
+    .withRpcUrl(readUrl())
+    .build();
+  const deployer = new StellarContractDeployer(client, keypair);
 
-  const adapterId = await deployAdapter(deployer, server, keypair);
+  const adapterId = await deployAdapter(deployer, client, keypair);
 
   for (const feed of FEEDS) {
-    await deployPriceFeed(deployer, server, keypair, adapterId, feed);
+    await deployPriceFeed(deployer, client, keypair, adapterId, feed);
   }
 }
 

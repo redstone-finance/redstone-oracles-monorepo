@@ -24,6 +24,9 @@
       "path": "../move-connector/tsconfig.build.json"
     },
     {
+      "path": "../stellar-connector/tsconfig.build.json"
+    },
+    {
       "path": "../on-chain-relayer-common/tsconfig.build.json"
     },
     {
