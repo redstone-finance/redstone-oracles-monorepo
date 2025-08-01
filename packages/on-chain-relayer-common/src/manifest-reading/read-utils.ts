@@ -2,7 +2,11 @@ import { RedstoneCommon } from "@redstone-finance/utils";
 import { MANIFEST_DIRS, ManifestType } from "../schemas";
 
 export function getOnChainRelayerBasePath() {
-  return RedstoneCommon.path.join(__dirname, "../../../on-chain-relayer");
+  // Removes /dist (or \dist) from dirname path
+  return RedstoneCommon.path.join(
+    __dirname.replace(/[/\\]dist([/\\]|$)/g, "/"),
+    "../../../on-chain-relayer"
+  );
 }
 
 export const removeFileExtension = (fileName: string): string => {
