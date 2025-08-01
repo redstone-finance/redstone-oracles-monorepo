@@ -18,7 +18,7 @@ export const TRUSTED_UPDATERS =
     z.array(z.string()).optional()
   ) ?? [];
 
-const NETWORK_ID = RedstoneCommon.getFromEnv(
+export const NETWORK_ID = RedstoneCommon.getFromEnv(
   "NETWORK_ID",
   z.number().optional()
 );
@@ -107,7 +107,7 @@ function formatAddressFilename(
 
 export function makeRadixClient(networkId?: number) {
   return new RadixClientBuilder()
-    .withNetworkId(networkId ?? NETWORK.id)
+    .withNetworkId(networkId ? `radix/${networkId}` : `radix/${NETWORK.id}`)
     .withRpcUrl(NETWORK.basePath)
     .withPrivateKey(PRIVATE_KEY)
     .withClientConfig({ ...DEFAULT_RADIX_CLIENT_CONFIG, maxFeeXrd: 1 })
