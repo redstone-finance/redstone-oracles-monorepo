@@ -98,6 +98,9 @@ const config: HardhatUserConfig = {
     katana: {
       url: "https://rpc.katana.network",
     },
+    tacSpbTestnet: {
+      url: "https://spb.rpc.tac.build",
+    },
   },
 };
 
