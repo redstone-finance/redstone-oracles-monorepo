@@ -1097,7 +1097,7 @@
     },
     "aptos-testnet": {
       "name": "Aptos Testnet",
-      "networkId": "movement/2",
+      "networkId": "aptos/2",
       "currencySymbol": "APT",
       "publicRpcUrls": ["https://api.testnet.aptoslabs.com/v1"],
       "avgBlockTimeMs": 130,
@@ -1108,6 +1108,20 @@
       "isAuctionModel": false,
       "twoDimensionalFees": false,
       "isMainnet": false
+    },
+    "aptos-mainnet": {
+      "name": "Aptos Mainnet",
+      "networkId": "aptos/1",
+      "currencySymbol": "APT",
+      "publicRpcUrls": ["https://api.mainnet.aptoslabs.com/v1"],
+      "avgBlockTimeMs": 130,
+      "multicall3": {
+        "address": "",
+        "type": "Multicall3"
+      },
+      "isAuctionModel": false,
+      "twoDimensionalFees": false,
+      "isMainnet": true
     },
     "radix-stokenet": {
       "name": "Radix Stokenet",
