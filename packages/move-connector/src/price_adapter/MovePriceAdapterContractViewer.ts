@@ -7,10 +7,6 @@ import {
   RedstoneCommon,
 } from "@redstone-finance/utils";
 import { BigNumber } from "ethers";
-import {
-  ALL_EXECUTIONS_TIMEOUT_MS,
-  SINGLE_EXECUTION_TIMEOUT_MS,
-} from "../AptosClientBuilder";
 import { MoveContractViewer } from "../MoveContractViewer";
 import { PriceDataSchema } from "../types";
 import { makeFeedIdBytes } from "../utils";
@@ -45,8 +41,8 @@ export class MovePriceAdapterContractViewer extends MoveContractViewer {
       {
         ...MultiExecutor.DEFAULT_CONFIG,
         defaultMode: MultiExecutor.ExecutionMode.AGREEMENT,
-        singleExecutionTimeoutMs: SINGLE_EXECUTION_TIMEOUT_MS,
-        allExecutionsTimeoutMs: ALL_EXECUTIONS_TIMEOUT_MS,
+        singleExecutionTimeoutMs: MultiExecutor.SINGLE_EXECUTION_TIMEOUT_MS,
+        allExecutionsTimeoutMs: MultiExecutor.ALL_EXECUTIONS_TIMEOUT_MS,
       }
     );
   }

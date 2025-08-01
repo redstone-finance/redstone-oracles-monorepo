@@ -1,6 +1,6 @@
-export * from "./AptosClientBuilder";
 export * from "./config";
 export * from "./consts";
+export * from "./MoveClientBuilder";
 export * from "./MoveContractConnector";
 export * from "./MoveContractViewer";
 export * from "./MoveTxDeliveryMan";
