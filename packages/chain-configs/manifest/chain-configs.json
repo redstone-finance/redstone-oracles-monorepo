@@ -1286,8 +1286,8 @@
     }
   },
   "temporaryConfigUpdates": {
-    "expirationTimestamp": "2025-07-31T12:01:00+02:00",
-    "polygon": {
+    "expirationTimestamp": "2025-08-05T12:01:00+02:00",
+    "sei": {
       "disabled": true
     }
   }
