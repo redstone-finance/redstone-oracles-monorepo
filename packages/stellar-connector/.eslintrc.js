@@ -4,5 +4,5 @@ module.exports = {
     tsconfigRootDir: __dirname,
     sourceType: "module",
   },
-  ignorePatterns: ["stellar", "deployments"],
+  ignorePatterns: ["/stellar", "deployments"],
 };

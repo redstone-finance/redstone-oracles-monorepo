@@ -21,4 +21,10 @@ export abstract class StellarContractConnector<Adapter>
       return false;
     }
   }
+
+  async getNormalizedBalance(address: string) {
+    const balance = await this.rpcClient.getAccountBalance(address);
+
+    return balance * (10n ** 18n / 10n ** 7n);
+  }
 }
