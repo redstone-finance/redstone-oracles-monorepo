@@ -11,6 +11,7 @@ import {
   TransactionBuilder,
   xdr,
 } from "@stellar/stellar-sdk";
+import * as XdrUtils from "../XdrUtils";
 
 const RETRY_COUNT = 10;
 const SLEEP_TIME_MS = 1_000;
@@ -24,12 +25,15 @@ export class StellarRpcClient {
   constructor(private readonly server: rpc.Server) {}
 
   async getAccount(publicKey: string): Promise<Account> {
-    const accountResponse = await this.server.getAccount(publicKey);
+    return await this.server.getAccount(publicKey);
+  }
 
-    return new Account(
-      accountResponse.accountId(),
-      accountResponse.sequenceNumber()
-    );
+  async getAccountBalance(address: string) {
+    const ledgerKey = XdrUtils.ledgerKeyFromAddress(address);
+
+    const response = await this.server.getLedgerEntries(ledgerKey);
+
+    return XdrUtils.accountFromResponse(response).balance().toBigInt();
   }
 
   async getBlockNumber() {
