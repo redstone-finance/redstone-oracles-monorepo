@@ -1,7 +1,9 @@
 import { RedstoneCommon } from "@redstone-finance/utils";
 import {
   Account,
+  Address,
   BASE_FEE,
+  Contract,
   Keypair,
   Operation,
   rpc,
@@ -97,5 +99,13 @@ export class StellarRpcClient {
     const tx = await this.transactionFromOperation(operation, sender);
 
     return await this.simulateTransaction(tx);
+  }
+
+  async getContractData(
+    contract: string | Address | Contract,
+    key: xdr.ScVal,
+    durability?: rpc.Durability
+  ) {
+    return await this.server.getContractData(contract, key, durability);
   }
 }

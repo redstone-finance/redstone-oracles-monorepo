@@ -63,18 +63,6 @@ export function parseGetPricesSimulation(
   });
 }
 
-export function parseReadPriceDataSimulation(
-  sim: rpc.Api.SimulateTransactionSuccessResponse
-) {
-  return parseSimValAs(sim, (val) => {
-    const vec = expectValue<xdr.ScVal[]>(val.vec(), "simRetValAsVec");
-
-    return vec.map((val) =>
-      lastRoundDetailsFromXdrMap(expectValue(val.map(), "valAsMap"))
-    );
-  });
-}
-
 export function parseReadSinglePriceDataSimulation(
   sim: rpc.Api.SimulateTransactionSuccessResponse
 ) {
@@ -97,6 +85,16 @@ export function parseBigIntFromSimulation(
   sim: rpc.Api.SimulateTransactionSuccessResponse
 ) {
   return parseSimValAs(sim, (val) => scValToBigInt(val));
+}
+
+export function parsePriceDataFromContractData(
+  result: rpc.Api.LedgerEntryResult
+) {
+  const map = expectValue(
+    result.val.contractData().val().map(),
+    "contract data as map"
+  );
+  return lastRoundDetailsFromXdrMap(map);
 }
 
 export function lastRoundDetailsFromXdrMap(map: xdr.ScMapEntry[]) {
