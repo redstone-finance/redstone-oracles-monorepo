@@ -133,18 +133,13 @@ export class StellarPricesContractAdapter
   }
 
   async getContractData(feedIds: string[]) {
-    const feedIdsScVal = XdrUtils.mapArrayToScVec(
-      feedIds,
-      XdrUtils.stringToScVal
+    const results = await Promise.all(
+      feedIds.map((feedId) => {
+        const key = XdrUtils.stringToScVal(feedId);
+        return this.rpcClient.getContractData(this.contract, key);
+      })
     );
-    const operation = this.contract.call("read_price_data", feedIdsScVal);
-
-    const sim = await this.rpcClient.simulateOperation(
-      operation,
-      this.getPublicKey()
-    );
-
-    return XdrUtils.parseReadPriceDataSimulation(sim);
+    return results.map(XdrUtils.parsePriceDataFromContractData);
   }
 
   async prepareCallArgs(paramsProvider: ContractParamsProvider) {
