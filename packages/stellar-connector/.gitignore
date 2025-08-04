@@ -2,4 +2,5 @@ target
 
 .stellar
 
+/stellar/*.custom
 /stellar/*.testnet
