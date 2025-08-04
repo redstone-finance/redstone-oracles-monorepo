@@ -10,7 +10,7 @@ import { TxDeliveryOptsValidated, unsafeBnToNumber } from "./TxDelivery";
 
 type FeeHistoryResponse = { reward: string[] };
 
-// es stated in eth spec max increase is 12.5% per block
+// as stated in eth spec max increase is 12.5% per block
 // however this fee is refunded anyway, so we are okey with having bigger margin
 const BASE_FEE_SCALER = 2;
 
