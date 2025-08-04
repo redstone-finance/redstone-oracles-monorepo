@@ -9846,6 +9846,17 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@redstone-finance/lambda-admin-access-monitor@workspace:packages/lambda/lambda-admin-access-monitor":
+  version: 0.0.0-use.local
+  resolution: "@redstone-finance/lambda-admin-access-monitor@workspace:packages/lambda/lambda-admin-access-monitor"
+  dependencies:
+    "@redstone-finance/internal-utils": "workspace:*"
+    "@redstone-finance/utils": "workspace:*"
+    "@types/aws-lambda": "npm:^8.10.145"
+    zod: "npm:^3.22.4"
+  languageName: unknown
+  linkType: soft
+
 "@redstone-finance/lambda-aggregator-influx-synchronizer@workspace:packages/lambda/lambda-aggregator-influx-synchronizer":
   version: 0.0.0-use.local
   resolution: "@redstone-finance/lambda-aggregator-influx-synchronizer@workspace:packages/lambda/lambda-aggregator-influx-synchronizer"
