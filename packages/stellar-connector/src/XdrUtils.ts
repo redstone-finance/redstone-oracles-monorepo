@@ -3,6 +3,7 @@ import {
   rpc,
   scValToBigInt,
   scValToNative,
+  StrKey,
   xdr,
 } from "@stellar/stellar-sdk";
 
@@ -16,6 +17,33 @@ function expectValue<T>(val: T | null | undefined, name: string) {
   }
 
   return val;
+}
+
+export function ledgerKeyFromAddress(address: string) {
+  const publicKeyBuffer = StrKey.decodeEd25519PublicKey(address);
+  const accountIdXdr = xdr.PublicKey.publicKeyTypeEd25519(publicKeyBuffer);
+
+  return xdr.LedgerKey.account(
+    new xdr.LedgerKeyAccount({
+      accountId: accountIdXdr,
+    })
+  );
+}
+
+export function accountFromResponse(
+  response: rpc.Api.GetLedgerEntriesResponse
+) {
+  if (response.entries.length === 0) {
+    throw new Error("Empty response");
+  }
+
+  const entry = response.entries[0].val;
+
+  if (entry.switch().name !== "account") {
+    throw new Error("Unexpected response type");
+  }
+
+  return entry.account();
 }
 
 export function numbersToScvBytes(val: number[]) {
