@@ -9,7 +9,11 @@ import fs from "fs";
 import { getTransactionJsonPath, readAddress } from "../deploy-utils";
 import { getEnvContractName } from "../get-env";
 import { MovePackageTxBuilder } from "../package";
-import { MULTI_SIG_ADDRESS, MULTI_SIG_UPGRADE_TX_ID } from "./const";
+import {
+  LEDGER_ACCOUNT_ID,
+  MULTI_SIG_ADDRESS,
+  MULTI_SIG_UPGRADE_TX_ID,
+} from "./const";
 import { executeAsLedger } from "./execute-as-ledger";
 
 async function executeTransaction(
@@ -41,12 +45,14 @@ async function executeTransaction(
 }
 
 async function main() {
-  await executeAsLedger((aptos, signerAddress) =>
-    executeTransaction(
-      aptos,
-      signerAddress,
-      getTransactionJsonPath(MULTI_SIG_UPGRADE_TX_ID)
-    )
+  await executeAsLedger(
+    (aptos, signerAddress) =>
+      executeTransaction(
+        aptos,
+        signerAddress,
+        getTransactionJsonPath(MULTI_SIG_UPGRADE_TX_ID)
+      ),
+    LEDGER_ACCOUNT_ID
   );
 }
 
