@@ -1287,7 +1287,7 @@
   },
   "temporaryConfigUpdates": {
     "expirationTimestamp": "2025-08-05T12:01:00+02:00",
-    "sei": {
+    "base": {
       "disabled": true
     }
   }
