@@ -2,7 +2,11 @@ import {
   Env,
   fetchParsedRpcUrlsFromSsmByNetworkId,
 } from "@redstone-finance/chain-configs";
-import { isNonEvmNetworkId, NetworkId } from "@redstone-finance/utils";
+import {
+  isNonEvmNetworkId,
+  NetworkId,
+  RedstoneCommon,
+} from "@redstone-finance/utils";
 import { BigNumber } from "ethers";
 import {
   EvmBlockchainService,
@@ -40,17 +44,22 @@ export async function getBalanceProviderWithRpcUrls(
   rpcUrls: string[]
 ): Promise<BalanceProvider | undefined> {
   if (!rpcUrls.length) {
-    return;
+    return undefined;
   }
 
-  if (isNonEvmNetworkId(networkId)) {
-    return getNonEvmBlockchainService(networkId, rpcUrls);
-  } else {
-    return new EvmBlockchainService(
-      await getProviderWithRpcUrls(networkId, rpcUrls, {
-        singleProviderOperationTimeout: SINGLE_RPC_TIMEOUT_MILLISECONDS,
-        allProvidersOperationTimeout: ALL_RPC_TIMEOUT_MILLISECONDS,
-      })
-    );
+  try {
+    if (isNonEvmNetworkId(networkId)) {
+      return getNonEvmBlockchainService(networkId, rpcUrls);
+    } else {
+      return new EvmBlockchainService(
+        await getProviderWithRpcUrls(networkId, rpcUrls, {
+          singleProviderOperationTimeout: SINGLE_RPC_TIMEOUT_MILLISECONDS,
+          allProvidersOperationTimeout: ALL_RPC_TIMEOUT_MILLISECONDS,
+        })
+      );
+    }
+  } catch (e) {
+    console.error(RedstoneCommon.stringifyError(e));
+    return undefined;
   }
 }
