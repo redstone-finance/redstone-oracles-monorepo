@@ -9,6 +9,8 @@ import {
 import { RedstoneCommon } from "@redstone-finance/utils";
 import prompts from "prompts";
 import { z } from "zod";
+import { isAptos, isMovement } from "./config";
+import { getEnvNetwork } from "./get-env";
 import { AptosLedger, signTx } from "./ledger/ledger-utils";
 
 const DEFAULT_TESTNET_RPC_URL =
@@ -106,4 +108,18 @@ export async function promptForConfirmation() {
     console.log("Operation cancelled.");
     process.exit(0);
   }
+}
+
+export function getCurrencySymbol() {
+  const network = getEnvNetwork();
+
+  if (isAptos(network)) {
+    return "APT";
+  }
+
+  if (isMovement(network)) {
+    return "MOVE";
+  }
+
+  return "CUSTOM-NETWORK_CURRENCY";
 }
