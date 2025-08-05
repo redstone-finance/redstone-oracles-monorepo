@@ -35,7 +35,7 @@ const getDerivationPath = (accountId: number) =>
   `m/44'/637'/${accountId}'/0'/0'`;
 
 /// returns public key of the ledger account
-export const getLedgerData = async (aptos: AptosLedger, accountId = 0) => {
+export const getLedgerData = async (aptos: AptosLedger, accountId: number) => {
   const result = await aptos.getAddress(getDerivationPath(accountId));
 
   return {
@@ -49,7 +49,7 @@ export const getLedgerData = async (aptos: AptosLedger, accountId = 0) => {
 export const signTx = async (
   aptos: AptosLedger,
   tx: AnyRawTransaction,
-  accountId = 0
+  accountId: number
 ) => {
   const msg = generateSigningMessageForTransaction(tx);
   const signed = await aptos.signTransaction(
@@ -58,7 +58,7 @@ export const signTx = async (
   );
 
   const signature = new Ed25519Signature(signed.signature);
-  const data = await getLedgerData(aptos);
+  const data = await getLedgerData(aptos, accountId);
 
   return new AccountAuthenticatorEd25519(data.ed, signature);
 };
