@@ -1,8 +1,12 @@
 import { AccountAddress, Aptos } from "@aptos-labs/ts-sdk";
 import "dotenv/config";
-import { promptForConfirmation } from "../utils";
+import { getCurrencySymbol, promptForConfirmation } from "../utils";
 import { MultiSigTxBuilder } from "./MultiSigTxBuilder";
-import { SIGNER_ADDRESSES, SIGNER_COUNT_THRESHOLD_FACTOR } from "./const";
+import {
+  LEDGER_ACCOUNT_ID,
+  SIGNER_ADDRESSES,
+  SIGNER_COUNT_THRESHOLD_FACTOR,
+} from "./const";
 import { executeAsLedger } from "./execute-as-ledger";
 
 async function setUpMultiSig(
@@ -33,7 +37,7 @@ async function setUpMultiSig(
   console.log(
     `Multi-sig account address: ${multiSigAddress.toString()}\n` +
       `Set the value as MULTI_SIG_ADDRESS inside consts.ts file\n` +
-      `and also fund that account with some MOVE coins`
+      `and also fund that account with some ${getCurrencySymbol()} coins`
   );
   return await builder.createMultiSigTx();
 }
@@ -41,8 +45,9 @@ async function setUpMultiSig(
 async function main() {
   const signers = SIGNER_ADDRESSES.map((addr) => AccountAddress.from(addr));
 
-  await executeAsLedger((aptos, signerAddress) =>
-    setUpMultiSig(aptos, signerAddress, signers)
+  await executeAsLedger(
+    (aptos, signerAddress) => setUpMultiSig(aptos, signerAddress, signers),
+    LEDGER_ACCOUNT_ID
   );
 }
 

@@ -20,6 +20,7 @@
     "upgrade-sdk": "CONTRACT_NAME=redstone_sdk IS_UPGRADE=true yarn global:ts-node ./scripts/deploy-runner",
     "deploy-price_adapter": "CONTRACT_NAME=price_adapter yarn global:ts-node ./scripts/deploy-runner",
     "upgrade-price_adapter": "CONTRACT_NAME=price_adapter IS_UPGRADE=true yarn global:ts-node ./scripts/deploy-runner",
+    "full-sample-deploy": "yarn deploy-sdk && yarn deploy-price_adapter && yarn deploy-price_feed",
     "deploy-price_feed": "CONTRACT_NAME=price_feed_ETH yarn global:ts-node ./scripts/deploy-runner",
     "prepare": "yarn global:ts-node ./scripts/prepare-test-env.ts",
     "transfer-coins": "yarn global:ts-node scripts/transfer-coins.ts",

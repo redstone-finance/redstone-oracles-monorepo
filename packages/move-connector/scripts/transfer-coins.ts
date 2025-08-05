@@ -2,16 +2,17 @@ import { Account, Aptos } from "@aptos-labs/ts-sdk";
 import "dotenv/config";
 import prompts from "prompts";
 import { makeAptosAccount, OCTAS_PER_MOVE } from "../src";
-import { makeAptos, signAndSubmit } from "./utils";
+import { getCurrencySymbol, makeAptos, signAndSubmit } from "./utils";
 
 async function transferCoins(
   aptos: Aptos,
   sender: Account,
   recipientAddress: string,
-  amount: bigint
+  amount: bigint,
+  currencySymbol: string
 ) {
   try {
-    console.log("🚀 Sending MOVE to recipient...");
+    console.log(`🚀 Sending ${currencySymbol} to recipient...`);
     const transaction = await aptos.transferCoinTransaction({
       sender: sender.accountAddress,
       recipient: recipientAddress,
@@ -32,10 +33,11 @@ async function transferCoins(
 async function ensureRecipientCanReceive(
   aptos: Aptos,
   sender: Account,
-  recipientAddress: string
+  recipientAddress: string,
+  currencySymbol: string
 ) {
   try {
-    console.log("🔍 Checking if recipient has registered MOVE...");
+    console.log(`🔍 Checking if recipient has registered ${currencySymbol}...`);
     const resources = await aptos.getAccountResources({
       accountAddress: recipientAddress,
     });
@@ -45,7 +47,9 @@ async function ensureRecipientCanReceive(
     );
 
     if (!hasAptosCoinStore) {
-      console.log("⚠️ Recipient has NOT registered MOVE. Registering now...");
+      console.log(
+        `⚠️ Recipient has NOT registered ${currencySymbol}. Registering now...`
+      );
 
       const transaction = await aptos.transaction.build.simple({
         sender: sender.accountAddress,
@@ -58,9 +62,11 @@ async function ensureRecipientCanReceive(
       const response = await signAndSubmit(aptos, transaction, sender);
       await aptos.waitForTransaction({ transactionHash: response.hash });
 
-      console.log(`✅ Recipient registered for MOVE successfully!`);
+      console.log(
+        `✅ Recipient registered for ${currencySymbol} successfully!`
+      );
     } else {
-      console.log("✅ Recipient is already registered for MOVE.");
+      console.log(`✅ Recipient is already registered for ${currencySymbol}.`);
     }
   } catch (error) {
     console.error("❌ Error checking or registering recipient:", error);
@@ -154,18 +160,28 @@ async function main() {
   const aptos = makeAptos();
   const sender = makeAptosAccount();
 
+  const currencySymbol = getCurrencySymbol();
+
   console.log(`💸 Sending from: ${sender.accountAddress.toString()}`);
-  console.log(`💰 Current balance: ${await getBalance(aptos, sender)} MOVE`);
+  console.log(
+    `💰 Current balance: ${await getBalance(aptos, sender)} ${currencySymbol}`
+  );
 
   const { recipient: recipientAddress, amount } = await getTransferDetails();
 
   await ensureRecipientAccountExists(aptos, sender, recipientAddress);
-  await ensureRecipientCanReceive(aptos, sender, recipientAddress);
+  await ensureRecipientCanReceive(
+    aptos,
+    sender,
+    recipientAddress,
+    currencySymbol
+  );
   await transferCoins(
     aptos,
     sender,
     recipientAddress,
-    BigInt(amount * OCTAS_PER_MOVE)
+    BigInt(amount * OCTAS_PER_MOVE),
+    currencySymbol
   );
 }
 
