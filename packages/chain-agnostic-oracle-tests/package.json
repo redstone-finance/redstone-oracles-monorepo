@@ -1,0 +1,45 @@
+{
+  "name": "@redstone-finance/chain-agnostic-oracle-tests",
+  "version": "0.8.0",
+  "main": "dist/src/index.js",
+  "exports": "./dist/src/index.js",
+  "types": "dist/src/index.d.ts",
+  "license": "MIT",
+  "scripts": {
+    "clean": "rm -rf dist",
+    "test": "yarn global:jest:cov",
+    "build": "yarn global:tsc --build tsconfig.build.json",
+    "build-dev": "yarn global:tsc --build tsconfig.json",
+    "preversion": "yarn build",
+    "lint": "yarn global:eslint .",
+    "lint:fix": "yarn global:eslint --fix ."
+  },
+  "dependencies": {
+    "@redstone-finance/protocol": "workspace:*",
+    "@redstone-finance/sdk": "workspace:*",
+    "@types/lodash": "^4.14.195",
+    "axios": "^1.8.4",
+    "consola": "^2.15.3",
+    "decimal.js": "^10.4.3",
+    "ethers": "^5.7.2",
+    "lodash": "^4.17.21",
+    "zod": "^3.22.4"
+  },
+  "devDependencies": {
+    "@types/sinon": "^10.0.15",
+    "sinon": "^18.0.0"
+  },
+  "overrides": {
+    "elliptic": "^6.6.1"
+  },
+  "resolutions": {
+    "elliptic": "^6.6.1"
+  },
+  "files": [
+    "src",
+    "dist"
+  ],
+  "publishConfig": {
+    "access": "public"
+  }
+}
