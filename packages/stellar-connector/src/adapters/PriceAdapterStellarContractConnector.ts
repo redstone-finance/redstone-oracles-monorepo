@@ -21,7 +21,7 @@ export class PriceAdapterStellarContractConnector extends StellarContractConnect
     );
   }
 
-  getAdapter() {
+  override getAdapter() {
     return Promise.resolve(this.adapter);
   }
 }
