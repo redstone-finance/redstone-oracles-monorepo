@@ -4,6 +4,7 @@ import {
   makeKeypair as makeSolanaKeypair,
   SolanaConnectionBuilder,
 } from "@redstone-finance/solana-connector";
+import { StellarClientBuilder } from "@redstone-finance/stellar-connector";
 import {
   makeSuiKeypair,
   SuiClientBuilder,
@@ -16,6 +17,7 @@ import {
 import { MoveBlockchainService } from "./MoveBlockchainService";
 import { RadixBlockchainService } from "./RadixBlockchainService";
 import { SolanaBlockchainService } from "./SolanaBlockchainService";
+import { StellarBlockchainService } from "./StellarBlockchainService";
 import { SuiBlockchainService } from "./SuiBlockchainService";
 
 export function getNonEvmBlockchainService(
@@ -59,7 +61,13 @@ export function getNonEvmBlockchainService(
         : undefined;
       return new SolanaBlockchainService(connection, undefined, keypair);
     }
-    case "stellar":
+    case "stellar": {
+      const client = new StellarClientBuilder()
+        .withNetworkId(networkId)
+        .withRpcUrls(rpcUrls)
+        .build();
+      return new StellarBlockchainService(client);
+    }
     case "fuel":
       throw new Error(`Not supported for ${chainType}`);
     case "evm":
