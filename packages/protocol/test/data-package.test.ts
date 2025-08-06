@@ -36,7 +36,7 @@ describe("Data package", () => {
 
   test("Should throw an error for data package without data points", () => {
     expect(() => new DataPackage([], TIMESTAMP_FOR_TESTS, "BTC")).toThrow(
-      "Can not create a data package with no data points"
+      "Assertion failed: Empty data packages are not allowed"
     );
   });
 
