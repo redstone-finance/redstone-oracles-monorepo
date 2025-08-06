@@ -1,12 +1,14 @@
 import { IContractConnector } from "@redstone-finance/sdk";
 import { StellarRpcClient } from "../stellar/StellarRpcClient";
 
-export abstract class StellarContractConnector<Adapter>
+export class StellarContractConnector<Adapter>
   implements IContractConnector<Adapter>
 {
-  protected constructor(private readonly rpcClient: StellarRpcClient) {}
+  constructor(private readonly rpcClient: StellarRpcClient) {}
 
-  abstract getAdapter(): Promise<Adapter>;
+  getAdapter(): Promise<Adapter> {
+    throw new Error("Must be implemented in a subclass");
+  }
 
   async getBlockNumber() {
     return await this.rpcClient.getBlockNumber();
