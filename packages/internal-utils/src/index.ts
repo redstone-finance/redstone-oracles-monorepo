@@ -1,3 +1,4 @@
+export * from "./ApiKeysUsageTracker";
 export * from "./aws/cloudwatch";
 export * from "./aws/DynamoDbService";
 export * from "./aws/ecs";

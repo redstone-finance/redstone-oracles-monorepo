@@ -20,6 +20,9 @@ interface CacheServiceConfig {
   dataPackagesTTL: number;
   streamrStreamNamePattern: string;
   keepAliveTimeoutInSeconds: number;
+  influxUrl?: string;
+  influxToken?: string;
+  env: string;
 }
 
 const DEFAULT_APP_PORT = 3000;
@@ -91,6 +94,15 @@ const config: CacheServiceConfig = {
     "KEEP_ALIVE_TIMEOUT_IN_SECONDS",
     z.number().default(60)
   ),
+  influxUrl: RedstoneCommon.getFromEnv(
+    "INFLUX_BROADCASTER_URL",
+    z.string().optional()
+  ),
+  influxToken: RedstoneCommon.getFromEnv(
+    "INFLUX_BROADCASTER_AUTH_TOKEN",
+    z.string().optional()
+  ),
+  env: RedstoneCommon.getFromEnv("ENV", z.string().optional().default("dev")),
 };
 
 export default config;
