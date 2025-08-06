@@ -9523,6 +9523,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@redstone-finance/db-less-gateway@workspace:packages/db-less-gateway"
   dependencies:
+    "@influxdata/influxdb-client": "npm:^1.35.0"
     "@redstone-finance/internal-utils": "workspace:*"
     "@redstone-finance/protocol": "workspace:*"
     "@redstone-finance/sdk": "workspace:*"
