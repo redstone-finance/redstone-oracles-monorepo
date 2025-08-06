@@ -632,11 +632,19 @@
     },
     "aUSD": {
       "source": [
+        "blackhole-avalanche-usdc-75",
+        "bullish-usdc",
+        "pharaoh-avalanche-usdc-50",
         "trader-joe-v2-avalanche-usdc",
         "trader-joe-v2-avalanche-usdt",
-        "trader-joe-v2-avalanche-wavax",
-        "uniswap-v4-ethereum-usdc-500"
+        "trader-joe-v2-avalanche-wavax"
       ],
+      "deviationCheck": {
+        "deviationWithRecentValues": {
+          "maxPercent": 5,
+          "maxDelayMilliseconds": 120000
+        }
+      },
       "denomination": "USD",
       "rateFeed": false
     }
