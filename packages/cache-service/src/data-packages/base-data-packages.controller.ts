@@ -6,10 +6,13 @@ import {
   HttpStatus,
   Param,
   Post,
+  Req,
   ServiceUnavailableException,
   UsePipes,
   ValidationPipe,
 } from "@nestjs/common";
+import { ApiKeysUsageTracker } from "@redstone-finance/internal-utils";
+import { Request } from "express";
 import config from "../config";
 import {
   BulkPostRequestBody,
@@ -19,7 +22,17 @@ import { DataPackagesService } from "./data-packages.service";
 
 @UsePipes(new ValidationPipe({ transform: true }))
 export abstract class BaseDataPackagesController {
-  constructor(protected readonly dataPackagesService: DataPackagesService) {}
+  private readonly apiKeysUsageTracker?: ApiKeysUsageTracker;
+
+  constructor(protected readonly dataPackagesService: DataPackagesService) {
+    if (config.influxUrl && config.influxToken) {
+      this.apiKeysUsageTracker = new ApiKeysUsageTracker({
+        influxUrl: config.influxUrl,
+        influxToken: config.influxToken,
+        serviceName: `cache-service-${config.env}`,
+      });
+    }
+  }
 
   protected abstract readonly allowExternalSigners: boolean;
 
@@ -85,7 +98,11 @@ export abstract class BaseDataPackagesController {
   }
 
   @Post("bulk")
-  async addBulk(@Body() body: BulkPostRequestBody) {
+  async addBulk(@Body() body: BulkPostRequestBody, @Req() req: Request) {
+    const apiKey = req.headers["x-api-key"] as string;
+    if (apiKey && this.apiKeysUsageTracker) {
+      this.apiKeysUsageTracker.trackBulkRequest(apiKey);
+    }
     if (!config.enableDirectPostingRoutes) {
       throw new HttpException(
         {
