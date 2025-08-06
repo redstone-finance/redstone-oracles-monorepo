@@ -1532,6 +1532,17 @@
       "denomination": "USD",
       "rateFeed": false
     },
+    "cbETH": {
+      "source": [
+        "coinbase-usd",
+        "uniswap-v3-ethereum-weth-500",
+        "uniswap-v3-base-weth-500",
+        "curve-ethereum-weth",
+        "aerodrome-cl-base-weth"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
     "FDUSD": {
       "source": [
         "binance-bnb-reversed",
