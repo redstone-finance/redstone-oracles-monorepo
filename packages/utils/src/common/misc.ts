@@ -23,6 +23,21 @@ export function getS(value: number, s = "s") {
   return value !== 1 ? s : "";
 }
 
+export function toOrdinal(n: number): string {
+  const lastDigit = n % 10;
+  const rem100 = n % 100;
+
+  if (lastDigit === 1 && rem100 !== 11) {
+    return `${n}st`;
+  } else if (lastDigit === 2 && rem100 !== 12) {
+    return `${n}nd`;
+  } else if (lastDigit === 3 && rem100 !== 13) {
+    return `${n}rd`;
+  } else {
+    return `${n}th`;
+  }
+}
+
 export function stringify<R>(result: R) {
   if (typeof result === "string") {
     return result;
