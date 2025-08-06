@@ -22,6 +22,14 @@ export interface DataPackagePlainObj {
   dataPackageId: string;
 }
 
+const env =
+  (globalThis as { process?: { env?: Record<string, string> } }).process?.env ??
+  {};
+const allowUnsafeEmptyDataPackages =
+  env.REDSTONE_ALLOW_UNSAFE_EMPTY_DATA_PACKAGES === "true";
+const allowUnsafeDataPackagesWithDuplications =
+  env.REDSTONE_ALLOW_UNSAFE_DATA_PACKAGES_WITH_DUPLICATIONS === "true";
+
 export class DataPackage extends Serializable {
   constructor(
     public readonly dataPoints: DataPoint[],
@@ -31,21 +39,30 @@ export class DataPackage extends Serializable {
     super();
 
     if (dataPoints.length === 0) {
-      throw new Error("Can not create a data package with no data points");
-    }
-
-    const expectedDataPointByteSize = dataPoints[0].getValueByteSize();
-    for (const dataPoint of dataPoints) {
       assert(
-        dataPoint.getValueByteSize() === expectedDataPointByteSize,
-        "Values of all data points in a DataPackage must have the same number of bytes"
+        allowUnsafeEmptyDataPackages,
+        "Empty data packages are not allowed"
       );
+    } else {
+      const expectedDataPointByteSize = dataPoints[0].getValueByteSize();
+      for (const dataPoint of dataPoints) {
+        assert(
+          dataPoint.getValueByteSize() === expectedDataPointByteSize,
+          "Values of all data points in a DataPackage must have the same number of bytes"
+        );
+      }
     }
   }
 
-  // Each data point in this data package can have a different byte size
-  // So we set the default byte size to 0
   getEachDataPointByteSize() {
+    if (this.dataPoints.length === 0) {
+      assert(
+        allowUnsafeEmptyDataPackages,
+        "Empty data packages are not allowed"
+      );
+      return 32;
+    }
+
     return this.dataPoints[0].getValueByteSize();
   }
 
@@ -101,7 +118,7 @@ export class DataPackage extends Serializable {
         bytes32dataFeedId2Hexlified
       );
       assert(
-        comparisonResult !== 0,
+        comparisonResult !== 0 || allowUnsafeDataPackagesWithDuplications,
         `Duplicated dataFeedId found: ${dp1.dataFeedId}`
       );
       return comparisonResult;
