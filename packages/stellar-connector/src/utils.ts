@@ -3,7 +3,13 @@ import { Keypair } from "@stellar/stellar-sdk";
 import { z } from "zod";
 
 export function makeKeypair(privateKey = readPrivateKey()) {
-  return Keypair.fromSecret(privateKey);
+  try {
+    return Keypair.fromSecret(privateKey);
+  } catch (e) {
+    throw new Error(
+      `Wrong secret key format: ${RedstoneCommon.stringifyError(e)});`
+    );
+  }
 }
 
 function readPrivateKey() {
