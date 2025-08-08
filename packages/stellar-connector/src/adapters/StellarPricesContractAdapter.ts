@@ -2,6 +2,7 @@ import {
   ContractData,
   ContractParamsProvider,
   IMultiFeedPricesContractAdapter,
+  LastRoundDetails,
 } from "@redstone-finance/sdk";
 import { Contract, Keypair } from "@stellar/stellar-sdk";
 import _ from "lodash";
@@ -54,7 +55,7 @@ export class StellarPricesContractAdapter
   }
 
   async readContractData(feedIds: string[], _blockNumber?: number) {
-    const data = _.zip(feedIds, await this.getContractData(feedIds));
+    const data = await this.getContractData(feedIds);
 
     return Object.fromEntries(data) as ContractData;
   }
@@ -62,16 +63,15 @@ export class StellarPricesContractAdapter
   async getUniqueSignerThreshold(_blockNumber?: number) {
     const operation = this.contract.call("unique_signer_threshold");
 
-    const sim = await this.rpcClient.simulateOperation(
+    return await this.rpcClient.simulateOperation(
       operation,
-      this.getPublicKey()
+      this.getPublicKey(),
+      (sim) => XdrUtils.parsePrimitiveFromSimulation(sim, Number)
     );
-
-    return XdrUtils.parsePrimitiveFromSimulation(sim, Number);
   }
 
   async readLatestUpdateBlockTimestamp(feedId: string, _blockNumber?: number) {
-    return (await this.getContractData([feedId]))[0].lastBlockTimestampMS;
+    return (await this.getContractData([feedId]))[0][1]!.lastBlockTimestampMS;
   }
 
   getSignerAddress() {
@@ -90,10 +90,11 @@ export class StellarPricesContractAdapter
 
     const sim = await this.rpcClient.simulateOperation(
       operation,
-      this.getPublicKey()
+      this.getPublicKey(),
+      XdrUtils.parseGetPricesSimulation
     );
 
-    return XdrUtils.parseGetPricesSimulation(sim).prices;
+    return sim.prices;
   }
 
   async writePricesFromPayloadToContract(
@@ -125,31 +126,60 @@ export class StellarPricesContractAdapter
   ) {
     const feedIds = paramsProvider.getDataFeedIds();
 
-    return (await this.getContractData(feedIds)).map((data) => data.lastValue);
+    return (await this.getContractData(feedIds)).map(
+      (data) => data[1]!.lastValue
+    );
   }
 
   async readTimestampFromContract(feedId: string, _blockNumber?: number) {
-    return (await this.getContractData([feedId]))[0].lastDataPackageTimestampMS;
+    return (await this.readContractData([feedId]))[feedId]
+      .lastDataPackageTimestampMS;
   }
 
-  async getContractData(feedIds: string[]) {
-    const results = await Promise.all(
-      feedIds.map((feedId) => {
-        const key = XdrUtils.stringToScVal(feedId);
-        return this.rpcClient.getContractData(this.contract, key);
-      })
-    );
-    return results.map(XdrUtils.parsePriceDataFromContractData);
+  private async getContractData(
+    feedIds: string[]
+  ): Promise<[string, LastRoundDetails | undefined][]> {
+    const promises = feedIds.map(async (feedId) => {
+      const key = XdrUtils.stringToScVal(feedId);
+      const settledResult = this.rpcClient.getContractData(
+        this.contract,
+        key,
+        XdrUtils.parsePriceDataFromContractData
+      );
+
+      return await settledResult;
+    });
+
+    const results = _.zip(
+      feedIds,
+      await Promise.allSettled(promises)
+    ) as unknown as [string, PromiseSettledResult<LastRoundDetails>][];
+
+    return results.map(([feedId, settledResult]) => {
+      switch (settledResult.status) {
+        case "fulfilled":
+          return [feedId, settledResult.value];
+        case "rejected":
+          return [feedId, undefined];
+      }
+    });
   }
 
-  async prepareCallArgs(paramsProvider: ContractParamsProvider) {
+  async prepareCallArgs(
+    paramsProvider: ContractParamsProvider,
+    metadataTimestamp = Date.now()
+  ) {
     const feedIdsScVal = XdrUtils.mapArrayToScVec(
       paramsProvider.getDataFeedIds(),
       XdrUtils.stringToScVal
     );
 
     const payloadScVal = XdrUtils.numbersToScvBytes(
-      await paramsProvider.getPayloadData()
+      await paramsProvider.getPayloadData({
+        withUnsignedMetadata: true,
+        metadataTimestamp,
+        componentName: "stellar-connector",
+      })
     );
 
     return [feedIdsScVal, payloadScVal];

@@ -18,9 +18,12 @@ export class StellarPriceFeedContractAdapter
 
   async getDescription() {
     const operation = this.contract.call("description");
-    const sim = await this.rpcClient.simulateOperation(operation, this.sender);
 
-    return XdrUtils.parsePrimitiveFromSimulation(sim, String);
+    return await this.rpcClient.simulateOperation(
+      operation,
+      this.sender,
+      (sim) => XdrUtils.parsePrimitiveFromSimulation(sim, String)
+    );
   }
 
   async getDataFeedId() {
@@ -44,43 +47,61 @@ export class StellarPriceFeedContractAdapter
 
   async decimals() {
     const operation = this.contract.call("decimals");
-    const sim = await this.rpcClient.simulateOperation(operation, this.sender);
 
-    return XdrUtils.parsePrimitiveFromSimulation(sim, Number);
+    return await this.rpcClient.simulateOperation(
+      operation,
+      this.sender,
+      (sim) => XdrUtils.parsePrimitiveFromSimulation(sim, Number)
+    );
   }
 
   async feedId() {
     const operation = this.contract.call("feed_id");
-    const sim = await this.rpcClient.simulateOperation(operation, this.sender);
 
-    return XdrUtils.parsePrimitiveFromSimulation(sim, String);
+    return await this.rpcClient.simulateOperation(
+      operation,
+      this.sender,
+      (sim) => XdrUtils.parsePrimitiveFromSimulation(sim, String)
+    );
   }
 
   async readPrice() {
     const operation = this.contract.call("read_price");
-    const sim = await this.rpcClient.simulateOperation(operation, this.sender);
 
-    return XdrUtils.parseBigIntFromSimulation(sim);
+    return await this.rpcClient.simulateOperation(
+      operation,
+      this.sender,
+      XdrUtils.parseBigIntFromSimulation
+    );
   }
 
   async readTimestamp() {
     const operation = this.contract.call("read_timestamp");
-    const sim = await this.rpcClient.simulateOperation(operation, this.sender);
 
-    return XdrUtils.parsePrimitiveFromSimulation(sim, Number);
+    return await this.rpcClient.simulateOperation(
+      operation,
+      this.sender,
+      (sim) => XdrUtils.parsePrimitiveFromSimulation(sim, Number)
+    );
   }
 
   async readPriceAndTimestamp() {
     const operation = this.contract.call("read_price_and_timestamp");
-    const sim = await this.rpcClient.simulateOperation(operation, this.sender);
 
-    return XdrUtils.parseReadPriceAndTimestampSimulation(sim);
+    return await this.rpcClient.simulateOperation(
+      operation,
+      this.sender,
+      XdrUtils.parseReadPriceAndTimestampSimulation
+    );
   }
 
   async readPriceData() {
     const operation = this.contract.call("read_price_data");
-    const sim = await this.rpcClient.simulateOperation(operation, this.sender);
 
-    return XdrUtils.parseReadSinglePriceDataSimulation(sim);
+    return await this.rpcClient.simulateOperation(
+      operation,
+      this.sender,
+      XdrUtils.parseReadSinglePriceDataSimulation
+    );
   }
 }
