@@ -96,6 +96,70 @@
       "denomination": "USD",
       "rateFeed": false
     },
+    "USDC_V2": {
+      "source": [
+        "bitstamp-usd",
+        "coingecko",
+        "coinmarketcap",
+        "kraken-usd",
+        "bitstamp_stables_ratio-usd",
+        "coinbase_stables_ratio-usd",
+        "coingecko_stables_ratio",
+        "coinmarketcap_stables_ratio",
+        "kraken_stables_ratio-usd"
+      ],
+      "deviationCheck": {
+        "deviationWithRecentValues": {
+          "maxPercent": 5,
+          "maxDelayMilliseconds": 120000
+        }
+      },
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "USDT_V2": {
+      "source": [
+        "bitstamp-usd",
+        "coinbase-usd",
+        "coingecko",
+        "coinmarketcap",
+        "kraken-usd",
+        "bitstamp_stables_ratio-usd",
+        "coingecko_stables_ratio",
+        "coinmarketcap_stables_ratio",
+        "kraken_stables_ratio-usd"
+      ],
+      "deviationCheck": {
+        "deviationWithRecentValues": {
+          "maxPercent": 5,
+          "maxDelayMilliseconds": 120000
+        }
+      },
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "USDC/USDT": {
+      "source": [
+        "balancer-ethereum-usdt-no-quoting",
+        "binance-usdt-no-quoting",
+        "bitget-usdt-no-quoting",
+        "bitmart-usdt-no-quoting",
+        "bitrue-usdt-no-quoting",
+        "curve-ethereum-usdt-no-quoting",
+        "kraken-usdt-no-quoting",
+        "kucoin-usdt-no-quoting",
+        "lbank-usdt-no-quoting",
+        "okx-usdt-no-quoting"
+      ],
+      "deviationCheck": {
+        "deviationWithRecentValues": {
+          "maxPercent": 5,
+          "maxDelayMilliseconds": 120000
+        }
+      },
+      "denomination": "USDT",
+      "rateFeed": false
+    },
     "USDC.e": {
       "source": [
         "camelot-v3-arbitrumone-usdc",
