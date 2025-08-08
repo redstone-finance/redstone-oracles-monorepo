@@ -1,6 +1,5 @@
 {
   "name": "@redstone-finance/stellar-connector",
-  "private": true,
   "version": "0.8.0",
   "description": "A tool to inject RedStone data into Stellar compatible smart contracts",
   "main": "dist/src/index.js",
@@ -30,6 +29,10 @@
     "dotenv": "^16.0.3"
   },
   "files": [
+    "src",
     "dist/src/**/*"
-  ]
+  ],
+  "publishConfig": {
+    "access": "public"
+  }
 }
