@@ -24,7 +24,7 @@ const RETRY_CONFIG: Omit<RedstoneCommon.RetryConfig, "fn"> = {
 export class StellarRpcClient {
   constructor(private readonly server: rpc.Server) {}
 
-  async getAccount(publicKey: string): Promise<Account> {
+  private async getAccount(publicKey: string): Promise<Account> {
     return await this.server.getAccount(publicKey);
   }
 
@@ -45,7 +45,7 @@ export class StellarRpcClient {
       fn: async () => {
         const response = await this.server.getTransaction(hash);
         if (response.status === rpc.Api.GetTransactionStatus.SUCCESS) {
-          return response;
+          return { returnValue: response.returnValue };
         }
         throw new Error(
           `Transaction did not succeed: ${hash}, status: ${response.status}`
@@ -83,7 +83,7 @@ export class StellarRpcClient {
     return await this.server.sendTransaction(assembled);
   }
 
-  async transactionFromOperation(
+  private async transactionFromOperation(
     operation: xdr.Operation<Operation.InvokeHostFunction>,
     sender: string
   ) {
@@ -96,20 +96,24 @@ export class StellarRpcClient {
       .build();
   }
 
-  async simulateOperation(
+  async simulateOperation<T>(
     operation: xdr.Operation<Operation.InvokeHostFunction>,
-    sender: string
+    sender: string,
+    transform: (sim: rpc.Api.SimulateTransactionSuccessResponse) => T
   ) {
     const tx = await this.transactionFromOperation(operation, sender);
 
-    return await this.simulateTransaction(tx);
+    return transform(await this.simulateTransaction(tx));
   }
 
-  async getContractData(
+  async getContractData<T>(
     contract: string | Address | Contract,
     key: xdr.ScVal,
+    transform: (result: rpc.Api.LedgerEntryResult) => T,
     durability?: rpc.Durability
   ) {
-    return await this.server.getContractData(contract, key, durability);
+    return transform(
+      await this.server.getContractData(contract, key, durability)
+    );
   }
 }
