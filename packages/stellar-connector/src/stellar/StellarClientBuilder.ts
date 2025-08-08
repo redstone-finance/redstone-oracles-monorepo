@@ -15,8 +15,16 @@ export class StellarClientBuilder extends MultiExecutor.ClientBuilder<StellarRpc
       throw new Error("Network not set");
     }
 
-    const server = new rpc.Server(this.urls[0], { allowHttp: true });
-
-    return new StellarRpcClient(server);
+    return this.makeMultiExecutor(
+      (url) => new StellarRpcClient(new rpc.Server(url, { allowHttp: true })),
+      {
+        getBlockNumber: StellarClientBuilder.blockNumberConsensusExecutor,
+        executeOperation: MultiExecutor.ExecutionMode.RACE,
+        simulateOperation: MultiExecutor.ExecutionMode.AGREEMENT,
+        getAccountBalance: MultiExecutor.ExecutionMode.AGREEMENT,
+        getContractData: MultiExecutor.ExecutionMode.AGREEMENT,
+        waitForTx: MultiExecutor.ExecutionMode.AGREEMENT,
+      }
+    );
   }
 }
