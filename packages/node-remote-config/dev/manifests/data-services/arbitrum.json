@@ -160,6 +160,8 @@
     "BNB": {
       "source": [
         "binance-usdt",
+        "bingx-usdc",
+        "bingx-usdt",
         "bitget-usdt",
         "bitmart-usdt",
         "kucoin-usdt",
@@ -626,10 +628,12 @@
       "source": [
         "bingx-usdt",
         "bitget-usdt",
+        "bybit-usdt",
         "curve-ethereum-eth",
         "curve-ethereum-eth-2",
         "curve-ethereum-weth",
         "okx-eth",
+        "okx-usdt",
         "uniswap-v2-ethereum-weth"
       ],
       "denomination": "USD",

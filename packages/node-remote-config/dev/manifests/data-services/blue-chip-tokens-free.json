@@ -123,6 +123,8 @@
     "BNB": {
       "source": [
         "binance-usdt",
+        "bingx-usdc",
+        "bingx-usdt",
         "bitget-usdt",
         "bitmart-usdt",
         "kucoin-usdt",
@@ -151,11 +153,15 @@
     "TRX": {
       "source": [
         "binance-usdt",
+        "bingx-usdt",
         "bitget-usdt",
+        "bitmart-usdt",
         "bitrue-usdt",
         "gate-usdt",
+        "kraken-usd",
         "kucoin-usdt",
-        "lbank-usdt"
+        "lbank-usdt",
+        "mexc-usdt"
       ]
     },
     "ATOM": {

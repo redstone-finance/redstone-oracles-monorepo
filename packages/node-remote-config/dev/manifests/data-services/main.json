@@ -53,6 +53,8 @@
     "BNB": {
       "source": [
         "binance-usdt",
+        "bingx-usdt",
+        "bingx-usdc",
         "bitget-usdt",
         "bitmart-usdt",
         "kucoin-usdt",
@@ -281,12 +283,16 @@
     "TRX": {
       "source": [
         "binance-usdt",
+        "bingx-usdt",
         "bitget-usdt",
+        "bitmart-usdt",
         "bitrue-usdt",
         "gate-usdt",
         "kaiko-v2",
+        "kraken-usd",
         "kucoin-usdt",
-        "lbank-usdt"
+        "lbank-usdt",
+        "mexc-usdt"
       ],
       "denomination": "USD",
       "rateFeed": false
@@ -667,6 +673,8 @@
       "source": [
         "bingx-usdt",
         "bitget-usdt",
+        "bybit-usdt",
+        "okx-usdt",
         "curve-ethereum-eth",
         "curve-ethereum-eth-2",
         "curve-ethereum-weth",
@@ -1357,6 +1365,7 @@
     },
     "TON": {
       "source": [
+        "binance-usdt",
         "bitget-usdt",
         "bitmart-usdt",
         "bitrue-usdt",
@@ -2839,7 +2848,12 @@
       "rateFeed": true
     },
     "USDX": {
-      "source": ["curve-ethereum-usdt", "pancake-swap-stable-bnb-usdt"],
+      "source": [
+        "curve-bnb-susdx_bnb_fundamental",
+        "curve-ethereum-usdt",
+        "pancake-swap-stable-bnb-usdt",
+        "pancake-swap-bnb-susdx_bnb_fundamental-500"
+      ],
       "denomination": "USD",
       "rateFeed": false
     },
@@ -2946,7 +2960,8 @@
         "bitrue-usdt",
         "gate-usdt",
         "kucoin-usdt",
-        "okx-usdt"
+        "okx-usdt",
+        "uniswap-v3-base-weth-3000"
       ],
       "denomination": "USD",
       "rateFeed": false
@@ -6856,7 +6871,11 @@
         "pancake-swap-bnb-wbnb-500",
         "uniswap-v3-ethereum-usdc-100",
         "uniswap-v3-ethereum-usdt-100",
-        "uniswap-v3-bnb-usdt-100"
+        "uniswap-v3-bnb-usdt-100",
+        "binance-usdt",
+        "mexc-usdt",
+        "lbank-usdt",
+        "gate-usdt"
       ],
       "denomination": "USD",
       "rateFeed": false
