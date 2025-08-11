@@ -61,6 +61,8 @@
     "BNB": {
       "source": [
         "binance-usdt",
+        "bingx-usdt",
+        "bingx-usdc",
         "bitget-usdt",
         "bitmart-usdt",
         "kucoin-usdt",
