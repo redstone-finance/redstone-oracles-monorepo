@@ -20,15 +20,31 @@ export const updateUsingOevAuction = async (
 ) => {
   logger.log(`Updating using OEV auction`);
   const start = Date.now();
-  const { id, result } = await runOevAuction(
+  const auctionResponse = await runOevAuction(
     relayerConfig,
     adapterContract.signer,
     txDeliveryCalldata
   );
   const auctionFinished = Date.now();
-  logger.log(
-    `Received signed oev id: ${id}, transactions ${result.length} in ${auctionFinished - start}ms `
+  logger.info(
+    `OEV auction finished in ${auctionFinished - start}ms with response`,
+    auctionResponse
   );
+
+  const { id, error, result } = auctionResponse;
+  if (result) {
+    logger.info(
+      `Received signed oev id: ${id}, transactions count: ${result.length}`
+    );
+  } else {
+    if (error?.message?.includes("no solver operations received")) {
+      logger.info(`OEV auction message: no solver operations received`);
+    } else {
+      logger.error(`OEV auction: unexpected behaviour, error: `, error);
+    }
+    return;
+  }
+
   const verificationTimeout =
     relayerConfig.oevAuctionVerificationTimeout ??
     1.5 * relayerConfig.getBlockNumberTimeout;
@@ -56,7 +72,11 @@ export const updateUsingOevAuction = async (
 type OevAuctionResponse = {
   jsonrpc: string;
   id: number;
-  result: string[];
+  result?: string[];
+  error?: {
+    code?: number;
+    message?: string;
+  };
 };
 
 const runOevAuction = async (
