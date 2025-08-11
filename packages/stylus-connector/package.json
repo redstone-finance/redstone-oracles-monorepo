@@ -1,7 +1,7 @@
 {
   "name": "@redstone-finance/stylus-connector",
   "private": true,
-  "version": "0.8.0",
+  "version": "0.9.0",
   "description": "A tool to inject RedStone data into Stylus compatible smart contracts",
   "main": "dist/src/index.js",
   "exports": "./dist/src/index.js",
