@@ -1,6 +1,6 @@
 {
   "name": "@redstone-finance/cache-service",
-  "version": "0.8.0",
+  "version": "0.9.0",
   "main": "dist/src/main.js",
   "exports": "./dist/src/main.js",
   "types": "dist/src/main.d.ts",
