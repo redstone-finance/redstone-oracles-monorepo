@@ -41,7 +41,7 @@ To test MovementPricesContractAdapter i MovementPricesContractConnector follow t
 * Prepare node for test deploying all the required contracts. You have to do it only once until your node is running.
 
   ```sh
-  yarn prepare
+  yarn prepare-test-env
   ```
 
 * Run the test.
