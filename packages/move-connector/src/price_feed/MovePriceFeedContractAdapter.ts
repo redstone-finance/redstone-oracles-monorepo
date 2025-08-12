@@ -1,16 +1,16 @@
-import { Aptos } from "@aptos-labs/ts-sdk";
 import {
   IPriceFeedContractAdapter,
   PriceAndTimestamp,
 } from "@redstone-finance/sdk";
 import { BigNumber } from "ethers";
+import { MoveClient } from "../MoveClient";
 import { MoveContractViewer } from "../MoveContractViewer";
 
 export class MovePriceFeedContractAdapter
   extends MoveContractViewer
   implements IPriceFeedContractAdapter
 {
-  constructor(client: Aptos, packageAddress: string) {
+  constructor(client: MoveClient, packageAddress: string) {
     super(client, "price_feed", packageAddress);
   }
 

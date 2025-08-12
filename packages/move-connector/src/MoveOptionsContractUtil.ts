@@ -1,6 +1,7 @@
-import { Aptos, InputGenerateTransactionOptions } from "@aptos-labs/ts-sdk";
+import { InputGenerateTransactionOptions } from "@aptos-labs/ts-sdk";
 import { loggerFactory } from "@redstone-finance/utils";
 import { DEFAULT_BROADCAST_BUCKETS } from "./consts";
+import { MoveClient } from "./MoveClient";
 import { octasToMove } from "./utils";
 
 export class MoveOptionsContractUtil {
@@ -9,7 +10,7 @@ export class MoveOptionsContractUtil {
   );
 
   static async prepareTransactionOptions(
-    client: Aptos,
+    client: MoveClient,
     writePriceOctasTxGasBudget: number,
     iteration: number = 0,
     accountSequenceNumber?: bigint
@@ -31,7 +32,7 @@ export class MoveOptionsContractUtil {
   }
 
   private static async computeGasPrice(
-    client: Aptos,
+    client: MoveClient,
     iteration: number
   ): Promise<number | undefined> {
     const date = Date.now();

@@ -1,4 +1,5 @@
-import { Account, Aptos } from "@aptos-labs/ts-sdk";
+import { Account } from "@aptos-labs/ts-sdk";
+import { MoveClient } from "../MoveClient";
 import { MoveContractConnector } from "../MoveContractConnector";
 import { MoveTxDeliveryMan } from "../MoveTxDeliveryMan";
 import { TransactionConfig } from "../types";
@@ -10,7 +11,7 @@ export class MovePricesContractConnector extends MoveContractConnector<MovePrice
   private readonly adapter: MovePricesContractAdapter;
 
   constructor(
-    client: Aptos,
+    client: MoveClient,
     args: { packageObjectAddress: string; priceAdapterObjectAddress: string },
     account?: Account,
     config?: TransactionConfig
@@ -18,12 +19,12 @@ export class MovePricesContractConnector extends MoveContractConnector<MovePrice
     super(client);
 
     const txDeliveryMan = account
-      ? MoveTxDeliveryMan.createMultiTxDeliveryMan(client, account, config)
+      ? new MoveTxDeliveryMan(client, account, config)
       : undefined;
 
     this.adapter = new MovePricesContractAdapter(
-      MovePriceAdapterContractViewer.createMultiReader(
-        this.client,
+      new MovePriceAdapterContractViewer(
+        client,
         args.packageObjectAddress,
         args.priceAdapterObjectAddress
       ),
