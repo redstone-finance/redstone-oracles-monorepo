@@ -1,10 +1,10 @@
 import { ethers } from "ethers";
 import { GasEstimator } from "./GasEstimator";
-import { TxDeliveryOptsValidated, unsafeBnToNumber } from "./TxDelivery";
-
-export type AuctionModelFee = {
-  gasPrice: number;
-};
+import {
+  unsafeBnToNumber,
+  type AuctionModelFee,
+  type TxDeliveryOptsValidated,
+} from "./common";
 
 export class AuctionModelGasEstimator implements GasEstimator<AuctionModelFee> {
   constructor(readonly opts: TxDeliveryOptsValidated) {}

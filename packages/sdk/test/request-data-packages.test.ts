@@ -2,11 +2,8 @@ import { DataPackage } from "@redstone-finance/protocol";
 import { RedstoneCommon } from "@redstone-finance/utils";
 import axios from "axios";
 import { ethers } from "ethers";
-import {
-  DataPackagesRequestParams,
-  requestDataPackages,
-  requestRedstonePayload,
-} from "../src";
+import { DataPackagesRequestParams, requestDataPackages } from "../src";
+import { requestRedstonePayload } from "../src/request-redstone-payload";
 import { mockSignedDataPackages } from "./mocks/mock-packages";
 import { server } from "./mocks/server";
 

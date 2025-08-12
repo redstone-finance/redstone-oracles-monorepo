@@ -1,15 +1,8 @@
 import {
   INumericDataPoint,
-  RedstonePayload,
-  SignedDataPackage,
   SignedDataPackagePlainObj,
 } from "@redstone-finance/protocol";
 import { default as redstoneOraclesInitialState } from "./registry/initial-state.json";
-import {
-  DataPackagesRequestParams,
-  DataPackagesResponse,
-  requestDataPackages,
-} from "./request-data-packages";
 
 export const getDecimalsForDataFeedId = (
   dataPackages: SignedDataPackagePlainObj[]
@@ -28,44 +21,6 @@ export const getDecimalsForDataFeedId = (
   return firstDecimal;
 };
 
-export const convertDataPackagesResponse = (
-  signedDataPackagesResponse: DataPackagesResponse,
-  format = "hex",
-  unsignedMetadataMsg?: string
-) => {
-  const signedDataPackages = Object.values(
-    signedDataPackagesResponse
-  ).flat() as SignedDataPackage[];
-
-  const payload = new RedstonePayload(
-    signedDataPackages,
-    unsignedMetadataMsg ?? ""
-  );
-
-  switch (format) {
-    case "json":
-      return JSON.stringify(payload.toObj(), null, 2);
-    case "bytes":
-      return JSON.stringify(Array.from(payload.toBytes()));
-    default:
-      return payload.toBytesHexWithout0xPrefix();
-  }
-};
-
-export const requestRedstonePayload = async (
-  reqParams: DataPackagesRequestParams,
-  format = "hex",
-  unsignedMetadataMsg?: string
-): Promise<string> => {
-  const signedDataPackagesResponse = await requestDataPackages(reqParams);
-
-  return convertDataPackagesResponse(
-    signedDataPackagesResponse,
-    format,
-    unsignedMetadataMsg
-  );
-};
-
 export * from "./contracts/ContractData";
 export * from "./contracts/ContractParamsProvider";
 export * from "./contracts/ContractParamsProviderMock";
@@ -79,4 +34,6 @@ export * from "./DataPackagesResponseCache";
 export * from "./oracle-registry";
 export * from "./pick-closest-to-median";
 export * from "./request-data-packages";
+export * from "./request-data-packages-common";
+export * from "./request-redstone-payload";
 export { redstoneOraclesInitialState };

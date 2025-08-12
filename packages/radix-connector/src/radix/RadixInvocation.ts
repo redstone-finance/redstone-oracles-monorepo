@@ -4,7 +4,7 @@ import {
   tuple,
   Value,
 } from "@radixdlt/radix-engine-toolkit";
-import { RadixTransaction } from "./RadixTransaction";
+import type { RadixTransaction } from "./RadixTransaction";
 
 export abstract class RadixInvocation<T> {
   constructor(
