@@ -1,4 +1,4 @@
-import { GasOracleFn } from "./TxDelivery";
+import type { GasOracleFn } from "./common";
 import { blockscoutStatsGasOracle } from "./custom-gas-oracles/blockscout-stats-gas-oracle";
 import { kavaGasOracle } from "./custom-gas-oracles/kava";
 import { merlinGasOracle } from "./custom-gas-oracles/merlin";
