@@ -5,9 +5,10 @@ import {
   MultiExecutor,
   RedstoneCommon,
 } from "@redstone-finance/utils";
+import { MoveClient } from "./MoveClient";
 import { chainIdToNetwork, chainIdtoUrl } from "./network-ids";
 
-export abstract class MoveClientBuilder extends MultiExecutor.ClientBuilder<Aptos> {
+export abstract class MoveClientBuilder extends MultiExecutor.ClientBuilder<MoveClient> {
   static getInstance(chainType: Extract<ChainType, "movement" | "aptos">) {
     switch (chainType) {
       case ChainTypeEnum.Enum.aptos:
@@ -31,24 +32,24 @@ export abstract class MoveClientBuilder extends MultiExecutor.ClientBuilder<Apto
     const network = chainIdToNetwork(this.chainId);
 
     return this.makeMultiExecutor(
-      (fullnode) =>
-        new Aptos(
-          new AptosConfig({
-            network,
-            fullnode,
-          })
+      (url) =>
+        new MoveClient(
+          new Aptos(
+            new AptosConfig({
+              network,
+              fullnode: url,
+            })
+          )
         ),
       {
-        transaction: {
-          signAndSubmitTransaction: MultiExecutor.ExecutionMode.RACE,
-          waitForTransaction: MultiExecutor.ExecutionMode.RACE,
-        },
-        getAccountInfo: MultiExecutor.ExecutionMode.AGREEMENT,
-        getAccountAPTAmount: MultiExecutor.ExecutionMode.AGREEMENT,
-      },
-      {
-        singleExecutionTimeoutMs: MultiExecutor.SINGLE_EXECUTION_TIMEOUT_MS,
-        allExecutionsTimeoutMs: MultiExecutor.ALL_EXECUTIONS_TIMEOUT_MS,
+        sendSimpleTransaction: MultiExecutor.ExecutionMode.RACE,
+        waitForTransaction: MultiExecutor.ExecutionMode.AGREEMENT,
+        getSequenceNumber: MultiExecutor.ExecutionMode.AGREEMENT,
+        getBlockNumber:
+          MultiExecutor.ClientBuilder.blockNumberConsensusExecutor,
+        getGasPriceEstimation: MultiExecutor.ExecutionMode.AGREEMENT,
+        getBalance: MultiExecutor.ExecutionMode.AGREEMENT,
+        viewOnChain: MultiExecutor.ExecutionMode.AGREEMENT,
       }
     );
   }
