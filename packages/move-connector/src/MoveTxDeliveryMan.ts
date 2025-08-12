@@ -1,22 +1,18 @@
 import {
   Account,
-  AccountAddress,
-  Aptos,
   AptosApiError,
   InputGenerateTransactionPayloadData,
-  TransactionResponse,
 } from "@aptos-labs/ts-sdk";
 import {
   loggerFactory,
-  MultiExecutor,
   OperationQueue,
   RedstoneCommon,
 } from "@redstone-finance/utils";
 import _ from "lodash";
 import { TRANSACTION_DEFAULT_CONFIG } from "./config";
+import { CommittedTransaction, MoveClient } from "./MoveClient";
 import { MoveOptionsContractUtil } from "./MoveOptionsContractUtil";
 import { TransactionConfig } from "./types";
-import { txCost } from "./utils";
 
 const SEQUENCE_NUMBER_TOO_OLD_CODE = "SEQUENCE_NUMBER_TOO_OLD".toLowerCase();
 
@@ -28,8 +24,6 @@ export type MoveTransactionData = InputGenerateTransactionPayloadData & {
   identifier: string;
   deferredDataProvider?: DeferredDataProvider;
 };
-
-const BLOCK_NUMBER_EXECUTION_TIMEOUT_MS = 2_000;
 
 export class MoveTxDeliveryMan {
   private readonly logger = loggerFactory("move-tx-delivery-man");
@@ -43,33 +37,10 @@ export class MoveTxDeliveryMan {
   }
 
   constructor(
-    private readonly client: Aptos,
+    private readonly client: MoveClient,
     private readonly account: Account,
     private readonly config: TransactionConfig = TRANSACTION_DEFAULT_CONFIG
   ) {}
-
-  static createMultiTxDeliveryMan(
-    client: Aptos,
-    account: Account,
-    config: TransactionConfig = TRANSACTION_DEFAULT_CONFIG
-  ) {
-    return MultiExecutor.createForSubInstances(
-      client,
-      (client) => new MoveTxDeliveryMan(client, account, config),
-      {
-        getSequenceNumber: new MultiExecutor.CeilMedianConsensusExecutor(
-          MultiExecutor.DEFAULT_CONFIG.consensusQuorumRatio,
-          BLOCK_NUMBER_EXECUTION_TIMEOUT_MS
-        ),
-      },
-      {
-        ...MultiExecutor.DEFAULT_CONFIG,
-        defaultMode: MultiExecutor.ExecutionMode.FALLBACK,
-        singleExecutionTimeoutMs: MultiExecutor.SINGLE_EXECUTION_TIMEOUT_MS,
-        allExecutionsTimeoutMs: MultiExecutor.ALL_EXECUTIONS_TIMEOUT_MS,
-      }
-    );
-  }
 
   getSignerAddress() {
     return this.account.accountAddress;
@@ -167,22 +138,15 @@ export class MoveTxDeliveryMan {
         .join("; ")
     );
 
-    const transaction = await this.client.transaction.build.simple({
-      sender: this.account.accountAddress,
+    const pendingTransaction = await this.client.sendSimpleTransaction(
       data,
-      options,
-    });
+      this.account,
+      options
+    );
 
-    const pendingTransaction =
-      await this.client.transaction.signAndSubmitTransaction({
-        transaction,
-        signer: this.account,
-      });
-
-    const committedTransaction =
-      await this.client.transaction.waitForTransaction({
-        transactionHash: pendingTransaction.hash,
-      });
+    const committedTransaction = await this.client.waitForTransaction(
+      pendingTransaction.hash
+    );
 
     if (!committedTransaction.success) {
       throw new Error(
@@ -197,7 +161,7 @@ export class MoveTxDeliveryMan {
 
   private async refreshSequenceNumber() {
     this.setSequenceNumber(
-      await this.getSequenceNumber(this.account.accountAddress)
+      await this.client.getSequenceNumber(this.account.accountAddress)
     );
   }
 
@@ -215,41 +179,28 @@ export class MoveTxDeliveryMan {
     this.sequenceNumber = sequenceNumber;
   }
 
-  async getSequenceNumber(accountAddress: AccountAddress) {
-    const accountInfo = await this.client.getAccountInfo({ accountAddress });
-    this.logger.debug(
-      `Fetched sequence number: ${accountInfo.sequence_number}`
-    );
-
-    return BigInt(accountInfo.sequence_number);
-  }
-
-  private processCommittedTransaction(tx: TransactionResponse) {
-    const cost = txCost(tx);
+  private processCommittedTransaction(tx: CommittedTransaction) {
     this.logger.log(
-      `Transaction ${tx.hash} finished, status: COMMITTED, cost: ${cost} MOVE.`
+      `Transaction ${tx.hash} finished, status: COMMITTED, cost: ${tx.cost} MOVE.`
     );
 
-    if ("sequence_number" in tx) {
-      this.setNextSequenceNumber(tx.sequence_number);
+    if (tx.sequenceNumber) {
+      this.setNextSequenceNumber(tx.sequenceNumber);
     }
   }
 
   private async processTransactionError(e: unknown) {
     let didLog = false;
-    if ("transaction" in (e as Error)) {
-      const fail = e as {
-        transaction: { sequence_number: string; vm_status: string };
-      };
-
+    const failInfo = MoveTxDeliveryMan.maybeGetTransactionFailInfo(e);
+    if (failInfo) {
       this.logger.error(
-        fail.transaction.vm_status,
-        MoveTxDeliveryMan.extractSimpleFields(fail.transaction)
+        failInfo.vm_status,
+        MoveTxDeliveryMan.extractSimpleFields(failInfo)
       );
 
       didLog = true;
 
-      this.setNextSequenceNumber(fail.transaction.sequence_number);
+      this.setNextSequenceNumber(failInfo.sequence_number);
     } else if (MoveTxDeliveryMan.isSequenceNumberTooOldError(e)) {
       await this.refreshSequenceNumber();
     }
@@ -261,7 +212,31 @@ export class MoveTxDeliveryMan {
     this.logger.error(RedstoneCommon.stringifyError(e));
   }
 
+  private static maybeGetTransactionFailInfo(
+    e: unknown
+  ): { sequence_number: string; vm_status: string } | undefined {
+    if (e instanceof AggregateError) {
+      return e.errors
+        .map(MoveTxDeliveryMan.maybeGetTransactionFailInfo)
+        .filter(RedstoneCommon.isDefined)
+        .at(0);
+    }
+
+    if ("transaction" in (e as Error)) {
+      const fail = e as {
+        transaction: { sequence_number: string; vm_status: string };
+      };
+
+      return fail.transaction;
+    }
+
+    return undefined;
+  }
+
   private static isSequenceNumberTooOldError(e: unknown) {
+    if (e instanceof AggregateError) {
+      return e.errors.some(MoveTxDeliveryMan.isSequenceNumberTooOldError);
+    }
     return (
       e instanceof AptosApiError &&
       e.message.toLowerCase().includes(SEQUENCE_NUMBER_TOO_OLD_CODE)

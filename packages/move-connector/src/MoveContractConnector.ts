@@ -1,7 +1,8 @@
-import { Account, Aptos, PrivateKeyVariants } from "@aptos-labs/ts-sdk";
+import { Account, PrivateKeyVariants } from "@aptos-labs/ts-sdk";
 import { IContractConnector } from "@redstone-finance/sdk";
 import { loggerFactory, RedstoneCommon } from "@redstone-finance/utils";
 import { OCTAS_PER_MOVE } from "./consts";
+import { MoveClient } from "./MoveClient";
 import { makeAptosAccount } from "./utils";
 
 export const TIMEOUT_IN_SEC = 20;
@@ -13,7 +14,7 @@ export class MoveContractConnector<Adapter>
   private readonly account?: Account;
 
   constructor(
-    protected readonly client: Aptos,
+    protected readonly client: MoveClient,
     privateKey?: RedstoneCommon.PrivateKey
   ) {
     if (privateKey) {
@@ -29,17 +30,12 @@ export class MoveContractConnector<Adapter>
   }
 
   async getBlockNumber(): Promise<number> {
-    return Number((await this.client.getLedgerInfo()).block_height);
+    return await this.client.getBlockNumber();
   }
 
   async waitForTransaction(txId: string): Promise<boolean> {
     try {
-      const committedTx = await this.client.waitForTransaction({
-        transactionHash: txId,
-        options: {
-          timeoutSecs: TIMEOUT_IN_SEC,
-        },
-      });
+      const committedTx = await this.client.waitForTransaction(txId);
 
       return committedTx.success;
     } catch (exception) {
@@ -53,11 +49,8 @@ export class MoveContractConnector<Adapter>
 
   async getNormalizedBalance(address: string): Promise<bigint> {
     return (
-      BigInt(
-        await this.client.account.getAccountAPTAmount({
-          accountAddress: address,
-        })
-      ) * BigInt(10 ** 18 / OCTAS_PER_MOVE)
+      BigInt(await this.client.getBalance(address)) *
+      BigInt(10 ** 18 / OCTAS_PER_MOVE)
     );
   }
 
@@ -67,19 +60,14 @@ export class MoveContractConnector<Adapter>
     }
     amount = amount * OCTAS_PER_MOVE;
 
-    const transaction = await this.client.transaction.build.simple({
-      sender: this.account.accountAddress,
-      data: {
+    await this.client.sendSimpleTransaction(
+      {
         function: "0x1::aptos_account::transfer",
         typeArguments: [],
         functionArguments: [toAddress, amount],
       },
-    });
-
-    await this.client.signAndSubmitTransaction({
-      signer: this.account,
-      transaction,
-    });
+      this.account
+    );
   }
 
   getSignerAddress() {
