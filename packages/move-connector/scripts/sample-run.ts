@@ -3,11 +3,16 @@ import {
   getSignersForDataServiceId,
   sampleRun,
 } from "@redstone-finance/sdk";
-import { makeAptosAccount, MovePricesContractConnector } from "../src";
+import { RedstoneCommon } from "@redstone-finance/utils";
+import { z } from "zod";
+import {
+  makeAptosAccount,
+  MoveClientBuilder,
+  MovePricesContractConnector,
+} from "../src";
 import { MovePriceFeedContractConnector } from "../src/price_feed/MovePriceFeedContractConnector";
 import { PRICE_ADAPTER, PRICE_FEED } from "./contract-name-enum";
 import { readObjectAddress } from "./deploy-utils";
-import { makeAptos } from "./utils";
 
 async function main() {
   const paramsProvider = new ContractParamsProvider({
@@ -16,7 +21,15 @@ async function main() {
     dataPackagesIds: ["ETH"],
     authorizedSigners: getSignersForDataServiceId("redstone-primary-prod"),
   });
-  const aptos = makeAptos();
+  const client = MoveClientBuilder.getInstance("aptos")
+    .withChainId(1)
+    .withRpcUrls(
+      RedstoneCommon.getFromEnv(
+        "RPC_URLS",
+        z.array(z.string().url()).optional()
+      ) ?? [RedstoneCommon.getFromEnv("RPC_URL", z.string().url())]
+    )
+    .build();
   const account = makeAptosAccount();
 
   const { contractAddress, objectAddress } = readObjectAddress(PRICE_ADAPTER);
@@ -28,13 +41,13 @@ async function main() {
   );
 
   const moveContractConnector = new MovePricesContractConnector(
-    aptos,
+    client,
     { packageObjectAddress, priceAdapterObjectAddress },
     account
   );
 
   const ethPriceFeedConnector = new MovePriceFeedContractConnector(
-    aptos,
+    client,
     feedAddress.toString()
   );
   await sampleRun(paramsProvider, moveContractConnector, ethPriceFeedConnector);

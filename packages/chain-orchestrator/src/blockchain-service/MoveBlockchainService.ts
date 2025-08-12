@@ -1,5 +1,7 @@
-import { Aptos } from "@aptos-labs/ts-sdk";
-import { MoveContractConnector } from "@redstone-finance/move-connector";
+import {
+  MoveClient,
+  MoveContractConnector,
+} from "@redstone-finance/move-connector";
 import { loggerFactory, RedstoneCommon } from "@redstone-finance/utils";
 import { NonEvmBlockchainService } from "./NonEvmBlockchainService";
 
@@ -7,21 +9,23 @@ export class MoveBlockchainService extends NonEvmBlockchainService {
   private readonly logger = loggerFactory("movement-blockchain-service");
 
   constructor(
-    private client: Aptos,
+    private client: MoveClient,
     privateKey?: RedstoneCommon.PrivateKey
   ) {
     super(new MoveContractConnector(client, privateKey));
   }
 
   async getTimeForBlock(blockHeight: number) {
-    const block = await this.client.getBlockByHeight({ blockHeight });
+    const block = await this.client
+      .getMultiAptos()
+      .getBlockByHeight({ blockHeight });
 
     return new Date(Math.floor(Number(block.block_timestamp) / 1000));
   }
 
   async tryGetBlock(blockHeight: number) {
     try {
-      return await this.client.getBlockByHeight({
+      return await this.client.getMultiAptos().getBlockByHeight({
         blockHeight,
         options: { withTransactions: true },
       });
@@ -74,7 +78,7 @@ export class MoveBlockchainService extends NonEvmBlockchainService {
       }
   `;
 
-    return await this.client.queryIndexer<{
+    return await this.client.getMultiAptos().queryIndexer<{
       user_transactions: { version: number; block_height: number }[];
     }>({
       query: {
@@ -84,7 +88,7 @@ export class MoveBlockchainService extends NonEvmBlockchainService {
   }
 
   async getTransactionByVersion(version: number) {
-    return await this.client.getTransactionByVersion({
+    return await this.client.getMultiAptos().getTransactionByVersion({
       ledgerVersion: version,
     });
   }
