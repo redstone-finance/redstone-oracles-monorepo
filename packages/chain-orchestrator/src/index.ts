@@ -6,6 +6,7 @@ export * from "./blockchain-service/MoveBlockchainService";
 export * from "./blockchain-service/NonEvmBlockchainService";
 export * from "./blockchain-service/RadixBlockchainService";
 export * from "./blockchain-service/SolanaBlockchainService";
+export * from "./blockchain-service/StellarBlockchainService";
 export * from "./blockchain-service/SuiBlockchainService";
 export * from "./get-zrodelko-private-key";
 export * from "./non-evm/relayer-monitoring-connector/get-relayer-monitoring-non-evm-contract-connector";
