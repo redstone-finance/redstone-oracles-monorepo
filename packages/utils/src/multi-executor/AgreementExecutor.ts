@@ -1,4 +1,4 @@
-import { getS, stringify, stringifyError } from "../common";
+import { getS, stringify } from "../common";
 import { ParallelExecutor } from "./ParallelExecutor";
 
 export class AgreementExecutor<R> extends ParallelExecutor<R> {
@@ -58,17 +58,15 @@ export class AgreementExecutor<R> extends ParallelExecutor<R> {
 
     this.logger.debug("Successful results:", successfulResults);
 
-    const failedCount = errorResults.length;
     if (this.shouldResolveUnagreedToUndefined) {
       return true; // Will be resolved to undefined
     }
 
-    throw new Error(
-      `Agreement failed: got max ${maxCount} equal result${getS(maxCount)}, ` +
-        `needed at least ${quorum}` +
-        (failedCount > 0
-          ? `; ${stringifyError(new AggregateError(errorResults, `${failedCount} fail${getS(failedCount)}`))})`
-          : "")
+    const failedCount = errorResults.length;
+    throw new AggregateError(
+      errorResults,
+      `Agreement failed: got max ${maxCount} equal result${getS(maxCount)}, needed at least ${quorum}` +
+        (failedCount > 0 ? `; ${failedCount} fail${getS(failedCount)}` : "")
     );
   }
 

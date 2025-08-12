@@ -13,6 +13,7 @@ import { readObjectAddress } from "../scripts/deploy-utils";
 import { makeAptos } from "../scripts/utils";
 import {
   makeAptosAccount,
+  MoveClient,
   MovePricesContractAdapter,
   MovePricesContractConnector,
 } from "../src";
@@ -52,7 +53,7 @@ describe("MovePricesContractAdapter", () => {
     const packageObjectAddress = contractAddress.toString();
     const priceAdapterObjectAddress = objectAddress!.toString();
     connector = new MovePricesContractConnector(
-      aptos,
+      new MoveClient(aptos),
       { packageObjectAddress, priceAdapterObjectAddress },
       account
     );

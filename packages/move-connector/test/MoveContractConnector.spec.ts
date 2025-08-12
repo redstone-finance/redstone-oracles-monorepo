@@ -11,7 +11,11 @@ import "dotenv/config";
 import { PRICE_ADAPTER } from "../scripts/contract-name-enum";
 import { readObjectAddress } from "../scripts/deploy-utils";
 import { makeAptos } from "../scripts/utils";
-import { MovePricesContractAdapter, MovePricesContractConnector } from "../src";
+import {
+  MoveClient,
+  MovePricesContractAdapter,
+  MovePricesContractConnector,
+} from "../src";
 import {
   FAKE_PRIVKEY_SECP256K1,
   NETWORK,
@@ -45,7 +49,7 @@ describe("MovePricesContractConnector", () => {
     const packageObjectAddress = contractAddress.toString();
     const priceAdapterObjectAddress = objectAddress!.toString();
     connector = new MovePricesContractConnector(
-      aptos,
+      new MoveClient(aptos),
       { packageObjectAddress, priceAdapterObjectAddress },
       account
     );
