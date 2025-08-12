@@ -7,7 +7,8 @@ import { ethers, providers } from "ethers";
 import { getProviderNetworkInfo } from "../common";
 import { ProviderWithAgreement } from "../providers/ProviderWithAgreement";
 import { ProviderWithFallback } from "../providers/ProviderWithFallback";
-import { TxDelivery, TxDeliveryOpts, TxDeliverySigner } from "./TxDelivery";
+import { TxDelivery, TxDeliverySigner } from "./TxDelivery";
+import type { TxDeliveryOpts } from "./common";
 
 export type TxDeliveryManSupportedProviders =
   | providers.JsonRpcProvider

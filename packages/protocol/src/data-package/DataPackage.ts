@@ -1,9 +1,14 @@
+import type { Signature } from "ethers";
 import {
   arrayify,
+  base64,
+  computeAddress,
   concat,
   hexlify,
+  joinSignature,
   keccak256,
   SigningKey,
+  splitSignature,
 } from "ethers/lib/utils";
 import {
   DATA_POINT_VALUE_BYTE_SIZE_BS,
@@ -14,7 +19,7 @@ import { Serializable } from "../common/Serializable";
 import { assert, convertIntegerNumberToBytes } from "../common/utils";
 import { deserializeDataPointFromObj } from "../data-point/data-point-deserializer";
 import { DataPoint, DataPointPlainObj } from "../data-point/DataPoint";
-import { SignedDataPackage } from "./SignedDataPackage";
+import { UniversalSigner } from "../UniversalSigner";
 
 export interface DataPackagePlainObj {
   dataPoints: DataPointPlainObj[];
@@ -146,4 +151,116 @@ export class DataPackage extends Serializable {
       DATA_POINT_VALUE_BYTE_SIZE_BS
     );
   }
+}
+
+export interface SignedDataPackagePlainObj extends DataPackagePlainObj {
+  signature: string; // base64-encoded joined signature
+}
+
+/**
+ * represents data package created by RedStone oracle-node and returned from DDL
+ */
+export class SignedDataPackage
+  extends Serializable
+  implements SignedDataPackageLike
+{
+  public readonly signature: Signature;
+
+  constructor(
+    public readonly dataPackage: DataPackage,
+    signature: Signature | string
+  ) {
+    super();
+    if (typeof signature === "string") {
+      this.signature = splitSignature(signature);
+    } else {
+      this.signature = signature;
+    }
+  }
+
+  serializeSignatureToBytes(): Uint8Array {
+    return arrayify(this.serializeSignatureToHex());
+  }
+
+  serializeSignatureToHex(): string {
+    return joinSignature(this.signature);
+  }
+
+  recoverSignerPublicKey(): Uint8Array {
+    return recoverSignerPublicKey(this);
+  }
+
+  recoverSignerAddress(): string {
+    return recoverSignerAddress(this);
+  }
+
+  toBytes(): Uint8Array {
+    return concat([
+      this.dataPackage.toBytes(),
+      this.serializeSignatureToBytes(),
+    ]);
+  }
+
+  toObj(): SignedDataPackagePlainObj {
+    const signatureHex = this.serializeSignatureToHex();
+
+    return {
+      ...this.dataPackage.toObj(),
+      signature: base64.encode(signatureHex),
+    };
+  }
+
+  public static fromObj(
+    plainObject: SignedDataPackagePlainObj
+  ): SignedDataPackage {
+    return SignedDataPackage.fromObjLikeThis(
+      deserializeSignedPackage(plainObject)
+    );
+  }
+
+  private static fromObjLikeThis(object: SignedDataPackageLike) {
+    return new SignedDataPackage(object.dataPackage, object.signature);
+  }
+}
+
+export interface SignedDataPackageLike {
+  signature: Signature;
+  dataPackage: DataPackage;
+}
+
+export function deserializeSignedPackage(
+  plainObject: SignedDataPackagePlainObj
+): SignedDataPackageLike {
+  const signatureBase64 = plainObject.signature;
+  if (!signatureBase64) {
+    throw new Error("Signature can not be empty");
+  }
+  const signatureBytes: Uint8Array = base64.decode(signatureBase64);
+  const parsedSignature = splitSignature(signatureBytes);
+
+  const { signature: _, ...unsignedDataPackagePlainObj } = plainObject;
+  const unsignedDataPackage = DataPackage.fromObj(unsignedDataPackagePlainObj);
+
+  return { signature: parsedSignature, dataPackage: unsignedDataPackage };
+}
+
+export function recoverSignerPublicKey(
+  object: SignedDataPackageLike
+): Uint8Array {
+  return UniversalSigner.recoverPublicKey(
+    object.dataPackage.getSignableHash(),
+    object.signature
+  );
+}
+
+export function recoverSignerAddress(object: SignedDataPackageLike): string {
+  const signerPublicKeyBytes = recoverSignerPublicKey(object);
+
+  return computeAddress(signerPublicKeyBytes);
+}
+
+export function recoverDeserializedSignerAddress(
+  plainObj: SignedDataPackagePlainObj
+): string {
+  return recoverSignerAddress(deserializeSignedPackage(plainObj));
 }

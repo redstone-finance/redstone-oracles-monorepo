@@ -1,8 +1,8 @@
 import { loggerFactory, RedstoneCommon } from "@redstone-finance/utils";
 import {
-  DataPackagesResponse,
+  type DataPackagesResponse,
   getResponseTimestamp,
-} from "./request-data-packages";
+} from "./request-data-packages-common";
 
 export class RequestDataPackagesLogger {
   private readonly initialDate: number;

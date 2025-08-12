@@ -8,12 +8,9 @@ import {
   RedstoneCommon,
 } from "@redstone-finance/utils";
 import { BigNumber } from "ethers";
-import {
-  EvmBlockchainService,
-  getNonEvmBlockchainService,
-  getProviderWithRpcUrls,
-} from "../index";
-import { getProviderMemoized } from "./get-provider";
+import { EvmBlockchainService } from "../blockchain-service/EvmBlockchainService";
+import { getNonEvmBlockchainService } from "../blockchain-service/get-non-evm-blockchain-service";
+import { getProviderMemoized, getProviderWithRpcUrls } from "./get-provider";
 
 export interface BalanceProvider {
   getBalance(addressOrName: string, blockTag?: number): Promise<BigNumber>;

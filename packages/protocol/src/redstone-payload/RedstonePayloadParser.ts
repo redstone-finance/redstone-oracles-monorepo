@@ -13,8 +13,7 @@ import {
   UNSIGNED_METADATA_BYTE_SIZE_BS,
 } from "../common/redstone-constants";
 import { convertBytesToNumber } from "../common/utils";
-import { DataPackage } from "../data-package/DataPackage";
-import { SignedDataPackage } from "../data-package/SignedDataPackage";
+import { DataPackage, SignedDataPackage } from "../data-package/DataPackage";
 import { DataPoint } from "../data-point/DataPoint";
 import { NumericDataPoint } from "../data-point/NumericDataPoint";
 

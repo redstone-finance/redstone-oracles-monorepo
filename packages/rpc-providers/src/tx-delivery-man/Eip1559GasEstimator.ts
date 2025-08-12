@@ -6,18 +6,17 @@ import {
 import { providers } from "ethers";
 import { getProviderNetworkId } from "../common";
 import { GasEstimator } from "./GasEstimator";
-import { TxDeliveryOptsValidated, unsafeBnToNumber } from "./TxDelivery";
+import {
+  unsafeBnToNumber,
+  type Eip1559Fee,
+  type TxDeliveryOptsValidated,
+} from "./common";
 
 type FeeHistoryResponse = { reward: string[] };
 
 // as stated in eth spec max increase is 12.5% per block
 // however this fee is refunded anyway, so we are okey with having bigger margin
 const BASE_FEE_SCALER = 2;
-
-export type Eip1559Fee = {
-  maxFeePerGas: number;
-  maxPriorityFeePerGas: number;
-};
 
 export class Eip1559GasEstimator implements GasEstimator<Eip1559Fee> {
   constructor(readonly opts: TxDeliveryOptsValidated) {}

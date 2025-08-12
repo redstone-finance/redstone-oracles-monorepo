@@ -1,5 +1,5 @@
 import { providers } from "ethers";
-import { FeeStructure } from "./TxDelivery";
+import type { FeeStructure } from "./common";
 
 export interface GasEstimator<T extends FeeStructure> {
   getFees(provider: providers.JsonRpcProvider): Promise<T>;
