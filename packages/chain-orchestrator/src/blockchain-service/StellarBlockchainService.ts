@@ -5,13 +5,15 @@ import {
 import { NonEvmBlockchainService } from "./NonEvmBlockchainService";
 
 export class StellarBlockchainService extends NonEvmBlockchainService {
-  constructor(client: StellarRpcClient) {
+  constructor(private client: StellarRpcClient) {
     super(new StellarContractConnector(client));
   }
 
-  // eslint-disable-next-line @typescript-eslint/class-methods-use-this
-  getTimeForBlock(_blockHeight: number) {
-    console.warn("getTimeForBlock is not supported for Stellar");
-    return Promise.resolve(new Date(0));
+  async getTimeForBlock(sequence: number) {
+    return await this.client.getTimeForBlock(sequence);
+  }
+
+  async getTransactions(startLedger: number, endLedger: number) {
+    return await this.client.getTransactions(startLedger, endLedger);
   }
 }
