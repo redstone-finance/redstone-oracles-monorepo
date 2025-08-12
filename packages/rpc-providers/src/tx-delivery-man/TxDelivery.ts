@@ -4,20 +4,19 @@ import {
   TransactionResponse,
 } from "@ethersproject/providers";
 import { loggerFactory, RedstoneCommon, Tx } from "@redstone-finance/utils";
-import { BigNumber, providers, utils } from "ethers";
+import { providers, utils } from "ethers";
 import _ from "lodash";
-import { z } from "zod";
 import { EthersError, isEthersError } from "../common";
-import {
-  AuctionModelFee,
-  AuctionModelGasEstimator,
-} from "./AuctionModelGasEstimator";
+import { AuctionModelGasEstimator } from "./AuctionModelGasEstimator";
 import { CHAIN_ID_TO_GAS_ORACLE } from "./CustomGasOracles";
-import { Eip1559Fee, Eip1559GasEstimator } from "./Eip1559GasEstimator";
+import { Eip1559GasEstimator } from "./Eip1559GasEstimator";
 import { GasEstimator } from "./GasEstimator";
 import { GasLimitEstimator } from "./GasLimitEstimator";
-
-export type FeeStructure = Eip1559Fee | AuctionModelFee;
+import type {
+  FeeStructure,
+  TxDeliveryOpts,
+  TxDeliveryOptsValidated,
+} from "./common";
 
 export type ContractOverrides = {
   nonce: number;
@@ -55,83 +54,6 @@ type DeliveryManTx =
       data: string;
     };
 
-export type GasOracleFn = (
-  opts: TxDeliveryOptsValidated,
-  attempt: number
-) => Promise<FeeStructure>;
-
-export const NewestBlockTypeEnum = z.enum(["latest", "pending"]);
-export type NewestBlockType = z.infer<typeof NewestBlockTypeEnum>;
-
-export type TxDeliveryOpts = {
-  /**
-   * It depends on network block finalization,
-   * For example, for ETH ~12 s block times we should set it to 14_000
-   */
-  expectedDeliveryTimeMs: number;
-
-  /**
-   * Gas limit used by contract
-   */
-  gasLimit?: number;
-
-  /**
-   * If network support arbitrum like 2D fees should be set to true
-   * more info: https://medium.com/offchainlabs/understanding-arbitrum-2-dimensional-fees-fd1d582596c9
-   */
-  twoDimensionalFees?: boolean;
-
-  /**
-   * Max number of attempts to deliver transaction
-   */
-  maxAttempts?: number;
-
-  /**
-   * Multiply last failed gas fee by
-   */
-  multiplier?: number;
-
-  /**
-   * Multiply las failed gas limit by
-   */
-  gasLimitMultiplier?: number;
-
-  /**
-   * If we want to take rewards from the last block we can achieve is using percentiles
-   * 75 percentile we will receive reward which was given by 75% of users and 25% of them has given bigger reward
-   * the bigger the value the higher priority fee
-   * If you want to prioritize speed over cost choose number between 50-95
-   * If you want to prioritize cost over speed choose numbers between 1-50
-   */
-  percentileOfPriorityFee?: number;
-
-  /**
-   * How many blocks to use in eth_feeHistory
-   */
-  numberOfBlocksForFeeHistory?: number;
-
-  /**
-   * Block to start fetching the fee history data from
-   */
-  newestBlockForFeeHistory?: NewestBlockType;
-
-  /**
-   * Should be set to true if chain doesn't support EIP1559
-   */
-  isAuctionModel?: boolean;
-
-  /**
-   * Forcefully disable custom gas oracle if defined
-   */
-  forceDisableCustomGasOracle?: boolean;
-
-  logger?: (text: string) => void;
-
-  gasOracleTimeout?: number;
-};
-
-export const unsafeBnToNumber = (bn: BigNumber) => Number(bn.toString());
-
 const logger = loggerFactory("TxDelivery");
 
 export const DEFAULT_TX_DELIVERY_OPTS = {
@@ -146,13 +68,6 @@ export const DEFAULT_TX_DELIVERY_OPTS = {
   numberOfBlocksForFeeHistory: 2,
   newestBlockForFeeHistory: "pending",
   logger: logger.log.bind(logger),
-};
-
-export type TxDeliveryOptsValidated = Omit<
-  Required<TxDeliveryOpts>,
-  "gasLimit"
-> & {
-  gasLimit?: number;
 };
 
 export type TxDeliverySigner = {

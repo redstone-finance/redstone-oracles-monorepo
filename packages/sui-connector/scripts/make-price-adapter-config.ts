@@ -3,7 +3,8 @@ import {
   getSignersForDataServiceId,
 } from "@redstone-finance/sdk";
 import { RedstoneCommon } from "@redstone-finance/utils";
-import { DEFAULT_GAS_BUDGET, PriceAdapterConfig } from "../src";
+import { PriceAdapterConfig } from "../src/PriceAdapterConfig";
+import { DEFAULT_GAS_BUDGET } from "../src/SuiContractUtil";
 
 export function makeSuiDeployConfig(
   dataServiceId: DataServiceIds = "redstone-primary-prod"

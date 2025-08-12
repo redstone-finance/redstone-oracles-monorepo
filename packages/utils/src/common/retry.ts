@@ -1,5 +1,5 @@
 import { loggerFactory } from "../logger";
-import { stringifyError } from "./errors";
+import { stringifyError, type UnrecoverableError } from "./errors";
 import { sleep } from "./time";
 
 const logger = loggerFactory("retry");
@@ -17,10 +17,6 @@ export type RetryConfig<
     backOffBase: number;
   };
 };
-
-export class UnrecoverableError extends Error {
-  unrecoverable?: boolean = true;
-}
 
 export const isErrorUnrecoverable = (err: Error): err is UnrecoverableError =>
   !!(err as UnrecoverableError).unrecoverable;

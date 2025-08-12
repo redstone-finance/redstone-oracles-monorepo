@@ -1,6 +1,6 @@
 import { Contract } from "ethers";
 import { IRedstoneContractAdapter } from "../../core/contract-interactions/IRedstoneContractAdapter";
-import {
+import type {
   MultiFeedAdapterWithoutRounds,
   RedstoneAdapterBase,
 } from "../../index";

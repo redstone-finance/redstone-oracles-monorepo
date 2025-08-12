@@ -1,7 +1,9 @@
 import { Wallet } from "ethers";
 import { computePublicKey, hexlify } from "ethers/lib/utils";
-import { DataPackage } from "../src/data-package/DataPackage";
-import { SignedDataPackage } from "../src/data-package/SignedDataPackage";
+import {
+  DataPackage,
+  SignedDataPackage,
+} from "../src/data-package/DataPackage";
 import { NumericDataPoint } from "../src/data-point/NumericDataPoint";
 
 const TIMESTAMP_FOR_TESTS = 1654353400000;

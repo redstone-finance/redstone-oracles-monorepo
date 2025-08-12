@@ -1,6 +1,6 @@
 import { RedstonePayloadParser } from "@redstone-finance/protocol";
 import _ from "lodash";
-import { DataPackagesResponse } from "../request-data-packages";
+import type { DataPackagesResponse } from "../request-data-packages-common";
 import { ContractParamsProvider } from "./ContractParamsProvider";
 
 export class ContractParamsProviderMock extends ContractParamsProvider {
