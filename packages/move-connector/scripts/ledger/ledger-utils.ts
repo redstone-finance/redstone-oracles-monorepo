@@ -52,6 +52,11 @@ export const signTx = async (
   accountId: number
 ) => {
   const msg = generateSigningMessageForTransaction(tx);
+
+  console.log(
+    `Serialized transaction, check with \`wtf\`: ${tx.bcsToHex().toStringWithoutPrefix()}`
+  );
+
   const signed = await aptos.signTransaction(
     getDerivationPath(accountId),
     Buffer.from(msg)
