@@ -3174,6 +3174,13 @@
       ],
       "denomination": "HYPE",
       "rateFeed": true
+    },
+    "thBILL_FUNDAMENTAL": {
+      "source": [
+        "ethereum-evm-fetcher-theo"
+      ],
+      "denomination": "USDC",
+      "rateFeed": true
     }
   },
   "multiPointPackages": {
