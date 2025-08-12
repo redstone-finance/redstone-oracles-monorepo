@@ -7,6 +7,10 @@ import axios from "axios";
 import { z } from "zod";
 import { resolveDataServiceUrls } from "./data-services-urls";
 import { pickDataFeedPackagesClosestToMedian } from "./pick-closest-to-median";
+import {
+  getResponseTimestamp,
+  type DataPackagesResponse,
+} from "./request-data-packages-common";
 import { RequestDataPackagesLogger } from "./RequestDataPackagesLogger";
 
 const GET_REQUEST_TIMEOUT = 5_000;
@@ -96,13 +100,6 @@ type DataPackagesQuery =
 
 export type DataPackagesRequestParams = DataPackagesRequestParamsInternal &
   DataPackagesQuery;
-
-/**
- * represents per-feed response from DDL
- */
-export interface DataPackagesResponse {
-  [dataPackageId: string]: SignedDataPackage[] | undefined;
-}
 
 export interface ValuesForDataFeeds {
   [dataFeedId: string]: bigint | undefined;
@@ -219,9 +216,6 @@ export const requestDataPackages = async (
     throw new Error(errMessage);
   }
 };
-
-export const getResponseTimestamp = (response: DataPackagesResponse) =>
-  Object.values(response).at(0)?.at(0)?.dataPackage.timestampMilliseconds ?? 0;
 
 const getTheMostRecentDataPackages = (
   promises: Promise<DataPackagesResponse>[],

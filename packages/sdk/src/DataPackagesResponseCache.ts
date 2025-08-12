@@ -1,9 +1,7 @@
 import { loggerFactory } from "@redstone-finance/utils";
 import _ from "lodash";
-import {
-  DataPackagesRequestParams,
-  DataPackagesResponse,
-} from "./request-data-packages";
+import { DataPackagesRequestParams } from "./request-data-packages";
+import type { DataPackagesResponse } from "./request-data-packages-common";
 
 export class DataPackagesResponseCache {
   private readonly logger = loggerFactory("data-packages-response-cache");
