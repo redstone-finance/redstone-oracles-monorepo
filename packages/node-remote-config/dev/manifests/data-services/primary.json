@@ -1682,6 +1682,7 @@
       "source": [
         "blackhole-avalanche-usdc-75",
         "bullish-usdc",
+        "bullish-btc-reversed",
         "pharaoh-avalanche-usdc-50",
         "trader-joe-v2-avalanche-usdc",
         "trader-joe-v2-avalanche-usdt",
@@ -2600,13 +2601,15 @@
         "bingx-usdt",
         "bitget-usdt",
         "bitmart-usdt",
+        "bullish-usdc",
+        "bullish-btc-reversed",
         "bybit-usdt",
+        "curve-ethereum-usdc",
         "gate-usdt",
         "kraken-usd",
         "kucoin-usdt",
         "okx-usdt",
-        "uniswap-v3-ethereum-usdt-100",
-        "curve-ethereum-usdc"
+        "uniswap-v3-ethereum-usdt-100"
       ],
       "denomination": "USD",
       "rateFeed": false
