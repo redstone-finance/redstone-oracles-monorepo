@@ -1,4 +1,4 @@
-import { RedstoneCommon } from "..";
+import * as RedstoneCommon from "../common";
 
 // CONSTANTS WHICH ARE NOT PART OF THE PROTOCOL BUT USED BY MORE THEN ONE PACKAGE
 

@@ -1,6 +1,6 @@
 import { IContractConnector } from "@redstone-finance/sdk";
 import { BigNumber } from "ethers";
-import { IBlockchainService } from "./IBlockchainService";
+import type { IBlockchainService } from "./IBlockchainService";
 
 export abstract class NonEvmBlockchainService implements IBlockchainService {
   protected constructor(private connector: IContractConnector<unknown>) {}
