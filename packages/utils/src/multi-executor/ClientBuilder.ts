@@ -7,7 +7,7 @@ import {
 } from "../NetworkId";
 import { CeilMedianConsensusExecutor } from "./CeilMedianConsensusExecutor";
 import { DEFAULT_CONFIG, makeBaseConfig, NestedMethodConfig } from "./config";
-import { create } from "./create";
+import { create } from "./MultiExecutorFactory";
 import { QuarantinedListFnDelegate } from "./QuarantinedListFnDelegate";
 
 export const SINGLE_EXECUTION_TIMEOUT_MS = 7_000;

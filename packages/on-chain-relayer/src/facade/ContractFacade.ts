@@ -7,7 +7,7 @@ import {
 } from "@redstone-finance/sdk";
 import { loggerFactory, RedstoneCommon } from "@redstone-finance/utils";
 import { RelayerConfig } from "../config/RelayerConfig";
-import { IRedstoneContractAdapter } from "../core/contract-interactions/IRedstoneContractAdapter";
+import type { IRedstoneContractAdapter } from "../core/contract-interactions/IRedstoneContractAdapter";
 import { makeDataPackagesRequestParams } from "../core/make-data-packages-request-params";
 import { ContractData, ShouldUpdateContext, UpdatePricesArgs } from "../types";
 
