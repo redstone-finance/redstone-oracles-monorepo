@@ -1945,6 +1945,7 @@
       "source": [
         "blackhole-avalanche-usdc-75",
         "bullish-usdc",
+        "bullish-btc-reversed",
         "pharaoh-avalanche-usdc-50",
         "trader-joe-v2-avalanche-usdc",
         "trader-joe-v2-avalanche-usdt",
@@ -6949,6 +6950,8 @@
         "bingx-usdt",
         "bitget-usdt",
         "bitmart-usdt",
+        "bullish-usdc",
+        "bullish-btc-reversed",
         "bybit-usdt",
         "gate-usdt",
         "kraken-usd",
