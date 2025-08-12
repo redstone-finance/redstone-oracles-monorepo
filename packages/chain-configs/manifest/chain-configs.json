@@ -1212,7 +1212,11 @@
       "name": "HyperEVM",
       "networkId": 999,
       "currencySymbol": "HYPE",
-      "publicRpcUrls": ["https://rpc.hyperliquid.xyz/evm"],
+      "publicRpcUrls": [
+        "https://rpc.hyperliquid.xyz/evm",
+        "https://hyperliquid.drpc.org",
+        "https://rpc.hypurrscan.io"
+      ],
       "avgBlockTimeMs": 2000,
       "multicall3": {
         "address": "0xaD6CC5a465E5c8284a49eC9eD10EFE275460678c",
