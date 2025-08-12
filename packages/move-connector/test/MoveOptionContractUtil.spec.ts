@@ -1,6 +1,10 @@
-import { Aptos, Network } from "@aptos-labs/ts-sdk";
+import { Network } from "@aptos-labs/ts-sdk";
 import { makeAptos } from "../scripts/utils";
-import { DEFAULT_BROADCAST_BUCKETS, TRANSACTION_DEFAULT_CONFIG } from "../src";
+import {
+  DEFAULT_BROADCAST_BUCKETS,
+  MoveClient,
+  TRANSACTION_DEFAULT_CONFIG,
+} from "../src";
 import { MoveOptionsContractUtil } from "../src/MoveOptionsContractUtil";
 import { NETWORK, REST_NODE_LOCALNET_URL } from "./helpers";
 
@@ -8,16 +12,14 @@ const TEST_DEFAULT_LOCALNET_MOVE_PRICE = 100;
 const TEST_DEFAULT_LOCALNET_GAS_BUDGET = 100_000;
 
 describe("MoveOptionContractUtil", () => {
-  let aptos: Aptos;
-
-  beforeAll(() => {
-    aptos = makeAptos(NETWORK as Network, REST_NODE_LOCALNET_URL);
-  });
+  const client = new MoveClient(
+    makeAptos(NETWORK as Network, REST_NODE_LOCALNET_URL)
+  );
 
   describe("prepareTransactionOptions", () => {
     it("should prepare transaction option for default settings with required parameters", async () => {
       const options = await MoveOptionsContractUtil.prepareTransactionOptions(
-        aptos,
+        client,
         TRANSACTION_DEFAULT_CONFIG.writePriceOctasTxGasBudget
       );
 
@@ -35,9 +37,9 @@ describe("MoveOptionContractUtil", () => {
     });
 
     describe("prepareTransactionOptions", () => {
-      it("should prepare transaction option for default settings skipping accountSequanceNumber and expireTimestamp parameters", async () => {
+      it("should prepare transaction option for default settings skipping accountSequenceNumber and expireTimestamp parameters", async () => {
         const options = await MoveOptionsContractUtil.prepareTransactionOptions(
-          aptos,
+          client,
           TRANSACTION_DEFAULT_CONFIG.writePriceOctasTxGasBudget
         );
 
@@ -53,7 +55,7 @@ describe("MoveOptionContractUtil", () => {
         iteration++
       ) {
         const options = await MoveOptionsContractUtil.prepareTransactionOptions(
-          aptos,
+          client,
           TEST_DEFAULT_LOCALNET_GAS_BUDGET,
           iteration
         );
@@ -76,7 +78,7 @@ describe("MoveOptionContractUtil", () => {
     test("should fail to prepare transaction options for specific settings for iteration exhausting prioritization buckets size", async () => {
       await expect(() =>
         MoveOptionsContractUtil.prepareTransactionOptions(
-          aptos,
+          client,
           TEST_DEFAULT_LOCALNET_GAS_BUDGET,
           DEFAULT_BROADCAST_BUCKETS.length
         )

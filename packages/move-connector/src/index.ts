@@ -1,5 +1,6 @@
 export * from "./config";
 export * from "./consts";
+export * from "./MoveClient";
 export * from "./MoveClientBuilder";
 export * from "./MoveContractConnector";
 export * from "./MoveContractViewer";
