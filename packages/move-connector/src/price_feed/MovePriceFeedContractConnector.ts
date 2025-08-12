@@ -1,10 +1,10 @@
-import { Aptos } from "@aptos-labs/ts-sdk";
+import { MoveClient } from "../MoveClient";
 import { MoveContractConnector } from "../MoveContractConnector";
 import { MovePriceFeedContractAdapter } from "./MovePriceFeedContractAdapter";
 
 export class MovePriceFeedContractConnector extends MoveContractConnector<MovePriceFeedContractAdapter> {
   constructor(
-    client: Aptos,
+    client: MoveClient,
     private readonly contractAddress: string
   ) {
     super(client);

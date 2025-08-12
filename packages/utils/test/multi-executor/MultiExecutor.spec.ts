@@ -196,8 +196,11 @@ describe("MultiExecutor", () => {
     ];
     const sut = makeSut(instances, config);
 
-    await expect(sut.someHexFunction("1234")).rejects.toThrowError(
-      "Consensus failed: got 1 successful result, needed at least 2; AggregateError: 2 fails, errors: ERROR: 123401"
+    await expectAggregateError(
+      () => sut.someHexFunction("1234"),
+      "Consensus failed: got 1 successful result, needed at least 2; 2 fails",
+      "ERROR: 123401",
+      2
     );
   });
 
@@ -211,8 +214,11 @@ describe("MultiExecutor", () => {
     ];
     const sut = makeSut(instances, config);
 
-    await expect(sut.someHexFunction("1234")).rejects.toThrowError(
-      "Consensus failed: got 2 successful results, needed at least 3; AggregateError: 3 fails, errors: ERROR: 123408"
+    await expectAggregateError(
+      () => sut.someHexFunction("1234"),
+      "Consensus failed: got 2 successful results, needed at least 3; 3 fails",
+      "ERROR: 123408",
+      3
     );
   });
 
@@ -223,8 +229,10 @@ describe("MultiExecutor", () => {
       consensusQuorumRatio: 1,
     });
 
-    await expect(sut.someHexFunction("1234")).rejects.toThrowError(
-      "Consensus failed: got 3 successful results, needed at least 4; AggregateError: 1 fail, errors: ERROR: 123401"
+    await expectAggregateError(
+      () => sut.someHexFunction("1234"),
+      "Consensus failed: got 3 successful results, needed at least 4; 1 fail",
+      "ERROR: 123401"
     );
   });
 
@@ -513,8 +521,10 @@ describe("MultiExecutor", () => {
       someHexFunction: ExecutionMode.AGREEMENT,
     });
 
-    await expect(sut.someHexFunction("1234")).rejects.toThrowError(
-      `Agreement failed: got max 0 equal results, needed at least 1; AggregateError: 1 fail, errors: ERROR: 123408`
+    await expectAggregateError(
+      () => sut.someHexFunction("1234"),
+      "Agreement failed: got max 0 equal results, needed at least 1; 1 fail",
+      "ERROR: 123408"
     );
   });
 
@@ -524,15 +534,11 @@ describe("MultiExecutor", () => {
       someHexFunction: ExecutionMode.RACE,
     });
 
-    try {
-      await sut.someHexFunction("1234");
-    } catch (e) {
-      const aggregatedError = e as AggregateError;
-
-      expect(aggregatedError.message).toEqual("All promises were rejected");
-      expect(aggregatedError.errors.length).toEqual(1);
-      expect(aggregatedError.errors[0]).toEqual(new Error("ERROR: 123408"));
-    }
+    await expectAggregateError(
+      () => sut.someHexFunction("1234"),
+      "All promises were rejected",
+      "ERROR: 123408"
+    );
   });
 
   it("Consensus should fail when there's only one value that fails", async () => {
@@ -541,8 +547,10 @@ describe("MultiExecutor", () => {
       someHexFunction: ExecutionMode.CONSENSUS_ALL_EQUAL,
     });
 
-    await expect(sut.someHexFunction("1234")).rejects.toThrowError(
-      `Consensus failed: got 0 successful results, needed at least 1; AggregateError: 1 fail, errors: ERROR: 123408`
+    await expectAggregateError(
+      () => sut.someHexFunction("1234"),
+      "Consensus failed: got 0 successful results, needed at least 1; 1 fail",
+      "ERROR: 123408"
     );
   });
 
@@ -583,10 +591,30 @@ describe("MultiExecutor", () => {
       }
     );
 
-    await expect(sut.someHexFunction("1")).rejects.toThrowError(
-      `Consensus failed: got 1 successful result, needed at least 3; AggregateError: 3 fails, errors: ERROR: 100`
+    await expectAggregateError(
+      () => sut.someHexFunction("1"),
+      "Consensus failed: got 1 successful result, needed at least 3; 3 fails",
+      "ERROR: 100",
+      3
     );
   });
+
+  async function expectAggregateError(
+    func: () => Promise<unknown>,
+    message: string,
+    firstReason: string,
+    numberOfFails = 1
+  ) {
+    try {
+      await func();
+    } catch (e) {
+      const aggregateError = e as AggregateError;
+
+      expect(aggregateError.message).toEqual(message);
+      expect(aggregateError.errors.length).toEqual(numberOfFails);
+      expect(aggregateError.errors[0]).toEqual(new Error(firstReason));
+    }
+  }
 });
 
 export function makeSut<T extends MockClient>(
