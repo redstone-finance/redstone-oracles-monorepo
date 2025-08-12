@@ -6,7 +6,7 @@ import {
   UNSIGNED_METADATA_BYTE_SIZE_BS,
 } from "../common/redstone-constants";
 import { convertIntegerNumberToBytes } from "../common/utils";
-import { SignedDataPackage } from "../data-package/SignedDataPackage";
+import { SignedDataPackage } from "../data-package/DataPackage";
 import {
   RedstonePayloadParser,
   RedstonePayloadParsingResult,

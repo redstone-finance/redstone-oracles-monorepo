@@ -5,13 +5,13 @@ import { utils } from "ethers";
 import { arrayify } from "ethers/lib/utils";
 import _ from "lodash";
 import { version } from "../../package.json";
+import type { DataPackagesResponseCache } from "../DataPackagesResponseCache";
 import {
-  convertDataPackagesResponse,
   DataPackagesRequestParams,
-  DataPackagesResponseCache,
   extractSignedDataPackagesForFeedId,
   requestDataPackages,
-} from "../index";
+} from "../request-data-packages";
+import { convertDataPackagesResponse } from "../request-redstone-payload";
 
 export const DEFAULT_COMPONENT_NAME = "data-packages-wrapper";
 

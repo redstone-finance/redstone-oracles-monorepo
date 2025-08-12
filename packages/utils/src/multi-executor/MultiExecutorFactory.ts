@@ -1,4 +1,4 @@
-import { MultiExecutor } from "..";
+import _ from "lodash";
 import {
   getS,
   stringify,
@@ -17,6 +17,7 @@ import { FnBox } from "./FnBox";
 import { MultiAgreementExecutor } from "./MultiAgreementExecutor";
 import { RaceExecutor } from "./RaceExecutor";
 import {
+  DEFAULT_CONFIG,
   ExecutionMode,
   MultiExecutorConfig,
   NestedMethodConfig,
@@ -106,7 +107,7 @@ export class MultiExecutorFactory<T extends object> {
         }
 
         if (typeof method !== "function") {
-          return MultiExecutor.create(
+          return create(
             that.instances.map((instance) => instance[key] as object),
             that.methodConfig[key] ?? {},
             that.config
@@ -184,4 +185,37 @@ export class MultiExecutorFactory<T extends object> {
     this.logger.debug(`[${stringify(key)}] Returning ${stringify(value)}`);
     return value;
   }
+}
+
+export function create<T extends object>(
+  instances: T[],
+  methodConfig: NestedMethodConfig<T> = {},
+  config: MultiExecutorConfig = DEFAULT_CONFIG
+): T {
+  if (!instances.length) {
+    throw new Error("At least one instance is required");
+  }
+
+  return new MultiExecutorFactory(
+    instances,
+    methodConfig,
+    config
+  ).createProxy();
+}
+
+export function createForSubInstances<T extends object, U extends object>(
+  subject: T,
+  callback: (arg: T) => U,
+  methodConfig: NestedMethodConfig<U> = {},
+  config: MultiExecutorConfig = DEFAULT_CONFIG
+) {
+  const instances =
+    "__instances" in subject
+      ? (subject.__instances as T[]).map(callback)
+      : [callback(subject)];
+
+  const baseConfig = "__config" in subject ? subject.__config : undefined;
+  const mergedConfig = baseConfig ? _.assign({}, baseConfig, config) : config;
+
+  return create(instances, methodConfig, mergedConfig);
 }
