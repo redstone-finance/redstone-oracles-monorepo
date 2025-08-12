@@ -11106,6 +11106,7 @@ __metadata:
     "@types/sinon": "npm:^10.0.15"
     axios: "npm:^1.8.4"
     consola: "npm:^2.15.3"
+    date-fns: "npm:^3.6.0"
     decimal.js: "npm:^10.4.3"
     ethers: "npm:^5.7.2"
     lodash: "npm:^4.17.21"
