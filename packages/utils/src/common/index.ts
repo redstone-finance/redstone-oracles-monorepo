@@ -5,6 +5,7 @@ export * from "./batch-promises";
 export * from "./big-numbers";
 export * from "./clone";
 export * from "./conversions";
+export * from "./date-utils";
 export * from "./env";
 export * from "./errors";
 export * from "./fetch-with-fallback";
