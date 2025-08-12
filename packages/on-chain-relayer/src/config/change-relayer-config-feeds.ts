@@ -1,5 +1,5 @@
 import _ from "lodash";
-import { RelayerSplitConfig } from "./split-relayer-config";
+import type { RelayerSplitConfig } from "./split-relayer-config";
 
 export function changeRelayerConfigFeeds<T extends RelayerSplitConfig>(
   relayerConfig: T,

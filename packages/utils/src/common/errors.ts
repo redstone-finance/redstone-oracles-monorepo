@@ -2,7 +2,10 @@ import axios, { AxiosError } from "axios";
 import { LogLevel } from "consola";
 import { ethers } from "ethers";
 import { getLogLevel, loggerFactory } from "../logger";
-import { UnrecoverableError } from "./retry";
+
+export class UnrecoverableError extends Error {
+  unrecoverable?: boolean = true;
+}
 
 export function assert(
   value: unknown,

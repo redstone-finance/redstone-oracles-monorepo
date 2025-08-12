@@ -1,4 +1,4 @@
-import { SubscribeCallback } from "./Mqtt5Client";
+import type { SubscribeCallback } from "./Mqtt5Client";
 import { ContentTypes } from "./SerializerDeserializer";
 
 export type PubSubPayload = {
