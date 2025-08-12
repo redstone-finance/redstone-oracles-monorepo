@@ -7239,6 +7239,11 @@
       "source": ["ethereum-evm-fetcher-theo"],
       "denomination": "USDC",
       "rateFeed": true
+    },
+    "cUSD_FUNDAMENTAL": {
+      "source": ["ethereum-evm-fetcher-cap"],
+      "denomination": "USD",
+      "rateFeed": true
     }
   }
 }
