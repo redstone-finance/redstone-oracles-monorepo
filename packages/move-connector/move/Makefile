@@ -7,6 +7,8 @@ ADAPTER_OBJECT_ADDRESS=$(shell cat deployments/custom-price_adapter-addresses.js
 FEED_ETH=0x4554480000000000000000000000000000000000000000000000000000000000
 FEED_BTC=0x4254430000000000000000000000000000000000000000000000000000000000
 
+DIR=contracts
+
 # ignored so clean will always run
 .IGNORE: install-movement clean prepare-cli update-aptos-core-deps
 
@@ -39,27 +41,27 @@ adapter-address:
 	$(ADAPTER_ADDRESS)
 
 fmt:
-	aptos move fmt --package-path contracts/redstone_sdk
-	aptos move fmt --package-path contracts/price_adapter
-	aptos move fmt --package-path contracts/price_feed
+	aptos move fmt --package-path ${DIR}/redstone_sdk
+	aptos move fmt --package-path ${DIR}/price_adapter
+	aptos move fmt --package-path ${DIR}/price_feed
 
 test:
-	movement move test --package-dir contracts/redstone_sdk
-	movement move test --package-dir contracts/price_adapter
-	movement move test --package-dir contracts/price_feed
+	movement move test --package-dir ${DIR}/redstone_sdk
+	movement move test --package-dir ${DIR}/price_adapter
+	movement move test --package-dir ${DIR}/price_feed
 
 
 build:
-	movement move build --package-dir contracts/redstone_sdk --dev
-	movement move build --package-dir contracts/price_adapter --dev
-	movement move build --package-dir contracts/price_feed --dev
+	movement move build --package-dir ${DIR}/redstone_sdk --dev
+	movement move build --package-dir ${DIR}/price_adapter --dev
+	movement move build --package-dir ${DIR}/price_feed --dev
 
 deploy-price-adapter:
-	movement move publish --package-dir contracts/redstone_sdk --named-addresses redstone_sdk=default
-	movement move publish --package-dir contracts/price_adapter --named-addresses redstone_price_adapter=default,redstone_sdk=default
+	movement move publish --package-dir ${DIR}/redstone_sdk --named-addresses redstone_sdk=default
+	movement move publish --package-dir ${DIR}/price_adapter --named-addresses redstone_price_adapter=default,redstone_sdk=default
 
 deploy-price-feed:
-	movement move publish --package-dir contracts/price_feed --named-addresses redstone_price_adapter=default,price_feed=default,price_adapter_object_address=$(ADAPTER_ADDRESS),redstone_sdk=default
+	movement move publish --package-dir ${DIR}/price_feed --named-addresses redstone_price_adapter=default,price_feed=default,price_adapter_object_address=$(ADAPTER_ADDRESS),redstone_sdk=default
 
 prepare-data:
 	make -C $(DATA_GENERATOR) DATA_NAME=$(DATA_NAME) prepare_data
