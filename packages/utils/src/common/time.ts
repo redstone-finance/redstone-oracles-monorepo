@@ -42,7 +42,7 @@ export const timeout = async <T>(
 };
 
 export const sleep = (ms: number) =>
-  new Promise((resolve, _rejects) => setTimeout(resolve, ms));
+  new Promise<void>((resolve, _rejects) => setTimeout(resolve, ms));
 
 export const msToMin = (ms: number) => ms / 60_000;
 
