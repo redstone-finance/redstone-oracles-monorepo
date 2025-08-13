@@ -2,7 +2,7 @@ import { getSSMParameterValues } from "@redstone-finance/internal-utils";
 import { NetworkId, RedstoneCommon } from "@redstone-finance/utils";
 import { z } from "zod";
 
-export type Env = "prod" | "dev" | "staging";
+export type Env = "prod" | "dev";
 
 export type NodeType = "fallback" | "main";
 export type FetchRpcUrlsFromSsmOpts = {
