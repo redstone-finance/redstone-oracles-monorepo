@@ -8,9 +8,6 @@ export type ReportMetricFn = (message: Point) => void;
 export type ContractCallOverrides = { blockTag: BlockTag };
 export type EthersError = { code: ErrorCode; message: string };
 
-export const sleepMS = (ms: number) =>
-  new Promise((resolve, _reject) => setTimeout(resolve, ms));
-
 /** Assumes that if blockTag is string the it is hex string */
 export const convertBlockTagToNumber = (blockTag: BlockTag): number =>
   typeof blockTag === "string" ? convertHexToNumber(blockTag) : blockTag;
