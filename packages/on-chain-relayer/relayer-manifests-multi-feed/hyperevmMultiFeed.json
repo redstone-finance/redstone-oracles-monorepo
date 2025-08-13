@@ -136,6 +136,9 @@
     },
     "beHYPE_FUNDAMENTAL": {
       "priceFeedAddress": "0xBE4d4D2FDdE7408bD00B9912705De7bDC3F9bDeb"
+    },
+    "thBILL_FUNDAMENTAL": {
+      "priceFeedAddress": "0x3EbFAAe0eF43f63dBb176FF11cAb16dcd976607b"
     }
   }
 }
