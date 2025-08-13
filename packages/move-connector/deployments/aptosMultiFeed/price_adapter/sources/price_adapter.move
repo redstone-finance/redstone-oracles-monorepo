@@ -31,7 +31,9 @@ module redstone_price_adapter::price_adapter {
     // === Constants ===
 
     const TRUSTED_UPDATERS: vector<address> = vector[
-        @0x0183ebc9f50233361639fa0fd16a01ab4ef191f523f1a46e1d73372ba1b92dc3
+        @0xb1a516df08231d2a8b5592a6ce83de3c0bd24f4e2c768261e67dc06b17766dac,
+        @0x949276ef270a67be000a33f80796aecf4ec8b64b71bedf9eb8ef6c06a95bf6ce,
+        @0xb69b1f537a2b2ff6a7a2a98a6d911bec7924ac0fd73db0fa0c0aa12080438f91
     ];
     const SIGNER_COUNT_THRESHOLD: u8 = 3;
     const ALLOWED_SIGNERS: vector<vector<u8>> = vector[
@@ -43,13 +45,13 @@ module redstone_price_adapter::price_adapter {
     ];
     const MAX_TIMESTAMP_DELAY_MS: u64 = 60 * 1000; // 60 seconds
     const MAX_TIMESTAMP_AHEAD_MS: u64 = 60 * 1000; // 60 seconds
-    const MIN_INTERVAL_BETWEEN_UPDATES: u64 = 40 * 1000; // 40 seconds
+    const MIN_INTERVAL_BETWEEN_UPDATES: u64 = 172800 * 1000; // 2 days
 
     const NAME: vector<u8> = b"RedStonePriceAdapter";
 
     // === Errors ===
     const E_UNEXPECTED_RESULT_COUNT: u64 = 0;
-    const E_TIMESTAMP_TOO_OLD: u64 = 1;
+    const E_DATA_TOO_OLD: u64 = 1;
     const E_INVALID_FEED_ID: u64 = 2;
 
     // === Structs ===
@@ -207,7 +209,7 @@ module redstone_price_adapter::price_adapter {
         let feed_id = *feed::feed_id(feed);
         let price_data = get_or_create_default(price_adapter, feed);
 
-        assert!(timestamp > price_data_timestamp(price_data), E_TIMESTAMP_TOO_OLD);
+        assert!(timestamp > price_data_timestamp(price_data), E_DATA_TOO_OLD);
         update(
             price_data,
             feed_id,

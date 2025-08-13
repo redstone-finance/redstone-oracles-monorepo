@@ -49,7 +49,7 @@ module redstone_price_adapter::price_adapter {
 
     // === Errors ===
     const E_UNEXPECTED_RESULT_COUNT: u64 = 0;
-    const E_TIMESTAMP_TOO_OLD: u64 = 1;
+    const E_DATA_TOO_OLD: u64 = 1;
     const E_INVALID_FEED_ID: u64 = 2;
 
     // === Structs ===
@@ -207,7 +207,7 @@ module redstone_price_adapter::price_adapter {
         let feed_id = *feed::feed_id(feed);
         let price_data = get_or_create_default(price_adapter, feed);
 
-        assert!(timestamp > price_data_timestamp(price_data), E_TIMESTAMP_TOO_OLD);
+        assert!(timestamp > price_data_timestamp(price_data), E_DATA_TOO_OLD);
         update(
             price_data,
             feed_id,
