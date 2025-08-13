@@ -10128,6 +10128,29 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@redstone-finance/lambda-fallback-relayer@workspace:packages/lambda/lambda-fallback-relayer":
+  version: 0.0.0-use.local
+  resolution: "@redstone-finance/lambda-fallback-relayer@workspace:packages/lambda/lambda-fallback-relayer"
+  dependencies:
+    "@redstone-finance/chain-configs": "workspace:*"
+    "@redstone-finance/evm-connector": "workspace:*"
+    "@redstone-finance/internal-utils": "workspace:*"
+    "@redstone-finance/monitoring-manifests": "workspace:*"
+    "@redstone-finance/on-chain-relayer": "workspace:*"
+    "@redstone-finance/on-chain-relayer-common": "workspace:*"
+    "@redstone-finance/protocol": "workspace:*"
+    "@redstone-finance/rpc-providers": "workspace:*"
+    "@redstone-finance/sdk": "workspace:*"
+    "@redstone-finance/utils": "workspace:*"
+    "@types/aws-lambda": "npm:^8.10.145"
+    "@types/lodash": "npm:^4.14.195"
+    dotenv: "npm:^16.0.3"
+    ethers: "npm:^5.7.2"
+    lodash: "npm:^4.17.21"
+    zod: "npm:^3.22.4"
+  languageName: unknown
+  linkType: soft
+
 "@redstone-finance/lambda-gas-cost-breakdown@workspace:packages/lambda/lambda-gas-cost-breakdown":
   version: 0.0.0-use.local
   resolution: "@redstone-finance/lambda-gas-cost-breakdown@workspace:packages/lambda/lambda-gas-cost-breakdown"
