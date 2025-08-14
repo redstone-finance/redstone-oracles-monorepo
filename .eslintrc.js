@@ -71,6 +71,7 @@ module.exports = {
     ],
     "import/order": ["off"],
     "import/namespace": "off",
+    eqeqeq: "error",
   },
   root: true,
 };

@@ -37,7 +37,7 @@ export class IterationsHealthCheck implements HealthCheck {
       referenceDate,
       fireDate
     );
-    const isStartup = this.lastIterationDate == null;
+    const isStartup = !RedstoneCommon.isDefined(this.lastIterationDate);
 
     if (elapsed <= periodInS) {
       if (isStartup) {
