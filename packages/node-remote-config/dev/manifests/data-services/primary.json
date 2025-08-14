@@ -2694,7 +2694,7 @@
       "source": [
         "hyperliquid-api-fetcher",
         "hyperswap-hyperevm-whype-3000",
-        "kittenswap-hyperevm-whype-2500"
+        "kittenswap-hyperevm-whype"
       ],
       "denomination": "USD",
       "rateFeed": false
@@ -2745,7 +2745,7 @@
     "stHYPE": {
       "source": [
         "hyperswap-hyperevm-whype-100",
-        "kittenswap-hyperevm-whype-200",
+        "kittenswap-hyperevm-whype",
         "valantis-hyperevm-whype"
       ],
       "denomination": "USD",
