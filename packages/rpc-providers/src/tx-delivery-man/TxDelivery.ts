@@ -164,7 +164,7 @@ export class TxDelivery {
 
   private logCurrentAttempt(tx: DeliveryManTx) {
     let feesInfo: string;
-    if (tx.type == 0) {
+    if (tx.type === 0) {
       feesInfo = `gasPrice=${tx.gasPrice}`;
     } else {
       feesInfo = `maxFeePerGas=${tx.maxFeePerGas} maxPriorityFeePerGas=${tx.maxPriorityFeePerGas}`;
