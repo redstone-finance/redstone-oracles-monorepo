@@ -1,3 +1,4 @@
+import { RedstoneCommon } from "@redstone-finance/utils";
 import {
   CasperClient,
   Contracts,
@@ -37,7 +38,7 @@ export class CasperConnection implements ICasperConnection {
       .block;
 
     if (!blockInfo) {
-      throw new Error("Block info couldnt be fetched");
+      throw new Error("Block info couldn't be fetched");
     }
 
     return blockInfo.header.height;
@@ -150,11 +151,11 @@ export class CasperConnection implements ICasperConnection {
   private static describeDeployResult(deployResult: GetDeployResult) {
     const executionResults = deployResult.execution_results;
 
-    const successes = executionResults.filter(
-      (result) => result.result.Success != null
+    const successes = executionResults.filter((result) =>
+      RedstoneCommon.isDefined(result.result.Success)
     );
-    const failures = executionResults.filter(
-      (result) => result.result.Failure != null
+    const failures = executionResults.filter((result) =>
+      RedstoneCommon.isDefined(result.result.Failure)
     );
 
     if (failures.length > 0) {

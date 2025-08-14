@@ -18,7 +18,8 @@
   "dependencies": {
     "@redstone-finance/utils": "workspace:*",
     "dotenv": "^16.0.3",
-    "node-schedule": "^2.1.1"
+    "node-schedule": "^2.1.1",
+    "zod": "^3.22.4"
   },
   "devDependencies": {
     "@types/node-schedule": "^2.1.0"

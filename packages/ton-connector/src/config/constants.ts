@@ -20,4 +20,4 @@ export const OP_REDSTONE_READ_DATA = Number(
 ); //keccak(RedStone_Read_Data).substring(0, 8)
 
 export const KEY_LEN_BITS = 256;
-assert(KEY_LEN_BITS == consts.DATA_FEED_ID_BS * 8);
+assert(KEY_LEN_BITS === consts.DATA_FEED_ID_BS * 8);
