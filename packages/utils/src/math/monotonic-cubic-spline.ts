@@ -112,7 +112,7 @@ const createInterpolant = (
   sortedYs: number[];
 } => {
   // checking the initial conditions
-  if (xs.length != ys.length) {
+  if (xs.length !== ys.length) {
     throw new Error("The number of xs and ys should be equal");
   }
   if (xs.length === 0) {

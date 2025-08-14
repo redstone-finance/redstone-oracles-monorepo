@@ -52,7 +52,7 @@ export class RadixParser {
       return undefined;
     }
 
-    if (obj.kind == ValueKind.Blob && obj.value.length === U256_VALUE_SIZE) {
+    if (obj.kind === ValueKind.Blob && obj.value.length === U256_VALUE_SIZE) {
       const value = BigNumber.from(obj.value);
       return asKeyName ? value.toHexString() : value;
     }
@@ -119,7 +119,7 @@ export class RadixParser {
     obj: ObjInterface
   ): SerializableManifestValue {
     if (
-      obj.kind == "Enum" &&
+      obj.kind === "Enum" &&
       "type_name" in obj &&
       "variant_name" in obj &&
       obj.type_name === "Option"
