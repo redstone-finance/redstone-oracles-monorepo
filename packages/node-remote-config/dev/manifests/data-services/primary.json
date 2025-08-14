@@ -2895,6 +2895,11 @@
       "source": ["ethereum-evm-fetcher-cap"],
       "denomination": "USD",
       "rateFeed": true
+    },
+    "stHYPE_LP_FUNDAMENTAL": {
+      "source": ["hyperevm-evm-fetcher-valantis-lp"],
+      "denomination": "HYPE",
+      "rateFeed": true
     }
   },
   "multiPointPackages": {
