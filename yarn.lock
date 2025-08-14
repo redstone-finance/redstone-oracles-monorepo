@@ -9754,6 +9754,7 @@ __metadata:
     prompts: "npm:^2.4.2"
     replace-in-file: "npm:^6.3.5"
     supertest: "npm:^6.2.3"
+    tweetnacl: "npm:^1.0.3"
     zod: "npm:^3.22.4"
   languageName: unknown
   linkType: soft
