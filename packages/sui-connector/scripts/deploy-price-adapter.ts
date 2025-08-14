@@ -109,9 +109,11 @@ async function initialize(
 }
 
 function findObject(changes: ObjectChanges, objectType: string) {
-  const created = changes.objectChanges?.filter((obj) => obj.type == "created");
+  const created = changes.objectChanges?.filter(
+    (obj) => obj.type === "created"
+  );
 
-  return created?.find((obj) => obj.objectType == objectType)?.objectId;
+  return created?.find((obj) => obj.objectType === objectType)?.objectId;
 }
 
 function getAdminCap(changes: ObjectChanges, packageId: string) {
@@ -127,11 +129,11 @@ function getPriceAdapter(
   packageId: string
 ) {
   const created = response.objectChanges?.filter(
-    (obj) => obj.type == "created"
+    (obj) => obj.type === "created"
   );
 
   return created?.find(
-    (obj) => obj.objectType == `${packageId}::price_adapter::PriceAdapter`
+    (obj) => obj.objectType === `${packageId}::price_adapter::PriceAdapter`
   )?.objectId;
 }
 

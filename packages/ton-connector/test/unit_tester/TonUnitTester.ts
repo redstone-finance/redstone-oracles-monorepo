@@ -52,7 +52,7 @@ export class TonUnitTester extends TonContract {
       {
         type: "slice",
         cell:
-          typeof data == "string"
+          typeof data === "string"
             ? createBuilderFromString(data).asCell()
             : data,
       },
@@ -74,7 +74,7 @@ export class TonUnitTester extends TonContract {
       {
         type: "slice",
         cell:
-          typeof data == "string"
+          typeof data === "string"
             ? createBuilderFromString(data).asCell()
             : data,
       },

@@ -147,7 +147,7 @@ export abstract class BaseWrapper<T extends Contract> {
           result
         );
         // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-        return decoded.length == 1 ? decoded[0] : decoded;
+        return decoded.length === 1 ? decoded[0] : decoded;
       } else {
         const sentTx = await contract.signer.sendTransaction(tx);
 

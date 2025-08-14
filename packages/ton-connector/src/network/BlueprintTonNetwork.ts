@@ -11,13 +11,13 @@ export class BlueprintTonNetwork implements TonNetwork {
   walletAddress?: Address;
 
   constructor(
-    private networkProvider: NetworkProvider,
+    private readonly networkProvider: NetworkProvider,
     apiV2Config: TonApiV2Config
   ) {
     this.oldApi = new TonClient(apiV2Config);
     this.sender = networkProvider.sender();
     this.api = networkProvider.api() as TonClient4;
-    this.workchain = networkProvider.network() == "testnet" ? 0 : -1;
+    this.workchain = networkProvider.network() === "testnet" ? 0 : -1;
     this.walletAddress = networkProvider.sender().address;
   }
 

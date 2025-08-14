@@ -147,7 +147,7 @@ describe("UniversalSigner", () => {
       : baseSignature;
 
     const S = signature.substring(64, 128);
-    const newV = signature.substring(128) == "1b" ? "1c" : "1b";
+    const newV = signature.substring(128) === "1b" ? "1c" : "1b";
     const newS = ECDSA_N - BigInt("0x" + S);
 
     return replaceSignatureSV(baseSignature, newS, newV);

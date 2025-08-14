@@ -39,14 +39,14 @@ export const describeCommonPriceFeedTests = ({
 
     const adapter = await adapterFactory.deploy();
     const priceFeed =
-      priceFeedContractName == adapterContractName
+      priceFeedContractName === adapterContractName
         ? adapter
         : await priceFeedFactory.deploy();
 
     await adapter.deployed();
     await priceFeed.deployed();
 
-    if (priceFeedContractName != adapterContractName) {
+    if (priceFeedContractName !== adapterContractName) {
       // eslint-disable-next-line @typescript-eslint/no-unsafe-call
       const tx = (await priceFeed.setAdapterAddress(
         adapter.address
@@ -208,7 +208,7 @@ export const describeCommonPriceFeedTests = ({
         "0x4254430000000000000000000000000000000000000000000000000000000000"
       );
 
-      if (adapterContractName != priceFeedContractName) {
+      if (adapterContractName !== priceFeedContractName) {
         const adapterAddress = await contractV1.getPriceFeedAdapter();
 
         expect(adapterAddress).to.eq(
