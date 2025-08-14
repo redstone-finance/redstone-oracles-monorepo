@@ -13,7 +13,7 @@ export abstract class TonContractConnector<
   protected constructor(
     protected contractType: typeof TonContract,
     protected network: TonNetwork,
-    private address?: string
+    private readonly address?: string
   ) {}
 
   async makeContract(
@@ -41,7 +41,7 @@ export abstract class TonContractConnector<
     let totalFees: number | undefined;
 
     let currentHash = hash;
-    while (hash == currentHash) {
+    while (hash === currentHash) {
       console.log(`Waiting for contract changes...`);
       await sleep(1500);
 

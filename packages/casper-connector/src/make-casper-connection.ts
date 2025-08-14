@@ -13,7 +13,7 @@ export async function makeCasperConnection(config: CasperConfig) {
   );
 
   const response = await axios.get(config.statusApi);
-  if (response.status != 200) {
+  if (response.status !== 200) {
     throw new Error("Network status cannot be fetched");
   }
 

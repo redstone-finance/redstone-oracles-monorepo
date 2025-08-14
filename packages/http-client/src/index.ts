@@ -59,9 +59,7 @@ export type HttpClientOptions = {
 const isNode =
   typeof process !== "undefined" &&
   // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-  process.versions != null &&
-  // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-  process.versions.node != null;
+  process.versions?.node !== undefined;
 
 /**
  * This class should be initialized statically on the top level to avoid garbage collection and benefit from sockets reusability
@@ -70,7 +68,7 @@ const isNode =
 export class HttpClient {
   public httpsAgent?: HttpsAgent;
   public httpAgent?: HttpAgent;
-  private axiosInstance: AxiosInstance;
+  private readonly axiosInstance: AxiosInstance;
 
   constructor(httpClientOptions: HttpClientOptions) {
     if (isNode) {

@@ -4,12 +4,12 @@ import { GelatoLogger } from "./GelatoLogger";
 
 export class GelatoDeliveryMan implements Tx.ITxDeliveryMan {
   constructor(
-    private resolve: (result: Web3FunctionResult) => void,
-    private logger: GelatoLogger
+    private readonly resolve: (result: Web3FunctionResult) => void,
+    private readonly logger: GelatoLogger
   ) {}
 
   private static makeWeb3FunctionResult(txDeliveryCall: Tx.TxDeliveryCall) {
-    if (!!txDeliveryCall.data && txDeliveryCall.data != "0x") {
+    if (!!txDeliveryCall.data && txDeliveryCall.data !== "0x") {
       return GelatoDeliveryMan.canExec(txDeliveryCall);
     } else {
       return GelatoDeliveryMan.shouldNotExec(

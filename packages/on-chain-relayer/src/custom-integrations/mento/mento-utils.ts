@@ -137,7 +137,7 @@ const tokenAddressToValue = async (
   const redstoneOracleIndex = rates[0].findIndex((address) =>
     addressesAreEqual(address, mentoAdapter.address)
   );
-  if (redstoneOracleIndex == -1) {
+  if (redstoneOracleIndex === -1) {
     return undefined;
   }
   return rates[1][redstoneOracleIndex]
@@ -150,9 +150,9 @@ const dataFeedToTokenAddress = (
   contractFeeds: MentoAdapterBase.DataFeedDetailsStructOutput[]
 ) => {
   const dataFeedIndex = contractFeeds.findIndex(
-    (cf) => ethers.utils.parseBytes32String(cf.dataFeedId) == dataFeedId
+    (cf) => ethers.utils.parseBytes32String(cf.dataFeedId) === dataFeedId
   );
-  if (dataFeedIndex == -1) {
+  if (dataFeedIndex === -1) {
     throw new Error(`data feed ${dataFeedId} not present in contract`);
   }
   return contractFeeds[dataFeedIndex].tokenAddress;

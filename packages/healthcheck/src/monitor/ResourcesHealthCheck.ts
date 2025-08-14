@@ -48,7 +48,7 @@ export class ResourcesHealthCheck implements HealthCheck {
     }
 
     // First time crossing the threshold: start the timer but still report healthy.
-    if (this.thresholdExceededSince == null) {
+    if (this.thresholdExceededSince === null) {
       this.thresholdExceededSince = now;
       return healthy();
     }

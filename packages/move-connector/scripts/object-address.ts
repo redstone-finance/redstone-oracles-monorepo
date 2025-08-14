@@ -6,7 +6,7 @@ import {
 import { makeAptos } from "./utils";
 
 function isObjectAddressQuery(args: string[]) {
-  return args.length == 2 && args[1] == "--object-address";
+  return args.length === 2 && args[1] === "--object-address";
 }
 
 async function main() {

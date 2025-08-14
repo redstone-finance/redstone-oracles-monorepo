@@ -108,7 +108,7 @@ describe("Ton Prices Tests", () => {
 
     const prices3 = await priceManager.readPricesFromContract(paramsProvider);
 
-    if (timestamp2 == timestamp) {
+    if (timestamp2 === timestamp) {
       expect(prices2).toStrictEqual([0n, 0n]);
       expect(prices3).toStrictEqual(prices);
     } else {

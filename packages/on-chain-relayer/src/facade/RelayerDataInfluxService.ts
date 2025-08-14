@@ -68,7 +68,7 @@ export class RelayerDataInfluxService
     // Setting fields
     const dataPackages = Object.values(dataPackagesResponse)
       .flatMap((x) => x)
-      .filter((x) => x != undefined);
+      .filter((x) => x !== undefined);
 
     point.intField("dataTimestampMs", timestamp);
     point.intField("dataPackagesCount", dataPackages.length);

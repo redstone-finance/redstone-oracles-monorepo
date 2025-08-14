@@ -20,8 +20,8 @@ export class CustomTonNetwork implements TonNetwork {
   walletAddress?: Address;
 
   constructor(
-    private walletKeyProvider: () => Promise<KeyPair | undefined>,
-    private apiV2Config: TonApiV2Config,
+    private readonly walletKeyProvider: () => Promise<KeyPair | undefined>,
+    private readonly apiV2Config: TonApiV2Config,
     public workchain = 0
   ) {}
 
@@ -47,7 +47,7 @@ export class CustomTonNetwork implements TonNetwork {
 
   async isContractDeployed(address?: Address): Promise<boolean> {
     return (
-      address != undefined && (await this.oldApi!.isContractDeployed(address))
+      address !== undefined && (await this.oldApi!.isContractDeployed(address))
     );
   }
 

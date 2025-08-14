@@ -1,3 +1,4 @@
+import { RedstoneCommon } from "@redstone-finance/utils";
 import { hexlify, hexZeroPad } from "ethers/lib/utils";
 import { readFileSync } from "fs";
 import {
@@ -30,7 +31,7 @@ export class FuelPricesContractDeployer extends FuelPricesContractConnector {
 
   constructor(
     wallet: Account,
-    private parameters: PricesContractDeployParameters
+    private readonly parameters: PricesContractDeployParameters
   ) {
     super(wallet, hexZeroPad("0x00", 32));
   }
@@ -101,7 +102,7 @@ export class FuelPricesContractDeployer extends FuelPricesContractConnector {
     const FAKE_TIMESTAMP_KEY = "0x66616b655f74696d657374616d70"; // fake_timestamp
     const storageSlots: StorageSlot[] = [];
 
-    if (this.parameters.fakeTimestamp != null) {
+    if (RedstoneCommon.isDefined(this.parameters.fakeTimestamp)) {
       storageSlots.push({
         key: FAKE_TIMESTAMP_KEY,
         value: hexlify(this.parameters.fakeTimestamp),

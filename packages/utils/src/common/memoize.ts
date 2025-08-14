@@ -40,7 +40,7 @@ export function memoize<
 
     // to avoid caching results forever
     iterationCounter = (iterationCounter + 1) % cleanEveryNIteration;
-    if (iterationCounter == 0) {
+    if (iterationCounter === 0) {
       cleanStaleCacheEntries(cache, ttl);
     }
 
