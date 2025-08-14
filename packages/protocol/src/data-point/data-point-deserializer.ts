@@ -9,7 +9,7 @@ import { INumericDataPoint, NumericDataPoint } from "./NumericDataPoint";
 export const deserializeDataPointFromObj = (
   plainObject: DataPointPlainObj
 ): DataPoint => {
-  if (typeof plainObject.value == "number") {
+  if (typeof plainObject.value === "number") {
     return new NumericDataPoint(plainObject as INumericDataPoint);
   } else {
     return new DataPoint(

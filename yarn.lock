@@ -9836,6 +9836,7 @@ __metadata:
     "@types/node-schedule": "npm:^2.1.0"
     dotenv: "npm:^16.0.3"
     node-schedule: "npm:^2.1.1"
+    zod: "npm:^3.22.4"
   languageName: unknown
   linkType: soft
 

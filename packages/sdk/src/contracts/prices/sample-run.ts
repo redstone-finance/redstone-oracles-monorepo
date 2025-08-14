@@ -80,7 +80,7 @@ async function executePushModel(
   const deployHash =
     await pricesAdapter.writePricesFromPayloadToContract(paramsProvider);
 
-  if (typeof deployHash == "string") {
+  if (typeof deployHash === "string") {
     await pricesConnector.waitForTransaction(deployHash);
   } else {
     console.log(`Values pushed to contract: ${deployHash}`);
