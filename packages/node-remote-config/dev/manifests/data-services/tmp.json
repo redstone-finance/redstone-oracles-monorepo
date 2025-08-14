@@ -1,0 +1,162 @@
+{
+  "interval": 10000,
+  "priceAggregator": "median",
+  "defaultSource": ["coingecko"],
+  "sourceTimeout": 7000,
+  "minValidSourcesPercentage": 1,
+  "deviationCheck": {
+    "deviationWithRecentValues": {
+      "maxPercent": 30,
+      "maxDelayMilliseconds": 120000
+    }
+  },
+  "tokens": {
+    "DAI": {
+      "source": [
+        "bingx-usdt",
+        "bitget-usdt",
+        "bitmart-usdt",
+        "bitrue-usdt",
+        "bybit-usdt",
+        "coingecko",
+        "coinmarketcap",
+        "curve-ethereum-usdt",
+        "gate-usdt",
+        "kraken-usd",
+        "lbank-usdt",
+        "okx-usdt"
+      ],
+      "deviationCheck": {
+        "deviationWithRecentValues": {
+          "maxPercent": 5,
+          "maxDelayMilliseconds": 120000
+        }
+      },
+      "denomination": "USD",
+      "rateFeed": false,
+      "skipBroadcasting": true
+    },
+    "USDC": {
+      "source": [
+        "balancer-ethereum-usdt",
+        "binance-usdt",
+        "bitget-usdt",
+        "bitmart-usdt",
+        "bitrue-usdt",
+        "bitstamp-usd",
+        "coingecko",
+        "curve-ethereum-dai",
+        "curve-ethereum-usdt",
+        "kaiko-v2",
+        "kraken-usdt",
+        "kucoin-usdt",
+        "lbank-usdt",
+        "okx-usdt",
+        "uniswap-v3-ethereum-dai-100"
+      ],
+      "deviationCheck": {
+        "deviationWithRecentValues": {
+          "maxPercent": 5,
+          "maxDelayMilliseconds": 120000
+        }
+      },
+      "denomination": "USD",
+      "rateFeed": false,
+      "skipBroadcasting": true
+    },
+    "USDT": {
+      "source": [
+        "bitstamp-usd",
+        "coinbase-usd",
+        "coingecko",
+        "coinmarketcap",
+        "gate-usd",
+        "kaiko-v2",
+        "kraken-usd"
+      ],
+      "deviationCheck": {
+        "deviationWithRecentValues": {
+          "maxPercent": 5,
+          "maxDelayMilliseconds": 120000
+        }
+      },
+      "denomination": "USD",
+      "rateFeed": false,
+      "skipBroadcasting": true
+    },
+    "USDC_V2": {
+      "source": [
+        "bitstamp-usd",
+        "coingecko",
+        "coinmarketcap",
+        "kraken-usd",
+        "bitstamp_stables_ratio-usd",
+        "coinbase_stables_ratio-usd",
+        "coingecko_stables_ratio",
+        "coinmarketcap_stables_ratio",
+        "kraken_stables_ratio-usd"
+      ],
+      "deviationCheck": {
+        "deviationWithRecentValues": {
+          "maxPercent": 5,
+          "maxDelayMilliseconds": 120000
+        }
+      },
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "USDT_V2": {
+      "source": [
+        "bitstamp-usd",
+        "coinbase-usd",
+        "coingecko",
+        "coinmarketcap",
+        "kraken-usd",
+        "bitstamp_stables_ratio-usd",
+        "coingecko_stables_ratio",
+        "coinmarketcap_stables_ratio",
+        "kraken_stables_ratio-usd"
+      ],
+      "deviationCheck": {
+        "deviationWithRecentValues": {
+          "maxPercent": 5,
+          "maxDelayMilliseconds": 120000
+        }
+      },
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "USDC/USDT": {
+      "source": [
+        "balancer-ethereum-usdt-no-quoting",
+        "binance-usdt-no-quoting",
+        "bitget-usdt-no-quoting",
+        "bitmart-usdt-no-quoting",
+        "bitrue-usdt-no-quoting",
+        "curve-ethereum-usdt-no-quoting",
+        "kraken-usdt-no-quoting",
+        "kucoin-usdt-no-quoting",
+        "lbank-usdt-no-quoting",
+        "okx-usdt-no-quoting"
+      ],
+      "deviationCheck": {
+        "deviationWithRecentValues": {
+          "maxPercent": 5,
+          "maxDelayMilliseconds": 120000
+        }
+      },
+      "denomination": "USDT",
+      "rateFeed": false
+    },
+    "thBILL_FUNDAMENTAL": {
+      "source": ["ethereum-evm-fetcher-theo"],
+      "denomination": "USDC",
+      "rateFeed": true
+    },
+    "cUSD_FUNDAMENTAL": {
+      "source": ["ethereum-evm-fetcher-cap"],
+      "denomination": "USD",
+      "rateFeed": true
+    }
+  }
+}
