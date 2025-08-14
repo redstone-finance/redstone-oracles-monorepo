@@ -134,7 +134,7 @@ export class MoveTxDeliveryMan {
           ? `sequenceNumber: ${options.accountSequenceNumber}`
           : undefined,
       ]
-        .filter((x) => x != undefined)
+        .filter((x) => x !== undefined)
         .join("; ")
     );
 

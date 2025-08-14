@@ -100,7 +100,7 @@ describe("Benchmark", function () {
   const prepareMockDataPackageConfigWithManyDataPointPackages = (
     benchmarkParams: BenchmarkTestCaseParams
   ) => {
-    // Prepare data package for each signer (each data paackage has benchmarkParams.dataPointsCount data points)
+    // Prepare data package for each signer (each data package has benchmarkParams.dataPointsCount data points)
     const dataPoints = [...Array(benchmarkParams.dataPointsCount).keys()].map(
       (i) =>
         new NumericDataPoint({
@@ -126,8 +126,8 @@ describe("Benchmark", function () {
     benchmarkParams: BenchmarkTestCaseParams,
     gasReport: GasReport
   ) => {
-    const becnhmarkCaseKey = getBenchmarkCaseShortTitle(benchmarkParams);
-    fullGasReport[becnhmarkCaseKey] = gasReport;
+    const benchmarkCaseKey = getBenchmarkCaseShortTitle(benchmarkParams);
+    fullGasReport[benchmarkCaseKey] = gasReport;
   };
 
   const getBenchmarkCaseShortTitle = (
@@ -208,7 +208,7 @@ describe("Benchmark", function () {
   for (const requiredSignersCount of TEST_CASES.requiredSignersCount) {
     for (const requestedSymbolsCount of TEST_CASES.requestedSymbolsCount) {
       for (const dataPointsCount of TEST_CASES.dataPointsCount) {
-        if (dataPointsCount >= requestedSymbolsCount || dataPointsCount == 1) {
+        if (dataPointsCount >= requestedSymbolsCount || dataPointsCount === 1) {
           const benchmarkParams: BenchmarkTestCaseParams = {
             requiredSignersCount,
             requestedSymbolsCount,
