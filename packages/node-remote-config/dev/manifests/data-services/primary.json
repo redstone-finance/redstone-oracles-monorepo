@@ -2056,7 +2056,7 @@
       "denomination": "USD",
       "rateFeed": true
     },
-    "BUIDL_I_ETHEREUM_DAILY_ACCRUAL_V2": {
+    "BUIDL_I_ETHEREUM_DAILY_ACCRUALV2": {
       "source": ["securitize-tsso"],
       "denomination": "percentage",
       "rateFeed": false
