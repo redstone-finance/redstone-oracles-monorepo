@@ -41,10 +41,7 @@ const main = async (accountId = LEDGER_ACCOUNT) => {
     return;
   }
   console.log("Signing transaction with input:", transactionArg);
-  const tx = messageWithIntent(
-    "TransactionData",
-    fromBase64(transactionArg)
-  ) as string;
+  const tx = messageWithIntent("TransactionData", fromBase64(transactionArg));
   console.log(tx);
   const signed = await sui.signTransaction(getDerivationPath(accountId), tx);
   console.log("Signature to combine:");
