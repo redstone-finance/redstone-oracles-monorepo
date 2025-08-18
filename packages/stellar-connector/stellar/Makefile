@@ -17,7 +17,7 @@ ADAPTER_ID=
 setup-env:
 	rustup target add $(WASM_TARGET)
 	rustup toolchain install $(NIGHTLY) --component rustfmt,clippy
-	cargo install cargo-machete --locked
+	cargo install cargo-machete --version 0.8.0 --locked
 
 unused-deps:
 	cargo machete --with-metadata
