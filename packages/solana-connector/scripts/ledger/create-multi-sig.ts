@@ -1,5 +1,5 @@
 import { Keypair, PublicKey } from "@solana/web3.js";
-import multisig from "@sqds/multisig";
+import * as multisig from "@sqds/multisig";
 import "dotenv/config";
 import { makeConnection, readKeypair } from "../utils";
 import { MULTI_SIG_PUBLIC_KEYS, THRESHOLD } from "./config";
@@ -30,9 +30,9 @@ async function createMultiSig() {
     }));
 
   const signature = await multisig.rpc.multisigCreateV2({
-    connection: connection,
-    creator: creator,
-    createKey: createKey,
+    connection,
+    creator,
+    createKey,
     multisigPda,
     configAuthority: null,
     timeLock: 0,
