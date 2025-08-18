@@ -39,7 +39,7 @@ describe("TON unit Tests", () => {
   });
 
   it("median for sorted arrays", async () => {
-    for await (const caseData of [
+    for (const caseData of [
       { numbers: [1, 3, 7], expectedMedian: 3 },
       { numbers: [1, 7], expectedMedian: 4 },
       { numbers: [1, 7, 7], expectedMedian: 7 },
@@ -56,7 +56,7 @@ describe("TON unit Tests", () => {
   });
 
   it("median for unsorted arrays", async () => {
-    for await (const caseData of [
+    for (const caseData of [
       { numbers: [7, 1, 3], expectedMedian: 3 },
       { numbers: [3, 1, 7], expectedMedian: 3 },
       { numbers: [3, 1, 7, 12], expectedMedian: 5 },
@@ -141,7 +141,7 @@ describe("TON unit Tests", () => {
   });
 
   it("deserialize integers passed as a serialized tuple", async () => {
-    for await (const caseData of [
+    for (const caseData of [
       [],
       [1, 2, 3],
       ["BTC", "ETH", "USDT"].map((n) => hexlify(toUtf8Bytes(n))),
