@@ -2056,7 +2056,7 @@
       "denomination": "USD",
       "rateFeed": true
     },
-    "BUIDL_I_ETHEREUM_DAILY_ACCRUALV2": {
+    "BUIDL_I_ETHEREUM_DAILY_ACC_V2": {
       "source": ["securitize-tsso"],
       "denomination": "percentage",
       "rateFeed": false
@@ -2066,7 +2066,7 @@
       "denomination": "USD",
       "rateFeed": true
     },
-    "BUIDL_ARBITRUM_DAILY_ACCRUAL_V2": {
+    "BUIDL_ARBITRUM_DAILY_ACC_V2": {
       "source": ["securitize-tsso"],
       "denomination": "percentage",
       "rateFeed": false
@@ -2076,7 +2076,7 @@
       "denomination": "USD",
       "rateFeed": true
     },
-    "BUIDL_OPTIMISM_DAILY_ACCRUAL_V2": {
+    "BUIDL_OPTIMISM_DAILY_ACC_V2": {
       "source": ["securitize-tsso"],
       "denomination": "percentage",
       "rateFeed": false
@@ -2086,7 +2086,7 @@
       "denomination": "USD",
       "rateFeed": true
     },
-    "BUIDL_AVALANCHE_DAILY_ACCRUAL_V2": {
+    "BUIDL_AVALANCHE_DAILY_ACC_V2": {
       "source": ["securitize-tsso"],
       "denomination": "percentage",
       "rateFeed": false
@@ -2096,7 +2096,7 @@
       "denomination": "USD",
       "rateFeed": true
     },
-    "BUIDL_POLYGON_DAILY_ACCRUAL_V2": {
+    "BUIDL_POLYGON_DAILY_ACC_V2": {
       "source": ["securitize-tsso"],
       "denomination": "percentage",
       "rateFeed": false
@@ -2106,7 +2106,7 @@
       "denomination": "USD",
       "rateFeed": true
     },
-    "BUIDL_SOLANA_DAILY_ACCRUAL_V2": {
+    "BUIDL_SOLANA_DAILY_ACC_V2": {
       "source": ["securitize-tsso"],
       "denomination": "percentage",
       "rateFeed": false
