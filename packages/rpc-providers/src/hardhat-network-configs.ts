@@ -2,8 +2,8 @@ import { getLocalChainConfigs } from "@redstone-finance/chain-configs";
 import { isEvmNetworkId } from "@redstone-finance/utils";
 
 const ChainConfigs = getLocalChainConfigs();
-const chainNames = Object.keys(ChainConfigs);
-type ChainName = (typeof chainNames)[number];
+const _chainNames = Object.keys(ChainConfigs);
+type ChainName = (typeof _chainNames)[number];
 
 const CHAIN_NAME_TO_HARDHAT_NETWORK_NAME: {
   [key: ChainName]: string | undefined;

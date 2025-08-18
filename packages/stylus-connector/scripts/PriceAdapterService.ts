@@ -3,11 +3,11 @@ import {
   IStylusAdapter,
   LastUpdateDetailsStructOutput,
 } from "../abi/IStylusAdapter";
-import { abi as PRICE_ADAPTER_ABI } from "../abi/IStylusAdapter.json";
+import { abi as PRICE_ADAPTER_ABI } from "../abi/StylusAdapter.json";
 
 export class PriceAdapterService {
-  private contract: Contract & IStylusAdapter;
-  private signer: Signer;
+  private readonly contract: Contract & IStylusAdapter;
+  private readonly signer: Signer;
 
   constructor(contractAddress: string, signer: ethers.Signer) {
     this.signer = signer;
