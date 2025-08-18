@@ -27,7 +27,7 @@ describe("TON process_payload Tests", () => {
   it("should process payload (2 signers x 2 feeds)", async () => {
     const paramsProvider = createContractParamsProviderMock(["ETH", "BTC"]);
 
-    for await (const uniqueSignersThreshold of [1, 2]) {
+    for (const uniqueSignersThreshold of [1, 2]) {
       const { values, minTimestamp } = await testerAdapter.testProcessPayload(
         paramsProvider,
         SIGNERS,
@@ -64,7 +64,7 @@ describe("TON process_payload Tests", () => {
       "2sig_ETH"
     );
 
-    for await (const uniqueSignersThreshold of [1, 2]) {
+    for (const uniqueSignersThreshold of [1, 2]) {
       const { values, minTimestamp } = await testerAdapter.testProcessPayload(
         paramsProvider,
         SIGNERS,
@@ -113,8 +113,8 @@ describe("TON process_payload Tests", () => {
     ).rejects.toHaveProperty("exitCode", 300);
   });
 
-  it("should reject when there is missing one data feed", async () => {
-    for await (const caseData of [
+  it("should reject when there is missing one data feed", () => {
+    for (const caseData of [
       {
         dataFeedsIds: ["ETH", "AVAX", "BTC"],
       },
@@ -164,10 +164,10 @@ describe("TON process_payload Tests", () => {
     expect(minTimestamp).toBe(SAMPLE_PACKAGES_TIMESTAMP * 1000);
   });
 
-  it("should reject when timestamps are too future / too old", async () => {
+  it("should reject when timestamps are too future / too old", () => {
     const paramsProvider = createContractParamsProviderMock(["ETH", "BTC"]);
 
-    for await (const caseData of [
+    for (const caseData of [
       { currentTimestampDelta: 901, expectedCode: 201 },
       { currentTimestampDelta: 911, expectedCode: 200 },
       {
