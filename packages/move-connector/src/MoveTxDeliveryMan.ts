@@ -98,7 +98,8 @@ export class MoveTxDeliveryMan {
 
             resolve(await this.tryCallFunction(newData, iterationIndex));
           } catch (e) {
-            reject(e);
+            const err = e as Error;
+            reject(err);
           }
         }
       );
