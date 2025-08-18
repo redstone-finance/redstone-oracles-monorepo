@@ -93,7 +93,7 @@
     "syncpack": "^11.2.1",
     "ts-jest": "^29.1.1",
     "ts-node": "^10.9.2",
-    "typescript": "^5.5.4"
+    "typescript": "^5.9.2"
   },
   "overrides": {
     "elliptic": "^6.6.1",
