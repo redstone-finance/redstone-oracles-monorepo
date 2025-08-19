@@ -7754,6 +7754,13 @@
       ],
       "denomination": "HYPE",
       "rateFeed": true
+    },
+    "wVLP_FUNDAMENTAL": {
+      "source": [
+        "hyperevm-evm-fetcher-hyperbeat-oracle"
+      ],
+      "denomination": "USDT",
+      "rateFeed": true
     }
   }
 }
