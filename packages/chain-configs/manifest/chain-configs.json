@@ -1274,6 +1274,20 @@
       "twoDimensionalFees": false,
       "isMainnet": true
     },
+    "haven1": {
+      "name": "Haven1",
+      "networkId": 8811,
+      "currencySymbol": "H1",
+      "publicRpcUrls": ["https://rpc.haven1.org"],
+      "avgBlockTimeMs": 5000,
+      "multicall3": {
+        "address": "",
+        "type": "Multicall3"
+      },
+      "isAuctionModel": false,
+      "twoDimensionalFees": false,
+      "isMainnet": true
+    },
     "stellar-testnet": {
       "name": "Stellar Testnet",
       "networkId": "stellar/2",
