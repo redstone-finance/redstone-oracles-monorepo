@@ -1,0 +1,18 @@
+{
+  "chain": {
+    "name": "hyperevm",
+    "id": 999
+  },
+  "updateTriggers": {
+    "deviationPercentage": 0.5,
+    "timeSinceLastUpdateInMilliseconds": 21600000
+  },
+  "adapterContract": "0x24c8964338Deb5204B096039147B8e8C3AEa42Cc",
+  "adapterContractType": "multi-feed",
+  "dataServiceId": "redstone-primary-prod",
+  "priceFeeds": {
+    "thBILL_FUNDAMENTAL": {
+      "priceFeedAddress": "0x3EbFAAe0eF43f63dBb176FF11cAb16dcd976607b"
+    }
+  }
+}
