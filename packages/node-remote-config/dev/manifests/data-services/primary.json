@@ -2467,6 +2467,26 @@
       "denomination": "USD",
       "rateFeed": false
     },
+    "iBGT/BERA": {
+      "source": ["non-usd-based"],
+      "denomination": "BERA",
+      "valueCapConfig": {
+        "lower": {
+          "value": 1
+        }
+      },
+      "rateFeed": false
+    },
+    "iBGT/BERA-TWAP-60": {
+      "source": ["twap-local-redstone-primary-prod"],
+      "denomination": "BERA",
+      "valueCapConfig": {
+        "lower": {
+          "value": 1
+        }
+      },
+      "rateFeed": false
+    },
     "PRIME_ECHELON": {
       "source": [
         "bingx-usdt",
