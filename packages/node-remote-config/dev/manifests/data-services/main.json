@@ -7226,11 +7226,6 @@
       "denomination": "USD",
       "rateFeed": false
     },
-    "FLP.1_FUNDAMENTAL": {
-      "source": ["flash-trade-api"],
-      "denomination": "USD",
-      "rateFeed": true
-    },
     "lstHYPE_FUNDAMENTAL": {
       "source": ["hyperevm-evm-fetcher-hyperbeat-oracle"],
       "denomination": "HYPE",
