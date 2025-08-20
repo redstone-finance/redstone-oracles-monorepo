@@ -38,11 +38,10 @@ export const updateUsingOevAuction = async (
     );
   } else {
     if (error?.message?.includes("no solver operations received")) {
-      logger.info(`OEV auction message: no solver operations received`);
+      throw new Error(`No solver operations received`);
     } else {
-      logger.error(`OEV auction: unexpected behaviour, error: `, error);
+      throw new Error(`Unexpected behaviour ${JSON.stringify(error)}`);
     }
-    return;
   }
 
   const verificationTimeout =
