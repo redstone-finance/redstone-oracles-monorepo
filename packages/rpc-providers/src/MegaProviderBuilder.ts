@@ -1,10 +1,16 @@
+import { HttpClient } from "@redstone-finance/http-client";
 import { RedstoneCommon } from "@redstone-finance/utils";
 import { providers } from "ethers";
+import { z } from "zod";
 import {
   ProviderWithAgreement,
   ProviderWithAgreementConfig,
 } from "./providers/ProviderWithAgreement";
 import { ProviderWithFallback } from "./providers/ProviderWithFallback";
+import {
+  RedstoneEthers5Provider,
+  RedstoneProvider,
+} from "./providers/RedstoneProvider";
 
 type MegaProviderOptions = {
   rpcUrls: readonly string[];
@@ -12,6 +18,7 @@ type MegaProviderOptions = {
   throttleLimit: number;
   timeout: number;
   pollingInterval?: number;
+  httpClient?: HttpClient;
 };
 
 type ProviderFactory = () => providers.Provider;
@@ -64,20 +71,42 @@ export class MegaProviderBuilder {
   }
 
   private buildProvidersFactories(): ProviderFactory[] {
+    const useRedstoneProvider = RedstoneCommon.getFromEnv(
+      "USE_REDSTONE_PROVIDER",
+      z.boolean().default(false)
+    );
+
     return this.options.rpcUrls.map((rpcUrl) => () => {
-      const provider = new providers.StaticJsonRpcProvider(
-        {
-          url: rpcUrl,
-          timeout: this.options.timeout,
-          throttleLimit: this.options.throttleLimit,
-          throttleCallback: () => Promise.resolve(false), // blocks ethersJs retries on 429 responses - caused memory leak due to long retry-again in RPC (hypeRPC) api rate limit exceeded response
-        },
-        this.options.network
-      );
-      if (this.options.pollingInterval) {
-        provider.pollingInterval = this.options.pollingInterval;
+      if (useRedstoneProvider) {
+        RedstoneCommon.assert(
+          this.options.httpClient,
+          "You have to provide httpClient to MegeProviderBuilder when USE_REDSTONE_PROVIDER is set",
+          true
+        );
+        const redstoneProvider = new RedstoneProvider(
+          this.options.httpClient,
+          rpcUrl
+        );
+        const provider = new RedstoneEthers5Provider(
+          redstoneProvider,
+          this.options.network
+        );
+        return provider;
+      } else {
+        const provider = new providers.StaticJsonRpcProvider(
+          {
+            url: rpcUrl,
+            timeout: this.options.timeout,
+            throttleLimit: this.options.throttleLimit,
+            throttleCallback: () => Promise.resolve(false), // blocks ethersJs retries on 429 responses - caused memory leak due to long retry-again in RPC (hypeRPC) api rate limit exceeded response
+          },
+          this.options.network
+        );
+        if (this.options.pollingInterval) {
+          provider.pollingInterval = this.options.pollingInterval;
+        }
+        return provider;
       }
-      return provider;
     });
   }
 }

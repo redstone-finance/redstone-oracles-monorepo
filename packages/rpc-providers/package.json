@@ -25,6 +25,7 @@
     "@redstone-finance/agents": "workspace:*",
     "@redstone-finance/chain-configs": "workspace:*",
     "@redstone-finance/evm-multicall": "workspace:*",
+    "@redstone-finance/http-client": "workspace:*",
     "@redstone-finance/utils": "workspace:*",
     "axios": "^1.8.4",
     "ethers": "^5.7.2",
