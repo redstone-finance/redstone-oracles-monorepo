@@ -573,7 +573,6 @@
         "binance-usdt",
         "bingx-usdt",
         "bitget-usdt",
-        "bitmart-usdc",
         "bitrue-usdt",
         "kucoin-usdt",
         "lbank-usdt",
@@ -618,11 +617,7 @@
       "rateFeed": false
     },
     "deUSD": {
-      "source": [
-        "curve-ethereum-dai",
-        "curve-ethereum-usdc",
-        "curve-ethereum-usdt"
-      ],
+      "source": ["curve-ethereum-usdc", "curve-ethereum-usdt"],
       "deviationCheck": {
         "deviationWithRecentValues": {
           "maxPercent": 5,

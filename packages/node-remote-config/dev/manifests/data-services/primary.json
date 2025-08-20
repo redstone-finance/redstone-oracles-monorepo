@@ -184,7 +184,6 @@
         "binance-usdt",
         "bingx-usdt",
         "bitget-usdt",
-        "bitmart-usdc",
         "bitrue-usdt",
         "kucoin-usdt",
         "lbank-usdt",
@@ -254,7 +253,6 @@
     },
     "wstETH": {
       "source": [
-        "balancer-arbitrumone-weth",
         "balancer-arbitrumone-weth-2",
         "balancer-ethereum-aave",
         "balancer-ethereum-weth",
@@ -468,7 +466,6 @@
         "camelot-v3-arbitrumone-weth",
         "curve-ethereum-weth",
         "uniswap-v3-arbitrumone-weth-3000",
-        "uniswap-v3-ethereum-weth-100",
         "uniswap-v3-ethereum-weth-500"
       ],
       "denomination": "USD",
@@ -1458,7 +1455,7 @@
       "rateFeed": true
     },
     "pzETH": {
-      "source": ["curve-ethereum-ezeth", "curve-ethereum-wsteth"],
+      "source": ["curve-ethereum-ezeth"],
       "denomination": "USD",
       "rateFeed": false
     },
@@ -1484,11 +1481,7 @@
       "rateFeed": false
     },
     "deUSD": {
-      "source": [
-        "curve-ethereum-dai",
-        "curve-ethereum-usdc",
-        "curve-ethereum-usdt"
-      ],
+      "source": ["curve-ethereum-usdc", "curve-ethereum-usdt"],
       "deviationCheck": {
         "deviationWithRecentValues": {
           "maxPercent": 5,
@@ -1598,7 +1591,6 @@
         "curve-ethereum-wbtc",
         "uniswap-v3-base-weth-3000",
         "uniswap-v3-ethereum-wbtc-100",
-        "uniswap-v3-ethereum-weth-3000",
         "uniswap-v3-base-usdc-500",
         "curve-ethereum-weth"
       ],
@@ -1867,8 +1859,7 @@
         "bitrue-usdt",
         "bybit-usdt",
         "gate-usdt",
-        "kucoin-usdt",
-        "lbank-usdt"
+        "kucoin-usdt"
       ],
       "denomination": "USD",
       "rateFeed": false
@@ -2169,7 +2160,6 @@
     "NECT": {
       "source": [
         "burrbear-berachain-honey",
-        "burrbear-berachain-usdc.e",
         "kodiak-berachain-honey-500",
         "kodiak-berachain-usde-500"
       ],
