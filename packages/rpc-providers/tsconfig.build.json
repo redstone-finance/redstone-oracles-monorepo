@@ -19,6 +19,9 @@
     },
     {
       "path": "../agents/tsconfig.build.json"
+    },
+    {
+      "path": "../http-client/tsconfig.build.json"
     }
   ]
 }
