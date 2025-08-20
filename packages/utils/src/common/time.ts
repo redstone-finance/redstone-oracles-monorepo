@@ -41,6 +41,27 @@ export const timeout = async <T>(
   }
 };
 
+export const timeoutWithCustomError = async <T>(
+  prom: Promise<T>,
+  timeoutMS: number,
+  customError: Error
+): Promise<T> => {
+  let timer: NodeJS.Timeout | undefined;
+  try {
+    return await Promise.race<T>([
+      prom,
+      new Promise(
+        (_resolve, reject) =>
+          (timer = setTimeout(() => {
+            reject(customError);
+          }, timeoutMS))
+      ),
+    ]);
+  } finally {
+    clearTimeout(timer);
+  }
+};
+
 export const sleep = (ms: number) =>
   new Promise<void>((resolve, _rejects) => setTimeout(resolve, ms));
 
