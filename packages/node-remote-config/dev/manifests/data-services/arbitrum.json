@@ -232,7 +232,6 @@
         "binance-usdt",
         "bingx-usdt",
         "bitget-usdt",
-        "bitmart-usdc",
         "bitrue-usdt",
         "kucoin-usdt",
         "lbank-usdt",
@@ -365,7 +364,6 @@
     },
     "wstETH": {
       "source": [
-        "balancer-arbitrumone-weth",
         "balancer-arbitrumone-weth-2",
         "balancer-ethereum-aave",
         "balancer-ethereum-weth",
@@ -583,7 +581,6 @@
         "camelot-v3-arbitrumone-weth",
         "curve-ethereum-weth",
         "uniswap-v3-arbitrumone-weth-3000",
-        "uniswap-v3-ethereum-weth-100",
         "uniswap-v3-ethereum-weth-500"
       ],
       "denomination": "USD",
@@ -1179,7 +1176,6 @@
         "curve-ethereum-wbtc",
         "uniswap-v3-base-weth-3000",
         "uniswap-v3-ethereum-wbtc-100",
-        "uniswap-v3-ethereum-weth-3000",
         "uniswap-v3-base-usdc-500",
         "curve-ethereum-weth"
       ],
