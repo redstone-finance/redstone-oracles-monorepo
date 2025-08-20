@@ -6,52 +6,49 @@ import {
 } from "@redstone-finance/sdk";
 import { Contract, Keypair } from "@stellar/stellar-sdk";
 import _ from "lodash";
+import { DEFAULT_STELLAR_CONFIG } from "../config";
 import { StellarRpcClient } from "../stellar/StellarRpcClient";
+import { StellarTxDeliveryMan } from "../stellar/StellarTxDeliveryMan";
 import * as XdrUtils from "../XdrUtils";
-
-// TODO: remove it after switching to getContractData instead of simulating
-const MOCK_TESTNET_ACCOUNT_ID =
-  "GAZBYVTHAPTE423VKHTN3T7L2UHHSVRQQPPVXMUQRWDF576ATL47MJI2";
 
 export class StellarPricesContractAdapter
   implements IMultiFeedPricesContractAdapter
 {
+  private readonly txDeliveryMan?: StellarTxDeliveryMan;
+
   constructor(
     private readonly rpcClient: StellarRpcClient,
     private readonly contract: Contract,
-    private readonly keypair?: Keypair
-  ) {}
+    keypair?: Keypair,
+    config = DEFAULT_STELLAR_CONFIG
+  ) {
+    this.txDeliveryMan = keypair
+      ? new StellarTxDeliveryMan(rpcClient, keypair, config.txDeliveryMan)
+      : undefined;
+  }
 
   async init(admin: string) {
-    if (!this.keypair) {
-      throw new Error("Keypair is missing");
+    if (!this.txDeliveryMan) {
+      throw new Error("Cannot initialize contract, txDeliveryMan not set");
     }
 
     const adminAddr = XdrUtils.addressToScVal(admin);
-    const operation = this.contract.call("init", adminAddr);
 
-    const submitResponse = await this.rpcClient.executeOperation(
-      operation,
-      this.keypair
-    );
-
-    await this.rpcClient.waitForTx(submitResponse.hash);
+    return await this.txDeliveryMan.sendTransaction(() => {
+      return this.contract.call("init", adminAddr);
+    });
   }
 
   async changeAdmin(newAdmin: string) {
-    if (!this.keypair) {
-      throw new Error("Keypair is missing");
+    if (!this.txDeliveryMan) {
+      throw new Error("Cannot change contract's admin, txDeliveryMan not set");
     }
 
     const adminAddr = XdrUtils.addressToScVal(newAdmin);
-    const operation = this.contract.call("change_admin", adminAddr);
 
-    const submitResponse = await this.rpcClient.executeOperation(
-      operation,
-      this.keypair
-    );
-
-    await this.rpcClient.waitForTx(submitResponse.hash);
+    return await this.txDeliveryMan.sendTransaction(() => {
+      return this.contract.call("change_admin", adminAddr);
+    });
   }
 
   async readContractData(feedIds: string[], _blockNumber?: number) {
@@ -79,7 +76,11 @@ export class StellarPricesContractAdapter
   }
 
   private getPublicKey() {
-    return this.keypair?.publicKey() ?? MOCK_TESTNET_ACCOUNT_ID;
+    const pk = this.txDeliveryMan?.getPublicKey();
+    if (pk === undefined) {
+      throw new Error("txDeliveryMan not set");
+    }
+    return pk;
   }
 
   async getPricesFromPayload(paramsProvider: ContractParamsProvider) {
@@ -100,24 +101,20 @@ export class StellarPricesContractAdapter
   async writePricesFromPayloadToContract(
     paramsProvider: ContractParamsProvider
   ) {
-    if (!this.keypair) {
-      throw new Error("Keypair is missing");
+    if (!this.txDeliveryMan) {
+      throw new Error("Cannot write prices, txDeliveryMan not set");
     }
 
-    const updater = XdrUtils.addressToScVal(this.keypair.publicKey());
+    const updater = XdrUtils.addressToScVal(this.txDeliveryMan.getPublicKey());
+    const metadataTimestamp = Date.now();
 
-    const operation = this.contract.call(
-      "write_prices",
-      updater,
-      ...(await this.prepareCallArgs(paramsProvider))
-    );
-
-    const submitResponse = await this.rpcClient.executeOperation(
-      operation,
-      this.keypair
-    );
-
-    return submitResponse.hash;
+    return await this.txDeliveryMan.sendTransaction(async () => {
+      return this.contract.call(
+        "write_prices",
+        updater,
+        ...(await this.prepareCallArgs(paramsProvider, metadataTimestamp))
+      );
+    });
   }
 
   async readPricesFromContract(
