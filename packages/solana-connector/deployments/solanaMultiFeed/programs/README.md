@@ -122,7 +122,7 @@ pub struct Initialize<'info> {
 ### Feed accounts
 
 |                            | mainnet-beta                                 | testnet                                      | devnet                                       |
-| -------------------------- | -------------------------------------------- | -------------------------------------------- | -------------------------------------------- |
+| -------------------------- | -------------------------------------------- |----------------------------------------------|----------------------------------------------|
 | ETH                        | HPmPoq3eUTPePsDB5U4G6msu5RpeZHhMemc5VnqxQ9Lx | BsFkAfSgub54ZMHxZpCXqB3zpWXF8NwAswbuNX1Jq55g | 6bgjyNJ18vWGjw2qjjseSBaDK4QbJF8sjsHAhwy8EuBW |
 | BTC                        | 74o5fhuMC33HgfUqvv2TdpYiKvEWfcRTS1E8zxK6ESjN | FbTaAY9o6MU3xZKXT65xE3wATNrxU7nTnZZPmg4gS9Ad | AhQGbBqhbcqJhV7WJ5GktjtjM7dHBPYv2uFhL7Cy7gzQ |
 | BUIDL_SOLANA_FUNDAMENTAL   | ESxdEASDcYRN4ybnYNCJJuPHcF2SGJN1MypQq1yfY9Kz | x                                            | x                                            |
@@ -130,3 +130,4 @@ pub struct Initialize<'info> {
 | ACRED_SOLANA_FUNDAMENTAL   | 6sK8czVw8Xy6T8YbH6VC8p5ovNZD2mXf5vUTv8sgnUJf | x                                            | x                                            |
 | sUSDS_FUNDAMENTAL          | x                                            | x                                            | BsakcTH9iP8vqvf9SvA6jQQfjn48qhCrUdP1EX4h1smY |
 | VBILL_SOLANA_FUNDAMENTAL   | H9ckR9pZtPZCjRYz9RXBPhc2X6m4e3ndpxgVe7HgYVMd | x                                            | x                                            |
+| LBTC_FUNDAMENTAL           | EjN4MxDvAbBEofxFwpvCsz2u8wZ96kHMsLmk2N5Bvomt | x                                            | x                                            |
