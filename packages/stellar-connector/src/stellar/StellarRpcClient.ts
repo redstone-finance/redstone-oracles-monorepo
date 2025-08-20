@@ -71,11 +71,13 @@ export class StellarRpcClient {
 
   async executeOperation(
     operation: xdr.Operation<Operation.InvokeHostFunction>,
-    keypair: Keypair
+    keypair: Keypair,
+    fee = BASE_FEE
   ) {
     const transaction = await this.transactionFromOperation(
       operation,
-      keypair.publicKey()
+      keypair.publicKey(),
+      fee
     );
     const sim = await this.simulateTransaction(transaction);
 
@@ -87,10 +89,11 @@ export class StellarRpcClient {
 
   private async transactionFromOperation(
     operation: xdr.Operation<Operation.InvokeHostFunction>,
-    sender: string
+    sender: string,
+    fee = BASE_FEE
   ) {
     return new TransactionBuilder(await this.getAccount(sender), {
-      fee: BASE_FEE,
+      fee,
       networkPassphrase: (await this.server.getNetwork()).passphrase,
     })
       .addOperation(operation)
