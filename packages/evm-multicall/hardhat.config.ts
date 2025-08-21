@@ -98,6 +98,9 @@ const config: HardhatUserConfig = {
     tacSpbTestnet: {
       url: "https://spb.rpc.tac.build",
     },
+    incentivTestnet: {
+      url: "https://rpc2.testnet.incentiv.io/",
+    },
   },
 };
 
