@@ -1301,6 +1301,21 @@
       "isAuctionModel": false,
       "twoDimensionalFees": false,
       "isMainnet": false
+    },
+    "incentivTestnet": {
+      "name": "Incentiv Testnet",
+      "networkId": 28802,
+      "currencySymbol": "TCENT",
+      "publicRpcUrls": ["https://rpc2.testnet.incentiv.io/"],
+      "avgBlockTimeMs": 12000,
+      "multicall3": {
+        "address": "0x52f530e1d42BdFeF939729C341Ed714698a993f7",
+        "type": "RedstoneMulticall3",
+        "gasLimitPerCall": 1000000
+      },
+      "isAuctionModel": false,
+      "twoDimensionalFees": false,
+      "isMainnet": false
     }
   },
   "temporaryConfigUpdates": {
