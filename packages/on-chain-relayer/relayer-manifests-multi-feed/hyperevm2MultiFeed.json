@@ -13,6 +13,12 @@
   "priceFeeds": {
     "thBILL_FUNDAMENTAL": {
       "priceFeedAddress": "0x3EbFAAe0eF43f63dBb176FF11cAb16dcd976607b"
+    },
+    "wVLP_FUNDAMENTAL": {
+      "priceFeedAddress": "0xBe92962Ec21B99870A583e232aBcFdD64cdB78c9"
+    },
+    "stHYPE_LP_FUNDAMENTAL": {
+      "priceFeedAddress": "0x5f138218aD5F40804C1e3f18266102493Df872AD"
     }
   }
 }
