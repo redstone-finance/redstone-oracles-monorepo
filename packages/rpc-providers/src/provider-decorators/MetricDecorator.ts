@@ -1,5 +1,6 @@
 import { BlockTag, TransactionRequest } from "@ethersproject/abstract-provider";
 import { Point } from "@influxdata/influxdb-client";
+import { sanitizeLogMessage } from "@redstone-finance/utils";
 import { providers } from "ethers";
 import { Deferrable } from "ethers/lib/utils";
 import { ReportMetricFn, getProviderNetworkInfo } from "../common";
@@ -31,7 +32,7 @@ export function CallMetricDecorator(
         const point = new Point("rpc_provider")
           .tag("op", "call")
           .tag("chainId", chainId.toString())
-          .tag("url", url)
+          .tag("url", sanitizeLogMessage(url))
           .tag("isFailure", isFailure.toString())
           .floatField("duration", end - start)
           .timestamp(Date.now());
@@ -70,7 +71,7 @@ export function GetBlockNumberMetricDecorator(
         const point = new Point("rpc_provider")
           .tag("op", "getBlockNumber")
           .tag("chainId", chainId.toString())
-          .tag("url", url)
+          .tag("url", sanitizeLogMessage(url))
           .tag("isFailure", isFailure.toString())
           .floatField("blockNumber", blockNumber)
           .floatField("duration", end - start)
