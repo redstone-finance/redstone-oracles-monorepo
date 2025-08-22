@@ -3,6 +3,7 @@ import {
   isNonEvmNetworkId,
   loggerFactory,
   RedstoneCommon,
+  sanitizeLogMessage,
 } from "@redstone-finance/utils";
 import chai from "chai";
 import { ethers } from "ethers";
@@ -100,9 +101,12 @@ export const validateBlockNumberAgreementBetweenRpcs = (
               const blockNumber = await getBlockNumberWithTimeout(rpcUrl, 5000);
               return { rpcUrl, blockNumber };
             } catch (error) {
-              logger.warn(`Failed to fetch block number`, { rpcUrl, error });
+              logger.warn(`Failed to fetch block number`, {
+                rpcUrl: sanitizeLogMessage(rpcUrl),
+                error,
+              });
               throw new Error(
-                `Failed to fetch block number for RPC: ${rpcUrl}`
+                `Failed to fetch block number for RPC: ${sanitizeLogMessage(rpcUrl)}`
               );
             }
           })
