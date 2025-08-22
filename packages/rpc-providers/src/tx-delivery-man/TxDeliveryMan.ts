@@ -2,7 +2,12 @@ import {
   TransactionReceipt,
   TransactionResponse,
 } from "@ethersproject/providers";
-import { loggerFactory, RedstoneCommon, Tx } from "@redstone-finance/utils";
+import {
+  loggerFactory,
+  RedstoneCommon,
+  sanitizeLogMessage,
+  Tx,
+} from "@redstone-finance/utils";
 import { ethers, providers } from "ethers";
 import { getProviderNetworkInfo } from "../common";
 import { ProviderWithAgreement } from "../providers/ProviderWithAgreement";
@@ -170,7 +175,8 @@ function createTxDelivery(
   return new TxDelivery(
     {
       ...opts,
-      logger: (msg) => logger.log(`RpcUrl=${rpcUrl}, ${msg}`),
+      logger: (msg) =>
+        logger.log(`RpcUrl=${sanitizeLogMessage(rpcUrl)}, ${msg}`),
     },
     signer,
     provider,
