@@ -96,7 +96,6 @@
         "coinbase-usd",
         "coingecko",
         "coinmarketcap",
-        "gate-usd",
         "kaiko-v2",
         "kraken-usd"
       ],
@@ -766,12 +765,11 @@
         "curve-ethereum-dai",
         "curve-ethereum-fdusd",
         "curve-ethereum-frax",
-        "uniswap-v3-ethereum-usdt-100",
-        "uniswap-v4-ethereum-usdt-100",
-        "uniswap-v3-ethereum-mnt-3000",
         "curve-ethereum-usdt",
-        "pancake-swap-bnb-usdt-100",
-        "uniswap-v3-ethereum-usdc-100"
+        "uniswap-v3-ethereum-mnt-3000",
+        "uniswap-v3-ethereum-usdc-100",
+        "uniswap-v3-ethereum-usdt-100",
+        "uniswap-v4-ethereum-usdt-100"
       ],
       "deviationCheck": {
         "deviationWithRecentValues": {
