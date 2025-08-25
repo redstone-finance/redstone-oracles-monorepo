@@ -6,9 +6,11 @@ import {
 } from "@redstone-finance/sdk";
 import { Contract, Keypair } from "@stellar/stellar-sdk";
 import _ from "lodash";
-import { DEFAULT_STELLAR_CONFIG } from "../config";
 import { StellarRpcClient } from "../stellar/StellarRpcClient";
-import { StellarTxDeliveryMan } from "../stellar/StellarTxDeliveryMan";
+import {
+  StellarTxDeliveryMan,
+  StellarTxDeliveryManConfig,
+} from "../stellar/StellarTxDeliveryMan";
 import * as XdrUtils from "../XdrUtils";
 
 export class StellarPricesContractAdapter
@@ -20,10 +22,10 @@ export class StellarPricesContractAdapter
     private readonly rpcClient: StellarRpcClient,
     private readonly contract: Contract,
     keypair?: Keypair,
-    config = DEFAULT_STELLAR_CONFIG
+    txDeliveryManConfig?: Partial<StellarTxDeliveryManConfig>
   ) {
     this.txDeliveryMan = keypair
-      ? new StellarTxDeliveryMan(rpcClient, keypair, config.txDeliveryMan)
+      ? new StellarTxDeliveryMan(rpcClient, keypair, txDeliveryManConfig)
       : undefined;
   }
 

@@ -1,8 +1,10 @@
 import { Address, Keypair, Operation } from "@stellar/stellar-sdk";
 import { readFileSync } from "fs";
-import { DEFAULT_STELLAR_CONFIG } from "./config";
 import { StellarRpcClient } from "./stellar/StellarRpcClient";
-import { StellarTxDeliveryMan } from "./stellar/StellarTxDeliveryMan";
+import {
+  StellarTxDeliveryMan,
+  StellarTxDeliveryManConfig,
+} from "./stellar/StellarTxDeliveryMan";
 
 export class StellarContractDeployer {
   private readonly txDeliveryMan: StellarTxDeliveryMan;
@@ -10,12 +12,12 @@ export class StellarContractDeployer {
   constructor(
     private readonly rpcClient: StellarRpcClient,
     keypair: Keypair,
-    config = DEFAULT_STELLAR_CONFIG
+    txDeliveryManConfig?: Partial<StellarTxDeliveryManConfig>
   ) {
     this.txDeliveryMan = new StellarTxDeliveryMan(
       rpcClient,
       keypair,
-      config.txDeliveryMan
+      txDeliveryManConfig
     );
   }
 
