@@ -132,16 +132,16 @@
       "ecdsaPublicKey": "0x04440a1d2f497db99d7282bf6ccaf133995ed05f992c177c1eaf7b861a9e64261d1da123bcefa6bed232755197fc5082d42696e72aaf42b45771eba336d693b9b3",
       "dateAdded": "2024-01-01"
     },
-    "0x33b36223dddBfeC1FfCdE87e83fe47923Cb5bB90": {
-      "name": "redstone-primary-demo-keyrock-1",
+    "0x8cdBF4FE234F106eFB28D84Ef466bBaf8616f8D9": {
+      "name": "redstone-primary-prod-keyrock-1",
       "description": "Data feeds from primary redstone nodes - Keyrock node 1",
       "logo": "https://raw.githubusercontent.com/redstone-finance/redstone-images/main/providers/keyrock/logo.png",
-      "dataServiceId": "redstone-primary-demo",
-      "evmAddress": "0x33b36223dddBfeC1FfCdE87e83fe47923Cb5bB90",
+      "dataServiceId": "redstone-primary-prod",
+      "evmAddress": "0x8cdBF4FE234F106eFB28D84Ef466bBaf8616f8D9",
       "url": "https://keyrock.com",
       "ipAddress": "0.0.0.0",
-      "ecdsaPublicKey": "0x043c9991a6ca128056de66428233c379ef7de0380d3620e4a105815afeb855d7aad3361c2c4f2fa7952243c5f62abd22b41ec04f037d23586b295e5cc62746a1a0",
-      "dateAdded": "2025-05-22"
+      "ecdsaPublicKey": "0x043a5024908db4228690632214cdbb1a7d24e525fac526b3fd0e430c8c8c4ef4cb3f75e48a146ef9e7309606e05e127db29a41de9682b1d46297d3b763c4ccfe98",
+      "dateAdded": "2025-08-25"
     },
     "R4ih95AvybIzz3uKuEmpBee17J73CGkSk4bvzU_IZ_I": {
       "name": "redstone-primary-prod-altair",
