@@ -8,8 +8,16 @@ import { PartialRelayerConfig } from "./partial-relayer-config";
 export const getStellarContractConnector = (
   relayerConfig: PartialRelayerConfig
 ) => {
-  const { adapterContractAddress, privateKey, rpcUrls, networkId } =
-    relayerConfig;
+  const {
+    adapterContractAddress,
+    privateKey,
+    rpcUrls,
+    networkId,
+    gasLimit,
+    gasMultiplier,
+    maxTxSendAttempts,
+    expectedTxDeliveryTimeInMS,
+  } = relayerConfig;
 
   const client = new StellarClientBuilder()
     .withNetworkId(networkId)
@@ -17,9 +25,17 @@ export const getStellarContractConnector = (
     .withQuarantineEnabled()
     .build();
 
+  const txDeliveryManConfig = {
+    gasLimit,
+    gasMultiplier,
+    maxTxSendAttempts,
+    expectedTxDeliveryTimeInMS,
+  };
+
   return new PriceAdapterStellarContractConnector(
     client,
     adapterContractAddress,
-    makeKeypair(privateKey)
+    makeKeypair(privateKey),
+    txDeliveryManConfig
   );
 };
