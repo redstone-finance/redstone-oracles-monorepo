@@ -1,19 +1,28 @@
 import { loggerFactory, RedstoneCommon } from "@redstone-finance/utils";
 import { BASE_FEE, Keypair, Operation, xdr } from "@stellar/stellar-sdk";
-import { StellarConfig } from "../config";
 import { StellarRpcClient } from "../stellar/StellarRpcClient";
+import {
+  configFromPartial,
+  StellarTxDeliveryManConfig,
+  WAIT_BETWEEN_MS,
+} from "./StellarTxDeliveryManConfig";
+
+export type { StellarTxDeliveryManConfig } from "./StellarTxDeliveryManConfig";
 
 type Tx = xdr.Operation<Operation.InvokeHostFunction>;
 type TxCreator = () => Tx | Promise<Tx>;
 
 export class StellarTxDeliveryMan {
   private readonly logger = loggerFactory("stellar-tx-delivery-man");
+  private readonly config: StellarTxDeliveryManConfig;
 
   constructor(
     private readonly rpcClient: StellarRpcClient,
     private readonly keypair: Keypair,
-    private readonly config: StellarConfig["txDeliveryMan"]
-  ) {}
+    config?: Partial<StellarTxDeliveryManConfig>
+  ) {
+    this.config = configFromPartial(config);
+  }
 
   getPublicKey() {
     return this.keypair.publicKey();
@@ -25,12 +34,12 @@ export class StellarTxDeliveryMan {
     try {
       const { hash, fee } = await RedstoneCommon.retry({
         fn: async () => {
-          return await RedstoneCommon.timeout(
+          return await RedstoneCommon.timeoutOrResult(
             this.sendTransactionWithIteration(txCreator, i++),
-            this.config.timeoutMs
+            this.config.expectedTxDeliveryTimeInMS
           );
         },
-        ...this.config.retry,
+        maxRetries: this.config.maxTxSendAttempts,
         logger: this.logger.warn,
       })();
 
@@ -41,7 +50,7 @@ export class StellarTxDeliveryMan {
       return hash;
     } catch (e) {
       this.logger.error(
-        `Sending transaction failed ${this.config.retry.maxRetries} times`
+        `Sending transaction failed ${this.config.maxTxSendAttempts} times`
       );
       throw e;
     }
@@ -53,11 +62,10 @@ export class StellarTxDeliveryMan {
   ) {
     const tx = await txCreator();
 
-    const multiplier = BigInt(this.config.feeMultiplier) ** BigInt(iteration);
-    let fee = BigInt(BASE_FEE) * multiplier;
-    if (fee > this.config.feeLimit) {
-      fee = this.config.feeLimit;
-    }
+    const multiplier = this.config.gasMultiplier ** iteration;
+    const fee = BigInt(
+      Math.round(Math.min(Number(BASE_FEE) * multiplier, this.config.gasLimit))
+    );
 
     this.logger.info(
       `Sending transaction; Attempt #${iteration + 1} (fee: ${fee} stroops)`
@@ -70,6 +78,9 @@ export class StellarTxDeliveryMan {
     );
 
     if (!["PENDING", "DUPLICATE"].includes(submitResponse.status)) {
+      if (submitResponse.status === "TRY_AGAIN_LATER") {
+        await RedstoneCommon.sleep(WAIT_BETWEEN_MS);
+      }
       throw new Error(`Execute operation status: ${submitResponse.status}`);
     }
 
