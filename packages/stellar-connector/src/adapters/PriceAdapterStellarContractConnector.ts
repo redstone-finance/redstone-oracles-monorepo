@@ -1,7 +1,7 @@
 import { IPricesContractAdapter } from "@redstone-finance/sdk";
 import { Contract, Keypair } from "@stellar/stellar-sdk";
-import { DEFAULT_STELLAR_CONFIG } from "../config";
 import { StellarRpcClient } from "../stellar/StellarRpcClient";
+import { StellarTxDeliveryManConfig } from "../stellar/StellarTxDeliveryMan";
 import { StellarContractConnector } from "./StellarContractConnector";
 import { StellarPricesContractAdapter } from "./StellarPricesContractAdapter";
 
@@ -12,7 +12,7 @@ export class PriceAdapterStellarContractConnector extends StellarContractConnect
     rpcClient: StellarRpcClient,
     contractAddress: string,
     keypair?: Keypair,
-    config = DEFAULT_STELLAR_CONFIG
+    txDeliveryManConfig?: Partial<StellarTxDeliveryManConfig>
   ) {
     super(rpcClient);
 
@@ -20,7 +20,7 @@ export class PriceAdapterStellarContractConnector extends StellarContractConnect
       rpcClient,
       new Contract(contractAddress),
       keypair,
-      config
+      txDeliveryManConfig
     );
   }
 
