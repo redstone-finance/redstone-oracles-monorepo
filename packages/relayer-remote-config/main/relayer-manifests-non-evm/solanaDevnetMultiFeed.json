@@ -5,7 +5,7 @@
     "id": "solana/3"
   },
   "updateTriggers": {
-    "deviationPercentage": 0.2,
+    "deviationPercentage": 0.5,
     "timeSinceLastUpdateInMilliseconds": 86400000
   },
   "adapterContract": "REDuYsnEucMweattdv4xQCYdU1i8Q2W92kdayrpY9rA",

@@ -98,6 +98,20 @@
         "deviationPercentage": 0.1,
         "timeSinceLastUpdateInMilliseconds": 86400000
       }
+    },
+    "BNB": {
+      "priceFeedAddress": "0x8dd2D85C7c28F43F965AE4d9545189C7D022ED0e",
+      "updateTriggersOverrides": {
+        "deviationPercentage": 0.1,
+        "timeSinceLastUpdateInMilliseconds": 60000
+      }
+    },
+    "BTC": {
+      "priceFeedAddress": "0xa51738d1937FFc553d5070f43300B385AA2D9F55",
+      "updateTriggersOverrides": {
+        "deviationPercentage": 0.1,
+        "timeSinceLastUpdateInMilliseconds": 60000
+      }
     }
   }
 }

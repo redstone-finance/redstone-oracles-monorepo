@@ -5,7 +5,7 @@
     "id": "solana/3"
   },
   "updateTriggers": {
-    "deviationPercentage": 0.05,
+    "deviationPercentage": 0.5,
     "timeSinceLastUpdateInMilliseconds": 86400000
   },
   "adapterContract": "BtepN2n3H1ch36wozM1zvmd716afym3sJLJmkCH1T4HE",
@@ -14,8 +14,7 @@
     "ETH": {},
     "BTC": {
       "updateTriggersOverrides": {
-        "deviationPercentage": 0.01,
-        "timeSinceLastUpdateInMilliseconds": 86400000
+        "deviationPercentage": 0.4
       }
     }
   }
