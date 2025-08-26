@@ -1,18 +1,17 @@
 {
   "adapterContractType": "multi-feed",
   "chain": {
-    "name": "solana-devnet",
-    "id": "solana/3"
+    "name": "stellar-testnet",
+    "id": "stellar/2"
   },
   "updateTriggers": {
     "deviationPercentage": 0.5,
     "timeSinceLastUpdateInMilliseconds": 86400000
   },
-  "adapterContract": "REDuYsnEucMweattdv4xQCYdU1i8Q2W92kdayrpY9rA",
+  "adapterContract": "CDRFIYPLCIO3GCE3MBD6EXKA6OZKN4KQIYXRIQG2Y6Z5ZRQ3VDBB5QR5",
   "dataServiceId": "redstone-primary-prod",
   "priceFeeds": {
     "ETH": {},
-    "BTC": {},
-    "sUSDS_FUNDAMENTAL": {}
+    "BTC": {}
   }
 }
