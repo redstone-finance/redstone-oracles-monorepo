@@ -49,6 +49,7 @@ export type OnChainRelayerEnv = {
   multiFeedAdditionalUpdatesDeviationThreshold?: number;
   multiFeedSyncHeartbeats?: boolean;
   oevAuctionUrl?: string;
+  oevMultiAuctions?: boolean;
   oevResolveAuctionTimeout: number;
   oevTotalTimeout: number;
   oevAuctionVerificationTimeout?: number;
