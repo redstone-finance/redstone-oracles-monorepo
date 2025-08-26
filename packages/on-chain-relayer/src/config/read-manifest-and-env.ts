@@ -188,6 +188,10 @@ export const readManifestAndEnv = async () => {
       "OEV_AUCTION_URL",
       z.string().optional()
     ),
+    oevMultiAuctions: RedstoneCommon.getFromEnv(
+      "OEV_MULTI_AUCTIONS",
+      z.boolean().default(false)
+    ),
     oevResolveAuctionTimeout: RedstoneCommon.getFromEnv(
       "OEV_RESOLVE_AUCTION_TIMEOUT_MS",
       z.number().default(2000)

@@ -3,9 +3,11 @@ import { TxDeliveryManSupportedProviders } from "@redstone-finance/rpc-providers
 import { DataPackagesResponseCache } from "@redstone-finance/sdk";
 import { Tx } from "@redstone-finance/utils";
 import { Signer, Wallet } from "ethers";
+import { MultiFeedAdapterWithoutRounds } from "../../../typechain-types";
 import { isOevRelayerConfig } from "../../config/relayer-config-checks";
 import { RelayerConfig } from "../../config/RelayerConfig";
 import { getRelayerProvider } from "../../core/contract-interactions/get-relayer-provider";
+import { OevMultiAuctionsTxDeliveryMan } from "../../core/contract-interactions/OevMultiAuctionsTxDeliveryMan";
 import { OevTxDeliveryMan } from "../../core/contract-interactions/OevTxDeliveryMan";
 import { getTxDeliveryMan } from "../../core/TxDeliveryManSingleton";
 import { RelayerDataInfluxService } from "../RelayerDataInfluxService";
@@ -59,11 +61,19 @@ function makeTxDeliveryMan(
   }
 
   if (isOevRelayerConfig(relayerConfig)) {
-    txDeliveryMan = new OevTxDeliveryMan(
-      txDeliveryMan,
-      adapterContract,
-      relayerConfig
-    );
+    if (relayerConfig.oevMultiAuctions) {
+      txDeliveryMan = new OevMultiAuctionsTxDeliveryMan(
+        txDeliveryMan,
+        adapterContract as MultiFeedAdapterWithoutRounds,
+        relayerConfig
+      );
+    } else {
+      txDeliveryMan = new OevTxDeliveryMan(
+        txDeliveryMan,
+        adapterContract,
+        relayerConfig
+      );
+    }
   }
 
   return txDeliveryMan;
