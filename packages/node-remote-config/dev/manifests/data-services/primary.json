@@ -1671,11 +1671,8 @@
     "aUSD": {
       "source": [
         "blackhole-avalanche-usdc-75",
-        "bullish-usdc",
         "bullish-btc-reversed",
         "pharaoh-avalanche-usdc-50",
-        "trader-joe-v2-avalanche-usdc",
-        "trader-joe-v2-avalanche-usdt",
         "trader-joe-v2-avalanche-wavax"
       ],
       "deviationCheck": {
@@ -2156,11 +2153,7 @@
       "rateFeed": false
     },
     "NECT": {
-      "source": [
-        "burrbear-berachain-honey",
-        "kodiak-berachain-honey-500",
-        "kodiak-berachain-usde-500"
-      ],
+      "source": ["kodiak-berachain-honey-500", "kodiak-berachain-usde-500"],
       "deviationCheck": {
         "deviationWithRecentValues": {
           "maxPercent": 5,
@@ -2174,7 +2167,6 @@
       "source": [
         "beraswap-berachain-usdc.e",
         "beraswap-berachain-wbera",
-        "burrbear-berachain-usdc.e",
         "kodiak-berachain-susde-500",
         "kodiak-berachain-usdc.e-500",
         "kodiak-berachain-usde-500",
