@@ -79,4 +79,36 @@ export class MultiSigTxBuilder {
       },
     });
   }
+
+  /// Creates tx that rejects proposed tx on the chain.
+  static async rejectTx(
+    aptos: Aptos,
+    sender: AccountAddress,
+    multisigAddress: AccountAddress,
+    txId: number
+  ): Promise<SimpleTransaction> {
+    return await aptos.transaction.build.simple({
+      sender,
+      data: {
+        function: multiSigModuleCall("reject_transaction"),
+        functionArguments: [multisigAddress, txId],
+      },
+    });
+  }
+
+  /// Creates tx that execute rejecting txs on the chain.
+  static async executeRejectTxs(
+    aptos: Aptos,
+    sender: AccountAddress,
+    multisigAddress: AccountAddress,
+    upTo: number
+  ): Promise<SimpleTransaction> {
+    return await aptos.transaction.build.simple({
+      sender,
+      data: {
+        function: multiSigModuleCall("execute_rejected_transactions"),
+        functionArguments: [multisigAddress, upTo],
+      },
+    });
+  }
 }
