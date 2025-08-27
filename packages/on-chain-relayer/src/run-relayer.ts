@@ -15,8 +15,8 @@ import { MqttRunner } from "./runner/MqttRunner";
 import { IterationOptions } from "./runner/run-iteration";
 import { SendHealthcheckCollector } from "./SendHealthcheckCollector";
 
-export const runRelayer = async () => {
-  const relayerConfig = await config(ConsciouslyInvoked);
+export const runRelayer = () => {
+  const relayerConfig = config(ConsciouslyInvoked);
   const logger = loggerFactory("relayer/run");
 
   logger.log(

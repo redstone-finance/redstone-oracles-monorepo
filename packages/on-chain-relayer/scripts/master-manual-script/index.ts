@@ -118,7 +118,7 @@ async function main() {
     }
 
     clearCache();
-    const relayerConfig = await config(ConsciouslyInvoked);
+    const relayerConfig = config(ConsciouslyInvoked);
     const contractFacade = await getContractFacade(relayerConfig);
 
     try {

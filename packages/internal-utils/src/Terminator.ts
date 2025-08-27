@@ -23,9 +23,7 @@ export function terminateWithUpdateConfigExitCode(): never {
   process.exit(ExitCodes.RestartConfigExitCode);
 }
 
-export function terminateWithNodeRemoteConfigError(
-  errorDetails: string
-): never {
+export function terminateWithRemoteConfigError(errorDetails: string): never {
   logger.error(
     `Node configuration error: ${errorDetails}.\n` +
       `Terminating with exit code ${ExitCodes.NodeRemoteConfigError}`
