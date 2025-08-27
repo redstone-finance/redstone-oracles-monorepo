@@ -1278,6 +1278,26 @@
       "twoDimensionalFees": false,
       "isMainnet": true
     },
+    "zeroGravityTestnet": {
+      "name": "0G Galileo Testnet",
+      "networkId": 16601,
+      "currencySymbol": "OG",
+      "publicRpcUrls": [
+        "https://evmrpc-testnet.0g.ai",
+        "https://rpc.ankr.com/0g_galileo_testnet_evm",
+        "https://16601.rpc.thirdweb.com",
+        "https://lightnode-json-rpc-0g.grandvalleys.com"
+      ],
+      "avgBlockTimeMs": 2000,
+      "multicall3": {
+        "address": "0xaD6CC5a465E5c8284a49eC9eD10EFE275460678c",
+        "type": "RedstoneMulticall3",
+        "gasLimitPerCall": 1000000
+      },
+      "isAuctionModel": false,
+      "twoDimensionalFees": false,
+      "isMainnet": false
+    },
     "haven1": {
       "name": "Haven1",
       "networkId": 8811,
