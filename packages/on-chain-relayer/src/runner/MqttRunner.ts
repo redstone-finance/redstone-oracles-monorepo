@@ -1,3 +1,4 @@
+import { terminateWithUpdateConfigExitCode } from "@redstone-finance/internal-utils";
 import {
   DataPackageSubscriber,
   Mqtt5Client,
@@ -35,13 +36,21 @@ export class MqttRunner {
     1_000,
     10_000
   );
+  private shouldGracefullyShutdown: boolean = false;
 
   constructor(
     private readonly client: MultiPubSubClient,
     private readonly contractFacade: ContractFacade,
     private readonly cache: DataPackagesResponseCache,
     private readonly iterationOptionsOverride: Partial<IterationOptions>
-  ) {}
+  ) {
+    process.on("SIGTERM", () => {
+      this.logger.info(
+        "SIGTERM received, NodeRunner scheduled for a graceful shut down."
+      );
+      this.shouldGracefullyShutdown = true;
+    });
+  }
 
   static async run(
     relayerConfig: RelayerConfig,
@@ -219,6 +228,10 @@ export class MqttRunner {
     requestParams: DataPackagesRequestParams
   ) {
     try {
+      if (this.shouldGracefullyShutdown) {
+        this.logger.info(`Shutdown scheduled, not running next iteration`);
+        return;
+      }
       this.cache.update(dataPackagesResponse, requestParams);
       await runIteration(
         this.contractFacade,
@@ -230,6 +243,10 @@ export class MqttRunner {
         "Unhandled error occurred during iteration:",
         RedstoneCommon.stringifyError(error)
       );
+    } finally {
+      if (this.shouldGracefullyShutdown) {
+        terminateWithUpdateConfigExitCode();
+      }
     }
   }
 }

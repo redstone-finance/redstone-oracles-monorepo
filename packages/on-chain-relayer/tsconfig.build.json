@@ -38,6 +38,9 @@
     },
     {
       "path": "../healthcheck/tsconfig.build.json"
+    },
+    {
+      "path": "../remote-config/tsconfig.build.json"
     }
   ]
 }
