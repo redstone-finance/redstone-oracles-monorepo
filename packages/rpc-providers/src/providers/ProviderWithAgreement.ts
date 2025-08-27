@@ -6,6 +6,7 @@ import {
   RedstoneCommon,
   RedstoneLogger,
   RpcIdentifier,
+  sanitizeLogMessage,
 } from "@redstone-finance/utils";
 import { BigNumber, providers, utils } from "ethers";
 import _ from "lodash";
@@ -180,7 +181,7 @@ export class ProviderWithAgreement extends ProviderWithFallback {
         blockNumbersResults.map(
           (result, index) =>
             new Error(
-              `${healthyProviders[index].identifier}: ${String((result as PromiseRejectedResult).reason)}`
+              `${healthyProviders[index].identifier}: ${sanitizeLogMessage(String((result as PromiseRejectedResult).reason))}`
             )
         ),
         `All providers failed to fetch 'getBlockNumber'`
