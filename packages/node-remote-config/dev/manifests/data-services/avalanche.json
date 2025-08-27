@@ -65,19 +65,6 @@
       "denomination": "USD",
       "rateFeed": false
     },
-    "GBP": {
-      "source": [
-        "bitstamp-usd",
-        "financialmodelingprep-usd",
-        "kraken-usd",
-        "coinbase-btc-reversed",
-        "bitstamp-btc-reversed",
-        "kraken-usdt-reversed",
-        "bitfinex-btc-reversed"
-      ],
-      "denomination": "USD",
-      "rateFeed": false
-    },
     "PNG": {
       "source": ["coingecko", "coinmarketcap", "gate-usdt"],
       "denomination": "USD",
@@ -187,11 +174,6 @@
       "denomination": "USD",
       "rateFeed": false
     },
-    "YYAV3SA1": {
-      "source": ["avalanche-evm-fetcher-yield-yak"],
-      "denomination": "USD",
-      "rateFeed": false
-    },
     "YY_PNG_AVAX_USDC_LP": {
       "source": ["avalanche-evm-fetcher-yield-yak"],
       "denomination": "USD",
@@ -212,24 +194,8 @@
       "denomination": "USD",
       "rateFeed": false
     },
-    "PNG_AVAX_USDT_LP": {
-      "source": ["avalanche-evm-fetcher-dex-lp"],
-      "denomination": "USD",
-      "rateFeed": false
-    },
     "PNG_AVAX_ETH_LP": {
       "source": ["avalanche-evm-fetcher-dex-lp"],
-      "denomination": "USD",
-      "rateFeed": false
-    },
-    "XAVA": {
-      "source": [
-        "bybit-usdt",
-        "coingecko",
-        "coinmarketcap",
-        "gate-usdt",
-        "kucoin-usdt"
-      ],
       "denomination": "USD",
       "rateFeed": false
     },
@@ -259,7 +225,6 @@
         "bitmart-usdt",
         "gate-usdt",
         "okx-usdt",
-        "trader-joe-v1-avalanche-wavax",
         "xt"
       ],
       "denomination": "USD",
@@ -288,26 +253,6 @@
       "denomination": "USD",
       "rateFeed": false
     },
-    "gmdUSDC": {
-      "source": ["avalanche-evm-fetcher-gmd"],
-      "denomination": "USD",
-      "rateFeed": false
-    },
-    "gmdAVAX": {
-      "source": ["avalanche-evm-fetcher-gmd"],
-      "denomination": "USD",
-      "rateFeed": false
-    },
-    "gmdBTC": {
-      "source": ["avalanche-evm-fetcher-gmd"],
-      "denomination": "USD",
-      "rateFeed": false
-    },
-    "gmdETH": {
-      "source": ["avalanche-evm-fetcher-gmd"],
-      "denomination": "USD",
-      "rateFeed": false
-    },
     "EUROC": {
       "source": [
         "coingecko",
@@ -328,29 +273,6 @@
       "denomination": "USD",
       "rateFeed": false
     },
-    "TJ_AVAX_USDC_AUTO": {
-      "source": ["avalanche-evm-fetcher-trader-joe"],
-      "denomination": "USD",
-      "rateFeed": false
-    },
-    "CRV": {
-      "source": [
-        "binance-usdt",
-        "bingx-usdt",
-        "bitget-usdt",
-        "bitmart-usdt",
-        "bitrue-usdt",
-        "coinbase-usd",
-        "gate-usdt",
-        "kraken-usd",
-        "kucoin-usdt",
-        "lbank-usdt",
-        "okx-usdt",
-        "xt"
-      ],
-      "denomination": "USD",
-      "rateFeed": false
-    },
     "SOL": {
       "source": [
         "binance-usdt",
@@ -367,21 +289,6 @@
         "okx-usdt",
         "xt"
       ],
-      "denomination": "USD",
-      "rateFeed": false
-    },
-    "crvUSDBTCETH": {
-      "source": ["avalanche-evm-fetcher-curve"],
-      "denomination": "USD",
-      "rateFeed": false
-    },
-    "IB01.L": {
-      "source": ["twelve-data"],
-      "denomination": "USD",
-      "rateFeed": false
-    },
-    "SHLB_GMX-AVAX_B": {
-      "source": ["avalanche-evm-fetcher-steak-hut"],
       "denomination": "USD",
       "rateFeed": false
     },
@@ -615,17 +522,6 @@
       "denomination": "USD",
       "rateFeed": false
     },
-    "deUSD": {
-      "source": ["curve-ethereum-usdc", "curve-ethereum-usdt"],
-      "deviationCheck": {
-        "deviationWithRecentValues": {
-          "maxPercent": 5,
-          "maxDelayMilliseconds": 120000
-        }
-      },
-      "denomination": "USD",
-      "rateFeed": false
-    },
     "aUSD": {
       "source": [
         "blackhole-avalanche-usdc-75",
@@ -652,8 +548,6 @@
       "BAL_yyAVAX_AVAX",
       "BTC",
       "EUR",
-      "GBP",
-      "CRV",
       "DAI",
       "ETH",
       "EUROC",
@@ -666,35 +560,24 @@
       "GM_ETH_WETHe",
       "GM_ETH_WETHe_USDC",
       "GM_SOL_SOL_USDC",
-      "IB01.L",
       "JOE",
       "LINK",
       "PNG",
       "PNG_AVAX_ETH_LP",
       "PNG_AVAX_USDC_LP",
-      "PNG_AVAX_USDT_LP",
       "QI",
-      "SHLB_GMX-AVAX_B",
       "SOL",
-      "TJ_AVAX_USDC_AUTO",
       "USDC",
       "USDT",
       "WOMBAT_ggAVAX_AVAX_LP_AVAX",
       "WOMBAT_ggAVAX_AVAX_LP_ggAVAX",
       "WOMBAT_sAVAX_AVAX_LP_AVAX",
       "WOMBAT_sAVAX_AVAX_LP_sAVAX",
-      "XAVA",
-      "YYAV3SA1",
       "YY_AAVE_AVAX",
       "YY_GLP",
       "YY_PNG_AVAX_ETH_LP",
       "YY_PNG_AVAX_USDC_LP",
-      "crvUSDBTCETH",
       "ggAVAX",
-      "gmdAVAX",
-      "gmdBTC",
-      "gmdETH",
-      "gmdUSDC",
       "sAVAX",
       "yyAVAX",
       "DOGE",
@@ -706,8 +589,7 @@
       "FXS",
       "3Crv",
       "sDAI",
-      "FRAX",
-      "deUSD"
+      "FRAX"
     ]
   }
 }
