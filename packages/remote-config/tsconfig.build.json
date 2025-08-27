@@ -5,8 +5,8 @@
     "dist",
     "test",
     "**/*spec.ts",
-    "scripts",
-    "hardhat.config.ts"
+    ".jest",
+    "jest.config.ts"
   ],
   "references": [
     {
@@ -14,12 +14,6 @@
     },
     {
       "path": "../internal-utils/tsconfig.build.json"
-    },
-    {
-      "path": "../evm-multicall/tsconfig.build.json"
-    },
-    {
-      "path": "../remote-config/tsconfig.build.json"
     }
   ]
 }

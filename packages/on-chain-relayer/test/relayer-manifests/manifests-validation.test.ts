@@ -5,7 +5,6 @@ import {
 } from "@redstone-finance/on-chain-relayer-common";
 import { RedstoneCommon } from "@redstone-finance/utils";
 import { describe, test } from "mocha";
-import path from "path";
 
 const RELAYERS_DATA = {
   classic: {
@@ -25,7 +24,7 @@ const RELAYERS_DATA = {
 function tryParseManifests(type: keyof typeof RELAYERS_DATA) {
   const { readManifests, schema } = RELAYERS_DATA[type];
 
-  const manifests = readManifests(path.join(__dirname, "../.."));
+  const manifests = readManifests();
   for (const [relayerName, manifest] of Object.entries(manifests)) {
     try {
       schema.strict().parse(manifest);

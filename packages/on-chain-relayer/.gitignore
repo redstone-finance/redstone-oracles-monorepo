@@ -18,3 +18,7 @@ hardhat-deployed-contracts.json
 adapter-contract-address.txt
 
 healthcheck.txt
+
+relayer-remote-config
+
+config_*
