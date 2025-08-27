@@ -7900,6 +7900,13 @@
       ],
       "denomination": "USD",
       "rateFeed": true
+    },
+    "UTY_FUNDAMENTAL": {
+      "source": [
+        "accountable"
+      ],
+      "denomination": "USD",
+      "rateFeed": true
     }
   }
 }
