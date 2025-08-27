@@ -12,7 +12,6 @@ import {
 import { expect } from "chai";
 import { Bytes, Contract, ContractFunction, providers, utils } from "ethers";
 import { describe, test } from "mocha";
-import path from "path";
 
 const INTEGRATIONS_NOT_FOR_TESTING = [
   "hemiMultiFeed", // remove once we get a publicRpc
@@ -101,9 +100,7 @@ const checkDataFeedIdInContract = async (
 
 if (process.env.RUN_NONDETERMINISTIC_TESTS) {
   describe("Price feed contract should return the same dataFeedId as in relayer manifest", () => {
-    const classicManifests = ManifestReading.readClassicManifests(
-      path.join(__dirname, "../..")
-    );
+    const classicManifests = ManifestReading.readClassicManifests();
     for (const [name, manifest] of Object.entries(classicManifests)) {
       test(name, async () => {
         for (const [dataFeedId, priceFeedAddress] of Object.entries(
@@ -124,9 +121,7 @@ if (process.env.RUN_NONDETERMINISTIC_TESTS) {
       });
     }
 
-    const multiFeedManifests = ManifestReading.readMultiFeedManifests(
-      path.join(__dirname, "../..")
-    );
+    const multiFeedManifests = ManifestReading.readMultiFeedManifests();
     for (const [name, manifest] of Object.entries(multiFeedManifests)) {
       if (INTEGRATIONS_NOT_FOR_TESTING.includes(name)) {
         continue;
