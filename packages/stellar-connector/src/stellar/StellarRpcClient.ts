@@ -141,7 +141,7 @@ export class StellarRpcClient {
         },
       };
 
-      const res = await axios.post(this.server.serverURL as string, req);
+      const res = await axios.post(this.server.serverURL.href(), req);
 
       const Response = z.object({
         jsonrpc: z.literal("2.0"),
