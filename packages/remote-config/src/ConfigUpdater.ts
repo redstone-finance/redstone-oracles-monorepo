@@ -1,8 +1,6 @@
 import {
   calculateBuffersHash,
   calculateDirectoryHash,
-  LogMonitoring,
-  LogMonitoringType,
   terminateWithRemoteConfigError,
 } from "@redstone-finance/internal-utils";
 import { loggerFactory, RedstoneCommon } from "@redstone-finance/utils";
@@ -233,11 +231,6 @@ export class ConfigUpdater extends EventEmitter {
          and lack of compatible remote config available yet - proceed with care!`
       );
       historicalConfigDir = BACKUP_CONFIG_DIR;
-      LogMonitoring.warn(
-        LogMonitoringType.NODE_RUNNING_ON_BACKUP_CONFIG,
-        "Node is running on a backup config.",
-        logger
-      );
     } else {
       historicalConfigDir = `${HISTORICAL_CONFIG_DIR_PREFIX}${prevConfig.configHash}`;
     }
