@@ -158,7 +158,7 @@ fn update_one_feed_when_payload_has_multiple() {
     scenario.run(contract);
 }
 
-fn write_prices(client: &ContractClient, sample: Sample) {
+fn write_prices(client: &ContractClient, sample: Sample, expected_ttl: u32) {
     let env = &client.env;
 
     let btc = String::from_str(env, "BTC");
@@ -175,6 +175,7 @@ fn write_prices(client: &ContractClient, sample: Sample) {
     env.as_contract(&client.address, || {
         let ttl = env.storage().persistent().get_ttl(&btc);
         assert!(ttl >= FEED_TTL_SECS / 5);
+        assert_eq!(ttl, expected_ttl);
     });
 }
 
@@ -185,27 +186,7 @@ fn test_feeds_storage_ttl() {
     let contract_id = env.register(Contract, ());
     let client = ContractClient::new(&env, &contract_id);
 
-    write_prices(&client, sample_btc_eth_3sig());
-
-    env.ledger().set_sequence_number(FEED_TTL_EXTEND_TO);
-    assert_eq!(
-        client.read_timestamp(&String::from_str(&env, "BTC")),
-        sample_btc_eth_3sig().timestamp,
-    );
-}
-
-#[test]
-#[should_panic(expected = "[testing-only] Accessed contract data key key that has been archived.")]
-fn test_feeds_storage_ttl_expired() {
-    let env = Env::default();
-    env.mock_all_auths();
-    let contract_id = env.register(Contract, ());
-    let client = ContractClient::new(&env, &contract_id);
-
-    write_prices(&client, sample_btc_eth_3sig());
-
-    env.ledger().set_sequence_number(FEED_TTL_EXTEND_TO + 1);
-    client.read_timestamp(&String::from_str(&env, "BTC"));
+    write_prices(&client, sample_btc_eth_3sig(), FEED_TTL_EXTEND_TO);
 }
 
 #[test]
@@ -215,40 +196,16 @@ fn test_feeds_storage_ttl_update_before_threshold() {
     let contract_id = env.register(Contract, ());
     let client = ContractClient::new(&env, &contract_id);
 
-    write_prices(&client, sample_btc_eth_3sig());
+    write_prices(&client, sample_btc_eth_3sig(), FEED_TTL_EXTEND_TO);
 
-    env.ledger()
-        .set_sequence_number(FEED_TTL_EXTEND_TO - FEED_TTL_THRESHOLD - 1);
-    assert_eq!(
-        client.read_timestamp(&String::from_str(&env, "BTC")),
-        sample_btc_eth_3sig().timestamp,
+    let move_ledgers = FEED_TTL_EXTEND_TO - FEED_TTL_THRESHOLD - 1;
+    env.ledger().set_sequence_number(move_ledgers);
+
+    write_prices(
+        &client,
+        sample_btc_eth_3sig_newer(),
+        FEED_TTL_EXTEND_TO - move_ledgers,
     );
-
-    write_prices(&client, sample_btc_eth_3sig_newer());
-
-    env.ledger().set_sequence_number(FEED_TTL_EXTEND_TO);
-    assert_eq!(
-        client.read_timestamp(&String::from_str(&env, "BTC")),
-        sample_btc_eth_3sig_newer().timestamp,
-    );
-}
-
-#[test]
-#[should_panic(expected = "[testing-only] Accessed contract data key key that has been archived.")]
-fn test_feeds_storage_ttl_update_before_threshold_expired() {
-    let env = Env::default();
-    env.mock_all_auths();
-    let contract_id = env.register(Contract, ());
-    let client = ContractClient::new(&env, &contract_id);
-
-    write_prices(&client, sample_btc_eth_3sig());
-
-    env.ledger()
-        .set_sequence_number(FEED_TTL_EXTEND_TO - FEED_TTL_THRESHOLD - 1);
-    write_prices(&client, sample_btc_eth_3sig_newer());
-
-    env.ledger().set_sequence_number(FEED_TTL_EXTEND_TO + 1);
-    client.read_timestamp(&String::from_str(&env, "BTC"));
 }
 
 #[test]
@@ -258,40 +215,14 @@ fn test_feeds_storage_ttl_update_after_threshold() {
     let contract_id = env.register(Contract, ());
     let client = ContractClient::new(&env, &contract_id);
 
-    write_prices(&client, sample_btc_eth_3sig());
+    write_prices(&client, sample_btc_eth_3sig(), FEED_TTL_EXTEND_TO);
 
-    env.ledger()
-        .set_sequence_number(FEED_TTL_EXTEND_TO - FEED_TTL_THRESHOLD);
-    assert_eq!(
-        client.read_timestamp(&String::from_str(&env, "BTC")),
-        sample_btc_eth_3sig().timestamp,
+    let move_ledgers = FEED_TTL_EXTEND_TO - FEED_TTL_THRESHOLD;
+    env.ledger().set_sequence_number(move_ledgers);
+
+    write_prices(
+        &client,
+        sample_btc_eth_3sig_newer(),
+        2 * FEED_TTL_EXTEND_TO - FEED_TTL_THRESHOLD - move_ledgers,
     );
-
-    write_prices(&client, sample_btc_eth_3sig_newer());
-
-    env.ledger()
-        .set_sequence_number(2 * FEED_TTL_EXTEND_TO - FEED_TTL_THRESHOLD);
-    assert_eq!(
-        client.read_timestamp(&String::from_str(&env, "BTC")),
-        sample_btc_eth_3sig_newer().timestamp,
-    );
-}
-
-#[test]
-#[should_panic(expected = "[testing-only] Accessed contract data key key that has been archived.")]
-fn test_feeds_storage_ttl_update_after_threshold_expired() {
-    let env = Env::default();
-    env.mock_all_auths();
-    let contract_id = env.register(Contract, ());
-    let client = ContractClient::new(&env, &contract_id);
-
-    write_prices(&client, sample_btc_eth_3sig());
-
-    env.ledger()
-        .set_sequence_number(FEED_TTL_EXTEND_TO - FEED_TTL_THRESHOLD);
-    write_prices(&client, sample_btc_eth_3sig_newer());
-
-    env.ledger()
-        .set_sequence_number(2 * FEED_TTL_EXTEND_TO - FEED_TTL_THRESHOLD + 1);
-    client.read_timestamp(&String::from_str(&env, "BTC"));
 }
