@@ -1,8 +1,8 @@
 import {
-  findRemoteConfigOrThrow,
   readJsonFile,
-  terminateWithNodeRemoteConfigError,
+  terminateWithRemoteConfigError,
 } from "@redstone-finance/internal-utils";
+import { RedstoneRemoteConfig } from "@redstone-finance/remote-config";
 import { RedstoneCommon } from "@redstone-finance/utils";
 import { ChainTokenMapSchema, type SupportedNetworkNames } from "./schemas";
 
@@ -22,14 +22,15 @@ let chainTokenMap: ChainTokenMap | null = null;
 function readAndValidateChainTokenMapConfig(): ChainTokenMap {
   if (!chainTokenMap) {
     try {
-      const chainTokenMapConfigPath = findRemoteConfigOrThrow();
+      const chainTokenMapConfigPath =
+        RedstoneRemoteConfig.findNodeRemoteConfigOrThrow();
       const config = readJsonFile<ChainTokenMap>(
         `${chainTokenMapConfigPath}/chains/chain-token-map.json`
       );
       RedstoneCommon.zodAssert<ChainTokenMap>(ChainTokenMapSchema, config);
       chainTokenMap = config;
     } catch (error) {
-      terminateWithNodeRemoteConfigError(RedstoneCommon.stringifyError(error));
+      terminateWithRemoteConfigError(RedstoneCommon.stringifyError(error));
     }
   }
   return chainTokenMap;
