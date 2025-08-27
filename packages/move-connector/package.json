@@ -28,7 +28,11 @@
     "transfer-object": "yarn global:ts-node  scripts/ledger/transfer-object.ts",
     "propose-upgrade": "yarn global:ts-node  scripts/ledger/propose-upgrade.ts",
     "approve-transaction": "yarn global:ts-node  scripts/ledger/approve-transaction.ts",
-    "execute-transaction": "yarn global:ts-node  scripts/ledger/execute-transaction.ts"
+    "execute-transaction": "yarn global:ts-node  scripts/ledger/execute-transaction.ts",
+    "reject-transaction": "yarn global:ts-node  scripts/ledger/reject-txs.ts",
+    "execute-reject-transaction": "yarn global:ts-node  scripts/ledger/execute-reject-txs.ts",
+    "propose-transfer-object-as-multisig": "yarn global:ts-node  scripts/ledger/multisig-transfer-object.ts propose",
+    "execute-transfer-object-as-multisig": "yarn global:ts-node  scripts/ledger/multisig-transfer-object.ts execute"
   },
   "dependencies": {
     "@aptos-labs/ts-sdk": "1.33.2",
