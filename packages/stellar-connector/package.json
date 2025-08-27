@@ -21,11 +21,12 @@
   "dependencies": {
     "@redstone-finance/sdk": "workspace:*",
     "@redstone-finance/utils": "workspace:*",
-    "@stellar/stellar-sdk": "v14.0.0-rc.3",
+    "@stellar/stellar-sdk": "14.1.0",
     "lodash": "^4.17.21",
     "zod": "^3.22.4"
   },
   "devDependencies": {
+    "@types/urijs": "^1.19.25",
     "dotenv": "^16.0.3"
   },
   "files": [
