@@ -36,14 +36,9 @@ const TOKENS_ONLY_IN_ONE_DB = [
   "USDT.e",
   "YAK",
   "gmdUSDC",
-  "gmdAVAX",
-  "gmdBTC",
   "gmdETH",
   "EUROC",
-  "TJ_AVAX_USDC_AUTO",
   "CRV",
-  "crvUSDBTCETH",
-  "IB01.L",
 ];
 
 // eslint-disable-next-line @typescript-eslint/no-floating-promises
