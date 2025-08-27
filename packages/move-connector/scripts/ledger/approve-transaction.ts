@@ -1,9 +1,5 @@
 import { AccountAddress, Aptos } from "@aptos-labs/ts-sdk";
-import {
-  LEDGER_ACCOUNT_ID,
-  MULTI_SIG_ADDRESS,
-  MULTI_SIG_UPGRADE_TX_ID,
-} from "./const";
+import { LEDGER_ACCOUNT_ID, MULTI_SIG_ADDRESS, MULTI_SIG_TX_ID } from "./const";
 import { executeAsLedger } from "./execute-as-ledger";
 import { MultiSigTxBuilder } from "./MultiSigTxBuilder";
 
@@ -20,7 +16,7 @@ async function approveTransaction(
 async function main() {
   await executeAsLedger(
     (aptos, signerAddress) =>
-      approveTransaction(aptos, signerAddress, MULTI_SIG_UPGRADE_TX_ID),
+      approveTransaction(aptos, signerAddress, MULTI_SIG_TX_ID),
     LEDGER_ACCOUNT_ID
   );
 }
