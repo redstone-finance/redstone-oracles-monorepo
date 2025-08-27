@@ -4,4 +4,4 @@ import "dotenv/config";
 
 import { runRelayer } from "./run-relayer";
 
-void runRelayer();
+runRelayer();

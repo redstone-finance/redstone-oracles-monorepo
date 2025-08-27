@@ -9382,6 +9382,7 @@ __metadata:
     "@nomiclabs/hardhat-etherscan": "npm:^3.1.7"
     "@redstone-finance/evm-multicall": "workspace:*"
     "@redstone-finance/internal-utils": "workspace:*"
+    "@redstone-finance/remote-config": "workspace:*"
     "@redstone-finance/utils": "workspace:*"
     "@typechain/ethers-v5": "npm:^10.2.0"
     "@typechain/hardhat": "npm:^6.1.2"
@@ -9777,6 +9778,7 @@ __metadata:
     "@redstone-finance/chain-configs": "workspace:*"
     "@redstone-finance/internal-utils": "workspace:*"
     "@redstone-finance/node-commons": "workspace:*"
+    "@redstone-finance/remote-config": "workspace:*"
     "@redstone-finance/rpc-providers": "workspace:*"
     "@redstone-finance/sdk": "workspace:*"
     "@redstone-finance/utils": "workspace:*"
@@ -9914,6 +9916,7 @@ __metadata:
     "@redstone-finance/oracle-node": "workspace:*"
     "@redstone-finance/oracles-smartweave-contracts": "npm:0.5.4"
     "@redstone-finance/protocol": "workspace:*"
+    "@redstone-finance/remote-config": "workspace:*"
     "@redstone-finance/sdk": "workspace:*"
     "@redstone-finance/utils": "workspace:*"
     axios: "npm:^1.8.4"
@@ -10739,6 +10742,7 @@ __metadata:
     "@redstone-finance/http-client": "workspace:*"
     "@redstone-finance/internal-utils": "workspace:*"
     "@redstone-finance/protocol": "workspace:*"
+    "@redstone-finance/remote-config": "workspace:*"
     "@redstone-finance/rpc-providers": "workspace:*"
     "@redstone-finance/utils": "workspace:*"
     decimal.js: "npm:^10.4.3"
@@ -10787,6 +10791,7 @@ __metadata:
     "@redstone-finance/mqtt5-client": "workspace:*"
     "@redstone-finance/on-chain-relayer-common": "workspace:*"
     "@redstone-finance/protocol": "workspace:*"
+    "@redstone-finance/remote-config": "workspace:*"
     "@redstone-finance/rpc-providers": "workspace:*"
     "@redstone-finance/sdk": "workspace:*"
     "@redstone-finance/utils": "workspace:*"
@@ -10829,6 +10834,7 @@ __metadata:
     "@redstone-finance/mqtt5-client": "workspace:*"
     "@redstone-finance/node-commons": "workspace:*"
     "@redstone-finance/protocol": "workspace:*"
+    "@redstone-finance/remote-config": "workspace:*"
     "@redstone-finance/rpc-providers": "workspace:*"
     "@redstone-finance/sdk": "workspace:*"
     "@redstone-finance/utils": "workspace:*"
@@ -10990,6 +10996,19 @@ __metadata:
 "@redstone-finance/relayer-remote-config@workspace:packages/relayer-remote-config":
   version: 0.0.0-use.local
   resolution: "@redstone-finance/relayer-remote-config@workspace:packages/relayer-remote-config"
+  languageName: unknown
+  linkType: soft
+
+"@redstone-finance/remote-config@workspace:*, @redstone-finance/remote-config@workspace:packages/remote-config":
+  version: 0.0.0-use.local
+  resolution: "@redstone-finance/remote-config@workspace:packages/remote-config"
+  dependencies:
+    "@redstone-finance/internal-utils": "workspace:*"
+    "@redstone-finance/utils": "workspace:*"
+    "@types/node-schedule": "npm:^2.1.0"
+    dotenv: "npm:^16.0.3"
+    node-schedule: "npm:^2.1.1"
+    zod: "npm:^3.22.4"
   languageName: unknown
   linkType: soft
 

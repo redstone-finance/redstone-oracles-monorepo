@@ -7,6 +7,7 @@ const MAX_REMOTE_CONFIG_NESTING_DEPTH = 20;
 
 export const REMOTE_CONFIG_SIGNATURES_FOLDER = "signatures";
 export const NODE_REMOTE_CONFIG_FOLDER = "node-remote-config";
+export const RELAYER_REMOTE_CONFIG_FOLDER = "relayer-remote-config";
 
 export enum OracleNodeEnv {
   Dev = "dev",
@@ -14,6 +15,11 @@ export enum OracleNodeEnv {
   ProdFallback = "prod-fallback",
   ProdRedStone = "prod-redstone",
   ProdRedStoneFallback = "prod-redstone-fallback",
+}
+
+export enum RelayerNodeEnv {
+  Main = "main",
+  Fallback = "fallback",
 }
 
 export const ORACLE_ENVS_WITH_SIG_VERIFICATION = [
@@ -35,7 +41,7 @@ export function parseOracleNodeEnv(
 }
 
 export function getSignaturesRepositoryPath(nodeEnv = OracleNodeEnv.Dev) {
-  const remoteConfigPath = findRemoteConfigOrThrow(nodeEnv);
+  const remoteConfigPath = findNodeRemoteConfigOrThrow(nodeEnv);
   return path.join(
     remoteConfigPath,
     "..",
@@ -53,11 +59,28 @@ export const getNodeConfigBasePath = (nodeEnv = OracleNodeEnv.Dev) => {
     : path.join(NODE_REMOTE_CONFIG_FOLDER, nodeEnv);
 };
 
-export function findRemoteConfigOrThrow(configType = OracleNodeEnv.Dev) {
+export const getRelayerConfigBasePath = () => {
+  return RedstoneCommon.getFromEnv(
+    "USE_RELAYER_REMOTE_CONFIG",
+    z.boolean().default(false)
+  )
+    ? RELAYER_REMOTE_CONFIG_FOLDER
+    : path.join(RELAYER_REMOTE_CONFIG_FOLDER, RelayerNodeEnv.Main);
+};
+
+export function findNodeRemoteConfigOrThrow(configType = OracleNodeEnv.Dev) {
+  return findDirOrThrow(getNodeConfigBasePath(configType));
+}
+
+export function findRelayerRemoteConfigOrThrow() {
+  return findDirOrThrow(getRelayerConfigBasePath());
+}
+
+export function findDirOrThrow(searchedDir: string) {
   const startDir = process.cwd();
   let dir = startDir;
   for (let i = 0; i < MAX_REMOTE_CONFIG_NESTING_DEPTH; i++) {
-    const candidate = path.join(dir, getNodeConfigBasePath(configType));
+    const candidate = path.join(dir, searchedDir);
     if (fs.existsSync(candidate) && fs.statSync(candidate).isDirectory()) {
       return candidate;
     }
@@ -69,6 +92,6 @@ export function findRemoteConfigOrThrow(configType = OracleNodeEnv.Dev) {
     dir = parentDir;
   }
   throw new Error(
-    `Could not find ${getNodeConfigBasePath()} directory, starting from ${startDir}.`
+    `Could not find ${searchedDir} directory, starting from ${startDir}`
   );
 }

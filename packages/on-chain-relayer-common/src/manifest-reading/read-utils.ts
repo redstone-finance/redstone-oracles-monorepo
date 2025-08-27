@@ -2,10 +2,9 @@ import { RedstoneCommon } from "@redstone-finance/utils";
 import { MANIFEST_DIRS, ManifestType } from "../schemas";
 
 export function getOnChainRelayerBasePath() {
-  // Removes /dist (or \dist) from dirname path
   return RedstoneCommon.path.join(
-    __dirname.replace(/[/\\]dist([/\\]|$)/g, "/"),
-    "../../../on-chain-relayer"
+    __dirname,
+    "../../../../relayer-remote-config/main"
   );
 }
 

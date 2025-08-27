@@ -30,6 +30,7 @@
   "dependencies": {
     "@redstone-finance/evm-multicall": "workspace:*",
     "@redstone-finance/internal-utils": "workspace:*",
+    "@redstone-finance/remote-config": "workspace:*",
     "@redstone-finance/utils": "workspace:*",
     "dayjs": "^1.11.12",
     "ethers": "^5.7.2",

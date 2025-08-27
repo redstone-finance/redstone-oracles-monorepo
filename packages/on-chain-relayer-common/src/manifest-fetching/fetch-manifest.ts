@@ -62,7 +62,8 @@ export const fetchRelayerManifestWithAxios = async (
 ) => {
   const manifestPath = MANIFEST_DIRS[manifestType];
   for (const manifestsHost of manifestsHosts) {
-    const manifestUrl = `https://${manifestsHost}/redstone-finance/redstone-monorepo-priv/${gitref}/packages/on-chain-relayer/${manifestPath}/${relayerName}.json`;
+    // TODO: should we always read from "main" here?
+    const manifestUrl = `https://${manifestsHost}/redstone-finance/redstone-monorepo-priv/${gitref}/packages/relayer-remote-config/main/${manifestPath}/${relayerName}.json`;
     try {
       const response = await RedstoneCommon.axiosGetWithRetries(manifestUrl, {
         maxRetries: 2,

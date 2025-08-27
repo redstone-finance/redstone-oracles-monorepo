@@ -1,0 +1,30 @@
+{
+  "chain": {
+    "name": "haven1",
+    "id": 8811
+  },
+  "updateTriggers": {
+    "deviationPercentage": 0.5,
+    "timeSinceLastUpdateInMilliseconds": 21600000
+  },
+  "adapterContract": "0x6570E2CA3DDb2565233D5835457cb8f3323B17CA",
+  "adapterContractType": "multi-feed",
+  "dataServiceId": "redstone-primary-prod",
+  "priceFeeds": {
+    "ETH": {
+      "priceFeedAddress": "0xFa673Bf4c1067111A766801DfCC4E31059FFc789"
+    },
+    "USDC": {
+      "priceFeedAddress": "0xCB649258F3f05668afb84c852e2b33e8C1576105"
+    },
+    "USDT": {
+      "priceFeedAddress": "0xA430D490496D0c014E70635172443e7A1E970528"
+    },
+    "cbBTC": {
+      "priceFeedAddress": "0x6168825FCd5986250047Ca3F4BA7d2283E45Cdef"
+    },
+    "cbETH": {
+      "priceFeedAddress": "0xaE70DE70c272a9ECFf3E4825f8FFAd2971Ae9a1D"
+    }
+  }
+}
