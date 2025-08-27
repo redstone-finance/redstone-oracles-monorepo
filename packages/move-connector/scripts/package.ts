@@ -9,6 +9,7 @@ import {
   TypeTagAddress,
   TypeTagVector,
 } from "@aptos-labs/ts-sdk";
+import { RedstoneCommon } from "@redstone-finance/utils";
 
 function objectCodeDeploymentCall(call: string): MoveFunctionId {
   return `0x1::object_code_deployment::${call}`;
@@ -36,6 +37,9 @@ export class MovePackageTxBuilder {
             new TypeTagVector(TypeTagVector.u8()),
           ],
         },
+      },
+      options: {
+        expireTimestamp: Date.now() + RedstoneCommon.hourToMs(2),
       },
     });
   }
@@ -84,6 +88,24 @@ export class MovePackageTxBuilder {
           new TypeTagVector(TypeTagVector.u8()),
           new TypeTagAddress(),
         ],
+      },
+      aptosConfig: this.aptos.transaction.config,
+    });
+  }
+
+  public async objectTransferFunctionMultisig(
+    multiSigAddress: AccountAddress,
+    objectAddress: AccountAddress,
+    newOwner: AccountAddress
+  ) {
+    return await generateTransactionPayload({
+      multisigAddress: multiSigAddress,
+      function: "0x1::object::transfer",
+      functionArguments: [objectAddress, newOwner],
+      typeArguments: ["0x1::object::ObjectCore"],
+      abi: {
+        typeParameters: [{ constraints: [MoveAbility.KEY] }],
+        parameters: [new TypeTagAddress(), new TypeTagAddress()],
       },
       aptosConfig: this.aptos.transaction.config,
     });

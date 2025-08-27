@@ -81,6 +81,8 @@ export async function handleTxAsLedger(
 
   console.log(result);
 
+  await aptos.waitForTransaction({ transactionHash: result.hash });
+
   return result;
 }
 
