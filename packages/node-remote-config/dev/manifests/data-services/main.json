@@ -533,24 +533,6 @@
       "denomination": "USD",
       "rateFeed": false
     },
-    "STX": {
-      "source": [
-        "binance-usdt",
-        "bingx-usdt",
-        "bitget-usdt",
-        "bitrue-usdt",
-        "bitrue-usdt",
-        "bybit-usdt",
-        "coinbase-usd",
-        "gate-usdt",
-        "kraken-usd",
-        "kucoin-usdt",
-        "okx-usdt",
-        "xt"
-      ],
-      "denomination": "USD",
-      "rateFeed": false
-    },
     "EOS": {
       "source": [
         "binance-usdt",
@@ -778,7 +760,6 @@
         "bitmart-usdt",
         "gate-usdt",
         "okx-usdt",
-        "trader-joe-v1-avalanche-wavax",
         "xt"
       ],
       "denomination": "USD",
@@ -794,13 +775,6 @@
         "aerodrome-cl-base-usdc-2",
         "aerodrome-cl-base-weth",
         "trader-joe-v2-avalanche-usdc"
-      ],
-      "denomination": "USD",
-      "rateFeed": false
-    },
-    "TJ_AVAX_USDC_AUTO": {
-      "source": [
-        "avalanche-evm-fetcher-trader-joe"
       ],
       "denomination": "USD",
       "rateFeed": false
@@ -982,22 +956,6 @@
         "bingx-usdt",
         "coingecko"
       ],
-      "denomination": "USD",
-      "rateFeed": false
-    },
-    "YY_WOMBEX_USDT": {
-      "source": [
-        "arbitrum-evm-fetcher-yield-yak"
-      ],
-      "decimals": 20,
-      "denomination": "USD",
-      "rateFeed": false
-    },
-    "YY_WOMBEX_USDC.e": {
-      "source": [
-        "arbitrum-evm-fetcher-yield-yak"
-      ],
-      "decimals": 20,
       "denomination": "USD",
       "rateFeed": false
     },
@@ -1900,20 +1858,6 @@
       "denomination": "USD",
       "rateFeed": false
     },
-    "YY_STG_S*USDT": {
-      "source": [
-        "arbitrum-evm-fetcher-yield-yak"
-      ],
-      "denomination": "USD",
-      "rateFeed": false
-    },
-    "YY_STG_S*ETH": {
-      "source": [
-        "arbitrum-evm-fetcher-yield-yak"
-      ],
-      "denomination": "USD",
-      "rateFeed": false
-    },
     "PRIME_ECHELON": {
       "source": [
         "bingx-usdt",
@@ -2236,25 +2180,6 @@
         "kraken-usd",
         "kucoin-usdt",
         "mexc-usdt",
-        "lbank-usdt",
-        "okx-usdt",
-        "xt"
-      ],
-      "denomination": "USD",
-      "rateFeed": false
-    },
-    "ORDI": {
-      "source": [
-        "binance-fdusd",
-        "binance-usdc",
-        "binance-usdt",
-        "bingx-usdt",
-        "bitget-usdt",
-        "bitmart-usdt",
-        "bitrue-usdt",
-        "bybit-usdt",
-        "gate-usdt",
-        "kucoin-usdt",
         "lbank-usdt",
         "okx-usdt",
         "xt"
@@ -2808,13 +2733,6 @@
       "denomination": "USD",
       "rateFeed": false
     },
-    "YYAV3SA1": {
-      "source": [
-        "avalanche-evm-fetcher-yield-yak"
-      ],
-      "denomination": "USD",
-      "rateFeed": false
-    },
     "YY_PNG_AVAX_USDC_LP": {
       "source": [
         "avalanche-evm-fetcher-yield-yak"
@@ -2837,13 +2755,6 @@
       "rateFeed": false
     },
     "PNG_AVAX_USDC_LP": {
-      "source": [
-        "avalanche-evm-fetcher-dex-lp"
-      ],
-      "denomination": "USD",
-      "rateFeed": false
-    },
-    "PNG_AVAX_USDT_LP": {
       "source": [
         "avalanche-evm-fetcher-dex-lp"
       ],
@@ -2885,48 +2796,6 @@
       "denomination": "ETH",
       "rateFeed": false
     },
-    "gmdUSDC": {
-      "source": [
-        "avalanche-evm-fetcher-gmd"
-      ],
-      "denomination": "USD",
-      "rateFeed": false
-    },
-    "gmdAVAX": {
-      "source": [
-        "avalanche-evm-fetcher-gmd"
-      ],
-      "denomination": "USD",
-      "rateFeed": false
-    },
-    "gmdBTC": {
-      "source": [
-        "avalanche-evm-fetcher-gmd"
-      ],
-      "denomination": "USD",
-      "rateFeed": false
-    },
-    "gmdETH": {
-      "source": [
-        "avalanche-evm-fetcher-gmd"
-      ],
-      "denomination": "USD",
-      "rateFeed": false
-    },
-    "crvUSDBTCETH": {
-      "source": [
-        "avalanche-evm-fetcher-curve"
-      ],
-      "denomination": "USD",
-      "rateFeed": false
-    },
-    "SHLB_GMX-AVAX_B": {
-      "source": [
-        "avalanche-evm-fetcher-steak-hut"
-      ],
-      "denomination": "USD",
-      "rateFeed": false
-    },
     "ggAVAX": {
       "source": [
         "avalanche-evm-fetcher-oracle-adapter"
@@ -2965,16 +2834,6 @@
     "WOMBAT_sAVAX_AVAX_LP_sAVAX": {
       "source": [
         "avalanche-evm-fetcher-wombat"
-      ],
-      "denomination": "USD",
-      "rateFeed": false
-    },
-    "XAVA": {
-      "source": [
-        "bybit-usdt",
-        "coingecko",
-        "gate-usdt",
-        "kucoin-usdt"
       ],
       "denomination": "USD",
       "rateFeed": false

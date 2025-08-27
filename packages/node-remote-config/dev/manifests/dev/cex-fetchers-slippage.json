@@ -925,11 +925,6 @@
         "avalanche-evm-fetcher"
       ]
     },
-    "TJ_AVAX_USDC_AUTO": {
-      "source": [
-        "avalanche-evm-fetcher"
-      ]
-    },
     "CRV": {
       "source": [
         "binance-usdt",
@@ -1112,16 +1107,6 @@
         "bingx",
         "coingecko",
         "bingx-usdt"
-      ]
-    },
-    "YY_WOMBEX_USDT": {
-      "source": [
-        "arbitrum-evm-fetcher"
-      ]
-    },
-    "YY_WOMBEX_USDC.e": {
-      "source": [
-        "arbitrum-evm-fetcher"
       ]
     },
     "YY_WOMBEX_GLP": {
@@ -1972,9 +1957,6 @@
     "CSPX.L": {
       "source": []
     },
-    "IB01.L": {
-      "source": []
-    },
     "IBTA.L": {
       "source": []
     },
@@ -2464,11 +2446,6 @@
         "avalanche-evm-fetcher"
       ]
     },
-    "PNG_AVAX_USDT_LP": {
-      "source": [
-        "avalanche-evm-fetcher"
-      ]
-    },
     "PNG_AVAX_ETH_LP": {
       "source": [
         "avalanche-evm-fetcher"
@@ -2524,11 +2501,6 @@
         "avalanche-evm-fetcher"
       ]
     },
-    "YYAV3SA1": {
-      "source": [
-        "avalanche-evm-fetcher"
-      ]
-    },
     "sAVAX": {
       "source": [
         "avalanche-evm-fetcher"
@@ -2571,36 +2543,6 @@
         "non-usd-based"
       ]
     },
-    "gmdUSDC": {
-      "source": [
-        "avalanche-evm-fetcher"
-      ]
-    },
-    "gmdAVAX": {
-      "source": [
-        "avalanche-evm-fetcher"
-      ]
-    },
-    "gmdBTC": {
-      "source": [
-        "avalanche-evm-fetcher"
-      ]
-    },
-    "gmdETH": {
-      "source": [
-        "avalanche-evm-fetcher"
-      ]
-    },
-    "crvUSDBTCETH": {
-      "source": [
-        "avalanche-evm-fetcher"
-      ]
-    },
-    "SHLB_GMX-AVAX_B": {
-      "source": [
-        "avalanche-evm-fetcher"
-      ]
-    },
     "ggAVAX": {
       "source": [
         "avalanche-evm-fetcher"
@@ -2609,15 +2551,6 @@
     "yyAVAX": {
       "source": [
         "avalanche-evm-fetcher"
-      ]
-    },
-    "XAVA": {
-      "source": [
-        "kucoin-usdt",
-        "mexc-usdt",
-        "gate-usdt",
-        "coingecko",
-        "coinmarketcap"
       ]
     },
     "QI": {
