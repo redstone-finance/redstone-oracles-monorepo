@@ -22,7 +22,6 @@
         "coingecko",
         "curve-ethereum-dai",
         "curve-ethereum-usdt",
-        "kaiko-v2",
         "kraken-usdt",
         "kucoin-usdt",
         "lbank-usdt",
@@ -44,7 +43,6 @@
         "coinbase-usd",
         "coingecko",
         "coinmarketcap",
-        "kaiko-v2",
         "kraken-usd"
       ],
       "deviationCheck": {

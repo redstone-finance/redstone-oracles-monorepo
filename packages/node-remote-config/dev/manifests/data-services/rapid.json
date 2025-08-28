@@ -54,7 +54,6 @@
         "coinbase-usd",
         "coingecko",
         "gate-usd",
-        "kaiko-v2",
         "kraken-usd"
       ]
     },
@@ -211,7 +210,6 @@
         "coingecko",
         "curve-ethereum-dai",
         "curve-ethereum-usdt",
-        "kaiko-v2",
         "kraken-usdt",
         "kucoin-usdt",
         "lbank-usdt",
