@@ -16,7 +16,9 @@
     "preversion": "yarn build",
     "pack-package": "yarn build && cd dist && npm pack",
     "sample-run": "yarn global:ts-node scripts/sample-run.ts",
-    "sample-deploy": "make build -C stellar && yarn global:ts-node scripts/sample-deploy.ts"
+    "sample-deploy": "make build -C stellar && yarn global:ts-node scripts/sample-deploy.ts",
+    "get-ledger-data": "yarn global:ts-node ./scripts/ledger/get-ledger-data.ts",
+    "create-multisig": "yarn global:ts-node ./scripts/ledger/create-multisig.ts"
   },
   "dependencies": {
     "@redstone-finance/sdk": "workspace:*",
@@ -26,8 +28,11 @@
     "zod": "^3.22.4"
   },
   "devDependencies": {
+    "@ledgerhq/hw-app-str": "^7.2.5",
+    "@ledgerhq/hw-transport-node-hid-singleton": "^6.31.10",
     "@types/urijs": "^1.19.25",
-    "dotenv": "^16.0.3"
+    "dotenv": "^16.0.3",
+    "ethers": "^5.7.2"
   },
   "files": [
     "src",
