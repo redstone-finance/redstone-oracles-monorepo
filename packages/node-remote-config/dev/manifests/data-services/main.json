@@ -1861,6 +1861,12 @@
         "curve-ethereum-gho",
         "curve-ethereum-usdc"
       ],
+      "deviationCheck": {
+        "deviationWithRecentValues": {
+          "maxPercent": 5,
+          "maxDelayMilliseconds": 120000
+        }
+      },
       "denomination": "USD",
       "rateFeed": false
     },
@@ -3318,6 +3324,12 @@
         "fraxswap-fraxtal-wfrax",
         "curve-ethereum-crvusd"
       ],
+      "deviationCheck": {
+        "deviationWithRecentValues": {
+          "maxPercent": 5,
+          "maxDelayMilliseconds": 120000
+        }
+      },
       "denomination": "USD",
       "rateFeed": false
     },
@@ -6911,6 +6923,12 @@
         "lbank-usdt",
         "gate-usdt"
       ],
+      "deviationCheck": {
+        "deviationWithRecentValues": {
+          "maxPercent": 5,
+          "maxDelayMilliseconds": 120000
+        }
+      },
       "denomination": "USD",
       "rateFeed": false
     },
@@ -6993,6 +7011,12 @@
         "uniswap-v3-ethereum-usdt-100",
         "curve-ethereum-usdc"
       ],
+      "deviationCheck": {
+        "deviationWithRecentValues": {
+          "maxPercent": 5,
+          "maxDelayMilliseconds": 120000
+        }
+      },
       "denomination": "USD",
       "rateFeed": false
     },
