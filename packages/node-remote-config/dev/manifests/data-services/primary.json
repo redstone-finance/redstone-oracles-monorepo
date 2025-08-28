@@ -1649,6 +1649,12 @@
         "curve-ethereum-gho",
         "curve-ethereum-usdc"
       ],
+      "deviationCheck": {
+        "deviationWithRecentValues": {
+          "maxPercent": 5,
+          "maxDelayMilliseconds": 120000
+        }
+      },
       "denomination": "USD",
       "rateFeed": false
     },
@@ -2328,6 +2334,12 @@
         "fraxswap-fraxtal-wfrax",
         "curve-ethereum-crvusd"
       ],
+      "deviationCheck": {
+        "deviationWithRecentValues": {
+          "maxPercent": 5,
+          "maxDelayMilliseconds": 120000
+        }
+      },
       "denomination": "USD",
       "rateFeed": false
     },
@@ -2483,6 +2495,12 @@
         "uniswap-v3-ethereum-usdt-100",
         "uniswap-v3-bnb-usdt-100"
       ],
+      "deviationCheck": {
+        "deviationWithRecentValues": {
+          "maxPercent": 5,
+          "maxDelayMilliseconds": 120000
+        }
+      },
       "denomination": "USD",
       "rateFeed": false
     },
@@ -2629,6 +2647,12 @@
         "okx-usdt",
         "uniswap-v3-ethereum-usdt-100"
       ],
+      "deviationCheck": {
+        "deviationWithRecentValues": {
+          "maxPercent": 5,
+          "maxDelayMilliseconds": 120000
+        }
+      },
       "denomination": "USD",
       "rateFeed": false
     },
