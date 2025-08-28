@@ -76,7 +76,6 @@
         "coingecko",
         "curve-ethereum-dai",
         "curve-ethereum-usdt",
-        "kaiko-v2",
         "kraken-usdt",
         "kucoin-usdt",
         "lbank-usdt",
@@ -87,13 +86,7 @@
       "rateFeed": false
     },
     "USDT": {
-      "source": [
-        "bitstamp-usd",
-        "coinbase-usd",
-        "coingecko",
-        "kaiko-v2",
-        "kraken-usd"
-      ],
+      "source": ["bitstamp-usd", "coinbase-usd", "coingecko", "kraken-usd"],
       "denomination": "USD",
       "rateFeed": false
     },
