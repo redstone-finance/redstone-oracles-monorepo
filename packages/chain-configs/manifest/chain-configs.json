@@ -139,8 +139,8 @@
       "networkId": 8453,
       "currencySymbol": "ETH",
       "publicRpcUrls": [
-        "https://base.publicnode.com",
         "https://mainnet.base.org",
+        "https://base.publicnode.com",
         "https://base.llamarpc.com",
         "https://base-mainnet.public.blastapi.io"
       ],
@@ -1028,8 +1028,8 @@
       "networkId": 130,
       "currencySymbol": "ETH",
       "publicRpcUrls": [
-        "https://unichain-rpc.publicnode.com",
         "https://unichain.drpc.org",
+        "https://unichain-rpc.publicnode.com",
         "https://unichain.api.onfinality.io/public"
       ],
       "avgBlockTimeMs": 1000,
