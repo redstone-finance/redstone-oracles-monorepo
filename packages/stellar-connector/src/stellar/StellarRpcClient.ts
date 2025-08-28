@@ -2,6 +2,7 @@ import { RedstoneCommon } from "@redstone-finance/utils";
 import {
   Account,
   Address,
+  Asset,
   BASE_FEE,
   Contract,
   Keypair,
@@ -49,6 +50,7 @@ export class StellarRpcClient {
         if (response.status === rpc.Api.GetTransactionStatus.SUCCESS) {
           return { returnValue: response.returnValue };
         }
+
         throw new Error(
           `Transaction did not succeed: ${hash}, status: ${response.status}`
         );
@@ -120,6 +122,57 @@ export class StellarRpcClient {
     return transform(
       await this.server.getContractData(contract, key, durability)
     );
+  }
+
+  async transferXlm(sender: Keypair, destination: string, amount: number) {
+    const senderAccount = await this.server.getAccount(sender.publicKey());
+
+    const transaction = new TransactionBuilder(senderAccount, {
+      fee: BASE_FEE,
+      networkPassphrase: (await this.server.getNetwork()).passphrase,
+    })
+      .addOperation(
+        Operation.payment({
+          destination,
+          asset: Asset.native(),
+          amount: String(amount),
+        })
+      )
+      .setTimeout(300)
+      .build();
+
+    transaction.sign(sender);
+    const result = await this.server.sendTransaction(transaction);
+
+    await this.waitForTx(result.hash);
+    return result.hash;
+  }
+
+  async createAccountWithFunds(
+    sender: Keypair,
+    destination: string,
+    amount: number
+  ) {
+    const senderAccount = await this.server.getAccount(sender.publicKey());
+
+    const transaction = new TransactionBuilder(senderAccount, {
+      fee: BASE_FEE,
+      networkPassphrase: (await this.server.getNetwork()).passphrase,
+    })
+      .addOperation(
+        Operation.createAccount({
+          destination,
+          startingBalance: String(amount),
+        })
+      )
+      .setTimeout(300)
+      .build();
+
+    transaction.sign(sender);
+    const result = await this.server.sendTransaction(transaction);
+
+    await this.waitForTx(result.hash);
+    return result.hash;
   }
 
   async getTimeForBlock(sequence: number) {
