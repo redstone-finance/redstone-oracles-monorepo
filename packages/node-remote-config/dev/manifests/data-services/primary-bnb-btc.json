@@ -23,7 +23,6 @@
         "bitstamp-usd",
         "curve-ethereum-dai",
         "curve-ethereum-usdt",
-        "kaiko-v2",
         "kraken-usdt",
         "kucoin-usdt",
         "okx-usdt",
@@ -44,7 +43,6 @@
         "coingecko",
         "coinmarketcap",
         "gate-usd",
-        "kaiko-v2",
         "kraken-usd"
       ],
       "deviationCheck": {
