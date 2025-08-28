@@ -3017,6 +3017,26 @@
       "denomination": "USD",
       "rateFeed": true
     },
+    "VBILL_ETHEREUM_DAILY_ACCRUAL": {
+      "source": ["securitize-api"],
+      "denomination": "percentage",
+      "rateFeed": true
+    },
+    "VBILL_AVALANCHE_DAILY_ACCRUAL": {
+      "source": ["securitize-api"],
+      "denomination": "percentage",
+      "rateFeed": true
+    },
+    "VBILL_BNB_DAILY_ACCRUAL": {
+      "source": ["securitize-api"],
+      "denomination": "percentage",
+      "rateFeed": true
+    },
+    "VBILL_SOLANA_DAILY_ACCRUAL": {
+      "source": ["securitize-api"],
+      "denomination": "percentage",
+      "rateFeed": true
+    },
     "BUIDL_FUNDAMENTAL_V2": {
       "source": ["securitize-tsso"],
       "denomination": "USD",
@@ -3125,6 +3145,26 @@
     "VBILL_SOLANA_FUNDAMENTAL_V2": {
       "source": ["securitize-tsso"],
       "denomination": "USD",
+      "rateFeed": true
+    },
+    "VBILL_ETHEREUM_DAILY_ACC_V2": {
+      "source": ["securitize-tsso"],
+      "denomination": "percentage",
+      "rateFeed": true
+    },
+    "VBILL_AVALANCHE_DAILY_ACC_V2": {
+      "source": ["securitize-tsso"],
+      "denomination": "percentage",
+      "rateFeed": true
+    },
+    "VBILL_BNB_DAILY_ACC_V2": {
+      "source": ["securitize-tsso"],
+      "denomination": "percentage",
+      "rateFeed": true
+    },
+    "VBILL_SOLANA_DAILY_ACC_V2": {
+      "source": ["securitize-tsso"],
+      "denomination": "percentage",
       "rateFeed": true
     },
     "egETH_FUNDAMENTAL": {
