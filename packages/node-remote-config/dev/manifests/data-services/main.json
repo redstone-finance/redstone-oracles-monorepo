@@ -78,7 +78,6 @@
         "coingecko",
         "curve-ethereum-dai",
         "curve-ethereum-usdt",
-        "kaiko-v2",
         "kraken-usdt",
         "kucoin-usdt",
         "lbank-usdt",
@@ -93,7 +92,6 @@
         "bitstamp-usd",
         "coinbase-usd",
         "coingecko",
-        "kaiko-v2",
         "kraken-usd"
       ],
       "denomination": "USD",
