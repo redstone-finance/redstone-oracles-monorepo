@@ -52,6 +52,20 @@ export const assertWithLog = (condition: boolean, errMsg: string) => {
   }
 };
 
+export const concatMessages = (messages: string[]) => messages.join("\n");
+
+export const throwIfErrorsPresent = (
+  errors: UnrecoverableError[],
+  context = "",
+  thresholdToError = 0
+) => {
+  assert(
+    errors.filter((e) => !!e.message).length <= thresholdToError,
+    `${context}\n${concatMessages(errors.map((e) => e.message))}`,
+    errors.some((e) => e.unrecoverable)
+  );
+};
+
 let trace: boolean | undefined;
 
 const showStack = (stack: string | undefined): string => {
