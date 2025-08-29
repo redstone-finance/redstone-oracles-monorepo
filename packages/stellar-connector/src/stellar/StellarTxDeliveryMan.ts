@@ -32,7 +32,7 @@ export class StellarTxDeliveryMan {
     let i = 0;
 
     try {
-      const { hash, fee } = await RedstoneCommon.retry({
+      const { hash, cost, fee } = await RedstoneCommon.retry({
         fn: async () => {
           return await RedstoneCommon.timeoutOrResult(
             this.sendTransactionWithIteration(txCreator, i++),
@@ -44,7 +44,7 @@ export class StellarTxDeliveryMan {
       })();
 
       this.logger.info(
-        `Sending transaction successful, hash: ${hash}, fee: ${fee} stroops`
+        `Sending transaction successful, hash: ${hash}, cost: ${cost} stroops, fee: ${fee} stroops`
       );
 
       return hash;
@@ -78,16 +78,29 @@ export class StellarTxDeliveryMan {
     );
 
     if (!["PENDING", "DUPLICATE"].includes(submitResponse.status)) {
-      if (submitResponse.status === "TRY_AGAIN_LATER") {
+      const { status, errorResult } = submitResponse;
+
+      if (status === "TRY_AGAIN_LATER") {
         await RedstoneCommon.sleep(WAIT_BETWEEN_MS);
       }
-      throw new Error(`Execute operation status: ${submitResponse.status}`);
+
+      if (errorResult === undefined) {
+        throw new Error(`Execute operation status: ${status}`);
+      }
+
+      const error = errorResult.result().switch().name;
+      const cost = errorResult.feeCharged().toBigInt();
+      throw new Error(
+        `Execute operation status: ${status}, error: ${error}, cost: ${cost} stroops`
+      );
     }
 
-    await this.rpcClient.waitForTx(submitResponse.hash);
+    this.logger.info(`Waiting for tx: ${submitResponse.hash}`);
+    const { cost } = await this.rpcClient.waitForTx(submitResponse.hash);
 
     return {
       hash: submitResponse.hash,
+      cost: cost.toBigInt(),
       fee,
     };
   }

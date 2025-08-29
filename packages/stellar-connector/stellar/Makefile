@@ -77,15 +77,6 @@ upgrade: build
 	  upgrade \
 	  --new_wasm_hash $${hash}
 
-check_version:
-	stellar contract invoke \
-	  --id $(ADAPTER_ID) \
-	  --source $(ACCOUNT) \
-	  --network $(NETWORK) \
-	  --cost \
-	  -- \
-	  version
-
 write_prices: prepare_data
 	stellar contract invoke \
 	  --id $(ADAPTER_ID) \
