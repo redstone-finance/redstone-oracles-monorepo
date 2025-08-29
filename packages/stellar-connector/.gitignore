@@ -4,3 +4,4 @@ target
 
 /stellar/*.custom
 /stellar/*.testnet
+/stellar/*.mainnet
