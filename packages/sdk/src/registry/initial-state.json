@@ -132,6 +132,39 @@
       "ecdsaPublicKey": "0x04440a1d2f497db99d7282bf6ccaf133995ed05f992c177c1eaf7b861a9e64261d1da123bcefa6bed232755197fc5082d42696e72aaf42b45771eba336d693b9b3",
       "dateAdded": "2024-01-01"
     },
+    "0x21F05763188246E9F1FdAe3Bb67465a1E81b9f21": {
+      "name": "redstone-primary-demo-bolt-1",
+      "description": "Data feeds from primary redstone nodes - demo bolt 1",
+      "logo": "https://redstone.finance/assets/img/redstone-logo-full.svg",
+      "dataServiceId": "redstone-primary-demo",
+      "evmAddress": "0x21F05763188246E9F1FdAe3Bb67465a1E81b9f21",
+      "url": "https://redstone.finance",
+      "ipAddress": "0.0.0.0",
+      "ecdsaPublicKey": "0x046e57d5a05571a535f4ffa850571cea6b12ebb5e7b329368a7ff9dd185940f0903d74576a02953ec2ab0cb9077fd5b05e6f4d9e304eadb60b1d3a4e7720f6106a",
+      "dateAdded": "2025-08-29"
+    },
+    "0x3F12DE3492D044FeB08a88b402455026B0f1ae04": {
+      "name": "redstone-primary-demo-bolt-2",
+      "description": "Data feeds from primary redstone nodes - demo bolt 2",
+      "logo": "https://redstone.finance/assets/img/redstone-logo-full.svg",
+      "dataServiceId": "redstone-primary-demo",
+      "evmAddress": "0x3F12DE3492D044FeB08a88b402455026B0f1ae04",
+      "url": "https://redstone.finance",
+      "ipAddress": "0.0.0.0",
+      "ecdsaPublicKey": "0x0477a834b8c7250c74ac0b8732e78466dddf83fdc3434b71a1393c58bf5c3b1f3feef1d0f160354582b6b9681dd88c35486a529c9424e48f903e9127cb6144df7c",
+      "dateAdded": "2025-08-29"
+    },
+    "0x5451dB9e574C3a9f9C0DA324E498093AC185169A": {
+      "name": "redstone-primary-demo-bolt-3",
+      "description": "Data feeds from primary redstone nodes - demo bolt 3",
+      "logo": "https://redstone.finance/assets/img/redstone-logo-full.svg",
+      "dataServiceId": "redstone-primary-demo",
+      "evmAddress": "0x5451dB9e574C3a9f9C0DA324E498093AC185169A",
+      "url": "https://redstone.finance",
+      "ipAddress": "0.0.0.0",
+      "ecdsaPublicKey": "0x04a149d6f29664673c549f7c0200d1921a59c277d4f82b0c7997651ab4a3ddc72d70b3f5ae4838abd3591e55da76e690325721e06e426112b4006c425b1f398bf6",
+      "dateAdded": "2025-08-29"
+    },
     "0x8cdBF4FE234F106eFB28D84Ef466bBaf8616f8D9": {
       "name": "redstone-primary-prod-keyrock-1",
       "description": "Data feeds from primary redstone nodes - Keyrock node 1",
