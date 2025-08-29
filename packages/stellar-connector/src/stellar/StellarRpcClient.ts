@@ -48,7 +48,10 @@ export class StellarRpcClient {
       fn: async () => {
         const response = await this.server.getTransaction(hash);
         if (response.status === rpc.Api.GetTransactionStatus.SUCCESS) {
-          return { returnValue: response.returnValue };
+          return {
+            returnValue: response.returnValue,
+            cost: response.resultXdr.feeCharged(),
+          };
         }
 
         throw new Error(
@@ -63,9 +66,7 @@ export class StellarRpcClient {
     const sim = await this.server.simulateTransaction(transaction);
 
     if (!rpc.Api.isSimulationSuccess(sim)) {
-      throw new Error(
-        `Simulation failed: ${RedstoneCommon.stringifyError(sim.error)}`
-      );
+      throw new Error(`Simulation failed: ${sim.error}`);
     }
 
     return sim;
