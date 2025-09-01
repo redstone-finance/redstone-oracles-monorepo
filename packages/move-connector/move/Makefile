@@ -9,27 +9,12 @@ FEED_BTC=0x4254430000000000000000000000000000000000000000000000000000000000
 
 DIR=contracts
 
-# ignored so clean will always run
-.IGNORE: install-movement clean prepare-cli update-aptos-core-deps
-
-prepare-cli:
-	git clone https://github.com/movementlabsxyz/aptos-core.git
-	cd aptos-core && git checkout movement-cli-v3.5.0
-
-update-aptos-core-deps:
-	@echo "Updating Cargo.toml to use specific version instead of revision."
-	@cd aptos-core && \
-	sed -i '' 's|tonic = { git = "https://github.com/aptos-labs/tonic.git", rev = "0da1ba8b1751d6e19eb55be24cccf9ae933c666e" }|tonic = { git = "https://github.com/aptos-labs/tonic.git" }|' Cargo.toml
-
-install-movement:
-	@echo "Installing movement-cli with cargo install."
-	@cd aptos-core && \
-	cargo install --locked --bin movement --path crates/aptos --profile cli
-
-clean:
-	rm -rf aptos-core
-
-install-cli: prepare-cli update-aptos-core-deps install-movement clean
+install-cli:
+	curl -LO https://github.com/movementlabsxyz/homebrew-movement-cli/releases/download/bypass-homebrew/movement-macos-arm64.tar.gz
+	tar -xzf movement-macos-arm64.tar.gz
+	rm movement-macos-arm64.tar.gz
+	chmod +x macos-arm64/movement
+	sudo mv macos-arm64/movement /usr/local/bin/movement
 
 init-movement:
 	movement init --skip-faucet
