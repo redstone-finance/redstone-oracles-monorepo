@@ -24,7 +24,7 @@ export type { EvmContractAdapter } from "./core/contract-interactions/EvmContrac
 export type { EvmContractConnector } from "./core/contract-interactions/EvmContractConnector";
 export type { IRedstoneContractAdapter } from "./core/contract-interactions/IRedstoneContractAdapter";
 export { prepareLinkedListLocationsForMentoAdapterReport } from "./custom-integrations/mento/mento-utils";
-export type { ContractFacade } from "./facade/ContractFacade";
+export { ContractFacade } from "./facade/ContractFacade";
 export { EvmContractFacade } from "./facade/evm/EvmContractFacade";
 export type { RedstoneEvmContract } from "./facade/evm/EvmContractFacade";
 export { getEvmContract } from "./facade/evm/get-evm-contract";

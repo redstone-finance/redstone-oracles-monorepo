@@ -14,7 +14,7 @@ export const getIterationArgs = async (
 
   const updateRequestParams = makeDataPackagesRequestParams(
     relayerConfig,
-    context.uniqueSignersThreshold
+    context.uniqueSignerThreshold
   );
 
   return {

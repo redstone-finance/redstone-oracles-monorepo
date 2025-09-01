@@ -12,7 +12,7 @@ export type ContractData = SdkContractData;
 export interface ShouldUpdateContext {
   dataPackages: DataPackagesResponse;
   dataFromContract: ContractData;
-  uniqueSignersThreshold: number;
+  uniqueSignerThreshold: number;
   blockTag: number;
   baseChecksTimestamp: number;
   historicalCache?: DataPackagesResponseCache;

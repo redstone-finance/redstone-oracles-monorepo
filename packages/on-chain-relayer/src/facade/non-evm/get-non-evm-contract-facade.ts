@@ -7,11 +7,15 @@ import { NonEvmContractFacade } from "./NonEvmContractFacade";
 
 export async function getNonEvmContractFacade(
   relayerConfig: RelayerConfig,
-  cache: DataPackagesResponseCache | undefined
+  cache?: DataPackagesResponseCache
 ) {
   return new (
     isMultiFeedAdapterType(relayerConfig.adapterContractType)
       ? MultiFeedNonEvmContractFacade
       : NonEvmContractFacade
-  )(await getWritableNonEvmContractConnector(relayerConfig), cache);
+  )(
+    await getWritableNonEvmContractConnector(relayerConfig),
+    relayerConfig,
+    cache
+  );
 }

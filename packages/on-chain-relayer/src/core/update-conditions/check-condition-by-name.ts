@@ -60,7 +60,7 @@ function fetchHistoricalDataPackages(
 ) {
   return new ContractParamsProvider(
     convertToHistoricalDataPackagesRequestParams(
-      makeDataPackagesRequestParams(config, context.uniqueSignersThreshold),
+      makeDataPackagesRequestParams(config, context.uniqueSignerThreshold),
       config,
       getDataPackagesTimestamp(context.dataPackages, dataFeedId),
       context.baseChecksTimestamp

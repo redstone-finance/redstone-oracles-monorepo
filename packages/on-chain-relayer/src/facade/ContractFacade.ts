@@ -18,13 +18,30 @@ export type UpdatePricesOptions = {
 
 export abstract class ContractFacade {
   private readonly logger = loggerFactory("contract-facade");
+  private readonly getUniqueSignerThresholdMemoized: (
+    blockTag?: number
+  ) => Promise<number>;
 
   constructor(
     protected readonly connector: IContractConnector<
       IExtendedPricesContractAdapter | IRedstoneContractAdapter
     >,
+    opts: Pick<RelayerConfig, "uniqueSignerThresholdCacheTtlMs"> = {
+      uniqueSignerThresholdCacheTtlMs: 0,
+    },
     protected cache?: DataPackagesResponseCache
-  ) {}
+  ) {
+    this.getUniqueSignerThresholdMemoized = RedstoneCommon.memoize({
+      functionToMemoize: (blockTag?: number) =>
+        this.getUniqueSignerThresholdFromContract(blockTag),
+      ttl: opts.uniqueSignerThresholdCacheTtlMs,
+      cacheReporter: (isMissing: boolean) =>
+        isMissing
+          ? this.logger.log("Refreshing cached uniqueSignerThreshold")
+          : this.logger.info("Reusing cached uniqueSignerThreshold"),
+      cacheKeyBuilder: () => "uniqueSignerThresholdCached",
+    });
+  }
 
   abstract getLatestRoundContractData(
     feedIds: string[],
@@ -35,24 +52,12 @@ export abstract class ContractFacade {
   async getShouldUpdateContext(
     relayerConfig: RelayerConfig
   ): Promise<ShouldUpdateContext> {
-    const blockTag = await this.getBlockNumber();
-    const { updateConditions, dataFeeds } = relayerConfig;
-    const shouldCheckValueDeviation = dataFeeds.some((feedId) =>
-      updateConditions[feedId].includes("value-deviation")
-    );
-
-    const [uniqueSignersThreshold, dataFromContract] = await Promise.all([
-      this.getUniqueSignersThresholdFromContract(blockTag),
-      this.getLatestRoundContractData(
-        dataFeeds,
-        blockTag,
-        shouldCheckValueDeviation
-      ),
-    ]);
+    const { blockTag, uniqueSignerThreshold, dataFromContract } =
+      await this.getContractData(relayerConfig);
 
     const requestParams = makeDataPackagesRequestParams(
       relayerConfig,
-      uniqueSignersThreshold
+      uniqueSignerThreshold
     );
 
     const dataPackages = await this.getContractParamsProvider(
@@ -61,7 +66,7 @@ export abstract class ContractFacade {
 
     return {
       dataPackages,
-      uniqueSignersThreshold,
+      uniqueSignerThreshold,
       dataFromContract,
       blockTag,
       baseChecksTimestamp: Date.now(),
@@ -73,12 +78,39 @@ export abstract class ContractFacade {
     return this.connector.getBlockNumber();
   }
 
-  async getUniqueSignersThresholdFromContract(
-    blockTag: number
-  ): Promise<number> {
+  private async getContractData(relayerConfig: RelayerConfig) {
+    const { dataFeeds } = relayerConfig;
+    const { shouldCheckValueDeviation, canOmitFetchingDataFromContract } =
+      ContractFacade.getContractDataOpts(relayerConfig);
+
+    if (canOmitFetchingDataFromContract) {
+      const uniqueSignerThreshold =
+        await this.getUniqueSignerThresholdMemoized();
+
+      return {
+        blockTag: 0,
+        uniqueSignerThreshold,
+        dataFromContract: {},
+      };
+    }
+
+    const blockTag = await this.getBlockNumber();
+    const [uniqueSignerThreshold, dataFromContract] = await Promise.all([
+      this.getUniqueSignerThresholdMemoized(blockTag),
+      this.getLatestRoundContractData(
+        dataFeeds,
+        blockTag,
+        shouldCheckValueDeviation
+      ),
+    ]);
+
+    return { blockTag, uniqueSignerThreshold, dataFromContract };
+  }
+
+  async getUniqueSignerThresholdFromContract(blockTag?: number) {
     return await (
       await this.connector.getAdapter()
-    ).getUniqueSignerThreshold(blockTag);
+    ).getUniqueSignerThreshold(blockTag ?? (await this.getBlockNumber()));
   }
 
   async updatePrices(
@@ -111,5 +143,26 @@ export abstract class ContractFacade {
     feedIds?: string[]
   ): ContractParamsProvider {
     return new ContractParamsProvider(requestParams, this.cache, feedIds);
+  }
+
+  static getContractDataOpts(
+    relayerConfig: Pick<
+      RelayerConfig,
+      "dataFeeds" | "updateConditions" | "updateTriggers"
+    >
+  ) {
+    const { updateConditions, dataFeeds, updateTriggers } = relayerConfig;
+
+    const shouldCheckValueDeviation = dataFeeds.some((feedId) =>
+      updateConditions[feedId].includes("value-deviation")
+    );
+    const canOmitFetchingDataFromContract =
+      !shouldCheckValueDeviation &&
+      dataFeeds.every(
+        (feedId) =>
+          updateTriggers[feedId].timeSinceLastUpdateInMilliseconds === 0
+      );
+
+    return { shouldCheckValueDeviation, canOmitFetchingDataFromContract };
   }
 }
