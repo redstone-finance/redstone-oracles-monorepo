@@ -1,6 +1,6 @@
 {
-    "packageId": "0x855e47c0c9b2d4cc512b1a7d916f71971a8b0e80ec4dd1a017e1a8d24c2cef32",
-    "priceAdapterObjectId": "0x9cbc963969d389ffadcf51690e9556aaba3dbba7d1d0a8117fd3d82ed4a564f0",
-    "adminCapId": "0x1cc244489cb79ff061945fcb0c8472764c1ccb781325d73c918d1fbf5bb9019a",
-    "upgradeCapId": "0xd1af43b22dc59b43883fc84616eef6c3744c0e53a985c6a84e0b1d2dd2ccd894"
+  "packageId": "0x855e47c0c9b2d4cc512b1a7d916f71971a8b0e80ec4dd1a017e1a8d24c2cef32",
+  "priceAdapterObjectId": "0x9cbc963969d389ffadcf51690e9556aaba3dbba7d1d0a8117fd3d82ed4a564f0",
+  "adminCapId": "0x1cc244489cb79ff061945fcb0c8472764c1ccb781325d73c918d1fbf5bb9019a",
+  "upgradeCapId": "0xd1af43b22dc59b43883fc84616eef6c3744c0e53a985c6a84e0b1d2dd2ccd894"
 }
