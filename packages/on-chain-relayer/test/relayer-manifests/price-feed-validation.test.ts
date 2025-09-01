@@ -106,9 +106,13 @@ if (process.env.RUN_NONDETERMINISTIC_TESTS) {
         for (const [dataFeedId, priceFeedAddress] of Object.entries(
           manifest.priceFeeds
         )) {
-          const config = getChainConfig(manifest.chain.id);
+          const disabledNetworks = (process.env.DISABLED_NETWORKS ??
+            []) as NetworkId[];
 
-          if (priceFeedAddress !== "__NO_FEED__" && !config.disabled) {
+          if (
+            priceFeedAddress !== "__NO_FEED__" &&
+            disabledNetworks.includes(manifest.chain.id)
+          ) {
             expect(
               await checkDataFeedIdInContract(
                 dataFeedId,
@@ -130,9 +134,13 @@ if (process.env.RUN_NONDETERMINISTIC_TESTS) {
         for (const [dataFeedId, { priceFeedAddress }] of Object.entries(
           manifest.priceFeeds
         )) {
-          const config = getChainConfig(manifest.chain.id);
+          const disabledNetworks = (process.env.DISABLED_NETWORKS ??
+            []) as NetworkId[];
 
-          if (priceFeedAddress && !config.disabled) {
+          if (
+            priceFeedAddress &&
+            disabledNetworks.includes(manifest.chain.id)
+          ) {
             expect(
               await checkDataFeedIdInContract(
                 dataFeedId,
