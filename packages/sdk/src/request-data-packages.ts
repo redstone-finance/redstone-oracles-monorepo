@@ -44,6 +44,10 @@ type DataPackagesRequestParamsInternal = {
    */
   waitForAllGatewaysTimeMs?: number;
   /**
+   * wait for response from single gateway for this amount of time, 5000 ms by default
+   */
+  singleGatewayTimeoutMs?: number;
+  /**
    * maximum allowed timestamp deviation in milliseconds
    */
   maxTimestampDeviationMS?: number;
@@ -305,7 +309,11 @@ const prepareDataPackagePromises = (
   }
 
   return urls.map(async (url) => {
-    const response = await sendRequestToGateway(url, pathComponents);
+    const response = await sendRequestToGateway(
+      url,
+      pathComponents,
+      reqParams.singleGatewayTimeoutMs
+    );
 
     return parseAndValidateDataPackagesResponse(
       response.data,
@@ -432,13 +440,17 @@ const getUrlsForDataServiceId = (
   );
 };
 
-function sendRequestToGateway(url: string, pathComponents: string[]) {
+function sendRequestToGateway(
+  url: string,
+  pathComponents: string[],
+  timeout = GET_REQUEST_TIMEOUT
+) {
   const sanitizedUrl = [url.replace(/\/+$/, "")]
     .concat(pathComponents)
     .join("/");
 
   return axios.get<Record<string, SignedDataPackagePlainObj[]>>(sanitizedUrl, {
-    timeout: GET_REQUEST_TIMEOUT,
+    timeout,
   });
 }
 
