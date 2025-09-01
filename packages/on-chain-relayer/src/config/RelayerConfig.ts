@@ -73,4 +73,5 @@ export type OnChainRelayerEnv = {
   isPausedUntil?: Date;
   feedsSplit?: string[][];
   splitAllFeeds?: boolean;
+  uniqueSignerThresholdCacheTtlMs: number;
 };

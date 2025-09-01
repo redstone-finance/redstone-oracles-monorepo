@@ -3,7 +3,7 @@ import sinon from "sinon";
 import {
   isPaused,
   MAX_PAUSE_FUTURE_TIMESTAMP_HOURS,
-} from "../../src/config/is_paused";
+} from "../../src/config/is-paused";
 
 describe("isPaused function", () => {
   let clock: sinon.SinonFakeTimers;

@@ -40,6 +40,7 @@ export const getEvmContractFacade = (
 
   return new EvmContractFacade(
     getEvmContractConnector(provider, adapter),
+    relayerConfig,
     cache
   );
 };

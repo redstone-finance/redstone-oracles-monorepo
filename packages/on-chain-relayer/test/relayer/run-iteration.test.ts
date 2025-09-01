@@ -142,7 +142,7 @@ describe("runIteration tests", () => {
       .stub(adapter, "writePricesFromPayloadToContract")
       .resolves();
 
-    const facade = new EvmContractFacade(connector, cache);
+    const facade = new EvmContractFacade(connector, relayerConfig, cache);
     const contractParamsProvider = new ContractParamsProviderMock(
       DEFAULT_DATA_POINTS,
       undefined,
