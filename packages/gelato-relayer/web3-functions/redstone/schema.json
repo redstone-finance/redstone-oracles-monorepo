@@ -3,6 +3,5 @@
   "runtime": "js-1.0",
   "memory": 256,
   "timeout": 30,
-  "userArgs": {
-  }
+  "userArgs": {}
 }
