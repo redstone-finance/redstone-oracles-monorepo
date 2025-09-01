@@ -5,6 +5,7 @@ import {
   OnChainRelayerManifest,
   UpdateTriggers,
 } from "@redstone-finance/on-chain-relayer-common";
+import { RedstoneCommon } from "@redstone-finance/utils";
 import {
   ConditionCheckNames,
   ManifestConfig,
@@ -151,7 +152,7 @@ function updateConditionsAndTriggersForFeed(
     updateTriggers[dataFeedId].deviationPercentage = deviationPercentage;
   }
 
-  if (timeSinceLastUpdateInMilliseconds) {
+  if (RedstoneCommon.isDefined(timeSinceLastUpdateInMilliseconds)) {
     updateConditions[dataFeedId].push("time");
     updateTriggers[dataFeedId].timeSinceLastUpdateInMilliseconds =
       timeSinceLastUpdateInMilliseconds;

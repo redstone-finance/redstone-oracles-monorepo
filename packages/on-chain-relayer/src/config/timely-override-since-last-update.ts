@@ -15,8 +15,11 @@ export const timelyOverrideSinceLastUpdate = (
     relayerConfig.updateTriggers[dataFeedId].timeSinceLastUpdateInMilliseconds =
       Math.min(
         temporaryUpdatePriceInterval,
-        relayerConfig.updateTriggers[dataFeedId]
-          .timeSinceLastUpdateInMilliseconds ?? temporaryUpdatePriceInterval
+        RedstoneCommon.useDefaultIfNotDefined(
+          relayerConfig.updateTriggers[dataFeedId]
+            .timeSinceLastUpdateInMilliseconds,
+          temporaryUpdatePriceInterval
+        )
       );
     if (!relayerConfig.updateConditions[dataFeedId].includes("time")) {
       relayerConfig.updateConditions[dataFeedId].push("time");

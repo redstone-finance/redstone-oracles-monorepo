@@ -9,7 +9,7 @@ import {
 } from "@redstone-finance/sdk";
 
 export class MockContractFacade extends EvmContractFacade {
-  override getUniqueSignersThresholdFromContract(
+  override getUniqueSignerThresholdFromContract(
     _blockTag: number
   ): Promise<number> {
     return Promise.resolve(1);

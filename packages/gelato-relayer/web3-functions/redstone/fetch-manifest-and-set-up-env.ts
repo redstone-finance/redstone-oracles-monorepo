@@ -28,6 +28,7 @@ const EMPTY_GELATO_ENV: OnChainRelayerEnv = {
   getBlockNumberTimeout: 1000,
   waitForAllGatewaysTimeMs: 5000,
   includeAdditionalFeedsForGasOptimization: true,
+  uniqueSignerThresholdCacheTtlMs: 0,
 };
 
 export async function fetchManifestAndSetUpEnv(env: IterationArgsProviderEnv) {

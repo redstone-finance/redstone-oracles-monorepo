@@ -1,3 +1,4 @@
+import { RedstoneCommon } from "@redstone-finance/utils";
 import { RelayerConfig } from "../../config/RelayerConfig";
 
 export const timeUpdateCondition = (
@@ -10,7 +11,7 @@ export const timeUpdateCondition = (
   let updatePriceInterval =
     config.updateTriggers[dataFeedId].timeSinceLastUpdateInMilliseconds;
 
-  if (!updatePriceInterval) {
+  if (!RedstoneCommon.isDefined(updatePriceInterval)) {
     throw new Error("Update price interval must be defined");
   }
 

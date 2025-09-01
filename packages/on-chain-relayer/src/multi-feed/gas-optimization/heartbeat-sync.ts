@@ -1,3 +1,4 @@
+import { RedstoneCommon } from "@redstone-finance/utils";
 import { RelayerConfig } from "../../config/RelayerConfig";
 
 export const includeSynchronizedHeartbeatUpdates = (
@@ -16,16 +17,19 @@ export const includeSynchronizedHeartbeatUpdates = (
   const messages: string[] = [];
   for (const dataFeedId of dataFeeds) {
     if (
-      !updateTriggers[dataFeedId].timeSinceLastUpdateInMilliseconds ||
+      !RedstoneCommon.isDefined(
+        updateTriggers[dataFeedId].timeSinceLastUpdateInMilliseconds
+      ) ||
       dataFeedsToUpdate.includes(dataFeedId)
     ) {
       continue;
     }
     for (const heartbeat of heartbeatUpdates) {
       if (
+        updateTriggers[dataFeedId].timeSinceLastUpdateInMilliseconds === 0 ||
         heartbeat %
           updateTriggers[dataFeedId].timeSinceLastUpdateInMilliseconds ===
-        0
+          0
       ) {
         messages.push(
           `DataFeed: ${dataFeedId} included due to heartbeat syncing`

@@ -257,6 +257,10 @@ export const readManifestAndEnv = () => {
       "SPLIT_ALL_FEEDS",
       z.boolean().optional()
     ),
+    uniqueSignerThresholdCacheTtlMs: RedstoneCommon.getFromEnv(
+      "UNIQUE_SIGNER_THRESHOLD_CACHE_TTL_MS",
+      z.number().default(0)
+    ),
   };
 
   return { manifest, env };
