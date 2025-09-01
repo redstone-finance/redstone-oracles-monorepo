@@ -2,6 +2,7 @@ import {
   deconstructNetworkId,
   isNonEvmNetworkId,
   loggerFactory,
+  NetworkId,
   RedstoneCommon,
   sanitizeLogMessage,
 } from "@redstone-finance/utils";
@@ -162,8 +163,9 @@ export function skipIfDisabledOrNotSupported(
   chainConfig: ChainConfig,
   chainsToSkip: string[] = []
 ) {
+  const disabledNetworks = (process.env.DISABLED_NETWORKS ?? []) as NetworkId[];
   if (
-    chainConfig.disabled ||
+    disabledNetworks.includes(chainConfig.networkId) ||
     isNonEvmNetworkId(chainConfig.networkId) ||
     chainsToSkip.includes(chainConfig.name)
   ) {
