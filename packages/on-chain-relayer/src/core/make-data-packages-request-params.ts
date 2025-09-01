@@ -13,7 +13,7 @@ export function canIgnoreMissingFeeds(relayerConfig: RelayerConfig) {
 
 export function makeDataPackagesRequestParams(
   relayerConfig: RelayerConfig,
-  uniqueSignersThreshold: number,
+  uniqueSignerThreshold: number,
   dataFeedIds?: string[]
 ): DataPackagesRequestParams {
   const {
@@ -33,7 +33,7 @@ export function makeDataPackagesRequestParams(
 
   return {
     dataServiceId,
-    uniqueSignersCount: uniqueSignersThreshold,
+    uniqueSignersCount: uniqueSignerThreshold,
     dataPackagesIds: dataFeedIds ?? dataPackagesNames ?? dataFeeds,
     urls: cacheServiceUrls,
     maxTimestampDeviationMS: RedstoneCommon.minToMs(3),
