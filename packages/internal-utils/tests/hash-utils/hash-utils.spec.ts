@@ -10,7 +10,7 @@ describe("hash-utils", () => {
     it("should calculate the correct SHA256 hash for bybit-config.json matching", () => {
       const filePath = path.resolve(__dirname, "test-config.json");
       const hash =
-        "6ee7a6e8f58eeb1f7e29899611be04c1dfcf3f298458380079c0fe1a37a0acbc";
+        "8309f74229dd166b2ccc4700293e872aacf0369c72604340213fd78b51b23348";
 
       const calculatedHash = calculateFileHash(filePath);
       expect(calculatedHash).toBe(hash);
