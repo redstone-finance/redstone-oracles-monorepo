@@ -100,15 +100,12 @@ export class MqttRunner {
 
   private async updateSubscription(relayerConfig: RelayerConfig) {
     try {
-      const blockTag = await this.contractFacade.getBlockNumber();
-      const uniqueSignersThreshold =
-        await this.contractFacade.getUniqueSignersThresholdFromContract(
-          blockTag
-        );
+      const uniqueSignerThreshold =
+        await this.contractFacade.getUniqueSignerThresholdFromContract();
 
       const requestParams = makeDataPackagesRequestParams(
         relayerConfig,
-        uniqueSignersThreshold
+        uniqueSignerThreshold
       );
 
       this.logger.debug("Checking subscription", requestParams);
