@@ -13,7 +13,6 @@ export const ChainConfigSchema = z.object({
   isAuctionModel: z.boolean(),
   twoDimensionalFees: z.boolean(),
   isMainnet: z.boolean(),
-  disabled: z.boolean().default(false),
   etherScanApi: z.string().url().optional(),
   /**
    * Some blockchains don't have empty blocks, thus eth_feeHistory returns 0, but they have

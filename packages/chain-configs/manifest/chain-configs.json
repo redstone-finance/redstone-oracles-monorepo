@@ -188,8 +188,7 @@
       },
       "isAuctionModel": false,
       "twoDimensionalFees": false,
-      "isMainnet": true,
-      "disabled": true
+      "isMainnet": true
     },
     "manta": {
       "name": "Manta Pacific Mainnet",
@@ -482,8 +481,7 @@
       },
       "isAuctionModel": false,
       "twoDimensionalFees": false,
-      "isMainnet": false,
-      "disabled": true
+      "isMainnet": false
     },
     "merlin": {
       "name": "Merlin Mainnet",
@@ -1343,9 +1341,6 @@
     }
   },
   "temporaryConfigUpdates": {
-    "expirationTimestamp": "2025-08-05T12:01:00+02:00",
-    "base": {
-      "disabled": true
-    }
+    "expirationTimestamp": "2025-08-05T12:01:00+02:00"
   }
 }
