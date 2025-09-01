@@ -41,6 +41,13 @@ export function isDefined<T>(value: T): value is NonNullable<T> {
   return value !== null && value !== undefined;
 }
 
+export function useDefaultIfNotDefined<T>(
+  value: T | null | undefined,
+  defaultValue: T
+): T {
+  return isDefined(value) ? value : defaultValue;
+}
+
 export function isTruthy<T>(value: T): value is NonNullable<T> {
   return !!value;
 }
