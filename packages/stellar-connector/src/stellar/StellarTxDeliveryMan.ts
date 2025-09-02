@@ -1,6 +1,7 @@
 import { loggerFactory, RedstoneCommon } from "@redstone-finance/utils";
-import { BASE_FEE, Keypair, Operation, xdr } from "@stellar/stellar-sdk";
+import { BASE_FEE, Operation, xdr } from "@stellar/stellar-sdk";
 import { StellarRpcClient } from "../stellar/StellarRpcClient";
+import { Signer, StellarSigner } from "./StellarSigner";
 import {
   configFromPartial,
   StellarTxDeliveryManConfig,
@@ -15,17 +16,19 @@ type TxCreator = () => Tx | Promise<Tx>;
 export class StellarTxDeliveryMan {
   private readonly logger = loggerFactory("stellar-tx-delivery-man");
   private readonly config: StellarTxDeliveryManConfig;
+  private readonly signer: StellarSigner;
 
   constructor(
     private readonly rpcClient: StellarRpcClient,
-    private readonly keypair: Keypair,
+    signer: Signer,
     config?: Partial<StellarTxDeliveryManConfig>
   ) {
     this.config = configFromPartial(config);
+    this.signer = new StellarSigner(signer);
   }
 
-  getPublicKey() {
-    return this.keypair.publicKey();
+  async getPublicKey() {
+    return await this.signer.publicKey();
   }
 
   async sendTransaction(txCreator: TxCreator) {
@@ -73,7 +76,7 @@ export class StellarTxDeliveryMan {
 
     const submitResponse = await this.rpcClient.executeOperation(
       tx,
-      this.keypair,
+      this.signer,
       fee.toString()
     );
 
