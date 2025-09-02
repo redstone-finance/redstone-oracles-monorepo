@@ -76,6 +76,7 @@
         "coingecko",
         "curve-ethereum-dai",
         "curve-ethereum-usdt",
+        "gemini-usd",
         "kraken-usdt",
         "kucoin-usdt",
         "lbank-usdt",
@@ -86,7 +87,14 @@
       "rateFeed": false
     },
     "USDT": {
-      "source": ["bitstamp-usd", "coinbase-usd", "coingecko", "kraken-usd"],
+      "source": [
+        "bitstamp-usd",
+        "coinbase-usd",
+        "coingecko",
+        "gemini-usd",
+        "kraken-usd",
+        "okx-usd"
+      ],
       "denomination": "USD",
       "rateFeed": false
     },
@@ -95,12 +103,15 @@
         "bitstamp-usd",
         "coingecko",
         "coinmarketcap",
+        "gemini-usd",
         "kraken-usd",
         "bitstamp_stables_ratio-usd",
         "coinbase_stables_ratio-usd",
         "coingecko_stables_ratio",
         "coinmarketcap_stables_ratio",
-        "kraken_stables_ratio-usd"
+        "gemini_stables_ratio-usd",
+        "kraken_stables_ratio-usd",
+        "okx_stables_ratio-usd"
       ],
       "deviationCheck": {
         "deviationWithRecentValues": {
@@ -117,10 +128,13 @@
         "coinbase-usd",
         "coingecko",
         "coinmarketcap",
+        "gemini-usd",
         "kraken-usd",
+        "okx-usd",
         "bitstamp_stables_ratio-usd",
         "coingecko_stables_ratio",
         "coinmarketcap_stables_ratio",
+        "gemini_stables_ratio-usd",
         "kraken_stables_ratio-usd"
       ],
       "deviationCheck": {
