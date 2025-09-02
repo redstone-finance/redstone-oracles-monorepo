@@ -46,8 +46,8 @@ export class RequestDataPackagesLogger {
     );
 
     (timeout ? this.logger.info : this.logger.debug)(
-      `${timeout ? "Timed out with" : "Checking"} ${collectedResponses.length} response(s) / ${collectedErrors.length} error(s) ` +
-        `, didResolveOrReject before: ${didResolveOrReject}`,
+      `${timeout ? "Timed out with" : "Checking"} ${collectedResponses.length} response(s) / ${collectedErrors.length} error(s),` +
+        ` didResolveOrReject before: ${didResolveOrReject}`,
       {
         particularTimestamps,
         particularTimes: this.particularTimes,
