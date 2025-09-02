@@ -26,7 +26,8 @@ async function proposeUpgrade(
     signerAddress,
     contractName,
     prepareDepAddresses(contractName),
-    contractAddress
+    contractAddress,
+    networkName
   );
 
   fs.writeFileSync(
