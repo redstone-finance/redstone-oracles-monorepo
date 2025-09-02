@@ -53,6 +53,18 @@ export class StellarPricesContractAdapter
     });
   }
 
+  async upgrade(wasmHash: Buffer) {
+    if (!this.txDeliveryMan) {
+      throw new Error("Cannot upgrade contract, txDeliveryMan not set");
+    }
+
+    const hash = XdrUtils.bytesToScVal(wasmHash);
+
+    return await this.txDeliveryMan.sendTransaction(() => {
+      return this.contract.call("upgrade", hash);
+    });
+  }
+
   async readContractData(feedIds: string[], _blockNumber?: number) {
     const data = await this.getContractData(feedIds);
 
