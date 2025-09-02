@@ -6,6 +6,7 @@ import {
   TransactionBuilder,
 } from "@stellar/stellar-sdk";
 import { makeKeypair, StellarRpcClient } from "../../src";
+import { StellarSigner } from "../../src/stellar/StellarSigner";
 import { makeServer } from "../utils";
 import {
   INITIAL_ACCOUNT_AMOUNT,
@@ -68,7 +69,7 @@ async function main() {
   console.log(
     `Creations hash:`,
     await client.createAccountWithFunds(
-      payer,
+      new StellarSigner(payer),
       sourceKeypair.publicKey(),
       INITIAL_ACCOUNT_AMOUNT
     )
