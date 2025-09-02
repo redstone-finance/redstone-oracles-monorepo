@@ -10,6 +10,7 @@ import "dotenv/config";
 import fs from "fs";
 import { EOL } from "os";
 import path from "path";
+import { isAptos } from "./config";
 import {
   ContractName,
   PRICE_ADAPTER,
@@ -109,6 +110,7 @@ export async function setUpDeploy(
   contractName: string,
   namedAddresses: NamedAddresses,
   currentObjectAddress?: AccountAddress,
+  networkName = getEnvNetwork(),
   deployDir = getEnvDeployDir()
 ) {
   const builder = new MovePackageTxBuilder(aptos);
@@ -121,7 +123,7 @@ export async function setUpDeploy(
   console.log(`Compiling code for ${contractAddress.toString()}`);
   namedAddresses[contractName] = contractAddress;
   namedAddresses["redstone_price_adapter"] = namedAddresses[PRICE_ADAPTER];
-  compileCodeForDeployment(contractName, namedAddresses);
+  compileCodeForDeployment(contractName, namedAddresses, networkName);
   const { metadataBytes, bytecode } = getPackageBytesToPublish(
     getJsonBuildFile(contractName, deployDir)
   );
@@ -137,6 +139,7 @@ export async function setUpDeploy(
 function compileCodeForDeployment(
   contractName: string,
   namedAddresses: NamedAddresses,
+  networkName = getEnvNetwork(),
   deployDir = getEnvDeployDir(),
   outputBuildDir = OUTPUT_BUILD_DIR
 ) {
@@ -147,7 +150,7 @@ function compileCodeForDeployment(
   execSync(`mkdir -p ${path.join(deployDir, outputBuildDir)}`, {
     stdio: ["inherit", "inherit", "inherit"],
   });
-  const cmd = `movement move build-publish-payload --package-dir ${deployDir}/${contractName} --named-addresses ${namedAddressesParam} --json-output-file ${getJsonBuildFile(contractName, deployDir, outputBuildDir)} --assume-yes`;
+  const cmd = `${isAptos(networkName) ? "aptos" : "movement"} move build-publish-payload --package-dir ${deployDir}/${contractName} --named-addresses ${namedAddressesParam} --json-output-file ${getJsonBuildFile(contractName, deployDir, outputBuildDir)} --assume-yes`;
   console.log(cmd);
   execSync(cmd, { stdio: ["inherit", "inherit", "inherit"] });
 }
@@ -168,6 +171,7 @@ export async function deploy(
       contractName,
       namedAddresses,
       currentObjectAddress,
+      networkName,
       deployDir
     );
 
