@@ -13,6 +13,7 @@ import {
 import { MovePriceFeedContractConnector } from "../src/price_feed/MovePriceFeedContractConnector";
 import { PRICE_ADAPTER, PRICE_FEED } from "./contract-name-enum";
 import { readObjectAddress } from "./deploy-utils";
+import { getEnvNetworkEnum } from "./get-env";
 
 async function main() {
   const paramsProvider = new ContractParamsProvider({
@@ -21,14 +22,13 @@ async function main() {
     dataPackagesIds: ["ETH"],
     authorizedSigners: getSignersForDataServiceId("redstone-primary-prod"),
   });
+  const rpcUrls = RedstoneCommon.getFromEnv(
+    "RPC_URLS",
+    z.array(z.string().url()).optional()
+  ) ?? [RedstoneCommon.getFromEnv("RPC_URL", z.string().url())];
   const client = MoveClientBuilder.getInstance("aptos")
-    .withChainId(1)
-    .withRpcUrls(
-      RedstoneCommon.getFromEnv(
-        "RPC_URLS",
-        z.array(z.string().url()).optional()
-      ) ?? [RedstoneCommon.getFromEnv("RPC_URL", z.string().url())]
-    )
+    .withNetwork(getEnvNetworkEnum())
+    .withRpcUrls(rpcUrls)
     .build();
   const account = makeAptosAccount();
 
