@@ -54,7 +54,9 @@
         "coinbase-usd",
         "coingecko",
         "coinmarketcap",
-        "kraken-usd"
+        "gemini-usd",
+        "kraken-usd",
+        "okx-usd"
       ],
       "deviationCheck": {
         "deviationWithRecentValues": {
@@ -75,6 +77,7 @@
         "coinmarketcap",
         "curve-ethereum-dai",
         "curve-ethereum-usdt",
+        "gemini-usd",
         "kraken-usdt",
         "kucoin-usdt",
         "lbank-usdt",
