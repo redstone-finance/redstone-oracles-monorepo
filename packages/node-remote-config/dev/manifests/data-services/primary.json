@@ -2177,7 +2177,12 @@
       "rateFeed": false
     },
     "NECT": {
-      "source": ["kodiak-berachain-honey-500", "kodiak-berachain-usde-500"],
+      "source": [
+        "kodiak-berachain-honey-500",
+        "kodiak-berachain-usdt0-500",
+        "burrbear-berachain-usdc.e",
+        "burrbear-berachain-usdt0"
+      ],
       "deviationCheck": {
         "deviationWithRecentValues": {
           "maxPercent": 5,
@@ -2947,6 +2952,19 @@
       "source": ["hyperevm-evm-fetcher-hyperbeat-oracle"],
       "denomination": "USD",
       "rateFeed": true
+    },
+    "USDT0": {
+      "source": [
+        "project-x-hyperevm-whype-500",
+        "project-x-hyperevm-whype-3000",
+        "hyperswap-hyperevm-whype-500",
+        "uniswap-v3-arbitrumone-wbtc-500",
+        "uniswap-v3-arbitrumone-usdc-100",
+        "hyperliquid-api-fetcher",
+        "uniswap-v4-unichain-wbtc-500"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
     }
   },
   "multiPointPackages": {
