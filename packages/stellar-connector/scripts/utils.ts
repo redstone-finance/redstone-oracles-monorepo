@@ -6,7 +6,7 @@ import path from "path";
 import { z } from "zod";
 import { StellarNetwork } from "../src/stellar/network-ids";
 
-const OUTPUT_DIR = "./stellar/";
+const OUTPUT_DIR = readDeployDir();
 
 export function readUrl() {
   return RedstoneCommon.getFromEnv("RPC_URL", z.string().url());
@@ -16,6 +16,13 @@ export function readNetwork(): StellarNetwork {
   return RedstoneCommon.getFromEnv(
     "NETWORK",
     z.enum(["testnet", "mainnet", "custom"])
+  );
+}
+
+export function readDeployDir() {
+  return (
+    RedstoneCommon.getFromEnv("DEPLOY_DIR", z.string().optional()) ??
+    "./stellar"
   );
 }
 
@@ -59,6 +66,9 @@ export function loadPriceFeedId(feedId: string, dir = OUTPUT_DIR) {
   return readFileSync(filepath).toString("utf-8");
 }
 
-export function wasmFilePath(contractName: "redstone_adapter" | "price_feed") {
-  return `./stellar/target/wasm32v1-none/release/${contractName}.wasm`;
+export function wasmFilePath(
+  contractName: "redstone_adapter" | "price_feed",
+  dir = OUTPUT_DIR
+) {
+  return `${dir}/target/wasm32v1-none/release/${contractName}.wasm`;
 }

@@ -54,6 +54,10 @@ export function stringToScVal(val: string) {
   return xdr.ScVal.scvString(val);
 }
 
+export function bytesToScVal(val: Buffer) {
+  return xdr.ScVal.scvBytes(val);
+}
+
 export function mapArrayToScVec<T>(array: T[], mapFn: (val: T) => xdr.ScVal) {
   return xdr.ScVal.scvVec(array.map(mapFn));
 }

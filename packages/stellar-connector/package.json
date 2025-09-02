@@ -16,7 +16,8 @@
     "preversion": "yarn build",
     "pack-package": "yarn build && cd dist && npm pack",
     "sample-run": "yarn global:ts-node scripts/sample-run.ts",
-    "sample-deploy": "make build -C stellar && yarn global:ts-node scripts/sample-deploy.ts",
+    "sample-deploy": "yarn global:ts-node scripts/sample-deploy.ts",
+    "sample-upgrade": "yarn global:ts-node scripts/sample-upgrade.ts",
     "get-ledger-data": "yarn global:ts-node ./scripts/ledger/get-ledger-data.ts",
     "create-multisig": "yarn global:ts-node ./scripts/ledger/create-multisig.ts"
   },
