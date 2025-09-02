@@ -1,6 +1,7 @@
 import { IPriceFeedContractAdapter } from "@redstone-finance/sdk";
 import { Contract, Keypair } from "@stellar/stellar-sdk";
 import { StellarRpcClient } from "../stellar/StellarRpcClient";
+import { StellarSigner } from "../stellar/StellarSigner";
 import * as XdrUtils from "../XdrUtils";
 
 export class StellarPriceFeedContractAdapter
@@ -39,7 +40,7 @@ export class StellarPriceFeedContractAdapter
 
     const submitResponse = await this.rpcClient.executeOperation(
       operation,
-      keypair
+      new StellarSigner(keypair)
     );
 
     return await this.rpcClient.waitForTx(submitResponse.hash);
