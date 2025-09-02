@@ -6,7 +6,10 @@ import { InfluxService } from "./influx/InfluxService";
 const logger = loggerFactory("ApiKeysUsageTracker");
 
 interface RequestMetrics {
-  [hashedKey: string]: number;
+  [hashedKey: string]: {
+    totalCount: number;
+    nodeBreakdown: Map<string, number>; // nodeAddress -> count
+  };
 }
 
 export interface ApiKeysUsageTrackerConfig {
@@ -64,18 +67,30 @@ export class ApiKeysUsageTracker {
     }
   }
 
-  trackBulkRequest(apiKey: string) {
+  trackBulkRequest(apiKey: string, nodeIdentifier: string) {
     if (!apiKey) {
       logger.warn("Attempted to track request without API key");
       return;
     }
 
     const hashedKey = ApiKeysUsageTracker.hashApiKey(apiKey);
-    this.requestMetrics[hashedKey] ??= 0;
-    this.requestMetrics[hashedKey] += 1;
+
+    this.requestMetrics[hashedKey] ??= {
+      totalCount: 0,
+      nodeBreakdown: new Map(),
+    };
+
+    this.requestMetrics[hashedKey].totalCount += 1;
+
+    const currentNodeCount =
+      this.requestMetrics[hashedKey].nodeBreakdown.get(nodeIdentifier) || 0;
+    this.requestMetrics[hashedKey].nodeBreakdown.set(
+      nodeIdentifier,
+      currentNodeCount + 1
+    );
 
     logger.debug(
-      `Tracked request for key hash: ${hashedKey}, count: ${this.requestMetrics[hashedKey]}, service: ${this.config.serviceName}`
+      `Tracked request for key hash: ${hashedKey}, node: ${nodeIdentifier}, total: ${this.requestMetrics[hashedKey].totalCount}, service: ${this.config.serviceName}`
     );
   }
 
@@ -102,23 +117,23 @@ export class ApiKeysUsageTracker {
     try {
       const timestamp = Date.now();
 
-      // Create points for all current metrics
-      const dataPoints = Object.entries(this.requestMetrics).map(
-        ([hashedKey, count]) => {
-          const point = new Point("apiRequestsPerMinute")
-            .tag("service", this.config.serviceName)
-            .tag("keyHash", hashedKey)
-            .intField("requestCount", count)
-            .timestamp(timestamp);
+      const dataPoints: Point[] = Object.entries(this.requestMetrics).flatMap(
+        ([hashedKey, metrics]) =>
+          Array.from(metrics.nodeBreakdown, ([nodeAddress, count]) => {
+            const point = new Point("apiKeyUsage")
+              .tag("service", this.config.serviceName)
+              .tag("keyHash", hashedKey)
+              .tag("nodeAddress", nodeAddress)
+              .intField("requestCount", count)
+              .timestamp(timestamp);
 
-          logger.debug(
-            `Creating point for key hash: ${hashedKey}, count: ${count}, service: ${this.config.serviceName}`
-          );
-          return point;
-        }
+            logger.debug(
+              `Creating point for key hash: ${hashedKey}, node: ${nodeAddress}, count: ${count}, service: ${this.config.serviceName}`
+            );
+            return point;
+          })
       );
 
-      // Send all points at once
       await this.influxService.insert(dataPoints);
 
       logger.debug(
