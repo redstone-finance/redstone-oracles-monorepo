@@ -37,52 +37,58 @@ describe("ApiKeysUsageTracker", () => {
 
     it("should track API key and hash it correctly", () => {
       const apiKey = "test-api-key-123";
+      const nodeId = "0x1234567890abcdef";
       const expectedHash = createHash("sha256").update(apiKey).digest("hex");
 
-      tracker.trackBulkRequest(apiKey);
+      tracker.trackBulkRequest(apiKey, nodeId);
       const metrics = tracker.getCurrentMetrics();
 
       expect(Object.keys(metrics)).toContain(expectedHash);
-      expect(metrics[expectedHash]).toBe(1);
+      expect(metrics[expectedHash].totalCount).toBe(1);
+      expect(metrics[expectedHash].nodeBreakdown.get(nodeId)).toBe(1);
     });
 
     it("should increment count for multiple requests with same API key", () => {
       const apiKey = "test-api-key-123";
+      const nodeId = "0x1234567890abcdef";
       const expectedHash = createHash("sha256").update(apiKey).digest("hex");
 
-      tracker.trackBulkRequest(apiKey);
-      tracker.trackBulkRequest(apiKey);
-      tracker.trackBulkRequest(apiKey);
+      tracker.trackBulkRequest(apiKey, nodeId);
+      tracker.trackBulkRequest(apiKey, nodeId);
+      tracker.trackBulkRequest(apiKey, nodeId);
 
       const metrics = tracker.getCurrentMetrics();
-      expect(metrics[expectedHash]).toBe(3);
+      expect(metrics[expectedHash].totalCount).toBe(3);
+      expect(metrics[expectedHash].nodeBreakdown.get(nodeId)).toBe(3);
     });
 
     it("should track multiple different API keys independently", () => {
       const apiKeys = ["api-key-1", "api-key-2", "api-key-3"];
+      const nodeId = "0x1234567890abcdef";
       const expectedHashes = apiKeys.map((key) =>
         createHash("sha256").update(key).digest("hex")
       );
 
-      tracker.trackBulkRequest(apiKeys[0]);
-      tracker.trackBulkRequest(apiKeys[1]);
-      tracker.trackBulkRequest(apiKeys[1]);
-      tracker.trackBulkRequest(apiKeys[2]);
-      tracker.trackBulkRequest(apiKeys[2]);
-      tracker.trackBulkRequest(apiKeys[2]);
+      tracker.trackBulkRequest(apiKeys[0], nodeId);
+      tracker.trackBulkRequest(apiKeys[1], nodeId);
+      tracker.trackBulkRequest(apiKeys[1], nodeId);
+      tracker.trackBulkRequest(apiKeys[2], nodeId);
+      tracker.trackBulkRequest(apiKeys[2], nodeId);
+      tracker.trackBulkRequest(apiKeys[2], nodeId);
 
       const metrics = tracker.getCurrentMetrics();
-      expect(metrics[expectedHashes[0]]).toBe(1);
-      expect(metrics[expectedHashes[1]]).toBe(2);
-      expect(metrics[expectedHashes[2]]).toBe(3);
+      expect(metrics[expectedHashes[0]].totalCount).toBe(1);
+      expect(metrics[expectedHashes[1]].totalCount).toBe(2);
+      expect(metrics[expectedHashes[2]].totalCount).toBe(3);
       expect(Object.keys(metrics)).toHaveLength(3);
     });
 
     it("should handle empty API key gracefully", () => {
       const initialMetrics = tracker.getCurrentMetrics();
       const initialCount = Object.keys(initialMetrics).length;
+      const nodeId = "0x1234567890abcdef";
 
-      tracker.trackBulkRequest("");
+      tracker.trackBulkRequest("", nodeId);
 
       const metrics = tracker.getCurrentMetrics();
       expect(Object.keys(metrics)).toHaveLength(initialCount);
@@ -94,11 +100,11 @@ describe("ApiKeysUsageTracker", () => {
         .update(specialKey)
         .digest("hex");
 
-      tracker.trackBulkRequest(specialKey);
+      tracker.trackBulkRequest(specialKey, "0x1234567890abcdef");
 
       const metrics = tracker.getCurrentMetrics();
       expect(Object.keys(metrics)).toContain(expectedHash);
-      expect(metrics[expectedHash]).toBe(1);
+      expect(metrics[expectedHash].totalCount).toBe(1);
 
       expect(expectedHash).toMatch(/^[a-f0-9]{64}$/);
     });
@@ -109,11 +115,11 @@ describe("ApiKeysUsageTracker", () => {
       const requestCount = 1000;
 
       for (let i = 0; i < requestCount; i++) {
-        tracker.trackBulkRequest(apiKey);
+        tracker.trackBulkRequest(apiKey, "0x1234567890abcdef");
       }
 
       const metrics = tracker.getCurrentMetrics();
-      expect(metrics[expectedHash]).toBe(requestCount);
+      expect(metrics[expectedHash].totalCount).toBe(requestCount);
     });
   });
 
@@ -137,7 +143,7 @@ describe("ApiKeysUsageTracker", () => {
     it("should not call InfluxDB insert immediately after tracking", () => {
       const apiKey = "test-api-key-123";
 
-      tracker.trackBulkRequest(apiKey);
+      tracker.trackBulkRequest(apiKey, "0x1234567890abcdef");
 
       // InfluxDB insert should not be called immediately (it's batched)
       expect(mockInfluxInsert).not.toHaveBeenCalled();
@@ -149,9 +155,9 @@ describe("ApiKeysUsageTracker", () => {
       const expectedHash1 = createHash("sha256").update(apiKey1).digest("hex");
       const expectedHash2 = createHash("sha256").update(apiKey2).digest("hex");
 
-      tracker.trackBulkRequest(apiKey1);
-      tracker.trackBulkRequest(apiKey1);
-      tracker.trackBulkRequest(apiKey2);
+      tracker.trackBulkRequest(apiKey1, "0x1111111111111111");
+      tracker.trackBulkRequest(apiKey1, "0x1111111111111111");
+      tracker.trackBulkRequest(apiKey2, "0x2222222222222222");
 
       jest.advanceTimersByTime(60001);
 
@@ -165,7 +171,7 @@ describe("ApiKeysUsageTracker", () => {
       // Define the expected Point structure
       interface MockPoint {
         fields: { requestCount: string };
-        tags: { service: string; keyHash: string };
+        tags: { service: string; keyHash: string; nodeAddress: string };
         name: string;
         time: number;
       }
@@ -182,19 +188,21 @@ describe("ApiKeysUsageTracker", () => {
 
       expect(point1.fields.requestCount).toBe("2i");
       expect(point1.tags.service).toBe("test-service");
-      expect(point1.name).toBe("apiRequestsPerMinute");
+      expect(point1.tags.nodeAddress).toBe("0x1111111111111111");
+      expect(point1.name).toBe("apiKeyUsage");
       expect(point1.time).toBeDefined();
 
       expect(point2.fields.requestCount).toBe("1i");
       expect(point2.tags.service).toBe("test-service");
-      expect(point2.name).toBe("apiRequestsPerMinute");
+      expect(point2.tags.nodeAddress).toBe("0x2222222222222222");
+      expect(point2.name).toBe("apiKeyUsage");
       expect(point2.time).toBeDefined();
     });
 
     it("should reset metrics after successful reporting", async () => {
       const apiKey = "test-key";
 
-      tracker.trackBulkRequest(apiKey);
+      tracker.trackBulkRequest(apiKey, "0x1234567890abcdef");
       expect(Object.keys(tracker.getCurrentMetrics())).toHaveLength(1);
 
       jest.advanceTimersByTime(60001);
@@ -206,7 +214,7 @@ describe("ApiKeysUsageTracker", () => {
     it("should not reset metrics if InfluxDB fails", () => {
       const apiKey = "test-key";
 
-      tracker.trackBulkRequest(apiKey);
+      tracker.trackBulkRequest(apiKey, "0x1234567890abcdef");
       expect(Object.keys(tracker.getCurrentMetrics())).toHaveLength(1);
 
       mockInfluxInsert.mockRejectedValueOnce(
@@ -225,7 +233,7 @@ describe("ApiKeysUsageTracker", () => {
 
       jest.spyOn(Date, "now").mockReturnValue(mockTimestamp);
 
-      tracker.trackBulkRequest(apiKey);
+      tracker.trackBulkRequest(apiKey, "0x1234567890abcdef");
 
       jest.advanceTimersByTime(60001);
 
@@ -246,11 +254,13 @@ describe("ApiKeysUsageTracker", () => {
         new Error("InfluxDB connection failed")
       );
 
-      expect(() => tracker.trackBulkRequest(apiKey)).not.toThrow();
+      expect(() =>
+        tracker.trackBulkRequest(apiKey, "0x1234567890abcdef")
+      ).not.toThrow();
 
       const metrics = tracker.getCurrentMetrics();
       const expectedHash = createHash("sha256").update(apiKey).digest("hex");
-      expect(metrics[expectedHash]).toBe(1);
+      expect(metrics[expectedHash].totalCount).toBe(1);
     });
   });
 
@@ -280,7 +290,7 @@ describe("ApiKeysUsageTracker", () => {
       });
 
       const apiKey = "test-key";
-      tracker.trackBulkRequest(apiKey);
+      tracker.trackBulkRequest(apiKey, "0x1234567890abcdef");
       expect(Object.keys(tracker.getCurrentMetrics())).toHaveLength(1);
 
       await tracker.shutdown();
