@@ -6,7 +6,12 @@ import {
   RedstoneCommon,
 } from "@redstone-finance/utils";
 import { MoveClient } from "./MoveClient";
-import { chainIdToNetwork, chainIdtoUrl } from "./network-ids";
+import {
+  AptosAndMovementNetwork,
+  chainIdToNetwork,
+  chainIdtoUrl,
+  networkToChainId,
+} from "./network-ids";
 
 export abstract class MoveClientBuilder extends MultiExecutor.ClientBuilder<MoveClient> {
   static getInstance(chainType: Extract<ChainType, "movement" | "aptos">) {
@@ -52,6 +57,10 @@ export abstract class MoveClientBuilder extends MultiExecutor.ClientBuilder<Move
         viewOnChain: MultiExecutor.ExecutionMode.AGREEMENT,
       }
     );
+  }
+
+  withNetwork(network: AptosAndMovementNetwork) {
+    return this.withChainId(networkToChainId(network));
   }
 }
 

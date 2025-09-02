@@ -10,6 +10,6 @@ redstone_sdk="_"
 redstone_sdk="0xedeed"
 
 [dependencies.AptosFramework]
-git = "https://github.com/movementlabsxyz/aptos-core.git"
-rev = "movement"
+git = "https://github.com/aptos-labs/aptos-core.git"
+rev = "aptos-node-v1.34.3-hotfix"
 subdir = "aptos-move/framework/aptos-framework"
