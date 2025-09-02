@@ -1,4 +1,5 @@
 import { Contract, Keypair } from "@stellar/stellar-sdk";
+import { execSync } from "node:child_process";
 import {
   StellarClientBuilder,
   StellarContractDeployer,
@@ -9,6 +10,7 @@ import {
 } from "../src";
 import { FEEDS } from "./consts";
 import {
+  readDeployDir,
   readNetwork,
   readUrl,
   saveAdapterId,
@@ -21,6 +23,8 @@ async function deployAdapter(
   client: StellarRpcClient,
   keypair: Keypair
 ) {
+  execSync(`make -C ${readDeployDir()} build`, { stdio: "inherit" });
+
   const adapterDeployResult = await deployer.deploy(
     wasmFilePath("redstone_adapter")
   );
