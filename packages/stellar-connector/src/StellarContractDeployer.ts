@@ -44,7 +44,7 @@ export class StellarContractDeployer {
   }
 
   async createContract(wasmHash: Buffer) {
-    const address = Address.fromString(this.txDeliveryMan.getPublicKey());
+    const address = Address.fromString(await this.txDeliveryMan.getPublicKey());
 
     const hash = await this.txDeliveryMan.sendTransaction(() => {
       return Operation.createCustomContract({ wasmHash, address });
