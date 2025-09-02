@@ -4,9 +4,10 @@ import {
   IMultiFeedPricesContractAdapter,
   LastRoundDetails,
 } from "@redstone-finance/sdk";
-import { Contract, Keypair } from "@stellar/stellar-sdk";
+import { Contract } from "@stellar/stellar-sdk";
 import _ from "lodash";
 import { StellarRpcClient } from "../stellar/StellarRpcClient";
+import { Signer } from "../stellar/StellarSigner";
 import {
   StellarTxDeliveryMan,
   StellarTxDeliveryManConfig,
@@ -21,11 +22,11 @@ export class StellarPricesContractAdapter
   constructor(
     private readonly rpcClient: StellarRpcClient,
     private readonly contract: Contract,
-    keypair?: Keypair,
+    signer?: Signer,
     txDeliveryManConfig?: Partial<StellarTxDeliveryManConfig>
   ) {
-    this.txDeliveryMan = keypair
-      ? new StellarTxDeliveryMan(rpcClient, keypair, txDeliveryManConfig)
+    this.txDeliveryMan = signer
+      ? new StellarTxDeliveryMan(rpcClient, signer, txDeliveryManConfig)
       : undefined;
   }
 
@@ -76,7 +77,7 @@ export class StellarPricesContractAdapter
 
     return await this.rpcClient.simulateOperation(
       operation,
-      this.getPublicKey(),
+      await this.getPublicKey(),
       (sim) => XdrUtils.parsePrimitiveFromSimulation(sim, Number)
     );
   }
@@ -85,12 +86,12 @@ export class StellarPricesContractAdapter
     return (await this.getContractData([feedId]))[0][1]!.lastBlockTimestampMS;
   }
 
-  getSignerAddress() {
-    return Promise.resolve(this.getPublicKey());
+  async getSignerAddress() {
+    return await this.getPublicKey();
   }
 
-  private getPublicKey() {
-    const pk = this.txDeliveryMan?.getPublicKey();
+  private async getPublicKey() {
+    const pk = await this.txDeliveryMan?.getPublicKey();
     if (pk === undefined) {
       throw new Error("txDeliveryMan not set");
     }
@@ -105,7 +106,7 @@ export class StellarPricesContractAdapter
 
     const sim = await this.rpcClient.simulateOperation(
       operation,
-      this.getPublicKey(),
+      await this.getPublicKey(),
       XdrUtils.parseGetPricesSimulation
     );
 
@@ -119,7 +120,7 @@ export class StellarPricesContractAdapter
       throw new Error("Cannot write prices, txDeliveryMan not set");
     }
 
-    const updater = XdrUtils.addressToScVal(this.txDeliveryMan.getPublicKey());
+    const updater = XdrUtils.addressToScVal(await this.getPublicKey());
     const metadataTimestamp = Date.now();
 
     return await this.txDeliveryMan.sendTransaction(async () => {

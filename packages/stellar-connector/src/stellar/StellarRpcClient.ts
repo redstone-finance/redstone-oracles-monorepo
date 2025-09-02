@@ -5,7 +5,6 @@ import {
   Asset,
   BASE_FEE,
   Contract,
-  Keypair,
   Operation,
   rpc,
   Transaction,
@@ -15,9 +14,11 @@ import {
 import axios from "axios";
 import z from "zod";
 import * as XdrUtils from "../XdrUtils";
+import { StellarSigner } from "./StellarSigner";
 
 const RETRY_COUNT = 10;
 const SLEEP_TIME_MS = 1_000;
+const TIMEOUT_SEC = 30;
 
 const RETRY_CONFIG: Omit<RedstoneCommon.RetryConfig, "fn"> = {
   maxRetries: RETRY_COUNT,
@@ -74,34 +75,37 @@ export class StellarRpcClient {
 
   async executeOperation(
     operation: xdr.Operation<Operation.InvokeHostFunction>,
-    keypair: Keypair,
+    signer: StellarSigner,
     fee = BASE_FEE
   ) {
     const transaction = await this.transactionFromOperation(
       operation,
-      keypair.publicKey(),
+      await signer.publicKey(),
       fee
     );
-    const sim = await this.simulateTransaction(transaction);
 
-    const assembled = rpc.assembleTransaction(transaction, sim).build();
-    assembled.sign(keypair);
+    await signer.sign(transaction);
 
-    return await this.server.sendTransaction(assembled);
+    return await this.server.sendTransaction(transaction);
   }
 
-  private async transactionFromOperation(
+  async transactionFromOperation(
     operation: xdr.Operation<Operation.InvokeHostFunction>,
     sender: string,
-    fee = BASE_FEE
+    fee = BASE_FEE,
+    timeout = TIMEOUT_SEC
   ) {
-    return new TransactionBuilder(await this.getAccount(sender), {
+    const tx = new TransactionBuilder(await this.getAccount(sender), {
       fee,
       networkPassphrase: (await this.server.getNetwork()).passphrase,
     })
       .addOperation(operation)
-      .setTimeout(30)
+      .setTimeout(timeout)
       .build();
+
+    const sim = await this.simulateTransaction(tx);
+
+    return rpc.assembleTransaction(tx, sim).build();
   }
 
   async simulateOperation<T>(
@@ -125,8 +129,14 @@ export class StellarRpcClient {
     );
   }
 
-  async transferXlm(sender: Keypair, destination: string, amount: number) {
-    const senderAccount = await this.server.getAccount(sender.publicKey());
+  async transferXlm(
+    sender: StellarSigner,
+    destination: string,
+    amount: number
+  ) {
+    const senderAccount = await this.server.getAccount(
+      await sender.publicKey()
+    );
 
     const transaction = new TransactionBuilder(senderAccount, {
       fee: BASE_FEE,
@@ -139,10 +149,10 @@ export class StellarRpcClient {
           amount: String(amount),
         })
       )
-      .setTimeout(300)
+      .setTimeout(TIMEOUT_SEC)
       .build();
 
-    transaction.sign(sender);
+    await sender.sign(transaction);
     const result = await this.server.sendTransaction(transaction);
 
     await this.waitForTx(result.hash);
@@ -150,11 +160,13 @@ export class StellarRpcClient {
   }
 
   async createAccountWithFunds(
-    sender: Keypair,
+    sender: StellarSigner,
     destination: string,
     amount: number
   ) {
-    const senderAccount = await this.server.getAccount(sender.publicKey());
+    const senderAccount = await this.server.getAccount(
+      await sender.publicKey()
+    );
 
     const transaction = new TransactionBuilder(senderAccount, {
       fee: BASE_FEE,
@@ -166,10 +178,10 @@ export class StellarRpcClient {
           startingBalance: String(amount),
         })
       )
-      .setTimeout(300)
+      .setTimeout(TIMEOUT_SEC)
       .build();
 
-    transaction.sign(sender);
+    await sender.sign(transaction);
     const result = await this.server.sendTransaction(transaction);
 
     await this.waitForTx(result.hash);
@@ -261,5 +273,9 @@ export class StellarRpcClient {
     return transactions.filter(
       ({ ledger }) => ledger >= startLedger && ledger <= endLedger
     );
+  }
+
+  async sendTransaction(tx: Transaction) {
+    return await this.server.sendTransaction(tx);
   }
 }
