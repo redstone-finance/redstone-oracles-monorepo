@@ -99,10 +99,6 @@ export abstract class BaseDataPackagesController {
 
   @Post("bulk")
   async addBulk(@Body() body: BulkPostRequestBody, @Req() req: Request) {
-    const apiKey = req.headers["x-api-key"] as string;
-    if (apiKey && this.apiKeysUsageTracker) {
-      this.apiKeysUsageTracker.trackBulkRequest(apiKey);
-    }
     if (!config.enableDirectPostingRoutes) {
       throw new HttpException(
         {
@@ -114,6 +110,12 @@ export abstract class BaseDataPackagesController {
     }
 
     const signerAddress = DataPackagesService.verifyRequester(body);
+
+    // Track metrics with node identification
+    const apiKey = req.headers["x-api-key"] as string;
+    if (apiKey && this.apiKeysUsageTracker) {
+      this.apiKeysUsageTracker.trackBulkRequest(apiKey, signerAddress);
+    }
 
     const dataPackagesToSave =
       await DataPackagesService.prepareReceivedDataPackagesForBulkSaving(

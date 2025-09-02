@@ -84,7 +84,10 @@ describe("BaseDataPackagesController API Keys Integration", () => {
 
       await controller.addBulk(mockBody, mockRequest);
 
-      expect(mockTrackBulkRequest).toHaveBeenCalledWith("test-api-key-123");
+      expect(mockTrackBulkRequest).toHaveBeenCalledWith(
+        "test-api-key-123",
+        "mock-signer-address"
+      );
     });
 
     it("should not track when x-api-key header is missing", async () => {
@@ -127,9 +130,18 @@ describe("BaseDataPackagesController API Keys Integration", () => {
       }
 
       expect(mockTrackBulkRequest).toHaveBeenCalledTimes(3);
-      expect(mockTrackBulkRequest).toHaveBeenCalledWith("api-key-1");
-      expect(mockTrackBulkRequest).toHaveBeenCalledWith("api-key-2");
-      expect(mockTrackBulkRequest).toHaveBeenCalledWith("api-key-3");
+      expect(mockTrackBulkRequest).toHaveBeenCalledWith(
+        "api-key-1",
+        "mock-signer-address"
+      );
+      expect(mockTrackBulkRequest).toHaveBeenCalledWith(
+        "api-key-2",
+        "mock-signer-address"
+      );
+      expect(mockTrackBulkRequest).toHaveBeenCalledWith(
+        "api-key-3",
+        "mock-signer-address"
+      );
     });
   });
 });
