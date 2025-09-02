@@ -13,7 +13,7 @@ export const MoveNetworkSchema = z.enum([
 export type MoveNetwork = z.infer<typeof MoveNetworkSchema>;
 
 export function isAptos(network: MoveNetwork) {
-  return network.startsWith("aptos");
+  return network.startsWith("aptos") || network === "local";
 }
 
 export function isMovement(network: MoveNetwork) {
