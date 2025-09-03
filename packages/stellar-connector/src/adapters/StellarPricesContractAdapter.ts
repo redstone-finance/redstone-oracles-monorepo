@@ -30,27 +30,27 @@ export class StellarPricesContractAdapter
       : undefined;
   }
 
-  async init(admin: string) {
+  async init(owner: string) {
     if (!this.txDeliveryMan) {
       throw new Error("Cannot initialize contract, txDeliveryMan not set");
     }
 
-    const adminAddr = XdrUtils.addressToScVal(admin);
+    const ownerAddr = XdrUtils.addressToScVal(owner);
 
     return await this.txDeliveryMan.sendTransaction(() => {
-      return this.contract.call("init", adminAddr);
+      return this.contract.call("init", ownerAddr);
     });
   }
 
-  async changeAdmin(newAdmin: string) {
+  async changeOwner(newOwner: string) {
     if (!this.txDeliveryMan) {
-      throw new Error("Cannot change contract's admin, txDeliveryMan not set");
+      throw new Error("Cannot change contract's owner, txDeliveryMan not set");
     }
 
-    const adminAddr = XdrUtils.addressToScVal(newAdmin);
+    const ownerAddr = XdrUtils.addressToScVal(newOwner);
 
     return await this.txDeliveryMan.sendTransaction(() => {
-      return this.contract.call("change_admin", adminAddr);
+      return this.contract.call("change_owner", ownerAddr);
     });
   }
 

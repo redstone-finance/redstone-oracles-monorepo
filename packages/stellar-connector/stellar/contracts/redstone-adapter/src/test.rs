@@ -27,11 +27,11 @@ use soroban_sdk::{
 use self::test_contract::TestContract;
 use crate::{
     config::{FEED_TTL_EXTEND_TO, FEED_TTL_SECS, FEED_TTL_THRESHOLD, STELLAR_CONFIG},
-    Contract, ContractClient,
+    RedStoneAdapter, RedStoneAdapterClient,
 };
 
 #[test]
-fn check_initalization() {
+fn check_initialization() {
     let contract = TestContract::new();
     let scenario = scenario_check_initalization();
 
@@ -158,7 +158,7 @@ fn update_one_feed_when_payload_has_multiple() {
     scenario.run(contract);
 }
 
-fn write_prices(client: &ContractClient, sample: Sample, expected_ttl: u32) {
+fn write_prices(client: &RedStoneAdapterClient, sample: Sample, expected_ttl: u32) {
     let env = &client.env;
 
     let btc = String::from_str(env, "BTC");
@@ -183,8 +183,8 @@ fn write_prices(client: &ContractClient, sample: Sample, expected_ttl: u32) {
 fn test_feeds_storage_ttl() {
     let env = Env::default();
     env.mock_all_auths();
-    let contract_id = env.register(Contract, ());
-    let client = ContractClient::new(&env, &contract_id);
+    let contract_id = env.register(RedStoneAdapter, ());
+    let client = RedStoneAdapterClient::new(&env, &contract_id);
 
     write_prices(&client, sample_btc_eth_3sig(), FEED_TTL_EXTEND_TO);
 }
@@ -193,8 +193,8 @@ fn test_feeds_storage_ttl() {
 fn test_feeds_storage_ttl_update_before_threshold() {
     let env = Env::default();
     env.mock_all_auths();
-    let contract_id = env.register(Contract, ());
-    let client = ContractClient::new(&env, &contract_id);
+    let contract_id = env.register(RedStoneAdapter, ());
+    let client = RedStoneAdapterClient::new(&env, &contract_id);
 
     write_prices(&client, sample_btc_eth_3sig(), FEED_TTL_EXTEND_TO);
 
@@ -212,8 +212,8 @@ fn test_feeds_storage_ttl_update_before_threshold() {
 fn test_feeds_storage_ttl_update_after_threshold() {
     let env = Env::default();
     env.mock_all_auths();
-    let contract_id = env.register(Contract, ());
-    let client = ContractClient::new(&env, &contract_id);
+    let contract_id = env.register(RedStoneAdapter, ());
+    let client = RedStoneAdapterClient::new(&env, &contract_id);
 
     write_prices(&client, sample_btc_eth_3sig(), FEED_TTL_EXTEND_TO);
 

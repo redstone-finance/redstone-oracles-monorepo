@@ -31,9 +31,15 @@ export class StellarPriceFeedContractAdapter
     return await this.feedId();
   }
 
-  async init(feedId: string, adapterContractId: string, keypair: Keypair) {
+  async init(
+    admin: string,
+    feedId: string,
+    adapterContractId: string,
+    keypair: Keypair
+  ) {
     const operation = this.contract.call(
       "init",
+      XdrUtils.addressToScVal(admin),
       XdrUtils.stringToScVal(feedId),
       XdrUtils.addressToScVal(adapterContractId)
     );
