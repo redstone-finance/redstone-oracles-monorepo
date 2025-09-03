@@ -9,10 +9,12 @@ use redstone::{
 };
 use soroban_sdk::{Address, Env};
 
+const UPDATER_COUNT: usize = 4;
+
 pub struct Config {
     pub signer_count_threshold: u8,
     pub signers: [SignerAddressBs; 5],
-    pub trusted_updaters: [&'static str; 1],
+    pub trusted_updaters: [&'static str; UPDATER_COUNT],
     pub max_timestamp_delay_ms: u64,
     pub max_timestamp_ahead_ms: u64,
     pub min_interval_between_updates_ms: u64,
@@ -41,7 +43,12 @@ const REDSTONE_PRIMARY_PROD_ALLOWED_SIGNERS: [SignerAddressBs; 5] = [
     hex!("9c5ae89c4af6aa32ce58588dbaf90d18a855b6de"),
 ];
 
-const TRUSTED_UPDATERS: [&str; 1] = ["GDJRUXF7QNI4G3YQEBKYX26HTBKDKVLFQRVVXG7RPE5WDI57LPFZH5CF"];
+const TRUSTED_UPDATERS: [&str; UPDATER_COUNT] = [
+    "GASNOA72CECDUZ5GEUK6WFINSASEG6R3WYZB2DE2CGDU7YI7GC2QPSFX",
+    "GBES67CMQHFXTDNO7NTW7IP5GHJ2K5NSLWXN5JP7BVQR7JLDIKBT3NTF",
+    "GARZ4YWUOMCVPFTYI57N3TQEU6PM52RGG3Y46DVOBB4TG3TG7JORFQCK",
+    "GD5JF5IP4PRQLYICDLZWNE2IXN663DPJMSYUKAWZH7PVU65RLDWWSMMM"
+];
 
 impl Config {
     pub fn redstone_signers(&self) -> Vec<SignerAddress> {
@@ -66,7 +73,7 @@ impl Config {
         Ok((config, crypto).into())
     }
 
-    pub fn trusted_updaters(&self, env: &Env) -> [Address; 1] {
+    pub fn trusted_updaters(&self, env: &Env) -> [Address; UPDATER_COUNT] {
         self.trusted_updaters
             .map(|trusted| Address::from_str(env, trusted))
     }

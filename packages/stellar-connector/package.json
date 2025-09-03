@@ -15,6 +15,7 @@
     "test": "make -C stellar build && yarn global:jest:cov --runInBand",
     "preversion": "yarn build",
     "pack-package": "yarn build && cd dist && npm pack",
+    "convert-keys": "yarn global:ts-node scripts/convert-keys.ts",
     "sample-run": "yarn global:ts-node scripts/sample-run.ts",
     "sample-deploy": "yarn global:ts-node scripts/sample-deploy.ts",
     "sample-upgrade": "yarn global:ts-node scripts/sample-upgrade.ts",
