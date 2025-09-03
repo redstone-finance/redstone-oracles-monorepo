@@ -1,13 +1,14 @@
 import { Contract } from "@stellar/stellar-sdk";
 import { execSync } from "node:child_process";
 import {
+  makeKeypair,
   StellarClientBuilder,
   StellarContractDeployer,
   StellarPricesContractAdapter,
-  makeKeypair,
 } from "../src";
 import {
   loadAdapterId,
+  PRICE_ADAPTER,
   readDeployDir,
   readNetwork,
   readUrl,
@@ -29,7 +30,7 @@ async function sampleUpgrade() {
 
   execSync(`make -C ${readDeployDir()} build`, { stdio: "inherit" });
 
-  const wasmHash = await deployer.upload(wasmFilePath("redstone_adapter"));
+  const wasmHash = await deployer.upload(wasmFilePath(PRICE_ADAPTER));
   await adapter.upgrade(wasmHash);
 
   console.log(
