@@ -19,6 +19,9 @@
     },
     "stHYPE_LP_FUNDAMENTAL": {
       "priceFeedAddress": "0x5f138218aD5F40804C1e3f18266102493Df872AD"
+    },
+    "dnHYPE_FUNDAMENTAL": {
+      "priceFeedAddress": "0xb7699E81Acf22456fa83696573738dfa25f1d6be"
     }
   }
 }
