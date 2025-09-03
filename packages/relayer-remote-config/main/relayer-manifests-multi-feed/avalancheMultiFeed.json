@@ -43,6 +43,20 @@
         "timeSinceLastUpdateInMilliseconds": 21600000
       },
       "priceFeedAddress": "0x5708d924Fc996EDee46962CdB6815f90639974e1"
+    },
+    "VBILL_AVALANCHE_DAILY_ACCRUAL": {
+      "updateTriggersOverrides": {
+        "deviationPercentage": 0.1,
+        "timeSinceLastUpdateInMilliseconds": 86400000
+      },
+      "priceFeedAddress": "0x4f67Fd74cff274Ef2942223c0f3166b856410AdD"
+    },
+    "sUSDe_FUNDAMENTAL": {
+      "updateTriggersOverrides": {
+        "deviationPercentage": 0.1,
+        "timeSinceLastUpdateInMilliseconds": 86400000
+      },
+      "priceFeedAddress": "0xe7f71d6a24EBc391f5ee57B867ED429EB7Bd74f4"
     }
   }
 }
