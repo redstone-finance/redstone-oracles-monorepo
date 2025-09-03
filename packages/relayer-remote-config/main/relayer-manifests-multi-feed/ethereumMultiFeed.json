@@ -332,6 +332,34 @@
         "timeSinceLastUpdateInMilliseconds": 21600000
       },
       "priceFeedAddress": "0x80B0735616b27b647233D3Ab67078C95BA5A2c93"
+    },
+    "VBILL_ETHEREUM_DAILY_ACCRUAL": {
+      "updateTriggersOverrides": {
+        "deviationPercentage": 0.1,
+        "timeSinceLastUpdateInMilliseconds": 86400000
+      },
+      "priceFeedAddress": "0x5cC480aeCAd8F52ebd25b9B427737e401E47e8B0"
+    },
+    "WLFI": {
+      "updateTriggersOverrides": {
+        "deviationPercentage": 0.5,
+        "timeSinceLastUpdateInMilliseconds": 21600000
+      },
+      "priceFeedAddress": "0x131141E6c88a3389A4Ab2368D3bbC65df1BF4a7E"
+    },
+    "wstETH": {
+      "updateTriggersOverrides": {
+        "deviationPercentage": 0.5,
+        "timeSinceLastUpdateInMilliseconds": 21600000
+      },
+      "priceFeedAddress": "0xe4aE88743c3834d0c492eAbC47384c84BcADC6a6"
+    },
+    "wstETH/stETH": {
+      "updateTriggersOverrides": {
+        "deviationPercentage": 0.5,
+        "timeSinceLastUpdateInMilliseconds": 21600000
+      },
+      "priceFeedAddress": "0xa7B0247d2dA6B11FF2740491cB433a1520d5DA98"
     }
   }
 }
