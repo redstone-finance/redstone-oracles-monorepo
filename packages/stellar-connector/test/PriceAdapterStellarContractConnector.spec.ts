@@ -1,4 +1,4 @@
-import { makeServer, wasmFilePath } from "../scripts/utils";
+import { makeServer, PRICE_ADAPTER, wasmFilePath } from "../scripts/utils";
 import {
   makeKeypair,
   PriceAdapterStellarContractConnector,
@@ -19,7 +19,7 @@ describe("PriceAdapterStellarContractConnector", () => {
 
     const deployer = new StellarContractDeployer(client, keypair);
     const { contractId: adapterId } = await deployer.deploy(
-      wasmFilePath("redstone_adapter")
+      wasmFilePath(PRICE_ADAPTER)
     );
 
     connector = new PriceAdapterStellarContractConnector(
