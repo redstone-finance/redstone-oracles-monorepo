@@ -6,7 +6,7 @@ import {
 import { MULTISIG_ADDRESS } from "./ledger/consts";
 import { loadAdapterId, readNetwork, readUrl } from "./utils";
 
-async function changeAdmin() {
+async function changeOwner() {
   const keypair = makeKeypair();
   const adapterId = loadAdapterId();
 
@@ -23,8 +23,8 @@ async function changeAdmin() {
 
   const adapter = await connector.getAdapter();
 
-  const hash = await adapter.changeAdmin(MULTISIG_ADDRESS);
-  console.log(`change admin tx: ${hash}`);
+  const hash = await adapter.changeOwner(MULTISIG_ADDRESS);
+  console.log(`change owner tx: ${hash}`);
 }
 
-void changeAdmin();
+void changeOwner();
