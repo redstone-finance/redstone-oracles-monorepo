@@ -36,7 +36,8 @@
     "add-multi-sig-members": "yarn global:ts-node scripts/ledger/add-multi-sig-members.ts",
     "manage-limits": "yarn global:ts-node scripts/ledger/manage-limits.ts",
     "remove-multi-sig-members": "yarn global:ts-node scripts/ledger/remove-multi-sig-members.ts",
-    "execute-config-tx": "yarn global:ts-node scripts/ledger/execute-config-tx.ts"
+    "execute-config-tx": "yarn global:ts-node scripts/ledger/execute-config-tx.ts",
+    "check-deployed-buffer": "yarn global:ts-node scripts/check-deployed-bytecode.ts"
   },
   "dependencies": {
     "@coral-xyz/anchor": "0.30.1",
