@@ -21,8 +21,8 @@
     "sample-upgrade": "yarn global:ts-node scripts/sample-upgrade.ts",
     "get-ledger-data": "yarn global:ts-node ./scripts/ledger/get-ledger-data.ts",
     "create-multisig": "yarn global:ts-node ./scripts/ledger/create-multisig.ts",
-    "change-admin": "yarn global:ts-node ./scripts/change-admin.ts",
-    "change-admin-tx": "yarn global:ts-node ./scripts/ledger/change-admin-tx.ts",
+    "change-owner": "yarn global:ts-node scripts/change-owner.ts",
+    "change-owner-tx": "yarn global:ts-node scripts/ledger/change-owner-tx.ts",
     "sign-tx": "yarn global:ts-node ./scripts/ledger/sign-tx.ts",
     "combine-signatures": "yarn global:ts-node ./scripts/ledger/combine-signatures.ts"
   },
