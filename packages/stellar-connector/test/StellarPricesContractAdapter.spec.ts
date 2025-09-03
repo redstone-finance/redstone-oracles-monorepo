@@ -3,7 +3,7 @@ import {
   getSignersForDataServiceId,
 } from "@redstone-finance/sdk";
 import { Contract, Keypair } from "@stellar/stellar-sdk";
-import { makeServer, wasmFilePath } from "../scripts/utils";
+import { makeServer, PRICE_ADAPTER, wasmFilePath } from "../scripts/utils";
 import {
   makeKeypair,
   StellarContractDeployer,
@@ -30,7 +30,7 @@ describe("StellarPricesContractAdapter", () => {
 
     const deployer = new StellarContractDeployer(client, keypair);
     const { contractId: adapterId } = await deployer.deploy(
-      wasmFilePath("redstone_adapter")
+      wasmFilePath(PRICE_ADAPTER)
     );
 
     adapter = new StellarPricesContractAdapter(
@@ -63,9 +63,9 @@ describe("StellarPricesContractAdapter", () => {
     });
   });
 
-  describe("changeAdmin", () => {
-    it("should allow to change admin of a contract", async () => {
-      await adapter.changeAdmin(keypair.publicKey());
+  describe("changeOwner", () => {
+    it("should allow to change owner of a contract", async () => {
+      await adapter.changeOwner(keypair.publicKey());
     });
   });
 
