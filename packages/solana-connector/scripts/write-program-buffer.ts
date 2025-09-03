@@ -13,21 +13,21 @@ async function writeBuffer(
   cluster = readCluster(),
   squads = makeSquads()
 ) {
-  const { cmd, pkData, builtProgramPath } = await buildCmd(
-    WITH_BUILD,
-    IS_VERIFIABLE,
-    "no",
-    undefined,
+  const { cmd, pkData, builtProgramPath } = await buildCmd({
+    withBuild: WITH_BUILD,
+    isVerifiable: IS_VERIFIABLE,
+    withDeploy: "no",
+    programAddress: undefined,
     deployDir,
-    cluster
-  );
+    cluster,
+  });
 
   execSync(cmd, {
     stdio: ["inherit", "inherit", "inherit"],
   });
   const writeCmds = [
     `cd ${deployDir}`,
-    `solana program write-buffer ${builtProgramPath} --url ${cluster} --keypair ${pkData.filename} --output json`,
+    `solana program write-buffer ${builtProgramPath} --url ${cluster} --keypair ${pkData!.filename} --output json`,
   ];
 
   const output = execSync(writeCmds.join(" && "), {
@@ -39,7 +39,7 @@ async function writeBuffer(
 
   const setAuthorityCmd = [
     `cd ${deployDir}`,
-    `solana program set-buffer-authority ${bufferAddress.buffer} --new-buffer-authority ${squads.vaultPda().toBase58()} --url ${cluster} --keypair ${pkData.filename}`,
+    `solana program set-buffer-authority ${bufferAddress.buffer} --new-buffer-authority ${squads.vaultPda().toBase58()} --url ${cluster} --keypair ${pkData!.filename}`,
   ];
 
   console.log(
