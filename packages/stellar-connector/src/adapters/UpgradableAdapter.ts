@@ -1,20 +1,20 @@
-import { BASE_FEE, Contract, xdr } from "@stellar/stellar-sdk";
-import { StellarRpcClient } from "./stellar/StellarRpcClient";
-import * as XdrUtils from "./XdrUtils";
+import { BASE_FEE, Contract } from "@stellar/stellar-sdk";
+import { StellarRpcClient } from "../stellar/StellarRpcClient";
+import * as XdrUtils from "../XdrUtils";
 
 const TIMEOUT_SEC = 3600;
 
-export class AdminAdapter {
+export class UpgradableAdapter {
   constructor(
     private readonly rpcClient: StellarRpcClient,
     private readonly contract: Contract
   ) {}
 
-  async changeAdminTx(sender: string, newAdmin: string, timeout = TIMEOUT_SEC) {
-    const adminAddr = XdrUtils.addressToScVal(newAdmin);
+  async changeOwnerTx(sender: string, newOwner: string, timeout = TIMEOUT_SEC) {
+    const ownerAddr = XdrUtils.addressToScVal(newOwner);
 
     return await this.rpcClient.transactionFromOperation(
-      this.contract.call("change_admin", adminAddr),
+      this.contract.call("change_owner", ownerAddr),
       sender,
       BASE_FEE,
       timeout
@@ -22,7 +22,7 @@ export class AdminAdapter {
   }
 
   async upgrade(sender: string, codeHash: string, timeout = TIMEOUT_SEC) {
-    const codeHashXdr = xdr.ScVal.scvBytes(Buffer.from(codeHash, "hex"));
+    const codeHashXdr = XdrUtils.bytesToScVal(Buffer.from(codeHash, "hex"));
 
     return await this.rpcClient.transactionFromOperation(
       this.contract.call("upgrade", codeHashXdr),
