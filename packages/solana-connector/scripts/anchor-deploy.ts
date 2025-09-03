@@ -15,14 +15,14 @@ async function deploy(
   deployDir = readDeployDir(),
   cluster = readCluster()
 ) {
-  const { cmd } = await buildCmd(
-    WITH_BUILD,
-    IS_VERIFIABLE,
-    IS_UPGRADE ? "upgrade" : "deploy",
-    address,
+  const { cmd } = await buildCmd({
+    withBuild: WITH_BUILD,
+    isVerifiable: IS_VERIFIABLE,
+    withDeploy: IS_UPGRADE ? "upgrade" : "deploy",
+    programAddress: address,
     deployDir,
-    cluster
-  );
+    cluster,
+  });
 
   execSync(cmd, {
     stdio: ["inherit", "inherit", "inherit"],
