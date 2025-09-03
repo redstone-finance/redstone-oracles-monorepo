@@ -1,10 +1,13 @@
 import { Contract } from "@stellar/stellar-sdk";
-import { makeKeypair, StellarClientBuilder } from "../../src";
-import { AdminAdapter } from "../../src/AdminAdapter";
+import {
+  makeKeypair,
+  StellarClientBuilder,
+  UpgradableAdapter,
+} from "../../src";
 import { loadAdapterId, readNetwork, readUrl } from "../utils";
 import { MULTISIG_ADDRESS } from "./consts";
 
-async function changeAdminTx() {
+async function changeOwnerTx() {
   const keypair = makeKeypair();
   const adapterId = loadAdapterId();
 
@@ -13,11 +16,10 @@ async function changeAdminTx() {
     .withRpcUrl(readUrl())
     .build();
 
-  const admin = new AdminAdapter(client, new Contract(adapterId));
-
-  const tx = await admin.changeAdminTx(MULTISIG_ADDRESS, keypair.publicKey());
+  const adapter = new UpgradableAdapter(client, new Contract(adapterId));
+  const tx = await adapter.changeOwnerTx(MULTISIG_ADDRESS, keypair.publicKey());
 
   console.log(tx.toEnvelope().toXDR("hex"));
 }
 
-void changeAdminTx();
+void changeOwnerTx();

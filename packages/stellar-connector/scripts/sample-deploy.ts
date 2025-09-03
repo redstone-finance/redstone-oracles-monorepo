@@ -1,15 +1,17 @@
 import { Contract, Keypair } from "@stellar/stellar-sdk";
 import { execSync } from "node:child_process";
 import {
+  makeKeypair,
   StellarClientBuilder,
   StellarContractDeployer,
   StellarPriceFeedContractAdapter,
   StellarPricesContractAdapter,
   StellarRpcClient,
-  makeKeypair,
 } from "../src";
 import { FEEDS } from "./consts";
 import {
+  PRICE_ADAPTER,
+  PRICE_FEED,
   readDeployDir,
   readNetwork,
   readUrl,
@@ -26,7 +28,7 @@ async function deployAdapter(
   execSync(`make -C ${readDeployDir()} build`, { stdio: "inherit" });
 
   const adapterDeployResult = await deployer.deploy(
-    wasmFilePath("redstone_adapter")
+    wasmFilePath(PRICE_ADAPTER)
   );
 
   await new StellarPricesContractAdapter(
@@ -50,14 +52,12 @@ async function deployPriceFeed(
   adapterAddress: string,
   feedId: string
 ) {
-  const priceFeedDeployResult = await deployer.deploy(
-    wasmFilePath("price_feed")
-  );
+  const priceFeedDeployResult = await deployer.deploy(wasmFilePath(PRICE_FEED));
   await new StellarPriceFeedContractAdapter(
     rpcClient,
     new Contract(priceFeedDeployResult.contractId),
     keypair.publicKey()
-  ).init(feedId, adapterAddress, keypair);
+  ).init(keypair.publicKey(), feedId, adapterAddress, keypair);
 
   console.log(
     `🚀 price feed for ${feedId} contract deployed at: ${priceFeedDeployResult.contractId}`

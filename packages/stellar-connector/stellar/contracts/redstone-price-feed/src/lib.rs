@@ -2,6 +2,8 @@
 extern crate alloc;
 
 use common::{
+    ownable::Ownable,
+    upgradable::{Upgradable, WasmHash},
     PriceData, CONTRACT_TTL_EXTEND_TO_LEDGERS, CONTRACT_TTL_THRESHOLD_LEDGERS,
     MISSING_STORAGE_ENTRY,
 };
@@ -14,8 +16,8 @@ use soroban_sdk::{
 const DECIMALS: u64 = 8;
 const DESCRIPTION_PREFIX: &[u8; 24] = b"RedStone Price Feed for ";
 
-#[contractclient(name = "AdapterContractClient")]
-pub trait AdapterContract {
+#[contractclient(name = "RedStoneAdapterClient")]
+pub trait RedStoneAdapter {
     fn read_price_data_for_feed(feed_id: String) -> Result<PriceData, Error>;
 }
 
@@ -26,11 +28,21 @@ pub enum DataKey {
 }
 
 #[contract]
-pub struct PriceFeed;
+pub struct RedStonePriceFeed;
+
+impl Ownable for RedStonePriceFeed {}
+impl Upgradable for RedStonePriceFeed {}
 
 #[contractimpl]
-impl PriceFeed {
-    pub fn init(env: &Env, feed_id: String, adapter_address: Address) -> Result<(), Error> {
+impl RedStonePriceFeed {
+    pub fn init(
+        env: &Env,
+        owner: Address,
+        feed_id: String,
+        adapter_address: Address,
+    ) -> Result<(), Error> {
+        Self::_set_owner(env, owner)?;
+
         if env.storage().instance().has(&DataKey::FeedId) {
             return Err(Error::from_type_and_code(
                 ScErrorType::Storage,
@@ -44,6 +56,14 @@ impl PriceFeed {
             .set(&DataKey::AdapterAddress, &adapter_address);
 
         Ok(())
+    }
+
+    pub fn change_owner(env: &Env, new_owner: Address) -> Result<(), Error> {
+        Self::_change_owner(env, new_owner)
+    }
+
+    pub fn upgrade(env: &Env, new_wasm_hash: WasmHash) -> Result<(), Error> {
+        Self::_upgrade(env, new_wasm_hash)
     }
 
     pub fn decimals() -> u64 {
@@ -92,7 +112,7 @@ impl PriceFeed {
             .get(&DataKey::AdapterAddress)
             .ok_or(MISSING_STORAGE_ENTRY)?;
 
-        let client = AdapterContractClient::new(env, &adapter_address);
+        let client = RedStoneAdapterClient::new(env, &adapter_address);
 
         Ok(client.read_price_data_for_feed(&feed_id))
     }
