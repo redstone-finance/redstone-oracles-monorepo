@@ -6,6 +6,9 @@ import path from "path";
 import { z } from "zod";
 import { StellarNetwork } from "../src/stellar/network-ids";
 
+export const PRICE_ADAPTER = "redstone_adapter";
+export const PRICE_FEED = "redstone_price_feed";
+
 const OUTPUT_DIR = readDeployDir();
 
 export function readUrl() {
@@ -67,7 +70,7 @@ export function loadPriceFeedId(feedId: string, dir = OUTPUT_DIR) {
 }
 
 export function wasmFilePath(
-  contractName: "redstone_adapter" | "price_feed",
+  contractName: typeof PRICE_ADAPTER | typeof PRICE_FEED,
   dir = OUTPUT_DIR
 ) {
   return `${dir}/target/wasm32v1-none/release/${contractName}.wasm`;

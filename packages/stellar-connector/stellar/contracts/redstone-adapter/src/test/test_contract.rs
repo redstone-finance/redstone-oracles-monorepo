@@ -4,17 +4,17 @@ use core::time::Duration;
 use redstone_testing::{env::PriceAdapterRunEnv, redstone::Value, signer::ContractUpdateSigner};
 use soroban_sdk::{testutils::Ledger, Bytes, Env, String, Vec as SorobanVec};
 
-use crate::{config::STELLAR_CONFIG, Contract, ContractClient};
+use crate::{config::STELLAR_CONFIG, RedStoneAdapter, RedStoneAdapterClient};
 
-pub struct TestContract(ContractClient<'static>);
+pub struct TestContract(RedStoneAdapterClient<'static>);
 
 impl TestContract {
     pub fn new() -> Self {
         let env = Env::default();
         env.mock_all_auths();
 
-        let contract_id = env.register(Contract, ());
-        let contract = ContractClient::new(&env, &contract_id);
+        let contract_id = env.register(RedStoneAdapter, ());
+        let contract = RedStoneAdapterClient::new(&env, &contract_id);
 
         Self(contract)
     }

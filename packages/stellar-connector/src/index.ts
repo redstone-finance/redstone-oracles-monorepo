@@ -3,6 +3,7 @@ export * from "./adapters/PriceFeedStellarContractConnector";
 export * from "./adapters/StellarContractConnector";
 export * from "./adapters/StellarPriceFeedContractAdapter";
 export * from "./adapters/StellarPricesContractAdapter";
+export * from "./adapters/UpgradableAdapter";
 export * from "./stellar/StellarClientBuilder";
 export * from "./stellar/StellarRpcClient";
 export * from "./StellarContractDeployer";

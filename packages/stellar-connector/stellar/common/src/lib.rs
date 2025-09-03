@@ -1,5 +1,8 @@
 #![no_std]
 
+pub mod ownable;
+pub mod upgradable;
+
 use soroban_sdk::{
     contracttype,
     xdr::{ScErrorCode, ScErrorType},
