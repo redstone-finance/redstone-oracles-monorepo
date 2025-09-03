@@ -11,7 +11,10 @@ import fs from "fs";
 import { BPF_UPGRADEABLE_LOADER } from "../consts";
 import { SquadsMultisig } from "./multi-sig-utils";
 
-function getProgramDataAddress(programId: PublicKey): PublicKey {
+// 4 + 1 + 32 + 8 [account-type/upgradability/authority/lastUpdateNumber]
+const SO_IN_BUFFER_START_IDX = 45;
+
+export function getProgramDataAddress(programId: PublicKey): PublicKey {
   return PublicKey.findProgramAddressSync(
     [programId.toBuffer()],
     BPF_UPGRADEABLE_LOADER
@@ -58,7 +61,6 @@ export async function checkUpgradeTransaction(
   expectedBufferAccount: PublicKey,
   programBytesFile: string
 ) {
-  const bytes = fs.readFileSync(programBytesFile);
   const bufferAccount = vaultTransaction.message.accountKeys.find(
     (key) => key.toBase58() === expectedBufferAccount.toBase58()
   );
@@ -70,10 +72,45 @@ export async function checkUpgradeTransaction(
 
   console.log("✅ Expected buffer account in the transaction");
 
+  await checkData(
+    connection,
+    bufferAccount,
+    SO_IN_BUFFER_START_IDX,
+    1,
+    squads,
+    programBytesFile
+  );
+}
+
+export async function checkProgramData(
+  connection: Connection,
+  programDataAccount: PublicKey,
+  squads: SquadsMultisig,
+  programBytesFile: string
+) {
+  await checkData(
+    connection,
+    programDataAccount,
+    SO_IN_BUFFER_START_IDX,
+    3,
+    squads,
+    programBytesFile
+  );
+}
+
+async function checkData(
+  connection: Connection,
+  programDataAccount: PublicKey,
+  soFileInBufferStart: number,
+  expectedAccountType: number,
+  squads: SquadsMultisig,
+  programBytesFile: string
+) {
   console.log("Fetching buffer data to validate...");
 
-  const accountData = await connection.getAccountInfo(expectedBufferAccount);
+  const accountData = await connection.getAccountInfo(programDataAccount);
 
+  const bytes = fs.readFileSync(programBytesFile);
   const soLength = bytes.length;
 
   if (accountData === null) {
@@ -81,20 +118,31 @@ export async function checkUpgradeTransaction(
   }
   const data = accountData.data;
 
-  const soFileInBuffer = data.slice(data.length - soLength);
+  const soFileInBuffer = data.subarray(
+    soFileInBufferStart,
+    soFileInBufferStart + soLength
+  );
+
+  const padding = data.subarray(soFileInBufferStart + soLength);
+
+  if (!padding.every((v) => v === 0)) {
+    throw new Error(`❌ Expected padding to be all 0`);
+  }
 
   if (Buffer.compare(soFileInBuffer, bytes) !== 0) {
     throw new Error(`❌ Buffer data is not the same as in file program`);
   }
   console.log(`✅ ${programBytesFile} bytes are at the end of the data`);
 
-  if (data[0] !== 1) {
-    throw new Error(`❌ Buffer account is not of type buffer, ${data[0]}`);
+  if (data[0] !== expectedAccountType) {
+    throw new Error(
+      `❌ Program data account ${expectedAccountType} is not of type program data account, ${data[0]}`
+    );
   }
 
-  const authority = data.slice(
-    data.length - soLength - 32,
-    data.length - soLength
+  const authority = data.subarray(
+    soFileInBufferStart - 32,
+    soFileInBufferStart
   );
 
   if (squads.vaultPda().toBase58() !== new PublicKey(authority).toBase58()) {
