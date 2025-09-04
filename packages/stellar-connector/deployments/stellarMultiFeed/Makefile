@@ -5,7 +5,8 @@ FEED_ID=BTC
 FEED_IDS="$(FEED_ID)", "ETH"
 
 WASM_TARGET=wasm32v1-none
-CONTRACT=redstone_adapter
+ADAPTER_CONTRACT=redstone_adapter
+PRICE_FEED_CONTRACT=redstone_price_feed
 NIGHTLY=nightly-2025-04-29
 
 NETWORK=testnet
@@ -46,13 +47,19 @@ account:
 
 build: setup-env
 	stellar contract build
+	stellar contract optimize \
+		--wasm target/$(WASM_TARGET)/release/$(ADAPTER_CONTRACT).wasm \
+		--wasm-out target/$(WASM_TARGET)/release/$(ADAPTER_CONTRACT).wasm
+	stellar contract optimize \
+		--wasm target/$(WASM_TARGET)/release/$(PRICE_FEED_CONTRACT).wasm \
+		--wasm-out target/$(WASM_TARGET)/release/$(PRICE_FEED_CONTRACT).wasm
 
 deploy: build
 	adapter_id=`stellar contract deploy \
-	  --wasm target/$(WASM_TARGET)/release/$(CONTRACT).wasm \
+	  --wasm target/$(WASM_TARGET)/release/$(ADAPTER_CONTRACT).wasm \
 	  --source $(ACCOUNT) \
 	  --network $(NETWORK) \
-	  --alias $(CONTRACT)` && \
+	  --alias $(ADAPTER_CONTRACT)` && \
 	stellar contract invoke \
 	  --id $${adapter_id} \
 	  --source $(ACCOUNT) \
@@ -60,12 +67,12 @@ deploy: build
 	  --cost \
 	  -- \
 	  init \
-	  --admin $(ACCOUNT) && \
+	  --owner $(ACCOUNT) && \
 	echo "ADAPTER_ID: $${adapter_id}"
 
 upgrade: build
 	hash=`stellar contract upload \
-	  --wasm target/$(WASM_TARGET)/release/$(CONTRACT).wasm \
+	  --wasm target/$(WASM_TARGET)/release/$(ADAPTER_CONTRACT).wasm \
 	  --source $(ACCOUNT) \
 	  --network $(NETWORK)` && \
 	stellar contract invoke \
