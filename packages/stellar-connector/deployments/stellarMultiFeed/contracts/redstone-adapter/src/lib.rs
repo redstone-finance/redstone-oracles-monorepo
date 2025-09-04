@@ -4,70 +4,41 @@ extern crate alloc;
 mod config;
 mod test;
 
-use core::str;
-
 use common::{
-    PriceData, CONTRACT_TTL_EXTEND_TO_LEDGERS, CONTRACT_TTL_THRESHOLD_LEDGERS,
-    MISSING_STORAGE_ENTRY,
+    ownable::Ownable, upgradable::Upgradable, PriceData, CONTRACT_TTL_EXTEND_TO_LEDGERS,
+    CONTRACT_TTL_THRESHOLD_LEDGERS, MISSING_STORAGE_ENTRY,
 };
 use redstone::{
     contract::verification::UpdateTimestampVerifier, core::process_payload,
     network::error::Error as RedStoneError, soroban::helpers::ToBytes, TimestampMillis,
 };
 use soroban_sdk::{
-    contract, contractimpl,
-    storage::Persistent,
-    xdr::{ScErrorCode, ScErrorType},
-    Address, Bytes, BytesN, Env, Error, String, Vec, U256,
+    contract, contractimpl, storage::Persistent, Address, Bytes, BytesN, Env, Error, String, Vec,
+    U256,
 };
 
 use self::config::{FEED_TTL_EXTEND_TO, FEED_TTL_THRESHOLD, STELLAR_CONFIG};
 
 const MS_IN_SEC: u64 = 1_000;
-const ADMIN_KEY: &&str = &"admin";
 
 #[contract]
-pub struct Contract;
+pub struct RedStoneAdapter;
+
+impl Ownable for RedStoneAdapter {}
+impl Upgradable for RedStoneAdapter {}
 
 #[contractimpl]
-impl Contract {
-    pub fn init(env: &Env, admin: Address) -> Result<(), Error> {
-        if env.storage().instance().has(ADMIN_KEY) {
-            return Err(Error::from_type_and_code(
-                ScErrorType::Storage,
-                ScErrorCode::ExistingValue,
-            ));
-        }
-
-        env.storage().instance().set(ADMIN_KEY, &admin);
-
-        Ok(())
+impl RedStoneAdapter {
+    pub fn init(env: &Env, owner: Address) -> Result<(), Error> {
+        Self::_set_owner(env, owner)
     }
 
-    pub fn change_admin(env: &Env, new_admin: Address) -> Result<(), Error> {
-        let admin: Address = env
-            .storage()
-            .instance()
-            .get(ADMIN_KEY)
-            .ok_or(MISSING_STORAGE_ENTRY)?;
-
-        admin.require_auth();
-        env.storage().instance().set(ADMIN_KEY, &new_admin);
-
-        Ok(())
+    pub fn change_owner(env: &Env, new_owner: Address) -> Result<(), Error> {
+        Self::_change_owner(env, new_owner)
     }
 
     pub fn upgrade(env: &Env, new_wasm_hash: BytesN<32>) -> Result<(), Error> {
-        let admin: Address = env
-            .storage()
-            .instance()
-            .get(ADMIN_KEY)
-            .ok_or(MISSING_STORAGE_ENTRY)?;
-
-        admin.require_auth();
-        env.deployer().update_current_contract_wasm(new_wasm_hash);
-
-        Ok(())
+        Self::_upgrade(env, new_wasm_hash)
     }
 
     pub fn get_prices(
