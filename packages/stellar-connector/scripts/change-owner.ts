@@ -4,11 +4,10 @@ import {
   makeKeypair,
 } from "../src";
 import { MULTISIG_ADDRESS } from "./ledger/consts";
-import { loadAdapterId, readNetwork, readUrl } from "./utils";
+import { loadContractId, readNetwork, readUrl } from "./utils";
 
-async function changeOwner() {
+async function changeOwner(contractId = loadContractId()) {
   const keypair = makeKeypair();
-  const adapterId = loadAdapterId();
 
   const client = new StellarClientBuilder()
     .withStellarNetwork(readNetwork())
@@ -17,7 +16,7 @@ async function changeOwner() {
 
   const connector = new PriceAdapterStellarContractConnector(
     client,
-    adapterId,
+    contractId,
     keypair
   );
 

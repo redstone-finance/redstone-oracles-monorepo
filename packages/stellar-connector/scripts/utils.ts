@@ -75,3 +75,23 @@ export function wasmFilePath(
 ) {
   return `${dir}/target/wasm32v1-none/release/${contractName}.wasm`;
 }
+
+export function loadContractName() {
+  return RedstoneCommon.getFromEnv(
+    "CONTRACT_NAME",
+    z.enum([PRICE_ADAPTER, PRICE_FEED]).optional().default(PRICE_ADAPTER)
+  );
+}
+
+export function loadContractId(outputDir = OUTPUT_DIR) {
+  const contractName = loadContractName();
+  switch (contractName) {
+    case PRICE_ADAPTER:
+      return loadAdapterId(outputDir);
+    case PRICE_FEED:
+      return loadPriceFeedId(
+        RedstoneCommon.getFromEnv("PRICE_FEED_ID", z.string()),
+        outputDir
+      );
+  }
+}

@@ -4,66 +4,16 @@ import {
   IMultiFeedPricesContractAdapter,
   LastRoundDetails,
 } from "@redstone-finance/sdk";
-import { Contract } from "@stellar/stellar-sdk";
 import _ from "lodash";
-import { StellarRpcClient } from "../stellar/StellarRpcClient";
-import { Signer } from "../stellar/StellarSigner";
-import {
-  StellarTxDeliveryMan,
-  StellarTxDeliveryManConfig,
-} from "../stellar/StellarTxDeliveryMan";
 import * as XdrUtils from "../XdrUtils";
+import { StellarContractAdapter } from "./StellarContractAdapter";
 
-export class StellarPricesContractAdapter
+export class PriceAdapterStellarContractAdapter
+  extends StellarContractAdapter
   implements IMultiFeedPricesContractAdapter
 {
-  private readonly txDeliveryMan?: StellarTxDeliveryMan;
-
-  constructor(
-    private readonly rpcClient: StellarRpcClient,
-    private readonly contract: Contract,
-    signer?: Signer,
-    txDeliveryManConfig?: Partial<StellarTxDeliveryManConfig>
-  ) {
-    this.txDeliveryMan = signer
-      ? new StellarTxDeliveryMan(rpcClient, signer, txDeliveryManConfig)
-      : undefined;
-  }
-
   async init(owner: string) {
-    if (!this.txDeliveryMan) {
-      throw new Error("Cannot initialize contract, txDeliveryMan not set");
-    }
-
-    const ownerAddr = XdrUtils.addressToScVal(owner);
-
-    return await this.txDeliveryMan.sendTransaction(() => {
-      return this.contract.call("init", ownerAddr);
-    });
-  }
-
-  async changeOwner(newOwner: string) {
-    if (!this.txDeliveryMan) {
-      throw new Error("Cannot change contract's owner, txDeliveryMan not set");
-    }
-
-    const ownerAddr = XdrUtils.addressToScVal(newOwner);
-
-    return await this.txDeliveryMan.sendTransaction(() => {
-      return this.contract.call("change_owner", ownerAddr);
-    });
-  }
-
-  async upgrade(wasmHash: Buffer) {
-    if (!this.txDeliveryMan) {
-      throw new Error("Cannot upgrade contract, txDeliveryMan not set");
-    }
-
-    const hash = XdrUtils.bytesToScVal(wasmHash);
-
-    return await this.txDeliveryMan.sendTransaction(() => {
-      return this.contract.call("upgrade", hash);
-    });
+    return await this.initContract(owner);
   }
 
   async readContractData(feedIds: string[], _blockNumber?: number) {
@@ -88,14 +38,6 @@ export class StellarPricesContractAdapter
 
   async getSignerAddress() {
     return await this.getPublicKey();
-  }
-
-  private async getPublicKey() {
-    const pk = await this.txDeliveryMan?.getPublicKey();
-    if (pk === undefined) {
-      throw new Error("txDeliveryMan not set");
-    }
-    return pk;
   }
 
   async getPricesFromPayload(paramsProvider: ContractParamsProvider) {
