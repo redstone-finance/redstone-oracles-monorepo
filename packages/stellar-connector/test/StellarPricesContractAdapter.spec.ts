@@ -6,9 +6,10 @@ import { Contract, Keypair } from "@stellar/stellar-sdk";
 import { makeServer, PRICE_ADAPTER, wasmFilePath } from "../scripts/utils";
 import {
   makeKeypair,
+  PriceAdapterStellarContractAdapter,
   StellarContractDeployer,
-  StellarPricesContractAdapter,
   StellarRpcClient,
+  StellarTxDeliveryMan,
 } from "../src";
 
 const DATA_SERVICE_ID = "redstone-primary-prod";
@@ -16,7 +17,7 @@ const DEPLOY_CONTRACT_TIMEOUT_MS = 20 * 1_000;
 const WRITE_TEST_TIMEOUT_MS = 20 * 1_000;
 
 describe("StellarPricesContractAdapter", () => {
-  let adapter: StellarPricesContractAdapter;
+  let adapter: PriceAdapterStellarContractAdapter;
   let client: StellarRpcClient;
   let keypair: Keypair;
 
@@ -27,16 +28,17 @@ describe("StellarPricesContractAdapter", () => {
     const server = makeServer();
     keypair = makeKeypair();
     client = new StellarRpcClient(server);
+    const txDeliveryMan = new StellarTxDeliveryMan(client, keypair);
 
-    const deployer = new StellarContractDeployer(client, keypair);
+    const deployer = new StellarContractDeployer(client, txDeliveryMan);
     const { contractId: adapterId } = await deployer.deploy(
       wasmFilePath(PRICE_ADAPTER)
     );
 
-    adapter = new StellarPricesContractAdapter(
+    adapter = new PriceAdapterStellarContractAdapter(
       client,
       new Contract(adapterId),
-      keypair
+      txDeliveryMan
     );
 
     await adapter.init(keypair.publicKey());

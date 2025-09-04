@@ -3,38 +3,40 @@ import { execSync } from "node:child_process";
 import {
   makeKeypair,
   StellarClientBuilder,
+  StellarContractAdapter,
   StellarContractDeployer,
-  StellarPricesContractAdapter,
+  StellarTxDeliveryMan,
 } from "../src";
 import {
-  loadAdapterId,
-  PRICE_ADAPTER,
+  loadContractId,
+  loadContractName,
   readDeployDir,
   readNetwork,
   readUrl,
   wasmFilePath,
 } from "./utils";
 
-async function sampleUpgrade() {
-  const adapterId = loadAdapterId();
-  const contract = new Contract(adapterId);
+async function sampleUpgrade(contractId = loadContractId()) {
+  const contract = new Contract(contractId);
   const keypair = makeKeypair();
 
   const client = new StellarClientBuilder()
     .withStellarNetwork(readNetwork())
     .withRpcUrl(readUrl())
     .build();
+  const txDeliveryMan = new StellarTxDeliveryMan(client, keypair);
 
-  const deployer = new StellarContractDeployer(client, keypair);
-  const adapter = new StellarPricesContractAdapter(client, contract, keypair);
+  const deployer = new StellarContractDeployer(client, txDeliveryMan);
+  const adapter = new StellarContractAdapter(client, contract, txDeliveryMan);
 
   execSync(`make -C ${readDeployDir()} build`, { stdio: "inherit" });
 
-  const wasmHash = await deployer.upload(wasmFilePath(PRICE_ADAPTER));
+  const contractName = loadContractName();
+  const wasmHash = await deployer.upload(wasmFilePath(contractName));
   await adapter.upgrade(wasmHash);
 
   console.log(
-    `🚀 adapter contract upgraded at: ${adapterId}, new wasmHash: ${wasmHash.toString("hex")}`
+    `🚀 ${contractName} contract upgraded at: ${contractId}, new wasmHash: ${wasmHash.toString("hex")}`
   );
 }
 

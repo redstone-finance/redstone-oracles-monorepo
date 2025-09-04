@@ -1,10 +1,11 @@
 import { makeServer, PRICE_ADAPTER, wasmFilePath } from "../scripts/utils";
 import {
   makeKeypair,
+  PriceAdapterStellarContractAdapter,
   PriceAdapterStellarContractConnector,
   StellarContractDeployer,
-  StellarPricesContractAdapter,
   StellarRpcClient,
+  StellarTxDeliveryMan,
 } from "../src";
 
 const DEPLOY_CONTRACT_TIMEOUT_MS = 20 * 1_000;
@@ -16,8 +17,9 @@ describe("PriceAdapterStellarContractConnector", () => {
     const server = makeServer();
     const keypair = makeKeypair();
     const client = new StellarRpcClient(server);
+    const txDeliveryMan = new StellarTxDeliveryMan(client, keypair);
 
-    const deployer = new StellarContractDeployer(client, keypair);
+    const deployer = new StellarContractDeployer(client, txDeliveryMan);
     const { contractId: adapterId } = await deployer.deploy(
       wasmFilePath(PRICE_ADAPTER)
     );
@@ -39,7 +41,7 @@ describe("PriceAdapterStellarContractConnector", () => {
   describe("getAdapter", () => {
     it("should return adapter", async () => {
       const adapter = await connector.getAdapter();
-      expect(adapter).toBeInstanceOf(StellarPricesContractAdapter);
+      expect(adapter).toBeInstanceOf(PriceAdapterStellarContractAdapter);
     });
   });
 });

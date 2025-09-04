@@ -1,25 +1,13 @@
-import { Address, Keypair, Operation } from "@stellar/stellar-sdk";
+import { Address, Operation } from "@stellar/stellar-sdk";
 import { readFileSync } from "fs";
-import { StellarRpcClient } from "./stellar/StellarRpcClient";
-import {
-  StellarTxDeliveryMan,
-  StellarTxDeliveryManConfig,
-} from "./stellar/StellarTxDeliveryMan";
+import { StellarRpcClient } from "./StellarRpcClient";
+import { StellarTxDeliveryMan } from "./StellarTxDeliveryMan";
 
 export class StellarContractDeployer {
-  private readonly txDeliveryMan: StellarTxDeliveryMan;
-
   constructor(
     private readonly rpcClient: StellarRpcClient,
-    keypair: Keypair,
-    txDeliveryManConfig?: Partial<StellarTxDeliveryManConfig>
-  ) {
-    this.txDeliveryMan = new StellarTxDeliveryMan(
-      rpcClient,
-      keypair,
-      txDeliveryManConfig
-    );
-  }
+    private readonly txDeliveryMan: StellarTxDeliveryMan
+  ) {}
 
   async deploy(wasmPath: string) {
     const wasmHash = await this.upload(wasmPath);
