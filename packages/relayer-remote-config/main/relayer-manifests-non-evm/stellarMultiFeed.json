@@ -1,0 +1,17 @@
+{
+  "adapterContractType": "multi-feed",
+  "chain": {
+    "name": "stellar-mainnet",
+    "id": "stellar/1"
+  },
+  "updateTriggers": {
+    "deviationPercentage": 0.5,
+    "timeSinceLastUpdateInMilliseconds": 86400000
+  },
+  "adapterContract": "CA526Y2NQWGWVVQ7RFFPGAZMU66PSYJ3UC2MTVAV4ZU7OM5BOPHDXUSG",
+  "dataServiceId": "redstone-primary-prod",
+  "priceFeeds": {
+    "ETH": {},
+    "BTC": {}
+  }
+}
