@@ -36,7 +36,7 @@ async function main() {
   const ethPriceFeedConnector = new PriceFeedStellarContractConnector(
     client,
     loadPriceFeedId("ETH"),
-    keypair.publicKey()
+    keypair
   );
 
   await sampleRun(paramsProvider, connector, ethPriceFeedConnector);

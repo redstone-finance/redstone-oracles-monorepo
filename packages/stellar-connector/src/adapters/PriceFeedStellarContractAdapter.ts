@@ -1,18 +1,11 @@
 import { IPriceFeedContractAdapter } from "@redstone-finance/sdk";
-import { Contract, Keypair } from "@stellar/stellar-sdk";
-import { StellarRpcClient } from "../stellar/StellarRpcClient";
-import { StellarSigner } from "../stellar/StellarSigner";
 import * as XdrUtils from "../XdrUtils";
+import { StellarContractAdapter } from "./StellarContractAdapter";
 
-export class StellarPriceFeedContractAdapter
+export class PriceFeedStellarContractAdapter
+  extends StellarContractAdapter
   implements IPriceFeedContractAdapter
 {
-  constructor(
-    private readonly rpcClient: StellarRpcClient,
-    private readonly contract: Contract,
-    private readonly sender: string
-  ) {}
-
   async getPriceAndTimestamp() {
     return await this.readPriceAndTimestamp();
   }
@@ -22,7 +15,7 @@ export class StellarPriceFeedContractAdapter
 
     return await this.rpcClient.simulateOperation(
       operation,
-      this.sender,
+      await this.getPublicKey(),
       (sim) => XdrUtils.parsePrimitiveFromSimulation(sim, String)
     );
   }
@@ -31,25 +24,12 @@ export class StellarPriceFeedContractAdapter
     return await this.feedId();
   }
 
-  async init(
-    admin: string,
-    feedId: string,
-    adapterContractId: string,
-    keypair: Keypair
-  ) {
-    const operation = this.contract.call(
-      "init",
-      XdrUtils.addressToScVal(admin),
+  async init(owner: string, feedId: string, adapterContractId: string) {
+    return await this.initContract(
+      owner,
       XdrUtils.stringToScVal(feedId),
       XdrUtils.addressToScVal(adapterContractId)
     );
-
-    const submitResponse = await this.rpcClient.executeOperation(
-      operation,
-      new StellarSigner(keypair)
-    );
-
-    return await this.rpcClient.waitForTx(submitResponse.hash);
   }
 
   async decimals() {
@@ -57,7 +37,7 @@ export class StellarPriceFeedContractAdapter
 
     return await this.rpcClient.simulateOperation(
       operation,
-      this.sender,
+      await this.getPublicKey(),
       (sim) => XdrUtils.parsePrimitiveFromSimulation(sim, Number)
     );
   }
@@ -67,7 +47,7 @@ export class StellarPriceFeedContractAdapter
 
     return await this.rpcClient.simulateOperation(
       operation,
-      this.sender,
+      await this.getPublicKey(),
       (sim) => XdrUtils.parsePrimitiveFromSimulation(sim, String)
     );
   }
@@ -77,7 +57,7 @@ export class StellarPriceFeedContractAdapter
 
     return await this.rpcClient.simulateOperation(
       operation,
-      this.sender,
+      await this.getPublicKey(),
       XdrUtils.parseBigIntFromSimulation
     );
   }
@@ -87,7 +67,7 @@ export class StellarPriceFeedContractAdapter
 
     return await this.rpcClient.simulateOperation(
       operation,
-      this.sender,
+      await this.getPublicKey(),
       (sim) => XdrUtils.parsePrimitiveFromSimulation(sim, Number)
     );
   }
@@ -97,7 +77,7 @@ export class StellarPriceFeedContractAdapter
 
     return await this.rpcClient.simulateOperation(
       operation,
-      this.sender,
+      await this.getPublicKey(),
       XdrUtils.parseReadPriceAndTimestampSimulation
     );
   }
@@ -107,7 +87,7 @@ export class StellarPriceFeedContractAdapter
 
     return await this.rpcClient.simulateOperation(
       operation,
-      this.sender,
+      await this.getPublicKey(),
       XdrUtils.parseReadSinglePriceDataSimulation
     );
   }
