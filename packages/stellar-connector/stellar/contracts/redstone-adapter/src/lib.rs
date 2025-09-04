@@ -5,17 +5,16 @@ mod config;
 mod test;
 
 use common::{
-    ownable::Ownable,
-    upgradable::{Upgradable, WasmHash},
-    PriceData, CONTRACT_TTL_EXTEND_TO_LEDGERS, CONTRACT_TTL_THRESHOLD_LEDGERS,
-    MISSING_STORAGE_ENTRY,
+    ownable::Ownable, upgradable::Upgradable, PriceData, CONTRACT_TTL_EXTEND_TO_LEDGERS,
+    CONTRACT_TTL_THRESHOLD_LEDGERS, MISSING_STORAGE_ENTRY,
 };
 use redstone::{
     contract::verification::UpdateTimestampVerifier, core::process_payload,
     network::error::Error as RedStoneError, soroban::helpers::ToBytes, TimestampMillis,
 };
 use soroban_sdk::{
-    contract, contractimpl, storage::Persistent, Address, Bytes, Env, Error, String, Vec, U256,
+    contract, contractimpl, storage::Persistent, Address, Bytes, BytesN, Env, Error, String, Vec,
+    U256,
 };
 
 use self::config::{FEED_TTL_EXTEND_TO, FEED_TTL_THRESHOLD, STELLAR_CONFIG};
@@ -38,7 +37,7 @@ impl RedStoneAdapter {
         Self::_change_owner(env, new_owner)
     }
 
-    pub fn upgrade(env: &Env, new_wasm_hash: WasmHash) -> Result<(), Error> {
+    pub fn upgrade(env: &Env, new_wasm_hash: BytesN<32>) -> Result<(), Error> {
         Self::_upgrade(env, new_wasm_hash)
     }
 
