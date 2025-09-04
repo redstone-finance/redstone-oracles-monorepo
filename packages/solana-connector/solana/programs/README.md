@@ -25,4 +25,3 @@
 | BUIDL_SOLANA_FUNDAMENTAL   | ESxdEASDcYRN4ybnYNCJJuPHcF2SGJN1MypQq1yfY9Kz | x                                            | x                                            |
 | BUIDL_SOLANA_DAILY_ACCRUAL | CPKJ57Kvxf8Xrz1o3hqBK52SqqEUAPp1NVdCK94bDGSX | x                                            | x                                            |
 | ACRED_SOLANA_FUNDAMENTAL   | 6sK8czVw8Xy6T8YbH6VC8p5ovNZD2mXf5vUTv8sgnUJf | x                                            | x                                            |
-| VBILL_SOLANA_DAILY_ACCRUAL | 8aMjLzsmjSEGmgybHWELTEinTw4kn3okfos5zHrt2TJG | 8m2yZ4R1EcJpPv26a6TiJmwN6LUNa5iq2MX2QR6kY7BU | BVSjsi6tysQD8T8aZP94RMzRUF1BHrxWdX2qRBqbDzpz |

@@ -131,3 +131,4 @@ pub struct Initialize<'info> {
 | sUSDS_FUNDAMENTAL          | x                                            | x                                            | BsakcTH9iP8vqvf9SvA6jQQfjn48qhCrUdP1EX4h1smY |
 | VBILL_SOLANA_FUNDAMENTAL   | H9ckR9pZtPZCjRYz9RXBPhc2X6m4e3ndpxgVe7HgYVMd | x                                            | x                                            |
 | LBTC_FUNDAMENTAL           | EjN4MxDvAbBEofxFwpvCsz2u8wZ96kHMsLmk2N5Bvomt | x                                            | x                                            |
+| VBILL_SOLANA_DAILY_ACCRUAL | 8aMjLzsmjSEGmgybHWELTEinTw4kn3okfos5zHrt2TJG | x                                            | x                                            |

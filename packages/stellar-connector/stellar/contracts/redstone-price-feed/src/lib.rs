@@ -103,7 +103,7 @@ impl RedStonePriceFeed {
     }
 
     pub fn read_price_data(env: &Env) -> Result<PriceData, Error> {
-        extend_instace_storage(env);
+        extend_instance_storage(env);
 
         let feed_id = Self::feed_id(env)?;
         let adapter_address: Address = env
@@ -118,7 +118,7 @@ impl RedStonePriceFeed {
     }
 }
 
-fn extend_instace_storage(env: &Env) {
+fn extend_instance_storage(env: &Env) {
     env.storage().instance().extend_ttl(
         CONTRACT_TTL_THRESHOLD_LEDGERS,
         CONTRACT_TTL_EXTEND_TO_LEDGERS,
