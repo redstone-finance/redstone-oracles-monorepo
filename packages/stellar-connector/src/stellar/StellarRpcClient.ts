@@ -235,7 +235,8 @@ export class StellarRpcClient {
   async getTransactions(startLedger: number, endLedger: number) {
     const { oldestLedger, latestLedger } = await this.server.getTransactions({
       startLedger: await this.getBlockNumber(),
-    });
+      pagination: { limit: 0 },
+    } as unknown as rpc.Api.GetTransactionsRequest);
 
     if (oldestLedger > startLedger) {
       const end = Math.min(endLedger, oldestLedger);
@@ -251,18 +252,21 @@ export class StellarRpcClient {
     startLedger = Math.max(startLedger, oldestLedger);
     endLedger = Math.min(endLedger, latestLedger);
 
+    const FETCHING_LIMIT = 200;
     let { transactions, cursor } = await this.server.getTransactions({
       startLedger,
-    });
+      pagination: { limit: FETCHING_LIMIT },
+    } as unknown as rpc.Api.GetTransactionsRequest);
     let lastLedger = transactions.at(-1)?.ledger;
 
     while (lastLedger !== undefined && lastLedger <= endLedger) {
+      console.log(`Fetching data of ${lastLedger} up to ${endLedger}`);
       // TODO: Remove `as unknown as Request` hack when Stellar SDK fixes rpc.Server.getTransactions()
       // It is bugged right now and does not support pagination correctly.
       // Thankfully we can hack around it.
 
       const req = {
-        pagination: { cursor },
+        pagination: { cursor, limit: FETCHING_LIMIT },
       } as unknown as rpc.Api.GetTransactionsRequest;
       const result = await this.server.getTransactions(req);
       cursor = result.cursor;
