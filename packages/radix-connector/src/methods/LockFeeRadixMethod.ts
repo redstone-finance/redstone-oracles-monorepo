@@ -1,4 +1,4 @@
-import { decimal } from "@radixdlt/radix-engine-toolkit";
+import { decimal, Value } from "@radixdlt/radix-engine-toolkit";
 import { VoidRadixInvocation } from "../radix/RadixInvocation";
 
 export class LockFeeRadixMethod extends VoidRadixInvocation {
@@ -9,7 +9,7 @@ export class LockFeeRadixMethod extends VoidRadixInvocation {
     super(account, "lock_fee");
   }
 
-  override getParams() {
+  override getParams(): Value[] {
     return [decimal(this.fee)];
   }
 }
