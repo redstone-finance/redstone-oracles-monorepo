@@ -5,7 +5,7 @@ services:
     command: [
         "node",
         "attester",
-        "/ip4/54.220.62.139/tcp/3000/p2p/12D3KooWSBMPURmCU5B8nuXkUw1Tq26FuvDg5LsEcs4WX8dqAxWJ",
+        "/ip4/3.251.232.65/tcp/3000/p2p/12D3KooWSBMPURmCU5B8nuXkUw1Tq26FuvDg5LsEcs4WX8dqAxWJ",
         "--avs-webapi",
         "http://operator-validation-api",
         "--avs-webapi-port",
