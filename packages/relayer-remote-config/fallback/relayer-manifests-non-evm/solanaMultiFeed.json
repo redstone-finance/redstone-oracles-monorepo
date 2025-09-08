@@ -37,6 +37,12 @@
         "timeSinceLastUpdateInMilliseconds": 86400000
       }
     },
-    "LBTC_FUNDAMENTAL": {}
+    "LBTC_FUNDAMENTAL": {},
+    "VBILL_SOLANA_DAILY_ACCRUAL": {
+      "updateTriggersOverrides": {
+        "deviationPercentage": 0.1,
+        "timeSinceLastUpdateInMilliseconds": 86400000
+      }
+    }
   }
 }
