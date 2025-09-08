@@ -2995,6 +2995,11 @@
       ],
       "denomination": "USD",
       "rateFeed": false
+    },
+    "beHYPE_MAIN_FUNDAMENTAL": {
+      "source": ["hyperevm-evm-fetcher-hyperbeat-behype"],
+      "denomination": "HYPE",
+      "rateFeed": true
     }
   },
   "multiPointPackages": {
