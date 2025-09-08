@@ -7,6 +7,9 @@
     },
     {
       "path": "../internal-utils/tsconfig.build.json"
+    },
+    {
+      "path": "../http-client/tsconfig.build.json"
     }
   ]
 }
