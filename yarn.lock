@@ -10565,6 +10565,21 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@redstone-finance/lambda-node-package-counts-deviation-monitoring@workspace:packages/lambda/lambda-node-package-counts-deviation-monitoring":
+  version: 0.0.0-use.local
+  resolution: "@redstone-finance/lambda-node-package-counts-deviation-monitoring@workspace:packages/lambda/lambda-node-package-counts-deviation-monitoring"
+  dependencies:
+    "@redstone-finance/internal-utils": "workspace:*"
+    "@redstone-finance/monitoring-manifests": "workspace:*"
+    "@redstone-finance/remote-config": "workspace:*"
+    "@redstone-finance/utils": "workspace:*"
+    "@types/aws-lambda": "npm:^8.10.145"
+    dotenv: "npm:^16.0.3"
+    lodash: "npm:^4.17.21"
+    zod: "npm:^3.22.4"
+  languageName: unknown
+  linkType: soft
+
 "@redstone-finance/lambda-node-price-deviation-monitoring@workspace:packages/lambda/lambda-node-price-deviation-monitoring":
   version: 0.0.0-use.local
   resolution: "@redstone-finance/lambda-node-price-deviation-monitoring@workspace:packages/lambda/lambda-node-price-deviation-monitoring"
@@ -10920,7 +10935,6 @@ __metadata:
     "@types/lodash": "npm:^4.14.195"
     "@types/node-schedule": "npm:^2.1.0"
     "@types/prompts": "npm:^2.4.2"
-    "@types/xml2js": "npm:^0.4.14"
     arweave: "npm:^1.14.4"
     axios: "npm:^1.8.4"
     decimal.js: "npm:^10.4.3"
@@ -10935,7 +10949,6 @@ __metadata:
     node-schedule: "npm:^2.1.1"
     prompts: "npm:^2.4.2"
     sort-deep-object-arrays: "npm:^1.1.2"
-    xml2js: "npm:^0.6.2"
     zod: "npm:^3.22.4"
   languageName: unknown
   linkType: soft
@@ -11081,11 +11094,15 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@redstone-finance/remote-config@workspace:packages/remote-config"
   dependencies:
+    "@redstone-finance/http-client": "workspace:*"
     "@redstone-finance/internal-utils": "workspace:*"
     "@redstone-finance/utils": "workspace:*"
     "@types/node-schedule": "npm:^2.1.0"
+    "@types/xml2js": "npm:^0.4.14"
     dotenv: "npm:^16.0.3"
+    jszip: "npm:^3.10.1"
     node-schedule: "npm:^2.1.1"
+    xml2js: "npm:^0.6.2"
     zod: "npm:^3.22.4"
   languageName: unknown
   linkType: soft
