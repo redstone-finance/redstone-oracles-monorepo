@@ -7896,6 +7896,13 @@
       ],
       "denomination": "HYPE",
       "rateFeed": true
+    },
+    "dnPUMP_FUNDAMENTAL": {
+      "source": [
+        "hyperevm-evm-fetcher-hyperbeat-oracle"
+      ],
+      "denomination": "USD",
+      "rateFeed": true
     }
   }
 }
