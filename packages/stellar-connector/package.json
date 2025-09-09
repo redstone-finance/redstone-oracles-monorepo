@@ -24,7 +24,8 @@
     "change-owner": "yarn global:ts-node scripts/change-owner.ts",
     "change-owner-tx": "yarn global:ts-node scripts/ledger/change-owner-tx.ts",
     "sign-tx": "yarn global:ts-node ./scripts/ledger/sign-tx.ts",
-    "combine-signatures": "yarn global:ts-node ./scripts/ledger/combine-signatures.ts"
+    "combine-signatures": "yarn global:ts-node ./scripts/ledger/combine-signatures.ts",
+    "create-account": "yarn global:ts-node ./scripts/create-account-with-funds.ts"
   },
   "dependencies": {
     "@redstone-finance/sdk": "workspace:*",

@@ -73,6 +73,7 @@ async function sampleDeploy() {
     .withStellarNetwork(readNetwork())
     .withRpcUrl(readUrl())
     .build();
+
   const txDeliveryMan = new StellarTxDeliveryMan(client, keypair);
   const deployer = new StellarContractDeployer(client, txDeliveryMan);
   const adapterId = await deployAdapter(deployer, client, txDeliveryMan);
