@@ -6,6 +6,8 @@ import path from "path";
 import { z } from "zod";
 import { StellarNetwork } from "../src/stellar/network-ids";
 
+type StellarContract = typeof PRICE_ADAPTER | typeof PRICE_FEED;
+
 export const PRICE_ADAPTER = "redstone_adapter";
 export const PRICE_FEED = "redstone_price_feed";
 
@@ -33,9 +35,16 @@ export function makeServer() {
   return new rpc.Server(readUrl(), { allowHttp: true });
 }
 
+function getIdFilepath(
+  contract: string,
+  dir = OUTPUT_DIR,
+  network = readNetwork()
+) {
+  return path.join(dir, `${contract}-id.${network}`);
+}
+
 export function saveAdapterId(adapterId: string, dir = OUTPUT_DIR) {
-  const network = readNetwork();
-  const filepath = path.join(dir, `adapter-id.${network}`);
+  const filepath = getIdFilepath(PRICE_ADAPTER, dir);
 
   writeFileSync(filepath, adapterId);
 
@@ -43,10 +52,7 @@ export function saveAdapterId(adapterId: string, dir = OUTPUT_DIR) {
 }
 
 export function loadAdapterId(dir = OUTPUT_DIR) {
-  const network = readNetwork();
-  const filepath = path.join(dir, `adapter-id.${network}`);
-
-  return readFileSync(filepath).toString("utf-8");
+  return readFileSync(getIdFilepath(PRICE_ADAPTER, dir)).toString("utf-8");
 }
 
 export function savePriceFeedId(
@@ -54,8 +60,7 @@ export function savePriceFeedId(
   feedId: string,
   dir = OUTPUT_DIR
 ) {
-  const network = readNetwork();
-  const filepath = path.join(dir, `price-feed-${feedId}.${network}`);
+  const filepath = getIdFilepath(`${PRICE_FEED}-${feedId}`, dir);
 
   writeFileSync(filepath, priceFeedContractId);
 
@@ -63,16 +68,12 @@ export function savePriceFeedId(
 }
 
 export function loadPriceFeedId(feedId: string, dir = OUTPUT_DIR) {
-  const network = readNetwork();
-  const filepath = path.join(dir, `price-feed-${feedId}.${network}`);
-
-  return readFileSync(filepath).toString("utf-8");
+  return readFileSync(getIdFilepath(`${PRICE_FEED}-${feedId}`, dir)).toString(
+    "utf-8"
+  );
 }
 
-export function wasmFilePath(
-  contractName: typeof PRICE_ADAPTER | typeof PRICE_FEED,
-  dir = OUTPUT_DIR
-) {
+export function wasmFilePath(contractName: StellarContract, dir = OUTPUT_DIR) {
   return `${dir}/target/wasm32v1-none/release/${contractName}.wasm`;
 }
 

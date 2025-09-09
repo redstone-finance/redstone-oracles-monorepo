@@ -13,7 +13,6 @@ import { FEEDS } from "./consts";
 import {
   PRICE_ADAPTER,
   PRICE_FEED,
-  readDeployDir,
   readNetwork,
   readUrl,
   saveAdapterId,
@@ -26,7 +25,7 @@ async function deployAdapter(
   client: StellarRpcClient,
   txDeliveryMan: StellarTxDeliveryMan
 ) {
-  execSync(`make -C ${readDeployDir()} build`, { stdio: "inherit" });
+  execSync(`make build`, { stdio: "inherit" });
 
   const adapterDeployResult = await deployer.deploy(
     wasmFilePath(PRICE_ADAPTER)
@@ -53,12 +52,17 @@ async function deployPriceFeed(
   adapterAddress: string,
   feedId: string
 ) {
+  execSync(`make set-adapter-address ADDRESS=${adapterAddress}`, {
+    stdio: "inherit",
+  });
+  execSync(`make build`, { stdio: "inherit" });
+
   const priceFeedDeployResult = await deployer.deploy(wasmFilePath(PRICE_FEED));
   await new PriceFeedStellarContractAdapter(
     rpcClient,
     new Contract(priceFeedDeployResult.contractId),
     txDeliveryMan
-  ).init(await txDeliveryMan.getPublicKey(), feedId, adapterAddress);
+  ).init(await txDeliveryMan.getPublicKey(), feedId);
 
   console.log(
     `🚀 price feed for ${feedId} contract deployed at: ${priceFeedDeployResult.contractId}`
