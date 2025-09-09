@@ -67,7 +67,7 @@ fn updating_twice_with_the_same_timestamp() {
 }
 
 #[test]
-#[should_panic(expected = "Error(Contract, #2002)")]
+#[should_panic(expected = "Error(Storage, MissingValue)]")]
 fn updating_with_only_2_signers() {
     let contract = TestContract::new();
     let scenario = scenario_updating_with_only_2_signers();
@@ -85,7 +85,7 @@ fn untrusted_updates_twice_waiting_for_threshold() {
 }
 
 #[test]
-#[should_panic(expected = "Error(Contract, #2000)")]
+#[should_panic(expected = "Error(Storage, MissingValue)]")]
 fn missing_feed_in_payload() {
     let contract = TestContract::new();
     let scenario = scenario_missing_feed_in_payload();

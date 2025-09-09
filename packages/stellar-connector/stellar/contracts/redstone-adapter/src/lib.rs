@@ -2,7 +2,9 @@
 extern crate alloc;
 
 mod config;
+mod event;
 mod test;
+mod utils;
 
 use common::{
     ownable::Ownable, upgradable::Upgradable, PriceData, CONTRACT_TTL_EXTEND_TO_LEDGERS,
@@ -10,7 +12,7 @@ use common::{
 };
 use redstone::{
     contract::verification::UpdateTimestampVerifier, core::process_payload,
-    network::error::Error as RedStoneError, soroban::helpers::ToBytes, TimestampMillis,
+    network::error::Error as RedStoneError, soroban::helpers::ToBytes, FeedValue, TimestampMillis,
 };
 use soroban_sdk::{
     contract, contractimpl, storage::Persistent, Address, Bytes, BytesN, Env, Error, String, Vec,
@@ -18,8 +20,10 @@ use soroban_sdk::{
 };
 
 use self::config::{FEED_TTL_EXTEND_TO, FEED_TTL_THRESHOLD, STELLAR_CONFIG};
+use crate::{event::WritePrices, utils::feed_to_string};
 
 const MS_IN_SEC: u64 = 1_000;
+const MISSING_FEED_CODE: u32 = 10;
 
 #[contract]
 pub struct RedStoneAdapter;
@@ -46,7 +50,17 @@ impl RedStoneAdapter {
         feed_ids: Vec<String>,
         payload: Bytes,
     ) -> Result<(u64, Vec<U256>), Error> {
-        get_prices_from_payload(env, &feed_ids, &payload).map_err(error_from_redstone_error)
+        let (timestamp, prices) =
+            get_prices_from_payload(env, &feed_ids, &payload).map_err(error_from_redstone_error)?;
+
+        if prices.len() != feed_ids.len() {
+            return Err(Error::from_contract_error(MISSING_FEED_CODE));
+        }
+
+        Ok((
+            timestamp,
+            Vec::from_iter(env, prices.into_iter().map(|(_, price)| price)),
+        ))
     }
 
     pub fn write_prices(
@@ -54,7 +68,7 @@ impl RedStoneAdapter {
         updater: Address,
         feed_ids: Vec<String>,
         payload: Bytes,
-    ) -> Result<(u64, Vec<U256>), Error> {
+    ) -> Result<(u64, Vec<(String, U256)>), Error> {
         updater.require_auth();
 
         env.storage().instance().extend_ttl(
@@ -70,15 +84,26 @@ impl RedStoneAdapter {
         let write_timestamp = env.ledger().timestamp() * MS_IN_SEC;
 
         let db = env.storage().persistent();
-        for (feed_id, price) in feed_ids.into_iter().zip(prices.iter()) {
+
+        let mut updated_feeds = Vec::new(env);
+
+        for (feed_id, price) in prices.iter() {
             let price_data = PriceData {
                 price,
                 package_timestamp,
                 write_timestamp,
             };
+            updated_feeds.push_back(price_data.clone());
+
             update_feed(&db, &verifier, &feed_id, &price_data)
                 .map_err(error_from_redstone_error)?;
         }
+
+        env.events().publish_event(&WritePrices {
+            updated_feeds,
+            payload,
+            updater,
+        });
 
         Ok((package_timestamp, prices))
     }
@@ -136,10 +161,10 @@ fn get_prices_from_payload(
     env: &Env,
     feed_ids: &Vec<String>,
     payload: &Bytes,
-) -> Result<(u64, Vec<U256>), RedStoneError> {
+) -> Result<(u64, Vec<(String, U256)>), RedStoneError> {
     let feed_ids = feed_ids
         .into_iter()
-        .map(|id| id.to_bytes().into())
+        .map(|id| ToBytes::to_bytes(&id).into())
         .collect();
     let block_timestamp = TimestampMillis::from_millis(env.ledger().timestamp() * MS_IN_SEC);
 
@@ -149,9 +174,11 @@ fn get_prices_from_payload(
     let result = process_payload(&mut config, payload.to_alloc_vec())?;
 
     let mut prices = Vec::new(env);
-    for value in result.values {
+
+    for FeedValue { value, feed } in result.values {
         let price = U256::from_be_bytes(env, &Bytes::from_array(env, &value.0));
-        prices.push_back(price);
+        let feed_string = feed_to_string(env, feed);
+        prices.push_back((feed_string, price));
     }
 
     Ok((result.timestamp.as_millis(), prices))
