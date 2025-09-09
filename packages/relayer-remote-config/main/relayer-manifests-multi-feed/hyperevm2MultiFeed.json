@@ -22,6 +22,12 @@
     },
     "dnHYPE_FUNDAMENTAL": {
       "priceFeedAddress": "0xb7699E81Acf22456fa83696573738dfa25f1d6be"
+    },
+    "beHYPE_MAIN_FUNDAMENTAL": {
+      "priceFeedAddress": "0x5016c48F36f7e4C83b5C4D4b7227BFEf35Ae7688"
+    },
+    "dnPUMP_FUNDAMENTAL": {
+      "priceFeedAddress": "0xeeF31c7d9F2E82e8A497b140cc60cc082Be4b94e"
     }
   }
 }
