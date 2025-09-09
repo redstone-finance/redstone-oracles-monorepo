@@ -1,7 +1,0 @@
-# Rust's output directory
-target
-contracts/redstone-adapter/test_snapshots
-
-# Local settings
-.soroban
-.stellar

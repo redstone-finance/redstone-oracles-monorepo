@@ -1,6 +1,8 @@
 #![no_std]
 extern crate alloc;
 
+mod config;
+
 use common::{
     ownable::Ownable,
     upgradable::{Upgradable, WasmHash},
@@ -13,8 +15,7 @@ use soroban_sdk::{
     Address, Bytes, Env, Error, String, U256,
 };
 
-const DECIMALS: u64 = 8;
-const DESCRIPTION_PREFIX: &[u8; 24] = b"RedStone Price Feed for ";
+use self::config::{ADAPTER_ADDRESS, DECIMALS, DESCRIPTION_PREFIX};
 
 #[contractclient(name = "RedStoneAdapterClient")]
 pub trait RedStoneAdapter {
@@ -24,7 +25,6 @@ pub trait RedStoneAdapter {
 #[contracttype]
 pub enum DataKey {
     FeedId,
-    AdapterAddress,
 }
 
 #[contract]
@@ -35,12 +35,7 @@ impl Upgradable for RedStonePriceFeed {}
 
 #[contractimpl]
 impl RedStonePriceFeed {
-    pub fn init(
-        env: &Env,
-        owner: Address,
-        feed_id: String,
-        adapter_address: Address,
-    ) -> Result<(), Error> {
+    pub fn init(env: &Env, owner: Address, feed_id: String) -> Result<(), Error> {
         Self::_set_owner(env, owner)?;
 
         if env.storage().instance().has(&DataKey::FeedId) {
@@ -51,9 +46,6 @@ impl RedStonePriceFeed {
         }
 
         env.storage().instance().set(&DataKey::FeedId, &feed_id);
-        env.storage()
-            .instance()
-            .set(&DataKey::AdapterAddress, &adapter_address);
 
         Ok(())
     }
@@ -106,16 +98,16 @@ impl RedStonePriceFeed {
         extend_instance_storage(env);
 
         let feed_id = Self::feed_id(env)?;
-        let adapter_address: Address = env
-            .storage()
-            .instance()
-            .get(&DataKey::AdapterAddress)
-            .ok_or(MISSING_STORAGE_ENTRY)?;
-
-        let client = RedStoneAdapterClient::new(env, &adapter_address);
+        let client = get_adapter_client(env);
 
         Ok(client.read_price_data_for_feed(&feed_id))
     }
+}
+
+fn get_adapter_client(env: &Env) -> RedStoneAdapterClient {
+    let adapter_address = Address::from_str(env, ADAPTER_ADDRESS);
+
+    RedStoneAdapterClient::new(env, &adapter_address)
 }
 
 fn extend_instance_storage(env: &Env) {
