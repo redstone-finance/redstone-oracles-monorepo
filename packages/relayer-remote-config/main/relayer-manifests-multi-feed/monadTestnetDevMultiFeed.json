@@ -1,0 +1,16 @@
+{
+  "chain": {
+    "name": "monadTestnet",
+    "id": 10143
+  },
+  "adapterContract": "0xf0DEbDAE819b354D076b0D162e399BE013A856d3",
+  "adapterContractType": "multi-feed",
+  "dataServiceId": "redstone-primary-demo",
+  "updateTriggers": {
+    "timeSinceLastUpdateInMilliseconds": 0
+  },
+  "priceFeeds": {
+    "ETH": {},
+    "BTC": {}
+  }
+}
