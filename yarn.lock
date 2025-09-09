@@ -11282,6 +11282,7 @@ __metadata:
     dotenv: "npm:^16.0.3"
     ethers-v6: "npm:ethers@6.13.5"
     node-schedule: "npm:^2.1.1"
+    zod: "npm:^3.22.4"
   languageName: unknown
   linkType: soft
 
