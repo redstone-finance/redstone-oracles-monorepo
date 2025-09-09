@@ -2,12 +2,15 @@ import {
   StellarContractConnector,
   StellarRpcClient,
 } from "@redstone-finance/stellar-connector";
-import { rpc } from "@stellar/stellar-sdk";
+import { Keypair, rpc } from "@stellar/stellar-sdk";
 import { NonEvmBlockchainService } from "./NonEvmBlockchainService";
 
 export class StellarBlockchainService extends NonEvmBlockchainService {
-  constructor(private client: StellarRpcClient) {
-    super(new StellarContractConnector(client));
+  constructor(
+    private client: StellarRpcClient,
+    keypair?: Keypair
+  ) {
+    super(new StellarContractConnector(client, keypair));
   }
 
   async getTimeForBlock(sequence: number) {
