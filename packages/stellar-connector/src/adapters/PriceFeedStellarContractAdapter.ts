@@ -24,12 +24,8 @@ export class PriceFeedStellarContractAdapter
     return await this.feedId();
   }
 
-  async init(owner: string, feedId: string, adapterContractId: string) {
-    return await this.initContract(
-      owner,
-      XdrUtils.stringToScVal(feedId),
-      XdrUtils.addressToScVal(adapterContractId)
-    );
+  async init(owner: string, feedId: string) {
+    return await this.initContract(owner, XdrUtils.stringToScVal(feedId));
   }
 
   async decimals() {

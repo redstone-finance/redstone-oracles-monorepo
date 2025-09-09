@@ -10,7 +10,6 @@ import {
 import {
   loadContractId,
   loadContractName,
-  readDeployDir,
   readNetwork,
   readUrl,
   wasmFilePath,
@@ -33,7 +32,7 @@ async function sampleUpgrade(contractId = loadContractId()) {
     txDeliveryMan
   );
 
-  execSync(`make -C ${readDeployDir()} build`, { stdio: "inherit" });
+  execSync(`make build`, { stdio: "inherit" });
 
   const contractName = loadContractName();
   const wasmHash = await deployer.upload(wasmFilePath(contractName));

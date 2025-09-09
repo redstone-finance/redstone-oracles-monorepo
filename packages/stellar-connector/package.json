@@ -12,7 +12,7 @@
     "build-dev": "yarn global:tsc --build tsconfig.json",
     "lint": "yarn global:eslint .",
     "lint:fix": "yarn global:eslint --fix .",
-    "test": "make -C stellar build && yarn global:jest:cov --runInBand",
+    "test": "make build && yarn global:jest:cov --runInBand",
     "preversion": "yarn build",
     "pack-package": "yarn build && cd dist && npm pack",
     "convert-keys": "yarn global:ts-node scripts/convert-keys.ts",

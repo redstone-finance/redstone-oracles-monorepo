@@ -1,42 +1,46 @@
-DATA_DIR=../../sdk/scripts/payload-generator
+sinclude .env
+export
+
+DATA_DIR=../sdk/scripts/payload-generator
 DATA_NAME=stellar
 DATA_CAT=$(shell cat ${DATA_DIR}/data/${DATA_NAME}.hex)
+
 FEED_ID=BTC
 FEED_IDS="$(FEED_ID)", "ETH"
+ACCOUNT=stellar
+ADAPTER_ID=CB373ZHZJ75K34RCEEHGTSWKRR53ROJVO6DROQODGIZ5DLQEJZLEWDDC
+
+DEPLOY_DIR ?= "stellar"
 
 WASM_TARGET=wasm32v1-none
 ADAPTER_CONTRACT=redstone_adapter
 PRICE_FEED_CONTRACT=redstone_price_feed
 NIGHTLY=nightly-2025-04-29
 
-NETWORK=testnet
-ACCOUNT=stellar
-ADAPTER_ID=
-
 .PHONY: fmt check test build clippy build all-checks
 
 setup-env:
-	rustup target add $(WASM_TARGET)
-	rustup toolchain install $(NIGHTLY) --component rustfmt,clippy
-	cargo install cargo-machete --version 0.8.0 --locked
+	cd $(DEPLOY_DIR) && rustup target add $(WASM_TARGET)
+	cd $(DEPLOY_DIR) && rustup toolchain install $(NIGHTLY) --component rustfmt,clippy
+	cd $(DEPLOY_DIR) && cargo install cargo-machete --version 0.8.0 --locked
 
 unused-deps:
 	cargo machete --with-metadata
 
 fix-unused-deps:
-	cargo machete --fix
+	cd $(DEPLOY_DIR) && cargo machete --fix
 
 fmt:
-	cargo +$(NIGHTLY) fmt --all
+	cd $(DEPLOY_DIR) && cargo +$(NIGHTLY) fmt --all
 
 check:
-	cargo +$(NIGHTLY) fmt --all --check
+	cd $(DEPLOY_DIR) && cargo +$(NIGHTLY) fmt --all --check
 
 clippy:
-	cargo clippy --all-targets --all-features -- --no-deps -D warnings
+	cd $(DEPLOY_DIR) && cargo clippy --all-targets --all-features -- --no-deps -D warnings
 
 test:
-	cargo test --all-targets --all-features
+	cd $(DEPLOY_DIR) && cargo test --all-targets --all-features
 
 all-checks: check clippy test build unused-deps
 
@@ -46,16 +50,16 @@ account:
 	stellar keys generate --global $(ACCOUNT) --network $(NETWORK) --fund
 
 build: setup-env
-	stellar contract build
-	stellar contract optimize \
+	cd $(DEPLOY_DIR) && stellar contract build
+	cd $(DEPLOY_DIR) && stellar contract optimize \
 		--wasm target/$(WASM_TARGET)/release/$(ADAPTER_CONTRACT).wasm \
 		--wasm-out target/$(WASM_TARGET)/release/$(ADAPTER_CONTRACT).wasm
-	stellar contract optimize \
+	cd $(DEPLOY_DIR) && stellar contract optimize \
 		--wasm target/$(WASM_TARGET)/release/$(PRICE_FEED_CONTRACT).wasm \
 		--wasm-out target/$(WASM_TARGET)/release/$(PRICE_FEED_CONTRACT).wasm
 
 deploy: build
-	adapter_id=`stellar contract deploy \
+	cd $(DEPLOY_DIR) && adapter_id=`stellar contract deploy \
 	  --wasm target/$(WASM_TARGET)/release/$(ADAPTER_CONTRACT).wasm \
 	  --source $(ACCOUNT) \
 	  --network $(NETWORK) \
@@ -71,11 +75,11 @@ deploy: build
 	echo "ADAPTER_ID: $${adapter_id}"
 
 upgrade: build
-	hash=`stellar contract upload \
+	cd $(DEPLOY_DIR) && hash=`stellar contract upload \
 	  --wasm target/$(WASM_TARGET)/release/$(ADAPTER_CONTRACT).wasm \
 	  --source $(ACCOUNT) \
 	  --network $(NETWORK)` && \
-	stellar contract invoke \
+	cd $(DEPLOY_DIR) && stellar contract invoke \
 	  --id $(ADAPTER_ID) \
 	  --source $(ACCOUNT) \
 	  --network $(NETWORK) \
@@ -85,7 +89,7 @@ upgrade: build
 	  --new_wasm_hash $${hash}
 
 write_prices: prepare_data
-	stellar contract invoke \
+	cd $(DEPLOY_DIR) && stellar contract invoke \
 	  --id $(ADAPTER_ID) \
 	  --source $(ACCOUNT) \
 	  --network $(NETWORK) \
@@ -97,7 +101,7 @@ write_prices: prepare_data
 	  --payload $(DATA_CAT)
 
 get_prices: prepare_data
-	stellar contract invoke \
+	cd $(DEPLOY_DIR) && stellar contract invoke \
 	  --id $(ADAPTER_ID) \
 	  --source $(ACCOUNT) \
 	  --network $(NETWORK) \
@@ -108,7 +112,7 @@ get_prices: prepare_data
 	  --payload $(DATA_CAT)
 
 read_prices:
-	stellar contract invoke \
+	cd $(DEPLOY_DIR) && stellar contract invoke \
 	  --id $(ADAPTER_ID) \
 	  --source $(ACCOUNT) \
 	  --network $(NETWORK) \
@@ -118,7 +122,7 @@ read_prices:
 	  --feed_ids '[ $(FEED_IDS) ]'
 
 read_timestamp:
-	stellar contract invoke \
+	cd $(DEPLOY_DIR) && stellar contract invoke \
 	  --id $(ADAPTER_ID) \
 	  --source $(ACCOUNT) \
 	  --network $(NETWORK) \
@@ -128,7 +132,7 @@ read_timestamp:
 	  --feed_id $(FEED_ID)
 
 read_price_data:
-	stellar contract invoke \
+	cd $(DEPLOY_DIR) && stellar contract invoke \
 	  --id $(ADAPTER_ID) \
 	  --source $(ACCOUNT) \
 	  --network $(NETWORK) \
@@ -137,5 +141,13 @@ read_price_data:
 	  read_price_data \
 	  --feed_ids '[ $(FEED_IDS) ]'
 
+set-adapter-address:
+	@if [ -z "$(ADDRESS)" ]; then \
+		echo "ADDRESS not set"; \
+		exit 1; \
+	fi
+	@sed -i '' 's/ADAPTER_ADDRESS: &str = "[^"]*"/ADAPTER_ADDRESS: \&str = "$(ADDRESS)"/' $(DEPLOY_DIR)/contracts/redstone-price-feed/src/config.rs
+
 prepare_data:
 	make -C $(DATA_DIR) DATA_NAME=$(DATA_NAME) prepare_data
+

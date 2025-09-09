@@ -1,7 +1,6 @@
-target
+**/target
+*
+**/.soroban
+**/.stellar
 
-.stellar
-
-/stellar/*.custom
-/stellar/*.testnet
-/stellar/*.mainnet
+**/*.custom
