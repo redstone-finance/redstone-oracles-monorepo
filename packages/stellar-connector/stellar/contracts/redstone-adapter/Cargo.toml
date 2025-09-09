@@ -1,17 +1,19 @@
 [package]
-name = "redstone-adapter"
-version = "1.0.0"
 edition = "2021"
+name = "redstone-adapter"
 publish = false
+version = "1.0.0"
 
 [lib]
-crate-type = ["lib", "cdylib"]
+crate-type = ["cdylib", "lib"]
 doctest = false
 
 [dependencies]
 common = { workspace = true }
 hex-literal = { workspace = true }
-redstone = { workspace = true, features = ["soroban"] }
+redstone = { workspace = true, default-features = false, features = [
+  "soroban",
+] }
 soroban-sdk = { workspace = true, features = ["alloc"] }
 
 [dev-dependencies]
