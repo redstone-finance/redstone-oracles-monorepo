@@ -17,7 +17,7 @@ export class PriceAdapterStellarContractConnector extends StellarContractConnect
     keypair?: Keypair,
     txDeliveryManConfig?: Partial<StellarTxDeliveryManConfig>
   ) {
-    super(rpcClient);
+    super(rpcClient, keypair);
 
     const txDeliveryMan = keypair
       ? new StellarTxDeliveryMan(rpcClient, keypair, txDeliveryManConfig)

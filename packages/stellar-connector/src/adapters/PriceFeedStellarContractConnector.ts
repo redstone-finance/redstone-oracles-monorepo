@@ -13,7 +13,7 @@ export class PriceFeedStellarContractConnector extends StellarContractConnector<
     contractAddress: string,
     keypair: Keypair
   ) {
-    super(rpcClient);
+    super(rpcClient, keypair);
 
     this.priceFeedAdapter = new PriceFeedStellarContractAdapter(
       rpcClient,

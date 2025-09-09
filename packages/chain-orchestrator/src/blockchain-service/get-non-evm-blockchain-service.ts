@@ -4,7 +4,10 @@ import {
   makeKeypair as makeSolanaKeypair,
   SolanaConnectionBuilder,
 } from "@redstone-finance/solana-connector";
-import { StellarClientBuilder } from "@redstone-finance/stellar-connector";
+import {
+  makeKeypair as makeStellarKeypair,
+  StellarClientBuilder,
+} from "@redstone-finance/stellar-connector";
 import {
   makeSuiKeypair,
   SuiClientBuilder,
@@ -67,7 +70,10 @@ export function getNonEvmBlockchainService(
         .withRpcUrls(rpcUrls)
         .withQuarantineEnabled()
         .build();
-      return new StellarBlockchainService(client);
+      const keypair = privateKey
+        ? makeStellarKeypair(privateKey.value)
+        : undefined;
+      return new StellarBlockchainService(client, keypair);
     }
     case "fuel":
       throw new Error(`Not supported for ${chainType}`);
