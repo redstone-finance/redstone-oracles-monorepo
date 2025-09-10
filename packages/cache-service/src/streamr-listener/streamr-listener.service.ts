@@ -1,9 +1,6 @@
 import { Injectable, Logger } from "@nestjs/common";
 import { Cron } from "@nestjs/schedule";
-import {
-  getOracleRegistryState,
-  RedstoneOraclesState,
-} from "@redstone-finance/sdk";
+import { getOracleRegistryState, RedstoneOraclesState } from "@redstone-finance/sdk";
 import {
   decompressMsg,
   doesStreamExist,
@@ -47,8 +44,7 @@ export class StreamrListenerService {
   async syncStreamrListening() {
     this.logger.log(`Syncing streamr listening`);
     const oracleRegistryState = await getOracleRegistryState();
-    const nodeEvmAddresses =
-      this.prepareActiveNodeEvmAddresses(oracleRegistryState);
+    const nodeEvmAddresses = this.prepareActiveNodeEvmAddresses(oracleRegistryState);
 
     // Start listening to new nodes' streams
     for (const nodeEvmAddress of nodeEvmAddresses) {
@@ -58,12 +54,9 @@ export class StreamrListenerService {
     }
 
     // Stop listening to removed nodes' streams
-    for (const subscribedNodeEvmAddress of Object.keys(
-      this.subscriptionsState
-    )) {
+    for (const subscribedNodeEvmAddress of Object.keys(this.subscriptionsState)) {
       const nodeIsRegistered = nodeEvmAddresses.some(
-        (address) =>
-          address.toLowerCase() === subscribedNodeEvmAddress.toLowerCase()
+        (address) => address.toLowerCase() === subscribedNodeEvmAddress.toLowerCase()
       );
       if (!nodeIsRegistered) {
         this.cancelListeningToNodeStream(subscribedNodeEvmAddress);
@@ -81,30 +74,22 @@ export class StreamrListenerService {
     }
 
     this.logger.log(`Stream exists. Connecting to: ${streamId}`);
-    const subscription = await this.streamrClient.subscribe(
-      streamId,
-      async (message: unknown) => {
-        try {
-          this.logger.log(`Received a message from stream: ${streamId}`);
-          const dataPackagesReceived = decompressMsg<ReceivedDataPackage[]>(
-            message as Uint8Array
-          );
-          const dataPackagesToSave =
-            await DataPackagesService.prepareReceivedDataPackagesForBulkSaving(
-              dataPackagesReceived,
-              nodeEvmAddress
-            );
-          this.logger.log(`Data packages parsed for node: ${nodeEvmAddress}`);
-
-          await this.dataPackageService.broadcast(
-            dataPackagesToSave,
+    const subscription = await this.streamrClient.subscribe(streamId, async (message: unknown) => {
+      try {
+        this.logger.log(`Received a message from stream: ${streamId}`);
+        const dataPackagesReceived = decompressMsg<ReceivedDataPackage[]>(message as Uint8Array);
+        const dataPackagesToSave =
+          await DataPackagesService.prepareReceivedDataPackagesForBulkSaving(
+            dataPackagesReceived,
             nodeEvmAddress
           );
-        } catch (e) {
-          this.logger.error("Error occurred ", (e as Error).stack);
-        }
+        this.logger.log(`Data packages parsed for node: ${nodeEvmAddress}`);
+
+        await this.dataPackageService.broadcast(dataPackagesToSave, nodeEvmAddress);
+      } catch (e) {
+        this.logger.error("Error occurred ", (e as Error).stack);
       }
-    );
+    });
     this.subscriptionsState[nodeEvmAddress] = subscription;
   }
 
@@ -123,17 +108,13 @@ export class StreamrListenerService {
     return config.allowedStreamrDataServiceIds;
   }
 
-  private prepareActiveNodeEvmAddresses(
-    oracleRegistryState: RedstoneOraclesState
-  ): string[] {
+  private prepareActiveNodeEvmAddresses(oracleRegistryState: RedstoneOraclesState): string[] {
     const nodes: NodeLike[] = Object.values(oracleRegistryState.nodes);
     this.logger.log(`Found ${nodes.length} node evm addresses`);
 
     const allowedDataServiceIds = this.getAllowedDataServiceIds();
     if (allowedDataServiceIds.length === 0) {
-      this.logger.log(
-        `Filter is empty - allowing all of the node evm addresses`
-      );
+      this.logger.log(`Filter is empty - allowing all of the node evm addresses`);
       return nodes.map(({ evmAddress }) => evmAddress);
     }
 
@@ -145,9 +126,7 @@ export class StreamrListenerService {
       }
     }
 
-    this.logger.log(
-      `${result.length} of the node evm addresses remained after filtering them out`
-    );
+    this.logger.log(`${result.length} of the node evm addresses remained after filtering them out`);
 
     return result;
   }

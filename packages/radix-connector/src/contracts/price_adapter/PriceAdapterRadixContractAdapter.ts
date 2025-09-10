@@ -9,10 +9,7 @@ import { RadixClient } from "../../radix/RadixClient";
 import { RadixContractAdapter } from "../../radix/RadixContractAdapter";
 import { RadixInvocation } from "../../radix/RadixInvocation";
 import { NonFungibleGlobalIdInput } from "../../radix/utils";
-import {
-  GetPricesRadixMethod,
-  PricesAndTimestamp,
-} from "./methods/GetPricesRadixMethod";
+import { GetPricesRadixMethod, PricesAndTimestamp } from "./methods/GetPricesRadixMethod";
 import { ReadPriceDataRadixMethod } from "./methods/ReadPriceDataRadixMethod";
 import { ReadPricesRadixMethod } from "./methods/ReadPricesRadixMethod";
 import { ReadTimestampRadixMethod } from "./methods/ReadTimestampRadixMethod";
@@ -29,9 +26,7 @@ export class PriceAdapterRadixContractAdapter
     return await this.client.getAccountAddress();
   }
 
-  async getPricesFromPayload(
-    paramsProvider: ContractParamsProvider
-  ): Promise<bigint[]> {
+  async getPricesFromPayload(paramsProvider: ContractParamsProvider): Promise<bigint[]> {
     return (
       await this.client.call(
         new GetPricesRadixMethod(
@@ -47,11 +42,9 @@ export class PriceAdapterRadixContractAdapter
     paramsProvider: ContractParamsProvider
   ): Promise<string | bigint[]> {
     const metadataTimestamp = Date.now();
-    const provider = async () =>
-      await this.getWritePricesMethod(paramsProvider, metadataTimestamp);
+    const provider = async () => await this.getWritePricesMethod(paramsProvider, metadataTimestamp);
 
-    return (await this.client.callWithProvider<PricesAndTimestamp>(provider))
-      .values;
+    return (await this.client.callWithProvider<PricesAndTimestamp>(provider)).values;
   }
 
   private async getWritePricesMethod(
@@ -71,20 +64,12 @@ export class PriceAdapterRadixContractAdapter
           payloadData,
           proofBadge
         )
-      : new WritePricesRadixMethod(
-          this.componentId,
-          paramsProvider.getDataFeedIds(),
-          payloadData
-        );
+      : new WritePricesRadixMethod(this.componentId, paramsProvider.getDataFeedIds(), payloadData);
   }
 
   async getUniqueSignerThreshold(stateVersion?: number): Promise<number> {
     return Number(
-      await this.client.readValue(
-        this.componentId,
-        "signer_count_threshold",
-        stateVersion
-      )
+      await this.client.readValue(this.componentId, "signer_count_threshold", stateVersion)
     );
   }
 
@@ -95,15 +80,10 @@ export class PriceAdapterRadixContractAdapter
     if (this.readMode === "ReadFromStorage") {
       const priceData = await this.readPriceData(stateVersion);
 
-      return paramsProvider
-        .getDataFeedIds()
-        .map((feedId) => priceData[feedId].lastValue);
+      return paramsProvider.getDataFeedIds().map((feedId) => priceData[feedId].lastValue);
     } else {
       return await this.client.call(
-        new ReadPricesRadixMethod(
-          this.componentId,
-          paramsProvider.getDataFeedIds()
-        )
+        new ReadPricesRadixMethod(this.componentId, paramsProvider.getDataFeedIds())
       );
     }
   }
@@ -114,11 +94,7 @@ export class PriceAdapterRadixContractAdapter
 
       return Number(priceData[feedId!].lastDataPackageTimestampMS);
     } else {
-      return Number(
-        await this.client.call(
-          new ReadTimestampRadixMethod(this.componentId, feedId)
-        )
-      );
+      return Number(await this.client.call(new ReadTimestampRadixMethod(this.componentId, feedId)));
     }
   }
 
@@ -131,10 +107,7 @@ export class PriceAdapterRadixContractAdapter
     return priceData[feedId!].lastBlockTimestampMS;
   }
 
-  async readContractData(
-    feedIds: string[],
-    stateVersion?: number
-  ): Promise<ContractData> {
+  async readContractData(feedIds: string[], stateVersion?: number): Promise<ContractData> {
     if (this.readMode === "ReadFromStorage") {
       const priceData = await this.readPriceData(stateVersion);
 
@@ -145,12 +118,7 @@ export class PriceAdapterRadixContractAdapter
       );
 
       return Object.fromEntries(
-        _.zip(
-          feedIds,
-          priceData.map(
-            PriceAdapterRadixContractAdapter.convertRawToLastDetails
-          )
-        )
+        _.zip(feedIds, priceData.map(PriceAdapterRadixContractAdapter.convertRawToLastDetails))
       ) as ContractData;
     }
   }
@@ -168,9 +136,7 @@ export class PriceAdapterRadixContractAdapter
     );
   }
 
-  static convertRawToLastDetails(
-    data: [BigNumberish, BigNumberish, BigNumberish]
-  ) {
+  static convertRawToLastDetails(data: [BigNumberish, BigNumberish, BigNumberish]) {
     return {
       lastDataPackageTimestampMS: Number(data[2]),
       lastBlockTimestampMS: Number(data[1]),
@@ -205,8 +171,7 @@ export class PriceAdapterRadixContractAdapter
 
   private async makeTrustedUpdaterProofBadge() {
     const accountAddress = await this.client.getAccountAddress();
-    const trustedUpdaterProofBadge =
-      await this.getTrustedUpdaterResourceBadge(accountAddress);
+    const trustedUpdaterProofBadge = await this.getTrustedUpdaterResourceBadge(accountAddress);
 
     if (!trustedUpdaterProofBadge) {
       return undefined;

@@ -48,9 +48,7 @@ export class InfluxService {
     })();
   }
 
-  async filterByRetentionPeriod<T extends { timestampMilliseconds: number }>(
-    data: T[]
-  ) {
+  async filterByRetentionPeriod<T extends { timestampMilliseconds: number }>(data: T[]) {
     const retentionPeriod = (await this.getBucketRetentionPeriod()) * 1000;
 
     console.log(`Filtering data by retention period: ${retentionPeriod} [ms]`);
@@ -60,9 +58,7 @@ export class InfluxService {
     }
 
     const now = Date.now();
-    const newData = data.filter(
-      (entry) => now - entry.timestampMilliseconds < retentionPeriod
-    );
+    const newData = data.filter((entry) => now - entry.timestampMilliseconds < retentionPeriod);
 
     console.log(`Filtered-out item count: ${data.length - newData.length}`);
 

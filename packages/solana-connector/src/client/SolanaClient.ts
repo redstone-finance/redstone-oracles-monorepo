@@ -107,9 +107,7 @@ export class SolanaClient {
     const status = await this.connection.getSignatureStatus(signature);
 
     return {
-      isFinished: ["confirmed", "finalized"].includes(
-        status.value?.confirmationStatus ?? ""
-      ),
+      isFinished: ["confirmed", "finalized"].includes(status.value?.confirmationStatus ?? ""),
       error: status.value?.err ?? undefined,
     };
   }
@@ -118,16 +116,11 @@ export class SolanaClient {
     return await this.connection.getSlot();
   }
 
-  async getRecentPrioritizationFees(
-    config?: GetRecentPrioritizationFeesConfig
-  ) {
+  async getRecentPrioritizationFees(config?: GetRecentPrioritizationFeesConfig) {
     return await this.connection.getRecentPrioritizationFees(config);
   }
 
-  async sendTransaction(
-    transaction: VersionedTransaction,
-    options?: SendOptions
-  ) {
+  async sendTransaction(transaction: VersionedTransaction, options?: SendOptions) {
     return await this.connection.sendTransaction(transaction, options);
   }
 
@@ -141,9 +134,7 @@ export class SolanaClient {
       slot,
       `${description ?? ""} in slot ${slot}`,
       SOLANA_SLOT_TIME_INTERVAL_MS,
-      Math.floor(
-        MultiExecutor.SINGLE_EXECUTION_TIMEOUT_MS / SOLANA_SLOT_TIME_INTERVAL_MS
-      )
+      Math.floor(MultiExecutor.SINGLE_EXECUTION_TIMEOUT_MS / SOLANA_SLOT_TIME_INTERVAL_MS)
     );
 
     return { minContextSlot: slot };

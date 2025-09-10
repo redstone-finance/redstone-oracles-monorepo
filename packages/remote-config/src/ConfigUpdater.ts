@@ -82,10 +82,7 @@ export class ConfigUpdater extends EventEmitter {
           const { configuration, signatures } = await this.configLoader.load();
           const configHash = ConfigUpdater.calculateConfigHash(configuration);
           if (this.signatures.required) {
-            const verificationError = this.verifySignatures(
-              configHash,
-              signatures
-            );
+            const verificationError = this.verifySignatures(configHash, signatures);
             if (verificationError) {
               logger.error(verificationError);
               this.history.add({
@@ -96,10 +93,7 @@ export class ConfigUpdater extends EventEmitter {
               return;
             }
           }
-          this.transactionalWrite(
-            configuration,
-            `${HISTORICAL_CONFIG_DIR_PREFIX}${configHash}`
-          );
+          this.transactionalWrite(configuration, `${HISTORICAL_CONFIG_DIR_PREFIX}${configHash}`);
 
           this.history.add({
             configHash,
@@ -136,10 +130,7 @@ export class ConfigUpdater extends EventEmitter {
     return calculateBuffersHash(loadedConfig.map(({ content }) => content));
   }
 
-  private verifySignatures(
-    configHash: string,
-    signatures: FileData[]
-  ): string | null {
+  private verifySignatures(configHash: string, signatures: FileData[]): string | null {
     if (signatures.length < this.signatures.minRequiredSignatures) {
       return `Not enough signatures, expected: ${this.signatures.minRequiredSignatures},
        actual: ${signatures.length}`;
@@ -155,9 +146,7 @@ export class ConfigUpdater extends EventEmitter {
         continue;
       }
       if (!this.signatures.trustedAddresses.has(signerAddress)) {
-        logger.warn(
-          `Signing address ${signerAddress} is not among trusted addresses.`
-        );
+        logger.warn(`Signing address ${signerAddress} is not among trusted addresses.`);
         continue;
       }
       logger.debug(`Signature for ${signerAddress} verified properly`);
@@ -171,10 +160,7 @@ export class ConfigUpdater extends EventEmitter {
     return null;
   }
 
-  static extractSignerAddress(
-    signature: string,
-    configHash: string
-  ): string | null {
+  static extractSignerAddress(signature: string, configHash: string): string | null {
     try {
       if (!signature.startsWith("0x")) {
         signature = "0x" + signature;
@@ -183,9 +169,7 @@ export class ConfigUpdater extends EventEmitter {
 
       return ethers.utils.verifyMessage(configHash, signature);
     } catch (e) {
-      logger.error(
-        `Error while verifying signature ${RedstoneCommon.stringifyError(e)}`
-      );
+      logger.error(`Error while verifying signature ${RedstoneCommon.stringifyError(e)}`);
       return null;
     }
   }
@@ -206,10 +190,7 @@ export class ConfigUpdater extends EventEmitter {
       ConfigUpdater.createSymlink(this.configBasePath, tempDir);
       logger.debug("Config files update transaction committed.");
     } catch (err) {
-      logger.error(
-        "Error during config update transaction, rolling back:",
-        err
-      );
+      logger.error("Error during config update transaction, rolling back:", err);
       fs.rmSync(tempDir, { recursive: true, force: true });
       throw err;
     }
@@ -270,9 +251,7 @@ export class ConfigUpdater extends EventEmitter {
       // it might be the case in consecutive runs of the node - either
       // within the Docker container or directly on the host machine.
       if (fs.existsSync(`${BACKUP_CONFIG_DIR}`)) {
-        logger.warn(
-          "Backup config folder already exists, not creating a new one"
-        );
+        logger.warn("Backup config folder already exists, not creating a new one");
         return calculateDirectoryHash(BACKUP_CONFIG_DIR);
       }
 
@@ -282,10 +261,7 @@ export class ConfigUpdater extends EventEmitter {
        * 2. for a node running on the host machine - /(...)/redstone-monorepo-priv/packages/node-remote-config
        */
       const configLocation = findDirOrThrow(this.configBasePath);
-      const sourceBackupPath = path.join(
-        configLocation,
-        this.backupConfigSourceFolder
-      );
+      const sourceBackupPath = path.join(configLocation, this.backupConfigSourceFolder);
       logger.info("Local source backup path", sourceBackupPath);
       const configHash = calculateDirectoryHash(sourceBackupPath);
       logger.info("Backup configuration hash", configHash);

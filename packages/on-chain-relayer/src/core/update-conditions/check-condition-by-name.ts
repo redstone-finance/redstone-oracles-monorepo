@@ -18,26 +18,14 @@ export const checkConditionByName = async (
   context: ShouldUpdateContext,
   config: RelayerConfig
 ): Promise<ConditionCheckResponse> => {
-  const lastRoundDetails = getLastRoundDetails(
-    context.dataFromContract,
-    dataFeedId,
-    true
-  );
+  const lastRoundDetails = getLastRoundDetails(context.dataFromContract, dataFeedId, true);
 
   switch (name) {
     case "time":
-      return timeUpdateCondition(
-        dataFeedId,
-        lastRoundDetails.lastBlockTimestampMS,
-        config
-      );
+      return timeUpdateCondition(dataFeedId, lastRoundDetails.lastBlockTimestampMS, config);
 
     case "cron":
-      return cronCondition(
-        dataFeedId,
-        lastRoundDetails.lastBlockTimestampMS,
-        config
-      );
+      return cronCondition(dataFeedId, lastRoundDetails.lastBlockTimestampMS, config);
 
     case "value-deviation":
       return await valueDeviationCondition(

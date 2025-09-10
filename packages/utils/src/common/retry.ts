@@ -4,10 +4,7 @@ import { sleep } from "./time";
 
 const logger = loggerFactory("retry");
 
-export type RetryConfig<
-  P extends unknown[] = [],
-  R extends Promise<unknown> = Promise<unknown>,
-> = {
+export type RetryConfig<P extends unknown[] = [], R extends Promise<unknown> = Promise<unknown>> = {
   fn: (...args: P) => R;
   fnName?: string;
   maxRetries: number;
@@ -25,13 +22,9 @@ export class UnrecoverableAggregateError extends AggregateError {
   unrecoverable?: boolean = true;
 }
 
-export function retry<P extends unknown[], R extends Promise<unknown>>(
-  config: RetryConfig<P, R>
-) {
+export function retry<P extends unknown[], R extends Promise<unknown>>(config: RetryConfig<P, R>) {
   if (config.maxRetries === 0) {
-    throw new Error(
-      `Setting 'config.maxRetries' to 0 will never call the underlying function`
-    );
+    throw new Error(`Setting 'config.maxRetries' to 0 will never call the underlying function`);
   }
   return async (...args: P): Promise<Awaited<R>> => {
     const fnName = config.fnName ?? config.fn.name;
@@ -57,18 +50,13 @@ export function retry<P extends unknown[], R extends Promise<unknown>>(
             ? Math.pow(config.backOff.backOffBase, i - 1)
             : 1;
           const sleepTime = config.waitBetweenMs * sleepTimeBackOffMultiplier;
-          config.logger?.(
-            `Waiting ${sleepTime / 1000} s. for the next retry...`
-          );
+          config.logger?.(`Waiting ${sleepTime / 1000} s. for the next retry...`);
 
           await sleep(sleepTime);
         }
       }
     }
-    throw new AggregateError(
-      errors,
-      `Retry failed after ${i} attempts of ${fnName}`
-    );
+    throw new AggregateError(errors, `Retry failed after ${i} attempts of ${fnName}`);
   };
 }
 

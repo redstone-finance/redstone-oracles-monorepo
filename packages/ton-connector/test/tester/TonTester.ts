@@ -13,9 +13,7 @@ export class TonTester extends TonContract {
     uniqueSignersThreshold: number,
     currentTimestamp: number
   ) {
-    const payloadCell = createPayloadCell(
-      await paramsProvider.getPayloadHex(false)
-    );
+    const payloadCell = createPayloadCell(await paramsProvider.getPayloadHex(false));
 
     const dataFeedIds = createTupleItems(paramsProvider.getHexlifiedFeedIds());
 

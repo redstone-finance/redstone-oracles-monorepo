@@ -226,11 +226,7 @@
       "source": ["ethereum-evm-fetcher-curve"]
     },
     "LUSD": {
-      "source": [
-        "curve-ethereum-3crv",
-        "uniswap-v3-ethereum-usdc-500",
-        "velodrome-optimism-usdc"
-      ],
+      "source": ["curve-ethereum-3crv", "uniswap-v3-ethereum-usdc-500", "velodrome-optimism-usdc"],
       "deviationCheck": {
         "deviationWithRecentValues": {
           "maxPercent": 5,
@@ -280,11 +276,7 @@
       ]
     },
     "C3M": {
-      "source": [
-        "twelve-data",
-        "financialmodelingprep-usd",
-        "alphavantage-stock"
-      ]
+      "source": ["twelve-data", "financialmodelingprep-usd", "alphavantage-stock"]
     },
     "USDC.USDT": {
       "source": ["non-usd-based"],
@@ -341,11 +333,7 @@
       "source": ["coinmarketcap", "gate-usdt", "kucoin-usdt", "bitget-usdt"]
     },
     "ETHx": {
-      "source": [
-        "balancer-arbitrumone-wsteth",
-        "balancer-ethereum-wsteth",
-        "curve-ethereum-eth"
-      ]
+      "source": ["balancer-arbitrumone-wsteth", "balancer-ethereum-wsteth", "curve-ethereum-eth"]
     },
     "ETHx/ETH": {
       "source": ["non-usd-based"]
@@ -400,11 +388,7 @@
     },
     "osETH": {
       "priceAggregator": "depth",
-      "source": [
-        "balancer-ethereum-weth",
-        "balancer-arbitrumone-weth",
-        "curve-ethereum-reth"
-      ]
+      "source": ["balancer-ethereum-weth", "balancer-arbitrumone-weth", "curve-ethereum-reth"]
     },
     "osETH/ETH": {
       "source": ["non-usd-based"]
@@ -488,14 +472,7 @@
       ]
     },
     "BRL": {
-      "source": [
-        "binance-api",
-        "bitso-api",
-        "ecb",
-        "kucoin-api",
-        "mercado-api",
-        "twelve-data"
-      ]
+      "source": ["binance-api", "bitso-api", "ecb", "kucoin-api", "mercado-api", "twelve-data"]
     },
     "EUR": {
       "source": [
@@ -554,11 +531,7 @@
       ]
     },
     "ALUSD": {
-      "source": [
-        "curve-ethereum-3crv",
-        "curve-ethereum-crvfrax",
-        "velodrome-optimism-usdc"
-      ],
+      "source": ["curve-ethereum-3crv", "curve-ethereum-crvfrax", "velodrome-optimism-usdc"],
       "deviationCheck": {
         "deviationWithRecentValues": {
           "maxPercent": 5,
@@ -589,12 +562,7 @@
       ]
     },
     "CANTO": {
-      "source": [
-        "coingecko",
-        "canto-canto-note",
-        "canto-canto-atom",
-        "canto-canto-eth"
-      ]
+      "source": ["coingecko", "canto-canto-note", "canto-canto-atom", "canto-canto-eth"]
     },
     "XAU": {
       "source": ["alltick-api", "financialmodelingprep-usd", "twelve-data"]
@@ -806,11 +774,7 @@
       ]
     },
     "USDM": {
-      "source": [
-        "curve-ethereum-3crv",
-        "curve-ethereum-sdai",
-        "curve-ethereum-crvusd"
-      ],
+      "source": ["curve-ethereum-3crv", "curve-ethereum-sdai", "curve-ethereum-crvusd"],
       "deviationCheck": {
         "deviationWithRecentValues": {
           "maxPercent": 5,
@@ -1157,34 +1121,16 @@
       "source": ["alphavantage-usd", "twelve-data", "financialmodelingprep-usd"]
     },
     "PHP": {
-      "source": [
-        "alphavantage-usd",
-        "twelve-data",
-        "ecb",
-        "financialmodelingprep-usd"
-      ]
+      "source": ["alphavantage-usd", "twelve-data", "ecb", "financialmodelingprep-usd"]
     },
     "COP": {
-      "source": [
-        "alphavantage-usd-reversed",
-        "twelve-data",
-        "financialmodelingprep-usd"
-      ]
+      "source": ["alphavantage-usd-reversed", "twelve-data", "financialmodelingprep-usd"]
     },
     "INR": {
-      "source": [
-        "alphavantage-usd",
-        "twelve-data",
-        "ecb",
-        "financialmodelingprep-usd"
-      ]
+      "source": ["alphavantage-usd", "twelve-data", "ecb", "financialmodelingprep-usd"]
     },
     "bsdETH": {
-      "source": [
-        "aerodrome-base-weth",
-        "aerodrome-cl-base-weth",
-        "uniswap-v3-base-weth-100"
-      ]
+      "source": ["aerodrome-base-weth", "aerodrome-cl-base-weth", "uniswap-v3-base-weth-100"]
     },
     "bsdETH/ETH": {
       "source": ["non-usd-based"]
@@ -1278,31 +1224,19 @@
       "source": ["ethereum-evm-fetcher-mantle-lsp-staking"]
     },
     "ISEI": {
-      "source": [
-        "dragonswap-v2-sei-wsei-500",
-        "dragonswap-sei-wsei",
-        "jellyverse-sei-wsei"
-      ]
+      "source": ["dragonswap-v2-sei-wsei-500", "dragonswap-sei-wsei", "jellyverse-sei-wsei"]
     },
     "pzETH_FUNDAMENTAL": {
       "source": ["ethereum-evm-fetcher-renzo"]
     },
     "pzETH": {
-      "source": [
-        "curve-ethereum-ezeth",
-        "curve-ethereum-wsteth",
-        "uniswap-v3-ethereum-wsteth-100"
-      ]
+      "source": ["curve-ethereum-ezeth", "curve-ethereum-wsteth", "uniswap-v3-ethereum-wsteth-100"]
     },
     "pzETH/ETH": {
       "source": ["non-usd-based"]
     },
     "USD3": {
-      "source": [
-        "curve-ethereum-sdai",
-        "curve-ethereum-susde",
-        "curve-ethereum-usdm"
-      ],
+      "source": ["curve-ethereum-sdai", "curve-ethereum-susde", "curve-ethereum-usdm"],
       "deviationCheck": {
         "deviationWithRecentValues": {
           "maxPercent": 5,

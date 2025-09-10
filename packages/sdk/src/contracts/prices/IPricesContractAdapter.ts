@@ -4,9 +4,7 @@ import { ContractParamsProvider } from "../ContractParamsProvider";
 export interface IPricesContractAdapter {
   // Reads on-chain the returned by paramsProvider RedStone payload data and returns aggregated price values
   // for the feeds passed through the paramsProvider. It doesn't modify the contract's storage.
-  getPricesFromPayload(
-    paramsProvider: ContractParamsProvider
-  ): Promise<bigint[]>;
+  getPricesFromPayload(paramsProvider: ContractParamsProvider): Promise<bigint[]>;
 
   // Reads on-chain the returned by paramsProvider RedStone payload data and writes aggregated price values
   // for the feeds passed through the paramsProvider to the contract's storage.
@@ -23,10 +21,7 @@ export interface IPricesContractAdapter {
 
   // Reads the timestamp of the lastly written values to the contract's storage.
   // It doesn't modify the contract's storage
-  readTimestampFromContract(
-    feedId?: string,
-    blockNumber?: number
-  ): Promise<number>;
+  readTimestampFromContract(feedId?: string, blockNumber?: number): Promise<number>;
 }
 
 export interface IExtendedPricesContractAdapter extends IPricesContractAdapter {
@@ -42,10 +37,6 @@ export interface IExtendedPricesContractAdapter extends IPricesContractAdapter {
   getSignerAddress(): Promise<string | undefined>;
 }
 
-export interface IMultiFeedPricesContractAdapter
-  extends IExtendedPricesContractAdapter {
-  readContractData(
-    feedIds: string[],
-    blockNumber?: number
-  ): Promise<ContractData>;
+export interface IMultiFeedPricesContractAdapter extends IExtendedPricesContractAdapter {
+  readContractData(feedIds: string[], blockNumber?: number): Promise<ContractData>;
 }

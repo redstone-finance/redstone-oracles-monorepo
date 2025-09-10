@@ -10,23 +10,14 @@ import { server } from "./mock-server";
 
 chai.use(chaiAsPromised);
 
-const dataFeedIdsB32 = [
-  utils.convertStringToBytes32("ETH"),
-  utils.convertStringToBytes32("BTC"),
-];
+const dataFeedIdsB32 = [utils.convertStringToBytes32("ETH"), utils.convertStringToBytes32("BTC")];
 
-const checkExpectedValues = async (
-  contract: SampleRedstoneConsumerNumericMockManyDataFeeds
-) => {
+const checkExpectedValues = async (contract: SampleRedstoneConsumerNumericMockManyDataFeeds) => {
   const firstValueFromContract = await contract.firstValue();
   const secondValueFromContract = await contract.secondValue();
 
-  expect(firstValueFromContract.toNumber()).to.be.equal(
-    expectedNumericValues["ETH"]
-  );
-  expect(secondValueFromContract.toNumber()).to.be.equal(
-    expectedNumericValues["BTC"]
-  );
+  expect(firstValueFromContract.toNumber()).to.be.equal(expectedNumericValues["ETH"]);
+  expect(secondValueFromContract.toNumber()).to.be.equal(expectedNumericValues["BTC"]);
 };
 
 const runTest = async (
@@ -54,10 +45,7 @@ const runTestWithManualPayload = async (
   contract: SampleRedstoneConsumerNumericMockManyDataFeeds,
   payload: string
 ) => {
-  const tx = await contract.save2ValuesInStorageWithManualPayload(
-    dataFeedIdsB32,
-    payload
-  );
+  const tx = await contract.save2ValuesInStorageWithManualPayload(dataFeedIdsB32, payload);
   await tx.wait();
   await checkExpectedValues(contract);
 };
@@ -79,11 +67,7 @@ describe("DataServiceWrapper", () => {
     });
 
     it("Should properly execute with one valid cache", async () => {
-      await runTest(
-        contract,
-        ["http://valid-cache.com"],
-        "mock-data-service-tests"
-      );
+      await runTest(contract, ["http://valid-cache.com"], "mock-data-service-tests");
     });
 
     it("Should properly execute with one valid and one invalid cache", async () => {
@@ -156,9 +140,7 @@ describe("DataServiceWrapper", () => {
     });
 
     it("Should throw on not supported data-service id", async () => {
-      await expect(
-        runTest(contract, undefined, "wrong-service-id")
-      ).rejectedWith(
+      await expect(runTest(contract, undefined, "wrong-service-id")).rejectedWith(
         "Data service wrong-service-id is not configured by RedStone protocol"
       );
     });
@@ -168,11 +150,7 @@ describe("DataServiceWrapper", () => {
     });
 
     it("Should work with dataServiceId and urls passed explicit", async () => {
-      await runTest(
-        contract,
-        ["http://valid-cache.com"],
-        "mock-data-service-tests"
-      );
+      await runTest(contract, ["http://valid-cache.com"], "mock-data-service-tests");
     });
 
     it("Should work with manual payload without passed params", async () => {

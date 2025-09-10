@@ -8,11 +8,7 @@ const errorSeverities = ["critical", "error", "warning", "info"] as const;
 export const ErrorSeveritiesEnum = z.enum(errorSeverities);
 export type ErrorSeverity = z.infer<typeof ErrorSeveritiesEnum>;
 
-export function invokeLambda(
-  functionName: string,
-  payload: unknown,
-  region?: string
-) {
+export function invokeLambda(functionName: string, payload: unknown, region?: string) {
   const command = new InvokeCommand({
     FunctionName: functionName,
     Payload: JSON.stringify(payload),
@@ -31,8 +27,6 @@ export async function sendErrorLog(
   try {
     await invokeLambda(functionName, { message: errorLog, severity }, region);
   } catch (e) {
-    throw new Error(
-      `Error sending error log: ${RedstoneCommon.stringifyError(e)}`
-    );
+    throw new Error(`Error sending error log: ${RedstoneCommon.stringifyError(e)}`);
   }
 }

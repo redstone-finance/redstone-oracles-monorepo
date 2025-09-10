@@ -1,8 +1,5 @@
 import { DEFAULT_CONFIG } from "../../src/multi-executor";
-import {
-  ExecutionMode,
-  NestedMethodConfig,
-} from "../../src/multi-executor/config";
+import { ExecutionMode, NestedMethodConfig } from "../../src/multi-executor/config";
 import { MockClient } from "./MockClient";
 import { makeSut } from "./MultiExecutor.spec";
 

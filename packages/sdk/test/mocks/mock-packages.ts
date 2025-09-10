@@ -69,8 +69,6 @@ export const mockSignedDataPackagesResponse = {
 };
 
 export const mockPayload = RedstonePayload.prepare(
-  Object.values(mockSignedDataPackagesResponse).flatMap(
-    (dataPackage) => dataPackage
-  ),
+  Object.values(mockSignedDataPackagesResponse).flatMap((dataPackage) => dataPackage),
   ""
 );

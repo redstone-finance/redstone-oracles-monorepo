@@ -9,20 +9,13 @@ import {
 } from "../src";
 import { RadixApiClient } from "../src/radix/RadixApiClient";
 import { transactionCommittedDetails } from "./__mocks__/transactions";
-import {
-  mockDefaultValues,
-  transactionCommittedDetailsMock,
-} from "./mock-default-values";
+import { mockDefaultValues, transactionCommittedDetailsMock } from "./mock-default-values";
 
 const MOCK_PAYLOAD_HEX = "455448";
-export const MOCK_PRIVATE_KEY =
-  "aa602e9895fd07a75b1becbb3dd5f409664cff5047117eb4a16e8e3c8fdf4641";
-const MOCK_COMPONENT_ID =
-  "component_tdx_2_1crkz0vvpnuslwwfqmxxne67ygn8wrrtqcqhpn0yex2l27ruyvxg5tm";
+export const MOCK_PRIVATE_KEY = "aa602e9895fd07a75b1becbb3dd5f409664cff5047117eb4a16e8e3c8fdf4641";
+const MOCK_COMPONENT_ID = "component_tdx_2_1crkz0vvpnuslwwfqmxxne67ygn8wrrtqcqhpn0yex2l27ruyvxg5tm";
 
-export function makeContractParamsProviderMock(
-  feedIds: string[] = ["ETH", "BTC"]
-) {
+export function makeContractParamsProviderMock(feedIds: string[] = ["ETH", "BTC"]) {
   return new ContractParamsProviderMock(feedIds, "./payload.hex", (_) =>
     Buffer.from(MOCK_PAYLOAD_HEX)
   );
@@ -62,11 +55,7 @@ describe("PriceAdapterRadixContractAdapter tests", () => {
 
   it("readTimestampFromContractWithMethod should return proper value by using method", async () => {
     transactionCommittedDetails.mockResolvedValueOnce(
-      transactionCommittedDetailsMock([
-        "5c2100",
-        "5c0ad00f04e292010000",
-        "5c2100",
-      ])
+      transactionCommittedDetailsMock(["5c2100", "5c0ad00f04e292010000", "5c2100"])
     );
 
     sut.readMode = "CallReadMethod";

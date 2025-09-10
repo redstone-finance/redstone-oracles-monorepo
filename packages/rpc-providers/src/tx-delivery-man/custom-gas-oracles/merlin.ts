@@ -10,10 +10,7 @@ import type { AuctionModelFee, GasOracleFn } from "../common";
 // For reference, eth_gasPrice was returning 0.15 GWEI.
 const MERLIN_EMPIRIC_MINIMUM_GAS_PRICE = 0.05 * 1e9;
 
-export const merlinGasOracle: GasOracleFn = (
-  _opts,
-  attempt: number
-): Promise<AuctionModelFee> => {
+export const merlinGasOracle: GasOracleFn = (_opts, attempt: number): Promise<AuctionModelFee> => {
   if (attempt > 1) {
     throw new Error("Merlin gas oracles works only for attempt=1");
   }

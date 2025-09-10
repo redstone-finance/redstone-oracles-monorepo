@@ -13,9 +13,5 @@ export async function getNonEvmContractFacade(
     isMultiFeedAdapterType(relayerConfig.adapterContractType)
       ? MultiFeedNonEvmContractFacade
       : NonEvmContractFacade
-  )(
-    await getWritableNonEvmContractConnector(relayerConfig),
-    relayerConfig,
-    cache
-  );
+  )(await getWritableNonEvmContractConnector(relayerConfig), relayerConfig, cache);
 }

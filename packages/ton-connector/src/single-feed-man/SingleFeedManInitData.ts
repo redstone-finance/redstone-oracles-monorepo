@@ -14,10 +14,7 @@ export class SingleFeedManInitData implements TonInitData {
 
   toCell(): Cell {
     return beginCell()
-      .storeUint(
-        BigInt(hexlify(toUtf8Bytes(this.feedId))),
-        consts.DATA_FEED_ID_BS * 8
-      )
+      .storeUint(BigInt(hexlify(toUtf8Bytes(this.feedId))), consts.DATA_FEED_ID_BS * 8)
       .storeUint(this.signerCountThreshold, SIGNER_COUNT_THRESHOLD_BITS)
       .storeUint(0, consts.DEFAULT_NUM_VALUE_BS * 8)
       .storeUint(0, consts.TIMESTAMP_BS * 8)

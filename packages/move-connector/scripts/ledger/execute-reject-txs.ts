@@ -5,25 +5,15 @@ import { MultiSigTxBuilder } from "./MultiSigTxBuilder";
 
 const REJECT_UP_TO = 10;
 
-async function executeRejectTxs(
-  aptos: Aptos,
-  sender: AccountAddress,
-  upTo: number
-) {
+async function executeRejectTxs(aptos: Aptos, sender: AccountAddress, upTo: number) {
   const multiSigAddress = AccountAddress.from(MULTI_SIG_ADDRESS);
 
-  return await MultiSigTxBuilder.executeRejectTxs(
-    aptos,
-    sender,
-    multiSigAddress,
-    upTo
-  );
+  return await MultiSigTxBuilder.executeRejectTxs(aptos, sender, multiSigAddress, upTo);
 }
 
 async function main() {
   await executeAsLedger(
-    (aptos, signerAddress) =>
-      executeRejectTxs(aptos, signerAddress, REJECT_UP_TO),
+    (aptos, signerAddress) => executeRejectTxs(aptos, signerAddress, REJECT_UP_TO),
     LEDGER_ACCOUNT_ID
   );
 }

@@ -5,9 +5,7 @@ import {
 } from "@redstone-finance/stellar-connector";
 import { PartialRelayerConfig } from "./partial-relayer-config";
 
-export const getStellarContractConnector = (
-  relayerConfig: PartialRelayerConfig
-) => {
+export const getStellarContractConnector = (relayerConfig: PartialRelayerConfig) => {
   const {
     adapterContractAddress,
     privateKey,

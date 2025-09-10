@@ -11,13 +11,8 @@ async function main() {
   const aptos = makeAptos();
   const account = makeAptosAccount();
 
-  const isUpgrade = RedstoneCommon.getFromEnv(
-    "IS_UPGRADE",
-    z.boolean().default(false)
-  );
-  const currentObjectAddress = isUpgrade
-    ? readAddress(contractName)
-    : undefined;
+  const isUpgrade = RedstoneCommon.getFromEnv("IS_UPGRADE", z.boolean().default(false));
+  const currentObjectAddress = isUpgrade ? readAddress(contractName) : undefined;
 
   await deploy(
     aptos,

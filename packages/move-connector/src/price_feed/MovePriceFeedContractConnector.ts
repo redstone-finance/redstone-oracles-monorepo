@@ -11,8 +11,6 @@ export class MovePriceFeedContractConnector extends MoveContractConnector<MovePr
   }
 
   override getAdapter() {
-    return Promise.resolve(
-      new MovePriceFeedContractAdapter(this.client, this.contractAddress)
-    );
+    return Promise.resolve(new MovePriceFeedContractAdapter(this.client, this.contractAddress));
   }
 }

@@ -25,24 +25,11 @@ export const getEvmContractFacade = (
   const signer = new Wallet(privateKey, provider);
   const adapterContract = getEvmContract(relayerConfig, signer);
 
-  const txDeliveryMan = makeTxDeliveryMan(
-    relayerConfig,
-    signer,
-    provider,
-    adapterContract
-  );
+  const txDeliveryMan = makeTxDeliveryMan(relayerConfig, signer, provider, adapterContract);
 
-  const adapter = getEvmContractAdapter(
-    relayerConfig,
-    adapterContract,
-    txDeliveryMan
-  );
+  const adapter = getEvmContractAdapter(relayerConfig, adapterContract, txDeliveryMan);
 
-  return new EvmContractFacade(
-    getEvmContractConnector(provider, adapter),
-    relayerConfig,
-    cache
-  );
+  return new EvmContractFacade(getEvmContractConnector(provider, adapter), relayerConfig, cache);
 };
 
 function makeTxDeliveryMan(
@@ -69,11 +56,7 @@ function makeTxDeliveryMan(
         relayerConfig
       );
     } else {
-      txDeliveryMan = new OevTxDeliveryMan(
-        txDeliveryMan,
-        adapterContract,
-        relayerConfig
-      );
+      txDeliveryMan = new OevTxDeliveryMan(txDeliveryMan, adapterContract, relayerConfig);
     }
   }
 

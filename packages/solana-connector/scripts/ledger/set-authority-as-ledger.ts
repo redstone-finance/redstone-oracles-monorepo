@@ -11,13 +11,7 @@ async function transferOwnershipFromLedger() {
   const squadsUtils = makeSquads();
   const vaultPda = squadsUtils.vaultPda();
 
-  const tx = await createSetUpgradeAuthorityTx(
-    connection,
-    PROGRAM_ID,
-    pk.ed,
-    vaultPda,
-    pk.ed
-  );
+  const tx = await createSetUpgradeAuthorityTx(connection, PROGRAM_ID, pk.ed, vaultPda, pk.ed);
 
   await solanaLedger.signTransaction(tx);
 

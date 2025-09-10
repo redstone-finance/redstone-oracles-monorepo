@@ -59,10 +59,7 @@ export function stringify<R>(result: R) {
 
     return unescapeString(JSON.stringify(result));
   } catch (_e) {
-    if (
-      typeof result.toString === "function" &&
-      result.toString !== Object.prototype.toString
-    ) {
+    if (typeof result.toString === "function" && result.toString !== Object.prototype.toString) {
       return unescapeString(result.toString());
     }
 

@@ -1,7 +1,4 @@
-import {
-  IPriceFeedContractAdapter,
-  PriceAndTimestamp,
-} from "@redstone-finance/sdk";
+import { IPriceFeedContractAdapter, PriceAndTimestamp } from "@redstone-finance/sdk";
 import { BigNumber } from "ethers";
 import { MoveClient } from "../MoveClient";
 import { MoveContractViewer } from "../MoveContractViewer";

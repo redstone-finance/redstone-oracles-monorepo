@@ -20,17 +20,10 @@ describe("RadixParser tests", () => {
     const timestamp = 1724672890000n;
     const priceValues = ["0x3FD5C81B8E", "0x5CFEC9F0A58"];
 
-    const values = expectTupleOfBigIntAndArray(
-      result,
-      timestamp,
-      ValueKind.String
-    );
+    const values = expectTupleOfBigIntAndArray(result, timestamp, ValueKind.String);
     expect(values.map((value) => value.value)).toStrictEqual(priceValues);
 
-    expect(RadixParser.extractValue(result)).toStrictEqual([
-      timestamp,
-      priceValues,
-    ]);
+    expect(RadixParser.extractValue(result)).toStrictEqual([timestamp, priceValues]);
   });
 
   it("should decode getPrices SBOR response with Bytes values", async () => {
@@ -40,11 +33,7 @@ describe("RadixParser tests", () => {
     const timestamp = 1741185390000n;
     const priceValues = [218559678662n, 8907400000000n, 877400n];
 
-    const values = expectTupleOfBigIntAndArray(
-      result,
-      timestamp,
-      ValueKind.Blob
-    );
+    const values = expectTupleOfBigIntAndArray(result, timestamp, ValueKind.Blob);
 
     expect(values.map((value) => BigNumber.from(value.value))).toStrictEqual(
       priceValues.map((value) => BigNumber.from(value))
@@ -63,11 +52,7 @@ describe("RadixParser tests", () => {
     const timestamp = 1741253910000n;
     const priceValues = [228435931190n, 9070461527683n, 879472n];
 
-    const values = expectTupleOfBigIntAndArray(
-      result,
-      timestamp,
-      ValueKind.Tuple
-    );
+    const values = expectTupleOfBigIntAndArray(result, timestamp, ValueKind.Tuple);
 
     expect(
       values.map((value) => {
@@ -90,15 +75,9 @@ describe("RadixParser tests", () => {
     const timestamp = 1724767110000n;
     const priceValues = [261104886720n, 6226459076880n];
 
-    const values = expectTupleOfBigIntAndArray(
-      result,
-      timestamp,
-      ValueKind.Array
-    );
+    const values = expectTupleOfBigIntAndArray(result, timestamp, ValueKind.Array);
 
-    expect(values.map((value) => value.elements)).toStrictEqual(
-      priceValues.map(u256Digits)
-    );
+    expect(values.map((value) => value.elements)).toStrictEqual(priceValues.map(u256Digits));
 
     expect(RadixParser.extractValue(result)).toStrictEqual([
       timestamp,
@@ -116,12 +95,7 @@ describe("RadixParser tests", () => {
 
     const priceData = expectArray(result, ValueKind.Tuple);
     prices.forEach((price, index) =>
-      expectTupleOfBigIntAndTwoInts(
-        priceData[index],
-        price,
-        timestamp,
-        blockTimestamp
-      )
+      expectTupleOfBigIntAndTwoInts(priceData[index], price, timestamp, blockTimestamp)
     );
 
     const priceDataObj = RadixParser.extractValue(result);

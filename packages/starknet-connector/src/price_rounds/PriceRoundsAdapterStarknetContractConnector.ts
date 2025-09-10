@@ -1,7 +1,4 @@
-import {
-  ContractParamsProvider,
-  IContractConnector,
-} from "@redstone-finance/sdk";
+import { ContractParamsProvider, IContractConnector } from "@redstone-finance/sdk";
 import { ProviderInterface } from "starknet";
 import { StarknetContractConnector } from "../StarknetContractConnector";
 import { IPriceManagerContractAdapter } from "./IPriceManagerContractAdapter";

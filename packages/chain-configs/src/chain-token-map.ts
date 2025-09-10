@@ -1,7 +1,4 @@
-import {
-  readJsonFile,
-  terminateWithRemoteConfigError,
-} from "@redstone-finance/internal-utils";
+import { readJsonFile, terminateWithRemoteConfigError } from "@redstone-finance/internal-utils";
 import { RedstoneRemoteConfig } from "@redstone-finance/remote-config";
 import { RedstoneCommon } from "@redstone-finance/utils";
 import { ChainTokenMapSchema, type SupportedNetworkNames } from "./schemas";
@@ -22,8 +19,7 @@ let chainTokenMap: ChainTokenMap | null = null;
 function readAndValidateChainTokenMapConfig(): ChainTokenMap {
   if (!chainTokenMap) {
     try {
-      const chainTokenMapConfigPath =
-        RedstoneRemoteConfig.findNodeRemoteConfigOrThrow();
+      const chainTokenMapConfigPath = RedstoneRemoteConfig.findNodeRemoteConfigOrThrow();
       const config = readJsonFile<ChainTokenMap>(
         `${chainTokenMapConfigPath}/chains/chain-token-map.json`
       );
@@ -36,5 +32,4 @@ function readAndValidateChainTokenMapConfig(): ChainTokenMap {
   return chainTokenMap;
 }
 
-export const getChainTokenMap: () => ChainTokenMap =
-  readAndValidateChainTokenMapConfig;
+export const getChainTokenMap: () => ChainTokenMap = readAndValidateChainTokenMapConfig;

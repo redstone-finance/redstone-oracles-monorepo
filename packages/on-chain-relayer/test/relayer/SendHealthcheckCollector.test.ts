@@ -16,18 +16,10 @@ describe("SendHealthcheckPingCollector", () => {
 
   describe("constructor", () => {
     it("should initialize with correct parameters", () => {
-      collector = new SendHealthcheckCollector(
-        3,
-        "https://example.com",
-        mockSendHealthcheckPing
-      );
+      collector = new SendHealthcheckCollector(3, "https://example.com", mockSendHealthcheckPing);
       expect(collector["count"]).to.equal(3);
       expect(collector["param"]).to.equal("https://example.com");
-      expect(collector["sentHealthChecks"]).to.deep.equal([
-        false,
-        false,
-        false,
-      ]);
+      expect(collector["sentHealthChecks"]).to.deep.equal([false, false, false]);
     });
 
     it("should work without url parameter", () => {
@@ -38,22 +30,14 @@ describe("SendHealthcheckPingCollector", () => {
     });
 
     it("should use default sendHealthcheckPing when not provided", () => {
-      collector = new SendHealthcheckCollector(
-        2,
-        "https://example.com",
-        async () => {}
-      );
+      collector = new SendHealthcheckCollector(2, "https://example.com", async () => {});
       expect(collector["sendHealthcheckCallback"]).to.exist;
     });
   });
 
   describe("sendHealthcheckPing", () => {
     beforeEach(() => {
-      collector = new SendHealthcheckCollector(
-        3,
-        "https://example.com",
-        mockSendHealthcheckPing
-      );
+      collector = new SendHealthcheckCollector(3, "https://example.com", mockSendHealthcheckPing);
     });
 
     it("should return a function that marks ping as sent", async () => {
@@ -95,8 +79,7 @@ describe("SendHealthcheckPingCollector", () => {
       await ping2();
 
       expect(mockSendHealthcheckPing.calledOnce).to.be.true;
-      expect(mockSendHealthcheckPing.calledWith("https://example.com")).to.be
-        .true;
+      expect(mockSendHealthcheckPing.calledWith("https://example.com")).to.be.true;
     });
 
     it("should reset pings after calling callback", async () => {
@@ -106,11 +89,7 @@ describe("SendHealthcheckPingCollector", () => {
       await ping1();
       await ping2();
 
-      expect(collector["sentHealthChecks"]).to.deep.equal([
-        false,
-        false,
-        false,
-      ]);
+      expect(collector["sentHealthChecks"]).to.deep.equal([false, false, false]);
     });
 
     it("should handle multiple rounds of pings", async () => {
@@ -140,25 +119,16 @@ describe("SendHealthcheckPingCollector", () => {
 
   describe("edge cases", () => {
     it("should handle count of 1", async () => {
-      collector = new SendHealthcheckCollector(
-        1,
-        "https://example.com",
-        mockSendHealthcheckPing
-      );
+      collector = new SendHealthcheckCollector(1, "https://example.com", mockSendHealthcheckPing);
 
       await collector.sendHealthcheck(0)();
 
       expect(mockSendHealthcheckPing.calledOnce).to.be.true;
-      expect(mockSendHealthcheckPing.calledWith("https://example.com")).to.be
-        .true;
+      expect(mockSendHealthcheckPing.calledWith("https://example.com")).to.be.true;
     });
 
     it("should handle undefined url", async () => {
-      collector = new SendHealthcheckCollector(
-        2,
-        undefined,
-        mockSendHealthcheckPing
-      );
+      collector = new SendHealthcheckCollector(2, undefined, mockSendHealthcheckPing);
 
       await collector.sendHealthcheck(0)();
       await collector.sendHealthcheck(1)();
@@ -167,11 +137,7 @@ describe("SendHealthcheckPingCollector", () => {
     });
 
     it("should handle concurrent ping calls", async () => {
-      collector = new SendHealthcheckCollector(
-        3,
-        "https://example.com",
-        mockSendHealthcheckPing
-      );
+      collector = new SendHealthcheckCollector(3, "https://example.com", mockSendHealthcheckPing);
 
       const { ping0, ping1, ping2 } = makePings(collector);
 
@@ -180,22 +146,14 @@ describe("SendHealthcheckPingCollector", () => {
       await Promise.all(promises);
 
       expect(mockSendHealthcheckPing.callCount).to.equal(1);
-      expect(collector["sentHealthChecks"]).to.deep.equal([
-        false,
-        false,
-        false,
-      ]);
+      expect(collector["sentHealthChecks"]).to.deep.equal([false, false, false]);
     });
 
     it("should handle callback rejection", async () => {
       const error = new Error("Callback failed");
       mockSendHealthcheckPing.rejects(error);
 
-      collector = new SendHealthcheckCollector(
-        2,
-        "https://example.com",
-        mockSendHealthcheckPing
-      );
+      collector = new SendHealthcheckCollector(2, "https://example.com", mockSendHealthcheckPing);
 
       await collector.sendHealthcheck(0)();
 

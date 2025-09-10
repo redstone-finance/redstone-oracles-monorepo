@@ -2,11 +2,7 @@ import { ValuesForDataFeeds } from "@redstone-finance/sdk";
 import { expect } from "chai";
 import { RelayerConfig } from "../../src";
 import { shouldUpdate } from "../../src/price-feeds/should-update";
-import {
-  createNumberFromContract,
-  getDataPackagesResponse,
-  mockConfig,
-} from "../helpers";
+import { createNumberFromContract, getDataPackagesResponse, mockConfig } from "../helpers";
 
 describe("should-update", () => {
   let relayerConfig: RelayerConfig;
@@ -44,9 +40,7 @@ describe("should-update", () => {
       relayerConfig
     );
     expect(shouldUpdatePrices).to.be.false;
-    expect(messages[0].message).to.match(
-      /Not enough time has passed to update prices/
-    );
+    expect(messages[0].message).to.match(/Not enough time has passed to update prices/);
     expect(messages[1].message).to.match(/Value has not deviated enough to/);
   });
 
@@ -79,9 +73,7 @@ describe("should-update", () => {
       relayerConfig
     );
     expect(shouldUpdatePrices).to.be.true;
-    expect(messages[0].message).to.match(
-      /Not enough time has passed to update prices/
-    );
+    expect(messages[0].message).to.match(/Not enough time has passed to update prices/);
   });
 
   it("should return true if time check succeed", async () => {
@@ -113,9 +105,7 @@ describe("should-update", () => {
       relayerConfig
     );
     expect(shouldUpdatePrices).to.be.true;
-    expect(messages[1].message).to.match(
-      /Value has not deviated enough to be updated/
-    );
+    expect(messages[1].message).to.match(/Value has not deviated enough to be updated/);
   });
 
   it("should return true for same value when data packages contains custom decimals", async () => {
@@ -151,9 +141,7 @@ describe("should-update", () => {
       },
       relayerConfig
     );
-    expect(messages[1].message).to.match(
-      /Value has not deviated enough to be updated/
-    );
+    expect(messages[1].message).to.match(/Value has not deviated enough to be updated/);
   });
 
   it("should return true for smaller value when data packages contains custom decimals", async () => {
@@ -185,8 +173,6 @@ describe("should-update", () => {
       },
       relayerConfig
     );
-    expect(messages[0].message).to.match(
-      /Enough time has passed to update prices/
-    );
+    expect(messages[0].message).to.match(/Enough time has passed to update prices/);
   });
 });

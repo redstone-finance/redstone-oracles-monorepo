@@ -37,8 +37,7 @@ export function getMedian(numbers: ISafeNumber[]): ISafeNumber {
     return numbers[0];
   }
 
-  numbers =
-    numbers.length === 2 ? numbers : numbers.sort((a, b) => (a.lt(b) ? -1 : 1));
+  numbers = numbers.length === 2 ? numbers : numbers.sort((a, b) => (a.lt(b) ? -1 : 1));
 
   const middle = Math.floor(numbers.length / 2);
 

@@ -7,19 +7,13 @@ describe("Not Wrapped Contract", function () {
   let contract: SampleRedstoneConsumerNumericMock;
 
   this.beforeEach(async () => {
-    const ContractFactory = await ethers.getContractFactory(
-      "SampleRedstoneConsumerNumericMock"
-    );
+    const ContractFactory = await ethers.getContractFactory("SampleRedstoneConsumerNumericMock");
     contract = await ContractFactory.deploy();
     await contract.deployed();
   });
 
   it("Should revert if contract was not wrapped", async () => {
-    await expect(
-      contract.saveOracleValueInContractStorage(
-        utils.convertStringToBytes32("BTC")
-      )
-    )
+    await expect(contract.saveOracleValueInContractStorage(utils.convertStringToBytes32("BTC")))
       .to.be.revertedWithCustomError(contract, "CalldataMustHaveValidPayload")
       .withArgs();
   });

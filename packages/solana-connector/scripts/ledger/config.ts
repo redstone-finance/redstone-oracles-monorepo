@@ -12,17 +12,11 @@ export const MULTI_SIG_PUBLIC_KEYS = [
   "6613f8d286f38da095d7b4e7fd932aee14f5649feed780c28f043ab8bf4324cf",
 ];
 
-export const SQUAD_ADDRESS = new PublicKey(
-  "5khdVsyvPCDfbz1id1VBFVKHABKQWKrhPYEo4sZGnyfh"
-);
+export const SQUAD_ADDRESS = new PublicKey("5khdVsyvPCDfbz1id1VBFVKHABKQWKrhPYEo4sZGnyfh");
 
-export const PROGRAM_ID = new PublicKey(
-  "REDSTBDUecGjwXd6YGPzHSvEUBHQqVRfCcjUVgPiHsr"
-);
+export const PROGRAM_ID = new PublicKey("REDSTBDUecGjwXd6YGPzHSvEUBHQqVRfCcjUVgPiHsr");
 
-export const TEMP_AUTHORITY = new PublicKey(
-  "Co5UYi6GPzN1a7j9jKohzcSjhmGyq53k5bsJzEtkQqee"
-);
+export const TEMP_AUTHORITY = new PublicKey("Co5UYi6GPzN1a7j9jKohzcSjhmGyq53k5bsJzEtkQqee");
 
 export function makeSquads() {
   const connection = makeConnection();

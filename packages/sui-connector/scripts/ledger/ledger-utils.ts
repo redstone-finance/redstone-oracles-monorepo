@@ -1,10 +1,7 @@
 import TransportNodeHid from "@ledgerhq/hw-transport-node-hid";
 import { fromBase64 } from "@mysten/bcs";
 import Sui from "@mysten/ledgerjs-hw-app-sui";
-import {
-  messageWithIntent,
-  toSerializedSignature,
-} from "@mysten/sui/cryptography";
+import { messageWithIntent, toSerializedSignature } from "@mysten/sui/cryptography";
 import { Ed25519PublicKey } from "@mysten/sui/keypairs/ed25519";
 import { hexlify } from "ethers/lib/utils";
 import { LEDGER_ACCOUNT } from "./const";

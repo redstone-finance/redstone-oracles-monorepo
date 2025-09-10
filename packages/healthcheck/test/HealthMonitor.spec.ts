@@ -38,9 +38,7 @@ describe("HealthMonitor", () => {
 
     mockWriteFile.mockResolvedValue(undefined);
     mockRename.mockResolvedValue(undefined);
-    (RedstoneCommon.intervalMsToCronFormat as jest.Mock).mockReturnValue(
-      "*/5 * * * *"
-    );
+    (RedstoneCommon.intervalMsToCronFormat as jest.Mock).mockReturnValue("*/5 * * * *");
   });
 
   describe("constructor", () => {
@@ -48,13 +46,8 @@ describe("HealthMonitor", () => {
       const intervalMs = 5000;
       new RedstoneHealthcheck.HealthMonitor(new Map(), intervalMs);
 
-      expect(RedstoneCommon.intervalMsToCronFormat).toHaveBeenCalledWith(
-        intervalMs
-      );
-      expect(mockScheduleJob).toHaveBeenCalledWith(
-        "*/5 * * * *",
-        expect.any(Function)
-      );
+      expect(RedstoneCommon.intervalMsToCronFormat).toHaveBeenCalledWith(intervalMs);
+      expect(mockScheduleJob).toHaveBeenCalledWith("*/5 * * * *", expect.any(Function));
     });
   });
 
@@ -81,17 +74,12 @@ describe("HealthMonitor", () => {
         RedstoneHealthcheck.HealthStatus.healthy,
         { encoding: "utf8" }
       );
-      expect(mockRename).toHaveBeenCalledWith(
-        "healthcheck.txt.tmp",
-        "healthcheck.txt"
-      );
+      expect(mockRename).toHaveBeenCalledWith("healthcheck.txt.tmp", "healthcheck.txt");
     });
 
     it("should handle unhealthy checks", async () => {
       const mockHealthCheck: RedstoneHealthcheck.HealthCheck = {
-        check: jest
-          .fn()
-          .mockResolvedValue(RedstoneHealthcheck.unhealthy(["Error occurred"])),
+        check: jest.fn().mockResolvedValue(RedstoneHealthcheck.unhealthy(["Error occurred"])),
       };
 
       const checks = new Map([["test", mockHealthCheck]]);
@@ -137,9 +125,7 @@ describe("HealthMonitor", () => {
         check: jest.fn().mockResolvedValue(RedstoneHealthcheck.healthy()),
       };
       const unhealthyCheck: RedstoneHealthcheck.HealthCheck = {
-        check: jest
-          .fn()
-          .mockResolvedValue(RedstoneHealthcheck.unhealthy(["Error"])),
+        check: jest.fn().mockResolvedValue(RedstoneHealthcheck.unhealthy(["Error"])),
       };
 
       const checks = new Map([

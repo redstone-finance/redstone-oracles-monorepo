@@ -17,9 +17,7 @@ export const config = (isInvokedConsciously?: typeof ConsciouslyInvoked) => {
   try {
     AdapterTypesEnum.parse(relayerConfig.adapterContractType);
   } catch {
-    throw new Error(
-      `Adapter contract type not supported: ${relayerConfig.adapterContractType}`
-    );
+    throw new Error(`Adapter contract type not supported: ${relayerConfig.adapterContractType}`);
   }
   return relayerConfig;
 };

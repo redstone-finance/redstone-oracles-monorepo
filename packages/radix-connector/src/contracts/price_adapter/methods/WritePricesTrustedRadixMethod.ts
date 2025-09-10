@@ -10,13 +10,7 @@ export class WritePricesTrustedRadixMethod extends GetPricesRadixMethod {
     private proofBadge: NonFungibleGlobalIdInput,
     fee = dataFeedIds.length * 1.5
   ) {
-    super(
-      componentId,
-      dataFeedIds,
-      payloadData,
-      fee,
-      "write_prices_raw_trusted"
-    );
+    super(componentId, dataFeedIds, payloadData, fee, "write_prices_raw_trusted");
   }
 
   override getDedicatedTransaction(account: string, maxFeeOverride?: number) {

@@ -30,15 +30,12 @@ describe("SampleRedstoneConsumerBytesMock", function () {
     },
   ];
 
-  const mockBytesPackages = mockBytesPackageConfigs.map(
-    getMockPackageWithOneBytesDataPoint
-  );
+  const mockBytesPackages = mockBytesPackageConfigs.map(getMockPackageWithOneBytesDataPoint);
 
   const expectedBytesValueConvertedToNumber = 42 * 10 ** 8;
 
   const testShouldPass = async (mockPackages: MockDataPackageConfig[]) => {
-    const wrappedContract =
-      WrapperBuilder.wrap(contract).usingMockDataPackages(mockPackages);
+    const wrappedContract = WrapperBuilder.wrap(contract).usingMockDataPackages(mockPackages);
 
     const tx = await wrappedContract.saveOracleValueInContractStorage(
       DEFAULT_DATA_FEED_ID_BYTES_32
@@ -46,9 +43,7 @@ describe("SampleRedstoneConsumerBytesMock", function () {
     await tx.wait();
 
     const latestEthPriceFromContract = await contract.latestSavedValue();
-    expect(latestEthPriceFromContract.toNumber()).to.be.equal(
-      expectedBytesValueConvertedToNumber
-    );
+    expect(latestEthPriceFromContract.toNumber()).to.be.equal(expectedBytesValueConvertedToNumber);
   };
 
   const testShouldRevertWith = async (
@@ -56,21 +51,14 @@ describe("SampleRedstoneConsumerBytesMock", function () {
     revertMsg: string,
     ...args: unknown[]
   ) => {
-    const wrappedContract =
-      WrapperBuilder.wrap(contract).usingMockDataPackages(mockPackages);
-    await expect(
-      wrappedContract.saveOracleValueInContractStorage(
-        DEFAULT_DATA_FEED_ID_BYTES_32
-      )
-    )
+    const wrappedContract = WrapperBuilder.wrap(contract).usingMockDataPackages(mockPackages);
+    await expect(wrappedContract.saveOracleValueInContractStorage(DEFAULT_DATA_FEED_ID_BYTES_32))
       .to.be.revertedWithCustomError(wrappedContract, revertMsg)
       .withArgs(...args);
   };
 
   this.beforeEach(async () => {
-    const ContractFactory = await ethers.getContractFactory(
-      "SampleRedstoneConsumerBytesMock"
-    );
+    const ContractFactory = await ethers.getContractFactory("SampleRedstoneConsumerBytesMock");
     contract = await ContractFactory.deploy();
     await contract.deployed();
   });
@@ -150,17 +138,13 @@ describe("SampleRedstoneConsumerBytesMock", function () {
   });
 
   it("Should revert is data feed id not found", async () => {
-    const wrappedContract =
-      WrapperBuilder.wrap(contract).usingMockDataPackages(mockBytesPackages);
+    const wrappedContract = WrapperBuilder.wrap(contract).usingMockDataPackages(mockBytesPackages);
     await expect(
       wrappedContract.saveOracleValueInContractStorage(
         utils.convertStringToBytes32("ANOTHER_DATA_FEED_ID")
       )
     )
-      .to.be.revertedWithCustomError(
-        wrappedContract,
-        "InsufficientNumberOfUniqueSigners"
-      )
+      .to.be.revertedWithCustomError(wrappedContract, "InsufficientNumberOfUniqueSigners")
       .withArgs(0, 3);
   });
 });

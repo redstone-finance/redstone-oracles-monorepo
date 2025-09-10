@@ -5,8 +5,7 @@ import { getMultiSigPublicKey } from "./get-multi-sig-address";
 function combineSignatures(pkHexes: string[], signatures: string[]) {
   const multiSigPublicKey = getMultiSigPublicKey(pkHexes);
 
-  const multiSigSignature =
-    multiSigPublicKey.combinePartialSignatures(signatures);
+  const multiSigSignature = multiSigPublicKey.combinePartialSignatures(signatures);
   const multiSigAddress = multiSigPublicKey.toSuiAddress();
 
   const multiSigPublicKeyHex = hexlify(multiSigPublicKey.toRawBytes());

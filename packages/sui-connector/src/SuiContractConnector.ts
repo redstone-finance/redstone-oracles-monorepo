@@ -6,9 +6,7 @@ import type { IContractConnector } from "@redstone-finance/sdk";
 import { SuiTxDeliveryMan } from "./SuiTxDeliveryMan";
 import { SuiConfig } from "./config";
 
-export class SuiContractConnector<Adapter>
-  implements IContractConnector<Adapter>
-{
+export class SuiContractConnector<Adapter> implements IContractConnector<Adapter> {
   static txDeliveryManCache: { [p: string]: SuiTxDeliveryMan | undefined } = {};
 
   constructor(
@@ -45,11 +43,7 @@ export class SuiContractConnector<Adapter>
     return SuiTxDeliveryMan.getStatus(response).success;
   }
 
-  protected static getCachedDeliveryMan(
-    client: SuiClient,
-    keypair: Keypair,
-    config: SuiConfig
-  ) {
+  protected static getCachedDeliveryMan(client: SuiClient, keypair: Keypair, config: SuiConfig) {
     const cacheKey = keypair.getPublicKey().toSuiPublicKey();
     SuiContractConnector.txDeliveryManCache[cacheKey] ??= new SuiTxDeliveryMan(
       client,

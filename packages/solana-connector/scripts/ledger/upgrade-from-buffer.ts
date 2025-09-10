@@ -15,10 +15,7 @@ import { SquadsMultisig } from "./multi-sig-utils";
 const SO_IN_BUFFER_START_IDX = 45;
 
 export function getProgramDataAddress(programId: PublicKey): PublicKey {
-  return PublicKey.findProgramAddressSync(
-    [programId.toBuffer()],
-    BPF_UPGRADEABLE_LOADER
-  )[0];
+  return PublicKey.findProgramAddressSync([programId.toBuffer()], BPF_UPGRADEABLE_LOADER)[0];
 }
 
 export function createUpgradeInstruction(
@@ -72,14 +69,7 @@ export async function checkUpgradeTransaction(
 
   console.log("✅ Expected buffer account in the transaction");
 
-  await checkData(
-    connection,
-    bufferAccount,
-    SO_IN_BUFFER_START_IDX,
-    1,
-    squads,
-    programBytesFile
-  );
+  await checkData(connection, bufferAccount, SO_IN_BUFFER_START_IDX, 1, squads, programBytesFile);
 }
 
 export async function checkProgramData(
@@ -118,10 +108,7 @@ async function checkData(
   }
   const data = accountData.data;
 
-  const soFileInBuffer = data.subarray(
-    soFileInBufferStart,
-    soFileInBufferStart + soLength
-  );
+  const soFileInBuffer = data.subarray(soFileInBufferStart, soFileInBufferStart + soLength);
 
   const padding = data.subarray(soFileInBufferStart + soLength);
 
@@ -140,10 +127,7 @@ async function checkData(
     );
   }
 
-  const authority = data.subarray(
-    soFileInBufferStart - 32,
-    soFileInBufferStart
-  );
+  const authority = data.subarray(soFileInBufferStart - 32, soFileInBufferStart);
 
   if (squads.vaultPda().toBase58() !== new PublicKey(authority).toBase58()) {
     throw new Error(`❌ VaultPda is not set to authority in the buffer data.`);

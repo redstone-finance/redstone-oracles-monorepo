@@ -13,8 +13,7 @@ chai.use(chaiAsPromised);
 // adding method here generates agreement logic tests for it
 const operationsWithAgreement = ["call", "getBalance"] as const;
 
-const TEST_PRIV_KEY =
-  "0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80";
+const TEST_PRIV_KEY = "0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80";
 
 const createAgreementProvider = (providers: providers.Provider[]) =>
   new ProviderWithAgreement(providers);
@@ -64,11 +63,7 @@ describe("ProviderWithAgreement", () => {
 
     beforeEach(async () => {
       providerWithAgreement = CallCacheDecorator(
-        () =>
-          createAgreementProvider([
-            hardhat.ethers.provider,
-            hardhat.ethers.provider,
-          ]),
+        () => createAgreementProvider([hardhat.ethers.provider, hardhat.ethers.provider]),
         { ttl: 50_000 }
       )() as ProviderWithAgreement;
       const contract = await deployCounter(hardhat.ethers.provider);
@@ -205,9 +200,7 @@ describe("ProviderWithAgreement", () => {
     let providerWithAgreement: ProviderWithAgreement;
     let counter: Counter;
 
-    const brokenProvider = new providers.StaticJsonRpcProvider(
-      "http://blabla.xd"
-    );
+    const brokenProvider = new providers.StaticJsonRpcProvider("http://blabla.xd");
     const stub = sinon.stub(brokenProvider, "call");
 
     beforeEach(() => {
@@ -228,9 +221,7 @@ describe("ProviderWithAgreement", () => {
         counter.getCount({
           blockTag: await providerWithAgreement.getBlockNumber(),
         })
-      ).rejectedWith(
-        /Failed to find at least 2 agreeing providers at block 24/
-      );
+      ).rejectedWith(/Failed to find at least 2 agreeing providers at block 24/);
     });
 
     it("should write to contract", async () => {
@@ -261,9 +252,7 @@ describe("ProviderWithAgreement", () => {
         counter.getCount({
           blockTag: await providerWithAgreement.getBlockNumber(),
         })
-      ).rejectedWith(
-        /Failed to find at least 2 agreeing providers at block 29/
-      );
+      ).rejectedWith(/Failed to find at least 2 agreeing providers at block 29/);
     });
 
     it("should write to contract", async () => {
@@ -277,12 +266,9 @@ describe("ProviderWithAgreement", () => {
   });
 
   it("should respect getBlockNumber timeout", async () => {
-    const firstProvider = new providers.StaticJsonRpcProvider(
-      "http://blabla.xd"
-    );
+    const firstProvider = new providers.StaticJsonRpcProvider("http://blabla.xd");
 
-    firstProvider.getBlockNumber = () =>
-      new Promise((resolve) => setTimeout(() => resolve(0), 22));
+    firstProvider.getBlockNumber = () => new Promise((resolve) => setTimeout(() => resolve(0), 22));
 
     const providerWithAgreement = new ProviderWithAgreement(
       [firstProvider, hardhat.ethers.provider],
@@ -296,9 +282,7 @@ describe("ProviderWithAgreement", () => {
 
   describe("Treat0xAsErrorDecorator", () => {
     it("should treat 0x as error", async () => {
-      const firstProvider = new providers.StaticJsonRpcProvider(
-        "http://blabla.xd"
-      );
+      const firstProvider = new providers.StaticJsonRpcProvider("http://blabla.xd");
 
       const blockTag = await hardhat.ethers.provider.getBlockNumber();
 
@@ -316,9 +300,7 @@ describe("ProviderWithAgreement", () => {
     });
   });
 
-  const describeAgreementAlgorithmFor = (
-    operation: (typeof operationsWithAgreement)[number]
-  ) =>
+  const describeAgreementAlgorithmFor = (operation: (typeof operationsWithAgreement)[number]) =>
     describe("agreement algorithm", () => {
       it("should return 2 when results from providers are [1,2,2]", async () => {
         await testAgreementAlgo(["1", "2", "2"], "2", 2, operation);
@@ -338,9 +320,7 @@ describe("ProviderWithAgreement", () => {
         });
 
         it("should return 2 when results from providers are [2,2,1]", async () => {
-          await expect(
-            testAgreementAlgo(["2", "2", "1"], "2", 3, operation)
-          ).rejectedWith(
+          await expect(testAgreementAlgo(["2", "2", "1"], "2", 3, operation)).rejectedWith(
             /Failed to find at least 3 agreeing providers at block 1/
           );
         });
@@ -355,70 +335,37 @@ describe("ProviderWithAgreement", () => {
       });
 
       it("should return 5 when results from providers are [5,3,5,3,2,4,2,2]", async () => {
-        await testAgreementAlgo(
-          ["5", "3", "5", "3", "2", "4", "2", "2"],
-          "5",
-          2,
-          operation
-        );
+        await testAgreementAlgo(["5", "3", "5", "3", "2", "4", "2", "2"], "5", 2, operation);
       });
 
       it('should return 2 when results from providers are ["5", "3", "8", "7", "1", "4", "2", "2"]', async () => {
-        await testAgreementAlgo(
-          ["5", "3", "8", "7", "1", "4", "2", "2"],
-          "2",
-          2,
-          operation
-        );
+        await testAgreementAlgo(["5", "3", "8", "7", "1", "4", "2", "2"], "2", 2, operation);
       });
 
       it("should NOT fail on [2 error error], when ignoreAgreementOnInsufficientResponses", async () => {
-        await testAgreementAlgo(
-          ["2", "error", "error"],
-          "2",
-          2,
-          operation,
-          true
-        );
+        await testAgreementAlgo(["2", "error", "error"], "2", 2, operation, true);
       });
 
       it("should NOT fail on [2 error error 1 1] and pick response with most votes when ignoreAgreementOnInsufficientResponses", async () => {
-        await testAgreementAlgo(
-          ["2", "1", "error", "error", "1"],
-          "1",
-          3,
-          operation,
-          true
-        );
+        await testAgreementAlgo(["2", "1", "error", "error", "1"], "1", 3, operation, true);
       });
 
       it("should fail on [error,2]", async () => {
-        await expect(
-          testAgreementAlgo(["error", "2"], "", 2, operation)
-        ).rejectedWith(
+        await expect(testAgreementAlgo(["error", "2"], "", 2, operation)).rejectedWith(
           /Failed to find at least 2 agreeing providers at block 1/
         );
       });
 
       it("should fail on [1,2]", async () => {
-        await expect(
-          testAgreementAlgo(["1", "2"], "", 2, operation)
-        ).rejectedWith(
+        await expect(testAgreementAlgo(["1", "2"], "", 2, operation)).rejectedWith(
           /Failed to find at least 2 agreeing providers at block 1/
         );
       });
 
       it("should fail on [1,2,3,4,5,6,7,8,9]", async () => {
         await expect(
-          testAgreementAlgo(
-            ["1", "2", "3", "4", "5", "6", "7", "8", "9"],
-            "",
-            2,
-            operation
-          )
-        ).rejectedWith(
-          /Failed to find at least 2 agreeing providers at block 1/
-        );
+          testAgreementAlgo(["1", "2", "3", "4", "5", "6", "7", "8", "9"], "", 2, operation)
+        ).rejectedWith(/Failed to find at least 2 agreeing providers at block 1/);
       });
     });
 
@@ -485,9 +432,9 @@ describe("ProviderWithAgreement", () => {
     });
 
     it("throws on all errors", async () => {
-      await expect(
-        testGetBlockNumber([["error", "error", "error"]], [0])
-      ).rejectedWith(/All providers failed to fetch 'getBlockNumber'/);
+      await expect(testGetBlockNumber([["error", "error", "error"]], [0])).rejectedWith(
+        /All providers failed to fetch 'getBlockNumber'/
+      );
     });
 
     it("picks median", async () => {
@@ -563,9 +510,7 @@ const testGetBlockNumber = async (
   const mockProviders: providers.StaticJsonRpcProvider[] = [];
 
   for (let i = 0; i < providerResponsesPerRound[0].length; i++) {
-    const mockProvider = new providers.StaticJsonRpcProvider(
-      `http://${i}.mock`
-    );
+    const mockProvider = new providers.StaticJsonRpcProvider(`http://${i}.mock`);
     const stubOperation = sinon.stub(mockProvider, "getBlockNumber");
 
     for (let j = 0; j < providerResponsesPerRound.length; j++) {

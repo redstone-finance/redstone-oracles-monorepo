@@ -17,13 +17,8 @@ export async function makeCasperConnection(config: CasperConfig) {
     throw new Error("Network status cannot be fetched");
   }
 
-  const networkName = (response.data as { chainspec_name: string })
-    .chainspec_name;
+  const networkName = (response.data as { chainspec_name: string }).chainspec_name;
   assert(networkName === config.networkName);
 
-  return CasperConnection.makeWithKeyPair(
-    config.nodeUrl,
-    config.networkName,
-    signKeyPair
-  );
+  return CasperConnection.makeWithKeyPair(config.nodeUrl, config.networkName, signKeyPair);
 }

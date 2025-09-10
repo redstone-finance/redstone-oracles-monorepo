@@ -115,13 +115,7 @@
       ]
     },
     "XVS": {
-      "source": [
-        "binance-usdt",
-        "bingx-usdt",
-        "bitrue-usdt",
-        "gate-usdt",
-        "lbank-usdt"
-      ]
+      "source": ["binance-usdt", "bingx-usdt", "bitrue-usdt", "gate-usdt", "lbank-usdt"]
     },
     "BNB": {
       "source": [

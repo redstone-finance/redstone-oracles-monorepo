@@ -19,15 +19,9 @@ async function main(config: StarknetConfig) {
     authorizedSigners: getSignersForDataServiceId("redstone-avalanche-prod"),
   });
   const account = getAccount(config);
-  const pricesConnector = new PriceAdapterStarknetContractConnector(
-    account,
-    PRICE_ADAPTER_ADDRESS
-  );
+  const pricesConnector = new PriceAdapterStarknetContractConnector(account, PRICE_ADAPTER_ADDRESS);
 
-  const feedConnector = new PriceFeedStarknetContractConnector(
-    account,
-    PRICE_FEED_ADDRESS
-  );
+  const feedConnector = new PriceFeedStarknetContractConnector(account, PRICE_FEED_ADDRESS);
 
   await sampleRun(paramsProvider, pricesConnector, feedConnector);
 }

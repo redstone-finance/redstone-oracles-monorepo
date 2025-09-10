@@ -22,8 +22,7 @@ chai.use(chaiAsPromised);
 
 const mockToken1Address = "0xF194afDf50B03e69Bd7D057c1Aa9e10c9954E4C9"; // CELO token address
 const mockToken2Address = "0x874069Fa1Eb16D44d622F2e0Ca25eeA172369bC1"; // cUSD token address
-const TEST_PRIVATE_KEY =
-  "0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80";
+const TEST_PRIVATE_KEY = "0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80";
 
 describe("update-prices", () => {
   afterEach(() => {
@@ -40,13 +39,8 @@ describe("update-prices", () => {
       await priceFeedsAdapterFactory.deploy();
     await priceFeedsAdapter.deployed();
 
-    const provider = new ProviderWithAgreement([
-      ethers.provider,
-      ethers.provider,
-    ]);
-    priceFeedsAdapter = priceFeedsAdapter.connect(
-      new Wallet(TEST_PRIVATE_KEY).connect(provider)
-    );
+    const provider = new ProviderWithAgreement([ethers.provider, ethers.provider]);
+    priceFeedsAdapter = priceFeedsAdapter.connect(new Wallet(TEST_PRIVATE_KEY).connect(provider));
 
     // Update prices
     const contractAdapter = await getEvmContractConnector(
@@ -64,10 +58,9 @@ describe("update-prices", () => {
     await contractAdapter.writePricesFromPayloadToContract(paramsProvider);
 
     // Check updated values
-    const dataFeedsValues = await priceFeedsAdapter.getValuesForDataFeeds(
-      [btcDataFeed],
-      { blockTag: await provider.getBlockNumber() }
-    );
+    const dataFeedsValues = await priceFeedsAdapter.getValuesForDataFeeds([btcDataFeed], {
+      blockTag: await provider.getBlockNumber(),
+    });
     expect(dataFeedsValues[0]).to.be.equal(2307768000000);
   });
 
@@ -86,18 +79,12 @@ describe("update-prices", () => {
     const sortedOracles = await deployMockSortedOracles();
 
     // Deploying mento adapter
-    const mentoAdapterFactory =
-      await ethers.getContractFactory("MentoAdapterMock");
+    const mentoAdapterFactory = await ethers.getContractFactory("MentoAdapterMock");
     let mentoAdapter = await mentoAdapterFactory.deploy();
     await mentoAdapter.deployed();
 
-    const provider = new ProviderWithAgreement([
-      ethers.provider,
-      ethers.provider,
-    ]);
-    mentoAdapter = mentoAdapter.connect(
-      new Wallet(TEST_PRIVATE_KEY).connect(provider)
-    );
+    const provider = new ProviderWithAgreement([ethers.provider, ethers.provider]);
+    mentoAdapter = mentoAdapter.connect(new Wallet(TEST_PRIVATE_KEY).connect(provider));
 
     // Setting sorted oracles contract address
     await mentoAdapter.setSortedOraclesAddress(sortedOracles.address);
@@ -120,10 +107,7 @@ describe("update-prices", () => {
 
     // Check updated values in SortedOracles
     const normalizeValue = (num: number) => parseUnits(num.toString(), 24);
-    const expectOracleValues = async (
-      tokenAddress: string,
-      expectedValues: number[]
-    ) => {
+    const expectOracleValues = async (tokenAddress: string, expectedValues: number[]) => {
       const [, oracleValues] = await sortedOracles.getRates(tokenAddress);
       const expectedValuesNormalized = expectedValues.map(normalizeValue);
       expect(oracleValues).to.eql(expectedValuesNormalized);

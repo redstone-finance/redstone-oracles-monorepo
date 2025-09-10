@@ -9,17 +9,14 @@ describe("SampleWithEvents", function () {
   let sampleContract: SampleWithEvents;
 
   beforeEach(async () => {
-    const SampleWithEvents =
-      await ethers.getContractFactory("SampleWithEvents");
+    const SampleWithEvents = await ethers.getContractFactory("SampleWithEvents");
     sampleContract = await SampleWithEvents.deploy();
   });
 
   it("Test events with contract wrapping", async function () {
     // Wrapping the contract instance
     const wrappedContract =
-      WrapperBuilder.wrap(sampleContract).usingMockDataPackages(
-        mockNumericPackages
-      );
+      WrapperBuilder.wrap(sampleContract).usingMockDataPackages(mockNumericPackages);
 
     // Sending tx
     const tx = await wrappedContract.emitEventWithLatestOracleValue();

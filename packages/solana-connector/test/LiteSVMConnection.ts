@@ -16,11 +16,7 @@ import {
   VersionedTransaction,
 } from "@solana/web3.js";
 import bs58 from "bs58";
-import {
-  FailedTransactionMetadata,
-  LiteSVM,
-  TransactionMetadata,
-} from "litesvm";
+import { FailedTransactionMetadata, LiteSVM, TransactionMetadata } from "litesvm";
 import { toNumber } from "../src";
 
 const DUMMY_CONTEXT = { slot: 0 };
@@ -155,9 +151,7 @@ export class ConnectionStateScenario {
       .filter(
         (instr) =>
           instr.programId.toBase58() ===
-          new PublicKey(
-            "ComputeBudget111111111111111111111111111111"
-          ).toBase58()
+          new PublicKey("ComputeBudget111111111111111111111111111111").toBase58()
       )
       .find((instr) => instr.data[0] === 3)!;
 
@@ -211,9 +205,7 @@ export class LiteSVMConnection extends Connection {
     });
   }
 
-  override getAccountInfo(
-    publicKey: PublicKey
-  ): Promise<AccountInfo<Buffer> | null> {
+  override getAccountInfo(publicKey: PublicKey): Promise<AccountInfo<Buffer> | null> {
     const accountData = this.state.svm.getAccount(publicKey);
 
     if (accountData === null) {
@@ -229,9 +221,7 @@ export class LiteSVMConnection extends Connection {
   override getMultipleAccountsInfo(
     publicKeys: PublicKey[]
   ): Promise<(AccountInfo<Buffer> | null)[]> {
-    return Promise.all(
-      publicKeys.map((publicKey) => this.getAccountInfo(publicKey))
-    );
+    return Promise.all(publicKeys.map((publicKey) => this.getAccountInfo(publicKey)));
   }
 
   override async simulateTransaction(
@@ -241,8 +231,7 @@ export class LiteSVMConnection extends Connection {
       throw new Error("Message unsupported.");
     }
 
-    const simulationResult =
-      this.state.svm.simulateTransaction(transactionOrMessage);
+    const simulationResult = this.state.svm.simulateTransaction(transactionOrMessage);
 
     if (simulationResult instanceof FailedTransactionMetadata) {
       return await Promise.resolve({
@@ -262,13 +251,9 @@ export class LiteSVMConnection extends Connection {
         accounts: null,
         unitsConsumed: 0,
         returnData: {
-          programId: bs58.encode(
-            simulationResult.meta().returnData().programId()
-          ),
+          programId: bs58.encode(simulationResult.meta().returnData().programId()),
           data: [
-            Buffer.from(simulationResult.meta().returnData().data()).toString(
-              "base64"
-            ),
+            Buffer.from(simulationResult.meta().returnData().data()).toString("base64"),
             "base64",
           ],
         },

@@ -7,8 +7,7 @@ const getDataPackageResponse = (dataFeedId: string) =>
   singedDataPackageObj
     .filter(
       (dataPackage) =>
-        dataPackage.dataPoints.filter((dp) => dp.dataFeedId === dataFeedId)
-          .length > 0
+        dataPackage.dataPoints.filter((dp) => dp.dataFeedId === dataFeedId).length > 0
     )
     .map((dataPackage) => SignedDataPackage.fromObj(dataPackage));
 

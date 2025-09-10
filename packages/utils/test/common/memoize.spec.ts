@@ -8,9 +8,7 @@ describe("memoize", () => {
   });
 
   it("should cache the result within TTL", async () => {
-    const mockFn: (arg: string) => Promise<string> = jest
-      .fn()
-      .mockResolvedValue("result");
+    const mockFn: (arg: string) => Promise<string> = jest.fn().mockResolvedValue("result");
 
     const memoized = memoize({ functionToMemoize: mockFn, ttl: 1000 });
 
@@ -23,9 +21,7 @@ describe("memoize", () => {
   });
 
   it("should many cache concurrent requests within TTL", async () => {
-    const mockFn = jest
-      .fn()
-      .mockImplementation(async () => await Promise.resolve("result"));
+    const mockFn = jest.fn().mockImplementation(async () => await Promise.resolve("result"));
     const memoized = memoize({ functionToMemoize: mockFn, ttl: 1000 });
 
     const requests = [];
@@ -83,9 +79,7 @@ describe("memoize", () => {
   });
 
   it("should cache results based on custom toString methods", async () => {
-    const mockFn = jest.fn((obj: { name: string }) =>
-      Promise.resolve(obj.name)
-    );
+    const mockFn = jest.fn((obj: { name: string }) => Promise.resolve(obj.name));
 
     // Custom objects with toString method
     const obj1 = {

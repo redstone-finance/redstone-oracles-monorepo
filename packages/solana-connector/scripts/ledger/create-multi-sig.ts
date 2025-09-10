@@ -16,11 +16,10 @@ async function createMultiSig() {
   });
 
   const [programConfigPda] = multisig.getProgramConfigPda({});
-  const programConfig =
-    await multisig.accounts.ProgramConfig.fromAccountAddress(
-      connection,
-      programConfigPda
-    );
+  const programConfig = await multisig.accounts.ProgramConfig.fromAccountAddress(
+    connection,
+    programConfigPda
+  );
   const configTreasury = programConfig.treasury;
   const members = MULTI_SIG_PUBLIC_KEYS.map((pk) => Buffer.from(pk, "hex"))
     .map((pk) => new PublicKey(pk))

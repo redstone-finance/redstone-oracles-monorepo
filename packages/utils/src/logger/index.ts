@@ -1,9 +1,4 @@
-import consola, {
-  Consola,
-  FancyReporter,
-  JSONReporter,
-  LogLevel,
-} from "consola";
+import consola, { Consola, FancyReporter, JSONReporter, LogLevel } from "consola";
 import { z } from "zod";
 import { getFromEnv } from "../common/env";
 import { isNodeRuntime } from "../common/runtime";
@@ -43,9 +38,7 @@ export const loggerFactory = (moduleName: string): RedstoneLogger => {
       ? getCustomLogLevel(moduleName, customLogLevels, defaultLogLevel)
       : defaultLogLevel;
 
-    const mainReporter = enableJsonLogs
-      ? new JSONReporter()
-      : new FancyReporter();
+    const mainReporter = enableJsonLogs ? new JSONReporter() : new FancyReporter();
 
     const logger = consola
       .create({
@@ -96,11 +89,7 @@ function getCustomLogLevel(
   return defaultLogLevel;
 }
 
-function sanitize(
-  val: unknown,
-  seen: WeakSet<object>,
-  depth: number = 0
-): unknown {
+function sanitize(val: unknown, seen: WeakSet<object>, depth: number = 0): unknown {
   if (depth >= MAX_DEPTH) {
     return "[Max Depth Reached]";
   }
@@ -168,10 +157,7 @@ function parseLogLevels(): Record<string, LogLevel> | null {
   // example format: runner:Error,HealthCheck:Debug,PricesFetcher:Info,*:Silent
   // "*" sets log level for all the other modules.
   // if "*" is not specified - REDSTONE_FINANCE_LOG_LEVEL will be used.
-  const customLogLevels = getFromEnv(
-    "CUSTOM_LOG_LEVELS",
-    z.string().optional()
-  );
+  const customLogLevels = getFromEnv("CUSTOM_LOG_LEVELS", z.string().optional());
   if (!customLogLevels) {
     return null;
   }

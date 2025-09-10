@@ -12,17 +12,11 @@ async function maybeFundWithAirdrop(
   if (cluster === "devnet" || cluster === "testnet") {
     console.log("Requesting airdrop...");
     try {
-      const signature = await connection.requestAirdrop(
-        publicKey,
-        balanceFromSol(balanceInSol)
-      );
+      const signature = await connection.requestAirdrop(publicKey, balanceFromSol(balanceInSol));
       await connection.confirmTransaction(signature, "confirmed");
       console.log("Airdrop successful!");
     } catch (error) {
-      console.error(
-        "Airdrop failed with error:",
-        RedstoneCommon.stringifyError(error)
-      );
+      console.error("Airdrop failed with error:", RedstoneCommon.stringifyError(error));
     }
   }
 }
@@ -38,9 +32,7 @@ export async function getAccountInfo(publicKey: PublicKey, cluster: Cluster) {
     if (cluster === "devnet" || cluster === "testnet") {
       console.log("Account does not exist. Creating account...");
     } else {
-      throw new Error(
-        "Account must be funded on mainnet. Please send SOL to this address."
-      );
+      throw new Error("Account must be funded on mainnet. Please send SOL to this address.");
     }
   }
 

@@ -9,11 +9,7 @@ export class TonPriceManagerContractDeployer extends TonContractDeployer<
   TonPriceManager,
   TonPriceManagerContractAdapter
 > {
-  constructor(
-    network: TonNetwork,
-    code: Cell,
-    initData?: PriceManagerInitData
-  ) {
+  constructor(network: TonNetwork, code: Cell, initData?: PriceManagerInitData) {
     super(TonPriceManager, network, code, initData);
   }
 

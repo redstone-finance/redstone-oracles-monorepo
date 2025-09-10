@@ -1,14 +1,8 @@
-import {
-  INumericDataPoint,
-  SignedDataPackagePlainObj,
-} from "@redstone-finance/protocol";
+import { INumericDataPoint, SignedDataPackagePlainObj } from "@redstone-finance/protocol";
 import { default as redstoneOraclesInitialState } from "./registry/initial-state.json";
 
-export const getDecimalsForDataFeedId = (
-  dataPackages: SignedDataPackagePlainObj[]
-) => {
-  const firstDecimal = (dataPackages[0].dataPoints[0] as INumericDataPoint)
-    .decimals;
+export const getDecimalsForDataFeedId = (dataPackages: SignedDataPackagePlainObj[]) => {
+  const firstDecimal = (dataPackages[0].dataPoints[0] as INumericDataPoint).decimals;
   const areAllDecimalsEqual = dataPackages.every((dataPackage) =>
     dataPackage.dataPoints.every(
       (dataPoint) => (dataPoint as INumericDataPoint).decimals === firstDecimal

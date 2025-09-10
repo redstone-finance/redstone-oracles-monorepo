@@ -1,10 +1,6 @@
 import { Provider } from "@ethersproject/abstract-provider";
 import { CronAgent } from "@redstone-finance/agents";
-import {
-  NetworkId,
-  NetworkIdSchema,
-  RedstoneCommon,
-} from "@redstone-finance/utils";
+import { NetworkId, NetworkIdSchema, RedstoneCommon } from "@redstone-finance/utils";
 
 export type BackgroundBlockNumbersFetcherOpts = {
   blockNumbersFetchers: [NetworkId, IGetBlockNumber][];
@@ -19,8 +15,7 @@ export class BackgroundBlockNumberFetcher {
   agentPerNetworkId: Record<NetworkId, CronAgent<number>> = {};
 
   constructor(private readonly opts: BackgroundBlockNumbersFetcherOpts) {
-    for (const [networkId, blockNumberFetcher] of this.opts
-      .blockNumbersFetchers) {
+    for (const [networkId, blockNumberFetcher] of this.opts.blockNumbersFetchers) {
       const jobWithRetries = RedstoneCommon.retry({
         fn: () => blockNumberFetcher.getBlockNumber(),
         maxRetries: 1,
@@ -38,9 +33,7 @@ export class BackgroundBlockNumberFetcher {
   }
 
   start(): Promise<boolean[]> {
-    return Promise.all(
-      Object.values(this.agentPerNetworkId).map((agent) => agent.start())
-    );
+    return Promise.all(Object.values(this.agentPerNetworkId).map((agent) => agent.start()));
   }
 
   stop() {
@@ -54,8 +47,7 @@ export class BackgroundBlockNumberFetcher {
       const blockNumber = agent.getLastFreshMessageOrDefault();
 
       if (blockNumber !== undefined) {
-        blockNumbersPerNetworkId[NetworkIdSchema.parse(networkId)] =
-          blockNumber;
+        blockNumbersPerNetworkId[NetworkIdSchema.parse(networkId)] = blockNumber;
       }
     }
 

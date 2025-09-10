@@ -33,24 +33,18 @@ export const describeCommonPriceFeedTests = ({
 }: PriceFeedTestsParams) => {
   const deployAll = async () => {
     const adapterFactory = await ethers.getContractFactory(adapterContractName);
-    const priceFeedFactory = await ethers.getContractFactory(
-      priceFeedContractName
-    );
+    const priceFeedFactory = await ethers.getContractFactory(priceFeedContractName);
 
     const adapter = await adapterFactory.deploy();
     const priceFeed =
-      priceFeedContractName === adapterContractName
-        ? adapter
-        : await priceFeedFactory.deploy();
+      priceFeedContractName === adapterContractName ? adapter : await priceFeedFactory.deploy();
 
     await adapter.deployed();
     await priceFeed.deployed();
 
     if (priceFeedContractName !== adapterContractName) {
       // eslint-disable-next-line @typescript-eslint/no-unsafe-call
-      const tx = (await priceFeed.setAdapterAddress(
-        adapter.address
-      )) as ContractTransaction;
+      const tx = (await priceFeed.setAdapterAddress(adapter.address)) as ContractTransaction;
       await tx.wait();
     }
 
@@ -105,9 +99,7 @@ export const describeCommonPriceFeedTests = ({
       mockDataTimestamp = prevBlockTime * 1000;
       await time.setNextBlockTimestamp(curBlockTime);
 
-      const wrappedContract = WrapperBuilder.wrap(
-        contracts.adapter
-      ).usingSimpleNumericMock({
+      const wrappedContract = WrapperBuilder.wrap(contracts.adapter).usingSimpleNumericMock({
         mockSignersCount: 2,
         timestampMilliseconds: mockDataTimestamp,
         dataPoints: [{ dataFeedId: "BTC", value: 42 }],
@@ -119,9 +111,9 @@ export const describeCommonPriceFeedTests = ({
         ).updateDataFeedsValuesPartial([formatBytes32String("BTC")]);
         await tx.wait();
       } else {
-        const tx = await (
-          wrappedContract as IRedstoneAdapter
-        ).updateDataFeedsValues(mockDataTimestamp);
+        const tx = await (wrappedContract as IRedstoneAdapter).updateDataFeedsValues(
+          mockDataTimestamp
+        );
         await tx.wait();
       }
     };
@@ -155,9 +147,7 @@ export const describeCommonPriceFeedTests = ({
       await updatePrices();
       await updatePrices();
       const latestRoundData = await contracts.priceFeed.latestRoundData();
-      expect(latestRoundData.roundId.toNumber()).to.eq(
-        expectedRoundIdAfterTwoUpdates
-      );
+      expect(latestRoundData.roundId.toNumber()).to.eq(expectedRoundIdAfterTwoUpdates);
       expect(latestRoundData.startedAt.toNumber()).to.eq(curBlockTime);
       expect(latestRoundData.updatedAt.toNumber()).to.eq(curBlockTime);
       expect(latestRoundData.answer.toNumber()).to.eq(42 * 10 ** 8);
@@ -188,12 +178,8 @@ export const describeCommonPriceFeedTests = ({
     let contractV1: PriceFeedBase;
 
     beforeEach(async () => {
-      const contractFactory = await ethers.getContractFactory(
-        priceFeedContractName
-      );
-      contractV1 = (await upgrades.deployProxy(
-        contractFactory
-      )) as PriceFeedBase;
+      const contractFactory = await ethers.getContractFactory(priceFeedContractName);
+      contractV1 = (await upgrades.deployProxy(contractFactory)) as PriceFeedBase;
     });
 
     it("should initialize properly", async () => {
@@ -204,16 +190,12 @@ export const describeCommonPriceFeedTests = ({
         "Initializable: contract is already initialized"
       );
       const dataFeed = await contractV1.getDataFeedId();
-      expect(dataFeed).to.eq(
-        "0x4254430000000000000000000000000000000000000000000000000000000000"
-      );
+      expect(dataFeed).to.eq("0x4254430000000000000000000000000000000000000000000000000000000000");
 
       if (adapterContractName !== priceFeedContractName) {
         const adapterAddress = await contractV1.getPriceFeedAdapter();
 
-        expect(adapterAddress).to.eq(
-          "0x0000000000000000000000000000000000000000"
-        );
+        expect(adapterAddress).to.eq("0x0000000000000000000000000000000000000000");
       }
     });
 
@@ -221,9 +203,7 @@ export const describeCommonPriceFeedTests = ({
       let updatedContract: PriceFeedBase;
 
       before(async () => {
-        const updateContractFactory = await ethers.getContractFactory(
-          "PriceFeedUpdatedMock"
-        );
+        const updateContractFactory = await ethers.getContractFactory("PriceFeedUpdatedMock");
 
         updatedContract = (await upgrades.upgradeProxy(
           contractV1,
@@ -242,9 +222,7 @@ export const describeCommonPriceFeedTests = ({
       it("should change data feed id", async () => {
         const adapterAddress = await updatedContract.getPriceFeedAdapter();
 
-        expect(adapterAddress).to.eq(
-          "0x2C31d00C1AE878F28c58B3aC0672007aECb4A124"
-        );
+        expect(adapterAddress).to.eq("0x2C31d00C1AE878F28c58B3aC0672007aECb4A124");
       });
     });
   });

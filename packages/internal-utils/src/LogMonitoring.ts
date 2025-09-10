@@ -15,19 +15,11 @@ export enum LogMonitoringType {
 const defaultLogger = loggerFactory("LogMonitoring");
 
 export class LogMonitoring {
-  static error(
-    type: LogMonitoringType,
-    message: string,
-    logger: RedstoneLogger = defaultLogger
-  ) {
+  static error(type: LogMonitoringType, message: string, logger: RedstoneLogger = defaultLogger) {
     logger.error(this.prefixedMessage(type, message));
   }
 
-  static warn(
-    type: LogMonitoringType,
-    message: string,
-    logger: RedstoneLogger = defaultLogger
-  ) {
+  static warn(type: LogMonitoringType, message: string, logger: RedstoneLogger = defaultLogger) {
     logger.warn(this.prefixedMessage(type, message));
   }
 
@@ -40,10 +32,7 @@ export class LogMonitoring {
     return `<|${symbol}|>`;
   }
 
-  private static prefixedMessage(
-    type: LogMonitoringType,
-    message: string
-  ): string {
+  private static prefixedMessage(type: LogMonitoringType, message: string): string {
     return `${LOG_MONITORING_PREFIX}_${type}: ${message}`;
   }
 }

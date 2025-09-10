@@ -25,5 +25,6 @@ export function mapNetworkNameToGeckoTerminalNetworkName(
   return networkToGeckoTerminalNameMap[networkName];
 }
 
-export const allGeckoSupportedNetworkNames: SupportedNetworkNames[] =
-  Object.keys(networkToGeckoTerminalNameMap) as SupportedNetworkNames[];
+export const allGeckoSupportedNetworkNames: SupportedNetworkNames[] = Object.keys(
+  networkToGeckoTerminalNameMap
+) as SupportedNetworkNames[];

@@ -1,18 +1,8 @@
-import {
-  BASE_FEE,
-  Keypair,
-  Operation,
-  rpc,
-  TransactionBuilder,
-} from "@stellar/stellar-sdk";
+import { BASE_FEE, Keypair, Operation, rpc, TransactionBuilder } from "@stellar/stellar-sdk";
 import { makeKeypair, StellarRpcClient } from "../../src";
 import { StellarSigner } from "../../src/stellar/StellarSigner";
 import { makeServer } from "../utils";
-import {
-  INITIAL_ACCOUNT_AMOUNT,
-  MULTISIG_SIGNERS,
-  MULTISIG_TRESHOLD,
-} from "./consts";
+import { INITIAL_ACCOUNT_AMOUNT, MULTISIG_SIGNERS, MULTISIG_TRESHOLD } from "./consts";
 
 async function createMultisigAccount(
   server: rpc.Server,
@@ -22,9 +12,7 @@ async function createMultisigAccount(
 ): Promise<string> {
   const client = new StellarRpcClient(server);
 
-  const targetAccount = await server.getAccount(
-    targetAccountKeypair.publicKey()
-  );
+  const targetAccount = await server.getAccount(targetAccountKeypair.publicKey());
 
   const configTransactionBuilder = new TransactionBuilder(targetAccount, {
     fee: BASE_FEE,

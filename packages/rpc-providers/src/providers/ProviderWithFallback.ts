@@ -1,10 +1,5 @@
 import { ErrorCode } from "@ethersproject/logger";
-import {
-  EventType,
-  Listener,
-  Provider,
-  TransactionReceipt,
-} from "@ethersproject/providers";
+import { EventType, Listener, Provider, TransactionReceipt } from "@ethersproject/providers";
 import {
   ChainConfig,
   getChainConfigByNetworkId,
@@ -42,10 +37,7 @@ export const FALLBACK_DEFAULT_CONFIG: ProviderWithFallbackConfig = {
 
 type EthersError = Error & { code?: ErrorCode; reason?: string };
 
-export class ProviderWithFallback
-  extends ProviderWithFallbackBase
-  implements Provider
-{
+export class ProviderWithFallback extends ProviderWithFallbackBase implements Provider {
   public providers: readonly Provider[];
   protected readonly providerWithFallbackConfig: ProviderWithFallbackConfig;
   private lastErrorTimestamp: Record<number, number> = {};
@@ -68,10 +60,7 @@ export class ProviderWithFallback
     once: boolean;
   }[] = [];
 
-  constructor(
-    providers: providers.Provider[],
-    config: Partial<ProviderWithFallbackConfig> = {}
-  ) {
+  constructor(providers: providers.Provider[], config: Partial<ProviderWithFallbackConfig> = {}) {
     super();
     if (providers.length < 2) {
       throw new Error("Please provide at least two providers");
@@ -82,17 +71,11 @@ export class ProviderWithFallback
     this.providerWithFallbackConfig = { ...FALLBACK_DEFAULT_CONFIG, ...config };
     this.chainId = getProviderNetworkInfo(this.providers[0]).chainId;
     this.chainConfig =
-      config.chainConfig ??
-      getChainConfigByNetworkId(getLocalChainConfigs(), this.chainId);
+      config.chainConfig ?? getChainConfigByNetworkId(getLocalChainConfigs(), this.chainId);
 
     // assign begin values to have deterministic behavior
-    for (
-      let providerIndex = 0;
-      providerIndex < this.providers.length;
-      providerIndex++
-    ) {
-      this.lastErrorTimestamp[providerIndex] =
-        performance.now() - providerIndex;
+    for (let providerIndex = 0; providerIndex < this.providers.length; providerIndex++) {
+      this.lastErrorTimestamp[providerIndex] = performance.now() - providerIndex;
     }
   }
 
@@ -155,18 +138,10 @@ export class ProviderWithFallback
     confirmations?: number,
     timeout?: number
   ): Promise<TransactionReceipt> {
-    return this.currentProvider.waitForTransaction(
-      transactionHash,
-      confirmations,
-      timeout
-    );
+    return this.currentProvider.waitForTransaction(transactionHash, confirmations, timeout);
   }
 
-  private saveGlobalListener(
-    eventType: EventType,
-    listener: Listener,
-    once = false
-  ) {
+  private saveGlobalListener(eventType: EventType, listener: Listener, once = false) {
     this.globalListeners.push({ eventType, listener, once });
   }
 
@@ -216,11 +191,7 @@ export class ProviderWithFallback
         alreadyRetriedCount,
         providerIndexForThisAttempt
       );
-      return await this.doExecuteWithFallback(
-        alreadyRetriedCount + 1,
-        fnName,
-        ...args
-      );
+      return await this.doExecuteWithFallback(alreadyRetriedCount + 1, fnName, ...args);
     }
   }
 
@@ -239,9 +210,7 @@ export class ProviderWithFallback
   }
 
   private extractProviderName(index: number): string {
-    return (
-      this.providerWithFallbackConfig.providerNames?.[index] ?? index.toString()
-    );
+    return this.providerWithFallbackConfig.providerNames?.[index] ?? index.toString();
   }
 
   private electNewProviderOrFail(
@@ -249,17 +218,12 @@ export class ProviderWithFallback
     retryNumber: number,
     lastUsedProviderIndex: number
   ): void {
-    if (
-      error.code &&
-      this.providerWithFallbackConfig.unrecoverableErrors.includes(error.code)
-    ) {
+    if (error.code && this.providerWithFallbackConfig.unrecoverableErrors.includes(error.code)) {
       logger.warn(`Unrecoverable error ${error.code}, rethrowing error`);
       throw error;
     }
 
-    const lastUsedProviderName = this.extractProviderName(
-      lastUsedProviderIndex
-    );
+    const lastUsedProviderName = this.extractProviderName(lastUsedProviderIndex);
 
     logger.warn(
       `Provider ${lastUsedProviderName} failed with error: ${error.code} ${error.message}`
@@ -275,10 +239,10 @@ export class ProviderWithFallback
     // as next provider we choose the one which haven't failed for the longest period
     const nextProviderIndex = parseInt(
       (
-        _.minBy(
-          Object.entries(this.lastErrorTimestamp),
-          ([_provider, timestamp]) => timestamp
-        ) as [string, number]
+        _.minBy(Object.entries(this.lastErrorTimestamp), ([_provider, timestamp]) => timestamp) as [
+          string,
+          number,
+        ]
       )[0]
     );
 

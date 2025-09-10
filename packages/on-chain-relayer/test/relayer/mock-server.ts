@@ -3,12 +3,9 @@ import { setupServer } from "msw/node";
 import { getDataPackagesResponse, START_OEV_AUCTION_URL } from "../helpers";
 
 const handlers = [
-  http.get(
-    "http://mock-cache-service/data-packages/latest/redstone-main-demo",
-    () => {
-      return HttpResponse.json(getDataPackagesResponse());
-    }
-  ),
+  http.get("http://mock-cache-service/data-packages/latest/redstone-main-demo", () => {
+    return HttpResponse.json(getDataPackagesResponse());
+  }),
   http.post(START_OEV_AUCTION_URL, () => {
     return HttpResponse.json({
       jsonrpc: "2.0",

@@ -1,8 +1,7 @@
 import { jest } from "@jest/globals";
 import { CronAgent, CronAgentArgs } from "../src/CronAgent";
 
-const createMockFn = () =>
-  jest.fn<() => Promise<number>>().mockResolvedValue(42);
+const createMockFn = () => jest.fn<() => Promise<number>>().mockResolvedValue(42);
 
 describe("IntervalAgent", () => {
   let now: number;
@@ -68,9 +67,7 @@ describe("IntervalAgent", () => {
 
       jest.advanceTimersByTime(1500);
 
-      expect(() => agent.getLastFreshMessageOrFail()).toThrow(
-        /Cached data is stale/
-      );
+      expect(() => agent.getLastFreshMessageOrFail()).toThrow(/Cached data is stale/);
     });
 
     it("should return cached value when not stale", async () => {
@@ -98,9 +95,7 @@ describe("IntervalAgent", () => {
 
       await jest.advanceTimersByTimeAsync(5_000);
 
-      expect(mockError).toHaveBeenCalledWith(
-        expect.stringContaining("Agent job failed")
-      );
+      expect(mockError).toHaveBeenCalledWith(expect.stringContaining("Agent job failed"));
 
       expect(agent.getLastFreshMessageOrFail()).toEqual(45);
     });

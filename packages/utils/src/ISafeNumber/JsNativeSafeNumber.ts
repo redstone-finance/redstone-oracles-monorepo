@@ -9,10 +9,7 @@ export enum NumberValidationResult {
   isUnderflow,
 }
 
-export type NumberValidationError = Exclude<
-  NumberValidationResult,
-  NumberValidationResult.isOk
->;
+export type NumberValidationError = Exclude<NumberValidationResult, NumberValidationResult.isOk>;
 
 const logger = loggerFactory("JsNativeSafeNumber");
 
@@ -39,10 +36,7 @@ export class JsNativeSafeNumber implements ISafeNumber {
   static from(numberLike: NumberArg): JsNativeSafeNumber {
     if (numberLike instanceof JsNativeSafeNumber) {
       return new JsNativeSafeNumber(numberLike.unsafeToNumber());
-    } else if (
-      typeof numberLike === "number" ||
-      typeof numberLike === "string"
-    ) {
+    } else if (typeof numberLike === "number" || typeof numberLike === "string") {
       return new JsNativeSafeNumber(parseToSafeNumber(numberLike));
     } else {
       throw new Error(
@@ -82,8 +76,7 @@ export class JsNativeSafeNumber implements ISafeNumber {
   }
 
   mod(divisor: NumberArg): JsNativeSafeNumber {
-    const result =
-      this._value % JsNativeSafeNumber.from(divisor).unsafeToNumber();
+    const result = this._value % JsNativeSafeNumber.from(divisor).unsafeToNumber();
     return this.produceNewSafeNumber(result);
   }
 
@@ -94,29 +87,25 @@ export class JsNativeSafeNumber implements ISafeNumber {
   }
 
   add(numberLike: NumberArg): JsNativeSafeNumber {
-    const result =
-      this._value + JsNativeSafeNumber.from(numberLike).unsafeToNumber();
+    const result = this._value + JsNativeSafeNumber.from(numberLike).unsafeToNumber();
 
     return this.produceNewSafeNumber(result);
   }
 
   sub(numberLike: NumberArg): JsNativeSafeNumber {
-    const result =
-      this._value - JsNativeSafeNumber.from(numberLike).unsafeToNumber();
+    const result = this._value - JsNativeSafeNumber.from(numberLike).unsafeToNumber();
 
     return this.produceNewSafeNumber(result);
   }
 
   div(numberLike: NumberArg): JsNativeSafeNumber {
-    const result =
-      this._value / JsNativeSafeNumber.from(numberLike).unsafeToNumber();
+    const result = this._value / JsNativeSafeNumber.from(numberLike).unsafeToNumber();
 
     return this.produceNewSafeNumber(result);
   }
 
   mul(numberLike: NumberArg): JsNativeSafeNumber {
-    const result =
-      this._value * JsNativeSafeNumber.from(numberLike).unsafeToNumber();
+    const result = this._value * JsNativeSafeNumber.from(numberLike).unsafeToNumber();
 
     return this.produceNewSafeNumber(result);
   }
@@ -141,10 +130,7 @@ export class JsNativeSafeNumber implements ISafeNumber {
   eq(numberArg: NumberArg): boolean {
     const number = JsNativeSafeNumber.from(numberArg);
 
-    return (
-      Math.abs(number.unsafeToNumber() - this._value) <
-      JsNativeSafeNumberConfig.EPSILON
-    );
+    return Math.abs(number.unsafeToNumber() - this._value) < JsNativeSafeNumberConfig.EPSILON;
   }
 
   lt(numberArg: NumberArg): boolean {
@@ -177,20 +163,14 @@ export class JsNativeSafeNumber implements ISafeNumber {
     const { result: validationResult, message } = validateNumber(this._value);
 
     if (validationResult !== NumberValidationResult.isOk) {
-      JsNativeSafeNumberConfig.ON_NUMBER_VALIDATION_ERROR[validationResult](
-        message
-      );
+      JsNativeSafeNumberConfig.ON_NUMBER_VALIDATION_ERROR[validationResult](message);
     }
 
-    this._value = Number(
-      this._value.toFixed(JsNativeSafeNumberConfig.MAX_DECIMALS)
-    );
+    this._value = Number(this._value.toFixed(JsNativeSafeNumberConfig.MAX_DECIMALS));
   }
 }
 
-const validateNumber = (
-  number: number
-): { result: NumberValidationResult; message: string } => {
+const validateNumber = (number: number): { result: NumberValidationResult; message: string } => {
   if (Number.isNaN(number)) {
     return {
       result: NumberValidationResult.isNaN,
@@ -236,9 +216,7 @@ const parseToSafeNumber = (value: number | string) => {
 
   const { result: validationResult, message } = validateNumber(number);
   if (validationResult !== NumberValidationResult.isOk) {
-    JsNativeSafeNumberConfig.ON_NUMBER_VALIDATION_ERROR[validationResult](
-      message
-    );
+    JsNativeSafeNumberConfig.ON_NUMBER_VALIDATION_ERROR[validationResult](message);
   }
 
   return number;

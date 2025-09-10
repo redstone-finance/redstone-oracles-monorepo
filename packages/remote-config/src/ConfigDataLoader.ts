@@ -28,9 +28,7 @@ export class ConfigDataLoader implements IConfigDataLoader {
     this.httpClient = httpClient;
   }
 
-  public async currentUpdateLastModified(
-    configFileName?: string
-  ): Promise<string> {
+  public async currentUpdateLastModified(configFileName?: string): Promise<string> {
     const configFileS3Item = await this.currentConfigFile(configFileName);
 
     return configFileS3Item.LastModified;
@@ -56,20 +54,14 @@ export class ConfigDataLoader implements IConfigDataLoader {
       throw new Error(`No items found in S3 ${this.remoteConfigApiEndpoint}`);
     }
 
-    const contents: S3ListItem[] = Array.isArray(
-      parsedData.ListBucketResult.Contents
-    )
+    const contents: S3ListItem[] = Array.isArray(parsedData.ListBucketResult.Contents)
       ? parsedData.ListBucketResult.Contents
       : [parsedData.ListBucketResult.Contents];
 
-    const configFileS3Item = contents.find(
-      (item) => item.Key === configFileName
-    );
+    const configFileS3Item = contents.find((item) => item.Key === configFileName);
 
     if (!configFileS3Item) {
-      throw new Error(
-        `Config file ${configFileName} not found in ${this.remoteConfigApiEndpoint}`
-      );
+      throw new Error(`Config file ${configFileName} not found in ${this.remoteConfigApiEndpoint}`);
     }
 
     return configFileS3Item;
