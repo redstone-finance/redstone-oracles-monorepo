@@ -3,10 +3,7 @@ import { WrapperBuilder } from "@redstone-finance/evm-connector";
 import chai from "chai";
 import chaiAsPromised from "chai-as-promised";
 import { ethers } from "hardhat";
-import {
-  Hopper,
-  PriceFeedsAdapterWithLowestGasRead,
-} from "../../../typechain-types";
+import { Hopper, PriceFeedsAdapterWithLowestGasRead } from "../../../typechain-types";
 
 chai.use(chaiAsPromised);
 
@@ -18,23 +15,17 @@ describe("GasReadsBenchmarks", () => {
 
   beforeEach(async () => {
     // Deploy a new adapter contract
-    const adapterContractFactory =
-      await ethers.getContractFactory(adapterContractName);
+    const adapterContractFactory = await ethers.getContractFactory(adapterContractName);
     adapterContract = await adapterContractFactory.deploy();
   });
 
   it("benchmark", async () => {
-    const benchmarkContractFactory =
-      await ethers.getContractFactory("ReadBenchmark");
-    const benchmarkContract = await benchmarkContractFactory.deploy(
-      adapterContract.address
-    );
+    const benchmarkContractFactory = await ethers.getContractFactory("ReadBenchmark");
+    const benchmarkContract = await benchmarkContractFactory.deploy(adapterContract.address);
 
     const currentBlockTime = await time.latest();
     const nextBlockTime = currentBlockTime + 1;
-    const wrappedContract = WrapperBuilder.wrap(
-      adapterContract
-    ).usingSimpleNumericMock({
+    const wrappedContract = WrapperBuilder.wrap(adapterContract).usingSimpleNumericMock({
       timestampMilliseconds: nextBlockTime * 1000,
       dataPoints: [{ dataFeedId: "BTC", value: 42 }],
       mockSignersCount: 2,
@@ -70,10 +61,7 @@ describe("GasReadsBenchmarks", () => {
     const hop2 = await ethers.deployContract("Hopper", [hop1.address, false]);
     const hop3 = await ethers.deployContract("Hopper", [hop2.address, false]);
     const hop4 = await ethers.deployContract("Hopper", [hop3.address, false]);
-    const hop5 = (await ethers.deployContract("Hopper", [
-      hop4.address,
-      false,
-    ])) as Hopper;
+    const hop5 = (await ethers.deployContract("Hopper", [hop4.address, false])) as Hopper;
 
     const tx = await hop5.nextHop();
     console.log((await tx.wait()).gasUsed.toString());

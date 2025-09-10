@@ -2,11 +2,7 @@ import { ValuesForDataFeeds } from "@redstone-finance/sdk";
 import { expect } from "chai";
 import { RelayerConfig } from "../../src";
 import { checkValueDeviationCondition } from "../../src/core/update-conditions/check-value-deviation-condition";
-import {
-  createNumberFromContract,
-  getDataPackagesResponse,
-  mockConfig,
-} from "../helpers";
+import { createNumberFromContract, getDataPackagesResponse, mockConfig } from "../helpers";
 
 describe("check-value-deviation-condition", () => {
   let relayerConfig: RelayerConfig;
@@ -28,9 +24,7 @@ describe("check-value-deviation-condition", () => {
       relayerConfig
     );
     expect(shouldUpdatePrices).to.be.false;
-    expect(warningMessage).to.match(
-      /Value has not deviated enough to be updated/
-    );
+    expect(warningMessage).to.match(/Value has not deviated enough to be updated/);
     expect(warningMessage).not.to.match(/Deviation in fallback mode:/);
     ({ shouldUpdatePrices, warningMessage } = checkValueDeviationCondition(
       "BTC",
@@ -39,9 +33,7 @@ describe("check-value-deviation-condition", () => {
       relayerConfig
     ));
     expect(shouldUpdatePrices).to.be.false;
-    expect(warningMessage).to.match(
-      /Value has not deviated enough to be updated/
-    );
+    expect(warningMessage).to.match(/Value has not deviated enough to be updated/);
     expect(warningMessage).not.to.match(/Deviation in fallback mode:/);
   });
 

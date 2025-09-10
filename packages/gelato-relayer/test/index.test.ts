@@ -9,8 +9,7 @@ import path from "path";
 
 const { w3f } = hre;
 
-const CONDITION_NOT_SATISFIED_MESSAGE =
-  /Update condition NOT satisfied; block_number=12221/;
+const CONDITION_NOT_SATISFIED_MESSAGE = /Update condition NOT satisfied; block_number=12221/;
 describe("RedStone Gelato w3f Tests", function () {
   this.timeout(0);
 
@@ -36,10 +35,7 @@ describe("RedStone Gelato w3f Tests", function () {
   });
 
   it("Return canExec: false (Skipping) when update is not needed", async () => {
-    const message = await performShouldNotExecTest(
-      redstoneW3f,
-      prepareUserArgs(false)
-    );
+    const message = await performShouldNotExecTest(redstoneW3f, prepareUserArgs(false));
 
     expect(message).to.match(CONDITION_NOT_SATISFIED_MESSAGE);
   });
@@ -53,16 +49,11 @@ describe("RedStone Gelato w3f Tests", function () {
     expect(message).to.match(CONDITION_NOT_SATISFIED_MESSAGE);
   });
 
-  function prepareUserArgs(
-    shouldUpdatePrices = true,
-    manifestPath = "./manifest.json"
-  ) {
+  function prepareUserArgs(shouldUpdatePrices = true, manifestPath = "./manifest.json") {
     const userArgs = { ...args };
 
     userArgs.shouldUpdatePrices = shouldUpdatePrices;
-    userArgs.message = shouldUpdatePrices
-      ? "Update needed"
-      : "Update NOT needed";
+    userArgs.message = shouldUpdatePrices ? "Update needed" : "Update NOT needed";
     userArgs.localManifestData = Buffer.from(
       fs.readFileSync(path.join(__dirname, manifestPath))
     ).toString("base64");
@@ -90,10 +81,7 @@ describe("RedStone Gelato w3f Tests", function () {
     return callData[0].data;
   }
 
-  async function performShouldNotExecTest(
-    redstoneW3f: Web3FunctionHardhat,
-    userArgs: typeof args
-  ) {
+  async function performShouldNotExecTest(redstoneW3f: Web3FunctionHardhat, userArgs: typeof args) {
     const { result } = await redstoneW3f.run("onRun", { userArgs });
     expect(result.canExec).to.equal(false);
 

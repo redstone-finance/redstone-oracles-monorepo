@@ -4,11 +4,7 @@ import {
   getSignersForDataServiceId,
   IContractConnector,
 } from "@redstone-finance/sdk";
-import {
-  IRedstoneContractAdapter,
-  IterationArgsMessage,
-  RelayerConfig,
-} from "../../src";
+import { IRedstoneContractAdapter, IterationArgsMessage, RelayerConfig } from "../../src";
 import { ContractData, ShouldUpdateContext } from "../../src/types";
 
 class ContractAdapterMock implements IRedstoneContractAdapter {
@@ -20,10 +16,7 @@ class ContractAdapterMock implements IRedstoneContractAdapter {
     return Promise.resolve(1);
   }
 
-  readLatestRoundContractData(
-    _feedIds: string[],
-    _blockNumber: number
-  ): Promise<ContractData> {
+  readLatestRoundContractData(_feedIds: string[], _blockNumber: number): Promise<ContractData> {
     return Promise.resolve({
       ETH: {
         lastDataPackageTimestampMS: 1732026000000,
@@ -38,16 +31,12 @@ class ContractAdapterMock implements IRedstoneContractAdapter {
     });
   }
 
-  writePricesFromPayloadToContract(
-    _paramsProvider: ContractParamsProvider
-  ): Promise<void> {
+  writePricesFromPayloadToContract(_paramsProvider: ContractParamsProvider): Promise<void> {
     return Promise.resolve();
   }
 }
 
-export class ContractConnectorMock
-  implements IContractConnector<ContractAdapterMock>
-{
+export class ContractConnectorMock implements IContractConnector<ContractAdapterMock> {
   private adapter = new ContractAdapterMock();
 
   getAdapter(): Promise<ContractAdapterMock> {
@@ -67,10 +56,7 @@ export function getIterationArgsProviderMock(
   shouldUpdatePrices = true,
   additionalUpdateMessages?: IterationArgsMessage[]
 ) {
-  return (
-    _shouldUpdateContext: ShouldUpdateContext,
-    relayerConfig: RelayerConfig
-  ) =>
+  return (_shouldUpdateContext: ShouldUpdateContext, relayerConfig: RelayerConfig) =>
     Promise.resolve({
       shouldUpdatePrices,
       args: {

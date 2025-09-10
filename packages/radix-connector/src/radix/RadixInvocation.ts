@@ -1,9 +1,4 @@
-import {
-  ManifestBuilder,
-  str,
-  tuple,
-  Value,
-} from "@radixdlt/radix-engine-toolkit";
+import { ManifestBuilder, str, tuple, Value } from "@radixdlt/radix-engine-toolkit";
 import type { RadixTransaction } from "./RadixTransaction";
 
 export abstract class RadixInvocation<T> {
@@ -53,9 +48,7 @@ export abstract class ValueRadixInvocation<T> extends RadixInvocation<T> {
   }
 }
 
-export abstract class ValueProxyRadixInvocation<
-  T,
-> extends ProxyRadixInvocation<T> {
+export abstract class ValueProxyRadixInvocation<T> extends ProxyRadixInvocation<T> {
   override interpret(value: unknown) {
     return value as T;
   }
@@ -71,11 +64,6 @@ export abstract class RadixFunction<T> extends ValueRadixInvocation<T> {
   }
 
   override appendTo(builder: ManifestBuilder) {
-    return builder.callFunction(
-      this.subject,
-      this.blueprintName,
-      this.name,
-      this.getParams()
-    );
+    return builder.callFunction(this.subject, this.blueprintName, this.name, this.getParams());
   }
 }

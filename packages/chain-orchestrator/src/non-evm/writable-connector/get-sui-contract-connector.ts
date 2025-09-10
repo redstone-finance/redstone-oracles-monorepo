@@ -6,9 +6,7 @@ import {
 } from "@redstone-finance/sui-connector";
 import { PartialRelayerConfig } from "./partial-relayer-config";
 
-export const getSuiContractConnector = (
-  relayerConfig: PartialRelayerConfig
-) => {
+export const getSuiContractConnector = (relayerConfig: PartialRelayerConfig) => {
   const {
     privateKey,
     rpcUrls,
@@ -39,9 +37,5 @@ export const getSuiContractConnector = (
     expectedTxDeliveryTimeInMs: expectedTxDeliveryTimeInMS,
   });
 
-  return new SuiPricesContractConnector(
-    suiClient,
-    config,
-    makeSuiKeypair(privateKey)
-  );
+  return new SuiPricesContractConnector(suiClient, config, makeSuiKeypair(privateKey));
 };

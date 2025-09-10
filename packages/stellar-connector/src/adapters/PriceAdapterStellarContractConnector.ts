@@ -1,10 +1,7 @@
 import { IPricesContractAdapter } from "@redstone-finance/sdk";
 import { Contract, Keypair } from "@stellar/stellar-sdk";
 import { StellarRpcClient } from "../stellar/StellarRpcClient";
-import {
-  StellarTxDeliveryMan,
-  StellarTxDeliveryManConfig,
-} from "../stellar/StellarTxDeliveryMan";
+import { StellarTxDeliveryMan, StellarTxDeliveryManConfig } from "../stellar/StellarTxDeliveryMan";
 import { PriceAdapterStellarContractAdapter } from "./PriceAdapterStellarContractAdapter";
 import { StellarContractConnector } from "./StellarContractConnector";
 

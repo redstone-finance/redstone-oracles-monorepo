@@ -1,9 +1,6 @@
 import { Point } from "@influxdata/influxdb-client";
 import { InfluxService } from "@redstone-finance/internal-utils";
-import {
-  DataPackagesResponse,
-  getDataPackagesTimestamp,
-} from "@redstone-finance/sdk";
+import { DataPackagesResponse, getDataPackagesTimestamp } from "@redstone-finance/sdk";
 import { RedstoneCommon, SafeNumber, Tx } from "@redstone-finance/utils";
 import { basename } from "path";
 import { z } from "zod";
@@ -12,13 +9,9 @@ import { RelayerTxDeliveryManContext } from "../core/contract-interactions/Relay
 
 const RELAYER_DATA_BUCKET = "dry-run-relayer-data";
 const TXS_MEASUREMENT = "redstoneTransactions";
-const SENDER_TAG =
-  "0x0000000000000000000000000000000000000000000000000000000000000001";
+const SENDER_TAG = "0x0000000000000000000000000000000000000000000000000000000000000001";
 
-export class RelayerDataInfluxService
-  extends InfluxService
-  implements Tx.ITxDeliveryMan
-{
+export class RelayerDataInfluxService extends InfluxService implements Tx.ITxDeliveryMan {
   constructor(private relayerConfig: RelayerConfig) {
     const { influxUrl, influxToken } = relayerConfig;
 
@@ -30,10 +23,7 @@ export class RelayerDataInfluxService
     });
   }
 
-  async deliver(
-    _txDeliveryCall: Tx.TxDeliveryCall,
-    context: RelayerTxDeliveryManContext
-  ) {
+  async deliver(_txDeliveryCall: Tx.TxDeliveryCall, context: RelayerTxDeliveryManContext) {
     const dataPackages = await context.paramsProvider.requestDataPackages();
     const manifestFile = RedstoneCommon.getFromEnv("MANIFEST_FILE", z.string());
 
@@ -81,9 +71,7 @@ export class RelayerDataInfluxService
 
       const value = SafeNumber.getMedian(
         packages.map((dataPackage) =>
-          SafeNumber.createSafeNumber(
-            dataPackage.dataPackage.dataPoints[0].toObj().value
-          )
+          SafeNumber.createSafeNumber(dataPackage.dataPackage.dataPoints[0].toObj().value)
         )
       );
 

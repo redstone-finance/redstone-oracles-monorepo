@@ -1,19 +1,7 @@
-import {
-  HttpException,
-  Injectable,
-  Logger,
-  OnModuleInit,
-  Optional,
-} from "@nestjs/common";
+import { HttpException, Injectable, Logger, OnModuleInit, Optional } from "@nestjs/common";
 import { filterOutliers } from "@redstone-finance/internal-utils";
-import {
-  UniversalSigner,
-  recoverDeserializedSignerAddress,
-} from "@redstone-finance/protocol";
-import {
-  EXTERNAL_SIGNERS_CUTOFF_DATE,
-  getDataServiceIdForSigner,
-} from "@redstone-finance/sdk";
+import { UniversalSigner, recoverDeserializedSignerAddress } from "@redstone-finance/protocol";
+import { EXTERNAL_SIGNERS_CUTOFF_DATE, getDataServiceIdForSigner } from "@redstone-finance/sdk";
 import { RedstoneCommon } from "@redstone-finance/utils";
 import { DataPackagesBroadcaster } from "../broadcasters/data-packages-broadcaster";
 import { MongoBroadcaster } from "../broadcasters/mongo-broadcaster";
@@ -63,13 +51,8 @@ export class DataPackagesService implements OnModuleInit {
 
   private async initializeAllowedSigners() {
     const oracleRegistryState = await getOracleState();
-    DataPackagesService.allowedSigners = Object.values(
-      oracleRegistryState.nodes
-    )
-      .filter(
-        (node) =>
-          new Date(node.dateAdded).getTime() < EXTERNAL_SIGNERS_CUTOFF_DATE
-      )
+    DataPackagesService.allowedSigners = Object.values(oracleRegistryState.nodes)
+      .filter((node) => new Date(node.dateAdded).getTime() < EXTERNAL_SIGNERS_CUTOFF_DATE)
       .map((node) => node.evmAddress);
   }
 
@@ -90,9 +73,7 @@ export class DataPackagesService implements OnModuleInit {
     const savePromises = this.broadcasters.map(async (broadcaster) => {
       try {
         await broadcaster.broadcast(dataPackagesToSave, nodeEvmAddress);
-        this.logger.log(
-          `[${broadcaster.constructor.name}] succeeded to ${message}.`
-        );
+        this.logger.log(`[${broadcaster.constructor.name}] succeeded to ${message}.`);
       } catch (error) {
         this.logger.error(
           `[${
@@ -254,47 +235,46 @@ export class DataPackagesService implements OnModuleInit {
   ): Promise<DataPackagesResponse> {
     let fetchedPackagesPerDataFeed: DataPackagesResponse = {};
 
-    const groupedDataPackages =
-      await DataPackage.aggregate<DataPackageDocumentAggregated>([
-        {
-          $match: {
-            dataServiceId,
-            timestampMilliseconds: {
-              $gte: new Date(Date.now() - config.maxAllowedTimestampDelay),
-            },
+    const groupedDataPackages = await DataPackage.aggregate<DataPackageDocumentAggregated>([
+      {
+        $match: {
+          dataServiceId,
+          timestampMilliseconds: {
+            $gte: new Date(Date.now() - config.maxAllowedTimestampDelay),
           },
         },
-        {
-          $group: {
-            _id: {
-              timestampMilliseconds: "$timestampMilliseconds",
-            },
-            uniqueFeedSignerPairs: {
-              $addToSet: {
-                dataPackageId: "$dataPackageId",
-                signerAddress: "$signerAddress",
-              },
-            },
-            count: { $count: {} },
-            signatures: { $push: "$signature" },
-            dataPoints: { $push: "$dataPoints" },
-            dataPackageIds: { $push: "$dataPackageId" },
-            signerAddress: { $push: "$signerAddress" },
-            isSignatureValid: { $push: "$isSignatureValid" },
+      },
+      {
+        $group: {
+          _id: {
+            timestampMilliseconds: "$timestampMilliseconds",
           },
-        },
-        {
-          $addFields: {
-            uniqueCount: { $size: "$uniqueFeedSignerPairs" },
+          uniqueFeedSignerPairs: {
+            $addToSet: {
+              dataPackageId: "$dataPackageId",
+              signerAddress: "$signerAddress",
+            },
           },
+          count: { $count: {} },
+          signatures: { $push: "$signature" },
+          dataPoints: { $push: "$dataPoints" },
+          dataPackageIds: { $push: "$dataPackageId" },
+          signerAddress: { $push: "$signerAddress" },
+          isSignatureValid: { $push: "$isSignatureValid" },
         },
-        {
-          $sort: { uniqueCount: -1, "_id.timestampMilliseconds": -1 },
+      },
+      {
+        $addFields: {
+          uniqueCount: { $size: "$uniqueFeedSignerPairs" },
         },
-        {
-          $limit: 1,
-        },
-      ]);
+      },
+      {
+        $sort: { uniqueCount: -1, "_id.timestampMilliseconds": -1 },
+      },
+      {
+        $limit: 1,
+      },
+    ]);
 
     if (groupedDataPackages.length === 0) {
       throw new HttpException(
@@ -313,8 +293,7 @@ export class DataPackagesService implements OnModuleInit {
       );
       const dataPackageId = candidatePackage.dataPackageId;
       // temporary for backward compatibility
-      (candidatePackage as unknown as { dataFeedId: string }).dataFeedId =
-        dataPackageId;
+      (candidatePackage as unknown as { dataFeedId: string }).dataFeedId = dataPackageId;
       DataPackagesService.updateMediumPackageInResponseIfBetter(
         fetchedPackagesPerDataFeed,
         candidatePackage
@@ -364,17 +343,13 @@ export class DataPackagesService implements OnModuleInit {
     if (candidatePackage.dataPoints.length === 1) {
       return;
     }
-    const mediumPackages =
-      fetchedPackagesResponse[candidatePackage.dataPackageId];
+    const mediumPackages = fetchedPackagesResponse[candidatePackage.dataPackageId];
     if (!mediumPackages) {
       return;
     }
     for (let i = 0; i < mediumPackages.length; ++i) {
       if (mediumPackages[i].signerAddress === candidatePackage.signerAddress) {
-        if (
-          mediumPackages[i].dataPoints.length <
-          candidatePackage.dataPoints.length
-        ) {
+        if (mediumPackages[i].dataPoints.length < candidatePackage.dataPoints.length) {
           mediumPackages[i] = candidatePackage;
         }
       }
@@ -410,17 +385,12 @@ export class DataPackagesService implements OnModuleInit {
   ): boolean {
     return (
       !!fetchedPackagesForDataFeed &&
-      fetchedPackagesForDataFeed.some(
-        (dataPackage) => dataPackage.signerAddress === signerAddress
-      )
+      fetchedPackagesForDataFeed.some((dataPackage) => dataPackage.signerAddress === signerAddress)
     );
   }
 
   static verifyRequester(body: BulkPostRequestBody) {
-    return UniversalSigner.recoverSigner(
-      body.dataPackages,
-      body.requestSignature
-    );
+    return UniversalSigner.recoverSigner(body.dataPackages, body.requestSignature);
   }
 
   static async prepareReceivedDataPackagesForBulkSaving(
@@ -429,18 +399,14 @@ export class DataPackagesService implements OnModuleInit {
   ) {
     const oracleRegistryState = await getOracleState();
 
-    const dataServiceId = getDataServiceIdForSigner(
-      oracleRegistryState,
-      signerAddress
-    );
+    const dataServiceId = getDataServiceIdForSigner(oracleRegistryState, signerAddress);
 
-    const dataPackagesForSaving = receivedDataPackages.map(
-      (receivedDataPackage) =>
-        DataPackagesService.prepareDataPackageForSaving(
-          receivedDataPackage,
-          signerAddress,
-          dataServiceId
-        )
+    const dataPackagesForSaving = receivedDataPackages.map((receivedDataPackage) =>
+      DataPackagesService.prepareDataPackageForSaving(
+        receivedDataPackage,
+        signerAddress,
+        dataServiceId
+      )
     );
 
     return dataPackagesForSaving;
@@ -515,9 +481,7 @@ export class DataPackagesService implements OnModuleInit {
         continue;
       }
       const filteredPackages = packages.filter((pkg) => {
-        return allowedSigners
-          .map((x) => x.toLowerCase())
-          .includes(pkg.signerAddress.toLowerCase());
+        return allowedSigners.map((x) => x.toLowerCase()).includes(pkg.signerAddress.toLowerCase());
       });
 
       if (filteredPackages.length > 0) {

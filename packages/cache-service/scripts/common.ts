@@ -1,7 +1,4 @@
-import {
-  CachedDataPackage,
-  DataPackage,
-} from "../src/data-packages/data-packages.model";
+import { CachedDataPackage, DataPackage } from "../src/data-packages/data-packages.model";
 
 interface QueryDataPackagesParams {
   startTimestamp: number;

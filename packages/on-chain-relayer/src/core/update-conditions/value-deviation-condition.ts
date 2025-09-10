@@ -1,7 +1,4 @@
-import {
-  DataPackagesResponse,
-  getDataPackagesTimestamp,
-} from "@redstone-finance/sdk";
+import { DataPackagesResponse, getDataPackagesTimestamp } from "@redstone-finance/sdk";
 import { RelayerConfig } from "../../config/RelayerConfig";
 import { LastRoundDetails } from "../../types";
 import { checkValueDeviationCondition } from "./check-value-deviation-condition";
@@ -13,13 +10,12 @@ export const valueDeviationCondition = async (
   config: RelayerConfig,
   historicalDataPackagesFetchCallback: () => Promise<DataPackagesResponse>
 ) => {
-  const { shouldUpdatePrices, maxDeviationRatio, warningMessage } =
-    checkValueDeviationCondition(
-      dataFeedId,
-      latestDataPackages,
-      lastRoundDetails.lastValue,
-      config
-    );
+  const { shouldUpdatePrices, maxDeviationRatio, warningMessage } = checkValueDeviationCondition(
+    dataFeedId,
+    latestDataPackages,
+    lastRoundDetails.lastValue,
+    config
+  );
 
   const isFallback = config.fallbackOffsetInMilliseconds > 0;
   let historicalShouldUpdatePrices = true;
@@ -41,17 +37,13 @@ export const valueDeviationCondition = async (
       config
     );
 
-    historicalPackagesTime = getDataPackagesTimestamp(
-      historicalDataPackages,
-      dataFeedId
-    );
+    historicalPackagesTime = getDataPackagesTimestamp(historicalDataPackages, dataFeedId);
     historicalShouldUpdatePrices = historicalShouldUpdatePricesTmp;
     historicalMaxDeviation = historicalMaxDeviationTmp;
     historicalWarningMessage = ` AND Historical ${historicalWarningMessageTmp}`;
   }
 
-  const lastUpdateTimestampOffset =
-    Date.now() - lastRoundDetails.lastBlockTimestampMS;
+  const lastUpdateTimestampOffset = Date.now() - lastRoundDetails.lastBlockTimestampMS;
   const isLastUpdateNewerThanFallbackOffset =
     lastUpdateTimestampOffset < config.fallbackOffsetInMilliseconds;
   const isLastPackageNewerThanHistorical =
@@ -62,8 +54,7 @@ export const valueDeviationCondition = async (
     config.fallbackSkipDeviationBasedFrequentUpdates &&
     (isLastUpdateNewerThanFallbackOffset || isLastPackageNewerThanHistorical);
 
-  const shouldUpdatePricesNoSkip =
-    shouldUpdatePrices && historicalShouldUpdatePrices;
+  const shouldUpdatePricesNoSkip = shouldUpdatePrices && historicalShouldUpdatePrices;
   let updateSkippedMessage = isLastUpdateNewerThanFallbackOffset
     ? `less than ${config.fallbackOffsetInMilliseconds} milliseconds passed since last update (${lastUpdateTimestampOffset}); `
     : "";
@@ -72,9 +63,7 @@ export const valueDeviationCondition = async (
     : "";
 
   updateSkippedMessage =
-    updateSkippedMessage !== ""
-      ? `Update skipped: ${updateSkippedMessage}`
-      : "";
+    updateSkippedMessage !== "" ? `Update skipped: ${updateSkippedMessage}` : "";
 
   const skipFallbackMessage =
     shouldUpdatePricesNoSkip && skipFallbackUpdate ? updateSkippedMessage : "";

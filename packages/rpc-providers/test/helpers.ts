@@ -2,13 +2,10 @@ import { Contract, Wallet, providers } from "ethers";
 import hardhat from "hardhat";
 import { Counter } from "../typechain-types";
 
-const TEST_PRIVATE_KEY =
-  "0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80";
+const TEST_PRIVATE_KEY = "0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80";
 
 type JsonRpcProviderKeys = keyof providers.JsonRpcProvider;
-type ToMock = Partial<
-  Record<JsonRpcProviderKeys, providers.JsonRpcProvider[JsonRpcProviderKeys]>
->;
+type ToMock = Partial<Record<JsonRpcProviderKeys, providers.JsonRpcProvider[JsonRpcProviderKeys]>>;
 
 export class HardhatProviderMocker {
   constructor(
@@ -19,15 +16,8 @@ export class HardhatProviderMocker {
     const self = this;
     this.provider = new Proxy(provider, {
       get: function (target: providers.JsonRpcProvider, property, receiver) {
-        const originalValue = Reflect.get(
-          target,
-          property,
-          receiver
-        ) as unknown;
-        if (
-          typeof originalValue === "function" &&
-          Reflect.has(self.toMock, property)
-        ) {
+        const originalValue = Reflect.get(target, property, receiver) as unknown;
+        if (typeof originalValue === "function" && Reflect.has(self.toMock, property)) {
           return function (...args: unknown[]) {
             // eslint-disable-next-line @typescript-eslint/no-unsafe-return, @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-call, @typescript-eslint/no-explicit-any
             return (self.toMock as any)[property](...args);

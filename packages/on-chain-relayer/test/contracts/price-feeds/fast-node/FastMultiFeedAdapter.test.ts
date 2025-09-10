@@ -18,24 +18,17 @@ export const AUTHORIZED_UPDATERS = [
 const DATA_FEED_ID = ethers.utils.formatBytes32String("ETH");
 
 export async function deployAdapter() {
-  const adapterFactory = await ethers.getContractFactory(
-    "FastMultiFeedAdapterMock"
-  );
+  const adapterFactory = await ethers.getContractFactory("FastMultiFeedAdapterMock");
   const adapter = await adapterFactory.deploy();
   await adapter.deployed();
   return adapter;
 }
 
 async function randomPriceTimestamp() {
-  return (
-    (await time.latest()) * 1_000_000 + Math.floor(Math.random() * 1_000_000)
-  );
+  return (await time.latest()) * 1_000_000 + Math.floor(Math.random() * 1_000_000);
 }
 
-export async function updateByAllNodes(
-  adapter: FastMultiFeedAdapter,
-  prices: number[]
-) {
+export async function updateByAllNodes(adapter: FastMultiFeedAdapter, prices: number[]) {
   let blockTimestamp = await time.latest();
   const blockTimestamps = [];
   const priceTimestamps = [];
@@ -49,9 +42,7 @@ export async function updateByAllNodes(
     priceTimestamps.push(priceTimestamp);
     await adapter
       .connect(updater)
-      .updateDataFeedsValues(priceTimestamp, [
-        { dataFeedId: DATA_FEED_ID, price },
-      ]);
+      .updateDataFeedsValues(priceTimestamp, [{ dataFeedId: DATA_FEED_ID, price }]);
   }
   return { blockTimestamps, priceTimestamps };
 }
@@ -76,9 +67,7 @@ describe("FastMultiFeedAdapter - updateDataFeedsValues", function () {
     };
 
     await expect(
-      adapter
-        .connect(unauthorized)
-        .updateDataFeedsValues(timestamp, [priceUpdateInput])
+      adapter.connect(unauthorized).updateDataFeedsValues(timestamp, [priceUpdateInput])
     ).to.be.revertedWithCustomError(adapter, "UpdaterNotAuthorised");
   });
 
@@ -88,9 +77,7 @@ describe("FastMultiFeedAdapter - updateDataFeedsValues", function () {
     const timestamp = await randomPriceTimestamp();
     const priceUpdateInput = { dataFeedId: DATA_FEED_ID, price };
 
-    await adapter
-      .connect(updater)
-      .updateDataFeedsValues(timestamp, [priceUpdateInput]);
+    await adapter.connect(updater).updateDataFeedsValues(timestamp, [priceUpdateInput]);
 
     const storedData = await adapter.getUpdaterLastPriceData(0, DATA_FEED_ID);
     expect(storedData.price.toString()).to.equal(price.toString());
@@ -99,8 +86,7 @@ describe("FastMultiFeedAdapter - updateDataFeedsValues", function () {
 
   it("should not calculate price with less than 5 updates", async function () {
     // Check that price data is empty initially
-    let priceTimestamp =
-      await adapter.getDataTimestampFromLatestUpdate(DATA_FEED_ID);
+    let priceTimestamp = await adapter.getDataTimestampFromLatestUpdate(DATA_FEED_ID);
     expect(priceTimestamp).to.equal(0);
 
     // Update with 4 updaters
@@ -110,14 +96,11 @@ describe("FastMultiFeedAdapter - updateDataFeedsValues", function () {
       const timestamp = await randomPriceTimestamp();
       const priceUpdateInput = { dataFeedId: DATA_FEED_ID, price };
 
-      await adapter
-        .connect(updater)
-        .updateDataFeedsValues(timestamp, [priceUpdateInput]);
+      await adapter.connect(updater).updateDataFeedsValues(timestamp, [priceUpdateInput]);
     }
 
     // Check that price data is still empty
-    priceTimestamp =
-      await adapter.getDataTimestampFromLatestUpdate(DATA_FEED_ID);
+    priceTimestamp = await adapter.getDataTimestampFromLatestUpdate(DATA_FEED_ID);
     expect(priceTimestamp).to.equal(0);
 
     // Update with the 5th updater
@@ -127,9 +110,7 @@ describe("FastMultiFeedAdapter - updateDataFeedsValues", function () {
     const priceUpdateInput = { dataFeedId: DATA_FEED_ID, price };
 
     await expect(
-      adapter
-        .connect(updater)
-        .updateDataFeedsValues(timestamp, [priceUpdateInput])
+      adapter.connect(updater).updateDataFeedsValues(timestamp, [priceUpdateInput])
     ).to.emit(adapter, "RoundCreated");
 
     // Check that price data is now set
@@ -174,9 +155,7 @@ describe("FastMultiFeedAdapter - updateDataFeedsValues", function () {
     // First update should succeed
     await adapter
       .connect(updater)
-      .updateDataFeedsValues(timestamp, [
-        { dataFeedId: DATA_FEED_ID, price: price1 },
-      ]);
+      .updateDataFeedsValues(timestamp, [{ dataFeedId: DATA_FEED_ID, price: price1 }]);
 
     let stored = await adapter.getUpdaterLastPriceData(1, DATA_FEED_ID);
     expect(stored.price).to.equal(price1);
@@ -186,9 +165,7 @@ describe("FastMultiFeedAdapter - updateDataFeedsValues", function () {
     await expect(
       adapter
         .connect(updater)
-        .updateDataFeedsValues(timestamp, [
-          { dataFeedId: DATA_FEED_ID, price: price2 },
-        ])
+        .updateDataFeedsValues(timestamp, [{ dataFeedId: DATA_FEED_ID, price: price2 }])
     ).to.emit(adapter, "UpdateSkipDueToDataTimestamp");
 
     // Ensure data was not overwritten
@@ -209,18 +186,14 @@ describe("FastMultiFeedAdapter - updateDataFeedsValues", function () {
     // First update
     await adapter
       .connect(updater)
-      .updateDataFeedsValues(priceTimestamp1, [
-        { dataFeedId: DATA_FEED_ID, price: price1 },
-      ]);
+      .updateDataFeedsValues(priceTimestamp1, [{ dataFeedId: DATA_FEED_ID, price: price1 }]);
 
     // Second update at same block timestamp
     const priceTimestamp2 = priceTimestamp1 + 1; // valid new data timestamp
 
     const secondUpdateTx = await adapter
       .connect(updater)
-      .updateDataFeedsValues(priceTimestamp2, [
-        { dataFeedId: DATA_FEED_ID, price: price2 },
-      ]);
+      .updateDataFeedsValues(priceTimestamp2, [{ dataFeedId: DATA_FEED_ID, price: price2 }]);
 
     // resume automining
     await network.provider.send("evm_setAutomine", [true]);
@@ -233,9 +206,7 @@ describe("FastMultiFeedAdapter - updateDataFeedsValues", function () {
 
     // Check that tx2 emitted UpdateSkipDueToBlockTimestamp
     const receipt = await secondUpdateTx.wait();
-    const event = receipt.events?.find(
-      (e) => e.event === "UpdateSkipDueToBlockTimestamp"
-    );
+    const event = receipt.events?.find((e) => e.event === "UpdateSkipDueToBlockTimestamp");
     expect(event).to.not.be.undefined;
     expect(event?.args?.[0]).to.equal(DATA_FEED_ID);
   });
@@ -285,9 +256,7 @@ describe("FastMultiFeedAdapter - updateDataFeedsValues", function () {
         price: ethers.utils.parseUnits((1000 + i * 10 + idx).toString(), 8),
       }));
 
-      await adapter
-        .connect(updater)
-        .updateDataFeedsValues(baseTimestamp + i, inputs);
+      await adapter.connect(updater).updateDataFeedsValues(baseTimestamp + i, inputs);
     }
 
     for (const feedId of feeds) {
@@ -322,9 +291,7 @@ describe("FastMultiFeedAdapter - updateDataFeedsValues", function () {
     for (let i = 0; i < feedIds.length; i++) {
       await adapter
         .connect(updater)
-        .updateDataFeedsValues(timestamp, [
-          { dataFeedId: feedIds[i], price: prices[i] },
-        ]);
+        .updateDataFeedsValues(timestamp, [{ dataFeedId: feedIds[i], price: prices[i] }]);
     }
 
     for (let i = 0; i < feedIds.length; i++) {
@@ -336,8 +303,7 @@ describe("FastMultiFeedAdapter - updateDataFeedsValues", function () {
   it("should do nothing when given an empty input array", async function () {
     const updater = await getImpersonatedSigner(AUTHORIZED_UPDATERS[0]);
     const timestamp = await randomPriceTimestamp();
-    await expect(adapter.connect(updater).updateDataFeedsValues(timestamp, []))
-      .to.not.be.reverted;
+    await expect(adapter.connect(updater).updateDataFeedsValues(timestamp, [])).to.not.be.reverted;
   });
 
   it("should reject outdated price data update", async function () {
@@ -356,20 +322,14 @@ describe("FastMultiFeedAdapter - updateDataFeedsValues", function () {
     };
 
     await expect(
-      adapter
-        .connect(updater)
-        .updateDataFeedsValues(outdatedTimestamp, [outdatedPriceInput])
+      adapter.connect(updater).updateDataFeedsValues(outdatedTimestamp, [outdatedPriceInput])
     ).to.emit(adapter, "UpdateSkipDueToDataTimestamp");
 
     // Value should remain unchanged
     const lastUpdateAfter = await adapter.getLastUpdateDetails(DATA_FEED_ID);
     expect(lastUpdate.lastValue).to.equal(lastUpdateAfter.lastValue);
-    expect(lastUpdate.lastDataTimestamp).to.equal(
-      lastUpdateAfter.lastDataTimestamp
-    );
-    expect(lastUpdate.lastBlockTimestamp).to.equal(
-      lastUpdateAfter.lastBlockTimestamp
-    );
+    expect(lastUpdate.lastDataTimestamp).to.equal(lastUpdateAfter.lastDataTimestamp);
+    expect(lastUpdate.lastBlockTimestamp).to.equal(lastUpdateAfter.lastBlockTimestamp);
   });
 
   it("should accept update at exact max future timestamp and reject if exceeds", async () => {
@@ -386,9 +346,7 @@ describe("FastMultiFeedAdapter - updateDataFeedsValues", function () {
     await time.setNextBlockTimestamp(blockTimestamp);
     const exactAllowedTimestamp = (blockTimestamp + 60) * 1_000_000;
     await expect(
-      adapter
-        .connect(updater)
-        .updateDataFeedsValues(exactAllowedTimestamp, [priceInput])
+      adapter.connect(updater).updateDataFeedsValues(exactAllowedTimestamp, [priceInput])
     ).to.not.be.reverted;
 
     // Should reject timestamp that exceeds allowed future boundary by 1 ms
@@ -397,9 +355,7 @@ describe("FastMultiFeedAdapter - updateDataFeedsValues", function () {
     // MAX_DATA_TIMESTAMP_AHEAD_SECONDS = 1 minute
     const tooFarTimestamp = (blockTimestamp + 60) * 1_000_000 + 1;
     await expect(
-      adapter
-        .connect(updater)
-        .updateDataFeedsValues(tooFarTimestamp, [priceInput])
+      adapter.connect(updater).updateDataFeedsValues(tooFarTimestamp, [priceInput])
     ).to.emit(adapter, "UpdateSkipDueToDataTimestamp");
   });
 
@@ -409,9 +365,7 @@ describe("FastMultiFeedAdapter - updateDataFeedsValues", function () {
     const priceUpdateInput = { dataFeedId: DATA_FEED_ID, price: 0 };
 
     await expect(
-      adapter
-        .connect(updater)
-        .updateDataFeedsValues(timestamp, [priceUpdateInput])
+      adapter.connect(updater).updateDataFeedsValues(timestamp, [priceUpdateInput])
     ).to.emit(adapter, "UpdateSkipDueToInvalidValue");
   });
 
@@ -423,9 +377,7 @@ describe("FastMultiFeedAdapter - updateDataFeedsValues", function () {
       const price = ethers.utils.parseUnits("1000", 8);
       await adapter
         .connect(updater)
-        .updateDataFeedsValues(timestamp, [
-          { dataFeedId: DATA_FEED_ID, price },
-        ]);
+        .updateDataFeedsValues(timestamp, [{ dataFeedId: DATA_FEED_ID, price }]);
     }
 
     // The 5th updater sends zero price, should emit InvalidPriceData event
@@ -436,9 +388,7 @@ describe("FastMultiFeedAdapter - updateDataFeedsValues", function () {
     await expect(
       adapter
         .connect(badUpdater)
-        .updateDataFeedsValues(badTimestamp, [
-          { dataFeedId: DATA_FEED_ID, price: zeroPrice },
-        ])
+        .updateDataFeedsValues(badTimestamp, [{ dataFeedId: DATA_FEED_ID, price: zeroPrice }])
     ).to.emit(adapter, "UpdateSkipDueToInvalidValue");
 
     // Confirm no new round created because of invalid 5th update
@@ -454,9 +404,10 @@ describe("FastMultiFeedAdapter - updateDataFeedsValues", function () {
     const blockTimestamp = await time.latest();
     await time.setNextBlockTimestamp(blockTimestamp + 31 * 3600);
     await mine();
-    await expect(
-      adapter.getLastUpdateDetails(DATA_FEED_ID)
-    ).to.be.revertedWithCustomError(adapter, "InvalidLastUpdateDetails");
+    await expect(adapter.getLastUpdateDetails(DATA_FEED_ID)).to.be.revertedWithCustomError(
+      adapter,
+      "InvalidLastUpdateDetails"
+    );
   });
 
   it("should handle large batch updates with many dataFeedIds", async () => {
@@ -473,9 +424,8 @@ describe("FastMultiFeedAdapter - updateDataFeedsValues", function () {
     }
 
     // Should not revert for large batch update
-    await expect(
-      adapter.connect(updater).updateDataFeedsValues(timestamp, inputs)
-    ).to.not.be.reverted;
+    await expect(adapter.connect(updater).updateDataFeedsValues(timestamp, inputs)).to.not.be
+      .reverted;
 
     // check feed data correctness
     for (let i = 0; i < 200; i++) {
@@ -505,12 +455,8 @@ describe("FastMultiFeedAdapter - rounds data", function () {
   it("should return zero or default values for feed with no updates", async () => {
     expect(await adapter.getLatestRoundId(DATA_FEED_ID)).to.equal(0);
     expect(await adapter.getValueForDataFeed(DATA_FEED_ID)).to.equal(0);
-    expect(
-      await adapter.getDataTimestampFromLatestUpdate(DATA_FEED_ID)
-    ).to.equal(0);
-    expect(
-      await adapter.getBlockTimestampFromLatestUpdate(DATA_FEED_ID)
-    ).to.equal(0);
+    expect(await adapter.getDataTimestampFromLatestUpdate(DATA_FEED_ID)).to.equal(0);
+    expect(await adapter.getBlockTimestampFromLatestUpdate(DATA_FEED_ID)).to.equal(0);
   });
 
   it("should increase latestRoundId on each full update", async function () {
@@ -526,14 +472,16 @@ describe("FastMultiFeedAdapter - rounds data", function () {
 
   it("getRoundData should revert with specific custom errors for invalid roundIds", async function () {
     // Zero roundId should revert with RoundIdIsZero
-    await expect(
-      adapter.getRoundData(DATA_FEED_ID, 0)
-    ).to.be.revertedWithCustomError(adapter, "RoundIdIsZero");
+    await expect(adapter.getRoundData(DATA_FEED_ID, 0)).to.be.revertedWithCustomError(
+      adapter,
+      "RoundIdIsZero"
+    );
 
     // roundId > latestRoundId should revert with RoundIdTooHigh
-    await expect(
-      adapter.getRoundData(DATA_FEED_ID, 10)
-    ).to.be.revertedWithCustomError(adapter, "RoundIdTooHigh");
+    await expect(adapter.getRoundData(DATA_FEED_ID, 10)).to.be.revertedWithCustomError(
+      adapter,
+      "RoundIdTooHigh"
+    );
 
     // Create valid data to move latestRoundId forward
     const prices = [1000, 1001, 1002, 1003, 1004];
@@ -547,19 +495,17 @@ describe("FastMultiFeedAdapter - rounds data", function () {
 
     // If tooOldRoundId >= 1, we expect a revert with RoundIdTooOld
     if (tooOldRoundId >= 1) {
-      await expect(
-        adapter.getRoundData(DATA_FEED_ID, tooOldRoundId)
-      ).to.be.revertedWithCustomError(adapter, "RoundIdTooOld");
+      await expect(adapter.getRoundData(DATA_FEED_ID, tooOldRoundId)).to.be.revertedWithCustomError(
+        adapter,
+        "RoundIdTooOld"
+      );
     }
   });
 
   it("getRoundData should return correct data for a valid round", async function () {
     // First batch of updates to create round 1
     const prices = [1000, 1001, 1004, 1003, 1002];
-    const { blockTimestamps, priceTimestamps } = await updateByAllNodes(
-      adapter,
-      prices
-    );
+    const { blockTimestamps, priceTimestamps } = await updateByAllNodes(adapter, prices);
 
     const roundId = await adapter.getLatestRoundId(DATA_FEED_ID);
     const roundData = await adapter.getRoundData(DATA_FEED_ID, roundId);
@@ -567,9 +513,7 @@ describe("FastMultiFeedAdapter - rounds data", function () {
     expect(roundId).to.equal(1);
     expect(roundData.price).to.equal(100200000000);
     expect(roundData.priceTimestamp.toNumber()).to.equal(priceTimestamps[4]);
-    expect(roundData.blockTimestamp.toNumber()).to.equal(
-      blockTimestamps[4] * 1_000_000
-    );
+    expect(roundData.blockTimestamp.toNumber()).to.equal(blockTimestamps[4] * 1_000_000);
   });
 
   it("should return correct roundData for earliest and latest roundIds", async () => {
@@ -622,9 +566,10 @@ describe("FastMultiFeedAdapter - max history size", function () {
     expect(latestRoundId.toNumber()).to.equal(16);
 
     // Only rounds 7–16 should be accessible
-    await expect(
-      adapter.getRoundData(DATA_FEED_ID, 6)
-    ).to.be.revertedWithCustomError(adapter, "RoundIdTooOld");
+    await expect(adapter.getRoundData(DATA_FEED_ID, 6)).to.be.revertedWithCustomError(
+      adapter,
+      "RoundIdTooOld"
+    );
 
     const validRound = await adapter.getRoundData(DATA_FEED_ID, 7);
     expect(validRound.price).to.be.gt(0);
@@ -647,10 +592,7 @@ describe("FastMultiFeedAdapter - max history size", function () {
     ); // rounds 7–11
 
     const roundIdToCheck = 6;
-    const dataBeforeOverwrite = await adapter.getRoundData(
-      DATA_FEED_ID,
-      roundIdToCheck
-    );
+    const dataBeforeOverwrite = await adapter.getRoundData(DATA_FEED_ID, roundIdToCheck);
 
     // Add more rounds that overwrite previous data
     await updateByAllNodes(
@@ -662,9 +604,10 @@ describe("FastMultiFeedAdapter - max history size", function () {
     expect(latestRoundId.toNumber()).to.equal(16);
 
     // Round 6 should now be invalid (evicted)
-    await expect(
-      adapter.getRoundData(DATA_FEED_ID, roundIdToCheck)
-    ).to.be.revertedWithCustomError(adapter, "RoundIdTooOld");
+    await expect(adapter.getRoundData(DATA_FEED_ID, roundIdToCheck)).to.be.revertedWithCustomError(
+      adapter,
+      "RoundIdTooOld"
+    );
 
     // Slot 6 in buffer (roundId % 10) now holds data for round 16
     const dataNow = await adapter.getRoundData(DATA_FEED_ID, 16);
@@ -695,10 +638,7 @@ describe("FastMultiFeedAdapter - median or last of latest three", function () {
     adapter = await deployAdapter();
   });
 
-  async function getPermutedResults(
-    prices: number[],
-    adapter: FastMultiFeedAdapterMock
-  ) {
+  async function getPermutedResults(prices: number[], adapter: FastMultiFeedAdapterMock) {
     expect(prices).to.length(5);
     const blockTimestamp = await time.latest();
     const priceTimestamps = Array.from(

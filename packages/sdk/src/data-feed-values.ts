@@ -1,9 +1,6 @@
 import { MathUtils, RedstoneCommon } from "@redstone-finance/utils";
 import { resolveDataServiceUrls } from "./data-services-urls";
-import {
-  getSignersForDataServiceId,
-  type DataServiceIds,
-} from "./oracle-registry";
+import { getSignersForDataServiceId, type DataServiceIds } from "./oracle-registry";
 import { requestDataPackages } from "./request-data-packages";
 
 export interface GetDataFeedValuesInput {
@@ -21,16 +18,13 @@ export const getDataFeedValues = async (
   args: GetDataFeedValuesInput = {}
 ): Promise<GetDataFeedValuesOutput> => {
   const dataServiceId = args.dataServiceId ?? DEFAULT_DATA_SERVICE_ID;
-  const aggregationAlgorithm =
-    args.aggregationAlgorithm ?? DEFAULT_AGGREGATION_ALGORITHM;
+  const aggregationAlgorithm = args.aggregationAlgorithm ?? DEFAULT_AGGREGATION_ALGORITHM;
   const gatewayUrls = args.gatewayUrls ?? resolveDataServiceUrls(dataServiceId);
 
   const packages = await requestDataPackages({
     dataServiceId,
     uniqueSignersCount: 1,
-    authorizedSigners: getSignersForDataServiceId(
-      dataServiceId as DataServiceIds
-    ),
+    authorizedSigners: getSignersForDataServiceId(dataServiceId as DataServiceIds),
     urls: gatewayUrls,
     returnAllPackages: true,
     skipSignatureVerification: true,

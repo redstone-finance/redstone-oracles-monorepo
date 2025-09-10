@@ -31,10 +31,7 @@ describe("RedStone Gelato w3f: On-chain Relayer & remote manifest e2e Tests", fu
     );
   });
 
-  async function performTest(
-    userArgs: typeof args,
-    destinationContractAddress: string
-  ) {
+  async function performTest(userArgs: typeof args, destinationContractAddress: string) {
     const { result } = await redstoneW3f.run("onRun", { userArgs });
     expect(result.canExec).to.equal(true);
 

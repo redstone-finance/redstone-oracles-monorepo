@@ -5,16 +5,11 @@ import type { IBlockchainService } from "./IBlockchainService";
 export abstract class NonEvmBlockchainService implements IBlockchainService {
   protected constructor(private connector: IContractConnector<unknown>) {}
 
-  async getBalance(
-    addressOrName: string,
-    blockTag?: number
-  ): Promise<BigNumber> {
+  async getBalance(addressOrName: string, blockTag?: number): Promise<BigNumber> {
     if (!this.connector.getNormalizedBalance) {
       throw new Error("Method not implemented: getNormalizedBalance");
     }
-    return BigNumber.from(
-      await this.connector.getNormalizedBalance(addressOrName, blockTag)
-    );
+    return BigNumber.from(await this.connector.getNormalizedBalance(addressOrName, blockTag));
   }
 
   async transfer(toAddress: string, amount: number) {

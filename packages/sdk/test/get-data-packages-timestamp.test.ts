@@ -74,9 +74,7 @@ describe("getDataPackagesTimestamp tests", () => {
   });
 
   it("Throws when wrong feedId is passed", () => {
-    expect(() => getDataPackagesTimestamp(sutBtcEth, "BT")).toThrow(
-      "No data packages"
-    );
+    expect(() => getDataPackagesTimestamp(sutBtcEth, "BT")).toThrow("No data packages");
   });
 
   it("Returns the only timestamp of all medium packages when no feedId is passed", () => {
@@ -104,22 +102,17 @@ describe("getDataPackagesTimestamp tests", () => {
   });
 
   it("Throws when wrong feedId is passed", () => {
-    expect(() => getDataPackagesTimestamp(sutFraxtal, "BT")).toThrow(
-      "No data packages"
-    );
+    expect(() => getDataPackagesTimestamp(sutFraxtal, "BT")).toThrow("No data packages");
   });
 
   it("Throws when timestamps are different and without feedId", () => {
-    expect(() =>
-      getDataPackagesTimestamp({ ...sutBtcEth, ...sutFraxtal })
-    ).toThrow(/Timestamps do not have the same value/);
+    expect(() => getDataPackagesTimestamp({ ...sutBtcEth, ...sutFraxtal })).toThrow(
+      /Timestamps do not have the same value/
+    );
   });
 
   it("Returns when timestamps are different but not within the feed", () => {
-    const timestamp = getDataPackagesTimestamp(
-      { ...sutBtcEth, ...sutFraxtal },
-      "BTC"
-    );
+    const timestamp = getDataPackagesTimestamp({ ...sutBtcEth, ...sutFraxtal }, "BTC");
 
     expect(timestamp).toBe(TIMESTAMP_BTC_ETH);
   });

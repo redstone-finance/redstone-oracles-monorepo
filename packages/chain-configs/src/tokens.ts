@@ -7,18 +7,13 @@ type TokenInfo = {
   decimals: number;
 };
 
-export function getTokenInfo(
-  networkName: SupportedNetworkNames,
-  symbol: string
-): TokenInfo {
+export function getTokenInfo(networkName: SupportedNetworkNames, symbol: string): TokenInfo {
   const networkTokens = getChainTokenMap()[networkName];
   if (!networkTokens) {
     throw new Error(`Chain ${networkName} not found in chainTokenMap`);
   }
   if (!Object.keys(networkTokens).includes(symbol)) {
-    throw new Error(
-      `Token ${symbol} not found on ${networkName}, check getTokenInfo function`
-    );
+    throw new Error(`Token ${symbol} not found on ${networkName}, check getTokenInfo function`);
   }
   const token = networkTokens[symbol];
   const tokenInfo: TokenInfo = {

@@ -1,7 +1,4 @@
-import {
-  DataServiceIds,
-  getSignersForDataServiceId,
-} from "@redstone-finance/sdk";
+import { DataServiceIds, getSignersForDataServiceId } from "@redstone-finance/sdk";
 import { RedstoneCommon } from "@redstone-finance/utils";
 import { PriceAdapterConfig } from "../src/PriceAdapterConfig";
 import { DEFAULT_GAS_BUDGET } from "../src/SuiContractUtil";

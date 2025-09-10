@@ -46,16 +46,11 @@ export class ContractParamsProviderMock extends ContractParamsProvider {
     return this.overriddenFeedIds ?? super.getDataFeedIds();
   }
 
-  override async requestDataPackages(
-    _canUpdateCache?: boolean
-  ): Promise<DataPackagesResponse> {
+  override async requestDataPackages(_canUpdateCache?: boolean): Promise<DataPackagesResponse> {
     const parsedPayload = new RedstonePayloadParser(
       Buffer.from(await this.requestPayload(), "hex")
     ).parse();
 
-    return _.groupBy(
-      parsedPayload.signedDataPackages,
-      (sdp) => sdp.dataPackage.dataPackageId
-    );
+    return _.groupBy(parsedPayload.signedDataPackages, (sdp) => sdp.dataPackage.dataPackageId);
   }
 }

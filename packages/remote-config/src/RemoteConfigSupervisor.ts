@@ -5,10 +5,7 @@ import { ConfigUpdater, IRemoteConfigLoader } from "./ConfigUpdater";
 
 const logger = loggerFactory("ParentProcess");
 
-const recoverableExitCodes = [
-  ExitCodes.ManifestConfigError,
-  ExitCodes.NodeRemoteConfigError,
-];
+const recoverableExitCodes = [ExitCodes.ManifestConfigError, ExitCodes.NodeRemoteConfigError];
 
 export type RemoteConfigSupervisorOptions = {
   useRemoteConfig: boolean;
@@ -41,9 +38,7 @@ export class RemoteConfigSupervisor {
           // note: SIGTERM is normally sent to oracleNodeProcess
           // to schedule a restart during a configuration change
           // - that's why SIGKILL is being sent in this case
-          this.childProcess.kill(
-            signal === "SIGTERM" ? "SIGKILL" : (signal as NodeJS.Signals)
-          );
+          this.childProcess.kill(signal === "SIGTERM" ? "SIGKILL" : (signal as NodeJS.Signals));
         }
         process.exit();
       });
@@ -99,9 +94,7 @@ export class RemoteConfigSupervisor {
 
   private handleNewConfig(configHash: string) {
     if (this.childProcess) {
-      logger.info(
-        `New config loaded with hash ${configHash}. Scheduling child process restart.`
-      );
+      logger.info(`New config loaded with hash ${configHash}. Scheduling child process restart.`);
       try {
         this.addExitEventListener(configHash);
         this.scheduleRestart();
@@ -112,9 +105,7 @@ export class RemoteConfigSupervisor {
         );
       }
     } else {
-      logger.info(
-        `Initial child process start with config hash ${configHash}.`
-      );
+      logger.info(`Initial child process start with config hash ${configHash}.`);
       this.spawnAndAssignChildProcess(configHash);
     }
   }
@@ -139,9 +130,7 @@ export class RemoteConfigSupervisor {
     this.childProcess!.removeAllListeners("exit");
     this.childProcess!.on("exit", (code, signal) => {
       if (code === ExitCodes.RestartConfigExitCode) {
-        logger.info(
-          `Restarting NodeRunner with a new configuration hash: ${configHash}.`
-        );
+        logger.info(`Restarting NodeRunner with a new configuration hash: ${configHash}.`);
         this.spawnAndAssignChildProcess(configHash);
       } else {
         RemoteConfigSupervisor.propagateChildProcessErrors(signal, code);
@@ -156,14 +145,8 @@ export class RemoteConfigSupervisor {
     });
 
     this.childProcess.on("exit", (code, signal) => {
-      if (
-        code !== null &&
-        recoverableExitCodes.includes(code) &&
-        this.configUpdater
-      ) {
-        logger.error(
-          `Got ${code} error code, trying to restore previous config`
-        );
+      if (code !== null && recoverableExitCodes.includes(code) && this.configUpdater) {
+        logger.error(`Got ${code} error code, trying to restore previous config`);
         this.configUpdater.history.blacklistConfigHash(configHash);
         this.restartOnPrevConfig();
         return;
@@ -171,9 +154,7 @@ export class RemoteConfigSupervisor {
       RemoteConfigSupervisor.propagateChildProcessErrors(signal, code);
     });
 
-    logger.info(
-      `Child process worker spawned with PID: ${this.childProcess.pid}`
-    );
+    logger.info(`Child process worker spawned with PID: ${this.childProcess.pid}`);
   }
 
   private restartOnPrevConfig() {
@@ -189,10 +170,7 @@ export class RemoteConfigSupervisor {
    * This ensures that the parent process can also terminate,
    * maintaining proper process cleanup and state consistency throughout the application hierarchy.
    */
-  static propagateChildProcessErrors(
-    signal: NodeJS.Signals | null,
-    code: number | null
-  ) {
+  static propagateChildProcessErrors(signal: NodeJS.Signals | null, code: number | null) {
     if (signal) {
       logger.error(`Got kill signal ${signal} from Child Process`);
       process.kill(process.pid, signal);
@@ -203,8 +181,7 @@ export class RemoteConfigSupervisor {
   }
 
   static generateJitter(minSeconds: number, maxSeconds: number): number {
-    const randomSeconds =
-      Math.floor(Math.random() * (maxSeconds - minSeconds + 1)) + minSeconds;
+    const randomSeconds = Math.floor(Math.random() * (maxSeconds - minSeconds + 1)) + minSeconds;
     return randomSeconds * 1000;
   }
 }

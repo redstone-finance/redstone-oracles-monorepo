@@ -1,12 +1,6 @@
 {
   "extends": ["./tsconfig.json", "../../tsconfig-build-common.json"],
-  "exclude": [
-    "node_modules",
-    "dist",
-    "test",
-    "artifacts/**/*.sol/*.json",
-    "hardhat.config.ts"
-  ],
+  "exclude": ["node_modules", "dist", "test", "artifacts/**/*.sol/*.json", "hardhat.config.ts"],
   "references": [
     {
       "path": "../on-chain-relayer/tsconfig.build.json"

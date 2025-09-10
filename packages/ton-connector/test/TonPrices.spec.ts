@@ -11,10 +11,7 @@ import { SampleConsumerInitData } from "../src/sample-consumer/SampleConsumerIni
 import { TonSampleConsumerContractAdapter } from "../src/sample-consumer/TonSampleConsumerContractAdapter";
 import { TonSampleConsumerContractDeployer } from "../src/sample-consumer/TonSampleConsumerContractDeployer";
 import { toBigInt } from "../src/ton-utils";
-import {
-  createTestNetwork,
-  extractSandboxLogs,
-} from "./helpers/sandbox_helpers";
+import { createTestNetwork, extractSandboxLogs } from "./helpers/sandbox_helpers";
 import {
   expectUsdtPrice,
   getContractParamsProvider,
@@ -64,8 +61,7 @@ describe("Ton Prices Tests", () => {
     const priceFeedInitialData = await pricesFeed.getData();
     expect(priceFeedInitialData).toStrictEqual({ timestamp: 0, value: 0n });
 
-    const priceManagerInitialTimestamp =
-      await priceManager.readTimestampFromContract();
+    const priceManagerInitialTimestamp = await priceManager.readTimestampFromContract();
     expect(priceManagerInitialTimestamp).toBe(0);
   });
 
@@ -97,14 +93,18 @@ describe("Ton Prices Tests", () => {
   });
 
   it("must not write prices with same timestamp", async () => {
-    const { prices, timestamp, paramsProvider } =
-      await writeAndReadPricesAndTimestamp(["BTC", "ETH"]);
+    const { prices, timestamp, paramsProvider } = await writeAndReadPricesAndTimestamp([
+      "BTC",
+      "ETH",
+    ]);
 
     expect(timestamp).toBeGreaterThan(0n);
     expect(prices).not.toContain(0n);
 
-    const { prices: prices2, timestamp: timestamp2 } =
-      await writeAndReadPricesAndTimestamp(["AVAX", "USDT"]);
+    const { prices: prices2, timestamp: timestamp2 } = await writeAndReadPricesAndTimestamp([
+      "AVAX",
+      "USDT",
+    ]);
 
     const prices3 = await priceManager.readPricesFromContract(paramsProvider);
 
@@ -118,16 +118,17 @@ describe("Ton Prices Tests", () => {
   });
 
   it("should write prices twice", async () => {
-    const { prices, timestamp, paramsProvider } =
-      await writeAndReadPricesAndTimestamp(["BTC", "ETH"]);
+    const { prices, timestamp, paramsProvider } = await writeAndReadPricesAndTimestamp([
+      "BTC",
+      "ETH",
+    ]);
 
     expect(timestamp).toBeGreaterThan(0);
     expect(prices).not.toContain(0n);
 
     await waitForNewPayload(paramsProvider, timestamp, Number(prices[0]));
 
-    const { prices: prices2, timestamp: timestamp2 } =
-      await writeAndReadPricesAndTimestamp();
+    const { prices: prices2, timestamp: timestamp2 } = await writeAndReadPricesAndTimestamp();
 
     expect(timestamp2).not.toBe(timestamp);
     expect(prices).not.toStrictEqual(prices2);

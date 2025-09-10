@@ -1,7 +1,4 @@
-import {
-  StellarContractConnector,
-  StellarRpcClient,
-} from "@redstone-finance/stellar-connector";
+import { StellarContractConnector, StellarRpcClient } from "@redstone-finance/stellar-connector";
 import { Keypair, rpc } from "@stellar/stellar-sdk";
 import { NonEvmBlockchainService } from "./NonEvmBlockchainService";
 

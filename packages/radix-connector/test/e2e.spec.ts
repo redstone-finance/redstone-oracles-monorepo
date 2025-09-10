@@ -1,20 +1,9 @@
 import { NetworkId } from "@radixdlt/radix-engine-toolkit";
-import {
-  ContractParamsProvider,
-  getSignersForDataServiceId,
-} from "@redstone-finance/sdk";
+import { ContractParamsProvider, getSignersForDataServiceId } from "@redstone-finance/sdk";
 import "dotenv/config";
 import redstone from "redstone-api";
-import {
-  loadAddress,
-  PRICE_ADAPTER_NAME,
-  PRIVATE_KEY,
-} from "../scripts/constants";
-import {
-  PriceAdapterRadixContractConnector,
-  RadixClient,
-  RadixSigner,
-} from "../src";
+import { loadAddress, PRICE_ADAPTER_NAME, PRIVATE_KEY } from "../scripts/constants";
+import { PriceAdapterRadixContractConnector, RadixClient, RadixSigner } from "../src";
 import { RadixApiClient } from "../src/radix/RadixApiClient";
 
 jest.setTimeout(10 * 60000);
@@ -45,9 +34,7 @@ describe("Integrated and initialized prices contract", () => {
     });
 
     await adapter.writePricesFromPayloadToContract(paramsProvider);
-    const prices = (await adapter.readPricesFromContract(paramsProvider)).map(
-      Number
-    );
+    const prices = (await adapter.readPricesFromContract(paramsProvider)).map(Number);
     const timestamp = await adapter.readTimestampFromContract("ETH");
 
     const localTimestamp = Date.now();

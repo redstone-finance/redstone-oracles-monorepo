@@ -6,11 +6,7 @@ import {
 import { providers } from "ethers";
 import { getProviderNetworkId } from "../common";
 import { GasEstimator } from "./GasEstimator";
-import {
-  unsafeBnToNumber,
-  type Eip1559Fee,
-  type TxDeliveryOptsValidated,
-} from "./common";
+import { unsafeBnToNumber, type Eip1559Fee, type TxDeliveryOptsValidated } from "./common";
 
 type FeeHistoryResponse = { reward: string[] };
 
@@ -28,9 +24,7 @@ export class Eip1559GasEstimator implements GasEstimator<Eip1559Fee> {
     const lastBlock = await provider.getBlock("latest");
     await this.refreshLastUsedPriorityFee(provider);
 
-    const baseFee = Math.round(
-      unsafeBnToNumber(lastBlock.baseFeePerGas!) * BASE_FEE_SCALER
-    );
+    const baseFee = Math.round(unsafeBnToNumber(lastBlock.baseFeePerGas!) * BASE_FEE_SCALER);
     const maxFeePerGas = baseFee + this.maxPriorityFeePerGas;
 
     const fee: Eip1559Fee = {
@@ -41,9 +35,7 @@ export class Eip1559GasEstimator implements GasEstimator<Eip1559Fee> {
     return fee;
   }
 
-  private async refreshLastUsedPriorityFee(
-    provider: providers.JsonRpcProvider
-  ) {
+  private async refreshLastUsedPriorityFee(provider: providers.JsonRpcProvider) {
     const newPriorityFee = await this.estimatePriorityFee(provider);
 
     if (newPriorityFee !== 0) {
@@ -57,15 +49,10 @@ export class Eip1559GasEstimator implements GasEstimator<Eip1559Fee> {
    * If returns 0 fallbacks to default, which is described per chain in chain-configs.json
    * if it is not defined for current chain, returns 0
    */
-  private async estimatePriorityFee(
-    provider: providers.JsonRpcProvider
-  ): Promise<number> {
+  private async estimatePriorityFee(provider: providers.JsonRpcProvider): Promise<number> {
     const networkId = await getProviderNetworkId(provider);
 
-    const chainConfig = getChainConfigByNetworkId(
-      getLocalChainConfigs(),
-      networkId
-    );
+    const chainConfig = getChainConfigByNetworkId(getLocalChainConfigs(), networkId);
 
     const feeHistory = await this.getFeeHistory(provider, chainConfig);
 
@@ -73,9 +60,7 @@ export class Eip1559GasEstimator implements GasEstimator<Eip1559Fee> {
       .flat()
       .map((hex: string) => parseInt(hex, 16));
 
-    const maxRewardsPerBlockForPercentile = Math.max(
-      ...rewardsPerBlockForPercentile
-    );
+    const maxRewardsPerBlockForPercentile = Math.max(...rewardsPerBlockForPercentile);
 
     this.opts.logger(
       `Fetched rewardsPerBlockForPercentile: ${rewardsPerBlockForPercentile.toString()}, having max=${maxRewardsPerBlockForPercentile}`
@@ -113,11 +98,8 @@ export class Eip1559GasEstimator implements GasEstimator<Eip1559Fee> {
 
   scaleFees(currentFees: Eip1559Fee, attempt: number): Eip1559Fee {
     const multipleBy = this.opts.multiplier ** attempt;
-    const maxPriorityFeePerGas = Math.round(
-      currentFees.maxPriorityFeePerGas * multipleBy
-    );
-    const maxPriorityFeePerGasDiff =
-      maxPriorityFeePerGas - currentFees.maxPriorityFeePerGas;
+    const maxPriorityFeePerGas = Math.round(currentFees.maxPriorityFeePerGas * multipleBy);
+    const maxPriorityFeePerGasDiff = maxPriorityFeePerGas - currentFees.maxPriorityFeePerGas;
     const maxFeePerGas = currentFees.maxFeePerGas + maxPriorityFeePerGasDiff;
 
     const scaledFees: Eip1559Fee = {

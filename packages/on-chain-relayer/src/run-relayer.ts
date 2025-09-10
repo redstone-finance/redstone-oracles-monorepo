@@ -56,10 +56,8 @@ export const runRelayer = () => {
 
   configs.forEach((config, index) =>
     run(config, logger, {
-      sendHealthcheckPingCallback:
-        sendHealthcheckPingCollector.sendHealthcheck(index),
-      sendHealthcheckMetricCallback:
-        sendHealthcheckMetricCollector.sendHealthcheck(index),
+      sendHealthcheckPingCallback: sendHealthcheckPingCollector.sendHealthcheck(index),
+      sendHealthcheckMetricCallback: sendHealthcheckMetricCollector.sendHealthcheck(index),
     })
   );
 };
@@ -70,10 +68,7 @@ function run(
   iterationOptionsOverride: Partial<IterationOptions> = {}
 ) {
   if (relayerConfig.temporaryUpdatePriceInterval !== -1) {
-    timelyOverrideSinceLastUpdate(
-      relayerConfig,
-      relayerConfig.temporaryUpdatePriceInterval
-    );
+    timelyOverrideSinceLastUpdate(relayerConfig, relayerConfig.temporaryUpdatePriceInterval);
   }
 
   RedstoneHealthcheck.enableWithDefaultConfig();

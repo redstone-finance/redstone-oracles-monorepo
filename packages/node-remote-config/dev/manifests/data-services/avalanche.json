@@ -127,13 +127,7 @@
       "rateFeed": false
     },
     "QI": {
-      "source": [
-        "binance-usdt",
-        "bitrue-usdt",
-        "kucoin-usdt",
-        "lbank-usdt",
-        "xt"
-      ],
+      "source": ["binance-usdt", "bitrue-usdt", "kucoin-usdt", "lbank-usdt", "xt"],
       "denomination": "USD",
       "rateFeed": false
     },

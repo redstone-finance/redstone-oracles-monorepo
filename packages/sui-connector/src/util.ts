@@ -25,12 +25,7 @@ export function getDeployDir() {
 }
 
 function getIdsFilePath(network: string) {
-  return path.join(
-    __dirname,
-    `..`,
-    getDeployDir(),
-    `/object_ids.${network}.json`
-  );
+  return path.join(__dirname, `..`, getDeployDir(), `/object_ids.${network}.json`);
 }
 
 export function readIds(network: SuiNetworkName) {
@@ -52,9 +47,7 @@ export function makeSuiKeypair(privateKey?: string): Keypair {
   }
 
   return Secp256k1Keypair.fromSecretKey(
-    isHexString(key) || isHexString(`0x${key}`)
-      ? arrayify(key, { allowMissingPrefix: true })
-      : key
+    isHexString(key) || isHexString(`0x${key}`) ? arrayify(key, { allowMissingPrefix: true }) : key
   );
 }
 
@@ -84,28 +77,16 @@ export function hexToBytes(data: string): Uint8Array {
   );
 }
 
-export function serialize<T, U>(
-  type: BcsType<T, U>,
-  value: U,
-  asOptional = false
-) {
+export function serialize<T, U>(type: BcsType<T, U>, value: U, asOptional = false) {
   return (asOptional ? bcs.option(type) : type).serialize(value);
 }
 
 export function serializeSigners(signers: string[], asOptional = false) {
-  return serialize(
-    bcs.vector(bcs.vector(bcs.u8())),
-    signers.map(hexToBytes),
-    asOptional
-  );
+  return serialize(bcs.vector(bcs.vector(bcs.u8())), signers.map(hexToBytes), asOptional);
 }
 
 export function serializeAddresses(addresses: string[], asOptional = false) {
-  return serialize(
-    bcs.vector(bcs.bytes(32)),
-    addresses.map(hexToBytes),
-    asOptional
-  );
+  return serialize(bcs.vector(bcs.bytes(32)), addresses.map(hexToBytes), asOptional);
 }
 
 export function makeFeedIdBytes(feedId: string): Uint8Array {

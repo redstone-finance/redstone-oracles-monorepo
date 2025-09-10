@@ -1,9 +1,5 @@
 /* eslint-disable @typescript-eslint/unbound-method */
-import {
-  DataPackage,
-  NumericDataPoint,
-  utils,
-} from "@redstone-finance/protocol";
+import { DataPackage, NumericDataPoint, utils } from "@redstone-finance/protocol";
 import { ContractTransaction } from "ethers";
 import { ethers } from "hardhat";
 import {
@@ -47,12 +43,9 @@ describe("Benchmark", function () {
   const fullGasReport: Record<string, GasReport> = {};
 
   this.beforeEach(async () => {
-    const StorageStructureFactory = await ethers.getContractFactory(
-      "StorageStructureModel"
-    );
+    const StorageStructureFactory = await ethers.getContractFactory("StorageStructureModel");
 
-    const HashCalldataFactory =
-      await ethers.getContractFactory("HashCalldataModel");
+    const HashCalldataFactory = await ethers.getContractFactory("HashCalldataModel");
 
     storageStructureModel = await StorageStructureFactory.deploy();
     await storageStructureModel.deployed();
@@ -66,9 +59,7 @@ describe("Benchmark", function () {
     console.log(JSON.stringify(fullGasReport, null, 2));
   });
 
-  const prepareMockDataPackageConfig = (
-    benchmarkParams: BenchmarkTestCaseParams
-  ) => {
+  const prepareMockDataPackageConfig = (benchmarkParams: BenchmarkTestCaseParams) => {
     // Prepare many data packages (for each requested symbol there are many data packages with each signer)
     const mockDataPackages: MockDataPackageConfig[] = [];
     for (
@@ -76,11 +67,7 @@ describe("Benchmark", function () {
       requestedSymbolIndex < benchmarkParams.passedArgumentsCount;
       requestedSymbolIndex++
     ) {
-      for (
-        let signerIndex = 0;
-        signerIndex < requiredSignersCount;
-        signerIndex++
-      ) {
+      for (let signerIndex = 0; signerIndex < requiredSignersCount; signerIndex++) {
         const dataPoints = [
           new NumericDataPoint({
             dataFeedId: `TEST-${requestedSymbolIndex}`,
@@ -88,11 +75,7 @@ describe("Benchmark", function () {
           }),
         ];
         mockDataPackages.push({
-          dataPackage: new DataPackage(
-            dataPoints,
-            DEFAULT_TIMESTAMP_FOR_TESTS,
-            "__TEST__"
-          ),
+          dataPackage: new DataPackage(dataPoints, DEFAULT_TIMESTAMP_FOR_TESTS, "__TEST__"),
           signer: MOCK_SIGNERS[signerIndex].address as MockSignerAddress,
         });
       }
@@ -101,17 +84,12 @@ describe("Benchmark", function () {
     return mockDataPackages;
   };
 
-  const updateFullGasReport = (
-    benchmarkParams: BenchmarkTestCaseParams,
-    gasReport: GasReport
-  ) => {
+  const updateFullGasReport = (benchmarkParams: BenchmarkTestCaseParams, gasReport: GasReport) => {
     const benchmarkCaseKey = getBenchmarkCaseShortTitle(benchmarkParams);
     fullGasReport[benchmarkCaseKey] = gasReport;
   };
 
-  const getBenchmarkCaseShortTitle = (
-    benchmarkParams: BenchmarkTestCaseParams
-  ): string => {
+  const getBenchmarkCaseShortTitle = (benchmarkParams: BenchmarkTestCaseParams): string => {
     return (
       benchmarkParams.passedArgumentsCount +
       " arguments, " +
@@ -122,50 +100,37 @@ describe("Benchmark", function () {
     );
   };
 
-  const runBenchmarkTestCase = async (
-    benchmarkParams: BenchmarkTestCaseParams
-  ) => {
+  const runBenchmarkTestCase = async (benchmarkParams: BenchmarkTestCaseParams) => {
     const shortTitle = getBenchmarkCaseShortTitle(benchmarkParams);
 
     console.log(`Benchmark case testing started: ${shortTitle}`);
 
-    const dataFeedIds = [
-      ...Array(benchmarkParams.passedArgumentsCount).keys(),
-    ].map((i) => `TEST-${i}`);
+    const dataFeedIds = [...Array(benchmarkParams.passedArgumentsCount).keys()].map(
+      (i) => `TEST-${i}`
+    );
 
     const bytes32Symbols = dataFeedIds.map(utils.convertStringToBytes32);
-    const mockDataPackagesConfig =
-      prepareMockDataPackageConfig(benchmarkParams);
+    const mockDataPackagesConfig = prepareMockDataPackageConfig(benchmarkParams);
 
-    const wrappedStorageStructureModel = WrapperBuilder.wrap(
-      storageStructureModel
-    ).usingMockDataPackages(mockDataPackagesConfig);
-    const wrappedHashCalldataModel = WrapperBuilder.wrap(
-      hashCalldataModel
-    ).usingMockDataPackages(mockDataPackagesConfig);
+    const wrappedStorageStructureModel =
+      WrapperBuilder.wrap(storageStructureModel).usingMockDataPackages(mockDataPackagesConfig);
+    const wrappedHashCalldataModel =
+      WrapperBuilder.wrap(hashCalldataModel).usingMockDataPackages(mockDataPackagesConfig);
 
-    const setDeleteFromStorageStructTx =
-      await wrappedStorageStructureModel.setDeleteFromStorage(
-        benchmarkParams.deleteFromStorage.struct
-      );
+    const setDeleteFromStorageStructTx = await wrappedStorageStructureModel.setDeleteFromStorage(
+      benchmarkParams.deleteFromStorage.struct
+    );
     await setDeleteFromStorageStructTx.wait();
 
-    const setDeleteFromStorageHashTx =
-      await wrappedHashCalldataModel.setDeleteFromStorage(
-        benchmarkParams.deleteFromStorage.hash
-      );
+    const setDeleteFromStorageHashTx = await wrappedHashCalldataModel.setDeleteFromStorage(
+      benchmarkParams.deleteFromStorage.hash
+    );
     await setDeleteFromStorageHashTx.wait();
 
     try {
-      let sendStructRequestFunction: (
-        ...args: Uint8Array[]
-      ) => Promise<ContractTransaction>;
-      let executeStructRequestFunction: (
-        requestId: number
-      ) => Promise<ContractTransaction>;
-      let sendHashRequestFunction: (
-        ...args: Uint8Array[]
-      ) => Promise<ContractTransaction>;
+      let sendStructRequestFunction: (...args: Uint8Array[]) => Promise<ContractTransaction>;
+      let executeStructRequestFunction: (requestId: number) => Promise<ContractTransaction>;
+      let sendHashRequestFunction: (...args: Uint8Array[]) => Promise<ContractTransaction>;
       let executeHashRequestFunction: (
         blockNumber: number,
         address: string,
@@ -208,9 +173,7 @@ describe("Benchmark", function () {
         default:
           throw new Error("Unsupported passed arguments count");
       }
-      const requestStructTx = await sendStructRequestFunction(
-        ...bytes32Symbols
-      );
+      const requestStructTx = await sendStructRequestFunction(...bytes32Symbols);
       const requestStructTxReceipt = await requestStructTx.wait();
 
       const executeRequestStructTx = await executeStructRequestFunction(1);
@@ -231,10 +194,8 @@ describe("Benchmark", function () {
       const gasReport: GasReport = {
         forSavingRequestAsStruct: requestStructTxReceipt.gasUsed.toNumber(),
         forSavingRequestAsHash: requestHashTxReceipt.gasUsed.toNumber(),
-        forExecutingRequestAsStruct:
-          executeRequestStructTxReceipt.gasUsed.toNumber(),
-        forExecutingRequestAsHash:
-          executeRequestHashTxReceipt.gasUsed.toNumber(),
+        forExecutingRequestAsStruct: executeRequestStructTxReceipt.gasUsed.toNumber(),
+        forExecutingRequestAsHash: executeRequestHashTxReceipt.gasUsed.toNumber(),
       };
 
       console.log({ gasReport });
@@ -258,9 +219,7 @@ describe("Benchmark", function () {
         passedArgumentsCount,
         deleteFromStorage,
       };
-      it(`Benchmark: ${getBenchmarkCaseShortTitle(
-        benchmarkParams
-      )}`, async () => {
+      it(`Benchmark: ${getBenchmarkCaseShortTitle(benchmarkParams)}`, async () => {
         await runBenchmarkTestCase(benchmarkParams);
       });
     }

@@ -1,8 +1,4 @@
-import {
-  loggerFactory,
-  RedstoneCommon,
-  RedstoneLogger,
-} from "@redstone-finance/utils";
+import { loggerFactory, RedstoneCommon, RedstoneLogger } from "@redstone-finance/utils";
 import { Job, scheduleJob } from "node-schedule";
 
 type CachedResult<R> = { cachedAt: number; value?: R };
@@ -44,9 +40,7 @@ export class CronAgent<R> {
     }
 
     if (this.schedulerTask) {
-      this.logger.warn(
-        "Prevent from creating setInterval twice for same agent"
-      );
+      this.logger.warn("Prevent from creating setInterval twice for same agent");
       return true;
     }
 
@@ -54,9 +48,7 @@ export class CronAgent<R> {
       try {
         await this.executeJobAndSaveResults();
       } catch (e) {
-        this.logger.warn(
-          `Agent job failed error=${RedstoneCommon.stringifyError(e)}`
-        );
+        this.logger.warn(`Agent job failed error=${RedstoneCommon.stringifyError(e)}`);
       }
     });
 
@@ -97,18 +89,13 @@ export class CronAgent<R> {
   private async executeJobAndSaveResults() {
     // it has to be outside of try/catch block to avoid getting in finally block
     if (this.inProgress) {
-      this.logger.debug(
-        "skipping deferredFetchData, because previous is still in progress"
-      );
+      this.logger.debug("skipping deferredFetchData, because previous is still in progress");
       return;
     }
 
     try {
       this.inProgress = true;
-      const result = await RedstoneCommon.timeout(
-        this.args.job(),
-        this.args.timeout
-      );
+      const result = await RedstoneCommon.timeout(this.args.job(), this.args.timeout);
 
       this.cachedValue = { cachedAt: Date.now(), value: result };
     } finally {

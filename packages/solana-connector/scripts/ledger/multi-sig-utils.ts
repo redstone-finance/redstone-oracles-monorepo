@@ -1,9 +1,4 @@
-import {
-  Connection,
-  PublicKey,
-  TransactionInstruction,
-  TransactionMessage,
-} from "@solana/web3.js";
+import { Connection, PublicKey, TransactionInstruction, TransactionMessage } from "@solana/web3.js";
 import {
   accounts,
   getProposalPda,
@@ -27,11 +22,7 @@ export class SquadsMultisig {
     return BigInt(Number(multisigInfo.transactionIndex));
   }
 
-  async addMembers(
-    feePayer: PublicKey,
-    newMembers: PublicKey[],
-    newThreshold: number
-  ) {
+  async addMembers(feePayer: PublicKey, newMembers: PublicKey[], newThreshold: number) {
     const actions = newMembers.map(
       (newMember) =>
         ({
@@ -57,11 +48,7 @@ export class SquadsMultisig {
     });
   }
 
-  async removeMembers(
-    feePayer: PublicKey,
-    oldMembers: PublicKey[],
-    newThreshold: number
-  ) {
+  async removeMembers(feePayer: PublicKey, oldMembers: PublicKey[], newThreshold: number) {
     const actions = oldMembers.map(
       (oldMember) =>
         ({
@@ -93,16 +80,11 @@ export class SquadsMultisig {
 
     const ixs = Array.isArray(ix) ? ix : [ix];
 
-    console.log(
-      `VaultPda ${vaultPda.toBase58()}, do not forget to top up with some Sol`
-    );
+    console.log(`VaultPda ${vaultPda.toBase58()}, do not forget to top up with some Sol`);
 
-    const transactionIndex =
-      transactionIdx ?? (await this.multisigTransactionIndex()) + 1n;
+    const transactionIndex = transactionIdx ?? (await this.multisigTransactionIndex()) + 1n;
 
-    console.log(
-      `Create new squads transaction with index = ${transactionIndex}`
-    );
+    console.log(`Create new squads transaction with index = ${transactionIndex}`);
 
     const transactionMessage = new TransactionMessage({
       payerKey: vaultPda,
@@ -121,8 +103,7 @@ export class SquadsMultisig {
   }
 
   async propose(member: PublicKey, transactionIdx: bigint | undefined) {
-    const transactionIndex =
-      transactionIdx ?? (await this.multisigTransactionIndex());
+    const transactionIndex = transactionIdx ?? (await this.multisigTransactionIndex());
 
     console.log(`Proposing transaction with index = ${transactionIndex}`);
 
@@ -134,12 +115,9 @@ export class SquadsMultisig {
   }
 
   async approve(member: PublicKey, transactionIdx: bigint | undefined) {
-    const transactionIndex =
-      transactionIdx ?? (await this.multisigTransactionIndex());
+    const transactionIndex = transactionIdx ?? (await this.multisigTransactionIndex());
 
-    console.log(
-      `Approving squads transaction with index = ${transactionIndex}`
-    );
+    console.log(`Approving squads transaction with index = ${transactionIndex}`);
 
     return instructions.proposalApprove({
       multisigPda: this.multisigPda,
@@ -149,12 +127,9 @@ export class SquadsMultisig {
   }
 
   async execute(member: PublicKey, transactionIdx: bigint | undefined) {
-    const transactionIndex =
-      transactionIdx ?? (await this.multisigTransactionIndex());
+    const transactionIndex = transactionIdx ?? (await this.multisigTransactionIndex());
 
-    console.log(
-      `Executing squads transaction with index = ${transactionIndex}`
-    );
+    console.log(`Executing squads transaction with index = ${transactionIndex}`);
 
     return await instructions.vaultTransactionExecute({
       connection: this.connection,
@@ -165,12 +140,9 @@ export class SquadsMultisig {
   }
 
   async executeConfig(member: PublicKey, transactionIdx: bigint | undefined) {
-    const transactionIndex =
-      transactionIdx ?? (await this.multisigTransactionIndex());
+    const transactionIndex = transactionIdx ?? (await this.multisigTransactionIndex());
 
-    console.log(
-      `Executing squads transaction with index = ${transactionIndex}`
-    );
+    console.log(`Executing squads transaction with index = ${transactionIndex}`);
 
     return instructions.configTransactionExecute({
       multisigPda: this.multisigPda,
@@ -181,10 +153,7 @@ export class SquadsMultisig {
   }
 
   async txInfo(txIdx: number) {
-    return await accounts.VaultTransaction.fromAccountAddress(
-      this.connection,
-      this.txPda(txIdx)
-    );
+    return await accounts.VaultTransaction.fromAccountAddress(this.connection, this.txPda(txIdx));
   }
 
   vaultPda() {

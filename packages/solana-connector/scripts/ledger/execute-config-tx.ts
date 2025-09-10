@@ -1,8 +1,4 @@
-import {
-  PublicKey,
-  TransactionMessage,
-  VersionedTransaction,
-} from "@solana/web3.js";
+import { PublicKey, TransactionMessage, VersionedTransaction } from "@solana/web3.js";
 import "dotenv/config";
 import { makeConnection } from "../utils";
 import { LEDGER_ACCOUNT, SQUAD_ADDRESS } from "./config";

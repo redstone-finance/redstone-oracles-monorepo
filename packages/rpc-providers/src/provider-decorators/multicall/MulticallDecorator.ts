@@ -1,8 +1,5 @@
 import { BlockTag, TransactionRequest } from "@ethersproject/abstract-provider";
-import {
-  getChainConfigByNetworkId,
-  getLocalChainConfigs,
-} from "@redstone-finance/chain-configs";
+import { getChainConfigByNetworkId, getLocalChainConfigs } from "@redstone-finance/chain-configs";
 import { RedstoneCommon, loggerFactory } from "@redstone-finance/utils";
 import { providers } from "ethers";
 import { Deferrable } from "ethers/lib/utils";
@@ -12,20 +9,14 @@ import { MulticallBuffer } from "./MulticallBuffer";
 
 const chainConfigs = getLocalChainConfigs();
 
-async function prepareMulticall3Request(
-  tx: Deferrable<TransactionRequest>,
-  chainId: number
-) {
+async function prepareMulticall3Request(tx: Deferrable<TransactionRequest>, chainId: number) {
   const call: Multicall3Request = {
     callData: (await tx["data"]) as string,
     target: (await tx["to"]) as string,
     allowFailure: true,
   };
 
-  const multicall3Info = getChainConfigByNetworkId(
-    chainConfigs,
-    chainId
-  ).multicall3;
+  const multicall3Info = getChainConfigByNetworkId(chainConfigs, chainId).multicall3;
 
   if (multicall3Info.type === "RedstoneMulticall3") {
     call.gasLimit = multicall3Info.gasLimitPerCall;
@@ -49,34 +40,19 @@ const parseMulticallConfig = (opts: MulticallDecoratorOptions) => {
   return {
     multicallAddress:
       opts.multicallAddress ??
-      RedstoneCommon.getFromEnv(
-        "MULTICALL_CONTRACT_ADDRESS",
-        z.string().optional()
-      ),
+      RedstoneCommon.getFromEnv("MULTICALL_CONTRACT_ADDRESS", z.string().optional()),
     autoResolveInterval:
       opts.autoResolveInterval ??
-      RedstoneCommon.getFromEnv(
-        "MULTICALL_AUTO_RESOLVE_INTERVAL",
-        z.number().default(100)
-      ),
+      RedstoneCommon.getFromEnv("MULTICALL_AUTO_RESOLVE_INTERVAL", z.number().default(100)),
     maxCallsCount:
       opts.maxCallsCount ??
-      RedstoneCommon.getFromEnv(
-        "MULTICALL_MAX_CALLS_COUNT",
-        z.number().default(15)
-      ),
+      RedstoneCommon.getFromEnv("MULTICALL_MAX_CALLS_COUNT", z.number().default(15)),
     maxCallDataSize:
       opts.maxCallDataSize ??
-      RedstoneCommon.getFromEnv(
-        "MULTICALL_MAX_CALL_DATA_SIZE",
-        z.number().default(50_000)
-      ), // 0.05MB
+      RedstoneCommon.getFromEnv("MULTICALL_MAX_CALL_DATA_SIZE", z.number().default(50_000)), // 0.05MB
     retryBySingleCalls:
       opts.retryBySingleCalls ??
-      RedstoneCommon.getFromEnv(
-        "MULTICALL_RETRY_BY_SINGLE_CALLS",
-        z.boolean().default(true)
-      ),
+      RedstoneCommon.getFromEnv("MULTICALL_RETRY_BY_SINGLE_CALLS", z.boolean().default(true)),
   };
 };
 
@@ -87,10 +63,7 @@ export function MulticallDecorator<T extends providers.Provider>(
   const config = parseMulticallConfig(options);
   const originalProvider = buildProvider();
   const modifiedProvider = RedstoneCommon.cloneClassInstance(originalProvider);
-  const queue = new MulticallBuffer(
-    config.maxCallsCount,
-    config.maxCallDataSize
-  );
+  const queue = new MulticallBuffer(config.maxCallsCount, config.maxCallDataSize);
 
   let chainId: number | undefined = undefined;
   const chainIdPromise = originalProvider.getNetwork().then((n) => n.chainId);
@@ -121,9 +94,7 @@ export function MulticallDecorator<T extends providers.Provider>(
         }
       })
       .catch((e) => {
-        logger.log(
-          `call failed rejecting ${callEntries.length} bounded promises`
-        );
+        logger.log(`call failed rejecting ${callEntries.length} bounded promises`);
         // if multicall fails we have to reject all promises bounded to it
         for (const entry of callEntries) {
           entry.reject(e);
@@ -136,10 +107,7 @@ export function MulticallDecorator<T extends providers.Provider>(
     blockTag?: BlockTag | Promise<BlockTag>
   ): Promise<string> => {
     chainId = await chainIdPromise;
-    const multicall3Request = await prepareMulticall3Request(
-      transaction,
-      chainId
-    );
+    const multicall3Request = await prepareMulticall3Request(transaction, chainId);
     const resolvedBlockTag = await blockTag;
 
     const { promise, resolve, reject } = createDeferredPromise<string>();
@@ -171,10 +139,7 @@ export function MulticallDecorator<T extends providers.Provider>(
   };
 
   if (config.autoResolveInterval > 0) {
-    const interval = setInterval(
-      resolveBuffersForAllBlocks,
-      config.autoResolveInterval
-    );
+    const interval = setInterval(resolveBuffersForAllBlocks, config.autoResolveInterval);
     interval.unref();
   }
 

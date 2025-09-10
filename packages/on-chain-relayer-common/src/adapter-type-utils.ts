@@ -1,8 +1,4 @@
-import {
-  AdapterType,
-  AnyOnChainRelayerManifest,
-  MultiFeedOnChainRelayerManifest,
-} from "./schemas";
+import { AdapterType, AnyOnChainRelayerManifest, MultiFeedOnChainRelayerManifest } from "./schemas";
 
 export function isMultiFeedRelayerManifest(
   manifest: AnyOnChainRelayerManifest

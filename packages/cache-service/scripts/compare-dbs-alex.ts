@@ -1,10 +1,7 @@
 import { consts } from "@redstone-finance/protocol";
 import "dotenv/config";
 import mongoose from "mongoose";
-import {
-  CachedDataPackage,
-  DataPackage,
-} from "../src/data-packages/data-packages.model";
+import { CachedDataPackage, DataPackage } from "../src/data-packages/data-packages.model";
 
 const END_TIMESTAMP = getRoundedCurrentTimestamp();
 const START_TIMESTAMP = END_TIMESTAMP - 3 * 24 * 3600 * 1000; // END_TIMESTAMP - 5 days
@@ -37,21 +34,12 @@ const EXPECTED_SIGNERS_2 = {
 type Timestamp = number;
 type DataFeedId = string;
 type SignerAddress = string;
-type DataPackagesResponse = Record<
-  Timestamp,
-  DataPackagesForManyFeeds | undefined
->;
-type DataPackagesForManyFeeds = Record<
-  DataFeedId,
-  DataPackagesForManySigners | undefined
->;
+type DataPackagesResponse = Record<Timestamp, DataPackagesForManyFeeds | undefined>;
+type DataPackagesForManyFeeds = Record<DataFeedId, DataPackagesForManySigners | undefined>;
 type SimplifiedDataPackage = {
   value: number;
 };
-type DataPackagesForManySigners = Record<
-  SignerAddress,
-  SimplifiedDataPackage[] | undefined
->;
+type DataPackagesForManySigners = Record<SignerAddress, SimplifiedDataPackage[] | undefined>;
 type ValuesPerSigner = {
   [signer: string]: number[] | undefined;
 };
@@ -77,18 +65,10 @@ async function main() {
     prettyPrintInterval(interval);
 
     console.log("Loading data from the 1st DB...");
-    const dataPackages1 = await getDataPackages(
-      DB_URL_1,
-      DATA_SERVICE_ID_1,
-      interval
-    );
+    const dataPackages1 = await getDataPackages(DB_URL_1, DATA_SERVICE_ID_1, interval);
 
     console.log("Loading data from the 2nd DB...");
-    const dataPackages2 = await getDataPackages(
-      DB_URL_2,
-      DATA_SERVICE_ID_2,
-      interval
-    );
+    const dataPackages2 = await getDataPackages(DB_URL_2, DATA_SERVICE_ID_2, interval);
 
     console.log("Loading from DBs completed. Comparing data...");
     compareDataInInterval(dataPackages1, dataPackages2);
@@ -111,12 +91,7 @@ function compareDataInInterval(
   const commonTimestamps = getIntersection(timestamps1, timestamps2);
 
   for (const timestamp of commonTimestamps) {
-    compareDataPackagesAtTimestamp(
-      dataPackages1,
-      dataPackages2,
-      commonDataFeedIds,
-      timestamp
-    );
+    compareDataPackagesAtTimestamp(dataPackages1, dataPackages2, commonDataFeedIds, timestamp);
   }
 }
 
@@ -136,14 +111,8 @@ function compareDataPackagesAtTimestamp(
   for (const dataFeedId of dataFeedIds) {
     const context = `Data feed: ${dataFeedId}. ${timestampContext}`;
 
-    const valuesPerSigner1 = extractValuesForDataFeed(
-      dataPackages1[timestamp]!,
-      dataFeedId
-    );
-    const valuesPerSigner2 = extractValuesForDataFeed(
-      dataPackages2[timestamp]!,
-      dataFeedId
-    );
+    const valuesPerSigner1 = extractValuesForDataFeed(dataPackages1[timestamp]!, dataFeedId);
+    const valuesPerSigner2 = extractValuesForDataFeed(dataPackages2[timestamp]!, dataFeedId);
 
     if (isObjectEmpty(valuesPerSigner1) || isObjectEmpty(valuesPerSigner2)) {
       if (ENABLE_LOGGING_OF_MISSING_FEEDS) {
@@ -155,16 +124,8 @@ function compareDataPackagesAtTimestamp(
       continue;
     }
 
-    checkNumberOfPackages(
-      valuesPerSigner1,
-      EXPECTED_SIGNERS_1,
-      context + ". First DB"
-    );
-    checkNumberOfPackages(
-      valuesPerSigner2,
-      EXPECTED_SIGNERS_2,
-      context + ". Second DB"
-    );
+    checkNumberOfPackages(valuesPerSigner1, EXPECTED_SIGNERS_1, context + ". First DB");
+    checkNumberOfPackages(valuesPerSigner2, EXPECTED_SIGNERS_2, context + ". Second DB");
     checkDeviation(valuesPerSigner1, valuesPerSigner2, context);
   }
 }
@@ -193,9 +154,7 @@ function checkNumberOfPackages(
   expectedSigners: Record<string, number>,
   context: string
 ) {
-  for (const [signerAddress, expectedPackagesCount] of Object.entries(
-    expectedSigners
-  )) {
+  for (const [signerAddress, expectedPackagesCount] of Object.entries(expectedSigners)) {
     const valuesForSigner = valuesPerSigner[signerAddress];
 
     if (!valuesForSigner) {
@@ -214,9 +173,7 @@ function checkNumberOfPackages(
 
 function getMaxDeviation(values1: number[], values2: number[]): number {
   if (values1.length === 0 || values2.length === 0) {
-    console.log(
-      `Deviation can not be calculated correctly. One of the arrays is empty.`
-    );
+    console.log(`Deviation can not be calculated correctly. One of the arrays is empty.`);
     return EXCEPTIONAL_DEVIATION;
   }
 
@@ -235,9 +192,7 @@ function extractValuesForDataFeed(
   if (!dataPackagesForManyFeeds[dataFeedId]) {
     return {};
   } else {
-    for (const [signer, dataPackages] of Object.entries(
-      dataPackagesForManyFeeds[dataFeedId]
-    )) {
+    for (const [signer, dataPackages] of Object.entries(dataPackagesForManyFeeds[dataFeedId])) {
       valuesPerSigner[signer] = dataPackages!.map((dp) => dp.value);
     }
 
@@ -265,9 +220,7 @@ async function getDataPackages(
   return groupDataPackages(fetchedPackages);
 }
 
-function groupDataPackages(
-  dataPackages: CachedDataPackage[]
-): DataPackagesResponse {
+function groupDataPackages(dataPackages: CachedDataPackage[]): DataPackagesResponse {
   const result: DataPackagesResponse = {};
 
   for (const dataPackage of dataPackages) {
@@ -300,9 +253,7 @@ async function queryDataPackages(
         $lte: interval.endTimestamp,
       },
       dataServiceId,
-      ...(ANALYZE_ONLY_BIG_PACKAGES
-        ? { dataFeedId: consts.ALL_FEEDS_KEY }
-        : {}),
+      ...(ANALYZE_ONLY_BIG_PACKAGES ? { dataFeedId: consts.ALL_FEEDS_KEY } : {}),
     },
     { timestampMilliseconds: 1, signerAddress: 1, dataPoints: 1 }
   );
@@ -310,10 +261,7 @@ async function queryDataPackages(
   return dataPackages;
 }
 
-function splitToIntervals(
-  interval: TimeInterval,
-  pageSizeMilliseconds: number
-): TimeInterval[] {
+function splitToIntervals(interval: TimeInterval, pageSizeMilliseconds: number): TimeInterval[] {
   const { endTimestamp, startTimestamp } = interval;
 
   if (endTimestamp <= startTimestamp) {
@@ -329,10 +277,7 @@ function splitToIntervals(
   ) {
     intervals.push({
       startTimestamp: currentTimestamp,
-      endTimestamp: Math.min(
-        currentTimestamp + pageSizeMilliseconds,
-        endTimestamp
-      ),
+      endTimestamp: Math.min(currentTimestamp + pageSizeMilliseconds, endTimestamp),
     });
   }
 
@@ -342,15 +287,11 @@ function splitToIntervals(
   return intervals;
 }
 
-function extractAllDataFeedIds(
-  dataPackages: DataPackagesResponse
-): Set<string> {
+function extractAllDataFeedIds(dataPackages: DataPackagesResponse): Set<string> {
   const allDataFeedIds = new Set<string>([]);
 
   for (const dataPackagesForManyFeeds of Object.values(dataPackages)) {
-    for (const dataFeedId of Object.keys(
-      dataPackagesForManyFeeds as DataPackagesForManyFeeds
-    )) {
+    for (const dataFeedId of Object.keys(dataPackagesForManyFeeds as DataPackagesForManyFeeds)) {
       allDataFeedIds.add(dataFeedId);
     }
   }
@@ -362,11 +303,7 @@ function extractAllTimestamps(dataPackages: DataPackagesResponse): Set<number> {
   return new Set(Object.keys(dataPackages).map(Number));
 }
 
-function checkMissesInSets<T>(
-  context: string,
-  set1: Set<T>,
-  set2: Set<T>
-): void {
+function checkMissesInSets<T>(context: string, set1: Set<T>, set2: Set<T>): void {
   const onlyInFirst = [...set1].filter((element) => !set2.has(element));
   const onlyInSecond = [...set2].filter((element) => !set1.has(element));
   console.log(context, {
@@ -381,17 +318,13 @@ function checkMissesInSets<T>(
 
 function calcDeviation(value1: number, value2: number): number {
   if (value1 <= 0 || value2 <= 0) {
-    throw new Error(
-      `Values must be positive. Received: ${value1} and ${value2}`
-    );
+    throw new Error(`Values must be positive. Received: ${value1} and ${value2}`);
   }
   return (Math.abs(value1 - value2) / Math.min(value1, value2)) * 100;
 }
 
 function getIntersection<T>(set1: Set<T>, set2: Set<T>) {
-  const intersection = new Set(
-    [...set1].filter((element) => set2.has(element))
-  );
+  const intersection = new Set([...set1].filter((element) => set2.has(element)));
   return intersection;
 }
 

@@ -81,8 +81,7 @@ describe("Logger Sanitization Logic", () => {
     });
 
     test("must not change URLs in strings without secret in both items", () => {
-      const url =
-        '{"urls":["https://api.example.com","https://api.testnet.solana.com"]}';
+      const url = '{"urls":["https://api.example.com","https://api.testnet.solana.com"]}';
       const sanitized = sanitizeValue(url);
       expect(sanitized).toBe(
         '{"urls":["https://api.example.com","https://api.testnet.solana.com"]}'
@@ -136,15 +135,9 @@ describe("Logger Sanitization Logic", () => {
 
   describe("createSanitizedLogger", () => {
     test("should wrap logger methods to sanitize arguments", () => {
-      const {
-        logger: mockRawLogger,
-        capturedArgs,
-        mockLogFn,
-      } = createMockLogger();
+      const { logger: mockRawLogger, capturedArgs, mockLogFn } = createMockLogger();
 
-      const sanitizedLogger = createSanitizedLogger(
-        mockRawLogger as unknown as Consola
-      );
+      const sanitizedLogger = createSanitizedLogger(mockRawLogger as unknown as Consola);
 
       const url = "https://example.com/records/token=123456";
       sanitizedLogger.info("Connecting to: ", url);
@@ -160,14 +153,8 @@ describe("Logger Sanitization Logic", () => {
     });
 
     test("should handle multiple arguments including objects and arrays", () => {
-      const {
-        logger: mockRawLogger,
-        capturedArgs,
-        mockLogFn,
-      } = createMockLogger();
-      const sanitizedLogger = createSanitizedLogger(
-        mockRawLogger as unknown as Consola
-      );
+      const { logger: mockRawLogger, capturedArgs, mockLogFn } = createMockLogger();
+      const sanitizedLogger = createSanitizedLogger(mockRawLogger as unknown as Consola);
 
       const obj = {
         httpsUrl: "https://api.test.com?token=abcxyz",
@@ -224,10 +211,7 @@ describe("Logger Sanitization Logic", () => {
     circularObj.nested.parent = circularObj;
 
     type CircularArray = [string, { url: string }, ...unknown[]];
-    const circularArray: CircularArray = [
-      "first",
-      { url: "https://example.com/token=abcdef" },
-    ];
+    const circularArray: CircularArray = ["first", { url: "https://example.com/token=abcdef" }];
     circularArray.push(circularArray);
 
     const sanitizedObj = sanitizeValue(circularObj);

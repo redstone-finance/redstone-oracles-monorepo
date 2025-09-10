@@ -7,10 +7,7 @@ import { getNonEvmBlockchainService } from "./get-non-evm-blockchain-service";
 const SINGLE_RPC_TIMEOUT_MILLISECONDS = 10_000;
 const ALL_RPC_TIMEOUT_MILLISECONDS = 60_000;
 
-export function getBlockchainService(
-  rpcUrls: string[],
-  chainConfig: ChainConfig
-) {
+export function getBlockchainService(rpcUrls: string[], chainConfig: ChainConfig) {
   if (isNonEvmNetworkId(chainConfig.networkId)) {
     return getNonEvmBlockchainService(chainConfig.networkId, rpcUrls);
   }

@@ -2,16 +2,10 @@ import {} from "@redstone-finance/sdk";
 import { Keypair, LAMPORTS_PER_SOL, PublicKey } from "@solana/web3.js";
 import { LiteSVM } from "litesvm";
 import path from "path";
-import {
-  ConnectionStateScenario,
-  LiteSVMConnection,
-} from "./LiteSVMConnection";
+import { ConnectionStateScenario, LiteSVMConnection } from "./LiteSVMConnection";
 
 function programPath() {
-  return path.join(
-    __dirname,
-    "../solana/target/deploy/redstone_solana_price_adapter.so"
-  );
+  return path.join(__dirname, "../solana/target/deploy/redstone_solana_price_adapter.so");
 }
 
 function publicToDummyKeypair(publicKey: Uint8Array) {
@@ -22,9 +16,7 @@ function publicToDummyKeypair(publicKey: Uint8Array) {
 export function setUpEnv() {
   const svm = new LiteSVM().withBlockhashCheck(false).withSigverify(false);
 
-  const programId = new PublicKey(
-    "rds8J7VKqLQgzDr7vS59dkQga3B1BotgFy8F7LSLC74"
-  );
+  const programId = new PublicKey("rds8J7VKqLQgzDr7vS59dkQga3B1BotgFy8F7LSLC74");
   svm.addProgramFromFile(programId, programPath());
 
   const publicBytes = Buffer.from(

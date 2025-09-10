@@ -9,8 +9,6 @@ export class PriceAdapterStarknetContractConnector extends StarknetContractConne
   }
 
   getAdapter(): Promise<PriceAdapterStarknetContractAdapter> {
-    return Promise.resolve(
-      new PriceAdapterStarknetContractAdapter(this.getContract())
-    );
+    return Promise.resolve(new PriceAdapterStarknetContractAdapter(this.getContract()));
   }
 }

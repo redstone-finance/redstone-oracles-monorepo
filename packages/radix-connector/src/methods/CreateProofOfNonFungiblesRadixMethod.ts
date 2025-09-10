@@ -19,10 +19,7 @@ export class CreateProofOfNonFungiblesRadixMethod extends VoidRadixInvocation {
   override getParams(): Value[] {
     return [
       address(this.proof.resourceAddress),
-      array(
-        ValueKind.NonFungibleLocalId,
-        nonFungibleLocalId(this.proof.localId)
-      ),
+      array(ValueKind.NonFungibleLocalId, nonFungibleLocalId(this.proof.localId)),
     ];
   }
 }

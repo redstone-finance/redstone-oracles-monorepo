@@ -6,11 +6,7 @@ import {
 } from "../../src";
 import { PriceFeedCasperContractConnector } from "../../src/contracts/price_feed/PriceFeedCasperContractConnector";
 import { config } from "./config";
-import {
-  FEED_ADDRESS,
-  makeContractParamsProvider,
-  RELAY_ADAPTER_ADDRESS,
-} from "./e2e-utils";
+import { FEED_ADDRESS, makeContractParamsProvider, RELAY_ADAPTER_ADDRESS } from "./e2e-utils";
 
 async function main(config: CasperConfig) {
   const connection = await makeCasperConnection(config);

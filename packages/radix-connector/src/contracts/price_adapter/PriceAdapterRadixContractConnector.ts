@@ -15,10 +15,7 @@ export class PriceAdapterRadixContractConnector extends RadixContractConnector<P
   }
 
   override async getAdapter() {
-    this.adapter ??= new PriceAdapterRadixContractAdapter(
-      this.client,
-      await this.getComponentId()
-    );
+    this.adapter ??= new PriceAdapterRadixContractAdapter(this.client, await this.getComponentId());
 
     return this.adapter;
   }

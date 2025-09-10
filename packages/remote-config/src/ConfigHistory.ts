@@ -24,19 +24,13 @@ export class ConfigHistory {
   }
 
   isUpdateHashBlacklisted(updateHash: string) {
-    return this.history.some(
-      (c) => c.updateHash === updateHash && c.blacklisted
-    );
+    return this.history.some((c) => c.updateHash === updateHash && c.blacklisted);
   }
 
   blacklistConfigHash(configHash: string) {
-    const historicalConfig = this.history.find(
-      (c) => c.configHash === configHash
-    );
+    const historicalConfig = this.history.find((c) => c.configHash === configHash);
     if (!historicalConfig) {
-      logger.warn(
-        `Historical config with hash ${configHash} not found - cannot blacklist`
-      );
+      logger.warn(`Historical config with hash ${configHash} not found - cannot blacklist`);
       return;
     }
     historicalConfig.blacklisted = true;

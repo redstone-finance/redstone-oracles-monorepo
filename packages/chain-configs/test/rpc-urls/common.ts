@@ -9,11 +9,7 @@ import {
 import chai from "chai";
 import { ethers } from "ethers";
 import { RpcUrlsPerChain } from "../../scripts/read-ssm-rpc-urls";
-import {
-  ChainConfig,
-  getChainConfigByNetworkId,
-  getLocalChainConfigs,
-} from "../../src";
+import { ChainConfig, getChainConfigByNetworkId, getLocalChainConfigs } from "../../src";
 
 const RETRY_CONFIG: Omit<RedstoneCommon.RetryConfig, "fn"> = {
   maxRetries: 3,
@@ -22,15 +18,10 @@ const RETRY_CONFIG: Omit<RedstoneCommon.RetryConfig, "fn"> = {
 const logger = loggerFactory("chain-config/rpc-urls");
 
 export const validateNetworkRpcUrls = (rpcUrlsPerChain: RpcUrlsPerChain) => {
-  for (const [name, { networkId, rpcUrls }] of Object.entries(
-    rpcUrlsPerChain
-  )) {
+  for (const [name, { networkId, rpcUrls }] of Object.entries(rpcUrlsPerChain)) {
     describe(`Network Validation for ${name} (${networkId})`, function () {
       before(function () {
-        const chainConfig = getChainConfigByNetworkId(
-          getLocalChainConfigs(),
-          networkId
-        );
+        const chainConfig = getChainConfigByNetworkId(getLocalChainConfigs(), networkId);
         skipIfDisabledOrNotSupported(this, chainConfig, CHAINS_TO_SKIP_CHECK);
       });
 
@@ -55,10 +46,7 @@ export const validateNetworkRpcUrls = (rpcUrlsPerChain: RpcUrlsPerChain) => {
   }
 };
 
-const getBlockNumberWithTimeout = async (
-  rpcUrl: string,
-  timeout: number
-): Promise<number> => {
+const getBlockNumberWithTimeout = async (rpcUrl: string, timeout: number): Promise<number> => {
   const provider = new ethers.providers.JsonRpcProvider(rpcUrl);
   const host = getRpcHost(rpcUrl);
   const blockNumber = await RedstoneCommon.retry({
@@ -80,15 +68,10 @@ export const validateBlockNumberAgreementBetweenRpcs = (
   rpcUrlsPerChain: RpcUrlsPerChain,
   tolerance: number
 ) => {
-  for (const [name, { networkId, rpcUrls }] of Object.entries(
-    rpcUrlsPerChain
-  )) {
+  for (const [name, { networkId, rpcUrls }] of Object.entries(rpcUrlsPerChain)) {
     describe(`Block Number Agreement Validation for ${name} (${networkId})`, function () {
       before(function () {
-        const chainConfig = getChainConfigByNetworkId(
-          getLocalChainConfigs(),
-          networkId
-        );
+        const chainConfig = getChainConfigByNetworkId(getLocalChainConfigs(), networkId);
         skipIfDisabledOrNotSupported(this, chainConfig, CHAINS_TO_SKIP_CHECK);
       });
 
@@ -122,9 +105,7 @@ export const validateBlockNumberAgreementBetweenRpcs = (
         });
 
         maxBlockNumber = Math.max(
-          ...blockNumbers
-            .map((b) => b.blockNumber)
-            .filter(RedstoneCommon.isDefined)
+          ...blockNumbers.map((b) => b.blockNumber).filter(RedstoneCommon.isDefined)
         );
       });
 
@@ -137,9 +118,7 @@ export const validateBlockNumberAgreementBetweenRpcs = (
             throw new Error(`Failed to fetch block number for RPC: ${host}`);
           }
 
-          const blockNumberDifference = Math.abs(
-            currentBlock.blockNumber - maxBlockNumber!
-          );
+          const blockNumberDifference = Math.abs(currentBlock.blockNumber - maxBlockNumber!);
 
           chai
             .expect(blockNumberDifference)

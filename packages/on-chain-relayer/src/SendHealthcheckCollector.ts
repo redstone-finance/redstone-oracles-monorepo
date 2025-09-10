@@ -6,9 +6,7 @@ export class SendHealthcheckCollector {
   constructor(
     private readonly count: number,
     private readonly param: string | undefined,
-    private readonly sendHealthcheckCallback: (
-      healthcheckParam?: string
-    ) => Promise<void>
+    private readonly sendHealthcheckCallback: (healthcheckParam?: string) => Promise<void>
   ) {
     this.resetHealthChecks();
   }

@@ -14,20 +14,12 @@ import "dotenv/config";
 import path from "path";
 import { PROGRAM_SO_FILE } from "../consts";
 import { makeConnection, readDeployDir, readKeypair } from "../utils";
-import {
-  LEDGER_ACCOUNT,
-  PROGRAM_ID,
-  SQUAD_ADDRESS,
-  TEMP_AUTHORITY,
-} from "./config";
+import { LEDGER_ACCOUNT, PROGRAM_ID, SQUAD_ADDRESS, TEMP_AUTHORITY } from "./config";
 import { makeSolana } from "./ledger-utils";
 import { SquadsMultisig } from "./multi-sig-utils";
 import { sign, Signer, signerPublicKey } from "./signer";
 import { createSetUpgradeAuthority } from "./transfer-ownership";
-import {
-  checkUpgradeTransaction,
-  createUpgradeInstruction,
-} from "./upgrade-from-buffer";
+import { checkUpgradeTransaction, createUpgradeInstruction } from "./upgrade-from-buffer";
 
 type FunctionType = "createVaultTx" | "propose" | "approve" | "execute";
 type InstructionType =
@@ -64,10 +56,7 @@ async function promptInstructionType(functionType: FunctionType) {
         { title: "raw-transaction", value: "raw-transaction" },
       ],
     })
-  ).selectInstruction as
-    | "set-new-authority"
-    | "upgrade-from-buffer"
-    | "raw-transaction";
+  ).selectInstruction as "set-new-authority" | "upgrade-from-buffer" | "raw-transaction";
 
   switch (type) {
     case "set-new-authority": {
@@ -177,10 +166,7 @@ async function promptConfirm(
   functionType: FunctionType,
   instructionType: InstructionType | undefined
 ) {
-  if (
-    functionType === "approve" &&
-    instructionType?.type === "upgrade-from-buffer"
-  ) {
+  if (functionType === "approve" && instructionType?.type === "upgrade-from-buffer") {
     await checkUpgradeTransaction(
       connection,
       squad,
@@ -223,9 +209,7 @@ async function promptNewAuthority() {
 
   return {
     type: "set-authority",
-    newAuthorityAddress: new PublicKey(
-      newAuthorityPrompt.newAuthorityAddress as string
-    ),
+    newAuthorityAddress: new PublicKey(newAuthorityPrompt.newAuthorityAddress as string),
   };
 }
 
@@ -255,10 +239,7 @@ async function getTx(
   return new VersionedTransaction(message);
 }
 
-function getInstruction(
-  squad: SquadsMultisig,
-  instructionType: InstructionType
-) {
+function getInstruction(squad: SquadsMultisig, instructionType: InstructionType) {
   const type = instructionType.type;
   switch (type) {
     case "set-authority":
@@ -297,11 +278,7 @@ async function handleCreateVaultTx(
   const member = await signerPublicKey(signer);
   const innerIx = getInstruction(squad, instructionType);
 
-  const ix = await squad.createVaultTransaction(
-    member,
-    innerIx,
-    transactionIdx
-  );
+  const ix = await squad.createVaultTransaction(member, innerIx, transactionIdx);
 
   const tx = await getTx(connection, ix, member);
 
@@ -348,12 +325,7 @@ async function handleExecute(
   const member = await signerPublicKey(signer);
   const ixInfo = await squad.execute(member, transactionIdx);
 
-  const tx = await getTx(
-    connection,
-    ixInfo.instruction,
-    member,
-    ixInfo.lookupTableAccounts
-  );
+  const tx = await getTx(connection, ixInfo.instruction, member, ixInfo.lookupTableAccounts);
 
   await sign(signer, tx);
   return tx;
@@ -416,22 +388,14 @@ async function main() {
     message: "MultisigPda address",
     initial: SQUAD_ADDRESS.toBase58(),
   });
-  const squadAddress = new PublicKey(
-    squadAddressPrompt.multisigAddress as string
-  );
+  const squadAddress = new PublicKey(squadAddressPrompt.multisigAddress as string);
 
   const squadUtils = new SquadsMultisig(squadAddress, connection);
   const transactionIdx = await promptTxIdx(squadUtils, functionType);
 
   const signer = await promptSigner();
 
-  await promptConfirm(
-    connection,
-    squadUtils,
-    transactionIdx,
-    functionType,
-    instructionData
-  );
+  await promptConfirm(connection, squadUtils, transactionIdx, functionType, instructionData);
 
   const txSignature = await handleAction(
     connection,
