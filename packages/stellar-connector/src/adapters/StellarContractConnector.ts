@@ -45,4 +45,12 @@ export class StellarContractConnector<Adapter>
       amountInXlm
     );
   }
+
+  getSignerAddress() {
+    if (!this.keypair) {
+      throw new Error("Keypair is missing");
+    }
+
+    return Promise.resolve(this.keypair.publicKey());
+  }
 }
