@@ -511,11 +511,40 @@ describe("subscribe-data-packages", () => {
         signer: MOCK_WALLET_1,
       });
 
+      expect(callback).toBeCalledTimes(0);
       // doesn't publish cause still only one signer
       jest.advanceTimersByTime(
         subscriber.params
           .waitMsForOtherSignersAfterMinimalSignersCountSatisfied + 1
       );
+      expect(callback).toBeCalledTimes(1);
+    });
+
+    it("should publish immediately when received data from minimalOffChainSignersCount and waitMsForOtherSignersAfterMinimalSignersCountSatisfied is set to 0", async () => {
+      const pubSub = createMockPubSubClient();
+
+      const subscriber = new DataPackageSubscriber(
+        pubSub,
+        createMockParams({
+          dataPackageIds: ["ETH"],
+          authorizedSigners: [MOCK_WALLET_1.address, MOCK_WALLET_2.address],
+          uniqueSignersCount: 1,
+          minimalOffChainSignersCount: 1,
+          waitMsForOtherSignersAfterMinimalSignersCountSatisfied: 0,
+        })
+      );
+      const callback = jest.fn();
+      await subscriber.subscribe(callback);
+      const packageTimestamp = Date.now();
+
+      // first call to setup packageTimestamp
+      await publishToPubSub(pubSub, {
+        dataPackageId: "ETH",
+        value: 12,
+        timestamp: packageTimestamp,
+        signer: MOCK_WALLET_1,
+      });
+
       expect(callback).toBeCalledTimes(1);
     });
 

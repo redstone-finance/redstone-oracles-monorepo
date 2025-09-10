@@ -330,7 +330,7 @@ export class DataPackageSubscriber {
 
     this.packagesPerTimestamp.set(packageTimestamp, entryForTimestamp);
 
-    if (this.canBePublishedInstantly(entryForTimestamp)) {
+    if (this.hasGotPackagesFromAllSigners(entryForTimestamp)) {
       this.logger.debug(
         `Got packages from all signers timestamp=${packageTimestamp}, will try to publish instantly`
       );
@@ -339,10 +339,21 @@ export class DataPackageSubscriber {
     }
 
     const key = packageTimestamp.toString();
+    const hasEnoughPackages =
+      this.hasGotPackagesFromEnoughSigners(entryForTimestamp);
+
     if (
-      this.canSchedulePublish(entryForTimestamp) &&
-      !this.scheduledPublishes.has(key)
+      hasEnoughPackages &&
+      this.params.waitMsForOtherSignersAfterMinimalSignersCountSatisfied <= 0
     ) {
+      this.logger.debug(
+        `Got packages from enough authorized signers timestamp=${packageTimestamp},  will try to publish instantly because waitMsForOtherSignersAfterMinimalSignersCountSatisfied is <= 0`
+      );
+      this.publish(packageTimestamp);
+      return;
+    }
+
+    if (hasEnoughPackages && !this.scheduledPublishes.has(key)) {
       this.logger.debug(
         `Got packages from enough authorized signers timestamp=${packageTimestamp}, will try to publish in ${this.params.waitMsForOtherSignersAfterMinimalSignersCountSatisfied} [ms]`
       );
@@ -354,7 +365,7 @@ export class DataPackageSubscriber {
   }
 
   /** Can publish instantly only if already have packages for every data feed from every signer */
-  private canBePublishedInstantly(
+  private hasGotPackagesFromAllSigners(
     entryForTimestamp: Record<string, SignedDataPackage[] | undefined>
   ) {
     return this.params.dataPackageIds.every(
@@ -364,7 +375,7 @@ export class DataPackageSubscriber {
   }
 
   /** Check if minimalOffChainSignersCount is satisfied */
-  private canSchedulePublish(
+  private hasGotPackagesFromEnoughSigners(
     entryForTimestamp: Record<string, SignedDataPackage[] | undefined>
   ) {
     const quantifier = this.params.ignoreMissingFeeds ? "some" : "every";
