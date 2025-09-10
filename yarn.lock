@@ -10300,18 +10300,6 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@redstone-finance/lambda-gas-fee-comparator@workspace:packages/lambda/lambda-gas-fee-comparator":
-  version: 0.0.0-use.local
-  resolution: "@redstone-finance/lambda-gas-fee-comparator@workspace:packages/lambda/lambda-gas-fee-comparator"
-  dependencies:
-    "@influxdata/influxdb-client": "npm:^1.35.0"
-    "@redstone-finance/rpc-providers": "workspace:*"
-    "@redstone-finance/sdk": "workspace:*"
-    "@redstone-finance/utils": "workspace:*"
-    dotenv: "npm:^16.0.3"
-  languageName: unknown
-  linkType: soft
-
 "@redstone-finance/lambda-gateway-latencies-monitoring@workspace:packages/lambda/lambda-gateway-latencies-monitoring":
   version: 0.0.0-use.local
   resolution: "@redstone-finance/lambda-gateway-latencies-monitoring@workspace:packages/lambda/lambda-gateway-latencies-monitoring"
