@@ -19,8 +19,6 @@ try {
     errorMessage = error;
   }
 
-  process.stderr.write(
-    `Error calculating hash for directory ${dirPath}: ${errorMessage}\n`
-  );
+  process.stderr.write(`Error calculating hash for directory ${dirPath}: ${errorMessage}\n`);
   process.exit(1);
 }

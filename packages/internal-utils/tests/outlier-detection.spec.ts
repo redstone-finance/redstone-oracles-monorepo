@@ -1,9 +1,4 @@
-import {
-  DataPackage,
-  DataPoint,
-  NumericDataPoint,
-  utils,
-} from "@redstone-finance/protocol";
+import { DataPackage, DataPoint, NumericDataPoint, utils } from "@redstone-finance/protocol";
 import { filterOutliers } from "../src/outlier-detection";
 
 describe("outlier-detection", () => {
@@ -42,9 +37,7 @@ describe("outlier-detection", () => {
 
     const result = filterOutliers(packages);
     expect(result.TEST.length).toBe(3);
-    expect(
-      result.TEST.find((pkg) => pkg.dataPoints[0].value === 200)
-    ).toBeUndefined();
+    expect(result.TEST.find((pkg) => pkg.dataPoints[0].value === 200)).toBeUndefined();
   });
 
   it("should not filter when no clear outliers", () => {
@@ -69,11 +62,7 @@ describe("outlier-detection", () => {
         createMockDataPackage(42000),
         createMockDataPackage(80000), // outlier
       ],
-      ETH: [
-        createMockDataPackage(2000),
-        createMockDataPackage(2100),
-        createMockDataPackage(2200),
-      ],
+      ETH: [createMockDataPackage(2000), createMockDataPackage(2100), createMockDataPackage(2200)],
     };
 
     const result = filterOutliers(packages);

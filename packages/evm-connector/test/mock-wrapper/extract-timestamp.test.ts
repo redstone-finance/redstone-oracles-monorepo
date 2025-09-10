@@ -1,9 +1,6 @@
 import { expect } from "chai";
 import { ethers } from "hardhat";
-import {
-  DEFAULT_TIMESTAMP_FOR_TESTS,
-  getMockNumericPackage,
-} from "../../src/helpers/test-utils";
+import { DEFAULT_TIMESTAMP_FOR_TESTS, getMockNumericPackage } from "../../src/helpers/test-utils";
 import { WrapperBuilder } from "../../src/index";
 import { SampleRedstoneConsumerNumericMock } from "../../typechain-types";
 import { mockNumericPackages } from "../tests-common";
@@ -27,36 +24,26 @@ describe("Extract Timestamp", function () {
 
   it("Should extract timestamp correctly", async () => {
     const wrappedContract =
-      WrapperBuilder.wrap(sampleContract).usingMockDataPackages(
-        mockNumericPackages
-      );
+      WrapperBuilder.wrap(sampleContract).usingMockDataPackages(mockNumericPackages);
 
-    const timestamp =
-      await wrappedContract.extractTimestampFromRedstonePayload();
+    const timestamp = await wrappedContract.extractTimestampFromRedstonePayload();
 
     expect(timestamp).to.be.equal(DEFAULT_TIMESTAMP_FOR_TESTS);
   });
 
   it("Should revert if 2 timestamps are not equal", async () => {
-    const wrappedContract = WrapperBuilder.wrap(
-      sampleContract
-    ).usingMockDataPackages([
+    const wrappedContract = WrapperBuilder.wrap(sampleContract).usingMockDataPackages([
       getSimpleTestPackageWithTimestamp(DEFAULT_TIMESTAMP_FOR_TESTS),
       getSimpleTestPackageWithTimestamp(DEFAULT_TIMESTAMP_FOR_TESTS + 1),
     ]);
 
     await expect(
       wrappedContract.extractTimestampFromRedstonePayload()
-    ).to.be.revertedWithCustomError(
-      wrappedContract,
-      "DataPackageTimestampsMustBeEqual"
-    );
+    ).to.be.revertedWithCustomError(wrappedContract, "DataPackageTimestampsMustBeEqual");
   });
 
   it("Should revert if one of many timestamps is different", async () => {
-    const wrappedContract = WrapperBuilder.wrap(
-      sampleContract
-    ).usingMockDataPackages([
+    const wrappedContract = WrapperBuilder.wrap(sampleContract).usingMockDataPackages([
       getSimpleTestPackageWithTimestamp(DEFAULT_TIMESTAMP_FOR_TESTS),
       getSimpleTestPackageWithTimestamp(DEFAULT_TIMESTAMP_FOR_TESTS),
       getSimpleTestPackageWithTimestamp(DEFAULT_TIMESTAMP_FOR_TESTS),
@@ -66,9 +53,6 @@ describe("Extract Timestamp", function () {
 
     await expect(
       wrappedContract.extractTimestampFromRedstonePayload()
-    ).to.be.revertedWithCustomError(
-      wrappedContract,
-      "DataPackageTimestampsMustBeEqual"
-    );
+    ).to.be.revertedWithCustomError(wrappedContract, "DataPackageTimestampsMustBeEqual");
   });
 });

@@ -1,10 +1,6 @@
 import { RelayerConfig } from "../../config/RelayerConfig";
 import { makeDataPackagesRequestParams } from "../../core/make-data-packages-request-params";
-import {
-  IterationArgs,
-  MultiFeedUpdatePricesArgs,
-  ShouldUpdateContext,
-} from "../../types";
+import { IterationArgs, MultiFeedUpdatePricesArgs, ShouldUpdateContext } from "../../types";
 import { addExtraFeedsToUpdateParams } from "../gas-optimization/add-extra-feeds";
 import { shouldUpdateInMultiFeed } from "../should-update-in-multi-feed";
 
@@ -12,12 +8,8 @@ export const getMultiFeedIterationArgs = async (
   context: ShouldUpdateContext,
   relayerConfig: RelayerConfig
 ) => {
-  const {
-    dataFeedsToUpdate,
-    dataFeedsDeviationRatios,
-    heartbeatUpdates,
-    messages,
-  } = await shouldUpdateInMultiFeed(context, relayerConfig);
+  const { dataFeedsToUpdate, dataFeedsDeviationRatios, heartbeatUpdates, messages } =
+    await shouldUpdateInMultiFeed(context, relayerConfig);
 
   const updateRequestParams = makeDataPackagesRequestParams(
     relayerConfig,
@@ -52,9 +44,7 @@ function addExtraFeedsAndMessagesToUpdateParams(
 
   messages.push({
     message: "Data feeds that require update:",
-    args: [
-      [...(iterationArgs.args as MultiFeedUpdatePricesArgs).dataFeedsToUpdate],
-    ],
+    args: [[...(iterationArgs.args as MultiFeedUpdatePricesArgs).dataFeedsToUpdate]],
   });
 
   if (relayerConfig.includeAdditionalFeedsForGasOptimization) {
@@ -67,9 +57,7 @@ function addExtraFeedsAndMessagesToUpdateParams(
 
   messages.push({
     message: "Data feeds to be updated:",
-    args: [
-      [...(iterationArgs.args as MultiFeedUpdatePricesArgs).dataFeedsToUpdate],
-    ],
+    args: [[...(iterationArgs.args as MultiFeedUpdatePricesArgs).dataFeedsToUpdate]],
   });
 
   iterationArgs.additionalUpdateMessages = messages;

@@ -12,10 +12,7 @@ export type Eip1559Fee = {
 
 export type FeeStructure = Eip1559Fee | AuctionModelFee;
 
-export type GasOracleFn = (
-  opts: TxDeliveryOptsValidated,
-  attempt: number
-) => Promise<FeeStructure>;
+export type GasOracleFn = (opts: TxDeliveryOptsValidated, attempt: number) => Promise<FeeStructure>;
 
 export const NewestBlockTypeEnum = z.enum(["latest", "pending"]);
 export type NewestBlockType = z.infer<typeof NewestBlockTypeEnum>;
@@ -87,10 +84,7 @@ export type TxDeliveryOpts = {
   gasOracleTimeout?: number;
 };
 
-export type TxDeliveryOptsValidated = Omit<
-  Required<TxDeliveryOpts>,
-  "gasLimit"
-> & {
+export type TxDeliveryOptsValidated = Omit<Required<TxDeliveryOpts>, "gasLimit"> & {
   gasLimit?: number;
 };
 

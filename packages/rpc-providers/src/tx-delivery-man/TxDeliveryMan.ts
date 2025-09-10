@@ -1,13 +1,5 @@
-import {
-  TransactionReceipt,
-  TransactionResponse,
-} from "@ethersproject/providers";
-import {
-  loggerFactory,
-  RedstoneCommon,
-  sanitizeLogMessage,
-  Tx,
-} from "@redstone-finance/utils";
+import { TransactionReceipt, TransactionResponse } from "@ethersproject/providers";
+import { loggerFactory, RedstoneCommon, sanitizeLogMessage, Tx } from "@redstone-finance/utils";
 import { ethers, providers } from "ethers";
 import { getProviderNetworkInfo } from "../common";
 import { ProviderWithAgreement } from "../providers/ProviderWithAgreement";
@@ -26,10 +18,7 @@ const CONFIRMATION_COUNT = 1;
 
 export class TxDeliveryMan implements Tx.ITxDeliveryMan {
   private readonly providers: readonly providers.JsonRpcProvider[];
-  private readonly txDeliveriesInProgress = new Map<
-    providers.JsonRpcProvider,
-    boolean
-  >();
+  private readonly txDeliveriesInProgress = new Map<providers.JsonRpcProvider, boolean>();
 
   constructor(
     provider: TxDeliveryManSupportedProviders,
@@ -95,12 +84,7 @@ export class TxDeliveryMan implements Tx.ITxDeliveryMan {
     txDeliveryCall: Tx.TxDeliveryCall,
     deferredCallData?: () => Promise<string>
   ) {
-    const txDelivery = createTxDelivery(
-      provider,
-      this.signer,
-      this.opts,
-      deferredCallData
-    );
+    const txDelivery = createTxDelivery(provider, this.signer, this.opts, deferredCallData);
 
     const deliveryPromise = txDelivery
       .deliver(txDeliveryCall)
@@ -111,9 +95,7 @@ export class TxDeliveryMan implements Tx.ITxDeliveryMan {
     return deliveryPromise;
   }
 
-  async waitForTransaction(
-    deliveryPromises: Promise<TransactionResponse | undefined>[]
-  ) {
+  async waitForTransaction(deliveryPromises: Promise<TransactionResponse | undefined>[]) {
     const receipts = (
       await Promise.allSettled(
         deliveryPromises.map(async (txResponsePromise, index) => {
@@ -154,13 +136,8 @@ export class TxDeliveryMan implements Tx.ITxDeliveryMan {
 function extractProviders(
   provider: TxDeliveryManSupportedProviders
 ): readonly ethers.providers.JsonRpcProvider[] {
-  if (
-    provider instanceof ProviderWithFallback ||
-    provider instanceof ProviderWithAgreement
-  ) {
-    return Object.freeze(
-      provider.providers
-    ) as ethers.providers.JsonRpcProvider[];
+  if (provider instanceof ProviderWithFallback || provider instanceof ProviderWithAgreement) {
+    return Object.freeze(provider.providers) as ethers.providers.JsonRpcProvider[];
   }
   return Object.freeze([provider]);
 }
@@ -175,8 +152,7 @@ function createTxDelivery(
   return new TxDelivery(
     {
       ...opts,
-      logger: (msg) =>
-        logger.log(`RpcUrl=${sanitizeLogMessage(rpcUrl)}, ${msg}`),
+      logger: (msg) => logger.log(`RpcUrl=${sanitizeLogMessage(rpcUrl)}, ${msg}`),
     },
     signer,
     provider,

@@ -28,19 +28,11 @@ export async function sampleRun(
   );
 
   if (isMultiFeedContractAdapter(pricesAdapter)) {
-    await readFromMultiFeedPriceAdapter(
-      pricesAdapter,
-      paramsProvider,
-      blockNumber
-    );
+    await readFromMultiFeedPriceAdapter(pricesAdapter, paramsProvider, blockNumber);
   }
 
   if (isExtendedPricesContractAdapter(pricesAdapter)) {
-    await readFromExtendedPriceAdapter(
-      pricesAdapter,
-      paramsProvider,
-      blockNumber
-    );
+    await readFromExtendedPriceAdapter(pricesAdapter, paramsProvider, blockNumber);
   }
 
   if (ethFeedConnector) {
@@ -77,8 +69,7 @@ async function executePushModel(
   refreshStateCallback: () => Promise<void>
 ) {
   logHeader("Pushing values using classic model");
-  const deployHash =
-    await pricesAdapter.writePricesFromPayloadToContract(paramsProvider);
+  const deployHash = await pricesAdapter.writePricesFromPayloadToContract(paramsProvider);
 
   if (typeof deployHash === "string") {
     await pricesConnector.waitForTransaction(deployHash);
@@ -92,10 +83,7 @@ async function executePushModel(
   console.log(`Current block number: ${blockNumber}`);
 
   logHeader("Viewing values from contract");
-  const values = await pricesAdapter.readPricesFromContract(
-    paramsProvider,
-    blockNumber
-  );
+  const values = await pricesAdapter.readPricesFromContract(paramsProvider, blockNumber);
 
   console.log(`Values read from contract: ${values.map(convertValue)}`);
   const readTimestamp = await pricesAdapter.readTimestampFromContract(
@@ -115,10 +103,7 @@ async function readFromMultiFeedPriceAdapter(
 ) {
   console.log(
     `Price data: \n${describeContractData(
-      await pricesAdapter.readContractData(
-        paramsProvider.getDataFeedIds(),
-        blockNumber
-      )
+      await pricesAdapter.readContractData(paramsProvider.getDataFeedIds(), blockNumber)
     )}`
   );
 }
@@ -128,23 +113,19 @@ async function readFromExtendedPriceAdapter(
   paramsProvider: ContractParamsProvider,
   blockNumber: number
 ) {
-  const lastUpdateBlockTimestamp =
-    await pricesAdapter.readLatestUpdateBlockTimestamp(
-      paramsProvider.getDataFeedIds()[0],
-      blockNumber
-    );
+  const lastUpdateBlockTimestamp = await pricesAdapter.readLatestUpdateBlockTimestamp(
+    paramsProvider.getDataFeedIds()[0],
+    blockNumber
+  );
   console.log(
     `Last update block timestamp: ${lastUpdateBlockTimestamp} (${describeTimestamp(lastUpdateBlockTimestamp!)})`
   );
 
-  const uniqueSignerThreshold =
-    await pricesAdapter.getUniqueSignerThreshold(blockNumber);
+  const uniqueSignerThreshold = await pricesAdapter.getUniqueSignerThreshold(blockNumber);
   console.log(`Unique signer count: ${uniqueSignerThreshold}`);
 }
 
-async function readFromEthFeed(
-  ethFeedConnector: IContractConnector<IPriceFeedContractAdapter>
-) {
+async function readFromEthFeed(ethFeedConnector: IContractConnector<IPriceFeedContractAdapter>) {
   const feedAdapter = await ethFeedConnector.getAdapter();
 
   const description = feedAdapter.getDescription
@@ -154,13 +135,9 @@ async function readFromEthFeed(
 
   const { value, timestamp } = await feedAdapter.getPriceAndTimestamp();
 
-  const feedId = feedAdapter.getDataFeedId
-    ? await feedAdapter.getDataFeedId()
-    : "ETH";
+  const feedId = feedAdapter.getDataFeedId ? await feedAdapter.getDataFeedId() : "ETH";
 
-  console.log(
-    `${feedId} price: $${convertValue(value)} (${describeTimestamp(timestamp)})`
-  );
+  console.log(`${feedId} price: $${convertValue(value)} (${describeTimestamp(timestamp)})`);
 }
 
 export function convertValue(v: BigNumberish) {

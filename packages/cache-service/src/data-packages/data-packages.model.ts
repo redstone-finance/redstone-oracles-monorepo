@@ -61,8 +61,7 @@ export class CachedDataPackage {
   dataPackageId!: string;
 }
 
-export const DataPackageSchema =
-  SchemaFactory.createForClass(CachedDataPackage);
+export const DataPackageSchema = SchemaFactory.createForClass(CachedDataPackage);
 
 // Creating a compound mongoDB index to improve performance of the queries
 DataPackageSchema.index({

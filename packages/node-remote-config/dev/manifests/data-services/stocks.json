@@ -147,11 +147,7 @@
       ]
     },
     "COP": {
-      "source": [
-        "alphavantage-usd-reversed",
-        "financialmodelingprep-usd",
-        "twelve-data"
-      ]
+      "source": ["alphavantage-usd-reversed", "financialmodelingprep-usd", "twelve-data"]
     },
     "BBBY": {
       "source": ["twelve-data"]
@@ -280,13 +276,7 @@
       "source": ["twelve-data"]
     },
     "USDT": {
-      "source": [
-        "bitstamp-usd",
-        "coinbase-usd",
-        "coingecko",
-        "gate-usd",
-        "kraken-usd"
-      ]
+      "source": ["bitstamp-usd", "coinbase-usd", "coingecko", "gate-usd", "kraken-usd"]
     },
     "USDC": {
       "source": [

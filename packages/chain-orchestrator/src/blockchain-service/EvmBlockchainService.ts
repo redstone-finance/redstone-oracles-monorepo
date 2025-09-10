@@ -15,9 +15,7 @@ export class EvmBlockchainService implements IBlockchainService {
     return new Date((blockData?.timestamp || 0) * 1000);
   }
 
-  async getReceiptForTransaction(tx: {
-    hash?: string;
-  }): Promise<providers.TransactionReceipt> {
+  async getReceiptForTransaction(tx: { hash?: string }): Promise<providers.TransactionReceipt> {
     return await this.provider.getTransactionReceipt(tx.hash!);
   }
 

@@ -31,12 +31,7 @@ const parseTransaction = (transaction: BytesLike) => {
 };
 
 const pickGasAndNonceFieldsOfTx = (transaction: Transaction) =>
-  _.pick(transaction, [
-    "nonce",
-    "maxFeePerGas",
-    "maxPriorityFeePerGas",
-    "gasLimit",
-  ]);
+  _.pick(transaction, ["nonce", "maxFeePerGas", "maxPriorityFeePerGas", "gasLimit"]);
 
 const parseTxForComparison = (transaction: BytesLike) =>
   pickGasAndNonceFieldsOfTx(parseTransaction(transaction));
@@ -89,15 +84,10 @@ describe("TxDelivery", () => {
         },
         counter.signer,
         counter.provider as ethers.providers.JsonRpcProvider,
-        () =>
-          counter.populateTransaction["incBy"](count++).then(
-            (call) => call.data as string
-          )
+        () => counter.populateTransaction["incBy"](count++).then((call) => call.data as string)
       );
 
-      const call = convertToTxDeliveryCall(
-        await counter.populateTransaction["incBy"](count)
-      );
+      const call = convertToTxDeliveryCall(await counter.populateTransaction["incBy"](count));
       await delivery.deliver(call);
 
       expect(await counter.getCount()).to.eq(1);
@@ -116,17 +106,10 @@ describe("TxDelivery", () => {
         },
         counter.signer,
         counter.provider as ethers.providers.JsonRpcProvider,
-        () =>
-          counter.populateTransaction["incBy"](count + 1).then(
-            (call) => call.data as string
-          )
+        () => counter.populateTransaction["incBy"](count + 1).then((call) => call.data as string)
       );
       // to enforce sending two transactions
-      const getNonceStub = Sinon.stub()
-        .onFirstCall()
-        .returns(1)
-        .onSecondCall()
-        .returns(1);
+      const getNonceStub = Sinon.stub().onFirstCall().returns(1).onSecondCall().returns(1);
 
       const sendTransactionStub = Sinon.stub();
       sendTransactionStub.callsFake(hardhat.ethers.provider.sendTransaction);
@@ -136,19 +119,13 @@ describe("TxDelivery", () => {
         sendTransaction: sendTransactionStub,
       });
 
-      const call = convertToTxDeliveryCall(
-        await counter.populateTransaction["incBy"](count)
-      );
+      const call = convertToTxDeliveryCall(await counter.populateTransaction["incBy"](count));
 
       await delivery.deliver(call);
 
       // on position 161 is placed count param in transaction
-      expect((sendTransactionStub.getCalls()[0].firstArg as string)[161]).to.eq(
-        "8"
-      );
-      expect((sendTransactionStub.getCalls()[1].firstArg as string)[161]).to.eq(
-        "9"
-      );
+      expect((sendTransactionStub.getCalls()[0].firstArg as string)[161]).to.eq("8");
+      expect((sendTransactionStub.getCalls()[1].firstArg as string)[161]).to.eq("9");
     });
 
     it("should increase maxGas if transaction failed", async () => {
@@ -159,9 +136,7 @@ describe("TxDelivery", () => {
 
       const sendStub = Sinon.stub();
       sendStub.onFirstCall().rejects(underpricedError);
-      sendStub
-        .onSecondCall()
-        .callsFake(hardhat.ethers.provider.sendTransaction);
+      sendStub.onSecondCall().callsFake(hardhat.ethers.provider.sendTransaction);
       providerMocker.set({ sendTransaction: sendStub });
 
       await assertTxWillBeDelivered(delivery, counter);
@@ -221,9 +196,7 @@ describe("TxDelivery", () => {
       sendStub.onSecondCall().rejects(underpricedError);
       providerMocker.set({ sendTransaction: sendStub });
 
-      const call = convertToTxDeliveryCall(
-        await counter.populateTransaction["inc"]()
-      );
+      const call = convertToTxDeliveryCall(await counter.populateTransaction["inc"]());
 
       await expect(delivery.deliver(call)).rejectedWith();
     });
@@ -236,9 +209,7 @@ describe("TxDelivery", () => {
 
       const sendStub = Sinon.stub();
       sendStub.onFirstCall().rejects(underpricedError);
-      sendStub
-        .onSecondCall()
-        .callsFake(hardhat.ethers.provider.sendTransaction);
+      sendStub.onSecondCall().callsFake(hardhat.ethers.provider.sendTransaction);
       providerMocker.set({ sendTransaction: sendStub });
 
       await assertTxWillBeDelivered(delivery, counter);
@@ -267,18 +238,12 @@ describe("TxDelivery", () => {
 
       const sendStub = Sinon.stub();
       sendStub.onFirstCall().rejects(underpricedError);
-      sendStub
-        .onSecondCall()
-        .callsFake(hardhat.ethers.provider.sendTransaction);
+      sendStub.onSecondCall().callsFake(hardhat.ethers.provider.sendTransaction);
       providerMocker.set({ sendTransaction: sendStub });
 
       await assertTxWillBeDelivered(delivery, counter);
       expect(
-        _.pick(parseTransaction(sendStub.firstCall.args[0]), [
-          "nonce",
-          "gasLimit",
-          "gasPrice",
-        ])
+        _.pick(parseTransaction(sendStub.firstCall.args[0]), ["nonce", "gasLimit", "gasPrice"])
       ).to.deep.equal({
         nonce: 1,
         gasLimit: "210000",
@@ -286,11 +251,7 @@ describe("TxDelivery", () => {
       });
 
       expect(
-        _.pick(parseTransaction(sendStub.secondCall.args[0]), [
-          "nonce",
-          "gasLimit",
-          "gasPrice",
-        ])
+        _.pick(parseTransaction(sendStub.secondCall.args[0]), ["nonce", "gasLimit", "gasPrice"])
       ).to.deep.equal({
         nonce: 1,
         gasLimit: "210000",
@@ -305,9 +266,7 @@ async function assertTxWillBeDelivered(
   counter: Counter,
   expectedCounterValue = 1
 ) {
-  const call = convertToTxDeliveryCall(
-    await counter.populateTransaction["inc"]()
-  );
+  const call = convertToTxDeliveryCall(await counter.populateTransaction["inc"]());
   await delivery.deliver(call);
   expect(await counter.getCount()).to.eq(expectedCounterValue);
 }

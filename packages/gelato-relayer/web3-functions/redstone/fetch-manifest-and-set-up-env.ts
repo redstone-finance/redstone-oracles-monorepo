@@ -1,7 +1,4 @@
-import {
-  fetchOrParseManifest,
-  OnChainRelayerEnv,
-} from "@redstone-finance/on-chain-relayer";
+import { fetchOrParseManifest, OnChainRelayerEnv } from "@redstone-finance/on-chain-relayer";
 import { IterationArgsProviderEnv } from "../IterationArgsProviderInterface";
 
 const NOT_NEEDED_FOR_GELATO = "Not needed for Gelato";
@@ -32,10 +29,7 @@ const EMPTY_GELATO_ENV: OnChainRelayerEnv = {
 };
 
 export async function fetchManifestAndSetUpEnv(env: IterationArgsProviderEnv) {
-  const manifest = await fetchOrParseManifest(
-    env.manifestUrls,
-    env.localManifestData
-  );
+  const manifest = await fetchOrParseManifest(env.manifestUrls, env.localManifestData);
 
   const relayerEnv: OnChainRelayerEnv = {
     ...EMPTY_GELATO_ENV,

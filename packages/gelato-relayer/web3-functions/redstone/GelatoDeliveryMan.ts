@@ -12,9 +12,7 @@ export class GelatoDeliveryMan implements Tx.ITxDeliveryMan {
     if (!!txDeliveryCall.data && txDeliveryCall.data !== "0x") {
       return GelatoDeliveryMan.canExec(txDeliveryCall);
     } else {
-      return GelatoDeliveryMan.shouldNotExec(
-        `Wrong transaction data: '${txDeliveryCall.data}'`
-      );
+      return GelatoDeliveryMan.shouldNotExec(`Wrong transaction data: '${txDeliveryCall.data}'`);
     }
   }
 
@@ -22,9 +20,7 @@ export class GelatoDeliveryMan implements Tx.ITxDeliveryMan {
     return { canExec: false, message };
   }
 
-  private static canExec(
-    txDeliveryCall: Tx.TxDeliveryCall
-  ): Web3FunctionResult {
+  private static canExec(txDeliveryCall: Tx.TxDeliveryCall): Web3FunctionResult {
     return {
       canExec: true,
       callData: [{ data: txDeliveryCall.data, to: txDeliveryCall.to }],
@@ -42,10 +38,6 @@ export class GelatoDeliveryMan implements Tx.ITxDeliveryMan {
   doNotDeliver() {
     this.logger.emitMessages();
 
-    this.resolve(
-      GelatoDeliveryMan.shouldNotExec(
-        this.logger.getMainMessage() ?? "Unknown reason"
-      )
-    );
+    this.resolve(GelatoDeliveryMan.shouldNotExec(this.logger.getMainMessage() ?? "Unknown reason"));
   }
 }

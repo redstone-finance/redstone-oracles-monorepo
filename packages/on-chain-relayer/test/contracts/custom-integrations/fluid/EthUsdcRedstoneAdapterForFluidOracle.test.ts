@@ -3,10 +3,7 @@ import { WrapperBuilder } from "@redstone-finance/evm-connector";
 import chai, { expect } from "chai";
 import chaiAsPromised from "chai-as-promised";
 import { ethers } from "hardhat";
-import {
-  FluidMock,
-  FluidOracleRedstoneAdapterMock,
-} from "../../../../typechain-types";
+import { FluidMock, FluidOracleRedstoneAdapterMock } from "../../../../typechain-types";
 import { describeCommonPriceFeedsAdapterTests } from "../../price-feeds/common/price-feeds-adapter-utils";
 
 chai.use(chaiAsPromised);
@@ -26,8 +23,7 @@ describe("EthUsdcRedstoneAdapterForFluidOracle", () => {
 
     beforeEach(async () => {
       // Deploy a new adapter contract
-      const adapterContractFactory =
-        await ethers.getContractFactory(adapterContractName);
+      const adapterContractFactory = await ethers.getContractFactory(adapterContractName);
       adapterContract = await adapterContractFactory.deploy();
     });
 
@@ -41,9 +37,7 @@ describe("EthUsdcRedstoneAdapterForFluidOracle", () => {
       const currentBlockTime = await time.latest();
       const nextBlockTime = currentBlockTime + 1;
 
-      const wrappedContract = WrapperBuilder.wrap(
-        adapterContract
-      ).usingSimpleNumericMock({
+      const wrappedContract = WrapperBuilder.wrap(adapterContract).usingSimpleNumericMock({
         timestampMilliseconds: nextBlockTime * 1000,
         dataPoints: [{ dataFeedId: "ETH/USDC", value: 42 }],
         mockSignersCount: 2,

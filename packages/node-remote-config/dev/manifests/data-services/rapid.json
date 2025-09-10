@@ -49,13 +49,7 @@
       ]
     },
     "USDT": {
-      "source": [
-        "bitstamp-usd",
-        "coinbase-usd",
-        "coingecko",
-        "gate-usd",
-        "kraken-usd"
-      ]
+      "source": ["bitstamp-usd", "coinbase-usd", "coingecko", "gate-usd", "kraken-usd"]
     },
     "BNB": {
       "source": [

@@ -18,9 +18,7 @@ export type UpdatePricesOptions = {
 
 export abstract class ContractFacade {
   private readonly logger = loggerFactory("contract-facade");
-  private readonly getUniqueSignerThresholdMemoized: (
-    blockTag?: number
-  ) => Promise<number>;
+  private readonly getUniqueSignerThresholdMemoized: (blockTag?: number) => Promise<number>;
 
   constructor(
     protected readonly connector: IContractConnector<
@@ -32,8 +30,7 @@ export abstract class ContractFacade {
     protected cache?: DataPackagesResponseCache
   ) {
     this.getUniqueSignerThresholdMemoized = RedstoneCommon.memoize({
-      functionToMemoize: (blockTag?: number) =>
-        this.getUniqueSignerThresholdFromContract(blockTag),
+      functionToMemoize: (blockTag?: number) => this.getUniqueSignerThresholdFromContract(blockTag),
       ttl: opts.uniqueSignerThresholdCacheTtlMs,
       cacheReporter: (isMissing: boolean) =>
         isMissing
@@ -49,20 +46,15 @@ export abstract class ContractFacade {
     withDataFeedValues: boolean
   ): Promise<ContractData>;
 
-  async getShouldUpdateContext(
-    relayerConfig: RelayerConfig
-  ): Promise<ShouldUpdateContext> {
+  async getShouldUpdateContext(relayerConfig: RelayerConfig): Promise<ShouldUpdateContext> {
     const { blockTag, uniqueSignerThreshold, dataFromContract } =
       await this.getContractData(relayerConfig);
 
-    const requestParams = makeDataPackagesRequestParams(
-      relayerConfig,
-      uniqueSignerThreshold
-    );
+    const requestParams = makeDataPackagesRequestParams(relayerConfig, uniqueSignerThreshold);
 
-    const dataPackages = await this.getContractParamsProvider(
-      requestParams
-    ).requestDataPackages(this.cache?.isEmpty());
+    const dataPackages = await this.getContractParamsProvider(requestParams).requestDataPackages(
+      this.cache?.isEmpty()
+    );
 
     return {
       dataPackages,
@@ -84,8 +76,7 @@ export abstract class ContractFacade {
       ContractFacade.getContractDataOpts(relayerConfig);
 
     if (canOmitFetchingDataFromContract) {
-      const uniqueSignerThreshold =
-        await this.getUniqueSignerThresholdMemoized();
+      const uniqueSignerThreshold = await this.getUniqueSignerThresholdMemoized();
 
       return {
         blockTag: 0,
@@ -97,11 +88,7 @@ export abstract class ContractFacade {
     const blockTag = await this.getBlockNumber();
     const [uniqueSignerThreshold, dataFromContract] = await Promise.all([
       this.getUniqueSignerThresholdMemoized(blockTag),
-      this.getLatestRoundContractData(
-        dataFeeds,
-        blockTag,
-        shouldCheckValueDeviation
-      ),
+      this.getLatestRoundContractData(dataFeeds, blockTag, shouldCheckValueDeviation),
     ]);
 
     return { blockTag, uniqueSignerThreshold, dataFromContract };
@@ -113,17 +100,11 @@ export abstract class ContractFacade {
     ).getUniqueSignerThreshold(blockTag ?? (await this.getBlockNumber()));
   }
 
-  async updatePrices(
-    args: UpdatePricesArgs,
-    options?: UpdatePricesOptions
-  ): Promise<void> {
+  async updatePrices(args: UpdatePricesArgs, options?: UpdatePricesOptions): Promise<void> {
     const adapter = await this.connector.getAdapter();
 
     const result = await adapter.writePricesFromPayloadToContract(
-      this.getContractParamsProvider(
-        args.updateRequestParams,
-        args.dataFeedsToUpdate
-      ),
+      this.getContractParamsProvider(args.updateRequestParams, args.dataFeedsToUpdate),
       options
     );
 
@@ -132,9 +113,7 @@ export abstract class ContractFacade {
       this.connector
         .waitForTransaction(result)
         .then((_) => {})
-        .catch((error) =>
-          this.logger.error(RedstoneCommon.stringifyError(error))
-        );
+        .catch((error) => this.logger.error(RedstoneCommon.stringifyError(error)));
     }
   }
 
@@ -146,10 +125,7 @@ export abstract class ContractFacade {
   }
 
   static getContractDataOpts(
-    relayerConfig: Pick<
-      RelayerConfig,
-      "dataFeeds" | "updateConditions" | "updateTriggers"
-    >
+    relayerConfig: Pick<RelayerConfig, "dataFeeds" | "updateConditions" | "updateTriggers">
   ) {
     const { updateConditions, dataFeeds, updateTriggers } = relayerConfig;
 
@@ -158,10 +134,7 @@ export abstract class ContractFacade {
     );
     const canOmitFetchingDataFromContract =
       !shouldCheckValueDeviation &&
-      dataFeeds.every(
-        (feedId) =>
-          updateTriggers[feedId].timeSinceLastUpdateInMilliseconds === 0
-      );
+      dataFeeds.every((feedId) => updateTriggers[feedId].timeSinceLastUpdateInMilliseconds === 0);
 
     return { shouldCheckValueDeviation, canOmitFetchingDataFromContract };
   }

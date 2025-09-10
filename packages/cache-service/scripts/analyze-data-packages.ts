@@ -2,11 +2,7 @@ import { consts } from "@redstone-finance/protocol";
 import { MathUtils } from "@redstone-finance/utils";
 import mongoose from "mongoose";
 import config from "../src/config";
-import {
-  formatTime,
-  groupDataPackagesByField,
-  queryDataPackages,
-} from "./common";
+import { formatTime, groupDataPackagesByField, queryDataPackages } from "./common";
 
 // USAGE: yarn run-ts scripts/analyze-data-packages.ts
 
@@ -51,17 +47,10 @@ async function main() {
     dataFeedId: consts.ALL_FEEDS_KEY,
     dataServiceId: DATA_SERVICE_ID,
   });
-  const dataPackagesBySigner = groupDataPackagesByField(
-    dataPackages,
-    "signerAddress"
-  );
-  for (const [signerAddress, dataPackages] of Object.entries(
-    dataPackagesBySigner
-  )) {
+  const dataPackagesBySigner = groupDataPackagesByField(dataPackages, "signerAddress");
+  for (const [signerAddress, dataPackages] of Object.entries(dataPackagesBySigner)) {
     console.log(`\n\n\n==== ${signerAddress} ====`);
-    dataPackages.sort(
-      (a, b) => b.timestampMilliseconds - a.timestampMilliseconds
-    );
+    dataPackages.sort((a, b) => b.timestampMilliseconds - a.timestampMilliseconds);
 
     let lastTimestamp = 0;
     const prevValues: { [id: string]: string | number } = {};
@@ -83,8 +72,7 @@ async function main() {
 
       if (dataPackage.dataPoints.length < EXPECTED_DATA_FEEDS.length) {
         const missingDataFeeds = EXPECTED_DATA_FEEDS.filter(
-          (dataFeedId) =>
-            !dataPackage.dataPoints.some((dp) => dp.dataFeedId === dataFeedId)
+          (dataFeedId) => !dataPackage.dataPoints.some((dp) => dp.dataFeedId === dataFeedId)
         );
         console.log("Missing data feeds: " + missingDataFeeds.join(","));
       }

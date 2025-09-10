@@ -13,11 +13,7 @@ export class SuiPricesContractReader {
   static createMultiReader(client: SuiClient, priceAdapterObjectId: string) {
     return MultiExecutor.createForSubInstances(
       client,
-      (client) =>
-        new SuiPricesContractReader(
-          new SuiReader(client),
-          priceAdapterObjectId
-        ),
+      (client) => new SuiPricesContractReader(new SuiReader(client), priceAdapterObjectId),
       {},
       {
         ...MultiExecutor.DEFAULT_CONFIG,
@@ -37,14 +33,8 @@ export class SuiPricesContractReader {
     return PriceAdapterDataContent.parse(content);
   }
 
-  async getContractDataFromPricesTable(
-    pricesTableId: string,
-    blockNumber?: number
-  ) {
-    const parsedResults = await this.getPriceDataContent(
-      pricesTableId,
-      blockNumber
-    );
+  async getContractDataFromPricesTable(pricesTableId: string, blockNumber?: number) {
+    const parsedResults = await this.getPriceDataContent(pricesTableId, blockNumber);
 
     const contractData = parsedResults.map((data) => [
       ContractParamsProvider.unhexlifyFeedId(data.feed_id),
@@ -58,15 +48,10 @@ export class SuiPricesContractReader {
     return Object.fromEntries(contractData) as ContractData;
   }
 
-  private async getPriceDataContent(
-    pricesTableId: string,
-    blockNumber?: number
-  ) {
+  private async getPriceDataContent(pricesTableId: string, blockNumber?: number) {
     const ids = await this.suiReader.getObjectIds(pricesTableId);
     const values = await Promise.all(
-      ids.map((input) =>
-        this.suiReader.fetchObjectDataContent(input, blockNumber)
-      )
+      ids.map((input) => this.suiReader.fetchObjectDataContent(input, blockNumber))
     );
 
     return values.map((data) => PriceDataContent.parse(data).value);

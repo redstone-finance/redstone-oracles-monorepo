@@ -1,9 +1,5 @@
 import { JsonRpcProvider } from "@ethersproject/providers";
-import {
-  isEvmNetworkId,
-  loggerFactory,
-  RedstoneCommon,
-} from "@redstone-finance/utils";
+import { isEvmNetworkId, loggerFactory, RedstoneCommon } from "@redstone-finance/utils";
 import axios from "axios";
 import { randomUUID } from "crypto";
 import { providers, Signer, Transaction } from "ethers";
@@ -33,9 +29,7 @@ export const updateUsingOevAuction = async (
 
   const { id, error, result } = auctionResponse;
   if (result) {
-    logger.info(
-      `Received signed oev id: ${id}, transactions count: ${result.length}`
-    );
+    logger.info(`Received signed oev id: ${id}, transactions count: ${result.length}`);
   } else {
     if (error?.message?.includes("no solver operations received")) {
       throw new Error(`No solver operations received`);
@@ -45,15 +39,10 @@ export const updateUsingOevAuction = async (
   }
 
   const verificationTimeout =
-    relayerConfig.oevAuctionVerificationTimeout ??
-    1.5 * relayerConfig.getBlockNumberTimeout;
+    relayerConfig.oevAuctionVerificationTimeout ?? 1.5 * relayerConfig.getBlockNumberTimeout;
 
   const verificationPromises = result.map((tx) =>
-    verifyFastlaneResponse(
-      adapterContract.provider as providers.JsonRpcProvider,
-      tx,
-      relayerConfig
-    )
+    verifyFastlaneResponse(adapterContract.provider as providers.JsonRpcProvider, tx, relayerConfig)
   );
 
   await RedstoneCommon.timeout(
@@ -114,9 +103,7 @@ const runOevAuction = async (
     return response.data;
   } catch (error) {
     logOevAuctionError(error);
-    throw new Error(
-      `OEV auction failed: ${RedstoneCommon.stringifyError(error)}`
-    );
+    throw new Error(`OEV auction failed: ${RedstoneCommon.stringifyError(error)}`);
   }
 };
 
@@ -128,32 +115,20 @@ const verifyFastlaneResponse = async (
   const decodedTx = parseTransaction(tx);
   logger.log(`Decoded transaction from FastLane: ${JSON.stringify(decodedTx)}`);
   void tryToPropagateTransaction(provider, tx);
-  const waitForTransactionToMintPromise = waitForTransactionMint(
-    provider,
-    decodedTx
-  ).catch((error) => {
-    logger.log(
-      `Failed to wait for transaction mint: ${RedstoneCommon.stringifyError(error)}`
-    );
-    throw error;
-  });
-  const checkGasPricePromise = verifyGasPrice(
-    relayerConfig,
-    provider,
-    decodedTx
-  ).catch((error) => {
-    logger.log(
-      `Failed to verify gas price: ${RedstoneCommon.stringifyError(error)}`
-    );
+  const waitForTransactionToMintPromise = waitForTransactionMint(provider, decodedTx).catch(
+    (error) => {
+      logger.log(`Failed to wait for transaction mint: ${RedstoneCommon.stringifyError(error)}`);
+      throw error;
+    }
+  );
+  const checkGasPricePromise = verifyGasPrice(relayerConfig, provider, decodedTx).catch((error) => {
+    logger.log(`Failed to verify gas price: ${RedstoneCommon.stringifyError(error)}`);
     throw error;
   });
   await Promise.all([waitForTransactionToMintPromise, checkGasPricePromise]);
 };
 
-const tryToPropagateTransaction = async (
-  provider: providers.JsonRpcProvider,
-  tx: string
-) => {
+const tryToPropagateTransaction = async (provider: providers.JsonRpcProvider, tx: string) => {
   try {
     await provider.sendTransaction(tx);
   } catch (e) {
@@ -173,9 +148,7 @@ const waitForTransactionMint = async (
   if (receipt.status !== 1) {
     throw new Error(`Fastlane transaction failed after ${Date.now() - start}`);
   } else {
-    logger.log(
-      `OEV transaction: ${decodedTx.hash} minted, took: ${Date.now() - start}ms`
-    );
+    logger.log(`OEV transaction: ${decodedTx.hash} minted, took: ${Date.now() - start}ms`);
   }
 };
 
@@ -204,8 +177,6 @@ const logOevAuctionError = (error: unknown) => {
   ) {
     logger.log("No bids in OEV auction");
   } else {
-    logger.error(
-      `OEV auction failed with unknown error: ${RedstoneCommon.stringifyError(error)}`
-    );
+    logger.error(`OEV auction failed with unknown error: ${RedstoneCommon.stringifyError(error)}`);
   }
 };

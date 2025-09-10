@@ -1,14 +1,7 @@
-import {
-  getChainConfigByNetworkId,
-  getLocalChainConfigs,
-} from "@redstone-finance/chain-configs";
+import { getChainConfigByNetworkId, getLocalChainConfigs } from "@redstone-finance/chain-configs";
 import { ManifestReading } from "@redstone-finance/on-chain-relayer-common";
 import { MegaProviderBuilder } from "@redstone-finance/rpc-providers";
-import {
-  isEvmNetworkId,
-  NetworkId,
-  RedstoneCommon,
-} from "@redstone-finance/utils";
+import { isEvmNetworkId, NetworkId, RedstoneCommon } from "@redstone-finance/utils";
 import { expect } from "chai";
 import { Bytes, Contract, ContractFunction, providers, utils } from "ethers";
 import { describe, test } from "mocha";
@@ -79,9 +72,7 @@ const checkDataFeedIdInContract = async (
       fn: () => (contract.getDataFeedId as ContractFunction<Bytes>)(),
       ...RETRY_CONFIG,
     })();
-    const dataFeedIdFromContract = utils.parseBytes32String(
-      dataFeedIdFromContractAsBytes
-    );
+    const dataFeedIdFromContract = utils.parseBytes32String(dataFeedIdFromContractAsBytes);
     if (dataFeedId === dataFeedIdFromContract) {
       return true;
     } else {
@@ -91,9 +82,7 @@ const checkDataFeedIdInContract = async (
       return false;
     }
   } catch (e) {
-    console.log(
-      `contract.getFeedId failed with error: ${RedstoneCommon.stringifyError(e)}`
-    );
+    console.log(`contract.getFeedId failed with error: ${RedstoneCommon.stringifyError(e)}`);
     return false;
   }
 };
@@ -103,23 +92,12 @@ if (process.env.RUN_NONDETERMINISTIC_TESTS) {
     const classicManifests = ManifestReading.readClassicManifests();
     for (const [name, manifest] of Object.entries(classicManifests)) {
       test(name, async () => {
-        for (const [dataFeedId, priceFeedAddress] of Object.entries(
-          manifest.priceFeeds
-        )) {
-          const disabledNetworks = (process.env.DISABLED_NETWORKS ??
-            []) as NetworkId[];
+        for (const [dataFeedId, priceFeedAddress] of Object.entries(manifest.priceFeeds)) {
+          const disabledNetworks = (process.env.DISABLED_NETWORKS ?? []) as NetworkId[];
 
-          if (
-            priceFeedAddress !== "__NO_FEED__" &&
-            disabledNetworks.includes(manifest.chain.id)
-          ) {
-            expect(
-              await checkDataFeedIdInContract(
-                dataFeedId,
-                priceFeedAddress,
-                manifest.chain.id
-              )
-            ).to.be.true;
+          if (priceFeedAddress !== "__NO_FEED__" && disabledNetworks.includes(manifest.chain.id)) {
+            expect(await checkDataFeedIdInContract(dataFeedId, priceFeedAddress, manifest.chain.id))
+              .to.be.true;
           }
         }
       });
@@ -131,23 +109,12 @@ if (process.env.RUN_NONDETERMINISTIC_TESTS) {
         continue;
       }
       test(name, async () => {
-        for (const [dataFeedId, { priceFeedAddress }] of Object.entries(
-          manifest.priceFeeds
-        )) {
-          const disabledNetworks = (process.env.DISABLED_NETWORKS ??
-            []) as NetworkId[];
+        for (const [dataFeedId, { priceFeedAddress }] of Object.entries(manifest.priceFeeds)) {
+          const disabledNetworks = (process.env.DISABLED_NETWORKS ?? []) as NetworkId[];
 
-          if (
-            priceFeedAddress &&
-            disabledNetworks.includes(manifest.chain.id)
-          ) {
-            expect(
-              await checkDataFeedIdInContract(
-                dataFeedId,
-                priceFeedAddress,
-                manifest.chain.id
-              )
-            ).to.be.true;
+          if (priceFeedAddress && disabledNetworks.includes(manifest.chain.id)) {
+            expect(await checkDataFeedIdInContract(dataFeedId, priceFeedAddress, manifest.chain.id))
+              .to.be.true;
           }
         }
       });

@@ -32,15 +32,10 @@ export class AnchorReadonlyProvider implements Provider {
       replaceRecentBlockhash: true,
       commitment,
     };
-    const result = await this.connection.simulateTransaction(
-      versionedTransaction,
-      options
-    );
+    const result = await this.connection.simulateTransaction(versionedTransaction, options);
 
     if (result.value.err) {
-      throw new Error(
-        `Simulation failed: ${RedstoneCommon.stringifyError(result.value.err)}`
-      );
+      throw new Error(`Simulation failed: ${RedstoneCommon.stringifyError(result.value.err)}`);
     }
     return result.value;
   }
@@ -50,14 +45,9 @@ export class AnchorReadonlyProvider implements Provider {
       return tx;
     }
 
-    tx.recentBlockhash = await getRecentBlockhash(
-      this.client,
-      "getVersionedTransaction"
-    );
+    tx.recentBlockhash = await getRecentBlockhash(this.client, "getVersionedTransaction");
     tx.feePayer = await this.findSomeAccountWithSol();
-    const instructions = TransactionMessage.decompile(
-      tx.compileMessage()
-    ).instructions;
+    const instructions = TransactionMessage.decompile(tx.compileMessage()).instructions;
 
     const messageV0 = new TransactionMessage({
       payerKey: tx.feePayer,

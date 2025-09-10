@@ -16,17 +16,12 @@ const YEAR_IN_SECONDS = 3600 * 24 * 365;
 const fromPercent = (percent: number) => percent * 1e2;
 
 const createContract = async () => {
-  const contract = (await ethers.deployContract(
-    "MockCappedPriceFeed"
-  )) as MockCappedPriceFeed;
+  const contract = (await ethers.deployContract("MockCappedPriceFeed")) as MockCappedPriceFeed;
   return contract;
 };
 
 const getMarketPriceFeed = async (contract: MockCappedPriceFeed) => {
-  return await ethers.getContractAt(
-    "MockMarketPriceFeed",
-    await contract.getMarketPriceFeed()
-  );
+  return await ethers.getContractAt("MockMarketPriceFeed", await contract.getMarketPriceFeed());
 };
 
 const initContract = async (
@@ -44,11 +39,7 @@ const createAndInitContract = async (
   maxMarketDeviationPercent: number = 10e2 // 10%
 ) => {
   const contract = await createContract();
-  await initContract(
-    contract,
-    maxYearlyRatioGrowthPercent,
-    maxMarketDeviationPercent
-  );
+  await initContract(contract, maxYearlyRatioGrowthPercent, maxMarketDeviationPercent);
   return contract;
 };
 
@@ -82,9 +73,7 @@ describe("CappedPriceFeed", () => {
     it("should fail to set cap parameters with too small value", async () => {
       const contract = await createAndInitContract();
       await expect(
-        contract
-          .connect(PARAM_SETTER.connect(contract.provider))
-          .setCapParameters(0, 0)
+        contract.connect(PARAM_SETTER.connect(contract.provider)).setCapParameters(0, 0)
       ).to.revertedWithCustomError(contract, "PercentValueOutOfRange");
     });
 
@@ -102,9 +91,10 @@ describe("CappedPriceFeed", () => {
     it("should FAIL to transfer ownership NOT authorized by current owner", async () => {
       const contract = await createAndInitContract();
       const [_, newOwner] = await ethers.getSigners();
-      await expect(
-        contract.transferParamSetterRole(newOwner.address)
-      ).revertedWithCustomError(contract, "CallerIsNotParamSetter");
+      await expect(contract.transferParamSetterRole(newOwner.address)).revertedWithCustomError(
+        contract,
+        "CallerIsNotParamSetter"
+      );
     });
 
     it("should FAIL to transfer ownership to 0 address ", async () => {
@@ -118,16 +108,15 @@ describe("CappedPriceFeed", () => {
 
     it("should allow to set params to new values", async () => {
       const contract = await createAndInitContract();
-      await contract
-        .connect(PARAM_SETTER.connect(contract.provider))
-        .setCapParameters(1e4, 1e4);
+      await contract.connect(PARAM_SETTER.connect(contract.provider)).setCapParameters(1e4, 1e4);
     });
 
     it("should FAIL to set cap parameters, from unauthorized address", async () => {
       const contract = await createAndInitContract();
-      await expect(
-        contract.setCapParameters(1e4, 1e4)
-      ).to.revertedWithCustomError(contract, "CallerIsNotParamSetter");
+      await expect(contract.setCapParameters(1e4, 1e4)).to.revertedWithCustomError(
+        contract,
+        "CallerIsNotParamSetter"
+      );
     });
   });
 
@@ -253,53 +242,38 @@ describe("CappedPriceFeed", () => {
 
         await marketPriceFeed.setAnswer(test.marketRatio);
         await cappedPriceFeed.setFundamentalRatio(test.fundamentalRatio);
-        expect(
-          await cappedPriceFeed.getFundamentalRatioDeviationFromMarketRatio()
-        ).to.eq(test.deviation);
+        expect(await cappedPriceFeed.getFundamentalRatioDeviationFromMarketRatio()).to.eq(
+          test.deviation
+        );
       });
     }
 
     it("should return false when maxMarketDeviationPercent is crossed", async () => {
-      const cappedPriceFeed = await createAndInitContract(
-        fromPercent(10),
-        fromPercent(49)
-      );
+      const cappedPriceFeed = await createAndInitContract(fromPercent(10), fromPercent(49));
       const marketPriceFeed = await getMarketPriceFeed(cappedPriceFeed);
 
       await marketPriceFeed.setAnswer(2);
       await cappedPriceFeed.setFundamentalRatio(1);
-      expect(
-        await cappedPriceFeed.getFundamentalRatioDeviationFromMarketRatio()
-      ).to.eq(fromPercent(-50));
+      expect(await cappedPriceFeed.getFundamentalRatioDeviationFromMarketRatio()).to.eq(
+        fromPercent(-50)
+      );
 
-      expect(
-        await cappedPriceFeed.isFundamentalRatioCloseToMarketRatio()
-      ).to.eq(false);
+      expect(await cappedPriceFeed.isFundamentalRatioCloseToMarketRatio()).to.eq(false);
 
       await expect(
         cappedPriceFeed.latestAnswerIfRatioCloseToMarketRatio()
-      ).to.revertedWithCustomError(
-        cappedPriceFeed,
-        "FundamentalRatioDivergedFromMarketRatio"
-      );
+      ).to.revertedWithCustomError(cappedPriceFeed, "FundamentalRatioDivergedFromMarketRatio");
     });
 
     it("should return true when maxMarketDeviationPercent is NOT crossed", async () => {
-      const cappedPriceFeed = await createAndInitContract(
-        fromPercent(10),
-        fromPercent(49)
-      );
+      const cappedPriceFeed = await createAndInitContract(fromPercent(10), fromPercent(49));
       const marketPriceFeed = await getMarketPriceFeed(cappedPriceFeed);
 
       await marketPriceFeed.setAnswer(3);
       await cappedPriceFeed.setFundamentalRatio(2);
-      expect(
-        await cappedPriceFeed.getFundamentalRatioDeviationFromMarketRatio()
-      ).to.eq(-3333);
+      expect(await cappedPriceFeed.getFundamentalRatioDeviationFromMarketRatio()).to.eq(-3333);
 
-      expect(
-        await cappedPriceFeed.isFundamentalRatioCloseToMarketRatio()
-      ).to.eq(true);
+      expect(await cappedPriceFeed.isFundamentalRatioCloseToMarketRatio()).to.eq(true);
     });
   });
 
@@ -404,9 +378,7 @@ describe("CappedPriceFeed", () => {
 
       const lastBlockTimestamp = await time.latest();
       expect(await contract.getSnapshot()).to.deep.eq([
-        BigNumber.from(
-          "1684996666696914987166688442938726917102321526408785780068975640576"
-        ),
+        BigNumber.from("1684996666696914987166688442938726917102321526408785780068975640576"),
         lastBlockTimestamp,
       ]);
     });
@@ -424,9 +396,7 @@ describe("CappedPriceFeed", () => {
 
       const lastBlockTimestamp = await time.latest();
       expect(await contract.getSnapshot()).to.deep.eq([
-        BigNumber.from(
-          "1606938044258990275541962092341162602522202993782792835301376"
-        ),
+        BigNumber.from("1606938044258990275541962092341162602522202993782792835301376"),
         lastBlockTimestamp,
       ]);
     });

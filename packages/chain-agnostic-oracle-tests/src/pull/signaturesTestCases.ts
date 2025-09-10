@@ -5,10 +5,7 @@ import { getMockSignedDataPackageObj, MockSignerIndex } from "../test-utils";
 
 const { toOrdinal } = RedstoneCommon;
 
-const generateTestConfigWithSignerIndexes = (
-  signerIndexes: number[],
-  expectedSuccess: boolean
-) => {
+const generateTestConfigWithSignerIndexes = (signerIndexes: number[], expectedSuccess: boolean) => {
   return {
     ...basicPullModelTestConfig,
     expectedSuccess,
@@ -49,8 +46,10 @@ export const signaturesTestCases = {
         ];
       })
     ),
-    "All data packages have invalid signatures":
-      generateTestConfigWithSignerIndexes([11, 12, 13], false),
+    "All data packages have invalid signatures": generateTestConfigWithSignerIndexes(
+      [11, 12, 13],
+      false
+    ),
   },
 
   "Order of signatures should not change anything": {
@@ -70,8 +69,10 @@ export const signaturesTestCases = {
   },
 
   "Duplicated signatures": {
-    "Should fail if all signatures are the same":
-      generateTestConfigWithSignerIndexes([0, 0, 0], false),
+    "Should fail if all signatures are the same": generateTestConfigWithSignerIndexes(
+      [0, 0, 0],
+      false
+    ),
     ...Object.fromEntries(
       [0, 1, 2].map((i) => {
         const signerIndexes = i > 0 ? [0, 0, 0] : [1, 1, 1];

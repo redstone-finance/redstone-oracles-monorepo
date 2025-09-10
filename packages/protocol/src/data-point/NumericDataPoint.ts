@@ -19,9 +19,8 @@ export interface INumericDataPoint {
   metadata?: Metadata;
 }
 
-export const getNumericDataPointDecimals = (
-  dataPoint: INumericDataPoint
-): number => dataPoint.decimals ?? DEFAULT_NUM_VALUE_DECIMALS;
+export const getNumericDataPointDecimals = (dataPoint: INumericDataPoint): number =>
+  dataPoint.decimals ?? DEFAULT_NUM_VALUE_DECIMALS;
 
 // This data point does not store information about data size in its serialized value
 export class NumericDataPoint extends DataPoint {
@@ -39,16 +38,8 @@ export class NumericDataPoint extends DataPoint {
       `The byte size of the numeric value cannot be greater than ${MAX_NUM_VALUE_BS}`
     );
 
-    const valueBytes = convertNumberToBytes(
-      numericDataPointArgs.value,
-      decimals,
-      valueByteSize
-    );
-    super(
-      numericDataPointArgs.dataFeedId,
-      valueBytes,
-      numericDataPointArgs.metadata
-    );
+    const valueBytes = convertNumberToBytes(numericDataPointArgs.value, decimals, valueByteSize);
+    super(numericDataPointArgs.dataFeedId, valueBytes, numericDataPointArgs.metadata);
   }
 
   override toObj(): INumericDataPoint {

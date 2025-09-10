@@ -39,11 +39,7 @@ async function waitForSuccess(
     });
 
     // eslint-disable-next-line @typescript-eslint/no-floating-promises
-    page
-      .goto(url)
-      .then(() =>
-        console.log(`${url} loaded successfully, waiting ${timeout} [ms]`)
-      );
+    page.goto(url).then(() => console.log(`${url} loaded successfully, waiting ${timeout} [ms]`));
   });
 
   await RedstoneCommon.timeout(

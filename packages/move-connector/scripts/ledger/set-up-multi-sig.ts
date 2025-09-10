@@ -2,11 +2,7 @@ import { AccountAddress, Aptos } from "@aptos-labs/ts-sdk";
 import "dotenv/config";
 import { getCurrencySymbol, promptForConfirmation } from "../utils";
 import { MultiSigTxBuilder } from "./MultiSigTxBuilder";
-import {
-  LEDGER_ACCOUNT_ID,
-  SIGNER_ADDRESSES,
-  SIGNER_COUNT_THRESHOLD_FACTOR,
-} from "./const";
+import { LEDGER_ACCOUNT_ID, SIGNER_ADDRESSES, SIGNER_COUNT_THRESHOLD_FACTOR } from "./const";
 import { executeAsLedger } from "./execute-as-ledger";
 
 async function setUpMultiSig(

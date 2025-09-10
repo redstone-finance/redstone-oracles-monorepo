@@ -2,7 +2,5 @@
   "shouldUpdatePrices": false,
   "message": "Update NOT needed",
   "localManifestData": "",
-  "manifestUrls": [
-    "https://remote-config-ruby.vercel.app/gelato-sepolia-for-tests-manifest.json"
-  ]
+  "manifestUrls": ["https://remote-config-ruby.vercel.app/gelato-sepolia-for-tests-manifest.json"]
 }

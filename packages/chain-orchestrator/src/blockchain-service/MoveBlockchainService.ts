@@ -1,7 +1,4 @@
-import {
-  MoveClient,
-  MoveContractConnector,
-} from "@redstone-finance/move-connector";
+import { MoveClient, MoveContractConnector } from "@redstone-finance/move-connector";
 import { loggerFactory, RedstoneCommon } from "@redstone-finance/utils";
 import { NonEvmBlockchainService } from "./NonEvmBlockchainService";
 
@@ -16,9 +13,7 @@ export class MoveBlockchainService extends NonEvmBlockchainService {
   }
 
   async getTimeForBlock(blockHeight: number) {
-    const block = await this.client
-      .getMultiAptos()
-      .getBlockByHeight({ blockHeight });
+    const block = await this.client.getMultiAptos().getBlockByHeight({ blockHeight });
 
     return new Date(Math.floor(Number(block.block_timestamp) / 1000));
   }
@@ -38,11 +33,7 @@ export class MoveBlockchainService extends NonEvmBlockchainService {
     }
   }
 
-  async getAccountTransactions(
-    account: string,
-    startBlock: number,
-    endBlock: number
-  ) {
+  async getAccountTransactions(account: string, startBlock: number, endBlock: number) {
     const accountTransactions = await this.getAccountTransactionVersions(
       account,
       startBlock,
@@ -61,11 +52,7 @@ export class MoveBlockchainService extends NonEvmBlockchainService {
     );
   }
 
-  async getAccountTransactionVersions(
-    account: string,
-    startBlock: number,
-    endBlock: number
-  ) {
+  async getAccountTransactionVersions(account: string, startBlock: number, endBlock: number) {
     const query = `
       query TransactionsForAccountInBlockRange {
         user_transactions(

@@ -38,8 +38,6 @@ export function calculateCombinedHash(hashes: string[]): string {
 
 export function calculateDirectoryHash(directoryPath: string): string {
   const allFilePaths = getAllFiles(directoryPath);
-  const fileHashes = allFilePaths.map((filePath) =>
-    calculateFileHash(filePath)
-  );
+  const fileHashes = allFilePaths.map((filePath) => calculateFileHash(filePath));
   return calculateCombinedHash(fileHashes);
 }

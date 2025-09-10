@@ -15,19 +15,14 @@ const makePriceSeed = () => {
 function feedAddress(programId: string, feed: string) {
   const seeds = [makePriceSeed(), makeFeedIdBytes(feed)];
 
-  return PublicKey.findProgramAddressSync(
-    seeds,
-    new PublicKey(programId)
-  )[0].toBase58();
+  return PublicKey.findProgramAddressSync(seeds, new PublicKey(programId))[0].toBase58();
 }
 
 function makeFeedTable(feedIds: string[]) {
   const envs: Env[] = ["mainnet-beta", "testnet", "devnet"];
   const body = [];
   for (const feed of feedIds) {
-    const addresses = envs.map((env) =>
-      feedAddress(readProgramAddress(env), feed)
-    );
+    const addresses = envs.map((env) => feedAddress(readProgramAddress(env), feed));
 
     body.push([feed].concat(addresses));
   }

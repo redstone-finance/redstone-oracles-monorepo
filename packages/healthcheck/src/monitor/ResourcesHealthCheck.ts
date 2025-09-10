@@ -1,12 +1,7 @@
 import { loggerFactory } from "@redstone-finance/utils";
 import os from "os";
 import v8 from "v8";
-import {
-  type HealthCheck,
-  type HealthCheckResult,
-  healthy,
-  unhealthy,
-} from "./common";
+import { type HealthCheck, type HealthCheckResult, healthy, unhealthy } from "./common";
 
 export interface ResourceThresholds {
   memoryPercent: number;
@@ -56,9 +51,7 @@ export class ResourcesHealthCheck implements HealthCheck {
     // Otherwise, check how long we’ve been over the limit.
     const elapsed = now - this.thresholdExceededSince;
     if (elapsed > this.thresholds.gracePeriodMs) {
-      return unhealthy([
-        `Mem usage exceeded for ${elapsed} ms. Current ${memUsage}%`,
-      ]);
+      return unhealthy([`Mem usage exceeded for ${elapsed} ms. Current ${memUsage}%`]);
     }
 
     // Still within the grace period.
@@ -91,5 +84,4 @@ export class ResourcesHealthCheck implements HealthCheck {
   }
 }
 
-const formatMemoryUsage = (data: number) =>
-  `${Math.round((data / (1024 * 1024)) * 100) / 100} MB`;
+const formatMemoryUsage = (data: number) => `${Math.round((data / (1024 * 1024)) * 100) / 100} MB`;

@@ -9,9 +9,7 @@ import { PriceDataSchema } from "../types";
 import { makeFeedIdBytes } from "../utils";
 
 export class MovePriceAdapterContractViewer extends MoveContractViewer {
-  protected readonly logger = loggerFactory(
-    "move-price-adapter-contract-viewer"
-  );
+  protected readonly logger = loggerFactory("move-price-adapter-contract-viewer");
 
   constructor(
     client: MoveClient,
@@ -42,17 +40,12 @@ export class MovePriceAdapterContractViewer extends MoveContractViewer {
     return contractData;
   }
 
-  private async viewFeedContractData(
-    feedId: string
-  ): Promise<PriceDataSchema | undefined> {
+  private async viewFeedContractData(feedId: string): Promise<PriceDataSchema | undefined> {
     try {
-      const [data] = await this.viewOnChain<PriceDataSchema[]>(
-        "price_data_by_address",
-        [
-          AccountAddress.fromString(this.priceAdapterObjectAddress),
-          MoveVector.U8(hexlify(makeFeedIdBytes(feedId))),
-        ]
-      );
+      const [data] = await this.viewOnChain<PriceDataSchema[]>("price_data_by_address", [
+        AccountAddress.fromString(this.priceAdapterObjectAddress),
+        MoveVector.U8(hexlify(makeFeedIdBytes(feedId))),
+      ]);
 
       return data;
     } catch (e) {

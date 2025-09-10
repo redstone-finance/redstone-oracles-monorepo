@@ -16,9 +16,7 @@ import { MockContractFacade } from "./MockContractFacade";
 
 export class MockGelatoRunner extends GelatoRunner {
   override runIteration(
-    connector: IContractConnector<
-      IExtendedPricesContractAdapter | IRedstoneContractAdapter
-    >,
+    connector: IContractConnector<IExtendedPricesContractAdapter | IRedstoneContractAdapter>,
     config: RelayerConfig,
     logger: GelatoLogger
   ) {
@@ -29,9 +27,7 @@ export class MockGelatoRunner extends GelatoRunner {
   }
 }
 
-function getIterationArgsProviderFromContext(
-  context: Web3FunctionContext
-): IterationArgsProvider {
+function getIterationArgsProviderFromContext(context: Web3FunctionContext): IterationArgsProvider {
   return () => {
     return Promise.resolve({
       shouldUpdatePrices: context.userArgs.shouldUpdatePrices as boolean,

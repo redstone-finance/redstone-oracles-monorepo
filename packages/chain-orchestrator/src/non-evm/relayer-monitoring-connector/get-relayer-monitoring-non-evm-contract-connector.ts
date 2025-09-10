@@ -1,7 +1,4 @@
-import {
-  MoveClientBuilder,
-  MovePricesContractConnector,
-} from "@redstone-finance/move-connector";
+import { MoveClientBuilder, MovePricesContractConnector } from "@redstone-finance/move-connector";
 import { AnyOnChainRelayerManifest } from "@redstone-finance/on-chain-relayer-common";
 import {
   PriceAdapterRadixContractConnector,
@@ -41,9 +38,7 @@ export function getRelayerMonitoringNonEvmContractConnector(
     case "stellar":
       return getStellarContractConnector(rpcUrls, relayerManifest);
     case "fuel":
-      throw new Error(
-        `${relayerManifest.adapterContractType} is not supported in monitoring`
-      );
+      throw new Error(`${relayerManifest.adapterContractType} is not supported in monitoring`);
     case "evm":
       throw new Error(
         `Evm relayer config with networkId: ${relayerManifest.chain.id} got passed to non-evm blockchain service builder.`
@@ -53,40 +48,25 @@ export function getRelayerMonitoringNonEvmContractConnector(
   }
 }
 
-function getRadixContractConnector(
-  rpcUrls: string[],
-  relayerManifest: AnyOnChainRelayerManifest
-) {
+function getRadixContractConnector(rpcUrls: string[], relayerManifest: AnyOnChainRelayerManifest) {
   const client = new RadixClientBuilder()
     .withNetworkId(relayerManifest.chain.id)
     .withRpcUrls(rpcUrls)
     .build();
 
-  return new PriceAdapterRadixContractConnector(
-    client,
-    relayerManifest.adapterContract
-  );
+  return new PriceAdapterRadixContractConnector(client, relayerManifest.adapterContract);
 }
 
-function getSolanaContractConnector(
-  rpcUrls: string[],
-  relayerManifest: AnyOnChainRelayerManifest
-) {
+function getSolanaContractConnector(rpcUrls: string[], relayerManifest: AnyOnChainRelayerManifest) {
   const connection = new SolanaConnectionBuilder()
     .withNetworkId(relayerManifest.chain.id)
     .withRpcUrls(rpcUrls)
     .build();
 
-  return new SolanaContractConnector(
-    connection,
-    relayerManifest.adapterContract
-  );
+  return new SolanaContractConnector(connection, relayerManifest.adapterContract);
 }
 
-function getSuiContractConnector(
-  rpcUrls: string[],
-  relayerManifest: AnyOnChainRelayerManifest
-) {
+function getSuiContractConnector(rpcUrls: string[], relayerManifest: AnyOnChainRelayerManifest) {
   if (!relayerManifest.adapterContractPackageId) {
     throw new Error("adapterContractPackageId is required");
   }
@@ -133,8 +113,5 @@ function getStellarContractConnector(
     .withRpcUrls(rpcUrls)
     .build();
 
-  return new PriceAdapterStellarContractConnector(
-    client,
-    relayerManifest.adapterContract
-  );
+  return new PriceAdapterStellarContractConnector(client, relayerManifest.adapterContract);
 }

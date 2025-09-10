@@ -21,9 +21,7 @@ describe("calculateSum", () => {
   });
 
   it("Should properly calculate sum for 3-elem array", () => {
-    expect(calculateSum([42, 100, 1000].map(createSafeNumber)).toString()).toBe(
-      "1142"
-    );
+    expect(calculateSum([42, 100, 1000].map(createSafeNumber)).toString()).toBe("1142");
   });
 
   it("Should properly calculate sum for a big array", () => {
@@ -35,18 +33,12 @@ describe("calculateSum", () => {
 describe("calculateAverageValue", () => {
   it("Should properly calculate an average value for 1-elem arrays", () => {
     expect(calculateAverageValue([createSafeNumber(42)]).toString()).toBe("42");
-    expect(calculateAverageValue([createSafeNumber(142)]).toString()).toBe(
-      "142"
-    );
-    expect(calculateAverageValue([createSafeNumber(120)]).toString()).toBe(
-      "120"
-    );
+    expect(calculateAverageValue([createSafeNumber(142)]).toString()).toBe("142");
+    expect(calculateAverageValue([createSafeNumber(120)]).toString()).toBe("120");
   });
 
   it("Should properly calculate an average value for a 3-elem array", () => {
-    expect(
-      calculateAverageValue([42, 44, 43].map(createSafeNumber)).toString()
-    ).toBe("43");
+    expect(calculateAverageValue([42, 44, 43].map(createSafeNumber)).toString()).toBe("43");
   });
 
   it("Should properly calculate an average value for a big array", () => {
@@ -121,25 +113,17 @@ describe("getMedian", () => {
   });
 
   it("should properly calculate median for odd number of elements", () => {
-    expect(
-      getMedian([3, 7, 2, 6, 5, 4, 9].map(createSafeNumber)).toString()
-    ).toEqual("5");
+    expect(getMedian([3, 7, 2, 6, 5, 4, 9].map(createSafeNumber)).toString()).toEqual("5");
     expect(getMedian([-3, 0, 3].map(createSafeNumber)).toString()).toEqual("0");
     expect(getMedian([3, 0, -3].map(createSafeNumber)).toString()).toEqual("0");
-    expect(
-      getMedian([-7, -5, -11, -4, -8].map(createSafeNumber)).toString()
-    ).toEqual("-7");
+    expect(getMedian([-7, -5, -11, -4, -8].map(createSafeNumber)).toString()).toEqual("-7");
   });
 
   it("should properly calculate median for even number of elements", () => {
-    expect(
-      getMedian([3, 7, 2, 6, 5, 4].map(createSafeNumber)).toString()
-    ).toEqual("4.5");
+    expect(getMedian([3, 7, 2, 6, 5, 4].map(createSafeNumber)).toString()).toEqual("4.5");
     expect(getMedian([-3, 0].map(createSafeNumber)).toString()).toEqual("-1.5");
     expect(getMedian([0, -3].map(createSafeNumber)).toString()).toEqual("-1.5");
-    expect(
-      getMedian([-7, -5, -4, -8].map(createSafeNumber)).toString()
-    ).toEqual("-6");
+    expect(getMedian([-7, -5, -4, -8].map(createSafeNumber)).toString()).toEqual("-6");
   });
 });
 
@@ -314,15 +298,9 @@ describe("monotonic cubic interpolation", () => {
     expect(interpolation.forX(xs[0])).toEqual(ys[0]);
     expect(interpolation.forX(xs[1])).toEqual(ys[1]);
     expect(interpolation.forX(xs[2])).toEqual(ys[2]);
-    expect(Math.abs(interpolation.forY(ys[0], precision) - xs[0])).toBeLessThan(
-      precision
-    );
-    expect(Math.abs(interpolation.forY(ys[1], precision) - xs[1])).toBeLessThan(
-      precision
-    );
-    expect(Math.abs(interpolation.forY(ys[2], precision) - xs[2])).toBeLessThan(
-      precision
-    );
+    expect(Math.abs(interpolation.forY(ys[0], precision) - xs[0])).toBeLessThan(precision);
+    expect(Math.abs(interpolation.forY(ys[1], precision) - xs[1])).toBeLessThan(precision);
+    expect(Math.abs(interpolation.forY(ys[2], precision) - xs[2])).toBeLessThan(precision);
   });
 
   it("should be monotonic", () => {
@@ -354,8 +332,6 @@ describe("monotonic cubic interpolation", () => {
     const interpolation = monotoneCubicInterpolation(xs, ys);
 
     expect(interpolation.forX(3)).toEqual(3);
-    expect(Math.abs(interpolation.forY(3, precision) - 3)).toBeLessThan(
-      precision
-    );
+    expect(Math.abs(interpolation.forY(3, precision) - 3)).toBeLessThan(precision);
   });
 });

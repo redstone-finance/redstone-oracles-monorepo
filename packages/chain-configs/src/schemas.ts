@@ -42,10 +42,7 @@ export const ChainConfigSchema = z.object({
 });
 
 export const ChainConfigsSchema = z.record(z.string(), ChainConfigSchema);
-export const ChainConfigsByIdSchema = z.record(
-  NetworkIdSchema,
-  ChainConfigSchema
-);
+export const ChainConfigsByIdSchema = z.record(NetworkIdSchema, ChainConfigSchema);
 
 export type ChainConfigsInput = z.input<typeof ChainConfigsSchema>;
 export type ChainConfig = z.infer<typeof ChainConfigSchema>;
@@ -55,10 +52,7 @@ export type SupportedNetworkNames = keyof typeof chainConfigs.defaultConfig;
 
 export const SupportedNetworkNamesSchema = z.custom<SupportedNetworkNames>(
   (val): val is SupportedNetworkNames => {
-    return (
-      typeof val === "string" &&
-      Object.keys(chainConfigs.defaultConfig).includes(val)
-    );
+    return typeof val === "string" && Object.keys(chainConfigs.defaultConfig).includes(val);
   },
   {
     message: "Value must be a valid network name",
@@ -73,12 +67,7 @@ export const TokenMapSchema = z.record(
   })
 );
 
-export const ChainTokenMapSchema = z.record(
-  SupportedNetworkNamesSchema,
-  TokenMapSchema.optional()
-);
+export const ChainTokenMapSchema = z.record(SupportedNetworkNamesSchema, TokenMapSchema.optional());
 
-export const STANDARD_MULTICALL3_ADDRESS =
-  "0xcA11bde05977b3631167028862bE2a173976CA11";
-export const REDSTONE_MULTICALL3_ADDRESS =
-  "0xaD6CC5a465E5c8284a49eC9eD10EFE275460678c";
+export const STANDARD_MULTICALL3_ADDRESS = "0xcA11bde05977b3631167028862bE2a173976CA11";
+export const REDSTONE_MULTICALL3_ADDRESS = "0xaD6CC5a465E5c8284a49eC9eD10EFE275460678c";

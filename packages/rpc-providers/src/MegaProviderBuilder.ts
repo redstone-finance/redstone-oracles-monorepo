@@ -7,10 +7,7 @@ import {
   ProviderWithAgreementConfig,
 } from "./providers/ProviderWithAgreement";
 import { ProviderWithFallback } from "./providers/ProviderWithFallback";
-import {
-  RedstoneEthers5Provider,
-  RedstoneProvider,
-} from "./providers/RedstoneProvider";
+import { RedstoneEthers5Provider, RedstoneProvider } from "./providers/RedstoneProvider";
 
 type MegaProviderOptions = {
   rpcUrls: readonly string[];
@@ -83,14 +80,8 @@ export class MegaProviderBuilder {
           "You have to provide httpClient to MegeProviderBuilder when USE_REDSTONE_PROVIDER is set",
           true
         );
-        const redstoneProvider = new RedstoneProvider(
-          this.options.httpClient,
-          rpcUrl
-        );
-        const provider = new RedstoneEthers5Provider(
-          redstoneProvider,
-          this.options.network
-        );
+        const redstoneProvider = new RedstoneProvider(this.options.httpClient, rpcUrl);
+        const provider = new RedstoneEthers5Provider(redstoneProvider, this.options.network);
         return provider;
       } else {
         const provider = new providers.StaticJsonRpcProvider(

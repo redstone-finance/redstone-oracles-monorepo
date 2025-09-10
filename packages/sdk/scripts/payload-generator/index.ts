@@ -1,8 +1,4 @@
-import {
-  DataServiceIds,
-  getSignersForDataServiceId,
-  requestRedstonePayload,
-} from "../../src";
+import { DataServiceIds, getSignersForDataServiceId, requestRedstonePayload } from "../../src";
 
 const DATA_SERVICE_ID = "redstone-primary-prod";
 const DATA_FEEDS = ["BTC", "ETH"];
@@ -15,9 +11,7 @@ requestRedstonePayload(
     dataPackagesIds: DATA_FEEDS,
     dataServiceId: DATA_SERVICE_ID,
     uniqueSignersCount: UNIQUE_SIGNER_COUNT,
-    authorizedSigners: getSignersForDataServiceId(
-      DATA_SERVICE_ID as DataServiceIds
-    ),
+    authorizedSigners: getSignersForDataServiceId(DATA_SERVICE_ID as DataServiceIds),
   },
   scriptArgs[0]
 )

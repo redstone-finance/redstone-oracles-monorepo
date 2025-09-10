@@ -12,11 +12,7 @@ const PRICE_FEED_ADDRESS = "";
 void (async () => {
   const relayerConfig = config(ConsciouslyInvoked);
   const provider = getRelayerProvider(relayerConfig);
-  const priceFeedContract = new Contract(
-    PRICE_FEED_ADDRESS,
-    abi,
-    provider
-  ) as PriceFeedBase;
+  const priceFeedContract = new Contract(PRICE_FEED_ADDRESS, abi, provider) as PriceFeedBase;
   const latestRoundData = await priceFeedContract.latestRoundData();
   const price = utils.formatUnits(latestRoundData.answer, 8);
   console.log(price);

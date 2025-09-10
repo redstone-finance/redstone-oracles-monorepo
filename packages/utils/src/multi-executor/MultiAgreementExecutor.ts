@@ -5,9 +5,9 @@ import { AgreementExecutor } from "./AgreementExecutor";
 /* That class is used to execute multiple agreements in parallel and then aggregate the result point by point.
    It requires all the results to be of the same length
 */
-export class MultiAgreementExecutor<
-  R extends unknown[],
-> extends AgreementExecutor<(R | undefined)[]> {
+export class MultiAgreementExecutor<R extends unknown[]> extends AgreementExecutor<
+  (R | undefined)[]
+> {
   agreementExecutor: AgreementExecutor<R>;
   constructor(
     quorumNumber: number,
@@ -24,9 +24,7 @@ export class MultiAgreementExecutor<
   }
 
   override aggregate(results: R[][]) {
-    return (_.zip(...results) as R[][]).map((result) =>
-      this.agreementExecutor.aggregate(result)
-    );
+    return (_.zip(...results) as R[][]).map((result) => this.agreementExecutor.aggregate(result));
   }
 
   override verifySettlements(
@@ -49,15 +47,9 @@ export class MultiAgreementExecutor<
       return false;
     }
 
-    const partialSettlements = (_.zip(...successfulResults) as R[][]).map(
-      (result) => {
-        return this.agreementExecutor.verifySettlements(
-          result,
-          errorResults,
-          totalLength
-        );
-      }
-    );
+    const partialSettlements = (_.zip(...successfulResults) as R[][]).map((result) => {
+      return this.agreementExecutor.verifySettlements(result, errorResults, totalLength);
+    });
 
     return !partialSettlements.includes(false);
   }

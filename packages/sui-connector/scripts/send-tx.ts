@@ -4,9 +4,7 @@ import { makeSuiClient, makeSuiKeypair, SuiNetworkName } from "../src";
 import { makeBaseTx } from "./ledger/make-base-tx";
 import { setUpUpgradeTx } from "./ledger/upgrade-package";
 
-async function main(
-  creator: (tx: Transaction, network: SuiNetworkName) => void
-) {
+async function main(creator: (tx: Transaction, network: SuiNetworkName) => void) {
   const keypair = makeSuiKeypair();
   const { tx, network } = await makeBaseTx(creator, keypair.toSuiAddress());
   const client = makeSuiClient(network);

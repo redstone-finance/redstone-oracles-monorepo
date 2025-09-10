@@ -9,9 +9,7 @@ const colors = {
 const simpleLog =
   (level: keyof typeof colors) =>
   (...args: unknown[]) => {
-    process.stdout.write(
-      `${colors[level]}` + args.join(" ") + `${colors.reset}\n`
-    );
+    process.stdout.write(`${colors[level]}` + args.join(" ") + `${colors.reset}\n`);
   };
 
 global.console = {

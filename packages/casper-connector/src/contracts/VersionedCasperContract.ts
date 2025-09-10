@@ -19,9 +19,7 @@ export class VersionedCasperContract extends CasperContract {
   ) {
     super(connection);
 
-    this.packageHash = packageHash.startsWith("0x")
-      ? packageHash.substring(2)
-      : packageHash;
+    this.packageHash = packageHash.startsWith("0x") ? packageHash.substring(2) : packageHash;
   }
 
   override async queryContractData(
@@ -31,11 +29,7 @@ export class VersionedCasperContract extends CasperContract {
   ) {
     await this.checkContractVersion();
 
-    return (await super.queryContractData(
-      path,
-      casperClient,
-      stateRootHash
-    )) as unknown;
+    return (await super.queryContractData(path, casperClient, stateRootHash)) as unknown;
   }
 
   override async queryContractDictionary(
@@ -63,9 +57,7 @@ export class VersionedCasperContract extends CasperContract {
     signingKeys: Keys.AsymmetricKey[] = [],
     ttl: number = DEFAULT_DEPLOY_TTL
   ): DeployUtil.Deploy {
-    const contractHashAsByteArray = Contracts.contractHashToByteArray(
-      this.packageHash
-    );
+    const contractHashAsByteArray = Contracts.contractHashToByteArray(this.packageHash);
 
     const deploy = DeployUtil.makeDeploy(
       new DeployUtil.DeployParams(sender, chainName, 1, ttl),
@@ -86,9 +78,7 @@ export class VersionedCasperContract extends CasperContract {
       return;
     }
 
-    const res = await this.connection.queryGlobalState(
-      `hash-${this.packageHash}`
-    );
+    const res = await this.connection.queryGlobalState(`hash-${this.packageHash}`);
 
     if (!res.ContractPackage || !res.ContractPackage.versions.length) {
       throw new Error("Unable to fetch contract version");
@@ -97,8 +87,6 @@ export class VersionedCasperContract extends CasperContract {
     const versions = res.ContractPackage.versions;
     versions.sort((x, y) => y.contractVersion - x.contractVersion);
 
-    this.setContractHash(
-      versions[0].contractHash.replace("contract-", "hash-")
-    );
+    this.setContractHash(versions[0].contractHash.replace("contract-", "hash-"));
   }
 }

@@ -43,8 +43,7 @@ export async function fetchManagedInfluxConfig(): Promise<InfluxConfig> {
     INFLUX_PARAMS_AWS_REGION
   );
   const influxDbTokenPromise = getSSMParameterValue(
-    process.env.MANAGED_INFLUXDB_TOKEN_SSM_PATH ??
-      "/dev/influxdb/managed-token",
+    process.env.MANAGED_INFLUXDB_TOKEN_SSM_PATH ?? "/dev/influxdb/managed-token",
     INFLUX_PARAMS_AWS_REGION
   );
 
@@ -58,10 +57,7 @@ export async function fetchManagedInfluxConfig(): Promise<InfluxConfig> {
  * @deprecated This method is deprecated.
  * Please define an InfluxService-class instance and use "insert" method.
  */
-export async function insertIntoInfluxDb(
-  influx: InfluxDB,
-  requestData: Point[]
-) {
+export async function insertIntoInfluxDb(influx: InfluxDB, requestData: Point[]) {
   const writeApi = influx.getWriteApi(INFLUXDB_ORG, INFLUXDB_BUCKET, "ms");
   requestData.forEach((data) => writeApi.writePoint(data));
   await writeApi.close();

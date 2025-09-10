@@ -9,11 +9,7 @@ import {
   OnChainRelayerManifest,
 } from "../schemas";
 import { readAnyManifest } from "./read-manifest";
-import {
-  getOnChainRelayerBasePath,
-  readManifestFiles,
-  removeFileExtension,
-} from "./read-utils";
+import { getOnChainRelayerBasePath, readManifestFiles, removeFileExtension } from "./read-utils";
 
 export function readManifests(
   type: typeof MANIFEST_TYPE_PRICE_FEEDS,
@@ -31,10 +27,7 @@ export function readManifests(
   type: ManifestType,
   directory = getOnChainRelayerBasePath()
 ): Record<string, OnChainRelayerManifest | MultiFeedOnChainRelayerManifest> {
-  const manifests: Record<
-    string,
-    OnChainRelayerManifest | MultiFeedOnChainRelayerManifest
-  > = {};
+  const manifests: Record<string, OnChainRelayerManifest | MultiFeedOnChainRelayerManifest> = {};
   const files = readManifestFiles(type, directory);
 
   for (const file of files) {
@@ -42,37 +35,25 @@ export function readManifests(
       continue;
     }
 
-    manifests[removeFileExtension(file)] = readAnyManifest(
-      type,
-      file,
-      directory
-    );
+    manifests[removeFileExtension(file)] = readAnyManifest(type, file, directory);
   }
 
   return manifests;
 }
 
-export const readClassicManifests = (
-  directory = getOnChainRelayerBasePath()
-) => {
+export const readClassicManifests = (directory = getOnChainRelayerBasePath()) => {
   return readManifests(MANIFEST_TYPE_PRICE_FEEDS, directory);
 };
 
-export const readMultiFeedManifests = (
-  directory = getOnChainRelayerBasePath()
-) => {
+export const readMultiFeedManifests = (directory = getOnChainRelayerBasePath()) => {
   return readManifests(MANIFEST_TYPE_MULTI_FEED, directory);
 };
 
-export const readNonEvmManifests = (
-  directory = getOnChainRelayerBasePath()
-) => {
+export const readNonEvmManifests = (directory = getOnChainRelayerBasePath()) => {
   return readManifests(MANIFEST_TYPE_NON_EVM, directory);
 };
 
-export const readAllManifestsAsCommon = (
-  directory = getOnChainRelayerBasePath()
-) => {
+export const readAllManifestsAsCommon = (directory = getOnChainRelayerBasePath()) => {
   const manifests: Record<string, CommonRelayerManifest> = _.assign(
     {},
     readClassicManifests(directory),

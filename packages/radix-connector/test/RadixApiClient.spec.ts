@@ -7,10 +7,7 @@ import {
   transactionStatus,
   transactionSubmit,
 } from "./__mocks__/transactions";
-import {
-  mockDefaultValues,
-  transactionCommittedDetailsMock,
-} from "./mock-default-values";
+import { mockDefaultValues, transactionCommittedDetailsMock } from "./mock-default-values";
 
 jest.spyOn(Convert.Uint8Array, "toHexString");
 
@@ -45,9 +42,7 @@ describe("RadixApiClient", () => {
   it("should submit a transaction", async () => {
     const result = await sut.submitTransaction(new Uint8Array([1, 2, 3]));
     expect(result).toEqual(false);
-    expect(Convert.Uint8Array.toHexString).toHaveBeenCalledWith(
-      new Uint8Array([1, 2, 3])
-    );
+    expect(Convert.Uint8Array.toHexString).toHaveBeenCalledWith(new Uint8Array([1, 2, 3]));
     expect(transactionSubmit).toHaveBeenCalledWith({
       transactionSubmitRequest: {
         notarized_transaction_hex: "010203",
@@ -82,10 +77,8 @@ describe("RadixApiClient", () => {
       12345678
     );
     expect(result).toEqual({ signer_count_threshold: 1 });
-    expect(getEntityDetailsVaultAggregated).toHaveBeenCalledWith(
-      "mockComponentId",
-      undefined,
-      { state_version: 12345678 }
-    );
+    expect(getEntityDetailsVaultAggregated).toHaveBeenCalledWith("mockComponentId", undefined, {
+      state_version: 12345678,
+    });
   });
 });

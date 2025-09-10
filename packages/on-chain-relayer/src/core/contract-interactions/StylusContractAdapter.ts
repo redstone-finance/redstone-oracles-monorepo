@@ -1,10 +1,7 @@
 import { TxDeliveryCall } from "@redstone-finance/rpc-providers";
 import { ContractParamsProvider } from "@redstone-finance/sdk";
 import { Tx } from "@redstone-finance/utils";
-import {
-  IStylusAdapter,
-  MultiFeedAdapterWithoutRounds,
-} from "../../../typechain-types";
+import { IStylusAdapter, MultiFeedAdapterWithoutRounds } from "../../../typechain-types";
 import { MultiFeedEvmContractAdapterBase } from "./MultiFeedEvmContractAdapterBase";
 
 export class StylusContractAdapter extends MultiFeedEvmContractAdapterBase<
@@ -21,10 +18,7 @@ export class StylusContractAdapter extends MultiFeedEvmContractAdapterBase<
       metadataTimestamp,
     });
 
-    const tx = await this.adapterContract.populateTransaction.writePrices(
-      feedsIds,
-      payload
-    );
+    const tx = await this.adapterContract.populateTransaction.writePrices(feedsIds, payload);
 
     return Tx.convertToTxDeliveryCall(tx);
   }

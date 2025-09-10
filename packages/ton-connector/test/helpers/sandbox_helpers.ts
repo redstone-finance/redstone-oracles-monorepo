@@ -12,9 +12,7 @@ export function extractSandboxLogs(
   consumerResult: void | SendMessageResult,
   transactionIndex: number
 ) {
-  return (consumerResult as SendMessageResult).transactions[
-    transactionIndex
-  ].debugLogs
+  return (consumerResult as SendMessageResult).transactions[transactionIndex].debugLogs
     .split("\n")
     .map((log) => log.substring("#DEBUG#: s0 = ".length));
 }

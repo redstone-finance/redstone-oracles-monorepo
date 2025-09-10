@@ -2,11 +2,7 @@ import { utils } from "@redstone-finance/protocol";
 import { expect } from "chai";
 import { ethers } from "hardhat";
 import { WrapperBuilder } from "../../src";
-import {
-  MockSignerIndex,
-  getMockNumericPackage,
-  getRange,
-} from "../../src/helpers/test-utils";
+import { MockSignerIndex, getMockNumericPackage, getRange } from "../../src/helpers/test-utils";
 import {
   SampleChainableStorageProxy,
   SampleChainableStorageProxyConsumer,
@@ -46,14 +42,10 @@ describe("SampleChainableStorageProxy", function () {
       "SampleChainableStorageProxyConsumer"
     );
 
-    const contractB = await SampleChainableStorageProxyConsumer.deploy(
-      contract.address
-    );
+    const contractB = await SampleChainableStorageProxyConsumer.deploy(contract.address);
     await contractB.deployed();
 
-    consumerContract = await SampleChainableStorageProxyConsumer.deploy(
-      contract.address
-    );
+    consumerContract = await SampleChainableStorageProxyConsumer.deploy(contract.address);
     await consumerContract.deployed();
 
     await contract.register(contractB.address);
@@ -84,14 +76,10 @@ describe("SampleChainableStorageProxy", function () {
     const wrappedContract =
       WrapperBuilder.wrap(contract).usingMockDataPackages(mockNumericPackages);
 
-    const dataValues = dataPoints.map((dataPoint) =>
-      Math.round(dataPoint.value * 10 ** 8)
-    );
+    const dataValues = dataPoints.map((dataPoint) => Math.round(dataPoint.value * 10 ** 8));
 
     for (const dataPoint of dataPoints) {
-      await wrappedContract.processOracleValue(
-        utils.convertStringToBytes32(dataPoint.dataFeedId)
-      );
+      await wrappedContract.processOracleValue(utils.convertStringToBytes32(dataPoint.dataFeedId));
     }
 
     const computationResult = await consumerContract.getComputationResult();
@@ -115,9 +103,7 @@ describe("SampleChainableStorageProxy", function () {
 
     const dataFeedIds = dataPoints.map((dataPoint) => dataPoint.dataFeedId);
     const dataFeedIdsBytes = dataFeedIds.map(utils.convertStringToBytes32);
-    const dataValues = dataPoints.map((dataPoint) =>
-      Math.round(dataPoint.value * 10 ** 8)
-    );
+    const dataValues = dataPoints.map((dataPoint) => Math.round(dataPoint.value * 10 ** 8));
 
     await wrappedContract.processOracleValues(dataFeedIdsBytes);
     const computationResult = await consumerContract.getComputationResult();

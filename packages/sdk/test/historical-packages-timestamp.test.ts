@@ -5,10 +5,7 @@ const ONE_MINUTE_MS = 60000;
 
 describe("Historical packages timestamp", () => {
   it(`Should properly return (x-1):30 for x:30 with 10s denominator`, () => {
-    const result = calculateHistoricalPackagesTimestamp(
-      ONE_MINUTE_MS,
-      FULL_MINUTE_TS + 30 * 1000
-    );
+    const result = calculateHistoricalPackagesTimestamp(ONE_MINUTE_MS, FULL_MINUTE_TS + 30 * 1000);
 
     expect(result).toEqual(FULL_MINUTE_TS - 30 * 1000);
   });

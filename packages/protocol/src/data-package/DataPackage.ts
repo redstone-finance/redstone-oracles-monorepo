@@ -27,11 +27,8 @@ export interface DataPackagePlainObj {
   dataPackageId: string;
 }
 
-const env =
-  (globalThis as { process?: { env?: Record<string, string> } }).process?.env ??
-  {};
-const allowUnsafeEmptyDataPackages =
-  env.REDSTONE_ALLOW_UNSAFE_EMPTY_DATA_PACKAGES === "true";
+const env = (globalThis as { process?: { env?: Record<string, string> } }).process?.env ?? {};
+const allowUnsafeEmptyDataPackages = env.REDSTONE_ALLOW_UNSAFE_EMPTY_DATA_PACKAGES === "true";
 const allowUnsafeDataPackagesWithDuplications =
   env.REDSTONE_ALLOW_UNSAFE_DATA_PACKAGES_WITH_DUPLICATIONS === "true";
 
@@ -44,10 +41,7 @@ export class DataPackage extends Serializable {
     super();
 
     if (dataPoints.length === 0) {
-      assert(
-        allowUnsafeEmptyDataPackages,
-        "Empty data packages are not allowed"
-      );
+      assert(allowUnsafeEmptyDataPackages, "Empty data packages are not allowed");
     } else {
       const expectedDataPointByteSize = dataPoints[0].getValueByteSize();
       for (const dataPoint of dataPoints) {
@@ -61,10 +55,7 @@ export class DataPackage extends Serializable {
 
   getEachDataPointByteSize() {
     if (this.dataPoints.length === 0) {
-      assert(
-        allowUnsafeEmptyDataPackages,
-        "Empty data packages are not allowed"
-      );
+      assert(allowUnsafeEmptyDataPackages, "Empty data packages are not allowed");
       return 32;
     }
 
@@ -132,17 +123,11 @@ export class DataPackage extends Serializable {
   }
 
   protected serializeTimestamp(): Uint8Array {
-    return convertIntegerNumberToBytes(
-      this.timestampMilliseconds,
-      TIMESTAMP_BS
-    );
+    return convertIntegerNumberToBytes(this.timestampMilliseconds, TIMESTAMP_BS);
   }
 
   protected serializeDataPointsCount(): Uint8Array {
-    return convertIntegerNumberToBytes(
-      this.dataPoints.length,
-      DATA_POINTS_COUNT_BS
-    );
+    return convertIntegerNumberToBytes(this.dataPoints.length, DATA_POINTS_COUNT_BS);
   }
 
   protected serializeDefaultDataPointByteSize(): Uint8Array {
@@ -160,10 +145,7 @@ export interface SignedDataPackagePlainObj extends DataPackagePlainObj {
 /**
  * represents data package created by RedStone oracle-node and returned from DDL
  */
-export class SignedDataPackage
-  extends Serializable
-  implements SignedDataPackageLike
-{
+export class SignedDataPackage extends Serializable implements SignedDataPackageLike {
   public readonly signature: Signature;
 
   constructor(
@@ -195,10 +177,7 @@ export class SignedDataPackage
   }
 
   toBytes(): Uint8Array {
-    return concat([
-      this.dataPackage.toBytes(),
-      this.serializeSignatureToBytes(),
-    ]);
+    return concat([this.dataPackage.toBytes(), this.serializeSignatureToBytes()]);
   }
 
   toObj(): SignedDataPackagePlainObj {
@@ -210,12 +189,8 @@ export class SignedDataPackage
     };
   }
 
-  public static fromObj(
-    plainObject: SignedDataPackagePlainObj
-  ): SignedDataPackage {
-    return SignedDataPackage.fromObjLikeThis(
-      deserializeSignedPackage(plainObject)
-    );
+  public static fromObj(plainObject: SignedDataPackagePlainObj): SignedDataPackage {
+    return SignedDataPackage.fromObjLikeThis(deserializeSignedPackage(plainObject));
   }
 
   private static fromObjLikeThis(object: SignedDataPackageLike) {
@@ -244,13 +219,8 @@ export function deserializeSignedPackage(
   return { signature: parsedSignature, dataPackage: unsignedDataPackage };
 }
 
-export function recoverSignerPublicKey(
-  object: SignedDataPackageLike
-): Uint8Array {
-  return UniversalSigner.recoverPublicKey(
-    object.dataPackage.getSignableHash(),
-    object.signature
-  );
+export function recoverSignerPublicKey(object: SignedDataPackageLike): Uint8Array {
+  return UniversalSigner.recoverPublicKey(object.dataPackage.getSignableHash(), object.signature);
 }
 
 export function recoverSignerAddress(object: SignedDataPackageLike): string {
@@ -259,8 +229,6 @@ export function recoverSignerAddress(object: SignedDataPackageLike): string {
   return computeAddress(signerPublicKeyBytes);
 }
 
-export function recoverDeserializedSignerAddress(
-  plainObj: SignedDataPackagePlainObj
-): string {
+export function recoverDeserializedSignerAddress(plainObj: SignedDataPackagePlainObj): string {
   return recoverSignerAddress(deserializeSignedPackage(plainObj));
 }

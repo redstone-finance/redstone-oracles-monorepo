@@ -27,9 +27,7 @@ async function checkDataPackagesCount() {
   const dataPackagesCount = await queryDataPackages(DATA_PACKAGE_ID);
   console.log(`Fetched data packages count: ${dataPackagesCount}`);
   if (dataPackagesCount >= EXPECTED_COUNT) {
-    console.log(
-      `Expected data packages count reached: ${EXPECTED_COUNT}. Stopping...`
-    );
+    console.log(`Expected data packages count reached: ${EXPECTED_COUNT}. Stopping...`);
     process.exit();
   }
 }

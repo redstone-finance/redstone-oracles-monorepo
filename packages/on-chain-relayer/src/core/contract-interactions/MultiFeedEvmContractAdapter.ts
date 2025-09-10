@@ -41,18 +41,15 @@ export class MultiFeedEvmContractAdapter extends MultiFeedEvmContractAdapterBase
       dataFeedsAsBytes32 = dataPackagesFeeds.map(utils.formatBytes32String);
     }
 
-    const dataPackagesWrapper =
-      new DataPackagesWrapper<MultiFeedAdapterWithoutRounds>(dataPackages);
-
-    dataPackagesWrapper.setMetadataTimestamp(metadataTimestamp);
-    const wrappedContract = dataPackagesWrapper.overwriteEthersContract(
-      this.adapterContract
+    const dataPackagesWrapper = new DataPackagesWrapper<MultiFeedAdapterWithoutRounds>(
+      dataPackages
     );
 
+    dataPackagesWrapper.setMetadataTimestamp(metadataTimestamp);
+    const wrappedContract = dataPackagesWrapper.overwriteEthersContract(this.adapterContract);
+
     const txCall = Tx.convertToTxDeliveryCall(
-      await wrappedContract.populateTransaction["updateDataFeedsValuesPartial"](
-        dataFeedsAsBytes32
-      )
+      await wrappedContract.populateTransaction["updateDataFeedsValuesPartial"](dataFeedsAsBytes32)
     );
 
     return txCall;

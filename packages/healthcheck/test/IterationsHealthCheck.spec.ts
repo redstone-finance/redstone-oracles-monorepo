@@ -37,9 +37,7 @@ describe("IterationsHealthCheck", () => {
 
     jest.advanceTimersByTime(20_000);
     await expect(hc.check(new Date())).resolves.toEqual(
-      await unhealthy([
-        "Last iteration (2025-06-09T12:05:01.000Z) NOT within 300s",
-      ])
+      await unhealthy(["Last iteration (2025-06-09T12:05:01.000Z) NOT within 300s"])
     );
   });
 
@@ -67,9 +65,7 @@ describe("IterationsHealthCheck", () => {
 
     jest.advanceTimersByTime(2);
     await expect(hc.check(new Date())).resolves.toEqual(
-      await unhealthy([
-        "Last iteration (2025-06-09T12:00:00.000Z) NOT within 300s",
-      ])
+      await unhealthy(["Last iteration (2025-06-09T12:00:00.000Z) NOT within 300s"])
     );
 
     jest.advanceTimersByTime(10_000);
@@ -83,16 +79,12 @@ describe("IterationsHealthCheck", () => {
 
     jest.advanceTimersByTime(1);
     await expect(hc.check(new Date())).resolves.toEqual(
-      await unhealthy([
-        "Last iteration (2025-06-09T12:05:10.001Z) NOT within 300s",
-      ])
+      await unhealthy(["Last iteration (2025-06-09T12:05:10.001Z) NOT within 300s"])
     );
 
     jest.advanceTimersByTime(10_000);
     await expect(hc.check(new Date())).resolves.toEqual(
-      await unhealthy([
-        "Last iteration (2025-06-09T12:05:10.001Z) NOT within 300s",
-      ])
+      await unhealthy(["Last iteration (2025-06-09T12:05:10.001Z) NOT within 300s"])
     );
 
     jest.advanceTimersByTime(5_000);

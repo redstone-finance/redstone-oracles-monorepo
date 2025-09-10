@@ -22,48 +22,29 @@ export enum RelayerNodeEnv {
   Fallback = "fallback",
 }
 
-export const ORACLE_ENVS_WITH_SIG_VERIFICATION = [
-  OracleNodeEnv.Prod,
-  OracleNodeEnv.ProdFallback,
-];
+export const ORACLE_ENVS_WITH_SIG_VERIFICATION = [OracleNodeEnv.Prod, OracleNodeEnv.ProdFallback];
 
 export function isOracleNodeEnv(v: unknown): v is OracleNodeEnv {
-  return (
-    typeof v === "string" &&
-    Object.values(OracleNodeEnv).includes(v as OracleNodeEnv)
-  );
+  return typeof v === "string" && Object.values(OracleNodeEnv).includes(v as OracleNodeEnv);
 }
 
-export function parseOracleNodeEnv(
-  raw: string | undefined
-): OracleNodeEnv | undefined {
+export function parseOracleNodeEnv(raw: string | undefined): OracleNodeEnv | undefined {
   return isOracleNodeEnv(raw) ? raw : undefined;
 }
 
 export function getSignaturesRepositoryPath(nodeEnv = OracleNodeEnv.Dev) {
   const remoteConfigPath = findNodeRemoteConfigOrThrow(nodeEnv);
-  return path.join(
-    remoteConfigPath,
-    "..",
-    REMOTE_CONFIG_SIGNATURES_FOLDER,
-    nodeEnv
-  );
+  return path.join(remoteConfigPath, "..", REMOTE_CONFIG_SIGNATURES_FOLDER, nodeEnv);
 }
 
 export const getNodeConfigBasePath = (nodeEnv = OracleNodeEnv.Dev) => {
-  return RedstoneCommon.getFromEnv(
-    "USE_REMOTE_CONFIG",
-    z.boolean().default(false)
-  )
+  return RedstoneCommon.getFromEnv("USE_REMOTE_CONFIG", z.boolean().default(false))
     ? NODE_REMOTE_CONFIG_FOLDER
     : path.join(NODE_REMOTE_CONFIG_FOLDER, nodeEnv);
 };
 
 export const getRelayerConfigBasePath = () => {
-  return RedstoneCommon.getFromEnv(
-    "USE_RELAYER_REMOTE_CONFIG",
-    z.boolean().default(false)
-  )
+  return RedstoneCommon.getFromEnv("USE_RELAYER_REMOTE_CONFIG", z.boolean().default(false))
     ? RELAYER_REMOTE_CONFIG_FOLDER
     : path.join(RELAYER_REMOTE_CONFIG_FOLDER, RelayerNodeEnv.Main);
 };
@@ -91,7 +72,5 @@ export function findDirOrThrow(searchedDir: string) {
     }
     dir = parentDir;
   }
-  throw new Error(
-    `Could not find ${searchedDir} directory, starting from ${startDir}`
-  );
+  throw new Error(`Could not find ${searchedDir} directory, starting from ${startDir}`);
 }

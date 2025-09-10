@@ -97,11 +97,7 @@
       "source": ["ethereum-evm-fetcher-curve"]
     },
     "LUSD": {
-      "source": [
-        "curve-ethereum-3crv",
-        "uniswap-v3-ethereum-usdc-500",
-        "velodrome-optimism-usdc"
-      ],
+      "source": ["curve-ethereum-3crv", "uniswap-v3-ethereum-usdc-500", "velodrome-optimism-usdc"],
       "deviationCheck": {
         "deviationWithRecentValues": {
           "maxPercent": 5,
@@ -172,11 +168,7 @@
     },
     "osETH": {
       "priceAggregator": "depth",
-      "source": [
-        "balancer-ethereum-weth",
-        "curve-ethereum-reth",
-        "uniswap-v3-ethereum-usdc-500"
-      ]
+      "source": ["balancer-ethereum-weth", "curve-ethereum-reth", "uniswap-v3-ethereum-usdc-500"]
     },
     "pxETH": {
       "source": [
@@ -192,10 +184,7 @@
       "source": ["ethereum-evm-fetcher-redacted"]
     },
     "ARB": {
-      "source": [
-        "uniswap-v3-arbitrumone-weth-3000",
-        "uniswap-v3-arbitrumone-weth-500"
-      ]
+      "source": ["uniswap-v3-arbitrumone-weth-3000", "uniswap-v3-arbitrumone-weth-500"]
     },
     "OP": {
       "source": [
@@ -211,11 +200,7 @@
       "source": ["non-usd-based"]
     },
     "ALUSD": {
-      "source": [
-        "curve-ethereum-3crv",
-        "curve-ethereum-crvfrax",
-        "velodrome-optimism-usdc"
-      ],
+      "source": ["curve-ethereum-3crv", "curve-ethereum-crvfrax", "velodrome-optimism-usdc"],
       "deviationCheck": {
         "deviationWithRecentValues": {
           "maxPercent": 5,
@@ -253,10 +238,7 @@
       "source": ["uniswap-v3-ethereum-weth-3000"]
     },
     "MKR": {
-      "source": [
-        "uniswap-v3-ethereum-weth-10000",
-        "uniswap-v3-ethereum-weth-3000"
-      ]
+      "source": ["uniswap-v3-ethereum-weth-10000", "uniswap-v3-ethereum-weth-3000"]
     },
     "wUSDM": {
       "source": ["ethereum-evm-fetcher-mountain-protocol"]
@@ -450,11 +432,7 @@
       ]
     },
     "bsdETH": {
-      "source": [
-        "aerodrome-base-rsr",
-        "aerodrome-base-weth",
-        "aerodrome-cl-base-weth"
-      ]
+      "source": ["aerodrome-base-rsr", "aerodrome-base-weth", "aerodrome-cl-base-weth"]
     },
     "USD+": {
       "source": [

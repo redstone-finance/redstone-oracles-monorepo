@@ -1,7 +1,4 @@
-import {
-  mockPayload,
-  mockSignedDataPackagesResponse,
-} from "./mocks/mock-packages";
+import { mockPayload, mockSignedDataPackagesResponse } from "./mocks/mock-packages";
 // Do not remove this empty line to have the mocks working
 import { arrayify } from "ethers/lib/utils";
 import {
@@ -14,9 +11,7 @@ import {
 // eslint-disable-next-line @typescript-eslint/no-unsafe-return
 jest.mock("../src/request-data-packages", () => ({
   ...jest.requireActual("../src/request-data-packages"),
-  requestDataPackages: jest
-    .fn()
-    .mockResolvedValue(mockSignedDataPackagesResponse),
+  requestDataPackages: jest.fn().mockResolvedValue(mockSignedDataPackagesResponse),
 }));
 
 describe("ContractParamsProvider tests", () => {
@@ -93,8 +88,7 @@ describe("ContractParamsProvider tests", () => {
     const expectedNotMissing = ["ETH", "BTC"];
 
     const splitPayloads = await sut.prepareSplitPayloads();
-    const { payloads, missingFeedIds } =
-      ContractParamsProvider.extractMissingValues(splitPayloads);
+    const { payloads, missingFeedIds } = ContractParamsProvider.extractMissingValues(splitPayloads);
 
     expect(missingFeedIds).toStrictEqual(expectedMissing);
     expect(Object.keys(payloads)).toStrictEqual(expectedNotMissing);

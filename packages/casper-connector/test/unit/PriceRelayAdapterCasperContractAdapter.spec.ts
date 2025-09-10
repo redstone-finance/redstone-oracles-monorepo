@@ -42,12 +42,8 @@ describe("PriceRelayAdapterCasperContractAdapter", () => {
 
   beforeEach(async () => {
     connection = getMockCasperConnection();
-    connector = new PriceRelayAdapterCasperContractConnector(
-      connection,
-      "556677"
-    );
-    adapter =
-      (await connector.getAdapter()) as PriceRelayAdapterCasperContractAdapter;
+    connector = new PriceRelayAdapterCasperContractConnector(connection, "556677");
+    adapter = (await connector.getAdapter()) as PriceRelayAdapterCasperContractAdapter;
     wrappedAdapter = (await new PriceAdapterCasperContractConnector(
       connection,
       "112233"
@@ -90,12 +86,7 @@ describe("PriceRelayAdapterCasperContractAdapter", () => {
 
   it("getPricesFromPayload should callEntrypoint ENTRY_POINT_GET_PRICES and then queryContractDictionary STORAGE_KEY_VALUES about payload hash", async () => {
     connection.callEntrypoint.mockImplementationOnce(
-      callEntrypointMock(
-        adapter,
-        ENTRY_POINT_GET_PRICES,
-        0,
-        checkPayloadRuntimeArgs()
-      )
+      callEntrypointMock(adapter, ENTRY_POINT_GET_PRICES, 0, checkPayloadRuntimeArgs())
     );
     await testGetPricesFromPayload(connection, adapter);
   });
@@ -125,28 +116,18 @@ describe("PriceRelayAdapterCasperContractAdapter", () => {
     expect(deployId).toEqual("OK3");
   });
 
-  function getChunkEntrypointMock(
-    mode: RunMode,
-    value: string,
-    chunkIndex: number
-  ) {
+  function getChunkEntrypointMock(mode: RunMode, value: string, chunkIndex: number) {
     return callEntrypointMock(
       adapter,
-      mode === RunMode.WRITE
-        ? ENTRY_POINT_WRITE_PRICES_CHUNK
-        : ENTRY_POINT_GET_PRICES_CHUNK,
+      mode === RunMode.WRITE ? ENTRY_POINT_WRITE_PRICES_CHUNK : ENTRY_POINT_GET_PRICES_CHUNK,
       0,
       (runtimeArgs: RuntimeArgs) => {
-        checkPayloadRuntimeArgs(
-          MOCK_PAYLOAD_HEX.substring(chunkIndex * 2, (chunkIndex + 1) * 2)
-        )(runtimeArgs);
-
-        expect(
-          decodeNumber(runtimeArgs.args.get(ARG_NAME_CHUNK_INDEX))
-        ).toEqual(chunkIndex);
-        expect(decodeHex(runtimeArgs.args.get(ARG_NAME_HASH))).toEqual(
-          MOCK_PAYLOAD_HASH
+        checkPayloadRuntimeArgs(MOCK_PAYLOAD_HEX.substring(chunkIndex * 2, (chunkIndex + 1) * 2))(
+          runtimeArgs
         );
+
+        expect(decodeNumber(runtimeArgs.args.get(ARG_NAME_CHUNK_INDEX))).toEqual(chunkIndex);
+        expect(decodeHex(runtimeArgs.args.get(ARG_NAME_HASH))).toEqual(MOCK_PAYLOAD_HASH);
       },
       value
     );

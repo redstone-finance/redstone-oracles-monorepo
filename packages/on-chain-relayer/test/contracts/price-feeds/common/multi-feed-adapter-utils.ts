@@ -1,8 +1,5 @@
 import { time } from "@nomicfoundation/hardhat-network-helpers";
-import {
-  WrapperBuilder,
-  type MockSignerAddress,
-} from "@redstone-finance/evm-connector";
+import { WrapperBuilder, type MockSignerAddress } from "@redstone-finance/evm-connector";
 import { DataPackage, DataPoint, utils } from "@redstone-finance/protocol";
 import chai, { expect } from "chai";
 import chaiAsPromised from "chai-as-promised";
@@ -43,31 +40,20 @@ export const describeCommonMultiFeedAdapterTests = (contractName: string) => {
         : prevBlockTime * 1000;
       await time.setNextBlockTimestamp(curBlockTime);
 
-      const dataPoints = Object.entries(opts.prices).map(
-        ([dataFeedId, value]) => {
-          return new DataPoint(
-            dataFeedId,
-            utils.convertNumberToBytes(value, 0, 32)
-          );
-        }
-      );
-      const dataPackage = new DataPackage(
-        dataPoints,
-        mockDataTimestamp,
-        "__MOCK__"
-      );
-      const wrappedAdapter = WrapperBuilder.wrap(
-        multiAdapter
-      ).usingMockDataPackages(
+      const dataPoints = Object.entries(opts.prices).map(([dataFeedId, value]) => {
+        return new DataPoint(dataFeedId, utils.convertNumberToBytes(value, 0, 32));
+      });
+      const dataPackage = new DataPackage(dataPoints, mockDataTimestamp, "__MOCK__");
+      const wrappedAdapter = WrapperBuilder.wrap(multiAdapter).usingMockDataPackages(
         (opts.signerAddresses ?? authorisedSignersForTests).map((signer) => ({
           signer,
           dataPackage,
         }))
       );
 
-      const dataFeedIds = (
-        opts.dataFeedIdsStrings ?? Object.keys(opts.prices)
-      ).map(formatBytes32String);
+      const dataFeedIds = (opts.dataFeedIdsStrings ?? Object.keys(opts.prices)).map(
+        formatBytes32String
+      );
 
       return await wrappedAdapter.updateDataFeedsValuesPartial(dataFeedIds);
     };
@@ -81,8 +67,7 @@ export const describeCommonMultiFeedAdapterTests = (contractName: string) => {
 
     beforeEach(async () => {
       const contractFactory = await ethers.getContractFactory(contractName);
-      multiAdapter =
-        (await contractFactory.deploy()) as MultiFeedAdapterWithoutRoundsMock;
+      multiAdapter = (await contractFactory.deploy()) as MultiFeedAdapterWithoutRoundsMock;
       await multiAdapter.deployed();
     });
 
@@ -100,10 +85,9 @@ export const describeCommonMultiFeedAdapterTests = (contractName: string) => {
     it("Should get details of the latest update for many feeds", async () => {
       await updatePrices({ prices: { ETH: "42", BTC: "4242" } });
       // This function will be used by multi-feed relayer
-      const lastUpdateDetails =
-        await multiAdapter.getLastUpdateDetailsUnsafeForMany(
-          ["BTC", "MISSING_ID", "ETH"].map(formatBytes32String)
-        );
+      const lastUpdateDetails = await multiAdapter.getLastUpdateDetailsUnsafeForMany(
+        ["BTC", "MISSING_ID", "ETH"].map(formatBytes32String)
+      );
       expect(lastUpdateDetails[0].value).to.eq("4242");
       expect(lastUpdateDetails[0].blockTimestamp).to.not.eq("0");
       expect(lastUpdateDetails[1].value).to.eq("0");
@@ -135,10 +119,7 @@ export const describeCommonMultiFeedAdapterTests = (contractName: string) => {
     it("should revert if redstone payload is not attached", async () => {
       await expect(
         multiAdapter.updateDataFeedsValuesPartial([formatBytes32String("ETH")])
-      ).to.be.revertedWithCustomError(
-        multiAdapter,
-        "CalldataMustHaveValidPayload"
-      );
+      ).to.be.revertedWithCustomError(multiAdapter, "CalldataMustHaveValidPayload");
     });
 
     it("should revert for an unauthorised signer", async () => {
@@ -159,10 +140,7 @@ export const describeCommonMultiFeedAdapterTests = (contractName: string) => {
           prices: { ETH: "43" },
           signerAddresses: ["0x14dC79964da2C08b23698B3D3cc7Ca32193d9955"],
         })
-      ).to.be.revertedWithCustomError(
-        multiAdapter,
-        "InsufficientNumberOfUniqueSigners"
-      );
+      ).to.be.revertedWithCustomError(multiAdapter, "InsufficientNumberOfUniqueSigners");
     });
 
     it("should properly update data feeds with extra data feeds in payload", async () => {
@@ -185,10 +163,7 @@ export const describeCommonMultiFeedAdapterTests = (contractName: string) => {
           prices: { ETH: "43", USDC: "5000" },
           dataFeedIdsStrings: ["ETH", "USDC", "ETH"],
         })
-      ).to.be.revertedWithCustomError(
-        multiAdapter,
-        "InsufficientNumberOfUniqueSigners"
-      );
+      ).to.be.revertedWithCustomError(multiAdapter, "InsufficientNumberOfUniqueSigners");
     });
 
     it("should revert trying to update a missing feed", async () => {
@@ -197,10 +172,7 @@ export const describeCommonMultiFeedAdapterTests = (contractName: string) => {
           prices: { ETH: "43", USDC: "5000" },
           dataFeedIdsStrings: ["ETH", "BTC", "USDC"],
         })
-      ).to.be.revertedWithCustomError(
-        multiAdapter,
-        "InsufficientNumberOfUniqueSigners"
-      );
+      ).to.be.revertedWithCustomError(multiAdapter, "InsufficientNumberOfUniqueSigners");
     });
 
     it("should revert trying to get a zero value for a data feed", async () => {
@@ -220,9 +192,7 @@ export const describeCommonMultiFeedAdapterTests = (contractName: string) => {
     it("should revert trying to get several values, if one of values is zero", async () => {
       await updatePrices({ prices: { ETH: "44", BTC: "5000", USDC: "1234" } });
       await expect(
-        multiAdapter.getValuesForDataFeeds(
-          ["ETH", "INVALID", "BTC"].map(formatBytes32String)
-        )
+        multiAdapter.getValuesForDataFeeds(["ETH", "INVALID", "BTC"].map(formatBytes32String))
       ).to.be.revertedWithCustomError(multiAdapter, "InvalidLastUpdateDetails");
     });
 
@@ -251,10 +221,7 @@ export const describeCommonMultiFeedAdapterTests = (contractName: string) => {
       it(`should properly update values of different size for the same feed`, async () => {
         // We are testing values changing in different orders to check if our contract
         // works properly if we start needing bigger/smaller storage slot
-        const newValuesToTest = [
-          ...valuesToTest,
-          ...[...valuesToTest].reverse(),
-        ];
+        const newValuesToTest = [...valuesToTest, ...[...valuesToTest].reverse()];
 
         for (const valueToTest of newValuesToTest) {
           await updatePrices({ prices: { ETH: valueToTest } });
@@ -278,10 +245,7 @@ export const describeCommonMultiFeedAdapterTests = (contractName: string) => {
           prices: { ETH: "42" },
           prepareDataTime: (blockTime) => (blockTime + 2 * 60) * 1000,
         })
-      ).to.be.revertedWithCustomError(
-        multiAdapter,
-        "TimestampFromTooLongFuture"
-      );
+      ).to.be.revertedWithCustomError(multiAdapter, "TimestampFromTooLongFuture");
     });
 
     describe("Tests of the updates independency for data feeds (value validation)", () => {
@@ -500,9 +464,7 @@ export const describeCommonMultiFeedAdapterTests = (contractName: string) => {
             const dataFeedId = `dataFeed${i}`;
             dataFeedIds.push(formatBytes32String(dataFeedId));
             const gas =
-              await multiAdapter.estimateGas.getLastUpdateDetailsUnsafeForMany(
-                dataFeedIds
-              );
+              await multiAdapter.estimateGas.getLastUpdateDetailsUnsafeForMany(dataFeedIds);
             console.log(`\nGas costs for ${i + 1} feeds: ${gas.toNumber()}`);
           }
         });

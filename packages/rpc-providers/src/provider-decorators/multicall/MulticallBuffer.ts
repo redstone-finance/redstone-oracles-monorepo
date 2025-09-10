@@ -34,13 +34,9 @@ export class MulticallBuffer {
     }
   }
 
-  willCallDataSizeBeExceeded(
-    blockTag: BlockTag | undefined,
-    entry: CallEntry
-  ): boolean {
+  willCallDataSizeBeExceeded(blockTag: BlockTag | undefined, entry: CallEntry): boolean {
     return (
-      this.callDataSize(blockTag) + hexSizeToBytesSize(entry.callData.length) >
-      this.maxCallDataSize
+      this.callDataSize(blockTag) + hexSizeToBytesSize(entry.callData.length) > this.maxCallDataSize
     );
   }
 
@@ -55,9 +51,7 @@ export class MulticallBuffer {
   callDataSize(blockTag: BlockTag | undefined): number {
     const blockId = blockTagToBlockId(blockTag);
     const callDataLength =
-      this._state
-        .get(blockId)
-        ?.reduce((acc, entry) => acc + entry.callData.length, 0) ?? 0;
+      this._state.get(blockId)?.reduce((acc, entry) => acc + entry.callData.length, 0) ?? 0;
 
     return hexSizeToBytesSize(callDataLength);
   }

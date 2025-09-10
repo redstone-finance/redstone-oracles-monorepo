@@ -5,8 +5,7 @@ import { ethers } from "hardhat";
 import { MOCK_SIGNERS, WrapperBuilder } from "../../src/index";
 import { SampleForLocalhostMockTest } from "../../typechain-types";
 
-const dynamicDescribe =
-  process.env.MONOREPO_INTEGRATION_TEST === "true" ? describe : describe.skip;
+const dynamicDescribe = process.env.MONOREPO_INTEGRATION_TEST === "true" ? describe : describe.skip;
 
 const getCacheServiceUrls = (): string[] => {
   if (process.env.CACHE_SERVICE_URLS) {
@@ -33,8 +32,7 @@ dynamicDescribe("verify prices test", function () {
       urls: getCacheServiceUrls(),
       authorizedSigners: MOCK_SIGNERS.map((s) => s.address),
     });
-    const oracleValues =
-      await wrappedContract.extractOracleValuesView(bytes32Symbols);
+    const oracleValues = await wrappedContract.extractOracleValuesView(bytes32Symbols);
     checkValues(oracleValues);
   };
 
@@ -53,9 +51,7 @@ dynamicDescribe("verify prices test", function () {
   };
 
   this.beforeEach(async () => {
-    const ContractFactory = await ethers.getContractFactory(
-      "SampleForLocalhostMockTest"
-    );
+    const ContractFactory = await ethers.getContractFactory("SampleForLocalhostMockTest");
     contract = await ContractFactory.deploy();
     await contract.deployed();
   });

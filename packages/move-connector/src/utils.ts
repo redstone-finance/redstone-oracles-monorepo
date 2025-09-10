@@ -42,22 +42,14 @@ export function txCost(response: TransactionResponse) {
   return octasToMove(gas_price * gas_used);
 }
 
-export function makeAptosAccount(
-  privateKey?: string,
-  variant?: PrivateKeyVariants
-) {
-  privateKey ??= RedstoneCommon.getFromEnv(
-    "PRIVATE_KEY",
-    z.string().optional()
-  );
+export function makeAptosAccount(privateKey?: string, variant?: PrivateKeyVariants) {
+  privateKey ??= RedstoneCommon.getFromEnv("PRIVATE_KEY", z.string().optional());
   if (!privateKey) {
     throw new Error("privateKey not set");
   }
   variant ??=
-    RedstoneCommon.getFromEnv(
-      "PRIVATE_KEY_SCHEMA",
-      z.nativeEnum(PrivateKeyVariants).optional()
-    ) ?? PrivateKeyVariants.Secp256k1;
+    RedstoneCommon.getFromEnv("PRIVATE_KEY_SCHEMA", z.nativeEnum(PrivateKeyVariants).optional()) ??
+    PrivateKeyVariants.Secp256k1;
 
   return Account.fromPrivateKey({
     privateKey: extractPrivateKey(privateKey, variant),
@@ -67,9 +59,7 @@ export function makeAptosAccount(
 function extractPrivateKey(key: HexInput, keyType: PrivateKeyVariants) {
   switch (keyType) {
     case PrivateKeyVariants.Ed25519:
-      return new Ed25519PrivateKey(
-        PrivateKey.formatPrivateKey(key, PrivateKeyVariants.Ed25519)
-      );
+      return new Ed25519PrivateKey(PrivateKey.formatPrivateKey(key, PrivateKeyVariants.Ed25519));
     case PrivateKeyVariants.Secp256k1:
       return new Secp256k1PrivateKey(
         PrivateKey.formatPrivateKey(key, PrivateKeyVariants.Secp256k1)

@@ -11,9 +11,7 @@ describe("Utils", () => {
     assert(true);
     assert(true, "Some message");
     expect(() => assert(false)).toThrowError("Assertion failed");
-    expect(() => assert(false, "Custom msg")).toThrowError(
-      "Assertion failed: Custom msg"
-    );
+    expect(() => assert(false, "Custom msg")).toThrowError("Assertion failed: Custom msg");
   });
 
   test("Should correctly convert strings to bytes32", () => {
@@ -29,16 +27,10 @@ describe("Utils", () => {
     expect(hexlify(convertStringToBytes32(""))).toBe(
       "0x0000000000000000000000000000000000000000000000000000000000000000"
     );
-    expect(
-      hexlify(convertStringToBytes32("Long string - longer than 32 characters"))
-    ).toBe(
+    expect(hexlify(convertStringToBytes32("Long string - longer than 32 characters"))).toBe(
       "0x521e07e3034088704b35350d34ac32d1512f3d119f60761ba2597337f2124e51"
     );
-    expect(
-      hexlify(
-        convertStringToBytes32("0x15d34AAf54267DB7D7c367839AAf71A00a2C6A65")
-      )
-    ).toBe(
+    expect(hexlify(convertStringToBytes32("0x15d34AAf54267DB7D7c367839AAf71A00a2C6A65"))).toBe(
       "0xf4ca8532861558e29f9858a3804245bb30f0303cc71e4192e41546237b6ce58b"
     );
   });
@@ -93,9 +85,7 @@ describe("Utils", () => {
       "Assertion failed: convertIntegerNumberToBytes expects integer as input"
     );
 
-    expect(() => convertNumberToBytes(NaN, 2, 20)).toThrow(
-      /invalid decimal value/
-    );
+    expect(() => convertNumberToBytes(NaN, 2, 20)).toThrow(/invalid decimal value/);
   });
 
   test("Should throw on Infinity", () => {
@@ -103,9 +93,7 @@ describe("Utils", () => {
       "Assertion failed: convertIntegerNumberToBytes expects integer as input"
     );
 
-    expect(() => convertNumberToBytes(-Infinity, 2, 20)).toThrow(
-      /invalid decimal value/
-    );
+    expect(() => convertNumberToBytes(-Infinity, 2, 20)).toThrow(/invalid decimal value/);
   });
 
   test("Should fail on float passed to convertIntegerNumberToBytes", () => {

@@ -2,10 +2,7 @@ import { ContractParamsProvider } from "@redstone-finance/sdk";
 import { Contract } from "starknet";
 import { FEE_MULTIPLIER } from "../StarknetContractConnector";
 import { getNumberFromStarknetResult } from "../starknet-utils";
-import {
-  IPriceManagerContractAdapter,
-  PriceManagerMetadata,
-} from "./IPriceManagerContractAdapter";
+import { IPriceManagerContractAdapter, PriceManagerMetadata } from "./IPriceManagerContractAdapter";
 
 interface RoundData {
   payload_timestamp: number;
@@ -14,9 +11,7 @@ interface RoundData {
   block_timestamp: number;
 }
 
-export class PriceRoundsAdapterStarknetContractAdapter
-  implements IPriceManagerContractAdapter
-{
+export class PriceRoundsAdapterStarknetContractAdapter implements IPriceManagerContractAdapter {
   constructor(
     private readonly contract: Contract,
     private readonly paramsProvider: ContractParamsProvider,
@@ -27,12 +22,10 @@ export class PriceRoundsAdapterStarknetContractAdapter
     const result = (await this.contract.call("read_round_data")) as RoundData;
 
     return {
-      payload_timestamp:
-        getNumberFromStarknetResult(result.payload_timestamp) * 1000,
+      payload_timestamp: getNumberFromStarknetResult(result.payload_timestamp) * 1000,
       round: getNumberFromStarknetResult(result.round_number),
       block_number: getNumberFromStarknetResult(result.block_number),
-      block_timestamp:
-        getNumberFromStarknetResult(result.block_timestamp) * 1000,
+      block_timestamp: getNumberFromStarknetResult(result.block_timestamp) * 1000,
     };
   }
 

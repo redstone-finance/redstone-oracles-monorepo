@@ -31,15 +31,7 @@ const FIRST_DATA_SERVICE_ID = "redstone-avalanche-demo";
 const SECOND_DATA_SERVICE_ID = "redstone-avalanche-prod";
 const MIN_DEVIATION_PERCENTAGE_TO_LOG = 1;
 
-const TOKENS_ONLY_IN_ONE_DB = [
-  "stETH",
-  "USDT.e",
-  "YAK",
-  "gmdUSDC",
-  "gmdETH",
-  "EUROC",
-  "CRV",
-];
+const TOKENS_ONLY_IN_ONE_DB = ["stETH", "USDT.e", "YAK", "gmdUSDC", "gmdETH", "EUROC", "CRV"];
 
 // eslint-disable-next-line @typescript-eslint/no-floating-promises
 (async () => {
@@ -49,13 +41,8 @@ const TOKENS_ONLY_IN_ONE_DB = [
   for (const timestampIntervals of timestampsConfigs) {
     const { dataPackagesFromFirst, dataPackagesFromSecond } =
       await fetchDataPackagesFromBothMongoDbs(timestampIntervals);
-    if (
-      dataPackagesFromFirst.length === 0 ||
-      dataPackagesFromSecond.length === 0
-    ) {
-      console.log(
-        "Data packages from first or second are empty, finishing process"
-      );
+    if (dataPackagesFromFirst.length === 0 || dataPackagesFromSecond.length === 0) {
+      console.log("Data packages from first or second are empty, finishing process");
       process.exit(0);
     }
 
@@ -72,8 +59,7 @@ const TOKENS_ONLY_IN_ONE_DB = [
     for (const [timestamp, dataPackagesFromFirst] of Object.entries(
       dataPackagesFromFirstByTimestamp
     )) {
-      const dataPackagesFromSecond =
-        dataPackagesFromSecondByTimestamp[timestamp];
+      const dataPackagesFromSecond = dataPackagesFromSecondByTimestamp[timestamp];
       const timestampAsNumber = Number(timestamp);
 
       const arrayOfUniqueDataFeedsIdsFromFirst: Set<string>[] = [];
@@ -94,9 +80,7 @@ const TOKENS_ONLY_IN_ONE_DB = [
           warnings.forEach((warning) => console.log(warning));
         }
 
-        arrayOfUniqueDataFeedsIdsFromFirst.push(
-          getSetOfDataFeedsIds(allDataPoints)
-        );
+        arrayOfUniqueDataFeedsIdsFromFirst.push(getSetOfDataFeedsIds(allDataPoints));
       }
 
       handleComparingSetsOfDataPoints(
@@ -116,9 +100,7 @@ function defineTimestampsIntervals(): TimestampIntervals[] {
   }));
 }
 
-async function fetchDataPackagesFromBothMongoDbs(
-  timestampIntervals: TimestampIntervals
-) {
+async function fetchDataPackagesFromBothMongoDbs(timestampIntervals: TimestampIntervals) {
   console.log(
     `Fetching data packages from first MongoDb, timestamp intervals: ${JSON.stringify(
       timestampIntervals
@@ -202,17 +184,12 @@ function addUniqueDataFeedsIdsSetsFromSecond(
   arrayOfUniqueDataFeedsIdsFromSecond: Set<string>[]
 ) {
   for (const dataPackageFromSecond of dataPackagesFromSecond) {
-    const uniqueDataPointsFromSecond = getSetOfDataFeedsIds(
-      dataPackageFromSecond.dataPoints
-    );
+    const uniqueDataPointsFromSecond = getSetOfDataFeedsIds(dataPackageFromSecond.dataPoints);
     arrayOfUniqueDataFeedsIdsFromSecond.push(uniqueDataPointsFromSecond);
   }
 }
 
-function getDataPointsFromSecond(
-  dataPackagesFromSecond: CachedDataPackage[],
-  dataFeedId: string
-) {
+function getDataPointsFromSecond(dataPackagesFromSecond: CachedDataPackage[], dataFeedId: string) {
   const dataPointsFromSecond: DataPointPlainObj[] = [];
   for (const dataPackageFromSecond of dataPackagesFromSecond) {
     dataPointsFromSecond.push(
@@ -259,9 +236,7 @@ function compareDataPointsSets(leftSet: Set<string>, rightSet: Set<string>) {
   const diff = new Set(
     [...leftSet]
       .filter((leftSetElement) => !rightSet.has(leftSetElement))
-      .concat(
-        [...rightSet].filter((rightSetElement) => !leftSet.has(rightSetElement))
-      )
+      .concat([...rightSet].filter((rightSetElement) => !leftSet.has(rightSetElement)))
   );
   const diffValues = Array.from(diff);
   const filteredDiffValues = diffValues.filter(
@@ -294,12 +269,7 @@ function handleComparingSetsOfDataPoints(
   ];
 
   for (const option of compareOptions) {
-    compareSetsOfDataPointsAndLogWarnings(
-      option.left,
-      option.right,
-      timestamp,
-      option.type
-    );
+    compareSetsOfDataPointsAndLogWarnings(option.left, option.right, timestamp, option.type);
   }
 }
 

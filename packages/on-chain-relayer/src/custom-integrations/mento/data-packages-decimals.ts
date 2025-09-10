@@ -1,7 +1,4 @@
-import {
-  getNumericDataPointDecimals,
-  NumericDataPoint,
-} from "@redstone-finance/protocol";
+import { getNumericDataPointDecimals, NumericDataPoint } from "@redstone-finance/protocol";
 import { RelayerConfig } from "../../config/RelayerConfig";
 import { IterationArgsMessage, ShouldUpdateContext } from "../../types";
 
@@ -22,8 +19,7 @@ export const checkIfDataPackagesDecimalsAreAcceptable = (
       for (const dataPoint of signedDataPackage.dataPackage.dataPoints) {
         if (
           !(dataPoint instanceof NumericDataPoint) ||
-          getNumericDataPointDecimals(dataPoint.toObj()) !==
-            MENTO_SUPPORTED_DECIMALS
+          getNumericDataPointDecimals(dataPoint.toObj()) !== MENTO_SUPPORTED_DECIMALS
         ) {
           const message = `Cannot update prices in mento adapter, some decimals are different than ${MENTO_SUPPORTED_DECIMALS} ${JSON.stringify(
             { dataFeedId, dataPoint: dataPoint.toObj() }

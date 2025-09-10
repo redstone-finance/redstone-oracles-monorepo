@@ -19,12 +19,7 @@ export async function waitForBlockNumber(
 
   await waitForSuccess(
     (iterationIndex) =>
-      getBlockNumberWithLog(
-        getBlockNumber,
-        blockNumberToWaitFor,
-        description,
-        iterationIndex
-      ),
+      getBlockNumberWithLog(getBlockNumber, blockNumberToWaitFor, description, iterationIndex),
     maxIterationCount,
     `[${description}] Didn't achieve block number ${blockNumberToWaitFor} in ${(maxIterationCount * waitingIntervalMs) / 1000} [s]`,
     waitingIntervalMs,
@@ -43,9 +38,7 @@ async function getBlockNumberWithLog(
 
   (iterationIndex ? logger.info : logger.debug)(
     `[${description}] Iteration #${iterationIndex} Current block number: ${currentBlockNumber}` +
-      (!isConditionFulfilled
-        ? ` (missing: ${blockNumberToWaitFor - currentBlockNumber})`
-        : "")
+      (!isConditionFulfilled ? ` (missing: ${blockNumberToWaitFor - currentBlockNumber})` : "")
   );
 
   return isConditionFulfilled;

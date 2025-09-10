@@ -21,10 +21,7 @@ export class TransferNonFungibleRadixMethod extends VoidRadixInvocation {
   override getParams(): Value[] {
     return [
       address(this.badge.resourceAddress),
-      array(
-        ValueKind.NonFungibleLocalId,
-        nonFungibleLocalId(this.badge.localId)
-      ),
+      array(ValueKind.NonFungibleLocalId, nonFungibleLocalId(this.badge.localId)),
     ];
   }
 

@@ -1,10 +1,7 @@
 import { DataPackage, SignedDataPackage } from "@redstone-finance/protocol";
 import { Contract } from "ethers";
 import { version } from "../../package.json";
-import {
-  MockSignerAddress,
-  getMockSignerPrivateKey,
-} from "../helpers/test-utils";
+import { MockSignerAddress, getMockSignerPrivateKey } from "../helpers/test-utils";
 import { BaseWrapper } from "./BaseWrapper";
 
 export interface MockDataPackageConfig {

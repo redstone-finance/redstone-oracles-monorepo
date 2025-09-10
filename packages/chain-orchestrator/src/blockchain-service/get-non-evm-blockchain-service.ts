@@ -8,15 +8,8 @@ import {
   makeKeypair as makeStellarKeypair,
   StellarClientBuilder,
 } from "@redstone-finance/stellar-connector";
-import {
-  makeSuiKeypair,
-  SuiClientBuilder,
-} from "@redstone-finance/sui-connector";
-import {
-  deconstructNetworkId,
-  NetworkId,
-  RedstoneCommon,
-} from "@redstone-finance/utils";
+import { makeSuiKeypair, SuiClientBuilder } from "@redstone-finance/sui-connector";
+import { deconstructNetworkId, NetworkId, RedstoneCommon } from "@redstone-finance/utils";
 import { MoveBlockchainService } from "./MoveBlockchainService";
 import { RadixBlockchainService } from "./RadixBlockchainService";
 import { SolanaBlockchainService } from "./SolanaBlockchainService";
@@ -59,9 +52,7 @@ export function getNonEvmBlockchainService(
         .withNetworkId(networkId)
         .withRpcUrls(rpcUrls)
         .build();
-      const keypair = privateKey
-        ? makeSolanaKeypair(privateKey.value)
-        : undefined;
+      const keypair = privateKey ? makeSolanaKeypair(privateKey.value) : undefined;
       return new SolanaBlockchainService(connection, undefined, keypair);
     }
     case "stellar": {
@@ -70,9 +61,7 @@ export function getNonEvmBlockchainService(
         .withRpcUrls(rpcUrls)
         .withQuarantineEnabled()
         .build();
-      const keypair = privateKey
-        ? makeStellarKeypair(privateKey.value)
-        : undefined;
+      const keypair = privateKey ? makeStellarKeypair(privateKey.value) : undefined;
       return new StellarBlockchainService(client, keypair);
     }
     case "fuel":

@@ -9,16 +9,10 @@ import { ContractData } from "../../types";
 import { ContractFacade } from "../ContractFacade";
 
 export class NonEvmContractFacade extends ContractFacade {
-  async getLatestRoundContractData(
-    feedIds: string[],
-    _blockTag: number
-  ): Promise<ContractData> {
+  async getLatestRoundContractData(feedIds: string[], _blockTag: number): Promise<ContractData> {
     const adapter = await this.getAdapter();
 
-    return await getContractDataFromExtendedPricesContractAdapter(
-      adapter,
-      feedIds
-    );
+    return await getContractDataFromExtendedPricesContractAdapter(adapter, feedIds);
   }
 
   private async getAdapter() {

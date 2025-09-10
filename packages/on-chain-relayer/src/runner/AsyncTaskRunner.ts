@@ -15,9 +15,7 @@ export class AsyncTaskRunner {
   ) {
     {
       process.on("SIGTERM", () => {
-        logger.info(
-          "SIGTERM received, NodeRunner scheduled for a graceful shut down."
-        );
+        logger.info("SIGTERM received, NodeRunner scheduled for a graceful shut down.");
         shouldGracefullyShutdown = true;
       });
     }
@@ -31,11 +29,7 @@ export class AsyncTaskRunner {
             logger.info(`Shutdown scheduled, not running next iteration`);
             return;
           }
-          await runIteration(
-            contractFacade,
-            relayerConfig,
-            iterationOptionsOverride
-          );
+          await runIteration(contractFacade, relayerConfig, iterationOptionsOverride);
         } finally {
           if (shouldGracefullyShutdown) {
             terminateWithUpdateConfigExitCode();

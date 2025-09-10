@@ -15,16 +15,10 @@ export const NETWORK = Network.LOCAL;
 
 export class TestHelper {
   private isPrepared = false;
-  private readonly logger = loggerFactory(
-    "move-prices-contract-connector-tests"
-  );
+  private readonly logger = loggerFactory("move-prices-contract-connector-tests");
 
   static makeLocal(): TestHelper {
-    const client = makeAptos(
-      NETWORK as Network,
-      REST_NODE_LOCALNET_URL,
-      REST_FAUCET_LOCALNET_URL
-    );
+    const client = makeAptos(NETWORK as Network, REST_NODE_LOCALNET_URL, REST_FAUCET_LOCALNET_URL);
     const account = makeAptosAccount(FAKE_PRIVKEY_SECP256K1);
     return new TestHelper(client, account);
   }
@@ -48,9 +42,7 @@ export class TestHelper {
         this.logger.info("Funds transferred");
       }
     } catch (e) {
-      this.logger.info(
-        `Failed when funding account: ${RedstoneCommon.stringifyError(e)}`
-      );
+      this.logger.info(`Failed when funding account: ${RedstoneCommon.stringifyError(e)}`);
     }
   }
 

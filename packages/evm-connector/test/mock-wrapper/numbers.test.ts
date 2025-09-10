@@ -1,10 +1,7 @@
 import { utils } from "@redstone-finance/protocol";
 import { expect } from "chai";
 import { ethers } from "hardhat";
-import {
-  DEFAULT_TIMESTAMP_FOR_TESTS,
-  getMockNumericPackage,
-} from "../../src/helpers/test-utils";
+import { DEFAULT_TIMESTAMP_FOR_TESTS, getMockNumericPackage } from "../../src/helpers/test-utils";
 import { WrapperBuilder } from "../../src/index";
 import { MockDataPackageConfig } from "../../src/wrappers/MockWrapper";
 import { SampleRedstoneConsumerNumericMock } from "../../typechain-types";
@@ -33,9 +30,7 @@ describe("SampleRedstoneConsumerNumericMock", function () {
 
     const valueFromContract = await contract.latestSavedValue();
 
-    expect(valueFromContract.toNumber()).to.be.equal(
-      expectedNumericValues[dataFeedId]
-    );
+    expect(valueFromContract.toNumber()).to.be.equal(expectedNumericValues[dataFeedId]);
   };
 
   const testShouldRevertWith = async (
@@ -48,18 +43,14 @@ describe("SampleRedstoneConsumerNumericMock", function () {
       WrapperBuilder.wrap(contract).usingMockDataPackages(mockNumericPackages);
 
     await expect(
-      wrappedContract.saveOracleValueInContractStorage(
-        utils.convertStringToBytes32(dataFeedId)
-      )
+      wrappedContract.saveOracleValueInContractStorage(utils.convertStringToBytes32(dataFeedId))
     )
       .to.be.revertedWithCustomError(wrappedContract, revertMsg)
       .withArgs(...args);
   };
 
   this.beforeEach(async () => {
-    const ContractFactory = await ethers.getContractFactory(
-      "SampleRedstoneConsumerNumericMock"
-    );
+    const ContractFactory = await ethers.getContractFactory("SampleRedstoneConsumerNumericMock");
     contract = await ContractFactory.deploy();
     await contract.deployed();
   });
@@ -127,28 +118,13 @@ describe("SampleRedstoneConsumerNumericMock", function () {
   });
 
   it("Should revert for insufficient number of signers", async () => {
-    const newMockPackages = mockNumericPackages.slice(
-      0,
-      NUMBER_OF_MOCK_NUMERIC_SIGNERS - 1
-    );
-    await testShouldRevertWith(
-      newMockPackages,
-      "BTC",
-      "InsufficientNumberOfUniqueSigners",
-      9,
-      10
-    );
+    const newMockPackages = mockNumericPackages.slice(0, NUMBER_OF_MOCK_NUMERIC_SIGNERS - 1);
+    await testShouldRevertWith(newMockPackages, "BTC", "InsufficientNumberOfUniqueSigners", 9, 10);
   });
 
   it("Should revert for duplicated packages (not enough unique signers)", async () => {
     const newMockPackages = [...mockNumericPackages];
     newMockPackages[1] = mockNumericPackages[0];
-    await testShouldRevertWith(
-      newMockPackages,
-      "BTC",
-      "InsufficientNumberOfUniqueSigners",
-      9,
-      10
-    );
+    await testShouldRevertWith(newMockPackages, "BTC", "InsufficientNumberOfUniqueSigners", 9, 10);
   });
 });

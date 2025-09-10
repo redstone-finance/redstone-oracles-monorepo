@@ -14,8 +14,6 @@ export class PriceRoundsFeedStarknetContractConnector
   }
 
   async getAdapter(): Promise<IPriceRoundsFeedContractAdapter> {
-    return await Promise.resolve(
-      new PriceRoundsFeedStarknetContractAdapter(this.getContract())
-    );
+    return await Promise.resolve(new PriceRoundsFeedStarknetContractAdapter(this.getContract()));
   }
 }

@@ -1,43 +1,27 @@
 import { ContractParamsProvider } from "@redstone-finance/sdk";
-import {
-  FuelPricesContractAdapter,
-  FuelPricesContractConnector,
-} from "../../src";
+import { FuelPricesContractAdapter, FuelPricesContractConnector } from "../../src";
 
 export class GasUsageFuelPricesContractConnector extends FuelPricesContractConnector {
   override async getAdapter() {
     return await Promise.resolve(
-      new GasUsageFuelPricesContractAdapter(
-        await this.getContract(),
-        this.getGasLimit()
-      )
+      new GasUsageFuelPricesContractAdapter(await this.getContract(), this.getGasLimit())
     );
   }
 }
 
 class GasUsageFuelPricesContractAdapter extends FuelPricesContractAdapter {
-  override async getPricesFromPayload(
-    paramsProvider: ContractParamsProvider
-  ): Promise<bigint[]> {
-    return [
-      BigInt((await this.callGetPrices(paramsProvider)).gasUsed.toNumber()),
-    ];
+  override async getPricesFromPayload(paramsProvider: ContractParamsProvider): Promise<bigint[]> {
+    return [BigInt((await this.callGetPrices(paramsProvider)).gasUsed.toNumber())];
   }
 
   override async writePricesFromPayloadToContract(
     paramsProvider: ContractParamsProvider
   ): Promise<bigint[]> {
-    return [
-      BigInt((await this.callWritePrices(paramsProvider)).gasUsed.toNumber()),
-    ];
+    return [BigInt((await this.callWritePrices(paramsProvider)).gasUsed.toNumber())];
   }
 
-  override async readPricesFromContract(
-    paramsProvider: ContractParamsProvider
-  ): Promise<bigint[]> {
-    return [
-      BigInt((await this.callReadPrices(paramsProvider)).gasUsed.toNumber()),
-    ];
+  override async readPricesFromContract(paramsProvider: ContractParamsProvider): Promise<bigint[]> {
+    return [BigInt((await this.callReadPrices(paramsProvider)).gasUsed.toNumber())];
   }
 
   override async readTimestampFromContract(): Promise<number> {

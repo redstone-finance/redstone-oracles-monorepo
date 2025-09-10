@@ -3,9 +3,7 @@ import { beginCell, Builder, Cell, TupleBuilder, TupleReader } from "@ton/core";
 import { arrayify, hexlify, toUtf8Bytes } from "ethers/lib/utils";
 import { OP_NUMBER_BITS } from "./config/constants";
 
-export function createTupleItems(
-  items: (bigint | boolean | number | string)[]
-) {
+export function createTupleItems(items: (bigint | boolean | number | string)[]) {
   const tuple = new TupleBuilder();
 
   items.forEach((value) => tuple.writeNumber(BigInt(value)));

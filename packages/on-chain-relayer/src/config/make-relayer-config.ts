@@ -13,9 +13,7 @@ import {
   RelayerConfig,
 } from "./RelayerConfig";
 
-const createManifestConfig = (
-  manifest: AnyOnChainRelayerManifest
-): ManifestConfig => {
+const createManifestConfig = (manifest: AnyOnChainRelayerManifest): ManifestConfig => {
   const { updateConditions, updateTriggers } = makeUpdateConditions(manifest);
   return {
     chainName: manifest.chain.name,
@@ -73,17 +71,11 @@ export const makePriceFeedsUpdateConditions = (
     updateConditions[dataFeedId] = [];
     updateTriggers[dataFeedId] = {};
 
-    updateConditionsAndTriggersForFeed(
-      dataFeedId,
-      updateConditions,
-      updateTriggers,
-      {
-        deviationPercentage:
-          priceFeedsDeviationOverrides?.[dataFeedId] ?? deviationPercentage,
-        timeSinceLastUpdateInMilliseconds,
-        cron,
-      }
-    );
+    updateConditionsAndTriggersForFeed(dataFeedId, updateConditions, updateTriggers, {
+      deviationPercentage: priceFeedsDeviationOverrides?.[dataFeedId] ?? deviationPercentage,
+      timeSinceLastUpdateInMilliseconds,
+      cron,
+    });
   }
 
   return {
@@ -101,10 +93,9 @@ export const makeMultiFeedUpdateConditions = (
   const updateConditions: Record<string, ConditionCheckNames[]> = {};
   const updateTriggers: Record<string, UpdateTriggers> = {};
 
-  for (const [
-    dataFeedId,
-    { updateTriggersOverrides: dataFeedUpdateTriggers },
-  ] of Object.entries(manifest.priceFeeds)) {
+  for (const [dataFeedId, { updateTriggersOverrides: dataFeedUpdateTriggers }] of Object.entries(
+    manifest.priceFeeds
+  )) {
     updateConditions[dataFeedId] = [];
     updateTriggers[dataFeedId] = {};
 
@@ -120,16 +111,11 @@ export const makeMultiFeedUpdateConditions = (
       ? dataFeedUpdateTriggers.cron
       : manifest.updateTriggers.cron;
 
-    updateConditionsAndTriggersForFeed(
-      dataFeedId,
-      updateConditions,
-      updateTriggers,
-      {
-        deviationPercentage,
-        timeSinceLastUpdateInMilliseconds,
-        cron,
-      }
-    );
+    updateConditionsAndTriggersForFeed(dataFeedId, updateConditions, updateTriggers, {
+      deviationPercentage,
+      timeSinceLastUpdateInMilliseconds,
+      cron,
+    });
   }
 
   return {
@@ -144,8 +130,7 @@ function updateConditionsAndTriggersForFeed(
   updateTriggers: Record<string, UpdateTriggers>,
   feedUpdateTriggers: UpdateTriggers
 ) {
-  const { deviationPercentage, timeSinceLastUpdateInMilliseconds, cron } =
-    feedUpdateTriggers;
+  const { deviationPercentage, timeSinceLastUpdateInMilliseconds, cron } = feedUpdateTriggers;
 
   if (deviationPercentage) {
     updateConditions[dataFeedId].push("value-deviation");

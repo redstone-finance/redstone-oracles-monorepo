@@ -12,10 +12,7 @@ export class FuelPricesContractConnector extends FuelContractConnector<IPricesCo
 
   async getAdapter() {
     return await Promise.resolve(
-      new FuelPricesContractAdapter(
-        await this.getContract(),
-        this.getGasLimit()
-      )
+      new FuelPricesContractAdapter(await this.getContract(), this.getGasLimit())
     );
   }
 }

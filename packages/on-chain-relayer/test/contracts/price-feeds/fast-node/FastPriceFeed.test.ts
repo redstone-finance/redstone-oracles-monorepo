@@ -1,16 +1,11 @@
 import { expect } from "chai";
 import { ethers } from "hardhat";
-import {
-  FastMultiFeedAdapter,
-  FastPriceFeedMock,
-} from "../../../../typechain-types";
+import { FastMultiFeedAdapter, FastPriceFeedMock } from "../../../../typechain-types";
 import { deployAdapter, updateByAllNodes } from "./FastMultiFeedAdapter.test";
 
 const DATA_FEED_ID = ethers.utils.formatBytes32String("ETH");
 
-async function deployFastPriceFeed(
-  adapter: FastMultiFeedAdapter
-): Promise<FastPriceFeedMock> {
+async function deployFastPriceFeed(adapter: FastMultiFeedAdapter): Promise<FastPriceFeedMock> {
   const factory = await ethers.getContractFactory("FastPriceFeedMock");
   const feed = await factory.deploy(adapter.address, DATA_FEED_ID);
   await feed.deployed();
@@ -47,10 +42,7 @@ describe("FastPriceFeed", function () {
   });
 
   it("should revert if getRoundData is called with invalid round", async () => {
-    await expect(feed.getRoundData(1)).to.be.revertedWithCustomError(
-      adapter,
-      "RoundIdTooHigh"
-    );
+    await expect(feed.getRoundData(1)).to.be.revertedWithCustomError(adapter, "RoundIdTooHigh");
   });
 
   it("should return latestRoundData correctly", async () => {

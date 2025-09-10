@@ -12,9 +12,7 @@ export class SolanaLedgerSigner {
   ) {}
 
   async signTransaction(transaction: VersionedTransaction) {
-    console.log(
-      `Serialized transaction, check with \`wtf\`: ${hexlify(transaction.serialize())}`
-    );
+    console.log(`Serialized transaction, check with \`wtf\`: ${hexlify(transaction.serialize())}`);
     const serializedMessage = transaction.message.serialize();
 
     const result = await this.solana.signTransaction(
@@ -26,9 +24,7 @@ export class SolanaLedgerSigner {
   }
 
   async getPublicKey() {
-    const result = await this.solana.getAddress(
-      getDerivationPath(this.accountId)
-    );
+    const result = await this.solana.getAddress(getDerivationPath(this.accountId));
     const edPublicKey = new PublicKey(result.address);
 
     return {

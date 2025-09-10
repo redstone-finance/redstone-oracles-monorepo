@@ -6,18 +6,11 @@
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 import { INestApplication } from "@nestjs/common";
 import { Test, TestingModule } from "@nestjs/testing";
-import {
-  DataPoint,
-  SignedDataPackagePlainObj,
-  consts,
-} from "@redstone-finance/protocol";
+import { DataPoint, SignedDataPackagePlainObj, consts } from "@redstone-finance/protocol";
 import { Wallet } from "ethers-v6";
 import request from "supertest";
 import { AppModule } from "../../src/app.module";
-import {
-  DataPackage,
-  DataPackageDocument,
-} from "../../src/data-packages/data-packages.model";
+import { DataPackage, DataPackageDocument } from "../../src/data-packages/data-packages.model";
 import { DataPackagesService } from "../../src/data-packages/data-packages.service";
 import {
   MOCK_DATA_SERVICE_ID,
@@ -29,10 +22,7 @@ import {
   mockSigner,
   produceMockDataPackage,
 } from "../common/mock-values";
-import {
-  createTestDB as createAndConnectToTestDb,
-  dropTestDatabase,
-} from "../common/test-db";
+import { createTestDB as createAndConnectToTestDb, dropTestDatabase } from "../common/test-db";
 import { signByMockSigner } from "../common/test-utils";
 
 type WithSigner = { signerAddress: string };
@@ -46,9 +36,7 @@ jest.mock("@redstone-finance/sdk", () => ({
 const ALL_FEEDS_KEY = consts.ALL_FEEDS_KEY;
 const dataPackagesIds = [ALL_FEEDS_KEY, "ETH", "AAVE", "BTC"];
 
-const getExpectedDataPackagesInDB = (
-  dataPackages: SignedDataPackagePlainObj[]
-) =>
+const getExpectedDataPackagesInDB = (dataPackages: SignedDataPackagePlainObj[]) =>
   dataPackages.map((dataPackage) => ({
     ...dataPackage,
     signerAddress: mockSigner.address,
@@ -143,9 +131,7 @@ describe("Data packages (e2e)", () => {
           return rest;
         });
         expect(dataPackagesInDBCleaned).toEqual(
-          expect.arrayContaining(
-            getExpectedDataPackagesInDB(dataPackagesToSent)
-          )
+          expect.arrayContaining(getExpectedDataPackagesInDB(dataPackagesToSent))
         );
       });
 
@@ -182,20 +168,16 @@ describe("Data packages (e2e)", () => {
           .expect(200);
 
         const responseMostRecent = await request(httpServer)
-          .get(
-            `${version}/data-packages/latest-not-aligned-by-time/mock-data-service-1`
-          )
+          .get(`${version}/data-packages/latest-not-aligned-by-time/mock-data-service-1`)
           .expect(200);
 
         expect(
-          responseLatest.body[ALL_FEEDS_KEY].sort(
-            (a: WithSigner, b: WithSigner) =>
-              a.signerAddress.localeCompare(b.signerAddress)
+          responseLatest.body[ALL_FEEDS_KEY].sort((a: WithSigner, b: WithSigner) =>
+            a.signerAddress.localeCompare(b.signerAddress)
           )
         ).toEqual(
-          responseMostRecent.body[ALL_FEEDS_KEY].sort(
-            (a: WithSigner, b: WithSigner) =>
-              a.signerAddress.localeCompare(b.signerAddress)
+          responseMostRecent.body[ALL_FEEDS_KEY].sort((a: WithSigner, b: WithSigner) =>
+            a.signerAddress.localeCompare(b.signerAddress)
           )
         );
       });
@@ -219,9 +201,9 @@ describe("Data packages (e2e)", () => {
           .get(`${version}/data-packages/latest/mock-data-service-1`)
           .expect(200);
 
-        expect(
-          responseLatest.body[ALL_FEEDS_KEY][0].timestampMilliseconds
-        ).toBe(dpTimestamp - 1000);
+        expect(responseLatest.body[ALL_FEEDS_KEY][0].timestampMilliseconds).toBe(
+          dpTimestamp - 1000
+        );
       });
 
       it("/data-packages/latest (GET) return package which contains more UNIQUE data-packages (in this case older one) ", async () => {
@@ -261,9 +243,9 @@ describe("Data packages (e2e)", () => {
           .get(`${version}/data-packages/latest/mock-data-service-1`)
           .expect(200);
 
-        expect(
-          responseLatest.body[ALL_FEEDS_KEY][0].timestampMilliseconds
-        ).toBe(dpTimestamp - 1000);
+        expect(responseLatest.body[ALL_FEEDS_KEY][0].timestampMilliseconds).toBe(
+          dpTimestamp - 1000
+        );
       });
 
       it("/data-packages/latest (GET) return packages with unique signers if multiple packages with repeated signers", async () => {
@@ -326,18 +308,15 @@ describe("Data packages (e2e)", () => {
       });
 
       it("/data-packages/historical/mock-data-service-1 (GET)", async () => {
-        const historicalTimestamp =
-          mockDataPackages[0].timestampMilliseconds - 1000;
+        const historicalTimestamp = mockDataPackages[0].timestampMilliseconds - 1000;
         const testResponse = await request(httpServer)
-          .get(
-            `${version}/data-packages/historical/mock-data-service-1/${historicalTimestamp}`
-          )
+          .get(`${version}/data-packages/historical/mock-data-service-1/${historicalTimestamp}`)
           .expect(200);
 
         for (const dataPackageId of dataPackagesIds) {
-          expect(
-            testResponse.body[dataPackageId][0].timestampMilliseconds
-          ).toBe(historicalTimestamp);
+          expect(testResponse.body[dataPackageId][0].timestampMilliseconds).toBe(
+            historicalTimestamp
+          );
         }
         expect(
           testResponse.body[ALL_FEEDS_KEY].sort(
@@ -420,9 +399,7 @@ describe("Data packages (e2e)", () => {
           .get(`${version}/data-packages/latest/mock-data-service-1`)
           .expect(200);
 
-        const outlierPackage = response.body["BTC"].find(
-          (dp: any) => dp.signerAddress === "0x5"
-        );
+        const outlierPackage = response.body["BTC"].find((dp: any) => dp.signerAddress === "0x5");
         expect(outlierPackage).toBeUndefined();
       });
 
@@ -535,14 +512,10 @@ describe("Data packages (e2e)", () => {
     it("should work with hideMetadata for historical endpoint", async () => {
       const baseTimestamp = Date.now();
       const responseWithoutMetadata = await request(httpServer)
-        .get(
-          `/v2/data-packages/historical/mock-data-service-1/${baseTimestamp}/hide-metadata`
-        )
+        .get(`/v2/data-packages/historical/mock-data-service-1/${baseTimestamp}/hide-metadata`)
         .expect(200);
 
-      expect(
-        responseWithoutMetadata.body.BTC[0].dataPoints[0]
-      ).not.toHaveProperty("metadata");
+      expect(responseWithoutMetadata.body.BTC[0].dataPoints[0]).not.toHaveProperty("metadata");
     });
   });
 

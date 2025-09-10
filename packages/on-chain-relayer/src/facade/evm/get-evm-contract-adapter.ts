@@ -19,10 +19,8 @@ import { StylusContractAdapter } from "../../core/contract-interactions/StylusCo
 import { RedstoneEvmContract } from "./EvmContractFacade";
 
 const emptyTxDeliveryMan: Tx.ITxDeliveryMan = {
-  deliver: (
-    _txDeliveryCall: TxDeliveryCall,
-    _context: Tx.TxDeliveryManContext
-  ) => Promise.resolve(),
+  deliver: (_txDeliveryCall: TxDeliveryCall, _context: Tx.TxDeliveryManContext) =>
+    Promise.resolve(),
 };
 
 export function getEvmContractAdapter(
@@ -67,8 +65,6 @@ export function getEvmContractAdapter(
     }
 
     default:
-      return RedstoneCommon.throwUnsupportedParamError(
-        relayerConfig.adapterContractType
-      );
+      return RedstoneCommon.throwUnsupportedParamError(relayerConfig.adapterContractType);
   }
 }

@@ -1,8 +1,5 @@
 import { ErrorCode } from "@ethersproject/logger";
-import {
-  TransactionRequest,
-  TransactionResponse,
-} from "@ethersproject/providers";
+import { TransactionRequest, TransactionResponse } from "@ethersproject/providers";
 import { loggerFactory, RedstoneCommon, Tx } from "@redstone-finance/utils";
 import { providers, utils } from "ethers";
 import _ from "lodash";
@@ -12,11 +9,7 @@ import { CHAIN_ID_TO_GAS_ORACLE } from "./CustomGasOracles";
 import { Eip1559GasEstimator } from "./Eip1559GasEstimator";
 import { GasEstimator } from "./GasEstimator";
 import { GasLimitEstimator } from "./GasLimitEstimator";
-import type {
-  FeeStructure,
-  TxDeliveryOpts,
-  TxDeliveryOptsValidated,
-} from "./common";
+import type { FeeStructure, TxDeliveryOpts, TxDeliveryOptsValidated } from "./common";
 
 export type ContractOverrides = {
   nonce: number;
@@ -95,9 +88,7 @@ export class TxDelivery {
   }
 
   /** Returns undefined if nonce of sending account was bumped, by different process */
-  public async deliver(
-    call: Tx.TxDeliveryCall
-  ): Promise<TransactionResponse | undefined> {
+  public async deliver(call: Tx.TxDeliveryCall): Promise<TransactionResponse | undefined> {
     RedstoneCommon.assert(
       this.attempt === 1,
       "TxDelivery.deliver can be called only once per instance"
@@ -105,11 +96,7 @@ export class TxDelivery {
     let tx = await this.prepareTransactionRequest(call);
     let result: TransactionResponse | undefined = undefined;
 
-    for (
-      this.attempt = 1;
-      this.attempt <= this.opts.maxAttempts;
-      this.attempt++
-    ) {
+    for (this.attempt = 1; this.attempt <= this.opts.maxAttempts; this.attempt++) {
       try {
         this.logCurrentAttempt(tx);
 
@@ -157,9 +144,7 @@ export class TxDelivery {
       }
     }
 
-    throw new Error(
-      `Failed to deliver transaction after ${this.opts.maxAttempts} attempts`
-    );
+    throw new Error(`Failed to deliver transaction after ${this.opts.maxAttempts} attempts`);
   }
 
   private logCurrentAttempt(tx: DeliveryManTx) {
@@ -191,9 +176,7 @@ export class TxDelivery {
 
     if (currentNonce > tx.nonce) {
       // transaction was already delivered because nonce increased
-      this.opts.logger(
-        `Transaction mined, nonce changed: ${tx.nonce} => ${currentNonce}`
-      );
+      this.opts.logger(`Transaction mined, nonce changed: ${tx.nonce} => ${currentNonce}`);
 
       return true;
     } else {
@@ -205,9 +188,7 @@ export class TxDelivery {
   }
 
   private async waitForTxMining() {
-    this.opts.logger(
-      `Waiting ${this.opts.expectedDeliveryTimeMs} [MS] for mining transaction`
-    );
+    this.opts.logger(`Waiting ${this.opts.expectedDeliveryTimeMs} [MS] for mining transaction`);
     await RedstoneCommon.sleep(this.opts.expectedDeliveryTimeMs);
   }
 
@@ -216,10 +197,7 @@ export class TxDelivery {
     result: TransactionResponse | undefined,
     nonce: number
   ) {
-    RedstoneCommon.assert(
-      isEthersError(ethersError),
-      "Unknown non ethers error"
-    );
+    RedstoneCommon.assert(isEthersError(ethersError), "Unknown non ethers error");
 
     if (TxDelivery.isAlreadyKnownError(ethersError)) {
       this.opts.logger("Transaction already known");
@@ -255,9 +233,7 @@ export class TxDelivery {
     return TransactionBroadcastErrorResult.UnknownError;
   }
 
-  private async updateTxParamsForNextAttempt(
-    tx: DeliveryManTx
-  ): Promise<DeliveryManTx> {
+  private async updateTxParamsForNextAttempt(tx: DeliveryManTx): Promise<DeliveryManTx> {
     const gasEstimateTx = Tx.convertToTxDeliveryCall(tx);
     const [newFees, newGasLimit, newCalldata] = await Promise.all([
       this.getFees(),
@@ -273,9 +249,7 @@ export class TxDelivery {
     };
   }
 
-  async prepareTransactionRequest(
-    call: Tx.TxDeliveryCall
-  ): Promise<DeliveryManTx> {
+  async prepareTransactionRequest(call: Tx.TxDeliveryCall): Promise<DeliveryManTx> {
     const address = await this.signer.getAddress();
     const currentNonce = await this.provider.getTransactionCount(address);
 
@@ -321,9 +295,7 @@ export class TxDelivery {
   }
 
   private static isAlreadyKnownError(e: EthersError) {
-    return (
-      e.message.includes("already known") && e.code === ErrorCode.SERVER_ERROR
-    );
+    return e.message.includes("already known") && e.code === ErrorCode.SERVER_ERROR;
   }
 
   private static isInsufficientFundsError(e: EthersError) {
@@ -339,9 +311,7 @@ export class TxDelivery {
     }
   }
 
-  private async getFeeFromGasOracle(
-    provider: providers.JsonRpcProvider
-  ): Promise<FeeStructure> {
+  private async getFeeFromGasOracle(provider: providers.JsonRpcProvider): Promise<FeeStructure> {
     const { chainId } = await provider.getNetwork();
     const gasOracle = CHAIN_ID_TO_GAS_ORACLE[chainId];
     if (!gasOracle) {

@@ -3,16 +3,10 @@ import { changeRelayerConfigFeeds } from "./change-relayer-config-feeds";
 
 export type RelayerSplitConfig = Pick<
   RelayerConfig,
-  | "dataFeeds"
-  | "feedsSplit"
-  | "splitAllFeeds"
-  | "updateConditions"
-  | "updateTriggers"
+  "dataFeeds" | "feedsSplit" | "splitAllFeeds" | "updateConditions" | "updateTriggers"
 >;
 
-export function splitRelayerConfig<T extends RelayerSplitConfig>(
-  relayerConfig: T
-) {
+export function splitRelayerConfig<T extends RelayerSplitConfig>(relayerConfig: T) {
   const feedsSplit = relayerConfig.splitAllFeeds
     ? relayerConfig.dataFeeds.map((feedId) => [feedId])
     : relayerConfig.feedsSplit;
@@ -22,9 +16,7 @@ export function splitRelayerConfig<T extends RelayerSplitConfig>(
   }
 
   const configs: T[] = feedsSplit.map((feeds) => {
-    const dataFeeds = feeds.filter((feedId) =>
-      relayerConfig.dataFeeds.includes(feedId)
-    );
+    const dataFeeds = feeds.filter((feedId) => relayerConfig.dataFeeds.includes(feedId));
     return changeRelayerConfigFeeds({ ...relayerConfig }, dataFeeds);
   });
 

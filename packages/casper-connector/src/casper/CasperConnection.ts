@@ -34,8 +34,7 @@ export class CasperConnection implements ICasperConnection {
   }
 
   async getBlockHeight() {
-    const blockInfo = (await this.casperClient.nodeClient.getLatestBlockInfo())
-      .block;
+    const blockInfo = (await this.casperClient.nodeClient.getLatestBlockInfo()).block;
 
     if (!blockInfo) {
       throw new Error("Block info couldn't be fetched");
@@ -54,28 +53,23 @@ export class CasperConnection implements ICasperConnection {
 
   async waitForDeploy(deployHash: string) {
     return CasperConnection.describeDeployResult(
-      await this.casperClient.nodeClient.waitForDeploy(
-        deployHash,
-        TRANSACTION_TIMEOUT
-      )
+      await this.casperClient.nodeClient.waitForDeploy(deployHash, TRANSACTION_TIMEOUT)
     );
   }
 
   async waitForDeploys(deployIds: string[]) {
-    (
-      await Promise.allSettled(
-        deployIds.map((hashId) => this.waitForDeploy(hashId))
-      )
-    ).forEach((result, index) => {
-      switch (result.status) {
-        case "rejected":
-          return console.log(`Failed to check status #${index}`);
-        case "fulfilled":
-          if (!result.value) {
-            throw new Error(`Failed to send deploy #${index}`);
-          }
+    (await Promise.allSettled(deployIds.map((hashId) => this.waitForDeploy(hashId)))).forEach(
+      (result, index) => {
+        switch (result.status) {
+          case "rejected":
+            return console.log(`Failed to check status #${index}`);
+          case "fulfilled":
+            if (!result.value) {
+              throw new Error(`Failed to send deploy #${index}`);
+            }
+        }
       }
-    });
+    );
   }
 
   async queryContractDictionary<T>(
@@ -97,11 +91,7 @@ export class CasperConnection implements ICasperConnection {
   }
 
   async queryContractData<T>(contract: Contracts.Contract, key: string) {
-    return (await contract.queryContractData(
-      [key],
-      this.casperClient,
-      this.stateRootHash
-    )) as T;
+    return (await contract.queryContractData([key], this.casperClient, this.stateRootHash)) as T;
   }
 
   async queryGlobalState(key: string) {
@@ -109,11 +99,7 @@ export class CasperConnection implements ICasperConnection {
       await this.refreshStateRootHash();
     }
 
-    return await this.casperClient.nodeClient.getBlockState(
-      this.stateRootHash!,
-      key,
-      []
-    );
+    return await this.casperClient.nodeClient.getBlockState(this.stateRootHash!, key, []);
   }
 
   getPublicKey() {
@@ -159,13 +145,9 @@ export class CasperConnection implements ICasperConnection {
     );
 
     if (failures.length > 0) {
-      console.error(
-        failures.map((failure) => failure.result.Failure!.error_message)
-      );
+      console.error(failures.map((failure) => failure.result.Failure!.error_message));
     } else {
-      console.log(
-        successes.map((success) => success.result.Success!.cost / CSPR_MOTE)
-      );
+      console.log(successes.map((success) => success.result.Success!.cost / CSPR_MOTE));
     }
 
     return successes.length > 0 && failures.length === 0;

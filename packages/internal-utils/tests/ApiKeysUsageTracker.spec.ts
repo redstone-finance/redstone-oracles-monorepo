@@ -28,8 +28,7 @@ describe("ApiKeysUsageTracker", () => {
   describe("API Key Tracking", () => {
     beforeEach(() => {
       tracker = new ApiKeysUsageTracker({
-        influxUrl:
-          "https://influx-test.example.com/api/v2/write?org=test&bucket=metrics",
+        influxUrl: "https://influx-test.example.com/api/v2/write?org=test&bucket=metrics",
         influxToken: "test-token-123",
         serviceName: "test-service",
       });
@@ -65,9 +64,7 @@ describe("ApiKeysUsageTracker", () => {
     it("should track multiple different API keys independently", () => {
       const apiKeys = ["api-key-1", "api-key-2", "api-key-3"];
       const nodeId = "0x1234567890abcdef";
-      const expectedHashes = apiKeys.map((key) =>
-        createHash("sha256").update(key).digest("hex")
-      );
+      const expectedHashes = apiKeys.map((key) => createHash("sha256").update(key).digest("hex"));
 
       tracker.trackBulkRequest(apiKeys[0], nodeId);
       tracker.trackBulkRequest(apiKeys[1], nodeId);
@@ -96,9 +93,7 @@ describe("ApiKeysUsageTracker", () => {
 
     it("should handle special characters in API keys", () => {
       const specialKey = "key-with-$pecial-ch@r@cter$-and-ünic0de";
-      const expectedHash = createHash("sha256")
-        .update(specialKey)
-        .digest("hex");
+      const expectedHash = createHash("sha256").update(specialKey).digest("hex");
 
       tracker.trackBulkRequest(specialKey, "0x1234567890abcdef");
 
@@ -128,8 +123,7 @@ describe("ApiKeysUsageTracker", () => {
       jest.useFakeTimers();
       jest.clearAllMocks();
       tracker = new ApiKeysUsageTracker({
-        influxUrl:
-          "https://influx-test.example.com/api/v2/write?org=test&bucket=metrics",
+        influxUrl: "https://influx-test.example.com/api/v2/write?org=test&bucket=metrics",
         influxToken: "test-token-123",
         serviceName: "test-service",
         reportingIntervalMs: 60000, // 1 minute interval
@@ -163,9 +157,7 @@ describe("ApiKeysUsageTracker", () => {
 
       expect(mockInfluxInsert).toHaveBeenCalledTimes(1);
 
-      const dataPoints = (
-        mockInfluxInsert.mock.calls[0] as unknown[]
-      )[0] as unknown[];
+      const dataPoints = (mockInfluxInsert.mock.calls[0] as unknown[])[0] as unknown[];
       expect(dataPoints).toHaveLength(2);
 
       // Define the expected Point structure
@@ -217,9 +209,7 @@ describe("ApiKeysUsageTracker", () => {
       tracker.trackBulkRequest(apiKey, "0x1234567890abcdef");
       expect(Object.keys(tracker.getCurrentMetrics())).toHaveLength(1);
 
-      mockInfluxInsert.mockRejectedValueOnce(
-        new Error("InfluxDB connection failed")
-      );
+      mockInfluxInsert.mockRejectedValueOnce(new Error("InfluxDB connection failed"));
 
       jest.advanceTimersByTime(60001);
 
@@ -250,13 +240,9 @@ describe("ApiKeysUsageTracker", () => {
     it("should handle InfluxDB errors gracefully", () => {
       const apiKey = "test-api-key-123";
 
-      mockInfluxInsert.mockRejectedValueOnce(
-        new Error("InfluxDB connection failed")
-      );
+      mockInfluxInsert.mockRejectedValueOnce(new Error("InfluxDB connection failed"));
 
-      expect(() =>
-        tracker.trackBulkRequest(apiKey, "0x1234567890abcdef")
-      ).not.toThrow();
+      expect(() => tracker.trackBulkRequest(apiKey, "0x1234567890abcdef")).not.toThrow();
 
       const metrics = tracker.getCurrentMetrics();
       const expectedHash = createHash("sha256").update(apiKey).digest("hex");
@@ -267,8 +253,7 @@ describe("ApiKeysUsageTracker", () => {
   describe("Shutdown", () => {
     it("should shutdown gracefully with InfluxDB config", async () => {
       tracker = new ApiKeysUsageTracker({
-        influxUrl:
-          "https://influx-test.example.com/api/v2/write?org=test&bucket=metrics",
+        influxUrl: "https://influx-test.example.com/api/v2/write?org=test&bucket=metrics",
         influxToken: "test-token-123",
         serviceName: "test-service",
       });

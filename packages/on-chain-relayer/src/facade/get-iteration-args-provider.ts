@@ -9,10 +9,6 @@ export type IterationArgsProvider = (
   relayerConfig: RelayerConfig
 ) => Promise<IterationArgs>;
 
-export function getIterationArgsProvider(
-  relayerConfig: RelayerConfig
-): IterationArgsProvider {
-  return canIgnoreMissingFeeds(relayerConfig)
-    ? getMultiFeedIterationArgs
-    : getIterationArgs;
+export function getIterationArgsProvider(relayerConfig: RelayerConfig): IterationArgsProvider {
+  return canIgnoreMissingFeeds(relayerConfig) ? getMultiFeedIterationArgs : getIterationArgs;
 }

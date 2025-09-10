@@ -1,7 +1,4 @@
-import {
-  IterationArgsMessage,
-  IterationLogger,
-} from "@redstone-finance/on-chain-relayer";
+import { IterationArgsMessage, IterationLogger } from "@redstone-finance/on-chain-relayer";
 
 export class GelatoLogger implements IterationLogger {
   // No matter how big the number of messages is - the total length must not exceed ~1000 bytes
@@ -46,8 +43,7 @@ export class GelatoLogger implements IterationLogger {
   ];
 
   private static consoleLog(object: unknown) {
-    const message =
-      typeof object === "string" ? object : JSON.stringify(object);
+    const message = typeof object === "string" ? object : JSON.stringify(object);
 
     if (!message.length) {
       return;
@@ -69,18 +65,14 @@ export class GelatoLogger implements IterationLogger {
     return `${firstWord}${words
       .slice(1, -1)
       .map((word) => word[0])
-      .join(
-        ""
-      )}${words.length > 1 ? words[words.length - 1].substring(0, 3) : ""}`;
+      .join("")}${words.length > 1 ? words[words.length - 1].substring(0, 3) : ""}`;
   }
 
   emitMessages() {
     this.messages.forEach(({ message, args }, index) => {
       if (index > 0) {
         // only the first log is emitted with fully split args; the others are stringified
-        return GelatoLogger.consoleLog(
-          `${message}${args ? ` ${JSON.stringify(args)}` : ""}`
-        );
+        return GelatoLogger.consoleLog(`${message}${args ? ` ${JSON.stringify(args)}` : ""}`);
       }
 
       GelatoLogger.consoleLog(message);

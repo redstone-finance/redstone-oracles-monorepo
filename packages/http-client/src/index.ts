@@ -94,10 +94,8 @@ export class HttpClient {
         retryCondition: (axiosError: AxiosError) =>
           isRetryableError(axiosError) || isNetworkError(axiosError),
         retryDelay: (retryCount: number) =>
-          Math.pow(
-            httpClientOptions.retryOptions?.backOffBase ?? 1,
-            retryCount
-          ) * httpClientOptions.retryOptions!.delayMs,
+          Math.pow(httpClientOptions.retryOptions?.backOffBase ?? 1, retryCount) *
+          httpClientOptions.retryOptions!.delayMs,
       });
     }
   }

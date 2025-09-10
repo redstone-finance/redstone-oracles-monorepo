@@ -1,10 +1,6 @@
 import { RedstonePayload, SignedDataPackage } from "@redstone-finance/protocol";
 import { RedstoneCommon } from "@redstone-finance/utils";
-import {
-  basicPullModelTestConfig,
-  testDataPoints,
-  UNSIGNED_METADATA,
-} from "../common";
+import { basicPullModelTestConfig, testDataPoints, UNSIGNED_METADATA } from "../common";
 import { getMockSignedDataPackageObj, MockSignerIndex } from "../test-utils";
 
 const { toOrdinal } = RedstoneCommon;
@@ -32,20 +28,19 @@ export const dataTimestampTestCases = {
       [-500, -400, -300, -181],
       false
     ),
-    "Should work with old (but not outdated) data":
-      generateTestCasesWithTimestampOffsets(
-        [-179, -150, -100, -50, -20, -10, -5, -1],
-        true
-      ),
-    "Should work with data.time == block.time":
-      generateTestCasesWithTimestampOffsets([0], true),
-    "Should work with data from close future":
-      generateTestCasesWithTimestampOffsets([1, 3, 5, 10, 30, 59], true),
-    "Should revert with data from far future":
-      generateTestCasesWithTimestampOffsets(
-        [61, 62, 65, 70, 100, 500, 1000],
-        false
-      ),
+    "Should work with old (but not outdated) data": generateTestCasesWithTimestampOffsets(
+      [-179, -150, -100, -50, -20, -10, -5, -1],
+      true
+    ),
+    "Should work with data.time == block.time": generateTestCasesWithTimestampOffsets([0], true),
+    "Should work with data from close future": generateTestCasesWithTimestampOffsets(
+      [1, 3, 5, 10, 30, 59],
+      true
+    ),
+    "Should revert with data from far future": generateTestCasesWithTimestampOffsets(
+      [61, 62, 65, 70, 100, 500, 1000],
+      false
+    ),
   },
 
   "Some timestamps are not equal": {
@@ -61,17 +56,12 @@ export const dataTimestampTestCases = {
                 dataPoints: testDataPoints[i],
                 mockSignerIndex: i as MockSignerIndex,
                 timestampMilliseconds:
-                  dpIndexWithDifferentTimestamp === i
-                    ? timestamp + 1
-                    : timestamp, // changing timestamp for the selected package
+                  dpIndexWithDifferentTimestamp === i ? timestamp + 1 : timestamp, // changing timestamp for the selected package
               });
               return SignedDataPackage.fromObj(mdp);
             });
 
-            return RedstonePayload.prepare(
-              signedMockdataPackages,
-              UNSIGNED_METADATA
-            );
+            return RedstonePayload.prepare(signedMockdataPackages, UNSIGNED_METADATA);
           },
         },
       ])
@@ -89,10 +79,7 @@ export const dataTimestampTestCases = {
           return SignedDataPackage.fromObj(mdp);
         });
 
-        return RedstonePayload.prepare(
-          signedMockdataPackages,
-          UNSIGNED_METADATA
-        );
+        return RedstonePayload.prepare(signedMockdataPackages, UNSIGNED_METADATA);
       },
     },
   },

@@ -1,7 +1,4 @@
-import {
-  JsNativeSafeNumberConfig,
-  NumberValidationResult,
-} from "../src/ISafeNumber";
+import { JsNativeSafeNumberConfig, NumberValidationResult } from "../src/ISafeNumber";
 
 const throwErr = (msg: string) => {
   throw new Error(msg);

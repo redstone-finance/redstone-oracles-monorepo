@@ -13,10 +13,7 @@ const ssmCacheEnvConfig = () => {
       "CACHE_SSM_PARAMETERS",
       z.boolean().default(false)
     ),
-    ssmCacheTime: RedstoneCommon.getFromEnv(
-      "SSM_CACHE_TIME",
-      z.number().default(5 * 60 * 1000)
-    ),
+    ssmCacheTime: RedstoneCommon.getFromEnv("SSM_CACHE_TIME", z.number().default(5 * 60 * 1000)),
   });
 
   return ssmCacheEnv;
@@ -40,9 +37,7 @@ export const saveToSsmCache = (
   }
 
   if (value === undefined) {
-    console.log(
-      `Value provided for ${parameterName} is undefined, not saving to cache`
-    );
+    console.log(`Value provided for ${parameterName} is undefined, not saving to cache`);
     return;
   }
 

@@ -13,8 +13,7 @@ import { server } from "./mock-server";
 
 chai.use(chaiAsPromised);
 
-const TEST_PRIVATE_KEY =
-  "0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80";
+const TEST_PRIVATE_KEY = "0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80";
 const AUCTION_VERIFICATION_TIMEOUT = 20;
 
 const relayerConfig = mockConfig({
@@ -45,11 +44,7 @@ describe("update-using-oev-auction", () => {
       wallet
     );
 
-    await updateUsingOevAuction(
-      relayerConfig,
-      "0x",
-      adapterContract as RedstoneAdapterBase
-    );
+    await updateUsingOevAuction(relayerConfig, "0x", adapterContract as RedstoneAdapterBase);
   });
 
   it("should throw exception before verification finishes", async () => {
@@ -68,11 +63,7 @@ describe("update-using-oev-auction", () => {
     );
 
     try {
-      await updateUsingOevAuction(
-        relayerConfig,
-        "0x",
-        adapterContract as RedstoneAdapterBase
-      );
+      await updateUsingOevAuction(relayerConfig, "0x", adapterContract as RedstoneAdapterBase);
       expect.fail("Should have thrown an error");
     } catch (error) {
       expect((error as Error).message).to.include(

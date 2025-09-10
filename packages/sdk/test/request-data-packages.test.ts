@@ -7,8 +7,7 @@ import { requestRedstonePayload } from "../src/request-redstone-payload";
 import { mockSignedDataPackages } from "./mocks/mock-packages";
 import { server } from "./mocks/server";
 
-const TEST_PRIVATE_KEY =
-  "0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80";
+const TEST_PRIVATE_KEY = "0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80";
 const MOCK_WALLET = new ethers.Wallet(TEST_PRIVATE_KEY);
 
 const getReqParams = (urls?: string[]): DataPackagesRequestParams => {
@@ -49,9 +48,7 @@ describe("request-data-packages", () => {
 
   test("Should properly request data packages", async () => {
     const dataPackages = await requestDataPackages(getReqParams());
-    expect(mockSignedDataPackages.ETH[0]).toMatchObject(
-      dataPackages["ETH"]![0].toObj()
-    );
+    expect(mockSignedDataPackages.ETH[0]).toMatchObject(dataPackages["ETH"]![0].toObj());
   });
 
   test("Should properly request redstone payload", async () => {
@@ -79,25 +76,18 @@ describe("request-data-packages", () => {
       "https://good-url-1.com",
     ]);
     const dataPackages = await requestDataPackages(defaultReqParams);
-    expect(mockSignedDataPackages.ETH[0]).toMatchObject(
-      dataPackages["ETH"]![0].toObj()
-    );
+    expect(mockSignedDataPackages.ETH[0]).toMatchObject(dataPackages["ETH"]![0].toObj());
   });
 
   test("Should fail if all urls fail", async () => {
-    const defaultReqParams = getReqParams([
-      "https://bad-url-1.com",
-      "https://bad-url-2.com",
-    ]);
+    const defaultReqParams = getReqParams(["https://bad-url-1.com", "https://bad-url-2.com"]);
     await expect(requestDataPackages(defaultReqParams)).rejects.toThrow(
       /Request failed with status code 400/
     );
   });
 
   test("Should fail for missing data feed id", async () => {
-    const defaultReqParams = getReqParams([
-      "https://good-url-sorted-asc-only-eth.com",
-    ]);
+    const defaultReqParams = getReqParams(["https://good-url-sorted-asc-only-eth.com"]);
     await expect(() => requestDataPackages(defaultReqParams)).rejects.toThrow(
       "Requested data feed id is not included in response: BTC"
     );
@@ -234,9 +224,7 @@ describe("request-data-packages", () => {
       returnAllPackages: false,
     });
 
-    expect(dataPackages["ETH"]![0].dataPackage.timestampMilliseconds).toBe(
-      1654353400000 + 420
-    );
+    expect(dataPackages["ETH"]![0].dataPackage.timestampMilliseconds).toBe(1654353400000 + 420);
   });
 
   test("Should throw error for different timestamps", async () => {
@@ -287,9 +275,7 @@ describe("request-data-packages", () => {
         returnAllPackages: false,
         maxTimestampDeviationMS: 20_000,
       })
-    ).rejects.toThrowError(
-      /Timestamps do not have the same value: 1732724591163, 1732724591165/
-    );
+    ).rejects.toThrowError(/Timestamps do not have the same value: 1732724591163, 1732724591165/);
   });
 
   test("Should throw error for deviated timestamp", async () => {
@@ -507,9 +493,7 @@ describe("request-data-packages", () => {
       authorizedSigners: [MOCK_WALLET.address],
     });
 
-    expect(result["ETH"]![0].dataPackage.dataPoints[0].toObj().value).toEqual(
-      20_000
-    );
+    expect(result["ETH"]![0].dataPackage.dataPoints[0].toObj().value).toEqual(20_000);
 
     await expect(
       requestDataPackages({
@@ -598,9 +582,7 @@ describe("request-data-packages", () => {
     it("two gateways respond immediately one timeouts", async () => {
       const axiosGetSpy = jest.spyOn(axios, "get");
       axiosGetSpy
-        .mockImplementationOnce(
-          () => new Promise((_, reject) => setTimeout(reject, 20_000))
-        )
+        .mockImplementationOnce(() => new Promise((_, reject) => setTimeout(reject, 20_000)))
         .mockImplementationOnce(() => Promise.resolve(SAMPLE_RESPONSE))
         .mockImplementationOnce(() => Promise.resolve(SAMPLE_RESPONSE));
 
@@ -622,12 +604,8 @@ describe("request-data-packages", () => {
       const axiosGetSpy = jest.spyOn(axios, "get");
       axiosGetSpy
         .mockResolvedValueOnce(SAMPLE_RESPONSE)
-        .mockImplementationOnce(
-          () => new Promise((_, reject) => setTimeout(reject, 20_000))
-        )
-        .mockImplementationOnce(
-          () => new Promise((_, reject) => setTimeout(reject, 20_000))
-        );
+        .mockImplementationOnce(() => new Promise((_, reject) => setTimeout(reject, 20_000)))
+        .mockImplementationOnce(() => new Promise((_, reject) => setTimeout(reject, 20_000)));
 
       const start = performance.now();
       void jest.advanceTimersByTimeAsync(650);
@@ -646,10 +624,7 @@ describe("request-data-packages", () => {
     it("three gateways timeout", async () => {
       const axiosGetSpy = jest.spyOn(axios, "get");
       axiosGetSpy.mockImplementation(
-        () =>
-          new Promise((_, reject) =>
-            setTimeout(() => reject(new Error("timeout")), 20_000)
-          )
+        () => new Promise((_, reject) => setTimeout(() => reject(new Error("timeout")), 20_000))
       );
 
       const start = performance.now();
@@ -672,22 +647,13 @@ describe("request-data-packages", () => {
 
       axiosGetSpy
         .mockImplementationOnce(
-          () =>
-            new Promise((resolve, _) =>
-              setTimeout(() => resolve(SAMPLE_RESPONSE), 20_000)
-            )
+          () => new Promise((resolve, _) => setTimeout(() => resolve(SAMPLE_RESPONSE), 20_000))
         )
         .mockImplementationOnce(
-          () =>
-            new Promise((_, reject) =>
-              setTimeout(() => reject(new Error("timeout")), 20_000)
-            )
+          () => new Promise((_, reject) => setTimeout(() => reject(new Error("timeout")), 20_000))
         )
         .mockImplementationOnce(
-          () =>
-            new Promise((_, reject) =>
-              setTimeout(() => reject(new Error("timeout")), 20_000)
-            )
+          () => new Promise((_, reject) => setTimeout(() => reject(new Error("timeout")), 20_000))
         );
 
       const start = performance.now();

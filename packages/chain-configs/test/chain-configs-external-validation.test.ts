@@ -24,11 +24,7 @@ if (process.env.RUN_NONDETERMINISTIC_TESTS) {
       }
 
       it(`Chain config for chain ${chainConfig.name} (${chainConfig.networkId}) should have a valid multicall3 address`, async function () {
-        skipIfDisabledOrNotSupported(
-          this,
-          chainConfig,
-          CHAINS_TO_SKIP_EXTERNAL_CONFIG
-        );
+        skipIfDisabledOrNotSupported(this, chainConfig, CHAINS_TO_SKIP_EXTERNAL_CONFIG);
         try {
           await verifyMulticallAddress(chainConfig);
         } catch (e) {
@@ -43,28 +39,19 @@ if (process.env.RUN_NONDETERMINISTIC_TESTS) {
 }
 
 async function verifyMulticallAddress(chainConfig: ChainConfig, index = 0) {
-  const provider = new providers.StaticJsonRpcProvider(
-    chainConfig.publicRpcUrls[index]
-  );
+  const provider = new providers.StaticJsonRpcProvider(chainConfig.publicRpcUrls[index]);
 
   try {
     const multicallCode = await RedstoneCommon.retry({
       ...RETRY_CONFIG,
       fn: async () =>
-        await RedstoneCommon.timeout(
-          provider.getCode(chainConfig.multicall3.address),
-          1500
-        ),
+        await RedstoneCommon.timeout(provider.getCode(chainConfig.multicall3.address), 1500),
       fnName: "provider.getCode",
     })();
 
-    chai
-      .expect(multicallCode.length, "Multicall implementation missing")
-      .greaterThan(2);
+    chai.expect(multicallCode.length, "Multicall implementation missing").greaterThan(2);
   } catch (e) {
-    console.log(
-      `${chainConfig.name} - RPC ${chainConfig.publicRpcUrls[index]} failed.`
-    );
+    console.log(`${chainConfig.name} - RPC ${chainConfig.publicRpcUrls[index]} failed.`);
     if (index === chainConfig.publicRpcUrls.length - 1) {
       console.log(`${chainConfig.name} - All RPCs failed`);
       throw e;

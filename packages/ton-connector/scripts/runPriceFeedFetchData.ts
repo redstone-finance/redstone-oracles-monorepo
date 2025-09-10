@@ -1,9 +1,5 @@
 import { NetworkProvider } from "@ton/blueprint";
-import {
-  BlueprintTonNetwork,
-  TonPriceFeed,
-  TonPriceFeedContractConnector,
-} from "../src";
+import { BlueprintTonNetwork, TonPriceFeed, TonPriceFeedContractConnector } from "../src";
 import { config } from "../src/config";
 import { loadAddress } from "../src/deploy";
 

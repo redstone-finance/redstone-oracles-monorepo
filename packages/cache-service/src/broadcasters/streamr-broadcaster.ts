@@ -46,19 +46,14 @@ export class StreamrBroadcaster implements DataPackagesBroadcaster {
     this.address = new Wallet(streamrPrivateKey).address;
   }
 
-  async broadcast(
-    dataPackages: CachedDataPackage[],
-    nodeEvmAddress: string
-  ): Promise<void> {
+  async broadcast(dataPackages: CachedDataPackage[], nodeEvmAddress: string): Promise<void> {
     const streamId = getStreamIdForNodeByEvmAddress(nodeEvmAddress);
-    const dataToBroadcast: SignedDataPackagePlainObj[] = dataPackages.map(
-      (dp) => ({
-        timestampMilliseconds: dp.timestampMilliseconds,
-        dataPoints: dp.dataPoints,
-        signature: dp.signature,
-        dataPackageId: dp.dataPackageId,
-      })
-    );
+    const dataToBroadcast: SignedDataPackagePlainObj[] = dataPackages.map((dp) => ({
+      timestampMilliseconds: dp.timestampMilliseconds,
+      dataPoints: dp.dataPoints,
+      signature: dp.signature,
+      dataPackageId: dp.dataPackageId,
+    }));
 
     const streamExists = await this.lazyCheckIfStreamExists(streamId);
 
@@ -70,9 +65,7 @@ export class StreamrBroadcaster implements DataPackagesBroadcaster {
         },
         compressMsg(dataToBroadcast)
       );
-      this.logger.log(
-        `New data published to the stream: ${this.address}/${streamId}`
-      );
+      this.logger.log(`New data published to the stream: ${this.address}/${streamId}`);
     } else {
       await this.tryToCreateStream(streamId);
     }
@@ -86,9 +79,7 @@ export class StreamrBroadcaster implements DataPackagesBroadcaster {
 
     this.isStreamCreationRequested = true;
 
-    this.logger.log(
-      `Trying to create new Streamr stream: ${this.address}/${streamId}`
-    );
+    this.logger.log(`Trying to create new Streamr stream: ${this.address}/${streamId}`);
 
     await this.assertEnoughMaticBalance();
 
@@ -123,9 +114,7 @@ export class StreamrBroadcaster implements DataPackagesBroadcaster {
       logger: this.logger.log.bind(this),
     })();
 
-    this.logger.log(
-      `Added permissions to the stream: ${this.address}/${streamId}`
-    );
+    this.logger.log(`Added permissions to the stream: ${this.address}/${streamId}`);
     this.streamExistsCached = true;
   }
 
@@ -146,9 +135,7 @@ export class StreamrBroadcaster implements DataPackagesBroadcaster {
 
     if (balance < parseEther(MINIMAL_MATIC_BALANCE)) {
       throw new Error(
-        `MATIC balance is too low for creating a new stream: ${formatEther(
-          balance
-        )}`
+        `MATIC balance is too low for creating a new stream: ${formatEther(balance)}`
       );
     }
   }

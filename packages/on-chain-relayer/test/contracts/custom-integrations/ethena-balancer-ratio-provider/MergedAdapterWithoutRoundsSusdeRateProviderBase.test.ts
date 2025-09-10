@@ -14,10 +14,7 @@ const defaultTestValues = {
 describe("MergedAdapterWithoutRoundsSusdeRateProviderBase", () => {
   let mergedAdapterSusde: MergedAdapterWithoutRoundsSusdeRateProviderBase;
 
-  const updatePrices = async (
-    prices: Record<string, number>,
-    addedTimeInSeconds: number = 0
-  ) => {
+  const updatePrices = async (prices: Record<string, number>, addedTimeInSeconds: number = 0) => {
     const dataPoints = Object.entries(prices).map(([dataFeedId, value]) => ({
       dataFeedId,
       value,
@@ -26,9 +23,7 @@ describe("MergedAdapterWithoutRoundsSusdeRateProviderBase", () => {
     const curBlockTime = prevBlockTime + addedTimeInSeconds + 10;
     const mockDataTimestamp = (prevBlockTime + addedTimeInSeconds) * 1000;
     await time.setNextBlockTimestamp(curBlockTime);
-    const wrappedAdapter = WrapperBuilder.wrap(
-      mergedAdapterSusde
-    ).usingSimpleNumericMock({
+    const wrappedAdapter = WrapperBuilder.wrap(mergedAdapterSusde).usingSimpleNumericMock({
       mockSignersCount: 2,
       dataPoints,
       timestampMilliseconds: mockDataTimestamp,
@@ -97,10 +92,7 @@ describe("MergedAdapterWithoutRoundsSusdeRateProviderBase", () => {
     const SIX_HOURS_IN_SECONDS = 60 * 60 * 6;
     await expect(
       updatePrices(defaultTestValues, SIX_HOURS_IN_SECONDS)
-    ).to.be.revertedWithCustomError(
-      mergedAdapterSusde,
-      "MinIntervalBetweenUpdatesHasNotPassedYet"
-    );
+    ).to.be.revertedWithCustomError(mergedAdapterSusde, "MinIntervalBetweenUpdatesHasNotPassedYet");
   });
 
   it("shouldn't allow second update when new value is deviated more than 2% - lesser", async () => {
@@ -114,10 +106,7 @@ describe("MergedAdapterWithoutRoundsSusdeRateProviderBase", () => {
         },
         THIRTEEN_HOURS_IN_SECONDS
       )
-    ).to.be.revertedWithCustomError(
-      mergedAdapterSusde,
-      "ProposedValueIsDeviatedTooMuch"
-    );
+    ).to.be.revertedWithCustomError(mergedAdapterSusde, "ProposedValueIsDeviatedTooMuch");
   });
 
   it("shouldn't allow second update when new value is deviated more than 2% - bigger", async () => {
@@ -131,9 +120,6 @@ describe("MergedAdapterWithoutRoundsSusdeRateProviderBase", () => {
         },
         THIRTEEN_HOURS_IN_SECONDS
       )
-    ).to.be.revertedWithCustomError(
-      mergedAdapterSusde,
-      "ProposedValueIsDeviatedTooMuch"
-    );
+    ).to.be.revertedWithCustomError(mergedAdapterSusde, "ProposedValueIsDeviatedTooMuch");
   });
 });

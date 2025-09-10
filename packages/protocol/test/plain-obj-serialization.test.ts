@@ -16,14 +16,8 @@ const TIMESTAMP_FOR_TESTS = 1654353400000;
 const PRIVATE_KEY_FOR_TESTS_1 =
   "0x1111111111111111111111111111111111111111111111111111111111111111";
 
-const prepareSignedDataPackageForTests = (
-  dataPoints: DataPoint[]
-): SignedDataPackage => {
-  const dataPackage = new DataPackage(
-    dataPoints,
-    TIMESTAMP_FOR_TESTS,
-    "__RANDOM_NAME__"
-  );
+const prepareSignedDataPackageForTests = (dataPoints: DataPoint[]): SignedDataPackage => {
+  const dataPackage = new DataPackage(dataPoints, TIMESTAMP_FOR_TESTS, "__RANDOM_NAME__");
   return dataPackage.sign(PRIVATE_KEY_FOR_TESTS_1);
 };
 
@@ -105,9 +99,7 @@ describe("Fixed size data package", () => {
         "NX5yd/Cs8HzVdNchrM59uOoSst7n9KK5Ou9pA6S5GTM0RwghGlFjA0S+SVfb85ipg4HzUTKATBZSqPXlWldEEhw=",
     });
     const deserializedSignedDataPackage = SignedDataPackage.fromObj(
-      JSON.parse(
-        JSON.stringify(serializedPlainObj)
-      ) as SignedDataPackagePlainObj
+      JSON.parse(JSON.stringify(serializedPlainObj)) as SignedDataPackagePlainObj
     ).toBytesHex();
     expect(deserializedSignedDataPackage).toBe(signedDataPackage.toBytesHex());
   });
@@ -128,12 +120,7 @@ describe("Fixed size data package", () => {
         value: "qwertyuiopasdfghjklzxcvbnmqwerty",
       })
     );
-    dataPoints.push(
-      new DataPoint(
-        "SOME-BYTES",
-        toUtf8Bytes("qwertyuiopasdfghjklzxcvbnmqwerty")
-      )
-    );
+    dataPoints.push(new DataPoint("SOME-BYTES", toUtf8Bytes("qwertyuiopasdfghjklzxcvbnmqwerty")));
 
     const signedDataPackage = prepareSignedDataPackageForTests(dataPoints);
     const serializedPlainObj = signedDataPackage.toObj();
@@ -156,9 +143,7 @@ describe("Fixed size data package", () => {
         "WJ+EFIe6pSwzCRcjKWIYMWyhmtKJP+tN2aI55+Ip5w4osIGH0ngUEjTO4b7sAPBGd5MIv11qbPaFxWReppbGDRs=",
     });
     const deserializedSignedDataPackage = SignedDataPackage.fromObj(
-      JSON.parse(
-        JSON.stringify(serializedPlainObj)
-      ) as SignedDataPackagePlainObj
+      JSON.parse(JSON.stringify(serializedPlainObj)) as SignedDataPackagePlainObj
     ).toBytesHex();
     expect(deserializedSignedDataPackage).toBe(signedDataPackage.toBytesHex());
   });

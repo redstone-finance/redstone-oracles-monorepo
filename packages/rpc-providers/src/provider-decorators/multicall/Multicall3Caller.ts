@@ -61,9 +61,7 @@ export async function safeExecuteMulticall3(
         } separate calls. Error: ${RedstoneCommon.stringifyError(e)}`
       );
 
-      return await Promise.all(
-        call3s.map((call3) => safeFallbackCall(provider, call3, blockTag))
-      );
+      return await Promise.all(call3s.map((call3) => safeFallbackCall(provider, call3, blockTag)));
     } else {
       const errorDescription = `Whole multicall3 chainId=${chainId} failed. Will not fallback. Error: ${RedstoneCommon.stringifyError(e)}`;
 
@@ -85,10 +83,7 @@ async function safeFallbackCall(
   blockTag: BlockTag | undefined
 ) {
   try {
-    const callResult = await provider.call(
-      { to: call3.target, data: call3.callData },
-      blockTag
-    );
+    const callResult = await provider.call({ to: call3.target, data: call3.callData }, blockTag);
     logger.debug(
       `fallback call succeeded to=${call3.target} data=${call3.callData} blockTag=${blockTag}`
     );

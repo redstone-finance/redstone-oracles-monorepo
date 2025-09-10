@@ -1,11 +1,6 @@
 import pullModelTestCases from "./pull";
 import pushModelTestCases from "./push";
-import {
-  FullTestSpec,
-  Nested,
-  PullModelTestCase,
-  PushModelTestCase,
-} from "./types";
+import { FullTestSpec, Nested, PullModelTestCase, PushModelTestCase } from "./types";
 
 export const fullTestsSpec: FullTestSpec = {
   "Pull model": pullModelTestCases,

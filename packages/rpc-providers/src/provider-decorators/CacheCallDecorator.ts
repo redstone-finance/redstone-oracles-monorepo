@@ -55,9 +55,7 @@ const txCacheKeyBuilder = async (
     String(await blockTag),
   ].join("#");
 
-async function hashBytesLikeValue(
-  data: BytesLike | undefined | Promise<BytesLike | undefined>
-) {
+async function hashBytesLikeValue(data: BytesLike | undefined | Promise<BytesLike | undefined>) {
   const awaitedData = await data;
   if (awaitedData) {
     return RedstoneCrypto.sha256ToHex(awaitedData);

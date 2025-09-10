@@ -47,9 +47,7 @@ async function ensureRecipientCanReceive(
     );
 
     if (!hasAptosCoinStore) {
-      console.log(
-        `⚠️ Recipient has NOT registered ${currencySymbol}. Registering now...`
-      );
+      console.log(`⚠️ Recipient has NOT registered ${currencySymbol}. Registering now...`);
 
       const transaction = await aptos.transaction.build.simple({
         sender: sender.accountAddress,
@@ -62,9 +60,7 @@ async function ensureRecipientCanReceive(
       const response = await signAndSubmit(aptos, transaction, sender);
       await aptos.waitForTransaction({ transactionHash: response.hash });
 
-      console.log(
-        `✅ Recipient registered for ${currencySymbol} successfully!`
-      );
+      console.log(`✅ Recipient registered for ${currencySymbol} successfully!`);
     } else {
       console.log(`✅ Recipient is already registered for ${currencySymbol}.`);
     }
@@ -128,8 +124,7 @@ async function getTransferDetails() {
         type: "text",
         name: "recipient",
         message: "Enter recipient address:",
-        validate: (value: string) =>
-          value.startsWith("0x") || "Address must start with 0x",
+        validate: (value: string) => value.startsWith("0x") || "Address must start with 0x",
       },
       {
         type: "text", // Changed from "number" to "text" to allow decimals
@@ -138,9 +133,7 @@ async function getTransferDetails() {
         initial: "0.1",
         validate: (value: string) => {
           const num = parseFloat(value);
-          return !isNaN(num) && num > 0
-            ? true
-            : "Amount must be a valid number greater than 0";
+          return !isNaN(num) && num > 0 ? true : "Amount must be a valid number greater than 0";
         },
         format: (value: string) => parseFloat(value), // Ensure it's converted to a number
       },
@@ -163,19 +156,12 @@ async function main() {
   const currencySymbol = getCurrencySymbol();
 
   console.log(`💸 Sending from: ${sender.accountAddress.toString()}`);
-  console.log(
-    `💰 Current balance: ${await getBalance(aptos, sender)} ${currencySymbol}`
-  );
+  console.log(`💰 Current balance: ${await getBalance(aptos, sender)} ${currencySymbol}`);
 
   const { recipient: recipientAddress, amount } = await getTransferDetails();
 
   await ensureRecipientAccountExists(aptos, sender, recipientAddress);
-  await ensureRecipientCanReceive(
-    aptos,
-    sender,
-    recipientAddress,
-    currencySymbol
-  );
+  await ensureRecipientCanReceive(aptos, sender, recipientAddress, currencySymbol);
   await transferCoins(
     aptos,
     sender,

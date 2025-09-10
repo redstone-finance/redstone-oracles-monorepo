@@ -1,8 +1,4 @@
-import {
-  GetParameterCommand,
-  GetParametersCommand,
-  SSMClient,
-} from "@aws-sdk/client-ssm";
+import { GetParameterCommand, GetParametersCommand, SSMClient } from "@aws-sdk/client-ssm";
 import * as ArnParser from "@aws-sdk/util-arn-parser";
 import { RedstoneCommon } from "@redstone-finance/utils";
 import _ from "lodash";
@@ -18,10 +14,7 @@ import {
 // limit enforced by ssm
 const MAX_SSM_BATCH_SIZE = 10;
 
-const getParameterValue = async (
-  parameterNameOrArn: string,
-  region?: string
-) => {
+const getParameterValue = async (parameterNameOrArn: string, region?: string) => {
   const ssmRegion = region ?? getRegionFromArn(parameterNameOrArn);
 
   const client = getSsmClient(ssmRegion);
@@ -33,10 +26,7 @@ const getParameterValue = async (
   return (await client.send(command)).Parameter?.Value;
 };
 
-export const getSSMParameterValue = async (
-  parameterNameOrArn: string,
-  region?: string
-) => {
+export const getSSMParameterValue = async (parameterNameOrArn: string, region?: string) => {
   const cachedValue = getFromSsmCache(parameterNameOrArn);
   if (cachedValue !== undefined) {
     return cachedValue;
@@ -62,9 +52,7 @@ export const getSSMParameterValues = async (
   const client = getSsmClient(ssmRegion);
 
   const cachedParameters = getManyFromSsmCache(parameterNamesOrArns);
-  const parametersToFetch = parameterNamesOrArns.filter(
-    (name) => !(name in cachedParameters)
-  );
+  const parametersToFetch = parameterNamesOrArns.filter((name) => !(name in cachedParameters));
 
   const parameterNamesChunks = _.chunk(parametersToFetch, MAX_SSM_BATCH_SIZE);
 
@@ -72,10 +60,7 @@ export const getSSMParameterValues = async (
 
   // let's avoid rate limits by not using Promise.all
   for (const parameterNameChunk of parameterNamesChunks) {
-    const paramsForChunk = await getSSMParameterValuesBatch(
-      client,
-      parameterNameChunk
-    );
+    const paramsForChunk = await getSSMParameterValuesBatch(client, parameterNameChunk);
 
     collectedParameters = { ...collectedParameters, ...paramsForChunk };
   }

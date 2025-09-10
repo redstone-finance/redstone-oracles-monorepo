@@ -4,11 +4,7 @@ import chaiAsPromised from "chai-as-promised";
 import { ethers } from "ethers";
 import hardhat from "hardhat";
 import Sinon from "sinon";
-import {
-  ProviderWithFallback,
-  TxDeliveryMan,
-  convertToTxDeliveryCall,
-} from "../../src";
+import { ProviderWithFallback, TxDeliveryMan, convertToTxDeliveryCall } from "../../src";
 import { Counter } from "../../typechain-types";
 import { HardhatProviderMocker, deployCounter } from "../helpers";
 
@@ -19,9 +15,7 @@ async function assertTxWillBeDelivered(
   counter: Counter,
   expectedCounterValue = 1
 ) {
-  const call = convertToTxDeliveryCall(
-    await counter.populateTransaction["inc"]()
-  );
+  const call = convertToTxDeliveryCall(await counter.populateTransaction["inc"]());
   const waitForTransaction = await deliveryMan.deliver(call);
   await waitForTransaction();
   expect(await counter.getCount()).to.eq(expectedCounterValue);
@@ -42,13 +36,8 @@ describe("TxDeliveryMan", () => {
     });
 
     it("should work if one of providers always fails", async () => {
-      const failingProvider = new ethers.providers.JsonRpcProvider(
-        "https://1.com"
-      );
-      const fallbackProvider = new ProviderWithFallback([
-        failingProvider,
-        hardhat.ethers.provider,
-      ]);
+      const failingProvider = new ethers.providers.JsonRpcProvider("https://1.com");
+      const fallbackProvider = new ProviderWithFallback([failingProvider, hardhat.ethers.provider]);
 
       const deliveryMan = new TxDeliveryMan(fallbackProvider, counter.signer, {
         expectedDeliveryTimeMs: 20,
@@ -66,10 +55,9 @@ describe("TxDeliveryMan", () => {
         .onSecondCall()
         .returns(0);
 
-      const providerWithOldNonceMock = new HardhatProviderMocker(
-        hardhat.ethers.provider,
-        { getTransactionCount: getNonceStub }
-      );
+      const providerWithOldNonceMock = new HardhatProviderMocker(hardhat.ethers.provider, {
+        getTransactionCount: getNonceStub,
+      });
       const fallbackProvider = new ProviderWithFallback([
         hardhat.ethers.provider,
         providerWithOldNonceMock.provider,
@@ -84,24 +72,16 @@ describe("TxDeliveryMan", () => {
     });
 
     it("provider broadcast same transaction to every provider", async () => {
-      const firstProviderSendStub = Sinon.stub().callsFake(
-        hardhat.ethers.provider.sendTransaction
-      );
-      const firstProviderMock = new HardhatProviderMocker(
-        hardhat.ethers.provider,
-        {
-          sendTransaction: firstProviderSendStub,
-        }
-      );
+      const firstProviderSendStub = Sinon.stub().callsFake(hardhat.ethers.provider.sendTransaction);
+      const firstProviderMock = new HardhatProviderMocker(hardhat.ethers.provider, {
+        sendTransaction: firstProviderSendStub,
+      });
       const secondProviderSendStub = Sinon.stub().callsFake(
         hardhat.ethers.provider.sendTransaction
       );
-      const secondProviderMock = new HardhatProviderMocker(
-        hardhat.ethers.provider,
-        {
-          sendTransaction: secondProviderSendStub,
-        }
-      );
+      const secondProviderMock = new HardhatProviderMocker(hardhat.ethers.provider, {
+        sendTransaction: secondProviderSendStub,
+      });
 
       const fallbackProvider = new ProviderWithFallback([
         firstProviderMock.provider,
@@ -124,18 +104,12 @@ describe("TxDeliveryMan", () => {
       // don't bump nonce after new transaction sent
       const getNonceStub = Sinon.stub().returns(1);
 
-      const firstProviderMock = new HardhatProviderMocker(
-        hardhat.ethers.provider,
-        {
-          getTransactionCount: getNonceStub,
-        }
-      );
-      const secondProviderMock = new HardhatProviderMocker(
-        hardhat.ethers.provider,
-        {
-          getTransactionCount: getNonceStub,
-        }
-      );
+      const firstProviderMock = new HardhatProviderMocker(hardhat.ethers.provider, {
+        getTransactionCount: getNonceStub,
+      });
+      const secondProviderMock = new HardhatProviderMocker(hardhat.ethers.provider, {
+        getTransactionCount: getNonceStub,
+      });
 
       const fallbackProvider = new ProviderWithFallback([
         firstProviderMock.provider,
@@ -163,12 +137,9 @@ describe("TxDeliveryMan", () => {
         .onSecondCall()
         .resolves(1);
 
-      const secondProviderMock = new HardhatProviderMocker(
-        hardhat.ethers.provider,
-        {
-          getTransactionCount: secondProviderGetNonceStub,
-        }
-      );
+      const secondProviderMock = new HardhatProviderMocker(hardhat.ethers.provider, {
+        getTransactionCount: secondProviderGetNonceStub,
+      });
 
       const fallbackProvider = new ProviderWithFallback([
         hardhat.ethers.provider,
@@ -197,12 +168,9 @@ describe("TxDeliveryMan", () => {
       // don't bump nonce after new transaction sent
       const secondProviderSendTxStub = Sinon.stub().rejects("error sending tx");
 
-      const secondProviderMock = new HardhatProviderMocker(
-        hardhat.ethers.provider,
-        {
-          sendTransaction: secondProviderSendTxStub,
-        }
-      );
+      const secondProviderMock = new HardhatProviderMocker(hardhat.ethers.provider, {
+        sendTransaction: secondProviderSendTxStub,
+      });
 
       const fallbackProvider = new ProviderWithFallback([
         hardhat.ethers.provider,
@@ -230,12 +198,9 @@ describe("TxDeliveryMan", () => {
     it("should work if one of providers use stale nonce for building transaction", async () => {
       const secondProviderGetNonceStub = Sinon.stub().returns(0);
 
-      const secondProviderMock = new HardhatProviderMocker(
-        hardhat.ethers.provider,
-        {
-          getTransactionCount: secondProviderGetNonceStub,
-        }
-      );
+      const secondProviderMock = new HardhatProviderMocker(hardhat.ethers.provider, {
+        getTransactionCount: secondProviderGetNonceStub,
+      });
 
       const fallbackProvider = new ProviderWithFallback([
         hardhat.ethers.provider,
@@ -261,14 +226,10 @@ describe("TxDeliveryMan", () => {
     });
 
     it("should cancel current delivery start new one", async () => {
-      const deliveryMan = new TxDeliveryMan(
-        hardhat.ethers.provider,
-        counter.signer,
-        {
-          expectedDeliveryTimeMs: 20,
-          gasLimit: 210000,
-        }
-      );
+      const deliveryMan = new TxDeliveryMan(hardhat.ethers.provider, counter.signer, {
+        expectedDeliveryTimeMs: 20,
+        gasLimit: 210000,
+      });
 
       connectProvider(hardhat.ethers.provider);
 
@@ -308,9 +269,7 @@ describe("TxDeliveryMan", () => {
 
       try {
         await deliveryMan.deliver(
-          await counter.populateTransaction["inc"]().then((req) =>
-            convertToTxDeliveryCall(req)
-          ),
+          await counter.populateTransaction["inc"]().then((req) => convertToTxDeliveryCall(req)),
           { deferredCallData: deferredSpy }
         );
       } catch (e) {

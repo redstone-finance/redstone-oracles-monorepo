@@ -11,10 +11,7 @@ async function signIntent(compiledIntent: string) {
   const accountId = RedstoneCommon.getFromEnv("ACCOUNT_ID", z.number());
   const networkId = RedstoneCommon.getFromEnv("NETWORK_ID", z.number());
   const intent = await decompileIntent(compiledIntent);
-  const ledgerSigner = await LedgerSigner.makeLedgerSigner(
-    accountId,
-    networkId
-  );
+  const ledgerSigner = await LedgerSigner.makeLedgerSigner(accountId, networkId);
   const hashToSign = (await RadixEngineToolkit.Intent.intentHash(intent)).hash;
 
   console.log(`Intent hash to sign: ${hexlify(hashToSign)}`);

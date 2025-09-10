@@ -8,15 +8,11 @@ import { TonPriceFeedContractDeployer } from "../src/price-feed/TonPriceFeedCont
 export async function run(provider: NetworkProvider) {
   const managerAddress = await loadAddress(TonPriceManager.getName());
 
-  await deploy(
-    TonPriceFeed.getName(),
-    provider,
-    (network: TonNetwork, code: Cell) => {
-      return new TonPriceFeedContractDeployer(
-        network,
-        code,
-        new PriceFeedInitData("ETH", managerAddress)
-      );
-    }
-  );
+  await deploy(TonPriceFeed.getName(), provider, (network: TonNetwork, code: Cell) => {
+    return new TonPriceFeedContractDeployer(
+      network,
+      code,
+      new PriceFeedInitData("ETH", managerAddress)
+    );
+  });
 }

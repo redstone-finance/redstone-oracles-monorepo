@@ -1,12 +1,5 @@
-import {
-  Env,
-  fetchParsedRpcUrlsFromSsmByNetworkId,
-} from "@redstone-finance/chain-configs";
-import {
-  isNonEvmNetworkId,
-  NetworkId,
-  RedstoneCommon,
-} from "@redstone-finance/utils";
+import { Env, fetchParsedRpcUrlsFromSsmByNetworkId } from "@redstone-finance/chain-configs";
+import { isNonEvmNetworkId, NetworkId, RedstoneCommon } from "@redstone-finance/utils";
 import { BigNumber } from "ethers";
 import { EvmBlockchainService } from "../blockchain-service/EvmBlockchainService";
 import { getNonEvmBlockchainService } from "../blockchain-service/get-non-evm-blockchain-service";
@@ -25,11 +18,7 @@ export const getBalanceProvider = async (
   env: Env
 ): Promise<BalanceProvider | undefined> => {
   if (isNonEvmNetworkId(networkId)) {
-    const rpcUrls = await fetchParsedRpcUrlsFromSsmByNetworkId(
-      networkId,
-      env,
-      "main"
-    );
+    const rpcUrls = await fetchParsedRpcUrlsFromSsmByNetworkId(networkId, env, "main");
     return await getBalanceProviderWithRpcUrls(networkId, rpcUrls);
   } else {
     return await getProviderMemoized(networkId, env);

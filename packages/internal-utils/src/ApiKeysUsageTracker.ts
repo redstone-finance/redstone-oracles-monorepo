@@ -36,9 +36,7 @@ export class ApiKeysUsageTracker {
 
   private initializeTelemetryService() {
     if (!this.config.influxUrl || !this.config.influxToken) {
-      logger.info(
-        "InfluxDB configuration not provided, metrics will not be sent"
-      );
+      logger.info("InfluxDB configuration not provided, metrics will not be sent");
       return;
     }
 
@@ -46,8 +44,7 @@ export class ApiKeysUsageTracker {
       // Extract base URL and parse bucket/org from the full write endpoint URL
       const url = new URL(this.config.influxUrl);
       const baseUrl = `${url.protocol}//${url.host}`;
-      const bucket =
-        url.searchParams.get("bucket") || `${this.config.serviceName}-metrics`;
+      const bucket = url.searchParams.get("bucket") || `${this.config.serviceName}-metrics`;
       const org = url.searchParams.get("org") || "redstone";
 
       this.influxService = new InfluxService({
@@ -61,9 +58,7 @@ export class ApiKeysUsageTracker {
         `InfluxService initialized successfully - URL: ${baseUrl}, Bucket: ${bucket}, Org: ${org}, Service: ${this.config.serviceName}`
       );
     } catch (error) {
-      logger.error(
-        `Failed to initialize InfluxService: ${RedstoneCommon.stringifyError(error)}`
-      );
+      logger.error(`Failed to initialize InfluxService: ${RedstoneCommon.stringifyError(error)}`);
     }
   }
 
@@ -82,12 +77,8 @@ export class ApiKeysUsageTracker {
 
     this.requestMetrics[hashedKey].totalCount += 1;
 
-    const currentNodeCount =
-      this.requestMetrics[hashedKey].nodeBreakdown.get(nodeIdentifier) || 0;
-    this.requestMetrics[hashedKey].nodeBreakdown.set(
-      nodeIdentifier,
-      currentNodeCount + 1
-    );
+    const currentNodeCount = this.requestMetrics[hashedKey].nodeBreakdown.get(nodeIdentifier) || 0;
+    this.requestMetrics[hashedKey].nodeBreakdown.set(nodeIdentifier, currentNodeCount + 1);
 
     logger.debug(
       `Tracked request for key hash: ${hashedKey}, node: ${nodeIdentifier}, total: ${this.requestMetrics[hashedKey].totalCount}, service: ${this.config.serviceName}`
@@ -143,18 +134,14 @@ export class ApiKeysUsageTracker {
       // Reset metrics for next reporting period
       this.requestMetrics = {};
     } catch (error) {
-      logger.error(
-        `Failed to report metrics to InfluxDB: ${RedstoneCommon.stringifyError(error)}`
-      );
+      logger.error(`Failed to report metrics to InfluxDB: ${RedstoneCommon.stringifyError(error)}`);
       // Don't reset metrics on failure, try again next reporting period
     }
   }
 
   async shutdown() {
     clearInterval(this.reportingInterval);
-    logger.info(
-      `Stopped periodic metrics reporting for service: ${this.config.serviceName}`
-    );
+    logger.info(`Stopped periodic metrics reporting for service: ${this.config.serviceName}`);
 
     if (this.influxService) {
       try {

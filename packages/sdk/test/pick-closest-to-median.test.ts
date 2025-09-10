@@ -27,21 +27,15 @@ function createMockDataPackage(values: number[]): SignedDataPackagePlainObj {
 }
 
 describe("pickDataFeedPackagesClosestToMedian", () => {
-  const defineTestCase = (
-    values: number[][],
-    count: number,
-    expected: number[][]
-  ) => {
+  const defineTestCase = (values: number[][], count: number, expected: number[][]) => {
     it(`${JSON.stringify(values)} => ${JSON.stringify(expected)}`, () => {
       const mockPackages = values.map((value) => createMockDataPackage(value));
 
       const result = pickDataFeedPackagesClosestToMedian(mockPackages, count);
 
-      expect(
-        result.map((dp) =>
-          dp.dataPackage.dataPoints.map((p) => p.toObj().value)
-        )
-      ).toEqual(expected);
+      expect(result.map((dp) => dp.dataPackage.dataPoints.map((p) => p.toObj().value))).toEqual(
+        expected
+      );
     });
   };
 

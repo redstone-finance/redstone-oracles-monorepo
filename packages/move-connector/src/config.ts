@@ -10,8 +10,7 @@ export function configFromOptionals(
   maxTxSendAttemptsOptional?: number
 ) {
   const writePriceOctasTxGasBudget =
-    writePriceOctasTxGasBudgetOptional ??
-    TRANSACTION_DEFAULT_CONFIG.writePriceOctasTxGasBudget;
+    writePriceOctasTxGasBudgetOptional ?? TRANSACTION_DEFAULT_CONFIG.writePriceOctasTxGasBudget;
   const maxTxSendAttempts =
     maxTxSendAttemptsOptional ?? TRANSACTION_DEFAULT_CONFIG.maxTxSendAttempts;
 

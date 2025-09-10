@@ -10,16 +10,11 @@ export function Treat0xAsErrorDecorator(factory: () => providers.Provider) {
     const oldCall = provider.call.bind(provider);
     const providerInfo = getProviderNetworkInfo(provider);
 
-    provider.call = async (
-      transaction: Deferrable<TransactionRequest>,
-      blockTag?: BlockTag
-    ) => {
+    provider.call = async (transaction: Deferrable<TransactionRequest>, blockTag?: BlockTag) => {
       const result = await oldCall(transaction, blockTag);
 
       if (result === "0x") {
-        throw new Error(
-          `Provider ${providerInfo.url} has returned 0x as response`
-        );
+        throw new Error(`Provider ${providerInfo.url} has returned 0x as response`);
       }
 
       return result;

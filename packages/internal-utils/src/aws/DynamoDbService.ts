@@ -19,9 +19,7 @@ export class DynamoDbService {
     this.db = DynamoDBDocumentClient.from(getDynamoDbClient(region));
   }
 
-  public async query<T = Record<string, unknown>>(
-    input: Omit<QueryCommandInput, "TableName">
-  ) {
+  public async query<T = Record<string, unknown>>(input: Omit<QueryCommandInput, "TableName">) {
     const { Items } = await this.db.send(
       new QueryCommand({
         TableName: this.tableName,

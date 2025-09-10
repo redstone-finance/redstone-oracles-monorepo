@@ -5,14 +5,10 @@ export function mergeObjects<T = unknown>(objects: T[]) {
   return Object.assign({}, ...objects) as T;
 }
 
-export function getRequiredPropValue<T = unknown>(
-  obj: { [x: string]: unknown },
-  prop: string
-): T {
+export function getRequiredPropValue<T = unknown>(obj: { [x: string]: unknown }, prop: string): T {
   if (obj[prop] === undefined) {
     throw new Error(
-      `Object does not contain required property "${prop}". Obj: ` +
-        JSON.stringify(obj)
+      `Object does not contain required property "${prop}". Obj: ` + JSON.stringify(obj)
     );
   }
 
@@ -23,10 +19,7 @@ export function isEmpty<T>(value: T): value is NonNullable<T> {
   return isDefined(value) && value !== "";
 }
 
-export function useDefaultIfEmpty<T>(
-  value: T | null | undefined,
-  defaultValue: T
-): T {
+export function useDefaultIfEmpty<T>(value: T | null | undefined, defaultValue: T): T {
   return isEmpty(value) ? value : defaultValue;
 }
 
@@ -41,10 +34,7 @@ export function isDefined<T>(value: T): value is NonNullable<T> {
   return value !== null && value !== undefined;
 }
 
-export function useDefaultIfNotDefined<T>(
-  value: T | null | undefined,
-  defaultValue: T
-): T {
+export function useDefaultIfNotDefined<T>(value: T | null | undefined, defaultValue: T): T {
   return isDefined(value) ? value : defaultValue;
 }
 

@@ -6,10 +6,7 @@ export class TonUnitTesterContractAdapter {
   constructor(public readonly contract: AnyTonOpenedContract<TonUnitTester>) {}
 
   async testGetDataPackageSignerAddress(data: string, signature: string) {
-    return await this.contract.getTestGetDataPackageSignerAddress(
-      data,
-      signature
-    );
+    return await this.contract.getTestGetDataPackageSignerAddress(data, signature);
   }
 
   async testMedian(numbers: number[]) {

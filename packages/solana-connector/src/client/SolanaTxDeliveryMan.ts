@@ -40,10 +40,7 @@ export class SolanaTxDeliveryMan {
     return this.keypair.publicKey;
   }
 
-  async sendTransactions(
-    txIds: string[],
-    ixCreator: TransactionInstructionsCreator
-  ) {
+  async sendTransactions(txIds: string[], ixCreator: TransactionInstructionsCreator) {
     return await this.sendTransactionsWithRetry(txIds, ixCreator);
   }
 
@@ -66,23 +63,14 @@ export class SolanaTxDeliveryMan {
     const failedTxs: string[] = [];
     const successfulTxs: TransactionSignature[] = [];
 
-    const sendAndConfirmWrapper = async (
-      id: string,
-      instruction: TransactionInstruction
-    ) => {
+    const sendAndConfirmWrapper = async (id: string, instruction: TransactionInstruction) => {
       try {
-        const signature = await this.sendAndConfirm(
-          id,
-          instruction,
-          iterationIndex
-        );
+        const signature = await this.sendAndConfirm(id, instruction, iterationIndex);
         successfulTxs.push(signature);
       } catch (err) {
         errors.push(err);
         failedTxs.push(id);
-        this.logger.error(
-          `Failed transaction for ${id}, ${RedstoneCommon.stringifyError(err)}`
-        );
+        this.logger.error(`Failed transaction for ${id}, ${RedstoneCommon.stringifyError(err)}`);
       }
     };
 
@@ -107,29 +95,21 @@ export class SolanaTxDeliveryMan {
 
   private async wrapWithGas(ix: TransactionInstruction, iteration = 0) {
     const computeUnits = this.config.maxComputeUnits;
-    const writableKeys = ix.keys
-      .filter((meta) => meta.isWritable)
-      .map((meta) => meta.pubkey);
-    const priorityFeeUnitPriceCostInMicroLamports =
-      await this.gasOracle.getPriorityFeePerUnit(iteration, [
-        this.keypair.publicKey,
-        ...writableKeys,
-      ]);
+    const writableKeys = ix.keys.filter((meta) => meta.isWritable).map((meta) => meta.pubkey);
+    const priorityFeeUnitPriceCostInMicroLamports = await this.gasOracle.getPriorityFeePerUnit(
+      iteration,
+      [this.keypair.publicKey, ...writableKeys]
+    );
 
     const computeUnitsInstruction = ComputeBudgetProgram.setComputeUnitLimit({
       units: computeUnits,
     });
 
-    const setComputeUnitPriceInstruction =
-      ComputeBudgetProgram.setComputeUnitPrice({
-        microLamports: priorityFeeUnitPriceCostInMicroLamports,
-      });
+    const setComputeUnitPriceInstruction = ComputeBudgetProgram.setComputeUnitPrice({
+      microLamports: priorityFeeUnitPriceCostInMicroLamports,
+    });
 
-    const instructions = [
-      computeUnitsInstruction,
-      setComputeUnitPriceInstruction,
-      ix,
-    ];
+    const instructions = [computeUnitsInstruction, setComputeUnitPriceInstruction, ix];
 
     this.logger.debug(`Setting transaction compute units to ${computeUnits}`);
     if (priorityFeeUnitPriceCostInMicroLamports) {
@@ -137,10 +117,7 @@ export class SolanaTxDeliveryMan {
         `Additional cost of transaction: ${computeUnits * priorityFeeUnitPriceCostInMicroLamports} microLamports`
       );
     }
-    const recentBlockhash = await getRecentBlockhash(
-      this.client,
-      "wrapWithGas"
-    );
+    const recentBlockhash = await getRecentBlockhash(this.client, "wrapWithGas");
 
     return new TransactionMessage({
       payerKey: this.keypair.publicKey,
@@ -181,9 +158,7 @@ export class SolanaTxDeliveryMan {
 
         return result.isFinished;
       },
-      Math.floor(
-        this.config.expectedTxDeliveryTimeMs / SOLANA_SLOT_TIME_INTERVAL_MS
-      ),
+      Math.floor(this.config.expectedTxDeliveryTimeMs / SOLANA_SLOT_TIME_INTERVAL_MS),
       `Could not confirm transaction ${txSignature} for ${id}`,
       SOLANA_SLOT_TIME_INTERVAL_MS,
       `getSignatureStatus ${txSignature}`

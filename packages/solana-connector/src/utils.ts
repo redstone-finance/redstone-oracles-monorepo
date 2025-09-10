@@ -48,8 +48,5 @@ export function connectToCluster(cluster?: Cluster) {
 }
 
 export function readCluster() {
-  return RedstoneCommon.getFromEnv(
-    "CLUSTER",
-    z.enum(["devnet", "testnet", "mainnet-beta"])
-  );
+  return RedstoneCommon.getFromEnv("CLUSTER", z.enum(["devnet", "testnet", "mainnet-beta"]));
 }

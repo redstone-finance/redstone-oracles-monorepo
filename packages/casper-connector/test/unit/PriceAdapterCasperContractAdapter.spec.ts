@@ -22,8 +22,7 @@ describe("PriceAdapterCasperContractAdapter tests", () => {
   beforeEach(async () => {
     connection = getMockCasperConnection();
     connector = new PriceAdapterCasperContractConnector(connection, "");
-    adapter =
-      (await connector.getAdapter()) as PriceAdapterCasperContractAdapter;
+    adapter = (await connector.getAdapter()) as PriceAdapterCasperContractAdapter;
     mockStateRootHashImplementations(connection);
   });
 
@@ -42,21 +41,11 @@ describe("PriceAdapterCasperContractAdapter tests", () => {
   it("readPricesFromContract should return values even when one doesn't exist", async () => {
     connection.queryContractDictionary
       .mockImplementationOnce(
-        contractDictionaryMock(
-          adapter,
-          STORAGE_KEY_VALUES,
-          "ETH",
-          BigNumber.from(12345)
-        )
+        contractDictionaryMock(adapter, STORAGE_KEY_VALUES, "ETH", BigNumber.from(12345))
       )
       .mockRejectedValueOnce("")
       .mockImplementationOnce(
-        contractDictionaryMock(
-          adapter,
-          STORAGE_KEY_VALUES,
-          "BTC",
-          BigNumber.from(54321)
-        )
+        contractDictionaryMock(adapter, STORAGE_KEY_VALUES, "BTC", BigNumber.from(54321))
       );
 
     const values = await adapter.readPricesFromContract(
@@ -72,8 +61,6 @@ describe("PriceAdapterCasperContractAdapter tests", () => {
   it("getPricesFromPayload must not be executed", async () => {
     await expect(async () => {
       await adapter.getPricesFromPayload(makeContractParamsProviderMock());
-    }).rejects.toThrow(
-      "Method not supported. Use price_relay_adapter contract instead"
-    );
+    }).rejects.toThrow("Method not supported. Use price_relay_adapter contract instead");
   });
 });

@@ -144,17 +144,10 @@ describe("ContractFacade.getContractDataOpts", () => {
     canOmitFetchingDataFromContract = false
   ) {
     const result = ContractFacade.getContractDataOpts(
-      relayerConfig as Pick<
-        RelayerConfig,
-        "dataFeeds" | "updateConditions" | "updateTriggers"
-      >
+      relayerConfig as Pick<RelayerConfig, "dataFeeds" | "updateConditions" | "updateTriggers">
     );
 
-    expect(result.shouldCheckValueDeviation).to.equal(
-      shouldCheckValueDeviation
-    );
-    expect(result.canOmitFetchingDataFromContract).to.equal(
-      canOmitFetchingDataFromContract
-    );
+    expect(result.shouldCheckValueDeviation).to.equal(shouldCheckValueDeviation);
+    expect(result.canOmitFetchingDataFromContract).to.equal(canOmitFetchingDataFromContract);
   }
 });

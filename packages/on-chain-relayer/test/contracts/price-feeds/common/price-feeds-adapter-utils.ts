@@ -1,8 +1,5 @@
 import { time } from "@nomicfoundation/hardhat-network-helpers";
-import {
-  SimpleNumericMockConfig,
-  WrapperBuilder,
-} from "@redstone-finance/evm-connector";
+import { SimpleNumericMockConfig, WrapperBuilder } from "@redstone-finance/evm-connector";
 import { utils } from "@redstone-finance/protocol";
 import chai, { expect } from "chai";
 import chaiAsPromised from "chai-as-promised";
@@ -47,16 +44,13 @@ export const describeCommonPriceFeedsAdapterTests = ({
   };
 
   const updateValues = async (args: UpdateValuesParams) => {
-    const mockBlockTimestamp =
-      (await time.latest()) + args.increaseBlockTimeBySeconds;
+    const mockBlockTimestamp = (await time.latest()) + args.increaseBlockTimeBySeconds;
     const mockDataTimestamp = args.calculateMockDataTimestamp
       ? args.calculateMockDataTimestamp(mockBlockTimestamp)
       : mockBlockTimestamp * 1000;
 
     // Wrap it with RedStone payload
-    const wrappedContract = WrapperBuilder.wrap(
-      adapterContract
-    ).usingSimpleNumericMock({
+    const wrappedContract = WrapperBuilder.wrap(adapterContract).usingSimpleNumericMock({
       timestampMilliseconds: mockDataTimestamp,
       ...(args.mockWrapperConfig || defaultMockWrapperConfig),
     });
@@ -74,14 +68,11 @@ export const describeCommonPriceFeedsAdapterTests = ({
     };
   };
 
-  const validateValuesAndTimestamps = async (
-    args: ValidateValuesAndTimestampsParams
-  ) => {
+  const validateValuesAndTimestamps = async (args: ValidateValuesAndTimestampsParams) => {
     // Validating values
     const dataFeedIds = Object.keys(args.expectedValues);
     const dataFeedIdsBytes32 = dataFeedIds.map(utils.convertStringToBytes32);
-    const values =
-      await adapterContract.getValuesForDataFeeds(dataFeedIdsBytes32);
+    const values = await adapterContract.getValuesForDataFeeds(dataFeedIdsBytes32);
     for (let i = 0; i < values.length; i++) {
       const expectedValue = args.expectedValues[dataFeedIds[i]];
       expect(values[i].toNumber()).to.eq(expectedValue * 10 ** 8);
@@ -89,35 +80,26 @@ export const describeCommonPriceFeedsAdapterTests = ({
 
     // Validating timestamps
     const timestamps = await adapterContract.getTimestampsFromLatestUpdate();
-    expect(timestamps.blockTimestamp.toNumber()).to.eq(
-      args.expectedLatestBlockTimestamp
-    );
+    expect(timestamps.blockTimestamp.toNumber()).to.eq(args.expectedLatestBlockTimestamp);
 
     if (!skipTestsForPrevDataTimestamp) {
-      expect(timestamps.dataTimestamp.toNumber()).to.eq(
-        args.expectedLatestDataTimestamp
-      );
+      expect(timestamps.dataTimestamp.toNumber()).to.eq(args.expectedLatestDataTimestamp);
     }
   };
 
   beforeEach(async () => {
     // Deploy a new adapter contract
-    const adapterContractFactory =
-      await ethers.getContractFactory(adapterContractName);
-    adapterContract =
-      (await adapterContractFactory.deploy()) as IRedstoneAdapter;
+    const adapterContractFactory = await ethers.getContractFactory(adapterContractName);
+    adapterContract = (await adapterContractFactory.deploy()) as IRedstoneAdapter;
   });
 
   describe("upgrades", () => {
     let contractV1: IRedstoneAdapter;
 
     beforeEach(async () => {
-      const adapterContractFactory =
-        await ethers.getContractFactory(adapterContractName);
+      const adapterContractFactory = await ethers.getContractFactory(adapterContractName);
 
-      contractV1 = (await upgrades.deployProxy(
-        adapterContractFactory
-      )) as IRedstoneAdapter;
+      contractV1 = (await upgrades.deployProxy(adapterContractFactory)) as IRedstoneAdapter;
     });
 
     it("should properly initialize", async () => {
@@ -207,9 +189,7 @@ export const describeCommonPriceFeedsAdapterTests = ({
         expectedValues: { [dataFeedId]: 42 },
       });
     } else {
-      await expect(
-        updateValues({ increaseBlockTimeBySeconds: 2 })
-      ).to.be.revertedWithCustomError(
+      await expect(updateValues({ increaseBlockTimeBySeconds: 2 })).to.be.revertedWithCustomError(
         adapterContract,
         "MinIntervalBetweenUpdatesHasNotPassedYet"
       );
@@ -227,10 +207,7 @@ export const describeCommonPriceFeedsAdapterTests = ({
           increaseBlockTimeBySeconds: 5,
           calculateMockDataTimestamp: () => mockDataTimestamp,
         })
-      ).to.be.revertedWithCustomError(
-        adapterContract,
-        "DataTimestampShouldBeNewerThanBefore"
-      );
+      ).to.be.revertedWithCustomError(adapterContract, "DataTimestampShouldBeNewerThanBefore");
     });
 
     it("should revert if proposed data package timestamp is older than before", async () => {
@@ -243,10 +220,7 @@ export const describeCommonPriceFeedsAdapterTests = ({
           increaseBlockTimeBySeconds: 5,
           calculateMockDataTimestamp: () => mockDataTimestamp - 1,
         })
-      ).to.be.revertedWithCustomError(
-        adapterContract,
-        "DataTimestampShouldBeNewerThanBefore"
-      );
+      ).to.be.revertedWithCustomError(adapterContract, "DataTimestampShouldBeNewerThanBefore");
     });
   }
 
@@ -254,8 +228,7 @@ export const describeCommonPriceFeedsAdapterTests = ({
     await expect(
       updateValues({
         increaseBlockTimeBySeconds: 1,
-        calculateMockDataTimestamp: (blockTimestamp) =>
-          (blockTimestamp - 4 * 60) * 1000,
+        calculateMockDataTimestamp: (blockTimestamp) => (blockTimestamp - 4 * 60) * 1000,
       })
     ).to.be.revertedWithCustomError(adapterContract, "TimestampIsTooOld");
   });
@@ -264,13 +237,9 @@ export const describeCommonPriceFeedsAdapterTests = ({
     await expect(
       updateValues({
         increaseBlockTimeBySeconds: 1,
-        calculateMockDataTimestamp: (blockTimestamp) =>
-          (blockTimestamp + 4 * 60) * 1000,
+        calculateMockDataTimestamp: (blockTimestamp) => (blockTimestamp + 4 * 60) * 1000,
       })
-    ).to.be.revertedWithCustomError(
-      adapterContract,
-      "TimestampFromTooLongFuture"
-    );
+    ).to.be.revertedWithCustomError(adapterContract, "TimestampFromTooLongFuture");
   });
 
   it("should revert if at least one timestamp isn't equal to proposed timestamp", async () => {
@@ -284,20 +253,14 @@ export const describeCommonPriceFeedsAdapterTests = ({
           timestampMilliseconds: latestBlockTimestamp * 1000,
         },
       })
-    ).to.be.revertedWithCustomError(
-      adapterContract,
-      "DataPackageTimestampMismatch"
-    );
+    ).to.be.revertedWithCustomError(adapterContract, "DataPackageTimestampMismatch");
   });
 
   it("should revert if redstone payload is not attached", async () => {
     const mockBlockTimestamp = (await time.latest()) + 1;
     await expect(
       adapterContract.updateDataFeedsValues(mockBlockTimestamp * 1000)
-    ).to.be.revertedWithCustomError(
-      adapterContract,
-      "CalldataMustHaveValidPayload"
-    );
+    ).to.be.revertedWithCustomError(adapterContract, "CalldataMustHaveValidPayload");
   });
 
   it("should revert if a data feed is missed in redstone payload", async () => {
@@ -310,10 +273,7 @@ export const describeCommonPriceFeedsAdapterTests = ({
         },
       })
     )
-      .to.be.revertedWithCustomError(
-        adapterContract,
-        "InsufficientNumberOfUniqueSigners"
-      )
+      .to.be.revertedWithCustomError(adapterContract, "InsufficientNumberOfUniqueSigners")
       .withArgs(0, 2);
   });
 
@@ -327,10 +287,7 @@ export const describeCommonPriceFeedsAdapterTests = ({
         },
       })
     )
-      .to.be.revertedWithCustomError(
-        adapterContract,
-        "InsufficientNumberOfUniqueSigners"
-      )
+      .to.be.revertedWithCustomError(adapterContract, "InsufficientNumberOfUniqueSigners")
       .withArgs(1, 2);
   });
 
@@ -374,8 +331,7 @@ export const describeCommonPriceFeedsAdapterTests = ({
 
       const { mockDataTimestamp, mockBlockTimestamp } = await updateValues({
         increaseBlockTimeBySeconds: i * 10,
-        calculateMockDataTimestamp: (blockTimestamp) =>
-          (blockTimestamp - 1) * 1000,
+        calculateMockDataTimestamp: (blockTimestamp) => (blockTimestamp - 1) * 1000,
         mockWrapperConfig: {
           mockSignersCount: 2,
           dataPoints: [{ dataFeedId, value: btcMockValue }],
@@ -416,9 +372,7 @@ export const describeCommonPriceFeedsAdapterTests = ({
 
   it("should revert trying to get invalid (zero) data feed value", async () => {
     await expect(
-      adapterContract.getValueForDataFeed(
-        utils.convertStringToBytes32(dataFeedId)
-      )
+      adapterContract.getValueForDataFeed(utils.convertStringToBytes32(dataFeedId))
     ).to.be.revertedWithCustomError(
       adapterContract,
       isErc7412 ? "OracleDataRequired" : "DataFeedValueCannotBeZero"
@@ -427,9 +381,7 @@ export const describeCommonPriceFeedsAdapterTests = ({
 
   it("should revert trying to get a value for an unsupported data feed", async () => {
     await expect(
-      adapterContract.getValueForDataFeed(
-        utils.convertStringToBytes32("SMTH-ELSE")
-      )
+      adapterContract.getValueForDataFeed(utils.convertStringToBytes32("SMTH-ELSE"))
     ).to.be.revertedWithCustomError(adapterContract, "DataFeedIdNotFound");
   });
 
@@ -447,9 +399,7 @@ export const describeCommonPriceFeedsAdapterTests = ({
 
   it("should revert trying to get several values, if one data feed has invalid (zero) value", async () => {
     await expect(
-      adapterContract.getValuesForDataFeeds(
-        [dataFeedId].map(utils.convertStringToBytes32)
-      )
+      adapterContract.getValuesForDataFeeds([dataFeedId].map(utils.convertStringToBytes32))
     ).to.be.revertedWithCustomError(
       adapterContract,
       isErc7412 ? "OracleDataRequired" : "DataFeedValueCannotBeZero"

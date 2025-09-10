@@ -1,11 +1,6 @@
 import { Transaction, UpgradePolicy } from "@mysten/sui/transactions";
 import { execSync } from "child_process";
-import {
-  DEFAULT_GAS_BUDGET,
-  getDeployDir,
-  readIds,
-  SuiNetworkName,
-} from "../../src";
+import { DEFAULT_GAS_BUDGET, getDeployDir, readIds, SuiNetworkName } from "../../src";
 import { generateTransactionData } from "./generate-transaction-data";
 
 const BUILD_CMD = `sui move build --force --dump-bytecode-as-base64 --ignore-chain`;

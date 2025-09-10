@@ -24,10 +24,7 @@ export class LedgerSigner implements IRadixSigner {
 
   async signIntentToSignatureWithKey(hashIntent: Uint8Array) {
     const sig = await this.signHash(hashIntent);
-    return new SignatureWithPublicKey.Ed25519(
-      sig,
-      (await this.publicKey()).bytes
-    );
+    return new SignatureWithPublicKey.Ed25519(sig, (await this.publicKey()).bytes);
   }
 
   async signIntent(hashIntent: Uint8Array) {
@@ -36,9 +33,7 @@ export class LedgerSigner implements IRadixSigner {
   }
 
   async signHash(hashIntent: Uint8Array) {
-    return new Uint8Array(
-      (await signHash(this.aptos, hashIntent, this.accountId)).signature
-    );
+    return new Uint8Array((await signHash(this.aptos, hashIntent, this.accountId)).signature);
   }
 
   async publicKey() {
@@ -55,10 +50,7 @@ export class LedgerSigner implements IRadixSigner {
     return undefined;
   }
 
-  static async makeLedgerSigner(
-    accountId: number,
-    networkId = NetworkId.Stokenet
-  ) {
+  static async makeLedgerSigner(accountId: number, networkId = NetworkId.Stokenet) {
     return new LedgerSigner(await makeAptosLedger(), accountId, networkId);
   }
 }
@@ -75,8 +67,7 @@ export async function makeAptosLedger() {
   return aptos;
 }
 
-const getDerivationPath = (accountId: number) =>
-  `m/44'/637'/${accountId}'/0'/0'`;
+const getDerivationPath = (accountId: number) => `m/44'/637'/${accountId}'/0'/0'`;
 
 /// returns public key of the ledger account
 export const getPublicKey = async (
@@ -90,21 +81,11 @@ export const getPublicKey = async (
 
   return {
     publicKey: hexlify(result.publicKey),
-    address: await RadixEngineToolkit.Derive.virtualAccountAddressFromPublicKey(
-      pk,
-      networkId
-    ),
+    address: await RadixEngineToolkit.Derive.virtualAccountAddressFromPublicKey(pk, networkId),
     ed: pk,
   };
 };
 
-export async function signHash(
-  aptos: Aptos,
-  input: Uint8Array,
-  accountId: number
-) {
-  return await aptos.signTransaction(
-    getDerivationPath(accountId),
-    Buffer.from(input)
-  );
+export async function signHash(aptos: Aptos, input: Uint8Array, accountId: number) {
+  return await aptos.signTransaction(getDerivationPath(accountId), Buffer.from(input));
 }

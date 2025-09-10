@@ -1,11 +1,7 @@
 import { INumericDataPoint } from "@redstone-finance/protocol";
 import { RelayerConfig } from "../../src";
 import { valueDeviationCondition } from "../../src/core/update-conditions/value-deviation-condition";
-import {
-  createNumberFromContract,
-  getDataPackagesResponse,
-  mockConfig,
-} from "../helpers";
+import { createNumberFromContract, getDataPackagesResponse, mockConfig } from "../helpers";
 
 export const HISTORICAL_DATA_POINTS = [
   { dataFeedId: "ETH", value: 1660.99 },
@@ -29,18 +25,17 @@ export const performFallbackValueDeviationConditionTest = async (
     getDataPackagesResponse(dataPoints, true, Date.now());
   const ethValue = createNumberFromContract(ethPrice);
   const btcValue = createNumberFromContract(btcPrice);
-  const { shouldUpdatePrices, messages: warningMessage } =
-    await valueDeviationCondition(
-      "ETH",
-      dataPackages,
-      {
-        lastValue: ethValue,
-        lastBlockTimestampMS: lastUpdateTimestamp,
-        lastDataPackageTimestampMS: lastDataPackageTimestamp,
-      },
-      relayerConfig,
-      olderDataPackagesFetchCallback
-    );
+  const { shouldUpdatePrices, messages: warningMessage } = await valueDeviationCondition(
+    "ETH",
+    dataPackages,
+    {
+      lastValue: ethValue,
+      lastBlockTimestampMS: lastUpdateTimestamp,
+      lastDataPackageTimestampMS: lastDataPackageTimestamp,
+    },
+    relayerConfig,
+    olderDataPackagesFetchCallback
+  );
   const { shouldUpdatePrices: shouldUpdatePrices2, messages: warningMessage2 } =
     await valueDeviationCondition(
       "BTC",
@@ -70,15 +65,14 @@ export async function performSkipFrequentUpdatesCheck(
     historicalPackagesGateways: ["X"],
     fallbackSkipDeviationBasedFrequentUpdates: true,
   });
-  const { shouldUpdatePrices, warningMessage } =
-    await performFallbackValueDeviationConditionTest(
-      relayerConfig,
-      1230.99,
-      13011.68,
-      HISTORICAL_DATA_POINTS,
-      Date.now() - (isNotEnoughTimeElapsed ? 0 : 2 * 60000),
-      isUpdatedDataPackageNewerThanHistorical ? Date.now() : 0
-    );
+  const { shouldUpdatePrices, warningMessage } = await performFallbackValueDeviationConditionTest(
+    relayerConfig,
+    1230.99,
+    13011.68,
+    HISTORICAL_DATA_POINTS,
+    Date.now() - (isNotEnoughTimeElapsed ? 0 : 2 * 60000),
+    isUpdatedDataPackageNewerThanHistorical ? Date.now() : 0
+  );
 
   return { shouldUpdatePrices, warningMessage };
 }

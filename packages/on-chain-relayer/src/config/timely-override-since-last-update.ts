@@ -12,29 +12,23 @@ export const timelyOverrideSinceLastUpdate = (
   const oldUpdateTriggers = _.cloneDeep(relayerConfig.updateTriggers);
 
   for (const dataFeedId of relayerConfig.dataFeeds) {
-    relayerConfig.updateTriggers[dataFeedId].timeSinceLastUpdateInMilliseconds =
-      Math.min(
-        temporaryUpdatePriceInterval,
-        RedstoneCommon.useDefaultIfNotDefined(
-          relayerConfig.updateTriggers[dataFeedId]
-            .timeSinceLastUpdateInMilliseconds,
-          temporaryUpdatePriceInterval
-        )
-      );
+    relayerConfig.updateTriggers[dataFeedId].timeSinceLastUpdateInMilliseconds = Math.min(
+      temporaryUpdatePriceInterval,
+      RedstoneCommon.useDefaultIfNotDefined(
+        relayerConfig.updateTriggers[dataFeedId].timeSinceLastUpdateInMilliseconds,
+        temporaryUpdatePriceInterval
+      )
+    );
     if (!relayerConfig.updateConditions[dataFeedId].includes("time")) {
       relayerConfig.updateConditions[dataFeedId].push("time");
     }
   }
 
-  const temporaryUpdateDuration = Math.floor(
-    temporaryUpdatePriceInterval * 1.5
-  );
+  const temporaryUpdateDuration = Math.floor(temporaryUpdatePriceInterval * 1.5);
   logger.log(
     `Timely overriding updatePriceInterval to ${RedstoneCommon.msToMin(
       temporaryUpdatePriceInterval
-    ).toFixed(2)} [min] for ${RedstoneCommon.msToMin(
-      temporaryUpdateDuration
-    ).toFixed(2)} [min]`
+    ).toFixed(2)} [min] for ${RedstoneCommon.msToMin(temporaryUpdateDuration).toFixed(2)} [min]`
   );
 
   setTimeout(() => {

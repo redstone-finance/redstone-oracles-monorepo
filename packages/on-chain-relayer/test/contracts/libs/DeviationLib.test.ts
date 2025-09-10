@@ -6,8 +6,7 @@ describe("DeviationLib", function () {
   let deviationLib: SampleDeviationLib;
 
   before(async function () {
-    const deviationLibFactory =
-      await ethers.getContractFactory("SampleDeviationLib");
+    const deviationLibFactory = await ethers.getContractFactory("SampleDeviationLib");
     deviationLib = await deviationLibFactory.deploy();
     await deviationLib.deployed();
   });
@@ -33,11 +32,7 @@ describe("DeviationLib", function () {
     const precision = 1000;
 
     await expect(
-      deviationLib.calculateAbsDeviation(
-        proposedValue,
-        originalValue,
-        precision
-      )
+      deviationLib.calculateAbsDeviation(proposedValue, originalValue, precision)
     ).to.be.revertedWithPanic(0x12);
   });
 

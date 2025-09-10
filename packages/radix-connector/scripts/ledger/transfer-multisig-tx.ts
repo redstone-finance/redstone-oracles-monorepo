@@ -6,12 +6,7 @@ import { z } from "zod";
 import { RadixClient } from "../../src";
 import { SetRoleRadixInvocation } from "../../src/contracts/proxy/methods/ChangeManagerRole";
 import { makeMultisigAccessRule } from "../../src/radix/utils";
-import {
-  FEED_ID,
-  loadAddress,
-  makeRadixClient,
-  PROXY_NAME,
-} from "../constants";
+import { FEED_ID, loadAddress, makeRadixClient, PROXY_NAME } from "../constants";
 
 const THRESHOLD = 2;
 const MULTI_SIG_PUBLIC_KEYS = [""];

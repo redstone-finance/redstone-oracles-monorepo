@@ -3,11 +3,7 @@ import { RelayerConfig } from "../config/RelayerConfig";
 import { canIgnoreMissingFeeds } from "../core/make-data-packages-request-params";
 import { checkConditionByName } from "../core/update-conditions/check-condition-by-name";
 import { checkIfDataPackageTimestampIsNewer } from "../core/update-conditions/data-packages-timestamp";
-import {
-  IterationArgsMessage,
-  ShouldUpdateContext,
-  ShouldUpdateResponse,
-} from "../types";
+import { IterationArgsMessage, ShouldUpdateContext, ShouldUpdateResponse } from "../types";
 
 export const shouldUpdateInMultiFeed = async (
   context: ShouldUpdateContext,
@@ -20,9 +16,7 @@ export const shouldUpdateInMultiFeed = async (
   const heartbeatUpdates: Set<number> = new Set();
   const pictogram = config.runWithMqtt ? "ℹ️" : "⛔";
   const missingDataFeedIds = [];
-  for (const [dataFeedId, updateConditions] of Object.entries(
-    config.updateConditions
-  )) {
+  for (const [dataFeedId, updateConditions] of Object.entries(config.updateConditions)) {
     if (!Object.keys(context.dataPackages).includes(dataFeedId)) {
       missingDataFeedIds.push(dataFeedId);
       continue;
@@ -44,8 +38,7 @@ export const shouldUpdateInMultiFeed = async (
         }
 
         if (conditionCheck.maxDeviationRatio) {
-          dataFeedsDeviationRatios[dataFeedId] =
-            conditionCheck.maxDeviationRatio;
+          dataFeedsDeviationRatios[dataFeedId] = conditionCheck.maxDeviationRatio;
         }
         if (conditionCheck.shouldUpdatePrices && conditionName === "time") {
           heartbeatUpdates.add(
@@ -64,8 +57,10 @@ export const shouldUpdateInMultiFeed = async (
       }
     }
 
-    const { shouldNotUpdatePrice, messages } =
-      checkIfDataPackageTimestampIsNewer(context, dataFeedId);
+    const { shouldNotUpdatePrice, messages } = checkIfDataPackageTimestampIsNewer(
+      context,
+      dataFeedId
+    );
     if (shouldNotUpdatePrice) {
       shouldUpdatePrices = false;
       warningMessages.push(...messages);

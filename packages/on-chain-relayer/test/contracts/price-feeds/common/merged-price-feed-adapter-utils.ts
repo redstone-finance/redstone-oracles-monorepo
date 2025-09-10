@@ -32,12 +32,8 @@ export const describeCommonMergedPriceFeedAdapterTests = ({
   roundsEndabled,
 }: PriceFeedTestsParams) => {
   const deployBehindProxy = async () => {
-    const factory = await ethers.getContractFactory(
-      mergedPriceFeedAdapterContractName
-    );
-    return (await upgrades.deployProxy(
-      factory
-    )) as MergedPriceFeedAdapterWithRounds;
+    const factory = await ethers.getContractFactory(mergedPriceFeedAdapterContractName);
+    return (await upgrades.deployProxy(factory)) as MergedPriceFeedAdapterWithRounds;
   };
 
   describe("Tests for getting price feed / adapter details", () => {
@@ -73,9 +69,7 @@ export const describeCommonMergedPriceFeedAdapterTests = ({
       await time.setNextBlockTimestamp(curBlockTime);
 
       // Wrap contract
-      const wrappedContract = WrapperBuilder.wrap(
-        contract
-      ).usingSimpleNumericMock({
+      const wrappedContract = WrapperBuilder.wrap(contract).usingSimpleNumericMock({
         mockSignersCount: 2,
         timestampMilliseconds: mockDataTimestamp,
         dataPoints: [{ dataFeedId: "BTC", value: valueForUpdate }],
@@ -100,9 +94,7 @@ export const describeCommonMergedPriceFeedAdapterTests = ({
       expectBigNumber(latestRoundData.updatedAt, curBlockTime);
 
       // Read using adapter functions
-      const latestValueFromAdapter = await contract.getValueForDataFeed(
-        formatBytes32String("BTC")
-      );
+      const latestValueFromAdapter = await contract.getValueForDataFeed(formatBytes32String("BTC"));
       expectBigNumber(latestValueFromAdapter, valueForUpdate * 10 ** 8);
 
       // Check value for each round
@@ -122,9 +114,7 @@ export const describeCommonMergedPriceFeedAdapterTests = ({
 
       await testProperPriceUpdate({
         valueForUpdate: 42,
-        expectedRoundId: roundsEndabled
-          ? 1
-          : DEFAULT_ROUND_ID_FOR_WITHOUT_ROUNDS,
+        expectedRoundId: roundsEndabled ? 1 : DEFAULT_ROUND_ID_FOR_WITHOUT_ROUNDS,
         expectedValuesInRounds: roundsEndabled ? expectedValuesInRounds : [],
       });
     });
@@ -137,9 +127,7 @@ export const describeCommonMergedPriceFeedAdapterTests = ({
 
       await testProperPriceUpdate({
         valueForUpdate: 43,
-        expectedRoundId: roundsEndabled
-          ? 2
-          : DEFAULT_ROUND_ID_FOR_WITHOUT_ROUNDS,
+        expectedRoundId: roundsEndabled ? 2 : DEFAULT_ROUND_ID_FOR_WITHOUT_ROUNDS,
         expectedValuesInRounds: roundsEndabled ? expectedValuesInRounds : [],
       });
     });
@@ -147,8 +135,7 @@ export const describeCommonMergedPriceFeedAdapterTests = ({
     it("Should upgrade the contract", async () => {
       const version = await contract.version();
       expectBigNumber(version, 1);
-      const updatedContractFactory =
-        await ethers.getContractFactory(updatedContractName);
+      const updatedContractFactory = await ethers.getContractFactory(updatedContractName);
       contract = (await upgrades.upgradeProxy(
         contract,
         updatedContractFactory
@@ -166,9 +153,7 @@ export const describeCommonMergedPriceFeedAdapterTests = ({
 
       await testProperPriceUpdate({
         valueForUpdate: 44,
-        expectedRoundId: roundsEndabled
-          ? 3
-          : DEFAULT_ROUND_ID_FOR_WITHOUT_ROUNDS,
+        expectedRoundId: roundsEndabled ? 3 : DEFAULT_ROUND_ID_FOR_WITHOUT_ROUNDS,
         expectedValuesInRounds: roundsEndabled ? expectedValuesInRounds : [],
       });
     });

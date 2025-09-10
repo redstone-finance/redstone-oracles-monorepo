@@ -86,13 +86,7 @@
       ]
     },
     "USDT": {
-      "source": [
-        "bitstamp-usd",
-        "coinbase-usd",
-        "bitstamp",
-        "coinbase",
-        "bybit-eur"
-      ]
+      "source": ["bitstamp-usd", "coinbase-usd", "bitstamp", "coinbase", "bybit-eur"]
     },
     "BNB": {
       "source": [

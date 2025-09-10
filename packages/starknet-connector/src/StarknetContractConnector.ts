@@ -1,17 +1,9 @@
 import { IContractConnector } from "@redstone-finance/sdk";
-import {
-  Abi,
-  BlockTag,
-  Contract,
-  ProviderInterface,
-  TransactionFinalityStatus,
-} from "starknet";
+import { Abi, BlockTag, Contract, ProviderInterface, TransactionFinalityStatus } from "starknet";
 
 export const FEE_MULTIPLIER = 1000000000000000000;
 
-export abstract class StarknetContractConnector<Adapter>
-  implements IContractConnector<Adapter>
-{
+export abstract class StarknetContractConnector<Adapter> implements IContractConnector<Adapter> {
   protected constructor(
     protected provider: ProviderInterface,
     private contractAddress: string,
@@ -37,9 +29,7 @@ export abstract class StarknetContractConnector<Adapter>
       logText += acceptedResult.revert_reason;
     }
 
-    logText += `, fee: ${
-      parseInt(acceptedResult.actual_fee.amount) / FEE_MULTIPLIER
-    } ETH`;
+    logText += `, fee: ${parseInt(acceptedResult.actual_fee.amount) / FEE_MULTIPLIER} ETH`;
 
     console.log(logText);
 

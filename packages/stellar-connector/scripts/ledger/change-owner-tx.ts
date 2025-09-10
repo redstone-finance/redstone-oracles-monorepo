@@ -1,9 +1,5 @@
 import { Contract } from "@stellar/stellar-sdk";
-import {
-  makeKeypair,
-  StellarClientBuilder,
-  StellarContractAdapter,
-} from "../../src";
+import { makeKeypair, StellarClientBuilder, StellarContractAdapter } from "../../src";
 import { loadContractId, readNetwork, readUrl } from "../utils";
 import { MULTISIG_ADDRESS } from "./consts";
 

@@ -18,9 +18,7 @@ export class MovePricesContractConnector extends MoveContractConnector<MovePrice
   ) {
     super(client);
 
-    const txDeliveryMan = account
-      ? new MoveTxDeliveryMan(client, account, config)
-      : undefined;
+    const txDeliveryMan = account ? new MoveTxDeliveryMan(client, account, config) : undefined;
 
     this.adapter = new MovePricesContractAdapter(
       new MovePriceAdapterContractViewer(

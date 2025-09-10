@@ -39,9 +39,7 @@ async function proposeUpgrade(
   );
 
   console.log(`Upgrading package as ${signerAddress.toString()}`);
-  const upgradeTxPayload = await new MovePackageTxBuilder(
-    aptos
-  ).objectUpgradeTxPayload(
+  const upgradeTxPayload = await new MovePackageTxBuilder(aptos).objectUpgradeTxPayload(
     signerAddress,
     contractAddress,
     metadataBytes,
