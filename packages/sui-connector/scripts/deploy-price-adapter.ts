@@ -27,10 +27,7 @@ interface TransactionResult {
   digest: string;
 }
 
-async function executeCommand(
-  command: string,
-  args: string[]
-): Promise<string> {
+async function executeCommand(command: string, args: string[]): Promise<string> {
   return await new Promise((resolve, reject) => {
     const proc = spawn(command, args);
     let stdout = "";
@@ -48,9 +45,7 @@ async function executeCommand(
       if (code === 0) {
         resolve(stdout);
       } else {
-        reject(
-          new Error(` ${stdout} Process exited with code ${code}: ${stderr}`)
-        );
+        reject(new Error(` ${stdout} Process exited with code ${code}: ${stderr}`));
       }
     });
   });
@@ -59,10 +54,7 @@ async function executeCommand(
 async function executeSuiPublish(network: string): Promise<ObjectChanges> {
   const cwd = process.cwd();
   try {
-    const skipFaucet = RedstoneCommon.getFromEnv(
-      "SKIP_FAUCET",
-      z.optional(z.boolean())
-    );
+    const skipFaucet = RedstoneCommon.getFromEnv("SKIP_FAUCET", z.optional(z.boolean()));
     if ((network === "localnet" || network === "testnet") && !skipFaucet) {
       await executeCommand("sui", ["client", "faucet"]);
       console.log("waiting for faucet drip");
@@ -109,9 +101,7 @@ async function initialize(
 }
 
 function findObject(changes: ObjectChanges, objectType: string) {
-  const created = changes.objectChanges?.filter(
-    (obj) => obj.type === "created"
-  );
+  const created = changes.objectChanges?.filter((obj) => obj.type === "created");
 
   return created?.find((obj) => obj.objectType === objectType)?.objectId;
 }
@@ -124,17 +114,11 @@ function getUpgradeCap(changes: ObjectChanges) {
   return findObject(changes, `0x2::package::UpgradeCap`);
 }
 
-function getPriceAdapter(
-  response: SuiTransactionBlockResponse,
-  packageId: string
-) {
-  const created = response.objectChanges?.filter(
-    (obj) => obj.type === "created"
-  );
+function getPriceAdapter(response: SuiTransactionBlockResponse, packageId: string) {
+  const created = response.objectChanges?.filter((obj) => obj.type === "created");
 
-  return created?.find(
-    (obj) => obj.objectType === `${packageId}::price_adapter::PriceAdapter`
-  )?.objectId;
+  return created?.find((obj) => obj.objectType === `${packageId}::price_adapter::PriceAdapter`)
+    ?.objectId;
 }
 
 async function main() {
@@ -157,9 +141,7 @@ async function main() {
   }
 
   const publishResult = await executeSuiPublish(network);
-  const packageId = publishResult.objectChanges?.find(
-    (v) => v.type === "published"
-  )?.packageId;
+  const packageId = publishResult.objectChanges?.find((v) => v.type === "published")?.packageId;
   if (!packageId) {
     throw new Error("Package ID not found");
   }

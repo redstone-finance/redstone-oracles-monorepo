@@ -81,9 +81,7 @@ export const pThrottle = ({
   interval,
   strict,
   onDelay,
-}: Options): (<F extends AnyFunction>(
-  function_: F
-) => ThrottledFunction<F>) => {
+}: Options): (<F extends AnyFunction>(function_: F) => ThrottledFunction<F>) => {
   if (!Number.isFinite(limit)) {
     throw new TypeError("Expected `limit` to be a finite number");
   }
@@ -194,10 +192,7 @@ export const pThrottle = ({
   };
 };
 
-export function withRateLimiter<T extends AnyFunction>(
-  fn: T,
-  pThrottleOpts: Options
-): T {
+export function withRateLimiter<T extends AnyFunction>(fn: T, pThrottleOpts: Options): T {
   const limiter = pThrottle(pThrottleOpts);
 
   return limiter(fn);

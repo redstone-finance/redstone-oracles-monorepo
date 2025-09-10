@@ -19,10 +19,7 @@ describe("changeRelayerConfigFeeds", () => {
       },
     };
 
-    const result = changeRelayerConfigFeeds(prepareConfig(config), [
-      "feed1",
-      "feed3",
-    ]);
+    const result = changeRelayerConfigFeeds(prepareConfig(config), ["feed1", "feed3"]);
 
     expect(result.updateTriggers).to.deep.equal({
       feed1: { deviationPercentage: 0.5 },
@@ -61,11 +58,7 @@ describe("changeRelayerConfigFeeds", () => {
       },
     };
 
-    const result = changeRelayerConfigFeeds(prepareConfig(config), [
-      "feed1",
-      "feed2",
-      "feed3",
-    ]);
+    const result = changeRelayerConfigFeeds(prepareConfig(config), ["feed1", "feed2", "feed3"]);
 
     expect(result.dataFeeds).to.deep.equal(["feed1", "feed2", "feed3"]);
     // Only feed1 should have triggers/conditions since feed2/feed3 weren't in original
@@ -122,10 +115,7 @@ describe("changeRelayerConfigFeeds", () => {
       updateConditions: {},
     };
 
-    const result = changeRelayerConfigFeeds(prepareConfig(config), [
-      "feed2",
-      "feed3",
-    ]);
+    const result = changeRelayerConfigFeeds(prepareConfig(config), ["feed2", "feed3"]);
 
     // Should only include feed2, since feed3 wasn't in original triggers
     expect(result.updateTriggers).to.deep.equal({
@@ -145,11 +135,7 @@ describe("changeRelayerConfigFeeds", () => {
       },
     };
 
-    const result = changeRelayerConfigFeeds(prepareConfig(config), [
-      "feed1",
-      "feed1",
-      "feed2",
-    ]);
+    const result = changeRelayerConfigFeeds(prepareConfig(config), ["feed1", "feed1", "feed2"]);
 
     // Duplicates should be preserved in dataFeeds
     expect(result.dataFeeds).to.deep.equal(["feed1", "feed1", "feed2"]);

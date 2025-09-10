@@ -7,10 +7,7 @@ import { z } from "zod";
 import { GitHubConfigLoader } from "./config/GitHubConfigLoader";
 
 const relayerEnv =
-  RedstoneCommon.getFromEnv(
-    "FALLBACK_OFFSET_IN_MILLISECONDS",
-    z.number().int()
-  ) > 0
+  RedstoneCommon.getFromEnv("FALLBACK_OFFSET_IN_MILLISECONDS", z.number().int()) > 0
     ? RedstoneRemoteConfig.RelayerNodeEnv.Fallback
     : RedstoneRemoteConfig.RelayerNodeEnv.Main;
 
@@ -33,10 +30,7 @@ const supervisorProcess = new RedstoneRemoteConfig.RemoteConfigSupervisor({
         "RELAYER_REMOTE_CONFIG_REPOSITORY",
         z.string().default("redstone-finance/redstone-oracles-monorepo")
       ),
-      RedstoneCommon.getFromEnv(
-        "RELAYER_REMOTE_CONFIG_BRANCH",
-        z.string().default("main")
-      ),
+      RedstoneCommon.getFromEnv("RELAYER_REMOTE_CONFIG_BRANCH", z.string().default("main")),
       RedstoneCommon.getFromEnv(
         "RELAYER_REMOTE_CONFIG_REPOSITORY_PATH",
         z.string().default(`packages/relayer-remote-config/${relayerEnv}`)

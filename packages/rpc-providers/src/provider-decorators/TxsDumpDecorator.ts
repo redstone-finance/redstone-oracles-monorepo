@@ -10,10 +10,7 @@ export function TxDumpDecorator(factory: () => providers.Provider) {
     const oldCall = provider.call.bind(provider);
     const chainIdPromise = provider.getNetwork().then((n) => n.chainId);
 
-    provider.call = async (
-      transaction: Deferrable<TransactionRequest>,
-      blockTag?: BlockTag
-    ) => {
+    provider.call = async (transaction: Deferrable<TransactionRequest>, blockTag?: BlockTag) => {
       const info = {
         to: (await transaction.to)!,
         callData: (await transaction.data) as string,

@@ -6,10 +6,7 @@ const singedDataPackageObj = mockSignedDataPackageObjects;
 
 const getDataPackageResponse = (dataFeedId: string) =>
   singedDataPackageObj
-    .filter(
-      (obj) =>
-        obj.dataPoints.filter((dp) => dp.dataFeedId === dataFeedId).length > 0
-    )
+    .filter((obj) => obj.dataPoints.filter((dp) => dp.dataFeedId === dataFeedId).length > 0)
     .map((obj) => ({
       ...obj,
       dataFeedId,

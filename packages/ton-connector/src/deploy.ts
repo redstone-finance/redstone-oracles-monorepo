@@ -20,10 +20,7 @@ export async function deploy<
 ): Promise<A | undefined> {
   const code: Cell = await compile(name);
 
-  const deployer = deployerProvider(
-    new BlueprintTonNetwork(provider, config),
-    code
-  );
+  const deployer = deployerProvider(new BlueprintTonNetwork(provider, config), code);
 
   try {
     const contract = await deployer.getAdapter();
@@ -35,11 +32,7 @@ export async function deploy<
   } catch (e) {
     console.warn((e as Error).message);
 
-    await saveAddress(
-      name,
-      (e as TonContractError).contract.address,
-      nameSuffix
-    );
+    await saveAddress(name, (e as TonContractError).contract.address, nameSuffix);
   }
 
   return undefined;
@@ -49,11 +42,7 @@ function getFilename(name: string, nameSuffix?: string) {
   return `deploy/${name}${nameSuffix ? `_${nameSuffix}` : ""}.address`;
 }
 
-async function saveAddress(
-  name: string,
-  address: Address,
-  nameSuffix?: string
-) {
+async function saveAddress(name: string, address: Address, nameSuffix?: string) {
   const filename = getFilename(name, nameSuffix);
   await fs.promises.writeFile(filename, address.toString());
 

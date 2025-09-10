@@ -18,10 +18,7 @@ export class CubicInterpolation {
     if (x < this.xs[0]) {
       return this.ys[0] - this.firstSlope * (this.xs[0] - x);
     } else if (x > this.xs[this.xs.length - 1]) {
-      return (
-        this.ys[this.ys.length - 1] +
-        this.lastSlope * (x - this.xs[this.xs.length - 1])
-      );
+      return this.ys[this.ys.length - 1] + this.lastSlope * (x - this.xs[this.xs.length - 1]);
     } else {
       // we use the calculated cubic interpolation
       return this.fun(x);
@@ -36,10 +33,7 @@ export class CubicInterpolation {
     if (y < this.ys[0]) {
       return this.xs[0] - (this.ys[0] - y) / this.firstSlope;
     } else if (y > this.ys[this.ys.length - 1]) {
-      return (
-        this.xs[this.xs.length - 1] +
-        (y - this.ys[this.ys.length - 1]) / this.lastSlope
-      );
+      return this.xs[this.xs.length - 1] + (y - this.ys[this.ys.length - 1]) / this.lastSlope;
     } else {
       // search for the interval y is in, returning the corresponding x if y is one of the original ys
       const i = findIntervalIndex(y, this.ys);
@@ -90,14 +84,8 @@ export class CubicInterpolation {
  * Method based on https://en.wikipedia.org/wiki/Monotone_cubic_interpolation.
  * Method source code inspired by code in https://en.wikipedia.org/wiki/Monotone_cubic_interpolation#Example_implementation.
  */
-export const monotoneCubicInterpolation = (
-  xs: number[],
-  ys: number[]
-): CubicInterpolation => {
-  const { fun, firstSlope, lastSlope, sortedXs, sortedYs } = createInterpolant(
-    xs,
-    ys
-  );
+export const monotoneCubicInterpolation = (xs: number[], ys: number[]): CubicInterpolation => {
+  const { fun, firstSlope, lastSlope, sortedXs, sortedYs } = createInterpolant(xs, ys);
   return new CubicInterpolation(sortedXs, sortedYs, firstSlope, lastSlope, fun);
 };
 
@@ -263,7 +251,5 @@ const findIntervalIndex = (point: number, points: number[]) => {
   if (point === points[points.length - 1]) {
     return points.length - 1;
   }
-  throw new Error(
-    `The point (${point}) is outside the point list [${points.join(",")}]`
-  );
+  throw new Error(`The point (${point}) is outside the point list [${points.join(",")}]`);
 };

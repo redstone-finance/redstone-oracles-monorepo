@@ -18,9 +18,7 @@ export type IterationOptions = {
   logger: IterationLogger;
   iterationArgsProvider: IterationArgsProvider;
   sendHealthcheckPingCallback?: (healthcheckPingUrl?: string) => Promise<void>;
-  sendHealthcheckMetricCallback?: (
-    healthcheckMetricName?: string
-  ) => Promise<void>;
+  sendHealthcheckMetricCallback?: (healthcheckMetricName?: string) => Promise<void>;
 };
 
 const defaultLogger = loggerFactory("relayer/run-iteration");
@@ -54,12 +52,8 @@ export const runIteration = async (
     return;
   }
   const iterationStart = performance.now();
-  const shouldUpdateContext =
-    await contractFacade.getShouldUpdateContext(relayerConfig);
-  const iterationArgs = await iterationArgsProvider(
-    shouldUpdateContext,
-    relayerConfig
-  );
+  const shouldUpdateContext = await contractFacade.getShouldUpdateContext(relayerConfig);
+  const iterationArgs = await iterationArgsProvider(shouldUpdateContext, relayerConfig);
   void sendHealthcheckPingCallback?.(relayerConfig.healthcheckPingUrl);
   void sendHealthcheckMetricCallback?.(relayerConfig.healthcheckMetricName);
   const messages = _.map(iterationArgs.messages, "message");
@@ -71,10 +65,7 @@ export const runIteration = async (
 
   logger.log(message, messages);
 
-  if (
-    iterationArgs.shouldUpdatePrices ||
-    shouldForceUpdateInEachIteration(relayerConfig)
-  ) {
+  if (iterationArgs.shouldUpdatePrices || shouldForceUpdateInEachIteration(relayerConfig)) {
     iterationArgs.additionalUpdateMessages?.forEach(({ message, args }) =>
       logger.log(message, args)
     );

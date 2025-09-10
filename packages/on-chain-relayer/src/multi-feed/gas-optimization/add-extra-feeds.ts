@@ -7,8 +7,7 @@ export const addExtraFeedsToUpdateParams = (
   relayerConfig: RelayerConfig,
   args: MultiFeedUpdatePricesArgs
 ) => {
-  const { dataFeedsToUpdate, dataFeedsDeviationRatios, heartbeatUpdates } =
-    args;
+  const { dataFeedsToUpdate, dataFeedsDeviationRatios, heartbeatUpdates } = args;
   const dataFeedsToUpdateLengthOld = dataFeedsToUpdate.length;
   const { message: deviationMessage } = includeFeedsCloseToDeviation(
     dataFeedsToUpdate,

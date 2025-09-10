@@ -6,16 +6,9 @@ import { bignumberishToDecimal } from "../common";
 
 export * from "./monotonic-cubic-spline";
 
-export type ConvertibleToISafeNumber =
-  | number
-  | string
-  | Decimal
-  | ISafeNumber
-  | BigNumber;
+export type ConvertibleToISafeNumber = number | string | Decimal | ISafeNumber | BigNumber;
 
-export const castToISafeNumber = (
-  numberLike: ConvertibleToISafeNumber
-): ISafeNumber => {
+export const castToISafeNumber = (numberLike: ConvertibleToISafeNumber): ISafeNumber => {
   if (typeof numberLike === "string" || typeof numberLike === "number") {
     return createSafeNumber(numberLike.toString());
   } else if (numberLike instanceof Decimal) {
@@ -45,9 +38,7 @@ export const getMedian = (numbers: ConvertibleToISafeNumber[]) =>
   ISafeNumberMath.getMedian(numbers.map(castToISafeNumber)).unsafeToNumber();
 
 export const getMedianOfBigNumbers = (numbers: BigNumberish[]) =>
-  ISafeNumberMath.getMedian(
-    numbers.map(BigNumber.from).map(castToISafeNumber)
-  ).unsafeToNumber();
+  ISafeNumberMath.getMedian(numbers.map(BigNumber.from).map(castToISafeNumber)).unsafeToNumber();
 
 export class PrecisionScaler {
   readonly tokenDecimalsScaler: Decimal;
@@ -80,16 +71,8 @@ export const filterOutliers = (
 
   let bestGroup = { startIndex: 0, endIndex: 0 };
 
-  for (
-    let startIndex = bestGroup.startIndex;
-    startIndex < sortedNumbers.length;
-    startIndex++
-  ) {
-    for (
-      let endIndex = sortedNumbers.length;
-      startIndex < endIndex;
-      endIndex--
-    ) {
+  for (let startIndex = bestGroup.startIndex; startIndex < sortedNumbers.length; startIndex++) {
+    for (let endIndex = sortedNumbers.length; startIndex < endIndex; endIndex--) {
       const firstElementValue = sortedNumbers[startIndex];
       const lastElementValue = sortedNumbers[endIndex - 1];
 
@@ -102,10 +85,7 @@ export const filterOutliers = (
   }
 
   return {
-    representativeGroup: sortedNumbers.slice(
-      bestGroup.startIndex,
-      bestGroup.endIndex
-    ),
+    representativeGroup: sortedNumbers.slice(bestGroup.startIndex, bestGroup.endIndex),
     outliers: [
       ...sortedNumbers.slice(0, bestGroup.startIndex),
       ...sortedNumbers.slice(bestGroup.endIndex, sortedNumbers.length),
@@ -137,9 +117,7 @@ export const sumBy = <T>(array: T[], extract: (item: T) => number) => {
   const numbers = array.map(extract);
 
   if (numbers.some((number) => typeof number !== "number")) {
-    throw new Error(
-      "Can't sumBy because after extraction at least one of elements is not number"
-    );
+    throw new Error("Can't sumBy because after extraction at least one of elements is not number");
   }
 
   return numbers.reduce((acc, curr) => acc + curr, 0);

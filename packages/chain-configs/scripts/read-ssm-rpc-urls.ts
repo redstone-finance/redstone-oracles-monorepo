@@ -1,10 +1,7 @@
 import { NetworkId, RedstoneCommon } from "@redstone-finance/utils";
 import chalk from "chalk";
 import { z } from "zod";
-import {
-  fetchParsedRpcUrlsFromSsmByNetworkId,
-  getLocalChainConfigs,
-} from "../src";
+import { fetchParsedRpcUrlsFromSsmByNetworkId, getLocalChainConfigs } from "../src";
 
 export type RpcUrlsPerChain = {
   [name: string]: {
@@ -13,10 +10,7 @@ export type RpcUrlsPerChain = {
   };
 };
 
-const env = RedstoneCommon.getFromEnv(
-  "ENV",
-  z.enum(["dev", "prod"]).default("dev")
-);
+const env = RedstoneCommon.getFromEnv("ENV", z.enum(["dev", "prod"]).default("dev"));
 
 export const readSsmRpcUrls = async (
   isFallback: boolean,
@@ -26,10 +20,7 @@ export const readSsmRpcUrls = async (
   const rpcUrlsPerChain: RpcUrlsPerChain = {};
 
   for (const { name, networkId } of Object.values(chainConfigs)) {
-    if (
-      name === "hardhat" ||
-      (specificNetworkId && networkId !== specificNetworkId)
-    ) {
+    if (name === "hardhat" || (specificNetworkId && networkId !== specificNetworkId)) {
       continue;
     }
     try {

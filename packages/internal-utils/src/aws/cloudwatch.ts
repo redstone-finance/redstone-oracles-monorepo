@@ -67,9 +67,7 @@ export async function getAlarmTags(
     return {};
   }
 
-  return Object.fromEntries(
-    Tags.filter(isTagDefined).map((tag) => [tag.Key!, tag.Value!])
-  );
+  return Object.fromEntries(Tags.filter(isTagDefined).map((tag) => [tag.Key!, tag.Value!]));
 }
 
 function isTagDefined(tag: Tag) {

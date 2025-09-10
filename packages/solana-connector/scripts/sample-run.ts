@@ -5,22 +5,14 @@ import {
 } from "@redstone-finance/sdk";
 import "dotenv/config";
 import { hexlify } from "ethers/lib/utils";
-import {
-  readCluster,
-  SolanaConnectionBuilder,
-  SolanaContractConnector,
-} from "../src";
+import { readCluster, SolanaConnectionBuilder, SolanaContractConnector } from "../src";
 import { readProgramAddress } from "./consts";
 import { getRpcUrls } from "./get-rpc-urls";
 import { readKeypair } from "./utils";
 
 async function main() {
   const keypair = readKeypair();
-  console.log(
-    "Public key:",
-    hexlify(keypair.publicKey.toBytes()),
-    keypair.publicKey.toBase58()
-  );
+  console.log("Public key:", hexlify(keypair.publicKey.toBytes()), keypair.publicKey.toBase58());
   const rpcUrls = await getRpcUrls();
   const connection = new SolanaConnectionBuilder()
     .withCluster(readCluster())

@@ -12,15 +12,9 @@ export async function pkToAddress(
 ) {
   const bytes = publicKeyConvert(arrayify(publicKeyHex), true);
   console.log(`Public key hex: ${hexlify(bytes)}`);
-  const pk =
-    scheme === "secp256k1"
-      ? new PublicKey.Secp256k1(bytes)
-      : new PublicKey.Ed25519(bytes);
+  const pk = scheme === "secp256k1" ? new PublicKey.Secp256k1(bytes) : new PublicKey.Ed25519(bytes);
 
-  return await RadixEngineToolkit.Derive.virtualAccountAddressFromPublicKey(
-    pk,
-    networkId
-  );
+  return await RadixEngineToolkit.Derive.virtualAccountAddressFromPublicKey(pk, networkId);
 }
 
 async function main() {

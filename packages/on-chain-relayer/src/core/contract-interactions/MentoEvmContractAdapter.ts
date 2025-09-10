@@ -31,19 +31,13 @@ export class MentoEvmContractAdapter extends PriceFeedsEvmContractAdapter<MentoA
     });
     return await getValuesForMentoDataFeeds(
       this.adapterContract,
-      getSortedOraclesContractAtAddress(
-        sortedOraclesAddress,
-        this.adapterContract.provider
-      ),
+      getSortedOraclesContractAtAddress(sortedOraclesAddress, this.adapterContract.provider),
       dataFeeds,
       blockTag
     );
   }
 
-  override async makeUpdateTx(
-    paramsProvider: ContractParamsProvider,
-    metadataTimestamp: number
-  ) {
+  override async makeUpdateTx(paramsProvider: ContractParamsProvider, metadataTimestamp: number) {
     const dataPackagesPromise = paramsProvider.requestDataPackages();
     const blockTag = await this.adapterContract.provider.getBlockNumber();
 
@@ -56,20 +50,17 @@ export class MentoEvmContractAdapter extends PriceFeedsEvmContractAdapter<MentoA
     );
 
     const dataPackages = await dataPackagesPromise;
-    const dataPackagesWrapper = new DataPackagesWrapper<MentoAdapterBase>(
-      dataPackages
-    );
+    const dataPackagesWrapper = new DataPackagesWrapper<MentoAdapterBase>(dataPackages);
 
-    const linkedListPositions =
-      await prepareLinkedListLocationsForMentoAdapterReport(
-        {
-          mentoAdapter: this.adapterContract,
-          dataPackagesWrapper,
-          sortedOracles,
-        },
-        blockTag,
-        this.maxDeviationAllowed
-      );
+    const linkedListPositions = await prepareLinkedListLocationsForMentoAdapterReport(
+      {
+        mentoAdapter: this.adapterContract,
+        dataPackagesWrapper,
+        sortedOracles,
+      },
+      blockTag,
+      this.maxDeviationAllowed
+    );
     if (!linkedListPositions) {
       throw new Error(
         `Prices in Sorted Oracles deviated more than ${this.maxDeviationAllowed}% from RedStone prices`
@@ -77,16 +68,15 @@ export class MentoEvmContractAdapter extends PriceFeedsEvmContractAdapter<MentoA
     }
 
     dataPackagesWrapper.setMetadataTimestamp(metadataTimestamp);
-    const wrappedMentoContract = dataPackagesWrapper.overwriteEthersContract(
-      this.adapterContract
-    );
+    const wrappedMentoContract = dataPackagesWrapper.overwriteEthersContract(this.adapterContract);
 
     const proposedTimestamp = getDataPackagesTimestamp(dataPackages);
 
     const txCall = Tx.convertToTxDeliveryCall(
-      await wrappedMentoContract.populateTransaction[
-        "updatePriceValuesAndCleanOldReports"
-      ](proposedTimestamp, linkedListPositions)
+      await wrappedMentoContract.populateTransaction["updatePriceValuesAndCleanOldReports"](
+        proposedTimestamp,
+        linkedListPositions
+      )
     );
 
     return txCall;

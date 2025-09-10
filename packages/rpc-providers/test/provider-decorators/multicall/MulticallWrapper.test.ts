@@ -1,17 +1,10 @@
-import {
-  RedstoneMulticall3Abi,
-  RedstoneMulticall3ByteCode,
-} from "@redstone-finance/evm-multicall";
+import { RedstoneMulticall3Abi, RedstoneMulticall3ByteCode } from "@redstone-finance/evm-multicall";
 import chai, { expect } from "chai";
 import chaiAsPromised from "chai-as-promised";
 import { BigNumber, Contract, ContractFactory, Wallet, ethers } from "ethers";
 import hardhat from "hardhat";
 import Sinon from "sinon";
-import {
-  MulticallDecorator,
-  ProviderWithAgreement,
-  ProviderWithFallback,
-} from "../../../src";
+import { MulticallDecorator, ProviderWithAgreement, ProviderWithFallback } from "../../../src";
 import * as multicallUtils from "../../../src/provider-decorators/multicall/Multicall3Caller";
 import { Counter } from "../../../typechain-types";
 import { deployCounter } from "../../helpers";
@@ -75,9 +68,7 @@ const describeMultiWrapperSuite = (
     it("should group 2 calls to same contract and one to different contract", async () => {
       const multicallProvider = getProvider(multicall.address, providerFabric);
       counter = counter.connect(multicallProvider);
-      const counter2 = (await deployCounter(hardhat.ethers.provider)).connect(
-        multicallProvider
-      );
+      const counter2 = (await deployCounter(hardhat.ethers.provider)).connect(multicallProvider);
 
       const blockTag = await multicallProvider.getBlockNumber();
 
@@ -90,11 +81,7 @@ const describeMultiWrapperSuite = (
     });
 
     it("should make call to one contract", async () => {
-      const multicallProvider = getProvider(
-        multicall.address,
-        providerFabric,
-        1
-      );
+      const multicallProvider = getProvider(multicall.address, providerFabric, 1);
       counter = counter.connect(multicallProvider);
 
       const blockTag = await multicallProvider.getBlockNumber();
@@ -119,8 +106,7 @@ const describeMultiWrapperSuite = (
         counter.fail({ blockTag }),
       ]);
 
-      const resolvedResultCounter =
-        resultCounter as PromiseFulfilledResult<BigNumber>;
+      const resolvedResultCounter = resultCounter as PromiseFulfilledResult<BigNumber>;
 
       expect(resolvedResultCounter.value.toNumber()).to.eq(1);
       expect(resolvedResultCounter.status).to.eq("fulfilled");
@@ -137,9 +123,7 @@ const describeMultiWrapperSuite = (
       const multicallProvider = getProvider(multicall.address, providerFabric);
       counter = counter.connect(multicallProvider);
 
-      const counter2 = (await deployCounter(hardhat.ethers.provider)).connect(
-        multicallProvider
-      );
+      const counter2 = (await deployCounter(hardhat.ethers.provider)).connect(multicallProvider);
 
       const blockTag = await multicallProvider.getBlockNumber();
 
@@ -148,8 +132,7 @@ const describeMultiWrapperSuite = (
         counter.fail({ blockTag }),
       ]);
 
-      const resolvedResultCounter =
-        resultCounter as PromiseFulfilledResult<BigNumber>;
+      const resolvedResultCounter = resultCounter as PromiseFulfilledResult<BigNumber>;
 
       expect(resolvedResultCounter.value).to.eq(0);
       expect(resolvedResultCounter.status).to.eq("fulfilled");
@@ -184,11 +167,7 @@ const describeMultiWrapperSuite = (
     });
 
     it("should group by blockTag", async () => {
-      const multicallProvider = getProvider(
-        multicall.address,
-        providerFabric,
-        1
-      );
+      const multicallProvider = getProvider(multicall.address, providerFabric, 1);
       counter = counter.connect(multicallProvider);
 
       const blockNumber = await multicallProvider.getBlockNumber();
@@ -213,11 +192,7 @@ const describeMultiWrapperSuite = (
 
       const multicall3 = await contractFactory.deploy();
 
-      const multicallProvider = getProvider(
-        multicall3.address,
-        providerFabric,
-        2
-      );
+      const multicallProvider = getProvider(multicall3.address, providerFabric, 2);
       counter = counter.connect(multicallProvider);
 
       const blockNumber = await multicallProvider.getBlockNumber();
@@ -228,19 +203,13 @@ const describeMultiWrapperSuite = (
       ]);
 
       expect(resultCounter.status).to.eq("fulfilled");
-      expect((resultCounter as PromiseFulfilledResult<BigNumber>).value).to.eq(
-        1
-      );
+      expect((resultCounter as PromiseFulfilledResult<BigNumber>).value).to.eq(1);
 
       expect(resultCounter2.status).to.eq("rejected");
       expect(multicallFnSpy.getCalls().length).to.eq(1);
     });
     it("it should fallback to provider.call when multicall fails", async () => {
-      const multicallProvider = getProvider(
-        NOT_MULTICALL_ADDRESS,
-        providerFabric,
-        2
-      );
+      const multicallProvider = getProvider(NOT_MULTICALL_ADDRESS, providerFabric, 2);
 
       counter = counter.connect(multicallProvider);
 
@@ -278,11 +247,7 @@ const describeMultiWrapperSuite = (
     });
 
     it("it should fallback to provider.call when single call in multicall fails", async () => {
-      const multicallProvider = getProvider(
-        NOT_MULTICALL_ADDRESS,
-        providerFabric,
-        2
-      );
+      const multicallProvider = getProvider(NOT_MULTICALL_ADDRESS, providerFabric, 2);
 
       counter = counter.connect(multicallProvider);
 
@@ -341,11 +306,7 @@ const describeMultiWrapperSuite = (
         return provider;
       };
 
-      const multicallProvider = getProvider(
-        NOT_MULTICALL_ADDRESS,
-        customProviderFabric,
-        2
-      );
+      const multicallProvider = getProvider(NOT_MULTICALL_ADDRESS, customProviderFabric, 2);
 
       counter = counter.connect(multicallProvider);
 
@@ -361,9 +322,7 @@ const describeMultiWrapperSuite = (
       const count2Casted = count2 as PromiseFulfilledResult<BigNumber>;
 
       expect(countCasted.status).eq("rejected");
-      expect((countCasted.reason as Error).message).eq(
-        "first fallback call error"
-      );
+      expect((countCasted.reason as Error).message).eq("first fallback call error");
       expect(count2Casted.status).eq("fulfilled");
       expect(count2Casted.value.toString()).eq("1");
     });

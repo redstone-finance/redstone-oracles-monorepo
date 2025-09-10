@@ -34,31 +34,13 @@ const DEFAULT_APP_PORT = 3000;
 const CACHE_TTL = 5000;
 
 const config: CacheServiceConfig = {
-  appPort: RedstoneCommon.getFromEnv(
-    "APP_PORT",
-    z.number().default(DEFAULT_APP_PORT)
-  ),
+  appPort: RedstoneCommon.getFromEnv("APP_PORT", z.number().default(DEFAULT_APP_PORT)),
   mongoDbUrl: RedstoneCommon.getFromEnv("MONGO_DB_URL", z.string().optional()),
-  mongoDbTTLSeconds: RedstoneCommon.getFromEnv(
-    "MONGO_DB_TTL_SECONDS",
-    z.number().default(0)
-  ),
-  enableStreamrListening: RedstoneCommon.getFromEnv(
-    "ENABLE_STREAMR_LISTENING",
-    z.boolean()
-  ),
-  streamrPrivateKey: RedstoneCommon.getFromEnv(
-    "STREAMR_PRIVATE_KEY",
-    z.string().optional(),
-    false
-  ),
-  enableDirectPostingRoutes: RedstoneCommon.getFromEnv(
-    "ENABLE_DIRECT_POSTING_ROUTES",
-    z.boolean()
-  ),
-  apiKeyForAccessToAdminRoutes: RedstoneCommon.getFromEnv(
-    "API_KEY_FOR_ACCESS_TO_ADMIN_ROUTES"
-  ),
+  mongoDbTTLSeconds: RedstoneCommon.getFromEnv("MONGO_DB_TTL_SECONDS", z.number().default(0)),
+  enableStreamrListening: RedstoneCommon.getFromEnv("ENABLE_STREAMR_LISTENING", z.boolean()),
+  streamrPrivateKey: RedstoneCommon.getFromEnv("STREAMR_PRIVATE_KEY", z.string().optional(), false),
+  enableDirectPostingRoutes: RedstoneCommon.getFromEnv("ENABLE_DIRECT_POSTING_ROUTES", z.boolean()),
+  apiKeyForAccessToAdminRoutes: RedstoneCommon.getFromEnv("API_KEY_FOR_ACCESS_TO_ADMIN_ROUTES"),
   allowedStreamrDataServiceIds: RedstoneCommon.getFromEnv(
     "ALLOWED_STREAMR_DATA_SERVICE_IDS",
     z.array(z.string()).default([])
@@ -71,21 +53,12 @@ const config: CacheServiceConfig = {
     "ENABLE_HISTORICAL_DATA_SERVING",
     z.boolean().default(false)
   ),
-  secondMongoDbUrl: RedstoneCommon.getFromEnv(
-    "SECOND_MONGO_DB_URL",
-    z.string().url().optional()
-  ),
+  secondMongoDbUrl: RedstoneCommon.getFromEnv("SECOND_MONGO_DB_URL", z.string().url().optional()),
   maxAllowedTimestampDelay: RedstoneCommon.getFromEnv(
     "MAX_ALLOWED_TIMESTAMP_DELAY",
-    z
-      .number()
-      .positive()
-      .default(RedstoneConstants.DEFAULT_LATEST_DATA_PACKAGES_MAX_DELAY_MS)
+    z.number().positive().default(RedstoneConstants.DEFAULT_LATEST_DATA_PACKAGES_MAX_DELAY_MS)
   ),
-  dataPackagesTTL: RedstoneCommon.getFromEnv(
-    "DATA_PACKAGES_TTL",
-    z.number().default(CACHE_TTL)
-  ),
+  dataPackagesTTL: RedstoneCommon.getFromEnv("DATA_PACKAGES_TTL", z.number().default(CACHE_TTL)),
   streamrStreamNamePattern: RedstoneCommon.getFromEnv(
     "STREAMR_STREAM_NAME_PATTERN",
     z.string().default("/redstone-oracle-node/{evmAddress}/data-packages")
@@ -94,14 +67,8 @@ const config: CacheServiceConfig = {
     "KEEP_ALIVE_TIMEOUT_IN_SECONDS",
     z.number().default(60)
   ),
-  influxUrl: RedstoneCommon.getFromEnv(
-    "INFLUX_BROADCASTER_URL",
-    z.string().optional()
-  ),
-  influxToken: RedstoneCommon.getFromEnv(
-    "INFLUX_BROADCASTER_AUTH_TOKEN",
-    z.string().optional()
-  ),
+  influxUrl: RedstoneCommon.getFromEnv("INFLUX_BROADCASTER_URL", z.string().optional()),
+  influxToken: RedstoneCommon.getFromEnv("INFLUX_BROADCASTER_AUTH_TOKEN", z.string().optional()),
   env: RedstoneCommon.getFromEnv("ENV", z.string().optional().default("dev")),
 };
 

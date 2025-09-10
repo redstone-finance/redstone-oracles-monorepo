@@ -1,14 +1,10 @@
 import { Contract } from "ethers";
 import { IRedstoneContractAdapter } from "../../core/contract-interactions/IRedstoneContractAdapter";
-import type {
-  MultiFeedAdapterWithoutRounds,
-  RedstoneAdapterBase,
-} from "../../index";
+import type { MultiFeedAdapterWithoutRounds, RedstoneAdapterBase } from "../../index";
 import { ContractData } from "../../types";
 import { ContractFacade } from "../ContractFacade";
 
-export type RedstoneEvmContract = Contract &
-  (MultiFeedAdapterWithoutRounds | RedstoneAdapterBase);
+export type RedstoneEvmContract = Contract & (MultiFeedAdapterWithoutRounds | RedstoneAdapterBase);
 
 export class EvmContractFacade extends ContractFacade {
   async getLatestRoundContractData(

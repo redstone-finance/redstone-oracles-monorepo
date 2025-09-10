@@ -35,9 +35,7 @@ describe("fallback-cron-condition", () => {
       relayerConfig
     );
     expect(shouldUpdatePrices).to.be.false;
-    expect(messages[0].message).to.match(
-      /Should not update prices according to cron expr/
-    );
+    expect(messages[0].message).to.match(/Should not update prices according to cron expr/);
   });
 
   it("should properly return false due to offset", () => {
@@ -49,9 +47,7 @@ describe("fallback-cron-condition", () => {
       relayerConfig
     );
     expect(shouldUpdatePrices).to.be.false;
-    expect(messages[0].message).to.match(
-      /Should not update prices according to cron expr/
-    );
+    expect(messages[0].message).to.match(/Should not update prices according to cron expr/);
   });
 
   it("should return true if time diff bigger than interval increased by offset", () => {
@@ -63,8 +59,6 @@ describe("fallback-cron-condition", () => {
       relayerConfig
     );
     expect(shouldUpdatePrices).to.be.true;
-    expect(messages[0].message).to.match(
-      /Should update prices according to cron expr/
-    );
+    expect(messages[0].message).to.match(/Should update prices according to cron expr/);
   });
 });

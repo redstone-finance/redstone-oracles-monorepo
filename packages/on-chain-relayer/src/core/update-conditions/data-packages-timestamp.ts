@@ -9,18 +9,13 @@ export const checkIfDataPackageTimestampIsNewer = (
   const lastDataPackageTimestampMS =
     context.dataFromContract[dataFeedId].lastDataPackageTimestampMS;
 
-  const dataPackageTimestamp = getDataPackagesTimestamp(
-    dataPackages,
-    dataFeedId
-  );
+  const dataPackageTimestamp = getDataPackagesTimestamp(dataPackages, dataFeedId);
 
   if (lastDataPackageTimestampMS >= dataPackageTimestamp) {
-    const message = `Cannot update prices, proposed prices are not newer ${JSON.stringify(
-      {
-        lastDataPackageTimestampMS,
-        dataPackageTimestamp,
-      }
-    )}`;
+    const message = `Cannot update prices, proposed prices are not newer ${JSON.stringify({
+      lastDataPackageTimestampMS,
+      dataPackageTimestamp,
+    })}`;
     return { shouldNotUpdatePrice: true, messages: [{ message }] };
   }
 

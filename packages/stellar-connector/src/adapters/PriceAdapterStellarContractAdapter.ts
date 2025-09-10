@@ -25,10 +25,8 @@ export class PriceAdapterStellarContractAdapter
   async getUniqueSignerThreshold(_blockNumber?: number) {
     const operation = this.contract.call("unique_signer_threshold");
 
-    return await this.rpcClient.simulateOperation(
-      operation,
-      await this.getPublicKey(),
-      (sim) => XdrUtils.parsePrimitiveFromSimulation(sim, Number)
+    return await this.rpcClient.simulateOperation(operation, await this.getPublicKey(), (sim) =>
+      XdrUtils.parsePrimitiveFromSimulation(sim, Number)
     );
   }
 
@@ -55,9 +53,7 @@ export class PriceAdapterStellarContractAdapter
     return sim.prices;
   }
 
-  async writePricesFromPayloadToContract(
-    paramsProvider: ContractParamsProvider
-  ) {
+  async writePricesFromPayloadToContract(paramsProvider: ContractParamsProvider) {
     if (!this.txDeliveryMan) {
       throw new Error("Cannot write prices, txDeliveryMan not set");
     }
@@ -74,20 +70,14 @@ export class PriceAdapterStellarContractAdapter
     });
   }
 
-  async readPricesFromContract(
-    paramsProvider: ContractParamsProvider,
-    _blockNumber?: number
-  ) {
+  async readPricesFromContract(paramsProvider: ContractParamsProvider, _blockNumber?: number) {
     const feedIds = paramsProvider.getDataFeedIds();
 
-    return (await this.getContractData(feedIds)).map(
-      (data) => data[1]!.lastValue
-    );
+    return (await this.getContractData(feedIds)).map((data) => data[1]!.lastValue);
   }
 
   async readTimestampFromContract(feedId: string, _blockNumber?: number) {
-    return (await this.readContractData([feedId]))[feedId]
-      .lastDataPackageTimestampMS;
+    return (await this.readContractData([feedId]))[feedId].lastDataPackageTimestampMS;
   }
 
   private async getContractData(
@@ -104,10 +94,10 @@ export class PriceAdapterStellarContractAdapter
       return await settledResult;
     });
 
-    const results = _.zip(
-      feedIds,
-      await Promise.allSettled(promises)
-    ) as unknown as [string, PromiseSettledResult<LastRoundDetails>][];
+    const results = _.zip(feedIds, await Promise.allSettled(promises)) as unknown as [
+      string,
+      PromiseSettledResult<LastRoundDetails>,
+    ][];
 
     return results.map(([feedId, settledResult]) => {
       switch (settledResult.status) {
@@ -119,10 +109,7 @@ export class PriceAdapterStellarContractAdapter
     });
   }
 
-  async prepareCallArgs(
-    paramsProvider: ContractParamsProvider,
-    metadataTimestamp = Date.now()
-  ) {
+  async prepareCallArgs(paramsProvider: ContractParamsProvider, metadataTimestamp = Date.now()) {
     const feedIdsScVal = XdrUtils.mapArrayToScVec(
       paramsProvider.getDataFeedIds(),
       XdrUtils.stringToScVal

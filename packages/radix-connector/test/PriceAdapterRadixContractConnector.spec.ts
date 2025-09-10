@@ -1,22 +1,11 @@
 import { NetworkId } from "@radixdlt/radix-engine-toolkit";
-import {
-  PriceAdapterRadixContractDeployer,
-  RadixClient,
-  RadixSigner,
-} from "../src";
+import { PriceAdapterRadixContractDeployer, RadixClient, RadixSigner } from "../src";
 import { RadixApiClient } from "../src/radix/RadixApiClient";
-import {
-  transactionCommittedDetails,
-  transactionStatus,
-} from "./__mocks__/transactions";
-import {
-  mockDefaultValues,
-  transactionCommittedDetailsMock,
-} from "./mock-default-values";
+import { transactionCommittedDetails, transactionStatus } from "./__mocks__/transactions";
+import { mockDefaultValues, transactionCommittedDetailsMock } from "./mock-default-values";
 import { MOCK_PRIVATE_KEY } from "./PriceAdapterRadixContractAdapter.spec";
 
-const MOCK_PACKAGE_ID =
-  "package_tdx_2_1phugcdw02atg0m9mvc9lzq0hmyktrmytmqttnc22wce2dgychs6gtq";
+const MOCK_PACKAGE_ID = "package_tdx_2_1phugcdw02atg0m9mvc9lzq0hmyktrmytmqttnc22wce2dgychs6gtq";
 
 describe("PriceAdapterRadixContractConnector tests", () => {
   let sut: PriceAdapterRadixContractDeployer;
@@ -56,14 +45,10 @@ describe("PriceAdapterRadixContractConnector tests", () => {
     );
     const value = await sut.getComponentId();
 
-    expect(value).toBe(
-      "component_tdx_2_1cr4nqdcv473tq99cszuqucpywz6gasvaq8h8ftzuvql57q684j8xur"
-    );
+    expect(value).toBe("component_tdx_2_1cr4nqdcv473tq99cszuqucpywz6gasvaq8h8ftzuvql57q684j8xur");
 
     const value2 = await sut.getComponentId();
-    expect(value2).toBe(
-      "component_tdx_2_1cr4nqdcv473tq99cszuqucpywz6gasvaq8h8ftzuvql57q684j8xur"
-    );
+    expect(value2).toBe("component_tdx_2_1cr4nqdcv473tq99cszuqucpywz6gasvaq8h8ftzuvql57q684j8xur");
   });
 
   it("PriceAdapterRadixContractConnector should return block number", async () => {

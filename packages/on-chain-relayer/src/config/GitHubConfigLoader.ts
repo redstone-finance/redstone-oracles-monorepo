@@ -7,9 +7,7 @@ type GitHubMetadata = {
   sha: string;
 };
 
-export class GitHubConfigLoader
-  implements RedstoneRemoteConfig.IRemoteConfigLoader
-{
+export class GitHubConfigLoader implements RedstoneRemoteConfig.IRemoteConfigLoader {
   private readonly manifestUrl: string;
   private readonly metadataUrl: string;
 
@@ -33,9 +31,7 @@ export class GitHubConfigLoader
     logger.debug("Fetching", this.manifestUrl);
     const response = await fetch(this.manifestUrl);
     if (!response.ok) {
-      throw new Error(
-        `Fetching from github failed. Status: ${response.status}`
-      );
+      throw new Error(`Fetching from github failed. Status: ${response.status}`);
     }
     logger.debug("Successfully loaded relayer manifest");
     // const json = await response.json();
@@ -55,9 +51,7 @@ export class GitHubConfigLoader
     logger.debug("Fetching", this.metadataUrl);
     const response = await fetch(this.metadataUrl);
     if (!response.ok) {
-      throw new Error(
-        `Fetching from github failed. Status: ${response.status}`
-      );
+      throw new Error(`Fetching from github failed. Status: ${response.status}`);
     }
     const result = (await response.json()) as GitHubMetadata[];
     const sha = result[0].sha;

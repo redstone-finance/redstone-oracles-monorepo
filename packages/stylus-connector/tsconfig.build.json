@@ -1,13 +1,6 @@
 {
   "extends": ["./tsconfig.json", "../../tsconfig-build-common.json"],
-  "exclude": [
-    "node_modules",
-    "dist",
-    "**/*spec.ts",
-    "jest.config.ts",
-    "solana",
-    "deployments"
-  ],
+  "exclude": ["node_modules", "dist", "**/*spec.ts", "jest.config.ts", "solana", "deployments"],
   "references": [
     {
       "path": "../utils/tsconfig.build.json"

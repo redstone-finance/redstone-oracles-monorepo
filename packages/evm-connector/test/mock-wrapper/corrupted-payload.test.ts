@@ -39,9 +39,7 @@ describe("Corrupted payload", function () {
     ).overwriteEthersContract(contract);
 
     await expect(
-      wrappedContract.save2ValuesInStorage(
-        ["BTC", "ETH"].map(utils.convertStringToBytes32)
-      )
+      wrappedContract.save2ValuesInStorage(["BTC", "ETH"].map(utils.convertStringToBytes32))
     ).to.be.reverted;
   };
 
@@ -66,12 +64,8 @@ describe("Corrupted payload", function () {
     const firstValueFromContract = await contract.firstValue();
     const secondValueFromContract = await contract.secondValue();
 
-    expect(firstValueFromContract.toNumber()).to.be.equal(
-      expectedNumericValues.BTC
-    );
-    expect(secondValueFromContract.toNumber()).to.be.equal(
-      expectedNumericValues.ETH
-    );
+    expect(firstValueFromContract.toNumber()).to.be.equal(expectedNumericValues.BTC);
+    expect(secondValueFromContract.toNumber()).to.be.equal(expectedNumericValues.ETH);
   });
 
   it("Should revert for corrupted payload (wrong 1 byte in the beginning)", async () => {

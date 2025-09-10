@@ -9,9 +9,6 @@ void generateTransactionData((tx, network: SuiNetworkName) => {
   tx.setGasBudget(DEFAULT_GAS_BUDGET);
   tx.moveCall({
     target: `${config.packageId}::price_adapter::migrate_to_version_${VERSION}`,
-    arguments: [
-      tx.object(config.adminCapId),
-      tx.object(config.priceAdapterObjectId),
-    ],
+    arguments: [tx.object(config.adminCapId), tx.object(config.priceAdapterObjectId)],
   });
 });

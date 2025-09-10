@@ -4,10 +4,7 @@ import { HealthCheck, HealthMonitor, ResourcesHealthCheck } from "./monitor";
 
 export const healthcheckConfig = () =>
   Object.freeze({
-    enabled: RedstoneCommon.getFromEnv(
-      "HEALTHCHECK_ENABLED",
-      z.boolean().default(false)
-    ),
+    enabled: RedstoneCommon.getFromEnv("HEALTHCHECK_ENABLED", z.boolean().default(false)),
     memoryUsagePercentThreshold: RedstoneCommon.getFromEnv(
       "HEALTHCHECK_MEMORY_USAGE_PERCENT_THRESHOLD",
       z.number().default(95)
@@ -22,9 +19,7 @@ export const healthcheckConfig = () =>
  * Enables health check monitoring with a default memory usage check
  * @param additionalChecks - additional checks to be attached
  */
-export function enableWithDefaultConfig(
-  additionalChecks: Map<string, HealthCheck> = new Map()
-) {
+export function enableWithDefaultConfig(additionalChecks: Map<string, HealthCheck> = new Map()) {
   const hcConfig = healthcheckConfig();
   if (hcConfig.enabled) {
     additionalChecks.set(

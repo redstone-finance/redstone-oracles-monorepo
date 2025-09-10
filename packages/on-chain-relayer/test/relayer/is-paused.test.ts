@@ -1,14 +1,10 @@
 import { expect } from "chai";
 import sinon from "sinon";
-import {
-  isPaused,
-  MAX_PAUSE_FUTURE_TIMESTAMP_HOURS,
-} from "../../src/config/is-paused";
+import { isPaused, MAX_PAUSE_FUTURE_TIMESTAMP_HOURS } from "../../src/config/is-paused";
 
 describe("isPaused function", () => {
   let clock: sinon.SinonFakeTimers;
-  const MAX_PAUSE_FUTURE_TIMESTAMP =
-    MAX_PAUSE_FUTURE_TIMESTAMP_HOURS * 60 * 60 * 1000;
+  const MAX_PAUSE_FUTURE_TIMESTAMP = MAX_PAUSE_FUTURE_TIMESTAMP_HOURS * 60 * 60 * 1000;
 
   beforeEach(() => {
     clock = sinon.useFakeTimers(new Date("2023-01-01T12:00:00Z").getTime());
@@ -50,9 +46,7 @@ describe("isPaused function", () => {
 
   it("should return false when isPausedUntil is too far in the future", () => {
     const farFutureDate = new Date();
-    farFutureDate.setHours(
-      farFutureDate.getHours() + MAX_PAUSE_FUTURE_TIMESTAMP_HOURS
-    );
+    farFutureDate.setHours(farFutureDate.getHours() + MAX_PAUSE_FUTURE_TIMESTAMP_HOURS);
     farFutureDate.setMilliseconds(farFutureDate.getMilliseconds() + 1);
 
     const relayerConfig = {

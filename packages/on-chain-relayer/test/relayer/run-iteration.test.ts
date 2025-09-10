@@ -1,25 +1,10 @@
-import {
-  DataPackagesRequestParams,
-  DataPackagesResponseCache,
-} from "@redstone-finance/sdk";
+import { DataPackagesRequestParams, DataPackagesResponseCache } from "@redstone-finance/sdk";
 import { RedstoneLogger } from "@redstone-finance/utils";
 import { expect } from "chai";
 import sinon from "sinon";
-import {
-  EvmContractFacade,
-  IterationArgsProvider,
-  RelayerConfig,
-  runIteration,
-} from "../../src";
-import {
-  ContractParamsProviderMock,
-  DEFAULT_DATA_POINTS,
-  mockConfig,
-} from "../helpers";
-import {
-  ContractConnectorMock,
-  getIterationArgsProviderMock,
-} from "./run-iteration-mocks";
+import { EvmContractFacade, IterationArgsProvider, RelayerConfig, runIteration } from "../../src";
+import { ContractParamsProviderMock, DEFAULT_DATA_POINTS, mockConfig } from "../helpers";
+import { ContractConnectorMock, getIterationArgsProviderMock } from "./run-iteration-mocks";
 
 const UPDATE_CONDITION_SATISFIED_REGEXP =
   /Update condition satisfied; block_number=123432 iteration_duration=/;
@@ -50,13 +35,9 @@ describe("runIteration tests", () => {
     await performRunIterationTest(relayerConfig);
 
     expect(updatePricesStub.calledOnce).to.be.true;
-    expect(sendHealthcheckPingStub.calledOnceWith("http://example.com/ping")).to
-      .be.true;
+    expect(sendHealthcheckPingStub.calledOnceWith("http://example.com/ping")).to.be.true;
     expect(requestDataPackagesStub.calledOnce).to.be.true;
-    sinon.assert.calledWith(
-      loggerStub.log,
-      sinon.match(UPDATE_CONDITION_SATISFIED_REGEXP)
-    );
+    sinon.assert.calledWith(loggerStub.log, sinon.match(UPDATE_CONDITION_SATISFIED_REGEXP));
     expect(loggerStub.log.lastCall.lastArg).to.deep.equal(["Test message"]);
   });
 
@@ -64,20 +45,13 @@ describe("runIteration tests", () => {
     await performRunIterationTest(
       relayerConfig,
       getIterationArgsProviderMock(),
-      new DataPackagesResponseCache().update(
-        {},
-        {} as DataPackagesRequestParams
-      )
+      new DataPackagesResponseCache().update({}, {} as DataPackagesRequestParams)
     );
 
     expect(updatePricesStub.calledOnce).to.be.true;
-    expect(sendHealthcheckPingStub.calledOnceWith("http://example.com/ping")).to
-      .be.true;
+    expect(sendHealthcheckPingStub.calledOnceWith("http://example.com/ping")).to.be.true;
     expect(requestDataPackagesStub.called).to.be.false;
-    sinon.assert.calledWith(
-      loggerStub.log,
-      sinon.match(UPDATE_CONDITION_SATISFIED_REGEXP)
-    );
+    sinon.assert.calledWith(loggerStub.log, sinon.match(UPDATE_CONDITION_SATISFIED_REGEXP));
     expect(loggerStub.log.lastCall.lastArg).to.deep.equal(["Test message"]);
   });
 
@@ -91,30 +65,19 @@ describe("runIteration tests", () => {
     );
 
     expect(updatePricesStub.calledOnce).to.be.true;
-    expect(sendHealthcheckPingStub.calledOnceWith("http://example.com/ping")).to
-      .be.true;
+    expect(sendHealthcheckPingStub.calledOnceWith("http://example.com/ping")).to.be.true;
     expect(requestDataPackagesStub.calledOnce).to.be.true;
-    sinon.assert.calledWith(
-      loggerStub.log,
-      sinon.match(UPDATE_CONDITION_SATISFIED_REGEXP)
-    );
+    sinon.assert.calledWith(loggerStub.log, sinon.match(UPDATE_CONDITION_SATISFIED_REGEXP));
     expect(loggerStub.log.lastCall.lastArg).to.deep.equal(["Test message"]);
   });
 
   it("should not call updatePrices if shouldUpdatePrices is false", async () => {
-    await performRunIterationTest(
-      relayerConfig,
-      getIterationArgsProviderMock(false)
-    );
+    await performRunIterationTest(relayerConfig, getIterationArgsProviderMock(false));
 
     expect(updatePricesStub.called).to.be.false;
-    expect(sendHealthcheckPingStub.calledOnceWith("http://example.com/ping")).to
-      .be.true;
+    expect(sendHealthcheckPingStub.calledOnceWith("http://example.com/ping")).to.be.true;
     expect(requestDataPackagesStub.calledOnce).to.be.true;
-    sinon.assert.calledWith(
-      loggerStub.log,
-      sinon.match(UPDATE_CONDITION_NOT_SATISFIED_REGEXP)
-    );
+    sinon.assert.calledWith(loggerStub.log, sinon.match(UPDATE_CONDITION_NOT_SATISFIED_REGEXP));
     expect(loggerStub.log.lastCall.lastArg).to.deep.equal(["Test message"]);
   });
 
@@ -138,9 +101,7 @@ describe("runIteration tests", () => {
   ) {
     connector = new ContractConnectorMock();
     const adapter = await connector.getAdapter();
-    updatePricesStub = sinon
-      .stub(adapter, "writePricesFromPayloadToContract")
-      .resolves();
+    updatePricesStub = sinon.stub(adapter, "writePricesFromPayloadToContract").resolves();
 
     const facade = new EvmContractFacade(connector, relayerConfig, cache);
     const contractParamsProvider = new ContractParamsProviderMock(
@@ -148,14 +109,9 @@ describe("runIteration tests", () => {
       undefined,
       cache
     );
-    sinon
-      .stub(facade, "getContractParamsProvider")
-      .returns(contractParamsProvider);
+    sinon.stub(facade, "getContractParamsProvider").returns(contractParamsProvider);
 
-    requestDataPackagesStub = sinon.stub(
-      contractParamsProvider,
-      "performRequestingDataPackages"
-    );
+    requestDataPackagesStub = sinon.stub(contractParamsProvider, "performRequestingDataPackages");
 
     await runIteration(facade, relayerConfig, {
       logger: loggerStub as unknown as RedstoneLogger,

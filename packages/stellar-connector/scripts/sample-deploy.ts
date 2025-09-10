@@ -27,9 +27,7 @@ async function deployAdapter(
 ) {
   execSync(`make build`, { stdio: "inherit" });
 
-  const adapterDeployResult = await deployer.deploy(
-    wasmFilePath(PRICE_ADAPTER)
-  );
+  const adapterDeployResult = await deployer.deploy(wasmFilePath(PRICE_ADAPTER));
 
   await new PriceAdapterStellarContractAdapter(
     client,
@@ -37,9 +35,7 @@ async function deployAdapter(
     txDeliveryMan
   ).init(await txDeliveryMan.getPublicKey());
 
-  console.log(
-    `🚀 adapter contract deployed at: ${adapterDeployResult.contractId}`
-  );
+  console.log(`🚀 adapter contract deployed at: ${adapterDeployResult.contractId}`);
   saveAdapterId(adapterDeployResult.contractId);
 
   return adapterDeployResult.contractId;

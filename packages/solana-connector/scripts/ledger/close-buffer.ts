@@ -10,11 +10,7 @@ import { makeConnection } from "../utils";
 import { LEDGER_ACCOUNT, makeSquads } from "./config";
 import { makeSolana } from "./ledger-utils";
 
-function closeBufferAccountTx(
-  payer: PublicKey,
-  bufferAddress: PublicKey,
-  recipient: PublicKey
-) {
+function closeBufferAccountTx(payer: PublicKey, bufferAddress: PublicKey, recipient: PublicKey) {
   const keys = [
     { pubkey: bufferAddress, isWritable: true, isSigner: false },
     { pubkey: recipient, isWritable: true, isSigner: false },

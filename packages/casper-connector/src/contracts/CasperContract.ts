@@ -12,9 +12,7 @@ export class CasperContract extends Contracts.Contract {
       return;
     }
 
-    const hash = contractHash.startsWith("0x")
-      ? contractHash.substring(2)
-      : contractHash;
+    const hash = contractHash.startsWith("0x") ? contractHash.substring(2) : contractHash;
 
     this.setContractHash(`hash-${hash}`);
   }

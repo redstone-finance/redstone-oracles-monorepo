@@ -1,8 +1,4 @@
-import {
-  INumericDataPoint,
-  RedstonePayload,
-  SignedDataPackage,
-} from "@redstone-finance/protocol";
+import { INumericDataPoint, RedstonePayload, SignedDataPackage } from "@redstone-finance/protocol";
 import { RedstoneCommon } from "@redstone-finance/utils";
 import {
   basicPullModelTestConfig,
@@ -30,11 +26,7 @@ const generateDataPackagesTest = (
       : basicPullModelTestConfig.expectedValues,
     payloadGenerator: (timestamp: number) => {
       const signedMockdataPackages = [];
-      for (
-        let signerIndex = 0;
-        signerIndex < dataPointsForPackages.length;
-        signerIndex++
-      ) {
+      for (let signerIndex = 0; signerIndex < dataPointsForPackages.length; signerIndex++) {
         const mdp = getMockSignedDataPackageObj({
           dataPoints: dataPointsForPackages[signerIndex],
           mockSignerIndex: signerIndex as MockSignerIndex,
@@ -55,23 +47,16 @@ export const dataPackagesTestCases = {
   ),
 
   "Should fail if there are data packages with a duplicated data feed": {
-    "First signer tries to hack the system with 2 duplicated data points":
-      generateDataPackagesTest(
-        [[testDataPoint, testDataPoint], [testDataPoint]],
-        false
-      ),
+    "First signer tries to hack the system with 2 duplicated data points": generateDataPackagesTest(
+      [[testDataPoint, testDataPoint], [testDataPoint]],
+      false
+    ),
     "Second signer tries to hack the system with 2 duplicated data points":
-      generateDataPackagesTest(
-        [[testDataPoint], [testDataPoint, testDataPoint]],
-        false
-      ),
+      generateDataPackagesTest([[testDataPoint], [testDataPoint, testDataPoint]], false),
     ...Object.fromEntries(
       [3, 4, 5].map((i) => [
         `First signer tries to hack the system with ${i} duplicated data points`,
-        generateDataPackagesTest(
-          [Array(i).fill(testDataPoint) as INumericDataPoint[]],
-          false
-        ),
+        generateDataPackagesTest([Array(i).fill(testDataPoint) as INumericDataPoint[]], false),
       ])
     ),
   },
@@ -105,10 +90,7 @@ export const dataPackagesTestCases = {
         ];
       })
     ),
-    "All data packages are empty": generateDataPackagesTest(
-      [[], [], []],
-      false
-    ),
+    "All data packages are empty": generateDataPackagesTest([[], [], []], false),
   },
 
   "Data packages order should not change anything": {
@@ -122,11 +104,7 @@ export const dataPackagesTestCases = {
         [2, 0, 1],
       ].map((order) => {
         const dps = [...testDataPoints];
-        const reorderedTestsDataPoints = [
-          dps[order[0]],
-          dps[order[1]],
-          dps[order[2]],
-        ];
+        const reorderedTestsDataPoints = [dps[order[0]], dps[order[1]], dps[order[2]]];
         return [
           `Order ${JSON.stringify(order)} should yield the same result`,
           generateDataPackagesTest(reorderedTestsDataPoints, true),
@@ -192,11 +170,7 @@ export const dataPackagesTestCases = {
           const dataPointsForPackages = indexes.map((i) => dps[i]);
           return [
             title,
-            generateDataPackagesTest(
-              dataPointsForPackages,
-              true,
-              to8Decimals(newValue)
-            ),
+            generateDataPackagesTest(dataPointsForPackages, true, to8Decimals(newValue)),
           ];
         })
       ),

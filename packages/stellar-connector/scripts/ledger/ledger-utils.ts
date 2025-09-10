@@ -11,12 +11,8 @@ export class StellarLedgerSigner {
   ) {}
 
   async getPublicKey() {
-    const result = await this.stellar.getPublicKey(
-      getDerivationPath(this.accountId)
-    );
-    const stellarPublicKeyString = StrKey.encodeEd25519PublicKey(
-      result.rawPublicKey
-    );
+    const result = await this.stellar.getPublicKey(getDerivationPath(this.accountId));
+    const stellarPublicKeyString = StrKey.encodeEd25519PublicKey(result.rawPublicKey);
 
     const keypair = Keypair.fromPublicKey(stellarPublicKeyString);
 
@@ -32,9 +28,8 @@ export class StellarLedgerSigner {
   }
 
   async sign(hash: Buffer) {
-    const signature = (
-      await this.stellar.signHash(getDerivationPath(this.accountId), hash)
-    ).signature;
+    const signature = (await this.stellar.signHash(getDerivationPath(this.accountId), hash))
+      .signature;
 
     return signature;
   }

@@ -1,10 +1,7 @@
 import { consts } from "@redstone-finance/protocol";
 import { MongoBroadcaster } from "../../src/broadcasters/mongo-broadcaster";
 import { compressMsg } from "../../src/common/streamr";
-import {
-  DataPackage,
-  DataPackageDocument,
-} from "../../src/data-packages/data-packages.model";
+import { DataPackage, DataPackageDocument } from "../../src/data-packages/data-packages.model";
 import { DataPackagesService } from "../../src/data-packages/data-packages.service";
 import { StreamrListenerService } from "../../src/streamr-listener/streamr-listener.service";
 import {

@@ -19,18 +19,14 @@ export class MovePriceAdapterContractWriter {
     deferredDataRequest?: (feedId: string) => Promise<string>
   ) {
     const data = Object.entries(payloads).map(async ([feedId, payload]) => {
-      const data: MoveTransactionData =
-        await this.makeWritePriceTransactionData(
-          feedId,
-          Promise.resolve(payload)
-        );
+      const data: MoveTransactionData = await this.makeWritePriceTransactionData(
+        feedId,
+        Promise.resolve(payload)
+      );
 
       if (deferredDataRequest) {
         data.deferredDataProvider = () =>
-          this.makeWritePriceTransactionData(
-            feedId,
-            deferredDataRequest(feedId)
-          );
+          this.makeWritePriceTransactionData(feedId, deferredDataRequest(feedId));
       }
 
       return data;
@@ -44,25 +40,17 @@ export class MovePriceAdapterContractWriter {
     payload: Promise<string>,
     deferredDataRequest?: () => Promise<string>
   ) {
-    const data: MoveTransactionData = await this.makeWritePricesTransactionData(
-      feedIds,
-      payload
-    );
+    const data: MoveTransactionData = await this.makeWritePricesTransactionData(feedIds, payload);
 
     if (deferredDataRequest) {
       data.deferredDataProvider = () =>
         this.makeWritePricesTransactionData(feedIds, deferredDataRequest());
     }
 
-    return await this.txDeliveryMan.sendBatchTransactions([
-      Promise.resolve(data),
-    ]);
+    return await this.txDeliveryMan.sendBatchTransactions([Promise.resolve(data)]);
   }
 
-  private async makeWritePriceTransactionData(
-    feedId: string,
-    payload: Promise<string>
-  ) {
+  private async makeWritePriceTransactionData(feedId: string, payload: Promise<string>) {
     const fun = `${this.priceAdapterPackageAddress.toString()}::price_adapter::write_price`;
     return {
       identifier: `Write ${feedId} price: ${fun}`,
@@ -75,10 +63,7 @@ export class MovePriceAdapterContractWriter {
     };
   }
 
-  private async makeWritePricesTransactionData(
-    feedIds: string[],
-    payload: Promise<string>
-  ) {
+  private async makeWritePricesTransactionData(feedIds: string[], payload: Promise<string>) {
     const fun = `${this.priceAdapterPackageAddress.toString()}::price_adapter::write_prices`;
     return {
       identifier: `Write [${[...feedIds].sort().toString()}] price: ${fun}`,

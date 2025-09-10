@@ -56,11 +56,7 @@ export class RadixClient {
     proofResourceId?: string,
     maxTxSendAttempts = this.config.maxTxSendAttempts
   ) {
-    for (
-      let iterationIndex = 0;
-      iterationIndex < maxTxSendAttempts;
-      iterationIndex++
-    ) {
+    for (let iterationIndex = 0; iterationIndex < maxTxSendAttempts; iterationIndex++) {
       try {
         const invocation = await invocationProvider();
         const transaction = invocation.getDedicatedTransaction(
@@ -68,19 +64,14 @@ export class RadixClient {
           this.config.maxFeeXrd,
           proofResourceId
         );
-        const transactionHash = await this.callTransaction(
-          transaction,
-          iterationIndex
-        );
+        const transactionHash = await this.callTransaction(transaction, iterationIndex);
         const result = await this.waitForCommit(transactionHash.id);
 
         if (result) {
           return await this.interpret<T>(transactionHash.id, transaction);
         }
 
-        this.logger.log(
-          `Iteration #${iterationIndex} didn't finish with success.`
-        );
+        this.logger.log(`Iteration #${iterationIndex} didn't finish with success.`);
       } catch (e) {
         this.logger.error(RedstoneCommon.stringifyError(e));
       }
@@ -91,30 +82,17 @@ export class RadixClient {
     );
   }
 
-  private async interpret<T>(
-    transactionId: string,
-    transaction: RadixTransaction
-  ) {
+  private async interpret<T>(transactionId: string, transaction: RadixTransaction) {
     const output = await this.apiClient.getTransactionDetails(transactionId);
-    this.logger.log(
-      `Transaction ${transactionId} is COMMITTED; feePaid: ${output.feePaid} XRD`
-    );
+    this.logger.log(`Transaction ${transactionId} is COMMITTED; feePaid: ${output.feePaid} XRD`);
 
     return transaction.interpret(output.values) as T;
   }
 
-  async readValue<T>(
-    componentId: string,
-    fieldName: string,
-    stateVersion?: number
-  ) {
-    return (
-      await this.apiClient.getStateFields(
-        componentId,
-        [fieldName],
-        stateVersion
-      )
-    )[fieldName] as T;
+  async readValue<T>(componentId: string, fieldName: string, stateVersion?: number) {
+    return (await this.apiClient.getStateFields(componentId, [fieldName], stateVersion))[
+      fieldName
+    ] as T;
   }
 
   async getCurrentEpochNumber() {
@@ -126,9 +104,7 @@ export class RadixClient {
   }
 
   async getXRDBalance(address: string, stateVersion?: number) {
-    const addressBook = await RadixEngineToolkit.Utils.knownAddresses(
-      this.networkId
-    );
+    const addressBook = await RadixEngineToolkit.Utils.knownAddresses(this.networkId);
     return await this.apiClient.getFungibleBalance(
       address,
       addressBook.resourceAddresses.xrd,
@@ -136,16 +112,8 @@ export class RadixClient {
     );
   }
 
-  async getResourceBalance(
-    address: string,
-    resourceAddress: string,
-    stateVersion?: number
-  ) {
-    return await this.apiClient.getNonFungibleBalance(
-      address,
-      resourceAddress,
-      stateVersion
-    );
+  async getResourceBalance(address: string, resourceAddress: string, stateVersion?: number) {
+    return await this.apiClient.getNonFungibleBalance(address, resourceAddress, stateVersion);
   }
 
   async getTransactions(
@@ -175,10 +143,7 @@ export class RadixClient {
     return accumulatedResult;
   }
 
-  async waitForCommit(
-    transactionId: string,
-    pollDelayMs = TX_WAIT_POLL_DELAY_MS
-  ) {
+  async waitForCommit(transactionId: string, pollDelayMs = TX_WAIT_POLL_DELAY_MS) {
     try {
       const result = await this.performWaitingForCommit(
         transactionId,
@@ -206,8 +171,7 @@ export class RadixClient {
     pollAttempts: number
   ) {
     for (let i = 0; i < pollAttempts; i++) {
-      const statusOutput =
-        await this.apiClient.getTransactionStatus(transactionId);
+      const statusOutput = await this.apiClient.getTransactionStatus(transactionId);
       const logMessage = `Transaction ${transactionId} is ${statusOutput.status}`;
       switch (statusOutput.status) {
         case "Pending":
@@ -220,9 +184,7 @@ export class RadixClient {
           return true;
         }
         case "CommittedFailure":
-          throw new Error(
-            `Transaction ${transactionId} is FAILED: ${statusOutput.errorMessage}`
-          );
+          throw new Error(`Transaction ${transactionId} is FAILED: ${statusOutput.errorMessage}`);
         default:
           this.logger.log(logMessage);
       }
@@ -256,10 +218,7 @@ export class RadixClient {
     };
   }
 
-  async compileTransactionToIntent(
-    transaction: RadixTransaction,
-    iterationIndex = 0
-  ) {
+  async compileTransactionToIntent(transaction: RadixTransaction, iterationIndex = 0) {
     const transactionIntent: Intent = {
       header: await this.getTrasanctionHeader(iterationIndex),
       manifest: transaction.getManifest(),
@@ -279,27 +238,20 @@ export class RadixClient {
 
   private getTipPercentage(iterationIndex = 0) {
     return Math.floor(
-      Math.min(
-        100 * (this.config.tipMultiplier ** iterationIndex - 1),
-        MAX_TIP_PERCENTAGE
-      )
+      Math.min(100 * (this.config.tipMultiplier ** iterationIndex - 1), MAX_TIP_PERCENTAGE)
     );
   }
 
-  private async callTransaction(
-    transaction: RadixTransaction,
-    iterationIndex = 0
-  ) {
+  private async callTransaction(transaction: RadixTransaction, iterationIndex = 0) {
     const transactionHeader = await this.getTrasanctionHeader(iterationIndex);
 
-    const notarizedTransaction: NotarizedTransaction =
-      await TransactionBuilder.new().then((builder) => {
-        const tx = builder
-          .header(transactionHeader)
-          .manifest(transaction.getManifest());
+    const notarizedTransaction: NotarizedTransaction = await TransactionBuilder.new().then(
+      (builder) => {
+        const tx = builder.header(transactionHeader).manifest(transaction.getManifest());
 
         return this.signer!.asyncSign(tx);
-      });
+      }
+    );
 
     return await this.submitTransaction(notarizedTransaction);
   }
@@ -317,15 +269,10 @@ export class RadixClient {
     });
 
     const transactionId =
-      await RadixEngineToolkit.NotarizedTransaction.intentHash(
-        notarizedTransaction
-      );
+      await RadixEngineToolkit.NotarizedTransaction.intentHash(notarizedTransaction);
     this.logger.log(`Transaction ${transactionId.id} sent.`);
 
-    const compiled =
-      await RadixEngineToolkit.NotarizedTransaction.compile(
-        notarizedTransaction
-      );
+    const compiled = await RadixEngineToolkit.NotarizedTransaction.compile(notarizedTransaction);
 
     const duplicate = await this.apiClient.submitTransaction(compiled);
     if (duplicate) {
@@ -336,18 +283,11 @@ export class RadixClient {
   }
 
   async transfer(toAddress: string, amount: number) {
-    const addressBook = await RadixEngineToolkit.Utils.knownAddresses(
-      this.networkId
-    );
+    const addressBook = await RadixEngineToolkit.Utils.knownAddresses(this.networkId);
     const fromAddress = await this.getAccountAddress();
 
     await this.call(
-      new TransferXRDRadixMethod(
-        fromAddress,
-        toAddress,
-        addressBook.resourceAddresses.xrd,
-        amount
-      ),
+      new TransferXRDRadixMethod(fromAddress, toAddress, addressBook.resourceAddresses.xrd, amount),
       undefined,
       1
     );

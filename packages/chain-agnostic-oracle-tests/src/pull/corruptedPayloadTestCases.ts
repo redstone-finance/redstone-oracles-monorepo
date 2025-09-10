@@ -13,8 +13,7 @@ export const corruptedPayloadTestCases = {
     ...basicPullModelTestConfig,
     expectedSuccess: false,
     payloadGenerator: (timestamp: number) => {
-      const originalPayload =
-        basicPullModelTestConfig.payloadGenerator(timestamp);
+      const originalPayload = basicPullModelTestConfig.payloadGenerator(timestamp);
       if (!originalPayload.endsWith(REDSTONE_MARKER_HEX)) {
         throw new Error(
           `Expected to get a payload with redstone marker in the end. Got: ${originalPayload}`

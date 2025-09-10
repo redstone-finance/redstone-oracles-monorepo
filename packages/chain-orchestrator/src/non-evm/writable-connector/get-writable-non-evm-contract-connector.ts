@@ -7,9 +7,7 @@ import { getStellarContractConnector } from "./get-stellar-contract-connector";
 import { getSuiContractConnector } from "./get-sui-contract-connector";
 import { PartialRelayerConfig } from "./partial-relayer-config";
 
-export async function getWritableNonEvmContractConnector(
-  relayerConfig: PartialRelayerConfig
-) {
+export async function getWritableNonEvmContractConnector(relayerConfig: PartialRelayerConfig) {
   const { chainType } = deconstructNetworkId(relayerConfig.networkId);
 
   switch (chainType) {

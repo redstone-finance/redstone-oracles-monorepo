@@ -31,9 +31,7 @@ export class SolanaRustSdkErrroHandler {
     const sdkError = SkippableRustSdkError[errorCode];
 
     if (sdkError) {
-      SolanaRustSdkErrroHandler.logger.info(
-        `Transaction error should be skipped: ${sdkError}`
-      );
+      SolanaRustSdkErrroHandler.logger.info(`Transaction error should be skipped: ${sdkError}`);
       return true;
     }
 

@@ -64,17 +64,18 @@ export const OnChainRelayerManifestSchema = CommonManifestSchema.extend(
   OnChainRelayerManifestExtension
 );
 
-export const MultiFeedOnChainRelayerManifestSchema =
-  CommonManifestSchema.extend(MultiFeedOnChainRelayerManifestExtension);
+export const MultiFeedOnChainRelayerManifestSchema = CommonManifestSchema.extend(
+  MultiFeedOnChainRelayerManifestExtension
+);
 
-export const OnChainRelayerManifestSchemaStrict =
-  CommonManifestSchemaStrict.extend(OnChainRelayerManifestExtension).strict();
+export const OnChainRelayerManifestSchemaStrict = CommonManifestSchemaStrict.extend(
+  OnChainRelayerManifestExtension
+).strict();
 
-export const MultiFeedOnChainRelayerManifestSchemaStrict =
-  CommonManifestSchemaStrict.extend({
-    ...MultiFeedOnChainRelayerManifestExtension,
-    ...MultiFeedOnChainRelayerManifestExtensionStrict,
-  }).strict();
+export const MultiFeedOnChainRelayerManifestSchemaStrict = CommonManifestSchemaStrict.extend({
+  ...MultiFeedOnChainRelayerManifestExtension,
+  ...MultiFeedOnChainRelayerManifestExtensionStrict,
+}).strict();
 
 export const AnyOnChainRelayerManifestSchema = z.union([
   OnChainRelayerManifestSchema,
@@ -83,31 +84,21 @@ export const AnyOnChainRelayerManifestSchema = z.union([
 
 export type PriceFeedConfig = z.infer<typeof PriceFeedConfigSchema>;
 
-export type MultiFeedOnChainRelayerManifest = z.infer<
-  typeof MultiFeedOnChainRelayerManifestSchema
->;
+export type MultiFeedOnChainRelayerManifest = z.infer<typeof MultiFeedOnChainRelayerManifestSchema>;
 
 export type MultiFeedOnChainRelayerManifestInput = z.input<
   typeof MultiFeedOnChainRelayerManifestSchema
 >;
 
-export type OnChainRelayerManifest = z.infer<
-  typeof OnChainRelayerManifestSchema
->;
+export type OnChainRelayerManifest = z.infer<typeof OnChainRelayerManifestSchema>;
 
-export type OnChainRelayerManifestInput = z.input<
-  typeof OnChainRelayerManifestSchema
->;
+export type OnChainRelayerManifestInput = z.input<typeof OnChainRelayerManifestSchema>;
 
 export type CommonRelayerManifest = z.infer<typeof CommonManifestSchema>;
 
-export type AnyOnChainRelayerManifest = z.infer<
-  typeof AnyOnChainRelayerManifestSchema
->;
+export type AnyOnChainRelayerManifest = z.infer<typeof AnyOnChainRelayerManifestSchema>;
 
-export type AnyOnChainRelayerManifestInput = z.input<
-  typeof AnyOnChainRelayerManifestSchema
->;
+export type AnyOnChainRelayerManifestInput = z.input<typeof AnyOnChainRelayerManifestSchema>;
 
 export type ManifestType =
   | typeof MANIFEST_TYPE_PRICE_FEEDS

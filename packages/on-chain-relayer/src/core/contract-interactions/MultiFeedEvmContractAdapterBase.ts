@@ -30,12 +30,9 @@ export abstract class MultiFeedEvmContractAdapterBase<
   ): Promise<LastRoundDetails[]> {
     const dataFeedsAsBytes32 = feedIds.map(utils.formatBytes32String);
     const contractOutput: MultiFeedAdapterWithoutRounds.LastUpdateDetailsStructOutput[] =
-      await this.adapterContract.getLastUpdateDetailsUnsafeForMany(
-        dataFeedsAsBytes32,
-        {
-          blockTag: blockNumber,
-        }
-      );
+      await this.adapterContract.getLastUpdateDetailsUnsafeForMany(dataFeedsAsBytes32, {
+        blockTag: blockNumber,
+      });
 
     return contractOutput.map((lastRoundDetails) => ({
       lastDataPackageTimestampMS: lastRoundDetails.dataTimestamp.toNumber(),

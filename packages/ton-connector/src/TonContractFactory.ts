@@ -7,10 +7,7 @@ import { TonNetwork } from "./network/TonNetwork";
 export class TonContractFactory {
   constructor(private contractType: typeof TonContract) {}
 
-  async makeForExecute(
-    network: TonNetwork,
-    address: string
-  ): Promise<TonContract> {
+  async makeForExecute(network: TonNetwork, address: string): Promise<TonContract> {
     const contract = new this.contractType(Address.parse(address));
 
     await contract.connect(network);

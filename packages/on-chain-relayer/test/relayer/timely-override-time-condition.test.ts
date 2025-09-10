@@ -22,33 +22,18 @@ describe("timely override time condition", () => {
       },
     });
 
-    expect(
-      relayerConfig.updateTriggers["ETH"].timeSinceLastUpdateInMilliseconds
-    ).to.equal(1_000);
-    expect(relayerConfig.updateConditions["ETH"]).to.deep.equal([
-      "value-deviation",
-      "time",
-    ]);
+    expect(relayerConfig.updateTriggers["ETH"].timeSinceLastUpdateInMilliseconds).to.equal(1_000);
+    expect(relayerConfig.updateConditions["ETH"]).to.deep.equal(["value-deviation", "time"]);
 
     timelyOverrideSinceLastUpdate(relayerConfig, 1);
 
-    expect(
-      relayerConfig.updateTriggers["ETH"].timeSinceLastUpdateInMilliseconds
-    ).to.equal(1);
-    expect(relayerConfig.updateConditions["ETH"]).to.deep.equal([
-      "value-deviation",
-      "time",
-    ]);
+    expect(relayerConfig.updateTriggers["ETH"].timeSinceLastUpdateInMilliseconds).to.equal(1);
+    expect(relayerConfig.updateConditions["ETH"]).to.deep.equal(["value-deviation", "time"]);
 
     await RedstoneCommon.sleep(2);
 
-    expect(
-      relayerConfig.updateTriggers["ETH"].timeSinceLastUpdateInMilliseconds
-    ).to.equal(1_000);
-    expect(relayerConfig.updateConditions["ETH"]).to.deep.equal([
-      "value-deviation",
-      "time",
-    ]);
+    expect(relayerConfig.updateTriggers["ETH"].timeSinceLastUpdateInMilliseconds).to.equal(1_000);
+    expect(relayerConfig.updateConditions["ETH"]).to.deep.equal(["value-deviation", "time"]);
   });
 
   it("should temporary set update interval when time conditions DOES NOT exists", async () => {
@@ -68,30 +53,21 @@ describe("timely override time condition", () => {
       },
     });
 
-    expect(relayerConfig.updateConditions["BTC"]).to.deep.equal([
-      "value-deviation",
-    ]);
-    expect(
-      relayerConfig.updateTriggers["BTC"].timeSinceLastUpdateInMilliseconds
-    ).to.equal(undefined);
+    expect(relayerConfig.updateConditions["BTC"]).to.deep.equal(["value-deviation"]);
+    expect(relayerConfig.updateTriggers["BTC"].timeSinceLastUpdateInMilliseconds).to.equal(
+      undefined
+    );
 
     timelyOverrideSinceLastUpdate(relayerConfig, 1);
 
-    expect(
-      relayerConfig.updateTriggers["BTC"].timeSinceLastUpdateInMilliseconds
-    ).to.equal(1);
-    expect(relayerConfig.updateConditions["BTC"]).to.deep.equal([
-      "value-deviation",
-      "time",
-    ]);
+    expect(relayerConfig.updateTriggers["BTC"].timeSinceLastUpdateInMilliseconds).to.equal(1);
+    expect(relayerConfig.updateConditions["BTC"]).to.deep.equal(["value-deviation", "time"]);
 
     await RedstoneCommon.sleep(2);
 
-    expect(
-      relayerConfig.updateTriggers["BTC"].timeSinceLastUpdateInMilliseconds
-    ).to.equal(undefined);
-    expect(relayerConfig.updateConditions["BTC"]).to.deep.equal([
-      "value-deviation",
-    ]);
+    expect(relayerConfig.updateTriggers["BTC"].timeSinceLastUpdateInMilliseconds).to.equal(
+      undefined
+    );
+    expect(relayerConfig.updateConditions["BTC"]).to.deep.equal(["value-deviation"]);
   });
 });

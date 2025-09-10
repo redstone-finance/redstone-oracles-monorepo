@@ -10,9 +10,7 @@ describe("SampleRedstoneDefaultsLib", function () {
   let contract: SampleRedstoneDefaultsLib;
 
   beforeEach(async () => {
-    const ContractFactory = await ethers.getContractFactory(
-      "SampleRedstoneDefaultsLib"
-    );
+    const ContractFactory = await ethers.getContractFactory("SampleRedstoneDefaultsLib");
     contract = await ContractFactory.deploy();
     await contract.deployed();
   });
@@ -64,9 +62,7 @@ describe("SampleRedstoneDefaultsLib", function () {
   });
 
   it("Should properly aggregate an array with values, which include zeros", async () => {
-    const aggregatedValue = await contract.aggregateValues([
-      44, 0, 68, 0, 100, 0, 42,
-    ]);
+    const aggregatedValue = await contract.aggregateValues([44, 0, 68, 0, 100, 0, 42]);
     expect(aggregatedValue.toNumber()).to.eql(42);
   });
 

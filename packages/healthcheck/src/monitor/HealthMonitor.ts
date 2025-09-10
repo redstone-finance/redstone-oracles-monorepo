@@ -43,15 +43,11 @@ export class HealthMonitor {
       logger.debug(`Running health checks`);
       const data = await this.collectHealthData(fireDate);
       if (data.status !== HealthStatus.healthy) {
-        logger.warn(
-          `Health check status: ${data.status}, errors: ${JSON.stringify(data.results)}`
-        );
+        logger.warn(`Health check status: ${data.status}, errors: ${JSON.stringify(data.results)}`);
       }
       await this.atomicWriteStateFile(data.status);
     } catch (e) {
-      logger.error(
-        `Error while running health checks: ${RedstoneCommon.stringifyError(e)}`
-      );
+      logger.error(`Error while running health checks: ${RedstoneCommon.stringifyError(e)}`);
     }
   }
 
@@ -63,12 +59,8 @@ export class HealthMonitor {
       rawResults.map(({ key, status, errors }) => [key, { status, errors }])
     );
 
-    const anyFailed = Object.values(results).some(
-      (r) => r.status !== HealthStatus.healthy
-    );
-    const overallStatus = anyFailed
-      ? HealthStatus.unhealthy
-      : HealthStatus.healthy;
+    const anyFailed = Object.values(results).some((r) => r.status !== HealthStatus.healthy);
+    const overallStatus = anyFailed ? HealthStatus.unhealthy : HealthStatus.healthy;
 
     return {
       status: overallStatus,
@@ -79,11 +71,10 @@ export class HealthMonitor {
   private prepareCheckPromises(fireDate: Date) {
     return Array.from(this.checks.entries()).map(async ([key, healthCheck]) => {
       try {
-        const { status, errors } =
-          await RedstoneCommon.timeout<HealthCheckResult>(
-            healthCheck.check(fireDate),
-            3000
-          );
+        const { status, errors } = await RedstoneCommon.timeout<HealthCheckResult>(
+          healthCheck.check(fireDate),
+          3000
+        );
         return { key, status, errors };
       } catch (err) {
         // If it throws (e.g. timeout), treat as unhealthy

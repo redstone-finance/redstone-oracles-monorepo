@@ -9,11 +9,7 @@ export class TonSingleFeedManContractDeployer extends TonContractDeployer<
   TonSingleFeedMan,
   TonSingleFeedManContractAdapter
 > {
-  constructor(
-    network: TonNetwork,
-    code: Cell,
-    initData?: SingleFeedManInitData
-  ) {
+  constructor(network: TonNetwork, code: Cell, initData?: SingleFeedManInitData) {
     super(TonSingleFeedMan, network, code, initData);
   }
 

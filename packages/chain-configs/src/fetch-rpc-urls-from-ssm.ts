@@ -17,20 +17,14 @@ export async function fetchRpcUrlsFromSsm(
   opts: FetchRpcUrlsFromSsmOpts
 ): Promise<FetchRpcUrlsFromSsmResult> {
   const ssmPathToNetworkId: Record<string, NetworkId> = {};
-  const rpcEnv = RedstoneCommon.getFromEnv(
-    "RPC_ENV_OVERRIDE",
-    z.string().default(opts.env)
-  );
+  const rpcEnv = RedstoneCommon.getFromEnv("RPC_ENV_OVERRIDE", z.string().default(opts.env));
   for (const networkId of opts.networkIds) {
     const ssmPath = `/${rpcEnv}/rpc/${networkId}/${opts.type === "fallback" ? "fallback/" : ""}urls`;
     ssmPathToNetworkId[ssmPath] = networkId;
   }
 
   const region = opts.type === "fallback" ? "eu-north-1" : "eu-west-1";
-  const ssmParamsResponse = await getSSMParameterValues(
-    Object.keys(ssmPathToNetworkId),
-    region
-  );
+  const ssmParamsResponse = await getSSMParameterValues(Object.keys(ssmPathToNetworkId), region);
 
   const result: FetchRpcUrlsFromSsmResult = {};
 
@@ -60,9 +54,7 @@ export async function fetchParsedRpcUrlsFromSsmByNetworkId(
   const rpcUrlsForChain = ssmRpcUrls[networkId];
 
   if (!RedstoneCommon.isDefined(rpcUrlsForChain)) {
-    throw new Error(
-      `${env} RPC URLs not found for ${networkId}, or failed to parse`
-    );
+    throw new Error(`${env} RPC URLs not found for ${networkId}, or failed to parse`);
   }
 
   return rpcUrlsForChain;

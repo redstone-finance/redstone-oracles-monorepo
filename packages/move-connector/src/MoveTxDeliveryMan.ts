@@ -1,13 +1,5 @@
-import {
-  Account,
-  AptosApiError,
-  InputGenerateTransactionPayloadData,
-} from "@aptos-labs/ts-sdk";
-import {
-  loggerFactory,
-  OperationQueue,
-  RedstoneCommon,
-} from "@redstone-finance/utils";
+import { Account, AptosApiError, InputGenerateTransactionPayloadData } from "@aptos-labs/ts-sdk";
+import { loggerFactory, OperationQueue, RedstoneCommon } from "@redstone-finance/utils";
 import _ from "lodash";
 import { TRANSACTION_DEFAULT_CONFIG } from "./config";
 import { CommittedTransaction, MoveClient } from "./MoveClient";
@@ -16,9 +8,7 @@ import { TransactionConfig } from "./types";
 
 const SEQUENCE_NUMBER_TOO_OLD_CODE = "SEQUENCE_NUMBER_TOO_OLD".toLowerCase();
 
-export type DeferredDataProvider = (
-  iterationIndex: number
-) => Promise<MoveTransactionData>;
+export type DeferredDataProvider = (iterationIndex: number) => Promise<MoveTransactionData>;
 
 export type MoveTransactionData = InputGenerateTransactionPayloadData & {
   identifier: string;
@@ -82,10 +72,7 @@ export class MoveTxDeliveryMan {
     );
   }
 
-  private async performIteration(
-    data: MoveTransactionData,
-    iterationIndex: number
-  ) {
+  private async performIteration(data: MoveTransactionData, iterationIndex: number) {
     return await new Promise<string>((resolve, reject) => {
       this.logger.debug(`Enqueuing #${iterationIndex} ${data.identifier}`);
       const wasEnqueued = MoveTxDeliveryMan.getQueue(this.account).enqueue(
@@ -116,10 +103,7 @@ export class MoveTxDeliveryMan {
     });
   }
 
-  private async tryCallFunction(
-    data: MoveTransactionData,
-    iterationIndex: number
-  ) {
+  private async tryCallFunction(data: MoveTransactionData, iterationIndex: number) {
     const options = await MoveOptionsContractUtil.prepareTransactionOptions(
       this.client,
       this.config.writePriceOctasTxGasBudget,
@@ -139,20 +123,12 @@ export class MoveTxDeliveryMan {
         .join("; ")
     );
 
-    const pendingTransaction = await this.client.sendSimpleTransaction(
-      data,
-      this.account,
-      options
-    );
+    const pendingTransaction = await this.client.sendSimpleTransaction(data, this.account, options);
 
-    const committedTransaction = await this.client.waitForTransaction(
-      pendingTransaction.hash
-    );
+    const committedTransaction = await this.client.waitForTransaction(pendingTransaction.hash);
 
     if (!committedTransaction.success) {
-      throw new Error(
-        `${data.identifier}: Transaction ${committedTransaction.hash} failed.`
-      );
+      throw new Error(`${data.identifier}: Transaction ${committedTransaction.hash} failed.`);
     }
 
     this.processCommittedTransaction(committedTransaction);
@@ -161,9 +137,7 @@ export class MoveTxDeliveryMan {
   }
 
   private async refreshSequenceNumber() {
-    this.setSequenceNumber(
-      await this.client.getSequenceNumber(this.account.accountAddress)
-    );
+    this.setSequenceNumber(await this.client.getSequenceNumber(this.account.accountAddress));
   }
 
   private setNextSequenceNumber(sequenceNumber: string) {
@@ -181,9 +155,7 @@ export class MoveTxDeliveryMan {
   }
 
   private processCommittedTransaction(tx: CommittedTransaction) {
-    this.logger.log(
-      `Transaction ${tx.hash} finished, status: COMMITTED, cost: ${tx.cost} MOVE.`
-    );
+    this.logger.log(`Transaction ${tx.hash} finished, status: COMMITTED, cost: ${tx.cost} MOVE.`);
 
     if (tx.sequenceNumber) {
       this.setNextSequenceNumber(tx.sequenceNumber);
@@ -194,10 +166,7 @@ export class MoveTxDeliveryMan {
     let didLog = false;
     const failInfo = MoveTxDeliveryMan.maybeGetTransactionFailInfo(e);
     if (failInfo) {
-      this.logger.error(
-        failInfo.vm_status,
-        MoveTxDeliveryMan.extractSimpleFields(failInfo)
-      );
+      this.logger.error(failInfo.vm_status, MoveTxDeliveryMan.extractSimpleFields(failInfo));
 
       didLog = true;
 
@@ -239,19 +208,14 @@ export class MoveTxDeliveryMan {
       return e.errors.some(MoveTxDeliveryMan.isSequenceNumberTooOldError);
     }
     return (
-      e instanceof AptosApiError &&
-      e.message.toLowerCase().includes(SEQUENCE_NUMBER_TOO_OLD_CODE)
+      e instanceof AptosApiError && e.message.toLowerCase().includes(SEQUENCE_NUMBER_TOO_OLD_CODE)
     );
   }
 
   private static extractSimpleFields(error: object) {
     return _.pickBy(
       error,
-      (value) =>
-        _.isString(value) ||
-        _.isNumber(value) ||
-        _.isBoolean(value) ||
-        _.isNil(value)
+      (value) => _.isString(value) || _.isNumber(value) || _.isBoolean(value) || _.isNil(value)
     );
   }
 }

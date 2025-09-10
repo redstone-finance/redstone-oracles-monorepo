@@ -1,8 +1,4 @@
-import {
-  PriceAdapterStellarContractConnector,
-  StellarClientBuilder,
-  makeKeypair,
-} from "../src";
+import { PriceAdapterStellarContractConnector, StellarClientBuilder, makeKeypair } from "../src";
 import { MULTISIG_ADDRESS } from "./ledger/consts";
 import { loadContractId, readNetwork, readUrl } from "./utils";
 
@@ -14,11 +10,7 @@ async function changeOwner(contractId = loadContractId()) {
     .withRpcUrl(readUrl())
     .build();
 
-  const connector = new PriceAdapterStellarContractConnector(
-    client,
-    contractId,
-    keypair
-  );
+  const connector = new PriceAdapterStellarContractConnector(client, contractId, keypair);
 
   const adapter = await connector.getAdapter();
 

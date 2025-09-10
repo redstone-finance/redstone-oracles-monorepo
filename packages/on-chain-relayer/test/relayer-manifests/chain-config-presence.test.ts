@@ -1,7 +1,4 @@
-import {
-  getChainConfigByNetworkId,
-  getLocalChainConfigs,
-} from "@redstone-finance/chain-configs";
+import { getChainConfigByNetworkId, getLocalChainConfigs } from "@redstone-finance/chain-configs";
 import { ManifestReading } from "@redstone-finance/on-chain-relayer-common";
 import { NetworkId } from "@redstone-finance/utils";
 import { describe, test } from "mocha";

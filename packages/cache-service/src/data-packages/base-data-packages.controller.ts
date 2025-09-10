@@ -14,10 +14,7 @@ import {
 import { ApiKeysUsageTracker } from "@redstone-finance/internal-utils";
 import { Request } from "express";
 import config from "../config";
-import {
-  BulkPostRequestBody,
-  DataPackagesResponse,
-} from "./data-packages.interface";
+import { BulkPostRequestBody, DataPackagesResponse } from "./data-packages.interface";
 import { DataPackagesService } from "./data-packages.service";
 
 @UsePipes(new ValidationPipe({ transform: true }))
@@ -37,8 +34,7 @@ export abstract class BaseDataPackagesController {
   protected abstract readonly allowExternalSigners: boolean;
 
   protected static async validateDataServiceId(dataServiceId: string) {
-    const isDataServiceIdValid =
-      await DataPackagesService.isDataServiceIdValid(dataServiceId);
+    const isDataServiceIdValid = await DataPackagesService.isDataServiceIdValid(dataServiceId);
     if (!isDataServiceIdValid) {
       throw new HttpException(
         {
@@ -117,14 +113,11 @@ export abstract class BaseDataPackagesController {
       this.apiKeysUsageTracker.trackBulkRequest(apiKey, signerAddress);
     }
 
-    const dataPackagesToSave =
-      await DataPackagesService.prepareReceivedDataPackagesForBulkSaving(
-        body.dataPackages,
-        signerAddress
-      );
+    const dataPackagesToSave = await DataPackagesService.prepareReceivedDataPackagesForBulkSaving(
+      body.dataPackages,
+      signerAddress
+    );
 
-    this.dataPackagesService
-      .broadcast(dataPackagesToSave, signerAddress)
-      .catch(() => {}); // ignore errors as they are logged by the service
+    this.dataPackagesService.broadcast(dataPackagesToSave, signerAddress).catch(() => {}); // ignore errors as they are logged by the service
   }
 }

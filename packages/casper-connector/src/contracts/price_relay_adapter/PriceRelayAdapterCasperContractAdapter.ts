@@ -18,23 +18,15 @@ export class PriceRelayAdapterCasperContractAdapter extends PriceAdapterCasperCo
   static PROCESS_CHUNK_BASE_CSPR = 2;
   public wrappedContractAdapter?: PriceAdapterCasperContractAdapter;
 
-  override async readPricesFromContract(
-    paramsProvider: ContractParamsProvider
-  ): Promise<bigint[]> {
-    return await (
-      await this.getWrappedContractAdapter()
-    ).readPricesFromContract(paramsProvider);
+  override async readPricesFromContract(paramsProvider: ContractParamsProvider): Promise<bigint[]> {
+    return await (await this.getWrappedContractAdapter()).readPricesFromContract(paramsProvider);
   }
 
   override async readTimestampFromContract(): Promise<number> {
-    return await (
-      await this.getWrappedContractAdapter()
-    ).readTimestampFromContract();
+    return await (await this.getWrappedContractAdapter()).readTimestampFromContract();
   }
 
-  override async getPricesFromPayload(
-    paramsProvider: ContractParamsProvider
-  ): Promise<bigint[]> {
+  override async getPricesFromPayload(paramsProvider: ContractParamsProvider): Promise<bigint[]> {
     const payloadHex = await paramsProvider.getPayloadHex(false);
     const feedIds = paramsProvider.getHexlifiedFeedIds();
 
@@ -50,10 +42,7 @@ export class PriceRelayAdapterCasperContractAdapter extends PriceAdapterCasperCo
 
     await this.assertWaitForDeployAndRefreshStateRootHash(deployHash);
 
-    return await this.extractComputedValues(
-      hash,
-      paramsProvider.requestParams.dataPackagesIds!
-    );
+    return await this.extractComputedValues(hash, paramsProvider.requestParams.dataPackagesIds!);
   }
 
   protected override async callPricesEntryPoint(
@@ -64,22 +53,10 @@ export class PriceRelayAdapterCasperContractAdapter extends PriceAdapterCasperCo
     hash: string
   ): Promise<string> {
     if (payloadHex.length <= RuntimeArgsFactory.CHUNK_SIZE_BYTES) {
-      return await super.callPricesEntryPoint(
-        type,
-        feedIds,
-        numberOfPackages,
-        payloadHex,
-        hash
-      );
+      return await super.callPricesEntryPoint(type, feedIds, numberOfPackages, payloadHex, hash);
     }
 
-    return await this.callChunksEntryPoint(
-      type,
-      feedIds,
-      numberOfPackages,
-      payloadHex,
-      hash
-    );
+    return await this.callChunksEntryPoint(type, feedIds, numberOfPackages, payloadHex, hash);
   }
 
   private async callChunksEntryPoint(
@@ -89,11 +66,7 @@ export class PriceRelayAdapterCasperContractAdapter extends PriceAdapterCasperCo
     payloadHex: string,
     hash: string
   ) {
-    const argList = RuntimeArgsFactory.makeChunkRuntimeArgsList(
-      feedIds,
-      payloadHex,
-      hash
-    );
+    const argList = RuntimeArgsFactory.makeChunkRuntimeArgsList(feedIds, payloadHex, hash);
 
     const deployIds: string[] = [];
 
@@ -102,8 +75,7 @@ export class PriceRelayAdapterCasperContractAdapter extends PriceAdapterCasperCo
         type,
         argList[chunkIndex],
         PriceRelayAdapterCasperContractAdapter.PROCESS_CHUNK_BASE_CSPR +
-          (chunkIndex + 1) *
-            PriceRelayAdapterCasperContractAdapter.PROCESS_CHUNK_CSPR
+          (chunkIndex + 1) * PriceRelayAdapterCasperContractAdapter.PROCESS_CHUNK_CSPR
       );
 
       deployIds.push(hashId);
@@ -114,20 +86,13 @@ export class PriceRelayAdapterCasperContractAdapter extends PriceAdapterCasperCo
     return await this.callChunkEntryPoint(
       type,
       argList[argList.length - 1],
-      numberOfPackages *
-        PriceAdapterCasperContractAdapter.SINGLE_PACKAGE_PROCESS_CSPR
+      numberOfPackages * PriceAdapterCasperContractAdapter.SINGLE_PACKAGE_PROCESS_CSPR
     );
   }
 
-  private async callChunkEntryPoint(
-    type: RunMode,
-    args: RuntimeArgs,
-    csprAmount: number
-  ) {
+  private async callChunkEntryPoint(type: RunMode, args: RuntimeArgs, csprAmount: number) {
     return await this.callEntrypoint(
-      type === RunMode.WRITE
-        ? ENTRY_POINT_WRITE_PRICES_CHUNK
-        : ENTRY_POINT_GET_PRICES_CHUNK,
+      type === RunMode.WRITE ? ENTRY_POINT_WRITE_PRICES_CHUNK : ENTRY_POINT_GET_PRICES_CHUNK,
       csprAmount,
       args
     );
@@ -151,9 +116,7 @@ export class PriceRelayAdapterCasperContractAdapter extends PriceAdapterCasperCo
       return this.wrappedContractAdapter;
     }
 
-    const adapterContract = await this.queryForContract(
-      STORAGE_KEY_ADAPTER_ADDRESS
-    );
+    const adapterContract = await this.queryForContract(STORAGE_KEY_ADAPTER_ADDRESS);
 
     this.wrappedContractAdapter = new PriceAdapterCasperContractAdapter(
       this.connection,

@@ -5,10 +5,7 @@ import { readCluster } from "../src";
 import { buildCmd } from "./commands";
 import { readProgramAddress } from "./consts";
 import { makeSquads } from "./ledger/config";
-import {
-  checkProgramData,
-  getProgramDataAddress,
-} from "./ledger/upgrade-from-buffer";
+import { checkProgramData, getProgramDataAddress } from "./ledger/upgrade-from-buffer";
 import { makeConnection, readDeployDir } from "./utils";
 
 async function main() {

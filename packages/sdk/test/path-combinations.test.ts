@@ -1,8 +1,5 @@
 import axios from "axios";
-import {
-  DataPackagesRequestParams,
-  requestDataPackages,
-} from "../src/request-data-packages";
+import { DataPackagesRequestParams, requestDataPackages } from "../src/request-data-packages";
 
 export const getReqParams = (urls?: string[]): DataPackagesRequestParams => {
   return {
@@ -39,9 +36,7 @@ describe("Path construction in requestDataPackages", () => {
         hideMetadata: false,
         historicalTimestamp: HISTORICAL_TIMESTAMP,
       },
-      expectedPaths: [
-        "/data-packages/historical/:dataServiceId/:timestamp/show-metadata",
-      ],
+      expectedPaths: ["/data-packages/historical/:dataServiceId/:timestamp/show-metadata"],
     },
     {
       params: {
@@ -67,9 +62,7 @@ describe("Path construction in requestDataPackages", () => {
         it(`generates correct path for ${testUrl}`, async () => {
           (axios.get as jest.Mock).mockClear();
 
-          jest
-            .spyOn(axios, "get")
-            .mockRejectedValue(new Error("Request failed"));
+          jest.spyOn(axios, "get").mockRejectedValue(new Error("Request failed"));
 
           // Capture the expected URL before the request
           let calledUrl: string | undefined;
@@ -90,8 +83,7 @@ describe("Path construction in requestDataPackages", () => {
           }).rejects.toThrow();
 
           const matchedPattern = expectedPathPatterns.some(
-            (pattern) =>
-              calledUrl && calledUrl.match(pattern.replace(/:\w+/g, "[^/]+"))
+            (pattern) => calledUrl && calledUrl.match(pattern.replace(/:\w+/g, "[^/]+"))
           );
 
           expect(matchedPattern).toBe(true);

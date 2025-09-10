@@ -11,15 +11,10 @@ export class SuiReader {
     if (blockNumber) {
       let version = input.version;
       if (!version) {
-        version = await this.findLatestVersionAtCheckpoint(
-          input.objectId,
-          blockNumber
-        );
+        version = await this.findLatestVersionAtCheckpoint(input.objectId, blockNumber);
 
         if (!version) {
-          throw new Error(
-            `No version of ${input.objectId} found for ${blockNumber}`
-          );
+          throw new Error(`No version of ${input.objectId} found for ${blockNumber}`);
         }
       }
 
@@ -30,9 +25,7 @@ export class SuiReader {
       });
 
       if (object.status !== "VersionFound") {
-        throw new Error(
-          `Failed to find past object: ${RedstoneCommon.stringify(object)}`
-        );
+        throw new Error(`Failed to find past object: ${RedstoneCommon.stringify(object)}`);
       }
 
       if (!object.details.content) {
@@ -68,10 +61,7 @@ export class SuiReader {
     }));
   }
 
-  private async findLatestVersionAtCheckpoint(
-    objectId: string,
-    checkpointNumber: number
-  ) {
+  private async findLatestVersionAtCheckpoint(objectId: string, checkpointNumber: number) {
     await RedstoneCommon.waitForBlockNumber(
       () => this.client.getLatestCheckpointSequenceNumber().then(Number),
       checkpointNumber,
@@ -90,11 +80,7 @@ export class SuiReader {
         cursor,
       });
 
-      const result = SuiReader.checkPage(
-        transactions,
-        checkpointNumber,
-        objectId
-      );
+      const result = SuiReader.checkPage(transactions, checkpointNumber, objectId);
 
       if (result) {
         return result;

@@ -28,24 +28,18 @@ export class MoveClient {
 
   async getSequenceNumber(accountAddress: AccountAddress) {
     const accountInfo = await this.aptos.getAccountInfo({ accountAddress });
-    this.logger.debug(
-      `Fetched sequence number: ${accountInfo.sequence_number}`
-    );
+    this.logger.debug(`Fetched sequence number: ${accountInfo.sequence_number}`);
 
     return BigInt(accountInfo.sequence_number);
   }
 
-  async waitForTransaction(
-    transactionHash: string
-  ): Promise<CommittedTransaction> {
+  async waitForTransaction(transactionHash: string): Promise<CommittedTransaction> {
     const transaction = await this.aptos.transaction.waitForTransaction({
       transactionHash,
     });
 
     const sequenceNumber =
-      "sequence_number" in transaction
-        ? transaction.sequence_number
-        : undefined;
+      "sequence_number" in transaction ? transaction.sequence_number : undefined;
 
     return {
       success: transaction.success,
@@ -90,9 +84,7 @@ export class MoveClient {
     packageAddress: string,
     moduleName: string,
     functionName: string,
-    functionArguments?: Array<
-      EntryFunctionArgumentTypes | SimpleEntryFunctionArgumentTypes
-    >
+    functionArguments?: Array<EntryFunctionArgumentTypes | SimpleEntryFunctionArgumentTypes>
   ): Promise<T> {
     return await this.aptos.view({
       payload: {

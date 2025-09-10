@@ -6,9 +6,7 @@ import {
 } from "@redstone-finance/solana-connector";
 import { PartialRelayerConfig } from "./partial-relayer-config";
 
-export const getSolanaContractConnector = (
-  relayerConfig: PartialRelayerConfig
-) => {
+export const getSolanaContractConnector = (relayerConfig: PartialRelayerConfig) => {
   const {
     privateKey,
     adapterContractAddress,
@@ -33,10 +31,5 @@ export const getSolanaContractConnector = (
     .withQuarantineEnabled()
     .build();
 
-  return new SolanaContractConnector(
-    connection,
-    adapterContractAddress,
-    keypair,
-    solanaConfig
-  );
+  return new SolanaContractConnector(connection, adapterContractAddress, keypair, solanaConfig);
 };

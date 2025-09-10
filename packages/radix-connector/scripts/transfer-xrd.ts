@@ -12,20 +12,12 @@ async function transfer(toAddress: string, amount: number) {
   const fromAddress = await client.getAccountAddress();
 
   await client.call(
-    new TransferXRDRadixMethod(
-      fromAddress,
-      toAddress,
-      addressBook.resourceAddresses.xrd,
-      amount
-    )
+    new TransferXRDRadixMethod(fromAddress, toAddress, addressBook.resourceAddresses.xrd, amount)
   );
 }
 
 async function main() {
-  await transfer(
-    "account_rdx16xrpmhnzphjdpcd326wz42wdxyf28t9j2e4axn6t8p4au2vrgrdtxp",
-    100
-  );
+  await transfer("account_rdx16xrpmhnzphjdpcd326wz42wdxyf28t9j2e4axn6t8p4au2vrgrdtxp", 100);
 }
 
 void main();

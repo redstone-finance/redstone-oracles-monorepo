@@ -7,9 +7,7 @@ import { loggerFactory } from "@redstone-finance/utils";
 import { MovePriceAdapterContractViewer } from "./MovePriceAdapterContractViewer";
 import { MovePriceAdapterContractWriter } from "./MovePriceAdapterContractWriter";
 
-export class MovePricesContractAdapter
-  implements IMultiFeedPricesContractAdapter
-{
+export class MovePricesContractAdapter implements IMultiFeedPricesContractAdapter {
   private readonly logger = loggerFactory("move-contract-adapter");
 
   constructor(
@@ -22,15 +20,11 @@ export class MovePricesContractAdapter
   }
 
   //eslint-disable-next-line @typescript-eslint/require-await
-  async getPricesFromPayload(
-    _paramsProvider: ContractParamsProvider
-  ): Promise<bigint[]> {
+  async getPricesFromPayload(_paramsProvider: ContractParamsProvider): Promise<bigint[]> {
     throw new Error("Pull model not supported");
   }
 
-  async writePricesFromPayloadToContract(
-    paramsProvider: ContractParamsProvider
-  ): Promise<string> {
+  async writePricesFromPayloadToContract(paramsProvider: ContractParamsProvider): Promise<string> {
     if (!this.writer) {
       throw new Error("Adapter not set up for writes");
     }
@@ -42,10 +36,8 @@ export class MovePricesContractAdapter
 
     const payload = paramsProvider.getPayloadHex(true, unsignedMetadataArgs);
 
-    return await this.writer.writeAllPrices(
-      paramsProvider.getDataFeedIds(),
-      payload,
-      () => paramsProvider.getPayloadHex(true, unsignedMetadataArgs)
+    return await this.writer.writeAllPrices(paramsProvider.getDataFeedIds(), payload, () =>
+      paramsProvider.getPayloadHex(true, unsignedMetadataArgs)
     );
   }
 
@@ -53,16 +45,10 @@ export class MovePricesContractAdapter
     return await this.viewer.viewUniqueSignerThreshold();
   }
 
-  async readPricesFromContract(
-    paramsProvider: ContractParamsProvider
-  ): Promise<bigint[]> {
-    const contractData = await this.readContractData(
-      paramsProvider.getDataFeedIds()
-    );
+  async readPricesFromContract(paramsProvider: ContractParamsProvider): Promise<bigint[]> {
+    const contractData = await this.readContractData(paramsProvider.getDataFeedIds());
 
-    return paramsProvider
-      .getDataFeedIds()
-      .map((feedId) => contractData[feedId].lastValue);
+    return paramsProvider.getDataFeedIds().map((feedId) => contractData[feedId].lastValue);
   }
 
   async readLatestUpdateBlockTimestamp(feedId: string): Promise<number> {

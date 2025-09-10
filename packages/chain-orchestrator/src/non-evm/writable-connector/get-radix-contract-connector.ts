@@ -5,9 +5,7 @@ import {
 } from "@redstone-finance/radix-connector";
 import { PartialRelayerConfig } from "./partial-relayer-config";
 
-export const getRadixContractConnector = (
-  relayerConfig: PartialRelayerConfig
-) => {
+export const getRadixContractConnector = (relayerConfig: PartialRelayerConfig) => {
   const {
     privateKey,
     adapterContractAddress,
@@ -23,11 +21,9 @@ export const getRadixContractConnector = (
     ...DEFAULT_RADIX_CLIENT_CONFIG,
     tipMultiplier: gasMultiplier ?? DEFAULT_RADIX_CLIENT_CONFIG.tipMultiplier,
     maxFeeXrd: gasLimit ?? DEFAULT_RADIX_CLIENT_CONFIG.maxFeeXrd,
-    maxTxSendAttempts:
-      maxTxSendAttempts ?? DEFAULT_RADIX_CLIENT_CONFIG.maxTxSendAttempts,
+    maxTxSendAttempts: maxTxSendAttempts ?? DEFAULT_RADIX_CLIENT_CONFIG.maxTxSendAttempts,
     maxTxWaitingTimeMs:
-      expectedTxDeliveryTimeInMS ??
-      DEFAULT_RADIX_CLIENT_CONFIG.maxTxWaitingTimeMs,
+      expectedTxDeliveryTimeInMS ?? DEFAULT_RADIX_CLIENT_CONFIG.maxTxWaitingTimeMs,
   };
 
   const client = new RadixClientBuilder()

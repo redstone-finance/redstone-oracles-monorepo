@@ -51,19 +51,12 @@ export class ContractParamsProvider {
     );
   }
 
-  static hexlifyFeedIds(
-    feedIds: string[],
-    allowMissingPrefix?: boolean,
-    padRightSize?: number
-  ) {
+  static hexlifyFeedIds(feedIds: string[], allowMissingPrefix?: boolean, padRightSize?: number) {
     return feedIds
       .map((feed) => hexlify(toUtf8Bytes(feed)), { allowMissingPrefix })
       .map((value) =>
         padRightSize
-          ? value.padEnd(
-              padRightSize * 2 + (value.startsWith("0x") ? 2 : 0),
-              "0"
-            )
+          ? value.padEnd(padRightSize * 2 + (value.startsWith("0x") ? 2 : 0), "0")
           : value
       );
   }
@@ -76,24 +69,14 @@ export class ContractParamsProvider {
     withPrefix = true,
     unsignedMetadataArgs?: UnsignedMetadataArgs
   ): Promise<string> {
-    return (
-      (withPrefix ? "0x" : "") +
-      (await this.requestPayload(unsignedMetadataArgs))
-    );
+    return (withPrefix ? "0x" : "") + (await this.requestPayload(unsignedMetadataArgs));
   }
 
-  async getPayloadData(
-    unsignedMetadataArgs?: UnsignedMetadataArgs
-  ): Promise<number[]> {
-    return Array.from(
-      arrayify(await this.getPayloadHex(true, unsignedMetadataArgs))
-    );
+  async getPayloadData(unsignedMetadataArgs?: UnsignedMetadataArgs): Promise<number[]> {
+    return Array.from(arrayify(await this.getPayloadHex(true, unsignedMetadataArgs)));
   }
 
-  getHexlifiedFeedIds(
-    allowMissingPrefix?: boolean,
-    padRightSize?: number
-  ): string[] {
+  getHexlifiedFeedIds(allowMissingPrefix?: boolean, padRightSize?: number): string[] {
     return ContractParamsProvider.hexlifyFeedIds(
       this.getDataFeedIds(),
       allowMissingPrefix,
@@ -102,10 +85,7 @@ export class ContractParamsProvider {
   }
 
   getDataFeedIds(): string[] {
-    return (
-      this.overrideRequestParamsPackagesIds ??
-      this.requestParams.dataPackagesIds!
-    );
+    return this.overrideRequestParamsPackagesIds ?? this.requestParams.dataPackagesIds!;
   }
 
   async requestDataPackages(canUpdateCache = false) {
@@ -141,10 +121,7 @@ export class ContractParamsProvider {
     const result: SplitPayloads<string | undefined> = {};
 
     for (const feedId of this.getDataFeedIds()) {
-      const dataPackages = extractSignedDataPackagesForFeedId(
-        dataPackagesResponse,
-        feedId
-      );
+      const dataPackages = extractSignedDataPackagesForFeedId(dataPackagesResponse, feedId);
 
       if (!dataPackages.length) {
         result[feedId] = undefined;
@@ -161,18 +138,12 @@ export class ContractParamsProvider {
     return result;
   }
 
-  static extractMissingValues<K>(
-    payloads: SplitPayloads<K | undefined>,
-    logger?: RedstoneLogger
-  ) {
+  static extractMissingValues<K>(payloads: SplitPayloads<K | undefined>, logger?: RedstoneLogger) {
     const missingFeedIds = _.keys(
       _.pickBy(payloads, (value: K | undefined) => value === undefined)
     );
 
-    const filteredPayloads = _.omitBy(
-      payloads,
-      (value) => value === undefined
-    ) as SplitPayloads<K>;
+    const filteredPayloads = _.omitBy(payloads, (value) => value === undefined) as SplitPayloads<K>;
 
     if (missingFeedIds.length) {
       logger?.warn(`No data packages found for [${missingFeedIds.toString()}]`);

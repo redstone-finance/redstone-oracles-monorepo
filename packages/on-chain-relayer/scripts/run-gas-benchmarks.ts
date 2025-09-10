@@ -29,9 +29,7 @@ async function benchmarkContract(contractName: string) {
     const mockDataTimestamp = Date.now();
 
     // Wrapping contract with RedStone payload
-    const wrappedContract = WrapperBuilder.wrap(
-      contract
-    ).usingSimpleNumericMock({
+    const wrappedContract = WrapperBuilder.wrap(contract).usingSimpleNumericMock({
       mockSignersCount: 2,
       timestampMilliseconds: mockDataTimestamp,
       dataPoints: [{ dataFeedId: "BTC", value: btcMockValue }],

@@ -107,11 +107,7 @@ export const produceMockDataPackage = (
   timestamp = 1654353400000,
   privateKey = MOCK_PRIVATE_KEY
 ) => {
-  const dataPackage = new DataPackage(
-    dataPoints,
-    timestamp,
-    dataPackageName
-  ).sign(privateKey);
+  const dataPackage = new DataPackage(dataPoints, timestamp, dataPackageName).sign(privateKey);
 
   return dataPackage.toObj();
 };

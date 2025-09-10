@@ -7,9 +7,7 @@ import {
 import { RedstoneCommon } from "@redstone-finance/utils";
 
 export interface IRadixSigner {
-  asyncSign: (
-    step: TransactionBuilderIntentSignaturesStep
-  ) => Promise<NotarizedTransaction>;
+  asyncSign: (step: TransactionBuilderIntentSignaturesStep) => Promise<NotarizedTransaction>;
   publicKey: () => Promise<PublicKey>;
   publicKeyHex: () => Promise<string>;
   getNotarySigner: () => PrivateKey | undefined;
@@ -26,9 +24,7 @@ export class RadixSigner implements IRadixSigner {
     this.additionalSigners = additionalSignerKeys?.map(RadixSigner.makeSigner);
   }
 
-  public async asyncSign(
-    signatureStep: TransactionBuilderIntentSignaturesStep
-  ) {
+  public async asyncSign(signatureStep: TransactionBuilderIntentSignaturesStep) {
     for (const signer of this.additionalSigners ?? []) {
       signatureStep = signatureStep.sign(signer);
     }

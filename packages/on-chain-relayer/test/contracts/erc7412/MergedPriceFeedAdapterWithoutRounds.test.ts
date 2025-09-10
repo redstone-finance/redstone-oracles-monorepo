@@ -35,16 +35,11 @@ const updateValues = async (
   const nextBlockTimestamp = currentBlockTime + 10;
 
   const coder = new utils.AbiCoder();
-  const encodedDataPackageTimestamp = coder.encode(
-    ["uint256"],
-    [dataPackageTimestamp]
-  );
+  const encodedDataPackageTimestamp = coder.encode(["uint256"], [dataPackageTimestamp]);
 
   // Update one data feed
   await time.setNextBlockTimestamp(nextBlockTimestamp);
-  const tx = await contract.fulfillOracleQuery(
-    `${encodedDataPackageTimestamp}${redstonePayload}`
-  );
+  const tx = await contract.fulfillOracleQuery(`${encodedDataPackageTimestamp}${redstonePayload}`);
   await tx.wait();
 
   return {
@@ -76,22 +71,16 @@ describe("RedstonePrimaryProdERC7412", () => {
     let contract: RedstonePrimaryProdERC7412Mock;
 
     beforeEach(async () => {
-      contract = (await hr.ethers.deployContract(
-        contractName
-      )) as RedstonePrimaryProdERC7412Mock;
+      contract = (await hr.ethers.deployContract(contractName)) as RedstonePrimaryProdERC7412Mock;
     });
 
     it("returns oracleId", async () => {
-      const redstoneInHex = utils.hexlify(
-        protocolUtils.convertStringToBytes32("REDSTONE")
-      );
+      const redstoneInHex = utils.hexlify(protocolUtils.convertStringToBytes32("REDSTONE"));
       expect(await contract.oracleId()).to.equal(redstoneInHex);
     });
 
     it("should return same value for getDataFeedId and getDataFeedId", async () => {
-      const btcInHex = utils.hexlify(
-        protocolUtils.convertStringToBytes32("BTC")
-      );
+      const btcInHex = utils.hexlify(protocolUtils.convertStringToBytes32("BTC"));
 
       expect(await contract.getDataFeedId()).to.equal(btcInHex);
       expect(await contract.getDataFeedId()).to.equal(btcInHex);
@@ -121,12 +110,12 @@ describe("RedstonePrimaryProdERC7412", () => {
       await time.increase(TTL_FROM_CONTRACT + 1);
       await expect(contract.latestAnswer()).rejectedWith(/OracleDataRequired/);
       await expect(contract.getRoundData(1)).rejectedWith(/OracleDataRequired/);
-      await expect(
-        contract.getValuesForDataFeeds([await contract.getDataFeedId()])
-      ).rejectedWith(/OracleDataRequired/);
-      await expect(
-        contract.getValueForDataFeed(await contract.getDataFeedId())
-      ).rejectedWith(/OracleDataRequired/);
+      await expect(contract.getValuesForDataFeeds([await contract.getDataFeedId()])).rejectedWith(
+        /OracleDataRequired/
+      );
+      await expect(contract.getValueForDataFeed(await contract.getDataFeedId())).rejectedWith(
+        /OracleDataRequired/
+      );
     });
   });
 });

@@ -13,11 +13,7 @@ import {
   DataPackagesResponseCache,
   getDataPackagesTimestamp,
 } from "@redstone-finance/sdk";
-import {
-  loggerFactory,
-  OperationQueue,
-  RedstoneCommon,
-} from "@redstone-finance/utils";
+import { loggerFactory, OperationQueue, RedstoneCommon } from "@redstone-finance/utils";
 import _ from "lodash";
 import { RelayerConfig } from "../config/RelayerConfig";
 import {
@@ -32,10 +28,7 @@ export class MqttRunner {
   private subscriber?: DataPackageSubscriber;
   private readonly queue = new OperationQueue();
   private readonly logger = loggerFactory("relayer/mqtt-runner");
-  private readonly rateLimitCircuitBreaker = new RateLimitsCircuitBreaker(
-    1_000,
-    10_000
-  );
+  private readonly rateLimitCircuitBreaker = new RateLimitsCircuitBreaker(1_000, 10_000);
   private shouldGracefullyShutdown: boolean = false;
 
   constructor(
@@ -45,9 +38,7 @@ export class MqttRunner {
     private readonly iterationOptionsOverride: Partial<IterationOptions>
   ) {
     process.on("SIGTERM", () => {
-      this.logger.info(
-        "SIGTERM received, NodeRunner scheduled for a graceful shut down."
-      );
+      this.logger.info("SIGTERM received, NodeRunner scheduled for a graceful shut down.");
       this.shouldGracefullyShutdown = true;
     });
   }
@@ -81,12 +72,7 @@ export class MqttRunner {
       MqttTopics.calculateTopicCountPerConnection()
     );
 
-    const runner = new MqttRunner(
-      multiClient,
-      contractFacade,
-      cache,
-      iterationOptionsOverride
-    );
+    const runner = new MqttRunner(multiClient, contractFacade, cache, iterationOptionsOverride);
     await runner.updateSubscription(relayerConfig);
 
     if (relayerConfig.mqttUpdateSubscriptionIntervalMs > 0) {
@@ -104,26 +90,17 @@ export class MqttRunner {
       const uniqueSignerThreshold =
         await this.contractFacade.getUniqueSignerThresholdFromContract();
 
-      const requestParams = makeDataPackagesRequestParams(
-        relayerConfig,
-        uniqueSignerThreshold
-      );
+      const requestParams = makeDataPackagesRequestParams(relayerConfig, uniqueSignerThreshold);
 
       this.logger.debug("Checking subscription", requestParams);
 
       await this.subscribe(requestParams, relayerConfig);
     } catch (error) {
-      this.logger.error(
-        "Failed to check subscription",
-        RedstoneCommon.stringifyError(error)
-      );
+      this.logger.error("Failed to check subscription", RedstoneCommon.stringifyError(error));
     }
   }
 
-  private async subscribe(
-    requestParams: DataPackagesRequestParams,
-    relayerConfig: RelayerConfig
-  ) {
+  private async subscribe(requestParams: DataPackagesRequestParams, relayerConfig: RelayerConfig) {
     if (
       !relayerConfig.mqttMinimalOffChainSignersCount ||
       !RedstoneCommon.isDefined(relayerConfig.mqttWaitForOtherSignersMs)
@@ -142,8 +119,7 @@ export class MqttRunner {
       dataServiceId: requestParams.dataServiceId,
       dataPackageIds: requestParams.dataPackagesIds,
       uniqueSignersCount: requestParams.uniqueSignersCount,
-      minimalOffChainSignersCount:
-        relayerConfig.mqttMinimalOffChainSignersCount,
+      minimalOffChainSignersCount: relayerConfig.mqttMinimalOffChainSignersCount,
       waitMsForOtherSignersAfterMinimalSignersCountSatisfied:
         relayerConfig.mqttWaitForOtherSignersMs,
       ignoreMissingFeeds: canIgnoreMissingFeeds(relayerConfig),
@@ -166,15 +142,9 @@ export class MqttRunner {
     this.maybeEnableFallback(relayerConfig, requestParams);
     this.subscriber.enableCircuitBreaker(this.rateLimitCircuitBreaker);
 
-    await this.subscriber.subscribe(
-      (dataPackagesResponse: DataPackagesResponse) => {
-        this.processResponse(
-          relayerConfig,
-          requestParams,
-          dataPackagesResponse
-        );
-      }
-    );
+    await this.subscriber.subscribe((dataPackagesResponse: DataPackagesResponse) => {
+      this.processResponse(relayerConfig, requestParams, dataPackagesResponse);
+    });
   }
 
   private maybeEnableFallback(
@@ -192,8 +162,7 @@ export class MqttRunner {
     }
 
     this.subscriber!.enableFallback(
-      async () =>
-        await new ContractParamsProvider(requestParams).requestDataPackages(),
+      async () => await new ContractParamsProvider(requestParams).requestDataPackages(),
       relayerConfig.mqttFallbackMaxDelayBetweenPublishesMs,
       relayerConfig.mqttFallbackCheckIntervalMs
     );
@@ -231,11 +200,7 @@ export class MqttRunner {
         return;
       }
       this.cache.update(dataPackagesResponse, requestParams);
-      await runIteration(
-        this.contractFacade,
-        relayerConfig,
-        this.iterationOptionsOverride
-      );
+      await runIteration(this.contractFacade, relayerConfig, this.iterationOptionsOverride);
     } catch (error) {
       this.logger.error(
         "Unhandled error occurred during iteration:",

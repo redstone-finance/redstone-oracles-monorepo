@@ -12,9 +12,7 @@ const getDomain = (hostname: string): string => {
 
 const isTestNetworkOrKnownNetworkWithIssue = (name: string): boolean => {
   const testnetKeywords = ["testnet", "alfajores", "sepolia", "ghostnet"];
-  return testnetKeywords.some((keyword) =>
-    name.toLowerCase().includes(keyword)
-  );
+  return testnetKeywords.some((keyword) => name.toLowerCase().includes(keyword));
 };
 
 const addProblematicNetwork = (
@@ -47,12 +45,8 @@ const printRpcUrls = async (): Promise<void> => {
     }> = [];
     const testNetworks: string[] = [];
 
-    for (const [name, { networkId, rpcUrls }] of Object.entries(
-      mainRpcUrlsPerChain
-    )) {
-      console.log(
-        "\n---------------------------------------------------------------------\n"
-      );
+    for (const [name, { networkId, rpcUrls }] of Object.entries(mainRpcUrlsPerChain)) {
+      console.log("\n---------------------------------------------------------------------\n");
       console.log(`${name} (${networkId}): `);
 
       const issues: string[] = [];
@@ -70,15 +64,10 @@ const printRpcUrls = async (): Promise<void> => {
         domainCounts.set(domain, (domainCounts.get(domain) || 0) + 1);
       }
 
-      const sortedDomainCounts = Array.from(domainCounts).sort(
-        (a, b) => b[1] - a[1]
-      );
+      const sortedDomainCounts = Array.from(domainCounts).sort((a, b) => b[1] - a[1]);
 
       for (const [domain, count] of sortedDomainCounts) {
-        if (
-          count > 1 &&
-          rpcUrls.length < MIN_RPC_URLS_FOR_REPEAT_DOMAIN_CHECK
-        ) {
+        if (count > 1 && rpcUrls.length < MIN_RPC_URLS_FOR_REPEAT_DOMAIN_CHECK) {
           console.error(chalk.red(`Domain ${domain} repeats ${count} times`));
           issues.push(`Domain ${domain} repeats ${count} times`);
         }
@@ -121,9 +110,7 @@ const printRpcUrls = async (): Promise<void> => {
       const fallbackRpcUrls = fallbackRpcUrlsPerChain[name].rpcUrls;
 
       if (fallbackRpcUrls.length < MIN_RPC_URLS) {
-        console.error(
-          chalk.red(`Number of Fallback RPC URLs: ${fallbackRpcUrls.length}`)
-        );
+        console.error(chalk.red(`Number of Fallback RPC URLs: ${fallbackRpcUrls.length}`));
         issues.push(`Number of Fallback RPC URLs: ${fallbackRpcUrls.length}`);
       } else {
         console.log(`Number of Fallback RPC URLs: ${fallbackRpcUrls.length}`);
@@ -140,9 +127,7 @@ const printRpcUrls = async (): Promise<void> => {
       }
     }
 
-    console.log(
-      "\n---------------------------------------------------------------------\n"
-    );
+    console.log("\n---------------------------------------------------------------------\n");
     console.log("Problematic mainnet networks:");
     let networkProblemCount = 0;
     for (const { name, problems } of problematicMainnetNetworks) {
@@ -154,9 +139,7 @@ const printRpcUrls = async (): Promise<void> => {
       }
     }
 
-    console.log(
-      "\n---------------------------------------------------------------------\n"
-    );
+    console.log("\n---------------------------------------------------------------------\n");
     console.log("Problematic testnet networks or networks with known issue:");
     for (const { name, problems } of problematicTestnetNetworks) {
       console.log(`-`, chalk.red(`${name}:`));

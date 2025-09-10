@@ -1,7 +1,4 @@
-import {
-  ContractParamsProvider,
-  getSignersForDataServiceId,
-} from "@redstone-finance/sdk";
+import { ContractParamsProvider, getSignersForDataServiceId } from "@redstone-finance/sdk";
 import "dotenv/config";
 import redstone from "redstone-api";
 import { IS_CI, provider } from "../common/provider";
@@ -17,11 +14,7 @@ describe("Integrated and initialized prices contract", () => {
     }
 
     const adapter = await (
-      await connectPricesContract(
-        readProxyContractId(),
-        false,
-        await provider()
-      )
+      await connectPricesContract(readProxyContractId(), false, await provider())
     ).getAdapter();
     const paramsProvider = new ContractParamsProvider({
       dataServiceId: "redstone-primary-prod",

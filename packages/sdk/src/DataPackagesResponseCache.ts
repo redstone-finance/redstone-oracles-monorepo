@@ -9,10 +9,7 @@ export class DataPackagesResponseCache {
   private response?: DataPackagesResponse;
   private requestParams?: DataPackagesRequestParams;
 
-  update(
-    dataPackagesResponse: DataPackagesResponse,
-    requestParams: DataPackagesRequestParams
-  ) {
+  update(dataPackagesResponse: DataPackagesResponse, requestParams: DataPackagesRequestParams) {
     this.response = dataPackagesResponse;
     this.requestParams = requestParams;
 
@@ -28,20 +25,14 @@ export class DataPackagesResponseCache {
     this.requestParams = undefined;
   }
 
-  get(
-    requestParams: DataPackagesRequestParams,
-    shouldReportMissingResponse = true
-  ) {
+  get(requestParams: DataPackagesRequestParams, shouldReportMissingResponse = true) {
     if (!this.requestParams || !this.response) {
       if (shouldReportMissingResponse) {
-        this.logger.debug(
-          "Trying to use cache when there doesn't exist a cached value",
-          {
-            requestParams,
-            cachedRequestParams: this.requestParams,
-            cachedResponse: this.response,
-          }
-        );
+        this.logger.debug("Trying to use cache when there doesn't exist a cached value", {
+          requestParams,
+          cachedRequestParams: this.requestParams,
+          cachedResponse: this.response,
+        });
       }
 
       return undefined;
@@ -53,14 +44,11 @@ export class DataPackagesResponseCache {
       Object.keys(this.response)
     );
     if (!isRequestConformingToTheCachedValue) {
-      this.logger.debug(
-        "The request params are not conforming to the cached value",
-        {
-          requestParams,
-          cachedRequestParams: this.requestParams,
-          cachedResponse: this.response,
-        }
-      );
+      this.logger.debug("The request params are not conforming to the cached value", {
+        requestParams,
+        cachedRequestParams: this.requestParams,
+        cachedResponse: this.response,
+      });
 
       return undefined;
     }
@@ -86,10 +74,8 @@ export function isConforming(
   otherRequestParams: DataPackagesRequestParams,
   currentResponseDataPackageIds: string[]
 ) {
-  const thisComparableRequestParams =
-    makeComparableRequestParams(thisRequestParams);
-  const otherComparableRequestParams =
-    makeComparableRequestParams(otherRequestParams);
+  const thisComparableRequestParams = makeComparableRequestParams(thisRequestParams);
+  const otherComparableRequestParams = makeComparableRequestParams(otherRequestParams);
 
   if (!_.isEqual(thisComparableRequestParams, otherComparableRequestParams)) {
     return false;
@@ -129,12 +115,7 @@ function filterDataPackages(
   currentResponse: DataPackagesResponse,
   dataPackageIdsToInclude: string[]
 ): DataPackagesResponse {
-  if (
-    isSubsetOf(
-      new Set(dataPackageIdsToInclude),
-      new Set(Object.keys(currentResponse))
-    )
-  ) {
+  if (isSubsetOf(new Set(dataPackageIdsToInclude), new Set(Object.keys(currentResponse)))) {
     return currentResponse;
   }
 

@@ -31,18 +31,11 @@ export class SuiContractUtil {
     return tx;
   }
 
-  private static async computeGasPrice(
-    client: SuiClient,
-    gasMultiplier: number = 1
-  ) {
+  private static async computeGasPrice(client: SuiClient, gasMultiplier: number = 1) {
     const date = Date.now();
     const gasPrice = await client.getReferenceGasPrice();
-    this.logger.info(
-      `Reference gas price: ${gasPrice} MIST fetched in ${Date.now() - date} [ms]`
-    );
+    this.logger.info(`Reference gas price: ${gasPrice} MIST fetched in ${Date.now() - date} [ms]`);
 
-    return BigInt(
-      new Decimal(gasPrice.toString()).times(gasMultiplier).floor().toString()
-    );
+    return BigInt(new Decimal(gasPrice.toString()).times(gasMultiplier).floor().toString());
   }
 }

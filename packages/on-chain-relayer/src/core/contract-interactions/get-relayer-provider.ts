@@ -1,11 +1,5 @@
-import {
-  getChainConfigByNetworkId,
-  getLocalChainConfigs,
-} from "@redstone-finance/chain-configs";
-import {
-  MegaProviderBuilder,
-  ProviderDecorators,
-} from "@redstone-finance/rpc-providers";
+import { getChainConfigByNetworkId, getLocalChainConfigs } from "@redstone-finance/chain-configs";
+import { MegaProviderBuilder, ProviderDecorators } from "@redstone-finance/rpc-providers";
 import { isEvmNetworkId } from "@redstone-finance/utils";
 import { providers } from "ethers";
 import { RelayerConfig } from "../../config/RelayerConfig";
@@ -13,22 +7,13 @@ import { RelayerConfig } from "../../config/RelayerConfig";
 let cachedProvider: providers.Provider | undefined;
 
 const ACCEPTABLE_BLOCK_DIFF_IN_MS = 10_000;
-const electBlock = (
-  blockNumbers: number[],
-  _: number,
-  chainId: number
-): number => {
+const electBlock = (blockNumbers: number[], _: number, chainId: number): number => {
   const sortedBlockNumber = [...blockNumbers].sort((a, b) => b - a);
   const firstBlockNumber = sortedBlockNumber.at(-1)!;
   const secondBlockNumber = sortedBlockNumber.at(-2);
 
-  const { avgBlockTimeMs } = getChainConfigByNetworkId(
-    getLocalChainConfigs(),
-    chainId
-  );
-  const acceptableBlockDiff = Math.ceil(
-    ACCEPTABLE_BLOCK_DIFF_IN_MS / avgBlockTimeMs
-  );
+  const { avgBlockTimeMs } = getChainConfigByNetworkId(getLocalChainConfigs(), chainId);
+  const acceptableBlockDiff = Math.ceil(ACCEPTABLE_BLOCK_DIFF_IN_MS / avgBlockTimeMs);
 
   if (!secondBlockNumber) {
     return firstBlockNumber;
@@ -44,12 +29,9 @@ export const getRelayerProvider = (relayerConfig: RelayerConfig) => {
     return cachedProvider;
   }
 
-  const { rpcUrls, chainName, networkId, ethersPollingIntervalInMs } =
-    relayerConfig;
+  const { rpcUrls, chainName, networkId, ethersPollingIntervalInMs } = relayerConfig;
   if (!isEvmNetworkId(networkId)) {
-    throw new Error(
-      `Non-evm networkId ${networkId} passed to evm relayer provider`
-    );
+    throw new Error(`Non-evm networkId ${networkId} passed to evm relayer provider`);
   }
 
   cachedProvider = new MegaProviderBuilder({
@@ -61,10 +43,8 @@ export const getRelayerProvider = (relayerConfig: RelayerConfig) => {
   })
     .agreement(
       {
-        singleProviderOperationTimeout:
-          relayerConfig.singleProviderOperationTimeout,
-        allProvidersOperationTimeout:
-          relayerConfig.allProvidersOperationTimeout,
+        singleProviderOperationTimeout: relayerConfig.singleProviderOperationTimeout,
+        allProvidersOperationTimeout: relayerConfig.allProvidersOperationTimeout,
         getBlockNumberTimeoutMS: relayerConfig.getBlockNumberTimeout,
         electBlockFn: electBlock,
         ignoreAgreementOnInsufficientResponses: true,

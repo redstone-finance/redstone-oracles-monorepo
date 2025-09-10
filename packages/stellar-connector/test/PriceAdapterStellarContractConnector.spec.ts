@@ -20,15 +20,9 @@ describe("PriceAdapterStellarContractConnector", () => {
     const txDeliveryMan = new StellarTxDeliveryMan(client, keypair);
 
     const deployer = new StellarContractDeployer(client, txDeliveryMan);
-    const { contractId: adapterId } = await deployer.deploy(
-      wasmFilePath(PRICE_ADAPTER)
-    );
+    const { contractId: adapterId } = await deployer.deploy(wasmFilePath(PRICE_ADAPTER));
 
-    connector = new PriceAdapterStellarContractConnector(
-      client,
-      adapterId,
-      keypair
-    );
+    connector = new PriceAdapterStellarContractConnector(client, adapterId, keypair);
   }, DEPLOY_CONTRACT_TIMEOUT_MS);
 
   describe("getBlockNumber", () => {

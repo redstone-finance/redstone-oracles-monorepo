@@ -43,11 +43,7 @@ async function distributeTrustedUpdaterBadges(
     }
 
     await client.call(
-      new TransferNonFungibleRadixMethod(
-        await client.getAccountAddress(),
-        updater,
-        badge
-      )
+      new TransferNonFungibleRadixMethod(await client.getAccountAddress(), updater, badge)
     );
   }
 }

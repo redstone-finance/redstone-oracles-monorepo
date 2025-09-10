@@ -1,18 +1,9 @@
-import {
-  BlockWithTransactions,
-  TransactionResponse,
-} from "@ethersproject/abstract-provider";
+import { BlockWithTransactions, TransactionResponse } from "@ethersproject/abstract-provider";
 import { HttpClient } from "@redstone-finance/http-client";
 import { RedstoneCommon } from "@redstone-finance/utils";
 import { AxiosRequestConfig } from "axios";
 import { BigNumber, BigNumberish, ethers } from "ethers";
-import {
-  BytesLike,
-  getAddress,
-  getContractAddress,
-  hexlify,
-  hexZeroPad,
-} from "ethers/lib/utils";
+import { BytesLike, getAddress, getContractAddress, hexlify, hexZeroPad } from "ethers/lib/utils";
 
 type EthereumRpcRequest = {
   jsonrpc: "2.0";
@@ -177,11 +168,7 @@ export function getEthers5ErrorCode(msg: string): ethers.errors {
   if (/nonce (is )?too low/i.test(msg)) {
     return ethers.errors.NONCE_EXPIRED;
   }
-  if (
-    /replacement transaction underpriced|transaction gas price.*too low/i.test(
-      msg
-    )
-  ) {
+  if (/replacement transaction underpriced|transaction gas price.*too low/i.test(msg)) {
     return ethers.errors.REPLACEMENT_UNDERPRICED;
   }
   if (/only replay-protected/i.test(msg)) {
@@ -225,11 +212,7 @@ export class RedstoneProvider {
     public readonly url: string
   ) {}
 
-  async send<T>(
-    method: string,
-    params: unknown[],
-    config: AxiosRequestConfig = {}
-  ): Promise<T> {
+  async send<T>(method: string, params: unknown[], config: AxiosRequestConfig = {}): Promise<T> {
     const newId = this.id + (1 % Number.MAX_SAFE_INTEGER);
     const message: EthereumRpcRequest = {
       jsonrpc: "2.0",
@@ -239,11 +222,7 @@ export class RedstoneProvider {
     };
     this.id = newId;
 
-    const response = await this.httpClient.post<EthereumRpcResponse<T>>(
-      this.url,
-      message,
-      config
-    );
+    const response = await this.httpClient.post<EthereumRpcResponse<T>>(this.url, message, config);
 
     if (RedstoneCommon.isDefined(response.data.error)) {
       throw new Ethers5LikeError(
@@ -298,10 +277,7 @@ export class RedstoneEthers5Provider implements ethers.providers.Provider {
   // however my objective was to be aligned with ethers (because battle tested)
   async getFeeData(): Promise<ethers.providers.FeeData> {
     const [block, gasPrice] = await Promise.all([
-      this.rpc.send<ethers.providers.Block>("eth_getBlockByNumber", [
-        "latest",
-        false,
-      ]),
+      this.rpc.send<ethers.providers.Block>("eth_getBlockByNumber", ["latest", false]),
       this.getGasPrice(),
     ]);
 
@@ -319,9 +295,7 @@ export class RedstoneEthers5Provider implements ethers.providers.Provider {
       return {
         gasPrice,
         lastBaseFeePerGas: baseBaseFeePerGas,
-        maxFeePerGas: baseBaseFeePerGas
-          .mul(2)
-          .add(DEFAULT_MAX_PRIORITY_FEE_PER_GAS),
+        maxFeePerGas: baseBaseFeePerGas.mul(2).add(DEFAULT_MAX_PRIORITY_FEE_PER_GAS),
         maxPriorityFeePerGas: DEFAULT_MAX_PRIORITY_FEE_PER_GAS,
       };
     }
@@ -421,10 +395,7 @@ export class RedstoneEthers5Provider implements ethers.providers.Provider {
       maxPriorityFeePerGas: bigNumberishToHex(resolvedMaxPriorityFeePerGas),
     };
 
-    return await this.rpc.send<string>("eth_call", [
-      callParams,
-      resolvedBlockTag,
-    ]);
+    return await this.rpc.send<string>("eth_call", [callParams, resolvedBlockTag]);
   }
 
   async estimateGas(
@@ -476,13 +447,9 @@ export class RedstoneEthers5Provider implements ethers.providers.Provider {
     return BigNumber.from(gasHex);
   }
 
-  async getTransaction(
-    transactionHash: string
-  ): Promise<ethers.providers.TransactionResponse> {
+  async getTransaction(transactionHash: string): Promise<ethers.providers.TransactionResponse> {
     const [tx, blockNumber] = await Promise.all([
-      this.rpc.send<EthereumResponseTransaction>("eth_getTransactionByHash", [
-        transactionHash,
-      ]),
+      this.rpc.send<EthereumResponseTransaction>("eth_getTransactionByHash", [transactionHash]),
       this.getBlockNumber(),
     ]);
 
@@ -491,11 +458,7 @@ export class RedstoneEthers5Provider implements ethers.providers.Provider {
       return null as unknown as ethers.providers.TransactionResponse;
     }
 
-    const response = this.toTransactionResponse(
-      tx,
-      blockNumber,
-      transactionHash
-    );
+    const response = this.toTransactionResponse(tx, blockNumber, transactionHash);
 
     return response;
   }
@@ -504,9 +467,7 @@ export class RedstoneEthers5Provider implements ethers.providers.Provider {
     transactionHash: string
   ): Promise<ethers.providers.TransactionReceipt> {
     const [receipt, blockNumber] = await Promise.all([
-      this.rpc.send<TransactionReceipt>("eth_getTransactionReceipt", [
-        transactionHash,
-      ]),
+      this.rpc.send<TransactionReceipt>("eth_getTransactionReceipt", [transactionHash]),
       this.getBlockNumber(),
     ]);
 
@@ -518,9 +479,7 @@ export class RedstoneEthers5Provider implements ethers.providers.Provider {
     const receiptBlockNumber = Number.parseInt(receipt.blockNumber, 16);
     const response: ethers.providers.TransactionReceipt = {
       // @ts-expect-error this is null if this is contract creation ethers types are lying again
-      to: RedstoneCommon.isDefined(receipt.to)
-        ? getAddress(receipt.to)
-        : receipt.to,
+      to: RedstoneCommon.isDefined(receipt.to) ? getAddress(receipt.to) : receipt.to,
       from: getAddress(receipt.from),
       // @ts-expect-error this is null if this is contract creation ethers types are lying again
       contractAddress: RedstoneCommon.isDefined(receipt.contractAddress)
@@ -540,9 +499,7 @@ export class RedstoneEthers5Provider implements ethers.providers.Provider {
         ? Number.parseInt(receipt.status, 16)
         : receipt.status,
       // ethers defaults to 0
-      type: RedstoneCommon.isDefined(receipt.type)
-        ? Number.parseInt(receipt.type, 16)
-        : 0,
+      type: RedstoneCommon.isDefined(receipt.type) ? Number.parseInt(receipt.type, 16) : 0,
       logs: receipt.logs.map((log) => ({
         transactionIndex: Number.parseInt(log.transactionIndex, 16),
         logIndex: Number.parseInt(log.logIndex, 16),
@@ -563,9 +520,7 @@ export class RedstoneEthers5Provider implements ethers.providers.Provider {
     return response;
   }
 
-  async getLogs(
-    filter: ethers.providers.Filter
-  ): Promise<Array<ethers.providers.Log>> {
+  async getLogs(filter: ethers.providers.Filter): Promise<Array<ethers.providers.Log>> {
     const parsedFilter: {
       fromBlock?: string;
       toBlock?: string;
@@ -581,9 +536,7 @@ export class RedstoneEthers5Provider implements ethers.providers.Provider {
     }
     if (RedstoneCommon.isDefined(filter.toBlock)) {
       parsedFilter.toBlock =
-        typeof filter.toBlock === "number"
-          ? "0x" + filter.toBlock.toString(16)
-          : filter.toBlock;
+        typeof filter.toBlock === "number" ? "0x" + filter.toBlock.toString(16) : filter.toBlock;
     }
     if (RedstoneCommon.isDefined(filter.fromBlock)) {
       parsedFilter.fromBlock =
@@ -613,22 +566,13 @@ export class RedstoneEthers5Provider implements ethers.providers.Provider {
       | string
       | Promise<ethers.providers.BlockTag | string>
   ): Promise<ethers.providers.Block> {
-    return this._getBlock(
-      blockHashOrBlockTag,
-      false
-    ) as Promise<ethers.providers.Block>;
+    return this._getBlock(blockHashOrBlockTag, false) as Promise<ethers.providers.Block>;
   }
 
   getBlockWithTransactions(
-    blockHashOrBlockTag:
-      | ethers.providers.BlockTag
-      | string
-      | Promise<ethers.providers.BlockTag>
+    blockHashOrBlockTag: ethers.providers.BlockTag | string | Promise<ethers.providers.BlockTag>
   ): Promise<BlockWithTransactions> {
-    return this._getBlock(
-      blockHashOrBlockTag,
-      true
-    ) as Promise<BlockWithTransactions>;
+    return this._getBlock(blockHashOrBlockTag, true) as Promise<BlockWithTransactions>;
   }
 
   private async _getBlock(
@@ -640,55 +584,33 @@ export class RedstoneEthers5Provider implements ethers.providers.Provider {
   ): Promise<ethers.providers.Block | BlockWithTransactions> {
     const resolved = await blockHashOrBlockTag;
 
-    if (
-      typeof resolved === "string" &&
-      resolved.startsWith("0x") &&
-      resolved.length === 66
-    ) {
+    if (typeof resolved === "string" && resolved.startsWith("0x") && resolved.length === 66) {
       const [result, currentBlockNumber] = await Promise.all([
-        await this.rpc.send<EthereumBlock>("eth_getBlockByHash", [
-          resolved,
-          withTransactions,
-        ]),
+        await this.rpc.send<EthereumBlock>("eth_getBlockByHash", [resolved, withTransactions]),
         this.getBlockNumber(),
       ]);
       if (!RedstoneCommon.isDefined(result)) {
         // i know ethers ...
-        return null as unknown as
-          | ethers.providers.Block
-          | BlockWithTransactions;
+        return null as unknown as ethers.providers.Block | BlockWithTransactions;
       }
 
-      const block = this.parseToEthersBlock(
-        result,
-        withTransactions,
-        currentBlockNumber
-      );
+      const block = this.parseToEthersBlock(result, withTransactions, currentBlockNumber);
 
       return block;
     } else {
       // It's a block tag or number
       const blockNumber = await resolveBlockTag(blockHashOrBlockTag);
       const [result, currentBlockNumber] = await Promise.all([
-        await this.rpc.send<EthereumBlock>("eth_getBlockByNumber", [
-          blockNumber,
-          withTransactions,
-        ]),
+        await this.rpc.send<EthereumBlock>("eth_getBlockByNumber", [blockNumber, withTransactions]),
         this.getBlockNumber(),
       ]);
 
       if (!RedstoneCommon.isDefined(result)) {
         // i know ethers ...
-        return null as unknown as
-          | ethers.providers.Block
-          | BlockWithTransactions;
+        return null as unknown as ethers.providers.Block | BlockWithTransactions;
       }
 
-      return this.parseToEthersBlock(
-        result,
-        withTransactions,
-        currentBlockNumber
-      );
+      return this.parseToEthersBlock(result, withTransactions, currentBlockNumber);
     }
   }
 
@@ -697,9 +619,7 @@ export class RedstoneEthers5Provider implements ethers.providers.Provider {
   ): Promise<ethers.providers.TransactionResponse> {
     const resolvedTx = await signedTransaction;
 
-    const txHash = await this.rpc.send<string>("eth_sendRawTransaction", [
-      resolvedTx,
-    ]);
+    const txHash = await this.rpc.send<string>("eth_sendRawTransaction", [resolvedTx]);
 
     const error = new Ethers5LikeError(
       ethers.errors.TIMEOUT,
@@ -715,9 +635,7 @@ export class RedstoneEthers5Provider implements ethers.providers.Provider {
     );
   }
 
-  async _waitForTransaction(
-    txHash: string
-  ): Promise<ethers.providers.TransactionResponse> {
+  async _waitForTransaction(txHash: string): Promise<ethers.providers.TransactionResponse> {
     const start = performance.now();
     for (;;) {
       const transaction = await this.getTransaction(txHash);
@@ -764,8 +682,7 @@ export class RedstoneEthers5Provider implements ethers.providers.Provider {
   ): Promise<ethers.providers.TransactionReceipt> {
     const start = performance.now();
     for (;;) {
-      const transactionReceipt =
-        await this.getTransactionReceipt(transactionHash);
+      const transactionReceipt = await this.getTransactionReceipt(transactionHash);
 
       if (
         RedstoneCommon.isDefined(transactionReceipt) &&
@@ -794,9 +711,7 @@ export class RedstoneEthers5Provider implements ethers.providers.Provider {
   ): ethers.providers.Block | BlockWithTransactions {
     let transactions: string[] | TransactionResponse[] = block.transactions;
     if (withTransactions) {
-      transactions = (
-        block.transactions as unknown as EthereumResponseTransaction[]
-      ).map((tx) =>
+      transactions = (block.transactions as unknown as EthereumResponseTransaction[]).map((tx) =>
         this.toTransactionResponse(tx, currentBlockNumber, tx.hash)
       );
     }
@@ -844,9 +759,7 @@ export class RedstoneEthers5Provider implements ethers.providers.Provider {
       type: Number.parseInt(tx.type, 16),
       accessList: RedstoneCommon.isDefined(tx.accessList) ? tx.accessList : [],
 
-      gasPrice: RedstoneCommon.isDefined(tx.gasPrice)
-        ? BigNumber.from(tx.gasPrice)
-        : undefined,
+      gasPrice: RedstoneCommon.isDefined(tx.gasPrice) ? BigNumber.from(tx.gasPrice) : undefined,
       maxPriorityFeePerGas: RedstoneCommon.isDefined(tx.maxPriorityFeePerGas)
         ? BigNumber.from(tx.maxPriorityFeePerGas)
         : undefined,
@@ -855,10 +768,7 @@ export class RedstoneEthers5Provider implements ethers.providers.Provider {
         : undefined,
 
       // ethers types this as undefined but in reallity returns null
-      blockHash:
-        tx.blockHash === "0x00000000000000000000000000000000"
-          ? undefined
-          : tx.blockHash,
+      blockHash: tx.blockHash === "0x00000000000000000000000000000000" ? undefined : tx.blockHash,
       blockNumber: txBlockNumber,
 
       // @ts-expect-error - this field is returned by ethers but not part of TransactionResponse type
@@ -868,11 +778,7 @@ export class RedstoneEthers5Provider implements ethers.providers.Provider {
       creates: !RedstoneCommon.isDefined(tx.to) ? getContractAddress(tx) : null,
       confirmations,
       wait: (confirmations?: number) =>
-        this.waitForTransaction(
-          transactionHash,
-          confirmations,
-          this.waitForTransactionTimeout
-        ),
+        this.waitForTransaction(transactionHash, confirmations, this.waitForTransactionTimeout),
     };
     return response;
   }
@@ -913,10 +819,7 @@ export class RedstoneEthers5Provider implements ethers.providers.Provider {
       "Method 'once' not supported by RedstoneProvider. Choose diffrent provider like StaticJsonRpcProvider"
     );
   }
-  emit(
-    _eventName: ethers.providers.EventType,
-    ..._args: Array<unknown>
-  ): boolean {
+  emit(_eventName: ethers.providers.EventType, ..._args: Array<unknown>): boolean {
     throw new Error(
       "Method 'emit' not supported by RedstoneProvider. Choose diffrent provider like StaticJsonRpcProvider"
     );
@@ -926,9 +829,7 @@ export class RedstoneEthers5Provider implements ethers.providers.Provider {
       "Method 'listenerCount' not supported by RedstoneProvider. Choose diffrent provider like StaticJsonRpcProvider"
     );
   }
-  listeners(
-    _eventName?: ethers.providers.EventType
-  ): Array<ethers.providers.Listener> {
+  listeners(_eventName?: ethers.providers.EventType): Array<ethers.providers.Listener> {
     throw new Error(
       "Method 'listeners' not supported by RedstoneProvider. Choose diffrent provider like StaticJsonRpcProvider"
     );
@@ -941,9 +842,7 @@ export class RedstoneEthers5Provider implements ethers.providers.Provider {
       "Method 'off' not supported by RedstoneProvider. Choose diffrent provider like StaticJsonRpcProvider"
     );
   }
-  removeAllListeners(
-    _eventName?: ethers.providers.EventType
-  ): ethers.providers.Provider {
+  removeAllListeners(_eventName?: ethers.providers.EventType): ethers.providers.Provider {
     throw new Error(
       "Method 'removeAllListeners' not supported by RedstoneProvider. Choose diffrent provider like StaticJsonRpcProvider"
     );
@@ -984,9 +883,7 @@ async function resolveAddress(address: string | Promise<string> | undefined) {
   return (await address).toLowerCase();
 }
 
-function bigNumberishToHex(
-  bigNumberish: BigNumberish | undefined | null
-): string | undefined {
+function bigNumberishToHex(bigNumberish: BigNumberish | undefined | null): string | undefined {
   if (!RedstoneCommon.isDefined(bigNumberish)) {
     return undefined;
   }

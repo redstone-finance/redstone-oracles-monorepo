@@ -9,8 +9,6 @@ describe("Numeric data point", () => {
           value: 42000,
           valueByteSize: 33,
         })
-    ).toThrow(
-      "Assertion failed: The byte size of the numeric value cannot be greater than 32"
-    );
+    ).toThrow("Assertion failed: The byte size of the numeric value cannot be greater than 32");
   });
 });

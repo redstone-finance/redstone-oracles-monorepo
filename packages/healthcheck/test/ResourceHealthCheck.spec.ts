@@ -17,9 +17,7 @@ describe("ResourcesHealthCheck", () => {
 
   beforeEach(() => {
     jest.clearAllMocks();
-    healthCheck = new RedstoneHealthcheck.ResourcesHealthCheck(
-      defaultThresholds
-    );
+    healthCheck = new RedstoneHealthcheck.ResourcesHealthCheck(defaultThresholds);
   });
 
   function mockMemUsage(percentage: number) {
