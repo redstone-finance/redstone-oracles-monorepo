@@ -57,6 +57,13 @@
         "timeSinceLastUpdateInMilliseconds": 86400000
       },
       "priceFeedAddress": "0xe7f71d6a24EBc391f5ee57B867ED429EB7Bd74f4"
+    },
+    "UTY_FUNDAMENTAL": {
+      "updateTriggersOverrides": {
+        "deviationPercentage": 0.1,
+        "timeSinceLastUpdateInMilliseconds": 86400000
+      },
+      "priceFeedAddress": "0x24eDD61cdA334bFf871A80DEB135073a7d7a9187"
     }
   }
 }
