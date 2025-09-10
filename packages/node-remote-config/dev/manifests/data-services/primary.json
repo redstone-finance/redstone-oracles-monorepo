@@ -884,13 +884,9 @@
       "source": [
         "binance-usdt",
         "bingx-usdt",
-        "bitget-usdt",
         "coinbase-usd",
         "gate-usdt",
-        "kraken-usd",
-        "kucoin-usdt",
         "lbank-usdt",
-        "okx-usdt",
         "uniswap-v3-ethereum-weth-3000",
         "xt"
       ],
@@ -1654,7 +1650,6 @@
     "fxUSD": {
       "source": [
         "curve-ethereum-eusd",
-        "curve-ethereum-frax",
         "curve-ethereum-gho",
         "curve-ethereum-usdc"
       ],
@@ -1714,7 +1709,6 @@
         "aerodrome-cl-base-cbbtc",
         "curve-ethereum-wbtc",
         "curve-ethereum-wbtc-2",
-        "pancake-swap-bnb-btcb-500",
         "uniswap-v3-ethereum-wbtc-500",
         "uniswap-v3-ethereum-wbtc-100"
       ],
@@ -2341,7 +2335,6 @@
     "frxUSD": {
       "source": [
         "curve-ethereum-susds_fundamental/usd",
-        "curve-ethereum-usde",
         "curve-ethereum-frax",
         "curve-fraxtal-usdt",
         "curve-fraxtal-susde",
@@ -2758,7 +2751,6 @@
         "binance-usdt",
         "bingx-usdt",
         "bitget-usdt",
-        "bitmart-usdt",
         "bybit-usdt",
         "gate-usdt",
         "kraken-usd",
