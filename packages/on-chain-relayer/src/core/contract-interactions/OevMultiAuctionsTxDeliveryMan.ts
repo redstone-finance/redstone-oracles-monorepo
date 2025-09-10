@@ -16,30 +16,21 @@ export class OevMultiAuctionsTxDeliveryMan implements Tx.ITxDeliveryMan {
     private readonly relayerConfig: RelayerConfig
   ) {}
 
-  async deliver(
-    txDeliveryCall: Tx.TxDeliveryCall,
-    context: RelayerTxDeliveryManContext
-  ) {
+  async deliver(txDeliveryCall: Tx.TxDeliveryCall, context: RelayerTxDeliveryManContext) {
     try {
       await this.updateUsingOevAuctions(context.paramsProvider);
-      this.logger.log(
-        "Update using oev auction has finished. Proceeding with a standard update"
-      );
+      this.logger.log("Update using oev auction has finished. Proceeding with a standard update");
       if (context.deferredCallData) {
         txDeliveryCall.data = await context.deferredCallData();
       }
       await this.fallbackDeliveryMan.deliver(txDeliveryCall, context);
       this.logger.log("Standard update has finished");
     } catch (e) {
-      this.logger.error(
-        `Failed to update using oev auction: ${RedstoneCommon.stringifyError(e)}`
-      );
+      this.logger.error(`Failed to update using oev auction: ${RedstoneCommon.stringifyError(e)}`);
       if (context.canOmitFallbackAfterFailing) {
         this.logger.log("Skipping as update was optional");
       } else {
-        this.logger.warn(
-          `Failed to update using OEV auction, proceeding with standard update`
-        );
+        this.logger.warn(`Failed to update using OEV auction, proceeding with standard update`);
         if (context.deferredCallData) {
           txDeliveryCall.data = await context.deferredCallData();
         }
@@ -59,9 +50,7 @@ export class OevMultiAuctionsTxDeliveryMan implements Tx.ITxDeliveryMan {
       const updateUsingOevAuctionPromise = this.makeSingleFeedUpdateTx(
         singleFeedParamProvider,
         metadataTimestamp
-      ).then((tx) =>
-        updateUsingOevAuction(this.relayerConfig, tx.data, this.adapterContract)
-      );
+      ).then((tx) => updateUsingOevAuction(this.relayerConfig, tx.data, this.adapterContract));
 
       auctionPromises.push(updateUsingOevAuctionPromise);
     }
@@ -79,22 +68,17 @@ export class OevMultiAuctionsTxDeliveryMan implements Tx.ITxDeliveryMan {
     paramsProvider: ContractParamsProvider,
     metadataTimestamp: number
   ): Promise<Tx.TxDeliveryCall> {
-    const dataFeedsAsBytes32 = paramsProvider
-      .getDataFeedIds()
-      .map(utils.formatBytes32String);
+    const dataFeedsAsBytes32 = paramsProvider.getDataFeedIds().map(utils.formatBytes32String);
     const dataPackages = await paramsProvider.requestDataPackages();
-    const dataPackagesWrapper =
-      new DataPackagesWrapper<MultiFeedAdapterWithoutRounds>(dataPackages);
-
-    dataPackagesWrapper.setMetadataTimestamp(metadataTimestamp);
-    const wrappedContract = dataPackagesWrapper.overwriteEthersContract(
-      this.adapterContract
+    const dataPackagesWrapper = new DataPackagesWrapper<MultiFeedAdapterWithoutRounds>(
+      dataPackages
     );
 
+    dataPackagesWrapper.setMetadataTimestamp(metadataTimestamp);
+    const wrappedContract = dataPackagesWrapper.overwriteEthersContract(this.adapterContract);
+
     const txCall = Tx.convertToTxDeliveryCall(
-      await wrappedContract.populateTransaction["updateDataFeedsValuesPartial"](
-        dataFeedsAsBytes32
-      )
+      await wrappedContract.populateTransaction["updateDataFeedsValuesPartial"](dataFeedsAsBytes32)
     );
 
     return txCall;

@@ -6,22 +6,13 @@ import path from "path";
 import { z } from "zod";
 import { DEFAULT_RADIX_CLIENT_CONFIG, RadixClientBuilder } from "../src";
 
-const DEPLOYMENT_DIR = RedstoneCommon.getFromEnv(
-  "DEPLOYMENT_DIR",
-  z.string().default("")
-);
+const DEPLOYMENT_DIR = RedstoneCommon.getFromEnv("DEPLOYMENT_DIR", z.string().default(""));
 const SCRYPTO_DIR = `../scrypto/${DEPLOYMENT_DIR}`;
 
 export const TRUSTED_UPDATERS =
-  RedstoneCommon.getFromEnv(
-    "TRUSTED_UPDATERS",
-    z.array(z.string()).optional()
-  ) ?? [];
+  RedstoneCommon.getFromEnv("TRUSTED_UPDATERS", z.array(z.string()).optional()) ?? [];
 
-export const NETWORK_ID = RedstoneCommon.getFromEnv(
-  "NETWORK_ID",
-  z.number().optional()
-);
+export const NETWORK_ID = RedstoneCommon.getFromEnv("NETWORK_ID", z.number().optional());
 
 export const NETWORK =
   NETWORK_ID === NetworkId.Mainnet
@@ -34,22 +25,18 @@ export const PRICE_ADAPTER_NAME = "price_adapter";
 export const PRICE_FEED_NAME = "price_feed";
 export const PROXY_NAME = "proxy";
 
-const PRIVATE_KEY_VALUE = RedstoneCommon.getFromEnv(
-  "PRIVATE_KEY",
-  z.string().optional()
-);
+const PRIVATE_KEY_VALUE = RedstoneCommon.getFromEnv("PRIVATE_KEY", z.string().optional());
 
 const PRIVATE_KEY_SCHEME = RedstoneCommon.getFromEnv(
   "PRIVATE_KEY_SCHEME",
   z.enum(["secp256k1", "ed25519"]).default("secp256k1")
 );
-export const PRIVATE_KEY: RedstoneCommon.PrivateKey | undefined =
-  PRIVATE_KEY_VALUE
-    ? {
-        scheme: PRIVATE_KEY_SCHEME,
-        value: PRIVATE_KEY_VALUE,
-      }
-    : undefined;
+export const PRIVATE_KEY: RedstoneCommon.PrivateKey | undefined = PRIVATE_KEY_VALUE
+  ? {
+      scheme: PRIVATE_KEY_SCHEME,
+      value: PRIVATE_KEY_VALUE,
+    }
+  : undefined;
 
 export async function loadAddress(
   entityType: "component" | "package",
@@ -58,11 +45,7 @@ export async function loadAddress(
 ) {
   return (
     await fs.promises.readFile(
-      getContractFilename(
-        formatAddressFilename(clientName, entityType),
-        contractName,
-        "deployed"
-      ),
+      getContractFilename(formatAddressFilename(clientName, entityType), contractName, "deployed"),
       "utf8"
     )
   ).trim();
@@ -75,26 +58,13 @@ export async function saveAddress(
   clientName?: string
 ) {
   await fs.promises.writeFile(
-    getContractFilename(
-      formatAddressFilename(clientName, entityType),
-      contractName,
-      "deployed"
-    ),
+    getContractFilename(formatAddressFilename(clientName, entityType), contractName, "deployed"),
     address
   );
 }
 
-export function getContractFilename(
-  filename: string,
-  ...subdirectories: string[]
-) {
-  return path.join(
-    __dirname,
-    SCRYPTO_DIR,
-    "contracts",
-    ...subdirectories,
-    filename
-  );
+export function getContractFilename(filename: string, ...subdirectories: string[]) {
+  return path.join(__dirname, SCRYPTO_DIR, "contracts", ...subdirectories, filename);
 }
 
 function formatAddressFilename(

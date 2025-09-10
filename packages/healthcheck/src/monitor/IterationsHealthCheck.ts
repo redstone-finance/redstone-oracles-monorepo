@@ -1,11 +1,6 @@
 import { loggerFactory, RedstoneCommon } from "@redstone-finance/utils";
 import { z } from "zod";
-import {
-  type HealthCheck,
-  type HealthCheckResult,
-  healthy,
-  unhealthy,
-} from "./common";
+import { type HealthCheck, type HealthCheckResult, healthy, unhealthy } from "./common";
 
 const logger = loggerFactory("IterationHealthCheck");
 
@@ -33,10 +28,7 @@ export class IterationsHealthCheck implements HealthCheck {
   check(fireDate: Date): Promise<HealthCheckResult> {
     const { periodInS } = this.params;
     const referenceDate = this.lastIterationDate ?? this.startDate;
-    const elapsed = IterationsHealthCheck.secondsBetween(
-      referenceDate,
-      fireDate
-    );
+    const elapsed = IterationsHealthCheck.secondsBetween(referenceDate, fireDate);
     const isStartup = !RedstoneCommon.isDefined(this.lastIterationDate);
 
     if (elapsed <= periodInS) {

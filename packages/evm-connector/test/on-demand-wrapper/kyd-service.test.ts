@@ -21,10 +21,7 @@ describe.skip("SampleKydServiceConsumer", () => {
 
   it("Address should pass KYD", async () => {
     const wrappedContract = WrapperBuilder.wrap(contract).usingOnDemandRequest(
-      [
-        "http://first-node.com/score-by-address",
-        "http://second-node.com/score-by-address",
-      ],
+      ["http://first-node.com/score-by-address", "http://second-node.com/score-by-address"],
       ScoreType.coinbaseKYD
     );
     const transaction = await wrappedContract.executeActionPassingKYD();
@@ -36,10 +33,7 @@ describe.skip("SampleKydServiceConsumer", () => {
   it("Address shouldn't pass KYD", async () => {
     contract = await getContract(false);
     const wrappedContract = WrapperBuilder.wrap(contract).usingOnDemandRequest(
-      [
-        "http://first-node.com/score-by-address",
-        "http://second-node.com/score-by-address",
-      ],
+      ["http://first-node.com/score-by-address", "http://second-node.com/score-by-address"],
       ScoreType.coinbaseKYD
     );
     await expect(wrappedContract.executeActionPassingKYD())
@@ -56,19 +50,13 @@ describe.skip("SampleKydServiceConsumer", () => {
       ScoreType.coinbaseKYD
     );
     await expect(wrappedContract.executeActionPassingKYD())
-      .to.be.revertedWithCustomError(
-        wrappedContract,
-        "InsufficientNumberOfUniqueSigners"
-      )
+      .to.be.revertedWithCustomError(wrappedContract, "InsufficientNumberOfUniqueSigners")
       .withArgs(1, 2);
   });
 
   it("Should revert if one value from node is not equal", async () => {
     const wrappedContract = WrapperBuilder.wrap(contract).usingOnDemandRequest(
-      [
-        "http://first-node.com/score-by-address",
-        "http://invalid-value-node.com/score-by-address",
-      ],
+      ["http://first-node.com/score-by-address", "http://invalid-value-node.com/score-by-address"],
       ScoreType.coinbaseKYD
     );
     await expect(wrappedContract.executeActionPassingKYD())
@@ -78,24 +66,16 @@ describe.skip("SampleKydServiceConsumer", () => {
 
   it("Should revert if two calls to the same node", async () => {
     const wrappedContract = WrapperBuilder.wrap(contract).usingOnDemandRequest(
-      [
-        "http://first-node.com/score-by-address",
-        "http://first-node.com/score-by-address",
-      ],
+      ["http://first-node.com/score-by-address", "http://first-node.com/score-by-address"],
       ScoreType.coinbaseKYD
     );
     await expect(wrappedContract.executeActionPassingKYD())
-      .to.be.revertedWithCustomError(
-        wrappedContract,
-        "InsufficientNumberOfUniqueSigners"
-      )
+      .to.be.revertedWithCustomError(wrappedContract, "InsufficientNumberOfUniqueSigners")
       .withArgs(1, 2);
   });
 });
 
-const getContract = async (
-  isValidSigner: boolean = true
-): Promise<SampleKydServiceConsumer> => {
+const getContract = async (isValidSigner: boolean = true): Promise<SampleKydServiceConsumer> => {
   const signers = await ethers.getSigners();
   const ContractFactory = await ethers.getContractFactory(
     "SampleKydServiceConsumer",

@@ -38,20 +38,12 @@ export abstract class EvmContractAdapter<Contract extends RedstoneEvmContract>
     options?: UpdatePricesOptions
   ) {
     const metadataTimestamp = Date.now();
-    const baseParamsProvider = this.getBaseIterationTxParamsProvider(
-      paramsProvider,
-      options
-    );
-    const updateTx = await this.makeUpdateTx(
-      baseParamsProvider,
-      metadataTimestamp
-    );
+    const baseParamsProvider = this.getBaseIterationTxParamsProvider(paramsProvider, options);
+    const updateTx = await this.makeUpdateTx(baseParamsProvider, metadataTimestamp);
 
     return await this.txDeliveryMan.deliver(updateTx, {
       deferredCallData: () =>
-        this.makeUpdateTx(paramsProvider, metadataTimestamp).then(
-          (tx) => tx.data
-        ),
+        this.makeUpdateTx(paramsProvider, metadataTimestamp).then((tx) => tx.data),
       paramsProvider: baseParamsProvider,
       canOmitFallbackAfterFailing: options?.canOmitFallbackAfterFailing,
     } as RelayerTxDeliveryManContext);

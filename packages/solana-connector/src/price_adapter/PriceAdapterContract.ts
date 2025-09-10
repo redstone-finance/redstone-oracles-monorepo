@@ -20,20 +20,14 @@ export class PriceAdapterContract {
     this.program = new Program(priceAdapter, provider);
   }
 
-  private static getPriceDataAccount(
-    programId: PublicKey,
-    feedId: string
-  ): PublicKey {
+  private static getPriceDataAccount(programId: PublicKey, feedId: string): PublicKey {
     return web3.PublicKey.findProgramAddressSync(
       [makePriceSeed(), makeFeedIdBytes(feedId)],
       programId
     )[0];
   }
 
-  async getMultiplePriceData(
-    feedIds: string[],
-    slot?: number
-  ): Promise<(PriceData | undefined)[]> {
+  async getMultiplePriceData(feedIds: string[], slot?: number): Promise<(PriceData | undefined)[]> {
     if (feedIds.length === 1) {
       return [await this.getPriceData(feedIds[0], slot)];
     }
@@ -51,10 +45,7 @@ export class PriceAdapterContract {
   }
 
   async getPriceData(feedId: string, slot?: number): Promise<PriceData> {
-    const address = PriceAdapterContract.getPriceDataAccount(
-      this.program.programId,
-      feedId
-    );
+    const address = PriceAdapterContract.getPriceDataAccount(this.program.programId, feedId);
 
     return await this.client.getAccountInfo(
       address,
@@ -64,24 +55,16 @@ export class PriceAdapterContract {
     );
   }
 
-  private parsePriceDataAccountResponse(
-    response: AccountInfo<Buffer>
-  ): PriceData {
+  private parsePriceDataAccountResponse(response: AccountInfo<Buffer>): PriceData {
     return this.program.coder.accounts.decode("priceData", response.data);
   }
 
   async writePriceTx(user: PublicKey, feedId: string, payload: string) {
     return await this.program.methods
-      .writePrice(
-        Array.from(makeFeedIdBytes(feedId)),
-        Buffer.from(payload, "hex")
-      )
+      .writePrice(Array.from(makeFeedIdBytes(feedId)), Buffer.from(payload, "hex"))
       .accountsStrict({
         user,
-        priceAccount: PriceAdapterContract.getPriceDataAccount(
-          this.program.programId,
-          feedId
-        ),
+        priceAccount: PriceAdapterContract.getPriceDataAccount(this.program.programId, feedId),
         systemProgram: web3.SystemProgram.programId,
       })
       .instruction();

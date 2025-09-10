@@ -1,10 +1,5 @@
 import { isDefined } from "../common";
-import {
-  ChainType,
-  constructNetworkId,
-  deconstructNetworkId,
-  NetworkId,
-} from "../NetworkId";
+import { ChainType, constructNetworkId, deconstructNetworkId, NetworkId } from "../NetworkId";
 import { CeilMedianConsensusExecutor } from "./CeilMedianConsensusExecutor";
 import { DEFAULT_CONFIG, makeBaseConfig, NestedMethodConfig } from "./config";
 import { create } from "./MultiExecutorFactory";
@@ -14,10 +9,7 @@ export const SINGLE_EXECUTION_TIMEOUT_MS = 7_000;
 export const ALL_EXECUTIONS_TIMEOUT_MS = 30_000;
 export const BLOCK_NUMBER_EXECUTION_TIMEOUT_MS = 1_500;
 
-export abstract class ClientBuilder<
-  C,
-  URL extends string | undefined = string,
-> {
+export abstract class ClientBuilder<C, URL extends string | undefined = string> {
   protected abstract chainType: ChainType;
   protected urls: URL[] = [];
   protected chainId?: number;
@@ -33,9 +25,7 @@ export abstract class ClientBuilder<
   withNetworkId(networkId: NetworkId) {
     const { chainType, chainId } = deconstructNetworkId(networkId);
     if (chainType !== this.chainType) {
-      throw new Error(
-        `Non-${this.chainType} networkId ${networkId} passed to ClientBuilder`
-      );
+      throw new Error(`Non-${this.chainType} networkId ${networkId} passed to ClientBuilder`);
     }
 
     return this.withChainId(chainId);

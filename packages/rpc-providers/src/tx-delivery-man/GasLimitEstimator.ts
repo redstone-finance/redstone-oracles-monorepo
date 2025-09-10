@@ -17,10 +17,7 @@ export class GasLimitEstimator {
     );
   }
 
-  async getGasLimit(
-    provider: providers.JsonRpcProvider,
-    tx: GasEstimateTx
-  ): Promise<number> {
+  async getGasLimit(provider: providers.JsonRpcProvider, tx: GasEstimateTx): Promise<number> {
     if (this.opts.gasLimit) {
       return this.opts.gasLimit;
     }
@@ -31,9 +28,7 @@ export class GasLimitEstimator {
       "pending",
     ])) as BigNumber;
 
-    return Math.round(
-      Number(estimatedGas.toString()) * this.opts.gasLimitMultiplier
-    );
+    return Math.round(Number(estimatedGas.toString()) * this.opts.gasLimitMultiplier);
   }
 
   scaleGasLimit(gasLimit: number, attempt: number) {

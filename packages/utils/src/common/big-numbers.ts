@@ -8,10 +8,7 @@ export const decimalsMultiplier = parseUnits("1.0", DEFAULT_DECIMALS);
 export const bigNumberToFloat = (bignum: BigNumber) =>
   parseFloat(formatUnits(bignum, DEFAULT_DECIMALS));
 
-export const normalizeDecimals = (
-  reserve: BigNumber,
-  decimals: number
-): BigNumber => {
+export const normalizeDecimals = (reserve: BigNumber, decimals: number): BigNumber => {
   if (decimals > DEFAULT_DECIMALS) {
     throw new Error(`Can not normalize reserve decimals: ${decimals}`);
   }

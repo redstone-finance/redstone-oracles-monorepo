@@ -6,18 +6,12 @@ import {
 } from "@redstone-finance/sdk";
 import { RedstoneCommon } from "@redstone-finance/utils";
 import { hexlify } from "ethers/lib/utils";
-import {
-  readCluster,
-  SolanaConnectionBuilder,
-  SolanaContractConnector,
-} from "../src";
+import { readCluster, SolanaConnectionBuilder, SolanaContractConnector } from "../src";
 import { readProgramAddress } from "./consts";
 import { getRpcUrls } from "./get-rpc-urls";
 import { readKeypair } from "./utils";
 
-async function prepareParamsProviderWithData(
-  requestParams: DataPackagesRequestParams
-) {
+async function prepareParamsProviderWithData(requestParams: DataPackagesRequestParams) {
   const cache = new DataPackagesResponseCache();
   const paramsProvider = new ContractParamsProvider(requestParams, cache);
   const data = await paramsProvider.requestDataPackages();

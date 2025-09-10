@@ -5,11 +5,7 @@ import {
   type Env,
 } from "@redstone-finance/chain-configs";
 import { MegaProviderBuilder } from "@redstone-finance/rpc-providers";
-import {
-  isEvmNetworkId,
-  NetworkId,
-  RedstoneCommon,
-} from "@redstone-finance/utils";
+import { isEvmNetworkId, NetworkId, RedstoneCommon } from "@redstone-finance/utils";
 import { providers } from "ethers";
 
 const DEFAULT_CONFIG = {
@@ -34,10 +30,7 @@ export const getProviderWithRpcUrls = async (
   rpcUrls: string[],
   config = DEFAULT_CONFIG
 ): Promise<providers.Provider> => {
-  const chainConfig = getChainConfigByNetworkId(
-    await fetchChainConfigs(),
-    networkId
-  );
+  const chainConfig = getChainConfigByNetworkId(await fetchChainConfigs(), networkId);
   if (!isEvmNetworkId(networkId)) {
     throw new Error("Non-evm networkId passed to evm provider builder.");
   }

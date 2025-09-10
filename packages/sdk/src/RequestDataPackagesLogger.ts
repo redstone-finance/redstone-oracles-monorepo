@@ -1,8 +1,5 @@
 import { loggerFactory, RedstoneCommon } from "@redstone-finance/utils";
-import {
-  type DataPackagesResponse,
-  getResponseTimestamp,
-} from "./request-data-packages-common";
+import { type DataPackagesResponse, getResponseTimestamp } from "./request-data-packages-common";
 
 export class RequestDataPackagesLogger {
   private readonly initialDate: number;
@@ -41,9 +38,7 @@ export class RequestDataPackagesLogger {
       this.particularResponses
     );
     const particularTimestamps = this.particularTimestamps();
-    const collectedErrors = RequestDataPackagesLogger.filterOutUndefined(
-      this.particularErrors
-    );
+    const collectedErrors = RequestDataPackagesLogger.filterOutUndefined(this.particularErrors);
 
     (timeout ? this.logger.info : this.logger.debug)(
       `${timeout ? "Timed out with" : "Checking"} ${collectedResponses.length} response(s) / ${collectedErrors.length} error(s),` +
@@ -51,9 +46,7 @@ export class RequestDataPackagesLogger {
       {
         particularTimestamps,
         particularTimes: this.particularTimes,
-        particularErrors: this.particularErrors.map((e) =>
-          RedstoneCommon.stringifyError(e)
-        ),
+        particularErrors: this.particularErrors.map((e) => RedstoneCommon.stringifyError(e)),
         collectedResponsesLength: collectedResponses.length,
         collectedErrorsLength: collectedErrors.length,
       }
@@ -61,8 +54,7 @@ export class RequestDataPackagesLogger {
   }
 
   willResolve(dataPackagesResponse: DataPackagesResponse) {
-    const timestampDelta =
-      Date.now() - getResponseTimestamp(dataPackagesResponse);
+    const timestampDelta = Date.now() - getResponseTimestamp(dataPackagesResponse);
     const collectedResponses = RequestDataPackagesLogger.filterOutUndefined(
       this.particularResponses
     );
@@ -82,9 +74,7 @@ export class RequestDataPackagesLogger {
 
   willReject() {
     this.logger.error("Rejecting...", {
-      particularErrors: this.particularErrors.map((e) =>
-        RedstoneCommon.stringifyError(e)
-      ),
+      particularErrors: this.particularErrors.map((e) => RedstoneCommon.stringifyError(e)),
     });
   }
 

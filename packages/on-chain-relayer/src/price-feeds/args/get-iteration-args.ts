@@ -7,10 +7,7 @@ export const getIterationArgs = async (
   context: ShouldUpdateContext,
   relayerConfig: RelayerConfig
 ) => {
-  const { shouldUpdatePrices, messages } = await shouldUpdate(
-    context,
-    relayerConfig
-  );
+  const { shouldUpdatePrices, messages } = await shouldUpdate(context, relayerConfig);
 
   const updateRequestParams = makeDataPackagesRequestParams(
     relayerConfig,

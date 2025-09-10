@@ -1,31 +1,18 @@
 import { Provider } from "@ethersproject/providers";
-import {
-  ChainConfig,
-  getLocalChainConfigsByNetworkId,
-} from "@redstone-finance/chain-configs";
-import {
-  loggerFactory,
-  NetworkId,
-  NetworkIdSchema,
-  RedstoneCommon,
-} from "@redstone-finance/utils";
+import { ChainConfig, getLocalChainConfigsByNetworkId } from "@redstone-finance/chain-configs";
+import { loggerFactory, NetworkId, NetworkIdSchema, RedstoneCommon } from "@redstone-finance/utils";
 
 const logger = loggerFactory("SageOfChains");
 
 export class SageOfChains {
-  networkIdToProviderFactory: Record<
-    NetworkId,
-    (chainConfig: ChainConfig) => Provider
-  > = {};
+  networkIdToProviderFactory: Record<NetworkId, (chainConfig: ChainConfig) => Provider> = {};
   networkIdToProvider: Record<NetworkId, Provider | undefined> = {};
 
   constructor(
     allSupportedNetworkIds: NetworkId[],
     private readonly providerFactory: (chainConfig: ChainConfig) => Provider
   ) {
-    allSupportedNetworkIds.forEach((networkId) =>
-      this.fillProviderFactory(networkId)
-    );
+    allSupportedNetworkIds.forEach((networkId) => this.fillProviderFactory(networkId));
   }
 
   private fillProviderFactory(networkId: NetworkId) {
@@ -40,9 +27,7 @@ export class SageOfChains {
     const providerFactory = this.networkIdToProviderFactory[networkId];
     // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
     if (!providerFactory) {
-      throw new Error(
-        `SageOfChains: missing provider factory for ${networkId}`
-      );
+      throw new Error(`SageOfChains: missing provider factory for ${networkId}`);
     }
     const chainConfig = SageOfChains.getChainConfig(networkId);
     const provider = providerFactory(chainConfig);
@@ -55,16 +40,12 @@ export class SageOfChains {
     const chainConfig = chainConfigs[networkId];
     // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
     if (!chainConfig) {
-      throw new Error(
-        `SageOfChains: missing local chain config for ${networkId}`
-      );
+      throw new Error(`SageOfChains: missing local chain config for ${networkId}`);
     }
     return chainConfig;
   }
 
-  getProvidersForRequiredNetworkIds(
-    requiredNetworkIds: NetworkId[]
-  ): [NetworkId, Provider][] {
+  getProvidersForRequiredNetworkIds(requiredNetworkIds: NetworkId[]): [NetworkId, Provider][] {
     return requiredNetworkIds.map((networkId) => {
       return [networkId, this.getProvider(networkId)];
     });
@@ -72,19 +53,12 @@ export class SageOfChains {
 
   async getBlockNumbersPerChain(timeout: number) {
     const networkIdToBlockTuplesResults = await Promise.allSettled(
-      Object.entries(this.networkIdToProviderFactory).map(
-        async ([networkId, providerFactory]) => {
-          const chainConfig = SageOfChains.getChainConfig(
-            NetworkIdSchema.parse(networkId)
-          );
-          const provider = providerFactory(chainConfig);
-          const blockNumber = await getBlockNumberWithRetries(
-            provider,
-            timeout
-          );
-          return [networkId, blockNumber];
-        }
-      )
+      Object.entries(this.networkIdToProviderFactory).map(async ([networkId, providerFactory]) => {
+        const chainConfig = SageOfChains.getChainConfig(NetworkIdSchema.parse(networkId));
+        const provider = providerFactory(chainConfig);
+        const blockNumber = await getBlockNumberWithRetries(provider, timeout);
+        return [networkId, blockNumber];
+      })
     );
     const networkIdToBlockTuples = networkIdToBlockTuplesResults
       .map((result, index) => {
@@ -104,10 +78,7 @@ export class SageOfChains {
   }
 }
 
-const getBlockNumberWithRetries = (
-  provider: Provider,
-  timeout: number
-): Promise<number> =>
+const getBlockNumberWithRetries = (provider: Provider, timeout: number): Promise<number> =>
   RedstoneCommon.timeout(
     RedstoneCommon.retry({
       waitBetweenMs: 50,

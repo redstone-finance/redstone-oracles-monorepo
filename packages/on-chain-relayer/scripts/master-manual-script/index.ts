@@ -1,8 +1,5 @@
 import { getSSMParameterValue } from "@redstone-finance/internal-utils";
-import {
-  AdapterType,
-  ManifestReading,
-} from "@redstone-finance/on-chain-relayer-common";
+import { AdapterType, ManifestReading } from "@redstone-finance/on-chain-relayer-common";
 import { NetworkId, RedstoneCommon } from "@redstone-finance/utils";
 import { z } from "zod";
 import { runIteration } from "../../src";
@@ -22,10 +19,7 @@ const relayersToExecute = RedstoneCommon.getFromEnv(
   z.string().array().optional()
 );
 
-const privateKeyOverride = RedstoneCommon.getFromEnv(
-  "PRIVATE_KEY_OVERRIDE",
-  z.string().optional()
-);
+const privateKeyOverride = RedstoneCommon.getFromEnv("PRIVATE_KEY_OVERRIDE", z.string().optional());
 
 const defaultRelayersToSkip = [
   "sepoliaAngleAgeur",
@@ -70,18 +64,13 @@ async function setUpEnvVariables(
   process.env.MANIFEST_FILE = `./relayer-manifests${adapterContractType === "multi-feed" ? "-multi-feed" : ""}/${manifestName}.json`;
   try {
     process.env.PRIVATE_KEY =
-      privateKeyOverride ??
-      (await getSSMParameterValue(getManualKeySSMName(manifestName)));
+      privateKeyOverride ?? (await getSSMParameterValue(getManualKeySSMName(manifestName)));
   } catch {
-    console.log(
-      `📛Failed to fetch wallet key: ${getManualKeySSMName(manifestName)}📛`
-    );
+    console.log(`📛Failed to fetch wallet key: ${getManualKeySSMName(manifestName)}📛`);
     return false;
   }
   try {
-    process.env.RPC_URLS = await getSSMParameterValue(
-      `/prod/rpc/${networkId}/urls`
-    );
+    process.env.RPC_URLS = await getSSMParameterValue(`/prod/rpc/${networkId}/urls`);
   } catch {
     console.log(`📛Failed to fetch rpc urls: /prod/rpc/${networkId}/urls📛`);
     return false;
@@ -95,9 +84,7 @@ async function main() {
   const multiFeedManifests = ManifestReading.readMultiFeedManifests();
   const manifests = { ...classicManifests, ...multiFeedManifests };
 
-  for (const [manifestName, { chain, adapterContractType }] of Object.entries(
-    manifests
-  )) {
+  for (const [manifestName, { chain, adapterContractType }] of Object.entries(manifests)) {
     if (
       (relayersToExecute && !relayersToExecute.includes(manifestName)) ||
       relayersToSkip.includes(manifestName)
@@ -111,9 +98,7 @@ async function main() {
       `\n****************************************\n`
     );
 
-    if (
-      !(await setUpEnvVariables(manifestName, chain.id, adapterContractType))
-    ) {
+    if (!(await setUpEnvVariables(manifestName, chain.id, adapterContractType))) {
       continue;
     }
 
@@ -125,10 +110,7 @@ async function main() {
       const iteration = runIteration(contractFacade, relayerConfig);
       await RedstoneCommon.timeout(iteration, 15000);
     } catch (e) {
-      console.error(
-        `An error occurred while running iteration of ${manifestName}`,
-        e
-      );
+      console.error(`An error occurred while running iteration of ${manifestName}`, e);
     }
   }
   console.log("All relayers iterations finished.");

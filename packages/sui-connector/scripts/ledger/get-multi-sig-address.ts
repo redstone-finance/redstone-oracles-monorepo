@@ -5,9 +5,7 @@ import { hexlify } from "ethers/lib/utils";
 import { MULTI_SIG_PK_HEXES, THRESHOLD_FACTOR } from "./const";
 
 export function getMultiSigPublicKey(pkHexes: string[]) {
-  const pks = pkHexes.map((pkHex) =>
-    toBase64(Buffer.from(pkHex.replace("0x", ""), "hex"))
-  );
+  const pks = pkHexes.map((pkHex) => toBase64(Buffer.from(pkHex.replace("0x", ""), "hex")));
 
   return MultiSigPublicKey.fromPublicKeys({
     threshold: Math.ceil(pkHexes.length * THRESHOLD_FACTOR),

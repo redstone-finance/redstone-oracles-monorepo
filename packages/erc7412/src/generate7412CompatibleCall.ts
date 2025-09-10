@@ -19,10 +19,7 @@ const multicall3Abi = parseAbi([
 ]);
 
 // taken from erc7412 package
-type ERC7412TransactionRequest = Pick<
-  TransactionRequest,
-  "to" | "data" | "value"
->;
+type ERC7412TransactionRequest = Pick<TransactionRequest, "to" | "data" | "value">;
 
 export async function generate7412CompatibleCall(
   client: PublicClient,

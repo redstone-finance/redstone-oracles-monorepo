@@ -2,12 +2,8 @@ import { AnyOnChainRelayerManifestSchema } from "@redstone-finance/on-chain-rela
 import { loggerFactory } from "@redstone-finance/utils";
 import axios from "axios";
 
-export async function fetchOrParseManifest(
-  manifestUrls: string[],
-  localManifestData?: unknown
-) {
-  const manifestData =
-    localManifestData ?? (await fetchManifestFromUrls(manifestUrls));
+export async function fetchOrParseManifest(manifestUrls: string[], localManifestData?: unknown) {
+  const manifestData = localManifestData ?? (await fetchManifestFromUrls(manifestUrls));
   if (!manifestData) {
     throw new Error("failed to fetch manifest from all URLs");
   }
@@ -25,9 +21,7 @@ async function fetchManifestFromUrls(manifestUrls: string[]) {
         break;
       }
     } catch (_e) {
-      loggerFactory("fetch-or-parse-manifest").warn(
-        `Error fetching manifest from url: ${url}`
-      );
+      loggerFactory("fetch-or-parse-manifest").warn(`Error fetching manifest from url: ${url}`);
     }
   }
 

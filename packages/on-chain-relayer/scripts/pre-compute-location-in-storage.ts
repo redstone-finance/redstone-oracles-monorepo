@@ -7,10 +7,7 @@ const dataFeedId = utils.convertStringToBytes32("ETH/USDC");
 console.log(
   solidityKeccak256(
     ["bytes32", "bytes32"],
-    [
-      dataFeedId,
-      "0x4dd0c77efa6f6d590c97573d8c70b714546e7311202ff7c11c484cc841d91bfc",
-    ]
+    [dataFeedId, "0x4dd0c77efa6f6d590c97573d8c70b714546e7311202ff7c11c484cc841d91bfc"]
   )
 );
 

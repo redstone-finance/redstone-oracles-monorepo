@@ -2,9 +2,7 @@ import { IContractConnector } from "@redstone-finance/sdk";
 import { VersionedCasperContract } from "../contracts/VersionedCasperContract";
 import { ICasperConnection } from "./ICasperConnection";
 
-export abstract class CasperContractConnector<Adapter>
-  implements IContractConnector<Adapter>
-{
+export abstract class CasperContractConnector<Adapter> implements IContractConnector<Adapter> {
   constructor(
     protected connection: ICasperConnection,
     private contractPackageHash: string
@@ -21,9 +19,6 @@ export abstract class CasperContractConnector<Adapter>
   }
 
   protected getContract(): VersionedCasperContract {
-    return new VersionedCasperContract(
-      this.connection,
-      this.contractPackageHash
-    );
+    return new VersionedCasperContract(this.connection, this.contractPackageHash);
   }
 }

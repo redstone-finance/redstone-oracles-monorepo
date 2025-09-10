@@ -10,8 +10,7 @@ import { setUpEnv } from "./setup-env";
 import { testSample } from "./test-data";
 
 function getSolanaPricesContractAdapter(trusted: "trusted" | "untrusted") {
-  const { svm, trustedSigner, untrustedSigner, programId, connection, state } =
-    setUpEnv();
+  const { svm, trustedSigner, untrustedSigner, programId, connection, state } = setUpEnv();
   const signer = trusted === "trusted" ? trustedSigner : untrustedSigner;
 
   const client = new SolanaClient(connection);
@@ -98,9 +97,7 @@ describe("SolanaPricesContractAdapter tests", () => {
     const { priceAdapter, state } = getSolanaPricesContractAdapter("trusted");
     const { timestamp, provider } = testSample("default");
 
-    state
-      .setClock(timestamp)
-      .thenDontSubmitAndErrorFor(DEFAULT_SOLANA_CONFIG.maxTxAttempts);
+    state.setClock(timestamp).thenDontSubmitAndErrorFor(DEFAULT_SOLANA_CONFIG.maxTxAttempts);
 
     await expect(
       async () => await priceAdapter.writePricesFromPayloadToContract(provider)
@@ -111,9 +108,7 @@ describe("SolanaPricesContractAdapter tests", () => {
     const { priceAdapter, state } = getSolanaPricesContractAdapter("trusted");
     const { timestamp, provider } = testSample("default");
 
-    state
-      .setClock(timestamp)
-      .thenDontSubmitAndErrorFor(DEFAULT_SOLANA_CONFIG.maxTxAttempts);
+    state.setClock(timestamp).thenDontSubmitAndErrorFor(DEFAULT_SOLANA_CONFIG.maxTxAttempts);
 
     await expect(
       async () => await priceAdapter.writePricesFromPayloadToContract(provider)

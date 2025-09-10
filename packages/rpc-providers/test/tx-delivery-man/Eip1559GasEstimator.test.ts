@@ -1,9 +1,5 @@
 import { expect } from "chai";
-import {
-  DEFAULT_TX_DELIVERY_OPTS,
-  TxDeliveryOpts,
-  type Eip1559Fee,
-} from "../../src";
+import { DEFAULT_TX_DELIVERY_OPTS, TxDeliveryOpts, type Eip1559Fee } from "../../src";
 import { Eip1559GasEstimator } from "../../src/tx-delivery-man/Eip1559GasEstimator";
 
 describe("Eip1559GasEstimator", () => {

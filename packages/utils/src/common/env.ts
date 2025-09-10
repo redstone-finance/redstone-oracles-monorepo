@@ -3,11 +3,7 @@ import { isNodeRuntime } from "./runtime";
 
 type GetFromEnvType = {
   /** JSON.parse is used by default before passing the env variable to schema.parse */
-  <T extends ZodTypeAny>(
-    name: string,
-    schema: T,
-    parseAsJSON?: boolean
-  ): z.infer<typeof schema>;
+  <T extends ZodTypeAny>(name: string, schema: T, parseAsJSON?: boolean): z.infer<typeof schema>;
   /** JSON.parse is NOT used before passing the env variable to schema.parse */
   (name: string): string;
   /** if schema is provided JSON.parse is used before passing the env variable to schema.parse */

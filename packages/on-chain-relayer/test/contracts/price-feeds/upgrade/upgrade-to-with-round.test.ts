@@ -24,30 +24,21 @@ describe("upgrade from contracts without rounds to contracts with rounds", () =>
       "PriceFeedsAdapterWithoutRoundsMock"
     );
 
-    adapterWithoutRounds = (await upgrades.deployProxy(
-      adapterContractFactory
-    )) as IRedstoneAdapter;
+    adapterWithoutRounds = (await upgrades.deployProxy(adapterContractFactory)) as IRedstoneAdapter;
 
-    const priceFeedFactory = await ethers.getContractFactory(
-      "PriceFeedWithoutRoundsMock"
-    );
+    const priceFeedFactory = await ethers.getContractFactory("PriceFeedWithoutRoundsMock");
     priceFeedWithoutRounds = (await upgrades.deployProxy(
       priceFeedFactory
     )) as PriceFeedWithoutRoundsMock;
 
-    await priceFeedWithoutRounds.setAdapterAddress(
-      adapterWithoutRounds.address
-    );
+    await priceFeedWithoutRounds.setAdapterAddress(adapterWithoutRounds.address);
   });
 
   it("should updates prices and read using priceFeed", async () => {
     // update price ten times
     for (let i = 0; i < 10; i++) {
       const value = 123 + i;
-      const { timestamp } = await updatePriceInAdapter(
-        adapterWithoutRounds,
-        value
-      );
+      const { timestamp } = await updatePriceInAdapter(adapterWithoutRounds, value);
       await assertCommonPriceFeedWorks(
         priceFeedWithoutRounds,
         DEFAULT_ROUND_ID_FOR_WITHOUT_ROUNDS.toString(),
@@ -64,10 +55,7 @@ describe("upgrade from contracts without rounds to contracts with rounds", () =>
     const expectedRoundsData = [];
     for (let i = 1; i < 11; i++) {
       const value = 1337 + i;
-      const { timestamp, blockTimestamp } = await updatePriceInAdapter(
-        adapterWithRounds,
-        value
-      );
+      const { timestamp, blockTimestamp } = await updatePriceInAdapter(adapterWithRounds, value);
       await assertCommonPriceFeedWorks(
         priceFeedWithoutRounds,
         DEFAULT_ROUND_ID_FOR_WITHOUT_ROUNDS.toString(),
@@ -115,15 +103,8 @@ describe("upgrade from contracts without rounds to contracts with rounds", () =>
     const expectedRoundsDataAfterUpdatingPriceFeed = [];
     for (let i = 11; i < 21; i++) {
       const value = 1337 + i;
-      const { timestamp, blockTimestamp } = await updatePriceInAdapter(
-        adapterWithRounds,
-        value
-      );
-      await assertCommonPriceFeedWorks(
-        priceFeedWithRounds,
-        i.toString(),
-        value
-      );
+      const { timestamp, blockTimestamp } = await updatePriceInAdapter(adapterWithRounds, value);
+      await assertCommonPriceFeedWorks(priceFeedWithRounds, i.toString(), value);
       await assertCommonAdapterWorks(adapterWithRounds, timestamp, value);
       const args = {
         expectedRound: i.toString(),
@@ -151,9 +132,7 @@ describe("upgrade from contracts without rounds to contracts with rounds", () =>
     // check if price feed doesnt override state
     for (const expectedRoundData of expectedRoundsDataAfterUpdatingPriceFeed) {
       expect(
-        await mapToString(
-          priceFeedWithRounds.getRoundData(expectedRoundData.expectedRound)
-        )
+        await mapToString(priceFeedWithRounds.getRoundData(expectedRoundData.expectedRound))
         // roundId: BigNumber;
         // answer: BigNumber;
         // startedAt: BigNumber;
@@ -176,34 +155,21 @@ async function assertCommonAdapterWorks(
   value: number
 ) {
   expect(
-    await mapToString(
-      wrappedContract.getValuesForDataFeeds([formatBytes32String("BTC")])
-    )
+    await mapToString(wrappedContract.getValuesForDataFeeds([formatBytes32String("BTC")]))
   ).deep.eq([(value * 1e8).toString()]);
   expect(await wrappedContract.getBlockTimestampFromLatestUpdate()).to.eq(
     (await time.latest()).toString()
   );
-  expect(await wrappedContract.getDataFeedIds()).deep.eq([
-    formatBytes32String("BTC"),
-  ]);
-  expect(
-    await wrappedContract.getDataFeedIndex(formatBytes32String("BTC"))
-  ).to.eq("0");
-  expect(await wrappedContract.getDataTimestampFromLatestUpdate()).to.eq(
-    timestamp
-  );
+  expect(await wrappedContract.getDataFeedIds()).deep.eq([formatBytes32String("BTC")]);
+  expect(await wrappedContract.getDataFeedIndex(formatBytes32String("BTC"))).to.eq("0");
+  expect(await wrappedContract.getDataTimestampFromLatestUpdate()).to.eq(timestamp);
   expect(await wrappedContract.getMinIntervalBetweenUpdates()).to.eq("3");
 }
 
-async function updatePriceInAdapter(
-  adapterWithoutRounds: IRedstoneAdapter,
-  value: number
-) {
+async function updatePriceInAdapter(adapterWithoutRounds: IRedstoneAdapter, value: number) {
   await time.increase(4);
   const timestamp = ((await time.latest()) + 50) * 1000;
-  const wrappedContract = WrapperBuilder.wrap(
-    adapterWithoutRounds
-  ).usingSimpleNumericMock({
+  const wrappedContract = WrapperBuilder.wrap(adapterWithoutRounds).usingSimpleNumericMock({
     mockSignersCount: 2,
     timestampMilliseconds: timestamp,
     dataPoints: [
@@ -228,15 +194,11 @@ async function assertCommonPriceFeedWorks(
   expectedRound: string,
   expectedPrice: number
 ) {
-  expect(await priceFeedWithoutRounds.getDataFeedId()).to.eq(
-    formatBytes32String("BTC")
-  );
+  expect(await priceFeedWithoutRounds.getDataFeedId()).to.eq(formatBytes32String("BTC"));
   expect(await priceFeedWithoutRounds.latestRound()).to.eq(expectedRound);
   const blockTime = await time.latest();
   const expectedPriceScaled = (expectedPrice * 1e8).toString();
-  expect(await priceFeedWithoutRounds.latestAnswer()).to.eq(
-    expectedPriceScaled
-  );
+  expect(await priceFeedWithoutRounds.latestAnswer()).to.eq(expectedPriceScaled);
 
   expect(await mapToString(priceFeedWithoutRounds.latestRoundData())).deep.eq([
     expectedRound,
@@ -255,9 +217,7 @@ async function assertPriceFeedWithRoundsWorks(
   blockTimestamp: string
 ) {
   const expectedPriceScaled = (expectedPrice * 1e8).toString();
-  expect(
-    await mapToString(priceFeedWithoutRounds.getRoundData(expectedRound))
-  ).deep.eq([
+  expect(await mapToString(priceFeedWithoutRounds.getRoundData(expectedRound))).deep.eq([
     expectedRound,
     expectedPriceScaled,
     timestamp,
@@ -283,17 +243,11 @@ async function assertAdapterWithRoundsWorks(
   ]);
 
   expect(
-    await adapterWithRounds.getValueForDataFeedAndRound(
-      formatBytes32String("BTC"),
-      expectedRound
-    )
+    await adapterWithRounds.getValueForDataFeedAndRound(formatBytes32String("BTC"), expectedRound)
   ).to.eq(expectedPriceScaled);
   expect(
     await mapToString(
-      adapterWithRounds.getRoundDataFromAdapter(
-        formatBytes32String("BTC"),
-        expectedRound
-      )
+      adapterWithRounds.getRoundDataFromAdapter(formatBytes32String("BTC"), expectedRound)
     )
   ).deep.eq([expectedPriceScaled, timestamp, blockTime]);
 }

@@ -15,19 +15,16 @@ export class TonUnitTester extends TonContract {
     data: string,
     signature: string
   ) {
-    const { stack } = await provider.get(
-      "test_get_data_package_signer_address",
-      [
-        {
-          type: "slice",
-          cell: createBuilderFromString(data).asCell(),
-        },
-        {
-          type: "slice",
-          cell: createBuilderFromString(signature).asCell(),
-        },
-      ]
-    );
+    const { stack } = await provider.get("test_get_data_package_signer_address", [
+      {
+        type: "slice",
+        cell: createBuilderFromString(data).asCell(),
+      },
+      {
+        type: "slice",
+        cell: createBuilderFromString(signature).asCell(),
+      },
+    ]);
 
     return hexlify(stack.readBigNumber()).toLowerCase();
   }
@@ -43,18 +40,11 @@ export class TonUnitTester extends TonContract {
     return stack.readNumber();
   }
 
-  async getTestSliceUint(
-    provider: ContractProvider,
-    data: string | Cell,
-    byteLength: number
-  ) {
+  async getTestSliceUint(provider: ContractProvider, data: string | Cell, byteLength: number) {
     const { stack } = await provider.get("test_slice_uint", [
       {
         type: "slice",
-        cell:
-          typeof data === "string"
-            ? createBuilderFromString(data).asCell()
-            : data,
+        cell: typeof data === "string" ? createBuilderFromString(data).asCell() : data,
       },
       {
         type: "int",
@@ -65,18 +55,11 @@ export class TonUnitTester extends TonContract {
     return { remainingSlice: stack.readCell(), value: stack.readBigNumber() };
   }
 
-  async getTestSliceInt(
-    provider: ContractProvider,
-    data: string | Cell,
-    bitLength: number
-  ) {
+  async getTestSliceInt(provider: ContractProvider, data: string | Cell, bitLength: number) {
     const { stack } = await provider.get("test_slice_int", [
       {
         type: "slice",
-        cell:
-          typeof data === "string"
-            ? createBuilderFromString(data).asCell()
-            : data,
+        cell: typeof data === "string" ? createBuilderFromString(data).asCell() : data,
       },
       {
         type: "int",
@@ -102,10 +85,7 @@ export class TonUnitTester extends TonContract {
     };
   }
 
-  async getTestTupleDeserializeIntegers(
-    provider: ContractProvider,
-    numbers: (number | string)[]
-  ) {
+  async getTestTupleDeserializeIntegers(provider: ContractProvider, numbers: (number | string)[]) {
     const { stack } = await provider.get("test_tuple_deserialize_integers", [
       {
         type: "cell",

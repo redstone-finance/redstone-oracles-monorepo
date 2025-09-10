@@ -1,16 +1,10 @@
-import {
-  SignedDataPackage,
-  SignedDataPackagePlainObj,
-} from "@redstone-finance/protocol";
+import { SignedDataPackage, SignedDataPackagePlainObj } from "@redstone-finance/protocol";
 import { RedstoneCommon } from "@redstone-finance/utils";
 import axios from "axios";
 import { z } from "zod";
 import { resolveDataServiceUrls } from "./data-services-urls";
 import { pickDataFeedPackagesClosestToMedian } from "./pick-closest-to-median";
-import {
-  getResponseTimestamp,
-  type DataPackagesResponse,
-} from "./request-data-packages-common";
+import { getResponseTimestamp, type DataPackagesResponse } from "./request-data-packages-common";
 import { RequestDataPackagesLogger } from "./RequestDataPackagesLogger";
 
 const GET_REQUEST_TIMEOUT = 5_000;
@@ -102,8 +96,7 @@ type DataPackagesQuery =
       returnAllPackages: true;
     };
 
-export type DataPackagesRequestParams = DataPackagesRequestParamsInternal &
-  DataPackagesQuery;
+export type DataPackagesRequestParams = DataPackagesRequestParamsInternal & DataPackagesQuery;
 
 export interface ValuesForDataFeeds {
   [dataFeedId: string]: bigint | undefined;
@@ -124,11 +117,7 @@ export class DataFeedPackageError extends Error {
   public dataFeedId: string;
   public errorType: DataFeedPackageErrorType;
 
-  constructor(
-    message: string,
-    dataFeedId: string,
-    errorType: DataFeedPackageErrorType
-  ) {
+  constructor(message: string, dataFeedId: string, errorType: DataFeedPackageErrorType) {
     super(message);
     this.dataFeedId = dataFeedId;
     this.errorType = errorType;
@@ -170,9 +159,7 @@ export const calculateHistoricalPackagesTimestamp = (
   if (deviationCheckOffsetInMilliseconds > 0) {
     // We round the timestamp to full 10s, which usually works, better solution will be to have this rounding mechanism implemented in oracle-gateways
     return (
-      Math.floor(
-        (baseTimestamp - deviationCheckOffsetInMilliseconds) / denominator
-      ) * denominator
+      Math.floor((baseTimestamp - deviationCheckOffsetInMilliseconds) / denominator) * denominator
     );
   }
   return undefined;
@@ -191,16 +178,9 @@ export const requestDataPackages = async (
   try {
     const urls = getUrlsForDataServiceId(reqParams);
     const requestDataPackagesLogger = reqParams.enableEnhancedLogs
-      ? new RequestDataPackagesLogger(
-          urls.length,
-          !!reqParams.historicalTimestamp
-        )
+      ? new RequestDataPackagesLogger(urls.length, !!reqParams.historicalTimestamp)
       : undefined;
-    const promises = prepareDataPackagePromises(
-      reqParams,
-      urls,
-      requestDataPackagesLogger
-    );
+    const promises = prepareDataPackagePromises(reqParams, urls, requestDataPackagesLogger);
 
     return await getTheMostRecentDataPackages(
       promises,
@@ -256,8 +236,7 @@ const getTheMostRecentDataPackages = (
         didResolveOrReject = true;
         reject(new AggregateError(collectedErrors));
       } else if (
-        collectedResponses.length + collectedErrors.length ===
-          promises.length ||
+        collectedResponses.length + collectedErrors.length === promises.length ||
         (isTimedOut && collectedResponses.length !== 0)
       ) {
         const newestPackage = collectedResponses.reduce(
@@ -330,43 +309,27 @@ function validateDataPackagesResponse(
 ) {
   if (!dataFeedPackages) {
     const message = `Requested data feed id is not included in response: ${dataFeedId}`;
-    throw new DataFeedPackageError(
-      message,
-      dataFeedId,
-      DataFeedPackageErrorType.MissingDataFeed
-    );
+    throw new DataFeedPackageError(message, dataFeedId, DataFeedPackageErrorType.MissingDataFeed);
   }
 
   // filter out packages with not expected signers
   dataFeedPackages = dataFeedPackages.filter((dp) => {
-    const signer = reqParams.skipSignatureVerification
-      ? dp.signerAddress
-      : maybeGetSigner(dp);
+    const signer = reqParams.skipSignatureVerification ? dp.signerAddress : maybeGetSigner(dp);
     return signer ? reqParams.authorizedSigners.includes(signer) : false;
   });
 
   if (dataFeedPackages.length === 0) {
     const message = `No data packages for the data feed: ${dataFeedId}`;
-    throw new DataFeedPackageError(
-      message,
-      dataFeedId,
-      DataFeedPackageErrorType.NoDataPackages
-    );
+    throw new DataFeedPackageError(message, dataFeedId, DataFeedPackageErrorType.NoDataPackages);
   } else if (dataFeedPackages.length < reqParams.uniqueSignersCount) {
     const message =
       `Too few data packages with unique signers for the data feed: ${dataFeedId}. ` +
       `Expected: ${reqParams.uniqueSignersCount}. ` +
       `Received: ${dataFeedPackages.length}`;
-    throw new DataFeedPackageError(
-      message,
-      dataFeedId,
-      DataFeedPackageErrorType.TooFewSigners
-    );
+    throw new DataFeedPackageError(message, dataFeedId, DataFeedPackageErrorType.TooFewSigners);
   }
 
-  const signedDataPackages = dataFeedPackages.map((dp) =>
-    SignedDataPackage.fromObj(dp)
-  );
+  const signedDataPackages = dataFeedPackages.map((dp) => SignedDataPackage.fromObj(dp));
 
   const timestamp = checkAndGetSameTimestamp(signedDataPackages); // Needs to be before "if", because it checks the timestamps and throws
 
@@ -428,9 +391,7 @@ const parseAndValidateDataPackagesResponse = (
   return parsedResponse;
 };
 
-const getUrlsForDataServiceId = (
-  reqParams: DataPackagesRequestParams
-): string[] => {
+const getUrlsForDataServiceId = (reqParams: DataPackagesRequestParams): string[] => {
   return (
     reqParams.urls ??
     resolveDataServiceUrls(reqParams.dataServiceId, {
@@ -445,9 +406,7 @@ function sendRequestToGateway(
   pathComponents: string[],
   timeout = GET_REQUEST_TIMEOUT
 ) {
-  const sanitizedUrl = [url.replace(/\/+$/, "")]
-    .concat(pathComponents)
-    .join("/");
+  const sanitizedUrl = [url.replace(/\/+$/, "")].concat(pathComponents).join("/");
 
   return axios.get<Record<string, SignedDataPackagePlainObj[]>>(sanitizedUrl, {
     timeout,
@@ -466,10 +425,7 @@ export const getDataPackagesTimestamp = (
   dataPackages: DataPackagesResponse,
   dataFeedId?: string
 ) => {
-  const signedDataPackages = extractSignedDataPackagesForFeedId(
-    dataPackages,
-    dataFeedId
-  );
+  const signedDataPackages = extractSignedDataPackagesForFeedId(dataPackages, dataFeedId);
 
   return checkAndGetSameTimestamp(signedDataPackages);
 };
@@ -479,13 +435,9 @@ export const checkAndGetSameTimestamp = (dataPackages: SignedDataPackage[]) => {
     throw new Error("No data packages for unique timestamp calculation");
   }
 
-  const timestamps = dataPackages.map(
-    (dp) => dp.dataPackage.timestampMilliseconds
-  );
+  const timestamps = dataPackages.map((dp) => dp.dataPackage.timestampMilliseconds);
   if (new Set(timestamps).size !== 1) {
-    throw new Error(
-      `Timestamps do not have the same value: ${timestamps.join(", ")}`
-    );
+    throw new Error(`Timestamps do not have the same value: ${timestamps.join(", ")}`);
   }
 
   return timestamps[0];
@@ -499,18 +451,14 @@ export const extractSignedDataPackagesForFeedId = (
     return dataPackages[dataFeedId];
   }
 
-  const signedDataPackages = Object.values(dataPackages).flatMap(
-    (dataPackages) => dataPackages!
-  );
+  const signedDataPackages = Object.values(dataPackages).flatMap((dataPackages) => dataPackages!);
 
   if (!dataFeedId) {
     return signedDataPackages;
   }
 
   return signedDataPackages.filter((dataPackage) =>
-    dataPackage.dataPackage.dataPoints.some(
-      (dataPoint) => dataPoint.dataFeedId === dataFeedId
-    )
+    dataPackage.dataPackage.dataPoints.some((dataPoint) => dataPoint.dataFeedId === dataFeedId)
   );
 };
 
@@ -543,15 +491,9 @@ export function convertToHistoricalDataPackagesRequestParams(
     fallbackOffsetInMilliseconds,
     baseTimestamp
   )!;
-  if (
-    latestDataPackagesTimestamp &&
-    historicalTimestamp >= latestDataPackagesTimestamp
-  ) {
+  if (latestDataPackagesTimestamp && historicalTimestamp >= latestDataPackagesTimestamp) {
     historicalTimestamp = calculateHistoricalPackagesTimestamp(
-      Math.min(
-        HISTORICAL_DATA_PACKAGES_DENOMINATOR_MS,
-        fallbackOffsetInMilliseconds
-      ),
+      Math.min(HISTORICAL_DATA_PACKAGES_DENOMINATOR_MS, fallbackOffsetInMilliseconds),
       latestDataPackagesTimestamp
     )!;
   }

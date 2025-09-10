@@ -16,14 +16,10 @@ export function prepareConfig<T extends PartialSplitConfig<RelayerSplitConfig>>(
     ...config,
     updateTriggers:
       config.updateTriggers ??
-      Object.fromEntries(
-        config.dataFeeds.map((feedId) => [feedId, {} as UpdateTriggers])
-      ),
+      Object.fromEntries(config.dataFeeds.map((feedId) => [feedId, {} as UpdateTriggers])),
     updateConditions:
       config.updateConditions ??
-      Object.fromEntries(
-        config.dataFeeds.map((feedId) => [feedId, [] as ConditionCheckNames[]])
-      ),
+      Object.fromEntries(config.dataFeeds.map((feedId) => [feedId, [] as ConditionCheckNames[]])),
   };
 }
 

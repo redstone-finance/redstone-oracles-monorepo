@@ -33,12 +33,8 @@ describe.skip("E2E tests", () => {
     const { config } = await import("./config");
     connection = await makeCasperConnection(config);
 
-    pricesConnector = new PriceAdapterCasperContractConnector(
-      connection,
-      ADAPTER_ADDRESS
-    );
-    pricesAdapter =
-      (await pricesConnector.getAdapter()) as PriceAdapterCasperContractAdapter;
+    pricesConnector = new PriceAdapterCasperContractConnector(connection, ADAPTER_ADDRESS);
+    pricesAdapter = (await pricesConnector.getAdapter()) as PriceAdapterCasperContractAdapter;
 
     priceRelayConnector = new PriceRelayAdapterCasperContractConnector(
       connection,
@@ -47,24 +43,14 @@ describe.skip("E2E tests", () => {
     pricesRelayAdapter =
       (await priceRelayConnector.getAdapter()) as PriceRelayAdapterCasperContractAdapter;
 
-    priceFeedConnector = new PriceFeedCasperContractConnector(
-      connection,
-      FEED_ADDRESS
-    );
+    priceFeedConnector = new PriceFeedCasperContractConnector(connection, FEED_ADDRESS);
     priceFeedAdapter = await priceFeedConnector.getAdapter();
   });
 
   it("PriceRelayAdapter.getPricesFromPayload should return prices", async () => {
-    const paramsProvider = makeContractParamsProvider(
-      ["ETH", "BTC", "USDT"],
-      1
-    );
-    const values =
-      await pricesRelayAdapter.getPricesFromPayload(paramsProvider);
-    verifyReturnedValues(
-      values,
-      paramsProvider.requestParams.dataPackagesIds!.length
-    );
+    const paramsProvider = makeContractParamsProvider(["ETH", "BTC", "USDT"], 1);
+    const values = await pricesRelayAdapter.getPricesFromPayload(paramsProvider);
+    verifyReturnedValues(values, paramsProvider.requestParams.dataPackagesIds!.length);
   });
 
   it("PriceRelayAdapter.writePricesFromPayload should write prices that can be read", async () => {
@@ -84,32 +70,21 @@ describe.skip("E2E tests", () => {
     performingAdapter: PriceAdapterCasperContractAdapter,
     uniqueSignerCount = 1
   ) {
-    const paramsProvider = makeContractParamsProvider(
-      ["ETH", "BTC", "USDT"],
-      uniqueSignerCount
-    );
+    const paramsProvider = makeContractParamsProvider(["ETH", "BTC", "USDT"], uniqueSignerCount);
     const deployId = (await performingAdapter.writePricesFromPayloadToContract(
       paramsProvider
     )) as string;
-    await performingAdapter.assertWaitForDeployAndRefreshStateRootHash(
-      deployId
-    );
+    await performingAdapter.assertWaitForDeployAndRefreshStateRootHash(deployId);
 
     const values = await pricesAdapter.readPricesFromContract(paramsProvider);
     const timestamp = await pricesAdapter.readTimestampFromContract();
 
-    verifyReturnedValues(
-      values,
-      paramsProvider.requestParams.dataPackagesIds!.length,
-      timestamp
-    );
+    verifyReturnedValues(values, paramsProvider.requestParams.dataPackagesIds!.length, timestamp);
 
     const { timestamp: feedTimestamp, value: ethValue } =
       await priceFeedAdapter.getPriceAndTimestamp();
 
     expect(feedTimestamp).toBe(timestamp);
-    expect(BigNumber.from(ethValue).toNumber()).toBe(
-      BigNumber.from(values[0]).toNumber()
-    );
+    expect(BigNumber.from(ethValue).toNumber()).toBe(BigNumber.from(values[0]).toNumber());
   }
 });

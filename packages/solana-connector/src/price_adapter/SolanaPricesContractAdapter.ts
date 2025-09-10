@@ -10,9 +10,7 @@ import _ from "lodash";
 import { SolanaTxDeliveryMan } from "../client/SolanaTxDeliveryMan";
 import { PriceAdapterContract } from "./PriceAdapterContract";
 
-export class SolanaPricesContractAdapter
-  implements IMultiFeedPricesContractAdapter
-{
+export class SolanaPricesContractAdapter implements IMultiFeedPricesContractAdapter {
   protected readonly logger = loggerFactory("solana-price-adapter");
 
   constructor(
@@ -22,9 +20,7 @@ export class SolanaPricesContractAdapter
 
   getSignerAddress() {
     const pk = this.txDeliveryMan?.getPublicKey();
-    return pk
-      ? Promise.resolve(pk.toString())
-      : Promise.reject(new Error("Signer required"));
+    return pk ? Promise.resolve(pk.toString()) : Promise.reject(new Error("Signer required"));
   }
 
   async getUniqueSignerThreshold(slot?: number): Promise<number> {
@@ -47,9 +43,7 @@ export class SolanaPricesContractAdapter
     throw new Error("Pull model not supported");
   }
 
-  async writePricesFromPayloadToContract(
-    paramsProvider: ContractParamsProvider
-  ) {
+  async writePricesFromPayloadToContract(paramsProvider: ContractParamsProvider) {
     if (!this.txDeliveryMan) {
       throw new Error("Can't write prices, TxDeliveryMan not set");
     }
@@ -59,11 +53,7 @@ export class SolanaPricesContractAdapter
     const txSignatures = await this.txDeliveryMan.sendTransactions(
       paramsProvider.getDataFeedIds(),
       (feedIds) =>
-        this.fetchTransactionInstructionsWithData(
-          paramsProvider,
-          feedIds,
-          metadataTimestamp
-        )
+        this.fetchTransactionInstructionsWithData(paramsProvider, feedIds, metadataTimestamp)
     );
 
     this.logger.log(
@@ -109,10 +99,7 @@ export class SolanaPricesContractAdapter
       )
     );
 
-    const transactionInstructions = _.zip(
-      payloadEntries,
-      instructionSettledResults
-    )
+    const transactionInstructions = _.zip(payloadEntries, instructionSettledResults)
       .map(([payloadEntry, settledPromise]) =>
         settledPromise?.status === "fulfilled" && payloadEntry?.length
           ? {
@@ -138,9 +125,7 @@ export class SolanaPricesContractAdapter
   ): Promise<bigint[]> {
     const feedIds = paramsProvider.getDataFeedIds();
     const priceData = await this.contract.getMultiplePriceData(feedIds, slot);
-    const missingFeedIndex = priceData.findIndex(
-      (value) => !RedstoneCommon.isDefined(value)
-    );
+    const missingFeedIndex = priceData.findIndex((value) => !RedstoneCommon.isDefined(value));
     if (missingFeedIndex >= 0) {
       throw new Error(`Missing value for ${feedIds[missingFeedIndex]}`);
     }
@@ -148,34 +133,23 @@ export class SolanaPricesContractAdapter
     return priceData.map((priceData) => BigInt(toNumber(priceData!.value)));
   }
 
-  async readTimestampFromContract(
-    feedId: string,
-    slot?: number
-  ): Promise<number> {
+  async readTimestampFromContract(feedId: string, slot?: number): Promise<number> {
     const priceData = await this.contract.getPriceData(feedId, slot);
 
     return priceData.timestamp.toNumber();
   }
 
-  async readContractData(
-    feedIds: string[],
-    slot?: number
-  ): Promise<ContractData> {
-    const multipleResult = await this.contract.getMultiplePriceData(
-      feedIds,
-      slot
-    );
+  async readContractData(feedIds: string[], slot?: number): Promise<ContractData> {
+    const multipleResult = await this.contract.getMultiplePriceData(feedIds, slot);
 
-    const values = multipleResult
-      .filter(RedstoneCommon.isDefined)
-      .map((result) => [
-        ContractParamsProvider.unhexlifyFeedId(result.feedId),
-        {
-          lastDataPackageTimestampMS: result.timestamp.toNumber(),
-          lastBlockTimestampMS: result.writeTimestamp?.toNumber() ?? 0,
-          lastValue: toNumber(result.value),
-        },
-      ]);
+    const values = multipleResult.filter(RedstoneCommon.isDefined).map((result) => [
+      ContractParamsProvider.unhexlifyFeedId(result.feedId),
+      {
+        lastDataPackageTimestampMS: result.timestamp.toNumber(),
+        lastBlockTimestampMS: result.writeTimestamp?.toNumber() ?? 0,
+        lastValue: toNumber(result.value),
+      },
+    ]);
 
     return Object.fromEntries(values) as ContractData;
   }

@@ -6,14 +6,8 @@ export function changeRelayerConfigFeeds<T extends RelayerSplitConfig>(
   dataFeeds: string[]
 ) {
   relayerConfig.dataFeeds = dataFeeds;
-  relayerConfig.updateTriggers = _.pick(
-    relayerConfig.updateTriggers,
-    dataFeeds
-  );
-  relayerConfig.updateConditions = _.pick(
-    relayerConfig.updateConditions,
-    dataFeeds
-  );
+  relayerConfig.updateTriggers = _.pick(relayerConfig.updateTriggers, dataFeeds);
+  relayerConfig.updateConditions = _.pick(relayerConfig.updateConditions, dataFeeds);
 
   return relayerConfig;
 }

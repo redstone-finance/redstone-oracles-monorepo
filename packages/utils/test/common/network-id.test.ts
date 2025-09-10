@@ -1,9 +1,4 @@
-import {
-  ChainType,
-  deconstructNetworkId,
-  NetworkId,
-  NetworkIdSchema,
-} from "../../src";
+import { ChainType, deconstructNetworkId, NetworkId, NetworkIdSchema } from "../../src";
 
 describe("NetworkIdSchema", () => {
   const stringNumeralCases = ["5", "1", "56"];
@@ -94,12 +89,7 @@ describe("deconstructNetworkId", () => {
   });
 
   describe("should throw on invalid input", () => {
-    const invalidCases: string[] = [
-      "solana/abc",
-      "fuel/",
-      "movement/-1",
-      "evm/1",
-    ];
+    const invalidCases: string[] = ["solana/abc", "fuel/", "movement/-1", "evm/1"];
 
     invalidCases.forEach((input) => {
       it(`throws on invalid networkId: ${input}`, () => {

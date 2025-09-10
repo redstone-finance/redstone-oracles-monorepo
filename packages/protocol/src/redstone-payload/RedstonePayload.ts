@@ -7,10 +7,7 @@ import {
 } from "../common/redstone-constants";
 import { convertIntegerNumberToBytes } from "../common/utils";
 import { SignedDataPackage } from "../data-package/DataPackage";
-import {
-  RedstonePayloadParser,
-  RedstonePayloadParsingResult,
-} from "./RedstonePayloadParser";
+import { RedstonePayloadParser, RedstonePayloadParsingResult } from "./RedstonePayloadParser";
 
 export class RedstonePayload extends Serializable {
   constructor(
@@ -24,10 +21,7 @@ export class RedstonePayload extends Serializable {
     signedDataPackages: SignedDataPackage[],
     unsignedMetadata: BytesLike
   ): string {
-    return new RedstonePayload(
-      signedDataPackages,
-      unsignedMetadata
-    ).toBytesHexWithout0xPrefix();
+    return new RedstonePayload(signedDataPackages, unsignedMetadata).toBytesHexWithout0xPrefix();
   }
 
   toObj() {
@@ -60,19 +54,12 @@ export class RedstonePayload extends Serializable {
 
   serializeSignedDataPackages(): Uint8Array {
     return concat([
-      ...this.signedDataPackages.map((signedDataPackage) =>
-        signedDataPackage.toBytes()
-      ),
-      convertIntegerNumberToBytes(
-        this.signedDataPackages.length,
-        DATA_PACKAGES_COUNT_BS
-      ),
+      ...this.signedDataPackages.map((signedDataPackage) => signedDataPackage.toBytes()),
+      convertIntegerNumberToBytes(this.signedDataPackages.length, DATA_PACKAGES_COUNT_BS),
     ]);
   }
 
-  public static parse(
-    bytesWithRedstonePayloadInTheEnd: Uint8Array
-  ): RedstonePayloadParsingResult {
+  public static parse(bytesWithRedstonePayloadInTheEnd: Uint8Array): RedstonePayloadParsingResult {
     return new RedstonePayloadParser(bytesWithRedstonePayloadInTheEnd).parse();
   }
 }

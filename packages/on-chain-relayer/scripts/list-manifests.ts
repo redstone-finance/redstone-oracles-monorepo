@@ -6,16 +6,10 @@ async function main() {
   const dir = readdirSync("./relayer-manifests");
 
   const manifestsContent = await Promise.all(
-    dir.map((p) =>
-      promises
-        .readFile(path.join("relayer-manifests", p))
-        .then((b) => b.toString())
-    )
+    dir.map((p) => promises.readFile(path.join("relayer-manifests", p)).then((b) => b.toString()))
   );
 
-  const manifests = manifestsContent.map(
-    (c) => JSON.parse(c) as OnChainRelayerManifest
-  );
+  const manifests = manifestsContent.map((c) => JSON.parse(c) as OnChainRelayerManifest);
 
   const manifestInfo = manifests.map((m, i) => {
     const priceFeeds = Object.keys(m.priceFeeds).join(",");

@@ -32,8 +32,7 @@ describe("LayerBankOracleAdapterV2", () => {
   let layerBankAdapter: LayerBankOracleAdapterV2;
 
   // This function uses 18 decimals, all LayerBank feeds have 18 decimals as well
-  const formatDecimals = (value: number) =>
-    ethers.utils.parseEther(String(value));
+  const formatDecimals = (value: number) => ethers.utils.parseEther(String(value));
 
   const updatePrices = async (prices: Record<string, number>) => {
     const dataPoints = Object.entries(prices).map(([dataFeedId, value]) => ({
@@ -44,9 +43,7 @@ describe("LayerBankOracleAdapterV2", () => {
     const curBlockTime = prevBlockTime + 10;
     const mockDataTimestamp = prevBlockTime * 1000;
     await time.setNextBlockTimestamp(curBlockTime);
-    const wrappedAdapter = WrapperBuilder.wrap(
-      layerBankAdapter
-    ).usingSimpleNumericMock({
+    const wrappedAdapter = WrapperBuilder.wrap(layerBankAdapter).usingSimpleNumericMock({
       mockSignersCount: 2,
       dataPoints,
       timestampMilliseconds: mockDataTimestamp,
@@ -73,9 +70,7 @@ describe("LayerBankOracleAdapterV2", () => {
   });
 
   it("Should fail trying to update any feed with 0 value", async () => {
-    await expect(
-      updatePrices({ ...defaultTestValues, wstETH: 0 })
-    ).to.be.revertedWithCustomError(
+    await expect(updatePrices({ ...defaultTestValues, wstETH: 0 })).to.be.revertedWithCustomError(
       layerBankAdapter,
       "DataFeedValueCannotBeZero"
     );
@@ -89,9 +84,7 @@ describe("LayerBankOracleAdapterV2", () => {
         MANTA: 1 + 42 * i,
       };
       await updatePrices(testValues);
-      const prices = await layerBankAdapter.pricesOf(
-        Object.values(assetAddresses)
-      );
+      const prices = await layerBankAdapter.pricesOf(Object.values(assetAddresses));
       for (let i = 0; i < prices.length; i++) {
         const dataFeedId = Object.keys(assetAddresses)[i];
         expect(prices[i]).to.eq(formatDecimals(testValues[dataFeedId]));
@@ -134,24 +127,22 @@ describe("LayerBankOracleAdapterV2", () => {
     const prevBlockTime = await time.latest();
     await time.setNextBlockTimestamp(prevBlockTime + 10 * 3600 + 1);
     await mine();
-    await expect(
-      layerBankAdapter.priceOf(assetAddresses.ETH)
-    ).to.be.revertedWithCustomError(layerBankAdapter, "DataIsStale");
+    await expect(layerBankAdapter.priceOf(assetAddresses.ETH)).to.be.revertedWithCustomError(
+      layerBankAdapter,
+      "DataIsStale"
+    );
   });
 
   it("Should revert for getting 0 values", async () => {
     await expect(layerBankAdapter.priceOf(invalidAddress)).to.be.reverted;
-    await expect(
-      layerBankAdapter.pricesOf([assetAddresses.ETH, assetAddresses.MANTA])
-    ).to.be.reverted;
+    await expect(layerBankAdapter.pricesOf([assetAddresses.ETH, assetAddresses.MANTA])).to.be
+      .reverted;
   });
 
   it("Should revert for an unknown asset", async () => {
     await updatePrices(defaultTestValues);
     await expect(layerBankAdapter.priceOf(invalidAddress)).to.be.reverted;
-    await expect(
-      layerBankAdapter.pricesOf([assetAddresses.ETH, invalidAddress])
-    ).to.be.reverted;
+    await expect(layerBankAdapter.pricesOf([assetAddresses.ETH, invalidAddress])).to.be.reverted;
   });
 
   it("Should get underlying price", async () => {
@@ -176,9 +167,7 @@ describe("LayerBankOracleAdapterV2", () => {
   it("Should fail getting underlying prices for an invalid gToken", async () => {
     await updatePrices(defaultTestValues);
     await expect(
-      layerBankAdapter.getUnderlyingPrice(
-        "0x0000000000000000000000000000000000000003"
-      )
+      layerBankAdapter.getUnderlyingPrice("0x0000000000000000000000000000000000000003")
     ).to.be.revertedWithCustomError(layerBankAdapter, "InvalidGToken");
   });
 
@@ -197,9 +186,7 @@ describe("LayerBankOracleAdapterV2", () => {
     // Check basic PriceFeed functions after one prices update
     await updatePrices(defaultTestValues);
     expect(await priceFeed.latestRound()).to.eq(1);
-    expect(await priceFeed.latestAnswer()).to.eq(
-      defaultTestValues.ETH * 10 ** 8
-    );
+    expect(await priceFeed.latestAnswer()).to.eq(defaultTestValues.ETH * 10 ** 8);
 
     // Check basic PriceFeed functions after another prices update
     await updatePrices({ ...defaultTestValues, ETH: 1234 });

@@ -17,9 +17,7 @@ interface HostnameData {
 const DAY_IN_MS = 24 * 3600 * 1000;
 const MAX_EXPIRATION_PERIOD = 7 * DAY_IN_MS;
 
-export function resolveMonitoringManifest<T>(
-  manifest: GenericMonitoringManifest<T>
-): T {
+export function resolveMonitoringManifest<T>(manifest: GenericMonitoringManifest<T>): T {
   const { defaultConfig, temporaryConfigUpdates } = manifest;
 
   const expirationTimestamp = validateExpirationTimestamp(
@@ -30,8 +28,7 @@ export function resolveMonitoringManifest<T>(
     delete temporaryConfigUpdates["expirationTimestamp"];
   }
 
-  const applyTemporaryConfig =
-    temporaryConfigUpdates && expirationTimestamp > Date.now();
+  const applyTemporaryConfig = temporaryConfigUpdates && expirationTimestamp > Date.now();
 
   const finalConfig = applyTemporaryConfig
     ? _.merge(defaultConfig, temporaryConfigUpdates)
@@ -53,10 +50,7 @@ export async function getRemoteMonitoringManifestConfigFromEnv(): Promise<
 > {
   // this is hack to ease testing locally use only for that
   if (
-    RedstoneCommon.getFromEnv(
-      "OVERRIDE_REMOTE_MANIFEST_WITH_LOCAL",
-      z.boolean().default(false)
-    )
+    RedstoneCommon.getFromEnv("OVERRIDE_REMOTE_MANIFEST_WITH_LOCAL", z.boolean().default(false))
   ) {
     logger.warn(
       `OVERRIDE_REMOTE_MANIFEST_WITH_LOCAL is set to true, overriding remote manifest with local. SHOULD BE SEEN ONLY IN TESTS OR DEV ENV`
@@ -86,10 +80,7 @@ export async function getRemoteMonitoringManifestConfigFromEnv(): Promise<
     manifestsApiKeyPath,
     "MONITORING_MANIFESTS_APIKEY"
   );
-  RedstoneCommon.assert(
-    manifestsApiKey,
-    "Failed to fetch manifest api key from SSM"
-  );
+  RedstoneCommon.assert(manifestsApiKey, "Failed to fetch manifest api key from SSM");
 
   return {
     shouldUseLocal: false,
@@ -106,9 +97,7 @@ function getManifestHostnames(hostnamesData: HostnameData[]): string[] {
   return hostnamesData.map(({ hostname }) => hostname);
 }
 
-function parseExpirationTimestamp(
-  timestamp: string | number | undefined
-): number {
+function parseExpirationTimestamp(timestamp: string | number | undefined): number {
   if (timestamp === undefined) {
     return 0;
   }
@@ -126,9 +115,7 @@ function parseExpirationTimestamp(
 function validateExpirationTimestamp(timestamp: number) {
   if (timestamp > Date.now() + MAX_EXPIRATION_PERIOD) {
     throw new Error(
-      `expirationTimestamp is bigger than ${(
-        MAX_EXPIRATION_PERIOD / DAY_IN_MS
-      ).toFixed(0)} days`
+      `expirationTimestamp is bigger than ${(MAX_EXPIRATION_PERIOD / DAY_IN_MS).toFixed(0)} days`
     );
   }
   return timestamp;

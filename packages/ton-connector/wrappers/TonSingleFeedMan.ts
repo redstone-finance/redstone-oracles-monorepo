@@ -11,15 +11,10 @@ export class TonSingleFeedMan extends TonContract {
     return "single_feed_man";
   }
 
-  async sendWritePrice(
-    provider: ContractProvider,
-    paramsProvider: ContractParamsProvider
-  ) {
+  async sendWritePrice(provider: ContractProvider, paramsProvider: ContractParamsProvider) {
     const builder = messageBuilder(OP_REDSTONE_WRITE_PRICE);
 
-    const payloadCell = createPayloadCell(
-      await paramsProvider.getPayloadHex(false)
-    );
+    const payloadCell = createPayloadCell(await paramsProvider.getPayloadHex(false));
 
     builder.storeRef(payloadCell);
 
@@ -43,18 +38,12 @@ export class TonSingleFeedMan extends TonContract {
     };
   }
 
-  async getPrice(
-    provider: ContractProvider,
-    paramsProvider: ContractParamsProvider
-  ) {
-    const payloadCell = createPayloadCell(
-      await paramsProvider.getPayloadHex(false)
-    );
+  async getPrice(provider: ContractProvider, paramsProvider: ContractParamsProvider) {
+    const payloadCell = createPayloadCell(await paramsProvider.getPayloadHex(false));
 
-    const { stack } = await this.getAltApiContractProvider(provider).get(
-      "get_price",
-      [{ type: "cell", cell: payloadCell }]
-    );
+    const { stack } = await this.getAltApiContractProvider(provider).get("get_price", [
+      { type: "cell", cell: payloadCell },
+    ]);
 
     return {
       price: stack.readBigNumber(),

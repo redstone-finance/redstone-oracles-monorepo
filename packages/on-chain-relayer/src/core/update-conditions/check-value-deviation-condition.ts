@@ -1,17 +1,11 @@
 import { consts, INumericDataPoint } from "@redstone-finance/protocol";
-import {
-  DataPackagesResponse,
-  getDataPackagesTimestamp,
-} from "@redstone-finance/sdk";
+import { DataPackagesResponse, getDataPackagesTimestamp } from "@redstone-finance/sdk";
 import { MathUtils } from "@redstone-finance/utils";
 import { utils } from "ethers";
 
 import { RelayerConfig } from "../../config/RelayerConfig";
 
-const getDataPointsForDataFeedId = (
-  dataPackages: DataPackagesResponse,
-  dataFeedId: string
-) =>
+const getDataPointsForDataFeedId = (dataPackages: DataPackagesResponse, dataFeedId: string) =>
   Object.values(dataPackages)
     .flat()
     .flatMap((dataPackage) => dataPackage!.dataPackage.dataPoints)
@@ -52,10 +46,7 @@ export const checkValueDeviationCondition = (
   let shouldUpdatePrices = false;
   const warnings = verifyDataPackagesAreDisjoint(dataPackages);
   logTrace.addWarnings(warnings);
-  const timestampMilliseconds = getDataPackagesTimestamp(
-    dataPackages,
-    dataFeedId
-  );
+  const timestampMilliseconds = getDataPackagesTimestamp(dataPackages, dataFeedId);
   const dataPoints = getDataPointsForDataFeedId(dataPackages, dataFeedId);
   for (const dataPoint of dataPoints) {
     const dataPointObj = dataPoint.toObj() as INumericDataPoint;
@@ -67,22 +58,14 @@ export const checkValueDeviationCondition = (
       )
     );
 
-    logTrace.addPerDataFeedLog(
-      timestampMilliseconds,
-      valueFromContractAsDecimal,
-      dataPointObj
-    );
+    logTrace.addPerDataFeedLog(timestampMilliseconds, valueFromContractAsDecimal, dataPointObj);
 
-    const currentDeviation = calculateDeviation(
-      dataPointObj.value,
-      valueFromContractAsDecimal
-    );
+    const currentDeviation = calculateDeviation(dataPointObj.value, valueFromContractAsDecimal);
 
     maxDeviation = Math.max(currentDeviation, maxDeviation);
   }
 
-  const minDeviationPercentage =
-    config.updateTriggers[dataFeedId].deviationPercentage;
+  const minDeviationPercentage = config.updateTriggers[dataFeedId].deviationPercentage;
   shouldUpdatePrices ||= maxDeviation >= minDeviationPercentage!;
   logTrace.addDeviationInfo(maxDeviation, minDeviationPercentage!);
 
@@ -95,10 +78,7 @@ export const checkValueDeviationCondition = (
   };
 };
 
-const calculateDeviation = (
-  valueFromFetchedDataPackage: number,
-  valueFromContract: number
-) =>
+const calculateDeviation = (valueFromFetchedDataPackage: number, valueFromContract: number) =>
   MathUtils.calculateDeviationPercent({
     deviatedValue: valueFromFetchedDataPackage,
     baseValue: valueFromContract,
@@ -116,11 +96,7 @@ class ValueDeviationLogTrace {
   }[] = [];
   private readonly warnings: string[] = [];
 
-  addPerDataFeedLog(
-    timestamp: number,
-    valueFromContract: number,
-    dataPoint: INumericDataPoint
-  ) {
+  addPerDataFeedLog(timestamp: number, valueFromContract: number, dataPoint: INumericDataPoint) {
     this.dataFeedId = dataPoint.dataFeedId;
     this.valueFromContract = valueFromContract;
     this.timestamp = timestamp;

@@ -15,20 +15,11 @@ export async function batchPromises<T>(
     }
     const batch = promises.slice(i, i + batchSize);
     const batchResults = await Promise.allSettled(batch.map((f) => f()));
-    const filteredResults = batchResults.filter(
-      (result) => result.status === "fulfilled"
-    );
+    const filteredResults = batchResults.filter((result) => result.status === "fulfilled");
     results.push(...filteredResults.map((result) => result.value));
-    const filteredErrors = batchResults.filter(
-      (result) => result.status === "rejected"
-    );
+    const filteredErrors = batchResults.filter((result) => result.status === "rejected");
     errors.push(...filteredErrors.map((r) => r.reason as Error));
   }
 
-  return assertThenReturnOrFail(
-    results,
-    errors,
-    "batch operation failed",
-    failOnError
-  );
+  return assertThenReturnOrFail(results, errors, "batch operation failed", failOnError);
 }

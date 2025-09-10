@@ -1,7 +1,4 @@
-import {
-  DataPointPlainObj,
-  SignedDataPackagePlainObj,
-} from "@redstone-finance/protocol";
+import { DataPointPlainObj, SignedDataPackagePlainObj } from "@redstone-finance/protocol";
 import { Type } from "class-transformer";
 import {
   IsEnum,

@@ -9,9 +9,7 @@ export const timeoutOrResult = async <T>(
   customErrorMessage?: string,
   timeoutCallback?: TimeoutCallback<T>
 ): Promise<T> => {
-  return await (timeoutMS
-    ? timeout(prom, timeoutMS, customErrorMessage, timeoutCallback)
-    : prom);
+  return await (timeoutMS ? timeout(prom, timeoutMS, customErrorMessage, timeoutCallback) : prom);
 };
 
 export const timeout = async <T>(
@@ -30,9 +28,7 @@ export const timeout = async <T>(
             if (timeoutCallback) {
               return timeoutCallback(resolve, reject);
             }
-            reject(
-              new Error(customErrorMessage ?? `Timeout error ${timeoutMS} [MS]`)
-            );
+            reject(new Error(customErrorMessage ?? `Timeout error ${timeoutMS} [MS]`));
           }, timeoutMS))
       ),
     ]);

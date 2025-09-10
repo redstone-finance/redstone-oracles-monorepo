@@ -1,9 +1,5 @@
 import { BN } from "@coral-xyz/anchor";
-import {
-  PublicKey,
-  TransactionMessage,
-  VersionedTransaction,
-} from "@solana/web3.js";
+import { PublicKey, TransactionMessage, VersionedTransaction } from "@solana/web3.js";
 import { getNttProgram, NTT } from "@wormhole-foundation/sdk-solana-ntt";
 import "dotenv/config";
 import { makeConnection } from "../utils";
@@ -15,11 +11,7 @@ const NTT_ID = "NTtmvKU9dYM3hvKJq4tnrAkSRCqb82R6uTGkLUqY66K";
 const INBOUD_LIMIT = 10000000001;
 const OUTBOUD_LIMIT = 10000000231;
 
-async function main(
-  nttId: string,
-  inboundLimit: number,
-  outboundLimit: number
-) {
+async function main(nttId: string, inboundLimit: number, outboundLimit: number) {
   const connection = makeConnection();
   const solanaLedger = await makeSolana(LEDGER_ACCOUNT);
   const squadUtils = new SquadsMultisig(SQUAD_ADDRESS, connection);

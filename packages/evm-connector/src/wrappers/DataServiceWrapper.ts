@@ -17,9 +17,7 @@ export type DataPackagesRequestInput = WithRequired<
 >;
 
 export class DataServiceWrapper<T extends Contract> extends BaseWrapper<T> {
-  constructor(
-    private readonly dataPackagesRequestParams: DataPackagesRequestInput
-  ) {
+  constructor(private readonly dataPackagesRequestParams: DataPackagesRequestInput) {
     super();
   }
 
@@ -30,22 +28,18 @@ export class DataServiceWrapper<T extends Contract> extends BaseWrapper<T> {
   }
 
   async getDataPackagesForPayload(): Promise<SignedDataPackage[]> {
-    const dataPackagesRequestParams =
-      await this.resolveDataPackagesRequestParams();
+    const dataPackagesRequestParams = await this.resolveDataPackagesRequestParams();
     const dpResponse = await requestDataPackages(dataPackagesRequestParams);
     return Object.values(dpResponse).flat() as SignedDataPackage[];
   }
 
-  private async resolveDataPackagesRequestParams(): Promise<
-    Required<DataPackagesRequestInput>
-  > {
+  private async resolveDataPackagesRequestParams(): Promise<Required<DataPackagesRequestInput>> {
     const fetchedParams = {
       ...this.dataPackagesRequestParams,
     } as Required<DataPackagesRequestInput>;
 
     if (!this.dataPackagesRequestParams.uniqueSignersCount) {
-      fetchedParams.uniqueSignersCount =
-        await this.getUniqueSignersThresholdFromContract();
+      fetchedParams.uniqueSignersCount = await this.getUniqueSignersThresholdFromContract();
     }
 
     if (!this.dataPackagesRequestParams.dataServiceId) {
@@ -55,8 +49,7 @@ export class DataServiceWrapper<T extends Contract> extends BaseWrapper<T> {
     if (!this.dataPackagesRequestParams.urls) {
       fetchedParams.urls = resolveDataServiceUrls(
         // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-        fetchedParams.dataServiceId ??
-          this.dataPackagesRequestParams.dataServiceId
+        fetchedParams.dataServiceId ?? this.dataPackagesRequestParams.dataServiceId
       );
     }
 

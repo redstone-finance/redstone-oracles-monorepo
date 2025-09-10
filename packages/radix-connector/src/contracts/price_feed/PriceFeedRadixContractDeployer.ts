@@ -24,11 +24,7 @@ export class PriceFeedRadixContractDeployer extends PriceAdapterRadixContractCon
 
   private async instantiate() {
     return await this.client.call(
-      new PriceFeedInstantiateRadixFunction(
-        this.packageId,
-        this.adapterAddress,
-        this.feedId
-      )
+      new PriceFeedInstantiateRadixFunction(this.packageId, this.adapterAddress, this.feedId)
     );
   }
 }

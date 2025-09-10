@@ -1,11 +1,7 @@
 import { time } from "@nomicfoundation/hardhat-network-helpers";
 import { SignerWithAddress } from "@nomiclabs/hardhat-ethers/signers";
 import { WrapperBuilder } from "@redstone-finance/evm-connector";
-import {
-  DataPackage,
-  INumericDataPoint,
-  NumericDataPoint,
-} from "@redstone-finance/protocol";
+import { DataPackage, INumericDataPoint, NumericDataPoint } from "@redstone-finance/protocol";
 import {
   calculateHistoricalPackagesTimestamp,
   ContractParamsProvider,
@@ -58,16 +54,13 @@ export const getWrappedContractAndUpdateBlockTimestamp = async (
   });
 };
 
-export const mockConfig = (
-  overrideMockConfig: Record<string, unknown> = {}
-) => {
+export const mockConfig = (overrideMockConfig: Record<string, unknown> = {}) => {
   return {
     relayerIterationInterval: 10,
     rpcUrls: ["http://127.0.0.1:8545"],
     chainName: "HardhatNetwork",
     networkId: 31337,
-    privateKey:
-      "0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80", // well-known private key for the first hardhat account
+    privateKey: "0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80", // well-known private key for the first hardhat account
     adapterContractAddress: "0x5FbDB2315678afecb367f032d93F642f64180aa3",
     dataServiceId: "redstone-main-demo",
     dataFeeds: ["ETH", "BTC"],
@@ -88,8 +81,7 @@ export const mockConfig = (
     },
     adapterContractType: "price-feeds",
     fallbackOffsetInMilliseconds:
-      (overrideMockConfig.fallbackOffsetInMilliseconds as number | undefined) ??
-      0,
+      (overrideMockConfig.fallbackOffsetInMilliseconds as number | undefined) ?? 0,
     healthcheckPingUrl: "http://example.com/ping",
     ...overrideMockConfig,
   } as unknown as RelayerConfig;
@@ -99,13 +91,11 @@ type DataPointsKeys = "ETH" | "BTC";
 
 const mockWallets = [
   {
-    privateKey:
-      "0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80",
+    privateKey: "0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80",
     address: "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
   },
   {
-    privateKey:
-      "0x59c6995e998f97a5a0044966f0945389dc9e86dae88c7a8412f4603b6b78690d",
+    privateKey: "0x59c6995e998f97a5a0044966f0945389dc9e86dae88c7a8412f4603b6b78690d",
     address: "0x70997970C51812dc3A010C7d01b50e0d17dc79C8",
   },
 ];
@@ -132,20 +122,14 @@ export const getDataPackagesResponse = async (
       const dataPoint = new NumericDataPoint(dataPointObj);
       const mockDataPackage = {
         signer: mockWallet.address,
-        dataPackage: new DataPackage(
-          [dataPoint],
-          timestampMilliseconds,
-          dataPoint.dataFeedId
-        ),
+        dataPackage: new DataPackage([dataPoint], timestampMilliseconds, dataPoint.dataFeedId),
       };
       const privateKey = mockWallet.privateKey;
       const signedDataPackage = mockDataPackage.dataPackage.sign(privateKey);
       if (!signedDataPackages[dataPointObj.dataFeedId as DataPointsKeys]) {
         signedDataPackages[dataPointObj.dataFeedId as DataPointsKeys] = [];
       }
-      signedDataPackages[dataPointObj.dataFeedId as DataPointsKeys]!.push(
-        signedDataPackage
-      );
+      signedDataPackages[dataPointObj.dataFeedId as DataPointsKeys]!.push(signedDataPackage);
     }
   }
   return signedDataPackages;
@@ -157,11 +141,7 @@ export class ContractParamsProviderMock extends ContractParamsProvider {
     overrideRequestParamsPackagesIds?: string[],
     cache?: DataPackagesResponseCache
   ) {
-    super(
-      {} as unknown as DataPackagesRequestParams,
-      cache,
-      overrideRequestParamsPackagesIds
-    );
+    super({} as unknown as DataPackagesRequestParams, cache, overrideRequestParamsPackagesIds);
   }
 
   override performRequestingDataPackages() {
@@ -194,29 +174,22 @@ export const getMultiPointDataPackagesResponse = async (
   return signedDataPackages;
 };
 
-export const deployMockSortedOracles = async (
-  signer?: Signer
-): Promise<MockSortedOracles> => {
+export const deployMockSortedOracles = async (signer?: Signer): Promise<MockSortedOracles> => {
   // Deploying AddressSortedLinkedListWithMedian library
-  const AddressSortedLinkedListWithMedianFactory =
-    await ethers.getContractFactory(
-      "AddressSortedLinkedListWithMedian",
-      signer
-    );
-  const sortedLinkedListContract =
-    await AddressSortedLinkedListWithMedianFactory.deploy();
+  const AddressSortedLinkedListWithMedianFactory = await ethers.getContractFactory(
+    "AddressSortedLinkedListWithMedian",
+    signer
+  );
+  const sortedLinkedListContract = await AddressSortedLinkedListWithMedianFactory.deploy();
   await sortedLinkedListContract.deployed();
 
   // Deploying MockSortedOracles contract
-  const MockSortedOraclesFactory = await ethers.getContractFactory(
-    "MockSortedOracles",
-    {
-      libraries: {
-        AddressSortedLinkedListWithMedian: sortedLinkedListContract.address,
-      },
-      signer,
-    } as FactoryOptions
-  );
+  const MockSortedOraclesFactory = await ethers.getContractFactory("MockSortedOracles", {
+    libraries: {
+      AddressSortedLinkedListWithMedian: sortedLinkedListContract.address,
+    },
+    signer,
+  } as FactoryOptions);
   const contract = await MockSortedOraclesFactory.deploy();
   await contract.deployed();
   return contract;
@@ -231,14 +204,9 @@ export const restoreOriginalSystemTime = () => {
   Date.now = originalDateNow;
 };
 
-export async function getImpersonatedSigner(
-  address: string
-): Promise<SignerWithAddress> {
+export async function getImpersonatedSigner(address: string): Promise<SignerWithAddress> {
   const initialFunds = ethers.utils.parseEther("1");
-  await network.provider.send("hardhat_setBalance", [
-    address,
-    ethers.utils.hexValue(initialFunds),
-  ]);
+  await network.provider.send("hardhat_setBalance", [address, ethers.utils.hexValue(initialFunds)]);
   await network.provider.request({
     method: "hardhat_impersonateAccount",
     params: [address],

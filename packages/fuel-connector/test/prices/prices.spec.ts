@@ -6,10 +6,7 @@ import {
 import { BigNumberish } from "ethers";
 import fs from "fs";
 import path from "path";
-import {
-  SAMPLE_PACKAGES_TIMESTAMP,
-  deployPricesContract,
-} from "./prices-contract-test-utils";
+import { SAMPLE_PACKAGES_TIMESTAMP, deployPricesContract } from "./prices-contract-test-utils";
 
 jest.setTimeout(120000);
 
@@ -23,10 +20,7 @@ describe("Prices contract", () => {
 
   it("get_prices should return the price data", async () => {
     const values = await performPayloadTest(
-      async (
-        adapter: IPricesContractAdapter,
-        paramsProvider: ContractParamsProvider
-      ) => {
+      async (adapter: IPricesContractAdapter, paramsProvider: ContractParamsProvider) => {
         return await adapter.getPricesFromPayload(paramsProvider);
       }
     );
@@ -37,10 +31,7 @@ describe("Prices contract", () => {
 
   it("write_prices should write the price data that can be read then", async () => {
     const values = await performPayloadTest(
-      async (
-        adapter: IPricesContractAdapter,
-        paramsProvider: ContractParamsProviderMock
-      ) => {
+      async (adapter: IPricesContractAdapter, paramsProvider: ContractParamsProviderMock) => {
         await adapter.writePricesFromPayloadToContract(paramsProvider);
 
         paramsProvider.overriddenFeedIds = ["ETH", "AVAX", "BTC"];
@@ -65,14 +56,10 @@ describe("Prices contract", () => {
 
   it("write_prices should overwrite prices", async () => {
     const values = await performPayloadTest(
-      async (
-        adapter: IPricesContractAdapter,
-        paramsProvider: ContractParamsProviderMock
-      ) => {
+      async (adapter: IPricesContractAdapter, paramsProvider: ContractParamsProviderMock) => {
         await adapter.writePricesFromPayloadToContract(paramsProvider);
 
-        const newParamsProvider =
-          createContractParamsProviderMock("3sig_ETH_BTC_newer");
+        const newParamsProvider = createContractParamsProviderMock("3sig_ETH_BTC_newer");
         newParamsProvider.overriddenFeedIds = ["BTC"];
 
         await adapter.writePricesFromPayloadToContract(newParamsProvider);
@@ -87,15 +74,10 @@ describe("Prices contract", () => {
   it("write_prices should not write the same price data twice", async () => {
     await expect(
       performPayloadTest(
-        async (
-          adapter: IPricesContractAdapter,
-          paramsProvider: ContractParamsProviderMock
-        ) => {
+        async (adapter: IPricesContractAdapter, paramsProvider: ContractParamsProviderMock) => {
           await adapter.writePricesFromPayloadToContract(paramsProvider);
 
-          return (await adapter.writePricesFromPayloadToContract(
-            paramsProvider
-          )) as BigNumberish[];
+          return (await adapter.writePricesFromPayloadToContract(paramsProvider)) as BigNumberish[];
         }
       )
     ).rejects.toThrow();
@@ -104,10 +86,7 @@ describe("Prices contract", () => {
   it("get_prices should panic with insufficient number of signers", async () => {
     await expect(
       performPayloadTest(
-        async (
-          adapter: IPricesContractAdapter,
-          paramsProvider: ContractParamsProviderMock
-        ) => {
+        async (adapter: IPricesContractAdapter, paramsProvider: ContractParamsProviderMock) => {
           return await adapter.getPricesFromPayload(paramsProvider);
         },
         ["ETH", "BTC", "AVAX"]
@@ -121,12 +100,7 @@ describe("Prices contract", () => {
   ) => {
     const filePath = path.join(__dirname, `../sample-data/${filename}.hex`);
 
-    return new ContractParamsProviderMock(
-      dataFeeds,
-      filePath,
-      fs.readFileSync,
-      3
-    );
+    return new ContractParamsProviderMock(dataFeeds, filePath, fs.readFileSync, 3);
   };
 
   const performPayloadTest = async (
@@ -138,10 +112,7 @@ describe("Prices contract", () => {
     filename = "3sig_ETH_BTC"
   ): Promise<BigNumberish[]> => {
     const adapter = await deployPricesContract();
-    const paramsProvider = createContractParamsProviderMock(
-      filename,
-      dataFeeds
-    );
+    const paramsProvider = createContractParamsProviderMock(filename, dataFeeds);
 
     return await callback(adapter, paramsProvider);
   };

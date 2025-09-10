@@ -1,10 +1,7 @@
 import { Provider } from "@ethersproject/providers";
 import { time } from "@nomicfoundation/hardhat-network-helpers";
 import { SignerWithAddress } from "@nomiclabs/hardhat-ethers/signers";
-import {
-  SimpleNumericMockWrapper,
-  WrapperBuilder,
-} from "@redstone-finance/evm-connector";
+import { SimpleNumericMockWrapper, WrapperBuilder } from "@redstone-finance/evm-connector";
 import { TxDeliveryCall } from "@redstone-finance/rpc-providers";
 import { Tx } from "@redstone-finance/utils";
 import chai, { expect } from "chai";
@@ -19,11 +16,7 @@ import {
   calculateLinkedListPosition,
   prepareLinkedListLocationsForMentoAdapterReport,
 } from "../../../../src/custom-integrations/mento/mento-utils";
-import {
-  MentoAdapterBase,
-  MentoAdapterMock,
-  MockSortedOracles,
-} from "../../../../typechain-types";
+import { MentoAdapterBase, MentoAdapterMock, MockSortedOracles } from "../../../../typechain-types";
 import { deployMockSortedOracles } from "../../../helpers";
 
 let getProviderStub: Sinon.SinonStub<[RelayerConfig], Provider>;
@@ -64,12 +57,7 @@ describe("MentoAdapter", () => {
 
     const tx = await sortedOracles
       .connect(signer)
-      .report(
-        tokenAddress,
-        normalizeValue(valueToReport),
-        lesserKey,
-        greaterKey
-      );
+      .report(tokenAddress, normalizeValue(valueToReport), lesserKey, greaterKey);
     await tx.wait();
   };
 
@@ -104,16 +92,15 @@ describe("MentoAdapter", () => {
 
     // Prepare arguments
     const proposedTimestamp = timestampMilliseconds;
-    const locationsInSortedLinkedLists =
-      await prepareLinkedListLocationsForMentoAdapterReport(
-        {
-          mentoAdapter: adapterToTest,
-          dataPackagesWrapper,
-          sortedOracles,
-        },
-        await adapterToTest.provider.getBlockNumber(),
-        maxAllowedDeviation
-      );
+    const locationsInSortedLinkedLists = await prepareLinkedListLocationsForMentoAdapterReport(
+      {
+        mentoAdapter: adapterToTest,
+        dataPackagesWrapper,
+        sortedOracles,
+      },
+      await adapterToTest.provider.getBlockNumber(),
+      maxAllowedDeviation
+    );
 
     if (!locationsInSortedLinkedLists) {
       return;
@@ -142,10 +129,7 @@ describe("MentoAdapter", () => {
       maxAllowedDeviation
     );
 
-  const expectOracleValues = async (
-    tokenAddress: string,
-    expectedValues: number[]
-  ) => {
+  const expectOracleValues = async (tokenAddress: string, expectedValues: number[]) => {
     const [, oracleValues] = await sortedOracles.getRates(tokenAddress);
     const expectedValuesNormalized = expectedValues.map(normalizeValue);
     expect(oracleValues).to.eql(expectedValuesNormalized);
@@ -166,9 +150,7 @@ describe("MentoAdapter", () => {
     await expectOracleValues(mockToken2Address, [1200]);
   };
 
-  const testModifiedLocations = async (
-    locationsModifier: LocationsModifierFn
-  ) => {
+  const testModifiedLocations = async (locationsModifier: LocationsModifierFn) => {
     await reportDirectly(mockToken1Address, 40, signers[0]);
     await reportDirectly(mockToken1Address, 100, signers[1]);
     await reportWithAdapter(42, 1199, mentoAdapter, locationsModifier);
@@ -186,8 +168,7 @@ describe("MentoAdapter", () => {
     sortedOracles = await deployMockSortedOracles();
 
     // Deploying mento adapter
-    const MentoAdapterFactory =
-      await ethers.getContractFactory("MentoAdapterMock");
+    const MentoAdapterFactory = await ethers.getContractFactory("MentoAdapterMock");
     mentoAdapter = await MentoAdapterFactory.deploy();
     await mentoAdapter.deployed();
 
@@ -196,10 +177,7 @@ describe("MentoAdapter", () => {
   });
 
   it("Should report oracle values", async () => {
-    await checkCommonFunctionsForMentoAdapter(
-      mentoAdapter,
-      sortedOracles.address
-    );
+    await checkCommonFunctionsForMentoAdapter(mentoAdapter, sortedOracles.address);
   });
 
   it("Should report oracle values with other oracles", async () => {
@@ -256,40 +234,26 @@ describe("MentoAdapter", () => {
   });
 
   it("Should properly upgrade mento adapter contract", async () => {
-    const MentoAdapterFactory =
-      await ethers.getContractFactory("MentoAdapterMock");
-    const mentoAdapterV1 = (await upgrades.deployProxy(
-      MentoAdapterFactory
-    )) as MentoAdapterMock;
+    const MentoAdapterFactory = await ethers.getContractFactory("MentoAdapterMock");
+    const mentoAdapterV1 = (await upgrades.deployProxy(MentoAdapterFactory)) as MentoAdapterMock;
     await mentoAdapterV1.setSortedOraclesAddress(sortedOracles.address);
     const contractAddress = mentoAdapterV1.address;
 
     // Check contract before upgrade
-    const dataFeedsCountBeforeUpgrade =
-      await mentoAdapterV1.getDataFeedsCount();
+    const dataFeedsCountBeforeUpgrade = await mentoAdapterV1.getDataFeedsCount();
     expect(dataFeedsCountBeforeUpgrade.toNumber()).to.eql(2);
-    await checkCommonFunctionsForMentoAdapter(
-      mentoAdapterV1,
-      sortedOracles.address
-    );
+    await checkCommonFunctionsForMentoAdapter(mentoAdapterV1, sortedOracles.address);
 
     // Upgrading the contract
-    const MentoAdapterMockV2Factory =
-      await ethers.getContractFactory("MentoAdapterMockV2");
+    const MentoAdapterMockV2Factory = await ethers.getContractFactory("MentoAdapterMockV2");
     await upgrades.upgradeProxy(mentoAdapterV1, MentoAdapterMockV2Factory);
 
     // Check contract after upgrade
-    const mentoAdapterV2 = await ethers.getContractAt(
-      "MentoAdapterMock",
-      contractAddress
-    );
+    const mentoAdapterV2 = await ethers.getContractAt("MentoAdapterMock", contractAddress);
     await mentoAdapterV2.setSortedOraclesAddress(sortedOracles.address);
     const dataFeedsCountAfterUpgrade = await mentoAdapterV2.getDataFeedsCount();
     expect(dataFeedsCountAfterUpgrade.toNumber()).to.eql(1);
-    await checkCommonFunctionsForMentoAdapter(
-      mentoAdapterV2,
-      sortedOracles.address
-    );
+    await checkCommonFunctionsForMentoAdapter(mentoAdapterV2, sortedOracles.address);
   });
 
   it("Should not report oracle values when deviation is too big", async () => {
@@ -313,12 +277,12 @@ describe("MentoAdapter", () => {
   });
 
   it("Should properly read redstone values reported to sorted oracles", async () => {
-    const { proposedTimestamp, timestampMilliseconds } =
-      (await reportWithAdapter(1, 2, mentoAdapter))!;
-    const adapter = new MentoEvmContractAdapter(
-      mentoAdapter,
-      new MockTxDeliveryMan()
-    );
+    const { proposedTimestamp, timestampMilliseconds } = (await reportWithAdapter(
+      1,
+      2,
+      mentoAdapter
+    ))!;
+    const adapter = new MentoEvmContractAdapter(mentoAdapter, new MockTxDeliveryMan());
     const values = await adapter.readLatestRoundContractData(
       ["BTC", "ETH"],
       await mentoAdapter.provider.getBlockNumber(),

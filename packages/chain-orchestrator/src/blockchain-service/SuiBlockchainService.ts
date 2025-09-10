@@ -25,10 +25,7 @@ export class SuiBlockchainService extends NonEvmBlockchainService {
     return new Date(Number(checkpoint.timestampMs));
   }
 
-  async queryTransactionBlocks(
-    objectId: string,
-    cursor: string | null | undefined
-  ) {
+  async queryTransactionBlocks(objectId: string, cursor: string | null | undefined) {
     return await RedstoneCommon.retry({
       ...RETRY_CONFIG,
       fn: async () =>

@@ -7,9 +7,7 @@ import { makeAptosAccount } from "./utils";
 
 export const TIMEOUT_IN_SEC = 20;
 
-export class MoveContractConnector<Adapter>
-  implements IContractConnector<Adapter>
-{
+export class MoveContractConnector<Adapter> implements IContractConnector<Adapter> {
   private readonly logger = loggerFactory("move-contract-connector");
   private readonly account?: Account;
 
@@ -18,10 +16,7 @@ export class MoveContractConnector<Adapter>
     privateKey?: RedstoneCommon.PrivateKey
   ) {
     if (privateKey) {
-      this.account = makeAptosAccount(
-        privateKey.value,
-        privateKey.scheme as PrivateKeyVariants
-      );
+      this.account = makeAptosAccount(privateKey.value, privateKey.scheme as PrivateKeyVariants);
     }
   }
 
@@ -48,10 +43,7 @@ export class MoveContractConnector<Adapter>
   }
 
   async getNormalizedBalance(address: string): Promise<bigint> {
-    return (
-      BigInt(await this.client.getBalance(address)) *
-      BigInt(10 ** 18 / OCTAS_PER_MOVE)
-    );
+    return BigInt(await this.client.getBalance(address)) * BigInt(10 ** 18 / OCTAS_PER_MOVE);
   }
 
   async transfer(toAddress: string, amount: number) {

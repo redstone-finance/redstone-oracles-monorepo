@@ -6,12 +6,7 @@ import {
   requestDataPackages,
 } from "@redstone-finance/sdk";
 import { Adapter } from "erc7412";
-import {
-  decodeAbiParameters,
-  encodeAbiParameters,
-  type Address,
-  type Hex,
-} from "viem";
+import { decodeAbiParameters, encodeAbiParameters, type Address, type Hex } from "viem";
 
 const MAX_TIMESTAMP_DEVIATION = 180_000;
 
@@ -20,11 +15,7 @@ export class RedstoneAdapter implements Adapter {
     return "REDSTONE";
   }
 
-  async fetchOffchainData(
-    _client: unknown,
-    _requester: Address,
-    data: Hex
-  ): Promise<Hex> {
+  async fetchOffchainData(_client: unknown, _requester: Address, data: Hex): Promise<Hex> {
     const [feedId, uniqueSignersCount, dataServiceId] = decodeAbiParameters(
       [{ type: "bytes32" }, { type: "uint8" }, { type: "string" }],
       data
@@ -35,9 +26,7 @@ export class RedstoneAdapter implements Adapter {
       dataServiceId,
       uniqueSignersCount,
       maxTimestampDeviationMS: MAX_TIMESTAMP_DEVIATION,
-      authorizedSigners: getSignersForDataServiceId(
-        dataServiceId as DataServiceIds
-      ),
+      authorizedSigners: getSignersForDataServiceId(dataServiceId as DataServiceIds),
     });
 
     const signedRedstonePayload = await new DataPackagesWrapper(
@@ -45,10 +34,7 @@ export class RedstoneAdapter implements Adapter {
     ).prepareRedstonePayload(true);
 
     const dataTimestamp = BigInt(getDataPackagesTimestamp(dataPackages));
-    const encodedDataTimestamp = encodeAbiParameters(
-      [{ type: "uint256" }],
-      [dataTimestamp]
-    );
+    const encodedDataTimestamp = encodeAbiParameters([{ type: "uint256" }], [dataTimestamp]);
 
     return `${encodedDataTimestamp}${signedRedstonePayload}`;
   }
