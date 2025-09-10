@@ -10,9 +10,7 @@ describe("DuplicatedDataFeeds", function () {
   let contract: SampleDuplicatedDataFeeds;
 
   this.beforeEach(async () => {
-    const ContractFactory = await ethers.getContractFactory(
-      "SampleDuplicatedDataFeeds"
-    );
+    const ContractFactory = await ethers.getContractFactory("SampleDuplicatedDataFeeds");
     contract = await ContractFactory.deploy();
     await contract.deployed();
   });
@@ -29,9 +27,7 @@ describe("DuplicatedDataFeeds", function () {
     const values = await contract.getValuesFromStorage();
     for (let symbolIndex = 0; symbolIndex < dataFeedIds.length; symbolIndex++) {
       const symbol = dataFeedIds[symbolIndex];
-      expect(values[symbolIndex].toNumber()).to.eql(
-        expectedNumericValues[symbol]
-      );
+      expect(values[symbolIndex].toNumber()).to.eql(expectedNumericValues[symbol]);
     }
   };
 
@@ -44,15 +40,7 @@ describe("DuplicatedDataFeeds", function () {
   });
 
   it("Should get oracle values for feeds with duplicates", async () => {
-    await runTestForArrayOfDataFeeds([
-      "ETH",
-      "BTC",
-      "ETH",
-      "ETH",
-      "BTC",
-      "ETH",
-      "BTC",
-    ]);
+    await runTestForArrayOfDataFeeds(["ETH", "BTC", "ETH", "ETH", "BTC", "ETH", "BTC"]);
   });
 
   it("Should get oracle values for feeds with duplicates (100 times BTC)", async () => {

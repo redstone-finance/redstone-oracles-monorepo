@@ -20,9 +20,10 @@ async function executeTransaction(
 ) {
   const multiSigAddress = AccountAddress.from(MULTI_SIG_ADDRESS);
   const contractAddress = readAddress(contractName);
-  const { metadataBytes, bytecode } = JSON.parse(
-    fs.readFileSync(transactionJsonPath, "utf8")
-  ) as { bytecode: HexInput[]; metadataBytes: HexInput };
+  const { metadataBytes, bytecode } = JSON.parse(fs.readFileSync(transactionJsonPath, "utf8")) as {
+    bytecode: HexInput[];
+    metadataBytes: HexInput;
+  };
 
   const payload = await new MovePackageTxBuilder(aptos).objectUpgradeTxPayload(
     multiSigAddress,
@@ -43,11 +44,7 @@ async function executeTransaction(
 async function main() {
   await executeAsLedger(
     (aptos, signerAddress) =>
-      executeTransaction(
-        aptos,
-        signerAddress,
-        getTransactionJsonPath(MULTI_SIG_TX_ID)
-      ),
+      executeTransaction(aptos, signerAddress, getTransactionJsonPath(MULTI_SIG_TX_ID)),
     LEDGER_ACCOUNT_ID
   );
 }

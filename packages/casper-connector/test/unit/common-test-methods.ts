@@ -28,29 +28,14 @@ export async function testReadPricesFromContract(
 ) {
   connection.queryContractDictionary
     .mockImplementationOnce(
-      contractDictionaryMock(
-        wrappedAdapter,
-        STORAGE_KEY_VALUES,
-        "ETH",
-        BigNumber.from(12345)
-      )
+      contractDictionaryMock(wrappedAdapter, STORAGE_KEY_VALUES, "ETH", BigNumber.from(12345))
     )
     .mockImplementationOnce(
-      contractDictionaryMock(
-        wrappedAdapter,
-        STORAGE_KEY_VALUES,
-        "BTC",
-        BigNumber.from(54321)
-      )
+      contractDictionaryMock(wrappedAdapter, STORAGE_KEY_VALUES, "BTC", BigNumber.from(54321))
     );
 
-  const values = await adapter.readPricesFromContract(
-    makeContractParamsProviderMock()
-  );
-  expect(values.map(BigNumber.from)).toStrictEqual([
-    BigNumber.from(12345),
-    BigNumber.from(54321),
-  ]);
+  const values = await adapter.readPricesFromContract(makeContractParamsProviderMock());
+  expect(values.map(BigNumber.from)).toStrictEqual([BigNumber.from(12345), BigNumber.from(54321)]);
 }
 
 export async function testReadTimestampFromContract(
@@ -59,11 +44,7 @@ export async function testReadTimestampFromContract(
   wrappedAdapter: CasperContractAdapter
 ) {
   connection.queryContractData.mockImplementationOnce(
-    contractDataMock(
-      wrappedAdapter,
-      STORAGE_KEY_TIMESTAMP,
-      BigNumber.from(2233)
-    )
+    contractDataMock(wrappedAdapter, STORAGE_KEY_TIMESTAMP, BigNumber.from(2233))
   );
 
   const timestamp = await adapter.readTimestampFromContract();
@@ -75,17 +56,10 @@ export async function testWriteProcessFromPayloadToContract(
   adapter: PriceAdapterCasperContractAdapter
 ) {
   connection.callEntrypoint.mockImplementationOnce(
-    callEntrypointMock(
-      adapter,
-      ENTRY_POINT_WRITE_PRICES,
-      0,
-      checkPayloadRuntimeArgs()
-    )
+    callEntrypointMock(adapter, ENTRY_POINT_WRITE_PRICES, 0, checkPayloadRuntimeArgs())
   );
 
-  const deployId = await adapter.writePricesFromPayloadToContract(
-    makeContractParamsProviderMock()
-  );
+  const deployId = await adapter.writePricesFromPayloadToContract(makeContractParamsProviderMock());
   expect(deployId).toEqual("OK");
 }
 
@@ -107,19 +81,12 @@ export async function testGetPricesFromPayload(
     getComputedValuesContractDictionaryMock(adapter)
   );
 
-  const prices = await adapter.getPricesFromPayload(
-    makeContractParamsProviderMock()
-  );
+  const prices = await adapter.getPricesFromPayload(makeContractParamsProviderMock());
 
-  expect(prices.map(BigNumber.from)).toStrictEqual([
-    BigNumber.from(12345),
-    BigNumber.from(54321),
-  ]);
+  expect(prices.map(BigNumber.from)).toStrictEqual([BigNumber.from(12345), BigNumber.from(54321)]);
 }
 
-function getComputedValuesContractDictionaryMock(
-  adapter: PriceRelayAdapterCasperContractAdapter
-) {
+function getComputedValuesContractDictionaryMock(adapter: PriceRelayAdapterCasperContractAdapter) {
   return contractDictionaryMock(
     adapter,
     STORAGE_KEY_VALUES,

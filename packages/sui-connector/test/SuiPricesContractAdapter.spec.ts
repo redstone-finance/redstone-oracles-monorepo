@@ -1,8 +1,5 @@
 import { SuiClient } from "@mysten/sui/client";
-import {
-  ContractParamsProvider,
-  getSignersForDataServiceId,
-} from "@redstone-finance/sdk";
+import { ContractParamsProvider, getSignersForDataServiceId } from "@redstone-finance/sdk";
 import { RedstoneCommon } from "@redstone-finance/utils";
 import "dotenv/config";
 import {
@@ -60,9 +57,7 @@ describe("SuiPricesContractAdapter", () => {
     it(
       "should write prices from payload to contract",
       async () => {
-        const result = await adapter.writePricesFromPayloadToContract(
-          contractParamsProvider
-        );
+        const result = await adapter.writePricesFromPayloadToContract(contractParamsProvider);
         await checkResult(result);
       },
       WRITE_TEST_TIMEOUT
@@ -78,9 +73,7 @@ describe("SuiPricesContractAdapter", () => {
           authorizedSigners: getSignersForDataServiceId(DATA_SERVICE_ID),
         });
 
-        const result = await adapter.writePricesFromPayloadToContract(
-          contractParamsProvider
-        );
+        const result = await adapter.writePricesFromPayloadToContract(contractParamsProvider);
         await checkResult(result);
       },
       WRITE_TEST_TIMEOUT
@@ -98,9 +91,7 @@ describe("SuiPricesContractAdapter", () => {
 
   describe("readPricesFromContract", () => {
     it("should read prices from contract", async () => {
-      const result = await adapter.readPricesFromContract(
-        contractParamsProvider
-      );
+      const result = await adapter.readPricesFromContract(contractParamsProvider);
       expect(result.length).toBeGreaterThan(0);
       expect(typeof result[0] === "bigint");
     });
@@ -113,9 +104,7 @@ describe("SuiPricesContractAdapter", () => {
         authorizedSigners: getSignersForDataServiceId(DATA_SERVICE_ID),
       });
 
-      const result = await adapter.readPricesFromContract(
-        contractParamsProvider
-      );
+      const result = await adapter.readPricesFromContract(contractParamsProvider);
 
       expect(result.length).toBe(3);
       result.forEach((price) => {

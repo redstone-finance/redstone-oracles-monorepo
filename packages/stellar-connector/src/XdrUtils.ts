@@ -1,11 +1,4 @@
-import {
-  Address,
-  rpc,
-  scValToBigInt,
-  scValToNative,
-  StrKey,
-  xdr,
-} from "@stellar/stellar-sdk";
+import { Address, rpc, scValToBigInt, scValToNative, StrKey, xdr } from "@stellar/stellar-sdk";
 
 const PRICE_KEY = xdr.ScVal.scvSymbol("price");
 const PACKAGE_TIMESTAMP_KEY = xdr.ScVal.scvSymbol("package_timestamp");
@@ -30,9 +23,7 @@ export function ledgerKeyFromAddress(address: string) {
   );
 }
 
-export function accountFromResponse(
-  response: rpc.Api.GetLedgerEntriesResponse
-) {
+export function accountFromResponse(response: rpc.Api.GetLedgerEntriesResponse) {
   if (response.entries.length === 0) {
     throw new Error("Empty response");
   }
@@ -85,9 +76,7 @@ export function parseReadPriceAndTimestampSimulation(
   });
 }
 
-export function parseGetPricesSimulation(
-  sim: rpc.Api.SimulateTransactionSuccessResponse
-) {
+export function parseGetPricesSimulation(sim: rpc.Api.SimulateTransactionSuccessResponse) {
   return parseSimValAs(sim, (val) => {
     const vec = expectValue<xdr.ScVal[]>(val.vec(), "simRetValAsVec");
 
@@ -113,41 +102,26 @@ export function parsePrimitiveFromSimulation<P>(
   return parseSimValAs(sim, (val) => transform(scValToNative(val)));
 }
 
-export function parseBigIntFromSimulation(
-  sim: rpc.Api.SimulateTransactionSuccessResponse
-) {
+export function parseBigIntFromSimulation(sim: rpc.Api.SimulateTransactionSuccessResponse) {
   return parseSimValAs(sim, (val) => scValToBigInt(val));
 }
 
-export function parsePriceDataFromContractData(
-  result: rpc.Api.LedgerEntryResult
-) {
-  const map = expectValue(
-    result.val.contractData().val().map(),
-    "contract data as map"
-  );
+export function parsePriceDataFromContractData(result: rpc.Api.LedgerEntryResult) {
+  const map = expectValue(result.val.contractData().val().map(), "contract data as map");
   return lastRoundDetailsFromXdrMap(map);
 }
 
 export function lastRoundDetailsFromXdrMap(map: xdr.ScMapEntry[]) {
-  const price = scValToBigInt(
-    expectValue(findVal(map, PRICE_KEY), "PRICE_KEY in map").val()
-  );
+  const price = scValToBigInt(expectValue(findVal(map, PRICE_KEY), "PRICE_KEY in map").val());
 
   const packageTimestamp = Number(
     scValToNative(
-      expectValue(
-        findVal(map, PACKAGE_TIMESTAMP_KEY),
-        "PACKAGE_TIMESTAMP_KEY in map"
-      ).val()
+      expectValue(findVal(map, PACKAGE_TIMESTAMP_KEY), "PACKAGE_TIMESTAMP_KEY in map").val()
     )
   );
   const writeTimestamp = Number(
     scValToNative(
-      expectValue(
-        findVal(map, WRITE_TIMESTAMP_KEY),
-        "WRITE_TIMESTAMP_KEY in map"
-      ).val()
+      expectValue(findVal(map, WRITE_TIMESTAMP_KEY), "WRITE_TIMESTAMP_KEY in map").val()
     )
   );
 

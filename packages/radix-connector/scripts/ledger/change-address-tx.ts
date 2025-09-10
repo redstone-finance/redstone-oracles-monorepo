@@ -5,21 +5,12 @@ import { hexlify } from "ethers/lib/utils";
 import { z } from "zod";
 import { RadixClient } from "../../src";
 import { SetGlobalContractAddressInvocationMethod } from "../../src/contracts/proxy/methods/SetGlobalContractAddressInvocationMethod";
-import {
-  FEED_ID,
-  loadAddress,
-  makeRadixClient,
-  PRICE_FEED_NAME,
-  PROXY_NAME,
-} from "../constants";
+import { FEED_ID, loadAddress, makeRadixClient, PRICE_FEED_NAME, PROXY_NAME } from "../constants";
 
 export async function getTx(client: RadixClient) {
   const address = await loadAddress(`component`, PRICE_FEED_NAME, FEED_ID);
   const componentId = await loadAddress(`component`, PROXY_NAME, FEED_ID);
-  const invocation = new SetGlobalContractAddressInvocationMethod(
-    componentId,
-    address
-  );
+  const invocation = new SetGlobalContractAddressInvocationMethod(componentId, address);
 
   return invocation.getDedicatedTransaction(await client.getAccountAddress());
 }

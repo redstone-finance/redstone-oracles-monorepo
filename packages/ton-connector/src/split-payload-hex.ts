@@ -16,9 +16,7 @@ export function splitPayloadHex(payloadHex: string) {
   const unsignedMetadataBS = BigNumber.from(
     "0x" +
       payloadHex.substring(
-        payloadHex.length -
-          2 *
-            (consts.REDSTONE_MARKER_BS + consts.UNSIGNED_METADATA_BYTE_SIZE_BS),
+        payloadHex.length - 2 * (consts.REDSTONE_MARKER_BS + consts.UNSIGNED_METADATA_BYTE_SIZE_BS),
         payloadHex.length - 2 * consts.REDSTONE_MARKER_BS
       )
   ).toNumber();
@@ -29,10 +27,7 @@ export function splitPayloadHex(payloadHex: string) {
     unsignedMetadataBS +
     consts.DATA_PACKAGES_COUNT_BS;
 
-  const metadata = payloadHex.substring(
-    payloadHex.length - 2 * metadataBS,
-    payloadHex.length
-  );
+  const metadata = payloadHex.substring(payloadHex.length - 2 * metadataBS, payloadHex.length);
 
   const dataPackageCount = BigNumber.from(
     "0x" + metadata.substring(0, consts.DATA_PACKAGES_COUNT_BS * 2)
@@ -47,10 +42,7 @@ export function splitPayloadHex(payloadHex: string) {
   const dataPackageChunks: string[] = [];
   for (let i = 0; i < dataPackageCount; i++) {
     dataPackageChunks.push(
-      payloadHex.substring(
-        i * 2 * DATA_PACKAGE_BS,
-        (i + 1) * 2 * DATA_PACKAGE_BS
-      )
+      payloadHex.substring(i * 2 * DATA_PACKAGE_BS, (i + 1) * 2 * DATA_PACKAGE_BS)
     );
   }
 

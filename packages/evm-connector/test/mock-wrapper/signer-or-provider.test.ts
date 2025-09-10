@@ -15,9 +15,7 @@ describe("SignerOrProviderTest", function () {
   let deployedContract: SampleRedstoneConsumerNumericMock;
 
   this.beforeEach(async () => {
-    const ContractFactory = await ethers.getContractFactory(
-      "SampleRedstoneConsumerNumericMock"
-    );
+    const ContractFactory = await ethers.getContractFactory("SampleRedstoneConsumerNumericMock");
     deployedContract = await ContractFactory.deploy();
     await deployedContract.deployed();
   });
@@ -38,21 +36,16 @@ describe("SignerOrProviderTest", function () {
     const wrappedContract =
       WrapperBuilder.wrap(contract).usingMockDataPackages(mockNumericPackages);
 
-    await expect(
-      wrappedContract.saveOracleValueInContractStorage(DATA_FEED_ID)
-    ).to.be.rejectedWith(
+    await expect(wrappedContract.saveOracleValueInContractStorage(DATA_FEED_ID)).to.be.rejectedWith(
       "Cannot read properties of null (reading 'sendTransaction')"
     );
   });
 
   it("Should call non-static function with signer", async () => {
     const wrappedContract =
-      WrapperBuilder.wrap(deployedContract).usingMockDataPackages(
-        mockNumericPackages
-      );
+      WrapperBuilder.wrap(deployedContract).usingMockDataPackages(mockNumericPackages);
 
-    const tx =
-      await wrappedContract.saveOracleValueInContractStorage(DATA_FEED_ID);
+    const tx = await wrappedContract.saveOracleValueInContractStorage(DATA_FEED_ID);
     await tx.wait();
   });
 });

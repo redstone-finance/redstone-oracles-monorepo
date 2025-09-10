@@ -1,7 +1,4 @@
-import {
-  ContractParamsProvider,
-  getSignersForDataServiceId,
-} from "@redstone-finance/sdk";
+import { ContractParamsProvider, getSignersForDataServiceId } from "@redstone-finance/sdk";
 import { NetworkProvider } from "@ton/blueprint";
 import { BlueprintTonNetwork } from "../src";
 import { config } from "../src/config";

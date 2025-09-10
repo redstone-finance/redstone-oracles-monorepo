@@ -6,10 +6,7 @@ import {
   getSignersForDataServiceId,
   sampleRun,
 } from "@redstone-finance/sdk";
-import {
-  PriceAdapterRadixContractConnector,
-  PriceFeedRadixContractConnector,
-} from "../src";
+import { PriceAdapterRadixContractConnector, PriceFeedRadixContractConnector } from "../src";
 import {
   DATA_SERVICE_ID,
   FEED_ID,

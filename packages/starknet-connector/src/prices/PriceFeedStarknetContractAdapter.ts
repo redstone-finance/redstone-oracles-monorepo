@@ -1,13 +1,8 @@
-import {
-  IPriceFeedContractAdapter,
-  PriceAndTimestamp,
-} from "@redstone-finance/sdk";
+import { IPriceFeedContractAdapter, PriceAndTimestamp } from "@redstone-finance/sdk";
 import { Contract } from "starknet";
 import { extractNumbers } from "../starknet-utils";
 
-export class PriceFeedStarknetContractAdapter
-  implements IPriceFeedContractAdapter
-{
+export class PriceFeedStarknetContractAdapter implements IPriceFeedContractAdapter {
   constructor(private readonly contract: Contract) {}
 
   async getPriceAndTimestamp(): Promise<PriceAndTimestamp> {

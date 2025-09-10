@@ -45,11 +45,7 @@ const allReadGateways = {
 
 const DEV_GWS = [allReadGateways.dev1_aws, allReadGateways.dev1_gcp];
 
-const PROD_GWS = [
-  allReadGateways.prod1_gcp,
-  allReadGateways.prod1_aws,
-  allReadGateways.prod2_aws,
-];
+const PROD_GWS = [allReadGateways.prod1_gcp, allReadGateways.prod1_aws, allReadGateways.prod2_aws];
 
 const REDSTONE_DATA_SERVICES_URLS: Partial<Record<string, Gateway[]>> = {
   "redstone-primary-prod": PROD_GWS,
@@ -70,16 +66,13 @@ export const resolveDataServiceUrls = (
 ): string[] => {
   const gateways = REDSTONE_DATA_SERVICES_URLS[dataServiceId];
   if (!gateways) {
-    throw new Error(
-      `Data service ${dataServiceId} is not configured by RedStone protocol`
-    );
+    throw new Error(`Data service ${dataServiceId} is not configured by RedStone protocol`);
   }
 
   return gateways
     .filter(
       (gateway) =>
-        (!opts?.historical || gateway.historical) &&
-        (!opts?.metadata || gateway.metadata)
+        (!opts?.historical || gateway.historical) && (!opts?.metadata || gateway.metadata)
     )
     .map((gw) => gw.url);
 };

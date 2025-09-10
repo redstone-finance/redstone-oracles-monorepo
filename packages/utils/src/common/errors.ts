@@ -13,9 +13,7 @@ export function assert(
   unrecoverable: boolean = false
 ): asserts value {
   if (!value) {
-    throw new (unrecoverable ? UnrecoverableError : Error)(
-      `Assertion failed: ${errMsg}`
-    );
+    throw new (unrecoverable ? UnrecoverableError : Error)(`Assertion failed: ${errMsg}`);
   }
 }
 
@@ -121,9 +119,7 @@ export function stringifyError(e: unknown, noStack = false): string {
     if (error === undefined) {
       return "undefined";
     } else if (error instanceof AggregateError) {
-      const errorMessages: string[] = error.errors.map((e) =>
-        stringifyError(e, noStack)
-      );
+      const errorMessages: string[] = error.errors.map((e) => stringifyError(e, noStack));
       return `AggregateError: ${error.message ? error.message : "<no message>"}, errors: ${errorMessages.join(
         "; "
       )}`;
@@ -146,18 +142,14 @@ export function stringifyError(e: unknown, noStack = false): string {
         showStack(error.stack)
       );
     } else if (error instanceof Error) {
-      const causeString = error.cause
-        ? `cause: ${stringifyError(error.cause, noStack)}`
-        : "";
+      const causeString = error.cause ? `cause: ${stringifyError(error.cause, noStack)}` : "";
       return [error.message, noStack ? "" : showStack(error.stack), causeString]
         .filter((str) => str.length > 0)
         .join(" ");
     } else if (typeof error.toJSON === "function") {
       return JSON.stringify(error.toJSON());
     } else {
-      return `Error couldn't be handled by the stringifyError function: ${String(
-        e
-      )}`;
+      return `Error couldn't be handled by the stringifyError function: ${String(e)}`;
     }
   } catch (handlingError) {
     return `StringifyError thrown error: ${String(handlingError)} when stringifying error :${String(e)}`;

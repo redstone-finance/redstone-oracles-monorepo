@@ -5,10 +5,7 @@ import { PriceRelayAdapterCasperContractAdapter } from "./PriceRelayAdapterCaspe
 export class PriceRelayAdapterCasperContractConnector extends CasperContractConnector<IPricesContractAdapter> {
   getAdapter(): Promise<IPricesContractAdapter> {
     return Promise.resolve(
-      new PriceRelayAdapterCasperContractAdapter(
-        this.connection,
-        this.getContract()
-      )
+      new PriceRelayAdapterCasperContractAdapter(this.connection, this.getContract())
     );
   }
 }

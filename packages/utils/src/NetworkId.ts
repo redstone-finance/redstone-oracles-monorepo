@@ -42,9 +42,7 @@ export function isNonEvmNetworkId(
   return !isEvmNetworkId(networkId);
 }
 
-export function isNonEvmChainType(
-  chainType?: string
-): chainType is NonEvmChainType {
+export function isNonEvmChainType(chainType?: string): chainType is NonEvmChainType {
   return !isEvmChainType(chainType);
 }
 
@@ -75,10 +73,7 @@ export function deconstructNetworkId(networkId: NetworkId): {
   return { chainType, chainId };
 }
 
-export function constructNetworkId(
-  chainId: number,
-  chainType?: ChainType
-): NetworkId {
+export function constructNetworkId(chainId: number, chainType?: ChainType): NetworkId {
   if (!chainType || chainType === ChainTypeEnum.Enum.evm) {
     return chainId;
   }

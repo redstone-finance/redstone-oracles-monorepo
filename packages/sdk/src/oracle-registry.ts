@@ -6,8 +6,7 @@ export interface RedstoneOraclesState {
   dataServices: DataServices;
 }
 
-export type DataServiceIds =
-  keyof (typeof redstoneOraclesInitialState)["dataServices"];
+export type DataServiceIds = keyof (typeof redstoneOraclesInitialState)["dataServices"];
 
 export type Nodes = { [key: string]: Node };
 export type RegisterNodeInputData = Node;
@@ -35,10 +34,9 @@ export interface DataService {
 
 export const EXTERNAL_SIGNERS_CUTOFF_DATE = new Date("2024-01-02").getTime();
 
-export const getOracleRegistryState =
-  async (): Promise<RedstoneOraclesState> => {
-    return await Promise.resolve(redstoneOraclesInitialState);
-  };
+export const getOracleRegistryState = async (): Promise<RedstoneOraclesState> => {
+  return await Promise.resolve(redstoneOraclesInitialState);
+};
 
 export const getOracleRegistryStateSync = () => redstoneOraclesInitialState;
 
@@ -54,30 +52,27 @@ export const getDataServiceIdForSigner = (
   throw new Error(`Data service not found for ${signerAddress}`);
 };
 
-const preloadedSigners = new Map<
-  DataServiceIds,
-  { internal: string[]; all: string[] }
->();
-(
-  Object.keys(redstoneOraclesInitialState.dataServices) as DataServiceIds[]
-).forEach((dataServiceId) => {
-  const internalSigners = Object.values(redstoneOraclesInitialState.nodes)
-    .filter(
-      (node) =>
-        node.dataServiceId === dataServiceId &&
-        new Date(node.dateAdded).getTime() < EXTERNAL_SIGNERS_CUTOFF_DATE
-    )
-    .map((node) => node.evmAddress);
+const preloadedSigners = new Map<DataServiceIds, { internal: string[]; all: string[] }>();
+(Object.keys(redstoneOraclesInitialState.dataServices) as DataServiceIds[]).forEach(
+  (dataServiceId) => {
+    const internalSigners = Object.values(redstoneOraclesInitialState.nodes)
+      .filter(
+        (node) =>
+          node.dataServiceId === dataServiceId &&
+          new Date(node.dateAdded).getTime() < EXTERNAL_SIGNERS_CUTOFF_DATE
+      )
+      .map((node) => node.evmAddress);
 
-  const allSigners = Object.values(redstoneOraclesInitialState.nodes)
-    .filter((node) => node.dataServiceId === dataServiceId)
-    .map((node) => node.evmAddress);
+    const allSigners = Object.values(redstoneOraclesInitialState.nodes)
+      .filter((node) => node.dataServiceId === dataServiceId)
+      .map((node) => node.evmAddress);
 
-  preloadedSigners.set(dataServiceId, {
-    internal: internalSigners,
-    all: allSigners,
-  });
-});
+    preloadedSigners.set(dataServiceId, {
+      internal: internalSigners,
+      all: allSigners,
+    });
+  }
+);
 
 export function getSignersForDataServiceId(
   dataServiceId: DataServiceIds,

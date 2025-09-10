@@ -7,9 +7,7 @@ describe("retry", () => {
 
   // Successful Execution on First Try
   test("should succeed on first try without retrying", async () => {
-    const mockFunction = jest
-      .fn()
-      .mockResolvedValueOnce("success") as jest.Mock<Promise<string>>;
+    const mockFunction = jest.fn().mockResolvedValueOnce("success") as jest.Mock<Promise<string>>;
 
     const result = await retry({
       fn: mockFunction,

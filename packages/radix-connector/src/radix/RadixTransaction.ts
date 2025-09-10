@@ -23,11 +23,7 @@ export class RadixTransaction {
   }
 
   private getMethods(): RadixInvocation<unknown>[] {
-    return [
-      ...this.getInitMethods(),
-      ...this.bodyMethods,
-      ...this.getFinalMethods(),
-    ];
+    return [...this.getInitMethods(), ...this.bodyMethods, ...this.getFinalMethods()];
   }
 
   getManifest() {
@@ -43,9 +39,7 @@ export class RadixTransaction {
   interpret(output: unknown[]) {
     const index = DEFAULT_TRANSACTION_XRD_FEE + this.getFinalMethods().length;
 
-    return this.bodyMethods[this.bodyMethods.length - 1].interpret(
-      output[output.length - index]
-    );
+    return this.bodyMethods[this.bodyMethods.length - 1].interpret(output[output.length - index]);
   }
 }
 

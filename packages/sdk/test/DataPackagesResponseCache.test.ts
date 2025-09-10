@@ -73,9 +73,7 @@ describe("isConforming tests", () => {
     ]) {
       expect(isConforming(thisRequestParams, otherPrams, ["BTC"])).toBe(true);
       expect(isConforming(thisRequestParams, otherPrams, ["ETH"])).toBe(true);
-      expect(isConforming(thisRequestParams, otherPrams, ["ETH", "BTC"])).toBe(
-        true
-      );
+      expect(isConforming(thisRequestParams, otherPrams, ["ETH", "BTC"])).toBe(true);
     }
   });
 
@@ -87,9 +85,7 @@ describe("isConforming tests", () => {
       { ...thisNewParams, dataPackagesIds: ["BTC"] },
       { ...thisNewParams, dataPackagesIds: ["BTC", "ETH"] },
     ]) {
-      expect(isConforming(thisNewParams, otherPrams, ["ETH", "BTC"])).toBe(
-        true
-      );
+      expect(isConforming(thisNewParams, otherPrams, ["ETH", "BTC"])).toBe(true);
     }
   });
 
@@ -100,9 +96,7 @@ describe("isConforming tests", () => {
       ignoreMissingFeed: false,
     };
 
-    expect(isConforming(thisNewParams, { ...thisNewParams }, ["BTC"])).toBe(
-      false
-    );
+    expect(isConforming(thisNewParams, { ...thisNewParams }, ["BTC"])).toBe(false);
   });
 
   it("should return false if one of important request params is not equal", () => {

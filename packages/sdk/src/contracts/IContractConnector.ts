@@ -7,10 +7,7 @@ export interface IContractConnector<Adapter> {
 
   /// Normalized to a number for which 1 XYZ means 1e18
   /// In some monitoring mechanisms we assume the currency is denominated to 10 ** 18 units
-  getNormalizedBalance?: (
-    address: string,
-    blockNumber?: number
-  ) => Promise<bigint>;
+  getNormalizedBalance?: (address: string, blockNumber?: number) => Promise<bigint>;
 
   transfer?: (toAddress: string, amount: number) => Promise<void>;
 

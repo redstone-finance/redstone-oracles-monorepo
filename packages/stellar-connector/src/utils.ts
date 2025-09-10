@@ -11,15 +11,10 @@ export function makeKeypair(privateKey = readPrivateKey()) {
     }
 
     return Keypair.fromRawEd25519Seed(
-      Buffer.from(
-        privateKey.startsWith("0x") ? privateKey.substring(2) : privateKey,
-        "hex"
-      )
+      Buffer.from(privateKey.startsWith("0x") ? privateKey.substring(2) : privateKey, "hex")
     );
   } catch (e) {
-    throw new Error(
-      `Wrong secret key format: ${RedstoneCommon.stringifyError(e)}`
-    );
+    throw new Error(`Wrong secret key format: ${RedstoneCommon.stringifyError(e)}`);
   }
 }
 

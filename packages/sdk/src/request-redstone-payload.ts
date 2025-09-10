@@ -1,11 +1,5 @@
-import {
-  RedstonePayload,
-  type SignedDataPackage,
-} from "@redstone-finance/protocol";
-import {
-  requestDataPackages,
-  type DataPackagesRequestParams,
-} from "./request-data-packages";
+import { RedstonePayload, type SignedDataPackage } from "@redstone-finance/protocol";
+import { requestDataPackages, type DataPackagesRequestParams } from "./request-data-packages";
 import type { DataPackagesResponse } from "./request-data-packages-common";
 
 export const convertDataPackagesResponse = (
@@ -17,10 +11,7 @@ export const convertDataPackagesResponse = (
     signedDataPackagesResponse
   ).flat() as SignedDataPackage[];
 
-  const payload = new RedstonePayload(
-    signedDataPackages,
-    unsignedMetadataMsg ?? ""
-  );
+  const payload = new RedstonePayload(signedDataPackages, unsignedMetadataMsg ?? "");
 
   switch (format) {
     case "json":
@@ -39,9 +30,5 @@ export const requestRedstonePayload = async (
 ): Promise<string> => {
   const signedDataPackagesResponse = await requestDataPackages(reqParams);
 
-  return convertDataPackagesResponse(
-    signedDataPackagesResponse,
-    format,
-    unsignedMetadataMsg
-  );
+  return convertDataPackagesResponse(signedDataPackagesResponse, format, unsignedMetadataMsg);
 };

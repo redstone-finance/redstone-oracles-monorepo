@@ -46,20 +46,14 @@ export const convertNumberToBytes = (
 
   if (byteSize < bytesValue.length) {
     throw new Error(
-      `Overflow: ` +
-        `value: ${value}, ` +
-        `decimals: ${decimals}, ` +
-        `byteSize: ${byteSize}`
+      `Overflow: ` + `value: ${value}, ` + `decimals: ${decimals}, ` + `byteSize: ${byteSize}`
     );
   } else {
     return zeroPad(bytesValue, byteSize);
   }
 };
 
-export const convertNumberToString = (
-  value: NumberLike,
-  decimals: number
-): string => {
+export const convertNumberToString = (value: NumberLike, decimals: number): string => {
   if (typeof value === "string") {
     // It would be ideal to have this implementation
     // for all types, but implementing it would break
@@ -80,29 +74,19 @@ export const convertNumberToString = (
   });
 };
 
-export const convertIntegerNumberToBytes = (
-  value: NumberLike,
-  byteSize: number
-): Uint8Array => {
-  assert(
-    Number.isInteger(Number(value)),
-    "convertIntegerNumberToBytes expects integer as input"
-  );
+export const convertIntegerNumberToBytes = (value: NumberLike, byteSize: number): Uint8Array => {
+  assert(Number.isInteger(Number(value)), "convertIntegerNumberToBytes expects integer as input");
   const decimals = 0; // 0 digits after comma
   return convertNumberToBytes(value, decimals, byteSize);
 };
 
-export const convertBytesToNumber = (bytes: Uint8Array): number =>
-  BigNumber.from(bytes).toNumber();
+export const convertBytesToNumber = (bytes: Uint8Array): number => BigNumber.from(bytes).toNumber();
 
 export const hexlifyWithout0xPrefix = (value: BytesLike): string => {
   return hexlify(value).slice(ZERO_EX_PREFIX_LENGTH);
 };
 
-export function useDefaultIfUndefined<T>(
-  value: T | undefined,
-  defaultValue: T
-): T {
+export function useDefaultIfUndefined<T>(value: T | undefined, defaultValue: T): T {
   return value ?? defaultValue;
 }
 

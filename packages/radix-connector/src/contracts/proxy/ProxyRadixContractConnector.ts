@@ -8,9 +8,6 @@ export class ProxyRadixContractConnector extends RadixContractConnector<ProxyFee
   }
 
   override async getAdapter(): Promise<ProxyFeedRadixContractAdapter> {
-    return new ProxyFeedRadixContractAdapter(
-      this.client,
-      await this.getComponentId()
-    );
+    return new ProxyFeedRadixContractAdapter(this.client, await this.getComponentId());
   }
 }

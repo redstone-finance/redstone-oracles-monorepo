@@ -1,9 +1,4 @@
-import {
-  enumeration,
-  Expression,
-  expression,
-  Value,
-} from "@radixdlt/radix-engine-toolkit";
+import { enumeration, Expression, expression, Value } from "@radixdlt/radix-engine-toolkit";
 import { VoidRadixInvocation } from "../radix/RadixInvocation";
 
 export class TryDepositBatchOrAbortRadixMethod extends VoidRadixInvocation {

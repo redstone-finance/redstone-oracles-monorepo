@@ -20,16 +20,7 @@ describe("utils/numbers", () => {
     });
 
     it("Should return NaN for not string or valid numbers", () => {
-      const nanValues = [
-        NaN,
-        null,
-        undefined,
-        false,
-        true,
-        {},
-        { haha: 12 },
-        [3, 2, 4],
-      ];
+      const nanValues = [NaN, null, undefined, false, true, {}, { haha: 12 }, [3, 2, 4]];
       for (const nanValue of nanValues) {
         expect(safelyConvertAnyValueToNumber(nanValue)).toBe(NaN);
       }

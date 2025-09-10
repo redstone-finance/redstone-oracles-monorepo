@@ -40,9 +40,7 @@ const CuratedRpcListConfigSchema = z.object({
     ),
   extendedLogs: z
     .boolean()
-    .default(() =>
-      getFromEnv("RPC_CURATED_LIST_EXTENDED_LOGS", z.boolean().default(false))
-    ),
+    .default(() => getFromEnv("RPC_CURATED_LIST_EXTENDED_LOGS", z.boolean().default(false))),
   rpcIdentifiers: z.string().array().min(1),
   minimalProvidersCount: z.number(),
 });
@@ -143,9 +141,7 @@ export class CuratedRpcList {
       .map(([rpc]) => rpc);
 
     if (healthyProviders.length < this.config.minimalProvidersCount) {
-      this.logger.warn(
-        `Not enough healthy providers, have to release one from quarantine`
-      );
+      this.logger.warn(`Not enough healthy providers, have to release one from quarantine`);
 
       this.freeOneRpcFromQuarantine();
 
@@ -158,9 +154,7 @@ export class CuratedRpcList {
   freeOneRpcFromQuarantine(): void {
     const providersInQuarantine = this.getProvidersInQuarantine();
 
-    const weights = providersInQuarantine.map(
-      (v) => 1 / v[1].quarantineCounter
-    );
+    const weights = providersInQuarantine.map((v) => 1 / v[1].quarantineCounter);
 
     const index = weightedRandom(weights);
 
@@ -183,14 +177,10 @@ export class CuratedRpcList {
   }
 
   private getProvidersInQuarantine() {
-    return Object.entries(this.state).filter(
-      ([_, { inQuarantine }]) => inQuarantine
-    );
+    return Object.entries(this.state).filter(([_, { inQuarantine }]) => inQuarantine);
   }
 
   private getCalledProviders() {
-    return Object.entries(this.state).filter(
-      ([_, { callsCount }]) => callsCount > 0
-    );
+    return Object.entries(this.state).filter(([_, { callsCount }]) => callsCount > 0);
   }
 }

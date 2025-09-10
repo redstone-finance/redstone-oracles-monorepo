@@ -50,10 +50,7 @@ function storeMetadata(metadataHex: string, builder: Builder) {
 }
 
 function storeSignatureAndData(dataPackageHex: string, builder: Builder) {
-  const data = dataPackageHex.substring(
-    0,
-    dataPackageHex.length - 2 * consts.SIGNATURE_BS
-  );
+  const data = dataPackageHex.substring(0, dataPackageHex.length - 2 * consts.SIGNATURE_BS);
   const signature = dataPackageHex.substring(
     dataPackageHex.length - 2 * consts.SIGNATURE_BS,
     dataPackageHex.length

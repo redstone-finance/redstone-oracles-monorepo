@@ -2,15 +2,8 @@ import { utils } from "@redstone-finance/protocol";
 import { expect } from "chai";
 import { ethers } from "hardhat";
 import { WrapperBuilder } from "../../src";
-import {
-  MockSignerIndex,
-  getMockNumericPackage,
-  getRange,
-} from "../../src/helpers/test-utils";
-import {
-  SampleStorageProxy,
-  SampleStorageProxyConsumer,
-} from "../../typechain-types";
+import { MockSignerIndex, getMockNumericPackage, getRange } from "../../src/helpers/test-utils";
+import { SampleStorageProxy, SampleStorageProxyConsumer } from "../../typechain-types";
 import {
   NUMBER_OF_MOCK_NUMERIC_SIGNERS,
   expectedNumericValues,
@@ -54,8 +47,7 @@ describe("SampleStorageProxy", function () {
   const ethDataFeedId = utils.convertStringToBytes32("ETH");
 
   this.beforeEach(async () => {
-    const SampleStorageFactory =
-      await ethers.getContractFactory("SampleStorageProxy");
+    const SampleStorageFactory = await ethers.getContractFactory("SampleStorageProxy");
     contract = await SampleStorageFactory.deploy();
     await contract.deployed();
 
@@ -63,9 +55,7 @@ describe("SampleStorageProxy", function () {
       "SampleStorageProxyConsumer"
     );
 
-    consumerContract = await SampleStorageProxyConsumer.deploy(
-      contract.address
-    );
+    consumerContract = await SampleStorageProxyConsumer.deploy(contract.address);
     await consumerContract.deployed();
 
     await contract.register(consumerContract.address);
@@ -75,8 +65,7 @@ describe("SampleStorageProxy", function () {
     const wrappedContract =
       WrapperBuilder.wrap(contract).usingMockDataPackages(mockNumericPackages);
 
-    const fetchedValue =
-      await wrappedContract.fetchValueUsingProxyDryRun(ethDataFeedId);
+    const fetchedValue = await wrappedContract.fetchValueUsingProxyDryRun(ethDataFeedId);
 
     expect(fetchedValue).to.eq(expectedNumericValues.ETH);
   });
@@ -85,13 +74,9 @@ describe("SampleStorageProxy", function () {
     const wrappedContract =
       WrapperBuilder.wrap(contract).usingMockDataPackages(mockNumericPackages);
 
-    const fetchedValue =
-      await wrappedContract.fetchStructUsingProxyDryRun(ethDataFeedId);
+    const fetchedValue = await wrappedContract.fetchStructUsingProxyDryRun(ethDataFeedId);
 
-    const expectedValue = [
-      "sample",
-      ethers.BigNumber.from(expectedNumericValues.ETH),
-    ];
+    const expectedValue = ["sample", ethers.BigNumber.from(expectedNumericValues.ETH)];
 
     expect(fetchedValue).to.deep.equal(expectedValue);
   });
@@ -106,8 +91,7 @@ describe("SampleStorageProxy", function () {
       ethers.BigNumber.from(dataPoint.value * 10 ** 8)
     );
 
-    const fetchedValues =
-      await wrappedContract.fetchValuesUsingProxyDryRun(dataFeedIdsBytes);
+    const fetchedValues = await wrappedContract.fetchValuesUsingProxyDryRun(dataFeedIdsBytes);
 
     expect(dataValues).to.deep.eq(fetchedValues);
   });
@@ -119,9 +103,7 @@ describe("SampleStorageProxy", function () {
       WrapperBuilder.wrap(contract).usingMockDataPackages(mockNumericPackages);
 
     const fetchedValues =
-      await wrappedContract.fetchArrayOfStructsUsingProxyDryRun(
-        dataFeedIdsBytes
-      );
+      await wrappedContract.fetchArrayOfStructsUsingProxyDryRun(dataFeedIdsBytes);
 
     const dataValues = dataPoints.map((dataPoint) => [
       "sample",
@@ -138,14 +120,10 @@ describe("SampleStorageProxy", function () {
       WrapperBuilder.wrap(contract).usingMockDataPackages(mockNumericPackages);
 
     const fetchedValues =
-      await wrappedContract.fetchStructOfArraysUsingProxyDryRun(
-        dataFeedIdsBytes
-      );
+      await wrappedContract.fetchStructOfArraysUsingProxyDryRun(dataFeedIdsBytes);
 
     const names = dataPoints.map((_dataPoint) => "sample");
-    const values = dataPoints.map((dataPoint) =>
-      ethers.BigNumber.from(dataPoint.value * 10 ** 8)
-    );
+    const values = dataPoints.map((dataPoint) => ethers.BigNumber.from(dataPoint.value * 10 ** 8));
 
     const dataValuesArray = [names, values];
 
@@ -187,13 +165,10 @@ describe("SampleStorageProxy", function () {
     const wrappedContract =
       WrapperBuilder.wrap(contract).usingMockDataPackages(mockNumericPackages);
 
-    const dataValues = dataPoints.map((dataPoint) =>
-      Math.round(dataPoint.value * 10 ** 8)
-    );
+    const dataValues = dataPoints.map((dataPoint) => Math.round(dataPoint.value * 10 ** 8));
 
     await wrappedContract.saveOracleValuesInContractStorage(dataFeedIdsBytes);
-    await expect(
-      consumerContract.checkOracleValues(dataFeedIdsBytes, dataValues)
-    ).not.to.be.reverted;
+    await expect(consumerContract.checkOracleValues(dataFeedIdsBytes, dataValues)).not.to.be
+      .reverted;
   });
 });

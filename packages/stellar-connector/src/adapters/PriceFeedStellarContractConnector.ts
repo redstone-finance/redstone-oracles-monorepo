@@ -8,11 +8,7 @@ import { StellarContractConnector } from "./StellarContractConnector";
 export class PriceFeedStellarContractConnector extends StellarContractConnector<IPriceFeedContractAdapter> {
   private readonly priceFeedAdapter: PriceFeedStellarContractAdapter;
 
-  constructor(
-    rpcClient: StellarRpcClient,
-    contractAddress: string,
-    keypair: Keypair
-  ) {
+  constructor(rpcClient: StellarRpcClient, contractAddress: string, keypair: Keypair) {
     super(rpcClient, keypair);
 
     this.priceFeedAdapter = new PriceFeedStellarContractAdapter(

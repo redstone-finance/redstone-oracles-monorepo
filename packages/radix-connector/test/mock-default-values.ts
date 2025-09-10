@@ -22,9 +22,7 @@ export function mockDefaultValues() {
   });
   transactionSubmit.mockResolvedValue(TRANSACTION_SUBMIT_MOCK);
   transactionStatus.mockResolvedValue(TRANSACTION_STATUS_MOCK);
-  transactionCommittedDetails.mockResolvedValue(
-    TRANSACTION_COMMITTED_DETAILS_MOCK
-  );
+  transactionCommittedDetails.mockResolvedValue(TRANSACTION_COMMITTED_DETAILS_MOCK);
 }
 
 export function transactionCommittedDetailsMock(values: string[]) {

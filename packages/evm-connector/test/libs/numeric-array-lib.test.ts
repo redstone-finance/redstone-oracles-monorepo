@@ -11,23 +11,17 @@ describe("SampleNumericArrayLib", function () {
   const sortedTestArr = [...testArr].sort();
 
   const prepareRandomArray = (arrayLength: number) => {
-    return getRange({ start: 0, length: arrayLength }).map(() =>
-      Math.round(Math.random() * 10000)
-    );
+    return getRange({ start: 0, length: arrayLength }).map(() => Math.round(Math.random() * 10000));
   };
 
   beforeEach(async () => {
-    const ContractFactory = await ethers.getContractFactory(
-      "SampleNumericArrayLib"
-    );
+    const ContractFactory = await ethers.getContractFactory("SampleNumericArrayLib");
     contract = await ContractFactory.deploy();
     await contract.deployed();
   });
 
   it("Should store array in storage", async () => {
-    const tx = await contract.testArrayUpdatingInStorage([
-      3, 1, 4, 5, 2, 9, 8, 7, 4,
-    ]);
+    const tx = await contract.testArrayUpdatingInStorage([3, 1, 4, 5, 2, 9, 8, 7, 4]);
     await tx.wait();
   });
 
@@ -36,9 +30,7 @@ describe("SampleNumericArrayLib", function () {
     await tx.wait();
 
     const cachedArray = await contract.getCachedArray();
-    expect(cachedArray.map((bn: BigNumber) => bn.toNumber())).to.eql(
-      sortedTestArr
-    );
+    expect(cachedArray.map((bn: BigNumber) => bn.toNumber())).to.eql(sortedTestArr);
   });
 
   it("Should correctly pick the median value in an array with an odd length", async () => {
@@ -56,16 +48,12 @@ describe("SampleNumericArrayLib", function () {
   });
 
   it("Should store array in storage", async () => {
-    const tx = await contract.testArrayUpdatingInStorage([
-      3, 1, 4, 5, 2, 9, 8, 7, 4,
-    ]);
+    const tx = await contract.testArrayUpdatingInStorage([3, 1, 4, 5, 2, 9, 8, 7, 4]);
     await tx.wait();
   });
 
   it("Should store array in storage", async () => {
-    const tx = await contract.testArrayUpdatingInStorage([
-      3, 1, 4, 5, 2, 9, 8, 7, 4,
-    ]);
+    const tx = await contract.testArrayUpdatingInStorage([3, 1, 4, 5, 2, 9, 8, 7, 4]);
     await tx.wait();
   });
 

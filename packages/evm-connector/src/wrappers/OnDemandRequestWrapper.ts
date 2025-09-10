@@ -36,10 +36,7 @@ export class OnDemandRequestWrapper<T extends Contract> extends BaseWrapper<T> {
     const timestamp = Date.now();
     const message = prepareMessageToSign(timestamp);
     const { signer, scoreType } = this.requestParams;
-    const signature = await UniversalSigner.signWithEthereumHashMessage(
-      signer,
-      message
-    );
+    const signature = await UniversalSigner.signWithEthereumHashMessage(signer, message);
     const promises = this.nodeUrls.map((url) =>
       axios.get(url, {
         params: { timestamp, signature, scoreType },

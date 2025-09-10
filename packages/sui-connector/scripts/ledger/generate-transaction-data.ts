@@ -11,9 +11,7 @@ export async function generateTransactionData(
 ) {
   const { network, tx } = await makeBaseTx(creator, multiSigAddress);
 
-  const encodedTransaction = toBase64(
-    await tx.build({ client: makeSuiClient(network) })
-  );
+  const encodedTransaction = toBase64(await tx.build({ client: makeSuiClient(network) }));
   console.log(encodedTransaction);
 
   return encodedTransaction;

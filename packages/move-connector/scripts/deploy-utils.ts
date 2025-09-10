@@ -1,22 +1,11 @@
-import {
-  Account,
-  AccountAddress,
-  Aptos,
-  createObjectAddress,
-  HexInput,
-} from "@aptos-labs/ts-sdk";
+import { Account, AccountAddress, Aptos, createObjectAddress, HexInput } from "@aptos-labs/ts-sdk";
 import { execSync } from "child_process";
 import "dotenv/config";
 import fs from "fs";
 import { EOL } from "os";
 import path from "path";
 import { isAptos } from "./config";
-import {
-  ContractName,
-  PRICE_ADAPTER,
-  PRICE_FEED,
-  REDSTONE_SDK,
-} from "./contract-name-enum";
+import { ContractName, PRICE_ADAPTER, PRICE_FEED, REDSTONE_SDK } from "./contract-name-enum";
 import { getEnvContractName, getEnvDeployDir, getEnvNetwork } from "./get-env";
 import { MULTI_SIG_ADDRESS } from "./ledger/const";
 import { MovePackageTxBuilder } from "./package";
@@ -26,10 +15,7 @@ export const OUTPUT_BUILD_DIR = "./build/";
 
 type NamedAddresses = { [p: string]: AccountAddress | undefined };
 
-export function readAddress(
-  contractName = getEnvContractName(),
-  networkName = getEnvNetwork()
-) {
+export function readAddress(contractName = getEnvContractName(), networkName = getEnvNetwork()) {
   const content = JSON.parse(
     fs.readFileSync(getJsonAddressesFile(contractName, networkName), "utf-8")
   ) as { contractAddress: string };
@@ -37,10 +23,7 @@ export function readAddress(
   return AccountAddress.fromString(content.contractAddress);
 }
 
-export function readDepAddresses(
-  deps: ContractName[],
-  networkName = getEnvNetwork()
-) {
+export function readDepAddresses(deps: ContractName[], networkName = getEnvNetwork()) {
   return Object.fromEntries(
     deps.map((dep) => [dep, readAddress(dep, networkName)])
   ) as NamedAddresses;
@@ -73,10 +56,7 @@ export function getJsonAddressesFile(
   return path.join(deployDir, `${networkName}-${contractName}-addresses.json`);
 }
 
-export function readObjectAddress(
-  contractName: string,
-  networkName = getEnvNetwork()
-) {
+export function readObjectAddress(contractName: string, networkName = getEnvNetwork()) {
   const content = JSON.parse(
     fs.readFileSync(getJsonAddressesFile(contractName, networkName), "utf-8")
   ) as { contractAddress: string; objectAddress: string };
@@ -89,15 +69,9 @@ export function readObjectAddress(
   };
 }
 
-export async function objectAddressForDeployment(
-  aptos: Aptos,
-  address: AccountAddress
-) {
+export async function objectAddressForDeployment(aptos: Aptos, address: AccountAddress) {
   const info = await aptos.account.getAccountInfo({ accountAddress: address });
-  return createObjectAddress(
-    address,
-    objectSeed(+info.sequence_number + 1)
-  ).toString();
+  return createObjectAddress(address, objectSeed(+info.sequence_number + 1)).toString();
 }
 
 export function getPriceAdapterObjectAddress(creator: AccountAddress) {
@@ -116,9 +90,7 @@ export async function setUpDeploy(
   const builder = new MovePackageTxBuilder(aptos);
   const contractAddress =
     currentObjectAddress ??
-    AccountAddress.fromString(
-      await objectAddressForDeployment(aptos, accountAddress)
-    );
+    AccountAddress.fromString(await objectAddressForDeployment(aptos, accountAddress));
 
   console.log(`Compiling code for ${contractAddress.toString()}`);
   namedAddresses[contractName] = contractAddress;
@@ -164,16 +136,15 @@ export async function deploy(
   deployDir = getEnvDeployDir(),
   networkName = getEnvNetwork()
 ) {
-  const { builder, contractAddress, metadataBytes, bytecode } =
-    await setUpDeploy(
-      aptos,
-      account.accountAddress,
-      contractName,
-      namedAddresses,
-      currentObjectAddress,
-      networkName,
-      deployDir
-    );
+  const { builder, contractAddress, metadataBytes, bytecode } = await setUpDeploy(
+    aptos,
+    account.accountAddress,
+    contractName,
+    namedAddresses,
+    currentObjectAddress,
+    networkName,
+    deployDir
+  );
 
   console.log(`Doing actions as account: ${account.accountAddress.toString()}`);
   console.log(`Object address for deployment: ${contractAddress.toString()}`);
@@ -186,11 +157,7 @@ export async function deploy(
         metadataBytes,
         bytecode
       )
-    : await builder.objectPublishTx(
-        account.accountAddress,
-        metadataBytes,
-        bytecode
-      );
+    : await builder.objectPublishTx(account.accountAddress, metadataBytes, bytecode);
 
   await handleTx(aptos, publishTx, account);
 
@@ -200,8 +167,7 @@ export async function deploy(
   } as { [p: string]: string };
 
   if (contractName === PRICE_ADAPTER) {
-    output["objectAddress"] =
-      getPriceAdapterObjectAddress(contractAddress).toString();
+    output["objectAddress"] = getPriceAdapterObjectAddress(contractAddress).toString();
   }
 
   console.log(output);
@@ -223,12 +189,10 @@ export function prepareDepAddresses(
       return readDepAddresses([REDSTONE_SDK], networkName);
 
     case PRICE_FEED: {
-      const depsAddresses = readDepAddresses(
-        [REDSTONE_SDK, PRICE_ADAPTER],
-        networkName
+      const depsAddresses = readDepAddresses([REDSTONE_SDK, PRICE_ADAPTER], networkName);
+      depsAddresses["price_adapter_object_address"] = getPriceAdapterObjectAddress(
+        depsAddresses[PRICE_ADAPTER]!
       );
-      depsAddresses["price_adapter_object_address"] =
-        getPriceAdapterObjectAddress(depsAddresses[PRICE_ADAPTER]!);
       return depsAddresses;
     }
     default:

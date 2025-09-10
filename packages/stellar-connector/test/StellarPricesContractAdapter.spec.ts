@@ -1,7 +1,4 @@
-import {
-  ContractParamsProvider,
-  getSignersForDataServiceId,
-} from "@redstone-finance/sdk";
+import { ContractParamsProvider, getSignersForDataServiceId } from "@redstone-finance/sdk";
 import { Contract, Keypair } from "@stellar/stellar-sdk";
 import { makeServer, PRICE_ADAPTER, wasmFilePath } from "../scripts/utils";
 import {
@@ -31,9 +28,7 @@ describe("StellarPricesContractAdapter", () => {
     const txDeliveryMan = new StellarTxDeliveryMan(client, keypair);
 
     const deployer = new StellarContractDeployer(client, txDeliveryMan);
-    const { contractId: adapterId } = await deployer.deploy(
-      wasmFilePath(PRICE_ADAPTER)
-    );
+    const { contractId: adapterId } = await deployer.deploy(wasmFilePath(PRICE_ADAPTER));
 
     adapter = new PriceAdapterStellarContractAdapter(
       client,
@@ -101,8 +96,7 @@ describe("StellarPricesContractAdapter", () => {
     it(
       "should write prices from payload to contract",
       async () => {
-        const result =
-          await adapter.writePricesFromPayloadToContract(paramsOneFeed);
+        const result = await adapter.writePricesFromPayloadToContract(paramsOneFeed);
         await client.waitForTx(result);
       },
       WRITE_TEST_TIMEOUT_MS
@@ -111,8 +105,7 @@ describe("StellarPricesContractAdapter", () => {
     it(
       "should write prices with multiple feed IDs",
       async () => {
-        const result =
-          await adapter.writePricesFromPayloadToContract(paramsTwoFeeds);
+        const result = await adapter.writePricesFromPayloadToContract(paramsTwoFeeds);
         await client.waitForTx(result);
       },
       WRITE_TEST_TIMEOUT_MS
@@ -128,15 +121,11 @@ describe("StellarPricesContractAdapter", () => {
       expect(result["BTC"].lastValue).toBeGreaterThan(0);
 
       expect(result["BTC"].lastBlockTimestampMS).toBeGreaterThan(0);
-      const fullYearBlock = new Date(
-        result["BTC"].lastBlockTimestampMS
-      ).getFullYear();
+      const fullYearBlock = new Date(result["BTC"].lastBlockTimestampMS).getFullYear();
       expect(fullYearBlock).toBeGreaterThan(2024);
 
       expect(result["BTC"].lastDataPackageTimestampMS).toBeGreaterThan(0);
-      const fullYearPackage = new Date(
-        result["BTC"].lastDataPackageTimestampMS
-      ).getFullYear();
+      const fullYearPackage = new Date(result["BTC"].lastDataPackageTimestampMS).getFullYear();
       expect(fullYearPackage).toBeGreaterThan(2024);
     });
 
@@ -151,25 +140,17 @@ describe("StellarPricesContractAdapter", () => {
       expect(result["BTC"].lastValue > result["ETH"].lastValue).toBeTruthy();
 
       expect(result["BTC"].lastBlockTimestampMS).toBeGreaterThan(0);
-      const fullYearBlock0 = new Date(
-        result["BTC"].lastBlockTimestampMS
-      ).getFullYear();
+      const fullYearBlock0 = new Date(result["BTC"].lastBlockTimestampMS).getFullYear();
       expect(fullYearBlock0).toBeGreaterThan(2024);
       expect(result["ETH"].lastBlockTimestampMS).toBeGreaterThan(0);
-      const fullYearBlock1 = new Date(
-        result["ETH"].lastBlockTimestampMS
-      ).getFullYear();
+      const fullYearBlock1 = new Date(result["ETH"].lastBlockTimestampMS).getFullYear();
       expect(fullYearBlock1).toBeGreaterThan(2024);
 
       expect(result["BTC"].lastDataPackageTimestampMS).toBeGreaterThan(0);
-      const fullYearPackage0 = new Date(
-        result["BTC"].lastDataPackageTimestampMS
-      ).getFullYear();
+      const fullYearPackage0 = new Date(result["BTC"].lastDataPackageTimestampMS).getFullYear();
       expect(fullYearPackage0).toBeGreaterThan(2024);
       expect(result["ETH"].lastDataPackageTimestampMS).toBeGreaterThan(0);
-      const fullYearPackage1 = new Date(
-        result["ETH"].lastDataPackageTimestampMS
-      ).getFullYear();
+      const fullYearPackage1 = new Date(result["ETH"].lastDataPackageTimestampMS).getFullYear();
       expect(fullYearPackage1).toBeGreaterThan(2024);
     });
   });

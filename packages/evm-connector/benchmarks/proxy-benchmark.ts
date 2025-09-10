@@ -1,8 +1,4 @@
-import {
-  DataPackage,
-  NumericDataPoint,
-  utils,
-} from "@redstone-finance/protocol";
+import { DataPackage, NumericDataPoint, utils } from "@redstone-finance/protocol";
 import { ethers } from "hardhat";
 import {
   DEFAULT_TIMESTAMP_FOR_TESTS,
@@ -46,13 +42,8 @@ describe("Benchmark", function () {
     console.log(JSON.stringify(fullGasReport, null, 2));
   });
 
-  const initializeStorageProxyChain = async (
-    chainLength: number,
-    requiredSignersCount: number
-  ) => {
-    const StorageProxyFactory = await ethers.getContractFactory(
-      "SampleChainableStorageProxy"
-    );
+  const initializeStorageProxyChain = async (chainLength: number, requiredSignersCount: number) => {
+    const StorageProxyFactory = await ethers.getContractFactory("SampleChainableStorageProxy");
 
     const StorageProxyConsumer = await ethers.getContractFactory(
       "SampleChainableStorageProxyConsumer"
@@ -62,9 +53,8 @@ describe("Benchmark", function () {
 
     await initialProxy.updateUniqueSignersThreshold(requiredSignersCount);
 
-    let currentProxy:
-      | SampleChainableStorageProxy
-      | SampleChainableStorageProxyConsumer = initialProxy;
+    let currentProxy: SampleChainableStorageProxy | SampleChainableStorageProxyConsumer =
+      initialProxy;
     for (let i = 0; i < chainLength - 2; i++) {
       const nextProxy = await StorageProxyConsumer.deploy(initialProxy.address);
       await nextProxy.deployed();
@@ -72,9 +62,7 @@ describe("Benchmark", function () {
       currentProxy = nextProxy;
     }
 
-    const customerContract = await StorageProxyConsumer.deploy(
-      initialProxy.address
-    );
+    const customerContract = await StorageProxyConsumer.deploy(initialProxy.address);
     await customerContract.deployed();
     await currentProxy.register(customerContract.address);
 
@@ -85,13 +73,9 @@ describe("Benchmark", function () {
     chainLength: number,
     requiredSignersCount: number
   ) => {
-    const ProxyConnectorFactory = await ethers.getContractFactory(
-      "SampleChainableProxyConnector"
-    );
+    const ProxyConnectorFactory = await ethers.getContractFactory("SampleChainableProxyConnector");
 
-    const ProxyConnectorConsumer = await ethers.getContractFactory(
-      "SampleProxyConnectorConsumer"
-    );
+    const ProxyConnectorConsumer = await ethers.getContractFactory("SampleProxyConnectorConsumer");
     const initialProxy = await ProxyConnectorFactory.deploy();
     await initialProxy.deployed();
 
@@ -112,9 +96,7 @@ describe("Benchmark", function () {
     return initialProxy;
   };
 
-  const prepareMockDataPackageConfig = (
-    benchmarkParams: BenchmarkTestCaseParams
-  ) => {
+  const prepareMockDataPackageConfig = (benchmarkParams: BenchmarkTestCaseParams) => {
     // Prepare many data packages (for each requested symbol there are many data packages with each signer)
     const mockDataPackages: MockDataPackageConfig[] = [];
     for (
@@ -122,11 +104,7 @@ describe("Benchmark", function () {
       requestedSymbolIndex < benchmarkParams.requestedSymbolsCount;
       requestedSymbolIndex++
     ) {
-      for (
-        let signerIndex = 0;
-        signerIndex < benchmarkParams.requiredSignersCount;
-        signerIndex++
-      ) {
+      for (let signerIndex = 0; signerIndex < benchmarkParams.requiredSignersCount; signerIndex++) {
         const dataPoints = [
           new NumericDataPoint({
             dataFeedId: `TEST-${requestedSymbolIndex}`,
@@ -147,17 +125,12 @@ describe("Benchmark", function () {
     return mockDataPackages;
   };
 
-  const updateFullGasReport = (
-    benchmarkParams: BenchmarkTestCaseParams,
-    gasReport: GasReport
-  ) => {
+  const updateFullGasReport = (benchmarkParams: BenchmarkTestCaseParams, gasReport: GasReport) => {
     const benchmarkCaseKey = getBenchmarkCaseShortTitle(benchmarkParams);
     fullGasReport[benchmarkCaseKey] = gasReport;
   };
 
-  const getBenchmarkCaseShortTitle = (
-    benchmarkParams: BenchmarkTestCaseParams
-  ): string => {
+  const getBenchmarkCaseShortTitle = (benchmarkParams: BenchmarkTestCaseParams): string => {
     return (
       benchmarkParams.requiredSignersCount +
       " signers, " +
@@ -170,19 +143,16 @@ describe("Benchmark", function () {
     );
   };
 
-  const runBenchmarkTestCase = async (
-    benchmarkParams: BenchmarkTestCaseParams
-  ) => {
+  const runBenchmarkTestCase = async (benchmarkParams: BenchmarkTestCaseParams) => {
     const shortTitle = getBenchmarkCaseShortTitle(benchmarkParams);
 
     console.log(`Benchmark case testing started: ${shortTitle}`);
 
-    const dataFeedIds = [
-      ...Array(benchmarkParams.requestedSymbolsCount).keys(),
-    ].map((i) => `TEST-${i}`);
+    const dataFeedIds = [...Array(benchmarkParams.requestedSymbolsCount).keys()].map(
+      (i) => `TEST-${i}`
+    );
     const bytes32Symbols = dataFeedIds.map(utils.convertStringToBytes32);
-    const mockDataPackagesConfig =
-      prepareMockDataPackageConfig(benchmarkParams);
+    const mockDataPackagesConfig = prepareMockDataPackageConfig(benchmarkParams);
 
     // Initialize storage proxy chain
     const storageProxyForOneValue = await initializeStorageProxyChain(
@@ -203,16 +173,13 @@ describe("Benchmark", function () {
       benchmarkParams.requiredSignersCount
     );
 
-    const wrappedStorageProxyForOneValue = WrapperBuilder.wrap(
-      storageProxyForOneValue
-    ).usingMockDataPackages(mockDataPackagesConfig);
-    const wrappedProxyConnectorForOneValue = WrapperBuilder.wrap(
-      proxyConnectorForOneValue
-    ).usingMockDataPackages(mockDataPackagesConfig);
+    const wrappedStorageProxyForOneValue =
+      WrapperBuilder.wrap(storageProxyForOneValue).usingMockDataPackages(mockDataPackagesConfig);
+    const wrappedProxyConnectorForOneValue =
+      WrapperBuilder.wrap(proxyConnectorForOneValue).usingMockDataPackages(mockDataPackagesConfig);
 
-    const wrappedStorageProxyForManyValues = WrapperBuilder.wrap(
-      storageProxyForManyValues
-    ).usingMockDataPackages(mockDataPackagesConfig);
+    const wrappedStorageProxyForManyValues =
+      WrapperBuilder.wrap(storageProxyForManyValues).usingMockDataPackages(mockDataPackagesConfig);
     const wrappedProxyConnectorForManyValues = WrapperBuilder.wrap(
       proxyConnectorForManyValues
     ).usingMockDataPackages(mockDataPackagesConfig);
@@ -221,61 +188,43 @@ describe("Benchmark", function () {
     try {
       // Get value of one asset
       const wrappedProxyConnectorOneAssetTx =
-        await wrappedProxyConnectorForOneValue.processOracleValue(
-          bytes32Symbols[0]
-        );
-      const wrappedProxyConnectorOneAssetTxReceipt =
-        await wrappedProxyConnectorOneAssetTx.wait();
+        await wrappedProxyConnectorForOneValue.processOracleValue(bytes32Symbols[0]);
+      const wrappedProxyConnectorOneAssetTxReceipt = await wrappedProxyConnectorOneAssetTx.wait();
 
-      const wrappedStorageProxyOneAssetTx =
-        await wrappedStorageProxyForOneValue.processOracleValue(
-          bytes32Symbols[0]
-        );
-      const wrappedStorageProxyOneAssetTxReceipt =
-        await wrappedStorageProxyOneAssetTx.wait();
+      const wrappedStorageProxyOneAssetTx = await wrappedStorageProxyForOneValue.processOracleValue(
+        bytes32Symbols[0]
+      );
+      const wrappedStorageProxyOneAssetTxReceipt = await wrappedStorageProxyOneAssetTx.wait();
 
       // Writing value to existing storage slot should be cheaper
       const wrappedStorageProxyOneAssetSecondTx =
-        await wrappedStorageProxyForOneValue.processOracleValue(
-          bytes32Symbols[0]
-        );
+        await wrappedStorageProxyForOneValue.processOracleValue(bytes32Symbols[0]);
       const wrappedStorageProxyOneAssetSecondTxReceipt =
         await wrappedStorageProxyOneAssetSecondTx.wait();
 
       // Get value of many assets
       const wrappedProxyConnectorManyAssetsTx =
-        await wrappedProxyConnectorForManyValues.processOracleValues(
-          bytes32Symbols
-        );
+        await wrappedProxyConnectorForManyValues.processOracleValues(bytes32Symbols);
       const wrappedProxyConnectorManyAssetsTxReceipt =
         await wrappedProxyConnectorManyAssetsTx.wait();
 
       const wrappedStorageProxyManyAssetsTx =
-        await wrappedStorageProxyForManyValues.processOracleValues(
-          bytes32Symbols
-        );
-      const wrappedStorageProxyManyAssetsTxReceipt =
-        await wrappedStorageProxyManyAssetsTx.wait();
+        await wrappedStorageProxyForManyValues.processOracleValues(bytes32Symbols);
+      const wrappedStorageProxyManyAssetsTxReceipt = await wrappedStorageProxyManyAssetsTx.wait();
 
       // Writing value to existing storage slot should be cheaper
       const wrappedStorageProxyManyAssetsSecondTx =
-        await wrappedStorageProxyForManyValues.processOracleValues(
-          bytes32Symbols
-        );
+        await wrappedStorageProxyForManyValues.processOracleValues(bytes32Symbols);
       const wrappedStorageProxyManyAssetsSecondTxReceipt =
         await wrappedStorageProxyManyAssetsSecondTx.wait();
 
       const gasReport: GasReport = {
-        proxyConnectorOneAsset:
-          wrappedProxyConnectorOneAssetTxReceipt.gasUsed.toNumber(),
-        storageProxyOneAsset:
-          wrappedStorageProxyOneAssetTxReceipt.gasUsed.toNumber(),
+        proxyConnectorOneAsset: wrappedProxyConnectorOneAssetTxReceipt.gasUsed.toNumber(),
+        storageProxyOneAsset: wrappedStorageProxyOneAssetTxReceipt.gasUsed.toNumber(),
         storageProxyOneAssetSecondWrite:
           wrappedStorageProxyOneAssetSecondTxReceipt.gasUsed.toNumber(),
-        proxyConnectorManyAssets:
-          wrappedProxyConnectorManyAssetsTxReceipt.gasUsed.toNumber(),
-        storageProxyManyAssets:
-          wrappedStorageProxyManyAssetsTxReceipt.gasUsed.toNumber(),
+        proxyConnectorManyAssets: wrappedProxyConnectorManyAssetsTxReceipt.gasUsed.toNumber(),
+        storageProxyManyAssets: wrappedStorageProxyManyAssetsTxReceipt.gasUsed.toNumber(),
         storageProxyManyAssetsSecondWrite:
           wrappedStorageProxyManyAssetsSecondTxReceipt.gasUsed.toNumber(),
       };
@@ -306,9 +255,7 @@ describe("Benchmark", function () {
           dataPointsCount,
           proxyChainLength,
         };
-        it(`Benchmark: ${getBenchmarkCaseShortTitle(
-          benchmarkParams
-        )}`, async () => {
+        it(`Benchmark: ${getBenchmarkCaseShortTitle(benchmarkParams)}`, async () => {
           await runBenchmarkTestCase(benchmarkParams);
         });
       }

@@ -14,14 +14,9 @@ describe("TON process_payload Tests", () => {
   let testerAdapter: TonTesterContractAdapter;
 
   beforeAll(async () => {
-    const { network, testerCode } = await createTesterContractEnv(
-      "process_payload_tests"
-    );
+    const { network, testerCode } = await createTesterContractEnv("process_payload_tests");
 
-    testerAdapter = await new TonTesterContractDeployer(
-      network,
-      testerCode
-    ).getAdapter();
+    testerAdapter = await new TonTesterContractDeployer(network, testerCode).getAdapter();
   });
 
   it("should process payload (2 signers x 2 feeds)", async () => {
@@ -42,10 +37,7 @@ describe("TON process_payload Tests", () => {
   });
 
   it("should process payload (single feed and signer)", async () => {
-    const paramsProvider = createContractParamsProviderMock(
-      ["BTC"],
-      "1sig_BTC"
-    );
+    const paramsProvider = createContractParamsProviderMock(["BTC"], "1sig_BTC");
 
     const { values, minTimestamp } = await testerAdapter.testProcessPayload(
       paramsProvider,
@@ -59,10 +51,7 @@ describe("TON process_payload Tests", () => {
   });
 
   it("should process payload (single feed and 2 signers)", async () => {
-    const paramsProvider = createContractParamsProviderMock(
-      ["ETH"],
-      "2sig_ETH"
-    );
+    const paramsProvider = createContractParamsProviderMock(["ETH"], "2sig_ETH");
 
     for (const uniqueSignersThreshold of [1, 2]) {
       const { values, minTimestamp } = await testerAdapter.testProcessPayload(
@@ -104,12 +93,7 @@ describe("TON process_payload Tests", () => {
     );
 
     void expect(
-      testerAdapter.testProcessPayload(
-        paramsProvider,
-        SIGNERS,
-        2,
-        SAMPLE_PACKAGES_TIMESTAMP
-      )
+      testerAdapter.testProcessPayload(paramsProvider, SIGNERS, 2, SAMPLE_PACKAGES_TIMESTAMP)
     ).rejects.toHaveProperty("exitCode", 300);
   });
 
@@ -128,21 +112,11 @@ describe("TON process_payload Tests", () => {
         dataFeedsIds: ["AVAX"],
       },
     ]) {
-      const paramsProvider = createContractParamsProviderMock(
-        caseData.dataFeedsIds
-      );
+      const paramsProvider = createContractParamsProviderMock(caseData.dataFeedsIds);
 
       void expect(
-        testerAdapter.testProcessPayload(
-          paramsProvider,
-          SIGNERS,
-          2,
-          SAMPLE_PACKAGES_TIMESTAMP
-        )
-      ).rejects.toHaveProperty(
-        "exitCode",
-        300 + caseData.dataFeedsIds.indexOf("AVAX")
-      );
+        testerAdapter.testProcessPayload(paramsProvider, SIGNERS, 2, SAMPLE_PACKAGES_TIMESTAMP)
+      ).rejects.toHaveProperty("exitCode", 300 + caseData.dataFeedsIds.indexOf("AVAX"));
     }
   });
 
@@ -193,12 +167,7 @@ describe("TON process_payload Tests", () => {
     );
 
     void expect(
-      testerAdapter.testProcessPayload(
-        paramsProvider,
-        SIGNERS,
-        1,
-        SAMPLE_PACKAGES_TIMESTAMP
-      )
+      testerAdapter.testProcessPayload(paramsProvider, SIGNERS, 1, SAMPLE_PACKAGES_TIMESTAMP)
     ).rejects.toHaveProperty("exitCode", 500);
   });
 });

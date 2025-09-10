@@ -19,10 +19,7 @@ describe("TON parse data package Unit Tests", () => {
   beforeAll(async () => {
     const { network, testerCode } = await createTesterContractEnv("unit_tests");
 
-    testerAdapter = await new TonUnitTesterContractDeployer(
-      network,
-      testerCode
-    ).getAdapter();
+    testerAdapter = await new TonUnitTesterContractDeployer(network, testerCode).getAdapter();
   });
 
   it("parse data package", async () => {
@@ -45,8 +42,7 @@ describe("TON parse data package Unit Tests", () => {
   });
 
   it("parse data package for extreme data", async () => {
-    const extremeDataPackage =
-      "ff".repeat(DATA_PACKAGE_VALUES_LENGTH) + "00000020000001";
+    const extremeDataPackage = "ff".repeat(DATA_PACKAGE_VALUES_LENGTH) + "00000020000001";
     const {
       feedId: feedIdExtreme,
       value: valuExtreme,
@@ -59,8 +55,7 @@ describe("TON parse data package Unit Tests", () => {
   });
 
   it("parse data package for zero data", async () => {
-    const zeroDataPackage =
-      "00".repeat(DATA_PACKAGE_VALUES_LENGTH) + "00000020000001";
+    const zeroDataPackage = "00".repeat(DATA_PACKAGE_VALUES_LENGTH) + "00000020000001";
     const {
       feedId: feedIdExtreme,
       value: valuExtreme,
@@ -77,17 +72,14 @@ describe("TON parse data package Unit Tests", () => {
       testerAdapter.testParseDataPackage("00" + DATA_PACKAGE_DATA_1)
     ).rejects.toHaveProperty("exitCode", 9);
 
-    void expect(testerAdapter.testParseDataPackage("")).rejects.toHaveProperty(
+    void expect(testerAdapter.testParseDataPackage("")).rejects.toHaveProperty("exitCode", 9);
+
+    const zeroDataPackage = "00".repeat(DATA_PACKAGE_VALUES_LENGTH) + "00000000000001";
+
+    void expect(testerAdapter.testParseDataPackage(zeroDataPackage)).rejects.toHaveProperty(
       "exitCode",
-      9
+      600
     );
-
-    const zeroDataPackage =
-      "00".repeat(DATA_PACKAGE_VALUES_LENGTH) + "00000000000001";
-
-    void expect(
-      testerAdapter.testParseDataPackage(zeroDataPackage)
-    ).rejects.toHaveProperty("exitCode", 600);
 
     void expect(
       testerAdapter.testParseDataPackage(

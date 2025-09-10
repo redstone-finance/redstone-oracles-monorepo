@@ -1,10 +1,5 @@
 import { arrayify, hexlify, toUtf8Bytes, toUtf8String } from "ethers/lib/utils";
-import {
-  DataPackage,
-  NumericDataPoint,
-  RedstonePayload,
-  SignedDataPackage,
-} from "../src";
+import { DataPackage, NumericDataPoint, RedstonePayload, SignedDataPackage } from "../src";
 import { hexlifyWithout0xPrefix } from "../src/common/utils";
 
 const TIMESTAMP_FOR_TESTS = 1654353400000;
@@ -31,16 +26,10 @@ describe("Fixed size data package", () => {
     const dataPoints = [
       { dataFeedId: "BTC", value: 42000 },
       { dataFeedId: "ETH", value: 2000 },
-    ].map(
-      ({ dataFeedId, value }) => new NumericDataPoint({ dataFeedId, value })
-    );
+    ].map(({ dataFeedId, value }) => new NumericDataPoint({ dataFeedId, value }));
 
     // Prepare unsigned data package
-    dataPackage = new DataPackage(
-      dataPoints,
-      TIMESTAMP_FOR_TESTS,
-      "__BTC_ETH__"
-    );
+    dataPackage = new DataPackage(dataPoints, TIMESTAMP_FOR_TESTS, "__BTC_ETH__");
 
     // Prepare signed data packages
     signedDataPackages = [
@@ -50,10 +39,7 @@ describe("Fixed size data package", () => {
   });
 
   test("Should correctly serialize many signed data packages", () => {
-    const serializedHex = RedstonePayload.prepare(
-      signedDataPackages,
-      UNSIGNED_METADATA
-    );
+    const serializedHex = RedstonePayload.prepare(signedDataPackages, UNSIGNED_METADATA);
 
     expect(serializedHex).toBe(
       EXPECTED_SERIALIZED_DATA_PACKAGE +
@@ -87,18 +73,11 @@ describe("Fixed size data package", () => {
 
   test("Should correctly parse redstone payload", () => {
     const remainderPrefixHex = "0x1234";
-    const redstonePayloadHex = RedstonePayload.prepare(
-      signedDataPackages,
-      UNSIGNED_METADATA
-    );
+    const redstonePayloadHex = RedstonePayload.prepare(signedDataPackages, UNSIGNED_METADATA);
 
-    const parsingResult = RedstonePayload.parse(
-      arrayify(remainderPrefixHex + redstonePayloadHex)
-    );
+    const parsingResult = RedstonePayload.parse(arrayify(remainderPrefixHex + redstonePayloadHex));
 
-    expect(toUtf8String(parsingResult.unsignedMetadata)).toBe(
-      UNSIGNED_METADATA
-    );
+    expect(toUtf8String(parsingResult.unsignedMetadata)).toBe(UNSIGNED_METADATA);
     expect(hexlify(parsingResult.remainderPrefix)).toBe(remainderPrefixHex);
 
     const newRedstonePayloadHex = RedstonePayload.prepare(

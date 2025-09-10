@@ -1,7 +1,4 @@
-import {
-  ContractParamsProvider,
-  getSignersForDataServiceId,
-} from "@redstone-finance/sdk";
+import { ContractParamsProvider, getSignersForDataServiceId } from "@redstone-finance/sdk";
 import { BigNumber, BigNumberish } from "ethers";
 import fs from "fs";
 import path from "path";
@@ -27,10 +24,7 @@ export function makeContractParamsProvider(
 
 export function readDeployedHex(contractName: string) {
   return fs
-    .readFileSync(
-      path.join(__dirname, `../../rust/contracts/${contractName}/DEPLOYED.hex`),
-      "utf8"
-    )
+    .readFileSync(path.join(__dirname, `../../rust/contracts/${contractName}/DEPLOYED.hex`), "utf8")
     .trim();
 }
 

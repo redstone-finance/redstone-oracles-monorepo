@@ -18,12 +18,9 @@ export function getMockCasperConnection() {
 }
 
 export const MOCK_PAYLOAD_HEX = "455448";
-export const MOCK_PAYLOAD_HASH =
-  "aa602e9895fd07a75b1becbb3dd5f409664cff5047117eb4a16e8e3c8fdf4641";
+export const MOCK_PAYLOAD_HASH = "aa602e9895fd07a75b1becbb3dd5f409664cff5047117eb4a16e8e3c8fdf4641";
 
-export function makeContractParamsProviderMock(
-  feedIds: string[] = ["ETH", "BTC"]
-) {
+export function makeContractParamsProviderMock(feedIds: string[] = ["ETH", "BTC"]) {
   return new ContractParamsProviderMock(feedIds, "./payload.hex", (_) =>
     Buffer.from(MOCK_PAYLOAD_HEX)
   );
@@ -44,9 +41,7 @@ export function contractDictionaryMock<T>(
   ) => {
     expect(dictionaryName).toEqual(expectedName);
     expect(dictionaryItemKey).toEqual(expectedKey);
-    expect(expectedStateRootHash).toEqual(
-      expectedAdapter.connection.getStateRootHash()
-    );
+    expect(expectedStateRootHash).toEqual(expectedAdapter.connection.getStateRootHash());
     expect(contract).toEqual(expectedAdapter.contract);
 
     return Promise.resolve(value);
@@ -61,9 +56,7 @@ export function contractDataMock<T>(
 ) {
   return (contract: Contracts.Contract, key: string) => {
     expect(key).toEqual(expectedKey);
-    expect(expectedStateRootHash).toEqual(
-      expectedAdapter.connection.getStateRootHash()
-    );
+    expect(expectedStateRootHash).toEqual(expectedAdapter.connection.getStateRootHash());
     expect(contract).toEqual(expectedAdapter.contract);
 
     return Promise.resolve(value);
@@ -93,9 +86,7 @@ export function callEntrypointMock(
   };
 }
 
-export function mockStateRootHashImplementations(
-  connection: jest.Mocked<ICasperConnection>
-) {
+export function mockStateRootHashImplementations(connection: jest.Mocked<ICasperConnection>) {
   connection.waitForDeploy.mockResolvedValue(true);
   // eslint-disable-next-line @typescript-eslint/require-await
   connection.refreshStateRootHash.mockImplementationOnce(async () => {

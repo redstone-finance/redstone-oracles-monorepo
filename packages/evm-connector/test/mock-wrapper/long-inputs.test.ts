@@ -35,11 +35,8 @@ describe("Long Inputs", function () {
   it("Should pass long bytes oracle value", async () => {
     const hexValue = "0x" + "f".repeat(30_000);
     const mockPackages = prepareMockBytesPackages(hexValue);
-    const wrappedContract =
-      WrapperBuilder.wrap(contract).usingMockDataPackages(mockPackages);
-    await wrappedContract.saveLatestValueInStorage(
-      DEFAULT_DATA_FEED_ID_BYTES_32
-    );
+    const wrappedContract = WrapperBuilder.wrap(contract).usingMockDataPackages(mockPackages);
+    await wrappedContract.saveLatestValueInStorage(DEFAULT_DATA_FEED_ID_BYTES_32);
     expect(await contract.latestString()).to.be.equal(hexValue);
   });
 });

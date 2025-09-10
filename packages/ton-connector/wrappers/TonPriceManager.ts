@@ -17,19 +17,12 @@ export class TonPriceManager extends TonContract {
     return "price_manager";
   }
 
-  async sendWritePrices(
-    provider: ContractProvider,
-    paramsProvider: ContractParamsProvider
-  ) {
+  async sendWritePrices(provider: ContractProvider, paramsProvider: ContractParamsProvider) {
     const builder = messageBuilder(OP_REDSTONE_WRITE_PRICES);
 
-    const payloadCell = createPayloadCell(
-      await paramsProvider.getPayloadHex(false)
-    );
+    const payloadCell = createPayloadCell(await paramsProvider.getPayloadHex(false));
 
-    const dataFeedsIdsCell = serializeTuple(
-      createTupleItems(paramsProvider.getHexlifiedFeedIds())
-    );
+    const dataFeedsIdsCell = serializeTuple(createTupleItems(paramsProvider.getHexlifiedFeedIds()));
     builder.storeRef(dataFeedsIdsCell);
     builder.storeRef(payloadCell);
 
@@ -45,10 +38,7 @@ export class TonPriceManager extends TonContract {
     );
   }
 
-  async getReadPrices(
-    provider: ContractProvider,
-    paramsProvider: ContractParamsProvider
-  ) {
+  async getReadPrices(provider: ContractProvider, paramsProvider: ContractParamsProvider) {
     const { stack } = await provider.get("read_prices", [
       {
         type: "tuple",
@@ -65,13 +55,8 @@ export class TonPriceManager extends TonContract {
     return stack.readNumber();
   }
 
-  async getPrices(
-    provider: ContractProvider,
-    paramsProvider: ContractParamsProvider
-  ) {
-    const payloadCell = createPayloadCell(
-      await paramsProvider.getPayloadHex(false)
-    );
+  async getPrices(provider: ContractProvider, paramsProvider: ContractParamsProvider) {
+    const payloadCell = createPayloadCell(await paramsProvider.getPayloadHex(false));
 
     const dataFeedIds = createTupleItems(paramsProvider.getHexlifiedFeedIds());
 
@@ -95,10 +80,7 @@ export class TonPriceManager extends TonContract {
       { type: "cell", cell: payloadCell },
     ]);
 
-    return createArrayFromSerializedTuple(
-      stack.readCell(),
-      consts.DEFAULT_NUM_VALUE_BS * 8
-    );
+    return createArrayFromSerializedTuple(stack.readCell(), consts.DEFAULT_NUM_VALUE_BS * 8);
   }
 
   private async getPricesV4(

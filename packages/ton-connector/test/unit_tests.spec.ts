@@ -14,10 +14,7 @@ describe("TON unit Tests", () => {
   beforeAll(async () => {
     const { network, testerCode } = await createTesterContractEnv("unit_tests");
 
-    testerAdapter = await new TonUnitTesterContractDeployer(
-      network,
-      testerCode
-    ).getAdapter();
+    testerAdapter = await new TonUnitTesterContractDeployer(network, testerCode).getAdapter();
   });
 
   it("recover signer address 1c", async () => {
@@ -49,9 +46,7 @@ describe("TON unit Tests", () => {
         expectedMedian: 15,
       },
     ]) {
-      expect(await testerAdapter.testMedian(caseData.numbers)).toBe(
-        caseData.expectedMedian
-      );
+      expect(await testerAdapter.testMedian(caseData.numbers)).toBe(caseData.expectedMedian);
     }
   });
 
@@ -63,43 +58,37 @@ describe("TON unit Tests", () => {
       { numbers: [12, 3, 1, 7], expectedMedian: 5 },
       { numbers: [7, 1], expectedMedian: 4 },
     ]) {
-      expect(await testerAdapter.testMedian(caseData.numbers)).toBe(
-        caseData.expectedMedian
-      );
+      expect(await testerAdapter.testMedian(caseData.numbers)).toBe(caseData.expectedMedian);
     }
   });
 
   it("median for empty array should reject", () => {
-    void expect(testerAdapter.testMedian([])).rejects.toHaveProperty(
-      "exitCode",
-      999
-    );
+    void expect(testerAdapter.testMedian([])).rejects.toHaveProperty("exitCode", 999);
   });
 
   it("slice unsigned integer from string", async () => {
-    const { remainingSlice, value: dataPointCount } =
-      await testerAdapter.testSliceUint(
-        DATA_PACKAGE_DATA_1,
-        consts.DATA_POINTS_COUNT_BS
-      );
+    const { remainingSlice, value: dataPointCount } = await testerAdapter.testSliceUint(
+      DATA_PACKAGE_DATA_1,
+      consts.DATA_POINTS_COUNT_BS
+    );
 
     expect(dataPointCount).toBe(1n);
 
-    const { remainingSlice: slice2, value: valueByteSize } =
-      await testerAdapter.testSliceUint(
-        remainingSlice,
-        consts.DATA_POINT_VALUE_BYTE_SIZE_BS
-      );
+    const { remainingSlice: slice2, value: valueByteSize } = await testerAdapter.testSliceUint(
+      remainingSlice,
+      consts.DATA_POINT_VALUE_BYTE_SIZE_BS
+    );
 
     expect(valueByteSize).toBe(32n);
 
-    const { remainingSlice: slice3, value: timestamp } =
-      await testerAdapter.testSliceUint(slice2, consts.TIMESTAMP_BS);
+    const { remainingSlice: slice3, value: timestamp } = await testerAdapter.testSliceUint(
+      slice2,
+      consts.TIMESTAMP_BS
+    );
 
     expect(timestamp).toBe(1678113550000n);
 
-    const { remainingSlice: slice4, value: price } =
-      await testerAdapter.testSliceUint(slice3, 32);
+    const { remainingSlice: slice4, value: price } = await testerAdapter.testSliceUint(slice3, 32);
 
     expect(price).toBe(156954083908n);
     expect(slice4.bits.length).toBe(consts.DATA_FEED_ID_BS * 8);
@@ -116,28 +105,22 @@ describe("TON unit Tests", () => {
   });
 
   it("slice integers from string for extreme lengths", async () => {
-    void expect(
-      testerAdapter.testSliceInt(DATA_PACKAGE_DATA_1, 258)
-    ).rejects.toHaveProperty("exitCode", 997);
-
-    void expect(
-      testerAdapter.testSliceUint(DATA_PACKAGE_DATA_1, 33)
-    ).rejects.toHaveProperty("exitCode", 997);
-
-    void expect(testerAdapter.testSliceUint("", 1)).rejects.toHaveProperty(
+    void expect(testerAdapter.testSliceInt(DATA_PACKAGE_DATA_1, 258)).rejects.toHaveProperty(
       "exitCode",
-      9
+      997
     );
 
-    const { remainingSlice, value } = await testerAdapter.testSliceInt(
-      DATA_PACKAGE_DATA_1,
-      0
+    void expect(testerAdapter.testSliceUint(DATA_PACKAGE_DATA_1, 33)).rejects.toHaveProperty(
+      "exitCode",
+      997
     );
+
+    void expect(testerAdapter.testSliceUint("", 1)).rejects.toHaveProperty("exitCode", 9);
+
+    const { remainingSlice, value } = await testerAdapter.testSliceInt(DATA_PACKAGE_DATA_1, 0);
 
     expect(value).toBe(0n);
-    expect(remainingSlice.bits.length).toBe(
-      (DATA_PACKAGE_DATA_1.length / 2) * 8
-    );
+    expect(remainingSlice.bits.length).toBe((DATA_PACKAGE_DATA_1.length / 2) * 8);
   });
 
   it("deserialize integers passed as a serialized tuple", async () => {
@@ -147,16 +130,12 @@ describe("TON unit Tests", () => {
       ["BTC", "ETH", "USDT"].map((n) => hexlify(toUtf8Bytes(n))),
       ["0x12470f7aBA85c8b81D63137DD5925D6EE114952b"],
       ["0xFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF"],
-      [
-        "0x12470f7aBA85c8b81D63137DD5925D6EE114952b",
-        1,
-        hexlify(toUtf8Bytes("BTC")),
-      ],
+      ["0x12470f7aBA85c8b81D63137DD5925D6EE114952b", 1, hexlify(toUtf8Bytes("BTC"))],
       Array.from(Array(255).keys()),
     ]) {
-      expect(
-        await testerAdapter.testTupleDeserializeIntegers(caseData)
-      ).toStrictEqual(caseData.map(BigInt));
+      expect(await testerAdapter.testTupleDeserializeIntegers(caseData)).toStrictEqual(
+        caseData.map(BigInt)
+      );
     }
     void expect(
       testerAdapter.testTupleDeserializeIntegers(Array.from(Array(256).keys()))

@@ -10,10 +10,7 @@ import {
 } from "../../src/helpers/test-utils";
 
 import { WrapperBuilder } from "../../src/index";
-import {
-  MockDataPackageConfig,
-  MockWrapper,
-} from "../../src/wrappers/MockWrapper";
+import { MockDataPackageConfig, MockWrapper } from "../../src/wrappers/MockWrapper";
 import { SampleRedstoneConsumerNumericMockManyDataFeeds } from "../../typechain-types";
 import {
   expectedNumericValues,
@@ -46,12 +43,8 @@ describe("SampleRedstoneConsumerNumericMockManyDataFeeds", function () {
     const firstValueFromContract = await contract.firstValue();
     const secondValueFromContract = await contract.secondValue();
 
-    expect(firstValueFromContract.toNumber()).to.be.equal(
-      expectedNumericValues[dataFeedIds[0]]
-    );
-    expect(secondValueFromContract.toNumber()).to.be.equal(
-      expectedNumericValues[dataFeedIds[1]]
-    );
+    expect(firstValueFromContract.toNumber()).to.be.equal(expectedNumericValues[dataFeedIds[0]]);
+    expect(secondValueFromContract.toNumber()).to.be.equal(expectedNumericValues[dataFeedIds[1]]);
   };
 
   const testShouldRevertWith = async (
@@ -64,9 +57,7 @@ describe("SampleRedstoneConsumerNumericMockManyDataFeeds", function () {
       WrapperBuilder.wrap(contract).usingMockDataPackages(mockNumericPackages);
 
     await expect(
-      wrappedContract.save2ValuesInStorage(
-        dataFeedIds.map(utils.convertStringToBytes32)
-      )
+      wrappedContract.save2ValuesInStorage(dataFeedIds.map(utils.convertStringToBytes32))
     )
       .to.be.revertedWithCustomError(wrappedContract, revertMsg)
       .withArgs(...args);
@@ -90,8 +81,7 @@ describe("SampleRedstoneConsumerNumericMockManyDataFeeds", function () {
 
   it("Should work properly with manual payload", async () => {
     const mockWrapper = new MockWrapper(mockNumericPackages);
-    const payload =
-      await mockWrapper.getRedstonePayloadForManualUsage(contract);
+    const payload = await mockWrapper.getRedstonePayloadForManualUsage(contract);
     const dataFeedIds: ("ETH" | "BTC")[] = ["ETH", "BTC"];
     const tx = await contract.save2ValuesInStorageWithManualPayload(
       dataFeedIds.map(utils.convertStringToBytes32),
@@ -122,9 +112,7 @@ describe("SampleRedstoneConsumerNumericMockManyDataFeeds", function () {
         })
       ),
     ];
-    const mockSinglePackages = mockSinglePackageConfigs.map(
-      getMockNumericPackage
-    );
+    const mockSinglePackages = mockSinglePackageConfigs.map(getMockNumericPackage);
     await testShouldPass(mockSinglePackages, ["BTC", "ETH"]);
   });
 
@@ -171,11 +159,7 @@ describe("SampleRedstoneConsumerNumericMockManyDataFeeds", function () {
         timestampMilliseconds: DEFAULT_TIMESTAMP_FOR_TESTS - 1,
       })
     );
-    await testShouldRevertWith(
-      newMockPackages,
-      ["BTC", "ETH"],
-      "TimestampIsNotValid"
-    );
+    await testShouldRevertWith(newMockPackages, ["BTC", "ETH"], "TimestampIsNotValid");
   });
 
   it("Should revert for different timestamps", async () => {
@@ -184,11 +168,7 @@ describe("SampleRedstoneConsumerNumericMockManyDataFeeds", function () {
       ...mockNumericPackageConfigs[1],
       timestampMilliseconds: DEFAULT_TIMESTAMP_FOR_TESTS - 1,
     });
-    await testShouldRevertWith(
-      newMockPackages,
-      ["BTC", "ETH"],
-      "TimestampsMustBeEqual"
-    );
+    await testShouldRevertWith(newMockPackages, ["BTC", "ETH"], "TimestampsMustBeEqual");
   });
 
   it("Should revert for an unauthorised signer", async () => {
@@ -206,10 +186,7 @@ describe("SampleRedstoneConsumerNumericMockManyDataFeeds", function () {
   });
 
   it("Should revert for insufficient number of signers", async () => {
-    const newMockPackages = mockNumericPackages.slice(
-      0,
-      NUMBER_OF_MOCK_NUMERIC_SIGNERS - 1
-    );
+    const newMockPackages = mockNumericPackages.slice(0, NUMBER_OF_MOCK_NUMERIC_SIGNERS - 1);
     await testShouldRevertWith(
       newMockPackages,
       ["BTC", "ETH"],

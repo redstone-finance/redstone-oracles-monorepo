@@ -14,14 +14,11 @@ export interface StellarTxDeliveryManConfig {
   expectedTxDeliveryTimeInMS?: number;
 }
 
-export function configFromPartial(
-  config?: Partial<StellarTxDeliveryManConfig>
-) {
+export function configFromPartial(config?: Partial<StellarTxDeliveryManConfig>) {
   return {
     gasLimit: config?.gasLimit ?? DEFAULT_GAS_LIMIT_STROOPS,
     gasMultiplier: config?.gasMultiplier ?? DEFAULT_GAS_MULTIPLIER,
-    maxTxSendAttempts:
-      config?.maxTxSendAttempts ?? DEFAULT_MAX_TX_SEND_ATTEMPTS,
+    maxTxSendAttempts: config?.maxTxSendAttempts ?? DEFAULT_MAX_TX_SEND_ATTEMPTS,
     expectedTxDeliveryTimeInMS: config?.expectedTxDeliveryTimeInMS,
   };
 }

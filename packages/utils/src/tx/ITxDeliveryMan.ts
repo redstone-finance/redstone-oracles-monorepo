@@ -5,8 +5,5 @@ export interface TxDeliveryManContext {
 }
 
 export interface ITxDeliveryMan {
-  deliver(
-    txDeliveryCall: TxDeliveryCall,
-    context: TxDeliveryManContext
-  ): Promise<unknown>;
+  deliver(txDeliveryCall: TxDeliveryCall, context: TxDeliveryManContext): Promise<unknown>;
 }

@@ -1,8 +1,4 @@
-import {
-  isBytesLike,
-  SignatureLike,
-  splitSignature,
-} from "@ethersproject/bytes";
+import { isBytesLike, SignatureLike, splitSignature } from "@ethersproject/bytes";
 import { Signer, Wallet } from "ethers";
 import {
   arrayify,
@@ -17,9 +13,7 @@ import {
 import { ecdsaRecover } from "secp256k1";
 
 const RS_SIGNATURE_LENGTH = 64;
-const ECDSA_N_DIV_2 = BigInt(
-  "0x7fffffffffffffffffffffffffffffff5d576e7357a4501ddfe92f46681b20a0"
-);
+const ECDSA_N_DIV_2 = BigInt("0x7fffffffffffffffffffffffffffffff5d576e7357a4501ddfe92f46681b20a0");
 
 export class UniversalSigner {
   // A flag allowing to disable the signature verification globally for all checks
@@ -49,12 +43,7 @@ export class UniversalSigner {
   static recoverPublicKey(digest: Uint8Array, signature: SignatureLike) {
     const sig = this.verifyAndSplitSignature(signature);
 
-    return ecdsaRecover(
-      arrayify(sig.r + sig.s.substring(2)),
-      sig.recoveryParam,
-      digest,
-      false
-    );
+    return ecdsaRecover(arrayify(sig.r + sig.s.substring(2)), sig.recoveryParam, digest, false);
   }
 
   static verifyAndSplitSignature(signature: SignatureLike) {
@@ -73,9 +62,7 @@ export class UniversalSigner {
 
     // We need to check it here, because splitSignature normalizes v to 27/28
     if (v !== 27 && v !== 28) {
-      throw new Error(
-        `Invalid signature 'v' value - must be 27 or 28 but is: ${v}`
-      );
+      throw new Error(`Invalid signature 'v' value - must be 27 or 28 but is: ${v}`);
     }
 
     const sig = splitSignature(signature);
@@ -94,10 +81,7 @@ export class UniversalSigner {
     return signerOrWallet.signMessage(message);
   }
 
-  static recoverAddressFromEthereumHashMessage(
-    message: string,
-    signature: string
-  ): string {
+  static recoverAddressFromEthereumHashMessage(message: string, signature: string): string {
     this.verifyAndSplitSignature(signature);
 
     return verifyMessage(message, signature);

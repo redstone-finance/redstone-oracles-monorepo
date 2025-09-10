@@ -1,10 +1,6 @@
 import { CLList, CLTuple3, CLU256 } from "casper-js-sdk";
 import { BigNumberish } from "ethers";
-import {
-  decodeCLList,
-  decodeNumber,
-  decodeStringCLList,
-} from "../../casper/utils";
+import { decodeCLList, decodeNumber, decodeStringCLList } from "../../casper/utils";
 
 export type ComputedValue = {
   timestamp: number;

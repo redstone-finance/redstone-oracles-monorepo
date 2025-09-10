@@ -27,17 +27,14 @@ describe("SampleProxyConnector", function () {
     revertMsg: string,
     ...args: unknown[]
   ) => {
-    const wrappedContract =
-      WrapperBuilder.wrap(contract).usingMockDataPackages(mockPackages);
+    const wrappedContract = WrapperBuilder.wrap(contract).usingMockDataPackages(mockPackages);
     await expect(wrappedContract.getOracleValueUsingProxy(ethDataFeedId))
       .to.be.revertedWithCustomError(wrappedContract, revertMsg)
       .withArgs(...args);
   };
 
   this.beforeEach(async () => {
-    const ContractFactory = await ethers.getContractFactory(
-      "SampleProxyConnector"
-    );
+    const ContractFactory = await ethers.getContractFactory("SampleProxyConnector");
     contract = await ContractFactory.deploy();
     await contract.deployed();
   });
@@ -46,8 +43,7 @@ describe("SampleProxyConnector", function () {
     const wrappedContract =
       WrapperBuilder.wrap(contract).usingMockDataPackages(mockNumericPackages);
 
-    const fetchedValue =
-      await wrappedContract.getOracleValueUsingProxy(ethDataFeedId);
+    const fetchedValue = await wrappedContract.getOracleValueUsingProxy(ethDataFeedId);
     expect(fetchedValue).to.eq(expectedNumericValues.ETH);
   });
 
@@ -102,14 +98,9 @@ describe("SampleProxyConnector", function () {
     const wrappedContract =
       WrapperBuilder.wrap(contract).usingMockDataPackages(mockNumericPackages);
     await expect(
-      wrappedContract.checkOracleValueLongEncodedFunction(
-        ethDataFeedId,
-        expectedNumericValues.ETH
-      )
+      wrappedContract.checkOracleValueLongEncodedFunction(ethDataFeedId, expectedNumericValues.ETH)
     ).not.to.be.reverted;
-    await expect(
-      wrappedContract.checkOracleValueLongEncodedFunction(ethDataFeedId, 9999)
-    )
+    await expect(wrappedContract.checkOracleValueLongEncodedFunction(ethDataFeedId, 9999))
       .to.be.revertedWithCustomError(wrappedContract, "WrongValue")
       .withArgs();
   });
@@ -121,11 +112,7 @@ describe("SampleProxyConnector", function () {
         timestampMilliseconds: DEFAULT_TIMESTAMP_FOR_TESTS - 1,
       })
     );
-    await testShouldRevertWith(
-      newMockPackages,
-      "ProxyCalldataFailedWithCustomError",
-      "0x355b8743"
-    );
+    await testShouldRevertWith(newMockPackages, "ProxyCalldataFailedWithCustomError", "0x355b8743");
   });
 
   it("Should fail with correct message (different timestamps)", async () => {
@@ -134,18 +121,11 @@ describe("SampleProxyConnector", function () {
       ...mockNumericPackageConfigs[1],
       timestampMilliseconds: DEFAULT_TIMESTAMP_FOR_TESTS - 1,
     });
-    await testShouldRevertWith(
-      newMockPackages,
-      "ProxyCalldataFailedWithCustomError",
-      "0x4cbc4742"
-    );
+    await testShouldRevertWith(newMockPackages, "ProxyCalldataFailedWithCustomError", "0x4cbc4742");
   });
 
   it("Should fail with correct message (insufficient number of unique signers)", async () => {
-    const newMockPackages = mockNumericPackages.slice(
-      0,
-      NUMBER_OF_MOCK_NUMERIC_SIGNERS - 1
-    );
+    const newMockPackages = mockNumericPackages.slice(0, NUMBER_OF_MOCK_NUMERIC_SIGNERS - 1);
     await testShouldRevertWith(
       newMockPackages,
       "ProxyCalldataFailedWithCustomError",
@@ -169,9 +149,7 @@ describe("SampleProxyConnector", function () {
   it("Should fail with correct message (no error message)", async () => {
     const wrappedContract =
       WrapperBuilder.wrap(contract).usingMockDataPackages(mockNumericPackages);
-    await expect(
-      wrappedContract.proxyEmptyError()
-    ).to.be.revertedWithCustomError(
+    await expect(wrappedContract.proxyEmptyError()).to.be.revertedWithCustomError(
       wrappedContract,
       "ProxyCalldataFailedWithoutErrMsg"
     );
@@ -181,10 +159,7 @@ describe("SampleProxyConnector", function () {
     const wrappedContract =
       WrapperBuilder.wrap(contract).usingMockDataPackages(mockNumericPackages);
     await expect(wrappedContract.proxyTestStringError())
-      .to.be.revertedWithCustomError(
-        wrappedContract,
-        "ProxyCalldataFailedWithStringMessage"
-      )
+      .to.be.revertedWithCustomError(wrappedContract, "ProxyCalldataFailedWithStringMessage")
       .withArgs("Test message");
   });
 });
