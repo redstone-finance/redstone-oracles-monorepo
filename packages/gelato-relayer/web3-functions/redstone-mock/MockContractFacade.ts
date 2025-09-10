@@ -1,17 +1,9 @@
-import {
-  ContractData,
-  EvmContractFacade,
-} from "@redstone-finance/on-chain-relayer";
+import { ContractData, EvmContractFacade } from "@redstone-finance/on-chain-relayer";
 import { SignedDataPackage } from "@redstone-finance/protocol";
-import {
-  ContractParamsProvider,
-  DataPackagesRequestParams,
-} from "@redstone-finance/sdk";
+import { ContractParamsProvider, DataPackagesRequestParams } from "@redstone-finance/sdk";
 
 export class MockContractFacade extends EvmContractFacade {
-  override getUniqueSignerThresholdFromContract(
-    _blockTag: number
-  ): Promise<number> {
+  override getUniqueSignerThresholdFromContract(_blockTag: number): Promise<number> {
     return Promise.resolve(1);
   }
 
@@ -29,10 +21,7 @@ export class MockContractFacade extends EvmContractFacade {
     });
   }
 
-  override getContractParamsProvider(
-    requestParams: DataPackagesRequestParams,
-    feedIds?: string[]
-  ) {
+  override getContractParamsProvider(requestParams: DataPackagesRequestParams, feedIds?: string[]) {
     return new ContractParamsProviderStub(requestParams, undefined, feedIds);
   }
 }

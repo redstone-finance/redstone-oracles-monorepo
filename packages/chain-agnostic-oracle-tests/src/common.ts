@@ -1,13 +1,5 @@
-import {
-  INumericDataPoint,
-  RedstonePayload,
-  SignedDataPackage,
-} from "@redstone-finance/protocol";
-import {
-  getMockSignedDataPackageObj,
-  MOCK_SIGNERS,
-  MockSignerIndex,
-} from "./test-utils";
+import { INumericDataPoint, RedstonePayload, SignedDataPackage } from "@redstone-finance/protocol";
+import { getMockSignedDataPackageObj, MOCK_SIGNERS, MockSignerIndex } from "./test-utils";
 import {
   PullModelTestCase,
   PushModelInstruction,
@@ -64,10 +56,7 @@ export const basicPullModelTestConfig: PullModelTestCase = {
   isPullModelTestCase: true,
 };
 
-export const generatePayloadWithETH = (
-  value: number,
-  dataTimestamp: number
-) => {
+export const generatePayloadWithETH = (value: number, dataTimestamp: number) => {
   const dataPoints = [{ dataFeedId: "ETH", value }];
   const signedMockdataPackages = [
     getMockSignedDataPackageObj({

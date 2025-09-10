@@ -1,8 +1,4 @@
-import {
-  defaultContractConfiguration,
-  generatePayloadWithETH,
-  to8Decimals,
-} from "../../common";
+import { defaultContractConfiguration, generatePayloadWithETH, to8Decimals } from "../../common";
 import { Nested, PushModelTestCase, PushModelTestContext } from "../../types";
 
 const generateTestCasesForStaleDataRead = (
@@ -64,9 +60,8 @@ export const dataReadChecks: Nested<PushModelTestCase> = {
     false
   ),
 
-  "Should read data properly for old, but non-stale data:":
-    generateTestCasesForStaleDataRead(
-      [29, 28, 25, 20, 10, 5, 3, 2, 1, 0],
-      true
-    ),
+  "Should read data properly for old, but non-stale data:": generateTestCasesForStaleDataRead(
+    [29, 28, 25, 20, 10, 5, 3, 2, 1, 0],
+    true
+  ),
 };

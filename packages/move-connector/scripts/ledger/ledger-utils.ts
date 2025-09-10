@@ -22,17 +22,13 @@ export async function makeAptosLedger() {
   return aptos;
 }
 
-export async function makeAptosAccountAddress(
-  aptosLedger: AptosLedger,
-  accountId = 0
-) {
+export async function makeAptosAccountAddress(aptosLedger: AptosLedger, accountId = 0) {
   const data = await getLedgerData(aptosLedger, accountId);
 
   return AccountAddress.from(data.address);
 }
 
-const getDerivationPath = (accountId: number) =>
-  `m/44'/637'/${accountId}'/0'/0'`;
+const getDerivationPath = (accountId: number) => `m/44'/637'/${accountId}'/0'/0'`;
 
 /// returns public key of the ledger account
 export const getLedgerData = async (aptos: AptosLedger, accountId: number) => {
@@ -46,21 +42,14 @@ export const getLedgerData = async (aptos: AptosLedger, accountId: number) => {
 };
 
 /// Signs tx as a ledger account. Returns authenticator to be used while submitting tx to the network.
-export const signTx = async (
-  aptos: AptosLedger,
-  tx: AnyRawTransaction,
-  accountId: number
-) => {
+export const signTx = async (aptos: AptosLedger, tx: AnyRawTransaction, accountId: number) => {
   const msg = generateSigningMessageForTransaction(tx);
 
   console.log(
     `Serialized transaction, check with \`wtf\`: ${tx.bcsToHex().toStringWithoutPrefix()}`
   );
 
-  const signed = await aptos.signTransaction(
-    getDerivationPath(accountId),
-    Buffer.from(msg)
-  );
+  const signed = await aptos.signTransaction(getDerivationPath(accountId), Buffer.from(msg));
 
   const signature = new Ed25519Signature(signed.signature);
   const data = await getLedgerData(aptos, accountId);

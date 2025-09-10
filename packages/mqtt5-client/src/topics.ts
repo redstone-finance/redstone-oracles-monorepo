@@ -17,17 +17,11 @@ export function encodeDataPackageTopic({
   dataPackageId,
   nodeAddress,
 }: DataPackageTopic) {
-  return encodeTopic([
-    "data-package",
-    dataServiceId,
-    dataPackageId,
-    nodeAddress,
-  ]);
+  return encodeTopic(["data-package", dataServiceId, dataPackageId, nodeAddress]);
 }
 
 export function decodeDataPackageTopic(encodedTopic: string): DataPackageTopic {
-  const [_, dataServiceId, dataPackageId, nodeAddress] =
-    decodeTopic(encodedTopic);
+  const [_, dataServiceId, dataPackageId, nodeAddress] = decodeTopic(encodedTopic);
 
   return {
     dataServiceId,

@@ -46,9 +46,7 @@ export class CustomTonNetwork implements TonNetwork {
   }
 
   async isContractDeployed(address?: Address): Promise<boolean> {
-    return (
-      address !== undefined && (await this.oldApi!.isContractDeployed(address))
-    );
+    return address !== undefined && (await this.oldApi!.isContractDeployed(address));
   }
 
   open<T extends Contract>(contract: T): AnyTonOpenedContract<T> {

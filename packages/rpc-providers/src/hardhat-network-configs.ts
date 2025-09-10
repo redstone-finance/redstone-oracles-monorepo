@@ -15,10 +15,7 @@ const CHAIN_NAME_TO_HARDHAT_NETWORK_NAME: {
 };
 
 const HARDHAT_NETWORK_NAME_TO_CHAIN_NAME = Object.fromEntries(
-  Object.entries(CHAIN_NAME_TO_HARDHAT_NETWORK_NAME).map(([key, value]) => [
-    value,
-    key,
-  ])
+  Object.entries(CHAIN_NAME_TO_HARDHAT_NETWORK_NAME).map(([key, value]) => [value, key])
 ) as {
   [key: string]: ChainName | undefined;
 };
@@ -50,8 +47,7 @@ export const hardhatNetworksConfig = (
 
     const rpcUrl =
       config.publicRpcUrls[
-        (pickRandom ? 1 : 0) *
-          Math.floor(Math.random() * config.publicRpcUrls.length)
+        (pickRandom ? 1 : 0) * Math.floor(Math.random() * config.publicRpcUrls.length)
       ];
 
     networks[CHAIN_NAME_TO_HARDHAT_NETWORK_NAME[chainName] ?? chainName] = {
@@ -66,10 +62,6 @@ export const hardhatNetworksConfig = (
   return networks;
 };
 
-export function convertHardhatNetworkNameToChainName(
-  hardhatNetworkName: string
-) {
-  return (
-    HARDHAT_NETWORK_NAME_TO_CHAIN_NAME[hardhatNetworkName] ?? hardhatNetworkName
-  );
+export function convertHardhatNetworkNameToChainName(hardhatNetworkName: string) {
+  return HARDHAT_NETWORK_NAME_TO_CHAIN_NAME[hardhatNetworkName] ?? hardhatNetworkName;
 }

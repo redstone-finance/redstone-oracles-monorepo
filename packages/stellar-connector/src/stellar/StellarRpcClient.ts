@@ -55,9 +55,7 @@ export class StellarRpcClient {
           };
         }
 
-        throw new Error(
-          `Transaction did not succeed: ${hash}, status: ${response.status}`
-        );
+        throw new Error(`Transaction did not succeed: ${hash}, status: ${response.status}`);
       },
       ...RETRY_CONFIG,
     })();
@@ -124,19 +122,11 @@ export class StellarRpcClient {
     transform: (result: rpc.Api.LedgerEntryResult) => T,
     durability?: rpc.Durability
   ) {
-    return transform(
-      await this.server.getContractData(contract, key, durability)
-    );
+    return transform(await this.server.getContractData(contract, key, durability));
   }
 
-  async transferXlm(
-    sender: StellarSigner,
-    destination: string,
-    amount: number
-  ) {
-    const senderAccount = await this.server.getAccount(
-      await sender.publicKey()
-    );
+  async transferXlm(sender: StellarSigner, destination: string, amount: number) {
+    const senderAccount = await this.server.getAccount(await sender.publicKey());
 
     const transaction = new TransactionBuilder(senderAccount, {
       fee: BASE_FEE,
@@ -159,14 +149,8 @@ export class StellarRpcClient {
     return result.hash;
   }
 
-  async createAccountWithFunds(
-    sender: StellarSigner,
-    destination: string,
-    amount: number
-  ) {
-    const senderAccount = await this.server.getAccount(
-      await sender.publicKey()
-    );
+  async createAccountWithFunds(sender: StellarSigner, destination: string, amount: number) {
+    const senderAccount = await this.server.getAccount(await sender.publicKey());
 
     const transaction = new TransactionBuilder(senderAccount, {
       fee: BASE_FEE,
@@ -223,9 +207,7 @@ export class StellarRpcClient {
       });
       const resParsed = Response.parse(res.data);
 
-      return new Date(
-        Number(resParsed.result.ledgers[0].ledgerCloseTime) * 1000
-      );
+      return new Date(Number(resParsed.result.ledgers[0].ledgerCloseTime) * 1000);
     } catch {
       console.warn(`Could not get time of ledger ${sequence}`);
       return new Date(0);
@@ -240,9 +222,7 @@ export class StellarRpcClient {
 
     if (oldestLedger > startLedger) {
       const end = Math.min(endLedger, oldestLedger);
-      console.warn(
-        `RPC node is past requested ledgers, skipping: ${startLedger} - ${end}`
-      );
+      console.warn(`RPC node is past requested ledgers, skipping: ${startLedger} - ${end}`);
     }
 
     if (oldestLedger > endLedger || latestLedger < startLedger) {
@@ -274,9 +254,7 @@ export class StellarRpcClient {
       transactions = transactions.concat(result.transactions);
     }
 
-    return transactions.filter(
-      ({ ledger }) => ledger >= startLedger && ledger <= endLedger
-    );
+    return transactions.filter(({ ledger }) => ledger >= startLedger && ledger <= endLedger);
   }
 
   async sendTransaction(tx: Transaction) {

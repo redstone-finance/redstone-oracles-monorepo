@@ -1,7 +1,4 @@
-import {
-  ContractParamsProvider,
-  getSignersForDataServiceId,
-} from "@redstone-finance/sdk";
+import { ContractParamsProvider, getSignersForDataServiceId } from "@redstone-finance/sdk";
 import { BigNumberish } from "ethers";
 import { sleep } from "fuels";
 import { IS_CI, provider } from "../common/provider";
@@ -33,23 +30,16 @@ describe("Gas Usage of integrated and initialized prices contract", () => {
       const maxGasUsage = results[`${obj.func}:4:3`];
       const minGasUsage = results[`${obj.func}:1:3`];
 
-      const perSubject = Math.round(
-        (maxGasUsage - minGasUsage) / (obj.num - 3)
-      );
+      const perSubject = Math.round((maxGasUsage - minGasUsage) / (obj.num - 3));
       const perSubjectConst = minGasUsage - perSubject * 3;
 
-      console.log(
-        `${obj.func} costs: ${perSubjectConst} + ${perSubject} * #${obj.subject}`
-      );
+      console.log(`${obj.func} costs: ${perSubjectConst} + ${perSubject} * #${obj.subject}`);
     }
   });
 
   const results: { [invocation: string]: number } = {};
 
-  async function performGasUsageTests(
-    uniqueSignerCount: number,
-    dataFeeds: string[]
-  ) {
+  async function performGasUsageTests(uniqueSignerCount: number, dataFeeds: string[]) {
     const adapter = await (
       await connectPricesContract(readProxyContractId(), true, await provider())
     ).getAdapter();
@@ -61,38 +51,16 @@ describe("Gas Usage of integrated and initialized prices contract", () => {
     });
 
     let gasUsage = await adapter.getPricesFromPayload(paramsProvider);
-    logAndSaveResults(
-      "get_prices",
-      uniqueSignerCount,
-      dataFeeds,
-      Number(gasUsage[0])
-    );
+    logAndSaveResults("get_prices", uniqueSignerCount, dataFeeds, Number(gasUsage[0]));
 
-    gasUsage = (await adapter.writePricesFromPayloadToContract(
-      paramsProvider
-    )) as bigint[];
-    logAndSaveResults(
-      "write_prices",
-      uniqueSignerCount,
-      dataFeeds,
-      Number(gasUsage[0])
-    );
+    gasUsage = (await adapter.writePricesFromPayloadToContract(paramsProvider)) as bigint[];
+    logAndSaveResults("write_prices", uniqueSignerCount, dataFeeds, Number(gasUsage[0]));
 
     gasUsage = await adapter.readPricesFromContract(paramsProvider);
-    logAndSaveResults(
-      "read_prices",
-      uniqueSignerCount,
-      dataFeeds,
-      Number(gasUsage[0])
-    );
+    logAndSaveResults("read_prices", uniqueSignerCount, dataFeeds, Number(gasUsage[0]));
 
     const timestampGasUsage = await adapter.readTimestampFromContract();
-    logAndSaveResults(
-      "read_timestamp",
-      uniqueSignerCount,
-      dataFeeds,
-      timestampGasUsage
-    );
+    logAndSaveResults("read_timestamp", uniqueSignerCount, dataFeeds, timestampGasUsage);
   }
 
   function logAndSaveResults(
@@ -107,8 +75,7 @@ describe("Gas Usage of integrated and initialized prices contract", () => {
       } feed(s): ${Number(gasUsage)}`
     );
 
-    results[`${method}:${uniqueSignerCount}:${dataFeeds.length}`] =
-      Number(gasUsage);
+    results[`${method}:${uniqueSignerCount}:${dataFeeds.length}`] = Number(gasUsage);
   }
 
   async function waitForNewData() {

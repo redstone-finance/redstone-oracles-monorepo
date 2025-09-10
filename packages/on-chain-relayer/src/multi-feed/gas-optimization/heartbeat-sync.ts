@@ -17,9 +17,7 @@ export const includeSynchronizedHeartbeatUpdates = (
   const messages: string[] = [];
   for (const dataFeedId of dataFeeds) {
     if (
-      !RedstoneCommon.isDefined(
-        updateTriggers[dataFeedId].timeSinceLastUpdateInMilliseconds
-      ) ||
+      !RedstoneCommon.isDefined(updateTriggers[dataFeedId].timeSinceLastUpdateInMilliseconds) ||
       dataFeedsToUpdate.includes(dataFeedId)
     ) {
       continue;
@@ -27,13 +25,9 @@ export const includeSynchronizedHeartbeatUpdates = (
     for (const heartbeat of heartbeatUpdates) {
       if (
         updateTriggers[dataFeedId].timeSinceLastUpdateInMilliseconds === 0 ||
-        heartbeat %
-          updateTriggers[dataFeedId].timeSinceLastUpdateInMilliseconds ===
-          0
+        heartbeat % updateTriggers[dataFeedId].timeSinceLastUpdateInMilliseconds === 0
       ) {
-        messages.push(
-          `DataFeed: ${dataFeedId} included due to heartbeat syncing`
-        );
+        messages.push(`DataFeed: ${dataFeedId} included due to heartbeat syncing`);
         dataFeedsToUpdate.push(dataFeedId);
         break;
       }

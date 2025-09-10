@@ -53,10 +53,7 @@ export interface PushModelWaitInstruction {
 export type PushModelReadInstruction = {
   type: "read";
   dataFeedIds: string[];
-} & (
-  | { expectedSuccess: false }
-  | { expectedSuccess: true; expectedValues: number[] }
-);
+} & ({ expectedSuccess: false } | { expectedSuccess: true; expectedValues: number[] });
 
 export interface PushModelTestContext {
   timestamp: number;

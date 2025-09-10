@@ -1,7 +1,4 @@
-import {
-  IContractConnector,
-  IPriceFeedContractAdapter,
-} from "@redstone-finance/sdk";
+import { IContractConnector, IPriceFeedContractAdapter } from "@redstone-finance/sdk";
 import { ProviderInterface } from "starknet";
 import { StarknetContractConnector } from "../StarknetContractConnector";
 import { PriceFeedStarknetContractAdapter } from "./PriceFeedStarknetContractAdapter";
@@ -16,8 +13,6 @@ export class PriceFeedStarknetContractConnector
   }
 
   getAdapter(): Promise<PriceFeedStarknetContractAdapter> {
-    return Promise.resolve(
-      new PriceFeedStarknetContractAdapter(this.getContract())
-    );
+    return Promise.resolve(new PriceFeedStarknetContractAdapter(this.getContract()));
   }
 }

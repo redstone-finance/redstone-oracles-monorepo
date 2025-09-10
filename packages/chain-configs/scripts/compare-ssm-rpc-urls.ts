@@ -13,9 +13,7 @@ const compareRpcUrlSets = (
     const networkId = set1[chain].networkId;
 
     if (skipNetworkIds.includes(networkId)) {
-      console.log(
-        chalk.yellow(`Skipping chain ${chain} with networkId ${networkId}`)
-      );
+      console.log(chalk.yellow(`Skipping chain ${chain} with networkId ${networkId}`));
       continue;
     }
 
@@ -25,14 +23,10 @@ const compareRpcUrlSets = (
       continue;
     }
 
-    const missingUrls = set1[chain].rpcUrls.filter(
-      (url) => !set2[chain].rpcUrls.includes(url)
-    );
+    const missingUrls = set1[chain].rpcUrls.filter((url) => !set2[chain].rpcUrls.includes(url));
 
     if (missingUrls.length > 0) {
-      console.log(
-        "\n---------------------------------------------------------------------\n"
-      );
+      console.log("\n---------------------------------------------------------------------\n");
       console.error(chalk.red(`- Missing configuration for ${chain}`));
       console.log(`${setName1} for ${chain}:`);
       missingUrls.forEach((url) => {

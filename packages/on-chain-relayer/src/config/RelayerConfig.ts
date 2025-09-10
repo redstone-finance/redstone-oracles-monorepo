@@ -1,7 +1,4 @@
-import {
-  AdapterType,
-  UpdateTriggers,
-} from "@redstone-finance/on-chain-relayer-common";
+import { AdapterType, UpdateTriggers } from "@redstone-finance/on-chain-relayer-common";
 import { NewestBlockType } from "@redstone-finance/rpc-providers";
 import { NetworkId } from "@redstone-finance/utils";
 

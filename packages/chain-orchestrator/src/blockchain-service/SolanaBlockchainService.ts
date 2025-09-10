@@ -1,11 +1,6 @@
 import { SolanaContractConnector } from "@redstone-finance/solana-connector";
 import { loggerFactory, RedstoneCommon } from "@redstone-finance/utils";
-import {
-  ConfirmedSignatureInfo,
-  Connection,
-  Keypair,
-  PublicKey,
-} from "@solana/web3.js";
+import { ConfirmedSignatureInfo, Connection, Keypair, PublicKey } from "@solana/web3.js";
 import { NonEvmBlockchainService } from "./NonEvmBlockchainService";
 
 const TRANSACTION_FETCHING_BATCH_SIZE = 1000;
@@ -43,8 +38,7 @@ export class SolanaBlockchainService extends NonEvmBlockchainService {
         await this.connection.getBlockSignatures(toSlot),
       ]);
       fromSlotSignature = fromSlotSignatures.signatures[0];
-      toSlotSignature =
-        toSlotSignatures.signatures[toSlotSignatures.signatures.length - 1];
+      toSlotSignature = toSlotSignatures.signatures[toSlotSignatures.signatures.length - 1];
     } catch (error) {
       this.logger.warn(
         `Slot is missing, using latest ${TRANSACTION_FETCHING_BATCH_SIZE} signatures; ${RedstoneCommon.stringifyError(error)}`
@@ -54,11 +48,7 @@ export class SolanaBlockchainService extends NonEvmBlockchainService {
     const allSignatures: ConfirmedSignatureInfo[] = [];
     for (const address of addresses) {
       allSignatures.push(
-        ...(await this.getAllSignatureInfos(
-          address,
-          fromSlotSignature,
-          toSlotSignature
-        ))
+        ...(await this.getAllSignatureInfos(address, fromSlotSignature, toSlotSignature))
       );
     }
 
@@ -80,14 +70,11 @@ export class SolanaBlockchainService extends NonEvmBlockchainService {
     minTransactionSignature?: string,
     maxTransactionSignature?: string
   ): Promise<ConfirmedSignatureInfo[]> {
-    const result = await this.connection.getSignaturesForAddress(
-      new PublicKey(address),
-      {
-        limit: TRANSACTION_FETCHING_BATCH_SIZE,
-        before: maxTransactionSignature,
-        until: minTransactionSignature,
-      }
-    );
+    const result = await this.connection.getSignaturesForAddress(new PublicKey(address), {
+      limit: TRANSACTION_FETCHING_BATCH_SIZE,
+      before: maxTransactionSignature,
+      until: minTransactionSignature,
+    });
 
     if (
       result.length === TRANSACTION_FETCHING_BATCH_SIZE &&

@@ -2,16 +2,11 @@ import { RedstoneCommon, loggerFactory } from "@redstone-finance/utils";
 import { auth, iot, mqtt, mqtt5 } from "aws-iot-device-sdk-v2";
 import { randomUUID } from "crypto";
 import { PubSubClient, PubSubPayload } from "./PubSubClient";
-import {
-  ContentTypes,
-  getSerializerDeserializer,
-} from "./SerializerDeserializer";
+import { ContentTypes, getSerializerDeserializer } from "./SerializerDeserializer";
 
 export type Mqtt5ClientConfig = {
   endpoint: string;
-  authorization:
-    | { type: "AWSSigV4" }
-    | { type: "Cert"; privateKey: string; cert: string };
+  authorization: { type: "AWSSigV4" } | { type: "Cert"; privateKey: string; cert: string };
   qos?: mqtt5.QoS;
   connectionTimeoutMs?: number;
   messageExpireTimeMs?: number;
@@ -46,8 +41,7 @@ export class Mqtt5Client implements PubSubClient {
   static async create(config: Mqtt5ClientConfig): Promise<Mqtt5Client> {
     const client = new Mqtt5Client(config);
 
-    const mqttClientBuilder =
-      Mqtt5Client.createMqttBuilderWithAuthorization(config);
+    const mqttClientBuilder = Mqtt5Client.createMqttBuilderWithAuthorization(config);
 
     // Add some default configurations
     mqttClientBuilder
@@ -56,9 +50,7 @@ export class Mqtt5Client implements PubSubClient {
         clientId: randomUUID(),
         sessionExpiryIntervalSeconds: 3600,
       })
-      .withOfflineQueueBehavior(
-        mqtt5.ClientOperationQueueBehavior.FailAllOnDisconnect
-      )
+      .withOfflineQueueBehavior(mqtt5.ClientOperationQueueBehavior.FailAllOnDisconnect)
       .withSessionBehavior(mqtt5.ClientSessionBehavior.RejoinPostSuccess)
       .withRetryJitterMode(mqtt5.RetryJitterType.Full);
 
@@ -138,9 +130,7 @@ export class Mqtt5Client implements PubSubClient {
             topicName: payload.topic,
             qos: this.config.qos,
             contentType,
-            messageExpiryIntervalSeconds: Math.floor(
-              this.config.messageExpireTimeMs / 1000
-            ),
+            messageExpiryIntervalSeconds: Math.floor(this.config.messageExpireTimeMs / 1000),
           })
         );
       }

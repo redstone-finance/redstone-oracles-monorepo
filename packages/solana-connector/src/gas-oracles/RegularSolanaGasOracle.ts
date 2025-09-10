@@ -26,17 +26,12 @@ export class RegularSolanaGasOracle implements ISolanaGasOracle {
     });
     const prioritizationFees = fees.map((entry) => entry.prioritizationFee);
     const percentileForUse =
-      BASE_PRIORITY_FEE_PERCENTILE +
-      iterationIndex * PRIORITY_FEE_PERCENTILE_STEP;
+      BASE_PRIORITY_FEE_PERCENTILE + iterationIndex * PRIORITY_FEE_PERCENTILE_STEP;
     this.logPercentiles(prioritizationFees, percentileForUse);
 
-    const recentPriorityFeePercentile = calculatePercentile(
-      prioritizationFees,
-      percentileForUse
-    );
+    const recentPriorityFeePercentile = calculatePercentile(prioritizationFees, percentileForUse);
     const iterationGasMultiplier = this.config.gasMultiplier ** iterationIndex;
-    const maxRecentPriorityFee =
-      recentPriorityFeePercentile || MIN_DEFAULT_PRIORITY_FEE;
+    const maxRecentPriorityFee = recentPriorityFeePercentile || MIN_DEFAULT_PRIORITY_FEE;
 
     const priorityFee = Math.min(
       Math.ceil(maxRecentPriorityFee * iterationGasMultiplier),
@@ -58,10 +53,7 @@ export class RegularSolanaGasOracle implements ISolanaGasOracle {
     return priorityFee;
   }
 
-  private logPercentiles(
-    prioritizationFees: number[],
-    percentileForUse: number
-  ) {
+  private logPercentiles(prioritizationFees: number[], percentileForUse: number) {
     const step = 1;
     const startPercentile = BASE_PRIORITY_FEE_PERCENTILE;
     const percentiles = Array.from(

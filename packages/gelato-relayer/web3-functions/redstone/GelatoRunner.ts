@@ -1,7 +1,4 @@
-import {
-  Web3FunctionContext,
-  Web3FunctionResult,
-} from "@gelatonetwork/web3-functions-sdk";
+import { Web3FunctionContext, Web3FunctionResult } from "@gelatonetwork/web3-functions-sdk";
 import {
   EvmContractFacade,
   getEvmContract,
@@ -26,9 +23,7 @@ import { fetchManifestAndSetUpEnv } from "./fetch-manifest-and-set-up-env";
 export class GelatoRunner {
   constructor(protected readonly context: Web3FunctionContext) {}
 
-  async run(
-    provider: providers.StaticJsonRpcProvider
-  ): Promise<Web3FunctionResult> {
+  async run(provider: providers.StaticJsonRpcProvider): Promise<Web3FunctionResult> {
     const env = await this.getEnvParams();
     const { relayerEnv, manifest } = await fetchManifestAndSetUpEnv(env);
     const config = makeRelayerConfig(manifest, relayerEnv);
@@ -38,11 +33,7 @@ export class GelatoRunner {
       const deliveryMan = new GelatoDeliveryMan(resolve, logger);
       const connector = getEvmContractConnector(
         provider,
-        getEvmContractAdapter(
-          config,
-          getEvmContract(config, provider),
-          deliveryMan
-        )
+        getEvmContractAdapter(config, getEvmContract(config, provider), deliveryMan)
       );
 
       this.runIteration(connector, config, logger)
@@ -59,9 +50,7 @@ export class GelatoRunner {
 
   // eslint-disable-next-line @typescript-eslint/class-methods-use-this -- To be overridden
   protected runIteration(
-    connector: IContractConnector<
-      IExtendedPricesContractAdapter | IRedstoneContractAdapter
-    >,
+    connector: IContractConnector<IExtendedPricesContractAdapter | IRedstoneContractAdapter>,
     config: RelayerConfig,
     logger: GelatoLogger
   ) {
@@ -78,16 +67,13 @@ export class GelatoRunner {
         (await this.context.secrets.get("MANIFEST_URLS")) ?? "[]"
       ) as string[],
       fallbackOffsetInMilliseconds: Number.parseInt(
-        (await this.context.secrets.get("FALLBACK_OFFSET_IN_MILLISECONDS")) ??
-          "0"
+        (await this.context.secrets.get("FALLBACK_OFFSET_IN_MILLISECONDS")) ?? "0"
       ),
       historicalPackagesGateways: JSON.parse(
         (await this.context.secrets.get("HISTORICAL_PACKAGES_GATEWAYS")) ?? "[]"
       ) as string[],
       fallbackSkipDeviationBasedFrequentUpdates: JSON.parse(
-        (await this.context.secrets.get(
-          "SKIP_TX_SENDING_IF_OFFSET_MINUTES_DID_NOT_PASS"
-        )) ?? "true"
+        (await this.context.secrets.get("SKIP_TX_SENDING_IF_OFFSET_MINUTES_DID_NOT_PASS")) ?? "true"
       ) as boolean,
     };
 
@@ -98,9 +84,7 @@ export class GelatoRunner {
       );
 
       env.manifestUrls = this.context.userArgs["manifestUrls"] as string[];
-      const localManifestData = this.context.userArgs[
-        "localManifestData"
-      ] as string;
+      const localManifestData = this.context.userArgs["localManifestData"] as string;
       if (localManifestData) {
         env.localManifestData = JSON.parse(atob(localManifestData));
       }

@@ -8,8 +8,7 @@ import {
   setCurrentSystemTime,
 } from "../helpers";
 
-const SHOULD_NOT_UPDATE_REGEXP =
-  /Should not update prices according to cron expr/;
+const SHOULD_NOT_UPDATE_REGEXP = /Should not update prices according to cron expr/;
 const SHOULD_UPDATE_REGEXP = /Should update prices according to cron expr/;
 
 describe("cron-condition", () => {

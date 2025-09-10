@@ -29,8 +29,7 @@ export abstract class BaseWrapper<T extends Contract> {
   async getRedstonePayloadForManualUsage(contract: T): Promise<string> {
     this.setContractForFetchingDefaultParams(contract);
     const shouldBeMultipleOf32 = true;
-    const payloadWithoutZeroExPrefix =
-      await this.prepareRedstonePayload(shouldBeMultipleOf32);
+    const payloadWithoutZeroExPrefix = await this.prepareRedstonePayload(shouldBeMultipleOf32);
     return "0x" + payloadWithoutZeroExPrefix;
   }
 
@@ -38,10 +37,7 @@ export abstract class BaseWrapper<T extends Contract> {
     const signedDataPackages = await this.getDataPackagesForPayload();
     let unsignedMetadata = this.getUnsignedMetadata();
 
-    const originalPayload = RedstonePayload.prepare(
-      signedDataPackages,
-      unsignedMetadata
-    );
+    const originalPayload = RedstonePayload.prepare(signedDataPackages, unsignedMetadata);
 
     if (!shouldBeMultipleOf32) {
       return originalPayload;
@@ -69,11 +65,9 @@ export abstract class BaseWrapper<T extends Contract> {
   overwriteEthersContract(contract: T): T {
     this.setContractForFetchingDefaultParams(contract);
     const contractPrototype = Object.getPrototypeOf(contract) as object;
-    const wrappedContract = Object.assign(
-      Object.create(contractPrototype) as T,
-      contract,
-      { populateTransaction: {} }
-    );
+    const wrappedContract = Object.assign(Object.create(contractPrototype) as T, contract, {
+      populateTransaction: {},
+    });
 
     const functionNames: string[] = Object.keys(contract.functions);
     functionNames.forEach((functionName) => {
@@ -101,12 +95,8 @@ export abstract class BaseWrapper<T extends Contract> {
     contract,
     functionName,
   }: OverwriteFunctionArgs<T>) {
-    wrappedContract.populateTransaction[functionName] = async (
-      ...args: unknown[]
-    ) => {
-      const originalTx = await contract.populateTransaction[functionName](
-        ...args
-      );
+    wrappedContract.populateTransaction[functionName] = async (...args: unknown[]) => {
+      const originalTx = await contract.populateTransaction[functionName](...args);
       const dataToAppend = await this.getBytesDataForAppending();
       originalTx.data += dataToAppend;
       return originalTx;
@@ -114,11 +104,7 @@ export abstract class BaseWrapper<T extends Contract> {
   }
 
   // eslint-disable-next-line @typescript-eslint/class-methods-use-this
-  private overwriteFunction({
-    wrappedContract,
-    contract,
-    functionName,
-  }: OverwriteFunctionArgs<T>) {
+  private overwriteFunction({ wrappedContract, contract, functionName }: OverwriteFunctionArgs<T>) {
     const functionFragment = contract.interface.getFunction(functionName);
     const isCall = functionFragment.constant;
     const isDryRun = functionName.endsWith("DryRun");
@@ -126,26 +112,16 @@ export abstract class BaseWrapper<T extends Contract> {
     // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-explicit-any
     (wrappedContract as any)[functionName] = async (...args: unknown[]) => {
       // this is copied from node_modules/@ethersproject/contracts/src.ts/index.ts
-      const blockTag = BaseWrapper.handleContractOverrides(
-        args,
-        functionFragment
-      );
+      const blockTag = BaseWrapper.handleContractOverrides(args, functionFragment);
 
-      const tx = await wrappedContract.populateTransaction[functionName](
-        ...args
-      );
+      const tx = await wrappedContract.populateTransaction[functionName](...args);
 
       if (isCall || isDryRun) {
         const shouldUseSigner = Signer.isSigner(contract.signer);
 
-        const result = await contract[
-          shouldUseSigner ? "signer" : "provider"
-        ].call(tx, blockTag);
+        const result = await contract[shouldUseSigner ? "signer" : "provider"].call(tx, blockTag);
 
-        const decoded = contract.interface.decodeFunctionResult(
-          functionName,
-          result
-        );
+        const decoded = contract.interface.decodeFunctionResult(functionName, result);
         // eslint-disable-next-line @typescript-eslint/no-unsafe-return
         return decoded.length === 1 ? decoded[0] : decoded;
       } else {
@@ -160,10 +136,7 @@ export abstract class BaseWrapper<T extends Contract> {
   }
 
   /** Removes contractOverrides. Returns blockTag if passed in contract overrides */
-  private static handleContractOverrides(
-    args: unknown[],
-    functionFragment: FunctionFragment
-  ) {
+  private static handleContractOverrides(args: unknown[], functionFragment: FunctionFragment) {
     let blockTag: number | undefined = undefined;
     if (
       args.length === functionFragment.inputs.length + 1 &&

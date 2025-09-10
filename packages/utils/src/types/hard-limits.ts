@@ -11,5 +11,4 @@ export interface HardLimitsForSymbol {
 
 export type HardLimits = Partial<Record<string, HardLimitsForSymbol>>;
 
-export type HardLimitsWithTimestamp = HardLimits &
-  Partial<TimestampInHardLimits>;
+export type HardLimitsWithTimestamp = HardLimits & Partial<TimestampInHardLimits>;

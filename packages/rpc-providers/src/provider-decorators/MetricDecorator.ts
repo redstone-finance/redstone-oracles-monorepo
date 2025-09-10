@@ -14,10 +14,7 @@ export function CallMetricDecorator(
     const { chainId, url } = getProviderNetworkInfo(provider);
 
     const oldCall = provider.call.bind(provider);
-    provider.call = async (
-      transaction: Deferrable<TransactionRequest>,
-      blockTag?: BlockTag
-    ) => {
+    provider.call = async (transaction: Deferrable<TransactionRequest>, blockTag?: BlockTag) => {
       const start = performance.now();
       let isFailure = false;
       try {

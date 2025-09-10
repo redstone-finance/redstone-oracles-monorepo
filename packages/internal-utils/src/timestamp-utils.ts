@@ -17,20 +17,14 @@ export const calculateTimestampDifferenceInHumanReadableFormat = (
 ): string => {
   const date1 = new Date(timestamp1);
   const date2 = new Date(timestamp2);
-  const timeDifferenceInMilliseconds = Math.abs(
-    date1.getTime() - date2.getTime()
-  );
+  const timeDifferenceInMilliseconds = Math.abs(date1.getTime() - date2.getTime());
 
   const days = Math.floor(timeDifferenceInMilliseconds / (1000 * 60 * 60 * 24));
   const hours = Math.floor(
     (timeDifferenceInMilliseconds % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
   );
-  const minutes = Math.floor(
-    (timeDifferenceInMilliseconds % (1000 * 60 * 60)) / (1000 * 60)
-  );
-  const seconds = Math.floor(
-    (timeDifferenceInMilliseconds % (1000 * 60)) / 1000
-  );
+  const minutes = Math.floor((timeDifferenceInMilliseconds % (1000 * 60 * 60)) / (1000 * 60));
+  const seconds = Math.floor((timeDifferenceInMilliseconds % (1000 * 60)) / 1000);
 
   return `${days ? `${days} days, ` : ""}${hours ? `${hours} hours, ` : ""}${
     minutes ? `${minutes} minutes ` : ""

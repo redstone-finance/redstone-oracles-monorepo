@@ -56,17 +56,14 @@ export class RedStoneTxStatsInfluxService extends InfluxService {
     const avgInterval =
       responseRows.length === 1
         ? undefined
-        : (times[0] - times[times.length - 1]) /
-          (1000 * (responseRows.length - 1));
+        : (times[0] - times[times.length - 1]) / (1000 * (responseRows.length - 1));
 
     const gasCosts = responseRows.map((row) => row.gasCost);
     const count = gasCosts.length;
     const mean = gasCosts.reduce((acc, val) => acc + val, 0) / count;
     const median = MathUtils.getMedian(gasCosts);
     const stdDev = Math.sqrt(
-      gasCosts
-        .map((x) => Math.pow(x - mean, 2))
-        .reduce((acc, val) => acc + val, 0) / count
+      gasCosts.map((x) => Math.pow(x - mean, 2)).reduce((acc, val) => acc + val, 0) / count
     );
 
     return { mean, stdDev, count, median, avgInterval };

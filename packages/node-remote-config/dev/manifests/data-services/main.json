@@ -460,13 +460,7 @@
       "rateFeed": false
     },
     "XMR": {
-      "source": [
-        "binance-usdt",
-        "bitfinex-usd",
-        "coingecko",
-        "kraken-usdt",
-        "kucoin-usdt"
-      ],
+      "source": ["binance-usdt", "bitfinex-usd", "coingecko", "kraken-usdt", "kucoin-usdt"],
       "denomination": "USD",
       "rateFeed": false
     },
@@ -483,13 +477,7 @@
       "rateFeed": false
     },
     "BCH": {
-      "source": [
-        "binance-usdt",
-        "coinbase-usd",
-        "kraken-usd",
-        "kucoin-usdt",
-        "okx-usdt"
-      ],
+      "source": ["binance-usdt", "coinbase-usd", "kraken-usd", "kucoin-usdt", "okx-usdt"],
       "denomination": "USD",
       "rateFeed": false
     },
@@ -499,13 +487,7 @@
       "rateFeed": false
     },
     "XLM": {
-      "source": [
-        "binance-usdt",
-        "coinbase-usd",
-        "kraken-usd",
-        "kucoin-usdt",
-        "okx-usdt"
-      ],
+      "source": ["binance-usdt", "coinbase-usd", "kraken-usd", "kucoin-usdt", "okx-usdt"],
       "denomination": "USD",
       "rateFeed": false
     },
@@ -612,11 +594,7 @@
       "rateFeed": false
     },
     "OHM": {
-      "source": [
-        "coingecko",
-        "uniswap-v3-ethereum-usdc-3000",
-        "uniswap-v3-ethereum-weth-3000"
-      ],
+      "source": ["coingecko", "uniswap-v3-ethereum-usdc-3000", "uniswap-v3-ethereum-weth-3000"],
       "denomination": "USD",
       "rateFeed": false
     },
@@ -783,11 +761,7 @@
       "rateFeed": true
     },
     "LUSD": {
-      "source": [
-        "curve-ethereum-3crv",
-        "uniswap-v3-ethereum-usdc-500",
-        "velodrome-optimism-usdc"
-      ],
+      "source": ["curve-ethereum-3crv", "uniswap-v3-ethereum-usdc-500", "velodrome-optimism-usdc"],
       "denomination": "USD",
       "rateFeed": false
     },
@@ -1067,22 +1041,12 @@
       "rateFeed": false
     },
     "ALUSD": {
-      "source": [
-        "curve-ethereum-3crv",
-        "curve-ethereum-crvfrax",
-        "velodrome-optimism-usdc"
-      ],
+      "source": ["curve-ethereum-3crv", "curve-ethereum-crvfrax", "velodrome-optimism-usdc"],
       "denomination": "USD",
       "rateFeed": false
     },
     "XVS": {
-      "source": [
-        "binance-usdt",
-        "bingx-usdt",
-        "bitrue-usdt",
-        "gate-usdt",
-        "lbank-usdt"
-      ],
+      "source": ["binance-usdt", "bingx-usdt", "bitrue-usdt", "gate-usdt", "lbank-usdt"],
       "denomination": "USD",
       "rateFeed": false
     },
@@ -1464,11 +1428,7 @@
       "rateFeed": true
     },
     "rswETH": {
-      "source": [
-        "balancer-ethereum-ezeth",
-        "balancer-ethereum-weeth",
-        "curve-ethereum-weeth"
-      ],
+      "source": ["balancer-ethereum-ezeth", "balancer-ethereum-weeth", "curve-ethereum-weeth"],
       "denomination": "USD",
       "rateFeed": false
     },
@@ -1604,11 +1564,7 @@
       "rateFeed": false
     },
     "bsdETH": {
-      "source": [
-        "aerodrome-base-weth",
-        "aerodrome-cl-base-weth",
-        "uniswap-v3-base-weth-100"
-      ],
+      "source": ["aerodrome-base-weth", "aerodrome-cl-base-weth", "uniswap-v3-base-weth-100"],
       "denomination": "USD",
       "rateFeed": false
     },
@@ -1790,10 +1746,7 @@
       "rateFeed": false
     },
     "SolvBTC.BBN": {
-      "source": [
-        "pancake-swap-bnb-solvbtc-500",
-        "uniswap-v3-ethereum-solvbtc-100"
-      ],
+      "source": ["pancake-swap-bnb-solvbtc-500", "uniswap-v3-ethereum-solvbtc-100"],
       "denomination": "USD",
       "rateFeed": false
     },
@@ -1865,11 +1818,7 @@
       "rateFeed": false
     },
     "fxUSD": {
-      "source": [
-        "curve-ethereum-eusd",
-        "curve-ethereum-gho",
-        "curve-ethereum-usdc"
-      ],
+      "source": ["curve-ethereum-eusd", "curve-ethereum-gho", "curve-ethereum-usdc"],
       "deviationCheck": {
         "deviationWithRecentValues": {
           "maxPercent": 5,
@@ -1993,29 +1942,17 @@
       "rateFeed": false
     },
     "KES": {
-      "source": [
-        "alphavantage-usd",
-        "financialmodelingprep-usd",
-        "twelve-data"
-      ],
+      "source": ["alphavantage-usd", "financialmodelingprep-usd", "twelve-data"],
       "denomination": "USD",
       "rateFeed": false
     },
     "PHP": {
-      "source": [
-        "alphavantage-usd",
-        "financialmodelingprep-usd",
-        "twelve-data"
-      ],
+      "source": ["alphavantage-usd", "financialmodelingprep-usd", "twelve-data"],
       "denomination": "USD",
       "rateFeed": false
     },
     "COP": {
-      "source": [
-        "alphavantage-usd-reversed",
-        "financialmodelingprep-usd",
-        "twelve-data"
-      ],
+      "source": ["alphavantage-usd-reversed", "financialmodelingprep-usd", "twelve-data"],
       "denomination": "USD",
       "rateFeed": false
     },
@@ -2237,11 +2174,7 @@
       "rateFeed": false
     },
     "C3M": {
-      "source": [
-        "alphavantagestock-usd",
-        "financialmodelingprep-usd",
-        "twelve-data"
-      ],
+      "source": ["alphavantagestock-usd", "financialmodelingprep-usd", "twelve-data"],
       "denomination": "USD",
       "rateFeed": false
     },
@@ -2577,13 +2510,7 @@
       "rateFeed": false
     },
     "QI": {
-      "source": [
-        "binance-usdt",
-        "bitrue-usdt",
-        "kucoin-usdt",
-        "lbank-usdt",
-        "xt"
-      ],
+      "source": ["binance-usdt", "bitrue-usdt", "kucoin-usdt", "lbank-usdt", "xt"],
       "denomination": "USD",
       "rateFeed": false
     },
@@ -2815,13 +2742,7 @@
       "rateFeed": false
     },
     "THE": {
-      "source": [
-        "binance-usdt",
-        "bitget-usdt",
-        "gate-usdt",
-        "lbank-usdt",
-        "xt"
-      ],
+      "source": ["binance-usdt", "bitget-usdt", "gate-usdt", "lbank-usdt", "xt"],
       "denomination": "USD",
       "rateFeed": false
     },

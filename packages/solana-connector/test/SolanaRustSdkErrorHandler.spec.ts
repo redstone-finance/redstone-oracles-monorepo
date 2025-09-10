@@ -43,8 +43,6 @@ describe("SolanaRustSdkErrorHandler tests", () => {
     }
   });
   it("Handles badly formatted error", () => {
-    expect(
-      SolanaRustSdkErrroHandler.canSkipError(makeBadInstructionError())
-    ).toBeFalsy();
+    expect(SolanaRustSdkErrroHandler.canSkipError(makeBadInstructionError())).toBeFalsy();
   });
 });

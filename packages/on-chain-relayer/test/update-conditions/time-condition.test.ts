@@ -18,9 +18,7 @@ describe("time-condition", () => {
       relayerConfig
     );
     expect(shouldUpdatePrices).to.be.false;
-    expect(messages[0].message).to.match(
-      /Not enough time has passed to update prices/
-    );
+    expect(messages[0].message).to.match(/Not enough time has passed to update prices/);
   });
 
   it("should return true if time diff bigger than interval", () => {
@@ -31,8 +29,6 @@ describe("time-condition", () => {
       relayerConfig
     );
     expect(shouldUpdatePrices).to.be.true;
-    expect(messages[0].message).to.match(
-      /Enough time has passed to update prices/
-    );
+    expect(messages[0].message).to.match(/Enough time has passed to update prices/);
   });
 });

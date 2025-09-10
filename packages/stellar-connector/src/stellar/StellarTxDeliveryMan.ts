@@ -52,33 +52,20 @@ export class StellarTxDeliveryMan {
 
       return hash;
     } catch (e) {
-      this.logger.error(
-        `Sending transaction failed ${this.config.maxTxSendAttempts} times`
-      );
+      this.logger.error(`Sending transaction failed ${this.config.maxTxSendAttempts} times`);
       throw e;
     }
   }
 
-  private async sendTransactionWithIteration(
-    txCreator: TxCreator,
-    iteration: number
-  ) {
+  private async sendTransactionWithIteration(txCreator: TxCreator, iteration: number) {
     const tx = await txCreator();
 
     const multiplier = this.config.gasMultiplier ** iteration;
-    const fee = BigInt(
-      Math.round(Math.min(Number(BASE_FEE) * multiplier, this.config.gasLimit))
-    );
+    const fee = BigInt(Math.round(Math.min(Number(BASE_FEE) * multiplier, this.config.gasLimit)));
 
-    this.logger.info(
-      `Sending transaction; Attempt #${iteration + 1} (fee: ${fee} stroops)`
-    );
+    this.logger.info(`Sending transaction; Attempt #${iteration + 1} (fee: ${fee} stroops)`);
 
-    const submitResponse = await this.rpcClient.executeOperation(
-      tx,
-      this.signer,
-      fee.toString()
-    );
+    const submitResponse = await this.rpcClient.executeOperation(tx, this.signer, fee.toString());
 
     if (!["PENDING", "DUPLICATE"].includes(submitResponse.status)) {
       const { status, errorResult } = submitResponse;

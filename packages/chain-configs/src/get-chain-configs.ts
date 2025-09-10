@@ -5,12 +5,7 @@ import {
 } from "@redstone-finance/internal-utils";
 import { RedstoneCommon } from "@redstone-finance/utils";
 import localChainConfigsManifest from "../manifest/chain-configs.json";
-import {
-  ChainConfigs,
-  ChainConfigsById,
-  ChainConfigsInput,
-  ChainConfigsSchema,
-} from "./schemas";
+import { ChainConfigs, ChainConfigsById, ChainConfigsInput, ChainConfigsSchema } from "./schemas";
 
 export const fetchChainConfigsWithAxios = async (
   manifestsHosts: string[],
@@ -65,18 +60,12 @@ export function getLocalChainConfigs(): ChainConfigs {
   return LOCAL_CHAIN_CONFIGS;
 }
 
-function groupChainConfigsByNetworkId(
-  chainConfigs: ChainConfigs
-): ChainConfigsById {
-  const entries = Object.values(chainConfigs).map((chain) => [
-    chain.networkId,
-    chain,
-  ]);
+function groupChainConfigsByNetworkId(chainConfigs: ChainConfigs): ChainConfigsById {
+  const entries = Object.values(chainConfigs).map((chain) => [chain.networkId, chain]);
   return Object.fromEntries(entries) as ChainConfigsById;
 }
 
-const LOCAL_CHAIN_CONFIGS_BY_NETWORK_ID =
-  groupChainConfigsByNetworkId(LOCAL_CHAIN_CONFIGS);
+const LOCAL_CHAIN_CONFIGS_BY_NETWORK_ID = groupChainConfigsByNetworkId(LOCAL_CHAIN_CONFIGS);
 
 export function getLocalChainConfigsByNetworkId(): ChainConfigsById {
   return LOCAL_CHAIN_CONFIGS_BY_NETWORK_ID;

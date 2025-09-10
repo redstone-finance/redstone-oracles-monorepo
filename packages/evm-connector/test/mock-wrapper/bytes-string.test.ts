@@ -25,12 +25,9 @@ describe("SampleRedstoneConsumerBytesMockStrings", function () {
   );
 
   const testShouldPass = async (mockPackages: MockDataPackageConfig[]) => {
-    const wrappedContract =
-      WrapperBuilder.wrap(contract).usingMockDataPackages(mockPackages);
+    const wrappedContract = WrapperBuilder.wrap(contract).usingMockDataPackages(mockPackages);
 
-    const tx = await wrappedContract.saveLatestValueInStorage(
-      DEFAULT_DATA_FEED_ID_BYTES_32
-    );
+    const tx = await wrappedContract.saveLatestValueInStorage(DEFAULT_DATA_FEED_ID_BYTES_32);
     await tx.wait();
 
     const latestString = await contract.latestString();
@@ -42,12 +39,9 @@ describe("SampleRedstoneConsumerBytesMockStrings", function () {
     revertMsg: string,
     ...args: unknown[]
   ) => {
-    const wrappedContract =
-      WrapperBuilder.wrap(contract).usingMockDataPackages(mockPackages);
+    const wrappedContract = WrapperBuilder.wrap(contract).usingMockDataPackages(mockPackages);
 
-    await expect(
-      wrappedContract.saveLatestValueInStorage(DEFAULT_DATA_FEED_ID_BYTES_32)
-    )
+    await expect(wrappedContract.saveLatestValueInStorage(DEFAULT_DATA_FEED_ID_BYTES_32))
       .to.be.revertedWithCustomError(wrappedContract, revertMsg)
       .withArgs(...args);
   };
@@ -77,10 +71,7 @@ describe("SampleRedstoneConsumerBytesMockStrings", function () {
         hexValue: someLongHexValue.replace("ee42", "ff42"),
       }),
     ];
-    await testShouldRevertWith(
-      newPackages,
-      "EachSignerMustProvideTheSameValue"
-    );
+    await testShouldRevertWith(newPackages, "EachSignerMustProvideTheSameValue");
   });
 
   it("Should revert if there are too few signers", async () => {

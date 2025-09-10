@@ -1,15 +1,8 @@
-import {
-  DataPackage,
-  NumericDataPoint,
-  SignedDataPackage,
-} from "@redstone-finance/protocol";
+import { DataPackage, NumericDataPoint, SignedDataPackage } from "@redstone-finance/protocol";
 import { RedstoneLogger } from "@redstone-finance/utils";
 import { ethers } from "ethers";
 import { MqttTopics } from "../src";
-import {
-  DataPackageSubscriber,
-  DataPackageSubscriberParams,
-} from "../src/DataPackageSubscriber";
+import { DataPackageSubscriber, DataPackageSubscriberParams } from "../src/DataPackageSubscriber";
 import { MultiPubSubClient } from "../src/MultiPubSubClient";
 import { PubSubPayload } from "../src/PubSubClient";
 import { RateLimitsCircuitBreaker } from "../src/RateLimitsCircuitBreaker";
@@ -32,11 +25,7 @@ const MOCK_WALLET_5 = new ethers.Wallet(
 
 const dataServiceId = "data-service-1";
 
-type SubscribeFn = (
-  topicName: string,
-  messagePayload: unknown,
-  error: string | null
-) => unknown;
+type SubscribeFn = (topicName: string, messagePayload: unknown, error: string | null) => unknown;
 
 class MockPubSubClient {
   topicToCallback: Map<string, SubscribeFn> = new Map();
@@ -49,11 +38,7 @@ class MockPubSubClient {
 
   publish(payloads: PubSubPayload[]) {
     for (const payload of payloads) {
-      this.topicToCallback.get(payload.topic)?.(
-        payload.topic,
-        payload.data,
-        null
-      );
+      this.topicToCallback.get(payload.topic)?.(payload.topic, payload.data, null);
     }
   }
 
@@ -213,9 +198,9 @@ describe("subscribe-data-packages", () => {
         `data-package/data-service-1/ETH/${MOCK_WALLET_1.address}`,
         `data-package/data-service-1/ETH/${MOCK_WALLET_2.address}`,
       ]);
-      expect([
-        ...(pubSub as unknown as MockPubSubClient).topicToCallback.keys(),
-      ]).toEqual(subscriber.topics);
+      expect([...(pubSub as unknown as MockPubSubClient).topicToCallback.keys()]).toEqual(
+        subscriber.topics
+      );
     });
   });
 
@@ -223,12 +208,7 @@ describe("subscribe-data-packages", () => {
     it("should aggregate prices for single data feed id, one signer", async () => {
       const { pubSub, callback } = await singleSignerSetUp();
 
-      const dataPackage = createDataPackage(
-        "ETH",
-        12,
-        Date.now(),
-        MOCK_WALLET_1
-      );
+      const dataPackage = createDataPackage("ETH", 12, Date.now(), MOCK_WALLET_1);
 
       await pubSub.publish(
         [
@@ -252,12 +232,7 @@ describe("subscribe-data-packages", () => {
 
     it("should reject package not fulfilling schema", async () => {
       const { pubSub, callback, logger } = await singleSignerSetUp();
-      const dataPackage = createDataPackage(
-        "ETH",
-        12,
-        Date.now(),
-        MOCK_WALLET_1
-      );
+      const dataPackage = createDataPackage("ETH", 12, Date.now(), MOCK_WALLET_1);
 
       await pubSub.publish(
         [
@@ -274,19 +249,12 @@ describe("subscribe-data-packages", () => {
       );
 
       expect(callback).toBeCalledTimes(0);
-      expect(logger).toBeCalledWith(
-        expect.stringContaining("Zod validation error")
-      );
+      expect(logger).toBeCalledWith(expect.stringContaining("Zod validation error"));
     });
 
     it("should reject package wrong signer", async () => {
       const { pubSub, callback, logger } = await singleSignerSetUp();
-      const dataPackage = createDataPackage(
-        "ETH",
-        12,
-        Date.now(),
-        MOCK_WALLET_2
-      );
+      const dataPackage = createDataPackage("ETH", 12, Date.now(), MOCK_WALLET_2);
 
       await pubSub.publish(
         [
@@ -303,14 +271,11 @@ describe("subscribe-data-packages", () => {
       );
 
       expect(callback).toBeCalledTimes(0);
-      expect(logger).toBeCalledWith(
-        expect.stringContaining("Failed to verify signature")
-      );
+      expect(logger).toBeCalledWith(expect.stringContaining("Failed to verify signature"));
     });
 
     it("should reject package if it is older or the same timestamp as last published", async () => {
-      const { pubSub, callback, loggerDebug, subscriber } =
-        await singleSignerSetUp();
+      const { pubSub, callback, loggerDebug, subscriber } = await singleSignerSetUp();
 
       const timestamp = Date.now();
 
@@ -399,12 +364,7 @@ describe("subscribe-data-packages", () => {
 
     it("should reject package if id not in requested dataPackageId", async () => {
       const { pubSub, callback, loggerDebug } = await singleSignerSetUp();
-      const dataPackage = createDataPackage(
-        "ETH2",
-        12,
-        Date.now(),
-        MOCK_WALLET_1
-      );
+      const dataPackage = createDataPackage("ETH2", 12, Date.now(), MOCK_WALLET_1);
 
       // first call to setup packageTimestamp
       await pubSub.publish(
@@ -514,8 +474,7 @@ describe("subscribe-data-packages", () => {
       expect(callback).toBeCalledTimes(0);
       // doesn't publish cause still only one signer
       jest.advanceTimersByTime(
-        subscriber.params
-          .waitMsForOtherSignersAfterMinimalSignersCountSatisfied + 1
+        subscriber.params.waitMsForOtherSignersAfterMinimalSignersCountSatisfied + 1
       );
       expect(callback).toBeCalledTimes(1);
     });
@@ -585,8 +544,7 @@ describe("subscribe-data-packages", () => {
       expect(callback).toBeCalledTimes(0);
 
       jest.advanceTimersByTime(
-        subscriber.params
-          .waitMsForOtherSignersAfterMinimalSignersCountSatisfied + 1
+        subscriber.params.waitMsForOtherSignersAfterMinimalSignersCountSatisfied + 1
       );
       expect(callback).toBeCalledTimes(1);
       expect(callback).toBeCalledWith({
@@ -596,13 +554,7 @@ describe("subscribe-data-packages", () => {
   });
 
   describe("production like situations", () => {
-    const NODES = [
-      MOCK_WALLET_1,
-      MOCK_WALLET_2,
-      MOCK_WALLET_3,
-      MOCK_WALLET_4,
-      MOCK_WALLET_5,
-    ];
+    const NODES = [MOCK_WALLET_1, MOCK_WALLET_2, MOCK_WALLET_3, MOCK_WALLET_4, MOCK_WALLET_5];
     it("should prices closest to median and slice at unique signer threshold", async () => {
       const pubSub = createMockPubSubClient();
 
@@ -664,9 +616,7 @@ describe("subscribe-data-packages", () => {
         })
       );
       let callbackCalledAt = 0;
-      const callback = jest
-        .fn()
-        .mockImplementationOnce(() => (callbackCalledAt = Date.now()));
+      const callback = jest.fn().mockImplementationOnce(() => (callbackCalledAt = Date.now()));
       await subscriber.subscribe(callback);
       const packageTimestamp = Date.now();
 
@@ -695,9 +645,7 @@ describe("subscribe-data-packages", () => {
         ETH: [publishedPackagesEth[1], publishedPackagesEth[2]],
       });
       expect(Date.now() - callbackCalledAt).toEqual(
-        2_000 -
-          subscriber.params
-            .waitMsForOtherSignersAfterMinimalSignersCountSatisfied
+        2_000 - subscriber.params.waitMsForOtherSignersAfterMinimalSignersCountSatisfied
       );
     });
 
@@ -715,9 +663,7 @@ describe("subscribe-data-packages", () => {
         })
       );
       let callbackCalledAt = 0;
-      const callback = jest
-        .fn()
-        .mockImplementationOnce(() => (callbackCalledAt = Date.now()));
+      const callback = jest.fn().mockImplementationOnce(() => (callbackCalledAt = Date.now()));
       await subscriber.subscribe(callback);
       const packageTimestamp = Date.now();
 
@@ -740,9 +686,7 @@ describe("subscribe-data-packages", () => {
         ETH: [publishedPackagesEth[1], publishedPackagesEth[2]],
       });
       expect(Date.now() - callbackCalledAt).toEqual(
-        2_000 -
-          subscriber.params
-            .waitMsForOtherSignersAfterMinimalSignersCountSatisfied
+        2_000 - subscriber.params.waitMsForOtherSignersAfterMinimalSignersCountSatisfied
       );
     });
 
@@ -760,9 +704,7 @@ describe("subscribe-data-packages", () => {
         })
       );
       let callbackCalledAt = 0;
-      const callback = jest
-        .fn()
-        .mockImplementation(() => (callbackCalledAt = Date.now()));
+      const callback = jest.fn().mockImplementation(() => (callbackCalledAt = Date.now()));
       await subscriber.subscribe(callback);
       const packageTimestamp = Date.now();
 
@@ -810,9 +752,7 @@ describe("subscribe-data-packages", () => {
       }
 
       jest.advanceTimersByTime(
-        200 +
-          subscriber.params
-            .waitMsForOtherSignersAfterMinimalSignersCountSatisfied
+        200 + subscriber.params.waitMsForOtherSignersAfterMinimalSignersCountSatisfied
       );
 
       expect(callback).toBeCalledWith({
@@ -828,12 +768,7 @@ describe("subscribe-data-packages", () => {
       jest.setTimeout(15_000);
       const { callback, pubSub, subscriber } = await singleSignerSetUp();
 
-      const fallbackPackage = createDataPackage(
-        "ETH",
-        3,
-        Date.now() + 2_000,
-        MOCK_WALLET_1
-      );
+      const fallbackPackage = createDataPackage("ETH", 3, Date.now() + 2_000, MOCK_WALLET_1);
       const fallbackFn = jest.fn().mockImplementationOnce(() => ({
         ETH: [fallbackPackage],
       }));

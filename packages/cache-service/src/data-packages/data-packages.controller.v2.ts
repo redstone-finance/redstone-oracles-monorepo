@@ -1,10 +1,4 @@
-import {
-  Controller,
-  Get,
-  Header,
-  Param,
-  ServiceUnavailableException,
-} from "@nestjs/common";
+import { Controller, Get, Header, Param, ServiceUnavailableException } from "@nestjs/common";
 import config from "../config";
 import { BaseDataPackagesController } from "./base-data-packages.controller";
 import { DataPackagesResponse } from "./data-packages.interface";

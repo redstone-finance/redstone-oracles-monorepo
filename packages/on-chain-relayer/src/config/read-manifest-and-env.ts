@@ -1,7 +1,4 @@
-import {
-  readJsonFile,
-  terminateWithRemoteConfigError,
-} from "@redstone-finance/internal-utils";
+import { readJsonFile, terminateWithRemoteConfigError } from "@redstone-finance/internal-utils";
 import { AnyOnChainRelayerManifestSchema } from "@redstone-finance/on-chain-relayer-common";
 import { RedstoneRemoteConfig } from "@redstone-finance/remote-config";
 import { NewestBlockTypeEnum } from "@redstone-finance/rpc-providers";
@@ -37,10 +34,7 @@ const readManifest = () => {
 export const readManifestAndEnv = () => {
   const manifest = readManifest();
 
-  let gasLimit = RedstoneCommon.getFromEnv(
-    "GAS_LIMIT",
-    z.number().positive().int().optional()
-  );
+  let gasLimit = RedstoneCommon.getFromEnv("GAS_LIMIT", z.number().positive().int().optional());
 
   const numberOfFeeds = Object.keys(manifest.priceFeeds).length;
   const gasLimitPerFeed = RedstoneCommon.getFromEnv(
@@ -49,9 +43,7 @@ export const readManifestAndEnv = () => {
   );
 
   if (gasLimit && gasLimitPerFeed) {
-    throw new Error(
-      "GAS_LIMIT and GAS_LIMIT_PER_FEED cannot be set at the same time"
-    );
+    throw new Error("GAS_LIMIT and GAS_LIMIT_PER_FEED cannot be set at the same time");
   }
 
   if (gasLimitPerFeed) {
@@ -77,14 +69,8 @@ export const readManifestAndEnv = () => {
       z.number().default(20_000)
     ),
     privateKey: RedstoneCommon.getFromEnv("PRIVATE_KEY", z.string().min(16)),
-    gasMultiplier: RedstoneCommon.getFromEnv(
-      "GAS_MULTIPLIER",
-      z.number().optional()
-    ),
-    maxTxSendAttempts: RedstoneCommon.getFromEnv(
-      "MAX_TX_SEND_ATTEMPTS",
-      z.number().optional()
-    ),
+    gasMultiplier: RedstoneCommon.getFromEnv("GAS_MULTIPLIER", z.number().optional()),
+    maxTxSendAttempts: RedstoneCommon.getFromEnv("MAX_TX_SEND_ATTEMPTS", z.number().optional()),
     healthcheckPingUrl: RedstoneCommon.getFromEnv(
       "HEALTHCHECK_PING_URL",
       z.string().url().optional()
@@ -103,10 +89,7 @@ export const readManifestAndEnv = () => {
       z
         .boolean()
         .default(() =>
-          RedstoneCommon.getFromEnv(
-            "TWO_DIMENSIONAL_FEES",
-            z.boolean().default(false)
-          )
+          RedstoneCommon.getFromEnv("TWO_DIMENSIONAL_FEES", z.boolean().default(false))
         )
     ),
     fallbackOffsetInMilliseconds: RedstoneCommon.getFromEnv(
@@ -121,18 +104,12 @@ export const readManifestAndEnv = () => {
       "HISTORICAL_PACKAGES_GATEWAYS",
       z.array(z.string().url()).optional()
     ),
-    isAuctionModel: RedstoneCommon.getFromEnv(
-      "IS_AUCTION_MODEL",
-      z.boolean().default(false)
-    ),
+    isAuctionModel: RedstoneCommon.getFromEnv("IS_AUCTION_MODEL", z.boolean().default(false)),
     mentoMaxDeviationAllowed: RedstoneCommon.getFromEnv(
       "MENTO_MAX_DEVIATION_ALLOWED",
       z.number().gt(0).optional()
     ),
-    isNotLazy: RedstoneCommon.getFromEnv(
-      "IS_NOT_LAZY",
-      z.boolean().default(false)
-    ),
+    isNotLazy: RedstoneCommon.getFromEnv("IS_NOT_LAZY", z.boolean().default(false)),
     fallbackSkipDeviationBasedFrequentUpdates: RedstoneCommon.getFromEnv(
       "SKIP_TX_SENDING_IF_OFFSET_MINUTES_DID_NOT_PASS",
       z.boolean().default(true)
@@ -157,14 +134,8 @@ export const readManifestAndEnv = () => {
       "MULTI_FEED_SYNC_HEARTBEATS",
       z.boolean().default(true)
     ),
-    oevAuctionUrl: RedstoneCommon.getFromEnv(
-      "OEV_AUCTION_URL",
-      z.string().optional()
-    ),
-    oevMultiAuctions: RedstoneCommon.getFromEnv(
-      "OEV_MULTI_AUCTIONS",
-      z.boolean().default(false)
-    ),
+    oevAuctionUrl: RedstoneCommon.getFromEnv("OEV_AUCTION_URL", z.string().optional()),
+    oevMultiAuctions: RedstoneCommon.getFromEnv("OEV_MULTI_AUCTIONS", z.boolean().default(false)),
     oevResolveAuctionTimeout: RedstoneCommon.getFromEnv(
       "OEV_RESOLVE_AUCTION_TIMEOUT_MS",
       z.number().default(2000)
@@ -173,10 +144,7 @@ export const readManifestAndEnv = () => {
       "OEV_AUCTION_VERIFICATION_TIMEOUT",
       z.number().optional()
     ),
-    oevTotalTimeout: RedstoneCommon.getFromEnv(
-      "OEV_TOTAL_TIMEOUT_MS",
-      z.number().default(10000)
-    ),
+    oevTotalTimeout: RedstoneCommon.getFromEnv("OEV_TOTAL_TIMEOUT_MS", z.number().default(10000)),
     oevVerifyGasPriceDisabled: RedstoneCommon.getFromEnv(
       "OEV_VERIFY_GAS_PRICE_DISABLED",
       z.boolean().default(false)
@@ -189,30 +157,15 @@ export const readManifestAndEnv = () => {
       "WAIT_FOR_ALL_GATEWAYS_TIME_MS",
       z.number().default(DEFAULT_WAIT_FOR_ALL_GATEWAYS_TIME)
     ),
-    dryRunWithInflux: RedstoneCommon.getFromEnv(
-      "DRY_RUN_WITH_INFLUX",
-      z.boolean().default(false)
-    ),
-    influxUrl: RedstoneCommon.getFromEnv(
-      "INFLUX_URL",
-      z.string().url().optional()
-    ),
-    influxToken: RedstoneCommon.getFromEnv(
-      "INFLUX_TOKEN",
-      z.string().optional()
-    ),
+    dryRunWithInflux: RedstoneCommon.getFromEnv("DRY_RUN_WITH_INFLUX", z.boolean().default(false)),
+    influxUrl: RedstoneCommon.getFromEnv("INFLUX_URL", z.string().url().optional()),
+    influxToken: RedstoneCommon.getFromEnv("INFLUX_TOKEN", z.string().optional()),
     ethersPollingIntervalInMs: RedstoneCommon.getFromEnv(
       "ETHERS_POLLING_INTERVAL_IN_MS",
       z.number().default(4000)
     ),
-    runWithMqtt: RedstoneCommon.getFromEnv(
-      "RUN_WITH_MQTT",
-      z.boolean().default(false)
-    ),
-    mqttEndpoint: RedstoneCommon.getFromEnv(
-      "MQTT_ENDPOINT",
-      z.string().optional()
-    ),
+    runWithMqtt: RedstoneCommon.getFromEnv("RUN_WITH_MQTT", z.boolean().default(false)),
+    mqttEndpoint: RedstoneCommon.getFromEnv("MQTT_ENDPOINT", z.string().optional()),
     mqttUpdateSubscriptionIntervalMs: RedstoneCommon.getFromEnv(
       "MQTT_UPDATE_SUBSCRIPTION_INTERVAL_MS",
       z.number().default(RedstoneCommon.minToMs(3))
@@ -249,14 +202,8 @@ export const readManifestAndEnv = () => {
         .transform((isoString) => new Date(isoString))
         .optional()
     ),
-    feedsSplit: RedstoneCommon.getFromEnv(
-      "FEEDS_SPLIT",
-      z.array(z.array(z.string())).optional()
-    ),
-    splitAllFeeds: RedstoneCommon.getFromEnv(
-      "SPLIT_ALL_FEEDS",
-      z.boolean().optional()
-    ),
+    feedsSplit: RedstoneCommon.getFromEnv("FEEDS_SPLIT", z.array(z.array(z.string())).optional()),
+    splitAllFeeds: RedstoneCommon.getFromEnv("SPLIT_ALL_FEEDS", z.boolean().optional()),
     uniqueSignerThresholdCacheTtlMs: RedstoneCommon.getFromEnv(
       "UNIQUE_SIGNER_THRESHOLD_CACHE_TTL_MS",
       z.number().default(0)

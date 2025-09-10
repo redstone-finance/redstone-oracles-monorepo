@@ -1,7 +1,4 @@
-import {
-  SignedDataPackage,
-  SignedDataPackagePlainObj,
-} from "@redstone-finance/protocol";
+import { SignedDataPackage, SignedDataPackagePlainObj } from "@redstone-finance/protocol";
 import {
   DataPackagesResponse,
   pickDataFeedPackagesClosestToMedian,
@@ -152,25 +149,19 @@ export class DataPackageSubscriber {
     // eslint-disable-next-line @typescript-eslint/no-misused-promises
     this.fallbackInterval = setInterval(async () => {
       try {
-        if (
-          this.lastPublishedState.isAnyFeedNotPublishedIn(
-            maxDelayBetweenPublishes
-          )
-        ) {
+        if (this.lastPublishedState.isAnyFeedNotPublishedIn(maxDelayBetweenPublishes)) {
           this.logger.warn(
             `Fallback triggered now=${Date.now()} lastPublishedTimestamp=${this.lastPublishedState.toString()}`
           );
           const dataPackages = await fallbackFn();
           const packageTimestamp =
-            Object.values(dataPackages)[0]![0].dataPackage
-              .timestampMilliseconds;
+            Object.values(dataPackages)[0]![0].dataPackage.timestampMilliseconds;
 
           this.logger.debug(
             `Received package from fallbackFn packageTimestamp=${packageTimestamp}`
           );
 
-          const newerPackagesOnly =
-            this.lastPublishedState.filterOutNotNewerPackages(dataPackages);
+          const newerPackagesOnly = this.lastPublishedState.filterOutNotNewerPackages(dataPackages);
 
           const newDataPackagesIds = Object.keys(newerPackagesOnly);
 
@@ -179,16 +170,11 @@ export class DataPackageSubscriber {
               `Publishing packages from fallback method timestamp=${packageTimestamp} latency=${Date.now() - packageTimestamp} dataPackageIds=${newDataPackagesIds.join(",")}`
             );
             this.subscribeCallback!(dataPackages);
-            this.lastPublishedState.update(
-              Object.keys(newerPackagesOnly),
-              packageTimestamp
-            );
+            this.lastPublishedState.update(Object.keys(newerPackagesOnly), packageTimestamp);
           }
         }
       } catch (e) {
-        this.logger.error(
-          `FallbackFn has failed error=${RedstoneCommon.stringifyError(e)}`
-        );
+        this.logger.error(`FallbackFn has failed error=${RedstoneCommon.stringifyError(e)}`);
       }
     }, checkInterval);
   }
@@ -203,37 +189,30 @@ export class DataPackageSubscriber {
 
   async subscribe(subscribeCallback: SubscriptionCallbackFn) {
     if (this.subscribeCallback) {
-      this.logger.warn(
-        "You tried to subscribe twice using same subscriber, aborted this action"
-      );
+      this.logger.warn("You tried to subscribe twice using same subscriber, aborted this action");
       return;
     }
     this.subscribeCallback = subscribeCallback;
 
     try {
-      await this.pubSubClient.subscribe(
-        this.topics,
-        (_, messagePayload, error) => {
-          this.handleCircuitBreaker();
+      await this.pubSubClient.subscribe(this.topics, (_, messagePayload, error) => {
+        this.handleCircuitBreaker();
 
-          try {
-            if (error) {
-              throw new Error(error);
-            }
-
-            this.processNewPackage(messagePayload);
-          } catch (e) {
-            this.logger.error(
-              `Failed to process new package error=${RedstoneCommon.stringifyError(e)}`
-            );
+        try {
+          if (error) {
+            throw new Error(error);
           }
+
+          this.processNewPackage(messagePayload);
+        } catch (e) {
+          this.logger.error(
+            `Failed to process new package error=${RedstoneCommon.stringifyError(e)}`
+          );
         }
-      );
+      });
     } catch (e) {
       if (this.fallbackInterval) {
-        this.logger.warn(
-          "Failed to subscribe to topics, continuing because fallback is enabled"
-        );
+        this.logger.warn("Failed to subscribe to topics, continuing because fallback is enabled");
         return;
       } else {
         throw e;
@@ -247,9 +226,7 @@ export class DataPackageSubscriber {
     if (this.circuitBreaker?.shouldBreakCircuit()) {
       this.logger.error("Rate limits crossed will unsubscribe from pub/sub");
       this.unsubscribe().catch((e) =>
-        this.logger.error(
-          `Failed to unsubscribe error=${RedstoneCommon.stringifyError(e)}`
-        )
+        this.logger.error(`Failed to unsubscribe error=${RedstoneCommon.stringifyError(e)}`)
       );
     }
   }
@@ -270,8 +247,7 @@ export class DataPackageSubscriber {
     );
     const signedDataPackage = SignedDataPackage.fromObj(dataPackageFromMessage);
     const dataPackageId = signedDataPackage.dataPackage.dataPackageId;
-    const packageTimestamp =
-      signedDataPackage.dataPackage.timestampMilliseconds;
+    const packageTimestamp = signedDataPackage.dataPackage.timestampMilliseconds;
 
     // check if dataPackageId is in dataPackagesIds
     // reject before signature checking to save CPU cycles
@@ -292,29 +268,21 @@ export class DataPackageSubscriber {
     }
 
     //timestamp
-    if (
-      !this.lastPublishedState.isNewerThanLastPublished(
-        dataPackageId,
-        packageTimestamp
-      )
-    ) {
+    if (!this.lastPublishedState.isNewerThanLastPublished(dataPackageId, packageTimestamp)) {
       this.logger.debug(
         `Package was rejected because packageTimestamp=${packageTimestamp} <= lastPublishedTimestamp=${this.lastPublishedState.getLastPublishTime(dataPackageId)}`
       );
       return;
     }
 
-    const entryForTimestamp =
-      this.packagesPerTimestamp.get(packageTimestamp) ?? {};
+    const entryForTimestamp = this.packagesPerTimestamp.get(packageTimestamp) ?? {};
 
     if (!entryForTimestamp[dataPackageId]) {
       entryForTimestamp[dataPackageId] = [];
     }
 
     if (
-      entryForTimestamp[dataPackageId].some(
-        (dp) => dp.recoverSignerAddress() === packageSigner
-      )
+      entryForTimestamp[dataPackageId].some((dp) => dp.recoverSignerAddress() === packageSigner)
     ) {
       this.logger.debug(
         `Package was rejected because already have package signer=${packageSigner} timestamp=${packageTimestamp} dataPackageId=${dataPackageId}`
@@ -339,8 +307,7 @@ export class DataPackageSubscriber {
     }
 
     const key = packageTimestamp.toString();
-    const hasEnoughPackages =
-      this.hasGotPackagesFromEnoughSigners(entryForTimestamp);
+    const hasEnoughPackages = this.hasGotPackagesFromEnoughSigners(entryForTimestamp);
 
     if (
       hasEnoughPackages &&
@@ -369,8 +336,7 @@ export class DataPackageSubscriber {
     entryForTimestamp: Record<string, SignedDataPackage[] | undefined>
   ) {
     return this.params.dataPackageIds.every(
-      (dpId) =>
-        entryForTimestamp[dpId]?.length === this.params.authorizedSigners.length
+      (dpId) => entryForTimestamp[dpId]?.length === this.params.authorizedSigners.length
     );
   }
 
@@ -383,19 +349,14 @@ export class DataPackageSubscriber {
       if (!entryForTimestamp[dpId]) {
         return false;
       }
-      return (
-        entryForTimestamp[dpId].length >=
-        this.params.minimalOffChainSignersCount
-      );
+      return entryForTimestamp[dpId].length >= this.params.minimalOffChainSignersCount;
     });
   }
 
   private publish(packageTimestamp: number) {
     const entryForTimestamp = this.packagesPerTimestamp.get(packageTimestamp);
     if (!entryForTimestamp) {
-      this.logger.warn(
-        `No packages available for timestamp=${packageTimestamp}`
-      );
+      this.logger.warn(`No packages available for timestamp=${packageTimestamp}`);
       return;
     }
 
@@ -412,17 +373,12 @@ export class DataPackageSubscriber {
     );
 
     if (!this.subscribeCallback) {
-      this.logger.warn(
-        `subscribeCallback is undefined - have already unsubscribed?`
-      );
+      this.logger.warn(`subscribeCallback is undefined - have already unsubscribed?`);
       return;
     }
 
     this.subscribeCallback(packagesToPublish);
-    this.lastPublishedState.update(
-      Object.keys(packagesToPublish),
-      packageTimestamp
-    );
+    this.lastPublishedState.update(Object.keys(packagesToPublish), packageTimestamp);
 
     this.cleanPublishedAndStalePackages(packageTimestamp);
   }
@@ -433,10 +389,7 @@ export class DataPackageSubscriber {
     const packagesToPublish: Record<string, SignedDataPackage[]> = {};
 
     for (const [dataPackageId, packages] of Object.entries(entryForTimestamp)) {
-      if (
-        !packages ||
-        packages.length < this.params.minimalOffChainSignersCount
-      ) {
+      if (!packages || packages.length < this.params.minimalOffChainSignersCount) {
         this.logger.debug(
           `Omitting dataPackageId=${dataPackageId} in published packages because not enough received=${packages ? packages.length : 0} expected=${this.params.minimalOffChainSignersCount}`
         );

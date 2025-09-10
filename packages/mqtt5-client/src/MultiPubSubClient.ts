@@ -26,27 +26,18 @@ export class MultiPubSubClient implements PubSubClient {
   ) {}
 
   /** Created clients are not recycled */
-  async publish(
-    payloads: PubSubPayload[],
-    contentType: ContentTypes
-  ): Promise<void> {
+  async publish(payloads: PubSubPayload[], contentType: ContentTypes): Promise<void> {
     await this.publishMutex.acquire();
 
     try {
-      const neededClientsCount = Math.ceil(
-        payloads.length / MAX_REQ_PER_SECOND_PER_CONNECTION
-      );
-      const missingClientsCount =
-        neededClientsCount - this.publishClients.length;
+      const neededClientsCount = Math.ceil(payloads.length / MAX_REQ_PER_SECOND_PER_CONNECTION);
+      const missingClientsCount = neededClientsCount - this.publishClients.length;
 
       for (let i = 0; i < missingClientsCount; i++) {
         this.publishClients.push(await this.pubSubClientFactory());
       }
 
-      const chunksToPublish = _.chunk(
-        payloads,
-        MAX_REQ_PER_SECOND_PER_CONNECTION
-      );
+      const chunksToPublish = _.chunk(payloads, MAX_REQ_PER_SECOND_PER_CONNECTION);
 
       await Promise.all(
         chunksToPublish.map((payloads, index) =>
@@ -58,10 +49,7 @@ export class MultiPubSubClient implements PubSubClient {
     }
   }
 
-  async subscribe(
-    topics: string[],
-    onMessage: SubscribeCallback
-  ): Promise<void> {
+  async subscribe(topics: string[], onMessage: SubscribeCallback): Promise<void> {
     await this.subscribeMutex.acquire();
     try {
       await this._subscribe(topics, onMessage);
@@ -80,9 +68,7 @@ export class MultiPubSubClient implements PubSubClient {
       const updatedClientToTopics: [PubSubClient, string[]][] = [];
       for (const [client, assignedTopics] of this.clientToTopics) {
         const matchedTopics = assignedTopics.filter((t) => topics.includes(t));
-        const remainingTopics = assignedTopics.filter(
-          (t) => !topics.includes(t)
-        );
+        const remainingTopics = assignedTopics.filter((t) => !topics.includes(t));
 
         if (matchedTopics.length > 0) {
           await client.unsubscribe(matchedTopics);
@@ -111,10 +97,7 @@ export class MultiPubSubClient implements PubSubClient {
     this.clientToTopics = [];
   }
 
-  async _subscribe(
-    topics: string[],
-    onMessage: SubscribeCallback
-  ): Promise<void> {
+  async _subscribe(topics: string[], onMessage: SubscribeCallback): Promise<void> {
     const topicToAdd = [...topics];
     const freeClients = this.clientToTopics.filter(
       ([_, topics]) => topics.length < this.connectionsPerTopic

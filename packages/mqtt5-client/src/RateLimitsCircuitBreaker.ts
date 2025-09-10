@@ -14,9 +14,7 @@ export class RateLimitsCircuitBreaker {
     const now = Date.now();
 
     // we don't have take into account upper limit because we are single threaded
-    this.events = this.events.filter(
-      (occurredAt) => occurredAt >= now - this.interval
-    );
+    this.events = this.events.filter((occurredAt) => occurredAt >= now - this.interval);
 
     return this.events.length > this.maxEventsCountsInInterval;
   }

@@ -94,8 +94,7 @@ describe("ConfigHistory", () => {
     configHistory.add(config2);
     configHistory.add(config3);
 
-    const previousNonBlacklistedConfig =
-      configHistory.previousNonBlacklistedConfig();
+    const previousNonBlacklistedConfig = configHistory.previousNonBlacklistedConfig();
 
     expect(previousNonBlacklistedConfig).toEqual(config3);
   });
@@ -116,15 +115,13 @@ describe("ConfigHistory", () => {
     configHistory.add(config1);
     configHistory.add(config2);
 
-    const previousNonBlacklistedConfig =
-      configHistory.previousNonBlacklistedConfig();
+    const previousNonBlacklistedConfig = configHistory.previousNonBlacklistedConfig();
 
     expect(previousNonBlacklistedConfig).toBeNull();
   });
 
   it("should return null if no configs exist", () => {
-    const previousNonBlacklistedConfig =
-      configHistory.previousNonBlacklistedConfig();
+    const previousNonBlacklistedConfig = configHistory.previousNonBlacklistedConfig();
     expect(previousNonBlacklistedConfig).toBeNull();
   });
 

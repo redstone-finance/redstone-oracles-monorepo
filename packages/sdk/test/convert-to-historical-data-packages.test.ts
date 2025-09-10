@@ -19,10 +19,7 @@ describe("convertToHistoricalDataPackagesRequestParams", () => {
 
   const mockRelayerConfig = {
     fallbackOffsetInMilliseconds: 15000,
-    historicalPackagesGateways: [
-      "https://gateway1.com",
-      "https://gateway2.com",
-    ],
+    historicalPackagesGateways: ["https://gateway1.com", "https://gateway2.com"],
   };
 
   beforeEach(() => {

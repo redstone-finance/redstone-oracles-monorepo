@@ -222,10 +222,7 @@ describe("MultiPubSubClient complex", () => {
     // Initial subscribe
     await client.subscribe(["topic1", "topic2"], onMessage);
     expect(fabric).toHaveBeenCalledTimes(1);
-    expect(mockClient1.subscribe).toHaveBeenCalledWith(
-      ["topic1", "topic2"],
-      onMessage
-    );
+    expect(mockClient1.subscribe).toHaveBeenCalledWith(["topic1", "topic2"], onMessage);
     expect(client.clientToTopics).toHaveLength(1);
     expect(client.clientToTopics[0][1]).toEqual(["topic1", "topic2"]);
 
@@ -245,14 +242,8 @@ describe("MultiPubSubClient complex", () => {
     await client.subscribe(["topic1", "topic2", "topic3", "topic4"], onMessage);
 
     expect(fabric).toHaveBeenCalledTimes(2);
-    expect(mockClient1.subscribe).toHaveBeenCalledWith(
-      ["topic1", "topic2"],
-      onMessage
-    );
-    expect(mockClient2.subscribe).toHaveBeenCalledWith(
-      ["topic3", "topic4"],
-      onMessage
-    );
+    expect(mockClient1.subscribe).toHaveBeenCalledWith(["topic1", "topic2"], onMessage);
+    expect(mockClient2.subscribe).toHaveBeenCalledWith(["topic3", "topic4"], onMessage);
     expect(client.clientToTopics).toHaveLength(2);
 
     // Unsubscribe from all topics of first client

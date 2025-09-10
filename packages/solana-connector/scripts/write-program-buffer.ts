@@ -42,9 +42,7 @@ async function writeBuffer(
     `solana program set-buffer-authority ${bufferAddress.buffer} --new-buffer-authority ${squads.vaultPda().toBase58()} --url ${cluster} --keypair ${pkData!.filename}`,
   ];
 
-  console.log(
-    "Run the following command to change the authority of the buffer:"
-  );
+  console.log("Run the following command to change the authority of the buffer:");
   console.log(setAuthorityCmd.join(" && "));
   console.log(bufferAddress);
 }

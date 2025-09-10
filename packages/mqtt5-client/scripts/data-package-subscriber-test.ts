@@ -13,10 +13,7 @@ async function main() {
       },
     });
 
-  const multiClient = new MultiPubSubClient(
-    mqttClientFactory,
-    calculateTopicCountPerConnection()
-  );
+  const multiClient = new MultiPubSubClient(mqttClientFactory, calculateTopicCountPerConnection());
 
   const dataPackageSubscriber = new DataPackageSubscriber(multiClient, {
     dataServiceId: "redstone-primary-prod",

@@ -2,15 +2,8 @@ import { utils } from "@redstone-finance/protocol";
 import { expect } from "chai";
 import { ethers } from "hardhat";
 import { WrapperBuilder } from "../../src";
-import {
-  MockSignerIndex,
-  getMockNumericPackage,
-  getRange,
-} from "../../src/helpers/test-utils";
-import {
-  SampleChainableProxyConnector,
-  SampleProxyConnectorConsumer,
-} from "../../typechain-types";
+import { MockSignerIndex, getMockNumericPackage, getRange } from "../../src/helpers/test-utils";
+import { SampleChainableProxyConnector, SampleProxyConnectorConsumer } from "../../typechain-types";
 import {
   NUMBER_OF_MOCK_NUMERIC_SIGNERS,
   expectedNumericValues,
@@ -36,9 +29,7 @@ describe("SampleChainableProxyConnector", function () {
   const ethDataFeedId = utils.convertStringToBytes32("ETH");
 
   this.beforeEach(async () => {
-    const ContractFactory = await ethers.getContractFactory(
-      "SampleChainableProxyConnector"
-    );
+    const ContractFactory = await ethers.getContractFactory("SampleChainableProxyConnector");
     contract = await ContractFactory.deploy();
     await contract.deployed();
 
@@ -47,9 +38,7 @@ describe("SampleChainableProxyConnector", function () {
 
     await contract.registerNextConnector(contractB.address);
 
-    const ConsumerContractFactory = await ethers.getContractFactory(
-      "SampleProxyConnectorConsumer"
-    );
+    const ConsumerContractFactory = await ethers.getContractFactory("SampleProxyConnectorConsumer");
     consumerContract = await ConsumerContractFactory.deploy();
     await consumerContract.deployed();
 
@@ -80,14 +69,10 @@ describe("SampleChainableProxyConnector", function () {
     const wrappedContract =
       WrapperBuilder.wrap(contract).usingMockDataPackages(mockNumericPackages);
 
-    const dataValues = dataPoints.map((dataPoint) =>
-      Math.round(dataPoint.value * 10 ** 8)
-    );
+    const dataValues = dataPoints.map((dataPoint) => Math.round(dataPoint.value * 10 ** 8));
 
     for (const dataPoint of dataPoints) {
-      await wrappedContract.processOracleValue(
-        utils.convertStringToBytes32(dataPoint.dataFeedId)
-      );
+      await wrappedContract.processOracleValue(utils.convertStringToBytes32(dataPoint.dataFeedId));
     }
 
     const computationResult = await consumerContract.getComputationResult();
@@ -111,9 +96,7 @@ describe("SampleChainableProxyConnector", function () {
 
     const dataFeedIds = dataPoints.map((dataPoint) => dataPoint.dataFeedId);
     const dataFeedIdsBytes = dataFeedIds.map(utils.convertStringToBytes32);
-    const dataValues = dataPoints.map((dataPoint) =>
-      Math.round(dataPoint.value * 10 ** 8)
-    );
+    const dataValues = dataPoints.map((dataPoint) => Math.round(dataPoint.value * 10 ** 8));
 
     await wrappedContract.processOracleValues(dataFeedIdsBytes);
     const computationResult = await consumerContract.getComputationResult();

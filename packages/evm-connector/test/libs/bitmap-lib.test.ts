@@ -16,10 +16,7 @@ describe("SampleBitmapLib", function () {
   const validateBitmap = async () => {
     for (let bitIndex = 0; bitIndex < 256; bitIndex++) {
       const expectedBit = !!expectedBitmap[bitIndex];
-      const receivedBit = await contract.getBitFromBitmap(
-        bitmapNumber,
-        bitIndex
-      );
+      const receivedBit = await contract.getBitFromBitmap(bitmapNumber, bitIndex);
       const customErrMsg = "Bitmap invalid: " + JSON.stringify({ bitIndex });
       expect(receivedBit).to.eq(expectedBit, customErrMsg);
     }

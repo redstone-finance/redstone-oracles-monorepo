@@ -1,24 +1,14 @@
-import {
-  PublicKey,
-  TransactionMessage,
-  VersionedTransaction,
-} from "@solana/web3.js";
+import { PublicKey, TransactionMessage, VersionedTransaction } from "@solana/web3.js";
 import "dotenv/config";
 import { makeConnection } from "../utils";
 import { LEDGER_ACCOUNT, SQUAD_ADDRESS } from "./config";
 import { makeSolana } from "./ledger-utils";
 import { SquadsMultisig } from "./multi-sig-utils";
 
-const NEW_MEMBERS = [
-  new PublicKey("BDE2fFGSPvxv2aAqd7Naf48ZbsTGoLFF9kNiUKmVWvkC"),
-];
+const NEW_MEMBERS = [new PublicKey("BDE2fFGSPvxv2aAqd7Naf48ZbsTGoLFF9kNiUKmVWvkC")];
 const NEW_THRESHOLD = 2;
 
-async function addMember(
-  squadAddress: PublicKey,
-  members: PublicKey[],
-  newThreshold: number
-) {
+async function addMember(squadAddress: PublicKey, members: PublicKey[], newThreshold: number) {
   const connection = makeConnection();
   const solanaLedger = await makeSolana(LEDGER_ACCOUNT);
   const squadUtils = new SquadsMultisig(squadAddress, connection);

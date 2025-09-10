@@ -1,8 +1,5 @@
 import { Contract, ethers, Signer } from "ethers";
-import {
-  IStylusAdapter,
-  LastUpdateDetailsStructOutput,
-} from "../abi/IStylusAdapter";
+import { IStylusAdapter, LastUpdateDetailsStructOutput } from "../abi/IStylusAdapter";
 import { abi as PRICE_ADAPTER_ABI } from "../abi/StylusAdapter.json";
 
 export class PriceAdapterService {
@@ -19,9 +16,7 @@ export class PriceAdapterService {
     ) as IStylusAdapter;
   }
 
-  async readPriceData(
-    feedIds: string[]
-  ): Promise<LastUpdateDetailsStructOutput[]> {
+  async readPriceData(feedIds: string[]): Promise<LastUpdateDetailsStructOutput[]> {
     return await this.contract.getLastUpdateDetailsUnsafeForMany(feedIds);
   }
 

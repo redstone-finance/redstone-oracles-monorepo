@@ -4,9 +4,7 @@ export class LastPublishedFeedState {
   private lastPublishPerFeed: Map<string, number>;
 
   constructor(dataPackageIds: string[], initTimestamp: number) {
-    this.lastPublishPerFeed = new Map(
-      dataPackageIds.map((id) => [id, initTimestamp])
-    );
+    this.lastPublishPerFeed = new Map(dataPackageIds.map((id) => [id, initTimestamp]));
   }
 
   isNewerThanLastPublished(dataPackageId: string, timestamp: number) {
@@ -15,9 +13,7 @@ export class LastPublishedFeedState {
 
   isAnyFeedNotPublishedIn(maxDelay: number) {
     const now = Date.now();
-    return [...this.lastPublishPerFeed.values()].some(
-      (timestamp) => now - timestamp > maxDelay
-    );
+    return [...this.lastPublishPerFeed.values()].some((timestamp) => now - timestamp > maxDelay);
   }
 
   getLastPublishTime(dataPackageId: string) {
@@ -30,15 +26,10 @@ export class LastPublishedFeedState {
     }
   }
 
-  filterOutNotNewerPackages(
-    dataPackagesResponse: DataPackagesResponse
-  ): DataPackagesResponse {
+  filterOutNotNewerPackages(dataPackagesResponse: DataPackagesResponse): DataPackagesResponse {
     return Object.fromEntries(
       Object.entries(dataPackagesResponse).filter(([dataPackageId, packages]) =>
-        this.isNewerThanLastPublished(
-          dataPackageId,
-          packages![0].dataPackage.timestampMilliseconds
-        )
+        this.isNewerThanLastPublished(dataPackageId, packages![0].dataPackage.timestampMilliseconds)
       )
     );
   }

@@ -2,11 +2,7 @@ import { Ownership, PackageDeployer, Wallet } from "@atlantis-l/radix-tool";
 import { RadixClient } from "../src";
 
 export class RadixPackageDeployer extends RadixClient {
-  public async deployPackage(
-    wasm: Uint8Array,
-    rpd: Uint8Array,
-    feeLock: number
-  ) {
+  public async deployPackage(wasm: Uint8Array, rpd: Uint8Array, feeLock: number) {
     const wallet = new Wallet(
       await this.getAccountAddress(),
       await this.getPublicKey(),

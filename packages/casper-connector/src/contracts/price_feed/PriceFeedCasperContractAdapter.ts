@@ -1,7 +1,4 @@
-import {
-  IPriceFeedContractAdapter,
-  PriceAndTimestamp,
-} from "@redstone-finance/sdk";
+import { IPriceFeedContractAdapter, PriceAndTimestamp } from "@redstone-finance/sdk";
 import { BigNumber, BigNumberish } from "ethers";
 import { CasperContractAdapter } from "../CasperContractAdapter";
 import {
@@ -30,9 +27,7 @@ export class PriceFeedCasperContractAdapter
   }
 
   async readTimestampFromContract(): Promise<number> {
-    const timestamp: BigNumber = await this.queryContractData(
-      STORAGE_KEY_TIMESTAMP
-    );
+    const timestamp: BigNumber = await this.queryContractData(STORAGE_KEY_TIMESTAMP);
 
     return timestamp.toNumber();
   }
