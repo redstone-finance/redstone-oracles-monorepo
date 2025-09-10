@@ -10,7 +10,7 @@ export abstract class NonEvmBlockchainService implements IBlockchainService {
     blockTag?: number
   ): Promise<BigNumber> {
     if (!this.connector.getNormalizedBalance) {
-      throw new Error("Method not implemented.");
+      throw new Error("Method not implemented: getNormalizedBalance");
     }
     return BigNumber.from(
       await this.connector.getNormalizedBalance(addressOrName, blockTag)
@@ -19,14 +19,14 @@ export abstract class NonEvmBlockchainService implements IBlockchainService {
 
   async transfer(toAddress: string, amount: number) {
     if (!this.connector.transfer) {
-      throw new Error("Method not implemented.");
+      throw new Error("Method not implemented: transfer");
     }
     await this.connector.transfer(toAddress, amount);
   }
 
   getSignerAddress(): Promise<string> {
     if (!this.connector.getSignerAddress) {
-      throw new Error("Method not implemented.");
+      throw new Error("Method not implemented: getSignerAddress");
     }
     return this.connector.getSignerAddress();
   }
