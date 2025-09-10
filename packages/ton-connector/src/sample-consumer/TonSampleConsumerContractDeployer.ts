@@ -9,11 +9,7 @@ export class TonSampleConsumerContractDeployer extends TonContractDeployer<
   TonSampleConsumer,
   TonSampleConsumerContractAdapter
 > {
-  constructor(
-    network: TonNetwork,
-    code: Cell,
-    initData?: SampleConsumerInitData
-  ) {
+  constructor(network: TonNetwork, code: Cell, initData?: SampleConsumerInitData) {
     super(TonSampleConsumer, network, code, initData);
   }
 

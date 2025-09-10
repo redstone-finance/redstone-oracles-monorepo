@@ -34,10 +34,7 @@ export interface CasperWalletInterface {
    * @param signingPublicKeyHex public key (in hex format)
    * @returns a payload response when user responded to transaction request, it will contain signature if approved, or cancelled === true flag when rejected.
    */
-  sign(
-    deployJson: string,
-    signingPublicKeyHex: string
-  ): Promise<SignatureResponse>;
+  sign(deployJson: string, signingPublicKeyHex: string): Promise<SignatureResponse>;
 
   /**
    * Request the sign message interface with the Casper Wallet extension
@@ -45,10 +42,7 @@ export interface CasperWalletInterface {
    * @param signingPublicKeyHex public key (in hex format)
    * @returns a payload response when user responded to transaction request, it will contain signature if approved, or cancelled === true flag when rejected.
    */
-  signMessage(
-    message: string,
-    signingPublicKeyHex: string
-  ): Promise<SignatureResponse>;
+  signMessage(message: string, signingPublicKeyHex: string): Promise<SignatureResponse>;
 
   /**
    * Disconnect the Casper Wallet extension
@@ -113,8 +107,6 @@ export const CasperWalletEventTypes = {
 } as const;
 
 export interface CasperWindow {
-  CasperWalletProvider?: (
-    options: CasperWalletProviderOptions
-  ) => CasperWalletInterface;
+  CasperWalletProvider?: (options: CasperWalletProviderOptions) => CasperWalletInterface;
   CasperWalletEventTypes?: typeof CasperWalletEventTypes;
 }

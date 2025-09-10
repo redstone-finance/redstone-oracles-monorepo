@@ -1,7 +1,4 @@
-import {
-  IContractConnector,
-  IPricesContractAdapter,
-} from "@redstone-finance/sdk";
+import { IContractConnector, IPricesContractAdapter } from "@redstone-finance/sdk";
 import { Provider } from "fuels";
 import {
   FuelPricesContractConnector,
@@ -20,11 +17,10 @@ export const connectPricesContract = async (
   provider?: Provider
 ): Promise<IContractConnector<IPricesContractAdapter>> => {
   const wallet = await getWallet(provider);
-  return new (
-    forGasUsageOnly
-      ? GasUsageFuelPricesContractConnector
-      : FuelPricesContractConnector
-  )(wallet, contractId);
+  return new (forGasUsageOnly ? GasUsageFuelPricesContractConnector : FuelPricesContractConnector)(
+    wallet,
+    contractId
+  );
 };
 
 export const deployPricesContract = async (

@@ -1,9 +1,6 @@
 import { SuiClient, SuiTransactionBlockResponse } from "@mysten/sui/client";
 import type { Keypair } from "@mysten/sui/cryptography";
-import {
-  ParallelTransactionExecutor,
-  Transaction,
-} from "@mysten/sui/transactions";
+import { ParallelTransactionExecutor, Transaction } from "@mysten/sui/transactions";
 import { MIST_PER_SUI } from "@mysten/sui/utils";
 import { loggerFactory, RedstoneCommon } from "@redstone-finance/utils";
 import { DEFAULT_GAS_BUDGET } from "./SuiContractUtil";
@@ -24,9 +21,7 @@ export class SuiTxDeliveryMan {
 
   async sendTransaction(
     tx: Transaction,
-    repeatedTransactionCreator: (
-      iterationIndex: number
-    ) => Promise<Transaction>,
+    repeatedTransactionCreator: (iterationIndex: number) => Promise<Transaction>,
     iterationIndex = 0
   ): Promise<string> {
     try {
@@ -40,29 +35,20 @@ export class SuiTxDeliveryMan {
       );
     } catch (e) {
       const nextIterationIndex = iterationIndex + 1;
-      this.logger.error(
-        `Iteration #${iterationIndex} FAILED: ${RedstoneCommon.stringifyError(e)}`
-      );
+      this.logger.error(`Iteration #${iterationIndex} FAILED: ${RedstoneCommon.stringifyError(e)}`);
 
       if (nextIterationIndex >= this.config.maxTxSendAttempts) {
         throw e;
       }
 
       const tx = await repeatedTransactionCreator(nextIterationIndex);
-      return await this.sendTransaction(
-        tx,
-        repeatedTransactionCreator,
-        nextIterationIndex
-      );
+      return await this.sendTransaction(tx, repeatedTransactionCreator, nextIterationIndex);
     }
   }
 
   private async performExecutingTx(tx: Transaction) {
     const date = Date.now();
-    const { digest, data } = await this.executeTxWithExecutor(
-      tx,
-      this.getExecutor()
-    );
+    const { digest, data } = await this.executeTxWithExecutor(tx, this.getExecutor());
 
     const { status, success, error } = SuiTxDeliveryMan.getStatus(data);
     const cost = SuiTxDeliveryMan.getCost(data);
@@ -82,10 +68,7 @@ export class SuiTxDeliveryMan {
     return digest;
   }
 
-  private async executeTxWithExecutor(
-    tx: Transaction,
-    executor: ParallelTransactionExecutor
-  ) {
+  private async executeTxWithExecutor(tx: Transaction, executor: ParallelTransactionExecutor) {
     try {
       return await executor.executeTransaction(tx, {
         showEffects: true,
@@ -126,8 +109,7 @@ export class SuiTxDeliveryMan {
 
   private static getCost(response: SuiTransactionBlockResponse) {
     return (
-      Number(BigInt(response.balanceChanges![0].amount.replace("-", ""))) /
-      Number(MIST_PER_SUI)
+      Number(BigInt(response.balanceChanges![0].amount.replace("-", ""))) / Number(MIST_PER_SUI)
     );
   }
 }

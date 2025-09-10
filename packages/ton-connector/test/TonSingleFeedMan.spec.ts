@@ -8,10 +8,7 @@ import { SingleFeedManInitData } from "../src/single-feed-man/SingleFeedManInitD
 import { TonSingleFeedManContractAdapter } from "../src/single-feed-man/TonSingleFeedManContractAdapter";
 import { TonSingleFeedManContractDeployer } from "../src/single-feed-man/TonSingleFeedManContractDeployer";
 import { toBigInt } from "../src/ton-utils";
-import {
-  createTestNetwork,
-  extractSandboxLogs,
-} from "./helpers/sandbox_helpers";
+import { createTestNetwork, extractSandboxLogs } from "./helpers/sandbox_helpers";
 import {
   expectUsdtPrice,
   getContractParamsProvider,
@@ -53,8 +50,7 @@ describe("Ton Single Feed Man Tests", () => {
   }
 
   it("should deploy & not set any initial data", async () => {
-    const { price, timestamp } =
-      await singleFeedMan.readPriceAndTimestampFromContract();
+    const { price, timestamp } = await singleFeedMan.readPriceAndTimestampFromContract();
 
     expect(price).toBe(0n);
     expect(timestamp).toBe(0);
@@ -63,8 +59,7 @@ describe("Ton Single Feed Man Tests", () => {
   it("should get price", async () => {
     const paramsProvider = getContractParamsProvider();
 
-    const { price, timestamp } =
-      await singleFeedMan.getPriceFromPayload(paramsProvider);
+    const { price, timestamp } = await singleFeedMan.getPriceFromPayload(paramsProvider);
 
     expect(timestamp).toBeGreaterThan(0);
     expectUsdtPrice(price);
@@ -85,15 +80,13 @@ describe("Ton Single Feed Man Tests", () => {
 
   it("should write prices twice", async () => {
     await initialize("ETH");
-    const { price, timestamp, paramsProvider } =
-      await writeAndReadPriceAndTimestamp(["ETH"]);
+    const { price, timestamp, paramsProvider } = await writeAndReadPriceAndTimestamp(["ETH"]);
 
     expect(timestamp).toBeGreaterThan(0);
 
     await waitForNewPayload(paramsProvider, timestamp, Number(price));
 
-    const { price: price2, timestamp: timestamp2 } =
-      await writeAndReadPriceAndTimestamp();
+    const { price: price2, timestamp: timestamp2 } = await writeAndReadPriceAndTimestamp();
 
     expect(timestamp2).not.toBe(timestamp);
     expect(price2).not.toBe(price);
@@ -106,8 +99,7 @@ describe("Ton Single Feed Man Tests", () => {
     const paramsProvider = getContractParamsProvider(dataFeeds);
 
     await singleFeedMan.writePriceFromPayloadToContract(paramsProvider);
-    const { price, timestamp } =
-      await singleFeedMan.readPriceAndTimestampFromContract();
+    const { price, timestamp } = await singleFeedMan.readPriceAndTimestampFromContract();
 
     return { price, timestamp, paramsProvider };
   }

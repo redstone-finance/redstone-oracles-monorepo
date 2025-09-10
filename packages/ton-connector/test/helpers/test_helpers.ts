@@ -47,9 +47,7 @@ export function createContractParamsProviderMock(
   return new ContractParamsProviderMock(dataFeeds, filePath, fs.readFileSync);
 }
 
-export function getContractParamsProvider(
-  dataFeeds = ["ETH", "BTC", "AVAX", "USDT"]
-) {
+export function getContractParamsProvider(dataFeeds = ["ETH", "BTC", "AVAX", "USDT"]) {
   return new ContractParamsProvider({
     dataServiceId: "redstone-avalanche-prod",
     uniqueSignersCount: 4,
@@ -71,13 +69,9 @@ export async function waitForNewPayload(
   await RedstoneCommon.sleep(5000);
   await RedstoneCommon.waitForSuccess(
     async () => {
-      const { median, timestamp } = getMedianAndTimestamp(
-        await paramsProvider.getPayloadHex(true)
-      );
+      const { median, timestamp } = getMedianAndTimestamp(await paramsProvider.getPayloadHex(true));
 
-      console.log(
-        `${median} ${previousMedian} ${timestamp} ${previousTimestamp}`
-      );
+      console.log(`${median} ${previousMedian} ${timestamp} ${previousTimestamp}`);
 
       return previousMedian !== median && previousTimestamp !== timestamp;
     },

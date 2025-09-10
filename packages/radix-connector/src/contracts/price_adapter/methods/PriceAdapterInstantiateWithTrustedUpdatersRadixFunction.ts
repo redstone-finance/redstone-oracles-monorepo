@@ -22,10 +22,7 @@ export class PriceAdapterInstantiateWithTrustedUpdatersRadixFunction extends Pri
   }
 
   override getParams(): Value[] {
-    return [
-      ...super.getParams(),
-      array(ValueKind.String, ...this.trustedUpdaters.map(str)),
-    ];
+    return [...super.getParams(), array(ValueKind.String, ...this.trustedUpdaters.map(str))];
   }
 
   override interpret(value: unknown[]) {

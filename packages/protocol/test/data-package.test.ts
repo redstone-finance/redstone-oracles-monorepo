@@ -1,14 +1,10 @@
 import { Wallet } from "ethers";
 import { computePublicKey, hexlify } from "ethers/lib/utils";
-import {
-  DataPackage,
-  SignedDataPackage,
-} from "../src/data-package/DataPackage";
+import { DataPackage, SignedDataPackage } from "../src/data-package/DataPackage";
 import { NumericDataPoint } from "../src/data-point/NumericDataPoint";
 
 const TIMESTAMP_FOR_TESTS = 1654353400000;
-const PRIVATE_KEY_FOR_TESTS =
-  "0x1111111111111111111111111111111111111111111111111111111111111111";
+const PRIVATE_KEY_FOR_TESTS = "0x1111111111111111111111111111111111111111111111111111111111111111";
 const EXPECTED_SERIALIZED_UNSIGNED_DATA_PACKAGE =
   "0x" +
   "4254430000000000000000000000000000000000000000000000000000000000" + // bytes32("BTC")
@@ -29,11 +25,7 @@ describe("Data package", () => {
       { dataFeedId: "BTC", value: 42000 },
       { dataFeedId: "ETH", value: 2000 },
     ].map((dpArgs) => new NumericDataPoint(dpArgs));
-    dataPackage = new DataPackage(
-      dataPoints,
-      TIMESTAMP_FOR_TESTS,
-      "__BTC_ETH__"
-    );
+    dataPackage = new DataPackage(dataPoints, TIMESTAMP_FOR_TESTS, "__BTC_ETH__");
   });
 
   test("Should throw an error for data package without data points", () => {
@@ -55,17 +47,13 @@ describe("Data package", () => {
         valueByteSize: 16,
       }),
     ];
-    expect(
-      () => new DataPackage(dataPoints, TIMESTAMP_FOR_TESTS, "__BTC_ETH__")
-    ).toThrow(
+    expect(() => new DataPackage(dataPoints, TIMESTAMP_FOR_TESTS, "__BTC_ETH__")).toThrow(
       "Assertion failed: Values of all data points in a DataPackage must have the same number of bytes"
     );
   });
 
   test("Should serialize data package", () => {
-    expect(dataPackage.toBytesHex()).toBe(
-      EXPECTED_SERIALIZED_UNSIGNED_DATA_PACKAGE
-    );
+    expect(dataPackage.toBytesHex()).toBe(EXPECTED_SERIALIZED_UNSIGNED_DATA_PACKAGE);
   });
 
   test("Changed order of data points should not affect serialized bytes", () => {
@@ -73,9 +61,7 @@ describe("Data package", () => {
     dataPackage.dataPoints[0] = dataPackage.dataPoints[1];
     dataPackage.dataPoints[1] = tmpDataPoint;
 
-    expect(dataPackage.toBytesHex()).toBe(
-      EXPECTED_SERIALIZED_UNSIGNED_DATA_PACKAGE
-    );
+    expect(dataPackage.toBytesHex()).toBe(EXPECTED_SERIALIZED_UNSIGNED_DATA_PACKAGE);
   });
 
   test("Should throw an error for data points with duplicated dataFeedIds", () => {
@@ -87,19 +73,14 @@ describe("Data package", () => {
 
   test("Should sign data package", () => {
     const signedDataPackage = dataPackage.sign(PRIVATE_KEY_FOR_TESTS);
-    expect(signedDataPackage.serializeSignatureToHex()).toBe(
-      "0x" + EXPECTED_SIGNATURE
-    );
+    expect(signedDataPackage.serializeSignatureToHex()).toBe("0x" + EXPECTED_SIGNATURE);
     expect(signedDataPackage.toBytesHex()).toBe(
       EXPECTED_SERIALIZED_UNSIGNED_DATA_PACKAGE + EXPECTED_SIGNATURE
     );
   });
 
   test("Should verify data package signature", () => {
-    const signedDataPackage = new SignedDataPackage(
-      dataPackage,
-      "0x" + EXPECTED_SIGNATURE
-    );
+    const signedDataPackage = new SignedDataPackage(dataPackage, "0x" + EXPECTED_SIGNATURE);
 
     // Check public key
     const expectedPublicKey = computePublicKey(PRIVATE_KEY_FOR_TESTS);

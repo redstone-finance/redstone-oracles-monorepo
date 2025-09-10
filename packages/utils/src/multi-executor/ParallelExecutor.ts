@@ -13,9 +13,7 @@ export abstract class ParallelExecutor<R> extends Executor<R> {
       return undefined;
     }
 
-    const uniqueElements = _.uniqWith(results, (left, right) =>
-      _.isEqual(left, right)
-    );
+    const uniqueElements = _.uniqWith(results, (left, right) => _.isEqual(left, right));
     const counts = uniqueElements.map((item) => ({
       item,
       count: results.filter((d) => _.isEqual(d, item)).length,
@@ -71,11 +69,7 @@ export abstract class ParallelExecutor<R> extends Executor<R> {
     reject: (reason?: unknown) => void
   ) {
     try {
-      const isEnough = this.verifySettlements(
-        successfulResults,
-        errorResults,
-        totalLength
-      );
+      const isEnough = this.verifySettlements(successfulResults, errorResults, totalLength);
 
       if (isEnough) {
         const value = this.aggregate(successfulResults);

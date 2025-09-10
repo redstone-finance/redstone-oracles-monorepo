@@ -10,11 +10,7 @@ const IS_VERIFIABLE: boolean = true; // Docker is needed for verifiable builds
 const IS_UPGRADE: boolean = true;
 const WITH_BUILD: boolean = true;
 
-async function deploy(
-  address: string,
-  deployDir = readDeployDir(),
-  cluster = readCluster()
-) {
+async function deploy(address: string, deployDir = readDeployDir(), cluster = readCluster()) {
   const { cmd } = await buildCmd({
     withBuild: WITH_BUILD,
     isVerifiable: IS_VERIFIABLE,

@@ -16,11 +16,7 @@ async function changeProxyManager() {
 
   const adapter = await connector.getAdapter();
   await adapter.changeManagerAccessRule(
-    await makeMultisigAccessRule(
-      1,
-      [client.getNotarySigner()!.publicKeyHex()],
-      networkId
-    )
+    await makeMultisigAccessRule(1, [client.getNotarySigner()!.publicKeyHex()], networkId)
   );
 }
 

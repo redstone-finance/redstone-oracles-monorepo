@@ -3,12 +3,7 @@ import { assertThenReturnOrFail } from "../../src/common";
 describe("assertThenReturnOrFail", () => {
   it("should return the value when there are no errors", () => {
     const value = "test value";
-    const result = assertThenReturnOrFail(
-      value,
-      [],
-      "Test error message",
-      true
-    );
+    const result = assertThenReturnOrFail(value, [], "Test error message", true);
     expect(result).toBe(value);
   });
 

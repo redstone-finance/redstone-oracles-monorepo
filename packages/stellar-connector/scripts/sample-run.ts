@@ -20,11 +20,7 @@ async function main() {
     .withStellarNetwork(readNetwork())
     .withRpcUrl(readUrl())
     .build();
-  const connector = new PriceAdapterStellarContractConnector(
-    client,
-    adapterId,
-    keypair
-  );
+  const connector = new PriceAdapterStellarContractConnector(client, adapterId, keypair);
 
   const paramsProvider = new ContractParamsProvider({
     dataPackagesIds: FEEDS,

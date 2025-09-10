@@ -45,11 +45,7 @@ export function expectTupleOfBigIntAndTwoInts(
   expectValue(obj.fields[2], ValueKind.U64, v2);
 }
 
-export function expectValue<T>(
-  value: Value,
-  type: ValueKind,
-  expectedValue: T
-) {
+export function expectValue<T>(value: Value, type: ValueKind, expectedValue: T) {
   expectToBe(value, type);
   expect(value).toStrictEqual({ kind: type, value: expectedValue });
   expect(RadixParser.extractValue(value)).toBe(expectedValue);
@@ -59,9 +55,7 @@ export function expectU256Digits(value: Value, expectedValue: bigint) {
   const arr = expectArray(value, ValueKind.U64);
 
   expect(arr).toStrictEqual(u256Digits(expectedValue));
-  expect(RadixParser.extractValue(value)).toStrictEqual(
-    BigNumber.from(expectedValue)
-  );
+  expect(RadixParser.extractValue(value)).toStrictEqual(BigNumber.from(expectedValue));
 }
 
 export function expectArray<K extends ValueKind>(value: Value, type: K) {

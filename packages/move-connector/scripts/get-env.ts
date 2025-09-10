@@ -9,10 +9,7 @@ export function getEnvNetwork() {
 }
 
 export function getEnvNetworkEnum() {
-  return RedstoneCommon.getFromEnv(
-    "NETWORK",
-    z.nativeEnum(AptosAndMovementNetwork)
-  );
+  return RedstoneCommon.getFromEnv("NETWORK", z.nativeEnum(AptosAndMovementNetwork));
 }
 
 export function getEnvContractName() {
@@ -20,8 +17,5 @@ export function getEnvContractName() {
 }
 
 export function getEnvDeployDir() {
-  return RedstoneCommon.getFromEnv(
-    "DEPLOY_DIR",
-    z.string().optional().default("./move/contracts")
-  );
+  return RedstoneCommon.getFromEnv("DEPLOY_DIR", z.string().optional().default("./move/contracts"));
 }

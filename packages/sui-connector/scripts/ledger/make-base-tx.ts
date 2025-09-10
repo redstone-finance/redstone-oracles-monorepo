@@ -2,17 +2,9 @@ import { Transaction } from "@mysten/sui/transactions";
 import { SUI_FRAMEWORK_ADDRESS } from "@mysten/sui/utils";
 import { RedstoneCommon } from "@redstone-finance/utils";
 import assert from "assert";
-import {
-  DEFAULT_GAS_BUDGET,
-  makeSuiClient,
-  SuiNetworkName,
-  SuiNetworkSchema,
-} from "../../src";
+import { DEFAULT_GAS_BUDGET, makeSuiClient, SuiNetworkName, SuiNetworkSchema } from "../../src";
 
-async function fetchCoinObjects(
-  network: SuiNetworkName,
-  senderAddress: string
-) {
+async function fetchCoinObjects(network: SuiNetworkName, senderAddress: string) {
   const coins = await makeSuiClient(network).getCoins({ owner: senderAddress });
   assert(!coins.hasNextPage, "Too many coins");
 

@@ -34,18 +34,12 @@ async function verifyProgramAsMultiSig(
   console.log(buffer.toString("utf-8"));
   const buffers = buffer.toString("utf-8").split("\n");
 
-  const tx = Transaction.from(
-    Buffer.from(buffers[buffers.length - 2], "base64")
-  );
+  const tx = Transaction.from(Buffer.from(buffers[buffers.length - 2], "base64"));
 
   console.log("Instructions:", tx.instructions);
 
-  console.log(
-    "After confirming the transaction with Squads, run the following command:"
-  );
-  console.log(
-    `solana-verify remote submit-job --program-id ${address} ${uploader}`
-  );
+  console.log("After confirming the transaction with Squads, run the following command:");
+  console.log(`solana-verify remote submit-job --program-id ${address} ${uploader}`);
 }
 
 async function main() {

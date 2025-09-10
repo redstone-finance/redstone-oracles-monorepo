@@ -2,11 +2,8 @@ import { splitSignature } from "@ethersproject/bytes";
 import { ethers } from "ethers";
 import { UniversalSigner } from "../src";
 
-const PRIVATE_KEY_FOR_TESTS =
-  "0x1111111111111111111111111111111111111111111111111111111111111111";
-const ECDSA_N = BigInt(
-  "0xfffffffffffffffffffffffffffffffebaaedce6af48a03bbfd25e8cd0364141"
-);
+const PRIVATE_KEY_FOR_TESTS = "0x1111111111111111111111111111111111111111111111111111111111111111";
+const ECDSA_N = BigInt("0xfffffffffffffffffffffffffffffffebaaedce6af48a03bbfd25e8cd0364141");
 const TEST_MESSAGE_SIGNATURE =
   "0x13a3b3930428252cd84869dda483619bf2167011afbf3a32d0dc69b559848f0c007c55e25cb7a3f0a17f59986b106dca0ebf44f14dcb55f94fe035c40dabba731b";
 
@@ -20,9 +17,7 @@ describe("UniversalSigner", () => {
 
   test("Should correctly calculate digest for data", () => {
     const digest = UniversalSigner.getDigestForData(stringifiableData);
-    expect(digest).toBe(
-      "0x230a650f45bd2fb93390f0e372a77022536e6d9da6408aa3f1b2f28e04fb2011"
-    );
+    expect(digest).toBe("0x230a650f45bd2fb93390f0e372a77022536e6d9da6408aa3f1b2f28e04fb2011");
   });
 
   test("Should properly sign and verify stringifiable data", () => {
@@ -30,13 +25,8 @@ describe("UniversalSigner", () => {
       stringifiableData,
       PRIVATE_KEY_FOR_TESTS
     );
-    const recoveredSigner = UniversalSigner.recoverSigner(
-      stringifiableData,
-      signature
-    );
-    expect(recoveredSigner).toBe(
-      new ethers.Wallet(PRIVATE_KEY_FOR_TESTS).address
-    );
+    const recoveredSigner = UniversalSigner.recoverSigner(stringifiableData, signature);
+    expect(recoveredSigner).toBe(new ethers.Wallet(PRIVATE_KEY_FOR_TESTS).address);
   });
 
   test("Should not verify incorrectly signed data", () => {
@@ -48,31 +38,23 @@ describe("UniversalSigner", () => {
       [...stringifiableData, { hoho: 100 }],
       signature
     );
-    expect(recoveredSigner).not.toBe(
-      new ethers.Wallet(PRIVATE_KEY_FOR_TESTS).address
-    );
+    expect(recoveredSigner).not.toBe(new ethers.Wallet(PRIVATE_KEY_FOR_TESTS).address);
   });
 
   test("Should sign with Ethereum Hash Message", async () => {
     const wallet = new ethers.Wallet(PRIVATE_KEY_FOR_TESTS);
     const testMessage = "test-message";
-    const signature = await UniversalSigner.signWithEthereumHashMessage(
-      wallet,
-      testMessage
-    );
+    const signature = await UniversalSigner.signWithEthereumHashMessage(wallet, testMessage);
     expect(signature).toBe(TEST_MESSAGE_SIGNATURE);
   });
 
   test("Should verify Ethereum Hash Message", () => {
     const testMessage = "test-message";
-    const recoveredAddress =
-      UniversalSigner.recoverAddressFromEthereumHashMessage(
-        testMessage,
-        TEST_MESSAGE_SIGNATURE
-      );
-    expect(recoveredAddress).toBe(
-      new ethers.Wallet(PRIVATE_KEY_FOR_TESTS).address
+    const recoveredAddress = UniversalSigner.recoverAddressFromEthereumHashMessage(
+      testMessage,
+      TEST_MESSAGE_SIGNATURE
     );
+    expect(recoveredAddress).toBe(new ethers.Wallet(PRIVATE_KEY_FOR_TESTS).address);
   });
 
   test("Should properly verify base signatures", () => {
@@ -125,26 +107,16 @@ describe("UniversalSigner", () => {
       stringifiableData,
       PRIVATE_KEY_FOR_TESTS
     );
-    const recoveredSigner = UniversalSigner.recoverSigner(
-      stringifiableData,
-      signature
-    );
-    expect(recoveredSigner).toBe(
-      new ethers.Wallet(PRIVATE_KEY_FOR_TESTS).address
-    );
+    const recoveredSigner = UniversalSigner.recoverSigner(stringifiableData, signature);
+    expect(recoveredSigner).toBe(new ethers.Wallet(PRIVATE_KEY_FOR_TESTS).address);
 
     expect(() =>
-      UniversalSigner.recoverSigner(
-        stringifiableData,
-        fixSignatureForMalleability(signature)
-      )
+      UniversalSigner.recoverSigner(stringifiableData, fixSignatureForMalleability(signature))
     ).toThrow("Invalid signature 's' value");
   });
 
   function fixSignatureForMalleability(baseSignature: string) {
-    const signature = baseSignature.startsWith("0x")
-      ? baseSignature.substring(2)
-      : baseSignature;
+    const signature = baseSignature.startsWith("0x") ? baseSignature.substring(2) : baseSignature;
 
     const S = signature.substring(64, 128);
     const newV = signature.substring(128) === "1b" ? "1c" : "1b";
@@ -153,14 +125,8 @@ describe("UniversalSigner", () => {
     return replaceSignatureSV(baseSignature, newS, newV);
   }
 
-  function replaceSignatureSV(
-    baseSignature: string,
-    newS: bigint,
-    newV?: string
-  ) {
-    const signature = baseSignature.startsWith("0x")
-      ? baseSignature.substring(2)
-      : baseSignature;
+  function replaceSignatureSV(baseSignature: string, newS: bigint, newV?: string) {
+    const signature = baseSignature.startsWith("0x") ? baseSignature.substring(2) : baseSignature;
 
     return (
       (baseSignature.startsWith("0x") ? "0x" : "") +

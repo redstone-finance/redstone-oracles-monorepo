@@ -5,10 +5,8 @@ import { TonContract } from "./TonContract";
 import { TonContractFactory } from "./TonContractFactory";
 import { AnyTonOpenedContract, TonNetwork } from "./network/TonNetwork";
 
-export abstract class TonContractConnector<
-  Contract extends TonContract,
-  Adapter,
-> implements IContractConnector<Adapter>
+export abstract class TonContractConnector<Contract extends TonContract, Adapter>
+  implements IContractConnector<Adapter>
 {
   protected constructor(
     protected contractType: typeof TonContract,
@@ -16,9 +14,7 @@ export abstract class TonContractConnector<
     private readonly address?: string
   ) {}
 
-  async makeContract(
-    contractFactory: TonContractFactory
-  ): Promise<TonContract> {
+  async makeContract(contractFactory: TonContractFactory): Promise<TonContract> {
     return await contractFactory.makeForExecute(this.network, this.address!);
   }
 
@@ -45,11 +41,7 @@ export abstract class TonContractConnector<
       console.log(`Waiting for contract changes...`);
       await sleep(1500);
 
-      ({
-        hash: currentHash,
-        transactionId,
-        totalFees,
-      } = await this.fetchNetworkValues());
+      ({ hash: currentHash, transactionId, totalFees } = await this.fetchNetworkValues());
     }
 
     console.log(

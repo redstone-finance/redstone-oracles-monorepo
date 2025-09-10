@@ -30,11 +30,7 @@ export class ProxyRadixContractDeployer extends ProxyRadixContractConnector {
     return await this.client.call(
       new ProxyInstantiateRadixFunction(
         this.packageId,
-        await makeMultisigAccessRule(
-          this.threshold,
-          this.multisignaturePublicKeys,
-          this.networkId
-        ),
+        await makeMultisigAccessRule(this.threshold, this.multisignaturePublicKeys, this.networkId),
         this.contractGlobalAddress
       )
     );

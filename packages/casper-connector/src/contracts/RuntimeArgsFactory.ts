@@ -24,24 +24,14 @@ export class RuntimeArgsFactory {
     hash: string
   ): RuntimeArgs[] {
     const chunkSize = RuntimeArgsFactory.CHUNK_SIZE_BYTES * 2;
-    const numberOfChunks = Math.floor(
-      (payloadHex.length + chunkSize - 1) / chunkSize
-    );
+    const numberOfChunks = Math.floor((payloadHex.length + chunkSize - 1) / chunkSize);
 
     const result: RuntimeArgs[] = [];
 
     for (let chunkIndex = 0; chunkIndex < numberOfChunks; chunkIndex++) {
-      const chunk = payloadHex.substring(
-        chunkIndex * chunkSize,
-        (chunkIndex + 1) * chunkSize
-      );
+      const chunk = payloadHex.substring(chunkIndex * chunkSize, (chunkIndex + 1) * chunkSize);
 
-      const args = RuntimeArgsFactory.makeProcessChunkRuntimeArgs(
-        feedIds,
-        chunk,
-        hash,
-        chunkIndex
-      );
+      const args = RuntimeArgsFactory.makeProcessChunkRuntimeArgs(feedIds, chunk, hash, chunkIndex);
 
       result.push(args);
     }
@@ -55,10 +45,7 @@ export class RuntimeArgsFactory {
     hash: string,
     index: number
   ) {
-    const args = RuntimeArgsFactory.makePayloadRuntimeArgs(
-      feedIds,
-      `0x${chunk}`
-    );
+    const args = RuntimeArgsFactory.makePayloadRuntimeArgs(feedIds, `0x${chunk}`);
 
     args.insert(ARG_NAME_HASH, encodeByteCLList(hash));
     args.insert(ARG_NAME_CHUNK_INDEX, CLValueBuilder.u8(index));

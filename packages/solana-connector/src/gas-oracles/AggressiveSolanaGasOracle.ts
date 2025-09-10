@@ -9,8 +9,7 @@ export class AggressiveSolanaGasOracle implements ISolanaGasOracle {
 
   getPriorityFeePerUnit(iterationIndex: number): Promise<number> {
     const fee = Math.ceil(
-      this.config.basePricePerComputeUnit *
-        this.config.gasMultiplier ** iterationIndex
+      this.config.basePricePerComputeUnit * this.config.gasMultiplier ** iterationIndex
     );
 
     const finalFeePerUnit = Math.min(fee, this.config.maxPricePerComputeUnit);

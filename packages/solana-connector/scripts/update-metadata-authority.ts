@@ -17,10 +17,7 @@ import { readKeypairBytes } from "./utils";
 const MINT_ADDRESS = publicKey("token address here");
 const NEW_UPDATE_AUTHORITY = publicKey("pda of the multisig here");
 
-async function updateUpdateAuthority(
-  mint: PublicKey,
-  newUpdateAuthority: PublicKey
-) {
+async function updateUpdateAuthority(mint: PublicKey, newUpdateAuthority: PublicKey) {
   const umi = createUmi(clusterApiUrl(readCluster())).use(mplTokenMetadata());
 
   const keypairBytes = readKeypairBytes();

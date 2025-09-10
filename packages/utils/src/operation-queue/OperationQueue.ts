@@ -18,9 +18,7 @@ export class OperationQueue {
 
       return true;
     } else if (this.activeOperations.has(id)) {
-      this.logger.debug(
-        `Operation for [${id}] is currently processing and cannot be replaced.`
-      );
+      this.logger.debug(`Operation for [${id}] is currently processing and cannot be replaced.`);
 
       return false;
     } else {

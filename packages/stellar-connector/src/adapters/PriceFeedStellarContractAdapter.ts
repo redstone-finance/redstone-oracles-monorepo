@@ -13,10 +13,8 @@ export class PriceFeedStellarContractAdapter
   async getDescription() {
     const operation = this.contract.call("description");
 
-    return await this.rpcClient.simulateOperation(
-      operation,
-      await this.getPublicKey(),
-      (sim) => XdrUtils.parsePrimitiveFromSimulation(sim, String)
+    return await this.rpcClient.simulateOperation(operation, await this.getPublicKey(), (sim) =>
+      XdrUtils.parsePrimitiveFromSimulation(sim, String)
     );
   }
 
@@ -31,20 +29,16 @@ export class PriceFeedStellarContractAdapter
   async decimals() {
     const operation = this.contract.call("decimals");
 
-    return await this.rpcClient.simulateOperation(
-      operation,
-      await this.getPublicKey(),
-      (sim) => XdrUtils.parsePrimitiveFromSimulation(sim, Number)
+    return await this.rpcClient.simulateOperation(operation, await this.getPublicKey(), (sim) =>
+      XdrUtils.parsePrimitiveFromSimulation(sim, Number)
     );
   }
 
   async feedId() {
     const operation = this.contract.call("feed_id");
 
-    return await this.rpcClient.simulateOperation(
-      operation,
-      await this.getPublicKey(),
-      (sim) => XdrUtils.parsePrimitiveFromSimulation(sim, String)
+    return await this.rpcClient.simulateOperation(operation, await this.getPublicKey(), (sim) =>
+      XdrUtils.parsePrimitiveFromSimulation(sim, String)
     );
   }
 
@@ -61,10 +55,8 @@ export class PriceFeedStellarContractAdapter
   async readTimestamp() {
     const operation = this.contract.call("read_timestamp");
 
-    return await this.rpcClient.simulateOperation(
-      operation,
-      await this.getPublicKey(),
-      (sim) => XdrUtils.parsePrimitiveFromSimulation(sim, Number)
+    return await this.rpcClient.simulateOperation(operation, await this.getPublicKey(), (sim) =>
+      XdrUtils.parsePrimitiveFromSimulation(sim, Number)
     );
   }
 

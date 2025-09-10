@@ -14,9 +14,7 @@ export abstract class MoveContractViewer {
 
   protected async viewOnChain<T extends Array<MoveValue> = Array<MoveValue>>(
     functionName: string,
-    functionArguments?: Array<
-      EntryFunctionArgumentTypes | SimpleEntryFunctionArgumentTypes
-    >
+    functionArguments?: Array<EntryFunctionArgumentTypes | SimpleEntryFunctionArgumentTypes>
   ): Promise<T> {
     return await this.client.viewOnChain(
       this.packageAddress,

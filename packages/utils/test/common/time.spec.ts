@@ -16,10 +16,7 @@ describe("timeout", () => {
 
   it("should return the function value when asyncFunction is not timed out", async () => {
     expect(
-      await RedstoneCommon.timeout(
-        asyncFunction(NORMAL_DURATION_MS),
-        LONGER_DURATION_MS
-      )
+      await RedstoneCommon.timeout(asyncFunction(NORMAL_DURATION_MS), LONGER_DURATION_MS)
     ).toEqual(FUNCTION_VALUE);
   });
 
@@ -35,10 +32,7 @@ describe("timeout", () => {
 
   it("should throw default error when asyncFunction is timed out", async () => {
     await expect(
-      RedstoneCommon.timeout(
-        asyncFunction(LONGER_DURATION_MS),
-        NORMAL_DURATION_MS
-      )
+      RedstoneCommon.timeout(asyncFunction(LONGER_DURATION_MS), NORMAL_DURATION_MS)
     ).rejects.toThrow("Timeout error 50 [MS]");
   });
 
@@ -83,23 +77,17 @@ describe("interval", () => {
   describe("intervalToCronFormat", () => {
     it("should convert to CronFormat when interval equals 1 second", () => {
       const interval = 1000;
-      expect(RedstoneCommon.intervalMsToCronFormat(interval)).toEqual(
-        "*/1 * * * * *"
-      );
+      expect(RedstoneCommon.intervalMsToCronFormat(interval)).toEqual("*/1 * * * * *");
     });
 
     it("should convert to CronFormat when interval smaller than 1 minute", () => {
       const interval = 5000;
-      expect(RedstoneCommon.intervalMsToCronFormat(interval)).toEqual(
-        "*/5 * * * * *"
-      );
+      expect(RedstoneCommon.intervalMsToCronFormat(interval)).toEqual("*/5 * * * * *");
     });
 
     it("should convert to CronFormat when interval equals 1 minute", () => {
       const interval = 60000;
-      expect(RedstoneCommon.intervalMsToCronFormat(interval)).toEqual(
-        "0 * * * * *"
-      );
+      expect(RedstoneCommon.intervalMsToCronFormat(interval)).toEqual("0 * * * * *");
     });
   });
 });

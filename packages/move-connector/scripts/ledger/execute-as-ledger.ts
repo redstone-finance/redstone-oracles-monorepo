@@ -3,10 +3,7 @@ import { handleTxAsLedger, makeAptos } from "../utils";
 import { AptosLedger, getLedgerData, makeAptosLedger } from "./ledger-utils";
 
 export async function executeAsLedger(
-  txCreator: (
-    aptos: Aptos,
-    signerAddress: AccountAddress
-  ) => Promise<SimpleTransaction>,
+  txCreator: (aptos: Aptos, signerAddress: AccountAddress) => Promise<SimpleTransaction>,
   accountId: number,
   ledger?: AptosLedger
 ) {

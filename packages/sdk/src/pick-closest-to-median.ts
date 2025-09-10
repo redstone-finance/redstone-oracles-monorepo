@@ -1,7 +1,4 @@
-import {
-  SignedDataPackage,
-  SignedDataPackagePlainObj,
-} from "@redstone-finance/protocol";
+import { SignedDataPackage, SignedDataPackagePlainObj } from "@redstone-finance/protocol";
 import { MathUtils, SafeNumber } from "@redstone-finance/utils";
 import _ from "lodash";
 
