@@ -30,19 +30,16 @@ const handlers = [
     return HttpResponse.json(signedDataPackage.toObj());
   }),
 
-  http.get(
-    "http://invalid-address-node.com/score-by-address",
-    ({ request }) => {
-      const signedDataPackage = getSignedDataPackage({
-        request,
-        value: 1234,
-        privateKey: MOCK_PRIVATE_KEYS[2],
-        dataFeedId: "invalid data feed id",
-      });
+  http.get("http://invalid-address-node.com/score-by-address", ({ request }) => {
+    const signedDataPackage = getSignedDataPackage({
+      request,
+      value: 1234,
+      privateKey: MOCK_PRIVATE_KEYS[2],
+      dataFeedId: "invalid data feed id",
+    });
 
-      return HttpResponse.json(signedDataPackage.toObj());
-    }
-  ),
+    return HttpResponse.json(signedDataPackage.toObj());
+  }),
 
   http.get("http://invalid-value-node.com/score-by-address", ({ request }) => {
     const signedDataPackage = getSignedDataPackage({
@@ -71,10 +68,7 @@ const getSignedDataPackage = ({
   const timestamp = searchParams.get("timestamp") ?? "";
   const signature = searchParams.get("signature") ?? "";
   const message = prepareMessageToSign(Number(timestamp));
-  const address = UniversalSigner.recoverAddressFromEthereumHashMessage(
-    message,
-    signature
-  );
+  const address = UniversalSigner.recoverAddressFromEthereumHashMessage(message, signature);
   let valueToResponse = value;
   if (valueBasedOnAddress) {
     valueToResponse = address === VERIFIED_ADDRESS ? 1 : 0;

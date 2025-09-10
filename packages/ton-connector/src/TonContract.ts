@@ -1,10 +1,4 @@
-import {
-  Address,
-  beginCell,
-  Cell,
-  Contract,
-  ContractProvider,
-} from "@ton/core";
+import { Address, beginCell, Cell, Contract, ContractProvider } from "@ton/core";
 import { Maybe } from "@ton/core/src/utils/maybe";
 import { Ton } from "./Ton";
 

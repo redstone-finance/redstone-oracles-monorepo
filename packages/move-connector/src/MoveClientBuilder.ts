@@ -1,10 +1,5 @@
 import { Aptos, AptosConfig } from "@aptos-labs/ts-sdk";
-import {
-  ChainType,
-  ChainTypeEnum,
-  MultiExecutor,
-  RedstoneCommon,
-} from "@redstone-finance/utils";
+import { ChainType, ChainTypeEnum, MultiExecutor, RedstoneCommon } from "@redstone-finance/utils";
 import { MoveClient } from "./MoveClient";
 import {
   AptosAndMovementNetwork,
@@ -50,8 +45,7 @@ export abstract class MoveClientBuilder extends MultiExecutor.ClientBuilder<Move
         sendSimpleTransaction: MultiExecutor.ExecutionMode.RACE,
         waitForTransaction: MultiExecutor.ExecutionMode.AGREEMENT,
         getSequenceNumber: MultiExecutor.ExecutionMode.AGREEMENT,
-        getBlockNumber:
-          MultiExecutor.ClientBuilder.blockNumberConsensusExecutor,
+        getBlockNumber: MultiExecutor.ClientBuilder.blockNumberConsensusExecutor,
         getGasPriceEstimation: MultiExecutor.ExecutionMode.AGREEMENT,
         getBalance: MultiExecutor.ExecutionMode.AGREEMENT,
         viewOnChain: MultiExecutor.ExecutionMode.AGREEMENT,

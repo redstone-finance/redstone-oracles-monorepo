@@ -11,10 +11,7 @@ const RETRY_CONFIG: Omit<RedstoneCommon.RetryConfig, "fn"> = {
 
 const logger = loggerFactory("getRecentBlockhash");
 
-export async function getRecentBlockhash(
-  client: SolanaClient,
-  description: string
-) {
+export async function getRecentBlockhash(client: SolanaClient, description: string) {
   return await RedstoneCommon.retry({
     fn: () => getBlockhash(client, description),
     fnName: "getRecentBlockhash",

@@ -25,19 +25,15 @@ export class RadixApiClient {
   }
 
   async getTransactionDetails(transactionId: string) {
-    const receipt =
-      await this.apiClient.transaction.innerClient.transactionCommittedDetails({
-        transactionCommittedDetailsRequest: {
-          intent_hash: transactionId,
-          opt_ins: { receipt_output: true },
-        },
-      });
+    const receipt = await this.apiClient.transaction.innerClient.transactionCommittedDetails({
+      transactionCommittedDetailsRequest: {
+        intent_hash: transactionId,
+        opt_ins: { receipt_output: true },
+      },
+    });
 
     if (receipt.transaction.transaction_status !== "CommittedSuccess") {
-      throw new Error(
-        receipt.transaction.error_message ??
-          receipt.transaction.transaction_status
-      );
+      throw new Error(receipt.transaction.error_message ?? receipt.transaction.transaction_status);
     }
 
     const output = receipt.transaction.receipt?.output as {
@@ -47,9 +43,7 @@ export class RadixApiClient {
     return {
       values: (
         await Promise.all(
-          output.map((object) =>
-            RadixParser.decodeSborHex(object.hex, this.networkId)
-          )
+          output.map((object) => RadixParser.decodeSborHex(object.hex, this.networkId))
         )
       ).map((value) => RadixParser.extractValue(value)),
       feePaid: receipt.transaction.fee_paid,
@@ -57,8 +51,7 @@ export class RadixApiClient {
   }
 
   async submitTransaction(compiledTransaction: Uint8Array) {
-    const notarizedTransactionHex =
-      Convert.Uint8Array.toHexString(compiledTransaction);
+    const notarizedTransactionHex = Convert.Uint8Array.toHexString(compiledTransaction);
 
     return (
       await this.apiClient.transaction.innerClient.transactionSubmit({
@@ -70,12 +63,11 @@ export class RadixApiClient {
   }
 
   async getTransactionStatus(transactionId: string) {
-    const result =
-      await this.apiClient.transaction.innerClient.transactionStatus({
-        transactionStatusRequest: {
-          intent_hash: transactionId,
-        },
-      });
+    const result = await this.apiClient.transaction.innerClient.transactionStatus({
+      transactionStatusRequest: {
+        intent_hash: transactionId,
+      },
+    });
 
     return { status: result.intent_status, errorMessage: result.error_message };
   }
@@ -99,14 +91,13 @@ export class RadixApiClient {
   ): Promise<string> {
     const atLedgerState = await this.waitForLedgerState(stateVersion);
 
-    const response =
-      await this.apiClient.state.innerClient.entityFungibleResourceVaultPage({
-        stateEntityFungibleResourceVaultsPageRequest: {
-          address,
-          resource_address: resourceAddress,
-          at_ledger_state: atLedgerState,
-        },
-      });
+    const response = await this.apiClient.state.innerClient.entityFungibleResourceVaultPage({
+      stateEntityFungibleResourceVaultsPageRequest: {
+        address,
+        resource_address: resourceAddress,
+        at_ledger_state: atLedgerState,
+      },
+    });
 
     switch (response.items.length) {
       case 0:
@@ -114,29 +105,20 @@ export class RadixApiClient {
       case 1:
         return response.items[0].amount;
       default:
-        throw new Error(
-          `Unexpected item count: ${response.items.length} for ${resourceAddress}`
-        );
+        throw new Error(`Unexpected item count: ${response.items.length} for ${resourceAddress}`);
     }
   }
 
-  async getNonFungibleBalance(
-    address: string,
-    resourceAddress: string,
-    stateVersion?: number
-  ) {
+  async getNonFungibleBalance(address: string, resourceAddress: string, stateVersion?: number) {
     const atLedgerState = await this.waitForLedgerState(stateVersion);
 
-    const response =
-      await this.apiClient.state.innerClient.entityNonFungibleResourceVaultPage(
-        {
-          stateEntityNonFungibleResourceVaultsPageRequest: {
-            address,
-            resource_address: resourceAddress,
-            at_ledger_state: atLedgerState,
-          },
-        }
-      );
+    const response = await this.apiClient.state.innerClient.entityNonFungibleResourceVaultPage({
+      stateEntityNonFungibleResourceVaultsPageRequest: {
+        address,
+        resource_address: resourceAddress,
+        at_ledger_state: atLedgerState,
+      },
+    });
 
     switch (response.items.length) {
       case 0:
@@ -144,9 +126,7 @@ export class RadixApiClient {
       case 1:
         return response.items[0].total_count;
       default:
-        throw new Error(
-          `Unexpected item count: ${response.items.length} for ${resourceAddress}`
-        );
+        throw new Error(`Unexpected item count: ${response.items.length} for ${resourceAddress}`);
     }
   }
 
@@ -181,11 +161,7 @@ export class RadixApiClient {
     });
   }
 
-  async getStateFields(
-    componentId: string,
-    fieldNames?: string[],
-    stateVersion?: number
-  ) {
+  async getStateFields(componentId: string, fieldNames?: string[], stateVersion?: number) {
     const ledgerState = await this.waitForLedgerState(
       stateVersion,
       `getStateFields ${fieldNames?.toString()} in ${stateVersion}`
@@ -195,25 +171,17 @@ export class RadixApiClient {
       undefined,
       ledgerState
     );
-    const state = (
-      res.details as unknown as StateEntityDetailsResponseComponentDetails
-    ).state as { fields: { field_name: string }[] };
+    const state = (res.details as unknown as StateEntityDetailsResponseComponentDetails).state as {
+      fields: { field_name: string }[];
+    };
 
-    const fields = state.fields.filter(
-      (field) => fieldNames?.includes(field.field_name) !== false
-    );
-    const entries = fields.map((field) => [
-      field.field_name,
-      RadixParser.convertValue(field),
-    ]);
+    const fields = state.fields.filter((field) => fieldNames?.includes(field.field_name) !== false);
+    const entries = fields.map((field) => [field.field_name, RadixParser.convertValue(field)]);
 
     return Object.fromEntries(entries) as { [p: string]: Value };
   }
 
-  private async waitForLedgerState(
-    stateVersion: number | undefined,
-    description?: string
-  ) {
+  private async waitForLedgerState(stateVersion: number | undefined, description?: string) {
     await RedstoneCommon.waitForBlockNumber(
       () => this.getCurrentStateVersion(),
       stateVersion,

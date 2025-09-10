@@ -2,11 +2,7 @@ import { utils } from "@redstone-finance/protocol";
 import { expect } from "chai";
 import { Signer } from "ethers";
 import { ethers } from "hardhat";
-import {
-  getMockNumericPackage,
-  getRange,
-  MockSignerIndex,
-} from "../../src/helpers/test-utils";
+import { getMockNumericPackage, getRange, MockSignerIndex } from "../../src/helpers/test-utils";
 import { WrapperBuilder } from "../../src/index";
 import { SampleSyntheticToken } from "../../typechain-types";
 import { NUMBER_OF_MOCK_NUMERIC_SIGNERS } from "../tests-common";
@@ -27,9 +23,7 @@ describe("SampleSyntheticToken", function () {
   };
 
   beforeEach(async () => {
-    const SampleSyntheticToken = await ethers.getContractFactory(
-      "SampleSyntheticToken"
-    );
+    const SampleSyntheticToken = await ethers.getContractFactory("SampleSyntheticToken");
     sampleContract = await SampleSyntheticToken.deploy();
     await sampleContract.initialize(
       utils.convertStringToBytes32("REDSTONE"),
@@ -59,10 +53,7 @@ describe("SampleSyntheticToken", function () {
       })
     );
 
-    wrappedContract =
-      WrapperBuilder.wrap(sampleContract).usingMockDataPackages(
-        mockDataPackages
-      );
+    wrappedContract = WrapperBuilder.wrap(sampleContract).usingMockDataPackages(mockDataPackages);
   });
 
   it("Maker balance should be 0", async () => {
@@ -74,14 +65,10 @@ describe("SampleSyntheticToken", function () {
     await tx.wait();
 
     expect(await wrappedContract.balanceOf(address)).to.equal(toEth(100));
-    expect(await wrappedContract.balanceValueOf(address)).to.equal(
-      toVal(20000)
-    );
+    expect(await wrappedContract.balanceValueOf(address)).to.equal(toVal(20000));
     expect(await wrappedContract.totalValue()).to.equal(toVal(20000));
     expect(await wrappedContract.collateralOf(address)).to.equal(toEth(20));
-    expect(await wrappedContract.collateralValueOf(address)).to.equal(
-      toVal(40000)
-    );
+    expect(await wrappedContract.collateralValueOf(address)).to.equal(toVal(40000));
     expect(await wrappedContract.debtOf(address)).to.equal(toEth(100));
     expect(await wrappedContract.debtValueOf(address)).to.equal(toVal(20000));
     expect(await wrappedContract.solvencyOf(address)).to.equal(2000);

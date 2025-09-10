@@ -35,9 +35,7 @@ export class RedstonePayloadParser {
     const unsignedMetadata = this.extractUnsignedMetadata();
 
     let negativeOffset =
-      unsignedMetadata.length +
-      UNSIGNED_METADATA_BYTE_SIZE_BS +
-      REDSTONE_MARKER_BS;
+      unsignedMetadata.length + UNSIGNED_METADATA_BYTE_SIZE_BS + REDSTONE_MARKER_BS;
 
     const numberOfDataPackages = this.extractNumber({
       negativeOffset,
@@ -143,10 +141,7 @@ export class RedstonePayloadParser {
       negativeOffset += DATA_FEED_ID_BS;
 
       // Building a data point
-      const dataPoint = RedstonePayloadParser.createDataPoint(
-        dataFeedId,
-        dataPointValue
-      );
+      const dataPoint = RedstonePayloadParser.createDataPoint(dataFeedId, dataPointValue);
 
       if (!dataPackageId) {
         dataPackageId = dataPoint.dataFeedId;
@@ -169,14 +164,8 @@ export class RedstonePayloadParser {
     );
   }
 
-  private static createDataPoint(
-    dataFeedId: Uint8Array,
-    dataPointValue: Uint8Array
-  ): DataPoint {
-    return new DataPoint(
-      toUtf8String(dataFeedId).replaceAll("\x00", ""),
-      dataPointValue
-    );
+  private static createDataPoint(dataFeedId: Uint8Array, dataPointValue: Uint8Array): DataPoint {
+    return new DataPoint(toUtf8String(dataFeedId).replaceAll("\x00", ""), dataPointValue);
   }
 
   private extractNumber(sliceConfig: SliceConfig): number {
@@ -192,16 +181,10 @@ export class RedstonePayloadParser {
   }
 }
 
-export const convertDataPointToNumericDataPoint = (
-  dataPoint: DataPoint,
-  decimals?: number
-) =>
+export const convertDataPointToNumericDataPoint = (dataPoint: DataPoint, decimals?: number) =>
   new NumericDataPoint({
     value: Number(
-      formatUnits(
-        BigNumber.from(dataPoint.value),
-        decimals ?? DEFAULT_NUM_VALUE_DECIMALS
-      )
+      formatUnits(BigNumber.from(dataPoint.value), decimals ?? DEFAULT_NUM_VALUE_DECIMALS)
     ),
     dataFeedId: dataPoint.dataFeedId,
     decimals,

@@ -2,10 +2,7 @@ import { ScoreType } from "@redstone-finance/protocol";
 import { DataPackagesResponse } from "@redstone-finance/sdk";
 import { Contract } from "ethers";
 import { DataPackagesWrapper } from "./wrappers/DataPackagesWrapper";
-import {
-  DataPackagesRequestInput,
-  DataServiceWrapper,
-} from "./wrappers/DataServiceWrapper";
+import { DataPackagesRequestInput, DataServiceWrapper } from "./wrappers/DataServiceWrapper";
 import { MockDataPackageConfig, MockWrapper } from "./wrappers/MockWrapper";
 import { OnDemandRequestWrapper } from "./wrappers/OnDemandRequestWrapper";
 import {
@@ -21,21 +18,19 @@ export class WrapperBuilder<T extends Contract> {
   }
 
   usingDataService(dataPackagesRequestInput: DataPackagesRequestInput): T {
-    return new DataServiceWrapper<T>(
-      dataPackagesRequestInput
-    ).overwriteEthersContract(this.baseContract);
-  }
-
-  usingMockDataPackages(mockDataPackages: MockDataPackageConfig[]): T {
-    return new MockWrapper<T>(mockDataPackages).overwriteEthersContract(
+    return new DataServiceWrapper<T>(dataPackagesRequestInput).overwriteEthersContract(
       this.baseContract
     );
   }
 
+  usingMockDataPackages(mockDataPackages: MockDataPackageConfig[]): T {
+    return new MockWrapper<T>(mockDataPackages).overwriteEthersContract(this.baseContract);
+  }
+
   usingSimpleNumericMock(simpleNumericMockConfig: SimpleNumericMockConfig): T {
-    return new SimpleNumericMockWrapper<T>(
-      simpleNumericMockConfig
-    ).overwriteEthersContract(this.baseContract);
+    return new SimpleNumericMockWrapper<T>(simpleNumericMockConfig).overwriteEthersContract(
+      this.baseContract
+    );
   }
 
   usingOnDemandRequest(nodeUrls: string[], scoreType: ScoreType): T {
@@ -49,8 +44,6 @@ export class WrapperBuilder<T extends Contract> {
   }
 
   usingDataPackages(dataPackages: DataPackagesResponse) {
-    return new DataPackagesWrapper<T>(dataPackages).overwriteEthersContract(
-      this.baseContract
-    );
+    return new DataPackagesWrapper<T>(dataPackages).overwriteEthersContract(this.baseContract);
   }
 }

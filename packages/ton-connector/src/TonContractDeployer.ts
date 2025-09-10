@@ -18,13 +18,7 @@ export abstract class TonContractDeployer<
     super(contractType, network);
   }
 
-  override async makeContract(
-    contractFactory: TonContractFactory
-  ): Promise<TonContract> {
-    return await contractFactory.makeForDeploy(
-      this.code,
-      this.network,
-      this.initData
-    );
+  override async makeContract(contractFactory: TonContractFactory): Promise<TonContract> {
+    return await contractFactory.makeForDeploy(this.code, this.network, this.initData);
   }
 }

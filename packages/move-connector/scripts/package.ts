@@ -18,11 +18,7 @@ function objectCodeDeploymentCall(call: string): MoveFunctionId {
 export class MovePackageTxBuilder {
   constructor(private readonly aptos: Aptos) {}
 
-  public async objectPublishTx(
-    sender: AccountAddress,
-    metadata: HexInput,
-    code: Array<HexInput>
-  ) {
+  public async objectPublishTx(sender: AccountAddress, metadata: HexInput, code: Array<HexInput>) {
     const moveCode = new MoveVector(code.map(MoveVector.U8));
 
     return await this.aptos.transaction.build.simple({
@@ -32,10 +28,7 @@ export class MovePackageTxBuilder {
         functionArguments: [MoveVector.U8(metadata), moveCode],
         abi: {
           typeParameters: [],
-          parameters: [
-            TypeTagVector.u8(),
-            new TypeTagVector(TypeTagVector.u8()),
-          ],
+          parameters: [TypeTagVector.u8(), new TypeTagVector(TypeTagVector.u8())],
         },
       },
       options: {

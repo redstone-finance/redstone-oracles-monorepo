@@ -1,8 +1,6 @@
 import { PublicKey } from "@solana/web3.js";
 
-export const readProgramAddress = (
-  cluster: "mainnet-beta" | "testnet" | "devnet"
-) => {
+export const readProgramAddress = (cluster: "mainnet-beta" | "testnet" | "devnet") => {
   switch (cluster) {
     case "mainnet-beta":
       return "REDSTBDUecGjwXd6YGPzHSvEUBHQqVRfCcjUVgPiHsr";
@@ -13,8 +11,6 @@ export const readProgramAddress = (
   }
 };
 
-export const BPF_UPGRADEABLE_LOADER = new PublicKey(
-  "BPFLoaderUpgradeab1e11111111111111111111111"
-);
+export const BPF_UPGRADEABLE_LOADER = new PublicKey("BPFLoaderUpgradeab1e11111111111111111111111");
 
 export const PROGRAM_SO_FILE = "target/deploy/redstone_solana_price_adapter.so";

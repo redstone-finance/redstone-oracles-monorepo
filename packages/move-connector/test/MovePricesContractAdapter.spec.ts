@@ -2,10 +2,7 @@
 //       therefore shall be run sequentially with `-runInBand` flag.
 
 import { Aptos, Network } from "@aptos-labs/ts-sdk";
-import {
-  ContractParamsProvider,
-  getSignersForDataServiceId,
-} from "@redstone-finance/sdk";
+import { ContractParamsProvider, getSignersForDataServiceId } from "@redstone-finance/sdk";
 import { RedstoneCommon } from "@redstone-finance/utils";
 import "dotenv/config";
 import { PRICE_ADAPTER } from "../scripts/contract-name-enum";
@@ -17,11 +14,7 @@ import {
   MovePricesContractAdapter,
   MovePricesContractConnector,
 } from "../src";
-import {
-  FAKE_PRIVKEY_SECP256K1,
-  NETWORK,
-  REST_NODE_LOCALNET_URL,
-} from "./helpers";
+import { FAKE_PRIVKEY_SECP256K1, NETWORK, REST_NODE_LOCALNET_URL } from "./helpers";
 
 const TEST_FILE_TIMEOUT = 60_000;
 const WRITE_TEST_TIMEOUT = 20_000;
@@ -45,10 +38,7 @@ describe("MovePricesContractAdapter", () => {
   beforeAll(async () => {
     test_start_ts = Date.now();
     aptos = makeAptos(NETWORK as Network, REST_NODE_LOCALNET_URL);
-    const { contractAddress, objectAddress } = readObjectAddress(
-      PRICE_ADAPTER,
-      NETWORK
-    );
+    const { contractAddress, objectAddress } = readObjectAddress(PRICE_ADAPTER, NETWORK);
     const account = makeAptosAccount(FAKE_PRIVKEY_SECP256K1);
     const packageObjectAddress = contractAddress.toString();
     const priceAdapterObjectAddress = objectAddress!.toString();
@@ -119,9 +109,7 @@ describe("MovePricesContractAdapter", () => {
     });
 
     it("should read prices from contract with multiple feed IDs", async () => {
-      const result = await priceAdapter.readPricesFromContract(
-        contractParamsProviderMultiple
-      );
+      const result = await priceAdapter.readPricesFromContract(contractParamsProviderMultiple);
 
       expect(result.length).toBe(DATA_PACKAGES_IDS.length);
       result.forEach((price) => {
@@ -129,9 +117,7 @@ describe("MovePricesContractAdapter", () => {
       });
 
       // this would fail if ETH flipped BTC
-      expect(
-        BigInt(String(result[0])) < BigInt(String(result[1]))
-      ).toBeTruthy();
+      expect(BigInt(String(result[0])) < BigInt(String(result[1]))).toBeTruthy();
     });
   });
 

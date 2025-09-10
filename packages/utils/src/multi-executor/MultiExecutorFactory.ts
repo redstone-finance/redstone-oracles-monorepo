@@ -1,27 +1,14 @@
 import _ from "lodash";
-import {
-  getS,
-  stringify,
-  throwUnsupportedParamError,
-  timeoutOrResult,
-} from "../common";
+import { getS, stringify, throwUnsupportedParamError, timeoutOrResult } from "../common";
 import { loggerFactory } from "../logger";
 import { AgreementExecutor } from "./AgreementExecutor";
-import {
-  AllEqualConsensusExecutor,
-  MedianConsensusExecutor,
-} from "./ConsensusExecutor";
+import { AllEqualConsensusExecutor, MedianConsensusExecutor } from "./ConsensusExecutor";
 import { Executor } from "./Executor";
 import { FallbackExecutor } from "./FallbackExecutor";
 import { FnBox } from "./FnBox";
 import { MultiAgreementExecutor } from "./MultiAgreementExecutor";
 import { RaceExecutor } from "./RaceExecutor";
-import {
-  DEFAULT_CONFIG,
-  ExecutionMode,
-  MultiExecutorConfig,
-  NestedMethodConfig,
-} from "./config";
+import { DEFAULT_CONFIG, ExecutionMode, MultiExecutorConfig, NestedMethodConfig } from "./config";
 
 export class MultiExecutorFactory<T extends object> {
   private readonly logger = loggerFactory("multi-executor-proxy");
@@ -44,9 +31,7 @@ export class MultiExecutorFactory<T extends object> {
       return this.config.defaultMode;
     }
 
-    throw new Error(
-      `Unexpected NestedMethodConfig for function ${methodName.toString()}`
-    );
+    throw new Error(`Unexpected NestedMethodConfig for function ${methodName.toString()}`);
   }
 
   private getExecutor<R>(mode: ExecutionMode | Executor<R>): Executor<R> {
@@ -99,10 +84,7 @@ export class MultiExecutorFactory<T extends object> {
         const key = prop as keyof T;
         const method = target[key];
 
-        if (
-          Object(method) !== method ||
-          ["__instances", "__config"].includes(key as string)
-        ) {
+        if (Object(method) !== method || ["__instances", "__config"].includes(key as string)) {
           return method;
         }
 
@@ -114,20 +96,10 @@ export class MultiExecutorFactory<T extends object> {
           );
         }
 
-        if (
-          method.constructor.name === "AsyncFunction" ||
-          method.toString().includes("Promise")
-        ) {
+        if (method.constructor.name === "AsyncFunction" || method.toString().includes("Promise")) {
           return async function (...args: unknown[]): Promise<unknown> {
             const functions = that.instances.map((instance, index) =>
-              MultiExecutorFactory.makeFnBox(
-                method.name,
-                that.config,
-                index,
-                instance,
-                key,
-                args
-              )
+              MultiExecutorFactory.makeFnBox(method.name, that.config, index, instance, key, args)
             );
 
             return await that.performExecuting(key, functions);
@@ -135,10 +107,7 @@ export class MultiExecutorFactory<T extends object> {
         }
 
         return function (...args: unknown[]): unknown {
-          return (target[key] as (...args: unknown[]) => unknown).call(
-            target,
-            ...args
-          );
+          return (target[key] as (...args: unknown[]) => unknown).call(target, ...args);
         };
       },
     });
@@ -158,12 +127,7 @@ export class MultiExecutorFactory<T extends object> {
       index,
       delegate: config.delegate,
       fn: () =>
-        Promise.resolve(
-          (instance[key] as (...args: unknown[]) => unknown).call(
-            instance,
-            ...args
-          )
-        ),
+        Promise.resolve((instance[key] as (...args: unknown[]) => unknown).call(instance, ...args)),
     };
   }
 
@@ -178,10 +142,7 @@ export class MultiExecutorFactory<T extends object> {
     );
 
     const result = this.getExecutor<R>(mode).execute(functions);
-    const value = await timeoutOrResult(
-      result,
-      this.config.allExecutionsTimeoutMs
-    );
+    const value = await timeoutOrResult(result, this.config.allExecutionsTimeoutMs);
     this.logger.debug(`[${stringify(key)}] Returning ${stringify(value)}`);
     return value;
   }
@@ -196,11 +157,7 @@ export function create<T extends object>(
     throw new Error("At least one instance is required");
   }
 
-  return new MultiExecutorFactory(
-    instances,
-    methodConfig,
-    config
-  ).createProxy();
+  return new MultiExecutorFactory(instances, methodConfig, config).createProxy();
 }
 
 export function createForSubInstances<T extends object, U extends object>(
@@ -210,9 +167,7 @@ export function createForSubInstances<T extends object, U extends object>(
   config: MultiExecutorConfig = DEFAULT_CONFIG
 ) {
   const instances =
-    "__instances" in subject
-      ? (subject.__instances as T[]).map(callback)
-      : [callback(subject)];
+    "__instances" in subject ? (subject.__instances as T[]).map(callback) : [callback(subject)];
 
   const baseConfig = "__config" in subject ? subject.__config : undefined;
   const mergedConfig = baseConfig ? _.assign({}, baseConfig, config) : config;

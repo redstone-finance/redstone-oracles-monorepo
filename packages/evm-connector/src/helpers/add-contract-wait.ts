@@ -3,10 +3,7 @@ import { BytesLike, Contract, ContractReceipt, Event } from "ethers";
 import { LogDescription, deepCopy } from "ethers/lib/utils";
 
 // Copied from ethers.js source code
-export const addContractWait = (
-  contract: Contract,
-  tx: TransactionResponse
-) => {
+export const addContractWait = (contract: Contract, tx: TransactionResponse) => {
   const wait = tx.wait.bind(tx);
   tx.wait = async (confirmations?: number) => {
     const receipt: ContractReceipt = await wait(confirmations);
@@ -23,11 +20,7 @@ export const addContractWait = (
       if (parsed) {
         event.args = parsed.args;
         event.decode = (data: BytesLike, topics?: Array<string>) => {
-          return contract.interface.decodeEventLog(
-            parsed.eventFragment,
-            data,
-            topics
-          );
+          return contract.interface.decodeEventLog(parsed.eventFragment, data, topics);
         };
         event.event = parsed.name;
         event.eventSignature = parsed.signature;

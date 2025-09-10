@@ -15,9 +15,7 @@ import {
 } from "../src";
 import { getRpcUrls } from "./get-rpc-urls";
 
-async function prepareParamsProviderWithData(
-  requestParams: DataPackagesRequestParams
-) {
+async function prepareParamsProviderWithData(requestParams: DataPackagesRequestParams) {
   const cache = new DataPackagesResponseCache();
   const paramsProvider = new ContractParamsProvider(requestParams, cache);
   const data = await paramsProvider.requestDataPackages();
@@ -29,10 +27,7 @@ async function prepareParamsProviderWithData(
 export async function writeSimultaneously() {
   const network = RedstoneCommon.getFromEnv("NETWORK", SuiNetworkSchema);
   const rpcUrls = await getRpcUrls(network);
-  const suiClient = new SuiClientBuilder()
-    .withSuiNetwork(network)
-    .withRpcUrls(rpcUrls)
-    .build();
+  const suiClient = new SuiClientBuilder().withSuiNetwork(network).withRpcUrls(rpcUrls).build();
 
   const requestParams: DataPackagesRequestParams = {
     dataPackagesIds: ["ETH"],

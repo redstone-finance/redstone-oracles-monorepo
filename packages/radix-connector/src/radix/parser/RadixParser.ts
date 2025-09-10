@@ -64,11 +64,7 @@ export class RadixParser {
       );
 
     // Unwrapping simple objects like `struct XXX(YYY)`
-    if (
-      obj.kind === ValueKind.Tuple &&
-      obj.fields.length === 1 &&
-      Array.isArray(simpleObject)
-    ) {
+    if (obj.kind === ValueKind.Tuple && obj.fields.length === 1 && Array.isArray(simpleObject)) {
       simpleObject = simpleObject[0];
     }
 
@@ -91,9 +87,7 @@ export class RadixParser {
         const u256 = RadixParser.parseU256Digits(array as U256Digits);
         return asKeyName ? u256.toHexString() : u256;
       } else {
-        return array.elements.map((element) =>
-          RadixParser.extractValue(element)
-        );
+        return array.elements.map((element) => RadixParser.extractValue(element));
       }
     }
 
@@ -105,19 +99,14 @@ export class RadixParser {
     };
 
     const entries = map.entries.map(({ key, value }) => {
-      return [
-        RadixParser.extractValue(key, true),
-        RadixParser.extractValue(value),
-      ];
+      return [RadixParser.extractValue(key, true), RadixParser.extractValue(value)];
     });
 
     return Object.fromEntries(entries);
   }
 
   /// Warning: not all interfaces might be supported here
-  private static makeSerializableManifestValue(
-    obj: ObjInterface
-  ): SerializableManifestValue {
+  private static makeSerializableManifestValue(obj: ObjInterface): SerializableManifestValue {
     if (
       obj.kind === "Enum" &&
       "type_name" in obj &&
@@ -151,16 +140,10 @@ export class RadixParser {
         } as SerializableManifestValue;
       }
 
-      return RadixParser.makeSerializableManifestValue(
-        obj.value as unknown as ObjInterface
-      );
+      return RadixParser.makeSerializableManifestValue(obj.value as unknown as ObjInterface);
     }
 
-    if (
-      obj.hex &&
-      obj.element_kind === "U8" &&
-      (!obj.kind || obj.kind === "Bytes")
-    ) {
+    if (obj.hex && obj.element_kind === "U8" && (!obj.kind || obj.kind === "Bytes")) {
       return {
         kind: "Blob",
         value: {

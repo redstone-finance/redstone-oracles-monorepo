@@ -1,7 +1,4 @@
-import {
-  IContractConnector,
-  IPricesContractAdapter,
-} from "@redstone-finance/sdk";
+import { IContractConnector, IPricesContractAdapter } from "@redstone-finance/sdk";
 import {
   Connection,
   Keypair,
@@ -18,9 +15,7 @@ import { DEFAULT_SOLANA_CONFIG } from "./config";
 import { PriceAdapterContract } from "./price_adapter/PriceAdapterContract";
 import { SolanaPricesContractAdapter } from "./price_adapter/SolanaPricesContractAdapter";
 
-export class SolanaContractConnector
-  implements IContractConnector<IPricesContractAdapter>
-{
+export class SolanaContractConnector implements IContractConnector<IPricesContractAdapter> {
   private adapter?: SolanaPricesContractAdapter;
 
   constructor(
@@ -36,11 +31,7 @@ export class SolanaContractConnector
     }
     if (!this.adapter) {
       const client = SolanaClient.createMultiClient(this.connection);
-      const provider = new AnchorReadonlyProvider(
-        this.connection,
-        client,
-        this.keypair?.publicKey
-      );
+      const provider = new AnchorReadonlyProvider(this.connection, client, this.keypair?.publicKey);
       const contract = new PriceAdapterContract(this.address, provider, client);
 
       const txDeliveryMan = this.keypair
@@ -82,9 +73,7 @@ export class SolanaContractConnector
       })
     );
 
-    await sendAndConfirmTransaction(this.connection, transaction, [
-      this.keypair,
-    ]);
+    await sendAndConfirmTransaction(this.connection, transaction, [this.keypair]);
   }
 
   getSignerAddress() {

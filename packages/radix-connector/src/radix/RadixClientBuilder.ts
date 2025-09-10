@@ -1,14 +1,7 @@
-import {
-  ChainTypeEnum,
-  MultiExecutor,
-  RedstoneCommon,
-} from "@redstone-finance/utils";
+import { ChainTypeEnum, MultiExecutor, RedstoneCommon } from "@redstone-finance/utils";
 import { RadixApiClient } from "./RadixApiClient";
 import { RadixClient } from "./RadixClient";
-import {
-  DEFAULT_RADIX_CLIENT_CONFIG,
-  RadixClientConfig,
-} from "./RadixClientConfig";
+import { DEFAULT_RADIX_CLIENT_CONFIG, RadixClientConfig } from "./RadixClientConfig";
 import { RadixSigner } from "./RadixSigner";
 
 export class RadixClientBuilder extends MultiExecutor.ClientBuilder<
@@ -41,22 +34,17 @@ export class RadixClientBuilder extends MultiExecutor.ClientBuilder<
       this.urls.push(undefined);
     }
 
-    const apiClient = this.makeMultiExecutor(
-      (url) => new RadixApiClient(this.chainId, url),
-      {
-        getCurrentStateVersion: RadixClientBuilder.blockNumberConsensusExecutor,
-        getCurrentEpochNumber: RadixClientBuilder.blockNumberConsensusExecutor,
-        submitTransaction: MultiExecutor.ExecutionMode.RACE,
-        getTransactionStatus: MultiExecutor.ExecutionMode.AGREEMENT,
-        getFungibleBalance: MultiExecutor.ExecutionMode.AGREEMENT,
-        getNonFungibleBalance: MultiExecutor.ExecutionMode.AGREEMENT,
-        getStateFields: MultiExecutor.ExecutionMode.AGREEMENT,
-      }
-    );
+    const apiClient = this.makeMultiExecutor((url) => new RadixApiClient(this.chainId, url), {
+      getCurrentStateVersion: RadixClientBuilder.blockNumberConsensusExecutor,
+      getCurrentEpochNumber: RadixClientBuilder.blockNumberConsensusExecutor,
+      submitTransaction: MultiExecutor.ExecutionMode.RACE,
+      getTransactionStatus: MultiExecutor.ExecutionMode.AGREEMENT,
+      getFungibleBalance: MultiExecutor.ExecutionMode.AGREEMENT,
+      getNonFungibleBalance: MultiExecutor.ExecutionMode.AGREEMENT,
+      getStateFields: MultiExecutor.ExecutionMode.AGREEMENT,
+    });
 
-    const signer = this.privateKey
-      ? new RadixSigner(this.privateKey)
-      : undefined;
+    const signer = this.privateKey ? new RadixSigner(this.privateKey) : undefined;
 
     return new RadixClient(apiClient, this.chainId, signer, this.clientConfig);
   }

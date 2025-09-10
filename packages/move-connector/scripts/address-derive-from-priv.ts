@@ -10,12 +10,8 @@ function main() {
     account.signingScheme === SigningScheme.SingleKey
       ? PrivateKeyVariants.Secp256k1
       : PrivateKeyVariants.Ed25519;
-  console.log(
-    `${variant} Derived Address: ${account.accountAddress.toString()}`
-  );
-  console.log(
-    `${variant} Derived Public Key: ${hexlify(account.publicKey.toString())}`
-  );
+  console.log(`${variant} Derived Address: ${account.accountAddress.toString()}`);
+  console.log(`${variant} Derived Public Key: ${hexlify(account.publicKey.toString())}`);
 }
 
 main();

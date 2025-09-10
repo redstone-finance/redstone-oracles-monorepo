@@ -7,9 +7,7 @@ export type WeightedValue = {
   weight: ISafeNumber;
 };
 
-export const getWeightedMedian = (
-  weightedValues: WeightedValue[]
-): ISafeNumber => {
+export const getWeightedMedian = (weightedValues: WeightedValue[]): ISafeNumber => {
   if (weightedValues.length === 0) {
     throw new Error("Cannot get weighted median value of an empty array");
   }
@@ -18,9 +16,7 @@ export const getWeightedMedian = (
     a.value.lt(b.value) ? -1 : 1
   );
 
-  const halfTotalWeight = calculateSum(sortedValues.map((wv) => wv.weight)).div(
-    2
-  );
+  const halfTotalWeight = calculateSum(sortedValues.map((wv) => wv.weight)).div(2);
 
   let cumulativeWeight = SafeZero;
   for (let i = 0; i < sortedValues.length; i++) {
@@ -38,9 +34,7 @@ export const getWeightedMedian = (
   );
 };
 
-export const logarithmicWeighting = (
-  weightedValues: WeightedValue[]
-): WeightedValue[] => {
+export const logarithmicWeighting = (weightedValues: WeightedValue[]): WeightedValue[] => {
   const medianWeight = getMedian(weightedValues.map((v) => v.weight));
   return weightedValues.map((weightedValue) => ({
     value: weightedValue.value,
@@ -48,9 +42,7 @@ export const logarithmicWeighting = (
   }));
 };
 
-export const normalizeWeightedValues = (
-  weightedValues: WeightedValue[]
-): WeightedValue[] => {
+export const normalizeWeightedValues = (weightedValues: WeightedValue[]): WeightedValue[] => {
   const sum = calculateSum(weightedValues.map((value) => value.weight));
   return weightedValues.map((weightedValue) => ({
     value: weightedValue.value,

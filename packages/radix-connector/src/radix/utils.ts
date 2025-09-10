@@ -42,10 +42,7 @@ export async function edResource(networkId: number) {
   return addressBook.resourceAddresses.ed25519SignatureVirtualBadge;
 }
 
-export async function makeEdSignatureResource(
-  pkHash: string,
-  networkId: number
-) {
+export async function makeEdSignatureResource(pkHash: string, networkId: number) {
   return enumeration(
     0,
     makeNonFungibleGlobalId({
@@ -84,16 +81,10 @@ export async function makeMultisigAccessRule(
 }
 
 export function makeNonFungibleGlobalId(input: NonFungibleGlobalIdInput) {
-  return tuple(
-    address(input.resourceAddress),
-    nonFungibleLocalId(input.localId)
-  );
+  return tuple(address(input.resourceAddress), nonFungibleLocalId(input.localId));
 }
 
-export function makeOption<T>(
-  creator: (arg0: T) => Value,
-  valueOrUndefined?: T
-) {
+export function makeOption<T>(creator: (arg0: T) => Value, valueOrUndefined?: T) {
   return enumeration(
     valueOrUndefined ? 1 : 0,
     ...(valueOrUndefined ? [creator(valueOrUndefined)] : [])

@@ -1,8 +1,4 @@
-import {
-  DataPackage,
-  NumericDataPoint,
-  utils,
-} from "@redstone-finance/protocol";
+import { DataPackage, NumericDataPoint, utils } from "@redstone-finance/protocol";
 import { ethers } from "hardhat";
 import {
   DEFAULT_TIMESTAMP_FOR_TESTS,
@@ -49,16 +45,10 @@ describe("Benchmark", function () {
   const prepareMockDataPackageConfig = (
     benchmarkParams: BenchmarkTestCaseParams
   ): MockDataPackageConfig[] => {
-    if (
-      benchmarkParams.dataPointsCount < benchmarkParams.requestedSymbolsCount
-    ) {
-      return prepareMockDataPackageConfigWithSingleDataPointPackages(
-        benchmarkParams
-      );
+    if (benchmarkParams.dataPointsCount < benchmarkParams.requestedSymbolsCount) {
+      return prepareMockDataPackageConfigWithSingleDataPointPackages(benchmarkParams);
     } else {
-      return prepareMockDataPackageConfigWithManyDataPointPackages(
-        benchmarkParams
-      );
+      return prepareMockDataPackageConfigWithManyDataPointPackages(benchmarkParams);
     }
   };
 
@@ -72,11 +62,7 @@ describe("Benchmark", function () {
       requestedSymbolIndex < benchmarkParams.requestedSymbolsCount;
       requestedSymbolIndex++
     ) {
-      for (
-        let signerIndex = 0;
-        signerIndex < benchmarkParams.requiredSignersCount;
-        signerIndex++
-      ) {
+      for (let signerIndex = 0; signerIndex < benchmarkParams.requiredSignersCount; signerIndex++) {
         const dataPoints = [
           new NumericDataPoint({
             dataFeedId: `TEST-${requestedSymbolIndex}`,
@@ -111,28 +97,19 @@ describe("Benchmark", function () {
     const mockDataPackages: MockDataPackageConfig[] = [
       ...Array(benchmarkParams.requiredSignersCount).keys(),
     ].map((i) => ({
-      dataPackage: new DataPackage(
-        dataPoints,
-        DEFAULT_TIMESTAMP_FOR_TESTS,
-        "__TEST__"
-      ),
+      dataPackage: new DataPackage(dataPoints, DEFAULT_TIMESTAMP_FOR_TESTS, "__TEST__"),
       signer: MOCK_SIGNERS[i].address as MockSignerAddress,
     }));
 
     return mockDataPackages;
   };
 
-  const updateFullGasReport = (
-    benchmarkParams: BenchmarkTestCaseParams,
-    gasReport: GasReport
-  ) => {
+  const updateFullGasReport = (benchmarkParams: BenchmarkTestCaseParams, gasReport: GasReport) => {
     const benchmarkCaseKey = getBenchmarkCaseShortTitle(benchmarkParams);
     fullGasReport[benchmarkCaseKey] = gasReport;
   };
 
-  const getBenchmarkCaseShortTitle = (
-    benchmarkParams: BenchmarkTestCaseParams
-  ): string => {
+  const getBenchmarkCaseShortTitle = (benchmarkParams: BenchmarkTestCaseParams): string => {
     return (
       benchmarkParams.requiredSignersCount +
       " signers, " +
@@ -143,44 +120,36 @@ describe("Benchmark", function () {
     );
   };
 
-  const runBenchmarkTestCase = async (
-    benchmarkParams: BenchmarkTestCaseParams
-  ) => {
+  const runBenchmarkTestCase = async (benchmarkParams: BenchmarkTestCaseParams) => {
     const shortTitle = getBenchmarkCaseShortTitle(benchmarkParams);
 
     console.log(`Benchmark case testing started: ${shortTitle}`);
 
-    const dataFeedIds = [
-      ...Array(benchmarkParams.requestedSymbolsCount).keys(),
-    ].map((i) => `TEST-${i}`);
-    const bytes32Symbols = dataFeedIds.map(utils.convertStringToBytes32);
-    const mockDataPackagesConfig =
-      prepareMockDataPackageConfig(benchmarkParams);
-    const wrappedContract = WrapperBuilder.wrap(contract).usingMockDataPackages(
-      mockDataPackagesConfig
+    const dataFeedIds = [...Array(benchmarkParams.requestedSymbolsCount).keys()].map(
+      (i) => `TEST-${i}`
     );
+    const bytes32Symbols = dataFeedIds.map(utils.convertStringToBytes32);
+    const mockDataPackagesConfig = prepareMockDataPackageConfig(benchmarkParams);
+    const wrappedContract =
+      WrapperBuilder.wrap(contract).usingMockDataPackages(mockDataPackagesConfig);
 
     // Updating unique signers count in contract
-    const uniqueSignersThresholdUpdateTx =
-      await contract.updateUniqueSignersThreshold(
-        benchmarkParams.requiredSignersCount
-      );
+    const uniqueSignersThresholdUpdateTx = await contract.updateUniqueSignersThreshold(
+      benchmarkParams.requiredSignersCount
+    );
     await uniqueSignersThresholdUpdateTx.wait();
 
     // Test empty function without wrapping
-    const emptyTxWithoutWrapping =
-      await contract.emptyExtractOracleValues(bytes32Symbols);
+    const emptyTxWithoutWrapping = await contract.emptyExtractOracleValues(bytes32Symbols);
     const emptyTxWithoutWrappingReceipt = await emptyTxWithoutWrapping.wait();
 
     // Test empty function with wrapping
-    const emptyTxWithWrapping =
-      await wrappedContract.emptyExtractOracleValues(bytes32Symbols);
+    const emptyTxWithWrapping = await wrappedContract.emptyExtractOracleValues(bytes32Symbols);
     const emptyTxWithWrappingReceipt = await emptyTxWithWrapping.wait();
 
     try {
       // Test non-empty function with wrapping
-      const realOracleTx =
-        await wrappedContract.extractOracleValues(bytes32Symbols);
+      const realOracleTx = await wrappedContract.extractOracleValues(bytes32Symbols);
       const realOracleTxReceipt = await realOracleTx.wait();
 
       const gasReport: GasReport = {
@@ -214,9 +183,7 @@ describe("Benchmark", function () {
             requestedSymbolsCount,
             dataPointsCount,
           };
-          it(`Benchmark: ${getBenchmarkCaseShortTitle(
-            benchmarkParams
-          )}`, async () => {
+          it(`Benchmark: ${getBenchmarkCaseShortTitle(benchmarkParams)}`, async () => {
             await runBenchmarkTestCase(benchmarkParams);
           });
         }

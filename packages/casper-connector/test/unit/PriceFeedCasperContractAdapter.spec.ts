@@ -46,14 +46,9 @@ describe("PriceFeedCasperContractAdapter tests", () => {
 
   it("getPriceAndTimestamp should callEntrypoint ENTRY_POINT_GET_PRICE_AND_TIMESTAMP about STORAGE_KEY_VALUE", async () => {
     connection.callEntrypoint.mockImplementationOnce(
-      callEntrypointMock(
-        adapter,
-        ENTRY_POINT_GET_PRICE_AND_TIMESTAMP,
-        0,
-        (runtimeArgs) => {
-          expect(runtimeArgs.args.size).toEqual(0);
-        }
-      )
+      callEntrypointMock(adapter, ENTRY_POINT_GET_PRICE_AND_TIMESTAMP, 0, (runtimeArgs) => {
+        expect(runtimeArgs.args.size).toEqual(0);
+      })
     );
 
     connection.queryContractData
@@ -61,12 +56,7 @@ describe("PriceFeedCasperContractAdapter tests", () => {
         contractDataMock(adapter, STORAGE_KEY_VALUE, BigNumber.from(54321), "2")
       )
       .mockImplementationOnce(
-        contractDataMock(
-          adapter,
-          STORAGE_KEY_TIMESTAMP,
-          BigNumber.from(2233),
-          "2"
-        )
+        contractDataMock(adapter, STORAGE_KEY_TIMESTAMP, BigNumber.from(2233), "2")
       );
 
     const { value, timestamp } = await adapter.getPriceAndTimestamp();

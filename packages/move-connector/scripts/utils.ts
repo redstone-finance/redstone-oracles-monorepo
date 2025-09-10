@@ -13,10 +13,8 @@ import { isAptos, isMovement } from "./config";
 import { getEnvNetwork } from "./get-env";
 import { AptosLedger, signTx } from "./ledger/ledger-utils";
 
-const DEFAULT_TESTNET_RPC_URL =
-  "https://aptos.testnet.bardock.movementlabs.xyz/v1";
-const DEFAULT_TESTNET_FAUCET_URL =
-  "https://faucet.testnet.bardock.movementnetwork.xyz";
+const DEFAULT_TESTNET_RPC_URL = "https://aptos.testnet.bardock.movementlabs.xyz/v1";
+const DEFAULT_TESTNET_FAUCET_URL = "https://faucet.testnet.bardock.movementnetwork.xyz";
 
 export function makeAptos(
   network: Network = Network.CUSTOM,
@@ -42,22 +40,14 @@ export function objectSeed(sequenceNumber: number) {
   return serializer.toUint8Array();
 }
 
-export async function signAndSubmit(
-  aptos: Aptos,
-  transaction: SimpleTransaction,
-  signer: Account
-) {
+export async function signAndSubmit(aptos: Aptos, transaction: SimpleTransaction, signer: Account) {
   return await aptos.transaction.signAndSubmitTransaction({
     signer,
     transaction,
   });
 }
 
-export async function handleTx(
-  aptos: Aptos,
-  transaction: SimpleTransaction,
-  signer: Account
-) {
+export async function handleTx(aptos: Aptos, transaction: SimpleTransaction, signer: Account) {
   const pendingResponse = await signAndSubmit(aptos, transaction, signer);
 
   console.log(`TransactionHash: ${pendingResponse.hash}`);

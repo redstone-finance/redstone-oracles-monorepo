@@ -1,7 +1,4 @@
-import {
-  ContractParamsProvider,
-  IPricesContractAdapter,
-} from "@redstone-finance/sdk";
+import { ContractParamsProvider, IPricesContractAdapter } from "@redstone-finance/sdk";
 import assert from "assert";
 import { BigNumber } from "ethers";
 import { casperBlake2b } from "../../casper/casper-blake2b";
@@ -36,37 +33,25 @@ export class PriceAdapterCasperContractAdapter
     );
   }
 
-  getPricesFromPayload(
-    _paramsProvider: ContractParamsProvider
-  ): Promise<bigint[]> {
-    throw new Error(
-      "Method not supported. Use price_relay_adapter contract instead"
-    );
+  getPricesFromPayload(_paramsProvider: ContractParamsProvider): Promise<bigint[]> {
+    throw new Error("Method not supported. Use price_relay_adapter contract instead");
   }
 
   async readTimestampFromContract(): Promise<number> {
-    const timestamp: BigNumber = await this.queryContractData(
-      STORAGE_KEY_TIMESTAMP
-    );
+    const timestamp: BigNumber = await this.queryContractData(STORAGE_KEY_TIMESTAMP);
 
     return timestamp.toNumber();
   }
 
-  async readPricesFromContract(
-    paramsProvider: ContractParamsProvider
-  ): Promise<bigint[]> {
+  async readPricesFromContract(paramsProvider: ContractParamsProvider): Promise<bigint[]> {
     const results = await Promise.allSettled(
-      paramsProvider.requestParams.dataPackagesIds!.map((feedId) =>
-        this.readPriceValue(feedId)
-      )
+      paramsProvider.requestParams.dataPackagesIds!.map((feedId) => this.readPriceValue(feedId))
     );
 
     return results.map((result) => {
       switch (result.status) {
         case "fulfilled":
-          return BigNumber.from(
-            (result as PromiseFulfilledResult<BigNumber>).value
-          ).toBigInt();
+          return BigNumber.from((result as PromiseFulfilledResult<BigNumber>).value).toBigInt();
         default:
           return 0n;
       }
@@ -87,17 +72,11 @@ export class PriceAdapterCasperContractAdapter
       } bytes.
       Use price_relay_adapter contract instead`
     );
-    const runtimeArgs = RuntimeArgsFactory.makePayloadRuntimeArgs(
-      feedIds,
-      payloadHex
-    );
+    const runtimeArgs = RuntimeArgsFactory.makePayloadRuntimeArgs(feedIds, payloadHex);
 
     return await this.callEntrypoint(
-      type === RunMode.WRITE
-        ? ENTRY_POINT_WRITE_PRICES
-        : ENTRY_POINT_GET_PRICES,
-      numberOfPackages *
-        PriceAdapterCasperContractAdapter.SINGLE_PACKAGE_PROCESS_CSPR,
+      type === RunMode.WRITE ? ENTRY_POINT_WRITE_PRICES : ENTRY_POINT_GET_PRICES,
+      numberOfPackages * PriceAdapterCasperContractAdapter.SINGLE_PACKAGE_PROCESS_CSPR,
       runtimeArgs
     );
   }

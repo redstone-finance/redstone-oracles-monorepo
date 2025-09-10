@@ -15,15 +15,11 @@ export class AgreementExecutor<R> extends ParallelExecutor<R> {
     this.logger.debug(`Found modes: ${stringify(modes)}`);
 
     if (!modes) {
-      throw new Error(
-        `That should've never happened but still...: ${stringify(modes)}`
-      );
+      throw new Error(`That should've never happened but still...: ${stringify(modes)}`);
     }
 
     if (modes.length !== 1) {
-      (this.shouldResolveUnagreedToUndefined
-        ? this.logger.info
-        : this.logger.warn)(
+      (this.shouldResolveUnagreedToUndefined ? this.logger.info : this.logger.warn)(
         `Multiple modes found (shouldResolveUnagreedToUndefined = ${this.shouldResolveUnagreedToUndefined}; were the returning promises sync?): ${stringify(modes)}`
       );
 
@@ -35,11 +31,7 @@ export class AgreementExecutor<R> extends ParallelExecutor<R> {
     return modes[0].item;
   }
 
-  public verifySettlements(
-    successfulResults: R[],
-    errorResults: unknown[],
-    totalLength: number
-  ) {
+  public verifySettlements(successfulResults: R[], errorResults: unknown[], totalLength: number) {
     const modes = ParallelExecutor.getModes(successfulResults);
     const quorum = this.getQuorum(totalLength);
     const maxCount = modes?.[0]?.count ?? 0;
@@ -71,8 +63,6 @@ export class AgreementExecutor<R> extends ParallelExecutor<R> {
   }
 
   protected getQuorum(totalLength: number) {
-    return totalLength <= this.quorumNumber
-      ? Math.min(1, this.quorumNumber)
-      : this.quorumNumber;
+    return totalLength <= this.quorumNumber ? Math.min(1, this.quorumNumber) : this.quorumNumber;
   }
 }

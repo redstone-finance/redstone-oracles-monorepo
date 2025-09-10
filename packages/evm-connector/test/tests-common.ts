@@ -49,9 +49,7 @@ export const mockNumericPackageConfigs: MockNumericPackageArgs[] = [
   ),
 ];
 
-export const mockNumericPackages = mockNumericPackageConfigs.map(
-  getMockNumericPackage
-);
+export const mockNumericPackages = mockNumericPackageConfigs.map(getMockNumericPackage);
 
 export const mockSignedDataPackageObjects = mockNumericPackageConfigs.map(
   getMockSignedDataPackageObj
@@ -85,8 +83,7 @@ export const mockBytesPackageConfigs: MockStringPackageArgs[] = getRange({
   mockSignerIndex: i as MockSignerIndex,
 }));
 
-export const mockBytesPackages =
-  mockBytesPackageConfigs.map(getMockStringPackage);
+export const mockBytesPackages = mockBytesPackageConfigs.map(getMockStringPackage);
 
 export const expectedBytesValues = {
   ETH: "0x457468657265756d",

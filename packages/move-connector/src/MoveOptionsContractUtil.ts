@@ -5,9 +5,7 @@ import { MoveClient } from "./MoveClient";
 import { octasToMove } from "./utils";
 
 export class MoveOptionsContractUtil {
-  protected static readonly logger = loggerFactory(
-    "move-options-contract-util"
-  );
+  protected static readonly logger = loggerFactory("move-options-contract-util");
 
   static async prepareTransactionOptions(
     client: MoveClient,
@@ -36,8 +34,7 @@ export class MoveOptionsContractUtil {
     iteration: number
   ): Promise<number | undefined> {
     const date = Date.now();
-    const { gas_estimate: gasPriceEstimation } =
-      await client.getGasPriceEstimation();
+    const { gas_estimate: gasPriceEstimation } = await client.getGasPriceEstimation();
     this.logger.debug(
       `Reference gas standard price: ${gasPriceEstimation} Octas fetched in ${Date.now() - date} [ms]`
     );
@@ -48,10 +45,7 @@ export class MoveOptionsContractUtil {
   }
 }
 
-function findMatchInPriorityBuckets(
-  price: number,
-  iteration: number
-): number | undefined {
+function findMatchInPriorityBuckets(price: number, iteration: number): number | undefined {
   return DEFAULT_BROADCAST_BUCKETS[
     DEFAULT_BROADCAST_BUCKETS.findIndex((v) => v > price) + iteration - 1
   ];

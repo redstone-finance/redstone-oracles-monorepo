@@ -22,9 +22,11 @@ async function proposeTransfer(
     `Transfering object ${objectAddress.toString()} from ${multiSigAddress.toString()} to ${receiver.toString()}`
   );
 
-  const transferTx = await new MovePackageTxBuilder(
-    aptos
-  ).objectTransferFunctionMultisig(multiSigAddress, objectAddress, receiver);
+  const transferTx = await new MovePackageTxBuilder(aptos).objectTransferFunctionMultisig(
+    multiSigAddress,
+    objectAddress,
+    receiver
+  );
 
   return await MultiSigTxBuilder.proposeTx(aptos, sender, transferTx);
 }
@@ -41,9 +43,11 @@ async function executeTransfer(
     `Transfering object ${objectAddress.toString()} from ${multiSigAddress.toString()} to ${receiver.toString()}`
   );
 
-  const payload = await new MovePackageTxBuilder(
-    aptos
-  ).objectTransferFunctionMultisig(multiSigAddress, objectAddress, receiver);
+  const payload = await new MovePackageTxBuilder(aptos).objectTransferFunctionMultisig(
+    multiSigAddress,
+    objectAddress,
+    receiver
+  );
   const rawTransaction = await generateRawTransaction({
     aptosConfig: aptos.transaction.build.config,
     sender,

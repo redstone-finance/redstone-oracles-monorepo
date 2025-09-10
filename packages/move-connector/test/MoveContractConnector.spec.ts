@@ -11,11 +11,7 @@ import "dotenv/config";
 import { PRICE_ADAPTER } from "../scripts/contract-name-enum";
 import { readObjectAddress } from "../scripts/deploy-utils";
 import { makeAptos } from "../scripts/utils";
-import {
-  MoveClient,
-  MovePricesContractAdapter,
-  MovePricesContractConnector,
-} from "../src";
+import { MoveClient, MovePricesContractAdapter, MovePricesContractConnector } from "../src";
 import {
   FAKE_PRIVKEY_SECP256K1,
   NETWORK,
@@ -31,19 +27,14 @@ describe("MovePricesContractConnector", () => {
   let account: Account;
 
   beforeAll(() => {
-    aptos = makeAptos(
-      NETWORK as Network,
-      REST_NODE_LOCALNET_URL,
-      REST_FAUCET_LOCALNET_URL
+    aptos = makeAptos(NETWORK as Network, REST_NODE_LOCALNET_URL, REST_FAUCET_LOCALNET_URL);
+    const { contractAddress: contractAddress, objectAddress } = readObjectAddress(
+      PRICE_ADAPTER,
+      NETWORK
     );
-    const { contractAddress: contractAddress, objectAddress } =
-      readObjectAddress(PRICE_ADAPTER, NETWORK);
     account = Account.fromPrivateKey({
       privateKey: new Secp256k1PrivateKey(
-        PrivateKey.formatPrivateKey(
-          FAKE_PRIVKEY_SECP256K1,
-          PrivateKeyVariants.Secp256k1
-        )
+        PrivateKey.formatPrivateKey(FAKE_PRIVKEY_SECP256K1, PrivateKeyVariants.Secp256k1)
       ),
     });
     const packageObjectAddress = contractAddress.toString();
@@ -105,9 +96,7 @@ describe("MovePricesContractConnector", () => {
           senderAuthenticator,
         });
         await RedstoneCommon.sleep(WAIT_MS);
-        const result = await connector.waitForTransaction(
-          submittedTransaction.hash
-        );
+        const result = await connector.waitForTransaction(submittedTransaction.hash);
 
         expect(result).toBeTruthy();
       },

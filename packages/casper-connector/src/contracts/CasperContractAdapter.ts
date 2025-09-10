@@ -32,12 +32,7 @@ export class CasperContractAdapter {
     csprAmount: number,
     runtimeArgs: RuntimeArgs = RuntimeArgs.fromMap({})
   ) {
-    return await this.connection.callEntrypoint(
-      this.contract,
-      entryPoint,
-      csprAmount,
-      runtimeArgs
-    );
+    return await this.connection.callEntrypoint(this.contract, entryPoint, csprAmount, runtimeArgs);
   }
 
   async queryForContract(key: string): Promise<Contracts.Contract> {
@@ -47,10 +42,7 @@ export class CasperContractAdapter {
   }
 
   async assertWaitForDeployAndRefreshStateRootHash(deployId: string) {
-    assert(
-      await this.connection.waitForDeploy(deployId),
-      `Deploy ${deployId} failed!`
-    );
+    assert(await this.connection.waitForDeploy(deployId), `Deploy ${deployId} failed!`);
     await this.connection.refreshStateRootHash();
   }
 }

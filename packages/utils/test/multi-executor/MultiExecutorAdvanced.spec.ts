@@ -19,36 +19,24 @@ const CLIENTS = [
 describe("MultiExecutor Advanced Concepts", () => {
   it("createForSubInstances", async () => {
     const sut = makeSut(CLIENTS);
-    const wrappingSut = createForSubInstances(
-      sut,
-      (client) => new WrappingMockClient(client),
-      {
-        someWrappingMethod: ExecutionMode.FALLBACK,
-      }
-    );
+    const wrappingSut = createForSubInstances(sut, (client) => new WrappingMockClient(client), {
+      someWrappingMethod: ExecutionMode.FALLBACK,
+    });
 
     const result = await wrappingSut.someWrappingMethod(234);
     expect(result).toEqual("0#234");
 
     CLIENTS.forEach((instance) => {
-      expect(instance.calledArgs).toStrictEqual(
-        CLIENTS.indexOf(instance) === 0 ? [234] : []
-      );
+      expect(instance.calledArgs).toStrictEqual(CLIENTS.indexOf(instance) === 0 ? [234] : []);
     });
   });
 
   it("Fallback should move to not quarantined function", async () => {
-    await performQuarantineTests(CLIENTS, ExecutionMode.FALLBACK, [0], "1", [
-      1,
-    ]);
+    await performQuarantineTests(CLIENTS, ExecutionMode.FALLBACK, [0], "1", [1]);
   });
 
   it("Fallback should fail if all functions are quarantined", async () => {
-    await performAllQuarantinedTests(
-      CLIENTS,
-      ExecutionMode.FALLBACK,
-      "All promises failed"
-    );
+    await performAllQuarantinedTests(CLIENTS, ExecutionMode.FALLBACK, "All promises failed");
   });
 
   it("Race must not execute quarantined function", async () => {
@@ -67,23 +55,11 @@ describe("MultiExecutor Advanced Concepts", () => {
       new MockClient(0, 3 * EXEC_TIME),
     ];
 
-    await performQuarantineTests(
-      instances,
-      ExecutionMode.AGREEMENT,
-      [1],
-      "0",
-      [0, 2, 3]
-    );
+    await performQuarantineTests(instances, ExecutionMode.AGREEMENT, [1], "0", [0, 2, 3]);
   });
 
   it("Agreement should agree with one if all others are quarantined", async () => {
-    await performQuarantineTests(
-      CLIENTS,
-      ExecutionMode.AGREEMENT,
-      [0, 1],
-      "2",
-      [2]
-    );
+    await performQuarantineTests(CLIENTS, ExecutionMode.AGREEMENT, [0, 1], "2", [2]);
   });
 
   it("Agreement should fail if all functions are quarantined", async () => {
@@ -118,9 +94,7 @@ describe("MultiExecutor Advanced Concepts", () => {
       mode,
       instances.map((_, index) => index)
     );
-    await expect(sut.someAsyncFunction(234)).rejects.toThrowError(
-      expectedError
-    );
+    await expect(sut.someAsyncFunction(234)).rejects.toThrowError(expectedError);
 
     instances.forEach((instance) => {
       expect(instance.calledArgs).toStrictEqual([]);

@@ -20,23 +20,14 @@ export class SuiPricesContractWriter {
     return this.deliveryMan.keypair.toSuiAddress();
   }
 
-  async writePricesFromPayloadToContract(
-    paramsProvider: ContractParamsProvider
-  ) {
+  async writePricesFromPayloadToContract(paramsProvider: ContractParamsProvider) {
     const metadataTimestamp = Date.now();
-    const tx = await this.prepareWritePricesTransaction(
-      paramsProvider,
-      metadataTimestamp
-    );
+    const tx = await this.prepareWritePricesTransaction(paramsProvider, metadataTimestamp);
 
     return await this.deliveryMan.sendTransaction(
       tx,
       async (iterationIndex) =>
-        await this.prepareWritePricesTransaction(
-          paramsProvider,
-          metadataTimestamp,
-          iterationIndex
-        )
+        await this.prepareWritePricesTransaction(paramsProvider, metadataTimestamp, iterationIndex)
     );
   }
 

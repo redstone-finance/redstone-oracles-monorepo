@@ -22,9 +22,7 @@ describe("Simple Mock Numeric Wrapper", function () {
   });
 
   it("Should properly execute on contract wrapped using simple numeric mock", async () => {
-    const wrappedContract = WrapperBuilder.wrap(
-      contract
-    ).usingSimpleNumericMock({
+    const wrappedContract = WrapperBuilder.wrap(contract).usingSimpleNumericMock({
       mockSignersCount: 10,
       dataPoints,
     });
@@ -38,12 +36,8 @@ describe("Simple Mock Numeric Wrapper", function () {
     const firstValueFromContract = await contract.firstValue();
     const secondValueFromContract = await contract.secondValue();
 
-    expect(firstValueFromContract.toNumber()).to.be.equal(
-      dataPoints[0].value * 10 ** 8
-    );
-    expect(secondValueFromContract.toNumber()).to.be.equal(
-      dataPoints[1].value * 10 ** 8
-    );
+    expect(firstValueFromContract.toNumber()).to.be.equal(dataPoints[0].value * 10 ** 8);
+    expect(secondValueFromContract.toNumber()).to.be.equal(dataPoints[1].value * 10 ** 8);
   });
 
   it("Should properly execute on contract wrapped with smaller value byte size", async () => {
@@ -52,9 +46,7 @@ describe("Simple Mock Numeric Wrapper", function () {
       { dataFeedId: "BTC", value: 400, valueByteSize: 8 },
     ];
 
-    const wrappedContract = WrapperBuilder.wrap(
-      contract
-    ).usingSimpleNumericMock({
+    const wrappedContract = WrapperBuilder.wrap(contract).usingSimpleNumericMock({
       mockSignersCount: 10,
       dataPoints: dataPointsWithValueByteSize,
     });
@@ -82,9 +74,7 @@ describe("Simple Mock Numeric Wrapper", function () {
       { dataFeedId: "BTC", value: 400 },
     ];
 
-    const wrappedContract = WrapperBuilder.wrap(
-      contract
-    ).usingSimpleNumericMock({
+    const wrappedContract = WrapperBuilder.wrap(contract).usingSimpleNumericMock({
       mockSignersCount: 10,
       dataPoints: dataPointsWithValueByteSize,
     });
@@ -107,9 +97,7 @@ describe("Simple Mock Numeric Wrapper", function () {
   });
 
   it("Should revert for too few signers", async () => {
-    const wrappedContract = WrapperBuilder.wrap(
-      contract
-    ).usingSimpleNumericMock({
+    const wrappedContract = WrapperBuilder.wrap(contract).usingSimpleNumericMock({
       mockSignersCount: 9,
       dataPoints,
     });
@@ -120,17 +108,12 @@ describe("Simple Mock Numeric Wrapper", function () {
         utils.convertStringToBytes32(dataPoints[1].dataFeedId),
       ])
     )
-      .to.be.revertedWithCustomError(
-        wrappedContract,
-        "InsufficientNumberOfUniqueSigners"
-      )
+      .to.be.revertedWithCustomError(wrappedContract, "InsufficientNumberOfUniqueSigners")
       .withArgs(9, 10);
   });
 
   it("Should revert for too old timestamp", async () => {
-    const wrappedContract = WrapperBuilder.wrap(
-      contract
-    ).usingSimpleNumericMock({
+    const wrappedContract = WrapperBuilder.wrap(contract).usingSimpleNumericMock({
       mockSignersCount: 10,
       dataPoints,
       timestampMilliseconds: DEFAULT_TIMESTAMP_FOR_TESTS - 1,
@@ -147,9 +130,7 @@ describe("Simple Mock Numeric Wrapper", function () {
   });
 
   it("Should test getting data with timestamp", async () => {
-    const wrappedContract = WrapperBuilder.wrap(
-      contract
-    ).usingSimpleNumericMock({
+    const wrappedContract = WrapperBuilder.wrap(contract).usingSimpleNumericMock({
       mockSignersCount: 10,
       dataPoints,
     });
@@ -164,12 +145,8 @@ describe("Simple Mock Numeric Wrapper", function () {
     const secondValueFromContract = await contract.secondValue();
     const timestampFromContract = await contract.timestampFromData();
 
-    expect(firstValueFromContract.toNumber()).to.be.equal(
-      dataPoints[0].value * 10 ** 8
-    );
-    expect(secondValueFromContract.toNumber()).to.be.equal(
-      dataPoints[1].value * 10 ** 8
-    );
+    expect(firstValueFromContract.toNumber()).to.be.equal(dataPoints[0].value * 10 ** 8);
+    expect(secondValueFromContract.toNumber()).to.be.equal(dataPoints[1].value * 10 ** 8);
     expect(timestampFromContract.toNumber()).to.be.equal(1654353400000);
   });
 });

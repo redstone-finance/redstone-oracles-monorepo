@@ -32,7 +32,5 @@ try {
   // eslint-disable-next-line @typescript-eslint/no-require-imports
   path = require("path") as PathInterface<unknown, unknown, unknown>;
 } catch (_e) {
-  loggerFactory("fs-path-safe").error(
-    `Tried to import fs/path in non-node env (Gelato?)`
-  );
+  loggerFactory("fs-path-safe").error(`Tried to import fs/path in non-node env (Gelato?)`);
 }

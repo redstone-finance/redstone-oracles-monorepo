@@ -7,9 +7,7 @@ import { mockNumericPackages } from "../tests-common";
 describe("PopulateTransactionTest", function () {
   it("Should overwrite populateTransaction", async () => {
     // Deploying the contract
-    const ContractFactory = await ethers.getContractFactory(
-      "SampleRedstoneConsumerNumericMock"
-    );
+    const ContractFactory = await ethers.getContractFactory("SampleRedstoneConsumerNumericMock");
     const contract = await ContractFactory.deploy();
     await contract.deployed();
 
@@ -22,9 +20,7 @@ describe("PopulateTransactionTest", function () {
     const originalTxPopulated =
       await contract.populateTransaction["getValueForDataFeedId"](dataFeedId);
     const wrappedTxPopulated =
-      await wrappedContract.populateTransaction["getValueForDataFeedId"](
-        dataFeedId
-      );
+      await wrappedContract.populateTransaction["getValueForDataFeedId"](dataFeedId);
 
     // Checking the calldata
     const redstoneMarker = consts.REDSTONE_MARKER_HEX.replace("0x", "");

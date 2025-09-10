@@ -23,9 +23,7 @@ export abstract class Executor<R> {
     const { prefix, message, suffix } = this.makeLogData(func);
 
     if (func.delegate?.isQuarantined?.(func)) {
-      throw new Error(
-        `${prefix} tried to execute quarantined function... ${suffix}`
-      );
+      throw new Error(`${prefix} tried to execute quarantined function... ${suffix}`);
     }
 
     try {
@@ -35,10 +33,7 @@ export abstract class Executor<R> {
 
       return result;
     } catch (error) {
-      logger.warn(
-        `${message("failed")}: ${stringifyError(error)}${suffix}`,
-        error
-      );
+      logger.warn(`${message("failed")}: ${stringifyError(error)}${suffix}`, error);
       func.delegate?.didFail?.(func, error);
 
       throw error;
@@ -48,8 +43,7 @@ export abstract class Executor<R> {
   private static makeLogData<R>(func: FnBox<R>) {
     const date = Date.now();
     const prefix = `[${func.name}] Promise #${func.index}`;
-    const message = (result: string) =>
-      `${prefix} ${result} in ${Date.now() - date} [ms]`;
+    const message = (result: string) => `${prefix} ${result} in ${Date.now() - date} [ms]`;
     const suffix = func.description ? ` (${func.description})` : "";
 
     return { prefix, message, suffix };

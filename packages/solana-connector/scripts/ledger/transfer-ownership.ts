@@ -51,11 +51,7 @@ export async function createSetUpgradeAuthorityTx(
   newUpgradeAuthority: PublicKey,
   payer: PublicKey
 ) {
-  const ix = createSetUpgradeAuthority(
-    programId,
-    upgradeAuthority,
-    newUpgradeAuthority
-  );
+  const ix = createSetUpgradeAuthority(programId, upgradeAuthority, newUpgradeAuthority);
 
   const message = new TransactionMessage({
     payerKey: payer,
