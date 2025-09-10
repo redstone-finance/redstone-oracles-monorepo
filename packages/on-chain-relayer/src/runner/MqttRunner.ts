@@ -57,19 +57,20 @@ export class MqttRunner {
     iterationOptionsOverride: Partial<IterationOptions>
   ) {
     if (
-      !relayerConfig.mqttEndpoint ||
-      !relayerConfig.mqttUpdateSubscriptionIntervalMs
+      !RedstoneCommon.isDefined(relayerConfig.mqttEndpoint) ||
+      !RedstoneCommon.isDefined(relayerConfig.mqttUpdateSubscriptionIntervalMs)
     ) {
       throw new Error(
         "Relayer is going to run with mqtt but mqttEndpoint or mqttUpdateSubscriptionIntervalMs is not set"
       );
     }
 
+    const endpoint = relayerConfig.mqttEndpoint;
     const cache = new DataPackagesResponseCache();
     const contractFacade = await getContractFacade(relayerConfig, cache);
     const mqttClientFactory = () =>
       Mqtt5Client.create({
-        endpoint: relayerConfig.mqttEndpoint!,
+        endpoint,
         authorization: {
           type: "AWSSigV4",
         },
@@ -125,7 +126,7 @@ export class MqttRunner {
   ) {
     if (
       !relayerConfig.mqttMinimalOffChainSignersCount ||
-      !relayerConfig.mqttWaitForOtherSignersMs
+      !RedstoneCommon.isDefined(relayerConfig.mqttWaitForOtherSignersMs)
     ) {
       throw new Error(
         "Relayer is going to update mqtt subscription but mqttMinimalOffChainSignersCount or mqttWaitMsForOtherSignersMs is not set"
