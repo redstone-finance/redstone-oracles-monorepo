@@ -1325,7 +1325,7 @@
       "isMainnet": false
     },
     "stellar-mainnet": {
-      "name": "Stellar Testnet",
+      "name": "Stellar Mainnet",
       "networkId": "stellar/1",
       "currencySymbol": "XLM",
       "publicRpcUrls": [
