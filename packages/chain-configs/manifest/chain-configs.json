@@ -933,6 +933,7 @@
         "type": "Multicall3"
       },
       "isAuctionModel": true,
+      "fallbackToEthMaxPriorityFeePerGas": true,
       "twoDimensionalFees": false,
       "isMainnet": false
     },
