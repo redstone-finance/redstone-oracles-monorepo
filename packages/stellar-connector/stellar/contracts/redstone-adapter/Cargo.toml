@@ -18,5 +18,5 @@ soroban-sdk = { workspace = true, features = ["alloc"] }
 
 [dev-dependencies]
 hex = { workspace = true }
-redstone_testing = { workspace = true }
+redstone-testing = { workspace = true }
 soroban-sdk = { workspace = true, features = ["testutils"] }
