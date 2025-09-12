@@ -47,7 +47,7 @@ The code-lines inside the following sections in `*/src/**/*.rs` files should be 
 And the following **should not**:
 
 * Imports (use modules)
-* Tests and dev utility (code under #[cfg(feature = "dev")] and #cfg[(test)]).
+* Tests and dev utility (code under `#[cfg(feature = "dev")]` and `#cfg[(test)]`).
 * Code comments
 * Empty lines
 * Code inside test files inside `*/tests/**` directories

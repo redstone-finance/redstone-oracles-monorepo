@@ -59,8 +59,8 @@ We use multisig flow implemented in the [multisig](https://github.com/movementla
 3. Participants of the multisig vote on the proposed transaction.
 4. If threshold is met, anyone can execute the transaction on the chain.
 
-See [MultiSigTxBuilder.ts](scripts/ledger/MultiSigTxBuilder.ts) for implementation in the typescript of the multisig transactions.
+See [MultiSigTxBuilder.ts](scripts/ledger/MultiSigTxBuilder.ts) for implementation in the TypeScript of the multisig transactions.
 
 ### Deployments
 
-We adopted the object-code-deployment model, see [object-code-deployment](https://aptos.dev/en/build/smart-contracts/deployment) and [deploy-script](./scripts/deploy.ts).
+We adopted the object-code-deployment model, see [object-code-deployment](https://aptos.dev/en/build/smart-contracts/deployment) and [deploy-script](./scripts/deploy-runner.ts).
