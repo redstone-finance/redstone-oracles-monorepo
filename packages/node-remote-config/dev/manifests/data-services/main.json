@@ -7249,6 +7249,26 @@
       "denomination": "USD",
       "rateFeed": true
     },
+    "PT_sUSDe_25SEP2025": {
+      "source": ["evm-fetcher-pendle"],
+      "denomination": "sUSDe",
+      "rateFeed": true
+    },
+    "PT_sUSDe_27NOV2025": {
+      "source": ["evm-fetcher-pendle"],
+      "denomination": "sUSDe",
+      "rateFeed": true
+    },
+    "PT_sUSDe_25SEP2025-TWAP-1440": {
+      "source": ["twap-local-redstone-primary-prod"],
+      "denomination": "sUSDe",
+      "rateFeed": true
+    },
+    "PT_sUSDe_27NOV2025-TWAP-1440": {
+      "source": ["twap-local-redstone-primary-prod"],
+      "denomination": "sUSDe",
+      "rateFeed": true
+    },
     "USDT0": {
       "source": [
         "project-x-hyperevm-whype-500",
