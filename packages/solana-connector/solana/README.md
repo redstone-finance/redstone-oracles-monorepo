@@ -22,7 +22,7 @@ The direct path should look like:
 
 * General assumptions [programs/README.md](./programs/README.md)
 * PriceAdapter [programs/price-adapter/README.md](programs/redstone-solana-price-adapter/README.md)
-* General [RedStone Blockchain docs](https://docs.redstone.finance/docs/architecture/#data-formatting--processing)
+* General [RedStone Technical architecture](https://docs.redstone.finance/docs/architecture/)
   * Especially [The push model docs](https://docs.redstone.finance/docs/dapps/redstone-push/)
 
 
@@ -35,7 +35,7 @@ The code-lines inside the following sections in `*/src/**/*.rs` files should be 
 And the following **should not**:
 
 * imports (use modules)
-* tests and dev utility (code under #[cfg(feature = "dev")] and #cfg[(test)]).
+* tests and dev utility (code under `#[cfg(feature = "dev")]` and `#cfg[(test)]`).
 * Code comments
 * Empty lines
 * Code inside test files inside `*/tests/**` directories

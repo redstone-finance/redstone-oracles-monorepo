@@ -65,7 +65,7 @@ and the [TON RedStone payload packing](#-ton-redstone-payload-packing) section b
 (cell) get_prices_v2(cell data_feed_ids, cell payload) method_id;
 ```
 
-The function process on-chain the `payload` passed as an argument
+The function processes on-chain the `payload` passed as an argument
 and returns a `cell` of aggregated values of each feed passed as an identifier inside `feed_ids`.
 
 Due to HTTP GET method length limitation in TON API v4, the function is written for TON API v2.

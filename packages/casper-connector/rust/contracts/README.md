@@ -1,32 +1,30 @@
 # RedStone integration with Casper
 
 <!-- TOC -->
-
-- [RedStone integration with Casper](#redstone-integration-with-casper)
-  - [💡 How RedStone work with Casper](#-how-redstone-work-with-casper)
-  - [✨ General parameter disclaimer](#-general-parameter-disclaimer)
-  - [📄 Smart Contracts](#-smart-contracts)
-    - [Price Adapter](#price-adapter)
-      - [⨐ init](#-init)
-      - [⨗ get_prices](#-get_prices)
-      - [⨒ write_prices](#-write_prices)
-      - [⨗ read_prices](#-read_prices)
-      - [∮ read_timestamp](#-read_timestamp)
-      - [∮ read_price_and_timestamp](#-read_price_and_timestamp)
-    - [Price Relay Adapter](#price-relay-adapter)
-      - [⛔ JsonRPC Casper API limitations](#-jsonrpc-casper-api-limitations)
-      - [The reason for creating the Relay Adapter](#the-reason-for-creating-the-relay-adapter)
-      - [⨐ init](#-init-1)
-      - [⨗ get_prices](#-get_prices-1)
-      - [∯ write_prices_chunk](#-write_prices_chunk)
-      - [∯ get_prices_chunk](#-get_prices_chunk)
-    - [Price Feed](#price-feed)
-      - [⨐ init](#-init-2)
-    - [∮ get_price_and_timestamp](#-get_price_and_timestamp)
-    - [Sample payload](#sample-payload)
-  - [⚠ Possible transaction failures](#-possible-transaction-failures)
-  - [🙋‍Contact](#contact)
-
+* [RedStone integration with Casper](#redstone-integration-with-casper)
+  * [💡 How RedStone work with Casper](#-how-redstone-work-with-casper)
+  * [✨ General parameter disclaimer](#-general-parameter-disclaimer)
+  * [📄 Smart Contracts](#-smart-contracts)
+    * [Price Adapter](#price-adapter)
+      * [⨐ init](#-init)
+      * [⨗ get_prices](#-get_prices)
+      * [⨒ write_prices](#-write_prices)
+      * [⨗ read_prices](#-read_prices)
+      * [∮ read_timestamp](#-read_timestamp)
+      * [∮ read_price_and_timestamp](#-read_price_and_timestamp)
+    * [Price Relay Adapter](#price-relay-adapter)
+      * [⛔ JsonRPC Casper API limitations](#-jsonrpc-casper-api-limitations)
+      * [The reason for creating the Relay Adapter](#the-reason-for-creating-the-relay-adapter)
+      * [⨐ init](#-init-1)
+      * [⨗ get_prices](#-get_prices-1)
+      * [∯ write_prices_chunk](#-write_prices_chunk)
+      * [∯ get_prices_chunk](#-get_prices_chunk)
+    * [Price Feed](#price-feed)
+      * [⨐ init](#-init-2)
+      * [∮ get_price_and_timestamp](#-get_price_and_timestamp)
+    * [Sample payload](#sample-payload)
+  * [⚠ Possible transaction failures](#-possible-transaction-failures)
+  * [🙋‍Contact](#contact)
 <!-- TOC -->
 
 ## 💡 How RedStone work with Casper
@@ -107,7 +105,7 @@ fn price_adapter_init(signers: Vec<Bytes>, signer_count_threshold: u8) {
 get_prices(feed_ids: List[U256], payload: List[U8]): Tuple2     // Public/Contract
 ```
 
-The function process on-chain the `payload` passed as an argument and returns a `Tuple2` of aggregated values
+The function processes on-chain the `payload` passed as an argument and returns a `Tuple2` of aggregated values
 (of each feed passed as an identifier inside `feed_ids`) and the min timestamp of the data.
 
 The method doesn't modify the contract's storage.
@@ -299,7 +297,7 @@ init(adapter_address: Key, feed_id: U256): Unit     // Group([GROUP_NAME_OWNER])
 
 As mentioned above, the contract reads data from the adapter, so the `adapter_address` parameter needs to be passed
 as a `Key` (the one with the `hash-...` format).
-There is also needed the `feed_id` the value will be fetched for.
+There is also needed the `feed_id` the data will be fetched for.
 
 The function must be executed by the contract creator in the Contract context and only once.
 
