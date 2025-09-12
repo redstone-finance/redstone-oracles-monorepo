@@ -35,7 +35,7 @@ the [whole RedStone Oracle model](https://docs.redstone.finance/docs/introductio
   - [tests](rust/contracts/tests) directory contains various integration and unit tests of contracts having their
     WASM-compiled
     code.
-- [src](src) directory contains the typescript classes, useful for establishing a connection between typescript and
+- [src](src) directory contains the TypeScript classes, useful for establishing a connection between TypeScript and
   casper-network layers.
   - See [below](#-connecting-to-the-contract), how to connect to the contract.
 - [test](test) directory contains the TypeScript SDK tests
