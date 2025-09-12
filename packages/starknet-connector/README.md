@@ -92,7 +92,7 @@ Now you can access any of the contract's methods by invoking the code:
 
 ## 👨‍💻 Development and contributions
 
-The codebase consists of a wrapper written in typescript which is responsible for packing the data and cairo smart
+The codebase consists of a wrapper written in TypeScript which is responsible for packing the data and cairo smart
 contracts that extract the information. We encourage anyone to build and test the code and we welcome any issues with
 suggestions and pull requests.
 
