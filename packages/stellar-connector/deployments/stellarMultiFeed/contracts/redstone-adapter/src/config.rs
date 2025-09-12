@@ -70,6 +70,7 @@ impl Config {
             Some(self.max_timestamp_delay_ms.into()),
             Some(self.max_timestamp_ahead_ms.into()),
         )?;
+
         Ok((config, crypto).into())
     }
 
