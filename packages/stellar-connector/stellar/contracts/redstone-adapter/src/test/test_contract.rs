@@ -35,8 +35,8 @@ impl PriceAdapterRunEnv for TestContract {
         unimplemented!("Below tests do not require this method yet")
     }
 
-    fn read_prices(&mut self, _feed_ids: Vec<Vec<u8>>) -> Vec<Value> {
-        unimplemented!("Below tests do not require this method yet")
+    fn read_prices(&mut self, feed_ids: Vec<Vec<u8>>) -> Option<Vec<Value>> {
+        Some(self.read_prices_and_timestamp(feed_ids).0)
     }
 
     fn read_prices_and_timestamp(&mut self, feed_ids: Vec<Vec<u8>>) -> (Vec<Value>, u64) {

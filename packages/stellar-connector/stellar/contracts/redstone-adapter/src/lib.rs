@@ -11,8 +11,11 @@ use common::{
     CONTRACT_TTL_THRESHOLD_LEDGERS, MISSING_STORAGE_ENTRY,
 };
 use redstone::{
-    contract::verification::UpdateTimestampVerifier, core::process_payload,
-    network::error::Error as RedStoneError, soroban::helpers::ToBytes, FeedValue, TimestampMillis,
+    contract::verification::{verify_data_staleness, UpdateTimestampVerifier},
+    core::process_payload,
+    network::error::Error as RedStoneError,
+    soroban::helpers::ToBytes,
+    FeedValue, TimestampMillis,
 };
 use soroban_sdk::{
     contract, contractimpl, storage::Persistent, Address, Bytes, BytesN, Env, Error, String, Vec,
@@ -20,10 +23,13 @@ use soroban_sdk::{
 };
 
 use self::config::{FEED_TTL_EXTEND_TO, FEED_TTL_THRESHOLD, STELLAR_CONFIG};
-use crate::{event::WritePrices, utils::feed_to_string};
+use crate::{
+    event::WritePrices,
+    utils::{feed_to_string, now},
+};
 
-const MS_IN_SEC: u64 = 1_000;
 const MISSING_FEED_CODE: u32 = 10;
+const DATA_STALENESS: TimestampMillis = TimestampMillis::from_millis(30 * 60 * 60 * 1000);
 
 #[contract]
 pub struct RedStoneAdapter;
@@ -81,7 +87,7 @@ impl RedStoneAdapter {
 
         let (package_timestamp, prices) =
             get_prices_from_payload(env, &feed_ids, &payload).map_err(error_from_redstone_error)?;
-        let write_timestamp = env.ledger().timestamp() * MS_IN_SEC;
+        let write_timestamp = now(env);
 
         let db = env.storage().persistent();
 
@@ -91,7 +97,7 @@ impl RedStoneAdapter {
             let price_data = PriceData {
                 price,
                 package_timestamp,
-                write_timestamp,
+                write_timestamp: write_timestamp.as_millis(),
             };
             updated_feeds.push_back(price_data.clone());
 
@@ -113,31 +119,35 @@ impl RedStoneAdapter {
 
         let db = env.storage().persistent();
         for feed_id in feed_ids {
-            let price_data: PriceData = db.get(&feed_id).ok_or(MISSING_STORAGE_ENTRY)?;
-            prices.push_back(price_data.price);
+            let feed_data = db.get(&feed_id).ok_or(MISSING_STORAGE_ENTRY)?;
+            let checked_feed_data = Self::check_price_data(env, feed_data)?;
+
+            prices.push_back(checked_feed_data.price);
         }
 
         Ok(prices)
     }
 
     pub fn read_timestamp(env: &Env, feed_id: String) -> Result<u64, Error> {
-        let price_data: PriceData = env
+        let price_data = env
             .storage()
             .persistent()
             .get(&feed_id)
             .ok_or(MISSING_STORAGE_ENTRY)?;
 
-        Ok(price_data.package_timestamp)
+        let checked_priced_data = Self::check_price_data(env, price_data)?;
+
+        Ok(checked_priced_data.package_timestamp)
     }
 
     pub fn read_price_data_for_feed(env: &Env, feed_id: String) -> Result<PriceData, Error> {
-        let price_data: PriceData = env
+        let price_data = env
             .storage()
             .persistent()
             .get(&feed_id)
             .ok_or(MISSING_STORAGE_ENTRY)?;
 
-        Ok(price_data)
+        Self::check_price_data(env, price_data)
     }
 
     pub fn read_price_data(env: &Env, feed_ids: Vec<String>) -> Result<Vec<PriceData>, Error> {
@@ -146,8 +156,17 @@ impl RedStoneAdapter {
         let db = env.storage().persistent();
         for feed_id in feed_ids {
             let feed_data = db.get(&feed_id).ok_or(MISSING_STORAGE_ENTRY)?;
-            price_data.push_back(feed_data);
+            let checked_feed_data = Self::check_price_data(env, feed_data)?;
+
+            price_data.push_back(checked_feed_data);
         }
+
+        Ok(price_data)
+    }
+
+    pub fn check_price_data(env: &Env, price_data: PriceData) -> Result<PriceData, Error> {
+        verify_data_staleness(price_data.write_timestamp.into(), now(env), DATA_STALENESS)
+            .map_err(error_from_redstone_error)?;
 
         Ok(price_data)
     }
@@ -166,11 +185,9 @@ fn get_prices_from_payload(
         .into_iter()
         .map(|id| ToBytes::to_bytes(&id).into())
         .collect();
-    let block_timestamp = TimestampMillis::from_millis(env.ledger().timestamp() * MS_IN_SEC);
+    let block_timestamp = now(env);
 
-    let mut config = STELLAR_CONFIG
-        .redstone_config(env, feed_ids, block_timestamp)
-        .unwrap();
+    let mut config = STELLAR_CONFIG.redstone_config(env, feed_ids, block_timestamp)?;
     let result = process_payload(&mut config, payload.to_alloc_vec())?;
 
     let mut prices = Vec::new(env);
