@@ -30,8 +30,8 @@ the [whole RedStone model](https://docs.redstone.finance/docs/introduction).
   - There are also various tests of signature verification with the given signers, timestamp validation, value
     aggregation as well as full data-processing tests with various configurations.
   - You can find all the possibilities [here](sway/README.md).
-  - You can read [here](sway/contract/README.md) how the contract works.
-- [src](src) directory contains the typescript classes, useful for establishing a connection between typescript and
+  - You can read [here](sway/contract_adapter/README.md) how the contract works.
+- [src](src) directory contains the TypeScript classes, useful for establishing a connection between TypeScript and
   fuel-network layers.
   - See [below](#-connecting-to-the-contract), how to connect to the contract.
 - [test](test) directory contains the off-chain tests, especially:
