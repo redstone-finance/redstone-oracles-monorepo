@@ -7292,6 +7292,18 @@
       "source": ["hyperevm-evm-fetcher-hyperbeat-oracle"],
       "denomination": "USD",
       "rateFeed": true
+    },
+    "SKY": {
+      "source": [
+        "bitget-usdt",
+        "bitrue-usdt",
+        "bybit-usdt",
+        "coinbase-usd",
+        "kraken-usd",
+        "kucoin-usdt"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
     }
   }
 }
