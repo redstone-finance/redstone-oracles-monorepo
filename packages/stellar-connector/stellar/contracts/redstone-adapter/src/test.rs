@@ -10,8 +10,8 @@ use redstone_testing::{
         scenario_adapter_update_with_almost_old_timestamp,
         scenario_adapter_update_with_future_timestamp, scenario_adapter_update_with_old_timestamp,
         scenario_check_initalization, scenario_missing_feed_in_payload,
-        scenario_payload_with_multiple_feed_update_one,
-        scenario_trusted_updates_twice_without_waiting_for_threshold,
+        scenario_payload_with_multiple_feed_update_one, scenario_read_data,
+        scenario_read_stale_data, scenario_trusted_updates_twice_without_waiting_for_threshold,
         scenario_untrusted_updates_twice_waiting_for_threshold,
         scenario_untrusted_updates_twice_without_waiting_for_threshold,
         scenario_updating_twice_with_the_same_timestamp, scenario_updating_with_only_2_signers,
@@ -27,7 +27,7 @@ use soroban_sdk::{
 use self::test_contract::TestContract;
 use crate::{
     config::{FEED_TTL_EXTEND_TO, FEED_TTL_SECS, FEED_TTL_THRESHOLD, STELLAR_CONFIG},
-    RedStoneAdapter, RedStoneAdapterClient,
+    RedStoneAdapter, RedStoneAdapterClient, DATA_STALENESS,
 };
 
 #[test]
@@ -154,6 +154,25 @@ fn update_one_feed_when_payload_has_multiple() {
     let contract = TestContract::new();
     let threshold = Duration::from_millis(STELLAR_CONFIG.min_interval_between_updates_ms);
     let scenario = scenario_payload_with_multiple_feed_update_one(threshold);
+
+    scenario.run(contract);
+}
+
+#[test]
+fn read_data() {
+    let contract = TestContract::new();
+    let threshold = DATA_STALENESS;
+    let scenario = scenario_read_data(Duration::from_millis(threshold.as_millis()));
+
+    scenario.run(contract);
+}
+
+#[test]
+#[should_panic(expected = "Error(Contract, #1400)")]
+fn read_stale_data() {
+    let contract = TestContract::new();
+    let threshold = DATA_STALENESS;
+    let scenario = scenario_read_stale_data(Duration::from_millis(threshold.as_millis()));
 
     scenario.run(contract);
 }
