@@ -7935,6 +7935,13 @@
       ],
       "denomination": "USD",
       "rateFeed": false
+    },
+    "mF-ONE_FUNDAMENTAL": {
+      "source": [
+        "ethereum-evm-fetcher-mf-one"
+      ],
+      "denomination": "USD",
+      "rateFeed": true
     }
   }
 }
