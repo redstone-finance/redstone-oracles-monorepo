@@ -6839,7 +6839,8 @@
       "source": [
         "hyperliquid-api-fetcher",
         "hyperswap-hyperevm-whype-3000",
-        "kittenswap-hyperevm-whype"
+        "kittenswap-hyperevm-whype",
+        "project-x-hyperevm-whype-3000"
       ],
       "denomination": "USD",
       "rateFeed": false
@@ -7204,7 +7205,10 @@
       "source": [
         "hyperswap-hyperevm-whype-100",
         "project-x-hyperevm-whype-100",
-        "valantis-hyperevm-whype"
+        "valantis-hyperevm-whype",
+        "project-x-hyperevm-ubtc-3000",
+        "project-x-hyperevm-usdt0-3000",
+        "project-x-hyperevm-usdt0-500"
       ],
       "denomination": "USD",
       "rateFeed": false
