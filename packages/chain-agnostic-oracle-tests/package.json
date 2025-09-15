@@ -22,8 +22,7 @@
     "consola": "^2.15.3",
     "decimal.js": "^10.4.3",
     "ethers": "^5.7.2",
-    "lodash": "^4.17.21",
-    "zod": "^3.22.4"
+    "lodash": "^4.17.21"
   },
   "devDependencies": {
     "@types/sinon": "^10.0.15",
