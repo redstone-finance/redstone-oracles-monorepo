@@ -17,6 +17,8 @@
     "sample-run": "yarn global:ts-node scripts/sample-run.ts"
   },
   "dependencies": {
+    "@ethersproject/abi": "^5.6.3",
+    "@ethersproject/providers": "^5.6.8",
     "@redstone-finance/sdk": "workspace:*",
     "@redstone-finance/utils": "workspace:*",
     "ethers": "^5.7.2"
