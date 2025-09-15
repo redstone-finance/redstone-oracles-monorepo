@@ -1,3 +1,4 @@
+import { DynamoDBClient } from "@aws-sdk/client-dynamodb";
 import {
   BatchWriteCommand,
   DeleteCommand,
@@ -8,15 +9,27 @@ import {
   QueryCommandInput,
 } from "@aws-sdk/lib-dynamodb";
 import { getDynamoDbClient } from "./aws-clients";
+import { currentAwsRegion } from "./region";
 
 export class DynamoDbService {
   protected readonly db;
+  protected readonly dbClient;
 
   public constructor(
     protected readonly tableName: string,
-    region?: string
+    region?: string,
+    endpoint?: string
   ) {
-    this.db = DynamoDBDocumentClient.from(getDynamoDbClient(region));
+    if (endpoint) {
+      region ??= currentAwsRegion();
+      this.dbClient = new DynamoDBClient({
+        region,
+        endpoint,
+      });
+    } else {
+      this.dbClient = getDynamoDbClient(region);
+    }
+    this.db = DynamoDBDocumentClient.from(this.dbClient);
   }
 
   public async query<T = Record<string, unknown>>(input: Omit<QueryCommandInput, "TableName">) {
