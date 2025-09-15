@@ -10314,6 +10314,20 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@redstone-finance/lambda-gelato-monitoring@workspace:packages/lambda/lambda-gelato-monitoring":
+  version: 0.0.0-use.local
+  resolution: "@redstone-finance/lambda-gelato-monitoring@workspace:packages/lambda/lambda-gelato-monitoring"
+  dependencies:
+    "@aws-sdk/client-dynamodb": "npm:^3.696.0"
+    "@redstone-finance/internal-utils": "workspace:*"
+    "@redstone-finance/monitoring-manifests": "workspace:*"
+    "@redstone-finance/redstone-monitoring": "workspace:*"
+    "@redstone-finance/utils": "workspace:*"
+    "@types/aws-lambda": "npm:^8.10.145"
+    axios: "npm:^1.8.4"
+  languageName: unknown
+  linkType: soft
+
 "@redstone-finance/lambda-hard-limits-monitoring@workspace:packages/lambda/lambda-hard-limits-monitoring":
   version: 0.0.0-use.local
   resolution: "@redstone-finance/lambda-hard-limits-monitoring@workspace:packages/lambda/lambda-hard-limits-monitoring"
