@@ -37,7 +37,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@adraffy/ens-normalize@npm:1.10.0, @adraffy/ens-normalize@npm:^1.8.8":
+"@adraffy/ens-normalize@npm:1.10.0":
   version: 1.10.0
   resolution: "@adraffy/ens-normalize@npm:1.10.0"
   checksum: 10c0/78ae700847a2516d5a0ae12c4e23d09392a40c67e73b137eb7189f51afb1601c8d18784aeda2ed288a278997824dc924d1f398852c21d41ee2c4c564f2fb4d26
@@ -3779,13 +3779,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@ensdomains/resolver@npm:^0.2.4":
-  version: 0.2.4
-  resolution: "@ensdomains/resolver@npm:0.2.4"
-  checksum: 10c0/8bd21f82c3f122f56d7198cf671c08204cca2cb531fd5074fd558d625afa8a15828e92738bf80b9961575a92e4fe627208edd3f87a04c6a0fa47531c91ef0639
-  languageName: node
-  linkType: hard
-
 "@esbuild/aix-ppc64@npm:0.24.0":
   version: 0.24.0
   resolution: "@esbuild/aix-ppc64@npm:0.24.0"
@@ -6273,15 +6266,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@ledgerhq/devices@npm:8.5.0":
-  version: 8.5.0
-  resolution: "@ledgerhq/devices@npm:8.5.0"
+"@ledgerhq/devices@npm:8.5.1":
+  version: 8.5.1
+  resolution: "@ledgerhq/devices@npm:8.5.1"
   dependencies:
-    "@ledgerhq/errors": "npm:^6.24.0"
+    "@ledgerhq/errors": "npm:^6.25.0"
     "@ledgerhq/logs": "npm:^6.13.0"
     rxjs: "npm:^7.8.1"
     semver: "npm:^7.3.5"
-  checksum: 10c0/c28d4513ee6e6f28ca268beeb0e6fcdb64b10483ed59b25d5eea97d96039c7645dc08d9155fe2cd24026207d13fd135678f52437ec7ba3686dea306ad4f99291
+  checksum: 10c0/d0d5761dfd230ef6284288fea41cd5370219b9e5c90dc3264258575ea419f1f76ea03deb5d0c6fa9a5439533c937e352ae9523ab592ee9786932023bd7533ba7
   languageName: node
   linkType: hard
 
@@ -6354,10 +6347,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@ledgerhq/errors@npm:^6.24.0":
-  version: 6.24.0
-  resolution: "@ledgerhq/errors@npm:6.24.0"
-  checksum: 10c0/130c51fa844f4f300d68406f24cac00c900754856950c7b87a9ed93401a69aea4741141f699225f25a31522f10240733d91aa2d985f10dc360b81287c5e708dc
+"@ledgerhq/errors@npm:^6.25.0":
+  version: 6.25.0
+  resolution: "@ledgerhq/errors@npm:6.25.0"
+  checksum: 10c0/f322c78cae6021d83dd7af6b67486bc08a95d644d7f0e613cc3b91c0ff7ad2788aafee0d7af2562728e9a8342d70f6e0d97d95f5a6638800adb7718e6f2b630d
   languageName: node
   linkType: hard
 
@@ -6440,13 +6433,13 @@ __metadata:
   linkType: hard
 
 "@ledgerhq/hw-app-str@npm:^7.2.5":
-  version: 7.2.5
-  resolution: "@ledgerhq/hw-app-str@npm:7.2.5"
+  version: 7.2.6
+  resolution: "@ledgerhq/hw-app-str@npm:7.2.6"
   dependencies:
-    "@ledgerhq/errors": "npm:^6.24.0"
-    "@ledgerhq/hw-transport": "npm:^6.31.9"
+    "@ledgerhq/errors": "npm:^6.25.0"
+    "@ledgerhq/hw-transport": "npm:^6.31.10"
     bip32-path: "npm:^0.4.2"
-  checksum: 10c0/2a55962134c67cdba8c66a5446ba05b65f7283358f7ffd42711bd631ad2965d5960769543915f9a81ffedfafb19e9bd5b934a7ca643d5f03d9d362486e2936d0
+  checksum: 10c0/50e21f7665279f1c446b61da18108f7b5c2639c3e5b9f4f16c7d9df0b2fb639dcea47aa434261afc6c8a18f82f271f473c54685f681f39e3ea4ee4b34a7c077f
   languageName: node
   linkType: hard
 
@@ -6484,16 +6477,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@ledgerhq/hw-transport-node-hid-noevents@npm:^6.30.10":
-  version: 6.30.10
-  resolution: "@ledgerhq/hw-transport-node-hid-noevents@npm:6.30.10"
+"@ledgerhq/hw-transport-node-hid-noevents@npm:^6.30.11":
+  version: 6.30.11
+  resolution: "@ledgerhq/hw-transport-node-hid-noevents@npm:6.30.11"
   dependencies:
-    "@ledgerhq/devices": "npm:8.5.0"
-    "@ledgerhq/errors": "npm:^6.24.0"
-    "@ledgerhq/hw-transport": "npm:^6.31.9"
+    "@ledgerhq/devices": "npm:8.5.1"
+    "@ledgerhq/errors": "npm:^6.25.0"
+    "@ledgerhq/hw-transport": "npm:^6.31.10"
     "@ledgerhq/logs": "npm:^6.13.0"
     node-hid: "npm:2.1.2"
-  checksum: 10c0/5941a727a8eda587d311b62afc7c76fe517a51756194067ecc27572baba10d10f66596c7b102e9caeb22e294c00320437a7454533defc0927843b379a336d48f
+  checksum: 10c0/c1f7d5c2737f5bd84809f1f73fb4cd02b4a55946da2a277b7d9aef04a7bce384fe445bd4fbbed367a1f9db383182adb82ff26537907217604646c8b4faa768ff
   languageName: node
   linkType: hard
 
@@ -6511,17 +6504,17 @@ __metadata:
   linkType: hard
 
 "@ledgerhq/hw-transport-node-hid-singleton@npm:^6.31.10":
-  version: 6.31.10
-  resolution: "@ledgerhq/hw-transport-node-hid-singleton@npm:6.31.10"
+  version: 6.31.11
+  resolution: "@ledgerhq/hw-transport-node-hid-singleton@npm:6.31.11"
   dependencies:
-    "@ledgerhq/devices": "npm:8.5.0"
-    "@ledgerhq/errors": "npm:^6.24.0"
-    "@ledgerhq/hw-transport": "npm:^6.31.9"
-    "@ledgerhq/hw-transport-node-hid-noevents": "npm:^6.30.10"
+    "@ledgerhq/devices": "npm:8.5.1"
+    "@ledgerhq/errors": "npm:^6.25.0"
+    "@ledgerhq/hw-transport": "npm:^6.31.10"
+    "@ledgerhq/hw-transport-node-hid-noevents": "npm:^6.30.11"
     "@ledgerhq/logs": "npm:^6.13.0"
     node-hid: "npm:2.1.2"
     usb: "npm:2.9.0"
-  checksum: 10c0/f0cee47019aa32f94ebe2f146fcbb5f565e7fc50145981692c99abdba9b350e1745c341afc734f4ca225c8deb5eba37761345b3f7d385fd9bf989a77a1405e92
+  checksum: 10c0/59dbc617b7986ec14eada98a5d20989fed661439e6db43d6e2075f2982161e5621a53f341eedd46a42fab5850d5f825a34268d818537efc1cf036c863950fb45
   languageName: node
   linkType: hard
 
@@ -6580,15 +6573,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@ledgerhq/hw-transport@npm:^6.31.9":
-  version: 6.31.9
-  resolution: "@ledgerhq/hw-transport@npm:6.31.9"
+"@ledgerhq/hw-transport@npm:^6.31.10":
+  version: 6.31.10
+  resolution: "@ledgerhq/hw-transport@npm:6.31.10"
   dependencies:
-    "@ledgerhq/devices": "npm:8.5.0"
-    "@ledgerhq/errors": "npm:^6.24.0"
+    "@ledgerhq/devices": "npm:8.5.1"
+    "@ledgerhq/errors": "npm:^6.25.0"
     "@ledgerhq/logs": "npm:^6.13.0"
     events: "npm:^3.3.0"
-  checksum: 10c0/0c925980afcfe3f772bd5a2df5c25e3108cb1655769709b0c08eb68b6794d556afd9b5ec6f6439336d7a351e0860496020f177c6a56eec0fd68c6654ba9848cd
+  checksum: 10c0/d7c0adf6bd7e4aa5e25aa9b745bf34faab7232dbb00eb6651d26f04f8495b491620f38fa7d751fa9a9097c4016e627918ebfd989bd383dcc5ec7e94a81bae7c4
   languageName: node
   linkType: hard
 
@@ -9365,6 +9358,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@redstone-finance/agents@workspace:packages/agents"
   dependencies:
+    "@jest/globals": "npm:^29.7.0"
     "@redstone-finance/utils": "workspace:*"
     "@types/node-schedule": "npm:^2.1.0"
     node-schedule: "npm:^2.1.1"
@@ -9412,6 +9406,7 @@ __metadata:
     ts-loader: "npm:^9.2.3"
     tsconfig-paths: "npm:4.0.0"
     webpack: "npm:^5.89.0"
+    zod: "npm:^3.22.4"
   languageName: unknown
   linkType: soft
 
@@ -9425,6 +9420,7 @@ __metadata:
     casper-js-sdk: "npm:^2.15.5"
     ethers: "npm:^5.7.2"
     node-jq: "npm:^6.0.0"
+    zod: "npm:^3.22.4"
   languageName: unknown
   linkType: soft
 
@@ -9442,7 +9438,6 @@ __metadata:
     ethers: "npm:^5.7.2"
     lodash: "npm:^4.17.21"
     sinon: "npm:^18.0.0"
-    zod: "npm:^3.22.4"
   languageName: unknown
   linkType: soft
 
@@ -9497,7 +9492,6 @@ __metadata:
     "@redstone-finance/utils": "workspace:*"
     ethers: "npm:^5.7.2"
     lodash: "npm:^4.17.21"
-    zod: "npm:^3.22.4"
   languageName: unknown
   linkType: soft
 
@@ -9576,7 +9570,6 @@ __metadata:
     mocha: "npm:^10.2.0"
     solidity-coverage: "npm:^0.8.12"
     typechain: "npm:^8.1.1"
-    zod: "npm:^3.22.4"
   languageName: unknown
   linkType: soft
 
@@ -9620,7 +9613,6 @@ __metadata:
     solidity-coverage: "npm:^0.8.12"
     typechain: "npm:^8.1.1"
     zksync-ethers: "npm:^5.9.0"
-    zod: "npm:^3.22.4"
   languageName: unknown
   linkType: soft
 
@@ -9676,20 +9668,6 @@ __metadata:
     solidity-coverage: "npm:^0.8.12"
     typechain: "npm:^8.1.1"
     zod: "npm:^3.22.4"
-  languageName: unknown
-  linkType: soft
-
-"@redstone-finance/data-analytics@workspace:packages/data-analytics":
-  version: 0.0.0-use.local
-  resolution: "@redstone-finance/data-analytics@workspace:packages/data-analytics"
-  dependencies:
-    "@ethersproject/abi": "npm:^5.6.3"
-    "@ethersproject/providers": "npm:^5.6.8"
-    "@typechain/ethers-v5": "npm:^10.2.0"
-    "@types/cli-progress": "npm:^3.11.0"
-    ethers: "npm:^5.7.2"
-    typechain: "npm:^8.1.1"
-    web3: "npm:^4.1.2"
   languageName: unknown
   linkType: soft
 
@@ -9752,24 +9730,18 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@redstone-finance/eth-contracts@workspace:packages/eth-contracts"
   dependencies:
-    "@ensdomains/resolver": "npm:^0.2.4"
     "@ethersproject/abi": "npm:^5.6.3"
-    "@ethersproject/bytes": "npm:^5.6.1"
     "@ethersproject/providers": "npm:^5.6.8"
     "@nomicfoundation/hardhat-chai-matchers": "npm:^1.0.6"
     "@nomicfoundation/hardhat-network-helpers": "npm:^1.0.9"
     "@nomicfoundation/hardhat-toolbox": "npm:^2.0.2"
     "@nomiclabs/hardhat-ethers": "npm:^2.0.6"
     "@nomiclabs/hardhat-etherscan": "npm:^3.1.7"
-    "@openzeppelin/contracts": "npm:^4.8.1"
-    "@openzeppelin/contracts-upgradeable": "npm:^4.8.3"
     "@openzeppelin/hardhat-upgrades": "npm:^1.26.0"
     "@typechain/ethers-v5": "npm:^10.2.0"
     "@typechain/hardhat": "npm:^6.1.2"
     "@types/chai": "npm:^4.3.4"
-    "@types/chai-as-promised": "npm:^7.1.5"
     "@types/mocha": "npm:^10.0.1"
-    "@types/sinon-chai": "npm:^3.2.12"
     chai: "npm:^4.3.10"
     dotenv: "npm:^16.0.3"
     ethers: "npm:^5.7.2"
@@ -10088,6 +10060,7 @@ __metadata:
     "@types/aws-lambda": "npm:^8.10.145"
     axios: "npm:^1.8.4"
     dotenv: "npm:^16.0.3"
+    zod: "npm:^3.22.4"
   languageName: unknown
   linkType: soft
 
@@ -10137,6 +10110,7 @@ __metadata:
     sleep-promise: "npm:^9.1.0"
     supertest: "npm:^6.2.3"
     uuid-random: "npm:^1.3.2"
+    zod: "npm:^3.22.4"
   languageName: unknown
   linkType: soft
 
@@ -10152,6 +10126,7 @@ __metadata:
     axios: "npm:^1.8.4"
     ccxt: "npm:^4.4.89"
     lodash: "npm:^4.17.21"
+    zod: "npm:^3.22.4"
   languageName: unknown
   linkType: soft
 
@@ -10190,6 +10165,7 @@ __metadata:
     "@redstone-finance/internal-utils": "workspace:*"
     "@redstone-finance/utils": "workspace:*"
     dotenv: "npm:^16.0.3"
+    zod: "npm:^3.22.4"
   languageName: unknown
   linkType: soft
 
@@ -10202,6 +10178,7 @@ __metadata:
     "@redstone-finance/monitoring-manifests": "workspace:*"
     "@redstone-finance/sdk": "workspace:*"
     dotenv: "npm:^16.0.3"
+    zod: "npm:^3.22.4"
   languageName: unknown
   linkType: soft
 
@@ -10402,6 +10379,7 @@ __metadata:
     "@redstone-finance/utils": "workspace:*"
     cheerio: "npm:^1.1.0"
     dotenv: "npm:^16.0.3"
+    zod: "npm:^3.22.4"
   languageName: unknown
   linkType: soft
 
@@ -10452,6 +10430,7 @@ __metadata:
     "@redstone-finance/monitoring-manifests": "workspace:*"
     "@redstone-finance/utils": "workspace:*"
     dotenv: "npm:^16.0.3"
+    zod: "npm:^3.22.4"
   languageName: unknown
   linkType: soft
 
@@ -10510,11 +10489,8 @@ __metadata:
     "@redstone-finance/rpc-providers": "workspace:*"
     "@redstone-finance/sdk": "workspace:*"
     "@redstone-finance/utils": "workspace:*"
-    "@types/aws-lambda": "npm:^8.10.145"
-    axios: "npm:^1.8.4"
     dotenv: "npm:^16.0.3"
     ethers: "npm:^5.7.2"
-    zod: "npm:^3.22.4"
   languageName: unknown
   linkType: soft
 
@@ -10587,6 +10563,7 @@ __metadata:
   resolution: "@redstone-finance/lambda-node-price-deviation-monitoring@workspace:packages/lambda/lambda-node-price-deviation-monitoring"
   dependencies:
     "@influxdata/influxdb-client": "npm:^1.35.0"
+    "@jest/globals": "npm:^29.7.0"
     "@redstone-finance/internal-utils": "workspace:*"
     "@redstone-finance/monitoring-manifests": "workspace:*"
     "@redstone-finance/sdk": "workspace:*"
@@ -10757,9 +10734,8 @@ __metadata:
     "@redstone-finance/chain-orchestrator": "workspace:*"
     "@redstone-finance/internal-utils": "workspace:*"
     "@redstone-finance/monitoring-manifests": "workspace:*"
-    "@redstone-finance/on-chain-relayer-common": "workspace:*"
-    "@redstone-finance/rpc-providers": "workspace:*"
     "@redstone-finance/utils": "workspace:*"
+    dotenv: "npm:^16.0.3"
     ethers: "npm:^5.7.2"
     zod: "npm:^3.22.4"
   languageName: unknown
@@ -11023,6 +10999,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@redstone-finance/protocol@workspace:packages/protocol"
   dependencies:
+    "@ethersproject/bytes": "npm:^5.6.1"
     "@types/secp256k1": "npm:^4.0.6"
     decimal.js: "npm:^10.4.3"
     ethers: "npm:^5.7.2"
@@ -11250,6 +11227,8 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@redstone-finance/stylus-connector@workspace:packages/stylus-connector"
   dependencies:
+    "@ethersproject/abi": "npm:^5.6.3"
+    "@ethersproject/providers": "npm:^5.6.8"
     "@redstone-finance/sdk": "workspace:*"
     "@redstone-finance/utils": "workspace:*"
     dotenv: "npm:^16.0.3"
@@ -11268,10 +11247,9 @@ __metadata:
     "@redstone-finance/chain-configs": "workspace:*"
     "@redstone-finance/sdk": "workspace:*"
     "@redstone-finance/utils": "workspace:*"
-    "@types/chai": "npm:^4.3.4"
-    chai: "npm:^4.3.10"
     decimal.js: "npm:^10.4.3"
     dotenv: "npm:^16.0.3"
+    ethers: "npm:^5.7.2"
     lodash: "npm:^4.17.21"
     secp256k1: "npm:^5.0.1"
     zod: "npm:^3.22.4"
@@ -11302,14 +11280,12 @@ __metadata:
     "@redstone-finance/sdk": "workspace:*"
     "@redstone-finance/utils": "workspace:*"
     "@ton-community/func-js": "npm:0.6.3"
-    "@ton-community/func-js-bin": "npm:^0.4.5-tvmbeta.3"
     "@ton/blueprint": "npm:^0.19.0"
     "@ton/core": "npm:^0.56.3"
     "@ton/crypto": "npm:^3.2.0"
     "@ton/sandbox": "npm:^0.17.0"
     "@ton/test-utils": "npm:^0.4.2"
     "@ton/ton": "npm:^13.11.1"
-    dotenv: "npm:^16.0.3"
     ethers: "npm:^5.7.2"
   languageName: unknown
   linkType: soft
@@ -11318,12 +11294,14 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@redstone-finance/utils@workspace:packages/utils"
   dependencies:
+    "@ethersproject/providers": "npm:^5.6.8"
     "@types/lodash": "npm:^4.14.195"
     "@types/sinon": "npm:^10.0.15"
     axios: "npm:^1.8.4"
     consola: "npm:^2.15.3"
     date-fns: "npm:^3.6.0"
     decimal.js: "npm:^10.4.3"
+    dotenv: "npm:^16.0.3"
     ethers: "npm:^5.7.2"
     lodash: "npm:^4.17.21"
     sinon: "npm:^18.0.0"
@@ -11344,6 +11322,7 @@ __metadata:
     dotenv: "npm:^16.0.3"
     ethers-v6: "npm:ethers@6.13.5"
     express: "npm:^4.18.1"
+    zod: "npm:^3.22.4"
   languageName: unknown
   linkType: soft
 
@@ -14011,13 +13990,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@ton-community/func-js-bin@npm:^0.4.5-tvmbeta.3":
-  version: 0.4.5-tvmbeta.3
-  resolution: "@ton-community/func-js-bin@npm:0.4.5-tvmbeta.3"
-  checksum: 10c0/8d7458b5224614ae339fe6def8d591ae314a516b101f002c8c66d0db001a3f25f4ca40828a58100745d901456fe9f049aae6fb6f5ff7a817eef451e635af7148
-  languageName: node
-  linkType: hard
-
 "@ton-community/func-js@npm:0.6.3":
   version: 0.6.3
   resolution: "@ton-community/func-js@npm:0.6.3"
@@ -14481,15 +14453,6 @@ __metadata:
   version: 4.3.5
   resolution: "@types/chai@npm:4.3.5"
   checksum: 10c0/816b3081e067c6e332be313e2e9a518b117c9eac51201cac749de0d6fcf7cb3238d0def37690b6539b3a928bd87b2f5f777914248447889ebc6f630a0d00e0e5
-  languageName: node
-  linkType: hard
-
-"@types/cli-progress@npm:^3.11.0":
-  version: 3.11.2
-  resolution: "@types/cli-progress@npm:3.11.2"
-  dependencies:
-    "@types/node": "npm:*"
-  checksum: 10c0/95feae37530374f9d233bc34ed5956ed5c3882612b03ac6e6e328d8174f1aa1dc2c8aa0d1263d6c6bb514b126ae9b542d385862ab8ec0e088f9a41b1769c6fdc
   languageName: node
   linkType: hard
 
@@ -15340,15 +15303,6 @@ __metadata:
   dependencies:
     "@types/node": "npm:*"
   checksum: 10c0/3fd77c9e4e05c24ce42bfc7647f7506b08c40a40fe2aea236ef6d4e96fc7cb4006a81ed1b28ec9c457e177a74a72924f4768b7b4652680b42dfd52bc380e15f9
-  languageName: node
-  linkType: hard
-
-"@types/ws@npm:8.5.3":
-  version: 8.5.3
-  resolution: "@types/ws@npm:8.5.3"
-  dependencies:
-    "@types/node": "npm:*"
-  checksum: 10c0/af36857b804e6df615b401bacf34e9312f073ed9dbeda35be16ee3352d18a4449f27066169893166a6ec17ae51557c3adf8d232ac4a4a0226aafb3267e1f1b39
   languageName: node
   linkType: hard
 
@@ -20561,7 +20515,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"crc-32@npm:^1.2.0, crc-32@npm:^1.2.2":
+"crc-32@npm:^1.2.0":
   version: 1.2.2
   resolution: "crc-32@npm:1.2.2"
   bin:
@@ -39152,206 +39106,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"web3-core@npm:^4.2.0":
-  version: 4.2.0
-  resolution: "web3-core@npm:4.2.0"
-  dependencies:
-    web3-errors: "npm:^1.1.2"
-    web3-eth-iban: "npm:^4.0.6"
-    web3-providers-http: "npm:^4.0.6"
-    web3-providers-ipc: "npm:^4.0.6"
-    web3-providers-ws: "npm:^4.0.6"
-    web3-types: "npm:^1.2.0"
-    web3-utils: "npm:^4.0.6"
-    web3-validator: "npm:^2.0.2"
-  dependenciesMeta:
-    web3-providers-ipc:
-      optional: true
-  checksum: 10c0/cab0281acdc73d5f458b1f0f3382284e28e45779b23e107cf48cb112dad870b986b82c196e79e652aa35f591ea5e90e7a252911ad73ea60b8dd65486c6951a01
-  languageName: node
-  linkType: hard
-
-"web3-errors@npm:^1.1.2":
-  version: 1.1.2
-  resolution: "web3-errors@npm:1.1.2"
-  dependencies:
-    web3-types: "npm:^1.2.0"
-  checksum: 10c0/2cbe24b242c999152ece0e043294249bdc1f296f1921e3dbbaf95b211cc4767697f137f7f8162c60f5030e44707cdf9d66617e2110d1c2dbd133f39729353915
-  languageName: node
-  linkType: hard
-
-"web3-eth-abi@npm:^4.1.2":
-  version: 4.1.2
-  resolution: "web3-eth-abi@npm:4.1.2"
-  dependencies:
-    "@ethersproject/abi": "npm:^5.7.0"
-    "@ethersproject/bignumber": "npm:^5.7.0"
-    web3-errors: "npm:^1.1.2"
-    web3-types: "npm:^1.2.0"
-    web3-utils: "npm:^4.0.6"
-  checksum: 10c0/5b8ebf4d6fa8cc4c0d1c668da4ba87a3d4376ac83868de96fb6e1c46ffbe8570b55babfbcfc99b2f30696d54b44dfdbf60893df0efe0e51d7c10687d821823d8
-  languageName: node
-  linkType: hard
-
-"web3-eth-accounts@npm:^4.0.6":
-  version: 4.0.6
-  resolution: "web3-eth-accounts@npm:4.0.6"
-  dependencies:
-    "@ethereumjs/rlp": "npm:^4.0.1"
-    crc-32: "npm:^1.2.2"
-    ethereum-cryptography: "npm:^2.0.0"
-    web3-errors: "npm:^1.1.2"
-    web3-types: "npm:^1.2.0"
-    web3-utils: "npm:^4.0.6"
-    web3-validator: "npm:^2.0.2"
-  checksum: 10c0/daab3b83c788eb2ee4ed0be82a955ef21e24423b0978b719199704d0ac95ea7be2c0eeb14e8b617b6cbd242e51eebeeb9ece8fd8d17dda81a9c7882e96db230a
-  languageName: node
-  linkType: hard
-
-"web3-eth-contract@npm:^4.1.0":
-  version: 4.1.0
-  resolution: "web3-eth-contract@npm:4.1.0"
-  dependencies:
-    web3-core: "npm:^4.2.0"
-    web3-errors: "npm:^1.1.2"
-    web3-eth: "npm:^4.2.0"
-    web3-eth-abi: "npm:^4.1.2"
-    web3-types: "npm:^1.2.0"
-    web3-utils: "npm:^4.0.6"
-    web3-validator: "npm:^2.0.2"
-  checksum: 10c0/b301e3457c2f267515a80ee7246e7b81cfc219c4de6388c71cc30d3194ccc168be575c38a194c05aada0a5659e7bab397bea2f9879c442852a03f0feccbdb28f
-  languageName: node
-  linkType: hard
-
-"web3-eth-ens@npm:^4.0.6":
-  version: 4.0.6
-  resolution: "web3-eth-ens@npm:4.0.6"
-  dependencies:
-    "@adraffy/ens-normalize": "npm:^1.8.8"
-    web3-core: "npm:^4.2.0"
-    web3-errors: "npm:^1.1.2"
-    web3-eth: "npm:^4.2.0"
-    web3-eth-contract: "npm:^4.1.0"
-    web3-net: "npm:^4.0.6"
-    web3-types: "npm:^1.2.0"
-    web3-utils: "npm:^4.0.6"
-    web3-validator: "npm:^2.0.2"
-  checksum: 10c0/b1a0a62ecb151a4cdd70dc66e7605762691f66e2f5fb003fded72d3c15391a6ae545efc272560e9dee7ef1f7072f3ad4c6e622664a94dedca77e7eab3accfbec
-  languageName: node
-  linkType: hard
-
-"web3-eth-iban@npm:^4.0.6":
-  version: 4.0.6
-  resolution: "web3-eth-iban@npm:4.0.6"
-  dependencies:
-    web3-errors: "npm:^1.1.2"
-    web3-types: "npm:^1.2.0"
-    web3-utils: "npm:^4.0.6"
-    web3-validator: "npm:^2.0.2"
-  checksum: 10c0/10a04cc4515e3f5dda7a36604d0e6fbf18a5fd92baae2723d06ec607b5a5aeae496d7fb49fc67565d6072219b0c7b5e65a2ceefbe3fa54e793abe8b9df7b1251
-  languageName: node
-  linkType: hard
-
-"web3-eth-personal@npm:^4.0.6":
-  version: 4.0.6
-  resolution: "web3-eth-personal@npm:4.0.6"
-  dependencies:
-    web3-core: "npm:^4.2.0"
-    web3-eth: "npm:^4.2.0"
-    web3-rpc-methods: "npm:^1.1.2"
-    web3-types: "npm:^1.2.0"
-    web3-utils: "npm:^4.0.6"
-    web3-validator: "npm:^2.0.2"
-  checksum: 10c0/2f81365579cf19f45f08ff4bc3b07e15a3c8cfd928944cabacdf124f85f401163a05f756b5ed308d0be77fe8762edef7b5b40650bc6dd9d4aea396cc81c7eb19
-  languageName: node
-  linkType: hard
-
-"web3-eth@npm:^4.2.0":
-  version: 4.2.0
-  resolution: "web3-eth@npm:4.2.0"
-  dependencies:
-    setimmediate: "npm:^1.0.5"
-    web3-core: "npm:^4.2.0"
-    web3-errors: "npm:^1.1.2"
-    web3-eth-abi: "npm:^4.1.2"
-    web3-eth-accounts: "npm:^4.0.6"
-    web3-net: "npm:^4.0.6"
-    web3-providers-ws: "npm:^4.0.6"
-    web3-rpc-methods: "npm:^1.1.2"
-    web3-types: "npm:^1.2.0"
-    web3-utils: "npm:^4.0.6"
-    web3-validator: "npm:^2.0.2"
-  checksum: 10c0/66c9ae2018b922d00ddc63299b1a3eb1e511c6f8b3d17aa3021f2d9688a4c66a38fbed15797a081ef1bd3f5a07b974c1331e6b023724072417b7978fa0ed4610
-  languageName: node
-  linkType: hard
-
-"web3-net@npm:^4.0.6":
-  version: 4.0.6
-  resolution: "web3-net@npm:4.0.6"
-  dependencies:
-    web3-core: "npm:^4.2.0"
-    web3-rpc-methods: "npm:^1.1.2"
-    web3-types: "npm:^1.2.0"
-    web3-utils: "npm:^4.0.6"
-  checksum: 10c0/e0b1048db230880ae888dd9c8a2f58a48bc3a1e7064268af1145808b669f0c542500feb592a769602456a3661f874fc398bfbcfb69b1d9adb8e36c02f2c96e96
-  languageName: node
-  linkType: hard
-
-"web3-providers-http@npm:^4.0.6":
-  version: 4.0.6
-  resolution: "web3-providers-http@npm:4.0.6"
-  dependencies:
-    cross-fetch: "npm:^3.1.5"
-    web3-errors: "npm:^1.1.2"
-    web3-types: "npm:^1.2.0"
-    web3-utils: "npm:^4.0.6"
-  checksum: 10c0/57e648b8abfb5cb9b96df39104885c8108427c3e559301d7bf2b3670db3fc91413537366487db008d4ffd7a88002e9c5d47954f06b0ab4f69498e052f0826ed5
-  languageName: node
-  linkType: hard
-
-"web3-providers-ipc@npm:^4.0.6":
-  version: 4.0.6
-  resolution: "web3-providers-ipc@npm:4.0.6"
-  dependencies:
-    web3-errors: "npm:^1.1.2"
-    web3-types: "npm:^1.2.0"
-    web3-utils: "npm:^4.0.6"
-  checksum: 10c0/10b56c9e23ac0997f39273f793e440b87064418c1617271271ab79b574e8d963ca8fd353e19e1ed2a220f6e9e1d1b4c49b539b0a39d6e99afdfe8251d48abcc3
-  languageName: node
-  linkType: hard
-
-"web3-providers-ws@npm:^4.0.6":
-  version: 4.0.6
-  resolution: "web3-providers-ws@npm:4.0.6"
-  dependencies:
-    "@types/ws": "npm:8.5.3"
-    isomorphic-ws: "npm:^5.0.0"
-    web3-errors: "npm:^1.1.2"
-    web3-types: "npm:^1.2.0"
-    web3-utils: "npm:^4.0.6"
-    ws: "npm:^8.8.1"
-  checksum: 10c0/5f655cd57b2dbf0b2c1526f731cae2e3ecd88a74baaa4edcc89f09aa04f250289196730b1045ca2fc4831d3d98ba690751e498752956b75f9155a493725ecbe7
-  languageName: node
-  linkType: hard
-
-"web3-rpc-methods@npm:^1.1.2":
-  version: 1.1.2
-  resolution: "web3-rpc-methods@npm:1.1.2"
-  dependencies:
-    web3-core: "npm:^4.2.0"
-    web3-types: "npm:^1.2.0"
-    web3-validator: "npm:^2.0.2"
-  checksum: 10c0/83ea72eb638d9a15cf4b280b2c9860bf74f1fe0b4adf63efe3215678d15fdd59e233b140e02daa9d602492b2560ca27ad5ed580247d5bc00dd4e930a2f05498b
-  languageName: node
-  linkType: hard
-
-"web3-types@npm:^1.2.0":
-  version: 1.2.0
-  resolution: "web3-types@npm:1.2.0"
-  checksum: 10c0/283eeca7eb1dac2ffbce7527e9e9f8394a7eea3484a2205ef78bcdb4e74af7073cf088afcc28fedff47ac94bb7f433015345ea0ee657ac524ec8dabe08a07264
-  languageName: node
-  linkType: hard
-
 "web3-utils@npm:^1.3.6":
   version: 1.10.0
   resolution: "web3-utils@npm:1.10.0"
@@ -39364,55 +39118,6 @@ __metadata:
     randombytes: "npm:^2.1.0"
     utf8: "npm:3.0.0"
   checksum: 10c0/6543c5788fba035d73b3e16d7257a4ee82eb9d4949ca0572cf03e7619b51c5c97160499067a77de87efa34cbf0d932b2f560d17416cbb508c8be2527bb16e819
-  languageName: node
-  linkType: hard
-
-"web3-utils@npm:^4.0.6":
-  version: 4.0.6
-  resolution: "web3-utils@npm:4.0.6"
-  dependencies:
-    ethereum-cryptography: "npm:^2.0.0"
-    web3-errors: "npm:^1.1.2"
-    web3-types: "npm:^1.2.0"
-    web3-validator: "npm:^2.0.2"
-  checksum: 10c0/fc858ee3c9fc4da1b45beee01434b8620742fbce20fbaf76d5d19988ec723261d00714cba0bd7be6f6079d4a873d7bfea44d4c648469d46d8524c646da072f7d
-  languageName: node
-  linkType: hard
-
-"web3-validator@npm:^2.0.2":
-  version: 2.0.2
-  resolution: "web3-validator@npm:2.0.2"
-  dependencies:
-    ethereum-cryptography: "npm:^2.0.0"
-    util: "npm:^0.12.5"
-    web3-errors: "npm:^1.1.2"
-    web3-types: "npm:^1.2.0"
-    zod: "npm:^3.21.4"
-  checksum: 10c0/497b4cf2c5d5648d1ed9a34afb53b82cce55be4ea78d836cac8ef87eb2c1f02c3979968a534e1c3f23abafde783a980cdd32fc741470bebf7a8e2939808adb4c
-  languageName: node
-  linkType: hard
-
-"web3@npm:^4.1.2":
-  version: 4.1.2
-  resolution: "web3@npm:4.1.2"
-  dependencies:
-    web3-core: "npm:^4.2.0"
-    web3-errors: "npm:^1.1.2"
-    web3-eth: "npm:^4.2.0"
-    web3-eth-abi: "npm:^4.1.2"
-    web3-eth-accounts: "npm:^4.0.6"
-    web3-eth-contract: "npm:^4.1.0"
-    web3-eth-ens: "npm:^4.0.6"
-    web3-eth-iban: "npm:^4.0.6"
-    web3-eth-personal: "npm:^4.0.6"
-    web3-net: "npm:^4.0.6"
-    web3-providers-http: "npm:^4.0.6"
-    web3-providers-ws: "npm:^4.0.6"
-    web3-rpc-methods: "npm:^1.1.2"
-    web3-types: "npm:^1.2.0"
-    web3-utils: "npm:^4.0.6"
-    web3-validator: "npm:^2.0.2"
-  checksum: 10c0/c13f22fad7244cd4a90a2e032f47328523ae4b2b48aa1711af0d296986cc48212e36ad0b62f29e3b6b569dd1b76207ed978f2cc35d63ca280d7b7fcea6b79b49
   languageName: node
   linkType: hard
 
