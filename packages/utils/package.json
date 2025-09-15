@@ -15,6 +15,7 @@
     "lint:fix": "yarn global:eslint --fix ."
   },
   "dependencies": {
+    "@ethersproject/providers": "^5.6.8",
     "@types/lodash": "^4.14.195",
     "axios": "^1.8.4",
     "consola": "^2.15.3",
@@ -26,6 +27,7 @@
   },
   "devDependencies": {
     "@types/sinon": "^10.0.15",
+    "dotenv": "^16.0.3",
     "sinon": "^18.0.0"
   },
   "overrides": {
