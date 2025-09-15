@@ -38,11 +38,9 @@
     "@redstone-finance/sdk": "workspace:*",
     "@redstone-finance/utils": "workspace:*",
     "@ton-community/func-js": "0.6.3",
-    "@ton-community/func-js-bin": "^0.4.5-tvmbeta.3",
     "@ton/core": "^0.56.3",
     "@ton/crypto": "^3.2.0",
     "@ton/ton": "^13.11.1",
-    "dotenv": "^16.0.3",
     "ethers": "^5.7.2"
   },
   "devDependencies": {

@@ -21,7 +21,8 @@
     "@redstone-finance/sdk": "workspace:*",
     "axios": "^1.8.4",
     "casper-js-sdk": "^2.15.5",
-    "ethers": "^5.7.2"
+    "ethers": "^5.7.2",
+    "zod": "^3.22.4"
   },
   "devDependencies": {
     "node-jq": "^6.0.0"
