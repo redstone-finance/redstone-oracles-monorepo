@@ -138,4 +138,8 @@ export abstract class ContractFacade {
 
     return { shouldCheckValueDeviation, canOmitFetchingDataFromContract };
   }
+
+  async getDataFeedIds(blockNumber: number) {
+    return await (await this.connector.getAdapter()).getDataFeedIds?.(blockNumber);
+  }
 }

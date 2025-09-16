@@ -2,7 +2,7 @@ import { Env } from "@redstone-finance/chain-configs";
 import { getSSMParameterValue } from "@redstone-finance/internal-utils";
 import { deconstructNetworkId, NetworkId, RedstoneCommon } from "@redstone-finance/utils";
 
-const ed25519Chains = ["radix", "solana", "sui", "movement", "aptos"];
+const ed25519Chains = ["radix", "solana", "sui", "movement", "aptos", "stellar"];
 
 export async function getNonEvmZrodelkoPrivateKey(
   networkId: NetworkId,

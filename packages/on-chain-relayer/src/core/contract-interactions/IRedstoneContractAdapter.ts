@@ -17,4 +17,6 @@ export interface IRedstoneContractAdapter {
   ): Promise<unknown>;
 
   getSignerAddress(): Promise<string | undefined>;
+
+  getDataFeedIds?: (blockNumber: number) => Promise<string[] | undefined>;
 }
