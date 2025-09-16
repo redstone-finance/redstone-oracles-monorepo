@@ -1,3 +1,4 @@
+import { consts } from "@redstone-finance/protocol";
 import { RedstoneCommon } from "@redstone-finance/utils";
 import { BigNumber, BigNumberish } from "ethers";
 import { ContractData } from "../ContractData";
@@ -36,7 +37,7 @@ export async function sampleRun(
   }
 
   if (ethFeedConnector) {
-    await readFromEthFeed(ethFeedConnector);
+    await readFromEthFeed(ethFeedConnector, blockNumber);
   }
 
   logHeader("FINISHING");
@@ -125,23 +126,27 @@ async function readFromExtendedPriceAdapter(
   console.log(`Unique signer count: ${uniqueSignerThreshold}`);
 }
 
-async function readFromEthFeed(ethFeedConnector: IContractConnector<IPriceFeedContractAdapter>) {
+async function readFromEthFeed(
+  ethFeedConnector: IContractConnector<IPriceFeedContractAdapter>,
+  blockNumber?: number
+) {
   const feedAdapter = await ethFeedConnector.getAdapter();
 
-  const description = feedAdapter.getDescription
-    ? await feedAdapter.getDescription()
-    : "ETH PriceFeed";
+  const description = (await feedAdapter.getDescription?.(blockNumber)) ?? "ETH(???) PriceFeed";
   logHeader(`Viewing data from [${description}]`);
 
-  const { value, timestamp } = await feedAdapter.getPriceAndTimestamp();
+  const { value, timestamp } = await feedAdapter.getPriceAndTimestamp(blockNumber);
 
-  const feedId = feedAdapter.getDataFeedId ? await feedAdapter.getDataFeedId() : "ETH";
+  const feedId = (await feedAdapter.getDataFeedId?.(blockNumber)) ?? "ETH(???)";
+  const decimals = await feedAdapter.decimals?.(blockNumber);
 
-  console.log(`${feedId} price: $${convertValue(value)} (${describeTimestamp(timestamp)})`);
+  console.log(
+    `${feedId} price: $${convertValue(value, decimals)} (${describeTimestamp(timestamp)}) (${decimals} decimals)`
+  );
 }
 
-export function convertValue(v: BigNumberish) {
-  return BigNumber.from(v).toNumber() / 10 ** 8;
+export function convertValue(v: BigNumberish, decimals?: number) {
+  return BigNumber.from(v).toNumber() / 10 ** (decimals ?? consts.DEFAULT_NUM_VALUE_DECIMALS);
 }
 
 export function describeTimestamp(timestamp: number) {
