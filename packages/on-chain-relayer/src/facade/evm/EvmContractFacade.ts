@@ -20,4 +20,8 @@ export class EvmContractFacade extends ContractFacade {
   private async getAdapter() {
     return (await this.connector.getAdapter()) as IRedstoneContractAdapter;
   }
+
+  override async getDataFeedIds(blockTag: number): Promise<string[] | undefined> {
+    return await (await this.getAdapter()).getDataFeedIds?.(blockTag);
+  }
 }

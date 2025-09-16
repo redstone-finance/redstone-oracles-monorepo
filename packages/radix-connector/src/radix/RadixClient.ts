@@ -205,7 +205,7 @@ export class RadixClient {
     return this.signer?.publicKeyHex();
   }
 
-  async getTrasanctionHeader(iterationIndex = 0) {
+  async getTransactionHeader(iterationIndex = 0) {
     const currentEpochNumber = await this.apiClient.getCurrentEpochNumber();
     return {
       networkId: this.networkId,
@@ -220,7 +220,7 @@ export class RadixClient {
 
   async compileTransactionToIntent(transaction: RadixTransaction, iterationIndex = 0) {
     const transactionIntent: Intent = {
-      header: await this.getTrasanctionHeader(iterationIndex),
+      header: await this.getTransactionHeader(iterationIndex),
       manifest: transaction.getManifest(),
       message: { kind: "None" },
     };
@@ -243,7 +243,7 @@ export class RadixClient {
   }
 
   private async callTransaction(transaction: RadixTransaction, iterationIndex = 0) {
-    const transactionHeader = await this.getTrasanctionHeader(iterationIndex);
+    const transactionHeader = await this.getTransactionHeader(iterationIndex);
 
     const notarizedTransaction: NotarizedTransaction = await TransactionBuilder.new().then(
       (builder) => {
