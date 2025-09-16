@@ -14,6 +14,10 @@ export abstract class EvmContractAdapter<Contract extends RedstoneEvmContract>
     protected txDeliveryMan: Tx.ITxDeliveryMan
   ) {}
 
+  getDataFeedIds(_blockTag: number): Promise<string[] | undefined> {
+    return Promise.resolve(undefined);
+  }
+
   getSignerAddress(): Promise<string | undefined> {
     return this.adapterContract.signer.getAddress();
   }
