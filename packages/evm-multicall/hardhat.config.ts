@@ -15,6 +15,7 @@ const config: HardhatUserConfig = {
       sei: "anything",
       tac: "anything",
       katana: "anything",
+      zeroGravity: "anything",
     },
     customChains: [
       {
@@ -39,6 +40,14 @@ const config: HardhatUserConfig = {
         urls: {
           apiURL: "https://explorer.katanarpc.com/api",
           browserURL: "https://explorer.katanarpc.com",
+        },
+      },
+      {
+        network: "zeroGravity",
+        chainId: 16661,
+        urls: {
+          apiURL: "https://chainscan.0g.ai/open/api",
+          browserURL: "https://chainscan.0g.ai/",
         },
       },
     ],
@@ -97,6 +106,9 @@ const config: HardhatUserConfig = {
     },
     tacSpbTestnet: {
       url: "https://spb.rpc.tac.build",
+    },
+    zeroGravity: {
+      url: "http://evmrpc.0g.ai",
     },
     zeroGravityTestnet: {
       url: "https://rpc.ankr.com/0g_galileo_testnet_evm",
