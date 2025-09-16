@@ -42,6 +42,7 @@ export class RadixSigner implements IRadixSigner {
         return RedstoneCommon.throwUnsupportedParamError(privateKey.scheme);
     }
   }
+
   public publicKeyHex() {
     return Promise.resolve(this.notarySigner.publicKeyHex());
   }

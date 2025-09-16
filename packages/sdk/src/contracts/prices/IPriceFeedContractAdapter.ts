@@ -6,8 +6,9 @@ export interface PriceAndTimestamp {
 }
 
 export interface IPriceFeedContractAdapter {
-  getPriceAndTimestamp(): Promise<PriceAndTimestamp>;
+  getPriceAndTimestamp(blockTag?: number): Promise<PriceAndTimestamp>;
+  decimals?: (blockTag?: number) => Promise<number>;
 
-  getDescription?: () => Promise<string>;
-  getDataFeedId?: () => Promise<string>;
+  getDescription?: (blockTag?: number) => Promise<string>;
+  getDataFeedId?: (blockTag?: number) => Promise<string>;
 }

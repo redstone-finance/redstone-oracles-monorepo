@@ -11,7 +11,11 @@
   "adapterContract": "CA526Y2NQWGWVVQ7RFFPGAZMU66PSYJ3UC2MTVAV4ZU7OM5BOPHDXUSG",
   "dataServiceId": "redstone-primary-prod",
   "priceFeeds": {
-    "ETH": {},
-    "BTC": {}
+    "ETH": {
+      "priceFeedAddress": "CBC3S2VH7CM3DLGC62QXM4UD4YKCQULRLENAEEO7ZZ6U4OMZIQ5B777O"
+    },
+    "BTC": {
+      "priceFeedAddress": "CBLEPHLNPTCW3DY2NF5BYCZVECIP2K6YWBA3JDTU3HMQV6AKXB5GKTXA"
+    }
   }
 }
