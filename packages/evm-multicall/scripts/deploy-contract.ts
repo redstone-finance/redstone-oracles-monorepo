@@ -15,6 +15,7 @@ async function deployRedstoneMulticall() {
   console.log("deploy start");
   const contractFactory = await hre.ethers.getContractFactory("RedstoneMulticall3", wallet);
   const deployed = await contractFactory.deploy();
+  await deployed.deployed();
 
   console.log(`deploy_tx= ${JSON.stringify(deployed.deployTransaction)}`);
   console.log(`address= ${deployed.address}`);
