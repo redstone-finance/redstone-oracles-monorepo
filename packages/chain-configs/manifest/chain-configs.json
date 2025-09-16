@@ -1250,7 +1250,7 @@
     "zeroGravityTestnet": {
       "name": "0G Galileo Testnet",
       "networkId": 16601,
-      "currencySymbol": "OG",
+      "currencySymbol": "0G",
       "publicRpcUrls": [
         "https://evmrpc-testnet.0g.ai",
         "https://rpc.ankr.com/0g_galileo_testnet_evm",
@@ -1266,6 +1266,21 @@
       "isAuctionModel": false,
       "twoDimensionalFees": false,
       "isMainnet": false
+    },
+    "zeroGravity": {
+      "name": "0G Aristotle Mainnet",
+      "networkId": 16661,
+      "currencySymbol": "0G",
+      "publicRpcUrls": ["http://evmrpc.0g.ai"],
+      "avgBlockTimeMs": 400,
+      "multicall3": {
+        "address": "0xaD6CC5a465E5c8284a49eC9eD10EFE275460678c",
+        "type": "RedstoneMulticall3",
+        "gasLimitPerCall": 1000000
+      },
+      "isAuctionModel": false,
+      "twoDimensionalFees": false,
+      "isMainnet": true
     },
     "haven1": {
       "name": "Haven1",
