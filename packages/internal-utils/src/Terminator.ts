@@ -4,6 +4,8 @@ import { loggerFactory } from "@redstone-finance/utils";
 const logger = loggerFactory("Terminator");
 
 export enum ExitCodes {
+  UnknownCriticalError = 1,
+
   ManifestConfigError = 101,
   NodeRemoteConfigError = 102,
   RpcsConfigError = 103,
@@ -17,6 +19,14 @@ export function terminateWithManifestConfigError(errorDetails: string): never {
   );
 
   process.exit(ExitCodes.ManifestConfigError);
+}
+
+export function terminateWithUnknownCriticalError(errorDetails: string): never {
+  logger.error(
+    `Unknown critcal error: ${errorDetails}.\n` +
+      `Terminating with exit code ${ExitCodes.UnknownCriticalError}`
+  );
+  process.exit(ExitCodes.UnknownCriticalError);
 }
 
 export function terminateWithUpdateConfigExitCode(): never {

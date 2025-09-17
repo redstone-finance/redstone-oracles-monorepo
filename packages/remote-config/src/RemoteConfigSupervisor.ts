@@ -1,4 +1,4 @@
-import { ExitCodes } from "@redstone-finance/internal-utils";
+import { ExitCodes, terminateWithUnknownCriticalError } from "@redstone-finance/internal-utils";
 import { loggerFactory, RedstoneCommon } from "@redstone-finance/utils";
 import { ChildProcess, spawn } from "node:child_process";
 import { ConfigUpdater, IRemoteConfigLoader } from "./ConfigUpdater";
@@ -85,10 +85,9 @@ export class RemoteConfigSupervisor {
         this.spawnAndAssignChildProcess("legacy_static_config");
       }
     } catch (e) {
-      logger.info(
-        "Please find details about the correct node launching at https://github.com/redstone-finance/redstone-node/blob/main/docs/PREPARE_ENV_VARIABLES.md"
+      terminateWithUnknownCriticalError(
+        `Please find details about the correct node launching at https://github.com/redstone-finance/redstone-node/blob/main/docs/PREPARE_ENV_VARIABLES.md error=${RedstoneCommon.stringifyError(e)}`
       );
-      throw e;
     }
   }
 
