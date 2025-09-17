@@ -20,4 +20,8 @@ export class StellarBlockchainService extends NonEvmBlockchainService {
   ): Promise<rpc.Api.TransactionInfo[]> {
     return await this.client.getTransactions(startLedger, endLedger);
   }
+
+  async getEvents(startLedger: number, endLedger: number): Promise<rpc.Api.EventResponse[]> {
+    return await this.client.getEvents(startLedger, endLedger);
+  }
 }
