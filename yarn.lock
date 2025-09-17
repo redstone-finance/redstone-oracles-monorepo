@@ -11093,7 +11093,6 @@ __metadata:
     "@types/node-schedule": "npm:^2.1.0"
     "@types/xml2js": "npm:^0.4.14"
     dotenv: "npm:^16.0.3"
-    jszip: "npm:^3.10.1"
     node-schedule: "npm:^2.1.1"
     xml2js: "npm:^0.6.2"
     zod: "npm:^3.22.4"

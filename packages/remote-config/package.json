@@ -20,7 +20,6 @@
     "@redstone-finance/internal-utils": "workspace:*",
     "@redstone-finance/utils": "workspace:*",
     "dotenv": "^16.0.3",
-    "jszip": "^3.10.1",
     "node-schedule": "^2.1.1",
     "xml2js": "^0.6.2",
     "zod": "^3.22.4"
