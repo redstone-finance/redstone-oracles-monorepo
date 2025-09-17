@@ -7,6 +7,8 @@ const DEFAULT_ENABLE_JSON_LOGS = true;
 const DEFAULT_LOG_LEVEL = LogLevel.Info;
 const MAX_DEPTH = 5;
 
+const WHITELISTED_HOSTANAMES = new Set(["github.com"]);
+
 export type RedstoneLogger = Consola | Console;
 
 const LogTypeToLevel: { [key: string]: LogLevel } = {
@@ -131,6 +133,9 @@ export function sanitizeLogMessage(message: string): string {
   return message.replace(urlRegex, (match) => {
     try {
       const parsedUrl = new URL(match);
+      if (WHITELISTED_HOSTANAMES.has(parsedUrl.hostname)) {
+        return match;
+      }
       parsedUrl.password = "";
       parsedUrl.username = "";
       parsedUrl.pathname = parsedUrl.search
