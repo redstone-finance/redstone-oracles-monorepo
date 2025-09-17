@@ -85,10 +85,10 @@ export class RemoteConfigSupervisor {
         this.spawnAndAssignChildProcess("legacy_static_config");
       }
     } catch (e) {
-      logger.error((e as Error).stack);
       logger.info(
         "Please find details about the correct node launching at https://github.com/redstone-finance/redstone-node/blob/main/docs/PREPARE_ENV_VARIABLES.md"
       );
+      throw e;
     }
   }
 
