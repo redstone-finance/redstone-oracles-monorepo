@@ -11,6 +11,7 @@ import {
   TransactionBuilder,
   xdr,
 } from "@stellar/stellar-sdk";
+import { Api } from "@stellar/stellar-sdk/lib/minimal/rpc/api";
 import axios from "axios";
 import z from "zod";
 import * as XdrUtils from "../XdrUtils";
@@ -24,6 +25,8 @@ const RETRY_CONFIG: Omit<RedstoneCommon.RetryConfig, "fn"> = {
   maxRetries: RETRY_COUNT,
   waitBetweenMs: SLEEP_TIME_MS,
 };
+
+const REDSTONE_EVENT_TOPIC_QUALIFIER = "REDSTONE";
 
 export class StellarRpcClient {
   constructor(private readonly server: rpc.Server) {}
@@ -214,23 +217,15 @@ export class StellarRpcClient {
     }
   }
 
-  async getTransactions(startLedger: number, endLedger: number) {
-    const { oldestLedger, latestLedger } = await this.server.getTransactions({
-      startLedger: await this.getBlockNumber(),
-      pagination: { limit: 0 },
-    } as unknown as rpc.Api.GetTransactionsRequest);
+  async getTransactions(inputStartLedger: number, inputEndLedger: number) {
+    const { startLedger, endLedger, inRange } = await this.fixLedgerVersions(
+      inputStartLedger,
+      inputEndLedger
+    );
 
-    if (oldestLedger > startLedger) {
-      const end = Math.min(endLedger, oldestLedger);
-      console.warn(`RPC node is past requested ledgers, skipping: ${startLedger} - ${end}`);
-    }
-
-    if (oldestLedger > endLedger || latestLedger < startLedger) {
+    if (!inRange) {
       return [];
     }
-
-    startLedger = Math.max(startLedger, oldestLedger);
-    endLedger = Math.min(endLedger, latestLedger);
 
     const FETCHING_LIMIT = 200;
     let { transactions, cursor } = await this.server.getTransactions({
@@ -255,6 +250,78 @@ export class StellarRpcClient {
     }
 
     return transactions.filter(({ ledger }) => ledger >= startLedger && ledger <= endLedger);
+  }
+
+  async getEvents(
+    inputStartLedger: number,
+    inputEndLedger: number,
+    topic = REDSTONE_EVENT_TOPIC_QUALIFIER
+  ) {
+    const { startLedger, endLedger, inRange } = await this.fixLedgerVersions(
+      inputStartLedger,
+      inputEndLedger
+    );
+
+    if (!inRange) {
+      return [];
+    }
+
+    const FETCHING_LIMIT = 10000;
+    const allEvents = [];
+    let currentCursor = undefined;
+    let hasMoreEvents = false;
+
+    do {
+      console.log(
+        `Getting events with ${currentCursor ? currentCursor : `limit: ${FETCHING_LIMIT}`}`
+      );
+      const filters: Api.EventFilter[] = [
+        {
+          type: "contract",
+          topics: [[xdr.ScVal.scvSymbol(topic).toXDR("base64")]],
+        },
+      ];
+      const { events, cursor } = await this.server.getEvents(
+        currentCursor
+          ? {
+              cursor: currentCursor,
+              limit: FETCHING_LIMIT,
+              filters,
+            }
+          : {
+              startLedger,
+              endLedger,
+              limit: FETCHING_LIMIT,
+              filters,
+            }
+      );
+      allEvents.push(...events);
+      hasMoreEvents = events.length >= FETCHING_LIMIT;
+      currentCursor = cursor;
+    } while (hasMoreEvents && RedstoneCommon.isDefined(currentCursor));
+
+    return allEvents;
+  }
+
+  private async fixLedgerVersions(startLedger: number, endLedger: number) {
+    const { oldestLedger, latestLedger } = await this.server.getTransactions({
+      startLedger: await this.getBlockNumber(),
+      pagination: { limit: 0 },
+    } as unknown as rpc.Api.GetTransactionsRequest);
+
+    if (oldestLedger > startLedger) {
+      const end = Math.min(endLedger, oldestLedger);
+      console.warn(`RPC node is past requested ledgers, skipping: ${startLedger} - ${end}`);
+    }
+
+    if (oldestLedger > endLedger || latestLedger < startLedger) {
+      return { startLedger, endLedger, inRange: false };
+    }
+
+    startLedger = Math.max(startLedger, oldestLedger);
+    endLedger = Math.min(endLedger, latestLedger);
+
+    return { startLedger, endLedger, inRange: true };
   }
 
   async sendTransaction(tx: Transaction) {
