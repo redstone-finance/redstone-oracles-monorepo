@@ -69,6 +69,8 @@ export const hourToMs = (hours: number) => hours * 3_600_000;
 
 export const msToHours = (ms: number) => ms / 3_600_000;
 
+export const secsToMs = (secs: number) => secs * 1_000;
+
 export const intervalMsToCronFormat = (intervalMs: number) => {
   // edge case for every minute
   if (intervalMs === 60_000) {

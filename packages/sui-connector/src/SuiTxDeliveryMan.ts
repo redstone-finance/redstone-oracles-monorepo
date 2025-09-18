@@ -7,7 +7,7 @@ import { DEFAULT_GAS_BUDGET } from "./SuiContractUtil";
 import { SuiConfig } from "./config";
 
 const MAX_PARALLEL_TRANSACTION_COUNT = 5;
-const SPLIT_COIN_INITIAL_BALANCE = DEFAULT_GAS_BUDGET;
+const SPLIT_COIN_INITIAL_BALANCE = 2n * DEFAULT_GAS_BUDGET;
 
 export class SuiTxDeliveryMan {
   protected readonly logger = loggerFactory("sui-tx-delivery-man");
@@ -50,8 +50,9 @@ export class SuiTxDeliveryMan {
     const date = Date.now();
     const { digest, data } = await this.executeTxWithExecutor(tx, this.getExecutor());
 
-    const { status, success, error } = SuiTxDeliveryMan.getStatus(data);
+    const { status } = SuiTxDeliveryMan.getStatus(data);
     const cost = SuiTxDeliveryMan.getCost(data);
+
     this.logger.log(
       `Transaction ${digest} finished in ${Date.now() - date} [ms], status: ${status.toUpperCase()}, cost: ${cost} SUI`,
       {
@@ -60,10 +61,6 @@ export class SuiTxDeliveryMan {
         gasData: data.transaction!.data.gasData,
       }
     );
-
-    if (!success) {
-      throw new Error(error);
-    }
 
     return digest;
   }
@@ -108,8 +105,17 @@ export class SuiTxDeliveryMan {
   }
 
   private static getCost(response: SuiTransactionBlockResponse) {
-    return (
-      Number(BigInt(response.balanceChanges![0].amount.replace("-", ""))) / Number(MIST_PER_SUI)
-    );
+    if (!response.effects) {
+      return 0;
+    }
+
+    const gasUsed = response.effects.gasUsed;
+    const totalMist =
+      BigInt(gasUsed.computationCost) +
+      BigInt(gasUsed.storageCost) -
+      BigInt(gasUsed.storageRebate) +
+      BigInt(gasUsed.nonRefundableStorageFee);
+
+    return Number(totalMist) / Number(MIST_PER_SUI);
   }
 }
