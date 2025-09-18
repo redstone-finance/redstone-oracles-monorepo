@@ -2845,9 +2845,16 @@
       "rateFeed": false
     },
     "URANIUM": {
+      "source": ["tezos-uranium-price-api"],
+      "denomination": "USD",
+      "rateFeed": false,
+      "fallbackToken": "URANIUM_FALLBACK"
+    },
+    "URANIUM_FALLBACK": {
       "source": ["commodity-price-api", "metals-api", "metal-price-api"],
       "denomination": "USD",
-      "rateFeed": false
+      "rateFeed": false,
+      "skipBroadcasting": true
     },
     "lstHYPE_FUNDAMENTAL": {
       "source": ["hyperevm-evm-fetcher-hyperbeat-oracle"],
