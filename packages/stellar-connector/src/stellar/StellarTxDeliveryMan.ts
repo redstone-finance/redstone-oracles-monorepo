@@ -1,5 +1,5 @@
 import { loggerFactory, RedstoneCommon } from "@redstone-finance/utils";
-import { BASE_FEE, Operation, xdr } from "@stellar/stellar-sdk";
+import { Operation, xdr } from "@stellar/stellar-sdk";
 import { StellarRpcClient } from "../stellar/StellarRpcClient";
 import { Signer, StellarSigner } from "./StellarSigner";
 import {
@@ -61,7 +61,9 @@ export class StellarTxDeliveryMan {
     const tx = await txCreator();
 
     const multiplier = this.config.gasMultiplier ** iteration;
-    const fee = BigInt(Math.round(Math.min(Number(BASE_FEE) * multiplier, this.config.gasLimit)));
+    const fee = BigInt(
+      Math.round(Math.min(this.config.gasBase * multiplier, this.config.gasLimit))
+    );
 
     this.logger.info(`Sending transaction; Attempt #${iteration + 1} (fee: ${fee} stroops)`);
 
