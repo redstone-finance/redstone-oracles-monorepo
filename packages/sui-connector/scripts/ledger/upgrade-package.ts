@@ -1,17 +1,10 @@
 import { Transaction, UpgradePolicy } from "@mysten/sui/transactions";
-import { execSync } from "child_process";
-import { DEFAULT_GAS_BUDGET, getDeployDir, readIds, SuiNetworkName } from "../../src";
+import { buildPackage, DEFAULT_GAS_BUDGET, getDeployDir, readIds, SuiNetworkName } from "../../src";
 import { generateTransactionData } from "./generate-transaction-data";
-
-const BUILD_CMD = `sui move build --force --dump-bytecode-as-base64 --ignore-chain`;
 
 export function setUpUpgradeTx(tx: Transaction, network: SuiNetworkName) {
   const packagePath = getDeployDir();
-  const { modules, dependencies, digest } = JSON.parse(
-    execSync(`${BUILD_CMD} --path ${packagePath}`, {
-      encoding: "utf8",
-    })
-  ) as { modules: string[]; dependencies: string[]; digest: number[] };
+  const { modules, dependencies, digest } = buildPackage(packagePath);
 
   const ids = readIds(network);
   tx.setGasBudget(10n * DEFAULT_GAS_BUDGET);

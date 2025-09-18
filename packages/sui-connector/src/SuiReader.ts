@@ -52,7 +52,7 @@ export class SuiReader {
       parentId: pricesTableId,
     });
     if (dynamicFields.data.length === 0) {
-      throw new Error("Dynamic fields not found");
+      return [];
     }
 
     return dynamicFields.data.map((field) => ({

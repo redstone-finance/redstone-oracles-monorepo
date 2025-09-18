@@ -5194,6 +5194,28 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@gql.tada/cli-utils@npm:1.7.1":
+  version: 1.7.1
+  resolution: "@gql.tada/cli-utils@npm:1.7.1"
+  dependencies:
+    "@0no-co/graphqlsp": "npm:^1.12.13"
+    "@gql.tada/internal": "npm:1.0.8"
+    graphql: "npm:^15.5.0 || ^16.0.0 || ^17.0.0"
+  peerDependencies:
+    "@0no-co/graphqlsp": ^1.12.13
+    "@gql.tada/svelte-support": 1.0.1
+    "@gql.tada/vue-support": 1.0.1
+    graphql: ^15.5.0 || ^16.0.0 || ^17.0.0
+    typescript: ^5.0.0
+  peerDependenciesMeta:
+    "@gql.tada/svelte-support":
+      optional: true
+    "@gql.tada/vue-support":
+      optional: true
+  checksum: 10c0/e1ab1e5c93bdfc9df24577eaa6ab77d0f287d5b5d850edc568def3a5d935a98723de543c62b3ba5e432b653ff97c9e8477d97563dc36c1eb39840776f89bc878
+  languageName: node
+  linkType: hard
+
 "@gql.tada/internal@npm:1.0.8, @gql.tada/internal@npm:^1.0.0":
   version: 1.0.8
   resolution: "@gql.tada/internal@npm:1.0.8"
@@ -7456,13 +7478,23 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@mysten/bcs@npm:1.6.2, @mysten/bcs@npm:^1.6.2":
-  version: 1.6.2
-  resolution: "@mysten/bcs@npm:1.6.2"
+"@mysten/bcs@npm:1.7.0":
+  version: 1.7.0
+  resolution: "@mysten/bcs@npm:1.7.0"
   dependencies:
-    "@mysten/utils": "npm:0.0.1"
+    "@mysten/utils": "npm:0.1.1"
     "@scure/base": "npm:^1.2.6"
-  checksum: 10c0/8ae38ec7369e06c9850572ed42586cfad927d50563a1f039136b640cce0db9731bfbdb980ed6ae2ac8690874794ae59a6d28309d67e795f9de17ab400d62c973
+  checksum: 10c0/9cb22ef1d3d31b18f5942ce0186e7578893f74d4610f152f97e1b1b7c8e53402dcd625b0664113744d189d13b867c43db13f924fd11ad3ed7bed23e3af1c5874
+  languageName: node
+  linkType: hard
+
+"@mysten/bcs@npm:^1.6.2":
+  version: 1.8.0
+  resolution: "@mysten/bcs@npm:1.8.0"
+  dependencies:
+    "@mysten/utils": "npm:0.2.0"
+    "@scure/base": "npm:^1.2.6"
+  checksum: 10c0/0be5ce820acff75bfecf3fe7adcb74c335813df5b2bca46a24006f21d8a4b5211a4e4e3e8faa7fe5ef5dee3242581d2361a66c13ce8efd1932e280f7fa9e1d80
   languageName: node
   linkType: hard
 
@@ -7496,32 +7528,41 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@mysten/sui@npm:^1.31.0":
-  version: 1.31.0
-  resolution: "@mysten/sui@npm:1.31.0"
+"@mysten/sui@npm:1.37.3":
+  version: 1.37.3
+  resolution: "@mysten/sui@npm:1.37.3"
   dependencies:
     "@graphql-typed-document-node/core": "npm:^3.2.0"
-    "@mysten/bcs": "npm:1.6.2"
-    "@mysten/utils": "npm:0.0.1"
-    "@noble/curves": "npm:^1.9.1"
+    "@mysten/bcs": "npm:1.7.0"
+    "@mysten/utils": "npm:0.1.1"
+    "@noble/curves": "npm:^1.9.4"
     "@noble/hashes": "npm:^1.8.0"
     "@scure/base": "npm:^1.2.6"
     "@scure/bip32": "npm:^1.7.0"
     "@scure/bip39": "npm:^1.6.0"
-    gql.tada: "npm:^1.8.2"
+    gql.tada: "npm:^1.8.12"
     graphql: "npm:^16.11.0"
     poseidon-lite: "npm:^0.2.0"
     valibot: "npm:^0.36.0"
-  checksum: 10c0/c869f1f108ea8bfaa1edd7a07db93c98d79e2717090d251275e91a349ec2c3550860f0c48cedeefb4168f77582064540dfff83a3bab5857b74bd65de1688270b
+  checksum: 10c0/35fbd43642087afbc6a8839727c1b3cce79e27c5af8c8bc3932a49b05d6654b68303508f7264bde2eda554312e03ffb19da0a2c6247d899548b577f9b2c723c6
   languageName: node
   linkType: hard
 
-"@mysten/utils@npm:0.0.1":
-  version: 0.0.1
-  resolution: "@mysten/utils@npm:0.0.1"
+"@mysten/utils@npm:0.1.1":
+  version: 0.1.1
+  resolution: "@mysten/utils@npm:0.1.1"
   dependencies:
     "@scure/base": "npm:^1.2.6"
-  checksum: 10c0/3a6ed578bb0c1abd7f5611d61dbc3b01bb3a6d972c98e4ff589eaa5b1c858949f12d789484dc19584ebad4e63aed7137c37ce36230b54d2b448c210c951e43b6
+  checksum: 10c0/95b0493eaef8aeed885b9f4a62c57b62c8340274ea9c44e7a7bab7ea5310f77abe44fd4cd81f4df1dca027fa67d1f4bec3ccfb298ebd634f6fe5c33062528c6b
+  languageName: node
+  linkType: hard
+
+"@mysten/utils@npm:0.2.0":
+  version: 0.2.0
+  resolution: "@mysten/utils@npm:0.2.0"
+  dependencies:
+    "@scure/base": "npm:^1.2.6"
+  checksum: 10c0/016b8dca513ba268f6d48137fad2298bea009e2ead3bdfed90350651a8c95ff2b9eb7141ee7176e28a57565033410de2fbc8004bcd9fafc8679e6b1a743328a9
   languageName: node
   linkType: hard
 
@@ -7941,16 +7982,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@noble/curves@npm:^1.9.1":
-  version: 1.9.2
-  resolution: "@noble/curves@npm:1.9.2"
-  dependencies:
-    "@noble/hashes": "npm:1.8.0"
-  checksum: 10c0/21d049ae4558beedbf5da0004407b72db84360fa29d64822d82dc9e80251e1ecb46023590cc4b20e70eed697d1b87279b4911dc39f8694c51c874289cfc8e9a7
-  languageName: node
-  linkType: hard
-
-"@noble/curves@npm:^1.9.6":
+"@noble/curves@npm:^1.9.4, @noble/curves@npm:^1.9.6":
   version: 1.9.7
   resolution: "@noble/curves@npm:1.9.7"
   dependencies:
@@ -9424,7 +9456,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@redstone-finance/chain-agnostic-oracle-tests@workspace:packages/chain-agnostic-oracle-tests":
+"@redstone-finance/chain-agnostic-oracle-tests@workspace:*, @redstone-finance/chain-agnostic-oracle-tests@workspace:packages/chain-agnostic-oracle-tests":
   version: 0.0.0-use.local
   resolution: "@redstone-finance/chain-agnostic-oracle-tests@workspace:packages/chain-agnostic-oracle-tests"
   dependencies:
@@ -11240,11 +11272,13 @@ __metadata:
   resolution: "@redstone-finance/sui-connector@workspace:packages/sui-connector"
   dependencies:
     "@ledgerhq/hw-transport-node-hid": "npm:^6.29.5"
-    "@mysten/bcs": "npm:^1.6.2"
+    "@mysten/bcs": "npm:1.7.0"
     "@mysten/ledgerjs-hw-app-sui": "npm:^0.4.2"
-    "@mysten/sui": "npm:^1.31.0"
+    "@mysten/sui": "npm:1.37.3"
+    "@redstone-finance/chain-agnostic-oracle-tests": "workspace:*"
     "@redstone-finance/chain-configs": "workspace:*"
     "@redstone-finance/sdk": "workspace:*"
+    "@redstone-finance/suiangria": "git+https://github.com/redstone-finance/suiangria.git#v0.0.1-all"
     "@redstone-finance/utils": "workspace:*"
     decimal.js: "npm:^10.4.3"
     dotenv: "npm:^16.0.3"
@@ -11254,6 +11288,17 @@ __metadata:
     zod: "npm:^3.22.4"
   languageName: unknown
   linkType: soft
+
+"@redstone-finance/suiangria@git+https://github.com/redstone-finance/suiangria.git#v0.0.1-all":
+  version: 0.0.1
+  resolution: "@redstone-finance/suiangria@https://github.com/redstone-finance/suiangria.git#commit=3a8a81d35491784fa6e4890456ef8344b267d966"
+  dependencies:
+    "@mysten/bcs": "npm:^1.6.2"
+  peerDependencies:
+    "@mysten/sui": ^1.31.0
+  checksum: 10c0/fe37a60369018f1f9183862e65176a24fccbe243c2b3074dd709d1d441d3babbbaa1a19a6951882eb268b078feff199e409fa1675566c285e7622746297eaadf
+  languageName: node
+  linkType: hard
 
 "@redstone-finance/task-performer@workspace:packages/avs/task-performer":
   version: 0.0.0-use.local
@@ -25304,7 +25349,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"gql.tada@npm:^1.2.0, gql.tada@npm:^1.8.2":
+"gql.tada@npm:^1.2.0":
   version: 1.8.10
   resolution: "gql.tada@npm:1.8.10"
   dependencies:
@@ -25318,6 +25363,23 @@ __metadata:
     gql-tada: bin/cli.js
     gql.tada: bin/cli.js
   checksum: 10c0/b0485a9cfcd5bfd327bc3d7533654184808eadbf6d47bcb8cdc8655f2dc3928ec0b1a8ffb5f57345f0902370dc0c249f85827644fa5f9eace0817a1f812b1dc2
+  languageName: node
+  linkType: hard
+
+"gql.tada@npm:^1.8.12":
+  version: 1.8.13
+  resolution: "gql.tada@npm:1.8.13"
+  dependencies:
+    "@0no-co/graphql.web": "npm:^1.0.5"
+    "@0no-co/graphqlsp": "npm:^1.12.13"
+    "@gql.tada/cli-utils": "npm:1.7.1"
+    "@gql.tada/internal": "npm:1.0.8"
+  peerDependencies:
+    typescript: ^5.0.0
+  bin:
+    gql-tada: bin/cli.js
+    gql.tada: bin/cli.js
+  checksum: 10c0/d8163f0d0122bc8c0ef6df9cc52f2a8c86c4a34d95f09c2120e78514975461ab307ad97da01a1998a953c441080e617be9e2d1b5c5cd788a647fef96cb62f0a3
   languageName: node
   linkType: hard
 

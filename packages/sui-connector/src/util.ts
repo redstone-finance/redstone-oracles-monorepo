@@ -3,6 +3,7 @@ import { getFullnodeUrl, SuiClient } from "@mysten/sui/client";
 import type { Keypair } from "@mysten/sui/cryptography";
 import { Secp256k1Keypair } from "@mysten/sui/keypairs/secp256k1";
 import { RedstoneCommon } from "@redstone-finance/utils";
+import { execSync } from "child_process";
 import { arrayify, isHexString } from "ethers/lib/utils";
 import fs from "fs";
 import path from "path";
@@ -95,4 +96,14 @@ export function makeFeedIdBytes(feedId: string): Uint8Array {
 
 export function uint8ArrayToBcs(uint8Array: Uint8Array) {
   return bcs.vector(bcs.u8()).serialize(uint8Array);
+}
+
+export function buildPackage(packagePath: string) {
+  const buildCmd = `sui move build --force --dump-bytecode-as-base64 --ignore-chain`;
+
+  return JSON.parse(
+    execSync(`${buildCmd} --path ${packagePath}`, {
+      encoding: "utf8",
+    })
+  ) as { modules: string[]; dependencies: string[]; digest: number[] };
 }

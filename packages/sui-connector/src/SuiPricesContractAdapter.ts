@@ -4,6 +4,7 @@ import { Transaction } from "@mysten/sui/transactions";
 import {
   ContractData,
   type ContractParamsProvider,
+  getLastRoundDetails,
   IMultiFeedPricesContractAdapter,
 } from "@redstone-finance/sdk";
 import { RedstoneCommon } from "@redstone-finance/utils";
@@ -82,7 +83,10 @@ export class SuiPricesContractAdapter implements IMultiFeedPricesContractAdapter
   ): Promise<bigint[]> {
     const contractData = await this.readContractData(paramsProvider.getDataFeedIds(), blockNumber);
 
-    return paramsProvider.getDataFeedIds().map((feedId) => contractData[feedId].lastValue);
+    return paramsProvider
+      .getDataFeedIds()
+      .map((feedId) => getLastRoundDetails(contractData, feedId))
+      .map((data) => data.lastValue);
   }
 
   async readLatestUpdateBlockTimestamp(feedId: string, blockNumber?: number): Promise<number> {
@@ -109,7 +113,7 @@ export class SuiPricesContractAdapter implements IMultiFeedPricesContractAdapter
   }
 
   private async readAnyRoundDetails(feedId: string, blockNumber?: number) {
-    return Object.values(await this.readContractData([feedId], blockNumber))[0];
+    return getLastRoundDetails(await this.readContractData([feedId], blockNumber), feedId);
   }
 
   async writePricesFromPayloadToContract(paramsProvider: ContractParamsProvider): Promise<string> {
