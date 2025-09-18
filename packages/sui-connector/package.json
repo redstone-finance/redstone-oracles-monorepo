@@ -27,8 +27,8 @@
     "convert-evm-private-key": "yarn global:ts-node scripts/convert-evm-private-key.ts"
   },
   "dependencies": {
-    "@mysten/bcs": "^1.6.2",
-    "@mysten/sui": "^1.31.0",
+    "@mysten/bcs": "1.7.0",
+    "@mysten/sui": "1.37.3",
     "@redstone-finance/sdk": "workspace:*",
     "@redstone-finance/utils": "workspace:*",
     "decimal.js": "^10.4.3",
@@ -40,7 +40,9 @@
   "devDependencies": {
     "@ledgerhq/hw-transport-node-hid": "^6.29.5",
     "@mysten/ledgerjs-hw-app-sui": "^0.4.2",
+    "@redstone-finance/chain-agnostic-oracle-tests": "workspace:*",
     "@redstone-finance/chain-configs": "workspace:*",
+    "@redstone-finance/suiangria": "git+https://github.com/redstone-finance/suiangria.git#v0.0.1-all",
     "secp256k1": "^5.0.1"
   },
   "files": [
