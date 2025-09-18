@@ -70,7 +70,7 @@ export class HttpClient {
   public httpAgent?: HttpAgent;
   private readonly axiosInstance: AxiosInstance;
 
-  constructor(httpClientOptions: HttpClientOptions) {
+  constructor(readonly httpClientOptions: HttpClientOptions) {
     if (isNode) {
       /** https://nodejs.org/api/http.html#new-agentoptions */
       this.httpsAgent = new HttpsAgent({
@@ -106,5 +106,9 @@ export class HttpClient {
 
   post<R>(urlSuffix: string, body: unknown, config: AxiosRequestConfig) {
     return this.axiosInstance.post<R>(urlSuffix, body, config);
+  }
+
+  toJSON() {
+    return this.httpClientOptions;
   }
 }
