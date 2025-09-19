@@ -1,6 +1,6 @@
 import { hexToBytes } from "../src/util";
 
-describe.only("utils", () => {
+describe("utils", () => {
   it("should serialize signers properly", () => {
     const signer = "0x8BB8F32Df04c8b654987DAaeD53D6B6091e3B774";
     const want = [
