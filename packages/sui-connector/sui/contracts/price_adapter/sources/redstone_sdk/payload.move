@@ -13,14 +13,12 @@ use redstone_price_adapter::redstone_sdk_data_package::{
     data_points,
     new_data_point,
     new_data_package,
-    timestamp
+    timestamp,
+    signer_address
 };
 use redstone_price_adapter::redstone_sdk_median::calculate_median;
 use redstone_price_adapter::redstone_sdk_validate::{verify_data_packages, verify_redstone_marker};
-
-// === Errors ===
-
-const E_DATA_INCONSISTENT: u64 = 0;
+use redstone_price_adapter::result::{Result, ok, error};
 
 // === Constants ===
 
@@ -39,37 +37,67 @@ public struct Payload has copy, drop {
     data_packages: vector<DataPackage>,
 }
 
+public struct ParsedPayload has copy, drop {
+    aggregated_value: u256,
+    new_package_timestamp: u64,
+}
+
 // === Public Functions ===
+
+public fun destroy_processed_payload(payload: ParsedPayload): (u256, u64) {
+    (payload.aggregated_value, payload.new_package_timestamp)
+}
 
 public fun process_payload(
     config: &Config,
     timestamp_now_ms: u64,
     feed_id: vector<u8>,
     payload: vector<u8>,
-): (u256, u64) {
+): Result<ParsedPayload> {
     let parsed_payload = parse_raw_payload(payload);
-    let data_packages = filter_packages_by_feed_id(
-        &data_packages(&parsed_payload),
-        &feed_id,
+
+    let data_packages = parsed_payload.map_ref!(
+        |parsed_payload| filter_packages_by_feed_id(
+            &data_packages(parsed_payload),
+            &feed_id,
+        ),
     );
 
-    let data_packages = filter_out_zero_values(
+    let data_packages = data_packages.map!(
+        |data_packages| filter_out_zero_values(
+            data_packages,
+        ),
+    );
+
+    let verification_result = data_packages.flat_map!(
+        |data_packages| verify_data_packages(
+            &data_packages,
+            config,
+            timestamp_now_ms,
+        ),
+    );
+
+    if (!verification_result.is_ok()) {
+        return error(verification_result.unwrap_err().into_bytes())
+    };
+
+    let values = parsed_payload.map!(
+        |parsed_payload| extract_values_by_feed_id(&parsed_payload, &feed_id),
+    );
+
+    let aggregated_value = values.flat_map!(
+        |values| calculate_median(
+            &mut values.map!(|bytes| from_bytes_to_u256(&bytes)),
+        ),
+    );
+
+    aggregated_value.map_both!(
         data_packages,
-    );
-
-    verify_data_packages(
-        &data_packages,
-        config,
-        timestamp_now_ms,
-    );
-
-    let values = extract_values_by_feed_id(&parsed_payload, &feed_id);
-    let aggregated_value = calculate_median(
-        &mut values.map!(|bytes| from_bytes_to_u256(&bytes)),
-    );
-    let new_package_timestamp = data_packages[0].timestamp();
-
-    (aggregated_value, new_package_timestamp)
+        |aggregated_value, data_packages| ParsedPayload {
+            aggregated_value,
+            new_package_timestamp: data_packages[0].timestamp(),
+        },
+    )
 }
 
 // === Public-View Functions ===
@@ -89,28 +117,35 @@ public fun data_packages(payload: &Payload): vector<DataPackage> {
 
 // === Private Functions ===
 
-fun parse_raw_payload(mut payload: vector<u8>): Payload {
-    verify_redstone_marker(&payload);
+fun parse_raw_payload(mut payload: vector<u8>): Result<Payload> {
+    let marker_verification_result = verify_redstone_marker(&payload);
+    if (!marker_verification_result.is_ok()) {
+        return error(marker_verification_result.unwrap_err().into_bytes())
+    };
+
     trim_redstone_marker(&mut payload);
 
-    let parsed_payload = trim_payload(&mut payload);
-
-    parsed_payload
+    trim_payload(&mut payload)
 }
 
 fun trim_redstone_marker(payload: &mut vector<u8>) {
     let mut i = 0;
+
     while (i < REDSTONE_MARKER_BS) {
         payload.pop_back();
         i = i + 1;
     };
 }
 
-fun trim_payload(payload: &mut vector<u8>): Payload {
+fun trim_payload(payload: &mut vector<u8>): Result<Payload> {
     let data_packages_count = trim_metadata(payload);
     let data_packages = trim_data_packages(payload, data_packages_count);
-    assert!(payload.is_empty(), E_DATA_INCONSISTENT);
-    Payload { data_packages }
+
+    if (!payload.is_empty()) {
+        return error(b"Data inconsistent, leftover bytes after parsing")
+    };
+
+    data_packages.map!(|data_packages| Payload { data_packages })
 }
 
 fun trim_metadata(payload: &mut vector<u8>): u64 {
@@ -118,6 +153,7 @@ fun trim_metadata(payload: &mut vector<u8>): u64 {
         payload,
         UNSIGNED_METADATA_BYTE_SIZE_BS,
     );
+
     let unsigned_metadata_size = from_bytes_to_u64(&unsigned_metadata_size);
     let _ = trim_end(payload, unsigned_metadata_size);
     let package_count = trim_end(payload, DATA_PACKAGES_COUNT_BS);
@@ -125,13 +161,25 @@ fun trim_metadata(payload: &mut vector<u8>): u64 {
     from_bytes_to_u64(&package_count)
 }
 
-fun trim_data_packages(payload: &mut vector<u8>, count: u64): vector<DataPackage> {
-    vector::tabulate!(count, |_| {
-        trim_data_package(payload)
-    })
+fun trim_data_packages(payload: &mut vector<u8>, count: u64): Result<vector<DataPackage>> {
+    let mut packages = vector::empty();
+    let mut i = 0;
+
+    while (i < count) {
+        let package = trim_data_package(payload);
+
+        if (!package.is_ok()) {
+            return error(package.unwrap_err().into_bytes())
+        };
+
+        vector::push_back(&mut packages, package.unwrap());
+        i = i + 1;
+    };
+
+    ok(packages)
 }
 
-fun trim_data_package(payload: &mut vector<u8>): DataPackage {
+fun trim_data_package(payload: &mut vector<u8>): Result<DataPackage> {
     let signature = trim_end(payload, SIGNATURE_BS);
     let mut tmp = *payload;
     let data_point_count = trim_data_point_count(payload);
@@ -142,13 +190,18 @@ fun trim_data_package(payload: &mut vector<u8>): DataPackage {
             + TIMESTAMP_BS + DATA_POINTS_COUNT_BS;
     let signable_bytes = trim_end(&mut tmp, size);
     let signer_address = recover_address(&signable_bytes, &signature);
-    let data_points = trim_data_points(
-        payload,
-        data_point_count,
-        value_size,
-    );
 
-    new_data_package(signer_address, timestamp, data_points)
+    signer_address.map!(
+        |signer_address| new_data_package(
+            signer_address,
+            timestamp,
+            trim_data_points(
+                payload,
+                data_point_count,
+                value_size,
+            ),
+        ),
+    )
 }
 
 fun trim_data_point_count(payload: &mut vector<u8>): u64 {
@@ -270,7 +323,9 @@ fun test_process_payload() {
     let feed_id = x"4554480000000000000000000000000000000000000000000000000000000000";
     let timestamp = 1707307760000;
 
-    let (val, timestamp) = process_payload(&test_config(), timestamp, feed_id, payload);
+    let (val, timestamp) = process_payload(&test_config(), timestamp, feed_id, payload)
+        .unwrap()
+        .destroy_processed_payload();
 
     assert!(val == 236389750361);
     assert!(timestamp == 1707307760000);
@@ -278,7 +333,7 @@ fun test_process_payload() {
 
 #[test]
 fun test_make_payload() {
-    let payload = parse_raw_payload(SAMPLE_PAYLOAD);
+    let payload = parse_raw_payload(SAMPLE_PAYLOAD).unwrap();
 
     assert!(payload.data_packages().length() == 15);
 }
@@ -292,7 +347,7 @@ fun test_trim_data_packages() {
     let feed_id = x"4554480000000000000000000000000000000000000000000000000000000000";
     let timestamp = 1707144580000;
 
-    let data_packages = trim_data_packages(&mut data_package_bytes, 1);
+    let data_packages = trim_data_packages(&mut data_package_bytes, 1).unwrap();
 
     assert!(data_package_bytes == vector::empty());
     assert!(data_packages.length() == 1);

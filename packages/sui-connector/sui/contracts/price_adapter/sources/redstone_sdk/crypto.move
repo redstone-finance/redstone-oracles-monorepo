@@ -3,13 +3,7 @@
 module redstone_price_adapter::redstone_sdk_crypto;
 
 use redstone_price_adapter::redstone_sdk_conv::from_bytes_to_u256;
-
-// === Errors ===
-
-const E_INVALID_SIGNATURE_LEN: u64 = 0;
-const E_INVALID_RECOVERY_ID: u64 = 1;
-const E_INVALID_VECTOR_LEN: u64 = 2;
-const E_INVALID_SIGNATURE: u64 = 3;
+use redstone_price_adapter::result::{Result, error, ok};
 
 // === Constants ===
 
@@ -23,8 +17,10 @@ const ECDSA_N_DIV_2: u256 = 0x7fffffffffffffffffffffffffffffff5d576e7357a4501ddf
 /// the minimum signers threshold
 ///
 /// the function might abort with invalid signature error if address recovery fails
-public fun recover_address(msg: &vector<u8>, signature: &vector<u8>): vector<u8> {
-    assert!(signature.length() == 65, E_INVALID_SIGNATURE_LEN);
+public fun recover_address(msg: &vector<u8>, signature: &vector<u8>): Result<vector<u8>> {
+    if (signature.length() != 65) {
+        return error(b"Invalid signature len")
+    };
 
     // Create a mutable copy of the signature
     let mut sig = *signature;
@@ -36,8 +32,14 @@ public fun recover_address(msg: &vector<u8>, signature: &vector<u8>): vector<u8>
     } else {
         v
     };
-    assert!(v <2, E_INVALID_RECOVERY_ID);
-    check_s(&sig);
+
+    if (v >= 2) {
+        return error(b"Invalid recovery id")
+    };
+
+    if (!check_s(&sig)) {
+        return error(b"Invalid `s` part in signature")
+    };
 
     // Replace the last byte of the signature with the adjusted recovery byte
     *&mut sig[64] = v;
@@ -50,35 +52,37 @@ public fun recover_address(msg: &vector<u8>, signature: &vector<u8>): vector<u8>
     );
     let public_key = sui::ecdsa_k1::decompress_pubkey(&compressed_public_key);
 
+    let public_key = last_n_bytes(
+        &public_key,
+        public_key.length() - 1,
+    ).unwrap();
+
     let key_hash = sui::hash::keccak256(
-        &last_n_bytes(
-            &public_key,
-            public_key.length() - 1,
-        ),
+        &public_key,
     );
 
-    let recovered_address = last_n_bytes(&key_hash, 20);
-
-    recovered_address
+    last_n_bytes(&key_hash, 20)
 }
 
 // === Private Functions ===
 
-fun check_s(signature: &vector<u8>) {
+fun check_s(signature: &vector<u8>): bool {
     // signature = [r0..r31][s0..s31][v]
     let s = vector::tabulate!(32, |i| signature[32 + i]);
     let s_number = from_bytes_to_u256(&s);
 
-    assert!(s_number <= ECDSA_N_DIV_2, E_INVALID_SIGNATURE);
+    s_number <= ECDSA_N_DIV_2
 }
 
-fun last_n_bytes(input: &vector<u8>, n: u64): vector<u8> {
+fun last_n_bytes(input: &vector<u8>, n: u64): Result<vector<u8>> {
     let len = input.length();
-    assert!(n <= len, E_INVALID_VECTOR_LEN);
+
+    if (n > len) { return error(b"Invalid length of vector") };
 
     let start_idx = len - n;
+
     // input[start_idx...]
-    vector::tabulate!(n, |i| input[start_idx + i])
+    ok(vector::tabulate!(n, |i| input[start_idx + i]))
 }
 
 // === Test Functions ===
@@ -94,7 +98,7 @@ fun test_recover_signature() {
     let recovered_signer = recover_address(
         &msg,
         &signature,
-    );
+    ).unwrap();
 
     assert!(recovered_signer == expected_signer);
 }
@@ -110,7 +114,7 @@ fun test_recover_v27() {
     let recovered_signer = recover_address(
         &msg,
         &signature,
-    );
+    ).unwrap();
 
     assert!(recovered_signer == expected_signer);
 }
@@ -126,40 +130,37 @@ fun test_recover_v28() {
     let recovered_signer = recover_address(
         &msg,
         &signature,
-    );
+    ).unwrap();
 
     assert!(recovered_signer == expected_signer);
 }
 
 #[test]
-#[expected_failure(abort_code = E_INVALID_SIGNATURE_LEN)]
 fun invalida_signature_len() {
     // msg len is 64 should be 65
     let msg =
         x"415641580000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000d394303d018d79bf0ba000000020000001";
     let signature = vector[];
 
-    let _ = recover_address(
+    recover_address(
         &msg,
         &signature,
-    );
+    ).unwrap_err();
 }
 
 #[test]
-#[expected_failure(abort_code = E_INVALID_RECOVERY_ID)]
 fun invalid_recovery_byte() {
     let msg =
         x"415641580000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000d394303d018d79bf0ba000000020000001";
     let signature = vector::tabulate!(65, |_| 255); // recovery byte too large
 
-    let _ = recover_address(
+    recover_address(
         &msg,
         &signature,
-    );
+    ).unwrap_err();
 }
 
 #[test]
-#[expected_failure(abort_code = E_INVALID_SIGNATURE)]
 fun malleabillity() {
     let msg =
         x"4254430000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000058f32c910a001924dc0bd5000000020000001";
@@ -167,8 +168,8 @@ fun malleabillity() {
     let signature =
         x"6307247862e106f0d4b3cde75805ababa67325953145aa05bdd219d90a741e0eeba79b756bf3af6db6c26a8ed3810e3c584379476fd83096218e9deb95a7617e1b";
 
-    let _ = recover_address(
+    recover_address(
         &msg,
         &signature,
-    );
+    ).unwrap_err();
 }
