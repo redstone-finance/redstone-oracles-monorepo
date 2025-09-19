@@ -4,6 +4,7 @@ export * from "./adapters/PriceFeedStellarContractAdapter";
 export * from "./adapters/PriceFeedStellarContractConnector";
 export * from "./adapters/StellarContractAdapter";
 export * from "./adapters/StellarContractConnector";
+export * from "./stellar/network-ids";
 export * from "./stellar/StellarClientBuilder";
 export * from "./stellar/StellarContractDeployer";
 export * from "./stellar/StellarRpcClient";
