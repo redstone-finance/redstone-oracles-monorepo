@@ -176,3 +176,49 @@ export const dataPackagesTestCases = {
       ),
     },
 };
+
+export const nonEvmAdditionalTests = {
+  "Additional data packages should change aggregated value": {
+    ...Object.fromEntries(
+      [
+        {
+          title: "Added 4th data package with value 41",
+          indexes: [0, 0, 1, 2],
+          newValue: 41.5,
+        },
+        {
+          title: "Added 4th data package with value 42",
+          indexes: [2, 0, 1, 2],
+          newValue: 42.5,
+        },
+        {
+          title: "Added 4th and 5th data package with values 41 and 43",
+          indexes: [0, 1, 0, 1, 2],
+          newValue: 42,
+        },
+        {
+          title: "Added 4th data package with value 43",
+          indexes: [0, 1, 2, 1],
+          newValue: 42.5,
+        },
+        {
+          title: "Added 4th data package with value 42",
+          indexes: [0, 1, 2, 2],
+          newValue: 42,
+        },
+        {
+          title: "Added 4th and 5th data package with values 43 and 43",
+          indexes: [0, 1, 2, 1, 1],
+          newValue: 43,
+        },
+      ].map(({ title, indexes, newValue }) => {
+        const dps = [...testDataPoints];
+        const dataPointsForPackages = indexes.map((i) => dps[i]);
+        return [
+          title,
+          generateDataPackagesTest(dataPointsForPackages, true, to8Decimals(newValue)),
+        ];
+      })
+    ),
+  },
+};
