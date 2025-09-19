@@ -1,0 +1,21 @@
+{
+  "chain": {
+    "name": "edenTestnet",
+    "id": 3735928814
+  },
+  "updateTriggers": {
+    "deviationPercentage": 0.5,
+    "timeSinceLastUpdateInMilliseconds": 21600000
+  },
+  "adapterContract": "0x2e6495F68C8d8Bd56670Cc6110309Dd1e6Fe5CE0",
+  "adapterContractType": "multi-feed",
+  "dataServiceId": "redstone-primary-prod",
+  "priceFeeds": {
+    "TIA": {
+      "priceFeedAddress": "0x26CD22Ff0D84BAB3f6fec78eee790bE566E170Ce"
+    },
+    "ETH": {
+      "priceFeedAddress": "0xfe743BF30eB5d0e22ED806910914E15915611E6f"
+    }
+  }
+}
