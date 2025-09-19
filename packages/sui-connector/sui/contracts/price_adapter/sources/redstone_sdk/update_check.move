@@ -3,27 +3,30 @@
 module redstone_price_adapter::redstone_sdk_update_check;
 
 use redstone_price_adapter::redstone_sdk_config::Config;
-
-// === Errors ===
-
-const E_UPDATE_TOO_SOON: u64 = 0;
+use redstone_price_adapter::result::{ok, Result, error};
+use redstone_price_adapter::unit::{unit, Unit};
 
 // === Public-Package Functions ===
 
-public(package) fun assert_update_time(
+public(package) fun is_update_time_sound(
     config: &Config,
     last_update_timestamp_ms: u64,
     timestamp_now_ms: u64,
     sender: address,
-) {
-    if (sender_in_trusted(config, sender)) {
-        assert!(last_update_timestamp_ms < timestamp_now_ms, E_UPDATE_TOO_SOON);
+): Result<Unit> {
+    let is_trusted = sender_in_trusted(config, sender);
+
+    let earliest_valid_update_time_ms = if (is_trusted) {
+        last_update_timestamp_ms + 1
     } else {
-        assert!(
-            last_update_timestamp_ms + config.min_interval_between_updates_ms() < timestamp_now_ms,
-            E_UPDATE_TOO_SOON,
-        );
+        last_update_timestamp_ms + config.min_interval_between_updates_ms() + 1
     };
+
+    if (timestamp_now_ms < earliest_valid_update_time_ms) {
+        return error(b"Bad update time")
+    };
+
+    ok(unit())
 }
 
 // === Private Functions ===
