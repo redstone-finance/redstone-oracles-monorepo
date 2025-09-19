@@ -5,6 +5,7 @@ import {
   Asset,
   BASE_FEE,
   Contract,
+  Horizon,
   Operation,
   rpc,
   Transaction,
@@ -15,6 +16,7 @@ import { Api } from "@stellar/stellar-sdk/lib/minimal/rpc/api";
 import axios from "axios";
 import z from "zod";
 import * as XdrUtils from "../XdrUtils";
+import { LEDGER_TIME_MS } from "./StellarConstants";
 import { StellarSigner } from "./StellarSigner";
 
 const RETRY_COUNT = 10;
@@ -29,7 +31,10 @@ const RETRY_CONFIG: Omit<RedstoneCommon.RetryConfig, "fn"> = {
 const REDSTONE_EVENT_TOPIC_QUALIFIER = "REDSTONE";
 
 export class StellarRpcClient {
-  constructor(private readonly server: rpc.Server) {}
+  constructor(
+    private readonly server: rpc.Server,
+    private readonly horizon?: Horizon.Server
+  ) {}
 
   private async getAccount(publicKey: string): Promise<Account> {
     return await this.server.getAccount(publicKey);
@@ -327,4 +332,11 @@ export class StellarRpcClient {
   async sendTransaction(tx: Transaction) {
     return await this.server.sendTransaction(tx);
   }
+
+  getNetworkStats = RedstoneCommon.memoize({
+    functionToMemoize: async () => {
+      return await this.horizon?.feeStats();
+    },
+    ttl: LEDGER_TIME_MS,
+  });
 }
