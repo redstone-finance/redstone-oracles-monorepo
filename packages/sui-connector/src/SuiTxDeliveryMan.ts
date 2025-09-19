@@ -50,7 +50,8 @@ export class SuiTxDeliveryMan {
     const date = Date.now();
     const { digest, data } = await this.executeTxWithExecutor(tx, this.getExecutor());
 
-    const { status } = SuiTxDeliveryMan.getStatus(data);
+    const checkEventsForFailure = true;
+    const { status } = SuiTxDeliveryMan.getStatus(data, checkEventsForFailure);
     const cost = SuiTxDeliveryMan.getCost(data);
 
     this.logger.log(
@@ -71,6 +72,7 @@ export class SuiTxDeliveryMan {
         showEffects: true,
         showBalanceChanges: true,
         showInput: true,
+        showEvents: true,
       });
     } catch (e) {
       this.logger.warn("Reinitializing gas objects...");
@@ -96,10 +98,22 @@ export class SuiTxDeliveryMan {
     return executor;
   }
 
-  static getStatus(response: SuiTransactionBlockResponse) {
-    const status = response.effects!.status.status;
+  static getStatus(response: SuiTransactionBlockResponse, checkEvents = false) {
+    let status = response.effects!.status.status;
     const error = response.effects?.status.error;
-    const success = status === "success";
+
+    let success = status === "success";
+
+    if (checkEvents) {
+      const events = response.events;
+
+      const writePriceEvent = events
+        ? !events.every((event) => !event.type.includes("price_adapter::UpdateError"))
+        : false;
+
+      success = success && writePriceEvent;
+      status = success ? status : "failure";
+    }
 
     return { status, success, error };
   }
