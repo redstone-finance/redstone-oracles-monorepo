@@ -37,6 +37,7 @@ export class SuiContractConnector<Adapter> implements IContractConnector<Adapter
       digest: txId,
       options: {
         showEffects: true,
+        showEvents: true,
       },
     });
 
