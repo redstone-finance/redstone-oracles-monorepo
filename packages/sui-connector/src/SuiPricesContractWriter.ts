@@ -62,7 +62,7 @@ export class SuiPricesContractWriter {
 
   private writePrice(tx: Transaction, feedId: string, payload: string) {
     tx.moveCall({
-      target: `${this.config.packageId}::price_adapter::write_price`,
+      target: `${this.config.packageId}::price_adapter::try_write_price`,
       arguments: [
         tx.object(this.config.priceAdapterObjectId),
         tx.pure(uint8ArrayToBcs(makeFeedIdBytes(feedId))),

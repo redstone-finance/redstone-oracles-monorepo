@@ -1,9 +1,10 @@
+import { Transaction } from "@mysten/sui/transactions";
 import { DEFAULT_GAS_BUDGET, readIds, SuiNetworkName } from "../../src";
 import { generateTransactionData } from "./generate-transaction-data";
 
 const VERSION = 2;
 
-void generateTransactionData((tx, network: SuiNetworkName) => {
+export function migrateTransaction(tx: Transaction, network: SuiNetworkName) {
   const config = readIds(network);
 
   tx.setGasBudget(DEFAULT_GAS_BUDGET);
@@ -11,4 +12,8 @@ void generateTransactionData((tx, network: SuiNetworkName) => {
     target: `${config.packageId}::price_adapter::migrate_to_version_${VERSION}`,
     arguments: [tx.object(config.adminCapId), tx.object(config.priceAdapterObjectId)],
   });
+}
+
+void generateTransactionData((tx, network: SuiNetworkName) => {
+  migrateTransaction(tx, network);
 });

@@ -2,7 +2,7 @@ import { Transaction } from "@mysten/sui/transactions";
 import "dotenv/config";
 import { makeSuiClient, makeSuiKeypair, SuiNetworkName } from "../src";
 import { makeBaseTx } from "./ledger/make-base-tx";
-import { setUpUpgradeTx } from "./ledger/upgrade-package";
+import { migrateTransaction } from "./ledger/migrate-object-version";
 
 async function main(creator: (tx: Transaction, network: SuiNetworkName) => void) {
   const keypair = makeSuiKeypair();
@@ -29,4 +29,4 @@ async function main(creator: (tx: Transaction, network: SuiNetworkName) => void)
   }
 }
 
-void main(setUpUpgradeTx);
+void main(migrateTransaction);
