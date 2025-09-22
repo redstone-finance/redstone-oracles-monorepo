@@ -31,17 +31,30 @@
     },
     "BTC": {
       "source": [
+        "binance-usdc",
         "binance-usdt",
+        "bingx-usdc",
         "bingx-usdt",
+        "bitget-usdc",
         "bitget-usdt",
         "bitmart-usdt",
+        "bitrue-usdc",
         "bitrue-usdt",
         "bitstamp-usd",
+        "bybit-usdc",
+        "bybit-usdt",
         "coinbase-usd",
+        "gate-usdt",
+        "gemini-usd",
         "kaiko-v2",
         "kraken-usd",
+        "kraken-usdc",
+        "kraken-usdt",
         "kucoin-usdt",
         "lbank-usdt",
+        "mexc-usdt",
+        "okx-usd",
+        "okx-usdc",
         "okx-usdt",
         "xt"
       ]
@@ -120,12 +133,14 @@
     "BNB": {
       "source": [
         "binance-usdt",
-        "bingx-usdc",
         "bingx-usdt",
+        "bingx-usdc",
+        "bitget-usdc",
         "bitget-usdt",
         "bitmart-usdt",
         "kucoin-usdt",
         "lbank-usdt",
+        "mexc-usdt",
         "okx-usdt",
         "xt"
       ]
@@ -195,6 +210,7 @@
         "coinbase-usd",
         "gate-usdt",
         "kucoin-usdt",
+        "mexc-usdt",
         "okx-usdt",
         "xt"
       ]
@@ -222,7 +238,9 @@
         "curve-ethereum-usdt",
         "gate-usdt",
         "kraken-usd",
+        "kraken-usdt",
         "lbank-usdt",
+        "mexc-usdt",
         "okx-usdt"
       ],
       "deviationCheck": {
