@@ -2,11 +2,16 @@
 
 module redstone_price_adapter::redstone_sdk_median;
 
+use redstone_price_adapter::constants::deprecated_code;
 use redstone_price_adapter::result::{error, Result, ok};
 
 // === Public Functions ===
 
-public fun calculate_median(values: &mut vector<u256>): Result<u256> {
+public fun calculate_median(_values: &mut vector<u256>): u256 {
+    abort deprecated_code()
+}
+
+public fun try_calculate_median(values: &mut vector<u256>): Result<u256> {
     let len = values.length();
 
     if (len == 0) {
@@ -80,16 +85,16 @@ public fun sort(values: &mut vector<u256>) {
 #[test]
 fun test_median() {
     let mut values = vector[1, 3, 2];
-    assert!(calculate_median(&mut values).unwrap() == 2, 0);
+    assert!(try_calculate_median(&mut values).unwrap() == 2, 0);
 
     let mut values = vector[1, 2, 3, 4];
-    assert!(calculate_median(&mut values).unwrap() == 2, 1);
+    assert!(try_calculate_median(&mut values).unwrap() == 2, 1);
 
     let mut values = vector[1];
-    assert!(calculate_median(&mut values).unwrap() == 1, 2);
+    assert!(try_calculate_median(&mut values).unwrap() == 1, 2);
 
     let mut values = vector[5, 2, 8, 1, 9];
-    assert!(calculate_median(&mut values).unwrap() == 5, 4);
+    assert!(try_calculate_median(&mut values).unwrap() == 5, 4);
 }
 
 #[test]
@@ -102,7 +107,7 @@ fun test_median_with_max_values() {
         i = i + 1;
     };
 
-    let result = calculate_median(&mut values).unwrap();
+    let result = try_calculate_median(&mut values).unwrap();
 
     assert!(result == max_value, 0);
 }
@@ -118,7 +123,7 @@ fun test_median_avg() {
     values.push_back(max_value - diff);
     values.push_back(max_value - diff);
 
-    let result = calculate_median(&mut values).unwrap();
+    let result = try_calculate_median(&mut values).unwrap();
 
     assert!(result == max_value - (diff / 2), 0);
 }
@@ -126,26 +131,26 @@ fun test_median_avg() {
 #[test]
 fun test_median_small_vectors() {
     let mut values = vector[1];
-    assert!(calculate_median(&mut values).unwrap() == 1, 0);
+    assert!(try_calculate_median(&mut values).unwrap() == 1, 0);
 
     let mut values = vector[1, 2];
-    assert!(calculate_median(&mut values).unwrap() == 1, 1);
+    assert!(try_calculate_median(&mut values).unwrap() == 1, 1);
 
     let mut values = vector[1, 2, 3];
-    assert!(calculate_median(&mut values).unwrap() == 2, 2);
+    assert!(try_calculate_median(&mut values).unwrap() == 2, 2);
 
     let mut values = vector[3, 1, 2];
-    assert!(calculate_median(&mut values).unwrap() == 2, 3);
+    assert!(try_calculate_median(&mut values).unwrap() == 2, 3);
 
     let mut values = vector[2, 3, 1];
-    assert!(calculate_median(&mut values).unwrap() == 2, 4);
+    assert!(try_calculate_median(&mut values).unwrap() == 2, 4);
 }
 
 #[test]
 fun test_median_basic() {
     let mut items: vector<u256> = vector[150, 100, 250, 200];
     let expected_median = 175;
-    let median = calculate_median(&mut items).unwrap();
+    let median = try_calculate_median(&mut items).unwrap();
 
     assert!(median == expected_median);
 }
