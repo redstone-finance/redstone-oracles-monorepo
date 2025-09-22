@@ -2,9 +2,10 @@
 
 module redstone_price_adapter::redstone_sdk_payload;
 
+use redstone_price_adapter::constants::deprecated_code;
 use redstone_price_adapter::redstone_sdk_config::Config;
 use redstone_price_adapter::redstone_sdk_conv::{from_bytes_to_u64, from_bytes_to_u256};
-use redstone_price_adapter::redstone_sdk_crypto::recover_address;
+use redstone_price_adapter::redstone_sdk_crypto::try_recover_address;
 use redstone_price_adapter::redstone_sdk_data_package::{
     DataPackage,
     DataPoint,
@@ -16,8 +17,11 @@ use redstone_price_adapter::redstone_sdk_data_package::{
     timestamp,
     signer_address
 };
-use redstone_price_adapter::redstone_sdk_median::calculate_median;
-use redstone_price_adapter::redstone_sdk_validate::{verify_data_packages, verify_redstone_marker};
+use redstone_price_adapter::redstone_sdk_median::try_calculate_median;
+use redstone_price_adapter::redstone_sdk_validate::{
+    try_verify_data_packages,
+    try_verify_redstone_marker
+};
 use redstone_price_adapter::result::{Result, ok, error};
 
 // === Constants ===
@@ -49,6 +53,15 @@ public fun destroy_processed_payload(payload: ParsedPayload): (u256, u64) {
 }
 
 public fun process_payload(
+    _config: &Config,
+    _timestamp_now_ms: u64,
+    _feed_id: vector<u8>,
+    _payload: vector<u8>,
+): (u256, u64) {
+    abort deprecated_code()
+}
+
+public fun try_process_payload(
     config: &Config,
     timestamp_now_ms: u64,
     feed_id: vector<u8>,
@@ -70,7 +83,7 @@ public fun process_payload(
     );
 
     let verification_result = data_packages.flat_map!(
-        |data_packages| verify_data_packages(
+        |data_packages| try_verify_data_packages(
             &data_packages,
             config,
             timestamp_now_ms,
@@ -86,7 +99,7 @@ public fun process_payload(
     );
 
     let aggregated_value = values.flat_map!(
-        |values| calculate_median(
+        |values| try_calculate_median(
             &mut values.map!(|bytes| from_bytes_to_u256(&bytes)),
         ),
     );
@@ -118,7 +131,7 @@ public fun data_packages(payload: &Payload): vector<DataPackage> {
 // === Private Functions ===
 
 fun parse_raw_payload(mut payload: vector<u8>): Result<Payload> {
-    let marker_verification_result = verify_redstone_marker(&payload);
+    let marker_verification_result = try_verify_redstone_marker(&payload);
     if (!marker_verification_result.is_ok()) {
         return error(marker_verification_result.unwrap_err().into_bytes())
     };
@@ -189,7 +202,7 @@ fun trim_data_package(payload: &mut vector<u8>): Result<DataPackage> {
         data_point_count * (value_size + DATA_FEED_ID_BS) + DATA_POINT_VALUE_BYTE_SIZE_BS
             + TIMESTAMP_BS + DATA_POINTS_COUNT_BS;
     let signable_bytes = trim_end(&mut tmp, size);
-    let signer_address = recover_address(&signable_bytes, &signature);
+    let signer_address = try_recover_address(&signable_bytes, &signature);
 
     signer_address.map!(
         |signer_address| new_data_package(
@@ -323,7 +336,7 @@ fun test_process_payload() {
     let feed_id = x"4554480000000000000000000000000000000000000000000000000000000000";
     let timestamp = 1707307760000;
 
-    let (val, timestamp) = process_payload(&test_config(), timestamp, feed_id, payload)
+    let (val, timestamp) = try_process_payload(&test_config(), timestamp, feed_id, payload)
         .unwrap()
         .destroy_processed_payload();
 

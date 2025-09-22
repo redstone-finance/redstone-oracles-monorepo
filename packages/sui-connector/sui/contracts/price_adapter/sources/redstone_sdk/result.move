@@ -39,6 +39,12 @@ public fun unwrap<T>(result: Result<T>): T {
     ok.destroy_some()
 }
 
+public fun unwrap_or<T: drop>(result: Result<T>, default: T): T {
+    let Result { ok, .. } = result;
+
+    ok.destroy_with_default(default)
+}
+
 public fun unwrap_err<T>(result: Result<T>): String {
     let Result { is_ok, error, ok } = result;
 

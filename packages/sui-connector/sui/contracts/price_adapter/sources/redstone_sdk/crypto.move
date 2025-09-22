@@ -2,6 +2,7 @@
 
 module redstone_price_adapter::redstone_sdk_crypto;
 
+use redstone_price_adapter::constants::deprecated_code;
 use redstone_price_adapter::redstone_sdk_conv::from_bytes_to_u256;
 use redstone_price_adapter::result::{Result, error, ok};
 
@@ -11,13 +12,20 @@ const ECDSA_N_DIV_2: u256 = 0x7fffffffffffffffffffffffffffffff5d576e7357a4501ddf
 
 // === Public Functions ===
 
-/// `recover_address` doesn't check the signature validity, it just recovers the address.
+public fun recover_address(_msg: &vector<u8>, _signature: &vector<u8>): vector<u8> {
+    abort deprecated_code()
+}
+
+/// `try_recover_address` doesn't check the signature validity, it just recovers the address.
 /// the signatures are validated at a later step by checking if the
 /// recovered signers are present in the configured signers array and meets
 /// the minimum signers threshold
 ///
 /// the function might abort with invalid signature error if address recovery fails
-public fun recover_address(msg: &vector<u8>, signature: &vector<u8>): Result<vector<u8>> {
+public(package) fun try_recover_address(
+    msg: &vector<u8>,
+    signature: &vector<u8>,
+): Result<vector<u8>> {
     if (signature.length() != 65) {
         return error(b"Invalid signature len")
     };
@@ -95,7 +103,7 @@ fun test_recover_signature() {
         x"42414c5f73415641585f4156415800000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000aca4bc340192a6d8f79000000020000001";
     let expected_signer = x"109b4a318a4f5ddcbca6349b45f881b4137deafb";
 
-    let recovered_signer = recover_address(
+    let recovered_signer = try_recover_address(
         &msg,
         &signature,
     ).unwrap();
@@ -111,7 +119,7 @@ fun test_recover_v27() {
         x"475195641dae43318e194c3d9e5fc308773d6fdf5e197e02644dfd9ca3d19e3e2bd7d8656428f7f02e658a16b8f83722169c57126cc50bec8fad188b1bac6d191b";
     let expected_signer = x"2c59617248994D12816EE1Fa77CE0a64eEB456BF";
 
-    let recovered_signer = recover_address(
+    let recovered_signer = try_recover_address(
         &msg,
         &signature,
     ).unwrap();
@@ -127,7 +135,7 @@ fun test_recover_v28() {
         x"c88242d22d88252c845b946c9957dbf3c7d59a3b69ecba2898198869f9f146ff268c3e47a11dbb05cc5198aadd659881817a59ee37e088d3253f4695927428c11c";
     let expected_signer = x"12470f7aBA85c8b81D63137DD5925D6EE114952b";
 
-    let recovered_signer = recover_address(
+    let recovered_signer = try_recover_address(
         &msg,
         &signature,
     ).unwrap();
@@ -142,7 +150,7 @@ fun invalida_signature_len() {
         x"415641580000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000d394303d018d79bf0ba000000020000001";
     let signature = vector[];
 
-    recover_address(
+    try_recover_address(
         &msg,
         &signature,
     ).unwrap_err();
@@ -154,7 +162,7 @@ fun invalid_recovery_byte() {
         x"415641580000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000d394303d018d79bf0ba000000020000001";
     let signature = vector::tabulate!(65, |_| 255); // recovery byte too large
 
-    recover_address(
+    try_recover_address(
         &msg,
         &signature,
     ).unwrap_err();
@@ -168,7 +176,7 @@ fun malleabillity() {
     let signature =
         x"6307247862e106f0d4b3cde75805ababa67325953145aa05bdd219d90a741e0eeba79b756bf3af6db6c26a8ed3810e3c584379476fd83096218e9deb95a7617e1b";
 
-    recover_address(
+    try_recover_address(
         &msg,
         &signature,
     ).unwrap_err();
