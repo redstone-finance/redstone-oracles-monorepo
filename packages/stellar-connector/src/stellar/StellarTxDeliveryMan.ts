@@ -51,12 +51,12 @@ export class StellarTxDeliveryMan {
       this.logger.info(
         `Sending transaction successful, hash: ${hash}, cost: ${cost} stroops, fee: ${fee} stroops`
       );
-      void this.logNetworkUtilization();
+      void this.logNetworkUtilization(true);
 
       return hash;
     } catch (e) {
       this.logger.error(`Sending transaction failed ${this.config.maxTxSendAttempts} times`);
-      void this.logNetworkUtilization();
+      void this.logNetworkUtilization(true);
 
       throw e;
     }
@@ -102,8 +102,8 @@ export class StellarTxDeliveryMan {
     };
   }
 
-  private async logNetworkUtilization() {
-    const stats = await this.rpcClient.getNetworkStats();
+  private async logNetworkUtilization(force = false) {
+    const stats = await this.rpcClient.getNetworkStats(force);
     this.logger.info(
       `Network utilization: ${stats?.ledger_capacity_usage} (ledger: ${stats?.last_ledger})`
     );
