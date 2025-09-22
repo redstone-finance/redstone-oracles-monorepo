@@ -2,6 +2,7 @@
 
 module redstone_price_adapter::redstone_sdk_validate;
 
+use redstone_price_adapter::constants::deprecated_code;
 use redstone_price_adapter::redstone_sdk_config::{
     Config,
     signer_count_threshold,
@@ -14,14 +15,14 @@ use redstone_price_adapter::result::{Result, error, ok};
 use redstone_price_adapter::unit::{Unit, unit};
 use sui::vec_set;
 
-// === Constants ===]
+// === Constants ===
 
 const REDSTONE_MARKER: vector<u8> = x"000002ed57011e0000";
 const REDSTONE_MARKER_LEN: u64 = 9;
 
 // === Public Functions ===
 
-public fun verify_data_packages(
+public fun try_verify_data_packages(
     data_packages: &vector<DataPackage>,
     config: &Config,
     current_timestamp: u64,
@@ -48,7 +49,7 @@ public fun verify_data_packages(
     )
 }
 
-public fun verify_redstone_marker(bytes: &vector<u8>): Result<Unit> {
+public fun try_verify_redstone_marker(bytes: &vector<u8>): Result<Unit> {
     let bytes_len = bytes.length();
 
     if (bytes_len < REDSTONE_MARKER_LEN) {
@@ -67,6 +68,18 @@ public fun verify_redstone_marker(bytes: &vector<u8>): Result<Unit> {
     };
 
     ok(unit())
+}
+
+public fun verify_data_packages(
+    _data_packages: &vector<DataPackage>,
+    _config: &Config,
+    _current_timestamp: u64,
+) {
+    abort deprecated_code()
+}
+
+public fun verify_redstone_marker(_bytes: &vector<u8>) {
+    abort deprecated_code()
 }
 
 // === Private Functions ===
@@ -255,28 +268,28 @@ fun test_verify_signer_count_unknow_signers() {
 
 #[test]
 fun test_verify_redstone_marker_bad_last_byte() {
-    verify_redstone_marker(&x"000002ed57011e0001").unwrap_err();
+    try_verify_redstone_marker(&x"000002ed57011e0001").unwrap_err();
 }
 
 #[test]
 fun test_verify_redstone_marker_bad_first_byte() {
-    verify_redstone_marker(&x"100002ed57011e0000").unwrap_err();
+    try_verify_redstone_marker(&x"100002ed57011e0000").unwrap_err();
 }
 
 #[test]
 fun test_verify_redstone_marker_bad_marker() {
-    verify_redstone_marker(&vector::tabulate!(9, |i| i as u8)).unwrap_err();
+    try_verify_redstone_marker(&vector::tabulate!(9, |i| i as u8)).unwrap_err();
 }
 
 #[test]
 fun test_verify_redstone_marker() {
     let correct_marker = REDSTONE_MARKER;
 
-    verify_redstone_marker(&correct_marker).unwrap();
+    try_verify_redstone_marker(&correct_marker).unwrap();
 }
 
 #[test]
-fun test_verify_data_packages_fail_on_duplicated_packages() {
+fun test_try_verify_data_packages_fail_on_duplicated_packages() {
     let config = test_config();
     let timestamp = 1000;
 
@@ -288,11 +301,11 @@ fun test_verify_data_packages_fail_on_duplicated_packages() {
         new_data_package(config.signers()[1], timestamp, vector[]),
     ];
 
-    verify_data_packages(&data_packages, &config, 1000).unwrap_err();
+    try_verify_data_packages(&data_packages, &config, 1000).unwrap_err();
 }
 
 #[test]
-fun test_verify_data_packages() {
+fun test_try_verify_data_packages() {
     let config = test_config();
     let timestamp = 1000;
 
@@ -301,11 +314,11 @@ fun test_verify_data_packages() {
         new_data_package(config.signers()[1], timestamp, vector[]),
     ];
 
-    verify_data_packages(&data_packages, &config, 1000).unwrap();
+    try_verify_data_packages(&data_packages, &config, 1000).unwrap();
 }
 
 #[test]
-fun test_verify_data_packages_fail_on_duplicated_packages_after_threshold_met() {
+fun test_try_verify_data_packages_fail_on_duplicated_packages_after_threshold_met() {
     let config = test_config();
     let timestamp = 1000;
 
@@ -315,5 +328,5 @@ fun test_verify_data_packages_fail_on_duplicated_packages_after_threshold_met() 
         new_data_package(config.signers()[1], timestamp, vector[]),
     ];
 
-    verify_data_packages(&data_packages, &config, 1000).unwrap_err();
+    try_verify_data_packages(&data_packages, &config, 1000).unwrap_err();
 }
