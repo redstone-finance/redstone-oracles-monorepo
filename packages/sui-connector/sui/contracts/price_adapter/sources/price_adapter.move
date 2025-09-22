@@ -5,7 +5,7 @@ module redstone_price_adapter::price_adapter;
 use redstone_price_adapter::admin::AdminCap;
 use redstone_price_adapter::price_data::{Self, PriceData};
 use redstone_price_adapter::redstone_sdk_config::{Self, Config};
-use redstone_price_adapter::redstone_sdk_payload::process_payload;
+use redstone_price_adapter::redstone_sdk_payload::try_process_payload;
 use redstone_price_adapter::redstone_sdk_update_check::is_update_time_sound;
 use redstone_price_adapter::result::{Result, error, ok};
 use redstone_price_adapter::unit::{unit, Unit};
@@ -49,6 +49,22 @@ public struct UpdateError has copy, drop {
 // === Public-Mutative Functions ===
 
 public fun write_price(
+    price_adapter: &mut PriceAdapter,
+    feed_id: vector<u8>,
+    payload: vector<u8>,
+    clock: &Clock,
+    tx_context: &TxContext,
+): u256 {
+    try_write_price(
+        price_adapter,
+        feed_id,
+        payload,
+        clock,
+        tx_context,
+    ).unwrap_or(0)
+}
+
+public fun try_write_price(
     price_adapter: &mut PriceAdapter,
     feed_id: vector<u8>,
     payload: vector<u8>,
@@ -185,7 +201,7 @@ fun write_price_checked(
     payload: vector<u8>,
     timestamp_now_ms: u64,
 ): Result<u256> {
-    let result = process_payload(
+    let result = try_process_payload(
         &price_adapter.config,
         timestamp_now_ms,
         feed_id,
