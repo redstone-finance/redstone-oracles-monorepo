@@ -7158,6 +7158,11 @@
       "denomination": "USD",
       "rateFeed": true
     },
+    "hbUSDC_FUNDAMENTAL": {
+      "source": ["hyperevm-evm-fetcher-hyperbeat-oracle"],
+      "denomination": "USD",
+      "rateFeed": true
+    },
     "hbHYPE_FUNDAMENTAL": {
       "source": ["hyperevm-evm-fetcher-hyperbeat"],
       "denomination": "HYPE",
