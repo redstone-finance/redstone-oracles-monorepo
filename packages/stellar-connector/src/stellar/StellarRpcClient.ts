@@ -31,6 +31,8 @@ const RETRY_CONFIG: Omit<RedstoneCommon.RetryConfig, "fn"> = {
 const REDSTONE_EVENT_TOPIC_QUALIFIER = "REDSTONE";
 
 export class StellarRpcClient {
+  private cachedNetworkStats?: { value?: Horizon.HorizonApi.FeeStatsResponse; timestamp: number };
+
   constructor(
     private readonly server: rpc.Server,
     private readonly horizon?: Horizon.Server
@@ -333,10 +335,19 @@ export class StellarRpcClient {
     return await this.server.sendTransaction(tx);
   }
 
-  getNetworkStats = RedstoneCommon.memoize({
-    functionToMemoize: async () => {
-      return await this.horizon?.feeStats();
-    },
-    ttl: LEDGER_TIME_MS,
-  });
+  async getNetworkStats(force = false) {
+    const now = Date.now();
+    if (
+      force ||
+      this.cachedNetworkStats === undefined ||
+      now - this.cachedNetworkStats.timestamp > LEDGER_TIME_MS
+    ) {
+      this.cachedNetworkStats = {
+        value: await this.horizon?.feeStats(),
+        timestamp: now,
+      };
+    }
+
+    return this.cachedNetworkStats.value;
+  }
 }
