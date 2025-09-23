@@ -1350,7 +1350,7 @@
       "name": "Eden Testnet (Celestia)",
       "networkId": 3735928814,
       "currencySymbol": "ETH",
-      "publicRpcUrls": ["http://rpc-evreth-sequencer-edennet-1-testnet.binary.builders:8080"],
+      "publicRpcUrls": ["https://ev-reth-eden-testnet.binarybuilders.services:8545"],
       "avgBlockTimeMs": 500,
       "multicall3": {
         "address": "0xaD6CC5a465E5c8284a49eC9eD10EFE275460678c",
