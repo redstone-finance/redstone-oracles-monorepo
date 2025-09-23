@@ -22,6 +22,8 @@ pub struct Config {
 
 pub type SignerAddressBs = [u8; 20];
 
+pub const DATA_STALENESS: TimestampMillis = TimestampMillis::from_millis(30 * 60 * 60 * 1000);
+
 pub const FEED_TTL_SECS: u32 = 2 * 24 * 60 * 60;
 pub const FEED_TTL_THRESHOLD: u32 = FEED_TTL_SECS / 5;
 pub const FEED_TTL_EXTEND_TO: u32 = FEED_TTL_SECS * 3 / 10;
@@ -30,8 +32,8 @@ pub const STELLAR_CONFIG: Config = Config {
     signer_count_threshold: 3,
     signers: REDSTONE_PRIMARY_PROD_ALLOWED_SIGNERS,
     trusted_updaters: TRUSTED_UPDATERS,
-    max_timestamp_ahead_ms: 30 * 60 * 1_000,
-    max_timestamp_delay_ms: 30 * 60 * 1_000,
+    max_timestamp_ahead_ms: 3 * 60 * 1_000,
+    max_timestamp_delay_ms: 3 * 60 * 1_000,
     min_interval_between_updates_ms: 40_000,
 };
 
