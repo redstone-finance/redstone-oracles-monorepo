@@ -359,6 +359,7 @@
         "balancer-ethereum-weth",
         "balancer-ethereum-weth-2",
         "camelot-v3-arbitrumone-weth",
+        "curve-ethereum-crvusd",
         "uniswap-v3-arbitrumone-weth-100",
         "uniswap-v3-ethereum-weth-100",
         "velodrome-cl-optimism-weth",
@@ -525,11 +526,13 @@
     "weETH": {
       "source": [
         "balancer-arbitrumone-wsteth",
+        "balancer-arbitrumone-weth",
         "balancer-ethereum-reth",
         "camelot-v3-arbitrumone-weth",
         "curve-ethereum-weth",
         "uniswap-v3-arbitrumone-weth-3000",
-        "uniswap-v3-ethereum-weth-500"
+        "uniswap-v3-ethereum-weth-500",
+        "uniswap-v3-ethereum-weth-100"
       ],
       "denomination": "USD",
       "rateFeed": false
@@ -560,7 +563,8 @@
         "gate-usdt",
         "kraken-usd",
         "kucoin-usdt",
-        "okx-usdt"
+        "okx-usdt",
+        "curve-ethereum-weth"
       ],
       "denomination": "USD",
       "rateFeed": false
@@ -989,7 +993,8 @@
         "aerodrome-cl-base-usdc",
         "aerodrome-cl-base-usdc-2",
         "aerodrome-cl-base-weth",
-        "trader-joe-v2-avalanche-usdc"
+        "trader-joe-v2-avalanche-usdc",
+        "trader-joe-v2-avalanche-wavax"
       ],
       "denomination": "USD",
       "rateFeed": false

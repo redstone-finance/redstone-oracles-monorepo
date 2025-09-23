@@ -278,7 +278,8 @@
         "aerodrome-cl-base-usdc",
         "aerodrome-cl-base-usdc-2",
         "aerodrome-cl-base-weth",
-        "trader-joe-v2-avalanche-usdc"
+        "trader-joe-v2-avalanche-usdc",
+        "trader-joe-v2-avalanche-wavax"
       ],
       "deviationCheck": {
         "deviationWithRecentValues": {
@@ -569,7 +570,9 @@
         "blackhole-avalanche-usdc-75",
         "bullish-btc-reversed",
         "pharaoh-avalanche-usdc-50",
-        "trader-joe-v2-avalanche-wavax"
+        "trader-joe-v2-avalanche-wavax",
+        "trader-joe-v2-avalanche-usdc",
+        "trader-joe-v2-avalanche-usdt"
       ],
       "deviationCheck": {
         "deviationWithRecentValues": {
