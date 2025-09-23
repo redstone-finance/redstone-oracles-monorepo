@@ -117,7 +117,7 @@ const config: HardhatUserConfig = {
       url: "https://rpc2.testnet.incentiv.io/",
     },
     edenTestnet: {
-      url: "http://rpc-evreth-sequencer-edennet-1-testnet.binary.builders:8080",
+      url: "https://ev-reth-eden-testnet.binarybuilders.services:8545",
     },
   },
 };
