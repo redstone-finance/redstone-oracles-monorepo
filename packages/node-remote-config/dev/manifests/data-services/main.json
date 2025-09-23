@@ -63,6 +63,17 @@
       "denomination": "USD",
       "rateFeed": false
     },
+    "BTC_PERP": {
+      "source": [
+        "binance_perp-usdt",
+        "bybit_perp-usdt",
+        "gate_perp-usdt",
+        "mexc_perp-usdt",
+        "okx_perp-usdt"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
     "BNB": {
       "source": [
         "binance-usdt",
