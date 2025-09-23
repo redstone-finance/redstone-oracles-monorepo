@@ -15,21 +15,20 @@ use redstone::{
     core::process_payload,
     network::error::Error as RedStoneError,
     soroban::helpers::ToBytes,
-    FeedValue, TimestampMillis,
+    FeedValue,
 };
 use soroban_sdk::{
     contract, contractimpl, storage::Persistent, Address, Bytes, BytesN, Env, Error, String, Vec,
     U256,
 };
 
-use self::config::{FEED_TTL_EXTEND_TO, FEED_TTL_THRESHOLD, STELLAR_CONFIG};
+use self::config::{DATA_STALENESS, FEED_TTL_EXTEND_TO, FEED_TTL_THRESHOLD, STELLAR_CONFIG};
 use crate::{
     event::WritePrices,
     utils::{feed_to_string, now},
 };
 
 const MISSING_FEED_CODE: u32 = 10;
-const DATA_STALENESS: TimestampMillis = TimestampMillis::from_millis(30 * 60 * 60 * 1000);
 
 #[contract]
 pub struct RedStoneAdapter;
