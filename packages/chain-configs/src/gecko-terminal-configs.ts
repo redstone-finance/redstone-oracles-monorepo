@@ -17,6 +17,7 @@ const networkToGeckoTerminalNameMap: {
   fraxtal: "fraxtal",
   hyperevm: "hyperevm",
   unichain: "unichain",
+  hemi: "hemi",
 };
 
 export function mapNetworkNameToGeckoTerminalNetworkName(

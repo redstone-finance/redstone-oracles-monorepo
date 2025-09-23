@@ -3039,6 +3039,18 @@
       "source": ["ethereum-evm-fetcher-mf-one"],
       "denomination": "USD",
       "rateFeed": true
+    },
+    "HEMI": {
+      "source": [
+        "gate-usdt",
+        "mexc-usdt",
+        "pancake-swap-bnb-usdt-100",
+        "sushiswap-v3-hemi-usdc.e-3000",
+        "sushiswap-v3-hemi-usdt-500",
+        "sushiswap-v3-hemi-weth-500"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
     }
   },
   "multiPointPackages": {
