@@ -444,11 +444,6 @@
       "denomination": "USD",
       "rateFeed": false
     },
-    "SWETH": {
-      "source": ["uniswap-v3-ethereum-weth-500-multi-block"],
-      "denomination": "USD",
-      "rateFeed": false
-    },
     "SOL": {
       "source": [
         "binance-usdc",
@@ -1071,7 +1066,6 @@
       "PENDLE_E_ETH_26_09_24",
       "PENDLE_WSTETH_26_06_25",
       "SOL",
-      "SWETH",
       "UNI",
       "USDC",
       "USDC.e",
