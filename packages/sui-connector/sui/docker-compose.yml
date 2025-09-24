@@ -1,0 +1,11 @@
+services:
+  sui:
+    build:
+      context: .
+      target: dev-runtime
+    stdin_open: true
+    tty: true
+    volumes:
+      - ../../..:/redstone-monorepo-priv/
+    working_dir: /redstone-monorepo-priv/packages/sui-connector/sui/contracts/price_adapter
+    command: ["/bin/bash"]
