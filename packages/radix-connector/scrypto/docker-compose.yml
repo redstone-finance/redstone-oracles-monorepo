@@ -1,0 +1,11 @@
+services:
+  radix:
+    build:
+      context: .
+      target: dev-runtime
+    stdin_open: true
+    tty: true
+    volumes:
+      - ../../..:/redstone-monorepo-priv/
+    working_dir: /redstone-monorepo-priv/packages/radix-connector/scrypto
+    command: ["/bin/bash"]
