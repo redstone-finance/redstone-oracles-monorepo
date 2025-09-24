@@ -219,18 +219,6 @@
         "ethereum-evm-fetcher-lido"
       ]
     },
-    "SWETH": {
-      "source": [
-        "balancer-ethereum-weth-multi-block",
-        "pancake-swap-ethereum-weth-500-multi-block",
-        "uniswap-v3-ethereum-weth-500-multi-block"
-      ]
-    },
-    "SWETH/ETH": {
-      "source": [
-        "non-usd-based"
-      ]
-    },
     "crvFRAX": {
       "source": [
         "ethereum-evm-fetcher-curve"
@@ -791,26 +779,6 @@
         "kucoin-usdt",
         "lbank-usdt",
         "okx-usdt",
-        "xt"
-      ]
-    },
-    "MKR": {
-      "source": [
-        "binance-usdt",
-        "binanceusdm-usdt",
-        "bingx-usdt",
-        "bitfinex-usd",
-        "bitget-usdt",
-        "coinbase-usd",
-        "coingecko",
-        "coinmarketcap",
-        "gate-usdt",
-        "kraken-usd",
-        "kucoin-usdt",
-        "lbank-usdt",
-        "okx-usdt",
-        "uniswap-v3-ethereum-weth-3000",
-        "uniswap-v3-ethereum-weth-10000",
         "xt"
       ]
     },

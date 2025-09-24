@@ -82,14 +82,6 @@
     "wstETH/stETH": {
       "source": ["ethereum-evm-fetcher-lido"]
     },
-    "SWETH": {
-      "source": [
-        "balancer-ethereum-weth-multi-block",
-        "maverick-ethereum-weth-multi-block",
-        "pancake-swap-ethereum-weth-500",
-        "uniswap-v3-ethereum-weth-500-multi-block"
-      ]
-    },
     "crvFRAX": {
       "source": ["ethereum-evm-fetcher-curve"]
     },
@@ -236,9 +228,6 @@
     },
     "LINK": {
       "source": ["uniswap-v3-ethereum-weth-3000"]
-    },
-    "MKR": {
-      "source": ["uniswap-v3-ethereum-weth-10000", "uniswap-v3-ethereum-weth-3000"]
     },
     "wUSDM": {
       "source": ["ethereum-evm-fetcher-mountain-protocol"]
