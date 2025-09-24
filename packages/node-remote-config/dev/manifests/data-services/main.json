@@ -2784,6 +2784,11 @@
       "denomination": "USD",
       "rateFeed": false
     },
+    "NVDA": {
+      "source": [],
+      "denomination": "USD",
+      "rateFeed": false
+    },
     "META": {
       "source": [],
       "denomination": "USD",
