@@ -1162,20 +1162,6 @@
       "denomination": "USD",
       "rateFeed": false
     },
-    "MKR": {
-      "source": [
-        "binance-usdt",
-        "bingx-usdt",
-        "coinbase-usd",
-        "gate-usdt",
-        "lbank-usdt",
-        "uniswap-v2-ethereum-weth",
-        "uniswap-v3-ethereum-weth-3000",
-        "xt"
-      ],
-      "denomination": "USD",
-      "rateFeed": false
-    },
     "APE": {
       "source": [
         "binance-usdt",
@@ -2536,16 +2522,6 @@
     "GLP": {
       "source": ["avalanche-evm-fetcher-glp-manager"],
       "denomination": "USD",
-      "rateFeed": false
-    },
-    "SWETH": {
-      "source": ["uniswap-v3-ethereum-weth-500-multi-block"],
-      "denomination": "USD",
-      "rateFeed": false
-    },
-    "SWETH/ETH": {
-      "source": ["non-usd-based"],
-      "denomination": "ETH",
       "rateFeed": false
     },
     "ggAVAX": {
