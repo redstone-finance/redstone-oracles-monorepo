@@ -2475,7 +2475,22 @@
       "rateFeed": false
     },
     "TSLA": {
-      "source": ["twelve-data"],
+      "source": [
+        "alltick-stocks-api",
+        "alphavantagestock-usd",
+        "financialmodelingprep-usd",
+        "twelve-data"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "NVDA": {
+      "source": [
+        "alltick-stocks-api",
+        "alphavantagestock-usd",
+        "financialmodelingprep-usd",
+        "twelve-data"
+      ],
       "denomination": "USD",
       "rateFeed": false
     },
