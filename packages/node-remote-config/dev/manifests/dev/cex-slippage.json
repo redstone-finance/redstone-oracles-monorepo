@@ -1226,29 +1226,6 @@
         "bingx-usdt"
       ]
     },
-    "MKR": {
-      "source": [
-        "binance-usdt",
-        "bitget-usdt",
-        "kucoin-usdt",
-        "mexc-usdt",
-        "okx-usdt",
-        "gate-usdt",
-        "coinbase-usd",
-        "binanceusdm-usdt",
-        "bitmart-btc",
-        "kraken-usd",
-        "lbank-usdt",
-        "bitrue-usdt",
-        "bitfinex-usd",
-        "bitstamp-usd",
-        "bingx",
-        "coingecko",
-        "uniswap-v3-ethereum-on-chain-weth-3000",
-        "xt",
-        "bingx-usdt"
-      ]
-    },
     "APE": {
       "source": [
         "binance-usdt",
@@ -2079,16 +2056,6 @@
     },
     "SHLB_JOE-AVAX_B": {
       "source": ["avalanche-evm-fetcher"]
-    },
-    "SWETH": {
-      "source": [
-        "balancer-ethereum-weth-multi-block",
-        "maverick-multi-block",
-        "uniswap-v3-ethereum-on-chain-weth-500-multi-block"
-      ]
-    },
-    "SWETH/ETH": {
-      "source": ["non-usd-based"]
     },
     "ggAVAX": {
       "source": ["avalanche-evm-fetcher"]
