@@ -10,6 +10,7 @@ CONTRACTS := $(PRICE_ADAPTER) $(PRICE_FEED) $(PROXY)
 CONTRACTS_DIR=$(DEPLOYMENT_DIR)/contracts
 CONTRACT_DIR=$(CONTRACTS_DIR)/$(CONTRACT)
 DEPLOYED_DIR=$(CONTRACT_DIR)/deployed
+CARGO_TARGET_DIR ?= ./target
 PACKAGE_ADDRESS=$(shell cat $(DEPLOYED_DIR)/package.resim.addr)
 COMPONENT_ADDRESS=$(shell cat $(DEPLOYED_DIR)/component.resim.addr)
 PRICE_ADAPTER_ADDRESS=$(shell cat $(CONTRACTS_DIR)/$(PRICE_ADAPTER)/deployed/package.resim.addr)
@@ -33,15 +34,18 @@ TIMESTAMP=$(shell cat $(DATA_DIR)/data/$(DATA_NAME).time | node-jq -r ".timestam
 
 prepare:
 	@rustup target add wasm32-unknown-unknown
-	cargo install wasm-bindgen-cli@0.2.95 wasm-pack --locked
+	@if ! command -v wasm-bindgen >/dev/null; then \
+		cargo install wasm-bindgen-cli@0.2.95 wasm-pack --locked; \
+	fi
 
 build: $(foreach contract, $(CONTRACTS), build-$(contract))
 
 build-%: prepare
 	cargo build --package $*
 	scrypto build --path $(CONTRACTS_DIR)/$*
-	cp ./target/wasm32-unknown-unknown/release/$*.rpd $(CONTRACTS_DIR)/$*/artifacts/
-	cp ./target/wasm32-unknown-unknown/release/$*_with_schema.wasm $(CONTRACTS_DIR)/$*/artifacts/
+	mkdir -p $(CONTRACTS_DIR)/$*/artifacts/
+	cp $(CARGO_TARGET_DIR)/wasm32-unknown-unknown/release/$*.rpd $(CONTRACTS_DIR)/$*/artifacts/
+	cp $(CARGO_TARGET_DIR)/wasm32-unknown-unknown/release/$*_with_schema.wasm $(CONTRACTS_DIR)/$*/artifacts/
 
 publish: $(foreach contract, $(CONTRACTS), publish-$(contract))
 
@@ -61,9 +65,11 @@ call-%:
 	resim call-method $(COMPONENT_ADDRESS) $* $(ARGS) $(PROOFS)
 
 test: clippy
-	@for contract in $(CONTRACTS); do \
-		cargo test --package $$contract; \
-	done
+	@failed=0; \
+	for contract in $(CONTRACTS); do \
+		cargo test --package $$contract || failed=1; \
+	done; \
+	exit $$failed
 
 clippy: prepare
 	@for contract in $(CONTRACTS); do \
