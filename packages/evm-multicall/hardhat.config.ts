@@ -119,6 +119,9 @@ const config: HardhatUserConfig = {
     edenTestnet: {
       url: "https://ev-reth-eden-testnet.binarybuilders.services:8545",
     },
+    plasma: {
+      url: "https://rpc.plasma.to",
+    },
   },
 };
 
