@@ -15,10 +15,10 @@ fmt-check: prepare
 lint: clippy fmt-check
 
 build-verifiable:
-	RUSTUP_TOOLCHAIN=$(NIGHTLY_TOOLCHAIN) anchor build --verifiable
+	anchor build --verifiable
 
 build:
-	RUSTUP_TOOLCHAIN=$(NIGHTLY_TOOLCHAIN) anchor build
+	anchor build
 
 copy-program:
 	@mkdir -p target/deploy
