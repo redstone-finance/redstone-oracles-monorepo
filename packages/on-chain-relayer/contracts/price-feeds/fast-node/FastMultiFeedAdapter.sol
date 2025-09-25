@@ -10,38 +10,40 @@ import {IFastMultiFeedAdapter} from "./IFastMultiFeedAdapter.sol";
  * - The contract supports updating multiple prices simultaneously.
  * - The contract stores the latest price for each feed and each updater.
  * - The contract supports round functionality, meaning it stores historical price data.
- * - After each update, a new round is calculated for the feeds that were updated.
- * - The price aggregation algorithm works by taking the latest prices for a given feed from the 5 updaters,
- *   selecting the 3 most recent ones, calculating the median of those 3,
- *   and returning either that median or the most recent price if it was close to the median.
- * - The above means that the adapter functions correctly with 3 out of 5 nodes operating properly,
- *   and with 2 out of 5 nodes operating properly, it returns correct prices accurate within the DEVIATION_THRESHOLD.
+ * - Aggregation & round creation (executed after each successful update):
+ *   - The median is calculated from fresh prices (not exceeding MAX_DATA_TIMESTAMP_DELAY_MICROSECONDS) from all updaters
+ *   - For a new round to be created, 3 fresh prices from updaters are required
  */
 abstract contract FastMultiFeedAdapter is IFastMultiFeedAdapter {
-  // Threshold for price deviation in basis points (50 basis points = 0.5%)
-  uint256 internal constant DEVIATION_THRESHOLD_BASIS_POINTS = 50;
-  // Max number of rounds stored (at least 1 month)
+  // ----------------------- Config ----------------------------------------- //
+  uint256 internal constant NUM_UPDATERS = 5;
+  // Max number of rounds stored (ring buffer size)
   uint256 internal constant MAX_HISTORY_SIZE = 300_000_000;
   // Maximum allowed staleness of data during reading in microseconds (30 minutes)
-  uint256 internal constant MAX_DATA_STALENESS = 30_000_000;
-  // Maximum allowed price data staleness in microseconds (1 minute)
-  uint64 internal constant MAX_DATA_TIMESTAMP_DELAY_MICROSECONDS = 60_000_000;
-  // Maximum allowed future offset for price timestamp in microseconds (1 minute)
-  uint64 internal constant MAX_DATA_TIMESTAMP_AHEAD_MICROSECONDS = 60_000_000;
+  uint256 internal constant MAX_READING_DATA_STALENESS = 1_800_000_000;
+  // Maximum allowed price data staleness in microseconds (10 seconds)
+  uint64 internal constant MAX_DATA_TIMESTAMP_DELAY_MICROSECONDS = 10_000_000;
+  // Maximum allowed future offset for price timestamp in microseconds (1 second)
+  uint64 internal constant MAX_DATA_TIMESTAMP_AHEAD_MICROSECONDS = 1_000_000;
 
-  function getDeviationThresholdBasisPoints() internal pure virtual returns (uint256) { return DEVIATION_THRESHOLD_BASIS_POINTS; }
   function getMaxHistorySize() internal pure virtual returns (uint256) { return MAX_HISTORY_SIZE; }
+  function getMaxReadingDataStaleness() internal pure virtual returns (uint256) { return MAX_READING_DATA_STALENESS; }
+  function getMaxDataTimestampDelayMicroseconds() internal pure virtual returns (uint64) { return MAX_DATA_TIMESTAMP_DELAY_MICROSECONDS; }
+  function getMaxDataTimestampAheadMicroseconds() internal pure virtual returns (uint64) { return MAX_DATA_TIMESTAMP_AHEAD_MICROSECONDS; }
+
+  // ----------------------- Events and error ------------------------------- //
+  // Round not created reasons
+  event RoundNotCreatedDueToInsufficientFreshPrices(bytes32 indexed dataFeedId, uint256 freshCount);
 
   error UnsupportedFunctionCall(string message);
+  error InvalidMedianCount(uint256 count);
 
   // ----------------------- Storage ---------------------------------------- //
-
-  // Storage positions for each mapping
   bytes32 private constant UPDATER_LAST_PRICE_DATA_POSITION = keccak256("fast.multi.feed.adapter.updater.last.price.data");
   bytes32 private constant LATEST_ROUND_ID_FOR_FEED_POSITION = keccak256("fast.multi.feed.adapter.latest.round.id.for.feed");
   bytes32 private constant ROUNDS_DATA_POSITION = keccak256("fast.multi.feed.adapter.rounds.data");
 
-  // Returns the last price update data for a given updater address and data feed id
+  // Returns the last price update data for a given updater id and data feed id
   function updaterLastPriceData() private pure returns (mapping(uint256 => mapping(bytes32 => PriceData)) storage store) {
     bytes32 position = UPDATER_LAST_PRICE_DATA_POSITION;
     assembly { store.slot := position }
@@ -95,7 +97,7 @@ abstract contract FastMultiFeedAdapter is IFastMultiFeedAdapter {
 
   /// Checks if caller is an authorized updater
   /// @dev Returns the ID of the authorised updater.
-  /// Reverts with UpdaterNotAuthorised(msg.sender) if sender is not in the authorised updater list.
+  /// Reverts with `UpdaterNotAuthorised(msg.sender)` if sender is not in the authorised updater list.
   /// Must be implemented in the derived contract
   function getAuthorisedUpdaterId() internal view virtual returns (uint256);
 
@@ -107,12 +109,12 @@ abstract contract FastMultiFeedAdapter is IFastMultiFeedAdapter {
       return false;
     }
     // Reject if price timestamp is too old relative to the block timestamp
-    if (priceData.priceTimestamp + MAX_DATA_TIMESTAMP_DELAY_MICROSECONDS < priceData.blockTimestamp) {
+    if (priceData.priceTimestamp + getMaxDataTimestampDelayMicroseconds() < priceData.blockTimestamp) {
       emit UpdateSkipDueToDataTimestamp(feedId);
       return false;
     }
     // Reject if price timestamp is too far in the future relative to the block timestamp
-    if (priceData.priceTimestamp > priceData.blockTimestamp + MAX_DATA_TIMESTAMP_AHEAD_MICROSECONDS) {
+    if (priceData.priceTimestamp > priceData.blockTimestamp + getMaxDataTimestampAheadMicroseconds()) {
       emit UpdateSkipDueToDataTimestamp(feedId);
       return false;
     }
@@ -133,83 +135,97 @@ abstract contract FastMultiFeedAdapter is IFastMultiFeedAdapter {
   /// @param dataFeedId The data feed identifier to aggregate prices for
   /// @param currentBlockTimestamp The timestamp of the current block in microseconds
   function tryAggregateAndStore(bytes32 dataFeedId, uint64 currentBlockTimestamp) private {
-    PriceData[5] memory prices;
-    for (uint256 i = 0; i < 5; ) {
-      prices[i] = updaterLastPriceData()[i][dataFeedId];
-      // We do not aggregate the price if any updater has not provided it yet
-      if (prices[i].priceTimestamp == 0) return;
+    uint256[NUM_UPDATERS] memory prices;
+    uint256 count = 0;
+    uint64 maxPriceTimestamp = 0;
+
+    for (uint256 i = 0; i < NUM_UPDATERS; ) {
+      PriceData memory p = updaterLastPriceData()[i][dataFeedId];
+      if (p.price > 0 && p.priceTimestamp + getMaxDataTimestampDelayMicroseconds() >= currentBlockTimestamp) {
+        prices[count] = p.price;
+        if (p.priceTimestamp > maxPriceTimestamp) maxPriceTimestamp = p.priceTimestamp;
+        unchecked { count++; }
+      }
       unchecked { i++; }
     }
 
-    // Increment round id for the feed and store aggregated price data
+    // < 3 fresh prices -> no round
+    if (count < 3) {
+      emit RoundNotCreatedDueToInsufficientFreshPrices(dataFeedId, count);
+      return;
+    }
+
+    uint256 medianPrice = medianOfPrices(prices, count);
+
+    // Create round
     uint256 newRoundId = ++latestRoundIdForFeed()[dataFeedId];
-    PriceData memory newRoundData = medianOrLastOfLatestThree(prices);
-    newRoundData.blockTimestamp = currentBlockTimestamp;
+    PriceData memory newRoundData = PriceData({
+      // Safe cast: median of uint64 values fits in uint64
+      price: uint64(medianPrice),
+      priceTimestamp: maxPriceTimestamp,
+      blockTimestamp: currentBlockTimestamp
+    });
     roundsData()[dataFeedId][newRoundId % getMaxHistorySize()] = newRoundData;
-    emit RoundCreated(newRoundData.price, dataFeedId, currentBlockTimestamp, newRoundId);
+    emit RoundCreated(medianPrice, dataFeedId, currentBlockTimestamp, newRoundId);
   }
 
-  /// Finds median or latest price data based on timestamps and deviation threshold
-  /// Note: This function does not specifically handle cases where more than three prices share the same timestamp,
-  /// as this is considered a highly unlikely scenario.
-  /// @param prices Array of last price data from authorized updaters
-  function medianOrLastOfLatestThree(PriceData[5] memory prices) internal pure returns (PriceData memory) {
-    // Compare two pairs
-    (PriceData memory a, PriceData memory b) = prices[0].priceTimestamp > prices[1].priceTimestamp ? (prices[0], prices[1]) : (prices[1], prices[0]);
-    (PriceData memory c, PriceData memory d) = prices[2].priceTimestamp > prices[3].priceTimestamp ? (prices[2], prices[3]) : (prices[3], prices[2]);
-
-    // Merge the two pairs (a > b, c > d)
-    if (a.priceTimestamp > c.priceTimestamp) {
-      if (c.priceTimestamp > b.priceTimestamp) {
-        if (b.priceTimestamp > d.priceTimestamp) {
-          (a, b, c) = (a, c, b); // a > c > b > d
-        } else {
-          (a, b, c) = (a, c, d); // a > c > d > b
-        }
-      }
-    } else {
-      if (a.priceTimestamp > d.priceTimestamp) {
-        if (b.priceTimestamp > d.priceTimestamp) {
-          (a, b, c) = (c, a, b); // c > a > b > d
-        } else {
-          (a, b, c) = (c, a, d); // c > a > d > b
-        }
-      } else {
-        (a, b, c) = (c, d, a); // c > d > a > b
-      }
+  /// @notice Returns median for the first `count` entries of `prices`.
+  /// @dev Uses fixed-size sorting networks for count=3/4/5 to save gas; falls back to insertion sort otherwise.
+  function medianOfPrices(uint256[NUM_UPDATERS] memory prices, uint256 count) internal pure returns (uint256) {
+    if (count == 3) {
+      return _median3(prices[0], prices[1], prices[2]);
     }
-
-    // Insert the 5th element to (a > b > c)
-    if (prices[4].priceTimestamp > a.priceTimestamp) {
-      (a, b, c) = (prices[4], a, b);
-    } else if (prices[4].priceTimestamp > c.priceTimestamp) {
-      (a, b, c) = (a, b, prices[4]); // We don't know which is larger, b or prices[4], but it's irrelevant
+    if (count == 4) {
+      return _median4(prices[0], prices[1], prices[2], prices[3]);
     }
-    return medianOrLast(a, b, c);
-  }
-
-  function medianOrLast(PriceData memory latest, PriceData memory p1, PriceData memory p2) private pure returns (PriceData memory) {
-    PriceData memory med = medianOfThreePrices(p1, p2, latest);
-    return isWithinDeviation(med.price, latest.price) ? latest : med;
-  }
-
-  function medianOfThreePrices(PriceData memory p1, PriceData memory p2, PriceData memory p3) private pure returns (PriceData memory) {
-    if (p1.price > p2.price) {
-      return (p1.price < p3.price) ? p1 : ((p2.price > p3.price) ? p2 : p3);
+    if (count == 5) {
+      return _median5(prices[0], prices[1], prices[2], prices[3], prices[4]);
     }
-    return (p1.price > p3.price) ? p1 : ((p2.price > p3.price) ? p3 : p2);
+    // Any other count is not expected given NUM_UPDATERS=5 and the aggregation rules.
+    revert InvalidMedianCount(count);
   }
 
-  /// Determines if the latest price is within deviation threshold compared to median price
-  /// @param value Price to check
-  /// @param base Reference price
-  function isWithinDeviation(uint256 value, uint256 base) private pure returns (bool) {
-    uint256 deviation = value > base ? value - base : base - value;
-    return deviation * 10_000 <= base * getDeviationThresholdBasisPoints();
+  /// @dev Median of 3 using a tiny sorting network (3 comparisons).
+  function _median3(uint256 a, uint256 b, uint256 c) private pure returns (uint256) {
+    (a, b) = compareAndSwap(a, b);
+    (b, c) = compareAndSwap(b, c);
+    (a, b) = compareAndSwap(a, b);
+    return b;
+  }
+
+  /// @dev Median of 4: sort network to get middle two, then average (5 comparisons).
+  function _median4(uint256 a, uint256 b, uint256 c, uint256 d) private pure returns (uint256) {
+    (a, b) = compareAndSwap(a, b);
+    (c, d) = compareAndSwap(c, d);
+    (a, c) = compareAndSwap(a, c);
+    (b, d) = compareAndSwap(b, d);
+    (b, c) = compareAndSwap(b, c);
+    // Safe: sum of two uint64 values fits in uint256; result fits in uint64 when cast by caller.
+    return (b + c) / 2;
+  }
+
+  /// @dev Median of 5 via sorting network that places the median at position 3. Sequence of 9 compare and swaps.
+  function _median5(uint256 a, uint256 b, uint256 c, uint256 d, uint256 e) private pure returns (uint256) {
+    (a, b) = compareAndSwap(a, b);
+    (d, e) = compareAndSwap(d, e);
+    (c, e) = compareAndSwap(c, e);
+    (c, d) = compareAndSwap(c, d);
+    (b, e) = compareAndSwap(b, e);
+    (a, d) = compareAndSwap(a, d);
+    (b, c) = compareAndSwap(b, c);
+    (a, b) = compareAndSwap(a, b);
+    (c, d) = compareAndSwap(c, d);
+    return c;
+  }
+
+  /// @dev returns (min(a,b), max(a,b)).
+  function compareAndSwap(uint256 a, uint256 b) private pure returns (uint256, uint256) {
+    if (a > b) return (b, a);
+    return (a, b);
   }
 
   /// Returns last price data submitted by given updater for a feed
-  /// @param updaterId Updater identifier [0 - 4]
+  /// @param updaterId Updater identifier [0 .. NUM_UPDATERS-1]
   /// @param dataFeedId Data feed identifier
   /// @return PriceData Last price data for the updater and feed
   function getUpdaterLastPriceData(uint256 updaterId, bytes32 dataFeedId) external view returns (PriceData memory) {
@@ -226,10 +242,10 @@ abstract contract FastMultiFeedAdapter is IFastMultiFeedAdapter {
   /// Returns details about last update for a data feed; reverts if data is stale
   function getLastUpdateDetails(bytes32 dataFeedId) public view override returns (uint256 lastDataTimestamp, uint256 lastBlockTimestamp, uint256 lastValue) {
     (lastDataTimestamp, lastBlockTimestamp, lastValue) = getLastUpdateDetailsUnsafe(dataFeedId);
-    if (lastBlockTimestamp + MAX_DATA_STALENESS < getBlockTimestampInMicroSeconds() 
-        || lastValue == 0 
-        || lastDataTimestamp + MAX_DATA_TIMESTAMP_DELAY_MICROSECONDS < lastBlockTimestamp 
-        || lastDataTimestamp > lastBlockTimestamp + MAX_DATA_TIMESTAMP_AHEAD_MICROSECONDS) {
+    if (lastBlockTimestamp + getMaxReadingDataStaleness() < getBlockTimestampInMicroSeconds()
+        || lastValue == 0
+        || lastDataTimestamp + getMaxDataTimestampDelayMicroseconds() < lastBlockTimestamp
+        || lastDataTimestamp > lastBlockTimestamp + getMaxDataTimestampAheadMicroseconds()) {
       revert InvalidLastUpdateDetails(dataFeedId, lastDataTimestamp, lastBlockTimestamp, lastValue);
     }
   }
@@ -244,7 +260,7 @@ abstract contract FastMultiFeedAdapter is IFastMultiFeedAdapter {
   /// Returns prices for multiple data feeds
   function getValuesForDataFeeds(bytes32[] memory requestedDataFeedIds) public view override returns (uint256[] memory values) {
     values = new uint256[](requestedDataFeedIds.length);
-    for (uint i = 0; i < requestedDataFeedIds.length; ) {
+    for (uint256 i = 0; i < requestedDataFeedIds.length; ) {
       values[i] = getValueForDataFeed(requestedDataFeedIds[i]);
       unchecked { i++; }
     }
@@ -252,7 +268,7 @@ abstract contract FastMultiFeedAdapter is IFastMultiFeedAdapter {
 
   /// Returns the latest price for a specific data feed
   function getValueForDataFeed(bytes32 dataFeedId) public view override returns (uint256 dataFeedValue) {
-    return roundsData()[dataFeedId][latestRoundIdForFeed()[dataFeedId] % getMaxHistorySize()].price;
+    return (roundsData()[dataFeedId][latestRoundIdForFeed()[dataFeedId] % getMaxHistorySize()]).price;
   }
 
   /// Returns the timestamp of the latest price update for a feed
@@ -273,11 +289,12 @@ abstract contract FastMultiFeedAdapter is IFastMultiFeedAdapter {
   }
 
   /// Returns price data for a specific round id, reverts if roundId is invalid
-  function getRoundData(bytes32 dataFeedId, uint256 roundId) public view returns (PriceData memory) {
-    uint256 latestRoundId = latestRoundIdForFeed()[dataFeedId];
+  function getRoundData(bytes32 dataFeedId, uint256 roundId) public view override returns (PriceData memory) {
     if (roundId == 0) revert RoundIdIsZero(dataFeedId);
+    uint256 latestRoundId = latestRoundIdForFeed()[dataFeedId];
     if (roundId > latestRoundId) revert RoundIdTooHigh(dataFeedId, roundId, latestRoundId);
-    if (roundId + getMaxHistorySize() <= latestRoundId) revert RoundIdTooOld(dataFeedId, roundId);
-    return roundsData()[dataFeedId][roundId % getMaxHistorySize()];
+    uint256 maxHistorySize = getMaxHistorySize();
+    if (roundId + maxHistorySize <= latestRoundId) revert RoundIdTooOld(dataFeedId, roundId);
+    return roundsData()[dataFeedId][roundId % maxHistorySize];
   }
 }
