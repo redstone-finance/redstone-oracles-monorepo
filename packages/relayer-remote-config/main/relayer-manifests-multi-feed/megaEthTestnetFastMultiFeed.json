@@ -4,36 +4,36 @@
     "id": 6342
   },
   "updateTriggers": {},
-  "adapterContract": "0x30DeFBA371c64Ee4D47ABB31054844e797487732",
+  "adapterContract": "0x16dE4E3E6FaA80B9f8c182FF906A1eBFa9dDaeb5",
   "adapterContractType": "multi-feed",
   "dataServiceId": "redstone-primary-prod",
   "priceFeeds": {
     "BTC": {
-      "priceFeedAddress": "0xD55cc9fCdc45E20402C0411797b587E26738877C"
+      "priceFeedAddress": "0x900B3E3B914eEFacbf8DbFFB4d266ed1EFCEB66e"
     },
     "ETH": {
-      "priceFeedAddress": "0x9D4dc6f9326eb5BF7aAeeE1110AD5b9049459Db3"
+      "priceFeedAddress": "0xEEBb5d988a2FD8714d120AE8bC2DDd87666CcB90"
     },
     "USDC": {
-      "priceFeedAddress": "0x0726aEd5f21c8DfE48Cd3C5685d244BDc7b5e5c1"
+      "priceFeedAddress": "0x434ef4175907bF65cdf70a139B2624eEe5692495"
     },
     "USDT": {
-      "priceFeedAddress": "0xff64EBbD0e6CDd6F600eADe39C527E914b510d10"
+      "priceFeedAddress": "0x852d6bfc954D85eDF365f9c903478f3e6516220b"
     },
     "ADA": {
-      "priceFeedAddress": "0x293B8425e11Ab9D1ba027c3C9f753044bbB21Cf1"
+      "priceFeedAddress": "0xA045Ec9Fcc2B4574ffde94fCD1557E3311230701"
     },
     "BNB": {
-      "priceFeedAddress": "0x64C0509778fe602b2B6f0366C2129FB70D1Cc727"
+      "priceFeedAddress": "0xbCB47942726598dDe3494b77779549436C682752"
     },
     "DOGE": {
-      "priceFeedAddress": "0x6DC0E8896cDE8C2a07E3f63b607432d0f32B0992"
+      "priceFeedAddress": "0xbc833bb93F846F6F3771C17B9E78c39c500572aa"
     },
     "SOL": {
-      "priceFeedAddress": "0xcEacE3d68D3F2E90978b4373847FFbc582ECc601"
+      "priceFeedAddress": "0x0B4B824E9Be8E50B86BC09f9369b174C3031A82b"
     },
     "XRP": {
-      "priceFeedAddress": "0xaf357790F6b29F8D7ee120d33A4DCE0E74Be9D07"
+      "priceFeedAddress": "0x1Aa1Bf9Ba79D30542d26a4C10018038530D20D2D"
     }
   }
 }
