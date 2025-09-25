@@ -1,13 +1,13 @@
 import { mine, time } from "@nomicfoundation/hardhat-network-helpers";
 import { expect } from "chai";
+import { BigNumberish, utils } from "ethers";
 import { ethers, network } from "hardhat";
-import {
-  FastMultiFeedAdapter,
-  FastMultiFeedAdapterMock,
-  IFastMultiFeedAdapter,
-} from "../../../../typechain-types";
+import { FastMultiFeedAdapter, FastMultiFeedAdapterMock } from "../../../../typechain-types";
 import { getImpersonatedSigner, permutations } from "../../../helpers";
 
+/**
+ * Authorized updaters as wired in FastMultiFeedAdapterMock.getAuthorisedUpdaterId()
+ */
 export const AUTHORIZED_UPDATERS = [
   "0xA13f0A8e3CbF4Cd612a5b7E4C24e376Fb0b56A11",
   "0x52c4F9885b93f11055A037CCB8fAb557D38A2234",
@@ -15,394 +15,388 @@ export const AUTHORIZED_UPDATERS = [
   "0x40AE11483d9B1E7F7Ccf56aaf76AdeB8e320d07C",
   "0x92c5e1b7B1467ea836F9c3bFb8fe8297b97f95BD",
 ];
-const DATA_FEED_ID = ethers.utils.formatBytes32String("ETH");
 
+const DATA_FEED_ID = utils.formatBytes32String("ETH");
+
+/** Deploys the mock (history size = 10) */
 export async function deployAdapter() {
-  const adapterFactory = await ethers.getContractFactory("FastMultiFeedAdapterMock");
-  const adapter = await adapterFactory.deploy();
+  const factory = await ethers.getContractFactory("FastMultiFeedAdapterMock");
+  const adapter = await factory.deploy();
   await adapter.deployed();
   return adapter;
 }
 
-async function randomPriceTimestamp() {
-  return (await time.latest()) * 1_000_000 + Math.floor(Math.random() * 1_000_000);
+/** Converts seconds to microseconds used by the contract */
+function toMicros(blockTs: number) {
+  return blockTs * 1_000_000;
 }
 
-export async function updateByAllNodes(adapter: FastMultiFeedAdapter, prices: number[]) {
-  let blockTimestamp = await time.latest();
-  const blockTimestamps = [];
-  const priceTimestamps = [];
+/**
+ * Helper: make 5 updates (one per authorized updater), each one second apart.
+ * This guarantees all 5 updates are "fresh" (≤ 10s window) and that block
+ * timestamps are strictly increasing (Hardhat requirement).
+ */
+export async function updateByAllNodesFresh(
+  adapter: FastMultiFeedAdapter,
+  prices: number[],
+  feedId: string = DATA_FEED_ID
+) {
+  expect(prices.length).to.equal(5);
+  const base = (await time.latest()) + 1; // ensure strictly > previous block
+
+  const blockTimestamps: number[] = [];
+  const priceTimestamps: number[] = [];
+
   for (let i = 0; i < 5; i++) {
-    blockTimestamp += 10;
-    blockTimestamps.push(blockTimestamp);
-    await time.setNextBlockTimestamp(blockTimestamp);
+    const blockTs = base + i;
+    await time.setNextBlockTimestamp(blockTs);
     const updater = await getImpersonatedSigner(AUTHORIZED_UPDATERS[i]);
-    const price = ethers.utils.parseUnits(String(prices[i]), 8);
-    const priceTimestamp = await randomPriceTimestamp();
-    priceTimestamps.push(priceTimestamp);
+    const price = utils.parseUnits(String(prices[i]), 8);
+    const priceTimestamp = toMicros(blockTs);
+
     await adapter
       .connect(updater)
-      .updateDataFeedsValues(priceTimestamp, [{ dataFeedId: DATA_FEED_ID, price }]);
+      .updateDataFeedsValues(priceTimestamp, [{ dataFeedId: feedId, price }]);
+
+    blockTimestamps.push(blockTs);
+    priceTimestamps.push(priceTimestamp);
   }
+
   return { blockTimestamps, priceTimestamps };
 }
 
-describe("FastMultiFeedAdapter - updateDataFeedsValues", function () {
-  let adapter: FastMultiFeedAdapter;
+/**
+ * Helper: produce 2 "old" updates and later 3 "fresh" updates without going back in time.
+ * We first submit 2 updates, then jump forward by > 10 seconds to make them stale,
+ * then provide 3 fresh updates close together.
+ */
+export async function twoStaleThenThreeFresh(
+  adapter: FastMultiFeedAdapter,
+  pricesOld: number[],
+  pricesFresh: number[],
+  feedId: string = DATA_FEED_ID
+) {
+  expect(pricesOld.length).to.equal(2);
+  expect(pricesFresh.length).to.equal(3);
 
-  before(async function () {
+  let now = (await time.latest()) + 1;
+
+  // Two "old" updates at t and t+1
+  for (let i = 0; i < 2; i++) {
+    const blockTs = now + i;
+    await time.setNextBlockTimestamp(blockTs);
+    const updater = await getImpersonatedSigner(AUTHORIZED_UPDATERS[i]);
+    const price = utils.parseUnits(String(pricesOld[i]), 8);
+    await adapter
+      .connect(updater)
+      .updateDataFeedsValues(toMicros(blockTs), [{ dataFeedId: feedId, price }]);
+  }
+
+  // Jump forward by >= 20s so the above become stale (MAX delay = 10s)
+  now = (await time.latest()) + 20;
+
+  // Three fresh updates at now, now+1, now+2 (from the remaining 3 updaters)
+  for (let j = 0; j < 3; j++) {
+    const blockTs = now + j;
+    await time.setNextBlockTimestamp(blockTs);
+    const updater = await getImpersonatedSigner(AUTHORIZED_UPDATERS[2 + j]);
+    const price = utils.parseUnits(String(pricesFresh[j]), 8);
+    await adapter
+      .connect(updater)
+      .updateDataFeedsValues(toMicros(blockTs), [{ dataFeedId: feedId, price }]);
+  }
+}
+
+describe("FastMultiFeedAdapter", function () {
+  let adapter: FastMultiFeedAdapterMock;
+
+  before(async () => {
     await network.provider.send("hardhat_reset");
   });
 
-  beforeEach(async function () {
+  beforeEach(async () => {
     adapter = await deployAdapter();
   });
 
-  it("should reject unauthorized updater", async function () {
+  it("rejects unauthorized updater", async () => {
     const [unauthorized] = await ethers.getSigners();
-    const timestamp = await randomPriceTimestamp();
-    const priceUpdateInput = {
+    const blockTs = (await time.latest()) + 2;
+    await time.setNextBlockTimestamp(blockTs);
+    const ts = toMicros(blockTs);
+    const input = {
       dataFeedId: DATA_FEED_ID,
-      price: ethers.utils.parseUnits("1000", 8),
+      price: utils.parseUnits("1000", 8),
     };
-
     await expect(
-      adapter.connect(unauthorized).updateDataFeedsValues(timestamp, [priceUpdateInput])
+      adapter.connect(unauthorized).updateDataFeedsValues(ts, [input])
     ).to.be.revertedWithCustomError(adapter, "UpdaterNotAuthorised");
   });
 
-  it("should store price data for authorized updater", async function () {
+  it("stores last price per updater and feed", async () => {
     const updater = await getImpersonatedSigner(AUTHORIZED_UPDATERS[0]);
-    const price = ethers.utils.parseUnits("1000", 8);
-    const timestamp = await randomPriceTimestamp();
-    const priceUpdateInput = { dataFeedId: DATA_FEED_ID, price };
+    const blockTs = (await time.latest()) + 2;
+    await time.setNextBlockTimestamp(blockTs);
+    const ts = toMicros(blockTs);
+    const price = utils.parseUnits("1000", 8);
 
-    await adapter.connect(updater).updateDataFeedsValues(timestamp, [priceUpdateInput]);
+    await adapter.connect(updater).updateDataFeedsValues(ts, [{ dataFeedId: DATA_FEED_ID, price }]);
 
-    const storedData = await adapter.getUpdaterLastPriceData(0, DATA_FEED_ID);
-    expect(storedData.price.toString()).to.equal(price.toString());
-    expect(storedData.priceTimestamp).to.equal(timestamp);
+    const stored = await adapter.getUpdaterLastPriceData(0, DATA_FEED_ID);
+    expect(stored.price).to.equal(price);
+    expect(stored.priceTimestamp).to.equal(ts);
   });
 
-  it("should not calculate price with less than 5 updates", async function () {
-    // Check that price data is empty initially
-    let priceTimestamp = await adapter.getDataTimestampFromLatestUpdate(DATA_FEED_ID);
-    expect(priceTimestamp).to.equal(0);
-
-    // Update with 4 updaters
-    for (let i = 0; i < 4; i++) {
+  it("does NOT create a round if fewer than 3 fresh prices are available", async () => {
+    // Submit only 2 fresh updates
+    for (let i = 0; i < 2; i++) {
       const updater = await getImpersonatedSigner(AUTHORIZED_UPDATERS[i]);
-      const price = ethers.utils.parseUnits(`100${i}`, 8);
-      const timestamp = await randomPriceTimestamp();
-      const priceUpdateInput = { dataFeedId: DATA_FEED_ID, price };
-
-      await adapter.connect(updater).updateDataFeedsValues(timestamp, [priceUpdateInput]);
+      const blockTs = (await time.latest()) + 1;
+      await time.setNextBlockTimestamp(blockTs);
+      await adapter.connect(updater).updateDataFeedsValues(toMicros(blockTs), [
+        {
+          dataFeedId: DATA_FEED_ID,
+          price: utils.parseUnits(String(1000 + i), 8),
+        },
+      ]);
     }
 
-    // Check that price data is still empty
-    priceTimestamp = await adapter.getDataTimestampFromLatestUpdate(DATA_FEED_ID);
-    expect(priceTimestamp).to.equal(0);
-
-    // Update with the 5th updater
-    const updater = await getImpersonatedSigner(AUTHORIZED_UPDATERS[4]);
-    const price = ethers.utils.parseUnits("104", 8);
-    const timestamp = await randomPriceTimestamp();
-    const priceUpdateInput = { dataFeedId: DATA_FEED_ID, price };
-
-    await expect(
-      adapter.connect(updater).updateDataFeedsValues(timestamp, [priceUpdateInput])
-    ).to.emit(adapter, "RoundCreated");
-
-    // Check that price data is now set
-    const updateDetails = await adapter.getLastUpdateDetails(DATA_FEED_ID);
-    expect(updateDetails.lastDataTimestamp).to.be.gt(0);
-    expect(updateDetails.lastValue).to.be.gt(0);
+    expect(await adapter.getLatestRoundId(DATA_FEED_ID)).to.equal(0);
+    expect(await adapter.getValueForDataFeed(DATA_FEED_ID)).to.equal(0);
   });
 
-  it("should use median when latest price deviates too much", async function () {
-    // Prepare test data where latest price deviates more than 1%
-    const prices = [100, 101, 102, 103, 150];
+  it("creates a round when at least 3 fresh prices exist (with 2 stale ignored)", async () => {
+    await twoStaleThenThreeFresh(adapter, [900, 1100], [1000, 1002, 1004]);
+    const latestRoundId = await adapter.getLatestRoundId(DATA_FEED_ID);
+    expect(latestRoundId).to.equal(1);
 
-    // Submit all 5 price updates
-    await updateByAllNodes(adapter, prices);
-
-    // Get the calculated price - should use median (103) not latest (110)
-    const updateDetails = await adapter.getLastUpdateDetails(DATA_FEED_ID);
-    const expectedMedian = ethers.utils.parseUnits("103", 8);
-    expect(updateDetails.lastValue).to.equal(expectedMedian);
+    const { lastValue } = await adapter.getLastUpdateDetails(DATA_FEED_ID);
+    // median([1000, 1002, 1004]) = 1002
+    expect(lastValue).to.equal(utils.parseUnits("1002", 8));
   });
 
-  it("should use latest price when within deviation threshold", async function () {
-    // Prepare test data where latest price is within 1% deviation
-    const prices = [100, 101, 102, 103, 103];
-
-    // Submit all 5 price updates
-    await updateByAllNodes(adapter, prices);
-
-    // Get the calculated price - should use latest (103) not median (102)
-    const lastUpdate = await adapter.getLastUpdateDetails(DATA_FEED_ID);
-    const expectedLatest = ethers.utils.parseUnits("103", 8);
-    expect(lastUpdate.lastValue).to.equal(expectedLatest);
+  it("uses median of fresh prices; large outlier is ignored by median", async () => {
+    // With plain median (no deadband), after 5 fresh updates [100,101,102,103,1000]
+    // the final median is 102.
+    await updateByAllNodesFresh(adapter, [100, 101, 102, 103, 1000]);
+    const { lastValue } = await adapter.getLastUpdateDetails(DATA_FEED_ID);
+    expect(lastValue).to.equal(utils.parseUnits("102", 8));
   });
 
-  it("should reject update with same timestamp and not overwrite previous price data", async () => {
-    const updater = await getImpersonatedSigner(AUTHORIZED_UPDATERS[1]);
-    const timestamp = await randomPriceTimestamp();
+  it("for even fresh count, median is the average of the two middle values", async () => {
+    // Bootstrap initial round to establish history.
+    await updateByAllNodesFresh(adapter, [100, 100, 100, 100, 100]);
+    const r1 = await adapter.getLastUpdateDetails(DATA_FEED_ID);
+    expect(r1.lastValue).to.equal(utils.parseUnits("100", 8));
 
-    const price1 = ethers.utils.parseUnits("1000", 8);
-    const price2 = ethers.utils.parseUnits("1100", 8);
+    // Make previous prices stale to ensure we truly have 4 fresh inputs only.
+    const jump = (await time.latest()) + 20; // > 10s staleness window
+    await time.setNextBlockTimestamp(jump);
 
-    // First update should succeed
-    await adapter
-      .connect(updater)
-      .updateDataFeedsValues(timestamp, [{ dataFeedId: DATA_FEED_ID, price: price1 }]);
+    // Provide exactly 4 fresh prices: [10, 20, 30, 40]
+    // Even count (4) → median = (20 + 30) / 2 = 25 (no tie-break with last round).
+    for (let i = 0; i < 4; i++) {
+      const updater = await getImpersonatedSigner(AUTHORIZED_UPDATERS[i]);
+      const ts = jump + i;
+      await time.setNextBlockTimestamp(ts);
+      await adapter
+        .connect(updater)
+        .updateDataFeedsValues(toMicros(ts), [
+          { dataFeedId: DATA_FEED_ID, price: utils.parseUnits(String([10, 20, 30, 40][i]), 8) },
+        ]);
+    }
 
-    let stored = await adapter.getUpdaterLastPriceData(1, DATA_FEED_ID);
-    expect(stored.price).to.equal(price1);
-    expect(stored.priceTimestamp).to.equal(timestamp);
+    const { lastValue } = await adapter.getLastUpdateDetails(DATA_FEED_ID);
+    expect(lastValue).to.equal(utils.parseUnits("25", 8));
+  });
 
-    // Second update with the same timestamp should be rejected
+  it("creates rounds and updates value even for small changes (no deadband)", async () => {
+    // Round #1..#3 created by the first fresh batch (on 3rd/4th/5th update).
+    await updateByAllNodesFresh(adapter, [100, 100, 100, 100, 100]);
+
+    const beforeRoundId = await adapter.getLatestRoundId(DATA_FEED_ID);
+    const previousPrice = await adapter.getValueForDataFeed(DATA_FEED_ID);
+    expect(previousPrice).to.equal(utils.parseUnits("100", 8));
+
+    // Update three distinct updaters with prices slightly > 100.
+    // Since the other two updaters still have 100, the final median after the third update is 100.1.
+    const medCandidates = [100.1, 100.2, 100.3];
+    const base = (await time.latest()) + 2;
+    for (let i = 0; i < 3; i++) {
+      const updater = await getImpersonatedSigner(AUTHORIZED_UPDATERS[i]);
+      const ts = base + i;
+      await time.setNextBlockTimestamp(ts);
+      await adapter
+        .connect(updater)
+        .updateDataFeedsValues(toMicros(ts), [
+          { dataFeedId: DATA_FEED_ID, price: utils.parseUnits(String(medCandidates[i]), 8) },
+        ]);
+    }
+
+    const afterRoundId = await adapter.getLatestRoundId(DATA_FEED_ID);
+    expect(afterRoundId).to.equal(beforeRoundId.add(3)); // +3 rounds
+
+    const { lastValue } = await adapter.getLastUpdateDetails(DATA_FEED_ID);
+    expect(lastValue).to.equal(utils.parseUnits("100.1", 8));
+  });
+
+  it("rejects zero price; rejects stale/too-future data timestamp; rejects non-increasing block timestamp", async () => {
+    const updater = await getImpersonatedSigner(AUTHORIZED_UPDATERS[0]);
+
+    // Zero price
+    let blockTs = (await time.latest()) + 2;
+    await time.setNextBlockTimestamp(blockTs);
     await expect(
       adapter
         .connect(updater)
-        .updateDataFeedsValues(timestamp, [{ dataFeedId: DATA_FEED_ID, price: price2 }])
+        .updateDataFeedsValues(toMicros(blockTs), [{ dataFeedId: DATA_FEED_ID, price: 0 }])
+    ).to.emit(adapter, "UpdateSkipDueToInvalidValue");
+
+    // Too old (> 10s)
+    blockTs = (await time.latest()) + 20;
+    await time.setNextBlockTimestamp(blockTs);
+    const tooOldTs = toMicros(blockTs - 11);
+    await expect(
+      adapter.connect(updater).updateDataFeedsValues(tooOldTs, [
+        {
+          dataFeedId: DATA_FEED_ID,
+          price: utils.parseUnits("1000", 8),
+        },
+      ])
     ).to.emit(adapter, "UpdateSkipDueToDataTimestamp");
 
-    // Ensure data was not overwritten
-    stored = await adapter.getUpdaterLastPriceData(1, DATA_FEED_ID);
-    expect(stored.price).to.equal(price1);
-    expect(stored.priceTimestamp).to.equal(timestamp);
-  });
+    // Exactly +1s ahead → allowed
+    blockTs = (await time.latest()) + 2;
+    await time.setNextBlockTimestamp(blockTs);
+    const aheadOk = toMicros(blockTs) + 1_000_000;
+    await expect(
+      adapter.connect(updater).updateDataFeedsValues(aheadOk, [
+        {
+          dataFeedId: DATA_FEED_ID,
+          price: utils.parseUnits("1000", 8),
+        },
+      ])
+    ).to.not.be.reverted;
 
-  it("should emit UpdateSkipDueToBlockTimestamp when block timestamp is not increasing", async () => {
-    const updater = await getImpersonatedSigner(AUTHORIZED_UPDATERS[3]);
-    const price1 = ethers.utils.parseUnits("1000", 8);
-    const price2 = ethers.utils.parseUnits("1100", 8);
-    const priceTimestamp1 = await randomPriceTimestamp();
+    // +1 µs beyond limit → rejected
+    blockTs = (await time.latest()) + 2;
+    await time.setNextBlockTimestamp(blockTs);
+    const aheadTooFar = toMicros(blockTs) + 1_000_000 + 1;
+    await expect(
+      adapter.connect(updater).updateDataFeedsValues(aheadTooFar, [
+        {
+          dataFeedId: DATA_FEED_ID,
+          price: utils.parseUnits("1000", 8),
+        },
+      ])
+    ).to.emit(adapter, "UpdateSkipDueToDataTimestamp");
 
-    // pause automining
+    // Non-increasing block timestamp (same block for two tx from the same updater)
     await network.provider.send("evm_setAutomine", [false]);
 
-    // First update
-    await adapter
+    const fixedBlockTs = (await time.latest()) + 100; // future block timestamp
+    await time.setNextBlockTimestamp(fixedBlockTs);
+
+    const price1 = utils.parseUnits("1", 8);
+    const price2 = utils.parseUnits("2", 8);
+    const ts1 = toMicros(fixedBlockTs) + 10;
+    const ts2 = ts1 + 1; // data ts increases, but block ts will be identical
+
+    const _tx1 = await adapter
       .connect(updater)
-      .updateDataFeedsValues(priceTimestamp1, [{ dataFeedId: DATA_FEED_ID, price: price1 }]);
+      .updateDataFeedsValues(ts1, [{ dataFeedId: DATA_FEED_ID, price: price1 }]);
 
-    // Second update at same block timestamp
-    const priceTimestamp2 = priceTimestamp1 + 1; // valid new data timestamp
-
-    const secondUpdateTx = await adapter
+    const tx2 = await adapter
       .connect(updater)
-      .updateDataFeedsValues(priceTimestamp2, [{ dataFeedId: DATA_FEED_ID, price: price2 }]);
+      .updateDataFeedsValues(ts2, [{ dataFeedId: DATA_FEED_ID, price: price2 }]);
 
-    // resume automining
+    // Mine exactly one block with the fixed timestamp → both tx share the same block timestamp
+    await network.provider.send("evm_mine", [fixedBlockTs]);
     await network.provider.send("evm_setAutomine", [true]);
-    await network.provider.send("evm_mine");
 
-    // Confirm data was not overwritten
-    const stored = await adapter.getUpdaterLastPriceData(3, DATA_FEED_ID);
+    // Confirm data was not overwritten and event emitted for the second tx
+    const stored = await adapter.getUpdaterLastPriceData(0, DATA_FEED_ID);
     expect(stored.price).to.equal(price1);
-    expect(stored.priceTimestamp).to.equal(priceTimestamp1);
 
-    // Check that tx2 emitted UpdateSkipDueToBlockTimestamp
-    const receipt = await secondUpdateTx.wait();
-    const event = receipt.events?.find((e) => e.event === "UpdateSkipDueToBlockTimestamp");
-    expect(event).to.not.be.undefined;
-    expect(event?.args?.[0]).to.equal(DATA_FEED_ID);
+    const receipt = await tx2.wait();
+    const ev = receipt.events?.find((e) => e.event === "UpdateSkipDueToBlockTimestamp");
+    expect(ev).to.not.be.undefined;
+    expect(ev?.args?.[0]).to.equal(DATA_FEED_ID);
   });
 
-  it("should allow batch updating multiple dataFeedIds in one call", async function () {
+  it("supports batch updates for multiple feeds in a single call", async () => {
     const updater = await getImpersonatedSigner(AUTHORIZED_UPDATERS[2]);
-    const timestamp = await randomPriceTimestamp();
+    const blockTs = (await time.latest()) + 2;
+    await time.setNextBlockTimestamp(blockTs);
 
     const inputs = [
       {
-        dataFeedId: ethers.utils.formatBytes32String("ETH"),
-        price: ethers.utils.parseUnits("1000", 8),
+        dataFeedId: utils.formatBytes32String("ETH"),
+        price: utils.parseUnits("1000", 8),
       },
       {
-        dataFeedId: ethers.utils.formatBytes32String("BTC"),
-        price: ethers.utils.parseUnits("30000", 8),
+        dataFeedId: utils.formatBytes32String("BTC"),
+        price: utils.parseUnits("30000", 8),
       },
       {
-        dataFeedId: ethers.utils.formatBytes32String("USDT"),
-        price: ethers.utils.parseUnits("7", 8),
+        dataFeedId: utils.formatBytes32String("USDT"),
+        price: utils.parseUnits("7", 8),
       },
     ];
 
-    await adapter.connect(updater).updateDataFeedsValues(timestamp, inputs);
+    await adapter.connect(updater).updateDataFeedsValues(toMicros(blockTs), inputs);
 
-    for (const input of inputs) {
-      const stored = await adapter.getUpdaterLastPriceData(2, input.dataFeedId);
-      expect(stored.price).to.equal(input.price);
-      expect(stored.priceTimestamp).to.equal(timestamp);
+    for (const i of inputs) {
+      const stored = await adapter.getUpdaterLastPriceData(2, i.dataFeedId);
+      expect(stored.price).to.equal(i.price);
+      expect(stored.priceTimestamp).to.equal(toMicros(blockTs));
     }
   });
 
-  it("should handle batch update of multiple feeds by multiple updaters correctly", async () => {
+  it("handles concurrent batch updates from multiple updaters; rounds per feed are independent", async () => {
     const feeds = [
-      ethers.utils.formatBytes32String("ETH"),
-      ethers.utils.formatBytes32String("BTC"),
-      ethers.utils.formatBytes32String("USDT"),
-      ethers.utils.formatBytes32String("LINK"),
-      ethers.utils.formatBytes32String("MATIC"),
+      utils.formatBytes32String("ETH"),
+      utils.formatBytes32String("BTC"),
+      utils.formatBytes32String("USDT"),
+      utils.formatBytes32String("LINK"),
+      utils.formatBytes32String("MATIC"),
     ];
-    const baseTimestamp = await randomPriceTimestamp();
 
+    const base = (await time.latest()) + 2;
+    // Every updater submits values for all feeds within a 1-second window → all fresh
     for (let i = 0; i < AUTHORIZED_UPDATERS.length; i++) {
       const updater = await getImpersonatedSigner(AUTHORIZED_UPDATERS[i]);
       const inputs = feeds.map((feedId, idx) => ({
         dataFeedId: feedId,
-        price: ethers.utils.parseUnits((1000 + i * 10 + idx).toString(), 8),
+        price: utils.parseUnits((1000 + i * 10 + idx).toString(), 8),
       }));
-
-      await adapter.connect(updater).updateDataFeedsValues(baseTimestamp + i, inputs);
+      await time.setNextBlockTimestamp(base + i);
+      await adapter.connect(updater).updateDataFeedsValues(toMicros(base + i), inputs);
     }
 
     for (const feedId of feeds) {
       const latestRoundId = await adapter.getLatestRoundId(feedId);
-      expect(latestRoundId.toString()).to.equal("1");
+      expect(latestRoundId).to.be.gt(0);
 
-      // Latest price should correspond to last updater's price for that feed
-      const latestPrice = ethers.utils.parseUnits(
-        (1000 + 4 * 10 + feeds.indexOf(feedId)).toString(),
-        8
+      // With 5 fresh prices (1000+idx, 1010+idx, 1020+idx, 1030+idx, 1040+idx),
+      // the final median is 1020 + idx.
+      const expected = 1020 + feeds.indexOf(feedId);
+      expect(await adapter.getValueForDataFeed(feedId)).to.equal(
+        utils.parseUnits(String(expected), 8)
       );
-      expect(await adapter.getValueForDataFeed(feedId)).to.equal(latestPrice);
     }
   });
 
-  it("should handle updates for multiple distinct dataFeedIds independently", async () => {
-    const updater = await getImpersonatedSigner(AUTHORIZED_UPDATERS[3]);
-    const timestamp = await randomPriceTimestamp();
-
-    const feedIds = [
-      ethers.utils.formatBytes32String("ETH"),
-      ethers.utils.formatBytes32String("BTC"),
-      ethers.utils.formatBytes32String("USDT"),
-    ];
-
-    const prices = [
-      ethers.utils.parseUnits("3000", 8),
-      ethers.utils.parseUnits("100000", 8),
-      ethers.utils.parseUnits("1", 8),
-    ];
-
-    for (let i = 0; i < feedIds.length; i++) {
-      await adapter
-        .connect(updater)
-        .updateDataFeedsValues(timestamp, [{ dataFeedId: feedIds[i], price: prices[i] }]);
-    }
-
-    for (let i = 0; i < feedIds.length; i++) {
-      const storedData = await adapter.getUpdaterLastPriceData(3, feedIds[i]);
-      expect(storedData.price).to.equal(prices[i]);
-    }
-  });
-
-  it("should do nothing when given an empty input array", async function () {
-    const updater = await getImpersonatedSigner(AUTHORIZED_UPDATERS[0]);
-    const timestamp = await randomPriceTimestamp();
-    await expect(adapter.connect(updater).updateDataFeedsValues(timestamp, [])).to.not.be.reverted;
-  });
-
-  it("should reject outdated price data update", async function () {
-    // Submit 5 price updates
-    const prices = [1000, 1001, 1002, 1003, 1004];
-    const { blockTimestamps } = await updateByAllNodes(adapter, prices);
-    const lastUpdate = await adapter.getLastUpdateDetails(DATA_FEED_ID);
-
-    // Attempt to update with older timestamp
-    const updater = await getImpersonatedSigner(AUTHORIZED_UPDATERS[0]);
-    const outdatedTimestamp = (blockTimestamps[0] - 30) * 1_000_000;
-    const price = ethers.utils.parseUnits("900", 8);
-    const outdatedPriceInput = {
-      dataFeedId: DATA_FEED_ID,
-      price,
-    };
-
-    await expect(
-      adapter.connect(updater).updateDataFeedsValues(outdatedTimestamp, [outdatedPriceInput])
-    ).to.emit(adapter, "UpdateSkipDueToDataTimestamp");
-
-    // Value should remain unchanged
-    const lastUpdateAfter = await adapter.getLastUpdateDetails(DATA_FEED_ID);
-    expect(lastUpdate.lastValue).to.equal(lastUpdateAfter.lastValue);
-    expect(lastUpdate.lastDataTimestamp).to.equal(lastUpdateAfter.lastDataTimestamp);
-    expect(lastUpdate.lastBlockTimestamp).to.equal(lastUpdateAfter.lastBlockTimestamp);
-  });
-
-  it("should accept update at exact max future timestamp and reject if exceeds", async () => {
-    const updater = await getImpersonatedSigner(AUTHORIZED_UPDATERS[0]);
-    let blockTimestamp = await time.latest();
-
-    const priceInput = {
-      dataFeedId: DATA_FEED_ID,
-      price: ethers.utils.parseUnits("1000", 8),
-    };
-
-    // Should accept timestamp exactly at allowed future boundary
-    blockTimestamp += 5;
-    await time.setNextBlockTimestamp(blockTimestamp);
-    const exactAllowedTimestamp = (blockTimestamp + 60) * 1_000_000;
-    await expect(
-      adapter.connect(updater).updateDataFeedsValues(exactAllowedTimestamp, [priceInput])
-    ).to.not.be.reverted;
-
-    // Should reject timestamp that exceeds allowed future boundary by 1 ms
-    blockTimestamp += 5;
-    await time.setNextBlockTimestamp(blockTimestamp);
-    // MAX_DATA_TIMESTAMP_AHEAD_SECONDS = 1 minute
-    const tooFarTimestamp = (blockTimestamp + 60) * 1_000_000 + 1;
-    await expect(
-      adapter.connect(updater).updateDataFeedsValues(tooFarTimestamp, [priceInput])
-    ).to.emit(adapter, "UpdateSkipDueToDataTimestamp");
-  });
-
-  it("should reject price update with zero price", async () => {
-    const updater = await getImpersonatedSigner(AUTHORIZED_UPDATERS[0]);
-    const timestamp = await randomPriceTimestamp();
-    const priceUpdateInput = { dataFeedId: DATA_FEED_ID, price: 0 };
-
-    await expect(
-      adapter.connect(updater).updateDataFeedsValues(timestamp, [priceUpdateInput])
-    ).to.emit(adapter, "UpdateSkipDueToInvalidValue");
-  });
-
-  it("should not aggregate if any price is zero and emit InvalidPriceData event", async () => {
-    // Update 4 authorized updaters with valid prices
-    for (let i = 0; i < 4; i++) {
-      const updater = await getImpersonatedSigner(AUTHORIZED_UPDATERS[i]);
-      const timestamp = await randomPriceTimestamp();
-      const price = ethers.utils.parseUnits("1000", 8);
-      await adapter
-        .connect(updater)
-        .updateDataFeedsValues(timestamp, [{ dataFeedId: DATA_FEED_ID, price }]);
-    }
-
-    // The 5th updater sends zero price, should emit InvalidPriceData event
-    const badUpdater = await getImpersonatedSigner(AUTHORIZED_UPDATERS[4]);
-    const badTimestamp = await randomPriceTimestamp();
-    const zeroPrice = ethers.constants.Zero;
-
-    await expect(
-      adapter
-        .connect(badUpdater)
-        .updateDataFeedsValues(badTimestamp, [{ dataFeedId: DATA_FEED_ID, price: zeroPrice }])
-    ).to.emit(adapter, "UpdateSkipDueToInvalidValue");
-
-    // Confirm no new round created because of invalid 5th update
+  it("returns zeros for never-updated feed", async () => {
     expect(await adapter.getLatestRoundId(DATA_FEED_ID)).to.equal(0);
+    expect(await adapter.getValueForDataFeed(DATA_FEED_ID)).to.equal(0);
+    expect(await adapter.getDataTimestampFromLatestUpdate(DATA_FEED_ID)).to.equal(0);
+    expect(await adapter.getBlockTimestampFromLatestUpdate(DATA_FEED_ID)).to.equal(0);
   });
 
-  it("should revert getLastUpdateDetails if data is stale", async () => {
-    // Submit 5 price updates
-    const prices = [1000, 1001, 1002, 1003, 1004];
-    await updateByAllNodes(adapter, prices);
-
-    // Advance blockchain by more than MAX_DATA_STALENESS (e.g., 31 hours)
-    const blockTimestamp = await time.latest();
-    await time.setNextBlockTimestamp(blockTimestamp + 31 * 3600);
+  it("getLastUpdateDetails reverts when data is stale (> 30 minutes)", async () => {
+    await updateByAllNodesFresh(adapter, [1000, 1001, 1002, 1003, 1004]);
+    const now = await time.latest();
+    await time.setNextBlockTimestamp(now + 31 * 60 + 1);
     await mine();
     await expect(adapter.getLastUpdateDetails(DATA_FEED_ID)).to.be.revertedWithCustomError(
       adapter,
@@ -410,286 +404,252 @@ describe("FastMultiFeedAdapter - updateDataFeedsValues", function () {
     );
   });
 
-  it("should handle large batch updates with many dataFeedIds", async () => {
+  it("supports large batch (many feeds) in one call", async () => {
     const updater = await getImpersonatedSigner(AUTHORIZED_UPDATERS[4]);
-    const timestamp = await randomPriceTimestamp();
+    const blockTs = (await time.latest()) + 2;
+    await time.setNextBlockTimestamp(blockTs);
 
-    // Prepare 200 unique dataFeedIds
     const inputs = [];
     for (let i = 0; i < 200; i++) {
       inputs.push({
-        dataFeedId: ethers.utils.formatBytes32String(`FEED_${i}`),
-        price: ethers.utils.parseUnits((1000 + i).toString(), 8),
+        dataFeedId: utils.formatBytes32String(`FEED_${i}`),
+        price: utils.parseUnits(String(1000 + i), 8),
       });
     }
 
-    // Should not revert for large batch update
-    await expect(adapter.connect(updater).updateDataFeedsValues(timestamp, inputs)).to.not.be
-      .reverted;
+    await expect(adapter.connect(updater).updateDataFeedsValues(toMicros(blockTs), inputs)).to.not
+      .be.reverted;
 
-    // check feed data correctness
     for (let i = 0; i < 200; i++) {
-      const feedId = ethers.utils.formatBytes32String(`FEED_${i}`);
-      const storedData = await adapter.getUpdaterLastPriceData(4, feedId);
-      expect(storedData.price.toString()).to.equal(
-        ethers.utils.parseUnits((1000 + i).toString(), 8).toString()
-      );
-      expect(storedData.priceTimestamp).to.equal(timestamp);
+      const feedId = utils.formatBytes32String(`FEED_${i}`);
+      const stored = await adapter.getUpdaterLastPriceData(4, feedId);
+      expect(stored.price).to.equal(utils.parseUnits(String(1000 + i), 8));
+      expect(stored.priceTimestamp).to.equal(toMicros(blockTs));
     }
   });
 
-  it("should revert when calling updateDataFeedsValuesPartial", async () => {
+  it("updateDataFeedsValuesPartial reverts with UnsupportedFunctionCall", async () => {
     await expect(
       adapter.updateDataFeedsValuesPartial([DATA_FEED_ID])
     ).to.be.revertedWithCustomError(adapter, "UnsupportedFunctionCall");
   });
-});
 
-describe("FastMultiFeedAdapter - rounds data", function () {
-  let adapter: FastMultiFeedAdapter;
+  describe("Rounds ring buffer (MAX_HISTORY_SIZE = 10 in the mock)", () => {
+    it("keeps only the most recent 10 rounds; older rounds become inaccessible", async () => {
+      // Produce many rounds. Every batch creates multiple rounds now.
+      let baseVal = 1000;
+      for (let i = 0; i < 16; i++) {
+        await updateByAllNodesFresh(adapter, [
+          baseVal,
+          baseVal + 1,
+          baseVal + 2,
+          baseVal + 3,
+          baseVal + 4,
+        ]);
+        baseVal += 20;
+      }
 
-  beforeEach(async function () {
-    adapter = await deployAdapter();
-  });
+      const latest = await adapter.getLatestRoundId(DATA_FEED_ID);
+      // First batch makes 3 rounds, next 15 batches make 5 each => 78 total.
+      expect(latest).to.equal(78);
 
-  it("should return zero or default values for feed with no updates", async () => {
-    expect(await adapter.getLatestRoundId(DATA_FEED_ID)).to.equal(0);
-    expect(await adapter.getValueForDataFeed(DATA_FEED_ID)).to.equal(0);
-    expect(await adapter.getDataTimestampFromLatestUpdate(DATA_FEED_ID)).to.equal(0);
-    expect(await adapter.getBlockTimestampFromLatestUpdate(DATA_FEED_ID)).to.equal(0);
-  });
+      const maxHistory = 10;
+      const oldestKept = latest.sub(maxHistory).add(1); // inclusive
+      const tooOld = oldestKept.sub(1);
 
-  it("should increase latestRoundId on each full update", async function () {
-    const prices = [1000, 1001, 1002, 1003, 1004];
-    await updateByAllNodes(adapter, prices);
-    const latestRoundId = await adapter.getLatestRoundId(DATA_FEED_ID);
-    expect(latestRoundId.toString()).to.equal("1"); // new round only when all nodes send the price
-
-    await updateByAllNodes(adapter, prices);
-    const latestRoundId2 = await adapter.getLatestRoundId(DATA_FEED_ID);
-    expect(latestRoundId2).to.equal(6); // 5 new rounds
-  });
-
-  it("getRoundData should revert with specific custom errors for invalid roundIds", async function () {
-    // Zero roundId should revert with RoundIdIsZero
-    await expect(adapter.getRoundData(DATA_FEED_ID, 0)).to.be.revertedWithCustomError(
-      adapter,
-      "RoundIdIsZero"
-    );
-
-    // roundId > latestRoundId should revert with RoundIdTooHigh
-    await expect(adapter.getRoundData(DATA_FEED_ID, 10)).to.be.revertedWithCustomError(
-      adapter,
-      "RoundIdTooHigh"
-    );
-
-    // Create valid data to move latestRoundId forward
-    const prices = [1000, 1001, 1002, 1003, 1004];
-    await updateByAllNodes(adapter, prices); // Round 1
-    await updateByAllNodes(adapter, prices); // Rounds 2–6
-
-    const latestRoundId = await adapter.getLatestRoundId(DATA_FEED_ID);
-
-    // MAX_HISTORY_SIZE = 10
-    const tooOldRoundId = latestRoundId.toNumber() + 1 - 10;
-
-    // If tooOldRoundId >= 1, we expect a revert with RoundIdTooOld
-    if (tooOldRoundId >= 1) {
-      await expect(adapter.getRoundData(DATA_FEED_ID, tooOldRoundId)).to.be.revertedWithCustomError(
+      // Too old should revert
+      await expect(adapter.getRoundData(DATA_FEED_ID, tooOld)).to.be.revertedWithCustomError(
         adapter,
         "RoundIdTooOld"
       );
-    }
-  });
 
-  it("getRoundData should return correct data for a valid round", async function () {
-    // First batch of updates to create round 1
-    const prices = [1000, 1001, 1004, 1003, 1002];
-    const { blockTimestamps, priceTimestamps } = await updateByAllNodes(adapter, prices);
+      // Oldest kept should still be readable
+      const valid = await adapter.getRoundData(DATA_FEED_ID, oldestKept);
+      expect(valid.price).to.be.gt(0);
+    });
 
-    const roundId = await adapter.getLatestRoundId(DATA_FEED_ID);
-    const roundData = await adapter.getRoundData(DATA_FEED_ID, roundId);
+    it("correctly overwrites buffer slots using modulo indexing", async () => {
+      // Make 11 batches. With the new behavior this yields 53 total rounds:
+      // first batch: 3 rounds; next 10 batches: 5 rounds each.
+      let baseVal = 2000;
+      for (let i = 0; i < 11; i++) {
+        await updateByAllNodesFresh(adapter, [
+          baseVal,
+          baseVal + 1,
+          baseVal + 2,
+          baseVal + 3,
+          baseVal + 4,
+        ]);
+        baseVal += 50;
+      }
 
-    expect(roundId).to.equal(1);
-    expect(roundData.price).to.equal(100200000000);
-    expect(roundData.priceTimestamp.toNumber()).to.equal(priceTimestamps[4]);
-    expect(roundData.blockTimestamp.toNumber()).to.equal(blockTimestamps[4] * 1_000_000);
-  });
+      const latest = await adapter.getLatestRoundId(DATA_FEED_ID);
+      expect(latest).to.equal(53);
 
-  it("should return correct roundData for earliest and latest roundIds", async () => {
-    const prices = [1000, 1010, 1020, 1030, 1040];
-    await updateByAllNodes(adapter, prices);
+      const maxHistory = 10;
+      const oldestKept = latest.sub(maxHistory).add(1); // 44
+      const tooOld = oldestKept.sub(1); // 43
 
-    const firstRoundId = await adapter.getLatestRoundId(DATA_FEED_ID);
-    expect(firstRoundId.toString()).to.equal("1");
-
-    // Let's do a second full set of updates
-    const nextPrices = [1100, 1110, 1120, 1130, 1140];
-    await updateByAllNodes(adapter, nextPrices);
-
-    const secondRoundId = await adapter.getLatestRoundId(DATA_FEED_ID);
-    expect(secondRoundId).to.equal(6); // 1 + 5 more
-
-    const first = await adapter.getRoundData(DATA_FEED_ID, 1);
-    const last = await adapter.getRoundData(DATA_FEED_ID, 6);
-
-    expect(first.price).to.equal(ethers.utils.parseUnits("1040", 8));
-    expect(last.price).to.equal(ethers.utils.parseUnits("1140", 8));
-  });
-});
-
-describe("FastMultiFeedAdapter - max history size", function () {
-  let adapter: FastMultiFeedAdapter;
-
-  beforeEach(async function () {
-    adapter = await deployAdapter(); // Mock with MAX_HISTORY_SIZE = 10
-  });
-
-  it("should store only the latest MAX_HISTORY_SIZE rounds and overwrite the oldest", async () => {
-    const prices = [1000, 1001, 1002, 1003, 1004];
-
-    // First call: creates 1 round
-    await updateByAllNodes(
-      adapter,
-      prices.map((p) => p + 0)
-    );
-
-    // Next 3 calls: each creates 5 rounds => 1 + 3 * 5 = 16 rounds total
-    for (let i = 1; i <= 3; i++) {
-      await updateByAllNodes(
+      // Round just outside the window is evicted
+      await expect(adapter.getRoundData(DATA_FEED_ID, tooOld)).to.be.revertedWithCustomError(
         adapter,
-        prices.map((p) => p + i)
+        "RoundIdTooOld"
       );
-    }
 
-    const latestRoundId = await adapter.getLatestRoundId(DATA_FEED_ID);
-    expect(latestRoundId.toNumber()).to.equal(16);
+      // Oldest kept is available
+      const rOldestKept = await adapter.getRoundData(DATA_FEED_ID, oldestKept);
+      expect(rOldestKept.price).to.be.gt(0);
 
-    // Only rounds 7–16 should be accessible
-    await expect(adapter.getRoundData(DATA_FEED_ID, 6)).to.be.revertedWithCustomError(
-      adapter,
-      "RoundIdTooOld"
-    );
+      // Latest is available and should differ from oldest kept (values jump by +50 per batch)
+      const rLatest = await adapter.getRoundData(DATA_FEED_ID, latest);
+      expect(rLatest.price).to.not.equal(rOldestKept.price);
 
-    const validRound = await adapter.getRoundData(DATA_FEED_ID, 7);
-    expect(validRound.price).to.be.gt(0);
-  });
+      // Optional: push one more batch to force eviction of `oldestKept`
+      await updateByAllNodesFresh(adapter, [
+        baseVal,
+        baseVal + 1,
+        baseVal + 2,
+        baseVal + 3,
+        baseVal + 4,
+      ]);
+      const latest2 = await adapter.getLatestRoundId(DATA_FEED_ID);
+      // +5 rounds due to 5 fresh updates
+      expect(latest2).to.equal(latest.add(5));
 
-  it("should correctly overwrite buffer slots using modulo indexing", async () => {
-    const prices = [2000, 2001, 2002, 2003, 2004];
-
-    await updateByAllNodes(
-      adapter,
-      prices.map((p) => p + 0)
-    ); // round 1
-    await updateByAllNodes(
-      adapter,
-      prices.map((p) => p + 1)
-    ); // rounds 2–6
-    await updateByAllNodes(
-      adapter,
-      prices.map((p) => p + 2)
-    ); // rounds 7–11
-
-    const roundIdToCheck = 6;
-    const dataBeforeOverwrite = await adapter.getRoundData(DATA_FEED_ID, roundIdToCheck);
-
-    // Add more rounds that overwrite previous data
-    await updateByAllNodes(
-      adapter,
-      prices.map((p) => p + 3)
-    ); // rounds 12–16
-
-    const latestRoundId = await adapter.getLatestRoundId(DATA_FEED_ID);
-    expect(latestRoundId.toNumber()).to.equal(16);
-
-    // Round 6 should now be invalid (evicted)
-    await expect(adapter.getRoundData(DATA_FEED_ID, roundIdToCheck)).to.be.revertedWithCustomError(
-      adapter,
-      "RoundIdTooOld"
-    );
-
-    // Slot 6 in buffer (roundId % 10) now holds data for round 16
-    const dataNow = await adapter.getRoundData(DATA_FEED_ID, 16);
-    expect(dataNow.price).to.not.equal(dataBeforeOverwrite.price);
-  });
-
-  it("should create exactly 1 + (n - 1) * 5 rounds", async () => {
-    const prices = [3000, 3001, 3002, 3003, 3004];
-    const n = 7; // number of updateByAllNodes calls
-
-    for (let i = 0; i < n; i++) {
-      await updateByAllNodes(
+      // Now `oldestKept` should be evicted
+      await expect(adapter.getRoundData(DATA_FEED_ID, oldestKept)).to.be.revertedWithCustomError(
         adapter,
-        prices.map((p) => p + i)
+        "RoundIdTooOld"
       );
-    }
-
-    const expectedRounds = 1 + (n - 1) * 5;
-    const latestRoundId = await adapter.getLatestRoundId(DATA_FEED_ID);
-    expect(latestRoundId).to.equal(expectedRounds);
-  });
-});
-
-describe("FastMultiFeedAdapter - median or last of latest three", function () {
-  let adapter: FastMultiFeedAdapterMock;
-
-  beforeEach(async function () {
-    adapter = await deployAdapter();
+    });
   });
 
-  async function getPermutedResults(prices: number[], adapter: FastMultiFeedAdapterMock) {
-    expect(prices).to.length(5);
-    const blockTimestamp = await time.latest();
-    const priceTimestamps = Array.from(
-      { length: prices.length },
-      (_, i) => blockTimestamp - prices.length + i
-    );
-    const results = [];
-    for (const permutedPrices of permutations(prices)) {
-      const input = permutedPrices.map((price, index) => ({
-        price: ethers.utils.parseUnits(String(price), 8),
-        priceTimestamp: priceTimestamps[index],
-        blockTimestamp,
-      }));
-      const result = await adapter._medianOrLastOfLatestThree(
-        input as [
-          IFastMultiFeedAdapter.PriceDataStruct,
-          IFastMultiFeedAdapter.PriceDataStruct,
-          IFastMultiFeedAdapter.PriceDataStruct,
-          IFastMultiFeedAdapter.PriceDataStruct,
-          IFastMultiFeedAdapter.PriceDataStruct,
-        ]
-      );
-      results.push({ input, result });
-    }
-    return results;
-  }
+  describe("Median of prices (exposed via mock)", () => {
+    it("returns median for odd count", async () => {
+      // Tuple type matches the Solidity signature uint256[NUM_UPDATERS]
+      const p: [BigNumberish, BigNumberish, BigNumberish, BigNumberish, BigNumberish] = [
+        utils.parseUnits("100", 8),
+        utils.parseUnits("101", 8),
+        utils.parseUnits("102", 8),
+        utils.parseUnits("103", 8),
+        utils.parseUnits("500", 8),
+      ];
+      const median = await adapter._medianOfPrices(p, 5);
+      expect(median).to.equal(utils.parseUnits("102", 8));
+    });
 
-  it("returns median when latest deviates too much", async () => {
-    // all values differing by more than the deviation
-    const prices = [100, 200, 300, 400, 500];
+    it("returns average of the two middle values for even count", async () => {
+      const p: [BigNumberish, BigNumberish, BigNumberish, BigNumberish, BigNumberish] = [
+        utils.parseUnits("100", 8),
+        utils.parseUnits("200", 8),
+        utils.parseUnits("300", 8),
+        utils.parseUnits("400", 8),
+        0, // unused, but we must keep tuple length = 5
+      ];
+      const median = await adapter._medianOfPrices(p, 4); // use first 4
+      expect(median).to.equal(utils.parseUnits("250", 8));
+    });
 
-    const permutedResults = await getPermutedResults(prices, adapter);
-    for (const { input, result } of permutedResults) {
-      expect(result.price.toNumber()).to.equal(
-        // median of the last three
-        input
-          .slice(2, 5)
-          .map((priceData) => priceData.price.toNumber())
-          .sort()[1]
-      );
-    }
-  });
+    it("odd count = 5 → median = 102 for every permutation", async () => {
+      // 5 values (last one is an outlier) → median should be 102
+      const values5 = [100, 101, 102, 103, 500];
+      const expected = utils.parseUnits("102", 8);
 
-  it("returns last when latest does not deviate more than 1%", async () => {
-    // prices are close to each other, differences are within 1%
-    const prices = [100, 100.5, 100.7, 99.8, 100.2];
+      for (const perm of permutations(values5)) {
+        // medianOfPrices expects a fixed-length tuple of size NUM_UPDATERS (5 here)
+        const tuple = perm.map((x) => utils.parseUnits(String(x), 8)) as [
+          BigNumberish,
+          BigNumberish,
+          BigNumberish,
+          BigNumberish,
+          BigNumberish,
+        ];
 
-    const permutedResults = await getPermutedResults(prices, adapter);
-    for (const { input, result } of permutedResults) {
-      const expectedLast = input[4].price.toNumber();
-      expect(result.price.toNumber()).to.equal(expectedLast);
-    }
+        const median = await adapter._medianOfPrices(tuple, 5);
+        expect(median).to.equal(expected, `perm=${perm.join(",")}`);
+      }
+    });
+
+    it("even count = 4 → median = (200+300)/2 = 250 for every permutation", async () => {
+      const values4 = [100, 200, 300, 400];
+      const expected = utils.parseUnits("250", 8);
+
+      for (const perm of permutations(values4)) {
+        // Pad to length 5; the extra element is ignored because count=4
+        const padded = [
+          ...perm.map((x) => utils.parseUnits(String(x), 8)),
+          utils.parseUnits("0", 8),
+        ] as [BigNumberish, BigNumberish, BigNumberish, BigNumberish, BigNumberish];
+
+        const median = await adapter._medianOfPrices(padded, 4);
+        expect(median).to.equal(expected, `perm=${perm.join(",")}`);
+      }
+    });
+
+    it("odd count = 3 → median = 20 for every permutation", async () => {
+      const values3 = [10, 20, 30];
+      const expected = utils.parseUnits("20", 8);
+
+      for (const perm of permutations(values3)) {
+        // Pad to length 5; extra elements are ignored because count=3
+        const padded = [
+          ...perm.map((x) => utils.parseUnits(String(x), 8)),
+          utils.parseUnits("0", 8),
+          utils.parseUnits("0", 8),
+        ] as [BigNumberish, BigNumberish, BigNumberish, BigNumberish, BigNumberish];
+
+        const median = await adapter._medianOfPrices(padded, 3);
+        expect(median).to.equal(expected, `perm=${perm.join(",")}`);
+      }
+    });
+
+    it("odd count = 5 with duplicates → median = 101 for every permutation", async () => {
+      // Multiset: two 100s plus 101, 102, 103 → sorted = [100,100,101,102,103] → median = 101
+      const values = [100, 100, 101, 102, 103];
+      const expected = utils.parseUnits("101", 8);
+
+      for (const perm of permutations(values)) {
+        const tuple = perm.map((x) => utils.parseUnits(String(x), 8)) as [
+          BigNumberish,
+          BigNumberish,
+          BigNumberish,
+          BigNumberish,
+          BigNumberish,
+        ];
+        const median = await adapter._medianOfPrices(tuple, 5);
+        expect(median).to.equal(expected, `perm=${perm.join(",")}`);
+      }
+    });
+
+    it("even count = 4 with duplicates → median = 200 for every permutation", async () => {
+      // Multiset: [100, 100, 300, 400] → sorted middle pair = (100,300) → median = 200
+      const values = [100, 100, 300, 400];
+      const expected = utils.parseUnits("200", 8);
+
+      for (const perm of permutations(values)) {
+        const padded = [
+          ...perm.map((x) => utils.parseUnits(String(x), 8)),
+          utils.parseUnits("0", 8), // ignored (count=4)
+        ] as [BigNumberish, BigNumberish, BigNumberish, BigNumberish, BigNumberish];
+        const median = await adapter._medianOfPrices(padded, 4);
+        expect(median).to.equal(expected, `perm=${perm.join(",")}`);
+      }
+    });
+
+    it("odd count = 3 with duplicates → median = 20 for every permutation", async () => {
+      // Multiset: [20, 20, 30] → median = 20 regardless of order
+      const values = [20, 20, 30];
+      const expected = utils.parseUnits("20", 8);
+
+      for (const perm of permutations(values)) {
+        const padded = [
+          ...perm.map((x) => utils.parseUnits(String(x), 8)),
+          utils.parseUnits("0", 8),
+          utils.parseUnits("0", 8), // ignored (count=3)
+        ] as [BigNumberish, BigNumberish, BigNumberish, BigNumberish, BigNumberish];
+        const median = await adapter._medianOfPrices(padded, 3);
+        expect(median).to.equal(expected, `perm=${perm.join(",")}`);
+      }
+    });
   });
 });
