@@ -1,0 +1,14 @@
+services:
+  solana:
+    build:
+      context: .
+      target: dev-runtime
+    platform: linux/amd64
+    stdin_open: true
+    tty: true
+    environment:
+      CARGO_TARGET_DIR: /redstone-monorepo-priv/packages/solana-connector/solana/target
+    volumes:
+      - ../../..:/redstone-monorepo-priv/
+    working_dir: /redstone-monorepo-priv/packages/solana-connector/solana
+    command: ["/bin/bash"]
