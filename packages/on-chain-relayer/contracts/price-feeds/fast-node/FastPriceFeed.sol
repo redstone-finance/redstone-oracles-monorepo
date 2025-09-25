@@ -29,7 +29,7 @@ abstract contract FastPriceFeed is IPriceFeed {
     uint80 roundId, int256 answer, uint256 startedAt, uint256 updatedAt, uint80 answeredInRound
   ) {
     IFastMultiFeedAdapter.PriceData memory data = getPriceFeedAdapter().getRoundData(getDataFeedId(), _roundId);
-    return (_roundId, int256(uint256(data.price)), uint256(data.blockTimestamp), uint256(data.blockTimestamp), _roundId);
+    return (_roundId, int256(uint256(data.price)), uint256(data.priceTimestamp), uint256(data.priceTimestamp), _roundId);
   }
 
   // Returns detailed data for the latest round
