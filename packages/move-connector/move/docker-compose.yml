@@ -1,0 +1,11 @@
+services:
+  move:
+    build:
+      context: .
+      target: dev-runtime
+    stdin_open: true
+    tty: true
+    volumes:
+      - ../../..:/redstone-monorepo-priv/
+    working_dir: /redstone-monorepo-priv/packages/move-connector/move
+    command: ["/bin/bash"]
