@@ -54,7 +54,9 @@ fn updating_twice_with_the_same_timestamp() {
 }
 
 #[test]
-#[should_panic(expected = "Error Code: rust-sdk. Error Number: 2002")]
+#[should_panic(
+    expected = "Error Code: rust-sdk. Error Number: 510. Error Message: Array is empty."
+)]
 fn updating_with_only_2_signers() {
     let env = Env::new();
     let scenario = scenario_updating_with_only_2_signers();
@@ -71,7 +73,9 @@ fn untrusted_updates_twice_waiting_for_threshold() {
 }
 
 #[test]
-#[should_panic(expected = "rust-sdk. Error Number: 2000")]
+#[should_panic(
+    expected = "Error Code: rust-sdk. Error Number: 510. Error Message: Array is empty."
+)]
 fn missing_feed_in_payload() {
     let env = Env::new();
     let scenario = scenario_missing_feed_in_payload();
