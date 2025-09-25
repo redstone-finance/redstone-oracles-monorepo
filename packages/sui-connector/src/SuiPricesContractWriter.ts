@@ -1,3 +1,4 @@
+import { SuiClient } from "@mysten/sui/client";
 import { Transaction } from "@mysten/sui/transactions";
 import { SUI_CLOCK_OBJECT_ID } from "@mysten/sui/utils";
 import { ContractParamsProvider } from "@redstone-finance/sdk";
@@ -53,16 +54,34 @@ export class SuiPricesContractWriter {
       this.logger
     );
 
-    Object.entries(payloads).forEach(([feedId, payload]) => {
-      this.writePrice(tx, feedId, payload);
-    });
-
+    for (const [feedId, payload] of Object.entries(payloads)) {
+      await this.writePrice(tx, feedId, payload);
+    }
     return tx;
   }
 
-  private writePrice(tx: Transaction, feedId: string, payload: string) {
+  static async selectFunction(client: SuiClient, packageId: string) {
+    try {
+      await client.getNormalizedMoveFunction({
+        package: packageId,
+        module: "price_adapter",
+        function: "try_write_price",
+      });
+
+      return "try_write_price";
+    } catch {
+      return "write_price";
+    }
+  }
+
+  private async writePrice(tx: Transaction, feedId: string, payload: string) {
+    const fn = await SuiPricesContractWriter.selectFunction(
+      this.deliveryMan.client,
+      this.config.packageId
+    );
+
     tx.moveCall({
-      target: `${this.config.packageId}::price_adapter::try_write_price`,
+      target: `${this.config.packageId}::price_adapter::${fn}`,
       arguments: [
         tx.object(this.config.priceAdapterObjectId),
         tx.pure(uint8ArrayToBcs(makeFeedIdBytes(feedId))),
