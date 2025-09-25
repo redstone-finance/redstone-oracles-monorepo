@@ -3,8 +3,9 @@ pub type SignerAddressBs = [u8; 20];
 use anchor_lang::prelude::*;
 use hex_literal::hex;
 use redstone::{
-    core::config::Config as RedstoneConfig, solana::SolanaRedStoneConfig, FeedId, SignerAddress,
-    TimestampMillis,
+    core::config::Config as RedstoneConfig,
+    solana::{SolanaCrypto, SolanaRedStoneConfig},
+    FeedId, SignerAddress, TimestampMillis,
 };
 
 pub const SOLANA_CONFIG: Config = Config {
@@ -47,15 +48,18 @@ impl Config {
         feed_id: FeedId,
         block_timestamp: TimestampMillis,
     ) -> Result<SolanaRedStoneConfig> {
-        Ok(RedstoneConfig::try_new(
-            self.signer_count_threshold,
-            self.redstone_signers(),
-            vec![feed_id],
-            block_timestamp,
-            Some(self.max_timestamp_delay_ms.into()),
-            Some(self.max_timestamp_ahead_ms.into()),
-        )?
-        .into())
+        Ok((
+            RedstoneConfig::try_new(
+                self.signer_count_threshold,
+                self.redstone_signers(),
+                vec![feed_id],
+                block_timestamp,
+                Some(self.max_timestamp_delay_ms.into()),
+                Some(self.max_timestamp_ahead_ms.into()),
+            )?,
+            SolanaCrypto,
+        )
+            .into())
     }
 
     pub fn trusted_updaters(&self) -> &[Pubkey] {
