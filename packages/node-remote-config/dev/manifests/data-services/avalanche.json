@@ -572,7 +572,8 @@
         "pharaoh-avalanche-usdc-50",
         "trader-joe-v2-avalanche-wavax",
         "trader-joe-v2-avalanche-usdc",
-        "trader-joe-v2-avalanche-usdt"
+        "trader-joe-v2-avalanche-usdt",
+        "uniswap-v4-ethereum-usdc-100"
       ],
       "deviationCheck": {
         "deviationWithRecentValues": {
