@@ -31,11 +31,14 @@ abstract contract FastMultiFeedAdapter is IFastMultiFeedAdapter {
   function getMaxDataTimestampDelayMicroseconds() internal pure virtual returns (uint64) { return MAX_DATA_TIMESTAMP_DELAY_MICROSECONDS; }
   function getMaxDataTimestampAheadMicroseconds() internal pure virtual returns (uint64) { return MAX_DATA_TIMESTAMP_AHEAD_MICROSECONDS; }
 
-  // ----------------------- Events and error ------------------------------- //
-  // Round not created reasons
+  // ----------------------- Events and errors ------------------------------ //
+  /// @notice Emitted when a round cannot be created because there are fewer than 3 fresh prices.
   event RoundNotCreatedDueToInsufficientFreshPrices(bytes32 indexed dataFeedId, uint256 freshCount);
 
+  /// @notice Revert on unsupported function call paths.
   error UnsupportedFunctionCall(string message);
+
+  /// @notice Revert when an unexpected count is used for median calculation.
   error InvalidMedianCount(uint256 count);
 
   // ----------------------- Storage ---------------------------------------- //
@@ -81,7 +84,7 @@ abstract contract FastMultiFeedAdapter is IFastMultiFeedAdapter {
       // Validate price data before storing
       if (validatePriceDataValid(updaterId, input.dataFeedId, priceData)) {
         updaterData[input.dataFeedId] = priceData;
-        tryAggregateAndStore(input.dataFeedId, currentBlockTimestamp);
+        tryAggregateAndStore(input.dataFeedId, currentBlockTimestamp, updaterId);
       }
       unchecked { i++; }
     }
@@ -95,10 +98,9 @@ abstract contract FastMultiFeedAdapter is IFastMultiFeedAdapter {
     return uint64(block.timestamp * 1_000_000);
   }
 
-  /// Checks if caller is an authorized updater
-  /// @dev Returns the ID of the authorised updater.
-  /// Reverts with `UpdaterNotAuthorised(msg.sender)` if sender is not in the authorised updater list.
-  /// Must be implemented in the derived contract
+  /// @notice Checks that the caller is an authorized updater.
+  /// @dev Must return the updater's numeric ID [0..NUM_UPDATERS-1].
+  /// MUST revert with `UpdaterNotAuthorised(msg.sender)` if the sender is not authorized.
   function getAuthorisedUpdaterId() internal view virtual returns (uint256);
 
   /// Validates price data
@@ -134,7 +136,8 @@ abstract contract FastMultiFeedAdapter is IFastMultiFeedAdapter {
   /// Attempts to aggregate last prices from all authorized updaters and stores aggregated price
   /// @param dataFeedId The data feed identifier to aggregate prices for
   /// @param currentBlockTimestamp The timestamp of the current block in microseconds
-  function tryAggregateAndStore(bytes32 dataFeedId, uint64 currentBlockTimestamp) private {
+  /// @param updaterId The updater id whose successful update triggered this attempt.
+  function tryAggregateAndStore(bytes32 dataFeedId, uint64 currentBlockTimestamp, uint256 updaterId) private {
     uint256[NUM_UPDATERS] memory prices;
     uint256 count = 0;
     uint64 maxPriceTimestamp = 0;
@@ -166,11 +169,11 @@ abstract contract FastMultiFeedAdapter is IFastMultiFeedAdapter {
       blockTimestamp: currentBlockTimestamp
     });
     roundsData()[dataFeedId][newRoundId % getMaxHistorySize()] = newRoundData;
-    emit RoundCreated(medianPrice, dataFeedId, currentBlockTimestamp, newRoundId);
+    emit RoundCreated(medianPrice, maxPriceTimestamp, dataFeedId, currentBlockTimestamp, newRoundId, updaterId);
   }
 
   /// @notice Returns median for the first `count` entries of `prices`.
-  /// @dev Uses fixed-size sorting networks for count=3/4/5 to save gas; falls back to insertion sort otherwise.
+  /// @dev Uses fixed-size sorting networks for count=3/4/5 to save gas; reverts otherwise.
   function medianOfPrices(uint256[NUM_UPDATERS] memory prices, uint256 count) internal pure returns (uint256) {
     if (count == 3) {
       return _median3(prices[0], prices[1], prices[2]);
@@ -193,29 +196,27 @@ abstract contract FastMultiFeedAdapter is IFastMultiFeedAdapter {
     return b;
   }
 
-  /// @dev Median of 4: sort network to get middle two, then average (5 comparisons).
+  /// @dev Median of 4 using 4 comparisons (no full sort).
   function _median4(uint256 a, uint256 b, uint256 c, uint256 d) private pure returns (uint256) {
     (a, b) = compareAndSwap(a, b);
     (c, d) = compareAndSwap(c, d);
     (a, c) = compareAndSwap(a, c);
     (b, d) = compareAndSwap(b, d);
-    (b, c) = compareAndSwap(b, c);
     // Safe: sum of two uint64 values fits in uint256; result fits in uint64 when cast by caller.
     return (b + c) / 2;
   }
 
-  /// @dev Median of 5 via sorting network that places the median at position 3. Sequence of 9 compare and swaps.
+  /// @dev Median of 5 using a 7-comparison selection network.
   function _median5(uint256 a, uint256 b, uint256 c, uint256 d, uint256 e) private pure returns (uint256) {
-    (a, b) = compareAndSwap(a, b);
-    (d, e) = compareAndSwap(d, e);
-    (c, e) = compareAndSwap(c, e);
-    (c, d) = compareAndSwap(c, d);
-    (b, e) = compareAndSwap(b, e);
-    (a, d) = compareAndSwap(a, d);
-    (b, c) = compareAndSwap(b, c);
-    (a, b) = compareAndSwap(a, b);
-    (c, d) = compareAndSwap(c, d);
-    return c;
+    (a, b) = compareAndSwap(a, b); // a<=b
+    (c, d) = compareAndSwap(c, d); // c<=d
+    (a, c) = compareAndSwap(a, c); // a<=c
+    (b, d) = compareAndSwap(b, d); // b<=d
+    (b, c) = compareAndSwap(b, c); // b<=c  (now a <= b <= c <= d)
+
+    if (e <= b) return b;
+    if (e >= c) return c;
+    return e;
   }
 
   /// @dev returns (min(a,b), max(a,b)).
@@ -223,6 +224,8 @@ abstract contract FastMultiFeedAdapter is IFastMultiFeedAdapter {
     if (a > b) return (b, a);
     return (a, b);
   }
+
+  // ------------------------ Read helpers ---------------------------------- //
 
   /// Returns last price data submitted by given updater for a feed
   /// @param updaterId Updater identifier [0 .. NUM_UPDATERS-1]
@@ -232,9 +235,9 @@ abstract contract FastMultiFeedAdapter is IFastMultiFeedAdapter {
     return updaterLastPriceData()[updaterId][dataFeedId];
   }
 
-  // -------------------- IMultiFeedAdapter Interface -------------------- //
+  // -------------------- IMultiFeedAdapter Interface ------------------------ //
 
-  /// Function intentionally disabled to avoid misuse, directs users to use proper update method
+  /// @notice Function intentionally disabled to avoid misuse; directs users to the proper update method.
   function updateDataFeedsValuesPartial(bytes32[] memory) external pure override {
     revert UnsupportedFunctionCall("Use the function updateDataFeedsValues(uint64,PriceUpdateInput[]) instead.");
   }
@@ -257,7 +260,7 @@ abstract contract FastMultiFeedAdapter is IFastMultiFeedAdapter {
     return (data.priceTimestamp, data.blockTimestamp, data.price);
   }
 
-  /// Returns prices for multiple data feeds
+  /// @notice Returns prices for multiple data feeds.
   function getValuesForDataFeeds(bytes32[] memory requestedDataFeedIds) public view override returns (uint256[] memory values) {
     values = new uint256[](requestedDataFeedIds.length);
     for (uint256 i = 0; i < requestedDataFeedIds.length; ) {
@@ -266,29 +269,29 @@ abstract contract FastMultiFeedAdapter is IFastMultiFeedAdapter {
     }
   }
 
-  /// Returns the latest price for a specific data feed
+  /// @notice Returns the latest price for a specific data feed.
   function getValueForDataFeed(bytes32 dataFeedId) public view override returns (uint256 dataFeedValue) {
     return (roundsData()[dataFeedId][latestRoundIdForFeed()[dataFeedId] % getMaxHistorySize()]).price;
   }
 
-  /// Returns the timestamp of the latest price update for a feed
+  /// @notice Returns the data timestamp of the latest price update for a feed.
   function getDataTimestampFromLatestUpdate(bytes32 dataFeedId) public view override returns (uint256 lastDataTimestamp) {
     return roundsData()[dataFeedId][latestRoundIdForFeed()[dataFeedId] % getMaxHistorySize()].priceTimestamp;
   }
 
-  /// Returns the block timestamp of the latest price update for a feed
+  /// @notice Returns the block timestamp of the latest price update for a feed.
   function getBlockTimestampFromLatestUpdate(bytes32 dataFeedId) public view override returns (uint256 blockTimestamp) {
     return roundsData()[dataFeedId][latestRoundIdForFeed()[dataFeedId] % getMaxHistorySize()].blockTimestamp;
   }
 
-  // -------------------------- Rounds data ------------------------------ //
+  // -------------------------- Rounds data --------------------------------- //
 
-  /// Returns the latest round id for a given data feed
+  /// @notice Returns the latest round id for a given data feed.
   function getLatestRoundId(bytes32 dataFeedId) external view override returns (uint256 latestRoundId) {
     return latestRoundIdForFeed()[dataFeedId];
   }
 
-  /// Returns price data for a specific round id, reverts if roundId is invalid
+  /// @notice Returns price data for a specific round id; reverts if roundId is invalid or unavailable.
   function getRoundData(bytes32 dataFeedId, uint256 roundId) public view override returns (PriceData memory) {
     if (roundId == 0) revert RoundIdIsZero(dataFeedId);
     uint256 latestRoundId = latestRoundIdForFeed()[dataFeedId];
