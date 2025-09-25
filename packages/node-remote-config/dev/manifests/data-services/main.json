@@ -7430,6 +7430,36 @@
       ],
       "denomination": "USD",
       "rateFeed": false
+    },
+    "HL_ORACLE_PX_BTC": {
+      "source": ["hyperliquid-testnet-perps-ws-fetcher"],
+      "denomination": "USD",
+      "rateFeed": true
+    },
+    "HL_ORACLE_PX_sekaw:BTC": {
+      "source": ["hyperliquid-testnet-perps-ws-fetcher"],
+      "denomination": "USD",
+      "rateFeed": true
+    },
+    "HL_MARK_PX_BTC": {
+      "source": ["hyperliquid-testnet-perps-ws-fetcher"],
+      "denomination": "USD",
+      "rateFeed": true
+    },
+    "HL_MARK_PX_sekaw:BTC": {
+      "source": ["hyperliquid-testnet-perps-ws-fetcher"],
+      "denomination": "USD",
+      "rateFeed": true
+    },
+    "HL_MID_PX_BTC": {
+      "source": ["hyperliquid-testnet-perps-ws-fetcher"],
+      "denomination": "USD",
+      "rateFeed": true
+    },
+    "HL_MID_PX_sekaw:BTC": {
+      "source": ["hyperliquid-testnet-perps-ws-fetcher"],
+      "denomination": "USD",
+      "rateFeed": true
     }
   }
 }
