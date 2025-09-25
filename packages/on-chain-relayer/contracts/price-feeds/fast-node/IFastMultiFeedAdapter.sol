@@ -9,7 +9,7 @@ interface IFastMultiFeedAdapter is IMultiFeedAdapter {
   /// @notice Price data structure containing price and timestamps
   /// @dev This struct will occupy 1 storage slot (32 bytes), which is the minimum possible
   struct PriceData {
-    uint128 price;
+    uint64 price;
     uint64 priceTimestamp; // in microseconds
     uint64 blockTimestamp; // in microseconds
   }

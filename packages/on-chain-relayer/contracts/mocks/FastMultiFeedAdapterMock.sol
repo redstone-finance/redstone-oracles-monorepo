@@ -4,26 +4,14 @@ pragma solidity ^0.8.17;
 import "../price-feeds/fast-node/FastMultiFeedAdapter.sol";
 
 contract FastMultiFeedAdapterMock is FastMultiFeedAdapter {
-  /// @dev for testing purposes set to 1%
-  function getDeviationThresholdBasisPoints()
-    internal
-    pure
-    override
-    returns (uint256)
-  {
-    return 100;
-  }
-
   /// @dev overridden in mock to reduce storage size for testing purposes.
   function getMaxHistorySize() internal pure override returns (uint256) {
     return 10;
   }
 
-  /// @dev exposes the internal medianOrLastOfLatestThree function for testing purposes
-  function _medianOrLastOfLatestThree(
-    PriceData[5] memory prices
-  ) public pure returns (PriceData memory result) {
-    return medianOrLastOfLatestThree(prices);
+  /// @dev exposes the internal medianOfPrices function for testing purposes
+  function _medianOfPrices(uint256[NUM_UPDATERS] memory prices, uint256 count) public pure returns (uint256) {
+    return medianOfPrices(prices, count);
   }
 
   function getAuthorisedUpdaterId() internal view override returns (uint256) {
