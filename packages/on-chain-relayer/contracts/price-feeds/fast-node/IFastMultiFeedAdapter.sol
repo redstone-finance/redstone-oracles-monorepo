@@ -7,7 +7,7 @@ import {IMultiFeedAdapter} from "../interfaces/IMultiFeedAdapter.sol";
  */
 interface IFastMultiFeedAdapter is IMultiFeedAdapter {
   /// @notice Price data structure containing price and timestamps
-  /// @dev This struct will occupy 1 storage slot (32 bytes), which is the minimum possible
+  /// @dev This struct occupies 1 storage slot (32 bytes), which is the minimum possible
   struct PriceData {
     uint64 price;
     uint64 priceTimestamp; // in microseconds
@@ -17,7 +17,8 @@ interface IFastMultiFeedAdapter is IMultiFeedAdapter {
   /// @notice Input structure for price updates
   struct PriceUpdateInput { bytes32 dataFeedId; uint64 price; }
 
-  event RoundCreated(uint256 value, bytes32 dataFeedId, uint256 createdAt, uint256 roundId);
+  /// @notice Event emitted when a new round is created
+  event RoundCreated(uint256 value, uint256 valueTimestamp, bytes32 dataFeedId, uint256 createdAt, uint256 roundId, uint256 updaterId);
 
   /// @notice Error thrown when caller is not an authorized updater
   error UpdaterNotAuthorised(address updater);
