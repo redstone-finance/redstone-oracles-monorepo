@@ -41,6 +41,12 @@ build:
 	$(BUILDER) move build --package-dir ${DIR}/price_adapter --dev
 	$(BUILDER) move build --package-dir ${DIR}/price_feed --dev
 
+# This target only downloads dependencies without building the packages
+download-dependencies:
+	$(BUILDER) move compile --fetch-deps-only --package-dir ${DIR}/redstone_sdk --dev
+	$(BUILDER) move compile --fetch-deps-only --package-dir ${DIR}/price_adapter --dev
+	$(BUILDER) move compile --fetch-deps-only --package-dir ${DIR}/price_feed --dev
+
 deploy-price-adapter:
 	$(BUILDER) move publish --package-dir ${DIR}/redstone_sdk --named-addresses redstone_sdk=default
 	$(BUILDER) move publish --package-dir ${DIR}/price_adapter --named-addresses redstone_price_adapter=default,redstone_sdk=default
