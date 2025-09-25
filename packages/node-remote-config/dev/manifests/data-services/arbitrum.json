@@ -1019,6 +1019,105 @@
       ],
       "denomination": "USD",
       "rateFeed": false
+    },
+    "crvUSD": {
+      "source": [
+        "curve-arbitrumone-wbtc",
+        "curve-arbitrumone-weth",
+        "curve-ethereum-crv",
+        "curve-ethereum-frax",
+        "curve-ethereum-susde",
+        "curve-ethereum-usdc",
+        "curve-ethereum-usde",
+        "curve-ethereum-usdt",
+        "curve-ethereum-weth"
+      ],
+      "deviationCheck": {
+        "deviationWithRecentValues": {
+          "maxPercent": 5,
+          "maxDelayMilliseconds": 120000
+        }
+      },
+      "denomination": "USD",
+      "rateFeed": false,
+      "skipBroadcasting": true
+    },
+    "sUSDe": {
+      "source": ["ethereum-evm-fetcher-ethena"],
+      "denomination": "USD",
+      "rateFeed": true,
+      "skipBroadcasting": true
+    },
+    "USDe": {
+      "priceAggregator": "depth",
+      "source": [
+        "camelot-v3-arbitrumone-usdc",
+        "curve-ethereum-dai",
+        "curve-ethereum-fdusd",
+        "curve-ethereum-frax",
+        "curve-ethereum-usdt",
+        "uniswap-v3-ethereum-mnt-3000",
+        "uniswap-v3-ethereum-usdc-100",
+        "uniswap-v3-ethereum-usdt-100",
+        "uniswap-v4-ethereum-usdt-100"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "skipBroadcasting": true
+    },
+    "MNT": {
+      "source": [
+        "bingx-usdt",
+        "bitmart-usdt",
+        "bybit-btc",
+        "bybit-usdt",
+        "gate-usdt",
+        "kraken-usd",
+        "kucoin-usdt"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "skipBroadcasting": true
+    },
+    "AVAX": {
+      "source": [
+        "binance-usdt",
+        "bingx-usdt",
+        "bitget-usdt",
+        "bitmart-usdt",
+        "bitstamp-usd",
+        "coinbase-usd",
+        "gate-usdt",
+        "kaiko-v2",
+        "kraken-eur",
+        "kraken-usd",
+        "kucoin-usdt",
+        "lbank-usdt",
+        "mexc-usdt",
+        "okx-usdt"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "skipBroadcasting": true
+    },
+    "CRV": {
+      "source": [
+        "binance-usdt",
+        "bingx-usdt",
+        "bitget-usdt",
+        "bitmart-usdt",
+        "bitrue-usdt",
+        "coinbase-usd",
+        "gate-usdt",
+        "kraken-usd",
+        "kucoin-usdt",
+        "lbank-usdt",
+        "okx-usdt",
+        "xt"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "skipBroadcasting": true
     }
   },
   "multiPointPackages": {
