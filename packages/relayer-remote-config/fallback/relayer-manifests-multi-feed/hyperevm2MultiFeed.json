@@ -28,6 +28,9 @@
     },
     "dnPUMP_FUNDAMENTAL": {
       "priceFeedAddress": "0xeeF31c7d9F2E82e8A497b140cc60cc082Be4b94e"
+    },
+    "hbUSDC_FUNDAMENTAL": {
+      "priceFeedAddress": "0x368eE51E47a594fe1E9908b48228748a30BC7ca4"
     }
   }
 }

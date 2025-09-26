@@ -56,7 +56,7 @@
         "deviationPercentage": 0.1,
         "timeSinceLastUpdateInMilliseconds": 86400000
       },
-      "priceFeedAddress": "0xe7f71d6a24EBc391f5ee57B867ED429EB7Bd74f4"
+      "priceFeedAddress": "0x65eD6a4ac085620eE943c0B15525C4428D23e4Db"
     },
     "UTY_FUNDAMENTAL": {
       "updateTriggersOverrides": {
