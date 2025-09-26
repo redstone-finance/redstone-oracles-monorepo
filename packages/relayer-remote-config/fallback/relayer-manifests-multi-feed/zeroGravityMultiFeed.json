@@ -1,0 +1,27 @@
+{
+  "chain": {
+    "name": "zeroGravity",
+    "id": 16661
+  },
+  "updateTriggers": {
+    "deviationPercentage": 0.5,
+    "timeSinceLastUpdateInMilliseconds": 21600000
+  },
+  "adapterContract": "0xb4fe9028A4D4D8B3d00e52341F2BB0798860532C",
+  "adapterContractType": "multi-feed",
+  "dataServiceId": "redstone-primary-prod",
+  "priceFeeds": {
+    "ETH": {
+      "priceFeedAddress": "0xeC7C6AdcC867E1C22713D14797339750E36538E4"
+    },
+    "WBTC": {
+      "priceFeedAddress": "0x98DC6E90D4c2f212ed9d124aD2aFBa4833268633"
+    },
+    "USDC": {
+      "priceFeedAddress": "0x6f57Ff507735BcD3d86af83aF77ABD10395b2904"
+    },
+    "USDT": {
+      "priceFeedAddress": "0x7A532B1B204409472cB92cd07c8B0BB09DD2F520"
+    }
+  }
+}

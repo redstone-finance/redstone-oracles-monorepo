@@ -33,6 +33,9 @@
     },
     "bfBTC_FUNDAMENTAL": {
       "priceFeedAddress": "0xa8a94Da411425634e3Ed6C331a32ab4fd774aa43"
+    },
+    "HEMI": {
+      "priceFeedAddress": "0x0960F48901b327040be49ac517D5D8CC7B30c231"
     }
   }
 }
