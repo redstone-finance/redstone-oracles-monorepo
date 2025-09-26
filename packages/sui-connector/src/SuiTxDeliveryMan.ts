@@ -108,7 +108,7 @@ export class SuiTxDeliveryMan {
       const events = response.events;
 
       const writePriceEvent = events
-        ? !events.every((event) => !event.type.includes("price_adapter::UpdateError"))
+        ? events.every((event) => !event.type.includes("price_adapter::UpdateError"))
         : false;
 
       success = success && writePriceEvent;
