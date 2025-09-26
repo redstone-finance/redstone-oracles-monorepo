@@ -19,6 +19,7 @@
     "sample-run": "yarn global:ts-node scripts/sample-run.ts",
     "sample-deploy": "yarn global:ts-node scripts/sample-deploy.ts",
     "sample-upgrade": "yarn global:ts-node scripts/sample-upgrade.ts",
+    "sample-upgrade-tx": "yarn global:ts-node scripts/ledger/sample-upgrade-tx.ts",
     "get-ledger-data": "yarn global:ts-node ./scripts/ledger/get-ledger-data.ts",
     "create-multisig": "yarn global:ts-node ./scripts/ledger/create-multisig.ts",
     "change-owner": "yarn global:ts-node scripts/change-owner.ts",
