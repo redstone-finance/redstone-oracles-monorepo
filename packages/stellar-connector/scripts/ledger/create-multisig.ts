@@ -2,7 +2,7 @@ import { BASE_FEE, Keypair, Operation, rpc, TransactionBuilder } from "@stellar/
 import { makeKeypair, StellarRpcClient } from "../../src";
 import { StellarSigner } from "../../src/stellar/StellarSigner";
 import { makeServer } from "../utils";
-import { INITIAL_ACCOUNT_AMOUNT, MULTISIG_SIGNERS, MULTISIG_TRESHOLD } from "./consts";
+import { INITIAL_ACCOUNT_AMOUNT_XLM, MULTISIG_SIGNERS, MULTISIG_TRESHOLD } from "./consts";
 
 async function createMultisigAccount(
   server: rpc.Server,
@@ -59,7 +59,7 @@ async function main() {
     await client.createAccountWithFunds(
       new StellarSigner(payer),
       sourceKeypair.publicKey(),
-      INITIAL_ACCOUNT_AMOUNT
+      INITIAL_ACCOUNT_AMOUNT_XLM
     )
   );
 
