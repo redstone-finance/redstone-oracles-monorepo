@@ -2,12 +2,14 @@ import { SuiClient } from "@mysten/sui/client";
 import { Transaction } from "@mysten/sui/transactions";
 import { SUI_CLOCK_OBJECT_ID } from "@mysten/sui/utils";
 import { ContractParamsProvider } from "@redstone-finance/sdk";
-import { loggerFactory } from "@redstone-finance/utils";
+import { loggerFactory, RedstoneCommon } from "@redstone-finance/utils";
 import { utils } from "ethers";
 import { SuiContractUtil } from "./SuiContractUtil";
 import { SuiTxDeliveryMan } from "./SuiTxDeliveryMan";
 import { SuiConfig } from "./config";
 import { makeFeedIdBytes, uint8ArrayToBcs } from "./util";
+
+const FN_NAME_TTL = RedstoneCommon.hourToMs(1);
 
 export class SuiPricesContractWriter {
   protected readonly logger = loggerFactory("sui-prices-writer");
@@ -60,25 +62,28 @@ export class SuiPricesContractWriter {
     return tx;
   }
 
-  static async selectFunction(client: SuiClient, packageId: string) {
-    try {
-      await client.getNormalizedMoveFunction({
-        package: packageId,
-        module: "price_adapter",
-        function: "try_write_price",
-      });
+  selectFunction = RedstoneCommon.memoize({
+    functionToMemoize: async (client: SuiClient, packageId: string) => {
+      {
+        try {
+          await client.getNormalizedMoveFunction({
+            package: packageId,
+            module: "price_adapter",
+            function: "try_write_price",
+          });
 
-      return "try_write_price";
-    } catch {
-      return "write_price";
-    }
-  }
+          return "try_write_price";
+        } catch {
+          return "write_price";
+        }
+      }
+    },
+    ttl: FN_NAME_TTL,
+    cacheKeyBuilder: (_: SuiClient, packageId: string) => packageId,
+  });
 
   private async writePrice(tx: Transaction, feedId: string, payload: string) {
-    const fn = await SuiPricesContractWriter.selectFunction(
-      this.deliveryMan.client,
-      this.config.packageId
-    );
+    const fn = await this.selectFunction(this.deliveryMan.client, this.config.packageId);
 
     tx.moveCall({
       target: `${this.config.packageId}::price_adapter::${fn}`,
