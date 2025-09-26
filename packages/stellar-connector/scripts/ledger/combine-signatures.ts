@@ -1,3 +1,5 @@
+import { RedstoneCommon } from "@redstone-finance/utils";
+import { rpc } from "@stellar/stellar-sdk";
 import { inspect } from "util";
 import { makeServer } from "../utils";
 import { deserializeTx } from "./deserialize-tx";
@@ -21,10 +23,26 @@ export async function combineSignatures(
     tx.addSignature(publicKey, signature);
   }
 
-  const p = await server.sendTransaction(tx);
+  const transaction = await server.sendTransaction(tx);
 
-  console.log(p);
-  console.log(inspect(p, true, 100));
+  console.log(transaction);
+  console.log(inspect(transaction, true, 100));
+
+  const response = await RedstoneCommon.retry({
+    fn: async () => {
+      const response = await server.getTransaction(transaction.hash);
+      if (response.status === rpc.Api.GetTransactionStatus.SUCCESS) {
+        return response;
+      }
+      throw new Error(
+        `Transaction did not succeed: ${transaction.hash}, status: ${response.status}`
+      );
+    },
+    maxRetries: 10,
+    waitBetweenMs: 1_000,
+  })();
+
+  console.dir(response, { depth: 0 });
 }
 
 void combineSignatures(

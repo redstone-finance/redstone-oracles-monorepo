@@ -32,24 +32,24 @@ export class StellarContractAdapter {
     });
   }
 
-  async changeOwnerTx(sender: string, newOwner: string, timeout = TIMEOUT_SEC) {
+  async changeOwnerTx(sender: string, newOwner: string, timeout = TIMEOUT_SEC, fee = BASE_FEE) {
     const ownerAddr = XdrUtils.addressToScVal(newOwner);
 
     return await this.rpcClient.transactionFromOperation(
       this.contract.call("change_owner", ownerAddr),
       sender,
-      BASE_FEE,
+      fee,
       timeout
     );
   }
 
-  async upgradeTx(sender: string, codeHash: Buffer, timeout = TIMEOUT_SEC) {
+  async upgradeTx(sender: string, codeHash: Buffer, timeout = TIMEOUT_SEC, fee = BASE_FEE) {
     const codeHashXdr = XdrUtils.bytesToScVal(codeHash);
 
     return await this.rpcClient.transactionFromOperation(
       this.contract.call("upgrade", codeHashXdr),
       sender,
-      BASE_FEE,
+      fee,
       timeout
     );
   }
