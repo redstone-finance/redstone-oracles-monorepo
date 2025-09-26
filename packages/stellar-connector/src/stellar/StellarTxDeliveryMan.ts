@@ -34,7 +34,7 @@ export class StellarTxDeliveryMan {
   async sendTransaction(txCreator: TxCreator) {
     let i = 0;
 
-    void this.logNetworkUtilization();
+    void this.logNetworkStats();
 
     try {
       const { hash, cost, fee } = await RedstoneCommon.retry({
@@ -51,12 +51,12 @@ export class StellarTxDeliveryMan {
       this.logger.info(
         `Sending transaction successful, hash: ${hash}, cost: ${cost} stroops, fee: ${fee} stroops`
       );
-      void this.logNetworkUtilization(true);
+      void this.logNetworkStats(true);
 
       return hash;
     } catch (e) {
       this.logger.error(`Sending transaction failed ${this.config.maxTxSendAttempts} times`);
-      void this.logNetworkUtilization(true);
+      void this.logNetworkStats(true);
 
       throw e;
     }
@@ -102,10 +102,11 @@ export class StellarTxDeliveryMan {
     };
   }
 
-  private async logNetworkUtilization(force = false) {
+  private async logNetworkStats(force = false) {
     const stats = await this.rpcClient.getNetworkStats(force);
     this.logger.info(
-      `Network utilization: ${stats?.ledger_capacity_usage} (ledger: ${stats?.last_ledger})`
+      `Network utilization: ${stats?.ledger_capacity_usage} (ledger: ${stats?.last_ledger})`,
+      stats
     );
   }
 }
