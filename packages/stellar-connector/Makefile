@@ -146,7 +146,11 @@ set-adapter-address:
 		echo "ADDRESS not set"; \
 		exit 1; \
 	fi
-	@sed -i '' 's/ADAPTER_ADDRESS: &str = "[^"]*"/ADAPTER_ADDRESS: \&str = "$(ADDRESS)"/' $(DEPLOY_DIR)/contracts/redstone-price-feed/src/config.rs
+	@sed 's/ADAPTER_ADDRESS: &str = "[^"]*"/ADAPTER_ADDRESS: \&str = "$(ADDRESS)"/' \
+		$(DEPLOY_DIR)/contracts/redstone-price-feed/src/config.rs \
+		> $(DEPLOY_DIR)/contracts/redstone-price-feed/src/config.rs.tmp
+	@mv $(DEPLOY_DIR)/contracts/redstone-price-feed/src/config.rs.tmp \
+		$(DEPLOY_DIR)/contracts/redstone-price-feed/src/config.rs
 
 prepare_data:
 	make -C $(DATA_DIR) DATA_NAME=$(DATA_NAME) prepare_data
