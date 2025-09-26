@@ -18,7 +18,7 @@ interface IFastMultiFeedAdapter is IMultiFeedAdapter {
   struct PriceUpdateInput { bytes32 dataFeedId; uint64 price; }
 
   /// @notice Event emitted when a new round is created
-  event RoundCreated(uint256 value, uint256 valueTimestamp, bytes32 dataFeedId, uint256 createdAt, uint256 roundId, uint256 updaterId);
+  event RoundCreated(uint256 value, uint256 updaterTimestamp, bytes32 dataFeedId, uint256 blockTimestamp, uint256 roundId, uint256 updaterId);
 
   /// @notice Error thrown when caller is not an authorized updater
   error UpdaterNotAuthorised(address updater);
