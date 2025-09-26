@@ -36,12 +36,20 @@ export class SuiPricesContractReader {
   async getContractDataFromPricesTable(pricesTableId: string, blockNumber?: number) {
     const parsedResults = await this.getPriceDataContent(pricesTableId, blockNumber);
 
+    const parseLastValue = (value: string) => {
+      try {
+        return BigInt(value);
+      } catch {
+        return 0n;
+      }
+    };
+
     const contractData = parsedResults.map((data) => [
       ContractParamsProvider.unhexlifyFeedId(data.feed_id),
       {
         lastDataPackageTimestampMS: parseInt(data.timestamp),
         lastBlockTimestampMS: parseInt(data.write_timestamp),
-        lastValue: BigInt(data.value),
+        lastValue: parseLastValue(data.value),
       },
     ]);
 
