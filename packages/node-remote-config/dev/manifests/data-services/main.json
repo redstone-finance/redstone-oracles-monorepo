@@ -7461,6 +7461,15 @@
       "source": ["hyperliquid-testnet-perps-ws-fetcher"],
       "denomination": "USD",
       "rateFeed": true
+    },
+    "USDH": {
+      "source": [
+        "hyperliquid-api-fetcher",
+        "project-x-hyperevm-whype-500",
+        "project-x-hyperevm-khype-500"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
     }
   }
 }
