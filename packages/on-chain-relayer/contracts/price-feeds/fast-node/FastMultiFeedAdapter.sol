@@ -18,7 +18,7 @@ abstract contract FastMultiFeedAdapter is IFastMultiFeedAdapter {
   // ----------------------- Config ----------------------------------------- //
   uint256 internal constant NUM_UPDATERS = 5;
   // Max number of rounds stored (ring buffer size)
-  uint256 internal constant MAX_HISTORY_SIZE = 300_000_000;
+  uint256 internal constant MAX_HISTORY_SIZE = 1_200_000;
   // Maximum allowed staleness of data during reading in microseconds (30 minutes)
   uint256 internal constant MAX_READING_DATA_STALENESS = 1_800_000_000;
   // Maximum allowed price data staleness in microseconds (10 seconds)
