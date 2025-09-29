@@ -111,7 +111,7 @@ const config: HardhatUserConfig = {
       url: "http://evmrpc.0g.ai",
     },
     zeroGravityTestnet: {
-      url: "https://rpc.ankr.com/0g_galileo_testnet_evm",
+      url: "https://evmrpc-testnet.0g.ai",
     },
     incentivTestnet: {
       url: "https://rpc2.testnet.incentiv.io/",

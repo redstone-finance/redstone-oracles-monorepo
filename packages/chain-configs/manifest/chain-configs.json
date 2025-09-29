@@ -1249,21 +1249,17 @@
     },
     "zeroGravityTestnet": {
       "name": "0G Galileo Testnet",
-      "networkId": 16601,
+      "networkId": 16602,
       "currencySymbol": "0G",
-      "publicRpcUrls": [
-        "https://evmrpc-testnet.0g.ai",
-        "https://rpc.ankr.com/0g_galileo_testnet_evm",
-        "https://16601.rpc.thirdweb.com",
-        "https://lightnode-json-rpc-0g.grandvalleys.com"
-      ],
-      "avgBlockTimeMs": 2000,
+      "publicRpcUrls": ["https://evmrpc-testnet.0g.ai"],
+      "avgBlockTimeMs": 700,
       "multicall3": {
-        "address": "0xaD6CC5a465E5c8284a49eC9eD10EFE275460678c",
+        "address": "0xb4fe9028A4D4D8B3d00e52341F2BB0798860532C",
         "type": "RedstoneMulticall3",
         "gasLimitPerCall": 1000000
       },
       "isAuctionModel": false,
+      "fallbackToEthMaxPriorityFeePerGas": true,
       "twoDimensionalFees": false,
       "isMainnet": false
     },
