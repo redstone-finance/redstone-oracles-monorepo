@@ -63,7 +63,7 @@ describe("RedStone Gelato w3f Tests", function () {
 
   async function performCanExecTest(
     userArgs: typeof args,
-    adapterContractAddress = "0x11B714817cBC92D402383cFd3f1037B122dcf69A"
+    adapterContractAddress = "0x5D417Aee8E85bf5A373C2C251859985B8ECFcc99"
   ) {
     const { result } = await redstoneW3f.run("onRun", { userArgs });
     expect(result.canExec).to.equal(true);
