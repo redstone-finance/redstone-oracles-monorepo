@@ -33,7 +33,9 @@ export class OperationQueue {
   }
 
   private async processQueue(): Promise<void> {
-    if (this.isProcessing) return;
+    if (this.isProcessing) {
+      return;
+    }
     this.isProcessing = true;
 
     while (this.queue.length > 0) {

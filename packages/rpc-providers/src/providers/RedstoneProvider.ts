@@ -879,7 +879,9 @@ async function resolveBlockTag(
 }
 
 async function resolveAddress(address: string | Promise<string> | undefined) {
-  if (!RedstoneCommon.isDefined(address)) return address;
+  if (!RedstoneCommon.isDefined(address)) {
+    return address;
+  }
   return (await address).toLowerCase();
 }
 

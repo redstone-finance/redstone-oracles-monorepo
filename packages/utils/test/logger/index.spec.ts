@@ -245,7 +245,9 @@ describe("Logger Sanitization Logic", () => {
     const sanitized = sanitizeValue(deepObject);
 
     const checkDepth = (obj: DeepNestedObject): number => {
-      if (obj.nested === "[Max Depth Reached]") return 1;
+      if (obj.nested === "[Max Depth Reached]") {
+        return 1;
+      }
       return 1 + checkDepth(obj.nested!);
     };
 
