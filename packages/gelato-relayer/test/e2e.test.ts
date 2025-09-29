@@ -15,8 +15,8 @@ describe("RedStone Gelato w3f: On-chain Relayer & remote manifest e2e Tests", fu
     redstoneW3f = w3f.get("redstone");
   });
 
-  it.skip("Return 'canExec: true' when update is needed", async () => {
-    await performTest(args, "0x11B714817cBC92D402383cFd3f1037B122dcf69A");
+  it("Return 'canExec: true' when update is needed", async () => {
+    await performTest(args, "0x5D417Aee8E85bf5A373C2C251859985B8ECFcc99");
   });
 
   it("Return 'canExec: true' when update is needed for MultiFeed", async () => {
