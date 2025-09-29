@@ -19,6 +19,7 @@ const CHAINS_TO_SKIP_REDSTONE_MULTICALL_ADDRESS_CHECK: string[] = [
   "zkSync",
   "Polygon Mainnet",
   "Incentiv Testnet",
+  "0G Galileo Testnet",
 ];
 
 const CHAINS_TO_SKIP_STANDARD_MULTICALL_ADDRESS_CHECK: string[] = [
