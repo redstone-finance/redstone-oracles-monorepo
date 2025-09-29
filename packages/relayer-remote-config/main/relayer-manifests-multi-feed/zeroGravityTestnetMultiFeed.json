@@ -1,27 +1,27 @@
 {
   "chain": {
     "name": "zeroGravityTestnet",
-    "id": 16601
+    "id": 16602
   },
   "updateTriggers": {
     "deviationPercentage": 0.5,
     "timeSinceLastUpdateInMilliseconds": 21600000
   },
-  "adapterContract": "0xc44be6D00307c3565FDf753e852Fc003036cBc13",
+  "adapterContract": "0xE94c9f9A1893f23be38A5C0394E46Ac05e8a5f8C",
   "adapterContractType": "multi-feed",
   "dataServiceId": "redstone-primary-prod",
   "priceFeeds": {
     "ETH": {
-      "priceFeedAddress": "0x7A9b672fc20b5C89D6774514052b3e0899E5E263"
+      "priceFeedAddress": "0x6f57Ff507735BcD3d86af83aF77ABD10395b2904"
+    },
+    "WBTC": {
+      "priceFeedAddress": "0x22d47686b3AEC9068768f84EFD8Ce2637a347B0A"
     },
     "USDC": {
-      "priceFeedAddress": "0x1b0FDa12D125B864756Bbf191ad20eaB10915a6F"
+      "priceFeedAddress": "0xc44be6D00307c3565FDf753e852Fc003036cBc13"
     },
     "USDT": {
-      "priceFeedAddress": "0x0bE6929FD4ad87347e97A525DB6ac8E884FCDCeC"
-    },
-    "BTC": {
-      "priceFeedAddress": "0x55e5eCA2A70Ce7E3ea74B84157c12Cf34545D6F6"
+      "priceFeedAddress": "0xED2B1ca5D7E246f615c2291De309643D41FeC97e"
     }
   }
 }
