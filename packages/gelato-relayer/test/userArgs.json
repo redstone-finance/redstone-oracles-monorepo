@@ -3,6 +3,6 @@
   "message": "Update NOT needed",
   "localManifestData": "",
   "manifestUrls": [
-    "https://gist.githubusercontent.com/Lukasz2891/eb90449ab33dc11981c5127ab464498b/raw/a163ebf993ee22f423c0462aea956201d6816a5b/gelato-sepolia-for-tests-manifest.json"
+    "https://raw.githubusercontent.com/redstone-finance/redstone-oracles-monorepo/refs/heads/main/packages/gelato-relayer/test/manifest.json"
   ]
 }
