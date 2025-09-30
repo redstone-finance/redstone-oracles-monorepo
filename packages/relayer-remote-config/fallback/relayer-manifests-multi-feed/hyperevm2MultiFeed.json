@@ -31,6 +31,9 @@
     },
     "hbUSDC_FUNDAMENTAL": {
       "priceFeedAddress": "0x368eE51E47a594fe1E9908b48228748a30BC7ca4"
+    },
+    "USDH": {
+      "priceFeedAddress": "0xE18aAD6733D1db21e19cb83B697082D3d4eE5170"
     }
   }
 }
