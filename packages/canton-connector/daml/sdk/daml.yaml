@@ -1,0 +1,16 @@
+sdk-version: ${SDK_VERSION}
+name: redstone-sdk${SVER}
+version: ${VERSION}
+source: src
+dependencies:
+  - daml-prim
+  - daml-stdlib
+exposed-modules:
+  - RedStone.Config
+  - RedStone.Processor
+  - RedStone.ProcessorResult
+  - RedStone.Result
+  - RedStone.U256
+build-options:
+  - -Wno-crypto-text-is-alpha
+  - --target=${TARGET}
