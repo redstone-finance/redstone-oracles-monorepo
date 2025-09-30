@@ -112,3 +112,18 @@ export class HttpClient {
     return this.httpClientOptions;
   }
 }
+
+export const httpClient = new HttpClient({
+  maxSockets: 100,
+  maxTotalSockets: 1000,
+  keepAliveMsecs: 60_000,
+  keepAlive: true,
+  scheduling: "fifo",
+  maxContentLength: 10_000_000,
+  timeout: 5_000,
+  retryOptions: {
+    retries: 2,
+    delayMs: 50,
+    backOffBase: 1,
+  },
+});

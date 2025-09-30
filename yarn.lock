@@ -7438,6 +7438,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@msgpack/msgpack@npm:^3.1.2":
+  version: 3.1.2
+  resolution: "@msgpack/msgpack@npm:3.1.2"
+  checksum: 10c0/4fee6dbea70a485d3a787ac76dd43687f489d662f22919237db1f2abbc3c88070c1d3ad78417ce6e764bcd041051680284654021f52068e0aff82d570cb942d5
+  languageName: node
+  linkType: hard
+
 "@mswjs/interceptors@npm:^0.35.8":
   version: 0.35.9
   resolution: "@mswjs/interceptors@npm:0.35.9"
@@ -9858,6 +9865,7 @@ __metadata:
   resolution: "@redstone-finance/fetchers@workspace:packages/fetchers"
   dependencies:
     "@redstone-finance/chain-configs": "workspace:*"
+    "@redstone-finance/hl-hip3": "workspace:*"
     "@redstone-finance/internal-utils": "workspace:*"
     "@redstone-finance/node-commons": "workspace:*"
     "@redstone-finance/remote-config": "workspace:*"
@@ -9973,6 +9981,31 @@ __metadata:
     "@types/node-schedule": "npm:^2.1.0"
     dotenv: "npm:^16.0.3"
     node-schedule: "npm:^2.1.1"
+    zod: "npm:^3.22.4"
+  languageName: unknown
+  linkType: soft
+
+"@redstone-finance/hl-hip3@workspace:*, @redstone-finance/hl-hip3@workspace:packages/hl-hip3":
+  version: 0.0.0-use.local
+  resolution: "@redstone-finance/hl-hip3@workspace:packages/hl-hip3"
+  dependencies:
+    "@msgpack/msgpack": "npm:^3.1.2"
+    "@redstone-finance/http-client": "workspace:*"
+    ethers: "npm:^5.7.2"
+    zod: "npm:^3.22.4"
+  languageName: unknown
+  linkType: soft
+
+"@redstone-finance/hl-relayer@workspace:packages/hl-relayer":
+  version: 0.0.0-use.local
+  resolution: "@redstone-finance/hl-relayer@workspace:packages/hl-relayer"
+  dependencies:
+    "@redstone-finance/hl-hip3": "workspace:*"
+    "@redstone-finance/http-client": "workspace:*"
+    "@redstone-finance/internal-utils": "workspace:*"
+    "@redstone-finance/mqtt5-client": "workspace:*"
+    "@redstone-finance/utils": "workspace:*"
+    dotenv: "npm:^16.0.3"
     zod: "npm:^3.22.4"
   languageName: unknown
   linkType: soft
@@ -10950,6 +10983,7 @@ __metadata:
     "@redstone-finance/chain-configs": "workspace:*"
     "@redstone-finance/fetchers": "workspace:*"
     "@redstone-finance/healthcheck": "workspace:*"
+    "@redstone-finance/hl-hip3": "workspace:*"
     "@redstone-finance/internal-utils": "workspace:*"
     "@redstone-finance/mqtt5-client": "workspace:*"
     "@redstone-finance/node-commons": "workspace:*"
@@ -10969,6 +11003,7 @@ __metadata:
     ethers: "npm:^5.7.2"
     ethers-v6: "npm:ethers@6.13.5"
     express: "npm:^4.18.1"
+    fastify: "npm:^4.25.1"
     jest-mock-extended: "npm:^3.0.4"
     jszip: "npm:^3.10.1"
     lodash: "npm:^4.17.21"
