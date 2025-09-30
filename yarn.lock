@@ -9449,6 +9449,28 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@redstone-finance/canton-connector@workspace:packages/canton-connector":
+  version: 0.0.0-use.local
+  resolution: "@redstone-finance/canton-connector@workspace:packages/canton-connector"
+  dependencies:
+    "@ethersproject/bytes": "npm:^5.6.1"
+    "@ethersproject/strings": "npm:^5.7.0"
+    "@redstone-finance/protocol": "workspace:*"
+    "@redstone-finance/sdk": "workspace:*"
+    "@redstone-finance/utils": "workspace:*"
+    "@types/lodash": "npm:^4.14.195"
+    asn1.js: "npm:^5.4.1"
+    axios: "npm:^1.8.4"
+    crypto: "npm:^1.0.1"
+    ethereum-cryptography: "npm:^3.2.0"
+    ethers: "npm:^5.7.2"
+    lodash: "npm:^4.17.21"
+    msw: "npm:^2.4.10"
+    secp256k1: "npm:^5.0.1"
+    zod: "npm:^3.22.4"
+  languageName: unknown
+  linkType: soft
+
 "@redstone-finance/casper-connector@workspace:packages/casper-connector":
   version: 0.0.0-use.local
   resolution: "@redstone-finance/casper-connector@workspace:packages/casper-connector"
@@ -20758,6 +20780,13 @@ __metadata:
   dependencies:
     type-fest: "npm:^1.0.1"
   checksum: 10c0/16e11a3c8140398f5408b7fded35a961b9423c5dac39a60cbbd08bd3f0e07d7de130e87262adea7db03ec1a7a4b7551054e0db07ee5408b012bac5400cfc07a5
+  languageName: node
+  linkType: hard
+
+"crypto@npm:^1.0.1":
+  version: 1.0.1
+  resolution: "crypto@npm:1.0.1"
+  checksum: 10c0/fcf7dbd68ac5415b7fde7d7208fe203038e92e83e8a8fcf6e86ab4771ce3dd026d6967a990ba56b9d1c771378210814d5c90d907d3739fbd1723d552ad6c8ab8
   languageName: node
   linkType: hard
 

@@ -1,0 +1,30 @@
+module RedStone.Internal.Trim 
+  (
+    trimStart
+    , trimMulti
+    , trimLeadingZeros
+    , trimTrailingZeros
+  ) where
+
+import DA.List as L
+
+-- Public 
+
+trimLeadingZeros = L.dropWhile (== 0)
+trimTrailingZeros = L.dropWhileEnd (== 0)
+
+trimStart = trimMulti trimOneElement
+
+trimMulti = trimMultiAcc []
+
+-- Private 
+
+trimMultiAcc acc trimSingle n list = case n of
+  0 -> (list, acc)
+  _ -> 
+    let
+      (rest, trimmed) = trimSingle list
+    in trimMultiAcc (trimmed :: acc) trimSingle (n - 1) rest
+
+trimOneElement [] = error $ "List too short"
+trimOneElement (h :: t) = (t, h)

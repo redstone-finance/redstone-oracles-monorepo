@@ -1,0 +1,25 @@
+module RedStone.Result where
+
+-- Public
+
+data Result v e = Ok v | Error e 
+    deriving (Show, Ord, Eq)
+
+mapResultOk f (Ok x) = Ok $ f x
+mapResultOk _ (Error t) = Error t 
+
+mapResultErr f (Error x) = Error $ f x
+mapResultErr _ (Ok x) = Ok x
+
+mapResult f g = (mapResultOk f) . (mapResultErr g) 
+
+resultFromOptional _ (Some x) = Ok x
+resultFromOptional message None  = Error message
+
+resultUnwrap (Ok x) = x
+resultUnwrap (Error e) = error $ "Trying to unwrap Error " <> (show e)
+
+resultIsOk (Ok _) = True
+resultIsOk (Error _) = False
+
+resultIsError r = not $ resultIsOk r

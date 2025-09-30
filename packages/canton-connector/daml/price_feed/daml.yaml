@@ -1,0 +1,11 @@
+sdk-version: ${SDK_VERSION}
+name: redstone-price-feed${SVER}
+version: ${VERSION}
+source: src
+dependencies:
+  - daml-prim
+  - daml-stdlib
+data-dependencies:
+  - ../interface/.daml/dist/redstone-interface${SVER}-${VERSION}.dar
+build-options:
+  - --target=${TARGET}

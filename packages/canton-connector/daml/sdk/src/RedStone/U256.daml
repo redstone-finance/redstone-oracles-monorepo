@@ -1,0 +1,114 @@
+module RedStone.U256 
+  (
+    U256
+    , u256FromBeByteList
+    , u256
+    , u256Zero
+    , divBy2
+    , add
+    , mod2
+    , isZero
+    , isNotZero
+    , toIntU256
+    , u256ToInt
+    , u256ToNumeric
+  )
+where
+
+import DA.List as L
+import RedStone.Internal.Bytes
+import RedStone.Internal.Const
+import RedStone.Internal.Hex
+import RedStone.Internal.Math
+import RedStone.Internal.Trim
+
+-- Public
+
+data U256 = U256 
+    with 
+        bytes : Bytes
+    deriving (Eq)
+
+instance Ord U256 where
+  compare = compareU256
+
+instance Show U256 where
+  show = showU256
+
+u256FromBeByteList list = u256 $ fromList list
+u256 bytes = U256 $ Bytes $ normalizeBytes bytes
+u256Zero = u256 $ Bytes []
+
+divBy2 (U256 (Bytes revList)) =
+  let
+    result = divideBytes (reverse revList) 0
+  in u256 $ fromList result
+
+add (U256 (Bytes revList1)) (U256 (Bytes revList2)) =
+  let
+    result = addBytes revList1 revList2 0
+  in u256 $ Bytes result
+
+mod2 (U256 (Bytes [])) = error "Empty list"
+mod2 (U256 (Bytes (x::_))) = u256FromBeByteList [x % 2]
+
+isZero (U256 (Bytes revList)) = all (== 0) revList
+isNotZero v = not $ isZero v
+
+toIntU256 (U256 (Bytes revList)) = leByteListToInt revList
+
+u256ToInt (U256 (Bytes revList)) =
+  let
+    first8 = take int_size revList
+    rest = drop int_size revList
+
+    hasHighBytes = any (/= 0) rest
+
+    value = leByteListToInt first8
+  in if hasHighBytes || value < 0
+     then None
+     else Some value
+
+u256ToNumeric (U256 (Bytes revList)) = leByteListToNumeric revList
+
+-- Private
+
+compareU256 (U256 (Bytes revList1)) (U256 (Bytes revList2)) = compare (L.reverse revList1) (L.reverse revList2)
+
+showU256 u =
+  let
+    (U256 (Bytes revList)) = u
+    text = case u256ToInt u of
+      Some n -> show n
+      None -> "0x" <> listToHex (L.reverse $ trimTrailingZeros $ revList)
+  in text
+
+normalizeBytes Bytes{revList=xs}
+  | length xs < u256_size = xs ++ replicate (u256_size - length xs) 0
+  | length xs == u256_size = xs
+  | otherwise = 
+      let
+        first32 = take u256_size xs
+        rest = drop u256_size xs
+      in if all (== 0) rest
+         then first32
+         else error $ "U256 overflow: non-zero bytes beyond 32: " <> show rest
+
+divideBytes [] _ = []
+divideBytes (x::xs) carry =
+    let
+    val = x + carry * byte_value
+    newByte = val / 2
+    newCarry = val % 2
+    in newByte :: divideBytes xs newCarry
+
+addBytes [] [] 0 = []
+addBytes [] [] carry = [carry]
+addBytes [] ys carry = error "Different lengths"
+addBytes xs [] carry = error "Different lengths"
+addBytes (x::xs) (y::ys) carry =
+    let
+    sum = x + y + carry
+    newByte = sum % byte_value
+    newCarry = sum / byte_value
+    in newByte :: addBytes xs ys newCarry

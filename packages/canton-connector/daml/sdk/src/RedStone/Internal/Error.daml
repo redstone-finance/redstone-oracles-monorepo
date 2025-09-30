@@ -1,0 +1,26 @@
+module RedStone.Internal.Error where
+
+data ErrorCode = 
+  Configuration
+  | Processing
+  | Verification
+  | Other
+  deriving (Eq, Ord, Show)
+
+data RedStoneError a = RedStoneError 
+  with
+    code : ErrorCode
+    message : Text
+    arg : a
+  deriving (Eq, Ord);
+
+instance Show a => Show (RedStoneError a) where
+    show e = "[RedStone." <> (show e.code) <> "Error] " <> e.message <> " with: " <> show e.arg
+
+otherError message arg = RedStoneError Other message arg
+
+check cond orError = 
+    if cond then () else error $ show orError
+
+infixl 1 ???
+cond ??? orError = check cond orError

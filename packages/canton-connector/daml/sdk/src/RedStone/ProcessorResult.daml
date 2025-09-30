@@ -1,0 +1,20 @@
+module RedStone.ProcessorResult where 
+
+import DA.Numeric
+import RedStone.U256
+import RedStone.Result
+
+-- Public
+
+-- The max value of Numeric 0 is 10^38-1, but the RedStone value is given as multiplied by 10^8,
+-- so that's 10^30-1 for the real value, which means only the decimal values up to 2^99 (2^126 as multiplied) are supported by the DecimalValue
+type DecimalValue = Numeric 8 -- 8 decimals
+value_divisor: DecimalValue = 10.0 ^ 8
+
+type ProcessorResult  = ([Result DecimalValue Text], Int)
+type RedStoneRawResult = ([Result U256 Text], Int)
+
+divByDivisor a = div a value_divisor
+
+u256ToDecimalValue: U256 -> DecimalValue
+u256ToDecimalValue = divByDivisor . u256ToNumeric

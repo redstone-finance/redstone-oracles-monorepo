@@ -1,0 +1,26 @@
+module RedStone.Internal.Math 
+(
+    leByteListToInt
+    , beByteListToInt
+    , leByteListToNumeric
+    , beByteListToNumeric
+) where
+
+import DA.List as L
+import RedStone.Internal.Const
+import RedStone.Internal.Trim
+
+-- Public 
+
+leByteListToInt list = leByteListToIntAcc identity 0 0 (trimTrailingZeros list)
+beByteListToInt list = leByteListToInt $ L.reverse list 
+
+leByteListToNumeric: [Int] -> Numeric 0
+leByteListToNumeric list = leByteListToIntAcc intToNumeric 0 0.0 (trimTrailingZeros list)
+beByteListToNumeric list = leByteListToNumeric $ L.reverse list 
+
+-- Private
+
+leByteListToIntAcc : Number a =>  (Int -> a) -> Int -> a -> [Int] -> a
+leByteListToIntAcc _ _ acc [] = acc
+leByteListToIntAcc f pos acc (b::bs) = leByteListToIntAcc f (pos + 1) (acc + f b * ((f byte_value) ^ pos)) bs
