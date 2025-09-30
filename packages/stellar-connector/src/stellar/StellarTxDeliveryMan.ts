@@ -34,11 +34,11 @@ export class StellarTxDeliveryMan {
   async sendTransaction(txCreator: TxCreator) {
     let i = 0;
 
-    void this.logNetworkStats();
-
     try {
       const { hash, cost, fee } = await RedstoneCommon.retry({
         fn: async () => {
+          void this.logNetworkStats(true);
+
           return await RedstoneCommon.timeoutOrResult(
             this.sendTransactionWithIteration(txCreator, i++),
             this.config.expectedTxDeliveryTimeInMS
