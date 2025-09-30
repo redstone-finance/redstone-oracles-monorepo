@@ -1,0 +1,48 @@
+module IRedStonePriceFeed where
+
+import RedStoneTypes
+import IRedStoneAdapter
+
+type RedStoneAdapterCid = ContractId IRedStoneAdapter
+
+interface IRedStonePriceFeed where
+  viewtype RedStonePriceFeedView
+
+  readData : RedStoneAdapterCid -> Update (RedStonePriceData RedStoneValue)
+  readPrice : RedStoneAdapterCid -> Update RedStoneValue
+  readTimestamp : RedStoneAdapterCid -> Update Int
+  getDescription : () -> Update Text
+
+  nonconsuming choice ReadData : (RedStonePriceData RedStoneValue)
+    with
+      adapterCid : RedStoneAdapterCid
+    controller (view this).viewers
+    do 
+      readData this adapterCid
+
+  nonconsuming choice ReadPrice : RedStoneValue
+    with
+      adapterCid : RedStoneAdapterCid
+    controller (view this).viewers
+    do 
+      readPrice this adapterCid
+  
+  nonconsuming choice ReadTimestamp : Int
+    with
+      adapterCid : RedStoneAdapterCid
+    controller (view this).viewers
+    do 
+      readTimestamp this adapterCid
+
+  nonconsuming choice GetDescription : Text
+    controller (view this).viewers
+    do 
+      getDescription this ()
+
+data RedStonePriceFeedView = RedStonePriceFeedView
+  with
+    owner : Party
+    viewers : [Party]
+    adapterId : Text
+    feedId : RedStoneFeedId
+  deriving (Eq, Show, Ord)

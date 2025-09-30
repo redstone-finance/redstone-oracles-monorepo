@@ -1,0 +1,49 @@
+module RedStone.Internal.Hex (
+  HexBytes(..)
+  , listToHex
+  , hexToList
+) where
+
+import DA.Text as T
+import DA.List as L
+import DA.Optional
+
+-- Public
+
+listToHex list =
+  let
+    asciiToHex a = 
+      let
+        hex = toHex a
+      in substring (T.length hex - 2) (T.length hex) hex 
+  in implode (map asciiToHex list)
+
+hexToList hex = map (\[a,b] -> pairToByte (a,b)) (L.chunksOf 2 ((explode hex)))
+
+-- Private
+
+data HexBytes = HexBytes 
+  with 
+    bytes: [Int]
+  deriving (Eq)
+
+instance Show HexBytes where
+  show HexBytes{bytes} = show $ listToHex bytes
+
+hexCharToInt c =
+  let hexChars = ["0","1","2","3","4","5","6","7","8","9","A","B","C","D","E","F"]
+      upper = T.asciiToUpper c
+  in elemIndex upper hexChars 
+
+hexDigit n = case n of
+  n | n >= 0 && n <= 15 -> ["0","1","2","3","4","5","6","7","8","9","a","b","c","d","e","f"] !! n
+  _ -> "?"
+
+pairToByte (a, b) = 16 * (fromSome (hexCharToInt a)) + (fromSome (hexCharToInt b)) 
+
+
+
+toHex a = let
+    high = a / 16
+    low = a % 16
+  in hexDigit high <> hexDigit low

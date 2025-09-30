@@ -1,0 +1,16 @@
+module Archive where
+
+import Daml.Script
+import Input
+import FindContract (findAnyAdapter)
+
+main : Input -> Script ()
+main input = script do
+  let alice = input.alice  
+
+  cid <- findAnyAdapter "RedStoneAdapter-456" alice
+  
+  submit alice do
+    archiveCmd cid
+  
+  return ()
