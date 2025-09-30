@@ -122,6 +122,9 @@ const config: HardhatUserConfig = {
     plasma: {
       url: "https://rpc.plasma.to",
     },
+    giwaTestnet: {
+      url: "https://sepolia-rpc.giwa.io",
+    },
   },
 };
 
