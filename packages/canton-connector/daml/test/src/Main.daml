@@ -1,0 +1,19 @@
+module Main where
+
+import Daml.Script
+import RedStone.Processor
+import RedStone.Config
+import Input
+
+main : Input -> Script ()
+main input = script do
+
+currentTime <- getTime
+
+let config = (redstonePrimaryProdDefaultConfig input.feedIds currentTime) with maxDelayMs = 30 * 60_000
+
+let resultUnsafe = processPayloadNumeric config input.payload 
+let result = processPayload config input.payload 
+
+debug (resultUnsafe)
+debug (result)

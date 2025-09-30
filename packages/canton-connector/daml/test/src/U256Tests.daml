@@ -1,0 +1,195 @@
+module U256Tests where
+
+import Daml.Script
+import DA.List (sort)
+import DA.Assert ((===))
+import RedStone.U256
+import RedStone.Internal.Median
+
+main : Script ()
+main = do
+  debug "=== Starting U256 Tests ==="
+  
+  testBasicOperations
+  testLargeNumbers
+  testEdgeCases
+--   testOverflow
+  testComparison
+  testMedian
+  
+  debug "=== All tests passed! ==="
+  pure ()
+
+assertEq testName expected actual = do
+  if expected == actual
+    then debug $ "✓ " <> testName
+    else do
+      debug $ "✗ " <> testName <> " FAILED"
+      debug $ "  Expected: " <> show expected
+      debug $ "  Actual: " <> show actual
+      fail $ testName <> " failed"
+
+testBasicOperations : Script ()
+testBasicOperations = do
+  debug "-- Testing basic operations --"
+  
+  -- Test: 10 / 2 = 5
+  let ten = u256FromBeByteList [10]
+  let five = u256FromBeByteList [5]
+  assertEq "10 / 2 = 5" five (divBy2 ten)
+  
+  -- Test: 5 + 5 = 10
+  assertEq "5 + 5 = 10" ten (add five five)
+  
+  -- Test: modulo 2
+  assertEq "10 mod 2 = 0" (u256FromBeByteList [0]) (mod2 ten)
+  assertEq "5 mod 2 = 1" (u256FromBeByteList [1]) (mod2 five)
+  
+  -- Test: 255 / 2 = 127
+  let n255 = u256FromBeByteList [255]
+  let n127 = u256FromBeByteList [127]
+  assertEq "255 / 2 = 127" n127 (divBy2 n255)
+  
+  pure ()
+
+
+testLargeNumbers : Script ()
+testLargeNumbers = do
+  debug "-- Testing large numbers --"
+  
+  -- Test: 2^16 = 65536
+  let n65536 = u256FromBeByteList [1, 0, 0]  
+  let n32768 = u256FromBeByteList [128, 0]  
+  assertEq "65536 / 2 = 32768" n32768 (divBy2 n65536)
+  
+  -- Test: 2^24 
+  let n2_24 = u256FromBeByteList [1, 0, 0, 0]  -- 16777216
+  let n2_23 = u256FromBeByteList [128, 0, 0]    -- 8388608
+  assertEq "2^24 / 2 = 2^23" n2_23 (divBy2 n2_24)
+  
+  let max32bit = u256FromBeByteList [255, 255, 255, 255]  -- 4294967295
+  let halfMax32 = u256FromBeByteList [127, 255, 255, 255]  -- 2147483647
+  assertEq "max32bit / 2" halfMax32 (divBy2 max32bit)
+  
+  let large128 = u256FromBeByteList $ replicate 16 255
+  let halfLarge128 = u256FromBeByteList $ 127 :: replicate 15 255
+  assertEq "large 128-bit / 2" halfLarge128 (divBy2 large128)
+  
+  let almostMax = u256FromBeByteList $ replicate 31 255 ++ [254]  -- max - 1
+  let halfAlmostMax = u256FromBeByteList $ 127 :: replicate 31 255
+
+  assertEq "(max-1) / 2" halfAlmostMax (divBy2 almostMax)
+  
+  pure ()
+
+
+testEdgeCases : Script ()
+testEdgeCases = do
+  debug "-- Testing edge cases --"
+  
+  -- Test: Zero
+  let zero = u256FromBeByteList []
+  assertEq "0 / 2 = 0" zero (divBy2 zero)
+  assertEq "0 + 0 = 0" zero (add zero zero)
+  assertEq "0 mod 2 = 0" zero (mod2 zero)
+  
+  -- Test: One
+  let one = u256FromBeByteList [1]
+  assertEq "1 / 2 = 0" zero (divBy2 one)
+  assertEq "1 mod 2 = 1" one (mod2 one)
+  
+  -- Test: Max U256
+  let maxU256 = u256FromBeByteList $ replicate 32 255
+  let halfMax = u256FromBeByteList $ 127 :: replicate 31 255
+  assertEq "maxU256 / 2" halfMax (divBy2 maxU256)
+  
+  -- Test: Carry propagation 
+  let n1 = u256FromBeByteList [255, 255]  -- 65535
+  let n2 = u256FromBeByteList [1]          -- 1
+  let sum = u256FromBeByteList [1, 0, 0]   -- 65536
+  assertEq "65535 + 1 = 65536" sum (add n1 n2)
+  
+  let allOnes16 = u256FromBeByteList $ replicate 16 255
+  let result16 = u256FromBeByteList $ [1] ++ replicate 15 0 ++ [0]
+  assertEq "carry through 16 bytes" result16 (add allOnes16 (u256FromBeByteList [1]))
+
+
+  pure ()
+
+-- testOverflow : Script ()
+-- testOverflow = do
+--   debug "-- Testing overflow handling --"
+  
+--   let halfMax = u256FromBeByteList $ replicate 32 128
+--   let sum = add halfMax halfMax  
+--   case sum of
+--     U256 (Bytes revList) -> 
+--       assertEq "sum has 32 bytes" 32 (length revList)
+  
+-- --   let testOverflow = do
+-- --     let _ = u256FromBeByteList $ replicate 33 1  
+-- --     pure ()
+  
+--   pure ()
+
+testComparison : Script ()
+testComparison = do
+  debug "-- Testing comparison --"
+  
+  let n1 = u256FromBeByteList [1]
+  let n2 = u256FromBeByteList [2]
+  let n256 = u256FromBeByteList [1, 0]  
+  let n257 = u256FromBeByteList [1, 1]  
+  
+  assert $ n1 < n2
+  assert $ n2 > n1
+  n1 === n1
+  assert $ n256 < n257
+  
+  let numbers = [n257, n1, n256, n2]
+  let sorted = sort numbers
+  assertEq "sorted correctly" [n1, n2, n256, n257] sorted
+  
+  pure ()
+
+testMedian : Script ()
+testMedian = do
+  debug "-- Testing median --"
+  
+  let n0 = u256FromBeByteList [0]
+  let n1 = u256FromBeByteList [1]  
+  let n10 = u256FromBeByteList [10]
+  let n11 = u256FromBeByteList [11]
+  let n13 = u256FromBeByteList [13]
+  let n15 = u256FromBeByteList [15]  
+  let n17 = u256FromBeByteList [17]
+  let n18 = u256FromBeByteList [18]
+  let n20 = u256FromBeByteList [20]
+  let n25 = u256FromBeByteList [25]  
+  let n30 = u256FromBeByteList [30]
+  let n40 = u256FromBeByteList [40]
+
+  assertEq "median [10] = 10" n10 (median [n10])
+  assertEq "median [10,20] = 15" n15 (median [n10, n20])
+  assertEq "median [11,15] = 13" n13 (median [n11, n15])
+  assertEq "median [11,25] = 18" n18 (median [n11, n25])
+  assertEq "median [10,25] = 17" n17 (median [n10, n25])
+  assertEq "median [10,30,20] = 20" n20 (median [n10, n30, n20])
+  assertEq "median [10,20,30] = 20" n20 (median [n10, n20, n30])
+  assertEq "median [20,10,30] = 20" n20 (median [n20, n10, n30])
+  assertEq "median [10,20,30,40] = 25" n25 (median [n40, n20, n30, n10])
+  
+  let big1 = u256FromBeByteList [1, 0, 0]     -- 65536
+  let big2 = u256FromBeByteList [2, 0, 0]     -- 131072
+  let bigMed = u256FromBeByteList [1, 128, 0] -- 98304 = (65536 + 131072) / 2
+  assertEq "median big numbers" bigMed (median [big1, big2])
+
+  let max = u256FromBeByteList $ replicate 32 255
+  let maxL1 = u256FromBeByteList $ replicate 31 255 ++ [254]
+  let maxD2 = u256FromBeByteList $ 127 :: replicate 31 255
+  assertEq "median [max,max] = max" max (median [max,max])
+  assertEq "median [max-1,max] = max-1" maxL1 (median [maxL1,max])
+  assertEq "median [max-1,max-1] = max-1" maxL1 (median [maxL1,maxL1])
+  assertEq "median [max,0] = max/2" maxD2 (median [max,n0])
+  assertEq "median [max,1] = max/2 + 1" (add maxD2 n1) (median [max,n1])
+  pure ()

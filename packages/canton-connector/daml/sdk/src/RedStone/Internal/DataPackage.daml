@@ -1,0 +1,34 @@
+module RedStone.Internal.DataPackage where
+
+import RedStone.Internal.Bytes
+import RedStone.Internal.Trim
+import RedStone.Internal.Protocol
+import RedStone.Internal.DataPoint
+import RedStone.Internal.Hex
+
+-- Public
+
+data DataPackage = DataPackage 
+  with
+    dataPoints : [DataPoint]
+    timestamp : Int
+    signature : HexBytes
+    signableBytes : HexBytes
+  deriving (Eq, Show)
+
+trimDataPackage bytes = 
+  let 
+    (signatureRest, signature) = bytesTrim signature_bs bytes
+    (dataPointCountRest, dataPointCount) = bytesTrimNum data_point_count_bs signatureRest
+    (valueSizeRest, valueSize) = bytesTrimNum value_size_bs dataPointCountRest
+    (timestampRest, timestamp) = bytesTrimNum timestamp_bs valueSizeRest
+
+    signableSize =
+        dataPointCount * (valueSize + feed_id_bs) + value_size_bs
+            + timestamp_bs + data_point_count_bs
+
+    (_, signableBytes) = bytesTrim signableSize signatureRest
+
+    (dataPointsRest, dataPoints) = trimMulti (trimDataPoint valueSize) dataPointCount timestampRest
+
+  in (dataPointsRest, DataPackage dataPoints timestamp (HexBytes signature) (HexBytes signableBytes))

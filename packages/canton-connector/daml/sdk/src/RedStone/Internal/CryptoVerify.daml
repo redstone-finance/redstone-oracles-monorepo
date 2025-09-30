@@ -1,0 +1,33 @@
+module RedStone.Internal.CryptoVerify
+(
+  getDataPackageSignerIndices
+) where 
+
+import DA.List as L
+import DA.Crypto.Text as C
+import RedStone.Result
+import RedStone.Internal.Hex
+import RedStone.Internal.Der
+
+-- Public
+
+getDataPackageSignerIndices signers = map (\(dataPackage) -> (dataPackage, verifySignerIndex signers dataPackage))
+
+-- Private
+
+-- TODO: 3.4.0
+-- cryptoVerify = C.secp256k1WithEcdsaOnly
+cryptoVerify = C.secp256k1
+
+isValidSig HexBytes{bytes=signature} HexBytes{bytes=signableBytes} pk =
+  let
+    derSignature = listToHex . signatureToDer $ signature
+    derPublicKey = publicKeyToDer pk
+    hash = C.keccak256 . listToHex $ signableBytes
+  in cryptoVerify derSignature hash derPublicKey
+
+verifySignerIndex signers dataPackage =
+    let 
+        findSignerIndex signature signableBytes = L.findIndex $ isValidSig signature signableBytes
+        index = findSignerIndex dataPackage.signature dataPackage.signableBytes signers
+    in resultFromOptional ("Wrong signer index for " <> show dataPackage) index
