@@ -1,0 +1,15 @@
+module RedStone.Internal.NoCryptoVerify
+(
+  getDataPackageSignerIndices
+) where 
+
+import DA.List as L
+import RedStone.Result
+
+-- Public
+
+getDataPackageSignerIndices signers dataPackages = map (\(dataPackage) -> (dataPackage, verifySignerIndexFake dataPackage dataPackages)) dataPackages
+
+-- Private
+
+verifySignerIndexFake dataPackage dataPackages =  ((resultFromOptional ("Wrong signer index for " <> show dataPackage)) . L.elemIndex dataPackage) (L.filter (\(a) -> (head a.dataPoints).feedId == (head dataPackage.dataPoints).feedId) dataPackages)

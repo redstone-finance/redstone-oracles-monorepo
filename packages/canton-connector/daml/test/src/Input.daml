@@ -1,0 +1,9 @@
+module Input where
+
+data Input = Input with
+  alice: Party
+  bob: Party
+  charlie: Party
+  feedIds: [[Int]]
+  payload: Text
+      deriving (Eq, Show)

@@ -1,0 +1,161 @@
+module U256ConversionTests where
+
+import Daml.Script
+import DA.Foldable (forA_)
+import RedStone.U256
+import RedStone.ProcessorResult
+
+main : Script ()
+main = do
+  debug "=== Starting U256 Conversion Tests ==="
+  
+  testConversion
+  
+  debug "=== All tests passed! ==="
+  pure ()
+
+data U256TestCase = U256TestCase with
+  name : Text
+  bigEndianBytes : [Int]
+  expectedHex : Text
+  expectedShow : Text  
+  expectedDecimalValue : DecimalValue
+  expectedInt : Optional Int
+  expectedNumeric : Numeric 0
+    deriving (Eq, Show)
+
+runU256Test : U256TestCase -> Script ()
+runU256Test tc = do
+  let u256Val = u256FromBeByteList tc.bigEndianBytes
+  
+  assertEq 
+    ("Description of " <> tc.name <> " " <> tc.expectedHex) 
+    tc.expectedShow 
+    (show u256Val)
+  
+  assertEq 
+    ("DecimalValue of " <> tc.name)
+    tc.expectedDecimalValue
+    (u256ToDecimalValue u256Val)
+
+  assertEq 
+    ("Int of " <> tc.name) 
+    tc.expectedInt 
+    (u256ToInt u256Val)
+  
+  assertEq 
+    ("Numeric of " <> tc.name) 
+    tc.expectedNumeric 
+    (u256ToNumeric u256Val)
+  
+  pure ()
+
+assertEq testName expected actual = do
+  if expected == actual
+    then debug $ "✓ " <> testName
+    else do
+      debug $ "✗ " <> testName <> " FAILED"
+      debug $ "  Expected: " <> show expected
+      debug $ "  Actual: " <> show actual
+      fail $ testName <> " failed"
+
+testCases = 
+  [ U256TestCase with
+      name = "10^22"
+      bigEndianBytes = [2, 30, 25, 224, 201, 186, 178, 64, 0, 0]
+      expectedHex = "0x021e19e0c9bab2400000"
+      expectedShow = "0x021e19e0c9bab2400000"
+      expectedDecimalValue = 100_000_000_000_000.0
+      expectedInt = None
+      expectedNumeric = 10_000_000_000_000_000_000_000.0
+      
+  , U256TestCase with
+      name = "10^22+1"
+      bigEndianBytes = [2, 30, 25, 224, 201, 186, 178, 64, 0, 1]
+      expectedHex = "0x021e19e0c9bab2400001"
+      expectedShow = "0x021e19e0c9bab2400001"
+      expectedDecimalValue = 100_000_000_000_000.00000001
+      expectedInt = None
+      expectedNumeric = 10_000_000_000_000_000_000_001.0
+      
+  , U256TestCase with
+      name = "10^30-1"
+      bigEndianBytes = [12, 159, 44, 156, 208, 70, 116, 237, 234, 63, 255, 255, 255]
+      expectedHex = "0x0c9f2c9cd04674edea3fffffff"
+      expectedShow = "0x0c9f2c9cd04674edea3fffffff"
+      expectedDecimalValue = 9_999_999_999_999_999_999_999.99999999
+      expectedInt = None
+      expectedNumeric = 999_999_999_999_999_999_999_999_999_999.0
+
+  , U256TestCase with
+      name = "10^37-1"
+      bigEndianBytes = [7, 133, 238, 16, 213, 218, 70, 217, 0, 244, 54, 159, 255, 255, 255, 255]
+      expectedHex = "0x0785ee10d5da46d900f4369fffffffff"
+      expectedShow = "0x0785ee10d5da46d900f4369fffffffff"
+      expectedDecimalValue = 99_999_999_999_999_999_999_999_999_999.99999999
+      expectedInt = None
+      expectedNumeric = 9_999_999_999_999_999_999_999_999_999_999_999_999.0
+
+  , U256TestCase with
+      name = "10^38-1"
+      bigEndianBytes = [75, 59, 76, 168, 90, 134, 196, 122, 9, 138, 34, 63, 255, 255, 255, 255]  
+      expectedHex = "0x4b3b4ca85a86c47a098a223fffffffff"
+      expectedShow = "0x4b3b4ca85a86c47a098a223fffffffff"
+      expectedDecimalValue = 999_999_999_999_999_999_999_999_999_999.99999999
+      expectedInt = None
+      expectedNumeric = 99_999_999_999_999_999_999_999_999_999_999_999_999.0
+      
+  , U256TestCase with
+      name = "2^61"
+      bigEndianBytes = [32, 0, 0, 0, 0, 0, 0, 0]
+      expectedHex = "0x2000000000000000"
+      expectedShow = "2305843009213693952"
+      expectedDecimalValue = 23_058_430_092.13693952
+      expectedInt = Some 2_305_843_009_213_693_952
+      expectedNumeric = 2_305_843_009_213_693_952.0
+      
+  , U256TestCase with
+      name = "2^73"
+      bigEndianBytes = [2, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+      expectedHex = "0x02000000000000000000"
+      expectedShow = "0x02000000000000000000"
+      expectedDecimalValue = 94_447_329_657_392.90427392
+      expectedInt = None
+      expectedNumeric = 9_444_732_965_739_290_427_392.0
+      
+  , U256TestCase with
+      name = "2^99"
+      bigEndianBytes = [8, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+      expectedHex = "0x08000000000000000000000000"
+      expectedShow = "0x08000000000000000000000000"
+      expectedDecimalValue = 6_338_253_001_141_147_007_483.51602688
+      expectedInt = None
+      expectedNumeric = 633_825_300_114_114_700_748_351_602_688.0
+
+  , U256TestCase with
+      name = "2^122"
+      bigEndianBytes = [4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+      expectedHex = "0x04000000000000000000000000000000"
+      expectedShow = "0x04000000000000000000000000000000"
+      expectedDecimalValue = 53169119831396634916152282411.21378304
+      expectedInt = None
+      expectedNumeric = 5316911983139663491615228241121378304.0
+
+  , U256TestCase with
+      name = "2^126"
+      bigEndianBytes = [64, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+      expectedHex = "0x40000000000000000000000000000000"
+      expectedShow = "0x40000000000000000000000000000000"
+      expectedDecimalValue = 850_705_917_302_346_158_658_436_518_579.42052864
+      expectedInt = None
+      expectedNumeric = 85_070_591_730_234_615_865_843_651_857_942_052_864.0
+  ]
+
+
+testConversion : Script ()
+testConversion = do
+  debug "-- Testing conversion --"
+
+  forA_ testCases runU256Test
+  
+  pure ()

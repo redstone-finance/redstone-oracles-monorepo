@@ -1,0 +1,44 @@
+module Run where
+
+import Daml.Script
+import DA.List
+import IRedStoneAdapter
+import IRedStonePriceFeed
+import Input
+import FindContract
+import VerifyResults
+
+main : Input -> Script ()
+main input = script do
+  let bob = input.bob
+  let charlie = input.charlie
+
+  currentTime <- getTime
+  adapterCid <- findOneAdapter "RedStoneAdapter-456" bob 
+
+  values <- submit charlie do
+    exerciseCmd adapterCid GetPrices with
+      payloadHex = input.payload  
+      feedIds = input.feedIds
+      currentTime
+  debug $ "Processed result: " <> show values
+
+  newCid <- submit bob do
+    exerciseCmd adapterCid WritePrices with
+      payloadHex = input.payload  
+      feedIds = input.feedIds
+      currentTime
+
+  adapterCid <- findOneAdapter "RedStoneAdapter-456" charlie
+
+  readResult <- submit charlie do
+    exerciseCmd adapterCid ReadPriceData with
+      feedIds = input.feedIds
+
+  feedCid <- findOnePriceFeed "RedStoneAdapter-456" (head input.feedIds) charlie 
+
+  feedResult <- submit charlie do
+    exerciseCmd feedCid ReadData with
+      adapterCid
+
+  verifyResults currentTime readResult feedResult

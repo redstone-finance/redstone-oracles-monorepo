@@ -1,0 +1,56 @@
+module RedStone.Internal.Median
+(
+  Averageable(..)
+  , median
+) where
+
+import DA.List as L
+import RedStone.U256
+
+-- Public
+
+class Averageable a where
+  avg : a -> a -> a
+  toInt : a -> Int
+
+instance Averageable Int where
+  avg = avgInt
+  toInt = identity
+
+instance Averageable U256 where
+  avg = avgU256  
+  toInt = toIntU256
+
+median : (Ord a, Averageable a) => [a] -> a
+median [] = error "Empty list"
+median [a] = a
+median [a, b] = avg a b
+median [a, b, c] = 
+  case maybePickMedian a b c of
+    Some result -> result
+    None -> 
+      case maybePickMedian b a c of
+        Some result -> result
+        None -> 
+          case maybePickMedian b c a of
+            Some result -> result
+            None -> error "This should never happen for 3 elements"
+
+median l =
+  let
+    sortedList = sort l
+    len = L.length sortedList
+    mid = len / 2
+  in if len % 2 == 1
+     then (sortedList !! mid)
+     else avg (sortedList !! (mid - 1)) (sortedList !! mid)
+
+-- Private
+
+avgInt a b = a / 2 + b / 2 + (a % 2 + b % 2) / 2
+avgU256 a b = add (add (divBy2 a) (divBy2 b)) (divBy2 (add (mod2 a) (mod2 b)))
+
+maybePickMedian a b c = 
+  if (b >= a && b <= c) || (b >= c && b <= a)
+    then Some b
+    else None
