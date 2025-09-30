@@ -24,7 +24,7 @@ describe("RedStone Gelato w3f: On-chain Relayer & remote manifest e2e Tests", fu
       {
         ...args,
         manifestUrls: [
-          "https://remote-config-ruby.vercel.app/gelato-sepolia-for-tests-multi-feed-manifest.json",
+          "https://raw.githubusercontent.com/redstone-finance/redstone-oracles-monorepo/refs/heads/main/packages/gelato-relayer/test/manifestMultiFeed.json",
         ],
       },
       "0xfcd454d19f9B8806F8908e99d85b8eA17b3c7346"
