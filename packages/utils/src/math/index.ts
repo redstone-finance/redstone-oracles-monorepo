@@ -2,7 +2,7 @@ import Decimal from "decimal.js";
 import { BigNumber, BigNumberish } from "ethers";
 import * as ISafeNumberMath from "../ISafeNumber";
 import { ISafeNumber, createSafeNumber } from "../ISafeNumber";
-import { bignumberishToDecimal } from "../common";
+import { assert, bignumberishToDecimal } from "../common";
 
 export * from "./monotonic-cubic-spline";
 
@@ -122,3 +122,20 @@ export const sumBy = <T>(array: T[], extract: (item: T) => number) => {
 
   return numbers.reduce((acc, curr) => acc + curr, 0);
 };
+
+export function weightedMedian(values: number[], weights: number[]) {
+  assert(
+    values.length === weights.length,
+    "weightedMedian requires values and weights has same length"
+  );
+  const pairs = values.map((v, i) => [v, weights[i]]).sort((a, b) => a[0] - b[0]);
+  const total = weights.reduce((a, b) => a + b);
+  let cum = 0;
+  for (const [val, weight] of pairs) {
+    cum += weight;
+    if (cum >= total / 2) {
+      return val;
+    }
+  }
+  throw new Error(`failed to calculate weighted median`);
+}
