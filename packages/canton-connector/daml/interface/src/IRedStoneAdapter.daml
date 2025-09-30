@@ -1,0 +1,51 @@
+module IRedStoneAdapter where
+
+import RedStoneTypes
+
+interface IRedStoneAdapter where
+  viewtype RedStoneAdapterView
+
+  getPrices : [RedStoneFeedId] -> Time -> Text -> Update RedStoneResult
+  writePrices : [RedStoneFeedId] -> Time -> Text -> Update (ContractId IRedStoneAdapter)
+  readPriceData : [RedStoneFeedId] -> Update [Optional (RedStonePriceData RedStoneValue)]
+  readPrices : [RedStoneFeedId] -> Update [RedStoneValue]
+
+  nonconsuming choice GetPrices : RedStoneResult
+    with
+      feedIds : [RedStoneFeedId]
+      currentTime : Time
+      payloadHex : Text
+    controller (view this).viewers
+    do
+      getPrices this feedIds currentTime payloadHex
+
+  choice WritePrices : ContractId IRedStoneAdapter
+    with
+      feedIds : [RedStoneFeedId]
+      currentTime : Time
+      payloadHex : Text
+    controller (view this).updaters
+    do
+      writePrices this feedIds currentTime payloadHex
+
+  nonconsuming choice ReadPrices : [RedStoneValue]
+    with
+      feedIds : [RedStoneFeedId]
+    controller (view this).viewers
+    do
+      readPrices this feedIds
+
+  nonconsuming choice ReadPriceData : [Optional (RedStonePriceData RedStoneValue)]
+    with
+      feedIds : [RedStoneFeedId]
+    controller (view this).viewers
+    do 
+      readPriceData this feedIds
+
+data RedStoneAdapterView = RedStoneAdapterView
+  with
+    owner : Party
+    updaters : [Party]
+    viewers : [Party]
+    adapterId : Text
+  deriving (Eq, Show, Ord)

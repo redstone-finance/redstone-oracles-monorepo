@@ -1,0 +1,71 @@
+module RedStone.Processor
+ (
+  processPayload
+  , processPayloadNumeric
+ ) where
+
+import DA.List as L
+import DA.Map as M
+import DA.Optional
+import RedStone.Config
+import RedStone.ProcessorResult
+import RedStone.Result
+import RedStone.U256
+import RedStone.Internal.Bytes as B
+import RedStone.Internal.DataPackage
+import RedStone.Internal.Error 
+-- TODO: 3.4.0
+-- import RedStone.Internal.CryptoVerify
+import RedStone.Internal.NoCryptoVerify
+import RedStone.Internal.Hex
+import RedStone.Internal.Median
+import RedStone.Internal.Protocol
+
+import RedStone.Internal.Trim
+import RedStone.Internal.Verify
+
+-- Public
+
+processPayload config hex = processPayloadBytes config (B.fromList (hexToList hex))
+
+processPayloadNumeric: Config -> Text -> ProcessorResult
+processPayloadNumeric config hex = 
+  let
+    (values, timestamp) = processPayload config hex
+  in (map (mapResultOk u256ToDecimalValue) values, timestamp)
+
+-- Private
+
+aggregate = map (mapResult median show)
+
+processPayloadBytes config bytes = 
+  let
+    (markerRest, marker) = bytesTrim redstone_marker_size bytes
+
+    _ = marker == redstone_marker ??? RedStoneError Processing "Wrong RedStone marker" marker
+
+    (unsMetadataByteCountRest, unsignedMetadataByteCount) = bytesTrimNum uns_metadata_count_bs markerRest
+    (unsMetadataRest, _) = bytesTrim unsignedMetadataByteCount unsMetadataByteCountRest
+    (dataPackageCountRest, dataPackageCount) = bytesTrimNum data_packages_bs unsMetadataRest 
+    (Bytes{revList=dataPackagesRest}, dataPackages) = trimMulti trimDataPackage dataPackageCount dataPackageCountRest
+
+    _ = L.null dataPackagesRest ??? RedStoneError Processing "Non-empty payload remainder" (L.reverse dataPackagesRest)
+
+    timestamp = verifyTimestamps config dataPackages
+    feedValues = getFeedValues config dataPackages 
+  in 
+  (aggregate feedValues, timestamp)
+
+getFeedValues config dataPackages = 
+  let
+    seqlt n = [0..(n-1)]
+    dataPointsWithSignerIndices = getDataPointsWithSignerIndices $ getDataPackageSignerIndices config.signers dataPackages
+    makeMatrix input = map (\feedId -> map (\signerIndex -> M.lookup (feedId, Ok signerIndex) input) (seqlt $ L.length config.signers)) config.feedIds
+    matrixInput = foldl (\m (dataPoint, index) -> insert (dataPoint.feedId, index) dataPoint.value m) empty dataPointsWithSignerIndices
+    feedValues = map catOptionals (makeMatrix matrixInput) 
+  in map (\values -> if L.length values >= config.signerCountThreshold then Ok values else Error $ verificationError "Signer count not achieved" values) feedValues
+
+getDataPointsWithSignerIndices dataPackageSignerIndices = 
+  let
+    dataPointsWithSignerIndices = concatMap (\(dataPackage, signIndex) -> map (\(dataPoint) -> (dataPoint, signIndex)) dataPackage.dataPoints) dataPackageSignerIndices
+  in L.filter (\(dataPoint, _) -> isNotZero dataPoint.value) dataPointsWithSignerIndices

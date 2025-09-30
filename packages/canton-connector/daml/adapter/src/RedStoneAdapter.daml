@@ -1,0 +1,72 @@
+module RedStoneAdapter where
+
+import DA.List as L
+import DA.Map as M
+import RedStone.Processor
+import RedStone.Config
+import RedStone.U256
+import RedStone.ProcessorResult
+import RedStone.Result
+import RedStoneTypes
+import IRedStoneAdapter
+
+template RedStoneAdapter
+  with
+    adapterId: Text
+    owner : Party
+    updaters : [Party]
+    viewers : [Party]
+    feedData : M.Map [Int] (RedStonePriceData U256)
+  where
+    signatory owner
+    observer viewers, updaters
+
+    interface instance IRedStoneAdapter for RedStoneAdapter where
+      view = RedStoneAdapterView with owner, updaters, viewers, adapterId
+
+      getPrices feedIds currentTime payloadHex = do
+        config <- verifyConfigAgainstLedger $ redstonePrimaryProdDefaultConfig feedIds currentTime
+        let (values, timestamp) = processPayloadNumeric config payloadHex
+
+        return $ (map resultUnwrap values, timestamp)
+
+      writePrices feedIds currentTime payloadHex = do
+        config <- verifyConfigAgainstLedger $ redstonePrimaryProdDefaultConfig feedIds currentTime
+
+        let (values, timestamp) = processPayload config payloadHex
+
+        let verify (feedId, value) =
+              case value of
+                Error t -> Error (t <> " for " <> show feedId)
+                Ok v -> case M.lookup feedId feedData of
+                  None -> value
+                  Some priceData 
+                    | priceData.timestamp < timestamp && priceData.writeTimestamp < config.currentTimestamp -> value
+                    | otherwise -> Error ("Wrong timestamps for " <> show feedId)
+
+        let verifiedValues = zipWith (\feedId val -> (feedId, verify (feedId, val))) feedIds values
+        let filteredValues = L.filter (resultIsOk . snd) verifiedValues
+        let unwrappedValues = map (\(feedId, value) -> (feedId, resultUnwrap value)) filteredValues
+
+        let newEntries = M.fromList $ map (\(feedId, value) -> 
+              (feedId, RedStonePriceData value timestamp config.currentTimestamp)) 
+              unwrappedValues
+        let updatedFeedData = M.union newEntries feedData
+                  
+        newCid <- create this with feedData = updatedFeedData 
+        
+        return $ toInterfaceContractId @IRedStoneAdapter newCid
+      
+      readPriceData feedIds = do
+        let getPriceData feedId =
+              case M.lookup feedId feedData of
+                None -> None
+                Some priceData -> Some $ RedStonePriceData{value = u256ToDecimalValue priceData.value,timestamp=priceData.timestamp,writeTimestamp=priceData.writeTimestamp}
+        return $ map getPriceData feedIds
+
+      readPrices feedIds = do
+        let getPriceValue feedId =
+              case M.lookup feedId feedData of
+                None -> error $ "Value not found " <> show feedId
+                Some priceData -> u256ToDecimalValue priceData.value
+        return $ map getPriceValue feedIds

@@ -1,0 +1,64 @@
+module RedStone.Internal.Der
+(
+  signatureToDer
+  , publicKeyToDer
+) where 
+
+import DA.Text as T
+import DA.List as L
+import RedStone.Internal.Error 
+
+-- Public
+
+signatureToDer fullSignature =
+  let
+    sigLen = L.length fullSignature
+    _ = sigLen == sig_rs_length || sigLen == sig_rsv_length ??? otherError "Wrong signature length" sigLen
+    
+    (signatureRS, _) = L.splitAt sig_rs_length fullSignature
+    (r, s) = L.splitAt sig_r_length signatureRS
+    _ = isCanonicalS s ??? otherError "Signature s value is over N/2" s
+
+    seq = concatMap derEncodeList [r, s]
+    der = 0x30 :: (L.length seq) :: seq
+  in der
+
+publicKeyToDer pubKeyHex =
+  let
+    prefixLen = 2
+    keyLength = T.length pubKeyHex / 2
+  in if keyLength == public_key_length + prefixLen && T.take prefixLen pubKeyHex == "04"
+     then
+       let
+         derPrefix = "3056" <>                    -- SEQUENCE, 86 bytes
+                    "3010" <>                     -- Algorithm SEQUENCE, 16 bytes
+                    "06072a8648ce3d0201" <>       -- OID: ecPublicKey
+                    "06052b8104000a" <>           -- OID: secp256k1
+                    "0342" <>                     -- BIT STRING, 66 bytes
+                    "00"                          -- Unused bits
+         
+         fullDER = derPrefix <> pubKeyHex
+         
+       in fullDER
+     else if keyLength == public_key_length
+     then publicKeyToDer ("04" <> pubKeyHex)
+     else error "Error: Expected 65 bytes starting with 04 (or 64 bytes without prefix)"
+
+-- Private
+
+sig_r_length = 32
+sig_rs_length = 64
+sig_rsv_length = 65
+public_key_length = 64
+secp256k1_N_div_2 = 
+  [ 0x7F, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF
+  , 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF
+  , 0x5D, 0x57, 0x6E, 0x73, 0x57, 0xA4, 0x50, 0x1D
+  , 0xDF, 0xE9, 0x2F, 0x46, 0x68, 0x1B, 0x20, 0xA0
+  ]
+
+isCanonicalS sBytes = sBytes <= secp256k1_N_div_2
+
+derEncodeList list =
+  let list' = if head list >= 0x80 then 0x00 :: list else list
+  in 0x02 :: (L.length list') :: list'
