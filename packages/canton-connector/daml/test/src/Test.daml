@@ -1,0 +1,59 @@
+module Test where
+
+import Daml.Script
+import DA.List
+import DA.Map as M
+import RedStoneAdapter
+import IRedStoneAdapter
+import RedStonePriceFeed
+import IRedStonePriceFeed
+import Input
+import VerifyResults
+
+main : Input -> Script ()
+main input = script do
+  alice <- allocateParty "Alice"  
+  bob <- allocateParty "Bob"      
+  charlie <- allocateParty "Charlie"   
+  
+  adapterCid <- submit alice do
+    createCmd RedStoneAdapter with
+      adapterId = "RedStoneAdapter-123"
+      owner = alice
+      updaters = [bob]
+      viewers = [charlie]
+      feedData = M.empty
+
+  feedCid <- submit alice do
+    createCmd RedStonePriceFeed with
+      owner = alice
+      viewers = [charlie]
+      adapterId = "RedStoneAdapter-123"
+      feedId = head input.feedIds
+      description = "RedSteone Feed Id"
+
+  currentTime <- getTime
+
+  result <- submit charlie do
+    exerciseCmd (toInterfaceContractId @IRedStoneAdapter adapterCid) GetPrices with
+      payloadHex = input.payload  
+      feedIds = input.feedIds
+      currentTime
+
+  debug $ "Processed result: " <> show result
+  
+  newCid <- submit bob do 
+    exerciseCmd (toInterfaceContractId @IRedStoneAdapter adapterCid) WritePrices with
+      payloadHex = input.payload  
+      feedIds = input.feedIds
+      currentTime
+
+  readResult <- submit charlie do 
+    exerciseCmd newCid ReadPriceData with 
+      feedIds = input.feedIds
+
+  feedResult <- submit charlie do
+    exerciseCmd (toInterfaceContractId @IRedStonePriceFeed feedCid) ReadData with
+      adapterCid = newCid
+
+  verifyResults currentTime readResult feedResult

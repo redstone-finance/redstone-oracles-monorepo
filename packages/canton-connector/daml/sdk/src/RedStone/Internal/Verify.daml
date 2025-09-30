@@ -1,0 +1,25 @@
+module RedStone.Internal.Verify 
+    (
+        verificationError
+        , verifyTimestamps
+    ) where
+
+import DA.List as L
+import RedStone.Internal.Error 
+
+-- Public
+
+verificationError = RedStoneError Verification
+
+verifyTimestamps config dataPackages = 
+    let
+        timestamps dataPackages = dedup (map (\dataPackage -> dataPackage.timestamp) dataPackages)
+        ts = timestamps dataPackages
+
+        _ = L.length ts == 1 ??? verificationError "Timestamps are non-equal" ts
+
+        timestamp = head ts
+
+        _ = timestamp <= config.currentTimestamp + config.maxAheadMs ??? verificationError "Timestamp to future" (timestamp, config.currentTimestamp + config.maxAheadMs) 
+        _ = timestamp >= config.currentTimestamp - config.maxDelayMs ??? verificationError "Timestamp to old" (timestamp, config.currentTimestamp - config.maxAheadMs) 
+    in timestamp
