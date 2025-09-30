@@ -1,0 +1,9 @@
+sdk-version: ${SDK_VERSION}
+name: redstone-interface${SVER}
+version: ${VERSION}
+source: src
+dependencies:
+  - daml-prim
+  - daml-stdlib
+build-options:
+  - --target=${TARGET}

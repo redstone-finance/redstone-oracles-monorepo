@@ -1,0 +1,7 @@
+sdk-version: ${SDK_VERSION}
+packages:
+  - ./sdk
+  - ./interface
+  - ./adapter
+  - ./price_feed
+  - ./test
