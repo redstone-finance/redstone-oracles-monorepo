@@ -4,7 +4,7 @@
     "id": 6342
   },
   "updateTriggers": {},
-  "adapterContract": "0xD962A6544bB645EA2f1678034788261E9417e9BC",
+  "adapterContract": "0x16dE4E3E6FaA80B9f8c182FF906A1eBFa9dDaeb5",
   "adapterContractType": "multi-feed",
   "dataServiceId": "redstone-primary-prod",
   "priceFeeds": {
