@@ -1,0 +1,15 @@
+sdk-version: ${SDK_VERSION}
+name: redstone-test${SVER}
+version: ${VERSION}
+source: src
+dependencies:
+  - daml-prim
+  - daml-stdlib
+  - daml-script
+data-dependencies:
+  - ../interface/.daml/dist/redstone-interface${SVER}-${VERSION}.dar
+  - ../adapter/.daml/dist/redstone-adapter${SVER}-${VERSION}.dar
+  - ../price_feed/.daml/dist/redstone-price-feed${SVER}-${VERSION}.dar
+  - ../sdk/.daml/dist/redstone-sdk${SVER}-${VERSION}.dar
+build-options:
+  - --target=${TARGET}

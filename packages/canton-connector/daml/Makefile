@@ -1,0 +1,97 @@
+include ./ops.mk
+
+VERSION=0.3.63
+SVER=-v2
+LEDGER_HOST=localhost
+LEDGER_PORT=6865
+# TODO: 3.4.0
+#ENVS=SDK_VERSION=3.4.0-snapshot.20250911.0 TARGET=2.dev VERSION=$(VERSION) SVER=$(SVER)
+ENVS=SDK_VERSION=3.3.0-snapshot.20250603.0 TARGET=2.1 VERSION=$(VERSION) SVER=$(SVER)
+
+TEST_DAR=.daml/dist/redstone-test$(SVER)-$(VERSION).dar
+
+.PHONY: get_party_suffix
+
+build-%:
+	cd $* && $(ENVS) daml build
+
+clean-%: 
+	cd $* && daml clean 
+
+build_redstone_adapter: build-sdk build-interface build-adapter
+
+build_test: 
+	$(ENVS) daml build --all
+
+run-%: build_test
+	cd test && $(ENVS) daml script --ide-ledger \
+		--dar $(TEST_DAR) \
+		--script-name $*:main \
+		--input-file input.json
+
+clean:
+	$(ENVS) daml clean --all
+	rm -f $(ADAPTER_ID_TXT) $(PRICE_FEED_ID_TXT) refresh_token.txt token.txt test/input.json test/sample_data/payload.hex
+
+lint: lint-sdk lint-adapter lint-price_feed lint-interface lint-test
+	./lint-newlines.sh
+
+build: build_test
+
+lint-%: 
+	cd $* && $(ENVS) daml damlc lint
+
+run_main: run-Main
+
+run_test: build_test lint-test run-Test
+
+test-%: build_redstone_adapter build_test
+	cd test && $(ENVS) daml script --ide-ledger \
+		--dar $(TEST_DAR) \
+		--script-name $*:main
+
+test: test-U256Tests test-U256ConversionTests
+
+integration_tests: prepare_data run_main run_test
+
+run_ledger: ledger-Run
+
+ledger-%: build_test
+	cd test && $(ENVS) daml script --script-name $*:main \
+	--ledger-host $(LEDGER_HOST) \
+	--ledger-port $(LEDGER_PORT) \
+	--input-file input.json \
+	--dar $(TEST_DAR)
+
+start:
+	cd test && $(ENVS) daml start
+
+start_daemon:
+	make start & \
+	sleep 20
+
+ledger_deploy: build_redstone_adapter ledger-Deploy 
+
+ledger_tests: allocate_parties get_party_suffix ledger_deploy run_ledger
+
+archive: ledger-Archive 
+
+allocate_parties: 
+	@daml ledger allocate-parties Alice Bob Charlie \
+	--host $(LEDGER_HOST) \
+	--port $(LEDGER_PORT)
+
+list_parties: 
+	@daml ledger list-parties \
+	--host $(LEDGER_HOST) \
+	--port $(LEDGER_PORT)
+
+get_party_suffix:
+	@HASH=$$(make list_parties | grep -o '[a-f0-9]\{68\}' | head -1); \
+	if [[ "$$(uname)" == "Darwin" ]]; then \
+		sed -i '' "s/::[a-f0-9]\{68\}/::$$HASH/g" test/input.json; \
+		sed -i '' "s/::[a-f0-9]\{68\}/::$$HASH/g" test/input.json.input; \
+	else \
+		sed -i "s/::[a-f0-9]\{68\}/::$$HASH/g" test/input.json; \
+		sed -i "s/::[a-f0-9]\{68\}/::$$HASH/g" test/input.json.input; \
+	fi

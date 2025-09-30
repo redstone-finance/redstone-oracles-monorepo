@@ -1,0 +1,14 @@
+module RedStone.Internal.Protocol where
+
+-- Public
+
+signature_bs = 65
+data_point_count_bs = 3
+value_size_bs = 4
+timestamp_bs = 6
+feed_id_bs = 32
+redstone_marker_size = 9
+redstone_marker = [0,0,2,237,87,1,30,0,0]
+uns_metadata_count_bs = 3
+data_packages_bs = 2
+decimals = 8

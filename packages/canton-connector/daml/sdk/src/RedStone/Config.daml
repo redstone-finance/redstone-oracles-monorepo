@@ -1,0 +1,77 @@
+module RedStone.Config
+  (
+    Config
+    , config
+    , defaultConfig
+    , redstonePrimaryProdDefaultConfig
+    , verifyConfigAgainstLedger
+    , redstone_primary_prod_public_keys
+  ) where
+
+import DA.Assert
+import DA.List as L
+import DA.Time
+import RedStone.Internal.Error 
+import RedStone.Internal.Time
+
+-- Public
+
+data Config = Config 
+  with
+    feedIds : [[Int]] 
+    currentTimestamp : Int
+    signers : [Text]
+    signerCountThreshold : Int
+    maxDelayMs : Int
+    maxAheadMs : Int
+  deriving (Eq, Show)
+
+redstone_primary_prod_public_keys = ["049a0e6cada7938a0fc616578aff2b11337d90ec4e99e9fee95e57e9d8371562b31698225fb73c666ba586842b913e67ad289f374f7a46fc873342f805a8683d4e"
+                        ,"04683f7100d67fbaccae68db4d146f7bc3090c5cbcb1351e333efd58d42f609ceeada12b0af28a6e789d6edfe25fe784dd1e86798240d4cee9f60e56848cb55965"
+                        ,"04490f08821dea02d23683f170459aa6317dd65b544aac1df514f2e657f87ac00b81757edce3e78785e00dcd92e2dc8ddd9a680dc929a0c91062d87ae000a217ce"
+                        ,"04a221496ff2436da121796c11f888cc4e2155da7e36bd1148c9466fb54627f15e42d4cfed06b1570b7ebe0c589acf91fd314cfd95303c9894c0be43432aba619f"
+                        ,"04f23aa199aeda6e55628e0ec88194c47713ba260898aae4483fb2f166c7e29b1664f817922059736358de71bdf374b3354db58d15f928a6fac9d1f61e284019b7"]
+
+config maxAheadMs maxDelayMs signerCountThreshold signers feedIds currentTime = 
+  let 
+    _ = unique feedIds && feedIds /= [] ??? configError "feedIds are empty or not unique" feedIds
+    _ = unique signers && signers /= [] ??? configError "signers are empty or not unique" signers
+    _ = signerCountThreshold <= L.length signers ??? configError "signerCountThreshold exceeds signer length" (signerCountThreshold, L.length signers)
+    _ = signerCountThreshold > 0 ??? configError "signerCountThreshold must be positive" signerCountThreshold
+    _ = maxAheadMs >= 0 ??? configError "maxAheadMs must be non-negative" maxAheadMs
+    _ = maxDelayMs >= 0 ??? configError "maxDelayMs must be non-negative" maxDelayMs
+
+    currentTimestamp = timeToMillis currentTime
+
+    _ = currentTimestamp > min_acceptable_timestamp ??? configError "Wrong currentTimestamp" currentTimestamp
+  in Config{feedIds,currentTimestamp,signers,signerCountThreshold,maxDelayMs,maxAheadMs}
+
+defaultConfig = config (1 * one_min_ms) (3 * one_min_ms) default_signer_count_threshold
+redstonePrimaryProdDefaultConfig = defaultConfig redstone_primary_prod_public_keys
+
+verifyCurrentTimeVsLedger config = do
+  notIde <- isNotIDE
+  if notIde then do
+    let currentTime = millisToTime config.currentTimestamp
+
+    let maxLedgerFutureTime = addRelTime currentTime $ milliseconds (- (config.maxAheadMs))
+    let maxLedgerOldTime = addRelTime currentTime $ milliseconds config.maxDelayMs
+
+    assertWithinDeadline  "currentTimestamp too old"  maxLedgerOldTime  --- ledgerTime - maxDelayMs < currentTime
+    assertDeadlineExceeded  "currentTimestamp too future"  maxLedgerFutureTime --- ledgerTime + maxAheadMs >= currentTime
+
+    pure config
+  else pure config
+
+-- Private
+
+default_signer_count_threshold = 3
+
+configError = RedStoneError Configuration
+
+isNotIDE = do 
+    isNonZero <- isLedgerTimeGT unix_epoch_start
+
+    pure (isNonZero)
+
+verifyConfigAgainstLedger config = verifyCurrentTimeVsLedger config
