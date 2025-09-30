@@ -5,7 +5,7 @@
     "id": "stellar/1"
   },
   "updateTriggers": {
-    "deviationPercentage": 0.5,
+    "deviationPercentage": 0.1,
     "timeSinceLastUpdateInMilliseconds": 86400000
   },
   "adapterContract": "CA526Y2NQWGWVVQ7RFFPGAZMU66PSYJ3UC2MTVAV4ZU7OM5BOPHDXUSG",
