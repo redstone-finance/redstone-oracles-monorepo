@@ -1,4 +1,5 @@
 import {
+  GetMetricDataCommand,
   ListTagsForResourceCommand,
   PutMetricDataCommand,
   StandardUnit,
@@ -18,7 +19,8 @@ export async function sendMetrics(
     }[];
   }[] = [],
   unit = StandardUnit.Count,
-  region?: string
+  region?: string,
+  storageResolution = 0
 ) {
   const params = {
     MetricData: values.map(({ value, dimensions }) => {
@@ -27,6 +29,7 @@ export async function sendMetrics(
         Dimensions: dimensions,
         Unit: unit,
         Value: value,
+        StorageResolution: storageResolution,
       };
     }),
     Namespace: namespace,
@@ -74,14 +77,57 @@ function isTagDefined(tag: Tag) {
   return tag.Key !== undefined && tag.Value !== undefined;
 }
 
-export const sendHealthcheckMetric = async (healthcheckMetricName?: string, logPerf = true) => {
+export const sendHealthcheckMetric = async (
+  healthcheckMetricName?: string,
+  logPerf = true,
+  storageResolution?: number
+) => {
   const METRICS_NAMESPACE = "Health-Check-Metrics";
   if (!healthcheckMetricName) {
     return;
   }
   const start = Date.now();
-  await sendMetrics(METRICS_NAMESPACE, healthcheckMetricName, [{ value: 1 }]);
+  await sendMetrics(
+    METRICS_NAMESPACE,
+    healthcheckMetricName,
+    [{ value: 1 }],
+    undefined,
+    undefined,
+    storageResolution
+  );
   if (logPerf) {
     console.info(`Sent healthcheck metric in ${Date.now() - start}ms`);
   }
+};
+
+export const getHealthcheckMetric = async (
+  healthcheckMetricName: string,
+  period: number,
+  region?: string
+) => {
+  const id = "m1";
+  const params = {
+    MetricDataQueries: [
+      {
+        Id: id,
+        MetricStat: {
+          Metric: {
+            Namespace: "Health-Check-Metrics",
+            MetricName: healthcheckMetricName,
+          },
+          Period: 1,
+          Stat: "Minimum",
+        },
+        ReturnData: true,
+      },
+    ],
+    StartTime: new Date(Date.now() - period), // 1 hour ago
+    EndTime: new Date(),
+  };
+
+  const command = new GetMetricDataCommand(params);
+
+  const response = await getCloudWatchClient(region).send(command);
+
+  return response.MetricDataResults?.find((m) => m.Id === id);
 };
