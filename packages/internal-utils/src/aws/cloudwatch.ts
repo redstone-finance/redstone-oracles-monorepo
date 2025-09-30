@@ -74,12 +74,14 @@ function isTagDefined(tag: Tag) {
   return tag.Key !== undefined && tag.Value !== undefined;
 }
 
-export const sendHealthcheckMetric = async (healthcheckMetricName?: string) => {
+export const sendHealthcheckMetric = async (healthcheckMetricName?: string, logPerf = true) => {
   const METRICS_NAMESPACE = "Health-Check-Metrics";
   if (!healthcheckMetricName) {
     return;
   }
   const start = Date.now();
   await sendMetrics(METRICS_NAMESPACE, healthcheckMetricName, [{ value: 1 }]);
-  console.info(`Sent healthcheck metric in ${Date.now() - start}ms`);
+  if (logPerf) {
+    console.info(`Sent healthcheck metric in ${Date.now() - start}ms`);
+  }
 };
