@@ -1,0 +1,87 @@
+{
+  "interval": 2000,
+  "priceAggregator": "median",
+  "defaultSource": ["coingecko"],
+  "sourceTimeout": 2000,
+  "minValidSourcesPercentage": 30,
+  "deviationCheck": {
+    "deviationWithRecentValues": {
+      "maxPercent": 30,
+      "maxDelayMilliseconds": 120000
+    }
+  },
+  "tokens": {
+    "USDT": {
+      "source": ["bitstamp-usd", "coinbase-usd", "kraken-usd"],
+      "deviationCheck": {
+        "deviationWithRecentValues": {
+          "maxPercent": 5,
+          "maxDelayMilliseconds": 120000
+        }
+      },
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "BTC_PERP": {
+      "source": [
+        "binance_perp-usdt",
+        "bybit_perp-usd",
+        "gate_perp-usdt",
+        "mexc_perp-usdt",
+        "okx_perp-usdt"
+      ],
+      "priceAggregator": "constantWeightMedian",
+      "skipBroadcasting": true,
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "HL_ORACLE_PX_BTC": {
+      "source": ["hyperliquid-perps-native_testnet-api-fetcher"],
+      "skipBroadcasting": true,
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "HL_ORACLE_PX_sekaw:BTC": {
+      "source": ["hyperliquid-perps-sekaw-api-fetcher"],
+      "skipBroadcasting": true,
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "HL_MARK_PX_sekaw:BTC": {
+      "source": ["hyperliquid-perps-sekaw-api-fetcher"],
+      "skipBroadcasting": true,
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "HL_MID_PX_sekaw:BTC": {
+      "source": ["hyperliquid-perps-sekaw-api-fetcher"],
+      "skipBroadcasting": true,
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "sekaw:BTC_MARK_0": {
+      "source": ["hyperliquid-hip3-proposer-fetcher"],
+      "broadcasters": ["hyperliquid-hip3"],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "sekaw:BTC_MARK_1": {
+      "source": ["hyperliquid-hip3-proposer-fetcher"],
+      "broadcasters": ["hyperliquid-hip3"],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "sekaw:BTC_EXT": {
+      "source": ["hyperliquid-hip3-proposer-fetcher"],
+      "broadcasters": ["hyperliquid-hip3"],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "sekaw:BTC": {
+      "source": ["hyperliquid-hip3-proposer-fetcher"],
+      "broadcasters": ["hyperliquid-hip3"],
+      "denomination": "USD",
+      "rateFeed": false
+    }
+  }
+}
