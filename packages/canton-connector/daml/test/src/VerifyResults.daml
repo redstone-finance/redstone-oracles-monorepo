@@ -1,0 +1,20 @@
+module VerifyResults where
+
+import DA.Assert
+import DA.Date
+import DA.List
+import DA.Optional
+import DA.Time
+
+unix_epoch_start = time (date 1970 Jan 1) 00 00 00
+millisToTime m = addRelTime unix_epoch_start $ milliseconds m
+
+verifyResults currentTime readResult feedResult = do
+  debug $ "Read result: " <> show readResult
+  debug $ "Feed result: " <> show feedResult
+
+  feedResult === fromSome (head readResult)
+
+  let timeDiff = subTime currentTime (millisToTime feedResult.writeTimestamp)
+  assert $ timeDiff <= milliseconds 1
+  assert $ timeDiff >= microseconds 0
