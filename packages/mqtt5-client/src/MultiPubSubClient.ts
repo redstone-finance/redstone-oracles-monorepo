@@ -10,6 +10,7 @@ const MAX_REQ_PER_SECOND_PER_CONNECTION = 100;
 
 /**
  * Using subscribe and unsubscribe together in Promise.all doesn't give any performance boost cause of mutex
+ * connectionsPerTopic - only have sense in context of subscribe, depends on number of messages received
  */
 export class MultiPubSubClient implements PubSubClient {
   clientToTopics: [PubSubClient, string[]][] = [];
