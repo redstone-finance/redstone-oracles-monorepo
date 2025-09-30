@@ -3299,6 +3299,13 @@
       "denomination": "USDC",
       "rateFeed": true
     },
+    "thBILL_FUNDAMENTAL/USD": {
+      "source": [
+        "usd-based"
+      ],
+      "denomination": "USD",
+      "rateFeed": true
+    },
     "cUSD_FUNDAMENTAL": {
       "source": [
         "ethereum-evm-fetcher-cap"
