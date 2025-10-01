@@ -55,6 +55,9 @@
         "AWS_SESSION_TOKEN",
         "AWS_REGION"
       ]
+    },
+    "clean": {
+      "cache": false
     }
   }
 }
