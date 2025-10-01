@@ -20,7 +20,7 @@ export async function sendMetrics(
   }[] = [],
   unit = StandardUnit.Count,
   region?: string,
-  storageResolution = 0
+  storageResolution = 60
 ) {
   const params = {
     MetricData: values.map(({ value, dimensions }) => {
