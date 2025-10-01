@@ -8,9 +8,10 @@
   "scripts": {
     "run-ts": "yarn global:ts-node",
     "clean": "yarn global:ts-hardhat-clean",
-    "build": "yarn build-deps && yarn global:tsc --build tsconfig.build.json",
-    "build-dev": "yarn build-deps && yarn global:tsc --build tsconfig.json",
-    "build-deps": "yarn --cwd ../evm-multicall build",
+    "build": "yarn global:tsc -p tsconfig.build.json",
+    "build:turbo": "yarn global:turbo build",
+    "build-dev": "yarn global:tsc -p tsconfig.json",
+    "build-dev:turbo": "yarn global:turbo build-dev",
     "lint": "yarn global:eslint . && yarn global:prettier --check manifest/**/*.json",
     "lint:fix": "yarn global:eslint --fix . && yarn global:prettier --write manifest/**/*.json",
     "preversion": "yarn build",
