@@ -9,9 +9,10 @@
   "license": "MIT",
   "scripts": {
     "clean": "yarn global:ts-clean",
-    "build": "yarn build-deps && yarn global:tsc --build tsconfig.build.json",
-    "build-dev": "yarn build-deps && yarn global:tsc --build tsconfig.json",
-    "build-deps": "yarn --cwd ../evm-multicall build",
+    "build": "yarn global:tsc -p tsconfig.build.json",
+    "build:turbo": "yarn global:turbo build",
+    "build-dev": "yarn global:tsc -p tsconfig.json",
+    "build-dev:turbo": "yarn global:turbo build-dev",
     "lint": "yarn global:eslint .",
     "lint:fix": "yarn global:eslint --fix .",
     "sample-run": "yarn global:ts-node scripts/sample-run.ts"

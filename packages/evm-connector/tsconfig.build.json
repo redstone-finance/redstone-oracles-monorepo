@@ -9,16 +9,5 @@
     "**/*spec.ts",
     "benchmarks",
     "hardhat.config.ts"
-  ],
-  "references": [
-    {
-      "path": "../protocol/tsconfig.build.json"
-    },
-    {
-      "path": "../utils/tsconfig.build.json"
-    },
-    {
-      "path": "../sdk/tsconfig.build.json"
-    }
   ]
 }
