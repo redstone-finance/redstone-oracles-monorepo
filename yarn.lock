@@ -10109,6 +10109,7 @@ __metadata:
   resolution: "@redstone-finance/lambda-admin-access-monitor@workspace:packages/lambda/lambda-admin-access-monitor"
   dependencies:
     "@redstone-finance/internal-utils": "workspace:*"
+    "@redstone-finance/node-remote-config": "workspace:*"
     "@redstone-finance/utils": "workspace:*"
     "@types/aws-lambda": "npm:^8.10.145"
     zod: "npm:^3.22.4"
@@ -10121,6 +10122,7 @@ __metadata:
   dependencies:
     "@influxdata/influxdb-client": "npm:^1.35.0"
     "@redstone-finance/internal-utils": "workspace:*"
+    "@redstone-finance/node-remote-config": "workspace:*"
     "@redstone-finance/utils": "workspace:*"
     ethers: "npm:^5.7.2"
   languageName: unknown
@@ -10132,6 +10134,7 @@ __metadata:
   dependencies:
     "@redstone-finance/internal-utils": "workspace:*"
     "@redstone-finance/monitoring-manifests": "workspace:*"
+    "@redstone-finance/node-remote-config": "workspace:*"
     "@redstone-finance/utils": "workspace:*"
     "@types/aws-lambda": "npm:^8.10.145"
     axios: "npm:^1.8.4"
@@ -10145,6 +10148,7 @@ __metadata:
   resolution: "@redstone-finance/lambda-all-relayers-manifests@workspace:packages/lambda/lambda-all-relayers-manifests"
   dependencies:
     "@redstone-finance/internal-utils": "workspace:*"
+    "@redstone-finance/node-remote-config": "workspace:*"
     "@redstone-finance/utils": "workspace:*"
     "@types/aws-lambda": "npm:^8.10.145"
     axios: "npm:^1.8.4"
@@ -10161,6 +10165,7 @@ __metadata:
     "@aws-sdk/client-ssm": "npm:^3.696.0"
     "@irys/sdk": "npm:^0.2.0"
     "@redstone-finance/internal-utils": "workspace:*"
+    "@redstone-finance/node-remote-config": "workspace:*"
     "@redstone-finance/protocol": "workspace:*"
     "@redstone-finance/sdk": "workspace:*"
     "@types/aws-lambda": "npm:^8.10.145"
@@ -10175,6 +10180,7 @@ __metadata:
   resolution: "@redstone-finance/lambda-cache-layer@workspace:packages/lambda/lambda-cache-layer"
   dependencies:
     "@codegenie/serverless-express": "npm:^4.3.9"
+    "@redstone-finance/node-remote-config": "workspace:*"
     "@redstone-finance/protocol": "workspace:*"
     "@redstone-finance/sdk": "workspace:*"
     "@redstone-finance/utils": "workspace:*"
@@ -10210,6 +10216,7 @@ __metadata:
     "@redstone-finance/chain-configs": "workspace:*"
     "@redstone-finance/fetchers": "workspace:*"
     "@redstone-finance/internal-utils": "workspace:*"
+    "@redstone-finance/node-remote-config": "workspace:*"
     "@redstone-finance/utils": "workspace:*"
     "@types/aws-lambda": "npm:^8.10.145"
     axios: "npm:^1.8.4"
@@ -10226,6 +10233,7 @@ __metadata:
     "@influxdata/influxdb-client": "npm:^1.35.0"
     "@redstone-finance/chain-orchestrator": "workspace:*"
     "@redstone-finance/internal-utils": "workspace:*"
+    "@redstone-finance/node-remote-config": "workspace:*"
     "@redstone-finance/utils": "workspace:*"
     dotenv: "npm:^16.0.3"
     ethers: "npm:^5.7.2"
@@ -10239,6 +10247,7 @@ __metadata:
   dependencies:
     "@redstone-finance/internal-utils": "workspace:*"
     "@redstone-finance/monitoring-manifests": "workspace:*"
+    "@redstone-finance/node-remote-config": "workspace:*"
     "@redstone-finance/utils": "workspace:*"
     "@types/aws-lambda": "npm:^8.10.145"
     axios: "npm:^1.8.4"
@@ -10252,6 +10261,7 @@ __metadata:
   resolution: "@redstone-finance/lambda-clients-tvs-tvl@workspace:packages/lambda/lambda-clients-tvs-tvl"
   dependencies:
     "@redstone-finance/internal-utils": "workspace:*"
+    "@redstone-finance/node-remote-config": "workspace:*"
     "@redstone-finance/utils": "workspace:*"
     dotenv: "npm:^16.0.3"
     zod: "npm:^3.22.4"
@@ -10265,6 +10275,7 @@ __metadata:
     "@influxdata/influxdb-client": "npm:^1.35.0"
     "@redstone-finance/internal-utils": "workspace:*"
     "@redstone-finance/monitoring-manifests": "workspace:*"
+    "@redstone-finance/node-remote-config": "workspace:*"
     "@redstone-finance/sdk": "workspace:*"
     dotenv: "npm:^16.0.3"
     zod: "npm:^3.22.4"
@@ -10278,6 +10289,7 @@ __metadata:
     "@redstone-finance/fetchers": "workspace:*"
     "@redstone-finance/internal-utils": "workspace:*"
     "@redstone-finance/node-commons": "workspace:*"
+    "@redstone-finance/node-remote-config": "workspace:*"
     "@redstone-finance/oracle-node": "workspace:*"
     "@redstone-finance/utils": "workspace:*"
     "@types/aws-lambda": "npm:^8.10.145"
@@ -10291,6 +10303,7 @@ __metadata:
   resolution: "@redstone-finance/lambda-ecs-restarter-by-s3-update@workspace:packages/lambda/lambda-ecs-restarter-by-s3-update"
   dependencies:
     "@aws-sdk/client-ecs": "npm:^3.696.0"
+    "@redstone-finance/node-remote-config": "workspace:*"
     "@redstone-finance/utils": "workspace:*"
     "@types/aws-lambda": "npm:^8.10.145"
   languageName: unknown
@@ -10303,6 +10316,7 @@ __metadata:
     "@aws-sdk/client-ecs": "npm:^3.696.0"
     "@redstone-finance/internal-utils": "workspace:*"
     "@redstone-finance/monitoring-manifests": "workspace:*"
+    "@redstone-finance/node-remote-config": "workspace:*"
     "@redstone-finance/sdk": "workspace:*"
     "@redstone-finance/utils": "workspace:*"
     "@types/aws-lambda": "npm:^8.10.145"
@@ -10320,6 +10334,7 @@ __metadata:
   dependencies:
     "@redstone-finance/internal-utils": "workspace:*"
     "@redstone-finance/monitoring-manifests": "workspace:*"
+    "@redstone-finance/node-remote-config": "workspace:*"
     "@redstone-finance/utils": "workspace:*"
     "@types/aws-lambda": "npm:^8.10.145"
     axios: "npm:^1.8.4"
@@ -10335,6 +10350,7 @@ __metadata:
     "@redstone-finance/evm-connector": "workspace:*"
     "@redstone-finance/internal-utils": "workspace:*"
     "@redstone-finance/monitoring-manifests": "workspace:*"
+    "@redstone-finance/node-remote-config": "workspace:*"
     "@redstone-finance/on-chain-relayer": "workspace:*"
     "@redstone-finance/on-chain-relayer-common": "workspace:*"
     "@redstone-finance/protocol": "workspace:*"
@@ -10359,6 +10375,7 @@ __metadata:
     "@redstone-finance/chain-configs": "workspace:*"
     "@redstone-finance/internal-utils": "workspace:*"
     "@redstone-finance/monitoring-manifests": "workspace:*"
+    "@redstone-finance/node-remote-config": "workspace:*"
     "@redstone-finance/utils": "workspace:*"
     "@types/aws-lambda": "npm:^8.10.145"
     dotenv: "npm:^16.0.3"
@@ -10373,6 +10390,7 @@ __metadata:
     "@influxdata/influxdb-client": "npm:^1.35.0"
     "@redstone-finance/internal-utils": "workspace:*"
     "@redstone-finance/monitoring-manifests": "workspace:*"
+    "@redstone-finance/node-remote-config": "workspace:*"
     "@redstone-finance/utils": "workspace:*"
     "@types/aws-lambda": "npm:^8.10.145"
     dotenv: "npm:^16.0.3"
@@ -10387,6 +10405,7 @@ __metadata:
     "@aws-sdk/client-dynamodb": "npm:^3.696.0"
     "@redstone-finance/internal-utils": "workspace:*"
     "@redstone-finance/monitoring-manifests": "workspace:*"
+    "@redstone-finance/node-remote-config": "workspace:*"
     "@redstone-finance/redstone-monitoring": "workspace:*"
     "@redstone-finance/utils": "workspace:*"
     "@types/aws-lambda": "npm:^8.10.145"
@@ -10400,6 +10419,7 @@ __metadata:
   dependencies:
     "@redstone-finance/internal-utils": "workspace:*"
     "@redstone-finance/monitoring-manifests": "workspace:*"
+    "@redstone-finance/node-remote-config": "workspace:*"
     "@redstone-finance/protocol": "workspace:*"
     "@redstone-finance/sdk": "workspace:*"
     "@redstone-finance/utils": "workspace:*"
@@ -10417,6 +10437,7 @@ __metadata:
     "@aws-sdk/client-cloudwatch": "npm:^3.696.0"
     "@redstone-finance/internal-utils": "workspace:*"
     "@redstone-finance/monitoring-manifests": "workspace:*"
+    "@redstone-finance/node-remote-config": "workspace:*"
     "@redstone-finance/protocol": "workspace:*"
     "@redstone-finance/sdk": "workspace:*"
     "@redstone-finance/utils": "workspace:*"
@@ -10430,6 +10451,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@redstone-finance/lambda-http-multi-call@workspace:packages/lambda/lambda-http-multi-call"
   dependencies:
+    "@redstone-finance/node-remote-config": "workspace:*"
     "@redstone-finance/utils": "workspace:*"
     "@types/aws-lambda": "npm:^8.10.145"
     axios: "npm:^1.8.4"
@@ -10442,6 +10464,7 @@ __metadata:
   dependencies:
     "@aws-sdk/client-ssm": "npm:^3.696.0"
     "@influxdata/influxdb-client": "npm:^1.35.0"
+    "@redstone-finance/node-remote-config": "workspace:*"
     "@redstone-finance/utils": "workspace:*"
     "@types/aws-lambda": "npm:^8.10.145"
     dotenv: "npm:^16.0.3"
@@ -10455,6 +10478,7 @@ __metadata:
   dependencies:
     "@influxdata/influxdb-client": "npm:^1.35.0"
     "@redstone-finance/internal-utils": "workspace:*"
+    "@redstone-finance/node-remote-config": "workspace:*"
     "@redstone-finance/utils": "workspace:*"
     dotenv: "npm:^16.0.3"
     zod: "npm:^3.22.4"
@@ -10466,6 +10490,7 @@ __metadata:
   resolution: "@redstone-finance/lambda-job-offers@workspace:packages/lambda/lambda-job-offers"
   dependencies:
     "@redstone-finance/internal-utils": "workspace:*"
+    "@redstone-finance/node-remote-config": "workspace:*"
     "@redstone-finance/utils": "workspace:*"
     cheerio: "npm:^1.1.0"
     dotenv: "npm:^16.0.3"
@@ -10478,6 +10503,7 @@ __metadata:
   resolution: "@redstone-finance/lambda-kms-decrypt-monitor@workspace:packages/lambda/lambda-kms-decrypt-monitor"
   dependencies:
     "@redstone-finance/internal-utils": "workspace:*"
+    "@redstone-finance/node-remote-config": "workspace:*"
     "@redstone-finance/utils": "workspace:*"
     "@types/aws-lambda": "npm:^8.10.145"
     zod: "npm:^3.22.4"
@@ -10490,6 +10516,7 @@ __metadata:
   dependencies:
     "@redstone-finance/internal-utils": "workspace:*"
     "@redstone-finance/monitoring-manifests": "workspace:*"
+    "@redstone-finance/node-remote-config": "workspace:*"
     "@redstone-finance/protocol": "workspace:*"
     "@redstone-finance/sdk": "workspace:*"
     "@redstone-finance/utils": "workspace:*"
@@ -10503,6 +10530,7 @@ __metadata:
     "@aws-sdk/client-cloudwatch-logs": "npm:^3.696.0"
     "@redstone-finance/internal-utils": "workspace:*"
     "@redstone-finance/monitoring-manifests": "workspace:*"
+    "@redstone-finance/node-remote-config": "workspace:*"
     "@redstone-finance/sdk": "workspace:*"
     "@redstone-finance/utils": "workspace:*"
     "@types/aws-lambda": "npm:^8.10.145"
@@ -10518,6 +10546,7 @@ __metadata:
     "@influxdata/influxdb-client": "npm:^1.35.0"
     "@redstone-finance/internal-utils": "workspace:*"
     "@redstone-finance/monitoring-manifests": "workspace:*"
+    "@redstone-finance/node-remote-config": "workspace:*"
     "@redstone-finance/utils": "workspace:*"
     dotenv: "npm:^16.0.3"
     zod: "npm:^3.22.4"
@@ -10532,6 +10561,7 @@ __metadata:
     "@aws-sdk/client-ssm": "npm:^3.696.0"
     "@influxdata/influxdb-client": "npm:^1.35.0"
     "@redstone-finance/internal-utils": "workspace:*"
+    "@redstone-finance/node-remote-config": "workspace:*"
     "@redstone-finance/protocol": "workspace:*"
     "@redstone-finance/utils": "workspace:*"
     "@types/aws-lambda": "npm:^8.10.145"
@@ -10549,6 +10579,7 @@ __metadata:
   resolution: "@redstone-finance/lambda-monitoring-approver@workspace:packages/lambda/lambda-monitoring-approver"
   dependencies:
     "@redstone-finance/internal-utils": "workspace:*"
+    "@redstone-finance/node-remote-config": "workspace:*"
     "@redstone-finance/utils": "workspace:*"
     "@types/aws-lambda": "npm:^8.10.145"
     axios: "npm:^1.8.4"
@@ -10562,6 +10593,7 @@ __metadata:
   resolution: "@redstone-finance/lambda-monitoring-avs@workspace:packages/lambda/lambda-monitoring-avs"
   dependencies:
     "@redstone-finance/monitoring-manifests": "workspace:*"
+    "@redstone-finance/node-remote-config": "workspace:*"
     "@redstone-finance/redstone-monitoring": "workspace:*"
     "@redstone-finance/utils": "workspace:*"
     dotenv: "npm:^16.0.3"
@@ -10576,6 +10608,7 @@ __metadata:
     "@redstone-finance/evm-connector": "workspace:*"
     "@redstone-finance/internal-utils": "workspace:*"
     "@redstone-finance/monitoring-manifests": "workspace:*"
+    "@redstone-finance/node-remote-config": "workspace:*"
     "@redstone-finance/rpc-providers": "workspace:*"
     "@redstone-finance/sdk": "workspace:*"
     "@redstone-finance/utils": "workspace:*"
@@ -10590,6 +10623,7 @@ __metadata:
   dependencies:
     "@redstone-finance/chain-configs": "workspace:*"
     "@redstone-finance/monitoring-manifests": "workspace:*"
+    "@redstone-finance/node-remote-config": "workspace:*"
     "@redstone-finance/redstone-monitoring": "workspace:*"
     "@redstone-finance/utils": "workspace:*"
     dotenv: "npm:^16.0.3"
@@ -10603,6 +10637,7 @@ __metadata:
   dependencies:
     "@aws-sdk/client-ssm": "npm:^3.696.0"
     "@aws-sdk/client-sts": "npm:^3.696.0"
+    "@redstone-finance/node-remote-config": "workspace:*"
     "@smithy/types": "npm:^3.7.1"
     aws-sdk-client-mock: "npm:^4.1.0"
     ethers: "npm:^5.7.2"
@@ -10619,6 +10654,7 @@ __metadata:
     "@redstone-finance/evm-multicall": "workspace:*"
     "@redstone-finance/internal-utils": "workspace:*"
     "@redstone-finance/lambda-wallets-balances-notifier": "workspace:*"
+    "@redstone-finance/node-remote-config": "workspace:*"
     "@redstone-finance/on-chain-relayer-common": "workspace:*"
     "@redstone-finance/rpc-providers": "workspace:*"
     "@redstone-finance/utils": "workspace:*"
@@ -10639,6 +10675,7 @@ __metadata:
   dependencies:
     "@redstone-finance/internal-utils": "workspace:*"
     "@redstone-finance/monitoring-manifests": "workspace:*"
+    "@redstone-finance/node-remote-config": "workspace:*"
     "@redstone-finance/remote-config": "workspace:*"
     "@redstone-finance/utils": "workspace:*"
     "@types/aws-lambda": "npm:^8.10.145"
@@ -10656,6 +10693,7 @@ __metadata:
     "@jest/globals": "npm:^29.7.0"
     "@redstone-finance/internal-utils": "workspace:*"
     "@redstone-finance/monitoring-manifests": "workspace:*"
+    "@redstone-finance/node-remote-config": "workspace:*"
     "@redstone-finance/sdk": "workspace:*"
     "@redstone-finance/utils": "workspace:*"
     "@types/aws-lambda": "npm:^8.10.145"
@@ -10672,6 +10710,7 @@ __metadata:
     "@redstone-finance/chain-orchestrator": "workspace:*"
     "@redstone-finance/internal-utils": "workspace:*"
     "@redstone-finance/monitoring-manifests": "workspace:*"
+    "@redstone-finance/node-remote-config": "workspace:*"
     "@redstone-finance/on-chain-relayer": "workspace:*"
     "@redstone-finance/on-chain-relayer-common": "workspace:*"
     "@redstone-finance/sdk": "workspace:*"
@@ -10690,6 +10729,7 @@ __metadata:
   resolution: "@redstone-finance/lambda-private-key-generator@workspace:packages/lambda/lambda-private-key-generator"
   dependencies:
     "@aws-sdk/client-ssm": "npm:^3.696.0"
+    "@redstone-finance/node-remote-config": "workspace:*"
     "@redstone-finance/utils": "workspace:*"
     elliptic: "npm:^6.6.1"
     ethers: "npm:^5.7.2"
@@ -10704,6 +10744,7 @@ __metadata:
     "@influxdata/influxdb-client": "npm:^1.35.0"
     "@redstone-finance/chain-orchestrator": "workspace:*"
     "@redstone-finance/internal-utils": "workspace:*"
+    "@redstone-finance/node-remote-config": "workspace:*"
     "@redstone-finance/utils": "workspace:*"
     dotenv: "npm:^16.0.3"
     ethers: "npm:^5.7.2"
@@ -10717,6 +10758,7 @@ __metadata:
   dependencies:
     "@influxdata/influxdb-client": "npm:^1.35.0"
     "@redstone-finance/internal-utils": "workspace:*"
+    "@redstone-finance/node-remote-config": "workspace:*"
     "@redstone-finance/utils": "workspace:*"
     ethers: "npm:^5.7.2"
     lodash: "npm:^4.17.21"
@@ -10735,6 +10777,7 @@ __metadata:
     "@redstone-finance/evm-multicall": "workspace:*"
     "@redstone-finance/internal-utils": "workspace:*"
     "@redstone-finance/monitoring-manifests": "workspace:*"
+    "@redstone-finance/node-remote-config": "workspace:*"
     "@redstone-finance/rpc-providers": "workspace:*"
     "@redstone-finance/sdk": "workspace:*"
     "@redstone-finance/utils": "workspace:*"
@@ -10762,6 +10805,7 @@ __metadata:
     "@redstone-finance/evm-multicall": "workspace:*"
     "@redstone-finance/internal-utils": "workspace:*"
     "@redstone-finance/monitoring-manifests": "workspace:*"
+    "@redstone-finance/node-remote-config": "workspace:*"
     "@redstone-finance/on-chain-relayer-common": "workspace:*"
     "@redstone-finance/protocol": "workspace:*"
     "@redstone-finance/utils": "workspace:*"
@@ -10779,6 +10823,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@redstone-finance/lambda-token-info@workspace:packages/lambda/lambda-token-info"
   dependencies:
+    "@redstone-finance/node-remote-config": "workspace:*"
     "@types/aws-lambda": "npm:^8.10.145"
     date-fns: "npm:^3.6.0"
   languageName: unknown
@@ -10795,6 +10840,7 @@ __metadata:
     "@redstone-finance/internal-utils": "workspace:*"
     "@redstone-finance/monitoring-manifests": "workspace:*"
     "@redstone-finance/node-commons": "workspace:*"
+    "@redstone-finance/node-remote-config": "workspace:*"
     "@redstone-finance/sdk": "workspace:*"
     "@redstone-finance/utils": "workspace:*"
     "@types/aws-lambda": "npm:^8.10.145"
@@ -10809,6 +10855,7 @@ __metadata:
   resolution: "@redstone-finance/lambda-wallet-balances@workspace:packages/lambda/lambda-wallet-balances"
   dependencies:
     "@redstone-finance/internal-utils": "workspace:*"
+    "@redstone-finance/node-remote-config": "workspace:*"
     "@redstone-finance/utils": "workspace:*"
     axios: "npm:^1.8.4"
     ethers: "npm:^5.7.2"
@@ -10824,6 +10871,7 @@ __metadata:
     "@redstone-finance/chain-orchestrator": "workspace:*"
     "@redstone-finance/internal-utils": "workspace:*"
     "@redstone-finance/monitoring-manifests": "workspace:*"
+    "@redstone-finance/node-remote-config": "workspace:*"
     "@redstone-finance/utils": "workspace:*"
     dotenv: "npm:^16.0.3"
     ethers: "npm:^5.7.2"
@@ -10835,6 +10883,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@redstone-finance/lambda-whitelist-monitoring-dashboard@workspace:packages/lambda/lambda-whitelist-monitoring-dashboard"
   dependencies:
+    "@redstone-finance/node-remote-config": "workspace:*"
     "@redstone-finance/redstone-monitoring": "workspace:*"
     "@types/aws-lambda": "npm:^8.10.145"
     "@types/express": "npm:^4.17.14"
@@ -10854,6 +10903,7 @@ __metadata:
     "@redstone-finance/chain-orchestrator": "workspace:*"
     "@redstone-finance/internal-utils": "workspace:*"
     "@redstone-finance/monitoring-manifests": "workspace:*"
+    "@redstone-finance/node-remote-config": "workspace:*"
     "@redstone-finance/on-chain-relayer-common": "workspace:*"
     "@redstone-finance/utils": "workspace:*"
     "@types/aws-lambda": "npm:^8.10.145"
@@ -10928,7 +10978,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@redstone-finance/node-remote-config@workspace:packages/node-remote-config":
+"@redstone-finance/node-remote-config@workspace:*, @redstone-finance/node-remote-config@workspace:packages/node-remote-config":
   version: 0.0.0-use.local
   resolution: "@redstone-finance/node-remote-config@workspace:packages/node-remote-config"
   languageName: unknown
@@ -11075,6 +11125,7 @@ __metadata:
     syncpack: "npm:^11.2.1"
     ts-jest: "npm:^29.1.1"
     ts-node: "npm:^10.9.2"
+    turbo: "npm:^2.5.8"
     typescript: "npm:^5.9.2"
     typescript-eslint: "npm:^8.39.1"
   languageName: unknown
@@ -15022,11 +15073,11 @@ __metadata:
   linkType: hard
 
 "@types/node@npm:*, @types/node@npm:>=13.7.0":
-  version: 24.3.0
-  resolution: "@types/node@npm:24.3.0"
+  version: 22.13.13
+  resolution: "@types/node@npm:22.13.13"
   dependencies:
-    undici-types: "npm:~7.10.0"
-  checksum: 10c0/96bdeca01f690338957c2dcc92cb9f76c262c10398f8d91860865464412b0f9d309c24d9b03d0bdd26dd47fa7ee3f8227893d5c89bc2009d919a525a22512030
+    undici-types: "npm:~6.20.0"
+  checksum: 10c0/daf792ba5dcff1316abf4b33680f94b792f8d54d6ae495efc8929531e0ba1284a248d29aab117d2259f9280284d986ad5799b193b0516e2b926d713aab835f7d
   languageName: node
   linkType: hard
 
@@ -15068,20 +15119,38 @@ __metadata:
   linkType: hard
 
 "@types/node@npm:^18.11.18":
-  version: 18.19.123
-  resolution: "@types/node@npm:18.19.123"
+  version: 18.19.83
+  resolution: "@types/node@npm:18.19.83"
   dependencies:
     undici-types: "npm:~5.26.4"
-  checksum: 10c0/8077177ee2019c4c8875784b367732813b07e533f24197d1fb3bb09e81335267de9da3e70326daaba7a6499df2410257f6099d82d15c9a903d1587a752563178
+  checksum: 10c0/09db7bcbfb4598d5ec703530e9d061aaf954943947c3059284f09d4ff1a4cbe9e7884ea3af1c1ad3d79af6cd30423775add557c95da83f0c031da5577462faf2
   languageName: node
   linkType: hard
 
-"@types/node@npm:^22.13.10, @types/node@npm:^22.15.3, @types/node@npm:^22.5.5, @types/node@npm:^22.9.0":
+"@types/node@npm:^22.13.10, @types/node@npm:^22.5.5":
   version: 22.17.2
   resolution: "@types/node@npm:22.17.2"
   dependencies:
     undici-types: "npm:~6.21.0"
   checksum: 10c0/23cd13aa35da6322a6d66cf4b3a45dbd40764ba726ab8681960270156c3abba776dd8dc173250c467f708d40612ecd725755d7659b775b513904680d5205eaff
+  languageName: node
+  linkType: hard
+
+"@types/node@npm:^22.15.3":
+  version: 22.15.18
+  resolution: "@types/node@npm:22.15.18"
+  dependencies:
+    undici-types: "npm:~6.21.0"
+  checksum: 10c0/e23178c568e2dc6b93b6aa3b8dfb45f9556e527918c947fe7406a4c92d2184c7396558912400c3b1b8d0fa952ec63819aca2b8e4d3545455fc6f1e9623e09ca6
+  languageName: node
+  linkType: hard
+
+"@types/node@npm:^22.9.0":
+  version: 22.15.17
+  resolution: "@types/node@npm:22.15.17"
+  dependencies:
+    undici-types: "npm:~6.21.0"
+  checksum: 10c0/fb92aa10b628683c5b965749f955bc2322485ecb0ea6c2f4cae5f2c7537a16834607e67083a9e9281faaae8d7dee9ada8d6a5c0de9a52c17d82912ef00c0fdd4
   languageName: node
   linkType: hard
 
@@ -38093,6 +38162,77 @@ __metadata:
   languageName: node
   linkType: hard
 
+"turbo-darwin-64@npm:2.5.8":
+  version: 2.5.8
+  resolution: "turbo-darwin-64@npm:2.5.8"
+  conditions: os=darwin & cpu=x64
+  languageName: node
+  linkType: hard
+
+"turbo-darwin-arm64@npm:2.5.8":
+  version: 2.5.8
+  resolution: "turbo-darwin-arm64@npm:2.5.8"
+  conditions: os=darwin & cpu=arm64
+  languageName: node
+  linkType: hard
+
+"turbo-linux-64@npm:2.5.8":
+  version: 2.5.8
+  resolution: "turbo-linux-64@npm:2.5.8"
+  conditions: os=linux & cpu=x64
+  languageName: node
+  linkType: hard
+
+"turbo-linux-arm64@npm:2.5.8":
+  version: 2.5.8
+  resolution: "turbo-linux-arm64@npm:2.5.8"
+  conditions: os=linux & cpu=arm64
+  languageName: node
+  linkType: hard
+
+"turbo-windows-64@npm:2.5.8":
+  version: 2.5.8
+  resolution: "turbo-windows-64@npm:2.5.8"
+  conditions: os=win32 & cpu=x64
+  languageName: node
+  linkType: hard
+
+"turbo-windows-arm64@npm:2.5.8":
+  version: 2.5.8
+  resolution: "turbo-windows-arm64@npm:2.5.8"
+  conditions: os=win32 & cpu=arm64
+  languageName: node
+  linkType: hard
+
+"turbo@npm:^2.5.8":
+  version: 2.5.8
+  resolution: "turbo@npm:2.5.8"
+  dependencies:
+    turbo-darwin-64: "npm:2.5.8"
+    turbo-darwin-arm64: "npm:2.5.8"
+    turbo-linux-64: "npm:2.5.8"
+    turbo-linux-arm64: "npm:2.5.8"
+    turbo-windows-64: "npm:2.5.8"
+    turbo-windows-arm64: "npm:2.5.8"
+  dependenciesMeta:
+    turbo-darwin-64:
+      optional: true
+    turbo-darwin-arm64:
+      optional: true
+    turbo-linux-64:
+      optional: true
+    turbo-linux-arm64:
+      optional: true
+    turbo-windows-64:
+      optional: true
+    turbo-windows-arm64:
+      optional: true
+  bin:
+    turbo: bin/turbo
+  checksum: 10c0/34e8dc87fc2c5d63c3cd5aede9068c1123509d88f9bb99283ffec1687de6ad6df7ebfb83a5d348580afb3fdac53af479456e36938a1b6ed80fc1c3416c6dc3f3
+  languageName: node
+  linkType: hard
+
 "tweetnacl-util@npm:^0.15.1":
   version: 0.15.1
   resolution: "tweetnacl-util@npm:0.15.1"
@@ -38435,13 +38575,23 @@ __metadata:
   languageName: node
   linkType: hard
 
-"typescript@npm:>=3 < 6, typescript@npm:^5.7.2, typescript@npm:^5.7.3, typescript@npm:^5.8.3, typescript@npm:^5.9.2":
+"typescript@npm:>=3 < 6, typescript@npm:^5.7.3, typescript@npm:^5.9.2":
   version: 5.9.2
   resolution: "typescript@npm:5.9.2"
   bin:
     tsc: bin/tsc
     tsserver: bin/tsserver
   checksum: 10c0/cd635d50f02d6cf98ed42de2f76289701c1ec587a363369255f01ed15aaf22be0813226bff3c53e99d971f9b540e0b3cc7583dbe05faded49b1b0bed2f638a18
+  languageName: node
+  linkType: hard
+
+"typescript@npm:^5.7.2, typescript@npm:^5.8.3":
+  version: 5.8.3
+  resolution: "typescript@npm:5.8.3"
+  bin:
+    tsc: bin/tsc
+    tsserver: bin/tsserver
+  checksum: 10c0/5f8bb01196e542e64d44db3d16ee0e4063ce4f3e3966df6005f2588e86d91c03e1fb131c2581baf0fb65ee79669eea6e161cd448178986587e9f6844446dbb48
   languageName: node
   linkType: hard
 
@@ -38455,13 +38605,23 @@ __metadata:
   languageName: node
   linkType: hard
 
-"typescript@patch:typescript@npm%3A>=3 < 6#optional!builtin<compat/typescript>, typescript@patch:typescript@npm%3A^5.7.2#optional!builtin<compat/typescript>, typescript@patch:typescript@npm%3A^5.7.3#optional!builtin<compat/typescript>, typescript@patch:typescript@npm%3A^5.8.3#optional!builtin<compat/typescript>, typescript@patch:typescript@npm%3A^5.9.2#optional!builtin<compat/typescript>":
+"typescript@patch:typescript@npm%3A>=3 < 6#optional!builtin<compat/typescript>, typescript@patch:typescript@npm%3A^5.7.3#optional!builtin<compat/typescript>, typescript@patch:typescript@npm%3A^5.9.2#optional!builtin<compat/typescript>":
   version: 5.9.2
   resolution: "typescript@patch:typescript@npm%3A5.9.2#optional!builtin<compat/typescript>::version=5.9.2&hash=8c6c40"
   bin:
     tsc: bin/tsc
     tsserver: bin/tsserver
   checksum: 10c0/66fc07779427a7c3fa97da0cf2e62595eaff2cea4594d45497d294bfa7cb514d164f0b6ce7a5121652cf44c0822af74e29ee579c771c405e002d1f23cf06bfde
+  languageName: node
+  linkType: hard
+
+"typescript@patch:typescript@npm%3A^5.7.2#optional!builtin<compat/typescript>, typescript@patch:typescript@npm%3A^5.8.3#optional!builtin<compat/typescript>":
+  version: 5.8.3
+  resolution: "typescript@patch:typescript@npm%3A5.8.3#optional!builtin<compat/typescript>::version=5.8.3&hash=8c6c40"
+  bin:
+    tsc: bin/tsc
+    tsserver: bin/tsserver
+  checksum: 10c0/92ea03509e06598948559ddcdd8a4ae5a7ab475766d5589f1b796f5731b3d631a4c7ddfb86a3bd44d58d10102b132cd4b4994dda9b63e6273c66d77d6a271dbd
   languageName: node
   linkType: hard
 
@@ -38595,17 +38755,17 @@ __metadata:
   languageName: node
   linkType: hard
 
+"undici-types@npm:~6.20.0":
+  version: 6.20.0
+  resolution: "undici-types@npm:6.20.0"
+  checksum: 10c0/68e659a98898d6a836a9a59e6adf14a5d799707f5ea629433e025ac90d239f75e408e2e5ff086afc3cace26f8b26ee52155293564593fbb4a2f666af57fc59bf
+  languageName: node
+  linkType: hard
+
 "undici-types@npm:~6.21.0":
   version: 6.21.0
   resolution: "undici-types@npm:6.21.0"
   checksum: 10c0/c01ed51829b10aa72fc3ce64b747f8e74ae9b60eafa19a7b46ef624403508a54c526ffab06a14a26b3120d055e1104d7abe7c9017e83ced038ea5cf52f8d5e04
-  languageName: node
-  linkType: hard
-
-"undici-types@npm:~7.10.0":
-  version: 7.10.0
-  resolution: "undici-types@npm:7.10.0"
-  checksum: 10c0/8b00ce50e235fe3cc601307f148b5e8fb427092ee3b23e8118ec0a5d7f68eca8cee468c8fc9f15cbb2cf2a3797945ebceb1cbd9732306a1d00e0a9b6afa0f635
   languageName: node
   linkType: hard
 

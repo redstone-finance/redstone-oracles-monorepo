@@ -1,12 +1,4 @@
 {
   "extends": ["./tsconfig.json", "../../tsconfig-build-common.json"],
-  "exclude": ["node_modules", "dist", "test", "**/*spec.ts", ".jest", "jest.config.ts"],
-  "references": [
-    {
-      "path": "../protocol/tsconfig.build.json"
-    },
-    {
-      "path": "../sdk/tsconfig.build.json"
-    }
-  ]
+  "exclude": ["node_modules", "dist", "test", "**/*spec.ts", ".jest", "jest.config.ts"]
 }

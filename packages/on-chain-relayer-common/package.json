@@ -8,8 +8,10 @@
   "license": "MIT",
   "scripts": {
     "run-ts": "yarn global:ts-node",
-    "build": "yarn global:tsc --build tsconfig.build.json",
-    "build-dev": "yarn global:tsc --build tsconfig.json",
+    "build": "yarn global:tsc -p tsconfig.build.json",
+    "build:turbo": "yarn global:turbo build",
+    "build-dev": "yarn global:tsc -p tsconfig.json",
+    "build-dev:turbo": "yarn global:turbo build-dev",
     "clean": "yarn global:ts-clean",
     "lint": "yarn global:eslint .",
     "lint:fix": "yarn global:eslint --fix .",

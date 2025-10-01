@@ -1,15 +1,4 @@
 {
   "extends": "../../tsconfig-common.json",
-  "include": ["**/*", "src/**/*.json", "artifacts/**/*.sol/*.json"],
-  "references": [
-    {
-      "path": "../on-chain-relayer/tsconfig.build.json"
-    },
-    {
-      "path": "../sdk/tsconfig.build.json"
-    },
-    {
-      "path": "../evm-connector/tsconfig.build.json"
-    }
-  ]
+  "include": ["**/*", "src/**/*.json", "artifacts/**/*.sol/*.json"]
 }
