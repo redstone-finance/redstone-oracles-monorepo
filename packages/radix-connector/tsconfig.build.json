@@ -10,13 +10,5 @@
     "jest.config.ts",
     "scrypto",
     "deployments"
-  ],
-  "references": [
-    {
-      "path": "../sdk/tsconfig.build.json"
-    },
-    {
-      "path": "../utils/tsconfig.build.json"
-    }
   ]
 }
