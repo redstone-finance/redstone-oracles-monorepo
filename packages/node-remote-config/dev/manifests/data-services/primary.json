@@ -3052,6 +3052,23 @@
       ],
       "denomination": "USD",
       "rateFeed": false
+    },
+    "0G": {
+      "source": [
+        "binance-usdt",
+        "binance-usdc",
+        "bybit-usdt",
+        "bitget-usdt",
+        "gate-usdt",
+        "mexc-usdt",
+        "kucoin-usdt",
+        "bingx-usdt",
+        "kraken-usd",
+        "pancake-swap-bnb-usdt-100",
+        "xt"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
     }
   },
   "multiPointPackages": {
