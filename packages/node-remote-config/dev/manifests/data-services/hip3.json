@@ -20,7 +20,8 @@
         }
       },
       "denomination": "USD",
-      "rateFeed": false
+      "rateFeed": false,
+      "skipBroadcasting": true
     },
     "BTC_PERP": {
       "source": [
@@ -78,6 +79,67 @@
       "rateFeed": false
     },
     "sekaw:BTC": {
+      "source": ["hyperliquid-hip3-proposer-fetcher"],
+      "broadcasters": ["hyperliquid-hip3"],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "ETH_PERP": {
+      "source": [
+        "binance_perp-usdt",
+        "bybit_perp-usd",
+        "gate_perp-usdt",
+        "mexc_perp-usdt",
+        "okx_perp-usdt"
+      ],
+      "priceAggregator": "constantWeightMedian",
+      "skipBroadcasting": true,
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "HL_ORACLE_PX_ETH": {
+      "source": ["hyperliquid-perps-native_testnet-api-fetcher"],
+      "skipBroadcasting": true,
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "HL_ORACLE_PX_sekaw:ETH": {
+      "source": ["hyperliquid-perps-sekaw-api-fetcher"],
+      "skipBroadcasting": true,
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "HL_MARK_PX_sekaw:ETH": {
+      "source": ["hyperliquid-perps-sekaw-api-fetcher"],
+      "skipBroadcasting": true,
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "HL_MID_PX_sekaw:ETH": {
+      "source": ["hyperliquid-perps-sekaw-api-fetcher"],
+      "skipBroadcasting": true,
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "sekaw:ETH_MARK_0": {
+      "source": ["hyperliquid-hip3-proposer-fetcher"],
+      "broadcasters": ["hyperliquid-hip3"],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "sekaw:ETH_MARK_1": {
+      "source": ["hyperliquid-hip3-proposer-fetcher"],
+      "broadcasters": ["hyperliquid-hip3"],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "sekaw:ETH_EXT": {
+      "source": ["hyperliquid-hip3-proposer-fetcher"],
+      "broadcasters": ["hyperliquid-hip3"],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "sekaw:ETH": {
       "source": ["hyperliquid-hip3-proposer-fetcher"],
       "broadcasters": ["hyperliquid-hip3"],
       "denomination": "USD",
