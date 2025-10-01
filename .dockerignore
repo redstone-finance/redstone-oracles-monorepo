@@ -14,3 +14,4 @@ terraform
 packages/oracle-node/config_*
 packages/oracle-node/node-remote-config
 **/target
+**/.turbo
