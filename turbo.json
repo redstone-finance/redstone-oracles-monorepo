@@ -1,0 +1,60 @@
+{
+  "tasks": {
+    "compile": {
+      "inputs": ["hardhat.config.ts", "contracts/**"],
+      "outputs": ["typechain-types/**", "artifacts/**", "cache/**"],
+      "dependsOn": ["^build-dev"]
+    },
+    "build-dev": {
+      "inputs": ["src/**.{js,ts}", "package.json", "tsconfig.json"],
+      "outputs": ["dist/**"],
+      "dependsOn": ["^build-dev", "compile"]
+    },
+    "lint": {
+      "inputs": ["./**.{js,ts}"],
+      "dependsOn": ["^build-dev", "compile"]
+    },
+    "test": {
+      "inputs": ["test/**"],
+      "outputs": ["coverage/**"],
+      "dependsOn": ["build-dev"],
+      "passThroughEnv": ["GH_AUTH_TOKEN"]
+    },
+    "build": {
+      "inputs": ["src/**.{js,ts}", "package.json", "tsconfig.build.json"],
+      "outputs": ["dist/**"],
+      "dependsOn": ["^build", "compile"]
+    },
+    "bundle": {
+      "inputs": ["dist/**"],
+      "outputs": ["dist/index.js"],
+      "dependsOn": ["build"]
+    },
+    "zip": {
+      "cache": false,
+      "dependsOn": ["build"]
+    },
+    "pushDev": {
+      "cache": false,
+      "dependsOn": ["zip"],
+      "passThroughEnv": [
+        "AWS_PROFILE",
+        "AWS_ACCESS_KEY_ID",
+        "AWS_SECRET_ACCESS_KEY",
+        "AWS_SESSION_TOKEN",
+        "AWS_REGION"
+      ]
+    },
+    "pushProd": {
+      "cache": false,
+      "dependsOn": ["zip"],
+      "passThroughEnv": [
+        "AWS_PROFILE",
+        "AWS_ACCESS_KEY_ID",
+        "AWS_SECRET_ACCESS_KEY",
+        "AWS_SESSION_TOKEN",
+        "AWS_REGION"
+      ]
+    }
+  }
+}
