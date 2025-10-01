@@ -2065,6 +2065,20 @@
       "denomination": "deUSD",
       "rateFeed": true
     },
+    "sfastUSD_FUNDAMENTAL": {
+      "source": [
+        "sei-evm-fetcher-fast"
+      ],
+      "denomination": "deUSD",
+      "rateFeed": true
+    },
+    "sfastUSD_FUNDAMENTAL/USD": {
+      "source": [
+        "usd-based"
+      ],
+      "denomination": "USD",
+      "rateFeed": true
+    },
     "SolvBTC": {
       "source": [
         "pancake-swap-bnb-btcb-500",
