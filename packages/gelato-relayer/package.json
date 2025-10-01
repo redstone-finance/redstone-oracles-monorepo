@@ -5,8 +5,10 @@
   "repository": "https://github.com/redstone-finance/redstone-oracles-monorepo",
   "scripts": {
     "clean": "yarn global:ts-hardhat-clean",
-    "build": "yarn compile && yarn global:tsc --build tsconfig.build.json",
-    "build-dev": "yarn compile && yarn global:tsc --build tsconfig.json",
+    "build": " yarn global:tsc -p tsconfig.build.json",
+    "build:turbo": "yarn global:turbo build",
+    "build-dev": " yarn global:tsc -p tsconfig.json",
+    "build-dev:turbo": "yarn global:turbo build-dev",
     "compile": "yarn compile-deps && hardhat compile",
     "compile-deps": "yarn --cwd ../on-chain-relayer compile && yarn --cwd ../rpc-providers build",
     "lint": "yarn global:eslint .",
