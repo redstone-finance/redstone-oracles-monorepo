@@ -1490,6 +1490,16 @@
       "denomination": "deUSD",
       "rateFeed": true
     },
+    "sfastUSD_FUNDAMENTAL": {
+      "source": ["sei-evm-fetcher-fast"],
+      "denomination": "deUSD",
+      "rateFeed": true
+    },
+    "sfastUSD_FUNDAMENTAL/USD": {
+      "source": ["usd-based"],
+      "denomination": "USD",
+      "rateFeed": true
+    },
     "CESR": {
       "source": ["coindesk-cesr"],
       "denomination": "percentage",
