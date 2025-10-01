@@ -7,13 +7,5 @@
     "scripts",
     "hardhat.config.ts",
     "artifacts/build-info"
-  ],
-  "references": [
-    {
-      "path": "../utils/tsconfig.build.json"
-    },
-    {
-      "path": "../internal-utils/tsconfig.build.json"
-    }
   ]
 }

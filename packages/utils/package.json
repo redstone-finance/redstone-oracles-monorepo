@@ -8,8 +8,10 @@
   "scripts": {
     "clean": "yarn global:ts-clean",
     "test": "yarn global:jest:cov",
-    "build": "yarn global:tsc --build tsconfig.build.json",
-    "build-dev": "yarn global:tsc --build tsconfig.json",
+    "build": "yarn global:tsc -p tsconfig.build.json",
+    "build:turbo": "yarn global:turbo build",
+    "build-dev": "yarn global:tsc -p tsconfig.json",
+    "build-dev:turbo": "yarn global:turbo build-dev",
     "preversion": "yarn build",
     "lint": "yarn global:eslint .",
     "lint:fix": "yarn global:eslint --fix ."

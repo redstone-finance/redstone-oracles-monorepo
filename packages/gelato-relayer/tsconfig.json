@@ -3,10 +3,5 @@
   "compilerOptions": {
     "downlevelIteration": true
   },
-  "include": ["**/*", "**/*.json"],
-  "references": [
-    {
-      "path": "../on-chain-relayer/tsconfig.build.json"
-    }
-  ]
+  "include": ["**/*", "**/*.json"]
 }

@@ -1,21 +1,4 @@
 {
   "extends": ["./tsconfig.json", "../../tsconfig-build-common.json"],
-  "exclude": ["node_modules", "dist", "test", "scripts", "**/*spec.ts", ".jest", "jest.config.ts"],
-  "references": [
-    {
-      "path": "../protocol/tsconfig.build.json"
-    },
-    {
-      "path": "../sdk/tsconfig.build.json"
-    },
-    {
-      "path": "../utils/tsconfig.build.json"
-    },
-    {
-      "path": "../internal-utils/tsconfig.build.json"
-    },
-    {
-      "path": "../healthcheck/tsconfig.build.json"
-    }
-  ]
+  "exclude": ["node_modules", "dist", "test", "scripts", "**/*spec.ts", ".jest", "jest.config.ts"]
 }

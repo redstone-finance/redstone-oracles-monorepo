@@ -9,8 +9,10 @@
   "license": "MIT",
   "scripts": {
     "clean": "yarn global:ts-clean",
-    "build": "yarn global:tsc --build tsconfig.build.json && yarn nest build",
-    "build-dev": "yarn global:tsc --build tsconfig.json && yarn nest build",
+    "build": "yarn global:tsc -p tsconfig.build.json && yarn nest build",
+    "build:turbo": "yarn global:turbo build",
+    "build-dev": "yarn global:tsc -p tsconfig.json && yarn nest build",
+    "build-dev:turbo": "yarn global:turbo build-dev",
     "lint": "yarn global:eslint .",
     "lint:fix": "yarn global:eslint --fix .",
     "test": "yarn global:jest:cov --runInBand",

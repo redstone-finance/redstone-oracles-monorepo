@@ -1,0 +1,8 @@
+{
+  "extends": ["//"],
+  "tasks": {
+    "test": {
+      "env": ["DISABLED_NETWORKS"]
+    }
+  }
+}

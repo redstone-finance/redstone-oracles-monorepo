@@ -1,18 +1,4 @@
 {
   "extends": ["./tsconfig.json", "../../tsconfig-build-common.json"],
-  "exclude": ["node_modules", "dist", "test", "**/*spec.ts", "scripts", "hardhat.config.ts"],
-  "references": [
-    {
-      "path": "../utils/tsconfig.build.json"
-    },
-    {
-      "path": "../internal-utils/tsconfig.build.json"
-    },
-    {
-      "path": "../evm-multicall/tsconfig.build.json"
-    },
-    {
-      "path": "../remote-config/tsconfig.build.json"
-    }
-  ]
+  "exclude": ["node_modules", "dist", "test", "**/*spec.ts", "scripts", "hardhat.config.ts"]
 }

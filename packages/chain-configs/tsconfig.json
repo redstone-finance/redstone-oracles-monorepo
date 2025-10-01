@@ -1,18 +1,4 @@
 {
   "extends": "../../tsconfig-common.json",
-  "include": ["**/*", ".jest/*", "src/**/*.json", "manifest/*.json"],
-  "references": [
-    {
-      "path": "../utils/tsconfig.build.json"
-    },
-    {
-      "path": "../internal-utils/tsconfig.build.json"
-    },
-    {
-      "path": "../evm-multicall/tsconfig.build.json"
-    },
-    {
-      "path": "../remote-config/tsconfig.build.json"
-    }
-  ]
+  "include": ["**/*", ".jest/*", "src/**/*.json", "manifest/*.json"]
 }

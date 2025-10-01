@@ -10,10 +10,11 @@
     "test": "yarn global:jest:cov",
     "clean": "yarn global:ts-clean",
     "build": "yarn global:tsc --build tsconfig.build.json",
+    "build:turbo": "yarn global:turbo build",
     "build-dev": "yarn global:tsc --build tsconfig.json",
+    "build-dev:turbo": "yarn global:turbo build-dev",
     "preversion": "yarn build",
-    "pack-package": "yarn build && cd dist && npm pack",
-    "lint": "yarn global:eslint ."
+    "pack-package": "yarn build && cd dist && npm pack"
   },
   "dependencies": {
     "@ethersproject/bytes": "^5.6.1",
