@@ -1,0 +1,9 @@
+{
+  "extends": ["//"],
+  "tasks": {
+    "test": {
+      "env": ["NETWORK"],
+      "passThroughEnv": ["PRIVATE_KEY"]
+    }
+  }
+}
