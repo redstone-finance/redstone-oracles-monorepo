@@ -9,7 +9,8 @@
   "scripts": {
     "clean": "yarn global:ts-hardhat-clean",
     "test": "hardhat test",
-    "build": "yarn compile && yarn global:tsc --build",
+    "build": " yarn global:tsc -p tsconfig.json",
+    "build:turbo": "yarn global:turbo build",
     "compile": "hardhat compile"
   },
   "dependencies": {
