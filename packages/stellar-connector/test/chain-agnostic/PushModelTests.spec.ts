@@ -1,7 +1,7 @@
 import { fullTestsSpec, generatePushTestsFor } from "@redstone-finance/chain-agnostic-oracle-tests";
 import { getTestEnvFunction } from "./TestEnvironment";
 
-describe.only("Stellar", () => {
+describe("Stellar", () => {
   jest.setTimeout(300_000);
 
   generatePushTestsFor(
