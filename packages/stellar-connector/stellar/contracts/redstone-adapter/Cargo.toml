@@ -8,6 +8,9 @@ version = "1.0.0"
 crate-type = ["cdylib", "lib"]
 doctest = false
 
+[features]
+agnostic-tests = []
+
 [dependencies]
 common = { workspace = true }
 hex-literal = { workspace = true }

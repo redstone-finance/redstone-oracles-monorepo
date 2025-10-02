@@ -10912,6 +10912,15 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@redstone-finance/mars-rover@git+https://github.com/redstone-finance/mars-rover.git#v0.0.0":
+  version: 0.0.1
+  resolution: "@redstone-finance/mars-rover@https://github.com/redstone-finance/mars-rover.git#commit=e237890fb92db0763d5545091e36d7c492f618c8"
+  peerDependencies:
+    "@stellar/stellar-sdk": 14.1.0
+  checksum: 10c0/7e71ed85d42c3749fdf93fc3d94ca3d2d1f2d8d5298f0e7ec8f248c00b16d5cb0a95355b664508a4673086715b8d7b23fad1cddb52f4e12759a09790cf04061d
+  languageName: node
+  linkType: hard
+
 "@redstone-finance/monitoring-manifests@workspace:*, @redstone-finance/monitoring-manifests@workspace:packages/monitoring-manifests":
   version: 0.0.0-use.local
   resolution: "@redstone-finance/monitoring-manifests@workspace:packages/monitoring-manifests"
@@ -11354,6 +11363,8 @@ __metadata:
   dependencies:
     "@ledgerhq/hw-app-str": "npm:^7.2.5"
     "@ledgerhq/hw-transport-node-hid-singleton": "npm:^6.31.10"
+    "@redstone-finance/chain-agnostic-oracle-tests": "workspace:*"
+    "@redstone-finance/mars-rover": "git+https://github.com/redstone-finance/mars-rover.git#v0.0.0"
     "@redstone-finance/sdk": "workspace:*"
     "@redstone-finance/utils": "workspace:*"
     "@stellar/stellar-sdk": "npm:14.1.0"
