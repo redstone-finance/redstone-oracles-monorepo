@@ -987,6 +987,15 @@ version = "3.0.0-pre3"
 source = "git+https://github.com/redstone-finance/rust-sdk?tag=3.0.0-pre3#72a39a7a8f7564e9bd3dc3de867b9479434b99ca"
 dependencies = [
  "hex-literal 0.4.1",
+ "thiserror 2.0.17",
+]
+
+[[package]]
+name = "redstone"
+version = "3.0.0-pre4"
+source = "git+https://github.com/redstone-finance/rust-sdk?tag=3.0.0-pre4#de1deeb2d02887fd03e5d295a17ef16342cccfc8"
+dependencies = [
+ "hex-literal 0.4.1",
  "soroban-sdk",
  "thiserror 2.0.17",
 ]
@@ -998,7 +1007,7 @@ dependencies = [
  "common",
  "hex",
  "hex-literal 1.0.0",
- "redstone",
+ "redstone 3.0.0-pre4",
  "redstone-testing",
  "soroban-sdk",
 ]
@@ -1017,7 +1026,7 @@ version = "0.3.3"
 source = "git+https://github.com/redstone-finance/rust-sdk?tag=redstone-testing-v0.3.3#6113cd7771916a5ce5b51673fd5dcdd757a627ad"
 dependencies = [
  "hex",
- "redstone",
+ "redstone 3.0.0-pre3",
 ]
 
 [[package]]
