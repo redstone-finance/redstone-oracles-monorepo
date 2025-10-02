@@ -341,8 +341,6 @@
         "kraken-btc",
         "kraken-usd",
         "kucoin-btc",
-        "okx-btc",
-        "okx-usdt",
         "uniswap-v3-arbitrumone-weth-500",
         "uniswap-v3-ethereum-weth-3000",
         "uniswap-v3-ethereum-weth-500",
@@ -385,7 +383,6 @@
       "source": [
         "balancer-ethereum-weth",
         "bitget-usdt",
-        "bitmart-usdt",
         "gate-usdt",
         "kucoin-usdt",
         "lbank-usdt",
@@ -511,7 +508,6 @@
         "balancer-ethereum-wsteth-2",
         "curve-ethereum-wsteth",
         "curve-ethereum-wsteth-2",
-        "pancake-swap-ethereum-weth-500",
         "uniswap-v3-ethereum-weth-100",
         "uniswap-v3-ethereum-weth-500"
       ],
@@ -553,7 +549,6 @@
         "binance-usdt",
         "bingx-usdt",
         "bitget-usdt",
-        "bitmart-usdt",
         "bitrue-usdt",
         "gate-usdt",
         "kraken-usd",
