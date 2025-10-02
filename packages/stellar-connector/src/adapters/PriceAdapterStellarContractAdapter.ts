@@ -73,7 +73,7 @@ export class PriceAdapterStellarContractAdapter
   async readPricesFromContract(paramsProvider: ContractParamsProvider, _blockNumber?: number) {
     const feedIds = paramsProvider.getDataFeedIds();
 
-    return (await this.getContractData(feedIds)).map((data) => data[1]!.lastValue);
+    return (await this.getContractData(feedIds)).map((data) => data[1]?.lastValue ?? 0n);
   }
 
   async readTimestampFromContract(feedId: string, _blockNumber?: number) {

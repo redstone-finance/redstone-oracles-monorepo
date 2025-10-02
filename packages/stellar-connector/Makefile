@@ -40,7 +40,7 @@ clippy:
 	cd $(DEPLOY_DIR) && cargo clippy --all-targets --all-features -- --no-deps -D warnings
 
 test:
-	cd $(DEPLOY_DIR) && cargo test --all-targets --all-features
+	cd $(DEPLOY_DIR) && cargo test --all-targets # --all-features
 
 all-checks: check clippy test build unused-deps
 
@@ -57,6 +57,12 @@ build: setup-env
 	cd $(DEPLOY_DIR) && stellar contract optimize \
 		--wasm target/$(WASM_TARGET)/release/$(PRICE_FEED_CONTRACT).wasm \
 		--wasm-out target/$(WASM_TARGET)/release/$(PRICE_FEED_CONTRACT).wasm
+
+build-test: setup-env
+	cd $(DEPLOY_DIR) && stellar contract build --features agnostic-tests --out-dir target/agnostic-tests
+	cd $(DEPLOY_DIR) && stellar contract optimize \
+		--wasm target/agnostic-tests/$(ADAPTER_CONTRACT).wasm \
+		--wasm-out target/agnostic-tests/$(ADAPTER_CONTRACT).wasm
 
 deploy: build
 	cd $(DEPLOY_DIR) && adapter_id=`stellar contract deploy \
