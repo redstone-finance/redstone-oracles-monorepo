@@ -2484,7 +2484,8 @@
         "alltick-stocks-api",
         "alphavantagestock-usd",
         "financialmodelingprep-usd",
-        "twelve-data"
+        "twelve-data",
+        "databento-tsla"
       ],
       "denomination": "USD",
       "rateFeed": false
@@ -2494,7 +2495,8 @@
         "alltick-stocks-api",
         "alphavantagestock-usd",
         "financialmodelingprep-usd",
-        "twelve-data"
+        "twelve-data",
+        "databento-nvda"
       ],
       "denomination": "USD",
       "rateFeed": false
