@@ -98,10 +98,10 @@ impl RedStoneAdapter {
                 package_timestamp,
                 write_timestamp: write_timestamp.as_millis(),
             };
-            updated_feeds.push_back(price_data.clone());
 
-            update_feed(&db, &verifier, &feed_id, &price_data)
-                .map_err(error_from_redstone_error)?;
+            if update_feed(&db, &verifier, &feed_id, &price_data) {
+                updated_feeds.push_back(price_data.clone());
+            }
         }
 
         env.events().publish_event(&WritePrices {
@@ -205,23 +205,28 @@ fn update_feed(
     verifier: &UpdateTimestampVerifier,
     feed_id: &String,
     price_data: &PriceData,
-) -> Result<(), RedStoneError> {
+) -> bool {
     let old_price_data: Option<PriceData> = db.get(feed_id);
 
-    verifier.verify_timestamp(
-        price_data.write_timestamp.into(),
-        old_price_data.as_ref().map(|pd| pd.write_timestamp.into()),
-        STELLAR_CONFIG.min_interval_between_updates_ms.into(),
-        old_price_data
-            .as_ref()
-            .map(|pd| pd.package_timestamp.into()),
-        price_data.package_timestamp.into(),
-    )?;
+    if verifier
+        .verify_timestamp(
+            price_data.write_timestamp.into(),
+            old_price_data.as_ref().map(|pd| pd.write_timestamp.into()),
+            STELLAR_CONFIG.min_interval_between_updates_ms.into(),
+            old_price_data
+                .as_ref()
+                .map(|pd| pd.package_timestamp.into()),
+            price_data.package_timestamp.into(),
+        )
+        .is_err()
+    {
+        return false;
+    }
 
     db.set(feed_id, price_data);
     db.extend_ttl(feed_id, FEED_TTL_THRESHOLD, FEED_TTL_EXTEND_TO);
 
-    Ok(())
+    true
 }
 
 fn error_from_redstone_error(error: RedStoneError) -> Error {
