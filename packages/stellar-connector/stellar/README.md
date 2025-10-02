@@ -14,10 +14,10 @@
 
 * The repository: https://github.com/redstone-finance/redstone-oracles-monorepo
 * The CommitId: [will be prepared for the particular version]
-* Path: `packages/stellar-connector/stellar`
+* Path: `packages/stellar-connector/deployments/stellarMultiFeed`
 
 The direct path should look like:
-[https://github.com/redstone-finance/redstone-oracles-monorepo/tree/[COMMIT_ID]/packages/stellar-connector/stellar](https://github.com/redstone-finance/redstone-oracles-monorepo/tree/main/packages/stellar-connector/stellar)
+[https://github.com/redstone-finance/redstone-oracles-monorepo/tree/[COMMIT_ID]/packages/stellar-connector/deployments/stellarMultiFeed](https://github.com/redstone-finance/redstone-oracles-monorepo/tree/main/packages/stellar-connector/deployments/stellarMultiFeed)
 
 ## Code description
 
