@@ -11,20 +11,14 @@
     * [RedStone Adapter](#redstone-adapter)
     * [RedStone PriceFeed](#redstone-pricefeed)
     * [Test](#test)
-  * [The current state](#the-current-state)
+  * [The current state of development](#the-current-state-of-development)
 <!-- TOC -->
 
 ## Intellect.eu & Keycloak
 
-https://canton.dev.redstone.catalyst.intellecteu.io/participants \
-User: `redstone-catalyst-devnet` \
-Pass: `***`
-
 1. That's our node-provider
 2. Intellect did set up a participant (node), which we can use
-   1. I couldn't set up a participant by my own (THEIR SLACK: *it should work* - but it doesn't)
 3. Keycloak defines a user who can operate on the participant
-   1. I've created a new user in the Keycloak, but they can't connect to the provider (SLACK: *o it always uses the admin user in the participant*)
 4. It operates with DAML `3.3.0` and the "production" `2.1` target
    1. We use DAML `3.4.0-snapshot` with the "development" `2.dev` target
    2. So, for now, no `secp256k1` crypto additions can be tested
@@ -144,9 +138,11 @@ Pass: `***`
 2. Provides also integration tests for local/ide/ledger deploying and running.
 3. Must be extended to cover more cases
 
-## The current state
+## The current state of development
 
 1. It's possible to deploy all components above to the predefined intellect.eu participant and operate with them with the predefined user
-2. For now, it's a mystery if the contracts are visible outside intellect eu, in the global Canton world
+   1. Setting up a new participant is in progress
+   2. Creating a new user in the Keycloak, they can connect to the provider, is in progress (*it always uses the admin user in the participant*)
+2. Contracts' visibility in the global Canton world, outside intellect.eu, is a mystery
     1. it depends on the Parties defined in other participants
-3. Managing users and participants is very aggravating, and it's necessary to have a dedicated team for it.
+3. Managing users and participants is quite aggravating
