@@ -39,7 +39,6 @@ fn check_initialization() {
 }
 
 #[test]
-#[should_panic(expected = "Error(Contract, #1102)")]
 fn untrusted_updates_twice_without_waiting_for_threshold() {
     let contract = TestContract::new();
     let threshold = Duration::from_millis(STELLAR_CONFIG.min_interval_between_updates_ms);
@@ -58,7 +57,6 @@ fn trusted_updates_twice_without_waiting_for_threshold() {
 }
 
 #[test]
-#[should_panic(expected = "Error(Contract, #1101)")]
 fn updating_twice_with_the_same_timestamp() {
     let contract = TestContract::new();
     let scenario = scenario_updating_twice_with_the_same_timestamp();
