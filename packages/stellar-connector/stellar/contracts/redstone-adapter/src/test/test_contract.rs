@@ -35,6 +35,16 @@ impl PriceAdapterRunEnv for TestContract {
         unimplemented!("Below tests do not require this method yet")
     }
 
+    fn read_write_timestamp(&mut self, feed_id: Vec<u8>) -> u64 {
+        let feed_id = String::from_bytes(&self.0.env, &feed_id);
+
+        let price_data = self
+            .0
+            .read_price_data(&SorobanVec::from_slice(&self.0.env, &[feed_id]));
+
+        price_data.first().unwrap().write_timestamp
+    }
+
     fn read_prices(&mut self, feed_ids: Vec<Vec<u8>>) -> Option<Vec<Value>> {
         Some(self.read_prices_and_timestamp(feed_ids).0)
     }
