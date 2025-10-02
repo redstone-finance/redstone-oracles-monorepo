@@ -112,7 +112,7 @@ query-contract: get-token
 	@curl -X POST -H "Authorization: Bearer $(TOKEN)" \
 	  -H "Content-Type: application/json" \
 	  $(CANTON_API)/query \
-	  -d '{"templateIds": ["$(TEMPLATE_ID)"]}' \
+	  -d '{"templateIds": ["$(IADAPTER_TEMPLATE_ID)"]}' \
 	  | jq '.'
 
 check-my-parties: get-token
