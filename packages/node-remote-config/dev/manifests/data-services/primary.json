@@ -3074,6 +3074,22 @@
       ],
       "denomination": "USD",
       "rateFeed": false
+    },
+    "ANKR": {
+      "source": [
+        "binance-usdt",
+        "mexc-usdt",
+        "coinbase-usd",
+        "bybit-usdt",
+        "bitmart-usdt",
+        "bitget-usdt",
+        "gate-usdt",
+        "kraken-usd",
+        "bingx-usdt",
+        "xt"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
     }
   },
   "multiPointPackages": {
