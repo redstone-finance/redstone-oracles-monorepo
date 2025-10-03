@@ -117,7 +117,7 @@ export class RemoteConfigSupervisor {
      * from restarting simultaneously, which could cause service disruption or availability
      * issues in a distributed deployment.
      */
-    const jitter = RemoteConfigSupervisor.generateJitter(10, 30);
+    const jitter = RedstoneCommon.jitter(10, 30);
     logger.info(`Restarting child process in ${jitter}ms`);
     setTimeout(() => {
       logger.info("Sending SIGTERM to child process");
@@ -177,10 +177,5 @@ export class RemoteConfigSupervisor {
       logger.error(`Got exit code ${code} from Child Process`);
       process.exit(code);
     }
-  }
-
-  static generateJitter(minSeconds: number, maxSeconds: number): number {
-    const randomSeconds = Math.floor(Math.random() * (maxSeconds - minSeconds + 1)) + minSeconds;
-    return randomSeconds * 1000;
   }
 }
