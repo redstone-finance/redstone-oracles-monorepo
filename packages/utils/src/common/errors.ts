@@ -1,5 +1,5 @@
 import axios, { AxiosError } from "axios";
-import { LogLevel } from "consola";
+import { LogLevels } from "consola";
 import { ethers } from "ethers";
 import { getLogLevel, loggerFactory, sanitizeLogMessage } from "../logger";
 
@@ -70,7 +70,7 @@ const showStack = (stack: string | undefined): string => {
   if (!stack) {
     return "";
   }
-  trace ??= getLogLevel() >= LogLevel.Trace;
+  trace ??= getLogLevel() >= LogLevels.trace;
 
   if (trace) {
     return stack + ";";

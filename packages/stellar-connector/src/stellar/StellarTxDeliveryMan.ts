@@ -45,7 +45,7 @@ export class StellarTxDeliveryMan {
           );
         },
         maxRetries: this.config.maxTxSendAttempts,
-        logger: this.logger.warn,
+        logger: this.logger.warn.bind(this.logger),
       })();
 
       this.logger.info(

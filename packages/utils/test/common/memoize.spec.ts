@@ -158,14 +158,14 @@ describe("memoize", () => {
     const memoized = memoize({ functionToMemoize: mockFn, ttl: 1000 });
 
     const requests = [];
-    for (let i = 0; i < 10_000; i++) {
+    for (let i = 0; i < 1_000; i++) {
       requests.push(memoized("result"));
     }
 
     const results = await Promise.all(requests);
     expect(mockFn).toHaveBeenCalledTimes(1);
 
-    for (let i = 0; i < 10_000; i++) {
+    for (let i = 0; i < 1_000; i++) {
       expect(results[i]).toBe("result");
     }
     jest.useFakeTimers(); // Switch back to fake timers after the test

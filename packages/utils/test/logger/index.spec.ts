@@ -1,4 +1,4 @@
-import { Consola } from "consola";
+import { type ConsolaInstance } from "consola";
 import { createSanitizedLogger, sanitizeValue } from "../../src";
 
 const createMockLogger = () => {
@@ -137,7 +137,7 @@ describe("Logger Sanitization Logic", () => {
     test("should wrap logger methods to sanitize arguments", () => {
       const { logger: mockRawLogger, capturedArgs, mockLogFn } = createMockLogger();
 
-      const sanitizedLogger = createSanitizedLogger(mockRawLogger as unknown as Consola);
+      const sanitizedLogger = createSanitizedLogger(mockRawLogger as unknown as ConsolaInstance);
 
       const url = "https://example.com/records/token=123456";
       sanitizedLogger.info("Connecting to: ", url);
@@ -154,7 +154,7 @@ describe("Logger Sanitization Logic", () => {
 
     test("should handle multiple arguments including objects and arrays", () => {
       const { logger: mockRawLogger, capturedArgs, mockLogFn } = createMockLogger();
-      const sanitizedLogger = createSanitizedLogger(mockRawLogger as unknown as Consola);
+      const sanitizedLogger = createSanitizedLogger(mockRawLogger as unknown as ConsolaInstance);
 
       const obj = {
         httpsUrl: "https://api.test.com?token=abcxyz",
