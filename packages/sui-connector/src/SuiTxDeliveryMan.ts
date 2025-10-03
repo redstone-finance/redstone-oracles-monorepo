@@ -15,7 +15,7 @@ export class SuiTxDeliveryMan {
   constructor(
     public client: SuiClient,
     public keypair: Keypair,
-    private config: SuiConfig,
+    private readonly config: SuiConfig,
     private executor?: ParallelTransactionExecutor
   ) {}
 
@@ -25,9 +25,7 @@ export class SuiTxDeliveryMan {
     iterationIndex = 0
   ): Promise<string> {
     try {
-      (iterationIndex ? this.logger.info : this.logger.debug)(
-        `Iteration #${iterationIndex} started`
-      );
+      this.logger[iterationIndex ? "info" : "debug"](`Iteration #${iterationIndex} started`);
 
       return await RedstoneCommon.timeout(
         this.performExecutingTx(tx),
