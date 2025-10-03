@@ -22,12 +22,24 @@
       "rateFeed": false
     },
     "BTC_PERP": {
-      "source": ["ws-perp-binance-usdt"],
+      "source": [
+        "ws-perp-binance-usdt",
+        "ws-perp-bybit-usdt",
+        "ws-perp-gate-usdt",
+        "ws-perp-mexc-usdt",
+        "ws-perp-okx-usdt"
+      ],
       "denomination": "USD",
       "rateFeed": false
     },
     "ETH_PERP": {
-      "source": ["ws-perp-binance-usdt"],
+      "source": [
+        "ws-perp-binance-usdt",
+        "ws-perp-bybit-usdt",
+        "ws-perp-gate-usdt",
+        "ws-perp-mexc-usdt",
+        "ws-perp-okx-usdt"
+      ],
       "denomination": "USD",
       "rateFeed": false
     }
