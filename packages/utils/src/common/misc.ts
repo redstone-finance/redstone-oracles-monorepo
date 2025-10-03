@@ -84,6 +84,11 @@ export function stringify<R>(result: R) {
   }
 }
 
+export function jitter(minSeconds: number, maxSeconds: number): number {
+  const randomSeconds = Math.floor(Math.random() * (maxSeconds - minSeconds + 1)) + minSeconds;
+  return randomSeconds * 1000;
+}
+
 function unescapeString(s: string) {
   return _.unescape(s).replace(/\\"/g, '"').replace(/\\\\/g, "\\");
 }
