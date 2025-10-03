@@ -66,6 +66,7 @@ describe("ConfigHistory", () => {
 
     configHistory.blacklistConfigHash("nonExistentHash");
 
+    // eslint-disable-next-line @typescript-eslint/unbound-method
     expect(logger.warn).toHaveBeenCalledWith(
       "Historical config with hash nonExistentHash not found - cannot blacklist"
     );
