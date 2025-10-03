@@ -3486,10 +3486,6 @@
       "denomination": "USD",
       "rateFeed": false
     },
-    "ANKR": {
-      "denomination": "USD",
-      "rateFeed": false
-    },
     "HBAR": {
       "denomination": "USD",
       "rateFeed": false
@@ -7494,6 +7490,22 @@
         "bingx-usdt",
         "kraken-usd",
         "pancake-swap-bnb-usdt-100",
+        "xt"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "ANKR": {
+      "source": [
+        "binance-usdt",
+        "mexc-usdt",
+        "coinbase-usd",
+        "bybit-usdt",
+        "bitmart-usdt",
+        "bitget-usdt",
+        "gate-usdt",
+        "kraken-usd",
+        "bingx-usdt",
         "xt"
       ],
       "denomination": "USD",
