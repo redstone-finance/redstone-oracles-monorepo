@@ -40,7 +40,7 @@ export class RequestDataPackagesLogger {
     const particularTimestamps = this.particularTimestamps();
     const collectedErrors = RequestDataPackagesLogger.filterOutUndefined(this.particularErrors);
 
-    (timeout ? this.logger.info : this.logger.debug)(
+    this.logger[timeout ? "info" : "debug"](
       `${timeout ? "Timed out with" : "Checking"} ${collectedResponses.length} response(s) / ${collectedErrors.length} error(s),` +
         ` didResolveOrReject before: ${didResolveOrReject}`,
       {

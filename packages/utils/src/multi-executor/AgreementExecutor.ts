@@ -19,7 +19,7 @@ export class AgreementExecutor<R> extends ParallelExecutor<R> {
     }
 
     if (modes.length !== 1) {
-      (this.shouldResolveUnagreedToUndefined ? this.logger.info : this.logger.warn)(
+      this.logger[this.shouldResolveUnagreedToUndefined ? "info" : "warn"](
         `Multiple modes found (shouldResolveUnagreedToUndefined = ${this.shouldResolveUnagreedToUndefined}; were the returning promises sync?): ${stringify(modes)}`
       );
 

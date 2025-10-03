@@ -84,7 +84,7 @@ const getBlockNumberWithRetries = (provider: Provider, timeout: number): Promise
       waitBetweenMs: 50,
       maxRetries: 2,
       fn: () => provider.getBlockNumber(),
-      logger: logger.log,
+      logger: logger.log.bind(logger),
     })(),
     timeout
   );

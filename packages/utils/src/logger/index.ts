@@ -1,27 +1,33 @@
-import consola, { Consola, FancyReporter, JSONReporter, LogLevel } from "consola";
+import {
+  createConsola,
+  LogLevels,
+  type ConsolaInstance,
+  type LogLevel,
+  type LogObject,
+} from "consola/basic";
 import { z } from "zod";
 import { getFromEnv } from "../common/env";
 import { isNodeRuntime } from "../common/runtime";
 
 const DEFAULT_ENABLE_JSON_LOGS = true;
-const DEFAULT_LOG_LEVEL = LogLevel.Info;
+const DEFAULT_LOG_LEVEL = LogLevels.info;
 const MAX_DEPTH = 5;
 
-const WHITELISTED_HOSTANAMES = new Set(["github.com"]);
+const WHITELISTED_HOSTNAMES = new Set(["github.com"]);
 
-export type RedstoneLogger = Consola | Console;
+export type RedstoneLogger = ConsolaInstance | Console;
 
 const LogTypeToLevel: { [key: string]: LogLevel } = {
-  Fatal: LogLevel.Fatal,
-  Error: LogLevel.Error,
-  Warn: LogLevel.Warn,
-  Log: LogLevel.Log,
-  Info: LogLevel.Info,
-  Success: LogLevel.Success,
-  Debug: LogLevel.Debug,
-  Trace: LogLevel.Trace,
-  Silent: LogLevel.Silent,
-  Verbose: LogLevel.Verbose,
+  Fatal: LogLevels.fatal,
+  Error: LogLevels.error,
+  Warn: LogLevels.warn,
+  Log: LogLevels.log,
+  Info: LogLevels.info,
+  Success: LogLevels.success,
+  Debug: LogLevels.debug,
+  Trace: LogLevels.trace,
+  Silent: LogLevels.silent,
+  Verbose: LogLevels.verbose,
 };
 
 let customLogLevels: undefined | null | Record<string, LogLevel> = undefined;
@@ -40,14 +46,13 @@ export const loggerFactory = (moduleName: string): RedstoneLogger => {
       ? getCustomLogLevel(moduleName, customLogLevels, defaultLogLevel)
       : defaultLogLevel;
 
-    const mainReporter = enableJsonLogs ? new JSONReporter() : new FancyReporter();
+    const reporters = enableJsonLogs ? [new JSONReporter()] : undefined;
 
-    const logger = consola
-      .create({
-        reporters: [mainReporter],
-        level: logLevel,
-      })
-      .withTag(moduleName);
+    const logger = createConsola({
+      ...(reporters ? { reporters } : []),
+      fancy: !reporters,
+      level: logLevel,
+    }).withTag(moduleName);
 
     return createSanitizedLogger(logger);
   } else {
@@ -56,10 +61,7 @@ export const loggerFactory = (moduleName: string): RedstoneLogger => {
 };
 
 export const getLogLevel = () => {
-  return getFromEnv(
-    "REDSTONE_FINANCE_LOG_LEVEL",
-    z.nativeEnum(LogLevel).default(DEFAULT_LOG_LEVEL)
-  );
+  return getFromEnv("REDSTONE_FINANCE_LOG_LEVEL", z.number().default(DEFAULT_LOG_LEVEL));
 };
 
 export function createSanitizedLogger(logger: RedstoneLogger): RedstoneLogger {
@@ -133,7 +135,7 @@ export function sanitizeLogMessage(message: string): string {
   return message.replace(urlRegex, (match) => {
     try {
       const parsedUrl = new URL(match);
-      if (WHITELISTED_HOSTANAMES.has(parsedUrl.hostname)) {
+      if (WHITELISTED_HOSTNAMES.has(parsedUrl.hostname)) {
         return match;
       }
       parsedUrl.password = "";
@@ -178,4 +180,12 @@ function parseLogLevels(): Record<string, LogLevel> | null {
   });
 
   return levels;
+}
+
+class JSONReporter {
+  // eslint-disable-next-line @typescript-eslint/class-methods-use-this
+  log(logObj: LogObject) {
+    // used only in node environment
+    process.stdout.write(JSON.stringify(logObj) + "\n");
+  }
 }
