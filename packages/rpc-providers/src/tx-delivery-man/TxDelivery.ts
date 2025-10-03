@@ -60,7 +60,7 @@ export const DEFAULT_TX_DELIVERY_OPTS = {
   forceDisableCustomGasOracle: false,
   numberOfBlocksForFeeHistory: 2,
   newestBlockForFeeHistory: "pending",
-  logger: logger.log.bind(logger),
+  logger: logger.log.bind(logger) as (message: unknown) => void,
 };
 
 export type TxDeliverySigner = {
