@@ -1,5 +1,5 @@
 {
-  "interval": 10000,
+  "interval": 1000,
   "priceAggregator": "median",
   "defaultSource": ["coingecko"],
   "sourceTimeout": 8000,
@@ -18,6 +18,16 @@
           "maxDelayMilliseconds": 120000
         }
       },
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "BTC_PERP": {
+      "source": ["ws-perp-binance-usdt"],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "ETH_PERP": {
+      "source": ["ws-perp-binance-usdt"],
       "denomination": "USD",
       "rateFeed": false
     }
