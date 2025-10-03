@@ -9494,7 +9494,7 @@ __metadata:
     "@types/lodash": "npm:^4.14.195"
     "@types/sinon": "npm:^10.0.15"
     axios: "npm:^1.8.4"
-    consola: "npm:^2.15.3"
+    consola: "npm:^3.4.2"
     decimal.js: "npm:^10.4.3"
     ethers: "npm:^5.7.2"
     lodash: "npm:^4.17.21"
@@ -11464,7 +11464,7 @@ __metadata:
     "@types/lodash": "npm:^4.14.195"
     "@types/sinon": "npm:^10.0.15"
     axios: "npm:^1.8.4"
-    consola: "npm:^2.15.3"
+    consola: "npm:^3.4.2"
     date-fns: "npm:^3.6.0"
     decimal.js: "npm:^10.4.3"
     dotenv: "npm:^16.0.3"
@@ -20382,17 +20382,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"consola@npm:^2.15.3":
-  version: 2.15.3
-  resolution: "consola@npm:2.15.3"
-  checksum: 10c0/34a337e6b4a1349ee4d7b4c568484344418da8fdb829d7d71bfefcd724f608f273987633b6eef465e8de510929907a092e13cb7a28a5d3acb3be446fcc79fd5e
-  languageName: node
-  linkType: hard
-
-"consola@npm:^3.2.3":
-  version: 3.4.0
-  resolution: "consola@npm:3.4.0"
-  checksum: 10c0/bc7f7ad46514375109a80f3ae8330097eb1e5d89232a24eb830f3ac383e22036a62c53d33561cd73d7cda4b3691fba85e3dcf35229ef7721b324aae291ceb40c
+"consola@npm:^3.2.3, consola@npm:^3.4.2":
+  version: 3.4.2
+  resolution: "consola@npm:3.4.2"
+  checksum: 10c0/7cebe57ecf646ba74b300bcce23bff43034ed6fbec9f7e39c27cee1dc00df8a21cd336b466ad32e304ea70fba04ec9e890c200270de9a526ce021ba8a7e4c11a
   languageName: node
   linkType: hard
 
