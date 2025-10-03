@@ -120,7 +120,7 @@ export class CuratedRpcList {
       stats.inQuarantine = true;
       stats.quarantineCounter += 1;
       const index = this.config.rpcIdentifiers.indexOf(rpc);
-      (this.config.extendedLogs ? this.logger.info : this.logger.debug)(
+      this.logger[this.config.extendedLogs ? "info" : "debug"](
         `Sending provider with identifier=${rpc} to quarantine; errorRate=${errorRate.toFixed(
           2
         )}; index: ${index}`,
@@ -163,7 +163,7 @@ export class CuratedRpcList {
 
       const rpc = providersInQuarantine[index][0];
       const rpcIndex = this.config.rpcIdentifiers.indexOf(rpc);
-      (this.config.extendedLogs ? this.logger.info : this.logger.debug)(
+      this.logger[this.config.extendedLogs ? "info" : "debug"](
         `Releasing provider identifier=${rpc} from quarantine`,
         {
           rpc,

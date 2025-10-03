@@ -36,7 +36,7 @@ async function getBlockNumberWithLog(
   const currentBlockNumber = await getBlockNumber();
   const isConditionFulfilled = currentBlockNumber >= blockNumberToWaitFor;
 
-  (iterationIndex ? logger.info : logger.debug)(
+  logger[iterationIndex ? "info" : "debug"](
     `[${description}] Iteration #${iterationIndex} Current block number: ${currentBlockNumber}` +
       (!isConditionFulfilled ? ` (missing: ${blockNumberToWaitFor - currentBlockNumber})` : "")
   );
