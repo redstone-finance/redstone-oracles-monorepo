@@ -36,7 +36,7 @@ export const validateNetworkRpcUrls = (rpcUrlsPerChain: RpcUrlsPerChain) => {
             ...RETRY_CONFIG,
             fn: async () => (await provider.getNetwork()).chainId,
             fnName: "provider.getNetwork()",
-            logger: logger.log,
+            logger: logger.log.bind(logger),
           })();
 
           chai.expect(fetchedChainId, `Wrong networkId`).to.eq(chainId);
@@ -59,7 +59,7 @@ const getBlockNumberWithTimeout = async (rpcUrl: string, timeout: number): Promi
       );
     },
     fnName: `provider.getBlockNumber() for ${host}`,
-    logger: logger.log,
+    logger: logger.log.bind(logger),
   })();
   return blockNumber;
 };
