@@ -121,7 +121,7 @@ export const getHealthcheckMetric = async (
         ReturnData: true,
       },
     ],
-    StartTime: new Date(Date.now() - period), // 1 hour ago
+    StartTime: new Date(Date.now() - period),
     EndTime: new Date(),
   };
 
