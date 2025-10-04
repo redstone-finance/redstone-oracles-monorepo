@@ -6,12 +6,12 @@
       "dependsOn": ["^build-dev"]
     },
     "build-dev": {
-      "inputs": ["src/**.{js,ts}", "package.json", "tsconfig.json"],
+      "inputs": ["$TURBO_DEFAULT$", "$TURBO_ROOT$/tsconfig-common.json", "!tsconfig.build.json"],
       "outputs": ["dist/**"],
       "dependsOn": ["^build-dev", "compile"]
     },
     "lint": {
-      "inputs": ["./**.{js,ts}"],
+      "inputs": ["./**.{js,ts}", "$TURBO_ROOT$/eslint.config.ts"],
       "dependsOn": ["^build-dev", "compile"]
     },
     "test": {
@@ -21,12 +21,18 @@
       "passThroughEnv": ["GH_AUTH_TOKEN"]
     },
     "build": {
-      "inputs": ["src/**.{js,ts}", "package.json", "tsconfig.build.json"],
+      "inputs": [
+        "$TURBO_DEFAULT$",
+        "$TURBO_ROOT$/tsconfig-build-common.json",
+        "!test*/**",
+        "!scripts/**",
+        "!tsconfig.json"
+      ],
       "outputs": ["dist/**"],
       "dependsOn": ["^build", "compile"]
     },
     "bundle": {
-      "inputs": ["dist/**"],
+      "inputs": ["dist/**", "$TURBO_ROOT$/rollup-config.mjs"],
       "outputs": ["dist/index.js"],
       "dependsOn": ["build"]
     },
