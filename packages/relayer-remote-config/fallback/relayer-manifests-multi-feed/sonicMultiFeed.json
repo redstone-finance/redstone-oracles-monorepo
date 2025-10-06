@@ -20,7 +20,7 @@
     "SolvBTC": {
       "priceFeedAddress": "0x4aF6b78d92432D32E3a635E824d3A541866f7a78"
     },
-    "SolvBTC.BBN": {
+    "SolvBTC.BBN_FUNDAMENTAL": {
       "priceFeedAddress": "0x26FB59e5562405F42f55661f790fA1Bd2F410A3d"
     },
     "stS_FUNDAMENTAL": {
