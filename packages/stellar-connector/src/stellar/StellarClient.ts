@@ -5,7 +5,6 @@ import {
   Asset,
   BASE_FEE,
   Contract,
-  Horizon,
   Operation,
   rpc,
   Transaction,
@@ -15,27 +14,23 @@ import {
 import { Api } from "@stellar/stellar-sdk/lib/minimal/rpc/api";
 import axios from "axios";
 import z from "zod";
+import { getLedgerCloseDate } from "../utils";
 import * as XdrUtils from "../XdrUtils";
-import { LEDGER_TIME_MS } from "./StellarConstants";
+import { HorizonClient } from "./HorizonClient";
 import { StellarSigner } from "./StellarSigner";
 
-const RETRY_COUNT = 10;
-const SLEEP_TIME_MS = 1_000;
-const TIMEOUT_SEC = 30;
-
-const RETRY_CONFIG: Omit<RedstoneCommon.RetryConfig, "fn"> = {
-  maxRetries: RETRY_COUNT,
-  waitBetweenMs: SLEEP_TIME_MS,
-};
-
 const REDSTONE_EVENT_TOPIC_QUALIFIER = "REDSTONE";
+const TRANSACTION_TIMEOUT_SEC = 30;
 
-export class StellarRpcClient {
-  private cachedNetworkStats?: { value?: Horizon.HorizonApi.FeeStatsResponse; timestamp: number };
+export class StellarClient {
+  private getNetwork = RedstoneCommon.memoize({
+    functionToMemoize: () => this.server.getNetwork(),
+    ttl: RedstoneCommon.hourToMs(1),
+  });
 
   constructor(
     private readonly server: rpc.Server,
-    private readonly horizon?: Horizon.Server
+    private readonly horizon?: HorizonClient
   ) {}
 
   private async getAccount(publicKey: string): Promise<Account> {
@@ -54,21 +49,24 @@ export class StellarRpcClient {
     return (await this.server.getLatestLedger()).sequence;
   }
 
-  async waitForTx(hash: string) {
-    return await RedstoneCommon.retry({
-      fn: async () => {
-        const response = await this.server.getTransaction(hash);
-        if (response.status === rpc.Api.GetTransactionStatus.SUCCESS) {
-          return {
-            returnValue: response.returnValue,
-            cost: response.resultXdr.feeCharged(),
-          };
-        }
+  async getTransaction<T>(hash: string, valueTransform?: (returnValue: xdr.ScVal) => T) {
+    const tx = await this.server.getTransaction(hash);
 
-        throw new Error(`Transaction did not succeed: ${hash}, status: ${response.status}`);
-      },
-      ...RETRY_CONFIG,
-    })();
+    if (tx.status === rpc.Api.GetTransactionStatus.SUCCESS) {
+      return {
+        status: tx.status,
+        cost: tx.resultXdr.feeCharged(),
+        value: tx.returnValue ? valueTransform?.(tx.returnValue) : undefined,
+      };
+    }
+
+    return {
+      status: tx.status,
+    };
+  }
+
+  async waitForTx(hash: string) {
+    return await this.server.pollTransaction(hash);
   }
 
   async simulateTransaction(transaction: Transaction) {
@@ -81,39 +79,32 @@ export class StellarRpcClient {
     return sim;
   }
 
-  async executeOperation(
+  async prepareSignedTransaction(
     operation: xdr.Operation<Operation.InvokeHostFunction>,
     signer: StellarSigner,
     fee = BASE_FEE
   ) {
-    const transaction = await this.transactionFromOperation(
-      operation,
-      await signer.publicKey(),
-      fee
-    );
+    const tx = await this.buildTransaction(operation, await signer.publicKey(), fee);
+    const transaction = await this.server.prepareTransaction(tx);
 
     await signer.sign(transaction);
 
-    return await this.server.sendTransaction(transaction);
+    return transaction;
   }
 
-  async transactionFromOperation(
+  async buildTransaction(
     operation: xdr.Operation<Operation.InvokeHostFunction>,
     sender: string,
     fee = BASE_FEE,
-    timeout = TIMEOUT_SEC
+    timeout = TRANSACTION_TIMEOUT_SEC
   ) {
-    const tx = new TransactionBuilder(await this.getAccount(sender), {
+    return new TransactionBuilder(await this.getAccount(sender), {
       fee,
-      networkPassphrase: (await this.server.getNetwork()).passphrase,
+      networkPassphrase: (await this.getNetwork()).passphrase,
     })
       .addOperation(operation)
       .setTimeout(timeout)
       .build();
-
-    const sim = await this.simulateTransaction(tx);
-
-    return rpc.assembleTransaction(tx, sim).build();
   }
 
   async simulateOperation<T>(
@@ -121,7 +112,7 @@ export class StellarRpcClient {
     sender: string,
     transform: (sim: rpc.Api.SimulateTransactionSuccessResponse) => T
   ) {
-    const tx = await this.transactionFromOperation(operation, sender);
+    const tx = await this.buildTransaction(operation, sender);
 
     return transform(await this.simulateTransaction(tx));
   }
@@ -135,52 +126,45 @@ export class StellarRpcClient {
     return transform(await this.server.getContractData(contract, key, durability));
   }
 
+  async sendTransaction(tx: Transaction) {
+    return await this.server.sendTransaction(tx);
+  }
+
+  // Other
+
   async transferXlm(sender: StellarSigner, destination: string, amount: number) {
-    const senderAccount = await this.server.getAccount(await sender.publicKey());
-
-    const transaction = new TransactionBuilder(senderAccount, {
-      fee: BASE_FEE,
-      networkPassphrase: (await this.server.getNetwork()).passphrase,
-    })
-      .addOperation(
-        Operation.payment({
-          destination,
-          asset: Asset.native(),
-          amount: String(amount),
-        })
-      )
-      .setTimeout(TIMEOUT_SEC)
-      .build();
-
-    await sender.sign(transaction);
-    const result = await this.server.sendTransaction(transaction);
-
-    await this.waitForTx(result.hash);
-    return result.hash;
+    const operation = Operation.payment({
+      destination,
+      asset: Asset.native(),
+      amount: String(amount),
+    });
+    return await this.buildAndSendTransaction(sender, operation);
   }
 
   async createAccountWithFunds(sender: StellarSigner, destination: string, amount: number) {
-    const senderAccount = await this.server.getAccount(await sender.publicKey());
+    const operation = Operation.createAccount({
+      destination,
+      startingBalance: String(amount),
+    });
 
-    const transaction = new TransactionBuilder(senderAccount, {
-      fee: BASE_FEE,
-      networkPassphrase: (await this.server.getNetwork()).passphrase,
-    })
-      .addOperation(
-        Operation.createAccount({
-          destination,
-          startingBalance: String(amount),
-        })
-      )
-      .setTimeout(TIMEOUT_SEC)
-      .build();
+    return await this.buildAndSendTransaction(sender, operation);
+  }
+
+  private async buildAndSendTransaction(
+    sender: StellarSigner,
+    operation: xdr.Operation<Operation.InvokeHostFunction>
+  ) {
+    const transaction = await this.buildTransaction(operation, await sender.publicKey());
 
     await sender.sign(transaction);
-    const result = await this.server.sendTransaction(transaction);
+    const result = await this.sendTransaction(transaction);
 
     await this.waitForTx(result.hash);
+
     return result.hash;
   }
+
+  // Indexer purposes
 
   async getTimeForBlock(sequence: number) {
     // TODO: Use Stellar SDK's rpc.Server when it adds support for getLedgers()
@@ -210,14 +194,14 @@ export class StellarRpcClient {
           ledgers: z.array(
             z.object({
               sequence: z.literal(sequence),
-              ledgerCloseTime: z.string(),
+              ledgerCloseTime: z.number(),
             })
           ),
         }),
       });
       const resParsed = Response.parse(res.data);
 
-      return new Date(Number(resParsed.result.ledgers[0].ledgerCloseTime) * 1000);
+      return getLedgerCloseDate(resParsed.result.ledgers[0].ledgerCloseTime);
     } catch {
       console.warn(`Could not get time of ledger ${sequence}`);
       return new Date(0);
@@ -331,23 +315,9 @@ export class StellarRpcClient {
     return { startLedger, endLedger, inRange: true };
   }
 
-  async sendTransaction(tx: Transaction) {
-    return await this.server.sendTransaction(tx);
-  }
+  // Horizon
 
   async getNetworkStats(force = false) {
-    const now = Date.now();
-    if (
-      force ||
-      this.cachedNetworkStats === undefined ||
-      now - this.cachedNetworkStats.timestamp > LEDGER_TIME_MS
-    ) {
-      this.cachedNetworkStats = {
-        value: await this.horizon?.feeStats(),
-        timestamp: now,
-      };
-    }
-
-    return this.cachedNetworkStats.value;
+    return await this.horizon?.getNetworkStats(force);
   }
 }

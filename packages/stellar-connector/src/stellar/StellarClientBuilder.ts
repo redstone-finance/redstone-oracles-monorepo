@@ -1,11 +1,12 @@
-import { ChainTypeEnum, MultiExecutor } from "@redstone-finance/utils";
+import { ChainTypeEnum, MultiExecutor, RedstoneCommon } from "@redstone-finance/utils";
 import { Horizon, rpc } from "@stellar/stellar-sdk";
-import { StellarRpcClient } from "./StellarRpcClient";
+import { HorizonClient } from "./HorizonClient";
+import { StellarClient } from "./StellarClient";
 import { getStellarChainId, StellarNetwork } from "./network-ids";
 
 const SINGLE_EXECUTION_TIMEOUT_MS = 11_000;
 
-export class StellarClientBuilder extends MultiExecutor.ClientBuilder<StellarRpcClient> {
+export class StellarClientBuilder extends MultiExecutor.ClientBuilder<StellarClient> {
   protected override chainType = ChainTypeEnum.Enum.stellar;
   private horizonUrl?: string;
 
@@ -24,19 +25,19 @@ export class StellarClientBuilder extends MultiExecutor.ClientBuilder<StellarRpc
       throw new Error("Network not set");
     }
 
-    const horizon =
-      this.horizonUrl !== undefined
-        ? new Horizon.Server(this.horizonUrl, { allowHttp: true })
-        : undefined;
+    const horizon = RedstoneCommon.isDefined(this.horizonUrl)
+      ? new HorizonClient(new Horizon.Server(this.horizonUrl, { allowHttp: true }))
+      : undefined;
 
     return this.makeMultiExecutor(
-      (url) => new StellarRpcClient(new rpc.Server(url, { allowHttp: true }), horizon),
+      (url) => new StellarClient(new rpc.Server(url, { allowHttp: true }), horizon),
       {
         getBlockNumber: StellarClientBuilder.blockNumberConsensusExecutor,
-        executeOperation: MultiExecutor.ExecutionMode.RACE,
+        sendTransaction: MultiExecutor.ExecutionMode.RACE,
         simulateOperation: MultiExecutor.ExecutionMode.AGREEMENT,
         getAccountBalance: MultiExecutor.ExecutionMode.AGREEMENT,
         getContractData: MultiExecutor.ExecutionMode.AGREEMENT,
+        getTransaction: MultiExecutor.ExecutionMode.AGREEMENT,
         waitForTx: MultiExecutor.ExecutionMode.AGREEMENT,
       },
       {

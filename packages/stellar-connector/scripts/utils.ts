@@ -4,7 +4,7 @@ import "dotenv/config";
 import { readFileSync, writeFileSync } from "fs";
 import path from "path";
 import { z } from "zod";
-import { StellarNetwork } from "../src/stellar/network-ids";
+import { StellarNetwork } from "../src";
 
 type StellarContract = typeof PRICE_ADAPTER | typeof PRICE_FEED;
 

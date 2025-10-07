@@ -12,6 +12,7 @@
     "build:turbo": "yarn global:turbo build",
     "build-dev": "yarn global:tsc -p tsconfig.json",
     "build-dev:turbo": "yarn global:turbo build-dev",
+    "build-dependent:turbo": "yarn build:turbo --filter=...@redstone-finance/stellar-connector",
     "lint": "yarn global:eslint .",
     "lint:fix": "yarn global:eslint --fix .",
     "test": "make build && yarn global:jest:cov --runInBand",
@@ -33,7 +34,7 @@
   "dependencies": {
     "@redstone-finance/sdk": "workspace:*",
     "@redstone-finance/utils": "workspace:*",
-    "@stellar/stellar-sdk": "14.1.0",
+    "@stellar/stellar-sdk": "14.2.0",
     "lodash": "^4.17.21",
     "zod": "^3.22.4"
   },
