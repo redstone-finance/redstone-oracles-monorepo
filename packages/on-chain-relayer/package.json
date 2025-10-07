@@ -27,7 +27,7 @@
     "start:dev": "yarn global:ts-node src/main.ts",
     "start:dev:remote": "yarn build && yarn global:ts-node --swc src/main-remote-config.ts",
     "run-manual-script": "yarn run-ts scripts/master-manual-script/index.ts",
-    "compile": "hardhat compile",
+    "compile": "PRIVATE_KEY= hardhat compile",
     "lint": "yarn global:eslint . && hardhat check",
     "lint:fix": "yarn global:eslint --fix .",
     "run-script": "hardhat run",
