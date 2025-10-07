@@ -25,7 +25,7 @@ export class PriceAdapterStellarContractAdapter
   async getUniqueSignerThreshold(_blockNumber?: number) {
     const operation = this.contract.call("unique_signer_threshold");
 
-    return await this.rpcClient.simulateOperation(operation, await this.getPublicKey(), (sim) =>
+    return await this.client.simulateOperation(operation, await this.getPublicKey(), (sim) =>
       XdrUtils.parsePrimitiveFromSimulation(sim, Number)
     );
   }
@@ -44,7 +44,7 @@ export class PriceAdapterStellarContractAdapter
       ...(await this.prepareCallArgs(paramsProvider))
     );
 
-    const sim = await this.rpcClient.simulateOperation(
+    const sim = await this.client.simulateOperation(
       operation,
       await this.getPublicKey(),
       XdrUtils.parseGetPricesSimulation
@@ -85,7 +85,7 @@ export class PriceAdapterStellarContractAdapter
   ): Promise<[string, LastRoundDetails | undefined][]> {
     const promises = feedIds.map(async (feedId) => {
       const key = XdrUtils.stringToScVal(feedId);
-      const settledResult = this.rpcClient.getContractData(
+      const settledResult = this.client.getContractData(
         this.contract,
         key,
         XdrUtils.parsePriceDataFromContractData
