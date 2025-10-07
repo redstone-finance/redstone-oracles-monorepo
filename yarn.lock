@@ -11367,7 +11367,7 @@ __metadata:
     "@redstone-finance/mars-rover": "git+https://github.com/redstone-finance/mars-rover.git#v0.0.0"
     "@redstone-finance/sdk": "workspace:*"
     "@redstone-finance/utils": "workspace:*"
-    "@stellar/stellar-sdk": "npm:14.1.0"
+    "@stellar/stellar-sdk": "npm:14.2.0"
     "@types/urijs": "npm:^1.19.25"
     dotenv: "npm:^16.0.3"
     ethers: "npm:^5.7.2"
@@ -13854,9 +13854,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@stellar/stellar-base@npm:^14.0.0":
-  version: 14.0.0
-  resolution: "@stellar/stellar-base@npm:14.0.0"
+"@stellar/stellar-base@npm:^14.0.1":
+  version: 14.0.1
+  resolution: "@stellar/stellar-base@npm:14.0.1"
   dependencies:
     "@noble/curves": "npm:^1.9.6"
     "@stellar/js-xdr": "npm:^3.1.2"
@@ -13864,23 +13864,23 @@ __metadata:
     bignumber.js: "npm:^9.3.1"
     buffer: "npm:^6.0.3"
     sha.js: "npm:^2.4.12"
-  checksum: 10c0/24bec66dc9ba90b12d828011cc44351876d281808f45648c8e30ba838a22952c008acce02a42fb13cb55c56bd92b6922e4809318f2d672c6a183c70ef68f62ee
+  checksum: 10c0/7552cbf9d302b7680c6b84511db2a8f372513d082db31f80e90634d3b8ba954203d1e28c276657b817d5351838d022ae772e836773758245488cd0abb7945417
   languageName: node
   linkType: hard
 
-"@stellar/stellar-sdk@npm:14.1.0":
-  version: 14.1.0
-  resolution: "@stellar/stellar-sdk@npm:14.1.0"
+"@stellar/stellar-sdk@npm:14.2.0":
+  version: 14.2.0
+  resolution: "@stellar/stellar-sdk@npm:14.2.0"
   dependencies:
-    "@stellar/stellar-base": "npm:^14.0.0"
-    axios: "npm:^1.8.4"
+    "@stellar/stellar-base": "npm:^14.0.1"
+    axios: "npm:^1.12.2"
     bignumber.js: "npm:^9.3.1"
     eventsource: "npm:^2.0.2"
     feaxios: "npm:^0.0.23"
     randombytes: "npm:^2.1.0"
     toml: "npm:^3.0.0"
     urijs: "npm:^1.19.1"
-  checksum: 10c0/cc8af8902d24a64891cb5f99b70da2fc87dbb20c5de110ccf6db7ae193bc102a218b10c8235828e576319c915dc283078cd60d5897b3afc11a1ebf1ecacc370f
+  checksum: 10c0/2ffb2e06e1587edd1b055305aa986e1a53665544cfb910bf6c40f85913bc9485b3f892f1c6a57fb3d7e34ed1c73697fa8801fa7a8318ba3ee98414a271ed4668
   languageName: node
   linkType: hard
 
@@ -18290,6 +18290,17 @@ __metadata:
     follow-redirects: "npm:^1.14.9"
     form-data: "npm:^4.0.0"
   checksum: 10c0/76d673d2a90629944b44d6f345f01e58e9174690f635115d5ffd4aca495d99bcd8f95c590d5ccb473513f5ebc1d1a6e8934580d0c57cdd0498c3a101313ef771
+  languageName: node
+  linkType: hard
+
+"axios@npm:^1.12.2":
+  version: 1.12.2
+  resolution: "axios@npm:1.12.2"
+  dependencies:
+    follow-redirects: "npm:^1.15.6"
+    form-data: "npm:^4.0.4"
+    proxy-from-env: "npm:^1.1.0"
+  checksum: 10c0/80b063e318cf05cd33a4d991cea0162f3573481946f9129efb7766f38fde4c061c34f41a93a9f9521f02b7c9565ccbc197c099b0186543ac84a24580017adfed
   languageName: node
   linkType: hard
 
@@ -24508,6 +24519,19 @@ __metadata:
     combined-stream: "npm:^1.0.8"
     mime-types: "npm:^2.1.12"
   checksum: 10c0/1ccc3ae064a080a799923f754d49fcebdd90515a8924f0f54de557540b50e7f1fe48ba5f2bd0435a5664aa2d49729107e6aaf2155a9abf52339474c5638b4485
+  languageName: node
+  linkType: hard
+
+"form-data@npm:^4.0.4":
+  version: 4.0.4
+  resolution: "form-data@npm:4.0.4"
+  dependencies:
+    asynckit: "npm:^0.4.0"
+    combined-stream: "npm:^1.0.8"
+    es-set-tostringtag: "npm:^2.1.0"
+    hasown: "npm:^2.0.2"
+    mime-types: "npm:^2.1.12"
+  checksum: 10c0/373525a9a034b9d57073e55eab79e501a714ffac02e7a9b01be1c820780652b16e4101819785e1e18f8d98f0aee866cc654d660a435c378e16a72f2e7cac9695
   languageName: node
   linkType: hard
 
