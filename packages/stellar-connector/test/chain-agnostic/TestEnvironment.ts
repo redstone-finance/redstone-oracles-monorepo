@@ -10,8 +10,8 @@ import { Keypair } from "@stellar/stellar-sdk";
 import { execSync } from "child_process";
 import {
   PriceAdapterStellarContractConnector,
+  StellarClient,
   StellarContractDeployer,
-  StellarRpcClient,
   StellarTxDeliveryMan,
 } from "../../src";
 
@@ -118,7 +118,7 @@ export function getTestEnvFunction() {
 export async function getTestEnv() {
   const { server, marsRover } = makeSandbox();
 
-  const client = new StellarRpcClient(server);
+  const client = new StellarClient(server);
   const keypair = Keypair.fromSecret(TRUSTED_UPDATER_SECRET);
   marsRover.fundAccount(keypair.xdrPublicKey().toXDR("base64"), 1_000_000_000_000);
   const txDeliveryMan = new StellarTxDeliveryMan(client, keypair);

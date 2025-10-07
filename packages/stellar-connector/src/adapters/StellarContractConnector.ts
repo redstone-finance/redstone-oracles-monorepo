@@ -1,11 +1,11 @@
 import { IContractConnector } from "@redstone-finance/sdk";
 import { Keypair } from "@stellar/stellar-sdk";
-import { StellarRpcClient } from "../stellar/StellarRpcClient";
+import { StellarClient } from "../stellar/StellarClient";
 import { StellarSigner } from "../stellar/StellarSigner";
 
 export class StellarContractConnector<Adapter> implements IContractConnector<Adapter> {
   constructor(
-    private readonly rpcClient: StellarRpcClient,
+    private readonly client: StellarClient,
     private readonly keypair?: Keypair
   ) {}
 
@@ -14,12 +14,12 @@ export class StellarContractConnector<Adapter> implements IContractConnector<Ada
   }
 
   async getBlockNumber() {
-    return await this.rpcClient.getBlockNumber();
+    return await this.client.getBlockNumber();
   }
 
   async waitForTransaction(txId: string) {
     try {
-      await this.rpcClient.waitForTx(txId);
+      await this.client.waitForTx(txId);
 
       return true;
     } catch {
@@ -28,7 +28,7 @@ export class StellarContractConnector<Adapter> implements IContractConnector<Ada
   }
 
   async getNormalizedBalance(address: string) {
-    const balance = await this.rpcClient.getAccountBalance(address);
+    const balance = await this.client.getAccountBalance(address);
 
     return balance * (10n ** 18n / 10n ** 7n);
   }
@@ -37,7 +37,7 @@ export class StellarContractConnector<Adapter> implements IContractConnector<Ada
     if (!this.keypair) {
       throw new Error("Keypair is missing");
     }
-    await this.rpcClient.transferXlm(new StellarSigner(this.keypair), toAddress, amountInXlm);
+    await this.client.transferXlm(new StellarSigner(this.keypair), toAddress, amountInXlm);
   }
 
   getSignerAddress() {

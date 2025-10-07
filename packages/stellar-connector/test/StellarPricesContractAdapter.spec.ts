@@ -4,8 +4,8 @@ import { makeServer, PRICE_ADAPTER, wasmFilePath } from "../scripts/utils";
 import {
   makeKeypair,
   PriceAdapterStellarContractAdapter,
+  StellarClient,
   StellarContractDeployer,
-  StellarRpcClient,
   StellarTxDeliveryMan,
 } from "../src";
 
@@ -15,7 +15,7 @@ const WRITE_TEST_TIMEOUT_MS = 20 * 1_000;
 
 describe("StellarPricesContractAdapter", () => {
   let adapter: PriceAdapterStellarContractAdapter;
-  let client: StellarRpcClient;
+  let client: StellarClient;
   let keypair: Keypair;
 
   let paramsOneFeed: ContractParamsProvider;
@@ -24,7 +24,7 @@ describe("StellarPricesContractAdapter", () => {
   beforeAll(async () => {
     const server = makeServer();
     keypair = makeKeypair();
-    client = new StellarRpcClient(server);
+    client = new StellarClient(server);
     const txDeliveryMan = new StellarTxDeliveryMan(client, keypair);
 
     const deployer = new StellarContractDeployer(client, txDeliveryMan);

@@ -4,9 +4,9 @@ import {
   makeKeypair,
   PriceAdapterStellarContractAdapter,
   PriceFeedStellarContractAdapter,
+  StellarClient,
   StellarClientBuilder,
   StellarContractDeployer,
-  StellarRpcClient,
   StellarTxDeliveryMan,
 } from "../src";
 import { FEEDS } from "./consts";
@@ -22,7 +22,7 @@ import {
 
 async function deployAdapter(
   deployer: StellarContractDeployer,
-  client: StellarRpcClient,
+  client: StellarClient,
   txDeliveryMan: StellarTxDeliveryMan
 ) {
   execSync(`make build`, { stdio: "inherit" });
@@ -43,7 +43,7 @@ async function deployAdapter(
 
 async function deployPriceFeed(
   deployer: StellarContractDeployer,
-  rpcClient: StellarRpcClient,
+  client: StellarClient,
   txDeliveryMan: StellarTxDeliveryMan,
   adapterAddress: string,
   feedId: string
@@ -55,7 +55,7 @@ async function deployPriceFeed(
 
   const priceFeedDeployResult = await deployer.deploy(wasmFilePath(PRICE_FEED));
   await new PriceFeedStellarContractAdapter(
-    rpcClient,
+    client,
     new Contract(priceFeedDeployResult.contractId),
     txDeliveryMan
   ).init(await txDeliveryMan.getPublicKey(), feedId);

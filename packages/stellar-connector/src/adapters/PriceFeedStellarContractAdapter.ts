@@ -13,7 +13,7 @@ export class PriceFeedStellarContractAdapter
   async getDescription() {
     const operation = this.contract.call("description");
 
-    return await this.rpcClient.simulateOperation(operation, await this.getPublicKey(), (sim) =>
+    return await this.client.simulateOperation(operation, await this.getPublicKey(), (sim) =>
       XdrUtils.parsePrimitiveFromSimulation(sim, String)
     );
   }
@@ -29,7 +29,7 @@ export class PriceFeedStellarContractAdapter
   async decimals() {
     const operation = this.contract.call("decimals");
 
-    return await this.rpcClient.simulateOperation(operation, await this.getPublicKey(), (sim) =>
+    return await this.client.simulateOperation(operation, await this.getPublicKey(), (sim) =>
       XdrUtils.parsePrimitiveFromSimulation(sim, Number)
     );
   }
@@ -37,7 +37,7 @@ export class PriceFeedStellarContractAdapter
   async feedId() {
     const operation = this.contract.call("feed_id");
 
-    return await this.rpcClient.simulateOperation(operation, await this.getPublicKey(), (sim) =>
+    return await this.client.simulateOperation(operation, await this.getPublicKey(), (sim) =>
       XdrUtils.parsePrimitiveFromSimulation(sim, String)
     );
   }
@@ -45,7 +45,7 @@ export class PriceFeedStellarContractAdapter
   async readPrice() {
     const operation = this.contract.call("read_price");
 
-    return await this.rpcClient.simulateOperation(
+    return await this.client.simulateOperation(
       operation,
       await this.getPublicKey(),
       XdrUtils.parseBigIntFromSimulation
@@ -55,7 +55,7 @@ export class PriceFeedStellarContractAdapter
   async readTimestamp() {
     const operation = this.contract.call("read_timestamp");
 
-    return await this.rpcClient.simulateOperation(operation, await this.getPublicKey(), (sim) =>
+    return await this.client.simulateOperation(operation, await this.getPublicKey(), (sim) =>
       XdrUtils.parsePrimitiveFromSimulation(sim, Number)
     );
   }
@@ -63,7 +63,7 @@ export class PriceFeedStellarContractAdapter
   async readPriceAndTimestamp() {
     const operation = this.contract.call("read_price_and_timestamp");
 
-    return await this.rpcClient.simulateOperation(
+    return await this.client.simulateOperation(
       operation,
       await this.getPublicKey(),
       XdrUtils.parseReadPriceAndTimestampSimulation
@@ -73,7 +73,7 @@ export class PriceFeedStellarContractAdapter
   async readPriceData() {
     const operation = this.contract.call("read_price_data");
 
-    return await this.rpcClient.simulateOperation(
+    return await this.client.simulateOperation(
       operation,
       await this.getPublicKey(),
       XdrUtils.parseReadSinglePriceDataSimulation

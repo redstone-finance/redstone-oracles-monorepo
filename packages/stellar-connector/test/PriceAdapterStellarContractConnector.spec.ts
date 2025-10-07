@@ -3,8 +3,8 @@ import {
   makeKeypair,
   PriceAdapterStellarContractAdapter,
   PriceAdapterStellarContractConnector,
+  StellarClient,
   StellarContractDeployer,
-  StellarRpcClient,
   StellarTxDeliveryMan,
 } from "../src";
 
@@ -16,7 +16,7 @@ describe("PriceAdapterStellarContractConnector", () => {
   beforeAll(async () => {
     const server = makeServer();
     const keypair = makeKeypair();
-    const client = new StellarRpcClient(server);
+    const client = new StellarClient(server);
     const txDeliveryMan = new StellarTxDeliveryMan(client, keypair);
 
     const deployer = new StellarContractDeployer(client, txDeliveryMan);
