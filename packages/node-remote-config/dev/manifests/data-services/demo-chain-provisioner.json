@@ -284,9 +284,6 @@
     "cNOTE": {
       "source": ["canto-evm-fetcher-cnote"]
     },
-    "LAB.m": {
-      "source": ["aperture-swap-manta-weth-500"]
-    },
     "sfrxETH": {
       "source": ["ethereum-evm-fetcher-frax"]
     },
