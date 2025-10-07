@@ -1,6 +1,7 @@
 import { loggerFactory, RedstoneCommon } from "@redstone-finance/utils";
-import { Operation, xdr } from "@stellar/stellar-sdk";
-import { StellarRpcClient } from "../stellar/StellarRpcClient";
+import { Operation, rpc, xdr } from "@stellar/stellar-sdk";
+import { getLedgerCloseDate } from "../utils";
+import { StellarClient } from "./StellarClient";
 import { Signer, StellarSigner } from "./StellarSigner";
 import {
   configFromPartial,
@@ -9,9 +10,13 @@ import {
 } from "./StellarTxDeliveryManConfig";
 
 export type { StellarTxDeliveryManConfig } from "./StellarTxDeliveryManConfig";
-
 type Tx = xdr.Operation<Operation.InvokeHostFunction>;
 type TxCreator = () => Tx | Promise<Tx>;
+
+const SLEEP_TIME_MS = 1_000;
+const RETRY_CONFIG: Omit<RedstoneCommon.RetryConfig, "fn" | "maxRetries"> = {
+  waitBetweenMs: SLEEP_TIME_MS,
+};
 
 export class StellarTxDeliveryMan {
   private readonly logger = loggerFactory("stellar-tx-delivery-man");
@@ -19,7 +24,7 @@ export class StellarTxDeliveryMan {
   private readonly signer: StellarSigner;
 
   constructor(
-    private readonly rpcClient: StellarRpcClient,
+    private readonly client: StellarClient,
     signer: Signer,
     config?: Partial<StellarTxDeliveryManConfig>
   ) {
@@ -35,7 +40,7 @@ export class StellarTxDeliveryMan {
     let i = 0;
 
     try {
-      const { hash, cost, fee } = await RedstoneCommon.retry({
+      const { hash, cost, baseFee } = await RedstoneCommon.retry({
         fn: async () => {
           void this.logNetworkStats(true);
 
@@ -48,8 +53,8 @@ export class StellarTxDeliveryMan {
         logger: this.logger.warn.bind(this.logger),
       })();
 
-      this.logger.info(
-        `Sending transaction successful, hash: ${hash}, cost: ${cost} stroops, fee: ${fee} stroops`
+      this.logger.log(
+        `Sending transaction successful, hash: ${hash}, cost: ${cost} stroops, baseFee: ${baseFee} stroops`
       );
       void this.logNetworkStats(true);
 
@@ -66,16 +71,29 @@ export class StellarTxDeliveryMan {
     const tx = await txCreator();
 
     const multiplier = this.config.gasMultiplier ** iteration;
-    const fee = BigInt(
+    const baseFee = BigInt(
       Math.round(Math.min(this.config.gasBase * multiplier, this.config.gasLimit))
     );
 
-    this.logger.info(`Sending transaction; Attempt #${iteration + 1} (fee: ${fee} stroops)`);
+    this.logger.info(
+      `Sending transaction; Attempt #${iteration + 1} (baseFee: ${baseFee} stroops)`
+    );
 
-    const submitResponse = await this.rpcClient.executeOperation(tx, this.signer, fee.toString());
+    const transaction = await this.client.prepareSignedTransaction(
+      tx,
+      this.signer,
+      baseFee.toString()
+    );
+    const response = await this.client.sendTransaction(transaction);
+    const hash = response.hash;
 
-    if (!["PENDING", "DUPLICATE"].includes(submitResponse.status)) {
-      const { status, errorResult } = submitResponse;
+    this.logger.info(
+      `Transaction ${hash} sent with status ${response.status}; ` +
+        `latestLedger: ${response.latestLedger} closed on ${getLedgerCloseDate(response.latestLedgerCloseTime).toISOString()}`
+    );
+
+    if (!["PENDING", "DUPLICATE"].includes(response.status)) {
+      const { status, errorResult } = response;
 
       if (status === "TRY_AGAIN_LATER") {
         await RedstoneCommon.sleep(WAIT_BETWEEN_MS);
@@ -92,18 +110,34 @@ export class StellarTxDeliveryMan {
       );
     }
 
-    this.logger.info(`Waiting for tx: ${submitResponse.hash}`);
-    const { cost } = await this.rpcClient.waitForTx(submitResponse.hash);
+    this.logger.info(`Waiting for tx: ${hash}`);
+    const { cost } = await this.waitForTx(hash, this.config.expectedTxDeliveryTimeInMS);
 
     return {
-      hash: submitResponse.hash,
+      hash,
       cost: cost.toBigInt(),
-      fee,
+      baseFee,
     };
   }
 
+  private async waitForTx(hash: string, timeout: number) {
+    return await RedstoneCommon.retry({
+      ...RETRY_CONFIG,
+      fn: async () => {
+        const response = await this.client.getTransaction(hash);
+        if (response.status === rpc.Api.GetTransactionStatus.SUCCESS) {
+          return response;
+        }
+
+        throw new Error(`Transaction ${hash} ${response.status}`);
+      },
+      fnName: `waitForTx ${hash}`,
+      maxRetries: timeout / SLEEP_TIME_MS,
+    })();
+  }
+
   private async logNetworkStats(force = false) {
-    const stats = await this.rpcClient.getNetworkStats(force);
+    const stats = await this.client.getNetworkStats(force);
     this.logger.info(
       `Network utilization: ${stats?.ledger_capacity_usage} (ledger: ${stats?.last_ledger})`,
       stats

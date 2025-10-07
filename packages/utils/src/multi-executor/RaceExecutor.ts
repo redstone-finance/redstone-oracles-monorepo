@@ -1,5 +1,5 @@
 import _ from "lodash";
-import { getS } from "../common";
+import { getS, stringify } from "../common";
 import { Executor } from "./Executor";
 import { FnBox } from "./FnBox";
 
@@ -26,7 +26,7 @@ export class RaceExecutor<R> extends Executor<R> {
       if (failed.length > 0) {
         this.logger.warn(
           `Race completed successfully, but ${failed.length} other promise${getS(failed.length)} failed:`,
-          _.map(failed, (item) => `Promise #${item.index} failed: ${item.reason}`)
+          _.map(failed, (item) => `Promise #${item.index} failed: ${stringify(item.reason)}`)
         );
       }
     });
