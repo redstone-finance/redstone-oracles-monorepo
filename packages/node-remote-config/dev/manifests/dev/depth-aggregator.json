@@ -842,9 +842,6 @@
     "cNOTE": {
       "source": ["canto-evm-fetcher-cnote"]
     },
-    "LAB.m": {
-      "source": ["aperture-swap-manta-weth-500"]
-    },
     "TON": {
       "source": [
         "bitget-usdt",
@@ -1247,26 +1244,6 @@
       }
     },
     "SolvBTC/BTC": {
-      "source": ["non-usd-based"],
-      "upper": {
-        "value": 1.01
-      }
-    },
-    "SolvBTC.BBN": {
-      "source": [
-        "pancake-swap-bnb-solvbtc-100",
-        "trader-joe-v2-avalanche-solvbtc",
-        "uniswap-v3-ethereum-solvbtc-100",
-        "pancake-swap-bnb-solvbtc-500",
-        "curve-ethereum-solvbtc",
-        "dodoex-bnb-solvbtc"
-      ],
-      "upper": {
-        "token": "BTC",
-        "multiplier": 1.01
-      }
-    },
-    "SolvBTC.BBN/BTC": {
       "source": ["non-usd-based"],
       "upper": {
         "value": 1.01

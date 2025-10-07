@@ -1348,11 +1348,6 @@
       "denomination": "USD",
       "rateFeed": true
     },
-    "LAB.m": {
-      "source": ["aperture-swap-manta-weth-500"],
-      "denomination": "USD",
-      "rateFeed": false
-    },
     "TON": {
       "source": [
         "binance-usdt",
@@ -1823,16 +1818,6 @@
       "rateFeed": false
     },
     "SolvBTC/BTC": {
-      "source": ["non-usd-based"],
-      "denomination": "BTC",
-      "rateFeed": false
-    },
-    "SolvBTC.BBN": {
-      "source": ["pancake-swap-bnb-solvbtc-500", "uniswap-v3-ethereum-solvbtc-100"],
-      "denomination": "USD",
-      "rateFeed": false
-    },
-    "SolvBTC.BBN/BTC": {
       "source": ["non-usd-based"],
       "denomination": "BTC",
       "rateFeed": false
