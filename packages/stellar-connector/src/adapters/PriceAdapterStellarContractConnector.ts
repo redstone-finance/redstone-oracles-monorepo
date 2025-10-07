@@ -1,6 +1,6 @@
 import { IPricesContractAdapter } from "@redstone-finance/sdk";
 import { Contract, Keypair } from "@stellar/stellar-sdk";
-import { StellarRpcClient } from "../stellar/StellarRpcClient";
+import { StellarClient } from "../stellar/StellarClient";
 import { StellarTxDeliveryMan, StellarTxDeliveryManConfig } from "../stellar/StellarTxDeliveryMan";
 import { PriceAdapterStellarContractAdapter } from "./PriceAdapterStellarContractAdapter";
 import { StellarContractConnector } from "./StellarContractConnector";
@@ -9,19 +9,19 @@ export class PriceAdapterStellarContractConnector extends StellarContractConnect
   private readonly adapter: PriceAdapterStellarContractAdapter;
 
   constructor(
-    rpcClient: StellarRpcClient,
+    client: StellarClient,
     contractAddress: string,
     keypair?: Keypair,
     txDeliveryManConfig?: Partial<StellarTxDeliveryManConfig>
   ) {
-    super(rpcClient, keypair);
+    super(client, keypair);
 
     const txDeliveryMan = keypair
-      ? new StellarTxDeliveryMan(rpcClient, keypair, txDeliveryManConfig)
+      ? new StellarTxDeliveryMan(client, keypair, txDeliveryManConfig)
       : undefined;
 
     this.adapter = new PriceAdapterStellarContractAdapter(
-      rpcClient,
+      client,
       new Contract(contractAddress),
       txDeliveryMan
     );
