@@ -1363,9 +1363,6 @@
     "cNOTE": {
       "source": ["canto-evm-fetcher"]
     },
-    "LAB.m": {
-      "source": ["aperture-swap-weth-500"]
-    },
     "TON": {
       "source": [
         "kucoin-usdt",
