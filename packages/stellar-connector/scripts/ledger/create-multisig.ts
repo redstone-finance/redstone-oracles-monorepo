@@ -1,5 +1,5 @@
 import { BASE_FEE, Keypair, Operation, rpc, TransactionBuilder } from "@stellar/stellar-sdk";
-import { makeKeypair, StellarRpcClient } from "../../src";
+import { makeKeypair, StellarClient } from "../../src";
 import { StellarSigner } from "../../src/stellar/StellarSigner";
 import { makeServer } from "../utils";
 import { INITIAL_ACCOUNT_AMOUNT_XLM, MULTISIG_SIGNERS, MULTISIG_TRESHOLD } from "./consts";
@@ -10,7 +10,7 @@ async function createMultisigAccount(
   signerPublicKeys: string[],
   threshold: number
 ): Promise<string> {
-  const client = new StellarRpcClient(server);
+  const client = new StellarClient(server);
 
   const targetAccount = await server.getAccount(targetAccountKeypair.publicKey());
 
@@ -51,7 +51,7 @@ async function main() {
   const payer = makeKeypair();
   const sourceKeypair = Keypair.random();
 
-  const client = new StellarRpcClient(server);
+  const client = new StellarClient(server);
 
   // we need to fund account before we can set settings
   console.log(

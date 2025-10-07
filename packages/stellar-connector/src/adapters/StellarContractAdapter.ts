@@ -1,5 +1,5 @@
 import { BASE_FEE, Contract, xdr } from "@stellar/stellar-sdk";
-import { StellarRpcClient } from "../stellar/StellarRpcClient";
+import { StellarClient } from "../stellar/StellarClient";
 import { StellarTxDeliveryMan } from "../stellar/StellarTxDeliveryMan";
 import * as XdrUtils from "../XdrUtils";
 
@@ -7,7 +7,7 @@ const TIMEOUT_SEC = 3600;
 
 export class StellarContractAdapter {
   constructor(
-    protected readonly rpcClient: StellarRpcClient,
+    protected readonly client: StellarClient,
     protected readonly contract: Contract,
     protected readonly txDeliveryMan?: StellarTxDeliveryMan
   ) {}
@@ -35,7 +35,7 @@ export class StellarContractAdapter {
   async changeOwnerTx(sender: string, newOwner: string, timeout = TIMEOUT_SEC, fee = BASE_FEE) {
     const ownerAddr = XdrUtils.addressToScVal(newOwner);
 
-    return await this.rpcClient.transactionFromOperation(
+    return await this.client.buildTransaction(
       this.contract.call("change_owner", ownerAddr),
       sender,
       fee,
@@ -46,7 +46,7 @@ export class StellarContractAdapter {
   async upgradeTx(sender: string, codeHash: Buffer, timeout = TIMEOUT_SEC, fee = BASE_FEE) {
     const codeHashXdr = XdrUtils.bytesToScVal(codeHash);
 
-    return await this.rpcClient.transactionFromOperation(
+    return await this.client.buildTransaction(
       this.contract.call("upgrade", codeHashXdr),
       sender,
       fee,
