@@ -36,6 +36,13 @@
     },
     "weETH_FUNDAMENTAL": {
       "priceFeedAddress": "0xeC7C6AdcC867E1C22713D14797339750E36538E4"
+    },
+    "EUR": {
+      "priceFeedAddress": "0x22d47686b3AEC9068768f84EFD8Ce2637a347B0A",
+      "updateTriggersOverrides": {
+        "deviationPercentage": 0.15,
+        "timeSinceLastUpdateInMilliseconds": 86400000
+      }
     }
   }
 }
