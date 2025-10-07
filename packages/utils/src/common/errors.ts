@@ -2,6 +2,7 @@ import axios, { AxiosError } from "axios";
 import { LogLevels } from "consola";
 import { ethers } from "ethers";
 import { getLogLevel, loggerFactory, sanitizeLogMessage } from "../logger";
+import { stringify } from "./misc";
 
 export class UnrecoverableError extends Error {
   unrecoverable?: boolean = true;
@@ -149,10 +150,10 @@ export function stringifyError(e: unknown, noStack = false): string {
     } else if (typeof error.toJSON === "function") {
       return JSON.stringify(error.toJSON());
     } else {
-      return `Error couldn't be handled by the stringifyError function: ${String(e)}`;
+      return `Error couldn't be handled by the stringifyError function: ${stringify(e)}`;
     }
   } catch (handlingError) {
-    return `StringifyError thrown error: ${String(handlingError)} when stringifying error :${String(e)}`;
+    return `StringifyError thrown error: ${stringify(handlingError)} when stringifying error :${stringify(e)}`;
   }
 }
 

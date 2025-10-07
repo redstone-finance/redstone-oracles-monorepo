@@ -9,7 +9,7 @@ import {
 } from "../src";
 import { loadContractId, loadContractName, readNetwork, readUrl, wasmFilePath } from "./utils";
 
-async function sampleUpgrade(contractId = loadContractId()) {
+export async function getSampleUpgradeTx(contractId: string) {
   const contract = new Contract(contractId);
   const keypair = makeKeypair();
 
@@ -26,6 +26,12 @@ async function sampleUpgrade(contractId = loadContractId()) {
 
   const contractName = loadContractName();
   const wasmHash = await deployer.upload(wasmFilePath(contractName));
+  return { adapter, wasmHash };
+}
+
+async function sampleUpgrade(contractId = loadContractId()) {
+  const contractName = loadContractName();
+  const { adapter, wasmHash } = await getSampleUpgradeTx(contractId);
 
   console.log(`upgrade`, await adapter.upgrade(wasmHash));
 

@@ -1,11 +1,11 @@
 import { Address, Operation } from "@stellar/stellar-sdk";
 import { readFileSync } from "fs";
-import { StellarRpcClient } from "./StellarRpcClient";
+import { StellarClient } from "./StellarClient";
 import { StellarTxDeliveryMan } from "./StellarTxDeliveryMan";
 
 export class StellarContractDeployer {
   constructor(
-    private readonly rpcClient: StellarRpcClient,
+    private readonly client: StellarClient,
     private readonly txDeliveryMan: StellarTxDeliveryMan
   ) {}
 
@@ -26,9 +26,7 @@ export class StellarContractDeployer {
       return Operation.uploadContractWasm({ wasm: wasmBuffer });
     });
 
-    const res = await this.rpcClient.waitForTx(hash);
-
-    return res.returnValue!.bytes();
+    return (await this.client.getTransaction(hash, (returnValue) => returnValue.bytes())).value!;
   }
 
   async createContract(wasmHash: Buffer) {
@@ -38,8 +36,6 @@ export class StellarContractDeployer {
       return Operation.createCustomContract({ wasmHash, address });
     });
 
-    const res = await this.rpcClient.waitForTx(hash);
-
-    return Address.fromScVal(res.returnValue!);
+    return (await this.client.getTransaction(hash, Address.fromScVal)).value!;
   }
 }

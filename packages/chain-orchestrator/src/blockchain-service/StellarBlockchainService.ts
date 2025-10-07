@@ -1,10 +1,10 @@
-import { StellarContractConnector, StellarRpcClient } from "@redstone-finance/stellar-connector";
+import { StellarClient, StellarContractConnector } from "@redstone-finance/stellar-connector";
 import { Keypair, rpc } from "@stellar/stellar-sdk";
 import { NonEvmBlockchainService } from "./NonEvmBlockchainService";
 
 export class StellarBlockchainService extends NonEvmBlockchainService {
   constructor(
-    private client: StellarRpcClient,
+    private client: StellarClient,
     keypair?: Keypair
   ) {
     super(new StellarContractConnector(client, keypair));

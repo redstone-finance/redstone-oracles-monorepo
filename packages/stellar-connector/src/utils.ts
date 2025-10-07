@@ -21,3 +21,7 @@ export function makeKeypair(privateKey = readPrivateKey()) {
 function readPrivateKey() {
   return RedstoneCommon.getFromEnv("PRIVATE_KEY", z.string());
 }
+
+export function getLedgerCloseDate(ledgerCloseTime: number) {
+  return new Date(ledgerCloseTime * RedstoneCommon.secsToMs(1));
+}
