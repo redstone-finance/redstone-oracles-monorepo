@@ -1,6 +1,6 @@
 import { FetchRpcUrlsFromSsmResult, getLocalChainConfigs } from "@redstone-finance/chain-configs";
-import { isEvmNetworkId } from "@redstone-finance/utils";
-import { readFileSync } from "fs";
+import { isEvmNetworkId, loggerFactory } from "@redstone-finance/utils";
+import { existsSync, readFileSync } from "fs";
 
 const ChainConfigs = getLocalChainConfigs();
 const _chainNames = Object.keys(ChainConfigs);
@@ -29,15 +29,24 @@ type NetworkUserConfig = {
   accounts: string[];
 };
 
+const logger = loggerFactory("hardhat-network-configs");
+
 type NetworksUserConfig = { [key: ChainName]: NetworkUserConfig };
 
 const maybeReadPrivateRpcUrlsFromFile = (): FetchRpcUrlsFromSsmResult => {
+  if (!existsSync("private-rpc-urls.json")) {
+    return {};
+  }
   try {
     const rpcUrls = JSON.parse(
       readFileSync("private-rpc-urls.json", "utf8")
     ) as FetchRpcUrlsFromSsmResult;
     return rpcUrls;
-  } catch (_e) {
+  } catch (e) {
+    logger.warn(
+      "Failed to read or parse `private-rpc-urls.json` file. Public RPC URLs will be used",
+      e
+    );
     return {};
   }
 };
