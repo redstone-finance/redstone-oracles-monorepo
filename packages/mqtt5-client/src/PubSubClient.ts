@@ -1,5 +1,5 @@
+import { ContentTypes } from "@redstone-finance/internal-utils";
 import type { SubscribeCallback } from "./Mqtt5Client";
-import { ContentTypes } from "./SerializerDeserializer";
 
 export type PubSubPayload = {
   /** valid topic @see ./topic.ts */

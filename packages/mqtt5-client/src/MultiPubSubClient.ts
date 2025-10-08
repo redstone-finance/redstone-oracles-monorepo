@@ -1,9 +1,9 @@
+import { ContentTypes } from "@redstone-finance/internal-utils";
 import { loggerFactory } from "@redstone-finance/utils";
 import { Mutex } from "async-mutex";
 import _ from "lodash";
 import { SubscribeCallback } from "./Mqtt5Client";
 import { PubSubClient, PubSubPayload } from "./PubSubClient";
-import { ContentTypes } from "./SerializerDeserializer";
 
 /** AWS enforce limit per connection  */
 const MAX_REQ_PER_SECOND_PER_CONNECTION = 100;
