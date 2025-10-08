@@ -16,6 +16,7 @@ export * from "./manifests";
 export * from "./monorepo-fetcher";
 export * from "./outlier-detection";
 export * from "./resolve-manifest-with-expiration-updates";
+export * from "./SerializerDeserializer";
 export * from "./signer-addresses-fetcher";
 export * from "./Terminator";
 export * from "./timestamp-utils";
