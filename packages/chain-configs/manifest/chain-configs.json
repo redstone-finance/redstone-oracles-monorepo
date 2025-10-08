@@ -1040,7 +1040,7 @@
       "networkId": "movement/250",
       "currencySymbol": "MOVE",
       "publicRpcUrls": [
-        "https://aptos.testnet.bardock.movementlabs.xyz/v1",
+        "https://testnet.movementnetwork.xyz/v1",
         "https://rpc.sentio.xyz/movement-testnet/v1"
       ],
       "avgBlockTimeMs": 1000,
