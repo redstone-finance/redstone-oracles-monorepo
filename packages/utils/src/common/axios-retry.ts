@@ -1,49 +1,68 @@
 import axios, { Axios, AxiosResponse, RawAxiosRequestHeaders } from "axios";
 import { retry, RetryConfig } from "./retry";
 
-export type AxiosGetWithRetriesConfig = {
+export type AxiosWithRetriesConfig = {
   timeout?: number;
   headers?: RawAxiosRequestHeaders;
   params?: unknown;
 } & Omit<RetryConfig, "fn">;
 
-export type AxiosPostWithRetriesConfig = {
-  timeout?: number;
-  headers?: RawAxiosRequestHeaders;
-  params?: unknown;
-} & Omit<RetryConfig, "fn">;
+const AXIOS_FN_BY_METHOD = {
+  GET: "axios.get",
+  POST: "axios.post",
+  PUT: "axios.put",
+};
 
-export async function axiosGetWithRetries<T>(
+const METHODS_WITHOUT_BODY = ["GET"];
+
+export type AxiosMethod = keyof typeof AXIOS_FN_BY_METHOD;
+
+async function axiosRequestWithRetries<T>(
+  method: AxiosMethod,
   url: string,
-  config: AxiosGetWithRetriesConfig,
-  axiosInstance: Axios = axios
+  config: AxiosWithRetriesConfig,
+  axiosInstance: Axios,
+  data?: unknown
 ): Promise<AxiosResponse<T>> {
+  const hasBody = !METHODS_WITHOUT_BODY.includes(method);
+
   return await retry({
-    fnName: config.fnName ?? "axios.get",
+    fnName: config.fnName ?? AXIOS_FN_BY_METHOD[method],
     fn: async () =>
-      await axiosInstance.get<T>(url, {
+      await axiosInstance.request<T>({
+        url,
+        method,
         timeout: config.timeout,
         headers: config.headers,
         params: config.params,
+        ...(hasBody ? { data } : {}),
       }),
     ...config,
   })();
 }
 
+export async function axiosGetWithRetries<T>(
+  url: string,
+  config: AxiosWithRetriesConfig,
+  axiosInstance: Axios = axios
+): Promise<AxiosResponse<T>> {
+  return await axiosRequestWithRetries<T>("GET", url, config, axiosInstance);
+}
+
 export async function axiosPostWithRetries<T>(
   url: string,
   data: unknown,
-  config: AxiosPostWithRetriesConfig,
+  config: AxiosWithRetriesConfig,
   axiosInstance: Axios = axios
 ): Promise<AxiosResponse<T>> {
-  return await retry({
-    fnName: config.fnName ?? "axios.post",
-    fn: async () =>
-      await axiosInstance.post<T>(url, data, {
-        timeout: config.timeout,
-        headers: config.headers,
-        params: config.params,
-      }),
-    ...config,
-  })();
+  return await axiosRequestWithRetries<T>("POST", url, config, axiosInstance, data);
+}
+
+export async function axiosPutWithRetries<T>(
+  url: string,
+  data: unknown,
+  config: AxiosWithRetriesConfig,
+  axiosInstance: Axios = axios
+): Promise<AxiosResponse<T>> {
+  return await axiosRequestWithRetries<T>("PUT", url, config, axiosInstance, data);
 }
