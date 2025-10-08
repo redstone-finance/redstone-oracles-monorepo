@@ -13,7 +13,11 @@ const DEFAULT_ENABLE_JSON_LOGS = true;
 const DEFAULT_LOG_LEVEL = LogLevels.info;
 const MAX_DEPTH = 5;
 
-const WHITELISTED_HOSTNAMES = new Set(["github.com"]);
+const WHITELISTED_HOSTNAMES = new Set([
+  "github.com",
+  "raw.githubusercontent.com",
+  "api.github.com",
+]);
 
 export type RedstoneLogger = ConsolaInstance | Console;
 
