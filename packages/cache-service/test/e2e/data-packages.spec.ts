@@ -6,8 +6,15 @@
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 import { INestApplication } from "@nestjs/common";
 import { Test, TestingModule } from "@nestjs/testing";
+import {
+  ContentTypes,
+  SerializerDeserializerRegistry,
+  getContentEncoding,
+  getSerializerDeserializer,
+} from "@redstone-finance/internal-utils";
 import { DataPoint, SignedDataPackagePlainObj, consts } from "@redstone-finance/protocol";
 import { Wallet } from "ethers-v6";
+import { json, urlencoded } from "express";
 import request from "supertest";
 import { AppModule } from "../../src/app.module";
 import { DataPackage, DataPackageDocument } from "../../src/data-packages/data-packages.model";
@@ -36,6 +43,39 @@ jest.mock("@redstone-finance/sdk", () => ({
 const ALL_FEEDS_KEY = consts.ALL_FEEDS_KEY;
 const dataPackagesIds = [ALL_FEEDS_KEY, "ETH", "AAVE", "BTC"];
 
+const DO_NOT_COMPRESS_TYPE = "no-compression";
+const compressionTypes = [...Object.keys(SerializerDeserializerRegistry), DO_NOT_COMPRESS_TYPE];
+
+const shouldCompress = (compressionType: string): compressionType is ContentTypes => {
+  return compressionType !== DO_NOT_COMPRESS_TYPE;
+};
+
+const postBulk = async (
+  compressionType: string,
+  version: string,
+  httpServer: unknown,
+  body: Record<string, unknown>,
+  expectedStatus = 201
+) => {
+  const endpoint = `${version}/data-packages/bulk`;
+  if (shouldCompress(compressionType)) {
+    const payload = await getSerializerDeserializer(compressionType).serializeAsync(body);
+
+    const req = request(httpServer)
+      .post(endpoint)
+      .set("Content-Type", "application/json")
+      .set("Content-Encoding", getContentEncoding(compressionType));
+    req.write(payload);
+
+    const res = await req;
+
+    expect(res.statusCode).toBe(expectedStatus);
+    return res;
+  } else {
+    return await request(httpServer).post(endpoint).send(body).expect(expectedStatus);
+  }
+};
+
 const getExpectedDataPackagesInDB = (dataPackages: SignedDataPackagePlainObj[]) =>
   dataPackages.map((dataPackage) => ({
     ...dataPackage,
@@ -45,6 +85,21 @@ const getExpectedDataPackagesInDB = (dataPackages: SignedDataPackagePlainObj[]) 
     dataFeedId: ALL_FEEDS_KEY,
     dataPackageId: ALL_FEEDS_KEY,
   }));
+
+const checkDataPackagesInDBCleaned = async (dataPackages: SignedDataPackagePlainObj[]) => {
+  const dataPackagesInDB = await DataPackage.find().sort({
+    dataPackageId: 1,
+  });
+  const dataPackagesInDBCleaned = dataPackagesInDB.map((dp) => {
+    const { _id, __v, ...rest } = dp.toJSON() as any;
+
+    rest.dataFeedId = rest.dataPackageId;
+    return rest;
+  });
+  expect(dataPackagesInDBCleaned).toEqual(
+    expect.arrayContaining(getExpectedDataPackagesInDB(dataPackages))
+  );
+};
 
 const mockSigners = [MOCK_SIGNER_ADDRESS, "0x2", "0x3", "0x4", "0x5"];
 
@@ -61,6 +116,8 @@ describe("Data packages (e2e)", () => {
 
     mockDataPackages = getMockDataPackages();
     app = moduleFixture.createNestApplication();
+    app.use(json({ limit: "50mb" }));
+    app.use(urlencoded({ extended: true, limit: "50mb" }));
     await app.init();
     httpServer = app.getHttpServer();
 
@@ -103,61 +160,66 @@ describe("Data packages (e2e)", () => {
 
   ["", "/v2"].forEach((version) => {
     describe(`API ${version}`, () => {
-      it("/data-packages/bulk (POST) - should accept data packages where prices are strings", async () => {
-        const dataPackagesToSent = [
-          produceMockDataPackage(
-            [
-              new DataPoint("BTC", Buffer.from("3000", "utf-8")),
-              new DataPoint("ETH", Buffer.from("1000", "utf-8")),
-            ],
-            "___ALL_FEEDS___"
-          ),
-        ];
-        const requestSignature = signByMockSigner(dataPackagesToSent);
+      compressionTypes.forEach((compressionType) => {
+        it(`/data-packages/bulk (POST) - (compression ${compressionType}) should accept data packages where prices are strings`, async () => {
+          const dataPackagesToSent = [
+            produceMockDataPackage(
+              [
+                new DataPoint("BTC", Buffer.from("3000", "utf-8")),
+                new DataPoint("ETH", Buffer.from("1000", "utf-8")),
+              ],
+              "___ALL_FEEDS___"
+            ),
+          ];
+          const requestSignature = signByMockSigner(dataPackagesToSent);
 
-        await request(httpServer)
-          .post(`${version}/data-packages/bulk`)
-          .send({ requestSignature, dataPackages: dataPackagesToSent })
-          .expect(201);
+          await postBulk(
+            compressionType,
+            version,
+            httpServer,
+            { requestSignature, dataPackages: dataPackagesToSent },
+            201
+          );
 
-        const dataPackagesInDB = await DataPackage.find().sort({
-          dataPackageId: 1,
+          await checkDataPackagesInDBCleaned(mockDataPackages);
         });
-        const dataPackagesInDBCleaned = dataPackagesInDB.map((dp) => {
-          const { _id, __v, ...rest } = dp.toJSON() as any;
-          // temporary for backward compatibility
 
-          rest.dataFeedId = rest.dataPackageId;
-          return rest;
+        it(`/data-packages/bulk (POST) - (compression ${compressionType}) should save data to DB`, async () => {
+          const requestSignature = signByMockSigner(mockDataPackages);
+
+          await postBulk(
+            compressionType,
+            version,
+            httpServer,
+            {
+              requestSignature,
+              dataPackages: mockDataPackages,
+            },
+            201
+          );
+
+          await checkDataPackagesInDBCleaned(mockDataPackages);
         });
-        expect(dataPackagesInDBCleaned).toEqual(
-          expect.arrayContaining(getExpectedDataPackagesInDB(dataPackagesToSent))
-        );
-      });
 
-      it("/data-packages/bulk (POST) - should save data to DB", async () => {
-        const requestSignature = signByMockSigner(mockDataPackages);
-        await request(httpServer)
-          .post(`${version}/data-packages/bulk`)
-          .send({
-            requestSignature,
-            dataPackages: mockDataPackages,
-          })
-          .expect(201);
+        it(`/data-packages/bulk (POST) - (compression ${compressionType}) should fail for invalid signature`, async () => {
+          const initialDpCount = await DataPackage.countDocuments();
+          const manipulatedDataPackages = getMockDataPackages();
+          const requestSignature = signByMockSigner(manipulatedDataPackages);
+          manipulatedDataPackages[0].dataPoints[0].value = 43;
 
-        const dataPackagesInDB = await DataPackage.find().sort({
-          dataPackageId: 1,
+          await postBulk(
+            compressionType,
+            version,
+            httpServer,
+            {
+              requestSignature,
+              dataPackages: manipulatedDataPackages,
+            },
+            500
+          );
+
+          expect(await DataPackage.countDocuments()).toEqual(initialDpCount);
         });
-        const dataPackagesInDBCleaned = dataPackagesInDB.map((dp) => {
-          const { _id, __v, ...rest } = dp.toJSON() as any;
-          // temporary for backward compatibility
-
-          rest.dataFeedId = rest.dataPackageId;
-          return rest;
-        });
-        expect(dataPackagesInDBCleaned).toEqual(
-          expect.arrayContaining(getExpectedDataPackagesInDB(mockDataPackages))
-        );
       });
 
       it("/data-packages/latest (GET) return same result as /data-packages/latest (GET), when same number of dataPackages", async () => {
@@ -268,22 +330,6 @@ describe("Data packages (e2e)", () => {
           )
         );
         expect(uniqueSignersFromETH.size).toBe(5);
-      });
-
-      it("/data-packages/bulk (POST) - should fail for invalid signature", async () => {
-        const initialDpCount = await DataPackage.countDocuments();
-        const manipulatedDataPackages = getMockDataPackages();
-        const requestSignature = signByMockSigner(manipulatedDataPackages);
-        manipulatedDataPackages[0].dataPoints[0].value = 43;
-        await request(httpServer)
-          .post(`${version}/data-packages/bulk`)
-          .send({
-            requestSignature,
-            dataPackages: manipulatedDataPackages,
-          })
-          .expect(500);
-
-        expect(await DataPackage.countDocuments()).toEqual(initialDpCount);
       });
 
       it("/data-packages/latest/mock-data-service-1 (GET)", async () => {
@@ -558,13 +604,16 @@ describe("Data packages (e2e)", () => {
         EXTERNAL_SIGNER_WALLET.privateKey
       );
 
-      await request(httpServer)
-        .post(`/v2/data-packages/bulk`)
-        .send({
+      await postBulk(
+        DO_NOT_COMPRESS_TYPE,
+        "/v2",
+        httpServer,
+        {
           requestSignature,
           dataPackages: externalSignerPackage,
-        })
-        .expect(201);
+        },
+        201
+      );
 
       const savedPackages = await DataPackage.find({
         signerAddress: EXTERNAL_SIGNER,
