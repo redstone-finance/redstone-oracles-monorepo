@@ -20,16 +20,6 @@
       },
       "denomination": "USD",
       "rateFeed": false
-    },
-    "BTC_PERP": {
-      "source": ["ws-perp-binance-usdt"],
-      "denomination": "USD",
-      "rateFeed": false
-    },
-    "ETH_PERP": {
-      "source": ["ws-perp-binance-usdt"],
-      "denomination": "USD",
-      "rateFeed": false
     }
   }
 }
