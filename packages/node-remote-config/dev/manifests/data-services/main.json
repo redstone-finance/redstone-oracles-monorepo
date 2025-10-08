@@ -7356,24 +7356,34 @@
       "denomination": "USD",
       "rateFeed": true
     },
-    "PT_sUSDe_25SEP2025": {
+    "PT_sUSDe_27NOV2025_ETH": {
       "source": ["evm-fetcher-pendle"],
       "denomination": "sUSDe",
       "rateFeed": true
     },
-    "PT_sUSDe_27NOV2025": {
+    "PT_sUSDe_27NOV2025_ETH-TWAP": {
+      "source": ["twap-local-redstone-primary-prod"],
+      "denomination": "sUSDe",
+      "rateFeed": true
+    },
+    "PT_sUSDe_15JAN2026_PLSM": {
       "source": ["evm-fetcher-pendle"],
       "denomination": "sUSDe",
       "rateFeed": true
     },
-    "PT_sUSDe_25SEP2025-TWAP-1440": {
+    "PT_sUSDe_15JAN2026_PLSM-TWAP": {
       "source": ["twap-local-redstone-primary-prod"],
       "denomination": "sUSDe",
       "rateFeed": true
     },
-    "PT_sUSDe_27NOV2025-TWAP-1440": {
+    "PT_kHYPE_13NOV2025_HL": {
+      "source": ["evm-fetcher-pendle"],
+      "denomination": "kHYPE",
+      "rateFeed": true
+    },
+    "PT_kHYPE_13NOV2025_HL-TWAP": {
       "source": ["twap-local-redstone-primary-prod"],
-      "denomination": "sUSDe",
+      "denomination": "kHYPE",
       "rateFeed": true
     },
     "USDT0": {
