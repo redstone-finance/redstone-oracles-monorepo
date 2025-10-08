@@ -6,7 +6,7 @@ import { getSSMParamWithEnvFallback } from "./aws/params";
 
 export type GenericMonitoringManifest<T = unknown> = {
   defaultConfig: T;
-  temporaryConfigUpdates?: { expirationTimestamp?: string };
+  temporaryConfigUpdates?: { expirationTimestamp?: string } & Partial<T>;
 };
 
 interface HostnameData {
