@@ -32,7 +32,7 @@
     "global:rollup": "cd $INIT_CWD && rollup",
     "global:ts-node": "cd $INIT_CWD && ts-node",
     "global:tsc": "cd $INIT_CWD && tsc",
-    "global:lambda-build": "cd $INIT_CWD && tsc -p tsconfig.build.json && esbuild $INDEX_PATH --bundle --minify --platform=node --target=es2022 --outfile=lambda-dist/index.js && cp -R ../../node-remote-config lambda-dist/node-remote-config",
+    "global:lambda-build": "cd $INIT_CWD && tsc -p tsconfig.build.json && esbuild $INDEX_PATH --bundle --minify --platform=node --target=es2022 --outfile=lambda-dist/index.js ${ESBUILD_EXTRA:-} && cp -R ../../node-remote-config lambda-dist/node-remote-config",
     "global:lambda-build-dev": "cd $INIT_CWD && tsc -p tsconfig.json && cp -R ../../node-remote-config dist/node-remote-config",
     "global:lambda-clean": "cd $INIT_CWD && yarn global:ts-clean && rm -rf lambda-dist",
     "global:lambda-zip": "cd $INIT_CWD && cd lambda-dist && zip -r build.zip *",
