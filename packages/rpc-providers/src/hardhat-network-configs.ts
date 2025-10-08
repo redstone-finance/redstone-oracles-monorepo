@@ -1,5 +1,6 @@
-import { getLocalChainConfigs } from "@redstone-finance/chain-configs";
+import { FetchRpcUrlsFromSsmResult, getLocalChainConfigs } from "@redstone-finance/chain-configs";
 import { isEvmNetworkId } from "@redstone-finance/utils";
+import { readFileSync } from "fs";
 
 const ChainConfigs = getLocalChainConfigs();
 const _chainNames = Object.keys(ChainConfigs);
@@ -30,11 +31,20 @@ type NetworkUserConfig = {
 
 type NetworksUserConfig = { [key: ChainName]: NetworkUserConfig };
 
-export const hardhatNetworksConfig = (
-  accounts: string[] = [],
-  pickRandom: boolean = false
-): NetworksUserConfig => {
+const maybeReadPrivateRpcUrlsFromFile = (): FetchRpcUrlsFromSsmResult => {
+  try {
+    const rpcUrls = JSON.parse(
+      readFileSync("private-rpc-urls.json", "utf8")
+    ) as FetchRpcUrlsFromSsmResult;
+    return rpcUrls;
+  } catch (_e) {
+    return {};
+  }
+};
+
+export const hardhatNetworksConfig = (accounts: string[] = []): NetworksUserConfig => {
   const networks: NetworksUserConfig = {};
+  const privateRpcUrlsFile = maybeReadPrivateRpcUrlsFromFile();
 
   for (const [chainName, config] of Object.entries(ChainConfigs)) {
     if (
@@ -45,10 +55,8 @@ export const hardhatNetworksConfig = (
       continue;
     }
 
-    const rpcUrl =
-      config.publicRpcUrls[
-        (pickRandom ? 1 : 0) * Math.floor(Math.random() * config.publicRpcUrls.length)
-      ];
+    const privateRpcUrls = privateRpcUrlsFile[config.networkId];
+    const rpcUrl = privateRpcUrls?.length ? privateRpcUrls[0] : config.publicRpcUrls[0];
 
     networks[CHAIN_NAME_TO_HARDHAT_NETWORK_NAME[chainName] ?? chainName] = {
       name: config.name,
