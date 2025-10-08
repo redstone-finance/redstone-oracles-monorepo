@@ -28,7 +28,7 @@ export type ConfigData = {
 };
 
 export interface IRemoteConfigLoader {
-  load(): Promise<ConfigData>;
+  load(updateHash: string): Promise<ConfigData>;
   currentUpdateHash(): Promise<string>;
 }
 
@@ -79,7 +79,7 @@ export class ConfigUpdater extends EventEmitter {
 
         if (newUpdateHash !== this.currentUpdateHash) {
           logger.info(`New update config hash ${newUpdateHash}`);
-          const { configuration, signatures } = await this.configLoader.load();
+          const { configuration, signatures } = await this.configLoader.load(newUpdateHash);
           const configHash = ConfigUpdater.calculateConfigHash(configuration);
           if (this.signatures.required) {
             const verificationError = this.verifySignatures(configHash, signatures);
