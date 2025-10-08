@@ -8,7 +8,7 @@ type GitHubMetadata = {
 };
 
 export class GitHubConfigLoader implements RedstoneRemoteConfig.IRemoteConfigLoader {
-  private readonly manifestUrl: string;
+  private readonly manifestUrl: (updateHash: string) => string;
   private readonly metadataUrl: string;
 
   constructor(
@@ -27,14 +27,13 @@ export class GitHubConfigLoader implements RedstoneRemoteConfig.IRemoteConfigLoa
     this.metadataUrl = metadataUrl;
   }
 
-  async load(): Promise<RedstoneRemoteConfig.ConfigData> {
-    logger.debug("Fetching", this.manifestUrl);
-    const response = await fetch(this.manifestUrl);
+  async load(updateHash: string): Promise<RedstoneRemoteConfig.ConfigData> {
+    logger.debug("Fetching", { updateHash });
+    const response = await fetch(this.manifestUrl(updateHash));
     if (!response.ok) {
       throw new Error(`Fetching from github failed. Status: ${response.status}`);
     }
     logger.debug("Successfully loaded relayer manifest");
-    // const json = await response.json();
 
     return {
       configuration: [
@@ -67,7 +66,8 @@ export class GitHubConfigLoader implements RedstoneRemoteConfig.IRemoteConfigLoa
     manifestPath: string
   ) {
     return {
-      manifestUrl: `https://raw.githubusercontent.com/${repository}/${branch}/${repositoryPath}/${manifestPath}`,
+      manifestUrl: (updateHash: string) =>
+        `https://raw.githubusercontent.com/${repository}/${updateHash}/${repositoryPath}/${manifestPath}`,
       metadataUrl: `https://api.github.com/repos/${repository}/commits?sha=${branch}&path=${repositoryPath}/${manifestPath}`,
     };
   }
