@@ -1,8 +1,8 @@
+import { ContentTypes, getSerializerDeserializer } from "@redstone-finance/internal-utils";
 import { RedstoneCommon, loggerFactory } from "@redstone-finance/utils";
 import { auth, iot, mqtt, mqtt5 } from "aws-iot-device-sdk-v2";
 import { randomUUID } from "crypto";
 import { PubSubClient, PubSubPayload } from "./PubSubClient";
-import { ContentTypes, getSerializerDeserializer } from "./SerializerDeserializer";
 
 export type Mqtt5ClientConfig = {
   endpoint: string;

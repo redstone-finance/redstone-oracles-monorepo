@@ -2,6 +2,7 @@ import {
   ContentTypes,
   DeflateJson,
   getSerializerDeserializer,
+  GZipJson,
   SerializerDeserializerRegistry,
 } from "../src/SerializerDeserializer";
 
@@ -42,6 +43,23 @@ describe("SerializerDeserializer", () => {
         const deserialized = serializerDeserializer.deserialize(serialized);
         expect(deserialized).toEqual(complexObject);
       });
+
+      it("should handle arrays", () => {
+        const array = [
+          { a: 0 },
+          {
+            a: 1,
+            b: "string",
+            c: [1, 2, 3],
+            d: { nested: true },
+            e: null,
+            f: undefined,
+          },
+        ];
+        const serialized = serializerDeserializer.serialize(array);
+        const deserialized = serializerDeserializer.deserialize(serialized);
+        expect(deserialized).toEqual(array);
+      });
     });
   };
 
@@ -77,6 +95,9 @@ describe("SerializerDeserializer", () => {
     it("should return the correct SerializerDeserializer", () => {
       const deflateJson = getSerializerDeserializer("deflate+json");
       expect(deflateJson).toBeInstanceOf(DeflateJson);
+
+      const gzipJson = getSerializerDeserializer("gzip+json");
+      expect(gzipJson).toBeInstanceOf(GZipJson);
     });
 
     it("should throw an error for non-existent SerializerDeserializer", () => {

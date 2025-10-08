@@ -17,6 +17,7 @@
     "lint:fix": "yarn global:eslint --fix ."
   },
   "dependencies": {
+    "@redstone-finance/internal-utils": "workspace:*",
     "@redstone-finance/protocol": "workspace:*",
     "@redstone-finance/sdk": "workspace:*",
     "@redstone-finance/utils": "workspace:*",
