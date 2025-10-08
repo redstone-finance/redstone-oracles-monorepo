@@ -10853,6 +10853,23 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@redstone-finance/lambda-unsnooze-networks@workspace:packages/lambda/lambda-unsnooze-networks":
+  version: 0.0.0-use.local
+  resolution: "@redstone-finance/lambda-unsnooze-networks@workspace:packages/lambda/lambda-unsnooze-networks"
+  dependencies:
+    "@redstone-finance/internal-utils": "workspace:*"
+    "@redstone-finance/monitoring-manifests": "workspace:*"
+    "@redstone-finance/utils": "workspace:*"
+    "@types/aws-lambda": "npm:^8.10.145"
+    axios: "npm:^1.8.4"
+    dotenv: "npm:^16.0.3"
+    mongodb: "npm:^5.9.0"
+    prettier: "npm:^3.6.2"
+    redstone-prettier-config: "npm:^1.0.0"
+    zod: "npm:^3.22.4"
+  languageName: unknown
+  linkType: soft
+
 "@redstone-finance/lambda-upload-depths@workspace:packages/lambda/lambda-depth-influx":
   version: 0.0.0-use.local
   resolution: "@redstone-finance/lambda-upload-depths@workspace:packages/lambda/lambda-depth-influx"
