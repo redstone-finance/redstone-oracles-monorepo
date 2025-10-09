@@ -19,8 +19,8 @@
 1. That's our node-provider
 2. Intellect did set up a participant (node), which we can use
 3. Keycloak defines a user who can operate on the participant
-4. It operates with DAML `3.3.0` and the "production" `2.1` target
-   1. We use DAML `3.4.0-snapshot` with the "development" `2.dev` target
+4. It operates with DAML `3.3.0`
+   1. We use DAML `3.4.0-snapshot`
    2. So, for now, no `secp256k1` crypto additions can be tested
 5. Doesn't provide Ledger API outside the system so it can be only used via RPC calls.
 
@@ -57,7 +57,7 @@
 2. Implements `U256` type for larger values
    1. But also `DecimalValue` works to values up to `2^99` with the `8`-fixed-point scale (`2^126` as multiplied value from nodes)
 3. Provides [`CryptoVerify`](./sdk/src/RedStone/Internal/CryptoVerify.daml)  mechanisms for `secp256k1` crypto verification
-   1. It works in `DAML 3.4.0-snapshot-2025-09-11`+++ and for `2.dev` target only
+   1. It works in `DAML 3.4.0-snapshot-2025-10-06`+++
    2. Disabled for now, the [`NoCryptoVerify`](./sdk/src/RedStone/Internal/NoCryptoVerify.daml) module is used
 
 ### [RedStone Interface](./interface)
@@ -141,7 +141,7 @@
 ## The current state of development
 
 1. It's possible to deploy all components above to the predefined intellect.eu participant and operate with them with the predefined user
-   1. Setting up a new participant is in progress
+   1. The components' system client/reader has been tested on a single domain in 2 intellect.eu node-participants for daml `2.7.9` (so with most of the checks disabled).
    2. Creating a new user in the Keycloak, they can connect to the provider, is in progress (*it always uses the admin user in the participant*)
 2. Contracts' visibility in the global Canton world, outside intellect.eu, is a mystery
     1. it depends on the Parties defined in other participants
