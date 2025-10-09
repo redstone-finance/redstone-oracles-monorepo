@@ -10046,6 +10046,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@redstone-finance/hl-relayer@workspace:packages/hl-relayer"
   dependencies:
+    "@redstone-finance/healthcheck": "workspace:*"
     "@redstone-finance/hl-hip3": "workspace:*"
     "@redstone-finance/http-client": "workspace:*"
     "@redstone-finance/internal-utils": "workspace:*"
