@@ -28,8 +28,9 @@ export class GitHubConfigLoader implements RedstoneRemoteConfig.IRemoteConfigLoa
   }
 
   async load(updateHash: string): Promise<RedstoneRemoteConfig.ConfigData> {
-    logger.debug("Fetching", { updateHash });
-    const response = await fetch(this.manifestUrl(updateHash));
+    const manifestUrl = this.manifestUrl(updateHash);
+    logger.debug("Fetching", { manifestUrl });
+    const response = await fetch(manifestUrl);
     if (!response.ok) {
       throw new Error(`Fetching from github failed. Status: ${response.status}`);
     }
