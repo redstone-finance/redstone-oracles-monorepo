@@ -3,13 +3,13 @@
     "name": "stylusSepolia",
     "id": 421614
   },
-  "adapterContract": "0x04a968ab0fE91B26BB3eF20D26dbD8cFBbbC5a6f",
-  "adapterContractType": "multi-feed",
-  "dataServiceId": "redstone-primary-prod",
   "updateTriggers": {
     "deviationPercentage": 0.5,
     "timeSinceLastUpdateInMilliseconds": 86400000
   },
+  "adapterContract": "0x04a968ab0fE91B26BB3eF20D26dbD8cFBbbC5a6f",
+  "adapterContractType": "multi-feed",
+  "dataServiceId": "redstone-primary-prod",
   "priceFeeds": {
     "ETH": {},
     "BTC": {}
