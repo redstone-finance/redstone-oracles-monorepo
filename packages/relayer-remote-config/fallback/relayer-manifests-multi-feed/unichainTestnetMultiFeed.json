@@ -3,13 +3,13 @@
     "name": "unichainTestnet",
     "id": 1301
   },
-  "adapterContract": "0x56b13Aa2f3b9fD2a136Ab46fc570E3c549191d71",
-  "adapterContractType": "multi-feed",
-  "dataServiceId": "redstone-primary-prod",
   "updateTriggers": {
     "deviationPercentage": 0.5,
     "timeSinceLastUpdateInMilliseconds": 21600000
   },
+  "adapterContract": "0x56b13Aa2f3b9fD2a136Ab46fc570E3c549191d71",
+  "adapterContractType": "multi-feed",
+  "dataServiceId": "redstone-primary-prod",
   "priceFeeds": {
     "ETH": {
       "priceFeedAddress": "0x67F6838e58859d612E4ddF04dA396d6DABB66Dc4"

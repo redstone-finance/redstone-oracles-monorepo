@@ -3,13 +3,13 @@
     "name": "sepolia",
     "id": 11155111
   },
-  "adapterContract": "0xE2Ff0DeB9B24Ec6C4F1f1dEE39610A450B3238E0",
-  "adapterContractType": "multi-feed",
-  "dataServiceId": "redstone-primary-prod",
   "updateTriggers": {
     "deviationPercentage": 1,
     "timeSinceLastUpdateInMilliseconds": 86400000
   },
+  "adapterContract": "0xE2Ff0DeB9B24Ec6C4F1f1dEE39610A450B3238E0",
+  "adapterContractType": "multi-feed",
+  "dataServiceId": "redstone-primary-prod",
   "priceFeeds": {
     "ETH": {},
     "BTC": {},

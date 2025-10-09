@@ -24,8 +24,8 @@ export const UpdateTriggersSchema = z.object({
 export type UpdateTriggers = z.infer<typeof UpdateTriggersSchema>;
 
 const PriceFeedConfigSchema = z.object({
-  updateTriggersOverrides: UpdateTriggersSchema.optional(),
   priceFeedAddress: z.string().optional(),
+  updateTriggersOverrides: UpdateTriggersSchema.optional(),
 });
 
 export const CommonManifestSchema = z.object({

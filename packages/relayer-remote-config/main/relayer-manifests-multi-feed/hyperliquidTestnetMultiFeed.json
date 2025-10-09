@@ -3,13 +3,13 @@
     "name": "hyperliquidTestnet",
     "id": 998
   },
-  "adapterContract": "0x663B50C9DA9Bd586f855aF13e91EF2f0954c9761",
-  "adapterContractType": "multi-feed",
-  "dataServiceId": "redstone-primary-prod",
   "updateTriggers": {
     "deviationPercentage": 0.5,
     "timeSinceLastUpdateInMilliseconds": 21600000
   },
+  "adapterContract": "0x663B50C9DA9Bd586f855aF13e91EF2f0954c9761",
+  "adapterContractType": "multi-feed",
+  "dataServiceId": "redstone-primary-prod",
   "priceFeeds": {
     "BTC": {
       "priceFeedAddress": "0x85C4F855Bc0609D2584405819EdAEa3aDAbfE97D"
