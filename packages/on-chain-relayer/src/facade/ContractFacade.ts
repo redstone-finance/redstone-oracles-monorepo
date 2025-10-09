@@ -32,11 +32,9 @@ export abstract class ContractFacade {
     this.getUniqueSignerThresholdMemoized = RedstoneCommon.memoize({
       functionToMemoize: (blockTag?: number) => this.getUniqueSignerThresholdFromContract(blockTag),
       ttl: opts.uniqueSignerThresholdCacheTtlMs,
-      cacheReporter: (isMissing: boolean) =>
-        isMissing
-          ? this.logger.log("Refreshing cached uniqueSignerThreshold")
-          : this.logger.info("Reusing cached uniqueSignerThreshold"),
       cacheKeyBuilder: () => "uniqueSignerThresholdCached",
+      cacheReporter: (isMissing) =>
+        RedstoneCommon.reportMemoizeCacheUsage(isMissing, "uniqueSignerThreshold", this.logger),
     });
   }
 

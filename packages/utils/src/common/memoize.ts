@@ -1,3 +1,4 @@
+import { loggerFactory } from "../logger";
 import { assertWithLog } from "./errors";
 
 type MemoizeCache<T> = { promise: Promise<T>; lastSet: number };
@@ -62,6 +63,18 @@ export function memoize<
 
     return await cache[cacheKey]!.promise;
   }) as F;
+}
+
+export function reportMemoizeCacheUsage(
+  isMissing: boolean,
+  desc: string,
+  logger = loggerFactory("memoize")
+) {
+  if (isMissing) {
+    logger.log(`Refreshing cached ${desc}`);
+  } else {
+    logger.debug(`Reusing cached ${desc}`);
+  }
 }
 
 const cleanStaleCacheEntries = <T>(
