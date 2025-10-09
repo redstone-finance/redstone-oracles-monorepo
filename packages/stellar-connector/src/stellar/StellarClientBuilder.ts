@@ -4,8 +4,6 @@ import { HorizonClient } from "./HorizonClient";
 import { StellarClient } from "./StellarClient";
 import { getStellarChainId, StellarNetwork } from "./network-ids";
 
-const SINGLE_EXECUTION_TIMEOUT_MS = 11_000;
-
 export class StellarClientBuilder extends MultiExecutor.ClientBuilder<StellarClient> {
   protected override chainType = ChainTypeEnum.Enum.stellar;
   private horizonUrl?: string;
@@ -39,10 +37,6 @@ export class StellarClientBuilder extends MultiExecutor.ClientBuilder<StellarCli
         getContractData: MultiExecutor.ExecutionMode.AGREEMENT,
         getTransaction: MultiExecutor.ExecutionMode.AGREEMENT,
         waitForTx: MultiExecutor.ExecutionMode.AGREEMENT,
-      },
-      {
-        singleExecutionTimeoutMs: SINGLE_EXECUTION_TIMEOUT_MS,
-        allExecutionsTimeoutMs: MultiExecutor.ALL_EXECUTIONS_TIMEOUT_MS,
       }
     );
   }

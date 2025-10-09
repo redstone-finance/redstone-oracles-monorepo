@@ -25,7 +25,13 @@ const TRANSACTION_TIMEOUT_SEC = 30;
 export class StellarClient {
   private getNetwork = RedstoneCommon.memoize({
     functionToMemoize: () => this.server.getNetwork(),
-    ttl: RedstoneCommon.hourToMs(1),
+    ttl: RedstoneCommon.hourToMs(24),
+    cacheKeyBuilder: () => this.server.serverURL.href(),
+    cacheReporter: (isMissing) =>
+      RedstoneCommon.reportMemoizeCacheUsage(
+        isMissing,
+        `network metadata of ${this.server.serverURL.href()}`
+      ),
   });
 
   constructor(
