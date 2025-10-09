@@ -64,6 +64,13 @@
         "timeSinceLastUpdateInMilliseconds": 86400000
       },
       "priceFeedAddress": "0x24eDD61cdA334bFf871A80DEB135073a7d7a9187"
+    },
+    "EUR": {
+      "priceFeedAddress": "0x5C4c8d6f6Bf79B718F3e8399AaBdFEd01cB7e48f",
+      "updateTriggersOverrides": {
+        "deviationPercentage": 0.15,
+        "timeSinceLastUpdateInMilliseconds": 86400000
+      }
     }
   }
 }
