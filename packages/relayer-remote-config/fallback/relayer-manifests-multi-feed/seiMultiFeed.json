@@ -48,11 +48,11 @@
       "priceFeedAddress": "0xe0d290eBA865A6CA14c1C9bFD9CD839FA8d54543"
     },
     "ACRED_FUNDAMENTAL": {
+      "priceFeedAddress": "0x692F045EFaC629a4d3C54DE4d8dDb1D225b5A976",
       "updateTriggersOverrides": {
         "deviationPercentage": 0.1,
         "timeSinceLastUpdateInMilliseconds": 86400000
-      },
-      "priceFeedAddress": "0x692F045EFaC629a4d3C54DE4d8dDb1D225b5A976"
+      }
     }
   }
 }

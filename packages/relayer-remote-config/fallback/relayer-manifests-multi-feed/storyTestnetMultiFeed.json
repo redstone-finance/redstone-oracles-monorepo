@@ -3,13 +3,13 @@
     "name": "storyTestnet",
     "id": 1315
   },
-  "adapterContract": "0xb4fe9028A4D4D8B3d00e52341F2BB0798860532C",
-  "adapterContractType": "multi-feed",
-  "dataServiceId": "redstone-primary-prod",
   "updateTriggers": {
     "deviationPercentage": 0.5,
     "timeSinceLastUpdateInMilliseconds": 21600000
   },
+  "adapterContract": "0xb4fe9028A4D4D8B3d00e52341F2BB0798860532C",
+  "adapterContractType": "multi-feed",
+  "dataServiceId": "redstone-primary-prod",
   "priceFeeds": {
     "ETH": {
       "priceFeedAddress": "0xeC7C6AdcC867E1C22713D14797339750E36538E4"

@@ -1,0 +1,21 @@
+{
+  "chain": {
+    "name": "giwaTestnet",
+    "id": 91342
+  },
+  "updateTriggers": {
+    "deviationPercentage": 0.5,
+    "timeSinceLastUpdateInMilliseconds": 21600000
+  },
+  "adapterContract": "0x65d0F14f7809CdC4f90c3978c753C4671b6B815b",
+  "adapterContractType": "multi-feed",
+  "dataServiceId": "redstone-primary-prod",
+  "priceFeeds": {
+    "ETH": {
+      "priceFeedAddress": "0xE94c9f9A1893f23be38A5C0394E46Ac05e8a5f8C"
+    },
+    "BTC": {
+      "priceFeedAddress": "0xb67047eDF6204F4C81333248dA71F8387050790C"
+    }
+  }
+}
