@@ -3,13 +3,13 @@
     "name": "scroll",
     "id": 534352
   },
-  "adapterContract": "0x4aaf2844c5420BF979d5bC2Cf883EF02Db07e590",
-  "adapterContractType": "multi-feed",
-  "dataServiceId": "redstone-primary-prod",
   "updateTriggers": {
     "deviationPercentage": 0.5,
     "timeSinceLastUpdateInMilliseconds": 86400000
   },
+  "adapterContract": "0x4aaf2844c5420BF979d5bC2Cf883EF02Db07e590",
+  "adapterContractType": "multi-feed",
+  "dataServiceId": "redstone-primary-prod",
   "priceFeeds": {
     "pufETH": {
       "priceFeedAddress": "0xC49F0Dd98F38C525A7ce15E73E60675456F3a161"
