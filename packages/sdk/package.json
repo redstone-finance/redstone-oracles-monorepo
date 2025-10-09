@@ -15,7 +15,8 @@
     "preversion": "yarn build",
     "pack-package": "yarn build && cd dist && npm pack",
     "lint": "yarn global:eslint .",
-    "lint:fix": "yarn global:eslint --fix ."
+    "lint:fix": "yarn global:eslint --fix .",
+    "prepare-data": "yarn global:ts-node ./scripts/payload-generator/index.ts"
   },
   "dependencies": {
     "@ethersproject/bytes": "^5.6.1",
