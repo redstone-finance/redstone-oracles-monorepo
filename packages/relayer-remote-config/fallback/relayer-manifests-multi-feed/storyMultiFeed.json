@@ -3,13 +3,13 @@
     "name": "story",
     "id": 1514
   },
-  "adapterContract": "0xb67047eDF6204F4C81333248dA71F8387050790C",
-  "adapterContractType": "multi-feed",
-  "dataServiceId": "redstone-primary-prod",
   "updateTriggers": {
     "deviationPercentage": 0.5,
     "timeSinceLastUpdateInMilliseconds": 21600000
   },
+  "adapterContract": "0xb67047eDF6204F4C81333248dA71F8387050790C",
+  "adapterContractType": "multi-feed",
+  "dataServiceId": "redstone-primary-prod",
   "priceFeeds": {
     "ETH": {
       "priceFeedAddress": "0x22d47686b3AEC9068768f84EFD8Ce2637a347B0A"
