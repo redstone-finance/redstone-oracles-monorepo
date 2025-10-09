@@ -49,6 +49,13 @@
     },
     "SUSHI": {
       "priceFeedAddress": "0xb81131B6368b3F0a83af09dB4E39Ac23DA96C2Db"
+    },
+    "UTY_FUNDAMENTAL": {
+      "priceFeedAddress": "0x7A532B1B204409472cB92cd07c8B0BB09DD2F520",
+      "updateTriggersOverrides": {
+        "deviationPercentage": 0.1,
+        "timeSinceLastUpdateInMilliseconds": 86400000
+      }
     }
   }
 }

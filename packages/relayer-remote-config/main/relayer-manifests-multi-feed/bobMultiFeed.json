@@ -3,13 +3,13 @@
     "name": "bob",
     "id": 60808
   },
-  "adapterContract": "0x85C4F855Bc0609D2584405819EdAEa3aDAbfE97D",
-  "adapterContractType": "multi-feed",
-  "dataServiceId": "redstone-primary-prod",
   "updateTriggers": {
     "deviationPercentage": 0.2,
     "timeSinceLastUpdateInMilliseconds": 86400000
   },
+  "adapterContract": "0x85C4F855Bc0609D2584405819EdAEa3aDAbfE97D",
+  "adapterContractType": "multi-feed",
+  "dataServiceId": "redstone-primary-prod",
   "priceFeeds": {
     "HybridBTC.pendle_FUNDAMENTAL": {
       "priceFeedAddress": "0xBf3bA2b090188B40eF83145Be0e9F30C6ca63689"
