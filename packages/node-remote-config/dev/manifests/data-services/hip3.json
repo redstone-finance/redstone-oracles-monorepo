@@ -1,8 +1,8 @@
 {
-  "interval": 2000,
+  "interval": 1000,
   "priceAggregator": "median",
   "defaultSource": ["coingecko"],
-  "sourceTimeout": 2000,
+  "sourceTimeout": 1000,
   "minValidSourcesPercentage": 30,
   "deviationCheck": {
     "deviationWithRecentValues": {
@@ -11,51 +11,44 @@
     }
   },
   "tokens": {
-    "USDT": {
-      "source": ["bitstamp-usd", "coinbase-usd", "kraken-usd"],
-      "deviationCheck": {
-        "deviationWithRecentValues": {
-          "maxPercent": 5,
-          "maxDelayMilliseconds": 120000
-        }
-      },
-      "denomination": "USD",
-      "rateFeed": false,
-      "skipBroadcasting": true
-    },
     "BTC_PERP": {
       "source": [
-        "binance_perp-usdt",
-        "bybit_perp-usd",
-        "gate_perp-usdt",
-        "mexc_perp-usdt",
-        "okx_perp-usdt"
+        "ws-perp-binance-usdt",
+        "ws-perp-bybit-usdt",
+        "ws-perp-gate-usdt",
+        "ws-perp-mexc-usdt",
+        "ws-perp-okx-usdt"
       ],
       "priceAggregator": "constantWeightMedian",
+      "customeWeightsForWeightedMedian": {
+        "ws-perp-binance-usdt": 3,
+        "ws-perp-okx-usdt": 2,
+        "ws-perp-bybit-usdt": 2
+      },
       "skipBroadcasting": true,
       "denomination": "USD",
       "rateFeed": false
     },
     "HL_ORACLE_PX_BTC": {
-      "source": ["hyperliquid-perps-native_testnet-api-fetcher"],
+      "source": ["hyperliquid-testnet-perps-ws-fetcher"],
       "skipBroadcasting": true,
       "denomination": "USD",
       "rateFeed": false
     },
     "HL_ORACLE_PX_sekaw:BTC": {
-      "source": ["hyperliquid-perps-sekaw-api-fetcher"],
+      "source": ["hyperliquid-testnet-perps-ws-fetcher"],
       "skipBroadcasting": true,
       "denomination": "USD",
       "rateFeed": false
     },
     "HL_MARK_PX_sekaw:BTC": {
-      "source": ["hyperliquid-perps-sekaw-api-fetcher"],
+      "source": ["hyperliquid-testnet-perps-ws-fetcher"],
       "skipBroadcasting": true,
       "denomination": "USD",
       "rateFeed": false
     },
     "HL_MID_PX_sekaw:BTC": {
-      "source": ["hyperliquid-perps-sekaw-api-fetcher"],
+      "source": ["hyperliquid-testnet-perps-ws-fetcher"],
       "skipBroadcasting": true,
       "denomination": "USD",
       "rateFeed": false
@@ -86,37 +79,41 @@
     },
     "ETH_PERP": {
       "source": [
-        "binance_perp-usdt",
-        "bybit_perp-usd",
-        "gate_perp-usdt",
-        "mexc_perp-usdt",
-        "okx_perp-usdt"
+        "ws-perp-binance-usdt",
+        "ws-perp-bybit-usdt",
+        "ws-perp-gate-usdt",
+        "ws-perp-mexc-usdt",
+        "ws-perp-okx-usdt"
       ],
-      "priceAggregator": "constantWeightMedian",
+      "customeWeightsForWeightedMedian": {
+        "ws-perp-binance-usdt": 3,
+        "ws-perp-okx-usdt": 2,
+        "ws-perp-bybit-usdt": 2
+      },
       "skipBroadcasting": true,
       "denomination": "USD",
       "rateFeed": false
     },
     "HL_ORACLE_PX_ETH": {
-      "source": ["hyperliquid-perps-native_testnet-api-fetcher"],
+      "source": ["hyperliquid-testnet-perps-ws-fetcher"],
       "skipBroadcasting": true,
       "denomination": "USD",
       "rateFeed": false
     },
     "HL_ORACLE_PX_sekaw:ETH": {
-      "source": ["hyperliquid-perps-sekaw-api-fetcher"],
+      "source": ["hyperliquid-testnet-perps-ws-fetcher"],
       "skipBroadcasting": true,
       "denomination": "USD",
       "rateFeed": false
     },
     "HL_MARK_PX_sekaw:ETH": {
-      "source": ["hyperliquid-perps-sekaw-api-fetcher"],
+      "source": ["hyperliquid-testnet-perps-ws-fetcher"],
       "skipBroadcasting": true,
       "denomination": "USD",
       "rateFeed": false
     },
     "HL_MID_PX_sekaw:ETH": {
-      "source": ["hyperliquid-perps-sekaw-api-fetcher"],
+      "source": ["hyperliquid-testnet-perps-ws-fetcher"],
       "skipBroadcasting": true,
       "denomination": "USD",
       "rateFeed": false
