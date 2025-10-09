@@ -123,6 +123,9 @@
         "timeSinceLastUpdateInMilliseconds": 21600000
       },
       "priceFeedAddress": "0x67F6838e58859d612E4ddF04dA396d6DABB66Dc4"
+    },
+    "thBILL_FUNDAMENTAL/USD": {
+      "priceFeedAddress": "0x26FB59e5562405F42f55661f790fA1Bd2F410A3d"
     }
   }
 }
