@@ -3,13 +3,13 @@
     "name": "zircuit",
     "id": 48900
   },
-  "adapterContract": "0xa41107f9259bB835275eaCaAd8048307B80D7c00",
-  "adapterContractType": "multi-feed",
-  "dataServiceId": "redstone-primary-prod",
   "updateTriggers": {
     "deviationPercentage": 0.5,
     "timeSinceLastUpdateInMilliseconds": 86400000
   },
+  "adapterContract": "0xa41107f9259bB835275eaCaAd8048307B80D7c00",
+  "adapterContractType": "multi-feed",
+  "dataServiceId": "redstone-primary-prod",
   "priceFeeds": {
     "ETH": {
       "priceFeedAddress": "0x72266eFcdd0EC7110b44576e5413EF383950EEc2"

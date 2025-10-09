@@ -3,13 +3,13 @@
     "name": "citreaTestnet",
     "id": 5115
   },
-  "adapterContract": "0x368eE51E47a594fe1E9908b48228748a30BC7ca4",
-  "adapterContractType": "multi-feed",
-  "dataServiceId": "redstone-primary-prod",
   "updateTriggers": {
     "deviationPercentage": 0.5,
     "timeSinceLastUpdateInMilliseconds": 86400000
   },
+  "adapterContract": "0x368eE51E47a594fe1E9908b48228748a30BC7ca4",
+  "adapterContractType": "multi-feed",
+  "dataServiceId": "redstone-primary-prod",
   "priceFeeds": {
     "BTC": {
       "priceFeedAddress": "0xc555c100DB24dF36D406243642C169CC5A937f09"

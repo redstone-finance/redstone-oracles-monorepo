@@ -3,13 +3,13 @@
     "name": "ink",
     "id": 57073
   },
-  "adapterContract": "0xFB1267A29C0aa19daae4a483ea895862A69e4AA5",
-  "adapterContractType": "multi-feed",
-  "dataServiceId": "redstone-primary-prod",
   "updateTriggers": {
     "deviationPercentage": 0.5,
     "timeSinceLastUpdateInMilliseconds": 21600000
   },
+  "adapterContract": "0xFB1267A29C0aa19daae4a483ea895862A69e4AA5",
+  "adapterContractType": "multi-feed",
+  "dataServiceId": "redstone-primary-prod",
   "priceFeeds": {
     "ETH": {
       "priceFeedAddress": "0xe5867B1d421f0b52697F16e2ac437e87d66D5fbF"

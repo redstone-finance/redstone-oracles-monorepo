@@ -3,13 +3,13 @@
     "name": "swellchain",
     "id": 1923
   },
-  "adapterContract": "0x24c8964338Deb5204B096039147B8e8C3AEa42Cc",
-  "adapterContractType": "multi-feed",
-  "dataServiceId": "redstone-primary-prod",
   "updateTriggers": {
     "deviationPercentage": 0.5,
     "timeSinceLastUpdateInMilliseconds": 21600000
   },
+  "adapterContract": "0x24c8964338Deb5204B096039147B8e8C3AEa42Cc",
+  "adapterContractType": "multi-feed",
+  "dataServiceId": "redstone-primary-prod",
   "priceFeeds": {
     "wstETH/stETH": {
       "priceFeedAddress": "0xa8a94Da411425634e3Ed6C331a32ab4fd774aa43"
