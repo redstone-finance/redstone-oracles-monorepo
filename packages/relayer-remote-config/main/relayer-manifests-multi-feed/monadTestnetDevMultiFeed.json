@@ -22,5 +22,10 @@
     "USDT": {
       "priceFeedAddress": "0x65d0F14f7809CdC4f90c3978c753C4671b6B815b"
     }
-  }
+  },
+  "authorizedSigners": [
+    "0x21F05763188246E9F1FdAe3Bb67465a1E81b9f21",
+    "0x3F12DE3492D044FeB08a88b402455026B0f1ae04",
+    "0x5451dB9e574C3a9f9C0DA324E498093AC185169A"
+  ]
 }
