@@ -51,6 +51,12 @@ export class ContractParamsProvider {
     );
   }
 
+  splitIntoFeedBatches(batchSize: number) {
+    const feedIds = this.getDataFeedIds();
+
+    return _.chunk(feedIds, batchSize).map((feedIds) => this.copyForFeedIds(feedIds));
+  }
+
   static hexlifyFeedIds(feedIds: string[], allowMissingPrefix?: boolean, padRightSize?: number) {
     return feedIds
       .map((feed) => hexlify(toUtf8Bytes(feed)), { allowMissingPrefix })
