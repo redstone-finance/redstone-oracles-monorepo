@@ -4,9 +4,13 @@ import {
   IMultiFeedPricesContractAdapter,
   LastRoundDetails,
 } from "@redstone-finance/sdk";
+import { RedstoneCommon } from "@redstone-finance/utils";
 import _ from "lodash";
 import * as XdrUtils from "../XdrUtils";
 import { StellarContractAdapter } from "./StellarContractAdapter";
+
+// We estimate write_prices operations as `feedIds * signers`
+const MAX_WRITE_PRICES_OPS = 33;
 
 export class PriceAdapterStellarContractAdapter
   extends StellarContractAdapter
@@ -39,35 +43,54 @@ export class PriceAdapterStellarContractAdapter
   }
 
   async getPricesFromPayload(paramsProvider: ContractParamsProvider) {
-    const operation = this.contract.call(
-      "get_prices",
-      ...(await this.prepareCallArgs(paramsProvider))
-    );
+    const batchSize = MAX_WRITE_PRICES_OPS / paramsProvider.requestParams.uniqueSignersCount;
+    const paramsProviders = paramsProvider.splitIntoFeedBatches(batchSize);
 
-    const sim = await this.client.simulateOperation(
-      operation,
-      await this.getPublicKey(),
-      XdrUtils.parseGetPricesSimulation
-    );
+    const promises = paramsProviders.map(async (paramsProvider) => {
+      const operation = this.contract.call(
+        "get_prices",
+        ...(await this.prepareCallArgs(paramsProvider))
+      );
 
-    return sim.prices;
+      const sim = await this.client.simulateOperation(
+        operation,
+        await this.getPublicKey(),
+        XdrUtils.parseGetPricesSimulation
+      );
+
+      return sim.prices;
+    });
+
+    const prices = await Promise.all(promises);
+
+    return prices.flat();
   }
 
   async writePricesFromPayloadToContract(paramsProvider: ContractParamsProvider) {
     if (!this.txDeliveryMan) {
       throw new Error("Cannot write prices, txDeliveryMan not set");
     }
+    const txDeliveryMan = this.txDeliveryMan;
 
     const updater = XdrUtils.addressToScVal(await this.getPublicKey());
     const metadataTimestamp = Date.now();
 
-    return await this.txDeliveryMan.sendTransaction(async () => {
-      return this.contract.call(
-        "write_prices",
-        updater,
-        ...(await this.prepareCallArgs(paramsProvider, metadataTimestamp))
-      );
+    const batchSize = MAX_WRITE_PRICES_OPS / paramsProvider.requestParams.uniqueSignersCount;
+    const paramsProviders = paramsProvider.splitIntoFeedBatches(batchSize);
+
+    const fns = paramsProviders.map((paramsProvider) => () => {
+      return txDeliveryMan.sendTransaction(async () => {
+        return this.contract.call(
+          "write_prices",
+          updater,
+          ...(await this.prepareCallArgs(paramsProvider, metadataTimestamp))
+        );
+      });
     });
+
+    const txHashes = await RedstoneCommon.batchPromises(1, 0, fns, true);
+
+    return txHashes[txHashes.length - 1];
   }
 
   async readPricesFromContract(paramsProvider: ContractParamsProvider, _blockNumber?: number) {
