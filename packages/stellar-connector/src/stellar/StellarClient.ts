@@ -13,6 +13,7 @@ import {
 } from "@stellar/stellar-sdk";
 import { Api } from "@stellar/stellar-sdk/lib/minimal/rpc/api";
 import axios from "axios";
+import _ from "lodash";
 import z from "zod";
 import { getLedgerCloseDate } from "../utils";
 import * as XdrUtils from "../XdrUtils";
@@ -249,7 +250,7 @@ export class StellarClient {
     return transactions.filter(({ ledger }) => ledger >= startLedger && ledger <= endLedger);
   }
 
-  async getEvents(
+  async getEventsWithTransactions(
     inputStartLedger: number,
     inputEndLedger: number,
     topic = REDSTONE_EVENT_TOPIC_QUALIFIER
@@ -297,7 +298,16 @@ export class StellarClient {
       currentCursor = cursor;
     } while (hasMoreEvents && RedstoneCommon.isDefined(currentCursor));
 
-    return allEvents;
+    const txsPromises = allEvents.map(async ({ id, txHash }) => {
+      const tx = await this.server.getTransaction(txHash);
+      if (tx.status === rpc.Api.GetTransactionStatus.NOT_FOUND) {
+        throw new Error(`Transaction ${txHash} not found for event ${id}`);
+      }
+      return tx;
+    });
+    const txs = await Promise.all(txsPromises);
+
+    return _.zipWith(allEvents, txs, (event, tx) => ({ event, tx }));
   }
 
   private async fixLedgerVersions(startLedger: number, endLedger: number) {
