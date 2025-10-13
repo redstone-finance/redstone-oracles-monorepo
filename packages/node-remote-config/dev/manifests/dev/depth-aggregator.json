@@ -307,7 +307,7 @@
       ]
     },
     "PREMIA-TWAP-60": {
-      "source": ["twap-local-redstone-primary-prod"]
+      "source": ["twap-local"]
     },
     "MNT": {
       "source": [
@@ -922,7 +922,7 @@
       "source": ["non-usd-based"]
     },
     "ezETH-TWAP-60": {
-      "source": ["twap-local-redstone-primary-prod"]
+      "source": ["twap-local"]
     },
     "crvUSD": {
       "source": [
@@ -979,7 +979,7 @@
       }
     },
     "USDB-TWAP-30": {
-      "source": ["twap-local-redstone-primary-prod"],
+      "source": ["twap-local"],
       "deviationCheck": {
         "deviationWithRecentValues": {
           "maxPercent": 5,
@@ -1082,7 +1082,7 @@
       }
     },
     "SolvBTC_MERLIN/BTC-TWAP-60": {
-      "source": ["twap-local-redstone-primary-prod"]
+      "source": ["twap-local"]
     },
     "KES": {
       "source": ["alphavantage-usd", "twelve-data", "financialmodelingprep-usd"]
