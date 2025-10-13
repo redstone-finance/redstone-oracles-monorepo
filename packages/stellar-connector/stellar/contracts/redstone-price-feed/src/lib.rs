@@ -4,19 +4,22 @@ extern crate alloc;
 mod config;
 
 use common::{
-    ownable::Ownable,
-    upgradable::{Upgradable, WasmHash},
-    PriceData, CONTRACT_TTL_EXTEND_TO_LEDGERS, CONTRACT_TTL_THRESHOLD_LEDGERS,
-    MISSING_STORAGE_ENTRY,
+    flatten_call_result, ownable::Ownable, upgradable::Upgradable, PriceData,
+    CONTRACT_TTL_EXTEND_TO_LEDGERS, CONTRACT_TTL_THRESHOLD_LEDGERS, MISSING_STORAGE_ENTRY,
 };
 use soroban_sdk::{
     contract, contractclient, contractimpl, contracttype,
-    xdr::{ScErrorCode, ScErrorType, ToXdr},
-    Address, Bytes, Env, Error, String, U256,
+    xdr::{ScErrorCode, ScErrorType},
+    Address, Bytes, BytesN, Env, Error, String, U256,
 };
 
 use self::config::{ADAPTER_ADDRESS, DECIMALS, DESCRIPTION_PREFIX};
 
+// IMPORTANT: Macro contractclient generates two methods for each `fn name() ->
+// Result<T, Error>`. One called `name` that unwraps internally and returns T.
+// And another one named `try_name` that returns `Result<Result<T,
+// ConversionError>, Result<Error, InvokeError>>`. Remember to use "try" version
+// if you want to handle or propagate errors.
 #[contractclient(name = "RedStoneAdapterClient")]
 pub trait RedStoneAdapter {
     fn read_price_data_for_feed(feed_id: String) -> Result<PriceData, Error>;
@@ -54,7 +57,7 @@ impl RedStonePriceFeed {
         Self::_change_owner(env, new_owner)
     }
 
-    pub fn upgrade(env: &Env, new_wasm_hash: WasmHash) -> Result<(), Error> {
+    pub fn upgrade(env: &Env, new_wasm_hash: BytesN<32>) -> Result<(), Error> {
         Self::_upgrade(env, new_wasm_hash)
     }
 
@@ -68,7 +71,7 @@ impl RedStonePriceFeed {
         let mut description_bytes = Bytes::new(env);
 
         description_bytes.extend_from_array(DESCRIPTION_PREFIX);
-        description_bytes.append(&feed_id.to_xdr(env));
+        description_bytes.append(&feed_id.to_bytes());
 
         Ok(String::from_bytes(env, &description_bytes.to_alloc_vec()))
     }
@@ -100,7 +103,7 @@ impl RedStonePriceFeed {
         let feed_id = Self::feed_id(env)?;
         let client = get_adapter_client(env);
 
-        Ok(client.read_price_data_for_feed(&feed_id))
+        flatten_call_result(client.try_read_price_data_for_feed(&feed_id))
     }
 }
 
