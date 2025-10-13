@@ -2,6 +2,11 @@ import { StellarClient, StellarContractConnector } from "@redstone-finance/stell
 import { Keypair, rpc } from "@stellar/stellar-sdk";
 import { NonEvmBlockchainService } from "./NonEvmBlockchainService";
 
+export type EventWithTx = {
+  event: rpc.Api.EventResponse;
+  tx: rpc.Api.GetSuccessfulTransactionResponse | rpc.Api.GetFailedTransactionResponse;
+};
+
 export class StellarBlockchainService extends NonEvmBlockchainService {
   constructor(
     private client: StellarClient,
@@ -21,7 +26,7 @@ export class StellarBlockchainService extends NonEvmBlockchainService {
     return await this.client.getTransactions(startLedger, endLedger);
   }
 
-  async getEvents(startLedger: number, endLedger: number): Promise<rpc.Api.EventResponse[]> {
-    return await this.client.getEvents(startLedger, endLedger);
+  async getEventsWithTransactions(startLedger: number, endLedger: number): Promise<EventWithTx[]> {
+    return await this.client.getEventsWithTransactions(startLedger, endLedger);
   }
 }
