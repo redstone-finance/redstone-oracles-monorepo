@@ -427,7 +427,7 @@
       "rateFeed": false
     },
     "PREMIA-TWAP-60": {
-      "source": ["twap-local-redstone-primary-prod"],
+      "source": ["twap-local"],
       "denomination": "USD",
       "rateFeed": false
     },
@@ -1137,7 +1137,7 @@
       "rateFeed": false
     },
     "ezETH-TWAP-60": {
-      "source": ["twap-local-redstone-primary-prod"],
+      "source": ["twap-local"],
       "denomination": "USD",
       "rateFeed": false
     },
@@ -1223,7 +1223,7 @@
       "rateFeed": false
     },
     "USDB-TWAP-30": {
-      "source": ["twap-local-redstone-primary-prod"],
+      "source": ["twap-local"],
       "deviationCheck": {
         "deviationWithRecentValues": {
           "maxPercent": 5,
@@ -2372,7 +2372,7 @@
       "rateFeed": false
     },
     "iBGT/BERA-TWAP-60": {
-      "source": ["twap-local-redstone-primary-prod"],
+      "source": ["twap-local"],
       "denomination": "BERA",
       "valueCapConfig": {
         "lower": {
@@ -3102,7 +3102,7 @@
       "rateFeed": true
     },
     "PT_sUSDe_27NOV2025_ETH-TWAP": {
-      "source": ["twap-local-redstone-primary-prod"],
+      "source": ["twap-local"],
       "denomination": "sUSDe",
       "rateFeed": true
     },
@@ -3112,7 +3112,7 @@
       "rateFeed": true
     },
     "PT_sUSDe_15JAN2026_PLSM-TWAP": {
-      "source": ["twap-local-redstone-primary-prod"],
+      "source": ["twap-local"],
       "denomination": "sUSDe",
       "rateFeed": true
     },
@@ -3122,7 +3122,7 @@
       "rateFeed": true
     },
     "PT_kHYPE_13NOV2025_HL-TWAP": {
-      "source": ["twap-local-redstone-primary-prod"],
+      "source": ["twap-local"],
       "denomination": "kHYPE",
       "rateFeed": true
     }
