@@ -106,7 +106,6 @@ impl RedStoneAdapter {
 
         env.events().publish_event(&WritePrices {
             updated_feeds,
-            payload,
             updater,
         });
 
