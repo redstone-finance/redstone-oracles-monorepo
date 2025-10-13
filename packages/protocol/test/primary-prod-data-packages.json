@@ -19303,7 +19303,7 @@
           "metadata": {
             "value": "0.25121223554469274",
             "sourceMetadata": {
-              "twap-local-redstone-primary-prod": {
+              "twap-local": {
                 "value": "0.25121223554469274"
               }
             },
@@ -19327,7 +19327,7 @@
           "metadata": {
             "value": "0.2512134729329609",
             "sourceMetadata": {
-              "twap-local-redstone-primary-prod": {
+              "twap-local": {
                 "value": "0.2512134729329609"
               }
             },
@@ -19351,7 +19351,7 @@
           "metadata": {
             "value": "0.2512129636312849",
             "sourceMetadata": {
-              "twap-local-redstone-primary-prod": {
+              "twap-local": {
                 "value": "0.2512129636312849"
               }
             },
@@ -19375,7 +19375,7 @@
           "metadata": {
             "value": "0.2512125207821229",
             "sourceMetadata": {
-              "twap-local-redstone-primary-prod": {
+              "twap-local": {
                 "value": "0.2512125207821229"
               }
             },
@@ -19399,7 +19399,7 @@
           "metadata": {
             "value": "0.2512126332960894",
             "sourceMetadata": {
-              "twap-local-redstone-primary-prod": {
+              "twap-local": {
                 "value": "0.2512126332960894"
               }
             },
@@ -21539,7 +21539,7 @@
           "metadata": {
             "value": "0.9900954667352878",
             "sourceMetadata": {
-              "twap-local-redstone-primary-prod": {
+              "twap-local": {
                 "value": "0.9900954667352878"
               }
             },
@@ -21563,7 +21563,7 @@
           "metadata": {
             "value": "0.9900954667352929",
             "sourceMetadata": {
-              "twap-local-redstone-primary-prod": {
+              "twap-local": {
                 "value": "0.9900954667352929"
               }
             },
@@ -21587,7 +21587,7 @@
           "metadata": {
             "value": "0.9900954667352876",
             "sourceMetadata": {
-              "twap-local-redstone-primary-prod": {
+              "twap-local": {
                 "value": "0.9900954667352876"
               }
             },
@@ -21611,7 +21611,7 @@
           "metadata": {
             "value": "0.990095466735289",
             "sourceMetadata": {
-              "twap-local-redstone-primary-prod": {
+              "twap-local": {
                 "value": "0.990095466735289"
               }
             },
@@ -21635,7 +21635,7 @@
           "metadata": {
             "value": "0.9900954667352908",
             "sourceMetadata": {
-              "twap-local-redstone-primary-prod": {
+              "twap-local": {
                 "value": "0.9900954667352908"
               }
             },
@@ -21965,7 +21965,7 @@
           "metadata": {
             "value": "0.9880731562354802",
             "sourceMetadata": {
-              "twap-local-redstone-primary-prod": {
+              "twap-local": {
                 "value": "0.9880731562354802"
               }
             },
@@ -21989,7 +21989,7 @@
           "metadata": {
             "value": "0.9880723056656192",
             "sourceMetadata": {
-              "twap-local-redstone-primary-prod": {
+              "twap-local": {
                 "value": "0.9880723056656192"
               }
             },
@@ -22013,7 +22013,7 @@
           "metadata": {
             "value": "0.9880723056656142",
             "sourceMetadata": {
-              "twap-local-redstone-primary-prod": {
+              "twap-local": {
                 "value": "0.9880723056656142"
               }
             },
@@ -22037,7 +22037,7 @@
           "metadata": {
             "value": "0.9880723056656177",
             "sourceMetadata": {
-              "twap-local-redstone-primary-prod": {
+              "twap-local": {
                 "value": "0.9880723056656177"
               }
             },
@@ -22061,7 +22061,7 @@
           "metadata": {
             "value": "0.9880713280963861",
             "sourceMetadata": {
-              "twap-local-redstone-primary-prod": {
+              "twap-local": {
                 "value": "0.9880713280963861"
               }
             },
@@ -25166,7 +25166,7 @@
           "metadata": {
             "value": "1.001144137977528",
             "sourceMetadata": {
-              "twap-local-redstone-primary-prod": {
+              "twap-local": {
                 "value": "1.001144137977528"
               }
             },
@@ -25190,7 +25190,7 @@
           "metadata": {
             "value": "1.0011511362921348",
             "sourceMetadata": {
-              "twap-local-redstone-primary-prod": {
+              "twap-local": {
                 "value": "1.0011511362921348"
               }
             },
@@ -25214,7 +25214,7 @@
           "metadata": {
             "value": "1.0011467268539325",
             "sourceMetadata": {
-              "twap-local-redstone-primary-prod": {
+              "twap-local": {
                 "value": "1.0011467268539325"
               }
             },
@@ -25238,7 +25238,7 @@
           "metadata": {
             "value": "1.001145046741573",
             "sourceMetadata": {
-              "twap-local-redstone-primary-prod": {
+              "twap-local": {
                 "value": "1.001145046741573"
               }
             },
@@ -25262,7 +25262,7 @@
           "metadata": {
             "value": "1.001146299241573",
             "sourceMetadata": {
-              "twap-local-redstone-primary-prod": {
+              "twap-local": {
                 "value": "1.001146299241573"
               }
             },
@@ -36345,7 +36345,7 @@
           "metadata": {
             "value": "3509.088411373136",
             "sourceMetadata": {
-              "twap-local-redstone-primary-prod": {
+              "twap-local": {
                 "value": "3509.088411373136"
               }
             },
@@ -36369,7 +36369,7 @@
           "metadata": {
             "value": "3509.1056933556147",
             "sourceMetadata": {
-              "twap-local-redstone-primary-prod": {
+              "twap-local": {
                 "value": "3509.1056933556147"
               }
             },
@@ -36393,7 +36393,7 @@
           "metadata": {
             "value": "3509.0985806882823",
             "sourceMetadata": {
-              "twap-local-redstone-primary-prod": {
+              "twap-local": {
                 "value": "3509.0985806882823"
               }
             },
@@ -36417,7 +36417,7 @@
           "metadata": {
             "value": "3509.0923944918436",
             "sourceMetadata": {
-              "twap-local-redstone-primary-prod": {
+              "twap-local": {
                 "value": "3509.0923944918436"
               }
             },
@@ -36441,7 +36441,7 @@
           "metadata": {
             "value": "3509.0939647207265",
             "sourceMetadata": {
-              "twap-local-redstone-primary-prod": {
+              "twap-local": {
                 "value": "3509.0939647207265"
               }
             },
