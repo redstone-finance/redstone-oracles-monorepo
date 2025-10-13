@@ -85,7 +85,7 @@ upgrade: build
 	  --wasm target/$(WASM_TARGET)/release/$(ADAPTER_CONTRACT).wasm \
 	  --source $(ACCOUNT) \
 	  --network $(NETWORK)` && \
-	cd $(DEPLOY_DIR) && stellar contract invoke \
+	stellar contract invoke \
 	  --id $(ADAPTER_ID) \
 	  --source $(ACCOUNT) \
 	  --network $(NETWORK) \
@@ -95,7 +95,7 @@ upgrade: build
 	  --new_wasm_hash $${hash}
 
 write_prices: prepare_data
-	cd $(DEPLOY_DIR) && stellar contract invoke \
+	stellar contract invoke \
 	  --id $(ADAPTER_ID) \
 	  --source $(ACCOUNT) \
 	  --network $(NETWORK) \
@@ -107,7 +107,7 @@ write_prices: prepare_data
 	  --payload $(DATA_CAT)
 
 get_prices: prepare_data
-	cd $(DEPLOY_DIR) && stellar contract invoke \
+	stellar contract invoke \
 	  --id $(ADAPTER_ID) \
 	  --source $(ACCOUNT) \
 	  --network $(NETWORK) \
@@ -118,7 +118,7 @@ get_prices: prepare_data
 	  --payload $(DATA_CAT)
 
 read_prices:
-	cd $(DEPLOY_DIR) && stellar contract invoke \
+	stellar contract invoke \
 	  --id $(ADAPTER_ID) \
 	  --source $(ACCOUNT) \
 	  --network $(NETWORK) \
@@ -128,7 +128,7 @@ read_prices:
 	  --feed_ids '[ $(FEED_IDS) ]'
 
 read_timestamp:
-	cd $(DEPLOY_DIR) && stellar contract invoke \
+	stellar contract invoke \
 	  --id $(ADAPTER_ID) \
 	  --source $(ACCOUNT) \
 	  --network $(NETWORK) \
@@ -138,7 +138,7 @@ read_timestamp:
 	  --feed_id $(FEED_ID)
 
 read_price_data:
-	cd $(DEPLOY_DIR) && stellar contract invoke \
+	stellar contract invoke \
 	  --id $(ADAPTER_ID) \
 	  --source $(ACCOUNT) \
 	  --network $(NETWORK) \
