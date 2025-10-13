@@ -330,7 +330,7 @@
     },
     "PREMIA-TWAP-60": {
       "source": [
-        "twap-local-redstone-primary-prod"
+        "twap-local"
       ]
     },
     "MNT": {
@@ -1020,7 +1020,7 @@
     },
     "ezETH-TWAP-60": {
       "source": [
-        "twap-local-redstone-primary-prod"
+        "twap-local"
       ]
     },
     "crvUSD": {
@@ -1081,7 +1081,7 @@
     },
     "USDB-TWAP-30": {
       "source": [
-        "twap-local-redstone-primary-prod"
+        "twap-local"
       ],
       "deviationCheck": {
         "deviationWithRecentValues": {
@@ -1212,7 +1212,7 @@
     },
     "SolvBTC_MERLIN/BTC-TWAP-60": {
       "source": [
-        "twap-local-redstone-primary-prod"
+        "twap-local"
       ]
     },
     "KES": {
