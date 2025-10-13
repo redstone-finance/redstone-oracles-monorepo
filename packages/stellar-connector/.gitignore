@@ -4,3 +4,5 @@
 **/.stellar
 
 **/*.custom
+
+**/test_snapshots
