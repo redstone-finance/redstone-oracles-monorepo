@@ -7532,6 +7532,96 @@
       ],
       "denomination": "USD",
       "rateFeed": false
+    },
+    "NYC_MAYOR_ELECTIONS_2025": {
+      "source": ["kalshi-api"],
+      "denomination": "USD",
+      "rateFeed": true
+    },
+    "NYC_MAYOR_ELECTIONS_2025_VOL": {
+      "source": ["kalshi-api"],
+      "denomination": "contracts",
+      "rateFeed": true
+    },
+    "NYC_MAYOR_ELECTIONS_2025_V24H": {
+      "source": ["kalshi-api"],
+      "denomination": "contracts",
+      "rateFeed": true
+    },
+    "NYC_MAYOR_ELECTIONS_2025_OI": {
+      "source": ["kalshi-api"],
+      "denomination": "contracts",
+      "rateFeed": true
+    },
+    "NYC_MAYOR_ELECTIONS_2025_LIQ": {
+      "source": ["kalshi-api"],
+      "denomination": "USD",
+      "rateFeed": true
+    },
+    "NYC_MAYOR_ELECTIONS_2025_EXP": {
+      "source": ["kalshi-api"],
+      "denomination": "timestamp",
+      "rateFeed": true
+    },
+    "DEMOCRATIC_NOMINEE_2028": {
+      "source": ["kalshi-api"],
+      "denomination": "USD",
+      "rateFeed": true
+    },
+    "DEMOCRATIC_NOMINEE_2028_VOL": {
+      "source": ["kalshi-api"],
+      "denomination": "contracts",
+      "rateFeed": true
+    },
+    "DEMOCRATIC_NOMINEE_2028_V24H": {
+      "source": ["kalshi-api"],
+      "denomination": "contracts",
+      "rateFeed": true
+    },
+    "DEMOCRATIC_NOMINEE_2028_OI": {
+      "source": ["kalshi-api"],
+      "denomination": "contracts",
+      "rateFeed": true
+    },
+    "DEMOCRATIC_NOMINEE_2028_LIQ": {
+      "source": ["kalshi-api"],
+      "denomination": "USD",
+      "rateFeed": true
+    },
+    "DEMOCRATIC_NOMINEE_2028_EXP": {
+      "source": ["kalshi-api"],
+      "denomination": "timestamp",
+      "rateFeed": true
+    },
+    "NO_OF_RATE_CUTS_2028": {
+      "source": ["kalshi-api"],
+      "denomination": "USD",
+      "rateFeed": true
+    },
+    "NO_OF_RATE_CUTS_2028_VOL": {
+      "source": ["kalshi-api"],
+      "denomination": "contracts",
+      "rateFeed": true
+    },
+    "NO_OF_RATE_CUTS_2028_V24H": {
+      "source": ["kalshi-api"],
+      "denomination": "contracts",
+      "rateFeed": true
+    },
+    "NO_OF_RATE_CUTS_2028_OI": {
+      "source": ["kalshi-api"],
+      "denomination": "contracts",
+      "rateFeed": true
+    },
+    "NO_OF_RATE_CUTS_2028_LIQ": {
+      "source": ["kalshi-api"],
+      "denomination": "USD",
+      "rateFeed": true
+    },
+    "NO_OF_RATE_CUTS_2028_EXP": {
+      "source": ["kalshi-api"],
+      "denomination": "timestamp",
+      "rateFeed": true
     }
   }
 }
