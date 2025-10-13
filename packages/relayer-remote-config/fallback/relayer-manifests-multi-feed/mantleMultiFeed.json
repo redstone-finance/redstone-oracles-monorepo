@@ -64,6 +64,13 @@
         "deviationPercentage": 0.25,
         "timeSinceLastUpdateInMilliseconds": 86400000
       }
+    },
+    "thBILL_FUNDAMENTAL/USD": {
+      "priceFeedAddress": "0x5C4c8d6f6Bf79B718F3e8399AaBdFEd01cB7e48f",
+      "updateTriggers": {
+        "deviationPercentage": 0.5,
+        "timeSinceLastUpdateInMilliseconds": 21600000
+      }
     }
   }
 }
