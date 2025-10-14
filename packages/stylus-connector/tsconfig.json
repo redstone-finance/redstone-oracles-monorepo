@@ -1,4 +1,5 @@
 {
   "extends": "../../tsconfig-common.json",
-  "include": ["src/**/*", "scripts/**/*", "test/**/*", "jest.config.ts", "abi/*.json", "abi/*.ts"]
+  "include": ["src/**/*", "scripts/**/*", "test/**/*", "jest.config.ts", "abi/*.json", "abi/*.ts"],
+  "exclude": ["node_modules", "dist", "**/target"]
 }
