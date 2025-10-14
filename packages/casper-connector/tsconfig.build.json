@@ -9,6 +9,7 @@
     "casper_keys",
     "analysis",
     "**/*spec.ts",
-    "jest.config.ts"
+    "jest.config.ts",
+    "**/target"
   ]
 }
