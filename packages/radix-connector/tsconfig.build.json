@@ -9,6 +9,7 @@
     "**/*spec.ts",
     "jest.config.ts",
     "scrypto",
-    "deployments"
+    "deployments",
+    "**/target"
   ]
 }
