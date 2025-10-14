@@ -3398,7 +3398,14 @@
     },
     "UTY_FUNDAMENTAL": {
       "source": [
-        "accountable"
+        "accountable-uty"
+      ],
+      "denomination": "USD",
+      "rateFeed": true
+    },
+    "YUSD_FUNDAMENTAL": {
+      "source": [
+        "accountable-yusd"
       ],
       "denomination": "USD",
       "rateFeed": true
