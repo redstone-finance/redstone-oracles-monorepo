@@ -2496,7 +2496,8 @@
         "alphavantagestock-usd",
         "financialmodelingprep-usd",
         "twelve-data",
-        "databento-tsla"
+        "databento-tsla",
+        "polygon"
       ],
       "denomination": "USD",
       "rateFeed": false
@@ -2507,7 +2508,8 @@
         "alphavantagestock-usd",
         "financialmodelingprep-usd",
         "twelve-data",
-        "databento-nvda"
+        "databento-nvda",
+        "polygon"
       ],
       "denomination": "USD",
       "rateFeed": false
