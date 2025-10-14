@@ -3057,6 +3057,11 @@
       "denomination": "percentage",
       "rateFeed": true
     },
+    "MI4_MANTLE_FUNDAMENTAL": {
+      "source": ["securitize-api"],
+      "denomination": "USD",
+      "rateFeed": true
+    },
     "BUIDL_FUNDAMENTAL_V2": {
       "source": ["securitize-tsso"],
       "denomination": "USD",
@@ -3185,6 +3190,11 @@
     "VBILL_SOLANA_DAILY_ACC_V2": {
       "source": ["securitize-tsso"],
       "denomination": "percentage",
+      "rateFeed": true
+    },
+    "MI4_MANTLE_FUNDAMENTAL_V2": {
+      "source": ["securitize-tsso"],
+      "denomination": "USD",
       "rateFeed": true
     },
     "egETH_FUNDAMENTAL": {
