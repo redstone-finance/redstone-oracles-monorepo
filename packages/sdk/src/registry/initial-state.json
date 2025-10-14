@@ -384,6 +384,72 @@
       "evmAddress": "0xA4CcC693371D3270DFBE914f51E1D3a3184A2Cdc",
       "ecdsaPublicKey": "0x0414dbb123a833de852fa2166856f972fc925a8499498bb47501c3da2a716616c4e5102d8b48b785de821934d518c1d1282979f1103148e8b11526ca1fd03cd4e1",
       "dateAdded": "2024-01-01"
+    },
+    "0x52997CFaDc2fB563285dD308b7Ef319dB79C27A9": {
+      "url": "https://redstone.finance",
+      "logo": "https://redstone.finance/assets/img/redstone-logo-full.svg",
+      "name": "redstone-hip3-prod-wayfarer",
+      "ipAddress": "0.0.0.0",
+      "dataServiceId": "redstone-hip3-prod",
+      "description": "Data feeds from hip3 nodes - prod node wayfarer",
+      "evmAddress": "0x52997CFaDc2fB563285dD308b7Ef319dB79C27A9",
+      "ecdsaPublicKey": "0x043523ef80483b7d716732b340267b7a89c5475f27cd96fb8fc9c50e116b074620c089fbd634193873ba515e253807727ac7b2a602a4f3cb0690b2f3a48741d6af",
+      "dateAdded": "2025-10-13"
+    },
+    "0xae8E318a2C606928a8539f06F9F42F049255f5eE": {
+      "url": "https://redstone.finance",
+      "logo": "https://redstone.finance/assets/img/redstone-logo-full.svg",
+      "name": "redstone-hip3-prod-altair",
+      "ipAddress": "0.0.0.0",
+      "dataServiceId": "redstone-hip3-prod",
+      "description": "Data feeds from hip3 nodes - prod node altair",
+      "evmAddress": "0xae8E318a2C606928a8539f06F9F42F049255f5eE",
+      "ecdsaPublicKey": "0x0493f410862da21c324af170664fbd6630431b6b9cd0f2e6c587e296660865b85a26f93da67e6e76ca3a9491a8cd5ff61336464d2d06fb8fd1f02959a7949089c5",
+      "dateAdded": "2025-10-13"
+    },
+    "0xEEE3aBBe9FD8162bEDe5401BfA7F2C98216cBBE4": {
+      "url": "https://redstone.finance",
+      "logo": "https://redstone.finance/assets/img/redstone-logo-full.svg",
+      "name": "redstone-hip3-prod-morpheus",
+      "ipAddress": "0.0.0.0",
+      "dataServiceId": "redstone-hip3-prod",
+      "description": "Data feeds from hip3 nodes - prod node morpheus",
+      "evmAddress": "0xEEE3aBBe9FD8162bEDe5401BfA7F2C98216cBBE4",
+      "ecdsaPublicKey": "0x045045f6c6fba6a596e99aefaf8161c749e1ffecfd4a0d38f04835764442ab74985b94ab01901b03f29a4f3900ae4413080b91bf6a3a61731f0cb05a28328648ea",
+      "dateAdded": "2025-10-13"
+    },
+    "0xA928ab80a3A3f286A9a8Fd998c895298b2Bc3a3E": {
+      "url": "https://redstone.finance",
+      "logo": "https://redstone.finance/assets/img/redstone-logo-full.svg",
+      "name": "redstone-hip3-prod-ciri",
+      "ipAddress": "0.0.0.0",
+      "dataServiceId": "redstone-hip3-prod",
+      "description": "Data feeds from hip3 nodes - prod node ciri",
+      "evmAddress": "0xA928ab80a3A3f286A9a8Fd998c895298b2Bc3a3E",
+      "ecdsaPublicKey": "0x046afb9c4d9b65f55bf2f7c5ea4b94f187c56f3b3e2b59965261315ebcf54085898f4b7bc080f5ccf8aa1eb4b6727a79202d5baa79a3352c0f6aef243ad7a221ed",
+      "dateAdded": "2025-10-13"
+    },
+    "0x2c96305c90215fBe76a100A69EC00099eb07A8fd": {
+      "url": "https://redstone.finance",
+      "logo": "https://redstone.finance/assets/img/redstone-logo-full.svg",
+      "name": "redstone-hip3-prod-redstone",
+      "ipAddress": "0.0.0.0",
+      "dataServiceId": "redstone-hip3-prod",
+      "description": "Data feeds from hip3 nodes - prod node redstone",
+      "evmAddress": "0x2c96305c90215fBe76a100A69EC00099eb07A8fd",
+      "ecdsaPublicKey": "0x0434ce60044705097d7f793b6a3212b1fca61a88f21d3d3296c25ab7d6bf0e99c38c3ff2f963a0cd1dc1b6df984d8f194d08985fee9f2a5cc3198dcb2225287807",
+      "dateAdded": "2025-10-13"
+    },
+    "0x1b19c451BA9afba29865Cd4202523629624bfEcF": {
+      "url": "https://redstone.finance",
+      "logo": "https://redstone.finance/assets/img/redstone-logo-full.svg",
+      "name": "redstone-hip3-prod-redstone-relayer",
+      "ipAddress": "0.0.0.0",
+      "dataServiceId": "redstone-hip3-prod",
+      "description": "On chain relayer that is also part of redstone hip3 multisig",
+      "evmAddress": "0x1b19c451BA9afba29865Cd4202523629624bfEcF",
+      "ecdsaPublicKey": "0x04e827bdf91378c28fcd847d736d042ec25d6914cf6ae254bcaa3f1f6ee4f70036e19d1d9a550b44fbb2fb0ae9b25878cca64bf32b364e44c66b0eea62dfe7bec5",
+      "dateAdded": "2025-10-13"
     }
   },
   "evolve": null,
