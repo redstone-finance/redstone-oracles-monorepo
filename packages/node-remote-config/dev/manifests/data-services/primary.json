@@ -2301,6 +2301,13 @@
       "denomination": "percentage",
       "rateFeed": true
     },
+    "MI4_MANTLE_FUNDAMENTAL": {
+      "source": [
+        "securitize-api"
+      ],
+      "denomination": "USD",
+      "rateFeed": true
+    },
     "scUSD_FUNDAMENTAL": {
       "source": [
         "ethereum-evm-fetcher-veda"
