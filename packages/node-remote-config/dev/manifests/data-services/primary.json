@@ -3524,6 +3524,20 @@
       ],
       "denomination": "kHYPE",
       "rateFeed": true
+    },
+    "SPKCC_NAV": {
+      "source": [
+        "spiko"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "eurSPKCC_NAV": {
+      "source": [
+        "spiko"
+      ],
+      "denomination": "EUR",
+      "rateFeed": false
     }
   },
   "multiPointPackages": {
