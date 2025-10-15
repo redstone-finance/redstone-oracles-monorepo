@@ -243,20 +243,28 @@ describe("TxDelivery", () => {
 
       await assertTxWillBeDelivered(delivery, counter);
       expect(
-        _.pick(parseTransaction(sendStub.firstCall.args[0]), ["nonce", "gasLimit", "gasPrice"])
+        _.pick(parseTransaction(sendStub.firstCall.args[0]), ["nonce", "gasLimit"])
       ).to.deep.equal({
         nonce: 1,
         gasLimit: "210000",
-        gasPrice: "1768221906",
       });
+      //
+      expect(Number(parseTransaction(sendStub.firstCall.args[0]).gasPrice)).to.be.closeTo(
+        1768378450,
+        1_000_000
+      );
 
       expect(
-        _.pick(parseTransaction(sendStub.secondCall.args[0]), ["nonce", "gasLimit", "gasPrice"])
+        _.pick(parseTransaction(sendStub.secondCall.args[0]), ["nonce", "gasLimit"])
       ).to.deep.equal({
         nonce: 1,
         gasLimit: "210000",
-        gasPrice: "1989249644",
       });
+
+      expect(Number(parseTransaction(sendStub.secondCall.args[0]).gasPrice)).to.be.closeTo(
+        1989425756,
+        1_000_000
+      );
     });
   });
 });

@@ -21,7 +21,7 @@ function getProvider(
   bufferSize = 2,
   maxCallDataSize = 100000000,
   autoResolveInterval = -1,
-  retryBySingleCalls = true
+  retryBySingleCalls = false
 ) {
   return MulticallDecorator(providerFabric, {
     autoResolveInterval,
@@ -44,7 +44,13 @@ const describeMultiWrapperSuite = (
 
     beforeEach(async () => {
       await hardhat.ethers.provider.send("hardhat_reset", []);
-      multicall = await hardhat.ethers.deployContract("Multicall3");
+      const contractFactory = new ContractFactory(
+        RedstoneMulticall3Abi,
+        RedstoneMulticall3ByteCode,
+        (await hardhat.ethers.getSigners())[0]
+      );
+
+      multicall = await contractFactory.deploy();
       multicallFnSpy.resetHistory();
 
       counter = await deployCounter(hardhat.ethers.provider);
@@ -91,11 +97,7 @@ const describeMultiWrapperSuite = (
       expect(multicallFnSpy.getCalls().length).to.eq(1);
     });
 
-    it("should throw error on fail (error should match with ethers error), with one contract", async () => {
-      const [ethersProviderResult] = await Promise.allSettled([
-        counter.connect(hardhat.ethers.provider).fail(),
-      ]);
-
+    it("should throw error on fail with one contract", async () => {
       const multicallProvider = getProvider(multicall.address, providerFabric);
       counter = counter.connect(multicallProvider);
 
@@ -111,15 +113,31 @@ const describeMultiWrapperSuite = (
       expect(resolvedResultCounter.value.toNumber()).to.eq(1);
       expect(resolvedResultCounter.status).to.eq("fulfilled");
 
-      expect(resultCounter2).to.deep.eq(ethersProviderResult);
+      expect(resultCounter2.status).to.eq("rejected");
       expect(multicallFnSpy.getCalls().length).to.eq(1);
     });
 
-    it("should throw error on fail (error should match with ethers error), with two contracts", async () => {
-      const [ethersProviderResult] = await Promise.allSettled([
-        counter.connect(hardhat.ethers.provider).fail(),
+    it("should throw error on fail with one contract and named error", async () => {
+      const multicallProvider = getProvider(multicall.address, providerFabric);
+      counter = counter.connect(multicallProvider);
+
+      const blockTag = await multicallProvider.getBlockNumber();
+
+      const [resultCounter, resultCounter2] = await Promise.allSettled([
+        counter.getCount({ blockTag }),
+        counter.failNamedError({ blockTag }),
       ]);
 
+      const resolvedResultCounter = resultCounter as PromiseFulfilledResult<BigNumber>;
+
+      expect(resultCounter2.status).to.eq("rejected");
+      expect(resolvedResultCounter.value.toNumber()).to.eq(1);
+      expect(resolvedResultCounter.status).to.eq("fulfilled");
+
+      expect(multicallFnSpy.getCalls().length).to.eq(1);
+    });
+
+    it("should throw error on fail with two contracts", async () => {
       const multicallProvider = getProvider(multicall.address, providerFabric);
       counter = counter.connect(multicallProvider);
 
@@ -134,10 +152,11 @@ const describeMultiWrapperSuite = (
 
       const resolvedResultCounter = resultCounter as PromiseFulfilledResult<BigNumber>;
 
+      expect(resultCounter2.status).to.eq("rejected");
       expect(resolvedResultCounter.value).to.eq(0);
       expect(resolvedResultCounter.status).to.eq("fulfilled");
 
-      expect(resultCounter2).to.deep.eq(ethersProviderResult);
+      // expect(resultCounter2).to.deep.eq(ethersProviderResult);
       expect(multicallFnSpy.getCalls().length).to.eq(1);
     });
 
@@ -184,15 +203,7 @@ const describeMultiWrapperSuite = (
     });
 
     it("should fail for infiniteLoop call, but succeed for proper call", async () => {
-      const contractFactory = new ContractFactory(
-        RedstoneMulticall3Abi,
-        RedstoneMulticall3ByteCode,
-        (await hardhat.ethers.getSigners())[0]
-      );
-
-      const multicall3 = await contractFactory.deploy();
-
-      const multicallProvider = getProvider(multicall3.address, providerFabric, 2);
+      const multicallProvider = getProvider(multicall.address, providerFabric, 2);
       counter = counter.connect(multicallProvider);
 
       const blockNumber = await multicallProvider.getBlockNumber();
@@ -208,8 +219,16 @@ const describeMultiWrapperSuite = (
       expect(resultCounter2.status).to.eq("rejected");
       expect(multicallFnSpy.getCalls().length).to.eq(1);
     });
+
     it("it should fallback to provider.call when multicall fails", async () => {
-      const multicallProvider = getProvider(NOT_MULTICALL_ADDRESS, providerFabric, 2);
+      const multicallProvider = getProvider(
+        NOT_MULTICALL_ADDRESS,
+        providerFabric,
+        2,
+        undefined,
+        undefined,
+        true
+      );
 
       counter = counter.connect(multicallProvider);
 
@@ -223,31 +242,15 @@ const describeMultiWrapperSuite = (
       expect(multicallFnSpy.getCalls().length).to.eq(1);
     });
 
-    it("it should not fallback to provider.call when multicall fails and retryBySingleCalls disabled", async () => {
+    it("it should fallback to provider.call when single call in multicall fails", async () => {
       const multicallProvider = getProvider(
-        NOT_MULTICALL_ADDRESS,
+        multicall.address,
         providerFabric,
         2,
-        100000000,
-        -1,
-        false
+        undefined,
+        undefined,
+        true
       );
-
-      counter = counter.connect(multicallProvider);
-
-      const blockTag = await multicallProvider.getBlockNumber();
-
-      const [count, count2] = await Promise.allSettled([
-        counter.getCount({ blockTag }),
-        counter.getCount({ blockTag }),
-      ]);
-      expect(count.status).to.eq("rejected");
-      expect(count2.status).to.eq("rejected");
-      expect(multicallFnSpy.getCalls().length).to.eq(1);
-    });
-
-    it("it should fallback to provider.call when single call in multicall fails", async () => {
-      const multicallProvider = getProvider(NOT_MULTICALL_ADDRESS, providerFabric, 2);
 
       counter = counter.connect(multicallProvider);
 
@@ -306,7 +309,14 @@ const describeMultiWrapperSuite = (
         return provider;
       };
 
-      const multicallProvider = getProvider(NOT_MULTICALL_ADDRESS, customProviderFabric, 2);
+      const multicallProvider = getProvider(
+        NOT_MULTICALL_ADDRESS,
+        customProviderFabric,
+        2,
+        undefined,
+        undefined,
+        true
+      );
 
       counter = counter.connect(multicallProvider);
 

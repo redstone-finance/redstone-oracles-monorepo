@@ -52,7 +52,7 @@ const parseMulticallConfig = (opts: MulticallDecoratorOptions) => {
       RedstoneCommon.getFromEnv("MULTICALL_MAX_CALL_DATA_SIZE", z.number().default(50_000)), // 0.05MB
     retryBySingleCalls:
       opts.retryBySingleCalls ??
-      RedstoneCommon.getFromEnv("MULTICALL_RETRY_BY_SINGLE_CALLS", z.boolean().default(true)),
+      RedstoneCommon.getFromEnv("MULTICALL_RETRY_BY_SINGLE_CALLS", z.boolean().default(false)),
   };
 };
 
@@ -88,6 +88,10 @@ export function MulticallDecorator<T extends providers.Provider>(
           // we should handle fallback specially because they can fail partially
           if (result3s[i].fallbackRejectReason) {
             callEntries[i].reject(result3s[i].fallbackRejectReason);
+          } else if (!result3s[i].success) {
+            callEntries[i].reject(
+              `call failed with CALL_EXCEPTION to=${callEntries[i].target} blockTag=${callEntries[i].blockTag} callData=${callEntries[i].callData} returnData=${result3s[i].returnData}`
+            );
           } else {
             callEntries[i].resolve(result3s[i].returnData);
           }
