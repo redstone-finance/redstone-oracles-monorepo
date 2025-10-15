@@ -6,6 +6,7 @@ contract Counter {
   event Inc(uint256 count);
   uint256 count;
   address multicallAddress;
+  error NamedError(uint256 x);
 
   mapping(uint256 => uint256) gasBurnerMap;
 
@@ -26,6 +27,10 @@ contract Counter {
 
   function fail() external pure {
     revert("This functions always reverts.");
+  }
+
+  function failNamedError() external pure {
+    revert NamedError(3);
   }
 
   function returnCountIfNotMulticall() external view returns (uint256) {
