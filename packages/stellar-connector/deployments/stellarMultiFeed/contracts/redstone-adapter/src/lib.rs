@@ -3,7 +3,6 @@ extern crate alloc;
 
 mod config;
 mod event;
-mod test;
 mod utils;
 
 use common::{
@@ -73,7 +72,7 @@ impl RedStoneAdapter {
         updater: Address,
         feed_ids: Vec<String>,
         payload: Bytes,
-    ) -> Result<(u64, Vec<(String, U256)>), Error> {
+    ) -> Result<(), Error> {
         updater.require_auth();
 
         env.storage().instance().extend_ttl(
@@ -106,11 +105,10 @@ impl RedStoneAdapter {
 
         env.events().publish_event(&WritePrices {
             updated_feeds,
-            payload,
             updater,
         });
 
-        Ok((package_timestamp, prices))
+        Ok(())
     }
 
     pub fn read_prices(env: &Env, feed_ids: Vec<String>) -> Result<Vec<U256>, Error> {
