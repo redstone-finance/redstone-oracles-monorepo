@@ -1326,6 +1326,22 @@
       "twoDimensionalFees": false,
       "isMainnet": false
     },
+    "incentiv": {
+      "name": "Incentiv Mainnet",
+      "networkId": 24101,
+      "currencySymbol": "CENT",
+      "publicRpcUrls": ["https://rpc.incentiv.io", "https://rpc-archive.incentiv.io"],
+      "avgBlockTimeMs": 5500,
+      "multicall3": {
+        "address": "0xaD6CC5a465E5c8284a49eC9eD10EFE275460678c",
+        "type": "RedstoneMulticall3",
+        "gasLimitPerCall": 1000000
+      },
+      "isAuctionModel": false,
+      "fallbackToEthMaxPriorityFeePerGas": true,
+      "twoDimensionalFees": false,
+      "isMainnet": true
+    },
     "edenTestnet": {
       "name": "Eden Testnet (Celestia)",
       "networkId": 3735928814,
