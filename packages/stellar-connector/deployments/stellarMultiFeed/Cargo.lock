@@ -24,15 +24,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "arbitrary"
-version = "1.3.2"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "7d5a26814d8dcb93b0e5a0ff3c6d80a8843bafb21b39e8e18a6f05471870e110"
-dependencies = [
- "derive_arbitrary",
-]
-
-[[package]]
 name = "ark-bls12-381"
 version = "0.4.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -302,16 +293,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "ctor"
-version = "0.2.9"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "32a2785755761f3ddc1492979ce1e48d2c00d09311c39e4466429188f3dd6501"
-dependencies = [
- "quote",
- "syn 2.0.106",
-]
-
-[[package]]
 name = "curve25519-dalek"
 version = "4.1.3"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -408,17 +389,6 @@ dependencies = [
  "proc-macro2",
  "quote",
  "syn 1.0.109",
-]
-
-[[package]]
-name = "derive_arbitrary"
-version = "1.3.2"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "67e77553c4162a157adbf834ebae5b415acbecbeafc7a74b0e886657506a7611"
-dependencies = [
- "proc-macro2",
- "quote",
- "syn 2.0.106",
 ]
 
 [[package]]
@@ -947,17 +917,8 @@ dependencies = [
 
 [[package]]
 name = "redstone"
-version = "3.0.0-pre3"
-source = "git+https://github.com/redstone-finance/rust-sdk?tag=3.0.0-pre3#72a39a7a8f7564e9bd3dc3de867b9479434b99ca"
-dependencies = [
- "hex-literal 0.4.1",
- "thiserror 2.0.16",
-]
-
-[[package]]
-name = "redstone"
-version = "3.0.0-pre4"
-source = "git+https://github.com/redstone-finance/rust-sdk?tag=3.0.0-pre4#de1deeb2d02887fd03e5d295a17ef16342cccfc8"
+version = "3.0.0-pre5"
+source = "git+https://github.com/redstone-finance/rust-sdk?tag=3.0.0-pre5#3111e77213b896aadbd3e9db06a308490295d30a"
 dependencies = [
  "hex-literal 0.4.1",
  "soroban-sdk",
@@ -969,10 +930,8 @@ name = "redstone-adapter"
 version = "1.0.0"
 dependencies = [
  "common",
- "hex",
  "hex-literal 1.0.0",
- "redstone 3.0.0-pre4",
- "redstone-testing",
+ "redstone",
  "soroban-sdk",
 ]
 
@@ -982,15 +941,6 @@ version = "1.0.0"
 dependencies = [
  "common",
  "soroban-sdk",
-]
-
-[[package]]
-name = "redstone-testing"
-version = "0.3.3"
-source = "git+https://github.com/redstone-finance/rust-sdk?tag=redstone-testing-v0.3.3#6113cd7771916a5ce5b51673fd5dcdd757a627ad"
-dependencies = [
- "hex",
- "redstone 3.0.0-pre3",
 ]
 
 [[package]]
@@ -1224,12 +1174,10 @@ version = "23.0.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "00067f52e8bbf1abf0de03fe3e2fbb06910893cfbe9a7d9093d6425658833ff3"
 dependencies = [
- "arbitrary",
  "crate-git-revision",
  "ethnum",
  "num-derive",
  "num-traits",
- "serde",
  "soroban-env-macros",
  "soroban-wasmi",
  "static_assertions",
@@ -1299,38 +1247,19 @@ dependencies = [
 ]
 
 [[package]]
-name = "soroban-ledger-snapshot"
-version = "23.0.2"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "3823372b72cab2e7ff2ced62bbffa11fce8da0713a224f122141558cab174647"
-dependencies = [
- "serde",
- "serde_json",
- "serde_with",
- "soroban-env-common",
- "soroban-env-host",
- "thiserror 1.0.69",
-]
-
-[[package]]
 name = "soroban-sdk"
 version = "23.0.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "af0e5bf6702f5952d78c5b2bcd05b0349f9a570cc62028d90dac3710b40cbe65"
 dependencies = [
- "arbitrary",
  "bytes-lit",
  "crate-git-revision",
- "ctor",
- "derive_arbitrary",
- "ed25519-dalek",
  "rand",
  "rustc_version",
  "serde",
  "serde_json",
  "soroban-env-guest",
  "soroban-env-host",
- "soroban-ledger-snapshot",
  "soroban-sdk-macros",
  "stellar-strkey",
 ]
@@ -1434,7 +1363,6 @@ version = "23.0.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "89d2848e1694b0c8db81fd812bfab5ea71ee28073e09ccc45620ef3cf7a75a9b"
 dependencies = [
- "arbitrary",
  "base64",
  "cfg_eval",
  "crate-git-revision",
