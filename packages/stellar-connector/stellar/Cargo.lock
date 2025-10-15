@@ -992,8 +992,8 @@ dependencies = [
 
 [[package]]
 name = "redstone"
-version = "3.0.0-pre4"
-source = "git+https://github.com/redstone-finance/rust-sdk?tag=3.0.0-pre4#de1deeb2d02887fd03e5d295a17ef16342cccfc8"
+version = "3.0.0-pre5"
+source = "git+https://github.com/redstone-finance/rust-sdk?tag=3.0.0-pre5#3111e77213b896aadbd3e9db06a308490295d30a"
 dependencies = [
  "hex-literal 0.4.1",
  "soroban-sdk",
@@ -1007,7 +1007,7 @@ dependencies = [
  "common",
  "hex",
  "hex-literal 1.0.0",
- "redstone 3.0.0-pre4",
+ "redstone 3.0.0-pre5",
  "redstone-testing",
  "soroban-sdk",
 ]

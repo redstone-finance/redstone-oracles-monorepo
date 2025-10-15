@@ -1,6 +1,5 @@
 use alloc::vec::Vec;
 
-use hex_literal::hex;
 use redstone::{
     core::config::Config as RedstoneConfig,
     network::error::Error,
@@ -9,18 +8,22 @@ use redstone::{
 };
 use soroban_sdk::{Address, Env};
 
-const UPDATER_COUNT: usize = 4;
+mod config_prod;
+
+use config_prod as config_values;
+use config_values::{
+    SignerAddressBs, MAX_TIMESTAMP_AHEAD_MS, MAX_TIMESTAMP_DELAY_MS,
+    REDSTONE_PRIMARY_PROD_ALLOWED_SIGNERS, SIGNER_COUNT, TRUSTED_UPDATERS, UPDATER_COUNT,
+};
 
 pub struct Config {
     pub signer_count_threshold: u8,
-    pub signers: [SignerAddressBs; 5],
+    pub signers: [SignerAddressBs; SIGNER_COUNT],
     pub trusted_updaters: [&'static str; UPDATER_COUNT],
     pub max_timestamp_delay_ms: u64,
     pub max_timestamp_ahead_ms: u64,
     pub min_interval_between_updates_ms: u64,
 }
-
-pub type SignerAddressBs = [u8; 20];
 
 pub const DATA_STALENESS: TimestampMillis = TimestampMillis::from_millis(30 * 60 * 60 * 1000);
 
@@ -32,25 +35,10 @@ pub const STELLAR_CONFIG: Config = Config {
     signer_count_threshold: 3,
     signers: REDSTONE_PRIMARY_PROD_ALLOWED_SIGNERS,
     trusted_updaters: TRUSTED_UPDATERS,
-    max_timestamp_ahead_ms: 60 * 1_000,
-    max_timestamp_delay_ms: 3 * 60 * 1_000,
+    max_timestamp_ahead_ms: MAX_TIMESTAMP_AHEAD_MS,
+    max_timestamp_delay_ms: MAX_TIMESTAMP_DELAY_MS,
     min_interval_between_updates_ms: 2 * 24 * 60 * 60 * 1_000, // 2 days
 };
-
-const REDSTONE_PRIMARY_PROD_ALLOWED_SIGNERS: [SignerAddressBs; 5] = [
-    hex!("8bb8f32df04c8b654987daaed53d6b6091e3b774"),
-    hex!("deb22f54738d54976c4c0fe5ce6d408e40d88499"),
-    hex!("51ce04be4b3e32572c4ec9135221d0691ba7d202"),
-    hex!("dd682daec5a90dd295d14da4b0bec9281017b5be"),
-    hex!("9c5ae89c4af6aa32ce58588dbaf90d18a855b6de"),
-];
-
-const TRUSTED_UPDATERS: [&str; UPDATER_COUNT] = [
-    "GASNOA72CECDUZ5GEUK6WFINSASEG6R3WYZB2DE2CGDU7YI7GC2QPSFX",
-    "GBES67CMQHFXTDNO7NTW7IP5GHJ2K5NSLWXN5JP7BVQR7JLDIKBT3NTF",
-    "GARZ4YWUOMCVPFTYI57N3TQEU6PM52RGG3Y46DVOBB4TG3TG7JORFQCK",
-    "GD5JF5IP4PRQLYICDLZWNE2IXN663DPJMSYUKAWZH7PVU65RLDWWSMMM",
-];
 
 impl Config {
     pub fn redstone_signers(&self) -> Vec<SignerAddress> {

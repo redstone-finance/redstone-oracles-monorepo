@@ -1,5 +1,5 @@
 use common::PriceData;
-use soroban_sdk::{contracttype, symbol_short, xdr::ToXdr, Address, Bytes, Event, Symbol, Vec};
+use soroban_sdk::{contracttype, symbol_short, xdr::ToXdr, Address, Event, Symbol, Vec};
 
 const WRITE_PRICES_TOPIC: Symbol = symbol_short!("REDSTONE");
 
@@ -8,7 +8,6 @@ const WRITE_PRICES_TOPIC: Symbol = symbol_short!("REDSTONE");
 pub struct WritePrices {
     pub updater: Address,
     pub updated_feeds: Vec<PriceData>,
-    pub payload: Bytes,
 }
 
 impl Event for WritePrices {
