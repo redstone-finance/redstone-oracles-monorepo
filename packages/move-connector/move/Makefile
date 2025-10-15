@@ -13,8 +13,8 @@ install-cli:
 	curl -LO https://github.com/movementlabsxyz/homebrew-movement-cli/releases/download/bypass-homebrew/movement-macos-arm64.tar.gz
 	tar -xzf movement-macos-arm64.tar.gz
 	rm movement-macos-arm64.tar.gz
-	chmod +x macos-arm64/movement
-	sudo mv macos-arm64/movement /usr/local/bin/movement
+	chmod +x movement
+	sudo mv movement /usr/local/bin/movement
 	brew install aptos
 
 init-movement:
