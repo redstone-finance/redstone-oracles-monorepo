@@ -70,10 +70,7 @@ export class StellarTxDeliveryMan {
   private async sendTransactionWithIteration(txCreator: TxCreator, iteration: number) {
     const tx = await txCreator();
 
-    const multiplier = this.config.gasMultiplier ** iteration;
-    const baseFee = BigInt(
-      Math.round(Math.min(this.config.gasBase * multiplier, this.config.gasLimit))
-    );
+    const baseFee = this.config.gasLimit;
 
     this.logger.info(
       `Sending transaction; Attempt #${iteration + 1} (baseFee: ${baseFee} stroops)`
