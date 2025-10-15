@@ -45,6 +45,14 @@ impl RedStoneAdapter {
         Self::_change_owner(env, new_owner)
     }
 
+    pub fn accept_ownership(env: &Env) -> Result<(), Error> {
+        Self::_accept_ownership(env)
+    }
+
+    pub fn cancel_ownership_transfer(env: &Env) -> Result<(), Error> {
+        Self::_cancel_ownership_transfer(env)
+    }
+
     pub fn upgrade(env: &Env, new_wasm_hash: BytesN<32>) -> Result<(), Error> {
         Self::_upgrade(env, new_wasm_hash)
     }
