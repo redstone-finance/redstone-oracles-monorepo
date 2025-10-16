@@ -178,7 +178,9 @@
         "lbank-usdt",
         "mexc-usdt",
         "okx-usdt",
-        "uniswap-v3-ethereum-dai-100"
+        "uniswap-v3-ethereum-dai-100",
+        "uniswap-v4-ethereum-usdt-1",
+        "uniswap-v4-arbitrumone-usdt-8"
       ],
       "deviationCheck": {
         "deviationWithRecentValues": {
