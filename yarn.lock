@@ -10076,7 +10076,6 @@ __metadata:
     "@redstone-finance/http-client": "workspace:*"
     "@redstone-finance/internal-utils": "workspace:*"
     "@redstone-finance/mqtt5-client": "workspace:*"
-    "@redstone-finance/sdk": "workspace:*"
     "@redstone-finance/utils": "workspace:*"
     dotenv: "npm:^16.0.3"
     ethers: "npm:^5.7.2"
