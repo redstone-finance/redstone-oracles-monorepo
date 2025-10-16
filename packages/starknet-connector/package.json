@@ -20,9 +20,11 @@
   },
   "dependencies": {
     "@redstone-finance/sdk": "workspace:*",
+    "@redstone-finance/utils": "workspace:*",
     "dotenv": "^16.0.3",
     "ethers": "^5.7.2",
-    "starknet": "^6.6.6"
+    "starknet": "^6.6.6",
+    "zod": "^3.22.4"
   },
   "overrides": {
     "elliptic": "^6.6.1"
