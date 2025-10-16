@@ -34,7 +34,7 @@ export const updateUsingOevAuction = async (
     if (error?.message?.includes("no solver operations received")) {
       throw new Error(`No solver operations received`);
     } else {
-      throw new Error(`Unexpected behaviour ${JSON.stringify(error)}`);
+      throw new Error(`Unexpected behaviour ${JSON.stringify(error)} for tx ${txDeliveryCalldata}`);
     }
   }
 

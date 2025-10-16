@@ -1,5 +1,5 @@
 import { DataPackagesWrapper } from "@redstone-finance/evm-connector";
-import { ContractParamsProvider } from "@redstone-finance/sdk";
+import { ContractParamsProvider, DataPackagesResponse } from "@redstone-finance/sdk";
 import { loggerFactory, RedstoneCommon, Tx } from "@redstone-finance/utils";
 import { utils } from "ethers";
 import { MultiFeedAdapterWithoutRounds } from "../../../typechain-types";
@@ -43,12 +43,14 @@ export class OevMultiAuctionsTxDeliveryMan implements Tx.ITxDeliveryMan {
     const auctionPromises = [];
 
     const metadataTimestamp = Date.now();
-    for (const feedId of paramsProvider.getDataFeedIds()) {
+    const dataPackages = await paramsProvider.requestDataPackages();
+    const dataPackagesFeeds = Object.keys(dataPackages);
+    for (const feedId of dataPackagesFeeds) {
       this.logger.log("Oev Auction for FeedId", feedId);
-      const singleFeedParamProvider = paramsProvider.copyForFeedId(feedId);
 
       const updateUsingOevAuctionPromise = this.makeSingleFeedUpdateTx(
-        singleFeedParamProvider,
+        feedId,
+        dataPackages,
         metadataTimestamp
       ).then((tx) => updateUsingOevAuction(this.relayerConfig, tx.data, this.adapterContract));
 
@@ -60,25 +62,24 @@ export class OevMultiAuctionsTxDeliveryMan implements Tx.ITxDeliveryMan {
     await RedstoneCommon.timeout(
       Promise.all(auctionPromises),
       timeout,
-      `Updating using OEV auction didn't succeed in ${timeout} [ms].`
+      `Updating using OEV auctions didn't succeed in ${timeout} [ms].`
     );
   }
 
   async makeSingleFeedUpdateTx(
-    paramsProvider: ContractParamsProvider,
+    feedId: string,
+    dataPackages: DataPackagesResponse,
     metadataTimestamp: number
   ): Promise<Tx.TxDeliveryCall> {
-    const dataFeedsAsBytes32 = paramsProvider.getDataFeedIds().map(utils.formatBytes32String);
-    const dataPackages = await paramsProvider.requestDataPackages();
-    const dataPackagesWrapper = new DataPackagesWrapper<MultiFeedAdapterWithoutRounds>(
-      dataPackages
-    );
-
+    const feedAsBytes32 = utils.formatBytes32String(feedId);
+    const dataPackagesWrapper = new DataPackagesWrapper<MultiFeedAdapterWithoutRounds>({
+      feedId: dataPackages[feedId],
+    });
     dataPackagesWrapper.setMetadataTimestamp(metadataTimestamp);
     const wrappedContract = dataPackagesWrapper.overwriteEthersContract(this.adapterContract);
 
     const txCall = Tx.convertToTxDeliveryCall(
-      await wrappedContract.populateTransaction["updateDataFeedsValuesPartial"](dataFeedsAsBytes32)
+      await wrappedContract.populateTransaction["updateDataFeedsValuesPartial"]([feedAsBytes32])
     );
 
     return txCall;
