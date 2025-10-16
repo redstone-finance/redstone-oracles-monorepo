@@ -18,6 +18,7 @@
     "test": ""
   },
   "dependencies": {
+    "@mysten/sui": "1.37.3",
     "@redstone-finance/chain-configs": "workspace:*",
     "@redstone-finance/evm-connector": "workspace:*",
     "@redstone-finance/fuel-connector": "workspace:*",
@@ -26,11 +27,15 @@
     "@redstone-finance/on-chain-relayer-common": "workspace:*",
     "@redstone-finance/radix-connector": "workspace:*",
     "@redstone-finance/rpc-providers": "workspace:*",
+    "@redstone-finance/sdk": "workspace:*",
     "@redstone-finance/solana-connector": "workspace:*",
     "@redstone-finance/stellar-connector": "workspace:*",
     "@redstone-finance/sui-connector": "workspace:*",
     "@redstone-finance/utils": "workspace:*",
+    "@solana/web3.js": "^1.98.2",
+    "@stellar/stellar-sdk": "14.2.0",
     "ethers": "^5.7.2",
+    "fuels": "^0.97.0",
     "lodash": "^4.17.21"
   },
   "files": [

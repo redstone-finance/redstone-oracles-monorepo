@@ -19,7 +19,9 @@
   },
   "dependencies": {
     "@gelatonetwork/web3-functions-sdk": "^2.4.4",
-    "@redstone-finance/on-chain-relayer": "workspace:*"
+    "@redstone-finance/on-chain-relayer": "workspace:*",
+    "@redstone-finance/sdk": "workspace:*",
+    "@redstone-finance/utils": "workspace:*"
   },
   "license": "MIT",
   "devDependencies": {
