@@ -9545,6 +9545,7 @@ __metadata:
     "@types/chai": "npm:^4.3.4"
     "@types/mocha": "npm:^10.0.1"
     chai: "npm:^4.3.10"
+    chalk: "npm:^4.1.2"
     dayjs: "npm:^1.11.12"
     dotenv: "npm:^16.0.3"
     ethers: "npm:^5.7.2"
@@ -9562,6 +9563,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@redstone-finance/chain-orchestrator@workspace:packages/chain-orchestrator"
   dependencies:
+    "@mysten/sui": "npm:1.37.3"
     "@redstone-finance/chain-configs": "workspace:*"
     "@redstone-finance/evm-connector": "workspace:*"
     "@redstone-finance/fuel-connector": "workspace:*"
@@ -9570,11 +9572,15 @@ __metadata:
     "@redstone-finance/on-chain-relayer-common": "workspace:*"
     "@redstone-finance/radix-connector": "workspace:*"
     "@redstone-finance/rpc-providers": "workspace:*"
+    "@redstone-finance/sdk": "workspace:*"
     "@redstone-finance/solana-connector": "workspace:*"
     "@redstone-finance/stellar-connector": "workspace:*"
     "@redstone-finance/sui-connector": "workspace:*"
     "@redstone-finance/utils": "workspace:*"
+    "@solana/web3.js": "npm:^1.98.2"
+    "@stellar/stellar-sdk": "npm:14.2.0"
     ethers: "npm:^5.7.2"
+    fuels: "npm:^0.97.0"
     lodash: "npm:^4.17.21"
   languageName: unknown
   linkType: soft
@@ -9638,6 +9644,7 @@ __metadata:
     "@parity/hardhat-polkadot": "npm:^0.1.5"
     "@redstone-finance/contract-deployments": "workspace:*"
     "@redstone-finance/evm-connector": "workspace:*"
+    "@redstone-finance/internal-utils": "workspace:*"
     "@redstone-finance/on-chain-relayer": "workspace:*"
     "@redstone-finance/on-chain-relayer-common": "workspace:*"
     "@redstone-finance/utils": "workspace:*"
@@ -9728,6 +9735,7 @@ __metadata:
     "@redstone-finance/on-chain-relayer": "workspace:*"
     "@redstone-finance/on-chain-relayer-common": "workspace:*"
     "@redstone-finance/protocol": "workspace:*"
+    "@redstone-finance/remote-config": "workspace:*"
     "@redstone-finance/rpc-providers": "workspace:*"
     "@redstone-finance/sdk": "workspace:*"
     "@redstone-finance/utils": "workspace:*"
@@ -9740,6 +9748,7 @@ __metadata:
     "@types/semver": "npm:^7.7.0"
     axios: "npm:^1.8.4"
     chai: "npm:^4.3.10"
+    chai-as-promised: "npm:^7.1.1"
     chalk: "npm:^4.1.2"
     diff: "npm:^7.0.0"
     dotenv: "npm:^16.0.3"
@@ -9767,6 +9776,7 @@ __metadata:
     "@redstone-finance/utils": "workspace:*"
     "@types/autocannon": "npm:^7.12.5"
     autocannon: "npm:^7.15.0"
+    dotenv: "npm:^16.0.3"
     esbuild: "npm:^0.19.9"
     fastify: "npm:^4.25.1"
     pino: "npm:^9.7.0"
@@ -9910,8 +9920,12 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@redstone-finance/fetchers@workspace:packages/fetchers"
   dependencies:
+    "@ethersproject/abi": "npm:^5.6.3"
+    "@ethersproject/abstract-provider": "npm:^5.7.0"
+    "@ethersproject/constants": "npm:^5.7.0"
     "@redstone-finance/chain-configs": "workspace:*"
     "@redstone-finance/hl-hip3": "workspace:*"
+    "@redstone-finance/http-client": "workspace:*"
     "@redstone-finance/internal-utils": "workspace:*"
     "@redstone-finance/node-commons": "workspace:*"
     "@redstone-finance/remote-config": "workspace:*"
@@ -9983,6 +9997,8 @@ __metadata:
     "@redstone-finance/on-chain-relayer": "workspace:*"
     "@redstone-finance/protocol": "workspace:*"
     "@redstone-finance/rpc-providers": "workspace:*"
+    "@redstone-finance/sdk": "workspace:*"
+    "@redstone-finance/utils": "workspace:*"
     "@tsconfig/recommended": "npm:1.0.2"
     "@typechain/ethers-v5": "npm:^10.2.0"
     "@typechain/hardhat": "npm:^6.1.2"
@@ -10056,6 +10072,8 @@ __metadata:
     "@redstone-finance/mqtt5-client": "workspace:*"
     "@redstone-finance/utils": "workspace:*"
     dotenv: "npm:^16.0.3"
+    ethers: "npm:^5.7.2"
+    lodash: "npm:^4.17.21"
     zod: "npm:^3.22.4"
   languageName: unknown
   linkType: soft
@@ -10140,6 +10158,7 @@ __metadata:
     "@redstone-finance/node-remote-config": "workspace:*"
     "@redstone-finance/utils": "workspace:*"
     "@types/aws-lambda": "npm:^8.10.145"
+    dotenv: "npm:^16.0.3"
     zod: "npm:^3.22.4"
   languageName: unknown
   linkType: soft
@@ -10152,7 +10171,9 @@ __metadata:
     "@redstone-finance/internal-utils": "workspace:*"
     "@redstone-finance/node-remote-config": "workspace:*"
     "@redstone-finance/utils": "workspace:*"
+    "@types/lodash": "npm:^4.14.195"
     ethers: "npm:^5.7.2"
+    lodash: "npm:^4.17.21"
   languageName: unknown
   linkType: soft
 
@@ -10244,11 +10265,13 @@ __metadata:
     "@redstone-finance/chain-configs": "workspace:*"
     "@redstone-finance/fetchers": "workspace:*"
     "@redstone-finance/internal-utils": "workspace:*"
+    "@redstone-finance/node-commons": "workspace:*"
     "@redstone-finance/node-remote-config": "workspace:*"
     "@redstone-finance/utils": "workspace:*"
     "@types/aws-lambda": "npm:^8.10.145"
     axios: "npm:^1.8.4"
     ccxt: "npm:^4.4.89"
+    dotenv: "npm:^16.0.3"
     lodash: "npm:^4.17.21"
     zod: "npm:^3.22.4"
   languageName: unknown
@@ -10305,6 +10328,7 @@ __metadata:
     "@redstone-finance/monitoring-manifests": "workspace:*"
     "@redstone-finance/node-remote-config": "workspace:*"
     "@redstone-finance/sdk": "workspace:*"
+    "@redstone-finance/utils": "workspace:*"
     dotenv: "npm:^16.0.3"
     zod: "npm:^3.22.4"
   languageName: unknown
@@ -10314,6 +10338,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@redstone-finance/lambda-dex-price-shift-cost-estimator@workspace:packages/lambda/lambda-DEX-price-shift-cost-estimator"
   dependencies:
+    "@influxdata/influxdb-client": "npm:^1.35.0"
     "@redstone-finance/fetchers": "workspace:*"
     "@redstone-finance/internal-utils": "workspace:*"
     "@redstone-finance/node-commons": "workspace:*"
@@ -10321,6 +10346,7 @@ __metadata:
     "@redstone-finance/oracle-node": "workspace:*"
     "@redstone-finance/utils": "workspace:*"
     "@types/aws-lambda": "npm:^8.10.145"
+    axios: "npm:^1.8.4"
     dotenv: "npm:^16.0.3"
     zod: "npm:^3.22.4"
   languageName: unknown
@@ -10416,6 +10442,7 @@ __metadata:
     "@redstone-finance/internal-utils": "workspace:*"
     "@redstone-finance/monitoring-manifests": "workspace:*"
     "@redstone-finance/node-remote-config": "workspace:*"
+    "@redstone-finance/on-chain-relayer-common": "workspace:*"
     "@redstone-finance/utils": "workspace:*"
     "@types/aws-lambda": "npm:^8.10.145"
     dotenv: "npm:^16.0.3"
@@ -10433,7 +10460,9 @@ __metadata:
     "@redstone-finance/node-remote-config": "workspace:*"
     "@redstone-finance/utils": "workspace:*"
     "@types/aws-lambda": "npm:^8.10.145"
+    "@types/lodash": "npm:^4.14.195"
     dotenv: "npm:^16.0.3"
+    lodash: "npm:^4.17.21"
     zod: "npm:^3.22.4"
   languageName: unknown
   linkType: soft
@@ -10450,6 +10479,10 @@ __metadata:
     "@redstone-finance/utils": "workspace:*"
     "@types/aws-lambda": "npm:^8.10.145"
     axios: "npm:^1.8.4"
+    axios-debug-log: "npm:^1.0.0"
+    dotenv: "npm:^16.0.3"
+    lodash: "npm:^4.17.21"
+    zod: "npm:^3.22.4"
   languageName: unknown
   linkType: soft
 
@@ -10547,6 +10580,7 @@ __metadata:
     "@redstone-finance/node-remote-config": "workspace:*"
     "@redstone-finance/utils": "workspace:*"
     "@types/aws-lambda": "npm:^8.10.145"
+    dotenv: "npm:^16.0.3"
     zod: "npm:^3.22.4"
   languageName: unknown
   linkType: soft
@@ -10561,6 +10595,7 @@ __metadata:
     "@redstone-finance/protocol": "workspace:*"
     "@redstone-finance/sdk": "workspace:*"
     "@redstone-finance/utils": "workspace:*"
+    dotenv: "npm:^16.0.3"
   languageName: unknown
   linkType: soft
 
@@ -10576,6 +10611,7 @@ __metadata:
     "@redstone-finance/utils": "workspace:*"
     "@types/aws-lambda": "npm:^8.10.145"
     axios: "npm:^1.8.4"
+    dotenv: "npm:^16.0.3"
     zod: "npm:^3.22.4"
   languageName: unknown
   linkType: soft
@@ -10663,6 +10699,7 @@ __metadata:
   resolution: "@redstone-finance/lambda-monitoring-relayers@workspace:packages/lambda/lambda-monitoring-relayers"
   dependencies:
     "@redstone-finance/chain-configs": "workspace:*"
+    "@redstone-finance/internal-utils": "workspace:*"
     "@redstone-finance/monitoring-manifests": "workspace:*"
     "@redstone-finance/node-remote-config": "workspace:*"
     "@redstone-finance/redstone-monitoring": "workspace:*"
@@ -10695,6 +10732,7 @@ __metadata:
     "@redstone-finance/evm-multicall": "workspace:*"
     "@redstone-finance/internal-utils": "workspace:*"
     "@redstone-finance/lambda-wallets-balances-notifier": "workspace:*"
+    "@redstone-finance/monitoring-manifests": "workspace:*"
     "@redstone-finance/node-remote-config": "workspace:*"
     "@redstone-finance/on-chain-relayer-common": "workspace:*"
     "@redstone-finance/rpc-providers": "workspace:*"
@@ -10747,6 +10785,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@redstone-finance/lambda-on-chain-relayer-update@workspace:packages/lambda/lambda-on-chain-relayer-update"
   dependencies:
+    "@ethersproject/logger": "npm:^5.7.0"
     "@redstone-finance/chain-configs": "workspace:*"
     "@redstone-finance/chain-orchestrator": "workspace:*"
     "@redstone-finance/internal-utils": "workspace:*"
@@ -10754,6 +10793,7 @@ __metadata:
     "@redstone-finance/node-remote-config": "workspace:*"
     "@redstone-finance/on-chain-relayer": "workspace:*"
     "@redstone-finance/on-chain-relayer-common": "workspace:*"
+    "@redstone-finance/rpc-providers": "workspace:*"
     "@redstone-finance/sdk": "workspace:*"
     "@redstone-finance/utils": "workspace:*"
     "@types/aws-lambda": "npm:^8.10.145"
@@ -10772,6 +10812,7 @@ __metadata:
     "@aws-sdk/client-ssm": "npm:^3.696.0"
     "@redstone-finance/node-remote-config": "workspace:*"
     "@redstone-finance/utils": "workspace:*"
+    dotenv: "npm:^16.0.3"
     elliptic: "npm:^6.6.1"
     ethers: "npm:^5.7.2"
     zod: "npm:^3.22.4"
@@ -10819,12 +10860,14 @@ __metadata:
     "@redstone-finance/internal-utils": "workspace:*"
     "@redstone-finance/monitoring-manifests": "workspace:*"
     "@redstone-finance/node-remote-config": "workspace:*"
+    "@redstone-finance/on-chain-relayer-common": "workspace:*"
     "@redstone-finance/rpc-providers": "workspace:*"
     "@redstone-finance/sdk": "workspace:*"
     "@redstone-finance/utils": "workspace:*"
     "@types/aws-lambda": "npm:^8.10.145"
     "@types/cors": "npm:^2.8.12"
     "@types/express": "npm:^4.17.14"
+    axios: "npm:^1.8.4"
     cors: "npm:^2.8.5"
     dotenv: "npm:^16.0.3"
     ethers: "npm:^5.7.2"
@@ -10840,7 +10883,10 @@ __metadata:
   dependencies:
     "@aptos-labs/ts-sdk": "npm:1.33.2"
     "@aws-sdk/client-ssm": "npm:^3.696.0"
+    "@ethersproject/abstract-provider": "npm:^5.7.0"
+    "@ethersproject/transactions": "npm:^5.7.0"
     "@influxdata/influxdb-client": "npm:^1.35.0"
+    "@mysten/sui": "npm:1.37.3"
     "@redstone-finance/chain-configs": "workspace:*"
     "@redstone-finance/chain-orchestrator": "workspace:*"
     "@redstone-finance/evm-multicall": "workspace:*"
@@ -10850,6 +10896,8 @@ __metadata:
     "@redstone-finance/on-chain-relayer-common": "workspace:*"
     "@redstone-finance/protocol": "workspace:*"
     "@redstone-finance/utils": "workspace:*"
+    "@solana/web3.js": "npm:^1.98.2"
+    "@stellar/stellar-sdk": "npm:14.2.0"
     "@types/aws-lambda": "npm:^8.10.145"
     axios: "npm:^1.8.4"
     dotenv: "npm:^16.0.3"
@@ -10941,6 +10989,8 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@redstone-finance/lambda-whitelist-monitoring-dashboard@workspace:packages/lambda/lambda-whitelist-monitoring-dashboard"
   dependencies:
+    "@aws-sdk/client-s3": "npm:^3.696.0"
+    "@redstone-finance/internal-utils": "workspace:*"
     "@redstone-finance/node-remote-config": "workspace:*"
     "@redstone-finance/redstone-monitoring": "workspace:*"
     "@types/aws-lambda": "npm:^8.10.145"
@@ -11022,6 +11072,7 @@ __metadata:
     "@redstone-finance/utils": "workspace:*"
     async-mutex: "npm:^0.5.0"
     aws-iot-device-sdk-v2: "npm:^1.21.1"
+    ethers: "npm:^5.7.2"
     lodash: "npm:^4.17.21"
   languageName: unknown
   linkType: soft
@@ -11057,6 +11108,8 @@ __metadata:
   resolution: "@redstone-finance/on-chain-relayer-common@workspace:packages/on-chain-relayer-common"
   dependencies:
     "@redstone-finance/utils": "workspace:*"
+    "@types/lodash": "npm:^4.14.195"
+    lodash: "npm:^4.17.21"
     zod: "npm:^3.22.4"
   languageName: unknown
   linkType: soft
@@ -11068,6 +11121,7 @@ __metadata:
     "@chainlink/contracts": "npm:1.2.0"
     "@ethersproject/abi": "npm:^5.6.3"
     "@ethersproject/providers": "npm:^5.6.8"
+    "@influxdata/influxdb-client": "npm:^1.35.0"
     "@nomicfoundation/hardhat-chai-matchers": "npm:^1.0.6"
     "@nomicfoundation/hardhat-network-helpers": "npm:^1.0.9"
     "@nomicfoundation/hardhat-toolbox": "npm:^2.0.2"
@@ -11077,6 +11131,7 @@ __metadata:
     "@openzeppelin/contracts": "npm:^4.8.1"
     "@openzeppelin/contracts-upgradeable": "npm:^4.8.3"
     "@openzeppelin/hardhat-upgrades": "npm:^1.26.0"
+    "@redstone-finance/chain-configs": "workspace:*"
     "@redstone-finance/chain-orchestrator": "workspace:*"
     "@redstone-finance/evm-connector": "workspace:*"
     "@redstone-finance/healthcheck": "workspace:*"
@@ -11103,6 +11158,7 @@ __metadata:
     hardhat: "npm:^2.22.14"
     hardhat-gas-reporter: "npm:^1.0.9"
     lodash: "npm:^4.17.21"
+    mocha: "npm:^10.2.0"
     msw: "npm:^2.4.10"
     sinon: "npm:^18.0.0"
     solidity-coverage: "npm:^0.8.12"
@@ -11249,6 +11305,7 @@ __metadata:
     "@aws-sdk/client-s3": "npm:^3.696.0"
     "@ethersproject/abi": "npm:^5.6.3"
     "@ethersproject/providers": "npm:^5.6.8"
+    "@influxdata/influxdb-client": "npm:^1.35.0"
     "@nomicfoundation/hardhat-chai-matchers": "npm:^1.0.6"
     "@nomicfoundation/hardhat-network-helpers": "npm:^1.0.9"
     "@nomicfoundation/hardhat-toolbox": "npm:^2.0.2"
@@ -11306,6 +11363,7 @@ __metadata:
     "@types/node-schedule": "npm:^2.1.0"
     "@types/xml2js": "npm:^0.4.14"
     dotenv: "npm:^16.0.3"
+    ethers: "npm:^5.7.2"
     node-schedule: "npm:^2.1.1"
     xml2js: "npm:^0.6.2"
     zod: "npm:^3.22.4"
@@ -11395,6 +11453,7 @@ __metadata:
     bs58: "npm:^6.0.0"
     chai: "npm:^4.3.10"
     dotenv: "npm:^16.0.3"
+    ethers: "npm:^5.7.2"
     litesvm: "npm:^0.2.0"
     lodash: "npm:^4.17.21"
     markdown-table-ts: "npm:1.0.3"
