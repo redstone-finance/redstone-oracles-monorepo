@@ -39,9 +39,11 @@
   },
   "dependencies": {
     "@aptos-labs/ts-sdk": "1.33.2",
+    "@ethersproject/bytes": "^5.6.1",
     "@redstone-finance/sdk": "workspace:*",
     "@redstone-finance/utils": "workspace:*",
     "dotenv": "^16.0.3",
+    "ethers": "^5.7.2",
     "lodash": "^4.17.21",
     "zod": "^3.22.4"
   },
