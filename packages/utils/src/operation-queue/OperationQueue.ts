@@ -9,7 +9,7 @@ export class OperationQueue {
 
   constructor(private logger = loggerFactory("operation-queue")) {}
 
-  enqueue(id: string, operation: Operation) {
+  enqueue(id: string, operation: Operation, canAddWhenIsRunning = false) {
     const existingOperationIndex = this.queue.findIndex((op) => op.id === id);
 
     if (existingOperationIndex !== -1) {
@@ -17,7 +17,7 @@ export class OperationQueue {
       this.logger.debug(`Replaced operation for [${id}] in the queue.`);
 
       return true;
-    } else if (this.activeOperations.has(id)) {
+    } else if (!canAddWhenIsRunning && this.activeOperations.has(id)) {
       this.logger.debug(`Operation for [${id}] is currently processing and cannot be replaced.`);
 
       return false;
@@ -39,6 +39,9 @@ export class OperationQueue {
     this.isProcessing = true;
 
     while (this.queue.length > 0) {
+      this.logger.debug(`Queue length: ${this.queue.length}`, {
+        ids: this.queue.map((q) => q.id).join(", "),
+      });
       const { id, operation } = this.queue.shift()!;
       this.activeOperations.add(id);
       try {

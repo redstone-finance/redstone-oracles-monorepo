@@ -39,6 +39,14 @@ export class MultiFeedEvmContractAdapter extends MultiFeedEvmContractAdapterBase
       );
 
       dataFeedsAsBytes32 = dataPackagesFeeds.map(utils.formatBytes32String);
+    } else {
+      logger.info(
+        `All feeds available in the response, will update for [${dataPackagesFeeds.toString()}]`,
+        {
+          dataFeedsToUpdate,
+          dataPackagesFeeds,
+        }
+      );
     }
 
     const dataPackagesWrapper = new DataPackagesWrapper<MultiFeedAdapterWithoutRounds>(
