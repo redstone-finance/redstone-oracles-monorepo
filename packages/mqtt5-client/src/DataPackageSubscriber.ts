@@ -1,3 +1,4 @@
+import { LogMonitoring, LogMonitoringType } from "@redstone-finance/internal-utils";
 import { SignedDataPackage, SignedDataPackagePlainObj } from "@redstone-finance/protocol";
 import {
   DataPackagesResponse,
@@ -150,8 +151,10 @@ export class DataPackageSubscriber {
     this.fallbackInterval = setInterval(async () => {
       try {
         if (this.lastPublishedState.isAnyFeedNotPublishedIn(maxDelayBetweenPublishes)) {
-          this.logger.warn(
-            `Fallback triggered now=${Date.now()} lastPublishedTimestamp=${this.lastPublishedState.toString()}`
+          LogMonitoring.warn(
+            LogMonitoringType.MQTT_FALLBACK_USED,
+            `Fallback triggered now=${Date.now()} lastPublishedTimestamp=${this.lastPublishedState.toString()}`,
+            this.logger
           );
           const dataPackages = await fallbackFn();
           const packageTimestamp =
