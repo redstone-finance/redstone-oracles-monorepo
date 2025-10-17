@@ -5,6 +5,10 @@ import { NetworkId } from "@redstone-finance/utils";
 export type RelayerConfig = OnChainRelayerEnv & ManifestConfig;
 
 export type ConditionCheckNames = "time" | "value-deviation" | "cron";
+export enum MqttDataProcessingStrategyType {
+  Base = "base",
+  Timestamp = "timestamp",
+}
 
 export type ManifestConfig = {
   chainName: string;
@@ -64,6 +68,7 @@ export type OnChainRelayerEnv = {
   mqttWaitForOtherSignersMs?: number;
   mqttFallbackMaxDelayBetweenPublishesMs?: number;
   mqttFallbackCheckIntervalMs?: number;
+  mqttDataProcessingStrategy?: MqttDataProcessingStrategyType;
   authorizedSigners?: string[];
   includeAdditionalFeedsForGasOptimization: boolean;
   newestBlockForFeeHistory?: NewestBlockType;
