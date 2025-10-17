@@ -84,7 +84,7 @@
       "source": ["twelve-data"]
     },
     "XAU": {
-      "source": ["alltick-api", "financialmodelingprep-usd", "twelve-data"]
+      "source": ["alltick-api", "financialmodelingprep", "twelve-data"]
     },
     "SILVER": {
       "source": ["twelve-data"]
@@ -113,7 +113,7 @@
     "GBP": {
       "source": [
         "bitstamp-usd",
-        "financialmodelingprep-usd",
+        "financialmodelingprep",
         "kraken-usd",
         "coinbase-btc-reversed",
         "bitstamp-btc-reversed",
@@ -147,7 +147,7 @@
       ]
     },
     "COP": {
-      "source": ["alphavantage-usd-reversed", "financialmodelingprep-usd", "twelve-data"]
+      "source": ["alphavantage-usd-reversed", "financialmodelingprep", "twelve-data"]
     },
     "BBBY": {
       "source": ["twelve-data"]
