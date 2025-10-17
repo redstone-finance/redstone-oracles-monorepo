@@ -451,6 +451,61 @@
       "ecdsaPublicKey": "0x04e827bdf91378c28fcd847d736d042ec25d6914cf6ae254bcaa3f1f6ee4f70036e19d1d9a550b44fbb2fb0ae9b25878cca64bf32b364e44c66b0eea62dfe7bec5",
       "dateAdded": "2025-10-13"
     },
+    "0x6dBB798F484Ae044290d4a03cfA74A3AE760ee54": {
+      "url": "https://redstone.finance",
+      "logo": "https://redstone.finance/assets/img/redstone-logo-full.svg",
+      "name": "redstone-perun-monad-altair",
+      "ipAddress": "0.0.0.0",
+      "dataServiceId": "redstone-primary-prod",
+      "description": "Data feeds from perun monad nodes - altair",
+      "evmAddress": "0x6dBB798F484Ae044290d4a03cfA74A3AE760ee54",
+      "ecdsaPublicKey": "0x04549f4195804fa854df96918d6779c6b52559c39be9ad23181081fd35f696dda5c6e9703f130829479acaebf70aefefd87941fd1374258acee8da12e0603ed71c",
+      "dateAdded": "2025-10-16"
+    },
+    "0xf1B20cf4CFac262D462b919Ad048263B32d682aF": {
+      "url": "https://redstone.finance",
+      "logo": "https://redstone.finance/assets/img/redstone-logo-full.svg",
+      "name": "redstone-perun-monad-wayfarer",
+      "ipAddress": "0.0.0.0",
+      "dataServiceId": "redstone-primary-prod",
+      "description": "Data feeds from perun monad nodes - wayfarer",
+      "evmAddress": "0xf1B20cf4CFac262D462b919Ad048263B32d682aF",
+      "ecdsaPublicKey": "0x0445ee882a04a3cb918fb315f5c9d464c0c8cde082e5d2d4d30480e90aa715b2624722f49c3d9fd7e668d1a081997f8acc0c9339b5d16881842ed659f7cdc9601e",
+      "dateAdded": "2025-10-16"
+    },
+    "0x711F2DC1C8120f5E927De79e4a1Eec2C35579F2a": {
+      "url": "https://redstone.finance",
+      "logo": "https://redstone.finance/assets/img/redstone-logo-full.svg",
+      "name": "redstone-perun-monad-ciri",
+      "ipAddress": "0.0.0.0",
+      "dataServiceId": "redstone-primary-prod",
+      "description": "Data feeds from perun monad nodes - ciri",
+      "evmAddress": "0x711F2DC1C8120f5E927De79e4a1Eec2C35579F2a",
+      "ecdsaPublicKey": "0x047fd245d5f82597ea9fe371ad17dbcaef4d44437f68b3cbab24419ec16c65b91d7cc36f4f7e17aec9e484bf85aff6bda720848c735dfdd75f40e1d3265b0cbb73",
+      "dateAdded": "2025-10-16"
+    },
+    "0x50d5c34354092790c51e516CE3f7cB8a30b79fF1": {
+      "url": "https://redstone.finance",
+      "logo": "https://redstone.finance/assets/img/redstone-logo-full.svg",
+      "name": "redstone-perun-monad-morpheus",
+      "ipAddress": "0.0.0.0",
+      "dataServiceId": "redstone-primary-prod",
+      "description": "Data feeds from perun monad nodes - morpheus",
+      "evmAddress": "0x50d5c34354092790c51e516CE3f7cB8a30b79fF1",
+      "ecdsaPublicKey": "0x04421edb5ab3f2ef1a21bf0e71169a6f15c0d54f6213882ff27294ba52ad0aa42734f7b584ad1a3155c24bb589a215cc568250a53ce962f44c82c720bad27feb6b",
+      "dateAdded": "2025-10-16"
+    },
+    "0x080B4dB52c765Ef7b0E7156E5171F5e5999D06be": {
+      "url": "https://redstone.finance",
+      "logo": "https://redstone.finance/assets/img/redstone-logo-full.svg",
+      "name": "redstone-perun-monad-redstone",
+      "ipAddress": "0.0.0.0",
+      "dataServiceId": "redstone-primary-prod",
+      "description": "Data feeds from perun monad nodes - redstone",
+      "evmAddress": "0x080B4dB52c765Ef7b0E7156E5171F5e5999D06be",
+      "ecdsaPublicKey": "0x042a27c123a347b29c3115a8fc80a45863cba7150108c9935c9a2e08e41409ccef4149a16943e70c9e5889194c65a3325e212f393dbab9235aa3dcd85ef11e8cda",
+      "dateAdded": "2025-10-16"
+    },
     "0x4FDBC50FDF3997f692F217A03c7C8487F99a5629": {
       "url": "https://redstone.finance",
       "logo": "https://redstone.finance/assets/img/redstone-logo-full.svg",
