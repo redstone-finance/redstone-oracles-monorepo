@@ -450,6 +450,28 @@
       "evmAddress": "0x1b19c451BA9afba29865Cd4202523629624bfEcF",
       "ecdsaPublicKey": "0x04e827bdf91378c28fcd847d736d042ec25d6914cf6ae254bcaa3f1f6ee4f70036e19d1d9a550b44fbb2fb0ae9b25878cca64bf32b364e44c66b0eea62dfe7bec5",
       "dateAdded": "2025-10-13"
+    },
+    "0x4FDBC50FDF3997f692F217A03c7C8487F99a5629": {
+      "url": "https://redstone.finance",
+      "logo": "https://redstone.finance/assets/img/redstone-logo-full.svg",
+      "name": "redstone-hip3-demo-1",
+      "ipAddress": "0.0.0.0",
+      "dataServiceId": "redstone-hip3-demo",
+      "description": "Data feeds from hip3 nodes - demo node 1",
+      "evmAddress": "0x4FDBC50FDF3997f692F217A03c7C8487F99a5629",
+      "ecdsaPublicKey": "0x0457865cf3a7e818deea2a86ea30807be6fedc46d566e6b8c5c1a9c6bcacdf3ca1a27f2248ec9a0c4efe3beaa1e1231cdc15f7245acf568f08da9c5833f314d2e5",
+      "dateAdded": "2025-10-16"
+    },
+    "0x9EBf523C0055DD5B4e0D99dE21Cbde925103293B": {
+      "url": "https://redstone.finance",
+      "logo": "https://redstone.finance/assets/img/redstone-logo-full.svg",
+      "name": "redstone-hip3-demo-2",
+      "ipAddress": "0.0.0.0",
+      "dataServiceId": "redstone-hip3-demo",
+      "description": "Data feeds from hip3 nodes - demo node 2",
+      "evmAddress": "0x9EBf523C0055DD5B4e0D99dE21Cbde925103293B",
+      "ecdsaPublicKey": "0x0491d1ebb2aed4550d2f0bfae643513336d54168dd5d8d830a407484c5b602150e3728a8ac234ad641e5e4522f5a515f54a18f2aaa99e1fa6c0649a99f9db9084c",
+      "dateAdded": "2025-10-16"
     }
   },
   "evolve": null,
@@ -516,6 +538,16 @@
       "logo": "https://redstone.finance/assets/img/redstone-logo-full.svg",
       "name": "redstone-perun-demo-1",
       "description": "RedStone Perun running dev node"
+    },
+    "redstone-hip3-demo": {
+      "logo": "https://redstone.finance/assets/img/redstone-logo-full.svg",
+      "name": "RedStone hip3 demo",
+      "description": "dev data feeds for Hyperliquid HIP3"
+    },
+    "redstone-hip3-prod": {
+      "logo": "https://redstone.finance/assets/img/redstone-logo-full.svg",
+      "name": "RedStone hip3 prod",
+      "description": "prod data feeds for Hyperliquid HIP3"
     }
   },
   "contractAdmins": [
