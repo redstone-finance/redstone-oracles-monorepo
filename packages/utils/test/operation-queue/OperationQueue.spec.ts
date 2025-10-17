@@ -53,6 +53,21 @@ describe("OperationQueue tests", () => {
     expect(operation2.called).toBeFalsy();
   });
 
+  it("should not replace an active operation, but add if can add when is running", async () => {
+    const operation1 = makeOperationSpy();
+    const operation2 = makeOperationSpy();
+
+    sut.enqueue("op1", operation1);
+    const result = sut.enqueue("op1", operation2, true);
+
+    expect(result).toBeTruthy();
+
+    await sleep(WAIT_FOR_OP_MS);
+
+    expect(operation1.called).toBeTruthy();
+    expect(operation2.called).toBeTruthy();
+  });
+
   it("should process operations in order", async () => {
     const operation1 = makeOperationSpy();
     const operation2 = makeOperationSpy();
