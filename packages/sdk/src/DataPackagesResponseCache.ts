@@ -19,7 +19,7 @@ export class DataPackagesResponseCache {
   }
 
   deleteFromResponse(feedId: string) {
-    if (!this.response || !this.response[feedId]) {
+    if (!this.response?.[feedId]) {
       return undefined;
     }
 
@@ -67,7 +67,7 @@ export class DataPackagesResponseCache {
       Object.keys(this.response),
       Object.keys(dataPackagesResponse)
     );
-    const areDataPackageIdsDifferent = 0 === Object.keys(intersection).length;
+    const areDataPackageIdsDifferent = Object.keys(intersection).length === 0;
 
     if (!areRequestParamsConforming || !areDataPackageIdsDifferent) {
       this.logger.error(
