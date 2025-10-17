@@ -39,10 +39,10 @@ export class StellarContractAdapter {
     });
   }
 
-  async changeOwnerTx(sender: string, newOwner: string, timeout = TIMEOUT_SEC, fee = BASE_FEE) {
+  async changeOwnerTx(sender: string, newOwner: string, fee = BASE_FEE, timeout = TIMEOUT_SEC) {
     const ownerAddr = XdrUtils.addressToScVal(newOwner);
 
-    return await this.client.buildTransaction(
+    return await this.client.prepareTransaction(
       this.contract.call(FN_CHANGE_OWNER, ownerAddr),
       sender,
       fee,
@@ -50,8 +50,8 @@ export class StellarContractAdapter {
     );
   }
 
-  async acceptOwnershipTx(sender: string, timeout = TIMEOUT_SEC, fee = BASE_FEE) {
-    return await this.client.buildTransaction(
+  async acceptOwnershipTx(sender: string, fee = BASE_FEE, timeout = TIMEOUT_SEC) {
+    return await this.client.prepareTransaction(
       this.contract.call(FN_ACCEPT_OWNERSHIP),
       sender,
       fee,
@@ -59,8 +59,8 @@ export class StellarContractAdapter {
     );
   }
 
-  async cancelOwnershipTransferTx(sender: string, timeout = TIMEOUT_SEC, fee = BASE_FEE) {
-    return await this.client.buildTransaction(
+  async cancelOwnershipTransferTx(sender: string, fee = BASE_FEE, timeout = TIMEOUT_SEC) {
+    return await this.client.prepareTransaction(
       this.contract.call(FN_CANCEL_OWNERSHIP_TRANSFER),
       sender,
       fee,
@@ -68,10 +68,10 @@ export class StellarContractAdapter {
     );
   }
 
-  async upgradeTx(sender: string, codeHash: Buffer, timeout = TIMEOUT_SEC, fee = BASE_FEE) {
+  async upgradeTx(sender: string, codeHash: Buffer, fee = BASE_FEE, timeout = TIMEOUT_SEC) {
     const codeHashXdr = XdrUtils.bytesToScVal(codeHash);
 
-    return await this.client.buildTransaction(
+    return await this.client.prepareTransaction(
       this.contract.call(FN_UPGRADE, codeHashXdr),
       sender,
       fee,

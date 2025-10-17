@@ -40,4 +40,6 @@ async function sampleUpgrade(contractId = loadContractId()) {
   );
 }
 
-void sampleUpgrade();
+if (require.main === module) {
+  void sampleUpgrade();
+}
