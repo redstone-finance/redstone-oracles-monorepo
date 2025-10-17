@@ -11,11 +11,10 @@ import {
   DataPackagesRequestParams,
   DataPackagesResponse,
   DataPackagesResponseCache,
-  getDataPackagesTimestamp,
 } from "@redstone-finance/sdk";
-import { loggerFactory, OperationQueue, RedstoneCommon } from "@redstone-finance/utils";
+import { loggerFactory, RedstoneCommon } from "@redstone-finance/utils";
 import _ from "lodash";
-import { RelayerConfig } from "../config/RelayerConfig";
+import { MqttDataProcessingStrategyType, RelayerConfig } from "../config/RelayerConfig";
 import {
   canIgnoreMissingFeeds,
   makeDataPackagesRequestParams,
@@ -23,24 +22,31 @@ import {
 import { ContractFacade } from "../facade/ContractFacade";
 import { getContractFacade } from "../facade/get-contract-facade";
 import { IterationOptions, runIteration } from "./run-iteration";
+import { BaseMqttDataProcessingStrategy } from "./strategy/BaseMqttProcessingStrategy";
+import {
+  MqttDataProcessingStrategy,
+  MqttDataProcessingStrategyDelegate,
+} from "./strategy/MqttDataProcessingStrategy";
+import { TimestampMqttDataProcessingStrategy } from "./strategy/TimestampMqttDataProcessingStrategy";
 
-export class MqttRunner {
+export class MqttRunner implements MqttDataProcessingStrategyDelegate<RelayerConfig> {
   private subscriber?: DataPackageSubscriber;
-  private readonly queue = new OperationQueue();
-  private readonly logger = loggerFactory("relayer/mqtt-runner");
+  readonly logger = loggerFactory("relayer/mqtt-runner");
   private readonly rateLimitCircuitBreaker = new RateLimitsCircuitBreaker(1_000, 10_000);
   private shouldGracefullyShutdown: boolean = false;
 
   constructor(
     private readonly client: MultiPubSubClient,
     private readonly contractFacade: ContractFacade,
-    private readonly cache: DataPackagesResponseCache,
+    private readonly strategy: MqttDataProcessingStrategy<RelayerConfig>,
     private readonly iterationOptionsOverride: Partial<IterationOptions>
   ) {
     process.on("SIGTERM", () => {
       this.logger.info("SIGTERM received, NodeRunner scheduled for a graceful shut down.");
       this.shouldGracefullyShutdown = true;
     });
+
+    strategy.delegate = new WeakRef(this);
   }
 
   static async run(
@@ -72,7 +78,13 @@ export class MqttRunner {
       MqttTopics.calculateTopicCountPerConnection()
     );
 
-    const runner = new MqttRunner(multiClient, contractFacade, cache, iterationOptionsOverride);
+    const strategy = new (
+      relayerConfig.mqttDataProcessingStrategy === MqttDataProcessingStrategyType.Timestamp
+        ? TimestampMqttDataProcessingStrategy<RelayerConfig>
+        : BaseMqttDataProcessingStrategy<RelayerConfig>
+    )(cache);
+
+    const runner = new MqttRunner(multiClient, contractFacade, strategy, iterationOptionsOverride);
     await runner.updateSubscription(relayerConfig);
 
     if (relayerConfig.mqttUpdateSubscriptionIntervalMs > 0) {
@@ -143,7 +155,7 @@ export class MqttRunner {
     this.subscriber.enableCircuitBreaker(this.rateLimitCircuitBreaker);
 
     await this.subscriber.subscribe((dataPackagesResponse: DataPackagesResponse) => {
-      this.processResponse(relayerConfig, requestParams, dataPackagesResponse);
+      this.strategy.processResponse(relayerConfig, requestParams, dataPackagesResponse);
     });
   }
 
@@ -168,39 +180,17 @@ export class MqttRunner {
     );
   }
 
-  private processResponse(
-    relayerConfig: RelayerConfig,
-    requestParams: DataPackagesRequestParams,
-    dataPackagesResponse: DataPackagesResponse
-  ) {
-    const dataPackageIds = Object.keys(dataPackagesResponse);
-    dataPackageIds.sort();
-
-    this.logger.debug(
-      `Got data for [${dataPackageIds.toString()}], timestamp: ${getDataPackagesTimestamp(dataPackagesResponse)}`
-    );
-
-    const wasEnqueued = this.queue.enqueue(dataPackageIds.toString(), () =>
-      this.runIteration(relayerConfig, dataPackagesResponse, requestParams)
-    );
-
-    if (!wasEnqueued) {
-      this.cache.update(dataPackagesResponse, requestParams);
-    }
-  }
-
-  private async runIteration(
-    relayerConfig: RelayerConfig,
-    dataPackagesResponse: DataPackagesResponse,
-    requestParams: DataPackagesRequestParams
-  ) {
+  async strategyRunIteration(
+    _strategy: MqttDataProcessingStrategy<RelayerConfig>,
+    config: RelayerConfig
+  ): Promise<void> {
     try {
       if (this.shouldGracefullyShutdown) {
         this.logger.info(`Shutdown scheduled, not running next iteration`);
         return;
       }
-      this.cache.update(dataPackagesResponse, requestParams);
-      await runIteration(this.contractFacade, relayerConfig, this.iterationOptionsOverride);
+
+      await runIteration(this.contractFacade, config, this.iterationOptionsOverride);
     } catch (error) {
       this.logger.error(
         "Unhandled error occurred during iteration:",
