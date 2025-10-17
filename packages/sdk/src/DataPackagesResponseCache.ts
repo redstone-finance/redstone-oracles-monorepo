@@ -6,8 +6,10 @@ import type { DataPackagesResponse } from "./request-data-packages-common";
 export class DataPackagesResponseCache {
   private readonly logger = loggerFactory("data-packages-response-cache");
 
-  private response?: DataPackagesResponse;
-  private requestParams?: DataPackagesRequestParams;
+  constructor(
+    private response?: DataPackagesResponse,
+    private requestParams?: DataPackagesRequestParams
+  ) {}
 
   update(dataPackagesResponse: DataPackagesResponse, requestParams: DataPackagesRequestParams) {
     this.response = dataPackagesResponse;
@@ -16,13 +18,92 @@ export class DataPackagesResponseCache {
     return this;
   }
 
+  deleteFromResponse(feedId: string) {
+    if (!this.response || !this.response[feedId]) {
+      return undefined;
+    }
+
+    const dataPackages = this.response[feedId];
+    const response = { ...this.response };
+    delete response[feedId];
+
+    this.response = response;
+
+    return dataPackages;
+  }
+
+  takeFromOther(cache: DataPackagesResponseCache) {
+    this.invalidate();
+
+    if (cache.response && cache.requestParams) {
+      return this.update(cache.response, cache.requestParams);
+    } else {
+      return this;
+    }
+  }
+
+  maybeExtend(
+    dataPackagesResponse: DataPackagesResponse,
+    requestParams: DataPackagesRequestParams
+  ) {
+    if (!this.requestParams || !this.response) {
+      this.update(dataPackagesResponse, requestParams);
+
+      return true;
+    }
+
+    if (this.requestParams.returnAllPackages || requestParams.returnAllPackages) {
+      this.logger.error("Responses returning all packages are not supported");
+
+      return false;
+    }
+
+    const areRequestParamsConforming = areConformingRequestParams(
+      this.requestParams,
+      requestParams
+    );
+
+    const intersection = _.intersection(
+      Object.keys(this.response),
+      Object.keys(dataPackagesResponse)
+    );
+    const areDataPackageIdsDifferent = 0 === Object.keys(intersection).length;
+
+    if (!areRequestParamsConforming || !areDataPackageIdsDifferent) {
+      this.logger.error(
+        "Trying to extend cache when the new response is not conforming to the cached one",
+        {
+          requestParams,
+          cachedRequestParams: this.requestParams,
+          cachedResponse: this.response,
+        }
+      );
+
+      return false;
+    }
+
+    this.update(
+      { ...this.response, ...dataPackagesResponse },
+      {
+        ...this.requestParams,
+        dataPackagesIds: Array.from(
+          new Set([...this.requestParams.dataPackagesIds, ...requestParams.dataPackagesIds])
+        ),
+      }
+    );
+
+    return true;
+  }
+
   isEmpty() {
-    return !this.response;
+    return !this.response || Object.keys(this.response).length === 0;
   }
 
   invalidate() {
     this.response = undefined;
     this.requestParams = undefined;
+
+    return this;
   }
 
   get(requestParams: DataPackagesRequestParams, shouldReportMissingResponse = true) {
@@ -57,6 +138,16 @@ export class DataPackagesResponseCache {
   }
 }
 
+function areConformingRequestParams(
+  thisRequestParams: DataPackagesRequestParams,
+  otherRequestParams: DataPackagesRequestParams
+) {
+  const thisComparableRequestParams = makeComparableRequestParams(thisRequestParams);
+  const otherComparableRequestParams = makeComparableRequestParams(otherRequestParams);
+
+  return _.isEqual(thisComparableRequestParams, otherComparableRequestParams);
+}
+
 /**
  * Determines if the cached response conforms to the specified request parameters.
  *
@@ -74,10 +165,8 @@ export function isConforming(
   otherRequestParams: DataPackagesRequestParams,
   currentResponseDataPackageIds: string[]
 ) {
-  const thisComparableRequestParams = makeComparableRequestParams(thisRequestParams);
-  const otherComparableRequestParams = makeComparableRequestParams(otherRequestParams);
-
-  if (!_.isEqual(thisComparableRequestParams, otherComparableRequestParams)) {
+  const areConforiming = areConformingRequestParams(thisRequestParams, otherRequestParams);
+  if (!areConforiming) {
     return false;
   }
 

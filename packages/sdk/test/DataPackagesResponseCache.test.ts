@@ -22,6 +22,7 @@ describe("DataPackagesResponseCache tests", () => {
 
   it("should return undefined when cache is empty", () => {
     const result = sut.get(mockRequestParams);
+    expect(sut.isEmpty()).toBeTruthy();
 
     expect(result).toBeUndefined();
   });
@@ -53,6 +54,103 @@ describe("DataPackagesResponseCache tests", () => {
     const result = sut.get(modifiedRequestParams);
 
     expect(result).toEqual({ ETH: mockSignedDataPackagesResponse["ETH"] });
+  });
+
+  it("should remove cached entry for feedId", () => {
+    sut.update(mockSignedDataPackagesResponse, mockRequestParams);
+    sut.deleteFromResponse("BTC");
+    expect(sut.isEmpty()).toBeFalsy();
+
+    const modifiedRequestParams = {
+      ...mockRequestParams,
+      dataPackagesIds: ["ETH"],
+    };
+    const result = sut.get(modifiedRequestParams);
+    expect(result).toEqual({ ETH: mockSignedDataPackagesResponse["ETH"] });
+
+    sut.deleteFromResponse("ETH");
+    expect(sut.isEmpty()).toBeTruthy();
+
+    const result2 = sut.get(modifiedRequestParams);
+    expect(result2).toEqual(undefined);
+  });
+
+  it("should take from other cache", () => {
+    sut.update(mockSignedDataPackagesResponse, mockRequestParams);
+
+    const otherSignedDataPackagesResponse = {
+      ETH: mockSignedDataPackagesResponse["ETH"],
+    };
+    const modifiedRequestParams = {
+      ...mockRequestParams,
+      dataPackagesIds: ["ETH"],
+    };
+    const other = new DataPackagesResponseCache(
+      otherSignedDataPackagesResponse,
+      modifiedRequestParams
+    );
+
+    const resSut = sut.takeFromOther(other);
+    expect(resSut).toBe(sut);
+    expect(sut.isEmpty()).toBeFalsy();
+
+    const result = sut.get(mockRequestParams);
+    expect(result).toEqual(undefined);
+
+    const result2 = sut.get(modifiedRequestParams);
+    expect(result2).toEqual(otherSignedDataPackagesResponse);
+  });
+
+  it("should invalidate when taking from other empty cache", () => {
+    sut.update(mockSignedDataPackagesResponse, mockRequestParams);
+    const resSut = sut.takeFromOther(new DataPackagesResponseCache());
+    expect(resSut).toBe(sut);
+    expect(sut.isEmpty()).toBeTruthy();
+  });
+
+  it("should extend when new feedIds are different than cached ones", () => {
+    sut.update({}, mockRequestParams);
+    expect(sut.isEmpty()).toBeTruthy();
+
+    const ethSignedDataPackagesResponse = {
+      ETH: mockSignedDataPackagesResponse["ETH"],
+    };
+    const btcSignedDataPackagesResponse = {
+      BTC: mockSignedDataPackagesResponse["BTC"],
+    };
+    const didExtendEth = sut.maybeExtend(ethSignedDataPackagesResponse, mockRequestParams);
+    expect(didExtendEth).toBeTruthy();
+
+    const didExtendBtc = sut.maybeExtend(btcSignedDataPackagesResponse, mockRequestParams);
+    expect(didExtendBtc).toBeTruthy();
+
+    const result2 = sut.get(mockRequestParams);
+    expect(result2).toEqual(mockSignedDataPackagesResponse);
+  });
+
+  it("should not extend when new feedIds intersect the cached ones (subset)", () => {
+    sut.update(mockSignedDataPackagesResponse, mockRequestParams);
+
+    const ethSignedDataPackagesResponse = {
+      ETH: mockSignedDataPackagesResponse["ETH"],
+    };
+
+    const didExtendEth = sut.maybeExtend(ethSignedDataPackagesResponse, mockRequestParams);
+    expect(didExtendEth).toBeFalsy();
+
+    const result = sut.get(mockRequestParams);
+    expect(result).toEqual(mockSignedDataPackagesResponse);
+  });
+
+  it("should not extend when new feedIds intersect the cached ones (superset)", () => {
+    const ethSignedDataPackagesResponse = {
+      ETH: mockSignedDataPackagesResponse["ETH"],
+    };
+
+    sut.update(ethSignedDataPackagesResponse, mockRequestParams);
+
+    const didExtend = sut.maybeExtend(mockSignedDataPackagesResponse, mockRequestParams);
+    expect(didExtend).toBeFalsy();
   });
 });
 
