@@ -970,7 +970,7 @@
         "twelve-data",
         "ecb",
         "kraken-usd",
-        "financialmodelingprep-usd"
+        "financialmodelingprep"
       ]
     },
     "sfrxETH": {
@@ -1229,7 +1229,7 @@
         "alphavantage-usd",
         "twelve-data",
         "ecb",
-        "financialmodelingprep-usd"
+        "financialmodelingprep"
       ]
     },
     "bsdETH": {
