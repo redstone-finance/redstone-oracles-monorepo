@@ -1515,7 +1515,7 @@
       "source": ["twelve-data", "yf-unofficial"]
     },
     "XAU": {
-      "source": ["alltick-api", "financialmodelingprep-usd", "twelve-data"]
+      "source": ["alltick-api", "financialmodelingprep", "twelve-data"]
     },
     "SILVER": {
       "source": ["twelve-data", "yf-unofficial"]

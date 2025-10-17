@@ -2014,7 +2014,7 @@
     "GBP": {
       "source": [
         "bitstamp-usd",
-        "financialmodelingprep-usd",
+        "financialmodelingprep",
         "kraken-usd",
         "coinbase-btc-reversed",
         "bitstamp-btc-reversed",
@@ -2025,17 +2025,17 @@
       "rateFeed": false
     },
     "KES": {
-      "source": ["alphavantage-usd", "financialmodelingprep-usd", "twelve-data"],
+      "source": ["alphavantage-usd", "financialmodelingprep", "twelve-data"],
       "denomination": "USD",
       "rateFeed": false
     },
     "PHP": {
-      "source": ["alphavantage-usd", "financialmodelingprep-usd", "twelve-data"],
+      "source": ["alphavantage-usd", "financialmodelingprep", "twelve-data"],
       "denomination": "USD",
       "rateFeed": false
     },
     "COP": {
-      "source": ["alphavantage-usd-reversed", "financialmodelingprep-usd", "twelve-data"],
+      "source": ["alphavantage-usd-reversed", "financialmodelingprep", "twelve-data"],
       "denomination": "USD",
       "rateFeed": false
     },
@@ -2158,7 +2158,7 @@
       "source": [
         "alltick-api",
         "commodity-price-api",
-        "financialmodelingprep-usd",
+        "financialmodelingprep",
         "metals-api",
         "metal-price-api",
         "twelve-data"
@@ -2257,7 +2257,7 @@
       "rateFeed": false
     },
     "C3M": {
-      "source": ["alphavantagestock-usd", "financialmodelingprep-usd", "twelve-data"],
+      "source": ["alphavantagestock-usd", "financialmodelingprep", "twelve-data"],
       "denomination": "USD",
       "rateFeed": false
     },
@@ -2506,7 +2506,7 @@
       "source": [
         "alltick-stocks-api",
         "alphavantagestock-usd",
-        "financialmodelingprep-usd",
+        "financialmodelingprep",
         "twelve-data",
         "databento-tsla",
         "polygon"
@@ -2518,7 +2518,7 @@
       "source": [
         "alltick-stocks-api",
         "alphavantagestock-usd",
-        "financialmodelingprep-usd",
+        "financialmodelingprep",
         "twelve-data",
         "databento-nvda",
         "polygon"
