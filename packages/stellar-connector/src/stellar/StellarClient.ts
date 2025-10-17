@@ -86,13 +86,28 @@ export class StellarClient {
     return sim;
   }
 
+  async prepareTransaction(
+    operation: xdr.Operation<Operation.InvokeHostFunction>,
+    signer: StellarSigner | string,
+    fee = BASE_FEE,
+    timeout = TRANSACTION_TIMEOUT_SEC
+  ) {
+    if (typeof signer !== "string") {
+      signer = await signer.publicKey();
+    }
+
+    const tx = await this.buildTransaction(operation, signer, fee, timeout);
+
+    return await this.server.prepareTransaction(tx);
+  }
+
   async prepareSignedTransaction(
     operation: xdr.Operation<Operation.InvokeHostFunction>,
     signer: StellarSigner,
-    fee = BASE_FEE
+    fee = BASE_FEE,
+    timeout = TRANSACTION_TIMEOUT_SEC
   ) {
-    const tx = await this.buildTransaction(operation, await signer.publicKey(), fee);
-    const transaction = await this.server.prepareTransaction(tx);
+    const transaction = await this.prepareTransaction(operation, signer, fee, timeout);
 
     await signer.sign(transaction);
 
