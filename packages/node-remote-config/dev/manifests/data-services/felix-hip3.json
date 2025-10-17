@@ -1,0 +1,56 @@
+{
+  "interval": 1000,
+  "priceAggregator": "median",
+  "defaultSource": ["coingecko"],
+  "sourceTimeout": 1000,
+  "minValidSourcesPercentage": 30,
+  "deviationCheck": {
+    "deviationWithRecentValues": {
+      "maxPercent": 30,
+      "maxDelayMilliseconds": 120000
+    }
+  },
+  "tokens": {
+    "TSLA": {
+      "source": ["financialmodelingprep_deferred-usd", "twelve-data_deferred"],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "HL_MARK_PX_stocks:TSLA": {
+      "source": ["hyperliquid-testnet-perps-ws-fetcher"],
+      "skipBroadcasting": true,
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "HL_ORACLE_PX_stocks:TSLA": {
+      "source": ["hyperliquid-testnet-perps-ws-fetcher"],
+      "skipBroadcasting": true,
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "stocks:TSLA_MARK_0": {
+      "source": ["hyperliquid-hip3-felix-stocks-fetcher"],
+      "broadcasters": ["hyperliquid-hip3"],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "stocks:TSLA_MARK_1": {
+      "source": ["hyperliquid-hip3-felix-stocks-fetcher"],
+      "broadcasters": ["hyperliquid-hip3"],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "stocks:TSLA_EXT": {
+      "source": ["hyperliquid-hip3-felix-stocks-fetcher"],
+      "broadcasters": ["hyperliquid-hip3"],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "stocks:TSLA": {
+      "source": ["hyperliquid-hip3-felix-stocks-fetcher"],
+      "broadcasters": ["hyperliquid-hip3"],
+      "denomination": "USD",
+      "rateFeed": false
+    }
+  }
+}
