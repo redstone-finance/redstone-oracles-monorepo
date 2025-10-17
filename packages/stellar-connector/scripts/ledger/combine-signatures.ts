@@ -12,7 +12,7 @@ const signatures = [
   },
 ];
 
-export async function combineSignatures(
+async function combineSignatures(
   envelopeRaw: string,
   signatures: { publicKey: string; signature: string }[]
 ) {
