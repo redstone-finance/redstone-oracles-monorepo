@@ -3552,6 +3552,22 @@
       ],
       "denomination": "EUR",
       "rateFeed": false
+    },
+    "XPL": {
+      "source": [
+        "bitget-usdt",
+        "bitmart-usdt",
+        "binance-usdt",
+        "bybit-usdt",
+        "kraken-usd",
+        "kucoin-usdt",
+        "mexc-usdt",
+        "okx-usdt",
+        "gate-usdt",
+        "binance-usdc"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
     }
   },
   "multiPointPackages": {
