@@ -1,5 +1,5 @@
 import { type ConsolaInstance } from "consola";
-import { createSanitizedLogger, sanitizeValue } from "../../src";
+import { createSanitizedLogger, MAX_DEPTH, sanitizeValue } from "../../src";
 
 const createMockLogger = () => {
   const capturedArgs: unknown[][] = [];
@@ -225,23 +225,46 @@ describe("Logger Sanitization Logic", () => {
     expect(sanitizedArray[2]).toBe("[Circular]");
   });
 
+  test("should properly handle copied object references on same level", () => {
+    const nestedObj = { x: "x", y: "y" };
+    const nestedObjResult = sanitizeValue(nestedObj);
+    const obj = { a: nestedObj, b: nestedObj };
+
+    const result = sanitizeValue(obj);
+    expect(result).toEqual({ a: nestedObjResult, b: nestedObjResult });
+  });
+
+  test("should properly handle copied object in array", () => {
+    const nestedArr = [1, 2, 3];
+    const nestedArrResult = sanitizeValue(nestedArr);
+    const obj = {
+      lists: [nestedArr, nestedArr],
+    };
+
+    const result = sanitizeValue(obj);
+    expect(result).toEqual({ lists: [nestedArrResult, nestedArrResult] });
+  });
+
   test("should handle deeply nested structures with depth limit", () => {
     type DeepNestedObject = {
       nested?: DeepNestedObject | "[Max Depth Reached]";
       url: string;
+      value: number;
     };
 
     const createDeepObject = (depth: number): DeepNestedObject => {
       if (depth === 0) {
-        return { url: "https://example.com/secret?key=12345" };
+        return { url: "https://example.com/secret?key=12345", value: depth };
       }
       return {
         nested: createDeepObject(depth - 1),
         url: `https://example.com/level${depth}?key=secret${depth}`,
+        value: depth,
       };
     };
 
-    const deepObject = createDeepObject(6);
+    const DEPTH = MAX_DEPTH + 1;
+    const deepObject = createDeepObject(DEPTH);
     const sanitized = sanitizeValue(deepObject);
 
     const checkDepth = (obj: DeepNestedObject): number => {
@@ -251,16 +274,23 @@ describe("Logger Sanitization Logic", () => {
       return 1 + checkDepth(obj.nested!);
     };
 
-    expect(checkDepth(sanitized)).toBe(5);
-    expect(sanitized.url).toBe("https://example.com/...ret6");
+    expect(checkDepth(sanitized)).toBe(DEPTH - 1);
+    expect(sanitized.value).toBe(DEPTH);
+    expect(sanitized.url).toBe(`https://example.com/...ret${DEPTH}`);
 
     let current: DeepNestedObject = sanitized;
-    for (let i = 0; i < 4; i++) {
+    for (let i = 0; i < MAX_DEPTH - 1; i++) {
+      expect(current.url).toBe(`https://example.com/...ret${DEPTH - i}`);
+      expect(current.value).toBe(DEPTH - i);
       expect(current.nested).not.toBe("[Max Depth Reached]");
       if (current.nested && typeof current.nested !== "string") {
         current = current.nested;
       }
     }
-    expect(current.nested).toBe("[Max Depth Reached]");
+    expect(current).toStrictEqual({
+      nested: "[Max Depth Reached]",
+      url: "https://example.com/...ret2",
+      value: 2,
+    });
   });
 });

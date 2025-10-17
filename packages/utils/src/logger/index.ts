@@ -11,7 +11,7 @@ import { isNodeRuntime } from "../common/runtime";
 
 const DEFAULT_ENABLE_JSON_LOGS = true;
 const DEFAULT_LOG_LEVEL = LogLevels.info;
-const MAX_DEPTH = 5;
+export const MAX_DEPTH = 5;
 
 const WHITELISTED_HOSTNAMES = new Set([
   "github.com",
@@ -97,18 +97,23 @@ function getCustomLogLevel(
   return defaultLogLevel;
 }
 
+const isPrimitive = (val: unknown) => {
+  return val === null || (typeof val !== "object" && typeof val !== "function");
+};
+
 function sanitize(val: unknown, seen: WeakSet<object>, depth: number = 0): unknown {
-  if (depth >= MAX_DEPTH) {
+  if (isPrimitive(val)) {
+    return typeof val === "string" ? sanitizeLogMessage(val) : val;
+  } else if (depth >= MAX_DEPTH) {
     return "[Max Depth Reached]";
-  }
-  if (typeof val === "string") {
-    return sanitizeLogMessage(val);
   } else if (Array.isArray(val)) {
     if (seen.has(val)) {
       return "[Circular]";
     }
     seen.add(val);
-    return val.map((item) => sanitize(item, seen, depth + 1));
+    const result = val.map((item) => sanitize(item, seen, depth + 1));
+    seen.delete(val);
+    return result;
   } else if (val !== null && typeof val === "object") {
     if (seen.has(val)) {
       return "[Circular]";
@@ -118,6 +123,7 @@ function sanitize(val: unknown, seen: WeakSet<object>, depth: number = 0): unkno
     for (const [key, item] of Object.entries(val)) {
       result[key] = sanitize(item, seen, depth + 1);
     }
+    seen.delete(val);
     return result;
   }
   return val;
