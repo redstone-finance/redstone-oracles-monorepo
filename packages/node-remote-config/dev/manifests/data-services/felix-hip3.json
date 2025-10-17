@@ -12,7 +12,7 @@
   },
   "tokens": {
     "TSLA": {
-      "source": ["financialmodelingprep_deferred-usd", "twelve-data_deferred"],
+      "source": ["financialmodelingprep-deferred", "twelve-data-deferred"],
       "denomination": "USD",
       "rateFeed": false
     },
