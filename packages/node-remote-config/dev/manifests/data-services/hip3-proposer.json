@@ -1,7 +1,9 @@
 {
   "interval": 1000,
   "priceAggregator": "median",
-  "defaultSource": ["coingecko"],
+  "defaultSource": [
+    "coingecko"
+  ],
   "sourceTimeout": 1000,
   "minValidSourcesPercentage": 30,
   "deviationCheck": {
@@ -30,50 +32,74 @@
       "rateFeed": false
     },
     "HL_ORACLE_PX_BTC": {
-      "source": ["hyperliquid-testnet-perps-ws-fetcher"],
+      "source": [
+        "hyperliquid-testnet-perps-ws-fetcher"
+      ],
       "skipBroadcasting": true,
       "denomination": "USD",
       "rateFeed": false
     },
     "HL_ORACLE_PX_sekaw:BTC": {
-      "source": ["hyperliquid-testnet-perps-ws-fetcher"],
+      "source": [
+        "hyperliquid-testnet-perps-ws-fetcher"
+      ],
       "skipBroadcasting": true,
       "denomination": "USD",
       "rateFeed": false
     },
     "HL_MARK_PX_sekaw:BTC": {
-      "source": ["hyperliquid-testnet-perps-ws-fetcher"],
+      "source": [
+        "hyperliquid-testnet-perps-ws-fetcher"
+      ],
       "skipBroadcasting": true,
       "denomination": "USD",
       "rateFeed": false
     },
     "HL_MID_PX_sekaw:BTC": {
-      "source": ["hyperliquid-testnet-perps-ws-fetcher"],
+      "source": [
+        "hyperliquid-testnet-perps-ws-fetcher"
+      ],
       "skipBroadcasting": true,
       "denomination": "USD",
       "rateFeed": false
     },
     "sekaw:BTC_MARK_0": {
-      "source": ["hyperliquid-hip3-ethena-fetcher"],
-      "broadcasters": ["hyperliquid-hip3"],
+      "source": [
+        "hyperliquid-hip3-ethena-fetcher"
+      ],
+      "broadcasters": [
+        "hyperliquid-hip3"
+      ],
       "denomination": "USD",
       "rateFeed": false
     },
     "sekaw:BTC_MARK_1": {
-      "source": ["hyperliquid-hip3-ethena-fetcher"],
-      "broadcasters": ["hyperliquid-hip3"],
+      "source": [
+        "hyperliquid-hip3-ethena-fetcher"
+      ],
+      "broadcasters": [
+        "hyperliquid-hip3"
+      ],
       "denomination": "USD",
       "rateFeed": false
     },
     "sekaw:BTC_EXT": {
-      "source": ["hyperliquid-hip3-ethena-fetcher"],
-      "broadcasters": ["hyperliquid-hip3"],
+      "source": [
+        "hyperliquid-hip3-ethena-fetcher"
+      ],
+      "broadcasters": [
+        "hyperliquid-hip3"
+      ],
       "denomination": "USD",
       "rateFeed": false
     },
     "sekaw:BTC": {
-      "source": ["hyperliquid-hip3-ethena-fetcher"],
-      "broadcasters": ["hyperliquid-hip3"],
+      "source": [
+        "hyperliquid-hip3-ethena-fetcher"
+      ],
+      "broadcasters": [
+        "hyperliquid-hip3"
+      ],
       "denomination": "USD",
       "rateFeed": false
     },
@@ -95,50 +121,135 @@
       "rateFeed": false
     },
     "HL_ORACLE_PX_ETH": {
-      "source": ["hyperliquid-testnet-perps-ws-fetcher"],
+      "source": [
+        "hyperliquid-testnet-perps-ws-fetcher"
+      ],
       "skipBroadcasting": true,
       "denomination": "USD",
       "rateFeed": false
     },
     "HL_ORACLE_PX_sekaw:ETH": {
-      "source": ["hyperliquid-testnet-perps-ws-fetcher"],
+      "source": [
+        "hyperliquid-testnet-perps-ws-fetcher"
+      ],
       "skipBroadcasting": true,
       "denomination": "USD",
       "rateFeed": false
     },
     "HL_MARK_PX_sekaw:ETH": {
-      "source": ["hyperliquid-testnet-perps-ws-fetcher"],
+      "source": [
+        "hyperliquid-testnet-perps-ws-fetcher"
+      ],
       "skipBroadcasting": true,
       "denomination": "USD",
       "rateFeed": false
     },
     "HL_MID_PX_sekaw:ETH": {
-      "source": ["hyperliquid-testnet-perps-ws-fetcher"],
+      "source": [
+        "hyperliquid-testnet-perps-ws-fetcher"
+      ],
       "skipBroadcasting": true,
       "denomination": "USD",
       "rateFeed": false
     },
     "sekaw:ETH_MARK_0": {
-      "source": ["hyperliquid-hip3-ethena-fetcher"],
-      "broadcasters": ["hyperliquid-hip3"],
+      "source": [
+        "hyperliquid-hip3-ethena-fetcher"
+      ],
+      "broadcasters": [
+        "hyperliquid-hip3"
+      ],
       "denomination": "USD",
       "rateFeed": false
     },
     "sekaw:ETH_MARK_1": {
-      "source": ["hyperliquid-hip3-ethena-fetcher"],
-      "broadcasters": ["hyperliquid-hip3"],
+      "source": [
+        "hyperliquid-hip3-ethena-fetcher"
+      ],
+      "broadcasters": [
+        "hyperliquid-hip3"
+      ],
       "denomination": "USD",
       "rateFeed": false
     },
     "sekaw:ETH_EXT": {
-      "source": ["hyperliquid-hip3-ethena-fetcher"],
-      "broadcasters": ["hyperliquid-hip3"],
+      "source": [
+        "hyperliquid-hip3-ethena-fetcher"
+      ],
+      "broadcasters": [
+        "hyperliquid-hip3"
+      ],
       "denomination": "USD",
       "rateFeed": false
     },
     "sekaw:ETH": {
-      "source": ["hyperliquid-hip3-ethena-fetcher"],
-      "broadcasters": ["hyperliquid-hip3"],
+      "source": [
+        "hyperliquid-hip3-ethena-fetcher"
+      ],
+      "broadcasters": [
+        "hyperliquid-hip3"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "TSLA": {
+      "source": [],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "HL_MARK_PX_stocks:TSLA": {
+      "source": [
+        "hyperliquid-testnet-perps-ws-fetcher"
+      ],
+      "skipBroadcasting": true,
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "HL_ORACLE_PX_stocks:TSLA": {
+      "source": [
+        "hyperliquid-testnet-perps-ws-fetcher"
+      ],
+      "skipBroadcasting": true,
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "stocks:TSLA_MARK_0": {
+      "source": [
+        "hyperliquid-hip3-felix-stocks-fetcher"
+      ],
+      "broadcasters": [
+        "hyperliquid-hip3"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "stocks:TSLA_MARK_1": {
+      "source": [
+        "hyperliquid-hip3-felix-stocks-fetcher"
+      ],
+      "broadcasters": [
+        "hyperliquid-hip3"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "stocks:TSLA_EXT": {
+      "source": [
+        "hyperliquid-hip3-felix-stocks-fetcher"
+      ],
+      "broadcasters": [
+        "hyperliquid-hip3"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "stocks:TSLA": {
+      "source": [
+        "hyperliquid-hip3-felix-stocks-fetcher"
+      ],
+      "broadcasters": [
+        "hyperliquid-hip3"
+      ],
       "denomination": "USD",
       "rateFeed": false
     }
