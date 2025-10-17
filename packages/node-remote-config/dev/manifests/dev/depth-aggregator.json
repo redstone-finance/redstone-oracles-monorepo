@@ -266,7 +266,7 @@
       ]
     },
     "C3M": {
-      "source": ["twelve-data", "financialmodelingprep-usd", "alphavantage-stock"]
+      "source": ["twelve-data", "financialmodelingprep", "alphavantage-stock"]
     },
     "USDC.USDT": {
       "source": ["non-usd-based"],
@@ -555,7 +555,7 @@
       "source": ["coingecko", "canto-canto-note", "canto-canto-atom", "canto-canto-eth"]
     },
     "XAU": {
-      "source": ["alltick-api", "financialmodelingprep-usd", "twelve-data"]
+      "source": ["alltick-api", "financialmodelingprep", "twelve-data"]
     },
     "XRP": {
       "source": [
@@ -876,13 +876,7 @@
       ]
     },
     "GBP": {
-      "source": [
-        "alphavantage-usd",
-        "twelve-data",
-        "ecb",
-        "kraken-usd",
-        "financialmodelingprep-usd"
-      ]
+      "source": ["alphavantage-usd", "twelve-data", "ecb", "kraken-usd", "financialmodelingprep"]
     },
     "sfrxETH": {
       "source": ["ethereum-evm-fetcher-frax"]
@@ -1085,16 +1079,16 @@
       "source": ["twap-local"]
     },
     "KES": {
-      "source": ["alphavantage-usd", "twelve-data", "financialmodelingprep-usd"]
+      "source": ["alphavantage-usd", "twelve-data", "financialmodelingprep"]
     },
     "PHP": {
-      "source": ["alphavantage-usd", "twelve-data", "ecb", "financialmodelingprep-usd"]
+      "source": ["alphavantage-usd", "twelve-data", "ecb", "financialmodelingprep"]
     },
     "COP": {
-      "source": ["alphavantage-usd-reversed", "twelve-data", "financialmodelingprep-usd"]
+      "source": ["alphavantage-usd-reversed", "twelve-data", "financialmodelingprep"]
     },
     "INR": {
-      "source": ["alphavantage-usd", "twelve-data", "ecb", "financialmodelingprep-usd"]
+      "source": ["alphavantage-usd", "twelve-data", "ecb", "financialmodelingprep"]
     },
     "bsdETH": {
       "source": ["aerodrome-base-weth", "aerodrome-cl-base-weth", "uniswap-v3-base-weth-100"]
