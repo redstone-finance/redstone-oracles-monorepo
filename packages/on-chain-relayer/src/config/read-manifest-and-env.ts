@@ -5,7 +5,7 @@ import { NewestBlockTypeEnum } from "@redstone-finance/rpc-providers";
 import { RedstoneCommon } from "@redstone-finance/utils";
 import "dotenv/config";
 import { z } from "zod";
-import { OnChainRelayerEnv } from "./RelayerConfig";
+import { MqttDataProcessingStrategyType, OnChainRelayerEnv } from "./RelayerConfig";
 
 const DEFAULT_WAIT_FOR_ALL_GATEWAYS_TIME = 1000;
 
@@ -185,6 +185,10 @@ export const readManifestAndEnv = () => {
     mqttFallbackCheckIntervalMs: RedstoneCommon.getFromEnv(
       "MQTT_FALLBACK_CHECK_INTERVAL_MS",
       z.number().optional()
+    ),
+    mqttDataProcessingStrategy: RedstoneCommon.getFromEnv(
+      "MQTT_DATA_PROCESSING_STRATEGY",
+      z.nativeEnum(MqttDataProcessingStrategyType).default(MqttDataProcessingStrategyType.Base)
     ),
     includeAdditionalFeedsForGasOptimization: RedstoneCommon.getFromEnv(
       "INCLUDE_ADDITIONAL_FEEDS_FOR_GAS_OPTIMIZATION",
