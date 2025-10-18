@@ -2,46 +2,46 @@ import { SuiClient, SuiTransactionBlockResponse } from "@mysten/sui/client";
 import type { Keypair } from "@mysten/sui/cryptography";
 import { ParallelTransactionExecutor, Transaction } from "@mysten/sui/transactions";
 import { MIST_PER_SUI } from "@mysten/sui/utils";
-import { loggerFactory, RedstoneCommon } from "@redstone-finance/utils";
+import { ContractUpdater, ContractUpdateStatus } from "@redstone-finance/multichain-kit";
+import { ContractParamsProvider } from "@redstone-finance/sdk";
+import { loggerFactory } from "@redstone-finance/utils";
 import { DEFAULT_GAS_BUDGET } from "./SuiContractUtil";
+import { SuiPricesContractWriter } from "./SuiPricesContractWriter";
 import { SuiConfig } from "./config";
 
 const MAX_PARALLEL_TRANSACTION_COUNT = 5;
 const SPLIT_COIN_INITIAL_BALANCE = 2n * DEFAULT_GAS_BUDGET;
 
-export class SuiTxDeliveryMan {
-  protected readonly logger = loggerFactory("sui-tx-delivery-man");
+export class SuiContractUpdater implements ContractUpdater {
+  protected readonly logger = loggerFactory("sui-contract-updater");
+  private readonly writer: SuiPricesContractWriter;
 
   constructor(
-    public client: SuiClient,
-    public keypair: Keypair,
+    private readonly client: SuiClient,
+    private readonly keypair: Keypair,
     private readonly config: SuiConfig,
     private executor?: ParallelTransactionExecutor
-  ) {}
+  ) {
+    this.writer = new SuiPricesContractWriter(client, keypair, config);
+  }
 
-  async sendTransaction(
-    tx: Transaction,
-    repeatedTransactionCreator: (iterationIndex: number) => Promise<Transaction>,
-    iterationIndex = 0
-  ): Promise<string> {
-    try {
-      this.logger[iterationIndex ? "info" : "debug"](`Iteration #${iterationIndex} started`);
+  async update(
+    params: ContractParamsProvider,
+    attempt: number,
+    updateStartTimeMs: number
+  ): Promise<ContractUpdateStatus> {
+    const tx = await this.writer.prepareWritePricesTransaction(params, updateStartTimeMs, attempt);
 
-      return await RedstoneCommon.timeout(
-        this.performExecutingTx(tx),
-        this.config.expectedTxDeliveryTimeInMs
-      );
-    } catch (e) {
-      const nextIterationIndex = iterationIndex + 1;
-      this.logger.error(`Iteration #${iterationIndex} FAILED: ${RedstoneCommon.stringifyError(e)}`);
+    const digest = await this.performExecutingTx(tx);
 
-      if (nextIterationIndex >= this.config.maxTxSendAttempts) {
-        throw e;
-      }
+    return {
+      success: true,
+      transactionHash: digest,
+    };
+  }
 
-      const tx = await repeatedTransactionCreator(nextIterationIndex);
-      return await this.sendTransaction(tx, repeatedTransactionCreator, nextIterationIndex);
-    }
+  getSignerAddress() {
+    return this.keypair.toSuiAddress();
   }
 
   private async performExecutingTx(tx: Transaction) {
@@ -49,8 +49,8 @@ export class SuiTxDeliveryMan {
     const { digest, data } = await this.executeTxWithExecutor(tx, this.getExecutor());
 
     const checkEventsForFailure = true;
-    const { status } = SuiTxDeliveryMan.getStatus(data, checkEventsForFailure);
-    const cost = SuiTxDeliveryMan.getCost(data);
+    const { status } = SuiContractUpdater.getStatus(data, checkEventsForFailure);
+    const cost = SuiContractUpdater.getCost(data);
 
     this.logger.log(
       `Transaction ${digest} finished in ${Date.now() - date} [ms], status: ${status.toUpperCase()}, cost: ${cost} SUI`,

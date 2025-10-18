@@ -11153,6 +11153,15 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@redstone-finance/multichain-kit@workspace:*, @redstone-finance/multichain-kit@workspace:packages/multichain-kit":
+  version: 0.0.0-use.local
+  resolution: "@redstone-finance/multichain-kit@workspace:packages/multichain-kit"
+  dependencies:
+    "@redstone-finance/sdk": "workspace:*"
+    "@redstone-finance/utils": "workspace:*"
+  languageName: unknown
+  linkType: soft
+
 "@redstone-finance/node-commons@workspace:*, @redstone-finance/node-commons@workspace:packages/node-commons":
   version: 0.0.0-use.local
   resolution: "@redstone-finance/node-commons@workspace:packages/node-commons"
@@ -11599,6 +11608,7 @@ __metadata:
     "@mysten/sui": "npm:1.37.3"
     "@redstone-finance/chain-agnostic-oracle-tests": "workspace:*"
     "@redstone-finance/chain-configs": "workspace:*"
+    "@redstone-finance/multichain-kit": "workspace:*"
     "@redstone-finance/sdk": "workspace:*"
     "@redstone-finance/suiangria": "git+https://github.com/redstone-finance/suiangria.git#v0.0.1-all"
     "@redstone-finance/utils": "workspace:*"
