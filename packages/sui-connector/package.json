@@ -32,6 +32,7 @@
   "dependencies": {
     "@mysten/bcs": "1.7.0",
     "@mysten/sui": "1.37.3",
+    "@redstone-finance/multichain-kit": "workspace:*",
     "@redstone-finance/sdk": "workspace:*",
     "@redstone-finance/utils": "workspace:*",
     "decimal.js": "^10.4.3",
