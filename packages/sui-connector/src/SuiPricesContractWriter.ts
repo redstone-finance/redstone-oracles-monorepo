@@ -1,11 +1,11 @@
 import { SuiClient } from "@mysten/sui/client";
+import type { Keypair } from "@mysten/sui/cryptography";
 import { Transaction } from "@mysten/sui/transactions";
 import { SUI_CLOCK_OBJECT_ID } from "@mysten/sui/utils";
 import { ContractParamsProvider } from "@redstone-finance/sdk";
 import { loggerFactory, RedstoneCommon } from "@redstone-finance/utils";
 import { utils } from "ethers";
 import { SuiContractUtil } from "./SuiContractUtil";
-import { SuiTxDeliveryMan } from "./SuiTxDeliveryMan";
 import { SuiConfig } from "./config";
 import { makeFeedIdBytes, uint8ArrayToBcs } from "./util";
 
@@ -15,35 +15,25 @@ export class SuiPricesContractWriter {
   protected readonly logger = loggerFactory("sui-prices-writer");
 
   constructor(
-    private readonly deliveryMan: SuiTxDeliveryMan,
+    private readonly client: SuiClient,
+    private readonly keypair: Keypair,
     private readonly config: SuiConfig
   ) {}
 
   getSignerAddress() {
-    return this.deliveryMan.keypair.toSuiAddress();
+    return this.keypair.toSuiAddress();
   }
 
-  async writePricesFromPayloadToContract(paramsProvider: ContractParamsProvider) {
-    const metadataTimestamp = Date.now();
-    const tx = await this.prepareWritePricesTransaction(paramsProvider, metadataTimestamp);
-
-    return await this.deliveryMan.sendTransaction(
-      tx,
-      async (iterationIndex) =>
-        await this.prepareWritePricesTransaction(paramsProvider, metadataTimestamp, iterationIndex)
-    );
-  }
-
-  private async prepareWritePricesTransaction(
+  async prepareWritePricesTransaction(
     paramsProvider: ContractParamsProvider,
     metadataTimestamp: number,
     iterationIndex = 0
   ) {
     const tx = await SuiContractUtil.prepareBaseTransaction(
-      this.deliveryMan.client,
+      this.client,
       this.config.gasMultiplier ** iterationIndex,
       this.config.writePricesTxGasBudget,
-      this.deliveryMan.keypair
+      this.keypair
     );
 
     const unsignedMetadataArgs = {
@@ -83,7 +73,7 @@ export class SuiPricesContractWriter {
   });
 
   private async writePrice(tx: Transaction, feedId: string, payload: string) {
-    const fn = await this.selectFunction(this.deliveryMan.client, this.config.packageId);
+    const fn = await this.selectFunction(this.client, this.config.packageId);
 
     tx.moveCall({
       target: `${this.config.packageId}::price_adapter::${fn}`,
@@ -91,7 +81,7 @@ export class SuiPricesContractWriter {
         tx.object(this.config.priceAdapterObjectId),
         tx.pure(uint8ArrayToBcs(makeFeedIdBytes(feedId))),
         tx.pure(uint8ArrayToBcs(utils.arrayify("0x" + payload))),
-        tx.object(SUI_CLOCK_OBJECT_ID), // Clock object ID
+        tx.object(SUI_CLOCK_OBJECT_ID),
       ],
     });
   }

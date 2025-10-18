@@ -3,8 +3,8 @@ import { Keypair } from "@mysten/sui/cryptography";
 import type { IContractConnector } from "@redstone-finance/sdk";
 import { SuiConfig } from "./config";
 import { SuiContractConnector } from "./SuiContractConnector";
+import { SuiContractUpdater } from "./SuiContractUpdater";
 import { SuiPricesContractAdapter } from "./SuiPricesContractAdapter";
-import { SuiTxDeliveryMan } from "./SuiTxDeliveryMan";
 
 export class SuiPricesContractConnector
   extends SuiContractConnector<SuiPricesContractAdapter>
@@ -16,7 +16,7 @@ export class SuiPricesContractConnector
     client: SuiClient,
     private readonly config: SuiConfig,
     keypair?: Keypair,
-    private readonly txDeliveryMan?: SuiTxDeliveryMan
+    private readonly contractUpdater?: SuiContractUpdater
   ) {
     super(client, keypair);
   }
@@ -25,17 +25,17 @@ export class SuiPricesContractConnector
     this.adapter ??= new SuiPricesContractAdapter(
       this.client,
       this.config,
-      this.getTxDeliveryMan()
+      this.getContractUpdater()
     );
 
     return Promise.resolve(this.adapter);
   }
 
-  protected getTxDeliveryMan() {
+  protected getContractUpdater() {
     return (
-      this.txDeliveryMan ??
+      this.contractUpdater ??
       (this.keypair
-        ? SuiContractConnector.getCachedDeliveryMan(this.client, this.keypair, this.config)
+        ? SuiContractConnector.getCachedContractUpdater(this.client, this.keypair, this.config)
         : undefined)
     );
   }

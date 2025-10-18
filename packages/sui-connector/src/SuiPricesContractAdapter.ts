@@ -1,33 +1,39 @@
 import { bcs } from "@mysten/bcs";
 import { SuiClient } from "@mysten/sui/client";
 import { Transaction } from "@mysten/sui/transactions";
+import { TxDeliveryMan } from "@redstone-finance/multichain-kit";
 import {
   ContractData,
   type ContractParamsProvider,
   getLastRoundDetails,
   IMultiFeedPricesContractAdapter,
 } from "@redstone-finance/sdk";
-import { RedstoneCommon } from "@redstone-finance/utils";
+import { loggerFactory, RedstoneCommon } from "@redstone-finance/utils";
 import _ from "lodash";
 import { SuiConfig } from "./config";
 import { PriceAdapterConfig } from "./PriceAdapterConfig";
+import { SuiContractUpdater } from "./SuiContractUpdater";
 import { SuiPricesContractReader } from "./SuiPricesContractReader";
-import { SuiPricesContractWriter } from "./SuiPricesContractWriter";
-import { SuiTxDeliveryMan } from "./SuiTxDeliveryMan";
 import { serialize, serializeAddresses, serializeSigners } from "./util";
 
 export class SuiPricesContractAdapter implements IMultiFeedPricesContractAdapter {
   private readonly reader: SuiPricesContractReader;
-  private readonly writer?: SuiPricesContractWriter;
+  private readonly txDeliveryMan?: TxDeliveryMan;
+  private readonly logger = loggerFactory("sui-prices-contract-adapter");
+
   private getPriceAdapterObjectDataContentMemoized = RedstoneCommon.memoize({
     functionToMemoize: (blockNumber?: number) =>
       this.reader.getPriceAdapterObjectDataContent(blockNumber),
     ttl: 1_000,
   });
 
-  constructor(client: SuiClient, config: SuiConfig, deliveryMan?: SuiTxDeliveryMan) {
+  constructor(
+    client: SuiClient,
+    config: SuiConfig,
+    private readonly contractUpdater?: SuiContractUpdater
+  ) {
     this.reader = SuiPricesContractReader.createMultiReader(client, config.priceAdapterObjectId);
-    this.writer = deliveryMan ? new SuiPricesContractWriter(deliveryMan, config) : undefined;
+    this.txDeliveryMan = contractUpdater ? new TxDeliveryMan(contractUpdater, config) : undefined;
   }
 
   static initialize(
@@ -67,7 +73,7 @@ export class SuiPricesContractAdapter implements IMultiFeedPricesContractAdapter
   }
 
   getSignerAddress() {
-    return Promise.resolve(this.writer?.getSignerAddress());
+    return Promise.resolve(this.contractUpdater?.getSignerAddress());
   }
 
   async getUniqueSignerThreshold(blockNumber?: number): Promise<number> {
@@ -117,15 +123,23 @@ export class SuiPricesContractAdapter implements IMultiFeedPricesContractAdapter
   }
 
   async writePricesFromPayloadToContract(paramsProvider: ContractParamsProvider): Promise<string> {
-    if (!this.writer) {
+    if (!this.txDeliveryMan) {
       throw new Error("Writer is not set");
     }
 
-    return await this.writer.writePricesFromPayloadToContract(paramsProvider);
+    const status = await this.txDeliveryMan.submitTransaction(paramsProvider);
+
+    this.logger.info(`write-prices status: ${RedstoneCommon.stringify(status)}`);
+
+    switch (status.success) {
+      case true:
+        return status.transactionHash;
+      case false:
+        throw AggregateError(status.errors);
+    }
   }
 
-  //eslint-disable-next-line @typescript-eslint/require-await
-  async getPricesFromPayload(_paramsProvider: ContractParamsProvider): Promise<bigint[]> {
+  getPricesFromPayload(_paramsProvider: ContractParamsProvider): Promise<bigint[]> {
     throw new Error("Pull model not supported");
   }
 }
