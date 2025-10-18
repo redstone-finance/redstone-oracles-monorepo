@@ -3,11 +3,11 @@ import { Keypair } from "@mysten/sui/cryptography";
 import { Transaction } from "@mysten/sui/transactions";
 import { MIST_PER_SUI } from "@mysten/sui/utils";
 import type { IContractConnector } from "@redstone-finance/sdk";
-import { SuiTxDeliveryMan } from "./SuiTxDeliveryMan";
 import { SuiConfig } from "./config";
+import { SuiContractUpdater } from "./SuiContractUpdater";
 
 export class SuiContractConnector<Adapter> implements IContractConnector<Adapter> {
-  static txDeliveryManCache: { [p: string]: SuiTxDeliveryMan | undefined } = {};
+  static contractUpdaterCache: { [p: string]: SuiContractUpdater | undefined } = {};
 
   constructor(
     protected readonly client: SuiClient,
@@ -41,18 +41,23 @@ export class SuiContractConnector<Adapter> implements IContractConnector<Adapter
       },
     });
 
-    return SuiTxDeliveryMan.getStatus(response).success;
+    return SuiContractUpdater.getStatus(response).success;
   }
 
-  protected static getCachedDeliveryMan(client: SuiClient, keypair: Keypair, config: SuiConfig) {
+  protected static getCachedContractUpdater(
+    client: SuiClient,
+    keypair: Keypair,
+    config: SuiConfig
+  ) {
     const cacheKey = keypair.getPublicKey().toSuiPublicKey();
-    SuiContractConnector.txDeliveryManCache[cacheKey] ??= new SuiTxDeliveryMan(
+
+    SuiContractConnector.contractUpdaterCache[cacheKey] ??= new SuiContractUpdater(
       client,
       keypair,
       config
     );
 
-    return SuiContractConnector.txDeliveryManCache[cacheKey];
+    return SuiContractConnector.contractUpdaterCache[cacheKey];
   }
 
   async transfer(toAddress: string, amount: number) {
@@ -75,6 +80,7 @@ export class SuiContractConnector<Adapter> implements IContractConnector<Adapter
     if (!this.keypair) {
       throw new Error("Private Key was not provided.");
     }
+
     return Promise.resolve(this.keypair.getPublicKey().toSuiAddress());
   }
 }
