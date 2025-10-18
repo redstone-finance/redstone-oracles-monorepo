@@ -1,0 +1,31 @@
+{
+  "name": "@redstone-finance/multichain-kit",
+  "version": "0.9.0",
+  "main": "dist/src/index.js",
+  "exports": "./dist/src/index.js",
+  "types": "dist/src/index.d.ts",
+  "license": "MIT",
+  "scripts": {
+    "test": "yarn global:jest:cov --passWithNoTests",
+    "clean": "yarn global:ts-clean",
+    "build": "yarn global:tsc -p tsconfig.build.json",
+    "build:turbo": "yarn global:turbo build",
+    "build-dev": "yarn global:tsc -p tsconfig.json",
+    "build-dev:turbo": "yarn global:turbo build-dev",
+    "preversion": "yarn build",
+    "pack-package": "yarn build && cd dist && npm pack",
+    "lint": "yarn global:eslint .",
+    "lint:fix": "yarn global:eslint --fix ."
+  },
+  "dependencies": {
+    "@redstone-finance/sdk": "workspace:*",
+    "@redstone-finance/utils": "workspace:*"
+  },
+  "files": [
+    "src",
+    "dist"
+  ],
+  "publishConfig": {
+    "access": "public"
+  }
+}

@@ -9,7 +9,7 @@ import {
   SuiNetworkSchema,
   SuiPricesContractAdapter,
 } from "../src";
-import { SuiTxDeliveryMan } from "../src/SuiTxDeliveryMan";
+import { SuiContractUpdater } from "../src/SuiContractUpdater";
 
 const DATA_SERVICE_ID = "redstone-primary-prod";
 const WRITE_TEST_TIMEOUT = 20 * 1_000; // 20 secs
@@ -27,7 +27,7 @@ describe("SuiPricesContractAdapter", () => {
     adapter = new SuiPricesContractAdapter(
       client,
       config,
-      new SuiTxDeliveryMan(client, keypair, config)
+      new SuiContractUpdater(client, keypair, config)
     );
     suiClient = makeSuiClient(network);
   });
