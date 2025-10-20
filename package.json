@@ -5,8 +5,8 @@
   "scripts": {
     "global:turbo": "cd $INIT_CWD && turbo",
     "build:all": "yarn turbo build",
-    "build-dev:all": "yarn turbo build-dev",
-    "global:separate-build": "cd $INIT_CWD && turbo build-dev",
+    "typecheck:all": "yarn turbo typecheck",
+    "global:separate-build": "cd $INIT_CWD && turbo build",
     "global:build-clean-build": "cd $INIT_CWD && turbo build --force",
     "compile:all": "yarn turbo compile",
     "clean:all": "yarn turbo clean",
@@ -33,7 +33,6 @@
     "global:ts-node": "cd $INIT_CWD && ts-node",
     "global:tsc": "cd $INIT_CWD && tsc",
     "global:lambda-build": "cd $INIT_CWD && tsc -p tsconfig.build.json && esbuild $INDEX_PATH --bundle --minify --platform=node --target=es2022 --outfile=lambda-dist/index.js ${ESBUILD_EXTRA:-} && cp -R ../../node-remote-config lambda-dist/node-remote-config",
-    "global:lambda-build-dev": "cd $INIT_CWD && tsc -p tsconfig.json && cp -R ../../node-remote-config dist/node-remote-config",
     "global:lambda-clean": "cd $INIT_CWD && yarn global:ts-clean && rm -rf lambda-dist",
     "global:lambda-zip": "cd $INIT_CWD && cd lambda-dist && zip -r build.zip *",
     "global:lambda-pushToBucket": "cd $INIT_CWD && aws s3api put-object --bucket $BUCKET_NAME --key $PACKAGE_NAME.$(git log -1 --format=%h --abbrev=8).zip --body ./lambda-dist/build.zip  && echo \"S3 object: $PACKAGE_NAME.$(git log -1 --format=%h --abbrev=8).zip\"",
@@ -48,7 +47,7 @@
     "global:lambda-pushProd": "cd $INIT_CWD && yarn global:lambda-pushProdIreland",
     "global:lambda-pushProdAllRegions": "cd $INIT_CWD && yarn global:lambda-pushProdFrankfurt && yarn global:lambda-pushProdIreland && yarn global:lambda-pushProdLondon && yarn global:lambda-pushProdParis && yarn global:lambda-pushProdStockholm",
     "global:object-pushToBucket": "cd $INIT_CWD && aws s3api put-object --bucket $BUCKET_NAME --key $KEY_NAME --body $FILENAME",
-    "global:ts-clean": "cd $INIT_CWD && rm -rf dist coverage",
+    "global:ts-clean": "cd $INIT_CWD && rm -rf dist coverage \"*.tsbuildinfo\"",
     "global:ts-hardhat-clean": "cd $INIT_CWD && yarn global:ts-clean && rm -rf artifacts cache typechain-types",
     "generate-paths-to-include-in-public-repo": "yarn global:ts-node scripts/generate-paths-to-include-in-public-repo.ts",
     "validate-paths-to-include-in-public-repo": "yarn global:ts-node scripts/validate-paths-to-include-in-public-repo.ts"
