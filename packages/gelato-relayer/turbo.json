@@ -1,0 +1,8 @@
+{
+  "extends": ["//"],
+  "tasks": {
+    "compile": {
+      "dependsOn": ["@redstone-finance/rpc-providers#build"]
+    }
+  }
+}
