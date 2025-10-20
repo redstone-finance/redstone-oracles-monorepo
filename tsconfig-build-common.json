@@ -1,1 +1,5 @@
-{}
+{
+  "compilerOptions": {
+    "tsBuildInfoFile": "${configDir}/dist/tsconfig.build.tsbuildinfo"
+  }
+}
