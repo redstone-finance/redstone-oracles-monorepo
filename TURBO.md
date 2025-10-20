@@ -28,14 +28,19 @@ If you forget to run it, `typescript-eslint` will scream at you about missing ty
 
 ```bash
 cd packages/my-package
- # Execute build-dev task in current package along with its deps
-yarn global:turbo build-dev
+# Build dependencies and run hardhat compile (if applicable)
+yarn global:turbo setup-dev
 
-# WRONG: Only runs tsc on current package, does not rebuild deps
-yarn build-dev
+# Execute build satisfying all dependencies
+yarn global:turbo build
+# WRONG (usually): Only runs tsc on current package, does not rebuild deps
+yarn build
+
+# Typecheck the whole package (including scripts, tests, etc.). Does not output to dist.
+yarn typecheck
 ```
 
-Alternatively, you might run `yarn global:turbo build-dev` at the repo root to prepare *every* package for development.
+Alternatively, you might run `yarn global:turbo setup-dev` at the repo root to prepare *every* package for development.
 
 ## Tips and tricks
 - Consider installing turbo binary globally to avoid `yarn global:turbo` every time (`npm i -g turbo`)
@@ -43,8 +48,8 @@ Alternatively, you might run `yarn global:turbo build-dev` at the repo root to p
 - Use `--only` flag to run the task *without* its dependencies
 - Use `--filter "@redstone-finance/my-package"` to scope the command to some package
 - Use `--filter "@redstone-finance/my-package...` to run the command for this package and *all* of it's dependencies (recursively)
-- Globs are supported `turbo build-dev --filter="@redstone-finance/lambda-*"`
-- [Continue](https://turborepo.com/docs/reference/run#--continueoption) when encountering errors `turbo build-dev --filter="@redstone-finance/*-connector" --continue=dependencies-successful` (useful when running for multiple packages)
+- Globs are supported `turbo build --filter="@redstone-finance/lambda-*"`
+- [Continue](https://turborepo.com/docs/reference/run#--continueoption) when encountering errors `turbo build --filter="@redstone-finance/*-connector" --continue=dependencies-successful` (useful when running for multiple packages)
 - See what's gonna happen before applying the command: `--dry-run=text` (useful to see why certain dependencies exist or why something was or was not cached)
 - Use interactive terminal UI: `--ui=tui`
 
