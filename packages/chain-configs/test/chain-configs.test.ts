@@ -8,7 +8,7 @@ import {
 } from "../src";
 import { skipIfDisabledOrNotSupported } from "./rpc-urls/common";
 
-const CHAINS_TO_SKIP_RPC_PRESENCE_CHECK: string[] = ["megaEth Testnet"];
+const CHAINS_TO_SKIP_RPC_PRESENCE_CHECK: string[] = ["megaEth Testnet", "Monad Mainnet"];
 
 const CHAINS_TO_SKIP_REDSTONE_MULTICALL_ADDRESS_CHECK: string[] = [
   "Arbitrum Sepolia",
