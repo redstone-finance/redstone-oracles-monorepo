@@ -1412,7 +1412,13 @@
       "source": ["beaconchain-api", "flashbots-data-api"],
       "denomination": "ETH",
       "rateFeed": false,
-      "minValidSourcesPercentage": 100
+      "minValidSourcesPercentage": 100,
+      "deviationCheck": {
+        "deviationWithRecentValues": {
+          "maxPercent": 50,
+          "maxDelayMilliseconds": 120000
+        }
+      }
     },
     "SEI": {
       "source": [
