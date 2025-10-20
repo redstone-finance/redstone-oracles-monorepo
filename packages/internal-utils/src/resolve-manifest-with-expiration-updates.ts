@@ -17,6 +17,18 @@ interface HostnameData {
 const DAY_IN_MS = 24 * 3600 * 1000;
 const MAX_EXPIRATION_PERIOD = 7 * DAY_IN_MS;
 
+const arrayNamesToConcat = new Set([
+  "symbolsToSkip",
+  "symbolsToCheck",
+  "symbolsToWarn",
+  "disabledNetworks",
+  "disabledChecks",
+]);
+const configMerger = (objValue: unknown, srcValue: unknown, key: string) =>
+  Array.isArray(objValue) && Array.isArray(srcValue) && arrayNamesToConcat.has(key)
+    ? objValue.concat(srcValue)
+    : undefined; // fallback to default lodash behavior
+
 export function resolveMonitoringManifest<T>(manifest: GenericMonitoringManifest<T>): T {
   const { defaultConfig, temporaryConfigUpdates } = manifest;
 
@@ -31,7 +43,7 @@ export function resolveMonitoringManifest<T>(manifest: GenericMonitoringManifest
   const applyTemporaryConfig = temporaryConfigUpdates && expirationTimestamp > Date.now();
 
   const finalConfig = applyTemporaryConfig
-    ? _.merge(defaultConfig, temporaryConfigUpdates)
+    ? _.mergeWith(defaultConfig, temporaryConfigUpdates, configMerger)
     : defaultConfig;
 
   return finalConfig;
