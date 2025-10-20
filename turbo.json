@@ -1,25 +1,5 @@
 {
   "tasks": {
-    "compile": {
-      "inputs": ["hardhat.config.ts", "contracts/**"],
-      "outputs": ["typechain-types/**", "artifacts/**", "cache/**"],
-      "dependsOn": ["^build-dev"]
-    },
-    "build-dev": {
-      "inputs": ["$TURBO_DEFAULT$", "$TURBO_ROOT$/tsconfig-common.json", "!tsconfig.build.json"],
-      "outputs": ["dist/**"],
-      "dependsOn": ["^build-dev", "compile"]
-    },
-    "lint": {
-      "inputs": ["./**.{js,ts}", "$TURBO_ROOT$/eslint.config.ts"],
-      "dependsOn": ["^build-dev", "compile"]
-    },
-    "test": {
-      "inputs": ["test/**"],
-      "outputs": ["coverage/**"],
-      "dependsOn": ["build-dev"],
-      "passThroughEnv": ["GH_AUTH_TOKEN"]
-    },
     "build": {
       "inputs": [
         "$TURBO_DEFAULT$",
@@ -28,8 +8,30 @@
         "!scripts/**",
         "!tsconfig.json"
       ],
-      "outputs": ["dist/**"],
+      "outputs": ["dist/**", "lambda-dist/**", "!lambda-dist/build.zip"],
+      "dependsOn": ["setup-dev"]
+    },
+    "setup-dev": {
+      "inputs": ["package.json"],
       "dependsOn": ["^build", "compile"]
+    },
+    "typecheck": {
+      "inputs": ["$TURBO_DEFAULT$", "$TURBO_ROOT$/tsconfig-common.json", "!tsconfig.build.json"],
+      "dependsOn": ["setup-dev"]
+    },
+    "compile": {
+      "inputs": ["hardhat.config.ts", "contracts/**"],
+      "outputs": ["typechain-types/**", "artifacts/**", "cache/**"]
+    },
+    "lint": {
+      "inputs": ["./**.{js,ts}", "$TURBO_ROOT$/eslint.config.ts"],
+      "dependsOn": ["setup-dev"]
+    },
+    "test": {
+      "inputs": ["test/**"],
+      "outputs": ["coverage/**"],
+      "dependsOn": ["setup-dev"],
+      "passThroughEnv": ["GH_AUTH_TOKEN"]
     },
     "bundle": {
       "inputs": ["dist/**", "$TURBO_ROOT$/rollup-config.mjs"],
