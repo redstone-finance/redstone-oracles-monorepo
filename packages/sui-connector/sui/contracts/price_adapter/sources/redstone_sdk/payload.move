@@ -20,7 +20,8 @@ use redstone_price_adapter::redstone_sdk_data_package::{
 use redstone_price_adapter::redstone_sdk_median::try_calculate_median;
 use redstone_price_adapter::redstone_sdk_validate::{
     try_verify_data_packages,
-    try_verify_redstone_marker
+    try_verify_redstone_marker,
+    try_verify_feeds_in_data_packages
 };
 use redstone_price_adapter::result::{Result, ok, error};
 
@@ -76,6 +77,15 @@ public fun try_process_payload(
         ),
     );
 
+    let verification_result = data_packages.flat_map!(
+        |data_packages| try_verify_feeds_in_data_packages(
+            &data_packages,
+        ),
+    );
+    if (!verification_result.is_ok()) {
+        return error(verification_result.unwrap_err().into_bytes())
+    };
+
     let data_packages = data_packages.map!(
         |data_packages| filter_out_zero_values(
             data_packages,
@@ -94,8 +104,8 @@ public fun try_process_payload(
         return error(verification_result.unwrap_err().into_bytes())
     };
 
-    let values = parsed_payload.map!(
-        |parsed_payload| extract_values_by_feed_id(&parsed_payload, &feed_id),
+    let values = data_packages.map!(
+        |packages| extract_values_by_feed_id_from_packages(packages, &feed_id),
     );
 
     let aggregated_value = values.flat_map!(
@@ -115,13 +125,8 @@ public fun try_process_payload(
 
 // === Public-View Functions ===
 
-public fun extract_values_by_feed_id(payload: &Payload, feed_id: &vector<u8>): vector<vector<u8>> {
-    payload
-        .data_packages()
-        .map!(|package| *package.data_points())
-        .flatten()
-        .filter!(|data_point| data_point.feed_id() == feed_id)
-        .map!(|data_point| *data_point.value())
+public fun extract_values_by_feed_id(_: &Payload, _: &vector<u8>): vector<vector<u8>> {
+    abort deprecated_code()
 }
 
 public fun data_packages(payload: &Payload): vector<DataPackage> {
@@ -129,6 +134,17 @@ public fun data_packages(payload: &Payload): vector<DataPackage> {
 }
 
 // === Private Functions ===
+
+fun extract_values_by_feed_id_from_packages(
+    data_packages: vector<DataPackage>,
+    feed_id: &vector<u8>,
+): vector<vector<u8>> {
+    data_packages
+        .map!(|package| *package.data_points())
+        .flatten()
+        .filter!(|data_point| data_point.feed_id() == feed_id)
+        .map!(|data_point| *data_point.value())
+}
 
 fun parse_raw_payload(mut payload: vector<u8>): Result<Payload> {
     let marker_verification_result = try_verify_redstone_marker(&payload);
@@ -328,7 +344,7 @@ fun trim_end(v: &mut vector<u8>, len: u64): vector<u8> {
 // === Tests Functions ===
 
 #[test_only]
-use redstone_price_adapter::redstone_sdk_config::test_config;
+use redstone_price_adapter::redstone_sdk_config::{new as new_config, test_config};
 
 #[test]
 fun test_process_payload() {
@@ -342,6 +358,85 @@ fun test_process_payload() {
 
     assert!(val == 236389750361);
     assert!(timestamp == 1707307760000);
+}
+
+#[test]
+fun test_process_payload_mixed_zero_and_non_zero_values() {
+    // 3 signers mixed values (0 and normal)
+    let payload =
+        x"45544800000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000455448000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000640199fd5f9ce300000020000002b2910ada57ee0681f34a0e92de771ca61eb7b3d855c25c63e33815f787de4cc50f647a33ba2c5a91e0042845c03834e6321a8e3c81118f13558a92b17bafcb671b45544800000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000455448000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000960199fd5f9ce300000020000002a870b83573a19ce17512bf47d3aa74771465e4b48ce9ec2ded9cd8092e17fa4a3de0b34526bed99e00827318ceb20a0f48881b486deb48a33ed9618a7ac4b5a61b45544800000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000455448000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000c80199fd5f9ce300000020000002c5c8a3d438d6e63716d39eec7958ffa0b8ca703d93d112df2e537f733988d2541e72ed308403516350a50c72f2f20274236e8859327338e36411b12678a24ee91c0003000000000002ed57011e0000";
+    let feed_id = x"4554480000000000000000000000000000000000000000000000000000000000";
+    let timestamp = 1760892525795;
+
+    let config = new_config(
+        3,
+        vector[
+            x"bF78255DB658E922466B4eea0F4d4633872D74f9",
+            x"305a6201Ae82a14aC11229122EaB42588C231618",
+            x"bD87688586ccb807499002Ea1d1D05705454292E",
+        ],
+        15 * 60 * 1000,
+        3 * 60 * 1000,
+        vector[],
+        0,
+    );
+
+    try_process_payload(&config, timestamp, feed_id, payload).unwrap_err();
+}
+
+#[test]
+fun test_process_payload_filter_out_zero_values_not_enough_signers() {
+    // 2 signers normal values 1 signer 0 value
+    let payload =
+        x"455448000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000199fd604abf000000200000015228fbcd70ae13576d1e4351b63134363e63560f0893330fc883d6830927d8cc710f0559f4b3aae5253e801374ffa095ae5563ed9b7714a8c1d4dbaad0e6b3aa1b455448000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000640199fd604abf000000200000013098dd9a4a0752249f197df27adfa6445e8429ee42a01f700bfdc12c90ed12c86725eb1264ced37526e9bf80db85db2459e28ac54e4e8c00f2b0ef4c7a5452481c455448000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000960199fd604abf0000002000000168bc07a5142d681407d1d9aebad69d07f1c9bcd1651e8a0d93ebf8e0b8bdef527b031a80954246f9c3369d0096c2d89450eecbab7857c691f017fbf282e0f6841c0003000000000002ed57011e0000";
+    let feed_id = x"4554480000000000000000000000000000000000000000000000000000000000";
+    let timestamp = 1760892570303;
+
+    let config = new_config(
+        3,
+        vector[
+            x"04E555EF92856019962b272a3547921E04322826",
+            x"3531539100252e266A48445702c7DFBf096f4C01",
+            x"8dBdb66B775Effd435e6dFe508EDa311eC3c3FDe",
+        ],
+        15 * 60 * 1000,
+        3 * 60 * 1000,
+        vector[],
+        0,
+    );
+
+    try_process_payload(&config, timestamp, feed_id, payload).unwrap_err();
+}
+
+#[test]
+fun test_process_payload_filter_out_zero_values_enough_signers() {
+    // 3 signers normal values 2 signers 0 value
+    let payload =
+        x"455448000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000199fd60cb2900000020000001f14e7fd44865f933be7b6f7e7ff40d9f86bf50ef810f902f109257b7beb64bb07d9ca4b3ae2238175622b147af702fa6f9904d2408e2ce4363751120772c333a1c455448000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000199fd60cb2900000020000001bb391d0de2bb8197ae5bfb3c212b3dcd83025982932af25be907c484b65332a6338525befcce3fe15729c8466b7b4f8d9102fff94c858e225498c9b39c2ce30c1b455448000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000640199fd60cb2900000020000001752e82b500da8f52732a0d6002ea0b2b522bad8b6610f8a3d245ea2f8ac683dd6cd376004ca05bbf62068c3cfcfe76ee075c6c4d1b8b45707dbb6fc3f1ba29571c455448000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000960199fd60cb290000002000000161a04db8f76c9a773a2af7d2f3f463ab84bdbc65b93c63f162da5c1aa094168e172dc680bfc8d14d6edf4eff9e3a8860e368dcced3a974370176f3389704c8e71b455448000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000c80199fd60cb290000002000000111a425bfa4d5227cacd62a2941ca37a023b765d04e4ec11f216b67eeaca3fc6522e960a52f773c0b5c78119a0e90ded73078a78dcb1197edce3afb11c171ddaa1c0005000000000002ed57011e0000";
+    let feed_id = x"4554480000000000000000000000000000000000000000000000000000000000";
+    let timestamp = 1760892603177;
+
+    let config = new_config(
+        3,
+        vector[
+            x"920e06708d37A902566040e2c03039fd4C91376A",
+            x"Adbda366207ff4111fc9B84DEc146Cdb6510AE72",
+            x"9fc9f59B052c0c62248B50bC375a100c6Ae2394c",
+            x"b2F64dE162b032b96A805c0F042d2bEBF47117c1",
+            x"1B1ae1eEbC8B3794ef1F8dcF535e0280A687B213",
+        ],
+        15 * 60 * 1000,
+        3 * 60 * 1000,
+        vector[],
+        0,
+    );
+
+    let (val, timestamp) = try_process_payload(&config, timestamp, feed_id, payload)
+        .unwrap()
+        .destroy_processed_payload();
+
+    assert!(val == 150);
+    assert!(timestamp == 1760892603177);
 }
 
 #[test]
