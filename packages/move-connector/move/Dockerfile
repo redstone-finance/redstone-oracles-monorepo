@@ -38,6 +38,12 @@ RUN make download-dependencies
 FROM builder AS ci-runtime
 COPY --from=dependency-cache /root/.move /root/.move
 
+# Add sudo and jq for CI scripts
+RUN apt-get update && apt-get install -y \
+    sudo \
+    jq \
+    && rm -rf /var/lib/apt/lists/*
+
 CMD ["bash"]
 
 # Stage 4: Development runtime image
