@@ -8342,6 +8342,13 @@
       ],
       "denomination": "USD",
       "rateFeed": false
+    },
+    "xUSD_FUNDAMENTAL": {
+      "source": [
+        "ethereum-evm-fetcher-stream"
+      ],
+      "denomination": "USDC",
+      "rateFeed": true
     }
   }
 }
