@@ -2,7 +2,8 @@ import { DataPackage, NumericDataPoint, SignedDataPackage } from "@redstone-fina
 import { RedstoneLogger } from "@redstone-finance/utils";
 import { ethers } from "ethers";
 import { MqttTopics } from "../src";
-import { DataPackageSubscriber, DataPackageSubscriberParams } from "../src/DataPackageSubscriber";
+import { DataPackageSubscriber } from "../src/DataPackageSubscriber";
+import { DataPackageSubscriberParams } from "../src/DataPackageSubscriberParams";
 import { MultiPubSubClient } from "../src/MultiPubSubClient";
 import { PubSubPayload } from "../src/PubSubClient";
 import { RateLimitsCircuitBreaker } from "../src/RateLimitsCircuitBreaker";

@@ -1,4 +1,5 @@
 export * from "./DataPackageSubscriber";
+export * from "./DataPackageSubscriberParams";
 export * from "./Mqtt5Client";
 export * from "./MultiPubSubClient";
 export * from "./RateLimitsCircuitBreaker";
