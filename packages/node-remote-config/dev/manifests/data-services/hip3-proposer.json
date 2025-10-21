@@ -22,12 +22,12 @@
         "ws-perp-okx-usdt"
       ],
       "priceAggregator": "constantWeightMedian",
-      "customeWeightsForWeightedMedian": {
+      "customWeightsForWeightedMedian": {
         "ws-perp-binance-usdt": 3,
         "ws-perp-okx-usdt": 2,
         "ws-perp-bybit-usdt": 2
       },
-      "skipBroadcasting": true,
+      "broadcasters": [],
       "denomination": "USD",
       "rateFeed": false
     },
@@ -35,7 +35,7 @@
       "source": [
         "hyperliquid-testnet-perps-ws-fetcher"
       ],
-      "skipBroadcasting": true,
+      "broadcasters": [],
       "denomination": "USD",
       "rateFeed": false
     },
@@ -43,7 +43,7 @@
       "source": [
         "hyperliquid-testnet-perps-ws-fetcher"
       ],
-      "skipBroadcasting": true,
+      "broadcasters": [],
       "denomination": "USD",
       "rateFeed": false
     },
@@ -51,7 +51,7 @@
       "source": [
         "hyperliquid-testnet-perps-ws-fetcher"
       ],
-      "skipBroadcasting": true,
+      "broadcasters": [],
       "denomination": "USD",
       "rateFeed": false
     },
@@ -59,7 +59,7 @@
       "source": [
         "hyperliquid-testnet-perps-ws-fetcher"
       ],
-      "skipBroadcasting": true,
+      "broadcasters": [],
       "denomination": "USD",
       "rateFeed": false
     },
@@ -103,6 +103,14 @@
       "denomination": "USD",
       "rateFeed": false
     },
+    "HL_OPEN_INTEREST_sekaw:BTC": {
+      "source": [
+        "hyperliquid-perps-sekaw-api-fetcher"
+      ],
+      "broadcasters": [],
+      "denomination": "USD",
+      "rateFeed": false
+    },
     "ETH_PERP": {
       "source": [
         "ws-perp-binance-usdt",
@@ -111,12 +119,12 @@
         "ws-perp-mexc-usdt",
         "ws-perp-okx-usdt"
       ],
-      "customeWeightsForWeightedMedian": {
+      "customWeightsForWeightedMedian": {
         "ws-perp-binance-usdt": 3,
         "ws-perp-okx-usdt": 2,
         "ws-perp-bybit-usdt": 2
       },
-      "skipBroadcasting": true,
+      "broadcasters": [],
       "denomination": "USD",
       "rateFeed": false
     },
@@ -124,7 +132,7 @@
       "source": [
         "hyperliquid-testnet-perps-ws-fetcher"
       ],
-      "skipBroadcasting": true,
+      "broadcasters": [],
       "denomination": "USD",
       "rateFeed": false
     },
@@ -132,7 +140,7 @@
       "source": [
         "hyperliquid-testnet-perps-ws-fetcher"
       ],
-      "skipBroadcasting": true,
+      "broadcasters": [],
       "denomination": "USD",
       "rateFeed": false
     },
@@ -140,7 +148,7 @@
       "source": [
         "hyperliquid-testnet-perps-ws-fetcher"
       ],
-      "skipBroadcasting": true,
+      "broadcasters": [],
       "denomination": "USD",
       "rateFeed": false
     },
@@ -148,7 +156,7 @@
       "source": [
         "hyperliquid-testnet-perps-ws-fetcher"
       ],
-      "skipBroadcasting": true,
+      "broadcasters": [],
       "denomination": "USD",
       "rateFeed": false
     },
@@ -192,6 +200,14 @@
       "denomination": "USD",
       "rateFeed": false
     },
+    "HL_OPEN_INTEREST_sekaw:ETH": {
+      "source": [
+        "hyperliquid-perps-sekaw-api-fetcher"
+      ],
+      "broadcasters": [],
+      "denomination": "USD",
+      "rateFeed": false
+    },
     "TSLA": {
       "source": [],
       "denomination": "USD",
@@ -201,7 +217,7 @@
       "source": [
         "hyperliquid-testnet-perps-ws-fetcher"
       ],
-      "skipBroadcasting": true,
+      "broadcasters": [],
       "denomination": "USD",
       "rateFeed": false
     },
@@ -209,7 +225,7 @@
       "source": [
         "hyperliquid-testnet-perps-ws-fetcher"
       ],
-      "skipBroadcasting": true,
+      "broadcasters": [],
       "denomination": "USD",
       "rateFeed": false
     },
@@ -250,6 +266,14 @@
       "broadcasters": [
         "hyperliquid-hip3"
       ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "HL_OPEN_INTEREST_stocks:TSLA": {
+      "source": [
+        "hyperliquid-perps-stocks-api-fetcher"
+      ],
+      "broadcasters": [],
       "denomination": "USD",
       "rateFeed": false
     }
