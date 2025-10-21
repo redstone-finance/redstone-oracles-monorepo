@@ -3581,6 +3581,13 @@
       ],
       "denomination": "USDC",
       "rateFeed": true
+    },
+    "vHYPE_FUNDAMENTAL": {
+      "source": [
+        "hyperevm-evm-fetcher-ventuals"
+      ],
+      "denomination": "HYPE",
+      "rateFeed": true
     }
   },
   "multiPointPackages": {
