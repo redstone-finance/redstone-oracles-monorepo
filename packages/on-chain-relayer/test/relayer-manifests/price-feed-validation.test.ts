@@ -7,7 +7,7 @@ import { Bytes, Contract, ContractFunction, providers, utils } from "ethers";
 import { describe, test } from "mocha";
 
 const INTEGRATIONS_NOT_FOR_TESTING = [
-  "hemiMultiFeed", // remove once we get a publicRpc
+  "monadMultiFeed", // remove once we get a publicRpc
   "megaEthTestnetMultiFeed", // remove once we get a publicRpc
 ];
 
