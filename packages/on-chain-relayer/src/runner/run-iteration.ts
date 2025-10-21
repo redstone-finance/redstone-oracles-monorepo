@@ -49,7 +49,7 @@ export const runIteration = async (
       `Relayer is paused until ${relayerConfig.isPausedUntil?.toString()}`
     );
 
-    return;
+    return false;
   }
   const iterationStart = performance.now();
   const shouldUpdateContext = await contractFacade.getShouldUpdateContext(relayerConfig);
