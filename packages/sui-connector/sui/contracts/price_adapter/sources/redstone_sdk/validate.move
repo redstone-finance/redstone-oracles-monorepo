@@ -149,12 +149,52 @@ fun verify_signer_count(
     ok(unit())
 }
 
+public(package) fun try_verify_feeds_in_data_packages(
+    data_packages: &vector<DataPackage>,
+): Result<Unit> {
+    let mut i = 0;
+
+    while (i < data_packages.length()) {
+        let data_package = &data_packages[i];
+
+        let verify_result = verify_feeds_in_data_package(data_package);
+        if (!verify_result.is_ok()) {
+            return verify_result
+        };
+
+        i = i + 1;
+    };
+
+    ok(unit())
+}
+
+fun verify_feeds_in_data_package(data_package: &DataPackage): Result<Unit> {
+    let mut feeds = vec_set::empty();
+
+    let mut i = 0;
+    let data_points = data_package.data_points();
+
+    while (i < data_points.length()) {
+        let feed_id = data_points[i].feed_id();
+
+        if (feeds.contains(feed_id)) {
+            return error(b"Reoccuring feed id")
+        };
+
+        feeds.insert(*feed_id);
+
+        i = i + 1;
+    };
+
+    ok(unit())
+}
+
 // === Tests Functions ===
 
 #[test_only]
 use redstone_price_adapter::redstone_sdk_config::test_config;
 #[test_only]
-use redstone_price_adapter::redstone_sdk_data_package::new_data_package;
+use redstone_price_adapter::redstone_sdk_data_package::{new_data_package, new_data_point};
 
 #[test]
 fun test_verify_timestamps_are_the_same() {
@@ -329,4 +369,46 @@ fun test_try_verify_data_packages_fail_on_duplicated_packages_after_threshold_me
     ];
 
     try_verify_data_packages(&data_packages, &config, 1000).unwrap_err();
+}
+
+#[test]
+fun test_try_verify_feeds_in_data_packages_fails_on_duplicated_feed_in_package() {
+    let config = test_config();
+    let timestamp = 1000;
+
+    let data_packages = vector[
+        new_data_package(
+            config.signers()[0],
+            timestamp,
+            vector[new_data_point(vector[1], vector[2]), new_data_point(vector[1], vector[2])],
+        ),
+        new_data_package(
+            config.signers()[1],
+            timestamp,
+            vector[new_data_point(vector[1], vector[2])],
+        ),
+    ];
+
+    try_verify_feeds_in_data_packages(&data_packages).unwrap_err();
+}
+
+#[test]
+fun test_try_verify_feeds_in_data_packages_distinct_feeds() {
+    let config = test_config();
+    let timestamp = 1000;
+
+    let data_packages = vector[
+        new_data_package(
+            config.signers()[0],
+            timestamp,
+            vector[new_data_point(vector[1], vector[2]), new_data_point(vector[2], vector[2])],
+        ),
+        new_data_package(
+            config.signers()[1],
+            timestamp,
+            vector[new_data_point(vector[1], vector[2])],
+        ),
+    ];
+
+    try_verify_feeds_in_data_packages(&data_packages).unwrap();
 }
