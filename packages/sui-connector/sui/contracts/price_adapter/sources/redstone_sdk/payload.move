@@ -87,7 +87,7 @@ public fun try_process_payload(
     };
 
     let data_packages = data_packages.map!(
-        |data_packages| filter_out_zero_values(
+        |data_packages| filter_out_data_packages_with_zero_values(
             data_packages,
         ),
     );
@@ -283,36 +283,20 @@ fun filter_packages_by_feed_id(
     filtered_packages
 }
 
-fun filter_out_zero_values(packages: vector<DataPackage>): vector<DataPackage> {
+fun filter_out_data_packages_with_zero_values(packages: vector<DataPackage>): vector<DataPackage> {
     let mut filtered_packages = vector::empty<DataPackage>();
 
-    packages.do!(|package| {
-        let package = filter_zero_from_data_points(package);
-
-        if (package.data_points().length() > 0) {
+    packages.do!(|package| { if (!contains_zero_value_point(&package)) {
             filtered_packages.push_back(package)
-        }
-    });
+        } });
 
     filtered_packages
 }
 
-fun filter_zero_from_data_points(package: DataPackage): DataPackage {
-    if (!package.data_points().any!(|data_point| {
-            is_zero_vec(data_point.value())
-        })) {
-        package
-    } else {
-        let mut data_points = vector::empty<DataPoint>();
-
-        package.data_points().do_ref!(|data_point| {
-            if (!is_zero_vec(data_point.value())) {
-                data_points.push_back(*data_point)
-            }
-        });
-
-        new_data_package(*package.signer_address(), package.timestamp(), data_points)
-    }
+fun contains_zero_value_point(package: &DataPackage): bool {
+    package.data_points().any!(|data_point| {
+        is_zero_vec(data_point.value())
+    })
 }
 
 fun is_zero_vec(vec: &vector<u8>): bool {
@@ -385,7 +369,7 @@ fun test_process_payload_mixed_zero_and_non_zero_values() {
 }
 
 #[test]
-fun test_process_payload_filter_out_zero_values_not_enough_signers() {
+fun test_process_payload_filter_out_data_packages_with_zero_values_not_enough_signers() {
     // 2 signers normal values 1 signer 0 value
     let payload =
         x"455448000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000199fd604abf000000200000015228fbcd70ae13576d1e4351b63134363e63560f0893330fc883d6830927d8cc710f0559f4b3aae5253e801374ffa095ae5563ed9b7714a8c1d4dbaad0e6b3aa1b455448000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000640199fd604abf000000200000013098dd9a4a0752249f197df27adfa6445e8429ee42a01f700bfdc12c90ed12c86725eb1264ced37526e9bf80db85db2459e28ac54e4e8c00f2b0ef4c7a5452481c455448000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000960199fd604abf0000002000000168bc07a5142d681407d1d9aebad69d07f1c9bcd1651e8a0d93ebf8e0b8bdef527b031a80954246f9c3369d0096c2d89450eecbab7857c691f017fbf282e0f6841c0003000000000002ed57011e0000";
@@ -409,7 +393,31 @@ fun test_process_payload_filter_out_zero_values_not_enough_signers() {
 }
 
 #[test]
-fun test_process_payload_filter_out_zero_values_enough_signers() {
+fun test_process_payload_filter_out_data_packages_with_mixed_zero_values_not_enough_signers() {
+    // 2 signers normal values 1 signer 0 value and non-zero value for other feed
+    let payload =
+        x"45544800000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000064019a06da5732000000200000010035f5ed5f709d43cd667e288d29783d457223b75dcb05f3b394599fc3a644ed6b19738bbcd1be1f7f58027ef9262822309997f979b7a58afab035620293508e1b45544800000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000096019a06da573200000020000001776d90438f57b838542637b23bcddd1093aee0bcb24e42b56b8e175d0ee1527c4b2c50fcdbd3cb5d522e8b380e2b15d4032a9209f26769a25814a17f0df5fb3c1b4554480000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000042544300000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000064019a06da573200000020000002dc442f204080d02faceb04fa030db026c13a41bdc876f07967eed7720fd6677e46f9d0dc34636eae7fb13a0d8997849f26ca16c8f674be0652987b9bc62a48351c0003000000000002ed57011e0000";
+    let feed_id = x"4554480000000000000000000000000000000000000000000000000000000000";
+    let timestamp = 1761051563826;
+
+    let config = new_config(
+        3,
+        vector[
+            x"1363AC5C4Fe807f85dB67Ed987B53B3909DA75e5",
+            x"E721D4140cf70C197994Ca3329e1945b70bc80d8",
+            x"73C0f71FC22Fc558ef6fd0b5d87e0eB9c4d97352",
+        ],
+        15 * 60 * 1000,
+        3 * 60 * 1000,
+        vector[],
+        0,
+    );
+
+    try_process_payload(&config, timestamp, feed_id, payload).unwrap_err();
+}
+
+#[test]
+fun test_process_payload_filter_out_data_packages_with_zero_values_enough_signers() {
     // 3 signers normal values 2 signers 0 value
     let payload =
         x"455448000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000199fd60cb2900000020000001f14e7fd44865f933be7b6f7e7ff40d9f86bf50ef810f902f109257b7beb64bb07d9ca4b3ae2238175622b147af702fa6f9904d2408e2ce4363751120772c333a1c455448000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000199fd60cb2900000020000001bb391d0de2bb8197ae5bfb3c212b3dcd83025982932af25be907c484b65332a6338525befcce3fe15729c8466b7b4f8d9102fff94c858e225498c9b39c2ce30c1b455448000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000640199fd60cb2900000020000001752e82b500da8f52732a0d6002ea0b2b522bad8b6610f8a3d245ea2f8ac683dd6cd376004ca05bbf62068c3cfcfe76ee075c6c4d1b8b45707dbb6fc3f1ba29571c455448000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000960199fd60cb290000002000000161a04db8f76c9a773a2af7d2f3f463ab84bdbc65b93c63f162da5c1aa094168e172dc680bfc8d14d6edf4eff9e3a8860e368dcced3a974370176f3389704c8e71b455448000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000c80199fd60cb290000002000000111a425bfa4d5227cacd62a2941ca37a023b765d04e4ec11f216b67eeaca3fc6522e960a52f773c0b5c78119a0e90ded73078a78dcb1197edce3afb11c171ddaa1c0005000000000002ed57011e0000";
@@ -598,20 +606,12 @@ fun test_filter_packages_by_zero_values() {
         ),
     ];
 
-    let filtered = filter_out_zero_values(data_packages);
+    let filtered = filter_out_data_packages_with_zero_values(data_packages);
 
     // we use timestamp here as ids of packages for tests asserts :)
-    assert!(filtered.length() == 3, filtered.length());
+    assert!(filtered.length() == 2, filtered.length());
     assert!(filtered[0].timestamp() == 1);
     assert!(filtered[1].timestamp() == 3);
-    assert!(filtered[2].timestamp() == 4);
-
-    let multi_data_points = filtered[2].data_points();
-
-    assert!(multi_data_points.length() == 3);
-    assert!(multi_data_points[0].value() == x"aa");
-    assert!(multi_data_points[1].value() == x"aa");
-    assert!(multi_data_points[2].value() == x"aa");
 }
 
 #[test_only]
