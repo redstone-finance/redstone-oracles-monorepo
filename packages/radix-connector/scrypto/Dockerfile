@@ -71,6 +71,12 @@ FROM builder AS ci-runtime
 COPY --from=crate-cache /usr/local/cargo /usr/local/cargo
 COPY --from=crate-cache /cargo/target /cargo/target
 
+# Add sudo and jq for CI scripts
+RUN apt-get update && apt-get install -y \
+    sudo \
+    jq \
+    && rm -rf /var/lib/apt/lists/*
+
 # Stage 5: Development Runtime image
 FROM builder AS dev-runtime
 
