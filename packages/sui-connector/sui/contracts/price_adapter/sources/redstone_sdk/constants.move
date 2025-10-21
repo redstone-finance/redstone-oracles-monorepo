@@ -3,7 +3,7 @@
 module redstone_price_adapter::constants;
 
 // === Errors ===
-const E_DEPRECATED: u64 = 0;
+const E_DEPRECATED: u64 = 100;
 
 // === Public(Package) functions ===
 
