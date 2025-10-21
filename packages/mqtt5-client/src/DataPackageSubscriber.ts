@@ -280,9 +280,7 @@ export class DataPackageSubscriber {
 
     const entryForTimestamp = this.packagesPerTimestamp.get(packageTimestamp) ?? {};
 
-    if (!entryForTimestamp[dataPackageId]) {
-      entryForTimestamp[dataPackageId] = [];
-    }
+    entryForTimestamp[dataPackageId] ??= [];
 
     if (
       entryForTimestamp[dataPackageId].some((dp) => dp.recoverSignerAddress() === packageSigner)
