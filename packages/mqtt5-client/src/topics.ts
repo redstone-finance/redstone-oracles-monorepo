@@ -11,7 +11,7 @@ export type DataPackageTopic = {
   nodeAddress: string;
 };
 
-export type HLPacakgeTopic = {
+export type HLPackageTopic = {
   dataServiceId: string;
   dexId: string;
   nodeAddress: string;
@@ -26,11 +26,11 @@ export function calculateTopicCountPerConnection(): number {
   return Math.floor(100 / 3);
 }
 
-export function encodeHLPackageTopic({ dataServiceId, dexId, nodeAddress }: HLPacakgeTopic) {
+export function encodeHLPackageTopic({ dataServiceId, dexId, nodeAddress }: HLPackageTopic) {
   return encodeTopic([PackagesTypes.HyperLiquidHIP3Package, dataServiceId, dexId, nodeAddress]);
 }
 
-export function decodeHLPackageTopic(encodedTopic: string): HLPacakgeTopic {
+export function decodeHLPackageTopic(encodedTopic: string): HLPackageTopic {
   const [packageType, dataServiceId, dexId, nodeAddress] = decodeTopic(encodedTopic).split("/");
 
   RedstoneCommon.assert(
