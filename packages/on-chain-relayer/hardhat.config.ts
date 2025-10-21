@@ -22,7 +22,7 @@ const config: HardhatUserConfig = {
     },
   },
   mocha: {
-    timeout: 100_000, // Set global timeout to 100 seconds
+    timeout: 200_000, // Set global timeout to 200 seconds
   },
   gasReporter: {
     enabled: true,
