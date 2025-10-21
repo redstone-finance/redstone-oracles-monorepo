@@ -2,57 +2,22 @@ import { LogMonitoring, LogMonitoringType } from "@redstone-finance/internal-uti
 import { SignedDataPackage, SignedDataPackagePlainObj } from "@redstone-finance/protocol";
 import {
   DataPackagesResponse,
+  DataServiceIds,
+  getSignersForDataServiceId,
   pickDataFeedPackagesClosestToMedian,
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   type requestDataPackages,
   SignedDataPackageSchema,
 } from "@redstone-finance/sdk";
 import { loggerFactory, RedstoneCommon } from "@redstone-finance/utils";
+import { cleanStalePackages, MAX_PACKAGE_STALENESS, PackageResponse } from "./common";
+import { DataPackageSubscriberParams } from "./DataPackageSubscriberParams";
 import { LastPublishedFeedState } from "./LastPublishedFeedState";
 import { MultiPubSubClient } from "./MultiPubSubClient";
 import { RateLimitsCircuitBreaker } from "./RateLimitsCircuitBreaker";
+import { ReferenceValueVerifier } from "./ReferenceValueVerifier";
+import { SignedDataPackageWithSavedSigner } from "./SignedDataPackageWithSavedSigner";
 import { encodeDataPackageTopic } from "./topics";
-
-const MAX_PACKAGE_STALENESS = RedstoneCommon.minToMs(2);
-
-/**
- * defines behavior of {@link DataPackageSubscriber}
- */
-export type DataPackageSubscriberParams = {
-  /**
-   * for production environment most of the time "redstone-primary-prod" is appropriate
-   */
-  dataServiceId: string;
-  /**
-   * array of tokens to fetch. If more then 50, then we subscribe to all. Because of message broker limits.
-   */
-  dataPackageIds: string[];
-  /**
-   * ensure minimum number of signers for each token - throws if there are less signers for any token
-   */
-  uniqueSignersCount: number;
-
-  /**
-   * has to be >= uniqueSignersCount
-   * specify minimal number of signers per package which have to be aggregated before publishing
-   */
-  minimalOffChainSignersCount: number;
-
-  /**
-   * time which we will wait for additional packages after minimal requirements are satisfied
-   */
-  waitMsForOtherSignersAfterMinimalSignersCountSatisfied: number;
-
-  /**
-   * if set to true, it is enough that minimal requirements are satisfied for single package and all will be published
-   */
-  ignoreMissingFeeds: boolean;
-
-  /**
-   * List of signers from which packages will be accepted
-   */
-  authorizedSigners: string[];
-};
 
 type SubscriptionCallbackFn = (dataPackages: DataPackagesResponse) => unknown;
 
@@ -85,20 +50,18 @@ type SubscriptionCallbackFn = (dataPackages: DataPackagesResponse) => unknown;
  *
  * 5. Circuit breaker (optional) {@link DataPackageSubscriber.enableCircuitBreaker}
  * - Allow to specify rate limits on messages received, if limit is crossed. Unsubscribing packet is sent.
- * - If fallback is enable DataPackageSubscriber will still continue working
+ * - If fallback is enabled DataPackageSubscriber will still continue working
  */
 export class DataPackageSubscriber {
   logger = loggerFactory("data-packages-subscriber");
   subscribeCallback?: SubscriptionCallbackFn;
   readonly topics: string[] = [];
-  readonly packagesPerTimestamp = new Map<
-    number,
-    Record<string, SignedDataPackage[] | undefined>
-  >();
+  readonly packagesPerTimestamp = new Map<number, PackageResponse>();
   private readonly scheduledPublishes = new RedstoneCommon.SetWithTTL();
   private readonly lastPublishedState: LastPublishedFeedState;
   private circuitBreaker?: RateLimitsCircuitBreaker;
   fallbackInterval?: NodeJS.Timeout;
+  private readonly verifier?: ReferenceValueVerifier;
 
   constructor(
     readonly pubSubClient: MultiPubSubClient,
@@ -124,6 +87,14 @@ export class DataPackageSubscriber {
       params.dataPackageIds,
       Date.now() - MAX_PACKAGE_STALENESS
     );
+
+    this.verifier = RedstoneCommon.isDefined(this.params.maxReferenceValueDeviationPercent)
+      ? new ReferenceValueVerifier(
+          new Set(getSignersForDataServiceId(this.params.dataServiceId as DataServiceIds)),
+          this.params.maxReferenceValueDeviationPercent,
+          this.params.maxReferenceValueDelayInSeconds
+        )
+      : undefined;
 
     for (const dataPackageId of params.dataPackageIds) {
       for (const signer of params.authorizedSigners) {
@@ -248,7 +219,7 @@ export class DataPackageSubscriber {
       SignedDataPackageSchema,
       dataPackageFromMessage
     );
-    const signedDataPackage = SignedDataPackage.fromObj(dataPackageFromMessage);
+    const signedDataPackage = SignedDataPackageWithSavedSigner.fromObj(dataPackageFromMessage);
     const dataPackageId = signedDataPackage.dataPackage.dataPackageId;
     const packageTimestamp = signedDataPackage.dataPackage.timestampMilliseconds;
 
@@ -262,12 +233,20 @@ export class DataPackageSubscriber {
     }
 
     const packageSigner = signedDataPackage.recoverSignerAddress();
+    signedDataPackage.packageSigner = packageSigner;
 
     //authorized signer
     if (!this.params.authorizedSigners.includes(packageSigner)) {
       throw new Error(
         `Failed to verify signature signer=${packageSigner} expectedSigners=${this.params.authorizedSigners.join(",")} dataPackageId=${dataPackageId} packageTimestamp=${packageTimestamp}`
       );
+    }
+
+    this.verifier?.registerDataPackage(signedDataPackage);
+    if (this.verifier && !this.verifier.verifyDataPackage(signedDataPackage)) {
+      this.logger.debug(`Package was rejected after verification`);
+
+      return;
     }
 
     //timestamp
@@ -279,12 +258,9 @@ export class DataPackageSubscriber {
     }
 
     const entryForTimestamp = this.packagesPerTimestamp.get(packageTimestamp) ?? {};
-
     entryForTimestamp[dataPackageId] ??= [];
 
-    if (
-      entryForTimestamp[dataPackageId].some((dp) => dp.recoverSignerAddress() === packageSigner)
-    ) {
+    if (entryForTimestamp[dataPackageId].some((dp) => dp.packageSigner === packageSigner)) {
       this.logger.debug(
         `Package was rejected because already have package signer=${packageSigner} timestamp=${packageTimestamp} dataPackageId=${dataPackageId}`
       );
@@ -296,7 +272,6 @@ export class DataPackageSubscriber {
     );
 
     entryForTimestamp[dataPackageId].push(signedDataPackage);
-
     this.packagesPerTimestamp.set(packageTimestamp, entryForTimestamp);
 
     if (this.hasGotPackagesFromAllSigners(entryForTimestamp)) {
@@ -333,18 +308,14 @@ export class DataPackageSubscriber {
   }
 
   /** Can publish instantly only if already have packages for every data feed from every signer */
-  private hasGotPackagesFromAllSigners(
-    entryForTimestamp: Record<string, SignedDataPackage[] | undefined>
-  ) {
+  private hasGotPackagesFromAllSigners(entryForTimestamp: PackageResponse) {
     return this.params.dataPackageIds.every(
       (dpId) => entryForTimestamp[dpId]?.length === this.params.authorizedSigners.length
     );
   }
 
   /** Check if minimalOffChainSignersCount is satisfied */
-  private hasGotPackagesFromEnoughSigners(
-    entryForTimestamp: Record<string, SignedDataPackage[] | undefined>
-  ) {
+  private hasGotPackagesFromEnoughSigners(entryForTimestamp: PackageResponse) {
     const quantifier = this.params.ignoreMissingFeeds ? "some" : "every";
     return this.params.dataPackageIds[quantifier]((dpId) => {
       if (!entryForTimestamp[dpId]) {
@@ -384,9 +355,7 @@ export class DataPackageSubscriber {
     this.cleanPublishedAndStalePackages(packageTimestamp);
   }
 
-  private preparePackagesBeforePublish(
-    entryForTimestamp: Record<string, SignedDataPackage[] | undefined>
-  ) {
+  private preparePackagesBeforePublish(entryForTimestamp: PackageResponse) {
     const packagesToPublish: Record<string, SignedDataPackage[]> = {};
 
     for (const [dataPackageId, packages] of Object.entries(entryForTimestamp)) {
@@ -419,13 +388,9 @@ export class DataPackageSubscriber {
       this.packagesPerTimestamp.set(timestamp, onlyNewerPackages);
     }
 
-    const now = Date.now();
     // extra clear for packages which were never published
-    for (const timestamp of this.packagesPerTimestamp.keys()) {
-      if (timestamp <= now - MAX_PACKAGE_STALENESS) {
-        this.packagesPerTimestamp.delete(timestamp);
-      }
-    }
+    cleanStalePackages(this.packagesPerTimestamp);
+    this.verifier?.cleanStalePackages();
 
     this.scheduledPublishes.removeOlderThen(Date.now());
   }

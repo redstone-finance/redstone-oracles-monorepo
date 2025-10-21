@@ -190,6 +190,14 @@ export const readManifestAndEnv = () => {
       "MQTT_DATA_PROCESSING_STRATEGY",
       z.nativeEnum(MqttDataProcessingStrategyType).default(MqttDataProcessingStrategyType.Base)
     ),
+    mqttMaxReferenceValueDeviationPercent: RedstoneCommon.getFromEnv(
+      "MQTT_MAX_REFERENCE_VALUE_DEVIATION_PERCENT",
+      z.number().optional()
+    ),
+    mqttMaxReferenceValueDelayInSeconds: RedstoneCommon.getFromEnv(
+      "MQTT_MAX_REFERENCE_VALUE_DEVIATION_DELAY_IN_SECONDS",
+      z.number().optional()
+    ),
     includeAdditionalFeedsForGasOptimization: RedstoneCommon.getFromEnv(
       "INCLUDE_ADDITIONAL_FEEDS_FOR_GAS_OPTIMIZATION",
       z.boolean().default(true)
