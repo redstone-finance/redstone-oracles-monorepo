@@ -1,5 +1,10 @@
+import { RedstoneCommon } from "@redstone-finance/utils";
+import { z } from "zod";
+
 export const fetchFromMonorepo = async (filePath: string): Promise<string> => {
-  const cloudFrontUrl = `https://d3cu28sut4ahjk.cloudfront.net/redstone-finance/redstone-monorepo-priv/main/${filePath}`;
+  const cloudfrontHostname = RedstoneCommon.getFromEnv("MONOREPO_HOSTNAME", z.string());
+
+  const cloudFrontUrl = `https://${cloudfrontHostname}/redstone-finance/redstone-monorepo-priv/main/${filePath}`;
 
   const response = await fetch(cloudFrontUrl);
 
