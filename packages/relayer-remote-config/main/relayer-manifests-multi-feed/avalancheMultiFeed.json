@@ -71,6 +71,13 @@
         "deviationPercentage": 0.15,
         "timeSinceLastUpdateInMilliseconds": 86400000
       }
+    },
+    "YUSD_FUNDAMENTAL": {
+      "priceFeedAddress": "0xddE3b77040cee3387C0cA661d1b619C3acA203b0",
+      "updateTriggersOverrides": {
+        "deviationPercentage": 0.25,
+        "timeSinceLastUpdateInMilliseconds": 43200000
+      }
     }
   }
 }
