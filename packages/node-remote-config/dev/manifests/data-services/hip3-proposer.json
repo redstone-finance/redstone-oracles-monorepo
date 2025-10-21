@@ -20,36 +20,36 @@
         "ws-perp-okx-usdt"
       ],
       "priceAggregator": "constantWeightMedian",
-      "customeWeightsForWeightedMedian": {
+      "customWeightsForWeightedMedian": {
         "ws-perp-binance-usdt": 3,
         "ws-perp-okx-usdt": 2,
         "ws-perp-bybit-usdt": 2
       },
-      "skipBroadcasting": true,
+      "broadcasters": [],
       "denomination": "USD",
       "rateFeed": false
     },
     "HL_ORACLE_PX_BTC": {
       "source": ["hyperliquid-testnet-perps-ws-fetcher"],
-      "skipBroadcasting": true,
+      "broadcasters": [],
       "denomination": "USD",
       "rateFeed": false
     },
     "HL_ORACLE_PX_sekaw:BTC": {
       "source": ["hyperliquid-testnet-perps-ws-fetcher"],
-      "skipBroadcasting": true,
+      "broadcasters": [],
       "denomination": "USD",
       "rateFeed": false
     },
     "HL_MARK_PX_sekaw:BTC": {
       "source": ["hyperliquid-testnet-perps-ws-fetcher"],
-      "skipBroadcasting": true,
+      "broadcasters": [],
       "denomination": "USD",
       "rateFeed": false
     },
     "HL_MID_PX_sekaw:BTC": {
       "source": ["hyperliquid-testnet-perps-ws-fetcher"],
-      "skipBroadcasting": true,
+      "broadcasters": [],
       "denomination": "USD",
       "rateFeed": false
     },
@@ -77,6 +77,12 @@
       "denomination": "USD",
       "rateFeed": false
     },
+    "HL_OPEN_INTEREST_sekaw:BTC": {
+      "source": ["hyperliquid-perps-sekaw-api-fetcher"],
+      "broadcasters": [],
+      "denomination": "USD",
+      "rateFeed": false
+    },
     "ETH_PERP": {
       "source": [
         "ws-perp-binance-usdt",
@@ -85,36 +91,36 @@
         "ws-perp-mexc-usdt",
         "ws-perp-okx-usdt"
       ],
-      "customeWeightsForWeightedMedian": {
+      "customWeightsForWeightedMedian": {
         "ws-perp-binance-usdt": 3,
         "ws-perp-okx-usdt": 2,
         "ws-perp-bybit-usdt": 2
       },
-      "skipBroadcasting": true,
+      "broadcasters": [],
       "denomination": "USD",
       "rateFeed": false
     },
     "HL_ORACLE_PX_ETH": {
       "source": ["hyperliquid-testnet-perps-ws-fetcher"],
-      "skipBroadcasting": true,
+      "broadcasters": [],
       "denomination": "USD",
       "rateFeed": false
     },
     "HL_ORACLE_PX_sekaw:ETH": {
       "source": ["hyperliquid-testnet-perps-ws-fetcher"],
-      "skipBroadcasting": true,
+      "broadcasters": [],
       "denomination": "USD",
       "rateFeed": false
     },
     "HL_MARK_PX_sekaw:ETH": {
       "source": ["hyperliquid-testnet-perps-ws-fetcher"],
-      "skipBroadcasting": true,
+      "broadcasters": [],
       "denomination": "USD",
       "rateFeed": false
     },
     "HL_MID_PX_sekaw:ETH": {
       "source": ["hyperliquid-testnet-perps-ws-fetcher"],
-      "skipBroadcasting": true,
+      "broadcasters": [],
       "denomination": "USD",
       "rateFeed": false
     },
@@ -142,6 +148,12 @@
       "denomination": "USD",
       "rateFeed": false
     },
+    "HL_OPEN_INTEREST_sekaw:ETH": {
+      "source": ["hyperliquid-perps-sekaw-api-fetcher"],
+      "broadcasters": [],
+      "denomination": "USD",
+      "rateFeed": false
+    },
     "TSLA": {
       "source": ["financialmodelingprep-deferred", "twelve-data-deferred"],
       "denomination": "USD",
@@ -149,13 +161,13 @@
     },
     "HL_MARK_PX_stocks:TSLA": {
       "source": ["hyperliquid-testnet-perps-ws-fetcher"],
-      "skipBroadcasting": true,
+      "broadcasters": [],
       "denomination": "USD",
       "rateFeed": false
     },
     "HL_ORACLE_PX_stocks:TSLA": {
       "source": ["hyperliquid-testnet-perps-ws-fetcher"],
-      "skipBroadcasting": true,
+      "broadcasters": [],
       "denomination": "USD",
       "rateFeed": false
     },
@@ -180,6 +192,12 @@
     "stocks:TSLA": {
       "source": ["hyperliquid-hip3-felix-stocks-fetcher"],
       "broadcasters": ["hyperliquid-hip3"],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "HL_OPEN_INTEREST_stocks:TSLA": {
+      "source": ["hyperliquid-perps-stocks-api-fetcher"],
+      "broadcasters": [],
       "denomination": "USD",
       "rateFeed": false
     }
