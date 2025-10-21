@@ -1,6 +1,7 @@
 import { terminateWithUpdateConfigExitCode } from "@redstone-finance/internal-utils";
 import {
   DataPackageSubscriber,
+  DataPackageSubscriberParams,
   Mqtt5Client,
   MqttTopics,
   MultiPubSubClient,
@@ -113,30 +114,7 @@ export class MqttRunner implements MqttDataProcessingStrategyDelegate<RelayerCon
   }
 
   private async subscribe(requestParams: DataPackagesRequestParams, relayerConfig: RelayerConfig) {
-    if (
-      !relayerConfig.mqttMinimalOffChainSignersCount ||
-      !RedstoneCommon.isDefined(relayerConfig.mqttWaitForOtherSignersMs)
-    ) {
-      throw new Error(
-        "Relayer is going to update mqtt subscription but mqttMinimalOffChainSignersCount or mqttWaitMsForOtherSignersMs is not set"
-      );
-    }
-
-    RedstoneCommon.assert(
-      requestParams.dataPackagesIds,
-      "property dataPackageIds is required in mqtt"
-    );
-
-    const params = {
-      dataServiceId: requestParams.dataServiceId,
-      dataPackageIds: requestParams.dataPackagesIds,
-      uniqueSignersCount: requestParams.uniqueSignersCount,
-      minimalOffChainSignersCount: relayerConfig.mqttMinimalOffChainSignersCount,
-      waitMsForOtherSignersAfterMinimalSignersCountSatisfied:
-        relayerConfig.mqttWaitForOtherSignersMs,
-      ignoreMissingFeeds: canIgnoreMissingFeeds(relayerConfig),
-      authorizedSigners: requestParams.authorizedSigners,
-    };
+    const params = MqttRunner.prepareDataPackageSubscriberParams(requestParams, relayerConfig);
 
     if (_.isEqual(params, this.subscriber?.params)) {
       this.logger.debug("Params remain unchanged, doesn't need to resubscribe");
@@ -201,5 +179,38 @@ export class MqttRunner implements MqttDataProcessingStrategyDelegate<RelayerCon
         terminateWithUpdateConfigExitCode();
       }
     }
+  }
+
+  private static prepareDataPackageSubscriberParams(
+    requestParams: DataPackagesRequestParams,
+    relayerConfig: RelayerConfig
+  ): DataPackageSubscriberParams {
+    const { dataServiceId, dataPackagesIds, uniqueSignersCount, authorizedSigners } = requestParams;
+    const {
+      mqttMinimalOffChainSignersCount,
+      mqttWaitForOtherSignersMs,
+      mqttMaxReferenceValueDeviationPercent,
+      mqttMaxReferenceValueDelayInSeconds,
+    } = relayerConfig;
+
+    if (!mqttMinimalOffChainSignersCount || !RedstoneCommon.isDefined(mqttWaitForOtherSignersMs)) {
+      throw new Error(
+        "Relayer is going to update mqtt subscription but mqttMinimalOffChainSignersCount or mqttWaitMsForOtherSignersMs is not set"
+      );
+    }
+
+    RedstoneCommon.assert(dataPackagesIds, "property dataPackageIds is required in mqtt");
+
+    return {
+      dataServiceId,
+      dataPackageIds: dataPackagesIds,
+      uniqueSignersCount,
+      authorizedSigners,
+      minimalOffChainSignersCount: mqttMinimalOffChainSignersCount,
+      waitMsForOtherSignersAfterMinimalSignersCountSatisfied: mqttWaitForOtherSignersMs,
+      ignoreMissingFeeds: canIgnoreMissingFeeds(relayerConfig),
+      maxReferenceValueDeviationPercent: mqttMaxReferenceValueDeviationPercent,
+      maxReferenceValueDelayInSeconds: mqttMaxReferenceValueDelayInSeconds,
+    };
   }
 }
