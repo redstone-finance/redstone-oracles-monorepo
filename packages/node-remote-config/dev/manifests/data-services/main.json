@@ -25,7 +25,6 @@
         "bitstamp-usd",
         "coinbase-usd",
         "gate-usdt",
-        "gemini-usd",
         "kaiko-v2",
         "kraken-eur",
         "kraken-usd",
@@ -1116,7 +1115,6 @@
         "camelot-v3-arbitrumone-weth",
         "curve-ethereum-weth",
         "uniswap-v3-arbitrumone-weth-3000",
-        "uniswap-v3-ethereum-weth-500",
         "uniswap-v3-ethereum-weth-100"
       ],
       "denomination": "USD",
@@ -1941,7 +1939,6 @@
         "gate-usdt",
         "kraken-usd",
         "uniswap-v3-ethereum-weth-10000",
-        "uniswap-v3-ethereum-weth-3000",
         "xt"
       ],
       "denomination": "USD",
@@ -2053,7 +2050,6 @@
     },
     "USD3": {
       "source": [
-        "curve-ethereum-sdai",
         "curve-ethereum-susde",
         "curve-ethereum-scrvusd_fundamental/usd",
         "curve-ethereum-susds_fundamental/usd"
@@ -8052,7 +8048,6 @@
         "mexc-usdt",
         "okx-usdt",
         "uniswap-v3-ethereum-usdc-10000",
-        "uniswap-v3-ethereum-usdt-10000",
         "xt"
       ],
       "denomination": "USD",
