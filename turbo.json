@@ -28,7 +28,6 @@
       "dependsOn": ["setup-dev"]
     },
     "test": {
-      "inputs": ["test/**"],
       "outputs": ["coverage/**"],
       "dependsOn": ["setup-dev"],
       "passThroughEnv": ["GH_AUTH_TOKEN"]
