@@ -50,6 +50,16 @@
       "source": ["hyperliquid-testnet-perps-ws-fetcher"],
       "denomination": "USD",
       "rateFeed": true
+    },
+    "HL_OPEN_INTEREST_BTC": {
+      "source": ["hyperliquid-testnet-perps-ws-fetcher"],
+      "denomination": "USD",
+      "rateFeed": true
+    },
+    "HL_OPEN_INTEREST_sekaw:BTC": {
+      "source": ["hyperliquid-testnet-perps-ws-fetcher"],
+      "denomination": "USD",
+      "rateFeed": true
     }
   }
 }
