@@ -42,7 +42,7 @@
     "global:lambda-pushProdLondon": "cd $INIT_CWD && BUCKET_NAME=redstone-lambdas-prod-eu-west-2 yarn global:lambda-pushToBucket",
     "global:lambda-pushProdParis": "cd $INIT_CWD && BUCKET_NAME=redstone-lambdas-prod-eu-west-3 yarn global:lambda-pushToBucket",
     "global:lambda-pushProdTokyo": "cd $INIT_CWD && BUCKET_NAME=redstone-lambdas-prod-ap-northeast-1 yarn global:lambda-pushToBucket",
-    "global:lambda-pushProdOsaka": "cd $INIT_CWD && BUCKET_NAME=redstone-lambdas-prod-ap-northeast-1 yarn global:lambda-pushToBucket",
+    "global:lambda-pushProdOsaka": "cd $INIT_CWD && BUCKET_NAME=redstone-lambdas-prod-ap-northeast-3 yarn global:lambda-pushToBucket",
     "global:lambda-pushProdStockholm": "cd $INIT_CWD && BUCKET_NAME=redstone-lambdas-prod-eu-north-1 yarn global:lambda-pushToBucket",
     "global:lambda-pushDevStockholm": "cd $INIT_CWD && BUCKET_NAME=redstone-lambdas-eu-north-1 yarn global:lambda-pushToBucket",
     "global:lambda-pushDev": "cd $INIT_CWD && yarn global:lambda-pushDevIreland",
