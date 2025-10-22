@@ -3,25 +3,20 @@ extern crate alloc;
 
 use alloc::vec::Vec;
 
-use alloy_primitives::{B256, U256};
-use redstone::{
-    contract::verification::UpdateTimestampVerifier,
-    core::{process_payload, processor_result::ValidatedPayload},
-    TimestampMillis, Value,
+use crate::{
+    config::STYLUS_CONFIG,
+    error::{NotEnoughResults, RedStoneError},
 };
+use alloy_primitives::{B256, U256};
+use redstone::{contract::verification::UpdateTimestampVerifier, TimestampMillis, Value};
+use redstone_stylus::processor::Processor;
 use stylus_sdk::{
     abi::Bytes,
     prelude::*,
     storage::{StorageGuard, StorageMap},
 };
 
-use crate::{
-    config::STYLUS_CONFIG,
-    error::{NotEnoughResults, RedStoneError},
-};
-
 mod config;
-mod crypto;
 mod error;
 
 sol_storage! {
@@ -40,24 +35,52 @@ struct PriceAdapter {
 
 #[public]
 impl PriceAdapter {
-    pub fn write_prices(
+    pub fn get_prices(
         &mut self,
         feeds: Vec<B256>,
         payload: Bytes,
-    ) -> Result<(), RedStoneError> {
+    ) -> Result<Vec<U256>, RedStoneError> {
         let block_timestamp = self.vm().block_timestamp();
         let block_timestamp_millis = block_timestamp * 1000;
 
-        let processed_payload = self.process_payload(&feeds, payload, block_timestamp_millis)?;
+        let processed_payload = Processor::process_payload(
+            self,
+            STYLUS_CONFIG,
+            &feeds,
+            payload,
+            block_timestamp_millis,
+        )?;
+        if processed_payload.values.len() != feeds.len() {
+            return Err(RedStoneError::NotEnoughResults(NotEnoughResults {}));
+        }
+
+        Ok(processed_payload
+            .values
+            .into_iter()
+            .map(|v| v.to_u256())
+            .collect())
+    }
+
+    pub fn write_prices(&mut self, feeds: Vec<B256>, payload: Bytes) -> Result<(), RedStoneError> {
+        let block_timestamp = self.vm().block_timestamp();
+        let block_timestamp_millis = block_timestamp * 1000;
+
+        let processed_payload = Processor::process_payload(
+            self,
+            STYLUS_CONFIG,
+            &feeds,
+            payload,
+            block_timestamp_millis,
+        )?;
+
+        if processed_payload.values.len() != feeds.len() {
+            return Err(RedStoneError::NotEnoughResults(NotEnoughResults {}));
+        }
 
         let verifier = UpdateTimestampVerifier::verifier(
             &self.vm().msg_sender().into_array(),
             STYLUS_CONFIG.trusted_updaters(),
         );
-
-        if processed_payload.values.len() != feeds.len() {
-            return Err(RedStoneError::NotEnoughResults(NotEnoughResults {}));
-        }
 
         for (new_price, feed) in processed_payload.values.into_iter().zip(feeds) {
             self.write_new_price(
@@ -108,8 +131,14 @@ impl PriceAdapter {
 
     /// Gets the last update details for a specific data feed (unsafe version)
     /// Returns (lastDataTimestamp, lastBlockTimestamp, lastValue)
-    pub fn get_last_update_details_unsafe_for_many(&self, feed_ids: Vec<B256>) -> Vec<(U256, U256, U256)> {
-        feed_ids.into_iter().map(|feed_id|self.get_last_update_details_unsafe(feed_id)).collect()
+    pub fn get_last_update_details_unsafe_for_many(
+        &self,
+        feed_ids: Vec<B256>,
+    ) -> Vec<(U256, U256, U256)> {
+        feed_ids
+            .into_iter()
+            .map(|feed_id| self.get_last_update_details_unsafe(feed_id))
+            .collect()
     }
 
     /// Gets values for multiple data feeds
@@ -193,26 +222,5 @@ impl PriceAdapter {
         feed_price.value.set(new_price.to_u256());
 
         Ok(())
-    }
-
-    fn process_payload(
-        &mut self,
-        feeds: &[B256],
-        payload: Bytes,
-        block_timestamp_millis: u64,
-    ) -> Result<ValidatedPayload, RedStoneError> {
-        let feeds_id = feeds
-            .iter()
-            .copied()
-            .map(|bytes| bytes.0)
-            .map(Into::into)
-            .collect();
-
-        let mut config =
-            STYLUS_CONFIG.redstone_config(self, feeds_id, block_timestamp_millis.into())?;
-
-        let processed_payload = process_payload(&mut config, payload.to_vec())?;
-
-        Ok(processed_payload)
     }
 }
