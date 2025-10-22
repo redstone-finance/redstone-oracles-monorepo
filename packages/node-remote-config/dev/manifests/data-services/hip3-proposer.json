@@ -109,7 +109,13 @@
       ],
       "broadcasters": [],
       "denomination": "USD",
-      "rateFeed": false
+      "rateFeed": false,
+      "deviationCheck": {
+        "deviationWithRecentValues": {
+          "maxPercent": 1000000000,
+          "maxDelayMilliseconds": 1000
+        }
+      }
     },
     "ETH_PERP": {
       "source": [
@@ -206,7 +212,13 @@
       ],
       "broadcasters": [],
       "denomination": "USD",
-      "rateFeed": false
+      "rateFeed": false,
+      "deviationCheck": {
+        "deviationWithRecentValues": {
+          "maxPercent": 1000000000,
+          "maxDelayMilliseconds": 1000
+        }
+      }
     },
     "TSLA": {
       "source": [],
@@ -275,7 +287,13 @@
       ],
       "broadcasters": [],
       "denomination": "USD",
-      "rateFeed": false
+      "rateFeed": false,
+      "deviationCheck": {
+        "deviationWithRecentValues": {
+          "maxPercent": 1000000000,
+          "maxDelayMilliseconds": 1000
+        }
+      }
     }
   }
 }
