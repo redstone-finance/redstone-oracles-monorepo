@@ -2228,6 +2228,7 @@ dependencies = [
  "alloy-sol-types",
  "openzeppelin-stylus",
  "redstone",
+ "redstone-stylus",
  "stylus-sdk",
 ]
 
@@ -2447,6 +2448,16 @@ source = "git+https://github.com/redstone-finance/rust-sdk?tag=2.1.0-pre#7bf92b4
 dependencies = [
  "alloy-primitives",
  "derive-getters",
+]
+
+[[package]]
+name = "redstone-stylus"
+version = "0.1.3"
+dependencies = [
+ "alloy-primitives",
+ "openzeppelin-stylus",
+ "redstone",
+ "stylus-sdk",
 ]
 
 [[package]]

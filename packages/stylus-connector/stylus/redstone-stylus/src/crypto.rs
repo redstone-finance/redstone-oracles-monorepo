@@ -1,11 +1,12 @@
-use crate::PriceAdapter;
-
 use alloy_primitives::B256;
 use openzeppelin_stylus::utils::cryptography::ecdsa;
 use redstone::{Bytes, Crypto, CryptoError, SignerAddress};
 use stylus_sdk::crypto;
+use stylus_sdk::prelude::TopLevelStorage;
 
-impl Crypto for &mut PriceAdapter {
+pub struct AdapterWrapper<Adapter>(pub Adapter);
+
+impl<Adapter: TopLevelStorage> Crypto for &mut AdapterWrapper<&mut Adapter> {
     type KeccakOutput = B256;
 
     fn keccak256(&mut self, input: impl AsRef<[u8]>) -> Self::KeccakOutput {
@@ -40,10 +41,11 @@ impl Crypto for &mut PriceAdapter {
             recovery_byte
         };
 
-        let address = ecdsa::recover(*self, hash, recovery_byte, r, s).map_err(|e| match e {
-            ecdsa::Error::InvalidSignature(_) => CryptoError::RecoveryByte(recovery_byte),
-            ecdsa::Error::InvalidSignatureS(_) => CryptoError::Signature(sig_bytes.to_vec()),
-        })?;
+        let address =
+            ecdsa::recover(&mut *self.0, hash, recovery_byte, r, s).map_err(|e| match e {
+                ecdsa::Error::InvalidSignature(_) => CryptoError::RecoveryByte(recovery_byte),
+                ecdsa::Error::InvalidSignatureS(_) => CryptoError::Signature(sig_bytes.to_vec()),
+            })?;
 
         Ok(Bytes(address.to_vec()))
     }
