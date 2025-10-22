@@ -81,7 +81,13 @@
       "source": ["hyperliquid-testnet-perps-ws-fetcher"],
       "broadcasters": [],
       "denomination": "USD",
-      "rateFeed": false
+      "rateFeed": false,
+      "deviationCheck": {
+        "deviationWithRecentValues": {
+          "maxPercent": 1000000000,
+          "maxDelayMilliseconds": 1000
+        }
+      }
     },
     "ETH_PERP": {
       "source": [
@@ -152,7 +158,13 @@
       "source": ["hyperliquid-testnet-perps-ws-fetcher"],
       "broadcasters": [],
       "denomination": "USD",
-      "rateFeed": false
+      "rateFeed": false,
+      "deviationCheck": {
+        "deviationWithRecentValues": {
+          "maxPercent": 1000000000,
+          "maxDelayMilliseconds": 1000
+        }
+      }
     },
     "TSLA": {
       "source": ["financialmodelingprep-deferred", "twelve-data-deferred"],
@@ -200,7 +212,13 @@
       "source": ["hyperliquid-testnet-perps-ws-fetcher"],
       "broadcasters": [],
       "denomination": "USD",
-      "rateFeed": false
+      "rateFeed": false,
+      "deviationCheck": {
+        "deviationWithRecentValues": {
+          "maxPercent": 1000000000,
+          "maxDelayMilliseconds": 1000
+        }
+      }
     }
   }
 }
