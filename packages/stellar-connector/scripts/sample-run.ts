@@ -31,7 +31,7 @@ async function main() {
 
   const ethPriceFeedConnector = new PriceFeedStellarContractConnector(
     client,
-    loadPriceFeedId("ETH"),
+    loadPriceFeedId(),
     keypair
   );
 
