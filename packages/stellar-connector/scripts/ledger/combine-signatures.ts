@@ -20,7 +20,13 @@ async function combineSignatures(
   const tx = await deserializeTx(envelopeRaw);
 
   for (const { publicKey, signature } of signatures) {
-    tx.addSignature(publicKey, signature);
+    try {
+      tx.addSignature(publicKey, signature);
+    } catch (e) {
+      console.error(`Error for ${publicKey}`);
+
+      throw e;
+    }
   }
 
   const transaction = await server.sendTransaction(tx);

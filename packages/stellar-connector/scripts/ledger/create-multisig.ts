@@ -2,7 +2,7 @@ import { BASE_FEE, Keypair, Operation, rpc, TransactionBuilder } from "@stellar/
 import { makeKeypair, StellarClient } from "../../src";
 import { StellarSigner } from "../../src/stellar/StellarSigner";
 import { makeServer } from "../utils";
-import { INITIAL_ACCOUNT_AMOUNT_XLM, MULTISIG_SIGNERS, MULTISIG_TRESHOLD } from "./consts";
+import { INITIAL_ACCOUNT_AMOUNT_XLM, MULTISIG_SIGNERS, MULTISIG_THRESHOLD } from "./consts";
 
 async function createMultisigAccount(
   server: rpc.Server,
@@ -67,7 +67,7 @@ async function main() {
     server,
     sourceKeypair,
     MULTISIG_SIGNERS,
-    MULTISIG_TRESHOLD
+    MULTISIG_THRESHOLD
   );
 
   console.log({

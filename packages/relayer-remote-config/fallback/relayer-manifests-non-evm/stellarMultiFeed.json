@@ -5,7 +5,7 @@
     "id": "stellar/1"
   },
   "updateTriggers": {
-    "deviationPercentage": 0.1,
+    "deviationPercentage": 0.2,
     "timeSinceLastUpdateInMilliseconds": 86400000
   },
   "adapterContract": "CA526Y2NQWGWVVQ7RFFPGAZMU66PSYJ3UC2MTVAV4ZU7OM5BOPHDXUSG",
@@ -16,6 +16,20 @@
     },
     "BTC": {
       "priceFeedAddress": "CBLEPHLNPTCW3DY2NF5BYCZVECIP2K6YWBA3JDTU3HMQV6AKXB5GKTXA"
+    },
+    "PYUSD": {
+      "priceFeedAddress": "CB3PNR7FSAHQH3UAVYKSJVPLWEQRPPYVFL2UIR4P3RYEPZLTOF7PL2L4",
+      "updateTriggersOverrides": {
+        "deviationPercentage": 0.05,
+        "timeSinceLastUpdateInMilliseconds": 86400000
+      }
+    },
+    "USDC": {
+      "priceFeedAddress": "CC2GB2TZTX24XIAM375YDWUDXA3PR2GDMNFUL2Z5VNXUMKPPOBES3CXM",
+      "updateTriggersOverrides": {
+        "deviationPercentage": 0.1,
+        "timeSinceLastUpdateInMilliseconds": 86400000
+      }
     }
   }
 }

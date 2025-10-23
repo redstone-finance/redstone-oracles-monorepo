@@ -33,7 +33,8 @@
     "change-owner-tx": "yarn global:ts-node scripts/ledger/change-owner-tx.ts",
     "sign-tx": "yarn global:ts-node ./scripts/ledger/sign-tx.ts",
     "combine-signatures": "yarn global:ts-node ./scripts/ledger/combine-signatures.ts",
-    "create-account": "yarn global:ts-node ./scripts/create-account-with-funds.ts"
+    "create-account": "yarn global:ts-node ./scripts/create-account-with-funds.ts",
+    "instantiate-price-feed": "CONTRACT_NAME=redstone_price_feed PRICE_FEED_ID=PYUSD yarn global:ts-node scripts/instantiate-price-feed.ts"
   },
   "dependencies": {
     "@redstone-finance/sdk": "workspace:*",
