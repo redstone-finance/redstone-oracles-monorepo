@@ -3,20 +3,19 @@ import { execSync } from "node:child_process";
 import {
   makeKeypair,
   PriceAdapterStellarContractAdapter,
-  PriceFeedStellarContractAdapter,
   StellarClient,
   StellarClientBuilder,
   StellarContractDeployer,
   StellarTxDeliveryMan,
 } from "../src";
 import { FEEDS } from "./consts";
+import { initPriceFeed } from "./instantiate-price-feed";
 import {
   PRICE_ADAPTER,
   PRICE_FEED,
   readNetwork,
   readUrl,
   saveAdapterId,
-  savePriceFeedId,
   wasmFilePath,
 } from "./utils";
 
@@ -54,16 +53,8 @@ async function deployPriceFeed(
   execSync(`make build`, { stdio: "inherit" });
 
   const priceFeedDeployResult = await deployer.deploy(wasmFilePath(PRICE_FEED));
-  await new PriceFeedStellarContractAdapter(
-    client,
-    new Contract(priceFeedDeployResult.contractId),
-    txDeliveryMan
-  ).init(await txDeliveryMan.getPublicKey(), feedId);
 
-  console.log(
-    `🚀 price feed for ${feedId} contract deployed at: ${priceFeedDeployResult.contractId}`
-  );
-  savePriceFeedId(priceFeedDeployResult.contractId, feedId);
+  await initPriceFeed(client, priceFeedDeployResult.contractId, txDeliveryMan, feedId);
 }
 
 async function sampleDeploy() {
