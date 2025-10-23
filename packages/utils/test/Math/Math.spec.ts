@@ -1,3 +1,4 @@
+import { max, sum } from "lodash";
 import {
   calculateAverageValue,
   calculateDeviationPercent,
@@ -5,7 +6,7 @@ import {
   createSafeNumber,
   getMedian,
   getWeightedMedian,
-  logarithmicWeighting,
+  limitWeights,
   NumberArg,
 } from "../../src/ISafeNumber";
 import { filterOutliers } from "../../src/math";
@@ -153,73 +154,101 @@ describe("getWeightedMedian", () => {
   });
 });
 
-describe("logarithmicWeighting", () => {
-  it("should throw for empty array", () => {
-    expect(() => logarithmicWeighting([])).toThrow();
+describe("limitWeights", () => {
+  it("returns input unchanged when count <= 2 (no limit applies)", () => {
+    const a = [{ value: createSafeNumber(1), weight: createSafeNumber(10) }];
+    const b = [
+      { value: createSafeNumber(1), weight: createSafeNumber(10) },
+      { value: createSafeNumber(2), weight: createSafeNumber(5) },
+    ];
+
+    expect(limitWeights(a)).toEqual(a);
+    expect(limitWeights(b)).toEqual(b);
   });
 
-  it("should return 1 for a singleton array", () => {
-    expect(
-      logarithmicWeighting([
-        {
-          value: createSafeNumber(1.2),
-          weight: createSafeNumber(3.4),
-        },
-      ])
-    ).toEqual([
-      {
-        value: createSafeNumber(1.2),
-        weight: createSafeNumber(1),
-      },
-    ]);
+  it("caps a single heavy outlier for count = 3 (limit ratio = 0.4)", () => {
+    // Weights: [10, 5, 5]
+    // maxWeight solves: maxWeight = 0.4 * (maxWeight + 5 + 5)  =>  maxWeight = 6.(6)
+    const input = [
+      { value: createSafeNumber(1), weight: createSafeNumber(10) },
+      { value: createSafeNumber(2), weight: createSafeNumber(5) },
+      { value: createSafeNumber(3), weight: createSafeNumber(5) },
+    ];
+
+    const out = limitWeights(input);
+    const nums = out.map((w) => w.weight.unsafeToNumber());
+
+    // The big one should be reduced close to 6.(6), the others untouched
+    expect(nums[0]).toBeCloseTo(20 / 3, 6); // 6.6666667
+    expect(nums[1]).toBeCloseTo(5, 12);
+    expect(nums[2]).toBeCloseTo(5, 12);
+
+    // Invariant: maxWeight == ratio * cappedSum
+    const cappedSum = sum(nums);
+    const ratio = 0.4;
+    const maxWeight = max(nums)!;
+    expect(maxWeight).toBeCloseTo(ratio * cappedSum, 6);
+
+    // Invariant: all weights <= maxWeight
+    nums.forEach((w) => expect(w).toBeLessThanOrEqual(maxWeight + 1e-12));
   });
 
-  it("should logarithmically reduce the weight proportions", () => {
-    expect(
-      logarithmicWeighting([
-        {
-          value: createSafeNumber(1),
-          weight: createSafeNumber(4),
-        },
-        {
-          value: createSafeNumber(2),
-          weight: createSafeNumber(4),
-        },
-        {
-          value: createSafeNumber(2),
-          weight: createSafeNumber(4),
-        },
-        {
-          value: createSafeNumber(3),
-          weight: createSafeNumber(12),
-        },
-        {
-          value: createSafeNumber(3),
-          weight: createSafeNumber(4092),
-        },
-      ])
-    ).toEqual([
-      {
-        value: createSafeNumber(1),
-        weight: createSafeNumber(1),
-      },
-      {
-        value: createSafeNumber(2),
-        weight: createSafeNumber(1),
-      },
-      {
-        value: createSafeNumber(2),
-        weight: createSafeNumber(1),
-      },
-      {
-        value: createSafeNumber(3),
-        weight: createSafeNumber(2),
-      },
-      {
-        value: createSafeNumber(3),
+  it("does not cap when all weights already satisfy the ratio constraint", () => {
+    // count = 5 => ratio = 0.35
+    // All weights equal => max (10) <= 0.35 * total (50) = 17.5, so no capping
+    const input = Array.from({ length: 5 }, (_, i) => ({
+      value: createSafeNumber(i + 1),
+      weight: createSafeNumber(10),
+    }));
+
+    const out = limitWeights(input);
+    expect(out).toEqual(input);
+  });
+
+  it("caps exactly one large element in a bigger array (count = 10, ratio = 0.25)", () => {
+    // Weights: [100, 10, 10, ..., 10] (1x100 + 9x10)
+    // Solve maxWeight = 0.25 * (maxWeight + 90) => maxWeight = 30
+    const input = [
+      { value: createSafeNumber(1), weight: createSafeNumber(100) },
+      ...Array.from({ length: 9 }, (_, i) => ({
+        value: createSafeNumber(i + 2),
         weight: createSafeNumber(10),
-      },
-    ]);
+      })),
+    ];
+
+    const out = limitWeights(input);
+    const nums = out.map((w) => w.weight.unsafeToNumber());
+
+    expect(nums[0]).toBeCloseTo(30, 12);
+    nums.slice(1).forEach((w) => expect(w).toBeCloseTo(10, 12));
+
+    const cappedSum = sum(nums);
+    const ratio = 0.25;
+    const maxWeight = max(nums)!;
+
+    // Ratio invariant and dominance
+    expect(maxWeight).toBeCloseTo(ratio * cappedSum, 12);
+    nums.forEach((w) => expect(w).toBeLessThanOrEqual(maxWeight + 1e-12));
+
+    // Order of elements (mapping preserves original order)
+    // i.e. first element is the one that got capped
+    expect(out[0].value.toString()).toBe("1");
+  });
+
+  it("preserves original value objects and only adjusts weights", () => {
+    const input = [
+      { value: createSafeNumber(42), weight: createSafeNumber(100) },
+      { value: createSafeNumber(7), weight: createSafeNumber(1) },
+      { value: createSafeNumber(8), weight: createSafeNumber(1) },
+    ];
+
+    const out = limitWeights(input);
+
+    // Values untouched
+    expect(out.map((v) => v.value.toString())).toEqual(input.map((v) => v.value.toString()));
+
+    // At least one weight changed (the big one)
+    expect(out[0].weight.toString()).not.toEqual(input[0].weight.toString());
   });
 });
 
