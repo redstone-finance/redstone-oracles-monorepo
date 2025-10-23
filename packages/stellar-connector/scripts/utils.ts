@@ -25,6 +25,10 @@ export function readDeployDir() {
   return RedstoneCommon.getFromEnv("DEPLOY_DIR", z.string().optional()) ?? "./stellar";
 }
 
+export function readPriceFeedId(orDefault = "ETH") {
+  return RedstoneCommon.getFromEnv("PRICE_FEED_ID", z.string().default(orDefault));
+}
+
 export function makeServer() {
   return new rpc.Server(readUrl(), { allowHttp: true });
 }
@@ -53,7 +57,7 @@ export function savePriceFeedId(priceFeedContractId: string, feedId: string, dir
   console.log(`✅ Id saved to ${filepath}`);
 }
 
-export function loadPriceFeedId(feedId: string, dir = OUTPUT_DIR) {
+export function loadPriceFeedId(feedId = readPriceFeedId(), dir = OUTPUT_DIR) {
   return readFileSync(getIdFilepath(`${PRICE_FEED}-${feedId}`, dir)).toString("utf-8");
 }
 
@@ -74,6 +78,6 @@ export function loadContractId(outputDir = OUTPUT_DIR) {
     case PRICE_ADAPTER:
       return loadAdapterId(outputDir);
     case PRICE_FEED:
-      return loadPriceFeedId(RedstoneCommon.getFromEnv("PRICE_FEED_ID", z.string()), outputDir);
+      return loadPriceFeedId(readPriceFeedId(), outputDir);
   }
 }
