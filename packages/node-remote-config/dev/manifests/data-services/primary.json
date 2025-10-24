@@ -378,7 +378,7 @@
       "rateFeed": false
     },
     "C3M": {
-      "source": ["alphavantagestock-usd", "financialmodelingprep", "twelve-data"],
+      "source": ["financialmodelingprep", "twelve-data"],
       "denomination": "USD",
       "rateFeed": false
     },
