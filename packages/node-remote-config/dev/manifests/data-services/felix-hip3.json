@@ -12,7 +12,13 @@
   },
   "tokens": {
     "TSLA": {
-      "source": ["financialmodelingprep-deferred", "twelve-data-deferred"],
+      "source": [
+        "alltick-stocks-api-deferred",
+        "databento-tsla",
+        "financialmodelingprep-deferred",
+        "polygon-deferred",
+        "twelve-data-deferred"
+      ],
       "denomination": "USD",
       "rateFeed": false
     },
