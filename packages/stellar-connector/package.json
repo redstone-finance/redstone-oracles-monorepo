@@ -39,7 +39,7 @@
   "dependencies": {
     "@redstone-finance/sdk": "workspace:*",
     "@redstone-finance/utils": "workspace:*",
-    "@stellar/stellar-sdk": "14.2.0",
+    "@stellar/stellar-sdk": "14.3.0",
     "axios": "^1.8.4",
     "lodash": "^4.17.21",
     "zod": "^3.22.4"
