@@ -295,6 +295,11 @@
           "maxDelayMilliseconds": 1000
         }
       }
+    },
+    "IS_NY_STOCKS_MARKET_OPEN": {
+      "source": [],
+      "denomination": "other",
+      "rateFeed": false
     }
   }
 }
