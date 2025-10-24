@@ -1652,16 +1652,10 @@
     "WKHS": {
       "source": ["twelve-data"]
     },
-    "SWTX": {
-      "source": ["twelve-data"]
-    },
     "ICPT": {
       "source": ["twelve-data"]
     },
     "LCID": {
-      "source": ["twelve-data"]
-    },
-    "JWN": {
       "source": ["twelve-data"]
     },
     "FFIE": {
@@ -1689,9 +1683,6 @@
       "source": ["twelve-data"]
     },
     "GDRX": {
-      "source": ["twelve-data"]
-    },
-    "IGMS": {
       "source": ["twelve-data"]
     },
     "AMC": {
