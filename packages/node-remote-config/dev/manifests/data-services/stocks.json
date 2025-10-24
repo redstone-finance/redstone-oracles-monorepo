@@ -183,11 +183,6 @@
     "SRG": {
       "source": []
     },
-    "HYZN": {
-      "source": [
-        "twelve-data"
-      ]
-    },
     "MVIS": {
       "source": []
     },
@@ -203,31 +198,11 @@
     "SPCE": {
       "source": []
     },
-    "RIDE": {
-      "source": [
-        "twelve-data"
-      ]
-    },
-    "FUV": {
-      "source": [
-        "twelve-data"
-      ]
-    },
     "WKHS": {
       "source": []
     },
-    "SWTX": {
-      "source": [
-        "twelve-data"
-      ]
-    },
     "LCID": {
       "source": []
-    },
-    "JWN": {
-      "source": [
-        "twelve-data"
-      ]
     },
     "FFIE": {
       "source": []
@@ -252,11 +227,6 @@
     },
     "GDRX": {
       "source": []
-    },
-    "IGMS": {
-      "source": [
-        "twelve-data"
-      ]
     },
     "GME": {
       "source": []
