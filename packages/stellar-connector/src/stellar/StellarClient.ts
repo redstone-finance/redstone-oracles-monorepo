@@ -12,9 +12,7 @@ import {
   xdr,
 } from "@stellar/stellar-sdk";
 import { Api } from "@stellar/stellar-sdk/lib/minimal/rpc/api";
-import axios from "axios";
 import _ from "lodash";
-import z from "zod";
 import { getLedgerCloseDate } from "../utils";
 import * as XdrUtils from "../XdrUtils";
 import { HorizonClient } from "./HorizonClient";
@@ -189,41 +187,15 @@ export class StellarClient {
   // Indexer purposes
 
   async getTimeForBlock(sequence: number) {
-    // TODO: Use Stellar SDK's rpc.Server when it adds support for getLedgers()
-    // For the time being we call getLedgers API ourselves
-    // <https://github.com/stellar/js-stellar-sdk/issues/944>
-    // <https://developers.stellar.org/docs/data/apis/rpc/api-reference/methods/getLedgers>
-
     try {
-      const req = {
-        jsonrpc: "2.0",
-        id: 1,
-        method: "getLedgers",
-        params: {
-          startLedger: sequence,
-          pagination: {
-            limit: 1,
-          },
+      const response = await this.server.getLedgers({
+        startLedger: sequence,
+        pagination: {
+          limit: 1,
         },
-      };
-
-      const res = await axios.post(this.server.serverURL.href(), req);
-
-      const Response = z.object({
-        jsonrpc: z.literal("2.0"),
-        id: z.literal(1),
-        result: z.object({
-          ledgers: z.array(
-            z.object({
-              sequence: z.literal(sequence),
-              ledgerCloseTime: z.number(),
-            })
-          ),
-        }),
       });
-      const resParsed = Response.parse(res.data);
 
-      return getLedgerCloseDate(resParsed.result.ledgers[0].ledgerCloseTime);
+      return getLedgerCloseDate(Number(response.ledgers[0].ledgerCloseTime));
     } catch {
       console.warn(`Could not get time of ledger ${sequence}`);
       return new Date(0);
@@ -249,13 +221,11 @@ export class StellarClient {
 
     while (lastLedger !== undefined && lastLedger <= endLedger) {
       console.log(`Fetching data of ${lastLedger} up to ${endLedger}`);
-      // TODO: Remove `as unknown as Request` hack when Stellar SDK fixes rpc.Server.getTransactions()
-      // It is bugged right now and does not support pagination correctly.
-      // Thankfully we can hack around it.
 
       const req = {
         pagination: { cursor, limit: FETCHING_LIMIT },
-      } as unknown as rpc.Api.GetTransactionsRequest;
+      };
+
       const result = await this.server.getTransactions(req);
       cursor = result.cursor;
       lastLedger = result.transactions.at(-1)?.ledger;
