@@ -1868,11 +1868,6 @@
     "WKHS": {
       "source": []
     },
-    "SWTX": {
-      "source": [
-        "twelve-data"
-      ]
-    },
     "ICPT": {
       "source": [
         "twelve-data"
@@ -1880,11 +1875,6 @@
     },
     "LCID": {
       "source": []
-    },
-    "JWN": {
-      "source": [
-        "twelve-data"
-      ]
     },
     "FFIE": {
       "source": []
@@ -1914,11 +1904,6 @@
     },
     "GDRX": {
       "source": []
-    },
-    "IGMS": {
-      "source": [
-        "twelve-data"
-      ]
     },
     "AMC": {
       "source": []
