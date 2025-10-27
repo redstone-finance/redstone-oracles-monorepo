@@ -1,13 +1,12 @@
 import { TransactionReceipt } from "@ethersproject/providers";
+import { RedstoneAdapterBase, RedstoneAdapterBaseAbi } from "@redstone-finance/evm-adapters";
 import { ProviderWithAgreement } from "@redstone-finance/rpc-providers";
 import { RedstoneCommon } from "@redstone-finance/utils";
 import chai, { expect } from "chai";
 import chaiAsPromised from "chai-as-promised";
 import { BigNumber, Contract, Wallet } from "ethers";
 import { ethers } from "hardhat";
-import { abi as redstoneAdapterABI } from "../../artifacts/contracts/core/RedstoneAdapterBase.sol/RedstoneAdapterBase.json";
 import { updateUsingOevAuction } from "../../src/custom-integrations/fastlane/update-using-oev-auction";
-import { RedstoneAdapterBase } from "../../typechain-types";
 import { mockConfig, START_OEV_AUCTION_URL } from "../helpers";
 import { server } from "./mock-server";
 
@@ -40,7 +39,7 @@ describe("update-using-oev-auction", () => {
 
     const adapterContract = new Contract(
       "0x61ed8EBd497d11654e91f5faFeadaAF4cB125E0C",
-      redstoneAdapterABI,
+      RedstoneAdapterBaseAbi,
       wallet
     );
 
@@ -58,7 +57,7 @@ describe("update-using-oev-auction", () => {
 
     const adapterContract = new Contract(
       "0x61ed8EBd497d11654e91f5faFeadaAF4cB125E0C",
-      redstoneAdapterABI,
+      RedstoneAdapterBaseAbi,
       wallet
     );
 

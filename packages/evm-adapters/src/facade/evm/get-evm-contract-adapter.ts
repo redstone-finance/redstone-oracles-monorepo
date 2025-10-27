@@ -1,5 +1,4 @@
 import { AdapterType } from "@redstone-finance/on-chain-relayer-common";
-import { TxDeliveryCall } from "@redstone-finance/rpc-providers";
 import { NetworkId, RedstoneCommon, Tx } from "@redstone-finance/utils";
 import {
   IStylusAdapter,
@@ -16,10 +15,10 @@ import { MentoEvmContractAdapter } from "../../core/contract-interactions/MentoE
 import { MultiFeedEvmContractAdapter } from "../../core/contract-interactions/MultiFeedEvmContractAdapter";
 import { PriceFeedsEvmContractAdapter } from "../../core/contract-interactions/PriceFeedsEvmContractAdapter";
 import { StylusContractAdapter } from "../../core/contract-interactions/StylusContractAdapter";
-import { RedstoneEvmContract } from "./EvmContractFacade";
+import { RedstoneEvmContract } from "./RedstoneEvmContract";
 
 const emptyTxDeliveryMan: Tx.ITxDeliveryMan = {
-  deliver: (_txDeliveryCall: TxDeliveryCall, _context: Tx.TxDeliveryManContext) =>
+  deliver: (_txDeliveryCall: Tx.TxDeliveryCall, _context: Tx.TxDeliveryManContext) =>
     Promise.resolve(),
 };
 

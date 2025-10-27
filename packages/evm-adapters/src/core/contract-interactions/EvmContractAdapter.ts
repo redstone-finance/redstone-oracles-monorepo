@@ -1,8 +1,7 @@
-import { ContractParamsProvider } from "@redstone-finance/sdk";
+import { ContractData, ContractParamsProvider } from "@redstone-finance/sdk";
 import { Tx } from "@redstone-finance/utils";
-import { UpdatePricesOptions } from "../../facade/ContractFacade";
-import { RedstoneEvmContract } from "../../facade/evm/EvmContractFacade";
-import { ContractData } from "../../types";
+import { RedstoneEvmContract } from "../../facade/evm/RedstoneEvmContract";
+import { UpdatePricesOptions } from "../../facade/UpdatePricesOptions";
 import { IRedstoneContractAdapter } from "./IRedstoneContractAdapter";
 import { RelayerTxDeliveryManContext } from "./RelayerTxDeliveryManContext";
 

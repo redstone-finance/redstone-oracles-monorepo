@@ -1,11 +1,13 @@
+import {
+  MultiFeedAdapterWithoutRounds,
+  RelayerTxDeliveryManContext,
+} from "@redstone-finance/evm-adapters";
 import { DataPackagesWrapper } from "@redstone-finance/evm-connector";
 import { ContractParamsProvider, DataPackagesResponse } from "@redstone-finance/sdk";
 import { loggerFactory, RedstoneCommon, Tx } from "@redstone-finance/utils";
 import { utils } from "ethers";
-import { MultiFeedAdapterWithoutRounds } from "../../../typechain-types";
 import { RelayerConfig } from "../../config/RelayerConfig";
 import { updateUsingOevAuction } from "../../custom-integrations/fastlane/update-using-oev-auction";
-import { RelayerTxDeliveryManContext } from "./RelayerTxDeliveryManContext";
 
 export class OevMultiAuctionsTxDeliveryMan implements Tx.ITxDeliveryMan {
   private readonly logger = loggerFactory("updatePrices/oev");

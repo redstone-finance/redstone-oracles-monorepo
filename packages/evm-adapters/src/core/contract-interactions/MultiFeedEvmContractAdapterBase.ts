@@ -1,6 +1,6 @@
+import { ContractData, LastRoundDetails } from "@redstone-finance/sdk";
 import { utils } from "ethers";
 import { MultiFeedAdapterWithoutRounds } from "../../../typechain-types";
-import { ContractData, LastRoundDetails } from "../../types";
 import { EvmContractAdapter } from "./EvmContractAdapter";
 
 export abstract class MultiFeedEvmContractAdapterBase<
