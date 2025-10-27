@@ -1,4 +1,3 @@
-import { TxDeliveryCall } from "@redstone-finance/rpc-providers";
 import { ContractParamsProvider } from "@redstone-finance/sdk";
 import { Tx } from "@redstone-finance/utils";
 import { IStylusAdapter, MultiFeedAdapterWithoutRounds } from "../../../typechain-types";
@@ -10,7 +9,7 @@ export class StylusContractAdapter extends MultiFeedEvmContractAdapterBase<
   override async makeUpdateTx(
     paramsProvider: ContractParamsProvider,
     metadataTimestamp: number
-  ): Promise<TxDeliveryCall> {
+  ): Promise<Tx.TxDeliveryCall> {
     const feedsIds = paramsProvider.getHexlifiedFeedIds(true, 32);
     const payload = await paramsProvider.getPayloadHex(true, {
       componentName: "stylus-adapter",

@@ -1,11 +1,11 @@
 import { Point } from "@influxdata/influxdb-client";
+import { RelayerTxDeliveryManContext } from "@redstone-finance/evm-adapters";
 import { InfluxService } from "@redstone-finance/internal-utils";
 import { DataPackagesResponse, getDataPackagesTimestamp } from "@redstone-finance/sdk";
 import { RedstoneCommon, SafeNumber, Tx } from "@redstone-finance/utils";
 import { basename } from "path";
 import { z } from "zod";
 import { RelayerConfig } from "../config/RelayerConfig";
-import { RelayerTxDeliveryManContext } from "../core/contract-interactions/RelayerTxDeliveryManContext";
 
 const RELAYER_DATA_BUCKET = "dry-run-relayer-data";
 const TXS_MEASUREMENT = "redstoneTransactions";

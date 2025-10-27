@@ -1,7 +1,7 @@
 import { Provider } from "@ethersproject/providers";
 import { EvmContractAdapter } from "../../core/contract-interactions/EvmContractAdapter";
 import { EvmContractConnector } from "../../core/contract-interactions/EvmContractConnector";
-import { RedstoneEvmContract } from "./EvmContractFacade";
+import { RedstoneEvmContract } from "./RedstoneEvmContract";
 
 export function getEvmContractConnector(
   provider: Provider,

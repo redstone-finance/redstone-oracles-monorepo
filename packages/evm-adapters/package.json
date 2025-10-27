@@ -1,33 +1,48 @@
 {
-  "name": "@redstone-finance/erc7412",
+  "name": "@redstone-finance/evm-adapters",
   "version": "0.9.0",
-  "main": "dist/src/index.js",
-  "exports": "./dist/src/index.js",
   "types": "dist/src/index.d.ts",
+  "main": "dist/src/index.js",
+  "exports": {
+    ".": "./dist/src/index.js",
+    "./artifacts/*": "./artifacts/*",
+    "./typechain-types": "./typechain-types"
+  },
   "license": "MIT",
   "scripts": {
-    "clean": "yarn global:ts-hardhat-clean",
+    "run-ts": "yarn global:ts-node",
     "build": " yarn global:tsc -p tsconfig.build.json",
     "build:turbo": "yarn global:turbo build",
     "typecheck": "yarn global:tsc --noEmit",
     "typecheck:turbo": "yarn global:turbo typecheck",
-    "compile": "hardhat compile",
-    "lint": "yarn global:eslint .",
+    "clean": "yarn global:ts-hardhat-clean",
+    "compile": "PRIVATE_KEY= hardhat compile",
+    "lint": "yarn global:eslint . && hardhat check",
     "lint:fix": "yarn global:eslint --fix .",
+    "run-script": "hardhat run",
+    "start-node": "hardhat node",
     "test": "NODE_ENV=test hardhat test",
     "preversion": "yarn build"
   },
   "dependencies": {
-    "@nomicfoundation/hardhat-viem": "^2.0.0",
-    "@redstone-finance/evm-adapters": "workspace:*",
+    "@chainlink/contracts": "1.2.0",
+    "@openzeppelin/contracts": "^4.8.1",
+    "@openzeppelin/contracts-upgradeable": "^4.8.3",
     "@redstone-finance/evm-connector": "workspace:*",
+    "@redstone-finance/on-chain-relayer-common": "workspace:*",
+    "@redstone-finance/protocol": "workspace:*",
     "@redstone-finance/sdk": "workspace:*",
-    "erc7412": "^0.2.3",
+    "@redstone-finance/utils": "workspace:*",
+    "@types/lodash": "^4.14.195",
+    "axios": "^1.8.4",
+    "cron-parser": "^4.8.1",
+    "dotenv": "^16.0.3",
     "ethers": "^5.7.2",
-    "node-gyp": "^10.0.1"
+    "lodash": "^4.17.21",
+    "toad-scheduler": "^3.1.0",
+    "zod": "^3.22.4"
   },
   "devDependencies": {
-    "@babel/preset-typescript": "^7.23.2",
     "@ethersproject/abi": "^5.6.3",
     "@ethersproject/providers": "^5.6.8",
     "@nomicfoundation/hardhat-chai-matchers": "^1.0.6",
@@ -35,22 +50,21 @@
     "@nomicfoundation/hardhat-toolbox": "^2.0.2",
     "@nomiclabs/hardhat-ethers": "^2.0.6",
     "@nomiclabs/hardhat-etherscan": "^3.1.7",
+    "@nomiclabs/hardhat-solhint": "^4.0.1",
+    "@openzeppelin/hardhat-upgrades": "^1.26.0",
     "@typechain/ethers-v5": "^10.2.0",
     "@typechain/hardhat": "^6.1.2",
     "@types/chai": "^4.3.4",
     "@types/mocha": "^10.0.1",
+    "@types/sinon-chai": "^3.2.12",
     "chai": "^4.3.10",
     "chai-as-promised": "^7.1.1",
     "hardhat": "^2.22.14",
     "hardhat-gas-reporter": "^1.0.9",
+    "msw": "^2.4.10",
+    "sinon": "^18.0.0",
     "solidity-coverage": "^0.8.12",
-    "typechain": "^8.1.1",
-    "viem": "^1.21.4"
-  },
-  "peerDependencies": {
-    "@pythnetwork/pyth-evm-js": "^1.25.0",
-    "@pythnetwork/pyth-sdk-solidity": "^2.2.1",
-    "viem": "^1.21.4"
+    "typechain": "^8.1.1"
   },
   "overrides": {
     "elliptic": "^6.6.1"
@@ -61,7 +75,7 @@
   "files": [
     "src",
     "dist",
-    "typechain-types"
+    "contracts"
   ],
   "publishConfig": {
     "access": "public"

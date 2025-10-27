@@ -1,5 +1,6 @@
 import { DataPackagesWrapper } from "@redstone-finance/evm-connector";
 import {
+  ContractData,
   ContractParamsProvider,
   getDataPackagesTimestamp,
   ValuesForDataFeeds,
@@ -7,7 +8,6 @@ import {
 import { RedstoneCommon, Tx } from "@redstone-finance/utils";
 import { utils } from "ethers";
 import { RedstoneAdapterBase } from "../../../typechain-types";
-import { ContractData } from "../../types";
 import { EvmContractAdapter } from "./EvmContractAdapter";
 import { getLatestTimestampsFromContract } from "./get-latest-timestamps-from-contract";
 
