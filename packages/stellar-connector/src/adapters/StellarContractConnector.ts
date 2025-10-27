@@ -30,7 +30,8 @@ export class StellarContractConnector<Adapter> implements IContractConnector<Ada
   async getNormalizedBalance(address: string) {
     const balance = await this.client.getAccountBalance(address);
 
-    return balance * (10n ** 18n / 10n ** 7n);
+    const NORMALIZED_BALANCE_MULTIPLIER = 10n ** (18n - 7n);
+    return balance * NORMALIZED_BALANCE_MULTIPLIER;
   }
 
   async transfer(toAddress: string, amountInXlm: number) {
