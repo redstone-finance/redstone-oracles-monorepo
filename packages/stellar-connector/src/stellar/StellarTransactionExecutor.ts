@@ -86,6 +86,10 @@ export class StellarTransactionExecutor {
           return response;
         }
 
+        if (response.status === rpc.Api.GetTransactionStatus.FAILED) {
+          throw new RedstoneCommon.UnrecoverableError(`Transaction ${hash} failed.`);
+        }
+
         throw new Error(`Transaction ${hash} status: ${response.status}`);
       },
       fnName: `waitForConfirmation ${hash}`,
