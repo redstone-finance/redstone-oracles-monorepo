@@ -1,6 +1,6 @@
 import { Web3FunctionContext } from "@gelatonetwork/web3-functions-sdk";
+import { IRedstoneContractAdapter } from "@redstone-finance/evm-adapters";
 import {
-  IRedstoneContractAdapter,
   IterationArgsProvider,
   RelayerConfig,
   runIteration,

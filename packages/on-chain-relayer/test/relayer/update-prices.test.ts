@@ -1,21 +1,20 @@
 import { JsonRpcProvider } from "@ethersproject/providers";
+import {
+  deployMentoAdapterMock,
+  deployMockSortedOracles,
+  deployPriceFeedsAdapterWithoutRoundsMock,
+  getEvmContractConnector,
+  MentoEvmContractAdapter,
+  PriceFeedsEvmContractAdapter,
+} from "@redstone-finance/evm-adapters";
 import { ProviderWithAgreement } from "@redstone-finance/rpc-providers";
 import chai, { expect } from "chai";
 import chaiAsPromised from "chai-as-promised";
 import { Wallet } from "ethers";
 import { parseUnits } from "ethers/lib/utils";
 import { ethers } from "hardhat";
-import { getEvmContractConnector } from "../../src";
-import { MentoEvmContractAdapter } from "../../src/core/contract-interactions/MentoEvmContractAdapter";
-import { PriceFeedsEvmContractAdapter } from "../../src/core/contract-interactions/PriceFeedsEvmContractAdapter";
 import { getTxDeliveryMan } from "../../src/core/TxDeliveryManSingleton";
-import { PriceFeedsAdapterWithoutRoundsMock } from "../../typechain-types";
-import {
-  btcDataFeed,
-  ContractParamsProviderMock,
-  deployMockSortedOracles,
-  mockConfig,
-} from "../helpers";
+import { btcDataFeed, ContractParamsProviderMock, mockConfig } from "../helpers";
 import { server } from "./mock-server";
 
 chai.use(chaiAsPromised);
@@ -31,16 +30,11 @@ describe("update-prices", () => {
 
   it("should update price in price-feeds adapter", async () => {
     const relayerConfig = mockConfig();
-    // Deploy contract
-    const priceFeedsAdapterFactory = await ethers.getContractFactory(
-      "PriceFeedsAdapterWithoutRoundsMock"
-    );
-    let priceFeedsAdapter: PriceFeedsAdapterWithoutRoundsMock =
-      await priceFeedsAdapterFactory.deploy();
-    await priceFeedsAdapter.deployed();
-
     const provider = new ProviderWithAgreement([ethers.provider, ethers.provider]);
-    priceFeedsAdapter = priceFeedsAdapter.connect(new Wallet(TEST_PRIVATE_KEY).connect(provider));
+    const signer = new Wallet(TEST_PRIVATE_KEY, provider);
+
+    // Deploy contract
+    const priceFeedsAdapter = await deployPriceFeedsAdapterWithoutRoundsMock(signer);
 
     // Update prices
     const contractAdapter = await getEvmContractConnector(
@@ -74,17 +68,16 @@ describe("update-prices", () => {
       },
     };
     const relayerConfig = mockConfig(overrideMockConfig);
+    const provider = new ProviderWithAgreement([ethers.provider, ethers.provider]);
+    const signer = new Wallet(TEST_PRIVATE_KEY, provider);
 
     // Deploying sorted oracles
-    const sortedOracles = await deployMockSortedOracles();
+    const sortedOracles = await deployMockSortedOracles(
+      new Wallet(TEST_PRIVATE_KEY, ethers.provider)
+    );
 
     // Deploying mento adapter
-    const mentoAdapterFactory = await ethers.getContractFactory("MentoAdapterMock");
-    let mentoAdapter = await mentoAdapterFactory.deploy();
-    await mentoAdapter.deployed();
-
-    const provider = new ProviderWithAgreement([ethers.provider, ethers.provider]);
-    mentoAdapter = mentoAdapter.connect(new Wallet(TEST_PRIVATE_KEY).connect(provider));
+    const mentoAdapter = await deployMentoAdapterMock(signer);
 
     // Setting sorted oracles contract address
     await mentoAdapter.setSortedOraclesAddress(sortedOracles.address);
