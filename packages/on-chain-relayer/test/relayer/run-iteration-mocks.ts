@@ -1,10 +1,11 @@
+import { IRedstoneContractAdapter } from "@redstone-finance/evm-adapters";
 import {
   ContractParamsProvider,
   DataServiceIds,
   getSignersForDataServiceId,
   IContractConnector,
 } from "@redstone-finance/sdk";
-import { IRedstoneContractAdapter, IterationArgsMessage, RelayerConfig } from "../../src";
+import { IterationArgsMessage, RelayerConfig } from "../../src";
 import { ContractData, ShouldUpdateContext } from "../../src/types";
 
 class ContractAdapterMock implements IRedstoneContractAdapter {

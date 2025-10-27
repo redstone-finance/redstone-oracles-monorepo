@@ -1,20 +1,23 @@
 import { Provider } from "@ethersproject/providers";
+import {
+  getEvmContract,
+  getEvmContractAdapter,
+  getEvmContractConnector,
+  isOevRelayerConfig,
+  MultiFeedAdapterWithoutRounds,
+  RedstoneEvmContract,
+} from "@redstone-finance/evm-adapters";
 import { TxDeliveryManSupportedProviders } from "@redstone-finance/rpc-providers";
 import { DataPackagesResponseCache } from "@redstone-finance/sdk";
 import { Tx } from "@redstone-finance/utils";
 import { Signer, Wallet } from "ethers";
-import { MultiFeedAdapterWithoutRounds } from "../../../typechain-types";
-import { isOevRelayerConfig } from "../../config/relayer-config-checks";
 import { RelayerConfig } from "../../config/RelayerConfig";
 import { getRelayerProvider } from "../../core/contract-interactions/get-relayer-provider";
 import { OevMultiAuctionsTxDeliveryMan } from "../../core/contract-interactions/OevMultiAuctionsTxDeliveryMan";
 import { OevTxDeliveryMan } from "../../core/contract-interactions/OevTxDeliveryMan";
 import { getTxDeliveryMan } from "../../core/TxDeliveryManSingleton";
 import { RelayerDataInfluxService } from "../RelayerDataInfluxService";
-import { EvmContractFacade, RedstoneEvmContract } from "./EvmContractFacade";
-import { getEvmContract } from "./get-evm-contract";
-import { getEvmContractAdapter } from "./get-evm-contract-adapter";
-import { getEvmContractConnector } from "./get-evm-contract-connector";
+import { EvmContractFacade } from "./EvmContractFacade";
 
 export const getEvmContractFacade = (
   relayerConfig: RelayerConfig,
