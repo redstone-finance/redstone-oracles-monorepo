@@ -5,19 +5,20 @@ import {
   StellarClient,
   StellarClientBuilder,
   StellarContractDeployer,
-  StellarTxDeliveryMan,
+  StellarOperationSender,
 } from "../src";
+import { StellarSigner } from "../src/stellar/StellarSigner";
 import { PRICE_FEED_WASM_HASH } from "./consts";
 import { readNetwork, readPriceFeedId, readUrl, savePriceFeedId } from "./utils";
 
 export async function initPriceFeed(
   client: StellarClient,
   contractId: string,
-  txDeliveryMan: StellarTxDeliveryMan,
+  sender: StellarOperationSender,
   feedId: string
 ) {
-  await new PriceFeedStellarContractAdapter(client, new Contract(contractId), txDeliveryMan).init(
-    await txDeliveryMan.getPublicKey(),
+  await new PriceFeedStellarContractAdapter(client, new Contract(contractId), sender).init(
+    await sender.getPublicKey(),
     feedId
   );
 
@@ -29,7 +30,7 @@ export async function initPriceFeed(
 async function instantiatePriceFeed(
   deployer: StellarContractDeployer,
   client: StellarClient,
-  txDeliveryMan: StellarTxDeliveryMan,
+  sender: StellarOperationSender,
   feedId = readPriceFeedId(),
   adapterWasmHash = PRICE_FEED_WASM_HASH
 ) {
@@ -37,7 +38,7 @@ async function instantiatePriceFeed(
     await deployer.createContract(Buffer.from(adapterWasmHash, "hex"))
   ).toString();
 
-  await initPriceFeed(client, contractId, txDeliveryMan, feedId);
+  await initPriceFeed(client, contractId, sender, feedId);
 }
 
 async function main() {
@@ -48,10 +49,10 @@ async function main() {
     .withRpcUrl(readUrl())
     .build();
 
-  const txDeliveryMan = new StellarTxDeliveryMan(client, keypair);
-  const deployer = new StellarContractDeployer(client, txDeliveryMan);
+  const sender = new StellarOperationSender(new StellarSigner(keypair), client);
+  const deployer = new StellarContractDeployer(client, sender);
 
-  await instantiatePriceFeed(deployer, client, txDeliveryMan);
+  await instantiatePriceFeed(deployer, client, sender);
 }
 
 void main();

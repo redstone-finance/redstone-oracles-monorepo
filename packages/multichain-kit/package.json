@@ -6,7 +6,7 @@
   "types": "dist/src/index.d.ts",
   "license": "MIT",
   "scripts": {
-    "test": "yarn global:jest:cov --passWithNoTests",
+    "test": "yarn global:jest:cov",
     "clean": "yarn global:ts-clean",
     "build": "yarn global:tsc -p tsconfig.build.json",
     "build:turbo": "yarn global:turbo build",
