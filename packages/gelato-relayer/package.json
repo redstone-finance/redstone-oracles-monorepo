@@ -10,7 +10,7 @@
     "typecheck": "yarn global:tsc --noEmit",
     "typecheck:turbo": "yarn global:turbo typecheck",
     "compile": "yarn compile-deps && hardhat compile",
-    "compile-deps": "yarn --cwd ../on-chain-relayer compile && yarn --cwd ../rpc-providers build",
+    "compile-deps": "yarn --cwd ../evm-adapters compile && yarn --cwd ../rpc-providers build",
     "lint": "yarn global:eslint .",
     "lint:fix": "yarn global:eslint --fix .",
     "test": "hardhat test",
@@ -19,6 +19,7 @@
   },
   "dependencies": {
     "@gelatonetwork/web3-functions-sdk": "^2.4.4",
+    "@redstone-finance/evm-adapters": "workspace:*",
     "@redstone-finance/on-chain-relayer": "workspace:*",
     "@redstone-finance/sdk": "workspace:*",
     "@redstone-finance/utils": "workspace:*"

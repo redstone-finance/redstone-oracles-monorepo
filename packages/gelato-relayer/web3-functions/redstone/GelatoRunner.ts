@@ -1,10 +1,12 @@
 import { Web3FunctionContext, Web3FunctionResult } from "@gelatonetwork/web3-functions-sdk";
 import {
-  EvmContractFacade,
   getEvmContract,
   getEvmContractAdapter,
   getEvmContractConnector,
   IRedstoneContractAdapter,
+} from "@redstone-finance/evm-adapters";
+import {
+  EvmContractFacade,
   makeRelayerConfig,
   RelayerConfig,
   runIteration,

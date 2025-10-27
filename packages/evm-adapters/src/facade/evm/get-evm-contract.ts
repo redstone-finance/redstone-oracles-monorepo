@@ -13,7 +13,7 @@ import {
   RedstoneAdapterBase,
 } from "../../../typechain-types";
 import { isArbitrumStylusRelayerConfig } from "../../config/relayer-config-checks";
-import { RedstoneEvmContract } from "./EvmContractFacade";
+import { RedstoneEvmContract } from "./RedstoneEvmContract";
 
 export function getEvmContract(
   relayerConfig: {

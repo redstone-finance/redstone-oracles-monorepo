@@ -1,23 +1,25 @@
 import { Provider } from "@ethersproject/providers";
 import { time } from "@nomicfoundation/hardhat-network-helpers";
 import { SignerWithAddress } from "@nomiclabs/hardhat-ethers/signers";
+import {
+  calculateLinkedListPosition,
+  deployMentoAdapterMock,
+  deployMockSortedOracles,
+  MentoAdapterBase,
+  type MentoAdapterMock,
+  MentoEvmContractAdapter,
+  MockSortedOracles,
+  prepareLinkedListLocationsForMentoAdapterReport,
+} from "@redstone-finance/evm-adapters";
 import { SimpleNumericMockWrapper, WrapperBuilder } from "@redstone-finance/evm-connector";
-import { TxDeliveryCall } from "@redstone-finance/rpc-providers";
 import { Tx } from "@redstone-finance/utils";
 import chai, { expect } from "chai";
 import chaiAsPromised from "chai-as-promised";
 import { parseUnits } from "ethers/lib/utils";
-import { ethers, upgrades } from "hardhat";
+import { ethers } from "hardhat";
 import Sinon from "sinon";
 import { RelayerConfig } from "../../../../src";
 import * as get_provider from "../../../../src/core/contract-interactions/get-relayer-provider";
-import { MentoEvmContractAdapter } from "../../../../src/core/contract-interactions/MentoEvmContractAdapter";
-import {
-  calculateLinkedListPosition,
-  prepareLinkedListLocationsForMentoAdapterReport,
-} from "../../../../src/custom-integrations/mento/mento-utils";
-import { MentoAdapterBase, MentoAdapterMock, MockSortedOracles } from "../../../../typechain-types";
-import { deployMockSortedOracles } from "../../../helpers";
 
 let getProviderStub: Sinon.SinonStub<[RelayerConfig], Provider>;
 
@@ -165,12 +167,10 @@ describe("MentoAdapter", () => {
 
   beforeEach(async () => {
     // Deploying sorted oracles
-    sortedOracles = await deployMockSortedOracles();
+    sortedOracles = await deployMockSortedOracles(signers[0]);
 
     // Deploying mento adapter
-    const MentoAdapterFactory = await ethers.getContractFactory("MentoAdapterMock");
-    mentoAdapter = await MentoAdapterFactory.deploy();
-    await mentoAdapter.deployed();
+    mentoAdapter = await deployMentoAdapterMock(signers[0]);
 
     // Setting sorted oracles address
     await mentoAdapter.setSortedOraclesAddress(sortedOracles.address);
@@ -233,29 +233,6 @@ describe("MentoAdapter", () => {
     await testModifiedLocations(modifier);
   });
 
-  it("Should properly upgrade mento adapter contract", async () => {
-    const MentoAdapterFactory = await ethers.getContractFactory("MentoAdapterMock");
-    const mentoAdapterV1 = (await upgrades.deployProxy(MentoAdapterFactory)) as MentoAdapterMock;
-    await mentoAdapterV1.setSortedOraclesAddress(sortedOracles.address);
-    const contractAddress = mentoAdapterV1.address;
-
-    // Check contract before upgrade
-    const dataFeedsCountBeforeUpgrade = await mentoAdapterV1.getDataFeedsCount();
-    expect(dataFeedsCountBeforeUpgrade.toNumber()).to.eql(2);
-    await checkCommonFunctionsForMentoAdapter(mentoAdapterV1, sortedOracles.address);
-
-    // Upgrading the contract
-    const MentoAdapterMockV2Factory = await ethers.getContractFactory("MentoAdapterMockV2");
-    await upgrades.upgradeProxy(mentoAdapterV1, MentoAdapterMockV2Factory);
-
-    // Check contract after upgrade
-    const mentoAdapterV2 = await ethers.getContractAt("MentoAdapterMock", contractAddress);
-    await mentoAdapterV2.setSortedOraclesAddress(sortedOracles.address);
-    const dataFeedsCountAfterUpgrade = await mentoAdapterV2.getDataFeedsCount();
-    expect(dataFeedsCountAfterUpgrade.toNumber()).to.eql(1);
-    await checkCommonFunctionsForMentoAdapter(mentoAdapterV2, sortedOracles.address);
-  });
-
   it("Should not report oracle values when deviation is too big", async () => {
     await reportDirectly(mockToken1Address, 40, signers[0]);
     await reportDirectly(mockToken1Address, 42, signers[1]);
@@ -304,7 +281,7 @@ describe("MentoAdapter", () => {
 });
 
 class MockTxDeliveryMan implements Tx.ITxDeliveryMan {
-  deliver(_txDeliveryCall: TxDeliveryCall, _context: Tx.TxDeliveryManContext) {
+  deliver(_txDeliveryCall: Tx.TxDeliveryCall, _context: Tx.TxDeliveryManContext) {
     return Promise.resolve();
   }
 }

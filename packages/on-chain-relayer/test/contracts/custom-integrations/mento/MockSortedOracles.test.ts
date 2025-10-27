@@ -1,10 +1,12 @@
 import { SignerWithAddress } from "@nomiclabs/hardhat-ethers/signers";
+import {
+  calculateLinkedListPosition,
+  deployMockSortedOracles,
+  MockSortedOracles,
+} from "@redstone-finance/evm-adapters";
 import { expect } from "chai";
 import { BigNumber } from "ethers";
 import { ethers } from "hardhat";
-import { calculateLinkedListPosition } from "../../../../src/custom-integrations/mento/mento-utils";
-import { MockSortedOracles } from "../../../../typechain-types";
-import { deployMockSortedOracles } from "../../../helpers";
 
 describe("MockSortedOracles", () => {
   let contract: MockSortedOracles;
@@ -46,7 +48,7 @@ describe("MockSortedOracles", () => {
   });
 
   beforeEach(async () => {
-    contract = await deployMockSortedOracles();
+    contract = await deployMockSortedOracles(signers[0]);
   });
 
   it("Different oracles should properly report their values", async () => {

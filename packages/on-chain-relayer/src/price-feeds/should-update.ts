@@ -30,7 +30,7 @@ export const shouldUpdate = async (
 
     ({ shouldNotUpdatePrice, messages } = checkIfDataPackagesDecimalsAreAcceptable(
       context,
-      config
+      config.adapterContractType
     ));
     if (shouldNotUpdatePrice) {
       shouldUpdatePrices = false;

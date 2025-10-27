@@ -1,0 +1,17 @@
+node_modules
+.env
+coverage
+coverage.json
+typechain
+typechain-types
+
+# Hardhat files
+cache
+artifacts
+
+# OpenZeppelin
+.openzeppelin/unknown-*.json
+
+hardhat-deployed-contracts.json
+
+healthcheck.txt

@@ -1,11 +1,11 @@
 import { JsonRpcProvider } from "@ethersproject/providers";
+import { RedstoneEvmContract } from "@redstone-finance/evm-adapters";
 import { isEvmNetworkId, loggerFactory, RedstoneCommon } from "@redstone-finance/utils";
 import axios from "axios";
 import { randomUUID } from "crypto";
 import { providers, Signer, Transaction } from "ethers";
 import { parseTransaction } from "ethers/lib/utils";
 import { RelayerConfig } from "../../config/RelayerConfig";
-import { RedstoneEvmContract } from "../../facade/evm/EvmContractFacade";
 
 const logger = loggerFactory("update-using-oev-auction");
 

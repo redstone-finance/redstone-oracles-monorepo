@@ -1,6 +1,5 @@
-import { ContractParamsProvider } from "@redstone-finance/sdk";
-import { UpdatePricesOptions } from "../../facade/ContractFacade";
-import { ContractData } from "../../types";
+import { ContractData, ContractParamsProvider } from "@redstone-finance/sdk";
+import { UpdatePricesOptions } from "../../facade/UpdatePricesOptions";
 
 export interface IRedstoneContractAdapter {
   getUniqueSignerThreshold(blockNumber?: number): Promise<number>;

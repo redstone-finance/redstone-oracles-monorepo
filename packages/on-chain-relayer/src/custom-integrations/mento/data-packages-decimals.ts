@@ -1,14 +1,14 @@
+import { AdapterType } from "@redstone-finance/on-chain-relayer-common";
 import { getNumericDataPointDecimals, NumericDataPoint } from "@redstone-finance/protocol";
-import { RelayerConfig } from "../../config/RelayerConfig";
 import { IterationArgsMessage, ShouldUpdateContext } from "../../types";
 
 const MENTO_SUPPORTED_DECIMALS = 8;
 
 export const checkIfDataPackagesDecimalsAreAcceptable = (
   context: ShouldUpdateContext,
-  relayerConfig: RelayerConfig
+  adapterContractType: AdapterType
 ): { shouldNotUpdatePrice: boolean; messages: IterationArgsMessage[] } => {
-  if (relayerConfig.adapterContractType !== "mento") {
+  if (adapterContractType !== "mento") {
     return { shouldNotUpdatePrice: false, messages: [] };
   }
   const { dataPackages } = context;
