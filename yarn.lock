@@ -11002,6 +11002,7 @@ __metadata:
     "@redstone-finance/rpc-providers": "workspace:*"
     "@redstone-finance/sdk": "workspace:*"
     "@redstone-finance/utils": "workspace:*"
+    "@stellar/stellar-sdk": "npm:14.2.0"
     "@types/aws-lambda": "npm:^8.10.145"
     "@types/cors": "npm:^2.8.12"
     "@types/express": "npm:^4.17.14"
