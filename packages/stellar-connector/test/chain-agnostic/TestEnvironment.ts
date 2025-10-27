@@ -12,8 +12,9 @@ import {
   PriceAdapterStellarContractConnector,
   StellarClient,
   StellarContractDeployer,
-  StellarTxDeliveryMan,
+  StellarOperationSender,
 } from "../../src";
+import { StellarSigner } from "../../src/stellar/StellarSigner";
 
 const TRUSTED_UPDATER_SECRET = "SCXBXWXPZ2AJJXOSARWPHYXZUYRE2CCGL2CPAV3CVLPYTBCTAT4HCTDL";
 const WASM_PATH = "stellar/target/agnostic-tests/redstone_adapter.wasm";
@@ -121,16 +122,16 @@ export async function getTestEnv() {
   const client = new StellarClient(server);
   const keypair = Keypair.fromSecret(TRUSTED_UPDATER_SECRET);
   marsRover.fundAccount(keypair.xdrPublicKey().toXDR("base64"), 1_000_000_000_000);
-  const txDeliveryMan = new StellarTxDeliveryMan(client, keypair);
 
-  const deployer = new StellarContractDeployer(client, txDeliveryMan);
+  const writer = new StellarOperationSender(new StellarSigner(keypair), client);
+  const deployer = new StellarContractDeployer(client, writer);
 
   const { contractId } = await deployer.deploy(WASM_PATH);
 
   return new StellarTestEnvironment(
     marsRover,
     new PriceAdapterStellarContractConnector(client, contractId, keypair, {
-      expectedTxDeliveryTimeInMS: 10,
+      expectedTxDeliveryTimeInMs: 10,
       maxTxSendAttempts: 2,
     })
   );

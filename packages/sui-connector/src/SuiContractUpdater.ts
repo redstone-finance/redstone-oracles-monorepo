@@ -2,7 +2,7 @@ import { SuiClient, SuiTransactionBlockResponse } from "@mysten/sui/client";
 import type { Keypair } from "@mysten/sui/cryptography";
 import { ParallelTransactionExecutor, Transaction } from "@mysten/sui/transactions";
 import { MIST_PER_SUI } from "@mysten/sui/utils";
-import { ContractUpdater, ContractUpdateStatus } from "@redstone-finance/multichain-kit";
+import { ContractUpdater, ContractUpdateStatus, ok } from "@redstone-finance/multichain-kit";
 import { ContractParamsProvider } from "@redstone-finance/sdk";
 import { loggerFactory } from "@redstone-finance/utils";
 import { DEFAULT_GAS_BUDGET } from "./SuiContractUtil";
@@ -19,7 +19,7 @@ export class SuiContractUpdater implements ContractUpdater {
   constructor(
     private readonly client: SuiClient,
     private readonly keypair: Keypair,
-    private readonly config: SuiConfig,
+    config: SuiConfig,
     private executor?: ParallelTransactionExecutor
   ) {
     this.writer = new SuiPricesContractWriter(client, keypair, config);
@@ -27,17 +27,15 @@ export class SuiContractUpdater implements ContractUpdater {
 
   async update(
     params: ContractParamsProvider,
-    attempt: number,
-    updateStartTimeMs: number
+    updateStartTimeMs: number,
+    attempt: number
   ): Promise<ContractUpdateStatus> {
     const tx = await this.writer.prepareWritePricesTransaction(params, updateStartTimeMs, attempt);
 
     const digest = await this.performExecutingTx(tx);
-
-    return {
-      success: true,
+    return ok({
       transactionHash: digest,
-    };
+    });
   }
 
   getSignerAddress() {

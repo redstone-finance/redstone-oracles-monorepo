@@ -1,7 +1,7 @@
 import { bcs } from "@mysten/bcs";
 import { SuiClient } from "@mysten/sui/client";
 import { Transaction } from "@mysten/sui/transactions";
-import { TxDeliveryMan } from "@redstone-finance/multichain-kit";
+import { TxDeliveryMan, unwrapSuccess } from "@redstone-finance/multichain-kit";
 import {
   ContractData,
   type ContractParamsProvider,
@@ -18,7 +18,7 @@ import { serialize, serializeAddresses, serializeSigners } from "./util";
 
 export class SuiPricesContractAdapter implements IMultiFeedPricesContractAdapter {
   private readonly reader: SuiPricesContractReader;
-  private readonly txDeliveryMan?: TxDeliveryMan;
+  private readonly txDeliveryMan: TxDeliveryMan;
   private readonly logger = loggerFactory("sui-prices-contract-adapter");
 
   private getPriceAdapterObjectDataContentMemoized = RedstoneCommon.memoize({
@@ -33,7 +33,7 @@ export class SuiPricesContractAdapter implements IMultiFeedPricesContractAdapter
     private readonly contractUpdater?: SuiContractUpdater
   ) {
     this.reader = SuiPricesContractReader.createMultiReader(client, config.priceAdapterObjectId);
-    this.txDeliveryMan = contractUpdater ? new TxDeliveryMan(contractUpdater, config) : undefined;
+    this.txDeliveryMan = new TxDeliveryMan(config);
   }
 
   static initialize(
@@ -123,20 +123,15 @@ export class SuiPricesContractAdapter implements IMultiFeedPricesContractAdapter
   }
 
   async writePricesFromPayloadToContract(paramsProvider: ContractParamsProvider): Promise<string> {
-    if (!this.txDeliveryMan) {
-      throw new Error("Writer is not set");
+    if (!this.contractUpdater) {
+      throw new Error("Updater is not set");
     }
 
-    const status = await this.txDeliveryMan.submitTransaction(paramsProvider);
+    const result = await this.txDeliveryMan.updateContract(this.contractUpdater, paramsProvider);
 
-    this.logger.info(`write-prices status: ${RedstoneCommon.stringify(status)}`);
+    this.logger.info(`write-prices status: ${RedstoneCommon.stringify(result)}`);
 
-    switch (status.success) {
-      case true:
-        return status.transactionHash;
-      case false:
-        throw AggregateError(status.errors);
-    }
+    return unwrapSuccess(result).transactionHash;
   }
 
   getPricesFromPayload(_paramsProvider: ContractParamsProvider): Promise<bigint[]> {

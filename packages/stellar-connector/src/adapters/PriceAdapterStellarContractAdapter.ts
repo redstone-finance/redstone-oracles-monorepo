@@ -1,11 +1,12 @@
+import { unwrapSuccess } from "@redstone-finance/multichain-kit";
 import {
   ContractData,
   ContractParamsProvider,
   IMultiFeedPricesContractAdapter,
   LastRoundDetails,
 } from "@redstone-finance/sdk";
-import { RedstoneCommon } from "@redstone-finance/utils";
 import _ from "lodash";
+import { StellarContractUpdater } from "../stellar/StellarContractUpdater";
 import * as XdrUtils from "../XdrUtils";
 import { StellarContractAdapter } from "./StellarContractAdapter";
 
@@ -67,30 +68,14 @@ export class PriceAdapterStellarContractAdapter
   }
 
   async writePricesFromPayloadToContract(paramsProvider: ContractParamsProvider) {
-    if (!this.txDeliveryMan) {
-      throw new Error("Cannot write prices, txDeliveryMan not set");
+    if (!this.operationSender) {
+      throw new Error("Cannot write prices, OperationSender not set");
     }
-    const txDeliveryMan = this.txDeliveryMan;
 
-    const updater = XdrUtils.addressToScVal(await this.getPublicKey());
-    const metadataTimestamp = Date.now();
+    const updater = new StellarContractUpdater(this.operationSender.getExecutor(), this.contract);
 
-    const batchSize = MAX_WRITE_PRICES_OPS / paramsProvider.requestParams.uniqueSignersCount;
-    const paramsProviders = paramsProvider.splitIntoFeedBatches(batchSize);
-
-    const fns = paramsProviders.map((paramsProvider) => () => {
-      return txDeliveryMan.sendTransaction(async () => {
-        return this.contract.call(
-          "write_prices",
-          updater,
-          ...(await this.prepareCallArgs(paramsProvider, metadataTimestamp))
-        );
-      });
-    });
-
-    const txHashes = await RedstoneCommon.batchPromises(1, 0, fns, true);
-
-    return txHashes[txHashes.length - 1];
+    return unwrapSuccess(await this.operationSender.updateContract(updater, paramsProvider))
+      .transactionHash;
   }
 
   async readPricesFromContract(paramsProvider: ContractParamsProvider, _blockNumber?: number) {
