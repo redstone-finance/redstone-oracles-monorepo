@@ -6,8 +6,9 @@ import {
   StellarClient,
   StellarClientBuilder,
   StellarContractDeployer,
-  StellarTxDeliveryMan,
+  StellarOperationSender,
 } from "../src";
+import { StellarSigner } from "../src/stellar/StellarSigner";
 import { FEEDS } from "./consts";
 import { initPriceFeed } from "./instantiate-price-feed";
 import {
@@ -22,7 +23,7 @@ import {
 async function deployAdapter(
   deployer: StellarContractDeployer,
   client: StellarClient,
-  txDeliveryMan: StellarTxDeliveryMan
+  sender: StellarOperationSender
 ) {
   execSync(`make build`, { stdio: "inherit" });
 
@@ -31,8 +32,8 @@ async function deployAdapter(
   await new PriceAdapterStellarContractAdapter(
     client,
     new Contract(adapterDeployResult.contractId),
-    txDeliveryMan
-  ).init(await txDeliveryMan.getPublicKey());
+    sender
+  ).init(await sender.getPublicKey());
 
   console.log(`🚀 adapter contract deployed at: ${adapterDeployResult.contractId}`);
   saveAdapterId(adapterDeployResult.contractId);
@@ -43,7 +44,7 @@ async function deployAdapter(
 async function deployPriceFeed(
   deployer: StellarContractDeployer,
   client: StellarClient,
-  txDeliveryMan: StellarTxDeliveryMan,
+  sender: StellarOperationSender,
   adapterAddress: string,
   feedId: string
 ) {
@@ -54,7 +55,7 @@ async function deployPriceFeed(
 
   const priceFeedDeployResult = await deployer.deploy(wasmFilePath(PRICE_FEED));
 
-  await initPriceFeed(client, priceFeedDeployResult.contractId, txDeliveryMan, feedId);
+  await initPriceFeed(client, priceFeedDeployResult.contractId, sender, feedId);
 }
 
 async function sampleDeploy() {
@@ -64,13 +65,13 @@ async function sampleDeploy() {
     .withStellarNetwork(readNetwork())
     .withRpcUrl(readUrl())
     .build();
+  const sender = new StellarOperationSender(new StellarSigner(keypair), client);
 
-  const txDeliveryMan = new StellarTxDeliveryMan(client, keypair);
-  const deployer = new StellarContractDeployer(client, txDeliveryMan);
-  const adapterId = await deployAdapter(deployer, client, txDeliveryMan);
+  const deployer = new StellarContractDeployer(client, sender);
+  const adapterId = await deployAdapter(deployer, client, sender);
 
   for (const feed of FEEDS) {
-    await deployPriceFeed(deployer, client, txDeliveryMan, adapterId, feed);
+    await deployPriceFeed(deployer, client, sender, adapterId, feed);
   }
 }
 
