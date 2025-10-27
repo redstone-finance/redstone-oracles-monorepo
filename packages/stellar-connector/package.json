@@ -37,6 +37,7 @@
     "instantiate-price-feed": "CONTRACT_NAME=redstone_price_feed PRICE_FEED_ID=PYUSD yarn global:ts-node scripts/instantiate-price-feed.ts"
   },
   "dependencies": {
+    "@redstone-finance/multichain-kit": "workspace:*",
     "@redstone-finance/sdk": "workspace:*",
     "@redstone-finance/utils": "workspace:*",
     "@stellar/stellar-sdk": "14.3.0",
