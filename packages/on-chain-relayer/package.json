@@ -30,10 +30,10 @@
     "run-script": "hardhat run",
     "start-node": "hardhat node",
     "test": "NODE_ENV=test hardhat test",
-    "test:chain-config-presence": "NODE_ENV=test hardhat test test/relayer-manifests/chain-config-presence.test.ts",
+    "test:chain-config-presence": "NODE_ENV=test mocha -r ts-node/register test/relayer-manifests/chain-config-presence.test.ts",
     "test:price-feed-validation": "NODE_ENV=test RUN_NONDETERMINISTIC_TESTS=t hardhat test test/relayer-manifests/price-feed-validation.test.ts",
-    "test:manifests-validation": "NODE_ENV=test hardhat test test/relayer-manifests/manifests-validation.test.ts",
-    "test:data-processing-strategy": "NODE_ENV=test hardhat test test/data-processing-strategy/*",
+    "test:manifests-validation": "NODE_ENV=test mocha -r ts-node/register test/relayer-manifests/manifests-validation.test.ts",
+    "test:data-processing-strategy": "NODE_ENV=test mocha -r ts-node/register test/data-processing-strategy/*",
     "preversion": "yarn build"
   },
   "dependencies": {

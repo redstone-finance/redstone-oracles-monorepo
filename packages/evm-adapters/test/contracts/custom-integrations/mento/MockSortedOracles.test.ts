@@ -1,12 +1,10 @@
 import { SignerWithAddress } from "@nomiclabs/hardhat-ethers/signers";
-import {
-  calculateLinkedListPosition,
-  deployMockSortedOracles,
-  MockSortedOracles,
-} from "@redstone-finance/evm-adapters";
 import { expect } from "chai";
 import { BigNumber } from "ethers";
 import { ethers } from "hardhat";
+import { deployMockSortedOracles } from "../../../../src";
+import { calculateLinkedListPosition } from "../../../../src/custom-integrations/mento/mento-utils";
+import { MockSortedOracles } from "../../../../typechain-types";
 
 describe("MockSortedOracles", () => {
   let contract: MockSortedOracles;
