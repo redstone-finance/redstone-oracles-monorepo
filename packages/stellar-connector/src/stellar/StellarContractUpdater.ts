@@ -2,10 +2,9 @@ import { ContractUpdater, ContractUpdateStatus, ok } from "@redstone-finance/mul
 import { ContractParamsProvider } from "@redstone-finance/sdk";
 import { RedstoneCommon } from "@redstone-finance/utils";
 import { Contract } from "@stellar/stellar-sdk";
+import { splitParamsIntoBatches } from "../splitParamsIntoBatches";
 import * as XdrUtils from "../XdrUtils";
 import { StellarTransactionExecutor } from "./StellarTransactionExecutor";
-
-const MAX_WRITE_PRICES_OPS = 33;
 
 export class StellarContractUpdater implements ContractUpdater {
   constructor(
@@ -18,8 +17,8 @@ export class StellarContractUpdater implements ContractUpdater {
     updateStartTimeMs: number
   ): Promise<ContractUpdateStatus> {
     const updater = XdrUtils.addressToScVal(await this.executor.getPublicKey());
-    const batchSize = MAX_WRITE_PRICES_OPS / params.requestParams.uniqueSignersCount;
-    const paramsProviders = params.splitIntoFeedBatches(batchSize);
+
+    const paramsProviders = splitParamsIntoBatches(params);
 
     const executors = paramsProviders.map((provider) => async () => {
       const args = await this.prepareCallArgs(provider, updateStartTimeMs);
