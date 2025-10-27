@@ -4,10 +4,8 @@ import chai, { expect } from "chai";
 import chaiAsPromised from "chai-as-promised";
 import { parseUnits } from "ethers/lib/utils";
 import { ethers, upgrades } from "hardhat";
-import {
-  deployMockSortedOracles,
-  prepareLinkedListLocationsForMentoAdapterReport,
-} from "../../../../src";
+import { deployMockSortedOracles } from "../../../../src";
+import { prepareLinkedListLocationsForMentoAdapterReport } from "../../../../src/custom-integrations/mento/mento-utils";
 import { MentoAdapterBase, MentoAdapterMock, MockSortedOracles } from "../../../../typechain-types";
 
 chai.use(chaiAsPromised);

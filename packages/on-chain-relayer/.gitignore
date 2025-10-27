@@ -8,3 +8,7 @@ healthcheck.txt
 relayer-remote-config
 
 config_*
+
+# Hardhat files
+cache
+artifacts
