@@ -1,12 +1,13 @@
 include ./ops.mk
 
-VERSION=0.3.63
-SVER=-v2
+VERSION=0.3.103
+SVER=-v1
 LEDGER_HOST=localhost
 LEDGER_PORT=6865
-# TODO: 3.4.0
-#ENVS=SDK_VERSION=3.4.0-snapshot.20251006.0 TARGET=2.1 VERSION=$(VERSION) SVER=$(SVER)
-ENVS=SDK_VERSION=3.3.0-snapshot.20250603.0 TARGET=2.1 VERSION=$(VERSION) SVER=$(SVER)
+
+#SDK_VERSION=3.4.0-snapshot.20251013.0
+SDK_VERSION=3.3.0-snapshot.20250930.0
+ENVS=SDK_VERSION=$(SDK_VERSION) TARGET=2.1 VERSION=$(VERSION) SVER=$(SVER)
 
 TEST_DAR=.daml/dist/redstone-test$(SVER)-$(VERSION).dar
 
@@ -77,7 +78,7 @@ ledger_tests: allocate_parties get_party_suffix ledger_deploy run_ledger
 archive: ledger-Archive 
 
 allocate_parties: 
-	@daml ledger allocate-parties Alice Bob Charlie \
+	@daml ledger allocate-parties RedStoneOracleOwner RedStoneOracleUpdater RedStoneOracleViewer \
 	--host $(LEDGER_HOST) \
 	--port $(LEDGER_PORT)
 
