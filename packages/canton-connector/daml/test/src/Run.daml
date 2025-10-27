@@ -10,34 +10,34 @@ import VerifyResults
 
 main : Input -> Script ()
 main input = script do
-  let bob = input.bob
-  let charlie = input.charlie
+  let updater = input.updater
+  let viewer = input.viewer
 
   currentTime <- getTime
-  adapterCid <- findOneAdapter "RedStoneAdapter-456" bob 
+  adapterCid <- findOneAdapter "RedStoneAdapter-456" updater 
 
-  values <- submit charlie do
+  values <- submit viewer do
     exerciseCmd adapterCid GetPrices with
       payloadHex = input.payload  
       feedIds = input.feedIds
       currentTime
   debug $ "Processed result: " <> show values
 
-  newCid <- submit bob do
+  newCid <- submit updater do
     exerciseCmd adapterCid WritePrices with
       payloadHex = input.payload  
       feedIds = input.feedIds
       currentTime
 
-  adapterCid <- findOneAdapter "RedStoneAdapter-456" charlie
+  adapterCid <- findOneAdapter "RedStoneAdapter-456" viewer
 
-  readResult <- submit charlie do
+  readResult <- submit viewer do
     exerciseCmd adapterCid ReadPriceData with
       feedIds = input.feedIds
 
-  feedCid <- findOnePriceFeed "RedStoneAdapter-456" (head input.feedIds) charlie 
+  feedCid <- findOnePriceFeed "RedStoneAdapter-456" (head input.feedIds) viewer 
 
-  feedResult <- submit charlie do
+  feedResult <- submit viewer do
     exerciseCmd feedCid ReadData with
       adapterCid
 
