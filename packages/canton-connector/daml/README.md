@@ -19,10 +19,7 @@
 1. That's our node-provider
 2. Intellect did set up a participant (node), which we can use
 3. Keycloak defines a user who can operate on the participant
-4. It operates with DAML `3.3.0`
-   1. We use DAML `3.4.0-snapshot`
-   2. So, for now, no `secp256k1` crypto additions can be tested
-5. Doesn't provide Ledger API outside the system so it can be only used via RPC calls.
+4. Doesn't provide Ledger API outside the system so it can be only used via RPC calls.
 
 ## Contracts - Canton caveats
 
@@ -57,8 +54,7 @@
 2. Implements `U256` type for larger values
    1. But also `DecimalValue` works to values up to `2^99` with the `8`-fixed-point scale (`2^126` as multiplied value from nodes)
 3. Provides [`CryptoVerify`](./sdk/src/RedStone/Internal/CryptoVerify.daml)  mechanisms for `secp256k1` crypto verification
-   1. It works in `DAML 3.4.0-snapshot-2025-10-06`+++
-   2. Disabled for now, the [`NoCryptoVerify`](./sdk/src/RedStone/Internal/NoCryptoVerify.daml) module is used
+   1. It works with  DAML`3.4.0-snapshot-2025-10-06` or `3.3.0-snapshot.20250930.0`+++
 
 ### [RedStone Interface](./interface)
 

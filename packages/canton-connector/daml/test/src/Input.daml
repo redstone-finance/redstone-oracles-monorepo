@@ -1,9 +1,9 @@
 module Input where
 
 data Input = Input with
-  alice: Party
-  bob: Party
-  charlie: Party
+  owner: Party
+  updater: Party
+  viewer: Party
   feedIds: [[Int]]
   payload: Text
       deriving (Eq, Show)
