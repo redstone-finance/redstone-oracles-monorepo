@@ -1,7 +1,7 @@
 {
-  "alice": "Alice::1220b37bab0ab9c3c84219a55a168c578e92d5efad54dbc84f134926392d5da30bfe",
-  "bob": "Bob::1220b37bab0ab9c3c84219a55a168c578e92d5efad54dbc84f134926392d5da30bfe",
-  "charlie": "Charlie::1220b37bab0ab9c3c84219a55a168c578e92d5efad54dbc84f134926392d5da30bfe",
+  "owner": "RedStoneOracleOwner::1220b37bab0ab9c3c84219a55a168c578e92d5efad54dbc84f134926392d5da30bfe",
+  "updater": "RedStoneOracleUpdater::1220b37bab0ab9c3c84219a55a168c578e92d5efad54dbc84f134926392d5da30bfe",
+  "viewer": "RedStoneOracleViewer::1220b37bab0ab9c3c84219a55a168c578e92d5efad54dbc84f134926392d5da30bfe",
   "feedIds": [[69,84,72], [66,84,67]],
   "payload": 
     "##PAYLOAD##"
