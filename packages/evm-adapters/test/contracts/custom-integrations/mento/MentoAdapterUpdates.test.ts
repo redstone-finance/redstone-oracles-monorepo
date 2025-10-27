@@ -1,27 +1,21 @@
-import { Provider } from "@ethersproject/providers";
 import { time } from "@nomicfoundation/hardhat-network-helpers";
 import { SignerWithAddress } from "@nomiclabs/hardhat-ethers/signers";
-import {
-  calculateLinkedListPosition,
-  deployMentoAdapterMock,
-  deployMockSortedOracles,
-  MentoAdapterBase,
-  type MentoAdapterMock,
-  MentoEvmContractAdapter,
-  MockSortedOracles,
-  prepareLinkedListLocationsForMentoAdapterReport,
-} from "@redstone-finance/evm-adapters";
 import { SimpleNumericMockWrapper, WrapperBuilder } from "@redstone-finance/evm-connector";
 import { Tx } from "@redstone-finance/utils";
 import chai, { expect } from "chai";
 import chaiAsPromised from "chai-as-promised";
 import { parseUnits } from "ethers/lib/utils";
 import { ethers } from "hardhat";
-import Sinon from "sinon";
-import { RelayerConfig } from "../../../../src";
-import * as get_provider from "../../../../src/core/contract-interactions/get-relayer-provider";
-
-let getProviderStub: Sinon.SinonStub<[RelayerConfig], Provider>;
+import {
+  deployMentoAdapterMock,
+  deployMockSortedOracles,
+  MentoEvmContractAdapter,
+} from "../../../../src";
+import {
+  calculateLinkedListPosition,
+  prepareLinkedListLocationsForMentoAdapterReport,
+} from "../../../../src/custom-integrations/mento/mento-utils";
+import { MentoAdapterBase, MentoAdapterMock, MockSortedOracles } from "../../../../typechain-types";
 
 chai.use(chaiAsPromised);
 
@@ -34,7 +28,7 @@ type LocationsModifierFn = (
   locationsBefore: LocationInSortedLinkedListStruct[]
 ) => LocationInSortedLinkedListStruct[];
 
-describe("MentoAdapter", () => {
+describe("MentoAdapterUpdates", () => {
   let sortedOracles: MockSortedOracles;
   let mentoAdapter: MentoAdapterMock;
   let signers: SignerWithAddress[];
@@ -161,8 +155,6 @@ describe("MentoAdapter", () => {
 
   before(async () => {
     signers = await ethers.getSigners();
-    getProviderStub = Sinon.stub(get_provider, "getRelayerProvider");
-    getProviderStub.returns(ethers.provider);
   });
 
   beforeEach(async () => {
