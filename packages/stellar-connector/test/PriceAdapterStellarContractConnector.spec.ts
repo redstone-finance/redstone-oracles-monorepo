@@ -5,8 +5,9 @@ import {
   PriceAdapterStellarContractConnector,
   StellarClient,
   StellarContractDeployer,
-  StellarTxDeliveryMan,
+  StellarOperationSender,
 } from "../src";
+import { StellarSigner } from "../src/stellar/StellarSigner";
 
 const DEPLOY_CONTRACT_TIMEOUT_MS = 20 * 1_000;
 
@@ -17,9 +18,9 @@ describe("PriceAdapterStellarContractConnector", () => {
     const server = makeServer();
     const keypair = makeKeypair();
     const client = new StellarClient(server);
-    const txDeliveryMan = new StellarTxDeliveryMan(client, keypair);
+    const writer = new StellarOperationSender(new StellarSigner(keypair), client);
 
-    const deployer = new StellarContractDeployer(client, txDeliveryMan);
+    const deployer = new StellarContractDeployer(client, writer);
     const { contractId: adapterId } = await deployer.deploy(wasmFilePath(PRICE_ADAPTER));
 
     connector = new PriceAdapterStellarContractConnector(client, adapterId, keypair);

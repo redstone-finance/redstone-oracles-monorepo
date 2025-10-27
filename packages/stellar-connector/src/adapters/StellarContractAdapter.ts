@@ -1,6 +1,6 @@
 import { BASE_FEE, Contract, xdr } from "@stellar/stellar-sdk";
 import { StellarClient } from "../stellar/StellarClient";
-import { StellarTxDeliveryMan } from "../stellar/StellarTxDeliveryMan";
+import { StellarOperationSender } from "../stellar/StellarOperationSender";
 import * as XdrUtils from "../XdrUtils";
 
 const TIMEOUT_SEC = 3600;
@@ -15,11 +15,12 @@ export class StellarContractAdapter {
   constructor(
     protected readonly client: StellarClient,
     protected readonly contract: Contract,
-    protected readonly txDeliveryMan?: StellarTxDeliveryMan
+    protected readonly operationSender?: StellarOperationSender
   ) {}
 
   async getPublicKey() {
-    const pk = await this.txDeliveryMan?.getPublicKey();
+    const pk = await this.operationSender?.getPublicKey();
+
     if (pk === undefined) {
       throw new Error("txDeliveryMan not set");
     }
@@ -28,15 +29,15 @@ export class StellarContractAdapter {
   }
 
   protected async initContract(owner: string, ...otherParams: xdr.ScVal[]) {
-    if (!this.txDeliveryMan) {
-      throw new Error("Cannot initialize contract, txDeliveryMan not set");
+    if (!this.operationSender) {
+      throw new Error("Cannot initialize contract, ContractWriter not set");
     }
 
     const ownerAddr = XdrUtils.addressToScVal(owner);
 
-    return await this.txDeliveryMan.sendTransaction(() => {
-      return this.contract.call(FN_INIT, ownerAddr, ...otherParams);
-    });
+    return await this.operationSender.sendTransaction(
+      this.contract.call(FN_INIT, ownerAddr, ...otherParams)
+    );
   }
 
   async changeOwnerTx(sender: string, newOwner: string, fee = BASE_FEE, timeout = TIMEOUT_SEC) {
@@ -80,46 +81,42 @@ export class StellarContractAdapter {
   }
 
   async changeOwner(newOwner: string) {
-    if (!this.txDeliveryMan) {
-      throw new Error("Cannot change contract's owner, txDeliveryMan not set");
+    if (!this.operationSender) {
+      throw new Error("Cannot change contract's owner, ContractWriter not set");
     }
 
     const ownerAddr = XdrUtils.addressToScVal(newOwner);
 
-    return await this.txDeliveryMan.sendTransaction(() => {
-      return this.contract.call(FN_CHANGE_OWNER, ownerAddr);
-    });
+    return await this.operationSender.sendTransaction(
+      this.contract.call(FN_CHANGE_OWNER, ownerAddr)
+    );
   }
 
   async upgrade(wasmHash: Buffer) {
-    if (!this.txDeliveryMan) {
-      throw new Error("Cannot upgrade contract, txDeliveryMan not set");
+    if (!this.operationSender) {
+      throw new Error("Cannot upgrade contract, ContractWriter not set");
     }
 
     const hash = XdrUtils.bytesToScVal(wasmHash);
 
-    return await this.txDeliveryMan.sendTransaction(() => {
-      return this.contract.call(FN_UPGRADE, hash);
-    });
+    return await this.operationSender.sendTransaction(this.contract.call(FN_UPGRADE, hash));
   }
 
   async acceptOwnership() {
-    if (!this.txDeliveryMan) {
-      throw new Error("Cannot accept ownership, txDeliveryMan not set");
+    if (!this.operationSender) {
+      throw new Error("Cannot accept ownership, ContractWriter not set");
     }
 
-    return await this.txDeliveryMan.sendTransaction(() => {
-      return this.contract.call(FN_ACCEPT_OWNERSHIP);
-    });
+    return await this.operationSender.sendTransaction(this.contract.call(FN_ACCEPT_OWNERSHIP));
   }
 
   async cancelOwnershipTransfer() {
-    if (!this.txDeliveryMan) {
-      throw new Error("Cannot cancel ownership transfer, txDeliveryMan not set");
+    if (!this.operationSender) {
+      throw new Error("Cannot cancel ownership transfer, ContractWriter not set");
     }
 
-    return await this.txDeliveryMan.sendTransaction(() => {
-      return this.contract.call(FN_CANCEL_OWNERSHIP_TRANSFER);
-    });
+    return await this.operationSender.sendTransaction(
+      this.contract.call(FN_CANCEL_OWNERSHIP_TRANSFER)
+    );
   }
 }
