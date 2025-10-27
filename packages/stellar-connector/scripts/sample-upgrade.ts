@@ -5,8 +5,9 @@ import {
   PriceAdapterStellarContractAdapter,
   StellarClientBuilder,
   StellarContractDeployer,
-  StellarTxDeliveryMan,
+  StellarOperationSender,
 } from "../src";
+import { StellarSigner } from "../src/stellar/StellarSigner";
 import { loadContractId, loadContractName, readNetwork, readUrl, wasmFilePath } from "./utils";
 
 export async function getSampleUpgradeTx(contractId: string) {
@@ -17,10 +18,10 @@ export async function getSampleUpgradeTx(contractId: string) {
     .withStellarNetwork(readNetwork())
     .withRpcUrl(readUrl())
     .build();
-  const txDeliveryMan = new StellarTxDeliveryMan(client, keypair);
+  const sender = new StellarOperationSender(new StellarSigner(keypair), client);
 
-  const deployer = new StellarContractDeployer(client, txDeliveryMan);
-  const adapter = new PriceAdapterStellarContractAdapter(client, contract, txDeliveryMan);
+  const deployer = new StellarContractDeployer(client, sender);
+  const adapter = new PriceAdapterStellarContractAdapter(client, contract, sender);
 
   execSync(`make build`, { stdio: "inherit" });
 

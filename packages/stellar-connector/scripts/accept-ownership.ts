@@ -2,9 +2,10 @@ import { Contract } from "@stellar/stellar-sdk";
 import {
   StellarClientBuilder,
   StellarContractAdapter,
-  StellarTxDeliveryMan,
+  StellarOperationSender,
   makeKeypair,
 } from "../src";
+import { StellarSigner } from "../src/stellar/StellarSigner";
 import { loadContractId, readNetwork, readUrl } from "./utils";
 
 async function acceptOwnership(contractId = loadContractId()) {
@@ -15,8 +16,8 @@ async function acceptOwnership(contractId = loadContractId()) {
     .withRpcUrl(readUrl())
     .build();
 
-  const txDeliveryMan = new StellarTxDeliveryMan(client, keypair);
-  const adapter = new StellarContractAdapter(client, new Contract(contractId), txDeliveryMan);
+  const operationSender = new StellarOperationSender(new StellarSigner(keypair), client);
+  const adapter = new StellarContractAdapter(client, new Contract(contractId), operationSender);
 
   const hash = await adapter.acceptOwnership();
   console.log(`accept tx: ${hash}`);

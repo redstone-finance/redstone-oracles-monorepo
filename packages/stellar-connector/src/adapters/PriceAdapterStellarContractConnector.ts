@@ -1,7 +1,9 @@
 import { IPricesContractAdapter } from "@redstone-finance/sdk";
 import { Contract, Keypair } from "@stellar/stellar-sdk";
 import { StellarClient } from "../stellar/StellarClient";
-import { StellarTxDeliveryMan, StellarTxDeliveryManConfig } from "../stellar/StellarTxDeliveryMan";
+import { StellarOperationSender } from "../stellar/StellarOperationSender";
+import { StellarSigner } from "../stellar/StellarSigner";
+import { StellarTxDeliveryManConfig } from "../stellar/StellarTxDeliveryManConfig";
 import { PriceAdapterStellarContractAdapter } from "./PriceAdapterStellarContractAdapter";
 import { StellarContractConnector } from "./StellarContractConnector";
 
@@ -12,18 +14,18 @@ export class PriceAdapterStellarContractConnector extends StellarContractConnect
     client: StellarClient,
     contractAddress: string,
     keypair?: Keypair,
-    txDeliveryManConfig?: Partial<StellarTxDeliveryManConfig>
+    config?: Partial<StellarTxDeliveryManConfig>
   ) {
     super(client, keypair);
 
-    const txDeliveryMan = keypair
-      ? new StellarTxDeliveryMan(client, keypair, txDeliveryManConfig)
+    const sender = keypair
+      ? new StellarOperationSender(new StellarSigner(keypair), client, config)
       : undefined;
 
     this.adapter = new PriceAdapterStellarContractAdapter(
       client,
       new Contract(contractAddress),
-      txDeliveryMan
+      sender
     );
   }
 

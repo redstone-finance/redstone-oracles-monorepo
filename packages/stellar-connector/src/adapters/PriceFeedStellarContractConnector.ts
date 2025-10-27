@@ -1,7 +1,8 @@
 import { IPriceFeedContractAdapter } from "@redstone-finance/sdk";
 import { Contract, Keypair } from "@stellar/stellar-sdk";
 import { StellarClient } from "../stellar/StellarClient";
-import { StellarTxDeliveryMan } from "../stellar/StellarTxDeliveryMan";
+import { StellarOperationSender } from "../stellar/StellarOperationSender";
+import { StellarSigner } from "../stellar/StellarSigner";
 import { PriceFeedStellarContractAdapter } from "./PriceFeedStellarContractAdapter";
 import { StellarContractConnector } from "./StellarContractConnector";
 
@@ -14,7 +15,7 @@ export class PriceFeedStellarContractConnector extends StellarContractConnector<
     this.priceFeedAdapter = new PriceFeedStellarContractAdapter(
       client,
       new Contract(contractAddress),
-      new StellarTxDeliveryMan(client, keypair)
+      new StellarOperationSender(new StellarSigner(keypair), client)
     );
   }
 

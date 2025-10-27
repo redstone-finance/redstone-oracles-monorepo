@@ -1,30 +1,15 @@
 import { ContractParamsProvider } from "@redstone-finance/sdk";
 import { loggerFactory, RedstoneCommon, RedstoneLogger } from "@redstone-finance/utils";
+import { err, Result } from "./Result";
 
-type SuccessResult = {
-  success: true;
-  transactionHash: string;
-};
-
-export type ContractUpdateStatus =
-  | SuccessResult
-  | {
-      success: false;
-      error: string;
-    };
-
-export type TxDeliveryManUpdateStatus =
-  | SuccessResult
-  | {
-      success: false;
-      errors: string[];
-    };
+export type ContractUpdateStatus = Result<{ transactionHash: string }, string>;
+export type TxDeliveryManUpdateStatus = Result<{ transactionHash: string }, string[]>;
 
 export interface ContractUpdater {
   update(
     params: ContractParamsProvider,
-    attempt: number,
-    updateStartTimeMs: number
+    updateStartTimeMs: number,
+    attempt: number
   ): Promise<ContractUpdateStatus>;
 }
 
@@ -37,7 +22,6 @@ export class TxDeliveryMan {
   private readonly logger: RedstoneLogger;
 
   constructor(
-    private readonly updater: ContractUpdater,
     private readonly config: TxDeliveryManConfig,
     logTarget: string = "tx-delivery-man"
   ) {
@@ -48,55 +32,52 @@ export class TxDeliveryMan {
     this.logger = loggerFactory(logTarget);
   }
 
-  async submitTransaction(params: ContractParamsProvider): Promise<TxDeliveryManUpdateStatus> {
-    let iterationIdx = 0;
-
-    const errors = [];
+  async updateContract(
+    updater: ContractUpdater,
+    params: ContractParamsProvider
+  ): Promise<TxDeliveryManUpdateStatus> {
     const updateStartTimeMs = Date.now();
 
-    while (iterationIdx < this.config.maxTxSendAttempts) {
-      const status = await this.trySubmit(iterationIdx, params, updateStartTimeMs);
-
-      this.logger.log(
-        `Attempt: ${iterationIdx + 1}, Submittion status: ${RedstoneCommon.stringify(status)}`
-      );
-
-      if (status.success) {
-        return {
-          success: true,
-          transactionHash: status.transactionHash,
-        };
-      } else if (status.error) {
-        errors.push(status.error);
-      }
-
-      iterationIdx += 1;
-    }
-
-    return {
-      success: false,
-      errors,
-    };
+    return await this.submit((attempt) => updater.update(params, updateStartTimeMs, attempt));
   }
 
-  private async trySubmit(
-    iterationIdx: number,
-    params: ContractParamsProvider,
-    updateStartTimeMs: number
-  ): Promise<ContractUpdateStatus> {
-    this.logger.log(
-      `Attempt ${iterationIdx + 1}/${this.config.maxTxSendAttempts} to send transaction`
-    );
+  async submit<T>(
+    operation: (attempt: number) => Promise<Result<T, string>>
+  ): Promise<Result<T, string[]>> {
+    const errors: string[] = [];
 
-    return await RedstoneCommon.timeout(
-      this.updater.update(params, iterationIdx, updateStartTimeMs),
-      this.config.expectedTxDeliveryTimeInMs,
-      undefined,
-      (resolve) =>
-        resolve({
-          success: false,
-          error: `Invocation timeout after ${this.config.expectedTxDeliveryTimeInMs}`,
-        })
-    );
+    for (let attempt = 0; attempt < this.config.maxTxSendAttempts; attempt++) {
+      this.logger.log(
+        `Attempt ${attempt + 1}/${this.config.maxTxSendAttempts} to send transaction`
+      );
+
+      try {
+        const result = await RedstoneCommon.timeout(
+          operation(attempt),
+          this.config.expectedTxDeliveryTimeInMs,
+          undefined,
+          (resolve) =>
+            resolve(err(`Invocation timeout after ${this.config.expectedTxDeliveryTimeInMs}ms`))
+        );
+
+        this.logger.log(
+          `Attempt: ${attempt + 1}, Submission status: ${RedstoneCommon.stringify(result)}`
+        );
+
+        if (result.success) {
+          return result;
+        }
+
+        errors.push(result.err);
+      } catch (e) {
+        const error = RedstoneCommon.stringifyError(e);
+        errors.push(error);
+        this.logger.log(
+          `Attempt: ${attempt + 1}, Submission status: ${RedstoneCommon.stringify(err({ error }))}`
+        );
+      }
+    }
+
+    return err(errors);
   }
 }
