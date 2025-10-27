@@ -242,6 +242,24 @@
       "twoDimensionalFees": false,
       "isMainnet": false
     },
+    "etherlinkShadownetTestnet": {
+      "name": "Etherlink Shadownet Testnet",
+      "networkId": 127823,
+      "currencySymbol": "XTZ",
+      "publicRpcUrls": [
+        "https://node.shadownet.etherlink.com",
+        "https://rpc.ankr.com/etherlink_shadownet_testnet"
+      ],
+      "avgBlockTimeMs": 6000,
+      "multicall3": {
+        "address": "0xaD6CC5a465E5c8284a49eC9eD10EFE275460678c",
+        "type": "RedstoneMulticall3",
+        "gasLimitPerCall": 10000000
+      },
+      "isAuctionModel": true,
+      "twoDimensionalFees": false,
+      "isMainnet": false
+    },
     "etherlink": {
       "name": "Etherlink Mainnet",
       "networkId": 42793,
@@ -251,10 +269,10 @@
       "multicall3": {
         "address": "0xaD6CC5a465E5c8284a49eC9eD10EFE275460678c",
         "type": "RedstoneMulticall3",
-        "gasLimitPerCall": 1000000
+        "gasLimitPerCall": 10000000
       },
       "isAuctionModel": true,
-      "twoDimensionalFees": true,
+      "twoDimensionalFees": false,
       "isMainnet": true
     },
     "mode": {
