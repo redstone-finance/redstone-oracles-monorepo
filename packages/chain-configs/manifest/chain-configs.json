@@ -894,9 +894,9 @@
     },
     "megaEthTestnet": {
       "name": "megaEth Testnet",
-      "networkId": 6342,
+      "networkId": 6343,
       "currencySymbol": "megaETH",
-      "publicRpcUrls": ["https://carrot.megaeth.com/rpc"],
+      "publicRpcUrls": ["https://timothy.megaeth.com/rpc"],
       "avgBlockTimeMs": 1000,
       "multicall3": {
         "address": "0xcA11bde05977b3631167028862bE2a173976CA11",
