@@ -15,8 +15,6 @@ export type {
   ISortedOracles,
   IStylusAdapter,
   MentoAdapterBase,
-  MentoAdapterMock,
-  MockSortedOracles,
   MultiFeedAdapterWithoutRounds,
   PriceFeedBase,
   PriceFeedsAdapterWithRounds,
@@ -33,10 +31,6 @@ export { MentoEvmContractAdapter } from "./core/contract-interactions/MentoEvmCo
 export { PriceFeedsEvmContractAdapter } from "./core/contract-interactions/PriceFeedsEvmContractAdapter";
 export { type RelayerTxDeliveryManContext } from "./core/contract-interactions/RelayerTxDeliveryManContext";
 export { getSortedOraclesContractAtAddress } from "./custom-integrations/mento/get-sorted-oracles-contract-at-address";
-export {
-  calculateLinkedListPosition,
-  prepareLinkedListLocationsForMentoAdapterReport,
-} from "./custom-integrations/mento/mento-utils";
 export { getEvmContract } from "./facade/evm/get-evm-contract";
 export { getEvmContractAdapter } from "./facade/evm/get-evm-contract-adapter";
 export { getEvmContractConnector } from "./facade/evm/get-evm-contract-connector";
