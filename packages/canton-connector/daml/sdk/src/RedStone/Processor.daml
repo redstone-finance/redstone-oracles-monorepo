@@ -13,10 +13,8 @@ import RedStone.Result
 import RedStone.U256
 import RedStone.Internal.Bytes as B
 import RedStone.Internal.DataPackage
+import RedStone.Internal.CryptoVerify
 import RedStone.Internal.Error 
--- TODO: 3.4.0
--- import RedStone.Internal.CryptoVerify
-import RedStone.Internal.NoCryptoVerify
 import RedStone.Internal.Hex
 import RedStone.Internal.Median
 import RedStone.Internal.Protocol
