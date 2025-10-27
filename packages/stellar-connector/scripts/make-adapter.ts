@@ -3,8 +3,9 @@ import {
   makeKeypair,
   StellarClientBuilder,
   StellarContractAdapter,
-  StellarTxDeliveryMan,
+  StellarOperationSender,
 } from "../src";
+import { StellarSigner } from "../src/stellar/StellarSigner";
 import { readNetwork, readUrl } from "./utils";
 
 export function makeAdapter(contractId: string) {
@@ -14,7 +15,8 @@ export function makeAdapter(contractId: string) {
     .withRpcUrl(readUrl())
     .build();
 
-  const txDeliveryMan = new StellarTxDeliveryMan(client, keypair);
+  const operationSender = new StellarOperationSender(new StellarSigner(keypair), client);
+  const adapter = new StellarContractAdapter(client, new Contract(contractId), operationSender);
 
-  return new StellarContractAdapter(client, new Contract(contractId), txDeliveryMan);
+  return adapter;
 }
