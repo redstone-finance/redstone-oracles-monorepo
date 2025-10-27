@@ -1,14 +1,14 @@
 sinclude ./.env
 
-PARTICIPANT=https://canton.dev.redstone.catalyst.intellecteu.io/api/participants/participant-redstone-validator
 CANTON_API=$(PARTICIPANT)/jsonapi/v1
 ADAPTER_NAME=RedStoneAdapter-789
-ADAPTER_TEMPLATE_ID=0b08417a22230be82a95fe5e8488082bc30876adf98d059dc1336dfda7a7894b:RedStoneAdapter:RedStoneAdapter
-PRICE_FEED_TEMPLATE_ID=1007404fc3efa8984f7d274289dec0a6e7c3a70b4a5f02cf5ce89b3c218cedfb:RedStonePriceFeed:RedStonePriceFeed
-IADAPTER_TEMPLATE_ID=ebca2dad212fd1fbcd8d8b722ef600a646516d3ecb799126189d0aa35e050034:IRedStoneAdapter:IRedStoneAdapter
-IPRICE_FEED_TEMPLATE_ID=ebca2dad212fd1fbcd8d8b722ef600a646516d3ecb799126189d0aa35e050034:IRedStonePriceFeed:IRedStonePriceFeed
+ADAPTER_TEMPLATE_ID=09d0d10efe85bb49e7341d7976ae4f6393ac24e51d66ec547fa5a443cc665c40:RedStoneAdapter:RedStoneAdapter
+PRICE_FEED_TEMPLATE_ID=b8587a80b73cf11bb9f623e0255c6e02ac27e26d636c605a6836cb2ae4402983:RedStonePriceFeed:RedStonePriceFeed
+IADAPTER_TEMPLATE_ID=72376a4cd76a5b74c91df27fbfb56238d076e55df64cbe9212311caecf1d3082:IRedStoneAdapter:IRedStoneAdapter
+IPRICE_FEED_TEMPLATE_ID=72376a4cd76a5b74c91df27fbfb56238d076e55df64cbe9212311caecf1d3082:IRedStonePriceFeed:IRedStonePriceFeed
+PARTY_SUFFIX=1220a6f7c2315ed7ba230397a459b036bfe9f36763a0e848dad741c4e9d20d85687c
+
 TOKEN=$(shell cat token.txt)
-PARTY_SUFFIX=1220a0242797a84e1d8c492f1259b3f87d561fcbde2e4b2cebc4572ddfc515b44c28
 ETH=["69","84","72"]
 BTC=["66","84","67"]
 ADAPTER_ID_TXT=adapter_id.txt
@@ -56,11 +56,11 @@ deploy-adapter: get-token
 		"templateId": "$(ADAPTER_TEMPLATE_ID)", \
 		"payload": {  \
 			"adapterId":"$(ADAPTER_NAME)", \
-			"owner": "Alice::$(PARTY_SUFFIX)", \
-			"updaters": ["Bob::$(PARTY_SUFFIX)"], \
-			"viewers": ["Charlie::$(PARTY_SUFFIX)"], \
+			"owner": "RedStoneOracleOwner::$(PARTY_SUFFIX)", \
+			"updaters": ["RedStoneOracleUpdater::$(PARTY_SUFFIX)"], \
+			"viewers": ["RedStoneOracleViewer::$(PARTY_SUFFIX)"], \
 			"feedData": []}, \
-	    "actAs": ["Alice::$(PARTY_SUFFIX)"] \
+	    "actAs": ["RedStoneOracleOwner::$(PARTY_SUFFIX)"] \
 	 }' | jq '.'
 
 deploy-price-feed: get-token
@@ -71,11 +71,11 @@ deploy-price-feed: get-token
 		"templateId": "$(PRICE_FEED_TEMPLATE_ID)", \
 		"payload": {  \
 			"adapterId":"$(ADAPTER_NAME)", \
-			"owner": "Alice::$(PARTY_SUFFIX)", \
-			"viewers": ["Charlie::$(PARTY_SUFFIX)"], \
+			"owner": "RedStoneOracleOwner::$(PARTY_SUFFIX)", \
+			"viewers": ["RedStoneOracleViewer::$(PARTY_SUFFIX)"], \
 			"feedId": $(ETH), \
 			"description": "RedStone ETH PriceFeed"}, \
-	    "actAs": ["Alice::$(PARTY_SUFFIX)"] \
+	    "actAs": ["RedStoneOracleOwner::$(PARTY_SUFFIX)"] \
 	 }' | jq '.'
 
 get-adapter-id: get-token
