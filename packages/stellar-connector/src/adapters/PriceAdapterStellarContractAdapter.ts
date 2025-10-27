@@ -6,12 +6,10 @@ import {
   LastRoundDetails,
 } from "@redstone-finance/sdk";
 import _ from "lodash";
+import { splitParamsIntoBatches } from "../splitParamsIntoBatches";
 import { StellarContractUpdater } from "../stellar/StellarContractUpdater";
 import * as XdrUtils from "../XdrUtils";
 import { StellarContractAdapter } from "./StellarContractAdapter";
-
-// We estimate write_prices operations as `feedIds * signers`
-const MAX_WRITE_PRICES_OPS = 33;
 
 export class PriceAdapterStellarContractAdapter
   extends StellarContractAdapter
@@ -44,8 +42,7 @@ export class PriceAdapterStellarContractAdapter
   }
 
   async getPricesFromPayload(paramsProvider: ContractParamsProvider) {
-    const batchSize = MAX_WRITE_PRICES_OPS / paramsProvider.requestParams.uniqueSignersCount;
-    const paramsProviders = paramsProvider.splitIntoFeedBatches(batchSize);
+    const paramsProviders = splitParamsIntoBatches(paramsProvider);
 
     const promises = paramsProviders.map(async (paramsProvider) => {
       const operation = this.contract.call(
