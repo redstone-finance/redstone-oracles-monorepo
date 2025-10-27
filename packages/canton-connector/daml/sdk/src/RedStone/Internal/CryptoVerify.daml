@@ -15,16 +15,12 @@ getDataPackageSignerIndices signers = map (\(dataPackage) -> (dataPackage, verif
 
 -- Private
 
--- TODO: 3.4.0
--- cryptoVerify = C.secp256k1WithEcdsaOnly
-cryptoVerify = C.secp256k1
-
 isValidSig HexBytes{bytes=signature} HexBytes{bytes=signableBytes} pk =
   let
     derSignature = listToHex . signatureToDer $ signature
     derPublicKey = publicKeyToDer pk
     hash = C.keccak256 . listToHex $ signableBytes
-  in cryptoVerify derSignature hash derPublicKey
+  in C.secp256k1WithEcdsaOnly derSignature hash derPublicKey
 
 verifySignerIndex signers dataPackage =
     let 

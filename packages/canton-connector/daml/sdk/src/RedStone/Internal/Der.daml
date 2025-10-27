@@ -27,7 +27,7 @@ publicKeyToDer pubKeyHex =
   let
     prefixLen = 2
     keyLength = T.length pubKeyHex / 2
-  in if keyLength == public_key_length + prefixLen && T.take prefixLen pubKeyHex == "04"
+  in if keyLength == public_key_length + (prefixLen / 2) && T.take prefixLen pubKeyHex == "04"
      then
        let
          derPrefix = "3056" <>                    -- SEQUENCE, 86 bytes
@@ -42,7 +42,7 @@ publicKeyToDer pubKeyHex =
        in fullDER
      else if keyLength == public_key_length
      then publicKeyToDer ("04" <> pubKeyHex)
-     else error "Error: Expected 65 bytes starting with 04 (or 64 bytes without prefix)"
+     else error $ "Error: Expected 65 bytes starting with 04 (or 64 bytes without prefix)" <> show (T.take prefixLen pubKeyHex)
 
 -- Private
 

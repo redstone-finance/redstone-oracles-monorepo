@@ -3,8 +3,8 @@ include ./intellect.mk
 include ./data.mk
 
 FEED_IDS=[$(ETH),$(BTC)]
-PARTY_WRITER="Bob"
-PARTY_READER="Charlie"
+PARTY_WRITER="RedStoneOracleUpdater"
+PARTY_READER="RedStoneOracleViewer"
 CURRENT_TIME=$(shell date -u +"%Y-%m-%dT%H:%M:%SZ")
 
 write-prices: prepare_data get-adapter-id-by-interface get-token

@@ -6,11 +6,11 @@ import FindContract (findAnyAdapter)
 
 main : Input -> Script ()
 main input = script do
-  let alice = input.alice  
+  let owner = input.owner  
 
-  cid <- findAnyAdapter "RedStoneAdapter-456" alice
+  cid <- findAnyAdapter "RedStoneAdapter-456" owner
   
-  submit alice do
+  submit owner do
     archiveCmd cid
   
   return ()

@@ -12,29 +12,29 @@ import VerifyResults
 
 main : Input -> Script ()
 main input = script do
-  alice <- allocateParty "Alice"  
-  bob <- allocateParty "Bob"      
-  charlie <- allocateParty "Charlie"   
+  owner <- allocateParty "RedStoneOracleOwner"  
+  updater <- allocateParty "RedStoneOracleUpdater"      
+  viewer <- allocateParty "RedStoneOracleViewer"   
   
-  adapterCid <- submit alice do
+  adapterCid <- submit owner do
     createCmd RedStoneAdapter with
       adapterId = "RedStoneAdapter-123"
-      owner = alice
-      updaters = [bob]
-      viewers = [charlie]
+      owner = owner
+      updaters = [updater]
+      viewers = [viewer]
       feedData = M.empty
 
-  feedCid <- submit alice do
+  feedCid <- submit owner do
     createCmd RedStonePriceFeed with
-      owner = alice
-      viewers = [charlie]
+      owner = owner
+      viewers = [viewer]
       adapterId = "RedStoneAdapter-123"
       feedId = head input.feedIds
       description = "RedSteone Feed Id"
 
   currentTime <- getTime
 
-  result <- submit charlie do
+  result <- submit viewer do
     exerciseCmd (toInterfaceContractId @IRedStoneAdapter adapterCid) GetPrices with
       payloadHex = input.payload  
       feedIds = input.feedIds
@@ -42,17 +42,17 @@ main input = script do
 
   debug $ "Processed result: " <> show result
   
-  newCid <- submit bob do 
+  newCid <- submit updater do 
     exerciseCmd (toInterfaceContractId @IRedStoneAdapter adapterCid) WritePrices with
       payloadHex = input.payload  
       feedIds = input.feedIds
       currentTime
 
-  readResult <- submit charlie do 
+  readResult <- submit viewer do 
     exerciseCmd newCid ReadPriceData with 
       feedIds = input.feedIds
 
-  feedResult <- submit charlie do
+  feedResult <- submit viewer do
     exerciseCmd (toInterfaceContractId @IRedStonePriceFeed feedCid) ReadData with
       adapterCid = newCid
 
