@@ -128,6 +128,9 @@ const config: HardhatUserConfig = {
     giwaTestnet: {
       url: "https://sepolia-rpc.giwa.io",
     },
+    etherlinkShadownetTestnet: {
+      url: "https://node.shadownet.etherlink.com",
+    },
   },
 };
 
