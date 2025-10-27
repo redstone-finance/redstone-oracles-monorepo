@@ -8,9 +8,7 @@
     "./src/run-relayer": {
       "types": "./dist/src/run-relayer",
       "default": "./dist/src/run-relayer.js"
-    },
-    "./artifacts/*": "./artifacts/*",
-    "./typechain-types": "./typechain-types"
+    }
   },
   "license": "MIT",
   "scripts": {
@@ -27,7 +25,6 @@
     "start:dev": "yarn global:ts-node src/main.ts",
     "start:dev:remote": "yarn build && yarn global:ts-node --swc src/main-remote-config.ts",
     "run-manual-script": "yarn run-ts scripts/master-manual-script/index.ts",
-    "compile": "PRIVATE_KEY= hardhat compile",
     "lint": "yarn global:eslint . && hardhat check",
     "lint:fix": "yarn global:eslint --fix .",
     "run-script": "hardhat run",
@@ -46,7 +43,7 @@
     "@openzeppelin/contracts-upgradeable": "^4.8.3",
     "@redstone-finance/chain-configs": "workspace:*",
     "@redstone-finance/chain-orchestrator": "workspace:*",
-    "@redstone-finance/evm-connector": "workspace:*",
+    "@redstone-finance/evm-adapters": "workspace:*",
     "@redstone-finance/healthcheck": "workspace:*",
     "@redstone-finance/internal-utils": "workspace:*",
     "@redstone-finance/mqtt5-client": "workspace:*",
@@ -74,6 +71,7 @@
     "@nomiclabs/hardhat-etherscan": "^3.1.7",
     "@nomiclabs/hardhat-solhint": "^4.0.1",
     "@openzeppelin/hardhat-upgrades": "^1.26.0",
+    "@redstone-finance/evm-connector": "workspace:*",
     "@typechain/ethers-v5": "^10.2.0",
     "@typechain/hardhat": "^6.1.2",
     "@types/chai": "^4.3.4",

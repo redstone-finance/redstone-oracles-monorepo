@@ -4,7 +4,7 @@ import { loggerFactory, Tx } from "@redstone-finance/utils";
 import { utils } from "ethers";
 import _ from "lodash";
 import { MultiFeedAdapterWithoutRounds } from "../../../typechain-types";
-import { UpdatePricesOptions } from "../../facade/ContractFacade";
+import { UpdatePricesOptions } from "../../facade/UpdatePricesOptions";
 import { MultiFeedEvmContractAdapterBase } from "./MultiFeedEvmContractAdapterBase";
 
 const logger = loggerFactory("updatePrices/multi-feed");

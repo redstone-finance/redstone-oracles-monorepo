@@ -1,3 +1,4 @@
+import type { IRedstoneContractAdapter, UpdatePricesOptions } from "@redstone-finance/evm-adapters";
 import {
   ContractParamsProvider,
   DataPackagesRequestParams,
@@ -7,14 +8,8 @@ import {
 } from "@redstone-finance/sdk";
 import { loggerFactory, RedstoneCommon } from "@redstone-finance/utils";
 import { RelayerConfig } from "../config/RelayerConfig";
-import type { IRedstoneContractAdapter } from "../core/contract-interactions/IRedstoneContractAdapter";
 import { makeDataPackagesRequestParams } from "../core/make-data-packages-request-params";
 import { ContractData, ShouldUpdateContext, UpdatePricesArgs } from "../types";
-
-export type UpdatePricesOptions = {
-  canOmitFallbackAfterFailing?: boolean;
-  allFeedIds: string[];
-};
 
 export abstract class ContractFacade {
   private readonly logger = loggerFactory("contract-facade");
