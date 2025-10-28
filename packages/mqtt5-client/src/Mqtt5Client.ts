@@ -27,6 +27,11 @@ export type SubscribeCallback = (
   error: string | null
 ) => unknown;
 
+export const createMqtt5ClientFactory =
+  (config: Mqtt5ClientConfig): (() => Promise<PubSubClient>) =>
+  () =>
+    Mqtt5Client.create(config);
+
 export class Mqtt5Client implements PubSubClient {
   private readonly logger = loggerFactory("mqtt5-client");
   private _mqtt!: mqtt5.Mqtt5Client;
