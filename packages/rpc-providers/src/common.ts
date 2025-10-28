@@ -3,10 +3,13 @@ import { ErrorCode } from "@ethersproject/logger";
 import { Point } from "@influxdata/influxdb-client";
 import { NetworkId } from "@redstone-finance/utils";
 import { providers } from "ethers";
+import { RedstoneEthers5Provider } from "./providers/RedstoneProvider";
 
 export type ReportMetricFn = (message: Point) => void;
 export type ContractCallOverrides = { blockTag: BlockTag };
 export type EthersError = { code: ErrorCode; message: string };
+
+export const HARDHAT_CHAIN_ID = 31337;
 
 /** Assumes that if blockTag is string the it is hex string */
 export const convertBlockTagToNumber = (blockTag: BlockTag): number =>
@@ -27,13 +30,19 @@ export const isEthersError = (e: unknown): e is EthersError => {
 
 export function getProviderNetworkInfo(
   provider: providers.Provider,
-  defaultVal = { chainId: 31337, url: "unknown" }
+  defaultVal = { chainId: HARDHAT_CHAIN_ID, url: "unknown" }
 ) {
   try {
     if (provider instanceof providers.JsonRpcProvider) {
       return {
         chainId: provider.network.chainId,
         url: provider.connection.url,
+      };
+    }
+    if (provider instanceof RedstoneEthers5Provider) {
+      return {
+        chainId: provider.network.chainId,
+        url: provider.rpc.url,
       };
     }
   } catch {
