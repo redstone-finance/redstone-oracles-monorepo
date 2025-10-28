@@ -3,7 +3,14 @@ import { HttpClient } from "@redstone-finance/http-client";
 import { RedstoneCommon } from "@redstone-finance/utils";
 import { AxiosRequestConfig } from "axios";
 import { BigNumber, BigNumberish, ethers } from "ethers";
-import { BytesLike, getAddress, getContractAddress, hexlify, hexZeroPad } from "ethers/lib/utils";
+import {
+  BytesLike,
+  getAddress,
+  getContractAddress,
+  hexlify,
+  hexValue,
+  hexZeroPad,
+} from "ethers/lib/utils";
 
 type EthereumRpcRequest = {
   jsonrpc: "2.0";
@@ -212,8 +219,33 @@ export class RedstoneProvider {
     public readonly url: string
   ) {}
 
+  private static stripLeadingZerosFromValue<T>(value: T): T {
+    if (typeof value === "string" && value.length > 3) {
+      return stripLeadingZeros(value) as T;
+    }
+
+    if (Array.isArray(value)) {
+      const result = [];
+      for (const item of value) {
+        result.push(RedstoneProvider.stripLeadingZerosFromValue(item));
+      }
+      return result as T;
+    }
+
+    if (value && typeof value === "object") {
+      const result: Record<string, unknown> = {};
+      for (const [key, val] of Object.entries(value)) {
+        result[key] = RedstoneProvider.stripLeadingZerosFromValue(val);
+      }
+      return result as T;
+    }
+
+    return value;
+  }
+
   async send<T>(method: string, params: unknown[], config: AxiosRequestConfig = {}): Promise<T> {
     const newId = this.id + (1 % Number.MAX_SAFE_INTEGER);
+
     const message: EthereumRpcRequest = {
       jsonrpc: "2.0",
       method: method,
@@ -222,7 +254,13 @@ export class RedstoneProvider {
     };
     this.id = newId;
 
-    const response = await this.httpClient.post<EthereumRpcResponse<T>>(this.url, message, config);
+    const sanitizedMessage = RedstoneProvider.stripLeadingZerosFromValue(message);
+
+    const response = await this.httpClient.post<EthereumRpcResponse<T>>(
+      this.url,
+      sanitizedMessage,
+      config
+    );
 
     if (RedstoneCommon.isDefined(response.data.error)) {
       throw new Ethers5LikeError(
@@ -863,6 +901,14 @@ export class RedstoneEthers5Provider implements ethers.providers.Provider {
       "Method 'removeListener' not supported by RedstoneProvider. Choose diffrent provider like StaticJsonRpcProvider"
     );
   }
+}
+
+function stripLeadingZeros(hexString: string): string {
+  if (!hexString.startsWith("0x")) {
+    return hexString;
+  }
+
+  return hexValue(hexString);
 }
 
 async function resolveBlockTag(
