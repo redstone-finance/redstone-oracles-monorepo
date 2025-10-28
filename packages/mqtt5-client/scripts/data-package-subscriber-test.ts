@@ -12,7 +12,8 @@ async function main() {
         type: "AWSSigV4",
       },
     }),
-    calculateTopicCountPerConnection()
+    calculateTopicCountPerConnection(),
+    ENDPOINT
   );
 
   const dataPackageSubscriber = new DataPackageSubscriber(multiClient, {

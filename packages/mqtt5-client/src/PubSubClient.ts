@@ -1,12 +1,20 @@
 import { ContentTypes } from "@redstone-finance/internal-utils";
-import type { SubscribeCallback } from "./Mqtt5Client";
 
 export type PubSubPayload = {
-  /** valid topic @see ./topic.ts */
+  /** valid topic @see topic.ts */
   topic: string;
   /** valid json object */
   data: unknown;
 };
+
+export type SubscribeCallback = (
+  /** encoded topic @see topic.ts */
+  topicName: string,
+  messagePayload: unknown,
+  error: string | null,
+  /** use wisely */
+  client: PubSubClient
+) => unknown;
 
 export interface PubSubClient {
   /**
@@ -28,6 +36,11 @@ export interface PubSubClient {
    * @param topics Array of topics to unsubscribe from
    */
   unsubscribe(topics: string[]): Promise<void>;
+
+  /**
+   * MUST return unique name across application (e.g. hostame)
+   */
+  getUniqueName(): string;
 
   stop(): void;
 }

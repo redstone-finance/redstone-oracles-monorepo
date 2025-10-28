@@ -19,9 +19,10 @@ describe("MultiPubSubClient", () => {
       unsubscribe: jest.fn(),
       publish: jest.fn(),
       stop: jest.fn(),
+      getUniqueName: () => "unique-name-1",
     };
     fabric = jest.fn().mockResolvedValue(mockClient);
-    client = new MultiPubSubClient(fabric, 2); // 2 topics per connection
+    client = new MultiPubSubClient(fabric, 2, "unique-name-1"); // 2 topics per connection
   });
 
   describe("subscribe", () => {
@@ -203,19 +204,21 @@ describe("MultiPubSubClient complex", () => {
       unsubscribe: jest.fn(),
       publish: jest.fn(),
       stop: jest.fn(),
+      getUniqueName: () => "unique-name-1",
     };
     mockClient2 = {
       subscribe: jest.fn(),
       unsubscribe: jest.fn(),
       publish: jest.fn(),
       stop: jest.fn(),
+      getUniqueName: () => "unique-name-2",
     };
 
     fabric = jest.fn().mockImplementation(() => {
       return Promise.resolve(clientIndex++ === 0 ? mockClient1 : mockClient2);
     });
 
-    client = new MultiPubSubClient(fabric, 2); // 2 topics per connection
+    client = new MultiPubSubClient(fabric, 2, "unique-name-1"); // 2 topics per connection
   });
 
   it("should handle subscribe -> unsubscribe -> subscribe sequence", async () => {
