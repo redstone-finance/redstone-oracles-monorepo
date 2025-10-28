@@ -2,8 +2,7 @@ import { ContentTypes } from "@redstone-finance/internal-utils";
 import { loggerFactory } from "@redstone-finance/utils";
 import { Mutex } from "async-mutex";
 import _ from "lodash";
-import { SubscribeCallback } from "./Mqtt5Client";
-import { PubSubClient, PubSubPayload } from "./PubSubClient";
+import { PubSubClient, PubSubPayload, SubscribeCallback } from "./PubSubClient";
 
 /** AWS enforce limit per connection  */
 const MAX_REQ_PER_SECOND_PER_CONNECTION = 100;
@@ -23,8 +22,14 @@ export class MultiPubSubClient implements PubSubClient {
 
   constructor(
     private readonly pubSubClientFactory: () => Promise<PubSubClient>,
-    private readonly connectionsPerTopic: number
+    private readonly connectionsPerTopic: number,
+    // first instance is created on first publish so we pass it explicit to avoid returning dummy value in getUniqueName()
+    private readonly uniqueName: string
   ) {}
+
+  getUniqueName(): string {
+    return this.uniqueName;
+  }
 
   /** Created clients are not recycled */
   async publish(payloads: PubSubPayload[], contentType: ContentTypes): Promise<void> {
@@ -85,6 +90,10 @@ export class MultiPubSubClient implements PubSubClient {
     } finally {
       this.subscribeMutex.release();
     }
+
+    this.logger.info(
+      `Unsubsribed from ${topics.length} topics, active ${this.clientToTopics.length} connections`
+    );
   }
 
   stop(): void {

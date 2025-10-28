@@ -24,7 +24,8 @@
     "async-mutex": "^0.5.0",
     "aws-iot-device-sdk-v2": "^1.21.1",
     "ethers": "^5.7.2",
-    "lodash": "^4.17.21"
+    "lodash": "^4.17.21",
+    "zod": "^3.22.4"
   },
   "files": [
     "src",

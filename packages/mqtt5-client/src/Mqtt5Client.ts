@@ -2,7 +2,7 @@ import { ContentTypes, getSerializerDeserializer } from "@redstone-finance/inter
 import { RedstoneCommon, loggerFactory } from "@redstone-finance/utils";
 import { auth, iot, mqtt, mqtt5 } from "aws-iot-device-sdk-v2";
 import { randomUUID } from "crypto";
-import { PubSubClient, PubSubPayload } from "./PubSubClient";
+import { PubSubClient, PubSubPayload, SubscribeCallback } from "./PubSubClient";
 
 export type Mqtt5ClientConfig = {
   endpoint: string;
@@ -20,13 +20,6 @@ const DEFAULT_CONFIG = {
 
 const TOPICS_BATCH_LIMIT = 8;
 
-export type SubscribeCallback = (
-  /** encoded topic @see ./topic.ts */
-  topicName: string,
-  messagePayload: unknown,
-  error: string | null
-) => unknown;
-
 export const createMqtt5ClientFactory =
   (config: Mqtt5ClientConfig): (() => Promise<PubSubClient>) =>
   () =>
@@ -41,6 +34,9 @@ export class Mqtt5Client implements PubSubClient {
   private constructor(config: Mqtt5ClientConfig) {
     this.config = { ...DEFAULT_CONFIG, ...config };
     process.on("beforeExit", () => this.stop());
+  }
+  getUniqueName(): string {
+    return this.config.endpoint;
   }
 
   static async create(config: Mqtt5ClientConfig): Promise<Mqtt5Client> {
@@ -160,12 +156,13 @@ export class Mqtt5Client implements PubSubClient {
             message.contentType as ContentTypes
           ).deserialize(Buffer.from(message.payload as ArrayBuffer));
 
-          this.onMessageCallback!(message.topicName, deserializeData, null);
+          this.onMessageCallback!(message.topicName, deserializeData, null, this);
         } catch (e) {
           this.onMessageCallback!(
             topicName,
             null,
-            `Error occurred when tried to parse message error=${RedstoneCommon.stringifyError(e)}`
+            `Error occurred when tried to parse message error=${RedstoneCommon.stringifyError(e)}`,
+            this
           );
         }
       });
