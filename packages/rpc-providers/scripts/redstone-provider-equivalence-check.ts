@@ -10,6 +10,7 @@ import {
   RedstoneProvider,
 } from "../src/providers/RedstoneProvider";
 import { Counter } from "../typechain-types";
+import {HARDHAT_CHAIN_ID} from "../src";
 
 // HOW TO RUN
 // npx hardhat node &
@@ -54,14 +55,14 @@ async function main() {
   const redP = new RedstoneEthers5Provider(
     rpc,
     {
-      chainId: 31337,
+      chainId: HARDHAT_CHAIN_ID,
       name: "hardhat",
     },
     500,
     60_000
   );
   const ethersP = new StaticJsonRpcProvider(RPC_URL_ETH, {
-    chainId: 31337,
+    chainId: HARDHAT_CHAIN_ID,
     name: "hardhat",
   });
 
