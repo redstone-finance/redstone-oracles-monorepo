@@ -1,8 +1,8 @@
 import { terminateWithUpdateConfigExitCode } from "@redstone-finance/internal-utils";
 import {
+  createMqtt5ClientFactory,
   DataPackageSubscriber,
   DataPackageSubscriberParams,
-  Mqtt5Client,
   MqttTopics,
   MultiPubSubClient,
   RateLimitsCircuitBreaker,
@@ -66,16 +66,14 @@ export class MqttRunner implements MqttDataProcessingStrategyDelegate<RelayerCon
     const endpoint = relayerConfig.mqttEndpoint;
     const cache = new DataPackagesResponseCache();
     const contractFacade = await getContractFacade(relayerConfig, cache);
-    const mqttClientFactory = () =>
-      Mqtt5Client.create({
+
+    const multiClient = new MultiPubSubClient(
+      createMqtt5ClientFactory({
         endpoint,
         authorization: {
           type: "AWSSigV4",
         },
-      });
-
-    const multiClient = new MultiPubSubClient(
-      mqttClientFactory,
+      }),
       MqttTopics.calculateTopicCountPerConnection()
     );
 
