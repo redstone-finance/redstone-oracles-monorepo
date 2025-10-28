@@ -6,7 +6,7 @@ import {MultiFeedAdapterWithoutRounds} from "../without-rounds/MultiFeedAdapterW
 
 abstract contract MultiFeedAdapterWithoutRoundsPrimaryDemo is MultiFeedAdapterWithoutRounds {
   function getUniqueSignersThreshold() public view virtual override returns (uint8) {
-    return 1;
+    return 2;
   }
 
   function getAuthorisedSignerIndex(
