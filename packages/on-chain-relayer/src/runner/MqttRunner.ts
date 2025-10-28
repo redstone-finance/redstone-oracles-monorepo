@@ -74,7 +74,8 @@ export class MqttRunner implements MqttDataProcessingStrategyDelegate<RelayerCon
           type: "AWSSigV4",
         },
       }),
-      MqttTopics.calculateTopicCountPerConnection()
+      MqttTopics.calculateTopicCountPerConnection(),
+      endpoint
     );
 
     const strategy = new (
