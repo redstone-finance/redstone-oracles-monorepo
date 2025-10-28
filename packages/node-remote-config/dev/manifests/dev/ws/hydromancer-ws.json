@@ -1,0 +1,65 @@
+{
+  "interval": 3000,
+  "priceAggregator": "median",
+  "defaultSource": ["coingecko"],
+  "sourceTimeout": 8000,
+  "deviationCheck": {
+    "deviationWithRecentValues": {
+      "maxPercent": 25,
+      "maxDelayMilliseconds": 120000
+    }
+  },
+  "tokens": {
+    "USDT": {
+      "source": ["kraken-usd"],
+      "deviationCheck": {
+        "deviationWithRecentValues": {
+          "maxPercent": 5,
+          "maxDelayMilliseconds": 120000
+        }
+      },
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "HL_ORACLE_PX_BTC": {
+      "source": ["hydromancer-testnet-perps-ws-fetcher"],
+      "denomination": "USD",
+      "rateFeed": true
+    },
+    "HL_ORACLE_PX_sekaw:BTC": {
+      "source": ["hydromancer-testnet-perps-ws-fetcher"],
+      "denomination": "USD",
+      "rateFeed": true
+    },
+    "HL_MARK_PX_BTC": {
+      "source": ["hydromancer-testnet-perps-ws-fetcher"],
+      "denomination": "USD",
+      "rateFeed": true
+    },
+    "HL_MARK_PX_sekaw:BTC": {
+      "source": ["hydromancer-testnet-perps-ws-fetcher"],
+      "denomination": "USD",
+      "rateFeed": true
+    },
+    "HL_MID_PX_BTC": {
+      "source": ["hydromancer-testnet-perps-ws-fetcher"],
+      "denomination": "USD",
+      "rateFeed": true
+    },
+    "HL_MID_PX_sekaw:BTC": {
+      "source": ["hydromancer-testnet-perps-ws-fetcher"],
+      "denomination": "USD",
+      "rateFeed": true
+    },
+    "HL_OPEN_INTEREST_BTC": {
+      "source": ["hydromancer-testnet-perps-ws-fetcher"],
+      "denomination": "USD",
+      "rateFeed": true
+    },
+    "HL_OPEN_INTEREST_sekaw:BTC": {
+      "source": ["hydromancer-testnet-perps-ws-fetcher"],
+      "denomination": "USD",
+      "rateFeed": true
+    }
+  }
+}
