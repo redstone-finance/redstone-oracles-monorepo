@@ -30,25 +30,41 @@
       "rateFeed": false
     },
     "HL_ORACLE_PX_BTC": {
-      "source": ["hyperliquid-testnet-perps-ws-fetcher"],
+      "source": ["hyperliquid-testnet-perps-ws-fetcher", "hydromancer-testnet-perps-ws-fetcher"],
+      "customWeightsForWeightedMedian": {
+        "hyperliquid-testnet-perps-ws-fetcher": 10,
+        "hydromancer-testnet-perps-ws-fetcher": 1
+      },
       "broadcasters": [],
       "denomination": "USD",
       "rateFeed": false
     },
     "HL_ORACLE_PX_sekaw:BTC": {
-      "source": ["hyperliquid-testnet-perps-ws-fetcher"],
+      "source": ["hyperliquid-testnet-perps-ws-fetcher", "hydromancer-testnet-perps-ws-fetcher"],
+      "customWeightsForWeightedMedian": {
+        "hyperliquid-testnet-perps-ws-fetcher": 10,
+        "hydromancer-testnet-perps-ws-fetcher": 1
+      },
       "broadcasters": [],
       "denomination": "USD",
       "rateFeed": false
     },
     "HL_MARK_PX_sekaw:BTC": {
-      "source": ["hyperliquid-testnet-perps-ws-fetcher"],
+      "source": ["hyperliquid-testnet-perps-ws-fetcher", "hydromancer-testnet-perps-ws-fetcher"],
+      "customWeightsForWeightedMedian": {
+        "hyperliquid-testnet-perps-ws-fetcher": 10,
+        "hydromancer-testnet-perps-ws-fetcher": 1
+      },
       "broadcasters": [],
       "denomination": "USD",
       "rateFeed": false
     },
     "HL_MID_PX_sekaw:BTC": {
-      "source": ["hyperliquid-testnet-perps-ws-fetcher"],
+      "source": ["hyperliquid-testnet-perps-ws-fetcher", "hydromancer-testnet-perps-ws-fetcher"],
+      "customWeightsForWeightedMedian": {
+        "hyperliquid-testnet-perps-ws-fetcher": 10,
+        "hydromancer-testnet-perps-ws-fetcher": 1
+      },
       "broadcasters": [],
       "denomination": "USD",
       "rateFeed": false
@@ -107,25 +123,41 @@
       "rateFeed": false
     },
     "HL_ORACLE_PX_ETH": {
-      "source": ["hyperliquid-testnet-perps-ws-fetcher"],
+      "source": ["hyperliquid-testnet-perps-ws-fetcher", "hydromancer-testnet-perps-ws-fetcher"],
+      "customWeightsForWeightedMedian": {
+        "hyperliquid-testnet-perps-ws-fetcher": 10,
+        "hydromancer-testnet-perps-ws-fetcher": 1
+      },
       "broadcasters": [],
       "denomination": "USD",
       "rateFeed": false
     },
     "HL_ORACLE_PX_sekaw:ETH": {
-      "source": ["hyperliquid-testnet-perps-ws-fetcher"],
+      "source": ["hyperliquid-testnet-perps-ws-fetcher", "hydromancer-testnet-perps-ws-fetcher"],
+      "customWeightsForWeightedMedian": {
+        "hyperliquid-testnet-perps-ws-fetcher": 10,
+        "hydromancer-testnet-perps-ws-fetcher": 1
+      },
       "broadcasters": [],
       "denomination": "USD",
       "rateFeed": false
     },
     "HL_MARK_PX_sekaw:ETH": {
-      "source": ["hyperliquid-testnet-perps-ws-fetcher"],
+      "source": ["hyperliquid-testnet-perps-ws-fetcher", "hydromancer-testnet-perps-ws-fetcher"],
+      "customWeightsForWeightedMedian": {
+        "hyperliquid-testnet-perps-ws-fetcher": 10,
+        "hydromancer-testnet-perps-ws-fetcher": 1
+      },
       "broadcasters": [],
       "denomination": "USD",
       "rateFeed": false
     },
     "HL_MID_PX_sekaw:ETH": {
-      "source": ["hyperliquid-testnet-perps-ws-fetcher"],
+      "source": ["hyperliquid-testnet-perps-ws-fetcher", "hydromancer-testnet-perps-ws-fetcher"],
+      "customWeightsForWeightedMedian": {
+        "hyperliquid-testnet-perps-ws-fetcher": 10,
+        "hydromancer-testnet-perps-ws-fetcher": 1
+      },
       "broadcasters": [],
       "denomination": "USD",
       "rateFeed": false
@@ -178,13 +210,21 @@
       "rateFeed": false
     },
     "HL_MARK_PX_stocks:TSLA": {
-      "source": ["hyperliquid-testnet-perps-ws-fetcher"],
+      "source": ["hyperliquid-testnet-perps-ws-fetcher", "hydromancer-testnet-perps-ws-fetcher"],
+      "customWeightsForWeightedMedian": {
+        "hyperliquid-testnet-perps-ws-fetcher": 10,
+        "hydromancer-testnet-perps-ws-fetcher": 1
+      },
       "broadcasters": [],
       "denomination": "USD",
       "rateFeed": false
     },
     "HL_ORACLE_PX_stocks:TSLA": {
-      "source": ["hyperliquid-testnet-perps-ws-fetcher"],
+      "source": ["hyperliquid-testnet-perps-ws-fetcher", "hydromancer-testnet-perps-ws-fetcher"],
+      "customWeightsForWeightedMedian": {
+        "hyperliquid-testnet-perps-ws-fetcher": 10,
+        "hydromancer-testnet-perps-ws-fetcher": 1
+      },
       "broadcasters": [],
       "denomination": "USD",
       "rateFeed": false
