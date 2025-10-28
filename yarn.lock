@@ -11215,6 +11215,7 @@ __metadata:
     aws-iot-device-sdk-v2: "npm:^1.21.1"
     ethers: "npm:^5.7.2"
     lodash: "npm:^4.17.21"
+    zod: "npm:^3.22.4"
   languageName: unknown
   linkType: soft
 
