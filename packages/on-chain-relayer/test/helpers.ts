@@ -1,6 +1,7 @@
 import { time } from "@nomicfoundation/hardhat-network-helpers";
 import { WrapperBuilder } from "@redstone-finance/evm-connector";
 import { DataPackage, INumericDataPoint, NumericDataPoint } from "@redstone-finance/protocol";
+import { HARDHAT_CHAIN_ID } from "@redstone-finance/rpc-providers";
 import {
   calculateHistoricalPackagesTimestamp,
   ContractParamsProvider,
@@ -55,7 +56,7 @@ export const mockConfig = (overrideMockConfig: Record<string, unknown> = {}) => 
     relayerIterationInterval: 10,
     rpcUrls: ["http://127.0.0.1:8545"],
     chainName: "HardhatNetwork",
-    networkId: 31337,
+    networkId: HARDHAT_CHAIN_ID,
     privateKey: "0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80", // well-known private key for the first hardhat account
     adapterContractAddress: "0x5FbDB2315678afecb367f032d93F642f64180aa3",
     dataServiceId: "redstone-main-demo",

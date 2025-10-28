@@ -289,8 +289,8 @@ export class RedstoneEthers5Provider implements ethers.providers.Provider {
   private readonly url: string;
 
   constructor(
-    private readonly rpc: RedstoneProvider,
-    private readonly network: { name: string; chainId: number },
+    public readonly rpc: RedstoneProvider,
+    public readonly network: { name: string; chainId: number },
     private readonly poolingInterval: number = 500,
     private readonly waitForTransactionTimeout: number = 60_000
   ) {

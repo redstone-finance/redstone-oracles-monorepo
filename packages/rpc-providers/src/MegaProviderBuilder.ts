@@ -77,7 +77,7 @@ export class MegaProviderBuilder {
       if (useRedstoneProvider) {
         RedstoneCommon.assert(
           this.options.httpClient,
-          "You have to provide httpClient to MegeProviderBuilder when USE_REDSTONE_PROVIDER is set",
+          "You have to provide httpClient to MegaProviderBuilder when USE_REDSTONE_PROVIDER is set",
           true
         );
         const redstoneProvider = new RedstoneProvider(this.options.httpClient, rpcUrl);
