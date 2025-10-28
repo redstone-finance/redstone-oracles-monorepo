@@ -1,6 +1,5 @@
 import { LogMonitoring, LogMonitoringType } from "@redstone-finance/internal-utils";
-import type { SubscribeCallback } from "../src/Mqtt5Client";
-import type { PubSubClient } from "../src/PubSubClient";
+import type { PubSubClient, SubscribeCallback } from "../src/PubSubClient";
 import { withRateLimiter } from "../src/decorators/withRateLimiter";
 
 describe("withRateLimiter", () => {
@@ -20,6 +19,7 @@ describe("withRateLimiter", () => {
       subscribe: jest.fn(),
       unsubscribe: mockUnsubscribe,
       stop: jest.fn(),
+      getUniqueName: jest.fn(),
     };
   });
 
@@ -33,7 +33,7 @@ describe("withRateLimiter", () => {
 
     // Send 5 messages (under limit of 10)
     for (let i = 0; i < 5; i++) {
-      rateLimitedCallback("test-topic", { data: i }, null);
+      rateLimitedCallback("test-topic", { data: i }, null, mockPubSubClient);
     }
 
     expect(mockCallback).toHaveBeenCalledTimes(5);
@@ -52,7 +52,7 @@ describe("withRateLimiter", () => {
 
     // Send 7 messages (exceeds limit of 5)
     for (let i = 0; i < 7; i++) {
-      rateLimitedCallback("test-topic", { data: i }, null);
+      rateLimitedCallback("test-topic", { data: i }, null, mockPubSubClient);
     }
 
     // First 5 messages should pass through, 6th triggers rate limit
@@ -82,12 +82,12 @@ describe("withRateLimiter", () => {
 
     // Send 3 messages to topic-1 (at limit)
     for (let i = 0; i < 3; i++) {
-      rateLimitedCallback("topic-1", { data: i }, null);
+      rateLimitedCallback("topic-1", { data: i }, null, mockPubSubClient);
     }
 
     // Send 2 messages to topic-2 (below limit)
     for (let i = 0; i < 2; i++) {
-      rateLimitedCallback("topic-2", { data: i }, null);
+      rateLimitedCallback("topic-2", { data: i }, null, mockPubSubClient);
     }
 
     // Both topics should have all messages passed through
@@ -95,20 +95,20 @@ describe("withRateLimiter", () => {
     expect(mockUnsubscribe).not.toHaveBeenCalled();
 
     // Now exceed limit for topic-1
-    rateLimitedCallback("topic-1", { data: 999 }, null);
-    rateLimitedCallback("topic-1", { data: 1000 }, null);
+    rateLimitedCallback("topic-1", { data: 999 }, null, mockPubSubClient);
+    rateLimitedCallback("topic-1", { data: 1000 }, null, mockPubSubClient);
 
     // topic-1 should be rate limited, but topic-2 should still work
     expect(mockUnsubscribe).toHaveBeenCalledTimes(1);
     expect(mockUnsubscribe).toHaveBeenCalledWith(["topic-1"]);
 
     // Send another message to topic-2 (should still work - 3rd message)
-    rateLimitedCallback("topic-2", { data: 999 }, null);
+    rateLimitedCallback("topic-2", { data: 999 }, null, mockPubSubClient);
     expect(mockCallback).toHaveBeenCalledTimes(6); // 5 + 1 more from topic-2
 
     // Now exceed limit for topic-2
-    rateLimitedCallback("topic-2", { data: 1000 }, null);
-    rateLimitedCallback("topic-2", { data: 1001 }, null);
+    rateLimitedCallback("topic-2", { data: 1000 }, null, mockPubSubClient);
+    rateLimitedCallback("topic-2", { data: 1001 }, null, mockPubSubClient);
 
     // topic-2 should also be rate limited now
     expect(mockUnsubscribe).toHaveBeenCalledTimes(2);
@@ -125,7 +125,7 @@ describe("withRateLimiter", () => {
 
     // Exceed rate limit
     for (let i = 0; i < 4; i++) {
-      rateLimitedCallback("test-topic", { data: i }, null);
+      rateLimitedCallback("test-topic", { data: i }, null, mockPubSubClient);
     }
 
     const callsBeforeAdvance = mockCallback.mock.calls.length;
@@ -136,7 +136,7 @@ describe("withRateLimiter", () => {
 
     // Try to send more messages - they should be blocked
     for (let i = 0; i < 5; i++) {
-      rateLimitedCallback("test-topic", { data: i }, null);
+      rateLimitedCallback("test-topic", { data: i }, null, mockPubSubClient);
     }
 
     // No new messages should be processed
@@ -155,7 +155,7 @@ describe("withRateLimiter", () => {
 
     // Send 3 messages (at limit)
     for (let i = 0; i < 3; i++) {
-      rateLimitedCallback("test-topic", { data: i }, null);
+      rateLimitedCallback("test-topic", { data: i }, null, mockPubSubClient);
     }
 
     expect(mockCallback).toHaveBeenCalledTimes(3);
@@ -165,7 +165,7 @@ describe("withRateLimiter", () => {
 
     // Should be able to send 3 more messages
     for (let i = 0; i < 3; i++) {
-      rateLimitedCallback("test-topic", { data: i + 100 }, null);
+      rateLimitedCallback("test-topic", { data: i + 100 }, null, mockPubSubClient);
     }
 
     expect(mockCallback).toHaveBeenCalledTimes(6);
@@ -186,7 +186,7 @@ describe("withRateLimiter", () => {
 
     // Should not throw, just pass the error through
     expect(() => {
-      rateLimitedCallback("test-topic", { data: 1 }, null);
+      rateLimitedCallback("test-topic", { data: 1 }, null, mockPubSubClient);
     }).toThrow("Callback error");
 
     expect(mockCallback).toHaveBeenCalledTimes(1);
@@ -201,9 +201,9 @@ describe("withRateLimiter", () => {
     });
 
     const errorMessage = "Test error";
-    rateLimitedCallback("test-topic", null, errorMessage);
+    rateLimitedCallback("test-topic", null, errorMessage, mockPubSubClient);
 
-    expect(mockCallback).toHaveBeenCalledWith("test-topic", null, errorMessage);
+    expect(mockCallback).toHaveBeenCalledWith("test-topic", null, errorMessage, mockPubSubClient);
   });
 
   it("should handle unsubscribe failures gracefully", async () => {
@@ -218,7 +218,7 @@ describe("withRateLimiter", () => {
 
     // Exceed rate limit
     for (let i = 0; i < 4; i++) {
-      rateLimitedCallback("test-topic", { data: i }, null);
+      rateLimitedCallback("test-topic", { data: i }, null, mockPubSubClient);
     }
 
     // Should still attempt to unsubscribe
@@ -228,7 +228,7 @@ describe("withRateLimiter", () => {
     await jest.runAllTimersAsync();
 
     // Topic should still be blocked even if unsubscribe failed
-    rateLimitedCallback("test-topic", { data: 999 }, null);
+    rateLimitedCallback("test-topic", { data: 999 }, null, mockPubSubClient);
     expect(mockCallback).toHaveBeenCalledTimes(2); // Only the first 2 (at limit), 3rd triggers rate limit
   });
 
@@ -241,12 +241,12 @@ describe("withRateLimiter", () => {
     });
 
     // First message should pass
-    rateLimitedCallback("test-topic", { data: 1 }, null);
+    rateLimitedCallback("test-topic", { data: 1 }, null, mockPubSubClient);
     expect(mockCallback).toHaveBeenCalledTimes(1);
 
     // Second message should trigger rate limit
-    rateLimitedCallback("test-topic", { data: 2 }, null);
-    rateLimitedCallback("test-topic", { data: 3 }, null);
+    rateLimitedCallback("test-topic", { data: 2 }, null, mockPubSubClient);
+    rateLimitedCallback("test-topic", { data: 3 }, null, mockPubSubClient);
 
     expect(mockCallback).toHaveBeenCalledTimes(1);
     expect(mockUnsubscribe).toHaveBeenCalledTimes(1);
@@ -262,15 +262,15 @@ describe("withRateLimiter", () => {
 
     // Send 1000 messages (at limit)
     for (let i = 0; i < 1000; i++) {
-      rateLimitedCallback("test-topic", { data: i }, null);
+      rateLimitedCallback("test-topic", { data: i }, null, mockPubSubClient);
     }
 
     expect(mockCallback).toHaveBeenCalledTimes(1000);
     expect(mockUnsubscribe).not.toHaveBeenCalled();
 
     // One more should trigger rate limit
-    rateLimitedCallback("test-topic", { data: 1000 }, null);
-    rateLimitedCallback("test-topic", { data: 1001 }, null);
+    rateLimitedCallback("test-topic", { data: 1000 }, null, mockPubSubClient);
+    rateLimitedCallback("test-topic", { data: 1001 }, null, mockPubSubClient);
 
     expect(mockCallback).toHaveBeenCalledTimes(1000);
     expect(mockUnsubscribe).toHaveBeenCalledTimes(1);
@@ -288,7 +288,7 @@ describe("withRateLimiter", () => {
 
     // Exceed rate limit
     for (let i = 0; i < 53; i++) {
-      rateLimitedCallback("my-special-topic", { data: i }, null);
+      rateLimitedCallback("my-special-topic", { data: i }, null, mockPubSubClient);
     }
 
     expect(logMonitoringSpy).toHaveBeenCalledWith(

@@ -1,7 +1,6 @@
 import { LogMonitoring, LogMonitoringType } from "@redstone-finance/internal-utils";
 import { loggerFactory } from "@redstone-finance/utils";
-import type { SubscribeCallback } from "../Mqtt5Client";
-import type { PubSubClient } from "../PubSubClient";
+import type { PubSubClient, SubscribeCallback } from "../PubSubClient";
 import { RateLimitsCircuitBreaker } from "../RateLimitsCircuitBreaker";
 
 const logger = loggerFactory("withRateLimiter");
@@ -53,7 +52,12 @@ export function withRateLimiter({
   const rateLimiters = new Map<string, RateLimitsCircuitBreaker>();
   const rateLimitedTopics = new Set<string>();
 
-  return (topicName: string, messagePayload: unknown, error: string | null) => {
+  return (
+    topicName: string,
+    messagePayload: unknown,
+    error: string | null,
+    client: PubSubClient
+  ) => {
     if (rateLimitedTopics.has(topicName)) {
       return;
     }
@@ -89,6 +93,6 @@ export function withRateLimiter({
       return;
     }
 
-    return callback(topicName, messagePayload, error);
+    return callback(topicName, messagePayload, error, client);
   };
 }
