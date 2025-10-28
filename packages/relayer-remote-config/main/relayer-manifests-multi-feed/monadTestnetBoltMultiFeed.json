@@ -1,0 +1,33 @@
+{
+  "chain": {
+    "name": "monadTestnet",
+    "id": 10143
+  },
+  "updateTriggers": {
+    "timeSinceLastUpdateInMilliseconds": 0
+  },
+  "adapterContract": "0x98DC6E90D4c2f212ed9d124aD2aFBa4833268633",
+  "adapterContractType": "multi-feed",
+  "dataServiceId": "redstone-primary-demo",
+  "priceFeeds": {
+    "ETH": {
+      "priceFeedAddress": "0xb9D0073aCb296719C26a8BF156e4b599174fe1d5"
+    },
+    "BTC": {
+      "priceFeedAddress": "0xE23eCA12D7D2ED3829499556F6dCE06642AFd990"
+    },
+    "USDC": {
+      "priceFeedAddress": "0x31a36CdF4465ba61ce78F5CDbA26FDF8ec361803"
+    },
+    "USDT": {
+      "priceFeedAddress": "0xe8D9FbC10e00ecc9f0694617075fDAF657a76FB2"
+    }
+  },
+  "authorizedSigners": [
+    "0xdE13FdEE7a9B483129a81794d02FCB4021069f0C",
+    "0xad05Ce43E0bCD11345f08a28995951DEc30D5226",
+    "0x21F05763188246E9F1FdAe3Bb67465a1E81b9f21",
+    "0x3F12DE3492D044FeB08a88b402455026B0f1ae04",
+    "0x5451dB9e574C3a9f9C0DA324E498093AC185169A"
+  ]
+}
