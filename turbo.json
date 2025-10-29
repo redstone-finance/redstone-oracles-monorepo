@@ -27,6 +27,10 @@
       "inputs": ["./**.{js,ts}", "$TURBO_ROOT$/eslint.config.ts"],
       "dependsOn": ["setup-dev"]
     },
+    "lint:fix": {
+      "cache": false,
+      "dependsOn": ["setup-dev"]
+    },
     "test": {
       "outputs": ["coverage/**"],
       "dependsOn": ["setup-dev"],
