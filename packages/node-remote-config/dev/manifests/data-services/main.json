@@ -8302,6 +8302,13 @@
       ],
       "denomination": "USDC",
       "rateFeed": true
+    },
+    "sYUSD_FUNDAMENTAL": {
+      "source": [
+        "ethereum-evm-fetcher-aegis"
+      ],
+      "denomination": "YUSD",
+      "rateFeed": true
     }
   }
 }
