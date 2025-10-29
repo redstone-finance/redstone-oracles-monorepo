@@ -263,7 +263,6 @@
     "TSLA": {
       "source": [],
       "denomination": "USD",
-      "broadcasters": [],
       "rateFeed": false
     },
     "HL_MARK_PX_stocks:TSLA": {
