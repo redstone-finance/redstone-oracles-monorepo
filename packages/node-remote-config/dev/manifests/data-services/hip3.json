@@ -207,7 +207,6 @@
         "twelve-data-deferred"
       ],
       "denomination": "USD",
-      "broadcasters": [],
       "rateFeed": false
     },
     "HL_MARK_PX_stocks:TSLA": {
