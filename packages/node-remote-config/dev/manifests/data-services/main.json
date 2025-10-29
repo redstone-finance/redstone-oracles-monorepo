@@ -2086,7 +2086,7 @@
       "rateFeed": false
     },
     "TRY": {
-      "source": ["ecb", "twelve-data"],
+      "source": ["ecb", "twelve-data", "financialmodelingprep", "finhub-usd-reversed"],
       "denomination": "USD",
       "rateFeed": false
     },
