@@ -2375,7 +2375,9 @@
     "TRY": {
       "source": [
         "ecb",
-        "twelve-data"
+        "twelve-data",
+        "financialmodelingprep",
+        "finhub-usd-reversed"
       ],
       "denomination": "USD",
       "rateFeed": false
