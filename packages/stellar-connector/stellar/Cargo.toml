@@ -7,9 +7,9 @@ common = { path = "common" }
 
 hex = "0.4.3"
 hex-literal = { version = "1.0.0" }
-redstone = { git = "https://github.com/redstone-finance/rust-sdk", tag = "3.0.0-pre5", default-features = false }
-redstone-testing = { git = "https://github.com/redstone-finance/rust-sdk", tag = "redstone-testing-v0.3.3" }
-soroban-sdk = "23.0.2"
+redstone = { git = "https://github.com/redstone-finance/rust-sdk", tag = "3.0.0", default-features = false }
+redstone-testing = { git = "https://github.com/redstone-finance/rust-sdk", tag = "redstone-testing-v0.3.4" }
+soroban-sdk = "23.0.3"
 
 [profile.release]
 codegen-units = 1
