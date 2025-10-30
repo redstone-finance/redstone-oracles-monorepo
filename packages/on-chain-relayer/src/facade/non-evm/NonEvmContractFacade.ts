@@ -25,9 +25,9 @@ async function getContractDataFromExtendedPricesContractAdapter(
   feedIds: string[]
 ) {
   const [timestamp, latestUpdateBlockTimestamp, prices] = await Promise.all([
-    await adapter.readTimestampFromContract(),
-    await adapter.readLatestUpdateBlockTimestamp(),
-    await adapter.readPricesFromContract(
+    adapter.readTimestampFromContract(),
+    adapter.readLatestUpdateBlockTimestamp(),
+    adapter.readPricesFromContract(
       new ContractParamsProvider({
         dataPackagesIds: feedIds,
       } as unknown as DataPackagesRequestParams) //TODO: [LK] change readPricesFromContract to reading only with (feedIds: string[])
