@@ -30,7 +30,8 @@ describe.skip("E2E tests", () => {
   let priceFeedAdapter: PriceFeedCasperContractAdapter;
 
   beforeAll(async () => {
-    const { config } = await import("./config");
+    const configPath = "./config" as const;
+    const { config } = (await import(configPath)) as typeof import("./config");
     connection = await makeCasperConnection(config);
 
     pricesConnector = new PriceAdapterCasperContractConnector(connection, ADAPTER_ADDRESS);
