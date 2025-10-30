@@ -30,10 +30,7 @@ const dataPackages = await requestDataPackages({
   // (optional, default: no filter) filter out old packages
   maxTimestampDeviationMS: 60 * 1000,
   // (optional, default: no filter) accept packages only from specific signers, by default signatures are not verified. RedStone gateway won't return packages not signed by RedStone nodes, but you may still want to use this filter if you use your own gateway or want higher level of security (e.g. stay immune to man-in-the-middle attacks)
-  authorizedSigners: getSignersForDataServiceId(
-    getOracleRegistryStateSync(),
-    "redstone-primary-prod"
-  ),
+  authorizedSigners: getSignersForDataServiceId("redstone-primary-prod"),
   // (optional, default: false) do not throw error in case of missing or filtered-out token
   ignoreMissingFeed: true,
 });
@@ -49,9 +46,7 @@ import { getSignersForDataServiceId } from "@redstone-finance/sdk";
 
 // well-known RedStone primary node addresses
 // you can pass this list to requestDataPackages method above to perform validation automatically
-const redstonePrimaryNodesAddresses = getSignersForDataServiceId(
-  "redstone-primary-prod"
-);
+const redstonePrimaryNodesAddresses = getSignersForDataServiceId("redstone-primary-prod");
 
 const signerAddress = recoverSignerAddress(dataPackage);
 if (redstonePrimaryNodesAddresses.includes(signerAddress)) {
