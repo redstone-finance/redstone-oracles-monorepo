@@ -38,7 +38,7 @@ export interface PubSubClient {
   unsubscribe(topics: string[]): Promise<void>;
 
   /**
-   * MUST return unique name across application (e.g. hostame)
+   * MUST return unique name across application (e.g. hostname)
    */
   getUniqueName(): string;
 
