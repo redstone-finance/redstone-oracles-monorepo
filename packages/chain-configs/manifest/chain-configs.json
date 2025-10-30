@@ -1204,6 +1204,7 @@
       "publicRpcUrls": [
         "https://rpc.hyperliquid.xyz/evm",
         "https://hyperliquid.drpc.org",
+        "https://rpc.hyperlend.finance",
         "https://rpc.hypurrscan.io"
       ],
       "avgBlockTimeMs": 2000,
