@@ -1,4 +1,4 @@
-import axios, { Axios, AxiosResponse, RawAxiosRequestHeaders } from "axios";
+import axios, { AxiosResponse, RawAxiosRequestHeaders, type AxiosInstance } from "axios";
 import { retry, RetryConfig } from "./retry";
 
 export type AxiosWithRetriesConfig = {
@@ -21,7 +21,7 @@ async function axiosRequestWithRetries<T>(
   method: AxiosMethod,
   url: string,
   config: AxiosWithRetriesConfig,
-  axiosInstance: Axios,
+  axiosInstance: AxiosInstance,
   data?: unknown
 ): Promise<AxiosResponse<T>> {
   const hasBody = !METHODS_WITHOUT_BODY.includes(method);
@@ -44,7 +44,7 @@ async function axiosRequestWithRetries<T>(
 export async function axiosGetWithRetries<T>(
   url: string,
   config: AxiosWithRetriesConfig,
-  axiosInstance: Axios = axios
+  axiosInstance: AxiosInstance = axios
 ): Promise<AxiosResponse<T>> {
   return await axiosRequestWithRetries<T>("GET", url, config, axiosInstance);
 }
@@ -53,7 +53,7 @@ export async function axiosPostWithRetries<T>(
   url: string,
   data: unknown,
   config: AxiosWithRetriesConfig,
-  axiosInstance: Axios = axios
+  axiosInstance: AxiosInstance = axios
 ): Promise<AxiosResponse<T>> {
   return await axiosRequestWithRetries<T>("POST", url, config, axiosInstance, data);
 }
@@ -62,7 +62,7 @@ export async function axiosPutWithRetries<T>(
   url: string,
   data: unknown,
   config: AxiosWithRetriesConfig,
-  axiosInstance: Axios = axios
+  axiosInstance: AxiosInstance = axios
 ): Promise<AxiosResponse<T>> {
   return await axiosRequestWithRetries<T>("PUT", url, config, axiosInstance, data);
 }
