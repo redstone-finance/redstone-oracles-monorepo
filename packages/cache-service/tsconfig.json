@@ -1,4 +1,9 @@
 {
   "extends": "../../tsconfig-common.json",
-  "include": ["**/*", ".jest/*"]
+  "include": ["**/*", ".jest/*"],
+  "compilerOptions": {
+    "paths": {
+      "streamr-client": ["../../node_modules/streamr-client/types/src/index.d.ts"]
+    }
+  }
 }
