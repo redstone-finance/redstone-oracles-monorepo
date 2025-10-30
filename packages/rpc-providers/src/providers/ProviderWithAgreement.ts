@@ -11,6 +11,7 @@ import {
 import { BigNumber, providers, utils } from "ethers";
 import _ from "lodash";
 import { convertBlockTagToNumber, getProviderNetworkInfo } from "../common";
+import { ProviderExecutor, ProviderWithIdentifier } from "./ProviderExecutor";
 import { ProviderWithFallback, ProviderWithFallbackConfig } from "./ProviderWithFallback";
 
 const MAX_BLOCK_TIME_AHEAD_HOURS = 72;
@@ -49,11 +50,6 @@ const defaultConfig: ProviderWithAgreementSpecificConfig = {
   requireExplicitBlockTag: true,
 };
 
-type ProviderWithIdentifier = {
-  provider: providers.Provider;
-  identifier: string;
-};
-
 export class ProviderWithAgreement extends ProviderWithFallback {
   readonly agreementConfig: ProviderWithAgreementSpecificConfig;
   readonly curatedRpcList?: CuratedRpcList;
@@ -63,6 +59,7 @@ export class ProviderWithAgreement extends ProviderWithFallback {
     { blockNumber: number; changedAt: number } | undefined
   > = {};
   readonly logger: RedstoneLogger;
+  readonly getBlockNumberProviderExecutor: ProviderExecutor<number>;
 
   constructor(providers: providers.Provider[], config: ProviderWithAgreementConfig = {}) {
     super(providers, config);
@@ -97,6 +94,20 @@ export class ProviderWithAgreement extends ProviderWithFallback {
     }
 
     this.logger = loggerFactory(`ProviderWithAgreement-${this.chainId}`);
+
+    this.getBlockNumberProviderExecutor = new ProviderExecutor<number>(
+      "getBlockNumber",
+      async (providerWithIdentifier) => {
+        // eslint-disable-next-line @typescript-eslint/return-await
+        return this.getProviderBlockNumberPromise(providerWithIdentifier);
+      },
+      this.logger,
+      this.curatedRpcList,
+      (providerWithIdentifier, blockNumber) => {
+        this.assertValidBlockNumber(blockNumber, providerWithIdentifier.identifier);
+        this.updateLastBlockNumber(blockNumber, providerWithIdentifier.identifier);
+      }
+    );
   }
 
   private validateProvidersCount(
@@ -127,9 +138,18 @@ export class ProviderWithAgreement extends ProviderWithFallback {
   }
 
   updateScore(identifier: RpcIdentifier, error: boolean) {
-    if (this.curatedRpcList) {
-      this.curatedRpcList.scoreRpc(identifier, { error });
-    }
+    this.curatedRpcList?.scoreRpc(identifier, { error });
+  }
+
+  private getProviderBlockNumberPromise(providerWithIdentifier: ProviderWithIdentifier) {
+    return RedstoneCommon.timeout(
+      withDebugLog(() => providerWithIdentifier.provider.getBlockNumber(), {
+        description: `rpc=${providerWithIdentifier.identifier} op=getBlockNumber`,
+        logValue: true,
+        logger: this.logger,
+      }),
+      this.agreementConfig.getBlockNumberTimeoutMS
+    );
   }
 
   override async getBlockNumber(): Promise<number> {
@@ -137,16 +157,7 @@ export class ProviderWithAgreement extends ProviderWithFallback {
 
     const blockNumbersResults = await Promise.allSettled(
       healthyProviders.map(async ({ provider, identifier }) => {
-        const blockNumber = await RedstoneCommon.timeout(
-          withDebugLog(() => provider.getBlockNumber(), {
-            description: `rpc=${identifier} op=getBlockNumber`,
-            logValue: true,
-            logger: this.logger,
-          }),
-          this.agreementConfig.getBlockNumberTimeoutMS
-        );
-        this.assertValidBlockNumber(blockNumber, identifier);
-        this.updateLastBlockNumber(identifier, blockNumber);
+        const blockNumber = await this.getBlockNumberProviderExecutor.run({ provider, identifier });
 
         const prevBlockResult = this.lastBlockNumberForProvider[identifier];
         if (prevBlockResult) {
@@ -190,7 +201,7 @@ export class ProviderWithAgreement extends ProviderWithFallback {
     return electedBlockNumber;
   }
 
-  private updateLastBlockNumber(identifier: string, blockNumber: number) {
+  private updateLastBlockNumber(blockNumber: number, identifier: string) {
     this.lastBlockNumberForProvider[identifier] ??= {
       blockNumber,
       changedAt: Date.now(),
@@ -277,7 +288,11 @@ export class ProviderWithAgreement extends ProviderWithFallback {
       { provider, identifier }: ProviderWithIdentifier,
       shouldAbort: () => boolean
     ) => {
-      while (!shouldAbort() && (await provider.getBlockNumber()) < electedBlockNumber) {
+      while (
+        !shouldAbort() &&
+        (await this.getBlockNumberProviderExecutor.run({ provider, identifier })) <
+          electedBlockNumber
+      ) {
         await RedstoneCommon.sleep(500);
       }
       if (shouldAbort()) {
