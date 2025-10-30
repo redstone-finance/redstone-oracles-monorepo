@@ -7365,6 +7365,26 @@
       "denomination": "sUSDe",
       "rateFeed": true
     },
+    "PT_srUSDe_15JAN2026_ETH": {
+      "source": ["evm-fetcher-pendle"],
+      "denomination": "srUSDe",
+      "rateFeed": true
+    },
+    "PT_srUSDe_15JAN2026_ETH-TWAP": {
+      "source": ["twap-local"],
+      "denomination": "srUSDe",
+      "rateFeed": true
+    },
+    "PT_cUSD_29JAN2026_ETH": {
+      "source": ["evm-fetcher-pendle"],
+      "denomination": "cUSD",
+      "rateFeed": true
+    },
+    "PT_cUSD_29JAN2026_ETH-TWAP": {
+      "source": ["twap-local"],
+      "denomination": "cUSD",
+      "rateFeed": true
+    },
     "PT_sUSDe_15JAN2026_PLSM": {
       "source": ["evm-fetcher-pendle"],
       "denomination": "sUSDe",
@@ -7383,6 +7403,16 @@
     "PT_kHYPE_13NOV2025_HL-TWAP": {
       "source": ["twap-local"],
       "denomination": "kHYPE",
+      "rateFeed": true
+    },
+    "PT_iBGT_25DEC2025_BERA": {
+      "source": ["evm-fetcher-pendle"],
+      "denomination": "iBGT",
+      "rateFeed": true
+    },
+    "PT_iBGT_25DEC2025_BERA-TWAP": {
+      "source": ["twap-local"],
+      "denomination": "iBGT",
       "rateFeed": true
     },
     "USDT0": {
