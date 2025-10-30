@@ -209,7 +209,12 @@
       "denomination": "USD",
       "rateFeed": false
     },
-    "HL_MARK_PX_stocks:TSLA": {
+    "IS_NY_STOCKS_MARKET_OPEN": {
+      "source": ["is-ny-stocks-market-open-deferred"],
+      "denomination": "other",
+      "rateFeed": false
+    },
+    "HL_MARK_PX_flxn:TSLA": {
       "source": ["hyperliquid-testnet-perps-ws-fetcher", "hydromancer-testnet-perps-ws-fetcher"],
       "customWeightsForWeightedMedian": {
         "hyperliquid-testnet-perps-ws-fetcher": 10,
@@ -219,7 +224,7 @@
       "denomination": "USD",
       "rateFeed": false
     },
-    "HL_ORACLE_PX_stocks:TSLA": {
+    "HL_ORACLE_PX_flxn:TSLA": {
       "source": ["hyperliquid-testnet-perps-ws-fetcher", "hydromancer-testnet-perps-ws-fetcher"],
       "customWeightsForWeightedMedian": {
         "hyperliquid-testnet-perps-ws-fetcher": 10,
@@ -229,31 +234,31 @@
       "denomination": "USD",
       "rateFeed": false
     },
-    "stocks:TSLA_MARK_0": {
+    "flxn:TSLA_MARK_0": {
       "source": ["hyperliquid-hip3-felix-proposer-fetcher"],
       "broadcasters": ["hyperliquid-hip3"],
       "denomination": "USD",
       "rateFeed": false
     },
-    "stocks:TSLA_MARK_1": {
+    "flxn:TSLA_MARK_1": {
       "source": ["hyperliquid-hip3-felix-proposer-fetcher"],
       "broadcasters": ["hyperliquid-hip3"],
       "denomination": "USD",
       "rateFeed": false
     },
-    "stocks:TSLA_EXT": {
+    "flxn:TSLA_EXT": {
       "source": ["hyperliquid-hip3-felix-proposer-fetcher"],
       "broadcasters": ["hyperliquid-hip3"],
       "denomination": "USD",
       "rateFeed": false
     },
-    "stocks:TSLA": {
+    "flxn:TSLA": {
       "source": ["hyperliquid-hip3-felix-proposer-fetcher"],
       "broadcasters": ["hyperliquid-hip3"],
       "denomination": "USD",
       "rateFeed": false
     },
-    "HL_OPEN_INTEREST_stocks:TSLA": {
+    "HL_OPEN_INTEREST_flxn:TSLA": {
       "source": ["hyperliquid-testnet-perps-ws-fetcher"],
       "broadcasters": [],
       "denomination": "USD",
@@ -264,11 +269,6 @@
           "maxDelayMilliseconds": 1000
         }
       }
-    },
-    "IS_NY_STOCKS_MARKET_OPEN": {
-      "source": ["is-ny-stocks-market-open-deferred"],
-      "denomination": "other",
-      "rateFeed": false
     }
   }
 }
