@@ -34,8 +34,8 @@ export class SolanaBlockchainService extends NonEvmBlockchainService {
 
     try {
       const [fromSlotSignatures, toSlotSignatures] = await Promise.all([
-        await this.connection.getBlockSignatures(fromSlot),
-        await this.connection.getBlockSignatures(toSlot),
+        this.connection.getBlockSignatures(fromSlot),
+        this.connection.getBlockSignatures(toSlot),
       ]);
       fromSlotSignature = fromSlotSignatures.signatures[0];
       toSlotSignature = toSlotSignatures.signatures[toSlotSignatures.signatures.length - 1];
