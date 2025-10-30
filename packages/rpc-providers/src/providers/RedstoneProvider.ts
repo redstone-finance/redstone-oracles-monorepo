@@ -624,7 +624,7 @@ export class RedstoneEthers5Provider implements ethers.providers.Provider {
 
     if (typeof resolved === "string" && resolved.startsWith("0x") && resolved.length === 66) {
       const [result, currentBlockNumber] = await Promise.all([
-        await this.rpc.send<EthereumBlock>("eth_getBlockByHash", [resolved, withTransactions]),
+        this.rpc.send<EthereumBlock>("eth_getBlockByHash", [resolved, withTransactions]),
         this.getBlockNumber(),
       ]);
       if (!RedstoneCommon.isDefined(result)) {
@@ -639,7 +639,7 @@ export class RedstoneEthers5Provider implements ethers.providers.Provider {
       // It's a block tag or number
       const blockNumber = await resolveBlockTag(blockHashOrBlockTag);
       const [result, currentBlockNumber] = await Promise.all([
-        await this.rpc.send<EthereumBlock>("eth_getBlockByNumber", [blockNumber, withTransactions]),
+        this.rpc.send<EthereumBlock>("eth_getBlockByNumber", [blockNumber, withTransactions]),
         this.getBlockNumber(),
       ]);
 
