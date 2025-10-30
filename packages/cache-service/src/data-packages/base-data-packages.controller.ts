@@ -12,7 +12,7 @@ import {
   ValidationPipe,
 } from "@nestjs/common";
 import { ApiKeysUsageTracker } from "@redstone-finance/internal-utils";
-import { Request } from "express";
+import type { Request } from "express";
 import config from "../config";
 import { BulkPostRequestBody, DataPackagesResponse } from "./data-packages.interface";
 import { DataPackagesService } from "./data-packages.service";
