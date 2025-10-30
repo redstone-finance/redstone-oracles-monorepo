@@ -446,7 +446,7 @@ export class RedstoneEthers5Provider implements ethers.providers.Provider {
       throw new Ethers5LikeError(
         ethers.errors.UNEXPECTED_ARGUMENT,
         this.url,
-        "estitmateGas",
+        "estimateGas",
         "Missing 'to' field in call request"
       );
     }
