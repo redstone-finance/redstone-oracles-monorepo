@@ -1,4 +1,4 @@
-import { Ownership, PackageDeployer, Wallet } from "@atlantis-l/radix-tool";
+import { Ownership, PackageDeployer, Wallet, type Result } from "@atlantis-l/radix-tool";
 import { RadixClient } from "../src";
 
 export class RadixPackageDeployer extends RadixClient {
@@ -12,7 +12,7 @@ export class RadixPackageDeployer extends RadixClient {
     const deployer = new PackageDeployer(this.networkId, wallet);
     deployer.feeLock = `${feeLock}`;
 
-    const result = await deployer.deployWithOwner(
+    const result = (await deployer.deployWithOwner(
       wasm,
       rpd,
       Ownership.None,
@@ -20,7 +20,7 @@ export class RadixPackageDeployer extends RadixClient {
       true,
       undefined,
       await this.getCurrentEpochNumber()
-    );
+    )) as Result;
 
     console.log(result);
 

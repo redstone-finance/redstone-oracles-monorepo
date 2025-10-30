@@ -10,8 +10,8 @@ import {
   Transaction,
   TransactionBuilder,
   xdr,
+  type Horizon,
 } from "@stellar/stellar-sdk";
-import { Api } from "@stellar/stellar-sdk/lib/minimal/rpc/api";
 import _ from "lodash";
 import { getLedgerCloseDate } from "../utils";
 import * as XdrUtils from "../XdrUtils";
@@ -255,10 +255,8 @@ export class StellarClient {
     let hasMoreEvents = false;
 
     do {
-      console.log(
-        `Getting events with ${currentCursor ? currentCursor : `limit: ${FETCHING_LIMIT}`}`
-      );
-      const filters: Api.EventFilter[] = [
+      console.log(`Getting events with ${currentCursor ?? `limit: ${FETCHING_LIMIT}`}`);
+      const filters: rpc.Api.EventFilter[] = [
         {
           type: "contract",
           topics: [[xdr.ScVal.scvSymbol(topic).toXDR("base64")]],
@@ -318,7 +316,7 @@ export class StellarClient {
 
   // Horizon
 
-  async getNetworkStats(force = false) {
+  async getNetworkStats(force = false): Promise<Horizon.HorizonApi.FeeStatsResponse | undefined> {
     return await this.horizon?.getNetworkStats(force);
   }
 }
