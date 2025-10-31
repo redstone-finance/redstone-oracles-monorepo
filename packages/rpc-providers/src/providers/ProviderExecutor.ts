@@ -22,7 +22,7 @@ export class ProviderExecutor<T> {
     private readonly opCreator: (providerWithIdentifier: ProviderWithIdentifier) => Promise<T>,
     private readonly logger: RedstoneLogger,
     private readonly curatedRpcList?: CuratedRpcList,
-    private readonly valueConsumer?: (
+    private readonly valueValidator?: (
       providerWithIdentifier: ProviderWithIdentifier,
       value: T
     ) => void
@@ -56,7 +56,7 @@ export class ProviderExecutor<T> {
     try {
       const blockNumber = await this.runningPromises[identifier];
 
-      this.valueConsumer?.(providerWithIdentifier, blockNumber);
+      this.valueValidator?.(providerWithIdentifier, blockNumber);
       this.updateScore(identifier, false);
 
       this.logger.trace(`Did finish op=${this.opName} for ${identifier}`, {

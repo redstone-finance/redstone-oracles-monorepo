@@ -99,10 +99,7 @@ export class ProviderWithAgreement extends ProviderWithFallback {
 
     this.getBlockNumberProviderExecutor = new ProviderExecutor<number>(
       "getBlockNumber",
-      async (providerWithIdentifier) => {
-        // eslint-disable-next-line @typescript-eslint/return-await
-        return this.getProviderBlockNumberPromise(providerWithIdentifier);
-      },
+      this.getProviderBlockNumberPromise.bind(this),
       this.logger,
       this.curatedRpcList,
       (providerWithIdentifier, blockNumber) => {
@@ -144,14 +141,11 @@ export class ProviderWithAgreement extends ProviderWithFallback {
   }
 
   private getProviderBlockNumberPromise(providerWithIdentifier: ProviderWithIdentifier) {
-    return RedstoneCommon.timeout(
-      withDebugLog(() => providerWithIdentifier.provider.getBlockNumber(), {
-        description: `rpc=${providerWithIdentifier.identifier} op=getBlockNumber`,
-        logValue: true,
-        logger: this.logger,
-      }),
-      this.agreementConfig.getBlockNumberTimeoutMS
-    );
+    return withDebugLog(() => providerWithIdentifier.provider.getBlockNumber(), {
+      description: `rpc=${providerWithIdentifier.identifier} op=getBlockNumber`,
+      logValue: true,
+      logger: this.logger,
+    });
   }
 
   override async getBlockNumber(): Promise<number> {
@@ -159,7 +153,10 @@ export class ProviderWithAgreement extends ProviderWithFallback {
 
     const blockNumbersResults = await Promise.allSettled(
       healthyProviders.map(async ({ provider, identifier }) => {
-        const blockNumber = await this.getBlockNumberProviderExecutor.run({ provider, identifier });
+        const blockNumber = await RedstoneCommon.timeout(
+          this.getBlockNumberProviderExecutor.run({ provider, identifier }),
+          this.agreementConfig.getBlockNumberTimeoutMS
+        );
 
         const prevBlockResult = this.lastBlockNumberForProvider[identifier];
         if (prevBlockResult) {
