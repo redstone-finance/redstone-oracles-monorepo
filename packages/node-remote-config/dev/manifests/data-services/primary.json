@@ -3625,6 +3625,13 @@
       ],
       "denomination": "YUSD",
       "rateFeed": true
+    },
+    "wNLP_FUNDAMENTAL": {
+      "source": [
+        "hyperevm-evm-fetcher-hyperbeat-wnlp"
+      ],
+      "denomination": "USD",
+      "rateFeed": true
     }
   },
   "multiPointPackages": {
