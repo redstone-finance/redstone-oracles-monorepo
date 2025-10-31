@@ -3046,6 +3046,11 @@
       "denomination": "USD",
       "rateFeed": true
     },
+    "STAC_FUNDAMENTAL": {
+      "source": ["securitize-api"],
+      "denomination": "USD",
+      "rateFeed": true
+    },
     "BUIDL_FUNDAMENTAL_V2": {
       "source": ["securitize-tsso"],
       "denomination": "USD",
@@ -3177,6 +3182,11 @@
       "rateFeed": true
     },
     "MI4_MANTLE_FUNDAMENTAL_V2": {
+      "source": ["securitize-tsso"],
+      "denomination": "USD",
+      "rateFeed": true
+    },
+    "STAC_FUNDAMENTAL_V2": {
       "source": ["securitize-tsso"],
       "denomination": "USD",
       "rateFeed": true
