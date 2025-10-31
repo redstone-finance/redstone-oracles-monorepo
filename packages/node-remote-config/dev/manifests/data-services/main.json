@@ -2774,6 +2774,11 @@
       "denomination": "USD",
       "rateFeed": false
     },
+    "FGNX": {
+      "source": [],
+      "denomination": "USD",
+      "rateFeed": false
+    },
     "META": {
       "source": [],
       "denomination": "USD",
