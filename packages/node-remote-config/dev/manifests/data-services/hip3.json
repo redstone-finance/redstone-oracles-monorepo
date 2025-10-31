@@ -204,7 +204,7 @@
         "databento-tsla",
         "financialmodelingprep-deferred",
         "polygon-deferred",
-        "twelve-data-deferred"
+        "twelve-data-stocks-deferred"
       ],
       "denomination": "USD",
       "rateFeed": false

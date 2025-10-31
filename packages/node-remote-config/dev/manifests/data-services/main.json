@@ -2479,7 +2479,7 @@
         "databento-tsla",
         "financialmodelingprep",
         "polygon",
-        "twelve-data"
+        "twelve-data-stocks"
       ],
       "denomination": "USD",
       "rateFeed": false
@@ -2490,13 +2490,13 @@
         "databento-nvda",
         "financialmodelingprep",
         "polygon",
-        "twelve-data"
+        "twelve-data-stocks"
       ],
       "denomination": "USD",
       "rateFeed": false
     },
     "FGNX": {
-      "source": ["databento-fgnx", "financialmodelingprep", "polygon", "twelve-data"],
+      "source": ["databento-fgnx", "financialmodelingprep", "polygon", "twelve-data-stocks"],
       "denomination": "USD",
       "rateFeed": false
     },
