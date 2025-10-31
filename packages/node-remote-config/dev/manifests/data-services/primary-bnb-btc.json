@@ -31,8 +31,7 @@
           "maxPercent": 5,
           "maxDelayMilliseconds": 120000
         }
-      },
-      "skipBroadcasting": true
+      }
     },
     "USDT": {
       "source": [
@@ -48,8 +47,7 @@
           "maxPercent": 5,
           "maxDelayMilliseconds": 120000
         }
-      },
-      "skipBroadcasting": true
+      }
     },
     "EUR": {
       "source": [
