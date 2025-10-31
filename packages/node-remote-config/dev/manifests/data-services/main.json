@@ -7687,6 +7687,11 @@
       "source": ["ethereum-evm-fetcher-aegis"],
       "denomination": "YUSD",
       "rateFeed": true
+    },
+    "wNLP_FUNDAMENTAL": {
+      "source": ["hyperevm-evm-fetcher-hyperbeat-wnlp"],
+      "denomination": "USD",
+      "rateFeed": true
     }
   }
 }
