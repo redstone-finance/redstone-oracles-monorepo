@@ -31,6 +31,8 @@ export type ProviderWithAgreementConfig = Partial<
   ProviderWithAgreementSpecificConfig & ProviderWithFallbackConfig
 >;
 
+type BlockNumberOrLatest = number | "latest";
+
 const DEFAULT_ELECT_BLOCK_FN = (blockNumbers: number[]): number => {
   blockNumbers.sort((a, b) => a - b);
   const mid = Math.floor(blockNumbers.length / 2);
@@ -224,7 +226,7 @@ export class ProviderWithAgreement extends ProviderWithFallback {
       "When using providerWithAgreement, blockTag has to be passed explicitly"
     );
     blockTag ??= await this.getBlockNumber();
-    const electedBlockTag = utils.hexlify(blockTag);
+    const electedBlockTag = blockTag !== "latest" ? utils.hexlify(blockTag) : blockTag;
 
     const callResult = RedstoneCommon.timeout(
       this.executeCallWithAgreement(transaction, electedBlockTag),
@@ -282,7 +284,8 @@ export class ProviderWithAgreement extends ProviderWithFallback {
     transaction: Deferrable<TransactionRequest>,
     electedBlockTag: BlockTag
   ): Promise<string> {
-    const electedBlockNumber = convertBlockTagToNumber(electedBlockTag);
+    const electedBlockNumber =
+      electedBlockTag !== "latest" ? convertBlockTagToNumber(electedBlockTag) : electedBlockTag;
 
     const syncThenCall = async (
       { provider, identifier }: ProviderWithIdentifier,
@@ -290,6 +293,7 @@ export class ProviderWithAgreement extends ProviderWithFallback {
     ) => {
       while (
         !shouldAbort() &&
+        electedBlockNumber !== "latest" &&
         (await this.getBlockNumberProviderExecutor.run({ provider, identifier })) <
           electedBlockNumber
       ) {
@@ -310,7 +314,7 @@ export class ProviderWithAgreement extends ProviderWithFallback {
   private executeWithAgreement(
     operation: (provider: ProviderWithIdentifier, shouldAbort: () => boolean) => Promise<string>,
     operationName: string,
-    electedBlockNumber: number
+    electedBlockNumber: BlockNumberOrLatest
   ) {
     return new Promise<string>((resolve, reject) => {
       const errors: Error[] = [];
@@ -386,7 +390,7 @@ export class ProviderWithAgreement extends ProviderWithFallback {
   private createAgreementError(
     errors: Error[],
     operationName: string,
-    electedBlockNumber: number,
+    electedBlockNumber: BlockNumberOrLatest,
     healthyProviders: readonly ProviderWithIdentifier[],
     results: Map<string, number>
   ): AggregateError {

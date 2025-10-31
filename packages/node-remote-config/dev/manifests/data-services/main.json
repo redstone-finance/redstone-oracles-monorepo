@@ -7724,6 +7724,11 @@
       ],
       "denomination": "USD",
       "rateFeed": false
+    },
+    "vHYPE_FUNDAMENTAL": {
+      "source": ["hyperevm-evm-fetcher-ventuals"],
+      "denomination": "HYPE",
+      "rateFeed": true
     }
   }
 }
