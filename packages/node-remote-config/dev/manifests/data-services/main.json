@@ -2476,10 +2476,10 @@
     "TSLA": {
       "source": [
         "alltick-stocks-api",
-        "financialmodelingprep",
-        "twelve-data",
         "databento-tsla",
-        "polygon"
+        "financialmodelingprep",
+        "polygon",
+        "twelve-data"
       ],
       "denomination": "USD",
       "rateFeed": false
@@ -2487,11 +2487,16 @@
     "NVDA": {
       "source": [
         "alltick-stocks-api",
-        "financialmodelingprep",
-        "twelve-data",
         "databento-nvda",
-        "polygon"
+        "financialmodelingprep",
+        "polygon",
+        "twelve-data"
       ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "FGNX": {
+      "source": ["databento-fgnx", "financialmodelingprep", "polygon", "twelve-data"],
       "denomination": "USD",
       "rateFeed": false
     },
