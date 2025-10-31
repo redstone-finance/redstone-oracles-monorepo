@@ -8360,6 +8360,23 @@
       ],
       "denomination": "USD",
       "rateFeed": true
+    },
+    "OPEN": {
+      "source": [
+        "binance-usdc",
+        "binance-usdt",
+        "bingx-usdt",
+        "bitget-usdt",
+        "bitmart-usdt",
+        "gate-usdt",
+        "kraken-usd",
+        "kucoin-usdt",
+        "lbank-usdt",
+        "mexc-usdt",
+        "pancake-swap-bnb-usdt-100"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
     }
   }
 }
