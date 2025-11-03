@@ -44,15 +44,19 @@ export class PriceAdapterContract {
     );
   }
 
-  async getPriceData(feedId: string, slot?: number): Promise<PriceData> {
+  async getPriceData(feedId: string, slot?: number): Promise<PriceData | undefined> {
     const address = PriceAdapterContract.getPriceDataAccount(this.program.programId, feedId);
 
-    return await this.client.getAccountInfo(
-      address,
-      (accountInfo) => this.parsePriceDataAccountResponse(accountInfo),
-      slot,
-      `getPriceData of ${feedId}`
-    );
+    try {
+      return await this.client.getAccountInfo(
+        address,
+        (accountInfo) => this.parsePriceDataAccountResponse(accountInfo),
+        slot,
+        `getPriceData of ${feedId}`
+      );
+    } catch {
+      return undefined;
+    }
   }
 
   private parsePriceDataAccountResponse(response: AccountInfo<Buffer>): PriceData {
