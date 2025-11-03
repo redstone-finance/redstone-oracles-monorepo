@@ -62,7 +62,7 @@ export class OevMultiAuctionsTxDeliveryMan implements Tx.ITxDeliveryMan {
     const timeout = this.relayerConfig.oevTotalTimeout;
 
     await RedstoneCommon.timeout(
-      Promise.all(auctionPromises),
+      Promise.allSettled(auctionPromises),
       timeout,
       `Updating using OEV auctions didn't succeed in ${timeout} [ms].`
     );
