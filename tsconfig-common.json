@@ -21,7 +21,8 @@
     "skipLibCheck": true,
     "sourceMap": true,
     "strict": true,
-    "target": "ES2022"
+    "target": "es2022",
+    "lib": ["ES2024", "ESNext.Iterator"]
   },
   "ts-node": {
     "files": true

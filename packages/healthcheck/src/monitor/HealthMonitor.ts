@@ -69,7 +69,7 @@ export class HealthMonitor {
   }
 
   private prepareCheckPromises(fireDate: Date) {
-    return Array.from(this.checks.entries()).map(async ([key, healthCheck]) => {
+    return Array.from(this.checks.entries(), async ([key, healthCheck]) => {
       try {
         const { status, errors } = await RedstoneCommon.timeout<HealthCheckResult>(
           healthCheck.check(fireDate),
