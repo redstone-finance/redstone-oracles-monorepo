@@ -59,7 +59,7 @@ export class ContractParamsProvider {
 
   static hexlifyFeedIds(feedIds: string[], allowMissingPrefix?: boolean, padRightSize?: number) {
     return feedIds
-      .map((feed) => hexlify(toUtf8Bytes(feed)), { allowMissingPrefix })
+      .map((feed) => hexlify(toUtf8Bytes(feed), { allowMissingPrefix }))
       .map((value) =>
         padRightSize
           ? value.padEnd(padRightSize * 2 + (value.startsWith("0x") ? 2 : 0), "0")
