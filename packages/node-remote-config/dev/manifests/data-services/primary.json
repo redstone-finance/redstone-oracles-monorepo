@@ -443,7 +443,7 @@
       "rateFeed": false
     },
     "ETHx": {
-      "source": ["balancer-ethereum-wsteth", "curve-ethereum-eth"],
+      "source": ["curve-ethereum-eth", "uniswap-v3-ethereum-wsteth-100"],
       "denomination": "USD",
       "rateFeed": false
     },
