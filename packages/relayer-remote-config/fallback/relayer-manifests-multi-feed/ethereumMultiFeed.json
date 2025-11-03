@@ -360,6 +360,7 @@
         "deviationPercentage": 0.5,
         "timeSinceLastUpdateInMilliseconds": 21600000
       }
-    }
+    },
+    "rswETH_FUNDAMENTAL": {}
   }
 }
