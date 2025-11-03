@@ -541,11 +541,8 @@
         "binance-usdt",
         "bingx-usdt",
         "bitget-usdt",
-        "bitrue-usdt",
         "gate-usdt",
         "kraken-usd",
-        "kucoin-usdt",
-        "okx-usdt",
         "curve-ethereum-weth"
       ],
       "denomination": "USD",

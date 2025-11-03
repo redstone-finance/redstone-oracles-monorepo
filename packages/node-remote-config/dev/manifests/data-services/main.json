@@ -1176,11 +1176,8 @@
         "binance-usdt",
         "bingx-usdt",
         "bitget-usdt",
-        "bitrue-usdt",
         "gate-usdt",
         "kraken-usd",
-        "kucoin-usdt",
-        "okx-usdt",
         "curve-ethereum-weth"
       ],
       "denomination": "USD",
@@ -1253,7 +1250,6 @@
         "bitget-usdt",
         "bitrue-usdt",
         "gate-usdt",
-        "kucoin-usdt",
         "lbank-usdt"
       ],
       "denomination": "USD",
@@ -7250,9 +7246,7 @@
     },
     "TAC": {
       "source": [
-        "bingx-usdt",
         "bitget-usdt",
-        "bitmart-usdt",
         "bybit-usdt",
         "kraken-usd",
         "mexc-usdt",
