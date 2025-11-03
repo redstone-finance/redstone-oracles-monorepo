@@ -19,16 +19,15 @@ describe("withRateLimiter", () => {
       subscribe: jest.fn(),
       unsubscribe: mockUnsubscribe,
       stop: jest.fn(),
-      getUniqueName: jest.fn(),
+      getUniqueName: jest.fn().mockReturnValue("mock-client"),
     };
   });
 
   it("should pass messages through when under rate limit", () => {
     const rateLimitedCallback = withRateLimiter({
       callback: mockCallback,
-      pubSubClient: mockPubSubClient,
-      intervalMs: 1000,
-      maxMessagesPerInterval: 10,
+      topicIntervalMs: 1000,
+      maxMessagesPerTopicInterval: 10,
     });
 
     // Send 5 messages (under limit of 10)
@@ -45,9 +44,8 @@ describe("withRateLimiter", () => {
 
     const rateLimitedCallback = withRateLimiter({
       callback: mockCallback,
-      pubSubClient: mockPubSubClient,
-      intervalMs: 1000,
-      maxMessagesPerInterval: 5,
+      topicIntervalMs: 1000,
+      maxMessagesPerTopicInterval: 5,
     });
 
     // Send 7 messages (exceeds limit of 5)
@@ -64,7 +62,7 @@ describe("withRateLimiter", () => {
 
     // LogMonitoring should be called
     expect(logMonitoringSpy).toHaveBeenCalledWith(
-      LogMonitoringType.MQTT_RATE_LIMITED,
+      LogMonitoringType.PUB_SUB_TOPIC_RATE_LIMITED,
       expect.stringContaining("test-topic"),
       expect.anything()
     );
@@ -75,9 +73,8 @@ describe("withRateLimiter", () => {
   it("should rate limit per topic independently", () => {
     const rateLimitedCallback = withRateLimiter({
       callback: mockCallback,
-      pubSubClient: mockPubSubClient,
-      intervalMs: 1000,
-      maxMessagesPerInterval: 3,
+      topicIntervalMs: 1000,
+      maxMessagesPerTopicInterval: 3,
     });
 
     // Send 3 messages to topic-1 (at limit)
@@ -118,9 +115,8 @@ describe("withRateLimiter", () => {
   it("should permanently block rate-limited topics until restart", () => {
     const rateLimitedCallback = withRateLimiter({
       callback: mockCallback,
-      pubSubClient: mockPubSubClient,
-      intervalMs: 1000,
-      maxMessagesPerInterval: 2,
+      topicIntervalMs: 1000,
+      maxMessagesPerTopicInterval: 2,
     });
 
     // Exceed rate limit
@@ -148,9 +144,8 @@ describe("withRateLimiter", () => {
   it("should reset rate limit after interval expires for non-blocked topics", () => {
     const rateLimitedCallback = withRateLimiter({
       callback: mockCallback,
-      pubSubClient: mockPubSubClient,
-      intervalMs: 1000,
-      maxMessagesPerInterval: 3,
+      topicIntervalMs: 1000,
+      maxMessagesPerTopicInterval: 3,
     });
 
     // Send 3 messages (at limit)
@@ -179,9 +174,8 @@ describe("withRateLimiter", () => {
 
     const rateLimitedCallback = withRateLimiter({
       callback: mockCallback,
-      pubSubClient: mockPubSubClient,
-      intervalMs: 1000,
-      maxMessagesPerInterval: 5,
+      topicIntervalMs: 1000,
+      maxMessagesPerTopicInterval: 5,
     });
 
     // Should not throw, just pass the error through
@@ -195,9 +189,8 @@ describe("withRateLimiter", () => {
   it("should pass error parameter to callback", () => {
     const rateLimitedCallback = withRateLimiter({
       callback: mockCallback,
-      pubSubClient: mockPubSubClient,
-      intervalMs: 1000,
-      maxMessagesPerInterval: 5,
+      topicIntervalMs: 1000,
+      maxMessagesPerTopicInterval: 5,
     });
 
     const errorMessage = "Test error";
@@ -211,9 +204,8 @@ describe("withRateLimiter", () => {
 
     const rateLimitedCallback = withRateLimiter({
       callback: mockCallback,
-      pubSubClient: mockPubSubClient,
-      intervalMs: 1000,
-      maxMessagesPerInterval: 2,
+      topicIntervalMs: 1000,
+      maxMessagesPerTopicInterval: 2,
     });
 
     // Exceed rate limit
@@ -235,9 +227,8 @@ describe("withRateLimiter", () => {
   it("should work with different rate limit configurations", () => {
     const rateLimitedCallback = withRateLimiter({
       callback: mockCallback,
-      pubSubClient: mockPubSubClient,
-      intervalMs: 500,
-      maxMessagesPerInterval: 1,
+      topicIntervalMs: 500,
+      maxMessagesPerTopicInterval: 1,
     });
 
     // First message should pass
@@ -255,9 +246,8 @@ describe("withRateLimiter", () => {
   it("should handle high volume of messages efficiently", () => {
     const rateLimitedCallback = withRateLimiter({
       callback: mockCallback,
-      pubSubClient: mockPubSubClient,
-      intervalMs: 1000,
-      maxMessagesPerInterval: 1000,
+      topicIntervalMs: 1000,
+      maxMessagesPerTopicInterval: 1000,
     });
 
     // Send 1000 messages (at limit)
@@ -281,9 +271,8 @@ describe("withRateLimiter", () => {
 
     const rateLimitedCallback = withRateLimiter({
       callback: mockCallback,
-      pubSubClient: mockPubSubClient,
-      intervalMs: 2000,
-      maxMessagesPerInterval: 50,
+      topicIntervalMs: 2000,
+      maxMessagesPerTopicInterval: 50,
     });
 
     // Exceed rate limit
@@ -292,23 +281,169 @@ describe("withRateLimiter", () => {
     }
 
     expect(logMonitoringSpy).toHaveBeenCalledWith(
-      LogMonitoringType.MQTT_RATE_LIMITED,
+      LogMonitoringType.PUB_SUB_TOPIC_RATE_LIMITED,
       expect.stringContaining("my-special-topic"),
       expect.anything()
     );
 
     expect(logMonitoringSpy).toHaveBeenCalledWith(
-      LogMonitoringType.MQTT_RATE_LIMITED,
+      LogMonitoringType.PUB_SUB_TOPIC_RATE_LIMITED,
       expect.stringContaining("maxMessages=50"),
       expect.anything()
     );
 
     expect(logMonitoringSpy).toHaveBeenCalledWith(
-      LogMonitoringType.MQTT_RATE_LIMITED,
+      LogMonitoringType.PUB_SUB_TOPIC_RATE_LIMITED,
       expect.stringContaining("intervalMs=2000"),
       expect.anything()
     );
 
     logMonitoringSpy.mockRestore();
+  });
+
+  it("should disable entire client when per-client rate limit is exceeded", () => {
+    const mockStop = jest.fn();
+    mockPubSubClient.stop = mockStop;
+    mockPubSubClient.getUniqueName = jest.fn().mockReturnValue("test-client-1");
+
+    const rateLimitedCallback = withRateLimiter({
+      callback: mockCallback,
+      topicIntervalMs: 1000,
+      maxMessagesPerTopicInterval: 100,
+      maxMessagesPerClientInterval: 10,
+      clientIntervalMs: 1000,
+    });
+
+    // Send 11 messages to trigger client rate limit
+    for (let i = 0; i < 11; i++) {
+      rateLimitedCallback("topic-1", { data: i }, null, mockPubSubClient);
+    }
+
+    // First 10 messages should pass through
+    expect(mockCallback).toHaveBeenCalledTimes(10);
+
+    // Client should be stopped due to rate limit
+    expect(mockStop).toHaveBeenCalledTimes(1);
+
+    // Try to send more messages - they should be blocked
+    for (let i = 0; i < 5; i++) {
+      rateLimitedCallback("topic-2", { data: i }, null, mockPubSubClient);
+    }
+
+    // No new messages should be processed
+    expect(mockCallback).toHaveBeenCalledTimes(10);
+  });
+
+  it("should track client rate limiters independently per client", () => {
+    const mockStopClient1 = jest.fn();
+    const mockStopClient2 = jest.fn();
+
+    const mockClient1 = {
+      publish: jest.fn(),
+      subscribe: jest.fn(),
+      unsubscribe: jest.fn().mockResolvedValue(undefined),
+      stop: mockStopClient1,
+      getUniqueName: jest.fn().mockReturnValue("client-1"),
+    };
+
+    const mockClient2 = {
+      publish: jest.fn(),
+      subscribe: jest.fn(),
+      unsubscribe: jest.fn().mockResolvedValue(undefined),
+      stop: mockStopClient2,
+      getUniqueName: jest.fn().mockReturnValue("client-2"),
+    };
+
+    const rateLimitedCallback = withRateLimiter({
+      callback: mockCallback,
+      topicIntervalMs: 1000,
+      maxMessagesPerTopicInterval: 100,
+      maxMessagesPerClientInterval: 5,
+      clientIntervalMs: 1000,
+    });
+
+    // Send 6 messages to client-1 (exceeds limit)
+    for (let i = 0; i < 6; i++) {
+      rateLimitedCallback("topic-1", { data: i }, null, mockClient1);
+    }
+
+    // Send 3 messages to client-2 (under limit)
+    for (let i = 0; i < 3; i++) {
+      rateLimitedCallback("topic-2", { data: i }, null, mockClient2);
+    }
+
+    // Client 1 should be stopped
+    expect(mockStopClient1).toHaveBeenCalledTimes(1);
+    // Client 2 should not be stopped
+    expect(mockStopClient2).not.toHaveBeenCalled();
+
+    // Client 1 messages should be limited to 5
+    expect(mockCallback.mock.calls.filter((call) => call[3] === mockClient1)).toHaveLength(5);
+    // Client 2 messages should all pass through
+    expect(mockCallback.mock.calls.filter((call) => call[3] === mockClient2)).toHaveLength(3);
+  });
+
+  it("should use clientIntervalMs when specified", () => {
+    const mockStop = jest.fn();
+    mockPubSubClient.stop = mockStop;
+    mockPubSubClient.getUniqueName = jest.fn().mockReturnValue("test-client");
+
+    const rateLimitedCallback = withRateLimiter({
+      callback: mockCallback,
+      topicIntervalMs: 1000,
+      maxMessagesPerTopicInterval: 100,
+      maxMessagesPerClientInterval: 10,
+      clientIntervalMs: 500, // Different from intervalMs
+    });
+
+    // Send messages at limit
+    for (let i = 0; i < 11; i++) {
+      rateLimitedCallback("topic-1", { data: i }, null, mockPubSubClient);
+    }
+
+    // Should trigger client rate limit using the clientIntervalMs (500ms)
+    expect(mockCallback).toHaveBeenCalledTimes(10);
+    expect(mockStop).toHaveBeenCalledTimes(1);
+
+    // Advance time beyond client interval (500ms) but within topic interval (1000ms)
+    jest.advanceTimersByTime(600);
+
+    // Should still be blocked
+    rateLimitedCallback("topic-1", { data: 999 }, null, mockPubSubClient);
+    expect(mockCallback).toHaveBeenCalledTimes(10);
+  });
+
+  it("should allow per-client rate limiting without per-topic limit being triggered", () => {
+    const mockStop = jest.fn();
+    mockPubSubClient.stop = mockStop;
+    mockPubSubClient.getUniqueName = jest.fn().mockReturnValue("test-client");
+
+    const rateLimitedCallback = withRateLimiter({
+      callback: mockCallback,
+      topicIntervalMs: 1000,
+      maxMessagesPerTopicInterval: 100,
+      maxMessagesPerClientInterval: 10,
+      clientIntervalMs: 1000,
+    });
+
+    // Send 10 messages across 5 different topics (2 messages each)
+    const topics = ["topic-1", "topic-2", "topic-3", "topic-4", "topic-5"];
+    for (const topic of topics) {
+      rateLimitedCallback(topic, { data: 1 }, null, mockPubSubClient);
+      rateLimitedCallback(topic, { data: 2 }, null, mockPubSubClient);
+    }
+
+    // All 10 messages should pass (no per-topic limit exceeded, no per-client limit exceeded)
+    expect(mockCallback).toHaveBeenCalledTimes(10);
+    expect(mockStop).not.toHaveBeenCalled();
+    expect(mockUnsubscribe).not.toHaveBeenCalled();
+
+    // One more message should trigger client rate limit
+    rateLimitedCallback("topic-6", { data: 1 }, null, mockPubSubClient);
+    rateLimitedCallback("topic-7", { data: 1 }, null, mockPubSubClient);
+
+    // Client should now be stopped
+    expect(mockStop).toHaveBeenCalledTimes(1);
+    expect(mockCallback).toHaveBeenCalledTimes(10); // Still 10, the new messages were blocked
   });
 });
