@@ -11809,6 +11809,16 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@redstone-finance/ws-test-server@workspace:packages/websocket-server":
+  version: 0.0.0-use.local
+  resolution: "@redstone-finance/ws-test-server@workspace:packages/websocket-server"
+  dependencies:
+    "@types/ws": "npm:^8.18.1"
+    ws: "npm:^8.18.3"
+    zod: "npm:^3.22.4"
+  languageName: unknown
+  linkType: soft
+
 "@rollup/plugin-commonjs@npm:^25.0.4":
   version: 25.0.4
   resolution: "@rollup/plugin-commonjs@npm:25.0.4"
