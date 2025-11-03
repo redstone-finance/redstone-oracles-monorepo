@@ -158,7 +158,6 @@
     },
     "USDC": {
       "source": [
-        "balancer-ethereum-usdt",
         "binance-usdt",
         "bingx-usdt",
         "bitget-usdt",
@@ -377,14 +376,7 @@
       "rateFeed": false
     },
     "BAL": {
-      "source": [
-        "balancer-ethereum-weth",
-        "bitget-usdt",
-        "gate-usdt",
-        "kucoin-usdt",
-        "lbank-usdt",
-        "okx-usdt"
-      ],
+      "source": ["bitget-usdt", "gate-usdt", "kucoin-usdt", "lbank-usdt", "okx-usdt"],
       "denomination": "USD",
       "rateFeed": false
     },
