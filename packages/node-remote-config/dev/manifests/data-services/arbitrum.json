@@ -39,7 +39,6 @@
     },
     "USDC": {
       "source": [
-        "balancer-ethereum-usdt",
         "binance-usdt",
         "bingx-usdt",
         "bitget-usdt",
@@ -365,10 +364,6 @@
     },
     "wstETH": {
       "source": [
-        "balancer-arbitrumone-weth-2",
-        "balancer-ethereum-aave",
-        "balancer-ethereum-weth",
-        "balancer-ethereum-weth-2",
         "camelot-v3-arbitrumone-weth",
         "curve-ethereum-crvusd",
         "uniswap-v3-arbitrumone-weth-100",
@@ -393,14 +388,7 @@
       "rateFeed": false
     },
     "BAL": {
-      "source": [
-        "balancer-ethereum-weth",
-        "bitget-usdt",
-        "gate-usdt",
-        "kucoin-usdt",
-        "lbank-usdt",
-        "okx-usdt"
-      ],
+      "source": ["bitget-usdt", "gate-usdt", "kucoin-usdt", "lbank-usdt", "okx-usdt"],
       "denomination": "USD",
       "rateFeed": false
     },
@@ -514,11 +502,6 @@
     },
     "rETH": {
       "source": [
-        "balancer-arbitrumone-weth",
-        "balancer-arbitrumone-wsteth",
-        "balancer-ethereum-weth",
-        "balancer-ethereum-wsteth",
-        "balancer-ethereum-wsteth-2",
         "curve-ethereum-weth",
         "curve-ethereum-wsteth",
         "curve-ethereum-wsteth-2",
@@ -531,9 +514,6 @@
     },
     "weETH": {
       "source": [
-        "balancer-arbitrumone-wsteth",
-        "balancer-arbitrumone-weth",
-        "balancer-ethereum-reth",
         "camelot-v3-arbitrumone-weth",
         "curve-ethereum-weth",
         "uniswap-v3-arbitrumone-weth-3000",
@@ -549,8 +529,6 @@
     },
     "rsETH": {
       "source": [
-        "balancer-arbitrumone-weth",
-        "balancer-ethereum-weth",
         "camelot-v3-arbitrumone-weth",
         "curve-ethereum-sfrxeth",
         "uniswap-v3-ethereum-wsteth-500"
@@ -607,9 +585,6 @@
     "ezETH": {
       "source": [
         "aerodrome-cl-base-weth",
-        "balancer-arbitrumone-wsteth",
-        "balancer-ethereum-weeth",
-        "balancer-ethereum-weth",
         "thruster-v3-blast-weth-3000",
         "thruster-v3-blast-weth-500",
         "uniswap-v4-arbitrumone-eth-500"
