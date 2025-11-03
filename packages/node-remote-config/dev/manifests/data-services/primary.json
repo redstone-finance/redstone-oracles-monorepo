@@ -13,7 +13,6 @@
   "tokens": {
     "USDC": {
       "source": [
-        "balancer-ethereum-usdt",
         "binance-usdt",
         "bingx-usdt",
         "bitget-usdt",
@@ -114,7 +113,6 @@
     },
     "USDC/USDT": {
       "source": [
-        "balancer-ethereum-usdt-no-quoting",
         "binance-usdt-no-quoting",
         "bitget-usdt-no-quoting",
         "bitmart-usdt-no-quoting",
@@ -288,10 +286,6 @@
     },
     "wstETH": {
       "source": [
-        "balancer-arbitrumone-weth-2",
-        "balancer-ethereum-aave",
-        "balancer-ethereum-weth",
-        "balancer-ethereum-weth-2",
         "camelot-v3-arbitrumone-weth",
         "curve-ethereum-crvusd",
         "uniswap-v3-arbitrumone-weth-100",
@@ -340,8 +334,6 @@
     },
     "GHO": {
       "source": [
-        "balancer-ethereum-usdc",
-        "balancer-ethereum-usdt",
         "bitget-usdt",
         "coingecko",
         "coinmarketcap",
@@ -476,9 +468,6 @@
     },
     "weETH": {
       "source": [
-        "balancer-arbitrumone-wsteth",
-        "balancer-arbitrumone-weth",
-        "balancer-ethereum-reth",
         "camelot-v3-arbitrumone-weth",
         "curve-ethereum-weth",
         "uniswap-v3-arbitrumone-weth-3000",
@@ -499,11 +488,6 @@
     },
     "rETH": {
       "source": [
-        "balancer-arbitrumone-weth",
-        "balancer-arbitrumone-wsteth",
-        "balancer-ethereum-weth",
-        "balancer-ethereum-wsteth",
-        "balancer-ethereum-wsteth-2",
         "curve-ethereum-weth",
         "curve-ethereum-wsteth",
         "curve-ethereum-wsteth-2",
@@ -532,7 +516,6 @@
     },
     "pxETH": {
       "source": [
-        "balancer-ethereum-weth",
         "curve-ethereum-steth-multi-block",
         "curve-ethereum-weth",
         "pancake-swap-ethereum-weth-100",
@@ -1106,8 +1089,6 @@
     },
     "rsETH": {
       "source": [
-        "balancer-arbitrumone-weth",
-        "balancer-ethereum-weth",
         "camelot-v3-arbitrumone-weth",
         "curve-ethereum-sfrxeth",
         "uniswap-v3-ethereum-wsteth-500"
@@ -1123,9 +1104,6 @@
     "ezETH": {
       "source": [
         "aerodrome-cl-base-weth",
-        "balancer-arbitrumone-wsteth",
-        "balancer-ethereum-weeth",
-        "balancer-ethereum-weth",
         "thruster-v3-blast-weth-3000",
         "thruster-v3-blast-weth-500",
         "uniswap-v4-arbitrumone-eth-500"
@@ -1254,7 +1232,6 @@
     },
     "pufETH": {
       "source": [
-        "balancer-ethereum-wsteth",
         "curve-ethereum-weth",
         "curve-ethereum-wsteth",
         "curve-ethereum-wsteth-2",
