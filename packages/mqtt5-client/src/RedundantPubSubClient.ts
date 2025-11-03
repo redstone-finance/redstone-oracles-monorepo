@@ -1,7 +1,7 @@
 import { ContentTypes } from "@redstone-finance/internal-utils";
 import { loggerFactory, RedstoneCommon } from "@redstone-finance/utils";
 import { z } from "zod";
-import { Mqtt5Client } from "./Mqtt5Client";
+import { createMqtt5ClientFactory } from "./Mqtt5Client";
 import { MultiPubSubClient } from "./MultiPubSubClient";
 import { PubSubClient, PubSubPayload, SubscribeCallback } from "./PubSubClient";
 
@@ -47,13 +47,11 @@ export function createRedundantPubSubClientFromEnv(
     const type = config.type;
     switch (type) {
       case "mqttAWSV4Sig": {
-        const factory = () =>
-          Mqtt5Client.create({
+        const client = new MultiPubSubClient(
+          createMqtt5ClientFactory({
             authorization: { type: "AWSSigV4" },
             endpoint: config.host,
-          });
-        const client = new MultiPubSubClient(
-          factory,
+          }),
           config.expectedRequestPerSecondPerTopic,
           config.host
         );
@@ -67,17 +65,15 @@ export function createRedundantPubSubClientFromEnv(
       }
 
       case "mqttCert": {
-        const factory = () =>
-          Mqtt5Client.create({
+        const client = new MultiPubSubClient(
+          createMqtt5ClientFactory({
             authorization: {
               type: "Cert",
               privateKey: RedstoneCommon.getFromEnv(config.privateKeyEnvPath),
               cert: RedstoneCommon.getFromEnv(config.certEnvPath),
             },
             endpoint: config.host,
-          });
-        const client = new MultiPubSubClient(
-          factory,
+          }),
           config.expectedRequestPerSecondPerTopic,
           config.host
         );
