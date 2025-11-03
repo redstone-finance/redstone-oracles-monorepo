@@ -101,13 +101,6 @@
     "osETH/ETH": {
       "priceFeedAddress": "0x66ac817f997Efd114EDFcccdce99F3268557B32C"
     },
-    "rswETH/ETH": {
-      "priceFeedAddress": "0x3A236F67Fce401D87D7215695235e201966576E4",
-      "updateTriggersOverrides": {
-        "deviationPercentage": 1,
-        "timeSinceLastUpdateInMilliseconds": 86400000
-      }
-    },
     "sfrxETH/ETH": {
       "priceFeedAddress": "0xdd60c54115C19e0c6360AD4762B88BB8076D50a8",
       "updateTriggersOverrides": {
@@ -368,6 +361,12 @@
         "timeSinceLastUpdateInMilliseconds": 43200000
       }
     },
-    "rswETH_FUNDAMENTAL": {}
+    "rswETH_FUNDAMENTAL": {
+      "priceFeedAddress": "0x3A236F67Fce401D87D7215695235e201966576E4",
+      "updateTriggersOverrides": {
+        "deviationPercentage": 1,
+        "timeSinceLastUpdateInMilliseconds": 86400000
+      }
+    }
   }
 }
