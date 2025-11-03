@@ -7657,11 +7657,6 @@
       "denomination": "USD",
       "rateFeed": false
     },
-    "xUSD_FUNDAMENTAL": {
-      "source": ["ethereum-evm-fetcher-stream"],
-      "denomination": "USDC",
-      "rateFeed": true
-    },
     "sYUSD_FUNDAMENTAL": {
       "source": ["ethereum-evm-fetcher-aegis"],
       "denomination": "YUSD",
