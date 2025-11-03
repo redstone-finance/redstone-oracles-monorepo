@@ -2,7 +2,6 @@ import {} from "@redstone-finance/sdk";
 import { Keypair, LAMPORTS_PER_SOL, PublicKey } from "@solana/web3.js";
 import { LiteSVM } from "litesvm";
 import path from "path";
-import { ConnectionStateScenario, LiteSVMConnection } from "./LiteSVMConnection";
 
 function programPath() {
   return path.join(__dirname, "../solana/target/deploy/redstone_solana_price_adapter.so");
@@ -30,15 +29,10 @@ export function setUpEnv() {
   svm.airdrop(trustedSigner.publicKey, BigInt(LAMPORTS_PER_SOL));
   svm.airdrop(untrustedSigner.publicKey, BigInt(LAMPORTS_PER_SOL));
 
-  const state = new ConnectionStateScenario(svm);
-  const connection = new LiteSVMConnection(state);
-
   return {
     svm,
     programId,
     trustedSigner,
     untrustedSigner,
-    connection,
-    state,
   };
 }

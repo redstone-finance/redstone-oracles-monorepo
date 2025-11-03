@@ -20,6 +20,9 @@ build-verifiable:
 build:
 	anchor build
 
+build-test:
+	anchor build -- --features agnostic-tests
+
 copy-program:
 	@mkdir -p target/deploy
 	@if [ -n "$$CARGO_TARGET_DIR" ]; then \
