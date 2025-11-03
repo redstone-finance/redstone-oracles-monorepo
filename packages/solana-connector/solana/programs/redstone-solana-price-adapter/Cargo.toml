@@ -17,6 +17,8 @@ no-entrypoint = []
 no-idl = []
 no-log-ix-name = []
 
+agnostic-tests = []
+
 [dependencies]
 anchor-lang = { version = "0.31.1", default-features = false, features = ["init-if-needed"] }
 hex-literal = { version = "0.4.1" }

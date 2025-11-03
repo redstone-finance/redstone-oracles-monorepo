@@ -1,3 +1,4 @@
+import { execSync } from "child_process";
 import {
   AnchorReadonlyProvider,
   DEFAULT_SOLANA_CONFIG,
@@ -6,12 +7,16 @@ import {
   SolanaPricesContractAdapter,
   SolanaTxDeliveryMan,
 } from "../src";
+import { ConnectionStateScenario, LiteSVMConnection } from "./LiteSVMConnection";
 import { setUpEnv } from "./setup-env";
 import { testSample } from "./test-data";
 
 function getSolanaPricesContractAdapter(trusted: "trusted" | "untrusted") {
-  const { svm, trustedSigner, untrustedSigner, programId, connection, state } = setUpEnv();
+  const { svm, trustedSigner, untrustedSigner, programId } = setUpEnv();
   const signer = trusted === "trusted" ? trustedSigner : untrustedSigner;
+
+  const state = new ConnectionStateScenario(svm);
+  const connection = new LiteSVMConnection(state);
 
   const client = new SolanaClient(connection);
   const contractAdapter = new PriceAdapterContract(
@@ -41,6 +46,10 @@ function getSolanaPricesContractAdapter(trusted: "trusted" | "untrusted") {
 }
 
 describe("SolanaPricesContractAdapter tests", () => {
+  beforeAll(() => {
+    execSync("make build -C solana", { stdio: "inherit" });
+  });
+
   it("getUniqueSignerThreshold", async () => {
     const { priceAdapter } = getSolanaPricesContractAdapter("trusted");
 

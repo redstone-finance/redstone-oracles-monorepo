@@ -1,6 +1,7 @@
 import {
   ContractData,
   ContractParamsProvider,
+  getLastRoundDetails,
   IMultiFeedPricesContractAdapter,
   SplitPayloads,
 } from "@redstone-finance/sdk";
@@ -36,7 +37,7 @@ export class SolanaPricesContractAdapter implements IMultiFeedPricesContractAdap
     }
     const priceData = await this.contract.getPriceData(feedId, slot);
 
-    return priceData.writeTimestamp?.toNumber();
+    return priceData?.writeTimestamp?.toNumber();
   }
 
   getPricesFromPayload(_: ContractParamsProvider): Promise<bigint[]> {
@@ -59,6 +60,7 @@ export class SolanaPricesContractAdapter implements IMultiFeedPricesContractAdap
     this.logger.log(
       `FINISHED ${txSignatures.length} transaction${RedstoneCommon.getS(txSignatures.length)}: [${txSignatures.toString()}]`
     );
+
     return txSignatures[txSignatures.length - 1];
   }
 
@@ -123,20 +125,18 @@ export class SolanaPricesContractAdapter implements IMultiFeedPricesContractAdap
     paramsProvider: ContractParamsProvider,
     slot?: number
   ): Promise<bigint[]> {
-    const feedIds = paramsProvider.getDataFeedIds();
-    const priceData = await this.contract.getMultiplePriceData(feedIds, slot);
-    const missingFeedIndex = priceData.findIndex((value) => !RedstoneCommon.isDefined(value));
-    if (missingFeedIndex >= 0) {
-      throw new Error(`Missing value for ${feedIds[missingFeedIndex]}`);
-    }
+    const contractData = await this.readContractData(paramsProvider.getDataFeedIds(), slot);
 
-    return priceData.map((priceData) => BigInt(toNumber(priceData!.value)));
+    return paramsProvider
+      .getDataFeedIds()
+      .map((feedId) => getLastRoundDetails(contractData, feedId))
+      .map((data) => data.lastValue);
   }
 
   async readTimestampFromContract(feedId: string, slot?: number): Promise<number> {
     const priceData = await this.contract.getPriceData(feedId, slot);
 
-    return priceData.timestamp.toNumber();
+    return priceData?.timestamp.toNumber() ?? 0;
   }
 
   async readContractData(feedIds: string[], slot?: number): Promise<ContractData> {
