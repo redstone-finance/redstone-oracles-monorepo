@@ -1,15 +1,9 @@
-import { RedstoneCommon } from "@redstone-finance/utils";
 import {
-  AccountInfo,
   BlockhashWithExpiryBlockHeight,
-  clusterApiUrl,
-  Connection,
-  Message,
   PublicKey,
   RecentPrioritizationFees,
   RpcResponseAndContext,
   SignatureStatus,
-  SimulatedTransactionResponse,
   Transaction,
   TransactionMessage,
   TransactionSignature,
@@ -18,40 +12,8 @@ import {
 import bs58 from "bs58";
 import { FailedTransactionMetadata, LiteSVM, TransactionMetadata } from "litesvm";
 import { toNumber } from "../src";
-
-const DUMMY_CONTEXT = { slot: 0 };
-const DUMMY_SIGNATURE =
-  "4bR5v2jR3iB6veTsiGEhdWmuheiexBqL53ukNyimvm4qE5vZ6JaZtCejuL9kDkTHp928ycp5jTv5YZiC9hEWJBEW";
-const DEFAULT_FEE = { ...DUMMY_CONTEXT, prioritizationFee: 0 };
-
-type Status = "confirmed" | "finalized" | "error";
-
-function transactionStatus(status: Status) {
-  switch (status) {
-    case "confirmed":
-    case "finalized":
-      return {
-        value: {
-          ...DUMMY_CONTEXT,
-          confirmations: 100,
-          confirmationStatus: status,
-          err: null,
-        },
-        context: DUMMY_CONTEXT,
-      };
-    case "error":
-      return {
-        value: {
-          ...DUMMY_CONTEXT,
-          confirmations: 100,
-          err: "Error :D",
-        },
-        context: DUMMY_CONTEXT,
-      };
-    default:
-      return RedstoneCommon.throwUnsupportedParamError(status);
-  }
-}
+import { LiteSVMAgnosticTestsConnection } from "./chain-agnostic/TestConnection";
+import { DEFAULT_FEE, DUMMY_CONTEXT, DUMMY_SIGNATURE, Status, transactionStatus } from "./utils";
 
 export class ConnectionStateScenario {
   recentFees: RecentPrioritizationFees[][] = [];
@@ -162,9 +124,9 @@ export class ConnectionStateScenario {
   }
 }
 
-export class LiteSVMConnection extends Connection {
+export class LiteSVMConnection extends LiteSVMAgnosticTestsConnection {
   constructor(private readonly state: ConnectionStateScenario) {
-    super(clusterApiUrl());
+    super(state.svm);
   }
 
   override getSlot(): Promise<number> {
@@ -199,67 +161,8 @@ export class LiteSVMConnection extends Connection {
     if (this.state.shouldUpdateBlockHash()) {
       this.state.svm.expireBlockhash();
     }
-    return Promise.resolve({
-      lastValidBlockHeight: 0,
-      blockhash: this.state.svm.latestBlockhash(),
-    });
-  }
 
-  override getAccountInfo(publicKey: PublicKey): Promise<AccountInfo<Buffer> | null> {
-    const accountData = this.state.svm.getAccount(publicKey);
-
-    if (accountData === null) {
-      return Promise.resolve(null);
-    }
-
-    return Promise.resolve({
-      ...accountData,
-      data: Buffer.from(accountData.data),
-    });
-  }
-
-  override getMultipleAccountsInfo(
-    publicKeys: PublicKey[]
-  ): Promise<(AccountInfo<Buffer> | null)[]> {
-    return Promise.all(publicKeys.map((publicKey) => this.getAccountInfo(publicKey)));
-  }
-
-  override async simulateTransaction(
-    transactionOrMessage: VersionedTransaction | Transaction | Message
-  ): Promise<RpcResponseAndContext<SimulatedTransactionResponse>> {
-    if (transactionOrMessage instanceof Message) {
-      throw new Error("Message unsupported.");
-    }
-
-    const simulationResult = this.state.svm.simulateTransaction(transactionOrMessage);
-
-    if (simulationResult instanceof FailedTransactionMetadata) {
-      return await Promise.resolve({
-        context: DUMMY_CONTEXT,
-        value: {
-          err: simulationResult.err(),
-          logs: [],
-        },
-      });
-    }
-
-    return await Promise.resolve({
-      context: DUMMY_CONTEXT,
-      value: {
-        err: null,
-        logs: simulationResult.meta().logs(),
-        accounts: null,
-        unitsConsumed: 0,
-        returnData: {
-          programId: bs58.encode(simulationResult.meta().returnData().programId()),
-          data: [
-            Buffer.from(simulationResult.meta().returnData().data()).toString("base64"),
-            "base64",
-          ],
-        },
-        innerInstructions: [],
-      },
-    });
+    return super.getLatestBlockhash();
   }
 
   override async sendTransaction(
