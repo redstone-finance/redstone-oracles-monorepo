@@ -1078,8 +1078,8 @@
     },
     "ETHx": {
       "source": [
-        "balancer-ethereum-wsteth",
-        "curve-ethereum-eth"
+        "curve-ethereum-eth",
+        "uniswap-v3-ethereum-wsteth-100"
       ],
       "denomination": "USD",
       "rateFeed": false
