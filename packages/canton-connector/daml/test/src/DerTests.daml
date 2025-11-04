@@ -1,0 +1,35 @@
+module DerTests where
+
+import Daml.Script
+import RedStone.Internal.Der
+import RedStone.Internal.Hex
+
+main : Script ()
+main = do
+  debug "=== Starting Der Tests ==="
+  
+  testBasicOperations
+  
+  debug "=== All tests passed! ==="
+  pure ()
+
+assertEq testName expected actual = do
+  if expected == actual
+    then debug $ "✓ " <> testName
+    else do
+      debug $ "✗ " <> testName <> " FAILED"
+      debug $ "  Expected: " <> show expected
+      debug $ "  Actual: " <> show actual
+      fail $ testName <> " failed"
+
+testBasicOperations : Script ()
+testBasicOperations = do
+  debug "-- Der converting basic operations --"
+
+  assertEq "0x44 (classic)" "30440220044077cc1bb8b8479fd4e4b2bdcfabf492b7d1650c7a2df46560f31f0e6494b702204175202bafcbd5854274988d892680d3c3f0abcca4925bbbf7bf9428c28e3ebd" $ (listToHex . signatureToDer) (hexToList "044077cc1bb8b8479fd4e4b2bdcfabf492b7d1650c7a2df46560f31f0e6494b74175202bafcbd5854274988d892680d3c3f0abcca4925bbbf7bf9428c28e3ebd")
+  assertEq "0x43 (leading zeros)" "3043021f12a2c511d40ebeca0ec6528af81bbff7357f15960eedd0650b015f079669f602205c251da4140de426d5348a5a0fb8e7fcc9ac5fb1a08354fd745d61ed52d100b2" $ (listToHex . signatureToDer) (hexToList "0012a2c511d40ebeca0ec6528af81bbff7357f15960eedd0650b015f079669f65c251da4140de426d5348a5a0fb8e7fcc9ac5fb1a08354fd745d61ed52d100b2")
+  assertEq "0x45 (>=0x80)" "3045022100a40f92c0d2912df895a1cbd44b001b77215ea67e3091f7fa743590192209e7ee0220166a29748b68e92c84bdad0afe3f51511ad9803e65ed3e376f2373f538b557e0" $ (listToHex . signatureToDer) (hexToList "a40f92c0d2912df895a1cbd44b001b77215ea67e3091f7fa743590192209e7ee166a29748b68e92c84bdad0afe3f51511ad9803e65ed3e376f2373f538b557e01c")
+  assertEq "0x45 (>=0x80 other)" "3045022100b0d77f7bece1ef8453997aa4d5ffaa251b91da63055636f41cfd3632d941a58a022009b1ba382af0f8f050c5b0bf2f96ce1d6588c2a7517ac035919eac85029a3f80" $ (listToHex . signatureToDer) (hexToList "b0d77f7bece1ef8453997aa4d5ffaa251b91da63055636f41cfd3632d941a58a09b1ba382af0f8f050c5b0bf2f96ce1d6588c2a7517ac035919eac85029a3f80")
+  assertEq "extreme" "3040021f0092c0d2912df895a1cbd44b001b77215ea67e3091f7fa743590192209e7ee021d09748b68e92c84bdad0afe3f51511ad9803e65ed3e376f2373f5355000" $ (listToHex . signatureToDer) (hexToList "000092c0d2912df895a1cbd44b001b77215ea67e3091f7fa743590192209e7ee00000009748b68e92c84bdad0afe3f51511ad9803e65ed3e376f2373f5355000")
+
+  pure ()
