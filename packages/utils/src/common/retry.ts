@@ -27,37 +27,47 @@ export function retry<P extends unknown[], R extends Promise<unknown>>(config: R
     throw new Error(`Setting 'config.maxRetries' to 0 will never call the underlying function`);
   }
   return async (...args: P): Promise<Awaited<R>> => {
-    const fnName = config.fnName ?? config.fn.name;
-    const errors = [];
-    let i = 0;
-    while (i < config.maxRetries) {
-      try {
-        return await config.fn(...args);
-      } catch (e) {
-        ++i;
-        errors.push(e);
+    return await executeWithRetries(config, args);
+  };
+}
 
-        config.logger?.(
-          `Retry ${i}/${config.maxRetries}; Function ${fnName} failed. ${stringifyError(e)}`
-        );
+export async function executeWithRetries<P extends unknown[], R extends Promise<unknown>>(
+  config: RetryConfig<P, R>,
+  args: P
+) {
+  if (config.maxRetries === 0) {
+    throw new Error(`Setting 'config.maxRetries' to 0 will never call the underlying function`);
+  }
+  const fnName = config.fnName ?? config.fn.name;
+  const errors = [];
+  let i = 0;
+  while (i < config.maxRetries) {
+    try {
+      return await config.fn(...args);
+    } catch (e) {
+      ++i;
+      errors.push(e);
 
-        if (isErrorUnrecoverable(e as Error)) {
-          break;
-        }
-        // don't wait in the last iteration
-        if (config.waitBetweenMs && i !== config.maxRetries) {
-          const sleepTimeBackOffMultiplier = config.backOff
-            ? Math.pow(config.backOff.backOffBase, i - 1)
-            : 1;
-          const sleepTime = config.waitBetweenMs * sleepTimeBackOffMultiplier;
-          config.logger?.(`Waiting ${sleepTime / 1000} s. for the next retry...`);
+      config.logger?.(
+        `Retry ${i}/${config.maxRetries}; Function ${fnName} failed. ${stringifyError(e)}`
+      );
 
-          await sleep(sleepTime);
-        }
+      if (isErrorUnrecoverable(e as Error)) {
+        break;
+      }
+      // don't wait in the last iteration
+      if (config.waitBetweenMs && i !== config.maxRetries) {
+        const sleepTimeBackOffMultiplier = config.backOff
+          ? Math.pow(config.backOff.backOffBase, i - 1)
+          : 1;
+        const sleepTime = config.waitBetweenMs * sleepTimeBackOffMultiplier;
+        config.logger?.(`Waiting ${sleepTime / 1000} s. for the next retry...`);
+
+        await sleep(sleepTime);
       }
     }
-    throw new AggregateError(errors, `Retry failed after ${i} attempts of ${fnName}`);
-  };
+  }
+  throw new AggregateError(errors, `Retry failed after ${i} attempts of ${fnName}`);
 }
 
 export const waitForSuccess = async (
