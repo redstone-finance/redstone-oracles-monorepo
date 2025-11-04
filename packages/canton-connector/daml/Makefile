@@ -51,7 +51,7 @@ test-%: build_redstone_adapter build_test
 		--dar $(TEST_DAR) \
 		--script-name $*:main
 
-test: test-U256Tests test-U256ConversionTests
+test: test-DerTests test-U256Tests test-U256ConversionTests
 
 integration_tests: prepare_data run_main run_test
 
@@ -82,7 +82,7 @@ allocate_parties:
 	--host $(LEDGER_HOST) \
 	--port $(LEDGER_PORT)
 
-list_parties: 
+list_parties:
 	@daml ledger list-parties \
 	--host $(LEDGER_HOST) \
 	--port $(LEDGER_PORT)
