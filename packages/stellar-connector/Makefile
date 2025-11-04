@@ -10,7 +10,7 @@ FEED_IDS="$(FEED_ID)", "ETH"
 ACCOUNT=stellar
 ADAPTER_ID=CB373ZHZJ75K34RCEEHGTSWKRR53ROJVO6DROQODGIZ5DLQEJZLEWDDC
 
-DEPLOY_DIR ?= "stellar"
+DEPLOY_DIR ?= ./stellar
 
 WASM_TARGET=wasm32v1-none
 ADAPTER_CONTRACT=redstone_adapter
@@ -161,3 +161,8 @@ set-adapter-address:
 prepare_data:
 	make -C $(DATA_DIR) DATA_NAME=$(DATA_NAME) prepare_data
 
+docker:
+	docker build --platform linux/amd64 -t stellar-reproducible-build .
+
+docker-build:
+	docker run -it --rm --platform linux/amd64 -v $(DEPLOY_DIR):/src stellar-reproducible-build build.sh
