@@ -41,8 +41,6 @@ hexDigit n = case n of
 
 pairToByte (a, b) = 16 * (fromSome (hexCharToInt a)) + (fromSome (hexCharToInt b)) 
 
-
-
 toHex a = let
     high = a / 16
     low = a % 16
