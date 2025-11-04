@@ -14,7 +14,8 @@
     "typecheck": "yarn global:tsc --noEmit",
     "typecheck:turbo": "yarn global:turbo typecheck",
     "preversion": "yarn build",
-    "pack-package": "yarn build && cd dist && npm pack"
+    "pack-package": "yarn build && cd dist && npm pack",
+    "run-sig-der": "yarn global:ts-node scripts/sig_der.ts"
   },
   "dependencies": {
     "@ethersproject/bytes": "^5.6.1",
