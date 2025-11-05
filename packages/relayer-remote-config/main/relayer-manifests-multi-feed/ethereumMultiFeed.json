@@ -367,6 +367,13 @@
         "deviationPercentage": 1,
         "timeSinceLastUpdateInMilliseconds": 86400000
       }
+    },
+    "STAC_FUNDAMENTAL": {
+      "priceFeedAddress": "0xEdC6287D3D41b322AF600317628D7E226DD3add4",
+      "updateTriggersOverrides": {
+        "deviationPercentage": 0.1,
+        "timeSinceLastUpdateInMilliseconds": 86400000
+      }
     }
   }
 }
