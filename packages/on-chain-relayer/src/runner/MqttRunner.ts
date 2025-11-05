@@ -190,6 +190,7 @@ export class MqttRunner implements MqttDataProcessingStrategyDelegate<RelayerCon
       mqttWaitForOtherSignersMs,
       mqttMaxReferenceValueDeviationPercent,
       mqttMaxReferenceValueDelayInSeconds,
+      mqttMinReferenceValues,
     } = relayerConfig;
 
     if (!mqttMinimalOffChainSignersCount || !RedstoneCommon.isDefined(mqttWaitForOtherSignersMs)) {
@@ -210,6 +211,7 @@ export class MqttRunner implements MqttDataProcessingStrategyDelegate<RelayerCon
       ignoreMissingFeeds: canIgnoreMissingFeeds(relayerConfig),
       maxReferenceValueDeviationPercent: mqttMaxReferenceValueDeviationPercent,
       maxReferenceValueDelayInSeconds: mqttMaxReferenceValueDelayInSeconds,
+      minReferenceValues: mqttMinReferenceValues,
     };
   }
 }
