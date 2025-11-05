@@ -6,6 +6,7 @@ import { cleanStalePackages, PackageResponse } from "./common";
 const PACKAGE_TIMESTAMP_GRANULATION_MS = 1_000;
 const DEFAULT_THRESHOLD_DEVIATION_PERCENT = 1;
 const DEFAULT_DELAY_IN_SECONDS = 3;
+const DEFAULT_MIN_REFERENCE_VALUES = 1;
 
 export class ReferenceValueVerifier {
   private readonly logger = loggerFactory("reference-value-verifier");
@@ -14,7 +15,8 @@ export class ReferenceValueVerifier {
   constructor(
     private readonly referenceSigners: Set<string>,
     private readonly thresholdDeviationPercent = DEFAULT_THRESHOLD_DEVIATION_PERCENT,
-    private readonly maxDelayInSeconds = DEFAULT_DELAY_IN_SECONDS
+    private readonly maxDelayInSeconds = DEFAULT_DELAY_IN_SECONDS,
+    private readonly minReferenceValues = DEFAULT_MIN_REFERENCE_VALUES
   ) {}
 
   private static getNormalizedDataPackageTimestamp(dataPackage: DataPackage) {
@@ -114,9 +116,12 @@ export class ReferenceValueVerifier {
     }
 
     const values = Array.from(signerValues.values());
-    if (!values.length) {
-      this.logger.warn(`Reference values not found ${logDescription}`, { deviationPercent: 0 });
 
+    if (values.length < this.minReferenceValues) {
+      this.logger.warn(
+        `Not enough reference values ${logDescription} (required: ${this.minReferenceValues}, found: ${values.length})`,
+        { deviationPercent: 0 }
+      );
       return 0;
     }
 

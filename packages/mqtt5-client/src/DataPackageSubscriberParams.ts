@@ -38,15 +38,22 @@ export type DataPackageSubscriberParams = {
 
   /**
    * If set, the values from unreferenced signers will be verified to not exceed the passed deviation in percent
-   * WARNING: if no reference values were found, the value is ACCEPTED
+   * WARNING: if too few reference values are found within the delay, the value is ACCEPTED
    * Default is 1 [%]
    */
   maxReferenceValueDeviationPercent?: number;
 
   /**
    * If maxReferenceValueDeviationPercent is set, specifies the delay (in seconds) of referenced values to be verified with
-   * WARNING: if no reference values were found, the value is ACCEPTED
+   * WARNING: if too few reference values are found within the delay, the value is ACCEPTED
    * Default is 3 [s]
    */
   maxReferenceValueDelayInSeconds?: number;
+
+  /**
+   * If maxReferenceValueDeviationPercent is set, specifies the minimum number of reference values required to perform deviation check
+   * WARNING: if fewer reference values are found, the value is ACCEPTED
+   * Default is 1
+   */
+  minReferenceValues?: number;
 };

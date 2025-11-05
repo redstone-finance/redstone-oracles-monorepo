@@ -5,6 +5,7 @@ const config: Config.InitialOptions = {
   collectCoverageFrom: ["<rootDir>/src/**/*.(t|j)s"],
   coverageDirectory: "<rootDir>/coverage",
   coverageReporters: ["html"],
+  modulePathIgnorePatterns: ["<rootDir>/dist/"],
   preset: "ts-jest",
   testPathIgnorePatterns: ["<rootDir>/dist/"],
 };
