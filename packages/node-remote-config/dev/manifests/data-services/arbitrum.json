@@ -544,8 +544,6 @@
     },
     "rswETH": {
       "source": [
-        "balancer-ethereum-ezeth",
-        "balancer-ethereum-weeth",
         "curve-ethereum-weeth"
       ],
       "denomination": "USD",
