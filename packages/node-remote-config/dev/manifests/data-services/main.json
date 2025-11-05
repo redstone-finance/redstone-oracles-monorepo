@@ -1144,7 +1144,6 @@
     },
     "osETH": {
       "source": [
-        "balancer-ethereum-weth",
         "curve-ethereum-reth"
       ],
       "denomination": "USD",
@@ -1666,8 +1665,6 @@
     },
     "rswETH": {
       "source": [
-        "balancer-ethereum-ezeth",
-        "balancer-ethereum-weeth",
         "curve-ethereum-weeth"
       ],
       "denomination": "USD",
