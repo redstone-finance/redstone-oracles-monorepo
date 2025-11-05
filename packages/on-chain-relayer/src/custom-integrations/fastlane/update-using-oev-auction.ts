@@ -12,9 +12,10 @@ const logger = loggerFactory("update-using-oev-auction");
 export const updateUsingOevAuction = async (
   relayerConfig: RelayerConfig,
   txDeliveryCalldata: string,
-  adapterContract: RedstoneEvmContract
+  adapterContract: RedstoneEvmContract,
+  customAuctionId = ""
 ) => {
-  logger.log(`Updating using OEV auction`);
+  const loggerPref = `OEV Auction ${customAuctionId}`;
   const start = Date.now();
   const auctionResponse = await runOevAuction(
     relayerConfig,
@@ -23,18 +24,22 @@ export const updateUsingOevAuction = async (
   );
   const auctionFinished = Date.now();
   logger.info(
-    `OEV auction finished in ${auctionFinished - start}ms with response`,
+    `${loggerPref} finished in ${auctionFinished - start}ms with response`,
     auctionResponse
   );
 
   const { id, error, result } = auctionResponse;
   if (result) {
-    logger.info(`Received signed oev id: ${id}, transactions count: ${result.length}`);
+    logger.info(
+      `${loggerPref} received signed oev id: ${id}, transactions count: ${result.length}`
+    );
   } else {
     if (error?.message?.includes("no solver operations received")) {
-      throw new Error(`No solver operations received`);
+      throw new Error(`${loggerPref} No solver operations received`);
     } else {
-      throw new Error(`Unexpected behaviour ${JSON.stringify(error)} for tx ${txDeliveryCalldata}`);
+      throw new Error(
+        `${loggerPref} Unexpected behaviour ${JSON.stringify(error)} for tx ${txDeliveryCalldata}`
+      );
     }
   }
 
@@ -48,13 +53,15 @@ export const updateUsingOevAuction = async (
   await RedstoneCommon.timeout(
     Promise.any(verificationPromises),
     verificationTimeout,
-    `Verification of the OEV auction didn't finish in ${verificationTimeout} [ms].`
+    `${loggerPref} verification didn't finish in ${verificationTimeout} [ms].`
   );
 
   const finish = Date.now();
   logger.log(
-    `OEV auction successfully completed in ${finish - start}ms, verification took ${finish - auctionFinished}ms`
+    `${loggerPref} successfully completed in ${finish - start}ms, verification took ${finish - auctionFinished}ms`
   );
+
+  return customAuctionId;
 };
 
 type OevAuctionResponse = {
