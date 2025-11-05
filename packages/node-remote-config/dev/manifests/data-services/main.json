@@ -1755,7 +1755,7 @@
       "rateFeed": false
     },
     "deUSD": {
-      "source": ["curve-ethereum-usdc", "curve-ethereum-usdt"],
+      "source": ["curve-ethereum-usdc", "curve-ethereum-usdt", "curve-ethereum-frxusd"],
       "denomination": "USD",
       "rateFeed": false
     },
