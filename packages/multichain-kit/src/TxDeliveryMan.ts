@@ -25,8 +25,10 @@ export class TxDeliveryMan {
     private readonly config: TxDeliveryManConfig,
     logTarget: string = "tx-delivery-man"
   ) {
-    if (this.config.maxTxSendAttempts === 0) {
-      throw new Error("Invalid config, `maxTxSendAttempts` needs to be > 0");
+    if (!this.config.maxTxSendAttempts || this.config.maxTxSendAttempts < 0) {
+      throw new Error(
+        `Invalid config, maxTxSendAttempts should be >0 && defined, is ${this.config.maxTxSendAttempts}`
+      );
     }
 
     this.logger = loggerFactory(logTarget);
