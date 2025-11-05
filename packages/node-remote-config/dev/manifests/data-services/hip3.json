@@ -65,6 +65,7 @@
         "hyperliquid-testnet-perps-ws-fetcher": 10,
         "hydromancer-testnet-perps-ws-fetcher": 1
       },
+      "localCacheTTL": "8h",
       "broadcasters": [],
       "denomination": "USD",
       "rateFeed": false
@@ -158,6 +159,7 @@
         "hyperliquid-testnet-perps-ws-fetcher": 10,
         "hydromancer-testnet-perps-ws-fetcher": 1
       },
+      "localCacheTTL": "8h",
       "broadcasters": [],
       "denomination": "USD",
       "rateFeed": false
@@ -224,12 +226,45 @@
       "denomination": "USD",
       "rateFeed": false
     },
+    "HL_IMPACT_PXS_BUY_flxn:TSLA": {
+      "source": ["hyperliquid-testnet-perps-ws-fetcher", "hydromancer-testnet-perps-ws-fetcher"],
+      "customWeightsForWeightedMedian": {
+        "hyperliquid-testnet-perps-ws-fetcher": 10,
+        "hydromancer-testnet-perps-ws-fetcher": 1
+      },
+      "localCacheTTL": "8h",
+      "broadcasters": [],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "HL_IMPACT_PXS_SELL_flxn:TSLA": {
+      "source": ["hyperliquid-testnet-perps-ws-fetcher", "hydromancer-testnet-perps-ws-fetcher"],
+      "customWeightsForWeightedMedian": {
+        "hyperliquid-testnet-perps-ws-fetcher": 10,
+        "hydromancer-testnet-perps-ws-fetcher": 1
+      },
+      "localCacheTTL": "8h",
+      "broadcasters": [],
+      "denomination": "USD",
+      "rateFeed": false
+    },
     "HL_ORACLE_PX_flxn:TSLA": {
       "source": ["hyperliquid-testnet-perps-ws-fetcher", "hydromancer-testnet-perps-ws-fetcher"],
       "customWeightsForWeightedMedian": {
         "hyperliquid-testnet-perps-ws-fetcher": 10,
         "hydromancer-testnet-perps-ws-fetcher": 1
       },
+      "broadcasters": [],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "HL_MID_PX_flxn:TSLA": {
+      "source": ["hyperliquid-testnet-perps-ws-fetcher", "hydromancer-testnet-perps-ws-fetcher"],
+      "customWeightsForWeightedMedian": {
+        "hyperliquid-testnet-perps-ws-fetcher": 10,
+        "hydromancer-testnet-perps-ws-fetcher": 1
+      },
+      "localCacheTTL": "8h",
       "broadcasters": [],
       "denomination": "USD",
       "rateFeed": false

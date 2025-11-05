@@ -304,7 +304,8 @@
         "camelot-v3-arbitrumone-weth",
         "sushiswap-ethereum-weth",
         "uniswap-v3-arbitrumone-weth-3000"
-      ]
+      ],
+      "localCacheTTL": "60m"
     },
     "PREMIA-TWAP-60": {
       "source": ["twap-local"]
@@ -910,7 +911,8 @@
         "uniswap-v3-ethereum-weth-100",
         "uniswap-v3-ethereum-wsteth-500",
         "aerodrome-cl-base-weth"
-      ]
+      ],
+      "localCacheTTL": "60m"
     },
     "ezETH/ETH": {
       "source": ["non-usd-based"]
@@ -965,6 +967,7 @@
         "thruster-v3-blast-weth-3000",
         "thruster-v3-blast-weth-500"
       ],
+      "localCacheTTL": "30m",
       "deviationCheck": {
         "deviationWithRecentValues": {
           "maxPercent": 5,
@@ -1069,6 +1072,7 @@
     },
     "SolvBTC_MERLIN/BTC": {
       "source": ["non-usd-based"],
+      "localCacheTTL": "60m",
       "valueCapConfig": {
         "upper": {
           "value": 1.01
