@@ -417,6 +417,7 @@
     "PREMIA": {
       "source": ["camelot-v3-arbitrumone-weth", "sushiswap-ethereum-weth"],
       "denomination": "USD",
+      "localCacheTTL": "60m",
       "rateFeed": false
     },
     "PREMIA-TWAP-60": {
@@ -1104,6 +1105,7 @@
         "thruster-v3-blast-weth-500",
         "uniswap-v4-arbitrumone-eth-500"
       ],
+      "localCacheTTL": "60m",
       "denomination": "USD",
       "rateFeed": false
     },
@@ -1191,6 +1193,7 @@
         "thruster-v3-blast-usde-500",
         "thruster-v3-blast-weth-500"
       ],
+      "localCacheTTL": "30m",
       "deviationCheck": {
         "deviationWithRecentValues": {
           "maxPercent": 5,
@@ -2363,6 +2366,7 @@
     "iBGT/BERA": {
       "source": ["non-usd-based"],
       "denomination": "BERA",
+      "localCacheTTL": "60m",
       "valueCapConfig": {
         "lower": {
           "value": 1
@@ -3100,6 +3104,7 @@
     "PT_sUSDe_27NOV2025_ETH": {
       "source": ["evm-fetcher-pendle"],
       "denomination": "sUSDe",
+      "localCacheTTL": "1d",
       "rateFeed": true
     },
     "PT_sUSDe_27NOV2025_ETH-TWAP": {
@@ -3110,6 +3115,7 @@
     "PT_srUSDe_15JAN2026_ETH": {
       "source": ["evm-fetcher-pendle"],
       "denomination": "srUSDe",
+      "localCacheTTL": "1d",
       "rateFeed": true
     },
     "PT_srUSDe_15JAN2026_ETH-TWAP": {
@@ -3120,6 +3126,7 @@
     "PT_cUSD_29JAN2026_ETH": {
       "source": ["evm-fetcher-pendle"],
       "denomination": "cUSD",
+      "localCacheTTL": "1d",
       "rateFeed": true
     },
     "PT_cUSD_29JAN2026_ETH-TWAP": {
@@ -3130,6 +3137,7 @@
     "PT_sUSDe_15JAN2026_PLSM": {
       "source": ["evm-fetcher-pendle"],
       "denomination": "sUSDe",
+      "localCacheTTL": "1d",
       "rateFeed": true
     },
     "PT_sUSDe_15JAN2026_PLSM-TWAP": {
@@ -3140,6 +3148,7 @@
     "PT_kHYPE_13NOV2025_HL": {
       "source": ["evm-fetcher-pendle"],
       "denomination": "kHYPE",
+      "localCacheTTL": "1d",
       "rateFeed": true
     },
     "PT_kHYPE_13NOV2025_HL-TWAP": {
@@ -3150,6 +3159,7 @@
     "PT_iBGT_25DEC2025_BERA": {
       "source": ["evm-fetcher-pendle"],
       "denomination": "iBGT",
+      "localCacheTTL": "1d",
       "rateFeed": true
     },
     "PT_iBGT_25DEC2025_BERA-TWAP": {
