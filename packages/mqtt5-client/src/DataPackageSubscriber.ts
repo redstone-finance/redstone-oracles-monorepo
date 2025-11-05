@@ -92,7 +92,8 @@ export class DataPackageSubscriber {
       ? new ReferenceValueVerifier(
           new Set(getSignersForDataServiceId(this.params.dataServiceId as DataServiceIds)),
           this.params.maxReferenceValueDeviationPercent,
-          this.params.maxReferenceValueDelayInSeconds
+          this.params.maxReferenceValueDelayInSeconds,
+          this.params.minReferenceValues
         )
       : undefined;
 
