@@ -66,7 +66,7 @@ describe("update-using-oev-auction", () => {
       expect.fail("Should have thrown an error");
     } catch (error) {
       expect((error as Error).message).to.include(
-        `Verification of the OEV auction didn't finish in ${AUCTION_VERIFICATION_TIMEOUT} [ms].`
+        `OEV Auction  verification didn't finish in ${AUCTION_VERIFICATION_TIMEOUT} [ms].`
       );
     }
   });

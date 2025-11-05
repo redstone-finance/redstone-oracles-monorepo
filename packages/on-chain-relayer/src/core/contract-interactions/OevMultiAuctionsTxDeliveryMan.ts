@@ -20,24 +20,45 @@ export class OevMultiAuctionsTxDeliveryMan implements Tx.ITxDeliveryMan {
 
   async deliver(txDeliveryCall: Tx.TxDeliveryCall, context: RelayerTxDeliveryManContext) {
     try {
-      await this.updateUsingOevAuctions(context.paramsProvider);
-      this.logger.log("Update using oev auction has finished. Proceeding with a standard update");
-      if (context.deferredCallData) {
-        txDeliveryCall.data = await context.deferredCallData();
-      }
-      await this.fallbackDeliveryMan.deliver(txDeliveryCall, context);
-      this.logger.log("Standard update has finished");
-    } catch (e) {
-      this.logger.error(`Failed to update using oev auction: ${RedstoneCommon.stringifyError(e)}`);
-      if (context.canOmitFallbackAfterFailing) {
-        this.logger.log("Skipping as update was optional");
-      } else {
-        this.logger.warn(`Failed to update using OEV auction, proceeding with standard update`);
+      const start = Date.now();
+      this.logger.log(`OEV Auctions start`);
+
+      const { values, errors } = await this.updateUsingOevAuctions(context.paramsProvider);
+      const auctionsTime = Date.now() - start;
+      this.logger.log(
+        `OEV Auctions finished in ${auctionsTime}ms with ${values.length} successes and ${errors.length} errors`
+      );
+
+      if (values.length > 0) {
+        this.logger.log(`OEV Auctions succeeded, proceeding with a standard update`, values);
         if (context.deferredCallData) {
           txDeliveryCall.data = await context.deferredCallData();
         }
         await this.fallbackDeliveryMan.deliver(txDeliveryCall, context);
+        this.logger.log("Standard update has finished");
+      } else {
+        await this.onOevAuctionsFailureCallback(txDeliveryCall, context);
       }
+    } catch (e) {
+      this.logger.error(
+        `OEV Auctions failed to update due to: ${RedstoneCommon.stringifyError(e)}`
+      );
+      await this.onOevAuctionsFailureCallback(txDeliveryCall, context);
+    }
+  }
+
+  private async onOevAuctionsFailureCallback(
+    txDeliveryCall: Tx.TxDeliveryCall,
+    context: RelayerTxDeliveryManContext
+  ) {
+    if (context.canOmitFallbackAfterFailing) {
+      this.logger.log("OEV Auctions, skipping fallback as update was optional");
+    } else {
+      this.logger.warn(`OEV Auctions failed, proceeding with standard update`);
+      if (context.deferredCallData) {
+        txDeliveryCall.data = await context.deferredCallData();
+      }
+      await this.fallbackDeliveryMan.deliver(txDeliveryCall, context);
     }
   }
 
@@ -46,26 +67,45 @@ export class OevMultiAuctionsTxDeliveryMan implements Tx.ITxDeliveryMan {
 
     const metadataTimestamp = Date.now();
     const dataPackages = await paramsProvider.requestDataPackages();
-    const dataPackagesFeeds = Object.keys(dataPackages);
-    for (const feedId of dataPackagesFeeds) {
-      this.logger.log("Oev Auction for FeedId", feedId);
+    for (const [feedId, packages] of Object.entries(dataPackages)) {
+      const values = packages
+        ?.flatMap((p) => p.dataPackage.dataPoints)
+        .map((dp) => dp.toObj().value);
+
+      this.logger.log(`OEV Auction ${feedId} update, values`, values);
 
       const updateUsingOevAuctionPromise = this.makeSingleFeedUpdateTx(
         feedId,
         dataPackages,
         metadataTimestamp
-      ).then((tx) => updateUsingOevAuction(this.relayerConfig, tx.data, this.adapterContract));
-
+      ).then((tx) =>
+        updateUsingOevAuction(this.relayerConfig, tx.data, this.adapterContract, feedId)
+      );
       auctionPromises.push(updateUsingOevAuctionPromise);
     }
 
     const timeout = this.relayerConfig.oevTotalTimeout;
 
-    await RedstoneCommon.timeout(
+    const results = await RedstoneCommon.timeout(
       Promise.allSettled(auctionPromises),
       timeout,
-      `Updating using OEV auctions didn't succeed in ${timeout} [ms].`
+      `OEV Auctions update didn't finish in ${timeout} [ms].`
     );
+
+    const values = [];
+    const errors = [];
+
+    for (const result of results) {
+      if (result.status === "fulfilled") {
+        values.push(result.value);
+      } else {
+        const strigifiedError = RedstoneCommon.stringifyError(result.reason);
+        this.logger.error(`OEV Auction error ${strigifiedError}`);
+        errors.push(strigifiedError);
+      }
+    }
+
+    return { values, errors };
   }
 
   async makeSingleFeedUpdateTx(
