@@ -57,7 +57,6 @@
     },
     "USDC": {
       "source": [
-        "balancer-ethereum-usdt",
         "binance-usdt",
         "bitget-usdt",
         "bitmart-usdt",
