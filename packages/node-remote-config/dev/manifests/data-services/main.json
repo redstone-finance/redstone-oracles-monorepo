@@ -1031,7 +1031,7 @@
       "rateFeed": false
     },
     "osETH": {
-      "source": ["balancer-ethereum-weth", "curve-ethereum-reth"],
+      "source": ["curve-ethereum-reth"],
       "denomination": "USD",
       "rateFeed": false
     },
@@ -1468,7 +1468,7 @@
       "rateFeed": true
     },
     "rswETH": {
-      "source": ["balancer-ethereum-ezeth", "balancer-ethereum-weeth", "curve-ethereum-weeth"],
+      "source": ["curve-ethereum-weeth"],
       "denomination": "USD",
       "rateFeed": false
     },

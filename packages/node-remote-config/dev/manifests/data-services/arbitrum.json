@@ -523,7 +523,7 @@
       "rateFeed": false
     },
     "rswETH": {
-      "source": ["balancer-ethereum-ezeth", "balancer-ethereum-weeth", "curve-ethereum-weeth"],
+      "source": ["curve-ethereum-weeth"],
       "denomination": "USD",
       "rateFeed": false
     },
