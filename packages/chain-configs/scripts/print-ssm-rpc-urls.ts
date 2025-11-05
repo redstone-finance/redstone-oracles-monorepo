@@ -11,7 +11,7 @@ const getDomain = (hostname: string): string => {
 };
 
 const isTestNetworkOrKnownNetworkWithIssue = (name: string): boolean => {
-  const testnetKeywords = ["testnet", "alfajores", "sepolia", "ghostnet"];
+  const testnetKeywords = ["testnet", "sepolia", "ghostnet"];
   return testnetKeywords.some((keyword) => name.toLowerCase().includes(keyword));
 };
 
