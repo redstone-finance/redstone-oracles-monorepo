@@ -133,6 +133,13 @@
         "deviationPercentage": 0.25,
         "timeSinceLastUpdateInMilliseconds": 43200000
       }
+    },
+    "sYUSD_FUNDAMENTAL": {
+      "priceFeedAddress": "0xb728dbB1D8504fD521db0e87bdDdF33466bCabAD",
+      "updateTriggersOverrides": {
+        "deviationPercentage": 0.25,
+        "timeSinceLastUpdateInMilliseconds": 43200000
+      }
     }
   }
 }
