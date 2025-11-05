@@ -71,6 +71,7 @@ export type OnChainRelayerEnv = {
   mqttDataProcessingStrategy?: MqttDataProcessingStrategyType;
   mqttMaxReferenceValueDeviationPercent?: number;
   mqttMaxReferenceValueDelayInSeconds?: number;
+  mqttMinReferenceValues?: number;
   authorizedSigners?: string[];
   includeAdditionalFeedsForGasOptimization: boolean;
   newestBlockForFeeHistory?: NewestBlockType;

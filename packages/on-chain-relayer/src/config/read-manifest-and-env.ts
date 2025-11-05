@@ -198,6 +198,10 @@ export const readManifestAndEnv = () => {
       "MQTT_MAX_REFERENCE_VALUE_DEVIATION_DELAY_IN_SECONDS",
       z.number().optional()
     ),
+    mqttMinReferenceValues: RedstoneCommon.getFromEnv(
+      "MQTT_MIN_REFERENCE_VALUES",
+      z.number().optional()
+    ),
     includeAdditionalFeedsForGasOptimization: RedstoneCommon.getFromEnv(
       "INCLUDE_ADDITIONAL_FEEDS_FOR_GAS_OPTIMIZATION",
       z.boolean().default(true)
