@@ -21,10 +21,12 @@ export function makeSuiConfig(
   args: Partial<SuiConfig> & Pick<SuiConfig, "packageId" | "priceAdapterObjectId">
 ): SuiConfig {
   return {
-    writePricesTxGasBudget: DEFAULT_GAS_BUDGET,
-    gasMultiplier: DEFAULT_GAS_MULTIPLIER,
-    maxTxSendAttempts: DEFAULT_MAX_TX_SEND_ATTEMPTS,
-    expectedTxDeliveryTimeInMs: DEFAULT_EXPECTED_DELIVERY_TIME_MS,
-    ...args,
+    packageId: args.packageId,
+    priceAdapterObjectId: args.priceAdapterObjectId,
+    writePricesTxGasBudget: args.writePricesTxGasBudget ?? DEFAULT_GAS_BUDGET,
+    gasMultiplier: args.gasMultiplier ?? DEFAULT_GAS_MULTIPLIER,
+    maxTxSendAttempts: args.maxTxSendAttempts ?? DEFAULT_MAX_TX_SEND_ATTEMPTS,
+    expectedTxDeliveryTimeInMs:
+      args.expectedTxDeliveryTimeInMs ?? DEFAULT_EXPECTED_DELIVERY_TIME_MS,
   };
 }
