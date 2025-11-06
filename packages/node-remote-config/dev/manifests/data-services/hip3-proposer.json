@@ -95,7 +95,7 @@
       "rateFeed": false
     },
     "HL_OPEN_INTEREST_sekaw:BTC": {
-      "source": ["hyperliquid-perps-sekaw-api-fetcher"],
+      "source": ["hyperliquid-testnet-perps-ws-fetcher"],
       "broadcasters": [],
       "denomination": "USD",
       "rateFeed": false,
@@ -189,7 +189,7 @@
       "rateFeed": false
     },
     "HL_OPEN_INTEREST_sekaw:ETH": {
-      "source": ["hyperliquid-perps-sekaw-api-fetcher"],
+      "source": ["hyperliquid-testnet-perps-ws-fetcher"],
       "broadcasters": [],
       "denomination": "USD",
       "rateFeed": false,
@@ -294,7 +294,7 @@
       "rateFeed": false
     },
     "HL_OPEN_INTEREST_flxn:TSLA": {
-      "source": ["hyperliquid-perps-flxn-api-fetcher"],
+      "source": ["hyperliquid-testnet-perps-ws-fetcher"],
       "broadcasters": [],
       "denomination": "USD",
       "rateFeed": false,
