@@ -10727,7 +10727,6 @@ __metadata:
   resolution: "@redstone-finance/lambda-job-offers@workspace:packages/lambda/lambda-job-offers"
   dependencies:
     "@redstone-finance/internal-utils": "workspace:*"
-    "@redstone-finance/node-remote-config": "workspace:*"
     "@redstone-finance/utils": "workspace:*"
     cheerio: "npm:^1.1.0"
     dotenv: "npm:^16.0.3"
