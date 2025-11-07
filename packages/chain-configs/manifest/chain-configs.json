@@ -1016,11 +1016,7 @@
       "name": "Sui Testnet",
       "networkId": "sui/1282977196",
       "currencySymbol": "SUI",
-      "publicRpcUrls": [
-        "https://sui-testnet.public.blastapi.io",
-        "https://sui-testnet.nodeinfra.com",
-        "https://sui-testnet-rpc.publicnode.com"
-      ],
+      "publicRpcUrls": ["https://sui-testnet-rpc.publicnode.com"],
       "avgBlockTimeMs": 1000,
       "multicall3": {
         "address": "",
@@ -1036,7 +1032,6 @@
       "currencySymbol": "SUI",
       "publicRpcUrls": [
         "https://rpc.ankr.com/sui",
-        "https://sui-mainnet.public.blastapi.io",
         "https://1rpc.io/sui",
         "https://sui.blockpi.network/v1/rpc/public",
         "https://sui-mainnet-endpoint.blockvision.org/",
