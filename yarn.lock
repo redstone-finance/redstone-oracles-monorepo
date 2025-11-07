@@ -9869,6 +9869,19 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@redstone-finance/ecs-env-runner@workspace:packages/ecs-env-runner":
+  version: 0.0.0-use.local
+  resolution: "@redstone-finance/ecs-env-runner@workspace:packages/ecs-env-runner"
+  dependencies:
+    "@aws-sdk/client-ecs": "npm:^3.696.0"
+    "@aws-sdk/util-arn-parser": "npm:^3.696.0"
+    "@redstone-finance/internal-utils": "workspace:*"
+    "@redstone-finance/utils": "workspace:*"
+  bin:
+    ecs-env-runner: dist/cli.js
+  languageName: unknown
+  linkType: soft
+
 "@redstone-finance/erc7412@workspace:packages/erc7412":
   version: 0.0.0-use.local
   resolution: "@redstone-finance/erc7412@workspace:packages/erc7412"
