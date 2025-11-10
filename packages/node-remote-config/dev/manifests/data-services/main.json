@@ -7266,7 +7266,7 @@
       "rateFeed": false
     },
     "URANIUM": {
-      "source": ["tezos-uranium-price-api"],
+      "source": ["tezos-uranium-price-api-deferred"],
       "denomination": "USD",
       "rateFeed": false,
       "fallbackToken": "URANIUM_FALLBACK"
