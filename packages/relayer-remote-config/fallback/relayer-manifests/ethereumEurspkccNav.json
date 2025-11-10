@@ -4,7 +4,7 @@
     "id": 1
   },
   "updateTriggers": {
-    "deviationPercentage": 0.1,
+    "deviationPercentage": 0.000001,
     "timeSinceLastUpdateInMilliseconds": 43200000
   },
   "adapterContract": "0x4B2C406f0Dbf7624a32971277DA7B4C43A7A942b",
