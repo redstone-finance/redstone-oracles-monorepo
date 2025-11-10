@@ -26,7 +26,7 @@ export interface MetadataPerSource {
   intermediateValues?: Record<string, string>;
 
   /** value timestamp as reported by source */
-  timestamp?: number;
+  timestampMilliseconds?: number;
 }
 
 export type SlippageData =
