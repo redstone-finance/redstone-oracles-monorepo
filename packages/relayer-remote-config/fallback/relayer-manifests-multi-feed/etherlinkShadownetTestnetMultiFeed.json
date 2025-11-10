@@ -31,6 +31,9 @@
     },
     "LBTC": {
       "priceFeedAddress": "0xE23eCA12D7D2ED3829499556F6dCE06642AFd990"
+    },
+    "URANIUM": {
+      "priceFeedAddress": "0xED2B1ca5D7E246f615c2291De309643D41FeC97e"
     }
   }
 }

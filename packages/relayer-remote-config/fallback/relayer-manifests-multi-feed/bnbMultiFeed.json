@@ -126,6 +126,20 @@
     },
     "thBILL_FUNDAMENTAL/USD": {
       "priceFeedAddress": "0x26FB59e5562405F42f55661f790fA1Bd2F410A3d"
+    },
+    "YUSD_FUNDAMENTAL": {
+      "priceFeedAddress": "0xBA1016eB82e39EcF4deB526B65f08e7aAa2Aea98",
+      "updateTriggersOverrides": {
+        "deviationPercentage": 0.25,
+        "timeSinceLastUpdateInMilliseconds": 43200000
+      }
+    },
+    "sYUSD_FUNDAMENTAL": {
+      "priceFeedAddress": "0xb728dbB1D8504fD521db0e87bdDdF33466bCabAD",
+      "updateTriggersOverrides": {
+        "deviationPercentage": 0.25,
+        "timeSinceLastUpdateInMilliseconds": 43200000
+      }
     }
   }
 }
