@@ -2055,7 +2055,13 @@
       "rateFeed": false
     },
     "TRY": {
-      "source": ["ecb", "twelve-data", "financialmodelingprep", "finhub-usd-reversed"],
+      "source": [
+        "ecb",
+        "twelve-data",
+        "financialmodelingprep",
+        "finhub-usd-reversed",
+        "alphavantage-usd"
+      ],
       "denomination": "USD",
       "rateFeed": false
     },
