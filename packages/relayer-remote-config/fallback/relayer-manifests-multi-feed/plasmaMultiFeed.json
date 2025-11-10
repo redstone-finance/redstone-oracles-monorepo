@@ -46,6 +46,12 @@
     },
     "thBILL_FUNDAMENTAL/USD": {
       "priceFeedAddress": "0xED2B1ca5D7E246f615c2291De309643D41FeC97e"
+    },
+    "XAUt": {
+      "priceFeedAddress": "0x17B0887c92575b147AcB34F2Ce63071b0D8841fb"
+    },
+    "XPL": {
+      "priceFeedAddress": "0x6ED89c637A6a42E0dc625Fbc16888263fa724d51"
     }
   }
 }
