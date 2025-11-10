@@ -36,6 +36,9 @@
     },
     "HEMI": {
       "priceFeedAddress": "0x0960F48901b327040be49ac517D5D8CC7B30c231"
+    },
+    "rETH": {
+      "priceFeedAddress": "0x3587a73AA02519335A8a6053a97657BECe0bC2Cc"
     }
   }
 }
