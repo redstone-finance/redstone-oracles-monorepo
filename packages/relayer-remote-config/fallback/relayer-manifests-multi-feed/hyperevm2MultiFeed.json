@@ -34,6 +34,9 @@
     },
     "USDH": {
       "priceFeedAddress": "0xE18aAD6733D1db21e19cb83B697082D3d4eE5170"
+    },
+    "wNLP_FUNDAMENTAL": {
+      "priceFeedAddress": "0xFd7457B6f09990243Bf8E4C6C956EB909C0E6417"
     }
   }
 }
