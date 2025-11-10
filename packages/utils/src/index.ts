@@ -2,6 +2,7 @@ export * as RedstoneCommon from "./common";
 export * as RedstoneConstants from "./constants";
 export * as RedstoneCrypto from "./crypto";
 export * from "./curated-list";
+export * as FP from "./fp";
 export * as SafeNumber from "./ISafeNumber";
 export * from "./logger";
 export * as MathUtils from "./math";
