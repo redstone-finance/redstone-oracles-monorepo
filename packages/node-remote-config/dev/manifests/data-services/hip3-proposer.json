@@ -6,8 +6,8 @@
   "minValidSourcesPercentage": 30,
   "deviationCheck": {
     "deviationWithRecentValues": {
-      "maxPercent": 30,
-      "maxDelayMilliseconds": 120000
+      "maxPercent": 1000000000,
+      "maxDelayMilliseconds": 1000
     }
   },
   "tokens": {
