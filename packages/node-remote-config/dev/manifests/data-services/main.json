@@ -2350,7 +2350,8 @@
         "ecb",
         "twelve-data",
         "financialmodelingprep",
-        "finhub-usd-reversed"
+        "finhub-usd-reversed",
+        "alphavantage-usd"
       ],
       "denomination": "USD",
       "rateFeed": false
