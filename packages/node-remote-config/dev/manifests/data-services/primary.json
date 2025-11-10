@@ -3250,7 +3250,7 @@
     },
     "URANIUM": {
       "source": [
-        "tezos-uranium-price-api"
+        "tezos-uranium-price-api-deferred"
       ],
       "denomination": "USD",
       "rateFeed": false,
