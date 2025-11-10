@@ -118,9 +118,7 @@ export class TxDeliveryMan implements Tx.ITxDeliveryMan {
     const hashes = Array.from(new Set(receipts.map((r) => r.transactionHash)));
 
     if (hashes.length === 0) {
-      throw new Error(
-        `Transaction was mined but reverted with error OR we failed to fetch it. Possible transactions: ${hashes.join(", ")}`
-      );
+      throw new Error("Transaction was mined but reverted with error OR we failed to fetch it.");
     }
 
     if (hashes.length > 1) {
