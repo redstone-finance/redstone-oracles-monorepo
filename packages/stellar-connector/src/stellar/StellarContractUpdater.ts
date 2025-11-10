@@ -1,6 +1,6 @@
-import { ContractUpdater, ContractUpdateStatus, ok } from "@redstone-finance/multichain-kit";
+import { ContractUpdater, ContractUpdateStatus } from "@redstone-finance/multichain-kit";
 import { ContractParamsProvider } from "@redstone-finance/sdk";
-import { RedstoneCommon } from "@redstone-finance/utils";
+import { FP, RedstoneCommon } from "@redstone-finance/utils";
 import { Contract } from "@stellar/stellar-sdk";
 import { splitParamsIntoBatches } from "../splitParamsIntoBatches";
 import * as XdrUtils from "../XdrUtils";
@@ -16,21 +16,26 @@ export class StellarContractUpdater implements ContractUpdater {
     params: ContractParamsProvider,
     updateStartTimeMs: number
   ): Promise<ContractUpdateStatus> {
-    const updater = XdrUtils.addressToScVal(await this.executor.getPublicKey());
+    const attempt = async () => {
+      const updater = XdrUtils.addressToScVal(await this.executor.getPublicKey());
+      const paramsProviders = splitParamsIntoBatches(params);
 
-    const paramsProviders = splitParamsIntoBatches(params);
+      const executors = paramsProviders.map((provider) => async () => {
+        const args = await this.prepareCallArgs(provider, updateStartTimeMs);
+        const operation = this.contract.call("write_prices", updater, ...args);
+        const result = await this.executor.executeOperation(operation);
 
-    const executors = paramsProviders.map((provider) => async () => {
-      const args = await this.prepareCallArgs(provider, updateStartTimeMs);
-      const operation = this.contract.call("write_prices", updater, ...args);
-      const result = await this.executor.executeOperation(operation);
+        return result.hash;
+      });
 
-      return result.hash;
-    });
+      return await RedstoneCommon.batchPromises(1, 0, executors, true);
+    };
 
-    const txHashes = await RedstoneCommon.batchPromises(1, 0, executors, true);
+    const updateResult = await FP.tryCallAsyncStringifyError(attempt);
 
-    return ok({ transactionHash: txHashes[txHashes.length - 1] });
+    return FP.mapStringifyError(updateResult, (txHashes) => ({
+      transactionHash: txHashes[txHashes.length - 1],
+    }));
   }
 
   private async prepareCallArgs(paramsProvider: ContractParamsProvider, metadataTimestamp: number) {

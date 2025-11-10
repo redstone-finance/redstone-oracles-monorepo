@@ -1,5 +1,5 @@
-import { RedstoneCommon } from "@redstone-finance/utils";
-import { err, ok, TxDeliveryMan } from "../src";
+import { FP, RedstoneCommon } from "@redstone-finance/utils";
+import { TxDeliveryMan } from "../src";
 
 describe("TxDeliveryMan", () => {
   const createDeliveryMan = (maxAttempts = 3, timeoutMs = 5000) =>
@@ -15,12 +15,12 @@ describe("TxDeliveryMan", () => {
     const operation = (attempt: number) => {
       attemptNumbers.push(attempt);
 
-      return Promise.resolve(ok({ data: "success" }));
+      return Promise.resolve(FP.ok({ data: "success" }));
     };
 
     const result = await deliveryMan.submit(operation);
 
-    expect(result).toEqual(ok({ data: "success" }));
+    expect(result).toEqual(FP.ok({ data: "success" }));
     expect(attemptNumbers).toEqual([0]);
   });
 
@@ -31,23 +31,23 @@ describe("TxDeliveryMan", () => {
     const operation = (attempt: number) => {
       attemptNumbers.push(attempt);
 
-      return Promise.resolve(attempt === 0 ? err("first failure") : ok({ data: "success" }));
+      return Promise.resolve(attempt === 0 ? FP.err("first failure") : FP.ok({ data: "success" }));
     };
 
     const result = await deliveryMan.submit(operation);
 
-    expect(result).toEqual(ok({ data: "success" }));
+    expect(result).toEqual(FP.ok({ data: "success" }));
     expect(attemptNumbers).toEqual([0, 1]);
   });
 
   it("accumulates errors when all attempts fail", async () => {
     const deliveryMan = createDeliveryMan(3);
 
-    const operation = (attempt: number) => Promise.resolve(err(`error ${attempt + 1}`));
+    const operation = (attempt: number) => Promise.resolve(FP.err(`error ${attempt + 1}`));
 
     const result = await deliveryMan.submit(operation);
 
-    expect(result).toEqual(err(["error 1", "error 2", "error 3"]));
+    expect(result).toEqual(FP.err(["error 1", "error 2", "error 3"]));
   });
 
   it("respects maxTxSendAttempts configuration", async () => {
@@ -57,7 +57,7 @@ describe("TxDeliveryMan", () => {
     const operation = (attempt: number) => {
       attemptNumbers.push(attempt);
 
-      return Promise.resolve(err("failure"));
+      return Promise.resolve(FP.err("failure"));
     };
 
     await deliveryMan.submit(operation);
@@ -72,12 +72,12 @@ describe("TxDeliveryMan", () => {
     const operation = (attempt: number) => {
       attemptNumbers.push(attempt);
 
-      return Promise.resolve(attempt === 2 ? ok({ value: 42 }) : err("not yet"));
+      return Promise.resolve(attempt === 2 ? FP.ok({ value: 42 }) : FP.err("not yet"));
     };
 
     const result = await deliveryMan.submit(operation);
 
-    expect(result).toEqual(ok({ value: 42 }));
+    expect(result).toEqual(FP.ok({ value: 42 }));
     expect(attemptNumbers).toEqual([0, 1, 2]);
   });
 
@@ -105,7 +105,7 @@ describe("TxDeliveryMan", () => {
     const operation = (attempt: number) => {
       receivedAttempts.push(attempt);
 
-      return Promise.resolve(err("keep trying"));
+      return Promise.resolve(FP.err("keep trying"));
     };
 
     await deliveryMan.submit(operation);
@@ -119,7 +119,7 @@ describe("TxDeliveryMan", () => {
     const operation = async () => {
       await RedstoneCommon.sleep(150);
 
-      return ok({ data: "never returned" });
+      return FP.ok({ data: "never returned" });
     };
 
     const result = await deliveryMan.submit(operation);
@@ -129,7 +129,7 @@ describe("TxDeliveryMan", () => {
     if (!result.success) {
       expect(result.err).toHaveLength(2);
       result.err.forEach((error) => {
-        expect(error).toContain("Invocation timeout after 50ms");
+        expect(error).toContain("Timeout error 50 [MS]");
       });
     }
   });
