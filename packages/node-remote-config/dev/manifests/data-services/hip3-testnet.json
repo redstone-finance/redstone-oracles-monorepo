@@ -96,7 +96,7 @@
     },
     "sekaw:BTC_MARK_0": {
       "source": [
-        "hyperliquid-hip3-proposer-fetcher"
+        "hyperliquid-hip3-ethena-fetcher"
       ],
       "broadcasters": [
         "hyperliquid-hip3"
@@ -106,7 +106,7 @@
     },
     "sekaw:BTC_MARK_1": {
       "source": [
-        "hyperliquid-hip3-proposer-fetcher"
+        "hyperliquid-hip3-ethena-fetcher"
       ],
       "broadcasters": [
         "hyperliquid-hip3"
@@ -116,7 +116,7 @@
     },
     "sekaw:BTC_EXT": {
       "source": [
-        "hyperliquid-hip3-proposer-fetcher"
+        "hyperliquid-hip3-ethena-fetcher"
       ],
       "broadcasters": [
         "hyperliquid-hip3"
@@ -126,7 +126,7 @@
     },
     "sekaw:BTC": {
       "source": [
-        "hyperliquid-hip3-proposer-fetcher"
+        "hyperliquid-hip3-ethena-fetcher"
       ],
       "broadcasters": [
         "hyperliquid-hip3"
@@ -232,7 +232,7 @@
     },
     "sekaw:ETH_MARK_0": {
       "source": [
-        "hyperliquid-hip3-proposer-fetcher"
+        "hyperliquid-hip3-ethena-fetcher"
       ],
       "broadcasters": [
         "hyperliquid-hip3"
@@ -242,7 +242,7 @@
     },
     "sekaw:ETH_MARK_1": {
       "source": [
-        "hyperliquid-hip3-proposer-fetcher"
+        "hyperliquid-hip3-ethena-fetcher"
       ],
       "broadcasters": [
         "hyperliquid-hip3"
@@ -252,7 +252,7 @@
     },
     "sekaw:ETH_EXT": {
       "source": [
-        "hyperliquid-hip3-proposer-fetcher"
+        "hyperliquid-hip3-ethena-fetcher"
       ],
       "broadcasters": [
         "hyperliquid-hip3"
@@ -262,7 +262,7 @@
     },
     "sekaw:ETH": {
       "source": [
-        "hyperliquid-hip3-proposer-fetcher"
+        "hyperliquid-hip3-ethena-fetcher"
       ],
       "broadcasters": [
         "hyperliquid-hip3"
@@ -376,7 +376,7 @@
     },
     "flxn:TSLA_MARK_0": {
       "source": [
-        "hyperliquid-hip3-felix-proposer-fetcher"
+        "hyperliquid-hip3-felix-testnet-fetcher"
       ],
       "broadcasters": [
         "hyperliquid-hip3"
@@ -386,7 +386,7 @@
     },
     "flxn:TSLA_MARK_1": {
       "source": [
-        "hyperliquid-hip3-felix-proposer-fetcher"
+        "hyperliquid-hip3-felix-testnet-fetcher"
       ],
       "broadcasters": [
         "hyperliquid-hip3"
@@ -396,7 +396,7 @@
     },
     "flxn:TSLA_EXT": {
       "source": [
-        "hyperliquid-hip3-felix-proposer-fetcher"
+        "hyperliquid-hip3-felix-testnet-fetcher"
       ],
       "broadcasters": [
         "hyperliquid-hip3"
@@ -406,7 +406,7 @@
     },
     "flxn:TSLA": {
       "source": [
-        "hyperliquid-hip3-felix-proposer-fetcher"
+        "hyperliquid-hip3-felix-testnet-fetcher"
       ],
       "broadcasters": [
         "hyperliquid-hip3"
