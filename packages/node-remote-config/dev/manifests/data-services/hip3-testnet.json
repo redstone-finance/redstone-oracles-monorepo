@@ -71,25 +71,25 @@
       "rateFeed": false
     },
     "sekaw:BTC_MARK_0": {
-      "source": ["hyperliquid-hip3-proposer-fetcher"],
+      "source": ["hyperliquid-hip3-ethena-fetcher"],
       "broadcasters": ["hyperliquid-hip3"],
       "denomination": "USD",
       "rateFeed": false
     },
     "sekaw:BTC_MARK_1": {
-      "source": ["hyperliquid-hip3-proposer-fetcher"],
+      "source": ["hyperliquid-hip3-ethena-fetcher"],
       "broadcasters": ["hyperliquid-hip3"],
       "denomination": "USD",
       "rateFeed": false
     },
     "sekaw:BTC_EXT": {
-      "source": ["hyperliquid-hip3-proposer-fetcher"],
+      "source": ["hyperliquid-hip3-ethena-fetcher"],
       "broadcasters": ["hyperliquid-hip3"],
       "denomination": "USD",
       "rateFeed": false
     },
     "sekaw:BTC": {
-      "source": ["hyperliquid-hip3-proposer-fetcher"],
+      "source": ["hyperliquid-hip3-ethena-fetcher"],
       "broadcasters": ["hyperliquid-hip3"],
       "denomination": "USD",
       "rateFeed": false
@@ -165,25 +165,25 @@
       "rateFeed": false
     },
     "sekaw:ETH_MARK_0": {
-      "source": ["hyperliquid-hip3-proposer-fetcher"],
+      "source": ["hyperliquid-hip3-ethena-fetcher"],
       "broadcasters": ["hyperliquid-hip3"],
       "denomination": "USD",
       "rateFeed": false
     },
     "sekaw:ETH_MARK_1": {
-      "source": ["hyperliquid-hip3-proposer-fetcher"],
+      "source": ["hyperliquid-hip3-ethena-fetcher"],
       "broadcasters": ["hyperliquid-hip3"],
       "denomination": "USD",
       "rateFeed": false
     },
     "sekaw:ETH_EXT": {
-      "source": ["hyperliquid-hip3-proposer-fetcher"],
+      "source": ["hyperliquid-hip3-ethena-fetcher"],
       "broadcasters": ["hyperliquid-hip3"],
       "denomination": "USD",
       "rateFeed": false
     },
     "sekaw:ETH": {
-      "source": ["hyperliquid-hip3-proposer-fetcher"],
+      "source": ["hyperliquid-hip3-ethena-fetcher"],
       "broadcasters": ["hyperliquid-hip3"],
       "denomination": "USD",
       "rateFeed": false
@@ -270,25 +270,25 @@
       "rateFeed": false
     },
     "flxn:TSLA_MARK_0": {
-      "source": ["hyperliquid-hip3-felix-proposer-fetcher"],
+      "source": ["hyperliquid-hip3-felix-testnet-fetcher"],
       "broadcasters": ["hyperliquid-hip3"],
       "denomination": "USD",
       "rateFeed": false
     },
     "flxn:TSLA_MARK_1": {
-      "source": ["hyperliquid-hip3-felix-proposer-fetcher"],
+      "source": ["hyperliquid-hip3-felix-testnet-fetcher"],
       "broadcasters": ["hyperliquid-hip3"],
       "denomination": "USD",
       "rateFeed": false
     },
     "flxn:TSLA_EXT": {
-      "source": ["hyperliquid-hip3-felix-proposer-fetcher"],
+      "source": ["hyperliquid-hip3-felix-testnet-fetcher"],
       "broadcasters": ["hyperliquid-hip3"],
       "denomination": "USD",
       "rateFeed": false
     },
     "flxn:TSLA": {
-      "source": ["hyperliquid-hip3-felix-proposer-fetcher"],
+      "source": ["hyperliquid-hip3-felix-testnet-fetcher"],
       "broadcasters": ["hyperliquid-hip3"],
       "denomination": "USD",
       "rateFeed": false
