@@ -2,9 +2,9 @@ import { SuiClient, SuiTransactionBlockResponse } from "@mysten/sui/client";
 import type { Keypair } from "@mysten/sui/cryptography";
 import { ParallelTransactionExecutor, Transaction } from "@mysten/sui/transactions";
 import { MIST_PER_SUI } from "@mysten/sui/utils";
-import { ContractUpdater, ContractUpdateStatus, ok } from "@redstone-finance/multichain-kit";
+import { ContractUpdater, ContractUpdateStatus } from "@redstone-finance/multichain-kit";
 import { ContractParamsProvider } from "@redstone-finance/sdk";
-import { loggerFactory } from "@redstone-finance/utils";
+import { FP, loggerFactory } from "@redstone-finance/utils";
 import { DEFAULT_GAS_BUDGET } from "./SuiContractUtil";
 import { SuiPricesContractWriter } from "./SuiPricesContractWriter";
 import { SuiConfig } from "./config";
@@ -30,12 +30,15 @@ export class SuiContractUpdater implements ContractUpdater {
     updateStartTimeMs: number,
     attempt: number
   ): Promise<ContractUpdateStatus> {
-    const tx = await this.writer.prepareWritePricesTransaction(params, updateStartTimeMs, attempt);
+    const txResult = await FP.tryCallAsyncStringifyError(() =>
+      this.writer.prepareWritePricesTransaction(params, updateStartTimeMs, attempt)
+    );
 
-    const digest = await this.performExecutingTx(tx);
-    return ok({
-      transactionHash: digest,
-    });
+    const digestResult = await FP.mapAsyncStringifyError(txResult, (tx) =>
+      this.performExecutingTx(tx)
+    );
+
+    return FP.mapStringifyError(digestResult, (transactionHash) => ({ transactionHash }));
   }
 
   getSignerAddress() {

@@ -1,14 +1,14 @@
 import { bcs } from "@mysten/bcs";
 import { SuiClient } from "@mysten/sui/client";
 import { Transaction } from "@mysten/sui/transactions";
-import { TxDeliveryMan, unwrapSuccess } from "@redstone-finance/multichain-kit";
+import { TxDeliveryMan } from "@redstone-finance/multichain-kit";
 import {
   ContractData,
   type ContractParamsProvider,
   getLastRoundDetails,
   IMultiFeedPricesContractAdapter,
 } from "@redstone-finance/sdk";
-import { loggerFactory, RedstoneCommon } from "@redstone-finance/utils";
+import { FP, loggerFactory, RedstoneCommon } from "@redstone-finance/utils";
 import _ from "lodash";
 import { SuiConfig } from "./config";
 import { PriceAdapterConfig } from "./PriceAdapterConfig";
@@ -131,7 +131,7 @@ export class SuiPricesContractAdapter implements IMultiFeedPricesContractAdapter
 
     this.logger.info(`write-prices status: ${RedstoneCommon.stringify(result)}`);
 
-    return unwrapSuccess(result).transactionHash;
+    return FP.unwrapSuccess(result).transactionHash;
   }
 
   getPricesFromPayload(_paramsProvider: ContractParamsProvider): Promise<bigint[]> {
