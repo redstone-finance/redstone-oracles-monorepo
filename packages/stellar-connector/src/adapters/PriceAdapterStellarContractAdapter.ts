@@ -1,10 +1,10 @@
-import { unwrapSuccess } from "@redstone-finance/multichain-kit";
 import {
   ContractData,
   ContractParamsProvider,
   IMultiFeedPricesContractAdapter,
   LastRoundDetails,
 } from "@redstone-finance/sdk";
+import { FP } from "@redstone-finance/utils";
 import _ from "lodash";
 import { splitParamsIntoBatches } from "../splitParamsIntoBatches";
 import { StellarContractUpdater } from "../stellar/StellarContractUpdater";
@@ -71,7 +71,7 @@ export class PriceAdapterStellarContractAdapter
 
     const updater = new StellarContractUpdater(this.operationSender.getExecutor(), this.contract);
 
-    return unwrapSuccess(await this.operationSender.updateContract(updater, paramsProvider))
+    return FP.unwrapSuccess(await this.operationSender.updateContract(updater, paramsProvider))
       .transactionHash;
   }
 

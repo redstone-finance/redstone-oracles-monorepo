@@ -1,9 +1,8 @@
 import { ContractParamsProvider } from "@redstone-finance/sdk";
-import { loggerFactory, RedstoneCommon, RedstoneLogger } from "@redstone-finance/utils";
-import { err, Result } from "./Result";
+import { FP, loggerFactory, RedstoneCommon, RedstoneLogger } from "@redstone-finance/utils";
 
-export type ContractUpdateStatus = Result<{ transactionHash: string }, string>;
-export type TxDeliveryManUpdateStatus = Result<{ transactionHash: string }, string[]>;
+export type ContractUpdateStatus = FP.Result<{ transactionHash: string }, string>;
+export type TxDeliveryManUpdateStatus = FP.Result<{ transactionHash: string }, string[]>;
 
 export interface ContractUpdater {
   update(
@@ -44,42 +43,28 @@ export class TxDeliveryMan {
   }
 
   async submit<T>(
-    operation: (attempt: number) => Promise<Result<T, string>>
-  ): Promise<Result<T, string[]>> {
-    const errors: string[] = [];
-
-    for (let attempt = 0; attempt < this.config.maxTxSendAttempts; attempt++) {
+    operation: (attempt: number) => Promise<FP.Result<T, string>>
+  ): Promise<FP.Result<T, string[]>> {
+    const makeAttempt = (attempt: number) => async () => {
       this.logger.log(
         `Attempt ${attempt + 1}/${this.config.maxTxSendAttempts} to send transaction`
       );
 
-      try {
-        const result = await RedstoneCommon.timeout(
-          operation(attempt),
-          this.config.expectedTxDeliveryTimeInMs,
-          undefined,
-          (resolve) =>
-            resolve(err(`Invocation timeout after ${this.config.expectedTxDeliveryTimeInMs}ms`))
-        );
+      const wrappedResult = await FP.tryCallAsyncStringifyError(
+        async () =>
+          await RedstoneCommon.timeout(operation(attempt), this.config.expectedTxDeliveryTimeInMs)
+      );
+      const result = FP.flatten(wrappedResult);
 
-        this.logger.log(
-          `Attempt: ${attempt + 1}, Submission status: ${RedstoneCommon.stringify(result)}`
-        );
+      this.logger.log(
+        `Attempt: ${attempt + 1}, Submission status: ${RedstoneCommon.stringify(result)}`
+      );
 
-        if (result.success) {
-          return result;
-        }
+      return result;
+    };
 
-        errors.push(result.err);
-      } catch (e) {
-        const error = RedstoneCommon.stringifyError(e);
-        errors.push(error);
-        this.logger.log(
-          `Attempt: ${attempt + 1}, Submission status: ${RedstoneCommon.stringify(err({ error }))}`
-        );
-      }
-    }
-
-    return err(errors);
+    return await FP.findFirstAsyncApply(
+      Array.from({ length: this.config.maxTxSendAttempts }, (_, i) => makeAttempt(i))
+    );
   }
 }
