@@ -60,6 +60,16 @@
       "source": ["hydromancer-testnet-perps-ws-fetcher"],
       "denomination": "USD",
       "rateFeed": true
+    },
+    "HL_IMPACT_PXS_BUY_flxn:TSLA": {
+      "source": ["hydromancer-testnet-perps-ws-fetcher"],
+      "denomination": "USD",
+      "rateFeed": true
+    },
+    "HL_IMPACT_PXS_SELL_flxn:TSLA": {
+      "source": ["hydromancer-testnet-perps-ws-fetcher"],
+      "denomination": "USD",
+      "rateFeed": true
     }
   }
 }

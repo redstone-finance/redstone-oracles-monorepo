@@ -56,7 +56,12 @@
       "denomination": "USD",
       "rateFeed": true
     },
-    "HL_OPEN_INTEREST_sekaw:BTC": {
+    "HL_IMPACT_PXS_BUY_flxn:TSLA": {
+      "source": ["hyperliquid-testnet-perps-ws-fetcher"],
+      "denomination": "USD",
+      "rateFeed": true
+    },
+    "HL_IMPACT_PXS_SELL_flxn:TSLA": {
       "source": ["hyperliquid-testnet-perps-ws-fetcher"],
       "denomination": "USD",
       "rateFeed": true
