@@ -1,16 +1,8 @@
 import { ContractParamsProvider } from "@redstone-finance/sdk";
 import { FP, loggerFactory, RedstoneCommon, RedstoneLogger } from "@redstone-finance/utils";
+import { ContractUpdater } from "./ContractUpdater";
 
-export type ContractUpdateStatus = FP.Result<{ transactionHash: string }, string>;
 export type TxDeliveryManUpdateStatus = FP.Result<{ transactionHash: string }, string[]>;
-
-export interface ContractUpdater {
-  update(
-    params: ContractParamsProvider,
-    updateStartTimeMs: number,
-    attempt: number
-  ): Promise<ContractUpdateStatus>;
-}
 
 export type TxDeliveryManConfig = {
   maxTxSendAttempts: number;
@@ -18,10 +10,10 @@ export type TxDeliveryManConfig = {
 };
 
 export class TxDeliveryMan {
-  private readonly logger: RedstoneLogger;
+  protected readonly logger: RedstoneLogger;
 
   constructor(
-    private readonly config: TxDeliveryManConfig,
+    protected readonly config: TxDeliveryManConfig,
     logTarget: string = "tx-delivery-man"
   ) {
     if (!this.config.maxTxSendAttempts || this.config.maxTxSendAttempts < 0) {
@@ -35,11 +27,12 @@ export class TxDeliveryMan {
 
   async updateContract(
     updater: ContractUpdater,
-    params: ContractParamsProvider
+    paramsProvider: ContractParamsProvider
   ): Promise<TxDeliveryManUpdateStatus> {
     const updateStartTimeMs = Date.now();
+    const context = { updateStartTimeMs };
 
-    return await this.submit((attempt) => updater.update(params, updateStartTimeMs, attempt));
+    return await this.submit((attempt) => updater.update(paramsProvider, context, attempt));
   }
 
   async submit<T>(

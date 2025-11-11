@@ -1,11 +1,13 @@
 import {
   ContractUpdater,
+  MultiTxDeliveryMan,
   TxDeliveryMan,
   TxDeliveryManUpdateStatus,
 } from "@redstone-finance/multichain-kit";
 import { ContractParamsProvider } from "@redstone-finance/sdk";
 import { FP, RedstoneCommon } from "@redstone-finance/utils";
 import { Operation, xdr } from "@stellar/stellar-sdk";
+import { MULTI_TX_DELIVERY_MAN_CONFIG } from "../split-params-into-batches";
 import { StellarClient } from "./StellarClient";
 import { StellarSigner } from "./StellarSigner";
 import { StellarTransactionExecutor } from "./StellarTransactionExecutor";
@@ -23,7 +25,13 @@ export class StellarOperationSender {
     config?: Partial<StellarTxDeliveryManConfig>
   ) {
     const fullConfig = configFromPartial(config);
-    this.txDeliveryMan = new TxDeliveryMan(fullConfig, "stellar-tx-delivery-man");
+    this.txDeliveryMan = new MultiTxDeliveryMan(
+      {
+        ...fullConfig,
+        ...MULTI_TX_DELIVERY_MAN_CONFIG,
+      },
+      "stellar-tx-delivery-man"
+    );
     this.executor = new StellarTransactionExecutor(
       signer,
       client,
@@ -44,9 +52,10 @@ export class StellarOperationSender {
   }
 
   async sendTransaction(operation: StellarOperation): Promise<string> {
+    const context = {};
     const operationResult = await FP.tryCallAsyncStringifyError(() =>
       this.txDeliveryMan.submit(async () => {
-        const txResult = await this.executor.executeOperation(operation);
+        const txResult = await this.executor.executeOperation(operation, context);
 
         return FP.ok({ transactionHash: txResult.hash });
       })
