@@ -6,7 +6,7 @@ import {
 } from "@redstone-finance/sdk";
 import { FP } from "@redstone-finance/utils";
 import _ from "lodash";
-import { splitParamsIntoBatches } from "../splitParamsIntoBatches";
+import { splitParamsIntoBatches } from "../split-params-into-batches";
 import { StellarContractUpdater } from "../stellar/StellarContractUpdater";
 import * as XdrUtils from "../XdrUtils";
 import { StellarContractAdapter } from "./StellarContractAdapter";
