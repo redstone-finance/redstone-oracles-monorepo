@@ -45,6 +45,7 @@
         "hyperliquid-testnet-perps-ws-fetcher": 10,
         "hydromancer-testnet-perps-ws-fetcher": 1
       },
+      "localCacheTTL": "150s",
       "broadcasters": ["influx"],
       "denomination": "USD",
       "rateFeed": false
@@ -129,6 +130,7 @@
         "hyperliquid-testnet-perps-ws-fetcher": 10,
         "hydromancer-testnet-perps-ws-fetcher": 1
       },
+      "localCacheTTL": "150s",
       "broadcasters": ["influx"],
       "denomination": "USD",
       "rateFeed": false
@@ -139,6 +141,7 @@
         "hyperliquid-testnet-perps-ws-fetcher": 10,
         "hydromancer-testnet-perps-ws-fetcher": 1
       },
+      "localCacheTTL": "150s",
       "broadcasters": ["influx"],
       "denomination": "USD",
       "rateFeed": false
@@ -254,6 +257,7 @@
         "hyperliquid-testnet-perps-ws-fetcher": 10,
         "hydromancer-testnet-perps-ws-fetcher": 1
       },
+      "localCacheTTL": "150s",
       "broadcasters": ["influx"],
       "denomination": "USD",
       "rateFeed": false
