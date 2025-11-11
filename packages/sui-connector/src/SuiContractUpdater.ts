@@ -2,7 +2,11 @@ import { SuiClient, SuiTransactionBlockResponse } from "@mysten/sui/client";
 import type { Keypair } from "@mysten/sui/cryptography";
 import { ParallelTransactionExecutor, Transaction } from "@mysten/sui/transactions";
 import { MIST_PER_SUI } from "@mysten/sui/utils";
-import { ContractUpdater, ContractUpdateStatus } from "@redstone-finance/multichain-kit";
+import {
+  ContractUpdateContext,
+  ContractUpdater,
+  ContractUpdateStatus,
+} from "@redstone-finance/multichain-kit";
 import { ContractParamsProvider } from "@redstone-finance/sdk";
 import { FP, loggerFactory } from "@redstone-finance/utils";
 import { DEFAULT_GAS_BUDGET } from "./SuiContractUtil";
@@ -26,12 +30,12 @@ export class SuiContractUpdater implements ContractUpdater {
   }
 
   async update(
-    params: ContractParamsProvider,
-    updateStartTimeMs: number,
+    paramsProvider: ContractParamsProvider,
+    context: ContractUpdateContext,
     attempt: number
   ): Promise<ContractUpdateStatus> {
     const txResult = await FP.tryCallAsyncStringifyError(() =>
-      this.writer.prepareWritePricesTransaction(params, updateStartTimeMs, attempt)
+      this.writer.prepareWritePricesTransaction(paramsProvider, context.updateStartTimeMs, attempt)
     );
 
     const digestResult = await FP.mapAsyncStringifyError(txResult, (tx) =>
