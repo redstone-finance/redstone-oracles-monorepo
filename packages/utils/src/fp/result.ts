@@ -98,6 +98,14 @@ export function flatten<T, E>(res: Result<Result<T, E>, E>): Result<T, E> {
   return res.ok;
 }
 
+export async function tryAwait<T>(promise: Promise<T>): Promise<Result<T, unknown>> {
+  try {
+    return ok(await promise);
+  } catch (e) {
+    return err(e);
+  }
+}
+
 export function tryCall<T>(fn: () => T): Result<T, unknown> {
   try {
     return ok(fn());
