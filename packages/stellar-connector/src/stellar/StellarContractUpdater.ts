@@ -1,40 +1,35 @@
 import { ContractUpdater, ContractUpdateStatus } from "@redstone-finance/multichain-kit";
 import { ContractParamsProvider } from "@redstone-finance/sdk";
-import { FP, RedstoneCommon } from "@redstone-finance/utils";
+import { FP } from "@redstone-finance/utils";
 import { Contract } from "@stellar/stellar-sdk";
-import { splitParamsIntoBatches } from "../splitParamsIntoBatches";
 import * as XdrUtils from "../XdrUtils";
-import { StellarTransactionExecutor } from "./StellarTransactionExecutor";
+import {
+  StellarContractUpdateContext,
+  StellarTransactionExecutor,
+} from "./StellarTransactionExecutor";
 
-export class StellarContractUpdater implements ContractUpdater {
+const WRITE_PRICES_METHOD = "write_prices";
+
+export class StellarContractUpdater implements ContractUpdater<StellarContractUpdateContext> {
   constructor(
     private readonly executor: StellarTransactionExecutor,
     private readonly contract: Contract
   ) {}
 
   async update(
-    params: ContractParamsProvider,
-    updateStartTimeMs: number
+    paramsProvider: ContractParamsProvider,
+    context: StellarContractUpdateContext
   ): Promise<ContractUpdateStatus> {
-    const attempt = async () => {
-      const updater = XdrUtils.addressToScVal(await this.executor.getPublicKey());
-      const paramsProviders = splitParamsIntoBatches(params);
+    const updater = XdrUtils.addressToScVal(await this.executor.getPublicKey());
 
-      const executors = paramsProviders.map((provider) => async () => {
-        const args = await this.prepareCallArgs(provider, updateStartTimeMs);
-        const operation = this.contract.call("write_prices", updater, ...args);
-        const result = await this.executor.executeOperation(operation);
+    const args = await this.prepareCallArgs(paramsProvider, context.updateStartTimeMs);
+    const operation = this.contract.call(WRITE_PRICES_METHOD, updater, ...args);
+    const attempt = this.executor.executeOperation(operation, context);
 
-        return result.hash;
-      });
+    const updateResult = await FP.tryAwait(attempt);
 
-      return await RedstoneCommon.batchPromises(1, 0, executors, true);
-    };
-
-    const updateResult = await FP.tryCallAsyncStringifyError(attempt);
-
-    return FP.mapStringifyError(updateResult, (txHashes) => ({
-      transactionHash: txHashes[txHashes.length - 1],
+    return FP.mapStringifyError(updateResult, (result) => ({
+      transactionHash: result.hash,
     }));
   }
 
