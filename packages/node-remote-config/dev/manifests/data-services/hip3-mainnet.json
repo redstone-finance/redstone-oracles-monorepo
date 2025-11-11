@@ -65,6 +65,7 @@
         "hyperliquid-mainnet-perps-ws-fetcher": 10,
         "hydromancer-mainnet-perps-ws-fetcher": 1
       },
+      "localCacheTTL": "150s",
       "broadcasters": ["influx"],
       "denomination": "USD",
       "rateFeed": false
