@@ -1,3 +1,4 @@
+import { ContractUpdateContext } from "@redstone-finance/multichain-kit";
 import { loggerFactory, RedstoneCommon } from "@redstone-finance/utils";
 import { Operation, rpc, xdr } from "@stellar/stellar-sdk";
 import { getLedgerCloseDate } from "../utils";
@@ -7,6 +8,8 @@ import { StellarSigner } from "./StellarSigner";
 const SLEEP_TIME_MS = 1_000;
 
 type StellarOperation = xdr.Operation<Operation.InvokeHostFunction>;
+export type StellarOperationContext = { baseTxHash?: string };
+export type StellarContractUpdateContext = ContractUpdateContext & StellarOperationContext;
 
 export class StellarTransactionExecutor {
   private readonly logger = loggerFactory("stellar-transaction-executor");
@@ -18,7 +21,7 @@ export class StellarTransactionExecutor {
     private readonly confirmationTimeoutMs: number
   ) {}
 
-  async executeOperation(operation: StellarOperation) {
+  async executeOperation(operation: StellarOperation, context: StellarOperationContext) {
     void this.logNetworkStats();
 
     const transaction = await this.client.prepareSignedTransaction(
@@ -28,18 +31,24 @@ export class StellarTransactionExecutor {
     );
     const response = await this.client.sendTransaction(transaction);
 
-    this.logger.info(
+    this.logger.log(
       `Transaction ${response.hash} sent with status ${response.status}, ` +
         `latestLedger: ${response.latestLedger} closed on ${getLedgerCloseDate(response.latestLedgerCloseTime).toISOString()}`
     );
 
-    this.validateTransactionResponse(response);
+    let waitingHash = response.hash;
+    if (response.status === "TRY_AGAIN_LATER") {
+      waitingHash = context.baseTxHash ?? waitingHash;
+    } else {
+      this.validateTransactionResponse(response);
+      context.baseTxHash = waitingHash;
+    }
 
-    this.logger.info(`Waiting for transaction: ${response.hash}`);
-    const confirmedTx = await this.waitForConfirmation(response.hash);
+    this.logger.info(`Waiting for transaction: ${waitingHash}`);
+    const confirmedTx = await this.waitForConfirmation(waitingHash);
 
     const result = {
-      hash: response.hash,
+      hash: waitingHash,
       cost: confirmedTx.cost.toBigInt(),
       baseFee: this.gasLimit,
     };
