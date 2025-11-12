@@ -1,9 +1,7 @@
 {
   "interval": 2000,
   "priceAggregator": "median",
-  "defaultSource": [
-    "coingecko"
-  ],
+  "defaultSource": ["coingecko"],
   "sourceTimeout": 2000,
   "minValidSourcesPercentage": 1,
   "deviationCheck": {
@@ -49,20 +47,6 @@
           "maxDelayMilliseconds": 120000
         }
       }
-    },
-    "EUR": {
-      "source": []
-    },
-    "GBP": {
-      "source": [
-        "bitstamp-usd",
-        "financialmodelingprep",
-        "kraken-usd",
-        "coinbase-btc-reversed",
-        "bitstamp-btc-reversed",
-        "kraken-usdt-reversed",
-        "bitfinex-btc-reversed"
-      ]
     },
     "DAI": {
       "source": [
