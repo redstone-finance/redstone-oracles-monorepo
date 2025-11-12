@@ -48,32 +48,6 @@
         }
       }
     },
-    "EUR": {
-      "source": [
-        "binance-usdt",
-        "bitstamp-usd",
-        "kaiko-v2",
-        "kraken-usd",
-        "coinbase-btc-reversed",
-        "bitstamp-btc-reversed",
-        "kraken-usdt-reversed",
-        "coinbase-usdt-reversed",
-        "binance-usdc",
-        "bitget-usdt-reversed",
-        "okx-btc-reversed"
-      ]
-    },
-    "GBP": {
-      "source": [
-        "bitstamp-usd",
-        "financialmodelingprep",
-        "kraken-usd",
-        "coinbase-btc-reversed",
-        "bitstamp-btc-reversed",
-        "kraken-usdt-reversed",
-        "bitfinex-btc-reversed"
-      ]
-    },
     "DAI": {
       "source": [
         "bingx-usdt",
