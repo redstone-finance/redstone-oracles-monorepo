@@ -59,7 +59,6 @@ export function getNonEvmBlockchainService(
       const client = new StellarClientBuilder()
         .withNetworkId(networkId)
         .withRpcUrls(rpcUrls)
-        .withQuarantineEnabled()
         .build();
       const keypair = privateKey ? makeStellarKeypair(privateKey.value) : undefined;
       return new StellarBlockchainService(client, keypair);

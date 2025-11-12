@@ -11205,6 +11205,7 @@ __metadata:
     "@types/aws-lambda": "npm:^8.10.145"
     dotenv: "npm:^16.0.3"
     ethers: "npm:^5.7.2"
+    zod: "npm:^3.22.4"
   languageName: unknown
   linkType: soft
 
