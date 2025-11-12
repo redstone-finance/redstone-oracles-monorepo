@@ -69,6 +69,10 @@ export const hourToMs = (hours: number) => hours * 3_600_000;
 
 export const msToHours = (ms: number) => ms / 3_600_000;
 
+export const hourToSecs = (hours: number) => hours * 3_600;
+
+export const secsToHours = (secs: number) => secs / 3_600;
+
 export const secsToMs = (secs: number) => secs * 1_000;
 
 export const intervalMsToCronFormat = (intervalMs: number) => {

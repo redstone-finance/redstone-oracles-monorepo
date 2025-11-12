@@ -11109,6 +11109,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@redstone-finance/lambda-unsnooze-networks@workspace:packages/lambda/lambda-unsnooze-networks"
   dependencies:
+    "@aws-sdk/client-dynamodb": "npm:^3.696.0"
     "@redstone-finance/internal-utils": "workspace:*"
     "@redstone-finance/monitoring-manifests": "workspace:*"
     "@redstone-finance/utils": "workspace:*"
