@@ -5,6 +5,7 @@ import {
   DynamoDBDocumentClient,
   GetCommand,
   PutCommand,
+  PutCommandInput,
   QueryCommand,
   QueryCommandInput,
 } from "@aws-sdk/lib-dynamodb";
@@ -54,11 +55,15 @@ export class DynamoDbService {
     return Item as T | undefined;
   }
 
-  public async write(item: Record<string, unknown>) {
+  public async write(
+    item: Record<string, unknown>,
+    opts?: Omit<PutCommandInput, "TableName" | "Item">
+  ) {
     await this.db.send(
       new PutCommand({
         TableName: this.tableName,
         Item: item,
+        ...opts,
       })
     );
   }
