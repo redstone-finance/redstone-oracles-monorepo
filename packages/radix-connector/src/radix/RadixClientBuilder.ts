@@ -8,7 +8,7 @@ export class RadixClientBuilder extends MultiExecutor.ClientBuilder<
   RadixClient,
   string | undefined
 > {
-  protected override chainType = ChainTypeEnum.Enum.radix;
+  protected override chainType = ChainTypeEnum.enum.radix;
 
   private privateKey?: RedstoneCommon.PrivateKey;
   private clientConfig = DEFAULT_RADIX_CLIENT_CONFIG;
