@@ -9549,7 +9549,7 @@ __metadata:
     ts-loader: "npm:^9.2.3"
     tsconfig-paths: "npm:4.0.0"
     webpack: "npm:^5.89.0"
-    zod: "npm:^3.22.4"
+    zod: "npm:^4.1.12"
   languageName: unknown
   linkType: soft
 
@@ -9571,7 +9571,7 @@ __metadata:
     lodash: "npm:^4.17.21"
     msw: "npm:^2.4.10"
     secp256k1: "npm:^5.0.1"
-    zod: "npm:^3.22.4"
+    zod: "npm:^4.1.12"
   languageName: unknown
   linkType: soft
 
@@ -9587,7 +9587,7 @@ __metadata:
     dotenv: "npm:^16.0.3"
     ethers: "npm:^5.7.2"
     node-jq: "npm:^6.0.0"
-    zod: "npm:^3.22.4"
+    zod: "npm:^4.1.12"
   languageName: unknown
   linkType: soft
 
@@ -9640,7 +9640,7 @@ __metadata:
     mocha: "npm:^10.2.0"
     solidity-coverage: "npm:^0.8.12"
     typechain: "npm:^8.1.1"
-    zod: "npm:^3.22.4"
+    zod: "npm:^4.1.12"
   languageName: unknown
   linkType: soft
 
@@ -9846,7 +9846,7 @@ __metadata:
     semver: "npm:^7.7.0"
     solidity-coverage: "npm:^0.8.12"
     typechain: "npm:^8.1.1"
-    zod: "npm:^3.22.4"
+    zod: "npm:^4.1.12"
   languageName: unknown
   linkType: soft
 
@@ -9865,7 +9865,7 @@ __metadata:
     dotenv: "npm:^16.0.3"
     fastify: "npm:^4.25.1"
     pino: "npm:^9.7.0"
-    zod: "npm:^3.22.4"
+    zod: "npm:^4.1.12"
   languageName: unknown
   linkType: soft
 
@@ -9985,7 +9985,7 @@ __metadata:
     solidity-coverage: "npm:^0.8.12"
     toad-scheduler: "npm:^3.1.0"
     typechain: "npm:^8.1.1"
-    zod: "npm:^3.22.4"
+    zod: "npm:^4.1.12"
   languageName: unknown
   linkType: soft
 
@@ -10104,7 +10104,7 @@ __metadata:
     supertest: "npm:^6.2.3"
     tweetnacl: "npm:^1.0.3"
     ws: "npm:^8.18.3"
-    zod: "npm:^3.22.4"
+    zod: "npm:^4.1.12"
   languageName: unknown
   linkType: soft
 
@@ -10120,7 +10120,7 @@ __metadata:
     lodash: "npm:^4.17.21"
     redstone-api: "npm:^0.4.13"
     toml: "npm:^3.0.0"
-    zod: "npm:^3.22.4"
+    zod: "npm:^4.1.12"
   languageName: unknown
   linkType: soft
 
@@ -10178,7 +10178,7 @@ __metadata:
     dotenv: "npm:^16.0.3"
     lodash: "npm:^4.17.21"
     node-schedule: "npm:^2.1.1"
-    zod: "npm:^3.22.4"
+    zod: "npm:^4.1.12"
   languageName: unknown
   linkType: soft
 
@@ -10190,7 +10190,7 @@ __metadata:
     "@types/node-schedule": "npm:^2.1.0"
     dotenv: "npm:^16.0.3"
     node-schedule: "npm:^2.1.1"
-    zod: "npm:^3.22.4"
+    zod: "npm:^4.1.12"
   languageName: unknown
   linkType: soft
 
@@ -10202,7 +10202,7 @@ __metadata:
     "@redstone-finance/http-client": "workspace:*"
     "@redstone-finance/utils": "workspace:*"
     ethers: "npm:^5.7.2"
-    zod: "npm:^3.22.4"
+    zod: "npm:^4.1.12"
   languageName: unknown
   linkType: soft
 
@@ -10220,7 +10220,7 @@ __metadata:
     dotenv: "npm:^16.0.3"
     ethers: "npm:^5.7.2"
     lodash: "npm:^4.17.21"
-    zod: "npm:^3.22.4"
+    zod: "npm:^4.1.12"
   languageName: unknown
   linkType: soft
 
@@ -10255,7 +10255,7 @@ __metadata:
     axios: "npm:^1.8.4"
     axios-retry: "npm:^4.5.0"
     ethers: "npm:^5.7.2"
-    zod: "npm:^3.22.4"
+    zod: "npm:^4.1.12"
   languageName: unknown
   linkType: soft
 
@@ -10279,7 +10279,7 @@ __metadata:
     axios: "npm:^1.8.4"
     dayjs: "npm:^1.11.12"
     lodash: "npm:^4.17.21"
-    zod: "npm:^3.22.4"
+    zod: "npm:^4.1.12"
   bin:
     calculate-dir-hash: ./dist/src/cli/calculate-dir-hash.js
   languageName: unknown
@@ -10294,7 +10294,7 @@ __metadata:
     "@redstone-finance/internal-utils": "workspace:*"
     "@redstone-finance/utils": "workspace:*"
     dotenv: "npm:^16.0.3"
-    zod: "npm:^3.22.4"
+    zod: "npm:^4.1.12"
   languageName: unknown
   linkType: soft
 
@@ -10307,7 +10307,7 @@ __metadata:
     "@redstone-finance/utils": "workspace:*"
     "@types/aws-lambda": "npm:^8.10.145"
     dotenv: "npm:^16.0.3"
-    zod: "npm:^3.22.4"
+    zod: "npm:^4.1.12"
   languageName: unknown
   linkType: soft
 
@@ -10336,7 +10336,7 @@ __metadata:
     "@types/aws-lambda": "npm:^8.10.145"
     axios: "npm:^1.8.4"
     uuid-random: "npm:^1.3.2"
-    zod: "npm:^3.22.4"
+    zod: "npm:^4.1.12"
   languageName: unknown
   linkType: soft
 
@@ -10350,7 +10350,7 @@ __metadata:
     "@types/aws-lambda": "npm:^8.10.145"
     axios: "npm:^1.8.4"
     dotenv: "npm:^16.0.3"
-    zod: "npm:^3.22.4"
+    zod: "npm:^4.1.12"
   languageName: unknown
   linkType: soft
 
@@ -10402,7 +10402,7 @@ __metadata:
     sleep-promise: "npm:^9.1.0"
     supertest: "npm:^6.2.3"
     uuid-random: "npm:^1.3.2"
-    zod: "npm:^3.22.4"
+    zod: "npm:^4.1.12"
   languageName: unknown
   linkType: soft
 
@@ -10421,7 +10421,7 @@ __metadata:
     ccxt: "npm:^4.4.89"
     dotenv: "npm:^16.0.3"
     lodash: "npm:^4.17.21"
-    zod: "npm:^3.22.4"
+    zod: "npm:^4.1.12"
   languageName: unknown
   linkType: soft
 
@@ -10451,7 +10451,7 @@ __metadata:
     "@types/aws-lambda": "npm:^8.10.145"
     axios: "npm:^1.8.4"
     dotenv: "npm:^16.0.3"
-    zod: "npm:^3.22.4"
+    zod: "npm:^4.1.12"
   languageName: unknown
   linkType: soft
 
@@ -10463,7 +10463,7 @@ __metadata:
     "@redstone-finance/node-remote-config": "workspace:*"
     "@redstone-finance/utils": "workspace:*"
     dotenv: "npm:^16.0.3"
-    zod: "npm:^3.22.4"
+    zod: "npm:^4.1.12"
   languageName: unknown
   linkType: soft
 
@@ -10478,7 +10478,7 @@ __metadata:
     "@redstone-finance/sdk": "workspace:*"
     "@redstone-finance/utils": "workspace:*"
     dotenv: "npm:^16.0.3"
-    zod: "npm:^3.22.4"
+    zod: "npm:^4.1.12"
   languageName: unknown
   linkType: soft
 
@@ -10496,7 +10496,7 @@ __metadata:
     "@types/aws-lambda": "npm:^8.10.145"
     axios: "npm:^1.8.4"
     dotenv: "npm:^16.0.3"
-    zod: "npm:^3.22.4"
+    zod: "npm:^4.1.12"
   languageName: unknown
   linkType: soft
 
@@ -10526,7 +10526,7 @@ __metadata:
     date-fns: "npm:^3.6.0"
     date-fns-tz: "npm:^3.1.3"
     dotenv: "npm:^16.0.3"
-    zod: "npm:^3.22.4"
+    zod: "npm:^4.1.12"
   languageName: unknown
   linkType: soft
 
@@ -10538,7 +10538,7 @@ __metadata:
     "@redstone-finance/utils": "workspace:*"
     elliptic: "npm:^6.6.1"
     ethers: "npm:^5.7.2"
-    zod: "npm:^3.22.4"
+    zod: "npm:^4.1.12"
   languageName: unknown
   linkType: soft
 
@@ -10552,7 +10552,7 @@ __metadata:
     "@redstone-finance/utils": "workspace:*"
     "@types/aws-lambda": "npm:^8.10.145"
     axios: "npm:^1.8.4"
-    zod: "npm:^3.22.4"
+    zod: "npm:^4.1.12"
   languageName: unknown
   linkType: soft
 
@@ -10576,7 +10576,7 @@ __metadata:
     dotenv: "npm:^16.0.3"
     ethers: "npm:^5.7.2"
     lodash: "npm:^4.17.21"
-    zod: "npm:^3.22.4"
+    zod: "npm:^4.1.12"
   languageName: unknown
   linkType: soft
 
@@ -10594,7 +10594,7 @@ __metadata:
     "@redstone-finance/utils": "workspace:*"
     "@types/aws-lambda": "npm:^8.10.145"
     dotenv: "npm:^16.0.3"
-    zod: "npm:^3.22.4"
+    zod: "npm:^4.1.12"
   languageName: unknown
   linkType: soft
 
@@ -10611,7 +10611,7 @@ __metadata:
     "@types/lodash": "npm:^4.14.195"
     dotenv: "npm:^16.0.3"
     lodash: "npm:^4.17.21"
-    zod: "npm:^3.22.4"
+    zod: "npm:^4.1.12"
   languageName: unknown
   linkType: soft
 
@@ -10630,7 +10630,7 @@ __metadata:
     axios-debug-log: "npm:^1.0.0"
     dotenv: "npm:^16.0.3"
     lodash: "npm:^4.17.21"
-    zod: "npm:^3.22.4"
+    zod: "npm:^4.1.12"
   languageName: unknown
   linkType: soft
 
@@ -10648,7 +10648,7 @@ __metadata:
     "@types/aws-lambda": "npm:^8.10.145"
     axios: "npm:^1.8.4"
     dotenv: "npm:^16.0.3"
-    zod: "npm:^3.22.4"
+    zod: "npm:^4.1.12"
   languageName: unknown
   linkType: soft
 
@@ -10665,7 +10665,7 @@ __metadata:
     "@redstone-finance/utils": "workspace:*"
     "@types/aws-lambda": "npm:^8.10.145"
     dotenv: "npm:^16.0.3"
-    zod: "npm:^3.22.4"
+    zod: "npm:^4.1.12"
   languageName: unknown
   linkType: soft
 
@@ -10680,7 +10680,7 @@ __metadata:
     axios: "npm:^1.8.4"
     elliptic: "npm:^6.6.1"
     ethers: "npm:^5.7.2"
-    zod: "npm:^3.22.4"
+    zod: "npm:^4.1.12"
   languageName: unknown
   linkType: soft
 
@@ -10705,7 +10705,7 @@ __metadata:
     "@redstone-finance/utils": "workspace:*"
     "@types/aws-lambda": "npm:^8.10.145"
     dotenv: "npm:^16.0.3"
-    zod: "npm:^3.22.4"
+    zod: "npm:^4.1.12"
   languageName: unknown
   linkType: soft
 
@@ -10718,7 +10718,7 @@ __metadata:
     "@redstone-finance/node-remote-config": "workspace:*"
     "@redstone-finance/utils": "workspace:*"
     dotenv: "npm:^16.0.3"
-    zod: "npm:^3.22.4"
+    zod: "npm:^4.1.12"
   languageName: unknown
   linkType: soft
 
@@ -10730,7 +10730,7 @@ __metadata:
     "@redstone-finance/utils": "workspace:*"
     cheerio: "npm:^1.1.0"
     dotenv: "npm:^16.0.3"
-    zod: "npm:^3.22.4"
+    zod: "npm:^4.1.12"
   languageName: unknown
   linkType: soft
 
@@ -10743,7 +10743,7 @@ __metadata:
     "@redstone-finance/utils": "workspace:*"
     "@types/aws-lambda": "npm:^8.10.145"
     dotenv: "npm:^16.0.3"
-    zod: "npm:^3.22.4"
+    zod: "npm:^4.1.12"
   languageName: unknown
   linkType: soft
 
@@ -10774,7 +10774,7 @@ __metadata:
     "@types/aws-lambda": "npm:^8.10.145"
     axios: "npm:^1.8.4"
     dotenv: "npm:^16.0.3"
-    zod: "npm:^3.22.4"
+    zod: "npm:^4.1.12"
   languageName: unknown
   linkType: soft
 
@@ -10789,7 +10789,7 @@ __metadata:
     "@redstone-finance/utils": "workspace:*"
     "@types/aws-lambda": "npm:^8.10.145"
     dotenv: "npm:^16.0.3"
-    zod: "npm:^3.22.4"
+    zod: "npm:^4.1.12"
   languageName: unknown
   linkType: soft
 
@@ -10810,7 +10810,7 @@ __metadata:
     lodash: "npm:^4.17.21"
     mongodb: "npm:^5.9.0"
     p-limit: "npm:^4.0.0"
-    zod: "npm:^3.22.4"
+    zod: "npm:^4.1.12"
   languageName: unknown
   linkType: soft
 
@@ -10824,7 +10824,7 @@ __metadata:
     "@types/aws-lambda": "npm:^8.10.145"
     axios: "npm:^1.8.4"
     dotenv: "npm:^16.0.3"
-    zod: "npm:^3.22.4"
+    zod: "npm:^4.1.12"
   languageName: unknown
   linkType: soft
 
@@ -10837,7 +10837,7 @@ __metadata:
     "@redstone-finance/redstone-monitoring": "workspace:*"
     "@redstone-finance/utils": "workspace:*"
     dotenv: "npm:^16.0.3"
-    zod: "npm:^3.22.4"
+    zod: "npm:^4.1.12"
   languageName: unknown
   linkType: soft
 
@@ -10868,7 +10868,7 @@ __metadata:
     "@redstone-finance/redstone-monitoring": "workspace:*"
     "@redstone-finance/utils": "workspace:*"
     dotenv: "npm:^16.0.3"
-    zod: "npm:^3.22.4"
+    zod: "npm:^4.1.12"
   languageName: unknown
   linkType: soft
 
@@ -10907,7 +10907,7 @@ __metadata:
     ethers: "npm:^5.7.2"
     inquirer: "npm:^8.2.6"
     prompts: "npm:^2.4.2"
-    zod: "npm:^3.22.4"
+    zod: "npm:^4.1.12"
   languageName: unknown
   linkType: soft
 
@@ -10923,7 +10923,7 @@ __metadata:
     "@types/aws-lambda": "npm:^8.10.145"
     dotenv: "npm:^16.0.3"
     lodash: "npm:^4.17.21"
-    zod: "npm:^3.22.4"
+    zod: "npm:^4.1.12"
   languageName: unknown
   linkType: soft
 
@@ -10940,7 +10940,7 @@ __metadata:
     "@redstone-finance/utils": "workspace:*"
     "@types/aws-lambda": "npm:^8.10.145"
     dotenv: "npm:^16.0.3"
-    zod: "npm:^3.22.4"
+    zod: "npm:^4.1.12"
   languageName: unknown
   linkType: soft
 
@@ -10964,7 +10964,7 @@ __metadata:
     ethers: "npm:^5.7.2"
     lodash: "npm:^4.17.21"
     prompts: "npm:^2.4.2"
-    zod: "npm:^3.22.4"
+    zod: "npm:^4.1.12"
   languageName: unknown
   linkType: soft
 
@@ -10978,7 +10978,7 @@ __metadata:
     dotenv: "npm:^16.0.3"
     elliptic: "npm:^6.6.1"
     ethers: "npm:^5.7.2"
-    zod: "npm:^3.22.4"
+    zod: "npm:^4.1.12"
   languageName: unknown
   linkType: soft
 
@@ -11029,7 +11029,7 @@ __metadata:
     express: "npm:^4.18.1"
     express-async-handler: "npm:^1.1.4"
     lodash: "npm:^4.17.21"
-    zod: "npm:^3.22.4"
+    zod: "npm:^4.1.12"
   languageName: unknown
   linkType: soft
 
@@ -11060,7 +11060,7 @@ __metadata:
     ethers: "npm:^5.7.2"
     express: "npm:^4.18.1"
     express-async-handler: "npm:^1.1.4"
-    zod: "npm:^3.22.4"
+    zod: "npm:^4.1.12"
   languageName: unknown
   linkType: soft
 
@@ -11091,7 +11091,7 @@ __metadata:
     ethers: "npm:^5.7.2"
     lodash: "npm:^4.17.21"
     prompts: "npm:^2.4.2"
-    zod: "npm:^3.22.4"
+    zod: "npm:^4.1.12"
   languageName: unknown
   linkType: soft
 
@@ -11119,7 +11119,7 @@ __metadata:
     mongodb: "npm:^5.9.0"
     prettier: "npm:^3.6.2"
     redstone-prettier-config: "npm:^1.0.0"
-    zod: "npm:^3.22.4"
+    zod: "npm:^4.1.12"
   languageName: unknown
   linkType: soft
 
@@ -11140,7 +11140,7 @@ __metadata:
     "@types/aws-lambda": "npm:^8.10.145"
     axios: "npm:^1.8.4"
     dotenv: "npm:^16.0.3"
-    zod: "npm:^3.22.4"
+    zod: "npm:^4.1.12"
   languageName: unknown
   linkType: soft
 
@@ -11169,7 +11169,7 @@ __metadata:
     "@redstone-finance/utils": "workspace:*"
     dotenv: "npm:^16.0.3"
     ethers: "npm:^5.7.2"
-    zod: "npm:^3.22.4"
+    zod: "npm:^4.1.12"
   languageName: unknown
   linkType: soft
 
@@ -11186,7 +11186,7 @@ __metadata:
     "@types/mustache": "npm:^4.2.5"
     express: "npm:^4.18.1"
     mustache: "npm:^4.2.0"
-    zod: "npm:^3.22.4"
+    zod: "npm:^4.1.12"
   languageName: unknown
   linkType: soft
 
@@ -11205,7 +11205,7 @@ __metadata:
     "@types/aws-lambda": "npm:^8.10.145"
     dotenv: "npm:^16.0.3"
     ethers: "npm:^5.7.2"
-    zod: "npm:^3.22.4"
+    zod: "npm:^4.1.12"
   languageName: unknown
   linkType: soft
 
@@ -11228,7 +11228,7 @@ __metadata:
     axios: "npm:^1.8.4"
     dotenv: "npm:^16.0.3"
     lodash: "npm:^4.17.21"
-    zod: "npm:^3.22.4"
+    zod: "npm:^4.1.12"
   languageName: unknown
   linkType: soft
 
@@ -11249,7 +11249,7 @@ __metadata:
     ethers: "npm:^5.7.2"
     lodash: "npm:^4.17.21"
     prompts: "npm:^2.4.2"
-    zod: "npm:^3.22.4"
+    zod: "npm:^4.1.12"
   languageName: unknown
   linkType: soft
 
@@ -11266,7 +11266,7 @@ __metadata:
     dotenv: "npm:^16.0.3"
     ethers: "npm:^5.7.2"
     lodash: "npm:^4.17.21"
-    zod: "npm:^3.22.4"
+    zod: "npm:^4.1.12"
   languageName: unknown
   linkType: soft
 
@@ -11295,7 +11295,7 @@ __metadata:
     dotenv: "npm:^16.0.3"
     ethers: "npm:^5.7.2"
     ethers-v6: "npm:ethers@6.13.5"
-    zod: "npm:^3.22.4"
+    zod: "npm:^4.1.12"
   languageName: unknown
   linkType: soft
 
@@ -11312,7 +11312,7 @@ __metadata:
     "@redstone-finance/utils": "workspace:*"
     "@types/lodash": "npm:^4.14.195"
     lodash: "npm:^4.17.21"
-    zod: "npm:^3.22.4"
+    zod: "npm:^4.1.12"
   languageName: unknown
   linkType: soft
 
@@ -11367,7 +11367,7 @@ __metadata:
     solidity-coverage: "npm:^0.8.12"
     toad-scheduler: "npm:^3.1.0"
     typechain: "npm:^8.1.1"
-    zod: "npm:^3.22.4"
+    zod: "npm:^4.1.12"
   languageName: unknown
   linkType: soft
 
@@ -11412,7 +11412,7 @@ __metadata:
     open: "npm:^10.2.0"
     prompts: "npm:^2.4.2"
     sort-deep-object-arrays: "npm:^1.1.2"
-    zod: "npm:^3.22.4"
+    zod: "npm:^4.1.12"
   languageName: unknown
   linkType: soft
 
@@ -11499,7 +11499,7 @@ __metadata:
     node-jq: "npm:^6.0.0"
     redstone-api: "npm:^0.4.13"
     secp256k1: "npm:^5.0.1"
-    zod: "npm:^3.22.4"
+    zod: "npm:^4.1.12"
   languageName: unknown
   linkType: soft
 
@@ -11548,7 +11548,7 @@ __metadata:
     redstone-api: "npm:^0.4.13"
     solidity-coverage: "npm:^0.8.12"
     typechain: "npm:^8.1.1"
-    zod: "npm:^3.22.4"
+    zod: "npm:^4.1.12"
   languageName: unknown
   linkType: soft
 
@@ -11571,7 +11571,7 @@ __metadata:
     ethers: "npm:^5.7.2"
     node-schedule: "npm:^2.1.1"
     xml2js: "npm:^0.6.2"
-    zod: "npm:^3.22.4"
+    zod: "npm:^4.1.12"
   languageName: unknown
   linkType: soft
 
@@ -11611,7 +11611,7 @@ __metadata:
     sinon: "npm:^18.0.0"
     solidity-coverage: "npm:^0.8.12"
     typechain: "npm:^8.1.1"
-    zod: "npm:^3.22.4"
+    zod: "npm:^4.1.12"
   languageName: unknown
   linkType: soft
 
@@ -11628,7 +11628,7 @@ __metadata:
     ethers: "npm:^5.7.2"
     lodash: "npm:^4.17.21"
     msw: "npm:^2.4.10"
-    zod: "npm:^3.22.4"
+    zod: "npm:^4.1.12"
   languageName: unknown
   linkType: soft
 
@@ -11668,7 +11668,7 @@ __metadata:
     redstone-api: "npm:^0.4.13"
     toml: "npm:^3.0.0"
     ts-mocha: "npm:^10.0.0"
-    zod: "npm:^3.22.4"
+    zod: "npm:^4.1.12"
   languageName: unknown
   linkType: soft
 
@@ -11681,7 +11681,7 @@ __metadata:
     dotenv: "npm:^16.0.3"
     ethers: "npm:^5.7.2"
     starknet: "npm:^6.6.6"
-    zod: "npm:^3.22.4"
+    zod: "npm:^4.1.12"
   languageName: unknown
   linkType: soft
 
@@ -11702,7 +11702,7 @@ __metadata:
     dotenv: "npm:^16.0.3"
     ethers: "npm:^5.7.2"
     lodash: "npm:^4.17.21"
-    zod: "npm:^3.22.4"
+    zod: "npm:^4.1.12"
   languageName: unknown
   linkType: soft
 
@@ -11738,7 +11738,7 @@ __metadata:
     ethers: "npm:^5.7.2"
     lodash: "npm:^4.17.21"
     secp256k1: "npm:^5.0.1"
-    zod: "npm:^3.22.4"
+    zod: "npm:^4.1.12"
   languageName: unknown
   linkType: soft
 
@@ -11764,7 +11764,7 @@ __metadata:
     dotenv: "npm:^16.0.3"
     ethers-v6: "npm:ethers@6.13.5"
     node-schedule: "npm:^2.1.1"
-    zod: "npm:^3.22.4"
+    zod: "npm:^4.1.12"
   languageName: unknown
   linkType: soft
 
@@ -11802,7 +11802,7 @@ __metadata:
     ethers: "npm:^5.7.2"
     lodash: "npm:^4.17.21"
     sinon: "npm:^18.0.0"
-    zod: "npm:^3.22.4"
+    zod: "npm:^4.1.12"
   languageName: unknown
   linkType: soft
 
@@ -11819,7 +11819,7 @@ __metadata:
     dotenv: "npm:^16.0.3"
     ethers-v6: "npm:ethers@6.13.5"
     express: "npm:^4.18.1"
-    zod: "npm:^3.22.4"
+    zod: "npm:^4.1.12"
   languageName: unknown
   linkType: soft
 
@@ -11829,7 +11829,7 @@ __metadata:
   dependencies:
     "@types/ws": "npm:^8.18.1"
     ws: "npm:^8.18.3"
-    zod: "npm:^3.22.4"
+    zod: "npm:^4.1.12"
   languageName: unknown
   linkType: soft
 
@@ -41126,23 +41126,23 @@ __metadata:
   languageName: node
   linkType: hard
 
-"zod@npm:3.23.8, zod@npm:^3.23.6, zod@npm:^3.23.8":
+"zod@npm:3.23.8":
   version: 3.23.8
   resolution: "zod@npm:3.23.8"
   checksum: 10c0/8f14c87d6b1b53c944c25ce7a28616896319d95bc46a9660fe441adc0ed0a81253b02b5abdaeffedbeb23bdd25a0bf1c29d2c12dd919aef6447652dd295e3e69
   languageName: node
   linkType: hard
 
-"zod@npm:^3.21.4":
-  version: 3.21.4
-  resolution: "zod@npm:3.21.4"
-  checksum: 10c0/161e8cf7aea38a99244d65da4a9477d9d966f6a533e503feaa20ff7968a9691065c38c6f1eab5cbbdc8374142fff4a05c9cacb8479803ab50ab6a6ca80e5d624
+"zod@npm:^3.21.4, zod@npm:^3.22.4, zod@npm:^3.23.6, zod@npm:^3.23.8":
+  version: 3.25.76
+  resolution: "zod@npm:3.25.76"
+  checksum: 10c0/5718ec35e3c40b600316c5b4c5e4976f7fee68151bc8f8d90ec18a469be9571f072e1bbaace10f1e85cf8892ea12d90821b200e980ab46916a6166a4260a983c
   languageName: node
   linkType: hard
 
-"zod@npm:^3.22.4":
-  version: 3.22.4
-  resolution: "zod@npm:3.22.4"
-  checksum: 10c0/7578ab283dac0eee66a0ad0fc4a7f28c43e6745aadb3a529f59a4b851aa10872b3890398b3160f257f4b6817b4ce643debdda4fb21a2c040adda7862cab0a587
+"zod@npm:^4.1.12":
+  version: 4.1.12
+  resolution: "zod@npm:4.1.12"
+  checksum: 10c0/b64c1feb19e99d77075261eaf613e0b2be4dfcd3551eff65ad8b4f2a079b61e379854d066f7d447491fcf193f45babd8095551a9d47973d30b46b6d8e2c46774
   languageName: node
   linkType: hard

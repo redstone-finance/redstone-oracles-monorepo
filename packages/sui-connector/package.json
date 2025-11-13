@@ -39,7 +39,7 @@
     "dotenv": "^16.0.3",
     "ethers": "^5.7.2",
     "lodash": "^4.17.21",
-    "zod": "^3.22.4"
+    "zod": "^4.1.12"
   },
   "devDependencies": {
     "@ledgerhq/hw-transport-node-hid": "^6.29.5",

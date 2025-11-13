@@ -14,13 +14,16 @@ export type NonEvmChainType = z.infer<typeof NonEvmChainTypeEnum>;
 export const ChainTypeEnum = z.enum(["evm", ...NonEvmChainTypeEnum.options]);
 export type ChainType = z.infer<typeof ChainTypeEnum>;
 
-const networkNumberSchema = z.coerce.number().int().positive();
+const networkNumberSchema = z.union([
+  z.int().positive(),
+  z.string().pipe(z.coerce.number()).pipe(z.int().positive()),
+]);
 
 export const NetworkIdSchema = z.union([
   networkNumberSchema,
   z
     .string()
-    .transform((s) => s.split("/"))
+    .transform((s) => s.split("/") as unknown[])
     .pipe(z.tuple([NonEvmChainTypeEnum, networkNumberSchema]))
     .transform(([str, num]) => `${str}/${num}` as const),
 ]);
@@ -33,7 +36,7 @@ export function isEvmNetworkId(networkId: NetworkId): networkId is number {
 export function isEvmChainType(
   chainType?: string
 ): chainType is Exclude<ChainType, NonEvmChainType> {
-  return !chainType || chainType === ChainTypeEnum.Enum.evm;
+  return !chainType || chainType === ChainTypeEnum.enum.evm;
 }
 
 export function isNonEvmNetworkId(
@@ -47,7 +50,7 @@ export function isNonEvmChainType(chainType?: string): chainType is NonEvmChainT
 }
 
 export function conformsToChainType(left?: ChainType, right?: ChainType) {
-  return (left ?? ChainTypeEnum.Enum.evm) === (right ?? ChainTypeEnum.Enum.evm);
+  return (left ?? ChainTypeEnum.enum.evm) === (right ?? ChainTypeEnum.enum.evm);
 }
 
 export function deconstructNetworkId(networkId: NetworkId): {
@@ -56,7 +59,7 @@ export function deconstructNetworkId(networkId: NetworkId): {
 } {
   if (typeof networkId === "number") {
     return {
-      chainType: ChainTypeEnum.Enum.evm,
+      chainType: ChainTypeEnum.enum.evm,
       chainId: networkId,
     };
   }
@@ -74,7 +77,7 @@ export function deconstructNetworkId(networkId: NetworkId): {
 }
 
 export function constructNetworkId(chainId: number, chainType?: ChainType): NetworkId {
-  if (!chainType || chainType === ChainTypeEnum.Enum.evm) {
+  if (!chainType || chainType === ChainTypeEnum.enum.evm) {
     return chainId;
   }
 

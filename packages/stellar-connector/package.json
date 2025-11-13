@@ -43,7 +43,7 @@
     "@stellar/stellar-sdk": "14.3.0",
     "axios": "^1.8.4",
     "lodash": "^4.17.21",
-    "zod": "^3.22.4"
+    "zod": "^4.1.12"
   },
   "devDependencies": {
     "@ledgerhq/hw-app-str": "^7.2.5",
