@@ -5,11 +5,7 @@ import { ContractData } from "../ContractData";
 import { ContractParamsProvider } from "../ContractParamsProvider";
 import { IContractConnector } from "../IContractConnector";
 import { IPriceFeedContractAdapter } from "./IPriceFeedContractAdapter";
-import {
-  IExtendedPricesContractAdapter,
-  IMultiFeedPricesContractAdapter,
-  IPricesContractAdapter,
-} from "./IPricesContractAdapter";
+import { IExtendedPricesContractAdapter, IPricesContractAdapter } from "./IPricesContractAdapter";
 
 /* eslint-disable @typescript-eslint/restrict-template-expressions */
 
@@ -28,11 +24,8 @@ export async function sampleRun(
     refreshStateCallback
   );
 
-  if (isMultiFeedContractAdapter(pricesAdapter)) {
-    await readFromMultiFeedPriceAdapter(pricesAdapter, paramsProvider, blockNumber);
-  }
-
   if (isExtendedPricesContractAdapter(pricesAdapter)) {
+    await readFromMultiFeedPriceAdapter(pricesAdapter, paramsProvider, blockNumber);
     await readFromExtendedPriceAdapter(pricesAdapter, paramsProvider, blockNumber);
   }
 
@@ -98,7 +91,7 @@ async function executePushModel(
 }
 
 async function readFromMultiFeedPriceAdapter(
-  pricesAdapter: IMultiFeedPricesContractAdapter,
+  pricesAdapter: IExtendedPricesContractAdapter,
   paramsProvider: ContractParamsProvider,
   blockNumber: number
 ) {
@@ -171,12 +164,4 @@ export function isExtendedPricesContractAdapter(
     typeof adapter.getUniqueSignerThreshold === "function" &&
     typeof adapter.readLatestUpdateBlockTimestamp === "function"
   );
-}
-
-export function isMultiFeedContractAdapter(
-  priceAdapter: IPricesContractAdapter
-): priceAdapter is IMultiFeedPricesContractAdapter {
-  const adapter = priceAdapter as IMultiFeedPricesContractAdapter;
-
-  return typeof adapter.readContractData === "function";
 }
