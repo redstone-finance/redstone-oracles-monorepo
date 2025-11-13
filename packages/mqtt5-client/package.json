@@ -27,6 +27,9 @@
     "lodash": "^4.17.21",
     "zod": "^3.22.4"
   },
+  "devDependencies": {
+    "dotenv": "^16.0.3"
+  },
   "files": [
     "src",
     "dist"
