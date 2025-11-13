@@ -32,7 +32,7 @@ const ChainConfigs = getLocalChainConfigs();
 
 describe("Validate chain configs", () => {
   it("Scheme should be valid", () => {
-    z.record(ChainConfigSchema).parse(ChainConfigs);
+    z.record(z.string(), ChainConfigSchema).parse(ChainConfigs);
   });
 
   it("Each chain config should have at least one publicRpcProvider", () => {

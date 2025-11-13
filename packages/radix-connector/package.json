@@ -55,7 +55,7 @@
     "node-jq": "^6.0.0",
     "redstone-api": "^0.4.13",
     "secp256k1": "^5.0.1",
-    "zod": "^3.22.4"
+    "zod": "^4.1.12"
   },
   "overrides": {
     "elliptic": "^6.6.1"
