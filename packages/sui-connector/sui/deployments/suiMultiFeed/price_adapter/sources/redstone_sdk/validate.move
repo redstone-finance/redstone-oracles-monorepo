@@ -2,6 +2,7 @@
 
 module redstone_price_adapter::redstone_sdk_validate;
 
+use redstone_price_adapter::constants::deprecated_code;
 use redstone_price_adapter::redstone_sdk_config::{
     Config,
     signer_count_threshold,
@@ -10,17 +11,9 @@ use redstone_price_adapter::redstone_sdk_config::{
     max_timestamp_delay_ms
 };
 use redstone_price_adapter::redstone_sdk_data_package::{DataPackage, signer_address, timestamp};
+use redstone_price_adapter::result::{Result, error, ok};
+use redstone_price_adapter::unit::{Unit, unit};
 use sui::vec_set;
-
-// === Errors ===
-
-const E_INVALID_REDSTONE_MARKER: u64 = 0;
-const E_TIMESTAMP_TOO_OLD: u64 = 1;
-const E_TIMESTAMP_TOO_FUTURE: u64 = 2;
-const E_INSUFFICIENT_SIGNER_COUNT: u64 = 3;
-const E_TIMESTAMP_MISMATCH: u64 = 4;
-const E_EMPTY_DATA_PACKAGES: u64 = 5;
-const E_SIGNER_UNKNOWN_OR_DUPLICATED: u64 = 6;
 
 // === Constants ===
 
@@ -29,77 +22,171 @@ const REDSTONE_MARKER_LEN: u64 = 9;
 
 // === Public Functions ===
 
-public fun verify_data_packages(
+public fun try_verify_data_packages(
     data_packages: &vector<DataPackage>,
     config: &Config,
     current_timestamp: u64,
-) {
-    verify_timestamps_are_the_same(data_packages);
+): Result<Unit> {
+    let timestamps_are_the_same_result = verify_timestamps_are_the_same(data_packages);
+    if (!timestamps_are_the_same_result.is_ok()) {
+        return timestamps_are_the_same_result
+    };
 
     // verify that packages timestamp is not stale
-    verify_timestamp(
+    let timestamp_verification_result = verify_timestamp(
         timestamp(&data_packages[0]),
         config,
         current_timestamp,
     );
+    if (!timestamp_verification_result.is_ok()) {
+        return timestamp_verification_result
+    };
 
     verify_signer_count(
         data_packages,
         signer_count_threshold(config),
         &signers(config),
-    );
+    )
 }
 
-public fun verify_redstone_marker(bytes: &vector<u8>) {
+public fun try_verify_redstone_marker(bytes: &vector<u8>): Result<Unit> {
     let bytes_len = bytes.length();
-    assert!(bytes_len >= REDSTONE_MARKER_LEN, E_INVALID_REDSTONE_MARKER);
+
+    if (bytes_len < REDSTONE_MARKER_LEN) {
+        return error(b"Bad redstone marker, not enough bytes")
+    };
 
     let marker = REDSTONE_MARKER;
-    // for i in (bytes_len - REDSTONE_MARKER_LEN)..bytes_len
-    (bytes_len - REDSTONE_MARKER_LEN).range_do!(bytes_len, |i| {
-        assert!(bytes[i] == marker[i + REDSTONE_MARKER_LEN - bytes_len], E_INVALID_REDSTONE_MARKER);
-    });
+    let start_index = bytes_len - REDSTONE_MARKER_LEN;
+    let mut i = 0;
+
+    while (i < REDSTONE_MARKER_LEN) {
+        if (bytes[start_index + i] != marker[i]) {
+            return error(b"Bad redstone marker, byte missmatch")
+        };
+        i = i + 1;
+    };
+
+    ok(unit())
+}
+
+public fun verify_data_packages(
+    _data_packages: &vector<DataPackage>,
+    _config: &Config,
+    _current_timestamp: u64,
+) {
+    abort deprecated_code()
+}
+
+public fun verify_redstone_marker(_bytes: &vector<u8>) {
+    abort deprecated_code()
 }
 
 // === Private Functions ===
 
-fun verify_timestamps_are_the_same(data_packages: &vector<DataPackage>) {
-    assert!(!data_packages.is_empty(), E_EMPTY_DATA_PACKAGES);
+fun verify_timestamps_are_the_same(data_packages: &vector<DataPackage>): Result<Unit> {
+    if (data_packages.is_empty()) {
+        return error(b"Empty data packages")
+    };
 
-    let timestamp = data_packages[0].timestamp();
+    let expected_timestamp = data_packages[0].timestamp();
+    let mut i = 1;
 
-    assert!(data_packages.all!(|package| package.timestamp() == timestamp), E_TIMESTAMP_MISMATCH);
+    while (i < data_packages.length()) {
+        let actual_timestamp = data_packages[i].timestamp();
+
+        if (actual_timestamp != expected_timestamp) {
+            return error(b"Not all timestamps are the same")
+        };
+
+        i = i + 1;
+    };
+
+    ok(unit())
 }
 
-fun verify_timestamp(package_timestamp: u64, config: &Config, current_timestamp: u64) {
-    assert!(
-        package_timestamp + config.max_timestamp_delay_ms() >= current_timestamp,
-        E_TIMESTAMP_TOO_OLD,
-    );
-    assert!(
-        package_timestamp <= current_timestamp + config.max_timestamp_ahead_ms(),
-        E_TIMESTAMP_TOO_FUTURE,
-    );
+fun verify_timestamp(
+    package_timestamp: u64,
+    config: &Config,
+    current_timestamp: u64,
+): Result<Unit> {
+    if (package_timestamp + config.max_timestamp_delay_ms() < current_timestamp) {
+        return error(b"Timestamp too old")
+    };
+
+    if (package_timestamp > current_timestamp + config.max_timestamp_ahead_ms()) {
+        return error(b"Timestamp too future")
+    };
+
+    ok(unit())
 }
 
 fun verify_signer_count(
     data_packages: &vector<DataPackage>,
     threshold: u8,
     signers: &vector<vector<u8>>,
-) {
-    let mut count = 0;
-    // this will fail if signers not unique
-    let mut signers = vec_set::from_keys(*signers);
-    data_packages.do_ref!(|package| {
-        let address = package.signer_address();
+): Result<Unit> {
+    let mut valid_signer_count = 0;
+    let mut remaining_signers = vec_set::from_keys(*signers);
+    let mut i = 0;
 
-        // this will fail if signer is uknown or known signer had more than one package for feed-id.
-        assert!(signers.contains(address), E_SIGNER_UNKNOWN_OR_DUPLICATED);
+    while (i < data_packages.length()) {
+        let signer_address = data_packages[i].signer_address();
 
-        count = count + 1;
-        signers.remove(address);
-    });
-    assert!(count >= threshold, E_INSUFFICIENT_SIGNER_COUNT);
+        if (!remaining_signers.contains(signer_address)) {
+            return error(b"Unknown or duplicated signer")
+        };
+
+        remaining_signers.remove(signer_address);
+        valid_signer_count = valid_signer_count + 1;
+        i = i + 1;
+    };
+
+    if (valid_signer_count < (threshold as u64)) {
+        return error(b"Insufficient signer count")
+    };
+
+    ok(unit())
+}
+
+public(package) fun try_verify_feeds_in_data_packages(
+    data_packages: &vector<DataPackage>,
+): Result<Unit> {
+    let mut i = 0;
+
+    while (i < data_packages.length()) {
+        let data_package = &data_packages[i];
+
+        let verify_result = verify_feeds_in_data_package(data_package);
+        if (!verify_result.is_ok()) {
+            return verify_result
+        };
+
+        i = i + 1;
+    };
+
+    ok(unit())
+}
+
+fun verify_feeds_in_data_package(data_package: &DataPackage): Result<Unit> {
+    let mut feeds = vec_set::empty();
+
+    let mut i = 0;
+    let data_points = data_package.data_points();
+
+    while (i < data_points.length()) {
+        let feed_id = data_points[i].feed_id();
+
+        if (feeds.contains(feed_id)) {
+            return error(b"Reoccuring feed id")
+        };
+
+        feeds.insert(*feed_id);
+
+        i = i + 1;
+    };
+
+    ok(unit())
 }
 
 // === Tests Functions ===
@@ -107,7 +194,7 @@ fun verify_signer_count(
 #[test_only]
 use redstone_price_adapter::redstone_sdk_config::test_config;
 #[test_only]
-use redstone_price_adapter::redstone_sdk_data_package::new_data_package;
+use redstone_price_adapter::redstone_sdk_data_package::{new_data_package, new_data_point};
 
 #[test]
 fun test_verify_timestamps_are_the_same() {
@@ -115,23 +202,21 @@ fun test_verify_timestamps_are_the_same() {
         new_data_package(x"", 10, vector[])
     });
 
-    verify_timestamps_are_the_same(&data_packages);
+    verify_timestamps_are_the_same(&data_packages).unwrap();
 }
 
 #[test]
-#[expected_failure(abort_code = E_TIMESTAMP_MISMATCH)]
 fun test_verify_timestamps_are_the_same_different_timestamps() {
     let data_packages = vector::tabulate!(10, |i| {
         new_data_package(x"", i, vector[])
     });
 
-    verify_timestamps_are_the_same(&data_packages);
+    verify_timestamps_are_the_same(&data_packages).unwrap_err();
 }
 
 #[test]
-#[expected_failure(abort_code = E_EMPTY_DATA_PACKAGES)]
 fun test_verify_timestamps_are_the_same_empty() {
-    verify_timestamps_are_the_same(&vector[]);
+    verify_timestamps_are_the_same(&vector[]).unwrap_err();
 }
 
 #[test]
@@ -140,26 +225,24 @@ fun test_verify_timestamp() {
     let current = 1_000;
 
     vector[0, 10, 200, 500].do!(|i| {
-        verify_timestamp(current - i, &config, current);
-        verify_timestamp(current + i, &config, current);
+        verify_timestamp(current - i, &config, current).unwrap();
+        verify_timestamp(current + i, &config, current).unwrap();
     });
 }
 
 #[test]
-#[expected_failure(abort_code = E_TIMESTAMP_TOO_FUTURE)]
 fun test_verify_timestamp_too_future() {
     let config = test_config();
 
-    verify_timestamp(1000 + config.max_timestamp_ahead_ms() + 1, &config, 1000);
+    verify_timestamp(1000 + config.max_timestamp_ahead_ms() + 1, &config, 1000).unwrap_err();
 }
 
 #[test]
-#[expected_failure(abort_code = E_TIMESTAMP_TOO_OLD)]
 fun test_verify_timestamp_too_old() {
     let config = test_config();
     let value = 1_000_000;
 
-    verify_timestamp(value - config.max_timestamp_delay_ms() - 1, &config, value);
+    verify_timestamp(value - config.max_timestamp_delay_ms() - 1, &config, value).unwrap_err();
 }
 
 #[test]
@@ -174,7 +257,9 @@ fun test_verify_signer_count() {
 
     let signers = vector[x"00", x"01", x"02", x"03", x"04"];
 
-    5_u64.do_eq!(|threshold| verify_signer_count(&data_packages, threshold as u8, &signers));
+    5_u64.do_eq!(
+        |threshold| verify_signer_count(&data_packages, threshold as u8, &signers).unwrap(),
+    );
 }
 
 #[test]
@@ -186,11 +271,12 @@ fun test_verify_signer_count_success() {
 
     let signers = vector[x"00", x"01"];
 
-    2_u64.do_eq!(|threshold| verify_signer_count(&data_packages, threshold as u8, &signers));
+    2_u64.do_eq!(
+        |threshold| verify_signer_count(&data_packages, threshold as u8, &signers).unwrap(),
+    );
 }
 
 #[test]
-#[expected_failure(abort_code = E_INSUFFICIENT_SIGNER_COUNT)]
 fun test_verify_signer_count_fail() {
     let data_packages = vector[
         new_data_package(x"00", 10, vector[]),
@@ -202,11 +288,10 @@ fun test_verify_signer_count_fail() {
 
     let signers = vector[x"00", x"01", x"02", x"03", x"04", x"05"];
 
-    verify_signer_count(&data_packages, 6, &signers)
+    verify_signer_count(&data_packages, 6, &signers).unwrap_err();
 }
 
 #[test]
-#[expected_failure(abort_code = E_SIGNER_UNKNOWN_OR_DUPLICATED)]
 fun test_verify_signer_count_unknow_signers() {
     let data_packages = vector[
         new_data_package(x"00", 10, vector[]),
@@ -218,36 +303,33 @@ fun test_verify_signer_count_unknow_signers() {
 
     let signers = vector[x"11", x"12", x"13", x"14"];
 
-    verify_signer_count(&data_packages, 3, &signers)
+    verify_signer_count(&data_packages, 3, &signers).unwrap_err();
 }
 
 #[test]
-#[expected_failure(abort_code = E_INVALID_REDSTONE_MARKER)]
 fun test_verify_redstone_marker_bad_last_byte() {
-    verify_redstone_marker(&x"000002ed57011e0001");
+    try_verify_redstone_marker(&x"000002ed57011e0001").unwrap_err();
 }
 
 #[test]
-#[expected_failure(abort_code = E_INVALID_REDSTONE_MARKER)]
 fun test_verify_redstone_marker_bad_first_byte() {
-    verify_redstone_marker(&x"100002ed57011e0000");
+    try_verify_redstone_marker(&x"100002ed57011e0000").unwrap_err();
 }
 
 #[test]
-#[expected_failure(abort_code = E_INVALID_REDSTONE_MARKER)]
 fun test_verify_redstone_marker_bad_marker() {
-    verify_redstone_marker(&vector::tabulate!(9, |i| i as u8));
+    try_verify_redstone_marker(&vector::tabulate!(9, |i| i as u8)).unwrap_err();
 }
 
 #[test]
 fun test_verify_redstone_marker() {
     let correct_marker = REDSTONE_MARKER;
-    verify_redstone_marker(&correct_marker);
+
+    try_verify_redstone_marker(&correct_marker).unwrap();
 }
 
 #[test]
-#[expected_failure(abort_code = E_SIGNER_UNKNOWN_OR_DUPLICATED)]
-fun test_verify_data_packages_fail_on_duplicated_packages() {
+fun test_try_verify_data_packages_fail_on_duplicated_packages() {
     let config = test_config();
     let timestamp = 1000;
 
@@ -259,11 +341,11 @@ fun test_verify_data_packages_fail_on_duplicated_packages() {
         new_data_package(config.signers()[1], timestamp, vector[]),
     ];
 
-    verify_data_packages(&data_packages, &config, 1000)
+    try_verify_data_packages(&data_packages, &config, 1000).unwrap_err();
 }
 
 #[test]
-fun test_verify_data_packages() {
+fun test_try_verify_data_packages() {
     let config = test_config();
     let timestamp = 1000;
 
@@ -272,12 +354,11 @@ fun test_verify_data_packages() {
         new_data_package(config.signers()[1], timestamp, vector[]),
     ];
 
-    verify_data_packages(&data_packages, &config, 1000)
+    try_verify_data_packages(&data_packages, &config, 1000).unwrap();
 }
 
 #[test]
-#[expected_failure(abort_code = E_SIGNER_UNKNOWN_OR_DUPLICATED)]
-fun test_verify_data_packages_fail_on_duplicated_packages_after_threshold_met() {
+fun test_try_verify_data_packages_fail_on_duplicated_packages_after_threshold_met() {
     let config = test_config();
     let timestamp = 1000;
 
@@ -287,5 +368,47 @@ fun test_verify_data_packages_fail_on_duplicated_packages_after_threshold_met() 
         new_data_package(config.signers()[1], timestamp, vector[]),
     ];
 
-    verify_data_packages(&data_packages, &config, 1000)
+    try_verify_data_packages(&data_packages, &config, 1000).unwrap_err();
+}
+
+#[test]
+fun test_try_verify_feeds_in_data_packages_fails_on_duplicated_feed_in_package() {
+    let config = test_config();
+    let timestamp = 1000;
+
+    let data_packages = vector[
+        new_data_package(
+            config.signers()[0],
+            timestamp,
+            vector[new_data_point(vector[1], vector[2]), new_data_point(vector[1], vector[2])],
+        ),
+        new_data_package(
+            config.signers()[1],
+            timestamp,
+            vector[new_data_point(vector[1], vector[2])],
+        ),
+    ];
+
+    try_verify_feeds_in_data_packages(&data_packages).unwrap_err();
+}
+
+#[test]
+fun test_try_verify_feeds_in_data_packages_distinct_feeds() {
+    let config = test_config();
+    let timestamp = 1000;
+
+    let data_packages = vector[
+        new_data_package(
+            config.signers()[0],
+            timestamp,
+            vector[new_data_point(vector[1], vector[2]), new_data_point(vector[2], vector[2])],
+        ),
+        new_data_package(
+            config.signers()[1],
+            timestamp,
+            vector[new_data_point(vector[1], vector[2])],
+        ),
+    ];
+
+    try_verify_feeds_in_data_packages(&data_packages).unwrap();
 }
