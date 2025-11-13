@@ -1,4 +1,4 @@
-import type { IRedstoneContractAdapter, UpdatePricesOptions } from "@redstone-finance/evm-adapters";
+import type { IRedstoneContractAdapter, UpdatePricesOptions } from "@redstone-finance/sdk";
 import {
   ContractParamsProvider,
   DataPackagesRequestParams,
@@ -11,7 +11,7 @@ import { RelayerConfig } from "../config/RelayerConfig";
 import { makeDataPackagesRequestParams } from "../core/make-data-packages-request-params";
 import { ContractData, ShouldUpdateContext, UpdatePricesArgs } from "../types";
 
-export abstract class ContractFacade {
+export class ContractFacade {
   private readonly logger = loggerFactory("contract-facade");
   private readonly getUniqueSignerThresholdMemoized: (blockTag?: number) => Promise<number>;
 
@@ -33,11 +33,13 @@ export abstract class ContractFacade {
     });
   }
 
-  abstract getLatestRoundContractData(
+  async getLatestRoundContractData(
     feedIds: string[],
     blockTag: number,
     withDataFeedValues: boolean
-  ): Promise<ContractData>;
+  ): Promise<ContractData> {
+    return await (await this.getAdapter()).readContractData(feedIds, blockTag, withDataFeedValues);
+  }
 
   async getShouldUpdateContext(relayerConfig: RelayerConfig): Promise<ShouldUpdateContext> {
     const { blockTag, uniqueSignerThreshold, dataFromContract } =
@@ -89,12 +91,12 @@ export abstract class ContractFacade {
 
   async getUniqueSignerThresholdFromContract(blockTag?: number) {
     return await (
-      await this.connector.getAdapter()
+      await this.getAdapter()
     ).getUniqueSignerThreshold(blockTag ?? (await this.getBlockNumber()));
   }
 
   async updatePrices(args: UpdatePricesArgs, options?: UpdatePricesOptions): Promise<void> {
-    const adapter = await this.connector.getAdapter();
+    const adapter = await this.getAdapter();
 
     const result = await adapter.writePricesFromPayloadToContract(
       this.getContractParamsProvider(args.updateRequestParams, args.dataFeedsToUpdate),
@@ -133,6 +135,10 @@ export abstract class ContractFacade {
   }
 
   async getDataFeedIds(blockNumber: number) {
-    return await (await this.connector.getAdapter()).getDataFeedIds?.(blockNumber);
+    return await (await this.getAdapter()).getDataFeedIds?.(blockNumber);
+  }
+
+  private async getAdapter() {
+    return await this.connector.getAdapter();
   }
 }
