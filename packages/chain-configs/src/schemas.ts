@@ -7,13 +7,13 @@ export { chainConfigs };
 export const ChainConfigSchema = z.object({
   networkId: NetworkIdSchema,
   name: z.string(),
-  publicRpcUrls: z.string().url().array(),
+  publicRpcUrls: z.url().array(),
   currencySymbol: z.string(),
   avgBlockTimeMs: z.number(),
   isAuctionModel: z.boolean(),
   twoDimensionalFees: z.boolean(),
   isMainnet: z.boolean(),
-  etherScanApi: z.string().url().optional(),
+  etherScanApi: z.url().optional(),
   /**
    * Some blockchains don't have empty blocks, thus eth_feeHistory returns 0, but they have
    * minimal maxPriorityFeePerGas requirement.
