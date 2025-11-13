@@ -27,7 +27,8 @@
     "upgrade-package": "yarn global:ts-node scripts/ledger/upgrade-package.ts",
     "convert-public-keys": "yarn global:ts-node scripts/convert-public-keys.ts",
     "convert-evm-private-key": "yarn global:ts-node scripts/convert-evm-private-key.ts",
-    "send-tx": "yarn global:ts-node scripts/send-tx.ts"
+    "send-tx": "yarn global:ts-node scripts/send-tx.ts",
+    "get-code-hashes": "yarn global:ts-node scripts/get-code-hashes.ts"
   },
   "dependencies": {
     "@mysten/bcs": "1.7.0",
