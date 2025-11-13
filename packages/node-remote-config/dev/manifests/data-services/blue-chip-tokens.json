@@ -205,7 +205,6 @@
     "CELO": {
       "source": [
         "binance-usdt",
-        "bingx-usdt",
         "bitget-usdt",
         "bitrue-usdt",
         "gate-usdt",
