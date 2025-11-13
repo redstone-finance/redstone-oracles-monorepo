@@ -1,9 +1,9 @@
-import { IRedstoneContractAdapter } from "@redstone-finance/evm-adapters";
 import {
   ContractParamsProvider,
   DataServiceIds,
   getSignersForDataServiceId,
   IContractConnector,
+  IRedstoneContractAdapter,
 } from "@redstone-finance/sdk";
 import { IterationArgsMessage, RelayerConfig } from "../../src";
 import { ContractData, ShouldUpdateContext } from "../../src/types";
@@ -30,6 +30,10 @@ class ContractAdapterMock implements IRedstoneContractAdapter {
         lastValue: 90000n,
       },
     });
+  }
+
+  readContractData(feedIds: string[], blockNumber: number): Promise<ContractData> {
+    return this.readLatestRoundContractData(feedIds, blockNumber);
   }
 
   writePricesFromPayloadToContract(_paramsProvider: ContractParamsProvider): Promise<void> {

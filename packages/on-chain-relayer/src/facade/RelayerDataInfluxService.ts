@@ -1,17 +1,20 @@
 import { Point } from "@influxdata/influxdb-client";
-import { RelayerTxDeliveryManContext } from "@redstone-finance/evm-adapters";
 import { InfluxService } from "@redstone-finance/internal-utils";
 import { DataPackagesResponse, getDataPackagesTimestamp } from "@redstone-finance/sdk";
 import { RedstoneCommon, SafeNumber, Tx } from "@redstone-finance/utils";
 import { basename } from "path";
 import { z } from "zod";
 import { RelayerConfig } from "../config/RelayerConfig";
+import { RelayerTxDeliveryManContext } from "../core/RelayerTxDeliveryManContext";
 
 const RELAYER_DATA_BUCKET = "dry-run-relayer-data";
 const TXS_MEASUREMENT = "redstoneTransactions";
 const SENDER_TAG = "0x0000000000000000000000000000000000000000000000000000000000000001";
 
-export class RelayerDataInfluxService extends InfluxService implements Tx.ITxDeliveryMan {
+export class RelayerDataInfluxService
+  extends InfluxService
+  implements Tx.ITxDeliveryMan<RelayerTxDeliveryManContext>
+{
   constructor(private relayerConfig: RelayerConfig) {
     const { influxUrl, influxToken } = relayerConfig;
 

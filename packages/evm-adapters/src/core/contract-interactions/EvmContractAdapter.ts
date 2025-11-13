@@ -1,16 +1,23 @@
-import { ContractData, ContractParamsProvider } from "@redstone-finance/sdk";
+import {
+  ContractData,
+  ContractParamsProvider,
+  IRedstoneContractAdapter,
+  UpdatePricesOptions,
+} from "@redstone-finance/sdk";
 import { Tx } from "@redstone-finance/utils";
 import { RedstoneEvmContract } from "../../facade/evm/RedstoneEvmContract";
-import { UpdatePricesOptions } from "../../facade/UpdatePricesOptions";
-import { IRedstoneContractAdapter } from "./IRedstoneContractAdapter";
-import { RelayerTxDeliveryManContext } from "./RelayerTxDeliveryManContext";
 
 export abstract class EvmContractAdapter<Contract extends RedstoneEvmContract>
   implements IRedstoneContractAdapter
 {
   constructor(
     public adapterContract: Contract,
-    protected txDeliveryMan: Tx.ITxDeliveryMan
+    protected txDeliveryMan: Tx.ITxDeliveryMan<
+      Tx.TxDeliveryManContext & {
+        paramsProvider?: ContractParamsProvider;
+        canOmitFallbackAfterFailing?: boolean;
+      }
+    >
   ) {}
 
   getDataFeedIds(_blockTag: number): Promise<string[] | undefined> {
@@ -32,6 +39,14 @@ export abstract class EvmContractAdapter<Contract extends RedstoneEvmContract>
     withDataFeedValues: boolean
   ): Promise<ContractData>;
 
+  async readContractData(
+    feedIds: string[],
+    blockNumber: number,
+    withDataFeedValues: boolean
+  ): Promise<ContractData> {
+    return await this.readLatestRoundContractData(feedIds, blockNumber, withDataFeedValues);
+  }
+
   async getUniqueSignerThreshold(blockTag?: number): Promise<number> {
     return await this.adapterContract.getUniqueSignersThreshold({ blockTag });
   }
@@ -49,7 +64,7 @@ export abstract class EvmContractAdapter<Contract extends RedstoneEvmContract>
         this.makeUpdateTx(paramsProvider, metadataTimestamp).then((tx) => tx.data),
       paramsProvider: baseParamsProvider,
       canOmitFallbackAfterFailing: options?.canOmitFallbackAfterFailing,
-    } as RelayerTxDeliveryManContext);
+    });
   }
 
   protected getBaseIterationTxParamsProvider(

@@ -2,7 +2,7 @@ import { DataPackagesRequestParams, DataPackagesResponseCache } from "@redstone-
 import { RedstoneLogger } from "@redstone-finance/utils";
 import { expect } from "chai";
 import sinon from "sinon";
-import { EvmContractFacade, IterationArgsProvider, RelayerConfig, runIteration } from "../../src";
+import { ContractFacade, IterationArgsProvider, RelayerConfig, runIteration } from "../../src";
 import { ContractParamsProviderMock, DEFAULT_DATA_POINTS, mockConfig } from "../helpers";
 import { ContractConnectorMock, getIterationArgsProviderMock } from "./run-iteration-mocks";
 
@@ -103,7 +103,7 @@ describe("runIteration tests", () => {
     const adapter = await connector.getAdapter();
     updatePricesStub = sinon.stub(adapter, "writePricesFromPayloadToContract").resolves();
 
-    const facade = new EvmContractFacade(connector, relayerConfig, cache);
+    const facade = new ContractFacade(connector, relayerConfig, cache);
     const contractParamsProvider = new ContractParamsProviderMock(
       DEFAULT_DATA_POINTS,
       undefined,
