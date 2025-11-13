@@ -1,4 +1,4 @@
-import { EvmContractFacade } from "@redstone-finance/on-chain-relayer";
+import { ContractFacade } from "@redstone-finance/on-chain-relayer";
 import { SignedDataPackage } from "@redstone-finance/protocol";
 import {
   ContractData,
@@ -6,7 +6,7 @@ import {
   DataPackagesRequestParams,
 } from "@redstone-finance/sdk";
 
-export class MockContractFacade extends EvmContractFacade {
+export class MockContractFacade extends ContractFacade {
   override getUniqueSignerThresholdFromContract(_blockTag: number): Promise<number> {
     return Promise.resolve(1);
   }
