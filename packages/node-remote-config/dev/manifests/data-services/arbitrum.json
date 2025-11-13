@@ -423,7 +423,7 @@
       "rateFeed": false
     },
     "GRAIL": {
-      "source": ["coingecko", "coinmarketcap", "gate-usdt"],
+      "source": ["coingecko", "coinmarketcap"],
       "denomination": "USD",
       "rateFeed": false
     },
