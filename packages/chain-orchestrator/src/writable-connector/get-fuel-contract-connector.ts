@@ -6,7 +6,7 @@ import { PartialRelayerConfig } from "./partial-relayer-config";
 export const getFuelContractConnector = async (relayerConfig: PartialRelayerConfig) => {
   const { privateKey, adapterContractAddress, rpcUrls, gasLimit, networkId } = relayerConfig;
   const { chainType, chainId } = deconstructNetworkId(networkId);
-  if (chainType !== ChainTypeEnum.Enum.fuel) {
+  if (chainType !== ChainTypeEnum.enum.fuel) {
     throw new Error(`NetworkId ${networkId} is not a fuel type`);
   }
 

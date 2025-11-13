@@ -25,7 +25,7 @@
     "aws-iot-device-sdk-v2": "^1.21.1",
     "ethers": "^5.7.2",
     "lodash": "^4.17.21",
-    "zod": "^3.22.4"
+    "zod": "^4.1.12"
   },
   "devDependencies": {
     "dotenv": "^16.0.3"
