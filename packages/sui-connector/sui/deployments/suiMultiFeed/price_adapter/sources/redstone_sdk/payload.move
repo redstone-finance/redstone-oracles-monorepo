@@ -2,9 +2,10 @@
 
 module redstone_price_adapter::redstone_sdk_payload;
 
+use redstone_price_adapter::constants::deprecated_code;
 use redstone_price_adapter::redstone_sdk_config::Config;
 use redstone_price_adapter::redstone_sdk_conv::{from_bytes_to_u64, from_bytes_to_u256};
-use redstone_price_adapter::redstone_sdk_crypto::recover_address;
+use redstone_price_adapter::redstone_sdk_crypto::try_recover_address;
 use redstone_price_adapter::redstone_sdk_data_package::{
     DataPackage,
     DataPoint,
@@ -13,14 +14,16 @@ use redstone_price_adapter::redstone_sdk_data_package::{
     data_points,
     new_data_point,
     new_data_package,
-    timestamp
+    timestamp,
+    signer_address
 };
-use redstone_price_adapter::redstone_sdk_median::calculate_median;
-use redstone_price_adapter::redstone_sdk_validate::{verify_data_packages, verify_redstone_marker};
-
-// === Errors ===
-
-const E_DATA_INCONSISTENT: u64 = 0;
+use redstone_price_adapter::redstone_sdk_median::try_calculate_median;
+use redstone_price_adapter::redstone_sdk_validate::{
+    try_verify_data_packages,
+    try_verify_redstone_marker,
+    try_verify_feeds_in_data_packages
+};
+use redstone_price_adapter::result::{Result, ok, error};
 
 // === Constants ===
 
@@ -39,44 +42,91 @@ public struct Payload has copy, drop {
     data_packages: vector<DataPackage>,
 }
 
+public struct ParsedPayload has copy, drop {
+    aggregated_value: u256,
+    new_package_timestamp: u64,
+}
+
 // === Public Functions ===
 
+public fun destroy_processed_payload(payload: ParsedPayload): (u256, u64) {
+    (payload.aggregated_value, payload.new_package_timestamp)
+}
+
 public fun process_payload(
+    _config: &Config,
+    _timestamp_now_ms: u64,
+    _feed_id: vector<u8>,
+    _payload: vector<u8>,
+): (u256, u64) {
+    abort deprecated_code()
+}
+
+public fun try_process_payload(
     config: &Config,
     timestamp_now_ms: u64,
     feed_id: vector<u8>,
     payload: vector<u8>,
-): (u256, u64) {
+): Result<ParsedPayload> {
     let parsed_payload = parse_raw_payload(payload);
-    let data_packages = filter_packages_by_feed_id(
-        &data_packages(&parsed_payload),
-        &feed_id,
+
+    let data_packages = parsed_payload.map_ref!(
+        |parsed_payload| filter_packages_by_feed_id(
+            &data_packages(parsed_payload),
+            &feed_id,
+        ),
     );
 
-    verify_data_packages(
-        &data_packages,
-        config,
-        timestamp_now_ms,
+    let verification_result = data_packages.flat_map!(
+        |data_packages| try_verify_feeds_in_data_packages(
+            &data_packages,
+        ),
+    );
+    if (!verification_result.is_ok()) {
+        return error(verification_result.unwrap_err().into_bytes())
+    };
+
+    let data_packages = data_packages.map!(
+        |data_packages| filter_out_data_packages_with_zero_values(
+            data_packages,
+        ),
     );
 
-    let values = extract_values_by_feed_id(&parsed_payload, &feed_id);
-    let aggregated_value = calculate_median(
-        &mut values.map!(|bytes| from_bytes_to_u256(&bytes)),
+    let verification_result = data_packages.flat_map!(
+        |data_packages| try_verify_data_packages(
+            &data_packages,
+            config,
+            timestamp_now_ms,
+        ),
     );
-    let new_package_timestamp = data_packages[0].timestamp();
 
-    (aggregated_value, new_package_timestamp)
+    if (!verification_result.is_ok()) {
+        return error(verification_result.unwrap_err().into_bytes())
+    };
+
+    let values = data_packages.map!(
+        |packages| extract_values_by_feed_id_from_packages(packages, &feed_id),
+    );
+
+    let aggregated_value = values.flat_map!(
+        |values| try_calculate_median(
+            &mut values.map!(|bytes| from_bytes_to_u256(&bytes)),
+        ),
+    );
+
+    aggregated_value.map_both!(
+        data_packages,
+        |aggregated_value, data_packages| ParsedPayload {
+            aggregated_value,
+            new_package_timestamp: data_packages[0].timestamp(),
+        },
+    )
 }
 
 // === Public-View Functions ===
 
-public fun extract_values_by_feed_id(payload: &Payload, feed_id: &vector<u8>): vector<vector<u8>> {
-    payload
-        .data_packages()
-        .map!(|package| *package.data_points())
-        .flatten()
-        .filter!(|data_point| data_point.feed_id() == feed_id)
-        .map!(|data_point| *data_point.value())
+public fun extract_values_by_feed_id(_: &Payload, _: &vector<u8>): vector<vector<u8>> {
+    abort deprecated_code()
 }
 
 public fun data_packages(payload: &Payload): vector<DataPackage> {
@@ -85,28 +135,46 @@ public fun data_packages(payload: &Payload): vector<DataPackage> {
 
 // === Private Functions ===
 
-fun parse_raw_payload(mut payload: vector<u8>): Payload {
-    verify_redstone_marker(&payload);
+fun extract_values_by_feed_id_from_packages(
+    data_packages: vector<DataPackage>,
+    feed_id: &vector<u8>,
+): vector<vector<u8>> {
+    data_packages
+        .map!(|package| *package.data_points())
+        .flatten()
+        .filter!(|data_point| data_point.feed_id() == feed_id)
+        .map!(|data_point| *data_point.value())
+}
+
+fun parse_raw_payload(mut payload: vector<u8>): Result<Payload> {
+    let marker_verification_result = try_verify_redstone_marker(&payload);
+    if (!marker_verification_result.is_ok()) {
+        return error(marker_verification_result.unwrap_err().into_bytes())
+    };
+
     trim_redstone_marker(&mut payload);
 
-    let parsed_payload = trim_payload(&mut payload);
-
-    parsed_payload
+    trim_payload(&mut payload)
 }
 
 fun trim_redstone_marker(payload: &mut vector<u8>) {
     let mut i = 0;
+
     while (i < REDSTONE_MARKER_BS) {
         payload.pop_back();
         i = i + 1;
     };
 }
 
-fun trim_payload(payload: &mut vector<u8>): Payload {
+fun trim_payload(payload: &mut vector<u8>): Result<Payload> {
     let data_packages_count = trim_metadata(payload);
     let data_packages = trim_data_packages(payload, data_packages_count);
-    assert!(payload.is_empty(), E_DATA_INCONSISTENT);
-    Payload { data_packages }
+
+    if (!payload.is_empty()) {
+        return error(b"Data inconsistent, leftover bytes after parsing")
+    };
+
+    data_packages.map!(|data_packages| Payload { data_packages })
 }
 
 fun trim_metadata(payload: &mut vector<u8>): u64 {
@@ -114,6 +182,7 @@ fun trim_metadata(payload: &mut vector<u8>): u64 {
         payload,
         UNSIGNED_METADATA_BYTE_SIZE_BS,
     );
+
     let unsigned_metadata_size = from_bytes_to_u64(&unsigned_metadata_size);
     let _ = trim_end(payload, unsigned_metadata_size);
     let package_count = trim_end(payload, DATA_PACKAGES_COUNT_BS);
@@ -121,13 +190,25 @@ fun trim_metadata(payload: &mut vector<u8>): u64 {
     from_bytes_to_u64(&package_count)
 }
 
-fun trim_data_packages(payload: &mut vector<u8>, count: u64): vector<DataPackage> {
-    vector::tabulate!(count, |_| {
-        trim_data_package(payload)
-    })
+fun trim_data_packages(payload: &mut vector<u8>, count: u64): Result<vector<DataPackage>> {
+    let mut packages = vector::empty();
+    let mut i = 0;
+
+    while (i < count) {
+        let package = trim_data_package(payload);
+
+        if (!package.is_ok()) {
+            return error(package.unwrap_err().into_bytes())
+        };
+
+        vector::push_back(&mut packages, package.unwrap());
+        i = i + 1;
+    };
+
+    ok(packages)
 }
 
-fun trim_data_package(payload: &mut vector<u8>): DataPackage {
+fun trim_data_package(payload: &mut vector<u8>): Result<DataPackage> {
     let signature = trim_end(payload, SIGNATURE_BS);
     let mut tmp = *payload;
     let data_point_count = trim_data_point_count(payload);
@@ -137,14 +218,19 @@ fun trim_data_package(payload: &mut vector<u8>): DataPackage {
         data_point_count * (value_size + DATA_FEED_ID_BS) + DATA_POINT_VALUE_BYTE_SIZE_BS
             + TIMESTAMP_BS + DATA_POINTS_COUNT_BS;
     let signable_bytes = trim_end(&mut tmp, size);
-    let signer_address = recover_address(&signable_bytes, &signature);
-    let data_points = trim_data_points(
-        payload,
-        data_point_count,
-        value_size,
-    );
+    let signer_address = try_recover_address(&signable_bytes, &signature);
 
-    new_data_package(signer_address, timestamp, data_points)
+    signer_address.map!(
+        |signer_address| new_data_package(
+            signer_address,
+            timestamp,
+            trim_data_points(
+                payload,
+                data_point_count,
+                value_size,
+            ),
+        ),
+    )
 }
 
 fun trim_data_point_count(payload: &mut vector<u8>): u64 {
@@ -197,6 +283,26 @@ fun filter_packages_by_feed_id(
     filtered_packages
 }
 
+fun filter_out_data_packages_with_zero_values(packages: vector<DataPackage>): vector<DataPackage> {
+    let mut filtered_packages = vector::empty<DataPackage>();
+
+    packages.do!(|package| { if (!contains_zero_value_point(&package)) {
+            filtered_packages.push_back(package)
+        } });
+
+    filtered_packages
+}
+
+fun contains_zero_value_point(package: &DataPackage): bool {
+    package.data_points().any!(|data_point| {
+        is_zero_vec(data_point.value())
+    })
+}
+
+fun is_zero_vec(vec: &vector<u8>): bool {
+    vec.all!(|b| b == 0)
+}
+
 fun trim_end(v: &mut vector<u8>, len: u64): vector<u8> {
     let v_len = v.length();
     if (len >= v_len) {
@@ -222,7 +328,7 @@ fun trim_end(v: &mut vector<u8>, len: u64): vector<u8> {
 // === Tests Functions ===
 
 #[test_only]
-use redstone_price_adapter::redstone_sdk_config::test_config;
+use redstone_price_adapter::redstone_sdk_config::{new as new_config, test_config};
 
 #[test]
 fun test_process_payload() {
@@ -230,15 +336,120 @@ fun test_process_payload() {
     let feed_id = x"4554480000000000000000000000000000000000000000000000000000000000";
     let timestamp = 1707307760000;
 
-    let (val, timestamp) = process_payload(&test_config(), timestamp, feed_id, payload);
+    let (val, timestamp) = try_process_payload(&test_config(), timestamp, feed_id, payload)
+        .unwrap()
+        .destroy_processed_payload();
 
     assert!(val == 236389750361);
     assert!(timestamp == 1707307760000);
 }
 
 #[test]
+fun test_process_payload_mixed_zero_and_non_zero_values() {
+    // 3 signers mixed values (0 and normal)
+    let payload =
+        x"45544800000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000455448000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000640199fd5f9ce300000020000002b2910ada57ee0681f34a0e92de771ca61eb7b3d855c25c63e33815f787de4cc50f647a33ba2c5a91e0042845c03834e6321a8e3c81118f13558a92b17bafcb671b45544800000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000455448000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000960199fd5f9ce300000020000002a870b83573a19ce17512bf47d3aa74771465e4b48ce9ec2ded9cd8092e17fa4a3de0b34526bed99e00827318ceb20a0f48881b486deb48a33ed9618a7ac4b5a61b45544800000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000455448000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000c80199fd5f9ce300000020000002c5c8a3d438d6e63716d39eec7958ffa0b8ca703d93d112df2e537f733988d2541e72ed308403516350a50c72f2f20274236e8859327338e36411b12678a24ee91c0003000000000002ed57011e0000";
+    let feed_id = x"4554480000000000000000000000000000000000000000000000000000000000";
+    let timestamp = 1760892525795;
+
+    let config = new_config(
+        3,
+        vector[
+            x"bF78255DB658E922466B4eea0F4d4633872D74f9",
+            x"305a6201Ae82a14aC11229122EaB42588C231618",
+            x"bD87688586ccb807499002Ea1d1D05705454292E",
+        ],
+        15 * 60 * 1000,
+        3 * 60 * 1000,
+        vector[],
+        0,
+    );
+
+    try_process_payload(&config, timestamp, feed_id, payload).unwrap_err();
+}
+
+#[test]
+fun test_process_payload_filter_out_data_packages_with_zero_values_not_enough_signers() {
+    // 2 signers normal values 1 signer 0 value
+    let payload =
+        x"455448000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000199fd604abf000000200000015228fbcd70ae13576d1e4351b63134363e63560f0893330fc883d6830927d8cc710f0559f4b3aae5253e801374ffa095ae5563ed9b7714a8c1d4dbaad0e6b3aa1b455448000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000640199fd604abf000000200000013098dd9a4a0752249f197df27adfa6445e8429ee42a01f700bfdc12c90ed12c86725eb1264ced37526e9bf80db85db2459e28ac54e4e8c00f2b0ef4c7a5452481c455448000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000960199fd604abf0000002000000168bc07a5142d681407d1d9aebad69d07f1c9bcd1651e8a0d93ebf8e0b8bdef527b031a80954246f9c3369d0096c2d89450eecbab7857c691f017fbf282e0f6841c0003000000000002ed57011e0000";
+    let feed_id = x"4554480000000000000000000000000000000000000000000000000000000000";
+    let timestamp = 1760892570303;
+
+    let config = new_config(
+        3,
+        vector[
+            x"04E555EF92856019962b272a3547921E04322826",
+            x"3531539100252e266A48445702c7DFBf096f4C01",
+            x"8dBdb66B775Effd435e6dFe508EDa311eC3c3FDe",
+        ],
+        15 * 60 * 1000,
+        3 * 60 * 1000,
+        vector[],
+        0,
+    );
+
+    try_process_payload(&config, timestamp, feed_id, payload).unwrap_err();
+}
+
+#[test]
+fun test_process_payload_filter_out_data_packages_with_mixed_zero_values_not_enough_signers() {
+    // 2 signers normal values 1 signer 0 value and non-zero value for other feed
+    let payload =
+        x"45544800000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000064019a06da5732000000200000010035f5ed5f709d43cd667e288d29783d457223b75dcb05f3b394599fc3a644ed6b19738bbcd1be1f7f58027ef9262822309997f979b7a58afab035620293508e1b45544800000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000096019a06da573200000020000001776d90438f57b838542637b23bcddd1093aee0bcb24e42b56b8e175d0ee1527c4b2c50fcdbd3cb5d522e8b380e2b15d4032a9209f26769a25814a17f0df5fb3c1b4554480000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000042544300000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000064019a06da573200000020000002dc442f204080d02faceb04fa030db026c13a41bdc876f07967eed7720fd6677e46f9d0dc34636eae7fb13a0d8997849f26ca16c8f674be0652987b9bc62a48351c0003000000000002ed57011e0000";
+    let feed_id = x"4554480000000000000000000000000000000000000000000000000000000000";
+    let timestamp = 1761051563826;
+
+    let config = new_config(
+        3,
+        vector[
+            x"1363AC5C4Fe807f85dB67Ed987B53B3909DA75e5",
+            x"E721D4140cf70C197994Ca3329e1945b70bc80d8",
+            x"73C0f71FC22Fc558ef6fd0b5d87e0eB9c4d97352",
+        ],
+        15 * 60 * 1000,
+        3 * 60 * 1000,
+        vector[],
+        0,
+    );
+
+    try_process_payload(&config, timestamp, feed_id, payload).unwrap_err();
+}
+
+#[test]
+fun test_process_payload_filter_out_data_packages_with_zero_values_enough_signers() {
+    // 3 signers normal values 2 signers 0 value
+    let payload =
+        x"455448000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000199fd60cb2900000020000001f14e7fd44865f933be7b6f7e7ff40d9f86bf50ef810f902f109257b7beb64bb07d9ca4b3ae2238175622b147af702fa6f9904d2408e2ce4363751120772c333a1c455448000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000199fd60cb2900000020000001bb391d0de2bb8197ae5bfb3c212b3dcd83025982932af25be907c484b65332a6338525befcce3fe15729c8466b7b4f8d9102fff94c858e225498c9b39c2ce30c1b455448000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000640199fd60cb2900000020000001752e82b500da8f52732a0d6002ea0b2b522bad8b6610f8a3d245ea2f8ac683dd6cd376004ca05bbf62068c3cfcfe76ee075c6c4d1b8b45707dbb6fc3f1ba29571c455448000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000960199fd60cb290000002000000161a04db8f76c9a773a2af7d2f3f463ab84bdbc65b93c63f162da5c1aa094168e172dc680bfc8d14d6edf4eff9e3a8860e368dcced3a974370176f3389704c8e71b455448000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000c80199fd60cb290000002000000111a425bfa4d5227cacd62a2941ca37a023b765d04e4ec11f216b67eeaca3fc6522e960a52f773c0b5c78119a0e90ded73078a78dcb1197edce3afb11c171ddaa1c0005000000000002ed57011e0000";
+    let feed_id = x"4554480000000000000000000000000000000000000000000000000000000000";
+    let timestamp = 1760892603177;
+
+    let config = new_config(
+        3,
+        vector[
+            x"920e06708d37A902566040e2c03039fd4C91376A",
+            x"Adbda366207ff4111fc9B84DEc146Cdb6510AE72",
+            x"9fc9f59B052c0c62248B50bC375a100c6Ae2394c",
+            x"b2F64dE162b032b96A805c0F042d2bEBF47117c1",
+            x"1B1ae1eEbC8B3794ef1F8dcF535e0280A687B213",
+        ],
+        15 * 60 * 1000,
+        3 * 60 * 1000,
+        vector[],
+        0,
+    );
+
+    let (val, timestamp) = try_process_payload(&config, timestamp, feed_id, payload)
+        .unwrap()
+        .destroy_processed_payload();
+
+    assert!(val == 150);
+    assert!(timestamp == 1760892603177);
+}
+
+#[test]
 fun test_make_payload() {
-    let payload = parse_raw_payload(SAMPLE_PAYLOAD);
+    let payload = parse_raw_payload(SAMPLE_PAYLOAD).unwrap();
 
     assert!(payload.data_packages().length() == 15);
 }
@@ -252,7 +463,7 @@ fun test_trim_data_packages() {
     let feed_id = x"4554480000000000000000000000000000000000000000000000000000000000";
     let timestamp = 1707144580000;
 
-    let data_packages = trim_data_packages(&mut data_package_bytes, 1);
+    let data_packages = trim_data_packages(&mut data_package_bytes, 1).unwrap();
 
     assert!(data_package_bytes == vector::empty());
     assert!(data_packages.length() == 1);
@@ -376,6 +587,33 @@ fun test_filter_packages_by_feed_id() {
     assert!(filtered[0].timestamp() == 4);
 }
 
+#[test]
+fun test_filter_packages_by_zero_values() {
+    let data_packages = vector[
+        new_test_data_package(0, data_points_by_feed_id(x"11", 10)),
+        new_test_data_package(1, vector[new_data_point(x"12", x"aa")]),
+        new_test_data_package(2, data_points_by_feed_id(x"11", 10)),
+        new_test_data_package(3, vector[new_data_point(x"12", x"aa")]),
+        new_test_data_package(
+            4,
+            vector[
+                new_data_point(x"11", vector[0]),
+                new_data_point(x"11", vector[0]),
+                new_data_point(x"12", x"aa"),
+                new_data_point(x"12", x"aa"),
+                new_data_point(x"12", x"aa"),
+            ],
+        ),
+    ];
+
+    let filtered = filter_out_data_packages_with_zero_values(data_packages);
+
+    // we use timestamp here as ids of packages for tests asserts :)
+    assert!(filtered.length() == 2, filtered.length());
+    assert!(filtered[0].timestamp() == 1);
+    assert!(filtered[1].timestamp() == 3);
+}
+
 #[test_only]
 const SAMPLE_PAYLOAD: vector<u8> =
     x"45544800000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000003709f35687018d8378f9800000002000000139c69986b10617291f07fe420bd9991de3aca4dd4c1a7e77f075aebbe56221a846649b1083773c945ae89c0074331037eba52b7f57dc634426099a7ec63f45711b45544800000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000003709f2ff20018d8378f980000000200000017dcdb6561923ebea544f9cd51aa32a1d37eba0960bfa9121cef9cdedd3135c88009e6c2e761492d14a4674ff3958a3f1c7b3e7c14b9bc08e107d8bab0a8f5a3d1c45544800000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000003709ed5659018d8378f980000000200000015687773e177cd39b410c06f25bd61e52abe8d8f8dffba822168eb06d9ac86fb947d83779cb9437f74e21359ed09568284da76d92351ee9a80df27ea4e6c8e5cc1b45544800000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000003709ebaa55018d8378f98000000020000001f321c0ca3703cad49fe373d98a4cceba1fad5172fdb0adb47877277328a869867d1d10c8e69e762cf6035983c0504423b2389bd24638c910c16467c4b9c4c4521b455448000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000037094b8cc2018d8378f98000000020000001c9fd2f5f1f01612a41c9337e3c1939050284dcc72b091cd4503d75913a38b7773d3bec57a07d95468b29c42504b2bec4546b655a33adbc062eeeeddf275986bb1c4254430000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000003e7316ea122018d8378f9800000002000000156588a1f87423c2675eb6f780b73649beb98ee062fb732ef1521e1b3e6ed366e7c584eab98215a7fb8b0cc136fde92f0f8f76fb49dd8534f44fbaab00b7a7be41b4254430000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000003e73180bb79018d8378f98000000020000001d14781f831df36e6529deb617d17887994092ac5ea7e0ea9c2f12ab84fc6a2952f48411f309aad4b16cc698a3c6dd60a5c998771fca4d08397d84948e6daff721c4254430000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000003e730b34178018d8378f980000000200000017f092d8108b516db8b163b382eb9d828848fe636bb433c8d0420e2451c6a960f5b1c224394b1cba681658c219b208fca2d06d90fa943e625772a3528c5d857d81c4254430000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000003e730580d76018d8378f9800000002000000159dda68806f9c64b9c93c2bb21d079cf3f1d07cae51da8173f9552fa2bcd3cf73758c0e46b1eecc46d12f1876cfbda3360cb1a25a11a38ef21c5f9e539c27c981b4254430000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000003e7318b8ad3018d8378f98000000020000001b4f2c86c5a1300c4f001a6878525afc23f9fe1aefbab7861439fd613f839d04a39caf6a037d4bb3996b90e98c2d2d850691eefe3f67e502f6278aa0a652c2e8a1b415641580000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000cbc887e2018d8378f980000000200000011001f8291b8b722e939f5aea0a436375d451d79ff5c1e248d2857f8fe341db007d8692a67c0bcf777f624c06da5b16ce30ec03b2fcbd301a3daec708eab215961c415641580000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000cbc8855a018d8378f980000000200000019ae0e0a4ceb48265b808e42ad2463984f6b4262dacbe34d6d085734177682d7474effb1cc22327b9f4ed31862c8d19868101b6dbed7f0d9579e22824cbe420421b415641580000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000cbc85b72018d8378f980000000200000017f05693fd3b0b4cae6c9c55507ae69a1682f63c2854215198400549777c7a4fa13d632296e7db0f24de80a4548bc9dfec8c4b82a954294f7cb8295e88006164b1b415641580000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000cbc84f11018d8378f98000000020000001722670ba61759fd47cb5eeceeda2c69695c2d3a633784af475d9a5c682d03f74250d4de708849ae0fc6eb6d043fa27be75357ace22aef071705d5f1bcbbac7f51b415641580000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000cbc8878f018d8378f98000000020000001d31cf023168e23772053a48dfbade05535bd2348d6a5e4b42516206037adbe715e8f272703763169a17b65073b88ab5a4201e514d8436f6e169114cf53c709521b000f000000000002ed57011e0000";
@@ -411,4 +649,40 @@ fun new_test_data_package(timestamp: u64, data_points: vector<DataPoint>): DataP
 fun test_data_point(data_point: DataPoint, feed_id: vector<u8>, value: vector<u8>) {
     assert!(data_point.feed_id() == feed_id);
     assert!(data_point.value() == value);
+}
+
+#[test]
+fun test_empty_vector() {
+    let empty_vec = vector::empty<u8>();
+    assert!(is_zero_vec(&empty_vec));
+}
+
+#[test]
+fun test_single_zero_byte() {
+    let vec = vector[0u8];
+    assert!(is_zero_vec(&vec));
+}
+
+#[test]
+fun test_multiple_zero_bytes() {
+    let vec = vector[0u8, 0u8, 0u8, 0u8, 0u8];
+    assert!(is_zero_vec(&vec));
+}
+
+#[test]
+fun test_single_non_zero_byte() {
+    let vec = vector[1u8];
+    assert!(!is_zero_vec(&vec));
+}
+
+#[test]
+fun test_multiple_non_zero_bytes() {
+    let vec = vector[1u8, 2u8, 3u8, 255u8];
+    assert!(!is_zero_vec(&vec));
+}
+
+#[test]
+fun test_mixed_vec() {
+    let vec = vector[1u8, 2u8, 0u8, 3u8, 255u8];
+    assert!(!is_zero_vec(&vec));
 }
