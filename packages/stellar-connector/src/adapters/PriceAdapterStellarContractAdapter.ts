@@ -1,7 +1,7 @@
 import {
   ContractData,
   ContractParamsProvider,
-  IMultiFeedPricesContractAdapter,
+  IExtendedPricesContractAdapter,
   LastRoundDetails,
 } from "@redstone-finance/sdk";
 import { FP } from "@redstone-finance/utils";
@@ -13,7 +13,7 @@ import { StellarContractAdapter } from "./StellarContractAdapter";
 
 export class PriceAdapterStellarContractAdapter
   extends StellarContractAdapter
-  implements IMultiFeedPricesContractAdapter
+  implements IExtendedPricesContractAdapter
 {
   async init(owner: string) {
     return await this.initContract(owner);

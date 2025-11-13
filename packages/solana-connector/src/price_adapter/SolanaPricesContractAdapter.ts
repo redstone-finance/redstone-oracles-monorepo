@@ -2,7 +2,7 @@ import {
   ContractData,
   ContractParamsProvider,
   getLastRoundDetails,
-  IMultiFeedPricesContractAdapter,
+  IExtendedPricesContractAdapter,
   SplitPayloads,
 } from "@redstone-finance/sdk";
 import { loggerFactory, RedstoneCommon } from "@redstone-finance/utils";
@@ -11,7 +11,7 @@ import _ from "lodash";
 import { SolanaTxDeliveryMan } from "../client/SolanaTxDeliveryMan";
 import { PriceAdapterContract } from "./PriceAdapterContract";
 
-export class SolanaPricesContractAdapter implements IMultiFeedPricesContractAdapter {
+export class SolanaPricesContractAdapter implements IExtendedPricesContractAdapter {
   protected readonly logger = loggerFactory("solana-price-adapter");
 
   constructor(

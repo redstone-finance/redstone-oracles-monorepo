@@ -3,7 +3,6 @@ import {
   getEvmContract,
   getEvmContractAdapter,
   getEvmContractConnector,
-  isOevRelayerConfig,
   MultiFeedAdapterWithoutRounds,
   RedstoneEvmContract,
 } from "@redstone-finance/evm-adapters";
@@ -11,13 +10,14 @@ import { TxDeliveryManSupportedProviders } from "@redstone-finance/rpc-providers
 import { DataPackagesResponseCache } from "@redstone-finance/sdk";
 import { Tx } from "@redstone-finance/utils";
 import { Signer, Wallet } from "ethers";
+import { isOevRelayerConfig } from "../../config/is-oev-relayer-config";
 import { RelayerConfig } from "../../config/RelayerConfig";
 import { getRelayerProvider } from "../../core/contract-interactions/get-relayer-provider";
 import { OevMultiAuctionsTxDeliveryMan } from "../../core/contract-interactions/OevMultiAuctionsTxDeliveryMan";
 import { OevTxDeliveryMan } from "../../core/contract-interactions/OevTxDeliveryMan";
 import { getTxDeliveryMan } from "../../core/TxDeliveryManSingleton";
+import { ContractFacade } from "../ContractFacade";
 import { RelayerDataInfluxService } from "../RelayerDataInfluxService";
-import { EvmContractFacade } from "./EvmContractFacade";
 
 export const getEvmContractFacade = (
   relayerConfig: RelayerConfig,
@@ -32,7 +32,7 @@ export const getEvmContractFacade = (
 
   const adapter = getEvmContractAdapter(relayerConfig, adapterContract, txDeliveryMan);
 
-  return new EvmContractFacade(getEvmContractConnector(provider, adapter), relayerConfig, cache);
+  return new ContractFacade(getEvmContractConnector(provider, adapter), relayerConfig, cache);
 };
 
 function makeTxDeliveryMan(

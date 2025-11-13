@@ -3,10 +3,9 @@ import {
   getEvmContract,
   getEvmContractAdapter,
   getEvmContractConnector,
-  IRedstoneContractAdapter,
 } from "@redstone-finance/evm-adapters";
 import {
-  EvmContractFacade,
+  ContractFacade,
   makeRelayerConfig,
   RelayerConfig,
   runIteration,
@@ -15,6 +14,7 @@ import {
   DataPackagesResponseCache,
   IContractConnector,
   IExtendedPricesContractAdapter,
+  IRedstoneContractAdapter,
 } from "@redstone-finance/sdk";
 import { providers } from "ethers";
 import { IterationArgsProviderEnv } from "../IterationArgsProviderInterface";
@@ -57,7 +57,7 @@ export class GelatoRunner {
     logger: GelatoLogger
   ) {
     return runIteration(
-      new EvmContractFacade(connector, config, new DataPackagesResponseCache()),
+      new ContractFacade(connector, config, new DataPackagesResponseCache()),
       config,
       { logger }
     );

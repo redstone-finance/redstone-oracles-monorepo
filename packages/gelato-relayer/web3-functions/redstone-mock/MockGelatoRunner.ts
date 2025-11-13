@@ -1,5 +1,4 @@
 import { Web3FunctionContext } from "@gelatonetwork/web3-functions-sdk";
-import { IRedstoneContractAdapter } from "@redstone-finance/evm-adapters";
 import {
   IterationArgsProvider,
   RelayerConfig,
@@ -9,6 +8,7 @@ import {
   DataPackagesRequestParams,
   IContractConnector,
   IExtendedPricesContractAdapter,
+  IRedstoneContractAdapter,
 } from "@redstone-finance/sdk";
 import { GelatoLogger } from "../redstone/GelatoLogger";
 import { GelatoRunner } from "../redstone/GelatoRunner";

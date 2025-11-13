@@ -6,7 +6,7 @@ import {
   ContractData,
   type ContractParamsProvider,
   getLastRoundDetails,
-  IMultiFeedPricesContractAdapter,
+  IExtendedPricesContractAdapter,
 } from "@redstone-finance/sdk";
 import { FP, loggerFactory, RedstoneCommon } from "@redstone-finance/utils";
 import _ from "lodash";
@@ -16,7 +16,7 @@ import { SuiContractUpdater } from "./SuiContractUpdater";
 import { SuiPricesContractReader } from "./SuiPricesContractReader";
 import { serialize, serializeAddresses, serializeSigners } from "./util";
 
-export class SuiPricesContractAdapter implements IMultiFeedPricesContractAdapter {
+export class SuiPricesContractAdapter implements IExtendedPricesContractAdapter {
   private readonly reader: SuiPricesContractReader;
   private readonly txDeliveryMan: TxDeliveryMan;
   private readonly logger = loggerFactory("sui-prices-contract-adapter");

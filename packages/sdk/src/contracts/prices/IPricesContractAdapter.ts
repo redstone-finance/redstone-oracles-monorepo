@@ -37,8 +37,10 @@ export interface IExtendedPricesContractAdapter extends IPricesContractAdapter {
   getSignerAddress(): Promise<string | undefined>;
 
   getDataFeedIds?: (blockTag?: number) => Promise<string[] | undefined>;
-}
 
-export interface IMultiFeedPricesContractAdapter extends IExtendedPricesContractAdapter {
-  readContractData(feedIds: string[], blockNumber?: number): Promise<ContractData>;
+  readContractData(
+    feedIds: string[],
+    blockNumber?: number,
+    withDataFeedValues?: boolean
+  ): Promise<ContractData>;
 }

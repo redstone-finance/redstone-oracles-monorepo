@@ -1,9 +1,10 @@
-import { RedstoneEvmContract, RelayerTxDeliveryManContext } from "@redstone-finance/evm-adapters";
+import { RedstoneEvmContract } from "@redstone-finance/evm-adapters";
 import { loggerFactory, RedstoneCommon, Tx } from "@redstone-finance/utils";
 import { RelayerConfig } from "../../config/RelayerConfig";
 import { updateUsingOevAuction } from "../../custom-integrations/fastlane/update-using-oev-auction";
+import { RelayerTxDeliveryManContext } from "../RelayerTxDeliveryManContext";
 
-export class OevTxDeliveryMan implements Tx.ITxDeliveryMan {
+export class OevTxDeliveryMan implements Tx.ITxDeliveryMan<RelayerTxDeliveryManContext> {
   private readonly logger = loggerFactory("updatePrices/oev");
 
   constructor(
