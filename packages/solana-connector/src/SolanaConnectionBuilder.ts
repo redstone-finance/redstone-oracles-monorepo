@@ -4,7 +4,7 @@ import { getSolanaChainId, getSolanaCluster } from "./network-ids";
 import { connectToCluster } from "./utils";
 
 export class SolanaConnectionBuilder extends MultiExecutor.ClientBuilder<Connection> {
-  protected override chainType = ChainTypeEnum.Enum.solana;
+  protected override chainType = ChainTypeEnum.enum.solana;
 
   withCluster(cluster: Cluster) {
     return this.withChainId(getSolanaChainId(cluster));
