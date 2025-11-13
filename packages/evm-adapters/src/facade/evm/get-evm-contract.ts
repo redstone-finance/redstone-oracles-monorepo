@@ -1,6 +1,5 @@
 import { Provider } from "@ethersproject/providers";
-import { AdapterType } from "@redstone-finance/on-chain-relayer-common";
-import { NetworkId, RedstoneCommon } from "@redstone-finance/utils";
+import { NetworkId } from "@redstone-finance/utils";
 import { Contract, Signer } from "ethers";
 import { abi as redstoneAdapterABI } from "../../../artifacts/contracts/core/RedstoneAdapterBase.sol/RedstoneAdapterBase.json";
 import { abi as mentoAdapterABI } from "../../../artifacts/contracts/custom-integrations/mento/MentoAdapterBase.sol/MentoAdapterBase.json";
@@ -12,22 +11,24 @@ import {
   MultiFeedAdapterWithoutRounds,
   RedstoneAdapterBase,
 } from "../../../typechain-types";
-import { isArbitrumStylusRelayerConfig } from "../../config/relayer-config-checks";
+import { isArbitrumStylusNetworkId } from "../../config/config-checks";
 import { RedstoneEvmContract } from "./RedstoneEvmContract";
 
+export type EvmAdapterType = "multi-feed" | "price-feeds" | "mento";
+
 export function getEvmContract(
-  relayerConfig: {
+  config: {
     networkId?: NetworkId;
     adapterContractAddress: string;
-    adapterContractType: AdapterType;
+    adapterContractType: EvmAdapterType;
   },
   signerOrProvider?: Signer | Provider
 ): RedstoneEvmContract {
-  const { adapterContractAddress, adapterContractType } = relayerConfig;
+  const { adapterContractAddress, adapterContractType } = config;
 
   switch (adapterContractType) {
     case "multi-feed": {
-      if (isArbitrumStylusRelayerConfig(relayerConfig)) {
+      if (isArbitrumStylusNetworkId(config.networkId)) {
         return new Contract(
           adapterContractAddress,
           stylusAdapterABI,
@@ -57,8 +58,5 @@ export function getEvmContract(
         signerOrProvider
       ) as MentoAdapterBase;
     }
-
-    default:
-      return RedstoneCommon.throwUnsupportedParamError(adapterContractType);
   }
 }

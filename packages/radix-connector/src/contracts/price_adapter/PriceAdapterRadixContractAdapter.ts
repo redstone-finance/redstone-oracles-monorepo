@@ -1,7 +1,7 @@
 import {
   ContractData,
   ContractParamsProvider,
-  IMultiFeedPricesContractAdapter,
+  IExtendedPricesContractAdapter,
 } from "@redstone-finance/sdk";
 import { BigNumber, BigNumberish } from "ethers";
 import _ from "lodash";
@@ -18,7 +18,7 @@ import { WritePricesTrustedRadixMethod } from "./methods/WritePricesTrustedRadix
 
 export class PriceAdapterRadixContractAdapter
   extends RadixContractAdapter
-  implements IMultiFeedPricesContractAdapter
+  implements IExtendedPricesContractAdapter
 {
   private trustedUpdaterProofBadge?: NonFungibleGlobalIdInput;
 

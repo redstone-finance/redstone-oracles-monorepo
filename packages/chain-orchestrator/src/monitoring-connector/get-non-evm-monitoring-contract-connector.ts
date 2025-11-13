@@ -19,7 +19,7 @@ import {
 } from "@redstone-finance/sui-connector";
 import { deconstructNetworkId, RedstoneCommon } from "@redstone-finance/utils";
 
-export function getRelayerMonitoringNonEvmContractConnector(
+export function getNonEvmMonitoringContractConnector(
   relayerManifest: AnyOnChainRelayerManifest,
   rpcUrls: string[]
 ) {
