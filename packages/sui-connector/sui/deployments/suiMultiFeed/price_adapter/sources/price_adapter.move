@@ -5,21 +5,23 @@ module redstone_price_adapter::price_adapter;
 use redstone_price_adapter::admin::AdminCap;
 use redstone_price_adapter::price_data::{Self, PriceData};
 use redstone_price_adapter::redstone_sdk_config::{Self, Config};
-use redstone_price_adapter::redstone_sdk_payload::process_payload;
-use redstone_price_adapter::redstone_sdk_update_check::assert_update_time;
+use redstone_price_adapter::redstone_sdk_payload::try_process_payload;
+use redstone_price_adapter::redstone_sdk_update_check::is_update_time_sound;
+use redstone_price_adapter::result::{Result, error, ok};
+use redstone_price_adapter::unit::{unit, Unit};
+use std::string::String;
 use sui::clock::Clock;
-use sui::event;
+use sui::event::{Self, emit};
 use sui::table::{Self, Table};
 
 // === Errors ===
 
 const E_INVALID_VERSION: u64 = 0;
-const E_TIMESTAMP_TOO_OLD: u64 = 1;
-const E_INVALID_FEED_ID: u64 = 2;
+const E_INVALID_FEED_ID: u64 = 1;
 
 // === Constants ===
 
-const VERSION: u8 = 1;
+const VERSION: u8 = 2;
 
 // === Structs ===
 
@@ -39,6 +41,11 @@ public struct PriceWrite has copy, drop {
     write_timestamp: u64,
 }
 
+public struct UpdateError has copy, drop {
+    feed_id: vector<u8>,
+    error: String,
+}
+
 // === Public-Mutative Functions ===
 
 public fun write_price(
@@ -48,6 +55,22 @@ public fun write_price(
     clock: &Clock,
     tx_context: &TxContext,
 ): u256 {
+    try_write_price(
+        price_adapter,
+        feed_id,
+        payload,
+        clock,
+        tx_context,
+    ).unwrap_or(0)
+}
+
+public fun try_write_price(
+    price_adapter: &mut PriceAdapter,
+    feed_id: vector<u8>,
+    payload: vector<u8>,
+    clock: &Clock,
+    tx_context: &TxContext,
+): Result<u256> {
     let timestamp_now_ms = clock.timestamp_ms();
 
     let assert_version = assert_version(price_adapter);
@@ -57,22 +80,31 @@ public fun write_price(
     );
 
     // If the feed_id was written to before check condition
-    price_write_timestamp.do!(|write_time| {
-        assert_update_time(
+    let is_bad_update_time = price_write_timestamp.map!(|write_time| {
+        is_update_time_sound(
             &price_adapter.config,
             write_time,
             timestamp_now_ms,
             tx_context.sender(),
         )
-    });
+    }).destroy_or!(ok(unit()));
 
-    write_price_checked(
-        assert_version,
-        price_adapter,
-        feed_id,
-        payload,
-        timestamp_now_ms,
-    )
+    is_bad_update_time
+        .flat_map!(
+            |_| write_price_checked(
+                assert_version,
+                price_adapter,
+                feed_id,
+                payload,
+                timestamp_now_ms,
+            ),
+        )
+        .peek_err!(|err| {
+            emit(UpdateError {
+                feed_id,
+                error: *err,
+            })
+        })
 }
 
 // === Public-View Functions ===
@@ -168,24 +200,26 @@ fun write_price_checked(
     feed_id: vector<u8>,
     payload: vector<u8>,
     timestamp_now_ms: u64,
-): u256 {
-    let (aggregated_value, timestamp) = process_payload(
+): Result<u256> {
+    let result = try_process_payload(
         &price_adapter.config,
         timestamp_now_ms,
         feed_id,
         payload,
     );
 
-    overwrite_price(
-        assert_version,
-        price_adapter,
-        feed_id,
-        aggregated_value,
-        timestamp,
-        timestamp_now_ms,
-    );
+    result.flat_map!(|payload| {
+        let (aggregated_value, timestamp) = payload.destroy_processed_payload();
 
-    aggregated_value
+        overwrite_price(
+            assert_version,
+            price_adapter,
+            feed_id,
+            aggregated_value,
+            timestamp,
+            timestamp_now_ms,
+        ).map!(|_| aggregated_value)
+    })
 }
 
 fun get_or_create_default(
@@ -216,10 +250,13 @@ fun overwrite_price(
     aggregated_value: u256,
     timestamp: u64,
     write_timestamp: u64,
-) {
+): Result<Unit> {
     let price_data = get_or_create_default(assert_version, price_adapter, feed_id);
 
-    assert!(timestamp > price_data.timestamp(), E_TIMESTAMP_TOO_OLD);
+    if (timestamp <= price_data.timestamp()) {
+        return error(b"Timestamp too old")
+    };
+
     price_data.update(feed_id, aggregated_value, timestamp, write_timestamp);
 
     event::emit(PriceWrite {
@@ -228,6 +265,8 @@ fun overwrite_price(
         timestamp,
         write_timestamp,
     });
+
+    ok(unit())
 }
 
 fun update_config_checked(
@@ -296,4 +335,21 @@ fun assert_version(price_adapter: &PriceAdapter): AssertVersion {
     assert!(price_adapter.version == VERSION, E_INVALID_VERSION);
 
     AssertVersion {}
+}
+
+// Migrations
+
+const E_CANT_BUMP_VERSION: u64 = 3;
+const E_VERSION_CONSTANT_INCORRECT: u64 = 4;
+
+/// Migrates to `price_adapter` object version 2
+public fun migrate_to_version_2(admin_cap: &AdminCap, price_adapter: &mut PriceAdapter) {
+    // check if we should bump the `price_adapter` version.
+    assert!(price_adapter.version == 1, E_CANT_BUMP_VERSION);
+
+    // sanity check
+    assert!(VERSION == 2, E_VERSION_CONSTANT_INCORRECT);
+
+    // set version to 2
+    price_adapter.set_version(admin_cap, VERSION);
 }
