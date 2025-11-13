@@ -11263,6 +11263,7 @@ __metadata:
     "@redstone-finance/utils": "workspace:*"
     async-mutex: "npm:^0.5.0"
     aws-iot-device-sdk-v2: "npm:^1.21.1"
+    dotenv: "npm:^16.0.3"
     ethers: "npm:^5.7.2"
     lodash: "npm:^4.17.21"
     zod: "npm:^3.22.4"
