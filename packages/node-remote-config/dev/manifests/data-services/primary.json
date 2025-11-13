@@ -3219,6 +3219,16 @@
       ],
       "denomination": "USD",
       "rateFeed": false
+    },
+    "iBENJI_ETHEREUM_FUNDAMENTAL": {
+      "source": ["ethereum-evm-fetcher-franklin-templeton"],
+      "denomination": "YUSD",
+      "rateFeed": true
+    },
+    "iBENJI_BNB_FUNDAMENTAL": {
+      "source": ["bnb-evm-fetcher-franklin-templeton"],
+      "denomination": "YUSD",
+      "rateFeed": true
     }
   },
   "multiPointPackages": {
