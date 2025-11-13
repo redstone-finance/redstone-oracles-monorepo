@@ -11,9 +11,9 @@ import {
 export abstract class MoveClientBuilder extends MultiExecutor.ClientBuilder<MoveClient> {
   static getInstance(chainType: Extract<ChainType, "movement" | "aptos">) {
     switch (chainType) {
-      case ChainTypeEnum.Enum.aptos:
+      case ChainTypeEnum.enum.aptos:
         return new AptosClientBuilder();
-      case ChainTypeEnum.Enum.movement:
+      case ChainTypeEnum.enum.movement:
         return new MovementClientBuilder();
       default:
         return RedstoneCommon.throwUnsupportedParamError(chainType);
@@ -59,9 +59,9 @@ export abstract class MoveClientBuilder extends MultiExecutor.ClientBuilder<Move
 }
 
 class AptosClientBuilder extends MoveClientBuilder {
-  protected override chainType = ChainTypeEnum.Enum.aptos;
+  protected override chainType = ChainTypeEnum.enum.aptos;
 }
 
 class MovementClientBuilder extends MoveClientBuilder {
-  protected override chainType = ChainTypeEnum.Enum.movement;
+  protected override chainType = ChainTypeEnum.enum.movement;
 }

@@ -47,7 +47,7 @@
     "@solana/web3.js": "^1.98.2",
     "ethers": "^5.7.2",
     "lodash": "^4.17.21",
-    "zod": "^3.22.4"
+    "zod": "^4.1.12"
   },
   "devDependencies": {
     "@ledgerhq/hw-app-solana": "^7.2.4",
