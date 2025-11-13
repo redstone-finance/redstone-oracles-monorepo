@@ -586,7 +586,6 @@
     "CELO": {
       "source": [
         "binance-usdt",
-        "bingx-usdt",
         "bitget-usdt",
         "bitrue-usdt",
         "gate-usdt",
@@ -1897,7 +1896,6 @@
         "gate-usdt",
         "kucoin-usdt",
         "okx-usdt",
-        "uniswap-v3-base-weth-3000",
         "uniswap-v4-ethereum-eth-3000"
       ],
       "denomination": "USD",
@@ -3004,7 +3002,6 @@
         "kucoin-usdt",
         "mexc-usdt",
         "okx-usdt",
-        "uniswap-v3-ethereum-usdc-10000",
         "xt"
       ],
       "denomination": "USD",
@@ -3052,9 +3049,7 @@
         "gate-usdt",
         "mexc-usdt",
         "pancake-swap-bnb-usdt-100",
-        "sushiswap-v3-hemi-usdc.e-3000",
-        "sushiswap-v3-hemi-usdt-500",
-        "sushiswap-v3-hemi-weth-500"
+        "sushiswap-v3-hemi-usdt-500"
       ],
       "denomination": "USD",
       "rateFeed": false
