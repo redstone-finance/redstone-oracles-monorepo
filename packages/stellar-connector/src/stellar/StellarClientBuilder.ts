@@ -5,7 +5,7 @@ import { StellarClient } from "./StellarClient";
 import { getStellarChainId, StellarNetwork } from "./network-ids";
 
 export class StellarClientBuilder extends MultiExecutor.ClientBuilder<StellarClient> {
-  protected override chainType = ChainTypeEnum.Enum.stellar;
+  protected override chainType = ChainTypeEnum.enum.stellar;
   private horizonUrl?: string;
 
   withStellarNetwork(network: StellarNetwork) {

@@ -22,14 +22,16 @@ const MqttCert = z.object({
   host: z.string(),
   // important only in context of reader
   expectedRequestPerSecondPerTopic: z.number(),
-  privateKeyEnvPath: z.string().refine(
-    (path) => RedstoneCommon.isDefined(process.env[path]),
-    (path) => ({ message: `Expected ENV ${path} by mqtt cert authorization - privateKeyEnvPath` })
-  ),
-  certEnvPath: z.string().refine(
-    (path) => RedstoneCommon.isDefined(process.env[path]),
-    (path) => ({ message: `Expected ENV ${path} by mqtt cert authorization - certEnvPath` })
-  ),
+  privateKeyEnvPath: z.string().superRefine((path, ctx) => {
+    if (!RedstoneCommon.isDefined(process.env[path])) {
+      ctx.addIssue(`Expected ENV ${path} by mqtt cert authorization - privateKeyEnvPath`);
+    }
+  }),
+  certEnvPath: z.string().superRefine((path, ctx) => {
+    if (!RedstoneCommon.isDefined(process.env[path])) {
+      ctx.addIssue(`Expected ENV ${path} by mqtt cert authorization - certEnvPath`);
+    }
+  }),
 });
 
 const RedundantMqttEnvConfig = z.discriminatedUnion("type", [MqttV4Sig, MqttCert]).array().min(1);
