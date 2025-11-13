@@ -7704,6 +7704,16 @@
       "source": ["hyperevm-evm-fetcher-ventuals"],
       "denomination": "HYPE",
       "rateFeed": true
+    },
+    "iBENJI_ETHEREUM_FUNDAMENTAL": {
+      "source": ["ethereum-evm-fetcher-franklin-templeton"],
+      "denomination": "YUSD",
+      "rateFeed": true
+    },
+    "iBENJI_BNB_FUNDAMENTAL": {
+      "source": ["bnb-evm-fetcher-franklin-templeton"],
+      "denomination": "YUSD",
+      "rateFeed": true
     }
   }
 }
