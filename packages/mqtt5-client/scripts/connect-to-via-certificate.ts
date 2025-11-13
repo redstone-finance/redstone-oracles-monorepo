@@ -1,14 +1,11 @@
-import { Mqtt5Client } from "../src";
+import "dotenv/config";
 
-const CERT = `-----BEGIN CERTIFICATE-----
-....
------END CERTIFICATE-----
-`;
-const PRIVATE_KEY = `-----BEGIN RSA PRIVATE KEY-----
-....
------END RSA PRIVATE KEY-----
-`;
-const ENDPOINT = "";
+import { Mqtt5Client, PubSubClient } from "../src";
+
+const CERT = process.env.MQTT_CERT!;
+const PRIVATE_KEY = process.env.MQTT_PRIVATE_KEY!;
+const ENDPOINT = process.env.MQTT_ENDPOINT!;
+const TOPIC = process.env.MQTT_TOPIC || "#";
 
 async function main() {
   const mqttClient = await Mqtt5Client.create({
@@ -20,7 +17,12 @@ async function main() {
     },
   });
 
-  await mqttClient.subscribe(["#"], console.log);
+  await mqttClient.subscribe(
+    [TOPIC],
+    (topicName: string, messagePayload: unknown, error: string | null, _client: PubSubClient) => {
+      console.dir({ topicName, payload: messagePayload, error }, { depth: null });
+    }
+  );
 }
 
 void main();
