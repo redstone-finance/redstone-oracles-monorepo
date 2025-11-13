@@ -23,19 +23,16 @@ export type {
   PriceFeedWithRoundsMock,
   RedstoneAdapterBase,
 } from "../typechain-types";
-export { isOevRelayerConfig } from "./config/relayer-config-checks";
 export { EvmContractAdapter } from "./core/contract-interactions/EvmContractAdapter";
 export { EvmContractConnector } from "./core/contract-interactions/EvmContractConnector";
-export type { IRedstoneContractAdapter } from "./core/contract-interactions/IRedstoneContractAdapter";
 export { MentoEvmContractAdapter } from "./core/contract-interactions/MentoEvmContractAdapter";
 export { PriceFeedsEvmContractAdapter } from "./core/contract-interactions/PriceFeedsEvmContractAdapter";
-export { type RelayerTxDeliveryManContext } from "./core/contract-interactions/RelayerTxDeliveryManContext";
 export { getSortedOraclesContractAtAddress } from "./custom-integrations/mento/get-sorted-oracles-contract-at-address";
+export { EvmPriceFeedContract } from "./facade/evm/EvmPriceFeedContract";
 export { getEvmContract } from "./facade/evm/get-evm-contract";
 export { getEvmContractAdapter } from "./facade/evm/get-evm-contract-adapter";
 export { getEvmContractConnector } from "./facade/evm/get-evm-contract-connector";
 export { type RedstoneEvmContract } from "./facade/evm/RedstoneEvmContract";
-export { type UpdatePricesOptions } from "./facade/UpdatePricesOptions";
 export {
   deployMentoAdapterMock,
   deployMockSortedOracles,
