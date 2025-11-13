@@ -7,7 +7,7 @@ import { z } from "zod";
 export function zodAssert<O>(schema: z.ZodSchema<O>, data: unknown): asserts data is O {
   const result = schema.safeParse(data);
   if (!result.success) {
-    throw new Error(`Zod validation error: ${result.error.toString()}`);
+    throw new Error(`Zod validation error: ${z.prettifyError(result.error)}`);
   }
 }
 

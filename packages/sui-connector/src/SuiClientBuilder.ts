@@ -5,7 +5,7 @@ import { getSuiChainId, getSuiNetworkName } from "./network-ids";
 import { makeSuiClient } from "./util";
 
 export class SuiClientBuilder extends MultiExecutor.ClientBuilder<SuiClient> {
-  protected override chainType = ChainTypeEnum.Enum.sui;
+  protected override chainType = ChainTypeEnum.enum.sui;
 
   withSuiNetwork(network: SuiNetworkName) {
     return this.withChainId(getSuiChainId(network));
