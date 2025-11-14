@@ -156,7 +156,7 @@ export function sanitizeLogMessage(message: string): string {
       parsedUrl.search = "";
 
       return parsedUrl.toString().replace(/\/+$/, "");
-    } catch (_err) {
+    } catch {
       return match;
     }
   });
