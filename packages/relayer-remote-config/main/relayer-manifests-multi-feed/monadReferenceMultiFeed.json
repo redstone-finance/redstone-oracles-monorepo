@@ -1,0 +1,20 @@
+{
+  "chain": {
+    "name": "monad",
+    "id": 143
+  },
+  "updateTriggers": {
+    "deviationPercentage": 0.5,
+    "timeSinceLastUpdateInMilliseconds": 21600000
+  },
+  "adapterContract": "0x98DC6E90D4c2f212ed9d124aD2aFBa4833268633",
+  "adapterContractType": "multi-feed",
+  "dataServiceId": "redstone-primary-prod",
+  "priceFeeds": {
+    "ETH": {},
+    "BTC": {},
+    "USDC": {},
+    "USDT": {},
+    "DAI": {}
+  }
+}
