@@ -53,8 +53,8 @@
   "author": "hatskier <Suvorovalex1997@gmail.com> (https://hatskier.com/)",
   "license": "MIT",
   "devDependencies": {
-    "@eslint/js": "^9.33.0",
     "@jest/types": "^29.5.4",
+    "@redstone-finance/eslint-plugin": "workspace:*",
     "@rollup/plugin-commonjs": "^25.0.4",
     "@rollup/plugin-json": "^6.0.0",
     "@rollup/plugin-node-resolve": "^15.2.3",
@@ -62,16 +62,8 @@
     "@swc/core": "^1.9.2",
     "@types/jest": "^29.5.4",
     "@types/node": "^22.13.10",
-    "@typescript-eslint/eslint-plugin": "^8.39.1",
-    "@typescript-eslint/parser": "^8.39.1",
     "esbuild": "^0.25.12",
-    "eslint": "^9.33.0",
-    "eslint-config-prettier": "^10.1.8",
-    "eslint-import-resolver-typescript": "^4.4.4",
-    "eslint-plugin-array-func": "^5.1.0",
-    "eslint-plugin-import": "^2.32.0",
-    "eslint-plugin-prettier": "^5.5.4",
-    "eslint-plugin-workspaces": "^0.11.0",
+    "eslint": "^9.39.1",
     "javascript-obfuscator": "^4.1.0",
     "jest": "^29.7.0",
     "jiti": "^2.5.1",
@@ -89,8 +81,7 @@
     "ts-jest": "^29.4.5",
     "ts-node": "^10.9.2",
     "turbo": "^2.5.8",
-    "typescript": "^5.9.2",
-    "typescript-eslint": "^8.39.1"
+    "typescript": "^5.9.2"
   },
   "overrides": {
     "elliptic": "^6.6.1",
