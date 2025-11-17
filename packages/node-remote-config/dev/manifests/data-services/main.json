@@ -2448,34 +2448,22 @@
       "rateFeed": false
     },
     "TSLA": {
-      "source": [
-        "alltick-stocks-api",
-        "databento-tsla-no-closing-price",
-        "financialmodelingprep",
-        "polygon",
-        "twelve-data-stocks"
-      ],
+      "source": ["alltick-stocks-api", "financialmodelingprep", "polygon", "twelve-data-stocks"],
       "denomination": "USD",
       "rateFeed": false
     },
     "NVDA": {
-      "source": [
-        "alltick-stocks-api",
-        "databento-nvda-no-closing-price",
-        "financialmodelingprep",
-        "polygon",
-        "twelve-data-stocks"
-      ],
+      "source": ["alltick-stocks-api", "financialmodelingprep", "polygon", "twelve-data-stocks"],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "PLTR": {
+      "source": ["alltick-stocks-api", "financialmodelingprep", "polygon", "twelve-data-stocks"],
       "denomination": "USD",
       "rateFeed": false
     },
     "FGNX": {
-      "source": [
-        "databento-fgnx-no-closing-price",
-        "financialmodelingprep",
-        "polygon",
-        "twelve-data-stocks"
-      ],
+      "source": ["financialmodelingprep", "polygon", "twelve-data-stocks"],
       "denomination": "USD",
       "rateFeed": false
     },
