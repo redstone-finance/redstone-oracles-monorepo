@@ -2746,6 +2746,11 @@
       "denomination": "USD",
       "rateFeed": false
     },
+    "PLTR": {
+      "source": [],
+      "denomination": "USD",
+      "rateFeed": false
+    },
     "FGNX": {
       "source": [],
       "denomination": "USD",
