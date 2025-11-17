@@ -340,7 +340,8 @@
         "curve-ethereum-crvusd",
         "curve-ethereum-usde",
         "curve-ethereum-weth",
-        "curve-ethereum-cbbtc"
+        "curve-ethereum-cbbtc",
+        "fluid-ethereum-usdc"
       ],
       "deviationCheck": {
         "deviationWithRecentValues": {
