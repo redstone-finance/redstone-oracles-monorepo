@@ -967,15 +967,16 @@
     },
     "EUROC": {
       "source": [
-        "coingecko",
-        "coinmarketcap",
-        "bitmart-usdt",
-        "uniswap-v3-ethereum-usdc-500",
         "aerodrome-cl-base-usdc",
         "aerodrome-cl-base-usdc-2",
         "aerodrome-cl-base-weth",
+        "coinbase-usdc",
+        "coingecko",
+        "coinmarketcap",
+        "kraken-usd",
         "trader-joe-v2-avalanche-usdc",
-        "trader-joe-v2-avalanche-wavax"
+        "trader-joe-v2-avalanche-wavax",
+        "uniswap-v3-ethereum-usdc-500"
       ],
       "denomination": "USD",
       "rateFeed": false
