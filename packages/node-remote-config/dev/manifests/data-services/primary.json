@@ -3652,6 +3652,13 @@
       ],
       "denomination": "USD",
       "rateFeed": true
+    },
+    "muBOND_FUNDAMENTAL": {
+      "source": [
+        "accountable-mubond"
+      ],
+      "denomination": "USD",
+      "rateFeed": true
     }
   },
   "multiPointPackages": {
