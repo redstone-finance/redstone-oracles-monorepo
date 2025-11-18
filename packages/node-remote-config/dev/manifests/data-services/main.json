@@ -2457,22 +2457,45 @@
       "rateFeed": false
     },
     "TSLA": {
-      "source": ["alltick-stocks-api", "financialmodelingprep", "polygon", "twelve-data-stocks"],
+      "source": [
+        "alltick-stocks-api",
+        "financialmodelingprep",
+        "polygon",
+        "twelve-data-stocks",
+        "ws-dx-feed-no-close-price"
+      ],
       "denomination": "USD",
       "rateFeed": false
     },
     "NVDA": {
-      "source": ["alltick-stocks-api", "financialmodelingprep", "polygon", "twelve-data-stocks"],
+      "source": [
+        "alltick-stocks-api",
+        "financialmodelingprep",
+        "polygon",
+        "twelve-data-stocks",
+        "ws-dx-feed-no-close-price"
+      ],
       "denomination": "USD",
       "rateFeed": false
     },
     "PLTR": {
-      "source": ["alltick-stocks-api", "financialmodelingprep", "polygon", "twelve-data-stocks"],
+      "source": [
+        "alltick-stocks-api",
+        "financialmodelingprep",
+        "polygon",
+        "twelve-data-stocks",
+        "ws-dx-feed-no-close-price"
+      ],
       "denomination": "USD",
       "rateFeed": false
     },
     "FGNX": {
-      "source": ["financialmodelingprep", "polygon", "twelve-data-stocks"],
+      "source": [
+        "financialmodelingprep",
+        "polygon",
+        "twelve-data-stocks",
+        "ws-dx-feed-no-close-price"
+      ],
       "denomination": "USD",
       "rateFeed": false
     },
