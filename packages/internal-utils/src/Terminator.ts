@@ -23,7 +23,7 @@ export function terminateWithManifestConfigError(errorDetails: string): never {
 
 export function terminateWithUnknownCriticalError(errorDetails: string): never {
   logger.error(
-    `Unknown critcal error: ${errorDetails}.\n` +
+    `Unknown critical error: ${errorDetails}.\n` +
       `Terminating with exit code ${ExitCodes.UnknownCriticalError}`
   );
   process.exit(ExitCodes.UnknownCriticalError);
