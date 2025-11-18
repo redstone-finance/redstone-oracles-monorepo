@@ -8396,6 +8396,13 @@
       ],
       "denomination": "USD",
       "rateFeed": true
+    },
+    "SIERRA_FUNDAMENTAL": {
+      "source": [
+        "avalanche-evm-fetcher-sierra"
+      ],
+      "denomination": "USD",
+      "rateFeed": true
     }
   }
 }
