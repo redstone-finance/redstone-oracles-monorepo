@@ -31,7 +31,7 @@
     "global:prettier": "cd $INIT_CWD && prettier",
     "global:rollup": "cd $INIT_CWD && rollup",
     "global:ts-node": "cd $INIT_CWD && ts-node",
-    "global:ecs-env-runner": "yarn global:ts-node packages/ecs-env-runner/src/cli.ts",
+    "global:ecs-env-runner": "yarn global:ts-node packages/ecs-env-runner/src/cli.ts --cwd $INIT_CWD ",
     "global:tsc": "cd $INIT_CWD && tsc",
     "global:lambda-key": "echo $PACKAGE_NAME.$(git log -1 --format=%h --abbrev=8).zip",
     "global:lambda-build": "cd $INIT_CWD && tsc -p tsconfig.build.json && esbuild $INDEX_PATH --bundle --minify --platform=node --target=es2022 --outfile=lambda-dist/index.js ${ESBUILD_EXTRA:-} && cp -R ../../node-remote-config lambda-dist/node-remote-config",
