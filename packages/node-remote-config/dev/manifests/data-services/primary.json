@@ -3638,6 +3638,13 @@
       ],
       "denomination": "USD",
       "rateFeed": true
+    },
+    "yzUSD_FUNDAMENTAL": {
+      "source": [
+        "accountable-yzusd"
+      ],
+      "denomination": "USD",
+      "rateFeed": true
     }
   },
   "multiPointPackages": {
