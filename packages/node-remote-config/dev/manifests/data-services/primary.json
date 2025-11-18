@@ -3216,6 +3216,16 @@
       "denomination": "USD",
       "rateFeed": false
     },
+    "syzUSD_FUNDAMENTAL": {
+      "source": ["plasma-evm-fetcher-yuzu-money"],
+      "denomination": "yzUSD_FUNDAMENTAL",
+      "rateFeed": true
+    },
+    "syzUSD_FUNDAMENTAL/USD": {
+      "source": ["usd-based"],
+      "denomination": "USD",
+      "rateFeed": true
+    },
     "iBENJI_ETHEREUM_FUNDAMENTAL": {
       "source": ["ethereum-evm-fetcher-franklin-templeton"],
       "denomination": "USD",
