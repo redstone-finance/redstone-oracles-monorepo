@@ -15,6 +15,7 @@
   "tokens": {
     "ETH": {
       "source": [
+        "binance-usdc",
         "binance-usdt",
         "bingx-usdc",
         "bingx-usdt",
@@ -23,6 +24,7 @@
         "bitmart-usdt",
         "bitrue-usdt",
         "bitstamp-usd",
+        "bybit-usdc",
         "coinbase-usd",
         "gate-usdt",
         "kaiko-v2",
@@ -33,6 +35,7 @@
         "kucoin-usdt",
         "lbank-usdt",
         "mexc-usdt",
+        "okx-usd",
         "okx-usdt",
         "xt"
       ],
@@ -289,6 +292,7 @@
       "source": [
         "binance-usdc",
         "binance-usdt",
+        "bingx-usdc",
         "bingx-usdt",
         "bitget-usdt",
         "bitmart-usdt",
@@ -471,6 +475,7 @@
         "lbank-usdc",
         "lbank-usdt",
         "mexc-usdt",
+        "okx-usd",
         "okx-usdt",
         "xt"
       ],
@@ -1111,6 +1116,7 @@
     "USDe": {
       "priceAggregator": "depth",
       "source": [
+        "binance-usdc",
         "binance-usdt",
         "bitget-usdc",
         "bybit-usdc",

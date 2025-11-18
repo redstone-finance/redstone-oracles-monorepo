@@ -242,6 +242,7 @@
     },
     "ETH": {
       "source": [
+        "binance-usdc",
         "binance-usdt",
         "bingx-usdc",
         "bingx-usdt",
@@ -250,6 +251,7 @@
         "bitmart-usdt",
         "bitrue-usdt",
         "bitstamp-usd",
+        "bybit-usdc",
         "coinbase-usd",
         "gate-usdt",
         "kaiko-v2",
@@ -260,6 +262,7 @@
         "kucoin-usdt",
         "lbank-usdt",
         "mexc-usdt",
+        "okx-usd",
         "okx-usdt",
         "xt"
       ],
@@ -359,6 +362,7 @@
         "curve-ethereum-usde",
         "curve-ethereum-weth",
         "curve-ethereum-cbbtc",
+        "gate-usdt",
         "fluid-ethereum-usdc"
       ],
       "deviationCheck": {
@@ -837,6 +841,7 @@
         "lbank-usdc",
         "lbank-usdt",
         "mexc-usdt",
+        "okx-usd",
         "okx-usdt",
         "xt"
       ],
@@ -930,6 +935,7 @@
       "source": [
         "binance-usdc",
         "binance-usdt",
+        "bingx-usdc",
         "bingx-usdt",
         "bitget-usdt",
         "bitmart-usdt",
@@ -1225,6 +1231,7 @@
     "USDe": {
       "priceAggregator": "depth",
       "source": [
+        "binance-usdc",
         "binance-usdt",
         "bitget-usdc",
         "bybit-usdc",
@@ -2793,6 +2800,7 @@
     },
     "USD1": {
       "source": [
+        "binance-usdc",
         "binance-usdt",
         "bingx-usdt",
         "bitget-usdt",
@@ -3595,6 +3603,7 @@
     },
     "XPL": {
       "source": [
+        "bingx-usdt",
         "bitget-usdt",
         "bitmart-usdt",
         "binance-usdt",
