@@ -7347,6 +7347,17 @@
       "denomination": "sUSDe",
       "rateFeed": true
     },
+    "PT_sUSDe_5FEB2026_ETH": {
+      "source": ["evm-fetcher-pendle"],
+      "denomination": "sUSDe",
+      "localCacheTTL": "1d",
+      "rateFeed": true
+    },
+    "PT_sUSDe_5FEB2026_ETH-TWAP": {
+      "source": ["twap-local"],
+      "denomination": "sUSDe",
+      "rateFeed": true
+    },
     "PT_srUSDe_15JAN2026_ETH": {
       "source": ["evm-fetcher-pendle"],
       "denomination": "srUSDe",
