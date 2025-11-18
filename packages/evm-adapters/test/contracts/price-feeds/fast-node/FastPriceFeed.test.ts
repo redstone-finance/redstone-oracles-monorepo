@@ -1,7 +1,7 @@
 import { expect } from "chai";
 import { ethers } from "hardhat";
 import { FastMultiFeedAdapterMock, FastPriceFeedMock } from "../../../../typechain-types";
-import { deployAdapter, updateByAllNodesFresh } from "./FastMultiFeedAdapter.test";
+import { deployAdapter, updateByAllNodesFresh } from "./fast-node-test-helpers";
 
 const DATA_FEED_ID = ethers.utils.formatBytes32String("ETH");
 
