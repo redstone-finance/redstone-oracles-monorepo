@@ -21,6 +21,11 @@
       "source": [],
       "denomination": "USD",
       "rateFeed": false
+    },
+    "NVDA": {
+      "source": [],
+      "denomination": "USD",
+      "rateFeed": false
     }
   }
 }
