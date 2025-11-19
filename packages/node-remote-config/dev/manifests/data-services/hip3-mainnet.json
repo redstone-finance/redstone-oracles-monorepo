@@ -14,7 +14,7 @@
     "TSLA": {
       "source": [
         "alltick-stocks-api-deferred",
-        "databento-tsla",
+        "databento",
         "financialmodelingprep-deferred",
         "polygon-deferred",
         "twelve-data-stocks-deferred"
