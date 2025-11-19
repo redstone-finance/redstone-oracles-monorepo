@@ -1,5 +1,5 @@
 import { LogMonitoring, LogMonitoringType } from "@redstone-finance/internal-utils";
-import { loggerFactory } from "@redstone-finance/utils";
+import { loggerFactory, RedstoneCommon } from "@redstone-finance/utils";
 import type { PubSubClient, SubscribeCallback } from "../PubSubClient";
 import { RateLimitsCircuitBreaker } from "../RateLimitsCircuitBreaker";
 
@@ -88,75 +88,79 @@ export function withRateLimiter({
     error: string | null,
     pubSubClient: PubSubClient
   ) => {
-    const clientUniqueName = pubSubClient.getUniqueName();
-    const topicKey = `${clientUniqueName}-${topicName}`;
+    try {
+      const clientUniqueName = pubSubClient.getUniqueName();
+      const topicKey = `${clientUniqueName}-${topicName}`;
 
-    if (rateLimitedClients.has(clientUniqueName) || rateLimitedTopics.has(topicKey)) {
-      return;
-    }
-
-    // Check per-client rate limit if configured
-    if (maxMessagesPerClientInterval && clientIntervalMs) {
-      let clientRateLimiter = clientRateLimiters.get(clientUniqueName);
-      if (!clientRateLimiter) {
-        clientRateLimiter = new RateLimitsCircuitBreaker(
-          clientIntervalMs,
-          maxMessagesPerClientInterval
-        );
-        clientRateLimiters.set(clientUniqueName, clientRateLimiter);
-      }
-
-      clientRateLimiter.recordEvent();
-      if (clientRateLimiter.shouldBreakCircuit()) {
-        rateLimitedClients.add(clientUniqueName);
-
-        LogMonitoring.error(
-          LogMonitoringType.PUB_SUB_CLIENT_RATE_LIMITED,
-          `PubSubClient rate limit exceeded: client=${clientUniqueName}, maxMessages=${maxMessagesPerClientInterval}, intervalMs=${clientIntervalMs}. Disabling entire client.`,
-          logger
-        );
-
-        // Stop the client to disable all topics
-        pubSubClient.stop();
-
-        logger.warn(`Disabled entire pubSubClient due to rate limit: ${clientUniqueName}`);
+      if (rateLimitedClients.has(clientUniqueName) || rateLimitedTopics.has(topicKey)) {
         return;
       }
-    }
 
-    if (maxMessagesPerTopicInterval && topicIntervalMs) {
-      let rateLimiter = rateLimiters.get(topicKey);
-      if (!rateLimiter) {
-        rateLimiter = new RateLimitsCircuitBreaker(topicIntervalMs, maxMessagesPerTopicInterval);
-        rateLimiters.set(topicKey, rateLimiter);
+      // Check per-client rate limit if configured
+      if (maxMessagesPerClientInterval && clientIntervalMs) {
+        let clientRateLimiter = clientRateLimiters.get(clientUniqueName);
+        if (!clientRateLimiter) {
+          clientRateLimiter = new RateLimitsCircuitBreaker(
+            clientIntervalMs,
+            maxMessagesPerClientInterval
+          );
+          clientRateLimiters.set(clientUniqueName, clientRateLimiter);
+        }
+
+        clientRateLimiter.recordEvent();
+        if (clientRateLimiter.shouldBreakCircuit()) {
+          rateLimitedClients.add(clientUniqueName);
+
+          LogMonitoring.error(
+            LogMonitoringType.PUB_SUB_CLIENT_RATE_LIMITED,
+            `PubSubClient rate limit exceeded: client=${clientUniqueName}, maxMessages=${maxMessagesPerClientInterval}, intervalMs=${clientIntervalMs}. Disabling entire client.`,
+            logger
+          );
+
+          // Stop the client to disable all topics
+          pubSubClient.stop();
+
+          logger.warn(`Disabled entire pubSubClient due to rate limit: ${clientUniqueName}`);
+          return;
+        }
       }
 
-      rateLimiter.recordEvent();
-      if (rateLimiter.shouldBreakCircuit()) {
-        rateLimitedTopics.add(topicKey);
+      if (maxMessagesPerTopicInterval && topicIntervalMs) {
+        let rateLimiter = rateLimiters.get(topicKey);
+        if (!rateLimiter) {
+          rateLimiter = new RateLimitsCircuitBreaker(topicIntervalMs, maxMessagesPerTopicInterval);
+          rateLimiters.set(topicKey, rateLimiter);
+        }
 
-        LogMonitoring.error(
-          LogMonitoringType.PUB_SUB_TOPIC_RATE_LIMITED,
-          `Topic rate limit exceeded: topic=${topicName}, client=${clientUniqueName}, maxMessages=${maxMessagesPerTopicInterval}, intervalMs=${topicIntervalMs}. Unsubscribing from topic.`,
-          logger
-        );
+        rateLimiter.recordEvent();
+        if (rateLimiter.shouldBreakCircuit()) {
+          rateLimitedTopics.add(topicKey);
 
-        pubSubClient
-          .unsubscribe([topicName])
-          .then(() => {
-            logger.info(
-              `Successfully unsubscribed from rate-limited topic: ${topicName} on client: ${clientUniqueName}`
-            );
-          })
-          .catch((unsubscribeError) => {
-            logger.error(
-              `Failed to unsubscribe from rate-limited topic: ${topicName} on client: ${clientUniqueName}`,
-              unsubscribeError
-            );
-          });
+          LogMonitoring.error(
+            LogMonitoringType.PUB_SUB_TOPIC_RATE_LIMITED,
+            `Topic rate limit exceeded: topic=${topicName}, client=${clientUniqueName}, maxMessages=${maxMessagesPerTopicInterval}, intervalMs=${topicIntervalMs}. Unsubscribing from topic.`,
+            logger
+          );
 
-        return;
+          pubSubClient
+            .unsubscribe([topicName])
+            .then(() => {
+              logger.info(
+                `Successfully unsubscribed from rate-limited topic: ${topicName} on client: ${clientUniqueName}`
+              );
+            })
+            .catch((unsubscribeError) => {
+              logger.error(
+                `Failed to unsubscribe from rate-limited topic: ${topicName} on client: ${clientUniqueName}`,
+                unsubscribeError
+              );
+            });
+
+          return;
+        }
       }
+    } catch (e) {
+      logger.error(`Failed to calculate rate limits error=${RedstoneCommon.stringifyError(e)}`);
     }
 
     return callback(topicName, messagePayload, error, pubSubClient);
