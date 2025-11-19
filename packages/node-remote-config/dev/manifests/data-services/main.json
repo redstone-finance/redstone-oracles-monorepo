@@ -7771,6 +7771,46 @@
       "source": ["accountable-mubond"],
       "denomination": "USD",
       "rateFeed": true
+    },
+    "aprMON_FUNDAMENTAL": {
+      "source": ["monad-evm-fetcher-aprmon"],
+      "denomination": "MON",
+      "rateFeed": true
+    },
+    "AZND_FUNDAMENTAL": {
+      "source": ["accountable-aznd"],
+      "denomination": "USD",
+      "rateFeed": true
+    },
+    "earnAUSD_FUNDAMENTAL": {
+      "source": ["monad-evm-fetcher-earnausd"],
+      "denomination": "AUSD",
+      "rateFeed": true
+    },
+    "shMON_FUNDAMENTAL": {
+      "source": ["monad-evm-fetcher-shmon"],
+      "denomination": "MON",
+      "rateFeed": true
+    },
+    "sMON_FUNDAMENTAL": {
+      "source": ["monad-evm-fetcher-smon"],
+      "denomination": "MON",
+      "rateFeed": true
+    },
+    "APR": {
+      "source": [
+        "bingx-usdt",
+        "bitget-usdt",
+        "bitmart-usdt",
+        "coinbase-usd",
+        "kraken-usd",
+        "kucoin-usdt",
+        "lbank-usdt",
+        "mexc-usdt",
+        "xt"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
     }
   }
 }
