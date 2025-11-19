@@ -16,7 +16,12 @@
       "rateFeed": false
     },
     "TSLA": {
-      "source": ["databento-tsla"],
+      "source": ["databento"],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "NVDA": {
+      "source": ["databento"],
       "denomination": "USD",
       "rateFeed": false
     }
