@@ -5,16 +5,54 @@
   },
   "updateTriggers": {
     "deviationPercentage": 0.5,
-    "timeSinceLastUpdateInMilliseconds": 21600000
+    "timeSinceLastUpdateInMilliseconds": 86400000
   },
   "adapterContract": "0x98DC6E90D4c2f212ed9d124aD2aFBa4833268633",
   "adapterContractType": "multi-feed",
   "dataServiceId": "redstone-primary-prod",
   "priceFeeds": {
-    "ETH": {},
-    "BTC": {},
-    "USDC": {},
-    "USDT": {},
-    "DAI": {}
+    "ETH": {
+      "updateTriggersOverrides": {
+        "deviationPercentage": 0.02,
+        "timeSinceLastUpdateInMilliseconds": 3600000
+      }
+    },
+    "BTC": {
+      "updateTriggersOverrides": {
+        "deviationPercentage": 0.02,
+        "timeSinceLastUpdateInMilliseconds": 3600000
+      }
+    },
+    "USDC": {
+      "updateTriggersOverrides": {
+        "deviationPercentage": 0.05,
+        "timeSinceLastUpdateInMilliseconds": 3600000
+      }
+    },
+    "USDT": {
+      "updateTriggersOverrides": {
+        "deviationPercentage": 0.05,
+        "timeSinceLastUpdateInMilliseconds": 3600000
+      }
+    },
+    "DAI": {
+      "updateTriggersOverrides": {
+        "deviationPercentage": 0.05,
+        "timeSinceLastUpdateInMilliseconds": 3600000
+      }
+    },
+    "SOL": {
+      "updateTriggersOverrides": {
+        "deviationPercentage": 0.05,
+        "timeSinceLastUpdateInMilliseconds": 3600000
+      }
+    },
+    "WBTC": {},
+    "cbBTC": {},
+    "stETH": {},
+    "wstETH_FUNDAMENTAL": {},
+    "weETH_FUNDAMENTAL": {},
+    "ezETH_FUNDAMENTAL": {},
+    "aUSD": {}
   }
 }
