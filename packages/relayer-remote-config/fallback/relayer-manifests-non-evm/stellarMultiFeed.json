@@ -30,6 +30,13 @@
         "deviationPercentage": 0.1,
         "timeSinceLastUpdateInMilliseconds": 86400000
       }
+    },
+    "EUROC/EUR": {
+      "priceFeedAddress": "CD4H2CN6ROCXVZFDTMLFCSU4O5CKLJP5BCFECNMNZEATNABEDRVGFKNI",
+      "updateTriggersOverrides": {
+        "deviationPercentage": 0.2,
+        "timeSinceLastUpdateInMilliseconds": 240000
+      }
     }
   }
 }
