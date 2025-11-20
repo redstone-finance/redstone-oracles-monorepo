@@ -8,7 +8,7 @@ import {
   StellarOperationSender,
 } from "../src";
 import { StellarSigner } from "../src/stellar/StellarSigner";
-import { PRICE_FEED_WASM_HASH } from "./consts";
+import { MULTISIG_ADDRESS, PRICE_FEED_WASM_HASH } from "./consts";
 import { readNetwork, readPriceFeedId, readUrl, savePriceFeedId } from "./utils";
 
 export async function initPriceFeed(
@@ -18,7 +18,7 @@ export async function initPriceFeed(
   feedId: string
 ) {
   await new PriceFeedStellarContractAdapter(client, new Contract(contractId), sender).init(
-    await sender.getPublicKey(),
+    MULTISIG_ADDRESS,
     feedId
   );
 
