@@ -13,7 +13,7 @@ import { loggerFactory, RedstoneCommon } from "@redstone-finance/utils";
 import { cleanStalePackages, MAX_PACKAGE_STALENESS, PackageResponse } from "./common";
 import { DataPackageSubscriberParams } from "./DataPackageSubscriberParams";
 import { LastPublishedFeedState } from "./LastPublishedFeedState";
-import { MultiPubSubClient } from "./MultiPubSubClient";
+import { PubSubClient } from "./PubSubClient";
 import { RateLimitsCircuitBreaker } from "./RateLimitsCircuitBreaker";
 import { ReferenceValueVerifier } from "./ReferenceValueVerifier";
 import { SignedDataPackageWithSavedSigner } from "./SignedDataPackageWithSavedSigner";
@@ -64,7 +64,7 @@ export class DataPackageSubscriber {
   private readonly verifier?: ReferenceValueVerifier;
 
   constructor(
-    readonly pubSubClient: MultiPubSubClient,
+    readonly pubSubClient: PubSubClient,
     readonly params: DataPackageSubscriberParams
   ) {
     if (params.authorizedSigners.length === 0) {
@@ -243,9 +243,11 @@ export class DataPackageSubscriber {
       );
     }
 
+    const description = `${packageSigner} timestamp=${packageTimestamp} dataPackageId=${dataPackageId}`;
+
     this.verifier?.registerDataPackage(signedDataPackage);
     if (this.verifier && !this.verifier.verifyDataPackage(signedDataPackage)) {
-      this.logger.debug(`Package was rejected after verification`);
+      this.logger.debug(`Package from ${description} was rejected after verification`);
 
       return;
     }
@@ -253,7 +255,7 @@ export class DataPackageSubscriber {
     //timestamp
     if (!this.lastPublishedState.isNewerThanLastPublished(dataPackageId, packageTimestamp)) {
       this.logger.debug(
-        `Package was rejected because packageTimestamp=${packageTimestamp} <= lastPublishedTimestamp=${this.lastPublishedState.getLastPublishTime(dataPackageId)}`
+        `Package from ${description} was rejected because packageTimestamp=${packageTimestamp} <= lastPublishedTimestamp=${this.lastPublishedState.getLastPublishTime(dataPackageId)}`
       );
       return;
     }
@@ -263,14 +265,12 @@ export class DataPackageSubscriber {
 
     if (entryForTimestamp[dataPackageId].some((dp) => dp.packageSigner === packageSigner)) {
       this.logger.debug(
-        `Package was rejected because already have package signer=${packageSigner} timestamp=${packageTimestamp} dataPackageId=${dataPackageId}`
+        `Package from ${description} was rejected because already have package signer=${description}`
       );
       return;
     }
 
-    this.logger.debug(
-      `Received and verified data package from=${packageSigner} timestamp=${packageTimestamp} dataPackageId=${dataPackageId}`
-    );
+    this.logger.debug(`Received and verified data package from=${description}`);
 
     entryForTimestamp[dataPackageId].push(signedDataPackage);
     this.packagesPerTimestamp.set(packageTimestamp, entryForTimestamp);

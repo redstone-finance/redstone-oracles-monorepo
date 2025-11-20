@@ -1,94 +1,11 @@
 import { ContentTypes } from "@redstone-finance/internal-utils";
 import { loggerFactory, RedstoneCommon } from "@redstone-finance/utils";
-import { z } from "zod";
-import { createMqtt5ClientFactory } from "./Mqtt5Client";
-import { MultiPubSubClient } from "./MultiPubSubClient";
 import { PubSubClient, PubSubPayload, SubscribeCallback } from "./PubSubClient";
 
 export type RedundantPubSubConfig = {
   client: PubSubClient;
   name: string;
 };
-
-const MqttV4Sig = z.object({
-  type: z.enum(["mqttAWSV4Sig"]),
-  host: z.string(),
-  // important only in context of reader
-  expectedRequestPerSecondPerTopic: z.number(),
-});
-
-const MqttCert = z.object({
-  type: z.enum(["mqttCert"]),
-  host: z.string(),
-  // important only in context of reader
-  expectedRequestPerSecondPerTopic: z.number(),
-  privateKeyEnvPath: z.string().superRefine((path, ctx) => {
-    if (!RedstoneCommon.isDefined(process.env[path])) {
-      ctx.addIssue(`Expected ENV ${path} by mqtt cert authorization - privateKeyEnvPath`);
-    }
-  }),
-  certEnvPath: z.string().superRefine((path, ctx) => {
-    if (!RedstoneCommon.isDefined(process.env[path])) {
-      ctx.addIssue(`Expected ENV ${path} by mqtt cert authorization - certEnvPath`);
-    }
-  }),
-});
-
-const RedundantMqttEnvConfig = z.discriminatedUnion("type", [MqttV4Sig, MqttCert]).array().min(1);
-
-export function createRedundantPubSubClientFromEnv(
-  envPath = "PUB_SUB_CONFIGS"
-): RedundantPubSubClient | undefined {
-  const configs = RedstoneCommon.getFromEnv(envPath, RedundantMqttEnvConfig.optional());
-  if (!configs) {
-    return undefined;
-  }
-  const redundantPubSubConfig: RedundantPubSubConfig[] = [];
-
-  for (const config of configs) {
-    const type = config.type;
-    switch (type) {
-      case "mqttAWSV4Sig": {
-        const client = new MultiPubSubClient(
-          createMqtt5ClientFactory({
-            authorization: { type: "AWSSigV4" },
-            endpoint: config.host,
-          }),
-          config.expectedRequestPerSecondPerTopic,
-          config.host
-        );
-
-        redundantPubSubConfig.push({
-          client,
-          name: `${config.type}::${config.host}`,
-        });
-
-        break;
-      }
-
-      case "mqttCert": {
-        const client = new MultiPubSubClient(
-          createMqtt5ClientFactory({
-            authorization: {
-              type: "Cert",
-              privateKey: RedstoneCommon.getFromEnv(config.privateKeyEnvPath),
-              cert: RedstoneCommon.getFromEnv(config.certEnvPath),
-            },
-            endpoint: config.host,
-          }),
-          config.expectedRequestPerSecondPerTopic,
-          config.host
-        );
-        redundantPubSubConfig.push({ client, name: `${config.type}::${config.host}` });
-        break;
-      }
-      default:
-        return RedstoneCommon.throwUnsupportedParamError(type);
-    }
-  }
-
-  return new RedundantPubSubClient(redundantPubSubConfig);
-}
 
 export class RedundantPubSubClient implements PubSubClient {
   logger = loggerFactory("redundant-pub-sub-client");

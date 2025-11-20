@@ -1,12 +1,14 @@
 import { DataPackage, NumericDataPoint, SignedDataPackage } from "@redstone-finance/protocol";
 import { RedstoneLogger } from "@redstone-finance/utils";
 import { ethers } from "ethers";
-import { MqttTopics } from "../src";
-import { DataPackageSubscriber } from "../src/DataPackageSubscriber";
-import { DataPackageSubscriberParams } from "../src/DataPackageSubscriberParams";
-import { MultiPubSubClient } from "../src/MultiPubSubClient";
-import { PubSubPayload } from "../src/PubSubClient";
-import { RateLimitsCircuitBreaker } from "../src/RateLimitsCircuitBreaker";
+import {
+  DataPackageSubscriber,
+  DataPackageSubscriberParams,
+  MqttTopics,
+  MultiPubSubClient,
+  PubSubPayload,
+  RateLimitsCircuitBreaker,
+} from "../src";
 
 const MOCK_WALLET_1 = new ethers.Wallet(
   "0xfae81e7c122f2ad245be182d88889e6a037bbeebd7de7bb5ca10f891d359e440"
@@ -302,7 +304,9 @@ describe("subscribe-data-packages", () => {
       jest.runAllTimers();
       expect(callback).toBeCalledTimes(1);
       expect(loggerDebug).toBeCalledWith(
-        expect.stringContaining("Package was rejected because packageTimestamp")
+        expect.stringContaining(
+          `Package from 0x8Bc17e0BE2403707244Ca75776e1bC6B6d80cBFB timestamp=${timestamp} dataPackageId=ETH was rejected because packageTimestamp`
+        )
       );
 
       // older
@@ -316,7 +320,9 @@ describe("subscribe-data-packages", () => {
       jest.runAllTimers();
       expect(callback).toBeCalledTimes(1);
       expect(loggerDebug).toBeCalledWith(
-        expect.stringContaining("Package was rejected because packageTimestamp")
+        expect.stringContaining(
+          `Package from 0x8Bc17e0BE2403707244Ca75776e1bC6B6d80cBFB timestamp=${timestamp - 1} dataPackageId=ETH was rejected because packageTimestamp`
+        )
       );
     });
 
@@ -358,7 +364,7 @@ describe("subscribe-data-packages", () => {
       expect(callback).toBeCalledTimes(0);
       expect(logger).toBeCalledWith(
         expect.stringContaining(
-          `Package was rejected because already have package signer=${MOCK_WALLET_1.address}`
+          `Package from 0x701790Ca360222a7e34212175280907e1572EbE6 timestamp=${timestamp} dataPackageId=ETH was rejected because already have package signer=${MOCK_WALLET_1.address}`
         )
       );
     });
