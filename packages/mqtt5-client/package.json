@@ -14,9 +14,12 @@
     "preversion": "yarn build",
     "test": "yarn global:jest",
     "lint": "yarn global:eslint .",
-    "lint:fix": "yarn global:eslint --fix ."
+    "lint:fix": "yarn global:eslint --fix .",
+    "run-sse-client-test": "yarn global:ts-node ./scripts/run-with-light-gateway"
   },
   "dependencies": {
+    "@msgpack/msgpack": "^3.1.2",
+    "@redstone-finance/http-client": "workspace:*",
     "@redstone-finance/internal-utils": "workspace:*",
     "@redstone-finance/protocol": "workspace:*",
     "@redstone-finance/sdk": "workspace:*",
@@ -24,10 +27,12 @@
     "async-mutex": "^0.5.0",
     "aws-iot-device-sdk-v2": "^1.21.1",
     "ethers": "^5.7.2",
+    "eventsource": "^4.0.0",
     "lodash": "^4.17.21",
     "zod": "^4.1.12"
   },
   "devDependencies": {
+    "@types/eventsource": "^3.0.0",
     "dotenv": "^16.0.3"
   },
   "files": [
