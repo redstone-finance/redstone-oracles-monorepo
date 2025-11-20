@@ -209,6 +209,7 @@
         "databento",
         "financialmodelingprep-deferred",
         "polygon-deferred",
+        "ws-polygon-massive",
         "twelve-data-stocks-deferred",
         "ws-dx-feed"
       ],
@@ -314,6 +315,7 @@
       "source": [
         "alltick-stocks-api-deferred",
         "financialmodelingprep-deferred",
+        "ws-polygon-massive",
         "twelve-data-stocks-deferred",
         "ws-dx-feed"
       ],
@@ -414,6 +416,7 @@
       "source": [
         "alltick-stocks-api-deferred",
         "financialmodelingprep-deferred",
+        "ws-polygon-massive",
         "twelve-data-stocks-deferred",
         "ws-dx-feed"
       ],
@@ -514,6 +517,7 @@
       "source": [
         "alltick-stocks-api-deferred",
         "financialmodelingprep-deferred",
+        "ws-polygon-massive",
         "twelve-data-stocks-deferred",
         "ws-dx-feed"
       ],
@@ -614,6 +618,7 @@
       "source": [
         "alltick-stocks-api-deferred",
         "financialmodelingprep-deferred",
+        "ws-polygon-massive",
         "twelve-data-stocks-deferred",
         "ws-dx-feed"
       ],
@@ -714,6 +719,7 @@
       "source": [
         "alltick-stocks-api-deferred",
         "financialmodelingprep-deferred",
+        "ws-polygon-massive",
         "twelve-data-stocks-deferred",
         "ws-dx-feed"
       ],
@@ -814,6 +820,7 @@
       "source": [
         "alltick-stocks-api-deferred",
         "financialmodelingprep-deferred",
+        "ws-polygon-massive",
         "twelve-data-stocks-deferred",
         "ws-dx-feed"
       ],
@@ -914,6 +921,7 @@
       "source": [
         "alltick-stocks-api-deferred",
         "financialmodelingprep-deferred",
+        "ws-polygon-massive",
         "twelve-data-stocks-deferred",
         "ws-dx-feed"
       ],
