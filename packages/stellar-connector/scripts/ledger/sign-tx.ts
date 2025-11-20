@@ -1,4 +1,4 @@
-import { ACCOUNT_ID } from "./consts";
+import { ACCOUNT_ID } from "../consts";
 import { deserializeTx } from "./deserialize-tx";
 import { makeStellar } from "./ledger-utils";
 

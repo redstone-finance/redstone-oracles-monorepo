@@ -1,6 +1,6 @@
+import { MULTISIG_ADDRESS } from "../consts";
 import { getSampleUpgradeTx } from "../sample-upgrade";
 import { loadContractId } from "../utils";
-import { MULTISIG_ADDRESS } from "./consts";
 
 const FEE_STROOPS = "1000";
 

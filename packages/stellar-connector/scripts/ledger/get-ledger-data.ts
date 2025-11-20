@@ -1,4 +1,4 @@
-import { ACCOUNT_ID } from "./consts";
+import { ACCOUNT_ID } from "../consts";
 import { makeStellar } from "./ledger-utils";
 
 async function main() {

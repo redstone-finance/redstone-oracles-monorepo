@@ -34,7 +34,7 @@ export function makeServer() {
 }
 
 function getIdFilepath(contract: string, dir = OUTPUT_DIR, network = readNetwork()) {
-  return path.join(dir, `${contract}-id.${network}`);
+  return path.join(dir, `${contract.replace("/", "-")}-id.${network}`);
 }
 
 export function saveAdapterId(adapterId: string, dir = OUTPUT_DIR) {
