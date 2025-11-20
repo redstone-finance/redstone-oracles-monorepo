@@ -11299,14 +11299,18 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@redstone-finance/mqtt5-client@workspace:packages/mqtt5-client"
   dependencies:
+    "@msgpack/msgpack": "npm:^3.1.2"
+    "@redstone-finance/http-client": "workspace:*"
     "@redstone-finance/internal-utils": "workspace:*"
     "@redstone-finance/protocol": "workspace:*"
     "@redstone-finance/sdk": "workspace:*"
     "@redstone-finance/utils": "workspace:*"
+    "@types/eventsource": "npm:^3.0.0"
     async-mutex: "npm:^0.5.0"
     aws-iot-device-sdk-v2: "npm:^1.21.1"
     dotenv: "npm:^16.0.3"
     ethers: "npm:^5.7.2"
+    eventsource: "npm:^4.0.0"
     lodash: "npm:^4.17.21"
     zod: "npm:^4.1.12"
   languageName: unknown
@@ -15132,6 +15136,15 @@ __metadata:
   version: 1.0.6
   resolution: "@types/estree@npm:1.0.6"
   checksum: 10c0/cdfd751f6f9065442cd40957c07fd80361c962869aa853c1c2fd03e101af8b9389d8ff4955a43a6fcfa223dd387a089937f95be0f3eec21ca527039fd2d9859a
+  languageName: node
+  linkType: hard
+
+"@types/eventsource@npm:^3.0.0":
+  version: 3.0.0
+  resolution: "@types/eventsource@npm:3.0.0"
+  dependencies:
+    eventsource: "npm:*"
+  checksum: 10c0/a6f41505cb6a5869c86f8959fd841db573d2b14e9183ffb03221d89bbc955c656b411a59873b953bad829d75dccd3033032ccd3791c27febe5b15da6a899c334
   languageName: node
   linkType: hard
 
@@ -23771,6 +23784,22 @@ __metadata:
   version: 3.3.0
   resolution: "events@npm:3.3.0"
   checksum: 10c0/d6b6f2adbccbcda74ddbab52ed07db727ef52e31a61ed26db9feb7dc62af7fc8e060defa65e5f8af9449b86b52cc1a1f6a79f2eafcf4e62add2b7a1fa4a432f6
+  languageName: node
+  linkType: hard
+
+"eventsource-parser@npm:^3.0.1":
+  version: 3.0.6
+  resolution: "eventsource-parser@npm:3.0.6"
+  checksum: 10c0/70b8ccec7dac767ef2eca43f355e0979e70415701691382a042a2df8d6a68da6c2fca35363669821f3da876d29c02abe9b232964637c1b6635c940df05ada78a
+  languageName: node
+  linkType: hard
+
+"eventsource@npm:*, eventsource@npm:^4.0.0":
+  version: 4.0.0
+  resolution: "eventsource@npm:4.0.0"
+  dependencies:
+    eventsource-parser: "npm:^3.0.1"
+  checksum: 10c0/908a3f64b60aadd053b9fd8ea8b6a896a4faf32dbbaf0150e91abbec179a9e2a3da261fb577ae296df8b744de91962d69a60b10e8d7092d7802e6e3e7a8b0f0e
   languageName: node
   linkType: hard
 
