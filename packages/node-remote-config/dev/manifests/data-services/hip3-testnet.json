@@ -3,7 +3,7 @@
   "priceAggregator": "median",
   "defaultSource": ["coingecko"],
   "sourceTimeout": 1000,
-  "minValidSourcesPercentage": 30,
+  "minValidSourcesPercentage": 10,
   "deviationCheck": {
     "deviationWithRecentValues": {
       "maxPercent": 1000000000,
@@ -213,6 +213,7 @@
         "twelve-data-stocks-deferred",
         "ws-dx-feed"
       ],
+      "broadcasters": ["influx"],
       "denomination": "USD",
       "rateFeed": false
     },
@@ -314,11 +315,14 @@
     "NVDA": {
       "source": [
         "alltick-stocks-api-deferred",
+        "databento",
         "financialmodelingprep-deferred",
+        "polygon-deferred",
         "ws-polygon-massive",
         "twelve-data-stocks-deferred",
         "ws-dx-feed"
       ],
+      "broadcasters": ["influx"],
       "denomination": "USD",
       "rateFeed": false
     },
@@ -412,115 +416,17 @@
         }
       }
     },
-    "PLTR": {
-      "source": [
-        "alltick-stocks-api-deferred",
-        "financialmodelingprep-deferred",
-        "ws-polygon-massive",
-        "twelve-data-stocks-deferred",
-        "ws-dx-feed"
-      ],
-      "denomination": "USD",
-      "rateFeed": false
-    },
-    "HL_MARK_PX_flxn:PLTR": {
-      "source": ["hyperliquid-testnet-perps-ws-fetcher", "hydromancer-testnet-perps-ws-fetcher"],
-      "customWeightsForWeightedMedian": {
-        "hyperliquid-testnet-perps-ws-fetcher": 10,
-        "hydromancer-testnet-perps-ws-fetcher": 1
-      },
-      "broadcasters": ["influx"],
-      "denomination": "USD",
-      "rateFeed": false
-    },
-    "HL_IMPACT_PXS_BUY_flxn:PLTR": {
-      "source": ["hyperliquid-testnet-perps-ws-fetcher", "hydromancer-testnet-perps-ws-fetcher"],
-      "customWeightsForWeightedMedian": {
-        "hyperliquid-testnet-perps-ws-fetcher": 10,
-        "hydromancer-testnet-perps-ws-fetcher": 1
-      },
-      "localCacheTTL": "8h",
-      "broadcasters": ["influx"],
-      "denomination": "USD",
-      "rateFeed": false
-    },
-    "HL_IMPACT_PXS_SELL_flxn:PLTR": {
-      "source": ["hyperliquid-testnet-perps-ws-fetcher", "hydromancer-testnet-perps-ws-fetcher"],
-      "customWeightsForWeightedMedian": {
-        "hyperliquid-testnet-perps-ws-fetcher": 10,
-        "hydromancer-testnet-perps-ws-fetcher": 1
-      },
-      "localCacheTTL": "8h",
-      "broadcasters": ["influx"],
-      "denomination": "USD",
-      "rateFeed": false
-    },
-    "HL_ORACLE_PX_flxn:PLTR": {
-      "source": ["hyperliquid-testnet-perps-ws-fetcher", "hydromancer-testnet-perps-ws-fetcher"],
-      "customWeightsForWeightedMedian": {
-        "hyperliquid-testnet-perps-ws-fetcher": 10,
-        "hydromancer-testnet-perps-ws-fetcher": 1
-      },
-      "localCacheTTL": "150s",
-      "broadcasters": ["influx"],
-      "denomination": "USD",
-      "rateFeed": false
-    },
-    "HL_MID_PX_flxn:PLTR": {
-      "source": ["hyperliquid-testnet-perps-ws-fetcher", "hydromancer-testnet-perps-ws-fetcher"],
-      "customWeightsForWeightedMedian": {
-        "hyperliquid-testnet-perps-ws-fetcher": 10,
-        "hydromancer-testnet-perps-ws-fetcher": 1
-      },
-      "localCacheTTL": "8h",
-      "broadcasters": ["influx"],
-      "denomination": "USD",
-      "rateFeed": false
-    },
-    "flxn:PLTR_MARK_0": {
-      "source": ["hyperliquid-hip3-felix-testnet-fetcher"],
-      "broadcasters": ["hyperliquid-hip3"],
-      "denomination": "USD",
-      "rateFeed": false
-    },
-    "flxn:PLTR_MARK_1": {
-      "source": ["hyperliquid-hip3-felix-testnet-fetcher"],
-      "broadcasters": ["hyperliquid-hip3"],
-      "denomination": "USD",
-      "rateFeed": false
-    },
-    "flxn:PLTR_EXT": {
-      "source": ["hyperliquid-hip3-felix-testnet-fetcher"],
-      "broadcasters": ["hyperliquid-hip3"],
-      "denomination": "USD",
-      "rateFeed": false
-    },
-    "flxn:PLTR": {
-      "source": ["hyperliquid-hip3-felix-testnet-fetcher"],
-      "broadcasters": ["hyperliquid-hip3"],
-      "denomination": "USD",
-      "rateFeed": false
-    },
-    "HL_OPEN_INTEREST_flxn:PLTR": {
-      "source": ["hyperliquid-testnet-perps-ws-fetcher"],
-      "broadcasters": ["influx"],
-      "denomination": "USD",
-      "rateFeed": false,
-      "deviationCheck": {
-        "deviationWithRecentValues": {
-          "maxPercent": 1000000000,
-          "maxDelayMilliseconds": 1000
-        }
-      }
-    },
     "HOOD": {
       "source": [
         "alltick-stocks-api-deferred",
+        "databento",
         "financialmodelingprep-deferred",
+        "polygon-deferred",
         "ws-polygon-massive",
         "twelve-data-stocks-deferred",
         "ws-dx-feed"
       ],
+      "broadcasters": ["influx"],
       "denomination": "USD",
       "rateFeed": false
     },
@@ -617,11 +523,14 @@
     "CRCL": {
       "source": [
         "alltick-stocks-api-deferred",
+        "databento",
         "financialmodelingprep-deferred",
+        "polygon-deferred",
         "ws-polygon-massive",
         "twelve-data-stocks-deferred",
         "ws-dx-feed"
       ],
+      "broadcasters": ["influx"],
       "denomination": "USD",
       "rateFeed": false
     },
@@ -718,11 +627,14 @@
     "COIN": {
       "source": [
         "alltick-stocks-api-deferred",
+        "databento",
         "financialmodelingprep-deferred",
+        "polygon-deferred",
         "ws-polygon-massive",
         "twelve-data-stocks-deferred",
         "ws-dx-feed"
       ],
+      "broadcasters": ["influx"],
       "denomination": "USD",
       "rateFeed": false
     },
@@ -805,208 +717,6 @@
       "rateFeed": false
     },
     "HL_OPEN_INTEREST_flxn:COIN": {
-      "source": ["hyperliquid-testnet-perps-ws-fetcher"],
-      "broadcasters": ["influx"],
-      "denomination": "USD",
-      "rateFeed": false,
-      "deviationCheck": {
-        "deviationWithRecentValues": {
-          "maxPercent": 1000000000,
-          "maxDelayMilliseconds": 1000
-        }
-      }
-    },
-    "META": {
-      "source": [
-        "alltick-stocks-api-deferred",
-        "financialmodelingprep-deferred",
-        "ws-polygon-massive",
-        "twelve-data-stocks-deferred",
-        "ws-dx-feed"
-      ],
-      "denomination": "USD",
-      "rateFeed": false
-    },
-    "HL_MARK_PX_flxn:META": {
-      "source": ["hyperliquid-testnet-perps-ws-fetcher", "hydromancer-testnet-perps-ws-fetcher"],
-      "customWeightsForWeightedMedian": {
-        "hyperliquid-testnet-perps-ws-fetcher": 10,
-        "hydromancer-testnet-perps-ws-fetcher": 1
-      },
-      "broadcasters": ["influx"],
-      "denomination": "USD",
-      "rateFeed": false
-    },
-    "HL_IMPACT_PXS_BUY_flxn:META": {
-      "source": ["hyperliquid-testnet-perps-ws-fetcher", "hydromancer-testnet-perps-ws-fetcher"],
-      "customWeightsForWeightedMedian": {
-        "hyperliquid-testnet-perps-ws-fetcher": 10,
-        "hydromancer-testnet-perps-ws-fetcher": 1
-      },
-      "localCacheTTL": "8h",
-      "broadcasters": ["influx"],
-      "denomination": "USD",
-      "rateFeed": false
-    },
-    "HL_IMPACT_PXS_SELL_flxn:META": {
-      "source": ["hyperliquid-testnet-perps-ws-fetcher", "hydromancer-testnet-perps-ws-fetcher"],
-      "customWeightsForWeightedMedian": {
-        "hyperliquid-testnet-perps-ws-fetcher": 10,
-        "hydromancer-testnet-perps-ws-fetcher": 1
-      },
-      "localCacheTTL": "8h",
-      "broadcasters": ["influx"],
-      "denomination": "USD",
-      "rateFeed": false
-    },
-    "HL_ORACLE_PX_flxn:META": {
-      "source": ["hyperliquid-testnet-perps-ws-fetcher", "hydromancer-testnet-perps-ws-fetcher"],
-      "customWeightsForWeightedMedian": {
-        "hyperliquid-testnet-perps-ws-fetcher": 10,
-        "hydromancer-testnet-perps-ws-fetcher": 1
-      },
-      "localCacheTTL": "150s",
-      "broadcasters": ["influx"],
-      "denomination": "USD",
-      "rateFeed": false
-    },
-    "HL_MID_PX_flxn:META": {
-      "source": ["hyperliquid-testnet-perps-ws-fetcher", "hydromancer-testnet-perps-ws-fetcher"],
-      "customWeightsForWeightedMedian": {
-        "hyperliquid-testnet-perps-ws-fetcher": 10,
-        "hydromancer-testnet-perps-ws-fetcher": 1
-      },
-      "localCacheTTL": "8h",
-      "broadcasters": ["influx"],
-      "denomination": "USD",
-      "rateFeed": false
-    },
-    "flxn:META_MARK_0": {
-      "source": ["hyperliquid-hip3-felix-testnet-fetcher"],
-      "broadcasters": ["hyperliquid-hip3"],
-      "denomination": "USD",
-      "rateFeed": false
-    },
-    "flxn:META_MARK_1": {
-      "source": ["hyperliquid-hip3-felix-testnet-fetcher"],
-      "broadcasters": ["hyperliquid-hip3"],
-      "denomination": "USD",
-      "rateFeed": false
-    },
-    "flxn:META_EXT": {
-      "source": ["hyperliquid-hip3-felix-testnet-fetcher"],
-      "broadcasters": ["hyperliquid-hip3"],
-      "denomination": "USD",
-      "rateFeed": false
-    },
-    "flxn:META": {
-      "source": ["hyperliquid-hip3-felix-testnet-fetcher"],
-      "broadcasters": ["hyperliquid-hip3"],
-      "denomination": "USD",
-      "rateFeed": false
-    },
-    "HL_OPEN_INTEREST_flxn:META": {
-      "source": ["hyperliquid-testnet-perps-ws-fetcher"],
-      "broadcasters": ["influx"],
-      "denomination": "USD",
-      "rateFeed": false,
-      "deviationCheck": {
-        "deviationWithRecentValues": {
-          "maxPercent": 1000000000,
-          "maxDelayMilliseconds": 1000
-        }
-      }
-    },
-    "GOOGL": {
-      "source": [
-        "alltick-stocks-api-deferred",
-        "financialmodelingprep-deferred",
-        "ws-polygon-massive",
-        "twelve-data-stocks-deferred",
-        "ws-dx-feed"
-      ],
-      "denomination": "USD",
-      "rateFeed": false
-    },
-    "HL_MARK_PX_flxn:GOOGL": {
-      "source": ["hyperliquid-testnet-perps-ws-fetcher", "hydromancer-testnet-perps-ws-fetcher"],
-      "customWeightsForWeightedMedian": {
-        "hyperliquid-testnet-perps-ws-fetcher": 10,
-        "hydromancer-testnet-perps-ws-fetcher": 1
-      },
-      "broadcasters": ["influx"],
-      "denomination": "USD",
-      "rateFeed": false
-    },
-    "HL_IMPACT_PXS_BUY_flxn:GOOGL": {
-      "source": ["hyperliquid-testnet-perps-ws-fetcher", "hydromancer-testnet-perps-ws-fetcher"],
-      "customWeightsForWeightedMedian": {
-        "hyperliquid-testnet-perps-ws-fetcher": 10,
-        "hydromancer-testnet-perps-ws-fetcher": 1
-      },
-      "localCacheTTL": "8h",
-      "broadcasters": ["influx"],
-      "denomination": "USD",
-      "rateFeed": false
-    },
-    "HL_IMPACT_PXS_SELL_flxn:GOOGL": {
-      "source": ["hyperliquid-testnet-perps-ws-fetcher", "hydromancer-testnet-perps-ws-fetcher"],
-      "customWeightsForWeightedMedian": {
-        "hyperliquid-testnet-perps-ws-fetcher": 10,
-        "hydromancer-testnet-perps-ws-fetcher": 1
-      },
-      "localCacheTTL": "8h",
-      "broadcasters": ["influx"],
-      "denomination": "USD",
-      "rateFeed": false
-    },
-    "HL_ORACLE_PX_flxn:GOOGL": {
-      "source": ["hyperliquid-testnet-perps-ws-fetcher", "hydromancer-testnet-perps-ws-fetcher"],
-      "customWeightsForWeightedMedian": {
-        "hyperliquid-testnet-perps-ws-fetcher": 10,
-        "hydromancer-testnet-perps-ws-fetcher": 1
-      },
-      "localCacheTTL": "150s",
-      "broadcasters": ["influx"],
-      "denomination": "USD",
-      "rateFeed": false
-    },
-    "HL_MID_PX_flxn:GOOGL": {
-      "source": ["hyperliquid-testnet-perps-ws-fetcher", "hydromancer-testnet-perps-ws-fetcher"],
-      "customWeightsForWeightedMedian": {
-        "hyperliquid-testnet-perps-ws-fetcher": 10,
-        "hydromancer-testnet-perps-ws-fetcher": 1
-      },
-      "localCacheTTL": "8h",
-      "broadcasters": ["influx"],
-      "denomination": "USD",
-      "rateFeed": false
-    },
-    "flxn:GOOGL_MARK_0": {
-      "source": ["hyperliquid-hip3-felix-testnet-fetcher"],
-      "broadcasters": ["hyperliquid-hip3"],
-      "denomination": "USD",
-      "rateFeed": false
-    },
-    "flxn:GOOGL_MARK_1": {
-      "source": ["hyperliquid-hip3-felix-testnet-fetcher"],
-      "broadcasters": ["hyperliquid-hip3"],
-      "denomination": "USD",
-      "rateFeed": false
-    },
-    "flxn:GOOGL_EXT": {
-      "source": ["hyperliquid-hip3-felix-testnet-fetcher"],
-      "broadcasters": ["hyperliquid-hip3"],
-      "denomination": "USD",
-      "rateFeed": false
-    },
-    "flxn:GOOGL": {
-      "source": ["hyperliquid-hip3-felix-testnet-fetcher"],
-      "broadcasters": ["hyperliquid-hip3"],
-      "denomination": "USD",
-      "rateFeed": false
-    },
-    "HL_OPEN_INTEREST_flxn:GOOGL": {
       "source": ["hyperliquid-testnet-perps-ws-fetcher"],
       "broadcasters": ["influx"],
       "denomination": "USD",
