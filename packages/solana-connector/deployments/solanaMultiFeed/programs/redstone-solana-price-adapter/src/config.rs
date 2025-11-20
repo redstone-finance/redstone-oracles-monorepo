@@ -19,7 +19,7 @@ pub const SOLANA_CONFIG: Config = Config {
 pub struct Config {
     pub signer_count_threshold: u8,
     pub signers: [SignerAddressBs; 5],
-    pub trusted_updaters: [Pubkey; 3],
+    pub trusted_updaters: [Pubkey; 4],
     pub max_timestamp_delay_ms: u64,
     pub max_timestamp_ahead_ms: u64,
     pub min_interval_between_updates_ms: u64,
@@ -33,7 +33,7 @@ const REDSTONE_PRIMARY_PROD_ALLOWED_SIGNERS: [SignerAddressBs; 5] = [
     hex!("9c5ae89c4af6aa32ce58588dbaf90d18a855b6de"),
 ];
 
-const TRUSTED_UPDATERS: [Pubkey; 3] = [
+const TRUSTED_UPDATERS: [Pubkey; 4] = [
     Pubkey::new_from_array(hex!(
         "b4e73475beda3eca111c79ccc60c1a0d89f8196296b5496152681cbd14e7e43c"
     )),
@@ -42,6 +42,9 @@ const TRUSTED_UPDATERS: [Pubkey; 3] = [
     )),
     Pubkey::new_from_array(hex!(
         "95e4929b52fbb5aae833a6a8794bba2702c289cec853ffa2b05d18235ac81126"
+    )),
+    Pubkey::new_from_array(hex!(
+        "81fa45202953e3140f4b412396ba036df8b8f5374e3318d68dc6ad107760ba9b"
     )),
 ];
 
