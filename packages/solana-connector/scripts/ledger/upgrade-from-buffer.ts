@@ -11,8 +11,8 @@ import fs from "fs";
 import { BPF_UPGRADEABLE_LOADER } from "../consts";
 import { SquadsMultisig } from "./multi-sig-utils";
 
-// 4 + 1 + 32 + 8 [account-type/upgradability/authority/lastUpdateNumber]
 const SO_IN_BUFFER_START_IDX = 45;
+const SO_IN_BUFFER_START_IDX_DURING_UPGRADE = 37;
 
 export function getProgramDataAddress(programId: PublicKey): PublicKey {
   return PublicKey.findProgramAddressSync([programId.toBuffer()], BPF_UPGRADEABLE_LOADER)[0];
@@ -69,7 +69,14 @@ export async function checkUpgradeTransaction(
 
   console.log("✅ Expected buffer account in the transaction");
 
-  await checkData(connection, bufferAccount, SO_IN_BUFFER_START_IDX, 1, squads, programBytesFile);
+  await checkData(
+    connection,
+    bufferAccount,
+    SO_IN_BUFFER_START_IDX_DURING_UPGRADE,
+    1,
+    squads,
+    programBytesFile
+  );
 }
 
 export async function checkProgramData(
@@ -107,7 +114,6 @@ async function checkData(
     throw new Error(`❌ Could not fetch buffer account info`);
   }
   const data = accountData.data;
-
   const soFileInBuffer = data.subarray(soFileInBufferStart, soFileInBufferStart + soLength);
 
   const padding = data.subarray(soFileInBufferStart + soLength);
