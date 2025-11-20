@@ -10821,6 +10821,20 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@redstone-finance/lambda-monad-relayer-logs-to-influx@workspace:packages/lambda/lambda-monad-relayer-logs-to-influx":
+  version: 0.0.0-use.local
+  resolution: "@redstone-finance/lambda-monad-relayer-logs-to-influx@workspace:packages/lambda/lambda-monad-relayer-logs-to-influx"
+  dependencies:
+    "@aws-sdk/client-cloudwatch-logs": "npm:^3.696.0"
+    "@influxdata/influxdb-client": "npm:^1.35.0"
+    "@redstone-finance/internal-utils": "workspace:*"
+    "@redstone-finance/utils": "workspace:*"
+    "@types/aws-lambda": "npm:^8.10.145"
+    dotenv: "npm:^16.0.3"
+    zod: "npm:^4.1.12"
+  languageName: unknown
+  linkType: soft
+
 "@redstone-finance/lambda-mongodb-influx-synchronizer@workspace:packages/lambda/lambda-mongodb-influx-synchronizer":
   version: 0.0.0-use.local
   resolution: "@redstone-finance/lambda-mongodb-influx-synchronizer@workspace:packages/lambda/lambda-mongodb-influx-synchronizer"
