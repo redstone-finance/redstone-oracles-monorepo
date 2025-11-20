@@ -314,7 +314,8 @@
       "source": [
         "alltick-stocks-api-deferred",
         "financialmodelingprep-deferred",
-        "twelve-data-stocks-deferred"
+        "twelve-data-stocks-deferred",
+        "ws-dx-feed"
       ],
       "denomination": "USD",
       "rateFeed": false
@@ -413,7 +414,8 @@
       "source": [
         "alltick-stocks-api-deferred",
         "financialmodelingprep-deferred",
-        "twelve-data-stocks-deferred"
+        "twelve-data-stocks-deferred",
+        "ws-dx-feed"
       ],
       "denomination": "USD",
       "rateFeed": false
@@ -512,7 +514,8 @@
       "source": [
         "alltick-stocks-api-deferred",
         "financialmodelingprep-deferred",
-        "twelve-data-stocks-deferred"
+        "twelve-data-stocks-deferred",
+        "ws-dx-feed"
       ],
       "denomination": "USD",
       "rateFeed": false
@@ -611,7 +614,8 @@
       "source": [
         "alltick-stocks-api-deferred",
         "financialmodelingprep-deferred",
-        "twelve-data-stocks-deferred"
+        "twelve-data-stocks-deferred",
+        "ws-dx-feed"
       ],
       "denomination": "USD",
       "rateFeed": false
@@ -710,7 +714,8 @@
       "source": [
         "alltick-stocks-api-deferred",
         "financialmodelingprep-deferred",
-        "twelve-data-stocks-deferred"
+        "twelve-data-stocks-deferred",
+        "ws-dx-feed"
       ],
       "denomination": "USD",
       "rateFeed": false
@@ -809,7 +814,8 @@
       "source": [
         "alltick-stocks-api-deferred",
         "financialmodelingprep-deferred",
-        "twelve-data-stocks-deferred"
+        "twelve-data-stocks-deferred",
+        "ws-dx-feed"
       ],
       "denomination": "USD",
       "rateFeed": false
@@ -908,7 +914,8 @@
       "source": [
         "alltick-stocks-api-deferred",
         "financialmodelingprep-deferred",
-        "twelve-data-stocks-deferred"
+        "twelve-data-stocks-deferred",
+        "ws-dx-feed"
       ],
       "denomination": "USD",
       "rateFeed": false
