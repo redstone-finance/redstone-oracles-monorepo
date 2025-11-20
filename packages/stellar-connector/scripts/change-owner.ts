@@ -1,4 +1,4 @@
-import { MULTISIG_ADDRESS } from "./ledger/consts";
+import { MULTISIG_ADDRESS } from "./consts";
 import { makeAdapter } from "./make-adapter";
 import { loadContractId } from "./utils";
 
