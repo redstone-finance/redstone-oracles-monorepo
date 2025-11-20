@@ -1,8 +1,8 @@
 import { BASE_FEE, Keypair, Operation, rpc, TransactionBuilder } from "@stellar/stellar-sdk";
 import { makeKeypair, StellarClient } from "../../src";
 import { StellarSigner } from "../../src/stellar/StellarSigner";
+import { INITIAL_ACCOUNT_AMOUNT_XLM, MULTISIG_SIGNERS, MULTISIG_THRESHOLD } from "../consts";
 import { makeServer } from "../utils";
-import { INITIAL_ACCOUNT_AMOUNT_XLM, MULTISIG_SIGNERS, MULTISIG_THRESHOLD } from "./consts";
 
 async function createMultisigAccount(
   server: rpc.Server,
