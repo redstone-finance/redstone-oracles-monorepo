@@ -24,6 +24,11 @@
       "source": ["databento"],
       "denomination": "USD",
       "rateFeed": false
+    },
+    "FCKED": {
+      "source": ["databento"],
+      "denomination": "USD",
+      "rateFeed": false
     }
   }
 }
