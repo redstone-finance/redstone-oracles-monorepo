@@ -1,10 +1,8 @@
 import { terminateWithUpdateConfigExitCode } from "@redstone-finance/internal-utils";
 import {
-  createMqtt5ClientFactory,
   DataPackageSubscriber,
   DataPackageSubscriberParams,
-  MqttTopics,
-  MultiPubSubClient,
+  PubSubClient,
   RateLimitsCircuitBreaker,
 } from "@redstone-finance/mqtt5-client";
 import {
@@ -22,6 +20,7 @@ import {
 } from "../core/make-data-packages-request-params";
 import { ContractFacade } from "../facade/ContractFacade";
 import { getContractFacade } from "../facade/get-contract-facade";
+import { createPubSubClient } from "./create-pub-sub-client";
 import { IterationOptions, runIteration } from "./run-iteration";
 import { BaseMqttDataProcessingStrategy } from "./strategy/BaseMqttProcessingStrategy";
 import {
@@ -37,7 +36,7 @@ export class MqttRunner implements MqttDataProcessingStrategyDelegate<RelayerCon
   private shouldGracefullyShutdown: boolean = false;
 
   constructor(
-    private readonly client: MultiPubSubClient,
+    private readonly client: PubSubClient,
     private readonly contractFacade: ContractFacade,
     private readonly strategy: MqttDataProcessingStrategy<RelayerConfig>,
     private readonly iterationOptionsOverride: Partial<IterationOptions>
@@ -54,47 +53,36 @@ export class MqttRunner implements MqttDataProcessingStrategyDelegate<RelayerCon
     relayerConfig: RelayerConfig,
     iterationOptionsOverride: Partial<IterationOptions>
   ) {
-    if (
-      !RedstoneCommon.isDefined(relayerConfig.mqttEndpoint) ||
-      !RedstoneCommon.isDefined(relayerConfig.mqttUpdateSubscriptionIntervalMs)
-    ) {
-      throw new Error(
-        "Relayer is going to run with mqtt but mqttEndpoint or mqttUpdateSubscriptionIntervalMs is not set"
-      );
-    }
-
-    const endpoint = relayerConfig.mqttEndpoint;
     const cache = new DataPackagesResponseCache();
     const contractFacade = await getContractFacade(relayerConfig, cache);
-
-    const multiClient = new MultiPubSubClient(
-      createMqtt5ClientFactory({
-        endpoint,
-        authorization: {
-          type: "AWSSigV4",
-        },
-      }),
-      MqttTopics.calculateTopicCountPerConnection(),
-      endpoint
-    );
-
     const strategy = new (
       relayerConfig.mqttDataProcessingStrategy === MqttDataProcessingStrategyType.Timestamp
         ? TimestampMqttDataProcessingStrategy<RelayerConfig>
         : BaseMqttDataProcessingStrategy<RelayerConfig>
     )(cache);
 
-    const runner = new MqttRunner(multiClient, contractFacade, strategy, iterationOptionsOverride);
+    const pubSubClient = createPubSubClient(relayerConfig);
+    const runner = new MqttRunner(pubSubClient, contractFacade, strategy, iterationOptionsOverride);
     await runner.updateSubscription(relayerConfig);
+
+    runner.setUpSubscriptionUpdates(relayerConfig);
+
+    return runner;
+  }
+
+  private setUpSubscriptionUpdates(relayerConfig: RelayerConfig) {
+    if (!RedstoneCommon.isDefined(relayerConfig.mqttUpdateSubscriptionIntervalMs)) {
+      throw new Error(
+        "Relayer is going to run with mqtt but mqttUpdateSubscriptionIntervalMs is not set"
+      );
+    }
 
     if (relayerConfig.mqttUpdateSubscriptionIntervalMs > 0) {
       // eslint-disable-next-line @typescript-eslint/no-misused-promises
       setInterval(async () => {
-        await runner.updateSubscription(relayerConfig);
+        await this.updateSubscription(relayerConfig);
       }, relayerConfig.mqttUpdateSubscriptionIntervalMs);
     }
-
-    return runner;
   }
 
   private async updateSubscription(relayerConfig: RelayerConfig) {
