@@ -36,6 +36,14 @@ const LogTypeToLevel: { [key: string]: LogLevel } = {
 
 let customLogLevels: undefined | null | Record<string, LogLevel> = undefined;
 
+export function isDebugEnabled(): boolean {
+  return getLogLevel() >= LogLevels.debug;
+}
+
+export function isTraceEnabled(): boolean {
+  return getLogLevel() >= LogLevels.trace;
+}
+
 export const loggerFactory = (moduleName: string): RedstoneLogger => {
   if (isNodeRuntime()) {
     if (customLogLevels === undefined) {
