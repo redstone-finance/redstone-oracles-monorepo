@@ -120,16 +120,21 @@ export class ContractFacade {
   }
 
   static getContractDataOpts(
-    relayerConfig: Pick<RelayerConfig, "dataFeeds" | "updateConditions" | "updateTriggers">
+    relayerConfig: Pick<
+      RelayerConfig,
+      "dataFeeds" | "updateConditions" | "updateTriggers" | "fallbackOffsetInMilliseconds"
+    >
   ) {
-    const { updateConditions, dataFeeds, updateTriggers } = relayerConfig;
+    const { updateConditions, dataFeeds, updateTriggers, fallbackOffsetInMilliseconds } =
+      relayerConfig;
 
     const shouldCheckValueDeviation = dataFeeds.some((feedId) =>
       updateConditions[feedId].includes("value-deviation")
     );
     const canOmitFetchingDataFromContract =
       !shouldCheckValueDeviation &&
-      dataFeeds.every((feedId) => updateTriggers[feedId].timeSinceLastUpdateInMilliseconds === 0);
+      dataFeeds.every((feedId) => updateTriggers[feedId].timeSinceLastUpdateInMilliseconds === 0) &&
+      !fallbackOffsetInMilliseconds;
 
     return { shouldCheckValueDeviation, canOmitFetchingDataFromContract };
   }

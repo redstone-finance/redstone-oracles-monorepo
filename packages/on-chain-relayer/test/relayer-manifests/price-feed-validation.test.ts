@@ -82,7 +82,9 @@ const checkDataFeedIdInContract = async (
       return false;
     }
   } catch (e) {
-    console.log(`contract.getFeedId failed with error: ${RedstoneCommon.stringifyError(e)}`);
+    console.log(
+      `contract.getDataFeedId failed for ${dataFeedId} with error: ${RedstoneCommon.stringifyError(e)}`
+    );
     return false;
   }
 };
