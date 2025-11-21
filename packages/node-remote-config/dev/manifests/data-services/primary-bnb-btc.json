@@ -135,6 +135,16 @@
         "okx-usdt",
         "xt"
       ]
+    },
+    "MON": {
+      "source": [
+        "bitget-usdt",
+        "bybit-usdt",
+        "coinbase-usd",
+        "gate-usdt",
+        "kraken-usd",
+        "kucoin-usdt"
+      ]
     }
   }
 }
