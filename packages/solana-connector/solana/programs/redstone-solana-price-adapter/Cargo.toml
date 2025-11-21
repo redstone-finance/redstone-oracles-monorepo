@@ -22,7 +22,7 @@ agnostic-tests = []
 [dependencies]
 anchor-lang = { version = "0.31.1", default-features = false, features = ["init-if-needed"] }
 hex-literal = { version = "0.4.1" }
-redstone = { git = "https://github.com/redstone-finance/rust-sdk", tag = "3.0.0-pre3", default-features = false, features=["solana"] }
+redstone = { git = "https://github.com/redstone-finance/rust-sdk", tag = "3.1.0-pre1", default-features = false, features=["solana"] }
 
 [dev-dependencies]
 rand = { version = "0.8.4", features = ["std"] }
