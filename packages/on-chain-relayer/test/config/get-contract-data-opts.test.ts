@@ -115,9 +115,25 @@ describe("ContractFacade.getContractDataOpts", () => {
       updateConditions: {},
       dataFeeds: [],
       updateTriggers: {},
+      fallbackOffsetInMilliseconds: 0,
     };
 
     performTest(relayerConfig, false, true);
+  });
+
+  it("edge case: fallback relayer (shouldCheckValueDeviation=false, canOmitFetchingDataFromContract=false)", () => {
+    const relayerConfig = {
+      updateConditions: {
+        ETH: ["time"],
+      },
+      dataFeeds: ["ETH"],
+      updateTriggers: {
+        ETH: { timeSinceLastUpdateInMilliseconds: 0 },
+      },
+      fallbackOffsetInMilliseconds: 100,
+    };
+
+    performTest(relayerConfig, false, false);
   });
 
   it("complex scenario: handles mixed conditions correctly (shouldCheckValueDeviation=true, canOmitFetchingDataFromContract=false)", () => {
@@ -143,9 +159,7 @@ describe("ContractFacade.getContractDataOpts", () => {
     shouldCheckValueDeviation = true,
     canOmitFetchingDataFromContract = false
   ) {
-    const result = ContractFacade.getContractDataOpts(
-      relayerConfig as Pick<RelayerConfig, "dataFeeds" | "updateConditions" | "updateTriggers">
-    );
+    const result = ContractFacade.getContractDataOpts(relayerConfig as RelayerConfig);
 
     expect(result.shouldCheckValueDeviation).to.equal(shouldCheckValueDeviation);
     expect(result.canOmitFetchingDataFromContract).to.equal(canOmitFetchingDataFromContract);
