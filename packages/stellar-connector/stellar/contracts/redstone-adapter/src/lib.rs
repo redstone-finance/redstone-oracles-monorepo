@@ -14,8 +14,8 @@ use redstone::{
     contract::verification::{verify_data_staleness, UpdateTimestampVerifier},
     core::process_payload,
     network::error::Error as RedStoneError,
-    soroban::helpers::ToBytes,
-    FeedValue,
+    soroban::{helpers::ToBytes, SorobanRedStoneConfig},
+    ConfigFactory, FeedValue,
 };
 use soroban_sdk::{
     contract, contractimpl, storage::Persistent, Address, Bytes, BytesN, Env, Error, String, Vec,
@@ -193,7 +193,8 @@ fn get_prices_from_payload(
         .collect();
     let block_timestamp = now(env);
 
-    let mut config = STELLAR_CONFIG.redstone_config(env, feed_ids, block_timestamp)?;
+    let mut config: SorobanRedStoneConfig<'_> =
+        STELLAR_CONFIG.redstone_config(env, feed_ids, block_timestamp)?;
     let result = process_payload(&mut config, payload.to_alloc_vec())?;
 
     let mut prices = Vec::new(env);
