@@ -4,8 +4,9 @@ import { ethers, providers } from "ethers";
 import { getProviderNetworkInfo } from "../common";
 import { ProviderWithAgreement } from "../providers/ProviderWithAgreement";
 import { ProviderWithFallback } from "../providers/ProviderWithFallback";
-import { TxDelivery, TxDeliverySigner } from "./TxDelivery";
 import type { TxDeliveryOpts } from "./common";
+import { TxDelivery, TxDeliverySigner } from "./TxDelivery";
+import { TxNonceCoordinator } from "./TxNonceCoordinator";
 
 export type TxDeliveryManSupportedProviders =
   | providers.JsonRpcProvider
@@ -19,6 +20,7 @@ const CONFIRMATION_COUNT = 1;
 export class TxDeliveryMan implements Tx.ITxDeliveryMan {
   private readonly providers: readonly providers.JsonRpcProvider[];
   private readonly txDeliveriesInProgress = new Map<providers.JsonRpcProvider, boolean>();
+  private readonly txNonceCoordinator: TxNonceCoordinator;
 
   constructor(
     provider: TxDeliveryManSupportedProviders,
@@ -26,6 +28,11 @@ export class TxDeliveryMan implements Tx.ITxDeliveryMan {
     private readonly opts: TxDeliveryOpts
   ) {
     this.providers = extractProviders(provider);
+    this.txNonceCoordinator = new TxNonceCoordinator(
+      this.providers,
+      this.signer,
+      this.opts.fastBroadcastMode === true
+    );
   }
 
   /**
@@ -41,6 +48,12 @@ export class TxDeliveryMan implements Tx.ITxDeliveryMan {
     txDeliveryCall: Tx.TxDeliveryCall,
     context: Tx.TxDeliveryManContext = {}
   ): Promise<() => Promise<TransactionReceipt>> {
+    const startedAt = Date.now();
+    let allocatedNonce: number | undefined;
+    if (this.opts.fastBroadcastMode) {
+      allocatedNonce = await this.txNonceCoordinator.allocateNonce();
+    }
+
     const deliveryPromises = this.providers.map(async (provider) => {
       const deliveryInProgress = this.txDeliveriesInProgress.get(provider);
 
@@ -48,7 +61,8 @@ export class TxDeliveryMan implements Tx.ITxDeliveryMan {
         return await this.createAndDeliverNewPackage(
           provider,
           txDeliveryCall,
-          context.deferredCallData
+          context.deferredCallData,
+          allocatedNonce
         );
       } else {
         // we are okay with skipping current delivery, because we are passing
@@ -66,6 +80,7 @@ export class TxDeliveryMan implements Tx.ITxDeliveryMan {
     const txReceiptPromise = this.waitForTransaction(deliveryPromises);
     this.logTxResponse(txReceiptPromise);
 
+    await this.waitForMinDeliveryTime(startedAt);
     return () => txReceiptPromise;
   }
 
@@ -82,9 +97,17 @@ export class TxDeliveryMan implements Tx.ITxDeliveryMan {
   private createAndDeliverNewPackage(
     provider: providers.JsonRpcProvider,
     txDeliveryCall: Tx.TxDeliveryCall,
-    deferredCallData?: () => Promise<string>
+    deferredCallData?: () => Promise<string>,
+    allocatedNonce?: number
   ) {
-    const txDelivery = createTxDelivery(provider, this.signer, this.opts, deferredCallData);
+    const txDelivery = createTxDelivery(
+      provider,
+      this.signer,
+      this.txNonceCoordinator,
+      this.opts,
+      deferredCallData,
+      allocatedNonce
+    );
 
     const deliveryPromise = txDelivery
       .deliver(txDeliveryCall)
@@ -129,6 +152,20 @@ export class TxDeliveryMan implements Tx.ITxDeliveryMan {
 
     return receipts[0];
   }
+
+  private async waitForMinDeliveryTime(startedAt: number) {
+    const minTime = this.opts.minTxDeliveryTimeMs;
+    if (!minTime) {
+      return;
+    }
+
+    const elapsed = Date.now() - startedAt;
+    const remaining = minTime - elapsed;
+    if (remaining > 0) {
+      logger.log(`Min delivery time enabled; sleeping for ${remaining} ms`);
+      await RedstoneCommon.sleep(remaining);
+    }
+  }
 }
 
 function extractProviders(
@@ -143,8 +180,10 @@ function extractProviders(
 function createTxDelivery(
   provider: providers.JsonRpcProvider,
   signer: TxDeliverySigner,
+  txNonceCoordinator: TxNonceCoordinator,
   opts: TxDeliveryOpts,
-  deferredCallData?: () => Promise<string>
+  deferredCallData?: () => Promise<string>,
+  allocatedNonce?: number
 ): TxDelivery {
   const rpcUrl = getProviderNetworkInfo(provider).url;
   return new TxDelivery(
@@ -154,12 +193,15 @@ function createTxDelivery(
     },
     signer,
     provider,
-    deferredCallData
+    txNonceCoordinator,
+    deferredCallData,
+    allocatedNonce
   );
 }
 
 const getTxReceiptDesc = (receipt: TransactionReceipt) => {
-  return `Transaction ${receipt.transactionHash} mined with SUCCESS(status: ${
+  const statusDesc = receipt.status === 1 ? "SUCCESS" : "REVERTED";
+  return `Transaction ${receipt.transactionHash} mined with ${statusDesc}(status: ${
     receipt.status
   }) in block #${receipt.blockNumber}[tx index: ${
     receipt.transactionIndex

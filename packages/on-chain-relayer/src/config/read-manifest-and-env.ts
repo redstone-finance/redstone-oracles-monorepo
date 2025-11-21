@@ -224,6 +224,11 @@ export const readManifestAndEnv = () => {
       "UNIQUE_SIGNER_THRESHOLD_CACHE_TTL_MS",
       z.number().default(0)
     ),
+    fastBroadcastMode: RedstoneCommon.getFromEnv("FAST_BROADCAST_MODE", z.boolean().optional()),
+    minTxDeliveryTimeMs: RedstoneCommon.getFromEnv(
+      "MIN_TX_DELIVERY_TIME_MS",
+      z.number().optional()
+    ),
   };
 
   return { manifest, env };
