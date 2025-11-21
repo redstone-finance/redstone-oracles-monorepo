@@ -2462,7 +2462,9 @@
         "financialmodelingprep",
         "polygon",
         "twelve-data-stocks",
-        "ws-dx-feed-no-close-price"
+        "ws-dx-feed-no-close-price",
+        "databento",
+        "databento-no-closing-price"
       ],
       "denomination": "USD",
       "rateFeed": false
@@ -2473,7 +2475,9 @@
         "financialmodelingprep",
         "polygon",
         "twelve-data-stocks",
-        "ws-dx-feed-no-close-price"
+        "ws-dx-feed-no-close-price",
+        "databento",
+        "databento-no-closing-price"
       ],
       "denomination": "USD",
       "rateFeed": false
@@ -2484,7 +2488,9 @@
         "financialmodelingprep",
         "polygon",
         "twelve-data-stocks",
-        "ws-dx-feed-no-close-price"
+        "ws-dx-feed-no-close-price",
+        "databento",
+        "databento-no-closing-price"
       ],
       "denomination": "USD",
       "rateFeed": false
@@ -2500,7 +2506,7 @@
       "rateFeed": false
     },
     "META": {
-      "source": ["twelve-data"],
+      "source": ["twelve-data", "databento", "databento-no-closing-price"],
       "denomination": "USD",
       "rateFeed": false
     },
