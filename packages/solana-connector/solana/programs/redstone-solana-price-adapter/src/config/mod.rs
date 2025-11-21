@@ -1,10 +1,8 @@
 use anchor_lang::prelude::*;
-use hex_literal::hex;
 
 use redstone::{
-    core::config::Config as RedstoneConfig,
-    solana::{SolanaCrypto, SolanaRedStoneConfig},
-    FeedId, SignerAddress, TimestampMillis,
+    solana::{SolanaCrypto, SolanaEnv},
+    ConfigFactory, SignerAddress,
 };
 
 #[cfg(not(feature = "agnostic-tests"))]
@@ -40,30 +38,29 @@ pub const SOLANA_CONFIG: Config = Config {
     min_interval_between_updates_ms: 40_000,
 };
 
-impl Config {
-    pub fn redstone_signers(&self) -> Vec<SignerAddress> {
+impl ConfigFactory<(), SolanaCrypto> for Config {
+    fn signer_count_threshold(&self) -> u8 {
+        self.signer_count_threshold
+    }
+
+    fn redstone_signers(&self) -> Vec<SignerAddress> {
         self.signers.iter().map(|s| s.to_vec().into()).collect()
     }
 
-    pub fn redstone_config(
-        &self,
-        feed_id: FeedId,
-        block_timestamp: TimestampMillis,
-    ) -> Result<SolanaRedStoneConfig> {
-        Ok((
-            RedstoneConfig::try_new(
-                self.signer_count_threshold,
-                self.redstone_signers(),
-                vec![feed_id],
-                block_timestamp,
-                Some(self.max_timestamp_delay_ms.into()),
-                Some(self.max_timestamp_ahead_ms.into()),
-            )?,
-            SolanaCrypto,
-        )
-            .into())
+    fn max_timestamp_delay_ms(&self) -> u64 {
+        self.max_timestamp_delay_ms
     }
 
+    fn max_timestamp_ahead_ms(&self) -> u64 {
+        self.max_timestamp_ahead_ms
+    }
+
+    fn make_crypto(_: ()) -> SolanaCrypto {
+        SolanaCrypto
+    }
+}
+
+impl Config {
     pub fn trusted_updaters(&self) -> &[Pubkey] {
         &self.trusted_updaters
     }
@@ -71,6 +68,7 @@ impl Config {
 
 #[cfg(test)]
 mod tests {
+    use super::*;
     use crate::config::SOLANA_CONFIG;
     use redstone::contract::verification::verify_signers_config;
 

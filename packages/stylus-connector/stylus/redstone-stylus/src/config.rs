@@ -1,8 +1,10 @@
 use crate::crypto::AdapterWrapper;
 use alloy_primitives::hex;
-use redstone::core::config::Config as RedstoneConfig;
-use redstone::network::StdEnv;
-use redstone::{FeedId, RedStoneConfigImpl, SignerAddress, TimestampMillis};
+use redstone::{
+    core::config::Config as RedstoneConfig,
+    network::{error::Error, StdEnv},
+    FeedId, RedStoneConfigImpl, TimestampMillis,
+};
 
 pub type SignerAddressBs = [u8; 20];
 pub type StylusRedStoneConfig<'a, Adapter> =
@@ -27,28 +29,21 @@ pub struct Config {
 }
 
 impl Config {
-    pub fn redstone_signers(&self) -> Vec<SignerAddress> {
-        self.signers.iter().map(|s| s.to_vec().into()).collect()
-    }
-
     pub fn redstone_config<'a, Adapter>(
         &self,
         price_adapter: &'a mut AdapterWrapper<Adapter>,
         feeds: Vec<FeedId>,
         block_timestamp: TimestampMillis,
-    ) -> Result<StylusRedStoneConfig<'a, Adapter>, redstone::network::error::Error> {
-        Ok((
-            RedstoneConfig::try_new(
-                self.signer_count_threshold,
-                self.redstone_signers(),
-                feeds,
-                block_timestamp,
-                Some(self.max_timestamp_delay_ms.into()),
-                Some(self.max_timestamp_ahead_ms.into()),
-            )?,
-            price_adapter,
-        )
-            .into())
+    ) -> Result<StylusRedStoneConfig<'a, Adapter>, Error> {
+        let config = RedstoneConfig::try_new(
+            self.signer_count_threshold,
+            self.signers.iter().map(|s| s.to_vec().into()).collect(),
+            feeds,
+            block_timestamp,
+            Some(self.max_timestamp_delay_ms.into()),
+            Some(self.max_timestamp_ahead_ms.into()),
+        )?;
+        Ok((config, price_adapter).into())
     }
 
     pub fn trusted_updaters(&self) -> &[SignerAddressBs] {
