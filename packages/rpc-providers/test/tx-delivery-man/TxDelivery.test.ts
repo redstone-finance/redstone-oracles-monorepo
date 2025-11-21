@@ -8,6 +8,7 @@ import hardhat from "hardhat";
 import _ from "lodash";
 import Sinon from "sinon";
 import { TxDelivery, TxDeliveryOpts, convertToTxDeliveryCall } from "../../src";
+import { TxNonceCoordinator } from "../../src/tx-delivery-man/TxNonceCoordinator";
 import { Counter } from "../../typechain-types";
 import { HardhatProviderMocker, deployCounter } from "../helpers";
 
@@ -50,8 +51,11 @@ describe("TxDelivery", () => {
       providerMocker.reset();
     });
 
-    const createTxDelivery = (opts: TxDeliveryOpts) =>
-      new TxDelivery(
+    const createTxDelivery = (opts: TxDeliveryOpts) => {
+      const provider = counter.provider as ethers.providers.JsonRpcProvider;
+      const txNonceCoordinator = new TxNonceCoordinator([provider], counter.signer, false);
+
+      return new TxDelivery(
         {
           maxAttempts: 10,
           multiplier: 1.125,
@@ -59,8 +63,10 @@ describe("TxDelivery", () => {
           ...opts,
         },
         counter.signer,
-        counter.provider as ethers.providers.JsonRpcProvider
+        provider,
+        txNonceCoordinator
       );
+    };
 
     it("should deliver transaction", async () => {
       const delivery = createTxDelivery({
@@ -74,6 +80,9 @@ describe("TxDelivery", () => {
     it("should deliver transaction with deferred callData", async () => {
       let count = 1;
 
+      const provider = counter.provider as ethers.providers.JsonRpcProvider;
+      const txNonceCoordinator = new TxNonceCoordinator([provider], counter.signer, false);
+
       const delivery = new TxDelivery(
         {
           maxAttempts: 10,
@@ -83,7 +92,8 @@ describe("TxDelivery", () => {
           gasLimit: 210000,
         },
         counter.signer,
-        counter.provider as ethers.providers.JsonRpcProvider,
+        provider,
+        txNonceCoordinator,
         () => counter.populateTransaction["incBy"](count++).then((call) => call.data as string)
       );
 
@@ -96,6 +106,9 @@ describe("TxDelivery", () => {
     it("should deliver transaction with deferred callData", async () => {
       const count = 8;
 
+      const provider = counter.provider as ethers.providers.JsonRpcProvider;
+      const txNonceCoordinator = new TxNonceCoordinator([provider], counter.signer, false);
+
       const delivery = new TxDelivery(
         {
           maxAttempts: 10,
@@ -105,7 +118,8 @@ describe("TxDelivery", () => {
           gasLimit: 210000,
         },
         counter.signer,
-        counter.provider as ethers.providers.JsonRpcProvider,
+        provider,
+        txNonceCoordinator,
         () => counter.populateTransaction["incBy"](count + 1).then((call) => call.data as string)
       );
       // to enforce sending two transactions

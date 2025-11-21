@@ -82,6 +82,17 @@ export type TxDeliveryOpts = {
   logger?: (text: string) => void;
 
   gasOracleTimeout?: number;
+
+  /**
+   * Fast broadcast mode - used on fast chains (e.g. Monad).
+   * In this mode, we skip waiting for mining inside TxDelivery.
+   */
+  fastBroadcastMode?: boolean;
+  /**
+   * Minimum time in miliseconds spent on delivering a transaction to the blockchain.
+   * If the transaction is delivered earlier, we wait until the specified time has fully elapsed.
+   */
+  minTxDeliveryTimeMs?: number;
 };
 
 export type TxDeliveryOptsValidated = Omit<Required<TxDeliveryOpts>, "gasLimit"> & {

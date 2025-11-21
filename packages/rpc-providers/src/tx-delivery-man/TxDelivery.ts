@@ -9,6 +9,7 @@ import { CHAIN_ID_TO_GAS_ORACLE } from "./CustomGasOracles";
 import { Eip1559GasEstimator } from "./Eip1559GasEstimator";
 import { GasEstimator } from "./GasEstimator";
 import { GasLimitEstimator } from "./GasLimitEstimator";
+import { TxNonceCoordinator } from "./TxNonceCoordinator";
 import type { FeeStructure, TxDeliveryOpts, TxDeliveryOptsValidated } from "./common";
 
 export type ContractOverrides = {
@@ -60,6 +61,8 @@ export const DEFAULT_TX_DELIVERY_OPTS = {
   forceDisableCustomGasOracle: false,
   numberOfBlocksForFeeHistory: 2,
   newestBlockForFeeHistory: "pending",
+  fastBroadcastMode: false,
+  minTxDeliveryTimeMs: 0,
   logger: logger.log.bind(logger) as (message: unknown) => void,
 };
 
@@ -78,7 +81,9 @@ export class TxDelivery {
     opts: TxDeliveryOpts,
     private readonly signer: TxDeliverySigner,
     private readonly provider: providers.JsonRpcProvider,
-    private readonly deferredCallData?: () => Promise<string>
+    private readonly txNonceCoordinator: TxNonceCoordinator,
+    private readonly deferredCallData?: () => Promise<string>,
+    private readonly allocatedNonce?: number
   ) {
     this.opts = _.merge({ ...DEFAULT_TX_DELIVERY_OPTS }, opts);
     this.feeEstimator = this.opts.isAuctionModel
@@ -101,6 +106,9 @@ export class TxDelivery {
         this.logCurrentAttempt(tx);
 
         result = await this.signAndSendTx(tx);
+        if (this.opts.fastBroadcastMode) {
+          return result;
+        }
       } catch (ethersError) {
         const broadcastErrorResult = this.handleTransactionBroadcastError(
           ethersError,
@@ -162,18 +170,13 @@ export class TxDelivery {
   private async signAndSendTx(tx: DeliveryManTx) {
     const signedTx = await this.signer.signTransaction(tx);
     const result = await this.provider.sendTransaction(signedTx);
+    this.txNonceCoordinator.registerPendingTx(tx.nonce, result.hash);
     this.opts.logger(`Transaction broadcasted successfully`);
     return result;
   }
 
   private async hasNonceIncreased(tx: DeliveryManTx): Promise<boolean> {
-    const address = await this.signer.getAddress();
-
-    const currentNonce = await this.provider.getTransactionCount(
-      address,
-      "latest" // this is the default, but to be explicit
-    );
-
+    const currentNonce = await this.txNonceCoordinator.getNextNonceFromChain(this.provider);
     if (currentNonce > tx.nonce) {
       // transaction was already delivered because nonce increased
       this.opts.logger(`Transaction mined, nonce changed: ${tx.nonce} => ${currentNonce}`);
@@ -250,8 +253,8 @@ export class TxDelivery {
   }
 
   async prepareTransactionRequest(call: Tx.TxDeliveryCall): Promise<DeliveryManTx> {
-    const address = await this.signer.getAddress();
-    const currentNonce = await this.provider.getTransactionCount(address);
+    const currentNonce =
+      this.allocatedNonce ?? (await this.txNonceCoordinator.getNextNonceFromChain(this.provider));
 
     const fees = await this.getFees();
     const gasLimit = await this.gasLimitEstimator.getGasLimit(
