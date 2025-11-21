@@ -3404,6 +3404,13 @@
       "denomination": "USD",
       "rateFeed": true
     },
+    "UTY_PEGGED_FUNDAMENTAL": {
+      "source": [
+        "accountable-uty-pegged"
+      ],
+      "denomination": "USD",
+      "rateFeed": true
+    },
     "YUSD_FUNDAMENTAL": {
       "source": [
         "accountable-yusd"
