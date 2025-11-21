@@ -13,14 +13,12 @@
   "priceFeeds": {
     "ETH": {
       "updateTriggersOverrides": {
-        "deviationPercentage": 0.02,
-        "timeSinceLastUpdateInMilliseconds": 3600000
+        "timeSinceLastUpdateInMilliseconds": 0
       }
     },
     "BTC": {
       "updateTriggersOverrides": {
-        "deviationPercentage": 0.02,
-        "timeSinceLastUpdateInMilliseconds": 3600000
+        "timeSinceLastUpdateInMilliseconds": 0
       }
     },
     "USDC": {
@@ -43,8 +41,7 @@
     },
     "SOL": {
       "updateTriggersOverrides": {
-        "deviationPercentage": 0.05,
-        "timeSinceLastUpdateInMilliseconds": 3600000
+        "timeSinceLastUpdateInMilliseconds": 0
       }
     },
     "WBTC": {},
@@ -53,6 +50,35 @@
     "wstETH_FUNDAMENTAL": {},
     "weETH_FUNDAMENTAL": {},
     "ezETH_FUNDAMENTAL": {},
-    "aUSD": {}
+    "aUSD": {},
+    "shMON_FUNDAMENTAL": {
+      "updateTriggersOverrides": {
+        "deviationPercentage": 0.05,
+        "timeSinceLastUpdateInMilliseconds": 43200000
+      }
+    },
+    "APR": {},
+    "aprMON_FUNDAMENTAL": {},
+    "yzUSD_FUNDAMENTAL": {
+      "updateTriggersOverrides": {
+        "deviationPercentage": 0.05,
+        "timeSinceLastUpdateInMilliseconds": 86400000
+      }
+    },
+    "syzUSD_FUNDAMENTAL": {
+      "updateTriggersOverrides": {
+        "deviationPercentage": 0.05,
+        "timeSinceLastUpdateInMilliseconds": 86400000
+      }
+    },
+    "sMON_FUNDAMENTAL": {
+      "updateTriggersOverrides": {
+        "deviationPercentage": 0.05,
+        "timeSinceLastUpdateInMilliseconds": 43200000
+      }
+    },
+    "muBOND_FUNDAMENTAL": {},
+    "AZND_FUNDAMENTAL": {},
+    "earnAUSD_FUNDAMENTAL": {}
   }
 }
