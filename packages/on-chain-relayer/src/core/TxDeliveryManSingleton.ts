@@ -20,6 +20,8 @@ export const getTxDeliveryMan = (
     isAuctionModel: relayerConfig.isAuctionModel,
     forceDisableCustomGasOracle: relayerConfig.disableCustomGasOracle,
     newestBlockForFeeHistory: relayerConfig.newestBlockForFeeHistory,
+    fastBroadcastMode: relayerConfig.fastBroadcastMode,
+    minTxDeliveryTimeMs: relayerConfig.minTxDeliveryTimeMs,
   });
   return deliveryMan;
 };
