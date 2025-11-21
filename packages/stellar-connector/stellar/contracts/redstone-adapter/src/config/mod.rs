@@ -1,11 +1,6 @@
 use alloc::vec::Vec;
 
-use redstone::{
-    core::config::Config as RedstoneConfig,
-    network::error::Error,
-    soroban::{SorobanCrypto, SorobanRedStoneConfig},
-    FeedId, SignerAddress, TimestampMillis,
-};
+use redstone::{soroban::SorobanCrypto, ConfigFactory, SignerAddress, TimestampMillis};
 use soroban_sdk::{Address, Env};
 
 #[cfg(not(feature = "agnostic-tests"))]
@@ -46,30 +41,29 @@ pub const STELLAR_CONFIG: Config = Config {
     min_interval_between_updates_ms: 40_000,
 };
 
-impl Config {
-    pub fn redstone_signers(&self) -> Vec<SignerAddress> {
+impl<'a> ConfigFactory<&'a Env, SorobanCrypto<'a>> for Config {
+    fn signer_count_threshold(&self) -> u8 {
+        self.signer_count_threshold
+    }
+
+    fn redstone_signers(&self) -> Vec<SignerAddress> {
         self.signers.iter().map(|s| s.to_vec().into()).collect()
     }
 
-    pub fn redstone_config<'a>(
-        &'a self,
-        env: &'a Env,
-        feed_ids: Vec<FeedId>,
-        block_timestamp: TimestampMillis,
-    ) -> Result<SorobanRedStoneConfig<'a>, Error> {
-        let crypto = SorobanCrypto::new(env);
-        let config = RedstoneConfig::try_new(
-            self.signer_count_threshold,
-            self.redstone_signers(),
-            feed_ids,
-            block_timestamp,
-            Some(self.max_timestamp_delay_ms.into()),
-            Some(self.max_timestamp_ahead_ms.into()),
-        )?;
-
-        Ok((config, crypto).into())
+    fn max_timestamp_delay_ms(&self) -> u64 {
+        self.max_timestamp_delay_ms
     }
 
+    fn max_timestamp_ahead_ms(&self) -> u64 {
+        self.max_timestamp_ahead_ms
+    }
+
+    fn make_crypto(env: &'a Env) -> SorobanCrypto<'a> {
+        SorobanCrypto::new(env)
+    }
+}
+
+impl Config {
     pub fn trusted_updaters(&self, env: &Env) -> [Address; UPDATER_COUNT] {
         self.trusted_updaters
             .map(|trusted| Address::from_str(env, trusted))
