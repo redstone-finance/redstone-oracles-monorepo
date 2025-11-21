@@ -9,6 +9,7 @@ use redstone::FeedValue;
 use redstone::{
     contract::verification::UpdateTimestampVerifier, core::processor::process_payload,
     network::as_str::AsHexStr, network::error::Error as RedStoneError,
+    solana::SolanaRedStoneConfig, ConfigFactory,
 };
 
 #[derive(Accounts)]
@@ -36,7 +37,8 @@ pub fn write_price(ctx: Context<WritePrice>, feed_id: FeedIdBs, payload: Vec<u8>
     let feed_id = feed_id.into();
     let block_timestamp = current_time_as_millis()?;
 
-    let mut config = SOLANA_CONFIG.redstone_config(feed_id, block_timestamp)?;
+    let mut config: SolanaRedStoneConfig =
+        SOLANA_CONFIG.redstone_config((), vec![feed_id], block_timestamp)?;
 
     let processed_payload = process_payload(&mut config, payload)?;
 
@@ -53,7 +55,7 @@ pub fn write_price(ctx: Context<WritePrice>, feed_id: FeedIdBs, payload: Vec<u8>
             price_account.write_timestamp.map(Into::into),
             SOLANA_CONFIG.min_interval_between_updates_ms.into(),
             Some(price_account.timestamp.into()),
-            processed_payload.timestamp.into(),
+            processed_payload.timestamp,
         )?;
 
     price_account.value = value.0;
