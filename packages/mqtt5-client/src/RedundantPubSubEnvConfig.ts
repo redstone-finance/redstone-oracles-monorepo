@@ -25,5 +25,9 @@ const MqttCert = RedundantPubSubEnvConfigBase.extend({
   }),
 });
 
-export const RedundantPubSubEnvConfig = z.discriminatedUnion("type", [MqttV4Sig, MqttCert]);
+const SSE = RedundantPubSubEnvConfigBase.extend({
+  type: z.enum(["sse"]),
+});
+
+export const RedundantPubSubEnvConfig = z.discriminatedUnion("type", [MqttV4Sig, MqttCert, SSE]);
 export const RedundantPubSubEnvConfigs = RedundantPubSubEnvConfig.array().min(1);

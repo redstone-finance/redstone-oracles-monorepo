@@ -3,24 +3,17 @@ import { loggerFactory, RedstoneCommon } from "@redstone-finance/utils";
 import { auth, iot, mqtt5 } from "aws-iot-device-sdk-v2";
 import { randomUUID } from "crypto";
 import { PubSubClient, PubSubPayload, SubscribeCallback } from "./PubSubClient";
-import { DEFAULT_CONFIG, PubSubClientConfig } from "./PubSubClientConfig";
+import { DEFAULT_CONFIG, MqttPubSubClientConfig } from "./PubSubClientConfig";
 
 const TOPICS_BATCH_LIMIT = 8;
-
-export type PubSubClientFactory = () => Promise<PubSubClient>;
-
-export const createMqtt5ClientFactory =
-  (config: PubSubClientConfig): PubSubClientFactory =>
-  () =>
-    Mqtt5Client.create(config);
 
 export class Mqtt5Client implements PubSubClient {
   private readonly logger = loggerFactory("mqtt5-client");
   private _mqtt!: mqtt5.Mqtt5Client;
-  private readonly config: Required<PubSubClientConfig>;
+  private readonly config: Required<MqttPubSubClientConfig>;
   private onMessageCallback?: SubscribeCallback;
 
-  private constructor(config: PubSubClientConfig) {
+  private constructor(config: MqttPubSubClientConfig) {
     this.config = { ...DEFAULT_CONFIG, ...config };
     process.on("beforeExit", () => this.stop());
   }
@@ -28,7 +21,7 @@ export class Mqtt5Client implements PubSubClient {
     return this.config.endpoint;
   }
 
-  static async create(config: PubSubClientConfig): Promise<Mqtt5Client> {
+  static async create(config: MqttPubSubClientConfig): Promise<Mqtt5Client> {
     const client = new Mqtt5Client(config);
 
     const mqttClientBuilder = Mqtt5Client.createMqttBuilderWithAuthorization(config);
@@ -83,7 +76,7 @@ export class Mqtt5Client implements PubSubClient {
   }
 
   private static createMqttBuilderWithAuthorization(
-    config: PubSubClientConfig
+    config: MqttPubSubClientConfig
   ): iot.AwsIotMqtt5ClientConfigBuilder {
     if (config.authorization.type === "AWSSigV4") {
       const credentialsProvider = auth.AwsCredentialsProvider.newDefault();

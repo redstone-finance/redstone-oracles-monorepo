@@ -305,7 +305,7 @@ describe("subscribe-data-packages", () => {
       expect(callback).toBeCalledTimes(1);
       expect(loggerDebug).toBeCalledWith(
         expect.stringContaining(
-          `Package from 0x8Bc17e0BE2403707244Ca75776e1bC6B6d80cBFB timestamp=${timestamp} dataPackageId=ETH was rejected because packageTimestamp`
+          `Package from ${MOCK_WALLET_2.address} timestamp=${timestamp} dataPackageId=ETH was rejected because packageTimestamp`
         )
       );
 
@@ -321,7 +321,7 @@ describe("subscribe-data-packages", () => {
       expect(callback).toBeCalledTimes(1);
       expect(loggerDebug).toBeCalledWith(
         expect.stringContaining(
-          `Package from 0x8Bc17e0BE2403707244Ca75776e1bC6B6d80cBFB timestamp=${timestamp - 1} dataPackageId=ETH was rejected because packageTimestamp`
+          `Package from ${MOCK_WALLET_2.address} timestamp=${timestamp - 1} dataPackageId=ETH was rejected because packageTimestamp`
         )
       );
     });
@@ -364,7 +364,7 @@ describe("subscribe-data-packages", () => {
       expect(callback).toBeCalledTimes(0);
       expect(logger).toBeCalledWith(
         expect.stringContaining(
-          `Package from 0x701790Ca360222a7e34212175280907e1572EbE6 timestamp=${timestamp} dataPackageId=ETH was rejected because already have package signer=${MOCK_WALLET_1.address}`
+          `Package from ${MOCK_WALLET_1.address} timestamp=${timestamp} dataPackageId=ETH was rejected because already have package from this signer`
         )
       );
     });

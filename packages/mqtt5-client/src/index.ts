@@ -1,4 +1,4 @@
-export * from "./create-redundant-pub-sub-client-from-env";
+export * from "./create-redundant-pub-sub-client";
 export * from "./DataPackageSubscriber";
 export * from "./DataPackageSubscriberParams";
 export * from "./decorators/withMqttStats";
@@ -7,6 +7,7 @@ export * from "./Mqtt5Client";
 export * from "./MultiPubSubClient";
 export * from "./PubSubClient";
 export * from "./PubSubClientConfig";
+export * from "./PubSubClientFactory";
 export * from "./RateLimitsCircuitBreaker";
 export * from "./RedundantPubSubClient";
 export * from "./RedundantPubSubEnvConfig";

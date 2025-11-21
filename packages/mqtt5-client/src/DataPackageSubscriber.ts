@@ -265,7 +265,7 @@ export class DataPackageSubscriber {
 
     if (entryForTimestamp[dataPackageId].some((dp) => dp.packageSigner === packageSigner)) {
       this.logger.debug(
-        `Package from ${description} was rejected because already have package signer=${description}`
+        `Package from ${description} was rejected because already have package from this signer`
       );
       return;
     }
