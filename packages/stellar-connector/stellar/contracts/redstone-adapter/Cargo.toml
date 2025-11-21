@@ -14,9 +14,7 @@ agnostic-tests = []
 [dependencies]
 common = { workspace = true }
 hex-literal = { workspace = true }
-redstone = { workspace = true, default-features = false, features = [
-  "soroban",
-] }
+redstone = { workspace = true, default-features = false, features = ["soroban"] }
 soroban-sdk = { workspace = true, features = ["alloc"] }
 
 [dev-dependencies]
