@@ -8,6 +8,7 @@ import { describe, test } from "mocha";
 
 const INTEGRATIONS_NOT_FOR_TESTING = [
   "monadMultiFeed", // remove once we get a publicRpc
+  "monadCurvanceMultiFeed", // remove once we get a publicRpc
   "megaEthTestnetMultiFeed", // remove once we get a publicRpc
 ];
 
@@ -91,13 +92,20 @@ const checkDataFeedIdInContract = async (
 
 if (process.env.RUN_NONDETERMINISTIC_TESTS) {
   describe("Price feed contract should return the same dataFeedId as in relayer manifest", () => {
+    const disabledNetworks = (process.env.DISABLED_NETWORKS ?? []) as NetworkId[];
     const classicManifests = ManifestReading.readClassicManifests();
     for (const [name, manifest] of Object.entries(classicManifests)) {
+      if (INTEGRATIONS_NOT_FOR_TESTING.includes(name)) {
+        console.log(`Integration ${name} is disabled`);
+        continue;
+      }
       test(name, async () => {
+        if (disabledNetworks.includes(manifest.chain.id)) {
+          console.log(`Network ${manifest.chain.id} is disabled`);
+          return;
+        }
         for (const [dataFeedId, priceFeedAddress] of Object.entries(manifest.priceFeeds)) {
-          const disabledNetworks = (process.env.DISABLED_NETWORKS ?? []) as NetworkId[];
-
-          if (priceFeedAddress !== "__NO_FEED__" && disabledNetworks.includes(manifest.chain.id)) {
+          if (priceFeedAddress !== "__NO_FEED__") {
             expect(await checkDataFeedIdInContract(dataFeedId, priceFeedAddress, manifest.chain.id))
               .to.be.true;
           }
@@ -108,13 +116,16 @@ if (process.env.RUN_NONDETERMINISTIC_TESTS) {
     const multiFeedManifests = ManifestReading.readMultiFeedManifests();
     for (const [name, manifest] of Object.entries(multiFeedManifests)) {
       if (INTEGRATIONS_NOT_FOR_TESTING.includes(name)) {
+        console.log(`Integration ${name} is disabled`);
         continue;
       }
       test(name, async () => {
+        if (disabledNetworks.includes(manifest.chain.id)) {
+          console.log(`Network ${manifest.chain.id} is disabled`);
+          return;
+        }
         for (const [dataFeedId, { priceFeedAddress }] of Object.entries(manifest.priceFeeds)) {
-          const disabledNetworks = (process.env.DISABLED_NETWORKS ?? []) as NetworkId[];
-
-          if (priceFeedAddress && disabledNetworks.includes(manifest.chain.id)) {
+          if (priceFeedAddress) {
             expect(await checkDataFeedIdInContract(dataFeedId, priceFeedAddress, manifest.chain.id))
               .to.be.true;
           }
