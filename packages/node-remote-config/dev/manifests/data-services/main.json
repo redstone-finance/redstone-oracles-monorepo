@@ -7817,6 +7817,25 @@
       ],
       "denomination": "USD",
       "rateFeed": false
+    },
+    "MON": {
+      "source": [
+        "bitget-usdt",
+        "bybit-usdt",
+        "coinbase-usd",
+        "coinbase-usdc",
+        "gate-usdt",
+        "kraken-usd",
+        "kraken-usdc",
+        "kucoin-usdt"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "gMON_FUNDAMENTAL": {
+      "source": ["monad-evm-fetcher-gmon"],
+      "denomination": "MON",
+      "rateFeed": true
     }
   }
 }
