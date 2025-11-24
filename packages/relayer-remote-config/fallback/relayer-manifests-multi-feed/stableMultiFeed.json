@@ -1,0 +1,57 @@
+{
+  "chain": {
+    "name": "stable",
+    "id": 988
+  },
+  "updateTriggers": {
+    "deviationPercentage": 0.5,
+    "timeSinceLastUpdateInMilliseconds": 21600000
+  },
+  "adapterContract": "0x6165211bEf5Bf1FE2697dBAa912D907e9Fd4c5b1",
+  "adapterContractType": "multi-feed",
+  "dataServiceId": "redstone-primary-prod",
+  "priceFeeds": {
+    "ETH": {
+      "priceFeedAddress": "0x457BE3C697c644bF329C2C3ea79EbF1D254d603a"
+    },
+    "BTC": {
+      "priceFeedAddress": "0x687103bA8CC2f66C94696182Ef410400Da45fb24"
+    },
+    "USDC": {
+      "priceFeedAddress": "0x8ea3C667C264BbdaA1dA7638904b8671F451c7F9"
+    },
+    "USDT": {
+      "priceFeedAddress": "0x58264801fadCd8598D3EE993572ADe9cA27F42c8"
+    },
+    "XAUt": {
+      "priceFeedAddress": "0xd5E244accc514b56DCAD89897DD44499E7C35a05"
+    },
+    "LBTC": {
+      "priceFeedAddress": "0x80295Cf12E28f3F943304BFd6C2A2C044e731aaB"
+    },
+    "thBILL_FUNDAMENTAL/USD": {
+      "priceFeedAddress": "0x7532df197a36587aeD2B9A59785c8BeD182FA62D"
+    },
+    "PYUSD": {
+      "priceFeedAddress": "0x1c30dA143E97c228102A5cAe3960dBBB41321604"
+    },
+    "frxUSD": {
+      "priceFeedAddress": "0xB5197ca89507FE045e8ce9996593D35071915EB7"
+    },
+    "sfrxUSD_FUNDAMENTAL": {
+      "priceFeedAddress": "0x71784611831b9566df7301A78bC1B3d29a8737bF"
+    },
+    "SolvBTC": {
+      "priceFeedAddress": "0xF2B77433dE1820a5254a5a04705DB2C82d627bC0"
+    },
+    "sfrxETH/ETH": {
+      "priceFeedAddress": "0x29533E113D803ab1967F6CB9495B95DC8C1EA594"
+    },
+    "FXS": {
+      "priceFeedAddress": "0xC3b182aee94AECeCa39b072942f3Ce4B87465517"
+    },
+    "weETH_FUNDAMENTAL": {
+      "priceFeedAddress": "0xD57b79401956BE4872D3d03F0C920639335e350F"
+    }
+  }
+}
