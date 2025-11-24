@@ -21,6 +21,11 @@
         "timeSinceLastUpdateInMilliseconds": 0
       }
     },
+    "MON": {
+      "updateTriggersOverrides": {
+        "timeSinceLastUpdateInMilliseconds": 0
+      }
+    },
     "USDC": {
       "updateTriggersOverrides": {
         "deviationPercentage": 0.05,
@@ -58,14 +63,19 @@
       }
     },
     "APR": {},
-    "aprMON_FUNDAMENTAL": {},
+    "aprMON_FUNDAMENTAL": {
+      "updateTriggersOverrides": {
+        "deviationPercentage": 0.5,
+        "timeSinceLastUpdateInMilliseconds": 43200000
+      }
+    },
     "yzUSD_FUNDAMENTAL": {
       "updateTriggersOverrides": {
         "deviationPercentage": 0.05,
         "timeSinceLastUpdateInMilliseconds": 86400000
       }
     },
-    "syzUSD_FUNDAMENTAL": {
+    "syzUSD_FUNDAMENTAL/USD": {
       "updateTriggersOverrides": {
         "deviationPercentage": 0.05,
         "timeSinceLastUpdateInMilliseconds": 86400000
@@ -79,6 +89,7 @@
     },
     "muBOND_FUNDAMENTAL": {},
     "AZND_FUNDAMENTAL": {},
-    "earnAUSD_FUNDAMENTAL": {}
+    "earnAUSD_FUNDAMENTAL": {},
+    "gMON_FUNDAMENTAL": {}
   }
 }
