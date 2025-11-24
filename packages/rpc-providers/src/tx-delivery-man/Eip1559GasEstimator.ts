@@ -21,8 +21,10 @@ export class Eip1559GasEstimator implements GasEstimator<Eip1559Fee> {
 
   /** this is reasonable (ether.js is not reasonable) fallback if gasOracle is not set */
   async getFees(provider: providers.JsonRpcProvider): Promise<Eip1559Fee> {
-    const lastBlock = await provider.getBlock("latest");
-    await this.refreshLastUsedPriorityFee(provider);
+    const [lastBlock, _] = await Promise.all([
+      provider.getBlock("latest"),
+      this.refreshLastUsedPriorityFee(provider),
+    ]);
 
     const baseFee = Math.round(unsafeBnToNumber(lastBlock.baseFeePerGas!) * BASE_FEE_SCALER);
     const maxFeePerGas = baseFee + this.maxPriorityFeePerGas;
