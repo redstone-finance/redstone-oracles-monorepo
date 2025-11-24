@@ -28,11 +28,7 @@ export class TxDeliveryMan implements Tx.ITxDeliveryMan {
     private readonly opts: TxDeliveryOpts
   ) {
     this.providers = extractProviders(provider);
-    this.txNonceCoordinator = new TxNonceCoordinator(
-      this.providers,
-      this.signer,
-      this.opts.fastBroadcastMode === true
-    );
+    this.txNonceCoordinator = new TxNonceCoordinator(this.providers, this.signer, this.opts);
   }
 
   /**

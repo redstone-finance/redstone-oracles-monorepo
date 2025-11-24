@@ -225,6 +225,10 @@ export const readManifestAndEnv = () => {
       z.number().default(0)
     ),
     fastBroadcastMode: RedstoneCommon.getFromEnv("FAST_BROADCAST_MODE", z.boolean().optional()),
+    txNonceStaleThresholdMs: RedstoneCommon.getFromEnv(
+      "TX_NONCE_STALE_THRESHOLD_MS",
+      z.number().optional()
+    ),
     minTxDeliveryTimeMs: RedstoneCommon.getFromEnv(
       "MIN_TX_DELIVERY_TIME_MS",
       z.number().optional()

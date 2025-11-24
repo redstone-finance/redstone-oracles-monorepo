@@ -62,6 +62,7 @@ export const DEFAULT_TX_DELIVERY_OPTS = {
   numberOfBlocksForFeeHistory: 2,
   newestBlockForFeeHistory: "pending",
   fastBroadcastMode: false,
+  txNonceStaleThresholdMs: 10_000,
   minTxDeliveryTimeMs: 0,
   logger: logger.log.bind(logger) as (message: unknown) => void,
 };
@@ -203,7 +204,7 @@ export class TxDelivery {
     RedstoneCommon.assert(isEthersError(ethersError), "Unknown non ethers error");
 
     if (TxDelivery.isAlreadyKnownError(ethersError)) {
-      this.opts.logger("Transaction already known");
+      this.opts.logger(`Transaction ${result?.hash} already known, nonce: ${nonce}`);
       return TransactionBroadcastErrorResult.AlreadyKnown;
     } else if (TxDelivery.isNonceExpiredError(ethersError)) {
       // if not by us, then it was delivered by someone else

@@ -53,7 +53,7 @@ describe("TxDelivery", () => {
 
     const createTxDelivery = (opts: TxDeliveryOpts) => {
       const provider = counter.provider as ethers.providers.JsonRpcProvider;
-      const txNonceCoordinator = new TxNonceCoordinator([provider], counter.signer, false);
+      const txNonceCoordinator = new TxNonceCoordinator([provider], counter.signer, {});
 
       return new TxDelivery(
         {
@@ -81,7 +81,7 @@ describe("TxDelivery", () => {
       let count = 1;
 
       const provider = counter.provider as ethers.providers.JsonRpcProvider;
-      const txNonceCoordinator = new TxNonceCoordinator([provider], counter.signer, false);
+      const txNonceCoordinator = new TxNonceCoordinator([provider], counter.signer, {});
 
       const delivery = new TxDelivery(
         {
@@ -107,7 +107,7 @@ describe("TxDelivery", () => {
       const count = 8;
 
       const provider = counter.provider as ethers.providers.JsonRpcProvider;
-      const txNonceCoordinator = new TxNonceCoordinator([provider], counter.signer, false);
+      const txNonceCoordinator = new TxNonceCoordinator([provider], counter.signer, {});
 
       const delivery = new TxDelivery(
         {
