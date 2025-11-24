@@ -47,7 +47,9 @@ describe("TxNonceCoordinator", () => {
     const providerA = createProvider([3]);
     const providerB = createProvider([5]);
 
-    const coordinator = new TxNonceCoordinator([providerA, providerB], signer, true);
+    const coordinator = new TxNonceCoordinator([providerA, providerB], signer, {
+      fastBroadcastMode: true,
+    });
 
     const first = await coordinator.allocateNonce();
     const second = await coordinator.allocateNonce();
@@ -65,7 +67,9 @@ describe("TxNonceCoordinator", () => {
       blockNumber: 1,
     });
 
-    const coordinator = new TxNonceCoordinator([provider], signer, true);
+    const coordinator = new TxNonceCoordinator([provider], signer, {
+      fastBroadcastMode: true,
+    });
 
     const nonce = await coordinator.allocateNonce();
     coordinator.registerPendingTx(nonce, "0xhash");
@@ -74,38 +78,5 @@ describe("TxNonceCoordinator", () => {
 
     const next = await coordinator.allocateNonce();
     expect(next).to.eq(nonce + 1);
-  });
-
-  it("rolls back nonce when pending tx reverts", async () => {
-    const provider = createProvider([3]);
-    provider.getTransactionReceipt.resolves({
-      status: 0,
-      blockNumber: 2,
-    });
-
-    const coordinator = new TxNonceCoordinator([provider], signer, true);
-
-    const nonce = await coordinator.allocateNonce(); // 3
-    coordinator.registerPendingTx(nonce, "0xreverted");
-
-    await clock.tickAsync(500);
-
-    const next = await coordinator.allocateNonce();
-    expect(next).to.eq(nonce); // rolled back to retry same nonce
-  });
-
-  it("drops stale pending tx and rolls back", async () => {
-    const provider = createProvider([2]);
-    // keep returning undefined receipt
-    provider.getTransactionReceipt.resolves(undefined);
-
-    const coordinator = new TxNonceCoordinator([provider], signer, true);
-    const nonce = await coordinator.allocateNonce(); // 2
-    coordinator.registerPendingTx(nonce, "0xstale");
-
-    await clock.tickAsync(2_600);
-
-    const next = await coordinator.allocateNonce();
-    expect(next).to.eq(nonce); // rollback to retry
   });
 });

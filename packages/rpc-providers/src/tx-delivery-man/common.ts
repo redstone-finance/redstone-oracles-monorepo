@@ -88,6 +88,7 @@ export type TxDeliveryOpts = {
    * In this mode, we skip waiting for mining inside TxDelivery.
    */
   fastBroadcastMode?: boolean;
+  txNonceStaleThresholdMs?: number;
   /**
    * Minimum time in miliseconds spent on delivering a transaction to the blockchain.
    * If the transaction is delivered earlier, we wait until the specified time has fully elapsed.

@@ -80,5 +80,6 @@ export type OnChainRelayerEnv = {
   splitAllFeeds?: boolean;
   uniqueSignerThresholdCacheTtlMs: number;
   fastBroadcastMode?: boolean;
+  txNonceStaleThresholdMs?: number;
   minTxDeliveryTimeMs?: number;
 };
