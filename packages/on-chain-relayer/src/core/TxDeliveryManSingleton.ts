@@ -21,6 +21,7 @@ export const getTxDeliveryMan = (
     forceDisableCustomGasOracle: relayerConfig.disableCustomGasOracle,
     newestBlockForFeeHistory: relayerConfig.newestBlockForFeeHistory,
     fastBroadcastMode: relayerConfig.fastBroadcastMode,
+    txNonceStaleThresholdMs: relayerConfig.txNonceStaleThresholdMs,
     minTxDeliveryTimeMs: relayerConfig.minTxDeliveryTimeMs,
   });
   return deliveryMan;
