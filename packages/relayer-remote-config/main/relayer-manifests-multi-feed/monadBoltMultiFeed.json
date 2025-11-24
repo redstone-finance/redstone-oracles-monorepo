@@ -12,6 +12,7 @@
   "priceFeeds": {
     "ETH": {},
     "BTC": {},
+    "MON": {},
     "SOL": {}
   },
   "authorizedSigners": [
