@@ -10234,7 +10234,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@redstone-finance/hl-relayer@workspace:packages/hl-relayer":
+"@redstone-finance/hl-relayer@workspace:*, @redstone-finance/hl-relayer@workspace:packages/hl-relayer":
   version: 0.0.0-use.local
   resolution: "@redstone-finance/hl-relayer@workspace:packages/hl-relayer"
   dependencies:
@@ -10269,8 +10269,10 @@ __metadata:
     "@redstone-finance/cache-service": "workspace:*"
     "@redstone-finance/evm-adapters": "workspace:*"
     "@redstone-finance/evm-connector": "workspace:*"
+    "@redstone-finance/hl-relayer": "workspace:*"
     "@redstone-finance/internal-utils": "workspace:*"
     "@redstone-finance/monitoring-manifests": "workspace:*"
+    "@redstone-finance/mqtt5-client": "workspace:*"
     "@redstone-finance/node-commons": "workspace:*"
     "@redstone-finance/on-chain-relayer": "workspace:*"
     "@redstone-finance/on-chain-relayer-common": "workspace:*"
@@ -10280,9 +10282,12 @@ __metadata:
     "@redstone-finance/remote-config": "workspace:*"
     "@redstone-finance/sdk": "workspace:*"
     "@redstone-finance/utils": "workspace:*"
+    "@types/express": "npm:^4.17.14"
     axios: "npm:^1.8.4"
     axios-retry: "npm:^4.5.0"
     ethers: "npm:^5.7.2"
+    expect: "npm:^29.7.0"
+    express: "npm:^4.18.1"
     zod: "npm:^4.1.12"
   languageName: unknown
   linkType: soft
