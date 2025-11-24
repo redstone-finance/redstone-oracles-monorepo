@@ -122,7 +122,7 @@ packages/on-chain-relayer/price-feed-contract-address.txt
 packages/**/yarn*
 .env-*
 mock-prices.json
-mock-prices.json-*
+mock-prices-*.json
 
 .terraform
 .yarn

@@ -1,0 +1,87 @@
+{
+  "interval": 1000,
+  "priceAggregator": "median",
+  "defaultSource": ["mock"],
+  "sourceTimeout": 1000,
+  "minValidSourcesPercentage": 30,
+  "deviationCheck": {
+    "deviationWithRecentValues": {
+      "maxPercent": 1000000000,
+      "maxDelayMilliseconds": 1000
+    }
+  },
+  "tokens": {
+    "TSLA": {
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "IS_NY_STOCKS_MARKET_OPEN": {
+      "denomination": "other",
+      "rateFeed": false
+    },
+    "HL_MARK_PX_flxn:TSLA": {
+      "broadcasters": [],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "HL_IMPACT_PXS_BUY_flxn:TSLA": {
+      "localCacheTTL": "8h",
+      "broadcasters": [],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "HL_IMPACT_PXS_SELL_flxn:TSLA": {
+      "localCacheTTL": "8h",
+      "broadcasters": [],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "HL_ORACLE_PX_flxn:TSLA": {
+      "localCacheTTL": "150s",
+      "broadcasters": [],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "HL_MID_PX_flxn:TSLA": {
+      "localCacheTTL": "8h",
+      "broadcasters": [],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "flxn:TSLA_MARK_0": {
+      "source": ["hyperliquid-hip3-felix-testnet-fetcher"],
+      "broadcasters": ["hyperliquid-hip3"],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "flxn:TSLA_MARK_1": {
+      "source": ["hyperliquid-hip3-felix-testnet-fetcher"],
+      "broadcasters": ["hyperliquid-hip3"],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "flxn:TSLA_EXT": {
+      "source": ["hyperliquid-hip3-felix-testnet-fetcher"],
+      "broadcasters": ["hyperliquid-hip3"],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "flxn:TSLA": {
+      "source": ["hyperliquid-hip3-felix-testnet-fetcher"],
+      "broadcasters": ["hyperliquid-hip3"],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "HL_OPEN_INTEREST_flxn:TSLA": {
+      "broadcasters": [],
+      "denomination": "USD",
+      "rateFeed": false,
+      "deviationCheck": {
+        "deviationWithRecentValues": {
+          "maxPercent": 1000000000,
+          "maxDelayMilliseconds": 1000
+        }
+      }
+    }
+  }
+}
