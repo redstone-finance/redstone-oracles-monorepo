@@ -101,6 +101,7 @@ const ethers_5_7_ErrorProps = [
   "address",
   "args",
   "errorSignature",
+  "body",
 ] as const;
 
 type Ethers_5_7_Error = {
