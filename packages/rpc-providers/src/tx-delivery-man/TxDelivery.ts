@@ -1,6 +1,6 @@
 import { ErrorCode } from "@ethersproject/logger";
 import { TransactionRequest, TransactionResponse } from "@ethersproject/providers";
-import { loggerFactory, RedstoneCommon, Tx } from "@redstone-finance/utils";
+import { loggerFactory, RedstoneCommon, RedstoneLogger, Tx } from "@redstone-finance/utils";
 import { providers, utils } from "ethers";
 import _ from "lodash";
 import { EthersError, isEthersError } from "../common";
@@ -238,11 +238,16 @@ export class TxDelivery {
 
   private async updateTxParamsForNextAttempt(tx: DeliveryManTx): Promise<DeliveryManTx> {
     const gasEstimateTx = Tx.convertToTxDeliveryCall(tx);
-    const [newFees, newGasLimit, newCalldata] = await Promise.all([
-      this.getFees(),
-      this.gasLimitEstimator.getGasLimit(this.provider, gasEstimateTx),
-      this.resolveTxDeliveryCallData(gasEstimateTx),
-    ]);
+    const [newFees, newGasLimit, newCalldata] = await logPerf(
+      () =>
+        Promise.all([
+          this.getFees(),
+          this.gasLimitEstimator.getGasLimit(this.provider, gasEstimateTx),
+          this.resolveTxDeliveryCallData(gasEstimateTx),
+        ]),
+      "updateTxParamsForNextAttempt",
+      logger
+    );
 
     return {
       ...tx,
@@ -253,16 +258,19 @@ export class TxDelivery {
   }
 
   async prepareTransactionRequest(call: Tx.TxDeliveryCall): Promise<DeliveryManTx> {
-    const currentNonce =
-      this.allocatedNonce ?? (await this.txNonceCoordinator.getNextNonceFromChain(this.provider));
-
-    const fees = await this.getFees();
-    const gasLimit = await this.gasLimitEstimator.getGasLimit(
-      this.provider,
-      Tx.convertToTxDeliveryCall(call)
+    const [currentNonce, fees, gasLimit, network] = await logPerf(
+      () =>
+        Promise.all([
+          this.allocatedNonce ?? this.txNonceCoordinator.getNextNonceFromChain(this.provider),
+          this.getFees(),
+          this.gasLimitEstimator.getGasLimit(this.provider, Tx.convertToTxDeliveryCall(call)),
+          this.provider.getNetwork(),
+        ]),
+      "prepareTransactionRequest",
+      logger
     );
 
-    const { chainId } = await this.provider.getNetwork();
+    const { chainId } = network;
 
     const transactionRequest = {
       ...call,
@@ -277,28 +285,36 @@ export class TxDelivery {
     return transactionRequest as DeliveryManTx;
   }
 
+  private static messageContainsAny(e: { message: string }, ...messages: string[]) {
+    return messages.some((message) => e.message.includes(message));
+  }
+
   private static isUnderpricedError(e: EthersError) {
     return (
-      (e.message.includes("maxFeePerGas") ||
-        e.message.includes("baseFeePerGas") ||
-        e.message.includes("underpriced") ||
+      (this.messageContainsAny(e, "maxFeePerGas", "baseFeePerGas", "underpriced") ||
         e.code === ErrorCode.REPLACEMENT_UNDERPRICED ||
-        e.code === ErrorCode.UNPREDICTABLE_GAS_LIMIT) &&
+        e.code === ErrorCode.UNPREDICTABLE_GAS_LIMIT ||
+        (e.code === ErrorCode.SERVER_ERROR && this.messageContainsAny(e, "Gas limit too low"))) &&
       !e.message.includes("VM Exception while processing transaction")
     );
   }
 
   private static isNonceExpiredError(e: EthersError) {
     return (
-      e.message.includes("nonce has already been used") ||
-      e.message.includes("invalid nonce") ||
-      e.message.includes("invalid sequence") ||
-      e.code === ErrorCode.NONCE_EXPIRED
+      this.messageContainsAny(
+        e,
+        "nonce has already been used",
+        "invalid nonce",
+        "invalid sequence"
+      ) || e.code === ErrorCode.NONCE_EXPIRED
     );
   }
 
   private static isAlreadyKnownError(e: EthersError) {
-    return e.message.includes("already known") && e.code === ErrorCode.SERVER_ERROR;
+    return (
+      e.code === ErrorCode.SERVER_ERROR &&
+      this.messageContainsAny(e, "already known", "existing transaction had higher priority")
+    );
   }
 
   private static isInsufficientFundsError(e: EthersError) {
@@ -309,7 +325,7 @@ export class TxDelivery {
     // some gas oracles relies on this fallback mechanism
     try {
       return await this.getFeeFromGasOracle(this.provider);
-    } catch (_e) {
+    } catch {
       return await this.feeEstimator.getFees(this.provider);
     }
   }
@@ -345,4 +361,16 @@ export class TxDelivery {
     }
     return tx.data;
   }
+}
+
+export function logPerf<T>(
+  fn: () => Promise<T>,
+  label: string,
+  originalLogger: RedstoneLogger
+): Promise<T> {
+  const startTime = performance.now();
+  return fn().finally(() => {
+    const duration = performance.now() - startTime;
+    originalLogger.warn(`${label}: ${duration}[ms]`, { duration });
+  });
 }
