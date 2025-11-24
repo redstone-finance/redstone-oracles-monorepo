@@ -58,7 +58,6 @@ export class TxNonceCoordinator {
     }
 
     const next = this.lastCommittedNonce! + 1;
-    this.lastCommittedNonce = next;
     logger.log(`Allocating nonce=${next}`);
     return next;
   }
