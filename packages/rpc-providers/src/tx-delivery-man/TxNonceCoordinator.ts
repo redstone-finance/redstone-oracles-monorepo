@@ -1,9 +1,10 @@
 import { loggerFactory, RedstoneCommon } from "@redstone-finance/utils";
 import { providers } from "ethers";
 import type { TxDeliverySigner } from "./TxDelivery";
+import { TxDeliveryOpts } from "./common";
 
 const logger = loggerFactory("TxNonceCoordinator");
-const STALE_TX_THRESHOLD_MS = 2_000;
+const DEFAULT_STALE_TX_THRESHOLD_MS = 10_000;
 const RECONCILE_INTERVAL_MS = 500;
 // max number of pending txs processed in a single reconcile tick
 const RECONCILE_MAX_PENDING_PER_TICK = 100;
@@ -28,13 +29,17 @@ export class TxNonceCoordinator {
   private reconcileInProgress = false;
   // cached signer address
   private address?: string;
+  private fastMode: boolean;
+  private staleTxThresholdMs: number = DEFAULT_STALE_TX_THRESHOLD_MS;
 
   constructor(
     private readonly providers: readonly providers.JsonRpcProvider[],
     private readonly signer: TxDeliverySigner,
-    private readonly fastMode: boolean
+    opts: Pick<TxDeliveryOpts, "fastBroadcastMode" | "txNonceStaleThresholdMs">
   ) {
-    if (fastMode) {
+    this.fastMode = opts.fastBroadcastMode === true;
+    this.staleTxThresholdMs = opts.txNonceStaleThresholdMs ?? DEFAULT_STALE_TX_THRESHOLD_MS;
+    if (this.fastMode) {
       setInterval(() => {
         void this.reconcilePendingTransactions();
       }, RECONCILE_INTERVAL_MS);
@@ -83,13 +88,6 @@ export class TxNonceCoordinator {
   private bumpLastCommittedNonce(nonce: number) {
     if (this.lastCommittedNonce === undefined || nonce > this.lastCommittedNonce) {
       this.lastCommittedNonce = nonce;
-    }
-  }
-
-  private rollbackFromNonce(failedNonce: number) {
-    const target = failedNonce - 1;
-    if (this.lastCommittedNonce === undefined || target < this.lastCommittedNonce) {
-      this.lastCommittedNonce = target;
     }
   }
 
@@ -176,13 +174,14 @@ export class TxNonceCoordinator {
     // tx mined (success or revert)
     if (RedstoneCommon.isDefined(receipt)) {
       this.pendingTxs.delete(nonce);
+      this.bumpLastCommittedNonce(nonce);
 
       if (receipt.status === 1) {
-        this.bumpLastCommittedNonce(nonce);
         logger.log(`Confirmed pending tx nonce=${nonce} block=${receipt.blockNumber}`);
       } else {
-        logger.warn(`Tx reverted nonce=${nonce}, releasing nonce`);
-        this.rollbackFromNonce(nonce);
+        logger.warn(
+          `Tx reverted nonce=${nonce} block=${receipt.blockNumber}, nonce remains consumed`
+        );
       }
 
       return;
@@ -190,10 +189,9 @@ export class TxNonceCoordinator {
 
     // tx considered stale
     const now = Date.now();
-    if (now - pending.addedAt > STALE_TX_THRESHOLD_MS) {
+    if (now - pending.addedAt > this.staleTxThresholdMs) {
       this.pendingTxs.delete(nonce);
-      logger.warn(`Stale tx nonce=${nonce} hash=${pending.hash}, rolling back`);
-      this.rollbackFromNonce(nonce);
+      logger.warn(`Stale tx nonce=${nonce} hash=${pending.hash}, stopping local tracking`);
     }
   }
 
