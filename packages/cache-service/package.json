@@ -22,6 +22,7 @@
     "start:dev": "yarn nest start --watch",
     "start:debug": "yarn nest start --debug --watch",
     "start:prod": "yarn global:node dist/src/main",
+    "start:mongo": "yarn run-ts scripts/launch-mongodb-in-memory.ts",
     "test:watch": "jest --watch",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "test:e2e": "jest --config ./test/jest-e2e.json",
