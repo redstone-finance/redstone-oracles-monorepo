@@ -22,13 +22,10 @@ export class GasLimitEstimator {
       return this.opts.gasLimit;
     }
 
-    const estimatedGas = (await provider.send("eth_estimateGas", [
-      tx,
-      // this is important to use pending not default latest block, cause we want to simulate in future block
-      "pending",
-    ])) as BigNumber;
+    const estimatedGas = await GasLimitEstimator.estimateGas(provider, tx);
+    const value = Number(estimatedGas.toString());
 
-    return Math.round(Number(estimatedGas.toString()) * this.opts.gasLimitMultiplier);
+    return Math.round(value * this.opts.gasLimitMultiplier);
   }
 
   scaleGasLimit(gasLimit: number, attempt: number) {
@@ -36,5 +33,13 @@ export class GasLimitEstimator {
       return gasLimit;
     }
     return Math.round(gasLimit * this.opts.gasLimitMultiplier ** attempt);
+  }
+
+  private static async estimateGas(provider: providers.JsonRpcProvider, tx: GasEstimateTx) {
+    return (await provider.send("eth_estimateGas", [
+      tx,
+      // this is important to use pending not default latest block, because we want to simulate in future block
+      "pending",
+    ])) as BigNumber;
   }
 }
