@@ -19,21 +19,21 @@
     },
     "MON": {
       "priceFeedAddress": "0x9a7FAe39f78f7711d46F28E9fd2271ECdca58f9a",
-      "updateTriggers": {
+      "updateTriggersOverrides": {
         "deviationPercentage": 0.1,
         "timeSinceLastUpdateInMilliseconds": 3600000
       }
     },
     "USDC": {
       "priceFeedAddress": "0x58E0d540841e4bD6E8bE6e46FCc68a897E3fD3e4",
-      "updateTriggers": {
+      "updateTriggersOverrides": {
         "deviationPercentage": 0.1,
         "timeSinceLastUpdateInMilliseconds": 3600000
       }
     },
     "aUSD": {
       "priceFeedAddress": "0xCaAbf2C777a3426eAfFB79A0675909cdCAfa3D23",
-      "updateTriggers": {
+      "updateTriggersOverrides": {
         "deviationPercentage": 0.1,
         "timeSinceLastUpdateInMilliseconds": 3600000
       }
