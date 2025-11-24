@@ -25,9 +25,20 @@ const MqttCert = RedundantPubSubEnvConfigBase.extend({
   }),
 });
 
+const MqttUnauthenticated = RedundantPubSubEnvConfigBase.extend({
+  type: z.enum(["mqttUnauthenticated"]),
+  host: z.string().default("localhost"),
+  port: z.number().default(1883),
+});
+
 const SSE = RedundantPubSubEnvConfigBase.extend({
   type: z.enum(["sse"]),
 });
 
-export const RedundantPubSubEnvConfig = z.discriminatedUnion("type", [MqttV4Sig, MqttCert, SSE]);
+export const RedundantPubSubEnvConfig = z.discriminatedUnion("type", [
+  MqttV4Sig,
+  MqttCert,
+  MqttUnauthenticated,
+  SSE,
+]);
 export const RedundantPubSubEnvConfigs = RedundantPubSubEnvConfig.array().min(1);

@@ -2,6 +2,7 @@ import { ContentTypes, getSerializerDeserializer } from "@redstone-finance/inter
 import { loggerFactory, RedstoneCommon } from "@redstone-finance/utils";
 import { auth, iot, mqtt5 } from "aws-iot-device-sdk-v2";
 import { randomUUID } from "crypto";
+import { MqttConfigBuilder } from "./MqttConfigBuilder";
 import { PubSubClient, PubSubPayload, SubscribeCallback } from "./PubSubClient";
 import { DEFAULT_CONFIG, MqttPubSubClientConfig } from "./PubSubClientConfig";
 
@@ -17,6 +18,7 @@ export class Mqtt5Client implements PubSubClient {
     this.config = { ...DEFAULT_CONFIG, ...config };
     process.on("beforeExit", () => this.stop());
   }
+
   getUniqueName(): string {
     return this.config.endpoint;
   }
@@ -75,24 +77,26 @@ export class Mqtt5Client implements PubSubClient {
     return client;
   }
 
-  private static createMqttBuilderWithAuthorization(
-    config: MqttPubSubClientConfig
-  ): iot.AwsIotMqtt5ClientConfigBuilder {
-    if (config.authorization.type === "AWSSigV4") {
-      const credentialsProvider = auth.AwsCredentialsProvider.newDefault();
-
-      return iot.AwsIotMqtt5ClientConfigBuilder.newWebsocketMqttBuilderWithSigv4Auth(
-        config.endpoint,
-        {
-          credentialsProvider,
-        }
-      );
-    } else {
-      return iot.AwsIotMqtt5ClientConfigBuilder.newDirectMqttBuilderWithMtlsFromMemory(
-        config.endpoint,
-        config.authorization.cert,
-        config.authorization.privateKey
-      );
+  private static createMqttBuilderWithAuthorization(config: MqttPubSubClientConfig) {
+    switch (config.authorization.type) {
+      case "AWSSigV4": {
+        const credentialsProvider = auth.AwsCredentialsProvider.newDefault();
+        return iot.AwsIotMqtt5ClientConfigBuilder.newWebsocketMqttBuilderWithSigv4Auth(
+          config.endpoint,
+          { credentialsProvider }
+        );
+      }
+      case "Cert":
+        return iot.AwsIotMqtt5ClientConfigBuilder.newDirectMqttBuilderWithMtlsFromMemory(
+          config.endpoint,
+          config.authorization.cert,
+          config.authorization.privateKey
+        );
+      case "Unauthenticated":
+        return MqttConfigBuilder.newDirectMqttBuilderWithoutAuth(
+          config.endpoint,
+          config.authorization.port
+        );
     }
   }
 

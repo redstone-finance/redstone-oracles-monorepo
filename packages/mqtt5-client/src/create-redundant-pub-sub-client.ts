@@ -59,6 +59,16 @@ function resolvePubSubClientFactory(
       });
     }
 
+    case "mqttUnauthenticated": {
+      return createMqtt5ClientFactory({
+        authorization: {
+          type: "Unauthenticated",
+          port: config.port,
+        },
+        endpoint: config.host,
+      });
+    }
+
     case "sse": {
       return createSSEClientFactory({
         endpoint: config.host,
