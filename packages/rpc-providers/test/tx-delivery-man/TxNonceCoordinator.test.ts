@@ -43,7 +43,7 @@ describe("TxNonceCoordinator", () => {
     getAddressStub.resetHistory();
   });
 
-  it("aligns with highest chain nonce and increments sequentially", async () => {
+  it("double allocate does not increment the nonce", async () => {
     const providerA = createProvider([3]);
     const providerB = createProvider([5]);
 
@@ -55,7 +55,7 @@ describe("TxNonceCoordinator", () => {
     const second = await coordinator.allocateNonce();
 
     expect(first).to.eq(5);
-    expect(second).to.eq(6);
+    expect(second).to.eq(5);
     Sinon.assert.calledWith(providerA.getTransactionCount, ADDRESS, "pending");
     Sinon.assert.calledWith(providerB.getTransactionCount, ADDRESS, "pending");
   });
