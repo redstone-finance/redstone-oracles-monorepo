@@ -420,8 +420,7 @@
         "bitget-usdt",
         "gate-usdt",
         "kucoin-usdt",
-        "lbank-usdt",
-        "okx-usdt"
+        "lbank-usdt"
       ],
       "denomination": "USD",
       "rateFeed": false
