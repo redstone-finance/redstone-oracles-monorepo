@@ -165,6 +165,17 @@
       "ecdsaPublicKey": "0x04a149d6f29664673c549f7c0200d1921a59c277d4f82b0c7997651ab4a3ddc72d70b3f5ae4838abd3591e55da76e690325721e06e426112b4006c425b1f398bf6",
       "dateAdded": "2025-08-29"
     },
+    "0x5De6cDFe3a04a44238c6d6701C7d588f9a796fc8": {
+      "name": "redstone-primary-demo-bolt-external",
+      "description": "Data feeds from primary redstone nodes - demo bolt external",
+      "logo": "https://redstone.finance/assets/img/redstone-logo-full.svg",
+      "dataServiceId": "redstone-primary-demo",
+      "evmAddress": "0x5De6cDFe3a04a44238c6d6701C7d588f9a796fc8",
+      "url": "https://redstone.finance",
+      "ipAddress": "0.0.0.0",
+      "ecdsaPublicKey": "0x04b4b5dc73aac5ec199db29021d8ade061936e531430da384ad4aaef08fe03111810db63481dd8dad810d3f83c16a00373b9c78fc029573ac35ee7f4e61f9ca791",
+      "dateAdded": "2025-10-09"
+    },
     "0x8cdBF4FE234F106eFB28D84Ef466bBaf8616f8D9": {
       "name": "redstone-primary-prod-keyrock-1",
       "description": "Data feeds from primary redstone nodes - Keyrock node 1",
