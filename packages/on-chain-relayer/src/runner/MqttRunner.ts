@@ -27,7 +27,13 @@ import {
   MqttDataProcessingStrategy,
   MqttDataProcessingStrategyDelegate,
 } from "./strategy/MqttDataProcessingStrategy";
+import { OptimizedMqttDataProcessingStrategy } from "./strategy/OptimizedMqttDataProcessingStrategy";
 import { TimestampMqttDataProcessingStrategy } from "./strategy/TimestampMqttDataProcessingStrategy";
+
+const RETRY_CONFIG: Omit<RedstoneCommon.RetryConfig, "fn"> = {
+  maxRetries: 3,
+  waitBetweenMs: 1000,
+};
 
 export class MqttRunner implements MqttDataProcessingStrategyDelegate<RelayerConfig> {
   private subscriber?: DataPackageSubscriber;
@@ -38,7 +44,7 @@ export class MqttRunner implements MqttDataProcessingStrategyDelegate<RelayerCon
   constructor(
     private readonly client: PubSubClient,
     private readonly contractFacade: ContractFacade,
-    private readonly strategy: MqttDataProcessingStrategy<RelayerConfig>,
+    private readonly strategy: MqttDataProcessingStrategy<RelayerConfig, unknown>,
     private readonly iterationOptionsOverride: Partial<IterationOptions>
   ) {
     process.on("SIGTERM", () => {
@@ -55,19 +61,31 @@ export class MqttRunner implements MqttDataProcessingStrategyDelegate<RelayerCon
   ) {
     const cache = new DataPackagesResponseCache();
     const contractFacade = await getContractFacade(relayerConfig, cache);
-    const strategy = new (
-      relayerConfig.mqttDataProcessingStrategy === MqttDataProcessingStrategyType.Timestamp
-        ? TimestampMqttDataProcessingStrategy<RelayerConfig>
-        : BaseMqttDataProcessingStrategy<RelayerConfig>
-    )(cache);
+    const strategy = new (this.getStrategyClass(relayerConfig.mqttDataProcessingStrategy))(cache);
 
     const pubSubClient = createPubSubClient(relayerConfig);
     const runner = new MqttRunner(pubSubClient, contractFacade, strategy, iterationOptionsOverride);
-    await runner.updateSubscription(relayerConfig);
+
+    await RedstoneCommon.retry({
+      ...RETRY_CONFIG,
+      fn: async () => await runner.updateSubscription(relayerConfig),
+      fnName: "runner.updateSubscription()",
+    })();
 
     runner.setUpSubscriptionUpdates(relayerConfig);
 
     return runner;
+  }
+
+  private static getStrategyClass(mqttDataProcessingStrategy?: MqttDataProcessingStrategyType) {
+    switch (mqttDataProcessingStrategy) {
+      case MqttDataProcessingStrategyType.Timestamp:
+        return TimestampMqttDataProcessingStrategy<RelayerConfig>;
+      case MqttDataProcessingStrategyType.Optimized:
+        return OptimizedMqttDataProcessingStrategy<RelayerConfig>;
+      default:
+        return BaseMqttDataProcessingStrategy<RelayerConfig>;
+    }
   }
 
   private setUpSubscriptionUpdates(relayerConfig: RelayerConfig) {
@@ -80,12 +98,12 @@ export class MqttRunner implements MqttDataProcessingStrategyDelegate<RelayerCon
     if (relayerConfig.mqttUpdateSubscriptionIntervalMs > 0) {
       // eslint-disable-next-line @typescript-eslint/no-misused-promises
       setInterval(async () => {
-        await this.updateSubscription(relayerConfig);
+        await this.updateSubscription(relayerConfig, false);
       }, relayerConfig.mqttUpdateSubscriptionIntervalMs);
     }
   }
 
-  private async updateSubscription(relayerConfig: RelayerConfig) {
+  private async updateSubscription(relayerConfig: RelayerConfig, canThrow = true) {
     try {
       const uniqueSignerThreshold =
         await this.contractFacade.getUniqueSignerThresholdFromContract();
@@ -97,6 +115,12 @@ export class MqttRunner implements MqttDataProcessingStrategyDelegate<RelayerCon
       await this.subscribe(requestParams, relayerConfig);
     } catch (error) {
       this.logger.error("Failed to check subscription", RedstoneCommon.stringifyError(error));
+
+      if (!canThrow) {
+        return;
+      }
+
+      throw error;
     }
   }
 
