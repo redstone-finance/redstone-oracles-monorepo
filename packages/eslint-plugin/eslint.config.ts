@@ -118,7 +118,6 @@ export default defineConfig([
       "import-x/order": "off",
       "import-x/namespace": "off",
       eqeqeq: "error",
-      curly: "error",
       "array-func/prefer-array-from": "off",
     },
   },
@@ -140,6 +139,12 @@ export default defineConfig([
     },
   },
   eslintConfigPrettier,
+  {
+    // rules disabled by prettier config that we want to re-enable
+    rules: {
+      curly: "error",
+    },
+  },
   globalIgnores([
     "**/artifacts",
     "**/typechain-types",

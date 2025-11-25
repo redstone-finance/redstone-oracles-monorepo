@@ -68,8 +68,9 @@ export class TxNonceCoordinator {
   }
 
   registerPendingTx(nonce: number, txHash: string) {
-    if (!this.fastMode) return;
-
+    if (!this.fastMode) {
+      return;
+    }
     this.bumpLastCommittedNonce(nonce);
     this.pendingTxs.set(nonce, { hash: txHash, addedAt: Date.now() });
     logger.log(`Registered pending tx nonce=${nonce} hash=${txHash}`);
@@ -129,7 +130,9 @@ export class TxNonceCoordinator {
     for (const [nonce] of this.pendingTxs) {
       this.pendingTxs.delete(nonce);
       dropped++;
-      if (dropped >= toDrop) break;
+      if (dropped >= toDrop) {
+        break;
+      }
     }
 
     logger.warn(
