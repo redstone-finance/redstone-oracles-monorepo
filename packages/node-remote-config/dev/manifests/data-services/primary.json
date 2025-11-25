@@ -476,8 +476,7 @@
       "source": [
         "camelot-v3-arbitrumone-weth",
         "curve-ethereum-weth",
-        "uniswap-v3-arbitrumone-weth-3000",
-        "uniswap-v3-ethereum-weth-100"
+        "uniswap-v3-arbitrumone-weth-3000"
       ],
       "denomination": "USD",
       "rateFeed": false
@@ -1239,7 +1238,6 @@
     },
     "pufETH": {
       "source": [
-        "curve-ethereum-weth",
         "curve-ethereum-wsteth",
         "curve-ethereum-wsteth-2",
         "uniswap-v3-ethereum-weth-3000"
@@ -1508,11 +1506,7 @@
       "rateFeed": false
     },
     "SolvBTC": {
-      "source": [
-        "pancake-swap-bnb-btcb-500",
-        "trader-joe-v2-avalanche-btc.b",
-        "uniswap-v3-ethereum-wbtc-500"
-      ],
+      "source": ["pancake-swap-bnb-btcb-500", "uniswap-v3-ethereum-wbtc-500"],
       "upper": {
         "token": "BTC",
         "multiplier": 1.01
@@ -1812,12 +1806,7 @@
       "rateFeed": true
     },
     "USDX": {
-      "source": [
-        "curve-bnb-susdx_bnb_fundamental",
-        "curve-ethereum-usdt",
-        "pancake-swap-stable-bnb-usdt",
-        "pancake-swap-bnb-susdx_bnb_fundamental-500"
-      ],
+      "source": ["pancake-swap-stable-bnb-usdt", "pancake-swap-bnb-susdx_bnb_fundamental-500"],
       "deviationCheck": {
         "deviationWithRecentValues": {
           "maxPercent": 5,
@@ -1904,8 +1893,7 @@
         "bitrue-usdt",
         "gate-usdt",
         "kucoin-usdt",
-        "okx-usdt",
-        "uniswap-v4-ethereum-eth-3000"
+        "okx-usdt"
       ],
       "denomination": "USD",
       "rateFeed": false
@@ -2985,7 +2973,6 @@
       "source": [
         "camelot-v3-arbitrumone-usdc",
         "project-x-hyperevm-whype-500",
-        "project-x-hyperevm-whype-3000",
         "hyperswap-hyperevm-whype-500",
         "uniswap-v3-arbitrumone-wbtc-500",
         "uniswap-v3-arbitrumone-weth-500",
