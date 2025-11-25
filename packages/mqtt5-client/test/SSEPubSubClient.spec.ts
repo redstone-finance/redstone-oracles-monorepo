@@ -7,7 +7,7 @@ const GATEWAY_ADDRESS = "0.0.0.0:8000";
 const SESSION_ID = "mock_session_id";
 
 class MockHttpClientAndEventSource {
-  private batchCallbacks: ((data: unknown) => void)[] = [];
+  batchCallbacks: ((data: unknown) => void)[] = [];
   postMock = jest.fn();
 
   init() {
@@ -159,5 +159,65 @@ describe("SSEPubSubClient", () => {
     ]);
     expect(onMessage).toHaveBeenCalledWith("topic1", 123, null, expect.anything());
     expect(onMessage).toHaveBeenCalledWith("topic2", 321, null, expect.anything());
+  });
+
+  it("should call callback with error on failure", async () => {
+    const onMessage = jest.fn();
+    await client.subscribe(["topic1"], onMessage);
+
+    MOCK.batchCallbacks[0]({
+      data: JSON.stringify([{ topic: "topic1", data: "invalid-base64-data" }]),
+    });
+
+    expect(onMessage).toHaveBeenCalledWith(
+      "topic1",
+      null,
+      expect.stringContaining("Error occurred when tried to parse message"),
+      client
+    );
+  });
+
+  it("should cleanup and throw error when subscription fails", async () => {
+    MOCK.postMock.mockImplementationOnce(() => {
+      throw new Error("Network error");
+    });
+
+    await expect(client.subscribe(["topic1", "topic2"], () => {})).rejects.toThrow(
+      "Subscription failed for topics=topic1, topic2"
+    );
+
+    expect(MOCK.postMock).toHaveBeenCalledWith(
+      `${GATEWAY_ADDRESS}/subscribe_to_topics`,
+      { session_id: SESSION_ID, topics: ["topic1", "topic2"] },
+      { headers: { "Content-Type": "application/json" } }
+    );
+
+    expect(MOCK.postMock).toHaveBeenCalledWith(
+      `${GATEWAY_ADDRESS}/unsubscribe_from_topics`,
+      { session_id: SESSION_ID, topics: ["topic1", "topic2"] },
+      { headers: { "Content-Type": "application/json" } }
+    );
+  });
+
+  it("should not call callback when deserialization fails", async () => {
+    const onMessage = jest.fn((_, data) => {
+      if (data) {
+        throw new Error("Callback error");
+      }
+    });
+
+    await client.subscribe(["topic1"], onMessage);
+
+    MOCK.batchCallbacks[0]({
+      data: JSON.stringify([{ topic: "topic1", data: "invalid-base64-data" }]),
+    });
+
+    expect(onMessage).toHaveBeenCalledTimes(1);
+    expect(onMessage).toHaveBeenCalledWith(
+      "topic1",
+      null,
+      expect.stringContaining("Error occurred when tried to parse message"),
+      client
+    );
   });
 });

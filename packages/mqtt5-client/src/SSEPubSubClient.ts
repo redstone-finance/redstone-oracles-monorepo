@@ -2,7 +2,7 @@ import { encode } from "@msgpack/msgpack";
 import { httpClient as defaultHttpClient, HttpClient } from "@redstone-finance/http-client";
 import { DeflateJson } from "@redstone-finance/internal-utils";
 import { loggerFactory, RedstoneCommon } from "@redstone-finance/utils";
-import { ErrorEvent, EventSource } from "eventsource";
+import { EventSource } from "eventsource";
 import { PubSubClient, PubSubPayload, SubscribeCallback } from "./PubSubClient";
 
 const POST_DATA_ROUTE = "post-data-batch";
@@ -53,7 +53,11 @@ export class SSEPubSubClient implements PubSubClient {
     );
     this.eventSource.addEventListener(CONNECTED_EVENT, (e) => this.handleConnected(e));
     this.eventSource.addEventListener(BATCH_EVENT, (e) => this.handleBatch(e));
-    this.eventSource.onerror = (e) => this.handleError(e);
+    this.eventSource.onerror = (event) =>
+      this.logger.log("SSE connection error", {
+        event,
+        state: this.eventSource?.readyState,
+      });
   }
 
   private handleConnected(event: MessageEvent) {
@@ -90,29 +94,17 @@ export class SSEPubSubClient implements PubSubClient {
       return;
     }
 
-    let data: unknown;
-
     try {
-      data = this.serializerDeserializer.deserialize(Buffer.from(update.data, "base64"));
-    } catch (error) {
-      this.logger.log("Failed to decode update data", { topic: update.topic, error });
-      return;
-    }
-
-    try {
+      const data = this.serializerDeserializer.deserialize(Buffer.from(update.data, "base64"));
       this.callback(update.topic, data, null, this);
-    } catch (error) {
-      this.logger.log(`Callback error, ${RedstoneCommon.stringifyError(error)}`, {
-        topic: update.topic,
-      });
+    } catch (e) {
+      this.callback(
+        update.topic,
+        null,
+        `Error occurred when tried to parse message and call callback, error=${RedstoneCommon.stringifyError(e)}`,
+        this
+      );
     }
-  }
-
-  private handleError(event: ErrorEvent) {
-    this.logger.log("SSE connection error", {
-      event,
-      state: this.eventSource?.readyState,
-    });
   }
 
   async publish(payloads: PubSubPayload[]) {
@@ -147,13 +139,23 @@ export class SSEPubSubClient implements PubSubClient {
     }
 
     if (this.sessionId && newTopics.length > 0) {
-      await this.httpClient.post(
-        `${this.lightGatewayAddress}/${SUBSCRIBE_TO_TOPICS_ROUTE}`,
-        { session_id: this.sessionId, topics: newTopics },
-        { headers: { "Content-Type": "application/json" } }
-      );
+      try {
+        await this.httpClient.post(
+          `${this.lightGatewayAddress}/${SUBSCRIBE_TO_TOPICS_ROUTE}`,
+          { session_id: this.sessionId, topics: newTopics },
+          { headers: { "Content-Type": "application/json" } }
+        );
 
-      this.logger.log("Subscribed to topics", { topics: newTopics });
+        this.logger.log("Subscribed to topics", { topics: newTopics });
+      } catch (e) {
+        await this.unsubscribe(topics).catch((error) =>
+          this.logger.error(RedstoneCommon.stringifyError(error))
+        );
+
+        throw new Error(
+          `Subscription failed for topics=${topics.join(", ")} error=${RedstoneCommon.stringifyError(e)}`
+        );
+      }
     }
   }
 
