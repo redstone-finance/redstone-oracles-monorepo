@@ -19,6 +19,8 @@ export const getTxDeliveryMan = (
     maxAttempts: relayerConfig.maxTxSendAttempts,
     isAuctionModel: relayerConfig.isAuctionModel,
     forceDisableCustomGasOracle: relayerConfig.disableCustomGasOracle,
+    percentileOfPriorityFee: relayerConfig.percentileOfPriorityFee,
+    numberOfBlocksForFeeHistory: relayerConfig.numberOfBlocksForFeeHistory,
     newestBlockForFeeHistory: relayerConfig.newestBlockForFeeHistory,
     fastBroadcastMode: relayerConfig.fastBroadcastMode,
     txNonceStaleThresholdMs: relayerConfig.txNonceStaleThresholdMs,
