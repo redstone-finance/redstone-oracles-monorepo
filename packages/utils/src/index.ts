@@ -10,5 +10,6 @@ export * from "./monitoring";
 export * as MultiExecutor from "./multi-executor";
 export * from "./NetworkId";
 export * from "./operation-queue/OperationQueue";
+export * from "./operation-queue/SetOperationQueue";
 export * as Tx from "./tx";
 export * as RedstoneTypes from "./types";
