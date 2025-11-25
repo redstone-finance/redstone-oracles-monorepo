@@ -11563,6 +11563,7 @@ __metadata:
     "@redstone-finance/evm-adapters": "workspace:*"
     "@redstone-finance/evm-connector": "workspace:*"
     "@redstone-finance/healthcheck": "workspace:*"
+    "@redstone-finance/hl-hip3": "workspace:*"
     "@redstone-finance/internal-utils": "workspace:*"
     "@redstone-finance/monitoring-manifests": "workspace:*"
     "@redstone-finance/mqtt5-client": "workspace:*"
