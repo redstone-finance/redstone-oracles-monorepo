@@ -206,6 +206,14 @@ export const readManifestAndEnv = () => {
       "INCLUDE_ADDITIONAL_FEEDS_FOR_GAS_OPTIMIZATION",
       z.boolean().default(true)
     ),
+    percentileOfPriorityFee: RedstoneCommon.getFromEnv(
+      "PERCENTILE_OF_PRIORITY_FEE",
+      z.number().lte(100).gte(1).optional()
+    ),
+    numberOfBlocksForFeeHistory: RedstoneCommon.getFromEnv(
+      "NUMBER_OF_BLOCKS_FOR_FEE_HISTORY",
+      z.number().gte(1).optional()
+    ),
     newestBlockForFeeHistory: RedstoneCommon.getFromEnv(
       "NEWEST_BLOCK_FOR_FEE_HISTORY",
       NewestBlockTypeEnum.optional()
