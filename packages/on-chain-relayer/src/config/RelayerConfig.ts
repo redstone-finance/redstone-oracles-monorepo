@@ -8,6 +8,7 @@ export type ConditionCheckNames = "time" | "value-deviation" | "cron";
 export enum MqttDataProcessingStrategyType {
   Base = "base",
   Timestamp = "timestamp",
+  Optimized = "optimized",
 }
 
 export type ManifestConfig = {
