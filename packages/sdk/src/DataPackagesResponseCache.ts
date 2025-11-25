@@ -1,4 +1,4 @@
-import { loggerFactory } from "@redstone-finance/utils";
+import { loggerFactory, RedstoneCommon } from "@redstone-finance/utils";
 import _ from "lodash";
 import { DataPackagesRequestParams } from "./request-data-packages";
 import type { DataPackagesResponse } from "./request-data-packages-common";
@@ -174,7 +174,7 @@ export function isConforming(
     return true;
   }
 
-  return isSubsetOf(
+  return RedstoneCommon.isSubsetOf(
     new Set(currentResponseDataPackageIds),
     new Set(otherRequestParams.dataPackagesIds)
   );
@@ -204,18 +204,14 @@ function filterDataPackages(
   currentResponse: DataPackagesResponse,
   dataPackageIdsToInclude: string[]
 ): DataPackagesResponse {
-  if (isSubsetOf(new Set(dataPackageIdsToInclude), new Set(Object.keys(currentResponse)))) {
+  if (
+    RedstoneCommon.isSubsetOf(
+      new Set(dataPackageIdsToInclude),
+      new Set(Object.keys(currentResponse))
+    )
+  ) {
     return currentResponse;
   }
 
   return _.pick(currentResponse, dataPackageIdsToInclude);
-}
-
-export function isSubsetOf<T>(superset: Set<T>, subset: Set<T>) {
-  for (const elem of subset) {
-    if (!superset.has(elem)) {
-      return false;
-    }
-  }
-  return true;
 }

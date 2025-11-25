@@ -38,7 +38,7 @@ export function toOrdinal(n: number): string {
   }
 }
 
-export function stringify<R>(result: R) {
+export function stringify<R>(result: R): string {
   if (typeof result === "string") {
     return result;
   }
@@ -55,6 +55,10 @@ export function stringify<R>(result: R) {
       typeof result === "symbol"
     ) {
       return String(result);
+    }
+
+    if (result instanceof Set) {
+      return `{${stringify(Array.from(result))}}`;
     }
 
     return unescapeString(JSON.stringify(result));
