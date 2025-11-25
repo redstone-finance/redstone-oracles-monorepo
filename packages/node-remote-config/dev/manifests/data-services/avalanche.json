@@ -382,7 +382,7 @@
       "rateFeed": false
     },
     "BAL": {
-      "source": ["bitget-usdt", "gate-usdt", "kucoin-usdt", "lbank-usdt", "okx-usdt"],
+      "source": ["bitget-usdt", "gate-usdt", "kucoin-usdt", "lbank-usdt"],
       "denomination": "USD",
       "rateFeed": false
     },
