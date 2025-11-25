@@ -4,19 +4,21 @@ import {
   DataPackagesResponseCache,
   getDataPackagesTimestamp,
 } from "@redstone-finance/sdk";
-import { OperationQueue, RedstoneLogger } from "@redstone-finance/utils";
+import { OperationQueue, RedstoneCommon, RedstoneLogger } from "@redstone-finance/utils";
 
 export interface MqttDataProcessingStrategyDelegate<C> {
-  strategyRunIteration(strategy: MqttDataProcessingStrategy<C>, config: C): Promise<void>;
+  strategyRunIteration(strategy: MqttDataProcessingStrategy<C, unknown>, config: C): Promise<void>;
 
   logger: RedstoneLogger;
 }
 
-export abstract class MqttDataProcessingStrategy<C> {
-  protected readonly queue = new OperationQueue();
+export abstract class MqttDataProcessingStrategy<C, Q = string> {
   delegate?: WeakRef<MqttDataProcessingStrategyDelegate<C>>;
 
-  constructor(protected facadeCache: DataPackagesResponseCache) {}
+  constructor(
+    protected facadeCache: DataPackagesResponseCache,
+    protected readonly queue = new OperationQueue<Q>()
+  ) {}
 
   abstract processResponse(
     relayerConfig: C,
@@ -34,15 +36,21 @@ export abstract class MqttDataProcessingStrategy<C> {
     return this.delegate?.deref();
   }
 
+  // eslint-disable-next-line @typescript-eslint/class-methods-use-this
+  protected makeKey(dataPackagesResponse: DataPackagesResponse) {
+    const dataPackageIds = Object.keys(dataPackagesResponse);
+    dataPackageIds.sort();
+
+    return dataPackageIds.toString() as Q;
+  }
+
   protected enqueue(
     relayerConfig: C,
     requestParams: DataPackagesRequestParams,
     dataPackagesResponse: DataPackagesResponse,
     canAddWhenIsRunning: boolean = false
   ) {
-    const dataPackageIds = Object.keys(dataPackagesResponse);
-    dataPackageIds.sort();
-    const key = dataPackageIds.toString();
+    const key = this.makeKey(dataPackagesResponse);
 
     const wasEnqueued = this.queue.enqueue(
       key,
@@ -51,7 +59,7 @@ export abstract class MqttDataProcessingStrategy<C> {
     );
 
     this.getDelegate()?.logger.debug(
-      `Enqueuing data for [${dataPackageIds.toString()}] with key ${key}, timestamp: ${getDataPackagesTimestamp(dataPackagesResponse)}`
+      `Enqueuing data for [${RedstoneCommon.stringify(key)}] with timestamp: ${getDataPackagesTimestamp(dataPackagesResponse)}`
     );
 
     return wasEnqueued;

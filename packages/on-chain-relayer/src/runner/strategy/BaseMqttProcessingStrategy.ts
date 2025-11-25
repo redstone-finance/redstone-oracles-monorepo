@@ -1,7 +1,10 @@
 import { DataPackagesRequestParams, DataPackagesResponse } from "@redstone-finance/sdk";
 import { MqttDataProcessingStrategy } from "./MqttDataProcessingStrategy";
 
-export class BaseMqttDataProcessingStrategy<C> extends MqttDataProcessingStrategy<C> {
+export class BaseMqttDataProcessingStrategy<C, Q = string> extends MqttDataProcessingStrategy<
+  C,
+  Q
+> {
   processResponse(
     relayerConfig: C,
     requestParams: DataPackagesRequestParams,
