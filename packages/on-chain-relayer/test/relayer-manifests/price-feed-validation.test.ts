@@ -10,6 +10,7 @@ const INTEGRATIONS_NOT_FOR_TESTING = [
   "monadMultiFeed", // remove once we get a publicRpc
   "monadCurvanceMultiFeed", // remove once we get a publicRpc
   "megaEthTestnetMultiFeed", // remove once we get a publicRpc
+  "stableMultiFeed", // remove once we get a publicRpc
 ];
 
 const ABI = ["function getDataFeedId() public view returns (bytes32)"];
