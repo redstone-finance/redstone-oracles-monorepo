@@ -188,7 +188,7 @@ export const readManifestAndEnv = () => {
     ),
     mqttDataProcessingStrategy: RedstoneCommon.getFromEnv(
       "MQTT_DATA_PROCESSING_STRATEGY",
-      z.nativeEnum(MqttDataProcessingStrategyType).default(MqttDataProcessingStrategyType.Base)
+      z.enum(MqttDataProcessingStrategyType).default(MqttDataProcessingStrategyType.Base)
     ),
     mqttMaxReferenceValueDeviationPercent: RedstoneCommon.getFromEnv(
       "MQTT_MAX_REFERENCE_VALUE_DEVIATION_PERCENT",
