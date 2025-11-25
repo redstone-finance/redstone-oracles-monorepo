@@ -34,6 +34,15 @@ const LogTypeToLevel: { [key: string]: LogLevel } = {
   Verbose: LogLevels.verbose,
 };
 
+const MethodToLogLevel: Record<string, LogLevel> = {
+  log: LogLevels.log,
+  info: LogLevels.info,
+  warn: LogLevels.warn,
+  error: LogLevels.error,
+  debug: LogLevels.debug,
+  trace: LogLevels.trace,
+};
+
 let customLogLevels: undefined | null | Record<string, LogLevel> = undefined;
 
 export function isDebugEnabled(): boolean {
@@ -77,13 +86,40 @@ export const getLogLevel = () => {
 };
 
 export function createSanitizedLogger(logger: RedstoneLogger): RedstoneLogger {
-  const methods = ["log", "info", "warn", "error", "debug"] as const;
+  const methods = ["log", "info", "warn", "error", "debug", "trace"] as const;
   const sanitizedLogger = { ...logger } as RedstoneLogger;
+
   methods.forEach((method) => {
     if (typeof logger[method] === "function") {
       const original = logger[method].bind(logger);
+
+      // Determine the required level for this specific method (e.g., debug = 4)
+      const methodLevel = MethodToLogLevel[method] ?? LogLevels.info;
+
       sanitizedLogger[method] = (...args: unknown[]) => {
-        const sanitizedArgs = args.map((arg) => sanitizeValue(arg));
+        // If we are in Node (Consola), we can check the current instance .level property.
+        // If the current configured level is lower than the method's level,
+        // we skip execution entirely
+        const currentLevel = (logger as ConsolaInstance).level;
+
+        if (currentLevel < methodLevel) {
+          return;
+        }
+
+        const sanitizedArgs = args.map((arg) => {
+          // 2. Lazy Evaluation:
+          // Because we successfully passed the level check above, we now
+          // execute the function (if it is one) to retrieve the log message/object.
+          // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+          const val =
+            typeof arg === "function"
+              ? // eslint-disable-next-line @typescript-eslint/no-unsafe-call
+                arg()
+              : arg;
+          // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+          return sanitizeValue(val);
+        });
+
         original.apply(logger, sanitizedArgs);
       };
     }
