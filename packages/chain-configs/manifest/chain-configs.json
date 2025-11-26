@@ -926,7 +926,13 @@
       "name": "Monad Mainnet",
       "networkId": 143,
       "currencySymbol": "MON",
-      "publicRpcUrls": ["https://mock.io"],
+      "publicRpcUrls": [
+        "https://rpc1.monad.xyz",
+        "https://rpc2.monad.xyz",
+        "https://rpc3.monad.xyz",
+        "https://rpc4.monad.xyz",
+        "https://rpc-mainnet.monadinfra.com"
+      ],
       "avgBlockTimeMs": 400,
       "multicall3": {
         "address": "0xaD6CC5a465E5c8284a49eC9eD10EFE275460678c",
