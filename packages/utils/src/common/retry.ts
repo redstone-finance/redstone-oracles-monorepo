@@ -92,5 +92,5 @@ export const waitForSuccess = async (
     return;
   }
 
-  logger.log(`${logPrefix}Did wait ${sleepTimeMs * waitCounter} [ms] in total`);
+  logger.info(`${logPrefix}Did wait ${sleepTimeMs * waitCounter} [ms] in total`);
 };
