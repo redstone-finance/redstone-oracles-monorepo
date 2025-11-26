@@ -85,7 +85,7 @@ export class TxDeliveryMan implements Tx.ITxDeliveryMan {
       .then((receipt) => logger.log(getTxReceiptDesc(receipt)))
       .catch((error) =>
         logger.error(
-          `Failed to wait for transaction minting ${RedstoneCommon.stringifyError(error)}`
+          `Failed to wait for transaction mining ${RedstoneCommon.stringifyError(error)}`
         )
       );
   }
