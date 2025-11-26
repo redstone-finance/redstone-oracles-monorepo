@@ -14,6 +14,22 @@ export type FeeStructure = Eip1559Fee | AuctionModelFee;
 
 export type GasOracleFn = (opts: TxDeliveryOptsValidated, attempt: number) => Promise<FeeStructure>;
 
+export type DeliveryManTx = {
+  nonce: number;
+  chainId: number;
+  from: string;
+  to: string;
+  data: string;
+  gasLimit: number;
+} & (
+  | ({
+      type: 2;
+    } & Eip1559Fee)
+  | ({
+      type: 0;
+    } & AuctionModelFee)
+);
+
 export const NewestBlockTypeEnum = z.enum(["latest", "pending"]);
 export type NewestBlockType = z.infer<typeof NewestBlockTypeEnum>;
 
@@ -90,10 +106,13 @@ export type TxDeliveryOpts = {
   fastBroadcastMode?: boolean;
   txNonceStaleThresholdMs?: number;
   /**
-   * Minimum time in miliseconds spent on delivering a transaction to the blockchain.
+   * Minimum time in milliseconds spent on delivering a transaction to the blockchain.
    * If the transaction is delivered earlier, we wait until the specified time has fully elapsed.
    */
   minTxDeliveryTimeMs?: number;
+
+  // Split waiting for tx, for 3 retries will check the transaction after ~expectedTxDeliveryTime/2 [ms], .../4, .../8, .../16
+  splitWaitingForTxRetries?: number;
 };
 
 export type TxDeliveryOptsValidated = Omit<Required<TxDeliveryOpts>, "gasLimit"> & {
