@@ -45,25 +45,13 @@
       }
     },
     "VBILL_AVALANCHE_DAILY_ACCRUAL": {
-      "priceFeedAddress": "0x4f67Fd74cff274Ef2942223c0f3166b856410AdD",
-      "updateTriggersOverrides": {
-        "deviationPercentage": 0.1,
-        "timeSinceLastUpdateInMilliseconds": 86400000
-      }
+      "priceFeedAddress": "0x4f67Fd74cff274Ef2942223c0f3166b856410AdD"
     },
     "sUSDe_FUNDAMENTAL": {
-      "priceFeedAddress": "0x65eD6a4ac085620eE943c0B15525C4428D23e4Db",
-      "updateTriggersOverrides": {
-        "deviationPercentage": 0.1,
-        "timeSinceLastUpdateInMilliseconds": 86400000
-      }
+      "priceFeedAddress": "0x65eD6a4ac085620eE943c0B15525C4428D23e4Db"
     },
     "UTY_FUNDAMENTAL": {
-      "priceFeedAddress": "0x24eDD61cdA334bFf871A80DEB135073a7d7a9187",
-      "updateTriggersOverrides": {
-        "deviationPercentage": 0.1,
-        "timeSinceLastUpdateInMilliseconds": 86400000
-      }
+      "priceFeedAddress": "0x24eDD61cdA334bFf871A80DEB135073a7d7a9187"
     },
     "EUR": {
       "priceFeedAddress": "0x5C4c8d6f6Bf79B718F3e8399AaBdFEd01cB7e48f",
@@ -85,6 +73,12 @@
         "deviationPercentage": 0.25,
         "timeSinceLastUpdateInMilliseconds": 43200000
       }
+    },
+    "SIERRA_FUNDAMENTAL": {
+      "priceFeedAddress": "0x8B4736f5eaD8ed579Ecf65a13F9c1E8B44dEdF20"
+    },
+    "UTY_PEGGED_FUNDAMENTAL": {
+      "priceFeedAddress": "0xcA727511c9d542AAb9eF406d24E5bbbE4567c22d"
     }
   }
 }
