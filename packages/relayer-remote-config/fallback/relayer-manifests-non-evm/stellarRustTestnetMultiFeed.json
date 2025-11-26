@@ -9,7 +9,7 @@
     "timeSinceLastUpdateInMilliseconds": 300000
   },
   "adapterContract": "CABR6OEYDVGZLANP5YAP3XMHLBH2XPXTAQPZMKYC6TPG2TELJPH5AWHO",
-  "dataServiceId": "redstone-primary-prod",
+  "dataServiceId": "redstone-primary-demo",
   "priceFeeds": {
     "ETH": {
       "priceFeedAddress": "CD3VQBK2SW7RV7CJZ4U5FQC5QNB7LEHNINCTBRDPJYWYRJECBRV2426V"
