@@ -5,12 +5,19 @@ import { providers, utils } from "ethers";
 import _ from "lodash";
 import { EthersError, isEthersError } from "../common";
 import { AuctionModelGasEstimator } from "./AuctionModelGasEstimator";
+import type {
+  DeliveryManTx,
+  FeeStructure,
+  TxDeliveryOpts,
+  TxDeliveryOptsValidated,
+} from "./common";
 import { CHAIN_ID_TO_GAS_ORACLE } from "./CustomGasOracles";
 import { Eip1559GasEstimator } from "./Eip1559GasEstimator";
 import { GasEstimator } from "./GasEstimator";
 import { GasLimitEstimator } from "./GasLimitEstimator";
+import { SplitTxWaitingStrategy } from "./SplitTxWaitingStrategy";
 import { TxNonceCoordinator } from "./TxNonceCoordinator";
-import type { FeeStructure, TxDeliveryOpts, TxDeliveryOptsValidated } from "./common";
+import { TxWaitingStrategy } from "./TxWaitingStrategy";
 
 export type ContractOverrides = {
   nonce: number;
@@ -24,29 +31,6 @@ enum TransactionBroadcastErrorResult {
   InsufficientFunds,
   AlreadyKnown,
 }
-
-type DeliveryManTx =
-  | {
-      type: 2;
-      maxFeePerGas: number;
-      maxPriorityFeePerGas: number;
-      nonce: number;
-      chainId: number;
-      gasLimit: number;
-      from: string;
-      to: string;
-      data: string;
-    }
-  | {
-      type: 0;
-      gasPrice: number;
-      nonce: number;
-      chainId: number;
-      gasLimit: number;
-      from: string;
-      to: string;
-      data: string;
-    };
 
 const logger = loggerFactory("TxDelivery");
 
@@ -64,6 +48,7 @@ export const DEFAULT_TX_DELIVERY_OPTS = {
   fastBroadcastMode: false,
   txNonceStaleThresholdMs: 10_000,
   minTxDeliveryTimeMs: 0,
+  splitWaitingForTxRetries: 0,
   logger: logger.log.bind(logger) as (message: unknown) => void,
 };
 
@@ -73,9 +58,13 @@ export type TxDeliverySigner = {
 };
 
 export class TxDelivery {
+  static repeatLogStart?: number;
+  static repeatCount = 0;
+
   private readonly opts: TxDeliveryOptsValidated;
   private readonly feeEstimator: GasEstimator<FeeStructure>;
   private readonly gasLimitEstimator: GasLimitEstimator;
+  private readonly txWaitingStrategy: TxWaitingStrategy;
   attempt = 1;
 
   constructor(
@@ -86,11 +75,15 @@ export class TxDelivery {
     private readonly deferredCallData?: () => Promise<string>,
     private readonly allocatedNonce?: number
   ) {
+    TxDelivery.repeatLogStart ??= Date.now();
     this.opts = _.merge({ ...DEFAULT_TX_DELIVERY_OPTS }, opts);
     this.feeEstimator = this.opts.isAuctionModel
       ? new AuctionModelGasEstimator(this.opts)
       : new Eip1559GasEstimator(this.opts);
     this.gasLimitEstimator = new GasLimitEstimator(this.opts);
+    this.txWaitingStrategy = new (
+      opts.splitWaitingForTxRetries ? SplitTxWaitingStrategy : TxWaitingStrategy
+    )(this.opts, (tx) => this.hasNonceIncreased(tx));
   }
 
   /** Returns undefined if nonce of sending account was bumped, by different process */
@@ -143,12 +136,12 @@ export class TxDelivery {
         }
       }
 
-      await this.waitForTxMining();
-      const wasDelivered = await this.hasNonceIncreased(tx);
+      try {
+        await this.txWaitingStrategy.waitForTx(tx);
 
-      if (wasDelivered) {
         return result;
-      } else {
+      } catch {
+        this.opts.logger("Trying with new fees...");
         tx = await this.updateTxParamsForNextAttempt(tx);
       }
     }
@@ -163,8 +156,13 @@ export class TxDelivery {
     } else {
       feesInfo = `maxFeePerGas=${tx.maxFeePerGas} maxPriorityFeePerGas=${tx.maxPriorityFeePerGas}`;
     }
+    if (this.attempt > 1) {
+      TxDelivery.repeatCount++;
+    }
+
+    const repeatsFactor = `${((TxDelivery.repeatCount * 1000) / (Date.now() - TxDelivery.repeatLogStart!)).toFixed(4)}`;
     this.opts.logger(
-      `Trying to delivery transaction attempt=${this.attempt}/${this.opts.maxAttempts} txNonce=${tx.nonce} gasLimit=${tx.gasLimit} ${feesInfo}`
+      `Trying to delivery transaction attempt=${this.attempt}/${this.opts.maxAttempts} txNonce=${tx.nonce} gasLimit=${tx.gasLimit} ${feesInfo} [repeatsFactor: ${repeatsFactor} txs per second]`
     );
   }
 
@@ -184,16 +182,8 @@ export class TxDelivery {
 
       return true;
     } else {
-      this.opts.logger(
-        `Transaction was not delivered yet, account_nonce=${currentNonce}. Trying with new fees ..`
-      );
-      return false;
+      throw new Error(`Transaction was not delivered yet, account_nonce=${currentNonce}`);
     }
-  }
-
-  private async waitForTxMining() {
-    this.opts.logger(`Waiting ${this.opts.expectedDeliveryTimeMs} [MS] for mining transaction`);
-    await RedstoneCommon.sleep(this.opts.expectedDeliveryTimeMs);
   }
 
   private handleTransactionBroadcastError(
