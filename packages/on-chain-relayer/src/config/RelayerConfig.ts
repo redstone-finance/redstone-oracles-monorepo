@@ -85,4 +85,5 @@ export type OnChainRelayerEnv = {
   fastBroadcastMode?: boolean;
   txNonceStaleThresholdMs?: number;
   minTxDeliveryTimeMs?: number;
+  splitWaitingForTxRetries?: number;
 };
