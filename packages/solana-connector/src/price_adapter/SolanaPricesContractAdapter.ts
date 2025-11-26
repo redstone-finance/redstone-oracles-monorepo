@@ -57,7 +57,7 @@ export class SolanaPricesContractAdapter implements IExtendedPricesContractAdapt
         this.fetchTransactionInstructionsWithData(paramsProvider, feedIds, metadataTimestamp)
     );
 
-    this.logger.log(
+    this.logger.info(
       `FINISHED ${txSignatures.length} transaction${RedstoneCommon.getS(txSignatures.length)}: [${txSignatures.toString()}]`
     );
 
