@@ -5,16 +5,91 @@
   },
   "updateTriggers": {
     "deviationPercentage": 0.5,
-    "timeSinceLastUpdateInMilliseconds": 21600000
+    "timeSinceLastUpdateInMilliseconds": 86400000
   },
   "adapterContract": "0x98DC6E90D4c2f212ed9d124aD2aFBa4833268633",
   "adapterContractType": "multi-feed",
   "dataServiceId": "redstone-primary-prod",
   "priceFeeds": {
-    "ETH": {},
-    "BTC": {},
-    "USDC": {},
-    "USDT": {},
-    "DAI": {}
+    "ETH": {
+      "updateTriggersOverrides": {
+        "timeSinceLastUpdateInMilliseconds": 0
+      }
+    },
+    "BTC": {
+      "updateTriggersOverrides": {
+        "timeSinceLastUpdateInMilliseconds": 0
+      }
+    },
+    "MON": {
+      "updateTriggersOverrides": {
+        "timeSinceLastUpdateInMilliseconds": 0
+      }
+    },
+    "USDC": {
+      "updateTriggersOverrides": {
+        "deviationPercentage": 0.05,
+        "timeSinceLastUpdateInMilliseconds": 3600000
+      }
+    },
+    "USDT": {
+      "updateTriggersOverrides": {
+        "deviationPercentage": 0.05,
+        "timeSinceLastUpdateInMilliseconds": 3600000
+      }
+    },
+    "DAI": {
+      "updateTriggersOverrides": {
+        "deviationPercentage": 0.05,
+        "timeSinceLastUpdateInMilliseconds": 3600000
+      }
+    },
+    "SOL": {
+      "updateTriggersOverrides": {
+        "timeSinceLastUpdateInMilliseconds": 0
+      }
+    },
+    "WBTC": {},
+    "cbBTC": {},
+    "stETH": {},
+    "wstETH_FUNDAMENTAL": {},
+    "weETH_FUNDAMENTAL": {},
+    "ezETH_FUNDAMENTAL": {},
+    "aUSD": {},
+    "shMON_FUNDAMENTAL": {
+      "updateTriggersOverrides": {
+        "deviationPercentage": 0.05,
+        "timeSinceLastUpdateInMilliseconds": 43200000
+      }
+    },
+    "APR": {},
+    "aprMON_FUNDAMENTAL": {
+      "updateTriggersOverrides": {
+        "deviationPercentage": 0.5,
+        "timeSinceLastUpdateInMilliseconds": 43200000
+      }
+    },
+    "yzUSD_FUNDAMENTAL": {
+      "updateTriggersOverrides": {
+        "deviationPercentage": 0.05,
+        "timeSinceLastUpdateInMilliseconds": 86400000
+      }
+    },
+    "syzUSD_FUNDAMENTAL/USD": {
+      "updateTriggersOverrides": {
+        "deviationPercentage": 0.05,
+        "timeSinceLastUpdateInMilliseconds": 86400000
+      }
+    },
+    "sMON_FUNDAMENTAL": {
+      "updateTriggersOverrides": {
+        "deviationPercentage": 0.05,
+        "timeSinceLastUpdateInMilliseconds": 43200000
+      }
+    },
+    "muBOND_FUNDAMENTAL": {},
+    "AZND_FUNDAMENTAL": {},
+    "earnAUSD_FUNDAMENTAL": {},
+    "gMON_FUNDAMENTAL": {}
   }
 }
