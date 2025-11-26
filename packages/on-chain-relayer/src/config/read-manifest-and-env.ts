@@ -241,6 +241,10 @@ export const readManifestAndEnv = () => {
       "MIN_TX_DELIVERY_TIME_MS",
       z.number().optional()
     ),
+    splitWaitingForTxRetries: RedstoneCommon.getFromEnv(
+      "SPLIT_WAITING_FOR_TX_RETRIES",
+      z.number().optional()
+    ),
   };
 
   return { manifest, env };
