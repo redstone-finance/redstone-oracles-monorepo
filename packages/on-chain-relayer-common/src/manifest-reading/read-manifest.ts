@@ -4,9 +4,9 @@ import {
   MANIFEST_TYPE_PRICE_FEEDS,
   ManifestType,
   MultiFeedOnChainRelayerManifest,
-  MultiFeedOnChainRelayerManifestSchema,
+  MultiFeedOnChainRelayerManifestSchemaStrict,
   OnChainRelayerManifest,
-  OnChainRelayerManifestSchema,
+  OnChainRelayerManifestSchemaStrict,
 } from "../schemas";
 import { getOnChainRelayerBasePath, readData } from "./read-utils";
 
@@ -19,9 +19,11 @@ export function readAnyManifest(
 
   return (
     type === MANIFEST_TYPE_PRICE_FEEDS
-      ? OnChainRelayerManifestSchema
-      : MultiFeedOnChainRelayerManifestSchema
-  ).parse(JSON.parse(data.toString()));
+      ? OnChainRelayerManifestSchemaStrict
+      : MultiFeedOnChainRelayerManifestSchemaStrict
+  )
+    .strict()
+    .parse(JSON.parse(data.toString()));
 }
 
 export function readManifest(
