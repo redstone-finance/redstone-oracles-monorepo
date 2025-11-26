@@ -25,7 +25,8 @@ type PackageBatch = Package[];
 
 export class SSEPubSubClient implements PubSubClient {
   private readonly logger = loggerFactory("sse-pub-sub-client");
-  private readonly topics: Set<string> = new Set();
+  private topics: Set<string> = new Set();
+  private initialTopics: Set<string> = new Set();
   private readonly httpClient: HttpClient;
   private readonly serializerDeserializer: DeflateJson = new DeflateJson();
 
@@ -45,7 +46,8 @@ export class SSEPubSubClient implements PubSubClient {
   }
 
   private connect() {
-    const initialTopics = Array.from(this.topics.keys());
+    this.initialTopics = new Set(this.topics);
+    const initialTopics = Array.from(this.initialTopics.keys());
     const query = initialTopics.length > 0 ? `?topics=${initialTopics.join(",")}` : "";
 
     this.eventSource = new EventSource(
@@ -67,8 +69,20 @@ export class SSEPubSubClient implements PubSubClient {
 
       this.logger.log("Connected to stream", {
         sessionId: this.sessionId,
-        topics: Array.from(this.topics.keys()),
+        topics: Array.from(this.initialTopics.keys()),
       });
+
+      const topics = this.topics;
+      this.topics = new Set(this.initialTopics);
+      if (this.callback !== undefined) {
+        void this.subscribe(Array.from(topics.keys()), this.callback);
+      }
+
+      const unsubscribedTopics = new Set(this.initialTopics);
+      for (const topic of topics) {
+        unsubscribedTopics.delete(topic);
+      }
+      void this.unsubscribe(Array.from(unsubscribedTopics.keys()));
     } catch (error) {
       this.logger.log("Failed to parse connected event", { error });
     }
