@@ -56,7 +56,7 @@ export class SSEPubSubClient implements PubSubClient {
     this.eventSource.addEventListener(CONNECTED_EVENT, (e) => this.handleConnected(e));
     this.eventSource.addEventListener(BATCH_EVENT, (e) => this.handleBatch(e));
     this.eventSource.onerror = (event) =>
-      this.logger.log("SSE connection error", {
+      this.logger.info("SSE connection error", {
         event,
         state: this.eventSource?.readyState,
       });
@@ -67,7 +67,7 @@ export class SSEPubSubClient implements PubSubClient {
       const data = JSON.parse(event.data as string) as ConnectedEvent;
       this.sessionId = data.session_id;
 
-      this.logger.log("Connected to stream", {
+      this.logger.info("Connected to stream", {
         sessionId: this.sessionId,
         topics: Array.from(this.initialTopics.keys()),
       });
@@ -84,7 +84,7 @@ export class SSEPubSubClient implements PubSubClient {
       }
       void this.unsubscribe(Array.from(unsubscribedTopics.keys()));
     } catch (error) {
-      this.logger.log("Failed to parse connected event", { error });
+      this.logger.info("Failed to parse connected event", { error });
     }
   }
 
@@ -94,7 +94,7 @@ export class SSEPubSubClient implements PubSubClient {
     try {
       batch = JSON.parse(event.data as string) as PackageBatch;
     } catch (error) {
-      this.logger.log("Failed to parse batch event", { error });
+      this.logger.info("Failed to parse batch event", { error });
       return;
     }
 
@@ -133,7 +133,7 @@ export class SSEPubSubClient implements PubSubClient {
       headers: { "Content-Type": "application/msgpack" },
     });
 
-    this.logger.log("Published data", { count: packages.length });
+    this.logger.info("Published data", { count: packages.length });
   }
 
   async subscribe(topics: string[], onMessage: SubscribeCallback) {
@@ -160,7 +160,7 @@ export class SSEPubSubClient implements PubSubClient {
           { headers: { "Content-Type": "application/json" } }
         );
 
-        this.logger.log("Subscribed to topics", { topics: newTopics });
+        this.logger.info("Subscribed to topics", { topics: newTopics });
       } catch (e) {
         await this.unsubscribe(topics).catch((error) =>
           this.logger.error(RedstoneCommon.stringifyError(error))
@@ -189,7 +189,7 @@ export class SSEPubSubClient implements PubSubClient {
         { headers: { "Content-Type": "application/json" } }
       );
 
-      this.logger.log("Unsubscribed from topics", { topics: removedTopics });
+      this.logger.info("Unsubscribed from topics", { topics: removedTopics });
     }
   }
 
@@ -207,7 +207,7 @@ export class SSEPubSubClient implements PubSubClient {
       this.eventSource = undefined;
       this.sessionId = undefined;
 
-      this.logger.log("Stopped SSE stream");
+      this.logger.info("Stopped SSE stream");
     }
 
     void this.beNiceToServer();
