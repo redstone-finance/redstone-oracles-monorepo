@@ -12,7 +12,8 @@
     "typecheck": "yarn global:tsc --noEmit",
     "typecheck:turbo": "yarn global:turbo typecheck",
     "preversion": "yarn build",
-    "test": "yarn global:jest",
+    "test": "yarn global:jest --testPathIgnorePatterns=/integration_tests/",
+    "test:integration": "yarn global:jest --testTimeout=90000 integration_tests",
     "lint": "yarn global:eslint .",
     "lint:fix": "yarn global:eslint --fix .",
     "run-sse-client-test": "yarn global:ts-node ./scripts/run-with-light-gateway"
