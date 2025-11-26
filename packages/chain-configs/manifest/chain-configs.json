@@ -104,8 +104,8 @@
       "networkId": 137,
       "currencySymbol": "POL",
       "publicRpcUrls": [
-        "https://polygon-mainnet.public.blastapi.io",
         "https://polygon-rpc.com",
+        "https://1rpc.io/matic",
         "https://rpc-mainnet.matic.quiknode.pro"
       ],
       "avgBlockTimeMs": 2000,

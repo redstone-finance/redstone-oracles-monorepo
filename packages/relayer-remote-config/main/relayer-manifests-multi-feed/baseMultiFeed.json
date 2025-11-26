@@ -105,6 +105,13 @@
         "deviationPercentage": 0.25,
         "timeSinceLastUpdateInMilliseconds": 43200000
       }
+    },
+    "UTY_PEGGED_FUNDAMENTAL": {
+      "priceFeedAddress": "0x56b13Aa2f3b9fD2a136Ab46fc570E3c549191d71",
+      "updateTriggersOverrides": {
+        "deviationPercentage": 0.1,
+        "timeSinceLastUpdateInMilliseconds": 86400000
+      }
     }
   }
 }
