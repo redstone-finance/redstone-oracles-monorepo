@@ -2425,11 +2425,6 @@
       "denomination": "USD",
       "rateFeed": false
     },
-    "AMZN": {
-      "source": ["twelve-data"],
-      "denomination": "USD",
-      "rateFeed": false
-    },
     "BYND": {
       "source": ["twelve-data"],
       "denomination": "USD",
@@ -2457,7 +2452,6 @@
         "polygon",
         "twelve-data-stocks",
         "ws-dx-feed-no-close-price",
-        "databento",
         "databento-no-closing-price"
       ],
       "denomination": "USD",
@@ -2470,7 +2464,6 @@
         "polygon",
         "twelve-data-stocks",
         "ws-dx-feed-no-close-price",
-        "databento",
         "databento-no-closing-price"
       ],
       "denomination": "USD",
@@ -2483,7 +2476,54 @@
         "polygon",
         "twelve-data-stocks",
         "ws-dx-feed-no-close-price",
-        "databento",
+        "databento-no-closing-price"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "AMD": {
+      "source": [
+        "alltick-stocks-api",
+        "financialmodelingprep",
+        "polygon",
+        "twelve-data-stocks",
+        "ws-dx-feed-no-close-price",
+        "databento-no-closing-price"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "GOOGL": {
+      "source": [
+        "alltick-stocks-api",
+        "financialmodelingprep",
+        "polygon",
+        "twelve-data-stocks",
+        "ws-dx-feed-no-close-price",
+        "databento-no-closing-price"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "META": {
+      "source": [
+        "alltick-stocks-api",
+        "financialmodelingprep",
+        "polygon",
+        "twelve-data-stocks",
+        "ws-dx-feed-no-close-price",
+        "databento-no-closing-price"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "AMZN": {
+      "source": [
+        "alltick-stocks-api",
+        "financialmodelingprep",
+        "polygon",
+        "twelve-data-stocks",
+        "ws-dx-feed-no-close-price",
         "databento-no-closing-price"
       ],
       "denomination": "USD",
@@ -2496,11 +2536,6 @@
         "twelve-data-stocks",
         "ws-dx-feed-no-close-price"
       ],
-      "denomination": "USD",
-      "rateFeed": false
-    },
-    "META": {
-      "source": ["twelve-data", "databento", "databento-no-closing-price"],
       "denomination": "USD",
       "rateFeed": false
     },
