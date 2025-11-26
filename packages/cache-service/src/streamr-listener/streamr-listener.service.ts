@@ -1,6 +1,7 @@
-import { Injectable, Logger } from "@nestjs/common";
+import { Injectable } from "@nestjs/common";
 import { Cron } from "@nestjs/schedule";
 import { getOracleRegistryState, RedstoneOraclesState } from "@redstone-finance/sdk";
+import { loggerFactory } from "@redstone-finance/utils";
 import {
   decompressMsg,
   doesStreamExist,
@@ -25,7 +26,7 @@ const CRON_EXPRESSION_EVERY_1_MINUTE = "*/1 * * * *";
 
 @Injectable()
 export class StreamrListenerService {
-  private readonly logger = new Logger(StreamrListenerService.name);
+  private readonly logger = loggerFactory(StreamrListenerService.name);
   private readonly streamrClient: StreamrClient = new StreamrClient({
     network: {
       webrtcDisallowPrivateAddresses: false,
@@ -42,7 +43,7 @@ export class StreamrListenerService {
   }
 
   async syncStreamrListening() {
-    this.logger.log(`Syncing streamr listening`);
+    this.logger.info(`Syncing streamr listening`);
     const oracleRegistryState = await getOracleRegistryState();
     const nodeEvmAddresses = this.prepareActiveNodeEvmAddresses(oracleRegistryState);
 
@@ -69,21 +70,21 @@ export class StreamrListenerService {
     const streamExists = await doesStreamExist(this.streamrClient, streamId);
 
     if (!streamExists) {
-      this.logger.log(`Stream does not exist. Skipping: ${streamId}`);
+      this.logger.info(`Stream does not exist. Skipping: ${streamId}`);
       return;
     }
 
-    this.logger.log(`Stream exists. Connecting to: ${streamId}`);
+    this.logger.info(`Stream exists. Connecting to: ${streamId}`);
     const subscription = await this.streamrClient.subscribe(streamId, async (message: unknown) => {
       try {
-        this.logger.log(`Received a message from stream: ${streamId}`);
+        this.logger.info(`Received a message from stream: ${streamId}`);
         const dataPackagesReceived = decompressMsg<ReceivedDataPackage[]>(message as Uint8Array);
         const dataPackagesToSave =
           await DataPackagesService.prepareReceivedDataPackagesForBulkSaving(
             dataPackagesReceived,
             nodeEvmAddress
           );
-        this.logger.log(`Data packages parsed for node: ${nodeEvmAddress}`);
+        this.logger.info(`Data packages parsed for node: ${nodeEvmAddress}`);
 
         await this.dataPackageService.broadcast(dataPackagesToSave, nodeEvmAddress);
       } catch (e) {
@@ -110,11 +111,11 @@ export class StreamrListenerService {
 
   private prepareActiveNodeEvmAddresses(oracleRegistryState: RedstoneOraclesState): string[] {
     const nodes: NodeLike[] = Object.values(oracleRegistryState.nodes);
-    this.logger.log(`Found ${nodes.length} node evm addresses`);
+    this.logger.info(`Found ${nodes.length} node evm addresses`);
 
     const allowedDataServiceIds = this.getAllowedDataServiceIds();
     if (allowedDataServiceIds.length === 0) {
-      this.logger.log(`Filter is empty - allowing all of the node evm addresses`);
+      this.logger.info(`Filter is empty - allowing all of the node evm addresses`);
       return nodes.map(({ evmAddress }) => evmAddress);
     }
 
@@ -126,7 +127,9 @@ export class StreamrListenerService {
       }
     }
 
-    this.logger.log(`${result.length} of the node evm addresses remained after filtering them out`);
+    this.logger.info(
+      `${result.length} of the node evm addresses remained after filtering them out`
+    );
 
     return result;
   }
