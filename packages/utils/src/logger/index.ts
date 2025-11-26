@@ -19,13 +19,14 @@ const WHITELISTED_HOSTNAMES = new Set([
   "api.github.com",
 ]);
 
-export type RedstoneLogger = ConsolaInstance | Console;
+type WithoutLog<T> = Omit<T, "log">;
+
+export type RedstoneLogger = WithoutLog<ConsolaInstance> | WithoutLog<Console>;
 
 const LogTypeToLevel: { [key: string]: LogLevel } = {
   Fatal: LogLevels.fatal,
   Error: LogLevels.error,
   Warn: LogLevels.warn,
-  Log: LogLevels.log,
   Info: LogLevels.info,
   Success: LogLevels.success,
   Debug: LogLevels.debug,
@@ -35,7 +36,6 @@ const LogTypeToLevel: { [key: string]: LogLevel } = {
 };
 
 const MethodToLogLevel: Record<string, LogLevel> = {
-  log: LogLevels.log,
   info: LogLevels.info,
   warn: LogLevels.warn,
   error: LogLevels.error,
@@ -86,7 +86,7 @@ export const getLogLevel = () => {
 };
 
 export function createSanitizedLogger(logger: RedstoneLogger): RedstoneLogger {
-  const methods = ["log", "info", "warn", "error", "debug", "trace"] as const;
+  const methods = ["info", "warn", "error", "debug", "trace"] as const;
   const sanitizedLogger = { ...logger } as RedstoneLogger;
 
   methods.forEach((method) => {
