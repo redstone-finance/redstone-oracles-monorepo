@@ -10,7 +10,7 @@ import {
 } from "../facade/get-iteration-args-provider";
 
 export type IterationLogger = {
-  log(message: string, ...args: unknown[]): void;
+  info(message: string, ...args: unknown[]): void;
   warn?: (message: string, ...args: unknown[]) => void;
 };
 
@@ -45,7 +45,7 @@ export const runIteration = async (
   };
 
   if (isPaused(relayerConfig)) {
-    (logger.warn ?? logger.log)(
+    (logger.warn ?? logger.info)(
       `Relayer is paused until ${relayerConfig.isPausedUntil?.toString()}`
     );
 
@@ -63,11 +63,11 @@ export const runIteration = async (
     iterationArgs.args.blockTag
   } iteration_duration=${performance.now() - iterationStart}`;
 
-  logger.log(message, messages);
+  logger.info(message, messages);
 
   if (iterationArgs.shouldUpdatePrices || shouldForceUpdateInEachIteration(relayerConfig)) {
     iterationArgs.additionalUpdateMessages?.forEach(({ message, args }) =>
-      logger.log(message, args)
+      logger.info(message, args)
     );
 
     await contractFacade.updatePrices(iterationArgs.args, {

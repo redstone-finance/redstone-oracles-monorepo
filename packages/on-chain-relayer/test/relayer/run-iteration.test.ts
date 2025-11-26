@@ -15,7 +15,7 @@ describe("runIteration tests", () => {
   let connector: ContractConnectorMock;
   let sendHealthcheckPingStub: sinon.SinonStub;
   let updatePricesStub: sinon.SinonStub;
-  let loggerStub: { log: sinon.SinonStub };
+  let loggerStub: { info: sinon.SinonStub };
   let requestDataPackagesStub: sinon.SinonStub;
   let relayerConfig: RelayerConfig;
 
@@ -23,7 +23,7 @@ describe("runIteration tests", () => {
     relayerConfig = mockConfig();
     sendHealthcheckPingStub = sinon.stub().resolves();
     loggerStub = {
-      log: sinon.stub(),
+      info: sinon.stub(),
     };
   });
 
@@ -37,8 +37,8 @@ describe("runIteration tests", () => {
     expect(updatePricesStub.calledOnce).to.be.true;
     expect(sendHealthcheckPingStub.calledOnceWith("http://example.com/ping")).to.be.true;
     expect(requestDataPackagesStub.calledOnce).to.be.true;
-    sinon.assert.calledWith(loggerStub.log, sinon.match(UPDATE_CONDITION_SATISFIED_REGEXP));
-    expect(loggerStub.log.lastCall.lastArg).to.deep.equal(["Test message"]);
+    sinon.assert.calledWith(loggerStub.info, sinon.match(UPDATE_CONDITION_SATISFIED_REGEXP));
+    expect(loggerStub.info.lastCall.lastArg).to.deep.equal(["Test message"]);
   });
 
   it("should call updatePrices and not to call requestDataPackages if shouldUpdatePrices is true with cache", async () => {
@@ -51,8 +51,8 @@ describe("runIteration tests", () => {
     expect(updatePricesStub.calledOnce).to.be.true;
     expect(sendHealthcheckPingStub.calledOnceWith("http://example.com/ping")).to.be.true;
     expect(requestDataPackagesStub.called).to.be.false;
-    sinon.assert.calledWith(loggerStub.log, sinon.match(UPDATE_CONDITION_SATISFIED_REGEXP));
-    expect(loggerStub.log.lastCall.lastArg).to.deep.equal(["Test message"]);
+    sinon.assert.calledWith(loggerStub.info, sinon.match(UPDATE_CONDITION_SATISFIED_REGEXP));
+    expect(loggerStub.info.lastCall.lastArg).to.deep.equal(["Test message"]);
   });
 
   it("should call updatePrices and call requestDataPackages if shouldUpdatePrices is true with cache, but cache is not conforming", async () => {
@@ -67,8 +67,8 @@ describe("runIteration tests", () => {
     expect(updatePricesStub.calledOnce).to.be.true;
     expect(sendHealthcheckPingStub.calledOnceWith("http://example.com/ping")).to.be.true;
     expect(requestDataPackagesStub.calledOnce).to.be.true;
-    sinon.assert.calledWith(loggerStub.log, sinon.match(UPDATE_CONDITION_SATISFIED_REGEXP));
-    expect(loggerStub.log.lastCall.lastArg).to.deep.equal(["Test message"]);
+    sinon.assert.calledWith(loggerStub.info, sinon.match(UPDATE_CONDITION_SATISFIED_REGEXP));
+    expect(loggerStub.info.lastCall.lastArg).to.deep.equal(["Test message"]);
   });
 
   it("should not call updatePrices if shouldUpdatePrices is false", async () => {
@@ -77,8 +77,8 @@ describe("runIteration tests", () => {
     expect(updatePricesStub.called).to.be.false;
     expect(sendHealthcheckPingStub.calledOnceWith("http://example.com/ping")).to.be.true;
     expect(requestDataPackagesStub.calledOnce).to.be.true;
-    sinon.assert.calledWith(loggerStub.log, sinon.match(UPDATE_CONDITION_NOT_SATISFIED_REGEXP));
-    expect(loggerStub.log.lastCall.lastArg).to.deep.equal(["Test message"]);
+    sinon.assert.calledWith(loggerStub.info, sinon.match(UPDATE_CONDITION_NOT_SATISFIED_REGEXP));
+    expect(loggerStub.info.lastCall.lastArg).to.deep.equal(["Test message"]);
   });
 
   it("should log additional messages if present and shouldUpdatePrices is true", async () => {
@@ -90,8 +90,8 @@ describe("runIteration tests", () => {
       ])
     );
 
-    expect(loggerStub.log.calledWith("Additional message")).to.be.true;
-    expect(loggerStub.log.calledWith("Other message")).to.be.true;
+    expect(loggerStub.info.calledWith("Additional message")).to.be.true;
+    expect(loggerStub.info.calledWith("Other message")).to.be.true;
   });
 
   async function performRunIterationTest(

@@ -65,7 +65,7 @@ export class SageOfChains {
         if (result.status === "fulfilled") {
           return result.value;
         }
-        logger.log(
+        logger.info(
           `Failed to fetch blockNumber for ${
             Object.keys(this.networkIdToProviderFactory)[index]
           } after 2 retries: ${RedstoneCommon.stringifyError(result.reason)}`
@@ -84,7 +84,7 @@ const getBlockNumberWithRetries = (provider: Provider, timeout: number): Promise
       waitBetweenMs: 50,
       maxRetries: 2,
       fn: () => provider.getBlockNumber(),
-      logger: logger.log.bind(logger),
+      logger: logger.info.bind(logger),
     })(),
     timeout
   );

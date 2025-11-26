@@ -1,8 +1,8 @@
-import { HttpException, Injectable, Logger, OnModuleInit, Optional } from "@nestjs/common";
+import { HttpException, Injectable, OnModuleInit, Optional } from "@nestjs/common";
 import { filterOutliers } from "@redstone-finance/internal-utils";
 import { UniversalSigner, recoverDeserializedSignerAddress } from "@redstone-finance/protocol";
 import { EXTERNAL_SIGNERS_CUTOFF_DATE, getDataServiceIdForSigner } from "@redstone-finance/sdk";
-import { RedstoneCommon } from "@redstone-finance/utils";
+import { RedstoneCommon, loggerFactory } from "@redstone-finance/utils";
 import { DataPackagesBroadcaster } from "../broadcasters/data-packages-broadcaster";
 import { MongoBroadcaster } from "../broadcasters/mongo-broadcaster";
 import { StreamrBroadcaster } from "../broadcasters/streamr-broadcaster";
@@ -23,7 +23,7 @@ import {
 
 @Injectable()
 export class DataPackagesService implements OnModuleInit {
-  private readonly logger = new Logger(DataPackagesService.name);
+  private readonly logger = loggerFactory(DataPackagesService.name);
   private readonly broadcasters: DataPackagesBroadcaster[] = [];
   private static allowedSigners: string[] | null = null;
 
@@ -38,7 +38,7 @@ export class DataPackagesService implements OnModuleInit {
       this.broadcasters.push(streamrBroadcaster);
     }
 
-    this.logger.log(
+    this.logger.info(
       `Active broadcasters:  ${this.broadcasters
         .map((broadcaster) => broadcaster.constructor.name)
         .join(",")}`
@@ -73,7 +73,7 @@ export class DataPackagesService implements OnModuleInit {
     const savePromises = this.broadcasters.map(async (broadcaster) => {
       try {
         await broadcaster.broadcast(dataPackagesToSave, nodeEvmAddress);
-        this.logger.log(`[${broadcaster.constructor.name}] succeeded to ${message}.`);
+        this.logger.info(`[${broadcaster.constructor.name}] succeeded to ${message}.`);
       } catch (error) {
         this.logger.error(
           `[${

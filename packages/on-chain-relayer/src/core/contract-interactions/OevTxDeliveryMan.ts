@@ -16,16 +16,16 @@ export class OevTxDeliveryMan implements Tx.ITxDeliveryMan<RelayerTxDeliveryManC
   async deliver(txDeliveryCall: Tx.TxDeliveryCall, context: RelayerTxDeliveryManContext) {
     try {
       await this.updateUsingOevAuction(txDeliveryCall);
-      this.logger.log("Update using oev auction has finished. Proceeding with a standard update");
+      this.logger.info("Update using oev auction has finished. Proceeding with a standard update");
       if (context.deferredCallData) {
         txDeliveryCall.data = await context.deferredCallData();
       }
       await this.fallbackDeliveryMan.deliver(txDeliveryCall, context);
-      this.logger.log("Standard update has finished");
+      this.logger.info("Standard update has finished");
     } catch (e) {
       this.logger.error(`Failed to update using oev auction: ${RedstoneCommon.stringifyError(e)}`);
       if (context.canOmitFallbackAfterFailing) {
-        this.logger.log("Skipping as update was optional");
+        this.logger.info("Skipping as update was optional");
       } else {
         this.logger.warn(`Failed to update using OEV auction, proceeding with standard update`);
         if (context.deferredCallData) {

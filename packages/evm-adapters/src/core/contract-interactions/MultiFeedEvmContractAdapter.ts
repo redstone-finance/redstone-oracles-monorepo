@@ -29,7 +29,7 @@ export class MultiFeedEvmContractAdapter extends MultiFeedEvmContractAdapterBase
 
     //TODO: Multifeed won't work with medium data packages.
     if (diff.length) {
-      logger.log(
+      logger.info(
         `Missing some feeds in the response: [${diff.toString()}], will update only for [${dataPackagesFeeds.toString()}]`,
         {
           dataFeedsToUpdate,
