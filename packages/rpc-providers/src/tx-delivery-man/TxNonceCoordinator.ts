@@ -58,7 +58,7 @@ export class TxNonceCoordinator {
     }
 
     const next = this.lastCommittedNonce! + 1;
-    logger.log(`Allocating nonce=${next}`);
+    logger.info(`Allocating nonce=${next}`);
     return next;
   }
 
@@ -73,7 +73,7 @@ export class TxNonceCoordinator {
     }
     this.bumpLastCommittedNonce(nonce);
     this.pendingTxs.set(nonce, { hash: txHash, addedAt: Date.now() });
-    logger.log(`Registered pending tx nonce=${nonce} hash=${txHash}`);
+    logger.info(`Registered pending tx nonce=${nonce} hash=${txHash}`);
   }
 
   // -------------------- helpers --------------------
@@ -109,7 +109,7 @@ export class TxNonceCoordinator {
       await this.processPendingSnapshot(pendingSnapshot);
 
       const duration = Date.now() - startedAt;
-      logger.log(
+      logger.info(
         `Reconcile: completed in ${duration} ms (snapshot=${pendingSnapshot.length}, pending=${this.pendingTxs.size})`
       );
 
@@ -179,7 +179,7 @@ export class TxNonceCoordinator {
       this.bumpLastCommittedNonce(nonce);
 
       if (receipt.status === 1) {
-        logger.log(`Confirmed pending tx nonce=${nonce} block=${receipt.blockNumber}`);
+        logger.info(`Confirmed pending tx nonce=${nonce} block=${receipt.blockNumber}`);
       } else {
         logger.warn(
           `Tx reverted nonce=${nonce} block=${receipt.blockNumber}, nonce remains consumed`
@@ -218,7 +218,7 @@ export class TxNonceCoordinator {
     if (this.lastCommittedNonce === undefined || chainNonce > this.lastCommittedNonce + 1) {
       const aligned = chainNonce - 1;
       this.lastCommittedNonce = aligned;
-      logger.log(`Aligned: chainNonce=${chainNonce} -> lastCommittedNonce=${aligned}`);
+      logger.info(`Aligned: chainNonce=${chainNonce} -> lastCommittedNonce=${aligned}`);
     }
   }
 }
