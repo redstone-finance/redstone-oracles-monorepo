@@ -25,6 +25,7 @@ export const getTxDeliveryMan = (
     fastBroadcastMode: relayerConfig.fastBroadcastMode,
     txNonceStaleThresholdMs: relayerConfig.txNonceStaleThresholdMs,
     minTxDeliveryTimeMs: relayerConfig.minTxDeliveryTimeMs,
+    splitWaitingForTxRetries: relayerConfig.splitWaitingForTxRetries,
   });
   return deliveryMan;
 };
