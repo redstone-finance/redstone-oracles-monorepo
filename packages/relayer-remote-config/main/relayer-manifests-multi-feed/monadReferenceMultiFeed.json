@@ -90,6 +90,11 @@
     "muBOND_FUNDAMENTAL": {},
     "AZND_FUNDAMENTAL": {},
     "earnAUSD_FUNDAMENTAL": {},
-    "gMON_FUNDAMENTAL": {}
+    "gMON_FUNDAMENTAL": {
+      "updateTriggersOverrides": {
+        "deviationPercentage": 0.5,
+        "timeSinceLastUpdateInMilliseconds": 43200000
+      }
+    }
   }
 }
