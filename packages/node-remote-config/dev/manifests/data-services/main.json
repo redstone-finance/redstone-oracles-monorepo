@@ -2716,11 +2716,6 @@
       "denomination": "USD",
       "rateFeed": false
     },
-    "AMZN": {
-      "source": [],
-      "denomination": "USD",
-      "rateFeed": false
-    },
     "BYND": {
       "source": [],
       "denomination": "USD",
@@ -2756,12 +2751,27 @@
       "denomination": "USD",
       "rateFeed": false
     },
-    "FGNX": {
+    "AMD": {
+      "source": [],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "GOOGL": {
       "source": [],
       "denomination": "USD",
       "rateFeed": false
     },
     "META": {
+      "source": [],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "AMZN": {
+      "source": [],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "FGNX": {
       "source": [],
       "denomination": "USD",
       "rateFeed": false
