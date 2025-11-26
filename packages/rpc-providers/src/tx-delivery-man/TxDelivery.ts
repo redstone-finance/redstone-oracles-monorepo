@@ -49,7 +49,7 @@ export const DEFAULT_TX_DELIVERY_OPTS = {
   txNonceStaleThresholdMs: 10_000,
   minTxDeliveryTimeMs: 0,
   splitWaitingForTxRetries: 0,
-  logger: logger.log.bind(logger) as (message: unknown) => void,
+  logger: logger.info.bind(logger) as (message: unknown) => void,
 };
 
 export type TxDeliverySigner = {
