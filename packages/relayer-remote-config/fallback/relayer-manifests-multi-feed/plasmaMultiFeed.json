@@ -52,6 +52,20 @@
     },
     "XPL": {
       "priceFeedAddress": "0x6ED89c637A6a42E0dc625Fbc16888263fa724d51"
+    },
+    "yzUSD_FUNDAMENTAL": {
+      "priceFeedAddress": "0xaE02D5bE17a23C8fdd0676C6A5f9143d91237979",
+      "updateTriggersOverrides": {
+        "deviationPercentage": 0.05,
+        "timeSinceLastUpdateInMilliseconds": 86400000
+      }
+    },
+    "syzUSD_FUNDAMENTAL/USD": {
+      "priceFeedAddress": "0xa8a94Da411425634e3Ed6C331a32ab4fd774aa43",
+      "updateTriggersOverrides": {
+        "deviationPercentage": 0.05,
+        "timeSinceLastUpdateInMilliseconds": 86400000
+      }
     }
   }
 }

@@ -381,6 +381,26 @@
         "deviationPercentage": 0.1,
         "timeSinceLastUpdateInMilliseconds": 86400000
       }
+    },
+    "iBENJI_ETHEREUM_FUNDAMENTAL": {
+      "priceFeedAddress": "0x009119Cd7eB8912863c30362CfdCe0B2F8a52D6C",
+      "updateTriggersOverrides": {
+        "deviationPercentage": 0.1,
+        "timeSinceLastUpdateInMilliseconds": 86400000
+      }
+    },
+    "SIERRA_FUNDAMENTAL": {
+      "priceFeedAddress": "0x9269127F104C040AB526575573c23F3e67401aD9",
+      "updateTriggersOverrides": {
+        "deviationPercentage": 0.1,
+        "timeSinceLastUpdateInMilliseconds": 86400000
+      }
+    },
+    "APR": {
+      "priceFeedAddress": "0xE5c1A89887C572c3C345EFE2BBBe797AC5B22461"
+    },
+    "PT_srUSDe_15JAN2026_ETH-TWAP": {
+      "priceFeedAddress": "0x1102D8C7A6021e45cCddEC4912dc998Bc5ebD8e5"
     }
   }
 }

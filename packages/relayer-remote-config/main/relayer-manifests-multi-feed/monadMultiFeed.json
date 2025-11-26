@@ -125,7 +125,11 @@
       "priceFeedAddress": "0xD1136a8C1E5a8Ff204d6875b51158b5Ef1858f60"
     },
     "gMON_FUNDAMENTAL": {
-      "priceFeedAddress": "0x8C9f39f0D08EE284a4Fe0198524fE7C28630CEAb"
+      "priceFeedAddress": "0x8C9f39f0D08EE284a4Fe0198524fE7C28630CEAb",
+      "updateTriggersOverrides": {
+        "deviationPercentage": 0.5,
+        "timeSinceLastUpdateInMilliseconds": 43200000
+      }
     }
   }
 }

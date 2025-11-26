@@ -1,0 +1,54 @@
+{
+  "chain": {
+    "name": "monad",
+    "id": 143
+  },
+  "updateTriggers": {
+    "deviationPercentage": 0.5,
+    "timeSinceLastUpdateInMilliseconds": 86400000
+  },
+  "adapterContract": "0xE333acACEb88B2995a06f8Af689E8e17D6C1551A",
+  "adapterContractType": "multi-feed",
+  "dataServiceId": "redstone-primary-prod",
+  "priceFeeds": {
+    "ETH": {
+      "priceFeedAddress": "0x8D89d6c114193154f111D7C83299D285C9cC5BBC"
+    },
+    "BTC": {
+      "priceFeedAddress": "0x77471661568DC65d4574EAd9544DfF1e618Adfb2"
+    },
+    "MON": {
+      "priceFeedAddress": "0x9a7FAe39f78f7711d46F28E9fd2271ECdca58f9a",
+      "updateTriggersOverrides": {
+        "deviationPercentage": 0.1,
+        "timeSinceLastUpdateInMilliseconds": 3600000
+      }
+    },
+    "USDC": {
+      "priceFeedAddress": "0x58E0d540841e4bD6E8bE6e46FCc68a897E3fD3e4",
+      "updateTriggersOverrides": {
+        "deviationPercentage": 0.1,
+        "timeSinceLastUpdateInMilliseconds": 3600000
+      }
+    },
+    "aUSD": {
+      "priceFeedAddress": "0xCaAbf2C777a3426eAfFB79A0675909cdCAfa3D23",
+      "updateTriggersOverrides": {
+        "deviationPercentage": 0.1,
+        "timeSinceLastUpdateInMilliseconds": 3600000
+      }
+    },
+    "muBOND_FUNDAMENTAL": {
+      "priceFeedAddress": "0xC0eB05Be4279EA3b615E8b0D35a1530B934477f6"
+    },
+    "gMON_FUNDAMENTAL": {
+      "priceFeedAddress": "0x7B16B934504bccCf46e5D825e2715c8b95D23f09"
+    },
+    "aprMON_FUNDAMENTAL": {
+      "priceFeedAddress": "0xE2c064020bE767882b55E9c7C9C093543Ef97B53"
+    },
+    "shMON_FUNDAMENTAL": {
+      "priceFeedAddress": "0xa41766262b03252b4E01095fc5c9C3716f63E375"
+    }
+  }
+}
