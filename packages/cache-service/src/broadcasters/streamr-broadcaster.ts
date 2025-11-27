@@ -1,6 +1,6 @@
-import { Injectable } from "@nestjs/common";
+import { Injectable, Logger } from "@nestjs/common";
 import { SignedDataPackagePlainObj } from "@redstone-finance/protocol";
-import { loggerFactory, RedstoneCommon } from "@redstone-finance/utils";
+import { RedstoneCommon } from "@redstone-finance/utils";
 import { formatEther, JsonRpcProvider, parseEther, Wallet } from "ethers-v6";
 import {
   compressMsg,
@@ -28,7 +28,7 @@ export class StreamrBroadcaster implements DataPackagesBroadcaster {
   private readonly address: string;
   private streamExistsCached: boolean = false;
   private isStreamCreationRequested: boolean = false;
-  private readonly logger = loggerFactory(StreamrBroadcaster.name);
+  private readonly logger = new Logger(StreamrBroadcaster.name);
 
   constructor() {
     const streamrPrivateKey = config.streamrPrivateKey;
@@ -58,14 +58,14 @@ export class StreamrBroadcaster implements DataPackagesBroadcaster {
     const streamExists = await this.lazyCheckIfStreamExists(streamId);
 
     if (streamExists) {
-      this.logger.info("Broadcasting data packages to streamr");
+      this.logger.log("Broadcasting data packages to streamr");
       await this.streamrClient.publish(
         {
           streamId,
         },
         compressMsg(dataToBroadcast)
       );
-      this.logger.info(`New data published to the stream: ${this.address}/${streamId}`);
+      this.logger.log(`New data published to the stream: ${this.address}/${streamId}`);
     } else {
       await this.tryToCreateStream(streamId);
     }
@@ -73,13 +73,13 @@ export class StreamrBroadcaster implements DataPackagesBroadcaster {
 
   private async tryToCreateStream(streamId: string) {
     if (this.isStreamCreationRequested) {
-      this.logger.info("Stream creation already requested, skipping");
+      this.logger.log("Stream creation already requested, skipping");
       return;
     }
 
     this.isStreamCreationRequested = true;
 
-    this.logger.info(`Trying to create new Streamr stream: ${this.address}/${streamId}`);
+    this.logger.log(`Trying to create new Streamr stream: ${this.address}/${streamId}`);
 
     await this.assertEnoughMaticBalance();
 
@@ -95,10 +95,10 @@ export class StreamrBroadcaster implements DataPackagesBroadcaster {
       backOff: {
         backOffBase: 2,
       },
-      logger: this.logger.info.bind(this),
+      logger: this.logger.log.bind(this),
     })();
 
-    this.logger.info(`Stream created: ${streamId}`);
+    this.logger.log(`Stream created: ${streamId}`);
 
     await RedstoneCommon.retry({
       fn: () =>
@@ -111,10 +111,10 @@ export class StreamrBroadcaster implements DataPackagesBroadcaster {
       backOff: {
         backOffBase: 2,
       },
-      logger: this.logger.info.bind(this),
+      logger: this.logger.log.bind(this),
     })();
 
-    this.logger.info(`Added permissions to the stream: ${this.address}/${streamId}`);
+    this.logger.log(`Added permissions to the stream: ${this.address}/${streamId}`);
     this.streamExistsCached = true;
   }
 
@@ -126,7 +126,7 @@ export class StreamrBroadcaster implements DataPackagesBroadcaster {
   }
 
   private async assertEnoughMaticBalance() {
-    this.logger.info("Checking MATIC balance");
+    this.logger.log("Checking MATIC balance");
     const provider = new JsonRpcProvider(POLYGON_RPC.rpc, {
       name: POLYGON_RPC.name,
       chainId: POLYGON_RPC.chainId,

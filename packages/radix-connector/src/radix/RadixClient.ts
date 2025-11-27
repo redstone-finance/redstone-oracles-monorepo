@@ -71,7 +71,7 @@ export class RadixClient {
           return await this.interpret<T>(transactionHash.id, transaction);
         }
 
-        this.logger.info(`Iteration #${iterationIndex} didn't finish with success.`);
+        this.logger.log(`Iteration #${iterationIndex} didn't finish with success.`);
       } catch (e) {
         this.logger.error(RedstoneCommon.stringifyError(e));
       }
@@ -84,7 +84,7 @@ export class RadixClient {
 
   private async interpret<T>(transactionId: string, transaction: RadixTransaction) {
     const output = await this.apiClient.getTransactionDetails(transactionId);
-    this.logger.info(`Transaction ${transactionId} is COMMITTED; feePaid: ${output.feePaid} XRD`);
+    this.logger.log(`Transaction ${transactionId} is COMMITTED; feePaid: ${output.feePaid} XRD`);
 
     return transaction.interpret(output.values) as T;
   }
@@ -186,7 +186,7 @@ export class RadixClient {
         case "CommittedFailure":
           throw new Error(`Transaction ${transactionId} is FAILED: ${statusOutput.errorMessage}`);
         default:
-          this.logger.info(logMessage);
+          this.logger.log(logMessage);
       }
       await RedstoneCommon.sleep(pollDelayMs);
     }
@@ -270,7 +270,7 @@ export class RadixClient {
 
     const transactionId =
       await RadixEngineToolkit.NotarizedTransaction.intentHash(notarizedTransaction);
-    this.logger.info(`Transaction ${transactionId.id} sent.`);
+    this.logger.log(`Transaction ${transactionId.id} sent.`);
 
     const compiled = await RadixEngineToolkit.NotarizedTransaction.compile(notarizedTransaction);
 
