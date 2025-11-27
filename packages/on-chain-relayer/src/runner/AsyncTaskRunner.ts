@@ -37,7 +37,7 @@ export class AsyncTaskRunner {
         }
       },
       (error) =>
-        logger.info(
+        logger.log(
           "Unhandled error occurred during iteration:",
           RedstoneCommon.stringifyError(error)
         )
