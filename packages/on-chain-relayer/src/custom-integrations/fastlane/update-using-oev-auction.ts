@@ -57,7 +57,7 @@ export const updateUsingOevAuction = async (
   );
 
   const finish = Date.now();
-  logger.info(
+  logger.log(
     `${loggerPref} successfully completed in ${finish - start}ms, verification took ${finish - auctionFinished}ms`
   );
 
@@ -120,16 +120,16 @@ const verifyFastlaneResponse = async (
   relayerConfig: RelayerConfig
 ) => {
   const decodedTx = parseTransaction(tx);
-  logger.info(`Decoded transaction from FastLane: ${JSON.stringify(decodedTx)}`);
+  logger.log(`Decoded transaction from FastLane: ${JSON.stringify(decodedTx)}`);
   void tryToPropagateTransaction(provider, tx);
   const waitForTransactionToMintPromise = waitForTransactionMint(provider, decodedTx).catch(
     (error) => {
-      logger.info(`Failed to wait for transaction mint: ${RedstoneCommon.stringifyError(error)}`);
+      logger.log(`Failed to wait for transaction mint: ${RedstoneCommon.stringifyError(error)}`);
       throw error;
     }
   );
   const checkGasPricePromise = verifyGasPrice(relayerConfig, provider, decodedTx).catch((error) => {
-    logger.info(`Failed to verify gas price: ${RedstoneCommon.stringifyError(error)}`);
+    logger.log(`Failed to verify gas price: ${RedstoneCommon.stringifyError(error)}`);
     throw error;
   });
   await Promise.all([waitForTransactionToMintPromise, checkGasPricePromise]);
@@ -139,7 +139,7 @@ const tryToPropagateTransaction = async (provider: providers.JsonRpcProvider, tx
   try {
     await provider.sendTransaction(tx);
   } catch (e) {
-    logger.info(
+    logger.log(
       `Unable to propagate, but FastLane likely already did, ${RedstoneCommon.stringifyError(e)}`
     );
   }
@@ -150,12 +150,12 @@ const waitForTransactionMint = async (
   decodedTx: Transaction
 ) => {
   const start = Date.now();
-  logger.info(`Waiting for transaction with oev to mint`);
+  logger.log(`Waiting for transaction with oev to mint`);
   const receipt = await provider.waitForTransaction(decodedTx.hash!);
   if (receipt.status !== 1) {
     throw new Error(`Fastlane transaction failed after ${Date.now() - start}`);
   } else {
-    logger.info(`OEV transaction: ${decodedTx.hash} minted, took: ${Date.now() - start}ms`);
+    logger.log(`OEV transaction: ${decodedTx.hash} minted, took: ${Date.now() - start}ms`);
   }
 };
 
@@ -168,7 +168,7 @@ const verifyGasPrice = async (
     return await Promise.resolve();
   } else {
     const gasPrice = await provider.getGasPrice();
-    logger.info(
+    logger.log(
       `Max fee per gas in FastLane transaction: ${decodedTx.maxFeePerGas!.toString()}, current estimated gas price: ${gasPrice.toString()}`
     );
     if (gasPrice.gt(decodedTx.maxFeePerGas!)) {
@@ -182,7 +182,7 @@ const logOevAuctionError = (error: unknown) => {
     axios.isAxiosError<{ error: { code: number } }>(error) &&
     error.response?.data.error.code === -32600
   ) {
-    logger.info("No bids in OEV auction");
+    logger.log("No bids in OEV auction");
   } else {
     logger.error(`OEV auction failed with unknown error: ${RedstoneCommon.stringifyError(error)}`);
   }

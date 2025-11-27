@@ -31,7 +31,7 @@ export class StellarTransactionExecutor {
     );
     const response = await this.client.sendTransaction(transaction);
 
-    this.logger.info(
+    this.logger.log(
       `Transaction ${response.hash} sent with status ${response.status}, ` +
         `latestLedger: ${response.latestLedger} closed on ${getLedgerCloseDate(response.latestLedgerCloseTime).toISOString()}`
     );
@@ -53,7 +53,7 @@ export class StellarTransactionExecutor {
       baseFee: this.gasLimit,
     };
 
-    this.logger.info(
+    this.logger.log(
       `Transaction successful: ${result.hash}, cost: ${result.cost} stroops, baseFee: ${result.baseFee} stroops`
     );
     void this.logNetworkStats();

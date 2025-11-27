@@ -39,7 +39,7 @@ export class TxDeliveryMan {
     operation: (attempt: number) => Promise<FP.Result<T, string>>
   ): Promise<FP.Result<T, string[]>> {
     const makeAttempt = (attempt: number) => async () => {
-      this.logger.info(
+      this.logger.log(
         `Attempt ${attempt + 1}/${this.config.maxTxSendAttempts} to send transaction`
       );
 
@@ -49,7 +49,7 @@ export class TxDeliveryMan {
       );
       const result = FP.flatten(wrappedResult);
 
-      this.logger.info(
+      this.logger.log(
         `Attempt: ${attempt + 1}, Submission status: ${RedstoneCommon.stringify(result)}`
       );
 

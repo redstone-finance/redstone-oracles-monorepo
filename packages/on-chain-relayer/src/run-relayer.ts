@@ -19,7 +19,7 @@ export const runRelayer = () => {
   const relayerConfig = config(ConsciouslyInvoked);
   const logger = loggerFactory("relayer/run");
 
-  logger.info(
+  logger.log(
     `Starting ${relayerConfig.adapterContractType} contract prices updater with relayer config ${JSON.stringify(
       {
         ...relayerConfig,
@@ -50,7 +50,7 @@ export const runRelayer = () => {
     sendHealthcheckMetric
   );
 
-  logger.info(
+  logger.log(
     `Splitting relayer config into ${configs.length} configs: [${configs.map((config) => `[${config.dataFeeds.toString()}]`).toString()}]`
   );
 
