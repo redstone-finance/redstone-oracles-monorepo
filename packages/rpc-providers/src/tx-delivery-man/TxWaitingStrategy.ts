@@ -10,8 +10,6 @@ export class TxWaitingStrategy {
   async waitForTx(tx: DeliveryManTx) {
     await this.sleepForTxMining(this.opts.expectedDeliveryTimeMs);
     await this.hasNonceIncreased(tx);
-
-    return;
   }
 
   protected async sleepForTxMining(timeMs: number) {
