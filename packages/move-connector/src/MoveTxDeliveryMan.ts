@@ -155,7 +155,7 @@ export class MoveTxDeliveryMan {
   }
 
   private processCommittedTransaction(tx: CommittedTransaction) {
-    this.logger.info(`Transaction ${tx.hash} finished, status: COMMITTED, cost: ${tx.cost} MOVE.`);
+    this.logger.log(`Transaction ${tx.hash} finished, status: COMMITTED, cost: ${tx.cost} MOVE.`);
 
     if (tx.sequenceNumber) {
       this.setNextSequenceNumber(tx.sequenceNumber);

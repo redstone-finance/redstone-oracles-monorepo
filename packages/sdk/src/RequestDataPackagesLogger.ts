@@ -60,7 +60,7 @@ export class RequestDataPackagesLogger {
     );
     const particularTimestamps = this.particularTimestamps();
 
-    this.logger.info(
+    this.logger.log(
       `Resolving with the ${this.isHistorical ? "historical" : "newest"} package timestamp: ${getResponseTimestamp(dataPackagesResponse)} of ${collectedResponses.length} response(s)` +
         `, ${timestampDelta / 1000} [s] ago`,
       {
