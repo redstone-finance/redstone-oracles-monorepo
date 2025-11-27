@@ -91,10 +91,10 @@ export class FuelPricesContractAdapter implements IExtendedPricesContractAdapter
       })
       .call();
 
-    logger.info(`TxId: ${transactionId} submitted`);
+    logger.log(`TxId: ${transactionId} submitted`);
     const result = await waitForResult();
-    logger.info(`TxId: ${transactionId} status: ${result.transactionResult.status}`);
-    logger.info(
+    logger.log(`TxId: ${transactionId} status: ${result.transactionResult.status}`);
+    logger.log(
       `TxId: ${transactionId} gasUsed: ${result.gasUsed.toString()}, fee: ${formatUnits(result.transactionResult.fee)} ETH, tip: ${formatUnits(result.transactionResult.tip)} ETH`
     );
 
