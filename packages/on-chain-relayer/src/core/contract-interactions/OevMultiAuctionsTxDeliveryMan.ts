@@ -21,21 +21,21 @@ export class OevMultiAuctionsTxDeliveryMan
   async deliver(txDeliveryCall: Tx.TxDeliveryCall, context: RelayerTxDeliveryManContext) {
     try {
       const start = Date.now();
-      this.logger.info(`OEV Auctions start`);
+      this.logger.log(`OEV Auctions start`);
 
       const { values, errors } = await this.updateUsingOevAuctions(context.paramsProvider);
       const auctionsTime = Date.now() - start;
-      this.logger.info(
+      this.logger.log(
         `OEV Auctions finished in ${auctionsTime}ms with ${values.length} successes and ${errors.length} errors`
       );
 
       if (values.length > 0) {
-        this.logger.info(`OEV Auctions succeeded, proceeding with a standard update`, values);
+        this.logger.log(`OEV Auctions succeeded, proceeding with a standard update`, values);
         if (context.deferredCallData) {
           txDeliveryCall.data = await context.deferredCallData();
         }
         await this.fallbackDeliveryMan.deliver(txDeliveryCall, context);
-        this.logger.info("Standard update has finished");
+        this.logger.log("Standard update has finished");
       } else {
         await this.onOevAuctionsFailureCallback(txDeliveryCall, context);
       }
@@ -52,7 +52,7 @@ export class OevMultiAuctionsTxDeliveryMan
     context: RelayerTxDeliveryManContext
   ) {
     if (context.canOmitFallbackAfterFailing) {
-      this.logger.info("OEV Auctions, skipping fallback as update was optional");
+      this.logger.log("OEV Auctions, skipping fallback as update was optional");
     } else {
       this.logger.warn(`OEV Auctions failed, proceeding with standard update`);
       if (context.deferredCallData) {
@@ -72,7 +72,7 @@ export class OevMultiAuctionsTxDeliveryMan
         ?.flatMap((p) => p.dataPackage.dataPoints)
         .map((dp) => dp.toObj().value);
 
-      this.logger.info(`OEV Auction ${feedId} update, values`, values);
+      this.logger.log(`OEV Auction ${feedId} update, values`, values);
 
       const updateUsingOevAuctionPromise = this.makeSingleFeedUpdateTx(
         feedId,

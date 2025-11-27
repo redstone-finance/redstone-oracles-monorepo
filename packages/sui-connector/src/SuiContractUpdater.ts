@@ -57,7 +57,7 @@ export class SuiContractUpdater implements ContractUpdater {
     const { status } = SuiContractUpdater.getStatus(data, checkEventsForFailure);
     const cost = SuiContractUpdater.getCost(data);
 
-    this.logger.info(
+    this.logger.log(
       `Transaction ${digest} finished in ${Date.now() - date} [ms], status: ${status.toUpperCase()}, cost: ${cost} SUI`,
       {
         errors: data.errors,
