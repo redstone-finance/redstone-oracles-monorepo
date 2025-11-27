@@ -519,8 +519,12 @@
     },
     "weETH": {
       "source": [
+        "aerodrome-cl-base-weth",
+        "blackhole-avalanche-weth.e-400",
+        "bitget-usdt",
         "camelot-v3-arbitrumone-weth",
         "curve-ethereum-weth",
+        "fluid-ethereum-eth",
         "uniswap-v3-arbitrumone-weth-3000"
       ],
       "denomination": "USD",
