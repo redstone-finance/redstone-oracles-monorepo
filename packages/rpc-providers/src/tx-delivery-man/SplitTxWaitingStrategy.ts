@@ -30,7 +30,7 @@ export class SplitTxWaitingStrategy extends TxWaitingStrategy {
     return {
       initialWaitBetweenFactor: RETRY_CONFIG.backOff.backOffBase ** INITIAL_BACKOFF_EXPONENT,
       totalBackoffWaitingFactor: Array.from(
-        { length: opts.splitWaitingForTxRetries },
+        { length: opts.splitWaitingForTxRetries - 1 },
         (_, power) => RETRY_CONFIG.backOff.backOffBase ** (power + INITIAL_BACKOFF_EXPONENT)
       ).reduce((sum, v) => sum + v),
     };
