@@ -52,7 +52,7 @@ export const calculateLinkedListPosition = (
       deviatedValue: valueToInsert,
     });
     if (deviation > maxDeviationAllowedInPercent) {
-      logger.info(
+      logger.log(
         `deviation ${deviation} is higher than max acceptable deviation ${maxDeviationAllowedInPercent}. Sorted oracles median price: ${currentMedian}. RedStone price:${valueToInsert.toString()}`
       );
       return undefined;
@@ -111,7 +111,7 @@ export const prepareLinkedListLocationsForMentoAdapterReport = async (
       maxDeviationAllowedInPercent
     );
     if (!locationInSortedLinkedList) {
-      logger.info(`price for ${dataFeeds[dataFeedIndex].dataFeedId} deviates too much`);
+      logger.log(`price for ${dataFeeds[dataFeedIndex].dataFeedId} deviates too much`);
       return undefined;
     }
     locationsInSortedLinkedLists.push(locationInSortedLinkedList);

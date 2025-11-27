@@ -1,13 +1,12 @@
-import { Controller, Get } from "@nestjs/common";
-import { loggerFactory } from "@redstone-finance/utils";
+import { Controller, Get, Logger } from "@nestjs/common";
 
 @Controller()
 export class AppController {
-  private readonly logger = loggerFactory(AppController.name);
+  private readonly logger = new Logger(AppController.name);
 
   @Get()
   getRootRouteResponse(): string {
-    this.logger.info("Received a request to the root route");
+    this.logger.log("Received a request to the root route");
     return `Hello! I am working correctly`;
   }
 }
