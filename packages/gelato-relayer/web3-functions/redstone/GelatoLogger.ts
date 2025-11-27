@@ -9,7 +9,7 @@ export class GelatoLogger implements IterationLogger {
     return this.messages.at(0)?.message;
   }
 
-  info(message: string, ...args: unknown[]): void {
+  log(message: string, ...args: unknown[]): void {
     this.messages.push({ message, args });
   }
 
