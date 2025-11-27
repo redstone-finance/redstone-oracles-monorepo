@@ -71,7 +71,7 @@ export function reportMemoizeCacheUsage(
   logger = loggerFactory("memoize")
 ) {
   if (isMissing) {
-    logger.info(`Refreshing cached ${desc}`);
+    logger.log(`Refreshing cached ${desc}`);
   } else {
     logger.debug(`Reusing cached ${desc}`);
   }

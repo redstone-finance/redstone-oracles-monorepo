@@ -66,7 +66,7 @@ export class RegularSolanaGasOracle implements ISolanaGasOracle {
       ]
     );
 
-    this.logger.info(`Current prioritization fee percentiles:`, {
+    this.logger.log(`Current prioritization fee percentiles:`, {
       percentileForUse,
       percentiles: Object.fromEntries(percentiles) as { [p: number]: number },
     });
