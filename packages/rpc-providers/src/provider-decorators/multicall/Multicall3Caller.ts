@@ -92,7 +92,7 @@ async function safeFallbackCall(
       success: true,
     };
   } catch (e) {
-    logger.info(
+    logger.log(
       `fallback call failed to=${call3.target} data=${call3.callData} blockTag=${blockTag}`
     );
     return {

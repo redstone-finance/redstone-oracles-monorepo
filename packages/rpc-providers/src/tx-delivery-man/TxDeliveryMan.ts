@@ -66,7 +66,7 @@ export class TxDeliveryMan implements Tx.ITxDeliveryMan {
         // This approach allows to better separate providers errors
         const rpcUrl = getProviderNetworkInfo(provider).url;
         const message = `RpcUrl=${rpcUrl} Delivery in progress; Skipping`;
-        logger.info(message);
+        logger.log(message);
         throw new Error(message);
       }
     });
@@ -82,7 +82,7 @@ export class TxDeliveryMan implements Tx.ITxDeliveryMan {
 
   private logTxResponse(txReceipt: Promise<TransactionReceipt>) {
     txReceipt
-      .then((receipt) => logger.info(getTxReceiptDesc(receipt)))
+      .then((receipt) => logger.log(getTxReceiptDesc(receipt)))
       .catch((error) =>
         logger.error(
           `Failed to wait for transaction mining ${RedstoneCommon.stringifyError(error)}`
@@ -158,7 +158,7 @@ export class TxDeliveryMan implements Tx.ITxDeliveryMan {
     const elapsed = Date.now() - startedAt;
     const remaining = minTime - elapsed;
     if (remaining > 0) {
-      logger.info(`Min delivery time enabled; sleeping for ${remaining} ms`);
+      logger.log(`Min delivery time enabled; sleeping for ${remaining} ms`);
       await RedstoneCommon.sleep(remaining);
     }
   }
@@ -185,7 +185,7 @@ function createTxDelivery(
   return new TxDelivery(
     {
       ...opts,
-      logger: (msg) => logger.info(`RpcUrl=${sanitizeLogMessage(rpcUrl)}, ${msg}`),
+      logger: (msg) => logger.log(`RpcUrl=${sanitizeLogMessage(rpcUrl)}, ${msg}`),
     },
     signer,
     provider,

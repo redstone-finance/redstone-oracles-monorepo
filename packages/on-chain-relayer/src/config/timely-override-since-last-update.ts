@@ -25,7 +25,7 @@ export const timelyOverrideSinceLastUpdate = (
   }
 
   const temporaryUpdateDuration = Math.floor(temporaryUpdatePriceInterval * 1.5);
-  logger.info(
+  logger.log(
     `Timely overriding updatePriceInterval to ${RedstoneCommon.msToMin(
       temporaryUpdatePriceInterval
     ).toFixed(2)} [min] for ${RedstoneCommon.msToMin(temporaryUpdateDuration).toFixed(2)} [min]`
@@ -34,6 +34,6 @@ export const timelyOverrideSinceLastUpdate = (
   setTimeout(() => {
     relayerConfig.updateTriggers = oldUpdateTriggers;
     relayerConfig.updateConditions = oldUpdateConditions;
-    logger.info(`Reverting updatePriceIntervals`);
+    logger.log(`Reverting updatePriceIntervals`);
   }, temporaryUpdateDuration);
 };

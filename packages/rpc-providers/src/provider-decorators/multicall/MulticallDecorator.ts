@@ -98,7 +98,7 @@ export function MulticallDecorator<T extends providers.Provider>(
         }
       })
       .catch((e) => {
-        logger.info(`call failed rejecting ${callEntries.length} bounded promises`);
+        logger.log(`call failed rejecting ${callEntries.length} bounded promises`);
         // if multicall fails we have to reject all promises bounded to it
         for (const entry of callEntries) {
           entry.reject(e);
