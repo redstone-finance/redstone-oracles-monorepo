@@ -6,7 +6,7 @@ import { EventSource } from "eventsource";
 import { PubSubClient, PubSubPayload, SubscribeCallback } from "./PubSubClient";
 
 const POST_DATA_ROUTE = "post-data-batch";
-const SUBSCRIBE_SEE_ROUTE = "subscribe_sse_stream";
+const SUBSCRIBE_SSE_ROUTE = "subscribe_sse_stream";
 const SUBSCRIBE_TO_TOPICS_ROUTE = "subscribe_to_topics";
 const UNSUBSCRIBE_FROM_TOPICS_ROUTE = "unsubscribe_from_topics";
 const CONNECTED_EVENT = "connected";
@@ -51,7 +51,7 @@ export class SSEPubSubClient implements PubSubClient {
     const query = initialTopics.length > 0 ? `?topics=${initialTopics.join(",")}` : "";
 
     this.eventSource = new EventSource(
-      `${this.lightGatewayAddress}/${SUBSCRIBE_SEE_ROUTE}${query}`
+      `${this.lightGatewayAddress}/${SUBSCRIBE_SSE_ROUTE}${query}`
     );
     this.eventSource.addEventListener(CONNECTED_EVENT, (e) => this.handleConnected(e));
     this.eventSource.addEventListener(BATCH_EVENT, (e) => this.handleBatch(e));
