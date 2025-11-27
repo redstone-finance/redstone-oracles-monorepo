@@ -81,8 +81,8 @@ export class RemoteConfigSupervisor {
           this.restartOnPrevConfig();
         }
       } else {
-        logger.info("Starting Runner in a legacy config mode");
-        this.spawnAndAssignChildProcess("legacy_static_config");
+        logger.info("Starting Runner in a static config mode");
+        this.spawnAndAssignChildProcess("static_config");
       }
     } catch (e) {
       terminateWithUnknownCriticalError(
