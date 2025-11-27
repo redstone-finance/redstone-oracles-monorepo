@@ -82,7 +82,7 @@ export class TxDelivery {
       : new Eip1559GasEstimator(this.opts);
     this.gasLimitEstimator = new GasLimitEstimator(this.opts);
     this.txWaitingStrategy = new (
-      opts.splitWaitingForTxRetries ? SplitTxWaitingStrategy : TxWaitingStrategy
+      (opts.splitWaitingForTxRetries ?? 0) > 0 ? SplitTxWaitingStrategy : TxWaitingStrategy
     )(this.opts, (tx) => this.hasNonceIncreased(tx));
   }
 
@@ -170,7 +170,8 @@ export class TxDelivery {
     const signedTx = await this.signer.signTransaction(tx);
     const result = await this.provider.sendTransaction(signedTx);
     this.txNonceCoordinator.registerPendingTx(tx.nonce, result.hash);
-    this.opts.logger(`Transaction broadcasted successfully`);
+    this.opts.logger(`Transaction ${result.hash} broadcasted successfully`);
+
     return result;
   }
 
