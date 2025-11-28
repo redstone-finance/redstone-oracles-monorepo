@@ -65,3 +65,18 @@ export const readS3Object = async <T>(
 
   return content;
 };
+
+export const listS3Objects = async (
+  bucketName: string,
+  prefix: string,
+  region = DEFAULT_AWS_REGION
+): Promise<string[]> => {
+  const params = {
+    Bucket: bucketName,
+    Prefix: prefix,
+  };
+
+  const data = await getS3(region).listObjectsV2(params);
+
+  return data.Contents?.map((obj) => obj.Key).filter((key): key is string => !!key) ?? [];
+};
