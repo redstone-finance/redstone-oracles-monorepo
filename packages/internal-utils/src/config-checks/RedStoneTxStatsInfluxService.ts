@@ -58,7 +58,7 @@ export class RedStoneTxStatsInfluxService extends InfluxService {
         ? undefined
         : (times[0] - times[times.length - 1]) / (1000 * (responseRows.length - 1));
 
-    const gasCosts = responseRows.map((row) => row.gasCost);
+    const gasCosts = responseRows.map((row) => row.gasCost || 0);
     const count = gasCosts.length;
     const mean = gasCosts.reduce((acc, val) => acc + val, 0) / count;
     const median = MathUtils.getMedian(gasCosts);
