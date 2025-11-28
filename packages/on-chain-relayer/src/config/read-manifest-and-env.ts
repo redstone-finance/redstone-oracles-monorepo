@@ -59,7 +59,7 @@ export const readManifestAndEnv = () => {
     relayerIterationInterval: Number(
       RedstoneCommon.getFromEnv("RELAYER_ITERATION_INTERVAL", z.number())
     ),
-    rpcUrls: RedstoneCommon.getFromEnv("RPC_URLS", z.array(z.string().url())),
+    rpcUrls: RedstoneCommon.getFromEnv("RPC_URLS", z.array(z.url())),
     singleProviderOperationTimeout: RedstoneCommon.getFromEnv(
       "SINGLE_PROVIDER_OPERATION_TIMEOUT",
       z.number().default(5_000)
@@ -71,10 +71,7 @@ export const readManifestAndEnv = () => {
     privateKey: RedstoneCommon.getFromEnv("PRIVATE_KEY", z.string().min(16)),
     gasMultiplier: RedstoneCommon.getFromEnv("GAS_MULTIPLIER", z.number().optional()),
     maxTxSendAttempts: RedstoneCommon.getFromEnv("MAX_TX_SEND_ATTEMPTS", z.number().optional()),
-    healthcheckPingUrl: RedstoneCommon.getFromEnv(
-      "HEALTHCHECK_PING_URL",
-      z.string().url().optional()
-    ),
+    healthcheckPingUrl: RedstoneCommon.getFromEnv("HEALTHCHECK_PING_URL", z.url().optional()),
     healthcheckMetricName: RedstoneCommon.getFromEnv(
       "HEALTHCHECK_METRIC_NAME",
       z.string().optional()
@@ -96,13 +93,10 @@ export const readManifestAndEnv = () => {
       "FALLBACK_OFFSET_IN_MILLISECONDS",
       z.number().int()
     ),
-    cacheServiceUrls: RedstoneCommon.getFromEnv(
-      "CACHE_SERVICE_URLS",
-      z.array(z.string().url()).optional()
-    ),
+    cacheServiceUrls: RedstoneCommon.getFromEnv("CACHE_SERVICE_URLS", z.array(z.url()).optional()),
     historicalPackagesGateways: RedstoneCommon.getFromEnv(
       "HISTORICAL_PACKAGES_GATEWAYS",
-      z.array(z.string().url()).optional()
+      z.array(z.url()).optional()
     ),
     isAuctionModel: RedstoneCommon.getFromEnv("IS_AUCTION_MODEL", z.boolean().default(false)),
     mentoMaxDeviationAllowed: RedstoneCommon.getFromEnv(
@@ -158,7 +152,7 @@ export const readManifestAndEnv = () => {
       z.number().default(DEFAULT_WAIT_FOR_ALL_GATEWAYS_TIME)
     ),
     dryRunWithInflux: RedstoneCommon.getFromEnv("DRY_RUN_WITH_INFLUX", z.boolean().default(false)),
-    influxUrl: RedstoneCommon.getFromEnv("INFLUX_URL", z.string().url().optional()),
+    influxUrl: RedstoneCommon.getFromEnv("INFLUX_URL", z.url().optional()),
     influxToken: RedstoneCommon.getFromEnv("INFLUX_TOKEN", z.string().optional()),
     ethersPollingIntervalInMs: RedstoneCommon.getFromEnv(
       "ETHERS_POLLING_INTERVAL_IN_MS",
@@ -220,8 +214,7 @@ export const readManifestAndEnv = () => {
     ),
     isPausedUntil: RedstoneCommon.getFromEnv(
       "IS_PAUSED_UNTIL",
-      z
-        .string()
+      z.iso
         .datetime({ offset: true }) // timezone offset
         .transform((isoString) => new Date(isoString))
         .optional()

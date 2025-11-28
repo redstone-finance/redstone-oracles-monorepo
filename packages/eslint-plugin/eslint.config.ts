@@ -119,6 +119,7 @@ export default defineConfig([
       "import-x/namespace": "off",
       eqeqeq: "error",
       "array-func/prefer-array-from": "off",
+      "@typescript-eslint/no-deprecated": "error",
     },
   },
   {
