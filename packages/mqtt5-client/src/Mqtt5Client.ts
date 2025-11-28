@@ -136,13 +136,11 @@ export class Mqtt5Client implements PubSubClient {
     if (this._mqtt.listenerCount("messageReceived") === 0) {
       this._mqtt.on("messageReceived", ({ message }) => {
         const topicName = message.topicName;
-
+        let deserializedData: unknown;
         try {
-          const deserializeData = getSerializerDeserializer(
+          deserializedData = getSerializerDeserializer(
             message.contentType as ContentTypes
           ).deserialize(Buffer.from(message.payload as ArrayBuffer));
-
-          this.onMessageCallback!(message.topicName, deserializeData, null, this);
         } catch (e) {
           this.onMessageCallback!(
             topicName,
@@ -150,7 +148,9 @@ export class Mqtt5Client implements PubSubClient {
             `Error occurred when tried to parse message error=${RedstoneCommon.stringifyError(e)}`,
             this
           );
+          return;
         }
+        this.onMessageCallback!(message.topicName, deserializedData, null, this);
       });
     }
   }
