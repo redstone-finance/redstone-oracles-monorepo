@@ -560,6 +560,28 @@
       "evmAddress": "0x9EBf523C0055DD5B4e0D99dE21Cbde925103293B",
       "ecdsaPublicKey": "0x0491d1ebb2aed4550d2f0bfae643513336d54168dd5d8d830a407484c5b602150e3728a8ac234ad641e5e4522f5a515f54a18f2aaa99e1fa6c0649a99f9db9084c",
       "dateAdded": "2025-10-16"
+    },
+    "0xAe1543D795765AA760189AE19b81D2489dC3B4F6": {
+      "url": "https://redstone.finance",
+      "logo": "https://redstone.finance/assets/img/redstone-logo-full.svg",
+      "name": "redstone-hip3-demo-proposer-1",
+      "ipAddress": "0.0.0.0",
+      "dataServiceId": "redstone-hip3-demo",
+      "description": "RedStone hip3 demo proposer 1",
+      "evmAddress": "0xAe1543D795765AA760189AE19b81D2489dC3B4F6",
+      "ecdsaPublicKey": "0x04f577bb6fe7b8b0846b1ef4411c0c935ff4350d01868329ef5bd6e42665f3eca2181822e3009fbcd102ff117261521cc6424e55c38b7b0771125e42fd0c73ced9",
+      "dateAdded": "2025-10-16"
+    },
+    "0x84cad9c5Abd4D18081262446eb2c3eC58568ae8F": {
+      "url": "https://redstone.finance",
+      "logo": "https://redstone.finance/assets/img/redstone-logo-full.svg",
+      "name": "redstone-hip3-demo-proposer-2",
+      "ipAddress": "0.0.0.0",
+      "dataServiceId": "redstone-hip3-demo",
+      "description": "RedStone hip3 demo proposer 2",
+      "evmAddress": "0x84cad9c5Abd4D18081262446eb2c3eC58568ae8F",
+      "ecdsaPublicKey": "0x042f04d71e77b9d3e1fea48b886fe739f8531744ce7680a08abd20234aae6e54fc89fdb7c2e0a7ed1910377ec6067c03207cdfe460973cef7360a8ab254b613356",
+      "dateAdded": "2025-10-16"
     }
   },
   "evolve": null,
