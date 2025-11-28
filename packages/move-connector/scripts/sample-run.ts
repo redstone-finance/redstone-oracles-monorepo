@@ -18,8 +18,8 @@ async function main() {
     dataPackagesIds: ["ETH"],
     authorizedSigners: getSignersForDataServiceId("redstone-primary-prod"),
   });
-  const rpcUrls = RedstoneCommon.getFromEnv("RPC_URLS", z.array(z.string().url()).optional()) ?? [
-    RedstoneCommon.getFromEnv("RPC_URL", z.string().url()),
+  const rpcUrls = RedstoneCommon.getFromEnv("RPC_URLS", z.array(z.url()).optional()) ?? [
+    RedstoneCommon.getFromEnv("RPC_URL", z.url()),
   ];
   const client = MoveClientBuilder.getInstance("aptos")
     .withNetwork(getEnvNetworkEnum())
