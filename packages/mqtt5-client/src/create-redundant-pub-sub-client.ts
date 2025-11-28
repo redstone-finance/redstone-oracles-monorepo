@@ -1,4 +1,4 @@
-import { RedstoneCommon } from "@redstone-finance/utils";
+import { loggerFactory, RedstoneCommon } from "@redstone-finance/utils";
 import { z } from "zod";
 import { MultiPubSubClient } from "./MultiPubSubClient";
 import {
@@ -8,6 +8,8 @@ import {
 } from "./PubSubClientFactory";
 import { RedundantPubSubClient, RedundantPubSubConfig } from "./RedundantPubSubClient";
 import { RedundantPubSubEnvConfig, RedundantPubSubEnvConfigs } from "./RedundantPubSubEnvConfig";
+
+const logger = loggerFactory("create-redundant-pub-sub-client");
 
 export function createRedundantPubSubClientFromEnv(
   envPath = "PUB_SUB_CONFIGS"
@@ -27,6 +29,8 @@ export function createRedundantPubSubClient(configs: z.infer<typeof RedundantPub
       config.expectedRequestPerSecondPerTopic,
       config.host
     );
+
+    logger.info("Creating PubSubClient for RedundantPubSubClient", { config });
 
     return {
       client,
