@@ -4,7 +4,7 @@ import z from "zod";
 import { getSuiChainId, SuiNetworkName } from "../src";
 
 export async function getRpcUrls(network: SuiNetworkName) {
-  const rpcUrls = RedstoneCommon.getFromEnv("RPC_URLS", z.array(z.string().url()).optional());
+  const rpcUrls = RedstoneCommon.getFromEnv("RPC_URLS", z.array(z.url()).optional());
 
   return (
     rpcUrls ??

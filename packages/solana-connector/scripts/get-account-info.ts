@@ -13,6 +13,7 @@ async function maybeFundWithAirdrop(
     console.log("Requesting airdrop...");
     try {
       const signature = await connection.requestAirdrop(publicKey, balanceFromSol(balanceInSol));
+      // eslint-disable-next-line @typescript-eslint/no-deprecated
       await connection.confirmTransaction(signature, "confirmed");
       console.log("Airdrop successful!");
     } catch (error) {
@@ -28,12 +29,10 @@ export async function getAccountInfo(publicKey: PublicKey, cluster: Cluster) {
   if (accountInfo) {
     const balance = await connection.getBalance(publicKey);
     console.log(`Account exists with balance: ${balanceToSol(balance)} SOL`);
+  } else if (cluster === "devnet" || cluster === "testnet") {
+    console.log("Account does not exist. Creating account...");
   } else {
-    if (cluster === "devnet" || cluster === "testnet") {
-      console.log("Account does not exist. Creating account...");
-    } else {
-      throw new Error("Account must be funded on mainnet. Please send SOL to this address.");
-    }
+    throw new Error("Account must be funded on mainnet. Please send SOL to this address.");
   }
 
   await maybeFundWithAirdrop(cluster, connection, publicKey);
