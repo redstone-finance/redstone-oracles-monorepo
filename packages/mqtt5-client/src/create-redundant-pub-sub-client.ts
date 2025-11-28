@@ -44,7 +44,8 @@ export function createRedundantPubSubClient(configs: z.infer<typeof RedundantPub
 function resolvePubSubClientFactory(
   config: z.infer<typeof RedundantPubSubEnvConfig>
 ): PubSubClientFactory {
-  switch (config.type) {
+  const configType = config.type;
+  switch (configType) {
     case "mqttAWSV4Sig": {
       return createMqtt5ClientFactory({
         authorization: { type: "AWSSigV4" },
@@ -78,5 +79,8 @@ function resolvePubSubClientFactory(
         endpoint: config.host,
       });
     }
+
+    default:
+      return RedstoneCommon.throwUnsupportedParamError(configType);
   }
 }
