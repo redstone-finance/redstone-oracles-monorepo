@@ -15,6 +15,12 @@
   "tokens": {
     "TSLA": {
       "source": [],
+      "deviationCheck": {
+        "deviationWithRecentValues": {
+          "maxPercent": 30,
+          "maxDelayMilliseconds": 120000
+        }
+      },
       "broadcasters": [
         "influx"
       ],
@@ -163,6 +169,12 @@
     },
     "NVDA": {
       "source": [],
+      "deviationCheck": {
+        "deviationWithRecentValues": {
+          "maxPercent": 30,
+          "maxDelayMilliseconds": 120000
+        }
+      },
       "broadcasters": [
         "influx"
       ],
@@ -306,6 +318,12 @@
     },
     "HOOD": {
       "source": [],
+      "deviationCheck": {
+        "deviationWithRecentValues": {
+          "maxPercent": 30,
+          "maxDelayMilliseconds": 120000
+        }
+      },
       "broadcasters": [
         "influx"
       ],
@@ -449,6 +467,12 @@
     },
     "CRCL": {
       "source": [],
+      "deviationCheck": {
+        "deviationWithRecentValues": {
+          "maxPercent": 30,
+          "maxDelayMilliseconds": 120000
+        }
+      },
       "broadcasters": [
         "influx"
       ],
@@ -592,6 +616,12 @@
     },
     "COIN": {
       "source": [],
+      "deviationCheck": {
+        "deviationWithRecentValues": {
+          "maxPercent": 30,
+          "maxDelayMilliseconds": 120000
+        }
+      },
       "broadcasters": [
         "influx"
       ],
