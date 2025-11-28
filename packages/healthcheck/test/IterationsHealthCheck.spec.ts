@@ -1,11 +1,10 @@
 import { healthy, IterationsHealthCheck, unhealthy } from "../src/monitor";
 
 describe("IterationsHealthCheck", () => {
-  const PERIOD_S = "300";
+  const PERIOD_S = 300;
 
   beforeEach(() => {
     jest.resetModules();
-    process.env.HEALTHCHECK_ITERATION_PERIOD_S = PERIOD_S;
   });
 
   afterEach(() => {
@@ -17,7 +16,7 @@ describe("IterationsHealthCheck", () => {
     const t0 = new Date("2025-06-09T12:00:00.000Z");
     jest.setSystemTime(t0);
 
-    const hc = new IterationsHealthCheck();
+    const hc = new IterationsHealthCheck({ periodInS: PERIOD_S, startPeriodInS: 60 });
     const fireDate = new Date(t0.getTime() + 299_000);
     await expect(hc.check(fireDate)).resolves.toEqual(await healthy());
   });
@@ -27,7 +26,7 @@ describe("IterationsHealthCheck", () => {
     const base = new Date("2025-06-09T12:00:00.000Z");
     jest.setSystemTime(base);
 
-    const hc = new IterationsHealthCheck();
+    const hc = new IterationsHealthCheck({ periodInS: PERIOD_S, startPeriodInS: 60 });
     jest.advanceTimersByTime(301_000);
     hc.registerIteration();
     await expect(hc.check(new Date())).resolves.toEqual(await healthy());
@@ -46,10 +45,17 @@ describe("IterationsHealthCheck", () => {
     const base = new Date("2025-06-09T12:00:00.000Z");
     jest.setSystemTime(base);
 
-    const hc = new IterationsHealthCheck();
-    jest.advanceTimersByTime(301_000);
+    const hc = new IterationsHealthCheck({ periodInS: PERIOD_S, startPeriodInS: 60 });
+    jest.advanceTimersByTime(60 * 1000);
+    await expect(hc.check(new Date())).resolves.toEqual(await healthy());
+
+    // still healthy, at the 300s limit
+    jest.advanceTimersByTime(240 * 1000);
+    await expect(hc.check(new Date())).resolves.toEqual(await healthy());
+
+    jest.advanceTimersByTime(1000);
     await expect(hc.check(new Date())).resolves.toEqual(
-      await unhealthy(["Still no iteration registered"])
+      await unhealthy(["Last iteration (none registered) NOT within 300s"])
     );
   });
 
@@ -58,7 +64,7 @@ describe("IterationsHealthCheck", () => {
     const base = new Date("2025-06-09T12:00:00.000Z");
     jest.setSystemTime(base);
 
-    const hc = new IterationsHealthCheck();
+    const hc = new IterationsHealthCheck({ periodInS: PERIOD_S, startPeriodInS: 60 });
     hc.registerIteration();
     jest.advanceTimersByTime(299_999);
     await expect(hc.check(new Date())).resolves.toEqual(await healthy());
