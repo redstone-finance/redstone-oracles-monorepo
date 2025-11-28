@@ -19,6 +19,12 @@
         "polygon-deferred",
         "twelve-data-stocks-deferred"
       ],
+      "deviationCheck": {
+        "deviationWithRecentValues": {
+          "maxPercent": 30,
+          "maxDelayMilliseconds": 120000
+        }
+      },
       "broadcasters": ["influx"],
       "denomination": "USD",
       "rateFeed": false
@@ -126,6 +132,12 @@
         "polygon-deferred",
         "twelve-data-stocks-deferred"
       ],
+      "deviationCheck": {
+        "deviationWithRecentValues": {
+          "maxPercent": 30,
+          "maxDelayMilliseconds": 120000
+        }
+      },
       "broadcasters": ["influx"],
       "denomination": "USD",
       "rateFeed": false
@@ -228,6 +240,12 @@
         "polygon-deferred",
         "twelve-data-stocks-deferred"
       ],
+      "deviationCheck": {
+        "deviationWithRecentValues": {
+          "maxPercent": 30,
+          "maxDelayMilliseconds": 120000
+        }
+      },
       "broadcasters": ["influx"],
       "denomination": "USD",
       "rateFeed": false
@@ -330,6 +348,12 @@
         "polygon-deferred",
         "twelve-data-stocks-deferred"
       ],
+      "deviationCheck": {
+        "deviationWithRecentValues": {
+          "maxPercent": 30,
+          "maxDelayMilliseconds": 120000
+        }
+      },
       "broadcasters": ["influx"],
       "denomination": "USD",
       "rateFeed": false
@@ -432,6 +456,12 @@
         "polygon-deferred",
         "twelve-data-stocks-deferred"
       ],
+      "deviationCheck": {
+        "deviationWithRecentValues": {
+          "maxPercent": 30,
+          "maxDelayMilliseconds": 120000
+        }
+      },
       "broadcasters": ["influx"],
       "denomination": "USD",
       "rateFeed": false
