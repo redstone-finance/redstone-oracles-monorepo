@@ -727,6 +727,40 @@
           "maxDelayMilliseconds": 1000
         }
       }
+    },
+    "USDT": {
+      "source": [
+        "bitstamp-usd",
+        "coinbase-usd",
+        "coingecko",
+        "coinmarketcap",
+        "gemini-usd",
+        "kraken-usd",
+        "okx-usd"
+      ],
+      "deviationCheck": {
+        "deviationWithRecentValues": {
+          "maxPercent": 5,
+          "maxDelayMilliseconds": 120000
+        }
+      },
+      "denomination": "USD",
+      "rateFeed": false,
+      "broadcasters": ["influx"]
+    },
+    "XMR": {
+      "source": [
+        "bitfinex-usd",
+        "bitmart-usdt",
+        "kraken-usd",
+        "kraken-usdt",
+        "kucoin-usdt",
+        "mexc-usdt",
+        "xt"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "broadcasters": ["influx"]
     }
   }
 }
