@@ -17,23 +17,27 @@ function getAllFiles(dirPath: string, arrayOfFiles: string[] = []): string[] {
   return arrayOfFiles;
 }
 
-export function calculateSHA256(buffer: Buffer): string {
+export function calculateSHA256(buffer: Buffer): Buffer {
+  return createHash("sha256").update(buffer).digest();
+}
+
+export function calculateSHA256Hex(buffer: Buffer): string {
   return createHash("sha256").update(buffer).digest("hex");
 }
 
 export function calculateFileHash(filePath: string): string {
   const content = fs.readFileSync(filePath);
-  return calculateSHA256(content);
+  return calculateSHA256Hex(content);
 }
 
 export function calculateBuffersHash(buffers: Buffer[]): string {
-  const hashes = buffers.map((buffer) => calculateSHA256(buffer));
+  const hashes = buffers.map((buffer) => calculateSHA256Hex(buffer));
   return calculateCombinedHash(hashes);
 }
 
 export function calculateCombinedHash(hashes: string[]): string {
   const sortedHashes = [...hashes].sort();
-  return calculateSHA256(Buffer.from(sortedHashes.join("")));
+  return calculateSHA256Hex(Buffer.from(sortedHashes.join("")));
 }
 
 export function calculateDirectoryHash(directoryPath: string): string {
