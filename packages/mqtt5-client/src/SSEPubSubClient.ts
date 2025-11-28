@@ -38,8 +38,14 @@ export class SSEPubSubClient implements PubSubClient {
     private readonly lightGatewayAddress: string,
     httpClient?: HttpClient
   ) {
+    if (!lightGatewayAddress.startsWith("http://") && !lightGatewayAddress.startsWith("https://")) {
+      this.lightGatewayAddress = `http://${lightGatewayAddress}`;
+    }
+
     this.httpClient = httpClient ?? defaultHttpClient;
-    this.logger.info("SSEPubSubClient initialized", { lightGatewayAddress });
+    this.logger.info("SSEPubSubClient initialized", {
+      lightGatewayAddress: this.lightGatewayAddress,
+    });
   }
 
   start() {
