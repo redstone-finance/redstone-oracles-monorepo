@@ -535,7 +535,15 @@
       "rateFeed": false
     },
     "XMR": {
-      "source": ["binance-usdt", "bitfinex-usd", "coingecko", "kraken-usdt", "kucoin-usdt"],
+      "source": [
+        "bitfinex-usd",
+        "bitmart-usdt",
+        "kraken-usd",
+        "kraken-usdt",
+        "kucoin-usdt",
+        "mexc-usdt",
+        "xt"
+      ],
       "denomination": "USD",
       "rateFeed": false
     },
