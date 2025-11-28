@@ -1,9 +1,9 @@
-import { isSubsetOf, stringify } from "../common";
+import { stringify } from "../common";
 import { OperationQueue, QueueEntry } from "./OperationQueue";
 
 export class SetOperationQueue extends OperationQueue<Set<string>> {
   protected override conforms(oldId: Set<string>, newId: Set<string>, strict = false) {
-    return isSubsetOf(newId, oldId) && (!strict || isSubsetOf(oldId, newId));
+    return newId.isSupersetOf(oldId) && (!strict || oldId.isSupersetOf(newId));
   }
 
   override purge(replacedOperationIndex: number, id: Set<string>) {
