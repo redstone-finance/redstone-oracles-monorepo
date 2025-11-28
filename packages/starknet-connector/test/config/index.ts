@@ -9,7 +9,7 @@ export const PRICE_FEED_ADDRESS =
   "0x037d35a079a441e0a40a8f2d29d6626acd09092e8e6825e746631e214a6a9f43";
 
 export const config = Object.freeze(<StarknetConfig>{
-  rpcUrl: RedstoneCommon.getFromEnv("RPC_URL", z.string().url()),
+  rpcUrl: RedstoneCommon.getFromEnv("RPC_URL", z.url()),
   ownerAddress: RedstoneCommon.getFromEnv("OWNER_ADDRESS"),
   privateKey: RedstoneCommon.getFromEnv("PRIVATE_KEY"),
 });
