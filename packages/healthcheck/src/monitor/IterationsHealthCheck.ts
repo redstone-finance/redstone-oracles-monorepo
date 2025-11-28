@@ -1,5 +1,4 @@
-import { loggerFactory, RedstoneCommon } from "@redstone-finance/utils";
-import { z } from "zod";
+import { loggerFactory } from "@redstone-finance/utils";
 import { type HealthCheck, type HealthCheckResult, healthy, unhealthy } from "./common";
 
 const logger = loggerFactory("IterationHealthCheck");
@@ -11,40 +10,40 @@ const logger = loggerFactory("IterationHealthCheck");
  * This health check is useful for ensuring that a background process
  * or loop is running with expected frequency and consistency.
  *
- * Environment variables used (must be set):
- * - `HEALTHCHECK_ITERATION_PERIOD_S`: Period (in seconds) during which iteration should occur.
+ * Options
+ * - `periodInS`: Period (in seconds) during which iteration should occur.
+ * - `startPeriodInS`: Service startup period (in seconds) during which no iteration needs to be registered
+ * (i.e. when the service is starting and performs additional initialization which delays the first iteration registration)
  */
 export class IterationsHealthCheck implements HealthCheck {
-  private readonly params = Object.freeze({
-    periodInS: RedstoneCommon.getFromEnv(
-      "HEALTHCHECK_ITERATION_PERIOD_S",
-      z.number() // no sane default
-    ),
-  });
-
   private readonly startDate = new Date();
   private lastIterationDate: Date | null = null;
 
+  constructor(
+    private readonly params: {
+      periodInS: number;
+      startPeriodInS: number;
+    }
+  ) {}
+
   check(fireDate: Date): Promise<HealthCheckResult> {
     const { periodInS } = this.params;
-    const referenceDate = this.lastIterationDate ?? this.startDate;
-    const elapsed = IterationsHealthCheck.secondsBetween(referenceDate, fireDate);
-    const isStartup = !RedstoneCommon.isDefined(this.lastIterationDate);
-
-    if (elapsed <= periodInS) {
-      if (isStartup) {
-        logger.debug("Iteration check within startup period");
-      } else {
-        logger.info(
-          `Last iteration (${this.lastIterationDate?.toISOString()}) within ${periodInS}s`
-        );
-      }
+    const isWithinStartupPeriod =
+      IterationsHealthCheck.secondsBetween(this.startDate, fireDate) <= this.params.startPeriodInS;
+    if (isWithinStartupPeriod) {
+      logger.info("Still within startup period");
       return healthy();
     }
 
-    const msg = isStartup
-      ? "Still no iteration registered"
-      : `Last iteration (${this.lastIterationDate?.toISOString()}) NOT within ${periodInS}s`;
+    const referenceDate = this.lastIterationDate ?? this.startDate;
+    const elapsed = IterationsHealthCheck.secondsBetween(referenceDate, fireDate);
+
+    if (elapsed <= periodInS) {
+      logger.info(`Last iteration (${this.lastIterationDate?.toISOString()}) within ${periodInS}s`);
+      return healthy();
+    }
+
+    const msg = `Last iteration (${this.lastIterationDate?.toISOString() ?? "none registered"}) NOT within ${periodInS}s`;
     return unhealthy([msg]);
   }
 
