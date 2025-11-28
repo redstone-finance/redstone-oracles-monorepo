@@ -3681,16 +3681,13 @@
     "NECT": {
       "source": [
         "kodiak-berachain-honey-500",
-        "kodiak-berachain-usdt0-500",
-        "burrbear-berachain-usdc.e",
-        "burrbear-berachain-usdt0"
+        "kodiak-berachain-usdt0-500"
       ],
       "denomination": "USD",
       "rateFeed": false
     },
     "HONEY": {
       "source": [
-        "beraswap-berachain-usdc.e",
         "beraswap-berachain-wbera",
         "kodiak-berachain-susde-500",
         "kodiak-berachain-usdc.e-500",
@@ -7269,7 +7266,6 @@
     },
     "iBERA": {
       "source": [
-        "beraswap-berachain-wbera",
         "kodiak-berachain-wbera-500",
         "kodiak-berachain-ibgt-3000"
       ],
@@ -8511,10 +8507,8 @@
         "bitget-usdt",
         "bybit-usdt",
         "coinbase-usd",
-        "coinbase-usdc",
         "gate-usdt",
         "kraken-usd",
-        "kraken-usdc",
         "kucoin-usdt"
       ],
       "denomination": "USD",
