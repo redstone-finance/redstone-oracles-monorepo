@@ -2538,7 +2538,8 @@
         "financialmodelingprep",
         "polygon",
         "twelve-data-stocks",
-        "ws-dx-feed-no-close-price"
+        "ws-dx-feed-no-close-price",
+        "databento-no-closing-price"
       ],
       "denomination": "USD",
       "rateFeed": false
