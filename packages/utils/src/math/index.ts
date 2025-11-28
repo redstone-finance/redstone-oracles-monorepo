@@ -8,7 +8,10 @@ export * from "./monotonic-cubic-spline";
 
 export type ConvertibleToISafeNumber = number | string | Decimal | ISafeNumber | BigNumber;
 
-export const castToISafeNumber = (numberLike: ConvertibleToISafeNumber): ISafeNumber => {
+export const castToISafeNumber = (numberLike: ConvertibleToISafeNumber | null): ISafeNumber => {
+  if (numberLike === null) {
+    throw new Error(`Can not cast null to ISafeNumber`);
+  }
   if (typeof numberLike === "string" || typeof numberLike === "number") {
     return createSafeNumber(numberLike.toString());
   } else if (numberLike instanceof Decimal) {
