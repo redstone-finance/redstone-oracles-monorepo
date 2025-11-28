@@ -14,7 +14,7 @@ export const PRICE_FEED = "redstone_price_feed";
 const OUTPUT_DIR = readDeployDir();
 
 export function readUrl() {
-  return RedstoneCommon.getFromEnv("RPC_URL", z.string().url());
+  return RedstoneCommon.getFromEnv("RPC_URL", z.url());
 }
 
 export function readNetwork(): StellarNetwork {
