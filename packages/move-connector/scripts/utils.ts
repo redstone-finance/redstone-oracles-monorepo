@@ -24,9 +24,7 @@ export function makeAptos(
   const config = new AptosConfig({
     network,
     fullnode:
-      rpcUrl ??
-      RedstoneCommon.getFromEnv("RPC_URL", z.string().url().optional()) ??
-      DEFAULT_TESTNET_RPC_URL,
+      rpcUrl ?? RedstoneCommon.getFromEnv("RPC_URL", z.url().optional()) ?? DEFAULT_TESTNET_RPC_URL,
     faucet: faucetUrl ?? DEFAULT_TESTNET_FAUCET_URL,
   });
   return new Aptos(config);

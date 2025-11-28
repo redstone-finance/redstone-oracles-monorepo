@@ -9,7 +9,7 @@ export function getEnvNetwork() {
 }
 
 export function getEnvNetworkEnum() {
-  return RedstoneCommon.getFromEnv("NETWORK", z.nativeEnum(AptosAndMovementNetwork));
+  return RedstoneCommon.getFromEnv("NETWORK", z.enum(AptosAndMovementNetwork));
 }
 
 export function getEnvContractName() {

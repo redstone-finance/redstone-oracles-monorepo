@@ -48,7 +48,7 @@ export function makeAptosAccount(privateKey?: string, variant?: PrivateKeyVarian
     throw new Error("privateKey not set");
   }
   variant ??=
-    RedstoneCommon.getFromEnv("PRIVATE_KEY_SCHEMA", z.nativeEnum(PrivateKeyVariants).optional()) ??
+    RedstoneCommon.getFromEnv("PRIVATE_KEY_SCHEMA", z.enum(PrivateKeyVariants).optional()) ??
     PrivateKeyVariants.Secp256k1;
 
   return Account.fromPrivateKey({

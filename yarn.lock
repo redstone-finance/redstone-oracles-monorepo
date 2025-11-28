@@ -11490,7 +11490,7 @@ __metadata:
     madge: "npm:^8.0.0"
     markdownlint-cli2: "npm:^0.18.1"
     prettier: "npm:^3.6.2"
-    prettier-plugin-organize-imports: "npm:^4.1.0"
+    prettier-plugin-organize-imports: "npm:^4.3.0"
     prettier-plugin-solidity: "npm:^2.1.0"
     redstone-prettier-config: "npm:^1.0.0"
     rollup: "npm:^3.29.5"
@@ -33587,17 +33587,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"prettier-plugin-organize-imports@npm:^4.1.0":
-  version: 4.1.0
-  resolution: "prettier-plugin-organize-imports@npm:4.1.0"
+"prettier-plugin-organize-imports@npm:^4.3.0":
+  version: 4.3.0
+  resolution: "prettier-plugin-organize-imports@npm:4.3.0"
   peerDependencies:
     prettier: ">=2.0"
     typescript: ">=2.9"
-    vue-tsc: ^2.1.0
+    vue-tsc: ^2.1.0 || 3
   peerDependenciesMeta:
     vue-tsc:
       optional: true
-  checksum: 10c0/fb2d6d415bac96b65a77ea7de9f708e8613436aeb9d82bbe63edeb312fd1362c0d3c57319bd4cc4adfc8b9964fb6c205cbbf8efd9546931b0f9874c0ae624a6a
+  checksum: 10c0/57e5a3e611f1da6614fe1228d306b9a361d9249140abfdfcf21cffc9de13bda204c01f44bed0396786269541b63e12b05e1eab03e43d2e201320e4211af88bc6
   languageName: node
   linkType: hard
 

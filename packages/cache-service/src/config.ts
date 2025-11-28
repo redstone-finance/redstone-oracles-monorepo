@@ -53,7 +53,7 @@ const config: CacheServiceConfig = {
     "ENABLE_HISTORICAL_DATA_SERVING",
     z.boolean().default(false)
   ),
-  secondMongoDbUrl: RedstoneCommon.getFromEnv("SECOND_MONGO_DB_URL", z.string().url().optional()),
+  secondMongoDbUrl: RedstoneCommon.getFromEnv("SECOND_MONGO_DB_URL", z.url().optional()),
   maxAllowedTimestampDelay: RedstoneCommon.getFromEnv(
     "MAX_ALLOWED_TIMESTAMP_DELAY",
     z.number().positive().default(RedstoneConstants.DEFAULT_LATEST_DATA_PACKAGES_MAX_DELAY_MS)
