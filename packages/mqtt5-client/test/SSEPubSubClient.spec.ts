@@ -3,7 +3,7 @@ import { HttpClient } from "@redstone-finance/http-client";
 import { DeflateJson } from "@redstone-finance/internal-utils";
 import { SSEPubSubClient } from "../src";
 
-const GATEWAY_ADDRESS = "0.0.0.0:8000";
+const GATEWAY_ADDRESS = "http://0.0.0.0:8000";
 const SESSION_ID = "mock_session_id";
 
 class MockHttpClientAndEventSource {
