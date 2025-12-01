@@ -34,14 +34,11 @@ export class SSEPubSubClient implements PubSubClient {
   private sessionId?: string;
   private callback?: SubscribeCallback;
 
-  constructor(
-    private readonly lightGatewayAddress: string,
-    httpClient?: HttpClient
-  ) {
+  constructor(lightGatewayAddress: string, httpClient?: HttpClient) {
     this.httpClient = httpClient ?? defaultHttpClient;
     this.common = new ClientCommon(
       this.httpClient,
-      this.lightGatewayAddress,
+      lightGatewayAddress,
       POST_DATA_ROUTE,
       this.logger
     );
@@ -59,7 +56,7 @@ export class SSEPubSubClient implements PubSubClient {
     this.initialTopics = new Set(this.topics);
     const initialTopics = Array.from(this.initialTopics.keys());
     const query = initialTopics.length > 0 ? `?topics=${initialTopics.join(",")}` : "";
-    const url = `${this.lightGatewayAddress}/${SUBSCRIBE_SSE_ROUTE}${query}`;
+    const url = this.common.getUrl(`${SUBSCRIBE_SSE_ROUTE}${query}`);
 
     this.logger.info("Establishing SSE connection", { url, topicCount: initialTopics.length });
 
@@ -231,7 +228,7 @@ export class SSEPubSubClient implements PubSubClient {
 
       try {
         await this.httpClient.post(
-          `${this.lightGatewayAddress}/${UNSUBSCRIBE_FROM_TOPICS_ROUTE}`,
+          this.common.getUrl(UNSUBSCRIBE_FROM_TOPICS_ROUTE),
           { session_id: this.sessionId, topics: removedTopics },
           { headers: { "Content-Type": "application/json" } }
         );
@@ -251,7 +248,7 @@ export class SSEPubSubClient implements PubSubClient {
   }
 
   getUniqueName() {
-    return this.lightGatewayAddress;
+    return this.common.lightGatewayAddress;
   }
 
   async beNiceToServer() {
