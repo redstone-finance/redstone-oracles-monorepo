@@ -19,31 +19,57 @@
       "denomination": "other",
       "rateFeed": false
     },
-    "HL_MARK_PX_flxn:TSLA": {
+    "MARK_flxn:TSLA": {
       "broadcasters": [],
       "denomination": "USD",
       "rateFeed": false
     },
-    "HL_IMPACT_PXS_BUY_flxn:TSLA": {
-      "localCacheTTL": "8h",
+    "IMPACT_BUY_flxn:TSLA": {
       "broadcasters": [],
       "denomination": "USD",
       "rateFeed": false
     },
-    "HL_IMPACT_PXS_SELL_flxn:TSLA": {
-      "localCacheTTL": "8h",
+    "IMPACT_BUY_flxn:TSLA_EMA_1H": {
       "broadcasters": [],
       "denomination": "USD",
       "rateFeed": false
     },
-    "HL_ORACLE_PX_flxn:TSLA": {
-      "localCacheTTL": "150s",
+    "IMPACT_BUY_flxn:TSLA_EMA_8H": {
       "broadcasters": [],
       "denomination": "USD",
       "rateFeed": false
     },
-    "HL_MID_PX_flxn:TSLA": {
-      "localCacheTTL": "8h",
+    "IMPACT_SELL_flxn:TSLA": {
+      "broadcasters": [],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "IMPACT_SELL_flxn:TSLA_EMA_1H": {
+      "broadcasters": [],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "IMPACT_SELL_flxn:TSLA_EMA_8H": {
+      "broadcasters": [],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "ORACLE_flxn:TSLA": {
+      "broadcasters": [],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "ORACLE_flxn:TSLA_EMA_150S": {
+      "broadcasters": [],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "MID_flxn:TSLA": {
+      "broadcasters": [],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "MID_flxn:TSLA_EMA_150S": {
       "broadcasters": [],
       "denomination": "USD",
       "rateFeed": false
@@ -72,7 +98,7 @@
       "denomination": "USD",
       "rateFeed": false
     },
-    "HL_OPEN_INTEREST_flxn:TSLA": {
+    "OPEN_INTEREST_flxn:TSLA": {
       "broadcasters": [],
       "denomination": "USD",
       "rateFeed": false,

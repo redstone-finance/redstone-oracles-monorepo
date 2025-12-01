@@ -21,52 +21,52 @@
       "denomination": "USD",
       "rateFeed": false
     },
-    "HL_ORACLE_PX_BTC": {
+    "ORACLE_BTC": {
       "source": ["hydromancer-testnet-perps-ws-fetcher"],
       "denomination": "USD",
       "rateFeed": true
     },
-    "HL_ORACLE_PX_sekaw:BTC": {
+    "ORACLE_sekaw:BTC": {
       "source": ["hydromancer-testnet-perps-ws-fetcher"],
       "denomination": "USD",
       "rateFeed": true
     },
-    "HL_MARK_PX_BTC": {
+    "MARK_BTC": {
       "source": ["hydromancer-testnet-perps-ws-fetcher"],
       "denomination": "USD",
       "rateFeed": true
     },
-    "HL_MARK_PX_sekaw:BTC": {
+    "MARK_sekaw:BTC": {
       "source": ["hydromancer-testnet-perps-ws-fetcher"],
       "denomination": "USD",
       "rateFeed": true
     },
-    "HL_MID_PX_BTC": {
+    "MID_BTC": {
       "source": ["hydromancer-testnet-perps-ws-fetcher"],
       "denomination": "USD",
       "rateFeed": true
     },
-    "HL_MID_PX_sekaw:BTC": {
+    "MID_sekaw:BTC": {
       "source": ["hydromancer-testnet-perps-ws-fetcher"],
       "denomination": "USD",
       "rateFeed": true
     },
-    "HL_OPEN_INTEREST_BTC": {
+    "OPEN_INTEREST_BTC": {
       "source": ["hydromancer-testnet-perps-ws-fetcher"],
       "denomination": "USD",
       "rateFeed": true
     },
-    "HL_OPEN_INTEREST_sekaw:BTC": {
+    "OPEN_INTEREST_sekaw:BTC": {
       "source": ["hydromancer-testnet-perps-ws-fetcher"],
       "denomination": "USD",
       "rateFeed": true
     },
-    "HL_IMPACT_PXS_BUY_flxn:TSLA": {
+    "IMPACT_BUY_flxn:TSLA": {
       "source": ["hydromancer-testnet-perps-ws-fetcher"],
       "denomination": "USD",
       "rateFeed": true
     },
-    "HL_IMPACT_PXS_SELL_flxn:TSLA": {
+    "IMPACT_SELL_flxn:TSLA": {
       "source": ["hydromancer-testnet-perps-ws-fetcher"],
       "denomination": "USD",
       "rateFeed": true
