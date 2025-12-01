@@ -26,11 +26,7 @@ const CHAINS_TO_SKIP_REDSTONE_MULTICALL_ADDRESS_CHECK: string[] = [
   "0G Galileo Testnet",
 ];
 
-const CHAINS_TO_SKIP_STANDARD_MULTICALL_ADDRESS_CHECK: string[] = [
-  "Arbitrum Sepolia",
-  "TAC Turin",
-  "Haven1",
-];
+const CHAINS_TO_SKIP_STANDARD_MULTICALL_ADDRESS_CHECK: string[] = ["Arbitrum Sepolia", "TAC Turin"];
 
 const ChainConfigs = getLocalChainConfigs();
 
