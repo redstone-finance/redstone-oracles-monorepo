@@ -1,0 +1,16 @@
+{
+  "chain": {
+    "name": "polygon",
+    "id": 137
+  },
+  "updateTriggers": {
+    "deviationPercentage": 0.000001,
+    "timeSinceLastUpdateInMilliseconds": 43200000
+  },
+  "adapterContract": "0x239F65DD4270554ecD0473D78F27F91C9c089db0",
+  "adapterContractType": "price-feeds",
+  "dataServiceId": "redstone-primary-prod",
+  "priceFeeds": {
+    "SPKCC_NAV": "0x239F65DD4270554ecD0473D78F27F91C9c089db0"
+  }
+}
