@@ -78,40 +78,6 @@
       "denomination": "USD",
       "rateFeed": false
     },
-    "BTC_PERP": {
-      "source": [
-        "ws-perp-binance-usdt",
-        "ws-perp-bybit-usdt",
-        "ws-perp-gate-usdt",
-        "ws-perp-mexc-usdt",
-        "ws-perp-okx-usdt"
-      ],
-      "priceAggregator": "constantWeightMedian",
-      "customWeightsForWeightedMedian": {
-        "ws-perp-binance-usdt": 3,
-        "ws-perp-okx-usdt": 2,
-        "ws-perp-bybit-usdt": 2
-      },
-      "deviationCheck": {
-        "deviationWithRecentValues": {
-          "maxPercent": 30,
-          "maxDelayMilliseconds": 120000
-        }
-      },
-      "broadcasters": ["influx"],
-      "denomination": "USD",
-      "rateFeed": false
-    },
-    "HL_ORACLE_PX_BTC": {
-      "source": ["hyperliquid-testnet-perps-ws-fetcher", "hydromancer-testnet-perps-ws-fetcher"],
-      "customWeightsForWeightedMedian": {
-        "hyperliquid-testnet-perps-ws-fetcher": 10,
-        "hydromancer-testnet-perps-ws-fetcher": 1
-      },
-      "broadcasters": ["influx"],
-      "denomination": "USD",
-      "rateFeed": false
-    },
     "HL_ORACLE_PX_sekaw:BTC": {
       "source": ["hyperliquid-testnet-perps-ws-fetcher", "hydromancer-testnet-perps-ws-fetcher"],
       "customWeightsForWeightedMedian": {
@@ -203,34 +169,6 @@
           "maxDelayMilliseconds": 120000
         }
       },
-      "broadcasters": ["influx"],
-      "denomination": "USD",
-      "rateFeed": false
-    },
-    "ETH_PERP": {
-      "source": [
-        "ws-perp-binance-usdt",
-        "ws-perp-bybit-usdt",
-        "ws-perp-gate-usdt",
-        "ws-perp-mexc-usdt",
-        "ws-perp-okx-usdt"
-      ],
-      "customWeightsForWeightedMedian": {
-        "ws-perp-binance-usdt": 3,
-        "ws-perp-okx-usdt": 2,
-        "ws-perp-bybit-usdt": 2
-      },
-      "broadcasters": ["influx"],
-      "denomination": "USD",
-      "rateFeed": false
-    },
-    "HL_ORACLE_PX_ETH": {
-      "source": ["hyperliquid-testnet-perps-ws-fetcher", "hydromancer-testnet-perps-ws-fetcher"],
-      "customWeightsForWeightedMedian": {
-        "hyperliquid-testnet-perps-ws-fetcher": 10,
-        "hydromancer-testnet-perps-ws-fetcher": 1
-      },
-      "localCacheTTL": "150s",
       "broadcasters": ["influx"],
       "denomination": "USD",
       "rateFeed": false
