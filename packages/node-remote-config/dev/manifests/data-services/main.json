@@ -7546,32 +7546,32 @@
       "denomination": "USD",
       "rateFeed": false
     },
-    "HL_ORACLE_PX_BTC": {
+    "ORACLE_BTC": {
       "source": ["hyperliquid-testnet-perps-ws-fetcher"],
       "denomination": "USD",
       "rateFeed": true
     },
-    "HL_ORACLE_PX_sekaw:BTC": {
+    "ORACLE_sekaw:BTC": {
       "source": ["hyperliquid-testnet-perps-ws-fetcher"],
       "denomination": "USD",
       "rateFeed": true
     },
-    "HL_MARK_PX_BTC": {
+    "MARK_BTC": {
       "source": ["hyperliquid-testnet-perps-ws-fetcher"],
       "denomination": "USD",
       "rateFeed": true
     },
-    "HL_MARK_PX_sekaw:BTC": {
+    "MARK_sekaw:BTC": {
       "source": ["hyperliquid-testnet-perps-ws-fetcher"],
       "denomination": "USD",
       "rateFeed": true
     },
-    "HL_MID_PX_BTC": {
+    "MID_BTC": {
       "source": ["hyperliquid-testnet-perps-ws-fetcher"],
       "denomination": "USD",
       "rateFeed": true
     },
-    "HL_MID_PX_sekaw:BTC": {
+    "MID_sekaw:BTC": {
       "source": ["hyperliquid-testnet-perps-ws-fetcher"],
       "denomination": "USD",
       "rateFeed": true
