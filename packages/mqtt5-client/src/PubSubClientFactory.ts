@@ -1,7 +1,7 @@
 import { Mqtt5Client } from "./Mqtt5Client";
 import { PubSubClient } from "./PubSubClient";
 import { MqttPubSubClientConfig, SSEPubSubClientConfig } from "./PubSubClientConfig";
-import { SSEPubSubClient } from "./SSEPubSubClient";
+import { SSEPubSubClient } from "./light-gateway-clients/SSEPubSubClient";
 
 export type PubSubClientFactory = () => Promise<PubSubClient>;
 

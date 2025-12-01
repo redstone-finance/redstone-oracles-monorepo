@@ -1,16 +1,16 @@
-import { encode } from "@msgpack/msgpack";
 import { httpClient as defaultHttpClient, HttpClient } from "@redstone-finance/http-client";
-import { DeflateJson } from "@redstone-finance/internal-utils";
 import { loggerFactory, RedstoneCommon } from "@redstone-finance/utils";
 import { EventSource } from "eventsource";
-import { PubSubClient, PubSubPayload, SubscribeCallback } from "./PubSubClient";
+import { PubSubClient, PubSubPayload, SubscribeCallback } from "../PubSubClient";
+import { ClientCommon } from "./ClientCommon";
 
-const POST_DATA_ROUTE = "post-data-batch";
+export const POST_DATA_ROUTE = "post-data-batch";
 const SUBSCRIBE_SSE_ROUTE = "subscribe_sse_stream";
 const SUBSCRIBE_TO_TOPICS_ROUTE = "subscribe_to_topics";
 const UNSUBSCRIBE_FROM_TOPICS_ROUTE = "unsubscribe_from_topics";
 const CONNECTED_EVENT = "connected";
 const BATCH_EVENT = "batch";
+const CONTENT_TYPE_JSON = "application/json";
 
 type ConnectedEvent = {
   session_id: string;
@@ -28,7 +28,7 @@ export class SSEPubSubClient implements PubSubClient {
   private topics: Set<string> = new Set();
   private initialTopics: Set<string> = new Set();
   private readonly httpClient: HttpClient;
-  private readonly serializerDeserializer: DeflateJson = new DeflateJson();
+  private readonly common: ClientCommon;
 
   private eventSource?: EventSource;
   private sessionId?: string;
@@ -38,13 +38,15 @@ export class SSEPubSubClient implements PubSubClient {
     private readonly lightGatewayAddress: string,
     httpClient?: HttpClient
   ) {
-    if (!lightGatewayAddress.startsWith("http://") && !lightGatewayAddress.startsWith("https://")) {
-      this.lightGatewayAddress = `http://${lightGatewayAddress}`;
-    }
-
     this.httpClient = httpClient ?? defaultHttpClient;
+    this.common = new ClientCommon(
+      this.httpClient,
+      this.lightGatewayAddress,
+      POST_DATA_ROUTE,
+      this.logger
+    );
     this.logger.info("SSEPubSubClient initialized", {
-      lightGatewayAddress: this.lightGatewayAddress,
+      lightGatewayAddress: this.common.lightGatewayAddress,
     });
   }
 
@@ -134,7 +136,7 @@ export class SSEPubSubClient implements PubSubClient {
     let data: unknown;
 
     try {
-      data = this.serializerDeserializer.deserialize(Buffer.from(update.data, "base64"));
+      data = this.common.deserializeData(update.data);
       this.logger.info("Processing update", { topic: update.topic, dataSize: update.data.length });
     } catch (e) {
       this.logger.error("Failed to deserialize update", {
@@ -155,31 +157,7 @@ export class SSEPubSubClient implements PubSubClient {
   }
 
   async publish(payloads: PubSubPayload[]) {
-    this.logger.info("Publishing data", { payloadCount: payloads.length });
-
-    const packages = payloads.map((payload) => ({
-      topic: payload.topic,
-      data: this.serializerDeserializer.serialize(payload.data),
-    }));
-
-    const encoded = encode(packages);
-
-    this.logger.info("Sending encoded data", { byteLength: encoded.length });
-
-    try {
-      await this.httpClient.post(`${this.lightGatewayAddress}/${POST_DATA_ROUTE}`, encoded, {
-        headers: { "Content-Type": "application/msgpack" },
-      });
-
-      this.logger.info("Published data successfully", { count: packages.length });
-    } catch (e) {
-      this.logger.error("Failed to publish data", {
-        error: RedstoneCommon.stringifyError(e),
-        count: packages.length,
-      });
-
-      throw e;
-    }
+    return await this.common.publish(payloads);
   }
 
   async subscribe(topics: string[], onMessage: SubscribeCallback) {
@@ -209,9 +187,9 @@ export class SSEPubSubClient implements PubSubClient {
 
       try {
         await this.httpClient.post(
-          `${this.lightGatewayAddress}/${SUBSCRIBE_TO_TOPICS_ROUTE}`,
+          this.common.getUrl(SUBSCRIBE_TO_TOPICS_ROUTE),
           { session_id: this.sessionId, topics: newTopics },
-          { headers: { "Content-Type": "application/json" } }
+          { headers: { "Content-Type": CONTENT_TYPE_JSON } }
         );
 
         this.logger.info("Subscribed to topics successfully", { topics: newTopics });

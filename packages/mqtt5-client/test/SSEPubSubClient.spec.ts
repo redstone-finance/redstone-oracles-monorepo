@@ -1,7 +1,7 @@
 import { decode } from "@msgpack/msgpack";
 import { HttpClient } from "@redstone-finance/http-client";
 import { DeflateJson } from "@redstone-finance/internal-utils";
-import { SSEPubSubClient } from "../src";
+import { POST_DATA_ROUTE, SSEPubSubClient } from "../src";
 
 const GATEWAY_ADDRESS = "http://0.0.0.0:8000";
 const SESSION_ID = "mock_session_id";
@@ -18,7 +18,7 @@ class MockHttpClientAndEventSource {
   post(urlSuffix: string, msg: unknown, config: { headers: Record<string, string> }) {
     if (msg instanceof Object && "session_id" in msg) {
       this.postMock(urlSuffix, msg, config);
-      return;
+      return Promise.resolve({ data: {} });
     }
 
     const data = decode(msg as Buffer) as [{ topic: string; data: Buffer }];
@@ -38,6 +38,7 @@ class MockHttpClientAndEventSource {
     }));
 
     this.postMock(urlSuffix, dataRaw, config);
+    return Promise.resolve({ data: {} });
   }
 
   addEventListener(event: string, callback: (data: unknown) => void) {
@@ -76,7 +77,7 @@ describe("SSEPubSubClient", () => {
     const data = [{ topic: "topic1", data: 123 }];
     await client.publish(data);
 
-    expect(MOCK.postMock).toHaveBeenCalledWith(`${GATEWAY_ADDRESS}/post-data-batch`, data, {
+    expect(MOCK.postMock).toHaveBeenCalledWith(`${GATEWAY_ADDRESS}/${POST_DATA_ROUTE}`, data, {
       headers: { "Content-Type": "application/msgpack" },
     });
   });
@@ -88,7 +89,7 @@ describe("SSEPubSubClient", () => {
     ];
     await client.publish(data);
 
-    expect(MOCK.postMock).toHaveBeenCalledWith(`${GATEWAY_ADDRESS}/post-data-batch`, data, {
+    expect(MOCK.postMock).toHaveBeenCalledWith(`${GATEWAY_ADDRESS}/${POST_DATA_ROUTE}`, data, {
       headers: { "Content-Type": "application/msgpack" },
     });
   });
