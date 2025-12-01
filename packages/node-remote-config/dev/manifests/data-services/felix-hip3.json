@@ -18,7 +18,7 @@
       "denomination": "USD",
       "rateFeed": false
     },
-    "HL_MARK_PX_stocks:TSLA": {
+    "MARK_stocks:TSLA": {
       "source": [
         "hyperliquid-testnet-perps-ws-fetcher"
       ],
@@ -26,7 +26,7 @@
       "denomination": "USD",
       "rateFeed": false
     },
-    "HL_ORACLE_PX_stocks:TSLA": {
+    "ORACLE_stocks:TSLA": {
       "source": [
         "hyperliquid-testnet-perps-ws-fetcher"
       ],
