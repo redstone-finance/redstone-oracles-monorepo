@@ -9,7 +9,7 @@ const RETRY_CONFIG: Omit<RedstoneCommon.RetryConfig, "fn"> = {
   waitBetweenMs: 1000,
 };
 
-const CHAINS_TO_SKIP_EXTERNAL_CONFIG: string[] = ["Arbitrum Sepolia", "Haven1"];
+const CHAINS_TO_SKIP_EXTERNAL_CONFIG: string[] = ["Arbitrum Sepolia"];
 
 const ChainConfigs = getLocalChainConfigs();
 
