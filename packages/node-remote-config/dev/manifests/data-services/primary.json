@@ -3242,6 +3242,11 @@
       "denomination": "USD",
       "rateFeed": true
     },
+    "BENJI_ETHEREUM_FUNDAMENTAL": {
+      "source": ["ethereum-evm-fetcher-franklin-templeton"],
+      "denomination": "USD",
+      "rateFeed": true
+    },
     "yzUSD_FUNDAMENTAL": {
       "source": ["accountable-yzusd"],
       "denomination": "USD",
