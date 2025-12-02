@@ -1,7 +1,7 @@
 import { BlockTag } from "@ethersproject/abstract-provider";
 import { ErrorCode } from "@ethersproject/logger";
 import { Point } from "@influxdata/influxdb-client";
-import { NetworkId } from "@redstone-finance/utils";
+import { MathUtils, NetworkId } from "@redstone-finance/utils";
 import { providers } from "ethers";
 import { RedstoneEthers5Provider } from "./providers/RedstoneProvider";
 
@@ -57,4 +57,8 @@ export function getProviderNetworkInfo(
 export async function getProviderNetworkId(provider: providers.Provider): Promise<NetworkId> {
   const network = await provider.getNetwork();
   return network.chainId;
+}
+
+export function electRoundedMedian(values: number[]) {
+  return Math.round(MathUtils.getMedian(values));
 }

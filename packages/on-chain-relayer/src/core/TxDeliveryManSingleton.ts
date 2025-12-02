@@ -26,6 +26,7 @@ export const getTxDeliveryMan = (
     txNonceStaleThresholdMs: relayerConfig.txNonceStaleThresholdMs,
     minTxDeliveryTimeMs: relayerConfig.minTxDeliveryTimeMs,
     splitWaitingForTxRetries: relayerConfig.splitWaitingForTxRetries,
+    getSingleNonceTimeoutMs: relayerConfig.getSingleNonceTimeoutMs,
   });
   return deliveryMan;
 };
