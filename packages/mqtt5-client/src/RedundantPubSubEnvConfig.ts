@@ -1,10 +1,11 @@
 import { RedstoneCommon } from "@redstone-finance/utils";
 import { z } from "zod";
+import { calculateTopicCountPerConnection } from "./topics";
 
 export const RedundantPubSubEnvConfigBase = z.object({
   host: z.string(),
   // important only in the context of reader
-  expectedRequestPerSecondPerTopic: z.number(),
+  expectedRequestPerSecondPerTopic: z.number().default(calculateTopicCountPerConnection()),
 });
 
 const MqttV4Sig = RedundantPubSubEnvConfigBase.extend({
