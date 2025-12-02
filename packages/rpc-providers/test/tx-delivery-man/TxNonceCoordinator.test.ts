@@ -54,8 +54,8 @@ describe("TxNonceCoordinator", () => {
     const first = await coordinator.allocateNonce();
     const second = await coordinator.allocateNonce();
 
-    expect(first).to.eq(5);
-    expect(second).to.eq(5);
+    expect(first.nonce).to.eq(5);
+    expect(second.nonce).to.eq(5);
     Sinon.assert.calledWith(providerA.getTransactionCount, ADDRESS, "pending");
     Sinon.assert.calledWith(providerB.getTransactionCount, ADDRESS, "pending");
   });
@@ -71,12 +71,12 @@ describe("TxNonceCoordinator", () => {
       fastBroadcastMode: true,
     });
 
-    const nonce = await coordinator.allocateNonce();
-    coordinator.registerPendingTx(nonce, "0xhash");
+    const allocated = await coordinator.allocateNonce();
+    coordinator.registerPendingTx(allocated.nonce, "0xhash", 0);
 
     await clock.tickAsync(500);
 
     const next = await coordinator.allocateNonce();
-    expect(next).to.eq(nonce + 1);
+    expect(next.nonce).to.eq(allocated.nonce + 1);
   });
 });

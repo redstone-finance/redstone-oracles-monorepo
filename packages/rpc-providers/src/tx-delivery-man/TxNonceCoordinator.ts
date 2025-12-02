@@ -12,14 +12,26 @@ import type { TxDeliverySigner } from "./TxDelivery";
 const logger = loggerFactory("TxNonceCoordinator");
 const DEFAULT_STALE_TX_THRESHOLD_MS = 10_000;
 const RECONCILE_INTERVAL_MS = 500;
-// max number of pending txs processed in a single reconcile tick
+// max number of pending nonces processed in a single reconcile tick
 const RECONCILE_MAX_PENDING_PER_TICK = 100;
-// hard cap for tracked pending txs
-const MAX_PENDING_TRACKED = 1_000;
+// hard cap for tracked nonces
+const MAX_NONCES_TRACKED = 1_000;
+// max attempts per nonce
+const MAX_NONCE_ATTEMPTS = 6;
+const TX_STATUS_OK = 1;
 
-type PendingTx = {
-  hash: string;
-  addedAt: number;
+type PendingNonce = {
+  // transactions hashes associated with this nonce
+  hashes: string[];
+  // last updated timestamp
+  updatedAt: number;
+  // number of attempts made for this nonce
+  attempts: number;
+};
+
+export type AllocatedNonce = {
+  nonce: number;
+  attempt: number;
 };
 
 /**
@@ -29,8 +41,9 @@ type PendingTx = {
  */
 export class TxNonceCoordinator {
   // highest nonce considered as used
-  private lastCommittedNonce: number | undefined;
-  private readonly pendingTxs = new Map<number, PendingTx>();
+  private lastUsedNonce: number | undefined;
+  private lastConfirmedNonce: number | undefined;
+  private readonly pendingNonces = new Map<number, PendingNonce>();
   // prevent concurrent reconciliation runs
   private reconcileInProgress = false;
   // cached signer address
@@ -59,31 +72,66 @@ export class TxNonceCoordinator {
     }
   }
 
-  async allocateNonce(): Promise<number> {
+  async allocateNonce(): Promise<AllocatedNonce> {
     if (!this.fastMode) {
       throw new Error("allocating nonce is only supported in fast mode");
     }
 
-    if (this.lastCommittedNonce === undefined) {
+    if (this.lastUsedNonce === undefined || this.lastConfirmedNonce === undefined) {
       await this.alignWithChain();
     }
 
-    const next = this.lastCommittedNonce! + 1;
-    logger.log(`Allocating nonce=${next}`);
-    return next;
+    const next = this.lastUsedNonce! + 1;
+    const attempt = this.pendingNonces.get(next)?.attempts ?? 0;
+
+    logger.log(`Allocated nonce=${next} attempt=${attempt}`);
+    return { nonce: next, attempt };
   }
 
   async getNextNonceFromChain(): Promise<number> {
     return await this.getChainNonce(LATEST_BLOCK_TAG);
   }
 
-  registerPendingTx(nonce: number, txHash: string) {
+  registerPendingTx(nonce: number, txHash: string, nonceAttempt: number) {
     if (!this.fastMode) {
       return;
     }
-    this.bumpLastCommittedNonce(nonce);
-    this.pendingTxs.set(nonce, { hash: txHash, addedAt: Date.now() });
-    logger.log(`Registered pending tx nonce=${nonce} hash=${txHash}`);
+    const now = Date.now();
+    this.bumpLastUsedNonce(nonce);
+    let pendingNonce = this.pendingNonces.get(nonce);
+    if (!pendingNonce) {
+      if (this.pendingNonces.size >= MAX_NONCES_TRACKED) {
+        throw new Error(`Too many pending nonces being tracked (${this.pendingNonces.size}).`);
+      }
+
+      pendingNonce = { hashes: [], updatedAt: now, attempts: 0 };
+      this.pendingNonces.set(nonce, pendingNonce);
+    }
+
+    if (nonceAttempt > pendingNonce.attempts) {
+      throw new Error(
+        `Invalid nonceAttempt=${nonceAttempt} for nonce=${nonce}, only ${pendingNonce.attempts} attempts exist`
+      );
+    }
+    if (nonceAttempt === pendingNonce.attempts) {
+      if (pendingNonce.attempts >= MAX_NONCE_ATTEMPTS) {
+        throw new Error(`Exceeded max attempts (${MAX_NONCE_ATTEMPTS}) for nonce=${nonce}`);
+      }
+      pendingNonce.attempts++;
+    }
+
+    pendingNonce.updatedAt = now;
+
+    if (pendingNonce.hashes.includes(txHash)) {
+      logger.log(
+        `Pending tx already registered (nonce=${nonce} hash=${txHash} attempt=${nonceAttempt}). Updating timestamp.`
+      );
+    } else {
+      pendingNonce.hashes.push(txHash);
+      logger.log(
+        `Registered pending tx nonce=${nonce} hash=${txHash} attempt=${nonceAttempt} totalHashes=${pendingNonce.hashes.length} attempts=${pendingNonce.attempts}`
+      );
+    }
   }
 
   // -------------------- helpers --------------------
@@ -95,14 +143,21 @@ export class TxNonceCoordinator {
     return this.address;
   }
 
-  private bumpLastCommittedNonce(nonce: number) {
-    if (this.lastCommittedNonce === undefined || nonce > this.lastCommittedNonce) {
-      this.lastCommittedNonce = nonce;
+  private bumpLastUsedNonce(nonce: number) {
+    if (this.lastUsedNonce === undefined || nonce > this.lastUsedNonce) {
+      this.lastUsedNonce = nonce;
+    }
+  }
+
+  private bumpLastConfirmedNonce(nonce: number) {
+    this.bumpLastUsedNonce(nonce);
+    if (this.lastConfirmedNonce === undefined || nonce > this.lastConfirmedNonce) {
+      this.lastConfirmedNonce = nonce;
     }
   }
 
   private async reconcilePendingTransactions() {
-    if (!this.fastMode || this.reconcileInProgress || this.pendingTxs.size === 0) {
+    if (!this.fastMode || this.reconcileInProgress || this.pendingNonces.size === 0) {
       return;
     }
 
@@ -110,9 +165,7 @@ export class TxNonceCoordinator {
     const startedAt = Date.now();
 
     try {
-      this.enforcePendingCap();
-
-      const pendingSnapshot = [...this.pendingTxs.entries()].slice(
+      const pendingSnapshot = [...this.pendingNonces.entries()].slice(
         0,
         RECONCILE_MAX_PENDING_PER_TICK
       );
@@ -120,7 +173,7 @@ export class TxNonceCoordinator {
 
       const duration = Date.now() - startedAt;
       logger.log(
-        `Reconcile: completed in ${duration} ms (snapshot=${pendingSnapshot.length}, pending=${this.pendingTxs.size})`
+        `Reconcile: completed in ${duration} ms (snapshot=${pendingSnapshot.length}, pending=${this.pendingNonces.size})`
       );
 
       await this.alignWithChain();
@@ -129,28 +182,7 @@ export class TxNonceCoordinator {
     }
   }
 
-  private enforcePendingCap() {
-    if (this.pendingTxs.size <= MAX_PENDING_TRACKED) {
-      return;
-    }
-
-    const toDrop = this.pendingTxs.size - MAX_PENDING_TRACKED;
-    let dropped = 0;
-
-    for (const [nonce] of this.pendingTxs) {
-      this.pendingTxs.delete(nonce);
-      dropped++;
-      if (dropped >= toDrop) {
-        break;
-      }
-    }
-
-    logger.warn(
-      `Reconcile: dropped ${dropped} oldest pending tx entries to keep map size under ${MAX_PENDING_TRACKED}`
-    );
-  }
-
-  private async processPendingSnapshot(pendingSnapshot: [number, PendingTx][]) {
+  private async processPendingSnapshot(pendingSnapshot: [number, PendingNonce][]) {
     if (pendingSnapshot.length === 0) {
       return;
     }
@@ -158,10 +190,10 @@ export class TxNonceCoordinator {
     let batch: Promise<void>[] = [];
     const maxBatchSize = this.providers.length;
 
-    for (const [nonce, pending] of pendingSnapshot) {
-      const task = this.reconcileSinglePendingTx(nonce, pending).catch((e) => {
+    for (const [nonce, pendingNonce] of pendingSnapshot) {
+      const task = this.reconcileSinglePendingNonce(nonce, pendingNonce).catch((e) => {
         logger.warn(
-          `Reconcile: failed to reconcile pending tx nonce=${nonce} hash=${pending.hash} error=${String(e)}`
+          `Reconcile: failed to reconcile pending txs with nonce=${nonce} hashes=${pendingNonce.hashes.join(",")} error=${String(e)}`
         );
       });
 
@@ -178,17 +210,35 @@ export class TxNonceCoordinator {
     }
   }
 
-  private async reconcileSinglePendingTx(nonce: number, pending: PendingTx) {
+  private async reconcileSinglePendingNonce(nonce: number, pendingNonce: PendingNonce) {
+    if (this.lastConfirmedNonce !== undefined && nonce <= this.lastConfirmedNonce) {
+      this.pendingNonces.delete(nonce);
+      return;
+    }
+
     const providerIndex = nonce % this.providers.length;
     const provider = this.providers[providerIndex];
-    const receipt = await provider.getTransactionReceipt(pending.hash);
+    // check pending txs in reverse order (most recent first),
+    // because previously added were more likely to be dropped
+    for (const txHash of [...pendingNonce.hashes].reverse()) {
+      await this.checkPendingTxStatus(nonce, txHash, pendingNonce.updatedAt, provider);
+    }
+  }
+
+  private async checkPendingTxStatus(
+    nonce: number,
+    txHash: string,
+    updatedAt: number,
+    provider: providers.Provider
+  ) {
+    const receipt = await provider.getTransactionReceipt(txHash);
 
     // tx mined (success or revert)
     if (RedstoneCommon.isDefined(receipt)) {
-      this.pendingTxs.delete(nonce);
-      this.bumpLastCommittedNonce(nonce);
+      this.pendingNonces.delete(nonce);
+      this.bumpLastConfirmedNonce(nonce);
 
-      if (receipt.status === 1) {
+      if (receipt.status === TX_STATUS_OK) {
         logger.log(`Confirmed pending tx nonce=${nonce} block=${receipt.blockNumber}`);
       } else {
         logger.warn(
@@ -201,20 +251,29 @@ export class TxNonceCoordinator {
 
     // tx considered stale
     const now = Date.now();
-    if (now - pending.addedAt > this.staleTxThresholdMs) {
-      this.pendingTxs.delete(nonce);
-      logger.warn(`Stale tx nonce=${nonce} hash=${pending.hash}, stopping local tracking`);
+    if (now - updatedAt > this.staleTxThresholdMs) {
+      this.lastUsedNonce = nonce - 1;
+      logger.warn(
+        `Stale tx nonce=${nonce} hash=${txHash}, resetting lastUsedNonce to ${this.lastUsedNonce}`
+      );
     }
   }
 
   private async alignWithChain() {
-    const chainNonce = await this.getChainNonce(PENDING_BLOCK_TAG);
-
-    // chain nonce is ahead — sync local state
-    if (this.lastCommittedNonce === undefined || chainNonce > this.lastCommittedNonce + 1) {
-      const aligned = chainNonce - 1;
-      this.lastCommittedNonce = aligned;
-      logger.log(`Aligned: chainNonce=${chainNonce} -> lastCommittedNonce=${aligned}`);
+    const [pendingChainNonce, latestChainNonce] = await Promise.all([
+      this.getChainNonce(PENDING_BLOCK_TAG),
+      this.getChainNonce(LATEST_BLOCK_TAG),
+    ]);
+    if (this.lastUsedNonce === undefined || pendingChainNonce - 1 > this.lastUsedNonce) {
+      this.lastUsedNonce = pendingChainNonce - 1;
+      logger.log(`Aligned with pending nonce: lastUsedNonce=${pendingChainNonce - 1}`);
+    }
+    if (this.lastConfirmedNonce === undefined || latestChainNonce - 1 > this.lastConfirmedNonce) {
+      this.lastConfirmedNonce = latestChainNonce - 1;
+      logger.log(`Aligned with latest nonce: lastConfirmedNonce=${latestChainNonce - 1}`);
+    }
+    if (this.lastConfirmedNonce > this.lastUsedNonce) {
+      this.lastUsedNonce = this.lastConfirmedNonce;
     }
   }
 

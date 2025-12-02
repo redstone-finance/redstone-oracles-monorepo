@@ -6,7 +6,7 @@ import { ProviderWithAgreement } from "../providers/ProviderWithAgreement";
 import { ProviderWithFallback } from "../providers/ProviderWithFallback";
 import type { TxDeliveryOpts } from "./common";
 import { TxDelivery, TxDeliverySigner } from "./TxDelivery";
-import { TxNonceCoordinator } from "./TxNonceCoordinator";
+import { AllocatedNonce, TxNonceCoordinator } from "./TxNonceCoordinator";
 
 export type TxDeliveryManSupportedProviders =
   | providers.JsonRpcProvider
@@ -45,7 +45,7 @@ export class TxDeliveryMan implements Tx.ITxDeliveryMan {
     context: Tx.TxDeliveryManContext = {}
   ): Promise<() => Promise<TransactionReceipt>> {
     const startedAt = Date.now();
-    let allocatedNonce: number | undefined;
+    let allocatedNonce: AllocatedNonce | undefined;
     if (this.opts.fastBroadcastMode) {
       allocatedNonce = await this.txNonceCoordinator.allocateNonce();
     }
@@ -94,7 +94,7 @@ export class TxDeliveryMan implements Tx.ITxDeliveryMan {
     provider: providers.JsonRpcProvider,
     txDeliveryCall: Tx.TxDeliveryCall,
     deferredCallData?: () => Promise<string>,
-    allocatedNonce?: number
+    allocatedNonce?: AllocatedNonce
   ) {
     const txDelivery = createTxDelivery(
       provider,
@@ -179,7 +179,7 @@ function createTxDelivery(
   txNonceCoordinator: TxNonceCoordinator,
   opts: TxDeliveryOpts,
   deferredCallData?: () => Promise<string>,
-  allocatedNonce?: number
+  allocatedNonce?: AllocatedNonce
 ): TxDelivery {
   const rpcUrl = getProviderNetworkInfo(provider).url;
   return new TxDelivery(
