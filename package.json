@@ -46,6 +46,8 @@
     "global:object-pushToBucket": "cd $INIT_CWD && aws s3api put-object --bucket $BUCKET_NAME --key $KEY_NAME --body $FILENAME",
     "global:ts-clean": "cd $INIT_CWD && rm -rf dist coverage \"*.tsbuildinfo\"",
     "global:ts-hardhat-clean": "cd $INIT_CWD && yarn global:ts-clean && rm -rf artifacts cache typechain-types",
+    "global:depcheck": "cd $INIT_CWD && depcheck",
+    "depcheck:all": "yarn workspaces foreach --all run global:depcheck",
     "generate-paths-to-include-in-public-repo": "yarn global:ts-node scripts/generate-paths-to-include-in-public-repo.ts",
     "validate-paths-to-include-in-public-repo": "yarn global:ts-node scripts/validate-paths-to-include-in-public-repo.ts"
   },
@@ -62,6 +64,7 @@
     "@swc/core": "^1.9.2",
     "@types/jest": "^29.5.4",
     "@types/node": "^22.13.10",
+    "depcheck": "^1.4.7",
     "esbuild": "^0.25.12",
     "eslint": "^9.39.1",
     "javascript-obfuscator": "^4.1.0",
