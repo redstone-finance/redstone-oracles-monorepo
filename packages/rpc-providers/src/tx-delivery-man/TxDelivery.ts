@@ -259,9 +259,14 @@ export class TxDelivery {
               "getNextNonceFromChain",
               logger
             ),
-          this.getFees(),
-          this.gasLimitEstimator.getGasLimit(this.provider, Tx.convertToTxDeliveryCall(call)),
-          this.provider.getNetwork(),
+          logPerf(() => this.getFees(), "getFees", logger),
+          logPerf(
+            () =>
+              this.gasLimitEstimator.getGasLimit(this.provider, Tx.convertToTxDeliveryCall(call)),
+            "getGasLimit",
+            logger
+          ),
+          logPerf(() => this.provider.getNetwork(), "getNetwork", logger),
         ]),
       "prepareTransactionRequest",
       logger
@@ -360,7 +365,7 @@ export class TxDelivery {
   }
 }
 
-export function logPerf<T>(
+function logPerf<T>(
   fn: () => Promise<T>,
   label: string,
   originalLogger: RedstoneLogger
@@ -368,6 +373,6 @@ export function logPerf<T>(
   const startTime = performance.now();
   return fn().finally(() => {
     const duration = performance.now() - startTime;
-    originalLogger.warn(`${label}: ${duration}[ms]`, { duration });
+    originalLogger.debug(`${label}: ${duration}[ms]`, { duration });
   });
 }
