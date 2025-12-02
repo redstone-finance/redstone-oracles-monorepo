@@ -85,7 +85,6 @@ const calculateDeviation = (valueFromFetchedDataPackage: number, valueFromContra
   });
 
 class ValueDeviationLogTrace {
-  private dataFeedId: string = "";
   private valueFromContract: number = -1;
   private readonly valuesFromNode: number[] = [];
   private timestamp: number = -1;
@@ -97,7 +96,6 @@ class ValueDeviationLogTrace {
   private readonly warnings: string[] = [];
 
   addPerDataFeedLog(timestamp: number, valueFromContract: number, dataPoint: INumericDataPoint) {
-    this.dataFeedId = dataPoint.dataFeedId;
     this.valueFromContract = valueFromContract;
     this.timestamp = timestamp;
     this.valuesFromNode.push(dataPoint.value);
