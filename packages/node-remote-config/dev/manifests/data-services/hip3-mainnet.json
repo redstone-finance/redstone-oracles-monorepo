@@ -11,6 +11,24 @@
     }
   },
   "tokens": {
+    "flx:XMR_EXT": {
+      "source": ["emergency-fetcher"],
+      "broadcasters": ["hyperliquid-hip3"],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "flx:GOLD_EXT": {
+      "source": ["emergency-fetcher"],
+      "broadcasters": ["hyperliquid-hip3"],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "flx:SILVER_EXT": {
+      "source": ["emergency-fetcher"],
+      "broadcasters": ["hyperliquid-hip3"],
+      "denomination": "USD",
+      "rateFeed": false
+    },
     "TSLA": {
       "source": [
         "alltick-stocks-api-deferred",
