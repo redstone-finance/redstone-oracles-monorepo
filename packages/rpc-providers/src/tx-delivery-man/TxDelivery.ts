@@ -176,7 +176,7 @@ export class TxDelivery {
   }
 
   private async hasNonceIncreased(tx: DeliveryManTx): Promise<boolean> {
-    const currentNonce = await this.txNonceCoordinator.getNextNonceFromChain(this.provider);
+    const currentNonce = await this.txNonceCoordinator.getNextNonceFromChain();
     if (currentNonce > tx.nonce) {
       // transaction was already delivered because nonce increased
       this.opts.logger(`Transaction mined, nonce changed: ${tx.nonce} => ${currentNonce}`);
@@ -253,7 +253,12 @@ export class TxDelivery {
     const [currentNonce, fees, gasLimit, network] = await logPerf(
       () =>
         Promise.all([
-          this.allocatedNonce ?? this.txNonceCoordinator.getNextNonceFromChain(this.provider),
+          this.allocatedNonce ??
+            logPerf(
+              () => this.txNonceCoordinator.getNextNonceFromChain(),
+              "getNextNonceFromChain",
+              logger
+            ),
           this.getFees(),
           this.gasLimitEstimator.getGasLimit(this.provider, Tx.convertToTxDeliveryCall(call)),
           this.provider.getNetwork(),
