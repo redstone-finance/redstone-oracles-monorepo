@@ -11,7 +11,7 @@ export type ProviderWithIdentifier = {
   identifier: RpcIdentifier;
 };
 
-export class ProviderExecutor<T> {
+export class ProviderExecutor<T, I extends ProviderWithIdentifier = ProviderWithIdentifier> {
   private readonly runningPromises: { [p: string]: Promise<T> | undefined } = {};
   private static skippedRuns = 0;
   private static totalRuns = 0;
@@ -19,16 +19,13 @@ export class ProviderExecutor<T> {
 
   constructor(
     private readonly opName: string,
-    private readonly opCreator: (providerWithIdentifier: ProviderWithIdentifier) => Promise<T>,
+    private readonly opCreator: (providerWithIdentifier: I) => Promise<T>,
     private readonly logger: RedstoneLogger,
     private readonly curatedRpcList?: CuratedRpcList,
-    private readonly valueValidator?: (
-      providerWithIdentifier: ProviderWithIdentifier,
-      value: T
-    ) => void
+    private readonly valueValidator?: (providerWithIdentifier: I, value: T) => void
   ) {}
 
-  async run(providerWithIdentifier: ProviderWithIdentifier) {
+  async run(providerWithIdentifier: I) {
     const identifier = providerWithIdentifier.identifier;
     const runningPromise = this.runningPromises[identifier];
     ProviderExecutor.totalRuns++;

@@ -1,7 +1,13 @@
 import { loggerFactory, RedstoneCommon } from "@redstone-finance/utils";
 import { providers } from "ethers";
-import type { TxDeliverySigner } from "./TxDelivery";
 import { TxDeliveryOpts } from "./common";
+import {
+  LATEST_BLOCK_TAG,
+  NonceFetcher,
+  PENDING_BLOCK_TAG,
+  SupportedBlockTag,
+} from "./NonceFetcher";
+import type { TxDeliverySigner } from "./TxDelivery";
 
 const logger = loggerFactory("TxNonceCoordinator");
 const DEFAULT_STALE_TX_THRESHOLD_MS = 10_000;
@@ -29,14 +35,19 @@ export class TxNonceCoordinator {
   private reconcileInProgress = false;
   // cached signer address
   private address?: string;
-  private fastMode: boolean;
-  private staleTxThresholdMs: number = DEFAULT_STALE_TX_THRESHOLD_MS;
+  private readonly fastMode: boolean;
+  private readonly staleTxThresholdMs: number;
+  private readonly nonceFetcher: NonceFetcher;
 
   constructor(
-    private readonly providers: readonly providers.JsonRpcProvider[],
+    private readonly providers: readonly providers.Provider[],
     private readonly signer: TxDeliverySigner,
-    opts: Pick<TxDeliveryOpts, "fastBroadcastMode" | "txNonceStaleThresholdMs">
+    opts: Pick<
+      TxDeliveryOpts,
+      "fastBroadcastMode" | "txNonceStaleThresholdMs" | "getSingleNonceTimeoutMs"
+    >
   ) {
+    this.nonceFetcher = new NonceFetcher(providers, opts);
     this.fastMode = opts.fastBroadcastMode === true;
     this.staleTxThresholdMs = opts.txNonceStaleThresholdMs ?? DEFAULT_STALE_TX_THRESHOLD_MS;
     if (this.fastMode) {
@@ -62,9 +73,8 @@ export class TxNonceCoordinator {
     return next;
   }
 
-  async getNextNonceFromChain(provider: providers.JsonRpcProvider): Promise<number> {
-    const address = await this.getAddress();
-    return await provider.getTransactionCount(address, "latest");
+  async getNextNonceFromChain(): Promise<number> {
+    return await this.getChainNonce(LATEST_BLOCK_TAG);
   }
 
   registerPendingTx(nonce: number, txHash: string) {
@@ -198,21 +208,7 @@ export class TxNonceCoordinator {
   }
 
   private async alignWithChain() {
-    const address = await this.getAddress();
-
-    // use max nonce from all providers, tolerate individual failures
-    const results = await Promise.allSettled(
-      this.providers.map((p) => p.getTransactionCount(address, "pending"))
-    );
-
-    const nonces = results
-      .filter((r) => r.status === "fulfilled")
-      .map((r) => r.value)
-      .filter(Number.isFinite);
-    if (nonces.length === 0) {
-      throw new Error("No valid nonces returned from providers");
-    }
-    const chainNonce = Math.max(...nonces);
+    const chainNonce = await this.getChainNonce(PENDING_BLOCK_TAG);
 
     // chain nonce is ahead — sync local state
     if (this.lastCommittedNonce === undefined || chainNonce > this.lastCommittedNonce + 1) {
@@ -220,5 +216,11 @@ export class TxNonceCoordinator {
       this.lastCommittedNonce = aligned;
       logger.log(`Aligned: chainNonce=${chainNonce} -> lastCommittedNonce=${aligned}`);
     }
+  }
+
+  private async getChainNonce(blockTag: SupportedBlockTag) {
+    const address = await this.getAddress();
+
+    return await this.nonceFetcher.fetchNonceFromChain(address, blockTag);
   }
 }

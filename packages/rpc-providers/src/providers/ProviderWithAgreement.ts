@@ -10,8 +10,8 @@ import {
 } from "@redstone-finance/utils";
 import { BigNumber, providers, utils } from "ethers";
 import _ from "lodash";
-import { convertBlockTagToNumber, getProviderNetworkInfo } from "../common";
-import { ProviderExecutor, ProviderWithIdentifier } from "./ProviderExecutor";
+import { convertBlockTagToNumber, electRoundedMedian, getProviderNetworkInfo } from "../common";
+import { ProviderExecutor, ProviderWithIdentifier } from "../ProviderExecutor";
 import { ProviderWithFallback, ProviderWithFallbackConfig } from "./ProviderWithFallback";
 
 const MAX_BLOCK_TIME_AHEAD_HOURS = 72;
@@ -33,20 +33,11 @@ export type ProviderWithAgreementConfig = Partial<
 
 type BlockNumberOrLatest = number | "latest";
 
-const DEFAULT_ELECT_BLOCK_FN = (blockNumbers: number[]): number => {
-  blockNumbers.sort((a, b) => a - b);
-  const mid = Math.floor(blockNumbers.length / 2);
-
-  return blockNumbers.length % 2 !== 0
-    ? blockNumbers[mid]
-    : Math.round((blockNumbers[mid - 1] + blockNumbers[mid]) / 2);
-};
-
 const defaultConfig: ProviderWithAgreementSpecificConfig = {
   ignoreAgreementOnInsufficientResponses: false,
   numberOfProvidersThatHaveToAgree: 2,
   getBlockNumberTimeoutMS: 1_500,
-  electBlockFn: DEFAULT_ELECT_BLOCK_FN,
+  electBlockFn: electRoundedMedian,
   enableRpcCuratedList: false,
   minimalProvidersCount: 3,
   requireExplicitBlockTag: true,

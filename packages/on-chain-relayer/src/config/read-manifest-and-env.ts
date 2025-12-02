@@ -238,6 +238,10 @@ export const readManifestAndEnv = () => {
       "SPLIT_WAITING_FOR_TX_RETRIES",
       z.number().optional()
     ),
+    getSingleNonceTimeoutMs: RedstoneCommon.getFromEnv(
+      "GET_SINGLE_NONCE_TIMEOUT_MS",
+      z.number().optional()
+    ),
   };
 
   return { manifest, env };

@@ -22,7 +22,7 @@ async function assertTxWillBeDelivered(
 }
 
 describe("TxDeliveryMan", () => {
-  describe("with more then one provider", () => {
+  describe("with more than one provider", () => {
     let counter!: Counter;
     let connectProvider!: (provider: ethers.providers.Provider) => void;
 
