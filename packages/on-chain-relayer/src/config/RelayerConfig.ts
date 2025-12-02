@@ -86,4 +86,5 @@ export type OnChainRelayerEnv = {
   txNonceStaleThresholdMs?: number;
   minTxDeliveryTimeMs?: number;
   splitWaitingForTxRetries?: number;
+  getSingleNonceTimeoutMs?: number;
 };
