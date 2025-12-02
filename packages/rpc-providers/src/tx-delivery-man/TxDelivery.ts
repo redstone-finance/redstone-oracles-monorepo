@@ -16,7 +16,7 @@ import { Eip1559GasEstimator } from "./Eip1559GasEstimator";
 import { GasEstimator } from "./GasEstimator";
 import { GasLimitEstimator } from "./GasLimitEstimator";
 import { SplitTxWaitingStrategy } from "./SplitTxWaitingStrategy";
-import { TxNonceCoordinator } from "./TxNonceCoordinator";
+import { AllocatedNonce, TxNonceCoordinator } from "./TxNonceCoordinator";
 import { TxWaitingStrategy } from "./TxWaitingStrategy";
 
 export type ContractOverrides = {
@@ -73,7 +73,7 @@ export class TxDelivery {
     private readonly provider: providers.JsonRpcProvider,
     private readonly txNonceCoordinator: TxNonceCoordinator,
     private readonly deferredCallData?: () => Promise<string>,
-    private readonly allocatedNonce?: number
+    private readonly allocatedNonce?: AllocatedNonce
   ) {
     TxDelivery.repeatLogStart ??= Date.now();
     this.opts = _.merge({ ...DEFAULT_TX_DELIVERY_OPTS }, opts);
@@ -92,17 +92,18 @@ export class TxDelivery {
       this.attempt === 1,
       "TxDelivery.deliver can be called only once per instance"
     );
+
     let tx = await this.prepareTransactionRequest(call);
+    if (this.getNonceAttempt() > 0) {
+      tx = await this.updateTxParamsForNextAttempt(tx);
+    }
+
     let result: TransactionResponse | undefined = undefined;
 
     for (this.attempt = 1; this.attempt <= this.opts.maxAttempts; this.attempt++) {
+      this.logCurrentAttempt(tx);
       try {
-        this.logCurrentAttempt(tx);
-
         result = await this.signAndSendTx(tx);
-        if (this.opts.fastBroadcastMode) {
-          return result;
-        }
       } catch (ethersError) {
         const broadcastErrorResult = this.handleTransactionBroadcastError(
           ethersError,
@@ -136,9 +137,12 @@ export class TxDelivery {
         }
       }
 
+      if (this.opts.fastBroadcastMode) {
+        return result;
+      }
+
       try {
         await this.txWaitingStrategy.waitForTx(tx);
-
         return result;
       } catch {
         this.opts.logger("Trying with new fees...");
@@ -166,13 +170,20 @@ export class TxDelivery {
     );
   }
 
-  private async signAndSendTx(tx: DeliveryManTx) {
+  private async signAndSendTx(tx: DeliveryManTx): Promise<TransactionResponse> {
     const signedTx = await this.signer.signTransaction(tx);
     const result = await this.provider.sendTransaction(signedTx);
-    this.txNonceCoordinator.registerPendingTx(tx.nonce, result.hash);
+    this.txNonceCoordinator.registerPendingTx(tx.nonce, result.hash, this.getNonceAttempt());
     this.opts.logger(`Transaction ${result.hash} broadcasted successfully`);
-
     return result;
+  }
+
+  private getNonceAttempt(): number {
+    return this.allocatedNonce?.attempt ?? 0;
+  }
+
+  private getAttemptFactor(): number {
+    return this.attempt + this.getNonceAttempt();
   }
 
   private async hasNonceIncreased(tx: DeliveryManTx): Promise<boolean> {
@@ -243,8 +254,8 @@ export class TxDelivery {
 
     return {
       ...tx,
-      ...this.feeEstimator.scaleFees(newFees, this.attempt),
-      gasLimit: this.gasLimitEstimator.scaleGasLimit(newGasLimit, this.attempt),
+      ...this.feeEstimator.scaleFees(newFees, this.getAttemptFactor()),
+      gasLimit: this.gasLimitEstimator.scaleGasLimit(newGasLimit, this.getAttemptFactor()),
       data: newCalldata,
     };
   }
@@ -345,7 +356,7 @@ export class TxDelivery {
 
     try {
       return await RedstoneCommon.timeout(
-        gasOracle(this.opts, this.attempt),
+        gasOracle(this.opts, this.getAttemptFactor()),
         this.opts.gasOracleTimeout,
         `Custom gas oracle timeout after ${this.opts.gasOracleTimeout}`
       );
