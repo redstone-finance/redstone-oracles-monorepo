@@ -16,11 +16,12 @@ export class QuarantinedListFnDelegate implements FnDelegate {
   } = {};
 
   static getCachedConfig(rpcUrls: string[], networkId: NetworkId) {
-    const key = [networkId, ...rpcUrls].join("|");
+    const urls = Array.from(new Set(rpcUrls)).toSorted();
+    const key = [networkId, ...urls].join("|");
 
     this.configCache[key] ??= {
-      descriptions: rpcUrls,
-      delegate: new QuarantinedListFnDelegate(rpcUrls, networkId),
+      descriptions: urls,
+      delegate: new QuarantinedListFnDelegate(urls, networkId),
     };
 
     return this.configCache[key];
