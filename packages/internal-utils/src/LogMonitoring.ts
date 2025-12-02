@@ -20,13 +20,15 @@ export enum LogMonitoringType {
   HIP3_NO_VALUE_FOR_CAPPING = "HIP3_NO_VALUE_FOR_CAPPING",
   HIP3_NOT_ENOUGH_SAMPLES_FOR_EMA = "HIP3_NOT_ENOUGH_SAMPLES_FOR_EMA",
   HIP3_FAILED_TO_FETCH_DEX_META = "HIP3_FAILED_TO_FETCH_DEX_META",
-  // when fallback is activated but we get nonce duplicated error this means that fallback and main
+  // when fallback is activated, but we get nonce duplicated error this means that fallback and main
   // in parallel are trying to deliver data, this SHOULD happen only once when main was down and later
   // get back to life
   HIP3_FALLBACK_NONCE_DUPLICATED = "HIP3_FALLBACK_NONCE_DUPLICATED",
   WORKER_TIMEOUT = "WORKER_TIMEOUT",
   NO_WORKERS_IN_POOL = "NO_WORKERS_IN_POOL",
   CLOSE_TO_MISSING_HOLIDAYS_STOCKS_HIP3 = "CLOSE_TO_MISSING_HOLIDAYS_STOCKS_HIP3",
+  UNHANDLED_REJECTION = "UNHANDLED_REJECTION",
+  UNCAUGHT_EXCEPTION = "UNCAUGHT_EXCEPTION",
 }
 
 const defaultLogger = loggerFactory("LogMonitoring");
