@@ -1,6 +1,8 @@
 {
   "compilerOptions": {
     "allowJs": true,
+    "allowUnreachableCode": false,
+    "allowUnusedLabels": false,
     "composite": true,
     "declaration": true,
     "declarationMap": true,
@@ -10,10 +12,13 @@
     "forceConsistentCasingInFileNames": true,
     "isolatedModules": true,
     "module": "nodenext",
+    "moduleDetection": "force",
     "moduleResolution": "nodenext",
     "noFallthroughCasesInSwitch": true,
     "noImplicitOverride": true,
     "noImplicitReturns": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
     "outDir": "${configDir}/dist",
     "tsBuildInfoFile": "${configDir}/tsconfig.tsbuildinfo",
     "removeComments": true,
