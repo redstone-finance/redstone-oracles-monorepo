@@ -244,7 +244,7 @@ export class SSEPubSubClient implements PubSubClient {
   }
 
   getUniqueName() {
-    return this.common.lightGatewayAddress;
+    return `sse-client::${this.common.lightGatewayAddress}`;
   }
 
   async beNiceToServer() {

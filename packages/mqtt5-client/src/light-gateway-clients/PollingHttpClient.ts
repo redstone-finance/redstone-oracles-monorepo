@@ -25,12 +25,12 @@ export class PollingHttpClient implements PubSubClient {
   private isPolling = false;
 
   constructor(
-    private readonly lightGatewayAddress: string,
+    lightGatewayAddress: string,
     private readonly pollingIntervalMs = DEFAULT_INTERVAL_MS,
     httpClient?: HttpClient
   ) {
     this.httpClient = httpClient ?? defaultHttpClient;
-    this.common = new ClientCommon(this.httpClient, this.lightGatewayAddress, this.logger);
+    this.common = new ClientCommon(this.httpClient, lightGatewayAddress, this.logger);
   }
 
   async publish(payloads: PubSubPayload[]) {
@@ -66,7 +66,7 @@ export class PollingHttpClient implements PubSubClient {
   }
 
   getUniqueName() {
-    return this.lightGatewayAddress;
+    return `polling-client::${this.common.lightGatewayAddress}`;
   }
 
   stop() {
