@@ -264,7 +264,7 @@ export class TxDelivery {
     const [currentNonce, fees, gasLimit, network] = await logPerf(
       () =>
         Promise.all([
-          this.allocatedNonce ??
+          this.allocatedNonce?.nonce ??
             logPerf(
               () => this.txNonceCoordinator.getNextNonceFromChain(),
               "getNextNonceFromChain",
@@ -284,18 +284,17 @@ export class TxDelivery {
     );
 
     const { chainId } = network;
+    const priceModelDeterminant =
+      "gasPrice" in fees ? { ...fees, type: 0 as const } : { ...fees, type: 2 as const };
 
-    const transactionRequest = {
+    return {
       ...call,
       nonce: currentNonce,
       chainId,
       gasLimit,
-      ...fees,
-      type: Reflect.has(fees, "gasPrice") ? 0 : 2,
+      ...priceModelDeterminant,
       value: call.value ?? utils.parseEther("0").toHexString(),
     };
-
-    return transactionRequest as DeliveryManTx;
   }
 
   private static messageContainsAny(e: { message: string }, ...messages: string[]) {
