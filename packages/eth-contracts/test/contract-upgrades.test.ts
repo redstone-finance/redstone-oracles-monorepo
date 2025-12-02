@@ -5,17 +5,14 @@ import { ethers, upgrades } from "hardhat";
 import { RedstoneToken } from "../typechain-types";
 
 describe("Contract upgrades tests", () => {
-  let token: RedstoneToken,
-    signers: SignerWithAddress[],
-    lockingRegistry: Contract;
+  let token: RedstoneToken, signers: SignerWithAddress[], lockingRegistry: Contract;
 
   beforeEach(async () => {
     // Getting test signers
     signers = await ethers.getSigners();
 
     // Deploy RedStone token
-    const TokenContractFactory =
-      await ethers.getContractFactory("RedstoneToken");
+    const TokenContractFactory = await ethers.getContractFactory("RedstoneToken");
     token = await TokenContractFactory.deploy(1000);
     await token.deployed();
 
@@ -32,10 +29,7 @@ describe("Contract upgrades tests", () => {
 
   describe("Locking registry upgrades", () => {
     const lockTokens = async (lockingAmount: number) => {
-      const approveTx = await token.approve(
-        lockingRegistry.address,
-        lockingAmount
-      );
+      const approveTx = await token.approve(lockingRegistry.address, lockingAmount);
       await approveTx.wait();
 
       const lockingTx = await lockingRegistry.lock(lockingAmount);
@@ -44,15 +38,12 @@ describe("Contract upgrades tests", () => {
 
     it("Should work as original version (lock tokens)", async () => {
       await lockTokens(100);
-      const lockedBalance = await lockingRegistry.getMaxSlashableAmount(
-        signers[0].address
-      );
+      const lockedBalance = await lockingRegistry.getMaxSlashableAmount(signers[0].address);
       expect(lockedBalance.toNumber()).to.eql(100);
     });
 
     it("Should properly upgrade", async () => {
-      const LockingRegistryV2 =
-        await ethers.getContractFactory("LockingRegistryV2");
+      const LockingRegistryV2 = await ethers.getContractFactory("LockingRegistryV2");
       const lockingRegistryV2 = await upgrades.upgradeProxy(
         lockingRegistry.address,
         LockingRegistryV2
@@ -86,17 +77,11 @@ describe("Contract upgrades tests", () => {
     });
 
     it("Should properly upgrade", async () => {
-      const VestingWalletV2 =
-        await ethers.getContractFactory("VestingWalletV2");
-      const vestingWalletV2 = await upgrades.upgradeProxy(
-        vestingWallet.address,
-        VestingWalletV2
-      );
+      const VestingWalletV2 = await ethers.getContractFactory("VestingWalletV2");
+      const vestingWalletV2 = await upgrades.upgradeProxy(vestingWallet.address, VestingWalletV2);
 
       expect(vestingWalletV2.address).to.eql(vestingWallet.address);
-      expect((await vestingWalletV2.getUnvestedAmount(0)).toNumber()).to.eql(
-        42
-      );
+      expect((await vestingWalletV2.getUnvestedAmount(0)).toNumber()).to.eql(42);
     });
   });
 });

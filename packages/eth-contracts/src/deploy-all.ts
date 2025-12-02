@@ -1,7 +1,7 @@
 import { BigNumber } from "ethers";
 import { parseEther } from "ethers/lib/utils";
 import { existsSync, readFileSync, writeFileSync } from "fs";
-import { ethers, upgrades, network } from "hardhat";
+import { ethers, network, upgrades } from "hardhat";
 
 const DEPLOYED_CONTRACT_ADDRESSES_FILE = `./${network.name}-deployed-contracts.json`;
 const INITIAL_SUPPLY = 1_000_000_000;
@@ -65,8 +65,7 @@ async function deployTokenContract() {
 }
 
 async function deployLockingContract(tokenAddress: string) {
-  const LockingRegistryFactory =
-    await ethers.getContractFactory("LockingRegistry");
+  const LockingRegistryFactory = await ethers.getContractFactory("LockingRegistry");
   const locking = await upgrades.deployProxy(LockingRegistryFactory, [
     tokenAddress,
     AUTHORISED_SLASHER,
@@ -75,13 +74,8 @@ async function deployLockingContract(tokenAddress: string) {
   return locking.address;
 }
 
-async function prepareAllVestingContracts(
-  tokenAddress: string,
-  lockingContractAddress: string
-) {
-  for (const [beneficiaryAddress, allocation] of Object.entries(
-    VESTING_ALLOCATION
-  )) {
+async function prepareAllVestingContracts(tokenAddress: string, lockingContractAddress: string) {
+  for (const [beneficiaryAddress, allocation] of Object.entries(VESTING_ALLOCATION)) {
     // Deploying a vesting contract
     const vestingContractAddress = await deployVestingContract({
       tokenAddress,
@@ -91,19 +85,11 @@ async function prepareAllVestingContracts(
     });
 
     // Transfering tokens to the deployed vesting contract
-    await transferRedstoneTokens(
-      tokenAddress,
-      vestingContractAddress,
-      allocation
-    );
+    await transferRedstoneTokens(tokenAddress, vestingContractAddress, allocation);
   }
 }
 
-async function transferRedstoneTokens(
-  tokenAddress: string,
-  recipient: string,
-  amount: number
-) {
+async function transferRedstoneTokens(tokenAddress: string, recipient: string, amount: number) {
   console.log(`Transfering ${amount} RedStone tokens to the vesting contract`);
   const TokenContractFactory = await ethers.getContractFactory("RedstoneToken");
   const token = TokenContractFactory.attach(tokenAddress);
@@ -115,9 +101,7 @@ async function transferRedstoneTokens(
 
 async function deployVestingContract(vestingConfig: VestingContractConfig) {
   const { beneficiaryAddress } = vestingConfig;
-  console.log(
-    `\nDeploying a vesting contract for address: ${beneficiaryAddress}`
-  );
+  console.log(`\nDeploying a vesting contract for address: ${beneficiaryAddress}`);
 
   const VestingWalletFactory = await ethers.getContractFactory("VestingWallet");
   const vestingContract = await upgrades.deployProxy(VestingWalletFactory, [
@@ -131,9 +115,7 @@ async function deployVestingContract(vestingConfig: VestingContractConfig) {
   ]);
 
   saveDeployedAddress(`vesting-${beneficiaryAddress}`, vestingContract.address);
-  console.log(
-    `Vesting contract for ${beneficiaryAddress} deployed at: ${vestingContract.address}`
-  );
+  console.log(`Vesting contract for ${beneficiaryAddress} deployed at: ${vestingContract.address}`);
 
   return vestingContract.address;
 }
@@ -144,12 +126,8 @@ function toEthBN(amount: number): BigNumber {
 
 function saveDeployedAddress(contractName: string, address: string) {
   const fileName = DEPLOYED_CONTRACT_ADDRESSES_FILE;
-  console.log(
-    `Saving ${address} as address for ${contractName} to ${fileName}`
-  );
-  const savedAddresses = existsSync(fileName)
-    ? JSON.parse(readFileSync(fileName, "utf-8"))
-    : {};
+  console.log(`Saving ${address} as address for ${contractName} to ${fileName}`);
+  const savedAddresses = existsSync(fileName) ? JSON.parse(readFileSync(fileName, "utf-8")) : {};
   writeFileSync(
     DEPLOYED_CONTRACT_ADDRESSES_FILE,
     JSON.stringify(

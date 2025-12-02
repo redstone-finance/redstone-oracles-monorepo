@@ -1,19 +1,19 @@
+import type { SignerWithAddress } from "@nomiclabs/hardhat-ethers/signers";
 import { expect } from "chai";
 import { ethers } from "hardhat";
-import { RedstoneTokenFactory, RedstoneToken } from "../typechain-types";
+import { RedstoneToken, RedstoneTokenFactory } from "../typechain-types";
 
 describe("RedstoneTokenFactory", () => {
   let factory: RedstoneTokenFactory;
   let token: RedstoneToken;
-  let deployer: any;
-  let other: any;
+  let deployer: SignerWithAddress;
+  let other: SignerWithAddress;
   let deployerAddr: string;
-  let otherAddr: string;
 
   beforeEach(async () => {
     [deployer, other] = await ethers.getSigners();
     deployerAddr = await deployer.getAddress();
-    otherAddr = await other.getAddress();
+    await other.getAddress();
 
     const FactoryContract = await ethers.getContractFactory("RedstoneTokenFactory");
     factory = await FactoryContract.deploy();

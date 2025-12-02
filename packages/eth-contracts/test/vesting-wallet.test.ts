@@ -1,9 +1,9 @@
 import { SignerWithAddress } from "@nomiclabs/hardhat-ethers/signers";
 import { expect } from "chai";
-import { ethers, upgrades } from "hardhat";
-import { RedstoneToken } from "../typechain-types";
-import { time } from "../src/utils";
 import { Contract, Transaction } from "ethers";
+import { ethers, upgrades } from "hardhat";
+import { time } from "../src/utils";
+import { RedstoneToken } from "../typechain-types";
 
 describe("Vesting Wallet", () => {
   let token: RedstoneToken,
@@ -28,14 +28,12 @@ describe("Vesting Wallet", () => {
     authorisedSlasher = signers[2];
 
     // Deploy token contract
-    const TokenContractFactory =
-      await ethers.getContractFactory("RedstoneToken");
+    const TokenContractFactory = await ethers.getContractFactory("RedstoneToken");
     token = await TokenContractFactory.deploy(1000);
     await token.deployed();
 
     // Deploy locking contract
-    const LockingRegistryFactory =
-      await ethers.getContractFactory("LockingRegistry");
+    const LockingRegistryFactory = await ethers.getContractFactory("LockingRegistry");
     locking = await upgrades.deployProxy(LockingRegistryFactory, [
       token.address,
       await authorisedSlasher.getAddress(),
@@ -43,8 +41,7 @@ describe("Vesting Wallet", () => {
     ]);
 
     // Deploy wallet
-    const VestingWalletFactory =
-      await ethers.getContractFactory("VestingWallet");
+    const VestingWalletFactory = await ethers.getContractFactory("VestingWallet");
     wallet = await upgrades.deployProxy(VestingWalletFactory, [
       token.address,
       beneficiary.address,
@@ -67,9 +64,7 @@ describe("Vesting Wallet", () => {
 
   describe("No external funding", () => {
     it("Only beneficiary can try to release", async () => {
-      await expect(
-        wallet.connect(notBeneficiary).release(1)
-      ).to.be.revertedWith(
+      await expect(wallet.connect(notBeneficiary).release(1)).to.be.revertedWith(
         "VestingWallet: only beneficiary can call this function"
       );
     });

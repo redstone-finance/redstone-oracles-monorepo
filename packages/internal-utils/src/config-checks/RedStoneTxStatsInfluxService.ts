@@ -56,7 +56,7 @@ export class RedStoneTxStatsInfluxService extends InfluxService {
     const avgInterval =
       responseRows.length === 1
         ? undefined
-        : (times[0] - times[times.length - 1]) / (1000 * (responseRows.length - 1));
+        : (times[0] - times.at(-1)!) / (1000 * (responseRows.length - 1));
 
     const gasCosts = responseRows.map((row) => row.gasCost || 0);
     const count = gasCosts.length;
