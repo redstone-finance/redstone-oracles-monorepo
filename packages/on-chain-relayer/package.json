@@ -23,6 +23,7 @@
     "start:bundled": "node dist/index.js",
     "start:remote": "node dist/src/main-remote-config.js",
     "start:dev": "yarn global:ts-node --swc src/main.ts",
+    "start:debug": "yarn build:turbo && yarn start",
     "start:dev:remote": "yarn build && yarn global:ts-node --swc src/main-remote-config.ts",
     "run-manual-script": "yarn run-ts scripts/master-manual-script/index.ts",
     "lint": "yarn global:eslint . && hardhat check",
