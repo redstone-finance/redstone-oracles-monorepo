@@ -10,21 +10,17 @@ describe("Locking registry", () => {
     signers: SignerWithAddress[],
     authorisedSlasher: SignerWithAddress;
 
-  const deployContracts = async (
-    delayForUnlockingInSeconds: number = 100000
-  ) => {
+  const deployContracts = async (delayForUnlockingInSeconds: number = 100000) => {
     signers = await ethers.getSigners();
     authorisedSlasher = signers[3];
 
     // Deploy token contract
-    const TokenContractFactory =
-      await ethers.getContractFactory("RedstoneToken");
+    const TokenContractFactory = await ethers.getContractFactory("RedstoneToken");
     token = await TokenContractFactory.deploy(1000);
     await token.deployed();
 
     // Deploy locking contract
-    const LockingRegistryFactory =
-      await ethers.getContractFactory("LockingRegistry");
+    const LockingRegistryFactory = await ethers.getContractFactory("LockingRegistry");
     locking = await upgrades.deployProxy(LockingRegistryFactory, [
       token.address,
       await authorisedSlasher.getAddress(),
@@ -43,9 +39,7 @@ describe("Locking registry", () => {
   it("Should properly lock tokens", async () => {
     await deployContracts();
     await lockTokens(100);
-    const lockedBalance = await locking.getMaxSlashableAmount(
-      signers[0].address
-    );
+    const lockedBalance = await locking.getMaxSlashableAmount(signers[0].address);
     expect(lockedBalance.toNumber()).to.eql(100);
     const contractBalance = await token.balanceOf(locking.address);
     expect(contractBalance.toNumber()).to.eql(100);
@@ -59,17 +53,13 @@ describe("Locking registry", () => {
     // Request unlock
     const reqTx = await locking.requestUnlock(30);
     await reqTx.wait();
-    const lockingDetails = await locking.getUserLockingDetails(
-      signers[0].address
-    );
+    const lockingDetails = await locking.getUserLockingDetails(signers[0].address);
     expect(lockingDetails.pendingAmountToUnlock.toNumber()).to.eql(30);
 
     // Complete unlock
     const unlockTx = await locking.completeUnlock();
     await unlockTx.wait();
-    const lockedBalance = await locking.getMaxSlashableAmount(
-      signers[0].address
-    );
+    const lockedBalance = await locking.getMaxSlashableAmount(signers[0].address);
     expect(lockedBalance.toNumber()).to.eql(70);
     const contractBalance = await token.balanceOf(locking.address);
     expect(contractBalance.toNumber()).to.eql(70);
@@ -104,23 +94,17 @@ describe("Locking registry", () => {
     const reqTx = await locking.requestUnlock(30);
     await reqTx.wait();
 
-    await expect(locking.completeUnlock()).to.be.revertedWith(
-      "Unlocking is not opened yet"
-    );
+    await expect(locking.completeUnlock()).to.be.revertedWith("Unlocking is not opened yet");
   });
 
   it("Should properly slash lock", async () => {
     await deployContracts();
     await lockTokens(100);
 
-    const tx = await locking
-      .connect(authorisedSlasher)
-      .slash(signers[0].address, 99);
+    const tx = await locking.connect(authorisedSlasher).slash(signers[0].address, 99);
     await tx.wait();
 
-    const userLockedBalance = await locking.getMaxSlashableAmount(
-      signers[0].address
-    );
+    const userLockedBalance = await locking.getMaxSlashableAmount(signers[0].address);
     const slasherBalance = await token.balanceOf(authorisedSlasher.address);
     expect(userLockedBalance.toNumber()).to.eql(1);
     expect(slasherBalance.toNumber()).to.eql(99);
@@ -130,9 +114,9 @@ describe("Locking registry", () => {
     await deployContracts();
     await lockTokens(100);
 
-    await expect(
-      locking.connect(signers[1]).slash(signers[0].address, 99)
-    ).to.be.revertedWith("Tx sender is not authorised to slash locks");
+    await expect(locking.connect(signers[1]).slash(signers[0].address, 99)).to.be.revertedWith(
+      "Tx sender is not authorised to slash locks"
+    );
   });
 
   it("Should not unlock after slashing", async () => {
@@ -143,28 +127,20 @@ describe("Locking registry", () => {
     // Request unlock
     const reqTx = await locking.requestUnlock(100);
     await reqTx.wait();
-    const lockingDetails = await locking.getUserLockingDetails(
-      signers[0].address
-    );
+    const lockingDetails = await locking.getUserLockingDetails(signers[0].address);
     expect(lockingDetails.pendingAmountToUnlock.toNumber()).to.eql(100);
 
     // Slash
-    const tx = await locking
-      .connect(authorisedSlasher)
-      .slash(signers[0].address, 10);
+    const tx = await locking.connect(authorisedSlasher).slash(signers[0].address, 10);
     await tx.wait();
 
-    const userLockedBalance = await locking.getMaxSlashableAmount(
-      signers[0].address
-    );
+    const userLockedBalance = await locking.getMaxSlashableAmount(signers[0].address);
     const slasherBalance = await token.balanceOf(authorisedSlasher.address);
     expect(userLockedBalance.toNumber()).to.eql(90);
     expect(slasherBalance.toNumber()).to.eql(10);
 
     // Complete unlock
-    await expect(locking.completeUnlock()).to.be.revertedWith(
-      "Can not unlock more than locked"
-    );
+    await expect(locking.completeUnlock()).to.be.revertedWith("Can not unlock more than locked");
   });
 
   // TODO: Test unlocks with simulating passed time
