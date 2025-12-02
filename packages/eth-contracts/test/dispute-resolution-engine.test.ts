@@ -4,11 +4,7 @@ import { BigNumber } from "ethers";
 import { parseEther } from "ethers/lib/utils";
 import { ethers } from "hardhat";
 import { generateSaltForVote } from "../src/utils";
-import {
-  DisputeResolutionEngine,
-  RedstoneToken,
-  LockingRegistry,
-} from "../typechain-types";
+import { DisputeResolutionEngine, LockingRegistry, RedstoneToken } from "../typechain-types";
 
 interface ExpectedVote {
   expectToBeRevealed: boolean;
@@ -66,10 +62,7 @@ describe("Dispute resolution engine", () => {
   });
 
   it("Should properly create dispute", async () => {
-    await createDispute(
-      dataProvider.address,
-      LOCKED_AMOUNT_FOR_DISPUTE_CREATION
-    );
+    await createDispute(dataProvider.address, LOCKED_AMOUNT_FOR_DISPUTE_CREATION);
 
     await checkDisputes([
       {
@@ -91,10 +84,7 @@ describe("Dispute resolution engine", () => {
   });
 
   it("Should properly commit vote", async () => {
-    await createDispute(
-      dataProvider.address,
-      LOCKED_AMOUNT_FOR_DISPUTE_CREATION
-    );
+    await createDispute(dataProvider.address, LOCKED_AMOUNT_FOR_DISPUTE_CREATION);
     await commitVote(disputeId, MIN_LOCK_AMOUNT_FOR_VOTING, true, voters[0]);
 
     await checkVote(disputeId, voters[0].address, {
@@ -105,10 +95,7 @@ describe("Dispute resolution engine", () => {
   });
 
   it("Should not commit vote with insufficient amount of tokens", async () => {
-    await createDispute(
-      dataProvider.address,
-      LOCKED_AMOUNT_FOR_DISPUTE_CREATION
-    );
+    await createDispute(dataProvider.address, LOCKED_AMOUNT_FOR_DISPUTE_CREATION);
 
     await expect(
       commitVote(disputeId, MIN_LOCK_AMOUNT_FOR_VOTING - 1, true, voters[0])
@@ -116,10 +103,7 @@ describe("Dispute resolution engine", () => {
   });
 
   it("Should not commit vote twice for the same dispute", async () => {
-    await createDispute(
-      dataProvider.address,
-      LOCKED_AMOUNT_FOR_DISPUTE_CREATION
-    );
+    await createDispute(dataProvider.address, LOCKED_AMOUNT_FOR_DISPUTE_CREATION);
     await commitVote(disputeId, LOCKED_BY_VOTERS[0], true, voters[0]);
 
     await expect(
@@ -128,10 +112,7 @@ describe("Dispute resolution engine", () => {
   });
 
   it("Should not reveal too early", async () => {
-    await createDispute(
-      dataProvider.address,
-      LOCKED_AMOUNT_FOR_DISPUTE_CREATION
-    );
+    await createDispute(dataProvider.address, LOCKED_AMOUNT_FOR_DISPUTE_CREATION);
     await commitVote(disputeId, MIN_LOCK_AMOUNT_FOR_VOTING, true, voters[0]);
     await expect(revealVote(disputeId, true, voters[0])).to.be.revertedWith(
       "Reveal period hasn't started yet"
@@ -139,10 +120,7 @@ describe("Dispute resolution engine", () => {
   });
 
   it("Should commit and reveal vote", async () => {
-    await createDispute(
-      dataProvider.address,
-      LOCKED_AMOUNT_FOR_DISPUTE_CREATION
-    );
+    await createDispute(dataProvider.address, LOCKED_AMOUNT_FOR_DISPUTE_CREATION);
     await commitVote(disputeId, MIN_LOCK_AMOUNT_FOR_VOTING, true, voters[0]);
     await increaseBlockTimestamp(COMMIT_PERIOD_SECONDS + 1);
     await revealVote(disputeId, true, voters[0]);
@@ -190,9 +168,7 @@ describe("Dispute resolution engine", () => {
     await increaseBlockTimestamp(REVEAL_PERIOD_SECONDS);
     await settleDispute(disputeId);
 
-    await expect(settleDispute(disputeId)).to.be.revertedWith(
-      "Dispute has already been settled"
-    );
+    await expect(settleDispute(disputeId)).to.be.revertedWith("Dispute has already been settled");
   });
 
   it("Should properly claim rewards for settled dispute", async () => {
@@ -204,9 +180,9 @@ describe("Dispute resolution engine", () => {
     await claimRewardAndCheckBalance(disputeId, voters[0], 8000);
     await claimRewardAndCheckBalance(disputeId, voters[2], 8000);
     await claimRewardAndCheckBalance(disputeId, disputeCreator, 16_000);
-    expect(
-      claimRewardAndCheckBalance(disputeId, voters[1], 1)
-    ).to.be.revertedWith("User didn't win the dispute");
+    await expect(claimRewardAndCheckBalance(disputeId, voters[1], 1)).to.be.revertedWith(
+      "User didn't win the dispute"
+    );
   });
 
   it("Should not claim reward twice for the same dispute", async () => {
@@ -215,46 +191,34 @@ describe("Dispute resolution engine", () => {
     await settleDispute(disputeId);
 
     await claimRewardAndCheckBalance(disputeId, voters[0], 8000);
-    await expect(
-      claimRewardAndCheckBalance(disputeId, voters[0], 8000)
-    ).to.be.revertedWith("User already claimed reward for this dispute");
+    await expect(claimRewardAndCheckBalance(disputeId, voters[0], 8000)).to.be.revertedWith(
+      "User already claimed reward for this dispute"
+    );
   });
 
   const deployContracts = async () => {
     // Deploy token contract
-    const TokenContractFactory =
-      await ethers.getContractFactory("RedstoneToken");
+    const TokenContractFactory = await ethers.getContractFactory("RedstoneToken");
     token = await TokenContractFactory.deploy(toBigNum(TOTAL_SUPPLY));
     await token.deployed();
 
     // Deploy the dispute resolution engine contract
-    const DisputeResolutionEngineFactory = await ethers.getContractFactory(
-      "DisputeResolutionEngine"
-    );
-    disputeResolutionEngine = await DisputeResolutionEngineFactory.deploy(
-      token.address
-    );
+    const DisputeResolutionEngineFactory =
+      await ethers.getContractFactory("DisputeResolutionEngine");
+    disputeResolutionEngine = await DisputeResolutionEngineFactory.deploy(token.address);
 
     // Attachig locking registry (which was created by dispute resolution engine)
-    const lockingRegistryAddress =
-      await disputeResolutionEngine.getLockingRegistryAddress();
-    const LockingRegistryFactory =
-      await ethers.getContractFactory("LockingRegistry");
+    const lockingRegistryAddress = await disputeResolutionEngine.getLockingRegistryAddress();
+    const LockingRegistryFactory = await ethers.getContractFactory("LockingRegistry");
     locking = LockingRegistryFactory.attach(lockingRegistryAddress);
   };
 
   const sendTokensFromAdmin = async (recipient: string, amount: number) => {
-    const tx = await token
-      .connect(redstoneAdmin)
-      .transfer(recipient, toBigNum(amount));
+    const tx = await token.connect(redstoneAdmin).transfer(recipient, toBigNum(amount));
     await tx.wait();
   };
 
-  const approveTokens = async (
-    spender: string,
-    amount: number,
-    signer: SignerWithAddress
-  ) => {
+  const approveTokens = async (spender: string, amount: number, signer: SignerWithAddress) => {
     const tx = await token.connect(signer).approve(spender, toBigNum(amount));
     await tx.wait();
   };
@@ -269,41 +233,26 @@ describe("Dispute resolution engine", () => {
 
     // Lock tokens by the dataProvider
     await approveTokens(locking.address, AMOUNT_TO_LOCK, dataProvider);
-    const lockingTx = await locking
-      .connect(dataProvider)
-      .lock(toBigNum(AMOUNT_TO_LOCK));
+    const lockingTx = await locking.connect(dataProvider).lock(toBigNum(AMOUNT_TO_LOCK));
     await lockingTx.wait();
   };
 
-  const createDispute = async (
-    accusedAddress: string,
-    lockedTokensAmount: number
-  ) => {
-    await approveTokens(
-      disputeResolutionEngine.address,
-      lockedTokensAmount,
-      disputeCreator
-    );
+  const createDispute = async (accusedAddress: string, lockedTokensAmount: number) => {
+    await approveTokens(disputeResolutionEngine.address, lockedTokensAmount, disputeCreator);
     const tx = await disputeResolutionEngine
       .connect(disputeCreator)
-      .createDispute(
-        accusedAddress,
-        "MOCK_ARWEAVE_URL",
-        toBigNum(lockedTokensAmount)
-      );
+      .createDispute(accusedAddress, "MOCK_ARWEAVE_URL", toBigNum(lockedTokensAmount));
     await tx.wait();
   };
 
   const checkDisputes = async (expectedDisputes: ExpectedDispute[]) => {
     // Checking expected number of disputes
-    const disputesCountBigNum =
-      await disputeResolutionEngine.getDisputesCount();
+    const disputesCountBigNum = await disputeResolutionEngine.getDisputesCount();
     expect(disputesCountBigNum.toNumber()).to.eql(expectedDisputes.length);
 
     // Checking each dispute
     for (let disputeId = 0; disputeId < expectedDisputes.length; disputeId++) {
-      const disputeDetails =
-        await disputeResolutionEngine.getDisputeDetails(disputeId);
+      const disputeDetails = await disputeResolutionEngine.getDisputeDetails(disputeId);
       const expectedDispute = expectedDisputes[disputeId];
       expect(disputeDetails.verdict).to.eql(expectedDispute.expectedVerdict);
       expect(disputeDetails.rewardPoolTokensAmount).to.eql(
@@ -327,11 +276,7 @@ describe("Dispute resolution engine", () => {
     );
 
     // Sending a vote
-    await approveTokens(
-      disputeResolutionEngine.address,
-      lockedTokensAmount,
-      voter
-    );
+    await approveTokens(disputeResolutionEngine.address, lockedTokensAmount, voter);
     const tx = await disputeResolutionEngine
       .connect(voter)
       .commitVote(disputeId, toBigNum(lockedTokensAmount), commitHash);
@@ -360,24 +305,15 @@ describe("Dispute resolution engine", () => {
     await tx.wait();
   };
 
-  const checkVote = async (
-    disputeId: number,
-    address: string,
-    expectedVote: ExpectedVote
-  ) => {
+  const checkVote = async (disputeId: number, address: string, expectedVote: ExpectedVote) => {
     const vote = await disputeResolutionEngine.getUserVote(address, disputeId);
-    expect(vote.lockedTokensAmount).to.be.eql(
-      toBigNum(expectedVote.expectedLockedTokensAmount)
-    );
+    expect(vote.lockedTokensAmount).to.be.eql(toBigNum(expectedVote.expectedLockedTokensAmount));
     expect(vote.revealedVote).to.eql(expectedVote.expectToBeRevealed);
     expect(vote.votedForGuilty).to.be.eql(expectedVote.expectVotedForGuilty);
   };
 
   const launchDisputeAndVoteByAllVoters = async () => {
-    await createDispute(
-      dataProvider.address,
-      LOCKED_AMOUNT_FOR_DISPUTE_CREATION
-    );
+    await createDispute(dataProvider.address, LOCKED_AMOUNT_FOR_DISPUTE_CREATION);
 
     // Commiting votes
     await commitVote(disputeId, LOCKED_BY_VOTERS[0], true, voters[0]);
@@ -400,9 +336,7 @@ describe("Dispute resolution engine", () => {
     const balanceBefore = await token.balanceOf(signer.address);
 
     // Claim rewards
-    const claimTx = await disputeResolutionEngine
-      .connect(signer)
-      .claimRewardForDispute(disputeId);
+    await disputeResolutionEngine.connect(signer).claimRewardForDispute(disputeId);
 
     const balanceAfter = await token.balanceOf(signer.address);
     const reward = balanceAfter.sub(balanceBefore);

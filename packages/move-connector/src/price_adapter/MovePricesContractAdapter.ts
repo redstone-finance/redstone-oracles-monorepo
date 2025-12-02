@@ -3,13 +3,10 @@ import {
   ContractParamsProvider,
   IExtendedPricesContractAdapter,
 } from "@redstone-finance/sdk";
-import { loggerFactory } from "@redstone-finance/utils";
 import { MovePriceAdapterContractViewer } from "./MovePriceAdapterContractViewer";
 import { MovePriceAdapterContractWriter } from "./MovePriceAdapterContractWriter";
 
 export class MovePricesContractAdapter implements IExtendedPricesContractAdapter {
-  private readonly logger = loggerFactory("move-contract-adapter");
-
   constructor(
     private readonly viewer: MovePriceAdapterContractViewer,
     private readonly writer?: MovePriceAdapterContractWriter
