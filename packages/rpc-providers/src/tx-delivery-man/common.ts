@@ -21,6 +21,7 @@ export type DeliveryManTx = {
   to: string;
   data: string;
   gasLimit: number;
+  value: string;
 } & (
   | ({
       type: 2;
