@@ -113,9 +113,15 @@ export type TxDeliveryOpts = {
 
   // Split waiting for tx, for 3 retries will check the transaction after ~expectedTxDeliveryTime/2 [ms], .../4, .../8, .../16
   splitWaitingForTxRetries?: number;
+
+  // Timeout for fetching nonce from single rpc provider
+  getSingleNonceTimeoutMs?: number;
 };
 
-export type TxDeliveryOptsValidated = Omit<Required<TxDeliveryOpts>, "gasLimit"> & {
+export type TxDeliveryOptsValidated = Omit<
+  Required<TxDeliveryOpts>,
+  "gasLimit" | "getSingleNonceTimeoutMs"
+> & {
   gasLimit?: number;
 };
 

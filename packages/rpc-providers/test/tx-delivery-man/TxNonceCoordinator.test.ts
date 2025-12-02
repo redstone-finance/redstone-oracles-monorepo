@@ -1,7 +1,7 @@
 import { expect } from "chai";
 import { ethers } from "ethers";
 import Sinon from "sinon";
-import { TxDeliverySigner } from "../../src/tx-delivery-man/TxDelivery";
+import { TxDeliverySigner } from "../../src";
 import { TxNonceCoordinator } from "../../src/tx-delivery-man/TxNonceCoordinator";
 
 const ADDRESS = "0x" + "1".repeat(40);
