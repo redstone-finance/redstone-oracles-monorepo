@@ -2,8 +2,7 @@ import { httpClient as defaultHttpClient, HttpClient } from "@redstone-finance/h
 import { loggerFactory, RedstoneCommon } from "@redstone-finance/utils";
 import { PubSubClient, PubSubPayload, SubscribeCallback } from "../PubSubClient";
 import { ClientCommon } from "./ClientCommon";
-
-export const GET_DATA_ROUTE = "get_data";
+import { GET_DATA_ROUTE } from "./routes";
 
 const LOGGER_NAME = "polling-http-client";
 const CONTENT_TYPE_JSON = "application/json";
@@ -15,10 +14,6 @@ type Packages = {
   data: string[];
 };
 
-export interface PollingOptions {
-  intervalMs?: number;
-}
-
 export class PollingHttpClient implements PubSubClient {
   private readonly logger = loggerFactory(LOGGER_NAME);
   private readonly topics: Set<string> = new Set();
@@ -27,26 +22,15 @@ export class PollingHttpClient implements PubSubClient {
 
   private callback?: SubscribeCallback;
   private pollingInterval?: NodeJS.Timeout;
-  private pollingOptions: PollingOptions = {
-    intervalMs: DEFAULT_INTERVAL_MS,
-  };
   private isPolling = false;
 
   constructor(
     private readonly lightGatewayAddress: string,
-    httpClient?: HttpClient,
-    pollingOptions?: PollingOptions
+    private readonly pollingIntervalMs = DEFAULT_INTERVAL_MS,
+    httpClient?: HttpClient
   ) {
     this.httpClient = httpClient ?? defaultHttpClient;
-    this.common = new ClientCommon(
-      this.httpClient,
-      this.lightGatewayAddress,
-      GET_DATA_ROUTE,
-      this.logger
-    );
-    if (pollingOptions) {
-      this.pollingOptions = { ...this.pollingOptions, ...pollingOptions };
-    }
+    this.common = new ClientCommon(this.httpClient, this.lightGatewayAddress, this.logger);
   }
 
   async publish(payloads: PubSubPayload[]) {
@@ -62,6 +46,7 @@ export class PollingHttpClient implements PubSubClient {
     this.logger.info("Subscribed to topics", { topics });
 
     this.startPolling();
+
     return Promise.resolve();
   }
 
@@ -93,6 +78,7 @@ export class PollingHttpClient implements PubSubClient {
 
     if (topicsToFetch.length === 0) {
       this.logger.warn("No topics to fetch data for");
+
       return new Map();
     }
 
@@ -103,42 +89,49 @@ export class PollingHttpClient implements PubSubClient {
         { headers: { "Content-Type": CONTENT_TYPE_JSON } }
       );
 
-      const result = response.data.reduce((acc, data) => {
-        const topic = data.topic;
-        const decodedData = data.data
-          .map((data) => {
-            try {
-              return this.common.deserializeData(data);
-            } catch (error) {
-              if (this.callback === undefined) {
-                this.logger.warn(
-                  `Failed to deserialize data for topic ${topic}, error=${RedstoneCommon.stringifyError(error)}`
-                );
+      const result = new Map<string, unknown[]>();
+
+      for (const pkg of response.data) {
+        const deserializedItems = pkg.data
+          .map((item) =>
+            this.tryDeserialize(pkg.topic, item, (errorMsg) => {
+              if (this.callback) {
+                this.callback(pkg.topic, null, errorMsg, this);
               } else {
-                this.callback(
-                  topic,
-                  null,
-                  `Failed to deserialize data for topic ${topic}, error=${RedstoneCommon.stringifyError(error)}`,
-                  this
-                );
+                this.logger.warn(errorMsg);
               }
-              return undefined;
-            }
-          })
-          .filter((item) => item !== undefined);
-        acc.set(data.topic, decodedData);
-        return acc;
-      }, new Map<string, unknown[]>());
+            })
+          )
+          .filter((item): item is unknown => item !== undefined);
+
+        result.set(pkg.topic, deserializedItems);
+      }
 
       this.logger.debug("Fetched data", {
         topicCount: result.size,
-        totalPackages: Array.from(result.values()).reduce((sum, data) => sum + data.length, 0),
+        totalPackages: Array.from(result.values()).reduce((sum, items) => sum + items.length, 0),
       });
 
       return result;
     } catch (error) {
       this.logger.error(`Failed to fetch data, error=${RedstoneCommon.stringifyError(error)}`);
       throw error;
+    }
+  }
+
+  private tryDeserialize(
+    topic: string,
+    serializedData: string,
+    errorHandler: (errorMsg: string) => void
+  ) {
+    try {
+      return this.common.deserializeData(serializedData);
+    } catch (error) {
+      const errorMessage = `Failed to deserialize data for topic ${topic}, error=${RedstoneCommon.stringifyError(error)}`;
+
+      errorHandler(errorMessage);
+
+      return undefined;
     }
   }
 
@@ -150,18 +143,16 @@ export class PollingHttpClient implements PubSubClient {
 
     this.isPolling = true;
 
-    const intervalMs = this.pollingOptions.intervalMs ?? DEFAULT_INTERVAL_MS;
-
     this.pollingInterval = setInterval(() => {
       this.pollData().catch((error) => {
         this.logger.error(
           `Error during scheduled poll, error=${RedstoneCommon.stringifyError(error)}`
         );
       });
-    }, intervalMs);
+    }, this.pollingIntervalMs);
 
     this.logger.info("Started polling for data", {
-      intervalMs,
+      intervalMs: this.pollingIntervalMs,
       topics: Array.from(this.topics.keys()),
     });
   }
@@ -188,24 +179,28 @@ export class PollingHttpClient implements PubSubClient {
       return;
     }
 
-    let data: Map<string, unknown[]>;
+    let dataByTopic: Map<string, unknown[]>;
     try {
-      data = await this.getData();
+      dataByTopic = await this.getData();
     } catch (error) {
       this.logger.warn(`Failed to poll data, error=${RedstoneCommon.stringifyError(error)}`);
       return;
     }
 
-    for (const [topic, dataArray] of data.entries()) {
-      for (const data of dataArray) {
-        try {
-          this.callback(topic, data, null, this);
-        } catch (error) {
-          this.logger.warn(
-            `Callback failed for topic ${topic}, error=${RedstoneCommon.stringifyError(error)}`
-          );
-        }
+    for (const [topic, items] of dataByTopic.entries()) {
+      for (const item of items) {
+        this.invokeCallback(topic, item);
       }
+    }
+  }
+
+  private invokeCallback(topic: string, data: unknown) {
+    try {
+      this.callback!(topic, data, null, this);
+    } catch (error) {
+      this.logger.warn(
+        `Callback failed for topic ${topic}, error=${RedstoneCommon.stringifyError(error)}`
+      );
     }
   }
 }

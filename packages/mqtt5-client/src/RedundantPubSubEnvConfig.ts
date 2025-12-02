@@ -31,8 +31,15 @@ const MqttUnauthenticated = RedundantPubSubEnvConfigBase.extend({
   port: z.number().default(1883),
 });
 
-const SSE = RedundantPubSubEnvConfigBase.extend({
+const SSE = z.object({
+  host: z.string(),
   type: z.enum(["sse"]),
+});
+
+const Polling = z.object({
+  host: z.string(),
+  type: z.enum(["polling"]),
+  pollingIntervalMs: z.number().optional(),
 });
 
 export const RedundantPubSubEnvConfig = z.discriminatedUnion("type", [
@@ -40,5 +47,6 @@ export const RedundantPubSubEnvConfig = z.discriminatedUnion("type", [
   MqttCert,
   MqttUnauthenticated,
   SSE,
+  Polling,
 ]);
 export const RedundantPubSubEnvConfigs = RedundantPubSubEnvConfig.array().min(1);

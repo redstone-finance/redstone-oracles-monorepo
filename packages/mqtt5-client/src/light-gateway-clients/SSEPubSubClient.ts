@@ -3,11 +3,12 @@ import { loggerFactory, RedstoneCommon } from "@redstone-finance/utils";
 import { EventSource } from "eventsource";
 import { PubSubClient, PubSubPayload, SubscribeCallback } from "../PubSubClient";
 import { ClientCommon } from "./ClientCommon";
+import {
+  SUBSCRIBE_SSE_ROUTE,
+  SUBSCRIBE_TO_TOPICS_ROUTE,
+  UNSUBSCRIBE_FROM_TOPICS_ROUTE,
+} from "./routes";
 
-export const POST_DATA_ROUTE = "post-data-batch";
-const SUBSCRIBE_SSE_ROUTE = "subscribe_sse_stream";
-const SUBSCRIBE_TO_TOPICS_ROUTE = "subscribe_to_topics";
-const UNSUBSCRIBE_FROM_TOPICS_ROUTE = "unsubscribe_from_topics";
 const CONNECTED_EVENT = "connected";
 const BATCH_EVENT = "batch";
 const CONTENT_TYPE_JSON = "application/json";
@@ -36,12 +37,7 @@ export class SSEPubSubClient implements PubSubClient {
 
   constructor(lightGatewayAddress: string, httpClient?: HttpClient) {
     this.httpClient = httpClient ?? defaultHttpClient;
-    this.common = new ClientCommon(
-      this.httpClient,
-      lightGatewayAddress,
-      POST_DATA_ROUTE,
-      this.logger
-    );
+    this.common = new ClientCommon(this.httpClient, lightGatewayAddress, this.logger);
     this.logger.info("SSEPubSubClient initialized", {
       lightGatewayAddress: this.common.lightGatewayAddress,
     });

@@ -1,7 +1,6 @@
 import { HttpClient } from "@redstone-finance/http-client";
 import { DeflateJson } from "@redstone-finance/internal-utils";
-import { PollingHttpClient, PollingOptions } from "../src";
-import { GET_DATA_ROUTE } from "../src/light-gateway-clients/PollingHttpClient";
+import { GET_DATA_ROUTE, PollingHttpClient } from "../src";
 
 const GATEWAY_ADDRESS = "0.0.0.0:8000";
 
@@ -47,10 +46,11 @@ describe("PollingHttpClient", () => {
 
   beforeEach(() => {
     MOCK.init();
-    const pollingOptions: PollingOptions = {
-      intervalMs: POLLING_INTERVAL_MS,
-    };
-    client = new PollingHttpClient(GATEWAY_ADDRESS, MOCK as unknown as HttpClient, pollingOptions);
+    client = new PollingHttpClient(
+      GATEWAY_ADDRESS,
+      POLLING_INTERVAL_MS,
+      MOCK as unknown as HttpClient
+    );
   });
 
   afterEach(() => {

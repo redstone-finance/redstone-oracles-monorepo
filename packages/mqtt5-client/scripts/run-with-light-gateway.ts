@@ -1,4 +1,6 @@
-import { SSEPubSubClient } from "../src";
+import { RedstoneCommon } from "@redstone-finance/utils";
+import z from "zod";
+import { PollingHttpClient, SSEPubSubClient } from "../src";
 
 const GATEWAY_URL = "http://localhost:3000";
 const NUM_PUBLISHERS = 5;
@@ -6,6 +8,10 @@ const NUM_SUBSCRIBERS = 10;
 const TOPICS_PER_SUBSCRIBER = 20;
 const PUBLISH_INTERVAL_MS = 100;
 const SUBSCRIPTION_ROTATION_MS = 5000;
+
+const clientToUse = RedstoneCommon.getFromEnv("USE_POLLING", z.boolean().default(false))
+  ? PollingHttpClient
+  : SSEPubSubClient;
 
 type Package = {
   timestamp: number;
@@ -20,7 +26,7 @@ const createPublisher = (id: number) => {
   const topics = generateTopics(10, id, `topic`);
 
   const publish = async () => {
-    const client = new SSEPubSubClient(GATEWAY_URL);
+    const client = new clientToUse(GATEWAY_URL);
 
     for (;;) {
       const payloads = topics.map((topic) => ({
@@ -46,7 +52,7 @@ const createPublisher = (id: number) => {
 
 const createSubscriber = async (id: number) => {
   const allTopics = generateTopics(50, 0, "topic");
-  const client = new SSEPubSubClient(GATEWAY_URL);
+  const client = new clientToUse(GATEWAY_URL);
   const messageCount = new Map<string, number>();
 
   let currentOffset = id * TOPICS_PER_SUBSCRIBER;
@@ -83,7 +89,6 @@ const createSubscriber = async (id: number) => {
   const initialTopics = allTopics.slice(currentOffset, currentOffset + TOPICS_PER_SUBSCRIBER);
 
   await client.subscribe(initialTopics, callback);
-  client.start();
 
   setInterval(() => void rotateSubscriptions(), SUBSCRIPTION_ROTATION_MS);
 

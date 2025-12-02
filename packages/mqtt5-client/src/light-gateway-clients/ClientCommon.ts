@@ -3,6 +3,7 @@ import { HttpClient } from "@redstone-finance/http-client";
 import { DeflateJson } from "@redstone-finance/internal-utils";
 import { RedstoneCommon, RedstoneLogger } from "@redstone-finance/utils";
 import { PubSubPayload } from "../PubSubClient";
+import { POST_DATA_ROUTE } from "./routes";
 
 export type SerializedPackage = {
   topic: string;
@@ -18,7 +19,6 @@ export class ClientCommon {
   constructor(
     private readonly httpClient: HttpClient,
     public readonly lightGatewayAddress: string,
-    private readonly publishRoute: string,
     private readonly logger: RedstoneLogger
   ) {
     if (!lightGatewayAddress.startsWith("http://") && !lightGatewayAddress.startsWith("https://")) {
@@ -49,7 +49,7 @@ export class ClientCommon {
   }
 
   getPublishUrl() {
-    return `${this.lightGatewayAddress}/${this.publishRoute}`;
+    return `${this.lightGatewayAddress}/${POST_DATA_ROUTE}`;
   }
 
   async publish(payloads: PubSubPayload[]) {

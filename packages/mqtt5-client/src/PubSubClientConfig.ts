@@ -14,12 +14,6 @@ export type MqttPubSubClientConfig = {
   messageExpireTimeMs?: number;
 };
 
-export type SSEPubSubClientConfig = {
-  endpoint: string;
-};
-
-export type PubSubClientConfig = MqttPubSubClientConfig | SSEPubSubClientConfig;
-
 export const DEFAULT_CONFIG = {
   qos: mqtt.QoS.AtMostOnce,
   connectionTimeoutMs: 10_000,
