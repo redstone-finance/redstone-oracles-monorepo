@@ -59,7 +59,7 @@ export class RedundantPubSubClient implements PubSubClient {
     );
   }
 
-  /** Fails if any of pubsubclient fail **/
+  /** Fails if any of pub-sub clients fail **/
   async unsubscribe(topics: string[]): Promise<void> {
     await Promise.all(this.pubSubConfigs.map((config) => config.client.unsubscribe(topics)));
   }

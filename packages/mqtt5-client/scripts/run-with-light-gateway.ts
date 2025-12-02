@@ -99,12 +99,10 @@ const main = async () => {
   console.log("Starting publishers and subscribers...\n");
 
   const publishers = Array.from({ length: NUM_PUBLISHERS }, (_, i) => createPublisher(i));
-
-  const _subscribers = Promise.all(
-    Array.from({ length: NUM_SUBSCRIBERS }, (_, i) => createSubscriber(i))
-  );
+  const subscribers = Array.from({ length: NUM_SUBSCRIBERS }, (_, i) => createSubscriber(i));
 
   await Promise.race(publishers);
+  await Promise.all(subscribers);
 };
 
 main().catch(console.error);

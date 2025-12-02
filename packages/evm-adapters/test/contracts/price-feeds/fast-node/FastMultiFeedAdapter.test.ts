@@ -207,7 +207,7 @@ describe("FastMultiFeedAdapter", function () {
     const ts1 = toMicros(fixedBlockTs) + 10;
     const ts2 = ts1 + 1; // data ts increases, but block ts will be identical
 
-    const _tx1 = await adapter
+    await adapter
       .connect(updater)
       .updateDataFeedsValues(ts1, [{ dataFeedId: DATA_FEED_ID, price: price1 }]);
 
