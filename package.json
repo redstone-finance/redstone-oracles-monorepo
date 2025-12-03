@@ -101,7 +101,16 @@
     "@redstone-finance/suiangria": {
       "built": true
     },
+    "deno-bin": {
+      "built": true
+    },
+    "mongodb-memory-server": {
+      "built": true
+    },
     "node-datachannel": {
+      "built": true
+    },
+    "puppeteer": {
       "built": true
     },
     "sqlite3": {
