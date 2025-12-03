@@ -94,6 +94,20 @@
     "elliptic": "^6.6.1",
     "node-datachannel": "0.25.0"
   },
+  "dependenciesMeta": {
+    "@redstone-finance/mars-rover": {
+      "built": true
+    },
+    "@redstone-finance/suiangria": {
+      "built": true
+    },
+    "node-datachannel": {
+      "built": true
+    },
+    "sqlite3": {
+      "built": true
+    }
+  },
   "private": true,
   "workspaces": {
     "packages": [
@@ -102,5 +116,5 @@
       "packages/lambda/*"
     ]
   },
-  "packageManager": "yarn@4.5.0"
+  "packageManager": "yarn@4.11.0"
 }
