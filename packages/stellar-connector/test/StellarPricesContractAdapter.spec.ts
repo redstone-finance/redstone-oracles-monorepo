@@ -14,6 +14,8 @@ const DATA_SERVICE_ID = "redstone-primary-prod";
 const DEPLOY_CONTRACT_TIMEOUT_MS = 20 * 1_000;
 const WRITE_TEST_TIMEOUT_MS = 20 * 1_000;
 
+jest.setTimeout(30000);
+
 describe("StellarPricesContractAdapter", () => {
   let adapter: PriceAdapterStellarContractAdapter;
   let client: StellarClient;
