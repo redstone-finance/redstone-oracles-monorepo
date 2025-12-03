@@ -1662,7 +1662,8 @@
     "SolvBTC": {
       "source": [
         "pancake-swap-bnb-btcb-500",
-        "uniswap-v3-ethereum-wbtc-500"
+        "uniswap-v3-ethereum-wbtc-500",
+        "thena-v3-bnb-btcb"
       ],
       "upper": {
         "token": "BTC",
