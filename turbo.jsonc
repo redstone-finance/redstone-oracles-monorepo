@@ -1,0 +1,83 @@
+{
+  "tasks": {
+    // Build package with tsc (still does typecheck) of all files specified in tsconfig.build.json
+    // Changes in tests and scripts are ignored (both here and in tsconfig.build.json)
+    "build": {
+      "inputs": [
+        "$TURBO_DEFAULT$",
+        "$TURBO_ROOT$/tsconfig-build-common.json",
+        "!test*/**",
+        "!scripts/**",
+        "!tsconfig.json"
+      ],
+      "outputs": ["dist/**", "lambda-dist/**", "!lambda-dist/build.zip"],
+      "dependsOn": ["setup-dev"]
+    },
+    // Prepare development environment for the package (build deps + hardhat compile this pkg)
+    // This task *does not* have corresponding script in package.json
+    // It ensures that all the tooling (IDE, linters, etc.) will work in current package
+    "setup-dev": {
+      "inputs": ["package.json"],
+      "dependsOn": ["^build", "compile"]
+    },
+    // Perform a *full* typecheck according to tsconfig.json (usually includes tests and scripts).
+    "typecheck": {
+      "inputs": ["$TURBO_DEFAULT$", "$TURBO_ROOT$/tsconfig-common.json", "!tsconfig.build.json"],
+      "dependsOn": ["setup-dev"]
+    },
+    "compile": {
+      "inputs": ["hardhat.config.ts", "contracts/**"],
+      "outputs": ["typechain-types/**", "artifacts/**", "cache/**"]
+    },
+    "lint": {
+      "inputs": ["./**.{js,ts}", "$TURBO_ROOT$/eslint.config.ts"],
+      "dependsOn": ["setup-dev"]
+    },
+    "lint:fix": {
+      "cache": false,
+      "dependsOn": ["setup-dev"]
+    },
+    // Only a task named exactly "test" will be cached.
+    // Specific per-package tests can declare thier own tasks in local turbo.json
+    "test": {
+      "outputs": ["coverage/**"],
+      "dependsOn": ["setup-dev"],
+      "passThroughEnv": ["GH_AUTH_TOKEN"]
+    },
+    "bundle": {
+      "inputs": ["dist/**", "$TURBO_ROOT$/rollup-config.mjs"],
+      // If your bundle script produces other outputs, you *have* to declare them in local turbo.json
+      "outputs": ["dist/index.js"],
+      "dependsOn": ["build"]
+    },
+    "zip": {
+      "cache": false,
+      "dependsOn": ["build"]
+    },
+    "pushDev": {
+      "cache": false,
+      "dependsOn": ["zip"],
+      "passThroughEnv": [
+        "AWS_PROFILE",
+        "AWS_ACCESS_KEY_ID",
+        "AWS_SECRET_ACCESS_KEY",
+        "AWS_SESSION_TOKEN",
+        "AWS_REGION"
+      ]
+    },
+    "pushProd": {
+      "cache": false,
+      "dependsOn": ["zip"],
+      "passThroughEnv": [
+        "AWS_PROFILE",
+        "AWS_ACCESS_KEY_ID",
+        "AWS_SECRET_ACCESS_KEY",
+        "AWS_SESSION_TOKEN",
+        "AWS_REGION"
+      ]
+    },
+    "clean": {
+      "cache": false
+    }
+  }
+}

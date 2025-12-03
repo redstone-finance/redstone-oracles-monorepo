@@ -31,6 +31,8 @@ You can learn more at https://docs.redstone.finance
 - install dependencies `yarn`
 - build everything `yarn build:all`
 
+We use Turborepo to run monorepo tasks efficiently. For more info, see our [Turborepo cheatsheet](./TURBO.md).
+
 ## 🙋‍♂️ Contact
 
 Please feel free to contact us on [Discord](https://redstone.finance/discord) or email to core@redstone.finance.
