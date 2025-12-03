@@ -242,6 +242,10 @@ export const readManifestAndEnv = () => {
       "GET_SINGLE_NONCE_TIMEOUT_MS",
       z.number().optional()
     ),
+    minMaxRewardsPerBlockForPercentile: RedstoneCommon.getFromEnv(
+      "MIN_MAX_REWARDS_PER_BLOCK_FOR_PERCENTILE",
+      z.number().optional()
+    ),
   };
 
   return { manifest, env };
