@@ -9,6 +9,7 @@ export enum UpdaterType {
   main = "main",
   fallback = "fallback",
   manual = "manual",
+  rustFallback = "rust-fallback",
 }
 
 export const updaterTypes = Object.values(UpdaterType);
