@@ -117,13 +117,18 @@ export type TxDeliveryOpts = {
 
   // Timeout for fetching nonce from single rpc provider
   getSingleNonceTimeoutMs?: number;
+
+  // minimal maxRewardsPerBlockForPercentile to be used for tx before falling back to eth_maxPriorityFeePerGas
+  minMaxRewardsPerBlockForPercentile?: number;
 };
 
 export type TxDeliveryOptsValidated = Omit<
   Required<TxDeliveryOpts>,
-  "gasLimit" | "getSingleNonceTimeoutMs"
+  "gasLimit" | "getSingleNonceTimeoutMs" | "minMaxRewardsPerBlockForPercentile"
 > & {
   gasLimit?: number;
+  getSingleNonceTimeoutMs?: number;
+  minMaxRewardsPerBlockForPercentile?: number;
 };
 
 export const unsafeBnToNumber = (bn: BigNumber) => Number(bn.toString());

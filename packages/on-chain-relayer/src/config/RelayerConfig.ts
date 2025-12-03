@@ -87,4 +87,5 @@ export type OnChainRelayerEnv = {
   minTxDeliveryTimeMs?: number;
   splitWaitingForTxRetries?: number;
   getSingleNonceTimeoutMs?: number;
+  minMaxRewardsPerBlockForPercentile?: number;
 };
