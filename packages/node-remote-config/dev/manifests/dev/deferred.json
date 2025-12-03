@@ -1,0 +1,27 @@
+{
+  "interval": 1000,
+  "priceAggregator": "median",
+  "defaultSource": [
+    "coingecko"
+  ],
+  "sourceTimeout": 50000,
+  "minValidSourcesPercentage": 10,
+  "deviationCheck": {
+    "deviationWithRecentValues": {
+      "maxPercent": 25,
+      "maxDelayMilliseconds": 120000
+    }
+  },
+  "tokens": {
+    "TSLA": {
+      "source": [],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "IS_NY_STOCKS_MARKET_OPEN": {
+      "source": [],
+      "denomination": "other",
+      "rateFeed": false
+    }
+  }
+}
