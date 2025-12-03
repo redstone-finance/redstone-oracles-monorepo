@@ -28,7 +28,7 @@
     "@redstone-finance/evm-multicall": "workspace:*",
     "@redstone-finance/http-client": "workspace:*",
     "@redstone-finance/utils": "workspace:*",
-    "axios": "^1.8.4",
+    "axios": "^1.13.2",
     "ethers": "^5.7.2",
     "lodash": "^4.17.21",
     "zod": "^4.1.12"
