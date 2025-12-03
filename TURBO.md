@@ -1,7 +1,7 @@
 # Turborepo cheatsheet
 Documentation: https://turborepo.com/docs
 
-Turborepo defines *tasks* (scripts in your `package.json` files) and dependencies between them in a global `turbo.json` file at the package root. Some packages may have their own specific `turbo.json` files in the package directory, extending the root `turbo.json`.
+Turborepo defines *tasks* (scripts in your `package.json` files) and dependencies between them in a global `turbo.jsonc` file at the package root. Some packages may have their own specific `turbo.jsonc` files in the package directory, extending the root `turbo.jsonc`.
 
 ## Key concepts
 - Tasks outputs are cached by default (e.g `dist` directory)
@@ -16,7 +16,7 @@ Turborepo defines *tasks* (scripts in your `package.json` files) and dependencie
 - Use `yarn global:turbo` to access turbo binary from any subdirectory
 - Enjoyers of IDE superpowers can simply click an alias script in `package.json`: `"build:turbo"` (invokes `yarn global:turbo build` under the hood)
 - Environment variables are **NOT** passed through by default (see [Strict Env Mode](https://turborepo.com/docs/crafting-your-repository/using-environment-variables#environment-modes))
-- Some tasks may **NOT** be intended for caching (like a test that does a network call or does a blockchain lookup). In this case consider disabling the cache for this task in the local `turbo.json` for this package
+- Some tasks may **NOT** be intended for caching (like a test that does a network call or does a blockchain lookup). In this case consider disabling the cache for this task in the local `turbo.jsonc` for this package
 - Turborepo has a concept of *Remote Cache* (sharing the cache between machines, e.g in CI). The recommended approach is to use proprietary one, but the protocol is open and there are multiple open-source implementations. See [CI](#ci) section for more info
 - Turborepo collects telemetry by default (mostly stats without any sensitive data). The easiest way to opt out is `export TURBO_TELEMETRY_DISABLED=1` in your shell profile. See [docs on telemetry](https://turborepo.com/docs/telemetry) for more info.
 
