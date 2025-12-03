@@ -6,6 +6,7 @@
     },
     "bundle": {
       "inputs": ["dist/**"],
+       // Important: correctly cache all the outputs of bundle step
       "outputs": ["dist/index.js", "dist/relayer-worker.js"],
       "dependsOn": ["build"]
     }
