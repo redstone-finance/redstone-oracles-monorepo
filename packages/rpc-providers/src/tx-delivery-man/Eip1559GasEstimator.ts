@@ -68,7 +68,7 @@ export class Eip1559GasEstimator implements GasEstimator<Eip1559Fee> {
       `Fetched rewardsPerBlockForPercentile: ${rewardsPerBlockForPercentile.toString()}, having max=${maxRewardsPerBlockForPercentile}`
     );
 
-    if (maxRewardsPerBlockForPercentile !== 0) {
+    if (maxRewardsPerBlockForPercentile > (this.opts.minMaxRewardsPerBlockForPercentile ?? 0)) {
       return maxRewardsPerBlockForPercentile;
     }
 
@@ -77,7 +77,7 @@ export class Eip1559GasEstimator implements GasEstimator<Eip1559Fee> {
         await provider.send("eth_maxPriorityFeePerGas", [])
       );
       this.opts.logger(
-        `Fallback to eth_maxPriorityFeePerGas=${ethMaxPriorityFeePerGasResult}  because maxRewardsPerBlockForPercentile=0`
+        `Fallback to eth_maxPriorityFeePerGas=${ethMaxPriorityFeePerGasResult}, because maxRewardsPerBlockForPercentile=${maxRewardsPerBlockForPercentile}`
       );
       return ethMaxPriorityFeePerGasResult;
     }
