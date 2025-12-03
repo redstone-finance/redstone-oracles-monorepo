@@ -157,7 +157,7 @@ export class TxNonceCoordinator {
   }
 
   private async reconcilePendingTransactions() {
-    if (!this.fastMode || this.reconcileInProgress || this.pendingNonces.size === 0) {
+    if (!this.fastMode || this.reconcileInProgress) {
       return;
     }
 
