@@ -25,7 +25,7 @@
     "@redstone-finance/utils": "workspace:*",
     "@types/lodash": "^4.14.195",
     "asn1.js": "^5.4.1",
-    "axios": "^1.8.4",
+    "axios": "^1.13.2",
     "crypto": "^1.0.1",
     "ethereum-cryptography": "^3.2.0",
     "ethers": "^5.7.2",
