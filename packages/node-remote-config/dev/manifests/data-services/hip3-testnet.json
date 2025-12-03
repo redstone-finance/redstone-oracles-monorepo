@@ -125,7 +125,6 @@
         "hyperliquid-testnet-perps-ws-fetcher": 10,
         "hydromancer-testnet-perps-ws-fetcher": 1
       },
-      "localCacheTTL": "150s",
       "broadcasters": [
         "influx"
       ],
@@ -166,7 +165,6 @@
         "hyperliquid-testnet-perps-ws-fetcher": 10,
         "hydromancer-testnet-perps-ws-fetcher": 1
       },
-      "localCacheTTL": "8h",
       "broadcasters": [
         "influx"
       ],
@@ -277,7 +275,6 @@
         "hyperliquid-testnet-perps-ws-fetcher": 10,
         "hydromancer-testnet-perps-ws-fetcher": 1
       },
-      "localCacheTTL": "150s",
       "broadcasters": [
         "influx"
       ],
@@ -318,7 +315,6 @@
         "hyperliquid-testnet-perps-ws-fetcher": 10,
         "hydromancer-testnet-perps-ws-fetcher": 1
       },
-      "localCacheTTL": "8h",
       "broadcasters": [
         "influx"
       ],
@@ -434,7 +430,6 @@
         "hyperliquid-testnet-perps-ws-fetcher": 10,
         "hydromancer-testnet-perps-ws-fetcher": 1
       },
-      "localCacheTTL": "8h",
       "broadcasters": [
         "influx"
       ],
@@ -470,7 +465,6 @@
         "hyperliquid-testnet-perps-ws-fetcher": 10,
         "hydromancer-testnet-perps-ws-fetcher": 1
       },
-      "localCacheTTL": "8h",
       "broadcasters": [
         "influx"
       ],
@@ -506,7 +500,6 @@
         "hyperliquid-testnet-perps-ws-fetcher": 10,
         "hydromancer-testnet-perps-ws-fetcher": 1
       },
-      "localCacheTTL": "150s",
       "broadcasters": [
         "influx"
       ],
@@ -532,7 +525,6 @@
         "hyperliquid-testnet-perps-ws-fetcher": 10,
         "hydromancer-testnet-perps-ws-fetcher": 1
       },
-      "localCacheTTL": "8h",
       "broadcasters": [
         "influx"
       ],
@@ -643,7 +635,6 @@
         "hyperliquid-testnet-perps-ws-fetcher": 10,
         "hydromancer-testnet-perps-ws-fetcher": 1
       },
-      "localCacheTTL": "8h",
       "broadcasters": [
         "influx"
       ],
@@ -679,7 +670,6 @@
         "hyperliquid-testnet-perps-ws-fetcher": 10,
         "hydromancer-testnet-perps-ws-fetcher": 1
       },
-      "localCacheTTL": "8h",
       "broadcasters": [
         "influx"
       ],
@@ -715,7 +705,6 @@
         "hyperliquid-testnet-perps-ws-fetcher": 10,
         "hydromancer-testnet-perps-ws-fetcher": 1
       },
-      "localCacheTTL": "150s",
       "broadcasters": [
         "influx"
       ],
@@ -741,7 +730,6 @@
         "hyperliquid-testnet-perps-ws-fetcher": 10,
         "hydromancer-testnet-perps-ws-fetcher": 1
       },
-      "localCacheTTL": "8h",
       "broadcasters": [
         "influx"
       ],
@@ -838,7 +826,6 @@
         "hyperliquid-mainnet-perps-ws-fetcher": 10,
         "hydromancer-mainnet-perps-ws-fetcher": 1
       },
-      "localCacheTTL": "8h",
       "broadcasters": [
         "influx"
       ],
@@ -874,7 +861,6 @@
         "hyperliquid-mainnet-perps-ws-fetcher": 10,
         "hydromancer-mainnet-perps-ws-fetcher": 1
       },
-      "localCacheTTL": "8h",
       "broadcasters": [
         "influx"
       ],
@@ -910,7 +896,6 @@
         "hyperliquid-mainnet-perps-ws-fetcher": 10,
         "hydromancer-mainnet-perps-ws-fetcher": 1
       },
-      "localCacheTTL": "150s",
       "broadcasters": [
         "influx"
       ],
@@ -936,7 +921,6 @@
         "hyperliquid-mainnet-perps-ws-fetcher": 10,
         "hydromancer-mainnet-perps-ws-fetcher": 1
       },
-      "localCacheTTL": "8h",
       "broadcasters": [
         "influx"
       ],
@@ -1033,7 +1017,6 @@
         "hyperliquid-mainnet-perps-ws-fetcher": 10,
         "hydromancer-mainnet-perps-ws-fetcher": 1
       },
-      "localCacheTTL": "8h",
       "broadcasters": [
         "influx"
       ],
@@ -1069,7 +1052,6 @@
         "hyperliquid-mainnet-perps-ws-fetcher": 10,
         "hydromancer-mainnet-perps-ws-fetcher": 1
       },
-      "localCacheTTL": "8h",
       "broadcasters": [
         "influx"
       ],
@@ -1105,7 +1087,6 @@
         "hyperliquid-mainnet-perps-ws-fetcher": 10,
         "hydromancer-mainnet-perps-ws-fetcher": 1
       },
-      "localCacheTTL": "150s",
       "broadcasters": [
         "influx"
       ],
@@ -1131,7 +1112,6 @@
         "hyperliquid-mainnet-perps-ws-fetcher": 10,
         "hydromancer-mainnet-perps-ws-fetcher": 1
       },
-      "localCacheTTL": "8h",
       "broadcasters": [
         "influx"
       ],
@@ -1242,7 +1222,6 @@
         "hyperliquid-mainnet-perps-ws-fetcher": 10,
         "hydromancer-mainnet-perps-ws-fetcher": 1
       },
-      "localCacheTTL": "8h",
       "broadcasters": [
         "influx"
       ],
@@ -1278,7 +1257,6 @@
         "hyperliquid-mainnet-perps-ws-fetcher": 10,
         "hydromancer-mainnet-perps-ws-fetcher": 1
       },
-      "localCacheTTL": "8h",
       "broadcasters": [
         "influx"
       ],
@@ -1314,7 +1292,6 @@
         "hyperliquid-mainnet-perps-ws-fetcher": 10,
         "hydromancer-mainnet-perps-ws-fetcher": 1
       },
-      "localCacheTTL": "150s",
       "broadcasters": [
         "influx"
       ],
@@ -1340,7 +1317,6 @@
         "hyperliquid-mainnet-perps-ws-fetcher": 10,
         "hydromancer-mainnet-perps-ws-fetcher": 1
       },
-      "localCacheTTL": "8h",
       "broadcasters": [
         "influx"
       ],
@@ -1451,7 +1427,6 @@
         "hyperliquid-mainnet-perps-ws-fetcher": 10,
         "hydromancer-mainnet-perps-ws-fetcher": 1
       },
-      "localCacheTTL": "8h",
       "broadcasters": [
         "influx"
       ],
@@ -1487,7 +1462,6 @@
         "hyperliquid-mainnet-perps-ws-fetcher": 10,
         "hydromancer-mainnet-perps-ws-fetcher": 1
       },
-      "localCacheTTL": "8h",
       "broadcasters": [
         "influx"
       ],
@@ -1523,7 +1497,6 @@
         "hyperliquid-mainnet-perps-ws-fetcher": 10,
         "hydromancer-mainnet-perps-ws-fetcher": 1
       },
-      "localCacheTTL": "150s",
       "broadcasters": [
         "influx"
       ],
@@ -1549,7 +1522,6 @@
         "hyperliquid-mainnet-perps-ws-fetcher": 10,
         "hydromancer-mainnet-perps-ws-fetcher": 1
       },
-      "localCacheTTL": "8h",
       "broadcasters": [
         "influx"
       ],
@@ -1660,7 +1632,6 @@
         "hyperliquid-mainnet-perps-ws-fetcher": 10,
         "hydromancer-mainnet-perps-ws-fetcher": 1
       },
-      "localCacheTTL": "8h",
       "broadcasters": [
         "influx"
       ],
@@ -1696,7 +1667,6 @@
         "hyperliquid-mainnet-perps-ws-fetcher": 10,
         "hydromancer-mainnet-perps-ws-fetcher": 1
       },
-      "localCacheTTL": "8h",
       "broadcasters": [
         "influx"
       ],
@@ -1732,7 +1702,6 @@
         "hyperliquid-mainnet-perps-ws-fetcher": 10,
         "hydromancer-mainnet-perps-ws-fetcher": 1
       },
-      "localCacheTTL": "150s",
       "broadcasters": [
         "influx"
       ],
@@ -1758,7 +1727,6 @@
         "hyperliquid-mainnet-perps-ws-fetcher": 10,
         "hydromancer-mainnet-perps-ws-fetcher": 1
       },
-      "localCacheTTL": "8h",
       "broadcasters": [
         "influx"
       ],
