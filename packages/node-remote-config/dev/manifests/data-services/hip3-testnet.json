@@ -61,7 +61,7 @@
       ],
       "deviationCheck": {
         "deviationWithRecentValues": {
-          "maxPercent": 30,
+          "maxPercent": 100,
           "maxDelayMilliseconds": 120000
         }
       },
@@ -88,7 +88,7 @@
       ],
       "deviationCheck": {
         "deviationWithRecentValues": {
-          "maxPercent": 30,
+          "maxPercent": 50,
           "maxDelayMilliseconds": 120000
         }
       },
@@ -107,7 +107,7 @@
       "rateFeed": false
     },
     "ORACLE_sekaw:BTC_EMA_150S": {
-      "source": ["hyperliquid-hip3-ema"],
+      "source": ["ema"],
       "broadcasters": ["influx"],
       "denomination": "USD",
       "rateFeed": false
@@ -133,7 +133,7 @@
       "rateFeed": false
     },
     "MID_sekaw:BTC_EMA_150S": {
-      "source": ["hyperliquid-hip3-ema"],
+      "source": ["ema"],
       "broadcasters": ["influx"],
       "denomination": "USD",
       "rateFeed": false
@@ -193,7 +193,7 @@
       ],
       "deviationCheck": {
         "deviationWithRecentValues": {
-          "maxPercent": 30,
+          "maxPercent": 50,
           "maxDelayMilliseconds": 120000
         }
       },
@@ -212,7 +212,7 @@
       "rateFeed": false
     },
     "ORACLE_sekaw:ETH_EMA_150S": {
-      "source": ["hyperliquid-hip3-ema"],
+      "source": ["ema"],
       "broadcasters": ["influx"],
       "denomination": "USD",
       "rateFeed": false
@@ -238,7 +238,7 @@
       "rateFeed": false
     },
     "MID_sekaw:ETH_EMA_150S": {
-      "source": ["hyperliquid-hip3-ema"],
+      "source": ["ema"],
       "broadcasters": ["influx"],
       "denomination": "USD",
       "rateFeed": false
@@ -325,13 +325,13 @@
       "rateFeed": false
     },
     "IMPACT_BUY_flxn:TSLA_EMA_1H": {
-      "source": ["hyperliquid-hip3-ema"],
+      "source": ["ema"],
       "broadcasters": ["influx"],
       "denomination": "USD",
       "rateFeed": false
     },
     "IMPACT_BUY_flxn:TSLA_EMA_8H": {
-      "source": ["hyperliquid-hip3-ema"],
+      "source": ["ema"],
       "broadcasters": ["influx"],
       "denomination": "USD",
       "rateFeed": false
@@ -347,13 +347,13 @@
       "rateFeed": false
     },
     "IMPACT_SELL_flxn:TSLA_EMA_1H": {
-      "source": ["hyperliquid-hip3-ema"],
+      "source": ["ema"],
       "broadcasters": ["influx"],
       "denomination": "USD",
       "rateFeed": false
     },
     "IMPACT_SELL_flxn:TSLA_EMA_8H": {
-      "source": ["hyperliquid-hip3-ema"],
+      "source": ["ema"],
       "broadcasters": ["influx"],
       "denomination": "USD",
       "rateFeed": false
@@ -369,7 +369,7 @@
       "rateFeed": false
     },
     "ORACLE_flxn:TSLA_EMA_150S": {
-      "source": ["hyperliquid-hip3-ema"],
+      "source": ["ema"],
       "broadcasters": ["influx"],
       "denomination": "USD",
       "rateFeed": false
@@ -385,7 +385,7 @@
       "rateFeed": false
     },
     "MID_flxn:TSLA_EMA_150S": {
-      "source": ["hyperliquid-hip3-ema"],
+      "source": ["ema"],
       "broadcasters": ["influx"],
       "denomination": "USD",
       "rateFeed": false
@@ -467,13 +467,13 @@
       "rateFeed": false
     },
     "IMPACT_BUY_flxn:NVDA_EMA_1H": {
-      "source": ["hyperliquid-hip3-ema"],
+      "source": ["ema"],
       "broadcasters": ["influx"],
       "denomination": "USD",
       "rateFeed": false
     },
     "IMPACT_BUY_flxn:NVDA_EMA_8H": {
-      "source": ["hyperliquid-hip3-ema"],
+      "source": ["ema"],
       "broadcasters": ["influx"],
       "denomination": "USD",
       "rateFeed": false
@@ -489,13 +489,13 @@
       "rateFeed": false
     },
     "IMPACT_SELL_flxn:NVDA_EMA_1H": {
-      "source": ["hyperliquid-hip3-ema"],
+      "source": ["ema"],
       "broadcasters": ["influx"],
       "denomination": "USD",
       "rateFeed": false
     },
     "IMPACT_SELL_flxn:NVDA_EMA_8H": {
-      "source": ["hyperliquid-hip3-ema"],
+      "source": ["ema"],
       "broadcasters": ["influx"],
       "denomination": "USD",
       "rateFeed": false
@@ -511,7 +511,7 @@
       "rateFeed": false
     },
     "ORACLE_flxn:NVDA_EMA_150S": {
-      "source": ["hyperliquid-hip3-ema"],
+      "source": ["ema"],
       "broadcasters": ["influx"],
       "denomination": "USD",
       "rateFeed": false
@@ -527,7 +527,7 @@
       "rateFeed": false
     },
     "MID_flxn:NVDA_EMA_150S": {
-      "source": ["hyperliquid-hip3-ema"],
+      "source": ["ema"],
       "broadcasters": ["influx"],
       "denomination": "USD",
       "rateFeed": false
@@ -589,13 +589,13 @@
       "rateFeed": false
     },
     "IMPACT_BUY_flx:TSLA_EMA_1H": {
-      "source": ["hyperliquid-hip3-ema"],
+      "source": ["ema"],
       "broadcasters": ["influx"],
       "denomination": "USD",
       "rateFeed": false
     },
     "IMPACT_BUY_flx:TSLA_EMA_8H": {
-      "source": ["hyperliquid-hip3-ema"],
+      "source": ["ema"],
       "broadcasters": ["influx"],
       "denomination": "USD",
       "rateFeed": false
@@ -611,13 +611,13 @@
       "rateFeed": false
     },
     "IMPACT_SELL_flx:TSLA_EMA_1H": {
-      "source": ["hyperliquid-hip3-ema"],
+      "source": ["ema"],
       "broadcasters": ["influx"],
       "denomination": "USD",
       "rateFeed": false
     },
     "IMPACT_SELL_flx:TSLA_EMA_8H": {
-      "source": ["hyperliquid-hip3-ema"],
+      "source": ["ema"],
       "broadcasters": ["influx"],
       "denomination": "USD",
       "rateFeed": false
@@ -633,7 +633,7 @@
       "rateFeed": false
     },
     "ORACLE_flx:TSLA_EMA_150S": {
-      "source": ["hyperliquid-hip3-ema"],
+      "source": ["ema"],
       "broadcasters": ["influx"],
       "denomination": "USD",
       "rateFeed": false
@@ -649,7 +649,7 @@
       "rateFeed": false
     },
     "MID_flx:TSLA_EMA_150S": {
-      "source": ["hyperliquid-hip3-ema"],
+      "source": ["ema"],
       "broadcasters": ["influx"],
       "denomination": "USD",
       "rateFeed": false
@@ -711,13 +711,13 @@
       "rateFeed": false
     },
     "IMPACT_BUY_flx:NVDA_EMA_1H": {
-      "source": ["hyperliquid-hip3-ema"],
+      "source": ["ema"],
       "broadcasters": ["influx"],
       "denomination": "USD",
       "rateFeed": false
     },
     "IMPACT_BUY_flx:NVDA_EMA_8H": {
-      "source": ["hyperliquid-hip3-ema"],
+      "source": ["ema"],
       "broadcasters": ["influx"],
       "denomination": "USD",
       "rateFeed": false
@@ -733,13 +733,13 @@
       "rateFeed": false
     },
     "IMPACT_SELL_flx:NVDA_EMA_1H": {
-      "source": ["hyperliquid-hip3-ema"],
+      "source": ["ema"],
       "broadcasters": ["influx"],
       "denomination": "USD",
       "rateFeed": false
     },
     "IMPACT_SELL_flx:NVDA_EMA_8H": {
-      "source": ["hyperliquid-hip3-ema"],
+      "source": ["ema"],
       "broadcasters": ["influx"],
       "denomination": "USD",
       "rateFeed": false
@@ -755,7 +755,7 @@
       "rateFeed": false
     },
     "ORACLE_flx:NVDA_EMA_150S": {
-      "source": ["hyperliquid-hip3-ema"],
+      "source": ["ema"],
       "broadcasters": ["influx"],
       "denomination": "USD",
       "rateFeed": false
@@ -771,7 +771,7 @@
       "rateFeed": false
     },
     "MID_flx:NVDA_EMA_150S": {
-      "source": ["hyperliquid-hip3-ema"],
+      "source": ["ema"],
       "broadcasters": ["influx"],
       "denomination": "USD",
       "rateFeed": false
@@ -853,13 +853,13 @@
       "rateFeed": false
     },
     "IMPACT_BUY_flx:HOOD_EMA_1H": {
-      "source": ["hyperliquid-hip3-ema"],
+      "source": ["ema"],
       "broadcasters": ["influx"],
       "denomination": "USD",
       "rateFeed": false
     },
     "IMPACT_BUY_flx:HOOD_EMA_8H": {
-      "source": ["hyperliquid-hip3-ema"],
+      "source": ["ema"],
       "broadcasters": ["influx"],
       "denomination": "USD",
       "rateFeed": false
@@ -875,13 +875,13 @@
       "rateFeed": false
     },
     "IMPACT_SELL_flx:HOOD_EMA_1H": {
-      "source": ["hyperliquid-hip3-ema"],
+      "source": ["ema"],
       "broadcasters": ["influx"],
       "denomination": "USD",
       "rateFeed": false
     },
     "IMPACT_SELL_flx:HOOD_EMA_8H": {
-      "source": ["hyperliquid-hip3-ema"],
+      "source": ["ema"],
       "broadcasters": ["influx"],
       "denomination": "USD",
       "rateFeed": false
@@ -897,7 +897,7 @@
       "rateFeed": false
     },
     "ORACLE_flx:HOOD_EMA_150S": {
-      "source": ["hyperliquid-hip3-ema"],
+      "source": ["ema"],
       "broadcasters": ["influx"],
       "denomination": "USD",
       "rateFeed": false
@@ -913,7 +913,7 @@
       "rateFeed": false
     },
     "MID_flx:HOOD_EMA_150S": {
-      "source": ["hyperliquid-hip3-ema"],
+      "source": ["ema"],
       "broadcasters": ["influx"],
       "denomination": "USD",
       "rateFeed": false
@@ -995,13 +995,13 @@
       "rateFeed": false
     },
     "IMPACT_BUY_flx:CRCL_EMA_1H": {
-      "source": ["hyperliquid-hip3-ema"],
+      "source": ["ema"],
       "broadcasters": ["influx"],
       "denomination": "USD",
       "rateFeed": false
     },
     "IMPACT_BUY_flx:CRCL_EMA_8H": {
-      "source": ["hyperliquid-hip3-ema"],
+      "source": ["ema"],
       "broadcasters": ["influx"],
       "denomination": "USD",
       "rateFeed": false
@@ -1017,13 +1017,13 @@
       "rateFeed": false
     },
     "IMPACT_SELL_flx:CRCL_EMA_1H": {
-      "source": ["hyperliquid-hip3-ema"],
+      "source": ["ema"],
       "broadcasters": ["influx"],
       "denomination": "USD",
       "rateFeed": false
     },
     "IMPACT_SELL_flx:CRCL_EMA_8H": {
-      "source": ["hyperliquid-hip3-ema"],
+      "source": ["ema"],
       "broadcasters": ["influx"],
       "denomination": "USD",
       "rateFeed": false
@@ -1039,7 +1039,7 @@
       "rateFeed": false
     },
     "ORACLE_flx:CRCL_EMA_150S": {
-      "source": ["hyperliquid-hip3-ema"],
+      "source": ["ema"],
       "broadcasters": ["influx"],
       "denomination": "USD",
       "rateFeed": false
@@ -1055,7 +1055,7 @@
       "rateFeed": false
     },
     "MID_flx:CRCL_EMA_150S": {
-      "source": ["hyperliquid-hip3-ema"],
+      "source": ["ema"],
       "broadcasters": ["influx"],
       "denomination": "USD",
       "rateFeed": false
@@ -1137,13 +1137,13 @@
       "rateFeed": false
     },
     "IMPACT_BUY_flx:COIN_EMA_1H": {
-      "source": ["hyperliquid-hip3-ema"],
+      "source": ["ema"],
       "broadcasters": ["influx"],
       "denomination": "USD",
       "rateFeed": false
     },
     "IMPACT_BUY_flx:COIN_EMA_8H": {
-      "source": ["hyperliquid-hip3-ema"],
+      "source": ["ema"],
       "broadcasters": ["influx"],
       "denomination": "USD",
       "rateFeed": false
@@ -1159,13 +1159,13 @@
       "rateFeed": false
     },
     "IMPACT_SELL_flx:COIN_EMA_1H": {
-      "source": ["hyperliquid-hip3-ema"],
+      "source": ["ema"],
       "broadcasters": ["influx"],
       "denomination": "USD",
       "rateFeed": false
     },
     "IMPACT_SELL_flx:COIN_EMA_8H": {
-      "source": ["hyperliquid-hip3-ema"],
+      "source": ["ema"],
       "broadcasters": ["influx"],
       "denomination": "USD",
       "rateFeed": false
@@ -1181,7 +1181,7 @@
       "rateFeed": false
     },
     "ORACLE_flx:COIN_EMA_150S": {
-      "source": ["hyperliquid-hip3-ema"],
+      "source": ["ema"],
       "broadcasters": ["influx"],
       "denomination": "USD",
       "rateFeed": false
@@ -1197,7 +1197,7 @@
       "rateFeed": false
     },
     "MID_flx:COIN_EMA_150S": {
-      "source": ["hyperliquid-hip3-ema"],
+      "source": ["ema"],
       "broadcasters": ["influx"],
       "denomination": "USD",
       "rateFeed": false
