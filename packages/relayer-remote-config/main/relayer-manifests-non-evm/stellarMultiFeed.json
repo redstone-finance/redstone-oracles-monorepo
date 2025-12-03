@@ -37,6 +37,20 @@
         "deviationPercentage": 0.2,
         "timeSinceLastUpdateInMilliseconds": 240000
       }
+    },
+    "iBENJI_ETHEREUM_FUNDAMENTAL": {
+      "priceFeedAddress": "CCFFK56RHKVSJF6ADIB35TLLRG7IN76H2WHO7P4SFVNYMLZOSVLLSDI2",
+      "updateTriggersOverrides": {
+        "deviationPercentage": 0.1,
+        "timeSinceLastUpdateInMilliseconds": 86400000
+      }
+    },
+    "SolvBTC.BBN_FUNDAMENTAL": {
+      "priceFeedAddress": "CBCVJGBJGNPMYCEU3YVYQIH5Y6KSNATRLRLCZCMS26QTCUV367AD54BE",
+      "updateTriggersOverrides": {
+        "deviationPercentage": 0.5,
+        "timeSinceLastUpdateInMilliseconds": 21600000
+      }
     }
   }
 }
