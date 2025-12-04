@@ -6,12 +6,11 @@ import chaiAsPromised from "chai-as-promised";
 import { formatBytes32String } from "ethers/lib/utils";
 import { ethers } from "hardhat";
 import {
-  FastMultiFeedAdapterMock,
   MultiFeedAdapterWithoutRounds,
+  MultiFeedAdapterWithoutRoundsMockWithReturnOverride,
   MultiFeedAdapterWithoutRoundsWithReferenceMock,
   PriceFeedWithoutRoundsForMultiFeedAdapterMock,
 } from "../../../../typechain-types";
-import { DATA_FEED_ID, updateByAllNodesFresh } from "../fast-node/fast-node-test-helpers";
 
 type AdapterType = "main" | "ref";
 
@@ -187,15 +186,74 @@ describe("MultiFeedAdapterWithoutRoundsWithReference", () => {
     await expectPrice("43");
   });
 
+  it("Should use ref data if main adapter has timestamp from future", async () => {
+    const customTimestampAdapter = (await connectNewAdapter(
+      "MultiFeedAdapterWithoutRoundsMockWithReturnOverride",
+      "main"
+    )) as MultiFeedAdapterWithoutRoundsMockWithReturnOverride;
+    await updatePrices({ ETH: "402" }, refAdapter, defaultDataTimestamp);
+    await updatePrices({ ETH: "403" }, customTimestampAdapter, defaultDataTimestamp + 1);
+    await expectPrice("403"); // Because data from main is fresher
+    await customTimestampAdapter.setBlockTimestampToReturn((await time.latest()) + 100);
+    await expectPrice("402"); // Because timestamp is from future
+  });
+
+  it("Should use main data if ref adapter has timestamp from future", async () => {
+    const customTimestampAdapter = (await connectNewAdapter(
+      "MultiFeedAdapterWithoutRoundsMockWithReturnOverride",
+      "ref"
+    )) as MultiFeedAdapterWithoutRoundsMockWithReturnOverride;
+    await updatePrices({ ETH: "42" }, mainAdapter, defaultDataTimestamp + 1);
+    await updatePrices({ ETH: "43" }, customTimestampAdapter, defaultDataTimestamp);
+    await expectPrice("43"); // Because of deviation
+    await customTimestampAdapter.setBlockTimestampToReturn((await time.latest()) + 100);
+    await expectPrice("42"); // Because timestamp is from future
+  });
+
+  it("Should use ref data if main adapter returns zero value", async () => {
+    const customValueAdapter = (await connectNewAdapter(
+      "MultiFeedAdapterWithoutRoundsMockWithReturnOverride",
+      "main"
+    )) as MultiFeedAdapterWithoutRoundsMockWithReturnOverride;
+    await updatePrices({ ETH: "402" }, refAdapter, defaultDataTimestamp);
+    await updatePrices({ ETH: "403" }, customValueAdapter, defaultDataTimestamp + 1);
+    await expectPrice("403"); // Because data from main is fresher
+    await customValueAdapter.setLastValueToReturn(0);
+    await expectPrice("402"); // Because main value is invalid (zero)
+  });
+
+  it("Should use main data if ref adapter returns zero value", async () => {
+    const customValueAdapter = (await connectNewAdapter(
+      "MultiFeedAdapterWithoutRoundsMockWithReturnOverride",
+      "ref"
+    )) as MultiFeedAdapterWithoutRoundsMockWithReturnOverride;
+    await updatePrices({ ETH: "42" }, mainAdapter, defaultDataTimestamp + 1);
+    await updatePrices({ ETH: "43" }, customValueAdapter, defaultDataTimestamp);
+    await expectPrice("43"); // Because ref is deviated from main
+    await customValueAdapter.setLastValueToReturn(0);
+    await expectPrice("42"); // Because ref value is invalid (zero)
+  });
+
+  it("Should query last update details using getLastUpdateDetailsUnsafeForMany", async () => {
+    await updatePrices({ ETH: "402", BTC: "4200" }, refAdapter, defaultDataTimestamp);
+    await updatePrices({ ETH: "403" }, mainAdapter, defaultDataTimestamp + 1);
+    const dataFeedIds = ["ETH", "BTC"].map(formatBytes32String);
+    const lastUpdateDetails =
+      await adapterWithReference.getLastUpdateDetailsUnsafeForMany(dataFeedIds);
+    expect(lastUpdateDetails[0].value.toString()).to.eq("403"); // Used from main, because it's newer
+    expect(lastUpdateDetails[1].value.toString()).to.eq("4200"); // Used from ref, because main doesn't have it
+  });
+
   it("Should use ref data if main adapter tried to consume too much gas", async () => {
     const gasConsumingAdapter = await connectNewAdapter(
       "MultiFeedAdapterWithoutRoundsMockGasConsuming",
       "main"
     );
-    await updatePrices({ ETH: "42" }, refAdapter, defaultDataTimestamp);
-    await updatePrices({ ETH: "43" }, gasConsumingAdapter, defaultDataTimestamp);
-    expect((await gasConsumingAdapter.getLastUpdateDetails(ETH_ID_B32)).lastValue).to.eq("43");
-    await expectPrice("42");
+    await updatePrices({ ETH: "402" }, refAdapter, defaultDataTimestamp);
+    await updatePrices({ ETH: "403" }, gasConsumingAdapter, defaultDataTimestamp + 1);
+    expect((await gasConsumingAdapter.getLastUpdateDetails(ETH_ID_B32)).lastValue).to.eq("403");
+    await expectPrice("402"); // main will hit gas limit
+    expect(await priceFeed.latestAnswer({ gasLimit: 40_000_000 })).to.eq("403"); // will not hit with custom gas limit
   });
 
   it("Should use main data if ref adapter tried to consume too much gas", async () => {
@@ -206,33 +264,8 @@ describe("MultiFeedAdapterWithoutRoundsWithReference", () => {
     await updatePrices({ ETH: "42" }, gasConsumingAdapter, defaultDataTimestamp);
     expect((await gasConsumingAdapter.getLastUpdateDetails(ETH_ID_B32)).lastValue).to.eq("42");
     await updatePrices({ ETH: "43" }, mainAdapter, defaultDataTimestamp);
-    await expectPrice("43");
-  });
-
-  it("Should work properly with fast multi feed adapter", async () => {
-    // Connecting fast adapter
-    const fastAdapter = (await connectNewAdapter(
-      "FastMultiFeedAdapterMock",
-      "main"
-    )) as unknown as FastMultiFeedAdapterMock;
-
-    // Only main adapter has value
-    await updatePrices({ ETH: "10200000001" }, refAdapter, defaultDataTimestamp);
-    await expectPrice("10200000001");
-
-    // Update in the fast oracle adapter
-    await updateByAllNodesFresh(fastAdapter, [100, 101, 102, 103, 1000]);
-    const answer = await fastAdapter.getLastUpdateDetails(DATA_FEED_ID);
-    expect(answer.lastValue.toString()).to.eq("10200000000"); // Median value from the fast adapter
-    await expectPrice("10200000000");
-
-    // New update (with crossed 1% deviation)
-    await time.setNextBlockTimestamp((await time.latest()) + 11);
-    await mine();
-    await updateByAllNodesFresh(fastAdapter, [100, 101, 104, 105, 1000]);
-    await expectPrice("10400000000"); // Value in the ref adapter is too old now
-    await updatePrices({ ETH: "10200000001" }, refAdapter, (await time.latest()) * 1000);
-    await expectPrice("10200000001"); // Using value from the ref adapter
+    await expectPrice("43"); // ref will hit gas limit
+    expect(await priceFeed.latestAnswer({ gasLimit: 40_000_000 })).to.eq("42"); // will not hit with custom gas limit
   });
 
   describe("Deviation tests", () => {
