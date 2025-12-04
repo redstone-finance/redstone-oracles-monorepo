@@ -7234,13 +7234,17 @@
     },
     "XAUt": {
       "source": [
-        "bybit-usdt",
-        "okx-usdt",
-        "bitget-usdt",
-        "mexc-usdt",
-        "gate-usdt",
         "bingx-usdt",
-        "bitrue-usdt"
+        "bitget-usdt",
+        "bitrue-usdt",
+        "bybit-usdt",
+        "gate-usdt",
+        "kraken-usd",
+        "kucoin-usdt",
+        "lbank-usdt",
+        "mexc-usdt",
+        "okx-usdt",
+        "xt"
       ],
       "denomination": "USD",
       "rateFeed": false
