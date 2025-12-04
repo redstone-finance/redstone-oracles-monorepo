@@ -1,11 +1,11 @@
 import { BlockTag } from "@ethersproject/abstract-provider";
 import { ErrorCode } from "@ethersproject/logger";
-import { Point } from "@influxdata/influxdb-client";
+import { TelemetryPoint } from "@redstone-finance/internal-utils";
 import { MathUtils, NetworkId } from "@redstone-finance/utils";
 import { providers } from "ethers";
 import { RedstoneEthers5Provider } from "./providers/RedstoneProvider";
 
-export type ReportMetricFn = (message: Point) => void;
+export type ReportMetricFn = (message: TelemetryPoint) => void;
 export type ContractCallOverrides = { blockTag: BlockTag };
 export type EthersError = { code: ErrorCode; message: string };
 

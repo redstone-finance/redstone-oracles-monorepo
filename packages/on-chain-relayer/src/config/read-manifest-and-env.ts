@@ -238,6 +238,15 @@ export const readManifestAndEnv = () => {
       "SPLIT_WAITING_FOR_TX_RETRIES",
       z.number().optional()
     ),
+    telemetryUrl: RedstoneCommon.getFromEnv("TELEMETRY_URL", z.string().optional()),
+    telemetryAuthorizationToken: RedstoneCommon.getFromEnv(
+      "TELEMETRY_AUTHORIZATION_TOKEN",
+      z.string().optional()
+    ),
+    telemetryBatchSendingIntervalMs: RedstoneCommon.getFromEnv(
+      "TELEMETRY_BATCH_SENDING_INTERVAL_MS",
+      z.number().optional()
+    ),
     getSingleNonceTimeoutMs: RedstoneCommon.getFromEnv(
       "GET_SINGLE_NONCE_TIMEOUT_MS",
       z.number().optional()

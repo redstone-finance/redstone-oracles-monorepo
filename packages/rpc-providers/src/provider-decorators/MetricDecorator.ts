@@ -1,9 +1,9 @@
 import { BlockTag, TransactionRequest } from "@ethersproject/abstract-provider";
-import { Point } from "@influxdata/influxdb-client";
+import { TelemetryPoint } from "@redstone-finance/internal-utils";
 import { sanitizeLogMessage } from "@redstone-finance/utils";
 import { providers } from "ethers";
 import { Deferrable } from "ethers/lib/utils";
-import { ReportMetricFn, getProviderNetworkInfo } from "../common";
+import { getProviderNetworkInfo, ReportMetricFn } from "../common";
 
 export function CallMetricDecorator(
   factory: () => providers.Provider,
@@ -26,13 +26,7 @@ export function CallMetricDecorator(
         throw e;
       } finally {
         const end = performance.now();
-        const point = new Point("rpc_provider")
-          .tag("op", "call")
-          .tag("chainId", chainId.toString())
-          .tag("url", sanitizeLogMessage(url))
-          .tag("isFailure", isFailure.toString())
-          .floatField("duration", end - start)
-          .timestamp(Date.now());
+        const point = createTelemetryPoint("call", chainId, url, isFailure, end - start);
         reportMetric(point);
       }
     };
@@ -65,14 +59,8 @@ export function GetBlockNumberMetricDecorator(
         throw e;
       } finally {
         const end = performance.now();
-        const point = new Point("rpc_provider")
-          .tag("op", "getBlockNumber")
-          .tag("chainId", chainId.toString())
-          .tag("url", sanitizeLogMessage(url))
-          .tag("isFailure", isFailure.toString())
-          .floatField("blockNumber", blockNumber)
-          .floatField("duration", end - start)
-          .timestamp(Date.now());
+        const point = createTelemetryPoint("getBlockNumber", chainId, url, isFailure, end - start);
+        point.floatField("blockNumber", blockNumber);
         reportMetric(point);
       }
     };
@@ -80,4 +68,19 @@ export function GetBlockNumberMetricDecorator(
   };
 
   return newFactory;
+}
+
+function createTelemetryPoint(
+  op: string,
+  chainId: number,
+  url: string,
+  isFailure: boolean,
+  duration: number
+): TelemetryPoint {
+  return new TelemetryPoint("rpc_provider")
+    .tag("op", op)
+    .tag("chainId", chainId.toString())
+    .tag("url", sanitizeLogMessage(url))
+    .tag("isFailure", isFailure.toString())
+    .floatField("duration", duration);
 }

@@ -86,6 +86,9 @@ export type OnChainRelayerEnv = {
   txNonceStaleThresholdMs?: number;
   minTxDeliveryTimeMs?: number;
   splitWaitingForTxRetries?: number;
+  telemetryUrl?: string;
+  telemetryAuthorizationToken?: string;
+  telemetryBatchSendingIntervalMs?: number;
   getSingleNonceTimeoutMs?: number;
   minMaxRewardsPerBlockForPercentile?: number;
 };
