@@ -27,6 +27,7 @@
     "@redstone-finance/chain-configs": "workspace:*",
     "@redstone-finance/evm-multicall": "workspace:*",
     "@redstone-finance/http-client": "workspace:*",
+    "@redstone-finance/internal-utils": "workspace:*",
     "@redstone-finance/utils": "workspace:*",
     "axios": "^1.13.2",
     "ethers": "^5.7.2",

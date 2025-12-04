@@ -11688,6 +11688,7 @@ __metadata:
     "@redstone-finance/chain-configs": "workspace:*"
     "@redstone-finance/evm-multicall": "workspace:*"
     "@redstone-finance/http-client": "workspace:*"
+    "@redstone-finance/internal-utils": "workspace:*"
     "@redstone-finance/utils": "workspace:*"
     "@typechain/ethers-v5": "npm:^10.2.0"
     "@typechain/hardhat": "npm:^6.1.2"
