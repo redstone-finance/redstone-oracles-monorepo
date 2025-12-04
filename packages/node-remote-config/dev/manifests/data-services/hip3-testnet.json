@@ -11,12 +11,6 @@
     }
   },
   "tokens": {
-    "flx:XMR_EXT": {
-      "source": ["emergency-fetcher"],
-      "broadcasters": ["hyperliquid-hip3"],
-      "denomination": "USD",
-      "rateFeed": false
-    },
     "flx:GOLD_EXT": {
       "source": ["emergency-fetcher"],
       "broadcasters": ["hyperliquid-hip3"],
@@ -33,10 +27,10 @@
       "source": [
         "bitstamp-usd",
         "coinbase-usd",
-        "coingecko",
-        "coinmarketcap",
+        "coingecko-deferred",
+        "coinmarketcap-deferred",
         "gemini-usd",
-        "kraken-usd",
+        "kraken_deferred-usd",
         "okx-usd"
       ],
       "deviationCheck": {
@@ -53,8 +47,8 @@
       "source": [
         "bitfinex-usd",
         "bitmart-usdt",
-        "kraken-usd",
-        "kraken-usdt",
+        "kraken_deferred-usd",
+        "kraken_deferred-usdt",
         "kucoin-usdt",
         "mexc-usdt",
         "xt-deferred"
@@ -69,6 +63,85 @@
       "rateFeed": false,
       "broadcasters": ["influx"]
     },
+    "ORACLE_flx:XMR": {
+      "source": ["hyperliquid-mainnet-perps-ws-fetcher", "hydromancer-mainnet-perps-ws-fetcher"],
+      "customWeightsForWeightedMedian": {
+        "hyperliquid-mainnet-perps-ws-fetcher": 10,
+        "hydromancer-mainnet-perps-ws-fetcher": 1
+      },
+      "broadcasters": ["influx"],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "ORACLE_flx:XMR_EMA_150S": {
+      "source": ["ema"],
+      "broadcasters": ["influx"],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "MARK_flx:XMR": {
+      "source": ["hyperliquid-mainnet-perps-ws-fetcher", "hydromancer-mainnet-perps-ws-fetcher"],
+      "customWeightsForWeightedMedian": {
+        "hyperliquid-mainnet-perps-ws-fetcher": 10,
+        "hydromancer-mainnet-perps-ws-fetcher": 1
+      },
+      "broadcasters": ["influx"],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "MID_flx:XMR": {
+      "source": ["hyperliquid-mainnet-perps-ws-fetcher", "hydromancer-mainnet-perps-ws-fetcher"],
+      "customWeightsForWeightedMedian": {
+        "hyperliquid-mainnet-perps-ws-fetcher": 10,
+        "hydromancer-mainnet-perps-ws-fetcher": 1
+      },
+      "broadcasters": ["influx"],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "MID_flx:XMR_EMA_150S": {
+      "source": ["ema"],
+      "broadcasters": ["influx"],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "flx:XMR_MARK_0": {
+      "source": ["hip3-felix-crypto-mainnet-fetcher"],
+      "broadcasters": ["hyperliquid-hip3"],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "flx:XMR_MARK_1": {
+      "source": ["hip3-felix-crypto-mainnet-fetcher"],
+      "broadcasters": ["hyperliquid-hip3"],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "flx:XMR_EXT": {
+      "source": ["hip3-felix-crypto-mainnet-fetcher"],
+      "broadcasters": ["hyperliquid-hip3"],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "flx:XMR": {
+      "source": ["hip3-felix-crypto-mainnet-fetcher"],
+      "broadcasters": ["hyperliquid-hip3"],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "OPEN_INTEREST_flx:XMR": {
+      "source": ["hyperliquid-mainnet-perps-ws-fetcher"],
+      "broadcasters": [],
+      "denomination": "USD",
+      "rateFeed": false,
+      "deviationCheck": {
+        "deviationWithRecentValues": {
+          "maxPercent": 1000000000,
+          "maxDelayMilliseconds": 1000
+        }
+      }
+    },
+
     "BTC": {
       "source": [
         "binance-usdt",
@@ -79,8 +152,7 @@
         "bitrue-usdt",
         "bitstamp-usd",
         "coinbase-usd",
-        "coingecko",
-        "kaiko-v2",
+        "coingecko-deferred",
         "kraken-usd",
         "kucoin-usdt",
         "okx-usdt",
@@ -92,24 +164,6 @@
           "maxDelayMilliseconds": 120000
         }
       },
-      "broadcasters": ["influx"],
-      "denomination": "USD",
-      "rateFeed": false
-    },
-    "XAUt": {
-      "source": [
-        "bingx-usdt",
-        "bitget-usdt",
-        "bitrue-usdt",
-        "bybit-usdt",
-        "gate-usdt",
-        "kraken-usd",
-        "kucoin-usdt",
-        "lbank-usdt",
-        "mexc-usdt",
-        "okx-usdt",
-        "xt-deferred"
-      ],
       "broadcasters": ["influx"],
       "denomination": "USD",
       "rateFeed": false
@@ -182,7 +236,7 @@
     },
     "OPEN_INTEREST_sekaw:BTC": {
       "source": ["hyperliquid-testnet-perps-ws-fetcher"],
-      "broadcasters": ["influx"],
+      "broadcasters": [],
       "denomination": "USD",
       "rateFeed": false,
       "deviationCheck": {
@@ -287,7 +341,7 @@
     },
     "OPEN_INTEREST_sekaw:ETH": {
       "source": ["hyperliquid-testnet-perps-ws-fetcher"],
-      "broadcasters": ["influx"],
+      "broadcasters": [],
       "denomination": "USD",
       "rateFeed": false,
       "deviationCheck": {
@@ -434,7 +488,7 @@
     },
     "OPEN_INTEREST_flxn:TSLA": {
       "source": ["hyperliquid-testnet-perps-ws-fetcher"],
-      "broadcasters": ["influx"],
+      "broadcasters": [],
       "denomination": "USD",
       "rateFeed": false,
       "deviationCheck": {
@@ -576,7 +630,7 @@
     },
     "OPEN_INTEREST_flxn:NVDA": {
       "source": ["hyperliquid-testnet-perps-ws-fetcher"],
-      "broadcasters": ["influx"],
+      "broadcasters": [],
       "denomination": "USD",
       "rateFeed": false,
       "deviationCheck": {
@@ -674,7 +728,7 @@
     },
     "OPEN_INTEREST_flx:TSLA": {
       "source": ["hyperliquid-mainnet-perps-ws-fetcher"],
-      "broadcasters": ["influx"],
+      "broadcasters": [],
       "denomination": "USD",
       "rateFeed": false,
       "deviationCheck": {
@@ -820,7 +874,7 @@
     },
     "OPEN_INTEREST_flx:NVDA": {
       "source": ["hyperliquid-mainnet-perps-ws-fetcher"],
-      "broadcasters": ["influx"],
+      "broadcasters": [],
       "denomination": "USD",
       "rateFeed": false,
       "deviationCheck": {
@@ -962,7 +1016,7 @@
     },
     "OPEN_INTEREST_flx:HOOD": {
       "source": ["hyperliquid-mainnet-perps-ws-fetcher"],
-      "broadcasters": ["influx"],
+      "broadcasters": [],
       "denomination": "USD",
       "rateFeed": false,
       "deviationCheck": {
@@ -1104,7 +1158,7 @@
     },
     "OPEN_INTEREST_flx:CRCL": {
       "source": ["hyperliquid-mainnet-perps-ws-fetcher"],
-      "broadcasters": ["influx"],
+      "broadcasters": [],
       "denomination": "USD",
       "rateFeed": false,
       "deviationCheck": {
@@ -1246,7 +1300,7 @@
     },
     "OPEN_INTEREST_flx:COIN": {
       "source": ["hyperliquid-mainnet-perps-ws-fetcher"],
-      "broadcasters": ["influx"],
+      "broadcasters": [],
       "denomination": "USD",
       "rateFeed": false,
       "deviationCheck": {
@@ -1255,6 +1309,24 @@
           "maxDelayMilliseconds": 1000
         }
       }
+    },
+    "XAUt": {
+      "source": [
+        "bingx-usdt",
+        "bitget-usdt",
+        "bitrue-usdt",
+        "bybit-usdt",
+        "gate-usdt",
+        "kraken-usd",
+        "kucoin-usdt",
+        "lbank-usdt",
+        "mexc-usdt",
+        "okx-usdt",
+        "xt-deferred"
+      ],
+      "broadcasters": ["influx"],
+      "denomination": "USD",
+      "rateFeed": false
     }
   }
 }
