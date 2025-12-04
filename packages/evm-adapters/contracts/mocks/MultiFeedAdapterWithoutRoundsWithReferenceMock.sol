@@ -14,7 +14,7 @@ contract MultiFeedAdapterWithoutRoundsWithReferenceMock is MultiFeedAdapterWitho
     referenceAdapter = _referenceAdapter;
   }
 
-  function getReferenceSwitchCriteria(bytes32 dataFeedId) public view virtual override returns (uint256 maxAllowedDeviation, uint256 maxDataAgeInSeconds) {
+  function getReferenceSwitchCriteria(bytes32 dataFeedId) public view virtual override returns (uint256 maxAllowedDeviationBps, uint256 maxDataAgeInSeconds) {
     if (dataFeedId == bytes32("USDT") || dataFeedId == bytes32("USDC") || dataFeedId == bytes32("DAI")) {
       return (50 /* 0.5% */, 10 /* 10 seconds */);
     }
