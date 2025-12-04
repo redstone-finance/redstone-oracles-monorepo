@@ -1,9 +1,12 @@
 import {
   DescribeServicesCommand,
   DescribeTaskDefinitionCommand,
+  DescribeTasksCommand,
+  DesiredStatus,
   ECSClient,
   ListClustersCommand,
   ListServicesCommand,
+  ListTasksCommand,
 } from "@aws-sdk/client-ecs";
 import { getEcsClient } from "./aws-clients";
 
@@ -35,6 +38,16 @@ export class AwsEcs {
     return serviceArns ?? [];
   }
 
+  async listTasks(clusterArn: string, desiredStatus: DesiredStatus): Promise<string[]> {
+    const command = new ListTasksCommand({
+      cluster: clusterArn,
+      desiredStatus,
+    });
+    const { taskArns } = await this.client.send(command);
+
+    return taskArns ?? [];
+  }
+
   async describeService(clusterArn: string, serviceArn: string) {
     const command = new DescribeServicesCommand({
       cluster: clusterArn,
@@ -43,6 +56,16 @@ export class AwsEcs {
     const { services } = await this.client.send(command);
 
     return services?.[0];
+  }
+
+  async describeTasks(clusterArn: string, taskArns: string[]) {
+    const command = new DescribeTasksCommand({
+      cluster: clusterArn,
+      tasks: taskArns,
+    });
+    const { tasks } = await this.client.send(command);
+
+    return tasks ?? [];
   }
 
   async describeTaskDefinition(taskDefinitionArn: string) {
