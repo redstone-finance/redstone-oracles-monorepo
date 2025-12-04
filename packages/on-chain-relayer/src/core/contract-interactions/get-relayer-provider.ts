@@ -1,4 +1,5 @@
 import { getChainConfigByNetworkId, getLocalChainConfigs } from "@redstone-finance/chain-configs";
+import { getTelemetrySendService, TelemetryPoint } from "@redstone-finance/internal-utils";
 import { MegaProviderBuilder, ProviderDecorators } from "@redstone-finance/rpc-providers";
 import { isEvmNetworkId } from "@redstone-finance/utils";
 import { providers } from "ethers";
@@ -34,6 +35,18 @@ export const getRelayerProvider = (relayerConfig: RelayerConfig) => {
     throw new Error(`Non-evm networkId ${networkId} passed to evm relayer provider`);
   }
 
+  const telemetrySendService = getTelemetrySendService(
+    relayerConfig.telemetryUrl,
+    relayerConfig.telemetryAuthorizationToken
+  );
+
+  const sendMetric = (metric: TelemetryPoint) => {
+    metric.tag("relayer-network-id", relayerConfig.networkId.toString());
+    metric.tag("relayer-adapter-address", relayerConfig.adapterContractAddress);
+    metric.tag("relayer-fallback-offset", relayerConfig.fallbackOffsetInMilliseconds.toString());
+    telemetrySendService.queueToSendMetric(metric);
+  };
+
   cachedProvider = new MegaProviderBuilder({
     rpcUrls,
     timeout: relayerConfig.singleProviderOperationTimeout,
@@ -41,6 +54,14 @@ export const getRelayerProvider = (relayerConfig: RelayerConfig) => {
     network: { name: chainName, chainId: networkId },
     pollingInterval: ethersPollingIntervalInMs,
   })
+    .addDecorator(
+      (factory) => ProviderDecorators.CallMetricDecorator(factory, sendMetric),
+      isRelayerTelemetryEnabled(relayerConfig)
+    )
+    .addDecorator(
+      (factory) => ProviderDecorators.GetBlockNumberMetricDecorator(factory, sendMetric),
+      isRelayerTelemetryEnabled(relayerConfig)
+    )
     .agreement(
       {
         singleProviderOperationTimeout: relayerConfig.singleProviderOperationTimeout,
@@ -67,4 +88,12 @@ export const getRelayerProvider = (relayerConfig: RelayerConfig) => {
 
 export const clearCachedRelayerProvider = () => {
   cachedProvider = undefined;
+};
+
+export const isRelayerTelemetryEnabled = (config: RelayerConfig) => {
+  return (
+    !!config.telemetryAuthorizationToken &&
+    !!config.telemetryUrl &&
+    !!config.telemetryBatchSendingIntervalMs
+  );
 };
