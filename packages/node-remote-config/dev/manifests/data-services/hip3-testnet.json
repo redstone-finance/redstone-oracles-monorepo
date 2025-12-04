@@ -57,7 +57,7 @@
         "kraken-usdt",
         "kucoin-usdt",
         "mexc-usdt",
-        "xt"
+        "xt-deferred"
       ],
       "deviationCheck": {
         "deviationWithRecentValues": {
@@ -92,6 +92,24 @@
           "maxDelayMilliseconds": 120000
         }
       },
+      "broadcasters": ["influx"],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "XAUt": {
+      "source": [
+        "bingx-usdt",
+        "bitget-usdt",
+        "bitrue-usdt",
+        "bybit-usdt",
+        "gate-usdt",
+        "kraken-usd",
+        "kucoin-usdt",
+        "lbank-usdt",
+        "mexc-usdt",
+        "okx-usdt",
+        "xt-deferred"
+      ],
       "broadcasters": ["influx"],
       "denomination": "USD",
       "rateFeed": false
