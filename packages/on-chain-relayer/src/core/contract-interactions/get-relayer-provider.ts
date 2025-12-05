@@ -4,6 +4,7 @@ import { MegaProviderBuilder, ProviderDecorators } from "@redstone-finance/rpc-p
 import { isEvmNetworkId } from "@redstone-finance/utils";
 import { providers } from "ethers";
 import { RelayerConfig } from "../../config/RelayerConfig";
+import { isRelayerTelemetryEnabled } from "../../config/relayer-telemetry";
 
 let cachedProvider: providers.Provider | undefined;
 
@@ -88,12 +89,4 @@ export const getRelayerProvider = (relayerConfig: RelayerConfig) => {
 
 export const clearCachedRelayerProvider = () => {
   cachedProvider = undefined;
-};
-
-export const isRelayerTelemetryEnabled = (config: RelayerConfig) => {
-  return (
-    !!config.telemetryAuthorizationToken &&
-    !!config.telemetryUrl &&
-    !!config.telemetryBatchSendingIntervalMs
-  );
 };
