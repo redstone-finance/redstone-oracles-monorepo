@@ -25,7 +25,6 @@ const defaultRelayersToSkip = [
   "sepoliaAngleAgeur",
   "sepoliaVenusXvs",
   "venusBnbTestnet",
-  "optimismDevMultiFeed",
   "sepoliaMultiFeed",
   "blastTestnet",
 ];
