@@ -45,10 +45,9 @@
     },
     "XMR": {
       "source": [
-        "bitfinex-usd",
+        "bitfinex-usdt",
         "bitmart-usdt",
         "kraken_deferred-usd",
-        "kraken_deferred-usdt",
         "kucoin-usdt",
         "mexc-usdt",
         "xt-deferred"
