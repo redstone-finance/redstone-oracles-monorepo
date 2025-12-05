@@ -11,7 +11,11 @@
   "adapterContractType": "multi-feed",
   "dataServiceId": "redstone-primary-prod",
   "priceFeeds": {
-    "ETH": {},
-    "BTC": {}
+    "ETH": {
+      "priceFeedAddress": "0x04a968ab0fE91B26BB3eF20D26dbD8cFBbbC5a6f"
+    },
+    "BTC": {
+      "priceFeedAddress": "0x04a968ab0fE91B26BB3eF20D26dbD8cFBbbC5a6f"
+    }
   }
 }
