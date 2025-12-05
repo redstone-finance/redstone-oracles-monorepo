@@ -39,7 +39,7 @@ interface VestingContractConfig {
   beneficiaryAddress: string;
 }
 
-deployAll();
+void deployAll();
 
 async function deployAll() {
   console.log("Deploying token contract");
@@ -127,7 +127,9 @@ function toEthBN(amount: number): BigNumber {
 function saveDeployedAddress(contractName: string, address: string) {
   const fileName = DEPLOYED_CONTRACT_ADDRESSES_FILE;
   console.log(`Saving ${address} as address for ${contractName} to ${fileName}`);
-  const savedAddresses = existsSync(fileName) ? JSON.parse(readFileSync(fileName, "utf-8")) : {};
+  const savedAddresses = existsSync(fileName)
+    ? (JSON.parse(readFileSync(fileName, "utf-8")) as Record<string, string>)
+    : {};
   writeFileSync(
     DEPLOYED_CONTRACT_ADDRESSES_FILE,
     JSON.stringify(
