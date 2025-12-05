@@ -35,6 +35,7 @@ export const CommonManifestSchema = z.object({
   adapterContractPackageId: z.string().optional(),
   adapterContractType: AdapterTypesEnum,
   dataServiceId: z.string(),
+  isHidden: z.boolean().optional(),
   priceFeeds: z.record(z.string(), z.any()),
   dataPackagesNames: z.array(z.string()).optional(),
 });
