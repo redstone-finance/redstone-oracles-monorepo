@@ -7,10 +7,10 @@ import {
   sendHealthcheckPing,
 } from "@redstone-finance/utils";
 import { config, ConsciouslyInvoked } from "./config/config";
+import { isRelayerTelemetryEnabled } from "./config/relayer-telemetry";
 import { RelayerConfig } from "./config/RelayerConfig";
 import { splitRelayerConfig } from "./config/split-relayer-config";
 import { timelyOverrideSinceLastUpdate } from "./config/timely-override-since-last-update";
-import { isRelayerTelemetryEnabled } from "./core/contract-interactions/get-relayer-provider";
 import { runNonIterationTelemetry } from "./run-non-iteration-telemetry.ts";
 import { AsyncTaskRunner } from "./runner/AsyncTaskRunner";
 import { MqttRunner } from "./runner/MqttRunner";
@@ -26,6 +26,10 @@ export const runRelayer = () => {
       {
         ...relayerConfig,
         privateKey: "********",
+        telemetryAuthorizationToken: relayerConfig.telemetryAuthorizationToken
+          ? "********"
+          : "undefined",
+        telemetryUrl: relayerConfig.telemetryUrl ? "********" : "undefined",
       }
     )}`
   );
