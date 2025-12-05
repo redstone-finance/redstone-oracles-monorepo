@@ -11,15 +11,35 @@
   "adapterContractType": "multi-feed",
   "dataServiceId": "redstone-primary-prod",
   "priceFeeds": {
-    "ETH": {},
-    "BTC": {},
-    "USDC": {},
-    "USDT": {},
-    "weETH": {},
-    "ezETH": {},
-    "STONE": {},
-    "rsETH": {},
-    "weETH_FUNDAMENTAL": {},
-    "sDAI": {}
+    "ETH": {
+      "priceFeedAddress": "0x5C4c8d6f6Bf79B718F3e8399AaBdFEd01cB7e48f"
+    },
+    "BTC": {
+      "priceFeedAddress": "0xFB1267A29C0aa19daae4a483ea895862A69e4AA5"
+    },
+    "USDC": {
+      "priceFeedAddress": "0x5ED849a45B4608952161f45483F4B95BCEa7f8f0"
+    },
+    "USDT": {
+      "priceFeedAddress": "0xc555c100DB24dF36D406243642C169CC5A937f09"
+    },
+    "weETH": {
+      "priceFeedAddress": "0xf0DEbDAE819b354D076b0D162e399BE013A856d3"
+    },
+    "ezETH": {
+      "priceFeedAddress": "0x4aF6b78d92432D32E3a635E824d3A541866f7a78"
+    },
+    "STONE": {
+      "priceFeedAddress": "0x26FB59e5562405F42f55661f790fA1Bd2F410A3d"
+    },
+    "rsETH": {
+      "priceFeedAddress": "0x65d0F14f7809CdC4f90c3978c753C4671b6B815b"
+    },
+    "weETH_FUNDAMENTAL": {
+      "priceFeedAddress": "0xeC7C6AdcC867E1C22713D14797339750E36538E4"
+    },
+    "sDAI": {
+      "priceFeedAddress": "0x98DC6E90D4c2f212ed9d124aD2aFBa4833268633"
+    }
   }
 }
