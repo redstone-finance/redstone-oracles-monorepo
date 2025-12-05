@@ -37,7 +37,7 @@ describe("RedStone token", () => {
     const transferTx = await contract.transfer(otherAddr, 700);
     await transferTx.wait();
 
-    expect(transferTx).to.emit(contract, "Transfer").withArgs(otherAddr, minterAddr, 700);
+    await expect(transferTx).to.emit(contract, "Transfer").withArgs(minterAddr, otherAddr, 700);
     expect(await contract.balanceOf(minterAddr)).to.equal(300);
     expect(await contract.balanceOf(otherAddr)).to.equal(700);
   });
@@ -85,14 +85,14 @@ describe("RedStone token", () => {
     // Propose
     const proposalTx = await contract.proposeNewMinter(otherAddr);
     await proposalTx.wait();
-    expect(proposalTx).to.emit(contract, "MinterProposal").withArgs(otherAddr);
+    await expect(proposalTx).to.emit(contract, "MinterProposal").withArgs(otherAddr);
     expect(await contract.minter()).to.equal(minterAddr);
     expect(await contract.proposedMinter()).to.equal(otherAddr);
 
     // Accept
     const acceptRoleTx = await contract.connect(other).acceptMinterRole();
     await acceptRoleTx.wait();
-    expect(acceptRoleTx).to.emit(contract, "MinterUpdate").withArgs(otherAddr);
+    await expect(acceptRoleTx).to.emit(contract, "MinterUpdate").withArgs(otherAddr);
     expect(await contract.minter()).to.equal(otherAddr);
     expect(await contract.proposedMinter()).to.equal(ethers.constants.AddressZero);
 
