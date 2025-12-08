@@ -1148,7 +1148,11 @@
       "networkId": "421614",
       "chainId": 421614,
       "currencySymbol": "ETH",
-      "publicRpcUrls": ["https://sepolia-rollup.arbitrum.io/rpc"],
+      "publicRpcUrls": [
+        "https://sepolia-rollup.arbitrum.io/rpc",
+        "https://arbitrum-sepolia.gateway.tenderly.co",
+        "https://arbitrum-sepolia.drpc.org"
+      ],
       "avgBlockTimeMs": 1000,
       "multicall3": {
         "address": "0xcA11bde05977b3631167028862bE2a173976CA11",
