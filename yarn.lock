@@ -10234,8 +10234,8 @@ __metadata:
     "@redstone-finance/agents": "workspace:*"
     "@redstone-finance/internal-utils": "workspace:*"
     "@redstone-finance/monitoring-manifests": "workspace:*"
-    "@redstone-finance/mqtt5-client": "workspace:*"
     "@redstone-finance/protocol": "workspace:*"
+    "@redstone-finance/pub-sub": "workspace:*"
     "@redstone-finance/sdk": "workspace:*"
     "@redstone-finance/utils": "workspace:*"
     dotenv: "npm:^16.0.3"
@@ -10277,7 +10277,7 @@ __metadata:
     "@redstone-finance/hl-hip3": "workspace:*"
     "@redstone-finance/http-client": "workspace:*"
     "@redstone-finance/internal-utils": "workspace:*"
-    "@redstone-finance/mqtt5-client": "workspace:*"
+    "@redstone-finance/pub-sub": "workspace:*"
     "@redstone-finance/sdk": "workspace:*"
     "@redstone-finance/utils": "workspace:*"
     dotenv: "npm:^16.0.3"
@@ -10307,13 +10307,13 @@ __metadata:
     "@redstone-finance/hl-relayer": "workspace:*"
     "@redstone-finance/internal-utils": "workspace:*"
     "@redstone-finance/monitoring-manifests": "workspace:*"
-    "@redstone-finance/mqtt5-client": "workspace:*"
     "@redstone-finance/node-commons": "workspace:*"
     "@redstone-finance/on-chain-relayer": "workspace:*"
     "@redstone-finance/on-chain-relayer-common": "workspace:*"
     "@redstone-finance/oracle-node": "workspace:*"
     "@redstone-finance/oracles-smartweave-contracts": "npm:0.5.4"
     "@redstone-finance/protocol": "workspace:*"
+    "@redstone-finance/pub-sub": "workspace:*"
     "@redstone-finance/remote-config": "workspace:*"
     "@redstone-finance/sdk": "workspace:*"
     "@redstone-finance/utils": "workspace:*"
@@ -11336,27 +11336,6 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@redstone-finance/mqtt5-client@workspace:*, @redstone-finance/mqtt5-client@workspace:packages/mqtt5-client":
-  version: 0.0.0-use.local
-  resolution: "@redstone-finance/mqtt5-client@workspace:packages/mqtt5-client"
-  dependencies:
-    "@msgpack/msgpack": "npm:^3.1.2"
-    "@redstone-finance/http-client": "workspace:*"
-    "@redstone-finance/internal-utils": "workspace:*"
-    "@redstone-finance/protocol": "workspace:*"
-    "@redstone-finance/sdk": "workspace:*"
-    "@redstone-finance/utils": "workspace:*"
-    "@types/eventsource": "npm:^3.0.0"
-    async-mutex: "npm:^0.5.0"
-    aws-iot-device-sdk-v2: "npm:^1.21.1"
-    dotenv: "npm:^16.0.3"
-    ethers: "npm:^5.7.2"
-    eventsource: "npm:^4.0.0"
-    lodash: "npm:^4.17.21"
-    zod: "npm:^4.1.12"
-  languageName: unknown
-  linkType: soft
-
 "@redstone-finance/multichain-kit@workspace:*, @redstone-finance/multichain-kit@workspace:packages/multichain-kit":
   version: 0.0.0-use.local
   resolution: "@redstone-finance/multichain-kit@workspace:packages/multichain-kit"
@@ -11426,9 +11405,9 @@ __metadata:
     "@redstone-finance/evm-connector": "workspace:*"
     "@redstone-finance/healthcheck": "workspace:*"
     "@redstone-finance/internal-utils": "workspace:*"
-    "@redstone-finance/mqtt5-client": "workspace:*"
     "@redstone-finance/on-chain-relayer-common": "workspace:*"
     "@redstone-finance/protocol": "workspace:*"
+    "@redstone-finance/pub-sub": "workspace:*"
     "@redstone-finance/remote-config": "workspace:*"
     "@redstone-finance/rpc-providers": "workspace:*"
     "@redstone-finance/sdk": "workspace:*"
@@ -11471,9 +11450,9 @@ __metadata:
     "@redstone-finance/healthcheck": "workspace:*"
     "@redstone-finance/hl-hip3": "workspace:*"
     "@redstone-finance/internal-utils": "workspace:*"
-    "@redstone-finance/mqtt5-client": "workspace:*"
     "@redstone-finance/node-commons": "workspace:*"
     "@redstone-finance/protocol": "workspace:*"
+    "@redstone-finance/pub-sub": "workspace:*"
     "@redstone-finance/remote-config": "workspace:*"
     "@redstone-finance/rpc-providers": "workspace:*"
     "@redstone-finance/sdk": "workspace:*"
@@ -11574,6 +11553,27 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@redstone-finance/pub-sub@workspace:*, @redstone-finance/pub-sub@workspace:packages/pub-sub":
+  version: 0.0.0-use.local
+  resolution: "@redstone-finance/pub-sub@workspace:packages/pub-sub"
+  dependencies:
+    "@msgpack/msgpack": "npm:^3.1.2"
+    "@redstone-finance/http-client": "workspace:*"
+    "@redstone-finance/internal-utils": "workspace:*"
+    "@redstone-finance/protocol": "workspace:*"
+    "@redstone-finance/sdk": "workspace:*"
+    "@redstone-finance/utils": "workspace:*"
+    "@types/eventsource": "npm:^3.0.0"
+    async-mutex: "npm:^0.5.0"
+    aws-iot-device-sdk-v2: "npm:^1.21.1"
+    dotenv: "npm:^16.0.3"
+    ethers: "npm:^5.7.2"
+    eventsource: "npm:^4.0.0"
+    lodash: "npm:^4.17.21"
+    zod: "npm:^4.1.12"
+  languageName: unknown
+  linkType: soft
+
 "@redstone-finance/radix-connector@workspace:*, @redstone-finance/radix-connector@workspace:packages/radix-connector":
   version: 0.0.0-use.local
   resolution: "@redstone-finance/radix-connector@workspace:packages/radix-connector"
@@ -11618,10 +11618,10 @@ __metadata:
     "@redstone-finance/hl-hip3": "workspace:*"
     "@redstone-finance/internal-utils": "workspace:*"
     "@redstone-finance/monitoring-manifests": "workspace:*"
-    "@redstone-finance/mqtt5-client": "workspace:*"
     "@redstone-finance/node-commons": "workspace:*"
     "@redstone-finance/on-chain-relayer-common": "workspace:*"
     "@redstone-finance/protocol": "workspace:*"
+    "@redstone-finance/pub-sub": "workspace:*"
     "@redstone-finance/rpc-providers": "workspace:*"
     "@redstone-finance/sdk": "workspace:*"
     "@redstone-finance/utils": "workspace:*"
