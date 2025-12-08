@@ -1,5 +1,5 @@
 import { RedstoneHealthcheck } from "@redstone-finance/healthcheck";
-import { sendHealthcheckMetric } from "@redstone-finance/internal-utils";
+import { assertSecp256k1Native, sendHealthcheckMetric } from "@redstone-finance/internal-utils";
 import {
   loggerFactory,
   RedstoneCommon,
@@ -18,6 +18,7 @@ import { IterationOptions } from "./runner/run-iteration";
 import { SendHealthcheckCollector } from "./SendHealthcheckCollector";
 
 export const runRelayer = () => {
+  assertSecp256k1Native();
   const relayerConfig = config(ConsciouslyInvoked);
   const logger = loggerFactory("relayer/run");
 

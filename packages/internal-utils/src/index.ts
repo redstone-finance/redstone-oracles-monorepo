@@ -7,6 +7,7 @@ export * from "./aws/params";
 export * from "./aws/region";
 export * from "./aws/s3";
 export * from "./config-checks";
+export * from "./crypto";
 export * from "./hash-utils";
 export * from "./influx/influxdb-config";
 export * from "./influx/InfluxService";
