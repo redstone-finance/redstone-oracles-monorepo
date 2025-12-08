@@ -19,7 +19,7 @@ const noConsolePackageNames = [
   "healthcheck",
   "http-client",
   "move-connector",
-  "mqtt5-client",
+  "pub-sub",
   "node-commons",
   "on-chain-relayer",
   "oracle-node",

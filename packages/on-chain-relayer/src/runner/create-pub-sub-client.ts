@@ -1,16 +1,16 @@
 import {
   createMqtt5ClientFactory,
-  createRedundantPubSubClientFromEnv,
+  createMultiPubSubClientFromEnv,
   MqttTopics,
-  MultiPubSubClient,
+  PooledMqttClient,
   PubSubClient,
-} from "@redstone-finance/mqtt5-client";
+} from "@redstone-finance/pub-sub";
 import { RelayerConfig } from "../config/RelayerConfig";
 
 const MQTT_PUB_SUB_CONFIGS_ENV_PATH = "MQTT_PUB_SUB_CONFIGS";
 
 export function createPubSubClient(relayerConfig: RelayerConfig): PubSubClient {
-  const client = createRedundantPubSubClientFromEnv(MQTT_PUB_SUB_CONFIGS_ENV_PATH);
+  const client = createMultiPubSubClientFromEnv(MQTT_PUB_SUB_CONFIGS_ENV_PATH);
   if (client) {
     return client;
   }
@@ -23,7 +23,7 @@ export function createPubSubClient(relayerConfig: RelayerConfig): PubSubClient {
     );
   }
 
-  return new MultiPubSubClient(
+  return new PooledMqttClient(
     createMqtt5ClientFactory({
       endpoint: relayerConfig.mqttEndpoint,
       authorization: {
