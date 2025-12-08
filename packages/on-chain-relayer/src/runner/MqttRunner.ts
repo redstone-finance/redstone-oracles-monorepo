@@ -4,7 +4,7 @@ import {
   DataPackageSubscriberParams,
   PubSubClient,
   RateLimitsCircuitBreaker,
-} from "@redstone-finance/mqtt5-client";
+} from "@redstone-finance/pub-sub";
 import {
   ContractParamsProvider,
   DataPackagesRequestParams,
