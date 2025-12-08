@@ -1,0 +1,49 @@
+{
+  "name": "@redstone-finance/pub-sub",
+  "version": "0.9.0",
+  "main": "dist/src/index.js",
+  "exports": {
+    ".": "./dist/src/index.js",
+    "./config": "./dist/src/MultiPubSubEnvConfigs.js"
+  },
+  "types": "dist/src/index.d.ts",
+  "license": "MIT",
+  "scripts": {
+    "clean": "yarn global:ts-clean",
+    "build": "yarn global:tsc -p tsconfig.build.json",
+    "build:turbo": "yarn global:turbo build",
+    "typecheck": "yarn global:tsc --noEmit",
+    "typecheck:turbo": "yarn global:turbo typecheck",
+    "preversion": "yarn build",
+    "test": "yarn global:jest --testPathIgnorePatterns=/integration_tests/",
+    "test:integration": "yarn global:jest --testTimeout=90000 integration_tests",
+    "lint": "yarn global:eslint .",
+    "lint:fix": "yarn global:eslint --fix .",
+    "run-sse-client-test": "yarn global:ts-node ./scripts/run-with-light-gateway"
+  },
+  "dependencies": {
+    "@msgpack/msgpack": "^3.1.2",
+    "@redstone-finance/http-client": "workspace:*",
+    "@redstone-finance/internal-utils": "workspace:*",
+    "@redstone-finance/protocol": "workspace:*",
+    "@redstone-finance/sdk": "workspace:*",
+    "@redstone-finance/utils": "workspace:*",
+    "async-mutex": "^0.5.0",
+    "aws-iot-device-sdk-v2": "^1.21.1",
+    "ethers": "^5.7.2",
+    "eventsource": "^4.0.0",
+    "lodash": "^4.17.21",
+    "zod": "^4.1.12"
+  },
+  "devDependencies": {
+    "@types/eventsource": "^3.0.0",
+    "dotenv": "^16.0.3"
+  },
+  "files": [
+    "src",
+    "dist"
+  ],
+  "publishConfig": {
+    "access": "public"
+  }
+}
