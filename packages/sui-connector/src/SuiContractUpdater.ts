@@ -9,12 +9,11 @@ import {
 } from "@redstone-finance/multichain-kit";
 import { ContractParamsProvider } from "@redstone-finance/sdk";
 import { FP, loggerFactory } from "@redstone-finance/utils";
-import { DEFAULT_GAS_BUDGET } from "./SuiContractUtil";
 import { SuiPricesContractWriter } from "./SuiPricesContractWriter";
 import { SuiConfig } from "./config";
 
 const MAX_PARALLEL_TRANSACTION_COUNT = 5;
-const SPLIT_COIN_INITIAL_BALANCE = 2n * DEFAULT_GAS_BUDGET;
+const SPLIT_COIN_INITIAL_BALANCE_MULTIPLIER = 2n;
 
 export class SuiContractUpdater implements ContractUpdater {
   protected readonly logger = loggerFactory("sui-contract-updater");
@@ -23,7 +22,7 @@ export class SuiContractUpdater implements ContractUpdater {
   constructor(
     private readonly client: SuiClient,
     private readonly keypair: Keypair,
-    config: SuiConfig,
+    private readonly config: SuiConfig,
     private executor?: ParallelTransactionExecutor
   ) {
     this.writer = new SuiPricesContractWriter(client, keypair, config);
@@ -92,7 +91,10 @@ export class SuiContractUpdater implements ContractUpdater {
     const executor = new ParallelTransactionExecutor({
       client: this.client,
       signer: this.keypair,
-      initialCoinBalance: SPLIT_COIN_INITIAL_BALANCE,
+      initialCoinBalance:
+        SPLIT_COIN_INITIAL_BALANCE_MULTIPLIER * this.config.writePricesTxGasBudget,
+      minimumCoinBalance: this.config.writePricesTxGasBudget,
+      defaultGasBudget: this.config.writePricesTxGasBudget,
       maxPoolSize: MAX_PARALLEL_TRANSACTION_COUNT,
     });
 
