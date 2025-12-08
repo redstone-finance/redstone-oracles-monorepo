@@ -573,10 +573,17 @@
     },
     "BCH": {
       "source": [
+        "binance-usdc",
         "binance-usdt",
+        "bingx-usdt",
+        "bitget-usdt",
+        "bitmart-usdt",
+        "bybit-usdt",
         "coinbase-usd",
+        "gate-usdt",
         "kraken-usd",
         "kucoin-usdt",
+        "mexc-usdt",
         "okx-usdt"
       ],
       "denomination": "USD",
@@ -592,10 +599,17 @@
     },
     "XLM": {
       "source": [
+        "binance-usdc",
         "binance-usdt",
+        "bingx-usdt",
+        "bitget-usdt",
+        "bitmart-usdt",
+        "bybit-usdt",
         "coinbase-usd",
+        "gate-usdt",
         "kraken-usd",
         "kucoin-usdt",
+        "mexc-usdt",
         "okx-usdt"
       ],
       "denomination": "USD",
@@ -3893,6 +3907,17 @@
       "rateFeed": false
     },
     "ZEC": {
+      "source": [
+        "binance-usdc",
+        "binance-usdt",
+        "bitget-usdt",
+        "bitmart-usdt",
+        "coinbase-usd",
+        "kucoin-usdt",
+        "kraken-usd",
+        "okx-usdt",
+        "mexc-usdt"
+      ],
       "denomination": "USD",
       "rateFeed": false
     },
@@ -3997,6 +4022,21 @@
       "rateFeed": false
     },
     "HBAR": {
+      "source": [
+        "binance-usdc",
+        "binance-usdt",
+        "bingx-usdt",
+        "bitget-usdt",
+        "bitmart-usdt",
+        "bybit-usdt",
+        "coinbase-usd",
+        "gate-usdt",
+        "kucoin-usdt",
+        "kraken-usd",
+        "lbank-usdt",
+        "mexc-usdt",
+        "okx-usdt"
+      ],
       "denomination": "USD",
       "rateFeed": false
     },
