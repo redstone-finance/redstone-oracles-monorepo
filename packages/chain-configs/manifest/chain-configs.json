@@ -138,6 +138,8 @@
       "publicRpcUrls": [
         "https://mainnet.base.org",
         "https://base.publicnode.com",
+        "https://base.gateway.tenderly.co",
+        "https://base.meowrpc.com",
         "https://base.llamarpc.com"
       ],
       "avgBlockTimeMs": 5000,
