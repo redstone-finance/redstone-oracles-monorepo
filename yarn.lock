@@ -10738,6 +10738,23 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@redstone-finance/lambda-hip3-monitoring@workspace:packages/lambda/lambda-hip3-monitoring":
+  version: 0.0.0-use.local
+  resolution: "@redstone-finance/lambda-hip3-monitoring@workspace:packages/lambda/lambda-hip3-monitoring"
+  dependencies:
+    "@jest/globals": "npm:^29.7.0"
+    "@redstone-finance/hl-hip3": "workspace:*"
+    "@redstone-finance/http-client": "workspace:*"
+    "@redstone-finance/internal-utils": "workspace:*"
+    "@redstone-finance/monitoring-manifests": "workspace:*"
+    "@redstone-finance/node-commons": "workspace:*"
+    "@redstone-finance/utils": "workspace:*"
+    "@types/aws-lambda": "npm:^8.10.145"
+    dotenv: "npm:^16.0.3"
+    zod: "npm:^4.1.12"
+  languageName: unknown
+  linkType: soft
+
 "@redstone-finance/lambda-hl-multisig@workspace:packages/lambda/lambda-hl-multisig":
   version: 0.0.0-use.local
   resolution: "@redstone-finance/lambda-hl-multisig@workspace:packages/lambda/lambda-hl-multisig"
