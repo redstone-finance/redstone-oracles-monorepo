@@ -4,7 +4,7 @@ import { getOracleState } from "../utils/get-oracle-state";
 @Controller("oracle-registry-state")
 export class OracleRegistryStateController {
   @Get()
-  // eslint-disable-next-line @typescript-eslint/class-methods-use-this
+  // eslint-disable-next-line @typescript-eslint/class-methods-use-this -- add reason here, please
   async getLoadedOracleRegistryState(): Promise<unknown> {
     return await getOracleState();
   }

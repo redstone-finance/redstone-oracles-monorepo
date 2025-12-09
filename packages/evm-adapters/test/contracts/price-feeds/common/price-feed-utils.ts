@@ -43,7 +43,7 @@ export const describeCommonPriceFeedTests = ({
     await priceFeed.deployed();
 
     if (priceFeedContractName !== adapterContractName) {
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-call
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-call -- add reason here, please
       const tx = (await priceFeed.setAdapterAddress(adapter.address)) as ContractTransaction;
       await tx.wait();
     }
@@ -183,9 +183,9 @@ export const describeCommonPriceFeedTests = ({
     });
 
     it("should initialize properly", async () => {
-      // eslint-disable-next-line @typescript-eslint/no-unused-expressions
+      // eslint-disable-next-line @typescript-eslint/no-unused-expressions -- add reason here, please
       expect(contractV1).to.not.be.undefined;
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-call, @typescript-eslint/no-explicit-any
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-call, @typescript-eslint/no-explicit-any -- add reason here, please
       await expect((contractV1 as any).initialize()).to.rejectedWith(
         "Initializable: contract is already initialized"
       );

@@ -12,7 +12,7 @@ import { deployCounter } from "../../helpers";
 chai.use(chaiAsPromised);
 
 const multicallFnSpy = Sinon.spy(multicallUtils.safeExecuteMulticall3);
-// eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-explicit-any
+// eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-explicit-any -- add reason here, please
 (multicallUtils as any).safeExecuteMulticall3 = multicallFnSpy;
 
 function getProvider(

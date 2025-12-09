@@ -103,9 +103,9 @@ export const describeCommonPriceFeedsAdapterTests = ({
     });
 
     it("should properly initialize", async () => {
-      // eslint-disable-next-line @typescript-eslint/no-unused-expressions
+      // eslint-disable-next-line @typescript-eslint/no-unused-expressions -- add reason here, please
       expect(contractV1).to.not.be.undefined;
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-call, @typescript-eslint/no-explicit-any
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-call, @typescript-eslint/no-explicit-any -- add reason here, please
       await expect((contractV1 as any).initialize()).to.rejectedWith(
         "Initializable: contract is already initialized"
       );
@@ -115,7 +115,7 @@ export const describeCommonPriceFeedsAdapterTests = ({
       expect(dataFeeds[0]).to.eq(formatBytes32String(dataFeedId));
 
       expect(
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-call, @typescript-eslint/no-explicit-any
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-call, @typescript-eslint/no-explicit-any -- add reason here, please
         await (contractV1 as any).getAuthorisedSignerIndex(
           "0x70997970c51812dc3a010c7d01b50e0d17dc79c8"
         )
@@ -148,7 +148,7 @@ export const describeCommonPriceFeedsAdapterTests = ({
 
       it("should change authorized updaters", async () => {
         expect(
-          // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-call, @typescript-eslint/no-explicit-any
+          // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-call, @typescript-eslint/no-explicit-any -- add reason here, please
           await (updatedContract as any).getAuthorisedSignerIndex(
             "0xb323240B8185C1918A338Bd76A6473E20A25fa62"
           )
