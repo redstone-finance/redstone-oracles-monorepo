@@ -1,0 +1,24 @@
+module IRedStoneCore where
+
+import RedStoneTypes
+
+interface IRedStoneCore where
+  viewtype RedStoneCoreView
+
+  getPrices : [RedStoneFeedId] -> Time -> Text -> Update RedStoneResult
+
+  nonconsuming choice GetPrices : RedStoneResult
+    with
+      feedIds : [RedStoneFeedId]
+      currentTime : Time
+      payloadHex : Text
+    controller (view this).viewers
+    do
+      getPrices this feedIds currentTime payloadHex
+
+data RedStoneCoreView = RedStoneCoreView
+  with
+    owner : Party
+    viewers : [Party]
+    coreId : Text
+  deriving (Eq, Show, Ord)
