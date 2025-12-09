@@ -38,7 +38,7 @@
       "dependsOn": ["setup-dev"]
     },
     // Only a task named exactly "test" will be cached.
-    // Specific per-package tests can declare thier own tasks in local turbo.json
+    // Specific per-package tests can declare their own tasks in local turbo.json
     "test": {
       "outputs": ["coverage/**"],
       "dependsOn": ["setup-dev"],
