@@ -110,13 +110,13 @@ export function createSanitizedLogger(logger: RedstoneLogger): RedstoneLogger {
           // 2. Lazy Evaluation:
           // Because we successfully passed the level check above, we now
           // execute the function (if it is one) to retrieve the log message/object.
-          // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+          // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment -- add reason here, please
           const val =
             typeof arg === "function"
-              ? // eslint-disable-next-line @typescript-eslint/no-unsafe-call
+              ? // eslint-disable-next-line @typescript-eslint/no-unsafe-call -- add reason here, please
                 arg()
               : arg;
-          // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+          // eslint-disable-next-line @typescript-eslint/no-unsafe-return -- add reason here, please
           return sanitizeValue(val);
         });
 
@@ -237,7 +237,7 @@ function parseLogLevels(): Record<string, LogLevel> | null {
 }
 
 class JSONReporter {
-  // eslint-disable-next-line @typescript-eslint/class-methods-use-this
+  // eslint-disable-next-line @typescript-eslint/class-methods-use-this -- add reason here, please
   log(logObj: LogObject) {
     // used only in node environment
     process.stdout.write(JSON.stringify(logObj) + "\n");
