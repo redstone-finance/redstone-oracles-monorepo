@@ -8,8 +8,9 @@
   * [Components](#components)
     * [RedStone SDK](#redstone-sdk)
     * [RedStone Interface](#redstone-interface)
-    * [RedStone Adapter](#redstone-adapter)
-    * [RedStone PriceFeed](#redstone-pricefeed)
+    * [RedStone Core](#redstone-core)
+    * [RedStone Adapter - experimental](#redstone-adapter---experimental)
+    * [RedStone PriceFeed - experimental](#redstone-pricefeed---experimental)
     * [Test](#test)
   * [The current state of development](#the-current-state-of-development)
 <!-- TOC -->
@@ -40,7 +41,7 @@
 
 ## [Makefile](./Makefile)
 
-1. There's impossible to use a `TypeScript` or other SDK, because of the [5.](#intellecteu--keycloak) above.
+1. There's impossible to use a `TypeScript` or other SDK, because of the [4.](#intellecteu--keycloak) above.
 2. It provides functions for
    1. Local development
    2. Calling [intellect.eu](./intellect.mk) methods with keycloak authorization
@@ -56,13 +57,32 @@
 3. Provides [`CryptoVerify`](./sdk/src/RedStone/Internal/CryptoVerify.daml)  mechanisms for `secp256k1` crypto verification
    1. It works with  DAML`3.4.0-snapshot-2025-10-06` or `3.3.0-snapshot.20250930.0`+++
 
+See more about the [RedStone SDK](./sdk/README.md) library.
+
 ### [RedStone Interface](./interface)
 
 1. Having unchanged interfaces, it's easier to find/call the contract by the interface it implements
-2. It defines the [`IRedStoneAdapter`](./interface/src/IRedStoneAdapter.daml) and [`IRedStonePriceFeed`](./interface/src/IRedStonePriceFeed.daml) interfaces
-3. Also defines the [`RedStoneTypes`](./interface/src/RedStoneTypes.daml), like `RedStoneValue` or `RedStonePriceData`
+2. It defines the [`IRedStoneCore`](./interface/src/IRedStoneCore.daml) interface for processing the payload data on-ledger
+3. It defines the [`IRedStoneAdapter`](./interface/src/IRedStoneAdapter.daml) and [`IRedStonePriceFeed`](./interface/src/IRedStonePriceFeed.daml) experimental interfaces
+4. Also defines the [`RedStoneTypes`](./interface/src/RedStoneTypes.daml), like `RedStoneValue` or `RedStonePriceData`
 
-### [RedStone Adapter](./adapter)
+### [RedStone Core](./adapter)
+
+1. Provides a [template](./core/src/RedStoneCore.daml) of a contract implementing the `IRedStoneCore` interface
+2. The contract code may change, but until the interface remains unchanged, it can be found by the interface package id.
+
+```haskell
+  nonconsuming choice GetPrices : RedStoneResult
+    with
+      feedIds : [RedStoneFeedId]
+      currentTime : Time
+      payloadHex : Text
+    controller (view this).viewers
+```
+
+See more about the Pull model [here](./core/README.md)
+
+### [RedStone Adapter](./adapter) - experimental
 
 1. Provides a [template](./adapter/src/RedStoneAdapter.daml) of a contract implementing the `IRedStoneAdapter` interface
 2. The contract code may change, but until the interface remains unchanged, it can be found by the interface package id.
@@ -93,7 +113,7 @@
     controller (view this).viewers
 ```
 
-### [RedStone PriceFeed](./price_feed)
+### [RedStone PriceFeed](./price_feed) - experimental
 
 1. Provides a [template](./price_feed/src/RedStonePriceFeed.daml) of a contract implementing the `IRedStonePriceFeed` interface
 2. Every method needs to have `adapterCid` passed, because the `adapterCid` still changes.
