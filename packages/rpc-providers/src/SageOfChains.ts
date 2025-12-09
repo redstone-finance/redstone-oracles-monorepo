@@ -25,7 +25,7 @@ export class SageOfChains {
       return providerCached;
     }
     const providerFactory = this.networkIdToProviderFactory[networkId];
-    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition -- add reason here, please
     if (!providerFactory) {
       throw new Error(`SageOfChains: missing provider factory for ${networkId}`);
     }
@@ -38,7 +38,7 @@ export class SageOfChains {
   private static getChainConfig(networkId: NetworkId) {
     const chainConfigs = getLocalChainConfigsByNetworkId();
     const chainConfig = chainConfigs[networkId];
-    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition -- add reason here, please
     if (!chainConfig) {
       throw new Error(`SageOfChains: missing local chain config for ${networkId}`);
     }

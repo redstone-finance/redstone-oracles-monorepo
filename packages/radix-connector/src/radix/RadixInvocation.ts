@@ -7,7 +7,7 @@ export abstract class RadixInvocation<T> {
     protected name: string
   ) {}
 
-  // eslint-disable-next-line @typescript-eslint/class-methods-use-this
+  // eslint-disable-next-line @typescript-eslint/class-methods-use-this -- add reason here, please
   getParams(): Value[] {
     return [];
   }
@@ -16,7 +16,7 @@ export abstract class RadixInvocation<T> {
     return builder.callMethod(this.subject, this.name, this.getParams());
   }
 
-  // eslint-disable-next-line @typescript-eslint/class-methods-use-this
+  // eslint-disable-next-line @typescript-eslint/class-methods-use-this -- add reason here, please
   getDedicatedTransaction(
     _account: string,
     _maxFeeOverride?: number,

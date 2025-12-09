@@ -100,7 +100,7 @@ const printRpcUrls = async (): Promise<void> => {
 
       console.log(`\nFallback URLs for ${name}:`);
 
-      // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+      // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition -- add reason here, please
       if (!fallbackRpcUrlsPerChain[name]) {
         console.error(chalk.red(`No fallback RPC URLs found for ${name}`));
         issues.push(`No fallback RPC URLs found for ${name}`);

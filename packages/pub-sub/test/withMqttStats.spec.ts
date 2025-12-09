@@ -1,8 +1,7 @@
-/* eslint-disable @typescript-eslint/no-unsafe-return */
 // Mock logger before importing the module
 const mockLoggerInfo = jest.fn();
 jest.mock("@redstone-finance/utils", () => ({
-  ...jest.requireActual("@redstone-finance/utils"),
+  ...jest.requireActual<object>("@redstone-finance/utils"),
   loggerFactory: () => ({
     info: mockLoggerInfo,
     warn: jest.fn(),
@@ -474,7 +473,7 @@ describe("withMqttStats decorator", () => {
 
       wrappedCallback("test-topic", { data: "test" }, null, mockPubSubClient);
 
-      // eslint-disable-next-line @typescript-eslint/unbound-method
+      // eslint-disable-next-line @typescript-eslint/unbound-method -- add reason here, please
       expect(mockPubSubClient.getUniqueName).toHaveBeenCalled();
     });
   });

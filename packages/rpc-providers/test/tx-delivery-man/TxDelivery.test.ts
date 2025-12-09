@@ -23,7 +23,7 @@ const parseTransaction = (transaction: BytesLike) => {
 
   for (const [key, value] of Object.entries(parsedTx)) {
     if (BigNumber.isBigNumber(value)) {
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-explicit-any
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-explicit-any -- add reason here, please
       (parsedTx as any)[key] = value.toString();
     }
   }

@@ -5,10 +5,9 @@ import { AppModule } from "../../src/app.module";
 import { mockOracleRegistryState } from "../common/mock-values";
 import "../common/set-test-envs";
 
-// eslint-disable-next-line @typescript-eslint/no-unsafe-return
 jest.mock("@redstone-finance/sdk", () => ({
   __esModule: true,
-  ...jest.requireActual("@redstone-finance/sdk"),
+  ...jest.requireActual<object>("@redstone-finance/sdk"),
   getOracleRegistryState: jest.fn(() => mockOracleRegistryState),
 }));
 
