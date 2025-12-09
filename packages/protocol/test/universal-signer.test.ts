@@ -67,12 +67,9 @@ describe("UniversalSigner", () => {
     ].forEach((sig) => {
       expect(UniversalSigner.verifyAndSplitSignature(sig)).toEqual(
         expect.objectContaining({
-          //eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-          r: expect.any(String),
-          //eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-          s: expect.any(String),
-          //eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-          v: expect.any(Number),
+          r: expect.any(String) as unknown,
+          s: expect.any(String) as unknown,
+          v: expect.any(Number) as unknown,
         })
       );
     });

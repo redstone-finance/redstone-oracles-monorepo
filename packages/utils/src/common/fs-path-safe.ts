@@ -26,10 +26,10 @@ export type PathInterface<ParsedPath, FormatInputPathObject, PlatformPath> = {
 export let path: PathInterface<unknown, unknown, unknown>;
 export let fs: FsPartialInterface;
 try {
-  // eslint-disable-next-line @typescript-eslint/no-require-imports
+  // eslint-disable-next-line @typescript-eslint/no-require-imports -- add reason here, please
   fs = require("fs") as FsPartialInterface;
 
-  // eslint-disable-next-line @typescript-eslint/no-require-imports
+  // eslint-disable-next-line @typescript-eslint/no-require-imports -- add reason here, please
   path = require("path") as PathInterface<unknown, unknown, unknown>;
 } catch (_e) {
   loggerFactory("fs-path-safe").error(`Tried to import fs/path in non-node env (Gelato?)`);

@@ -13,7 +13,7 @@ async function maybeFundWithAirdrop(
     console.log("Requesting airdrop...");
     try {
       const signature = await connection.requestAirdrop(publicKey, balanceFromSol(balanceInSol));
-      // eslint-disable-next-line @typescript-eslint/no-deprecated
+      // eslint-disable-next-line @typescript-eslint/no-deprecated -- add reason here, please
       await connection.confirmTransaction(signature, "confirmed");
       console.log("Airdrop successful!");
     } catch (error) {

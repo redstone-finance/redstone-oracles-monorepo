@@ -48,7 +48,7 @@ export class DataServiceWrapper<T extends Contract> extends BaseWrapper<T> {
 
     if (!this.dataPackagesRequestParams.urls) {
       fetchedParams.urls = resolveDataServiceUrls(
-        // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+        // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition -- add reason here, please
         fetchedParams.dataServiceId ?? this.dataPackagesRequestParams.dataServiceId
       );
     }
@@ -58,7 +58,7 @@ export class DataServiceWrapper<T extends Contract> extends BaseWrapper<T> {
 
   private async getDataServiceIdFromContract(): Promise<string> {
     try {
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-call
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-call -- add reason here, please
       const dataServiceId = (await this.contract.getDataServiceId()) as string;
       return dataServiceId;
     } catch (e) {
@@ -71,7 +71,7 @@ export class DataServiceWrapper<T extends Contract> extends BaseWrapper<T> {
 
   private async getUniqueSignersThresholdFromContract(): Promise<number> {
     try {
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-call
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-call -- add reason here, please
       return (await this.contract.getUniqueSignersThreshold()) as number;
     } catch (e) {
       throw new Error(

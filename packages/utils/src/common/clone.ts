@@ -3,7 +3,7 @@
  **/
 export function cloneClassInstance<T>(instance: T): T {
   return Object.assign(
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-argument -- add reason here, please
     Object.create(Object.getPrototypeOf(instance)),
     instance
   ) as T;

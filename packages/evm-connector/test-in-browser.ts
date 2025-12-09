@@ -38,7 +38,7 @@ async function waitForSuccess(
       }
     });
 
-    // eslint-disable-next-line @typescript-eslint/no-floating-promises
+    // eslint-disable-next-line @typescript-eslint/no-floating-promises -- add reason here, please
     page.goto(url).then(() => console.log(`${url} loaded successfully, waiting ${timeout} [ms]`));
   });
 
