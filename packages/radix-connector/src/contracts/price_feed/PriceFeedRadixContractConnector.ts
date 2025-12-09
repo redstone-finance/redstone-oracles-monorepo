@@ -7,7 +7,7 @@ export class PriceFeedRadixContractConnector extends RadixContractConnector<Pric
     super(client, proxyComponentId);
   }
 
-  // eslint-disable-next-line @typescript-eslint/require-await
+  // eslint-disable-next-line @typescript-eslint/require-await -- add reason here, please
   async getComponentId() {
     return this.componentId!;
   }

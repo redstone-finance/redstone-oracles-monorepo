@@ -96,7 +96,7 @@ export class MqttRunner implements MqttDataProcessingStrategyDelegate<RelayerCon
     }
 
     if (relayerConfig.mqttUpdateSubscriptionIntervalMs > 0) {
-      // eslint-disable-next-line @typescript-eslint/no-misused-promises
+      // eslint-disable-next-line @typescript-eslint/no-misused-promises -- add reason here, please
       setInterval(async () => {
         await this.updateSubscription(relayerConfig, false);
       }, relayerConfig.mqttUpdateSubscriptionIntervalMs);

@@ -48,7 +48,7 @@ type TimeInterval = {
   endTimestamp: number;
 };
 
-// eslint-disable-next-line @typescript-eslint/no-floating-promises
+// eslint-disable-next-line @typescript-eslint/no-floating-promises -- add reason here, please
 main();
 
 async function main() {

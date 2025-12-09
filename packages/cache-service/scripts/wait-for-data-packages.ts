@@ -21,7 +21,7 @@ async function main() {
   console.log("MongoDB connected");
 
   await checkDataPackagesCount();
-  // eslint-disable-next-line @typescript-eslint/no-misused-promises
+  // eslint-disable-next-line @typescript-eslint/no-misused-promises -- add reason here, please
   setInterval(checkDataPackagesCount, INTERVAL_MILLISECONDS);
 }
 
