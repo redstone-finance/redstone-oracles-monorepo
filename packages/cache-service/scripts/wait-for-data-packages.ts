@@ -1,21 +1,23 @@
-import { consts } from "@redstone-finance/protocol";
+// Make sure this import comes first. This is a hack to set some potentially missing env vars
+// that are required by cache-service/src/config.ts which is indirectly imported by this script
+import "./set-required-missing-env-vars";
+
 import mongoose from "mongoose";
-import config from "../src/config";
 import { DataPackage } from "../src/data-packages/data-packages.model";
 
-// USAGE: yarn run-ts scripts/wait-for-data-packages.ts <expected-count> <data-package-id>
+// USAGE: yarn run-ts scripts/wait-for-data-packages.ts <expected-count> <data-package-id> <mongo-url>
+// Note: This script is used by tests in `integration` package
 
-// Note! This script is used only in monorepo integration tests
-
-const INTERVAL_MILLISECONDS = 5000; // 5 seconds
-const DATA_PACKAGE_ID = process.argv[3] || consts.ALL_FEEDS_KEY;
+const INTERVAL_MILLISECONDS = 5000;
 const EXPECTED_COUNT = parseInt(process.argv[2]);
+const DATA_PACKAGE_ID = process.argv[3];
+const MONGO_DB_URL = process.argv[4];
 
 void main();
 
 async function main() {
   mongoose.set("strictQuery", true);
-  await mongoose.connect(config.mongoDbUrl!);
+  await mongoose.connect(MONGO_DB_URL);
   console.log("MongoDB connected");
 
   await checkDataPackagesCount();
