@@ -252,10 +252,17 @@ export class TxNonceCoordinator {
     // tx considered stale
     const now = Date.now();
     if (now - updatedAt > this.staleTxThresholdMs) {
-      this.lastUsedNonce = nonce - 1;
-      logger.warn(
-        `Stale tx nonce=${nonce} hash=${txHash}, resetting lastUsedNonce to ${this.lastUsedNonce}`
-      );
+      const resetCandidateNonce = nonce - 1;
+      if (this.lastUsedNonce === undefined || resetCandidateNonce <= this.lastUsedNonce) {
+        this.lastUsedNonce = resetCandidateNonce;
+        logger.warn(
+          `Stale tx nonce=${nonce} hash=${txHash}, resetting lastUsedNonce to ${resetCandidateNonce}`
+        );
+      } else {
+        logger.log(
+          `Stale tx nonce=${nonce} hash=${txHash}, but lastUsedNonce=${this.lastUsedNonce} is already lower than ${resetCandidateNonce}, skipping reset`
+        );
+      }
     }
   }
 
