@@ -18,6 +18,21 @@
       "denomination": "USD",
       "rateFeed": false
     },
+    "GOOG": {
+      "source": [],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "AAPL": {
+      "source": [],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "META": {
+      "source": [],
+      "denomination": "USD",
+      "rateFeed": false
+    },
     "IS_NY_STOCKS_MARKET_OPEN": {
       "source": [],
       "denomination": "other",
