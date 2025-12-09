@@ -1,7 +1,7 @@
-# RedStone Canton Connector - sdk
+# RedStone Canton Connector - RedStone SDK
 
 <!-- TOC -->
-* [RedStone Canton Connector - sdk](#redstone-canton-connector---sdk)
+* [RedStone Canton Connector - RedStone SDK](#redstone-canton-connector---redstone-sdk)
   * [RedStone data processing](#redstone-data-processing)
     * [Processor](#processor)
       * [Parameters](#parameters)
@@ -82,6 +82,7 @@ Configuration module contains configuration for the [`Processor`](#processor).
 
 The [`Config`](./src/RedStone/Config.daml) structure consists of:
 * `feedIds` to be processed by the `Processor`
+  * Represented as ascii-numbers of particular letters, for example `ETH = [69,84,72]` and `BTC=[66,84,67]`
 * `currentTimestamp`
   * The ledger doesn't have access to real world timestamp, so it's necessary to pass off-chain `currentTimestamp`
     where later the methods like [`isLedgerTimeLE/LT/GE/GT`](https://docs.digitalasset.com/build/3.4/reference/daml/stdlib/DA-Time.html#function-da-time-isledgertimelt-78120) or [`assertWithDeadline`](https://docs.digitalasset.com/build/3.4/reference/daml/stdlib/DA-Assert.html#function-da-assert-assertwithindeadline-85580`) are used to have it verified
@@ -146,4 +147,7 @@ Use `make run_main` using the `Makefile` defined [here](../Makefile)
 
 ## Preparing data
 
-Use `make prepare_data` using the `Makefile` defined [here](../data.mk)
+Use `make prepare_data` using the `Makefile` defined [here](../data.mk).
+
+The data preparation process used there, using the `requestDataPackages` function,
+is described in the TypeScript [`@redstone-finance/sdk`](../../../../packages/sdk/README.md) package.

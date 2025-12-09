@@ -18,7 +18,6 @@ import RedStone.Internal.Error
 import RedStone.Internal.Hex
 import RedStone.Internal.Median
 import RedStone.Internal.Protocol
-
 import RedStone.Internal.Trim
 import RedStone.Internal.Verify
 

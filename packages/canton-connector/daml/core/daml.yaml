@@ -1,0 +1,12 @@
+sdk-version: ${SDK_VERSION}
+name: redstone-core${SVER}
+version: ${VERSION}
+source: src
+dependencies:
+  - daml-prim
+  - daml-stdlib
+data-dependencies:
+  - ../sdk/.daml/dist/redstone-sdk${SVER}-${VERSION}.dar
+  - ../interface/.daml/dist/redstone-interface${SVER}-${VERSION}.dar
+build-options:
+  - --target=${TARGET}
