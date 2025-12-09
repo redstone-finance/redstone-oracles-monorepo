@@ -1,7 +1,6 @@
-import companyPrettier from "redstone-prettier-config";
+import redstonePrettierConfig from "redstone-prettier-config";
 
 export default {
-  ...companyPrettier,
-  printWidth: 100,
+  ...redstonePrettierConfig,
   plugins: ["prettier-plugin-organize-imports", "prettier-plugin-solidity"],
 };
