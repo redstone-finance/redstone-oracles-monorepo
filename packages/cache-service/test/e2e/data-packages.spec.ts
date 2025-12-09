@@ -36,7 +36,7 @@ type WithSigner = { signerAddress: string };
 
 jest.mock("@redstone-finance/sdk", () => ({
   __esModule: true,
-  ...jest.requireActual("@redstone-finance/sdk"),
+  ...jest.requireActual<object>("@redstone-finance/sdk"),
   getOracleRegistryState: jest.fn(() => mockOracleRegistryState),
 }));
 

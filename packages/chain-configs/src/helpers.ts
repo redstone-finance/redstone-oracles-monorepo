@@ -54,7 +54,7 @@ export function getMulticall3(
       Multicall3Abi,
       opts.signerOrProvider
     ) as EvmMulticallTypes.Multicall3;
-    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition -- add reason here, please
   } else if (multicall3.type === "RedstoneMulticall3") {
     return new Contract(
       address,

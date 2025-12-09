@@ -8,11 +8,11 @@ import { SampleRedstoneConsumerNumericMockManyDataFeeds } from "../../typechain-
 import { expectedNumericValues, mockNumericPackages } from "../tests-common";
 
 class CustomPayloadWrapper<T extends Contract> extends BaseWrapper<T> {
-  constructor(private customRedstonePayload: string) {
+  constructor(private readonly customRedstonePayload: string) {
     super();
   }
 
-  // eslint-disable-next-line @typescript-eslint/require-await
+  // eslint-disable-next-line @typescript-eslint/require-await -- add reason here, please
   override async getDataPackagesForPayload() {
     return [];
   }
@@ -21,7 +21,7 @@ class CustomPayloadWrapper<T extends Contract> extends BaseWrapper<T> {
     return "";
   }
 
-  // eslint-disable-next-line @typescript-eslint/require-await
+  // eslint-disable-next-line @typescript-eslint/require-await -- add reason here, please
   override async getBytesDataForAppending(): Promise<string> {
     return this.customRedstonePayload;
   }

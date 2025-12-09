@@ -8,9 +8,8 @@ import {
   requestDataPackages,
 } from "../src";
 
-// eslint-disable-next-line @typescript-eslint/no-unsafe-return
 jest.mock("../src/request-data-packages", () => ({
-  ...jest.requireActual("../src/request-data-packages"),
+  ...jest.requireActual<object>("../src/request-data-packages"),
   requestDataPackages: jest.fn().mockResolvedValue(mockSignedDataPackagesResponse),
 }));
 

@@ -37,7 +37,7 @@ export class StreamrListenerService {
 
   @Cron(CRON_EXPRESSION_EVERY_1_MINUTE)
   handleCron() {
-    // eslint-disable-next-line @typescript-eslint/no-floating-promises
+    // eslint-disable-next-line @typescript-eslint/no-floating-promises -- add reason here, please
     this.syncStreamrListening();
   }
 
@@ -97,13 +97,13 @@ export class StreamrListenerService {
     const subscription = this.subscriptionsState[nodeEvmAddress];
     if (subscription) {
       delete this.subscriptionsState[nodeEvmAddress];
-      // eslint-disable-next-line @typescript-eslint/no-floating-promises
+      // eslint-disable-next-line @typescript-eslint/no-floating-promises -- add reason here, please
       this.streamrClient.unsubscribe(subscription);
     }
   }
 
   // The function is left here to have it mockable in tests.
-  // eslint-disable-next-line @typescript-eslint/class-methods-use-this
+  // eslint-disable-next-line @typescript-eslint/class-methods-use-this -- add reason here, please
   getAllowedDataServiceIds(): string[] {
     return config.allowedStreamrDataServiceIds;
   }

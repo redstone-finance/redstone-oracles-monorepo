@@ -370,7 +370,7 @@ export class ProviderWithAgreement extends ProviderWithFallback {
         }
       };
 
-      // eslint-disable-next-line @typescript-eslint/no-misused-promises
+      // eslint-disable-next-line @typescript-eslint/no-misused-promises -- add reason here, please
       healthyProviders.forEach(executeOperationOnProvider);
     });
   }

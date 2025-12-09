@@ -18,7 +18,7 @@ type MemoizeArgs<F extends (...args: unknown[]) => Promise<unknown>> = {
  * Be default for building cacheKey JSON.stringify function is used, thus order of keys in object matters
  */
 export function memoize<
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any -- add reason here, please
   F extends (...args: any[]) => Promise<unknown>,
   R = ReturnType<F>,
 >({

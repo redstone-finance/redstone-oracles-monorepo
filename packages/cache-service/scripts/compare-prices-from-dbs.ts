@@ -33,7 +33,7 @@ const MIN_DEVIATION_PERCENTAGE_TO_LOG = 1;
 
 const TOKENS_ONLY_IN_ONE_DB = ["stETH", "USDT.e", "YAK", "gmdUSDC", "gmdETH", "EUROC", "CRV"];
 
-// eslint-disable-next-line @typescript-eslint/no-floating-promises
+// eslint-disable-next-line @typescript-eslint/no-floating-promises -- add reason here, please
 (async () => {
   console.log(`Comparing prices from ${DAYS} days`);
   const timestampsConfigs = defineTimestampsIntervals();

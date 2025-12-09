@@ -5,7 +5,7 @@ import { version } from "../../package.json";
 import { BaseWrapper } from "./BaseWrapper";
 
 export class DataPackagesWrapper<T extends Contract> extends BaseWrapper<T> {
-  constructor(private dataPackages: DataPackagesResponse) {
+  constructor(private readonly dataPackages: DataPackagesResponse) {
     super();
   }
 
@@ -13,7 +13,7 @@ export class DataPackagesWrapper<T extends Contract> extends BaseWrapper<T> {
     return `${this.getMetadataTimestamp()}#${version}#data-packages-wrapper`;
   }
 
-  // eslint-disable-next-line @typescript-eslint/require-await
+  // eslint-disable-next-line @typescript-eslint/require-await -- add reason here, please
   override async getDataPackagesForPayload() {
     return Object.values(this.dataPackages).flat() as SignedDataPackage[];
   }
