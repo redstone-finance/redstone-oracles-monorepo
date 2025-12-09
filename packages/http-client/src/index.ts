@@ -58,7 +58,7 @@ export type HttpClientOptions = {
 
 const isNode =
   typeof process !== "undefined" &&
-  // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+  // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition -- add reason here, please
   process.versions?.node !== undefined;
 
 /**

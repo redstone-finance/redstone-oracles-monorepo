@@ -36,7 +36,7 @@ export abstract class MqttDataProcessingStrategy<C, Q = string> {
     return this.delegate?.deref();
   }
 
-  // eslint-disable-next-line @typescript-eslint/class-methods-use-this
+  // eslint-disable-next-line @typescript-eslint/class-methods-use-this -- add reason here, please
   protected makeKey(dataPackagesResponse: DataPackagesResponse) {
     const dataPackageIds = Object.keys(dataPackagesResponse);
     dataPackageIds.sort();

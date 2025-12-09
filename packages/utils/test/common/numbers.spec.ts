@@ -2,7 +2,7 @@ import { safelyConvertAnyValueToNumber } from "../../src/common/numbers";
 
 describe("utils/numbers", () => {
   describe("safelyConvertAnyValueToNumber", () => {
-    // eslint-disable-next-line @typescript-eslint/no-loss-of-precision
+    // eslint-disable-next-line @typescript-eslint/no-loss-of-precision -- add reason here, please
     const numbersToCheck = [42, 4212312, 0, -1, 12342.323423123221];
 
     it("Should properly convert strings to numbers", () => {

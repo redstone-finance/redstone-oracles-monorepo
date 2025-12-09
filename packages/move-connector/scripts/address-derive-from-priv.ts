@@ -6,7 +6,7 @@ import { makeAptosAccount } from "../src";
 function main() {
   const account = makeAptosAccount();
   const variant =
-    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition -- add reason here, please
     account.signingScheme === SigningScheme.SingleKey
       ? PrivateKeyVariants.Secp256k1
       : PrivateKeyVariants.Ed25519;

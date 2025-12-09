@@ -1,3 +1,4 @@
+import comments from "@eslint-community/eslint-plugin-eslint-comments/configs";
 import js from "@eslint/js";
 import * as tsParser from "@typescript-eslint/parser";
 import type { Linter } from "eslint";
@@ -45,6 +46,7 @@ export default defineConfig([
   importXPlugin.flatConfigs.typescript as Linter.Config,
   arrayFunc.configs.recommended,
   tseslint.configs.recommendedTypeChecked,
+  comments.recommended,
   prettierEslintRecommended,
   workspaces.configs["flat/recommended"],
   redstoneConfig,
@@ -120,11 +122,19 @@ export default defineConfig([
       eqeqeq: "error",
       "array-func/prefer-array-from": "off",
       "@typescript-eslint/no-deprecated": "error",
+      "@eslint-community/eslint-comments/require-description": [
+        "error",
+        { ignore: ["eslint-disable"] },
+      ],
+      "@eslint-community/eslint-comments/no-unlimited-disable": "off",
+      "@eslint-community/eslint-comments/disable-enable-pair": "off",
     },
   },
   {
-    files: ["**/eslint.config.ts"],
-    extends: [tseslint.configs.disableTypeChecked],
+    files: ["packages/**/*.spec.ts"],
+    rules: {
+      "@eslint-community/eslint-comments/require-description": "off",
+    },
   },
   {
     files: [`packages/{${noConsolePackageNames.join(",")}}/src/**/*.ts`],

@@ -17,7 +17,7 @@ const compareRpcUrlSets = (
       continue;
     }
 
-    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition -- add reason here, please
     if (!set2[chain]) {
       console.log(`${setName2} does not contain ${chain}`);
       continue;
