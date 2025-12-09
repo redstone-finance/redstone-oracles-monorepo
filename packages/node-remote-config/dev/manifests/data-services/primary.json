@@ -3340,6 +3340,28 @@
       "denomination": "USD",
       "rateFeed": false
     },
+    "FGNXP": {
+      "source": [
+        "financialmodelingprep",
+        "polygon",
+        "twelve-data-stocks",
+        "ws-dx-feed-no-close-price",
+        "databento-no-closing-price"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "CEPT": {
+      "source": [
+        "financialmodelingprep",
+        "polygon",
+        "twelve-data-stocks",
+        "ws-dx-feed-no-close-price",
+        "databento-no-closing-price"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
     "IS_NY_STOCKS_MARKET_OPEN": {
       "source": ["is-ny-stocks-market-open"],
       "denomination": "other",
