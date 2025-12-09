@@ -3836,7 +3836,8 @@
         "kraken-usd",
         "kucoin-usdt",
         "mexc-usdt",
-        "okx-usdt"
+        "okx-usdt",
+        "xt"
       ],
       "denomination": "USD",
       "rateFeed": false
@@ -3854,7 +3855,8 @@
         "kraken-usd",
         "kucoin-usdt",
         "mexc-usdt",
-        "okx-usdt"
+        "okx-usdt",
+        "xt"
       ],
       "denomination": "USD",
       "rateFeed": false
@@ -3892,6 +3894,13 @@
       ],
       "denomination": "USD",
       "rateFeed": false
+    },
+    "CMC20_FUNDAMENTAL": {
+      "source": [
+        "bnb-evm-fetcher-reserve"
+      ],
+      "denomination": "USD",
+      "rateFeed": true
     }
   },
   "multiPointPackages": {
