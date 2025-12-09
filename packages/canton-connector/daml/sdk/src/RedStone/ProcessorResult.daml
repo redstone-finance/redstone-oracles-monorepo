@@ -12,7 +12,7 @@ type DecimalValue = Numeric 8 -- 8 decimals
 value_divisor: DecimalValue = 10.0 ^ 8
 
 type ProcessorResult  = ([Result DecimalValue Text], Int)
-type RedStoneRawResult = ([Result U256 Text], Int)
+type ProcessorRawResult = ([Result U256 Text], Int)
 
 divByDivisor a = div a value_divisor
 
