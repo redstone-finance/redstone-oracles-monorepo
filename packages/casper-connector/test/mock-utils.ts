@@ -88,7 +88,7 @@ export function callEntrypointMock(
 
 export function mockStateRootHashImplementations(connection: jest.Mocked<ICasperConnection>) {
   connection.waitForDeploy.mockResolvedValue(true);
-  // eslint-disable-next-line @typescript-eslint/require-await
+  // eslint-disable-next-line @typescript-eslint/require-await -- add reason here, please
   connection.refreshStateRootHash.mockImplementationOnce(async () => {
     connection.getStateRootHash.mockReturnValue("2");
   });

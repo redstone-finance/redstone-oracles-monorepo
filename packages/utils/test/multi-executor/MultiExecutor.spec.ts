@@ -598,7 +598,7 @@ export function makeSut<T extends MockClient>(
 }
 
 class CustomExecutor<R> extends Executor<R> {
-  // eslint-disable-next-line @typescript-eslint/class-methods-use-this
+  // eslint-disable-next-line @typescript-eslint/class-methods-use-this -- add reason here, please
   async execute(functions: FnBox<R>[]): Promise<R> {
     let result = undefined;
     for (const func of functions) {

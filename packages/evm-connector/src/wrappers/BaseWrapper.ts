@@ -103,13 +103,13 @@ export abstract class BaseWrapper<T extends Contract> {
     };
   }
 
-  // eslint-disable-next-line @typescript-eslint/class-methods-use-this
+  // eslint-disable-next-line @typescript-eslint/class-methods-use-this -- add reason here, please
   private overwriteFunction({ wrappedContract, contract, functionName }: OverwriteFunctionArgs<T>) {
     const functionFragment = contract.interface.getFunction(functionName);
     const isCall = functionFragment.constant;
     const isDryRun = functionName.endsWith("DryRun");
 
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-explicit-any
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-explicit-any -- add reason here, please
     (wrappedContract as any)[functionName] = async (...args: unknown[]) => {
       // this is copied from node_modules/@ethersproject/contracts/src.ts/index.ts
       const blockTag = BaseWrapper.handleContractOverrides(args, functionFragment);
@@ -122,7 +122,7 @@ export abstract class BaseWrapper<T extends Contract> {
         const result = await contract[shouldUseSigner ? "signer" : "provider"].call(tx, blockTag);
 
         const decoded = contract.interface.decodeFunctionResult(functionName, result);
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-return -- add reason here, please
         return decoded.length === 1 ? decoded[0] : decoded;
       } else {
         const sentTx = await contract.signer.sendTransaction(tx);

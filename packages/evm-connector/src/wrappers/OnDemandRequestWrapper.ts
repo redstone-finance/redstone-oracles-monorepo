@@ -27,7 +27,7 @@ export class OnDemandRequestWrapper<T extends Contract> extends BaseWrapper<T> {
     return `${version}#on-demand-request`;
   }
 
-  // eslint-disable-next-line @typescript-eslint/class-methods-use-this, @typescript-eslint/require-await
+  // eslint-disable-next-line @typescript-eslint/class-methods-use-this, @typescript-eslint/require-await -- add reason here, please
   async dryRunToVerifyPayload(payloads: string[]): Promise<string> {
     return payloads[0];
   }

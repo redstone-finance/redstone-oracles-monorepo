@@ -10,7 +10,7 @@ export interface MockDataPackageConfig {
 }
 
 export class MockWrapper<T extends Contract> extends BaseWrapper<T> {
-  constructor(private mockDataPackages: MockDataPackageConfig[]) {
+  constructor(private readonly mockDataPackages: MockDataPackageConfig[]) {
     super();
   }
 
@@ -19,7 +19,7 @@ export class MockWrapper<T extends Contract> extends BaseWrapper<T> {
   }
 
   // This function is async, because it's async in BaseWrapper
-  // eslint-disable-next-line @typescript-eslint/require-await
+  // eslint-disable-next-line @typescript-eslint/require-await -- add reason here, please
   override async getDataPackagesForPayload() {
     const signedDataPackages: SignedDataPackage[] = [];
 
@@ -32,7 +32,7 @@ export class MockWrapper<T extends Contract> extends BaseWrapper<T> {
     return signedDataPackages;
   }
 
-  // eslint-disable-next-line @typescript-eslint/class-methods-use-this, @typescript-eslint/require-await
+  // eslint-disable-next-line @typescript-eslint/class-methods-use-this, @typescript-eslint/require-await -- add reason here, please
   async dryRunToVerifyPayload(payloads: string[]): Promise<string> {
     return payloads[0];
   }
