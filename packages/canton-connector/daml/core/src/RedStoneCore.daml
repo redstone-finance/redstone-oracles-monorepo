@@ -1,0 +1,24 @@
+module RedStoneCore where
+
+import RedStone.Processor
+import RedStone.Config
+import RedStone.Result
+import IRedStoneCore
+
+template RedStoneCore
+  with
+    coreId: Text
+    owner : Party
+    viewers : [Party]
+  where
+    signatory owner
+    observer viewers
+
+    interface instance IRedStoneCore for RedStoneCore where
+      view = RedStoneCoreView with owner, viewers, coreId
+
+      getPrices feedIds currentTime payloadHex = do
+        config <- verifyConfigAgainstLedger $ redstonePrimaryProdDefaultConfig feedIds currentTime
+        let (values, timestamp) = processPayloadNumeric config payloadHex
+
+        return $ (map resultUnwrap values, timestamp)
