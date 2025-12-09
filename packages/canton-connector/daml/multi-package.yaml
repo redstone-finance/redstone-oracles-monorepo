@@ -2,6 +2,7 @@ sdk-version: ${SDK_VERSION}
 packages:
   - ./sdk
   - ./interface
+  - ./core
   - ./adapter
   - ./price_feed
   - ./test
