@@ -3332,8 +3332,8 @@
       "source": [
         "alltick-stocks-api",
         "financialmodelingprep",
-        "polygon",
-        "twelve-data-stocks",
+        "ws-polygon-massive-no-closing-price",
+        "ws-twelve-data-no-closing-price",
         "ws-dx-feed-no-close-price",
         "databento-no-closing-price"
       ],
