@@ -2583,6 +2583,28 @@
       "denomination": "USD",
       "rateFeed": false
     },
+    "FGNXP": {
+      "source": [
+        "financialmodelingprep",
+        "polygon",
+        "twelve-data-stocks",
+        "ws-dx-feed-no-close-price",
+        "databento-no-closing-price"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "CEPT": {
+      "source": [
+        "financialmodelingprep",
+        "polygon",
+        "twelve-data-stocks",
+        "ws-dx-feed-no-close-price",
+        "databento-no-closing-price"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
     "YY_AAVE_AVAX": {
       "source": ["avalanche-evm-fetcher-yield-yak"],
       "denomination": "USD",
