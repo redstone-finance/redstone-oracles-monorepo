@@ -360,9 +360,8 @@
         "alltick-stocks-api-deferred",
         "databento",
         "financialmodelingprep-deferred",
-        "polygon-deferred",
         "ws-polygon-massive",
-        "twelve-data-stocks-deferred",
+        "ws-twelve-data",
         "ws-dx-feed"
       ],
       "deviationCheck": {
@@ -502,9 +501,8 @@
         "alltick-stocks-api-deferred",
         "databento",
         "financialmodelingprep-deferred",
-        "polygon-deferred",
         "ws-polygon-massive",
-        "twelve-data-stocks-deferred",
+        "ws-twelve-data",
         "ws-dx-feed"
       ],
       "deviationCheck": {
@@ -888,9 +886,8 @@
         "alltick-stocks-api-deferred",
         "databento",
         "financialmodelingprep-deferred",
-        "polygon-deferred",
         "ws-polygon-massive",
-        "twelve-data-stocks-deferred",
+        "ws-twelve-data",
         "ws-dx-feed"
       ],
       "deviationCheck": {
@@ -1030,9 +1027,8 @@
         "alltick-stocks-api-deferred",
         "databento",
         "financialmodelingprep-deferred",
-        "polygon-deferred",
         "ws-polygon-massive",
-        "twelve-data-stocks-deferred",
+        "ws-twelve-data",
         "ws-dx-feed"
       ],
       "deviationCheck": {
@@ -1172,9 +1168,8 @@
         "alltick-stocks-api-deferred",
         "databento",
         "financialmodelingprep-deferred",
-        "polygon-deferred",
         "ws-polygon-massive",
-        "twelve-data-stocks-deferred",
+        "ws-twelve-data",
         "ws-dx-feed"
       ],
       "deviationCheck": {
