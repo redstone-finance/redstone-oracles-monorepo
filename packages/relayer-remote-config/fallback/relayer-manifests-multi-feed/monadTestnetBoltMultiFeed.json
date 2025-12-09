@@ -24,12 +24,6 @@
     },
     "SOL": {
       "priceFeedAddress": "0x6D4B25c672b950623b8482F2D41E686875dDf729"
-    },
-    "DAI": {
-      "priceFeedAddress": "0xc1F550F407cCA20D9b30c3edE469b9DA7539838d"
-    },
-    "gMON_TESTNET_FUNDAMENTAL": {
-      "priceFeedAddress": "0x8d1818Ba060543a3A24570C324b8c00E1c96b07A"
     }
   },
   "authorizedSigners": [
