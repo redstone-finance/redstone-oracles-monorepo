@@ -11529,6 +11529,8 @@ __metadata:
       built: true
     puppeteer:
       built: true
+    secp256k1:
+      built: true
     sqlite3:
       built: true
   languageName: unknown
