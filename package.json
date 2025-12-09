@@ -114,6 +114,9 @@
     "puppeteer": {
       "built": true
     },
+    "secp256k1": {
+      "built": true
+    },
     "sqlite3": {
       "built": true
     }
