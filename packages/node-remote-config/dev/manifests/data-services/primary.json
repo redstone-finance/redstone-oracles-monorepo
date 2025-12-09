@@ -3791,6 +3791,16 @@
       "denomination": "USD",
       "rateFeed": false
     },
+    "FGNXP": {
+      "source": [],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "CEPT": {
+      "source": [],
+      "denomination": "USD",
+      "rateFeed": false
+    },
     "IS_NY_STOCKS_MARKET_OPEN": {
       "source": [],
       "denomination": "other",
