@@ -9,7 +9,7 @@ export class PriceAdapterRadixContractConnector extends RadixContractConnector<P
     super(client, componentId);
   }
 
-  // eslint-disable-next-line @typescript-eslint/require-await
+  // eslint-disable-next-line @typescript-eslint/require-await -- add reason here, please
   async getComponentId() {
     return this.componentId!;
   }

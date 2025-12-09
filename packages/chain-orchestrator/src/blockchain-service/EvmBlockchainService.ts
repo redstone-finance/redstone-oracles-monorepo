@@ -2,7 +2,7 @@ import { providers } from "ethers";
 import { IBlockchainService } from "./IBlockchainService";
 
 export class EvmBlockchainService implements IBlockchainService {
-  constructor(private provider: providers.Provider) {}
+  constructor(private readonly provider: providers.Provider) {}
 
   async getBlockNumber() {
     return await this.provider.getBlockNumber();
@@ -11,7 +11,7 @@ export class EvmBlockchainService implements IBlockchainService {
   async getTimeForBlock(block: number): Promise<Date> {
     const blockData = await this.provider.getBlockWithTransactions(block);
 
-    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition -- add reason here, please
     return new Date((blockData?.timestamp || 0) * 1000);
   }
 

@@ -5,7 +5,7 @@ import {
   DataServiceIds,
   getSignersForDataServiceId,
   pickDataFeedPackagesClosestToMedian,
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars -- add reason here, please
   type requestDataPackages,
   SignedDataPackageSchema,
 } from "@redstone-finance/sdk";
@@ -119,7 +119,7 @@ export class DataPackageSubscriber {
     this.logger.info(
       `Enabled fallback mode interval=${checkInterval} maxDelayBetweenPublishes=${maxDelayBetweenPublishes}`
     );
-    // eslint-disable-next-line @typescript-eslint/no-misused-promises
+    // eslint-disable-next-line @typescript-eslint/no-misused-promises -- add reason here, please
     this.fallbackInterval = setInterval(async () => {
       try {
         if (this.lastPublishedState.isAnyFeedNotPublishedIn(maxDelayBetweenPublishes)) {

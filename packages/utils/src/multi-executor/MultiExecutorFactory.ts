@@ -72,7 +72,7 @@ export class MultiExecutorFactory<T extends object> {
   }
 
   createProxy(): T {
-    // eslint-disable-next-line @typescript-eslint/no-this-alias
+    // eslint-disable-next-line @typescript-eslint/no-this-alias -- add reason here, please
     const that = this;
     Object.assign(this.instances[0], {
       __instances: this.instances,

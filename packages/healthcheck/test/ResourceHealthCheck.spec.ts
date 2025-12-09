@@ -4,7 +4,7 @@ const mockV8HeapStats = jest.fn();
 
 jest.mock("v8", () => ({
   // note: the wrapping fn prevents from hoisting error.
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-return -- add reason here, please
   getHeapStatistics: () => mockV8HeapStats(),
 }));
 

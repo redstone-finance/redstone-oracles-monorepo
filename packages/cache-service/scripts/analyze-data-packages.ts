@@ -34,7 +34,7 @@ const EXPECTED_DATA_FEEDS = [
   "sAVAX",
 ];
 
-// eslint-disable-next-line @typescript-eslint/no-floating-promises
+// eslint-disable-next-line @typescript-eslint/no-floating-promises -- add reason here, please
 main();
 
 async function main() {
@@ -60,7 +60,7 @@ async function main() {
       lastTimestamp = timestamp;
 
       const timestampFromId = new Date(
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-argument, @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-explicit-any
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-argument, @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-explicit-any -- add reason here, please
         (dataPackage as any)._id.getTimestamp()
       ).getTime();
 

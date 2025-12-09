@@ -3,7 +3,7 @@
 
 /* eslint-disable @typescript-eslint/require-await */
 /* eslint-disable @typescript-eslint/ban-ts-comment */
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
+// eslint-disable-next-line @typescript-eslint/no-explicit-any -- add reason here, please
 type AnyFunction = (...arguments_: readonly any[]) => unknown;
 
 export type ThrottledFunction<F extends AnyFunction> = F & {

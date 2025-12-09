@@ -13,10 +13,9 @@ import "../common/set-test-envs";
 import { createTestDB, dropTestDatabase } from "../common/test-db";
 import { sleep } from "../common/test-utils";
 
-// eslint-disable-next-line @typescript-eslint/no-unsafe-return
 jest.mock("@redstone-finance/sdk", () => ({
   __esModule: true,
-  ...jest.requireActual("@redstone-finance/sdk"),
+  ...jest.requireActual<object>("@redstone-finance/sdk"),
   getOracleRegistryState: jest.fn(() => ({
     nodes: {
       node1: {
@@ -27,10 +26,9 @@ jest.mock("@redstone-finance/sdk", () => ({
   })),
 }));
 
-// eslint-disable-next-line @typescript-eslint/no-unsafe-return
 jest.mock("../../src/common/streamr", () => ({
   __esModule: true,
-  ...jest.requireActual("../../src/common/streamr"),
+  ...jest.requireActual<object>("../../src/common/streamr"),
   StreamrClient: jest.fn().mockImplementation(() => ({
     subscribe(_streamId: string, callback: (msg: Uint8Array) => void) {
       callback(compressMsg(getMockDataPackages()));
@@ -78,7 +76,7 @@ describe("Streamr Listener (e2e)", () => {
     const dataPackagesInDBCleaned = dataPackagesInDB.map((dp) => {
       const { _id, __v, ...rest } = dp.toJSON();
       // temporary for backward compatibility
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment -- add reason here, please
       rest.dataFeedId = rest.dataPackageId;
       return rest;
     });

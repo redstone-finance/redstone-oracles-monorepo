@@ -14,7 +14,7 @@ jest.mock("@redstone-finance/utils", () => ({
   RedstoneCommon: {
     intervalMsToCronFormat: jest.fn(),
     timeout: jest.fn(),
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-return,@typescript-eslint/no-unsafe-call,@typescript-eslint/no-unsafe-member-access
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-return,@typescript-eslint/no-unsafe-call,@typescript-eslint/no-unsafe-member-access -- add reason here, please
     stringifyError: jest.fn((err) => err.toString()),
   },
   loggerFactory: () => ({
@@ -61,12 +61,12 @@ describe("HealthMonitor", () => {
 
       const checks = new Map([["test", mockHealthCheck]]);
       new RedstoneHealthcheck.HealthMonitor(checks, 5000);
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-return -- add reason here, please
       mockTimeout.mockImplementation((promise) => promise);
 
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment,@typescript-eslint/no-unsafe-member-access
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment,@typescript-eslint/no-unsafe-member-access -- add reason here, please
       const scheduledCallback = mockScheduleJob.mock.calls[0][1];
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-call
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-call -- add reason here, please
       await scheduledCallback(mockDate);
 
       expect(mockWriteFile).toHaveBeenCalledWith(
@@ -84,12 +84,12 @@ describe("HealthMonitor", () => {
 
       const checks = new Map([["test", mockHealthCheck]]);
       new RedstoneHealthcheck.HealthMonitor(checks, 5000);
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-return -- add reason here, please
       mockTimeout.mockImplementation((promise) => promise);
 
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment,@typescript-eslint/no-unsafe-member-access
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment,@typescript-eslint/no-unsafe-member-access -- add reason here, please
       const scheduledCallback = mockScheduleJob.mock.calls[0][1];
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-call
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-call -- add reason here, please
       await scheduledCallback(mockDate);
 
       expect(mockWriteFile).toHaveBeenCalledWith(
@@ -108,9 +108,9 @@ describe("HealthMonitor", () => {
       new RedstoneHealthcheck.HealthMonitor(checks, 5000);
       mockTimeout.mockRejectedValue(new Error("Timeout"));
 
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment,@typescript-eslint/no-unsafe-member-access
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment,@typescript-eslint/no-unsafe-member-access -- add reason here, please
       const scheduledCallback = mockScheduleJob.mock.calls[0][1];
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-call
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-call -- add reason here, please
       await scheduledCallback(mockDate);
 
       expect(mockWriteFile).toHaveBeenCalledWith(
@@ -133,12 +133,12 @@ describe("HealthMonitor", () => {
         ["unhealthy", unhealthyCheck],
       ]);
       new RedstoneHealthcheck.HealthMonitor(checks, 5000);
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-return -- add reason here, please
       mockTimeout.mockImplementation((promise) => promise);
 
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment,@typescript-eslint/no-unsafe-member-access
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment,@typescript-eslint/no-unsafe-member-access -- add reason here, please
       const scheduledCallback = mockScheduleJob.mock.calls[0][1];
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-call
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-call -- add reason here, please
       await scheduledCallback(mockDate);
 
       expect(mockWriteFile).toHaveBeenCalledWith(

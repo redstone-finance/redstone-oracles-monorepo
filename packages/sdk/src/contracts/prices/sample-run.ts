@@ -7,8 +7,6 @@ import { IContractConnector } from "../IContractConnector";
 import { IPriceFeedContractAdapter } from "./IPriceFeedContractAdapter";
 import { IExtendedPricesContractAdapter, IPricesContractAdapter } from "./IPricesContractAdapter";
 
-/* eslint-disable @typescript-eslint/restrict-template-expressions */
-
 export async function sampleRun(
   paramsProvider: ContractParamsProvider,
   pricesConnector: IContractConnector<IPricesContractAdapter>,
@@ -50,7 +48,7 @@ async function executePullModel(
   logHeader("Pulling values using core model");
   try {
     const coreValues = await pricesAdapter.getPricesFromPayload(paramsProvider);
-    console.log(`Core values: ${coreValues.map(convertValue)}`);
+    console.log(`Core values: ${String(coreValues.map(convertValue))}`);
   } catch (e) {
     console.error(RedstoneCommon.stringifyError(e));
   }
@@ -68,7 +66,7 @@ async function executePushModel(
   if (typeof deployHash === "string") {
     await pricesConnector.waitForTransaction(deployHash);
   } else {
-    console.log(`Values pushed to contract: ${deployHash}`);
+    console.log(`Values pushed to contract: ${String(deployHash)}`);
   }
 
   await refreshStateCallback();
@@ -79,7 +77,7 @@ async function executePushModel(
   logHeader("Viewing values from contract");
   const values = await pricesAdapter.readPricesFromContract(paramsProvider, blockNumber);
 
-  console.log(`Values read from contract: ${values.map(convertValue)}`);
+  console.log(`Values read from contract: ${String(values.map(convertValue))}`);
   const readTimestamp = await pricesAdapter.readTimestampFromContract(
     paramsProvider.getDataFeedIds()[0],
     blockNumber

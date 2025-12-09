@@ -7,7 +7,7 @@ export type QueueEntry<T = string> = { id: T; operation: Operation; timestamp: n
 export class OperationQueue<T = string> {
   protected queue: QueueEntry<T>[] = [];
   private isProcessing = false;
-  private activeOperations = new Set<T>();
+  private readonly activeOperations = new Set<T>();
 
   constructor(protected logger = loggerFactory("operation-queue")) {}
 
@@ -55,17 +55,17 @@ export class OperationQueue<T = string> {
     }
   }
 
-  // eslint-disable-next-line @typescript-eslint/class-methods-use-this
+  // eslint-disable-next-line @typescript-eslint/class-methods-use-this -- add reason here, please
   protected expandQueueEntry(entry: QueueEntry<T>, now = Date.now()) {
     return { id: stringify(entry.id), age: now - entry.timestamp };
   }
 
-  // eslint-disable-next-line @typescript-eslint/class-methods-use-this
+  // eslint-disable-next-line @typescript-eslint/class-methods-use-this -- add reason here, please
   protected conforms(oldId: T, newId: T, _strict = false) {
     return oldId === newId;
   }
 
-  // eslint-disable-next-line @typescript-eslint/class-methods-use-this
+  // eslint-disable-next-line @typescript-eslint/class-methods-use-this -- add reason here, please
   protected purge(_replacedOperationIndex: number, _id: T) {
     // nop
   }

@@ -16,7 +16,7 @@ export class MovePricesContractAdapter implements IExtendedPricesContractAdapter
     return Promise.resolve(this.writer?.getSignerAddress().toString());
   }
 
-  //eslint-disable-next-line @typescript-eslint/require-await
+  // eslint-disable-next-line @typescript-eslint/require-await -- add reason here, please
   async getPricesFromPayload(_paramsProvider: ContractParamsProvider): Promise<bigint[]> {
     throw new Error("Pull model not supported");
   }

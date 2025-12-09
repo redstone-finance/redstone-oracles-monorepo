@@ -2,7 +2,7 @@ import { RadixContractConnector } from "../../radix/RadixContractConnector";
 import { ProxyFeedRadixContractAdapter } from "./ProxyRadixContractAdapter";
 
 export class ProxyRadixContractConnector extends RadixContractConnector<ProxyFeedRadixContractAdapter> {
-  // eslint-disable-next-line @typescript-eslint/require-await
+  // eslint-disable-next-line @typescript-eslint/require-await -- add reason here, please
   async getComponentId() {
     return this.componentId!;
   }
