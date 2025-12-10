@@ -11,12 +11,6 @@
     }
   },
   "tokens": {
-    "flx:GOLD_EXT": {
-      "source": ["emergency-fetcher"],
-      "broadcasters": ["hyperliquid-hip3"],
-      "denomination": "USD",
-      "rateFeed": false
-    },
     "flx:SILVER_EXT": {
       "source": ["emergency-fetcher"],
       "broadcasters": ["hyperliquid-hip3"],
@@ -1319,8 +1313,107 @@
         "xt-deferred"
       ],
       "broadcasters": ["influx"],
+      "deviationCheck": {
+        "deviationWithRecentValues": {
+          "maxPercent": 30,
+          "maxDelayMilliseconds": 120000
+        }
+      },
       "denomination": "USD",
       "rateFeed": false
+    },
+    "XAUt_EMA_1M": {
+      "source": ["ema"],
+      "broadcasters": ["influx"],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "XAUt_EMA_5M": {
+      "source": ["ema"],
+      "broadcasters": ["influx"],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "XAUt_EMA_8H": {
+      "source": ["ema"],
+      "broadcasters": ["influx"],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "XAU": {
+      "source": [
+        "alltick-api-deferred",
+        "commodity-price-api-deferred",
+        "financialmodelingprep-deferred",
+        "metal-price-api-deferred",
+        "ws-lmax",
+        "ws-polygon-massive-commodities"
+      ],
+      "broadcasters": ["influx"],
+      "deviationCheck": {
+        "deviationWithRecentValues": {
+          "maxPercent": 30,
+          "maxDelayMilliseconds": 120000
+        }
+      },
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "MARK_flxn:GOLD": {
+      "source": ["hyperliquid-testnet-perps-ws-fetcher", "hydromancer-testnet-perps-ws-fetcher"],
+      "customWeightsForWeightedMedian": {
+        "hyperliquid-testnet-perps-ws-fetcher": 10,
+        "hydromancer-testnet-perps-ws-fetcher": 1
+      },
+      "broadcasters": ["influx"],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "ORACLE_flxn:GOLD": {
+      "source": ["hyperliquid-testnet-perps-ws-fetcher", "hydromancer-testnet-perps-ws-fetcher"],
+      "customWeightsForWeightedMedian": {
+        "hyperliquid-testnet-perps-ws-fetcher": 10,
+        "hydromancer-testnet-perps-ws-fetcher": 1
+      },
+      "broadcasters": ["influx"],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "flxn:GOLD_MARK_0": {
+      "source": ["hip3-felix-commodities-testnet-fetcher"],
+      "broadcasters": ["hyperliquid-hip3"],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "flxn:GOLD_MARK_1": {
+      "source": ["hip3-felix-commodities-testnet-fetcher"],
+      "broadcasters": ["hyperliquid-hip3"],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "flxn:GOLD_EXT": {
+      "source": ["hip3-felix-commodities-testnet-fetcher"],
+      "broadcasters": ["hyperliquid-hip3"],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "flxn:GOLD": {
+      "source": ["hip3-felix-commodities-testnet-fetcher"],
+      "broadcasters": ["hyperliquid-hip3"],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "OPEN_INTEREST_flxn:GOLD": {
+      "source": ["hyperliquid-testnet-perps-ws-fetcher"],
+      "broadcasters": [],
+      "denomination": "USD",
+      "rateFeed": false,
+      "deviationCheck": {
+        "deviationWithRecentValues": {
+          "maxPercent": 1000000000,
+          "maxDelayMilliseconds": 1000
+        }
+      }
     }
   }
 }
