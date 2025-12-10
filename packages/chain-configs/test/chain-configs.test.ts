@@ -9,8 +9,8 @@ import {
 import { skipIfDisabledOrNotSupported } from "./rpc-urls/common";
 
 const CHAINS_TO_SKIP_RPC_PRESENCE_CHECK: string[] = [
-  "megaEth Testnet",
-  "Monad Mainnet",
+  "megaETH Testnet",
+  "megaETH Mainnet",
   "Stable Mainnet",
 ];
 
