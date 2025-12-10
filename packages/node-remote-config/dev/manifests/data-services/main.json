@@ -1091,16 +1091,6 @@
       "denomination": "USD",
       "rateFeed": false
     },
-    "TLOS": {
-      "source": [
-        "bitget-usdt",
-        "coingecko",
-        "gate-usdt",
-        "kucoin-usdt"
-      ],
-      "denomination": "USD",
-      "rateFeed": false
-    },
     "ETHx": {
       "source": [
         "curve-ethereum-eth",
