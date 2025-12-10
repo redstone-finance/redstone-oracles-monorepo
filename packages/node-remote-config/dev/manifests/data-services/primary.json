@@ -443,11 +443,6 @@
       "denomination": "USD",
       "rateFeed": false
     },
-    "TLOS": {
-      "source": ["bitget-usdt", "coingecko", "coinmarketcap", "gate-usdt", "kucoin-usdt"],
-      "denomination": "USD",
-      "rateFeed": false
-    },
     "ETHx": {
       "source": ["curve-ethereum-eth", "uniswap-v3-ethereum-wsteth-100"],
       "denomination": "USD",
