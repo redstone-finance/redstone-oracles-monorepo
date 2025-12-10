@@ -11160,6 +11160,7 @@ __metadata:
     "@redstone-finance/monitoring-manifests": "workspace:*"
     "@redstone-finance/node-remote-config": "workspace:*"
     "@redstone-finance/on-chain-relayer-common": "workspace:*"
+    "@redstone-finance/protocol": "workspace:*"
     "@redstone-finance/rpc-providers": "workspace:*"
     "@redstone-finance/sdk": "workspace:*"
     "@redstone-finance/utils": "workspace:*"
@@ -11167,12 +11168,14 @@ __metadata:
     "@types/aws-lambda": "npm:^8.10.145"
     "@types/cors": "npm:^2.8.12"
     "@types/express": "npm:^4.17.14"
+    "@types/lodash": "npm:^4.14.195"
     axios: "npm:^1.13.2"
     cors: "npm:^2.8.5"
     dotenv: "npm:^16.0.3"
     ethers: "npm:^5.7.2"
     express: "npm:^4.18.1"
     express-async-handler: "npm:^1.1.4"
+    lodash: "npm:^4.17.21"
     zod: "npm:^4.1.12"
   languageName: unknown
   linkType: soft
