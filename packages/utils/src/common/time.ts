@@ -63,6 +63,9 @@ export const sleep = (ms: number) =>
 
 export const msToMin = (ms: number) => ms / 60_000;
 
+export const hourToMin = (fullHour: number, minRemainder: number = 0) =>
+  fullHour * 60 + minRemainder;
+
 export const minToMs = (min: number) => min * 60_000;
 
 export const hourToMs = (hours: number) => hours * 3_600_000;
