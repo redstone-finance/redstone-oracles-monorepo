@@ -7826,6 +7826,16 @@
       "source": ["bnb-evm-fetcher-reserve"],
       "denomination": "USD",
       "rateFeed": true
+    },
+    "stMNT_FUNDAMENTAL": {
+      "source": ["ethereum-evm-fetcher-mantle-liq"],
+      "denomination": "MNT",
+      "rateFeed": true
+    },
+    "stMNT_FUNDAMENTAL/USD": {
+      "source": ["usd-based"],
+      "denomination": "USD",
+      "rateFeed": true
     }
   }
 }
