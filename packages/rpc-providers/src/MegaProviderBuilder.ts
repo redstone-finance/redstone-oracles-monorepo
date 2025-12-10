@@ -16,6 +16,7 @@ type MegaProviderOptions = {
   timeout: number;
   pollingInterval?: number;
   httpClient?: HttpClient;
+  blockNumberCacheOpts?: { isCacheEnabled: boolean; ttl?: number };
 };
 
 type ProviderFactory = () => providers.Provider;
@@ -81,7 +82,13 @@ export class MegaProviderBuilder {
           true
         );
         const redstoneProvider = new RedstoneProvider(this.options.httpClient, rpcUrl);
-        const provider = new RedstoneEthers5Provider(redstoneProvider, this.options.network);
+        const provider = new RedstoneEthers5Provider(
+          redstoneProvider,
+          this.options.network,
+          undefined,
+          undefined,
+          this.options.blockNumberCacheOpts
+        );
         return provider;
       } else {
         const provider = new providers.StaticJsonRpcProvider(
