@@ -54,6 +54,7 @@ export const getRelayerProvider = (relayerConfig: RelayerConfig) => {
     throttleLimit: 1,
     network: { name: chainName, chainId: networkId },
     pollingInterval: ethersPollingIntervalInMs,
+    blockNumberCacheOpts: { isCacheEnabled: false, ttl: 0 },
   })
     .addDecorator(
       (factory) => ProviderDecorators.CallMetricDecorator(factory, sendMetric),

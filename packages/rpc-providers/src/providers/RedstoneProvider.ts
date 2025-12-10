@@ -286,15 +286,34 @@ export class RedstoneProvider {
 
 export class RedstoneEthers5Provider implements ethers.providers.Provider {
   _isProvider: boolean = true;
+  private static readonly DEFAULT_BLOCK_NUMBER_CACHE_TTL = 100;
   private readonly url: string;
+  private readonly _getBlockNumberCached: () => Promise<number>;
 
   constructor(
     public readonly rpc: RedstoneProvider,
     public readonly network: { name: string; chainId: number },
-    private readonly poolingInterval: number = 500,
-    private readonly waitForTransactionTimeout: number = 60_000
+    private readonly pollingInterval: number = 500,
+    private readonly waitForTransactionTimeout: number = 60_000,
+    private readonly blockNumberCacheOpts: { ttl?: number; isCacheEnabled: boolean } = {
+      ttl: RedstoneEthers5Provider.DEFAULT_BLOCK_NUMBER_CACHE_TTL,
+      isCacheEnabled: true,
+    }
   ) {
     this.url = this.rpc.url;
+    this._getBlockNumberCached = this._initializeBlockNumberCache();
+  }
+
+  private _initializeBlockNumberCache(): () => Promise<number> {
+    if (this.blockNumberCacheOpts.isCacheEnabled) {
+      return RedstoneCommon.memoize({
+        functionToMemoize: this.getBlockNumberImpl.bind(this),
+        ttl:
+          this.blockNumberCacheOpts.ttl ?? RedstoneEthers5Provider.DEFAULT_BLOCK_NUMBER_CACHE_TTL,
+      }) as () => Promise<number>;
+    } else {
+      return this.getBlockNumberImpl.bind(this);
+    }
   }
 
   getNetwork(): Promise<ethers.providers.Network> {
@@ -302,6 +321,10 @@ export class RedstoneEthers5Provider implements ethers.providers.Provider {
   }
 
   async getBlockNumber(): Promise<number> {
+    return await this._getBlockNumberCached();
+  }
+
+  private async getBlockNumberImpl(): Promise<number> {
     const blockNumberInHex = await this.rpc.send<string>("eth_blockNumber", []);
     return Number.parseInt(blockNumberInHex, 16);
   }
@@ -682,7 +705,7 @@ export class RedstoneEthers5Provider implements ethers.providers.Provider {
         return transaction;
       }
 
-      await RedstoneCommon.sleep(this.poolingInterval);
+      await RedstoneCommon.sleep(this.pollingInterval);
 
       if (performance.now() - start > this.waitForTransactionTimeout) {
         throw new Ethers5LikeError(
@@ -729,7 +752,7 @@ export class RedstoneEthers5Provider implements ethers.providers.Provider {
         return transactionReceipt;
       }
 
-      await RedstoneCommon.sleep(this.poolingInterval);
+      await RedstoneCommon.sleep(this.pollingInterval);
 
       if (performance.now() - start > timeout) {
         throw new Ethers5LikeError(
