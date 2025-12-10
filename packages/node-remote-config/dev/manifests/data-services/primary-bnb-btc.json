@@ -1,7 +1,9 @@
 {
   "interval": 2000,
   "priceAggregator": "median",
-  "defaultSource": ["coingecko"],
+  "defaultSource": [
+    "coingecko"
+  ],
   "sourceTimeout": 2000,
   "minValidSourcesPercentage": 1,
   "deviationCheck": {
@@ -145,6 +147,9 @@
         "kraken-usdc",
         "kucoin-usdt"
       ]
+    },
+    "FGNX": {
+      "source": []
     }
   }
 }
