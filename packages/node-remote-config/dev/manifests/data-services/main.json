@@ -2761,61 +2761,6 @@
       "denomination": "USD",
       "rateFeed": false
     },
-    "IS_NY_STOCKS_MARKET_OPEN": {
-      "source": [],
-      "denomination": "other",
-      "rateFeed": false
-    },
-    "TSLA": {
-      "source": [],
-      "denomination": "USD",
-      "rateFeed": false
-    },
-    "NVDA": {
-      "source": [],
-      "denomination": "USD",
-      "rateFeed": false
-    },
-    "PLTR": {
-      "source": [],
-      "denomination": "USD",
-      "rateFeed": false
-    },
-    "AMD": {
-      "source": [],
-      "denomination": "USD",
-      "rateFeed": false
-    },
-    "GOOGL": {
-      "source": [],
-      "denomination": "USD",
-      "rateFeed": false
-    },
-    "META": {
-      "source": [],
-      "denomination": "USD",
-      "rateFeed": false
-    },
-    "AMZN": {
-      "source": [],
-      "denomination": "USD",
-      "rateFeed": false
-    },
-    "FGNX": {
-      "source": [],
-      "denomination": "USD",
-      "rateFeed": false
-    },
-    "FGNXP": {
-      "source": [],
-      "denomination": "USD",
-      "rateFeed": false
-    },
-    "CEPT": {
-      "source": [],
-      "denomination": "USD",
-      "rateFeed": false
-    },
     "YY_AAVE_AVAX": {
       "source": [
         "avalanche-evm-fetcher-yield-yak"
