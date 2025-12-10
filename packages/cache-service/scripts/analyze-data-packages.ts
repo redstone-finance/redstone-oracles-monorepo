@@ -21,16 +21,11 @@ const EXPECTED_DATA_FEEDS = [
   "JOE",
   "LINK",
   "PNG",
-  "PNG_AVAX_ETH_LP",
-  "PNG_AVAX_USDC_LP",
   "PTP",
   "QI",
   "USDC",
   "USDT",
-  "YY_AAVE_AVAX",
   "YY_GLP",
-  "YY_PNG_AVAX_ETH_LP",
-  "YY_PNG_AVAX_USDC_LP",
   "sAVAX",
 ];
 
