@@ -2109,7 +2109,8 @@
         "financialmodelingprep",
         "metals-api",
         "metal-price-api",
-        "twelve-data"
+        "twelve-data",
+        "ws-lmax"
       ],
       "denomination": "USD",
       "rateFeed": false
