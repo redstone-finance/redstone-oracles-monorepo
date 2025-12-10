@@ -3328,45 +3328,6 @@
       "denomination": "MON",
       "rateFeed": true
     },
-    "TSLA": {
-      "source": [
-        "alltick-stocks-api",
-        "financialmodelingprep",
-        "ws-polygon-massive-no-closing-price",
-        "ws-twelve-data-no-closing-price",
-        "ws-dx-feed-no-close-price",
-        "databento-no-closing-price"
-      ],
-      "denomination": "USD",
-      "rateFeed": false
-    },
-    "FGNXP": {
-      "source": [
-        "financialmodelingprep",
-        "polygon",
-        "twelve-data-stocks",
-        "ws-dx-feed-no-close-price",
-        "databento-no-closing-price"
-      ],
-      "denomination": "USD",
-      "rateFeed": false
-    },
-    "CEPT": {
-      "source": [
-        "financialmodelingprep",
-        "polygon",
-        "twelve-data-stocks",
-        "ws-dx-feed-no-close-price",
-        "databento-no-closing-price"
-      ],
-      "denomination": "USD",
-      "rateFeed": false
-    },
-    "IS_NY_STOCKS_MARKET_OPEN": {
-      "source": ["is-ny-stocks-market-open"],
-      "denomination": "other",
-      "rateFeed": false
-    },
     "LTC": {
       "source": [
         "binance-btc",
@@ -3460,6 +3421,113 @@
       "source": ["bnb-evm-fetcher-reserve"],
       "denomination": "USD",
       "rateFeed": true
+    },
+    "TSLA": {
+      "source": [
+        "alltick-stocks-api",
+        "databento-no-closing-price",
+        "ws-dx-feed-no-close-price",
+        "ws-polygon-massive-no-closing-price",
+        "ws-twelve-data-no-closing-price"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "FGNXP": {
+      "source": [
+        "databento-no-closing-price",
+        "ws-dx-feed-no-close-price",
+        "ws-polygon-massive-no-closing-price",
+        "ws-twelve-data-no-closing-price"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "CEPT": {
+      "source": [
+        "databento-no-closing-price",
+        "ws-dx-feed-no-close-price",
+        "ws-polygon-massive-no-closing-price",
+        "ws-twelve-data-no-closing-price"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "FGNX": {
+      "source": [
+        "databento-no-closing-price",
+        "ws-dx-feed-no-close-price",
+        "ws-polygon-massive-no-closing-price",
+        "ws-twelve-data-no-closing-price"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "NVDA": {
+      "source": [
+        "alltick-stocks-api",
+        "databento-no-closing-price",
+        "ws-dx-feed-no-close-price",
+        "ws-polygon-massive-no-closing-price",
+        "ws-twelve-data-no-closing-price"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "PLTR": {
+      "source": [
+        "alltick-stocks-api",
+        "databento-no-closing-price",
+        "ws-dx-feed-no-close-price",
+        "ws-polygon-massive-no-closing-price",
+        "ws-twelve-data-no-closing-price"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "AMD": {
+      "source": [
+        "alltick-stocks-api",
+        "databento-no-closing-price",
+        "ws-dx-feed-no-close-price",
+        "ws-polygon-massive-no-closing-price",
+        "ws-twelve-data-no-closing-price"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "GOOGL": {
+      "source": [
+        "alltick-stocks-api",
+        "databento-no-closing-price",
+        "ws-dx-feed-no-close-price",
+        "ws-polygon-massive-no-closing-price",
+        "ws-twelve-data-no-closing-price"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "META": {
+      "source": [
+        "alltick-stocks-api",
+        "databento-no-closing-price",
+        "ws-dx-feed-no-close-price",
+        "ws-polygon-massive-no-closing-price",
+        "ws-twelve-data-no-closing-price"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "AMZN": {
+      "source": [
+        "alltick-stocks-api",
+        "databento-no-closing-price",
+        "ws-dx-feed-no-close-price",
+        "ws-polygon-massive-no-closing-price",
+        "ws-twelve-data-no-closing-price"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
     }
   },
   "multiPointPackages": {
