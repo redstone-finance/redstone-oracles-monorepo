@@ -874,9 +874,9 @@
       "isMainnet": false
     },
     "megaEthTestnet": {
-      "name": "megaEth Testnet",
+      "name": "megaETH Testnet",
       "networkId": 6343,
-      "currencySymbol": "megaETH",
+      "currencySymbol": "ETH",
       "publicRpcUrls": ["https://timothy.megaeth.com/rpc"],
       "avgBlockTimeMs": 1000,
       "multicall3": {
@@ -886,6 +886,21 @@
       "isAuctionModel": false,
       "twoDimensionalFees": false,
       "isMainnet": false
+    },
+    "megaEth": {
+      "name": "megaETH Mainnet",
+      "networkId": 4326,
+      "currencySymbol": "ETH",
+      "publicRpcUrls": [],
+      "avgBlockTimeMs": 1000,
+      "multicall3": {
+        "address": "0xaD6CC5a465E5c8284a49eC9eD10EFE275460678c",
+        "type": "RedstoneMulticall3",
+        "gasLimitPerCall": 1000000
+      },
+      "isAuctionModel": false,
+      "twoDimensionalFees": false,
+      "isMainnet": true
     },
     "monadTestnet": {
       "name": "Monad Testnet",
