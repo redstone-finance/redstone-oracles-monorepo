@@ -198,33 +198,8 @@
       "denomination": "USD",
       "rateFeed": false
     },
-    "YY_AAVE_AVAX": {
-      "source": ["avalanche-evm-fetcher-yield-yak"],
-      "denomination": "USD",
-      "rateFeed": false
-    },
-    "YY_PNG_AVAX_USDC_LP": {
-      "source": ["avalanche-evm-fetcher-yield-yak"],
-      "denomination": "USD",
-      "rateFeed": false
-    },
-    "YY_PNG_AVAX_ETH_LP": {
-      "source": ["avalanche-evm-fetcher-yield-yak"],
-      "denomination": "USD",
-      "rateFeed": false
-    },
     "YY_GLP": {
       "source": ["avalanche-evm-fetcher-yield-yak"],
-      "denomination": "USD",
-      "rateFeed": false
-    },
-    "PNG_AVAX_USDC_LP": {
-      "source": ["avalanche-evm-fetcher-dex-lp"],
-      "denomination": "USD",
-      "rateFeed": false
-    },
-    "PNG_AVAX_ETH_LP": {
-      "source": ["avalanche-evm-fetcher-dex-lp"],
       "denomination": "USD",
       "rateFeed": false
     },
@@ -341,11 +316,6 @@
       "denomination": "USD",
       "rateFeed": false
     },
-    "yyAVAX": {
-      "source": ["avalanche-evm-fetcher-oracle-adapter"],
-      "denomination": "USD",
-      "rateFeed": false
-    },
     "GM_ETH_WETHe_USDC": {
       "source": ["avalanche-evm-fetcher-gmx"],
       "denomination": "USD",
@@ -363,21 +333,6 @@
     },
     "GM_SOL_SOL_USDC": {
       "source": ["avalanche-evm-fetcher-gmx"],
-      "denomination": "USD",
-      "rateFeed": false
-    },
-    "BAL_ggAVAX_AVAX": {
-      "source": ["avalanche-evm-fetcher-balancer"],
-      "denomination": "USD",
-      "rateFeed": false
-    },
-    "BAL_yyAVAX_AVAX": {
-      "source": ["avalanche-evm-fetcher-balancer"],
-      "denomination": "USD",
-      "rateFeed": false
-    },
-    "BAL_sAVAX_AVAX": {
-      "source": ["avalanche-evm-fetcher-balancer"],
       "denomination": "USD",
       "rateFeed": false
     },
@@ -604,9 +559,6 @@
     "___ALL_FEEDS___": [
       "AVAX",
       "BAL",
-      "BAL_ggAVAX_AVAX",
-      "BAL_sAVAX_AVAX",
-      "BAL_yyAVAX_AVAX",
       "BTC",
       "EUR",
       "DAI",
@@ -624,8 +576,6 @@
       "JOE",
       "LINK",
       "PNG",
-      "PNG_AVAX_ETH_LP",
-      "PNG_AVAX_USDC_LP",
       "QI",
       "SOL",
       "USDC",
@@ -634,13 +584,9 @@
       "WOMBAT_ggAVAX_AVAX_LP_ggAVAX",
       "WOMBAT_sAVAX_AVAX_LP_AVAX",
       "WOMBAT_sAVAX_AVAX_LP_sAVAX",
-      "YY_AAVE_AVAX",
       "YY_GLP",
-      "YY_PNG_AVAX_ETH_LP",
-      "YY_PNG_AVAX_USDC_LP",
       "ggAVAX",
       "sAVAX",
-      "yyAVAX",
       "DOGE",
       "XRP",
       "LTC",
