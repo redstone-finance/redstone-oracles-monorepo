@@ -717,7 +717,8 @@
         "metals-api",
         "metal-price-api",
         "twelve-data",
-        "ws-lmax"
+        "ws-lmax",
+        "ws-polygon-massive-no-closing-price"
       ],
       "denomination": "USD",
       "rateFeed": false
