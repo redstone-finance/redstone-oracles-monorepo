@@ -1067,13 +1067,6 @@
       "denomination": "USD",
       "rateFeed": false
     },
-    "YY_WOMBEX_DAI": {
-      "source": [
-        "arbitrum-evm-fetcher-yield-yak"
-      ],
-      "denomination": "USD",
-      "rateFeed": false
-    },
     "BAL": {
       "source": [
         "bitget-usdt",
@@ -1407,27 +1400,6 @@
     "GM_AVAX_WAVAX_USDC": {
       "source": [
         "avalanche-evm-fetcher-gmx"
-      ],
-      "denomination": "USD",
-      "rateFeed": false
-    },
-    "BAL_ggAVAX_AVAX": {
-      "source": [
-        "avalanche-evm-fetcher-balancer"
-      ],
-      "denomination": "USD",
-      "rateFeed": false
-    },
-    "BAL_yyAVAX_AVAX": {
-      "source": [
-        "avalanche-evm-fetcher-balancer"
-      ],
-      "denomination": "USD",
-      "rateFeed": false
-    },
-    "BAL_sAVAX_AVAX": {
-      "source": [
-        "avalanche-evm-fetcher-balancer"
       ],
       "denomination": "USD",
       "rateFeed": false
@@ -2751,44 +2723,9 @@
       "denomination": "USD",
       "rateFeed": false
     },
-    "YY_AAVE_AVAX": {
-      "source": [
-        "avalanche-evm-fetcher-yield-yak"
-      ],
-      "denomination": "USD",
-      "rateFeed": false
-    },
-    "YY_PNG_AVAX_USDC_LP": {
-      "source": [
-        "avalanche-evm-fetcher-yield-yak"
-      ],
-      "denomination": "USD",
-      "rateFeed": false
-    },
-    "YY_PNG_AVAX_ETH_LP": {
-      "source": [
-        "avalanche-evm-fetcher-yield-yak"
-      ],
-      "denomination": "USD",
-      "rateFeed": false
-    },
     "YY_GLP": {
       "source": [
         "avalanche-evm-fetcher-yield-yak"
-      ],
-      "denomination": "USD",
-      "rateFeed": false
-    },
-    "PNG_AVAX_USDC_LP": {
-      "source": [
-        "avalanche-evm-fetcher-dex-lp"
-      ],
-      "denomination": "USD",
-      "rateFeed": false
-    },
-    "PNG_AVAX_ETH_LP": {
-      "source": [
-        "avalanche-evm-fetcher-dex-lp"
       ],
       "denomination": "USD",
       "rateFeed": false
@@ -2808,13 +2745,6 @@
       "rateFeed": false
     },
     "ggAVAX": {
-      "source": [
-        "avalanche-evm-fetcher-oracle-adapter"
-      ],
-      "denomination": "USD",
-      "rateFeed": false
-    },
-    "yyAVAX": {
       "source": [
         "avalanche-evm-fetcher-oracle-adapter"
       ],
