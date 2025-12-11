@@ -3,12 +3,9 @@ import {
   ContractParamsProvider,
   getLastRoundDetails,
   IExtendedPricesContractAdapter,
-  SplitPayloads,
 } from "@redstone-finance/sdk";
-import { loggerFactory, RedstoneCommon } from "@redstone-finance/utils";
-import { PublicKey } from "@solana/web3.js";
-import _ from "lodash";
-import { SolanaTxDeliveryMan } from "../client/SolanaTxDeliveryMan";
+import { FP, loggerFactory, RedstoneCommon } from "@redstone-finance/utils";
+import { SolanaContractUpdater } from "../client/SolanaContractUpdater";
 import { PriceAdapterContract } from "./PriceAdapterContract";
 
 export class SolanaPricesContractAdapter implements IExtendedPricesContractAdapter {
@@ -16,11 +13,11 @@ export class SolanaPricesContractAdapter implements IExtendedPricesContractAdapt
 
   constructor(
     private contract: PriceAdapterContract,
-    private readonly txDeliveryMan?: SolanaTxDeliveryMan
+    private readonly updater?: SolanaContractUpdater
   ) {}
 
   getSignerAddress() {
-    const pk = this.txDeliveryMan?.getPublicKey();
+    const pk = this.updater?.getPublicKey();
     return pk ? Promise.resolve(pk.toString()) : Promise.reject(new Error("Signer required"));
   }
 
@@ -45,80 +42,13 @@ export class SolanaPricesContractAdapter implements IExtendedPricesContractAdapt
   }
 
   async writePricesFromPayloadToContract(paramsProvider: ContractParamsProvider) {
-    if (!this.txDeliveryMan) {
-      throw new Error("Can't write prices, TxDeliveryMan not set");
+    if (!this.updater) {
+      throw new Error("Can't write prices, updater not set");
     }
 
-    const metadataTimestamp = Date.now();
+    const res = await this.updater.writePrices(paramsProvider);
 
-    const txSignatures = await this.txDeliveryMan.sendTransactions(
-      paramsProvider.getDataFeedIds(),
-      (feedIds) =>
-        this.fetchTransactionInstructionsWithData(paramsProvider, feedIds, metadataTimestamp)
-    );
-
-    this.logger.log(
-      `FINISHED ${txSignatures.length} transaction${RedstoneCommon.getS(txSignatures.length)}: [${txSignatures.toString()}]`
-    );
-
-    return txSignatures[txSignatures.length - 1];
-  }
-
-  private async fetchTransactionInstructionsWithData(
-    paramsProvider: ContractParamsProvider,
-    feedIds: string[],
-    metadataTimestamp: number
-  ) {
-    if (!this.txDeliveryMan) {
-      throw new Error("Can't write prices, TxDeliveryMan not set");
-    }
-
-    this.logger.debug(`Fetching payloads for [${feedIds.toString()}].`);
-    const provider = paramsProvider.copyWithOverriddenFeedIds(feedIds);
-
-    const { payloads } = ContractParamsProvider.extractMissingValues(
-      await provider.prepareSplitPayloads({
-        metadataTimestamp,
-        withUnsignedMetadata: true,
-      }),
-      this.logger
-    );
-
-    const publicKey = this.txDeliveryMan.getPublicKey();
-    return await this.makeTransactionInstructions(payloads, publicKey, feedIds);
-  }
-
-  private async makeTransactionInstructions(
-    payloads: SplitPayloads<string>,
-    publicKey: PublicKey,
-    feedIds: string[]
-  ) {
-    const payloadEntries = Object.entries(payloads);
-
-    const instructionSettledResults = await Promise.allSettled(
-      payloadEntries.map(([feedId, payload]) =>
-        this.contract.writePriceTx(publicKey, feedId, payload)
-      )
-    );
-
-    const transactionInstructions = _.zip(payloadEntries, instructionSettledResults)
-      .map(([payloadEntry, settledPromise]) =>
-        settledPromise?.status === "fulfilled" && payloadEntry?.length
-          ? {
-              instruction: settledPromise.value,
-              id: payloadEntry[0],
-            }
-          : undefined
-      )
-      .filter((i) => i !== undefined);
-
-    if (transactionInstructions.length !== feedIds.length) {
-      this.logger.error(
-        `Failed to write ${feedIds.length - transactionInstructions.length} prices to contract.`
-      );
-    }
-
-    return transactionInstructions;
+    return FP.unwrapSuccess(res).transactionHash;
   }
 
   async readPricesFromContract(
