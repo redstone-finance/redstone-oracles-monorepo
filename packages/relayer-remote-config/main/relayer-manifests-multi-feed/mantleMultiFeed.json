@@ -74,6 +74,13 @@
     },
     "MI4_MANTLE_FUNDAMENTAL": {
       "priceFeedAddress": "0x24c8964338Deb5204B096039147B8e8C3AEa42Cc"
+    },
+    "stMNT_FUNDAMENTAL/USD": {
+      "priceFeedAddress": "0xFd7457B6f09990243Bf8E4C6C956EB909C0E6417",
+      "updateTriggersOverrides": {
+        "deviationPercentage": 0.5,
+        "timeSinceLastUpdateInMilliseconds": 21600000
+      }
     }
   }
 }
