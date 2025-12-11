@@ -717,7 +717,6 @@
         "metals-api",
         "metal-price-api",
         "twelve-data",
-        "ws-lmax",
         "ws-polygon-massive-commodities"
       ],
       "denomination": "USD",
