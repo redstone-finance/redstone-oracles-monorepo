@@ -88,7 +88,12 @@
         "timeSinceLastUpdateInMilliseconds": 43200000
       }
     },
-    "muBOND_FUNDAMENTAL": {},
+    "muBOND_FUNDAMENTAL": {
+      "updateTriggersOverrides": {
+        "deviationPercentage": 0.1,
+        "timeSinceLastUpdateInMilliseconds": 86400000
+      }
+    },
     "AZND_FUNDAMENTAL": {},
     "earnAUSD_FUNDAMENTAL": {},
     "gMON_FUNDAMENTAL": {
