@@ -10,7 +10,7 @@ import {
 } from "@solana/web3.js";
 import { AnchorReadonlyProvider } from "./client/AnchorReadonlyProvider";
 import { SolanaClient } from "./client/SolanaClient";
-import { SolanaTxDeliveryMan } from "./client/SolanaTxDeliveryMan";
+import { SolanaContractUpdater } from "./client/SolanaContractUpdater";
 import { DEFAULT_SOLANA_CONFIG } from "./config";
 import { PriceAdapterContract } from "./price_adapter/PriceAdapterContract";
 import { SolanaPricesContractAdapter } from "./price_adapter/SolanaPricesContractAdapter";
@@ -34,11 +34,11 @@ export class SolanaContractConnector implements IContractConnector<IPricesContra
       const provider = new AnchorReadonlyProvider(this.connection, client, this.keypair?.publicKey);
       const contract = new PriceAdapterContract(this.address, provider, client);
 
-      const txDeliveryMan = this.keypair
-        ? new SolanaTxDeliveryMan(client, this.config, this.keypair)
+      const contractUpdater = this.keypair
+        ? new SolanaContractUpdater(client, this.config, this.keypair, contract)
         : undefined;
 
-      this.adapter = new SolanaPricesContractAdapter(contract, txDeliveryMan);
+      this.adapter = new SolanaPricesContractAdapter(contract, contractUpdater);
     }
 
     return Promise.resolve(this.adapter);
