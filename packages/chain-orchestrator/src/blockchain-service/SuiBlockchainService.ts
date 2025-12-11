@@ -1,4 +1,4 @@
-import { SuiClient } from "@mysten/sui/client";
+import { SuiClient, SuiTransactionBlockResponseOptions } from "@mysten/sui/client";
 import { Keypair } from "@mysten/sui/cryptography";
 import { SuiContractConnector } from "@redstone-finance/sui-connector";
 import { RedstoneCommon } from "@redstone-finance/utils";
@@ -25,18 +25,18 @@ export class SuiBlockchainService extends NonEvmBlockchainService {
     return new Date(Number(checkpoint.timestampMs));
   }
 
-  async queryTransactionBlocks(objectId: string, cursor: string | null | undefined) {
+  async queryTransactionBlocks(
+    objectId: string,
+    cursor: string | null | undefined,
+    options: SuiTransactionBlockResponseOptions
+  ) {
     return await RedstoneCommon.retry({
       ...RETRY_CONFIG,
       fn: async () =>
         await this.client.queryTransactionBlocks({
           filter: { InputObject: objectId },
           cursor: cursor,
-          options: {
-            showInput: true,
-            showEffects: true,
-            showEvents: false,
-          },
+          options,
         }),
     })();
   }
