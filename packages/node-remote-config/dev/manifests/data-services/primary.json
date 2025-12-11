@@ -1939,7 +1939,7 @@
         "kucoin-usdt",
         "okx-usdt"
       ],
-      "denomination": "USDC",
+      "denomination": "USD",
       "rateFeed": false
     },
     "swETH_FUNDAMENTAL": {
@@ -1959,7 +1959,7 @@
         "mexc-usdt",
         "xt"
       ],
-      "denomination": "USDC",
+      "denomination": "USD",
       "rateFeed": false
     },
     "stTON_FUNDAMENTAL": {
