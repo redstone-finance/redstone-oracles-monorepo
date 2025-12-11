@@ -85,6 +85,7 @@
         "hyperliquid-mainnet-perps-ws-fetcher": 10,
         "hydromancer-mainnet-perps-ws-fetcher": 1
       },
+      "priceAggregator": "constantWeightMedian",
       "broadcasters": [
         "influx"
       ],
@@ -110,6 +111,7 @@
         "hyperliquid-mainnet-perps-ws-fetcher": 10,
         "hydromancer-mainnet-perps-ws-fetcher": 1
       },
+      "priceAggregator": "constantWeightMedian",
       "broadcasters": [
         "influx"
       ],
@@ -125,6 +127,7 @@
         "hyperliquid-mainnet-perps-ws-fetcher": 10,
         "hydromancer-mainnet-perps-ws-fetcher": 1
       },
+      "priceAggregator": "constantWeightMedian",
       "broadcasters": [
         "influx"
       ],
@@ -223,6 +226,7 @@
         "hyperliquid-mainnet-perps-ws-fetcher": 10,
         "hydromancer-mainnet-perps-ws-fetcher": 1
       },
+      "priceAggregator": "constantWeightMedian",
       "broadcasters": [
         "influx"
       ],
@@ -238,6 +242,7 @@
         "hyperliquid-mainnet-perps-ws-fetcher": 10,
         "hydromancer-mainnet-perps-ws-fetcher": 1
       },
+      "priceAggregator": "constantWeightMedian",
       "broadcasters": [
         "influx"
       ],
@@ -273,6 +278,7 @@
         "hyperliquid-mainnet-perps-ws-fetcher": 10,
         "hydromancer-mainnet-perps-ws-fetcher": 1
       },
+      "priceAggregator": "constantWeightMedian",
       "broadcasters": [
         "influx"
       ],
@@ -308,6 +314,7 @@
         "hyperliquid-mainnet-perps-ws-fetcher": 10,
         "hydromancer-mainnet-perps-ws-fetcher": 1
       },
+      "priceAggregator": "constantWeightMedian",
       "broadcasters": [
         "influx"
       ],
@@ -333,6 +340,7 @@
         "hyperliquid-mainnet-perps-ws-fetcher": 10,
         "hydromancer-mainnet-perps-ws-fetcher": 1
       },
+      "priceAggregator": "constantWeightMedian",
       "broadcasters": [
         "influx"
       ],
@@ -426,6 +434,7 @@
         "hyperliquid-mainnet-perps-ws-fetcher": 10,
         "hydromancer-mainnet-perps-ws-fetcher": 1
       },
+      "priceAggregator": "constantWeightMedian",
       "broadcasters": [
         "influx"
       ],
@@ -441,6 +450,7 @@
         "hyperliquid-mainnet-perps-ws-fetcher": 10,
         "hydromancer-mainnet-perps-ws-fetcher": 1
       },
+      "priceAggregator": "constantWeightMedian",
       "broadcasters": [
         "influx"
       ],
@@ -476,6 +486,7 @@
         "hyperliquid-mainnet-perps-ws-fetcher": 10,
         "hydromancer-mainnet-perps-ws-fetcher": 1
       },
+      "priceAggregator": "constantWeightMedian",
       "broadcasters": [
         "influx"
       ],
@@ -511,6 +522,7 @@
         "hyperliquid-mainnet-perps-ws-fetcher": 10,
         "hydromancer-mainnet-perps-ws-fetcher": 1
       },
+      "priceAggregator": "constantWeightMedian",
       "broadcasters": [
         "influx"
       ],
@@ -536,6 +548,7 @@
         "hyperliquid-mainnet-perps-ws-fetcher": 10,
         "hydromancer-mainnet-perps-ws-fetcher": 1
       },
+      "priceAggregator": "constantWeightMedian",
       "broadcasters": [
         "influx"
       ],
@@ -629,6 +642,7 @@
         "hyperliquid-mainnet-perps-ws-fetcher": 10,
         "hydromancer-mainnet-perps-ws-fetcher": 1
       },
+      "priceAggregator": "constantWeightMedian",
       "broadcasters": [
         "influx"
       ],
@@ -644,6 +658,7 @@
         "hyperliquid-mainnet-perps-ws-fetcher": 10,
         "hydromancer-mainnet-perps-ws-fetcher": 1
       },
+      "priceAggregator": "constantWeightMedian",
       "broadcasters": [
         "influx"
       ],
@@ -679,6 +694,7 @@
         "hyperliquid-mainnet-perps-ws-fetcher": 10,
         "hydromancer-mainnet-perps-ws-fetcher": 1
       },
+      "priceAggregator": "constantWeightMedian",
       "broadcasters": [
         "influx"
       ],
@@ -714,6 +730,7 @@
         "hyperliquid-mainnet-perps-ws-fetcher": 10,
         "hydromancer-mainnet-perps-ws-fetcher": 1
       },
+      "priceAggregator": "constantWeightMedian",
       "broadcasters": [
         "influx"
       ],
@@ -739,6 +756,7 @@
         "hyperliquid-mainnet-perps-ws-fetcher": 10,
         "hydromancer-mainnet-perps-ws-fetcher": 1
       },
+      "priceAggregator": "constantWeightMedian",
       "broadcasters": [
         "influx"
       ],
@@ -832,6 +850,7 @@
         "hyperliquid-mainnet-perps-ws-fetcher": 10,
         "hydromancer-mainnet-perps-ws-fetcher": 1
       },
+      "priceAggregator": "constantWeightMedian",
       "broadcasters": [
         "influx"
       ],
@@ -847,6 +866,7 @@
         "hyperliquid-mainnet-perps-ws-fetcher": 10,
         "hydromancer-mainnet-perps-ws-fetcher": 1
       },
+      "priceAggregator": "constantWeightMedian",
       "broadcasters": [
         "influx"
       ],
@@ -882,6 +902,7 @@
         "hyperliquid-mainnet-perps-ws-fetcher": 10,
         "hydromancer-mainnet-perps-ws-fetcher": 1
       },
+      "priceAggregator": "constantWeightMedian",
       "broadcasters": [
         "influx"
       ],
@@ -917,6 +938,7 @@
         "hyperliquid-mainnet-perps-ws-fetcher": 10,
         "hydromancer-mainnet-perps-ws-fetcher": 1
       },
+      "priceAggregator": "constantWeightMedian",
       "broadcasters": [
         "influx"
       ],
@@ -942,6 +964,7 @@
         "hyperliquid-mainnet-perps-ws-fetcher": 10,
         "hydromancer-mainnet-perps-ws-fetcher": 1
       },
+      "priceAggregator": "constantWeightMedian",
       "broadcasters": [
         "influx"
       ],
@@ -1035,6 +1058,7 @@
         "hyperliquid-mainnet-perps-ws-fetcher": 10,
         "hydromancer-mainnet-perps-ws-fetcher": 1
       },
+      "priceAggregator": "constantWeightMedian",
       "broadcasters": [
         "influx"
       ],
@@ -1050,6 +1074,7 @@
         "hyperliquid-mainnet-perps-ws-fetcher": 10,
         "hydromancer-mainnet-perps-ws-fetcher": 1
       },
+      "priceAggregator": "constantWeightMedian",
       "broadcasters": [
         "influx"
       ],
@@ -1085,6 +1110,7 @@
         "hyperliquid-mainnet-perps-ws-fetcher": 10,
         "hydromancer-mainnet-perps-ws-fetcher": 1
       },
+      "priceAggregator": "constantWeightMedian",
       "broadcasters": [
         "influx"
       ],
@@ -1120,6 +1146,7 @@
         "hyperliquid-mainnet-perps-ws-fetcher": 10,
         "hydromancer-mainnet-perps-ws-fetcher": 1
       },
+      "priceAggregator": "constantWeightMedian",
       "broadcasters": [
         "influx"
       ],
@@ -1145,6 +1172,7 @@
         "hyperliquid-mainnet-perps-ws-fetcher": 10,
         "hydromancer-mainnet-perps-ws-fetcher": 1
       },
+      "priceAggregator": "constantWeightMedian",
       "broadcasters": [
         "influx"
       ],
@@ -1294,6 +1322,7 @@
         "hyperliquid-mainnet-perps-ws-fetcher": 10,
         "hydromancer-mainnet-perps-ws-fetcher": 1
       },
+      "priceAggregator": "constantWeightMedian",
       "broadcasters": [
         "influx"
       ],
@@ -1309,6 +1338,7 @@
         "hyperliquid-mainnet-perps-ws-fetcher": 10,
         "hydromancer-mainnet-perps-ws-fetcher": 1
       },
+      "priceAggregator": "constantWeightMedian",
       "broadcasters": [
         "influx"
       ],
