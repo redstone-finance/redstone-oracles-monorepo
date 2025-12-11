@@ -42,6 +42,7 @@
   },
   "dependencies": {
     "@coral-xyz/anchor": "0.30.1",
+    "@redstone-finance/multichain-kit": "workspace:*",
     "@redstone-finance/sdk": "workspace:*",
     "@redstone-finance/utils": "workspace:*",
     "@solana/web3.js": "^1.98.2",

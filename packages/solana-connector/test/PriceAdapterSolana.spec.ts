@@ -4,8 +4,8 @@ import {
   DEFAULT_SOLANA_CONFIG,
   PriceAdapterContract,
   SolanaClient,
+  SolanaContractUpdater,
   SolanaPricesContractAdapter,
-  SolanaTxDeliveryMan,
 } from "../src";
 import { ConnectionStateScenario, LiteSVMConnection } from "./LiteSVMConnection";
 import { setUpEnv } from "./setup-env";
@@ -27,13 +27,14 @@ function getSolanaPricesContractAdapter(trusted: "trusted" | "untrusted") {
 
   const priceAdapter = new SolanaPricesContractAdapter(
     contractAdapter,
-    new SolanaTxDeliveryMan(
+    new SolanaContractUpdater(
       client,
       {
         ...DEFAULT_SOLANA_CONFIG,
         useAggressiveGasOracle: false,
       },
-      signer
+      signer,
+      contractAdapter
     )
   );
 
