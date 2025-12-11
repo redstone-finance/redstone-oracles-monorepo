@@ -39,7 +39,11 @@
       }
     },
     "muBOND_FUNDAMENTAL": {
-      "priceFeedAddress": "0xC0eB05Be4279EA3b615E8b0D35a1530B934477f6"
+      "priceFeedAddress": "0xC0eB05Be4279EA3b615E8b0D35a1530B934477f6",
+      "updateTriggersOverrides": {
+        "deviationPercentage": 0.1,
+        "timeSinceLastUpdateInMilliseconds": 86400000
+      }
     },
     "gMON_FUNDAMENTAL": {
       "priceFeedAddress": "0x7B16B934504bccCf46e5D825e2715c8b95D23f09"
