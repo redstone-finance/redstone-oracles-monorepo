@@ -8,6 +8,7 @@ import { describe, test } from "mocha";
 
 const INTEGRATIONS_NOT_FOR_TESTING = [
   "megaEthTestnetMultiFeed", // remove once we get a publicRpc
+  "megaEthMultiFeed", // remove once we get a publicRpc
   "stableMultiFeed", // remove once we get a publicRpc
   "westendHubMultiFeed", // remove it when the network is stable
 ];
