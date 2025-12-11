@@ -11776,6 +11776,7 @@ __metadata:
     "@metaplex-foundation/umi-bundle-defaults": "npm:^1.2.0"
     "@redstone-finance/chain-agnostic-oracle-tests": "workspace:*"
     "@redstone-finance/chain-configs": "workspace:*"
+    "@redstone-finance/multichain-kit": "workspace:*"
     "@redstone-finance/sdk": "workspace:*"
     "@redstone-finance/utils": "workspace:*"
     "@solana/web3.js": "npm:^1.98.2"
