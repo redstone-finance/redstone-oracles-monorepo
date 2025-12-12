@@ -22,7 +22,6 @@ const relayersToExecute = RedstoneCommon.getFromEnv(
 const privateKeyOverride = RedstoneCommon.getFromEnv("PRIVATE_KEY_OVERRIDE", z.string().optional());
 
 const defaultRelayersToSkip = [
-  "sepoliaAngleAgeur",
   "sepoliaVenusXvs",
   "venusBnbTestnet",
   "sepoliaMultiFeed",
