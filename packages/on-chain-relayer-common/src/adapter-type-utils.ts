@@ -9,3 +9,7 @@ export function isMultiFeedRelayerManifest(
 export function isMultiFeedAdapterType(adapterContractType: AdapterType) {
   return adapterContractType === "multi-feed";
 }
+
+export function isStylusAdapterType(adapterContractType: AdapterType) {
+  return adapterContractType === "stylus";
+}
