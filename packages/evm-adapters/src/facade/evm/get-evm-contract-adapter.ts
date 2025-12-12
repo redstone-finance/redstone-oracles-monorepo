@@ -5,7 +5,6 @@ import {
   MultiFeedAdapterWithoutRounds,
   RedstoneAdapterBase,
 } from "../../../typechain-types";
-import { isArbitrumStylusNetworkId } from "../../config/config-checks";
 import { EvmContractAdapter } from "../../core/contract-interactions/EvmContractAdapter";
 import { MentoEvmContractAdapter } from "../../core/contract-interactions/MentoEvmContractAdapter";
 import { MultiFeedEvmContractAdapter } from "../../core/contract-interactions/MultiFeedEvmContractAdapter";
@@ -31,13 +30,6 @@ export function getEvmContractAdapter(
 ): EvmContractAdapter<RedstoneEvmContract> {
   switch (config.adapterContractType) {
     case "multi-feed": {
-      if (isArbitrumStylusNetworkId(config.networkId)) {
-        return new StylusContractAdapter(
-          adapterContract as IStylusAdapter & MultiFeedAdapterWithoutRounds,
-          txDeliveryMan
-        );
-      }
-
       return new MultiFeedEvmContractAdapter(
         adapterContract as MultiFeedAdapterWithoutRounds,
         txDeliveryMan,
@@ -57,6 +49,13 @@ export function getEvmContractAdapter(
         adapterContract as MentoAdapterBase,
         txDeliveryMan,
         config.mentoMaxDeviationAllowed
+      );
+    }
+
+    case "stylus": {
+      return new StylusContractAdapter(
+        adapterContract as IStylusAdapter & MultiFeedAdapterWithoutRounds,
+        txDeliveryMan
       );
     }
   }

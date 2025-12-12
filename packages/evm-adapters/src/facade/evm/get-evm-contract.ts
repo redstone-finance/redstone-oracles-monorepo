@@ -11,10 +11,9 @@ import {
   MultiFeedAdapterWithoutRounds,
   RedstoneAdapterBase,
 } from "../../../typechain-types";
-import { isArbitrumStylusNetworkId } from "../../config/config-checks";
 import { RedstoneEvmContract } from "./RedstoneEvmContract";
 
-export type EvmAdapterType = "multi-feed" | "price-feeds" | "mento";
+export type EvmAdapterType = "multi-feed" | "price-feeds" | "mento" | "stylus";
 
 export function getEvmContract(
   config: {
@@ -28,14 +27,6 @@ export function getEvmContract(
 
   switch (adapterContractType) {
     case "multi-feed": {
-      if (isArbitrumStylusNetworkId(config.networkId)) {
-        return new Contract(
-          adapterContractAddress,
-          stylusAdapterABI,
-          signerOrProvider
-        ) as IStylusAdapter & RedstoneAdapterBase;
-      }
-
       return new Contract(
         adapterContractAddress,
         multifeedAdapterABI,
@@ -57,6 +48,14 @@ export function getEvmContract(
         mentoAdapterABI,
         signerOrProvider
       ) as MentoAdapterBase;
+    }
+
+    case "stylus": {
+      return new Contract(
+        adapterContractAddress,
+        stylusAdapterABI,
+        signerOrProvider
+      ) as IStylusAdapter & RedstoneAdapterBase;
     }
   }
 }
