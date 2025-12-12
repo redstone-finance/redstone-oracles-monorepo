@@ -722,6 +722,19 @@
       "denomination": "USD",
       "rateFeed": false
     },
+    "XAG": {
+      "source": [
+        "alltick-api",
+        "commodity-price-api",
+        "financialmodelingprep",
+        "metals-api",
+        "metal-price-api",
+        "twelve-data",
+        "ws-polygon-massive-commodities"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
     "XRP": {
       "source": [
         "binance-usdc",
