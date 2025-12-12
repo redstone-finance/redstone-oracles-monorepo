@@ -53,7 +53,8 @@ function resolvePubSubClient(config: z.infer<typeof MultiPubSubEnvConfig>) {
       return new PooledMqttClient(
         resolveMqttClientFactory(config),
         config.expectedRequestPerSecondPerTopic,
-        config.host
+        config.host,
+        config.nodeAddresses
       );
 
     default:
