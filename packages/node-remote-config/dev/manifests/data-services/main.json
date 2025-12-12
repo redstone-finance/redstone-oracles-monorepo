@@ -2353,10 +2353,8 @@
       "denomination": "USD",
       "rateFeed": false
     },
-    "SILVER": {
-      "source": [
-        "twelve-data"
-      ],
+    "XAG": {
+      "source": [],
       "denomination": "USD",
       "rateFeed": false
     },
