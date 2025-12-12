@@ -10,6 +10,9 @@ export const MultiPubSubEnvConfigBase = z.object({
 
 const MqttV4Sig = MultiPubSubEnvConfigBase.extend({
   type: z.enum(["mqttAWSV4Sig"]),
+  // When defined, only topics containing any of these node addresses will be subscribed.
+  // When undefined, all topics are subscribed (no filtering).
+  nodeAddresses: z.string().array().optional(),
 });
 
 const MqttCert = MultiPubSubEnvConfigBase.extend({
@@ -24,12 +27,18 @@ const MqttCert = MultiPubSubEnvConfigBase.extend({
       ctx.addIssue(`Expected ENV ${path} by mqtt cert authorization - certEnvPath`);
     }
   }),
+  // When defined, only topics containing any of these node addresses will be subscribed.
+  // When undefined, all topics are subscribed (no filtering).
+  nodeAddresses: z.string().array().optional(),
 });
 
 const MqttUnauthenticated = MultiPubSubEnvConfigBase.extend({
   type: z.enum(["mqttUnauthenticated"]),
   host: z.string().default("localhost"),
   port: z.number().default(1883),
+  // When defined, only topics containing any of these node addresses will be subscribed.
+  // When undefined, all topics are subscribed (no filtering).
+  nodeAddresses: z.string().array().optional(),
 });
 
 const SSE = z.object({

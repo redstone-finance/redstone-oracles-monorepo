@@ -25,7 +25,10 @@ export class PooledMqttClient implements PubSubClient {
     private readonly pubSubClientFactory: PubSubClientFactory,
     private readonly connectionsPerTopic: number,
     // first instance is created on first publish so we pass it explicit to avoid returning dummy value in getUniqueName()
-    private readonly uniqueName: string
+    private readonly uniqueName: string,
+    // When defined, only topics containing any of these filters will be subscribed.
+    // When undefined, all topics are subscribed (no filtering).
+    private readonly topicFilters?: string[]
   ) {}
 
   getUniqueName(): string {
@@ -57,11 +60,23 @@ export class PooledMqttClient implements PubSubClient {
   }
 
   async subscribe(topics: string[], onMessage: SubscribeCallback): Promise<void> {
+    const filteredTopics =
+      this.topicFilters === undefined
+        ? topics
+        : topics.filter((t) => this.topicFilters!.some((f) => t.includes(f)));
+
+    if (filteredTopics.length === 0) {
+      this.logger.info(
+        `No topics matched filters ${JSON.stringify(this.topicFilters)}, skipping subscribe`
+      );
+      return;
+    }
+
     await this.subscribeMutex.acquire();
     try {
-      await this._subscribe(topics, onMessage);
+      await this._subscribe(filteredTopics, onMessage);
       this.logger.info(
-        `Subscribed to ${topics.length} topics, active ${this.clientToTopics.length} connections`
+        `Requested ${topics.length} topics, subscribed to ${filteredTopics.length} topics, active ${this.clientToTopics.length} connections`
       );
     } finally {
       this.subscribeMutex.release();
