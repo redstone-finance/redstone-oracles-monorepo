@@ -32,10 +32,15 @@ abstract contract MultiFeedAdapterWithoutRoundsWithReference is IMultiFeedAdapte
    * @dev Should be overridden by the implementation contract. Defines when to switch from the main adapter to the reference adapter
    * @param dataFeedId The data feed identifier
    * @return maxAllowedDeviationBps The value deviation between adapters (in basis points) that triggers a switch
-   * @return maxDataAgeInSeconds The maximum allowed age (in seconds) of the reference adapter's last update
-   *                             compared to the current block timestamp for the reference data to be considered fresh
+   * @return maxRefBlockLag The maximum allowed lag of the reference adapter's last update compared to the current block timestamp for
+   *                        the reference data to be considered fresh. It must have the same units that getBlockTimestamp() returns
    */
-  function getReferenceSwitchCriteria(bytes32 dataFeedId) public view virtual returns (uint256 maxAllowedDeviationBps, uint256 maxDataAgeInSeconds);
+  function getReferenceSwitchCriteria(bytes32 dataFeedId) public view virtual returns (uint256 maxAllowedDeviationBps, uint256 maxRefBlockLag);
+
+  /// @dev This function can be overridden to support timestamps in different units (e.g. microseconds instead of seconds)
+  function getBlockTimestamp() public view virtual returns (uint256) {
+    return block.timestamp;
+  }
 
   /// @dev Important! Please check it and override if needed. This helps limit gas consumption from a potential attack by one adapter
   ///      Recommended: set to 30–40% of the maximum allowed gas per call on the chain you deploy the contract on
@@ -63,11 +68,11 @@ abstract contract MultiFeedAdapterWithoutRoundsWithReference is IMultiFeedAdapte
         : (refDataTimestamp, refBlockTimestamp, refValue);
     }
 
-    (uint256 maxAllowedDeviationBps, uint256 maxDataAgeInSeconds) = getReferenceSwitchCriteria(dataFeedId);
+    (uint256 maxAllowedDeviationBps, uint256 maxRefBlockLag) = getReferenceSwitchCriteria(dataFeedId);
     uint256 deviation = calculateDeviationBpsSafe(mainValue, refValue);
-    bool isRefDataFresh = (block.timestamp - refBlockTimestamp) <= maxDataAgeInSeconds;
+    bool isRefDataFresh = (getBlockTimestamp() - refBlockTimestamp) <= maxRefBlockLag;
 
-    // Due to the freshness check we should push reference data more often than `maxDataAgeInSeconds`
+    // Due to the freshness check we should push reference data more often than `maxRefBlockLag`
     if (deviation > maxAllowedDeviationBps && isRefDataFresh) {
       return (refDataTimestamp, refBlockTimestamp, refValue);
     }
@@ -93,7 +98,7 @@ abstract contract MultiFeedAdapterWithoutRoundsWithReference is IMultiFeedAdapte
 
   function _safeGetLastUpdateDetails(IMultiFeedAdapter adapter, bytes32 dataFeedId) internal view returns (bool ok, uint256 lastDataTimestamp, uint256 lastBlockTimestamp, uint256 lastValue) {
     try adapter.getLastUpdateDetails{gas: getGasLimitForGetLastUpdateDetailsCall()}(dataFeedId) returns (uint256 dataTs, uint256 blockTs, uint256 value) {
-      bool success = value > 0 && blockTs <= block.timestamp;
+      bool success = value > 0 && blockTs <= getBlockTimestamp(); // blockTs should not be greater than current block timestamp to avoid underflow during refBlockLag calculation
       return (success, dataTs, blockTs, value);
     } catch {
       return (false, 0, 0, 0);
