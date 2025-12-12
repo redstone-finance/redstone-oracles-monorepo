@@ -6,11 +6,14 @@ import chaiAsPromised from "chai-as-promised";
 import { formatBytes32String } from "ethers/lib/utils";
 import { ethers } from "hardhat";
 import {
+  FastMultiFeedAdapterMock,
   MultiFeedAdapterWithoutRounds,
   MultiFeedAdapterWithoutRoundsMockWithReturnOverride,
+  MultiFeedAdapterWithoutRoundsTransformingProxyMock,
   MultiFeedAdapterWithoutRoundsWithReferenceMock,
   PriceFeedWithoutRoundsForMultiFeedAdapterMock,
 } from "../../../../typechain-types";
+import { DATA_FEED_ID, updateByAllNodesFresh } from "../fast-node/fast-node-test-helpers";
 
 type AdapterType = "main" | "ref";
 
@@ -28,11 +31,11 @@ const authorisedSignersForTests: MockSignerAddress[] = [
   "0x15d34AAf54267DB7D7c367839AAf71A00a2C6A65",
 ];
 
-const deployContract = async (contractName: string) => {
+const deployContract = async <T>(contractName: string): Promise<T> => {
   const contractFactory = await ethers.getContractFactory(contractName);
   const contract = await contractFactory.deploy();
   await contract.deployed();
-  return contract;
+  return contract as T;
 };
 
 describe("MultiFeedAdapterWithoutRoundsWithReference", () => {
@@ -40,6 +43,7 @@ describe("MultiFeedAdapterWithoutRoundsWithReference", () => {
   let mainAdapter: MultiFeedAdapterWithoutRounds;
   let refAdapter: MultiFeedAdapterWithoutRounds;
   let priceFeed: PriceFeedWithoutRoundsForMultiFeedAdapterMock;
+  let fastAdapter: FastMultiFeedAdapterMock;
   let defaultDataTimestamp: number;
 
   const updatePrices = async (
@@ -67,14 +71,16 @@ describe("MultiFeedAdapterWithoutRoundsWithReference", () => {
     return await wrappedAdapter.updateDataFeedsValuesPartial(dataFeedIds);
   };
 
-  const connectNewAdapter = async (contractName: string, adapterType: AdapterType) => {
-    const newAdapter = (await deployContract(contractName)) as MultiFeedAdapterWithoutRounds;
+  const connectNewAdapter = async <T>(contractName: string, adapterType: AdapterType) => {
+    const newAdapter: MultiFeedAdapterWithoutRounds = await deployContract(contractName);
+    const currentMainAdapter = await adapterWithReference.getMainAdapter();
+    const currentRefAdapter = await adapterWithReference.getReferenceAdapter();
     const adapterWithRefInitTx = await adapterWithReference.init(
-      adapterType === "main" ? newAdapter.address : mainAdapter.address,
-      adapterType === "ref" ? newAdapter.address : refAdapter.address
+      adapterType === "main" ? newAdapter.address : currentMainAdapter,
+      adapterType === "ref" ? newAdapter.address : currentRefAdapter
     );
     await adapterWithRefInitTx.wait();
-    return newAdapter;
+    return newAdapter as T;
   };
 
   const expectPrice = async (expectedValue: string) => {
@@ -82,16 +88,10 @@ describe("MultiFeedAdapterWithoutRoundsWithReference", () => {
     expect(valueFromContract.toString()).to.eq(expectedValue);
   };
 
-  beforeEach(async () => {
-    mainAdapter = (await deployContract(
-      "MultiFeedAdapterWithoutRoundsMock"
-    )) as MultiFeedAdapterWithoutRounds;
-    refAdapter = (await deployContract(
-      "MultiFeedAdapterWithoutRoundsMock"
-    )) as MultiFeedAdapterWithoutRounds;
-    adapterWithReference = (await deployContract(
-      "MultiFeedAdapterWithoutRoundsWithReferenceMock"
-    )) as MultiFeedAdapterWithoutRoundsWithReferenceMock;
+  const beforeEachLogic = async (adapterWithRefContractName: string) => {
+    mainAdapter = await deployContract("MultiFeedAdapterWithoutRoundsMock");
+    refAdapter = await deployContract("MultiFeedAdapterWithoutRoundsMock");
+    adapterWithReference = await deployContract(adapterWithRefContractName);
 
     // Configure adapterWithReference
     const adapterWithRefInitTx = await adapterWithReference.init(
@@ -101,14 +101,16 @@ describe("MultiFeedAdapterWithoutRoundsWithReference", () => {
     await adapterWithRefInitTx.wait();
 
     // Deploy one price feed
-    priceFeed = (await deployContract(
-      "ETHPriceFeedWithoutRoundsForMultiFeedAdapterMock"
-    )) as PriceFeedWithoutRoundsForMultiFeedAdapterMock;
+    priceFeed = await deployContract("ETHPriceFeedWithoutRoundsForMultiFeedAdapterMock");
     const priceFeedInitTx = await priceFeed.setAdapterAddress(adapterWithReference.address);
     await priceFeedInitTx.wait();
 
     // Reset defaultDataTimestamp
     defaultDataTimestamp = (await time.latest()) * 1000;
+  };
+
+  beforeEach(async () => {
+    await beforeEachLogic("MultiFeedAdapterWithoutRoundsWithReferenceMock");
   });
 
   it("Non-implemented functions should revert", async () => {
@@ -187,10 +189,8 @@ describe("MultiFeedAdapterWithoutRoundsWithReference", () => {
   });
 
   it("Should use ref data if main adapter has timestamp from future", async () => {
-    const customTimestampAdapter = (await connectNewAdapter(
-      "MultiFeedAdapterWithoutRoundsMockWithReturnOverride",
-      "main"
-    )) as MultiFeedAdapterWithoutRoundsMockWithReturnOverride;
+    const customTimestampAdapter: MultiFeedAdapterWithoutRoundsMockWithReturnOverride =
+      await connectNewAdapter("MultiFeedAdapterWithoutRoundsMockWithReturnOverride", "main");
     await updatePrices({ ETH: "402" }, refAdapter, defaultDataTimestamp);
     await updatePrices({ ETH: "403" }, customTimestampAdapter, defaultDataTimestamp + 1);
     await expectPrice("403"); // Because data from main is fresher
@@ -199,10 +199,8 @@ describe("MultiFeedAdapterWithoutRoundsWithReference", () => {
   });
 
   it("Should use main data if ref adapter has timestamp from future", async () => {
-    const customTimestampAdapter = (await connectNewAdapter(
-      "MultiFeedAdapterWithoutRoundsMockWithReturnOverride",
-      "ref"
-    )) as MultiFeedAdapterWithoutRoundsMockWithReturnOverride;
+    const customTimestampAdapter: MultiFeedAdapterWithoutRoundsMockWithReturnOverride =
+      await connectNewAdapter("MultiFeedAdapterWithoutRoundsMockWithReturnOverride", "ref");
     await updatePrices({ ETH: "42" }, mainAdapter, defaultDataTimestamp + 1);
     await updatePrices({ ETH: "43" }, customTimestampAdapter, defaultDataTimestamp);
     await expectPrice("43"); // Because of deviation
@@ -211,10 +209,8 @@ describe("MultiFeedAdapterWithoutRoundsWithReference", () => {
   });
 
   it("Should use ref data if main adapter returns zero value", async () => {
-    const customValueAdapter = (await connectNewAdapter(
-      "MultiFeedAdapterWithoutRoundsMockWithReturnOverride",
-      "main"
-    )) as MultiFeedAdapterWithoutRoundsMockWithReturnOverride;
+    const customValueAdapter: MultiFeedAdapterWithoutRoundsMockWithReturnOverride =
+      await connectNewAdapter("MultiFeedAdapterWithoutRoundsMockWithReturnOverride", "main");
     await updatePrices({ ETH: "402" }, refAdapter, defaultDataTimestamp);
     await updatePrices({ ETH: "403" }, customValueAdapter, defaultDataTimestamp + 1);
     await expectPrice("403"); // Because data from main is fresher
@@ -223,10 +219,8 @@ describe("MultiFeedAdapterWithoutRoundsWithReference", () => {
   });
 
   it("Should use main data if ref adapter returns zero value", async () => {
-    const customValueAdapter = (await connectNewAdapter(
-      "MultiFeedAdapterWithoutRoundsMockWithReturnOverride",
-      "ref"
-    )) as MultiFeedAdapterWithoutRoundsMockWithReturnOverride;
+    const customValueAdapter: MultiFeedAdapterWithoutRoundsMockWithReturnOverride =
+      await connectNewAdapter("MultiFeedAdapterWithoutRoundsMockWithReturnOverride", "ref");
     await updatePrices({ ETH: "42" }, mainAdapter, defaultDataTimestamp + 1);
     await updatePrices({ ETH: "43" }, customValueAdapter, defaultDataTimestamp);
     await expectPrice("43"); // Because ref is deviated from main
@@ -245,7 +239,7 @@ describe("MultiFeedAdapterWithoutRoundsWithReference", () => {
   });
 
   it("Should use ref data if main adapter tried to consume too much gas", async () => {
-    const gasConsumingAdapter = await connectNewAdapter(
+    const gasConsumingAdapter: MultiFeedAdapterWithoutRounds = await connectNewAdapter(
       "MultiFeedAdapterWithoutRoundsMockGasConsuming",
       "main"
     );
@@ -257,7 +251,7 @@ describe("MultiFeedAdapterWithoutRoundsWithReference", () => {
   });
 
   it("Should use main data if ref adapter tried to consume too much gas", async () => {
-    const gasConsumingAdapter = await connectNewAdapter(
+    const gasConsumingAdapter: MultiFeedAdapterWithoutRounds = await connectNewAdapter(
       "MultiFeedAdapterWithoutRoundsMockGasConsuming",
       "ref"
     );
@@ -363,5 +357,73 @@ describe("MultiFeedAdapterWithoutRoundsWithReference", () => {
         await expectPrice(testCase.expected === "main" ? testCase.main : testCase.ref);
       });
     }
+  });
+
+  describe("Should work properly with FastMultiFeedAdapter", () => {
+    beforeEach(async () => {
+      await beforeEachLogic("MultiFeedAdapterWithoutRoundsWithReferenceMicrosecondsMock");
+      fastAdapter = await connectNewAdapter("FastMultiFeedAdapterMock", "main");
+      const proxyToRef: MultiFeedAdapterWithoutRoundsTransformingProxyMock =
+        await connectNewAdapter("MultiFeedAdapterWithoutRoundsTransformingProxyMock", "ref");
+      const proxyToRefInitTx = await proxyToRef.init(refAdapter.address);
+      await proxyToRefInitTx.wait();
+    });
+
+    it("Should return value from ref if there is no value on fast", async () => {
+      await updatePrices({ ETH: "42" }, refAdapter, defaultDataTimestamp);
+      await expectPrice("42");
+    });
+
+    it("Should return value from fast adapter if it's newer and not deviated", async () => {
+      await updatePrices({ ETH: "10200000001" }, refAdapter, defaultDataTimestamp);
+      await expectPrice("10200000001");
+      await updateByAllNodesFresh(fastAdapter, [100, 101, 102, 103, 1000]);
+      const fastAnswer = await fastAdapter.getLastUpdateDetails(DATA_FEED_ID);
+      expect(fastAnswer.lastValue.toString()).to.eq("10200000000"); // Median value from the fast adapter
+      await expectPrice("10200000000");
+    });
+
+    it("Should return value from ref adapter if the value crossed the deviation", async () => {
+      await updateByAllNodesFresh(fastAdapter, [100, 100, 100, 103, 1000]);
+      await updatePrices({ ETH: "10200000001" }, refAdapter, defaultDataTimestamp);
+      await expectPrice("10200000001");
+      const fastAnswer = await fastAdapter.getLastUpdateDetails(DATA_FEED_ID);
+      expect(fastAnswer.lastValue.toString()).to.eq("10000000000"); // Median value from the fast adapter
+      await expectPrice("10200000001"); // value from ref on the adapter with reference
+    });
+
+    it("Should use value from ref adapter if deviation is crossed but block and data ts are older than from main", async () => {
+      await updatePrices({ ETH: "10200000001" }, refAdapter, defaultDataTimestamp);
+      await updateByAllNodesFresh(fastAdapter, [100, 100, 100, 103, 1000]);
+      await expectPrice("10200000001");
+    });
+
+    it("Should use data from main in case of deviation but when ref data is old", async () => {
+      await updateByAllNodesFresh(fastAdapter, [100, 100, 100, 103, 1000]);
+      const fastAnswer = await fastAdapter.getLastUpdateDetails(DATA_FEED_ID);
+      await updatePrices({ ETH: "10200000001" }, refAdapter, defaultDataTimestamp);
+      await expectPrice("10200000001");
+      expect(fastAnswer.lastValue.toString()).to.eq("10000000000"); // Median value from the fast adapter
+      await expectPrice("10200000001"); // value from ref on the adapter with reference
+
+      // Waiting for 11 seconds
+      await time.setNextBlockTimestamp((await time.latest()) + 11);
+      await mine();
+
+      // Updating only main, ref data is outdated
+      await updateByAllNodesFresh(fastAdapter, [100, 101, 104, 105, 1000]);
+      await expectPrice("10400000000"); // Value in the ref adapter is too old now
+    });
+
+    it("Should use data with the newest data timestamp", async () => {
+      // No deviation, main data is newer
+      await updateByAllNodesFresh(fastAdapter, [100, 101, 102, 103, 1000]);
+      await updatePrices({ ETH: "10200000002" }, refAdapter, (await time.latest()) * 1000 - 1);
+      await expectPrice("10200000000"); // Median value from the fast adapter (because it's data a bit newer)
+
+      // No deviation, ref data is newer
+      await updatePrices({ ETH: "10200000002" }, refAdapter, (await time.latest()) * 1000 + 1);
+      await expectPrice("10200000002"); // Values from the ref adapter (because now it's newer)
+    });
   });
 });
