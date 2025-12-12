@@ -780,6 +780,11 @@
       "denomination": "USD",
       "rateFeed": false
     },
+    "XAG": {
+      "source": [],
+      "denomination": "USD",
+      "rateFeed": false
+    },
     "XRP": {
       "source": [
         "binance-usdc",
