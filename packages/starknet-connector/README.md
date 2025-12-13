@@ -8,7 +8,7 @@
 The @redstone-finance/starknet-connector module implements an alternative design of providing oracle data to smart
 contracts. Instead of constantly persisting data on Starknet storage (by data providers), the information is brought
 on-chain only when needed (by end users). Until that moment data remains in the decentralised cache layer, which is
-powered by RedStone light cache gateways and streamr data broadcasting protocol. Data is transferred to the Starknet by
+powered by RedStone light cache gateways. Data is transferred to the Starknet by
 end users. The information integrity is verified on-chain through signature checking.
 
 - [📦 Installation](#-installation)
