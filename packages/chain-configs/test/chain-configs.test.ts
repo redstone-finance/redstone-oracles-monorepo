@@ -9,8 +9,8 @@ import {
 import { skipIfDisabledOrNotSupported } from "./rpc-urls/common";
 
 const CHAINS_TO_SKIP_RPC_PRESENCE_CHECK: string[] = [
-  "megaETH Testnet",
-  "megaETH Mainnet",
+  "MegaETH Testnet",
+  "MegaETH Mainnet",
   "Stable Mainnet",
 ];
 
@@ -24,6 +24,7 @@ const CHAINS_TO_SKIP_REDSTONE_MULTICALL_ADDRESS_CHECK: string[] = [
   "Polygon Mainnet",
   "Incentiv Testnet",
   "0G Galileo Testnet",
+  "MegaETH Mainnet",
 ];
 
 const CHAINS_TO_SKIP_STANDARD_MULTICALL_ADDRESS_CHECK: string[] = ["Arbitrum Sepolia", "TAC Turin"];
