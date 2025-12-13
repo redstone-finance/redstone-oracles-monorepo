@@ -4,7 +4,7 @@ The following document contains helpful details for the security audit of the re
 
 ## Short intro
 
-RedStone EVM connector implements an alternative design of providing oracle data to smart contracts. Instead of constantly persisting data on EVM storage (by data providers), the information is brought on-chain only when needed (by end users). Until that moment data remains in the decentralised cache layer, which is powered by RedStone light cache gateways and streamr data broadcasting protocol. Data is transferred to the EVM by end users, who should attach the signed data packages to their transaction calldata. The information integrity is verified on-chain through signature checking.
+RedStone EVM connector implements an alternative design of providing oracle data to smart contracts. Instead of constantly persisting data on EVM storage (by data providers), the information is brought on-chain only when needed (by end users). Until that moment data remains in the decentralised cache layer, which is powered by RedStone light cache gateways. Data is transferred to the EVM by end users, who should attach the signed data packages to their transaction calldata. The information integrity is verified on-chain through signature checking.
 
 ## How to get into context
 

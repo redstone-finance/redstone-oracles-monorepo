@@ -1,4 +1,3 @@
-process.env.ENABLE_STREAMR_LISTENING = "false";
 process.env.ENABLE_DIRECT_POSTING_ROUTES = "true";
 process.env.API_KEY_FOR_ACCESS_TO_ADMIN_ROUTES = "test-api-key";
 // don't remove prevent from passing prod/test mongodburl to test env
