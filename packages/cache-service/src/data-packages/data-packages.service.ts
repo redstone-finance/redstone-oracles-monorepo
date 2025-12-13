@@ -5,7 +5,6 @@ import { EXTERNAL_SIGNERS_CUTOFF_DATE, getDataServiceIdForSigner } from "@redsto
 import { RedstoneCommon } from "@redstone-finance/utils";
 import { DataPackagesBroadcaster } from "../broadcasters/data-packages-broadcaster";
 import { MongoBroadcaster } from "../broadcasters/mongo-broadcaster";
-import { StreamrBroadcaster } from "../broadcasters/streamr-broadcaster";
 import { EMPTY_DATA_PACKAGE_RESPONSE_ERROR_CODE } from "../common/errors";
 import config from "../config";
 import { getOracleState } from "../utils/get-oracle-state";
@@ -27,15 +26,9 @@ export class DataPackagesService implements OnModuleInit {
   private readonly broadcasters: DataPackagesBroadcaster[] = [];
   private static allowedSigners: string[] | null = null;
 
-  constructor(
-    @Optional() mongoBroadcaster?: MongoBroadcaster,
-    @Optional() streamrBroadcaster?: StreamrBroadcaster
-  ) {
+  constructor(@Optional() mongoBroadcaster?: MongoBroadcaster) {
     if (mongoBroadcaster) {
       this.broadcasters.push(mongoBroadcaster);
-    }
-    if (streamrBroadcaster) {
-      this.broadcasters.push(streamrBroadcaster);
     }
 
     this.logger.log(
@@ -63,7 +56,7 @@ export class DataPackagesService implements OnModuleInit {
     return DataPackagesService.allowedSigners;
   }
 
-  /**  Save dataPackages to DB and streamr (optionally) */
+  /**  Save dataPackages to DB */
   async broadcast(
     dataPackagesToSave: CachedDataPackage[],
     nodeEvmAddress: string

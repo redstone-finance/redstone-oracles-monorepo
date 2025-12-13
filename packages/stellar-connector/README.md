@@ -13,7 +13,7 @@ on-chain only when required by the protocol.
 The `@redstone-finance/stellar-connector` module implements an alternative design of providing oracle data to smart
 contracts. Instead of constantly persisting data on the Stellar network storage (by data providers), the information is
 brought on-chain only when needed (by end users). Until that moment data remains in the decentralised cache layer, which
-is powered by RedStone light cache gateways and streamr data broadcasting protocol. Data is transferred to the Stellar
+is powered by RedStone light cache gateways. Data is transferred to the Stellar
 network by end users. The information integrity is verified on-chain through signature checking.
 
 Here also you can find the description of
