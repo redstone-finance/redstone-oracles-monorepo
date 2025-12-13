@@ -8,8 +8,6 @@ interface CacheServiceConfig {
   // e.g. by e2e test process
   mongoDbUrl?: string;
   mongoDbTTLSeconds: number;
-  streamrPrivateKey?: string;
-  enableStreamrListening: boolean;
   enableDirectPostingRoutes: boolean;
   apiKeyForAccessToAdminRoutes: string;
   allowedStreamrDataServiceIds: string[];
@@ -37,8 +35,6 @@ const config: CacheServiceConfig = {
   appPort: RedstoneCommon.getFromEnv("APP_PORT", z.number().default(DEFAULT_APP_PORT)),
   mongoDbUrl: RedstoneCommon.getFromEnv("MONGO_DB_URL", z.string().optional()),
   mongoDbTTLSeconds: RedstoneCommon.getFromEnv("MONGO_DB_TTL_SECONDS", z.number().default(0)),
-  enableStreamrListening: RedstoneCommon.getFromEnv("ENABLE_STREAMR_LISTENING", z.boolean()),
-  streamrPrivateKey: RedstoneCommon.getFromEnv("STREAMR_PRIVATE_KEY", z.string().optional(), false),
   enableDirectPostingRoutes: RedstoneCommon.getFromEnv("ENABLE_DIRECT_POSTING_ROUTES", z.boolean()),
   apiKeyForAccessToAdminRoutes: RedstoneCommon.getFromEnv("API_KEY_FOR_ACCESS_TO_ADMIN_ROUTES"),
   allowedStreamrDataServiceIds: RedstoneCommon.getFromEnv(
