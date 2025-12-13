@@ -1,0 +1,25 @@
+{
+  "chain": {
+    "name": "megaEth",
+    "id": 4326
+  },
+  "updateTriggers": {
+    "deviationPercentage": 0.1,
+    "timeSinceLastUpdateInMilliseconds": 21600000
+  },
+  "adapterContract": "0x57677Bdc4F24D5c08ddCE87E06670C26a00Cac0b",
+  "adapterContractType": "multi-feed",
+  "dataServiceId": "redstone-primary-prod",
+  "priceFeeds": {
+    "ETH": {},
+    "BTC": {},
+    "USDC": {},
+    "USDT": {},
+    "BNB": {},
+    "XRP": {},
+    "ADA": {},
+    "SOL": {},
+    "DOGE": {},
+    "wstETH/ETH": {}
+  }
+}
