@@ -2016,7 +2016,7 @@
     },
     "flxn:GOLD_MARK_0": {
       "source": [
-        "hip3-felix-gold-mainnet-fetcher"
+        "hip3-felix-gold-testnet-fetcher"
       ],
       "broadcasters": [
         "hyperliquid-hip3"
@@ -2026,7 +2026,7 @@
     },
     "flxn:GOLD_MARK_1": {
       "source": [
-        "hip3-felix-gold-mainnet-fetcher"
+        "hip3-felix-gold-testnet-fetcher"
       ],
       "broadcasters": [
         "hyperliquid-hip3"
@@ -2036,7 +2036,7 @@
     },
     "flxn:GOLD_EXT": {
       "source": [
-        "hip3-felix-gold-mainnet-fetcher"
+        "hip3-felix-gold-testnet-fetcher"
       ],
       "broadcasters": [
         "hyperliquid-hip3"
@@ -2046,7 +2046,7 @@
     },
     "flxn:GOLD": {
       "source": [
-        "hip3-felix-gold-mainnet-fetcher"
+        "hip3-felix-gold-testnet-fetcher"
       ],
       "broadcasters": [
         "hyperliquid-hip3"
