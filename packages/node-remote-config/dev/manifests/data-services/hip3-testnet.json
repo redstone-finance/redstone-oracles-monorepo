@@ -1419,25 +1419,25 @@
       "rateFeed": false
     },
     "flxn:GOLD_MARK_0": {
-      "source": ["hip3-felix-gold-mainnet-fetcher"],
+      "source": ["hip3-felix-gold-testnet-fetcher"],
       "broadcasters": ["hyperliquid-hip3"],
       "denomination": "USD",
       "rateFeed": false
     },
     "flxn:GOLD_MARK_1": {
-      "source": ["hip3-felix-gold-mainnet-fetcher"],
+      "source": ["hip3-felix-gold-testnet-fetcher"],
       "broadcasters": ["hyperliquid-hip3"],
       "denomination": "USD",
       "rateFeed": false
     },
     "flxn:GOLD_EXT": {
-      "source": ["hip3-felix-gold-mainnet-fetcher"],
+      "source": ["hip3-felix-gold-testnet-fetcher"],
       "broadcasters": ["hyperliquid-hip3"],
       "denomination": "USD",
       "rateFeed": false
     },
     "flxn:GOLD": {
-      "source": ["hip3-felix-gold-mainnet-fetcher"],
+      "source": ["hip3-felix-gold-testnet-fetcher"],
       "broadcasters": ["hyperliquid-hip3"],
       "denomination": "USD",
       "rateFeed": false
