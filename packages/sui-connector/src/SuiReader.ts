@@ -1,5 +1,8 @@
-import { PaginatedTransactionResponse, SuiClient } from "@mysten/sui/client";
+import { PaginatedTransactionResponse, SuiClient, SuiObjectChange } from "@mysten/sui/client";
+import { SUI_TYPE_ARG } from "@mysten/sui/utils";
 import { RedstoneCommon } from "@redstone-finance/utils";
+
+const TX_LOOKUP_COUNT_LIMIT = 100;
 
 export class SuiReader {
   constructor(private readonly client: SuiClient) {}
@@ -61,6 +64,68 @@ export class SuiReader {
     }));
   }
 
+  async getLatestReceivedCoin(
+    address: string,
+    minBalance: bigint,
+    coinType = SUI_TYPE_ARG,
+    txLimitCount = TX_LOOKUP_COUNT_LIMIT
+  ) {
+    const txs = await this.client.queryTransactionBlocks({
+      filter: { ToAddress: address },
+      options: { showObjectChanges: true },
+      order: "descending",
+      limit: txLimitCount,
+    });
+
+    const coins = await this.getCoinsWithSufficientBalance(address, minBalance, coinType);
+
+    if (coins.length === 0) {
+      throw new Error(
+        `Did not find any coin with sufficient balance for account: ${address}, balance: ${minBalance}`
+      );
+    }
+
+    for (const tx of txs.data) {
+      const receivedCoin = tx.objectChanges?.find((change) =>
+        SuiReader.isReceivedCoin(change, coinType, address)
+      );
+
+      if (!receivedCoin) {
+        continue;
+      }
+
+      const coin = coins.find((c) => c.coinObjectId === receivedCoin.objectId);
+
+      if (!coin) {
+        continue;
+      }
+
+      if (BigInt(coin.balance) >= minBalance) {
+        return receivedCoin.objectId;
+      }
+    }
+
+    return undefined;
+  }
+
+  async getCoinsWithSufficientBalance(address: string, minBalance: bigint, coinType: string) {
+    const coins = [];
+    let cursor = null;
+
+    do {
+      const { data, nextCursor, hasNextPage } = await this.client.getCoins({
+        owner: address,
+        coinType,
+        cursor,
+      });
+
+      coins.push(...data.filter((c) => BigInt(c.balance) > minBalance));
+      cursor = hasNextPage ? nextCursor : null;
+    } while (cursor);
+
+    return coins;
+  }
+
   private async findLatestVersionAtCheckpoint(objectId: string, checkpointNumber: number) {
     await RedstoneCommon.waitForBlockNumber(
       () => this.client.getLatestCheckpointSequenceNumber().then(Number),
@@ -109,5 +174,25 @@ export class SuiReader {
     }
 
     return undefined;
+  }
+
+  private static isReceivedCoin(
+    change: SuiObjectChange,
+    coinType: string,
+    address: string
+  ): change is Extract<SuiObjectChange, { type: "created" | "mutated" }> {
+    if (change.type !== "created" && change.type !== "mutated") {
+      return false;
+    }
+
+    if (!change.objectType.includes(coinType)) {
+      return false;
+    }
+
+    if (typeof change.owner !== "object" || !("AddressOwner" in change.owner)) {
+      return false;
+    }
+
+    return change.owner.AddressOwner === address;
   }
 }
