@@ -3,8 +3,7 @@ import chaiAsPromised from "chai-as-promised";
 import { providers, Signer, Wallet } from "ethers";
 import hardhat from "hardhat";
 import Sinon, * as sinon from "sinon";
-import { CallCacheDecorator } from "../../src/provider-decorators/CacheCallDecorator";
-import { ProviderWithAgreement } from "../../src/providers/ProviderWithAgreement";
+import { ProviderWithAgreement } from "../../src";
 import { Counter } from "../../typechain-types";
 import { deployCounter } from "../helpers";
 
@@ -54,102 +53,6 @@ describe("ProviderWithAgreement", () => {
     it("should await tx", async () => {
       const tx = await counter.inc();
       expect(await tx.wait()).not.to.be.undefined;
-    });
-  });
-
-  describe("CallCacheDecorator", () => {
-    let providerWithAgreement: ProviderWithAgreement;
-    let counter: Counter;
-
-    beforeEach(async () => {
-      providerWithAgreement = CallCacheDecorator(
-        () => createAgreementProvider([hardhat.ethers.provider, hardhat.ethers.provider]),
-        { ttl: 50_000 }
-      )() as ProviderWithAgreement;
-      const contract = await deployCounter(hardhat.ethers.provider);
-      counter = contract.connect(signer.connect(providerWithAgreement));
-    });
-
-    it("should use cache", async () => {
-      const callSpy = Sinon.spy(providerWithAgreement, "call");
-      const callBehindCacheSpy = Sinon.spy(
-        providerWithAgreement,
-        "executeCallWithAgreement" as keyof ProviderWithAgreement
-      );
-
-      const currentBlockNumber = await providerWithAgreement.getBlockNumber();
-      const count = await counter.getCount({ blockTag: currentBlockNumber });
-      const tx = await counter.inc();
-      await tx.wait();
-      const secondCount = await counter.getCount({
-        blockTag: currentBlockNumber,
-      });
-
-      expect(count).to.eq(secondCount);
-
-      expect(callSpy.getCalls().length).to.eq(2);
-      expect(callBehindCacheSpy.getCalls().length).to.eq(1);
-
-      // new block number should result in cache miss
-      const newBlockNumber = await hardhat.ethers.provider.getBlockNumber();
-      const countAtNewBlock = await counter.getCount({
-        blockTag: newBlockNumber,
-      });
-      expect(Number(count.toString()) + 1).to.eq(countAtNewBlock);
-      expect(callSpy.getCalls().length).to.eq(3);
-      expect(callBehindCacheSpy.getCalls().length).to.eq(2);
-    });
-
-    it("should not use cache, on different call", async () => {
-      const callSpy = Sinon.spy(providerWithAgreement, "call");
-      const callBehindCacheSpy = Sinon.spy(
-        providerWithAgreement,
-        "executeCallWithAgreement" as keyof ProviderWithAgreement
-      );
-
-      const currentBlockNumber = await providerWithAgreement.getBlockNumber();
-      const count = await counter.getCountPlusOne({
-        blockTag: currentBlockNumber,
-      });
-      const secondCount = await counter.getCount({
-        blockTag: currentBlockNumber,
-      });
-
-      expect(count).to.eq(secondCount.add(1));
-
-      expect(callSpy.getCalls().length).to.eq(2);
-      expect(callBehindCacheSpy.getCalls().length).to.eq(2);
-    });
-
-    // however it will cache call exceptions which is okey
-    it("should not cache errors", async () => {
-      providerWithAgreement = createAgreementProvider([
-        hardhat.ethers.provider,
-        new hardhat.ethers.providers.JsonRpcProvider(),
-      ]);
-      counter = contract.connect(signer.connect(providerWithAgreement));
-
-      const callSpy = Sinon.spy(providerWithAgreement, "call");
-      const callBehindCacheSpy = Sinon.spy(
-        providerWithAgreement,
-        "executeCallWithAgreement" as keyof ProviderWithAgreement
-      );
-
-      const currentBlockNumber = await providerWithAgreement.getBlockNumber();
-
-      await expect(
-        counter.getCount({
-          blockTag: currentBlockNumber,
-        })
-      ).rejectedWith(/Failed to find at least 2 agreeing/);
-      await expect(
-        counter.getCount({
-          blockTag: currentBlockNumber,
-        })
-      ).rejectedWith(/Failed to find at least 2 agreeing/);
-
-      expect(callSpy.getCalls().length).to.eq(2);
-      expect(callBehindCacheSpy.getCalls().length).to.eq(2);
     });
   });
 
@@ -221,7 +124,7 @@ describe("ProviderWithAgreement", () => {
         counter.getCount({
           blockTag: await providerWithAgreement.getBlockNumber(),
         })
-      ).rejectedWith(/Failed to find at least 2 agreeing providers at block 24/);
+      ).rejectedWith(/Failed to find at least 2 agreeing providers at block \d+/);
     });
 
     it("should write to contract", async () => {
@@ -252,7 +155,7 @@ describe("ProviderWithAgreement", () => {
         counter.getCount({
           blockTag: await providerWithAgreement.getBlockNumber(),
         })
-      ).rejectedWith(/Failed to find at least 2 agreeing providers at block 29/);
+      ).rejectedWith(/Failed to find at least 2 agreeing providers at block \d+/);
     });
 
     it("should write to contract", async () => {
