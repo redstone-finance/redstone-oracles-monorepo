@@ -36,6 +36,11 @@ export class IterationsHealthCheck implements HealthCheck {
     }
 
     const referenceDate = this.lastIterationDate ?? this.startDate;
+    if (fireDate.getTime() < referenceDate.getTime()) {
+      logger.warn("Possible overlapping iterations", { referenceDate, fireDate });
+      // note: yes, we consider "overlapping" iterations as "healthy"
+      return healthy();
+    }
     const elapsed = IterationsHealthCheck.secondsBetween(referenceDate, fireDate);
 
     if (elapsed <= periodInS) {
@@ -53,9 +58,6 @@ export class IterationsHealthCheck implements HealthCheck {
   }
 
   private static secondsBetween(earlier: Date, later: Date): number {
-    if (later.getTime() < earlier.getTime()) {
-      throw new Error("Check your head.");
-    }
     const msDiff = later.getTime() - earlier.getTime();
     return msDiff / 1000;
   }
