@@ -17,5 +17,8 @@
     "ETH": {
       "source": ["bitfinex-usd", "bitstamp-usd", "kaiko-v2", "xt"]
     }
+  },
+  "multiPointPackages": {
+    "___FAST___": ["BTC", "ETH"]
   }
 }

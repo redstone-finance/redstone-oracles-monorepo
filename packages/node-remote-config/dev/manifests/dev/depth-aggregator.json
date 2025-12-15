@@ -1266,6 +1266,7 @@
     }
   },
   "multiPointPackages": {
+    "___FAST___": ["USDC", "USDT", "DAI", "BNB", "BTC", "ETH", "SOL", "MON", "FGNX"],
     "__FRAXTAL__": ["BTC", "CRV", "ETH", "FRAX", "FXS"]
   }
 }
