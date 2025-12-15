@@ -8,9 +8,10 @@ import {
   ContractUpdateStatus,
 } from "@redstone-finance/multichain-kit";
 import { ContractParamsProvider } from "@redstone-finance/sdk";
-import { FP, loggerFactory } from "@redstone-finance/utils";
-import { SuiPricesContractWriter } from "./SuiPricesContractWriter";
+import { FP, loggerFactory, RedstoneCommon } from "@redstone-finance/utils";
 import { SuiConfig } from "./config";
+import { SuiPricesContractWriter } from "./SuiPricesContractWriter";
+import { SuiReader } from "./SuiReader";
 
 const MAX_PARALLEL_TRANSACTION_COUNT = 5;
 const SPLIT_COIN_INITIAL_BALANCE_MULTIPLIER = 2n;
@@ -18,6 +19,7 @@ const SPLIT_COIN_INITIAL_BALANCE_MULTIPLIER = 2n;
 export class SuiContractUpdater implements ContractUpdater {
   protected readonly logger = loggerFactory("sui-contract-updater");
   private readonly writer: SuiPricesContractWriter;
+  private readonly suiReader: SuiReader;
 
   constructor(
     private readonly client: SuiClient,
@@ -26,6 +28,7 @@ export class SuiContractUpdater implements ContractUpdater {
     private executor?: ParallelTransactionExecutor
   ) {
     this.writer = new SuiPricesContractWriter(client, keypair, config);
+    this.suiReader = new SuiReader(client);
   }
 
   async update(
@@ -50,7 +53,7 @@ export class SuiContractUpdater implements ContractUpdater {
 
   private async performExecutingTx(tx: Transaction) {
     const date = Date.now();
-    const { digest, data } = await this.executeTxWithExecutor(tx, this.getExecutor());
+    const { digest, data } = await this.executeTxWithExecutor(tx, await this.getExecutor());
 
     const checkEventsForFailure = true;
     const { status } = SuiContractUpdater.getStatus(data, checkEventsForFailure);
@@ -78,16 +81,40 @@ export class SuiContractUpdater implements ContractUpdater {
       });
     } catch (e) {
       this.logger.warn("Reinitializing gas objects...");
-      this.initializeExecutor();
+      await this.initializeExecutor();
       throw e;
     }
   }
 
-  private getExecutor() {
-    return this.executor ?? this.initializeExecutor();
+  private async getExecutor() {
+    return this.executor ?? (await this.initializeExecutor());
   }
 
-  private initializeExecutor() {
+  private async initializeExecutor() {
+    let sourceCoins = undefined;
+    try {
+      const minimumBalance =
+        SPLIT_COIN_INITIAL_BALANCE_MULTIPLIER *
+        this.config.writePricesTxGasBudget *
+        BigInt(MAX_PARALLEL_TRANSACTION_COUNT);
+
+      const coin = await this.suiReader.getLatestReceivedCoin(
+        this.keypair.getPublicKey().toSuiAddress(),
+        minimumBalance
+      );
+
+      if (coin) {
+        sourceCoins = [coin];
+        this.logger.info(`Using coin ${coin} for reinitialization of the executor`);
+      } else {
+        this.logger.warn(
+          `Error fetching latest coin: no coin or no coin has balance greater that: ${minimumBalance}`
+        );
+      }
+    } catch (e) {
+      this.logger.warn(`Error fetching latest coin: ${RedstoneCommon.stringifyError(e)}`);
+    }
+
     const executor = new ParallelTransactionExecutor({
       client: this.client,
       signer: this.keypair,
@@ -96,6 +123,7 @@ export class SuiContractUpdater implements ContractUpdater {
       minimumCoinBalance: this.config.writePricesTxGasBudget,
       defaultGasBudget: this.config.writePricesTxGasBudget,
       maxPoolSize: MAX_PARALLEL_TRANSACTION_COUNT,
+      sourceCoins,
     });
 
     this.executor = executor;
