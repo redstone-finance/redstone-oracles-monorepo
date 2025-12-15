@@ -1,0 +1,31 @@
+{
+  "interval": 1000,
+  "priceAggregator": "median",
+  "defaultSource": ["coingecko"],
+  "sourceTimeout": 8000,
+  "deviationCheck": {
+    "deviationWithRecentValues": {
+      "maxPercent": 25,
+      "maxDelayMilliseconds": 120000
+    }
+  },
+  "tokens": {
+    "TSLA": {
+      "source": ["ws-polygon-massive"],
+      "deviationCheck": {
+        "deviationWithRecentValues": {
+          "maxPercent": 30,
+          "maxDelayMilliseconds": 120000
+        }
+      },
+      "broadcasters": ["influx"],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "IS_NY_STOCKS_MARKET_OPEN": {
+      "source": ["is-ny-stocks-market-open-deferred"],
+      "denomination": "other",
+      "rateFeed": false
+    }
+  }
+}
