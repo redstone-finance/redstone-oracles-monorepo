@@ -153,5 +153,8 @@
         "ws-dx-feed-no-close-price"
       ]
     }
+  },
+  "multiPointPackages": {
+    "___FAST___": ["USDC", "USDT", "DAI", "BNB", "BTC", "ETH", "SOL", "MON", "FGNX"]
   }
 }
