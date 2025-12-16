@@ -62,6 +62,7 @@ export class PollingHttpClient implements PubSubClient {
     if (removedTopics.length > 0) {
       this.logger.info("Unsubscribed from topics", { topics: removedTopics });
     }
+
     return Promise.resolve();
   }
 
@@ -137,7 +138,7 @@ export class PollingHttpClient implements PubSubClient {
 
   startPolling() {
     if (this.isPolling) {
-      this.logger.info("Polling is already active");
+      this.logger.debug("Polling is already active");
       return;
     }
 
