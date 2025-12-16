@@ -15,6 +15,7 @@ DEPLOY_DIR ?= ./stellar
 WASM_TARGET=wasm32v1-none
 ADAPTER_CONTRACT=redstone_adapter
 PRICE_FEED_CONTRACT=redstone_price_feed
+# make sure this toolchain is configured in stellar-contracts-tests.yml CI workflow
 NIGHTLY=nightly-2025-04-29
 
 .PHONY: fmt check test build clippy build all-checks
