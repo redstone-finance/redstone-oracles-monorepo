@@ -67,7 +67,7 @@ export class SSEPubSubClient implements PubSubClient {
   }
 
   private handleConnected(event: MessageEvent) {
-    this.logger.info("Received connected event");
+    this.logger.debug("Received connected event");
 
     try {
       const data = JSON.parse(event.data as string) as ConnectedEvent;
@@ -107,7 +107,7 @@ export class SSEPubSubClient implements PubSubClient {
 
     try {
       batch = JSON.parse(event.data as string) as PackageBatch;
-      this.logger.info("Received batch event", { packageCount: batch.length });
+      this.logger.debug("Received batch event", { packageCount: batch.length });
     } catch (error) {
       this.logger.info("Failed to parse batch event", { error });
 
@@ -130,7 +130,7 @@ export class SSEPubSubClient implements PubSubClient {
 
     try {
       data = this.common.deserializeData(update.data);
-      this.logger.info("Processing update", { topic: update.topic, dataSize: update.data.length });
+      this.logger.debug("Processing update", { topic: update.topic, dataSize: update.data.length });
     } catch (e) {
       this.logger.error("Failed to deserialize update", {
         topic: update.topic,
@@ -154,7 +154,7 @@ export class SSEPubSubClient implements PubSubClient {
   }
 
   async subscribe(topics: string[], onMessage: SubscribeCallback) {
-    this.logger.info("Subscribe requested", { topics, hasSession: !!this.sessionId });
+    this.logger.debug("Subscribe requested", { topics, hasSession: !!this.sessionId });
     this.callback = onMessage;
 
     const newTopics: string[] = [];
@@ -201,12 +201,12 @@ export class SSEPubSubClient implements PubSubClient {
         );
       }
     } else {
-      this.logger.info("No new topics to subscribe", { requestedTopics: topics });
+      this.logger.debug("No new topics to subscribe", { requestedTopics: topics });
     }
   }
 
   async unsubscribe(topics: string[]) {
-    this.logger.info("Unsubscribe requested", { topics });
+    this.logger.debug("Unsubscribe requested", { topics });
 
     const removedTopics: string[] = [];
 
@@ -239,7 +239,7 @@ export class SSEPubSubClient implements PubSubClient {
         throw e;
       }
     } else if (removedTopics.length === 0) {
-      this.logger.info("No topics to unsubscribe", { requestedTopics: topics });
+      this.logger.debug("No topics to unsubscribe", { requestedTopics: topics });
     }
   }
 
