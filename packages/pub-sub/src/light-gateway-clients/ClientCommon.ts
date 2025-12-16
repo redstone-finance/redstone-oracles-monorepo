@@ -56,17 +56,18 @@ export class ClientCommon {
     const packages = payloads.map((payload) => this.serializePayload(payload));
     const encoded = ClientCommon.encodePackages(packages);
 
-    this.logger.info("Sending encoded data", { byteLength: encoded.length });
+    this.logger.debug("Publishing data", { byteLength: encoded.length, count: packages.length });
+
     try {
       await this.httpClient.post(this.getPublishUrl(), encoded, {
         headers: { "Content-Type": CONTENT_TYPE_MSGPACK },
       });
-      this.logger.info("Published data successfully", { count: packages.length });
     } catch (e) {
       this.logger.error("Failed to publish data", {
         error: RedstoneCommon.stringifyError(e),
         count: packages.length,
       });
+
       throw e;
     }
   }
