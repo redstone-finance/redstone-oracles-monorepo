@@ -525,11 +525,6 @@
       "denomination": "USD",
       "rateFeed": false
     },
-    "rswETH": {
-      "source": ["curve-ethereum-weeth"],
-      "denomination": "USD",
-      "rateFeed": false
-    },
     "rsETH": {
       "source": [
         "camelot-v3-arbitrumone-weth",
@@ -1150,7 +1145,6 @@
       "frxETH",
       "rETH",
       "rsETH",
-      "rswETH",
       "sfrxETH",
       "stETH",
       "weETH",
