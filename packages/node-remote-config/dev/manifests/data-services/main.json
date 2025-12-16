@@ -549,7 +549,6 @@
     "XMR": {
       "source": [
         "bitfinex-usd",
-        "bitmart-usdt",
         "kraken-usd",
         "kraken-usdt",
         "kucoin-usdt",
