@@ -32,14 +32,7 @@
       "broadcasters": ["influx"]
     },
     "XMR": {
-      "source": [
-        "bitfinex-ust",
-        "bitmart-usdt",
-        "kraken_deferred-usd",
-        "kucoin-usdt",
-        "mexc-usdt",
-        "xt-deferred"
-      ],
+      "source": ["bitfinex-ust", "kraken_deferred-usd", "kucoin-usdt", "mexc-usdt", "xt-deferred"],
       "deviationCheck": {
         "deviationWithRecentValues": {
           "maxPercent": 100,
