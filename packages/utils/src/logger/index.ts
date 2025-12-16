@@ -53,14 +53,17 @@ export function isTraceEnabled(): boolean {
   return getLogLevel() >= LogLevels.trace;
 }
 
-export const loggerFactory = (moduleName: string): RedstoneLogger => {
+export const loggerFactory = (
+  moduleName: string,
+  defaultEnableJsonLogs = DEFAULT_ENABLE_JSON_LOGS
+): RedstoneLogger => {
   if (isNodeRuntime()) {
     if (customLogLevels === undefined) {
       customLogLevels = parseLogLevels();
     }
     const enableJsonLogs = getFromEnv(
       "REDSTONE_FINANCE_ENABLE_JSON_LOGS",
-      z.boolean().default(DEFAULT_ENABLE_JSON_LOGS)
+      z.boolean().default(defaultEnableJsonLogs)
     );
     const defaultLogLevel = getLogLevel();
     const logLevel = customLogLevels
