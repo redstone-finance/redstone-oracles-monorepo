@@ -1481,16 +1481,6 @@
       "denomination": "USDe",
       "rateFeed": true
     },
-    "rswETH": {
-      "source": ["curve-ethereum-weeth"],
-      "denomination": "USD",
-      "rateFeed": false
-    },
-    "rswETH/ETH": {
-      "source": ["non-usd-based"],
-      "denomination": "ETH",
-      "rateFeed": false
-    },
     "sUSDe_RATE_PROVIDER": {
       "source": ["ethereum-evm-fetcher-balancer-rate-provider"],
       "denomination": "USDe",
@@ -1703,16 +1693,6 @@
       "denomination": "ETH",
       "rateFeed": true
     },
-    "pzETH": {
-      "source": ["curve-ethereum-ezeth"],
-      "denomination": "USD",
-      "rateFeed": false
-    },
-    "pzETH/ETH": {
-      "source": ["non-usd-based"],
-      "denomination": "ETH",
-      "rateFeed": false
-    },
     "USD3": {
       "source": [
         "curve-ethereum-susde",
@@ -1722,16 +1702,6 @@
       "denomination": "USD",
       "rateFeed": false
     },
-    "deUSD": {
-      "source": ["curve-ethereum-usdc", "curve-ethereum-usdt", "curve-ethereum-frxusd"],
-      "denomination": "USD",
-      "rateFeed": false
-    },
-    "deUSD_FUNDAMENTAL": {
-      "source": ["mixed-evm-fetcher-elixir-deusd"],
-      "denomination": "USD",
-      "rateFeed": true
-    },
     "sdeUSD_FUNDAMENTAL": {
       "source": ["ethereum-evm-fetcher-elixir"],
       "denomination": "deUSD",
@@ -1740,11 +1710,6 @@
     "sfastUSD_FUNDAMENTAL": {
       "source": ["sei-evm-fetcher-fast"],
       "denomination": "deUSD",
-      "rateFeed": true
-    },
-    "sfastUSD_FUNDAMENTAL/USD": {
-      "source": ["usd-based"],
-      "denomination": "USD",
       "rateFeed": true
     },
     "SolvBTC": {
@@ -1766,16 +1731,6 @@
       "source": ["ethereum-evm-fetcher-curve-rate-provider"],
       "denomination": "SolvBTC",
       "rateFeed": true
-    },
-    "fBOMB": {
-      "source": [
-        "aerodrome-base-cbbtc",
-        "aerodrome-base-weth",
-        "aerodrome-base-wsteth",
-        "velodrome-optimism-wsteth"
-      ],
-      "denomination": "USD",
-      "rateFeed": false
     },
     "SUSDz_FUNDAMENTAL": {
       "source": ["ethereum-evm-fetcher-anzen"],
@@ -2628,11 +2583,6 @@
       "denomination": "S",
       "rateFeed": true
     },
-    "USDX": {
-      "source": ["pancake-swap-stable-bnb-usdt", "pancake-swap-bnb-susdx_bnb_fundamental-500"],
-      "denomination": "USD",
-      "rateFeed": false
-    },
     "sUSDX_ARB_FUNDAMENTAL": {
       "source": ["arbitrum-evm-fetcher-stables-labs"],
       "denomination": "USDX",
@@ -2779,11 +2729,6 @@
       ],
       "denomination": "USD",
       "rateFeed": false
-    },
-    "USDtb_FUNDAMENTAL": {
-      "source": ["ethereum-ethena-usdtb"],
-      "denomination": "USD",
-      "rateFeed": true
     },
     "BERA": {
       "source": [
@@ -3100,11 +3045,6 @@
         "uniswap-v3-ethereum-usdc-500",
         "curve-ethereum-gho"
       ],
-      "denomination": "USD",
-      "rateFeed": false
-    },
-    "NECT": {
-      "source": ["kodiak-berachain-honey-500", "kodiak-berachain-usdt0-500"],
       "denomination": "USD",
       "rateFeed": false
     },
@@ -6666,19 +6606,6 @@
     },
     "LBTC_FUNDAMENTAL": {
       "source": ["lombard-lbtc"],
-      "denomination": "BTC",
-      "rateFeed": true
-    },
-    "mBTC_POR": {
-      "source": ["mbtc-indexer-fetcher"],
-      "valueCapConfig": {
-        "upper": {
-          "value": 1
-        },
-        "lower": {
-          "value": 1
-        }
-      },
       "denomination": "BTC",
       "rateFeed": true
     },

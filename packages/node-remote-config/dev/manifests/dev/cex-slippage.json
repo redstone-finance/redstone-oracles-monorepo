@@ -6821,7 +6821,6 @@
         "bingx-usdt"
       ]
     },
-    "USDX": {},
     "MNW": {
       "source": ["kucoin-usdt", "gate-usdt"]
     },
