@@ -19,6 +19,7 @@ export * from "./p-throttle";
 export * from "./private-key";
 export * from "./promises";
 export * from "./retry";
+export * from "./runtime";
 export * from "./SetWithTTL";
 export * from "./simple-cache";
 export * from "./time";
