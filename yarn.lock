@@ -9704,7 +9704,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@redstone-finance/ecs-env-runner@workspace:packages/ecs-env-runner":
+"@redstone-finance/ecs-env-runner@workspace:*, @redstone-finance/ecs-env-runner@workspace:packages/ecs-env-runner":
   version: 0.0.0-use.local
   resolution: "@redstone-finance/ecs-env-runner@workspace:packages/ecs-env-runner"
   dependencies:
@@ -10094,6 +10094,7 @@ __metadata:
   dependencies:
     "@actions/core": "npm:^1.11.1"
     "@redstone-finance/cache-service": "workspace:*"
+    "@redstone-finance/ecs-env-runner": "workspace:*"
     "@redstone-finance/evm-adapters": "workspace:*"
     "@redstone-finance/evm-connector": "workspace:*"
     "@redstone-finance/hl-relayer": "workspace:*"
