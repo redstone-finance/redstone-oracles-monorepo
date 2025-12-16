@@ -3482,6 +3482,26 @@
       "source": ["usd-based"],
       "denomination": "USD",
       "rateFeed": true
+    },
+    "MSUSD_FUNDAMENTAL": {
+      "source": ["accountable-msusd"],
+      "denomination": "USD",
+      "rateFeed": true
+    },
+    "MSY_FUNDAMENTAL": {
+      "source": ["ethereum-evm-fetcher-main-st"],
+      "denomination": "USD",
+      "rateFeed": true
+    },
+    "HYPE/USDC": {
+      "source": ["non-usd-based"],
+      "denomination": "USDC",
+      "rateFeed": false
+    },
+    "gTAC_FUNDAMENTAL": {
+      "source": ["tac-evm-fetcher-gtac"],
+      "denomination": "TAC",
+      "rateFeed": true
     }
   },
   "multiPointPackages": {
