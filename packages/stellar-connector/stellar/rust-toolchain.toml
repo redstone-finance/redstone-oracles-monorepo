@@ -1,3 +1,4 @@
+# make sure this toolchain is configured in stellar-contracts-tests.yml CI workflow
 [toolchain]
 channel = "1.85.0"
 components = ["clippy", "rust-src", "rustfmt"]
