@@ -132,17 +132,15 @@ describe("MultiFeedAdapterWithoutRoundsWithReference", () => {
   });
 
   it("Should revert if both adapters revert", async () => {
-    await expect(priceFeed.latestAnswer()).to.be.revertedWithCustomError(
-      adapterWithReference,
-      "BothAdaptersFailed"
-    );
-    await expect(priceFeed.latestRoundData()).to.be.revertedWithCustomError(
-      adapterWithReference,
-      "BothAdaptersFailed"
-    );
-    await expect(
-      adapterWithReference.getLastUpdateDetails(ETH_ID_B32)
-    ).to.be.revertedWithCustomError(adapterWithReference, "BothAdaptersFailed");
+    await expect(priceFeed.latestAnswer())
+      .to.be.revertedWithCustomError(adapterWithReference, "BothAdaptersFailed")
+      .withArgs(ETH_ID_B32);
+    await expect(priceFeed.latestRoundData())
+      .to.be.revertedWithCustomError(adapterWithReference, "BothAdaptersFailed")
+      .withArgs(ETH_ID_B32);
+    await expect(adapterWithReference.getLastUpdateDetails(ETH_ID_B32))
+      .to.be.revertedWithCustomError(adapterWithReference, "BothAdaptersFailed")
+      .withArgs(ETH_ID_B32);
     expect(await priceFeed.latestRound()).to.eq(1);
   });
 

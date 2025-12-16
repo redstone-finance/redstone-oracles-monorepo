@@ -13,10 +13,13 @@ import {IMultiFeedAdapter} from "../interfaces/IMultiFeedAdapter.sol";
  *      from the main adapter. If the main adapter fails or shows unexpected deviation, the reference adapter is used instead.
  */
 abstract contract MultiFeedAdapterWithoutRoundsWithReference is IMultiFeedAdapter {
-  uint256 internal constant DEFAULT_GET_LAST_UPDATE_DETAILS_GAS_LIMIT = 2_000_000;
+  // Percentage of gasleft, used only when this is above DEFAULT_ADAPTER_GAS_LIMIT
+  // not 100% to leave gas for the rest (incl. second adapter), not 50% to avoid large unused-but-paid gas on some chains (e.g. Monad)
+  uint256 internal constant ADAPTER_GAS_PERCENT_IF_DEFAULT_CROSSED = 75;
+  uint256 internal constant DEFAULT_ADAPTER_GAS_LIMIT = 2_000_000;
 
   error UnsupportedFunctionCall();
-  error BothAdaptersFailed();
+  error BothAdaptersFailed(bytes32 dataFeedId);
 
   // This struct is used only for returning values
   struct LastUpdateDetails {
@@ -45,7 +48,7 @@ abstract contract MultiFeedAdapterWithoutRoundsWithReference is IMultiFeedAdapte
   /// @dev Important! Please check it and override if needed. This helps limit gas consumption from a potential attack by one adapter
   ///      Recommended: set to 30–40% of the maximum allowed gas per call on the chain you deploy the contract on
   function getGasLimitForGetLastUpdateDetailsCall() public view virtual returns (uint256) {
-    return _max(gasleft() * 7 / 10, DEFAULT_GET_LAST_UPDATE_DETAILS_GAS_LIMIT);
+    return _max(gasleft() * ADAPTER_GAS_PERCENT_IF_DEFAULT_CROSSED / 100, DEFAULT_ADAPTER_GAS_LIMIT);
   }
 
   function getLastUpdateDetails(bytes32 dataFeedId) public view returns (
@@ -59,7 +62,7 @@ abstract contract MultiFeedAdapterWithoutRoundsWithReference is IMultiFeedAdapte
       _safeGetLastUpdateDetails(getReferenceAdapter(), dataFeedId);
 
     // Revert if both adapters failed
-    if (!mainOk && !refOk) revert BothAdaptersFailed();
+    if (!mainOk && !refOk) revert BothAdaptersFailed(dataFeedId);
 
     // If only one succeeded, return that one immediately
     if (mainOk != refOk) {
@@ -68,17 +71,18 @@ abstract contract MultiFeedAdapterWithoutRoundsWithReference is IMultiFeedAdapte
         : (refDataTimestamp, refBlockTimestamp, refValue);
     }
 
+    // If ref is fresher - return it immediately
+    if (refDataTimestamp > mainDataTimestamp) {
+      return (refDataTimestamp, refBlockTimestamp, refValue);
+    }
+
+    // If main is fresher or same, we check the deviation and freshness of ref
     (uint256 maxAllowedDeviationBps, uint256 maxRefBlockLag) = getReferenceSwitchCriteria(dataFeedId);
     uint256 deviation = calculateDeviationBpsSafe(mainValue, refValue);
     bool isRefDataFresh = (getBlockTimestamp() - refBlockTimestamp) <= maxRefBlockLag;
 
     // Due to the freshness check we should push reference data more often than `maxRefBlockLag`
-    if (deviation > maxAllowedDeviationBps && isRefDataFresh) {
-      return (refDataTimestamp, refBlockTimestamp, refValue);
-    }
-
-    // By default we return the freshest data
-    return refDataTimestamp > mainDataTimestamp
+    return (deviation > maxAllowedDeviationBps && isRefDataFresh)
       ? (refDataTimestamp, refBlockTimestamp, refValue)
       : (mainDataTimestamp, mainBlockTimestamp, mainValue);
   }
@@ -93,7 +97,7 @@ abstract contract MultiFeedAdapterWithoutRoundsWithReference is IMultiFeedAdapte
   function calculateDeviationBpsSafe(uint256 value1, uint256 value2) public pure returns (uint256) {
     if (value1 == value2) return 0;
     (uint256 maxVal, uint256 minVal) = value1 > value2 ? (value1, value2) : (value2, value1);
-    return ((maxVal - minVal) * 10_000) / maxVal;
+    return (maxVal - minVal) * 10_000 / maxVal;
   }
 
   function _safeGetLastUpdateDetails(IMultiFeedAdapter adapter, bytes32 dataFeedId) internal view returns (bool ok, uint256 lastDataTimestamp, uint256 lastBlockTimestamp, uint256 lastValue) {
