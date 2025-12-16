@@ -1324,17 +1324,35 @@
       "rateFeed": false
     },
     "KES": {
-      "source": ["alphavantage-usd", "financialmodelingprep", "twelve-data"],
+      "source": [
+        "alphavantage-usd",
+        "financialmodelingprep",
+        "twelve-data",
+        "ws-polygon-massive-commodities",
+        "metal-price-api"
+      ],
       "denomination": "USD",
       "rateFeed": false
     },
     "PHP": {
-      "source": ["alphavantage-usd", "financialmodelingprep", "twelve-data"],
+      "source": [
+        "alphavantage-usd",
+        "financialmodelingprep",
+        "twelve-data",
+        "ws-polygon-massive-commodities",
+        "metal-price-api"
+      ],
       "denomination": "USD",
       "rateFeed": false
     },
     "COP": {
-      "source": ["alphavantage-usd-reversed", "financialmodelingprep", "twelve-data"],
+      "source": [
+        "alphavantage-usd-reversed",
+        "financialmodelingprep",
+        "twelve-data",
+        "ws-polygon-massive-commodities",
+        "metal-price-api"
+      ],
       "denomination": "USD",
       "rateFeed": false
     },
