@@ -1314,7 +1314,7 @@
       "name": "Incentiv Testnet",
       "networkId": 28802,
       "currencySymbol": "TCENT",
-      "publicRpcUrls": ["https://rpc2.testnet.incentiv.io/"],
+      "publicRpcUrls": ["https://rpc2.testnet.incentiv.io/", "https://rpc3.testnet.incentiv.io"],
       "avgBlockTimeMs": 12000,
       "multicall3": {
         "address": "0x52f530e1d42BdFeF939729C341Ed714698a993f7",
