@@ -10,7 +10,7 @@ contract MultiFeedAdapterWithoutRoundsMockGasConsuming is MultiFeedAdapterWithou
     uint256 lastBlockTimestamp,
     uint256 lastValue
   ) {
-    uint256[] memory arr = new uint256[](100_000);
+    uint256[] memory arr = new uint256[](120_000);
     return super.getLastUpdateDetails(dataFeedId);
   }
 }
