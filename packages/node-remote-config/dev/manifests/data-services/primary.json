@@ -2188,6 +2188,19 @@
       "denomination": "BTC",
       "rateFeed": true
     },
+    "mBTC_POR": {
+      "source": ["mbtc-indexer-fetcher"],
+      "valueCapConfig": {
+        "upper": {
+          "value": 1
+        },
+        "lower": {
+          "value": 1
+        }
+      },
+      "denomination": "BTC",
+      "rateFeed": true
+    },
     "HybridBTC.pendle_FUNDAMENTAL": {
       "source": ["ethereum-evm-fetcher-hybrid-bitcoin-pendle"],
       "denomination": "WBTC",
