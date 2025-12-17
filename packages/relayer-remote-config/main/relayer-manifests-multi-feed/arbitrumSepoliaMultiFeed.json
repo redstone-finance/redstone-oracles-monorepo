@@ -6,12 +6,12 @@
   "updateTriggers": {
     "timeSinceLastUpdateInMilliseconds": 0
   },
-  "adapterContract": "0xFB1267A29C0aa19daae4a483ea895862A69e4AA5",
+  "adapterContract": "0x4aF6b78d92432D32E3a635E824d3A541866f7a78",
   "adapterContractType": "multi-feed",
-  "dataServiceId": "redstone-primary-prod",
+  "dataServiceId": "redstone-primary-demo",
   "priceFeeds": {
     "FGNX": {
-      "priceFeedAddress": "0xe5867B1d421f0b52697F16e2ac437e87d66D5fbF"
+      "priceFeedAddress": "0x26FB59e5562405F42f55661f790fA1Bd2F410A3d"
     }
   }
 }
