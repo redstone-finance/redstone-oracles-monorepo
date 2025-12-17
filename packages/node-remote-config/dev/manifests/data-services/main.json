@@ -8329,7 +8329,7 @@
       "denomination": "USD",
       "rateFeed": true
     },
-    "MSY_FUNDAMENTAL": {
+    "MSY_FUNDAMENTAL/USD": {
       "source": [
         "ethereum-evm-fetcher-main-st"
       ],
@@ -8349,6 +8349,19 @@
       ],
       "denomination": "TAC",
       "rateFeed": true
+    },
+    "IR": {
+      "source": [
+        "bingx-usdt",
+        "bitget-usdt",
+        "bitmart-usdt",
+        "gate-usdt",
+        "kraken-usd",
+        "kucoin-usdt",
+        "mexc-usdt"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
     }
   }
 }
