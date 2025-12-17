@@ -11,7 +11,7 @@ import { skipIfDisabledOrNotSupported } from "./rpc-urls/common";
 const CHAINS_TO_SKIP_RPC_PRESENCE_CHECK: string[] = [
   "MegaETH Testnet",
   "MegaETH Mainnet",
-  "Stable Mainnet",
+  "Citrea Mainnet",
 ];
 
 const CHAINS_TO_SKIP_REDSTONE_MULTICALL_ADDRESS_CHECK: string[] = [
