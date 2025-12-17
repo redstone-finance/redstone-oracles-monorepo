@@ -1,4 +1,4 @@
-sinclude ./.env
+sinclude ../.env
 include ./intellect.mk
 include ./data.mk
 
