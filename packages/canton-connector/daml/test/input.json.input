@@ -1,7 +1,7 @@
 {
-  "owner": "RedStoneOracleOwner::1220b37bab0ab9c3c84219a55a168c578e92d5efad54dbc84f134926392d5da30bfe",
-  "updater": "RedStoneOracleUpdater::1220b37bab0ab9c3c84219a55a168c578e92d5efad54dbc84f134926392d5da30bfe",
-  "viewer": "RedStoneOracleViewer::1220b37bab0ab9c3c84219a55a168c578e92d5efad54dbc84f134926392d5da30bfe",
+  "owner": "RedStoneOracleOwner::12200420dd0a9f001c02c50a26f383155150a8ed108d3f253472cdf9e1f60df733de",
+  "updater": "RedStoneOracleUpdater::12200420dd0a9f001c02c50a26f383155150a8ed108d3f253472cdf9e1f60df733de",
+  "viewer": "RedStoneOracleViewer::12200420dd0a9f001c02c50a26f383155150a8ed108d3f253472cdf9e1f60df733de",
   "feedIds": [[69,84,72], [66,84,67]],
   "payload": 
     "##PAYLOAD##"
