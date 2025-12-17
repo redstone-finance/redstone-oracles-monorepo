@@ -3,6 +3,7 @@ module Deploy where
 import Daml.Script
 import DA.List
 import DA.Map as M
+import RedStoneCore
 import RedStoneAdapter
 import RedStonePriceFeed
 import Input
@@ -11,7 +12,13 @@ main : Input -> Script ()
 main input = script do
   let owner = input.owner  
   let updater = input.updater  
-  let viewer = input.viewer   
+  let viewer = input.viewer
+
+  coreId <- submit (actAs [owner] <> readAs [updater, viewer]) do
+    createCmd RedStoneCore with
+      coreId = "RedStoneAdapter-456"
+      owner = owner
+      viewers = [viewer]
 
   adapterCid <- submit (actAs [owner] <> readAs [updater, viewer]) do
     createCmd RedStoneAdapter with

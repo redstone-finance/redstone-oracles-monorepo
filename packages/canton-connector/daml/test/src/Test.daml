@@ -30,7 +30,7 @@ main input = script do
       viewers = [viewer]
       adapterId = "RedStoneAdapter-123"
       feedId = head input.feedIds
-      description = "RedSteone Feed Id"
+      description = "RedStone Feed Id"
 
   currentTime <- getTime
 

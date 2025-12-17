@@ -1,4 +1,4 @@
-sinclude ./.env
+sinclude ../.env
 
 CANTON_API=$(PARTICIPANT)/jsonapi
 ADAPTER_NAME=RedStoneAdapter-040
