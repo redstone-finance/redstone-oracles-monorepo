@@ -1,4 +1,4 @@
 {
   "extends": ["./tsconfig.json", "../../tsconfig-build-common.json"],
-  "exclude": ["node_modules", "dist", "test", "**/*spec.ts", "jest.config.ts", "scripts", "daml"]
+  "exclude": ["node_modules", "dist", "test", "**/*spec.ts", ".jest", "jest.config.ts", "daml"]
 }
