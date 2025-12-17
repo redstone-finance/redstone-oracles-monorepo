@@ -152,6 +152,17 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@apidevtools/json-schema-ref-parser@npm:^11.5.4":
+  version: 11.9.3
+  resolution: "@apidevtools/json-schema-ref-parser@npm:11.9.3"
+  dependencies:
+    "@jsdevtools/ono": "npm:^7.1.3"
+    "@types/json-schema": "npm:^7.0.15"
+    js-yaml: "npm:^4.1.0"
+  checksum: 10c0/5745813b3d964279f387677b7a903ba6634cdeaf879ff3a331a694392cbc923763f398506df190be114f2574b8b570baab3e367c2194bb35f50147ff6cf27d7a
+  languageName: node
+  linkType: hard
+
 "@apollo/client@npm:^3.13.1":
   version: 3.13.8
   resolution: "@apollo/client@npm:3.13.8"
@@ -6382,6 +6393,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@jsdevtools/ono@npm:^7.1.3":
+  version: 7.1.3
+  resolution: "@jsdevtools/ono@npm:7.1.3"
+  checksum: 10c0/a9f7e3e8e3bc315a34959934a5e2f874c423cf4eae64377d3fc9de0400ed9f36cb5fd5ebce3300d2e8f4085f557c4a8b591427a583729a87841fda46e6c216b9
+  languageName: node
+  linkType: hard
+
 "@knowyourrpc/sdk@npm:0.5.2":
   version: 0.5.2
   resolution: "@knowyourrpc/sdk@npm:0.5.2"
@@ -9392,19 +9410,14 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@redstone-finance/canton-connector@workspace:packages/canton-connector"
   dependencies:
-    "@ethersproject/bytes": "npm:^5.6.1"
-    "@ethersproject/strings": "npm:^5.7.0"
-    "@redstone-finance/protocol": "workspace:*"
     "@redstone-finance/sdk": "workspace:*"
     "@redstone-finance/utils": "workspace:*"
-    "@types/lodash": "npm:^4.14.195"
-    asn1.js: "npm:^5.4.1"
     axios: "npm:^1.13.2"
-    crypto: "npm:^1.0.1"
-    ethereum-cryptography: "npm:^3.2.0"
+    decimal.js: "npm:^10.4.3"
+    dotenv: "npm:^16.0.3"
     ethers: "npm:^5.7.2"
     lodash: "npm:^4.17.21"
-    msw: "npm:^2.4.10"
+    openapi-typescript-codegen: "npm:^0.29.0"
     secp256k1: "npm:^5.0.1"
     zod: "npm:^4.1.12"
   languageName: unknown
@@ -20315,7 +20328,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"commander@npm:12.1.0, commander@npm:^12.1.0":
+"commander@npm:12.1.0, commander@npm:^12.0.0, commander@npm:^12.1.0":
   version: 12.1.0
   resolution: "commander@npm:12.1.0"
   checksum: 10c0/6e1996680c083b3b897bfc1cfe1c58dfbcd9842fd43e1aaf8a795fbc237f65efcc860a3ef457b318e73f29a4f4a28f6403c3d653d021d960e4632dd45bde54a9
@@ -20936,13 +20949,6 @@ __metadata:
   dependencies:
     type-fest: "npm:^1.0.1"
   checksum: 10c0/16e11a3c8140398f5408b7fded35a961b9423c5dac39a60cbbd08bd3f0e07d7de130e87262adea7db03ec1a7a4b7551054e0db07ee5408b012bac5400cfc07a5
-  languageName: node
-  linkType: hard
-
-"crypto@npm:^1.0.1":
-  version: 1.0.1
-  resolution: "crypto@npm:1.0.1"
-  checksum: 10c0/fcf7dbd68ac5415b7fde7d7208fe203038e92e83e8a8fcf6e86ab4771ce3dd026d6967a990ba56b9d1c771378210814d5c90d907d3739fbd1723d552ad6c8ab8
   languageName: node
   linkType: hard
 
@@ -31942,6 +31948,21 @@ __metadata:
     is-docker: "npm:^2.1.1"
     is-wsl: "npm:^2.2.0"
   checksum: 10c0/bb6b3a58401dacdb0aad14360626faf3fb7fba4b77816b373495988b724fb48941cad80c1b65d62bb31a17609b2cd91c41a181602caea597ca80dfbcc27e84c9
+  languageName: node
+  linkType: hard
+
+"openapi-typescript-codegen@npm:^0.29.0":
+  version: 0.29.0
+  resolution: "openapi-typescript-codegen@npm:0.29.0"
+  dependencies:
+    "@apidevtools/json-schema-ref-parser": "npm:^11.5.4"
+    camelcase: "npm:^6.3.0"
+    commander: "npm:^12.0.0"
+    fs-extra: "npm:^11.2.0"
+    handlebars: "npm:^4.7.8"
+  bin:
+    openapi: bin/index.js
+  checksum: 10c0/df4a7e6bb6e8044906249b1adfeaa46b3ed0bb887e782914195d9de579dbda9a3494356f4174517dd3cd2f93f58dce7b6b246ae54d06e0fad7f224a011e0aefb
   languageName: node
   linkType: hard
 
