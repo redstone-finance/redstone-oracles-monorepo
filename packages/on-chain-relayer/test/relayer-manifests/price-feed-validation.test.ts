@@ -11,6 +11,7 @@ const INTEGRATIONS_NOT_FOR_TESTING = [
   "megaEthBoltMultiFeed", // remove once we get a publicRpc
   "megaEthReferenceMultiFeed", // remove once we get a publicRpc
   "megaEthMultiFeed", // remove once we get a publicRpc
+  "citreaMultiFeed", // remove once we get a publicRpc
   "westendHubMultiFeed", // remove it when the network is stable
 ];
 
