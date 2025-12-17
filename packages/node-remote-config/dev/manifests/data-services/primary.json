@@ -207,15 +207,7 @@
       "rateFeed": false
     },
     "FXS": {
-      "source": [
-        "binance-usdt",
-        "bingx-usdt",
-        "bitget-usdt",
-        "bitrue-usdt",
-        "kucoin-usdt",
-        "lbank-usdt",
-        "okx-usdt"
-      ],
+      "source": ["binance-usdt", "bitrue-usdt", "kucoin-usdt", "lbank-usdt", "okx-usdt"],
       "denomination": "USD",
       "rateFeed": false
     },
@@ -1270,7 +1262,7 @@
       "rateFeed": false
     },
     "MODE": {
-      "source": ["bitmart-usdt", "bybit-usdt", "gate-usdt", "mexc-usdt", "xt"],
+      "source": ["bybit-usdt", "gate-usdt", "mexc-usdt", "xt"],
       "denomination": "USD",
       "rateFeed": false
     },
@@ -1314,19 +1306,12 @@
       "rateFeed": false
     },
     "KES": {
-      "source": [
-        "alphavantage-usd",
-        "financialmodelingprep",
-        "twelve-data",
-        "ws-polygon-massive-commodities",
-        "metal-price-api"
-      ],
+      "source": ["alphavantage-usd", "financialmodelingprep", "twelve-data", "metal-price-api"],
       "denomination": "USD",
       "rateFeed": false
     },
     "PHP": {
       "source": [
-        "alphavantage-usd",
         "financialmodelingprep",
         "twelve-data",
         "ws-polygon-massive-commodities",
@@ -1340,7 +1325,6 @@
         "alphavantage-usd-reversed",
         "financialmodelingprep",
         "twelve-data",
-        "ws-polygon-massive-commodities",
         "metal-price-api"
       ],
       "denomination": "USD",
@@ -1393,7 +1377,6 @@
         "bingx-usdt",
         "bitget-usdt",
         "bitmart-usdt",
-        "bitrue-usdt",
         "bybit-usdt",
         "gate-usdt",
         "kucoin-usdt",
@@ -2326,7 +2309,6 @@
       "source": [
         "bingx-usdt",
         "bitget-usdt",
-        "bitmart-usdt",
         "bitrue-usdt",
         "bybit-usdt",
         "gate-usdt",
@@ -3354,7 +3336,6 @@
         "bitmart-usdt",
         "coinbase-usd",
         "kucoin-usdt",
-        "kraken-usd",
         "okx-usdt",
         "mexc-usdt"
       ],

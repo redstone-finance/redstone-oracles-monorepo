@@ -228,15 +228,7 @@
       ]
     },
     "FXS": {
-      "source": [
-        "binance-usdt",
-        "bingx-usdt",
-        "bitget-usdt",
-        "bitrue-usdt",
-        "kucoin-usdt",
-        "lbank-usdt",
-        "okx-usdt"
-      ]
+      "source": ["binance-usdt", "bitrue-usdt", "kucoin-usdt", "lbank-usdt", "okx-usdt"]
     },
     "DAI": {
       "source": [
