@@ -211,8 +211,6 @@
     "FXS": {
       "source": [
         "binance-usdt",
-        "bingx-usdt",
-        "bitget-usdt",
         "bitrue-usdt",
         "kucoin-usdt",
         "lbank-usdt",
@@ -1345,7 +1343,6 @@
     },
     "MODE": {
       "source": [
-        "bitmart-usdt",
         "bybit-usdt",
         "gate-usdt",
         "mexc-usdt",
@@ -1471,7 +1468,6 @@
         "bingx-usdt",
         "bitget-usdt",
         "bitmart-usdt",
-        "bitrue-usdt",
         "bybit-usdt",
         "gate-usdt",
         "kucoin-usdt",
@@ -2587,7 +2583,6 @@
       "source": [
         "bingx-usdt",
         "bitget-usdt",
-        "bitmart-usdt",
         "bitrue-usdt",
         "bybit-usdt",
         "gate-usdt",
@@ -3753,7 +3748,6 @@
         "bitmart-usdt",
         "coinbase-usd",
         "kucoin-usdt",
-        "kraken-usd",
         "okx-usdt",
         "mexc-usdt"
       ],
