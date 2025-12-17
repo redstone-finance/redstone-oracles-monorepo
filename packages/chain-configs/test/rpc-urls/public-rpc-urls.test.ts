@@ -2,7 +2,7 @@ import { RpcUrlsPerChain } from "../../scripts/read-ssm-rpc-urls";
 import { getLocalChainConfigs } from "../../src";
 import { validateNetworkRpcUrls } from "./common";
 
-const CHAINS_TO_SKIP_RPC_CHECK = ["MegaETH Testnet", "MegaETH Mainnet"];
+const CHAINS_TO_SKIP_RPC_CHECK = ["MegaETH Testnet", "MegaETH Mainnet", "Citrea Mainnet"];
 
 const validatePublicRpcUrls = () => {
   const chainConfigs = getLocalChainConfigs();
