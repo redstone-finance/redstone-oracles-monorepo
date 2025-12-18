@@ -1,5 +1,6 @@
 import { RedstoneCommon } from "@redstone-finance/utils";
 import axios from "axios";
+import "dotenv/config";
 import { readFile } from "node:fs/promises";
 import path from "node:path";
 import { z } from "zod";

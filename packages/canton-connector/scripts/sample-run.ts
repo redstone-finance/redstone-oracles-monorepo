@@ -3,7 +3,6 @@ import {
   getSignersForDataServiceId,
   sampleRun,
 } from "@redstone-finance/sdk";
-import "dotenv/config";
 import { CantonClient } from "../src";
 import { PricesCantonContractConnector } from "../src/adapters/PricesCantonContractConnector";
 import { getJsonApiUrl, keycloakTokenProvider } from "./utils";
