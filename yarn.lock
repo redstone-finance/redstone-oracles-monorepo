@@ -9942,6 +9942,7 @@ __metadata:
     "@redstone-finance/rpc-providers": "workspace:*"
     "@redstone-finance/sdk": "workspace:*"
     "@redstone-finance/utils": "workspace:*"
+    "@redstone-finance/ws": "workspace:*"
     "@ton/core": "npm:^0.56.3"
     "@ton/crypto": "npm:^3.2.0"
     "@types/exchange-rates-api": "npm:^1.0.0"
@@ -9971,7 +9972,6 @@ __metadata:
     replace-in-file: "npm:^6.3.5"
     supertest: "npm:^6.2.3"
     tweetnacl: "npm:^1.0.3"
-    ws: "npm:^8.18.3"
     zod: "npm:^4.1.12"
   languageName: unknown
   linkType: soft
@@ -11754,6 +11754,16 @@ __metadata:
     "@types/ws": "npm:^8.18.1"
     ws: "npm:^8.18.3"
     zod: "npm:^4.1.12"
+  languageName: unknown
+  linkType: soft
+
+"@redstone-finance/ws@workspace:*, @redstone-finance/ws@workspace:packages/ws":
+  version: 0.0.0-use.local
+  resolution: "@redstone-finance/ws@workspace:packages/ws"
+  dependencies:
+    "@redstone-finance/utils": "workspace:*"
+    "@types/ws": "npm:^8.18.1"
+    ws: "npm:^8.18.3"
   languageName: unknown
   linkType: soft
 
