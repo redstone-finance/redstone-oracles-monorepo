@@ -19,8 +19,8 @@ export class CoreCantonContractAdapter extends CantonContractAdapter {
   }
 
   protected override getContractFilter() {
-    return ((createArgument: { core: string }) =>
-      createArgument.core === this.adapterId) as ContractFilter;
+    return ((createArgument: { coreId: string }) =>
+      createArgument.coreId === this.adapterId) as ContractFilter;
   }
 
   async getPricesFromPayload(paramsProvider: ContractParamsProvider) {
