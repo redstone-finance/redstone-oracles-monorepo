@@ -105,7 +105,7 @@ yarn install
 
 The Stellar Development Foundation offers grants and funding to projects building on and contributing
 to the growth of both the Stellar network and Soroban, Stellar’s native smart contracts platform.
-Explore our grants and award programs [here](https://stellar.org/grants-and-funding/).
+Explore their grants and award programs [here](https://stellar.org/grants-and-funding/).
 
 ## 📄 License
 
