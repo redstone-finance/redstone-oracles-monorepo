@@ -11,7 +11,7 @@
   "adapterContractType": "stylus",
   "dataServiceId": "redstone-primary-prod",
   "priceFeeds": {
-    "ETH": "__NO_FEED__",
-    "BTC": "__NO_FEED__"
+    "ETH": {},
+    "BTC": {}
   }
 }
