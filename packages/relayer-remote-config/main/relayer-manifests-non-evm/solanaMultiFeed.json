@@ -15,13 +15,13 @@
     "BTC": {},
     "BUIDL_SOLANA_FUNDAMENTAL": {
       "updateTriggersOverrides": {
-        "deviationPercentage": 0.1,
+        "deviationPercentage": 0.01,
         "timeSinceLastUpdateInMilliseconds": 86400000
       }
     },
     "BUIDL_SOLANA_DAILY_ACCRUAL": {
       "updateTriggersOverrides": {
-        "deviationPercentage": 0.1,
+        "deviationPercentage": 0.01,
         "timeSinceLastUpdateInMilliseconds": 86400000
       }
     },
@@ -33,14 +33,14 @@
     },
     "VBILL_SOLANA_FUNDAMENTAL": {
       "updateTriggersOverrides": {
-        "deviationPercentage": 0.1,
+        "deviationPercentage": 0.01,
         "timeSinceLastUpdateInMilliseconds": 86400000
       }
     },
     "LBTC_FUNDAMENTAL": {},
     "VBILL_SOLANA_DAILY_ACCRUAL": {
       "updateTriggersOverrides": {
-        "deviationPercentage": 0.1,
+        "deviationPercentage": 0.01,
         "timeSinceLastUpdateInMilliseconds": 86400000
       }
     }
