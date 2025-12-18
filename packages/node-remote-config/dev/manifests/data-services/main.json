@@ -1885,7 +1885,13 @@
         "bitstamp-btc-reversed",
         "kraken-usdt-reversed",
         "bitget-usdt-reversed",
-        "okx-btc-reversed"
+        "okx-btc-reversed",
+        "twelve-data",
+        "metal-price-api",
+        "ws-polygon-massive-commodities",
+        "financialmodelingprep",
+        "alltick-api",
+        "ws-lmax"
       ],
       "denomination": "USD",
       "rateFeed": false
@@ -7712,6 +7718,11 @@
         "kucoin-usdt",
         "mexc-usdt"
       ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "HG": {
+      "source": ["financialmodelingprep"],
       "denomination": "USD",
       "rateFeed": false
     }
