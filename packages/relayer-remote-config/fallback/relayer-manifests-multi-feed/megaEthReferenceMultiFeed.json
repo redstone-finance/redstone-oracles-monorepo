@@ -10,6 +10,7 @@
   "adapterContract": "0x57677Bdc4F24D5c08ddCE87E06670C26a00Cac0b",
   "adapterContractType": "multi-feed",
   "dataServiceId": "redstone-primary-prod",
+  "isHidden": true,
   "priceFeeds": {
     "ETH": {},
     "BTC": {},
