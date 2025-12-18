@@ -175,6 +175,9 @@
         "deviationPercentage": 0.5,
         "timeSinceLastUpdateInMilliseconds": 86400000
       }
+    },
+    "IR": {
+      "priceFeedAddress": "0x4F4E639745CfB234B6176E96c6afd83269baF52E"
     }
   }
 }

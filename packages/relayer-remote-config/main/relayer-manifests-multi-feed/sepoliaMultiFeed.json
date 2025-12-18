@@ -26,28 +26,28 @@
     "BUIDL_FUNDAMENTAL": {
       "priceFeedAddress": "0x0d9b42a2a73Ec528759701D0B70Ccf974a327EBb",
       "updateTriggersOverrides": {
-        "deviationPercentage": 0.1,
+        "deviationPercentage": 0.01,
         "timeSinceLastUpdateInMilliseconds": 86400000
       }
     },
     "ACRED_FUNDAMENTAL": {
       "priceFeedAddress": "0x6205DCc41329fb5dE3FB01e272eD49F8771cC715",
       "updateTriggersOverrides": {
-        "deviationPercentage": 0.1,
+        "deviationPercentage": 0.01,
         "timeSinceLastUpdateInMilliseconds": 86400000
       }
     },
     "BUIDL_I_ETHEREUM_FUNDAMENTAL": {
       "priceFeedAddress": "0x5708d924Fc996EDee46962CdB6815f90639974e1",
       "updateTriggersOverrides": {
-        "deviationPercentage": 0.1,
+        "deviationPercentage": 0.01,
         "timeSinceLastUpdateInMilliseconds": 86400000
       }
     },
     "VBILL_ETHEREUM_FUNDAMENTAL": {
       "priceFeedAddress": "0x4f67Fd74cff274Ef2942223c0f3166b856410AdD",
       "updateTriggersOverrides": {
-        "deviationPercentage": 0.1,
+        "deviationPercentage": 0.01,
         "timeSinceLastUpdateInMilliseconds": 86400000
       }
     }

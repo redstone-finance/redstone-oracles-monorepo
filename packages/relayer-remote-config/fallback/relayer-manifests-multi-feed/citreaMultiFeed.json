@@ -1,0 +1,24 @@
+{
+  "chain": {
+    "name": "citrea",
+    "id": 4114
+  },
+  "updateTriggers": {
+    "deviationPercentage": 0.5,
+    "timeSinceLastUpdateInMilliseconds": 21600000
+  },
+  "adapterContract": "0x368eE51E47a594fe1E9908b48228748a30BC7ca4",
+  "adapterContractType": "multi-feed",
+  "dataServiceId": "redstone-primary-prod",
+  "priceFeeds": {
+    "BTC": {
+      "priceFeedAddress": "0xc555c100DB24dF36D406243642C169CC5A937f09"
+    },
+    "USDC": {
+      "priceFeedAddress": "0xf0DEbDAE819b354D076b0D162e399BE013A856d3"
+    },
+    "USDT": {
+      "priceFeedAddress": "0x4aF6b78d92432D32E3a635E824d3A541866f7a78"
+    }
+  }
+}
