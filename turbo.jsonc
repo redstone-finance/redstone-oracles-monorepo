@@ -30,7 +30,7 @@
       "outputs": ["typechain-types/**", "artifacts/**", "cache/**"]
     },
     "lint": {
-      "inputs": ["./**.{js,ts}", "$TURBO_ROOT$/eslint.config.ts"],
+      "inputs": ["./**.{js,ts,json}", "$TURBO_ROOT$/eslint.config.ts"],
       "dependsOn": ["setup-dev"]
     },
     "lint:fix": {
