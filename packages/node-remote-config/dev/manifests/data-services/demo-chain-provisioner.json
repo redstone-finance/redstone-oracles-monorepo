@@ -400,14 +400,6 @@
     "ezETH_FUNDAMENTAL": {
       "source": ["ethereum-evm-fetcher-renzo"]
     },
-    "SolvBTC_MERLIN": {
-      "source": ["merlinswap-merlin-btc"],
-      "valueCapConfig": {
-        "upper": {
-          "token": "BTC"
-        }
-      }
-    },
     "mwstETH-WPUNKS:20": {
       "source": [
         "curve-ethereum-wsteth",

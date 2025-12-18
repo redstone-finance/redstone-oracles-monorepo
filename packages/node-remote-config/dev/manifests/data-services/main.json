@@ -1705,12 +1705,23 @@
     "SolvBTC": {
       "source": ["pancake-swap-bnb-btcb-500", "uniswap-v3-ethereum-wbtc-500", "thena-v3-bnb-btcb"],
       "denomination": "USD",
-      "rateFeed": false
+      "rateFeed": false,
+      "valueCapConfig": {
+        "upper": {
+          "token": "BTC",
+          "multiplier": 1.01
+        }
+      }
     },
     "SolvBTC/BTC": {
       "source": ["non-usd-based"],
       "denomination": "BTC",
-      "rateFeed": false
+      "rateFeed": false,
+      "valueCapConfig": {
+        "upper": {
+          "value": 1.01
+        }
+      }
     },
     "SolvBTC_FUNDAMENTAL": {
       "source": ["ethereum-evm-fetcher-solv-rate-provider"],
