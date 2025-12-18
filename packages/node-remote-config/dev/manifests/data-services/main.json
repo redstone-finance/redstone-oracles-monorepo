@@ -8362,6 +8362,11 @@
       ],
       "denomination": "USD",
       "rateFeed": false
+    },
+    "HG": {
+      "source": [],
+      "denomination": "USD",
+      "rateFeed": false
     }
   }
 }
