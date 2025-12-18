@@ -17,7 +17,7 @@
     "BCAP_FUNDAMENTAL": {
       "priceFeedAddress": "0x0eF2418216476Ab5264821070B8c24b6B458F796",
       "updateTriggersOverrides": {
-        "deviationPercentage": 0.1,
+        "deviationPercentage": 0.01,
         "timeSinceLastUpdateInMilliseconds": 86400000
       }
     },
