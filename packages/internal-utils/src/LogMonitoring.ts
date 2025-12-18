@@ -45,8 +45,12 @@ export class LogMonitoring {
     logger.warn(this.prefixedMessage(type, message));
   }
 
-  static throw(type: LogMonitoringType, message: string): never {
-    defaultLogger.error(this.prefixedMessage(type, message));
+  static throw(
+    type: LogMonitoringType,
+    message: string,
+    logger: RedstoneLogger = defaultLogger
+  ): never {
+    logger.error(this.prefixedMessage(type, message));
     throw new Error(this.prefixedMessage(type, message));
   }
 
