@@ -1,4 +1,9 @@
-import { ContentTypes, getSerializerDeserializer } from "@redstone-finance/internal-utils";
+import {
+  ContentTypes,
+  getSerializerDeserializer,
+  LogMonitoring,
+  LogMonitoringType,
+} from "@redstone-finance/internal-utils";
 import { loggerFactory, RedstoneCommon } from "@redstone-finance/utils";
 import { auth, iot, mqtt5 } from "aws-iot-device-sdk-v2";
 import { randomUUID } from "crypto";
@@ -198,8 +203,10 @@ export class Mqtt5Client implements PubSubClient {
         await this.unsubscribe(topics).catch((e) =>
           this.logger.error(RedstoneCommon.stringifyError(e))
         );
-        throw new Error(
-          `Subscription failed reason=${subscriptionResult.reasonString} reasonCodes=${subscriptionResult.reasonCodes.join(", ")}`
+        LogMonitoring.throw(
+          LogMonitoringType.UNEXPECTED_ERROR,
+          `Subscription failed reason=${subscriptionResult.reasonString} reasonCodes=${subscriptionResult.reasonCodes.join(", ")}`,
+          this.logger
         );
       }
     }
