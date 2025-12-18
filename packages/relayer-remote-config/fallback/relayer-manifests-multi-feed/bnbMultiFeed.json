@@ -51,9 +51,6 @@
         "timeSinceLastUpdateInMilliseconds": 86400000
       }
     },
-    "USDX": {
-      "priceFeedAddress": "0x4BAD96DD1C7D541270a0C92e1D4e5f12EEEA7a57"
-    },
     "sUSDX_BNB_FUNDAMENTAL": {
       "priceFeedAddress": "0xebE443E20ADf302B59419648c4dbA0c7299cf1A2"
     },
@@ -92,7 +89,7 @@
     "VBILL_BNB_FUNDAMENTAL": {
       "priceFeedAddress": "0x84AD474c33c9cCefB1a2D8b77Bdd88bDc592f96b",
       "updateTriggersOverrides": {
-        "deviationPercentage": 0.1,
+        "deviationPercentage": 0.01,
         "timeSinceLastUpdateInMilliseconds": 86400000
       }
     },
@@ -113,7 +110,7 @@
     "VBILL_BNB_DAILY_ACCRUAL": {
       "priceFeedAddress": "0x56b13Aa2f3b9fD2a136Ab46fc570E3c549191d71",
       "updateTriggersOverrides": {
-        "deviationPercentage": 0.1,
+        "deviationPercentage": 0.01,
         "timeSinceLastUpdateInMilliseconds": 86400000
       }
     },
