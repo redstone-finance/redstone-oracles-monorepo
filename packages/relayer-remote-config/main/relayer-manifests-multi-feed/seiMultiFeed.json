@@ -17,9 +17,6 @@
     "ISEI": {
       "priceFeedAddress": "0xC49F0Dd98F38C525A7ce15E73E60675456F3a161"
     },
-    "deUSD": {
-      "priceFeedAddress": "0xBf3bA2b090188B40eF83145Be0e9F30C6ca63689"
-    },
     "ezETH": {
       "priceFeedAddress": "0x4BAD96DD1C7D541270a0C92e1D4e5f12EEEA7a57"
     },
@@ -50,12 +47,9 @@
     "ACRED_FUNDAMENTAL": {
       "priceFeedAddress": "0x692F045EFaC629a4d3C54DE4d8dDb1D225b5A976",
       "updateTriggersOverrides": {
-        "deviationPercentage": 0.1,
+        "deviationPercentage": 0.01,
         "timeSinceLastUpdateInMilliseconds": 86400000
       }
-    },
-    "sfastUSD_FUNDAMENTAL/USD": {
-      "priceFeedAddress": "0xe5867B1d421f0b52697F16e2ac437e87d66D5fbF"
     }
   }
 }
