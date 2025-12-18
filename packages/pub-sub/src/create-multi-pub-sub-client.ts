@@ -39,7 +39,7 @@ export function createMultiPubSubClient(configs: z.infer<typeof MultiPubSubEnvCo
   return new MultiPubSubClient(multiPubSubConfigs);
 }
 
-function resolvePubSubClient(config: z.infer<typeof MultiPubSubEnvConfig>) {
+export function resolvePubSubClient(config: z.infer<typeof MultiPubSubEnvConfig>) {
   switch (config.type) {
     case "sse":
       return new SSEPubSubClient(config.host);
