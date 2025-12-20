@@ -2227,7 +2227,14 @@
         "twelve-data",
         "financialmodelingprep",
         "finhub-usd-reversed",
-        "alphavantage-usd"
+        "alphavantage-usd",
+        "metal-price-api",
+        "ws-polygon-massive-commodities",
+        "alltick-api-reversed",
+        "binance-btc-reversed",
+        "binance-usdt-reversed",
+        "okx-btc-reversed",
+        "okx-usdt-reversed"
       ],
       "denomination": "USD",
       "rateFeed": false
@@ -8375,6 +8382,11 @@
       "rateFeed": false
     },
     "HG": {
+      "source": [],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "WTI": {
       "source": [],
       "denomination": "USD",
       "rateFeed": false
