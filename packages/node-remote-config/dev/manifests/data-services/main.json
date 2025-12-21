@@ -7748,6 +7748,11 @@
       "source": ["twelve-data", "alltick-api", "ws-lmax", "metal-price-api"],
       "denomination": "USD",
       "rateFeed": false
+    },
+    "XCU": {
+      "source": ["ws-lmax", "alltick-api"],
+      "denomination": "USD",
+      "rateFeed": false
     }
   }
 }
