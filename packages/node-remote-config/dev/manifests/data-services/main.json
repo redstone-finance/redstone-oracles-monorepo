@@ -8390,6 +8390,11 @@
       "source": [],
       "denomination": "USD",
       "rateFeed": false
+    },
+    "XCU": {
+      "source": [],
+      "denomination": "USD",
+      "rateFeed": false
     }
   }
 }
