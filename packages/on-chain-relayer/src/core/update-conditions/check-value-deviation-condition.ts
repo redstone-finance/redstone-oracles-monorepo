@@ -1,38 +1,12 @@
 import { consts, INumericDataPoint } from "@redstone-finance/protocol";
-import { DataPackagesResponse, getDataPackagesTimestamp } from "@redstone-finance/sdk";
+import {
+  DataPackagesResponse,
+  getDataPackagesTimestamp,
+  getDataPointsForDataFeedId,
+} from "@redstone-finance/sdk";
 import { MathUtils } from "@redstone-finance/utils";
 import { utils } from "ethers";
-
 import { RelayerConfig } from "../../config/RelayerConfig";
-
-const getDataPointsForDataFeedId = (dataPackages: DataPackagesResponse, dataFeedId: string) =>
-  Object.values(dataPackages)
-    .flat()
-    .flatMap((dataPackage) => dataPackage!.dataPackage.dataPoints)
-    .filter((dataPoint) => dataPoint.dataFeedId === dataFeedId);
-
-const verifyDataPackagesAreDisjoint = (dataPackages: DataPackagesResponse) => {
-  const dataPackagesPerDataFeedId: Partial<Record<string, string>> = {};
-  const warnings = [];
-  for (const dataPackage of Object.values(dataPackages).flat()) {
-    for (const dataPoint of dataPackage!.dataPackage.dataPoints) {
-      const dataFeedId = dataPoint.dataFeedId;
-      const dataPackageName = dataPackage!.dataPackage.dataPackageId;
-
-      if (
-        !dataPackagesPerDataFeedId[dataFeedId] ||
-        dataPackagesPerDataFeedId[dataFeedId] === dataPackageName
-      ) {
-        dataPackagesPerDataFeedId[dataFeedId] = dataPackageName;
-      } else {
-        warnings.push(
-          `Potential misconfiguration detected! Data feed ${dataFeedId} included in two packages: ${dataPackageName} and ${dataPackagesPerDataFeedId[dataFeedId]}`
-        );
-      }
-    }
-  }
-  return warnings;
-};
 
 export const checkValueDeviationCondition = (
   dataFeedId: string,
@@ -44,8 +18,6 @@ export const checkValueDeviationCondition = (
 
   let maxDeviation = 0;
   let shouldUpdatePrices = false;
-  const warnings = verifyDataPackagesAreDisjoint(dataPackages);
-  logTrace.addWarnings(warnings);
   const timestampMilliseconds = getDataPackagesTimestamp(dataPackages, dataFeedId);
   const dataPoints = getDataPointsForDataFeedId(dataPackages, dataFeedId);
   for (const dataPoint of dataPoints) {

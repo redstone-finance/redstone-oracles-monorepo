@@ -10,6 +10,7 @@ import {
   extractSignedDataPackagesForFeedId,
   requestDataPackages,
 } from "../request-data-packages";
+import { filterRetainingPackagesForDataFeedIds } from "../request-data-packages-common";
 import { convertDataPackagesResponse } from "../request-redstone-payload";
 
 export const DEFAULT_COMPONENT_NAME = "data-packages-wrapper";
@@ -113,7 +114,12 @@ export class ContractParamsProvider {
       this.cache?.update(dataPackagesResponse, this.requestParams);
     }
 
-    return dataPackagesResponse;
+    return this.overrideRequestParamsPackagesIds
+      ? filterRetainingPackagesForDataFeedIds(
+          dataPackagesResponse,
+          this.overrideRequestParamsPackagesIds
+        )
+      : dataPackagesResponse;
   }
 
   protected async performRequestingDataPackages() {

@@ -1,7 +1,7 @@
 import { loggerFactory } from "@redstone-finance/utils";
 import _ from "lodash";
 import { DataPackagesRequestParams } from "./request-data-packages";
-import type { DataPackagesResponse } from "./request-data-packages-common";
+import { DataPackagesResponse, getResponseFeedIds } from "./request-data-packages-common";
 
 export class DataPackagesResponseCache {
   private readonly logger = loggerFactory("data-packages-response-cache");
@@ -64,8 +64,8 @@ export class DataPackagesResponseCache {
     );
 
     const intersection = _.intersection(
-      Object.keys(this.response),
-      Object.keys(dataPackagesResponse)
+      getResponseFeedIds(this.response),
+      getResponseFeedIds(dataPackagesResponse)
     );
     const areDataPackageIdsDifferent = Object.keys(intersection).length === 0;
 
@@ -96,7 +96,7 @@ export class DataPackagesResponseCache {
   }
 
   isEmpty() {
-    return !this.response || Object.keys(this.response).length === 0;
+    return !this.response || getResponseFeedIds(this.response).length === 0;
   }
 
   invalidate() {
@@ -122,7 +122,7 @@ export class DataPackagesResponseCache {
     const isRequestConformingToTheCachedValue = isConforming(
       this.requestParams,
       requestParams,
-      Object.keys(this.response)
+      getResponseFeedIds(this.response)
     );
     if (!isRequestConformingToTheCachedValue) {
       this.logger.debug("The request params are not conforming to the cached value", {
@@ -203,7 +203,7 @@ function filterDataPackages(
   currentResponse: DataPackagesResponse,
   dataPackageIdsToInclude: string[]
 ): DataPackagesResponse {
-  if (new Set(dataPackageIdsToInclude).isSupersetOf(new Set(Object.keys(currentResponse)))) {
+  if (new Set(dataPackageIdsToInclude).isSupersetOf(new Set(getResponseFeedIds(currentResponse)))) {
     return currentResponse;
   }
 
