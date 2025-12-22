@@ -1,9 +1,14 @@
 import { getChainConfigByNetworkId, getLocalChainConfigs } from "@redstone-finance/chain-configs";
-import { ManifestReading } from "@redstone-finance/on-chain-relayer-common";
-import { MegaProviderBuilder } from "@redstone-finance/rpc-providers";
+import {
+  getPriceFeedContractCreator,
+  getProviderWithRpcUrls,
+} from "@redstone-finance/chain-orchestrator";
+import {
+  getRelayerManifestFeedsWithAddresses,
+  ManifestReading,
+} from "@redstone-finance/on-chain-relayer-common";
 import { isEvmNetworkId, NetworkId, RedstoneCommon } from "@redstone-finance/utils";
 import { expect } from "chai";
-import { Bytes, Contract, ContractFunction, providers, utils } from "ethers";
 import { describe, test } from "mocha";
 
 const INTEGRATIONS_NOT_FOR_TESTING = [
@@ -13,13 +18,13 @@ const INTEGRATIONS_NOT_FOR_TESTING = [
   "megaEthMultiFeed", // remove once we get a publicRpc
   "citreaMultiFeed", // remove once we get a publicRpc
   "westendHubMultiFeed", // remove it when the network is stable
+
+  "stylusSepoliaMultiFeed", // non supported in stylus
 ];
 
-const ABI = ["function getDataFeedId() public view returns (bytes32)"];
-
-const CONNECTION_INFO = {
-  throttleLimit: 1,
-  timeout: 5_000,
+const readers: { [p: NetworkId]: string } = {
+  "stellar/2": "GB4EESHACOD6UXIALAVJMZGKK7XG7EYI5TJXSNSQDD7T4TRSAAN76XWB", // any existing account - zrodelko here
+  "stellar/1": "GB4EESHACOD6UXIALAVJMZGKK7XG7EYI5TJXSNSQDD7T4TRSAAN76XWB", // any existing account - zrodelko here
 };
 
 export const RETRY_CONFIG: Omit<RedstoneCommon.RetryConfig, "fn"> = {
@@ -27,56 +32,33 @@ export const RETRY_CONFIG: Omit<RedstoneCommon.RetryConfig, "fn"> = {
   waitBetweenMs: 1000,
 };
 
+function getDisabledNetworks() {
+  return ["radix/1", "radix/2", ...(process.env.DISABLED_NETWORKS ?? ([] as NetworkId[]))];
+}
+
 function getChainConfig(networkId: NetworkId) {
   return getChainConfigByNetworkId(getLocalChainConfigs(), networkId);
 }
-
-/**
- * Since we're relying on an agreement provider,
- * there’s a chance one provider might be one(or more) blocks ahead of the others.
- * When awaiting the transaction, we wait only for the fastest provider, and then we verify the state in the next iteration.
- * If we're working with an outdated state based on the median block number,
- * we’ll trigger another transaction update to stay "current" - it is better to trigger extra transaction, then delay whole iteration
- */
-const getProvider = (networkId: NetworkId): providers.Provider => {
-  const { publicRpcUrls, name } = getChainConfig(networkId);
-  if (!isEvmNetworkId(networkId)) {
-    throw new Error("This test supports only evm chains.");
-  }
-
-  return new MegaProviderBuilder({
-    rpcUrls: publicRpcUrls,
-    network: {
-      chainId: networkId,
-      name,
-    },
-    ...CONNECTION_INFO,
-  })
-    .agreement(
-      {
-        allProvidersOperationTimeout: 30_000,
-        singleProviderOperationTimeout: 5_000,
-        ignoreAgreementOnInsufficientResponses: true,
-        minimalProvidersCount: 2,
-        requireExplicitBlockTag: false,
-      },
-      publicRpcUrls.length !== 1
-    )
-    .build();
-};
 
 const checkDataFeedIdInContract = async (
   dataFeedId: string,
   address: string,
   networkId: NetworkId
 ) => {
-  const contract = new Contract(address, ABI, getProvider(networkId));
+  const { publicRpcUrls } = getChainConfig(networkId);
+  const priceFeedCreator = await getPriceFeedContractCreator(networkId, "dev", readers[networkId], {
+    provider: isEvmNetworkId(networkId)
+      ? await getProviderWithRpcUrls(networkId, publicRpcUrls)
+      : undefined,
+    rpcUrls: publicRpcUrls,
+  });
+  const contract = await priceFeedCreator(address);
+
   try {
-    const dataFeedIdFromContractAsBytes = await RedstoneCommon.retry({
-      fn: () => (contract.getDataFeedId as ContractFunction<Bytes>)(),
+    const dataFeedIdFromContract = await RedstoneCommon.retry({
+      fn: () => contract.getDataFeedId(),
       ...RETRY_CONFIG,
     })();
-    const dataFeedIdFromContract = utils.parseBytes32String(dataFeedIdFromContractAsBytes);
     if (dataFeedId === dataFeedIdFromContract) {
       return true;
     } else {
@@ -95,9 +77,9 @@ const checkDataFeedIdInContract = async (
 
 if (process.env.RUN_NONDETERMINISTIC_TESTS) {
   describe("Price feed contract should return the same dataFeedId as in relayer manifest", () => {
-    const disabledNetworks = (process.env.DISABLED_NETWORKS ?? []) as NetworkId[];
-    const classicManifests = ManifestReading.readClassicManifests();
-    for (const [name, manifest] of Object.entries(classicManifests)) {
+    const disabledNetworks = getDisabledNetworks();
+    const manifests = ManifestReading.readAllManifestsAsCommon();
+    for (const [name, manifest] of Object.entries(manifests)) {
       if (INTEGRATIONS_NOT_FOR_TESTING.includes(name)) {
         console.log(`Integration ${name} is disabled`);
         continue;
@@ -107,31 +89,11 @@ if (process.env.RUN_NONDETERMINISTIC_TESTS) {
           console.log(`Network ${manifest.chain.id} is disabled`);
           return;
         }
-        for (const [dataFeedId, priceFeedAddress] of Object.entries(manifest.priceFeeds)) {
-          if (priceFeedAddress !== "__NO_FEED__") {
-            expect(await checkDataFeedIdInContract(dataFeedId, priceFeedAddress, manifest.chain.id))
-              .to.be.true;
-          }
-        }
-      });
-    }
+        const { manifestFeedsWithAddresses } = getRelayerManifestFeedsWithAddresses(manifest);
 
-    const multiFeedManifests = ManifestReading.readMultiFeedManifests();
-    for (const [name, manifest] of Object.entries(multiFeedManifests)) {
-      if (INTEGRATIONS_NOT_FOR_TESTING.includes(name)) {
-        console.log(`Integration ${name} is disabled`);
-        continue;
-      }
-      test(name, async () => {
-        if (disabledNetworks.includes(manifest.chain.id)) {
-          console.log(`Network ${manifest.chain.id} is disabled`);
-          return;
-        }
-        for (const [dataFeedId, { priceFeedAddress }] of Object.entries(manifest.priceFeeds)) {
-          if (priceFeedAddress) {
-            expect(await checkDataFeedIdInContract(dataFeedId, priceFeedAddress, manifest.chain.id))
-              .to.be.true;
-          }
+        for (const [dataFeedId, priceFeedAddress] of manifestFeedsWithAddresses) {
+          expect(await checkDataFeedIdInContract(dataFeedId, priceFeedAddress, manifest.chain.id))
+            .to.be.true;
         }
       });
     }

@@ -1,4 +1,5 @@
 import { IPriceFeedContract } from "@redstone-finance/sdk";
+import { utils } from "ethers";
 import { PriceFeedWithRounds } from "../../../typechain-types";
 
 export class EvmPriceFeedContract implements IPriceFeedContract {
@@ -6,6 +7,12 @@ export class EvmPriceFeedContract implements IPriceFeedContract {
 
   async latestAnswer(blockTag?: number) {
     return (await this.contract.latestAnswer({ blockTag })).toBigInt();
+  }
+
+  async getDataFeedId(blockTag?: number) {
+    const hexFeedId = await this.contract.getDataFeedId({ blockTag });
+
+    return utils.parseBytes32String(hexFeedId);
   }
 
   async decimals(blockTag?: number) {
