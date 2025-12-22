@@ -12,6 +12,10 @@ export class NonEvmPriceFeedContract implements IPriceFeedContract {
     return new NonEvmPriceFeedContract(await connector.getAdapter());
   }
 
+  async getDataFeedId(blockTag?: number) {
+    return await this.adapter.getDataFeedId?.(blockTag);
+  }
+
   async decimals(blockTag?: number) {
     return await this.adapter.decimals?.(blockTag);
   }
