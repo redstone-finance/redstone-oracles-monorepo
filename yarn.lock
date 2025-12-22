@@ -11381,6 +11381,20 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@redstone-finance/pub-sub-archiver@workspace:packages/pub-sub-archiver":
+  version: 0.0.0-use.local
+  resolution: "@redstone-finance/pub-sub-archiver@workspace:packages/pub-sub-archiver"
+  dependencies:
+    "@redstone-finance/internal-utils": "workspace:*"
+    "@redstone-finance/protocol": "workspace:*"
+    "@redstone-finance/pub-sub": "workspace:*"
+    "@redstone-finance/sdk": "workspace:*"
+    "@redstone-finance/utils": "workspace:*"
+    dotenv: "npm:^16.0.3"
+    zod: "npm:^4.1.12"
+  languageName: unknown
+  linkType: soft
+
 "@redstone-finance/pub-sub@workspace:*, @redstone-finance/pub-sub@workspace:packages/pub-sub":
   version: 0.0.0-use.local
   resolution: "@redstone-finance/pub-sub@workspace:packages/pub-sub"
