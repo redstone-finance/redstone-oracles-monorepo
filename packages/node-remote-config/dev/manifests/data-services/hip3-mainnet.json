@@ -129,8 +129,9 @@
         "alltick-stocks-api-deferred",
         "databento",
         "financialmodelingprep-deferred",
-        "polygon-deferred",
-        "twelve-data-stocks-deferred"
+        "ws-polygon-massive",
+        "ws-twelve-data",
+        "ws-dx-feed"
       ],
       "deviationCheck": {
         "deviationWithRecentValues": {
@@ -279,8 +280,9 @@
         "alltick-stocks-api-deferred",
         "databento",
         "financialmodelingprep-deferred",
-        "polygon-deferred",
-        "twelve-data-stocks-deferred"
+        "ws-polygon-massive",
+        "ws-twelve-data",
+        "ws-dx-feed"
       ],
       "deviationCheck": {
         "deviationWithRecentValues": {
@@ -429,8 +431,9 @@
         "alltick-stocks-api-deferred",
         "databento",
         "financialmodelingprep-deferred",
-        "polygon-deferred",
-        "twelve-data-stocks-deferred"
+        "ws-polygon-massive",
+        "ws-twelve-data",
+        "ws-dx-feed"
       ],
       "deviationCheck": {
         "deviationWithRecentValues": {
@@ -579,8 +582,9 @@
         "alltick-stocks-api-deferred",
         "databento",
         "financialmodelingprep-deferred",
-        "polygon-deferred",
-        "twelve-data-stocks-deferred"
+        "ws-polygon-massive",
+        "ws-twelve-data",
+        "ws-dx-feed"
       ],
       "deviationCheck": {
         "deviationWithRecentValues": {
@@ -729,8 +733,9 @@
         "alltick-stocks-api-deferred",
         "databento",
         "financialmodelingprep-deferred",
-        "polygon-deferred",
-        "twelve-data-stocks-deferred"
+        "ws-polygon-massive",
+        "ws-twelve-data",
+        "ws-dx-feed"
       ],
       "deviationCheck": {
         "deviationWithRecentValues": {
@@ -920,7 +925,6 @@
       "source": [
         "alltick-api-deferred",
         "financialmodelingprep-deferred",
-        "metal-price-api-deferred",
         "ws-lmax",
         "ws-polygon-massive-commodities"
       ],
@@ -1105,6 +1109,94 @@
       "rateFeed": false
     },
     "OPEN_INTEREST_flx:SILVER": {
+      "source": ["hyperliquid-mainnet-perps-ws-fetcher"],
+      "broadcasters": [],
+      "denomination": "USD",
+      "rateFeed": false,
+      "deviationCheck": {
+        "deviationWithRecentValues": {
+          "maxPercent": 1000000000,
+          "maxDelayMilliseconds": 1000
+        }
+      }
+    },
+    "EUR": {
+      "source": [
+        "alltick-api-deferred",
+        "ws-polygon-massive-commodities",
+        "binance-usdt",
+        "kraken_deferred-usd",
+        "financialmodelingprep",
+        "ws-lmax"
+      ],
+      "deviationCheck": {
+        "deviationWithRecentValues": {
+          "maxPercent": 100,
+          "maxDelayMilliseconds": 120000
+        }
+      },
+      "denomination": "USD",
+      "rateFeed": false,
+      "broadcasters": ["influx"]
+    },
+    "ORACLE_flx:EUR": {
+      "source": ["hyperliquid-mainnet-perps-ws-fetcher", "hydromancer-mainnet-perps-ws-fetcher"],
+      "customWeightsForWeightedMedian": {
+        "hyperliquid-mainnet-perps-ws-fetcher": 10,
+        "hydromancer-mainnet-perps-ws-fetcher": 1
+      },
+      "priceAggregator": "constantWeightMedian",
+      "broadcasters": ["influx"],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "MARK_flx:EUR": {
+      "source": ["hyperliquid-mainnet-perps-ws-fetcher", "hydromancer-mainnet-perps-ws-fetcher"],
+      "customWeightsForWeightedMedian": {
+        "hyperliquid-mainnet-perps-ws-fetcher": 10,
+        "hydromancer-mainnet-perps-ws-fetcher": 1
+      },
+      "priceAggregator": "constantWeightMedian",
+      "broadcasters": ["influx"],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "MID_flx:EUR": {
+      "source": ["hyperliquid-mainnet-perps-ws-fetcher", "hydromancer-mainnet-perps-ws-fetcher"],
+      "customWeightsForWeightedMedian": {
+        "hyperliquid-mainnet-perps-ws-fetcher": 10,
+        "hydromancer-mainnet-perps-ws-fetcher": 1
+      },
+      "priceAggregator": "constantWeightMedian",
+      "broadcasters": ["influx"],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "flx:EUR_MARK_0": {
+      "source": ["hip3-felix-fx-mainnet-fetcher"],
+      "broadcasters": ["hyperliquid-hip3"],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "flx:EUR_MARK_1": {
+      "source": ["hip3-felix-fx-mainnet-fetcher"],
+      "broadcasters": ["hyperliquid-hip3"],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "flx:EUR_EXT": {
+      "source": ["hip3-felix-fx-mainnet-fetcher"],
+      "broadcasters": ["hyperliquid-hip3"],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "flx:EUR": {
+      "source": ["hip3-felix-fx-mainnet-fetcher"],
+      "broadcasters": ["hyperliquid-hip3"],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "OPEN_INTEREST_flx:EUR": {
       "source": ["hyperliquid-mainnet-perps-ws-fetcher"],
       "broadcasters": [],
       "denomination": "USD",
