@@ -70,8 +70,7 @@
           "maxPercent": 5,
           "maxDelayMilliseconds": 120000
         }
-      },
-      "skipBroadcasting": true
+      }
     },
     "BNB": {
       "source": [
