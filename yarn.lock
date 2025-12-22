@@ -10888,6 +10888,19 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@redstone-finance/lambda-pyth-dot-network-influx-synchronizer@workspace:packages/lambda/lambda-pyth-dot-network-influx-synchronizer":
+  version: 0.0.0-use.local
+  resolution: "@redstone-finance/lambda-pyth-dot-network-influx-synchronizer@workspace:packages/lambda/lambda-pyth-dot-network-influx-synchronizer"
+  dependencies:
+    "@influxdata/influxdb-client": "npm:^1.35.0"
+    "@redstone-finance/internal-utils": "workspace:*"
+    "@redstone-finance/utils": "workspace:*"
+    axios: "npm:^1.13.2"
+    dotenv: "npm:^16.0.3"
+    lodash: "npm:^4.17.21"
+  languageName: unknown
+  linkType: soft
+
 "@redstone-finance/lambda-pyth-influx-synchronizer@workspace:packages/lambda/lambda-pyth-influx-synchronizer":
   version: 0.0.0-use.local
   resolution: "@redstone-finance/lambda-pyth-influx-synchronizer@workspace:packages/lambda/lambda-pyth-influx-synchronizer"
