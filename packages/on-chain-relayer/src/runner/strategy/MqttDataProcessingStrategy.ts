@@ -3,6 +3,7 @@ import {
   DataPackagesResponse,
   DataPackagesResponseCache,
   getDataPackagesTimestamp,
+  getResponseFeedIds,
 } from "@redstone-finance/sdk";
 import { OperationQueue, RedstoneCommon, RedstoneLogger } from "@redstone-finance/utils";
 
@@ -38,7 +39,7 @@ export abstract class MqttDataProcessingStrategy<C, Q = string> {
 
   // eslint-disable-next-line @typescript-eslint/class-methods-use-this -- add reason here, please
   protected makeKey(dataPackagesResponse: DataPackagesResponse) {
-    const dataPackageIds = Object.keys(dataPackagesResponse);
+    const dataPackageIds = getResponseFeedIds(dataPackagesResponse);
     dataPackageIds.sort();
 
     return dataPackageIds.toString() as Q;
