@@ -1,3 +1,5 @@
+import { DataPackagesResponse, getDataPackagesWithFeedIds } from "@redstone-finance/sdk";
+import _ from "lodash";
 import { RelayerConfig } from "../../config/RelayerConfig";
 import { makeDataPackagesRequestParams } from "../../core/make-data-packages-request-params";
 import { IterationArgs, MultiFeedUpdatePricesArgs, ShouldUpdateContext } from "../../types";
@@ -14,7 +16,7 @@ export const getMultiFeedIterationArgs = async (
   const updateRequestParams = makeDataPackagesRequestParams(
     relayerConfig,
     context.uniqueSignerThreshold,
-    dataFeedsToUpdate
+    relayerConfig.dataPackagesNames ?? dataFeedsToUpdate
   );
 
   const iterationArgs = {
@@ -30,7 +32,7 @@ export const getMultiFeedIterationArgs = async (
   };
 
   if (iterationArgs.shouldUpdatePrices) {
-    addExtraFeedsAndMessagesToUpdateParams(relayerConfig, iterationArgs);
+    addExtraFeedsAndMessagesToUpdateParams(relayerConfig, iterationArgs, context.dataPackages);
   }
 
   return iterationArgs;
@@ -38,7 +40,8 @@ export const getMultiFeedIterationArgs = async (
 
 function addExtraFeedsAndMessagesToUpdateParams(
   relayerConfig: RelayerConfig,
-  iterationArgs: IterationArgs
+  iterationArgs: IterationArgs,
+  dataPackages: DataPackagesResponse
 ) {
   const messages = [];
 
@@ -53,6 +56,16 @@ function addExtraFeedsAndMessagesToUpdateParams(
       iterationArgs.args as MultiFeedUpdatePricesArgs
     );
     messages.push({ message });
+
+    const remainingFeedsMessage = addRemainingMultiDataPackageDataFeeds(
+      dataPackages,
+      relayerConfig.dataFeeds,
+      iterationArgs.args.dataFeedsToUpdate
+    );
+
+    if (remainingFeedsMessage) {
+      messages.push(remainingFeedsMessage);
+    }
   }
 
   messages.push({
@@ -61,4 +74,31 @@ function addExtraFeedsAndMessagesToUpdateParams(
   });
 
   iterationArgs.additionalUpdateMessages = messages;
+}
+
+function addRemainingMultiDataPackageDataFeeds(
+  dataPackages: DataPackagesResponse,
+  allowedDataFeedIds: string[],
+  dataFeedsToUpdate: string[]
+) {
+  const packagesWithFeeds = Object.values(getDataPackagesWithFeedIds(dataPackages, true)).filter(
+    ({ feedIds }) => feedIds.some((feedId) => dataFeedsToUpdate.includes(feedId))
+  );
+
+  const multiPackageAdditionalFeedIds = _.uniq(
+    packagesWithFeeds.flatMap(({ feedIds }) =>
+      feedIds.filter((feedId) => allowedDataFeedIds.includes(feedId))
+    )
+  ).filter((feedId) => !dataFeedsToUpdate.includes(feedId));
+
+  if (!multiPackageAdditionalFeedIds.length) {
+    return undefined;
+  }
+
+  dataFeedsToUpdate.push(...multiPackageAdditionalFeedIds);
+
+  return {
+    message: "MultiPackage remaining feeds added: ",
+    args: multiPackageAdditionalFeedIds,
+  };
 }

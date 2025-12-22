@@ -1,4 +1,8 @@
-import { DataPackagesResponse, DataPackagesResponseCache } from "@redstone-finance/sdk";
+import {
+  DataPackagesResponse,
+  DataPackagesResponseCache,
+  getResponseFeedIds,
+} from "@redstone-finance/sdk";
 import { SetOperationQueue } from "@redstone-finance/utils";
 import { BaseMqttDataProcessingStrategy } from "./BaseMqttProcessingStrategy";
 
@@ -11,6 +15,6 @@ export class OptimizedMqttDataProcessingStrategy<C> extends BaseMqttDataProcessi
   }
 
   protected override makeKey(dataPackagesResponse: DataPackagesResponse) {
-    return new Set(Object.keys(dataPackagesResponse));
+    return new Set(getResponseFeedIds(dataPackagesResponse));
   }
 }
