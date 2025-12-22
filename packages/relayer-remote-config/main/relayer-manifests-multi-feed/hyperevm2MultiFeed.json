@@ -37,6 +37,9 @@
     },
     "wNLP_FUNDAMENTAL": {
       "priceFeedAddress": "0xFd7457B6f09990243Bf8E4C6C956EB909C0E6417"
+    },
+    "HYPE": {
+      "priceFeedAddress": "0x40EA33eA76Fbe35e9FB422eDd175b8c8D84A63Cc"
     }
   }
 }
