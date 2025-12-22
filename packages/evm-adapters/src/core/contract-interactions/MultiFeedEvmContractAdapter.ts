@@ -1,5 +1,9 @@
 import { DataPackagesWrapper } from "@redstone-finance/evm-connector";
-import { ContractParamsProvider, UpdatePricesOptions } from "@redstone-finance/sdk";
+import {
+  ContractParamsProvider,
+  getResponseFeedIds,
+  UpdatePricesOptions,
+} from "@redstone-finance/sdk";
 import { loggerFactory, Tx } from "@redstone-finance/utils";
 import { utils } from "ethers";
 import _ from "lodash";
@@ -22,22 +26,20 @@ export class MultiFeedEvmContractAdapter extends MultiFeedEvmContractAdapterBase
     metadataTimestamp: number
   ): Promise<Tx.TxDeliveryCall> {
     const dataFeedsToUpdate = paramsProvider.getDataFeedIds();
-    let dataFeedsAsBytes32 = dataFeedsToUpdate.map(utils.formatBytes32String);
     const dataPackages = await paramsProvider.requestDataPackages();
-    const dataPackagesFeeds = Object.keys(dataPackages);
-    const diff = _.difference(dataFeedsToUpdate, dataPackagesFeeds);
+    const dataPackagesFeeds = getResponseFeedIds(dataPackages).filter((feedId) =>
+      dataFeedsToUpdate.includes(feedId)
+    );
+    const missingFeeds = _.difference(dataFeedsToUpdate, dataPackagesFeeds);
 
-    //TODO: Multifeed won't work with medium data packages.
-    if (diff.length) {
+    if (missingFeeds.length) {
       logger.log(
-        `Missing some feeds in the response: [${diff.toString()}], will update only for [${dataPackagesFeeds.toString()}]`,
+        `Missing some feeds in the response: [${missingFeeds.toString()}], will update only for [${dataPackagesFeeds.toString()}]`,
         {
           dataFeedsToUpdate,
           dataPackagesFeeds,
         }
       );
-
-      dataFeedsAsBytes32 = dataPackagesFeeds.map(utils.formatBytes32String);
     } else {
       logger.info(
         `All feeds available in the response, will update for [${dataPackagesFeeds.toString()}]`,
@@ -48,6 +50,7 @@ export class MultiFeedEvmContractAdapter extends MultiFeedEvmContractAdapterBase
       );
     }
 
+    const dataFeedsAsBytes32 = dataPackagesFeeds.map(utils.formatBytes32String);
     const dataPackagesWrapper = new DataPackagesWrapper<MultiFeedAdapterWithoutRounds>(
       dataPackages
     );
