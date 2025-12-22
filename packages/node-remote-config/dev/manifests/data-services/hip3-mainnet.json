@@ -1124,8 +1124,6 @@
       "source": [
         "alltick-api-deferred",
         "ws-polygon-massive-commodities",
-        "binance-usdt",
-        "kraken_deferred-usd",
         "financialmodelingprep",
         "ws-lmax"
       ],
