@@ -2,7 +2,6 @@ import { MathUtils, RedstoneCommon } from "@redstone-finance/utils";
 import { resolveDataServiceUrls } from "./data-services-urls";
 import { type DataServiceIds, getSignersForDataServiceId } from "./oracle-registry";
 import { requestDataPackages } from "./request-data-packages";
-import { isMultiPointDataPackageId } from "./request-data-packages-common";
 
 export interface GetDataFeedValuesInput {
   aggregationAlgorithm?: "median" | "min" | "max"; // median by default
@@ -34,7 +33,7 @@ export const getDataFeedValues = async (
   const result: GetDataFeedValuesOutput = {};
 
   for (const [dataPackageId, dataPackages] of Object.entries(packages)) {
-    if (isMultiPointDataPackageId(dataPackageId)) {
+    if (RedstoneCommon.isMultiPointDataPackageId(dataPackageId)) {
       continue;
     }
     const dataFeedId = dataPackageId;
