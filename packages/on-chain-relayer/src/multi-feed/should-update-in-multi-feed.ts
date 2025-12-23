@@ -1,4 +1,4 @@
-import { getResponseFeedIds, verifyDataPackagesAreDisjoint } from "@redstone-finance/sdk";
+import { getResponseFeedIds } from "@redstone-finance/sdk";
 import { RedstoneCommon } from "@redstone-finance/utils";
 import { RelayerConfig } from "../config/RelayerConfig";
 import { canIgnoreMissingFeeds } from "../core/make-data-packages-request-params";
@@ -19,8 +19,6 @@ export const shouldUpdateInMultiFeed = async (
   const missingDataFeedIds = [];
   const responseFeedIds = getResponseFeedIds(context.dataPackages);
 
-  const warnings = verifyDataPackagesAreDisjoint(context.dataPackages);
-  warningMessages.push(...warnings.map((message) => ({ message })));
   for (const [dataFeedId, updateConditions] of Object.entries(config.updateConditions)) {
     if (!responseFeedIds.includes(dataFeedId)) {
       missingDataFeedIds.push(dataFeedId);

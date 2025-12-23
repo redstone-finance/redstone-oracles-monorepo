@@ -96,3 +96,6 @@ export function jitter(minSeconds: number, maxSeconds: number): number {
 function unescapeString(s: string) {
   return _.unescape(s).replace(/\\"/g, '"').replace(/\\\\/g, "\\");
 }
+
+export const isMultiPointDataPackageId = (dataPackageId: string) =>
+  dataPackageId.startsWith("__") && dataPackageId.endsWith("__");
