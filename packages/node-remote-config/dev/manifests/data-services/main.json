@@ -7753,6 +7753,16 @@
       "source": ["ws-lmax", "alltick-api"],
       "denomination": "USD",
       "rateFeed": false
+    },
+    "XNG": {
+      "source": ["ws-lmax"],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "NG": {
+      "source": ["twelve-data", "alltick-api", "financialmodelingprep"],
+      "denomination": "USD",
+      "rateFeed": false
     }
   }
 }
