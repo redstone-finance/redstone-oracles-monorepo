@@ -18,9 +18,6 @@
         "timeSinceLastUpdateInMilliseconds": 86400000
       }
     },
-    "pzETH/ETH": {
-      "priceFeedAddress": "0x0B6c5C37215B27C944497D2d7011cBD366b0870A"
-    },
     "pzETH_FUNDAMENTAL": {
       "priceFeedAddress": "0x0d7697a15bce933cE8671Ba3D60ab062dA216C60"
     },
