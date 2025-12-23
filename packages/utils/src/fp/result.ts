@@ -1,7 +1,7 @@
 import { stringify } from "../common";
 import { stringifyError } from "../common/errors";
 
-export type Result<T, E> = Success<T> | Err<E>;
+export type Result<T, E = unknown> = Success<T> | Err<E>;
 
 export type Success<T> = { success: true } & { ok: T };
 export type Err<E> = { success: false } & { err: E };
@@ -22,12 +22,18 @@ export function err<E>(err: E): Err<E> {
   return { success: false, err };
 }
 
-function mapUnsafe<T, E, U>(res: Result<T, E>, fn: (val: T) => U): Result<U, E> {
-  if (isErr(res)) {
-    return res;
+export function mapUnsafe<T, E, U>(res: Result<T, E>, fn: (val: T) => U): Result<U, E>;
+export function mapUnsafe<T, U>(fn: (val: T) => U): <E>(res: Result<T, E>) => Result<U, E>;
+export function mapUnsafe<T, E, U>(resOrFn: Result<T, E> | ((val: T) => U), fn?: (val: T) => U) {
+  if (typeof resOrFn === "function") {
+    return <E>(res: Result<T, E>) => mapUnsafe(res, resOrFn);
   }
 
-  return ok(fn(res.ok));
+  if (isErr(resOrFn)) {
+    return resOrFn;
+  }
+
+  return ok(fn!(resOrFn.ok));
 }
 
 export function map<T, E, U>(res: Result<T, E>, fn: (val: T) => U): Result<U, unknown> {
@@ -49,12 +55,18 @@ export function mapStringifyError<T, E, U>(
   return mapErr(result, stringifyError);
 }
 
-export function mapErr<T, E, F>(res: Result<T, E>, fn: (err: E) => F): Result<T, F> {
-  if (isOk(res)) {
-    return res;
+export function mapErr<T, E, F>(res: Result<T, E>, fn: (err: E) => F): Result<T, F>;
+export function mapErr<E, F>(fn: (err: E) => F): <T>(res: Result<T, E>) => Result<T, F>;
+export function mapErr<T, E, F>(resOrFn: Result<T, E> | ((err: E) => F), fn?: (err: E) => F) {
+  if (typeof resOrFn === "function") {
+    return <T>(res: Result<T, E>) => mapErr(res, resOrFn);
   }
 
-  return err(fn(res.err));
+  if (isOk(resOrFn)) {
+    return resOrFn;
+  }
+
+  return err(fn!(resOrFn.err));
 }
 
 async function mapAsyncUnsafe<T, E, U>(
@@ -156,7 +168,7 @@ export function unwrapOr<T, E>(result: Result<T, E>, defaultValue: T): T {
   return isOk(result) ? result.ok : defaultValue;
 }
 
-export function unwrapOrElse<T, E>(result: Result<T, E>, fn: (err: E) => T): T {
+export function unwrapOrElse<T, E, RT>(result: Result<T, E>, fn: (err: E) => RT): T | RT {
   return isOk(result) ? result.ok : fn(result.err);
 }
 
