@@ -7758,6 +7758,11 @@
       "source": ["twelve-data", "alltick-api", "financialmodelingprep"],
       "denomination": "USD",
       "rateFeed": false
+    },
+    "SP500": {
+      "source": ["ws-lmax", "alltick-api", "financialmodelingprep"],
+      "denomination": "USD",
+      "rateFeed": false
     }
   }
 }
