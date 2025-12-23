@@ -1,4 +1,4 @@
-import { NetworkIdSchema } from "@redstone-finance/utils";
+import { NetworkIdSchema, RedstoneCommon } from "@redstone-finance/utils";
 import { z } from "zod";
 
 export const PRICE_FEEDS = "price-feeds";
@@ -38,7 +38,11 @@ export const CommonManifestSchema = z.object({
   dataServiceId: z.string(),
   isHidden: z.boolean().optional(),
   priceFeeds: z.record(z.string(), z.any()),
-  dataPackagesNames: z.array(z.string()).optional(),
+  dataPackagesNames: z
+    .array(z.string().refine(RedstoneCommon.isMultiPointDataPackageId), {
+      message: "dataPackagesNames should contain only multi-point data package names",
+    })
+    .optional(),
 });
 
 export const CommonManifestSchemaStrict = CommonManifestSchema.extend({
