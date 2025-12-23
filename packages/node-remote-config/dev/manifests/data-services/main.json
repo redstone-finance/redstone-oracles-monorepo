@@ -8398,6 +8398,11 @@
       "source": [],
       "denomination": "USD",
       "rateFeed": false
+    },
+    "SP500": {
+      "source": [],
+      "denomination": "USD",
+      "rateFeed": false
     }
   }
 }
