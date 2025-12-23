@@ -34,7 +34,9 @@ export function makeDataPackagesRequestParams(
   return {
     dataServiceId,
     uniqueSignersCount: uniqueSignerThreshold,
-    dataPackagesIds: dataFeedIds ?? dataPackagesNames ?? dataFeeds,
+    dataPackagesIds: dataPackagesNames?.length
+      ? [...dataPackagesNames, ...(dataFeedIds ?? dataFeeds)]
+      : (dataFeedIds ?? dataFeeds),
     urls: cacheServiceUrls,
     maxTimestampDeviationMS: RedstoneCommon.minToMs(3),
     authorizedSigners: signers,

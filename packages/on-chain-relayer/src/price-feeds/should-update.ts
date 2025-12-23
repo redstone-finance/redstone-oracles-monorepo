@@ -1,4 +1,3 @@
-import { verifyDataPackagesAreDisjoint } from "@redstone-finance/sdk";
 import { RelayerConfig } from "../config/RelayerConfig";
 import { checkConditionByName } from "../core/update-conditions/check-condition-by-name";
 import { checkIfDataPackageTimestampIsNewer } from "../core/update-conditions/data-packages-timestamp";
@@ -10,8 +9,6 @@ export const shouldUpdate = async (
   config: RelayerConfig
 ): Promise<ConditionCheckResponse> => {
   const warningMessages: IterationArgsMessage[] = [];
-  const warnings = verifyDataPackagesAreDisjoint(context.dataPackages);
-  warningMessages.push(...warnings.map((message) => ({ message })));
   let shouldUpdatePrices = false;
   for (const dataFeedId of config.dataFeeds) {
     for (const conditionName of config.updateConditions[dataFeedId]) {

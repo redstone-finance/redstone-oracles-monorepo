@@ -16,7 +16,7 @@ export const getMultiFeedIterationArgs = async (
   const updateRequestParams = makeDataPackagesRequestParams(
     relayerConfig,
     context.uniqueSignerThreshold,
-    relayerConfig.dataPackagesNames ?? dataFeedsToUpdate
+    dataFeedsToUpdate
   );
 
   const iterationArgs = {
