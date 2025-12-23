@@ -8395,6 +8395,16 @@
       "source": [],
       "denomination": "USD",
       "rateFeed": false
+    },
+    "XNG": {
+      "source": [],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "NG": {
+      "source": [],
+      "denomination": "USD",
+      "rateFeed": false
     }
   }
 }
