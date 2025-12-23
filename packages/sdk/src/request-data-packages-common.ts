@@ -12,9 +12,6 @@ export interface DataPackagesResponse {
 export const getResponseTimestamp = (response: DataPackagesResponse) =>
   Object.values(response).at(0)?.at(0)?.dataPackage.timestampMilliseconds ?? 0;
 
-export const isMultiPointDataPackageId = (dataPackageId: string) =>
-  dataPackageId.startsWith("__") && dataPackageId.endsWith("__");
-
 export function getPackageDataFeedIds(packages: SignedDataPackage[]) {
   return _.uniq(packages.flatMap((dp) => dp.dataPackage.dataPoints.map((dp) => dp.dataFeedId)));
 }
@@ -27,7 +24,7 @@ export function getDataPackagesWithFeedIds(
     .filter(
       ([packageId, dataPackage]) =>
         RedstoneCommon.isDefined(dataPackage) &&
-        (!includeMultiPointPackagesOnly || isMultiPointDataPackageId(packageId))
+        (!includeMultiPointPackagesOnly || RedstoneCommon.isMultiPointDataPackageId(packageId))
     )
     .map(([packageId, dataPackage]) => [
       packageId,
@@ -43,16 +40,47 @@ export function filterRetainingPackagesForDataFeedIds(
   response: DataPackagesResponse,
   requestedFeedIds: string[]
 ) {
-  const value = Object.entries(getDataPackagesWithFeedIds(response))
-    .filter(([_, { feedIds }]) => feedIds.some((feedId) => requestedFeedIds.includes(feedId)))
-    .map(([packageId, { dataPackage }]) => [packageId, dataPackage]);
+  const retainingResponse = Object.entries(getDataPackagesWithFeedIds(response))
+    .toSorted(
+      (a, b) =>
+        Number(RedstoneCommon.isMultiPointDataPackageId(b[0])) -
+        Number(RedstoneCommon.isMultiPointDataPackageId(a[0]))
+    )
+    .reduce(
+      (acc, entry) =>
+        entry[1].feedIds.some((feedId) => acc.remainingFeedIds.includes(feedId))
+          ? {
+              remainingFeedIds: acc.remainingFeedIds.filter(
+                (feedId) => !entry[1].feedIds.includes(feedId)
+              ),
+              entries: [...acc.entries, entry],
+            }
+          : acc,
+      {
+        remainingFeedIds: [...requestedFeedIds],
+        entries: [] as [
+          string,
+          {
+            dataPackage: SignedDataPackage[];
+            feedIds: string[];
+          },
+        ][],
+      }
+    );
 
-  return Object.fromEntries(value) as DataPackagesResponse;
+  const entries = retainingResponse.entries.map(([packageId, { dataPackage }]) => [
+    packageId,
+    dataPackage,
+  ]);
+
+  return Object.fromEntries(entries) as DataPackagesResponse;
 }
 
 export function getResponseFeedIds(response: DataPackagesResponse) {
   const dataPackageIds = Object.keys(response);
-  const containsMultiDataPointPackages = dataPackageIds.find(isMultiPointDataPackageId);
+  const containsMultiDataPointPackages = dataPackageIds.find(
+    RedstoneCommon.isMultiPointDataPackageId
+  );
   if (!containsMultiDataPointPackages) {
     return dataPackageIds;
   }
@@ -63,29 +91,6 @@ export function getResponseFeedIds(response: DataPackagesResponse) {
 
   return _.uniq(allFeedIds);
 }
-
-export const verifyDataPackagesAreDisjoint = (dataPackages: DataPackagesResponse) => {
-  const dataPackagesPerDataFeedId: Partial<Record<string, string>> = {};
-  const warnings = new Set<string>();
-  for (const dataPackage of Object.values(dataPackages).flat()) {
-    for (const dataPoint of dataPackage!.dataPackage.dataPoints) {
-      const dataFeedId = dataPoint.dataFeedId;
-      const dataPackageName = dataPackage!.dataPackage.dataPackageId;
-
-      if (
-        !dataPackagesPerDataFeedId[dataFeedId] ||
-        dataPackagesPerDataFeedId[dataFeedId] === dataPackageName
-      ) {
-        dataPackagesPerDataFeedId[dataFeedId] = dataPackageName;
-      } else {
-        warnings.add(
-          `⛔Potential misconfiguration detected! Data feed ${dataFeedId} included in two packages: ${dataPackageName} and ${dataPackagesPerDataFeedId[dataFeedId]}⛔`
-        );
-      }
-    }
-  }
-  return Array.from(warnings);
-};
 
 export const getDataPointsForDataFeedId = (
   dataPackages: DataPackagesResponse,
