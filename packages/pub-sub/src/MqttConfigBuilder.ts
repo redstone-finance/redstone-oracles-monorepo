@@ -4,7 +4,7 @@ export class MqttConfigBuilder {
   protected config: mqtt5.Mqtt5ClientConfig;
 
   private constructor(hostName: string, port: number) {
-    this.config = { hostName, port: port };
+    this.config = { hostName, port };
   }
 
   static newDirectMqttBuilderWithoutAuth(hostName: string, port: number): MqttConfigBuilder {
