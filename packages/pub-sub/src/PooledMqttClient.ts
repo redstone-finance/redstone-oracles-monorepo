@@ -9,8 +9,8 @@ import { PubSubClientFactory } from "./PubSubClientFactory";
 const MAX_REQ_PER_SECOND_PER_CONNECTION = 100;
 
 /**
- * Using subscribe and unsubscribe together in Promise.all doesn't give any performance boost cause of mutex
- * connectionsPerTopic - only have sense in context of subscribe, depends on number of messages received
+ * Using subscribe and unsubscribe together in Promise.all doesn't give any performance boost because of the mutex
+ * connectionsPerTopic - only makes sense in the context of subscribe depending on number of messages received
  */
 export class PooledMqttClient implements PubSubClient {
   clientToTopics: [PubSubClient, string[]][] = [];
@@ -131,7 +131,8 @@ export class PooledMqttClient implements PubSubClient {
 
     if (freeClients.length === 0) {
       this.clientToTopics.push([await this.pubSubClientFactory(), []]);
-      return await this._subscribe(topicToAdd, onMessage);
+      await this._subscribe(topicToAdd, onMessage);
+      return;
     }
 
     for (const [client, subscribedTopics] of freeClients) {
@@ -147,7 +148,7 @@ export class PooledMqttClient implements PubSubClient {
     }
 
     if (topicToAdd.length !== 0) {
-      return await this._subscribe(topicToAdd, onMessage);
+      await this._subscribe(topicToAdd, onMessage);
     }
   }
 }
