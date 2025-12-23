@@ -51,30 +51,30 @@ export class Mqtt5Client implements PubSubClient {
     mqttClient.start();
 
     mqttClient.on("error", (error) => {
-      client.logger.error("error:", error);
+      client.logger.error("error:", client.getUniqueName(), error);
     });
 
     mqttClient.on("connectionFailure", (event) => {
-      client.logger.error("Connection failure:", event);
+      client.logger.error("Connection failure:", client.getUniqueName(), event);
     });
 
     mqttClient.on("attemptingConnect", () => {
-      client.logger.info("Attempting to connect...");
+      client.logger.info("Attempting to connect...", client.getUniqueName());
     });
 
     mqttClient.on("disconnection", (event) => {
-      client.logger.error("Disconnected:", event);
+      client.logger.error("Disconnected:", client.getUniqueName(), event);
     });
 
     client._mqtt = await new Promise((resolve, reject) => {
       const timeoutId = setTimeout(() => {
         mqttClient.stop();
-        reject(new Error("Connection timeout"));
+        reject(new Error(`Connection timeout ${client.getUniqueName()}`));
       }, client.config.connectionTimeoutMs);
 
       mqttClient.on("connectionSuccess", () => {
         clearTimeout(timeoutId);
-        client.logger.info("Connection successful");
+        client.logger.info("Connection successful", client.getUniqueName());
         resolve(mqttClient);
       });
     });
@@ -83,7 +83,8 @@ export class Mqtt5Client implements PubSubClient {
   }
 
   private static createMqttBuilderWithAuthorization(config: MqttPubSubClientConfig) {
-    switch (config.authorization.type) {
+    const authType = config.authorization.type;
+    switch (authType) {
       case "AWSSigV4": {
         const credentialsProvider = auth.AwsCredentialsProvider.newDefault();
         return iot.AwsIotMqtt5ClientConfigBuilder.newWebsocketMqttBuilderWithSigv4Auth(
@@ -102,6 +103,8 @@ export class Mqtt5Client implements PubSubClient {
           config.endpoint,
           config.authorization.port
         );
+      default:
+        return RedstoneCommon.throwUnsupportedParamError(authType);
     }
   }
 
@@ -188,8 +191,9 @@ export class Mqtt5Client implements PubSubClient {
 
   private async subscribeToTopics(topics: string[]) {
     for (let i = 0; i < topics.length; i += TOPICS_BATCH_LIMIT) {
+      const topicsBatch = topics.slice(i, i + TOPICS_BATCH_LIMIT);
       const subscriptionResult = await this._mqtt.subscribe({
-        subscriptions: topics.slice(i, i + TOPICS_BATCH_LIMIT).map((topic) => ({
+        subscriptions: topicsBatch.map((topic) => ({
           topicFilter: topic,
           qos: this.config.qos,
         })),
@@ -205,7 +209,7 @@ export class Mqtt5Client implements PubSubClient {
         );
         LogMonitoring.throw(
           LogMonitoringType.UNEXPECTED_ERROR,
-          `Subscription failed reason=${subscriptionResult.reasonString} reasonCodes=${subscriptionResult.reasonCodes.join(", ")}`,
+          `Subscription failed client=${this.getUniqueName()} topics=${topicsBatch.join(",")} reason=${subscriptionResult.reasonString} reasonCodes=${subscriptionResult.reasonCodes.join(", ")}`,
           this.logger
         );
       }
