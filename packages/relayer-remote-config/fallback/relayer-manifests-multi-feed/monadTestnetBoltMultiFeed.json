@@ -6,24 +6,21 @@
   "updateTriggers": {
     "timeSinceLastUpdateInMilliseconds": 0
   },
-  "adapterContract": "0x98DC6E90D4c2f212ed9d124aD2aFBa4833268633",
+  "adapterContract": "0xa2B0067002dF61df015C11b2cF0be4f34fC41Cf8",
   "adapterContractType": "multi-feed",
   "dataServiceId": "redstone-primary-demo",
   "priceFeeds": {
     "ETH": {
-      "priceFeedAddress": "0xb9D0073aCb296719C26a8BF156e4b599174fe1d5"
+      "priceFeedAddress": "0x0B57D841B12458595B12188F36b75A8Ff263aE2c"
     },
     "BTC": {
-      "priceFeedAddress": "0xE23eCA12D7D2ED3829499556F6dCE06642AFd990"
-    },
-    "USDC": {
-      "priceFeedAddress": "0x31a36CdF4465ba61ce78F5CDbA26FDF8ec361803"
-    },
-    "USDT": {
-      "priceFeedAddress": "0xe8D9FbC10e00ecc9f0694617075fDAF657a76FB2"
+      "priceFeedAddress": "0xB9F0bd0733C4aEcd175186a09C0e160D28D12397"
     },
     "SOL": {
-      "priceFeedAddress": "0x6D4B25c672b950623b8482F2D41E686875dDf729"
+      "priceFeedAddress": "0xa06cDBa718D7d6a59fB36663ee604E406EC3A28E"
+    },
+    "MON": {
+      "priceFeedAddress": "0x92B14C0531A1f8fC0F85712FaF97d7302B4128C8"
     }
   },
   "authorizedSigners": [
