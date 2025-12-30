@@ -1,7 +1,10 @@
 import { time } from "@nomicfoundation/hardhat-network-helpers";
 import { WrapperBuilder } from "@redstone-finance/evm-connector";
 import { DataPackage, INumericDataPoint, NumericDataPoint } from "@redstone-finance/protocol";
-import { HARDHAT_CHAIN_ID } from "@redstone-finance/rpc-providers";
+import {
+  HARDHAT_CHAIN_ID,
+  RewardsPerBlockAggregationAlgorithm,
+} from "@redstone-finance/rpc-providers";
 import {
   calculateHistoricalPackagesTimestamp,
   ContractParamsProvider,
@@ -62,6 +65,7 @@ export const mockConfig = (overrideMockConfig: Record<string, unknown> = {}) => 
     dataServiceId: "redstone-main-demo",
     dataFeeds: ["ETH", "BTC"],
     gasLimit: 1000000,
+    rewardsPerBlockAggregationAlgorithm: RewardsPerBlockAggregationAlgorithm.Max,
     updateConditions: {
       ETH: ["time", "value-deviation"],
       BTC: ["time", "value-deviation"],

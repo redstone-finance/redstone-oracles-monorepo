@@ -3,10 +3,16 @@ import {
   getChainConfigByNetworkId,
   getLocalChainConfigs,
 } from "@redstone-finance/chain-configs";
+import { MathUtils, RedstoneCommon } from "@redstone-finance/utils";
 import { providers } from "ethers";
 import { getProviderNetworkId } from "../common";
 import { GasEstimator } from "./GasEstimator";
-import { unsafeBnToNumber, type Eip1559Fee, type TxDeliveryOptsValidated } from "./common";
+import {
+  RewardsPerBlockAggregationAlgorithm,
+  unsafeBnToNumber,
+  type Eip1559Fee,
+  type TxDeliveryOptsValidated,
+} from "./common";
 
 type FeeHistoryResponse = { reward: string[] };
 
@@ -62,27 +68,29 @@ export class Eip1559GasEstimator implements GasEstimator<Eip1559Fee> {
       .flat()
       .map((hex: string) => parseInt(hex, 16));
 
-    const maxRewardsPerBlockForPercentile = Math.max(...rewardsPerBlockForPercentile);
+    const aggregatedRewardsPerBlock = this.aggregateRewards(rewardsPerBlockForPercentile);
 
     this.opts.logger(
-      `Fetched rewardsPerBlockForPercentile: ${rewardsPerBlockForPercentile.toString()}, having max=${maxRewardsPerBlockForPercentile}`
+      `Fetched rewardsPerBlockForPercentile: ${rewardsPerBlockForPercentile.toString()}, having ${this.opts.rewardsPerBlockAggregationAlgorithm}=${aggregatedRewardsPerBlock}`
     );
 
-    if (maxRewardsPerBlockForPercentile > (this.opts.minMaxRewardsPerBlockForPercentile ?? 0)) {
-      return maxRewardsPerBlockForPercentile;
+    if (aggregatedRewardsPerBlock > (this.opts.minAggregatedRewardsPerBlockForPercentile ?? 0)) {
+      return aggregatedRewardsPerBlock;
+    } else {
+      this.opts.logger(
+        `aggregatedRewardsPerBlock=${aggregatedRewardsPerBlock} is below threshold=${this.opts.minAggregatedRewardsPerBlockForPercentile ?? 0}`
+      );
     }
 
     if (chainConfig.fallbackToEthMaxPriorityFeePerGas) {
       const ethMaxPriorityFeePerGasResult = Number(
         await provider.send("eth_maxPriorityFeePerGas", [])
       );
-      this.opts.logger(
-        `Fallback to eth_maxPriorityFeePerGas=${ethMaxPriorityFeePerGasResult}, because maxRewardsPerBlockForPercentile=${maxRewardsPerBlockForPercentile}`
-      );
+      this.opts.logger(`Fallback to eth_maxPriorityFeePerGas=${ethMaxPriorityFeePerGasResult}`);
       return ethMaxPriorityFeePerGasResult;
     }
 
-    return maxRewardsPerBlockForPercentile;
+    return aggregatedRewardsPerBlock;
   }
 
   private async getFeeHistory(
@@ -96,6 +104,20 @@ export class Eip1559GasEstimator implements GasEstimator<Eip1559Fee> {
       this.opts.newestBlockForFeeHistory,
       [this.opts.percentileOfPriorityFee],
     ])) as FeeHistoryResponse;
+  }
+
+  private aggregateRewards(rewards: number[]): number {
+    switch (this.opts.rewardsPerBlockAggregationAlgorithm) {
+      case RewardsPerBlockAggregationAlgorithm.Max:
+        return Math.max(...rewards);
+      case RewardsPerBlockAggregationAlgorithm.Median:
+        return Math.ceil(MathUtils.getMedian(rewards));
+      default: {
+        return RedstoneCommon.throwUnsupportedParamError(
+          this.opts.rewardsPerBlockAggregationAlgorithm
+        );
+      }
+    }
   }
 
   scaleFees(currentFees: Eip1559Fee, attempt: number): Eip1559Fee {

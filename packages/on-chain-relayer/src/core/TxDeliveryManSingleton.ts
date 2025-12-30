@@ -27,7 +27,9 @@ export const getTxDeliveryMan = (
     minTxDeliveryTimeMs: relayerConfig.minTxDeliveryTimeMs,
     splitWaitingForTxRetries: relayerConfig.splitWaitingForTxRetries,
     getSingleNonceTimeoutMs: relayerConfig.getSingleNonceTimeoutMs,
-    minMaxRewardsPerBlockForPercentile: relayerConfig.minMaxRewardsPerBlockForPercentile,
+    minAggregatedRewardsPerBlockForPercentile:
+      relayerConfig.minAggregatedRewardsPerBlockForPercentile,
+    rewardsPerBlockAggregationAlgorithm: relayerConfig.rewardsPerBlockAggregationAlgorithm,
   });
   return deliveryMan;
 };

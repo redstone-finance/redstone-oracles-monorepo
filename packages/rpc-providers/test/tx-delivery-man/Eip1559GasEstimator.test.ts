@@ -1,6 +1,15 @@
 import { expect } from "chai";
-import { DEFAULT_TX_DELIVERY_OPTS, TxDeliveryOpts, type Eip1559Fee } from "../../src";
+import { BigNumber } from "ethers";
+import hardhat from "hardhat";
+import Sinon from "sinon";
+import {
+  DEFAULT_TX_DELIVERY_OPTS,
+  RewardsPerBlockAggregationAlgorithm,
+  TxDeliveryOpts,
+  type Eip1559Fee,
+} from "../../src";
 import { Eip1559GasEstimator } from "../../src/tx-delivery-man/Eip1559GasEstimator";
+import { HardhatProviderMocker } from "../helpers";
 
 describe("Eip1559GasEstimator", () => {
   describe("scaleFees", () => {
@@ -73,6 +82,59 @@ describe("Eip1559GasEstimator", () => {
       ).to.deep.equal({
         maxFeePerGas: 0.1e9,
         maxPriorityFeePerGas: 0,
+      });
+    });
+  });
+
+  describe("getFees", () => {
+    it("should use max aggregation", async () => {
+      const opts = {
+        ...DEFAULT_TX_DELIVERY_OPTS,
+        logger: () => undefined,
+      } as unknown as Required<TxDeliveryOpts>;
+      const estimator = new Eip1559GasEstimator(opts);
+
+      const providerMock = new HardhatProviderMocker(hardhat.ethers.provider, {
+        getBlock: Sinon.stub().resolves({ baseFeePerGas: BigNumber.from(100) }),
+        send: Sinon.stub().callsFake((method: string) => {
+          if (method === "eth_feeHistory") {
+            return { reward: [["0x1", "0x5"], ["0x3"]] };
+          }
+          throw new Error(`Unexpected method: ${method}`);
+        }),
+      });
+
+      const fees = await estimator.getFees(providerMock.provider);
+
+      expect(fees).to.deep.equal({
+        maxFeePerGas: 200 + 5,
+        maxPriorityFeePerGas: 5,
+      });
+    });
+
+    it("should use median aggregation", async () => {
+      const opts = {
+        ...DEFAULT_TX_DELIVERY_OPTS,
+        rewardsPerBlockAggregationAlgorithm: RewardsPerBlockAggregationAlgorithm.Median,
+        logger: () => undefined,
+      } as unknown as Required<TxDeliveryOpts>;
+      const estimator = new Eip1559GasEstimator(opts);
+
+      const providerMock = new HardhatProviderMocker(hardhat.ethers.provider, {
+        getBlock: Sinon.stub().resolves({ baseFeePerGas: BigNumber.from(100) }),
+        send: Sinon.stub().callsFake((method: string) => {
+          if (method === "eth_feeHistory") {
+            return { reward: [["0x1", "0x5"], ["0x3"]] };
+          }
+          throw new Error(`Unexpected method: ${method}`);
+        }),
+      });
+
+      const fees = await estimator.getFees(providerMock.provider);
+
+      expect(fees).to.deep.equal({
+        maxFeePerGas: 200 + 3,
+        maxPriorityFeePerGas: 3,
       });
     });
   });
