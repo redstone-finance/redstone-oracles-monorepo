@@ -128,6 +128,9 @@ const config: HardhatUserConfig = {
     etherlinkShadownetTestnet: {
       url: "https://node.shadownet.etherlink.com",
     },
+    morph: {
+      url: "https://rpc-quicknode.morphl2.io",
+    },
   },
 };
 
