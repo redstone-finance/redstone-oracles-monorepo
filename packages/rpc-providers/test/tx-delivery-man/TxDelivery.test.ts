@@ -7,7 +7,12 @@ import { BigNumber, BytesLike, Transaction, ethers } from "ethers";
 import hardhat from "hardhat";
 import _ from "lodash";
 import Sinon from "sinon";
-import { TxDelivery, TxDeliveryOpts, convertToTxDeliveryCall } from "../../src";
+import {
+  RewardsPerBlockAggregationAlgorithm,
+  TxDelivery,
+  TxDeliveryOpts,
+  convertToTxDeliveryCall,
+} from "../../src";
 import { TxNonceCoordinator } from "../../src/tx-delivery-man/TxNonceCoordinator";
 import { Counter } from "../../typechain-types";
 import { HardhatProviderMocker, deployCounter } from "../helpers";
@@ -51,15 +56,18 @@ describe("TxDelivery", () => {
       providerMocker.reset();
     });
 
-    const createTxDelivery = (opts: TxDeliveryOpts) => {
+    const createTxDelivery = (opts: Partial<TxDeliveryOpts> = {}) => {
       const provider = counter.provider as ethers.providers.JsonRpcProvider;
       const txNonceCoordinator = new TxNonceCoordinator([provider], counter.signer, {});
 
       return new TxDelivery(
         {
+          expectedDeliveryTimeMs: 20,
+          gasLimit: 210000,
           maxAttempts: 10,
           multiplier: 1.125,
           gasLimitMultiplier: 1.1,
+          rewardsPerBlockAggregationAlgorithm: RewardsPerBlockAggregationAlgorithm.Max,
           ...opts,
         },
         counter.signer,
@@ -69,10 +77,7 @@ describe("TxDelivery", () => {
     };
 
     it("should deliver transaction", async () => {
-      const delivery = createTxDelivery({
-        expectedDeliveryTimeMs: 20,
-        gasLimit: 210000,
-      });
+      const delivery = createTxDelivery();
 
       await assertTxWillBeDelivered(delivery, counter);
     });
@@ -90,6 +95,7 @@ describe("TxDelivery", () => {
           gasLimitMultiplier: 1.1,
           expectedDeliveryTimeMs: 20,
           gasLimit: 210000,
+          rewardsPerBlockAggregationAlgorithm: RewardsPerBlockAggregationAlgorithm.Max,
         },
         counter.signer,
         provider,
@@ -116,6 +122,7 @@ describe("TxDelivery", () => {
           gasLimitMultiplier: 1.1,
           expectedDeliveryTimeMs: 20,
           gasLimit: 210000,
+          rewardsPerBlockAggregationAlgorithm: RewardsPerBlockAggregationAlgorithm.Max,
         },
         counter.signer,
         provider,
@@ -143,10 +150,7 @@ describe("TxDelivery", () => {
     });
 
     it("should increase maxGas if transaction failed", async () => {
-      const delivery = createTxDelivery({
-        expectedDeliveryTimeMs: 20,
-        gasLimit: 210000,
-      });
+      const delivery = createTxDelivery();
 
       const sendStub = Sinon.stub();
       sendStub.onFirstCall().rejects(underpricedError);
@@ -188,10 +192,7 @@ describe("TxDelivery", () => {
         getTransactionCount: getNonceStub,
       });
 
-      const delivery = createTxDelivery({
-        expectedDeliveryTimeMs: 20,
-        gasLimit: 210000,
-      });
+      const delivery = createTxDelivery();
 
       await assertTxWillBeDelivered(delivery, counter);
 
@@ -200,8 +201,6 @@ describe("TxDelivery", () => {
 
     it("should error after max attempts", async () => {
       const delivery = createTxDelivery({
-        expectedDeliveryTimeMs: 20,
-        gasLimit: 210000,
         maxAttempts: 2,
       });
 
@@ -217,8 +216,8 @@ describe("TxDelivery", () => {
 
     it("should increase gas limit for 2d prices", async () => {
       const delivery = createTxDelivery({
-        expectedDeliveryTimeMs: 20,
         twoDimensionalFees: true,
+        gasLimit: undefined,
       });
 
       const sendStub = Sinon.stub();
@@ -245,8 +244,6 @@ describe("TxDelivery", () => {
 
     it("should work with auction model", async () => {
       const delivery = createTxDelivery({
-        expectedDeliveryTimeMs: 20,
-        gasLimit: 210000,
         isAuctionModel: true,
       });
 

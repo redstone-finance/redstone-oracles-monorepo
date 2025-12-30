@@ -5,11 +5,12 @@ import { providers, utils } from "ethers";
 import _ from "lodash";
 import { EthersError, isEthersError } from "../common";
 import { AuctionModelGasEstimator } from "./AuctionModelGasEstimator";
-import type {
-  DeliveryManTx,
-  FeeStructure,
-  TxDeliveryOpts,
-  TxDeliveryOptsValidated,
+import {
+  RewardsPerBlockAggregationAlgorithm,
+  type DeliveryManTx,
+  type FeeStructure,
+  type TxDeliveryOpts,
+  type TxDeliveryOptsValidated,
 } from "./common";
 import { CHAIN_ID_TO_GAS_ORACLE } from "./CustomGasOracles";
 import { Eip1559GasEstimator } from "./Eip1559GasEstimator";
@@ -40,6 +41,7 @@ export const DEFAULT_TX_DELIVERY_OPTS = {
   multiplier: 1.4, //  1.4 ** 5 => 5.24 max scaler
   gasLimitMultiplier: 1.2,
   percentileOfPriorityFee: 50,
+  rewardsPerBlockAggregationAlgorithm: RewardsPerBlockAggregationAlgorithm.Max,
   twoDimensionalFees: false,
   gasOracleTimeout: 5_000,
   forceDisableCustomGasOracle: false,
