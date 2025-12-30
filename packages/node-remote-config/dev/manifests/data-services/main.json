@@ -7133,21 +7133,24 @@
         "ethereum-evm-fetcher-turtle-tac"
       ],
       "denomination": "ETH",
-      "rateFeed": true
+      "rateFeed": true,
+      "isHidden": true
     },
     "tacUSD_FUNDAMENTAL": {
       "source": [
         "ethereum-evm-fetcher-turtle-tac"
       ],
       "denomination": "USDC",
-      "rateFeed": true
+      "rateFeed": true,
+      "isHidden": true
     },
     "tacBTC_FUNDAMENTAL": {
       "source": [
         "ethereum-evm-fetcher-turtle-tac"
       ],
       "denomination": "BTC",
-      "rateFeed": true
+      "rateFeed": true,
+      "isHidden": true
     },
     "BRETT": {
       "source": [
