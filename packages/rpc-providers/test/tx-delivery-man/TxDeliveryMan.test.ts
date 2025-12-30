@@ -4,7 +4,14 @@ import chaiAsPromised from "chai-as-promised";
 import { ethers } from "ethers";
 import hardhat from "hardhat";
 import Sinon from "sinon";
-import { ProviderWithFallback, TxDeliveryMan, convertToTxDeliveryCall } from "../../src";
+import {
+  ProviderWithFallback,
+  RewardsPerBlockAggregationAlgorithm,
+  TxDeliveryMan,
+  TxDeliveryManSupportedProviders,
+  TxDeliveryOpts,
+  convertToTxDeliveryCall,
+} from "../../src";
 import { Counter } from "../../typechain-types";
 import { HardhatProviderMocker, deployCounter } from "../helpers";
 
@@ -35,14 +42,22 @@ describe("TxDeliveryMan", () => {
       };
     });
 
+    const createTxDeliveryMan = (
+      provider: TxDeliveryManSupportedProviders,
+      opts: Partial<TxDeliveryOpts> = {}
+    ) =>
+      new TxDeliveryMan(provider, counter.signer, {
+        expectedDeliveryTimeMs: 20,
+        gasLimit: 210000,
+        rewardsPerBlockAggregationAlgorithm: RewardsPerBlockAggregationAlgorithm.Max,
+        ...opts,
+      });
+
     it("should work if one of providers always fails", async () => {
       const failingProvider = new ethers.providers.JsonRpcProvider("https://1.com");
       const fallbackProvider = new ProviderWithFallback([failingProvider, hardhat.ethers.provider]);
 
-      const deliveryMan = new TxDeliveryMan(fallbackProvider, counter.signer, {
-        expectedDeliveryTimeMs: 20,
-        gasLimit: 210000,
-      });
+      const deliveryMan = createTxDeliveryMan(fallbackProvider);
 
       connectProvider(fallbackProvider);
       await assertTxWillBeDelivered(deliveryMan, counter);
@@ -62,10 +77,7 @@ describe("TxDeliveryMan", () => {
         hardhat.ethers.provider,
         providerWithOldNonceMock.provider,
       ]);
-      const deliveryMan = new TxDeliveryMan(fallbackProvider, counter.signer, {
-        expectedDeliveryTimeMs: 20,
-        gasLimit: 210000,
-      });
+      const deliveryMan = createTxDeliveryMan(fallbackProvider);
 
       connectProvider(fallbackProvider);
       await assertTxWillBeDelivered(deliveryMan, counter);
@@ -88,10 +100,7 @@ describe("TxDeliveryMan", () => {
         secondProviderMock.provider,
       ]);
 
-      const deliveryMan = new TxDeliveryMan(fallbackProvider, counter.signer, {
-        expectedDeliveryTimeMs: 20,
-        gasLimit: 210000,
-      });
+      const deliveryMan = createTxDeliveryMan(fallbackProvider);
 
       connectProvider(fallbackProvider);
       await assertTxWillBeDelivered(deliveryMan, counter);
@@ -116,11 +125,7 @@ describe("TxDeliveryMan", () => {
         secondProviderMock.provider,
       ]);
 
-      const deliveryMan = new TxDeliveryMan(fallbackProvider, counter.signer, {
-        expectedDeliveryTimeMs: 20,
-        gasLimit: 210000,
-        maxAttempts: 1,
-      });
+      const deliveryMan = createTxDeliveryMan(fallbackProvider, { maxAttempts: 1 });
 
       connectProvider(fallbackProvider);
 
@@ -146,11 +151,7 @@ describe("TxDeliveryMan", () => {
         secondProviderMock.provider,
       ]);
 
-      const deliveryMan = new TxDeliveryMan(fallbackProvider, counter.signer, {
-        expectedDeliveryTimeMs: 20,
-        gasLimit: 210000,
-        maxAttempts: 1,
-      });
+      const deliveryMan = createTxDeliveryMan(fallbackProvider, { maxAttempts: 1 });
 
       connectProvider(fallbackProvider);
       await assertTxWillBeDelivered(deliveryMan, counter);
@@ -177,11 +178,7 @@ describe("TxDeliveryMan", () => {
         secondProviderMock.provider,
       ]);
 
-      const deliveryMan = new TxDeliveryMan(fallbackProvider, counter.signer, {
-        expectedDeliveryTimeMs: 20,
-        gasLimit: 210000,
-        maxAttempts: 1,
-      });
+      const deliveryMan = createTxDeliveryMan(fallbackProvider, { maxAttempts: 1 });
 
       connectProvider(fallbackProvider);
       await assertTxWillBeDelivered(deliveryMan, counter);
@@ -207,11 +204,7 @@ describe("TxDeliveryMan", () => {
         secondProviderMock.provider,
       ]);
 
-      const deliveryMan = new TxDeliveryMan(fallbackProvider, counter.signer, {
-        expectedDeliveryTimeMs: 20,
-        gasLimit: 210000,
-        maxAttempts: 1,
-      });
+      const deliveryMan = createTxDeliveryMan(fallbackProvider, { maxAttempts: 1 });
 
       connectProvider(fallbackProvider);
       await assertTxWillBeDelivered(deliveryMan, counter);
@@ -226,10 +219,7 @@ describe("TxDeliveryMan", () => {
     });
 
     it("should cancel current delivery start new one", async () => {
-      const deliveryMan = new TxDeliveryMan(hardhat.ethers.provider, counter.signer, {
-        expectedDeliveryTimeMs: 20,
-        gasLimit: 210000,
-      });
+      const deliveryMan = createTxDeliveryMan(hardhat.ethers.provider);
 
       connectProvider(hardhat.ethers.provider);
 
@@ -255,11 +245,7 @@ describe("TxDeliveryMan", () => {
         sendTransaction: () => ({ hash: "mock_hash" }),
       }).provider;
 
-      const deliveryMan = new TxDeliveryMan(provider, counter.signer, {
-        expectedDeliveryTimeMs: 20,
-        gasLimit: 210000,
-        maxAttempts: 2,
-      });
+      const deliveryMan = createTxDeliveryMan(provider, { maxAttempts: 2 });
 
       connectProvider(provider);
 

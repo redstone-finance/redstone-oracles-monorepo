@@ -1,5 +1,8 @@
 import { AdapterType, UpdateTriggers } from "@redstone-finance/on-chain-relayer-common";
-import { NewestBlockType } from "@redstone-finance/rpc-providers";
+import {
+  NewestBlockType,
+  RewardsPerBlockAggregationAlgorithm,
+} from "@redstone-finance/rpc-providers";
 import { NetworkId } from "@redstone-finance/utils";
 
 export type RelayerConfig = OnChainRelayerEnv & ManifestConfig;
@@ -90,5 +93,6 @@ export type OnChainRelayerEnv = {
   telemetryAuthorizationToken?: string;
   telemetryBatchSendingIntervalMs?: number;
   getSingleNonceTimeoutMs?: number;
-  minMaxRewardsPerBlockForPercentile?: number;
+  minAggregatedRewardsPerBlockForPercentile?: number;
+  rewardsPerBlockAggregationAlgorithm: RewardsPerBlockAggregationAlgorithm;
 };

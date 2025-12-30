@@ -34,6 +34,11 @@ export type DeliveryManTx = {
 export const NewestBlockTypeEnum = z.enum(["latest", "pending"]);
 export type NewestBlockType = z.infer<typeof NewestBlockTypeEnum>;
 
+export enum RewardsPerBlockAggregationAlgorithm {
+  Max = "max",
+  Median = "median",
+}
+
 export type TxDeliveryOpts = {
   /**
    * It depends on network block finalization,
@@ -118,17 +123,24 @@ export type TxDeliveryOpts = {
   // Timeout for fetching nonce from single rpc provider
   getSingleNonceTimeoutMs?: number;
 
-  // minimal maxRewardsPerBlockForPercentile to be used for tx before falling back to eth_maxPriorityFeePerGas
-  minMaxRewardsPerBlockForPercentile?: number;
+  // minimal aggregatedRewardsPerBlock to be used for tx before falling back to eth_maxPriorityFeePerGas
+  minAggregatedRewardsPerBlockForPercentile?: number;
+
+  // Algorithm to aggregate rewards from last blocks
+  rewardsPerBlockAggregationAlgorithm: RewardsPerBlockAggregationAlgorithm;
 };
 
 export type TxDeliveryOptsValidated = Omit<
   Required<TxDeliveryOpts>,
-  "gasLimit" | "getSingleNonceTimeoutMs" | "minMaxRewardsPerBlockForPercentile"
+  | "gasLimit"
+  | "getSingleNonceTimeoutMs"
+  | "minAggregatedRewardsPerBlockForPercentile"
+  | "rewardsPerBlockAggregationAlgorithm"
 > & {
   gasLimit?: number;
   getSingleNonceTimeoutMs?: number;
-  minMaxRewardsPerBlockForPercentile?: number;
+  minAggregatedRewardsPerBlockForPercentile?: number;
+  rewardsPerBlockAggregationAlgorithm: RewardsPerBlockAggregationAlgorithm;
 };
 
 export const unsafeBnToNumber = (bn: BigNumber) => Number(bn.toString());
