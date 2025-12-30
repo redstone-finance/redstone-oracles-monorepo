@@ -1,7 +1,10 @@
 import { readJsonFile, terminateWithRemoteConfigError } from "@redstone-finance/internal-utils";
 import { AnyOnChainRelayerManifestSchema } from "@redstone-finance/on-chain-relayer-common";
 import { RedstoneRemoteConfig } from "@redstone-finance/remote-config";
-import { NewestBlockTypeEnum } from "@redstone-finance/rpc-providers";
+import {
+  NewestBlockTypeEnum,
+  RewardsPerBlockAggregationAlgorithm,
+} from "@redstone-finance/rpc-providers";
 import { RedstoneCommon } from "@redstone-finance/utils";
 import "dotenv/config";
 import { z } from "zod";
@@ -251,9 +254,13 @@ export const readManifestAndEnv = () => {
       "GET_SINGLE_NONCE_TIMEOUT_MS",
       z.number().optional()
     ),
-    minMaxRewardsPerBlockForPercentile: RedstoneCommon.getFromEnv(
-      "MIN_MAX_REWARDS_PER_BLOCK_FOR_PERCENTILE",
+    minAggregatedRewardsPerBlockForPercentile: RedstoneCommon.getFromEnv(
+      "MIN_AGGREGATED_REWARDS_PER_BLOCK_FOR_PERCENTILE",
       z.number().optional()
+    ),
+    rewardsPerBlockAggregationAlgorithm: RedstoneCommon.getFromEnv(
+      "REWARDS_PER_BLOCK_AGGREGATION_ALGORITHM",
+      z.enum(RewardsPerBlockAggregationAlgorithm).default(RewardsPerBlockAggregationAlgorithm.Max)
     ),
   };
 
