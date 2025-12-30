@@ -26,6 +26,8 @@ const EMPTY_GELATO_ENV: OnChainRelayerEnv = {
   waitForAllGatewaysTimeMs: 5000,
   includeAdditionalFeedsForGasOptimization: true,
   uniqueSignerThresholdCacheTtlMs: 0,
+  rewardsPerBlockAggregationAlgorithm:
+    "max" as OnChainRelayerEnv["rewardsPerBlockAggregationAlgorithm"],
 };
 
 export async function fetchManifestAndSetUpEnv(env: IterationArgsProviderEnv) {
