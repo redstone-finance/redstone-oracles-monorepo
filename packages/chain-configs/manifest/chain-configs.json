@@ -844,7 +844,7 @@
       "name": "Holesky",
       "networkId": 17000,
       "currencySymbol": "ETH",
-      "publicRpcUrls": ["https://holesky.gateway.tenderly.co", "https://holesky.drpc.org"],
+      "publicRpcUrls": ["https://holesky.drpc.org"],
       "avgBlockTimeMs": 14000,
       "multicall3": {
         "address": "0xcA11bde05977b3631167028862bE2a173976CA11",
