@@ -80,6 +80,10 @@ export const secsToMs = (secs: number) => secs * 1_000;
 
 export const msToSecs = (ms: number) => ms / 1_000;
 
+export const microsecsToSecs = (microsecs: number): number => microsecs / 1_000_000;
+
+export const microsecsToMs = (microsecs: number): number => microsecs / 1_000;
+
 export const intervalMsToCronFormat = (intervalMs: number) => {
   // edge case for every minute
   if (intervalMs === 60_000) {
