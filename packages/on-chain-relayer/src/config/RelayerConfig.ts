@@ -95,4 +95,5 @@ export type OnChainRelayerEnv = {
   getSingleNonceTimeoutMs?: number;
   minAggregatedRewardsPerBlockForPercentile?: number;
   rewardsPerBlockAggregationAlgorithm: RewardsPerBlockAggregationAlgorithm;
+  disableMultiPointPackages?: boolean;
 };

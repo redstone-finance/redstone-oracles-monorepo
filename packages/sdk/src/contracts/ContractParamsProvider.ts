@@ -10,7 +10,10 @@ import {
   extractSignedDataPackagesForFeedId,
   requestDataPackages,
 } from "../request-data-packages";
-import { filterRetainingPackagesForDataFeedIds } from "../request-data-packages-common";
+import {
+  DataPackagesResponse,
+  filterRetainingPackagesForDataFeedIds,
+} from "../request-data-packages-common";
 import { convertDataPackagesResponse } from "../request-redstone-payload";
 
 export const DEFAULT_COMPONENT_NAME = "data-packages-wrapper";
@@ -105,7 +108,7 @@ export class ContractParamsProvider {
   async requestDataPackages(canUpdateCache = false) {
     const cachedResponse = this.cache?.get(this.requestParams, !canUpdateCache);
     if (cachedResponse) {
-      return cachedResponse;
+      return this.maybeFilterDataPackagesResponse(cachedResponse);
     }
 
     const dataPackagesResponse = await this.performRequestingDataPackages();
@@ -114,6 +117,10 @@ export class ContractParamsProvider {
       this.cache?.update(dataPackagesResponse, this.requestParams);
     }
 
+    return this.maybeFilterDataPackagesResponse(dataPackagesResponse);
+  }
+
+  private maybeFilterDataPackagesResponse(dataPackagesResponse: DataPackagesResponse) {
     return this.overrideRequestParamsPackagesIds
       ? filterRetainingPackagesForDataFeedIds(
           dataPackagesResponse,
