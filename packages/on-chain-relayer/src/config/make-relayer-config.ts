@@ -34,9 +34,11 @@ export const makeRelayerConfig = (
   manifest: AnyOnChainRelayerManifest,
   env: OnChainRelayerEnv
 ): RelayerConfig => {
+  const manifestConfig = createManifestConfig(manifest);
   return {
-    ...createManifestConfig(manifest),
+    ...manifestConfig,
     ...env,
+    dataPackagesNames: env.disableMultiPointPackages ? undefined : manifestConfig.dataPackagesNames,
   };
 };
 
