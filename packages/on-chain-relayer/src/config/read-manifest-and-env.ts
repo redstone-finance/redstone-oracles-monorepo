@@ -262,6 +262,10 @@ export const readManifestAndEnv = () => {
       "REWARDS_PER_BLOCK_AGGREGATION_ALGORITHM",
       z.enum(RewardsPerBlockAggregationAlgorithm).default(RewardsPerBlockAggregationAlgorithm.Max)
     ),
+    disableMultiPointPackages: RedstoneCommon.getFromEnv(
+      "DISABLE_MULTI_POINT_PACKAGES",
+      z.boolean().default(false)
+    ),
   };
 
   return { manifest, env };
