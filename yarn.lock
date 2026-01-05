@@ -10085,6 +10085,7 @@ __metadata:
     "@redstone-finance/pub-sub": "workspace:*"
     "@redstone-finance/sdk": "workspace:*"
     "@redstone-finance/utils": "workspace:*"
+    "@redstone-finance/ws": "workspace:*"
     dotenv: "npm:^16.0.3"
     ethers: "npm:^5.7.2"
     lodash: "npm:^4.17.21"
