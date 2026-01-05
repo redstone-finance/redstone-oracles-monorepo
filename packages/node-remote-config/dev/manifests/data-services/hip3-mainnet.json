@@ -928,6 +928,11 @@
         "ws-lmax",
         "ws-polygon-massive-commodities"
       ],
+      "priceAggregator": "primarySource",
+      "primarySourceAggregatorConfig": {
+        "primarySource": "ws-lmax",
+        "maxAcceptableDeviation": 1
+      },
       "broadcasters": ["influx"],
       "deviationCheck": {
         "deviationWithRecentValues": {
@@ -1006,6 +1011,11 @@
         "ws-lmax",
         "ws-polygon-massive-commodities"
       ],
+      "priceAggregator": "primarySource",
+      "primarySourceAggregatorConfig": {
+        "primarySource": "ws-lmax",
+        "maxAcceptableDeviation": 1
+      },
       "broadcasters": ["influx"],
       "deviationCheck": {
         "deviationWithRecentValues": {
@@ -1127,6 +1137,11 @@
         "financialmodelingprep",
         "ws-lmax"
       ],
+      "priceAggregator": "primarySource",
+      "primarySourceAggregatorConfig": {
+        "primarySource": "ws-lmax",
+        "maxAcceptableDeviation": 1
+      },
       "deviationCheck": {
         "deviationWithRecentValues": {
           "maxPercent": 100,
