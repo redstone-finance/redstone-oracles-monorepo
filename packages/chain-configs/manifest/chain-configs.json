@@ -211,7 +211,7 @@
       "currencySymbol": "ETH",
       "publicRpcUrls": [
         "https://rpc.blast.io",
-        "https://rpc.ankr.com/blast",
+        "https://blast-rpc.publicnode.com",
         "https://blast.din.dev/rpc",
         "https://blast.drpc.org"
       ],
