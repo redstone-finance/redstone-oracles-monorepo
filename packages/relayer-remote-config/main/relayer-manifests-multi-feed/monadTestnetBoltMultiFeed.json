@@ -9,6 +9,7 @@
   "adapterContract": "0xa2B0067002dF61df015C11b2cF0be4f34fC41Cf8",
   "adapterContractType": "multi-feed",
   "dataServiceId": "redstone-primary-demo",
+  "dataPackagesNames": ["___FAST___"],
   "priceFeeds": {
     "ETH": {
       "priceFeedAddress": "0x0B57D841B12458595B12188F36b75A8Ff263aE2c"
