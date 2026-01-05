@@ -1969,6 +1969,11 @@
     },
     "XAU": {
       "source": [],
+      "priceAggregator": "primarySource",
+      "primarySourceAggregatorConfig": {
+        "primarySource": "",
+        "maxAcceptableDeviation": 1
+      },
       "broadcasters": [
         "influx"
       ],
@@ -2158,6 +2163,11 @@
       "broadcasters": [
         "influx"
       ],
+      "priceAggregator": "primarySource",
+      "primarySourceAggregatorConfig": {
+        "primarySource": "",
+        "maxAcceptableDeviation": 1
+      },
       "deviationCheck": {
         "deviationWithRecentValues": {
           "maxPercent": 30,
@@ -2485,6 +2495,11 @@
     },
     "EUR": {
       "source": [],
+      "priceAggregator": "primarySource",
+      "primarySourceAggregatorConfig": {
+        "primarySource": "",
+        "maxAcceptableDeviation": 1
+      },
       "deviationCheck": {
         "deviationWithRecentValues": {
           "maxPercent": 100,
