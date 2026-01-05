@@ -6,6 +6,7 @@ export * from "./aws/DynamoDbService";
 export * from "./aws/ecs";
 export * from "./aws/lambda";
 export * from "./aws/params";
+export * from "./aws/PubSubArchiverDataPackageDynamoDb";
 export * from "./aws/region";
 export * from "./aws/s3";
 export * from "./config-checks";
