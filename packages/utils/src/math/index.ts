@@ -142,3 +142,40 @@ export function weightedMedian(values: number[], weights: number[]) {
   }
   throw new Error(`failed to calculate weighted median`);
 }
+
+export class Clamper {
+  readonly upperClampMultiplier: ISafeNumber;
+  readonly lowerClampMultiplier: ISafeNumber;
+
+  constructor(upperCapPercent: number, lowerClampPercent: number) {
+    if (upperCapPercent <= 0 || lowerClampPercent <= 0) {
+      throw new Error("Percentages must be > 0");
+    }
+    if (lowerClampPercent >= 100) {
+      throw new Error("lowerClampPercent cannot exceed 100");
+    }
+
+    this.upperClampMultiplier = createSafeNumber(1 + upperCapPercent / 100);
+    this.lowerClampMultiplier = createSafeNumber(1 - lowerClampPercent / 100);
+  }
+
+  /** if lastValue is undefined returns newValue without capping
+   * supports only positive numbers
+   */
+  clamp(newValue: ISafeNumber, lastValue: ISafeNumber | undefined): ISafeNumber {
+    if (lastValue === undefined) {
+      return newValue;
+    }
+
+    const upperCap = lastValue.mul(this.upperClampMultiplier);
+    const lowerCap = lastValue.mul(this.lowerClampMultiplier);
+
+    if (newValue.gt(upperCap)) {
+      return upperCap;
+    } else if (newValue.lt(lowerCap)) {
+      return lowerCap;
+    }
+
+    return newValue;
+  }
+}
