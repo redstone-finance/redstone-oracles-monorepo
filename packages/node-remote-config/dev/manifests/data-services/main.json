@@ -7752,6 +7752,26 @@
       "denomination": "USD",
       "rateFeed": false
     },
+    "HGH26": {
+      "source": ["metals-api"],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "HG00": {
+      "source": ["metals-api"],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "HG1": {
+      "source": ["metals-api"],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "HG-SPOT": {
+      "source": ["commodity-price-api"],
+      "denomination": "USD",
+      "rateFeed": false
+    },
     "WTI": {
       "source": ["twelve-data", "alltick-api", "ws-lmax", "metal-price-api"],
       "denomination": "USD",
