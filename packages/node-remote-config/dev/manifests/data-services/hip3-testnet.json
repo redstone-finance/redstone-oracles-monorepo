@@ -1837,7 +1837,12 @@
       }
     },
     "WTI": {
-      "source": ["alltick-api-deferred", "metal-price-api-deferred", "ws-lmax", "ws-twelve-data"],
+      "source": [
+        "alltick-api-deferred",
+        "metal-price-api-deferred",
+        "ws-lmax",
+        "ws-twelve-data-no-closing-price"
+      ],
       "priceAggregator": "primarySource",
       "primarySourceAggregatorConfig": {
         "primarySource": "ws-lmax",
