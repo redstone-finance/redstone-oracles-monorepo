@@ -931,7 +931,9 @@
       "priceAggregator": "primarySource",
       "primarySourceAggregatorConfig": {
         "primarySource": "ws-lmax",
-        "maxAcceptableDeviation": 1
+        "maxAcceptableDeviation": 1.5,
+        "lowerClampPercent": 0.1,
+        "upperClampPercent": 0.1
       },
       "broadcasters": ["influx"],
       "deviationCheck": {
@@ -1014,7 +1016,9 @@
       "priceAggregator": "primarySource",
       "primarySourceAggregatorConfig": {
         "primarySource": "ws-lmax",
-        "maxAcceptableDeviation": 1
+        "maxAcceptableDeviation": 1.5,
+        "lowerClampPercent": 0.1,
+        "upperClampPercent": 0.1
       },
       "broadcasters": ["influx"],
       "deviationCheck": {
@@ -1140,7 +1144,9 @@
       "priceAggregator": "primarySource",
       "primarySourceAggregatorConfig": {
         "primarySource": "ws-lmax",
-        "maxAcceptableDeviation": 1
+        "maxAcceptableDeviation": 1.5,
+        "lowerClampPercent": 0.1,
+        "upperClampPercent": 0.1
       },
       "deviationCheck": {
         "deviationWithRecentValues": {
