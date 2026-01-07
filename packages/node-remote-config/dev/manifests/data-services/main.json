@@ -2039,7 +2039,12 @@
       "rateFeed": false
     },
     "SPY": {
-      "source": ["twelve-data"],
+      "source": ["twelve-data", "databento-no-closing-price"],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "ESH6": {
+      "source": ["databento-cme-no-closing-price"],
       "denomination": "USD",
       "rateFeed": false
     },
@@ -7742,8 +7747,23 @@
       "denomination": "USD",
       "rateFeed": false
     },
+    "HGH6": {
+      "source": ["databento-cme-no-closing-price"],
+      "denomination": "USD",
+      "rateFeed": false
+    },
     "WTI": {
       "source": ["twelve-data", "alltick-api", "ws-lmax", "metal-price-api"],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "CLH6": {
+      "source": ["databento-cme-no-closing-price"],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "CLG6": {
+      "source": ["databento-cme-no-closing-price"],
       "denomination": "USD",
       "rateFeed": false
     },
