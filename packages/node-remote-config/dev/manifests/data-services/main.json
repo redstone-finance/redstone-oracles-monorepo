@@ -2269,6 +2269,13 @@
       "denomination": "USD",
       "rateFeed": false
     },
+    "ESH6": {
+      "source": [
+        "databento-cme-no-closing-price"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
     "QQQ": {
       "source": [],
       "denomination": "USD",
@@ -8382,7 +8389,22 @@
       "denomination": "USD",
       "rateFeed": false
     },
+    "HGH6": {
+      "source": [],
+      "denomination": "USD",
+      "rateFeed": false
+    },
     "WTI": {
+      "source": [],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "CLH6": {
+      "source": [],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "CLG6": {
       "source": [],
       "denomination": "USD",
       "rateFeed": false
