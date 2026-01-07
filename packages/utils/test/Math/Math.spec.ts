@@ -9,7 +9,7 @@ import {
   limitWeights,
   NumberArg,
 } from "../../src/ISafeNumber";
-import { filterOutliers } from "../../src/math";
+import { Clamper, filterOutliers } from "../../src/math";
 import { monotoneCubicInterpolation } from "../../src/math/monotonic-cubic-spline";
 
 describe("calculateSum", () => {
@@ -362,5 +362,106 @@ describe("monotonic cubic interpolation", () => {
 
     expect(interpolation.forX(3)).toEqual(3);
     expect(Math.abs(interpolation.forY(3, precision) - 3)).toBeLessThan(precision);
+  });
+});
+
+describe("Clamper", () => {
+  describe("constructor", () => {
+    it("should create a Clamper with valid percentages", () => {
+      const clamper = new Clamper(10, 10);
+      expect(clamper.upperClampMultiplier.unsafeToNumber()).toBe(1.1);
+      expect(clamper.lowerClampMultiplier.unsafeToNumber()).toBe(0.9);
+    });
+
+    it("should throw for zero upperCapPercent", () => {
+      expect(() => new Clamper(0, 10)).toThrow("Percentages must be > 0");
+    });
+
+    it("should throw for zero lowerClampPercent", () => {
+      expect(() => new Clamper(10, 0)).toThrow("Percentages must be > 0");
+    });
+
+    it("should throw for negative upperCapPercent", () => {
+      expect(() => new Clamper(-1, 10)).toThrow("Percentages must be > 0");
+    });
+
+    it("should throw for negative lowerClampPercent", () => {
+      expect(() => new Clamper(10, -1)).toThrow("Percentages must be > 0");
+    });
+
+    it("should throw for lowerClampPercent equal to 100", () => {
+      expect(() => new Clamper(10, 100)).toThrow("lowerClampPercent cannot exceed 100");
+    });
+
+    it("should throw for lowerClampPercent exceeding 100", () => {
+      expect(() => new Clamper(10, 101)).toThrow("lowerClampPercent cannot exceed 100");
+    });
+  });
+
+  describe("clamp", () => {
+    it("should return newValue when lastValue is undefined", () => {
+      const clamper = new Clamper(10, 10);
+      const newValue = createSafeNumber(100);
+      const result = clamper.clamp(newValue, undefined);
+      expect(result.unsafeToNumber()).toBe(100);
+    });
+
+    it("should return newValue when within clamp range", () => {
+      const clamper = new Clamper(10, 10);
+      const lastValue = createSafeNumber(100);
+      const newValue = createSafeNumber(105);
+      const result = clamper.clamp(newValue, lastValue);
+      expect(result.unsafeToNumber()).toBe(105);
+    });
+
+    it("should clamp to upperCap when newValue exceeds upper limit", () => {
+      const clamper = new Clamper(10, 10);
+      const lastValue = createSafeNumber(100);
+      const newValue = createSafeNumber(120);
+      const result = clamper.clamp(newValue, lastValue);
+      expect(result.unsafeToNumber()).toBeCloseTo(110, 10);
+    });
+
+    it("should clamp to lowerCap when newValue is below lower limit", () => {
+      const clamper = new Clamper(10, 10);
+      const lastValue = createSafeNumber(100);
+      const newValue = createSafeNumber(80);
+      const result = clamper.clamp(newValue, lastValue);
+      expect(result.unsafeToNumber()).toBe(90);
+    });
+
+    it("should return exact cap value when newValue equals cap", () => {
+      const clamper = new Clamper(10, 10);
+      const lastValue = createSafeNumber(100);
+      const upperEdge = createSafeNumber(110);
+      const lowerEdge = createSafeNumber(90);
+      expect(clamper.clamp(upperEdge, lastValue).unsafeToNumber()).toBe(110);
+      expect(clamper.clamp(lowerEdge, lastValue).unsafeToNumber()).toBe(90);
+    });
+
+    it("should handle asymmetric clamp percentages", () => {
+      const clamper = new Clamper(20, 5);
+      const lastValue = createSafeNumber(100);
+
+      expect(clamper.clamp(createSafeNumber(130), lastValue).unsafeToNumber()).toBe(120);
+      expect(clamper.clamp(createSafeNumber(90), lastValue).unsafeToNumber()).toBe(95);
+      expect(clamper.clamp(createSafeNumber(115), lastValue).unsafeToNumber()).toBe(115);
+    });
+
+    it("should handle decimal values", () => {
+      const clamper = new Clamper(10, 10);
+      const lastValue = createSafeNumber(100.5);
+      const newValue = createSafeNumber(150);
+      const result = clamper.clamp(newValue, lastValue);
+      expect(result.unsafeToNumber()).toBeCloseTo(110.55, 10);
+    });
+
+    it("should handle zero lastValue", () => {
+      const clamper = new Clamper(10, 10);
+      const lastValue = createSafeNumber(0);
+      const newValue = createSafeNumber(100);
+      const result = clamper.clamp(newValue, lastValue);
+      expect(result.unsafeToNumber()).toBe(0);
+    });
   });
 });
