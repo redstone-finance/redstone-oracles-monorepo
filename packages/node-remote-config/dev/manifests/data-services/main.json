@@ -8394,6 +8394,26 @@
       "denomination": "USD",
       "rateFeed": false
     },
+    "HGH26": {
+      "source": [],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "HG00": {
+      "source": [],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "HG1": {
+      "source": [],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "HG-SPOT": {
+      "source": [],
+      "denomination": "USD",
+      "rateFeed": false
+    },
     "WTI": {
       "source": [],
       "denomination": "USD",
