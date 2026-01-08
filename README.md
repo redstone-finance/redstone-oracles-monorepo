@@ -37,6 +37,6 @@ We use Turborepo to run monorepo tasks efficiently. For more info, see our [Turb
 
 Please feel free to contact us on [Discord](https://redstone.finance/discord) or email to core@redstone.finance.
 
-## 📜 Licesnse
+## 📜 License
 
 BUSL-1.1
