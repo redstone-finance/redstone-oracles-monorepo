@@ -12,8 +12,9 @@ import {
 import { loggerFactory, RedstoneCommon } from "@redstone-finance/utils";
 import { cleanStalePackages, MAX_PACKAGE_STALENESS, PackageResponse } from "./common";
 import { DataPackageSubscriberParams } from "./DataPackageSubscriberParams";
+import { withStats } from "./decorators/withStats";
 import { LastPublishedFeedState } from "./LastPublishedFeedState";
-import { PubSubClient } from "./PubSubClient";
+import { PubSubClient, SubscribeCallback } from "./PubSubClient";
 import { RateLimitsCircuitBreaker } from "./RateLimitsCircuitBreaker";
 import { ReferenceValueVerifier } from "./ReferenceValueVerifier";
 import { SignedDataPackageWithSavedSigner } from "./SignedDataPackageWithSavedSigner";
@@ -169,22 +170,32 @@ export class DataPackageSubscriber {
     }
     this.subscribeCallback = subscribeCallback;
 
-    try {
-      await this.pubSubClient.subscribe(this.topics, (_, messagePayload, error) => {
-        this.handleCircuitBreaker();
+    const internalCallback: SubscribeCallback = (_topicName, messagePayload, error) => {
+      this.handleCircuitBreaker();
 
-        try {
-          if (error) {
-            throw new Error(error);
-          }
-
-          this.processNewPackage(messagePayload);
-        } catch (e) {
-          this.logger.error(
-            `Failed to process new package error=${RedstoneCommon.stringifyError(e)}`
-          );
+      try {
+        if (error) {
+          throw new Error(error);
         }
-      });
+
+        this.processNewPackage(messagePayload);
+      } catch (e) {
+        this.logger.error(
+          `Failed to process new package error=${RedstoneCommon.stringifyError(e)}`
+        );
+      }
+    };
+
+    const finalCallback =
+      this.params.statsLogIntervalMs === 0
+        ? internalCallback
+        : withStats({
+            callback: internalCallback,
+            logIntervalMs: this.params.statsLogIntervalMs,
+          });
+
+    try {
+      await this.pubSubClient.subscribe(this.topics, finalCallback);
     } catch (e) {
       if (this.fallbackInterval) {
         this.logger.warn("Failed to subscribe to topics, continuing because fallback is enabled");
