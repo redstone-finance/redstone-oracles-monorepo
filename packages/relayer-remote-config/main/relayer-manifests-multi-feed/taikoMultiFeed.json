@@ -22,13 +22,6 @@
     },
     "USDT": {
       "priceFeedAddress": "0xf1454949C6dEdfb500ae63Aa6c784Aa1Dde08A6c"
-    },
-    "mBTC_POR": {
-      "priceFeedAddress": "0x98DC6E90D4c2f212ed9d124aD2aFBa4833268633",
-      "updateTriggersOverrides": {
-        "deviationPercentage": 1,
-        "timeSinceLastUpdateInMilliseconds": 86400000
-      }
     }
   }
 }
