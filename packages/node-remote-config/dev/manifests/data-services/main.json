@@ -2849,6 +2849,16 @@
       "denomination": "USD",
       "rateFeed": true
     },
+    "HLScope_PLUME_FUNDAMENTAL": {
+      "source": ["securitize-api"],
+      "denomination": "USD",
+      "rateFeed": true
+    },
+    "EXOD_FUNDAMENTAL": {
+      "source": ["securitize-api"],
+      "denomination": "USD",
+      "rateFeed": true
+    },
     "BCAP_FUNDAMENTAL": {
       "source": ["securitize-api"],
       "denomination": "USD",
@@ -2985,6 +2995,16 @@
       "rateFeed": true
     },
     "HLScope_FUNDAMENTAL_V2": {
+      "source": ["securitize-tsso"],
+      "denomination": "USD",
+      "rateFeed": true
+    },
+    "HLScope_PLUME_FUNDAMENTAL_V2": {
+      "source": ["securitize-tsso"],
+      "denomination": "USD",
+      "rateFeed": true
+    },
+    "EXOD_FUNDAMENTAL_V2": {
       "source": ["securitize-tsso"],
       "denomination": "USD",
       "rateFeed": true
