@@ -6624,19 +6624,6 @@
       "denomination": "USD",
       "rateFeed": false
     },
-    "mBTC_POR": {
-      "source": ["mbtc-indexer-fetcher"],
-      "valueCapConfig": {
-        "upper": {
-          "value": 1
-        },
-        "lower": {
-          "value": 1
-        }
-      },
-      "denomination": "BTC",
-      "rateFeed": true
-    },
     "LBTC_FUNDAMENTAL": {
       "source": ["lombard-lbtc"],
       "denomination": "BTC",
