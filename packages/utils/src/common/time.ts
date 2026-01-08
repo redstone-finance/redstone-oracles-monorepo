@@ -72,6 +72,8 @@ export const hourToMs = (hours: number) => hours * 3_600_000;
 
 export const msToHours = (ms: number) => ms / 3_600_000;
 
+export const msToDays = (ms: number) => ms / (3_600_000 * 24);
+
 export const hourToSecs = (hours: number) => hours * 3_600;
 
 export const secsToHours = (secs: number) => secs / 3_600;
@@ -83,6 +85,8 @@ export const msToSecs = (ms: number) => ms / 1_000;
 export const microsecsToSecs = (microsecs: number): number => microsecs / 1_000_000;
 
 export const microsecsToMs = (microsecs: number): number => microsecs / 1_000;
+
+export const daysToYearFraction = (days: number): number => days / 365;
 
 export const intervalMsToCronFormat = (intervalMs: number) => {
   // edge case for every minute
