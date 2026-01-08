@@ -1557,7 +1557,7 @@
       "denomination": "USD",
       "rateFeed": false
     },
-    "IMPACT_BUY_flx:SP500_EMA_5M": {
+    "IMPACT_BUY_flx:SP500_EMA_30M": {
       "source": ["ema"],
       "broadcasters": ["influx"],
       "denomination": "USD",
@@ -1569,7 +1569,7 @@
       "denomination": "USD",
       "rateFeed": false
     },
-    "IMPACT_SELL_flx:SP500_EMA_5M": {
+    "IMPACT_SELL_flx:SP500_EMA_30M": {
       "source": ["ema"],
       "broadcasters": ["influx"],
       "denomination": "USD",
