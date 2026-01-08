@@ -40,6 +40,13 @@
     },
     "wstETH/ETH": {
       "priceFeedAddress": "0x31a36CdF4465ba61ce78F5CDbA26FDF8ec361803"
+    },
+    "cUSD_FUNDAMENTAL": {
+      "priceFeedAddress": "0x7A9b672fc20b5C89D6774514052b3e0899E5E263",
+      "updateTriggersOverrides": {
+        "deviationPercentage": 0.05,
+        "timeSinceLastUpdateInMilliseconds": 86400000
+      }
     }
   }
 }
