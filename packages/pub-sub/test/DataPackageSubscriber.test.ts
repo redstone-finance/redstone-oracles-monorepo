@@ -6,8 +6,10 @@ import {
   DataPackageSubscriberParams,
   MqttTopics,
   PooledMqttClient,
+  PubSubClient,
   PubSubPayload,
   RateLimitsCircuitBreaker,
+  SubscribeCallback,
 } from "../src";
 
 const MOCK_WALLET_1 = new ethers.Wallet(
@@ -28,12 +30,10 @@ const MOCK_WALLET_5 = new ethers.Wallet(
 
 const dataServiceId = "data-service-1";
 
-type SubscribeFn = (topicName: string, messagePayload: unknown, error: string | null) => unknown;
-
 class MockPubSubClient {
-  topicToCallback: Map<string, SubscribeFn> = new Map();
+  topicToCallback: Map<string, SubscribeCallback> = new Map();
 
-  subscribe(topics: string[], onMessage: SubscribeFn) {
+  subscribe(topics: string[], onMessage: SubscribeCallback) {
     for (const topic of topics) {
       this.topicToCallback.set(topic, onMessage);
     }
@@ -41,7 +41,9 @@ class MockPubSubClient {
 
   publish(payloads: PubSubPayload[]) {
     for (const payload of payloads) {
-      this.topicToCallback.get(payload.topic)?.(payload.topic, payload.data, null);
+      this.topicToCallback.get(payload.topic)?.(payload.topic, payload.data, null, {
+        getUniqueName: () => "mock-client",
+      } as unknown as PubSubClient);
     }
   }
 
@@ -301,7 +303,7 @@ describe("subscribe-data-packages", () => {
         signer: MOCK_WALLET_2,
       });
 
-      jest.runAllTimers();
+      jest.advanceTimersByTime(500);
       expect(callback).toBeCalledTimes(1);
       expect(loggerDebug).toBeCalledWith(
         expect.stringContaining(
@@ -317,7 +319,7 @@ describe("subscribe-data-packages", () => {
         signer: MOCK_WALLET_2,
       });
 
-      jest.runAllTimers();
+      jest.advanceTimersByTime(500);
       expect(callback).toBeCalledTimes(1);
       expect(loggerDebug).toBeCalledWith(
         expect.stringContaining(
@@ -440,7 +442,7 @@ describe("subscribe-data-packages", () => {
       });
 
       // doesn't publish cause still only one signer
-      jest.runAllTimers();
+      jest.advanceTimersByTime(500);
       expect(callback).toBeCalledTimes(0);
 
       await publishToPubSub(pubSub, {
@@ -450,7 +452,7 @@ describe("subscribe-data-packages", () => {
         signer: MOCK_WALLET_2,
       });
 
-      jest.runAllTimers();
+      jest.advanceTimersByTime(500);
       expect(callback).toBeCalledTimes(1);
     });
 
@@ -538,7 +540,7 @@ describe("subscribe-data-packages", () => {
         signer: MOCK_WALLET_1,
       });
 
-      jest.runAllTimers();
+      jest.advanceTimersByTime(500);
       expect(callback).toBeCalledTimes(0);
 
       const secondPackage = await publishToPubSub(pubSub, {
