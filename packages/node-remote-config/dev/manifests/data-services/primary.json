@@ -2154,6 +2154,20 @@
       "denomination": "USD",
       "rateFeed": true
     },
+    "HLScope_PLUME_FUNDAMENTAL": {
+      "source": [
+        "securitize-api"
+      ],
+      "denomination": "USD",
+      "rateFeed": true
+    },
+    "EXOD_FUNDAMENTAL": {
+      "source": [
+        "securitize-api"
+      ],
+      "denomination": "USD",
+      "rateFeed": true
+    },
     "BCAP_FUNDAMENTAL": {
       "source": [
         "securitize-api"
