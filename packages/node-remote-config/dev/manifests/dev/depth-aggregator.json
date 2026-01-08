@@ -1303,13 +1303,6 @@
         "ethereum-evm-fetcher-mantle-lsp-staking"
       ]
     },
-    "ISEI": {
-      "source": [
-        "dragonswap-v2-sei-wsei-500",
-        "dragonswap-sei-wsei",
-        "jellyverse-sei-wsei"
-      ]
-    },
     "pzETH_FUNDAMENTAL": {
       "source": [
         "ethereum-evm-fetcher-renzo"
