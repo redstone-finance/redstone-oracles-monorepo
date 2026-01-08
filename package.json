@@ -42,7 +42,7 @@
     "global:lambda-pushProdIreland": "cd $INIT_CWD && BUCKET_NAME=redstone-lambdas-prod-eu-west-1 yarn global:lambda-pushToBucket",
     "global:lambda-pushDev": "cd $INIT_CWD && KEY=$(yarn global:lambda-key) && yarn global:lambda-pushDevIreland && SRC_BUCKET=redstone-lambdas-eu-west-1 BUCKETS='redstone-lambdas-eu-west-2 redstone-lambdas-eu-north-1 redstone-lambdas-ap-northeast-1' KEY=$KEY ../../../scripts/s3_copy_to_all.sh",
     "global:lambda-pushProd": "cd $INIT_CWD && yarn global:lambda-pushProdIreland",
-    "global:lambda-pushProdAllRegions": "cd $INIT_CWD && KEY=$(yarn global:lambda-key) && yarn global:lambda-pushProdIreland && SRC_BUCKET=redstone-lambdas-prod-eu-west-1 BUCKETS='redstone-lambdas-prod-eu-central-1 redstone-lambdas-prod-eu-west-2 redstone-lambdas-prod-eu-west-3 redstone-lambdas-prod-ap-northeast-1 redstone-lambdas-prod-ap-northeast-3' KEY=$KEY ../../../scripts/s3_copy_to_all.sh",
+    "global:lambda-pushProdAllRegions": "cd $INIT_CWD && KEY=$(yarn global:lambda-key) && yarn global:lambda-pushProdIreland && SRC_BUCKET=redstone-lambdas-prod-eu-west-1 BUCKETS='redstone-lambdas-prod-eu-central-1 redstone-lambdas-prod-eu-west-2 redstone-lambdas-prod-eu-west-3 redstone-lambdas-prod-ap-northeast-1 redstone-lambdas-prod-ap-northeast-3 redstone-lambdas-prod-eu-north-1' KEY=$KEY ../../../scripts/s3_copy_to_all.sh",
     "global:object-pushToBucket": "cd $INIT_CWD && aws s3api put-object --bucket $BUCKET_NAME --key $KEY_NAME --body $FILENAME",
     "global:ts-clean": "cd $INIT_CWD && rm -rf dist coverage \"*.tsbuildinfo\"",
     "global:ts-hardhat-clean": "cd $INIT_CWD && yarn global:ts-clean && rm -rf artifacts cache typechain-types",
