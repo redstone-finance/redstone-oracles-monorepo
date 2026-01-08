@@ -21,6 +21,12 @@
     "ADA": {},
     "SOL": {},
     "DOGE": {},
-    "wstETH/ETH": {}
+    "wstETH/ETH": {},
+    "cUSD_FUNDAMENTAL": {
+      "updateTriggersOverrides": {
+        "deviationPercentage": 0.05,
+        "timeSinceLastUpdateInMilliseconds": 86400000
+      }
+    }
   }
 }
