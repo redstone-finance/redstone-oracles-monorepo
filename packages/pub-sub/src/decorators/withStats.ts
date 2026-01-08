@@ -114,7 +114,7 @@ export class MqttStatsTracker {
   }
 }
 
-export type WithMqttStatsConfig = {
+export type WithStatsConfig = {
   /**
    * The original SubscribeCallback to wrap
    */
@@ -128,27 +128,27 @@ export type WithMqttStatsConfig = {
 };
 
 /**
- * Creates a wrapper around a SubscribeCallback that tracks MQTT message statistics.
+ * Creates a wrapper around a SubscribeCallback that tracks message statistics.
  * Tracks messages per topic per second and per client per second.
  * Computes and logs max/min/avg statistics at regular intervals, then clears the data.
  * The stats tracker starts automatically when this function is called.
  *
- * @param {WithMqttStatsConfig} config - Configuration for stats tracking
+ * @param {WithStatsConfig} config - Configuration for stats tracking
  * @returns {SubscribeCallback} - A new SubscribeCallback with stats tracking
  *
  * @example
  * ```typescript
- * const statsCallback = withMqttStats({
+ * const statsCallback = withStats({
  *   callback: myCallback,
  *   logIntervalMs: 60000 // Log every minute
  * });
  * await pubSubClient.subscribe(topics, statsCallback);
  * ```
  */
-export function withMqttStats({
+export function withStats({
   callback,
   logIntervalMs = 60_000,
-}: WithMqttStatsConfig): SubscribeCallback {
+}: WithStatsConfig): SubscribeCallback {
   const tracker = new MqttStatsTracker(logIntervalMs);
 
   const wrappedCallback: SubscribeCallback = (
