@@ -10844,6 +10844,7 @@ __metadata:
     "@redstone-finance/sdk": "workspace:*"
     "@redstone-finance/utils": "workspace:*"
     "@types/aws-lambda": "npm:^8.10.145"
+    "@types/luxon": "npm:^3.3.0"
     dotenv: "npm:^16.0.3"
     luxon: "npm:^3.3.0"
     zod: "npm:^4.1.12"
