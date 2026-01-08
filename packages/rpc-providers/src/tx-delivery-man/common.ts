@@ -1,3 +1,4 @@
+import type { ChainConfigs } from "@redstone-finance/chain-configs";
 import type { BigNumber } from "ethers";
 import { z } from "zod";
 
@@ -128,6 +129,9 @@ export type TxDeliveryOpts = {
 
   // Algorithm to aggregate rewards from last blocks
   rewardsPerBlockAggregationAlgorithm: RewardsPerBlockAggregationAlgorithm;
+
+  // optional ChainConfigs object to use instead of local version
+  chainConfigs?: ChainConfigs;
 };
 
 export type TxDeliveryOptsValidated = Omit<
@@ -135,12 +139,12 @@ export type TxDeliveryOptsValidated = Omit<
   | "gasLimit"
   | "getSingleNonceTimeoutMs"
   | "minAggregatedRewardsPerBlockForPercentile"
-  | "rewardsPerBlockAggregationAlgorithm"
+  | "chainConfigs"
 > & {
   gasLimit?: number;
   getSingleNonceTimeoutMs?: number;
   minAggregatedRewardsPerBlockForPercentile?: number;
-  rewardsPerBlockAggregationAlgorithm: RewardsPerBlockAggregationAlgorithm;
+  chainConfigs?: ChainConfigs;
 };
 
 export const unsafeBnToNumber = (bn: BigNumber) => Number(bn.toString());

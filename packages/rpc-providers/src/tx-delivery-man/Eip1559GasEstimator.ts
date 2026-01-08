@@ -60,7 +60,10 @@ export class Eip1559GasEstimator implements GasEstimator<Eip1559Fee> {
   private async estimatePriorityFee(provider: providers.JsonRpcProvider): Promise<number> {
     const networkId = await getProviderNetworkId(provider);
 
-    const chainConfig = getChainConfigByNetworkId(getLocalChainConfigs(), networkId);
+    const chainConfig = getChainConfigByNetworkId(
+      this.opts.chainConfigs ?? getLocalChainConfigs(),
+      networkId
+    );
 
     const feeHistory = await this.getFeeHistory(provider, chainConfig);
 

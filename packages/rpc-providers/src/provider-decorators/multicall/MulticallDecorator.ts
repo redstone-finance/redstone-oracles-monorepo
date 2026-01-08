@@ -1,5 +1,9 @@
 import { BlockTag, TransactionRequest } from "@ethersproject/abstract-provider";
-import { getChainConfigByNetworkId, getLocalChainConfigs } from "@redstone-finance/chain-configs";
+import {
+  getChainConfigByNetworkId,
+  getLocalChainConfigs,
+  type ChainConfigs,
+} from "@redstone-finance/chain-configs";
 import { RedstoneCommon, loggerFactory } from "@redstone-finance/utils";
 import { providers } from "ethers";
 import { Deferrable } from "ethers/lib/utils";
@@ -7,16 +11,21 @@ import { z } from "zod";
 import { Multicall3Request, safeExecuteMulticall3 } from "./Multicall3Caller";
 import { MulticallBuffer } from "./MulticallBuffer";
 
-const chainConfigs = getLocalChainConfigs();
-
-async function prepareMulticall3Request(tx: Deferrable<TransactionRequest>, chainId: number) {
+async function prepareMulticall3Request(
+  tx: Deferrable<TransactionRequest>,
+  chainId: number,
+  chainConfigs?: ChainConfigs
+) {
   const call: Multicall3Request = {
     callData: (await tx["data"]) as string,
     target: (await tx["to"]) as string,
     allowFailure: true,
   };
 
-  const multicall3Info = getChainConfigByNetworkId(chainConfigs, chainId).multicall3;
+  const multicall3Info = getChainConfigByNetworkId(
+    chainConfigs ?? getLocalChainConfigs(),
+    chainId
+  ).multicall3;
 
   if (multicall3Info.type === "RedstoneMulticall3") {
     call.gasLimit = multicall3Info.gasLimitPerCall;
@@ -34,6 +43,7 @@ export type MulticallDecoratorOptions = {
   autoResolveInterval?: number;
   multicallAddress?: string;
   retryBySingleCalls?: boolean;
+  chainConfigs?: ChainConfigs;
 };
 
 const parseMulticallConfig = (opts: MulticallDecoratorOptions) => {
@@ -81,7 +91,8 @@ export function MulticallDecorator<T extends providers.Provider>(
       callEntries,
       config.retryBySingleCalls,
       blockTag,
-      config.multicallAddress
+      config.multicallAddress,
+      options.chainConfigs
     )
       .then((result3s) => {
         for (let i = 0; i < result3s.length; i++) {
@@ -111,7 +122,11 @@ export function MulticallDecorator<T extends providers.Provider>(
     blockTag?: BlockTag | Promise<BlockTag>
   ): Promise<string> => {
     chainId = await chainIdPromise;
-    const multicall3Request = await prepareMulticall3Request(transaction, chainId);
+    const multicall3Request = await prepareMulticall3Request(
+      transaction,
+      chainId,
+      options.chainConfigs
+    );
     const resolvedBlockTag = await blockTag;
 
     const { promise, resolve, reject } = createDeferredPromise<string>();
