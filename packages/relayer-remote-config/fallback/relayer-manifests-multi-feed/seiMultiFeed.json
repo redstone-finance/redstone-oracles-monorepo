@@ -14,14 +14,8 @@
     "SEI": {
       "priceFeedAddress": "0x100c8e61aB3BeA812A42976199Fc3daFbcDD7272"
     },
-    "ISEI": {
-      "priceFeedAddress": "0xC49F0Dd98F38C525A7ce15E73E60675456F3a161"
-    },
     "ezETH": {
       "priceFeedAddress": "0x4BAD96DD1C7D541270a0C92e1D4e5f12EEEA7a57"
-    },
-    "ISEI_FUNDAMENTAL/USD": {
-      "priceFeedAddress": "0x5C4c8d6f6Bf79B718F3e8399AaBdFEd01cB7e48f"
     },
     "ssETH_FUNDAMENTAL": {
       "priceFeedAddress": "0xFB1267A29C0aa19daae4a483ea895862A69e4AA5"
