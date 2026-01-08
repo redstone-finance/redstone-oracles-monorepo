@@ -10,7 +10,7 @@ jest.mock("@redstone-finance/utils", () => ({
   }),
 }));
 
-import { MqttStatsTracker, withMqttStats } from "../src/decorators/withMqttStats";
+import { MqttStatsTracker, withStats } from "../src/decorators/withStats";
 import { PubSubClient } from "../src/PubSubClient";
 
 describe("MqttStatsTracker", () => {
@@ -393,7 +393,7 @@ describe("MqttStatsTracker", () => {
   });
 });
 
-describe("withMqttStats decorator", () => {
+describe("withStats decorator", () => {
   let mockCallback: jest.Mock;
   let mockPubSubClient: PubSubClient;
 
@@ -415,13 +415,13 @@ describe("withMqttStats decorator", () => {
 
   describe("decorator creation", () => {
     it("should create wrapped callback", () => {
-      const wrappedCallback = withMqttStats({ callback: mockCallback });
+      const wrappedCallback = withStats({ callback: mockCallback });
       expect(wrappedCallback).toBeDefined();
       expect(typeof wrappedCallback).toBe("function");
     });
 
     it("should start tracking automatically when decorator is created", () => {
-      const wrappedCallback = withMqttStats({ callback: mockCallback });
+      const wrappedCallback = withStats({ callback: mockCallback });
 
       // The wrapped callback should work immediately
       wrappedCallback("test-topic", { data: "test" }, null, mockPubSubClient);
@@ -430,7 +430,7 @@ describe("withMqttStats decorator", () => {
     });
 
     it("should accept custom log interval", () => {
-      const wrappedCallback = withMqttStats({
+      const wrappedCallback = withStats({
         callback: mockCallback,
         logIntervalMs: 30_000,
       });
@@ -441,7 +441,7 @@ describe("withMqttStats decorator", () => {
 
   describe("message tracking", () => {
     it("should call original callback with all arguments", () => {
-      const wrappedCallback = withMqttStats({
+      const wrappedCallback = withStats({
         callback: mockCallback,
       });
 
@@ -452,7 +452,7 @@ describe("withMqttStats decorator", () => {
     });
 
     it("should call original callback even when error occurs", () => {
-      const wrappedCallback = withMqttStats({
+      const wrappedCallback = withStats({
         callback: mockCallback,
       });
 
@@ -467,7 +467,7 @@ describe("withMqttStats decorator", () => {
     });
 
     it("should track messages from pubSubClient", () => {
-      const wrappedCallback = withMqttStats({
+      const wrappedCallback = withStats({
         callback: mockCallback,
       });
 
@@ -480,7 +480,7 @@ describe("withMqttStats decorator", () => {
 
   describe("integration with rate limiter", () => {
     it("should work as a composable decorator", () => {
-      const wrappedCallback = withMqttStats({
+      const wrappedCallback = withStats({
         callback: mockCallback,
       });
 
@@ -504,7 +504,7 @@ describe("withMqttStats decorator", () => {
   describe("return value", () => {
     it("should return value from original callback", () => {
       const callbackWithReturn = jest.fn().mockReturnValue("success");
-      const wrappedCallback = withMqttStats({
+      const wrappedCallback = withStats({
         callback: callbackWithReturn,
       });
 

@@ -56,4 +56,29 @@ export type DataPackageSubscriberParams = {
    * Default is 1
    */
   minReferenceValues?: number;
+
+  /**
+   * Configure statistics tracking for PubSub messages.
+   *
+   * Logs message statistics per topic and per client at regular intervals.
+   *
+   * @param 0 - Stats tracking disabled
+   * @param undefined - Stats tracking enabled with default interval (60 seconds)
+   * @param number > 0 - Stats tracking enabled with custom interval (in milliseconds)
+   *
+   * @default undefined (enabled with 60 second interval)
+   *
+   * @example
+   * // Disabled
+   * { statsLogIntervalMs: 0 }
+   *
+   * @example
+   * // Enabled with default 60s interval
+   * { statsLogIntervalMs: undefined } // or omit the parameter
+   *
+   * @example
+   * // Enabled with custom 2-minute interval
+   * { statsLogIntervalMs: 120_000 }
+   */
+  statsLogIntervalMs?: number;
 };
