@@ -1964,7 +1964,7 @@
         }
       }
     },
-    "COOPER": {
+    "COPPER": {
       "source": [
         "commodity-price-api-deferred",
         "databento-cme-no-closing-price",
@@ -1989,7 +1989,7 @@
       "denomination": "USD",
       "rateFeed": false
     },
-    "MARK_flx:COOPER": {
+    "MARK_flx:COPPER": {
       "source": ["hyperliquid-mainnet-perps-ws-fetcher", "hydromancer-mainnet-perps-ws-fetcher"],
       "customWeightsForWeightedMedian": {
         "hyperliquid-mainnet-perps-ws-fetcher": 10,
@@ -2000,7 +2000,7 @@
       "denomination": "USD",
       "rateFeed": false
     },
-    "ORACLE_flx:COOPER": {
+    "ORACLE_flx:COPPER": {
       "source": ["hyperliquid-mainnet-perps-ws-fetcher", "hydromancer-mainnet-perps-ws-fetcher"],
       "customWeightsForWeightedMedian": {
         "hyperliquid-mainnet-perps-ws-fetcher": 10,
@@ -2011,7 +2011,7 @@
       "denomination": "USD",
       "rateFeed": false
     },
-    "IMPACT_BUY_flx:COOPER": {
+    "IMPACT_BUY_flx:COPPER": {
       "source": ["hyperliquid-mainnet-perps-ws-fetcher", "hydromancer-mainnet-perps-ws-fetcher"],
       "customWeightsForWeightedMedian": {
         "hyperliquid-mainnet-perps-ws-fetcher": 10,
@@ -2022,7 +2022,7 @@
       "denomination": "USD",
       "rateFeed": false
     },
-    "IMPACT_SELL_flx:COOPER": {
+    "IMPACT_SELL_flx:COPPER": {
       "source": ["hyperliquid-mainnet-perps-ws-fetcher", "hydromancer-mainnet-perps-ws-fetcher"],
       "customWeightsForWeightedMedian": {
         "hyperliquid-mainnet-perps-ws-fetcher": 10,
@@ -2033,55 +2033,55 @@
       "denomination": "USD",
       "rateFeed": false
     },
-    "IMPACT_BUY_flx:COOPER_EMA_1H": {
+    "IMPACT_BUY_flx:COPPER_EMA_1H": {
       "source": ["ema"],
       "broadcasters": ["influx"],
       "denomination": "USD",
       "rateFeed": false
     },
-    "IMPACT_BUY_flx:COOPER_EMA_8H": {
+    "IMPACT_BUY_flx:COPPER_EMA_8H": {
       "source": ["ema"],
       "broadcasters": ["influx"],
       "denomination": "USD",
       "rateFeed": false
     },
-    "IMPACT_SELL_flx:COOPER_EMA_1H": {
+    "IMPACT_SELL_flx:COPPER_EMA_1H": {
       "source": ["ema"],
       "broadcasters": ["influx"],
       "denomination": "USD",
       "rateFeed": false
     },
-    "IMPACT_SELL_flx:COOPER_EMA_8H": {
+    "IMPACT_SELL_flx:COPPER_EMA_8H": {
       "source": ["ema"],
       "broadcasters": ["influx"],
       "denomination": "USD",
       "rateFeed": false
     },
-    "flx:COOPER_MARK_0": {
+    "flx:COPPER_MARK_0": {
       "source": ["hip3-felix-commodities-mainnet-fetcher"],
       "broadcasters": ["hyperliquid-hip3"],
       "denomination": "USD",
       "rateFeed": false
     },
-    "flx:COOPER_MARK_1": {
+    "flx:COPPER_MARK_1": {
       "source": ["hip3-felix-commodities-mainnet-fetcher"],
       "broadcasters": ["hyperliquid-hip3"],
       "denomination": "USD",
       "rateFeed": false
     },
-    "flx:COOPER_EXT": {
+    "flx:COPPER_EXT": {
       "source": ["hip3-felix-commodities-mainnet-fetcher"],
       "broadcasters": ["hyperliquid-hip3"],
       "denomination": "USD",
       "rateFeed": false
     },
-    "flx:COOPER": {
+    "flx:COPPER": {
       "source": ["hip3-felix-commodities-mainnet-fetcher"],
       "broadcasters": ["hyperliquid-hip3"],
       "denomination": "USD",
       "rateFeed": false
     },
-    "OPEN_INTEREST_flx:COOPER": {
+    "OPEN_INTEREST_flx:COPPER": {
       "source": ["hyperliquid-mainnet-perps-ws-fetcher"],
       "broadcasters": [],
       "denomination": "USD",
