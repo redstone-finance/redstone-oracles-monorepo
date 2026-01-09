@@ -7781,7 +7781,17 @@
       "rateFeed": false
     },
     "XCU": {
-      "source": ["ws-lmax", "alltick-api"],
+      "source": [
+        "ws-lmax",
+        "alltick-api",
+        "metal-price-api-per-oz-to-mt",
+        "metals-api-per-oz-to-mt"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "LME-XCU": {
+      "source": ["metals-api-per-toz-to-mt"],
       "denomination": "USD",
       "rateFeed": false
     },
