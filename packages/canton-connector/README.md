@@ -57,7 +57,7 @@ selected [RedStone data service](https://app.redstone.finance/app/pull-model/red
 const tokenProvider = () => keycloakTokenProvider();
 
 // The party ID you'll be using to interact with the contract; one of defined during contract's initialization
-const partyId = `RedStoneOracleViewer:1220a0242797a84e1d8c492f1259b3f87d561fcbde2e4b2cebc4572ddfc515b44c28`;
+const partyId = `RedStoneOracleViewer::1220a0242797a84e1d8c492f1259b3f87d561fcbde2e4b2cebc4572ddfc515b44c28`;
 
 // The coreId defined during contract's initialization; NOT THE contractId - it will be fetched automatically by package ids
 const coreId = "RedStoneAdapter-040";

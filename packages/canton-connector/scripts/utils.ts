@@ -9,6 +9,10 @@ export function readParticipantUrl() {
   return RedstoneCommon.getFromEnv("PARTICIPANT", z.url());
 }
 
+export function readPartySuffix() {
+  return RedstoneCommon.getFromEnv("PARTY_SUFFIX");
+}
+
 export function getJsonApiUrl(participantUrl = readParticipantUrl()) {
   return `${participantUrl}/jsonapi`;
 }
