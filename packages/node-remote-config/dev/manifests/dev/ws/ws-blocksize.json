@@ -1,0 +1,19 @@
+{
+  "interval": 2000,
+  "priceAggregator": "median",
+  "defaultSource": ["coingecko"],
+  "sourceTimeout": 8000,
+  "deviationCheck": {
+    "deviationWithRecentValues": {
+      "maxPercent": 25,
+      "maxDelayMilliseconds": 120000
+    }
+  },
+  "tokens": {
+    "COPPER": {
+      "source": ["ws-blocksize"],
+      "denomination": "USD",
+      "rateFeed": false
+    }
+  }
+}
