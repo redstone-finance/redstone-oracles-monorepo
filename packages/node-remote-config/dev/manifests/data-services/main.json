@@ -8412,6 +8412,11 @@
       "denomination": "USD",
       "rateFeed": false
     },
+    "COPPER": {
+      "source": [],
+      "denomination": "USD",
+      "rateFeed": false
+    },
     "WTI": {
       "source": [],
       "denomination": "USD",
