@@ -49,10 +49,6 @@ const config: HardhatUserConfig = {
       url: "https://rpc.public.zkevm-test.net",
       accounts,
     },
-    "etherlink-ghostnet": {
-      url: "https://node.ghostnet.etherlink.com",
-      accounts,
-    },
   },
 };
 
