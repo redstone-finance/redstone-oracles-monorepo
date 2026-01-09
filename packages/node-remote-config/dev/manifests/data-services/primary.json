@@ -2912,6 +2912,12 @@
         "uniswap-v4-unichain-eth-500",
         "uniswap-v4-unichain-wbtc-500"
       ],
+      "deviationCheck": {
+        "deviationWithRecentValues": {
+          "maxPercent": 5,
+          "maxDelayMilliseconds": 120000
+        }
+      },
       "denomination": "USD",
       "rateFeed": false
     },
@@ -2987,11 +2993,13 @@
       "rateFeed": false
     },
     "USDH": {
-      "source": [
-        "hyperliquid-api-fetcher",
-        "project-x-hyperevm-whype-500",
-        "project-x-hyperevm-khype-500"
-      ],
+      "source": ["hyperliquid-api-fetcher", "nest-hyperevm-whype", "project-x-hyperevm-whype-3000"],
+      "deviationCheck": {
+        "deviationWithRecentValues": {
+          "maxPercent": 5,
+          "maxDelayMilliseconds": 120000
+        }
+      },
       "denomination": "USD",
       "rateFeed": false
     },
