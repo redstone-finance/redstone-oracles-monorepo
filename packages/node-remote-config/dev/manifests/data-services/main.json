@@ -7961,8 +7961,8 @@
     "USDH": {
       "source": [
         "hyperliquid-api-fetcher",
-        "project-x-hyperevm-whype-500",
-        "project-x-hyperevm-khype-500"
+        "nest-hyperevm-whype",
+        "project-x-hyperevm-whype-3000"
       ],
       "denomination": "USD",
       "rateFeed": false
