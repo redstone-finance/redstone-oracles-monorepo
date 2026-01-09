@@ -1,9 +1,9 @@
-sdk-version: ${SDK_VERSION}
-name: redstone-interface${SVER}
-version: ${VERSION}
+sdk-version: 3.4.9
+name: redstone-interface-v5
+version: 0.4.1
 source: src
 dependencies:
   - daml-prim
   - daml-stdlib
 build-options:
-  - --target=${TARGET}
+  - --target=2.1

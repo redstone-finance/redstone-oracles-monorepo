@@ -8,6 +8,7 @@ import { RedstoneCommon } from "@redstone-finance/utils";
 import _ from "lodash";
 import { CantonClient } from "../CantonClient";
 import { IADAPTER_TEMPLATE_NAME, INTERFACE_ID } from "../defs";
+import { ActiveContractData } from "../utils";
 import { ContractFilter } from "./CantonContractAdapter";
 import { CoreCantonContractAdapter } from "./CoreCantonContractAdapter";
 
@@ -56,18 +57,11 @@ export class PricesCantonContractAdapter
   }
 
   async readContractData(feedIds: string[]) {
-    this.contractId ??= await this.fetchContractId();
-
     const result: ({ value: string; timestamp: string; writeTimestamp: string } | undefined)[] =
-      await this.client.exerciseChoice({
-        choice: READ_PRICE_DATA_CHOICE,
-        contractId: this.contractId,
-        choiceArgument: {
-          feedIds: ContractParamsProvider.hexlifyFeedIds(feedIds).map(
-            ContractParamsProvider.arrayifyFeedId
-          ),
-        },
-        templateId: this.getInterfaceId(),
+      await this.exerciseChoice(READ_PRICE_DATA_CHOICE, {
+        feedIds: ContractParamsProvider.hexlifyFeedIds(feedIds).map(
+          ContractParamsProvider.arrayifyFeedId
+        ),
       });
 
     const data = _.zip(feedIds, result).map(([feedId, r]) => [
@@ -85,38 +79,23 @@ export class PricesCantonContractAdapter
   }
 
   async readPricesFromContract(paramsProvider: ContractParamsProvider): Promise<bigint[]> {
-    this.contractId ??= await this.fetchContractId();
-
-    const result: string[] = await this.client.exerciseChoice({
-      choice: READ_PRICES_CHOICE,
-      contractId: this.contractId,
-      choiceArgument: {
-        feedIds: paramsProvider.getArrayifiedFeedIds(),
-      },
-      templateId: this.getInterfaceId(),
+    const result: string[] = await this.exerciseChoice(READ_PRICES_CHOICE, {
+      feedIds: paramsProvider.getArrayifiedFeedIds(),
     });
 
     return result.map(CoreCantonContractAdapter.convertDecimalValue);
   }
 
   async writePricesFromPayloadToContract(paramsProvider: ContractParamsProvider): Promise<string> {
-    this.contractId ??= await this.fetchContractId(this.updateClient);
-
-    const result: string = await this.updateClient.exerciseChoice(
-      {
-        choice: WRITE_PRICES_CHOICE,
-        contractId: this.contractId,
-        choiceArgument: {
-          feedIds: paramsProvider.getArrayifiedFeedIds(),
-          payloadHex: await paramsProvider.getPayloadHex(false),
-        },
-        templateId: this.getInterfaceId(),
-      },
-      true
+    const result: ActiveContractData = await this.exerciseChoice(
+      WRITE_PRICES_CHOICE,
+      await CoreCantonContractAdapter.getPayloadArgument(paramsProvider),
+      true,
+      this.updateClient
     );
 
-    this.contractId = result;
+    this.activeContractData = result;
 
-    return result;
+    return result.contractId;
   }
 }
