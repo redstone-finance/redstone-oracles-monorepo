@@ -8439,7 +8439,7 @@
     },
     "LME-XCU": {
       "source": [
-        "metals-api-per-toz-to-mt"
+        "metals-api-per-toz-to-lb"
       ],
       "denomination": "USD",
       "rateFeed": false
