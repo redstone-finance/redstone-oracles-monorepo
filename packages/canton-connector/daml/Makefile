@@ -1,19 +1,18 @@
 include ./ops.mk
 
-VERSION=0.4.1
+VERSION=0.4.2
 SVER=-v5
 LEDGER_HOST=localhost
 LEDGER_PORT=6865
 
 SDK_VERSION=3.4.9
-ENVS=SDK_VERSION=$(SDK_VERSION) TARGET=2.1 VERSION=$(VERSION) SVER=$(SVER)
 
 TEST_DAR=.daml/dist/redstone-test$(SVER)-$(VERSION).dar
 
 .PHONY: get_party_suffix
 
 build-%:
-	cd $* && $(ENVS) daml build
+	cd $* && daml build
 
 clean-%: 
 	cd $* && daml clean 
@@ -23,16 +22,16 @@ build_redstone_adapter: build-sdk build-interface build-adapter
 build_redstone_core: build-sdk build-interface build-core
 
 build_test: 
-	$(ENVS) daml build --all
+	daml build --all
 
 run-%: build_test
-	cd test && $(ENVS) daml script --ide-ledger \
+	cd test && daml script --ide-ledger \
 		--dar $(TEST_DAR) \
 		--script-name $*:main \
 		--input-file input.json
 
 clean:
-	$(ENVS) daml clean --all
+	daml clean --all
 	rm -f $(ADAPTER_ID_TXT) $(PRICE_FEED_ID_TXT) $(CORE_ID_TXT) refresh_token.txt token.txt test/input.json test/sample_data/payload.hex
 
 lint: lint-sdk lint-core lint-adapter lint-price_feed lint-interface lint-test
@@ -41,14 +40,14 @@ lint: lint-sdk lint-core lint-adapter lint-price_feed lint-interface lint-test
 build: build_test
 
 lint-%: 
-	cd $* && $(ENVS) daml damlc lint
+	cd $* && daml damlc lint
 
 run_main: run-Main
 
 run_test: build_test lint-test run-Test run-Core
 
 test-%: build_redstone_adapter build_redstone_core build_test
-	cd test && $(ENVS) daml script --ide-ledger \
+	cd test && daml script --ide-ledger \
 		--dar $(TEST_DAR) \
 		--script-name $*:main
 
@@ -59,14 +58,14 @@ integration_tests: prepare_data run_main run_test
 run_ledger: ledger-Run
 
 ledger-%: build_test
-	cd test && $(ENVS) daml script --script-name $*:main \
+	cd test && daml script --script-name $*:main \
 	--ledger-host $(LEDGER_HOST) \
 	--ledger-port $(LEDGER_PORT) \
 	--input-file input.json \
 	--dar $(TEST_DAR)
 
 start:
-	cd test && $(ENVS) daml start
+	cd test && daml start
 
 start_daemon:
 	make start & \
