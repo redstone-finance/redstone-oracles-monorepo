@@ -7765,6 +7765,11 @@
       "denomination": "USD",
       "rateFeed": false
     },
+    "COPPER": {
+      "source": ["ws-blocksize"],
+      "denomination": "USD",
+      "rateFeed": false
+    },
     "WTI": {
       "source": ["twelve-data", "alltick-api", "ws-lmax", "metal-price-api"],
       "denomination": "USD",
