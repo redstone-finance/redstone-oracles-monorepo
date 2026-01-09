@@ -4,11 +4,14 @@ CANTON_API=$(PARTICIPANT)/jsonapi
 ADAPTER_NAME=RedStoneAdapter-040
 ADAPTER_TEMPLATE_ID=6caf79d77e6396402e572c347eea0537b3b03209718b6ae8cc5a1a9624be1418:RedStoneAdapter:RedStoneAdapter
 PRICE_FEED_TEMPLATE_ID=e6e6121cc8b94556ec5f2f12f4f86562be85bf385e0e6fea0638859be8de1141:RedStonePriceFeed:RedStonePriceFeed
-CORE_TEMPLATE_ID=198619e3ce1735292d168ecbf2270720b7c171baf43c1067bdb5929cb45b2b21:RedStoneCore:RedStoneCore
-IADAPTER_TEMPLATE_ID=06bb8634b832149544444b90abe087fbcfcbac7946da7fe227309ade3c2244ea:IRedStoneAdapter:IRedStoneAdapter
-IPRICE_FEED_TEMPLATE_ID=06bb8634b832149544444b90abe087fbcfcbac7946da7fe227309ade3c2244ea:IRedStonePriceFeed:IRedStonePriceFeed
-ICORE_TEMPLATE_ID=06bb8634b832149544444b90abe087fbcfcbac7946da7fe227309ade3c2244ea:IRedStoneCore:IRedStoneCore
-PARTY_SUFFIX=1220a0242797a84e1d8c492f1259b3f87d561fcbde2e4b2cebc4572ddfc515b44c28
+CORE_TEMPLATE_ID=5e14917b311c528ce677ded59d600013f5d3112409c3fe6df218f7bc7a580d7e:RedStoneCore:RedStoneCore
+CORE_CLIENT_TEMPLATE_ID=5e14917b311c528ce677ded59d600013f5d3112409c3fe6df218f7bc7a580d7e:RedStoneCoreClient:RedStoneCoreClient
+
+INTERFACE_ID=06bb8634b832149544444b90abe087fbcfcbac7946da7fe227309ade3c2244ea
+IADAPTER_TEMPLATE_ID=$(INTERFACE_ID):IRedStoneAdapter:IRedStoneAdapter
+IPRICE_FEED_TEMPLATE_ID=$(INTERFACE_ID):IRedStonePriceFeed:IRedStonePriceFeed
+ICORE_TEMPLATE_ID=$(INTERFACE_ID):IRedStoneCore:IRedStoneCore
+
 
 TOKEN=$(shell cat token.txt)
 ETH=["69","84","72"]
@@ -70,6 +73,22 @@ deploy-core: get-token
 					"viewers": ["RedStoneOracleViewer::$(PARTY_SUFFIX)"]}}}], \
 		"actAs": ["RedStoneOracleOwner::$(PARTY_SUFFIX)"], \
 		"commandId": "deploy-core-$(shell date +%s)"}' | jq '.'
+
+
+deploy-core-client: get-token
+	@curl -X POST -H "Authorization: Bearer $(TOKEN)" \
+	  -H "Content-Type: application/json" \
+	  "$(CANTON_API)/v2/commands/submit-and-wait-for-transaction-tree" \
+	  -d '{ \
+		"commands": [{ \
+			"CreateCommand": { \
+				"templateId": "$(CORE_CLIENT_TEMPLATE_ID)", \
+				"createArguments": { \
+					"owner": "RedStoneOracleOwner::$(PARTY_SUFFIX)", \
+					"viewers": ["Client::$(PARTY_SUFFIX)"]}}}], \
+		"actAs": ["RedStoneOracleOwner::$(PARTY_SUFFIX)"], \
+		"commandId": "deploy-core-client-$(shell date +%s)"}' | jq '.'
+
 
 deploy-adapter: get-token
 	@curl -X POST -H "Authorization: Bearer $(TOKEN)" \
