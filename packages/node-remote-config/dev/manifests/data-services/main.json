@@ -8432,6 +8432,13 @@
       "denomination": "USD",
       "rateFeed": false
     },
+    "LME-XCU": {
+      "source": [
+        "metals-api-per-toz-to-mt"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
     "XNG": {
       "source": [],
       "denomination": "USD",
