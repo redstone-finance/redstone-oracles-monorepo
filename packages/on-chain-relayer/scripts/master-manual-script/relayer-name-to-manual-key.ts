@@ -5,8 +5,6 @@ export const relayerNameToManualKeyArn: Record<string, string> = {
   ethereumEtherfiWeeth: "/prod/on-chain-relayer/ethereum/etherfi/weeth/manual/private_key",
   ethereumEtherfiWeetheth: "/prod/on-chain-relayer/ethereum/etherfi/weetheth/manual/private_key",
   ethereumPufStaking: "/prod/on-chain-relayer/ethereum/puf/staking/manual/private-key",
-  etherlinkGhostnetTezosXtzEthBtc:
-    "/prod/on-chain-relayer/etherlink-ghostnet/tezos/xtzethbtc/manual/private_key",
   mantaLayerBank: "/prod/on-chain-relayer/manta/layerbank/manual/private-key",
   mentoCeloMainnet: "/prod/on-chain-relayer/mento/celo/private-key",
   merlinMerl: "/prod/on-chain-relayer/merlin/multi-price-feed/manual/private-key",
