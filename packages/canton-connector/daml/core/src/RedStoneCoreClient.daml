@@ -1,0 +1,24 @@
+module RedStoneCoreClient where
+
+import IRedStoneCore
+import RedStoneTypes
+
+template RedStoneCoreClient
+  with
+    owner : Party
+    viewers : [Party]
+  where
+    signatory owner
+    observer viewers
+
+    nonconsuming choice GetPricesDisclosed : RedStoneResult
+      with
+        feedIds : [RedStoneFeedId]
+        currentTime : Time
+        payloadHex : Text
+        adapterCid : ContractId IRedStoneCore
+      controller viewers
+      do
+        adapter <- fetch adapterCid
+
+        getPrices adapter feedIds currentTime payloadHex

@@ -2,7 +2,7 @@ import { ContractParamsProvider } from "@redstone-finance/sdk";
 import Decimal from "decimal.js";
 import { CantonClient } from "../CantonClient";
 import { ICORE_TEMPLATE_NAME, INTERFACE_ID } from "../defs";
-import { Daml2Tuple } from "../utils";
+import { DamlTuple2 } from "../utils";
 import { CantonContractAdapter, ContractFilter } from "./CantonContractAdapter";
 
 const GET_PRICES_CHOICE = "GetPrices";
@@ -24,18 +24,9 @@ export class CoreCantonContractAdapter extends CantonContractAdapter {
   }
 
   async getPricesFromPayload(paramsProvider: ContractParamsProvider) {
-    this.contractId ??= await this.fetchContractId();
-
-    const result: Daml2Tuple<string[]> = await this.client.exerciseChoice(
-      {
-        choice: GET_PRICES_CHOICE,
-        contractId: this.contractId,
-        choiceArgument: {
-          feedIds: paramsProvider.getArrayifiedFeedIds(),
-          payloadHex: await paramsProvider.getPayloadHex(false),
-        },
-        templateId: this.getInterfaceId(),
-      },
+    const result: DamlTuple2<string[]> = await this.exerciseChoice(
+      GET_PRICES_CHOICE,
+      await CoreCantonContractAdapter.getPayloadArgument(paramsProvider),
       true
     );
 
@@ -43,6 +34,15 @@ export class CoreCantonContractAdapter extends CantonContractAdapter {
   }
 
   protected static convertDecimalValue(value: string) {
-    return BigInt(new Decimal(value).mul(10 ** REDSTONE_DECIMALS).toFixed());
+    const decimal = new Decimal(value).mul(10 ** REDSTONE_DECIMALS);
+
+    return BigInt(decimal.toFixed());
+  }
+
+  protected static async getPayloadArgument(paramsProvider: ContractParamsProvider) {
+    return {
+      feedIds: paramsProvider.getArrayifiedFeedIds(),
+      payloadHex: await paramsProvider.getPayloadHex(false),
+    };
   }
 }
