@@ -1,6 +1,6 @@
-sdk-version: ${SDK_VERSION}
-name: redstone-sdk${SVER}
-version: ${VERSION}
+sdk-version: 3.4.9
+name: redstone-sdk-v5
+version: 0.4.2
 source: src
 dependencies:
   - daml-prim
@@ -13,4 +13,4 @@ exposed-modules:
   - RedStone.U256
 build-options:
   - -Wno-crypto-text-is-alpha
-  - --target=${TARGET}
+  - --target=2.1
