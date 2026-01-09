@@ -1,4 +1,4 @@
-sdk-version: ${SDK_VERSION}
+sdk-version: 3.4.9
 packages:
   - ./sdk
   - ./interface

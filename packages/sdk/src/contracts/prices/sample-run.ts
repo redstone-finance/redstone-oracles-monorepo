@@ -129,15 +129,19 @@ async function readFromEthFeed(
   const { value, timestamp } = await feedAdapter.getPriceAndTimestamp(blockNumber);
 
   const feedId = (await feedAdapter.getDataFeedId?.(blockNumber)) ?? "ETH(???)";
-  const decimals = await feedAdapter.decimals?.(blockNumber);
+  const decimals = (await feedAdapter.decimals?.(blockNumber)) ?? consts.DEFAULT_NUM_VALUE_DECIMALS;
 
   console.log(
-    `${feedId} price: $${convertValue(value, decimals)} (${describeTimestamp(timestamp)}) (${decimals} decimals)`
+    `${feedId} price: $${convertValueDec(value, decimals)} (${describeTimestamp(timestamp)}) (${decimals} decimals)`
   );
 }
 
-export function convertValue(v: BigNumberish, decimals?: number) {
-  return BigNumber.from(v).toNumber() / 10 ** (decimals ?? consts.DEFAULT_NUM_VALUE_DECIMALS);
+export function convertValue(v: BigNumberish) {
+  return convertValueDec(v, consts.DEFAULT_NUM_VALUE_DECIMALS);
+}
+
+export function convertValueDec(v: BigNumberish, decimals: number) {
+  return BigNumber.from(v).toNumber() / 10 ** decimals;
 }
 
 export function describeTimestamp(timestamp: number) {
