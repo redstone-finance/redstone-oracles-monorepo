@@ -7814,6 +7814,11 @@
       "source": ["ws-lmax", "alltick-api", "financialmodelingprep"],
       "denomination": "USD",
       "rateFeed": false
+    },
+    "SPXU": {
+      "source": ["twelve-data", "financialmodelingprep", "ws-polygon-massive-no-closing-price"],
+      "denomination": "USD",
+      "rateFeed": false
     }
   }
 }
