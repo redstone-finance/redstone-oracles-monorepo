@@ -3876,6 +3876,11 @@
       ],
       "denomination": "USD",
       "rateFeed": false
+    },
+    "SPXU": {
+      "source": [],
+      "denomination": "USD",
+      "rateFeed": false
     }
   },
   "multiPointPackages": {
