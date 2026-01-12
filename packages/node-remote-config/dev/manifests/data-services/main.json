@@ -7810,6 +7810,11 @@
       "denomination": "USD",
       "rateFeed": false
     },
+    "NATURALGAS": {
+      "source": ["metal-price-api"],
+      "denomination": "USD",
+      "rateFeed": false
+    },
     "SP500": {
       "source": ["ws-lmax", "alltick-api", "financialmodelingprep"],
       "denomination": "USD",
@@ -7817,6 +7822,16 @@
     },
     "SPXU": {
       "source": ["twelve-data", "financialmodelingprep", "ws-polygon-massive-no-closing-price"],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "URNM": {
+      "source": [
+        "twelve-data",
+        "financialmodelingprep",
+        "databento-no-closing-price",
+        "ws-polygon-massive-no-closing-price"
+      ],
       "denomination": "USD",
       "rateFeed": false
     }
