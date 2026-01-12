@@ -3,7 +3,7 @@
   "priceAggregator": "median",
   "defaultSource": ["coingecko"],
   "sourceTimeout": 1000,
-  "minValidSourcesPercentage": 10,
+  "minValidSourcesPercentage": 30,
   "deviationCheck": {
     "deviationWithRecentValues": {
       "maxPercent": 1000000000,
@@ -2086,6 +2086,134 @@
       "rateFeed": false
     },
     "OPEN_INTEREST_flx:SP500": {
+      "source": ["hyperliquid-mainnet-perps-ws-fetcher"],
+      "broadcasters": [],
+      "denomination": "USD",
+      "rateFeed": false,
+      "deviationCheck": {
+        "deviationWithRecentValues": {
+          "maxPercent": 1000000000,
+          "maxDelayMilliseconds": 1000
+        }
+      }
+    },
+    "XCU": {
+      "source": [
+        "ws-lmax-per-mt-to-lb",
+        "alltick-api-per-mt-to-lb-deferred",
+        "metal-price-api-per-oz-to-lb-deferred",
+        "metals-api-per-oz-to-lb-deferred"
+      ],
+      "priceAggregator": "primarySource",
+      "primarySourceAggregatorConfig": {
+        "primarySource": "ws-lmax-per-mt-to-lb",
+        "maxAcceptableDeviation": 1.5,
+        "lowerClampPercent": 0.1,
+        "upperClampPercent": 0.1
+      },
+      "broadcasters": ["influx"],
+      "deviationCheck": {
+        "deviationWithRecentValues": {
+          "maxPercent": 30,
+          "maxDelayMilliseconds": 120000
+        }
+      },
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "MARK_flx:COPPER": {
+      "source": ["hyperliquid-mainnet-perps-ws-fetcher", "hydromancer-mainnet-perps-ws-fetcher"],
+      "customWeightsForWeightedMedian": {
+        "hyperliquid-mainnet-perps-ws-fetcher": 10,
+        "hydromancer-mainnet-perps-ws-fetcher": 1
+      },
+      "priceAggregator": "constantWeightMedian",
+      "broadcasters": ["influx"],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "ORACLE_flx:COPPER": {
+      "source": ["hyperliquid-mainnet-perps-ws-fetcher", "hydromancer-mainnet-perps-ws-fetcher"],
+      "customWeightsForWeightedMedian": {
+        "hyperliquid-mainnet-perps-ws-fetcher": 10,
+        "hydromancer-mainnet-perps-ws-fetcher": 1
+      },
+      "priceAggregator": "constantWeightMedian",
+      "broadcasters": ["influx"],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "IMPACT_BUY_flx:COPPER": {
+      "source": ["hyperliquid-mainnet-perps-ws-fetcher", "hydromancer-mainnet-perps-ws-fetcher"],
+      "customWeightsForWeightedMedian": {
+        "hyperliquid-mainnet-perps-ws-fetcher": 10,
+        "hydromancer-mainnet-perps-ws-fetcher": 1
+      },
+      "priceAggregator": "constantWeightMedian",
+      "broadcasters": ["influx"],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "IMPACT_SELL_flx:COPPER": {
+      "source": ["hyperliquid-mainnet-perps-ws-fetcher", "hydromancer-mainnet-perps-ws-fetcher"],
+      "customWeightsForWeightedMedian": {
+        "hyperliquid-mainnet-perps-ws-fetcher": 10,
+        "hydromancer-mainnet-perps-ws-fetcher": 1
+      },
+      "priceAggregator": "constantWeightMedian",
+      "broadcasters": ["influx"],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "IMPACT_BUY_flx:COPPER_EMA_2H": {
+      "source": ["ema"],
+      "broadcasters": ["influx"],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "IMPACT_BUY_flx:COPPER_EMA_8H": {
+      "source": ["ema"],
+      "broadcasters": ["influx"],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "IMPACT_SELL_flx:COPPER_EMA_2H": {
+      "source": ["ema"],
+      "broadcasters": ["influx"],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "IMPACT_SELL_flx:COPPER_EMA_8H": {
+      "source": ["ema"],
+      "broadcasters": ["influx"],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "flx:COPPER_MARK_0": {
+      "source": ["hip3-felix-copper-mainnet-fetcher"],
+      "broadcasters": ["hyperliquid-hip3"],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "flx:COPPER_MARK_1": {
+      "source": ["hip3-felix-copper-mainnet-fetcher"],
+      "broadcasters": ["hyperliquid-hip3"],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "flx:COPPER_EXT": {
+      "source": ["hip3-felix-copper-mainnet-fetcher"],
+      "broadcasters": ["hyperliquid-hip3"],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "flx:COPPER": {
+      "source": ["hip3-felix-copper-mainnet-fetcher"],
+      "broadcasters": ["hyperliquid-hip3"],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "OPEN_INTEREST_flx:COPPER": {
       "source": ["hyperliquid-mainnet-perps-ws-fetcher"],
       "broadcasters": [],
       "denomination": "USD",
