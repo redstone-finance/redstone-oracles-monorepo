@@ -107,7 +107,10 @@ export default defineConfig([
       "no-throw-literal": "off",
       "@typescript-eslint/only-throw-error": "error",
       "prefer-promise-reject-errors": "error",
-      "import-x/no-extraneous-dependencies": "error",
+      "import-x/no-extraneous-dependencies": [
+        "error",
+        { includeTypes: true, whitelist: ["@jest/types", "typescript"] },
+      ],
       "import-x/no-named-as-default": ["off"],
       "import-x/no-named-as-default-member": ["off"],
       "import-x/no-unresolved": [
