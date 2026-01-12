@@ -8454,12 +8454,24 @@
       "denomination": "USD",
       "rateFeed": false
     },
+    "NATURALGAS": {
+      "source": [
+        "metal-price-api"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
     "SP500": {
       "source": [],
       "denomination": "USD",
       "rateFeed": false
     },
     "SPXU": {
+      "source": [],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "URNM": {
       "source": [],
       "denomination": "USD",
       "rateFeed": false
