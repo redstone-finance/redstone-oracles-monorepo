@@ -1232,7 +1232,8 @@
         "alltick-api-deferred",
         "metal-price-api-deferred",
         "ws-lmax",
-        "ws-twelve-data-no-closing-price"
+        "ws-twelve-data-no-closing-price",
+        "ws-blocksize"
       ],
       "priceAggregator": "primarySource",
       "primarySourceAggregatorConfig": {
@@ -1493,7 +1494,8 @@
         "ws-lmax-per-mt-to-lb",
         "alltick-api-per-mt-to-lb-deferred",
         "metal-price-api-per-oz-to-lb-deferred",
-        "metals-api-per-oz-to-lb-deferred"
+        "metals-api-per-oz-to-lb-deferred",
+        "ws-blocksize"
       ],
       "priceAggregator": "primarySource",
       "primarySourceAggregatorConfig": {
