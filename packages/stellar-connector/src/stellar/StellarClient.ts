@@ -1,4 +1,4 @@
-import { RedstoneCommon } from "@redstone-finance/utils";
+import { loggerFactory, RedstoneCommon } from "@redstone-finance/utils";
 import {
   Account,
   Address,
@@ -20,8 +20,12 @@ import { StellarSigner } from "./StellarSigner";
 
 const REDSTONE_EVENT_TOPIC_QUALIFIER = "REDSTONE";
 const TRANSACTION_TIMEOUT_SEC = 30;
+const DAYS_TO_EXTEND_BEFORE = 7;
+const LEDGERS_PER_DAY = RedstoneCommon.hourToSecs(24) / 5;
 
 export class StellarClient {
+  private readonly logger = loggerFactory("stellar-client");
+
   private getNetwork = RedstoneCommon.memoize({
     functionToMemoize: () => this.server.getNetwork(),
     ttl: RedstoneCommon.hourToMs(24),
@@ -197,7 +201,7 @@ export class StellarClient {
 
       return getLedgerCloseDate(Number(response.ledgers[0].ledgerCloseTime));
     } catch {
-      console.warn(`Could not get time of ledger ${sequence}`);
+      this.logger.warn(`Could not get time of ledger ${sequence}`);
       return new Date(0);
     }
   }
@@ -220,7 +224,7 @@ export class StellarClient {
     let lastLedger = transactions.at(-1)?.ledger;
 
     while (lastLedger !== undefined && lastLedger <= endLedger) {
-      console.log(`Fetching data of ${lastLedger} up to ${endLedger}`);
+      this.logger.log(`Fetching data of ${lastLedger} up to ${endLedger}`);
 
       const req = {
         pagination: { cursor, limit: FETCHING_LIMIT },
@@ -255,7 +259,7 @@ export class StellarClient {
     let hasMoreEvents = false;
 
     do {
-      console.log(`Getting events with ${currentCursor ?? `limit: ${FETCHING_LIMIT}`}`);
+      this.logger.log(`Getting events with ${currentCursor ?? `limit: ${FETCHING_LIMIT}`}`);
       const filters: rpc.Api.EventFilter[] = [
         {
           type: "contract",
@@ -301,7 +305,7 @@ export class StellarClient {
 
     if (oldestLedger > startLedger) {
       const end = Math.min(endLedger, oldestLedger);
-      console.warn(`RPC node is past requested ledgers, skipping: ${startLedger} - ${end}`);
+      this.logger.warn(`RPC node is past requested ledgers, skipping: ${startLedger} - ${end}`);
     }
 
     if (oldestLedger > endLedger || latestLedger < startLedger) {
@@ -312,6 +316,42 @@ export class StellarClient {
     endLedger = Math.min(endLedger, latestLedger);
 
     return { startLedger, endLedger, inRange: true };
+  }
+
+  async getInstanceTtl(contract: string | Address | Contract) {
+    return (
+      await this.getContractData(
+        contract,
+        xdr.ScVal.scvLedgerKeyContractInstance(),
+        (result) => result
+      )
+    ).liveUntilLedgerSeq;
+  }
+
+  async getAddressesToExtendInstanceTtl(
+    addresses: string[],
+    updateTtlThreshold = LEDGERS_PER_DAY * DAYS_TO_EXTEND_BEFORE
+  ) {
+    const [currentLedger, ttls] = await Promise.all([
+      this.getBlockNumber(),
+      Promise.allSettled(addresses.map(this.getInstanceTtl.bind(this))),
+    ]);
+
+    const addressesToUpdate = _.zip(addresses, ttls)
+      .filter(([_, ttl]) => ttl?.status === "fulfilled")
+      .filter(
+        ([_, ttl]) =>
+          (ttl as PromiseFulfilledResult<number>).value - currentLedger < updateTtlThreshold
+      )
+      .map(([address]) => address!);
+
+    if (!addressesToUpdate.length) {
+      this.logger.info("No contracts to extend instance TTL");
+    } else {
+      this.logger.log(`Contracts to extend instance TTL: [${addressesToUpdate.join(`,`)}]`);
+    }
+
+    return addressesToUpdate;
   }
 
   // Horizon
