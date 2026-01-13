@@ -3516,6 +3516,11 @@
       ],
       "denomination": "USD",
       "rateFeed": false
+    },
+    "USDm": {
+      "source": ["kumbaya-megaeth-cusd-100"],
+      "denomination": "USD",
+      "rateFeed": false
     }
   },
   "multiPointPackages": {
