@@ -7834,6 +7834,21 @@
       ],
       "denomination": "USD",
       "rateFeed": false
+    },
+    "SOYABEAN": {
+      "source": ["twelve-data", "databento-cme-no-closing-price", "commodity-price-api"],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "CORN": {
+      "source": [
+        "twelve-data",
+        "databento-cme-no-closing-price",
+        "financialmodelingprep",
+        "commodity-price-api"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
     }
   }
 }
