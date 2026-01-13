@@ -13,7 +13,7 @@ import { StellarSigner } from "./StellarSigner";
 import { StellarTransactionExecutor } from "./StellarTransactionExecutor";
 import { configFromPartial, StellarTxDeliveryManConfig } from "./StellarTxDeliveryManConfig";
 
-type StellarOperation = xdr.Operation<Operation.InvokeHostFunction>;
+export type StellarOperation = xdr.Operation<Operation.InvokeHostFunction>;
 
 export class StellarOperationSender {
   private readonly executor: StellarTransactionExecutor;
