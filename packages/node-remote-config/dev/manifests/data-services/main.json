@@ -4516,10 +4516,6 @@
       "denomination": "USD",
       "rateFeed": false
     },
-    "CUSD": {
-      "denomination": "USD",
-      "rateFeed": false
-    },
     "SENSO": {
       "denomination": "USD",
       "rateFeed": false
@@ -8487,6 +8483,13 @@
     },
     "CORN": {
       "source": [],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "USDm": {
+      "source": [
+        "kumbaya-megaeth-cusd-100"
+      ],
       "denomination": "USD",
       "rateFeed": false
     }
