@@ -12,6 +12,8 @@ import {
 import { FEEDS } from "./consts";
 import { loadAdapterId, loadPriceFeedId, readNetwork, readUrl } from "./utils";
 
+const WITH_TTL_EXTENDING = false as boolean;
+
 async function main() {
   const keypair = makeKeypair();
   const adapterId = loadAdapterId();
@@ -28,6 +30,17 @@ async function main() {
     uniqueSignersCount: 3,
     authorizedSigners: getSignersForDataServiceId("redstone-primary-prod"),
   });
+
+  if (WITH_TTL_EXTENDING) {
+    const adapter = await connector.getAdapter();
+
+    await adapter.writePricesFromPayloadToContract(paramsProvider, {
+      allFeedIds: FEEDS,
+      feedAddresses: Object.fromEntries(FEEDS.map((feedId) => [feedId, loadPriceFeedId(feedId)])),
+    });
+
+    return;
+  }
 
   const ethPriceFeedConnector = new PriceFeedStellarContractConnector(
     client,
