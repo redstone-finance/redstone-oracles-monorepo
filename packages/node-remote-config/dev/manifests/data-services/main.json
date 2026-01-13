@@ -4095,10 +4095,6 @@
       "denomination": "USD",
       "rateFeed": false
     },
-    "CUSD": {
-      "denomination": "USD",
-      "rateFeed": false
-    },
     "SENSO": {
       "denomination": "USD",
       "rateFeed": false
@@ -7847,6 +7843,11 @@
         "financialmodelingprep",
         "commodity-price-api"
       ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "USDm": {
+      "source": ["kumbaya-megaeth-cusd-100"],
       "denomination": "USD",
       "rateFeed": false
     }
