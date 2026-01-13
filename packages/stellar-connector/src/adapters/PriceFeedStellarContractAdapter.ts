@@ -79,4 +79,8 @@ export class PriceFeedStellarContractAdapter
       XdrUtils.parseReadSinglePriceDataSimulation
     );
   }
+
+  override getExtendInstanceTtlOperation() {
+    return this.contract.call("read_timestamp");
+  }
 }

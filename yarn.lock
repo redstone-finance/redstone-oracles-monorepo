@@ -9511,7 +9511,7 @@ __metadata:
     "@redstone-finance/sui-connector": "workspace:*"
     "@redstone-finance/utils": "workspace:*"
     "@solana/web3.js": "npm:^1.98.2"
-    "@stellar/stellar-sdk": "npm:14.3.0"
+    "@stellar/stellar-sdk": "npm:14.4.3"
     ethers: "npm:^5.7.2"
     fuels: "npm:^0.97.0"
     lodash: "npm:^4.17.21"
@@ -11005,7 +11005,7 @@ __metadata:
     "@redstone-finance/rpc-providers": "workspace:*"
     "@redstone-finance/sdk": "workspace:*"
     "@redstone-finance/utils": "workspace:*"
-    "@stellar/stellar-sdk": "npm:14.3.0"
+    "@stellar/stellar-sdk": "npm:14.4.3"
     "@types/aws-lambda": "npm:^8.10.145"
     "@types/cors": "npm:^2.8.12"
     "@types/express": "npm:^4.17.14"
@@ -11041,7 +11041,7 @@ __metadata:
     "@redstone-finance/protocol": "workspace:*"
     "@redstone-finance/utils": "workspace:*"
     "@solana/web3.js": "npm:^1.98.2"
-    "@stellar/stellar-sdk": "npm:14.3.0"
+    "@stellar/stellar-sdk": "npm:14.4.3"
     "@types/aws-lambda": "npm:^8.10.145"
     axios: "npm:^1.13.2"
     dotenv: "npm:^16.0.3"
@@ -11685,7 +11685,7 @@ __metadata:
     "@redstone-finance/multichain-kit": "workspace:*"
     "@redstone-finance/sdk": "workspace:*"
     "@redstone-finance/utils": "workspace:*"
-    "@stellar/stellar-sdk": "npm:14.3.0"
+    "@stellar/stellar-sdk": "npm:14.4.3"
     "@types/urijs": "npm:^1.19.25"
     axios: "npm:^1.13.2"
     dotenv: "npm:^16.0.3"
@@ -14133,9 +14133,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@stellar/stellar-base@npm:^14.0.1":
-  version: 14.0.1
-  resolution: "@stellar/stellar-base@npm:14.0.1"
+"@stellar/stellar-base@npm:^14.0.4":
+  version: 14.0.4
+  resolution: "@stellar/stellar-base@npm:14.0.4"
   dependencies:
     "@noble/curves": "npm:^1.9.6"
     "@stellar/js-xdr": "npm:^3.1.2"
@@ -14143,23 +14143,23 @@ __metadata:
     bignumber.js: "npm:^9.3.1"
     buffer: "npm:^6.0.3"
     sha.js: "npm:^2.4.12"
-  checksum: 10c0/7552cbf9d302b7680c6b84511db2a8f372513d082db31f80e90634d3b8ba954203d1e28c276657b817d5351838d022ae772e836773758245488cd0abb7945417
+  checksum: 10c0/e09de57639b09d18ebd51a5e872f5dc742be6ee2c81ad105f0745ac1c77a7d783bd9b37299093b30136436ca1df7827f534eccbaaf0ac4c86f9d51814421b667
   languageName: node
   linkType: hard
 
-"@stellar/stellar-sdk@npm:14.3.0":
-  version: 14.3.0
-  resolution: "@stellar/stellar-sdk@npm:14.3.0"
+"@stellar/stellar-sdk@npm:14.4.3":
+  version: 14.4.3
+  resolution: "@stellar/stellar-sdk@npm:14.4.3"
   dependencies:
-    "@stellar/stellar-base": "npm:^14.0.1"
-    axios: "npm:^1.12.2"
+    "@stellar/stellar-base": "npm:^14.0.4"
+    axios: "npm:^1.13.2"
     bignumber.js: "npm:^9.3.1"
     eventsource: "npm:^2.0.2"
     feaxios: "npm:^0.0.23"
     randombytes: "npm:^2.1.0"
     toml: "npm:^3.0.0"
     urijs: "npm:^1.19.1"
-  checksum: 10c0/057499123a8cd7bff2db9705009e466a8adee7baae5bd3cf3bbaa65a8cf8394eed3a2fb6868a3a7614919bd2d34f82b8cce3aa7daa82cfa3ee41a20ec26698fe
+  checksum: 10c0/dfed422cbddfbcdc0e6fa891965d0aefe0622d0e2b8426545d31724d3533dc0b2d249dd9a44d47d5be2cceccda8348b094f265ea08138122c9269d6af138e70b
   languageName: node
   linkType: hard
 

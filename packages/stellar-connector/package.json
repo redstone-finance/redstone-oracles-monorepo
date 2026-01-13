@@ -35,13 +35,14 @@
     "combine-signatures": "yarn global:ts-node ./scripts/ledger/combine-signatures.ts",
     "create-account": "yarn global:ts-node ./scripts/create-account-with-funds.ts",
     "get-stellar-address": "yarn global:ts-node ./scripts/get-stellar-address.ts",
-    "instantiate-price-feed": "CONTRACT_NAME=redstone_price_feed yarn global:ts-node scripts/instantiate-price-feed.ts"
+    "instantiate-price-feed": "CONTRACT_NAME=redstone_price_feed yarn global:ts-node scripts/instantiate-price-feed.ts",
+    "extend-price-feed-ttl": "yarn global:ts-node scripts/extend-price-feed-ttl.ts"
   },
   "dependencies": {
     "@redstone-finance/multichain-kit": "workspace:*",
     "@redstone-finance/sdk": "workspace:*",
     "@redstone-finance/utils": "workspace:*",
-    "@stellar/stellar-sdk": "14.3.0",
+    "@stellar/stellar-sdk": "14.4.3",
     "axios": "^1.13.2",
     "lodash": "^4.17.21",
     "zod": "^4.1.12"

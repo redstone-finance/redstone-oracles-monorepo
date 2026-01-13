@@ -3,12 +3,15 @@ import {
   ContractParamsProvider,
   IExtendedPricesContractAdapter,
   LastRoundDetails,
+  UpdatePricesOptions,
 } from "@redstone-finance/sdk";
-import { FP } from "@redstone-finance/utils";
+import { FP, RedstoneCommon } from "@redstone-finance/utils";
+import { Contract } from "@stellar/stellar-sdk";
 import _ from "lodash";
 import { splitParamsIntoBatches } from "../split-params-into-batches";
 import { StellarContractUpdater } from "../stellar/StellarContractUpdater";
 import * as XdrUtils from "../XdrUtils";
+import { PriceFeedStellarContractAdapter } from "./PriceFeedStellarContractAdapter";
 import { StellarContractAdapter } from "./StellarContractAdapter";
 
 export class PriceAdapterStellarContractAdapter
@@ -64,15 +67,23 @@ export class PriceAdapterStellarContractAdapter
     return prices.flat();
   }
 
-  async writePricesFromPayloadToContract(paramsProvider: ContractParamsProvider) {
+  async writePricesFromPayloadToContract(
+    paramsProvider: ContractParamsProvider,
+    options?: UpdatePricesOptions
+  ) {
     if (!this.operationSender) {
       throw new Error("Cannot write prices, OperationSender not set");
     }
 
     const updater = new StellarContractUpdater(this.operationSender.getExecutor(), this.contract);
+    const result = await this.operationSender.updateContract(updater, paramsProvider);
 
-    return FP.unwrapSuccess(await this.operationSender.updateContract(updater, paramsProvider))
-      .transactionHash;
+    if (options && Object.keys(options.feedAddresses).length > 0) {
+      const feedAddresses = _.at(options.feedAddresses, paramsProvider.getDataFeedIds());
+      void this.maybeExtendTtlForPriceFeeds(feedAddresses);
+    }
+
+    return FP.unwrapSuccess(result).transactionHash;
   }
 
   async readPricesFromContract(paramsProvider: ContractParamsProvider, _blockNumber?: number) {
@@ -129,5 +140,23 @@ export class PriceAdapterStellarContractAdapter
     );
 
     return [feedIdsScVal, payloadScVal];
+  }
+
+  private async maybeExtendTtlForPriceFeeds(addresses: string[]) {
+    const addressesToUpdate = await this.client.getAddressesToExtendInstanceTtl(addresses);
+
+    await RedstoneCommon.batchPromises(
+      1,
+      0,
+      addressesToUpdate.map((address) => () => {
+        const adapter = new PriceFeedStellarContractAdapter(
+          this.client,
+          new Contract(address),
+          this.operationSender
+        );
+
+        return adapter.extendInstanceTtl();
+      })
+    );
   }
 }
