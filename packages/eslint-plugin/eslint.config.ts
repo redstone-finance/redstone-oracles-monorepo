@@ -25,6 +25,7 @@ const noConsolePackageNames = [
   "on-chain-relayer",
   "oracle-node",
   "radix-connector",
+  "stellar-connector",
   "rpc-providers",
   "sui-connector",
   "utils",

@@ -1,5 +1,6 @@
 import {
   AnyOnChainRelayerManifest,
+  getRelayerManifestFeedsWithAddresses,
   isMultiFeedRelayerManifest,
   MultiFeedOnChainRelayerManifest,
   OnChainRelayerManifest,
@@ -15,12 +16,14 @@ import {
 
 const createManifestConfig = (manifest: AnyOnChainRelayerManifest): ManifestConfig => {
   const { updateConditions, updateTriggers } = makeUpdateConditions(manifest);
+  const { manifestFeedsWithAddresses } = getRelayerManifestFeedsWithAddresses(manifest);
   return {
     chainName: manifest.chain.name,
     networkId: manifest.chain.id,
     adapterContractAddress: manifest.adapterContract,
     dataServiceId: manifest.dataServiceId,
     dataFeeds: Object.keys(manifest.priceFeeds),
+    dataFeedAddresses: Object.fromEntries(manifestFeedsWithAddresses),
     dataPackagesNames: manifest.dataPackagesNames,
     updateConditions,
     updateTriggers,

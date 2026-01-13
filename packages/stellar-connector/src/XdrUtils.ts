@@ -96,8 +96,7 @@ export function parseReadSinglePriceDataSimulation(
 
 export function parsePrimitiveFromSimulation<P>(
   sim: rpc.Api.SimulateTransactionSuccessResponse,
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any -- add reason here, please
-  transform: (val: any) => P
+  transform: (val: unknown) => P
 ) {
   return parseSimValAs(sim, (val) => transform(scValToNative(val)));
 }
