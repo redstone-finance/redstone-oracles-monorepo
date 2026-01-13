@@ -1,4 +1,10 @@
-import { AdapterType, AnyOnChainRelayerManifest, MultiFeedOnChainRelayerManifest } from "./schemas";
+import {
+  AdapterType,
+  AnyOnChainRelayerManifest,
+  MULTI_FEED,
+  MultiFeedOnChainRelayerManifest,
+  STYLUS,
+} from "./schemas";
 
 export function isMultiFeedRelayerManifest(
   manifest: AnyOnChainRelayerManifest
@@ -7,9 +13,5 @@ export function isMultiFeedRelayerManifest(
 }
 
 export function isMultiFeedAdapterType(adapterContractType: AdapterType) {
-  return adapterContractType === "multi-feed";
-}
-
-export function isStylusAdapterType(adapterContractType: AdapterType) {
-  return adapterContractType === "stylus";
+  return [MULTI_FEED, STYLUS].includes(adapterContractType);
 }
