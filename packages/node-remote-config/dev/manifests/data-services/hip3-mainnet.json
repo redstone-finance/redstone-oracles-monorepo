@@ -1491,15 +1491,15 @@
     },
     "XCU": {
       "source": [
-        "ws-lmax-per-mt-to-lb",
-        "alltick-api-per-mt-to-lb-deferred",
-        "metal-price-api-per-oz-to-lb-deferred",
-        "metals-api-per-oz-to-lb-deferred",
+        "ws-lmax",
+        "alltick-api-deferred",
+        "metal-price-api-deferred",
+        "metals-api-deferred",
         "ws-blocksize"
       ],
       "priceAggregator": "primarySource",
       "primarySourceAggregatorConfig": {
-        "primarySource": "ws-lmax-per-mt-to-lb",
+        "primarySource": "ws-lmax",
         "maxAcceptableDeviation": 1.5,
         "lowerClampPercent": 0.1,
         "upperClampPercent": 0.1
