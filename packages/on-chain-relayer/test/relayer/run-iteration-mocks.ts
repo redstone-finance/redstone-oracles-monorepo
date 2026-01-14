@@ -67,7 +67,7 @@ export function getIterationArgsProviderMock(
       args: {
         blockTag: 123432,
         updateRequestParams: {
-          dataPackagesIds: relayerConfig.dataFeeds,
+          dataPackagesIds: relayerConfig.dataPackagesNames ?? relayerConfig.dataFeeds,
           dataServiceId: relayerConfig.dataServiceId,
           uniqueSignersCount: 1,
           authorizedSigners: getSignersForDataServiceId(

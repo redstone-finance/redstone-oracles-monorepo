@@ -1,7 +1,8 @@
+import { createNumberFromContract } from "@redstone-finance/evm-adapters";
 import { INumericDataPoint } from "@redstone-finance/protocol";
 import { RelayerConfig } from "../../src";
 import { valueDeviationCondition } from "../../src/core/update-conditions/value-deviation-condition";
-import { createNumberFromContract, getDataPackagesResponse, mockConfig } from "../helpers";
+import { getDataPackagesResponse, mockConfig } from "../helpers";
 
 export const HISTORICAL_DATA_POINTS = [
   { dataFeedId: "ETH", value: 1660.99 },

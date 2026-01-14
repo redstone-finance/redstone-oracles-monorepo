@@ -2,15 +2,15 @@ import { SignerWithAddress } from "@nomiclabs/hardhat-ethers/signers";
 import { expect } from "chai";
 import { BigNumber } from "ethers";
 import { ethers } from "hardhat";
-import { deployMockSortedOracles } from "../../../../src";
 import { calculateLinkedListPosition } from "../../../../src/custom-integrations/mento/mento-utils";
+import { deployMockSortedOracles } from "../../../../src/helpers";
 import { MockSortedOracles } from "../../../../typechain-types";
 
 describe("MockSortedOracles", () => {
   let contract: MockSortedOracles;
   let signers: SignerWithAddress[];
 
-  const mockTokenAddress = "0xF194afDf50B03e69Bd7D057c1Aa9e10c9954E4C9"; // CELO token address
+  const mockTokenAddress = "0xF194afDf50B03e69Bd7D057c1Aa9e10c9954E4C9"; // BTC token address
 
   const reportNewOracleValue = async (
     valueToReport: number,
