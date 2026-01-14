@@ -6,11 +6,7 @@ import chai, { expect } from "chai";
 import chaiAsPromised from "chai-as-promised";
 import { parseUnits } from "ethers/lib/utils";
 import { ethers } from "hardhat";
-import {
-  deployMentoAdapterMock,
-  deployMockSortedOracles,
-  MentoEvmContractAdapter,
-} from "../../../../src";
+import { deployMentoAdapterWithSortedOraclesMock, MentoEvmContractAdapter } from "../../../../src";
 import {
   calculateLinkedListPosition,
   prepareLinkedListLocationsForMentoAdapterReport,
@@ -33,8 +29,8 @@ describe("MentoAdapterUpdates", () => {
   let mentoAdapter: MentoAdapterMock;
   let signers: SignerWithAddress[];
 
-  const mockToken1Address = "0xF194afDf50B03e69Bd7D057c1Aa9e10c9954E4C9"; // CELO token address
-  const mockToken2Address = "0x874069Fa1Eb16D44d622F2e0Ca25eeA172369bC1"; // cUSD token address
+  const mockToken1Address = "0xF194afDf50B03e69Bd7D057c1Aa9e10c9954E4C9"; // BTC token address
+  const mockToken2Address = "0x874069Fa1Eb16D44d622F2e0Ca25eeA172369bC1"; // ETH token address
 
   const normalizeValue = (num: number) => parseUnits(num.toString(), 24);
 
@@ -159,13 +155,10 @@ describe("MentoAdapterUpdates", () => {
 
   beforeEach(async () => {
     // Deploying sorted oracles
-    sortedOracles = await deployMockSortedOracles(signers[0]);
-
-    // Deploying mento adapter
-    mentoAdapter = await deployMentoAdapterMock(signers[0]);
-
-    // Setting sorted oracles address
-    await mentoAdapter.setSortedOraclesAddress(sortedOracles.address);
+    const { sortedOracles: oracles, mentoAdapter: adapter } =
+      await deployMentoAdapterWithSortedOraclesMock(signers[0]);
+    sortedOracles = oracles;
+    mentoAdapter = adapter;
   });
 
   it("Should report oracle values", async () => {

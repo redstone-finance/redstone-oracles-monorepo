@@ -26,6 +26,7 @@ export type {
 export { EvmContractAdapter } from "./core/contract-interactions/EvmContractAdapter";
 export { EvmContractConnector } from "./core/contract-interactions/EvmContractConnector";
 export { MentoEvmContractAdapter } from "./core/contract-interactions/MentoEvmContractAdapter";
+export { MultiFeedEvmContractAdapter } from "./core/contract-interactions/MultiFeedEvmContractAdapter";
 export { PriceFeedsEvmContractAdapter } from "./core/contract-interactions/PriceFeedsEvmContractAdapter";
 export { getSortedOraclesContractAtAddress } from "./custom-integrations/mento/get-sorted-oracles-contract-at-address";
 export { EvmPriceFeedContract } from "./facade/evm/EvmPriceFeedContract";
@@ -34,10 +35,15 @@ export { getEvmContractAdapter } from "./facade/evm/get-evm-contract-adapter";
 export { getEvmContractConnector } from "./facade/evm/get-evm-contract-connector";
 export { type RedstoneEvmContract } from "./facade/evm/RedstoneEvmContract";
 export {
-  deployMentoAdapterMock,
-  deployMockSortedOracles,
+  deployMentoAdapterWithSortedOraclesMock,
+  deployMultiFeedAdapterWithoutRoundsMock,
   deployPriceFeedsAdapterWithoutRoundsMock,
 } from "./helpers";
+export {
+  checkDataValues,
+  createNumberFromContract,
+  performWritePricesTests,
+} from "./perform-write-prices.tests";
 export {
   IPriceFeedAbi,
   ISortedOraclesAbi,

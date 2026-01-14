@@ -35,16 +35,15 @@
     "test:price-feed-validation": "NODE_ENV=test RUN_NONDETERMINISTIC_TESTS=t hardhat test test/relayer-manifests/price-feed-validation.test.ts",
     "test:manifests-validation": "NODE_ENV=test mocha -r ts-node/register test/relayer-manifests/manifests-validation.test.ts",
     "test:data-processing-strategy": "NODE_ENV=test mocha -r ts-node/register test/data-processing-strategy/*",
+    "test:write-prices": "NODE_ENV=test mocha -r @swc-node/register test/relayer/run-iteration.test.ts",
     "preversion": "yarn build"
   },
   "dependencies": {
-    "@chainlink/contracts": "1.2.0",
     "@influxdata/influxdb-client": "^1.35.0",
-    "@openzeppelin/contracts": "^4.8.1",
-    "@openzeppelin/contracts-upgradeable": "^4.8.3",
     "@redstone-finance/chain-configs": "workspace:*",
     "@redstone-finance/chain-orchestrator": "workspace:*",
     "@redstone-finance/evm-adapters": "workspace:*",
+    "@redstone-finance/evm-connector": "workspace:*",
     "@redstone-finance/healthcheck": "workspace:*",
     "@redstone-finance/internal-utils": "workspace:*",
     "@redstone-finance/on-chain-relayer-common": "workspace:*",
@@ -63,7 +62,6 @@
     "zod": "^4.1.12"
   },
   "devDependencies": {
-    "@ethersproject/abi": "^5.6.3",
     "@ethersproject/providers": "^5.6.8",
     "@nomicfoundation/hardhat-chai-matchers": "^1.0.6",
     "@nomicfoundation/hardhat-network-helpers": "^1.0.9",
@@ -72,8 +70,7 @@
     "@nomiclabs/hardhat-etherscan": "^3.1.7",
     "@nomiclabs/hardhat-solhint": "^4.0.1",
     "@openzeppelin/hardhat-upgrades": "^1.26.0",
-    "@redstone-finance/evm-connector": "workspace:*",
-    "@typechain/ethers-v5": "^10.2.0",
+    "@swc-node/register": "^1.11.1",
     "@typechain/hardhat": "^6.1.2",
     "@types/chai": "^4.3.4",
     "@types/lodash": "^4.14.195",
