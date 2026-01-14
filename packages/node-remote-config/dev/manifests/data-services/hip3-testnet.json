@@ -124,32 +124,6 @@
         }
       }
     },
-    "BTC": {
-      "source": [
-        "binance-usdt",
-        "bingx-usdt",
-        "bitfinex-usd",
-        "bitget-usdt",
-        "bitmart-usdt",
-        "bitrue-usdt",
-        "bitstamp-usd",
-        "coinbase-usd",
-        "coingecko-deferred",
-        "kraken-usd",
-        "kucoin-usdt",
-        "okx-usdt",
-        "xt"
-      ],
-      "deviationCheck": {
-        "deviationWithRecentValues": {
-          "maxPercent": 50,
-          "maxDelayMilliseconds": 120000
-        }
-      },
-      "broadcasters": ["influx"],
-      "denomination": "USD",
-      "rateFeed": false
-    },
     "ORACLE_sekaw:BTC": {
       "source": ["hyperliquid-testnet-perps-ws-fetcher", "hydromancer-testnet-perps-ws-fetcher"],
       "customWeightsForWeightedMedian": {
@@ -196,25 +170,25 @@
       "rateFeed": false
     },
     "sekaw:BTC_MARK_0": {
-      "source": ["hip3-felix-crypto-testnet-fetcher"],
+      "source": ["hip3-crypto-testnet-fetcher"],
       "broadcasters": ["hyperliquid-hip3"],
       "denomination": "USD",
       "rateFeed": false
     },
     "sekaw:BTC_MARK_1": {
-      "source": ["hip3-felix-crypto-testnet-fetcher"],
+      "source": ["hip3-crypto-testnet-fetcher"],
       "broadcasters": ["hyperliquid-hip3"],
       "denomination": "USD",
       "rateFeed": false
     },
     "sekaw:BTC_EXT": {
-      "source": ["hip3-felix-crypto-testnet-fetcher"],
+      "source": ["hip3-crypto-testnet-fetcher"],
       "broadcasters": ["hyperliquid-hip3"],
       "denomination": "USD",
       "rateFeed": false
     },
     "sekaw:BTC": {
-      "source": ["hip3-felix-crypto-testnet-fetcher"],
+      "source": ["hip3-crypto-testnet-fetcher"],
       "broadcasters": ["hyperliquid-hip3"],
       "denomination": "USD",
       "rateFeed": false
@@ -1337,7 +1311,6 @@
         "gate-usdt",
         "kraken_deferred-usd",
         "kucoin-usdt",
-        "lbank-usdt",
         "mexc-usdt",
         "okx-usdt",
         "xt-deferred"
@@ -2216,6 +2189,142 @@
       "rateFeed": false
     },
     "OPEN_INTEREST_flx:COPPER": {
+      "source": ["hyperliquid-mainnet-perps-ws-fetcher"],
+      "broadcasters": [],
+      "denomination": "USD",
+      "rateFeed": false,
+      "deviationCheck": {
+        "deviationWithRecentValues": {
+          "maxPercent": 1000000000,
+          "maxDelayMilliseconds": 1000
+        }
+      }
+    },
+    "BTC": {
+      "source": [
+        "binance-usdt",
+        "bingx-usdt",
+        "bitfinex-usd",
+        "bitget-usdt",
+        "bitmart-usdt",
+        "bitrue-usdt",
+        "bitstamp-usd",
+        "coinbase-usd",
+        "coingecko-deferred",
+        "kraken-usd",
+        "kucoin-usdt",
+        "okx-usdt",
+        "xt"
+      ],
+      "deviationCheck": {
+        "deviationWithRecentValues": {
+          "maxPercent": 50,
+          "maxDelayMilliseconds": 120000
+        }
+      },
+      "broadcasters": ["influx"],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "BTC_PERP": {
+      "source": [
+        "ws-perp-binance-usdt",
+        "ws-perp-bybit-usdt",
+        "ws-perp-gate-usdt",
+        "ws-perp-mexc-usdt",
+        "ws-perp-okx-usdt"
+      ],
+      "priceAggregator": "constantWeightMedian",
+      "customWeightsForWeightedMedian": {
+        "ws-perp-binance-usdt": 3,
+        "ws-perp-okx-usdt": 2,
+        "ws-perp-bybit-usdt": 2
+      },
+      "broadcasters": ["influx"],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "ORACLE_BTC": {
+      "source": ["hyperliquid-mainnet-perps-ws-fetcher", "hydromancer-mainnet-perps-ws-fetcher"],
+      "customWeightsForWeightedMedian": {
+        "hyperliquid-mainnet-perps-ws-fetcher": 10,
+        "hydromancer-mainnet-perps-ws-fetcher": 1
+      },
+      "priceAggregator": "constantWeightMedian",
+      "broadcasters": ["influx"],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "ORACLE_flx:BTC": {
+      "source": ["hyperliquid-mainnet-perps-ws-fetcher", "hydromancer-mainnet-perps-ws-fetcher"],
+      "customWeightsForWeightedMedian": {
+        "hyperliquid-mainnet-perps-ws-fetcher": 10,
+        "hydromancer-mainnet-perps-ws-fetcher": 1
+      },
+      "priceAggregator": "constantWeightMedian",
+      "broadcasters": ["influx"],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "ORACLE_flx:BTC_EMA_150S": {
+      "source": ["ema"],
+      "broadcasters": ["influx"],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "MARK_flx:BTC": {
+      "source": ["hyperliquid-mainnet-perps-ws-fetcher", "hydromancer-mainnet-perps-ws-fetcher"],
+      "customWeightsForWeightedMedian": {
+        "hyperliquid-mainnet-perps-ws-fetcher": 10,
+        "hydromancer-mainnet-perps-ws-fetcher": 1
+      },
+      "priceAggregator": "constantWeightMedian",
+      "broadcasters": ["influx"],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "MID_flx:BTC": {
+      "source": ["hyperliquid-mainnet-perps-ws-fetcher", "hydromancer-mainnet-perps-ws-fetcher"],
+      "customWeightsForWeightedMedian": {
+        "hyperliquid-mainnet-perps-ws-fetcher": 10,
+        "hydromancer-mainnet-perps-ws-fetcher": 1
+      },
+      "priceAggregator": "constantWeightMedian",
+      "broadcasters": ["influx"],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "MID_flx:BTC_EMA_150S": {
+      "source": ["ema"],
+      "broadcasters": ["influx"],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "flx:BTC_MARK_0": {
+      "source": ["hip3-crypto-mainnet-fetcher"],
+      "broadcasters": ["hyperliquid-hip3"],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "flx:BTC_MARK_1": {
+      "source": ["hip3-crypto-mainnet-fetcher"],
+      "broadcasters": ["hyperliquid-hip3"],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "flx:BTC_EXT": {
+      "source": ["hip3-crypto-mainnet-fetcher"],
+      "broadcasters": ["hyperliquid-hip3"],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "flx:BTC": {
+      "source": ["hip3-crypto-mainnet-fetcher"],
+      "broadcasters": ["hyperliquid-hip3"],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "OPEN_INTEREST_flx:BTC": {
       "source": ["hyperliquid-mainnet-perps-ws-fetcher"],
       "broadcasters": [],
       "denomination": "USD",
