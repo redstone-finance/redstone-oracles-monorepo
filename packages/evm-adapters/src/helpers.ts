@@ -3,6 +3,7 @@ import {
   AddressSortedLinkedListWithMedian__factory,
   MentoAdapterMock__factory,
   MockSortedOracles__factory,
+  MultiFeedAdapterWithoutRoundsMock__factory,
   PriceFeedsAdapterWithoutRoundsMock__factory,
 } from "../typechain-types";
 
@@ -18,6 +19,21 @@ export async function deployPriceFeedsAdapterWithoutRoundsMock(signer?: Signer) 
   await priceFeedsAdapter.deployed();
 
   return priceFeedsAdapter;
+}
+
+export async function deployMultiFeedAdapterWithoutRoundsMock(signer?: Signer) {
+  const multiFeedAdapter = await new MultiFeedAdapterWithoutRoundsMock__factory(signer).deploy();
+  await multiFeedAdapter.deployed();
+
+  return multiFeedAdapter;
+}
+
+export async function deployMentoAdapterWithSortedOraclesMock(signer?: Signer) {
+  const sortedOracles = await deployMockSortedOracles(signer);
+  const mentoAdapter = await deployMentoAdapterMock(signer);
+  await mentoAdapter.setSortedOraclesAddress(sortedOracles.address);
+
+  return { mentoAdapter, sortedOracles };
 }
 
 export const deployMockSortedOracles = async (signer?: Signer) => {
