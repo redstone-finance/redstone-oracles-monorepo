@@ -1,5 +1,4 @@
 import { time } from "@nomicfoundation/hardhat-network-helpers";
-import { WrapperBuilder } from "@redstone-finance/evm-connector";
 import { DataPackage, INumericDataPoint, NumericDataPoint } from "@redstone-finance/protocol";
 import {
   HARDHAT_CHAIN_ID,
@@ -12,49 +11,18 @@ import {
   DataPackagesResponse,
   DataPackagesResponseCache,
 } from "@redstone-finance/sdk";
-import { BigNumber, Contract } from "ethers";
 import { formatBytes32String } from "ethers/lib/utils";
 import { RelayerConfig } from "../src";
 
 export const ethDataFeed = formatBytes32String("ETH");
 export const btcDataFeed = formatBytes32String("BTC");
-
-export const DEFAULT_ROUND_ID_FOR_WITHOUT_ROUNDS = 1;
-
-export const START_OEV_AUCTION_URL = "http://mock-fastlane/start-auction";
-
-interface DataPoint {
-  dataFeedId: string;
-  value: number;
-}
-
-export const createNumberFromContract = (number: number, decimals = 8) =>
-  BigNumber.from(number * 10 ** decimals).toBigInt();
+export const ETH_PRICE = 1670.99;
+export const BTC_PRICE = 23077.68;
+export const MULTI_POINT_DATA_PACKAGE_ID = "__MULTI__";
 
 export const dataFeedsIds = [ethDataFeed, btcDataFeed];
 
-export const getWrappedContractAndUpdateBlockTimestamp = async (
-  contract: Contract,
-  timestamp: number,
-  newDataPoint?: DataPoint
-) => {
-  const dataPoints = [
-    { dataFeedId: "ETH", value: 1670.99 },
-    { dataFeedId: "BTC", value: 23077.68 },
-  ];
-  if (newDataPoint) {
-    dataPoints.push(newDataPoint);
-  }
-  const blockTimestamp = await time.latest();
-  await time.setNextBlockTimestamp(blockTimestamp + 10);
-  return WrapperBuilder.wrap(contract).usingSimpleNumericMock({
-    mockSignersCount: 2,
-    dataPoints,
-    timestampMilliseconds: timestamp,
-  });
-};
-
-export const mockConfig = (overrideMockConfig: Record<string, unknown> = {}) => {
+export const mockConfig = (overrideMockConfig: Partial<RelayerConfig> = {}) => {
   return {
     relayerIterationInterval: 10,
     rpcUrls: ["http://127.0.0.1:8545"],
@@ -81,14 +49,50 @@ export const mockConfig = (overrideMockConfig: Record<string, unknown> = {}) => 
       },
     },
     adapterContractType: "price-feeds",
-    fallbackOffsetInMilliseconds:
-      (overrideMockConfig.fallbackOffsetInMilliseconds as number | undefined) ?? 0,
+    fallbackOffsetInMilliseconds: overrideMockConfig.fallbackOffsetInMilliseconds ?? 0,
     healthcheckPingUrl: "http://example.com/ping",
     ...overrideMockConfig,
-  } as unknown as RelayerConfig;
+  } as RelayerConfig;
 };
 
-type DataPointsKeys = "ETH" | "BTC";
+export const DEFAULT_DATA_POINTS = [
+  { dataFeedId: "ETH", value: ETH_PRICE },
+  { dataFeedId: "BTC", value: BTC_PRICE },
+];
+
+export class ContractParamsProviderMock extends ContractParamsProvider {
+  constructor(
+    protected readonly dataPoints: INumericDataPoint[] = DEFAULT_DATA_POINTS,
+    overrideRequestParamsPackagesIds?: string[],
+    cache?: DataPackagesResponseCache
+  ) {
+    super(
+      {
+        dataPackagesIds: dataPoints.map((dp) => dp.dataFeedId),
+      } as unknown as DataPackagesRequestParams,
+      cache,
+      overrideRequestParamsPackagesIds
+    );
+  }
+
+  override performRequestingDataPackages() {
+    return getDataPackagesResponse(this.dataPoints);
+  }
+}
+
+export class ContractParamsProviderMockMulti extends ContractParamsProviderMock {
+  constructor(
+    private dataPackageId = MULTI_POINT_DATA_PACKAGE_ID,
+    dataPoints: INumericDataPoint[] = DEFAULT_DATA_POINTS,
+    cache?: DataPackagesResponseCache
+  ) {
+    super(dataPoints, undefined, cache);
+  }
+
+  override performRequestingDataPackages() {
+    return getMultiPointDataPackagesResponse(this.dataPackageId, this.dataPoints);
+  }
+}
 
 const mockWallets = [
   {
@@ -99,11 +103,6 @@ const mockWallets = [
     privateKey: "0x59c6995e998f97a5a0044966f0945389dc9e86dae88c7a8412f4603b6b78690d",
     address: "0x70997970C51812dc3A010C7d01b50e0d17dc79C8",
   },
-];
-
-export const DEFAULT_DATA_POINTS = [
-  { dataFeedId: "ETH", value: 1670.99 },
-  { dataFeedId: "BTC", value: 23077.68 },
 ];
 
 export const getDataPackagesResponse = async (
@@ -127,31 +126,17 @@ export const getDataPackagesResponse = async (
       };
       const privateKey = mockWallet.privateKey;
       const signedDataPackage = mockDataPackage.dataPackage.sign(privateKey);
-      if (!signedDataPackages[dataPointObj.dataFeedId as DataPointsKeys]) {
-        signedDataPackages[dataPointObj.dataFeedId as DataPointsKeys] = [];
+      if (!signedDataPackages[dataPointObj.dataFeedId]) {
+        signedDataPackages[dataPointObj.dataFeedId] = [];
       }
-      signedDataPackages[dataPointObj.dataFeedId as DataPointsKeys]!.push(signedDataPackage);
+      signedDataPackages[dataPointObj.dataFeedId]!.push(signedDataPackage);
     }
   }
   return signedDataPackages;
 };
 
-export class ContractParamsProviderMock extends ContractParamsProvider {
-  constructor(
-    private readonly dataPoints: INumericDataPoint[] = DEFAULT_DATA_POINTS,
-    overrideRequestParamsPackagesIds?: string[],
-    cache?: DataPackagesResponseCache
-  ) {
-    super({} as unknown as DataPackagesRequestParams, cache, overrideRequestParamsPackagesIds);
-  }
-
-  override performRequestingDataPackages() {
-    return getDataPackagesResponse(this.dataPoints);
-  }
-}
-
 export const getMultiPointDataPackagesResponse = async (
-  dataPackageId: string,
+  dataPackageId = MULTI_POINT_DATA_PACKAGE_ID,
   dataPoints: INumericDataPoint[] = DEFAULT_DATA_POINTS
 ) => {
   const timestampMilliseconds = (await time.latest()) * 1000;
@@ -183,28 +168,3 @@ export const originalDateNow = Date.now;
 export const restoreOriginalSystemTime = () => {
   Date.now = originalDateNow;
 };
-//
-// export async function getImpersonatedSigner(address: string): Promise<SignerWithAddress> {
-//   const initialFunds = ethers.utils.parseEther("1");
-//   await network.provider.send("hardhat_setBalance", [address, ethers.utils.hexValue(initialFunds)]);
-//   await network.provider.request({
-//     method: "hardhat_impersonateAccount",
-//     params: [address],
-//   });
-//   return await ethers.getSigner(address);
-// }
-//
-// export function permutations<T>(list: T[]): T[][] {
-//   if (list.length <= 1) {
-//     return [list];
-//   }
-//
-//   const result: T[][] = [];
-//   for (let i = 0; i < list.length; i++) {
-//     const tails = permutations(list.filter((_element, index) => i !== index));
-//     for (const tail of tails) {
-//       result.push([list[i], ...tail]);
-//     }
-//   }
-//   return result;
-// }
