@@ -7,8 +7,8 @@ import chaiAsPromised from "chai-as-promised";
 import { BigNumber, Contract, Wallet } from "ethers";
 import { ethers } from "hardhat";
 import { updateUsingOevAuction } from "../../src/custom-integrations/fastlane/update-using-oev-auction";
-import { mockConfig, START_OEV_AUCTION_URL } from "../helpers";
-import { server } from "./mock-server";
+import { mockConfig } from "../helpers";
+import { server, START_OEV_AUCTION_URL } from "./mock-server";
 
 chai.use(chaiAsPromised);
 
