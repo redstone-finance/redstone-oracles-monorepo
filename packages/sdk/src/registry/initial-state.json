@@ -385,6 +385,61 @@
       "ecdsaPublicKey": "0x04eb36acf54f5a99a28ae56390f6ca1cac5d0a74ebd0ce19995382d4b13861fceb7a9a7c3bb42a3a4889b2de3f44607e2058c6a7dd2da28ed2380c5505f40ad9be",
       "dateAdded": "2024-01-01"
     },
+    "0x4692D1223C0189B96D5b189b0f04aC91F22D1D84": {
+      "url": "https://redstone.finance",
+      "logo": "https://redstone.finance/assets/img/redstone-logo-full.svg",
+      "name": "redstone-megaeth-testnet-1",
+      "ipAddress": "0.0.0.0",
+      "dataServiceId": "redstone-megaeth-testnet",
+      "description": "Very frequent updates from the fastest sources",
+      "evmAddress": "0x4692D1223C0189B96D5b189b0f04aC91F22D1D84",
+      "ecdsaPublicKey": "0x0495a57fdab8642d703ed89969e44ea01b7bcb95dcdf269b44712bb9e7050c34da9e03de83fc01e86c0547572f8f0a2c05dfe150ebc74b42810561530645b6e8ba",
+      "dateAdded": "2024-01-01"
+    },
+    "0xbF2ECE85de000b5343Ab4D59579b5F9c7433aB1A": {
+      "url": "https://redstone.finance",
+      "logo": "https://redstone.finance/assets/img/redstone-logo-full.svg",
+      "name": "redstone-megaeth-testnet-2",
+      "ipAddress": "0.0.0.0",
+      "dataServiceId": "redstone-megaeth-testnet",
+      "description": "Very frequent updates from the fastest sources",
+      "evmAddress": "0xbF2ECE85de000b5343Ab4D59579b5F9c7433aB1A",
+      "ecdsaPublicKey": "0x0486ca66d2051d1fad3386df78eeb0b89cf7d4f27950e0131c44784034fd4bf3e33a6e71b380e1161de92d81a0e29d248c0465a4cd724a4eedd142da3a98617d98",
+      "dateAdded": "2024-01-01"
+    },
+    "0x3FFB0fDEE6f5D325fd86cb44b3AAC77bcb396173": {
+      "url": "https://redstone.finance",
+      "logo": "https://redstone.finance/assets/img/redstone-logo-full.svg",
+      "name": "redstone-megaeth-testnet-3",
+      "ipAddress": "0.0.0.0",
+      "dataServiceId": "redstone-megaeth-testnet",
+      "description": "Very frequent updates from the fastest sources",
+      "evmAddress": "0x3FFB0fDEE6f5D325fd86cb44b3AAC77bcb396173",
+      "ecdsaPublicKey": "0x04c334a113f32ed387a14b96c4fdd6b5861bc61fce7a7fbca60fe4f9028957d3df1f17024f6ebda5108d4cec32b4a7c048ceb99e82a6a709871e7ef1a733bd95c5",
+      "dateAdded": "2024-01-01"
+    },
+    "0xE5Da62080233519A02755c065023c45aff6413a5": {
+      "url": "https://redstone.finance",
+      "logo": "https://redstone.finance/assets/img/redstone-logo-full.svg",
+      "name": "redstone-megaeth-testnet-4",
+      "ipAddress": "0.0.0.0",
+      "dataServiceId": "redstone-megaeth-testnet",
+      "description": "Very frequent updates from the fastest sources",
+      "evmAddress": "0xE5Da62080233519A02755c065023c45aff6413a5",
+      "ecdsaPublicKey": "0x04f419fa7aeab8125d6a374cbd0183b262108441e727c3ffcd45be2644165af8a7eef8dc3aff6f28535eee76b34ba14b1325a776b19879567b240c270606a54166",
+      "dateAdded": "2024-01-01"
+    },
+    "0x91Cc53a68AC660d7bE5714bCEA0b8811232c3EC4": {
+      "url": "https://redstone.finance",
+      "logo": "https://redstone.finance/assets/img/redstone-logo-full.svg",
+      "name": "redstone-megaeth-testnet-5",
+      "ipAddress": "0.0.0.0",
+      "dataServiceId": "redstone-megaeth-testnet",
+      "description": "Very frequent updates from the fastest sources",
+      "evmAddress": "0x91Cc53a68AC660d7bE5714bCEA0b8811232c3EC4",
+      "ecdsaPublicKey": "0x044bee93562166a9fc3a693011cdab0ccad70a2445a0c321416f858064e0029780bdb2cac01206337d10628d4eea54761cd7f977689725bc15986b16e3ec91a99d",
+      "dateAdded": "2024-01-01"
+    },
     "0xA4CcC693371D3270DFBE914f51E1D3a3184A2Cdc": {
       "url": "https://redstone.finance",
       "logo": "https://redstone.finance/assets/img/redstone-logo-full.svg",
