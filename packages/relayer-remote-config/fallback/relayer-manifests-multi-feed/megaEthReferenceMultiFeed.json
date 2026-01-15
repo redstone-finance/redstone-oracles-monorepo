@@ -11,6 +11,7 @@
   "adapterContractType": "multi-feed",
   "dataServiceId": "redstone-primary-prod",
   "isHidden": true,
+  "dataPackagesNames": ["___FAST___"],
   "priceFeeds": {
     "ETH": {},
     "BTC": {},
