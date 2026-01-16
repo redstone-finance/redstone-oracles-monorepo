@@ -131,6 +131,9 @@ const config: HardhatUserConfig = {
     morph: {
       url: "https://rpc-quicknode.morphl2.io",
     },
+    plume: {
+      url: "https://plume.drpc.org",
+    },
   },
 };
 
