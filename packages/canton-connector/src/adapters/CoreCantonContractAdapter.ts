@@ -1,18 +1,18 @@
 import { ContractParamsProvider } from "@redstone-finance/sdk";
 import Decimal from "decimal.js";
 import { CantonClient } from "../CantonClient";
-import { ICORE_TEMPLATE_NAME, INTERFACE_ID } from "../defs";
 import { DamlTuple2 } from "../utils";
 import { CantonContractAdapter, ContractFilter } from "./CantonContractAdapter";
 
+export const ICORE_TEMPLATE_NAME = `IRedStoneCore:IRedStoneCore`;
 const GET_PRICES_CHOICE = "GetPrices";
 const REDSTONE_DECIMALS = 8;
 
 export class CoreCantonContractAdapter extends CantonContractAdapter {
   constructor(
     client: CantonClient,
-    protected adapterId: string,
-    interfaceId = INTERFACE_ID,
+    protected adapterId = client.Defs.core.coreId,
+    interfaceId = client.Defs.interfaceId,
     templateName = ICORE_TEMPLATE_NAME
   ) {
     super(client, interfaceId, templateName);
@@ -26,7 +26,7 @@ export class CoreCantonContractAdapter extends CantonContractAdapter {
   async getPricesFromPayload(paramsProvider: ContractParamsProvider) {
     const result: DamlTuple2<string[]> = await this.exerciseChoice(
       GET_PRICES_CHOICE,
-      await CoreCantonContractAdapter.getPayloadArgument(paramsProvider),
+      await CoreCantonContractAdapter.getPayloadArguments(paramsProvider),
       true
     );
 
@@ -39,7 +39,7 @@ export class CoreCantonContractAdapter extends CantonContractAdapter {
     return BigInt(decimal.toFixed());
   }
 
-  protected static async getPayloadArgument(paramsProvider: ContractParamsProvider) {
+  protected static async getPayloadArguments(paramsProvider: ContractParamsProvider) {
     return {
       feedIds: paramsProvider.getArrayifiedFeedIds(),
       payloadHex: await paramsProvider.getPayloadHex(false),
