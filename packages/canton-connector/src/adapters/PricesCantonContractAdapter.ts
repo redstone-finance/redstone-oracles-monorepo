@@ -7,11 +7,11 @@ import {
 import { RedstoneCommon } from "@redstone-finance/utils";
 import _ from "lodash";
 import { CantonClient } from "../CantonClient";
-import { IADAPTER_TEMPLATE_NAME, INTERFACE_ID } from "../defs";
 import { ActiveContractData } from "../utils";
 import { ContractFilter } from "./CantonContractAdapter";
 import { CoreCantonContractAdapter } from "./CoreCantonContractAdapter";
 
+export const IADAPTER_TEMPLATE_NAME = `IRedStoneAdapter:IRedStoneAdapter`;
 const WRITE_PRICES_CHOICE = "WritePrices";
 const READ_PRICES_CHOICE = "ReadPrices";
 const READ_PRICE_DATA_CHOICE = "ReadPriceData";
@@ -25,7 +25,7 @@ export class PricesCantonContractAdapter
     client: CantonClient,
     private updateClient: CantonClient,
     adapterId: string,
-    interfaceId = INTERFACE_ID,
+    interfaceId = client.Defs.interfaceId,
     templateName = IADAPTER_TEMPLATE_NAME
   ) {
     super(client, adapterId, interfaceId, templateName);
@@ -89,7 +89,7 @@ export class PricesCantonContractAdapter
   async writePricesFromPayloadToContract(paramsProvider: ContractParamsProvider): Promise<string> {
     const result: ActiveContractData = await this.exerciseChoice(
       WRITE_PRICES_CHOICE,
-      await CoreCantonContractAdapter.getPayloadArgument(paramsProvider),
+      await CoreCantonContractAdapter.getPayloadArguments(paramsProvider),
       true,
       this.updateClient
     );

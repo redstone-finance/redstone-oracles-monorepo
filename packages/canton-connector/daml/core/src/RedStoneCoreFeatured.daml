@@ -1,0 +1,24 @@
+module RedStoneCoreFeatured where
+
+import RedStone.Config
+import RedStone.GetPrices as G
+import Featured
+import IRedStoneCoreFeatured
+import IRedStoneCore
+
+template RedStoneCoreFeatured
+  with
+    coreId: Text
+    owner : Party
+    viewers : [Party]
+    beneficiary : Party
+  where
+    signatory owner, beneficiary
+    observer viewers
+
+    interface instance IRedStoneCoreFeatured for RedStoneCoreFeatured where
+      view = RedStoneCoreView with viewers, coreId
+
+      getPricesFeatured featuredCid feedIds currentTime payloadHex = do
+        Featured.takeReward beneficiary featuredCid
+        G.getPricesNumeric (redstonePrimaryProdDefaultConfig feedIds currentTime) payloadHex
