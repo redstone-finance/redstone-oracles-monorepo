@@ -10,17 +10,19 @@ import {
   StellarClientBuilder,
 } from "../src";
 import { FEEDS } from "./consts";
-import { loadAdapterId, loadPriceFeedId, readNetwork, readUrl } from "./utils";
+import { getRpcUrls } from "./get-rpc-urls";
+import { loadAdapterId, loadPriceFeedId, readNetwork } from "./utils";
 
 const WITH_TTL_EXTENDING = false as boolean;
 
 async function main() {
   const keypair = makeKeypair();
   const adapterId = loadAdapterId();
+  const network = readNetwork();
 
   const client = new StellarClientBuilder()
-    .withStellarNetwork(readNetwork())
-    .withRpcUrl(readUrl())
+    .withStellarNetwork(network)
+    .withRpcUrls(await getRpcUrls(network))
     .build();
   const connector = new PriceAdapterStellarContractConnector(client, adapterId, keypair);
 
