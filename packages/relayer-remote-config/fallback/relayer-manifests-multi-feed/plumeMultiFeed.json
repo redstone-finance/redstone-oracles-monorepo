@@ -1,0 +1,22 @@
+{
+  "chain": {
+    "name": "plume",
+    "id": 98866
+  },
+  "updateTriggers": {
+    "deviationPercentage": 0.5,
+    "timeSinceLastUpdateInMilliseconds": 21600000
+  },
+  "adapterContract": "0x368eE51E47a594fe1E9908b48228748a30BC7ca4",
+  "adapterContractType": "multi-feed",
+  "dataServiceId": "redstone-primary-prod",
+  "priceFeeds": {
+    "HLScope_PLUME_FUNDAMENTAL": {
+      "priceFeedAddress": "0x4aF6b78d92432D32E3a635E824d3A541866f7a78",
+      "updateTriggersOverrides": {
+        "deviationPercentage": 0.01,
+        "timeSinceLastUpdateInMilliseconds": 86400000
+      }
+    }
+  }
+}
