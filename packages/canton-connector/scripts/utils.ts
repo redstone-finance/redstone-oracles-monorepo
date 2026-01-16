@@ -4,9 +4,14 @@ import "dotenv/config";
 import { readFile } from "node:fs/promises";
 import path from "node:path";
 import { z } from "zod";
+import { CantonNetwork, CantonNetworks } from "../src";
 
 export function readParticipantUrl() {
   return RedstoneCommon.getFromEnv("PARTICIPANT", z.url());
+}
+
+export function readNetwork(): CantonNetwork {
+  return RedstoneCommon.getFromEnv("NETWORK", z.enum(CantonNetworks).default("devnet"));
 }
 
 export function readPartySuffix() {
