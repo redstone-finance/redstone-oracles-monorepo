@@ -11158,6 +11158,20 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@redstone-finance/lambda-global-log-monitoring@workspace:packages/lambda/lambda-global-log-monitoring":
+  version: 0.0.0-use.local
+  resolution: "@redstone-finance/lambda-global-log-monitoring@workspace:packages/lambda/lambda-global-log-monitoring"
+  dependencies:
+    "@redstone-finance/internal-utils": "workspace:*"
+    "@redstone-finance/monitoring-manifests": "workspace:*"
+    "@redstone-finance/utils": "workspace:*"
+    "@types/aws-lambda": "npm:^8.10.145"
+    axios: "npm:^1.13.2"
+    dotenv: "npm:^16.0.3"
+    zod: "npm:^4.1.12"
+  languageName: unknown
+  linkType: soft
+
 "@redstone-finance/lambda-hard-limits-monitoring@workspace:packages/lambda/lambda-hard-limits-monitoring":
   version: 0.0.0-use.local
   resolution: "@redstone-finance/lambda-hard-limits-monitoring@workspace:packages/lambda/lambda-hard-limits-monitoring"
