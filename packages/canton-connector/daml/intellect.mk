@@ -1,17 +1,22 @@
 sinclude ../.env
 
 CANTON_API=$(PARTICIPANT)/jsonapi
-ADAPTER_NAME=RedStoneAdapter-040
+ADAPTER_NAME=RedStoneCore-741
 ADAPTER_TEMPLATE_ID=6caf79d77e6396402e572c347eea0537b3b03209718b6ae8cc5a1a9624be1418:RedStoneAdapter:RedStoneAdapter
 PRICE_FEED_TEMPLATE_ID=e6e6121cc8b94556ec5f2f12f4f86562be85bf385e0e6fea0638859be8de1141:RedStonePriceFeed:RedStonePriceFeed
-CORE_TEMPLATE_ID=5e14917b311c528ce677ded59d600013f5d3112409c3fe6df218f7bc7a580d7e:RedStoneCore:RedStoneCore
-CORE_CLIENT_TEMPLATE_ID=5e14917b311c528ce677ded59d600013f5d3112409c3fe6df218f7bc7a580d7e:RedStoneCoreClient:RedStoneCoreClient
 
-INTERFACE_ID=06bb8634b832149544444b90abe087fbcfcbac7946da7fe227309ade3c2244ea
+CORE_ID := 3892dcfb99c55f2620dc38de2f62160b6dda44b67acd8b12af22b4cb652c8ee0
+CORE_TEMPLATE_ID := $(CORE_ID):RedStoneCore:RedStoneCore
+CORE_FEATURED_TEMPLATE_ID := $(CORE_ID):RedStoneCoreFeatured:RedStoneCoreFeatured
+CORE_CLIENT_TEMPLATE_ID := $(CORE_ID):RedStoneCoreClient:RedStoneCoreClient
+CORE_FEATURED_CLIENT_TEMPLATE_ID := $(CORE_ID):RedStoneCoreFeaturedClient:RedStoneCoreFeaturedClient
+
+INTERFACE_ID=f31913cd8dc80f4066ca887b056f8f4c58347ec840cd2b7e5367d49b9346a896
 IADAPTER_TEMPLATE_ID=$(INTERFACE_ID):IRedStoneAdapter:IRedStoneAdapter
 IPRICE_FEED_TEMPLATE_ID=$(INTERFACE_ID):IRedStonePriceFeed:IRedStonePriceFeed
 ICORE_TEMPLATE_ID=$(INTERFACE_ID):IRedStoneCore:IRedStoneCore
 
+BENEFICIARY=8b4399ba-c401-4a97-a1fe-59077a8b3b14
 
 TOKEN=$(shell cat token.txt)
 ETH=["69","84","72"]
@@ -57,7 +62,7 @@ test-api: get-token
 
 list-parties: get-token
 	@curl -H "Authorization: Bearer $(TOKEN)" \
-	  "$(CANTON_API)/v2/parties" | jq '.partyDetails[] | select(.party | contains("RedStoneOracleOwner"))'
+	  "$(CANTON_API)/v2/parties" | jq '.'
 
 deploy-core: get-token
 	@curl -X POST -H "Authorization: Bearer $(TOKEN)" \
@@ -74,6 +79,21 @@ deploy-core: get-token
 		"actAs": ["RedStoneOracleOwner::$(PARTY_SUFFIX)"], \
 		"commandId": "deploy-core-$(shell date +%s)"}' | jq '.'
 
+deploy-core-featured: get-token
+	@curl -X POST -H "Authorization: Bearer $(TOKEN)" \
+	  -H "Content-Type: application/json" \
+	  "$(CANTON_API)/v2/commands/submit-and-wait-for-transaction-tree" \
+	  -d '{ \
+		"commands": [{ \
+			"CreateCommand": { \
+				"templateId": "$(CORE_FEATURED_TEMPLATE_ID)", \
+				"createArguments": { \
+					"coreId": "$(ADAPTER_NAME)", \
+					"owner": "RedStoneOracleOwner::$(PARTY_SUFFIX)", \
+					"beneficiary": "$(BENEFICIARY)::$(PARTY_SUFFIX)", \
+					"viewers": ["RedStoneOracleViewer::$(PARTY_SUFFIX)"]}}}], \
+		"actAs": ["RedStoneOracleOwner::$(PARTY_SUFFIX)", "$(BENEFICIARY)::$(PARTY_SUFFIX)"], \
+		"commandId": "deploy-core-featured-$(shell date +%s)"}' | jq '.'
 
 deploy-core-client: get-token
 	@curl -X POST -H "Authorization: Bearer $(TOKEN)" \
@@ -88,6 +108,20 @@ deploy-core-client: get-token
 					"viewers": ["Client::$(PARTY_SUFFIX)"]}}}], \
 		"actAs": ["RedStoneOracleOwner::$(PARTY_SUFFIX)"], \
 		"commandId": "deploy-core-client-$(shell date +%s)"}' | jq '.'
+
+deploy-core-featured-client: get-token
+	@curl -X POST -H "Authorization: Bearer $(TOKEN)" \
+	  -H "Content-Type: application/json" \
+	  "$(CANTON_API)/v2/commands/submit-and-wait-for-transaction-tree" \
+	  -d '{ \
+		"commands": [{ \
+			"CreateCommand": { \
+				"templateId": "$(CORE_FEATURED_CLIENT_TEMPLATE_ID)", \
+				"createArguments": { \
+					"owner": "RedStoneOracleOwner::$(PARTY_SUFFIX)", \
+					"viewers": ["Client::$(PARTY_SUFFIX)"]}}}], \
+		"actAs": ["RedStoneOracleOwner::$(PARTY_SUFFIX)"], \
+		"commandId": "deploy-core-featured-client-$(shell date +%s)"}' | jq '.'
 
 
 deploy-adapter: get-token
@@ -250,3 +284,53 @@ get-price-feed-id-by-interface: get-token
 	  }' | jq -r '.[-1].contractEntry.JsActiveContract.createdEvent.contractId'); \
 	echo "$$CONTRACT_ID" > $(PRICE_FEED_ID_TXT); \
 	echo "Price Feed ID saved: $$CONTRACT_ID at offset $$LEDGER_END"
+
+get-featured-app-right: get-token
+	@LEDGER_END=$$(curl -s -X GET \
+		-H "Authorization: Bearer $(TOKEN)" \
+		-H "Content-Type: application/json" \
+		"$(CANTON_API)/v2/state/ledger-end" | jq -r '.offset'); \
+	curl -s -X POST \
+		-H "Authorization: Bearer $(TOKEN)" \
+		-H "Content-Type: application/json" \
+		"$(CANTON_API)/v2/state/active-contracts" \
+		-d '{ \
+			"filter": { \
+				"filtersByParty": { \
+					"$(BENEFICIARY)::$(PARTY_SUFFIX)": { \
+						"cumulative": [{ \
+							"identifierFilter": { \
+								"InterfaceFilter": { \
+									"value": { \
+										"interfaceId": "7804375fe5e4c6d5afe067bd314c42fe0b7d005a1300019c73154dd939da4dda:Splice.Api.FeaturedAppRightV1:FeaturedAppRight", \
+										"includeInterfaceView": true, \
+										"includeCreatedEventBlob": true \
+									} \
+								} \
+							} \
+						}] \
+					} \
+				} \
+			}, \
+			"activeAtOffset": '"$$LEDGER_END"' \
+		}' | jq -r '.'
+
+get-active-contracts: get-token
+	@LEDGER_END=$$(curl -s -X GET \
+		-H "Authorization: Bearer $(TOKEN)" \
+		-H "Content-Type: application/json" \
+		"$(CANTON_API)/v2/state/ledger-end" | jq -r '.offset'); \
+	curl -s -X POST \
+		-H "Authorization: Bearer $(TOKEN)" \
+		-H "Content-Type: application/json" \
+		"$(CANTON_API)/v2/state/active-contracts" \
+		-d '{ \
+			"filter": { \
+				"filtersByParty": { \
+					"$(BENEFICIARY)::$(PARTY_SUFFIX)": { \
+						"cumulative": [] \
+					} \
+				} \
+			}, \
+			"activeAtOffset": '"$$LEDGER_END"' \
+		}' | jq -r '.'

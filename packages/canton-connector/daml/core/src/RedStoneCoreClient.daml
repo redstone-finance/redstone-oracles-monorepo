@@ -20,5 +20,4 @@ template RedStoneCoreClient
       controller viewers
       do
         adapter <- fetch adapterCid
-
         getPrices adapter feedIds currentTime payloadHex

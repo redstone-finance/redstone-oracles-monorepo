@@ -56,7 +56,7 @@ export function isJsActiveContractEntry(contractEntry: JsContractEntry) {
 
 export interface ActiveContractData {
   contractId: string;
-  synchronizerId: string;
+  synchronizerId?: string;
   createdEventBlob?: string;
 }
 

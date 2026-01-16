@@ -1,6 +1,6 @@
 sdk-version: 3.4.9
-name: redstone-interface-v5
-version: 0.4.1
+name: redstone-interface-v7
+version: 0.4.0
 source: src
 dependencies:
   - daml-prim

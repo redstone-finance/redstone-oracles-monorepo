@@ -6,3 +6,4 @@ packages:
   - ./adapter
   - ./price_feed
   - ./test
+  - ./featured

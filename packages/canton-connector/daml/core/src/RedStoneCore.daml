@@ -1,8 +1,7 @@
 module RedStoneCore where
 
-import RedStone.Processor
 import RedStone.Config
-import RedStone.Result
+import RedStone.GetPrices as G
 import IRedStoneCore
 
 template RedStoneCore
@@ -15,10 +14,6 @@ template RedStoneCore
     observer viewers
 
     interface instance IRedStoneCore for RedStoneCore where
-      view = RedStoneCoreView with owner, viewers, coreId
+      view = RedStoneCoreView with viewers, coreId
 
-      getPrices feedIds currentTime payloadHex = do
-        config <- verifyConfigAgainstLedger $ redstonePrimaryProdDefaultConfig feedIds currentTime
-        let (values, timestamp) = processPayloadNumeric config payloadHex
-
-        return $ (map resultUnwrap values, timestamp)
+      getPrices feedIds currentTime = G.getPricesNumeric $ redstonePrimaryProdDefaultConfig feedIds currentTime

@@ -1,0 +1,21 @@
+module IRedStoneCoreFeatured where
+
+import RedStoneTypes
+import IRedStoneCore(RedStoneCoreView)
+import Featured(RedStoneFeaturedContract)
+
+interface IRedStoneCoreFeatured where
+  viewtype RedStoneCoreView
+
+  getPricesFeatured : RedStoneFeaturedContract -> [RedStoneFeedId] -> Time -> PayloadHex -> Update RedStoneResult
+
+  nonconsuming choice GetPricesFeatured : RedStoneResult
+    with
+      caller : Party
+      feedIds : [RedStoneFeedId]
+      currentTime : Time
+      payloadHex : PayloadHex
+      featuredCid : RedStoneFeaturedContract
+    controller caller
+    do
+      getPricesFeatured this featuredCid feedIds currentTime payloadHex
