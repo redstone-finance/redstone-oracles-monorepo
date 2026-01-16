@@ -1,6 +1,7 @@
 import { SignedDataPackage } from "@redstone-finance/protocol";
 import {
   DataPackagesResponse,
+  filterConsistentResponseFeedIds,
   filterRetainingPackagesForDataFeedIds,
   getDataPackagesWithFeedIds,
 } from "../src";
@@ -260,5 +261,56 @@ describe("getDataPackagesWithFeedIds", () => {
 
       expect(result.ETH.dataPackage).toHaveLength(2);
     });
+  });
+});
+
+describe("filterConsistentResponseFeedIds", () => {
+  it("returns feed IDs present in all packages", () => {
+    const result = filterConsistentResponseFeedIds([
+      ["ETH", "BTC", "SOL"],
+      ["ETH", "BTC"],
+      ["BTC", "AVAX", "ETH"],
+    ]);
+
+    expect(result).toEqual(["ETH", "BTC"]);
+  });
+
+  it("returns all feed IDs when all packages have same feeds", () => {
+    const result = filterConsistentResponseFeedIds([
+      ["ETH", "BTC"],
+      ["BTC", "ETH"],
+    ]);
+
+    expect(result).toEqual(["ETH", "BTC"]);
+  });
+
+  it("returns empty array when no common feed IDs", () => {
+    const result = filterConsistentResponseFeedIds([["ETH"], ["BTC"]]);
+
+    expect(result).toEqual([]);
+  });
+
+  it("returns all feeds for single package", () => {
+    const result = filterConsistentResponseFeedIds([["ETH", "BTC"]]);
+
+    expect(result).toEqual(["ETH", "BTC"]);
+  });
+
+  it("returns single feed contained in every package", () => {
+    const result = filterConsistentResponseFeedIds([["ETH"], ["ETH"], ["ETH"]]);
+
+    expect(result).toEqual(["ETH"]);
+  });
+
+  it("returns empty array for empty input", () => {
+    const result = filterConsistentResponseFeedIds([]);
+
+    expect(result).toEqual([]);
+  });
+
+  it("handles packages with empty arrays", () => {
+    const result = filterConsistentResponseFeedIds([["ETH", "BTC"], []]);
+
+    expect(result).toEqual([]);
   });
 });
