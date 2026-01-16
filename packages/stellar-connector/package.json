@@ -36,7 +36,7 @@
     "create-account": "yarn global:ts-node ./scripts/create-account-with-funds.ts",
     "get-stellar-address": "yarn global:ts-node ./scripts/get-stellar-address.ts",
     "instantiate-price-feed": "CONTRACT_NAME=redstone_price_feed yarn global:ts-node scripts/instantiate-price-feed.ts",
-    "extend-price-feed-ttl": "yarn global:ts-node scripts/extend-price-feed-ttl.ts"
+    "extend-instance-ttl": "yarn global:ts-node scripts/extend-instance-ttl.ts"
   },
   "dependencies": {
     "@redstone-finance/multichain-kit": "workspace:*",
@@ -51,6 +51,7 @@
     "@ledgerhq/hw-app-str": "^7.2.5",
     "@ledgerhq/hw-transport-node-hid-singleton": "^6.31.10",
     "@redstone-finance/chain-agnostic-oracle-tests": "workspace:*",
+    "@redstone-finance/chain-configs": "workspace:*",
     "@redstone-finance/mars-rover": "git+https://github.com/redstone-finance/mars-rover.git#v0.0.0",
     "@types/urijs": "^1.19.25",
     "dotenv": "^16.0.3",

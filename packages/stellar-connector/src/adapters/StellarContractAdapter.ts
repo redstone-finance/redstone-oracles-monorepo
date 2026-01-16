@@ -1,6 +1,6 @@
 import { BASE_FEE, Contract, xdr } from "@stellar/stellar-sdk";
 import { StellarClient } from "../stellar/StellarClient";
-import { StellarOperation, StellarOperationSender } from "../stellar/StellarOperationSender";
+import { StellarOperationSender } from "../stellar/StellarOperationSender";
 import * as XdrUtils from "../XdrUtils";
 
 const TIMEOUT_SEC = 3600;
@@ -118,22 +118,5 @@ export class StellarContractAdapter {
     return await this.operationSender.sendTransaction(
       this.contract.call(FN_CANCEL_OWNERSHIP_TRANSFER)
     );
-  }
-
-  async extendInstanceTtl() {
-    if (!this.operationSender) {
-      throw new Error("Cannot extend instance TTL, ContractWriter not set");
-    }
-
-    const operation = this.getExtendInstanceTtlOperation();
-    await this.operationSender.sendTransaction(operation);
-
-    return await this.client.getInstanceTtl(this.contract);
-  }
-
-  // A function containing extend_ttl in its body
-  // eslint-disable-next-line @typescript-eslint/class-methods-use-this -- will be implemented in a subclass
-  protected getExtendInstanceTtlOperation(): StellarOperation {
-    throw new Error("Method not implemented: getExtendInstanceTtlOperation");
   }
 }
