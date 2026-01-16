@@ -1,4 +1,4 @@
-import type { SignedDataPackage } from "@redstone-finance/protocol";
+import type { SignedDataPackage, SignedDataPackageLike } from "@redstone-finance/protocol";
 import { RedstoneCommon } from "@redstone-finance/utils";
 import _ from "lodash";
 
@@ -12,8 +12,19 @@ export interface DataPackagesResponse {
 export const getResponseTimestamp = (response: DataPackagesResponse) =>
   Object.values(response).at(0)?.at(0)?.dataPackage.timestampMilliseconds ?? 0;
 
+export const getDataPackageFeedIds = (dp: SignedDataPackageLike) =>
+  dp.dataPackage.dataPoints.map((dp) => dp.dataFeedId);
+
+export function filterConsistentResponseFeedIds(responseFeedIds: string[][]) {
+  const allFeedIds = _.uniq(responseFeedIds.flat());
+
+  return allFeedIds.filter((feedId) =>
+    responseFeedIds.every((pkgFeedIds) => pkgFeedIds.includes(feedId))
+  );
+}
+
 export function getPackageDataFeedIds(packages: SignedDataPackage[]) {
-  return _.uniq(packages.flatMap((dp) => dp.dataPackage.dataPoints.map((dp) => dp.dataFeedId)));
+  return filterConsistentResponseFeedIds(packages.map(getDataPackageFeedIds));
 }
 
 export function getDataPackagesWithFeedIds(
