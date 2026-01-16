@@ -1,6 +1,7 @@
 import { loggerFactory, RedstoneLogger } from "@redstone-finance/utils";
 
 const LOG_MONITORING_PREFIX = "LOG_MONITORING";
+const GLOBAL_LOG_MONITORING_PREFIX = `${LOG_MONITORING_PREFIX}_GLOBAL`;
 
 export enum LogMonitoringType {
   SOFT_TTL_EXCEEDED = "SOFT_TTL_EXCEEDED",
@@ -60,7 +61,13 @@ export class LogMonitoring {
     return `<|${symbol}|>`;
   }
 
-  private static prefixedMessage(type: LogMonitoringType, message: string): string {
+  protected static prefixedMessage(type: LogMonitoringType, message: string): string {
     return `${LOG_MONITORING_PREFIX}_${type}: ${message}`;
+  }
+}
+
+export class GlobalLogMonitoring extends LogMonitoring {
+  protected static override prefixedMessage(type: LogMonitoringType, message: string): string {
+    return `${GLOBAL_LOG_MONITORING_PREFIX}_${type}: ${message}`;
   }
 }
