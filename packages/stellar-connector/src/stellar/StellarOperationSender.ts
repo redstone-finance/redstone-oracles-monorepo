@@ -20,7 +20,7 @@ export class StellarOperationSender {
   private readonly txDeliveryMan: TxDeliveryMan;
 
   constructor(
-    signer: StellarSigner,
+    public signer: StellarSigner,
     client: StellarClient,
     config?: Partial<StellarTxDeliveryManConfig>
   ) {

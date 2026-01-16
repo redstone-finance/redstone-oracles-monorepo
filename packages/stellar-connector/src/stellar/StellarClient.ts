@@ -5,12 +5,13 @@ import {
   Asset,
   BASE_FEE,
   Contract,
+  type Horizon,
   Operation,
   rpc,
+  SorobanDataBuilder,
   Transaction,
   TransactionBuilder,
   xdr,
-  type Horizon,
 } from "@stellar/stellar-sdk";
 import _ from "lodash";
 import { getLedgerCloseDate } from "../utils";
@@ -18,10 +19,12 @@ import * as XdrUtils from "../XdrUtils";
 import { HorizonClient } from "./HorizonClient";
 import { StellarSigner } from "./StellarSigner";
 
+export const LEDGERS_PER_DAY = RedstoneCommon.hourToSecs(24) / 5;
 const REDSTONE_EVENT_TOPIC_QUALIFIER = "REDSTONE";
 const TRANSACTION_TIMEOUT_SEC = 30;
-const DAYS_TO_EXTEND_BEFORE = 7;
-const LEDGERS_PER_DAY = RedstoneCommon.hourToSecs(24) / 5;
+const DAYS_TO_EXTEND_TTL_THRESHOLD = 7;
+const DAYS_TO_EXTEND_TTL = 30;
+const BASE_EXTEND_TTL_FEE = 1e7;
 
 export class StellarClient {
   private readonly logger = loggerFactory("stellar-client");
@@ -92,13 +95,14 @@ export class StellarClient {
     operation: xdr.Operation<Operation.InvokeHostFunction>,
     signer: StellarSigner | string,
     fee = BASE_FEE,
-    timeout = TRANSACTION_TIMEOUT_SEC
+    timeout = TRANSACTION_TIMEOUT_SEC,
+    sorobanData?: xdr.SorobanTransactionData
   ) {
     if (typeof signer !== "string") {
       signer = await signer.publicKey();
     }
 
-    const tx = await this.buildTransaction(operation, signer, fee, timeout);
+    const tx = await this.buildTransaction(operation, signer, fee, timeout, sorobanData);
 
     return await this.server.prepareTransaction(tx);
   }
@@ -107,9 +111,10 @@ export class StellarClient {
     operation: xdr.Operation<Operation.InvokeHostFunction>,
     signer: StellarSigner,
     fee = BASE_FEE,
-    timeout = TRANSACTION_TIMEOUT_SEC
+    timeout = TRANSACTION_TIMEOUT_SEC,
+    sorobanData?: xdr.SorobanTransactionData
   ) {
-    const transaction = await this.prepareTransaction(operation, signer, fee, timeout);
+    const transaction = await this.prepareTransaction(operation, signer, fee, timeout, sorobanData);
 
     await signer.sign(transaction);
 
@@ -120,15 +125,17 @@ export class StellarClient {
     operation: xdr.Operation<Operation.InvokeHostFunction>,
     sender: string,
     fee = BASE_FEE,
-    timeout = TRANSACTION_TIMEOUT_SEC
+    timeout = TRANSACTION_TIMEOUT_SEC,
+    sorobanData?: xdr.SorobanTransactionData
   ) {
-    return new TransactionBuilder(await this.getAccount(sender), {
+    const builder = new TransactionBuilder(await this.getAccount(sender), {
       fee,
       networkPassphrase: (await this.getNetwork()).passphrase,
     })
       .addOperation(operation)
-      .setTimeout(timeout)
-      .build();
+      .setTimeout(timeout);
+
+    return (sorobanData ? builder.setSorobanData(sorobanData) : builder).build();
   }
 
   async simulateOperation<T>(
@@ -176,9 +183,18 @@ export class StellarClient {
 
   private async buildAndSendTransaction(
     sender: StellarSigner,
-    operation: xdr.Operation<Operation.InvokeHostFunction>
+    operation: xdr.Operation<Operation.InvokeHostFunction>,
+    fee = BASE_FEE,
+    timeout = TRANSACTION_TIMEOUT_SEC,
+    sorobanData?: xdr.SorobanTransactionData
   ) {
-    const transaction = await this.buildTransaction(operation, await sender.publicKey());
+    const transaction = await this.buildTransaction(
+      operation,
+      await sender.publicKey(),
+      fee,
+      timeout,
+      sorobanData
+    );
 
     await sender.sign(transaction);
     const result = await this.sendTransaction(transaction);
@@ -328,30 +344,53 @@ export class StellarClient {
     ).liveUntilLedgerSeq;
   }
 
+  async extendInstanceTtl(
+    contractId: string,
+    signer: StellarSigner,
+    extendTo = DAYS_TO_EXTEND_TTL * LEDGERS_PER_DAY,
+    fee = BASE_EXTEND_TTL_FEE.toString(),
+    timeout = TRANSACTION_TIMEOUT_SEC
+  ) {
+    const instanceKey = xdr.LedgerKey.contractData(
+      new xdr.LedgerKeyContractData({
+        contract: new Address(contractId).toScAddress(),
+        key: xdr.ScVal.scvLedgerKeyContractInstance(),
+        durability: xdr.ContractDataDurability.persistent(),
+      })
+    );
+
+    const operation = Operation.extendFootprintTtl({ extendTo });
+    const sorobanData = new SorobanDataBuilder().setReadOnly([instanceKey]).build();
+    const transaction = await this.prepareSignedTransaction(
+      operation,
+      signer,
+      fee,
+      timeout,
+      sorobanData
+    );
+    const result = await this.sendTransaction(transaction);
+
+    await this.waitForTx(result.hash);
+
+    return result.hash;
+  }
+
   async getAddressesToExtendInstanceTtl(
     addresses: string[],
-    updateTtlThreshold = LEDGERS_PER_DAY * DAYS_TO_EXTEND_BEFORE
+    updateTtlThreshold = LEDGERS_PER_DAY * DAYS_TO_EXTEND_TTL_THRESHOLD
   ) {
     const [currentLedger, ttls] = await Promise.all([
       this.getBlockNumber(),
       Promise.allSettled(addresses.map(this.getInstanceTtl.bind(this))),
     ]);
 
-    const addressesToUpdate = _.zip(addresses, ttls)
+    return _.zip(addresses, ttls)
       .filter(([_, ttl]) => ttl?.status === "fulfilled")
       .filter(
         ([_, ttl]) =>
           (ttl as PromiseFulfilledResult<number>).value - currentLedger < updateTtlThreshold
       )
       .map(([address]) => address!);
-
-    if (!addressesToUpdate.length) {
-      this.logger.info("No contracts to extend instance TTL");
-    } else {
-      this.logger.log(`Contracts to extend instance TTL: [${addressesToUpdate.join(`,`)}]`);
-    }
-
-    return addressesToUpdate;
   }
 
   // Horizon

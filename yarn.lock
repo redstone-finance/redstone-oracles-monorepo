@@ -12350,6 +12350,7 @@ __metadata:
     "@ledgerhq/hw-app-str": "npm:^7.2.5"
     "@ledgerhq/hw-transport-node-hid-singleton": "npm:^6.31.10"
     "@redstone-finance/chain-agnostic-oracle-tests": "workspace:*"
+    "@redstone-finance/chain-configs": "workspace:*"
     "@redstone-finance/mars-rover": "git+https://github.com/redstone-finance/mars-rover.git#v0.0.0"
     "@redstone-finance/multichain-kit": "workspace:*"
     "@redstone-finance/sdk": "workspace:*"

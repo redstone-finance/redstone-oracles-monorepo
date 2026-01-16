@@ -5,19 +5,19 @@ import {
   LastRoundDetails,
   UpdatePricesOptions,
 } from "@redstone-finance/sdk";
-import { FP, RedstoneCommon } from "@redstone-finance/utils";
-import { Contract } from "@stellar/stellar-sdk";
+import { FP, loggerFactory, RedstoneCommon } from "@redstone-finance/utils";
 import _ from "lodash";
 import { splitParamsIntoBatches } from "../split-params-into-batches";
 import { StellarContractUpdater } from "../stellar/StellarContractUpdater";
 import * as XdrUtils from "../XdrUtils";
-import { PriceFeedStellarContractAdapter } from "./PriceFeedStellarContractAdapter";
 import { StellarContractAdapter } from "./StellarContractAdapter";
 
 export class PriceAdapterStellarContractAdapter
   extends StellarContractAdapter
   implements IExtendedPricesContractAdapter
 {
+  private readonly logger = loggerFactory("stellar-price-adapter");
+
   async init(owner: string) {
     return await this.initContract(owner);
   }
@@ -145,17 +145,23 @@ export class PriceAdapterStellarContractAdapter
   private async maybeExtendTtlForPriceFeeds(addresses: string[]) {
     const addressesToUpdate = await this.client.getAddressesToExtendInstanceTtl(addresses);
 
+    if (!addressesToUpdate.length) {
+      this.logger.info("No contracts to extend instance TTL");
+    } else {
+      this.logger.log(`Contracts to extend instance TTL: [${addressesToUpdate.join(`,`)}]`);
+    }
+
+    if (!this.operationSender) {
+      throw new Error("Cannot extend instance ttls, OperationSender not set");
+    }
+
+    const signer = this.operationSender.signer;
+
     await RedstoneCommon.batchPromises(
       1,
       0,
-      addressesToUpdate.map((address) => () => {
-        const adapter = new PriceFeedStellarContractAdapter(
-          this.client,
-          new Contract(address),
-          this.operationSender
-        );
-
-        return adapter.extendInstanceTtl();
+      addressesToUpdate.map((address) => {
+        return () => this.client.extendInstanceTtl(address, signer);
       })
     );
   }
