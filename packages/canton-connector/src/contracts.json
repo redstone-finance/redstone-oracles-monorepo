@@ -1,0 +1,44 @@
+{
+  "mainnet": {
+    "interfaceId": "",
+    "featuredInterfaceId": "",
+    "core": {
+      "contractId": "",
+      "templateId": ":RedStoneCore:RedStoneCore",
+      "coreId": ""
+    },
+    "core-featured": {
+      "contractId": "",
+      "synchronizerId": "",
+      "coreId": "",
+      "templateId": "",
+      "createdEventBlob": ""
+    },
+    "featured-app-right": {
+      "contractId": "",
+      "synchronizerId": "",
+      "createdEventBlob": ""
+    }
+  },
+  "devnet": {
+    "interfaceId": "f31913cd8dc80f4066ca887b056f8f4c58347ec840cd2b7e5367d49b9346a896",
+    "featuredInterfaceId": "18ef26f869efaceec01d8bded8f49860152d57b63225bf76cd499a9c6f9936c4",
+    "core": {
+      "contractId": "00a0e4955b27b747c6575390aaae0d2bb71d1857cd40639b3848810a179c186369ca121220e16c48874edc84e340dfd900507821caace9d08964b41e9e22c0ff8eff55deda",
+      "templateId": "5d8990850bce0f029bf976138fdbea4f8bfda2167be213581ffbe36643dba5b1:RedStoneCore:RedStoneCore",
+      "coreId": "RedStoneCore-740"
+    },
+    "core-featured": {
+      "contractId": "0041b04680b0fc01d572b7540d288b7a2c8c0216dbf26443e5a6eb138db4e6ef72ca1212203ad10852eaaa6d80e83c2126b9222d50335b45d62b1bce99eb7ad91167d1dd67",
+      "synchronizerId": "global-domain::1220be58c29e65de40bf273be1dc2b266d43a9a002ea5b18955aeef7aac881bb471a",
+      "coreId": "RedStoneCore-741",
+      "templateId": "3892dcfb99c55f2620dc38de2f62160b6dda44b67acd8b12af22b4cb652c8ee0:RedStoneCoreFeatured:RedStoneCoreFeatured",
+      "createdEventBlob": "CgMyLjES8AYKRQBBsEaAsPwB1XK3VA0oi3osjAIW2/JkQ+Wm6xONtObvcsoSEiA60QhS6qptgOg8ISa5Ii1QM1tF1isbzpnretkRZ9HdZxIQcmVkc3RvbmUtY29yZS14eBpuCkAzODkyZGNmYjk5YzU1ZjI2MjBkYzM4ZGUyZjYyMTYwYjZkZGE0NGI2N2FjZDhiMTJhZjIyYjRjYjY1MmM4ZWUwEhRSZWRTdG9uZUNvcmVGZWF0dXJlZBoUUmVkU3RvbmVDb3JlRmVhdHVyZWQizAJqyQIKFAoSQhBSZWRTdG9uZUNvcmUtNzQxCl0KWzpZUmVkU3RvbmVPcmFjbGVPd25lcjo6MTIyMGEwMjQyNzk3YTg0ZTFkOGM0OTJmMTI1OWIzZjg3ZDU2MWZjYmRlMmU0YjJjZWJjNDU3MmRkZmM1MTViNDRjMjgKYgpgWl4KXDpaUmVkU3RvbmVPcmFjbGVWaWV3ZXI6OjEyMjBhMDI0Mjc5N2E4NGUxZDhjNDkyZjEyNTliM2Y4N2Q1NjFmY2JkZTJlNGIyY2ViYzQ1NzJkZGZjNTE1YjQ0YzI4Cm4KbDpqOGI0Mzk5YmEtYzQwMS00YTk3LWExZmUtNTkwNzdhOGIzYjE0OjoxMjIwYTAyNDI3OTdhODRlMWQ4YzQ5MmYxMjU5YjNmODdkNTYxZmNiZGUyZTRiMmNlYmM0NTcyZGRmYzUxNWI0NGMyOCpqOGI0Mzk5YmEtYzQwMS00YTk3LWExZmUtNTkwNzdhOGIzYjE0OjoxMjIwYTAyNDI3OTdhODRlMWQ4YzQ5MmYxMjU5YjNmODdkNTYxZmNiZGUyZTRiMmNlYmM0NTcyZGRmYzUxNWI0NGMyOCpZUmVkU3RvbmVPcmFjbGVPd25lcjo6MTIyMGEwMjQyNzk3YTg0ZTFkOGM0OTJmMTI1OWIzZjg3ZDU2MWZjYmRlMmU0YjJjZWJjNDU3MmRkZmM1MTViNDRjMjgyWlJlZFN0b25lT3JhY2xlVmlld2VyOjoxMjIwYTAyNDI3OTdhODRlMWQ4YzQ5MmYxMjU5YjNmODdkNTYxZmNiZGUyZTRiMmNlYmM0NTcyZGRmYzUxNWI0NGMyODmgAjzB8UcGAEIqCiYKJAgBEiDDhiYERPqRQ+4b8mZIBtN1qvQfKDOz8AL85vx6wJ+18BAe"
+    },
+    "featured-app-right": {
+      "contractId": "00deaaad88568938379d75d095961036688c49cca81efa596de41f578fe1ac1c2fca121220a86ed774b5e19df71fe79139d3fbb08e603db71977437cd997c7e1771efab2cc",
+      "synchronizerId": "global-domain::1220be58c29e65de40bf273be1dc2b266d43a9a002ea5b18955aeef7aac881bb471a",
+      "createdEventBlob": "CgMyLjES7QQKRQDeqq2IVok4N5110JWWEDZojEnMqB76WW3kH1eP4awcL8oSEiCobtd0teGd9x/nkTnT+7COYD23GXdDfNmXx+F3HvqyzBINc3BsaWNlLWFtdWxldBpkCkAzY2ExMzQzYWIyNmI0NTNkMzhjOGFkYjcwZGNhNWYxZWFkODQ0MGM0MmI1OWI2OGYwNzA3ODY5NTVjYmY5ZWMxEgZTcGxpY2USBkFtdWxldBoQRmVhdHVyZWRBcHBSaWdodCLCAWq/AQpNCks6SURTTzo6MTIyMGJlNThjMjllNjVkZTQwYmYyNzNiZTFkYzJiMjY2ZDQzYTlhMDAyZWE1YjE4OTU1YWVlZjdhYWM4ODFiYjQ3MWEKbgpsOmo4YjQzOTliYS1jNDAxLTRhOTctYTFmZS01OTA3N2E4YjNiMTQ6OjEyMjBhMDI0Mjc5N2E4NGUxZDhjNDkyZjEyNTliM2Y4N2Q1NjFmY2JkZTJlNGIyY2ViYzQ1NzJkZGZjNTE1YjQ0YzI4KklEU086OjEyMjBiZTU4YzI5ZTY1ZGU0MGJmMjczYmUxZGMyYjI2NmQ0M2E5YTAwMmVhNWIxODk1NWFlZWY3YWFjODgxYmI0NzFhMmo4YjQzOTliYS1jNDAxLTRhOTctYTFmZS01OTA3N2E4YjNiMTQ6OjEyMjBhMDI0Mjc5N2E4NGUxZDhjNDkyZjEyNTliM2Y4N2Q1NjFmY2JkZTJlNGIyY2ViYzQ1NzJkZGZjNTE1YjQ0YzI4OaJKB7zfRwYAQioKJgokCAESIDbsB7rbjoydLFC0bpT+Y3ewtwAOap/7GeGh4zIhX0aUEB4="
+    }
+  }
+}
