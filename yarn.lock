@@ -11903,6 +11903,7 @@ __metadata:
     "@redstone-finance/http-client": "workspace:*"
     "@redstone-finance/internal-utils": "workspace:*"
     "@redstone-finance/protocol": "workspace:*"
+    "@redstone-finance/pub-sub": "workspace:*"
     "@redstone-finance/remote-config": "workspace:*"
     "@redstone-finance/rpc-providers": "workspace:*"
     "@redstone-finance/utils": "workspace:*"
