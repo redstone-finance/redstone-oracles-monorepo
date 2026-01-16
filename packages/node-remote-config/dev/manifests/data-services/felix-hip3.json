@@ -12,7 +12,6 @@
   },
   "tokens": {
     "TSLA": {
-      "broadcasters": [],
       "source": [
         "alltick-stocks-api-deferred",
         "databento",
@@ -60,7 +59,6 @@
       "rateFeed": false
     },
     "IS_NY_STOCKS_MARKET_OPEN": {
-      "broadcasters": [],
       "source": ["is-ny-stocks-market-open-deferred"],
       "denomination": "other",
       "rateFeed": false
