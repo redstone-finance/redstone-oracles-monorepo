@@ -14,6 +14,7 @@
   },
   "tokens": {
     "TSLA": {
+      "broadcasters": [],
       "source": [],
       "denomination": "USD",
       "rateFeed": false
@@ -75,6 +76,7 @@
       "rateFeed": false
     },
     "IS_NY_STOCKS_MARKET_OPEN": {
+      "broadcasters": [],
       "source": [],
       "denomination": "other",
       "rateFeed": false

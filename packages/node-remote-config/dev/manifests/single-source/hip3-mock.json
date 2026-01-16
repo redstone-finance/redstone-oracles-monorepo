@@ -12,10 +12,12 @@
   },
   "tokens": {
     "TSLA": {
+      "broadcasters": [],
       "denomination": "USD",
       "rateFeed": false
     },
     "IS_NY_STOCKS_MARKET_OPEN": {
+      "broadcasters": [],
       "denomination": "other",
       "rateFeed": false
     },
