@@ -1,0 +1,30 @@
+module RedStoneCoreFeaturedClient where
+
+import Featured
+import IRedStoneCoreFeatured
+import RedStoneTypes
+
+template RedStoneCoreFeaturedClient
+  with
+    owner : Party
+    viewers : [Party]
+  where
+    signatory owner
+    observer viewers
+
+    nonconsuming choice GetPricesDisclosed : RedStoneResult
+      with
+        caller : Party
+        feedIds : [RedStoneFeedId]
+        currentTime : Time
+        payloadHex : Text
+        adapterCid : ContractId IRedStoneCoreFeatured
+        featuredCid : RedStoneFeaturedContract
+      controller viewers
+      do
+          exercise adapterCid GetPricesFeatured with
+            caller
+            feedIds
+            currentTime
+            payloadHex
+            featuredCid

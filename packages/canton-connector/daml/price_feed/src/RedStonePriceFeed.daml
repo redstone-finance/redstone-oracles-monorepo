@@ -19,7 +19,7 @@ template RedStonePriceFeed
     observer viewers
 
     interface instance IRedStonePriceFeed for RedStonePriceFeed where
-      view = RedStonePriceFeedView with owner, viewers, feedId, adapterId
+      view = RedStonePriceFeedView with viewers, feedId, adapterId
 
       readData adapterCid = do
         adapter <- fetch adapterCid

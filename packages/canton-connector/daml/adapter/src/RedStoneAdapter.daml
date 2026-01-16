@@ -2,11 +2,12 @@ module RedStoneAdapter where
 
 import DA.List as L
 import DA.Map as M
-import RedStone.Processor
 import RedStone.Config
-import RedStone.U256
+import RedStone.GetPrices as G
+import RedStone.Processor
 import RedStone.ProcessorResult
 import RedStone.Result
+import RedStone.U256
 import RedStoneTypes
 import IRedStoneAdapter
 
@@ -22,13 +23,9 @@ template RedStoneAdapter
     observer viewers, updaters
 
     interface instance IRedStoneAdapter for RedStoneAdapter where
-      view = RedStoneAdapterView with owner, updaters, viewers, adapterId
+      view = RedStoneAdapterView with updaters, viewers, adapterId
 
-      getPrices feedIds currentTime payloadHex = do
-        config <- verifyConfigAgainstLedger $ redstonePrimaryProdDefaultConfig feedIds currentTime
-        let (values, timestamp) = processPayloadNumeric config payloadHex
-
-        return $ (map resultUnwrap values, timestamp)
+      getPrices feedIds currentTime = G.getPricesNumeric $ redstonePrimaryProdDefaultConfig feedIds currentTime
 
       writePrices feedIds currentTime payloadHex = do
         config <- verifyConfigAgainstLedger $ redstonePrimaryProdDefaultConfig feedIds currentTime
