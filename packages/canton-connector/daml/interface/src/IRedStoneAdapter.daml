@@ -5,8 +5,8 @@ import RedStoneTypes
 interface IRedStoneAdapter where
   viewtype RedStoneAdapterView
 
-  getPrices : [RedStoneFeedId] -> Time -> Text -> Update RedStoneResult
-  writePrices : [RedStoneFeedId] -> Time -> Text -> Update (ContractId IRedStoneAdapter)
+  getPrices : [RedStoneFeedId] -> Time -> PayloadHex -> Update RedStoneResult
+  writePrices : [RedStoneFeedId] -> Time -> PayloadHex -> Update (ContractId IRedStoneAdapter)
   readPriceData : [RedStoneFeedId] -> Update [Optional (RedStonePriceData RedStoneValue)]
   readPrices : [RedStoneFeedId] -> Update [RedStoneValue]
 
@@ -14,7 +14,7 @@ interface IRedStoneAdapter where
     with
       feedIds : [RedStoneFeedId]
       currentTime : Time
-      payloadHex : Text
+      payloadHex : PayloadHex
     controller (view this).viewers
     do
       getPrices this feedIds currentTime payloadHex
@@ -23,7 +23,7 @@ interface IRedStoneAdapter where
     with
       feedIds : [RedStoneFeedId]
       currentTime : Time
-      payloadHex : Text
+      payloadHex : PayloadHex
     controller (view this).updaters
     do
       writePrices this feedIds currentTime payloadHex
@@ -44,7 +44,6 @@ interface IRedStoneAdapter where
 
 data RedStoneAdapterView = RedStoneAdapterView
   with
-    owner : Party
     updaters : [Party]
     viewers : [Party]
     adapterId : Text
