@@ -2,6 +2,7 @@ import { SuiClient } from "@mysten/sui/client";
 import { Keypair } from "@mysten/sui/cryptography";
 import { Transaction } from "@mysten/sui/transactions";
 import { MIST_PER_SUI } from "@mysten/sui/utils";
+import { SuiNetworkName } from "./config";
 import { DEFAULT_GAS_BUDGET } from "./SuiContractUtil";
 import { SuiPricesContractAdapter } from "./SuiPricesContractAdapter";
 import { buildPackage } from "./util";
@@ -12,8 +13,8 @@ export class SuiContractDeployer {
     private readonly keypair: Keypair
   ) {}
 
-  async deploy(projectPath: string) {
-    return await this.deployFromBuild(buildPackage(projectPath));
+  async deploy(projectPath: string, env: SuiNetworkName) {
+    return await this.deployFromBuild(buildPackage(projectPath, env));
   }
 
   async deployFromBuild(build: { modules: string[]; dependencies: string[] }) {
