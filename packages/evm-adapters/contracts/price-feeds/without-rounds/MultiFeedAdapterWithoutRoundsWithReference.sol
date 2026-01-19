@@ -21,13 +21,6 @@ abstract contract MultiFeedAdapterWithoutRoundsWithReference is IMultiFeedAdapte
   error UnsupportedFunctionCall();
   error BothAdaptersFailed(bytes32 dataFeedId);
 
-  // This struct is used only for returning values
-  struct LastUpdateDetails {
-    uint256 dataTimestamp;
-    uint256 blockTimestamp;
-    uint256 value;
-  }
-
   function getMainAdapter() public view virtual returns (IMultiFeedAdapter);
   function getReferenceAdapter() public view virtual returns (IMultiFeedAdapter);
 
@@ -113,7 +106,7 @@ abstract contract MultiFeedAdapterWithoutRoundsWithReference is IMultiFeedAdapte
     return a > b ? a : b;
   }
 
-  /// @dev Returns batch stats about last updates. It's convenient to use it in mointoring tools
+  /// @dev Returns batch stats about last updates. It's convenient to use it in monitoring tools
   function getLastUpdateDetailsUnsafeForMany(bytes32[] memory dataFeedIds) external view returns (LastUpdateDetails[] memory detailsForFeeds) {
     detailsForFeeds = new LastUpdateDetails[](dataFeedIds.length);
     for (uint256 i = 0; i < dataFeedIds.length;) {
