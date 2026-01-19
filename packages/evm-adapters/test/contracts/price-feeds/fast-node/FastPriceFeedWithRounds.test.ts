@@ -1,20 +1,25 @@
 import { expect } from "chai";
 import { ethers } from "hardhat";
-import { FastMultiFeedAdapterMock, FastPriceFeedMock } from "../../../../typechain-types";
+import {
+  FastMultiFeedAdapterWithRoundsMock,
+  FastPriceFeedWithRoundsMock,
+} from "../../../../typechain-types";
 import { deployAdapter, updateByAllNodesFresh } from "./fast-node-test-helpers";
 
 const DATA_FEED_ID = ethers.utils.formatBytes32String("ETH");
 
-async function deployFastPriceFeed(adapter: FastMultiFeedAdapterMock): Promise<FastPriceFeedMock> {
-  const factory = await ethers.getContractFactory("FastPriceFeedMock");
+async function deployFastPriceFeed(
+  adapter: FastMultiFeedAdapterWithRoundsMock
+): Promise<FastPriceFeedWithRoundsMock> {
+  const factory = await ethers.getContractFactory("FastPriceFeedWithRoundsMock");
   const feed = await factory.deploy(adapter.address, DATA_FEED_ID);
   await feed.deployed();
   return feed;
 }
 
 describe("FastPriceFeed", function () {
-  let adapter: FastMultiFeedAdapterMock;
-  let feed: FastPriceFeedMock;
+  let adapter: FastMultiFeedAdapterWithRoundsMock;
+  let feed: FastPriceFeedWithRoundsMock;
 
   beforeEach(async () => {
     adapter = await deployAdapter();

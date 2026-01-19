@@ -6,7 +6,7 @@ import chaiAsPromised from "chai-as-promised";
 import { formatBytes32String } from "ethers/lib/utils";
 import { ethers } from "hardhat";
 import {
-  FastMultiFeedAdapterMock,
+  FastMultiFeedAdapterWithRoundsMock,
   MultiFeedAdapterWithoutRounds,
   MultiFeedAdapterWithoutRoundsMockWithReturnOverride,
   MultiFeedAdapterWithoutRoundsTransformingProxyMock,
@@ -43,7 +43,7 @@ describe("MultiFeedAdapterWithoutRoundsWithReference", () => {
   let mainAdapter: MultiFeedAdapterWithoutRounds;
   let refAdapter: MultiFeedAdapterWithoutRounds;
   let priceFeed: PriceFeedWithoutRoundsForMultiFeedAdapterMock;
-  let fastAdapter: FastMultiFeedAdapterMock;
+  let fastAdapter: FastMultiFeedAdapterWithRoundsMock;
   let defaultDataTimestamp: number;
 
   const updatePrices = async (
@@ -360,7 +360,7 @@ describe("MultiFeedAdapterWithoutRoundsWithReference", () => {
   describe("Should work properly with FastMultiFeedAdapter", () => {
     beforeEach(async () => {
       await beforeEachLogic("MultiFeedAdapterWithoutRoundsWithReferenceMicrosecondsMock");
-      fastAdapter = await connectNewAdapter("FastMultiFeedAdapterMock", "main");
+      fastAdapter = await connectNewAdapter("FastMultiFeedAdapterWithRoundsMock", "main");
       const proxyToRef: MultiFeedAdapterWithoutRoundsTransformingProxyMock =
         await connectNewAdapter("MultiFeedAdapterWithoutRoundsTransformingProxyMock", "ref");
       const proxyToRefInitTx = await proxyToRef.init(refAdapter.address);

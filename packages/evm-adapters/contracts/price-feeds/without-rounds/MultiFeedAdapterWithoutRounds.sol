@@ -48,13 +48,6 @@ abstract contract MultiFeedAdapterWithoutRounds is RedstoneConsumerNumericBase, 
     uint256 biggerValue;
   }
 
-  // This struct is used only for returning values
-  struct LastUpdateDetails {
-    uint256 dataTimestamp;
-    uint256 blockTimestamp;
-    uint256 value;
-  }
-
   struct DataFeedsStorage {
     mapping(bytes32 => DataFeedDetailsWithOptionalBigValue) _dataFeeds;
   }

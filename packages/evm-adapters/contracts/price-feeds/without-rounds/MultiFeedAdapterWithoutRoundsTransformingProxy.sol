@@ -43,6 +43,9 @@ abstract contract MultiFeedAdapterWithoutRoundsTransformingProxy is IMultiFeedAd
   function getLastUpdateDetailsUnsafe(bytes32) external pure override returns (uint256, uint256, uint256) {
     revert UnsupportedFunctionCall();
   }
+  function getLastUpdateDetailsUnsafeForMany(bytes32[] memory) external pure override returns (LastUpdateDetails[] memory) {
+    revert UnsupportedFunctionCall();
+  }
   function getValuesForDataFeeds(bytes32[] memory) external pure override returns (uint256[] memory) {
     revert UnsupportedFunctionCall();
   }

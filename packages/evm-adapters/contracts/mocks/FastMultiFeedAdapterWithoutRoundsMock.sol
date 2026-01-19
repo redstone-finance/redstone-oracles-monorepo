@@ -1,14 +1,9 @@
 // SPDX-License-Identifier: BUSL-1.1
 pragma solidity ^0.8.17;
 
-import "../price-feeds/fast-node/FastMultiFeedAdapter.sol";
+import "../price-feeds/fast-node/FastMultiFeedAdapterWithoutRounds.sol";
 
-contract FastMultiFeedAdapterMock is FastMultiFeedAdapter {
-  /// @dev overridden in mock to reduce storage size for testing purposes.
-  function getMaxHistorySize() internal pure override returns (uint256) {
-    return 10;
-  }
-
+contract FastMultiFeedAdapterWithoutRoundsMock is FastMultiFeedAdapterWithoutRounds {
   /// @dev exposes the internal medianOfPrices function for testing purposes
   function _medianOfPrices(uint256[NUM_UPDATERS] memory prices, uint256 count) public pure returns (uint256) {
     return medianOfPrices(prices, count);
