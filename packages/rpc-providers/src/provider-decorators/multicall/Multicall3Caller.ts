@@ -52,6 +52,9 @@ export async function safeExecuteMulticall3(
       },
       getChainConfigByNetworkId(chainConfigs ?? getLocalChainConfigs(), chainId)
     );
+    if (!multicall3Contract) {
+      throw new Error(`Multicall3 not defined for chain ${chainId}.`);
+    }
     return await rawMulticall3(multicall3Contract, call3s, blockTag);
   } catch (e) {
     if (retryBySingleCalls) {

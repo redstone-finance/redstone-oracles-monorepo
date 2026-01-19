@@ -43,10 +43,12 @@ export type Multicall3Options = {
 export function getMulticall3(
   opts: Multicall3Options,
   chainConfig: ChainConfig
-): EvmMulticallTypes.Multicall3 | EvmMulticallTypes.RedstoneMulticall3 {
+): EvmMulticallTypes.Multicall3 | EvmMulticallTypes.RedstoneMulticall3 | undefined {
   const { multicall3 } = chainConfig;
-
   const address = opts.overrideAddress ?? multicall3.address;
+  if (address === "") {
+    return undefined;
+  }
 
   if (multicall3.type === "Multicall3") {
     return new Contract(
