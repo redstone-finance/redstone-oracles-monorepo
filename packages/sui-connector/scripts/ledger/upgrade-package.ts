@@ -4,7 +4,7 @@ import { generateTransactionData } from "./generate-transaction-data";
 
 export function setUpUpgradeTx(tx: Transaction, network: SuiNetworkName) {
   const packagePath = getDeployDir();
-  const { modules, dependencies, digest } = buildPackage(packagePath);
+  const { modules, dependencies, digest } = buildPackage(packagePath, network);
 
   const ids = readIds(network);
   tx.setGasBudget(10n * DEFAULT_GAS_BUDGET);

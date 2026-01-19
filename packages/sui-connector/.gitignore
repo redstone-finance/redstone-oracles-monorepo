@@ -178,3 +178,6 @@ dist
 .DS_Store
 
 TRANSACTION_DATA
+
+# sui
+Pub.*.toml
