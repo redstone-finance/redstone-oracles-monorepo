@@ -30,7 +30,7 @@ RUN ARCH=$(uname -m) && \
 FROM builder AS dependency-cache
 COPY contracts/price_adapter/Move.toml contracts/price_adapter/Move.toml
 RUN cd contracts/price_adapter && \
-    sui move build --fetch-deps-only
+    sui move build
 
 # Stage 3: CI runtime image
 FROM builder AS ci-runtime

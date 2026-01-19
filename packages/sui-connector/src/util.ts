@@ -25,7 +25,7 @@ export function getDeployDir() {
   );
 }
 
-function getIdsFilePath(network: string) {
+function getIdsFilePath(network: SuiNetworkName) {
   return path.join(__dirname, `..`, getDeployDir(), `/object_ids.${network}.json`);
 }
 
@@ -98,8 +98,8 @@ export function uint8ArrayToBcs(uint8Array: Uint8Array) {
   return bcs.vector(bcs.u8()).serialize(uint8Array);
 }
 
-export function buildPackage(packagePath: string) {
-  const buildCmd = `sui move build --force --dump-bytecode-as-base64 --ignore-chain`;
+export function buildPackage(packagePath: string, environment: SuiNetworkName) {
+  const buildCmd = `sui move build --force --dump-bytecode-as-base64 --environment ${environment}`;
 
   return JSON.parse(
     execSync(`${buildCmd} --path ${packagePath}`, {
