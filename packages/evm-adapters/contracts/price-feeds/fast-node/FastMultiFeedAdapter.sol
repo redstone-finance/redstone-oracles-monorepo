@@ -4,21 +4,19 @@ pragma solidity ^0.8.17;
 import {IFastMultiFeedAdapter} from "./IFastMultiFeedAdapter.sol";
 
 /**
- * Contract designed for frequent price updates
+ * Base contract designed for frequent price updates.
+ * Shared logic between adapters with and without rounds.
  * Key assumptions:
  * - Price updates can be performed by 5 independent updaters, whose addresses are stored in the contract.
  * - The contract supports updating multiple prices simultaneously.
  * - The contract stores the latest price for each feed and each updater.
- * - The contract supports round functionality, meaning it stores historical price data.
- * - Aggregation & round creation (executed after each successful update):
+ * - Aggregation (executed after each successful update):
  *   - The median is calculated from fresh prices (not exceeding MAX_DATA_TIMESTAMP_DELAY_MICROSECONDS) from all updaters
- *   - For a new round to be created, 3 fresh prices from updaters are required
+ *   - For a aggregated price to be stored, 3 fresh prices from updaters are required
  */
 abstract contract FastMultiFeedAdapter is IFastMultiFeedAdapter {
   // ----------------------- Config ----------------------------------------- //
   uint256 internal constant NUM_UPDATERS = 5;
-  // Max number of rounds stored (ring buffer size)
-  uint256 internal constant MAX_HISTORY_SIZE = 1_200_000;
   // Maximum allowed staleness of data during reading in microseconds (30 minutes)
   uint256 internal constant MAX_READING_DATA_STALENESS = 1_800_000_000;
   // Maximum allowed price data staleness in microseconds (10 seconds)
@@ -26,7 +24,6 @@ abstract contract FastMultiFeedAdapter is IFastMultiFeedAdapter {
   // Maximum allowed future offset for price timestamp in microseconds (1 second)
   uint64 internal constant MAX_DATA_TIMESTAMP_AHEAD_MICROSECONDS = 1_000_000;
 
-  function getMaxHistorySize() internal pure virtual returns (uint256) { return MAX_HISTORY_SIZE; }
   function getMaxReadingDataStaleness() internal pure virtual returns (uint256) { return MAX_READING_DATA_STALENESS; }
   function getMaxDataTimestampDelayMicroseconds() internal pure virtual returns (uint64) { return MAX_DATA_TIMESTAMP_DELAY_MICROSECONDS; }
   function getMaxDataTimestampAheadMicroseconds() internal pure virtual returns (uint64) { return MAX_DATA_TIMESTAMP_AHEAD_MICROSECONDS; }
@@ -43,22 +40,10 @@ abstract contract FastMultiFeedAdapter is IFastMultiFeedAdapter {
 
   // ----------------------- Storage ---------------------------------------- //
   bytes32 private constant UPDATER_LAST_PRICE_DATA_POSITION = keccak256("fast.multi.feed.adapter.updater.last.price.data");
-  bytes32 private constant LATEST_ROUND_ID_FOR_FEED_POSITION = keccak256("fast.multi.feed.adapter.latest.round.id.for.feed");
-  bytes32 private constant ROUNDS_DATA_POSITION = keccak256("fast.multi.feed.adapter.rounds.data");
 
   // Returns the last price update data for a given updater id and data feed id
   function updaterLastPriceData() private pure returns (mapping(uint256 => mapping(bytes32 => PriceData)) storage store) {
     bytes32 position = UPDATER_LAST_PRICE_DATA_POSITION;
-    assembly { store.slot := position }
-  }
-  // Returns the last round id for a given data feed id
-  function latestRoundIdForFeed() private pure returns (mapping(bytes32 => uint256) storage store) {
-    bytes32 position = LATEST_ROUND_ID_FOR_FEED_POSITION;
-    assembly { store.slot := position }
-  }
-  // Returns round data for a given data feed id and round id
-  function roundsData() private pure returns (mapping(bytes32 => mapping(uint256 => PriceData)) storage store) {
-    bytes32 position = ROUNDS_DATA_POSITION;
     assembly { store.slot := position }
   }
 
@@ -152,7 +137,7 @@ abstract contract FastMultiFeedAdapter is IFastMultiFeedAdapter {
       unchecked { i++; }
     }
 
-    // < 3 fresh prices -> no round
+    // < 3 fresh prices -> no aggregation
     if (count < 3) {
       emit RoundNotCreatedDueToInsufficientFreshPrices(dataFeedId, count);
       return;
@@ -160,17 +145,18 @@ abstract contract FastMultiFeedAdapter is IFastMultiFeedAdapter {
 
     uint256 medianPrice = medianOfPrices(prices, count);
 
-    // Create round
-    uint256 newRoundId = ++latestRoundIdForFeed()[dataFeedId];
-    PriceData memory newRoundData = PriceData({
+    PriceData memory newPriceData = PriceData({
       // Safe cast: median of uint64 values fits in uint64
       price: uint64(medianPrice),
       priceTimestamp: maxPriceTimestamp,
       blockTimestamp: currentBlockTimestamp
     });
-    roundsData()[dataFeedId][newRoundId % getMaxHistorySize()] = newRoundData;
-    emit RoundCreated(medianPrice, maxPriceTimestamp, dataFeedId, currentBlockTimestamp, newRoundId, updaterId);
+    storeAggregatedPrice(dataFeedId, newPriceData, medianPrice, updaterId);
   }
+
+  /// @notice Stores aggregated price data
+  /// @dev to be implemented by inheriting contracts
+  function storeAggregatedPrice(bytes32 dataFeedId, PriceData memory newPriceData, uint256 medianPrice, uint256 updaterId) internal virtual;
 
   /// @notice Returns median for the first `count` entries of `prices`.
   /// @dev Uses fixed-size sorting networks for count=3/4/5 to save gas; reverts otherwise.
@@ -253,11 +239,23 @@ abstract contract FastMultiFeedAdapter is IFastMultiFeedAdapter {
     }
   }
 
+  /// @notice Returns latest price data for a data feed
+  /// @dev to be implemented by inheriting contracts
+  function getLatestPriceData(bytes32 dataFeedId) internal view virtual returns (PriceData memory);
+
   /// Unsafe version of getting last update details that does not revert on stale data
   function getLastUpdateDetailsUnsafe(bytes32 dataFeedId) public view override returns (uint256 lastDataTimestamp, uint256 lastBlockTimestamp, uint256 lastValue) {
-    uint256 roundId = latestRoundIdForFeed()[dataFeedId];
-    PriceData memory data = roundsData()[dataFeedId][roundId % getMaxHistorySize()];
+    PriceData memory data = getLatestPriceData(dataFeedId);
     return (data.priceTimestamp, data.blockTimestamp, data.price);
+  }
+
+    /// @dev Returns batch stats about last updates. It's convenient to use it in monitoring tools
+  function getLastUpdateDetailsUnsafeForMany(bytes32[] memory dataFeedIds) external view returns (LastUpdateDetails[] memory detailsForFeeds) {
+    detailsForFeeds = new LastUpdateDetails[](dataFeedIds.length);
+    for (uint256 i = 0; i < dataFeedIds.length;) {
+      (detailsForFeeds[i].dataTimestamp, detailsForFeeds[i].blockTimestamp, detailsForFeeds[i].value) = getLastUpdateDetailsUnsafe(dataFeedIds[i]);
+      unchecked { i++; } // reduces gas costs
+    }
   }
 
   /// @notice Returns prices for multiple data feeds.
@@ -271,33 +269,16 @@ abstract contract FastMultiFeedAdapter is IFastMultiFeedAdapter {
 
   /// @notice Returns the latest price for a specific data feed.
   function getValueForDataFeed(bytes32 dataFeedId) public view override returns (uint256 dataFeedValue) {
-    return (roundsData()[dataFeedId][latestRoundIdForFeed()[dataFeedId] % getMaxHistorySize()]).price;
+    (,, dataFeedValue) = getLastUpdateDetails(dataFeedId);
   }
 
   /// @notice Returns the data timestamp of the latest price update for a feed.
   function getDataTimestampFromLatestUpdate(bytes32 dataFeedId) public view override returns (uint256 lastDataTimestamp) {
-    return roundsData()[dataFeedId][latestRoundIdForFeed()[dataFeedId] % getMaxHistorySize()].priceTimestamp;
+    (lastDataTimestamp, ,) = getLastUpdateDetails(dataFeedId);
   }
 
   /// @notice Returns the block timestamp of the latest price update for a feed.
   function getBlockTimestampFromLatestUpdate(bytes32 dataFeedId) public view override returns (uint256 blockTimestamp) {
-    return roundsData()[dataFeedId][latestRoundIdForFeed()[dataFeedId] % getMaxHistorySize()].blockTimestamp;
-  }
-
-  // -------------------------- Rounds data --------------------------------- //
-
-  /// @notice Returns the latest round id for a given data feed.
-  function getLatestRoundId(bytes32 dataFeedId) external view override returns (uint256 latestRoundId) {
-    return latestRoundIdForFeed()[dataFeedId];
-  }
-
-  /// @notice Returns price data for a specific round id; reverts if roundId is invalid or unavailable.
-  function getRoundData(bytes32 dataFeedId, uint256 roundId) public view override returns (PriceData memory) {
-    if (roundId == 0) revert RoundIdIsZero(dataFeedId);
-    uint256 latestRoundId = latestRoundIdForFeed()[dataFeedId];
-    if (roundId > latestRoundId) revert RoundIdTooHigh(dataFeedId, roundId, latestRoundId);
-    uint256 maxHistorySize = getMaxHistorySize();
-    if (roundId + maxHistorySize <= latestRoundId) revert RoundIdTooOld(dataFeedId, roundId);
-    return roundsData()[dataFeedId][roundId % maxHistorySize];
+    (, blockTimestamp, ) = getLastUpdateDetails(dataFeedId);
   }
 }

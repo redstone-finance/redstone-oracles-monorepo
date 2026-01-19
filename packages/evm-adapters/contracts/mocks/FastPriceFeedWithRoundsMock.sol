@@ -1,13 +1,14 @@
 // SPDX-License-Identifier: BUSL-1.1
 pragma solidity ^0.8.17;
 
-import "../price-feeds/fast-node/FastPriceFeed.sol";
+import "../price-feeds/fast-node/FastPriceFeedWithRounds.sol";
+import "../price-feeds/fast-node/IFastMultiFeedAdapterWithRounds.sol";
 
-contract FastPriceFeedMock is FastPriceFeed {
-  IFastMultiFeedAdapter public adapter;
+contract FastPriceFeedWithRoundsMock is FastPriceFeedWithRounds {
+  IFastMultiFeedAdapterWithRounds public adapter;
   bytes32 public feedId;
 
-  constructor(IFastMultiFeedAdapter _adapter, bytes32 _feedId) {
+  constructor(IFastMultiFeedAdapterWithRounds _adapter, bytes32 _feedId) {
     adapter = _adapter;
     feedId = _feedId;
   }
@@ -16,7 +17,7 @@ contract FastPriceFeedMock is FastPriceFeed {
     public
     view
     override
-    returns (IFastMultiFeedAdapter)
+    returns (IFastMultiFeedAdapterWithRounds)
   {
     return adapter;
   }

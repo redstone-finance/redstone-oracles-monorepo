@@ -2,10 +2,10 @@
 pragma solidity ^0.8.17;
 
 import {IPriceFeed} from "../interfaces/IPriceFeed.sol";
-import {IFastMultiFeedAdapter} from "./IFastMultiFeedAdapter.sol";
+import {IFastMultiFeedAdapterWithRounds} from "./IFastMultiFeedAdapterWithRounds.sol";
 
 /// Price feed for FastMultiFeedAdapter
-abstract contract FastPriceFeed is IPriceFeed {
+abstract contract FastPriceFeedWithRounds is IPriceFeed {
   uint256 internal constant INT256_MAX = uint256(type(int256).max);
   uint256 internal constant UINT80_MAX = uint256(type(uint80).max);
 
@@ -13,7 +13,7 @@ abstract contract FastPriceFeed is IPriceFeed {
   error UnsafeUint256ToUint80Conversion(uint256 value);
 
   // Returns the price feed adapter contract used by this feed
-  function getPriceFeedAdapter() public view virtual returns (IFastMultiFeedAdapter);
+  function getPriceFeedAdapter() public view virtual returns (IFastMultiFeedAdapterWithRounds);
   // Returns the data feed identifier used by this feed
   function getDataFeedId() public view virtual override returns (bytes32);
   // Returns the number of decimals used for the price feed (fixed at 8)
@@ -47,7 +47,7 @@ abstract contract FastPriceFeed is IPriceFeed {
   function getRoundData(uint80 _roundId) public view override returns (
     uint80 roundId, int256 answer, uint256 startedAt, uint256 updatedAt, uint80 answeredInRound
   ) {
-    IFastMultiFeedAdapter.PriceData memory data = getPriceFeedAdapter().getRoundData(getDataFeedId(), _roundId);
+    IFastMultiFeedAdapterWithRounds.PriceData memory data = getPriceFeedAdapter().getRoundData(getDataFeedId(), _roundId);
     return (_roundId, int256(uint256(data.price)), data.blockTimestamp, data.blockTimestamp, _roundId);
   }
 

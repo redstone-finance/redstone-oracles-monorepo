@@ -8,7 +8,7 @@ import { getImpersonatedSigner } from "../../../helpers";
 export const DATA_FEED_ID = utils.formatBytes32String("ETH");
 
 /**
- * Authorized updaters as wired in FastMultiFeedAdapterMock.getAuthorisedUpdaterId()
+ * Authorized updaters as wired in FastMultiFeedAdapterWithRoundsMock.getAuthorisedUpdaterId()
  */
 export const AUTHORIZED_UPDATERS = [
   "0xA13f0A8e3CbF4Cd612a5b7E4C24e376Fb0b56A11",
@@ -96,7 +96,7 @@ export async function twoStaleThenThreeFresh(
 
 /** Deploys the mock (history size = 10) */
 export async function deployAdapter() {
-  const factory = await ethers.getContractFactory("FastMultiFeedAdapterMock");
+  const factory = await ethers.getContractFactory("FastMultiFeedAdapterWithRoundsMock");
   const adapter = await factory.deploy();
   await adapter.deployed();
   return adapter;

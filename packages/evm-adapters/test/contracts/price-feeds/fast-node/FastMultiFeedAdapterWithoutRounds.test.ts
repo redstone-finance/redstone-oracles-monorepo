@@ -2,26 +2,27 @@ import { mine, time } from "@nomicfoundation/hardhat-network-helpers";
 import { expect } from "chai";
 import { BigNumberish, utils } from "ethers";
 import { ethers, network } from "hardhat";
-import { FastMultiFeedAdapterMock } from "../../../../typechain-types";
+import { FastMultiFeedAdapterWithoutRoundsMock } from "../../../../typechain-types";
 import { getImpersonatedSigner, permutations } from "../../../helpers";
 import {
   AUTHORIZED_UPDATERS,
   DATA_FEED_ID,
-  deployAdapter,
   toMicros,
   twoStaleThenThreeFresh,
   updateByAllNodesFresh,
 } from "./fast-node-test-helpers";
 
-describe("FastMultiFeedAdapter", function () {
-  let adapter: FastMultiFeedAdapterMock;
+describe("FastMultiFeedAdapterWithoutRounds", function () {
+  let adapter: FastMultiFeedAdapterWithoutRoundsMock;
 
   before(async () => {
     await network.provider.send("hardhat_reset");
   });
 
   beforeEach(async () => {
-    adapter = await deployAdapter();
+    const factory = await ethers.getContractFactory("FastMultiFeedAdapterWithoutRoundsMock");
+    adapter = await factory.deploy();
+    await adapter.deployed();
   });
 
   it("rejects unauthorized updater", async () => {
@@ -52,7 +53,7 @@ describe("FastMultiFeedAdapter", function () {
     expect(stored.priceTimestamp).to.equal(ts);
   });
 
-  it("does NOT create a round if fewer than 3 fresh prices are available", async () => {
+  it("does NOT store aggregated value if fewer than 3 fresh prices are available", async () => {
     // Submit only 2 fresh updates
     for (let i = 0; i < 2; i++) {
       const updater = await getImpersonatedSigner(AUTHORIZED_UPDATERS[i]);
@@ -66,40 +67,37 @@ describe("FastMultiFeedAdapter", function () {
       ]);
     }
 
-    expect(await adapter.getLatestRoundId(DATA_FEED_ID)).to.equal(0);
-    expect(await adapter.getValueForDataFeed(DATA_FEED_ID)).to.equal(0);
+    const unsafe = await adapter.getLastUpdateDetailsUnsafe(DATA_FEED_ID);
+    expect(unsafe.lastValue).to.equal(0);
+    expect(unsafe.lastDataTimestamp).to.equal(0);
+    expect(unsafe.lastBlockTimestamp).to.equal(0);
+    await expect(adapter.getValueForDataFeed(DATA_FEED_ID)).to.be.revertedWithCustomError(
+      adapter,
+      "InvalidLastUpdateDetails"
+    );
   });
 
-  it("creates a round when at least 3 fresh prices exist (with 2 stale ignored)", async () => {
+  it("stores value when at least 3 fresh prices exist (with 2 stale ignored)", async () => {
     await twoStaleThenThreeFresh(adapter, [900, 1100], [1000, 1002, 1004]);
-    const latestRoundId = await adapter.getLatestRoundId(DATA_FEED_ID);
-    expect(latestRoundId).to.equal(1);
-
     const { lastValue } = await adapter.getLastUpdateDetails(DATA_FEED_ID);
     // median([1000, 1002, 1004]) = 1002
     expect(lastValue).to.equal(utils.parseUnits("1002", 8));
   });
 
   it("uses median of fresh prices; large outlier is ignored by median", async () => {
-    // With plain median (no deadband), after 5 fresh updates [100,101,102,103,1000]
-    // the final median is 102.
     await updateByAllNodesFresh(adapter, [100, 101, 102, 103, 1000]);
     const { lastValue } = await adapter.getLastUpdateDetails(DATA_FEED_ID);
     expect(lastValue).to.equal(utils.parseUnits("102", 8));
   });
 
   it("for even fresh count, median is the average of the two middle values", async () => {
-    // Bootstrap initial round to establish history.
     await updateByAllNodesFresh(adapter, [100, 100, 100, 100, 100]);
     const r1 = await adapter.getLastUpdateDetails(DATA_FEED_ID);
     expect(r1.lastValue).to.equal(utils.parseUnits("100", 8));
 
-    // Make previous prices stale to ensure we truly have 4 fresh inputs only.
     const jump = (await time.latest()) + 20; // > 10s staleness window
     await time.setNextBlockTimestamp(jump);
 
-    // Provide exactly 4 fresh prices: [10, 20, 30, 40]
-    // Even count (4) → median = (20 + 30) / 2 = 25 (no tie-break with last round).
     for (let i = 0; i < 4; i++) {
       const updater = await getImpersonatedSigner(AUTHORIZED_UPDATERS[i]);
       const ts = jump + i;
@@ -115,16 +113,11 @@ describe("FastMultiFeedAdapter", function () {
     expect(lastValue).to.equal(utils.parseUnits("25", 8));
   });
 
-  it("creates rounds and updates value even for small changes (no deadband)", async () => {
-    // Round #1..#3 created by the first fresh batch (on 3rd/4th/5th update).
+  it("updates value even for small changes (no deadband)", async () => {
     await updateByAllNodesFresh(adapter, [100, 100, 100, 100, 100]);
-
-    const beforeRoundId = await adapter.getLatestRoundId(DATA_FEED_ID);
     const previousPrice = await adapter.getValueForDataFeed(DATA_FEED_ID);
     expect(previousPrice).to.equal(utils.parseUnits("100", 8));
 
-    // Update three distinct updaters with prices slightly > 100.
-    // Since the other two updaters still have 100, the final median after the third update is 100.1.
     const medCandidates = [100.1, 100.2, 100.3];
     const base = (await time.latest()) + 2;
     for (let i = 0; i < 3; i++) {
@@ -138,9 +131,6 @@ describe("FastMultiFeedAdapter", function () {
         ]);
     }
 
-    const afterRoundId = await adapter.getLatestRoundId(DATA_FEED_ID);
-    expect(afterRoundId).to.equal(beforeRoundId.add(3)); // +3 rounds
-
     const { lastValue } = await adapter.getLastUpdateDetails(DATA_FEED_ID);
     expect(lastValue).to.equal(utils.parseUnits("100.1", 8));
   });
@@ -148,7 +138,6 @@ describe("FastMultiFeedAdapter", function () {
   it("rejects zero price; rejects stale/too-future data timestamp; rejects non-increasing block timestamp", async () => {
     const updater = await getImpersonatedSigner(AUTHORIZED_UPDATERS[0]);
 
-    // Zero price
     let blockTs = (await time.latest()) + 2;
     await time.setNextBlockTimestamp(blockTs);
     await expect(
@@ -157,7 +146,6 @@ describe("FastMultiFeedAdapter", function () {
         .updateDataFeedsValues(toMicros(blockTs), [{ dataFeedId: DATA_FEED_ID, price: 0 }])
     ).to.emit(adapter, "UpdateSkipDueToInvalidValue");
 
-    // Too old (> 10s)
     blockTs = (await time.latest()) + 20;
     await time.setNextBlockTimestamp(blockTs);
     const tooOldTs = toMicros(blockTs - 11);
@@ -170,7 +158,6 @@ describe("FastMultiFeedAdapter", function () {
       ])
     ).to.emit(adapter, "UpdateSkipDueToDataTimestamp");
 
-    // Exactly +1s ahead → allowed
     blockTs = (await time.latest()) + 2;
     await time.setNextBlockTimestamp(blockTs);
     const aheadOk = toMicros(blockTs) + 1_000_000;
@@ -183,7 +170,6 @@ describe("FastMultiFeedAdapter", function () {
       ])
     ).to.not.be.reverted;
 
-    // +1 µs beyond limit → rejected
     blockTs = (await time.latest()) + 2;
     await time.setNextBlockTimestamp(blockTs);
     const aheadTooFar = toMicros(blockTs) + 1_000_000 + 1;
@@ -196,16 +182,15 @@ describe("FastMultiFeedAdapter", function () {
       ])
     ).to.emit(adapter, "UpdateSkipDueToDataTimestamp");
 
-    // Non-increasing block timestamp (same block for two tx from the same updater)
     await network.provider.send("evm_setAutomine", [false]);
 
-    const fixedBlockTs = (await time.latest()) + 100; // future block timestamp
+    const fixedBlockTs = (await time.latest()) + 100;
     await time.setNextBlockTimestamp(fixedBlockTs);
 
     const price1 = utils.parseUnits("1", 8);
     const price2 = utils.parseUnits("2", 8);
     const ts1 = toMicros(fixedBlockTs) + 10;
-    const ts2 = ts1 + 1; // data ts increases, but block ts will be identical
+    const ts2 = ts1 + 1;
 
     await adapter
       .connect(updater)
@@ -215,11 +200,9 @@ describe("FastMultiFeedAdapter", function () {
       .connect(updater)
       .updateDataFeedsValues(ts2, [{ dataFeedId: DATA_FEED_ID, price: price2 }]);
 
-    // Mine exactly one block with the fixed timestamp → both tx share the same block timestamp
     await network.provider.send("evm_mine", [fixedBlockTs]);
     await network.provider.send("evm_setAutomine", [true]);
 
-    // Confirm data was not overwritten and event emitted for the second tx
     const stored = await adapter.getUpdaterLastPriceData(0, DATA_FEED_ID);
     expect(stored.price).to.equal(price1);
 
@@ -258,7 +241,7 @@ describe("FastMultiFeedAdapter", function () {
     }
   });
 
-  it("handles concurrent batch updates from multiple updaters; rounds per feed are independent", async () => {
+  it("handles concurrent batch updates from multiple updaters; aggregation per feed is independent", async () => {
     const feeds = [
       utils.formatBytes32String("ETH"),
       utils.formatBytes32String("BTC"),
@@ -268,7 +251,6 @@ describe("FastMultiFeedAdapter", function () {
     ];
 
     const base = (await time.latest()) + 2;
-    // Every updater submits values for all feeds within a 1-second window → all fresh
     for (let i = 0; i < AUTHORIZED_UPDATERS.length; i++) {
       const updater = await getImpersonatedSigner(AUTHORIZED_UPDATERS[i]);
       const inputs = feeds.map((feedId, idx) => ({
@@ -280,11 +262,6 @@ describe("FastMultiFeedAdapter", function () {
     }
 
     for (const feedId of feeds) {
-      const latestRoundId = await adapter.getLatestRoundId(feedId);
-      expect(latestRoundId).to.be.gt(0);
-
-      // With 5 fresh prices (1000+idx, 1010+idx, 1020+idx, 1030+idx, 1040+idx),
-      // the final median is 1020 + idx.
       const expected = 1020 + feeds.indexOf(feedId);
       expect(await adapter.getValueForDataFeed(feedId)).to.equal(
         utils.parseUnits(String(expected), 8)
@@ -292,11 +269,21 @@ describe("FastMultiFeedAdapter", function () {
     }
   });
 
-  it("returns zeros for never-updated feed", async () => {
-    expect(await adapter.getLatestRoundId(DATA_FEED_ID)).to.equal(0);
-    expect(await adapter.getValueForDataFeed(DATA_FEED_ID)).to.equal(0);
-    expect(await adapter.getDataTimestampFromLatestUpdate(DATA_FEED_ID)).to.equal(0);
-    expect(await adapter.getBlockTimestampFromLatestUpdate(DATA_FEED_ID)).to.equal(0);
+  it("returns zeros for never-updated feed via unsafe getter; strict getters revert", async () => {
+    const unsafe = await adapter.getLastUpdateDetailsUnsafe(DATA_FEED_ID);
+    expect(unsafe.lastValue).to.equal(0);
+    expect(unsafe.lastDataTimestamp).to.equal(0);
+    expect(unsafe.lastBlockTimestamp).to.equal(0);
+    await expect(adapter.getValueForDataFeed(DATA_FEED_ID)).to.be.revertedWithCustomError(
+      adapter,
+      "InvalidLastUpdateDetails"
+    );
+    await expect(
+      adapter.getDataTimestampFromLatestUpdate(DATA_FEED_ID)
+    ).to.be.revertedWithCustomError(adapter, "InvalidLastUpdateDetails");
+    await expect(
+      adapter.getBlockTimestampFromLatestUpdate(DATA_FEED_ID)
+    ).to.be.revertedWithCustomError(adapter, "InvalidLastUpdateDetails");
   });
 
   it("getLastUpdateDetails reverts when data is stale (> 30 minutes)", async () => {
@@ -340,99 +327,8 @@ describe("FastMultiFeedAdapter", function () {
     ).to.be.revertedWithCustomError(adapter, "UnsupportedFunctionCall");
   });
 
-  describe("Rounds ring buffer (MAX_HISTORY_SIZE = 10 in the mock)", () => {
-    it("keeps only the most recent 10 rounds; older rounds become inaccessible", async () => {
-      // Produce many rounds. Every batch creates multiple rounds now.
-      let baseVal = 1000;
-      for (let i = 0; i < 16; i++) {
-        await updateByAllNodesFresh(adapter, [
-          baseVal,
-          baseVal + 1,
-          baseVal + 2,
-          baseVal + 3,
-          baseVal + 4,
-        ]);
-        baseVal += 20;
-      }
-
-      const latest = await adapter.getLatestRoundId(DATA_FEED_ID);
-      // First batch makes 3 rounds, next 15 batches make 5 each => 78 total.
-      expect(latest).to.equal(78);
-
-      const maxHistory = 10;
-      const oldestKept = latest.sub(maxHistory).add(1); // inclusive
-      const tooOld = oldestKept.sub(1);
-
-      // Too old should revert
-      await expect(adapter.getRoundData(DATA_FEED_ID, tooOld)).to.be.revertedWithCustomError(
-        adapter,
-        "RoundIdTooOld"
-      );
-
-      // Oldest kept should still be readable
-      const valid = await adapter.getRoundData(DATA_FEED_ID, oldestKept);
-      expect(valid.price).to.be.gt(0);
-    });
-
-    it("correctly overwrites buffer slots using modulo indexing", async () => {
-      // Make 11 batches. With the new behavior this yields 53 total rounds:
-      // first batch: 3 rounds; next 10 batches: 5 rounds each.
-      let baseVal = 2000;
-      for (let i = 0; i < 11; i++) {
-        await updateByAllNodesFresh(adapter, [
-          baseVal,
-          baseVal + 1,
-          baseVal + 2,
-          baseVal + 3,
-          baseVal + 4,
-        ]);
-        baseVal += 50;
-      }
-
-      const latest = await adapter.getLatestRoundId(DATA_FEED_ID);
-      expect(latest).to.equal(53);
-
-      const maxHistory = 10;
-      const oldestKept = latest.sub(maxHistory).add(1); // 44
-      const tooOld = oldestKept.sub(1); // 43
-
-      // Round just outside the window is evicted
-      await expect(adapter.getRoundData(DATA_FEED_ID, tooOld)).to.be.revertedWithCustomError(
-        adapter,
-        "RoundIdTooOld"
-      );
-
-      // Oldest kept is available
-      const rOldestKept = await adapter.getRoundData(DATA_FEED_ID, oldestKept);
-      expect(rOldestKept.price).to.be.gt(0);
-
-      // Latest is available and should differ from oldest kept (values jump by +50 per batch)
-      const rLatest = await adapter.getRoundData(DATA_FEED_ID, latest);
-      expect(rLatest.price).to.not.equal(rOldestKept.price);
-
-      // Optional: push one more batch to force eviction of `oldestKept`
-      await updateByAllNodesFresh(adapter, [
-        baseVal,
-        baseVal + 1,
-        baseVal + 2,
-        baseVal + 3,
-        baseVal + 4,
-      ]);
-      const latest2 = await adapter.getLatestRoundId(DATA_FEED_ID);
-      // +5 rounds due to 5 fresh updates
-      expect(latest2).to.equal(latest.add(5));
-
-      // Now `oldestKept` should be evicted
-      await expect(adapter.getRoundData(DATA_FEED_ID, oldestKept)).to.be.revertedWithCustomError(
-        adapter,
-        "RoundIdTooOld"
-      );
-    });
-  });
-
   describe("Median of prices (exposed via mock)", () => {
     it("returns median for odd count", async () => {
-      // Tuple type matches the Solidity signature uint256[NUM_UPDATERS]
       const p: [BigNumberish, BigNumberish, BigNumberish, BigNumberish, BigNumberish] = [
         utils.parseUnits("100", 8),
         utils.parseUnits("101", 8),
@@ -450,19 +346,17 @@ describe("FastMultiFeedAdapter", function () {
         utils.parseUnits("200", 8),
         utils.parseUnits("300", 8),
         utils.parseUnits("400", 8),
-        0, // unused, but we must keep tuple length = 5
+        0,
       ];
-      const median = await adapter._medianOfPrices(p, 4); // use first 4
+      const median = await adapter._medianOfPrices(p, 4);
       expect(median).to.equal(utils.parseUnits("250", 8));
     });
 
     it("odd count = 5 → median = 102 for every permutation", async () => {
-      // 5 values (last one is an outlier) → median should be 102
       const values5 = [100, 101, 102, 103, 500];
       const expected = utils.parseUnits("102", 8);
 
       for (const perm of permutations(values5)) {
-        // medianOfPrices expects a fixed-length tuple of size NUM_UPDATERS (5 here)
         const tuple = perm.map((x) => utils.parseUnits(String(x), 8)) as [
           BigNumberish,
           BigNumberish,
@@ -481,7 +375,6 @@ describe("FastMultiFeedAdapter", function () {
       const expected = utils.parseUnits("250", 8);
 
       for (const perm of permutations(values4)) {
-        // Pad to length 5; the extra element is ignored because count=4
         const padded = [
           ...perm.map((x) => utils.parseUnits(String(x), 8)),
           utils.parseUnits("0", 8),
@@ -497,7 +390,6 @@ describe("FastMultiFeedAdapter", function () {
       const expected = utils.parseUnits("20", 8);
 
       for (const perm of permutations(values3)) {
-        // Pad to length 5; extra elements are ignored because count=3
         const padded = [
           ...perm.map((x) => utils.parseUnits(String(x), 8)),
           utils.parseUnits("0", 8),
@@ -510,7 +402,6 @@ describe("FastMultiFeedAdapter", function () {
     });
 
     it("odd count = 5 with duplicates → median = 101 for every permutation", async () => {
-      // Multiset: two 100s plus 101, 102, 103 → sorted = [100,100,101,102,103] → median = 101
       const values = [100, 100, 101, 102, 103];
       const expected = utils.parseUnits("101", 8);
 
@@ -528,14 +419,13 @@ describe("FastMultiFeedAdapter", function () {
     });
 
     it("even count = 4 with duplicates → median = 200 for every permutation", async () => {
-      // Multiset: [100, 100, 300, 400] → sorted middle pair = (100,300) → median = 200
       const values = [100, 100, 300, 400];
       const expected = utils.parseUnits("200", 8);
 
       for (const perm of permutations(values)) {
         const padded = [
           ...perm.map((x) => utils.parseUnits(String(x), 8)),
-          utils.parseUnits("0", 8), // ignored (count=4)
+          utils.parseUnits("0", 8),
         ] as [BigNumberish, BigNumberish, BigNumberish, BigNumberish, BigNumberish];
         const median = await adapter._medianOfPrices(padded, 4);
         expect(median).to.equal(expected, `perm=${perm.join(",")}`);
@@ -543,7 +433,6 @@ describe("FastMultiFeedAdapter", function () {
     });
 
     it("odd count = 3 with duplicates → median = 20 for every permutation", async () => {
-      // Multiset: [20, 20, 30] → median = 20 regardless of order
       const values = [20, 20, 30];
       const expected = utils.parseUnits("20", 8);
 
@@ -551,7 +440,7 @@ describe("FastMultiFeedAdapter", function () {
         const padded = [
           ...perm.map((x) => utils.parseUnits(String(x), 8)),
           utils.parseUnits("0", 8),
-          utils.parseUnits("0", 8), // ignored (count=3)
+          utils.parseUnits("0", 8),
         ] as [BigNumberish, BigNumberish, BigNumberish, BigNumberish, BigNumberish];
         const median = await adapter._medianOfPrices(padded, 3);
         expect(median).to.equal(expected, `perm=${perm.join(",")}`);
