@@ -1,3 +1,4 @@
+export { BlockNumberDedupDecorator } from "./BlockNumberDedupDecorator";
 export { CallMetricDecorator, GetBlockNumberMetricDecorator } from "./MetricDecorator";
 export { MulticallDecorator } from "./multicall/MulticallDecorator";
 export { Treat0xAsErrorDecorator } from "./Treat0xAsErrorDecorator";
