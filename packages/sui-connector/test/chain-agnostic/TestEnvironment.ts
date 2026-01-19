@@ -148,7 +148,7 @@ export class SuiTestEnvironment implements PushTestEnvironment, PullTestEnvironm
 }
 
 export function getTestEnvFunction() {
-  const build = buildPackage("sui/contracts/price_adapter");
+  const build = buildPackage("sui/contracts/price_adapter", "testnet");
 
   return () => getTestEnv(build);
 }
