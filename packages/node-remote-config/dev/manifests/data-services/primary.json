@@ -701,32 +701,6 @@
       "denomination": "USD",
       "rateFeed": false
     },
-    "XAU": {
-      "source": [
-        "alltick-api",
-        "commodity-price-api",
-        "financialmodelingprep",
-        "metals-api",
-        "metal-price-api",
-        "twelve-data",
-        "ws-polygon-massive-commodities"
-      ],
-      "denomination": "USD",
-      "rateFeed": false
-    },
-    "XAG": {
-      "source": [
-        "alltick-api",
-        "commodity-price-api",
-        "financialmodelingprep",
-        "metals-api",
-        "metal-price-api",
-        "twelve-data",
-        "ws-polygon-massive-commodities"
-      ],
-      "denomination": "USD",
-      "rateFeed": false
-    },
     "XRP": {
       "source": [
         "binance-usdc",
@@ -1307,16 +1281,6 @@
     },
     "KES": {
       "source": ["alphavantage-usd", "financialmodelingprep", "twelve-data", "metal-price-api"],
-      "denomination": "USD",
-      "rateFeed": false
-    },
-    "PHP": {
-      "source": [
-        "financialmodelingprep",
-        "twelve-data",
-        "ws-polygon-massive-commodities",
-        "metal-price-api"
-      ],
       "denomination": "USD",
       "rateFeed": false
     },
@@ -3357,113 +3321,7 @@
       "denomination": "USD",
       "rateFeed": true
     },
-    "TSLA": {
-      "source": [
-        "alltick-stocks-api",
-        "databento-no-closing-price",
-        "ws-dx-feed-no-close-price",
-        "ws-polygon-massive-no-closing-price",
-        "ws-twelve-data-no-closing-price"
-      ],
-      "denomination": "USD",
-      "rateFeed": false
-    },
-    "FGNXP": {
-      "source": [
-        "databento-no-closing-price",
-        "ws-dx-feed-no-close-price",
-        "ws-polygon-massive-no-closing-price",
-        "ws-twelve-data-no-closing-price"
-      ],
-      "denomination": "USD",
-      "rateFeed": false
-    },
-    "CEPT": {
-      "source": [
-        "databento-no-closing-price",
-        "ws-dx-feed-no-close-price",
-        "ws-polygon-massive-no-closing-price",
-        "ws-twelve-data-no-closing-price"
-      ],
-      "denomination": "USD",
-      "rateFeed": false
-    },
-    "FGNX": {
-      "source": [
-        "databento-no-closing-price",
-        "ws-dx-feed-no-close-price",
-        "ws-polygon-massive-no-closing-price",
-        "ws-twelve-data-no-closing-price"
-      ],
-      "denomination": "USD",
-      "rateFeed": false
-    },
-    "NVDA": {
-      "source": [
-        "alltick-stocks-api",
-        "databento-no-closing-price",
-        "ws-dx-feed-no-close-price",
-        "ws-polygon-massive-no-closing-price",
-        "ws-twelve-data-no-closing-price"
-      ],
-      "denomination": "USD",
-      "rateFeed": false
-    },
-    "PLTR": {
-      "source": [
-        "alltick-stocks-api",
-        "databento-no-closing-price",
-        "ws-dx-feed-no-close-price",
-        "ws-polygon-massive-no-closing-price",
-        "ws-twelve-data-no-closing-price"
-      ],
-      "denomination": "USD",
-      "rateFeed": false
-    },
-    "AMD": {
-      "source": [
-        "alltick-stocks-api",
-        "databento-no-closing-price",
-        "ws-dx-feed-no-close-price",
-        "ws-polygon-massive-no-closing-price",
-        "ws-twelve-data-no-closing-price"
-      ],
-      "denomination": "USD",
-      "rateFeed": false
-    },
-    "GOOGL": {
-      "source": [
-        "alltick-stocks-api",
-        "databento-no-closing-price",
-        "ws-dx-feed-no-close-price",
-        "ws-polygon-massive-no-closing-price",
-        "ws-twelve-data-no-closing-price"
-      ],
-      "denomination": "USD",
-      "rateFeed": false
-    },
-    "META": {
-      "source": [
-        "alltick-stocks-api",
-        "databento-no-closing-price",
-        "ws-dx-feed-no-close-price",
-        "ws-polygon-massive-no-closing-price",
-        "ws-twelve-data-no-closing-price"
-      ],
-      "denomination": "USD",
-      "rateFeed": false
-    },
-    "AMZN": {
-      "source": [
-        "alltick-stocks-api",
-        "databento-no-closing-price",
-        "ws-dx-feed-no-close-price",
-        "ws-polygon-massive-no-closing-price",
-        "ws-twelve-data-no-closing-price"
-      ],
-      "denomination": "USD",
-      "rateFeed": false
-    },
+
     "stMNT_FUNDAMENTAL": {
       "source": ["ethereum-evm-fetcher-mantle-liq"],
       "denomination": "MNT",
@@ -3507,16 +3365,6 @@
       "denomination": "USD",
       "rateFeed": false
     },
-    "SPXU": {
-      "source": [
-        "twelve-data",
-        "financialmodelingprep",
-        "ws-dx-feed-no-close-price",
-        "ws-polygon-massive-no-closing-price"
-      ],
-      "denomination": "USD",
-      "rateFeed": false
-    },
     "USDm": {
       "source": ["kumbaya-megaeth-cusd-100"],
       "denomination": "USD",
@@ -3524,7 +3372,7 @@
     }
   },
   "multiPointPackages": {
-    "___FAST___": ["USDC", "USDT", "DAI", "BNB", "BTC", "ETH", "SOL", "MON", "FGNX"],
+    "___FAST___": ["USDC", "USDT", "DAI", "BNB", "BTC", "ETH", "SOL", "MON"],
     "__FRAXTAL__": ["BTC", "CRV", "ETH", "FRAX", "FXS"]
   }
 }

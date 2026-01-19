@@ -144,16 +144,9 @@
         "kraken-usdc",
         "kucoin-usdt"
       ]
-    },
-    "FGNX": {
-      "source": [
-        "databento-no-closing-price",
-        "ws-polygon-massive-no-closing-price",
-        "ws-dx-feed-no-close-price"
-      ]
     }
   },
   "multiPointPackages": {
-    "___FAST___": ["USDC", "USDT", "DAI", "BNB", "BTC", "ETH", "SOL", "MON", "FGNX"]
+    "___FAST___": ["USDC", "USDT", "DAI", "BNB", "BTC", "ETH", "SOL", "MON"]
   }
 }
