@@ -65,6 +65,13 @@
         "deviationPercentage": 0.1,
         "timeSinceLastUpdateInMilliseconds": 86400000
       }
+    },
+    "SPXU": {
+      "priceFeedAddress": "CBKC3LPRNTAOOJLNLG2GFKSMLLSDNHEUBVJO22Y2MY2RJLLYIXCRPK53",
+      "updateTriggersOverrides": {
+        "deviationPercentage": 0.1,
+        "timeSinceLastUpdateInMilliseconds": 86400000
+      }
     }
   }
 }
