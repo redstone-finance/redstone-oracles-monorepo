@@ -3,6 +3,7 @@ import { Transaction } from "@mysten/sui/transactions";
 import { RedstoneCommon } from "@redstone-finance/utils";
 import { spawn } from "child_process";
 import "dotenv/config";
+import { rmSync } from "fs";
 import { z } from "zod";
 import {
   getDeployDir,
@@ -10,6 +11,7 @@ import {
   makeSuiDeployConfig,
   makeSuiKeypair,
   saveIds,
+  SuiNetworkName,
   SuiNetworkSchema,
   SuiPricesContractAdapter,
 } from "../src";
@@ -51,14 +53,15 @@ async function executeCommand(command: string, args: string[]): Promise<string> 
   });
 }
 
-async function executeSuiPublish(network: string): Promise<ObjectChanges> {
+async function executeSuiPublish(network: SuiNetworkName): Promise<ObjectChanges> {
   const cwd = process.cwd();
   try {
     const skipFaucet = RedstoneCommon.getFromEnv("SKIP_FAUCET", z.optional(z.boolean()));
     if ((network === "localnet" || network === "testnet") && !skipFaucet) {
       await executeCommand("sui", ["client", "faucet"]);
       console.log("waiting for faucet drip");
-      await new Promise((resolve) => setTimeout(resolve, 3000));
+
+      await RedstoneCommon.sleep(RedstoneCommon.secsToMs(3));
     }
 
     const deployDir = getDeployDir();
@@ -67,7 +70,10 @@ async function executeSuiPublish(network: string): Promise<ObjectChanges> {
     console.log("===========================================================");
     process.chdir(deployDir);
 
-    const cmd = ["client", "publish", "--json"];
+    const cmd =
+      network === "localnet"
+        ? ["client", "test-publish", "--json", "--build-env", "localnet"]
+        : ["client", "publish", "--json"];
     if (network !== "mainnet") {
       cmd.push("--skip-dependency-verification");
     }
@@ -75,11 +81,17 @@ async function executeSuiPublish(network: string): Promise<ObjectChanges> {
     const output = await executeCommand("sui", cmd);
     console.log("Output:", output);
 
-    return JSON.parse(output.split("Transaction digest:")[0]) as ObjectChanges;
+    const jsonStart = output.indexOf("{");
+    const jsonEnd = output.lastIndexOf("}");
+
+    const json = output.slice(jsonStart, jsonEnd + 1);
+
+    return JSON.parse(json.split("Transaction digest:")[0]) as ObjectChanges;
   } catch (error) {
     console.error("Error executing sui client publish:", error);
     throw error;
   } finally {
+    rmSync("Pub.localnet.toml");
     process.chdir(cwd);
   }
 }
