@@ -7,7 +7,8 @@ export const includeSynchronizedHeartbeatUpdates = (
   config: RelayerConfig
 ) => {
   const { multiFeedSyncHeartbeats } = config;
-  if (!multiFeedSyncHeartbeats || heartbeatUpdates.length === 0) {
+  const filteredHeartbeatUpdates = heartbeatUpdates.filter((hb) => hb !== 0);
+  if (!multiFeedSyncHeartbeats || filteredHeartbeatUpdates.length === 0) {
     return {
       dataFeedsToUpdate,
       message: "",
@@ -22,12 +23,14 @@ export const includeSynchronizedHeartbeatUpdates = (
     ) {
       continue;
     }
-    for (const heartbeat of heartbeatUpdates) {
+    for (const heartbeat of filteredHeartbeatUpdates) {
       if (
         updateTriggers[dataFeedId].timeSinceLastUpdateInMilliseconds === 0 ||
         heartbeat % updateTriggers[dataFeedId].timeSinceLastUpdateInMilliseconds === 0
       ) {
-        messages.push(`DataFeed: ${dataFeedId} included due to heartbeat syncing`);
+        messages.push(
+          `DataFeed: ${dataFeedId} included due to heartbeat syncing (${heartbeat} [ms])`
+        );
         dataFeedsToUpdate.push(dataFeedId);
         break;
       }
