@@ -1,0 +1,88 @@
+{
+  "interval": 5000,
+  "priceAggregator": "median",
+  "defaultSource": [
+    "coingecko"
+  ],
+  "sourceTimeout": 7000,
+  "minValidSourcesPercentage": 1,
+  "deviationCheck": {
+    "deviationWithRecentValues": {
+      "maxPercent": 30,
+      "maxDelayMilliseconds": 120000
+    }
+  },
+  "tokens": {
+    "SPXU": {
+      "source": [],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "XAU": {
+      "source": [],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "XAG": {
+      "source": [],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "PHP": {
+      "source": [],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "TSLA": {
+      "source": [],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "FGNXP": {
+      "source": [],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "CEPT": {
+      "source": [],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "FGNX": {
+      "source": [],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "NVDA": {
+      "source": [],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "PLTR": {
+      "source": [],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "AMD": {
+      "source": [],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "GOOGL": {
+      "source": [],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "META": {
+      "source": [],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "AMZN": {
+      "source": [],
+      "denomination": "USD",
+      "rateFeed": false
+    }
+  },
+  "multiPointPackages": {}
+}
