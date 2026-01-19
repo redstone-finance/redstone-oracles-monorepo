@@ -773,16 +773,6 @@
       "denomination": "USD",
       "rateFeed": false
     },
-    "XAU": {
-      "source": [],
-      "denomination": "USD",
-      "rateFeed": false
-    },
-    "XAG": {
-      "source": [],
-      "denomination": "USD",
-      "rateFeed": false
-    },
     "XRP": {
       "source": [
         "binance-usdc",
@@ -1401,11 +1391,6 @@
       "rateFeed": false
     },
     "KES": {
-      "source": [],
-      "denomination": "USD",
-      "rateFeed": false
-    },
-    "PHP": {
       "source": [],
       "denomination": "USD",
       "rateFeed": false
@@ -3772,56 +3757,6 @@
       "denomination": "USD",
       "rateFeed": true
     },
-    "TSLA": {
-      "source": [],
-      "denomination": "USD",
-      "rateFeed": false
-    },
-    "FGNXP": {
-      "source": [],
-      "denomination": "USD",
-      "rateFeed": false
-    },
-    "CEPT": {
-      "source": [],
-      "denomination": "USD",
-      "rateFeed": false
-    },
-    "FGNX": {
-      "source": [],
-      "denomination": "USD",
-      "rateFeed": false
-    },
-    "NVDA": {
-      "source": [],
-      "denomination": "USD",
-      "rateFeed": false
-    },
-    "PLTR": {
-      "source": [],
-      "denomination": "USD",
-      "rateFeed": false
-    },
-    "AMD": {
-      "source": [],
-      "denomination": "USD",
-      "rateFeed": false
-    },
-    "GOOGL": {
-      "source": [],
-      "denomination": "USD",
-      "rateFeed": false
-    },
-    "META": {
-      "source": [],
-      "denomination": "USD",
-      "rateFeed": false
-    },
-    "AMZN": {
-      "source": [],
-      "denomination": "USD",
-      "rateFeed": false
-    },
     "stMNT_FUNDAMENTAL": {
       "source": [
         "ethereum-evm-fetcher-mantle-liq"
@@ -3877,11 +3812,6 @@
       "denomination": "USD",
       "rateFeed": false
     },
-    "SPXU": {
-      "source": [],
-      "denomination": "USD",
-      "rateFeed": false
-    },
     "USDm": {
       "source": [
         "kumbaya-megaeth-cusd-100"
@@ -3899,8 +3829,7 @@
       "BTC",
       "ETH",
       "SOL",
-      "MON",
-      "FGNX"
+      "MON"
     ],
     "__FRAXTAL__": [
       "BTC",
