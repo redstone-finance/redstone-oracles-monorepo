@@ -1995,7 +1995,7 @@
         "ecb",
         "twelve-data",
         "financialmodelingprep",
-        "finhub-usd-reversed",
+        "finhub_icmarkets-usd-reversed",
         "alphavantage-usd",
         "metal-price-api",
         "ws-polygon-massive-commodities",
@@ -2082,7 +2082,10 @@
         "metal-price-api",
         "twelve-data",
         "ws-polygon-massive-commodities",
-        "finhub-usd"
+        "finhub_icmarkets-usd",
+        "finhub_oanda-usd",
+        "finhub_pepperstone-usd",
+        "finhub_fxcm-usd"
       ],
       "denomination": "USD",
       "rateFeed": false
@@ -2096,7 +2099,10 @@
         "metal-price-api",
         "twelve-data",
         "ws-polygon-massive-commodities",
-        "finhub-usd",
+        "finhub_icmarkets-usd",
+        "finhub_oanda-usd",
+        "finhub_pepperstone-usd",
+        "finhub_fxcm-usd",
         "ws-blocksize"
       ],
       "denomination": "USD",
@@ -7770,19 +7776,17 @@
       "rateFeed": false
     },
     "COPPER": {
-      "source": ["ws-blocksize", "finhub-usd"],
+      "source": ["ws-blocksize", "finhub_oanda-usd", "finhub_pepperstone-usd", "finhub_fxcm-usd"],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "OIL": {
+      "source": ["finhub_icmarkets-usd", "finhub_oanda-usd", "finhub_pepperstone-usd"],
       "denomination": "USD",
       "rateFeed": false
     },
     "WTI": {
-      "source": [
-        "twelve-data",
-        "alltick-api",
-        "ws-lmax",
-        "metal-price-api",
-        "finhub-usd",
-        "ws-blocksize"
-      ],
+      "source": ["twelve-data", "alltick-api", "ws-lmax", "metal-price-api", "ws-blocksize"],
       "denomination": "USD",
       "rateFeed": false
     },
@@ -7803,7 +7807,8 @@
         "metal-price-api-deferred",
         "metals-api-deferred",
         "ws-blocksize",
-        "finhub-usd"
+        "finhub_oanda-usd",
+        "finhub_pepperstone-usd"
       ],
       "denomination": "USD",
       "rateFeed": false
@@ -7814,7 +7819,14 @@
       "rateFeed": false
     },
     "NG": {
-      "source": ["twelve-data", "alltick-api", "financialmodelingprep", "finhub-usd"],
+      "source": [
+        "twelve-data",
+        "alltick-api",
+        "financialmodelingprep",
+        "finhub_icmarkets-usd",
+        "finhub_oanda-usd",
+        "finhub_pepperstone-usd"
+      ],
       "denomination": "USD",
       "rateFeed": false
     },
@@ -7848,7 +7860,10 @@
         "twelve-data",
         "databento-cme-no-closing-price",
         "commodity-price-api",
-        "ws-blocksize"
+        "ws-blocksize",
+        "finhub_oanda-usd",
+        "finhub_pepperstone-usd",
+        "finhub_fxcm-usd"
       ],
       "denomination": "USD",
       "rateFeed": false
@@ -7859,8 +7874,20 @@
         "databento-cme-no-closing-price",
         "financialmodelingprep",
         "commodity-price-api",
-        "finhub-usd",
+        "finhub_oanda-usd",
+        "finhub_pepperstone-usd",
+        "finhub_fxcm-usd",
         "ws-blocksize"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "SPX500": {
+      "source": [
+        "finhub_icmarkets-usd",
+        "finhub_oanda-usd",
+        "finhub_pepperstone-usd",
+        "finhub_fxcm-usd"
       ],
       "denomination": "USD",
       "rateFeed": false
