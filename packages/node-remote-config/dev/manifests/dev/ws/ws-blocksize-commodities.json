@@ -1,0 +1,48 @@
+{
+  "interval": 2000,
+  "priceAggregator": "median",
+  "defaultSource": [
+    "coingecko"
+  ],
+  "sourceTimeout": 8000,
+  "deviationCheck": {
+    "deviationWithRecentValues": {
+      "maxPercent": 25,
+      "maxDelayMilliseconds": 120000
+    }
+  },
+  "tokens": {
+    "CORN": {
+      "source": [],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "SOYB": {
+      "source": [
+        "ws-blocksize"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "XCU": {
+      "source": [],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "WTI": {
+      "source": [],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "PALLADIUM": {
+      "source": [],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "XAG": {
+      "source": [],
+      "denomination": "USD",
+      "rateFeed": false
+    }
+  }
+}
