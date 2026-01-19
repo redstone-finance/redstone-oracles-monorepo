@@ -1,0 +1,169 @@
+{
+  "interval": 5000,
+  "priceAggregator": "median",
+  "defaultSource": ["coingecko"],
+  "sourceTimeout": 7000,
+  "minValidSourcesPercentage": 1,
+  "deviationCheck": {
+    "deviationWithRecentValues": {
+      "maxPercent": 30,
+      "maxDelayMilliseconds": 120000
+    }
+  },
+  "tokens": {
+    "SPXU": {
+      "source": [
+        "twelve-data",
+        "financialmodelingprep",
+        "ws-dx-feed-no-close-price",
+        "ws-polygon-massive-no-closing-price"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "XAU": {
+      "source": [
+        "alltick-api",
+        "commodity-price-api",
+        "financialmodelingprep",
+        "metals-api",
+        "metal-price-api",
+        "twelve-data",
+        "ws-polygon-massive-commodities"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "XAG": {
+      "source": [
+        "alltick-api",
+        "commodity-price-api",
+        "financialmodelingprep",
+        "metals-api",
+        "metal-price-api",
+        "twelve-data",
+        "ws-polygon-massive-commodities"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "PHP": {
+      "source": [
+        "financialmodelingprep",
+        "twelve-data",
+        "ws-polygon-massive-commodities",
+        "metal-price-api"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "TSLA": {
+      "source": [
+        "alltick-stocks-api",
+        "databento-no-closing-price",
+        "ws-dx-feed-no-close-price",
+        "ws-polygon-massive-no-closing-price",
+        "ws-twelve-data-no-closing-price"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "FGNXP": {
+      "source": [
+        "databento-no-closing-price",
+        "ws-dx-feed-no-close-price",
+        "ws-polygon-massive-no-closing-price",
+        "ws-twelve-data-no-closing-price"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "CEPT": {
+      "source": [
+        "databento-no-closing-price",
+        "ws-dx-feed-no-close-price",
+        "ws-polygon-massive-no-closing-price",
+        "ws-twelve-data-no-closing-price"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "FGNX": {
+      "source": [
+        "databento-no-closing-price",
+        "ws-dx-feed-no-close-price",
+        "ws-polygon-massive-no-closing-price",
+        "ws-twelve-data-no-closing-price"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "NVDA": {
+      "source": [
+        "alltick-stocks-api",
+        "databento-no-closing-price",
+        "ws-dx-feed-no-close-price",
+        "ws-polygon-massive-no-closing-price",
+        "ws-twelve-data-no-closing-price"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "PLTR": {
+      "source": [
+        "alltick-stocks-api",
+        "databento-no-closing-price",
+        "ws-dx-feed-no-close-price",
+        "ws-polygon-massive-no-closing-price",
+        "ws-twelve-data-no-closing-price"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "AMD": {
+      "source": [
+        "alltick-stocks-api",
+        "databento-no-closing-price",
+        "ws-dx-feed-no-close-price",
+        "ws-polygon-massive-no-closing-price",
+        "ws-twelve-data-no-closing-price"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "GOOGL": {
+      "source": [
+        "alltick-stocks-api",
+        "databento-no-closing-price",
+        "ws-dx-feed-no-close-price",
+        "ws-polygon-massive-no-closing-price",
+        "ws-twelve-data-no-closing-price"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "META": {
+      "source": [
+        "alltick-stocks-api",
+        "databento-no-closing-price",
+        "ws-dx-feed-no-close-price",
+        "ws-polygon-massive-no-closing-price",
+        "ws-twelve-data-no-closing-price"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "AMZN": {
+      "source": [
+        "alltick-stocks-api",
+        "databento-no-closing-price",
+        "ws-dx-feed-no-close-price",
+        "ws-polygon-massive-no-closing-price",
+        "ws-twelve-data-no-closing-price"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    }
+  },
+  "multiPointPackages": {}
+}
