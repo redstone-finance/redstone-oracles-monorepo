@@ -1,9 +1,7 @@
 {
   "interval": 2000,
   "priceAggregator": "median",
-  "defaultSource": [
-    "coingecko"
-  ],
+  "defaultSource": ["coingecko"],
   "sourceTimeout": 2000,
   "minValidSourcesPercentage": 1,
   "deviationCheck": {
@@ -146,22 +144,9 @@
         "kraken-usdc",
         "kucoin-usdt"
       ]
-    },
-    "FGNX": {
-      "source": []
     }
   },
   "multiPointPackages": {
-    "___FAST___": [
-      "USDC",
-      "USDT",
-      "DAI",
-      "BNB",
-      "BTC",
-      "ETH",
-      "SOL",
-      "MON",
-      "FGNX"
-    ]
+    "___FAST___": ["USDC", "USDT", "DAI", "BNB", "BTC", "ETH", "SOL", "MON"]
   }
 }
