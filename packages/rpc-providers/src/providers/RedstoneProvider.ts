@@ -286,7 +286,7 @@ export class RedstoneProvider {
 
 export class RedstoneEthers5Provider implements ethers.providers.Provider {
   _isProvider: boolean = true;
-  private static readonly DEFAULT_BLOCK_NUMBER_CACHE_TTL = 100;
+  private static readonly DEFAULT_BLOCK_NUMBER_CACHE_TTL_MS = 100;
   private readonly url: string;
   private readonly _getBlockNumberCached: () => Promise<number>;
 
@@ -296,7 +296,7 @@ export class RedstoneEthers5Provider implements ethers.providers.Provider {
     private readonly pollingInterval: number = 500,
     private readonly waitForTransactionTimeout: number = 60_000,
     private readonly blockNumberCacheOpts: { ttl?: number; isCacheEnabled: boolean } = {
-      ttl: RedstoneEthers5Provider.DEFAULT_BLOCK_NUMBER_CACHE_TTL,
+      ttl: RedstoneEthers5Provider.DEFAULT_BLOCK_NUMBER_CACHE_TTL_MS,
       isCacheEnabled: true,
     }
   ) {
@@ -305,15 +305,14 @@ export class RedstoneEthers5Provider implements ethers.providers.Provider {
   }
 
   private _initializeBlockNumberCache(): () => Promise<number> {
-    if (this.blockNumberCacheOpts.isCacheEnabled) {
+    const { ttl, isCacheEnabled } = this.blockNumberCacheOpts;
+    if (isCacheEnabled) {
       return RedstoneCommon.memoize({
         functionToMemoize: this.getBlockNumberImpl.bind(this),
-        ttl:
-          this.blockNumberCacheOpts.ttl ?? RedstoneEthers5Provider.DEFAULT_BLOCK_NUMBER_CACHE_TTL,
+        ttl: ttl ?? RedstoneEthers5Provider.DEFAULT_BLOCK_NUMBER_CACHE_TTL_MS,
       }) as () => Promise<number>;
-    } else {
-      return this.getBlockNumberImpl.bind(this);
     }
+    return this.getBlockNumberImpl.bind(this);
   }
 
   getNetwork(): Promise<ethers.providers.Network> {
