@@ -8465,12 +8465,8 @@
       "denomination": "USD",
       "rateFeed": false
     },
-    "SOYABEAN": {
-      "source": [
-        "twelve-data",
-        "databento-cme-no-closing-price",
-        "commodity-price-api"
-      ],
+    "SOYBEAN": {
+      "source": [],
       "denomination": "USD",
       "rateFeed": false
     },
@@ -8483,6 +8479,11 @@
       "source": [
         "kumbaya-megaeth-cusd-100"
       ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "PALLADIUM": {
+      "source": [],
       "denomination": "USD",
       "rateFeed": false
     }
