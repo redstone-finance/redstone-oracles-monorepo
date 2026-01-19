@@ -2091,7 +2091,8 @@
         "metal-price-api",
         "twelve-data",
         "ws-polygon-massive-commodities",
-        "finhub-usd"
+        "finhub-usd",
+        "ws-blocksize"
       ],
       "denomination": "USD",
       "rateFeed": false
@@ -7769,7 +7770,14 @@
       "rateFeed": false
     },
     "WTI": {
-      "source": ["twelve-data", "alltick-api", "ws-lmax", "metal-price-api", "finhub-usd"],
+      "source": [
+        "twelve-data",
+        "alltick-api",
+        "ws-lmax",
+        "metal-price-api",
+        "finhub-usd",
+        "ws-blocksize"
+      ],
       "denomination": "USD",
       "rateFeed": false
     },
@@ -7830,8 +7838,13 @@
       "denomination": "USD",
       "rateFeed": false
     },
-    "SOYABEAN": {
-      "source": ["twelve-data", "databento-cme-no-closing-price", "commodity-price-api"],
+    "SOYBEAN": {
+      "source": [
+        "twelve-data",
+        "databento-cme-no-closing-price",
+        "commodity-price-api",
+        "ws-blocksize"
+      ],
       "denomination": "USD",
       "rateFeed": false
     },
@@ -7841,13 +7854,19 @@
         "databento-cme-no-closing-price",
         "financialmodelingprep",
         "commodity-price-api",
-        "finhub-usd"
+        "finhub-usd",
+        "ws-blocksize"
       ],
       "denomination": "USD",
       "rateFeed": false
     },
     "USDm": {
       "source": ["kumbaya-megaeth-cusd-100"],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "PALLADIUM": {
+      "source": ["ws-blocksize"],
       "denomination": "USD",
       "rateFeed": false
     }
