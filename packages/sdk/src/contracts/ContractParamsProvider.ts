@@ -13,6 +13,7 @@ import {
 import {
   DataPackagesResponse,
   filterRetainingPackagesForDataFeedIds,
+  getResponseFeedIds,
 } from "../request-data-packages-common";
 import { convertDataPackagesResponse } from "../request-redstone-payload";
 
@@ -127,6 +128,23 @@ export class ContractParamsProvider {
           this.overrideRequestParamsPackagesIds
         )
       : dataPackagesResponse;
+  }
+
+  async requestDataPackagesWithFeedsInfo() {
+    const requestedFeedIds = this.getDataFeedIds();
+    const dataPackages = await this.requestDataPackages();
+    const feedsFromResponse = getResponseFeedIds(dataPackages);
+
+    const missingFeeds = requestedFeedIds.filter(
+      (feed) => !(feed in dataPackages) && !feedsFromResponse.includes(feed)
+    );
+
+    return {
+      feedsFromResponse: feedsFromResponse.filter((feed) => requestedFeedIds.includes(feed)),
+      missingFeeds,
+      dataPackages,
+      requestedFeedIds,
+    };
   }
 
   protected async performRequestingDataPackages() {
