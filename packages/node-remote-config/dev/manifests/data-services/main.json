@@ -7957,6 +7957,21 @@
       "source": ["ws-blocksize"],
       "denomination": "USD",
       "rateFeed": false
+    },
+    "slisBNB_FUNDAMENTAL": {
+      "source": ["bnb-evm-fetcher-venus-slis"],
+      "denomination": "BNB",
+      "rateFeed": true
+    },
+    "asBNB_FUNDAMENTAL": {
+      "source": ["bnb-evm-fetcher-venus-as"],
+      "denomination": "slisBNB",
+      "rateFeed": true
+    },
+    "wBETH_FUNDAMENTAL": {
+      "source": ["bnb-evm-fetcher-venus-wb"],
+      "denomination": "ETH",
+      "rateFeed": true
     }
   }
 }
