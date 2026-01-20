@@ -350,11 +350,21 @@
     "DOT": {
       "source": [
         "binance-usdt",
+        "binance-usdc",
         "coinbase-usd",
-        "kraken-usd",
+        "okx-usdt",
+        "bybit-usdt",
+        "bitget-usdt",
+        "gate-usdt",
         "kucoin-usdt",
+        "mexc-usdt",
+        "kraken-usd",
+        "kraken-eur",
+        "bingx-usdt",
+        "bitmart-usdt",
         "lbank-usdt",
-        "okx-usdt"
+        "htx-usdt",
+        "xt"
       ],
       "denomination": "USD",
       "rateFeed": false
@@ -547,11 +557,20 @@
     "FIL": {
       "source": [
         "binance-usdt",
+        "binance-usdc",
         "coinbase-usd",
-        "kraken-usd",
+        "okx-usdt",
+        "bybit-usdt",
+        "bitget-usdt",
+        "gate-usdt",
         "kucoin-usdt",
+        "mexc-usdt",
+        "kraken-usd",
+        "bingx-usdt",
+        "bitmart-usdt",
         "lbank-usdt",
-        "okx-usdt"
+        "htx-usdt",
+        "xt"
       ],
       "denomination": "USD",
       "rateFeed": false
@@ -3544,10 +3563,6 @@
       "denomination": "USD",
       "rateFeed": false
     },
-    "CAKE": {
-      "denomination": "USD",
-      "rateFeed": false
-    },
     "HOT": {
       "denomination": "USD",
       "rateFeed": false
@@ -4998,10 +5013,6 @@
       "rateFeed": false
     },
     "10SET": {
-      "denomination": "USD",
-      "rateFeed": false
-    },
-    "TWT": {
       "denomination": "USD",
       "rateFeed": false
     },
@@ -7890,6 +7901,49 @@
         "finhub_oanda-usd",
         "finhub_pepperstone-usd",
         "finhub_fxcm-usd"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "CAKE": {
+      "source": [
+        "pancake-swap-bnb-wbnb-500",
+        "pancake-swap-bnb-wbnb-2500",
+        "pancake-swap-bnb-usdt-2500",
+        "uniswap-v3-bnb-usdt-3000",
+        "binance-usdt",
+        "binance-usdc",
+        "coinbase-usd",
+        "bybit-usdt",
+        "bitget-usdt",
+        "gate-usdt",
+        "kraken-usd",
+        "bingx-usdt",
+        "bitmart-usdt",
+        "kucoin-usdt",
+        "mexc-usdt",
+        "lbank-usdt",
+        "htx-usdt",
+        "xt"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "TWT": {
+      "source": [
+        "pancake-swap-bnb-wbnb-2500",
+        "pancake-swap-bnb-usdt-2500",
+        "binance-usdt",
+        "binance-usdc",
+        "bybit-usdt",
+        "bitget-usdt",
+        "gate-usdt",
+        "kucoin-usdt",
+        "mexc-usdt",
+        "bingx-usdt",
+        "bitmart-usdt",
+        "lbank-usdt",
+        "xt"
       ],
       "denomination": "USD",
       "rateFeed": false
