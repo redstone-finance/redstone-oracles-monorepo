@@ -2014,7 +2014,7 @@
         "ecb",
         "twelve-data",
         "financialmodelingprep",
-        "finhub_icmarkets-usd-reversed",
+        "finhub_icmarkets_deferred-usd-reversed",
         "alphavantage-usd",
         "metal-price-api",
         "ws-polygon-massive-commodities",
@@ -2100,11 +2100,7 @@
         "metals-api",
         "metal-price-api",
         "twelve-data",
-        "ws-polygon-massive-commodities",
-        "finhub_icmarkets-usd",
-        "finhub_oanda-usd",
-        "finhub_pepperstone-usd",
-        "finhub_fxcm-usd"
+        "ws-polygon-massive-commodities"
       ],
       "denomination": "USD",
       "rateFeed": false
@@ -2118,10 +2114,6 @@
         "metal-price-api",
         "twelve-data",
         "ws-polygon-massive-commodities",
-        "finhub_icmarkets-usd",
-        "finhub_oanda-usd",
-        "finhub_pepperstone-usd",
-        "finhub_fxcm-usd",
         "ws-blocksize"
       ],
       "denomination": "USD",
@@ -7787,12 +7779,7 @@
       "rateFeed": false
     },
     "COPPER": {
-      "source": ["ws-blocksize", "finhub_oanda-usd", "finhub_pepperstone-usd", "finhub_fxcm-usd"],
-      "denomination": "USD",
-      "rateFeed": false
-    },
-    "OIL": {
-      "source": ["finhub_icmarkets-usd", "finhub_oanda-usd", "finhub_pepperstone-usd"],
+      "source": ["ws-blocksize"],
       "denomination": "USD",
       "rateFeed": false
     },
@@ -7817,9 +7804,7 @@
         "alltick-api-deferred",
         "metal-price-api-deferred",
         "metals-api-deferred",
-        "ws-blocksize",
-        "finhub_oanda-usd",
-        "finhub_pepperstone-usd"
+        "ws-blocksize"
       ],
       "denomination": "USD",
       "rateFeed": false
@@ -7834,11 +7819,12 @@
         "twelve-data",
         "alltick-api",
         "financialmodelingprep",
-        "finhub-usd",
         "ws-blocksize",
-        "finhub_icmarkets-usd",
         "finhub_oanda-usd",
-        "finhub_pepperstone-usd"
+        "finhub_pepperstone-usd",
+        "finhub_pepperstoneuk-usd",
+        "finhub_fxpig-usd",
+        "finhub_capital-usd"
       ],
       "denomination": "USD",
       "rateFeed": false
@@ -7874,9 +7860,7 @@
         "databento-cme-no-closing-price",
         "commodity-price-api",
         "ws-blocksize",
-        "finhub_oanda-usd",
-        "finhub_pepperstone-usd",
-        "finhub_fxcm-usd"
+        "finhub_fxcm_deferred-usd"
       ],
       "denomination": "USD",
       "rateFeed": false
@@ -7887,21 +7871,15 @@
         "databento-cme-no-closing-price",
         "financialmodelingprep",
         "commodity-price-api",
-        "finhub_oanda-usd",
-        "finhub_pepperstone-usd",
-        "finhub_fxcm-usd",
+        "finhub_fxcm_deferred-usd",
+        "finhub_capital_deferred-usd",
         "ws-blocksize"
       ],
       "denomination": "USD",
       "rateFeed": false
     },
-    "SPX500": {
-      "source": [
-        "finhub_icmarkets-usd",
-        "finhub_oanda-usd",
-        "finhub_pepperstone-usd",
-        "finhub_fxcm-usd"
-      ],
+    "USDm": {
+      "source": ["kumbaya-megaeth-cusd-100"],
       "denomination": "USD",
       "rateFeed": false
     },
@@ -7948,13 +7926,13 @@
       "denomination": "USD",
       "rateFeed": false
     },
-    "USDm": {
-      "source": ["kumbaya-megaeth-cusd-100"],
+    "PLATINUM": {
+      "source": ["finhub_deriv-usd", "finhub_capital_deferred-usd"],
       "denomination": "USD",
       "rateFeed": false
     },
     "PALLADIUM": {
-      "source": ["ws-blocksize"],
+      "source": ["ws-blocksize", "finhub_capital_deferred-usd"],
       "denomination": "USD",
       "rateFeed": false
     },

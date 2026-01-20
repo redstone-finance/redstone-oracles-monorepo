@@ -1,0 +1,112 @@
+{
+  "interval": 10000,
+  "priceAggregator": "median",
+  "defaultSource": ["coingecko"],
+  "sourceTimeout": 8000,
+  "deviationCheck": {
+    "deviationWithRecentValues": {
+      "maxPercent": 25,
+      "maxDelayMilliseconds": 120000
+    }
+  },
+  "tokens": {
+    "NG": {
+      "source": [
+        "finhub_oanda_deferred-usd",
+        "finhub_pepperstone_deferred-usd",
+        "finhub_pepperstoneuk_deferred-usd",
+        "finhub_fxpig_deferred-usd",
+        "finhub_capital_deferred-usd"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+
+    "SPX500": {
+      "source": [
+        "finhub_icmarkets_deferred-usd",
+        "finhub_oanda_deferred-usd",
+        "finhub_pepperstone_deferred-usd",
+        "finhub_pepperstoneuk_deferred-usd",
+        "finhub_fxcm_deferred-usd",
+        "finhub_fxpig_deferred-usd",
+        "finhub_capital_deferred-usd"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "URNM": {
+      "source": ["finhub_pepperstoneuk_deferred-usd"],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "SOYBEAN": {
+      "source": ["finhub_pepperstoneuk_deferred-usd"],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "CORN": {
+      "source": [
+        "finhub_oanda_deferred-usd",
+        "finhub_pepperstone_deferred-usd",
+        "finhub_pepperstoneuk_deferred-usd",
+        "finhub_fxcm_deferred-usd",
+        "finhub_capital_deferred-usd"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "OIL": {
+      "source": [
+        "finhub_icmarkets_deferred-usd",
+        "finhub_oanda_deferred-usd",
+        "finhub_pepperstone_deferred-usd",
+        "finhub_pepperstoneuk_deferred-usd",
+        "finhub_fxpig_deferred-usd",
+        "finhub_capital_deferred-usd"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "BRENT": {
+      "source": [
+        "finhub_pepperstoneuk_deferred-usd",
+        "finhub_fxpig_deferred-usd",
+        "finhub_capital_deferred-usd"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "XAU": {
+      "source": [
+        "finhub_icmarkets_deferred-usd",
+        "finhub_oanda_deferred-usd",
+        "finhub_pepperstone_deferred-usd",
+        "finhub_pepperstoneuk_deferred-usd",
+        "finhub_fxcm_deferred-usd",
+        "finhub_fxpig_deferred-usd",
+        "finhub_capital_deferred-usd"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "XAG": {
+      "source": [
+        "finhub_icmarkets_deferred-usd",
+        "finhub_oanda_deferred-usd",
+        "finhub_pepperstone_deferred-usd",
+        "finhub_pepperstoneuk_deferred-usd",
+        "finhub_fxcm_deferred-usd",
+        "finhub_fxpig_deferred-usd",
+        "finhub_capital_deferred-usd"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "XCU": {
+      "source": ["finhub_pepperstone_deferred-usd"],
+      "denomination": "USD",
+      "rateFeed": false
+    }
+  }
+}
