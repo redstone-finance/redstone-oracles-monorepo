@@ -98,6 +98,18 @@ export const mockSignedDataPackagesResponse = {
   BTC: btcSignedDataPackagesObjects.map(SignedDataPackage.fromObj),
 };
 
+export const mockFastMediumPackages = ethSignedDataPackagesObjects
+  .map((ethPackage, index) => {
+    const btcPackage = btcSignedDataPackagesObjects[index];
+
+    return {
+      ...ethPackage,
+      dataPoints: [...ethPackage.dataPoints, ...btcPackage.dataPoints],
+      dataPackageId: `__FAST__`,
+    };
+  })
+  .map(SignedDataPackage.fromObj);
+
 export const mockPayload = RedstonePayload.prepare(
   Object.values(mockSignedDataPackagesResponse).flatMap((dataPackage) => dataPackage),
   ""
