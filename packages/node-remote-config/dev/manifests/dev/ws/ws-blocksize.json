@@ -10,7 +10,7 @@
     }
   },
   "tokens": {
-    "COPPER": {
+    "XCU": {
       "source": ["ws-blocksize"],
       "denomination": "USD",
       "rateFeed": false

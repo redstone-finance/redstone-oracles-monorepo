@@ -15,7 +15,7 @@
       "denomination": "USD",
       "rateFeed": false
     },
-    "SOYB": {
+    "SOYBEAN": {
       "source": ["ws-blocksize"],
       "denomination": "USD",
       "rateFeed": false
@@ -36,6 +36,11 @@
       "rateFeed": false
     },
     "XAG": {
+      "source": ["ws-blocksize"],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "NG": {
       "source": ["ws-blocksize"],
       "denomination": "USD",
       "rateFeed": false
