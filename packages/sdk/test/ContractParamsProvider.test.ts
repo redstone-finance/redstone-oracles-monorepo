@@ -1,4 +1,8 @@
-import { mockPayload, mockSignedDataPackagesResponse } from "./mocks/mock-packages";
+import {
+  mockFastMediumPackages,
+  mockPayload,
+  mockSignedDataPackagesResponse,
+} from "./mocks/mock-packages";
 // Do not remove this empty line to have the mocks working
 import { arrayify } from "ethers/lib/utils";
 import {
@@ -91,5 +95,66 @@ describe("ContractParamsProvider tests", () => {
 
     expect(missingFeedIds).toStrictEqual(expectedMissing);
     expect(Object.keys(payloads)).toStrictEqual(expectedNotMissing);
+  });
+
+  it("should return expanded data feeds info with normal feeds", async () => {
+    const overrideIds = ["ETH", "BTC", "AVAX", "SOL"];
+    sut = new ContractParamsProvider(mockRequestParams, undefined, overrideIds);
+
+    const { missingFeeds, feedsFromResponse, dataPackages, requestedFeedIds } =
+      await sut.requestDataPackagesWithFeedsInfo();
+
+    expect(feedsFromResponse).toEqual(["ETH", "BTC"]);
+    expect(requestedFeedIds).toEqual(["ETH", "BTC", "AVAX", "SOL"]);
+    expect(missingFeeds).toEqual(["AVAX", "SOL"]);
+    expect(dataPackages).toEqual(mockSignedDataPackagesResponse);
+  });
+
+  it("should expand medium packages into feeds", async () => {
+    const mediumPackageResponse = {
+      ETH: mockSignedDataPackagesResponse["ETH"],
+      __FAST__: mockFastMediumPackages,
+    };
+
+    const responseWithoutEthSinglePackage = {
+      __FAST__: mockFastMediumPackages,
+    };
+
+    (requestDataPackages as jest.Mock).mockResolvedValueOnce(mediumPackageResponse);
+
+    const overrideIds = ["ETH", "__FAST__", "SOL"];
+    sut = new ContractParamsProvider(mockRequestParams, undefined, overrideIds);
+
+    const { missingFeeds, feedsFromResponse, dataPackages, requestedFeedIds } =
+      await sut.requestDataPackagesWithFeedsInfo();
+
+    expect(feedsFromResponse).toEqual(["ETH"]);
+    expect(requestedFeedIds).toEqual(["ETH", "__FAST__", "SOL"]);
+    expect(missingFeeds).toEqual(["SOL"]);
+    expect(dataPackages).toEqual(responseWithoutEthSinglePackage);
+  });
+
+  it("should expand medium packages into feeds", async () => {
+    const mediumPackageResponse = {
+      ETH: mockSignedDataPackagesResponse["ETH"],
+      __FAST__: [...mockSignedDataPackagesResponse["BTC"]],
+    };
+
+    const responseWithoutEthSinglePackage = {
+      __FAST__: [...mockSignedDataPackagesResponse["BTC"]],
+    };
+
+    (requestDataPackages as jest.Mock).mockResolvedValueOnce(mediumPackageResponse);
+
+    const overrideIds = ["BTC", "__FAST__"];
+    sut = new ContractParamsProvider(mockRequestParams, undefined, overrideIds);
+
+    const { missingFeeds, feedsFromResponse, dataPackages, requestedFeedIds } =
+      await sut.requestDataPackagesWithFeedsInfo();
+
+    expect(feedsFromResponse).toEqual(["BTC"]);
+    expect(requestedFeedIds).toEqual(["BTC", "__FAST__"]);
+    expect(missingFeeds).toEqual([]);
+    expect(dataPackages).toEqual(responseWithoutEthSinglePackage);
   });
 });

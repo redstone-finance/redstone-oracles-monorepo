@@ -1,12 +1,7 @@
 import { DataPackagesWrapper } from "@redstone-finance/evm-connector";
-import {
-  ContractParamsProvider,
-  getResponseFeedIds,
-  UpdatePricesOptions,
-} from "@redstone-finance/sdk";
+import { ContractParamsProvider, UpdatePricesOptions } from "@redstone-finance/sdk";
 import { loggerFactory, Tx } from "@redstone-finance/utils";
 import { utils } from "ethers";
-import _ from "lodash";
 import { MultiFeedAdapterWithoutRounds } from "../../../typechain-types";
 import { MultiFeedEvmContractAdapterBase } from "./MultiFeedEvmContractAdapterBase";
 
@@ -25,32 +20,29 @@ export class MultiFeedEvmContractAdapter extends MultiFeedEvmContractAdapterBase
     paramsProvider: ContractParamsProvider,
     metadataTimestamp: number
   ): Promise<Tx.TxDeliveryCall> {
-    const dataFeedsToUpdate = paramsProvider.getDataFeedIds();
-    const dataPackages = await paramsProvider.requestDataPackages();
-    const dataPackagesFeeds = getResponseFeedIds(dataPackages).filter((feedId) =>
-      dataFeedsToUpdate.includes(feedId)
-    );
-    const missingFeeds = _.difference(dataFeedsToUpdate, dataPackagesFeeds);
+    const { feedsFromResponse, missingFeeds, dataPackages, requestedFeedIds } =
+      await paramsProvider.requestDataPackagesWithFeedsInfo();
 
     if (missingFeeds.length) {
       logger.log(
-        `Missing some feeds in the response: [${missingFeeds.toString()}], will update only for [${dataPackagesFeeds.toString()}]`,
+        `Missing some feeds in the response: [${missingFeeds.toString()}], will update only for [${feedsFromResponse.toString()}]`,
         {
-          dataFeedsToUpdate,
-          dataPackagesFeeds,
+          missingFeeds,
+          feedsFromResponse,
+          requestedFeedIds,
         }
       );
     } else {
       logger.info(
-        `All feeds available in the response, will update for [${dataPackagesFeeds.toString()}]`,
+        `All feeds available in the response, will update for [${feedsFromResponse.toString()}]`,
         {
-          dataFeedsToUpdate,
-          dataPackagesFeeds,
+          feedsFromResponse,
+          requestedFeedIds,
         }
       );
     }
 
-    const dataFeedsAsBytes32 = dataPackagesFeeds.map(utils.formatBytes32String);
+    const dataFeedsAsBytes32 = feedsFromResponse.map(utils.formatBytes32String);
     const dataPackagesWrapper = new DataPackagesWrapper<MultiFeedAdapterWithoutRounds>(
       dataPackages
     );
