@@ -2235,7 +2235,7 @@
         "ecb",
         "twelve-data",
         "financialmodelingprep",
-        "finhub_icmarkets-usd-reversed",
+        "finhub_icmarkets_deferred-usd-reversed",
         "alphavantage-usd",
         "metal-price-api",
         "ws-polygon-massive-commodities",
@@ -8429,15 +8429,6 @@
       "denomination": "USD",
       "rateFeed": false
     },
-    "OIL": {
-      "source": [
-        "finhub_icmarkets-usd",
-        "finhub_oanda-usd",
-        "finhub_pepperstone-usd"
-      ],
-      "denomination": "USD",
-      "rateFeed": false
-    },
     "WTI": {
       "source": [],
       "denomination": "USD",
@@ -8500,12 +8491,9 @@
       "denomination": "USD",
       "rateFeed": false
     },
-    "SPX500": {
+    "USDm": {
       "source": [
-        "finhub_icmarkets-usd",
-        "finhub_oanda-usd",
-        "finhub_pepperstone-usd",
-        "finhub_fxcm-usd"
+        "kumbaya-megaeth-cusd-100"
       ],
       "denomination": "USD",
       "rateFeed": false
@@ -8553,10 +8541,8 @@
       "denomination": "USD",
       "rateFeed": false
     },
-    "USDm": {
-      "source": [
-        "kumbaya-megaeth-cusd-100"
-      ],
+    "PLATINUM": {
+      "source": [],
       "denomination": "USD",
       "rateFeed": false
     },
