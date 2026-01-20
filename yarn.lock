@@ -10941,7 +10941,7 @@ __metadata:
     "@redstone-finance/utils": "workspace:*"
     "@types/aws-lambda": "npm:^8.10.145"
     axios: "npm:^1.13.2"
-    ccxt: "npm:^4.4.89"
+    ccxt: "npm:^4.5.33"
     dotenv: "npm:^16.0.3"
     lodash: "npm:^4.17.21"
     zod: "npm:^4.1.12"
@@ -20869,12 +20869,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"ccxt@npm:^4.4.89":
-  version: 4.4.89
-  resolution: "ccxt@npm:4.4.89"
+"ccxt@npm:^4.5.33":
+  version: 4.5.33
+  resolution: "ccxt@npm:4.5.33"
   dependencies:
     ws: "npm:^8.8.1"
-  checksum: 10c0/cb866f445bbcc776cad57790ac00b5b2e2fa112b3217f6081224bf6ddbb343d97c4d6bc1583b8b7af6a0ac5c27d5cd59dd50b2bb75b38112c508b31082f49056
+  checksum: 10c0/9ded20244837c8b0628260441a773caecc7649fdf2eb2aa2ce7aad002f9076bd720b83769fb7acca7ee0b95d6d76a496ada21eb4bca355ba081135baecabb7a8
   languageName: node
   linkType: hard
 
