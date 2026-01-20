@@ -7823,6 +7823,8 @@
         "twelve-data",
         "alltick-api",
         "financialmodelingprep",
+        "finhub-usd",
+        "ws-blocksize",
         "finhub_icmarkets-usd",
         "finhub_oanda-usd",
         "finhub_pepperstone-usd"
