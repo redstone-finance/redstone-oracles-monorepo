@@ -21,7 +21,6 @@
       "denomination": "USD",
       "rateFeed": false
     },
-
     "SPX500": {
       "source": [
         "finhub_icmarkets_deferred-usd",
