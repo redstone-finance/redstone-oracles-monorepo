@@ -671,6 +671,11 @@
         }
       }
     },
+    "USDC/EUROC": {
+      "source": ["non-usd-based"],
+      "denomination": "EUROC",
+      "rateFeed": false
+    },
     "AVAX": {
       "source": [
         "binance-usdc",
