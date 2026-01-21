@@ -3727,6 +3727,36 @@
       "source": ["ethereum-evm-fetcher-buck"],
       "denomination": "USD",
       "rateFeed": true
+    },
+    "USDp_FUNDAMENTAL/USD": {
+      "source": ["evm-fetcher-parallel-usdp"],
+      "denomination": "USD",
+      "rateFeed": true
+    },
+    "sUSDp_AVAX_FUNDAMENTAL/USD": {
+      "source": ["avalanche-evm-fetcher-parallel-susdp"],
+      "denomination": "USD",
+      "rateFeed": true
+    },
+    "sUSDp_BASE_FUNDAMENTAL/USD": {
+      "source": ["base-evm-fetcher-parallel-susdp"],
+      "denomination": "USD",
+      "rateFeed": true
+    },
+    "sUSDp_ETH_FUNDAMENTAL/USD": {
+      "source": ["ethereum-evm-fetcher-parallel-susdp"],
+      "denomination": "USD",
+      "rateFeed": true
+    },
+    "sUSDp_HYPEREVM_FUNDAMENTAL/USD": {
+      "source": ["hyperevm-evm-fetcher-parallel-susdp"],
+      "denomination": "USD",
+      "rateFeed": true
+    },
+    "sUSDp_SONIC_FUNDAMENTAL/USD": {
+      "source": ["sonic-evm-fetcher-parallel-susdp"],
+      "denomination": "USD",
+      "rateFeed": true
     }
   },
   "multiPointPackages": {
