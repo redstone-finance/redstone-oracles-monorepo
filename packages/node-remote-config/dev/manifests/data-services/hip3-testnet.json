@@ -1348,7 +1348,8 @@
         "alltick-api-deferred",
         "financialmodelingprep-deferred",
         "ws-lmax",
-        "ws-polygon-massive-commodities"
+        "ws-polygon-massive-commodities",
+        "ws-keyrock"
       ],
       "priceAggregator": "primarySource",
       "primarySourceAggregatorConfig": {
@@ -1489,7 +1490,8 @@
         "financialmodelingprep-deferred",
         "metal-price-api-deferred",
         "ws-lmax",
-        "ws-polygon-massive-commodities"
+        "ws-polygon-massive-commodities",
+        "ws-keyrock"
       ],
       "broadcasters": ["influx"],
       "priceAggregator": "primarySource",
