@@ -924,7 +924,6 @@
         "coinmarketcap",
         "kraken-usd",
         "trader-joe-v2-avalanche-usdc",
-        "trader-joe-v2-avalanche-wavax",
         "uniswap-v3-ethereum-usdc-500"
       ],
       "denomination": "USD",
