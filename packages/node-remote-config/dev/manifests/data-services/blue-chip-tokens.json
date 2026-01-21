@@ -231,7 +231,17 @@
       ]
     },
     "FXS": {
-      "source": ["binance-usdt", "bitrue-usdt", "kucoin-usdt", "lbank-usdt", "okx-usdt"]
+      "source": [
+        "binance-usdt",
+        "bingx-usdt",
+        "bitget-usdt",
+        "bybit-usdt",
+        "gate-usdt",
+        "htx-usdt",
+        "kraken-usd",
+        "kucoin-usdt",
+        "mexc-usdt"
+      ]
     },
     "DAI": {
       "source": [
