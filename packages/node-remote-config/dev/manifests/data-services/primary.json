@@ -209,7 +209,17 @@
       "rateFeed": false
     },
     "FXS": {
-      "source": ["binance-usdt", "bitrue-usdt", "kucoin-usdt", "lbank-usdt", "okx-usdt"],
+      "source": [
+        "binance-usdt",
+        "bingx-usdt",
+        "bitget-usdt",
+        "bybit-usdt",
+        "gate-usdt",
+        "htx-usdt",
+        "kraken-usd",
+        "kucoin-usdt",
+        "mexc-usdt"
+      ],
       "denomination": "USD",
       "rateFeed": false
     },
@@ -217,11 +227,12 @@
       "source": [
         "curve-ethereum-3crv",
         "curve-ethereum-sdai",
-        "curve-ethereum-usdc-multi-block",
+        "curve-ethereum-usdc",
+        "curve-ethereum-usde",
         "fraxswap-ethereum-fxs",
         "fraxswap-ethereum-weth",
         "uniswap-v3-ethereum-usdc-500",
-        "uniswap-v3-ethereum-dai-500"
+        "uniswap-v3-ethereum-usdc-3000"
       ],
       "deviationCheck": {
         "deviationWithRecentValues": {
@@ -1156,7 +1167,6 @@
         "camelot-v3-arbitrumone-usdc",
         "curve-ethereum-dai",
         "curve-ethereum-fdusd",
-        "curve-ethereum-frax",
         "curve-ethereum-usdt",
         "uniswap-v3-ethereum-mnt-3000",
         "uniswap-v3-ethereum-usdc-100",
