@@ -2116,7 +2116,8 @@
         "metals-api",
         "metal-price-api",
         "twelve-data",
-        "ws-polygon-massive-commodities"
+        "ws-polygon-massive-commodities",
+        "ws-keyrock"
       ],
       "denomination": "USD",
       "rateFeed": false
@@ -2130,7 +2131,8 @@
         "metal-price-api",
         "twelve-data",
         "ws-polygon-massive-commodities",
-        "ws-blocksize"
+        "ws-blocksize",
+        "ws-keyrock"
       ],
       "denomination": "USD",
       "rateFeed": false
