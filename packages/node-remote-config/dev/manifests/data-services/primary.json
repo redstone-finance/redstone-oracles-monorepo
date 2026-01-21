@@ -3474,6 +3474,11 @@
       "source": ["bnb-evm-fetcher-venus-wb"],
       "denomination": "ETH",
       "rateFeed": true
+    },
+    "BUCK_FUNDAMENTAL/USD": {
+      "source": ["ethereum-evm-fetcher-buck"],
+      "denomination": "USD",
+      "rateFeed": true
     }
   },
   "multiPointPackages": {
