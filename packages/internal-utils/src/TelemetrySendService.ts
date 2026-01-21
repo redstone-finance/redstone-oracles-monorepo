@@ -1,5 +1,5 @@
 import { InfluxDB, Point, WritePrecisionType } from "@influxdata/influxdb-client";
-import { RedstoneCommon, loggerFactory } from "@redstone-finance/utils";
+import { RedstoneCommon, SafeNumber, loggerFactory } from "@redstone-finance/utils";
 
 const logger = loggerFactory("telemetry/TelemetrySendService");
 
@@ -38,6 +38,22 @@ export class TelemetryPoint {
 
   stringField(key: string, value: string | undefined): TelemetryPoint {
     this.fields.string[key] = value;
+    return this;
+  }
+
+  safeFloatField(key: string, value: string | number | undefined): TelemetryPoint {
+    if (!RedstoneCommon.isDefined(value)) {
+      logger.warn(`Will not save value for ${key} - undefined`);
+      return this;
+    }
+    try {
+      this.fields.float[key] = SafeNumber.createSafeNumber(value).unsafeToNumber();
+    } catch (e) {
+      logger.warn(
+        `Could not parse value for ${key}, skipping. Reason: ${RedstoneCommon.stringifyError(e)}`
+      );
+    }
+
     return this;
   }
 }
