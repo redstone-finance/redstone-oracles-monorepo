@@ -7842,7 +7842,8 @@
         "finhub_pepperstone-usd",
         "finhub_pepperstoneuk-usd",
         "finhub_fxpig-usd",
-        "finhub_capital-usd"
+        "finhub_capital-usd",
+        "databento-no-closing-price"
       ],
       "denomination": "USD",
       "rateFeed": false
