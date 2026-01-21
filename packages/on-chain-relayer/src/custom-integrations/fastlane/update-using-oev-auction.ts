@@ -80,7 +80,7 @@ const runOevAuction = async (
   txDeliveryCalldata: string
 ) => {
   const oevAuctionUrl = relayerConfig.oevAuctionUrl!;
-  const { adapterContractAddress, networkId } = relayerConfig;
+  const { adapterContractAddress, networkId, oevAuctionApiKey } = relayerConfig;
   if (!isEvmNetworkId(networkId)) {
     throw new Error("Non-evm networkId is not supported in fastlane.");
   }
@@ -103,9 +103,13 @@ const runOevAuction = async (
       },
     ],
   });
+
   try {
     const response = await axios.post<OevAuctionResponse>(oevAuctionUrl, body, {
       timeout: relayerConfig.oevResolveAuctionTimeout,
+      headers: {
+        ...(oevAuctionApiKey && { "x-api-key": oevAuctionApiKey }),
+      },
     });
     return response.data;
   } catch (error) {
