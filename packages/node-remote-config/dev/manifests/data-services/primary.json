@@ -1101,6 +1101,8 @@
     "ezETH": {
       "source": [
         "aerodrome-cl-base-weth",
+        "curve-fraxtal-frxeth",
+        "fluid-ethereum-eth",
         "thruster-v3-blast-weth-3000",
         "thruster-v3-blast-weth-500",
         "uniswap-v4-arbitrumone-eth-500"
