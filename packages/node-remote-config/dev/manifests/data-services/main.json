@@ -1263,6 +1263,13 @@
       "denomination": "EUR",
       "rateFeed": false
     },
+    "USDC/EUROC": {
+      "source": [
+        "non-usd-based"
+      ],
+      "denomination": "EUROC",
+      "rateFeed": false
+    },
     "ALUSD": {
       "source": [
         "curve-ethereum-3crv",
