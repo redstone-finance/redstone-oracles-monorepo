@@ -150,6 +150,42 @@
     },
     "CMC20_FUNDAMENTAL": {
       "priceFeedAddress": "0x4a784CB1e0b4c07AEf60f98c561f04b4414f44A2"
+    },
+    "XRP": {
+      "priceFeedAddress": "0xeC7C6AdcC867E1C22713D14797339750E36538E4"
+    },
+    "FDUSD": {
+      "priceFeedAddress": "0x98DC6E90D4c2f212ed9d124aD2aFBa4833268633"
+    },
+    "DOGE": {
+      "priceFeedAddress": "0x6f57Ff507735BcD3d86af83aF77ABD10395b2904"
+    },
+    "UNI": {
+      "priceFeedAddress": "0x22d47686b3AEC9068768f84EFD8Ce2637a347B0A"
+    },
+    "ADA": {
+      "priceFeedAddress": "0xc44be6D00307c3565FDf753e852Fc003036cBc13"
+    },
+    "XVS": {
+      "priceFeedAddress": "0xED2B1ca5D7E246f615c2291De309643D41FeC97e"
+    },
+    "LTC": {
+      "priceFeedAddress": "0x7A9b672fc20b5C89D6774514052b3e0899E5E263"
+    },
+    "SOL": {
+      "priceFeedAddress": "0x90196F6D52fce394C79D1614265d36D3F0033Ccf"
+    },
+    "LINK": {
+      "priceFeedAddress": "0x1b0FDa12D125B864756Bbf191ad20eaB10915a6F"
+    },
+    "DAI": {
+      "priceFeedAddress": "0x0bE6929FD4ad87347e97A525DB6ac8E884FCDCeC"
+    },
+    "BCH": {
+      "priceFeedAddress": "0x98ECE0D516f891a35278E3186772fb1545b274eB"
+    },
+    "AAVE": {
+      "priceFeedAddress": "0xe4630835eA31ABD4247e449A550Fb92c8a5a4E96"
     }
   }
 }

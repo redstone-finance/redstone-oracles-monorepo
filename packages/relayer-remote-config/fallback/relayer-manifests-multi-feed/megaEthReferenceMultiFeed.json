@@ -28,6 +28,7 @@
         "deviationPercentage": 0.05,
         "timeSinceLastUpdateInMilliseconds": 86400000
       }
-    }
+    },
+    "USDm": {}
   }
 }

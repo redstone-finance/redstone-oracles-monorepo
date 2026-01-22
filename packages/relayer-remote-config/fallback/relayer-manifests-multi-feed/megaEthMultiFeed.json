@@ -47,6 +47,9 @@
         "deviationPercentage": 0.05,
         "timeSinceLastUpdateInMilliseconds": 86400000
       }
+    },
+    "USDm": {
+      "priceFeedAddress": "0x90196F6D52fce394C79D1614265d36D3F0033Ccf"
     }
   }
 }
