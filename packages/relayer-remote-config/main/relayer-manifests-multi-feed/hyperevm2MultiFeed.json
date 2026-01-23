@@ -40,6 +40,20 @@
     },
     "HYPE": {
       "priceFeedAddress": "0x40EA33eA76Fbe35e9FB422eDd175b8c8D84A63Cc"
+    },
+    "USDp_FUNDAMENTAL/USD": {
+      "priceFeedAddress": "0xf0DEbDAE819b354D076b0D162e399BE013A856d3",
+      "updateTriggersOverrides": {
+        "deviationPercentage": 0.2,
+        "timeSinceLastUpdateInMilliseconds": 43200000
+      }
+    },
+    "sUSDp_HYPEREVM_FUNDAMENTAL/USD": {
+      "priceFeedAddress": "0xD15862FC3D5407A03B696548b6902D6464A69b8c",
+      "updateTriggersOverrides": {
+        "deviationPercentage": 0.2,
+        "timeSinceLastUpdateInMilliseconds": 43200000
+      }
     }
   }
 }

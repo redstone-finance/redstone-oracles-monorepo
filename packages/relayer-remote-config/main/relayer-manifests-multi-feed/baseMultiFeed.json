@@ -116,6 +116,20 @@
         "deviationPercentage": 0.5,
         "timeSinceLastUpdateInMilliseconds": 21600000
       }
+    },
+    "USDp_FUNDAMENTAL/USD": {
+      "priceFeedAddress": "0xD15862FC3D5407A03B696548b6902D6464A69b8c",
+      "updateTriggersOverrides": {
+        "deviationPercentage": 0.2,
+        "timeSinceLastUpdateInMilliseconds": 43200000
+      }
+    },
+    "sUSDp_BASE_FUNDAMENTAL/USD": {
+      "priceFeedAddress": "0x58fa68A373956285dDfb340EDf755246f8DfCA16",
+      "updateTriggersOverrides": {
+        "deviationPercentage": 0.2,
+        "timeSinceLastUpdateInMilliseconds": 43200000
+      }
     }
   }
 }
