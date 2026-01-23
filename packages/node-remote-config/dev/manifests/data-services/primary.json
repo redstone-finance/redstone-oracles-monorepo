@@ -2288,6 +2288,7 @@
     "LBTC_FUNDAMENTAL": {
       "source": ["lombard-lbtc"],
       "denomination": "BTC",
+      "localCacheTTL": "1d",
       "rateFeed": true
     },
     "HybridBTC.pendle_FUNDAMENTAL": {
