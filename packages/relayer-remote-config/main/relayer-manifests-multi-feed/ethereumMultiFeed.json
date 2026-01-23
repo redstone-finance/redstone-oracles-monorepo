@@ -399,6 +399,13 @@
         "deviationPercentage": 0.05,
         "timeSinceLastUpdateInMilliseconds": 86400000
       }
+    },
+    "BUCK_FUNDAMENTAL/USD": {
+      "priceFeedAddress": "0x6e7407fcd5021e3FE5f75959575b20C85231562d",
+      "updateTriggersOverrides": {
+        "deviationPercentage": 0.5,
+        "timeSinceLastUpdateInMilliseconds": 43200000
+      }
     }
   }
 }
