@@ -99,6 +99,20 @@
     },
     "UTY_PEGGED_FUNDAMENTAL": {
       "priceFeedAddress": "0xcA727511c9d542AAb9eF406d24E5bbbE4567c22d"
+    },
+    "USDp_FUNDAMENTAL/USD": {
+      "priceFeedAddress": "0xFB1267A29C0aa19daae4a483ea895862A69e4AA5",
+      "updateTriggersOverrides": {
+        "deviationPercentage": 0.2,
+        "timeSinceLastUpdateInMilliseconds": 43200000
+      }
+    },
+    "sUSDp_AVAX_FUNDAMENTAL/USD": {
+      "priceFeedAddress": "0x5ED849a45B4608952161f45483F4B95BCEa7f8f0",
+      "updateTriggersOverrides": {
+        "deviationPercentage": 0.2,
+        "timeSinceLastUpdateInMilliseconds": 43200000
+      }
     }
   }
 }
