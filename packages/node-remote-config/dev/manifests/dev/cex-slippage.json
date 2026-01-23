@@ -1106,11 +1106,6 @@
         "bingx-usdt"
       ]
     },
-    "YY_WOMBEX_GLP": {
-      "source": [
-        "arbitrum-evm-fetcher"
-      ]
-    },
     "BAL": {
       "source": [
         "binance-usdt",
@@ -1300,18 +1295,6 @@
         "coingecko",
         "uniswap-v3-arbitrum-on-chain-weth-3000",
         "xt",
-        "bingx-usdt"
-      ]
-    },
-    "GRAIL": {
-      "source": [
-        "bitget-usdt",
-        "kucoin-usdt",
-        "mexc-usdt",
-        "gate-usdt",
-        "bitmart-usdt",
-        "bingx",
-        "coingecko",
         "bingx-usdt"
       ]
     },
@@ -2456,16 +2439,6 @@
       ]
     },
     "sAVAX": {
-      "source": [
-        "avalanche-evm-fetcher"
-      ]
-    },
-    "GLP": {
-      "source": [
-        "avalanche-evm-fetcher"
-      ]
-    },
-    "YY_GLP": {
       "source": [
         "avalanche-evm-fetcher"
       ]
