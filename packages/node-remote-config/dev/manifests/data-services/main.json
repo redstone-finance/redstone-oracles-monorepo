@@ -1009,11 +1009,6 @@
       "denomination": "USD",
       "rateFeed": false
     },
-    "YY_WOMBEX_GLP": {
-      "source": ["arbitrum-evm-fetcher-yield-yak"],
-      "denomination": "USD",
-      "rateFeed": false
-    },
     "BAL": {
       "source": ["bitget-usdt", "gate-usdt", "kucoin-usdt", "lbank-usdt"],
       "denomination": "USD",
@@ -1175,11 +1170,6 @@
         "uniswap-v3-arbitrumone-weth-3000",
         "xt"
       ],
-      "denomination": "USD",
-      "rateFeed": false
-    },
-    "GRAIL": {
-      "source": ["coingecko", "coinmarketcap"],
       "denomination": "USD",
       "rateFeed": false
     },
@@ -2433,18 +2423,8 @@
       "denomination": "USD",
       "rateFeed": false
     },
-    "YY_GLP": {
-      "source": ["avalanche-evm-fetcher-yield-yak"],
-      "denomination": "USD",
-      "rateFeed": false
-    },
     "sAVAX": {
       "source": ["avalanche-evm-fetcher-oracle-adapter"],
-      "denomination": "USD",
-      "rateFeed": false
-    },
-    "GLP": {
-      "source": ["avalanche-evm-fetcher-glp-manager"],
       "denomination": "USD",
       "rateFeed": false
     },

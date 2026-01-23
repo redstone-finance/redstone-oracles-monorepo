@@ -201,11 +201,6 @@
       "denomination": "USD",
       "rateFeed": false
     },
-    "YY_GLP": {
-      "source": ["avalanche-evm-fetcher-yield-yak"],
-      "denomination": "USD",
-      "rateFeed": false
-    },
     "GMX": {
       "source": [
         "binance-usdt",
@@ -216,11 +211,6 @@
         "kucoin-usdt",
         "okx-usdt"
       ],
-      "denomination": "USD",
-      "rateFeed": false
-    },
-    "GLP": {
-      "source": ["avalanche-evm-fetcher-glp-manager"],
       "denomination": "USD",
       "rateFeed": false
     },
@@ -607,7 +597,6 @@
       "DAI",
       "ETH",
       "EUROC",
-      "GLP",
       "GMX",
       "GM_AVAX_WAVAX",
       "GM_AVAX_WAVAX_USDC",
@@ -627,7 +616,6 @@
       "WOMBAT_ggAVAX_AVAX_LP_ggAVAX",
       "WOMBAT_sAVAX_AVAX_LP_AVAX",
       "WOMBAT_sAVAX_AVAX_LP_sAVAX",
-      "YY_GLP",
       "ggAVAX",
       "sAVAX",
       "DOGE",
