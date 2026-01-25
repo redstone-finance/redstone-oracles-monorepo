@@ -7932,7 +7932,9 @@
         "finhub_capital_deferred-usd",
         "alltick-api-deferred",
         "metal-price-api-deferred",
-        "ws-lmax"
+        "ws-lmax",
+        "ws-keyrock",
+        "twelve-data"
       ],
       "denomination": "USD",
       "rateFeed": false
@@ -7945,7 +7947,9 @@
         "finhub_capital_deferred-usd",
         "alltick-api-deferred",
         "metal-price-api-deferred",
-        "ws-lmax"
+        "ws-lmax",
+        "ws-keyrock",
+        "twelve-data"
       ],
       "denomination": "USD",
       "rateFeed": false
