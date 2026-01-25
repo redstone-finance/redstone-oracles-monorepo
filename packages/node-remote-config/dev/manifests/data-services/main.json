@@ -7926,12 +7926,27 @@
       "rateFeed": false
     },
     "PLATINUM": {
-      "source": ["finhub_deriv-usd", "finhub_capital_deferred-usd"],
+      "source": [
+        "ws-blocksize",
+        "finhub_deriv-usd",
+        "finhub_capital_deferred-usd",
+        "alltick-api-deferred",
+        "metal-price-api-deferred",
+        "ws-lmax"
+      ],
       "denomination": "USD",
       "rateFeed": false
     },
     "PALLADIUM": {
-      "source": ["ws-blocksize", "finhub_capital_deferred-usd"],
+      "source": [
+        "financialmodelingprep-deferred",
+        "ws-blocksize",
+        "finhub_deriv-usd",
+        "finhub_capital_deferred-usd",
+        "alltick-api-deferred",
+        "metal-price-api-deferred",
+        "ws-lmax"
+      ],
       "denomination": "USD",
       "rateFeed": false
     },
