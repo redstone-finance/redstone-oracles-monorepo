@@ -1138,7 +1138,7 @@
       "source": [
         "alltick-api-deferred",
         "ws-polygon-massive-commodities",
-        "financialmodelingprep",
+        "financialmodelingprep-deferred",
         "ws-lmax"
       ],
       "priceAggregator": "primarySource",
@@ -1886,112 +1886,9 @@
         }
       }
     },
-    "MARK_flxn:PALLADIUM": {
-      "source": ["hyperliquid-testnet-perps-ws-fetcher", "hydromancer-testnet-perps-ws-fetcher"],
-      "customWeightsForWeightedMedian": {
-        "hyperliquid-testnet-perps-ws-fetcher": 10,
-        "hydromancer-testnet-perps-ws-fetcher": 1
-      },
-      "priceAggregator": "constantWeightMedian",
-      "broadcasters": ["influx"],
-      "denomination": "USD",
-      "rateFeed": false
-    },
-    "ORACLE_flxn:PALLADIUM": {
-      "source": ["hyperliquid-testnet-perps-ws-fetcher", "hydromancer-testnet-perps-ws-fetcher"],
-      "customWeightsForWeightedMedian": {
-        "hyperliquid-testnet-perps-ws-fetcher": 10,
-        "hydromancer-testnet-perps-ws-fetcher": 1
-      },
-      "priceAggregator": "constantWeightMedian",
-      "broadcasters": ["influx"],
-      "denomination": "USD",
-      "rateFeed": false
-    },
-    "IMPACT_BUY_flxn:PALLADIUM": {
-      "source": ["hyperliquid-testnet-perps-ws-fetcher", "hydromancer-testnet-perps-ws-fetcher"],
-      "customWeightsForWeightedMedian": {
-        "hyperliquid-testnet-perps-ws-fetcher": 10,
-        "hydromancer-testnet-perps-ws-fetcher": 1
-      },
-      "priceAggregator": "constantWeightMedian",
-      "broadcasters": ["influx"],
-      "denomination": "USD",
-      "rateFeed": false
-    },
-    "IMPACT_SELL_flxn:PALLADIUM": {
-      "source": ["hyperliquid-testnet-perps-ws-fetcher", "hydromancer-testnet-perps-ws-fetcher"],
-      "customWeightsForWeightedMedian": {
-        "hyperliquid-testnet-perps-ws-fetcher": 10,
-        "hydromancer-testnet-perps-ws-fetcher": 1
-      },
-      "priceAggregator": "constantWeightMedian",
-      "broadcasters": ["influx"],
-      "denomination": "USD",
-      "rateFeed": false
-    },
-    "IMPACT_BUY_flxn:PALLADIUM_EMA_1H": {
-      "source": ["ema"],
-      "broadcasters": ["influx"],
-      "denomination": "USD",
-      "rateFeed": false
-    },
-    "IMPACT_BUY_flxn:PALLADIUM_EMA_8H": {
-      "source": ["ema"],
-      "broadcasters": ["influx"],
-      "denomination": "USD",
-      "rateFeed": false
-    },
-    "IMPACT_SELL_flxn:PALLADIUM_EMA_1H": {
-      "source": ["ema"],
-      "broadcasters": ["influx"],
-      "denomination": "USD",
-      "rateFeed": false
-    },
-    "IMPACT_SELL_flxn:PALLADIUM_EMA_8H": {
-      "source": ["ema"],
-      "broadcasters": ["influx"],
-      "denomination": "USD",
-      "rateFeed": false
-    },
-    "flxn:PALLADIUM_MARK_0": {
-      "source": ["hip3-felix-commodities-testnet-fetcher"],
-      "broadcasters": ["hyperliquid-hip3"],
-      "denomination": "USD",
-      "rateFeed": false
-    },
-    "flxn:PALLADIUM_MARK_1": {
-      "source": ["hip3-felix-commodities-testnet-fetcher"],
-      "broadcasters": ["hyperliquid-hip3"],
-      "denomination": "USD",
-      "rateFeed": false
-    },
-    "flxn:PALLADIUM_EXT": {
-      "source": ["hip3-felix-commodities-testnet-fetcher"],
-      "broadcasters": ["hyperliquid-hip3"],
-      "denomination": "USD",
-      "rateFeed": false
-    },
-    "flxn:PALLADIUM": {
-      "source": ["hip3-felix-commodities-testnet-fetcher"],
-      "broadcasters": ["hyperliquid-hip3"],
-      "denomination": "USD",
-      "rateFeed": false
-    },
-    "OPEN_INTEREST_flxn:PALLADIUM": {
-      "source": ["hyperliquid-testnet-perps-ws-fetcher"],
-      "broadcasters": [],
-      "denomination": "USD",
-      "rateFeed": false,
-      "deviationCheck": {
-        "deviationWithRecentValues": {
-          "maxPercent": 1000000000,
-          "maxDelayMilliseconds": 1000
-        }
-      }
-    },
     "PLATINUM": {
       "source": [
+        "financialmodelingprep-deferred",
         "finhub_deriv_deferred-usd",
         "finhub_capital_deferred-usd",
         "metal-price-api-deferred",
@@ -2110,110 +2007,6 @@
     },
     "OPEN_INTEREST_flx:PLATINUM": {
       "source": ["hyperliquid-mainnet-perps-ws-fetcher"],
-      "broadcasters": [],
-      "denomination": "USD",
-      "rateFeed": false,
-      "deviationCheck": {
-        "deviationWithRecentValues": {
-          "maxPercent": 1000000000,
-          "maxDelayMilliseconds": 1000
-        }
-      }
-    },
-    "MARK_flxn:PLATINUM": {
-      "source": ["hyperliquid-testnet-perps-ws-fetcher", "hydromancer-testnet-perps-ws-fetcher"],
-      "customWeightsForWeightedMedian": {
-        "hyperliquid-testnet-perps-ws-fetcher": 10,
-        "hydromancer-testnet-perps-ws-fetcher": 1
-      },
-      "priceAggregator": "constantWeightMedian",
-      "broadcasters": ["influx"],
-      "denomination": "USD",
-      "rateFeed": false
-    },
-    "ORACLE_flxn:PLATINUM": {
-      "source": ["hyperliquid-testnet-perps-ws-fetcher", "hydromancer-testnet-perps-ws-fetcher"],
-      "customWeightsForWeightedMedian": {
-        "hyperliquid-testnet-perps-ws-fetcher": 10,
-        "hydromancer-testnet-perps-ws-fetcher": 1
-      },
-      "priceAggregator": "constantWeightMedian",
-      "broadcasters": ["influx"],
-      "denomination": "USD",
-      "rateFeed": false
-    },
-    "IMPACT_BUY_flxn:PLATINUM": {
-      "source": ["hyperliquid-testnet-perps-ws-fetcher", "hydromancer-testnet-perps-ws-fetcher"],
-      "customWeightsForWeightedMedian": {
-        "hyperliquid-testnet-perps-ws-fetcher": 10,
-        "hydromancer-testnet-perps-ws-fetcher": 1
-      },
-      "priceAggregator": "constantWeightMedian",
-      "broadcasters": ["influx"],
-      "denomination": "USD",
-      "rateFeed": false
-    },
-    "IMPACT_SELL_flxn:PLATINUM": {
-      "source": ["hyperliquid-testnet-perps-ws-fetcher", "hydromancer-testnet-perps-ws-fetcher"],
-      "customWeightsForWeightedMedian": {
-        "hyperliquid-testnet-perps-ws-fetcher": 10,
-        "hydromancer-testnet-perps-ws-fetcher": 1
-      },
-      "priceAggregator": "constantWeightMedian",
-      "broadcasters": ["influx"],
-      "denomination": "USD",
-      "rateFeed": false
-    },
-    "IMPACT_BUY_flxn:PLATINUM_EMA_1H": {
-      "source": ["ema"],
-      "broadcasters": ["influx"],
-      "denomination": "USD",
-      "rateFeed": false
-    },
-    "IMPACT_BUY_flxn:PLATINUM_EMA_8H": {
-      "source": ["ema"],
-      "broadcasters": ["influx"],
-      "denomination": "USD",
-      "rateFeed": false
-    },
-    "IMPACT_SELL_flxn:PLATINUM_EMA_1H": {
-      "source": ["ema"],
-      "broadcasters": ["influx"],
-      "denomination": "USD",
-      "rateFeed": false
-    },
-    "IMPACT_SELL_flxn:PLATINUM_EMA_8H": {
-      "source": ["ema"],
-      "broadcasters": ["influx"],
-      "denomination": "USD",
-      "rateFeed": false
-    },
-    "flxn:PLATINUM_MARK_0": {
-      "source": ["hip3-felix-commodities-testnet-fetcher"],
-      "broadcasters": ["hyperliquid-hip3"],
-      "denomination": "USD",
-      "rateFeed": false
-    },
-    "flxn:PLATINUM_MARK_1": {
-      "source": ["hip3-felix-commodities-testnet-fetcher"],
-      "broadcasters": ["hyperliquid-hip3"],
-      "denomination": "USD",
-      "rateFeed": false
-    },
-    "flxn:PLATINUM_EXT": {
-      "source": ["hip3-felix-commodities-testnet-fetcher"],
-      "broadcasters": ["hyperliquid-hip3"],
-      "denomination": "USD",
-      "rateFeed": false
-    },
-    "flxn:PLATINUM": {
-      "source": ["hip3-felix-commodities-testnet-fetcher"],
-      "broadcasters": ["hyperliquid-hip3"],
-      "denomination": "USD",
-      "rateFeed": false
-    },
-    "OPEN_INTEREST_flxn:PLATINUM": {
-      "source": ["hyperliquid-testnet-perps-ws-fetcher"],
       "broadcasters": [],
       "denomination": "USD",
       "rateFeed": false,
