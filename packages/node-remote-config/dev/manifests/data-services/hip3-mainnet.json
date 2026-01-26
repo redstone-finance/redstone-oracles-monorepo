@@ -1757,11 +1757,11 @@
     "PALLADIUM": {
       "source": [
         "financialmodelingprep-deferred",
-        "ws-blocksize",
-        "finhub_deriv-usd",
+        "finhub_deriv_deferred-usd",
         "finhub_capital_deferred-usd",
         "alltick-api-deferred",
         "metal-price-api-deferred",
+        "ws-blocksize",
         "ws-lmax",
         "ws-twelve-data"
       ],
@@ -1992,12 +1992,12 @@
     },
     "PLATINUM": {
       "source": [
-        "ws-blocksize",
-        "finhub_deriv-usd",
+        "finhub_deriv_deferred-usd",
         "finhub_capital_deferred-usd",
         "metal-price-api-deferred",
+        "ws-blocksize",
         "ws-lmax",
-        "twelve-data"
+        "ws-twelve-data"
       ],
       "broadcasters": ["influx"],
       "priceAggregator": "primarySource",
