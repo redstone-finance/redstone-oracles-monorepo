@@ -25,6 +25,7 @@ const CHAINS_TO_SKIP_REDSTONE_MULTICALL_ADDRESS_CHECK: string[] = [
   "Incentiv Testnet",
   "0G Galileo Testnet",
   "MegaETH Mainnet",
+  "Tempo Testnet (Moderato)",
 ];
 
 const CHAINS_TO_SKIP_STANDARD_MULTICALL_ADDRESS_CHECK: string[] = ["Arbitrum Sepolia", "TAC Turin"];
