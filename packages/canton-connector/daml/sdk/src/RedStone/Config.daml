@@ -1,8 +1,10 @@
 module RedStone.Config
   (
     Config
+    , BaseConfig
     , config
-    , defaultConfig
+    , defaultBaseConfig
+    , redstonePrimaryProdDefaultBaseConfig
     , redstonePrimaryProdDefaultConfig
     , verifyConfigAgainstLedger
     , redstone_primary_prod_public_keys
@@ -15,6 +17,14 @@ import RedStone.Internal.Error
 import RedStone.Internal.Time
 
 -- Public
+
+data BaseConfig = BaseConfig
+  with
+    signers : [Text]
+    signerCountThreshold : Int
+    maxDelayMs : Int
+    maxAheadMs : Int
+  deriving (Eq, Show)
 
 data Config = Config
   with
@@ -32,8 +42,10 @@ redstone_primary_prod_public_keys = ["049a0e6cada7938a0fc616578aff2b11337d90ec4e
                         ,"04a221496ff2436da121796c11f888cc4e2155da7e36bd1148c9466fb54627f15e42d4cfed06b1570b7ebe0c589acf91fd314cfd95303c9894c0be43432aba619f"
                         ,"04f23aa199aeda6e55628e0ec88194c47713ba260898aae4483fb2f166c7e29b1664f817922059736358de71bdf374b3354db58d15f928a6fac9d1f61e284019b7"]
 
-config maxAheadMs maxDelayMs signerCountThreshold signers feedIds currentTime =
+config baseConfig feedIds currentTime =
   let
+    BaseConfig{signers, signerCountThreshold, maxDelayMs, maxAheadMs} = baseConfig
+
     _ = unique feedIds && feedIds /= [] ??? configError "feedIds are empty or not unique" feedIds
     _ = unique signers && signers /= [] ??? configError "signers are empty or not unique" signers
     _ = signerCountThreshold <= L.length signers ??? configError "signerCountThreshold exceeds signer length" (signerCountThreshold, L.length signers)
@@ -44,10 +56,17 @@ config maxAheadMs maxDelayMs signerCountThreshold signers feedIds currentTime =
     currentTimestamp = timeToMillis currentTime
 
     _ = currentTimestamp > min_acceptable_timestamp ??? configError "Wrong currentTimestamp" currentTimestamp
-  in Config{feedIds,currentTimestamp,signers,signerCountThreshold,maxDelayMs,maxAheadMs}
+  in Config{feedIds, currentTimestamp,signers, signerCountThreshold, maxDelayMs, maxAheadMs}
 
-defaultConfig = config (1 * one_min_ms) (3 * one_min_ms) default_signer_count_threshold
-redstonePrimaryProdDefaultConfig = defaultConfig redstone_primary_prod_public_keys
+defaultBaseConfig signers = BaseConfig
+  with
+    signers
+    signerCountThreshold = default_signer_count_threshold
+    maxDelayMs = 3 * one_min_ms
+    maxAheadMs = 1 * one_min_ms
+
+redstonePrimaryProdDefaultBaseConfig = defaultBaseConfig redstone_primary_prod_public_keys
+redstonePrimaryProdDefaultConfig = config redstonePrimaryProdDefaultBaseConfig
 
 verifyCurrentTimeVsLedger config = do
   notIde <- isNotIDE
@@ -69,9 +88,6 @@ default_signer_count_threshold = 3
 
 configError = RedStoneError Configuration
 
-isNotIDE = do
-    isNonZero <- isLedgerTimeGT unix_epoch_start
-
-    pure (isNonZero)
+isNotIDE = isLedgerTimeGT unix_epoch_start
 
 verifyConfigAgainstLedger config = verifyCurrentTimeVsLedger config
