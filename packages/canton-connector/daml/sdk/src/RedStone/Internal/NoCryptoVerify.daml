@@ -1,7 +1,7 @@
 module RedStone.Internal.NoCryptoVerify
 (
   getDataPackageSignerIndices
-) where 
+) where
 
 import DA.List as L
 import RedStone.Result
