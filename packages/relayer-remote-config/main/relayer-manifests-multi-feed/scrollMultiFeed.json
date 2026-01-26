@@ -46,6 +46,12 @@
     },
     "uniETH_FUNDAMENTAL": {
       "priceFeedAddress": "0x5ED849a45B4608952161f45483F4B95BCEa7f8f0"
+    },
+    "weETH/ETH": {
+      "priceFeedAddress": "0xf0DEbDAE819b354D076b0D162e399BE013A856d3"
+    },
+    "wstETH/ETH": {
+      "priceFeedAddress": "0x4aF6b78d92432D32E3a635E824d3A541866f7a78"
     }
   }
 }
