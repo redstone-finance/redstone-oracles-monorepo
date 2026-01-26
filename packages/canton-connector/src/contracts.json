@@ -21,7 +21,7 @@
     }
   },
   "devnet": {
-    "interfaceId": "f31913cd8dc80f4066ca887b056f8f4c58347ec840cd2b7e5367d49b9346a896",
+    "interfaceId": "b8cfef679a969db246c98c0c4617dac4dda10f549265da716e7617b829910868",
     "featuredInterfaceId": "18ef26f869efaceec01d8bded8f49860152d57b63225bf76cd499a9c6f9936c4",
     "core": {
       "contractId": "00a0e4955b27b747c6575390aaae0d2bb71d1857cd40639b3848810a179c186369ca121220e16c48874edc84e340dfd900507821caace9d08964b41e9e22c0ff8eff55deda",
