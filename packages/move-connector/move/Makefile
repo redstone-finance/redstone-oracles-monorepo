@@ -10,11 +10,13 @@ BUILDER=aptos#or movement
 DIR=contracts
 
 install-cli:
-	curl -LO https://github.com/movementlabsxyz/homebrew-movement-cli/releases/download/bypass-homebrew/movement-macos-arm64.tar.gz
-	tar -xzf movement-macos-arm64.tar.gz
-	rm movement-macos-arm64.tar.gz
-	chmod +x movement
-	sudo mv movement /usr/local/bin/movement
+	curl -LO https://github.com/movementlabsxyz/homebrew-movement-cli/releases/download/bypass-homebrew/movement-cli-l1-macos-x86_64.tar.gz
+	mkdir -p temp_extract
+	tar -xzf movement-cli-l1-macos-x86_64.tar.gz -C temp_extract
+	chmod +x temp_extract/movement
+	sudo mv temp_extract/movement /usr/local/bin/movement
+	rm -rf temp_extract
+	rm movement-cli-l1-macos-x86_64.tar.gz
 	brew install aptos
 
 init-movement:
