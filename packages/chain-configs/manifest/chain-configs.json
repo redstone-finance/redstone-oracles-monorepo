@@ -1437,6 +1437,21 @@
       "isAuctionModel": false,
       "twoDimensionalFees": false,
       "isMainnet": true
+    },
+    "tempoTestnet": {
+      "name": "Tempo Testnet (Moderato)",
+      "networkId": 42431,
+      "currencySymbol": "USD",
+      "publicRpcUrls": ["https://rpc.moderato.tempo.xyz"],
+      "avgBlockTimeMs": 1000,
+      "multicall3": {
+        "address": "0x52f530e1d42BdFeF939729C341Ed714698a993f7",
+        "type": "RedstoneMulticall3",
+        "gasLimitPerCall": 1000000
+      },
+      "isAuctionModel": false,
+      "twoDimensionalFees": false,
+      "isMainnet": false
     }
   },
   "temporaryConfigUpdates": {
