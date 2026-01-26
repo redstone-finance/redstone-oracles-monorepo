@@ -4,7 +4,7 @@ import DA.Optional
 import DA.List
 import DA.Assert
 import IRedStonePriceFeed
-import IRedStoneAdapter 
+import IRedStoneAdapter
 import RedStoneTypes
 
 template RedStonePriceFeed
@@ -24,17 +24,17 @@ template RedStonePriceFeed
       readData adapterCid = do
         adapter <- fetch adapterCid
         (view adapter).adapterId === adapterId
-        
+
         result <- readPriceData (toInterface @IRedStoneAdapter adapter) [feedId]
         return $ fromSome (head result)
 
-      readPrice adapterCid = do 
+      readPrice adapterCid = do
         result <- readData (toInterface @IRedStonePriceFeed this) adapterCid
         return result.value
 
       readTimestamp adapterCid = do
         result <- readData (toInterface @IRedStonePriceFeed this) adapterCid
         return result.timestamp
-      
-      getDescription _ = do 
+
+      getDescription _ = do
         return description

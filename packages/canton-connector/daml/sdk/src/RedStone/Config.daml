@@ -11,12 +11,12 @@ module RedStone.Config
 import DA.Assert
 import DA.List as L
 import DA.Time
-import RedStone.Internal.Error 
+import RedStone.Internal.Error
 import RedStone.Internal.Time
 
 -- Public
 
-data Config = Config 
+data Config = Config
   with
     feedIds : [[Int]]
     currentTimestamp : Int
@@ -32,8 +32,8 @@ redstone_primary_prod_public_keys = ["049a0e6cada7938a0fc616578aff2b11337d90ec4e
                         ,"04a221496ff2436da121796c11f888cc4e2155da7e36bd1148c9466fb54627f15e42d4cfed06b1570b7ebe0c589acf91fd314cfd95303c9894c0be43432aba619f"
                         ,"04f23aa199aeda6e55628e0ec88194c47713ba260898aae4483fb2f166c7e29b1664f817922059736358de71bdf374b3354db58d15f928a6fac9d1f61e284019b7"]
 
-config maxAheadMs maxDelayMs signerCountThreshold signers feedIds currentTime = 
-  let 
+config maxAheadMs maxDelayMs signerCountThreshold signers feedIds currentTime =
+  let
     _ = unique feedIds && feedIds /= [] ??? configError "feedIds are empty or not unique" feedIds
     _ = unique signers && signers /= [] ??? configError "signers are empty or not unique" signers
     _ = signerCountThreshold <= L.length signers ??? configError "signerCountThreshold exceeds signer length" (signerCountThreshold, L.length signers)
@@ -69,7 +69,7 @@ default_signer_count_threshold = 3
 
 configError = RedStoneError Configuration
 
-isNotIDE = do 
+isNotIDE = do
     isNonZero <- isLedgerTimeGT unix_epoch_start
 
     pure (isNonZero)
