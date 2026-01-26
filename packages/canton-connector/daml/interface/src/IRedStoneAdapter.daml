@@ -39,7 +39,7 @@ interface IRedStoneAdapter where
     with
       feedIds : [RedStoneFeedId]
     controller (view this).viewers
-    do 
+    do
       readPriceData this feedIds
 
 data RedStoneAdapterView = RedStoneAdapterView

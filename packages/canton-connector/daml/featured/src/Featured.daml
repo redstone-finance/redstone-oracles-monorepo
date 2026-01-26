@@ -4,7 +4,7 @@ import Splice.Api.FeaturedAppRightV1
 
 type RedStoneFeaturedContract = ContractId FeaturedAppRight
 
-takeReward beneficiary featuredAppRightCid  = 
+takeReward beneficiary featuredAppRightCid  =
     do
         _ <- exercise featuredAppRightCid FeaturedAppRight_CreateActivityMarker with
             beneficiaries = [AppRewardBeneficiary with

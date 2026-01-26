@@ -12,10 +12,10 @@ import VerifyResults
 
 main : Input -> Script ()
 main input = script do
-  owner <- allocateParty "RedStoneOracleOwner"  
-  updater <- allocateParty "RedStoneOracleUpdater"      
-  viewer <- allocateParty "RedStoneOracleViewer"   
-  
+  owner <- allocateParty "RedStoneOracleOwner"
+  updater <- allocateParty "RedStoneOracleUpdater"
+  viewer <- allocateParty "RedStoneOracleViewer"
+
   adapterCid <- submit owner do
     createCmd RedStoneAdapter with
       adapterId = "RedStoneAdapter-123"
@@ -36,20 +36,20 @@ main input = script do
 
   result <- submit viewer do
     exerciseCmd (toInterfaceContractId @IRedStoneAdapter adapterCid) GetPrices with
-      payloadHex = input.payload  
+      payloadHex = input.payload
       feedIds = input.feedIds
       currentTime
 
   debug $ "Processed result: " <> show result
-  
-  newCid <- submit updater do 
+
+  newCid <- submit updater do
     exerciseCmd (toInterfaceContractId @IRedStoneAdapter adapterCid) WritePrices with
-      payloadHex = input.payload  
+      payloadHex = input.payload
       feedIds = input.feedIds
       currentTime
 
-  readResult <- submit viewer do 
-    exerciseCmd newCid ReadPriceData with 
+  readResult <- submit viewer do
+    exerciseCmd newCid ReadPriceData with
       feedIds = input.feedIds
 
   feedResult <- submit viewer do

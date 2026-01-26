@@ -35,7 +35,7 @@ clean:
 	rm -f $(ADAPTER_ID_TXT) $(PRICE_FEED_ID_TXT) $(CORE_ID_TXT) refresh_token.txt token.txt test/input.json test/sample_data/payload.hex
 
 lint: lint-sdk lint-core lint-adapter lint-price_feed lint-interface lint-test
-	./lint-newlines.sh
+	./lint-whitespaces.sh
 
 build: build_test
 
