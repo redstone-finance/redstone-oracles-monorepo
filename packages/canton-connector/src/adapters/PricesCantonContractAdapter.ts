@@ -15,7 +15,7 @@ export const IADAPTER_TEMPLATE_NAME = `IRedStoneAdapter:IRedStoneAdapter`;
 const WRITE_PRICES_CHOICE = "WritePrices";
 const READ_PRICES_CHOICE = "ReadPrices";
 const READ_PRICE_DATA_CHOICE = "ReadPriceData";
-const UNIQUE_SIGNERS_THRESHOLD = 3; // temporary
+const GET_UNIQUE_SIGNER_THRESHOLD_CHOICE = "GetUniqueSignerThreshold";
 
 export class PricesCantonContractAdapter
   extends CoreCantonContractAdapter
@@ -40,8 +40,17 @@ export class PricesCantonContractAdapter
     return Promise.resolve(this.updateClient.partyId);
   }
 
-  getUniqueSignerThreshold() {
-    return Promise.resolve(UNIQUE_SIGNERS_THRESHOLD);
+  async getUniqueSignerThreshold() {
+    const result: number | undefined = await this.exerciseChoice(
+      GET_UNIQUE_SIGNER_THRESHOLD_CHOICE,
+      {}
+    );
+
+    if (result === undefined) {
+      throw new Error("Failed to get unique signer threshold: result is undefined");
+    }
+
+    return result;
   }
 
   async readLatestUpdateBlockTimestamp(feedId: string) {

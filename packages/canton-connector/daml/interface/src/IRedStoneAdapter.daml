@@ -9,6 +9,7 @@ interface IRedStoneAdapter where
   writePrices : [RedStoneFeedId] -> Time -> PayloadHex -> Update (ContractId IRedStoneAdapter)
   readPriceData : [RedStoneFeedId] -> Update [Optional (RedStonePriceData RedStoneValue)]
   readPrices : [RedStoneFeedId] -> Update [RedStoneValue]
+  getUniqueSignerThreshold: () -> Update Int
 
   nonconsuming choice GetPrices : RedStoneResult
     with
@@ -41,6 +42,11 @@ interface IRedStoneAdapter where
     controller (view this).viewers
     do
       readPriceData this feedIds
+
+  nonconsuming choice GetUniqueSignerThreshold : Int
+    controller (view this).viewers
+    do
+      getUniqueSignerThreshold this ()
 
 data RedStoneAdapterView = RedStoneAdapterView
   with

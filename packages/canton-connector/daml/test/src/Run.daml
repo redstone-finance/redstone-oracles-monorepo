@@ -2,6 +2,7 @@ module Run where
 
 import Daml.Script
 import DA.List
+import DA.Assert
 import IRedStoneAdapter
 import IRedStonePriceFeed
 import Input
@@ -41,4 +42,11 @@ main input = script do
     exerciseCmd feedCid ReadData with
       adapterCid
 
+  signerCount <- submit viewer do
+    exerciseCmd adapterCid GetUniqueSignerThreshold
+
+  signerCount === 3
+
   verifyResults currentTime readResult feedResult
+
+  pure ()

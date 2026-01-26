@@ -1,9 +1,10 @@
 include ./ops.mk
 
-VERSION=0.4.0
+VERSION=0.4.3
 SVER=v7
 LEDGER_HOST=localhost
 LEDGER_PORT=6865
+DAML=daml # dpm
 
 SDK_VERSION=3.4.9
 
@@ -12,26 +13,26 @@ TEST_DAR=.daml/dist/redstone-test-$(SVER)-$(VERSION).dar
 .PHONY: get_party_suffix
 
 build-%:
-	cd $* && daml build
+	cd $* && $(DAML) build
 
-clean-%: 
-	cd $* && daml clean 
+clean-%:
+	cd $* && $(DAML) clean
 
 build_redstone_adapter: build-sdk build-interface build-adapter
 
 build_redstone_core: build-sdk build-interface build-core
 
-build_test: 
-	daml build --all
+build_test:
+	$(DAML) build --all
 
 run-%: build_test
-	cd test && daml script --ide-ledger \
+	cd test && $(DAML) script --ide-ledger \
 		--dar $(TEST_DAR) \
 		--script-name $*:main \
 		--input-file input.json
 
 clean:
-	daml clean --all
+	$(DAML) clean --all
 	rm -f $(ADAPTER_ID_TXT) $(PRICE_FEED_ID_TXT) $(CORE_ID_TXT) refresh_token.txt token.txt test/input.json test/sample_data/payload.hex
 
 lint: lint-sdk lint-core lint-adapter lint-price_feed lint-interface lint-test
@@ -39,15 +40,15 @@ lint: lint-sdk lint-core lint-adapter lint-price_feed lint-interface lint-test
 
 build: build_test
 
-lint-%: 
-	cd $* && daml damlc lint
+lint-%:
+	cd $* && $(DAML) damlc lint
 
 run_main: run-Main
 
 run_test: build_test lint-test run-Test run-Core
 
 test-%: build_redstone_adapter build_redstone_core build_test
-	cd test && daml script --ide-ledger \
+	cd test && $(DAML) script --ide-ledger \
 		--dar $(TEST_DAR) \
 		--script-name $*:main
 
@@ -58,14 +59,14 @@ integration_tests: prepare_data run_main run_test
 run_ledger: ledger-Run
 
 ledger-%: build_test
-	cd test && daml script --script-name $*:main \
+	cd test && $(DAML) script --script-name $*:main \
 	--ledger-host $(LEDGER_HOST) \
 	--ledger-port $(LEDGER_PORT) \
 	--input-file input.json \
 	--dar $(TEST_DAR)
 
 start:
-	cd test && daml start
+	cd test && $(DAML) start
 
 start_daemon:
 	make start & \
@@ -75,15 +76,15 @@ ledger_deploy: build_redstone_adapter build_redstone_core ledger-Deploy
 
 ledger_tests: allocate_parties get_party_suffix ledger_deploy run_ledger
 
-archive: ledger-Archive 
+archive: ledger-Archive
 
-allocate_parties: 
-	@daml ledger allocate-parties RedStoneOracleOwner RedStoneOracleUpdater RedStoneOracleViewer \
+allocate_parties:
+	@$(DAML) ledger allocate-parties RedStoneOracleOwner RedStoneOracleUpdater RedStoneOracleViewer \
 	--host $(LEDGER_HOST) \
 	--port $(LEDGER_PORT)
 
 list_parties:
-	@daml ledger list-parties \
+	@$(DAML) ledger list-parties \
 	--host $(LEDGER_HOST) \
 	--port $(LEDGER_PORT)
 

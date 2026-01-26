@@ -19,7 +19,8 @@ export class CantonClient {
     readonly partyId: string,
     private readonly baseUrl: string,
     private readonly tokenProvider: undefined | ((options: ApiRequestOptions) => Promise<string>),
-    network: CantonNetwork = "devnet"
+    network: CantonNetwork = "devnet",
+    private readonly userId: string | undefined = undefined
   ) {
     this.Defs = AllDefs[network];
   }
@@ -40,6 +41,7 @@ export class CantonClient {
         verbose: false,
       })
     );
+
     const adapters = contracts.filter(
       (contract) =>
         isJsActiveContractEntry(contract.contractEntry) &&
@@ -71,6 +73,7 @@ export class CantonClient {
         commandId: `${command.contractId}-${command.choice}-${timestamp.getTime()}`,
         actAs: [this.partyId],
         disclosedContracts,
+        userId: this.userId,
       })
     );
 
