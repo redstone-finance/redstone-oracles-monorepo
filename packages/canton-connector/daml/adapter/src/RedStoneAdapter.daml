@@ -67,3 +67,6 @@ template RedStoneAdapter
                 None -> error $ "Value not found " <> show feedId
                 Some priceData -> u256ToDecimalValue priceData.value
         return $ map getPriceValue feedIds
+
+      getUniqueSignerThreshold () = do
+       return redstonePrimaryProdDefaultBaseConfig.signerCountThreshold
