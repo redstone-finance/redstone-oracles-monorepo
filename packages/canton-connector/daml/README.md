@@ -125,26 +125,26 @@ See more about the Pull model [here](./core/README.md)
     with
       adapterCid : RedStoneAdapterCid
     controller (view this).viewers
-    do 
+    do
       readData this adapterCid
 
   nonconsuming choice ReadPrice : RedStoneValue
     with
       adapterCid : RedStoneAdapterCid
     controller (view this).viewers
-    do 
+    do
       readPrice this adapterCid
-  
+
   nonconsuming choice ReadTimestamp : Int
     with
       adapterCid : RedStoneAdapterCid
     controller (view this).viewers
-    do 
+    do
       readTimestamp this adapterCid
 
   nonconsuming choice GetDescription : Text
     controller (view this).viewers
-    do 
+    do
       getDescription this ()
 ```
 

@@ -10,8 +10,8 @@ import Input
 
 main : Input -> Script ()
 main input = script do
-  let owner = input.owner  
-  let updater = input.updater  
+  let owner = input.owner
+  let updater = input.updater
   let viewer = input.viewer
 
   coreId <- submit (actAs [owner] <> readAs [updater, viewer]) do
@@ -35,5 +35,5 @@ main input = script do
       viewers = [viewer]
       feedId = head input.feedIds
       description = "XXX"
-  
+
   return ()

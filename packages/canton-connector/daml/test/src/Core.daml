@@ -8,9 +8,9 @@ import Input
 
 main : Input -> Script ()
 main input = script do
-  owner <- allocateParty "RedStoneOracleOwner"  
-  viewer <- allocateParty "RedStoneOracleViewer"   
-  
+  owner <- allocateParty "RedStoneOracleOwner"
+  viewer <- allocateParty "RedStoneOracleViewer"
+
   coreCid <- submit owner do
     createCmd RedStoneCore with
       coreId = "RedStoneCore-123"
@@ -21,7 +21,7 @@ main input = script do
 
   result <- submit viewer do
     exerciseCmd (toInterfaceContractId @IRedStoneCore coreCid) GetPrices with
-      payloadHex = input.payload  
+      payloadHex = input.payload
       feedIds = input.feedIds
       currentTime
 
