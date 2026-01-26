@@ -127,16 +127,16 @@ data Input = Input with
   feedIds: [[Int]]
   payload: Text
       deriving (Eq, Show)
-      
+
 main : Input -> Script ()
 main input = script do
     currentTime <- getTime
-    
+
     let config = redstonePrimaryProdDefaultConfig input.feedIds currentTime
-    
-    let resultNumeric = processPayloadNumeric config input.payload 
-    let result = processPayload config input.payload 
-    
+
+    let resultNumeric = processPayloadNumeric config input.payload
+    let result = processPayload config input.payload
+
     debug (resultNumeric)
     debug (result)
 ```

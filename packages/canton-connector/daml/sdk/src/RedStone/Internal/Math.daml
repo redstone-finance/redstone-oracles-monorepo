@@ -1,4 +1,4 @@
-module RedStone.Internal.Math 
+module RedStone.Internal.Math
 (
     leByteListToInt
     , beByteListToInt
@@ -10,14 +10,14 @@ import DA.List as L
 import RedStone.Internal.Const
 import RedStone.Internal.Trim
 
--- Public 
+-- Public
 
 leByteListToInt list = leByteListToIntAcc identity 0 0 (trimTrailingZeros list)
-beByteListToInt list = leByteListToInt $ L.reverse list 
+beByteListToInt list = leByteListToInt $ L.reverse list
 
 leByteListToNumeric: [Int] -> Numeric 0
 leByteListToNumeric list = leByteListToIntAcc intToNumeric 0 0.0 (trimTrailingZeros list)
-beByteListToNumeric list = leByteListToNumeric $ L.reverse list 
+beByteListToNumeric list = leByteListToNumeric $ L.reverse list
 
 -- Private
 

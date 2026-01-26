@@ -2,16 +2,16 @@ module RedStone.Result where
 
 -- Public
 
-data Result v e = Ok v | Error e 
+data Result v e = Ok v | Error e
     deriving (Show, Ord, Eq)
 
 mapResultOk f (Ok x) = Ok $ f x
-mapResultOk _ (Error t) = Error t 
+mapResultOk _ (Error t) = Error t
 
 mapResultErr f (Error x) = Error $ f x
 mapResultErr _ (Ok x) = Ok x
 
-mapResult f g = (mapResultOk f) . (mapResultErr g) 
+mapResult f g = (mapResultOk f) . (mapResultErr g)
 
 resultFromOptional _ (Some x) = Ok x
 resultFromOptional message None  = Error message
