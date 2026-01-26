@@ -234,7 +234,7 @@ const getTheMostRecentDataPackages = (
         requestDataPackagesLogger?.willReject();
         clearTimeout(timer);
         didResolveOrReject = true;
-        reject(new AggregateError(collectedErrors));
+        reject(new AggregateError(collectedErrors, "requestDataPackages failed"));
       } else if (
         collectedResponses.length + collectedErrors.length === promises.length ||
         (isTimedOut && collectedResponses.length !== 0)
@@ -385,7 +385,7 @@ const parseAndValidateDataPackagesResponse = (
   }
 
   if (errors.length > 0) {
-    throw new AggregateError(errors);
+    throw new AggregateError(errors, "requestDataPackages failed");
   }
 
   return parsedResponse;
