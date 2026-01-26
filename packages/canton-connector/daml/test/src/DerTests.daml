@@ -7,9 +7,9 @@ import RedStone.Internal.Hex
 main : Script ()
 main = do
   debug "=== Starting Der Tests ==="
-  
+
   testBasicOperations
-  
+
   debug "=== All tests passed! ==="
   pure ()
 
