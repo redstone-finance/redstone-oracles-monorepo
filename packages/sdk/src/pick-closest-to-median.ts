@@ -6,7 +6,7 @@ export const pickDataFeedPackagesClosestToMedian = (
   dataFeedPackages: SignedDataPackagePlainObj[],
   count: number
 ): SignedDataPackage[] => {
-  const allValues = getAllValues(dataFeedPackages) as Record<string, number[]>;
+  const allValues = getAllValues(dataFeedPackages);
   const allMedians = _.mapValues(allValues, MathUtils.getMedian);
 
   return sortByDistanceFromMedian(dataFeedPackages, allMedians)
@@ -52,5 +52,5 @@ const getAllValues = (dataPackages: SignedDataPackagePlainObj[]) => {
       allValues[dataPoint.dataFeedId]!.push(Number(dataPoint.value));
     }
   }
-  return allValues;
+  return allValues as Record<string, number[]>;
 };
