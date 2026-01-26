@@ -1,4 +1,4 @@
-module RedStone.ProcessorResult where 
+module RedStone.ProcessorResult where
 
 import DA.Numeric
 import RedStone.U256

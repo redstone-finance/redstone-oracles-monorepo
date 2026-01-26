@@ -20,27 +20,27 @@ findContract checkIsUnique test party contracts = do
     $ \ (cid, view)
       -> do debug $ "Contract ID: " <> show cid
             debug $ "Contract data: " <> show view
-          
+
   assertMsg ("Contract length is " <> show (L.length contracts)) $  not checkIsUnique || L.length contracts == 1
-      
+
   let (contractCid, _) = L.head filtered
 
   return contractCid
 
 findAdapter: Bool -> Text -> Party ->  Script (ContractId IRedStoneAdapter)
 findAdapter checkIsUnique adapterId party = do
-    contracts <- queryInterface @IRedStoneAdapter party 
-    
+    contracts <- queryInterface @IRedStoneAdapter party
+
     findContract checkIsUnique (\view -> view.adapterId == adapterId) party contracts
 
 findPriceFeed: Bool -> Text -> RedStoneFeedId -> Party -> Script (ContractId IRedStonePriceFeed)
 findPriceFeed checkIsUnique adapterId feedId party = do
-    contracts <- queryInterface @IRedStonePriceFeed party 
-    
+    contracts <- queryInterface @IRedStonePriceFeed party
+
     findContract checkIsUnique (\view -> view.adapterId == adapterId && view.feedId == feedId) party contracts
 
-findOneAdapter = findAdapter True 
-findAnyAdapter = findAdapter False 
+findOneAdapter = findAdapter True
+findAnyAdapter = findAdapter False
 
 findOnePriceFeed = findPriceFeed True
 

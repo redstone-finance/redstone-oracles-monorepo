@@ -1,7 +1,7 @@
 module RedStone.Internal.CryptoVerify
 (
   getDataPackageSignerIndices
-) where 
+) where
 
 import DA.List as L
 import DA.Crypto.Text as C
@@ -23,7 +23,7 @@ isValidSig HexBytes{bytes=signature} HexBytes{bytes=signableBytes} pk =
   in C.secp256k1WithEcdsaOnly derSignature hash derPublicKey
 
 verifySignerIndex signers dataPackage =
-    let 
+    let
         findSignerIndex signature signableBytes = L.findIndex $ isValidSig signature signableBytes
         index = findSignerIndex dataPackage.signature dataPackage.signableBytes signers
     in resultFromOptional ("Wrong signer index for " <> show dataPackage) index
