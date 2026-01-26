@@ -1,13 +1,13 @@
 module RedStone.Internal.Error where
 
-data ErrorCode = 
+data ErrorCode =
   Configuration
   | Processing
   | Verification
   | Other
   deriving (Eq, Ord, Show)
 
-data RedStoneError a = RedStoneError 
+data RedStoneError a = RedStoneError
   with
     code : ErrorCode
     message : Text
@@ -19,7 +19,7 @@ instance Show a => Show (RedStoneError a) where
 
 otherError message arg = RedStoneError Other message arg
 
-check cond orError = 
+check cond orError =
     if cond then () else error $ show orError
 
 infixl 1 ???

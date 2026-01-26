@@ -37,7 +37,7 @@ template RedStoneAdapter
                 Error t -> Error (t <> " for " <> show feedId)
                 Ok v -> case M.lookup feedId feedData of
                   None -> value
-                  Some priceData 
+                  Some priceData
                     | priceData.timestamp < timestamp && priceData.writeTimestamp < config.currentTimestamp -> value
                     | otherwise -> Error ("Wrong timestamps for " <> show feedId)
 
@@ -45,15 +45,15 @@ template RedStoneAdapter
         let filteredValues = L.filter (resultIsOk . snd) verifiedValues
         let unwrappedValues = map (\(feedId, value) -> (feedId, resultUnwrap value)) filteredValues
 
-        let newEntries = M.fromList $ map (\(feedId, value) -> 
-              (feedId, RedStonePriceData value timestamp config.currentTimestamp)) 
+        let newEntries = M.fromList $ map (\(feedId, value) ->
+              (feedId, RedStonePriceData value timestamp config.currentTimestamp))
               unwrappedValues
         let updatedFeedData = M.union newEntries feedData
-                  
-        newCid <- create this with feedData = updatedFeedData 
-        
+
+        newCid <- create this with feedData = updatedFeedData
+
         return $ toInterfaceContractId @IRedStoneAdapter newCid
-      
+
       readPriceData feedIds = do
         let getPriceData feedId =
               case M.lookup feedId feedData of

@@ -1,4 +1,4 @@
-module RedStone.Internal.Trim 
+module RedStone.Internal.Trim
   (
     trimStart
     , trimMulti
@@ -8,7 +8,7 @@ module RedStone.Internal.Trim
 
 import DA.List as L
 
--- Public 
+-- Public
 
 trimLeadingZeros = L.dropWhile (== 0)
 trimTrailingZeros = L.dropWhileEnd (== 0)
@@ -17,11 +17,11 @@ trimStart = trimMulti trimOneElement
 
 trimMulti = trimMultiAcc []
 
--- Private 
+-- Private
 
 trimMultiAcc acc trimSingle n list = case n of
   0 -> (list, acc)
-  _ -> 
+  _ ->
     let
       (rest, trimmed) = trimSingle list
     in trimMultiAcc (trimmed :: acc) trimSingle (n - 1) rest

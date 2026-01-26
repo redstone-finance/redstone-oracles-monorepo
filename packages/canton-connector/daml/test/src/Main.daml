@@ -13,7 +13,7 @@ currentTime <- getTime
 let config = (redstonePrimaryProdDefaultConfig input.feedIds currentTime) with maxDelayMs = 30 * 60_000
 
 let resultNumeric = processPayloadNumeric config input.payload
-let result = processPayload config input.payload 
+let result = processPayload config input.payload
 
 debug (resultNumeric)
 debug (result)

@@ -8,7 +8,7 @@ import RedStone.Internal.Hex
 
 -- Public
 
-data DataPackage = DataPackage 
+data DataPackage = DataPackage
   with
     dataPoints : [DataPoint]
     timestamp : Int
@@ -16,8 +16,8 @@ data DataPackage = DataPackage
     signableBytes : HexBytes
   deriving (Eq, Show)
 
-trimDataPackage bytes = 
-  let 
+trimDataPackage bytes =
+  let
     (signatureRest, signature) = bytesTrim signature_bs bytes
     (dataPointCountRest, dataPointCount) = bytesTrimNum data_point_count_bs signatureRest
     (valueSizeRest, valueSize) = bytesTrimNum value_size_bs dataPointCountRest

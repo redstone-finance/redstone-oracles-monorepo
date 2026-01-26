@@ -1,4 +1,4 @@
-module RedStone.U256 
+module RedStone.U256
   (
     U256
     , u256FromBeByteList
@@ -24,8 +24,8 @@ import RedStone.Internal.Trim
 
 -- Public
 
-data U256 = U256 
-    with 
+data U256 = U256
+    with
         bytes : Bytes
     deriving (Eq)
 
@@ -86,7 +86,7 @@ showU256 u =
 normalizeBytes Bytes{revList=xs}
   | length xs < u256_size = xs ++ replicate (u256_size - length xs) 0
   | length xs == u256_size = xs
-  | otherwise = 
+  | otherwise =
       let
         first32 = take u256_size xs
         rest = drop u256_size xs
