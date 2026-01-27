@@ -10026,7 +10026,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@redstone-finance/canton-connector@workspace:packages/canton-connector":
+"@redstone-finance/canton-connector@workspace:*, @redstone-finance/canton-connector@workspace:packages/canton-connector":
   version: 0.0.0-use.local
   resolution: "@redstone-finance/canton-connector@workspace:packages/canton-connector"
   dependencies:
@@ -10117,6 +10117,7 @@ __metadata:
   resolution: "@redstone-finance/chain-orchestrator@workspace:packages/chain-orchestrator"
   dependencies:
     "@mysten/sui": "npm:1.37.3"
+    "@redstone-finance/canton-connector": "workspace:*"
     "@redstone-finance/chain-configs": "workspace:*"
     "@redstone-finance/evm-adapters": "workspace:*"
     "@redstone-finance/fuel-connector": "workspace:*"
