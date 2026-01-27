@@ -47,7 +47,7 @@
     "@redstone-finance/utils": "workspace:*",
     "@solana/web3.js": "^1.98.2",
     "ethers": "^5.7.2",
-    "lodash": "^4.17.21",
+    "lodash": "^4.17.23",
     "zod": "^4.1.12"
   },
   "devDependencies": {
