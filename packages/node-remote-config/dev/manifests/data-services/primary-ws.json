@@ -82,6 +82,16 @@
       "source": [],
       "denomination": "USD",
       "rateFeed": false
+    },
+    "STRC": {
+      "source": [],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "IS_NY_STOCKS_MARKET_OPEN": {
+      "source": [],
+      "denomination": "other",
+      "rateFeed": false
     }
   },
   "multiPointPackages": {}
