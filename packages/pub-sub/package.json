@@ -32,7 +32,7 @@
     "aws-iot-device-sdk-v2": "^1.21.1",
     "ethers": "^5.7.2",
     "eventsource": "^4.0.0",
-    "lodash": "^4.17.21",
+    "lodash": "^4.17.23",
     "zod": "^4.1.12"
   },
   "devDependencies": {

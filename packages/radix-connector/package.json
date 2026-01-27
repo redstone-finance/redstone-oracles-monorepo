@@ -44,7 +44,7 @@
     "@redstone-finance/sdk": "workspace:*",
     "axios": "^1.13.2",
     "ethers": "^5.7.2",
-    "lodash": "^4.17.21"
+    "lodash": "^4.17.23"
   },
   "devDependencies": {
     "@atlantis-l/radix-tool": "^0.8.9",
