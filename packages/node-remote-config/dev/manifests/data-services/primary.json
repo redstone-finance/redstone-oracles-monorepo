@@ -4244,6 +4244,13 @@
       ],
       "denomination": "USD",
       "rateFeed": true
+    },
+    "GUSD_FUNDAMENTAL/USD": {
+      "source": [
+        "ethereum-evm-fetcher-generic-gusd"
+      ],
+      "rateFeed": true,
+      "denomination": "USD"
     }
   },
   "multiPointPackages": {
