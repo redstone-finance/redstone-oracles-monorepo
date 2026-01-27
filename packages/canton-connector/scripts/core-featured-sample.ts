@@ -1,6 +1,7 @@
 import { ContractParamsProvider, getSignersForDataServiceId } from "@redstone-finance/sdk";
 import { CantonClient, CoreFeaturedCantonContractAdapter } from "../src";
-import { getJsonApiUrl, keycloakTokenProvider, readNetwork, readPartySuffix } from "./utils";
+import { keycloakTokenProvider, readPartySuffix } from "../src/utils";
+import { getJsonApiUrl, readNetwork } from "./utils";
 
 export async function coreSample() {
   const tokenProvider = () => keycloakTokenProvider();

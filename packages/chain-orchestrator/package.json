@@ -19,6 +19,7 @@
   },
   "dependencies": {
     "@mysten/sui": "1.37.3",
+    "@redstone-finance/canton-connector": "workspace:*",
     "@redstone-finance/chain-configs": "workspace:*",
     "@redstone-finance/evm-adapters": "workspace:*",
     "@redstone-finance/fuel-connector": "workspace:*",

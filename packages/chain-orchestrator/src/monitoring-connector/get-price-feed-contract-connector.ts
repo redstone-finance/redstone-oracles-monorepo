@@ -34,6 +34,7 @@ export function getPriceFeedContractConnector(
     case "aptos":
     case "movement":
     case "solana":
+    case "canton":
     case "evm":
       throw new Error(`${networkId} is not supported for getPriceFeedContractConnector`);
     default:
