@@ -2016,18 +2016,18 @@
     },
     "TRY": {
       "source": [
-        "ecb",
-        "twelve-data",
-        "financialmodelingprep",
-        "finhub_icmarkets_deferred-usd-reversed",
-        "alphavantage-usd",
-        "metal-price-api",
-        "ws-polygon-massive-commodities",
-        "alltick-api-reversed",
-        "binance-btc-reversed",
-        "binance-usdt-reversed",
-        "okx-btc-reversed",
-        "okx-usdt-reversed"
+        "paribu-usdt-reversed",
+        "paribu-avax-reversed",
+        "paribu-xrp-reversed",
+        "btcturk-usdt-reversed",
+        "btcturk-eth-reversed",
+        "btcturk-btc-reversed",
+        "binancetr-usdt-reversed",
+        "binancetr-btc-reversed",
+        "binancetr-eth-reversed",
+        "okxtr-usdt-reversed",
+        "okxtr-btc-reversed",
+        "okxtr-eth-reversed"
       ],
       "denomination": "USD",
       "rateFeed": false

@@ -3782,6 +3782,24 @@
       "source": ["ethereum-evm-fetcher-generic-gusd"],
       "rateFeed": true,
       "denomination": "USD"
+    },
+    "TRY": {
+      "source": [
+        "paribu-usdt-reversed",
+        "paribu-avax-reversed",
+        "paribu-xrp-reversed",
+        "btcturk-usdt-reversed",
+        "btcturk-eth-reversed",
+        "btcturk-btc-reversed",
+        "binancetr-usdt-reversed",
+        "binancetr-btc-reversed",
+        "binancetr-eth-reversed",
+        "okxtr-usdt-reversed",
+        "okxtr-btc-reversed",
+        "okxtr-eth-reversed"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
     }
   },
   "multiPointPackages": {
