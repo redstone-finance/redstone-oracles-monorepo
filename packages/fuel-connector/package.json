@@ -25,7 +25,7 @@
   "dependencies": {
     "@redstone-finance/sdk": "workspace:*",
     "fuels": "^0.97.0",
-    "lodash": "^4.17.21"
+    "lodash": "^4.17.23"
   },
   "devDependencies": {
     "@redstone-finance/utils": "workspace:*",
