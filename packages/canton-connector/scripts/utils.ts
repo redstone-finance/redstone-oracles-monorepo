@@ -1,10 +1,9 @@
 import { RedstoneCommon } from "@redstone-finance/utils";
-import axios from "axios";
 import "dotenv/config";
 import { readFile } from "node:fs/promises";
 import path from "node:path";
 import { z } from "zod";
-import { CantonNetwork, CantonNetworks } from "../src";
+import { CantonNetwork, CantonNetworks, keycloakTokenProvider } from "../src";
 
 const TOKEN_PROVIDER_TYPE = z.enum(["keycloak", "file", "none"]);
 
@@ -53,41 +52,4 @@ export async function fileTokenProvider(
   filePath = path.join(__dirname, "..", "daml", "token.txt")
 ) {
   return (await readFile(filePath, "utf-8")).trim();
-}
-
-export async function keycloakTokenProvider(opts?: {
-  url: string;
-  realm: string;
-  clientId: string;
-  username: string;
-  password: string;
-}) {
-  const { url, realm, clientId, username, password } = opts ?? readKeycloakOpts();
-
-  const { data } = await axios.post<{ access_token: string }>(
-    `${url}/auth/realms/${realm}/protocol/openid-connect/token`,
-    {
-      grant_type: "password",
-      client_id: clientId,
-      username: username,
-      password: password,
-    },
-    {
-      headers: {
-        "Content-Type": "application/x-www-form-urlencoded",
-      },
-    }
-  );
-
-  return data.access_token;
-}
-
-function readKeycloakOpts() {
-  return {
-    url: RedstoneCommon.getFromEnv("KEYCLOAK_URL", z.url()),
-    realm: RedstoneCommon.getFromEnv("REALM"),
-    clientId: RedstoneCommon.getFromEnv("CLIENT_ID"),
-    username: RedstoneCommon.getFromEnv("KEYCLOAK_USERNAME"),
-    password: RedstoneCommon.getFromEnv("KEYCLOAK_PASSWORD"),
-  };
 }

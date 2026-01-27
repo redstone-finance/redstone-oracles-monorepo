@@ -1,4 +1,6 @@
 import { RedstoneCommon } from "@redstone-finance/utils";
+import axios from "axios";
+import z from "zod";
 import {
   ApiError,
   CreatedEvent,
@@ -69,4 +71,52 @@ export function makeActiveContractData(
     synchronizerId,
     createdEventBlob: RedstoneCommon.useDefaultIfEmpty(createdEvent.createdEventBlob, undefined),
   };
+}
+
+export async function keycloakTokenProvider(opts?: {
+  url: string;
+  realm: string;
+  clientId: string;
+  username: string;
+  password: string;
+}) {
+  const { url, realm, clientId, username, password } = opts ?? readKeycloakOpts();
+
+  const { data } = await axios.post<{ access_token: string }>(
+    `${url}/auth/realms/${realm}/protocol/openid-connect/token`,
+    {
+      grant_type: "password",
+      client_id: clientId,
+      username: username,
+      password: password,
+    },
+    {
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded",
+      },
+    }
+  );
+
+  return data.access_token;
+}
+
+function readKeycloakOpts() {
+  return {
+    url: RedstoneCommon.getFromEnv("KEYCLOAK_URL", z.url()),
+    realm: RedstoneCommon.getFromEnv("REALM"),
+    clientId: RedstoneCommon.getFromEnv("CLIENT_ID"),
+    username: RedstoneCommon.getFromEnv("KEYCLOAK_USERNAME"),
+    password: RedstoneCommon.getFromEnv("KEYCLOAK_PASSWORD"),
+  };
+}
+
+export function readPartyId() {
+  return {
+    viewerPartyId: RedstoneCommon.getFromEnv("VIEWER_PARTY_ID"),
+    updaterPartyId: RedstoneCommon.getFromEnv("UPDATER_PARTY_ID"),
+  };
+}
+
+export function readPartySuffix() {
+  return RedstoneCommon.getFromEnv("PARTY_SUFFIX");
 }
