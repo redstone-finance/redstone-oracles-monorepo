@@ -24,7 +24,7 @@
     "date-fns": "^3.6.0",
     "decimal.js": "^10.4.3",
     "ethers": "^5.7.2",
-    "lodash": "^4.17.21",
+    "lodash": "^4.17.23",
     "zod": "^4.1.12"
   },
   "devDependencies": {

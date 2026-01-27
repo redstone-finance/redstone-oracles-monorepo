@@ -36,7 +36,7 @@
     "@stellar/stellar-sdk": "14.4.3",
     "ethers": "^5.7.2",
     "fuels": "^0.97.0",
-    "lodash": "^4.17.21"
+    "lodash": "^4.17.23"
   },
   "files": [
     "src",
