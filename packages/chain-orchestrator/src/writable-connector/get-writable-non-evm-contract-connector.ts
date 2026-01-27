@@ -1,4 +1,5 @@
 import { deconstructNetworkId, RedstoneCommon } from "@redstone-finance/utils";
+import { getCantonContractConnector } from "./get-canton-contract-connector";
 import { getFuelContractConnector } from "./get-fuel-contract-connector";
 import { getMoveContractConnector } from "./get-move-contract-connector";
 import { getRadixContractConnector } from "./get-radix-contract-connector";
@@ -24,6 +25,8 @@ export async function getWritableNonEvmContractConnector(relayerConfig: PartialR
       return getSolanaContractConnector(relayerConfig);
     case "stellar":
       return getStellarContractConnector(relayerConfig);
+    case "canton":
+      return getCantonContractConnector(relayerConfig);
     case "evm":
       throw new Error(
         `Evm relayer config with networkId: ${relayerConfig.networkId} got passed to non-evm blockchain service builder.`

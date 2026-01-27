@@ -5,7 +5,8 @@ import {
 } from "@redstone-finance/sdk";
 import { CantonClient } from "../src";
 import { PricesCantonContractConnector } from "../src/adapters/PricesCantonContractConnector";
-import { getJsonApiUrl, getTokenProvider, readNetwork, readPartySuffix, readUserId } from "./utils";
+import { readPartySuffix } from "../src/utils";
+import { getJsonApiUrl, getTokenProvider, readNetwork, readUserId } from "./utils";
 
 const VIEWER_PARTY_ID = `RedStoneOracleViewer`;
 const UPDATER_PARTY_ID = `RedStoneOracleUpdater`;
