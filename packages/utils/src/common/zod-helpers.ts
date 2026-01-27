@@ -20,13 +20,13 @@ export function zodAssert<O>(schema: z.ZodType<O>, data: unknown): asserts data 
  * outputs duration in ms
  */
 export const durationToMilliseconds = (duration: string): number => {
-  const regex = /^(\d+)([smhd])$/; // matches number + unit (s, m, h, d)
+  const regex = /^(\d+)([smhd])$/i; // matches number + unit (s, m, h, d) - case insensitive
   const match = duration.match(regex);
   if (!match) {
     throw new Error("Invalid duration format");
   }
   const value = parseInt(match[1], 10);
-  const unit = match[2];
+  const unit = match[2].toLowerCase();
   switch (unit) {
     case "d":
       return value * 86400000;
@@ -40,5 +40,8 @@ export const durationToMilliseconds = (duration: string): number => {
       throw new Error("Unknown unit");
   }
 };
+
+export const durationToSeconds = (duration: string): number =>
+  durationToMilliseconds(duration) / 1000;
 
 export const durationSchema = z.string().transform((val) => durationToMilliseconds(val));
