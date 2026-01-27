@@ -170,18 +170,6 @@
       "denomination": "USD",
       "rateFeed": false
     },
-    "IMPACT_BUY_flx:TSLA_EMA_1H": {
-      "source": ["ema"],
-      "broadcasters": ["influx"],
-      "denomination": "USD",
-      "rateFeed": false
-    },
-    "IMPACT_BUY_flx:TSLA_EMA_8H": {
-      "source": ["ema"],
-      "broadcasters": ["influx"],
-      "denomination": "USD",
-      "rateFeed": false
-    },
     "IMPACT_SELL_flx:TSLA": {
       "source": ["hyperliquid-mainnet-perps-ws-fetcher", "hydromancer-mainnet-perps-ws-fetcher"],
       "customWeightsForWeightedMedian": {
@@ -189,18 +177,6 @@
         "hydromancer-mainnet-perps-ws-fetcher": 1
       },
       "priceAggregator": "constantWeightMedian",
-      "broadcasters": ["influx"],
-      "denomination": "USD",
-      "rateFeed": false
-    },
-    "IMPACT_SELL_flx:TSLA_EMA_1H": {
-      "source": ["ema"],
-      "broadcasters": ["influx"],
-      "denomination": "USD",
-      "rateFeed": false
-    },
-    "IMPACT_SELL_flx:TSLA_EMA_8H": {
-      "source": ["ema"],
       "broadcasters": ["influx"],
       "denomination": "USD",
       "rateFeed": false
@@ -318,18 +294,6 @@
       "denomination": "USD",
       "rateFeed": false
     },
-    "IMPACT_BUY_flx:NVDA_EMA_1H": {
-      "source": ["ema"],
-      "broadcasters": ["influx"],
-      "denomination": "USD",
-      "rateFeed": false
-    },
-    "IMPACT_BUY_flx:NVDA_EMA_8H": {
-      "source": ["ema"],
-      "broadcasters": ["influx"],
-      "denomination": "USD",
-      "rateFeed": false
-    },
     "IMPACT_SELL_flx:NVDA": {
       "source": ["hyperliquid-mainnet-perps-ws-fetcher", "hydromancer-mainnet-perps-ws-fetcher"],
       "customWeightsForWeightedMedian": {
@@ -338,18 +302,6 @@
       },
       "priceAggregator": "constantWeightMedian",
 
-      "broadcasters": ["influx"],
-      "denomination": "USD",
-      "rateFeed": false
-    },
-    "IMPACT_SELL_flx:NVDA_EMA_1H": {
-      "source": ["ema"],
-      "broadcasters": ["influx"],
-      "denomination": "USD",
-      "rateFeed": false
-    },
-    "IMPACT_SELL_flx:NVDA_EMA_8H": {
-      "source": ["ema"],
       "broadcasters": ["influx"],
       "denomination": "USD",
       "rateFeed": false
@@ -469,18 +421,6 @@
       "denomination": "USD",
       "rateFeed": false
     },
-    "IMPACT_BUY_flx:HOOD_EMA_1H": {
-      "source": ["ema"],
-      "broadcasters": ["influx"],
-      "denomination": "USD",
-      "rateFeed": false
-    },
-    "IMPACT_BUY_flx:HOOD_EMA_8H": {
-      "source": ["ema"],
-      "broadcasters": ["influx"],
-      "denomination": "USD",
-      "rateFeed": false
-    },
     "IMPACT_SELL_flx:HOOD": {
       "source": ["hyperliquid-mainnet-perps-ws-fetcher", "hydromancer-mainnet-perps-ws-fetcher"],
       "customWeightsForWeightedMedian": {
@@ -489,18 +429,6 @@
       },
       "priceAggregator": "constantWeightMedian",
 
-      "broadcasters": ["influx"],
-      "denomination": "USD",
-      "rateFeed": false
-    },
-    "IMPACT_SELL_flx:HOOD_EMA_1H": {
-      "source": ["ema"],
-      "broadcasters": ["influx"],
-      "denomination": "USD",
-      "rateFeed": false
-    },
-    "IMPACT_SELL_flx:HOOD_EMA_8H": {
-      "source": ["ema"],
       "broadcasters": ["influx"],
       "denomination": "USD",
       "rateFeed": false
@@ -620,18 +548,6 @@
       "denomination": "USD",
       "rateFeed": false
     },
-    "IMPACT_BUY_flx:CRCL_EMA_1H": {
-      "source": ["ema"],
-      "broadcasters": ["influx"],
-      "denomination": "USD",
-      "rateFeed": false
-    },
-    "IMPACT_BUY_flx:CRCL_EMA_8H": {
-      "source": ["ema"],
-      "broadcasters": ["influx"],
-      "denomination": "USD",
-      "rateFeed": false
-    },
     "IMPACT_SELL_flx:CRCL": {
       "source": ["hyperliquid-mainnet-perps-ws-fetcher", "hydromancer-mainnet-perps-ws-fetcher"],
       "customWeightsForWeightedMedian": {
@@ -640,18 +556,6 @@
       },
       "priceAggregator": "constantWeightMedian",
 
-      "broadcasters": ["influx"],
-      "denomination": "USD",
-      "rateFeed": false
-    },
-    "IMPACT_SELL_flx:CRCL_EMA_1H": {
-      "source": ["ema"],
-      "broadcasters": ["influx"],
-      "denomination": "USD",
-      "rateFeed": false
-    },
-    "IMPACT_SELL_flx:CRCL_EMA_8H": {
-      "source": ["ema"],
       "broadcasters": ["influx"],
       "denomination": "USD",
       "rateFeed": false
@@ -771,18 +675,6 @@
       "denomination": "USD",
       "rateFeed": false
     },
-    "IMPACT_BUY_flx:COIN_EMA_1H": {
-      "source": ["ema"],
-      "broadcasters": ["influx"],
-      "denomination": "USD",
-      "rateFeed": false
-    },
-    "IMPACT_BUY_flx:COIN_EMA_8H": {
-      "source": ["ema"],
-      "broadcasters": ["influx"],
-      "denomination": "USD",
-      "rateFeed": false
-    },
     "IMPACT_SELL_flx:COIN": {
       "source": ["hyperliquid-mainnet-perps-ws-fetcher", "hydromancer-mainnet-perps-ws-fetcher"],
       "customWeightsForWeightedMedian": {
@@ -791,18 +683,6 @@
       },
       "priceAggregator": "constantWeightMedian",
 
-      "broadcasters": ["influx"],
-      "denomination": "USD",
-      "rateFeed": false
-    },
-    "IMPACT_SELL_flx:COIN_EMA_1H": {
-      "source": ["ema"],
-      "broadcasters": ["influx"],
-      "denomination": "USD",
-      "rateFeed": false
-    },
-    "IMPACT_SELL_flx:COIN_EMA_8H": {
-      "source": ["ema"],
       "broadcasters": ["influx"],
       "denomination": "USD",
       "rateFeed": false
@@ -900,24 +780,6 @@
           "maxDelayMilliseconds": 120000
         }
       },
-      "denomination": "USD",
-      "rateFeed": false
-    },
-    "XAUt_EMA_1M": {
-      "source": ["ema"],
-      "broadcasters": ["influx"],
-      "denomination": "USD",
-      "rateFeed": false
-    },
-    "XAUt_EMA_5M": {
-      "source": ["ema"],
-      "broadcasters": ["influx"],
-      "denomination": "USD",
-      "rateFeed": false
-    },
-    "XAUt_EMA_8H": {
-      "source": ["ema"],
-      "broadcasters": ["influx"],
       "denomination": "USD",
       "rateFeed": false
     },
@@ -1070,30 +932,6 @@
         "hydromancer-mainnet-perps-ws-fetcher": 1
       },
       "priceAggregator": "constantWeightMedian",
-      "broadcasters": ["influx"],
-      "denomination": "USD",
-      "rateFeed": false
-    },
-    "IMPACT_BUY_flx:SILVER_EMA_1H": {
-      "source": ["ema"],
-      "broadcasters": ["influx"],
-      "denomination": "USD",
-      "rateFeed": false
-    },
-    "IMPACT_BUY_flx:SILVER_EMA_8H": {
-      "source": ["ema"],
-      "broadcasters": ["influx"],
-      "denomination": "USD",
-      "rateFeed": false
-    },
-    "IMPACT_SELL_flx:SILVER_EMA_1H": {
-      "source": ["ema"],
-      "broadcasters": ["influx"],
-      "denomination": "USD",
-      "rateFeed": false
-    },
-    "IMPACT_SELL_flx:SILVER_EMA_8H": {
-      "source": ["ema"],
       "broadcasters": ["influx"],
       "denomination": "USD",
       "rateFeed": false
@@ -1296,30 +1134,6 @@
       "denomination": "USD",
       "rateFeed": false
     },
-    "IMPACT_BUY_flx:OIL_EMA_1H": {
-      "source": ["ema"],
-      "broadcasters": ["influx"],
-      "denomination": "USD",
-      "rateFeed": false
-    },
-    "IMPACT_BUY_flx:OIL_EMA_8H": {
-      "source": ["ema"],
-      "broadcasters": ["influx"],
-      "denomination": "USD",
-      "rateFeed": false
-    },
-    "IMPACT_SELL_flx:OIL_EMA_1H": {
-      "source": ["ema"],
-      "broadcasters": ["influx"],
-      "denomination": "USD",
-      "rateFeed": false
-    },
-    "IMPACT_SELL_flx:OIL_EMA_8H": {
-      "source": ["ema"],
-      "broadcasters": ["influx"],
-      "denomination": "USD",
-      "rateFeed": false
-    },
     "flx:OIL_MARK_0": {
       "source": ["hip3-felix-commodities-mainnet-fetcher"],
       "broadcasters": ["hyperliquid-hip3"],
@@ -1429,30 +1243,6 @@
       "denomination": "USD",
       "rateFeed": false
     },
-    "IMPACT_BUY_flx:SP500_EMA_30M": {
-      "source": ["ema"],
-      "broadcasters": ["influx"],
-      "denomination": "USD",
-      "rateFeed": false
-    },
-    "IMPACT_BUY_flx:SP500_EMA_2H": {
-      "source": ["ema"],
-      "broadcasters": ["influx"],
-      "denomination": "USD",
-      "rateFeed": false
-    },
-    "IMPACT_SELL_flx:SP500_EMA_30M": {
-      "source": ["ema"],
-      "broadcasters": ["influx"],
-      "denomination": "USD",
-      "rateFeed": false
-    },
-    "IMPACT_SELL_flx:SP500_EMA_2H": {
-      "source": ["ema"],
-      "broadcasters": ["influx"],
-      "denomination": "USD",
-      "rateFeed": false
-    },
     "flx:SP500_MARK_0": {
       "source": ["hip3-felix-sp500-mainnet-fetcher"],
       "broadcasters": ["hyperliquid-hip3"],
@@ -1554,30 +1344,6 @@
         "hydromancer-mainnet-perps-ws-fetcher": 1
       },
       "priceAggregator": "constantWeightMedian",
-      "broadcasters": ["influx"],
-      "denomination": "USD",
-      "rateFeed": false
-    },
-    "IMPACT_BUY_flx:COPPER_EMA_2H": {
-      "source": ["ema"],
-      "broadcasters": ["influx"],
-      "denomination": "USD",
-      "rateFeed": false
-    },
-    "IMPACT_BUY_flx:COPPER_EMA_8H": {
-      "source": ["ema"],
-      "broadcasters": ["influx"],
-      "denomination": "USD",
-      "rateFeed": false
-    },
-    "IMPACT_SELL_flx:COPPER_EMA_2H": {
-      "source": ["ema"],
-      "broadcasters": ["influx"],
-      "denomination": "USD",
-      "rateFeed": false
-    },
-    "IMPACT_SELL_flx:COPPER_EMA_8H": {
-      "source": ["ema"],
       "broadcasters": ["influx"],
       "denomination": "USD",
       "rateFeed": false
@@ -1826,30 +1592,6 @@
       "denomination": "USD",
       "rateFeed": false
     },
-    "IMPACT_BUY_flx:PALLADIUM_EMA_1H": {
-      "source": ["ema"],
-      "broadcasters": ["influx"],
-      "denomination": "USD",
-      "rateFeed": false
-    },
-    "IMPACT_BUY_flx:PALLADIUM_EMA_8H": {
-      "source": ["ema"],
-      "broadcasters": ["influx"],
-      "denomination": "USD",
-      "rateFeed": false
-    },
-    "IMPACT_SELL_flx:PALLADIUM_EMA_1H": {
-      "source": ["ema"],
-      "broadcasters": ["influx"],
-      "denomination": "USD",
-      "rateFeed": false
-    },
-    "IMPACT_SELL_flx:PALLADIUM_EMA_8H": {
-      "source": ["ema"],
-      "broadcasters": ["influx"],
-      "denomination": "USD",
-      "rateFeed": false
-    },
     "flx:PALLADIUM_MARK_0": {
       "source": ["hip3-felix-commodities-mainnet-fetcher"],
       "broadcasters": ["hyperliquid-hip3"],
@@ -1953,30 +1695,6 @@
         "hydromancer-mainnet-perps-ws-fetcher": 1
       },
       "priceAggregator": "constantWeightMedian",
-      "broadcasters": ["influx"],
-      "denomination": "USD",
-      "rateFeed": false
-    },
-    "IMPACT_BUY_flx:PLATINUM_EMA_1H": {
-      "source": ["ema"],
-      "broadcasters": ["influx"],
-      "denomination": "USD",
-      "rateFeed": false
-    },
-    "IMPACT_BUY_flx:PLATINUM_EMA_8H": {
-      "source": ["ema"],
-      "broadcasters": ["influx"],
-      "denomination": "USD",
-      "rateFeed": false
-    },
-    "IMPACT_SELL_flx:PLATINUM_EMA_1H": {
-      "source": ["ema"],
-      "broadcasters": ["influx"],
-      "denomination": "USD",
-      "rateFeed": false
-    },
-    "IMPACT_SELL_flx:PLATINUM_EMA_8H": {
-      "source": ["ema"],
       "broadcasters": ["influx"],
       "denomination": "USD",
       "rateFeed": false
