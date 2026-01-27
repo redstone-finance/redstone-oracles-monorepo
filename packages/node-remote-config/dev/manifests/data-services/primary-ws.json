@@ -61,6 +61,7 @@
       "source": [
         "alltick-stocks-api",
         "databento-no-closing-price",
+        "financialmodelingprep",
         "ws-dx-feed-no-close-price",
         "ws-polygon-massive-no-closing-price",
         "ws-twelve-data-no-closing-price"
@@ -71,6 +72,7 @@
     "FGNXP": {
       "source": [
         "databento-no-closing-price",
+        "financialmodelingprep",
         "ws-dx-feed-no-close-price",
         "ws-polygon-massive-no-closing-price",
         "ws-twelve-data-no-closing-price"
@@ -81,6 +83,7 @@
     "CEPT": {
       "source": [
         "databento-no-closing-price",
+        "financialmodelingprep",
         "ws-dx-feed-no-close-price",
         "ws-polygon-massive-no-closing-price",
         "ws-twelve-data-no-closing-price"
@@ -91,6 +94,7 @@
     "FGNX": {
       "source": [
         "databento-no-closing-price",
+        "financialmodelingprep",
         "ws-dx-feed-no-close-price",
         "ws-polygon-massive-no-closing-price",
         "ws-twelve-data-no-closing-price"
@@ -102,6 +106,7 @@
       "source": [
         "alltick-stocks-api",
         "databento-no-closing-price",
+        "financialmodelingprep",
         "ws-dx-feed-no-close-price",
         "ws-polygon-massive-no-closing-price",
         "ws-twelve-data-no-closing-price"
@@ -113,6 +118,7 @@
       "source": [
         "alltick-stocks-api",
         "databento-no-closing-price",
+        "financialmodelingprep",
         "ws-dx-feed-no-close-price",
         "ws-polygon-massive-no-closing-price",
         "ws-twelve-data-no-closing-price"
@@ -124,6 +130,7 @@
       "source": [
         "alltick-stocks-api",
         "databento-no-closing-price",
+        "financialmodelingprep",
         "ws-dx-feed-no-close-price",
         "ws-polygon-massive-no-closing-price",
         "ws-twelve-data-no-closing-price"
@@ -135,6 +142,7 @@
       "source": [
         "alltick-stocks-api",
         "databento-no-closing-price",
+        "financialmodelingprep",
         "ws-dx-feed-no-close-price",
         "ws-polygon-massive-no-closing-price",
         "ws-twelve-data-no-closing-price"
@@ -146,6 +154,7 @@
       "source": [
         "alltick-stocks-api",
         "databento-no-closing-price",
+        "financialmodelingprep",
         "ws-dx-feed-no-close-price",
         "ws-polygon-massive-no-closing-price",
         "ws-twelve-data-no-closing-price"
@@ -157,11 +166,29 @@
       "source": [
         "alltick-stocks-api",
         "databento-no-closing-price",
+        "financialmodelingprep",
         "ws-dx-feed-no-close-price",
         "ws-polygon-massive-no-closing-price",
         "ws-twelve-data-no-closing-price"
       ],
       "denomination": "USD",
+      "rateFeed": false
+    },
+    "STRC": {
+      "source": [
+        "alltick-stocks-api",
+        "databento",
+        "financialmodelingprep",
+        "ws-dx-feed",
+        "ws-polygon-massive",
+        "ws-twelve-data"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "IS_NY_STOCKS_MARKET_OPEN": {
+      "source": ["is-ny-stocks-market-open-deferred"],
+      "denomination": "other",
       "rateFeed": false
     }
   },
