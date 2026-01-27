@@ -30,4 +30,27 @@ describe("durationToMilliseconds", () => {
     expect(() => durationToMilliseconds("1.5s")).toThrow("Invalid duration format");
     expect(() => durationToMilliseconds("-1s")).toThrow("Invalid duration format");
   });
+
+  describe("Capital letters", () => {
+    it("converts seconds to milliseconds", () => {
+      expect(durationToMilliseconds("1S")).toBe(1000);
+      expect(durationToMilliseconds("30S")).toBe(30000);
+      expect(durationToMilliseconds("0S")).toBe(0);
+    });
+
+    it("converts minutes to milliseconds", () => {
+      expect(durationToMilliseconds("1M")).toBe(60000);
+      expect(durationToMilliseconds("5M")).toBe(300000);
+    });
+
+    it("converts hours to milliseconds", () => {
+      expect(durationToMilliseconds("1H")).toBe(3600000);
+      expect(durationToMilliseconds("2H")).toBe(7200000);
+    });
+
+    it("converts days to milliseconds", () => {
+      expect(durationToMilliseconds("1D")).toBe(86400000);
+      expect(durationToMilliseconds("3D")).toBe(259200000);
+    });
+  });
 });
