@@ -64,6 +64,7 @@ export function getNonEvmBlockchainService(
       return new StellarBlockchainService(client, keypair);
     }
     case "fuel":
+    case "canton":
       throw new Error(`Not supported for ${chainType}`);
     case "evm":
       throw new Error(

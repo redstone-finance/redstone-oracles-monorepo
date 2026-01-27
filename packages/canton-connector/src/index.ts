@@ -3,4 +3,7 @@ export * from "./adapters/CoreCantonContractAdapter";
 export * from "./adapters/CoreClientCantonContractAdapter";
 export * from "./adapters/CoreFeaturedCantonContractAdapter";
 export * from "./adapters/PricesCantonContractAdapter";
+export * from "./adapters/PricesCantonContractConnector";
 export * from "./CantonClient";
+export * from "./CantonClientBuilder";
+export * from "./utils";

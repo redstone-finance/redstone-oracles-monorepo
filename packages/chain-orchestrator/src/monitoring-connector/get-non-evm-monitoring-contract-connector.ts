@@ -38,6 +38,7 @@ export function getNonEvmMonitoringContractConnector(
     case "stellar":
       return getStellarContractConnector(rpcUrls, relayerManifest);
     case "fuel":
+    case "canton":
       throw new Error(`${relayerManifest.adapterContractType} is not supported in monitoring`);
     case "evm":
       throw new Error(
