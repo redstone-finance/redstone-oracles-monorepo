@@ -2290,6 +2290,11 @@
       "localCacheTTL": "1d",
       "rateFeed": true
     },
+    "BTC.b_FUNDAMENTAL": {
+      "source": ["evm-fetcher-lombard-btcb"],
+      "denomination": "BTC",
+      "rateFeed": true
+    },
     "HybridBTC.pendle_FUNDAMENTAL": {
       "source": ["ethereum-evm-fetcher-hybrid-bitcoin-pendle"],
       "denomination": "WBTC",

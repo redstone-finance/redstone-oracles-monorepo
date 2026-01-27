@@ -6640,6 +6640,11 @@
       "localCacheTTL": "1d",
       "rateFeed": true
     },
+    "BTC.b_FUNDAMENTAL": {
+      "source": ["evm-fetcher-lombard-btcb"],
+      "denomination": "BTC",
+      "rateFeed": true
+    },
     "iBERA": {
       "source": ["kodiak-berachain-wbera-500", "kodiak-berachain-ibgt-3000"],
       "denomination": "USD",
