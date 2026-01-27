@@ -20,7 +20,7 @@
   "dependencies": {
     "@redstone-finance/utils": "workspace:*",
     "@types/lodash": "^4.14.195",
-    "lodash": "^4.17.21",
+    "lodash": "^4.17.23",
     "zod": "^4.1.12"
   },
   "files": [
