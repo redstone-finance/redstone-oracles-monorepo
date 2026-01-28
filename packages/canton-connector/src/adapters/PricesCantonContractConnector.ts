@@ -1,24 +1,17 @@
-import { IContractConnector, IExtendedPricesContractAdapter } from "@redstone-finance/sdk";
+import { IExtendedPricesContractAdapter } from "@redstone-finance/sdk";
 import { CantonClient } from "../CantonClient";
+import { CantonContractConnector } from "./CantonContractConnector";
 import { PricesCantonContractAdapter } from "./PricesCantonContractAdapter";
 
-export class PricesCantonContractConnector
-  implements IContractConnector<IExtendedPricesContractAdapter>
-{
+export class PricesCantonContractConnector extends CantonContractConnector<IExtendedPricesContractAdapter> {
   private adapter?: IExtendedPricesContractAdapter;
 
   constructor(
-    private cantonClient: CantonClient,
+    cantonClient: CantonClient,
     private updateCantonClient: CantonClient,
     private adapterId: string
-  ) {}
-
-  async getBlockNumber() {
-    return await this.cantonClient.getCurrentOffset();
-  }
-
-  waitForTransaction(_txId: string) {
-    return Promise.resolve(true);
+  ) {
+    super(cantonClient);
   }
 
   getAdapter(): Promise<IExtendedPricesContractAdapter> {

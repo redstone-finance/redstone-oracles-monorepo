@@ -4,13 +4,14 @@ import {
   sampleRun,
 } from "@redstone-finance/sdk";
 import { CantonClient } from "../src";
+import { PriceFeedEntryCantonContractConnector } from "../src/adapters/PriceFeedEntryCantonContractConnector";
 import { PricesCantonContractConnector } from "../src/adapters/PricesCantonContractConnector";
 import { readPartySuffix } from "../src/utils";
 import { getJsonApiUrl, getTokenProvider, readNetwork, readUserId } from "./utils";
 
 const VIEWER_PARTY_ID = `RedStoneOracleViewer`;
 const UPDATER_PARTY_ID = `RedStoneOracleUpdater`;
-const ADAPTER_ID = "RedStoneAdapter-743";
+const ADAPTER_ID = "RedStoneAdapter-043b";
 
 async function main(adapterId = ADAPTER_ID) {
   const tokenProvider = getTokenProvider();
@@ -35,7 +36,9 @@ async function main(adapterId = ADAPTER_ID) {
     authorizedSigners: getSignersForDataServiceId("redstone-primary-prod"),
   });
 
-  await sampleRun(paramsProvider, connector, undefined);
+  const ethPriceFeedConnector = new PriceFeedEntryCantonContractConnector(client, "ETH");
+
+  await sampleRun(paramsProvider, connector, ethPriceFeedConnector);
 }
 
 void main();

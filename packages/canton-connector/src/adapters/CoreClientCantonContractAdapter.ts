@@ -1,5 +1,6 @@
 import { ContractParamsProvider } from "@redstone-finance/sdk";
 import { CantonClient } from "../CantonClient";
+import { convertDecimalValue } from "../conversions";
 import { ActiveContractData, DamlTuple2 } from "../utils";
 import { CoreCantonContractAdapter } from "./CoreCantonContractAdapter";
 import {
@@ -39,11 +40,12 @@ export class CoreClientCantonContractAdapter extends CoreCantonContractAdapter {
         adapterCid: this.coreActiveContractData.contractId,
         featuredCid: this.featuredActiveContractData.contractId,
       },
+      undefined,
       true,
       this.client,
       [this.featuredActiveContractData, this.coreActiveContractData]
     );
 
-    return result._1.map(CoreCantonContractAdapter.convertDecimalValue);
+    return result._1.map(convertDecimalValue);
   }
 }
