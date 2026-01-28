@@ -1,0 +1,32 @@
+module MockFeatured where
+
+import Splice.Api.FeaturedAppRightV1
+
+template MockFeaturedAppActivityMarker
+  with
+    dso : Party
+    provider : Party
+    beneficiary : Party
+  where
+    signatory dso
+    observer provider, beneficiary
+    
+    interface instance FeaturedAppActivityMarker for MockFeaturedAppActivityMarker where
+      view = FeaturedAppActivityMarkerView with provider, beneficiary, dso, weight = 1.0
+
+template MockFeaturedAppRight
+  with
+    dso : Party
+    provider : Party
+  where
+    signatory dso
+    observer provider
+    
+    interface instance FeaturedAppRight for MockFeaturedAppRight where
+      view = FeaturedAppRightView with provider, dso
+
+      featuredAppRight_CreateActivityMarkerImpl self arg = do
+        cids <- forA arg.beneficiaries \b -> do
+          cid <- create MockFeaturedAppActivityMarker with dso, provider, beneficiary = b.beneficiary
+          pure (toInterfaceContractId @FeaturedAppActivityMarker cid)
+        pure FeaturedAppRight_CreateActivityMarkerResult with activityMarkerCids = cids

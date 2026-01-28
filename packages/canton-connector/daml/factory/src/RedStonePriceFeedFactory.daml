@@ -1,0 +1,38 @@
+module RedStonePriceFeedFactory where
+
+import RedStone.Config
+import RedStone.GetPrices as G
+import Featured
+import IRedStoneCoreFeatured
+import IRedStoneCore
+import RedStoneTypes
+import RedStonePriceFeedEntry
+import DA.Foldable (forA_)
+
+template RedStonePriceFeedFactory
+  with
+    coreId: Text
+    owner : Party
+    viewers : [Party]
+    beneficiary : Party
+  where
+    signatory owner, beneficiary
+    observer viewers
+
+    interface instance IRedStoneCoreFeatured for RedStonePriceFeedFactory where
+      view = RedStoneCoreView with viewers, coreId
+
+      getPricesFeatured featuredCid feedIds currentTime payloadHex = do
+        let config = redstonePrimaryProdDefaultConfig feedIds currentTime
+        (values, timestamp) <- G.getPricesNumeric config payloadHex
+        let pairs = zip feedIds values
+
+        forA_ pairs \(feedId, value) ->
+          Featured.takeReward beneficiary featuredCid *>
+          create RedStonePriceFeedEntry with
+            owner
+            viewers
+            feedId
+            priceData = RedStonePriceData with value, timestamp, writeTimestamp = config.currentTimestamp
+
+        pure (values, timestamp)
