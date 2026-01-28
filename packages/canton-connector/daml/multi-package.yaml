@@ -7,3 +7,4 @@ packages:
   - ./price_feed
   - ./test
   - ./featured
+  - ./factory

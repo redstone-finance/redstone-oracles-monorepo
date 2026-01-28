@@ -1,0 +1,89 @@
+module Factory where
+
+import Daml.Script
+import DA.Assert
+import DA.Map as M
+import DA.Optional(fromSome)
+import DA.Foldable(forA_)
+import IRedStoneCoreFeatured
+import Input
+import MockFeatured
+import Splice.Api.FeaturedAppRightV1
+import RedStoneCoreFeaturedClient
+import RedStonePriceFeedFactory
+import IRedStonePriceFeedEntry
+
+main : Input -> Script ()
+main input = script do
+  dso <- allocateParty "DSO"
+  owner <- allocateParty "RedStoneOracleOwner"
+  viewer <- allocateParty "RedStoneOracleViewer"
+  beneficiary <- allocateParty "RedStoneBeneficiary"
+  client <- allocateParty "Client"
+
+  currentTime <- getTime
+
+  let verifier = verifyResult input.feedIds (beneficiary,dso,viewer)
+
+  featuredCid <- submit dso do
+    createCmd MockFeaturedAppRight with dso, provider = owner
+
+  coreCid <- submitMulti [owner, beneficiary] [] do
+    createCmd RedStonePriceFeedFactory with
+      coreId = "RedStoneCore-123"
+      owner
+      viewers = [viewer]
+      beneficiary
+
+  featuredDisclosure <- queryDisclosure @MockFeaturedAppRight owner featuredCid
+  coreDisclosure <- queryDisclosure @RedStonePriceFeedFactory owner coreCid
+
+  result <- submitWithDisclosures viewer [fromSome featuredDisclosure] do
+    exerciseCmd (toInterfaceContractId @IRedStoneCoreFeatured coreCid) GetPricesFeatured with
+      payloadHex = input.payload
+      feedIds = input.feedIds
+      currentTime
+      caller = viewer
+      featuredCid = toInterfaceContractId @FeaturedAppRight featuredCid
+
+  debug $ "Processed result: " <> show result
+
+  verifier 1 result
+
+  coreClientCid <- submit owner do
+    createCmd RedStoneCoreFeaturedClient with
+      owner = owner
+      viewers = [client]
+
+  currentTime <- getTime
+
+  result <- submitWithDisclosures client [fromSome featuredDisclosure, fromSome coreDisclosure] do
+    exerciseCmd coreClientCid GetPricesDisclosed with
+      payloadHex = input.payload
+      feedIds = input.feedIds
+      currentTime
+      adapterCid = (toInterfaceContractId @IRedStoneCoreFeatured coreCid)
+      featuredCid = toInterfaceContractId @FeaturedAppRight featuredCid
+      caller = client
+
+  debug $ "Client result: " <> show result
+
+  verifier 2 result
+
+
+verifyResult feedIds (beneficiary,dso,viewer) multiplier result = do
+  markers <- queryInterface @FeaturedAppActivityMarker beneficiary
+  debug markers
+
+  length markers === multiplier * (length feedIds)
+
+  priceFeedEntries <- queryInterface @IRedStonePriceFeedEntry viewer
+  debug priceFeedEntries
+
+  length priceFeedEntries === multiplier * length feedIds
+
+  let entryMap = M.fromList [ (view.feedId, view) | (_, Some view) <- priceFeedEntries ]
+
+  forA_ (zip feedIds $ fst result) \(feedId, expectedValue) -> do
+    let entry = fromSome $ M.lookup feedId entryMap
+    entry.priceData.value === expectedValue

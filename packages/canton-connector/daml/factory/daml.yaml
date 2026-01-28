@@ -1,19 +1,14 @@
 sdk-version: 3.4.9
-name: redstone-test-v7
+name: redstone-factory-v1
 version: 0.4.3
 source: src
 dependencies:
   - daml-prim
   - daml-stdlib
-  - daml-script
 data-dependencies:
-  - ../interface/.daml/dist/redstone-interface-v7-0.4.3.dar
-  - ../core/.daml/dist/redstone-core-v1-0.4.3.dar
-  - ../adapter/.daml/dist/redstone-adapter-v7-0.4.3.dar
-  - ../price_feed/.daml/dist/redstone-price-feed-v7-0.4.3.dar
   - ../sdk/.daml/dist/redstone-sdk-v7-0.4.3.dar
+  - ../interface/.daml/dist/redstone-interface-v7-0.4.3.dar
+  - ../price_feed/.daml/dist/redstone-price-feed-v7-0.4.3.dar
   - ../featured/.daml/dist/redstone-featured-v1-0.4.3.dar
-  - ../factory/.daml/dist/redstone-factory-v1-0.4.3.dar
-  - ../featured/dars/splice-api-featured-app-v1-1.0.0.dar
 build-options:
   - --target=2.1
