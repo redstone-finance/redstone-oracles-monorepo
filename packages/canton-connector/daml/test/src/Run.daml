@@ -15,7 +15,7 @@ main input = script do
   let viewer = input.viewer
 
   currentTime <- getTime
-  adapterCid <- findOneAdapter "RedStoneAdapter-456" updater
+  adapterCid <- findOneAdapter "RedStoneAdapter-043b" updater
 
   values <- submit viewer do
     exerciseCmd adapterCid GetPrices with
@@ -30,13 +30,13 @@ main input = script do
       feedIds = input.feedIds
       currentTime
 
-  adapterCid <- findOneAdapter "RedStoneAdapter-456" viewer
+  adapterCid <- findOneAdapter "RedStoneAdapter-043b" viewer
 
   readResult <- submit viewer do
     exerciseCmd adapterCid ReadPriceData with
       feedIds = input.feedIds
 
-  feedCid <- findOnePriceFeed "RedStoneAdapter-456" (head input.feedIds) viewer
+  feedCid <- findOnePriceFeed "RedStoneAdapter-043b" (head input.feedIds) viewer
 
   feedResult <- submit viewer do
     exerciseCmd feedCid ReadData with

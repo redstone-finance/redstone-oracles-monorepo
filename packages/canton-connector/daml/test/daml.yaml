@@ -12,5 +12,8 @@ data-dependencies:
   - ../adapter/.daml/dist/redstone-adapter-v7-0.4.3.dar
   - ../price_feed/.daml/dist/redstone-price-feed-v7-0.4.3.dar
   - ../sdk/.daml/dist/redstone-sdk-v7-0.4.3.dar
+  - ../featured/.daml/dist/redstone-featured-v1-0.4.3.dar
+  - ../factory/.daml/dist/redstone-factory-v1-0.4.3.dar
+  - ../featured/dars/splice-api-featured-app-v1-1.0.0.dar
 build-options:
   - --target=2.1

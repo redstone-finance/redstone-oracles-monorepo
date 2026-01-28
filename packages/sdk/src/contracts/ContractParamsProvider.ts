@@ -61,14 +61,14 @@ export class ContractParamsProvider {
     return _.chunk(feedIds, batchSize).map((feedIds) => this.copyForFeedIds(feedIds));
   }
 
+  static hexlifyFeedId(feedId: string, allowMissingPrefix?: boolean, padRightSize?: number) {
+    const hex = hexlify(toUtf8Bytes(feedId), { allowMissingPrefix });
+
+    return padRightSize ? hex.padEnd(padRightSize * 2 + (hex.startsWith("0x") ? 2 : 0), "0") : hex;
+  }
+
   static hexlifyFeedIds(feedIds: string[], allowMissingPrefix?: boolean, padRightSize?: number) {
-    return feedIds
-      .map((feed) => hexlify(toUtf8Bytes(feed), { allowMissingPrefix }))
-      .map((value) =>
-        padRightSize
-          ? value.padEnd(padRightSize * 2 + (value.startsWith("0x") ? 2 : 0), "0")
-          : value
-      );
+    return feedIds.map((feedId) => this.hexlifyFeedId(feedId, allowMissingPrefix, padRightSize));
   }
 
   static unhexlifyFeedId(hexlifiedFeedId: BytesLike) {

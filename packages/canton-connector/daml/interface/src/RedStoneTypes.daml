@@ -10,4 +10,4 @@ data RedStonePriceData a = RedStonePriceData
     value: a
     timestamp: Int
     writeTimestamp: Int
-  deriving (Eq, Show)
+  deriving (Eq, Show, Ord)
