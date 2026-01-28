@@ -83,6 +83,7 @@ typings/
 .nuxt
 dist
 lambda-dist
+meta.json
 
 # Gatsby files
 .cache/
