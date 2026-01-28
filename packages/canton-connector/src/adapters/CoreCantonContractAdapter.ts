@@ -1,12 +1,11 @@
 import { ContractParamsProvider } from "@redstone-finance/sdk";
-import Decimal from "decimal.js";
-import { CantonClient } from "../CantonClient";
+import { CantonClient, ContractFilter } from "../CantonClient";
+import { convertDecimalValue } from "../conversions";
 import { DamlTuple2 } from "../utils";
-import { CantonContractAdapter, ContractFilter } from "./CantonContractAdapter";
+import { CantonContractAdapter } from "./CantonContractAdapter";
 
 export const ICORE_TEMPLATE_NAME = `IRedStoneCore:IRedStoneCore`;
 const GET_PRICES_CHOICE = "GetPrices";
-const REDSTONE_DECIMALS = 8;
 
 export class CoreCantonContractAdapter extends CantonContractAdapter {
   constructor(
@@ -27,16 +26,11 @@ export class CoreCantonContractAdapter extends CantonContractAdapter {
     const result: DamlTuple2<string[]> = await this.exerciseChoice(
       GET_PRICES_CHOICE,
       await CoreCantonContractAdapter.getPayloadArguments(paramsProvider),
+      undefined,
       true
     );
 
-    return result._1.map(CoreCantonContractAdapter.convertDecimalValue);
-  }
-
-  protected static convertDecimalValue(value: string) {
-    const decimal = new Decimal(value).mul(10 ** REDSTONE_DECIMALS);
-
-    return BigInt(decimal.toFixed());
+    return result._1.map(convertDecimalValue);
   }
 
   protected static async getPayloadArguments(paramsProvider: ContractParamsProvider) {

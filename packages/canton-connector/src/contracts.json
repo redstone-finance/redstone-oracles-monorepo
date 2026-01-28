@@ -21,8 +21,8 @@
     }
   },
   "devnet": {
-    "interfaceId": "b8cfef679a969db246c98c0c4617dac4dda10f549265da716e7617b829910868",
-    "featuredInterfaceId": "18ef26f869efaceec01d8bded8f49860152d57b63225bf76cd499a9c6f9936c4",
+    "interfaceId": "c99bcd97dbf78f566a6fefcb5de2604873a2bcb491b290461e41c0cdd07fad38",
+    "featuredInterfaceId": "8f18f0f795173ba619465232d714ecafec3918f04e110c0cea93f38958837bc0",
     "core": {
       "contractId": "00a0e4955b27b747c6575390aaae0d2bb71d1857cd40639b3848810a179c186369ca121220e16c48874edc84e340dfd900507821caace9d08964b41e9e22c0ff8eff55deda",
       "templateId": "5d8990850bce0f029bf976138fdbea4f8bfda2167be213581ffbe36643dba5b1:RedStoneCore:RedStoneCore",

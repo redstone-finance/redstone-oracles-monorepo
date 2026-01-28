@@ -1,0 +1,18 @@
+module RedStonePriceFeedEntry where
+
+import IRedStonePriceFeedEntry
+import RedStoneTypes
+
+
+template RedStonePriceFeedEntry
+  with
+    owner : Party
+    viewers : [Party]
+    feedId : RedStoneFeedId
+    priceData : RedStonePriceData RedStoneValue
+  where
+    signatory owner
+    observer viewers
+
+    interface instance IRedStonePriceFeedEntry for RedStonePriceFeedEntry where
+      view = RedStonePriceFeedEntryView with viewers, feedId, priceData

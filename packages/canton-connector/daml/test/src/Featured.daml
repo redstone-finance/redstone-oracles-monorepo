@@ -1,0 +1,63 @@
+module Featured where
+
+import Daml.Script
+import DA.Optional(fromSome)
+import IRedStoneCoreFeatured
+import Input
+import MockFeatured
+import Splice.Api.FeaturedAppRightV1
+import RedStoneCoreFeaturedClient
+import RedStoneCoreFeatured
+
+main : Input -> Script ()
+main input = script do
+  dso <- allocateParty "DSO"
+  owner <- allocateParty "RedStoneOracleOwner"
+  viewer <- allocateParty "RedStoneOracleViewer"
+  beneficiary <- allocateParty "RedStoneBeneficiary"
+  client <- allocateParty "Client"
+
+  currentTime <- getTime
+
+  featuredCid <- submit dso do
+    createCmd MockFeaturedAppRight with dso, provider = owner
+
+  coreCid <- submitMulti [owner, beneficiary] [] do
+    createCmd RedStoneCoreFeatured with
+      coreId = "RedStoneCore-123"
+      owner
+      viewers = [viewer]
+      beneficiary
+
+  featuredDisclosure <- queryDisclosure @MockFeaturedAppRight owner featuredCid
+  coreDisclosure <- queryDisclosure @RedStoneCoreFeatured owner coreCid
+
+  result <- submitWithDisclosures viewer [fromSome featuredDisclosure] do
+    exerciseCmd (toInterfaceContractId @IRedStoneCoreFeatured coreCid) GetPricesFeatured with
+      payloadHex = input.payload
+      feedIds = input.feedIds
+      currentTime
+      caller = viewer
+      featuredCid = toInterfaceContractId @FeaturedAppRight featuredCid
+
+  debug $ "Processed result: " <> show result
+
+  coreClientCid <- submit owner do
+    createCmd RedStoneCoreFeaturedClient with
+      owner = owner
+      viewers = [client]
+
+  currentTime <- getTime
+
+  result <- submitWithDisclosures client [fromSome featuredDisclosure, fromSome coreDisclosure] do
+    exerciseCmd coreClientCid GetPricesDisclosed with
+      payloadHex = input.payload
+      feedIds = input.feedIds
+      currentTime
+      adapterCid = (toInterfaceContractId @IRedStoneCoreFeatured coreCid)
+      featuredCid = toInterfaceContractId @FeaturedAppRight featuredCid
+      caller = client
+
+  debug $ "Client result: " <> show result
+
+  pure ()
