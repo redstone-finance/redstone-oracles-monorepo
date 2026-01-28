@@ -6,9 +6,9 @@ import {
 } from "@redstone-finance/sdk";
 import { RedstoneCommon } from "@redstone-finance/utils";
 import _ from "lodash";
-import { CantonClient } from "../CantonClient";
+import { CantonClient, ContractFilter } from "../CantonClient";
+import { convertDecimalValue, getArrayifiedFeedId } from "../conversions";
 import { ActiveContractData } from "../utils";
-import { ContractFilter } from "./CantonContractAdapter";
 import { CoreCantonContractAdapter } from "./CoreCantonContractAdapter";
 
 export const IADAPTER_TEMPLATE_NAME = `IRedStoneAdapter:IRedStoneAdapter`;
@@ -40,10 +40,11 @@ export class PricesCantonContractAdapter
     return Promise.resolve(this.updateClient.partyId);
   }
 
-  async getUniqueSignerThreshold() {
+  async getUniqueSignerThreshold(offset?: number) {
     const result: number | undefined = await this.exerciseChoice(
       GET_UNIQUE_SIGNER_THRESHOLD_CHOICE,
-      {}
+      {},
+      offset
     );
 
     if (result === undefined) {
@@ -53,25 +54,27 @@ export class PricesCantonContractAdapter
     return result;
   }
 
-  async readLatestUpdateBlockTimestamp(feedId: string) {
-    const contractData = await this.readContractData([feedId]);
+  async readLatestUpdateBlockTimestamp(feedId: string, offset?: number) {
+    const contractData = await this.readContractData([feedId], offset);
 
     return contractData[feedId].lastBlockTimestampMS;
   }
 
-  async readTimestampFromContract(feedId: string) {
-    const contractData = await this.readContractData([feedId]);
+  async readTimestampFromContract(feedId: string, offset?: number) {
+    const contractData = await this.readContractData([feedId], offset);
 
     return contractData[feedId].lastDataPackageTimestampMS;
   }
 
-  async readContractData(feedIds: string[]) {
+  async readContractData(feedIds: string[], offset?: number) {
     const result: ({ value: string; timestamp: string; writeTimestamp: string } | undefined)[] =
-      await this.exerciseChoice(READ_PRICE_DATA_CHOICE, {
-        feedIds: ContractParamsProvider.hexlifyFeedIds(feedIds).map(
-          ContractParamsProvider.arrayifyFeedId
-        ),
-      });
+      await this.exerciseChoice(
+        READ_PRICE_DATA_CHOICE,
+        {
+          feedIds: feedIds.map(getArrayifiedFeedId),
+        },
+        offset
+      );
 
     const data = _.zip(feedIds, result).map(([feedId, r]) => [
       feedId!,
@@ -79,7 +82,7 @@ export class PricesCantonContractAdapter
         ? ({
             lastDataPackageTimestampMS: Number(r.timestamp),
             lastBlockTimestampMS: Number(r.writeTimestamp),
-            lastValue: CoreCantonContractAdapter.convertDecimalValue(r.value),
+            lastValue: convertDecimalValue(r.value),
           } as LastRoundDetails)
         : undefined,
     ]);
@@ -87,18 +90,26 @@ export class PricesCantonContractAdapter
     return Object.fromEntries(data) as ContractData;
   }
 
-  async readPricesFromContract(paramsProvider: ContractParamsProvider): Promise<bigint[]> {
-    const result: string[] = await this.exerciseChoice(READ_PRICES_CHOICE, {
-      feedIds: paramsProvider.getArrayifiedFeedIds(),
-    });
+  async readPricesFromContract(
+    paramsProvider: ContractParamsProvider,
+    offset?: number
+  ): Promise<bigint[]> {
+    const result: string[] = await this.exerciseChoice(
+      READ_PRICES_CHOICE,
+      {
+        feedIds: paramsProvider.getArrayifiedFeedIds(),
+      },
+      offset
+    );
 
-    return result.map(CoreCantonContractAdapter.convertDecimalValue);
+    return result.map(convertDecimalValue);
   }
 
   async writePricesFromPayloadToContract(paramsProvider: ContractParamsProvider): Promise<string> {
     const result: ActiveContractData = await this.exerciseChoice(
       WRITE_PRICES_CHOICE,
       await CoreCantonContractAdapter.getPayloadArguments(paramsProvider),
+      undefined,
       true,
       this.updateClient
     );

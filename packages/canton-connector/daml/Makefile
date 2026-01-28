@@ -35,7 +35,7 @@ clean:
 	$(DAML) clean --all
 	rm -f $(ADAPTER_ID_TXT) $(PRICE_FEED_ID_TXT) $(CORE_ID_TXT) refresh_token.txt token.txt test/input.json test/sample_data/payload.hex
 
-lint: lint-sdk lint-core lint-adapter lint-price_feed lint-interface lint-test
+lint: lint-sdk lint-core lint-adapter lint-price_feed lint-interface lint-test lint-featured lint-factory
 	./lint-whitespaces.sh
 
 build: build_test
@@ -45,7 +45,7 @@ lint-%:
 
 run_main: run-Main
 
-run_test: build_test lint-test run-Test run-Core
+run_test: build_test lint-test run-Test run-Core run-Featured run-Factory
 
 test-%: build_redstone_adapter build_redstone_core build_test
 	cd test && $(DAML) script --ide-ledger \
@@ -72,14 +72,14 @@ start_daemon:
 	make start & \
 	sleep 20
 
-ledger_deploy: build_redstone_adapter build_redstone_core ledger-Deploy
+ledger_deploy: build ledger-Deploy
 
 ledger_tests: allocate_parties get_party_suffix ledger_deploy run_ledger
 
 archive: ledger-Archive
 
 allocate_parties:
-	@$(DAML) ledger allocate-parties RedStoneOracleOwner RedStoneOracleUpdater RedStoneOracleViewer \
+	@$(DAML) ledger allocate-parties RedStoneOracleOwner RedStoneOracleUpdater RedStoneOracleViewer Client Beneficiary \
 	--host $(LEDGER_HOST) \
 	--port $(LEDGER_PORT)
 
