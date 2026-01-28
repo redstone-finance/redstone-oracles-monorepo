@@ -10690,6 +10690,7 @@ __metadata:
     "@msgpack/msgpack": "npm:^3.1.2"
     "@redstone-finance/http-client": "workspace:*"
     "@redstone-finance/utils": "workspace:*"
+    decimal.js: "npm:^10.4.3"
     ethers: "npm:^5.7.2"
     zod: "npm:^4.1.12"
   languageName: unknown
