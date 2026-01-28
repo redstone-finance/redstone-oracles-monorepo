@@ -1,0 +1,38 @@
+module IRedStonePriceFeedEntry where
+
+import RedStoneTypes
+
+interface IRedStonePriceFeedEntry where
+  viewtype RedStonePriceFeedEntryView
+
+  nonconsuming choice ReadData : (RedStonePriceData RedStoneValue)
+    controller (view this).viewers
+    do
+      pure (view this).priceData
+
+  nonconsuming choice ReadPrice : RedStoneValue
+    controller (view this).viewers
+    do
+      pure (view this).priceData.value
+
+  nonconsuming choice ReadTimestamp : Int
+    controller (view this).viewers
+    do
+      pure (view this).priceData.timestamp
+
+  nonconsuming choice ReadFeedId : RedStoneFeedId
+    controller (view this).viewers
+    do
+      pure (view this).feedId
+
+  nonconsuming choice ReadDescription : Text
+    controller (view this).viewers
+    do
+      pure $ "RedStone Price Feed Entry " <> (show (view this).feedId) <> " " <> (show (view this).priceData.timestamp)
+
+data RedStonePriceFeedEntryView = RedStonePriceFeedEntryView
+  with
+    viewers : [Party]
+    feedId : RedStoneFeedId
+    priceData : RedStonePriceData RedStoneValue
+  deriving (Eq, Show, Ord)
