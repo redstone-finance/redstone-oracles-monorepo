@@ -26,7 +26,6 @@
         "coinbase-usd",
         "gate-usdt",
         "htx-usdt",
-        "kaiko-v2",
         "kraken-eur",
         "kraken-usd",
         "kraken-usdc",
@@ -58,7 +57,6 @@
         "coinbase-usd",
         "gate-usdt",
         "htx-usdt",
-        "kaiko-v2",
         "kraken-usd",
         "kraken-usdc",
         "kraken-usdt",
@@ -278,14 +276,7 @@
       "rateFeed": false
     },
     "MATIC": {
-      "source": [
-        "binance-usdt",
-        "coinbase-usd",
-        "kraken-usd",
-        "kucoin-usdt",
-        "lbank-usdt",
-        "okx-usdt"
-      ],
+      "source": ["binance-usdt", "kraken-usd", "kucoin-usdt", "lbank-usdt", "okx-usdt"],
       "denomination": "USD",
       "rateFeed": false
     },
@@ -376,7 +367,6 @@
         "bitmart-usdt",
         "bitrue-usdt",
         "gate-usdt",
-        "kaiko-v2",
         "kraken-usd",
         "kucoin-usdt",
         "lbank-usdt",
@@ -431,7 +421,6 @@
         "bitstamp-usd",
         "coinbase-usd",
         "gate-usdt",
-        "kaiko-v2",
         "kraken-eur",
         "kraken-usd",
         "kucoin-usdt",
@@ -634,14 +623,7 @@
       "rateFeed": false
     },
     "EOS": {
-      "source": [
-        "binance-usdt",
-        "coinbase-usd",
-        "kraken-usd",
-        "kucoin-usdt",
-        "lbank-usdt",
-        "okx-usdt"
-      ],
+      "source": ["binance-usdt", "kraken-usd", "kucoin-usdt", "lbank-usdt", "okx-usdt"],
       "denomination": "USD",
       "rateFeed": false
     },
@@ -652,7 +634,6 @@
         "bitget-usdt",
         "bitmart-usdt",
         "coinbase-usd",
-        "kaiko-v2",
         "kraken-usd",
         "kucoin-usdt",
         "lbank-usdt",
@@ -1908,7 +1889,6 @@
         "binance-usdc",
         "binance-usdt",
         "bitstamp-usd",
-        "kaiko-v2",
         "kraken-usd",
         "mexc-usdt",
         "coinbase-btc-reversed",
