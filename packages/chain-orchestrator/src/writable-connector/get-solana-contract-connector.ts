@@ -1,3 +1,4 @@
+import { BackwardCompatibleConnector } from "@redstone-finance/multichain-kit";
 import {
   createSolanaConfig,
   makeKeypair,
@@ -31,5 +32,12 @@ export const getSolanaContractConnector = (relayerConfig: PartialRelayerConfig) 
     .withQuarantineEnabled()
     .build();
 
-  return new SolanaContractConnector(connection, adapterContractAddress, keypair, solanaConfig);
+  const fullConnector = new SolanaContractConnector(
+    connection,
+    adapterContractAddress,
+    keypair,
+    solanaConfig
+  );
+
+  return new BackwardCompatibleConnector(fullConnector);
 };
