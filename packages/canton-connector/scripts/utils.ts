@@ -3,7 +3,13 @@ import "dotenv/config";
 import { readFile } from "node:fs/promises";
 import path from "node:path";
 import { z } from "zod";
-import { CantonNetwork, CantonNetworks, keycloakTokenProvider } from "../src";
+import {
+  CantonClientBuilder,
+  CantonNetwork,
+  CantonNetworks,
+  keycloakTokenProvider,
+  networkToChainId,
+} from "../src";
 
 const TOKEN_PROVIDER_TYPE = z.enum(["keycloak", "file", "none"]);
 
@@ -13,10 +19,6 @@ export function readParticipantUrl() {
 
 export function readNetwork(): CantonNetwork {
   return RedstoneCommon.getFromEnv("NETWORK", z.enum(CantonNetworks).default("devnet"));
-}
-
-export function readUserId() {
-  return RedstoneCommon.getFromEnv("USER_ID", z.string().optional());
 }
 
 export function readPartySuffix() {
@@ -52,4 +54,13 @@ export async function fileTokenProvider(
   filePath = path.join(__dirname, "..", "daml", "token.txt")
 ) {
   return (await readFile(filePath, "utf-8")).trim();
+}
+
+export function makeDefaultClient(partyName: string) {
+  return new CantonClientBuilder()
+    .withChainId(networkToChainId(readNetwork()))
+    .withTokenProvider(getTokenProvider())
+    .withRpcUrl(getJsonApiUrl())
+    .withPartyId(`${partyName}::${readPartySuffix()}`)
+    .build();
 }
