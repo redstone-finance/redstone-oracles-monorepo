@@ -209,3 +209,11 @@ export function findFirst<T, E>() {
 export function findFirstAsync<T, E>() {
   return async (fns: Iterable<() => Promise<Result<T, E>>>) => await findFirstAsyncApply(fns);
 }
+
+export function collectAll<R, E>(results: Result<R, E>[]) {
+  const error = results.find(isErr);
+  if (error) {
+    return error;
+  }
+  return ok(results.map(unwrapSuccess));
+}
