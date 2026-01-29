@@ -9,6 +9,6 @@ export * from "./adapters/PricesCantonContractConnector";
 export * from "./CantonClient";
 export * from "./CantonClientBuilder";
 export * from "./CantonNetwork";
-export { keycloakTokenProvider } from "./keycloak-token-provider";
+export * from "./keycloak-token-provider";
 export * from "./KeycloakTokenProviderParams";
 export * from "./utils";
