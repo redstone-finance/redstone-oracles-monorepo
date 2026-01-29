@@ -107,7 +107,16 @@ export function parseBigIntFromSimulation(sim: rpc.Api.SimulateTransactionSucces
 
 export function parsePriceDataFromContractData(result: rpc.Api.LedgerEntryResult) {
   const map = expectValue(result.val.contractData().val().map(), "contract data as map");
+
   return lastRoundDetailsFromXdrMap(map);
+}
+
+export function maybeParsePriceDataFromContractData(result: rpc.Api.LedgerEntryResult) {
+  try {
+    return parsePriceDataFromContractData(result);
+  } catch {
+    return undefined;
+  }
 }
 
 export function lastRoundDetailsFromXdrMap(map: xdr.ScMapEntry[]) {

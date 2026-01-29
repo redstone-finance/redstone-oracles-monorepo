@@ -99,30 +99,12 @@ export class PriceAdapterStellarContractAdapter
   private async getContractData(
     feedIds: string[]
   ): Promise<[string, LastRoundDetails | undefined][]> {
-    const promises = feedIds.map(async (feedId) => {
-      const key = XdrUtils.stringToScVal(feedId);
-      const settledResult = this.client.getContractData(
-        this.contract,
-        key,
-        XdrUtils.parsePriceDataFromContractData
-      );
+    const data = await this.client.getContractEntries(
+      this.contract,
+      feedIds.map(XdrUtils.stringToScVal)
+    );
 
-      return await settledResult;
-    });
-
-    const results = _.zip(feedIds, await Promise.allSettled(promises)) as unknown as [
-      string,
-      PromiseSettledResult<LastRoundDetails>,
-    ][];
-
-    return results.map(([feedId, settledResult]) => {
-      switch (settledResult.status) {
-        case "fulfilled":
-          return [feedId, settledResult.value];
-        case "rejected":
-          return [feedId, undefined];
-      }
-    });
+    return _.zip(feedIds, data) as [string, LastRoundDetails | undefined][];
   }
 
   async prepareCallArgs(paramsProvider: ContractParamsProvider, metadataTimestamp = Date.now()) {
