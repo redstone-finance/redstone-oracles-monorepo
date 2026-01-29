@@ -29,6 +29,19 @@
         "timeSinceLastUpdateInMilliseconds": 86400000
       }
     },
-    "USDm": {}
+    "USDm": {},
+    "TRY": {},
+    "LBTC_FUNDAMENTAL": {
+      "updateTriggersOverrides": {
+        "deviationPercentage": 0.25,
+        "timeSinceLastUpdateInMilliseconds": 43200000
+      }
+    },
+    "BTC.b_FUNDAMENTAL": {
+      "updateTriggersOverrides": {
+        "deviationPercentage": 0.25,
+        "timeSinceLastUpdateInMilliseconds": 43200000
+      }
+    }
   }
 }
