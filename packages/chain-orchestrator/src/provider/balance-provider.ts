@@ -6,17 +6,14 @@ import { getNonEvmBlockchainService } from "../blockchain-service/get-non-evm-bl
 import { getProviderMemoized, getProviderWithRpcUrls } from "./get-provider";
 
 export interface BalanceProvider {
-  getBalance(addressOrName: string, blockTag?: number): Promise<BigNumber>;
+  getBalance(addressOrName: string, blockTag?: number): Promise<BigNumber | bigint>;
   getBlockNumber(): Promise<number>;
 }
 
 const SINGLE_RPC_TIMEOUT_MILLISECONDS = 10_000;
 const ALL_RPC_TIMEOUT_MILLISECONDS = 40_000;
 
-export const getBalanceProvider = async (
-  networkId: NetworkId,
-  env: Env
-): Promise<BalanceProvider | undefined> => {
+export const getBalanceProvider = async (networkId: NetworkId, env: Env) => {
   if (isNonEvmNetworkId(networkId)) {
     const rpcUrls = await fetchParsedRpcUrlsFromSsmByNetworkId(networkId, env, "main");
     return await getBalanceProviderWithRpcUrls(networkId, rpcUrls);
@@ -25,10 +22,7 @@ export const getBalanceProvider = async (
   }
 };
 
-export async function getBalanceProviderWithRpcUrls(
-  networkId: NetworkId,
-  rpcUrls: string[]
-): Promise<BalanceProvider | undefined> {
+export async function getBalanceProviderWithRpcUrls(networkId: NetworkId, rpcUrls: string[]) {
   if (!rpcUrls.length) {
     return undefined;
   }

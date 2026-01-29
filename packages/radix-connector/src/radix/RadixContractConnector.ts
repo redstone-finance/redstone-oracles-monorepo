@@ -24,6 +24,10 @@ export class RadixContractConnector<Adapter> implements IContractConnector<Adapt
     return utils.parseEther(await this.client.getXRDBalance(address, blockNumber)).toBigInt();
   }
 
+  async getBalance(address: string) {
+    return await this.getNormalizedBalance(address);
+  }
+
   async transfer(toAddress: string, amount: number) {
     return await this.client.transfer(toAddress, amount);
   }

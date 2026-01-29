@@ -1,13 +1,13 @@
 import { StellarClient, StellarContractConnector } from "@redstone-finance/stellar-connector";
 import { Keypair, rpc } from "@stellar/stellar-sdk";
-import { NonEvmBlockchainService } from "./NonEvmBlockchainService";
+import { NonEvmBlockchainServiceWithTransfer } from "./NonEvmBlockchainService";
 
 export type EventWithTx = {
   event: rpc.Api.EventResponse;
   tx: rpc.Api.GetSuccessfulTransactionResponse | rpc.Api.GetFailedTransactionResponse;
 };
 
-export class StellarBlockchainService extends NonEvmBlockchainService {
+export class StellarBlockchainService extends NonEvmBlockchainServiceWithTransfer {
   constructor(
     private client: StellarClient,
     keypair?: Keypair
