@@ -70,6 +70,8 @@ export const minToMs = (min: number) => min * 60_000;
 
 export const hourToMs = (hours: number) => hours * 3_600_000;
 
+export const daysToMs = (days: number) => days * 86_400_000;
+
 export const msToHours = (ms: number) => ms / 3_600_000;
 
 export const msToDays = (ms: number) => ms / (3_600_000 * 24);
