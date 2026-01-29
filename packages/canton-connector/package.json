@@ -18,7 +18,7 @@
     "lint:fix": "yarn global:eslint --fix .",
     "run-sig-der": "yarn global:ts-node scripts/sig_der.ts",
     "sample-run": "yarn build:turbo && node dist/scripts/sample-run.js",
-    "core-client-sample": "yarn global:ts-node scripts/core-client-sample.ts",
+    "core-featured-client-sample": "yarn global:ts-node scripts/core-featured-client-sample.ts",
     "core-featured-sample": "yarn global:ts-node scripts/core-featured-sample.ts"
   },
   "dependencies": {

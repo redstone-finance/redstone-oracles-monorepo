@@ -3,31 +3,19 @@ import {
   getSignersForDataServiceId,
   sampleRun,
 } from "@redstone-finance/sdk";
-import { CantonClient } from "../src";
+import { CoreFactoryCantonContractConnector } from "../src";
 import { PriceFeedEntryCantonContractConnector } from "../src/adapters/PriceFeedEntryCantonContractConnector";
-import { PricesCantonContractConnector } from "../src/adapters/PricesCantonContractConnector";
-import { readPartySuffix } from "../src/utils";
-import { getJsonApiUrl, getTokenProvider, readNetwork, readUserId } from "./utils";
+import { makeDefaultClient } from "./utils";
 
-const VIEWER_PARTY_ID = `RedStoneOracleViewer`;
-const UPDATER_PARTY_ID = `RedStoneOracleUpdater`;
-const ADAPTER_ID = "RedStoneAdapter-043b";
+const VIEWER_PARTY_NAME = `RedStoneOracleViewer`;
+const UPDATER_PARTY_NAME = `RedStoneOracleUpdater`;
+const ADAPTER_ID =
+  "00b13a09ae311a09ee2a702411ec9d05e6324b9fa6866f1df46e37594c6817f087ca121220328283362ef44ccebad1401fe7d34c8db43fdb804bfb57e42a5c9757a6c807c4";
 
 async function main(adapterId = ADAPTER_ID) {
-  const tokenProvider = getTokenProvider();
+  const [client, _updateClient] = [VIEWER_PARTY_NAME, UPDATER_PARTY_NAME].map(makeDefaultClient);
 
-  const [client, updateClient] = [VIEWER_PARTY_ID, UPDATER_PARTY_ID].map(
-    (partyId) =>
-      new CantonClient(
-        `${partyId}::${readPartySuffix()}`,
-        getJsonApiUrl(),
-        tokenProvider,
-        readNetwork(),
-        readUserId()
-      )
-  );
-
-  const connector = new PricesCantonContractConnector(client, updateClient, adapterId);
+  const connector = new CoreFactoryCantonContractConnector(client, adapterId);
 
   const paramsProvider = new ContractParamsProvider({
     dataPackagesIds: ["ETH", "BTC"],

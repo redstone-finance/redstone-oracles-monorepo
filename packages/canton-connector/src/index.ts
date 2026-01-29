@@ -1,9 +1,14 @@
 export * from "./adapters/CantonContractAdapter";
 export * from "./adapters/CoreCantonContractAdapter";
-export * from "./adapters/CoreClientCantonContractAdapter";
 export * from "./adapters/CoreFeaturedCantonContractAdapter";
+export * from "./adapters/CoreFeaturedClientCantonContractAdapter";
+export * from "./adapters/FactoryCantonContractAdapter";
+export * from "./adapters/FactoryCantonContractConnector";
 export * from "./adapters/PricesCantonContractAdapter";
 export * from "./adapters/PricesCantonContractConnector";
 export * from "./CantonClient";
 export * from "./CantonClientBuilder";
+export * from "./CantonNetwork";
+export { keycloakTokenProvider } from "./keycloak-token-provider";
+export * from "./KeycloakTokenProviderParams";
 export * from "./utils";
