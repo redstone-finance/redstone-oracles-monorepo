@@ -406,6 +406,13 @@
         "deviationPercentage": 0.5,
         "timeSinceLastUpdateInMilliseconds": 43200000
       }
+    },
+    "STRC": {
+      "priceFeedAddress": "0x04Ef0593aEFBC9D6fA28fd386A8bE0E5eb34F70b",
+      "updateTriggersOverrides": {
+        "deviationPercentage": 0.1,
+        "timeSinceLastUpdateInMilliseconds": 86400000
+      }
     }
   }
 }
