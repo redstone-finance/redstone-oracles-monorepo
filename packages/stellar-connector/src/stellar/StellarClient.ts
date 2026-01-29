@@ -157,6 +157,34 @@ export class StellarClient {
     return transform(await this.server.getContractData(contract, key, durability));
   }
 
+  async getContractEntries(contract: string | Address | Contract, feeds: xdr.ScVal[]) {
+    let scAddress: xdr.ScAddress;
+
+    if (typeof contract === "string") {
+      scAddress = new Contract(contract).address().toScAddress();
+    } else if (contract instanceof Address) {
+      scAddress = contract.toScAddress();
+    } else if (contract instanceof Contract) {
+      scAddress = contract.address().toScAddress();
+    } else {
+      throw new Error("Unsupported contract type in getContractEntries");
+    }
+
+    const keys = feeds.map((feed) =>
+      xdr.LedgerKey.contractData(
+        new xdr.LedgerKeyContractData({
+          contract: scAddress,
+          key: feed,
+          durability: xdr.ContractDataDurability.persistent(),
+        })
+      )
+    );
+
+    return (await this.server.getLedgerEntries(...keys)).entries.map(
+      XdrUtils.maybeParsePriceDataFromContractData
+    );
+  }
+
   async sendTransaction(tx: Transaction) {
     return await this.server.sendTransaction(tx);
   }
