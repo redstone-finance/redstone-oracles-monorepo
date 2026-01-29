@@ -1,12 +1,10 @@
 include ./ops.mk
 
-VERSION=0.4.3
+VERSION=0.4.4
 SVER=v7
 LEDGER_HOST=localhost
 LEDGER_PORT=6865
 DAML=daml # dpm
-
-SDK_VERSION=3.4.9
 
 TEST_DAR=.daml/dist/redstone-test-$(SVER)-$(VERSION).dar
 
