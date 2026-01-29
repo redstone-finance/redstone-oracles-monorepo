@@ -1,6 +1,7 @@
 import {
   ContractParamsProvider,
   IPriceFeedContractAdapter,
+  LastRoundDetails,
   PriceAndTimestamp,
 } from "@redstone-finance/sdk";
 import _ from "lodash";
@@ -34,12 +35,21 @@ export class PriceFeedEntryCantonContractAdapter
   }
 
   async getPriceAndTimestamp(offset?: number): Promise<PriceAndTimestamp> {
-    const result: PriceData = await this.exerciseChoice(READ_DATA_CHOICE, {}, offset);
+    const result = await this.readData(offset);
 
     return {
-      value: convertDecimalValue(result.value),
-      timestamp: Number.parseInt(result.timestamp),
+      value: result.lastValue,
+      timestamp: result.lastDataPackageTimestampMS,
     };
+  }
+
+  async readData(offset?: number) {
+    const result: PriceData = await this.exerciseChoice(READ_DATA_CHOICE, {}, offset);
+    return {
+      lastDataPackageTimestampMS: Number.parseInt(result.timestamp),
+      lastBlockTimestampMS: Number.parseInt(result.writeTimestamp),
+      lastValue: convertDecimalValue(result.value),
+    } as LastRoundDetails;
   }
 
   decimals(_offset?: number) {
