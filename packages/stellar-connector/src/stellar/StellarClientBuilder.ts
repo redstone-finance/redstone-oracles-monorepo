@@ -34,7 +34,7 @@ export class StellarClientBuilder extends MultiExecutor.ClientBuilder<StellarCli
         sendTransaction: MultiExecutor.ExecutionMode.RACE,
         simulateOperation: MultiExecutor.ExecutionMode.AGREEMENT,
         getAccountBalance: MultiExecutor.ExecutionMode.AGREEMENT,
-        getContractData: MultiExecutor.ExecutionMode.AGREEMENT,
+        getContractEntries: MultiExecutor.ExecutionMode.MULTI_AGREEMENT,
         getTransaction: MultiExecutor.ExecutionMode.AGREEMENT,
         waitForTx: MultiExecutor.ExecutionMode.AGREEMENT,
         getInstanceTtl: MultiExecutor.ExecutionMode.AGREEMENT,
