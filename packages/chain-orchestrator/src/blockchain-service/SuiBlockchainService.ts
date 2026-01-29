@@ -2,7 +2,7 @@ import { SuiClient, SuiTransactionBlockResponseOptions } from "@mysten/sui/clien
 import { Keypair } from "@mysten/sui/cryptography";
 import { SuiContractConnector } from "@redstone-finance/sui-connector";
 import { RedstoneCommon } from "@redstone-finance/utils";
-import { NonEvmBlockchainService } from "./NonEvmBlockchainService";
+import { NonEvmBlockchainServiceWithTransfer } from "./NonEvmBlockchainService";
 
 const RETRY_CONFIG: Omit<RedstoneCommon.RetryConfig, "fn"> = {
   maxRetries: 6,
@@ -12,7 +12,7 @@ const RETRY_CONFIG: Omit<RedstoneCommon.RetryConfig, "fn"> = {
   },
 };
 
-export class SuiBlockchainService extends NonEvmBlockchainService {
+export class SuiBlockchainService extends NonEvmBlockchainServiceWithTransfer {
   constructor(
     private client: SuiClient,
     keypair?: Keypair

@@ -34,6 +34,10 @@ export class StellarContractConnector<Adapter> implements IContractConnector<Ada
     return balance * NORMALIZED_BALANCE_MULTIPLIER;
   }
 
+  async getBalance(address: string) {
+    return await this.getNormalizedBalance(address);
+  }
+
   async transfer(toAddress: string, amountInXlm: number) {
     if (!this.keypair) {
       throw new Error("Keypair is missing");

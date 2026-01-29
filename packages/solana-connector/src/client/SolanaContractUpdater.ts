@@ -53,6 +53,10 @@ export class SolanaContractUpdater implements ContractUpdater {
     return this.keypair.publicKey;
   }
 
+  public getKeypair() {
+    return this.keypair;
+  }
+
   async writePrices(paramsProvider: ContractParamsProvider) {
     return await this.txDeliveryMan.updateContract(this, paramsProvider);
   }

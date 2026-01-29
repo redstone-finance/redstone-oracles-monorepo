@@ -1,8 +1,8 @@
 import { MoveClient, MoveContractConnector } from "@redstone-finance/move-connector";
 import { loggerFactory, RedstoneCommon } from "@redstone-finance/utils";
-import { NonEvmBlockchainService } from "./NonEvmBlockchainService";
+import { NonEvmBlockchainServiceWithTransfer } from "./NonEvmBlockchainService";
 
-export class MoveBlockchainService extends NonEvmBlockchainService {
+export class MoveBlockchainService extends NonEvmBlockchainServiceWithTransfer {
   private readonly logger = loggerFactory("movement-blockchain-service");
 
   constructor(

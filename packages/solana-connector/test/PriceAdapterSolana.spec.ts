@@ -5,7 +5,7 @@ import {
   PriceAdapterContract,
   SolanaClient,
   SolanaContractUpdater,
-  SolanaPricesContractAdapter,
+  SolanaWriteContractAdapter,
 } from "../src";
 import { ConnectionStateScenario, LiteSVMConnection } from "./LiteSVMConnection";
 import { setUpEnv } from "./setup-env";
@@ -25,8 +25,9 @@ function getSolanaPricesContractAdapter(trusted: "trusted" | "untrusted") {
     client
   );
 
-  const priceAdapter = new SolanaPricesContractAdapter(
+  const writePriceAdapter = new SolanaWriteContractAdapter(
     contractAdapter,
+    client,
     new SolanaContractUpdater(
       client,
       {
@@ -41,7 +42,7 @@ function getSolanaPricesContractAdapter(trusted: "trusted" | "untrusted") {
   return {
     svm,
     connection,
-    priceAdapter,
+    priceAdapter: writePriceAdapter,
     state,
   };
 }

@@ -3,9 +3,9 @@ import {
   RadixContractConnector,
   TransactionStatusFilter,
 } from "@redstone-finance/radix-connector";
-import { NonEvmBlockchainService } from "./NonEvmBlockchainService";
+import { NonEvmBlockchainServiceWithTransfer } from "./NonEvmBlockchainService";
 
-export class RadixBlockchainService extends NonEvmBlockchainService {
+export class RadixBlockchainService extends NonEvmBlockchainServiceWithTransfer {
   constructor(private client: RadixClient) {
     super(new RadixContractConnector(client));
   }
