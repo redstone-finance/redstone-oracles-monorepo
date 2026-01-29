@@ -10858,7 +10858,6 @@ __metadata:
   resolution: "@redstone-finance/lambda-arweave-gateway@workspace:packages/lambda/lambda-arweave-gateway"
   dependencies:
     "@ardrive/turbo-sdk": "npm:^1.2.0"
-    "@aws-sdk/client-ssm": "npm:^3.696.0"
     "@irys/sdk": "npm:^0.2.0"
     "@redstone-finance/internal-utils": "workspace:*"
     "@redstone-finance/node-remote-config": "workspace:*"
@@ -10882,7 +10881,6 @@ __metadata:
     "@redstone-finance/sdk": "workspace:*"
     "@redstone-finance/utils": "workspace:*"
     "@types/cors": "npm:^2.8.12"
-    "@types/errorhandler": "npm:^1.5.0"
     "@types/express": "npm:^4.17.14"
     "@types/lodash": "npm:^4.14.195"
     "@types/supertest": "npm:^2.0.12"
@@ -10892,11 +10890,9 @@ __metadata:
     csv-file-to-json: "npm:^4.0.5"
     deep-sort-object: "npm:^1.0.2"
     dotenv: "npm:^16.0.3"
-    errorhandler: "npm:^1.5.1"
     express: "npm:^4.18.1"
     express-async-handler: "npm:^1.1.4"
     lodash: "npm:^4.17.23"
-    mongodb: "npm:^5.9.0"
     mongodb-memory-server: "npm:^9.1.6"
     mongoose: "npm:^7.6.3"
     sleep-promise: "npm:^9.1.0"
@@ -16090,15 +16086,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/errorhandler@npm:^1.5.0":
-  version: 1.5.3
-  resolution: "@types/errorhandler@npm:1.5.3"
-  dependencies:
-    "@types/express": "npm:*"
-  checksum: 10c0/0d021e3683205b95b3c8e3222bc5bac35b2d80e671f0c9114b3c5daf7d2f6d2913fc172ee759ae9525f119c3f61eb37f38b2a5553a33067a0453320ee5e0b600
-  languageName: node
-  linkType: hard
-
 "@types/eslint-scope@npm:^3.7.3":
   version: 3.7.4
   resolution: "@types/eslint-scope@npm:3.7.4"
@@ -16178,7 +16165,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/express@npm:*, @types/express@npm:^4.17.14":
+"@types/express@npm:^4.17.14":
   version: 4.17.17
   resolution: "@types/express@npm:4.17.17"
   dependencies:
@@ -18408,7 +18395,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"accepts@npm:^1.3.7, accepts@npm:~1.3.7, accepts@npm:~1.3.8":
+"accepts@npm:^1.3.7, accepts@npm:~1.3.8":
   version: 1.3.8
   resolution: "accepts@npm:1.3.8"
   dependencies:
@@ -23507,16 +23494,6 @@ __metadata:
   dependencies:
     is-arrayish: "npm:^0.2.1"
   checksum: 10c0/ba827f89369b4c93382cfca5a264d059dfefdaa56ecc5e338ffa58a6471f5ed93b71a20add1d52290a4873d92381174382658c885ac1a2305f7baca363ce9cce
-  languageName: node
-  linkType: hard
-
-"errorhandler@npm:^1.5.1":
-  version: 1.5.1
-  resolution: "errorhandler@npm:1.5.1"
-  dependencies:
-    accepts: "npm:~1.3.7"
-    escape-html: "npm:~1.0.3"
-  checksum: 10c0/58568c7eec3f4de5dc49e4385a50af66b76759b3463a86e4a85e05c4f7a5348f51d3d23af51c3a23eceef6278045d0a47d975da11bdaaf92d1d783dc677e980e
   languageName: node
   linkType: hard
 
