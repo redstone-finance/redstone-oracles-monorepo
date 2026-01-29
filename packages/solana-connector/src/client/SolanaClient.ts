@@ -1,11 +1,17 @@
 import { MultiExecutor, RedstoneCommon } from "@redstone-finance/utils";
 import {
   AccountInfo,
+  Commitment,
   ConfirmOptions,
   Connection,
   GetRecentPrioritizationFeesConfig,
+  Keypair,
+  LAMPORTS_PER_SOL,
   PublicKey,
+  sendAndConfirmTransaction,
   SendOptions,
+  SystemProgram,
+  Transaction,
   VersionedTransaction,
 } from "@solana/web3.js";
 import { SolanaConnectionBuilder } from "../SolanaConnectionBuilder";
@@ -93,6 +99,12 @@ export class SolanaClient {
     return response.blockhash;
   }
 
+  async getBalance(address: PublicKey, slot?: number) {
+    return await this.connection.getBalance(address, {
+      minContextSlot: slot,
+    });
+  }
+
   async viewMethod<T>(
     method: { view: (options?: ConfirmOptions) => Promise<unknown> },
     slot?: number,
@@ -112,8 +124,8 @@ export class SolanaClient {
     };
   }
 
-  async getSlot() {
-    return await this.connection.getSlot();
+  async getSlot(commitment?: Commitment) {
+    return await this.connection.getSlot(commitment);
   }
 
   async getRecentPrioritizationFees(config?: GetRecentPrioritizationFeesConfig) {
@@ -138,5 +150,18 @@ export class SolanaClient {
     );
 
     return { minContextSlot: slot };
+  }
+
+  async transfer(from: Keypair, toAddress: string, amountInSol: number) {
+    amountInSol *= LAMPORTS_PER_SOL;
+    const transaction = new Transaction().add(
+      SystemProgram.transfer({
+        fromPubkey: from.publicKey,
+        toPubkey: new PublicKey(toAddress),
+        lamports: amountInSol,
+      })
+    );
+
+    await sendAndConfirmTransaction(this.connection, transaction, [from]);
   }
 }

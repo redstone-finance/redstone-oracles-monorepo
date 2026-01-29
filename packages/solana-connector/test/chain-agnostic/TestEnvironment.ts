@@ -43,9 +43,7 @@ export class SolanaTestEnvironment implements PushTestEnvironment, PullTestEnvir
     });
 
     try {
-      const hash = await (
-        await this.connector.getAdapter()
-      ).writePricesFromPayloadToContract(paramsProvider);
+      const hash = await this.connector.writePricesFromPayloadToContract(paramsProvider);
 
       await this.connector.waitForTransaction(hash);
     } catch {
@@ -55,9 +53,7 @@ export class SolanaTestEnvironment implements PushTestEnvironment, PullTestEnvir
 
   async read(dataFeedIds: string[]): Promise<number[]> {
     return (
-      await (
-        await this.connector.getAdapter()
-      ).readPricesFromContract(
+      await this.connector.readPricesFromContract(
         new ContractParamsProviderMock(dataFeedIds, "", () => Buffer.from([]))
       )
     ).map((bn) => Number(bn));
@@ -94,9 +90,7 @@ export class SolanaTestEnvironment implements PushTestEnvironment, PullTestEnvir
 
       return Buffer.from(payload.replace("0x", ""));
     });
-    const digest = await (
-      await this.connector.getAdapter()
-    ).writePricesFromPayloadToContract(paramsProvider);
+    const digest = await this.connector.writePricesFromPayloadToContract(paramsProvider);
 
     await this.connector.waitForTransaction(digest);
 
