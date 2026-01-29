@@ -21,12 +21,7 @@ const relayersToExecute = RedstoneCommon.getFromEnv(
 
 const privateKeyOverride = RedstoneCommon.getFromEnv("PRIVATE_KEY_OVERRIDE", z.string().optional());
 
-const defaultRelayersToSkip = [
-  "sepoliaVenusXvs",
-  "venusBnbTestnet",
-  "sepoliaMultiFeed",
-  "blastTestnet",
-];
+const defaultRelayersToSkip = ["sepoliaVenusXvs", "venusBnbTestnet", "sepoliaMultiFeed"];
 
 function getManualKeySSMName(manifestName: string) {
   if (relayerNameToManualKeyArn[manifestName]) {
