@@ -1,19 +1,34 @@
-import { SolanaContractConnector } from "@redstone-finance/solana-connector";
+import {
+  SolanaBlockchainService as Service,
+  SolanaClient,
+} from "@redstone-finance/solana-connector";
 import { loggerFactory, RedstoneCommon } from "@redstone-finance/utils";
-import { ConfirmedSignatureInfo, Connection, Keypair, PublicKey } from "@solana/web3.js";
-import { NonEvmBlockchainService } from "./NonEvmBlockchainService";
+import { ConfirmedSignatureInfo, Connection, PublicKey } from "@solana/web3.js";
 
 const TRANSACTION_FETCHING_BATCH_SIZE = 1000;
 
-export class SolanaBlockchainService extends NonEvmBlockchainService {
+export class SolanaBlockchainService {
   private logger = loggerFactory("solana-blockchain-service");
+  private readonly service: Service;
 
-  constructor(
-    private connection: Connection,
-    address?: string,
-    keypair?: Keypair
-  ) {
-    super(new SolanaContractConnector(connection, address, keypair));
+  constructor(private connection: Connection) {
+    this.service = new Service(new SolanaClient(connection));
+  }
+
+  async getBlockNumber() {
+    return await this.service.getBlockNumber();
+  }
+
+  async waitForTransaction(txId: string) {
+    return await this.service.waitForTransaction(txId);
+  }
+
+  async getNormalizedBalance(address: string, blockNumber?: number) {
+    return await this.service.getNormalizedBalance(address, blockNumber);
+  }
+
+  async getBalance(addressOrName: string, blockTag?: number) {
+    return await this.service.getNormalizedBalance(addressOrName, blockTag);
   }
 
   async getTimeForBlock(slot: number): Promise<Date> {

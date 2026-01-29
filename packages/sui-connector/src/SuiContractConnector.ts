@@ -83,4 +83,8 @@ export class SuiContractConnector<Adapter> implements IContractConnector<Adapter
 
     return Promise.resolve(this.keypair.getPublicKey().toSuiAddress());
   }
+
+  async getBalance(address: string) {
+    return await this.getNormalizedBalance(address);
+  }
 }

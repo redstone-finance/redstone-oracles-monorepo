@@ -40,8 +40,6 @@ export async function writeSimultaneously() {
     keypair
   );
 
-  const adapter = await solanaContractConnector.getAdapter();
-
   const paramsProvider = await prepareParamsProviderWithData(requestParams);
   await RedstoneCommon.sleep(10000);
   const paramsProvider2 = await prepareParamsProviderWithData(requestParams);
@@ -49,7 +47,7 @@ export async function writeSimultaneously() {
 
   await Promise.allSettled(
     [paramsProvider2, paramsProvider].map((paramsProvider) =>
-      adapter.writePricesFromPayloadToContract(paramsProvider)
+      solanaContractConnector.writePricesFromPayloadToContract(paramsProvider)
     )
   );
 }

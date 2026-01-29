@@ -1,3 +1,4 @@
+import { BackwardCompatibleConnector } from "@redstone-finance/multichain-kit";
 import {
   ContractParamsProvider,
   getSignersForDataServiceId,
@@ -32,7 +33,9 @@ async function main() {
     keypair
   );
 
-  await sampleRun(paramsProvider, solanaContractConnector);
+  const oldConnector = new BackwardCompatibleConnector(solanaContractConnector);
+
+  await sampleRun(paramsProvider, oldConnector);
 }
 
 void main();

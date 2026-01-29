@@ -1,54 +1,25 @@
-import {
-  ContractData,
-  ContractParamsProvider,
-  getLastRoundDetails,
-  IExtendedPricesContractAdapter,
-} from "@redstone-finance/sdk";
-import { FP, loggerFactory, RedstoneCommon } from "@redstone-finance/utils";
+import { ContractAdapter, WriteContractAdapter } from "@redstone-finance/multichain-kit";
+import { ContractData, ContractParamsProvider, getLastRoundDetails } from "@redstone-finance/sdk";
+import { FP, RedstoneCommon } from "@redstone-finance/utils";
+import { Connection } from "@solana/web3.js";
+import { AnchorReadonlyProvider } from "../client/AnchorReadonlyProvider";
+import { SolanaClient } from "../client/SolanaClient";
 import { SolanaContractUpdater } from "../client/SolanaContractUpdater";
 import { PriceAdapterContract } from "./PriceAdapterContract";
 
-export class SolanaPricesContractAdapter implements IExtendedPricesContractAdapter {
-  protected readonly logger = loggerFactory("solana-price-adapter");
+export class SolanaContractAdapter implements ContractAdapter {
+  constructor(private contract: PriceAdapterContract) {}
 
-  constructor(
-    private contract: PriceAdapterContract,
-    private readonly updater?: SolanaContractUpdater
-  ) {}
+  static fromConnectionAndAddress(connection: Connection, address: string) {
+    const client = new SolanaClient(connection);
+    const provider = new AnchorReadonlyProvider(connection, client);
+    const contract = new PriceAdapterContract(address, provider, client);
 
-  getSignerAddress() {
-    const pk = this.updater?.getPublicKey();
-    return pk ? Promise.resolve(pk.toString()) : Promise.reject(new Error("Signer required"));
-  }
-
-  async getUniqueSignerThreshold(slot?: number): Promise<number> {
-    return await this.contract.getUniqueSignerThreshold(slot);
-  }
-
-  async readLatestUpdateBlockTimestamp(
-    feedId?: string,
-    slot?: number
-  ): Promise<number | undefined> {
-    if (!feedId) {
-      return undefined;
-    }
-    const priceData = await this.contract.getPriceData(feedId, slot);
-
-    return priceData?.writeTimestamp?.toNumber();
+    return new SolanaContractAdapter(contract);
   }
 
   getPricesFromPayload(_: ContractParamsProvider): Promise<bigint[]> {
     throw new Error("Pull model not supported");
-  }
-
-  async writePricesFromPayloadToContract(paramsProvider: ContractParamsProvider) {
-    if (!this.updater) {
-      throw new Error("Can't write prices, updater not set");
-    }
-
-    const res = await this.updater.writePrices(paramsProvider);
-
-    return FP.unwrapSuccess(res).transactionHash;
   }
 
   async readPricesFromContract(
@@ -69,6 +40,18 @@ export class SolanaPricesContractAdapter implements IExtendedPricesContractAdapt
     return priceData?.timestamp.toNumber() ?? 0;
   }
 
+  async readLatestUpdateBlockTimestamp(
+    feedId?: string,
+    slot?: number
+  ): Promise<number | undefined> {
+    if (!feedId) {
+      return undefined;
+    }
+    const priceData = await this.contract.getPriceData(feedId, slot);
+
+    return priceData?.writeTimestamp?.toNumber();
+  }
+
   async readContractData(feedIds: string[], slot?: number): Promise<ContractData> {
     const multipleResult = await this.contract.getMultiplePriceData(feedIds, slot);
 
@@ -83,6 +66,10 @@ export class SolanaPricesContractAdapter implements IExtendedPricesContractAdapt
 
     return Object.fromEntries(values) as ContractData;
   }
+
+  async getUniqueSignerThreshold(slot?: number): Promise<number> {
+    return await this.contract.getUniqueSignerThreshold(slot);
+  }
 }
 
 export function toNumber(values: number[]): number {
@@ -91,4 +78,31 @@ export function toNumber(values: number[]): number {
     result = result * 256 + value;
   }
   return result;
+}
+
+export class SolanaWriteContractAdapter
+  extends SolanaContractAdapter
+  implements WriteContractAdapter
+{
+  constructor(
+    contract: PriceAdapterContract,
+    private readonly client: SolanaClient,
+    private readonly updater: SolanaContractUpdater
+  ) {
+    super(contract);
+  }
+
+  async writePricesFromPayloadToContract(paramsProvider: ContractParamsProvider) {
+    const res = await this.updater.writePrices(paramsProvider);
+
+    return FP.unwrapSuccess(res).transactionHash;
+  }
+
+  async transfer(toAddress: string, amountInSol: number) {
+    return await this.client.transfer(this.updater.getKeypair(), toAddress, amountInSol);
+  }
+
+  getSignerAddress(): Promise<string> {
+    return Promise.resolve(this.updater.getPublicKey().toBase58());
+  }
 }

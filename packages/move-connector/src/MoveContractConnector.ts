@@ -62,6 +62,10 @@ export class MoveContractConnector<Adapter> implements IContractConnector<Adapte
     );
   }
 
+  async getBalance(address: string) {
+    return await this.getNormalizedBalance(address);
+  }
+
   getSignerAddress() {
     if (!this.account) {
       throw new Error("Private Key was not provided.");

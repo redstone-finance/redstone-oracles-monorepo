@@ -1,33 +1,30 @@
-import { IContractConnector } from "@redstone-finance/sdk";
-import { BigNumber } from "ethers";
-import type { IBlockchainService } from "./IBlockchainService";
+import { BlockchainServiceWithTransfer } from "@redstone-finance/multichain-kit";
 
-export abstract class NonEvmBlockchainService implements IBlockchainService {
-  protected constructor(private connector: IContractConnector<unknown>) {}
-
-  async getBalance(addressOrName: string, blockTag?: number): Promise<BigNumber> {
-    if (!this.connector.getNormalizedBalance) {
-      throw new Error("Method not implemented: getNormalizedBalance");
-    }
-    return BigNumber.from(await this.connector.getNormalizedBalance(addressOrName, blockTag));
-  }
+export abstract class NonEvmBlockchainServiceWithTransfer implements BlockchainServiceWithTransfer {
+  protected constructor(private service: BlockchainServiceWithTransfer) {}
 
   async transfer(toAddress: string, amount: number) {
-    if (!this.connector.transfer) {
-      throw new Error("Method not implemented: transfer");
-    }
-    await this.connector.transfer(toAddress, amount);
+    return await this.service.transfer(toAddress, amount);
   }
 
-  getSignerAddress(): Promise<string> {
-    if (!this.connector.getSignerAddress) {
-      throw new Error("Method not implemented: getSignerAddress");
-    }
-    return this.connector.getSignerAddress();
+  async getSignerAddress() {
+    return await this.service.getSignerAddress();
   }
 
-  getBlockNumber(): Promise<number> {
-    return this.connector.getBlockNumber();
+  async getBlockNumber() {
+    return await this.service.getBlockNumber();
+  }
+
+  async waitForTransaction(txId: string) {
+    return await this.service.waitForTransaction(txId);
+  }
+
+  async getNormalizedBalance(address: string, blockNumber?: number) {
+    return await this.service.getNormalizedBalance(address, blockNumber);
+  }
+
+  async getBalance(addressOrName: string, blockTag?: number) {
+    return await this.service.getNormalizedBalance(addressOrName, blockTag);
   }
 
   abstract getTimeForBlock(blockHeight: number): Promise<Date>;

@@ -1,12 +1,15 @@
 import { MoveClientBuilder, MovePricesContractConnector } from "@redstone-finance/move-connector";
+import { BackwardCompatibleReadOnlyConnector } from "@redstone-finance/multichain-kit";
 import { AnyOnChainRelayerManifest } from "@redstone-finance/on-chain-relayer-common";
 import {
   PriceAdapterRadixContractConnector,
   RadixClientBuilder,
 } from "@redstone-finance/radix-connector";
 import {
+  SolanaBlockchainService,
+  SolanaClient,
   SolanaConnectionBuilder,
-  SolanaContractConnector,
+  SolanaContractAdapter,
 } from "@redstone-finance/solana-connector";
 import {
   PriceAdapterStellarContractConnector,
@@ -64,7 +67,13 @@ function getSolanaContractConnector(rpcUrls: string[], relayerManifest: AnyOnCha
     .withRpcUrls(rpcUrls)
     .build();
 
-  return new SolanaContractConnector(connection, relayerManifest.adapterContract);
+  const adapter = SolanaContractAdapter.fromConnectionAndAddress(
+    connection,
+    relayerManifest.adapterContract
+  );
+  const service = new SolanaBlockchainService(new SolanaClient(connection));
+
+  return new BackwardCompatibleReadOnlyConnector(adapter, service);
 }
 
 function getSuiContractConnector(rpcUrls: string[], relayerManifest: AnyOnChainRelayerManifest) {

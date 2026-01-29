@@ -23,7 +23,7 @@ export class EvmBlockchainService implements IBlockchainService {
     return await this.provider.getBlockWithTransactions(blockNumber);
   }
 
-  async getBalance(addressOrName: string, blockTag: number | undefined) {
+  async getBalance(addressOrName: string, blockTag?: number) {
     return await this.provider.getBalance(addressOrName, blockTag);
   }
 }
