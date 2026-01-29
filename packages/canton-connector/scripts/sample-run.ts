@@ -10,7 +10,7 @@ import { makeDefaultClient } from "./utils";
 const VIEWER_PARTY_NAME = `RedStoneOracleViewer`;
 const UPDATER_PARTY_NAME = `RedStoneOracleUpdater`;
 const ADAPTER_ID =
-  "00b13a09ae311a09ee2a702411ec9d05e6324b9fa6866f1df46e37594c6817f087ca121220328283362ef44ccebad1401fe7d34c8db43fdb804bfb57e42a5c9757a6c807c4";
+  "00bd38e47f5966f047571ea0d3f62f5ee9b1e0b11fb387d53ac10f87ca5fcc6235ca121220dfbf39c42f1a6eb84f56649fe64e0fcaf4135040e923834d215363d6b9f96d07";
 
 async function main(adapterId = ADAPTER_ID) {
   const [client, _updateClient] = [VIEWER_PARTY_NAME, UPDATER_PARTY_NAME].map(makeDefaultClient);
