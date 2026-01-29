@@ -1,21 +1,19 @@
 import {
-  makeCantonClients,
-  PricesCantonContractConnector,
+  CantonClientBuilder,
+  CoreFactoryCantonContractConnector,
 } from "@redstone-finance/canton-connector";
-import { deconstructNetworkId } from "@redstone-finance/utils";
+import { RedstoneCommon } from "@redstone-finance/utils";
 import { PartialRelayerConfig } from "./partial-relayer-config";
 
 export const getCantonContractConnector = (relayerConfig: PartialRelayerConfig) => {
-  const { adapterContractAddress, rpcUrls, networkId } = relayerConfig;
-  const { chainId } = deconstructNetworkId(networkId);
+  const { adapterContractAddress, rpcUrls, networkId, privateKey } = relayerConfig;
 
-  if (rpcUrls.length !== 1) {
-    throw new Error("Only single rpc url is supported");
-  }
+  const client = new CantonClientBuilder()
+    .withRpcUrls(rpcUrls)
+    .withNetworkId(networkId)
+    .withPartyId(RedstoneCommon.getFromEnv("VIEWER_PARTY_ID"))
+    .withDefaultAuth(privateKey)
+    .build();
 
-  const [url] = rpcUrls;
-
-  const { client, updateClient } = makeCantonClients(url, chainId);
-
-  return new PricesCantonContractConnector(client, updateClient, adapterContractAddress);
+  return new CoreFactoryCantonContractConnector(client, adapterContractAddress);
 };
