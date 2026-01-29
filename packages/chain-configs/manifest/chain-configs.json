@@ -1209,7 +1209,7 @@
       "name": "Citrea Mainnet",
       "networkId": 4114,
       "currencySymbol": "cBTC",
-      "publicRpcUrls": [],
+      "publicRpcUrls": ["https://rpc.mainnet.citrea.xyz"],
       "avgBlockTimeMs": 2000,
       "multicall3": {
         "address": "0xaD6CC5a465E5c8284a49eC9eD10EFE275460678c",
