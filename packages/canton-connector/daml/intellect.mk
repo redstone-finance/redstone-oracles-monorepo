@@ -5,11 +5,12 @@ ADAPTER_NAME=RedStoneAdapter-743
 ADAPTER_TEMPLATE_ID=8c8846ceb42d9ee5223aa086a384e436756b7abcd4d003768adfc86991c46d4c:RedStoneAdapter:RedStoneAdapter
 PRICE_FEED_TEMPLATE_ID=e6e6121cc8b94556ec5f2f12f4f86562be85bf385e0e6fea0638859be8de1141:RedStonePriceFeed:RedStonePriceFeed
 
-CORE_ID := 3892dcfb99c55f2620dc38de2f62160b6dda44b67acd8b12af22b4cb652c8ee0
+CORE_ID := f1474b5ecd985e07e1bd561f54412e7db334d63d61d962c4d3c3801e2949e7b6
 CORE_TEMPLATE_ID := $(CORE_ID):RedStoneCore:RedStoneCore
 CORE_FEATURED_TEMPLATE_ID := $(CORE_ID):RedStoneCoreFeatured:RedStoneCoreFeatured
 CORE_CLIENT_TEMPLATE_ID := $(CORE_ID):RedStoneCoreClient:RedStoneCoreClient
 CORE_FEATURED_CLIENT_TEMPLATE_ID := $(CORE_ID):RedStoneCoreFeaturedClient:RedStoneCoreFeaturedClient
+FACTORY_TEMPLATE_ID=bf42d4f959a4598c3411fd6fa27f25c5d7a31e88d23f21e6516e58dd2cd4eeb3:RedStonePriceFeedFactory:RedStonePriceFeedFactory
 
 INTERFACE_ID=b8cfef679a969db246c98c0c4617dac4dda10f549265da716e7617b829910868
 IADAPTER_TEMPLATE_ID=$(INTERFACE_ID):IRedStoneAdapter:IRedStoneAdapter
@@ -89,6 +90,22 @@ deploy-core-featured: get-token
 				"templateId": "$(CORE_FEATURED_TEMPLATE_ID)", \
 				"createArguments": { \
 					"coreId": "$(ADAPTER_NAME)", \
+					"owner": "RedStoneOracleOwner::$(PARTY_SUFFIX)", \
+					"beneficiary": "$(BENEFICIARY)::$(PARTY_SUFFIX)", \
+					"viewers": ["RedStoneOracleViewer::$(PARTY_SUFFIX)"]}}}], \
+		"actAs": ["RedStoneOracleOwner::$(PARTY_SUFFIX)", "$(BENEFICIARY)::$(PARTY_SUFFIX)"], \
+		"commandId": "deploy-core-featured-$(shell date +%s)"}' | jq '.'
+
+deploy-factory: get-token
+	@curl -X POST -H "Authorization: Bearer $(TOKEN)" \
+	  -H "Content-Type: application/json" \
+	  "$(CANTON_API)/v2/commands/submit-and-wait-for-transaction-tree" \
+	  -d '{ \
+		"commands": [{ \
+			"CreateCommand": { \
+				"templateId": "$(FACTORY_TEMPLATE_ID)", \
+				"createArguments": { \
+					"coreId": "Factory-$(ADAPTER_NAME)", \
 					"owner": "RedStoneOracleOwner::$(PARTY_SUFFIX)", \
 					"beneficiary": "$(BENEFICIARY)::$(PARTY_SUFFIX)", \
 					"viewers": ["RedStoneOracleViewer::$(PARTY_SUFFIX)"]}}}], \
@@ -328,7 +345,16 @@ get-active-contracts: get-token
 			"filter": { \
 				"filtersByParty": { \
 					"$(BENEFICIARY)::$(PARTY_SUFFIX)": { \
-						"cumulative": [] \
+						"cumulative": [ \
+							{ \
+							  "identifierFilter": { \
+								 "WildcardFilter": { \
+									"value": { \
+									   "includeCreatedEventBlob": true \
+									} \
+								 } \
+							  } \
+					   }] \
 					} \
 				} \
 			}, \

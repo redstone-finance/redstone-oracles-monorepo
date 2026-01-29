@@ -11,7 +11,7 @@ import {
 export const CORE_FEATURED_CLIENT_TEMPLATE_NAME = `RedStoneCoreFeaturedClient:RedStoneCoreFeaturedClient`;
 const GET_PRICES_DISCLOSED_CHOICE = "GetPricesDisclosed";
 
-export class CoreClientCantonContractAdapter extends CoreCantonContractAdapter {
+export class CoreFeaturedClientCantonContractAdapter extends CoreCantonContractAdapter {
   constructor(
     client: CantonClient,
     contractId: string,

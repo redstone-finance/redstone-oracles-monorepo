@@ -1,12 +1,12 @@
-sdk-version: 3.4.9
+sdk-version: 3.4.10
 name: redstone-featured-v1
-version: 0.4.3
+version: 0.4.4
 source: src
 dependencies:
   - daml-prim
   - daml-stdlib
 data-dependencies:
   - ./dars/splice-api-featured-app-v1-1.0.0.dar
-  - ../interface/.daml/dist/redstone-interface-v7-0.4.3.dar
+  - ../interface/.daml/dist/redstone-interface-v7-0.4.4.dar
 build-options:
   - --target=2.1

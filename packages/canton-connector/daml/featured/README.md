@@ -89,7 +89,7 @@ GetPricesDisclosed choice:
 - `adapterCid`: Contract ID of the disclosed Core contract (`IRedStoneCoreFeatured`)
 - `featuredCid`: Contract ID of the disclosed `FeaturedAppRight` for reward attribution
 
-### [TypeScript Contract Wrapper](../../src/adapters/CoreClientCantonContractAdapter.ts)
+### [TypeScript Contract Wrapper](../../src/adapters/CoreFeaturedClientCantonContractAdapter.ts)
 
 See the full example in [core-featured-sample.ts](../../scripts/core-featured-sample.ts).
 
@@ -99,7 +99,7 @@ const packageId = "3892dcfb99c55f2620dc38de2f62160b6dda44b67acd8b12af22b4cb652c8
 const contractId =
         "006f39a996caf6f8fe7b885788b40d350349a48391de2a3fb3e656ff97262b2dd4ca121220d6e33c5d817e76a86c20a9e8a954f7c8d6e193838a340bb833d028dca6ead506";
 
-export async function coreClientSample() {
+export async function coreFeaturedClientSample() {
   const tokenProvider = () => keycloakTokenProvider();
 
   const client = new CantonClient(partyId, getJsonApiUrl(), tokenProvider, readNetwork());
@@ -114,7 +114,7 @@ export async function coreClientSample() {
   console.log(await adapter.getPricesFromPayload(paramsProvider));
 }
 
-void coreClientSample();
+void coreFeaturedClientSample();
 ```
 
 #### Parameters
