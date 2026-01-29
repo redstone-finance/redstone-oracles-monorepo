@@ -15,6 +15,7 @@ import {IFastMultiFeedAdapter} from "./IFastMultiFeedAdapter.sol";
  *   - For a aggregated price to be stored, 3 fresh prices from updaters are required
  */
 abstract contract FastMultiFeedAdapter is IFastMultiFeedAdapter {
+  uint256 internal constant MICROSECONDS_IN_ONE_SECOND = 1_000_000;
   // ----------------------- Config ----------------------------------------- //
   uint256 internal constant NUM_UPDATERS = 5;
   // Maximum allowed staleness of data during reading in microseconds (30 minutes)
@@ -80,8 +81,15 @@ abstract contract FastMultiFeedAdapter is IFastMultiFeedAdapter {
   /// Overriding implementations should aim to provide the most granular timestamp available
   /// for the specific blockchain, e.g., a mini-block timestamp for MegaETH.
   function getBlockTimestampInMicroSeconds() internal view virtual returns (uint64) {
-    return uint64(block.timestamp * 1_000_000);
+    return uint64(block.timestamp * MICROSECONDS_IN_ONE_SECOND);
   }
+
+  /// @dev A separate function used when checking staleness while reading the price.
+  /// In this case, we don’t need as much precision as when updating the price.
+  function getBlockTimestampInMicroSecondsForStalenessCheck() internal view virtual returns (uint256) {
+    return block.timestamp * MICROSECONDS_IN_ONE_SECOND;
+  }
+
 
   /// @notice Checks that the caller is an authorized updater.
   /// @dev Must return the updater's numeric ID [0..NUM_UPDATERS-1].
@@ -231,7 +239,7 @@ abstract contract FastMultiFeedAdapter is IFastMultiFeedAdapter {
   /// Returns details about last update for a data feed; reverts if data is stale
   function getLastUpdateDetails(bytes32 dataFeedId) public view override returns (uint256 lastDataTimestamp, uint256 lastBlockTimestamp, uint256 lastValue) {
     (lastDataTimestamp, lastBlockTimestamp, lastValue) = getLastUpdateDetailsUnsafe(dataFeedId);
-    if (lastBlockTimestamp + getMaxReadingDataStaleness() < getBlockTimestampInMicroSeconds()
+    if (lastBlockTimestamp + getMaxReadingDataStaleness() < getBlockTimestampInMicroSecondsForStalenessCheck()
         || lastValue == 0
         || lastDataTimestamp + getMaxDataTimestampDelayMicroseconds() < lastBlockTimestamp
         || lastDataTimestamp > lastBlockTimestamp + getMaxDataTimestampAheadMicroseconds()) {
