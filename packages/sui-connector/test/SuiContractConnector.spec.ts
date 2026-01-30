@@ -4,18 +4,17 @@ import {
   makeSuiClient,
   makeSuiKeypair,
   readSuiConfig,
+  SuiContractConnector,
   SuiNetworkSchema,
-  SuiPricesContractAdapter,
-  SuiPricesContractConnector,
 } from "../src";
 
 describe("SuiContractConnector", () => {
-  let connector: SuiPricesContractConnector;
+  let connector: SuiContractConnector;
 
   beforeAll(() => {
     const network = RedstoneCommon.getFromEnv("NETWORK", SuiNetworkSchema);
 
-    connector = new SuiPricesContractConnector(
+    connector = new SuiContractConnector(
       makeSuiClient(network),
       readSuiConfig(network),
       makeSuiKeypair()
@@ -26,13 +25,6 @@ describe("SuiContractConnector", () => {
     it("should get block number", async () => {
       const result = await connector.getBlockNumber();
       expect(result).toBeGreaterThan(10);
-    });
-  });
-
-  describe("getAdapter", () => {
-    it("should return adapter", async () => {
-      const adapter = await connector.getAdapter();
-      expect(adapter).toBeInstanceOf(SuiPricesContractAdapter);
     });
   });
 });
