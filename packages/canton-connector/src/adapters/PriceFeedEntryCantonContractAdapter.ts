@@ -1,30 +1,29 @@
 import {
   ContractParamsProvider,
   IPriceFeedContractAdapter,
-  LastRoundDetails,
   PriceAndTimestamp,
 } from "@redstone-finance/sdk";
-import _ from "lodash";
 import { CantonClient, ContractFilter } from "../CantonClient";
-import { convertDecimalValue, getArrayifiedFeedId, REDSTONE_DECIMALS } from "../conversions";
+import { getArrayifiedFeedId, REDSTONE_DECIMALS } from "../conversions";
+import {
+  createFeedIdFilter,
+  findNewestContract,
+  IPRICE_FEED_ENTRY_TEMPLATE_NAME,
+  parsePriceData,
+  PriceData,
+  READ_DATA_CHOICE,
+  READ_DESCRIPTION_CHOICE,
+  READ_FEED_ID_CHOICE,
+} from "../price-feed-utils";
 import { makeActiveContractData } from "../utils";
 import { CantonContractAdapter } from "./CantonContractAdapter";
-
-export const IPRICE_FEED_ENTRY_TEMPLATE_NAME = `IRedStonePriceFeedEntry:IRedStonePriceFeedEntry`;
-const READ_DATA_CHOICE = "ReadData";
-const READ_FEED_ID_CHOICE = "ReadFeedId";
-const READ_DESCRIPTION_CHOICE = "ReadDescription";
-
-type PriceData = {
-  value: string;
-  timestamp: string;
-  writeTimestamp: string;
-};
 
 export class PriceFeedEntryCantonContractAdapter
   extends CantonContractAdapter
   implements IPriceFeedContractAdapter
 {
+  private readonly arrayifiedFeedId: number[];
+
   constructor(
     client: CantonClient,
     protected feedId: string,
@@ -32,11 +31,11 @@ export class PriceFeedEntryCantonContractAdapter
     templateName = IPRICE_FEED_ENTRY_TEMPLATE_NAME
   ) {
     super(client, interfaceId, templateName);
+    this.arrayifiedFeedId = getArrayifiedFeedId(feedId);
   }
 
   async getPriceAndTimestamp(offset?: number): Promise<PriceAndTimestamp> {
     const result = await this.readData(offset);
-
     return {
       value: result.lastValue,
       timestamp: result.lastDataPackageTimestampMS,
@@ -45,11 +44,7 @@ export class PriceFeedEntryCantonContractAdapter
 
   async readData(offset?: number) {
     const result: PriceData = await this.exerciseChoice(READ_DATA_CHOICE, {}, offset);
-    return {
-      lastDataPackageTimestampMS: Number.parseInt(result.timestamp),
-      lastBlockTimestampMS: Number.parseInt(result.writeTimestamp),
-      lastValue: convertDecimalValue(result.value),
-    } as LastRoundDetails;
+    return parsePriceData(result);
   }
 
   decimals(_offset?: number) {
@@ -62,7 +57,6 @@ export class PriceFeedEntryCantonContractAdapter
 
   async getDataFeedId(offset?: number) {
     const feedId: string[] = await this.exerciseChoice(READ_FEED_ID_CHOICE, {}, offset);
-
     return ContractParamsProvider.unhexlifyFeedId(feedId.map(Number));
   }
 
@@ -73,21 +67,15 @@ export class PriceFeedEntryCantonContractAdapter
       offset
     );
 
-    if (!createdEvents.length) {
+    const newest = findNewestContract(createdEvents);
+    if (!newest) {
       throw new Error("Didn't find any contract");
     }
-
-    _.sortBy(createdEvents, (event) => Number((event.createArgument as PriceData).timestamp));
-
-    const newest = createdEvents.at(-1)!;
 
     return makeActiveContractData(newest);
   }
 
   protected override getContractFilter(): ContractFilter {
-    const arrayifiedFeedId = getArrayifiedFeedId(this.feedId);
-
-    return ((createArgument: { feedId: string[]; priceData: PriceData }) =>
-      _.isEqual(createArgument.feedId.map(Number), arrayifiedFeedId)) as ContractFilter;
+    return createFeedIdFilter([this.arrayifiedFeedId]);
   }
 }
