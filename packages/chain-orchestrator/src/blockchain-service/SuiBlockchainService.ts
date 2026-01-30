@@ -1,8 +1,6 @@
 import { SuiClient, SuiTransactionBlockResponseOptions } from "@mysten/sui/client";
-import { Keypair } from "@mysten/sui/cryptography";
-import { SuiContractConnector } from "@redstone-finance/sui-connector";
+import { SuiBlockchainService as Service } from "@redstone-finance/sui-connector";
 import { RedstoneCommon } from "@redstone-finance/utils";
-import { NonEvmBlockchainServiceWithTransfer } from "./NonEvmBlockchainService";
 
 const RETRY_CONFIG: Omit<RedstoneCommon.RetryConfig, "fn"> = {
   maxRetries: 6,
@@ -12,12 +10,27 @@ const RETRY_CONFIG: Omit<RedstoneCommon.RetryConfig, "fn"> = {
   },
 };
 
-export class SuiBlockchainService extends NonEvmBlockchainServiceWithTransfer {
-  constructor(
-    private client: SuiClient,
-    keypair?: Keypair
-  ) {
-    super(new SuiContractConnector(client, keypair));
+export class SuiBlockchainService {
+  private readonly service: Service;
+
+  constructor(private readonly client: SuiClient) {
+    this.service = new Service(client);
+  }
+
+  async getBalance(addressOrName: string): Promise<bigint> {
+    return await this.service.getNormalizedBalance(addressOrName);
+  }
+
+  async getBlockNumber() {
+    return await this.service.getBlockNumber();
+  }
+
+  async waitForTransaction(txId: string) {
+    return await this.service.waitForTransaction(txId);
+  }
+
+  async getNormalizedBalance(address: string) {
+    return await this.service.getNormalizedBalance(address);
   }
 
   async getTimeForBlock(block: number): Promise<Date> {
