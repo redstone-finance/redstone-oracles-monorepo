@@ -30,7 +30,12 @@
       }
     },
     "USDm": {},
-    "TRY": {},
+    "TRY": {
+      "updateTriggersOverrides": {
+        "deviationPercentage": 0.1,
+        "timeSinceLastUpdateInMilliseconds": 21600000
+      }
+    },
     "LBTC_FUNDAMENTAL": {
       "updateTriggersOverrides": {
         "deviationPercentage": 0.25,
