@@ -7,7 +7,7 @@ import {
   makeSuiKeypair,
   readSuiConfig,
   SuiNetworkSchema,
-  SuiPricesContractAdapter,
+  SuiWriteContractAdapter,
 } from "../src";
 import { SuiContractUpdater } from "../src/SuiContractUpdater";
 
@@ -15,7 +15,7 @@ const DATA_SERVICE_ID = "redstone-primary-prod";
 const WRITE_TEST_TIMEOUT = 20 * 1_000; // 20 secs
 
 describe("SuiPricesContractAdapter", () => {
-  let adapter: SuiPricesContractAdapter;
+  let adapter: SuiWriteContractAdapter;
   let contractParamsProvider: ContractParamsProvider;
   let suiClient: SuiClient;
 
@@ -24,10 +24,10 @@ describe("SuiPricesContractAdapter", () => {
     const config = readSuiConfig(network);
     const client = makeSuiClient(network);
     const keypair = makeSuiKeypair();
-    adapter = new SuiPricesContractAdapter(
+    adapter = new SuiWriteContractAdapter(
       client,
-      config,
-      new SuiContractUpdater(client, keypair, config)
+      new SuiContractUpdater(client, keypair, config),
+      config
     );
     suiClient = makeSuiClient(network);
   });

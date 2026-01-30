@@ -1,3 +1,4 @@
+import { BackwardCompatibleConnector } from "@redstone-finance/multichain-kit";
 import {
   ContractParamsProvider,
   getSignersForDataServiceId,
@@ -9,8 +10,8 @@ import {
   makeSuiKeypair,
   readSuiConfig,
   SuiClientBuilder,
+  SuiContractConnector,
   SuiNetworkSchema,
-  SuiPricesContractConnector,
 } from "../src";
 import { getRpcUrls } from "./get-rpc-urls";
 
@@ -30,13 +31,15 @@ async function main() {
     .withFullnodeUrl()
     .build();
 
-  const suiContractConnector = new SuiPricesContractConnector(
+  const suiContractConnector = new SuiContractConnector(
     suiClient,
     readSuiConfig(network),
     makeSuiKeypair()
   );
 
-  await sampleRun(paramsProvider, suiContractConnector);
+  const oldConnector = new BackwardCompatibleConnector(suiContractConnector);
+
+  await sampleRun(paramsProvider, oldConnector);
 }
 
 void main();

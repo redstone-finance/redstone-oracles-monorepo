@@ -16,14 +16,14 @@ import {
   buildPackage,
   DEFAULT_GAS_BUDGET,
   makeSuiConfig,
+  SuiAdapterContractOps,
   SuiConfig,
-  SuiPricesContractAdapter,
-  SuiPricesContractConnector,
+  SuiContractConnector,
 } from "../../src";
 import { SuiContractDeployer } from "../../src/SuiContractDeployer";
 
 export class SuiTestEnvironment implements PushTestEnvironment, PullTestEnvironment {
-  private readonly connector: SuiPricesContractConnector;
+  private readonly connector: SuiContractConnector;
   private readonly config: SuiConfig;
 
   constructor(
@@ -41,7 +41,7 @@ export class SuiTestEnvironment implements PushTestEnvironment, PullTestEnvironm
       gasMultiplier: 1.1,
     });
 
-    this.connector = new SuiPricesContractConnector(sui, this.config, keypair);
+    this.connector = new SuiContractConnector(sui, this.config, keypair);
   }
 
   async pull(
@@ -53,9 +53,7 @@ export class SuiTestEnvironment implements PushTestEnvironment, PullTestEnvironm
 
       return Buffer.from(payload.replace("0x", ""));
     });
-    const digest = await (
-      await this.connector.getAdapter()
-    ).writePricesFromPayloadToContract(paramsProvider);
+    const digest = await this.connector.writePricesFromPayloadToContract(paramsProvider);
 
     await this.connector.waitForTransaction(digest);
 
@@ -66,7 +64,7 @@ export class SuiTestEnvironment implements PushTestEnvironment, PullTestEnvironm
     const tx = new Transaction();
     tx.setSender(this.keypair.toSuiAddress());
 
-    SuiPricesContractAdapter.updateConfig(
+    SuiAdapterContractOps.updateConfig(
       tx,
       {
         ...this.config,
@@ -108,18 +106,14 @@ export class SuiTestEnvironment implements PushTestEnvironment, PullTestEnvironm
 
       return Buffer.from(payload.replace("0x", ""));
     });
-    const digest = await (
-      await this.connector.getAdapter()
-    ).writePricesFromPayloadToContract(paramsProvider);
+    const digest = await this.connector.writePricesFromPayloadToContract(paramsProvider);
 
     await this.connector.waitForTransaction(digest);
   }
 
   async read(dataFeedIds: string[]): Promise<number[]> {
     return (
-      await (
-        await this.connector.getAdapter()
-      ).readPricesFromContract(
+      await this.connector.readPricesFromContract(
         new ContractParamsProviderMock(dataFeedIds, "", () => Buffer.from([]))
       )
     ).map((bn) => Number(bn));

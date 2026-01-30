@@ -17,8 +17,9 @@ import {
 } from "@redstone-finance/stellar-connector";
 import {
   makeSuiConfig,
+  SuiBlockchainService,
   SuiClientBuilder,
-  SuiPricesContractConnector,
+  SuiContractAdapter,
 } from "@redstone-finance/sui-connector";
 import { deconstructNetworkId, RedstoneCommon } from "@redstone-finance/utils";
 
@@ -86,13 +87,14 @@ function getSuiContractConnector(rpcUrls: string[], relayerManifest: AnyOnChainR
     .withRpcUrls(rpcUrls)
     .build();
 
-  return new SuiPricesContractConnector(
-    suiClient,
-    makeSuiConfig({
-      packageId: relayerManifest.adapterContractPackageId,
-      priceAdapterObjectId: relayerManifest.adapterContract,
-    })
-  );
+  const config = makeSuiConfig({
+    packageId: relayerManifest.adapterContractPackageId,
+    priceAdapterObjectId: relayerManifest.adapterContract,
+  });
+  const adapter = new SuiContractAdapter(suiClient, config);
+  const service = new SuiBlockchainService(suiClient);
+
+  return new BackwardCompatibleReadOnlyConnector(adapter, service);
 }
 
 function getMoveContractConnector(
