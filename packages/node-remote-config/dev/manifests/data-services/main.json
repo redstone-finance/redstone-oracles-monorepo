@@ -7624,21 +7624,17 @@
     },
     "URANIUM": {
       "source": [
-        "tezos-uranium-price-api-deferred"
-      ],
-      "denomination": "USD",
-      "rateFeed": false,
-      "fallbackToken": "URANIUM_FALLBACK"
-    },
-    "URANIUM_FALLBACK": {
-      "source": [
+        "tezos-uranium-price-api-deferred",
         "commodity-price-api",
         "metals-api",
         "metal-price-api"
       ],
+      "priceAggregator": "primarySource",
+      "primarySourceAggregatorConfig": {
+        "primarySource": "tezos-uranium-price-api-deferred"
+      },
       "denomination": "USD",
-      "rateFeed": false,
-      "skipBroadcasting": true
+      "rateFeed": false
     },
     "lstHYPE_FUNDAMENTAL": {
       "source": [
