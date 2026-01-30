@@ -1,5 +1,4 @@
 import { loggerFactory, RedstoneCommon } from "@redstone-finance/utils";
-import _ from "lodash";
 import {
   DefaultService,
   DisclosedContract,
@@ -122,41 +121,69 @@ export class CantonClient {
     command: { templateId: string; contractId: string; choice: string; choiceArgument: Arg },
     timestamp: Date,
     disclosedContracts?: DisclosedContract[]
-  ) {
+  ): Promise<Res> {
+    const results = await this.exerciseChoices<Arg, Res>([command], timestamp, disclosedContracts);
+    const [result] = Object.values(results);
+
+    if (!result) {
+      throw new Error(`No result for choice ${command.choice} on contract ${command.contractId}`);
+    }
+
+    return result;
+  }
+
+  async exerciseChoices<Arg extends object, Res = object>(
+    commands: { templateId: string; contractId: string; choice: string; choiceArgument: Arg }[],
+    timestamp: Date,
+    disclosedContracts?: DisclosedContract[]
+  ): Promise<Record<string, Res>> {
+    const choices = [...new Set(commands.map((c) => c.choice))].join(",");
     const result = await this.performRequest(
       () =>
         // eslint-disable-next-line @typescript-eslint/no-deprecated -- needed and available for 3.4.9 for now
         DefaultService.postV2CommandsSubmitAndWaitForTransactionTree({
-          commands: [
-            {
-              ExerciseCommand: command,
-            },
-          ],
-          commandId: `${command.contractId}-${command.choice}-${timestamp.getTime()}`,
+          commands: commands.map((command) => ({ ExerciseCommand: command })),
+          commandId: `batch-${choices}-${commands.length}-${timestamp.getTime()}`,
           actAs: [this.partyId],
           disclosedContracts,
           userId: !this.tokenProvider ? LOCAL_USER : undefined,
         }),
-      `postV2CommandsSubmitAndWaitForTransactionTree ${RedstoneCommon.stringify({ ...command, choiceArgument: _.isEqual(command.choiceArgument, {}) ? undefined : "#ARGS#" })}`
+      `postV2CommandsSubmitAndWaitForTransactionTree batch[${commands.length}]`
     );
 
-    const excerciseEvent = result.transactionTree.eventsById["0"];
-    if ("ExercisedTreeEvent" in excerciseEvent) {
-      if (excerciseEvent.ExercisedTreeEvent.value.consuming) {
-        const createdEvent = result.transactionTree.eventsById["1"];
+    const { eventsById, synchronizerId } = result.transactionTree;
+    const events = Object.values(eventsById);
+    const results: Record<string, Res> = {};
 
-        if (RedstoneCommon.isDefined(createdEvent) && "CreatedTreeEvent" in createdEvent) {
-          return makeActiveContractData(
+    for (const event of events) {
+      if (!("ExercisedTreeEvent" in event)) {
+        continue;
+      }
+
+      const exercisedEvent = event.ExercisedTreeEvent.value;
+
+      if (exercisedEvent.consuming) {
+        const createdEvent = events.find(
+          (e) =>
+            "CreatedTreeEvent" in e &&
+            e.CreatedTreeEvent.value.nodeId > exercisedEvent.nodeId &&
+            e.CreatedTreeEvent.value.nodeId <= exercisedEvent.lastDescendantNodeId
+        );
+
+        if (createdEvent && "CreatedTreeEvent" in createdEvent) {
+          const newContractId = createdEvent.CreatedTreeEvent.value.contractId;
+          results[newContractId] = makeActiveContractData(
             createdEvent.CreatedTreeEvent.value,
-            result.transactionTree.synchronizerId
+            synchronizerId
           ) as unknown as Res;
+          continue;
         }
       }
 
-      return excerciseEvent.ExercisedTreeEvent.value.exerciseResult as Res;
+      results[exercisedEvent.contractId] = exercisedEvent.exerciseResult as Res;
     }
 
-    throw new Error(RedstoneCommon.stringify(excerciseEvent));
+    return results;
   }
 
   private async performRequest<T>(
