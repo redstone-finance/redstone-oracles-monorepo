@@ -681,7 +681,6 @@
         "gate-usdt",
         "htx-usdt",
         "kraken-usd",
-        "kucoin-usdt",
         "mexc-usdt"
       ],
       "denomination": "USD",
