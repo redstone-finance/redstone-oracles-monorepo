@@ -1,15 +1,10 @@
-import {
-  ContractData,
-  ContractParamsProvider,
-  IExtendedPricesContractAdapter,
-} from "@redstone-finance/sdk";
-import { RedstoneCommon } from "@redstone-finance/utils";
-import _ from "lodash";
+import { ContractParamsProvider, IExtendedPricesContractAdapter } from "@redstone-finance/sdk";
 import { CantonClient } from "../CantonClient";
 import {
   CoreFeaturedCantonContractAdapter,
   ICORE_FEATURED_TEMPLATE_NAME,
 } from "./CoreFeaturedCantonContractAdapter";
+import { MultiFeedPriceEntryAdapter } from "./MultiFeedPriceEntryAdapter";
 import { PriceFeedEntryCantonContractAdapter } from "./PriceFeedEntryCantonContractAdapter";
 
 export class FactoryCantonContractAdapter
@@ -50,16 +45,7 @@ export class FactoryCantonContractAdapter
   }
 
   async readContractData(feedIds: string[], blockNumber?: number) {
-    const entries = _.zip(
-      feedIds,
-      await Promise.allSettled(feedIds.map((feedId) => this.readData(feedId, blockNumber)))
-    )
-      .map(([feedId, result]) =>
-        feedId && result?.status === "fulfilled" ? [feedId, result.value] : undefined
-      )
-      .filter(RedstoneCommon.isDefined);
-
-    return Object.fromEntries(entries) as ContractData;
+    return await this.batchReadData(feedIds, blockNumber);
   }
 
   async readPricesFromContract(paramsProvider: ContractParamsProvider, blockNumber?: number) {
@@ -78,5 +64,11 @@ export class FactoryCantonContractAdapter
     const adapter = new PriceFeedEntryCantonContractAdapter(this.client, feedId);
 
     return await adapter.readData(blockNumber);
+  }
+
+  private async batchReadData(feedIds: string[], blockNumber?: number) {
+    const adapter = new MultiFeedPriceEntryAdapter(this.client, feedIds);
+
+    return await adapter.batchReadData(blockNumber);
   }
 }

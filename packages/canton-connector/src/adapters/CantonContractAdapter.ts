@@ -11,6 +11,12 @@ const RETRY_CONFIG: Omit<RedstoneCommon.RetryConfig, "fn"> = {
   },
 };
 
+export type ChoiceInput<Arg extends object = object> = {
+  choice: string;
+  argument: Arg;
+  contractId: string;
+};
+
 export abstract class CantonContractAdapter {
   protected readonly logger = loggerFactory("canton-contract-adapter");
   protected activeContractData?: ActiveContractData;
@@ -42,59 +48,61 @@ export abstract class CantonContractAdapter {
     addCurrentTime = false,
     client = this.client,
     disclosedContractData?: Required<ActiveContractData>[]
-  ) {
-    return await RedstoneCommon.retry({
-      ...RETRY_CONFIG,
-      fn: async () =>
-        await this.performExerciseChoice<Arg, Res>(
-          choice,
-          argument,
-          offset,
-          addCurrentTime,
-          client,
-          disclosedContractData
-        ),
-    })();
-  }
-
-  private async performExerciseChoice<Arg extends object, Res>(
-    choice: string,
-    argument: Arg,
-    offset: number | undefined = undefined,
-    addCurrentTime = false,
-    client = this.client,
-    disclosedContractData?: Required<ActiveContractData>[]
-  ) {
+  ): Promise<Res> {
     this.activeContractData ??= await this.fetchContractData(offset, client);
-    const timestamp = new Date();
-
-    const choiceArgument = addCurrentTime
-      ? { ...argument, currentTime: timestamp.toISOString() }
-      : argument;
 
     try {
-      const result: Res = await client.exerciseChoice(
-        {
-          choice,
-          contractId: this.activeContractData.contractId,
-          choiceArgument,
-          templateId: this.getInterfaceId(),
-        },
-        timestamp,
+      const results = await this.exerciseChoices<Res, Arg>(
+        [{ choice, argument, contractId: this.activeContractData.contractId }],
+        this.getInterfaceId(),
+        addCurrentTime,
+        client,
         disclosedContractData
       );
 
+      const [result] = Object.values(results);
+      if (!result) {
+        throw new Error(`No result for choice ${choice}`);
+      }
+
       return result;
+    } catch (error) {
+      if (isContractNotFoundError(error)) {
+        this.activeContractData = undefined;
+      }
+      throw error;
+    }
+  }
+
+  protected async exerciseChoices<Res, Arg extends object = object>(
+    choices: ChoiceInput<Arg>[],
+    interfaceId: string,
+    addCurrentTime = false,
+    client = this.client,
+    disclosedContractData?: Required<ActiveContractData>[]
+  ): Promise<Record<string, Res>> {
+    const timestamp = new Date();
+
+    const commands = choices.map(({ choice, argument, contractId }) => ({
+      choice,
+      contractId,
+      templateId: interfaceId,
+      choiceArgument: addCurrentTime
+        ? { ...argument, currentTime: timestamp.toISOString() }
+        : argument,
+    }));
+
+    try {
+      return await RedstoneCommon.retry({
+        ...RETRY_CONFIG,
+        fn: async () =>
+          await client.exerciseChoices<Arg, Res>(commands, timestamp, disclosedContractData),
+      })();
     } catch (error) {
       const apiError = error as ApiError;
       this.logger.error(
         `${RedstoneCommon.stringify((apiError.body as { cause: unknown }).cause)} ${RedstoneCommon.stringifyError(error)}`
       );
-
-      if (isContractNotFoundError(error)) {
-        this.activeContractData = undefined;
-      }
-
       throw error;
     }
   }
