@@ -3,8 +3,8 @@ import { Keypair } from "@mysten/sui/cryptography";
 import { Transaction } from "@mysten/sui/transactions";
 import { MIST_PER_SUI } from "@mysten/sui/utils";
 import { SuiNetworkName } from "./config";
+import { SuiAdapterContractOps } from "./SuiAdapterContractOps";
 import { DEFAULT_GAS_BUDGET } from "./SuiContractUtil";
-import { SuiPricesContractAdapter } from "./SuiPricesContractAdapter";
 import { buildPackage } from "./util";
 
 export class SuiContractDeployer {
@@ -78,7 +78,7 @@ export class SuiContractDeployer {
       initializeTxGasBudget: 10n * DEFAULT_GAS_BUDGET,
     };
 
-    SuiPricesContractAdapter.initialize(tx, dummyConfig, packageId, adminCap);
+    SuiAdapterContractOps.initialize(tx, dummyConfig, packageId, adminCap);
 
     const result = await this.sui.signAndExecuteTransaction({
       transaction: tx,

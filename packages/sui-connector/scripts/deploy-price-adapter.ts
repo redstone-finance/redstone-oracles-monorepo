@@ -11,9 +11,9 @@ import {
   makeSuiDeployConfig,
   makeSuiKeypair,
   saveIds,
+  SuiAdapterContractOps,
   SuiNetworkName,
   SuiNetworkSchema,
-  SuiPricesContractAdapter,
 } from "../src";
 
 interface ObjectChanges {
@@ -104,7 +104,7 @@ async function initialize(
   const tx = new Transaction();
   const config = makeSuiDeployConfig();
   const keypair = makeSuiKeypair();
-  SuiPricesContractAdapter.initialize(tx, config, packageId, adminCap);
+  SuiAdapterContractOps.initialize(tx, config, packageId, adminCap);
 
   return await client.signAndExecuteTransaction({
     transaction: tx,
