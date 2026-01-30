@@ -10,7 +10,11 @@ import {
   makeKeypair as makeStellarKeypair,
   StellarClientBuilder,
 } from "@redstone-finance/stellar-connector";
-import { makeSuiKeypair, SuiClientBuilder } from "@redstone-finance/sui-connector";
+import {
+  makeSuiKeypair,
+  SuiBlockchainServiceWithTransfer,
+  SuiClientBuilder,
+} from "@redstone-finance/sui-connector";
 import { deconstructNetworkId, NetworkId, RedstoneCommon } from "@redstone-finance/utils";
 import { MoveBlockchainService } from "./MoveBlockchainService";
 import { RadixBlockchainService } from "./RadixBlockchainService";
@@ -27,7 +31,7 @@ export function getNonEvmBlockchainService(networkId: NetworkId, rpcUrls: string
         .withRpcUrls(rpcUrls)
         .build();
 
-      return new SuiBlockchainService(suiClient, undefined);
+      return new SuiBlockchainService(suiClient);
     }
     case "movement":
     case "aptos": {
@@ -89,7 +93,7 @@ export function getNonEvmBlockchainServiceWithTransfer(
         .build();
       const keypair = makeSuiKeypair(privateKey.value);
 
-      return new SuiBlockchainService(suiClient, keypair);
+      return new SuiBlockchainServiceWithTransfer(suiClient, keypair);
     }
     case "movement":
     case "aptos": {

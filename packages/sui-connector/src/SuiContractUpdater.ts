@@ -51,6 +51,10 @@ export class SuiContractUpdater implements ContractUpdater {
     return this.keypair.toSuiAddress();
   }
 
+  getPrivateKey() {
+    return this.keypair;
+  }
+
   private async performExecutingTx(tx: Transaction) {
     const date = Date.now();
     const { digest, data } = await this.executeTxWithExecutor(tx, await this.getExecutor());
