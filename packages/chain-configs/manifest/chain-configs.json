@@ -673,7 +673,7 @@
         "https://rpc.ankr.com/taiko",
         "https://taiko-rpc.publicnode.com"
       ],
-      "avgBlockTimeMs": 60000,
+      "avgBlockTimeMs": 6000,
       "multicall3": {
         "address": "0xaD6CC5a465E5c8284a49eC9eD10EFE275460678c",
         "type": "RedstoneMulticall3",
