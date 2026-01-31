@@ -186,6 +186,39 @@
     },
     "AAVE": {
       "priceFeedAddress": "0xe4630835eA31ABD4247e449A550Fb92c8a5a4E96"
+    },
+    "CAKE": {
+      "priceFeedAddress": "0x1102D8C7A6021e45cCddEC4912dc998Bc5ebD8e5"
+    },
+    "DOT": {
+      "priceFeedAddress": "0xa75CC459De167De5BC21ccdecCdB85e86377B00f"
+    },
+    "FIL": {
+      "priceFeedAddress": "0xe49df9f60D6B1Dd1D5fdfCAB29216f4a8582dA86"
+    },
+    "TWT": {
+      "priceFeedAddress": "0xefe76D1C11F267d8735D240f53317F238D8C77c9"
+    },
+    "slisBNB_FUNDAMENTAL": {
+      "priceFeedAddress": "0x0ABe8C71dc476a1cB4a9a3544169120F56ec59d0",
+      "updateTriggersOverrides": {
+        "deviationPercentage": 0.01,
+        "timeSinceLastUpdateInMilliseconds": 86400000
+      }
+    },
+    "asBNB_FUNDAMENTAL": {
+      "priceFeedAddress": "0xAd1A270a3F7FF685B90445d9da3EE7Eb22F8A1Ec",
+      "updateTriggersOverrides": {
+        "deviationPercentage": 0.01,
+        "timeSinceLastUpdateInMilliseconds": 86400000
+      }
+    },
+    "wBETH_FUNDAMENTAL": {
+      "priceFeedAddress": "0xE333acACEb88B2995a06f8Af689E8e17D6C1551A",
+      "updateTriggersOverrides": {
+        "deviationPercentage": 0.01,
+        "timeSinceLastUpdateInMilliseconds": 86400000
+      }
     }
   }
 }
