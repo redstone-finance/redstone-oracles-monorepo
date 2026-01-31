@@ -2405,20 +2405,6 @@
       },
       "rateFeed": false
     },
-    "PRIME_ECHELON": {
-      "source": [
-        "bingx-usdt",
-        "bitget-usdt",
-        "bitrue-usdt",
-        "bybit-usdt",
-        "gate-usdt",
-        "kraken-usd",
-        "uniswap-v3-ethereum-weth-10000",
-        "xt"
-      ],
-      "denomination": "USD",
-      "rateFeed": false
-    },
     "PROMPT": {
       "source": [
         "bingx-usdt",
