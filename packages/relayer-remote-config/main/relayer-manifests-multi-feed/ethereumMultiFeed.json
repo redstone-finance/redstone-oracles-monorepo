@@ -189,13 +189,6 @@
     "USUAL": {
       "priceFeedAddress": "0x2240AE461B34CC56D654ba5FA5830A243Ca54840"
     },
-    "PRIME_ECHELON": {
-      "priceFeedAddress": "0xC328CDf06CBc77134B84e1f6ed452774947146b6",
-      "updateTriggersOverrides": {
-        "deviationPercentage": 1,
-        "timeSinceLastUpdateInMilliseconds": 86400000
-      }
-    },
     "PROMPT": {
       "priceFeedAddress": "0x25a23C034fbC1eea341F6c92C6D8e6baFCF5DA40",
       "updateTriggersOverrides": {
