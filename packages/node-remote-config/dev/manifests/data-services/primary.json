@@ -4140,7 +4140,8 @@
     },
     "USDm": {
       "source": [
-        "kumbaya-megaeth-cusd-100"
+        "kumbaya-megaeth-cusd-100",
+        "kumbaya-megaeth-usdt0-100"
       ],
       "denomination": "USD",
       "rateFeed": false,
