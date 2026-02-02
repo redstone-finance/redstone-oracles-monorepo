@@ -27,6 +27,7 @@ export type UpdateTriggers = z.infer<typeof UpdateTriggersSchema>;
 const PriceFeedConfigSchema = z.object({
   priceFeedAddress: z.string().optional(),
   updateTriggersOverrides: UpdateTriggersSchema.optional(),
+  isBolt: z.boolean().optional(),
 });
 
 export const CommonManifestSchema = z.object({
@@ -60,6 +61,7 @@ const MultiFeedOnChainRelayerManifestExtension = {
   adapterContractType: AdapterTypesEnum.default(MULTI_FEED),
   priceFeeds: z.record(z.string(), PriceFeedConfigSchema),
   authorizedSigners: z.array(z.string()).optional(),
+  transactionAdapters: z.array(z.string()).optional(),
 };
 
 const MultiFeedOnChainRelayerManifestExtensionStrict = {
