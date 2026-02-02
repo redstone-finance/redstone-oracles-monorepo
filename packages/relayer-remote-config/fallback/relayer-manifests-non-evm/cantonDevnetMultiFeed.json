@@ -6,7 +6,7 @@
   },
   "updateTriggers": {
     "deviationPercentage": 0.2,
-    "timeSinceLastUpdateInMilliseconds": 86400000
+    "timeSinceLastUpdateInMilliseconds": 7000
   },
   "adapterContract": "00bd38e47f5966f047571ea0d3f62f5ee9b1e0b11fb387d53ac10f87ca5fcc6235ca121220dfbf39c42f1a6eb84f56649fe64e0fcaf4135040e923834d215363d6b9f96d07",
   "dataServiceId": "redstone-primary-prod",
