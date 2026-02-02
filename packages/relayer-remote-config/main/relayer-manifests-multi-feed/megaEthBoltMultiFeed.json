@@ -11,14 +11,14 @@
   "dataServiceId": "redstone-primary-prod",
   "isHidden": true,
   "priceFeeds": {
-    "ETH": {},
-    "BTC": {},
-    "USDC": {},
-    "USDT": {},
-    "BNB": {},
-    "XRP": {},
-    "ADA": {},
-    "SOL": {},
-    "DOGE": {}
+    "ETH": { "isBolt": true },
+    "BTC": { "isBolt": true },
+    "USDC": { "isBolt": true },
+    "USDT": { "isBolt": true },
+    "BNB": { "isBolt": true },
+    "XRP": { "isBolt": true },
+    "ADA": { "isBolt": true },
+    "SOL": { "isBolt": true },
+    "DOGE": { "isBolt": true }
   }
 }
