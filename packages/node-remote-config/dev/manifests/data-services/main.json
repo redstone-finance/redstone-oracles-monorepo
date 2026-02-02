@@ -7817,6 +7817,18 @@
     },
     "URNM": {
       "source": [
+        "ws-blocksize",
+        "twelve-data",
+        "financialmodelingprep",
+        "databento-no-closing-price",
+        "ws-polygon-massive-no-closing-price"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "URA": {
+      "source": [
+        "ws-blocksize",
         "twelve-data",
         "financialmodelingprep",
         "databento-no-closing-price",
