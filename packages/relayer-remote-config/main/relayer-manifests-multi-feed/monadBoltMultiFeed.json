@@ -11,10 +11,10 @@
   "dataServiceId": "redstone-primary-prod",
   "isHidden": true,
   "priceFeeds": {
-    "ETH": {},
-    "BTC": {},
-    "MON": {},
-    "SOL": {}
+    "ETH": { "isBolt": true },
+    "BTC": { "isBolt": true },
+    "MON": { "isBolt": true },
+    "SOL": { "isBolt": true }
   },
   "authorizedSigners": [
     "0x8BB8F32Df04c8b654987DAaeD53D6B6091e3B774",
