@@ -1452,6 +1452,20 @@
       "isAuctionModel": false,
       "twoDimensionalFees": false,
       "isMainnet": false
+    },
+    "canton-devnet": {
+      "name": "Canton Devnet",
+      "networkId": "canton/2",
+      "currencySymbol": "XLM",
+      "publicRpcUrls": ["https://localhost:7575"],
+      "avgBlockTimeMs": 10000,
+      "multicall3": {
+        "address": "",
+        "type": "Multicall3"
+      },
+      "isAuctionModel": false,
+      "twoDimensionalFees": false,
+      "isMainnet": false
     }
   },
   "temporaryConfigUpdates": {
