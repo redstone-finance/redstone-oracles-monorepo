@@ -5,8 +5,8 @@ import { SolanaClient } from "./client/SolanaClient";
 export class SolanaBlockchainService implements BlockchainService {
   constructor(protected readonly client: SolanaClient) {}
 
-  async getBalance(addressOrName: string, blockTag?: number): Promise<bigint> {
-    return BigInt(await this.client.getBalance(new PublicKey(addressOrName), blockTag));
+  async getBalance(addressOrName: string, slot?: number): Promise<bigint> {
+    return await this.getNormalizedBalance(addressOrName, slot);
   }
 
   async getBlockNumber(): Promise<number> {
