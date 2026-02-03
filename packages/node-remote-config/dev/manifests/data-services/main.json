@@ -1589,9 +1589,10 @@
     },
     "USD+": {
       "source": [
-        "aerodrome-cl-base-usdc",
-        "aerodrome-cl-base-weth",
-        "uniswap-v3-arbitrumone-usdc-100"
+        "pancake-swap-base-usdc-100",
+        "uniswap-v3-arbitrumone-usdc-100",
+        "uniswap-v3-base-usdc-100",
+        "uniswap-v3-base-weth-500"
       ],
       "denomination": "USD",
       "rateFeed": false
