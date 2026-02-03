@@ -74,13 +74,25 @@ export type TxDeliveryOpts = {
   gasLimitMultiplier?: number;
 
   /**
-   * If we want to take rewards from the last block we can achieve is using percentiles
-   * 75 percentile we will receive reward which was given by 75% of users and 25% of them has given bigger reward
-   * the bigger the value the higher priority fee
-   * If you want to prioritize speed over cost choose number between 50-95
-   * If you want to prioritize cost over speed choose numbers between 1-50
+   * Percentile(s) to use for priority/gas fee estimation across retry attempts.
+   * Can be a single number (for backward compatibility) or an array of numbers.
+   *
+   * Behavior:
+   * - Single number: Uses the same percentile for all retry attempts. The gas multiplier
+   *   is still applied on each retry.
+   * - Array: Each retry attempt uses the next percentile in the array. Once the last
+   *   percentile is reached, it continues to be used for subsequent retries and the
+   *   gas multiplier is used.
+   *
+   * Default: [25, 50, 75, 90, 99]
+   *
+   * Examples:
+   * - 50 - use 50th percentile for all attempts (backward compatible)
+   * - [25, 50, 75, 90, 99] - balanced approach with gradual escalation
+   * - [50, 75, 95, 99] - start higher for faster initial confirmation
+   * - [10, 25, 50, 75, 90, 99] - prioritize cost with more gradual escalation
    */
-  percentileOfPriorityFee?: number;
+  percentileOfPriorityFee?: number | number[];
 
   /**
    * How many blocks to use in eth_feeHistory

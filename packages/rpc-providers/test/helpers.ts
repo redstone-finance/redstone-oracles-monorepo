@@ -1,5 +1,7 @@
-import { Contract, Wallet, providers } from "ethers";
+import { BigNumber, Contract, Wallet, providers } from "ethers";
 import hardhat from "hardhat";
+import Sinon from "sinon";
+import { DEFAULT_TX_DELIVERY_OPTS, Eip1559GasEstimator, TxDeliveryOpts } from "../src";
 import { Counter } from "../typechain-types";
 
 const TEST_PRIVATE_KEY = "0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80";
@@ -57,4 +59,84 @@ export async function deployCounter(
   await contract.deployed();
 
   return new Contract(contract.address, contract.interface, wallet) as Counter;
+}
+
+export function createEip1559TestOpts(
+  overrides: Partial<TxDeliveryOpts> = {}
+): Required<TxDeliveryOpts> {
+  return {
+    ...DEFAULT_TX_DELIVERY_OPTS,
+    logger: () => undefined,
+    ...overrides,
+  } as unknown as Required<TxDeliveryOpts>;
+}
+
+/**
+ * Creates a basic provider mock with eth_feeHistory support
+ */
+export function createBasicProviderMock(
+  baseFee: number,
+  priorityFeeHex: string
+): HardhatProviderMocker {
+  return new HardhatProviderMocker(hardhat.ethers.provider, {
+    getBlock: Sinon.stub().resolves({ baseFeePerGas: BigNumber.from(baseFee) }),
+    send: Sinon.stub().callsFake((method: string) => {
+      if (method === "eth_feeHistory") {
+        return { reward: [[priorityFeeHex]] };
+      }
+      throw new Error(`Unexpected method: ${method}`);
+    }),
+  });
+}
+
+/**
+ * Creates a provider mock with eth_feeHistory and eth_maxPriorityFeePerGas fallback support
+ */
+export function createFallbackProviderMock(
+  baseFee: number,
+  rewardHex: string,
+  fallbackHex: string | null
+): HardhatProviderMocker {
+  return new HardhatProviderMocker(hardhat.ethers.provider, {
+    getBlock: Sinon.stub().resolves({ baseFeePerGas: BigNumber.from(baseFee) }),
+    send: Sinon.stub().callsFake((method: string) => {
+      if (method === "eth_feeHistory") {
+        return { reward: [[rewardHex]] };
+      }
+      if (method === "eth_maxPriorityFeePerGas") {
+        if (fallbackHex === null) {
+          throw new Error("Should not call eth_maxPriorityFeePerGas");
+        }
+        return fallbackHex;
+      }
+      throw new Error(`Unexpected method: ${method}`);
+    }),
+  });
+}
+
+/**
+ * Creates a provider mock that captures percentiles as they are requested
+ */
+export function createPercentileCaptureProviderMock(
+  baseFee: number,
+  rewardHex: string,
+  captureArray: number[]
+): HardhatProviderMocker {
+  return new HardhatProviderMocker(hardhat.ethers.provider, {
+    getBlock: Sinon.stub().resolves({ baseFeePerGas: BigNumber.from(baseFee) }),
+    send: Sinon.stub().callsFake((method: string, params: unknown[]) => {
+      if (method === "eth_feeHistory") {
+        captureArray.push((params[2] as number[])[0]);
+        return { reward: [[rewardHex]] };
+      }
+      throw new Error(`Unexpected method: ${method}`);
+    }),
+  });
+}
+
+/**
+ * Creates an Eip1559GasEstimator with the given options
+ */
+export function createEip1559Estimator(opts: Partial<TxDeliveryOpts> = {}): Eip1559GasEstimator {
+  return new Eip1559GasEstimator(createEip1559TestOpts(opts));
 }
