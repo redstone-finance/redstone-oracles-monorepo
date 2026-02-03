@@ -40,7 +40,7 @@ export const DEFAULT_TX_DELIVERY_OPTS = {
   maxAttempts: 8,
   multiplier: 1.4, //  1.4 ** 5 => 5.24 max scaler
   gasLimitMultiplier: 1.2,
-  percentileOfPriorityFee: 50,
+  percentileOfPriorityFee: [25, 50, 75, 90, 99],
   rewardsPerBlockAggregationAlgorithm: RewardsPerBlockAggregationAlgorithm.Max,
   twoDimensionalFees: false,
   gasOracleTimeout: 5_000,
@@ -79,6 +79,7 @@ export class TxDelivery {
   ) {
     TxDelivery.repeatLogStart ??= Date.now();
     this.opts = _.merge({ ...DEFAULT_TX_DELIVERY_OPTS }, opts);
+    this.overridePercentileIfProvided(opts);
     this.feeEstimator = this.opts.isAuctionModel
       ? new AuctionModelGasEstimator(this.opts)
       : new Eip1559GasEstimator(this.opts);
@@ -246,7 +247,7 @@ export class TxDelivery {
     const [newFees, newGasLimit, newCalldata] = await logPerf(
       () =>
         Promise.all([
-          this.getFees(),
+          this.getFees(this.getAttemptFactor()),
           this.gasLimitEstimator.getGasLimit(this.provider, gasEstimateTx),
           this.resolveTxDeliveryCallData(gasEstimateTx),
         ]),
@@ -272,7 +273,7 @@ export class TxDelivery {
               "getNextNonceFromChain",
               logger
             ),
-          logPerf(() => this.getFees(), "getFees", logger),
+          logPerf(() => this.getFees(0), "getFees", logger),
           logPerf(
             () =>
               this.gasLimitEstimator.getGasLimit(this.provider, Tx.convertToTxDeliveryCall(call)),
@@ -286,8 +287,12 @@ export class TxDelivery {
     );
 
     const { chainId } = network;
+
+    const scaledFees = this.feeEstimator.scaleFees(fees, 0);
     const priceModelDeterminant =
-      "gasPrice" in fees ? { ...fees, type: 0 as const } : { ...fees, type: 2 as const };
+      "gasPrice" in scaledFees
+        ? { ...scaledFees, type: 0 as const }
+        : { ...scaledFees, type: 2 as const };
 
     return {
       ...call,
@@ -335,16 +340,19 @@ export class TxDelivery {
     return e.code === ErrorCode.INSUFFICIENT_FUNDS;
   }
 
-  private async getFees(): Promise<FeeStructure> {
+  private async getFees(attempt: number = 0): Promise<FeeStructure> {
     // some gas oracles relies on this fallback mechanism
     try {
-      return await this.getFeeFromGasOracle(this.provider);
+      return await this.getFeeFromGasOracle(this.provider, attempt);
     } catch {
-      return await this.feeEstimator.getFees(this.provider);
+      return await this.feeEstimator.getFees(this.provider, attempt);
     }
   }
 
-  private async getFeeFromGasOracle(provider: providers.JsonRpcProvider): Promise<FeeStructure> {
+  private async getFeeFromGasOracle(
+    provider: providers.JsonRpcProvider,
+    attempt: number
+  ): Promise<FeeStructure> {
     const { chainId } = await provider.getNetwork();
     const gasOracle = CHAIN_ID_TO_GAS_ORACLE[chainId];
     if (!gasOracle) {
@@ -357,7 +365,7 @@ export class TxDelivery {
 
     try {
       return await RedstoneCommon.timeout(
-        gasOracle(this.opts, this.getAttemptFactor()),
+        gasOracle(this.opts, attempt),
         this.opts.gasOracleTimeout,
         `Custom gas oracle timeout after ${this.opts.gasOracleTimeout}`
       );
@@ -374,6 +382,15 @@ export class TxDelivery {
       return await this.deferredCallData();
     }
     return tx.data;
+  }
+  /**
+   * Override percentileOfPriorityFee if provided to avoid _.merge's array merging behavior.
+   * Without this, _.merge would merge arrays element-by-element
+   */
+  private overridePercentileIfProvided(opts: TxDeliveryOpts): void {
+    if (opts.percentileOfPriorityFee !== undefined) {
+      this.opts.percentileOfPriorityFee = opts.percentileOfPriorityFee;
+    }
   }
 }
 
