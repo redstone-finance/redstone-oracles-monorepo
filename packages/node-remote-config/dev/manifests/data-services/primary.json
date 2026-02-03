@@ -1158,17 +1158,19 @@
         "binance-usdc",
         "binance-usdt",
         "bitget-usdc",
+        "bitmart-usdt",
         "bybit-usdc",
         "bybit-usdt",
+        "gate-usdt",
+        "htx-usdt",
+        "kucoin-usdt",
+        "lbank-usdt",
         "mexc-usdt",
-        "camelot-v3-arbitrumone-usdc",
         "curve-ethereum-dai",
-        "curve-ethereum-fdusd",
         "curve-ethereum-usdt",
-        "uniswap-v3-ethereum-mnt-3000",
         "uniswap-v3-ethereum-usdc-100",
-        "uniswap-v3-ethereum-usdt-100",
-        "uniswap-v4-ethereum-usdt-100"
+        "uniswap-v4-ethereum-usdt-45",
+        "xt"
       ],
       "deviationCheck": {
         "deviationWithRecentValues": {
