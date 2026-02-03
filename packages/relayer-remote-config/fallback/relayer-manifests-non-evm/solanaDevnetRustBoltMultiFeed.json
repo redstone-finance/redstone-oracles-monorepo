@@ -1,0 +1,27 @@
+{
+  "adapterContractType": "multi-feed",
+  "chain": {
+    "name": "devnet",
+    "id": "solana/3"
+  },
+  "updateTriggers": {
+    "deviationPercentage": 0.001,
+    "timeSinceLastUpdateInMilliseconds": 10000
+  },
+  "adapterContract": "perrHDgcDL9B4coCk24kWDnHJ7bVbphVPMJWgN3Q84k",
+  "dataServiceId": "redstone-primary-demo",
+  "priceFeeds": {
+    "BTC": {},
+    "ETH": {},
+    "USDT": {},
+    "MON": {},
+    "SOL": {},
+    "USDC": {}
+  },
+  "authorizedSigners": [
+    "0x21F05763188246E9F1FdAe3Bb67465a1E81b9f21",
+    "0x3F12DE3492D044FeB08a88b402455026B0f1ae04",
+    "0x5451dB9e574C3a9f9C0DA324E498093AC185169A",
+    "0x5De6cDFe3a04a44238c6d6701C7d588f9a796fc8"
+  ]
+}
