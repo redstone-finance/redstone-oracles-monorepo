@@ -40,6 +40,6 @@ export class SolanaContractConnector extends SolanaWriteContractAdapter implemen
   }
 
   async getBalance(addressOrName: string, blockTag?: number) {
-    return await this.blockchainService.getNormalizedBalance(addressOrName, blockTag);
+    return await this.blockchainService.getBalance(addressOrName, blockTag);
   }
 }
