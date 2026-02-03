@@ -1,7 +1,7 @@
 import { Contract } from "@stellar/stellar-sdk";
 import {
   StellarClientBuilder,
-  StellarContractAdapter,
+  StellarContractOps,
   StellarOperationSender,
   makeKeypair,
 } from "../src";
@@ -17,7 +17,7 @@ async function acceptOwnership(contractId = loadContractId()) {
     .build();
 
   const operationSender = new StellarOperationSender(new StellarSigner(keypair), client);
-  const adapter = new StellarContractAdapter(client, new Contract(contractId), operationSender);
+  const adapter = new StellarContractOps(client, new Contract(contractId), operationSender);
 
   const hash = await adapter.acceptOwnership();
   console.log(`accept tx: ${hash}`);

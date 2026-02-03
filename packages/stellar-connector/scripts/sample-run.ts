@@ -1,3 +1,4 @@
+import { BackwardCompatibleConnector } from "@redstone-finance/multichain-kit";
 import {
   ContractParamsProvider,
   getSignersForDataServiceId,
@@ -5,9 +6,9 @@ import {
 } from "@redstone-finance/sdk";
 import {
   makeKeypair,
-  PriceAdapterStellarContractConnector,
   PriceFeedStellarContractConnector,
   StellarClientBuilder,
+  StellarContractConnector,
 } from "../src";
 import { FEEDS } from "./consts";
 import { getRpcUrls } from "./get-rpc-urls";
@@ -24,7 +25,7 @@ async function main() {
     .withStellarNetwork(network)
     .withRpcUrls(await getRpcUrls(network))
     .build();
-  const connector = new PriceAdapterStellarContractConnector(client, adapterId, keypair);
+  const connector = new StellarContractConnector(client, adapterId, keypair);
 
   const paramsProvider = new ContractParamsProvider({
     dataPackagesIds: FEEDS,
@@ -34,9 +35,7 @@ async function main() {
   });
 
   if (WITH_TTL_EXTENDING) {
-    const adapter = await connector.getAdapter();
-
-    await adapter.writePricesFromPayloadToContract(paramsProvider, {
+    await connector.writePricesFromPayloadToContract(paramsProvider, {
       allFeedIds: FEEDS,
       feedAddresses: Object.fromEntries(FEEDS.map((feedId) => [feedId, loadPriceFeedId(feedId)])),
     });
@@ -44,13 +43,11 @@ async function main() {
     return;
   }
 
-  const ethPriceFeedConnector = new PriceFeedStellarContractConnector(
-    client,
-    loadPriceFeedId(),
-    keypair
-  );
+  const ethPriceFeedConnector = new PriceFeedStellarContractConnector(client, loadPriceFeedId());
 
-  await sampleRun(paramsProvider, connector, ethPriceFeedConnector);
+  const oldConnector = new BackwardCompatibleConnector(connector);
+
+  await sampleRun(paramsProvider, oldConnector, ethPriceFeedConnector);
 }
 
 void main().catch((err) => console.log(err));
