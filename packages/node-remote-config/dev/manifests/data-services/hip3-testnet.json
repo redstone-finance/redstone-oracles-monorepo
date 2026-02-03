@@ -75,7 +75,6 @@
         "mexc-usdt",
         "curve-ethereum-usdt",
         "xt-deferred",
-        "uniswap-v3-ethereum-usdc-100",
         "uniswap-v4-ethereum-usdt-45"
       ],
       "deviationCheck": {
@@ -87,7 +86,7 @@
       "denomination": "USD",
       "rateFeed": false
     },
-    "ORACLE_flx:USDe": {
+    "ORACLE_flx:USDE": {
       "source": ["hyperliquid-mainnet-perps-ws-fetcher", "hydromancer-mainnet-perps-ws-fetcher"],
       "customWeightsForWeightedMedian": {
         "hyperliquid-mainnet-perps-ws-fetcher": 10,
@@ -98,13 +97,13 @@
       "denomination": "USD",
       "rateFeed": false
     },
-    "ORACLE_flx:USDe_EMA_150S": {
+    "ORACLE_flx:USDE_EMA_150S": {
       "source": ["ema"],
       "broadcasters": ["influx"],
       "denomination": "USD",
       "rateFeed": false
     },
-    "MARK_flx:USDe": {
+    "MARK_flx:USDE": {
       "source": ["hyperliquid-mainnet-perps-ws-fetcher", "hydromancer-mainnet-perps-ws-fetcher"],
       "customWeightsForWeightedMedian": {
         "hyperliquid-mainnet-perps-ws-fetcher": 10,
@@ -115,7 +114,7 @@
       "denomination": "USD",
       "rateFeed": false
     },
-    "MID_flx:USDe": {
+    "MID_flx:USDE": {
       "source": ["hyperliquid-mainnet-perps-ws-fetcher", "hydromancer-mainnet-perps-ws-fetcher"],
       "customWeightsForWeightedMedian": {
         "hyperliquid-mainnet-perps-ws-fetcher": 10,
@@ -126,37 +125,37 @@
       "denomination": "USD",
       "rateFeed": false
     },
-    "MID_flx:USDe_EMA_150S": {
+    "MID_flx:USDE_EMA_150S": {
       "source": ["ema"],
       "broadcasters": ["influx"],
       "denomination": "USD",
       "rateFeed": false
     },
-    "flx:USDe_MARK_0": {
+    "flx:USDE_MARK_0": {
       "source": ["hip3-felix-crypto-mainnet-fetcher"],
       "broadcasters": ["hyperliquid-hip3"],
       "denomination": "USD",
       "rateFeed": false
     },
-    "flx:USDe_MARK_1": {
+    "flx:USDE_MARK_1": {
       "source": ["hip3-felix-crypto-mainnet-fetcher"],
       "broadcasters": ["hyperliquid-hip3"],
       "denomination": "USD",
       "rateFeed": false
     },
-    "flx:USDe_EXT": {
+    "flx:USDE_EXT": {
       "source": ["hip3-felix-crypto-mainnet-fetcher"],
       "broadcasters": ["hyperliquid-hip3"],
       "denomination": "USD",
       "rateFeed": false
     },
-    "flx:USDe": {
+    "flx:USDE": {
       "source": ["hip3-felix-crypto-mainnet-fetcher"],
       "broadcasters": ["hyperliquid-hip3"],
       "denomination": "USD",
       "rateFeed": false
     },
-    "OPEN_INTEREST_flx:USDe": {
+    "OPEN_INTEREST_flx:USDE": {
       "source": ["hyperliquid-mainnet-perps-ws-fetcher"],
       "broadcasters": [],
       "denomination": "USD",
@@ -2207,25 +2206,25 @@
       "rateFeed": false
     },
     "flx:COPPER_MARK_0": {
-      "source": ["hip3-felix-copper-mainnet-fetcher"],
+      "source": ["hip3-felix-commodities-mainnet-fetcher"],
       "broadcasters": ["hyperliquid-hip3"],
       "denomination": "USD",
       "rateFeed": false
     },
     "flx:COPPER_MARK_1": {
-      "source": ["hip3-felix-copper-mainnet-fetcher"],
+      "source": ["hip3-felix-commodities-mainnet-fetcher"],
       "broadcasters": ["hyperliquid-hip3"],
       "denomination": "USD",
       "rateFeed": false
     },
     "flx:COPPER_EXT": {
-      "source": ["hip3-felix-copper-mainnet-fetcher"],
+      "source": ["hip3-felix-commodities-mainnet-fetcher"],
       "broadcasters": ["hyperliquid-hip3"],
       "denomination": "USD",
       "rateFeed": false
     },
     "flx:COPPER": {
-      "source": ["hip3-felix-copper-mainnet-fetcher"],
+      "source": ["hip3-felix-commodities-mainnet-fetcher"],
       "broadcasters": ["hyperliquid-hip3"],
       "denomination": "USD",
       "rateFeed": false
