@@ -1,0 +1,7 @@
+module Utils where
+
+import Daml.Script
+import DA.Foldable
+import DA.Optional
+
+submitDisclosed subject disclosures cmds = (actAs subject <> foldMap (disclose . fromSome) disclosures) `submit` cmds
