@@ -22,11 +22,6 @@ const INTEGRATIONS_NOT_FOR_TESTING = [
   "stylusSepoliaMultiFeed", // non supported in stylus
 ];
 
-const readers: { [p: NetworkId]: string } = {
-  "stellar/2": "GB4EESHACOD6UXIALAVJMZGKK7XG7EYI5TJXSNSQDD7T4TRSAAN76XWB", // any existing account - zrodelko here
-  "stellar/1": "GB4EESHACOD6UXIALAVJMZGKK7XG7EYI5TJXSNSQDD7T4TRSAAN76XWB", // any existing account - zrodelko here
-};
-
 export const RETRY_CONFIG: Omit<RedstoneCommon.RetryConfig, "fn"> = {
   maxRetries: 3,
   waitBetweenMs: 1000,
@@ -46,7 +41,7 @@ const checkDataFeedIdInContract = async (
   networkId: NetworkId
 ) => {
   const { publicRpcUrls } = getChainConfig(networkId);
-  const priceFeedCreator = await getPriceFeedContractCreator(networkId, "dev", readers[networkId], {
+  const priceFeedCreator = await getPriceFeedContractCreator(networkId, "dev", {
     provider: isEvmNetworkId(networkId)
       ? await getProviderWithRpcUrls(networkId, publicRpcUrls)
       : undefined,

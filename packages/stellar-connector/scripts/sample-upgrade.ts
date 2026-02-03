@@ -2,9 +2,9 @@ import { Contract } from "@stellar/stellar-sdk";
 import { execSync } from "node:child_process";
 import {
   makeKeypair,
-  PriceAdapterStellarContractAdapter,
   StellarClientBuilder,
   StellarContractDeployer,
+  StellarContractOps,
   StellarOperationSender,
 } from "../src";
 import { StellarSigner } from "../src/stellar/StellarSigner";
@@ -21,20 +21,20 @@ export async function getSampleUpgradeTx(contractId: string) {
   const sender = new StellarOperationSender(new StellarSigner(keypair), client);
 
   const deployer = new StellarContractDeployer(client, sender);
-  const adapter = new PriceAdapterStellarContractAdapter(client, contract, sender);
+  const ops = new StellarContractOps(client, contract, sender);
 
   execSync(`make build`, { stdio: "inherit" });
 
   const contractName = loadContractName();
   const wasmHash = await deployer.upload(wasmFilePath(contractName));
-  return { adapter, wasmHash };
+  return { ops, wasmHash };
 }
 
 async function sampleUpgrade(contractId = loadContractId()) {
   const contractName = loadContractName();
-  const { adapter, wasmHash } = await getSampleUpgradeTx(contractId);
+  const { ops, wasmHash } = await getSampleUpgradeTx(contractId);
 
-  console.log(`upgrade`, await adapter.upgrade(wasmHash));
+  console.log(`upgrade`, await ops.upgrade(wasmHash));
 
   console.log(
     `🚀 ${contractName} contract upgraded at: ${contractId}, new wasmHash: ${wasmHash.toString("hex")}`

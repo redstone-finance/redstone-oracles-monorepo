@@ -8,6 +8,7 @@ import {
 } from "@redstone-finance/solana-connector";
 import {
   makeKeypair as makeStellarKeypair,
+  StellarBlockchainServiceWithTransfer,
   StellarClientBuilder,
 } from "@redstone-finance/stellar-connector";
 import {
@@ -65,7 +66,7 @@ export function getNonEvmBlockchainService(networkId: NetworkId, rpcUrls: string
         .withRpcUrls(rpcUrls)
         .build();
 
-      return new StellarBlockchainService(client, undefined);
+      return new StellarBlockchainService(client);
     }
     case "fuel":
     case "canton":
@@ -129,7 +130,7 @@ export function getNonEvmBlockchainServiceWithTransfer(
         .build();
       const keypair = makeStellarKeypair(privateKey.value);
 
-      return new StellarBlockchainService(client, keypair);
+      return new StellarBlockchainServiceWithTransfer(client, keypair);
     }
     case "fuel":
     case "canton":

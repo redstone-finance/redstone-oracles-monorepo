@@ -3,13 +3,11 @@ import {
   StellarClientBuilder,
 } from "@redstone-finance/stellar-connector";
 import { deconstructNetworkId, NetworkId, RedstoneCommon } from "@redstone-finance/utils";
-import { Keypair } from "@stellar/stellar-sdk";
 
 export function getPriceFeedContractConnector(
   networkId: NetworkId,
   address: string,
-  rpcUrls: string[],
-  readerAddress?: string
+  rpcUrls: string[]
 ) {
   const { chainType } = deconstructNetworkId(networkId);
 
@@ -19,14 +17,8 @@ export function getPriceFeedContractConnector(
         .withNetworkId(networkId)
         .withRpcUrls(rpcUrls)
         .build();
-      if (!readerAddress) {
-        throw new Error(`readerAddress is needed for ${chainType}`);
-      }
-      return new PriceFeedStellarContractConnector(
-        client,
-        address,
-        Keypair.fromPublicKey(readerAddress)
-      );
+
+      return new PriceFeedStellarContractConnector(client, address);
     }
     case "radix":
     case "fuel":

@@ -2,10 +2,10 @@ import { Contract } from "@stellar/stellar-sdk";
 import { execSync } from "node:child_process";
 import {
   makeKeypair,
-  PriceAdapterStellarContractAdapter,
   StellarClient,
   StellarClientBuilder,
   StellarContractDeployer,
+  StellarContractOps,
   StellarOperationSender,
 } from "../src";
 import { StellarSigner } from "../src/stellar/StellarSigner";
@@ -29,11 +29,11 @@ async function deployAdapter(
 
   const adapterDeployResult = await deployer.deploy(wasmFilePath(PRICE_ADAPTER));
 
-  await new PriceAdapterStellarContractAdapter(
+  await new StellarContractOps(
     client,
     new Contract(adapterDeployResult.contractId),
     sender
-  ).init(await sender.getPublicKey());
+  ).initContract(await sender.getPublicKey());
 
   console.log(`🚀 adapter contract deployed at: ${adapterDeployResult.contractId}`);
   saveAdapterId(adapterDeployResult.contractId);
