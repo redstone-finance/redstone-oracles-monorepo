@@ -50,7 +50,7 @@ main input = script do
 
   debug $ "RedStonePriceFeed " <> show feedCid
 
-  factoryCoreCid <- submitMulti [owner, beneficiary] [] do
+  factoryCoreCid <- submit (actAs owner <> actAs beneficiary) do
     createCmd RedStonePriceFeedFactory with
       coreId = adapterId
       owner

@@ -1,13 +1,15 @@
 module Featured where
 
 import Daml.Script
-import DA.Optional(fromSome)
-import IRedStoneCoreFeatured
-import Input
-import MockFeatured
 import Splice.Api.FeaturedAppRightV1
+
+import IRedStoneCoreFeatured
 import RedStoneCoreFeaturedClient
 import RedStoneCoreFeatured
+
+import Input
+import MockFeatured
+import Utils
 
 main : Input -> Script ()
 main input = script do
@@ -22,7 +24,7 @@ main input = script do
   featuredCid <- submit dso do
     createCmd MockFeaturedAppRight with dso, provider = owner
 
-  coreCid <- submitMulti [owner, beneficiary] [] do
+  coreCid <- submit (actAs owner <> actAs beneficiary) do
     createCmd RedStoneCoreFeatured with
       coreId = "RedStoneCore-123"
       owner
@@ -32,7 +34,7 @@ main input = script do
   featuredDisclosure <- queryDisclosure @MockFeaturedAppRight owner featuredCid
   coreDisclosure <- queryDisclosure @RedStoneCoreFeatured owner coreCid
 
-  result <- submitWithDisclosures viewer [fromSome featuredDisclosure] do
+  result <- submitDisclosed viewer [featuredDisclosure] do
     exerciseCmd (toInterfaceContractId @IRedStoneCoreFeatured coreCid) GetPricesFeatured with
       payloadHex = input.payload
       feedIds = input.feedIds
@@ -49,7 +51,7 @@ main input = script do
 
   currentTime <- getTime
 
-  result <- submitWithDisclosures client [fromSome featuredDisclosure, fromSome coreDisclosure] do
+  result <- submitDisclosed client [featuredDisclosure, coreDisclosure] do
     exerciseCmd coreClientCid GetPricesDisclosed with
       payloadHex = input.payload
       feedIds = input.feedIds
