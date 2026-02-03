@@ -600,7 +600,7 @@
       "name": "redstone-perun-megaeth-wayfarer",
       "ipAddress": "0.0.0.0",
       "dataServiceId": "redstone-primary-prod",
-      "description": "Data feeds from perun monad nodes - wayfarer",
+      "description": "Data feeds from perun megaETH nodes - wayfarer",
       "evmAddress": "0x17E2609E18f9aE7667467695DC701ce3865464EF",
       "ecdsaPublicKey": "0x0400c9fe900cde8d3cd811d9fce147104d082faf1f2a42dea597abb6731049db301cb21f98747bfa75eafb329e75c42d25f4cbbb78d4fc95f34db1779c03ec88bc",
       "dateAdded": "2025-12-31"
@@ -611,7 +611,7 @@
       "name": "redstone-perun-megaeth-altair",
       "ipAddress": "0.0.0.0",
       "dataServiceId": "redstone-primary-prod",
-      "description": "Data feeds from perun monad nodes - altair",
+      "description": "Data feeds from perun megaETH nodes - altair",
       "evmAddress": "0xBBD80BEf77FD96b1D7D5db0614AF5Cb7b3d1D71F",
       "ecdsaPublicKey": "0x04747806e829d78b6bdd9f9938090eb5fb08590b19ef90410e4e7d1e2ece8830afbc1ac9ecda9fece7ed34d4c03d66c2587020ff4e67e7b4185b2c38cc80b26672",
       "dateAdded": "2025-12-31"
@@ -622,7 +622,7 @@
       "name": "redstone-perun-megaeth-ciri",
       "ipAddress": "0.0.0.0",
       "dataServiceId": "redstone-primary-prod",
-      "description": "Data feeds from perun monad nodes - ciri",
+      "description": "Data feeds from perun megaETH nodes - ciri",
       "evmAddress": "0x6a4D1b2fC6a894928979F152A8c9245D96860604",
       "ecdsaPublicKey": "0x04945155e8b19fdd8cdbaec330adfa992c5d42714a84ba9134baf22bd16f50eefc466c724668552cc5875247fd717f10d8394f8ea78c5f14df28a1c9f0300caf95",
       "dateAdded": "2025-12-31"
@@ -633,7 +633,7 @@
       "name": "redstone-perun-megaeth-morpheus",
       "ipAddress": "0.0.0.0",
       "dataServiceId": "redstone-primary-prod",
-      "description": "Data feeds from perun monad nodes - morpheus",
+      "description": "Data feeds from perun megaETH nodes - morpheus",
       "evmAddress": "0x4780bb20C0293B4b5E00C80A350AcAb467300D2e",
       "ecdsaPublicKey": "0x04103bae16f5c6a15c04788eaae685ff37ba007ea85b8fd161fadb760a7491ad4ffac325f712a8fee74aaf5771734250fe8b0f9aab770b79e578a0e9f9ae34336f",
       "dateAdded": "2025-12-31"
@@ -644,7 +644,7 @@
       "name": "redstone-perun-megaeth-redstone",
       "ipAddress": "0.0.0.0",
       "dataServiceId": "redstone-primary-prod",
-      "description": "Data feeds from perun monad nodes - redstone",
+      "description": "Data feeds from perun megaETH nodes - redstone",
       "evmAddress": "0x80A7dB0c2bE819aFa7C2755F02C8265F157cBDf6",
       "ecdsaPublicKey": "0x043120e254b049a65686970ae725368c345309d5228d8c3312a84da99f83e8aaf5fc632777df4c688b3535672446b321c60cc216913c65ced7c2255b08b46b5912",
       "dateAdded": "2025-12-31"
