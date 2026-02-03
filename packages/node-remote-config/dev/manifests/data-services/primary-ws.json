@@ -11,6 +11,211 @@
     }
   },
   "tokens": {
+    "USDT": {
+      "source": [
+        "bitstamp-usd",
+        "coinbase-usd",
+        "coingecko",
+        "coinmarketcap",
+        "gemini-usd",
+        "kraken-usd",
+        "okx-usd"
+      ],
+      "deviationCheck": {
+        "deviationWithRecentValues": {
+          "maxPercent": 5,
+          "maxDelayMilliseconds": 120000
+        }
+      },
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "USDC": {
+      "source": [
+        "binance-usdt",
+        "bingx-usdt",
+        "bitget-usdt",
+        "bitmart-usdt",
+        "bitrue-usdt",
+        "bitstamp-usd",
+        "bybit-usdt",
+        "coingecko",
+        "curve-ethereum-dai",
+        "curve-ethereum-usdt",
+        "gate-usdt",
+        "gemini-usd",
+        "htx-usdt",
+        "kraken-usd",
+        "kraken-usdt",
+        "kucoin-usdt",
+        "lbank-usdt",
+        "mexc-usdt",
+        "okx-usdt",
+        "uniswap-v3-ethereum-dai-100",
+        "uniswap-v4-ethereum-usdt-1",
+        "uniswap-v4-arbitrumone-usdt-8"
+      ],
+      "deviationCheck": {
+        "deviationWithRecentValues": {
+          "maxPercent": 5,
+          "maxDelayMilliseconds": 120000
+        }
+      },
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "DAI": {
+      "source": [
+        "bingx-usdt",
+        "bitget-usdt",
+        "bitmart-usdt",
+        "bitrue-usdt",
+        "bybit-usdt",
+        "coingecko",
+        "coinmarketcap",
+        "curve-ethereum-usdt",
+        "gate-usdt",
+        "kraken-usd",
+        "kraken-usdt",
+        "lbank-usdt",
+        "mexc-usdt",
+        "okx-usdt"
+      ],
+      "deviationCheck": {
+        "deviationWithRecentValues": {
+          "maxPercent": 5,
+          "maxDelayMilliseconds": 120000
+        }
+      },
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "EUR": {
+      "source": [
+        "binance-usdc",
+        "binance-usdt",
+        "bitstamp-usd",
+        "kraken-usd",
+        "mexc-usdt",
+        "coinbase-btc-reversed",
+        "bitstamp-btc-reversed",
+        "kraken-usdt-reversed",
+        "bitget-usdt-reversed",
+        "okx-btc-reversed"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "BTC": {
+      "source": [
+        "binance-usdc",
+        "binance-usdt",
+        "bingx-usdc",
+        "bingx-usdt",
+        "bitget-usdc",
+        "bitget-usdt",
+        "bitmart-usdt",
+        "bitrue-usdc",
+        "bitrue-usdt",
+        "bitstamp-usd",
+        "bybit-usdc",
+        "bybit-usdt",
+        "coinbase-usd",
+        "gate-usdt",
+        "htx-usdt",
+        "kraken-usd",
+        "kraken-usdc",
+        "kraken-usdt",
+        "kucoin-usdt",
+        "lbank-usdt",
+        "mexc-usdt",
+        "okx-usd",
+        "okx-usdt",
+        "xt"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "ETH": {
+      "source": [
+        "binance-usdc",
+        "binance-usdt",
+        "bingx-usdc",
+        "bingx-usdt",
+        "bitget-usdc",
+        "bitget-usdt",
+        "bitmart-usdt",
+        "bitrue-usdt",
+        "bitstamp-usd",
+        "bybit-usdc",
+        "coinbase-usd",
+        "gate-usdt",
+        "htx-usdt",
+        "kraken-eur",
+        "kraken-usd",
+        "kraken-usdc",
+        "kraken-usdt",
+        "kucoin-usdt",
+        "lbank-usdt",
+        "mexc-usdt",
+        "okx-usd",
+        "okx-usdt",
+        "xt"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "AVAX": {
+      "source": [
+        "binance-usdc",
+        "binance-usdt",
+        "bingx-usdt",
+        "bitget-usdt",
+        "bitmart-usdt",
+        "bitstamp-usd",
+        "coinbase-usd",
+        "gate-usdt",
+        "kraken-eur",
+        "kraken-usd",
+        "kucoin-usdt",
+        "lbank-usdt",
+        "mexc-usdt",
+        "okx-usdt"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "XRP": {
+      "source": [
+        "binance-usdc",
+        "binance-usdt",
+        "bingx-usdc",
+        "bingx-usdt",
+        "bitget-eur",
+        "bitget-usdc",
+        "bitget-usdt",
+        "bitmart-usdt",
+        "bitrue-usdt",
+        "bitstamp-eur",
+        "bitstamp-usd",
+        "bybit-usdt",
+        "coinbase-usd",
+        "gate-usdt",
+        "kraken-eur",
+        "kraken-usd",
+        "kraken-usdc",
+        "kraken-usdt",
+        "kucoin-usdt",
+        "lbank-usdc",
+        "lbank-usdt",
+        "mexc-usdt",
+        "okx-usd",
+        "okx-usdt",
+        "xt"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
     "SPXU": {
       "source": [
         "twelve-data",
