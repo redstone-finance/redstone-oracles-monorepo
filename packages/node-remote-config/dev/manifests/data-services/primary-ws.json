@@ -186,6 +186,40 @@
       "denomination": "USD",
       "rateFeed": false
     },
+    "TRY_FX": {
+      "source": [
+        "alltick-api-reversed",
+        "metal-price-api",
+        "ws-polygon-massive-commodities",
+        "financialmodelingprep",
+        "twelve-data"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "TRY_CEX": {
+      "source": [
+        "paribu-usdt-reversed",
+        "paribu-avax-reversed",
+        "paribu-xrp-reversed",
+        "btcturk-usdt-reversed",
+        "btcturk-eth-reversed",
+        "btcturk-btc-reversed",
+        "binancetr-usdt-reversed",
+        "binancetr-btc-reversed",
+        "binancetr-eth-reversed",
+        "okxtr-usdt-reversed",
+        "okxtr-btc-reversed",
+        "okxtr-eth-reversed"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "TRY": {
+      "source": ["try-condition-fetcher"],
+      "denomination": "USD",
+      "rateFeed": false
+    },
     "IS_NY_STOCKS_MARKET_OPEN": {
       "source": ["is-ny-stocks-market-open-deferred"],
       "denomination": "other",
