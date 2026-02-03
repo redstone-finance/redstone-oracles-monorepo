@@ -2206,7 +2206,7 @@
       "denomination": "USD",
       "rateFeed": false
     },
-    "TRY": {
+    "TRY_CEX": {
       "source": [
         "paribu-usdt-reversed",
         "paribu-avax-reversed",
@@ -2220,6 +2220,18 @@
         "okxtr-usdt-reversed",
         "okxtr-btc-reversed",
         "okxtr-eth-reversed"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "TRY_FX": {
+      "source": [],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "TRY": {
+      "source": [
+        "try-condition-fetcher"
       ],
       "denomination": "USD",
       "rateFeed": false
