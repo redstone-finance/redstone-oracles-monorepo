@@ -8012,6 +8012,11 @@
       "rateFeed": true,
       "denomination": "USD"
     },
+    "JITOSOL": {
+      "source": ["lbank-usdt", "okx-usdt", "bullish-usdc", "coinbase-usd", "kraken-usd", "xt"],
+      "denomination": "USD",
+      "rateFeed": false
+    },
     "CETES": {
       "source": ["etherfuse-api"],
       "denomination": "USD",
