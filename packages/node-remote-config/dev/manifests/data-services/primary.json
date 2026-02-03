@@ -4307,6 +4307,13 @@
       ],
       "rateFeed": false,
       "denomination": "USD"
+    },
+    "DLF_FUNDAMENTAL": {
+      "source": [
+        "accountable-dlf"
+      ],
+      "denomination": "TRY",
+      "rateFeed": true
     }
   },
   "multiPointPackages": {
