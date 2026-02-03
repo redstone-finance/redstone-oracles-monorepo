@@ -17,18 +17,12 @@ type PriceFeedContractCreator = (address: string) => Promise<IPriceFeedContract>
 export async function getPriceFeedContractCreator(
   networkId: NetworkId,
   env: MonitoringEnv,
-  readerAddress?: string,
   overrides?: { provider?: providers.Provider; rpcUrls?: string[] }
 ): Promise<PriceFeedContractCreator> {
   if (isEvmNetworkId(networkId)) {
     return await getEvmPriceFeedContractCreator(networkId, env, overrides?.provider);
   } else {
-    return await getNonEvmPriceFeedContractCreator(
-      networkId,
-      env,
-      readerAddress,
-      overrides?.rpcUrls
-    );
+    return await getNonEvmPriceFeedContractCreator(networkId, env, overrides?.rpcUrls);
   }
 }
 
@@ -51,13 +45,12 @@ async function getEvmPriceFeedContractCreator(
 async function getNonEvmPriceFeedContractCreator(
   networkId: NetworkId,
   env: MonitoringEnv,
-  readerAddress?: string,
   overrideRpcUrls?: string[]
 ): Promise<PriceFeedContractCreator> {
   const rpcUrls = overrideRpcUrls ?? (await fetchParsedRpcUrlsFromSsmByNetworkId(networkId, env));
 
   return async (address) =>
     await NonEvmPriceFeedContract.createWithConnector(
-      getPriceFeedContractConnector(networkId, address, rpcUrls, readerAddress)
+      getPriceFeedContractConnector(networkId, address, rpcUrls)
     );
 }

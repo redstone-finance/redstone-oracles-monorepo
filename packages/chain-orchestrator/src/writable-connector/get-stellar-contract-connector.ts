@@ -1,8 +1,9 @@
+import { BackwardCompatibleConnector } from "@redstone-finance/multichain-kit";
 import {
   getStellarNetwork,
   makeKeypair,
-  PriceAdapterStellarContractConnector,
   StellarClientBuilder,
+  StellarContractConnector,
   StellarNetwork,
 } from "@redstone-finance/stellar-connector";
 import { deconstructNetworkId, RedstoneCommon } from "@redstone-finance/utils";
@@ -53,10 +54,12 @@ export const getStellarContractConnector = (relayerConfig: PartialRelayerConfig)
     expectedTxDeliveryTimeInMS,
   };
 
-  return new PriceAdapterStellarContractConnector(
+  const connector = new StellarContractConnector(
     client,
     adapterContractAddress,
     makeKeypair(privateKey),
     txDeliveryManConfig
   );
+
+  return new BackwardCompatibleConnector(connector);
 };

@@ -1,10 +1,10 @@
-import { makeAdapter } from "./make-adapter";
+import { makeContractOps } from "./make-adapter";
 import { loadContractId } from "./utils";
 
 async function cancelOwnershipTransfer(contractId = loadContractId()) {
-  const adapter = makeAdapter(contractId);
+  const ops = makeContractOps(contractId);
 
-  const hash = await adapter.cancelOwnershipTransfer();
+  const hash = await ops.cancelOwnershipTransfer();
   console.log(`cancel tx: ${hash}`);
 }
 

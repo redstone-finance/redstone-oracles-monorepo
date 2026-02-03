@@ -1,55 +1,40 @@
-import { IContractConnector } from "@redstone-finance/sdk";
+import { FullConnector } from "@redstone-finance/multichain-kit";
 import { Keypair } from "@stellar/stellar-sdk";
+import { StellarBlockchainService } from "../stellar/StellarBlockchainService";
 import { StellarClient } from "../stellar/StellarClient";
+import { StellarOperationSender } from "../stellar/StellarOperationSender";
 import { StellarSigner } from "../stellar/StellarSigner";
+import { StellarTxDeliveryManConfig } from "../stellar/StellarTxDeliveryManConfig";
+import { StellarWriteContractAdapter } from "./StellarContractAdapter";
 
-export class StellarContractConnector<Adapter> implements IContractConnector<Adapter> {
+export class StellarContractConnector extends StellarWriteContractAdapter implements FullConnector {
+  private readonly service: StellarBlockchainService;
+
   constructor(
-    private readonly client: StellarClient,
-    private readonly keypair?: Keypair
-  ) {}
+    client: StellarClient,
+    contractAddress: string,
+    keypair: Keypair,
+    config?: Partial<StellarTxDeliveryManConfig>
+  ) {
+    const sender = new StellarOperationSender(new StellarSigner(keypair), client, config);
+    super(client, contractAddress, sender);
 
-  getAdapter(): Promise<Adapter> {
-    throw new Error("Must be implemented in a subclass");
+    this.service = new StellarBlockchainService(client);
   }
 
   async getBlockNumber() {
-    return await this.client.getBlockNumber();
+    return await this.service.getBlockNumber();
   }
 
   async waitForTransaction(txId: string) {
-    try {
-      await this.client.waitForTx(txId);
-
-      return true;
-    } catch {
-      return false;
-    }
+    return await this.service.waitForTransaction(txId);
   }
 
   async getNormalizedBalance(address: string) {
-    const balance = await this.client.getAccountBalance(address);
-
-    const NORMALIZED_BALANCE_MULTIPLIER = 10n ** (18n - 7n);
-    return balance * NORMALIZED_BALANCE_MULTIPLIER;
+    return await this.service.getNormalizedBalance(address);
   }
 
   async getBalance(address: string) {
-    return await this.getNormalizedBalance(address);
-  }
-
-  async transfer(toAddress: string, amountInXlm: number) {
-    if (!this.keypair) {
-      throw new Error("Keypair is missing");
-    }
-    await this.client.transferXlm(new StellarSigner(this.keypair), toAddress, amountInXlm);
-  }
-
-  getSignerAddress() {
-    if (!this.keypair) {
-      throw new Error("Keypair is missing");
-    }
-
-    return Promise.resolve(this.keypair.publicKey());
+    return await this.service.getBalance(address);
   }
 }

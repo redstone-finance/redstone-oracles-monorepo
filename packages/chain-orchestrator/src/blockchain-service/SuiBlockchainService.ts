@@ -10,27 +10,9 @@ const RETRY_CONFIG: Omit<RedstoneCommon.RetryConfig, "fn"> = {
   },
 };
 
-export class SuiBlockchainService {
-  private readonly service: Service;
-
-  constructor(private readonly client: SuiClient) {
-    this.service = new Service(client);
-  }
-
-  async getBalance(addressOrName: string): Promise<bigint> {
-    return await this.service.getNormalizedBalance(addressOrName);
-  }
-
-  async getBlockNumber() {
-    return await this.service.getBlockNumber();
-  }
-
-  async waitForTransaction(txId: string) {
-    return await this.service.waitForTransaction(txId);
-  }
-
-  async getNormalizedBalance(address: string) {
-    return await this.service.getNormalizedBalance(address);
+export class SuiBlockchainService extends Service {
+  constructor(client: SuiClient) {
+    super(client);
   }
 
   async getTimeForBlock(block: number): Promise<Date> {

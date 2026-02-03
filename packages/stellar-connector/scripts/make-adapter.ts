@@ -2,13 +2,13 @@ import { Contract } from "@stellar/stellar-sdk";
 import {
   makeKeypair,
   StellarClientBuilder,
-  StellarContractAdapter,
+  StellarContractOps,
   StellarOperationSender,
 } from "../src";
 import { StellarSigner } from "../src/stellar/StellarSigner";
 import { readNetwork, readUrl } from "./utils";
 
-export function makeAdapter(contractId: string) {
+export function makeContractOps(contractId: string) {
   const keypair = makeKeypair();
   const client = new StellarClientBuilder()
     .withStellarNetwork(readNetwork())
@@ -16,7 +16,7 @@ export function makeAdapter(contractId: string) {
     .build();
 
   const operationSender = new StellarOperationSender(new StellarSigner(keypair), client);
-  const adapter = new StellarContractAdapter(client, new Contract(contractId), operationSender);
+  const adapter = new StellarContractOps(client, new Contract(contractId), operationSender);
 
   return adapter;
 }
