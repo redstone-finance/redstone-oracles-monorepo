@@ -1,4 +1,4 @@
-![1080x360](https://user-images.githubusercontent.com/48165439/198347984-c69b1606-e6c6-460d-b3e8-d03694345faa.jpeg)
+![redstone-banner](https://github.com/user-attachments/assets/88a17ebf-1428-4c8e-8e58-78a1b6a501df)
 
 # RedStone Oracles Monorepo
 
