@@ -1,7 +1,7 @@
 {
   "interval": 1000,
   "priceAggregator": "median",
-  "defaultSource": ["coingecko"],
+  "defaultSource": ["kraken-usd"],
   "sourceTimeout": 2000,
   "minValidSourcesPercentage": 1,
   "deviationCheck": {
@@ -11,14 +11,14 @@
     }
   },
   "tokens": {
-    "BTC": {
-      "source": ["bitfinex-usd", "bitstamp-usd", "kaiko-v2", "xt"]
+    "USD+": {
+      "source": [
+        "pancake-swap-base-usdc-100",
+        "uniswap-v3-base-usdc-100",
+        "uniswap-v3-base-weth-500"
+      ]
     },
-    "ETH": {
-      "source": ["bitfinex-usd", "bitstamp-usd", "kaiko-v2", "xt"]
-    }
-  },
-  "multiPointPackages": {
-    "___FAST___": ["BTC", "ETH"]
+    "USDC": {},
+    "ETH": {}
   }
 }
