@@ -4292,6 +4292,21 @@
       ],
       "denomination": "USD",
       "rateFeed": false
+    },
+    "CC": {
+      "source": [
+        "bybit-usdc",
+        "bybit-usdt",
+        "gate-usdt",
+        "kraken-eur",
+        "kraken-usd",
+        "kraken-usdc",
+        "kucoin-usdt",
+        "mexc-usdc",
+        "xt"
+      ],
+      "rateFeed": false,
+      "denomination": "USD"
     }
   },
   "multiPointPackages": {
