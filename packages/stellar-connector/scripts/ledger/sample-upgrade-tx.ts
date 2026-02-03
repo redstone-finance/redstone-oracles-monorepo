@@ -5,9 +5,9 @@ import { loadContractId } from "../utils";
 const FEE_STROOPS = "1000";
 
 async function sampleUpgrade(contractId = loadContractId()) {
-  const { adapter, wasmHash } = await getSampleUpgradeTx(contractId);
+  const { ops, wasmHash } = await getSampleUpgradeTx(contractId);
 
-  const tx = await adapter.upgradeTx(MULTISIG_ADDRESS, wasmHash, FEE_STROOPS);
+  const tx = await ops.upgradeTx(MULTISIG_ADDRESS, wasmHash, FEE_STROOPS);
 
   console.log(tx.toEnvelope().toXDR("hex"));
 }

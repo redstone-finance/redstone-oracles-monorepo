@@ -1,13 +1,14 @@
 import { Contract } from "@stellar/stellar-sdk";
 import {
   makeKeypair,
-  PriceFeedStellarContractAdapter,
   StellarClient,
   StellarClientBuilder,
   StellarContractDeployer,
+  StellarContractOps,
   StellarOperationSender,
 } from "../src";
 import { StellarSigner } from "../src/stellar/StellarSigner";
+import * as XdrUtils from "../src/XdrUtils";
 import { MULTISIG_ADDRESS, PRICE_FEED_WASM_HASH } from "./consts";
 import { readNetwork, readPriceFeedId, readUrl, savePriceFeedId } from "./utils";
 
@@ -17,9 +18,9 @@ export async function initPriceFeed(
   sender: StellarOperationSender,
   feedId: string
 ) {
-  await new PriceFeedStellarContractAdapter(client, new Contract(contractId), sender).init(
+  await new StellarContractOps(client, new Contract(contractId), sender).initContract(
     MULTISIG_ADDRESS,
-    feedId
+    XdrUtils.stringToScVal(feedId)
   );
 
   console.log(`🚀 price feed for ${feedId} contract deployed at: ${contractId}`);
