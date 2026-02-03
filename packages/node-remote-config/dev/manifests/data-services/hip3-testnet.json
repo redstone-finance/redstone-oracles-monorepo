@@ -31,6 +31,143 @@
       "rateFeed": false,
       "broadcasters": ["influx"]
     },
+    "USDC": {
+      "source": [
+        "binance-usdt",
+        "bingx-usdt",
+        "bitget-usdt",
+        "bitmart-usdt",
+        "bitrue-usdt",
+        "bitstamp-usd",
+        "bybit-usdt",
+        "coingecko-deferred",
+        "curve-ethereum-usdt",
+        "gate-usdt",
+        "gemini-usd",
+        "htx-usdt",
+        "kraken-usd",
+        "kraken-usdt",
+        "kucoin-usdt",
+        "lbank-usdt",
+        "mexc-usdt",
+        "okx-usdt",
+        "uniswap-v4-ethereum-usdt-1"
+      ],
+      "deviationCheck": {
+        "deviationWithRecentValues": {
+          "maxPercent": 5,
+          "maxDelayMilliseconds": 120000
+        }
+      },
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "USDe": {
+      "source": [
+        "binance-usdc",
+        "binance-usdt",
+        "kucoin-usdt",
+        "bitget-usdt",
+        "gate-usdt",
+        "okx-usdt",
+        "bybit-usdt",
+        "kucoin-usdt",
+        "mexc-usdt",
+        "curve-ethereum-usdt",
+        "xt-deferred",
+        "uniswap-v3-ethereum-usdc-100",
+        "uniswap-v4-ethereum-usdt-45"
+      ],
+      "deviationCheck": {
+        "deviationWithRecentValues": {
+          "maxPercent": 5,
+          "maxDelayMilliseconds": 120000
+        }
+      },
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "ORACLE_flx:USDe": {
+      "source": ["hyperliquid-mainnet-perps-ws-fetcher", "hydromancer-mainnet-perps-ws-fetcher"],
+      "customWeightsForWeightedMedian": {
+        "hyperliquid-mainnet-perps-ws-fetcher": 10,
+        "hydromancer-mainnet-perps-ws-fetcher": 1
+      },
+      "priceAggregator": "constantWeightMedian",
+      "broadcasters": ["influx"],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "ORACLE_flx:USDe_EMA_150S": {
+      "source": ["ema"],
+      "broadcasters": ["influx"],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "MARK_flx:USDe": {
+      "source": ["hyperliquid-mainnet-perps-ws-fetcher", "hydromancer-mainnet-perps-ws-fetcher"],
+      "customWeightsForWeightedMedian": {
+        "hyperliquid-mainnet-perps-ws-fetcher": 10,
+        "hydromancer-mainnet-perps-ws-fetcher": 1
+      },
+      "priceAggregator": "constantWeightMedian",
+      "broadcasters": ["influx"],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "MID_flx:USDe": {
+      "source": ["hyperliquid-mainnet-perps-ws-fetcher", "hydromancer-mainnet-perps-ws-fetcher"],
+      "customWeightsForWeightedMedian": {
+        "hyperliquid-mainnet-perps-ws-fetcher": 10,
+        "hydromancer-mainnet-perps-ws-fetcher": 1
+      },
+      "priceAggregator": "constantWeightMedian",
+      "broadcasters": ["influx"],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "MID_flx:USDe_EMA_150S": {
+      "source": ["ema"],
+      "broadcasters": ["influx"],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "flx:USDe_MARK_0": {
+      "source": ["hip3-felix-crypto-mainnet-fetcher"],
+      "broadcasters": ["hyperliquid-hip3"],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "flx:USDe_MARK_1": {
+      "source": ["hip3-felix-crypto-mainnet-fetcher"],
+      "broadcasters": ["hyperliquid-hip3"],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "flx:USDe_EXT": {
+      "source": ["hip3-felix-crypto-mainnet-fetcher"],
+      "broadcasters": ["hyperliquid-hip3"],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "flx:USDe": {
+      "source": ["hip3-felix-crypto-mainnet-fetcher"],
+      "broadcasters": ["hyperliquid-hip3"],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "OPEN_INTEREST_flx:USDe": {
+      "source": ["hyperliquid-mainnet-perps-ws-fetcher"],
+      "broadcasters": [],
+      "denomination": "USD",
+      "rateFeed": false,
+      "deviationCheck": {
+        "deviationWithRecentValues": {
+          "maxPercent": 1000000000,
+          "maxDelayMilliseconds": 1000
+        }
+      }
+    },
     "XMR": {
       "source": ["bitfinex-ust", "kraken_deferred-usd", "kucoin-usdt", "mexc-usdt", "xt-deferred"],
       "deviationCheck": {
@@ -2007,13 +2144,7 @@
       }
     },
     "XCU": {
-      "source": [
-        "ws-lmax",
-        "alltick-api-deferred",
-        "metal-price-api-deferred",
-        "metals-api-deferred",
-        "ws-blocksize"
-      ],
+      "source": ["ws-lmax", "alltick-api-deferred", "metal-price-api-deferred", "ws-blocksize"],
       "priceAggregator": "primarySource",
       "primarySourceAggregatorConfig": {
         "primarySource": "ws-lmax",
