@@ -3,10 +3,11 @@ import { Contract, Keypair } from "@stellar/stellar-sdk";
 import { makeServer, PRICE_ADAPTER, wasmFilePath } from "../scripts/utils";
 import {
   makeKeypair,
-  PriceAdapterStellarContractAdapter,
   StellarClient,
   StellarContractDeployer,
+  StellarContractOps,
   StellarOperationSender,
+  StellarWriteContractAdapter,
 } from "../src";
 import { StellarSigner } from "../src/stellar/StellarSigner";
 
@@ -17,8 +18,9 @@ const WRITE_TEST_TIMEOUT_MS = 20 * 1_000;
 jest.setTimeout(30000);
 
 describe("StellarPricesContractAdapter", () => {
-  let adapter: PriceAdapterStellarContractAdapter;
+  let adapter: StellarWriteContractAdapter;
   let client: StellarClient;
+  let contractOps: StellarContractOps;
   let keypair: Keypair;
 
   let paramsOneFeed: ContractParamsProvider;
@@ -33,9 +35,10 @@ describe("StellarPricesContractAdapter", () => {
     const deployer = new StellarContractDeployer(client, writer);
     const { contractId: adapterId } = await deployer.deploy(wasmFilePath(PRICE_ADAPTER));
 
-    adapter = new PriceAdapterStellarContractAdapter(client, new Contract(adapterId), writer);
+    adapter = new StellarWriteContractAdapter(client, adapterId, writer);
+    contractOps = new StellarContractOps(client, new Contract(adapterId), writer);
 
-    await adapter.init(keypair.publicKey());
+    await contractOps.initContract(keypair.publicKey());
   }, DEPLOY_CONTRACT_TIMEOUT_MS);
 
   beforeEach(() => {
@@ -55,13 +58,13 @@ describe("StellarPricesContractAdapter", () => {
 
   describe("init", () => {
     it("should not be allowed to be called again", async () => {
-      await expect(adapter.init(keypair.publicKey())).rejects.toThrowError();
+      await expect(contractOps.initContract(keypair.publicKey())).rejects.toThrowError();
     });
   });
 
   describe("changeOwner", () => {
     it("should allow to change owner of a contract", async () => {
-      await adapter.changeOwner(keypair.publicKey());
+      await contractOps.changeOwner(keypair.publicKey());
     });
   });
 

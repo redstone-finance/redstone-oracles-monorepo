@@ -7,28 +7,11 @@ import { ConfirmedSignatureInfo, Connection, PublicKey } from "@solana/web3.js";
 
 const TRANSACTION_FETCHING_BATCH_SIZE = 1000;
 
-export class SolanaBlockchainService {
+export class SolanaBlockchainService extends Service {
   private logger = loggerFactory("solana-blockchain-service");
-  private readonly service: Service;
 
   constructor(private connection: Connection) {
-    this.service = new Service(new SolanaClient(connection));
-  }
-
-  async getBlockNumber() {
-    return await this.service.getBlockNumber();
-  }
-
-  async waitForTransaction(txId: string) {
-    return await this.service.waitForTransaction(txId);
-  }
-
-  async getNormalizedBalance(address: string, blockNumber?: number) {
-    return await this.service.getNormalizedBalance(address, blockNumber);
-  }
-
-  async getBalance(addressOrName: string, blockTag?: number) {
-    return await this.service.getNormalizedBalance(addressOrName, blockTag);
+    super(new SolanaClient(connection));
   }
 
   async getTimeForBlock(slot: number): Promise<Date> {

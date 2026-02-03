@@ -12,8 +12,9 @@ import {
   SolanaContractAdapter,
 } from "@redstone-finance/solana-connector";
 import {
-  PriceAdapterStellarContractConnector,
+  StellarBlockchainService,
   StellarClientBuilder,
+  StellarContractAdapter,
 } from "@redstone-finance/stellar-connector";
 import {
   makeSuiConfig,
@@ -125,5 +126,8 @@ function getStellarContractConnector(
     .withRpcUrls(rpcUrls)
     .build();
 
-  return new PriceAdapterStellarContractConnector(client, relayerManifest.adapterContract);
+  const adapter = new StellarContractAdapter(client, relayerManifest.adapterContract);
+  const service = new StellarBlockchainService(client);
+
+  return new BackwardCompatibleReadOnlyConnector(adapter, service);
 }

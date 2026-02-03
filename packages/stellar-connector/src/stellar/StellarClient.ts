@@ -123,12 +123,13 @@ export class StellarClient {
 
   async buildTransaction(
     operation: xdr.Operation<Operation.InvokeHostFunction>,
-    sender: string,
+    sender: string | Account,
     fee = BASE_FEE,
     timeout = TRANSACTION_TIMEOUT_SEC,
     sorobanData?: xdr.SorobanTransactionData
   ) {
-    const builder = new TransactionBuilder(await this.getAccount(sender), {
+    const account = typeof sender === "string" ? await this.getAccount(sender) : sender;
+    const builder = new TransactionBuilder(account, {
       fee,
       networkPassphrase: (await this.getNetwork()).passphrase,
     })
@@ -140,7 +141,7 @@ export class StellarClient {
 
   async simulateOperation<T>(
     operation: xdr.Operation<Operation.InvokeHostFunction>,
-    sender: string,
+    sender: string | Account,
     transform: (sim: rpc.Api.SimulateTransactionSuccessResponse) => T
   ) {
     const tx = await this.buildTransaction(operation, sender);

@@ -9,8 +9,8 @@ import { ContractParamsProviderMock } from "@redstone-finance/sdk";
 import { Keypair } from "@stellar/stellar-sdk";
 import { execSync } from "child_process";
 import {
-  PriceAdapterStellarContractConnector,
   StellarClient,
+  StellarContractConnector,
   StellarContractDeployer,
   StellarOperationSender,
 } from "../../src";
@@ -22,7 +22,7 @@ const WASM_PATH = "stellar/target/agnostic-tests/redstone_adapter.wasm";
 export class StellarTestEnvironment implements PushTestEnvironment, PullTestEnvironment {
   constructor(
     private readonly rover: MarsRover,
-    private readonly connector: PriceAdapterStellarContractConnector
+    private readonly connector: StellarContractConnector
   ) {}
 
   configure(_: ContractConfiguration): Promise<void> {
@@ -47,18 +47,14 @@ export class StellarTestEnvironment implements PushTestEnvironment, PullTestEnvi
       return Buffer.from(payload.replace("0x", ""));
     });
 
-    const hash = await (
-      await this.connector.getAdapter()
-    ).writePricesFromPayloadToContract(paramsProvider);
+    const hash = await this.connector.writePricesFromPayloadToContract(paramsProvider);
 
     await this.connector.waitForTransaction(hash);
   }
 
   async read(dataFeedIds: string[]): Promise<number[]> {
     return (
-      await (
-        await this.connector.getAdapter()
-      ).readPricesFromContract(
+      await this.connector.readPricesFromContract(
         new ContractParamsProviderMock(dataFeedIds, "", () => Buffer.from([]))
       )
     ).map((bn) => Number(bn));
@@ -100,9 +96,7 @@ export class StellarTestEnvironment implements PushTestEnvironment, PullTestEnvi
       return Buffer.from(payload.replace("0x", ""));
     });
 
-    return (await (await this.connector.getAdapter()).getPricesFromPayload(paramsProvider)).map(
-      (bn) => Number(bn)
-    );
+    return (await this.connector.getPricesFromPayload(paramsProvider)).map((bn) => Number(bn));
   }
 
   finish(): Promise<void> {
@@ -130,7 +124,7 @@ export async function getTestEnv() {
 
   return new StellarTestEnvironment(
     marsRover,
-    new PriceAdapterStellarContractConnector(client, contractId, keypair, {
+    new StellarContractConnector(client, contractId, keypair, {
       expectedTxDeliveryTimeInMs: 10,
       maxTxSendAttempts: 2,
     })
