@@ -8693,6 +8693,11 @@
       ],
       "denomination": "TRY",
       "rateFeed": true
+    },
+    "KOSPI": {
+      "source": [],
+      "denomination": "USD",
+      "rateFeed": true
     }
   }
 }
