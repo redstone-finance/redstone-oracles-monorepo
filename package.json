@@ -114,6 +114,9 @@
     "node-datachannel": {
       "built": true
     },
+    "node-hid": {
+      "built": true
+    },
     "puppeteer": {
       "built": true
     },
