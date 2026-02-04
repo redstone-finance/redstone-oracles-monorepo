@@ -51,7 +51,8 @@ export function resolveMonitoringManifest<T>(manifest: GenericMonitoringManifest
 
 const logger = loggerFactory("remote-monitoring-manifest-config");
 export async function getRemoteMonitoringManifestConfigFromEnv(): Promise<
-  | { shouldUseLocal: true }
+  // manifestsApiKey is optional in shouldUseLocal case - Perun manifests need it
+  | { shouldUseLocal: true; manifestsApiKey?: string }
   | {
       shouldUseLocal: false;
       manifestsHosts: string[];
@@ -60,6 +61,15 @@ export async function getRemoteMonitoringManifestConfigFromEnv(): Promise<
       manifestsGitRef: string;
     }
 > {
+  const manifestsApiKeyPath = RedstoneCommon.getFromEnv(
+    "MONITORING_MANIFESTS_APIKEY_PATH",
+    z.string().optional()
+  );
+  const manifestsApiKey = await getSSMParamWithEnvFallback(
+    manifestsApiKeyPath,
+    "MONITORING_MANIFESTS_APIKEY",
+    true
+  );
   // this is hack to ease testing locally use only for that
   if (
     RedstoneCommon.getFromEnv("OVERRIDE_REMOTE_MANIFEST_WITH_LOCAL", z.boolean().default(false))
@@ -67,7 +77,7 @@ export async function getRemoteMonitoringManifestConfigFromEnv(): Promise<
     logger.warn(
       `OVERRIDE_REMOTE_MANIFEST_WITH_LOCAL is set to true, overriding remote manifest with local. SHOULD BE SEEN ONLY IN TESTS OR DEV ENV`
     );
-    return { shouldUseLocal: true };
+    return { shouldUseLocal: true, manifestsApiKey };
   }
 
   const manifestsHostsData = RedstoneCommon.getFromEnv(
@@ -79,19 +89,11 @@ export async function getRemoteMonitoringManifestConfigFromEnv(): Promise<
       })
     )
   );
-  const manifestsApiKeyPath = RedstoneCommon.getFromEnv(
-    "MONITORING_MANIFESTS_APIKEY_PATH",
-    z.string().optional()
-  );
   const manifestsGitRef = RedstoneCommon.getFromEnv(
     "MONITORING_MANIFESTS_GITREF",
     z.string().default("main")
   );
 
-  const manifestsApiKey = await getSSMParamWithEnvFallback(
-    manifestsApiKeyPath,
-    "MONITORING_MANIFESTS_APIKEY"
-  );
   RedstoneCommon.assert(manifestsApiKey, "Failed to fetch manifest api key from SSM");
 
   return {

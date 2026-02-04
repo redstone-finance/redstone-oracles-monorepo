@@ -2,6 +2,7 @@ import { GetParameterCommand, GetParametersCommand, SSMClient } from "@aws-sdk/c
 import * as ArnParser from "@aws-sdk/util-arn-parser";
 import { RedstoneCommon } from "@redstone-finance/utils";
 import _ from "lodash";
+import z from "zod";
 import { getSsmClient } from "./aws-clients";
 import { readS3Object } from "./s3";
 import {
@@ -131,11 +132,30 @@ export const secretsToEnv = async (): Promise<void> => {
   }
 };
 
-export const getSSMParamWithEnvFallback = async (
+export async function getSSMParamWithEnvFallback(
   parameterNameOrArn: string | undefined,
   envVarName: string,
+  optional: true,
   region?: string
-) => {
+): Promise<string | undefined>;
+export async function getSSMParamWithEnvFallback(
+  parameterNameOrArn: string | undefined,
+  envVarName: string,
+  optional: false,
+  region?: string
+): Promise<string>;
+export async function getSSMParamWithEnvFallback(
+  parameterNameOrArn: string | undefined,
+  envVarName: string,
+  optional?: undefined,
+  region?: string
+): Promise<string>;
+export async function getSSMParamWithEnvFallback(
+  parameterNameOrArn: string | undefined,
+  envVarName: string,
+  optional = false,
+  region?: string
+): Promise<string | undefined> {
   if (parameterNameOrArn) {
     const value = await getSSMParameterValue(parameterNameOrArn, region);
     if (value !== undefined) {
@@ -143,8 +163,8 @@ export const getSSMParamWithEnvFallback = async (
     }
   }
 
-  return RedstoneCommon.getFromEnv(envVarName);
-};
+  return RedstoneCommon.getFromEnv(envVarName, optional ? z.string().optional() : z.string());
+}
 
 const getRegionFromArn = (arnOrName: string) => {
   if (!ArnParser.validate(arnOrName)) {
