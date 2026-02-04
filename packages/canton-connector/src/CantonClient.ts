@@ -132,48 +132,82 @@ export class CantonClient {
     return result;
   }
 
-  async exerciseChoices<Arg extends object, Res = object>(
+  async exerciseChoicesWithoutWaiting<Arg extends object>(
     commands: { templateId: string; contractId: string; choice: string; choiceArgument: Arg }[],
     timestamp: Date,
     disclosedContracts?: DisclosedContract[]
-  ): Promise<Record<string, Res>> {
+  ) {
     const choices = [...new Set(commands.map((c) => c.choice))].join(",");
-    const result = await this.performRequest(
+    const commandId = `batch-${choices}-${timestamp.getTime()}`;
+
+    await this.performRequest(
       () =>
-        // eslint-disable-next-line @typescript-eslint/no-deprecated -- needed and available for 3.4.9 for now
-        DefaultService.postV2CommandsSubmitAndWaitForTransactionTree({
+        DefaultService.postV2CommandsAsyncSubmit({
           commands: commands.map((command) => ({ ExerciseCommand: command })),
-          commandId: `batch-${choices}-${commands.length}-${timestamp.getTime()}`,
+          commandId,
           actAs: [this.partyId],
           disclosedContracts,
           userId: !this.tokenProvider ? LOCAL_USER : undefined,
         }),
-      `postV2CommandsSubmitAndWaitForTransactionTree batch[${commands.length}]`
+      `postV2CommandsAsyncSubmit batch[${commands.length}]`
     );
 
-    const { eventsById, synchronizerId } = result.transactionTree;
-    const events = Object.values(eventsById);
+    return commandId;
+  }
+
+  async exerciseChoices<Arg extends object, Res = object>(
+    commands: { templateId: string; contractId: string; choice: string; choiceArgument: Arg }[],
+    timestamp: Date,
+    disclosedContracts?: DisclosedContract[]
+  ) {
+    const choices = [...new Set(commands.map((c) => c.choice))].join(",");
+
+    const result = await this.performRequest(
+      () =>
+        DefaultService.postV2CommandsSubmitAndWaitForTransaction({
+          commands: {
+            commands: commands.map((command) => ({ ExerciseCommand: command })),
+            commandId: `batch-${choices}-${commands.length}-${timestamp.getTime()}`,
+            actAs: [this.partyId],
+            disclosedContracts,
+            userId: !this.tokenProvider ? LOCAL_USER : undefined,
+          },
+          transactionFormat: {
+            transactionShape: TransactionFormat.transactionShape.TRANSACTION_SHAPE_LEDGER_EFFECTS,
+            eventFormat: {
+              filtersByParty: { [this.partyId]: {} },
+              verbose: false,
+            },
+          },
+        }),
+      `postV2CommandsSubmitAndWaitForTransaction batch[${commands.length}]`
+    );
+
+    const { events, synchronizerId } = result.transaction;
+    if (!RedstoneCommon.isDefined(events)) {
+      throw new Error(`field events undefined even though explicitly requested`);
+    }
     const results: Record<string, Res> = {};
 
     for (const event of events) {
-      if (!("ExercisedTreeEvent" in event)) {
+      if (!("ExercisedEvent" in event)) {
         continue;
       }
 
-      const exercisedEvent = event.ExercisedTreeEvent.value;
+      const exercisedEvent = event.ExercisedEvent;
 
       if (exercisedEvent.consuming) {
         const createdEvent = events.find(
           (e) =>
-            "CreatedTreeEvent" in e &&
-            e.CreatedTreeEvent.value.nodeId > exercisedEvent.nodeId &&
-            e.CreatedTreeEvent.value.nodeId <= exercisedEvent.lastDescendantNodeId
+            "CreatedEvent" in e &&
+            e.CreatedEvent.nodeId > exercisedEvent.nodeId &&
+            e.CreatedEvent.nodeId <= exercisedEvent.lastDescendantNodeId
         );
 
-        if (createdEvent && "CreatedTreeEvent" in createdEvent) {
-          const newContractId = createdEvent.CreatedTreeEvent.value.contractId;
+        if (createdEvent && "CreatedEvent" in createdEvent) {
+          const newContractId = createdEvent.CreatedEvent.contractId;
           results[newContractId] = makeActiveContractData(
-            createdEvent.CreatedTreeEvent.value,
+            createdEvent.CreatedEvent,
             synchronizerId
           ) as unknown as Res;
           continue;
