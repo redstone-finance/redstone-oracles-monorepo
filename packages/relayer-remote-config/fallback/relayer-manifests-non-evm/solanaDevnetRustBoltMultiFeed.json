@@ -5,8 +5,8 @@
     "id": "solana/3"
   },
   "updateTriggers": {
-    "deviationPercentage": 0.001,
-    "timeSinceLastUpdateInMilliseconds": 10000
+    "deviationPercentage": 0.1,
+    "timeSinceLastUpdateInMilliseconds": 86400000
   },
   "adapterContract": "perrHDgcDL9B4coCk24kWDnHJ7bVbphVPMJWgN3Q84k",
   "dataServiceId": "redstone-primary-demo",
