@@ -69,9 +69,7 @@
         "kucoin-usdt",
         "bitget-usdt",
         "gate-usdt",
-        "okx-usdt",
         "bybit-usdt",
-        "kucoin-usdt",
         "mexc-usdt",
         "curve-ethereum-usdt",
         "xt-deferred",
@@ -1480,25 +1478,25 @@
       "rateFeed": false
     },
     "flx:COPPER_MARK_0": {
-      "source": ["hip3-felix-commodities-mainnet-fetcher"],
+      "source": ["hip3-felix-copper-mainnet-fetcher"],
       "broadcasters": ["hyperliquid-hip3"],
       "denomination": "USD",
       "rateFeed": false
     },
     "flx:COPPER_MARK_1": {
-      "source": ["hip3-felix-commodities-mainnet-fetcher"],
+      "source": ["hip3-felix-copper-mainnet-fetcher"],
       "broadcasters": ["hyperliquid-hip3"],
       "denomination": "USD",
       "rateFeed": false
     },
     "flx:COPPER_EXT": {
-      "source": ["hip3-felix-commodities-mainnet-fetcher"],
+      "source": ["hip3-felix-copper-mainnet-fetcher"],
       "broadcasters": ["hyperliquid-hip3"],
       "denomination": "USD",
       "rateFeed": false
     },
     "flx:COPPER": {
-      "source": ["hip3-felix-commodities-mainnet-fetcher"],
+      "source": ["hip3-felix-copper-mainnet-fetcher"],
       "broadcasters": ["hyperliquid-hip3"],
       "denomination": "USD",
       "rateFeed": false
