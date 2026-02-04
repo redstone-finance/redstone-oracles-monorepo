@@ -206,10 +206,11 @@ export const readManifestAndEnv = () => {
     ),
     percentileOfPriorityFee: RedstoneCommon.getFromEnv(
       "PERCENTILE_OF_PRIORITY_FEE",
-      z
-        .union([z.number().gte(1).lte(100), z.array(z.number().gte(1).lte(100)).min(1)])
-        .transform((val) => (Array.isArray(val) ? val : [val]))
-        .optional()
+      z.union([z.number().gte(1).lte(100), z.array(z.number().gte(1).lte(100)).min(1)]).optional()
+    ),
+    isEIP1559V2Estimator: RedstoneCommon.getFromEnv(
+      "IS_EIP1559_V2_ESTIMATOR",
+      z.boolean().default(false)
     ),
     numberOfBlocksForFeeHistory: RedstoneCommon.getFromEnv(
       "NUMBER_OF_BLOCKS_FOR_FEE_HISTORY",

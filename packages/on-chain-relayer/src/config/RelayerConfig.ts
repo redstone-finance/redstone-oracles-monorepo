@@ -80,7 +80,8 @@ export type OnChainRelayerEnv = {
   mqttMinReferenceValues?: number;
   authorizedSigners?: string[];
   includeAdditionalFeedsForGasOptimization: boolean;
-  percentileOfPriorityFee?: number[];
+  percentileOfPriorityFee?: number | number[];
+  isEIP1559V2Estimator?: boolean;
   numberOfBlocksForFeeHistory?: number;
   newestBlockForFeeHistory?: NewestBlockType;
   isPausedUntil?: Date;
