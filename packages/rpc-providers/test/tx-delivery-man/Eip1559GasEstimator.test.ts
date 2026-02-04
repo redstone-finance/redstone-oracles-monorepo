@@ -8,7 +8,7 @@ import {
   TxDeliveryOpts,
   type Eip1559Fee,
 } from "../../src";
-import { Eip1559GasEstimator } from "../../src/tx-delivery-man/Eip1559GasEstimator";
+import { Eip1559GasEstimatorV2 } from "../../src/tx-delivery-man/Eip1559GasEstimatorV2";
 import {
   HardhatProviderMocker,
   createBasicProviderMock,
@@ -17,7 +17,7 @@ import {
   createPercentileCaptureProviderMock,
 } from "../helpers";
 
-describe("Eip1559GasEstimator", () => {
+describe("Eip1559GasEstimatorV2", () => {
   describe("scaleFees", () => {
     it("should scale fees according to percentile configuration and multiplier", () => {
       const scenarios = [
@@ -429,7 +429,7 @@ describe("Eip1559GasEstimator", () => {
             ],
             logger: (msg: string) => logs.push(msg),
           } as unknown as Required<TxDeliveryOpts>;
-          const estimator = new Eip1559GasEstimator(opts);
+          const estimator = new Eip1559GasEstimatorV2(opts);
 
           const providerMock = createFallbackProviderMock(
             scenario.baseFee,
@@ -474,7 +474,7 @@ describe("Eip1559GasEstimator", () => {
           ],
           logger: () => undefined,
         } as unknown as Required<TxDeliveryOpts>;
-        const estimator = new Eip1559GasEstimator(opts);
+        const estimator = new Eip1559GasEstimatorV2(opts);
 
         const sendStub = Sinon.stub().callsFake((method: string, params: unknown[]) => {
           if (method === "eth_feeHistory") {
@@ -508,7 +508,7 @@ describe("Eip1559GasEstimator", () => {
           ],
           logger: () => undefined,
         } as unknown as Required<TxDeliveryOpts>;
-        const estimator = new Eip1559GasEstimator(opts);
+        const estimator = new Eip1559GasEstimatorV2(opts);
 
         const sendStub = Sinon.stub().callsFake((method: string, params: unknown[]) => {
           if (method === "eth_feeHistory") {
