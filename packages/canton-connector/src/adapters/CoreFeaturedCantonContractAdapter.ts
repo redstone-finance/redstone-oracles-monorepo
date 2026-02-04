@@ -20,20 +20,48 @@ export class CoreFeaturedCantonContractAdapter extends CoreCantonContractAdapter
     super(client, adapterId, interfaceId, templateName);
   }
 
-  override async getPricesFromPayload(paramsProvider: ContractParamsProvider) {
-    const result: DamlTuple2<string[]> = await this.exerciseChoice(
-      GET_PRICES_FEATURED_CHOICE,
-      {
+  private async getFeaturedPricesParams(paramsProvider: ContractParamsProvider) {
+    return {
+      choice: GET_PRICES_FEATURED_CHOICE,
+      argument: {
         ...(await CoreCantonContractAdapter.getPayloadArguments(paramsProvider)),
         featuredCid: this.client.Defs[DEFS_KEY_FEATURED_APP_RIGHT].contractId,
         caller: this.client.partyId,
       },
-      undefined,
-      true,
-      this.client,
-      [this.client.Defs[DEFS_KEY_FEATURED_APP_RIGHT]]
+      offset: undefined,
+      addCurrentTime: true,
+      client: this.client,
+      disclosedContractData: [this.client.Defs[DEFS_KEY_FEATURED_APP_RIGHT]],
+    };
+  }
+
+  override async getPricesFromPayload(paramsProvider: ContractParamsProvider) {
+    const { choice, argument, offset, addCurrentTime, client, disclosedContractData } =
+      await this.getFeaturedPricesParams(paramsProvider);
+
+    const result: DamlTuple2<string[]> = await this.exerciseChoice(
+      choice,
+      argument,
+      offset,
+      addCurrentTime,
+      client,
+      disclosedContractData
     );
 
     return result._1.map(convertDecimalValue);
+  }
+
+  protected async callGetPricesFromPayloadWithoutWaiting(paramsProvider: ContractParamsProvider) {
+    const { choice, argument, offset, addCurrentTime, client, disclosedContractData } =
+      await this.getFeaturedPricesParams(paramsProvider);
+
+    return await this.exerciseChoiceWithoutWaiting(
+      choice,
+      argument,
+      offset,
+      addCurrentTime,
+      client,
+      disclosedContractData
+    );
   }
 }
