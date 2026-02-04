@@ -33,7 +33,7 @@ const ANTI_UNDERPRICE_BUMP = 1.01;
  * - Anti-underprice protection: Tracks previously used fees and ensures each retry is at least
  *   1% higher to prevent "replacement transaction underpriced" errors.
  */
-export class Eip1559GasEstimator implements GasEstimator<Eip1559Fee> {
+export class Eip1559GasEstimatorV2 implements GasEstimator<Eip1559Fee> {
   private previousFee: Eip1559Fee = {
     maxFeePerGas: 0,
     maxPriorityFeePerGas: 0,
