@@ -29,7 +29,7 @@ export class FactoryCantonContractAdapter
   }
 
   writePricesFromPayloadToContract(paramsProvider: ContractParamsProvider) {
-    return this.getPricesFromPayload(paramsProvider);
+    return this.callGetPricesFromPayloadWithoutWaiting(paramsProvider);
   }
 
   async readLatestUpdateBlockTimestamp(feedId?: string, blockNumber?: number) {

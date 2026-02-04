@@ -41,6 +41,51 @@ export abstract class CantonContractAdapter {
 
   protected abstract getContractFilter(): ContractFilter;
 
+  private static buildCommands<Arg extends object>(
+    choices: ChoiceInput<Arg>[],
+    interfaceId: string,
+    timestamp: Date,
+    addCurrentTime: boolean
+  ) {
+    return choices.map(({ choice, argument, contractId }) => ({
+      choice,
+      contractId,
+      templateId: interfaceId,
+      choiceArgument: addCurrentTime
+        ? { ...argument, currentTime: timestamp.toISOString() }
+        : argument,
+    }));
+  }
+
+  private async withRetryAndLogging<T>(fn: () => Promise<T>): Promise<T> {
+    try {
+      return await RedstoneCommon.retry({ ...RETRY_CONFIG, fn })();
+    } catch (error) {
+      const apiError = error as ApiError;
+      this.logger.error(
+        `${RedstoneCommon.stringify((apiError.body as { cause: unknown }).cause)} ${RedstoneCommon.stringifyError(error)}`
+      );
+      throw error;
+    }
+  }
+
+  private async withContractDataCaching<T>(
+    offset: number | undefined,
+    client: CantonClient,
+    fn: (contractId: string) => Promise<T>
+  ): Promise<T> {
+    this.activeContractData ??= await this.fetchContractData(offset, client);
+
+    try {
+      return await fn(this.activeContractData.contractId);
+    } catch (error) {
+      if (isContractNotFoundError(error)) {
+        this.activeContractData = undefined;
+      }
+      throw error;
+    }
+  }
+
   protected async exerciseChoice<Res, Arg extends object = object>(
     choice: string,
     argument: Arg,
@@ -49,11 +94,9 @@ export abstract class CantonContractAdapter {
     client = this.client,
     disclosedContractData?: Required<ActiveContractData>[]
   ): Promise<Res> {
-    this.activeContractData ??= await this.fetchContractData(offset, client);
-
-    try {
+    return await this.withContractDataCaching(offset, client, async (contractId) => {
       const results = await this.exerciseChoices<Res, Arg>(
-        [{ choice, argument, contractId: this.activeContractData.contractId }],
+        [{ choice, argument, contractId }],
         this.getInterfaceId(),
         addCurrentTime,
         client,
@@ -66,12 +109,7 @@ export abstract class CantonContractAdapter {
       }
 
       return result;
-    } catch (error) {
-      if (isContractNotFoundError(error)) {
-        this.activeContractData = undefined;
-      }
-      throw error;
-    }
+    });
   }
 
   protected async exerciseChoices<Res, Arg extends object = object>(
@@ -82,28 +120,54 @@ export abstract class CantonContractAdapter {
     disclosedContractData?: Required<ActiveContractData>[]
   ): Promise<Record<string, Res>> {
     const timestamp = new Date();
+    const commands = CantonContractAdapter.buildCommands(
+      choices,
+      interfaceId,
+      timestamp,
+      addCurrentTime
+    );
 
-    const commands = choices.map(({ choice, argument, contractId }) => ({
-      choice,
-      contractId,
-      templateId: interfaceId,
-      choiceArgument: addCurrentTime
-        ? { ...argument, currentTime: timestamp.toISOString() }
-        : argument,
-    }));
+    return await this.withRetryAndLogging(() =>
+      client.exerciseChoices<Arg, Res>(commands, timestamp, disclosedContractData)
+    );
+  }
 
-    try {
-      return await RedstoneCommon.retry({
-        ...RETRY_CONFIG,
-        fn: async () =>
-          await client.exerciseChoices<Arg, Res>(commands, timestamp, disclosedContractData),
-      })();
-    } catch (error) {
-      const apiError = error as ApiError;
-      this.logger.error(
-        `${RedstoneCommon.stringify((apiError.body as { cause: unknown }).cause)} ${RedstoneCommon.stringifyError(error)}`
-      );
-      throw error;
-    }
+  protected async exerciseChoiceWithoutWaiting<Arg extends object = object>(
+    choice: string,
+    argument: Arg,
+    offset: number | undefined = undefined,
+    addCurrentTime = false,
+    client = this.client,
+    disclosedContractData?: Required<ActiveContractData>[]
+  ) {
+    return await this.withContractDataCaching(offset, client, (contractId) =>
+      this.exerciseChoicesWithoutWaiting<Arg>(
+        [{ choice, argument, contractId }],
+        this.getInterfaceId(),
+        addCurrentTime,
+        client,
+        disclosedContractData
+      )
+    );
+  }
+
+  protected async exerciseChoicesWithoutWaiting<Arg extends object = object>(
+    choices: ChoiceInput<Arg>[],
+    interfaceId: string,
+    addCurrentTime = false,
+    client = this.client,
+    disclosedContractData?: Required<ActiveContractData>[]
+  ) {
+    const timestamp = new Date();
+    const commands = CantonContractAdapter.buildCommands(
+      choices,
+      interfaceId,
+      timestamp,
+      addCurrentTime
+    );
+
+    return await this.withRetryAndLogging(() =>
+      client.exerciseChoicesWithoutWaiting<Arg>(commands, timestamp, disclosedContractData)
+    );
   }
 }
