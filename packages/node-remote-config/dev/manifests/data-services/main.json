@@ -2005,7 +2005,6 @@
         "alltick-api-reversed",
         "metal-price-api",
         "ws-polygon-massive-commodities",
-        "financialmodelingprep",
         "twelve-data"
       ],
       "denomination": "USD",
@@ -8057,9 +8056,7 @@
         "bybit-usdc",
         "bybit-usdt",
         "gate-usdt",
-        "kraken-eur",
         "kraken-usd",
-        "kraken-usdc",
         "kucoin-usdt",
         "mexc-usdc",
         "xt"
