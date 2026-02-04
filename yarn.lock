@@ -12049,6 +12049,8 @@ __metadata:
       built: true
     node-datachannel:
       built: true
+    node-hid:
+      built: true
     puppeteer:
       built: true
     secp256k1:
