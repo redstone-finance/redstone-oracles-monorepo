@@ -74,6 +74,16 @@ export type TxDeliveryOpts = {
   gasLimitMultiplier?: number;
 
   /**
+   * Whether to use the EIP-1559 V2 estimator.
+   * If true, the EIP-1559 V2 estimator will be used.
+   * If false, the EIP-1559 V1 estimator will be used.
+   * Default: false
+   */
+  isEIP1559V2Estimator?: boolean;
+
+  /**
+   * NOTE: Below is only true if isEIP1559V2Estimator is true.
+   *
    * Percentile(s) to use for priority/gas fee estimation across retry attempts.
    * Can be a single number (for backward compatibility) or an array of numbers.
    *

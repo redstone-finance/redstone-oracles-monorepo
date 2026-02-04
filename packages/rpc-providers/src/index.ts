@@ -18,7 +18,7 @@ export * from "./SageOfChains";
 export * from "./tx-delivery-man/AuctionModelGasEstimator";
 export * from "./tx-delivery-man/common";
 export * from "./tx-delivery-man/CustomGasOracles";
-export * from "./tx-delivery-man/Eip1559GasEstimator";
+export * from "./tx-delivery-man/Eip1559GasEstimatorV2";
 export * from "./tx-delivery-man/GasEstimator";
 export * from "./tx-delivery-man/TxDelivery";
 export * from "./tx-delivery-man/TxDeliveryMan";

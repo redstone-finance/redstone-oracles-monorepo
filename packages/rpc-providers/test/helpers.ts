@@ -1,7 +1,7 @@
 import { BigNumber, Contract, Wallet, providers } from "ethers";
 import hardhat from "hardhat";
 import Sinon from "sinon";
-import { DEFAULT_TX_DELIVERY_OPTS, Eip1559GasEstimator, TxDeliveryOpts } from "../src";
+import { DEFAULT_TX_DELIVERY_OPTS, Eip1559GasEstimatorV2, TxDeliveryOpts } from "../src";
 import { Counter } from "../typechain-types";
 
 const TEST_PRIVATE_KEY = "0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80";
@@ -135,8 +135,8 @@ export function createPercentileCaptureProviderMock(
 }
 
 /**
- * Creates an Eip1559GasEstimator with the given options
+ * Creates an Eip1559GasEstimatorV2 with the given options
  */
-export function createEip1559Estimator(opts: Partial<TxDeliveryOpts> = {}): Eip1559GasEstimator {
-  return new Eip1559GasEstimator(createEip1559TestOpts(opts));
+export function createEip1559Estimator(opts: Partial<TxDeliveryOpts> = {}): Eip1559GasEstimatorV2 {
+  return new Eip1559GasEstimatorV2(createEip1559TestOpts(opts));
 }

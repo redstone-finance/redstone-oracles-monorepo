@@ -13,7 +13,8 @@ import {
   type TxDeliveryOptsValidated,
 } from "./common";
 import { CHAIN_ID_TO_GAS_ORACLE } from "./CustomGasOracles";
-import { Eip1559GasEstimator } from "./Eip1559GasEstimator";
+import { Eip1559GasEstimatorV1 } from "./Eip1559GasEstimatorV1";
+import { Eip1559GasEstimatorV2 } from "./Eip1559GasEstimatorV2";
 import { GasEstimator } from "./GasEstimator";
 import { GasLimitEstimator } from "./GasLimitEstimator";
 import { SplitTxWaitingStrategy } from "./SplitTxWaitingStrategy";
@@ -40,7 +41,8 @@ export const DEFAULT_TX_DELIVERY_OPTS = {
   maxAttempts: 8,
   multiplier: 1.4, //  1.4 ** 5 => 5.24 max scaler
   gasLimitMultiplier: 1.2,
-  percentileOfPriorityFee: [25, 50, 75, 90, 99],
+  percentileOfPriorityFee: 50,
+  isEIP1559V2Estimator: false,
   rewardsPerBlockAggregationAlgorithm: RewardsPerBlockAggregationAlgorithm.Max,
   twoDimensionalFees: false,
   gasOracleTimeout: 5_000,
@@ -82,7 +84,9 @@ export class TxDelivery {
     this.overridePercentileIfProvided(opts);
     this.feeEstimator = this.opts.isAuctionModel
       ? new AuctionModelGasEstimator(this.opts)
-      : new Eip1559GasEstimator(this.opts);
+      : this.opts.isEIP1559V2Estimator
+        ? new Eip1559GasEstimatorV2(this.opts)
+        : new Eip1559GasEstimatorV1(this.opts);
     this.gasLimitEstimator = new GasLimitEstimator(this.opts);
     this.txWaitingStrategy = new (
       (opts.splitWaitingForTxRetries ?? 0) > 0 ? SplitTxWaitingStrategy : TxWaitingStrategy

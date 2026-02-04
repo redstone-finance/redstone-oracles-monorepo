@@ -182,6 +182,7 @@ describe("TxDelivery", () => {
       const delivery = createTxDelivery({
         multiplier: 1.001,
         percentileOfPriorityFee: 50,
+        isEIP1559V2Estimator: true,
       });
 
       const sendStub = Sinon.stub();
@@ -325,6 +326,7 @@ describe("TxDelivery", () => {
       const delivery = createTxDelivery({
         percentileOfPriorityFee: [50, 99],
         multiplier: 1.125,
+        isEIP1559V2Estimator: true,
       });
 
       const sendStub = Sinon.stub();
