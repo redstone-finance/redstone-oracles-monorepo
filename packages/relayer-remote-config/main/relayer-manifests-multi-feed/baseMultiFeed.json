@@ -127,6 +127,55 @@
         "deviationPercentage": 0.2,
         "timeSinceLastUpdateInMilliseconds": 43200000
       }
+    },
+    "CETES": {
+      "priceFeedAddress": "0xb4fe9028A4D4D8B3d00e52341F2BB0798860532C",
+      "updateTriggersOverrides": {
+        "deviationPercentage": 0.1,
+        "timeSinceLastUpdateInMilliseconds": 86400000
+      }
+    },
+    "KTB": {
+      "priceFeedAddress": "0xf1454949C6dEdfb500ae63Aa6c784Aa1Dde08A6c",
+      "updateTriggersOverrides": {
+        "deviationPercentage": 0.1,
+        "timeSinceLastUpdateInMilliseconds": 86400000
+      }
+    },
+    "USTRY": {
+      "priceFeedAddress": "0xE94c9f9A1893f23be38A5C0394E46Ac05e8a5f8C",
+      "updateTriggersOverrides": {
+        "deviationPercentage": 0.1,
+        "timeSinceLastUpdateInMilliseconds": 86400000
+      }
+    },
+    "TESOURO": {
+      "priceFeedAddress": "0xb67047eDF6204F4C81333248dA71F8387050790C",
+      "updateTriggersOverrides": {
+        "deviationPercentage": 0.1,
+        "timeSinceLastUpdateInMilliseconds": 86400000
+      }
+    },
+    "EUROB": {
+      "priceFeedAddress": "0xb9D0073aCb296719C26a8BF156e4b599174fe1d5",
+      "updateTriggersOverrides": {
+        "deviationPercentage": 0.1,
+        "timeSinceLastUpdateInMilliseconds": 86400000
+      }
+    },
+    "GILTS": {
+      "priceFeedAddress": "0xE23eCA12D7D2ED3829499556F6dCE06642AFd990",
+      "updateTriggersOverrides": {
+        "deviationPercentage": 0.1,
+        "timeSinceLastUpdateInMilliseconds": 86400000
+      }
+    },
+    "MXNe": {
+      "priceFeedAddress": "0x31a36CdF4465ba61ce78F5CDbA26FDF8ec361803",
+      "updateTriggersOverrides": {
+        "deviationPercentage": 0.1,
+        "timeSinceLastUpdateInMilliseconds": 86400000
+      }
     }
   }
 }

@@ -122,7 +122,7 @@ pub struct Initialize<'info> {
 ### Feed accounts
 
 |                            | mainnet-beta                                 | testnet                                      | devnet                                       |
-| -------------------------- | -------------------------------------------- |----------------------------------------------|----------------------------------------------|
+| -------------------------- | -------------------------------------------- | -------------------------------------------- | -------------------------------------------- |
 | ETH                        | HPmPoq3eUTPePsDB5U4G6msu5RpeZHhMemc5VnqxQ9Lx | BsFkAfSgub54ZMHxZpCXqB3zpWXF8NwAswbuNX1Jq55g | 6bgjyNJ18vWGjw2qjjseSBaDK4QbJF8sjsHAhwy8EuBW |
 | BTC                        | 74o5fhuMC33HgfUqvv2TdpYiKvEWfcRTS1E8zxK6ESjN | FbTaAY9o6MU3xZKXT65xE3wATNrxU7nTnZZPmg4gS9Ad | AhQGbBqhbcqJhV7WJ5GktjtjM7dHBPYv2uFhL7Cy7gzQ |
 | BUIDL_SOLANA_FUNDAMENTAL   | ESxdEASDcYRN4ybnYNCJJuPHcF2SGJN1MypQq1yfY9Kz | x                                            | x                                            |
@@ -132,3 +132,10 @@ pub struct Initialize<'info> {
 | VBILL_SOLANA_FUNDAMENTAL   | H9ckR9pZtPZCjRYz9RXBPhc2X6m4e3ndpxgVe7HgYVMd | x                                            | x                                            |
 | LBTC_FUNDAMENTAL           | EjN4MxDvAbBEofxFwpvCsz2u8wZ96kHMsLmk2N5Bvomt | x                                            | x                                            |
 | VBILL_SOLANA_DAILY_ACCRUAL | 8aMjLzsmjSEGmgybHWELTEinTw4kn3okfos5zHrt2TJG | x                                            | x                                            |
+| CETES                      | BBQbMAJxEjJQcPigdTDbMphzGoasBDKfsGKDNjuw41sn | x                                            | x                                            |
+| KTB                        | 7LpHkWowUSxwqpYEX71juUpNszR7EZ3ZiFnwt2fj3ubc | x                                            | x                                            |
+| USTRY                      | FQfn746CH96toaGvFAP4FaN1rhvcEPrH4AGjWcSMhP1P | x                                            | x                                            |
+| TESOURO                    | Fx7SbwDDiir4C42Q1ESH4cm8NGcDjQucgA7QAHFso8ob | x                                            | x                                            |
+| EUROB                      | HJpgmbTmVG49iLtYqQWacBqBs1XxVbAGAmpcB2ANhK4e | x                                            | x                                            |
+| GILTS                      | 7MNCZy8ucFRLzRitc24tBeXRNuzmfTKu469riUYSACq1 | x                                            | x                                            |
+| MXNe                       | 8QuwResPgdQdja4gdTbvNxeUznc58XX8baUM3cCwfVW2 | x                                            | x                                            |

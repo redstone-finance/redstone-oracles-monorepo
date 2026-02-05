@@ -5,7 +5,7 @@
   },
   "updateTriggers": {
     "deviationPercentage": 0.1,
-    "timeSinceLastUpdateInMilliseconds": 0
+    "timeSinceLastUpdateInMilliseconds": 10000
   },
   "adapterContract": "0x57677Bdc4F24D5c08ddCE87E06670C26a00Cac0b",
   "adapterContractType": "multi-feed",
@@ -13,14 +13,40 @@
   "isHidden": true,
   "dataPackagesNames": ["___FAST___"],
   "priceFeeds": {
-    "ETH": {},
-    "BTC": {},
-    "USDC": {},
-    "USDT": {},
-    "BNB": {},
+    "ETH": {
+      "updateTriggersOverrides": {
+        "timeSinceLastUpdateInMilliseconds": 0
+      }
+    },
+    "BTC": {
+      "updateTriggersOverrides": {
+        "timeSinceLastUpdateInMilliseconds": 0
+      }
+    },
+    "USDC": {
+      "updateTriggersOverrides": {
+        "deviationPercentage": 0.05,
+        "timeSinceLastUpdateInMilliseconds": 3600000
+      }
+    },
+    "USDT": {
+      "updateTriggersOverrides": {
+        "deviationPercentage": 0.05,
+        "timeSinceLastUpdateInMilliseconds": 3600000
+      }
+    },
+    "BNB": {
+      "updateTriggersOverrides": {
+        "timeSinceLastUpdateInMilliseconds": 0
+      }
+    },
     "XRP": {},
     "ADA": {},
-    "SOL": {},
+    "SOL": {
+      "updateTriggersOverrides": {
+        "timeSinceLastUpdateInMilliseconds": 0
+      }
+    },
     "DOGE": {},
     "wstETH/ETH": {},
     "cUSD_FUNDAMENTAL": {
@@ -46,6 +72,18 @@
       "updateTriggersOverrides": {
         "deviationPercentage": 0.25,
         "timeSinceLastUpdateInMilliseconds": 43200000
+      }
+    },
+    "sUSDe": {
+      "updateTriggersOverrides": {
+        "deviationPercentage": 0.1,
+        "timeSinceLastUpdateInMilliseconds": 21600000
+      }
+    },
+    "JITOSOL": {
+      "updateTriggersOverrides": {
+        "deviationPercentage": 0.1,
+        "timeSinceLastUpdateInMilliseconds": 21600000
       }
     }
   }
