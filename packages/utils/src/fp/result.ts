@@ -36,8 +36,14 @@ export function mapUnsafe<T, E, U>(resOrFn: Result<T, E> | ((val: T) => U), fn?:
   return ok(fn!(resOrFn.ok));
 }
 
-export function map<T, E, U>(res: Result<T, E>, fn: (val: T) => U): Result<U, unknown> {
-  const result = tryCall(() => mapUnsafe(res, fn));
+export function map<T, E, U>(res: Result<T, E>, fn: (val: T) => U): Result<U, unknown>;
+export function map<T, U>(fn: (val: T) => U): <E>(res: Result<T, E>) => Result<U, unknown>;
+export function map<T, E, U>(resOrFn: Result<T, E> | ((val: T) => U), fn?: (val: T) => U) {
+  if (typeof resOrFn === "function") {
+    return <E>(res: Result<T, E>) => map(res, resOrFn);
+  }
+
+  const result = tryCall(() => mapUnsafe(resOrFn, fn!));
 
   if (isOk(result)) {
     return result.ok;
