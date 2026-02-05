@@ -15,19 +15,22 @@
       "priceFeedAddress": "0xc44be6D00307c3565FDf753e852Fc003036cBc13",
       "updateTriggersOverrides": {
         "timeSinceLastUpdateInMilliseconds": 0
-      }
+      },
+      "isBolt": true
     },
     "BTC": {
       "priceFeedAddress": "0xED2B1ca5D7E246f615c2291De309643D41FeC97e",
       "updateTriggersOverrides": {
         "timeSinceLastUpdateInMilliseconds": 0
-      }
+      },
+      "isBolt": true
     },
     "MON": {
       "priceFeedAddress": "0x1C9582E87eD6E99bc23EC0e6Eb52eE9d7C0D6bcd",
       "updateTriggersOverrides": {
         "timeSinceLastUpdateInMilliseconds": 0
-      }
+      },
+      "isBolt": true
     },
     "USDC": {
       "priceFeedAddress": "0x7A9b672fc20b5C89D6774514052b3e0899E5E263",
@@ -54,7 +57,8 @@
       "priceFeedAddress": "0x0bE6929FD4ad87347e97A525DB6ac8E884FCDCeC",
       "updateTriggersOverrides": {
         "timeSinceLastUpdateInMilliseconds": 0
-      }
+      },
+      "isBolt": true
     },
     "WBTC": {
       "priceFeedAddress": "0x98ECE0D516f891a35278E3186772fb1545b274eB"
@@ -135,5 +139,6 @@
         "timeSinceLastUpdateInMilliseconds": 43200000
       }
     }
-  }
+  },
+  "transactionAdapters": ["monadBoltMultiFeed", "monadReferenceMultiFeed"]
 }
