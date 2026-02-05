@@ -72,6 +72,55 @@
         "deviationPercentage": 0.1,
         "timeSinceLastUpdateInMilliseconds": 86400000
       }
+    },
+    "CETES": {
+      "priceFeedAddress": "CCYGBQZ5JKE2TGK2XNNVIZRKFEIT27NZADS3XJFSO4CCIH3LHIUP34LG",
+      "updateTriggersOverrides": {
+        "deviationPercentage": 0.1,
+        "timeSinceLastUpdateInMilliseconds": 86400000
+      }
+    },
+    "KTB": {
+      "priceFeedAddress": "CDF24LSSKG55VEN2MRKNHEWK3XT5YKQ6XRXNVTNSRBMFL2FOMAC2MZ5O",
+      "updateTriggersOverrides": {
+        "deviationPercentage": 0.1,
+        "timeSinceLastUpdateInMilliseconds": 86400000
+      }
+    },
+    "USTRY": {
+      "priceFeedAddress": "CAEGYZFAJ3HLSDBUIVJ77SK5HLLS4MPE4LO5OB2W3L2TEDMAS6RCTMZ4",
+      "updateTriggersOverrides": {
+        "deviationPercentage": 0.1,
+        "timeSinceLastUpdateInMilliseconds": 86400000
+      }
+    },
+    "TESOURO": {
+      "priceFeedAddress": "CAO3JDDO52PV5SNIR4WRLBNTE72CY6B4JO5PNSSRRM4TC5DZ5X5ZSJVC",
+      "updateTriggersOverrides": {
+        "deviationPercentage": 0.1,
+        "timeSinceLastUpdateInMilliseconds": 86400000
+      }
+    },
+    "EUROB": {
+      "priceFeedAddress": "CAY3Q4DVBMS6OXWQWZWNOCVG7M3JNO6GL2PNZSQ6YH3NJOLW7O7IUWES",
+      "updateTriggersOverrides": {
+        "deviationPercentage": 0.1,
+        "timeSinceLastUpdateInMilliseconds": 86400000
+      }
+    },
+    "GILTS": {
+      "priceFeedAddress": "CDIBUKDR3AUJFOG3Z5PH2UIKTNK6FQEUBODVH4FA7DST4NITPKKYHMAP",
+      "updateTriggersOverrides": {
+        "deviationPercentage": 0.1,
+        "timeSinceLastUpdateInMilliseconds": 86400000
+      }
+    },
+    "MXNe": {
+      "priceFeedAddress": "CDYTKTOHHMMZQSBGEVTFSOAMN6ABFCRZ6TCNLZNFQZ6OK3ZGDB3666IV",
+      "updateTriggersOverrides": {
+        "deviationPercentage": 0.1,
+        "timeSinceLastUpdateInMilliseconds": 86400000
+      }
     }
   }
 }
