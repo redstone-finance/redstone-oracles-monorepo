@@ -1,0 +1,17 @@
+{
+  "chain": {
+    "name": "stylusSepolia",
+    "id": 421614
+  },
+  "updateTriggers": {
+    "deviationPercentage": 0.5,
+    "timeSinceLastUpdateInMilliseconds": 86400000
+  },
+  "adapterContract": "0x04a968ab0fE91B26BB3eF20D26dbD8cFBbbC5a6f",
+  "adapterContractType": "stylus",
+  "dataServiceId": "redstone-primary-prod",
+  "priceFeeds": {
+    "ETH": {},
+    "BTC": {}
+  }
+}

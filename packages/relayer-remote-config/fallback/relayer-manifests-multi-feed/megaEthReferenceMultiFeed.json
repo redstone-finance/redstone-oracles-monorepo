@@ -5,7 +5,7 @@
   },
   "updateTriggers": {
     "deviationPercentage": 0.1,
-    "timeSinceLastUpdateInMilliseconds": 21600000
+    "timeSinceLastUpdateInMilliseconds": 10000
   },
   "adapterContract": "0x57677Bdc4F24D5c08ddCE87E06670C26a00Cac0b",
   "adapterContractType": "multi-feed",
@@ -13,14 +13,40 @@
   "isHidden": true,
   "dataPackagesNames": ["___FAST___"],
   "priceFeeds": {
-    "ETH": {},
-    "BTC": {},
-    "USDC": {},
-    "USDT": {},
-    "BNB": {},
+    "ETH": {
+      "updateTriggersOverrides": {
+        "timeSinceLastUpdateInMilliseconds": 0
+      }
+    },
+    "BTC": {
+      "updateTriggersOverrides": {
+        "timeSinceLastUpdateInMilliseconds": 0
+      }
+    },
+    "USDC": {
+      "updateTriggersOverrides": {
+        "deviationPercentage": 0.05,
+        "timeSinceLastUpdateInMilliseconds": 3600000
+      }
+    },
+    "USDT": {
+      "updateTriggersOverrides": {
+        "deviationPercentage": 0.05,
+        "timeSinceLastUpdateInMilliseconds": 3600000
+      }
+    },
+    "BNB": {
+      "updateTriggersOverrides": {
+        "timeSinceLastUpdateInMilliseconds": 0
+      }
+    },
     "XRP": {},
     "ADA": {},
-    "SOL": {},
+    "SOL": {
+      "updateTriggersOverrides": {
+        "timeSinceLastUpdateInMilliseconds": 0
+      }
+    },
     "DOGE": {},
     "wstETH/ETH": {},
     "cUSD_FUNDAMENTAL": {
@@ -30,7 +56,12 @@
       }
     },
     "USDm": {},
-    "TRY": {},
+    "TRY": {
+      "updateTriggersOverrides": {
+        "deviationPercentage": 0.1,
+        "timeSinceLastUpdateInMilliseconds": 21600000
+      }
+    },
     "LBTC_FUNDAMENTAL": {
       "updateTriggersOverrides": {
         "deviationPercentage": 0.25,
@@ -41,6 +72,19 @@
       "updateTriggersOverrides": {
         "deviationPercentage": 0.25,
         "timeSinceLastUpdateInMilliseconds": 43200000
+      }
+    },
+    "sUSDe": {
+      "updateTriggersOverrides": {
+        "deviationPercentage": 0.1,
+        "timeSinceLastUpdateInMilliseconds": 21600000
+      }
+    },
+    "JITOSOL": {
+      "priceFeedAddress": "0xD3A0C347b07Fd45F41270D557089B389Fa735C3d",
+      "updateTriggersOverrides": {
+        "deviationPercentage": 0.1,
+        "timeSinceLastUpdateInMilliseconds": 21600000
       }
     }
   }

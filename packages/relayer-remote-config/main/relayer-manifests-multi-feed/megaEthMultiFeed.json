@@ -76,6 +76,12 @@
         "deviationPercentage": 0.25,
         "timeSinceLastUpdateInMilliseconds": 43200000
       }
+    },
+    "sUSDe": {
+      "priceFeedAddress": "0x7A532B1B204409472cB92cd07c8B0BB09DD2F520"
+    },
+    "JITOSOL": {
+      "priceFeedAddress": "0xD3A0C347b07Fd45F41270D557089B389Fa735C3d"
     }
   },
   "transactionAdapters": ["megaEthBoltMultiFeed", "megaEthReferenceMultiFeed"]

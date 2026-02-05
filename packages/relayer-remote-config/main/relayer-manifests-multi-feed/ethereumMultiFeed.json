@@ -406,6 +406,13 @@
         "deviationPercentage": 0.1,
         "timeSinceLastUpdateInMilliseconds": 86400000
       }
+    },
+    "DLF_FUNDAMENTAL": {
+      "priceFeedAddress": "0xFFD1339908E0deBE2416E03df0843B896b8944Fe",
+      "updateTriggersOverrides": {
+        "deviationPercentage": 0.15,
+        "timeSinceLastUpdateInMilliseconds": 86400000
+      }
     }
   }
 }

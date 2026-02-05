@@ -12,31 +12,40 @@
   "dataServiceId": "redstone-primary-prod",
   "priceFeeds": {
     "ETH": {
-      "priceFeedAddress": "0xc555c100DB24dF36D406243642C169CC5A937f09"
+      "priceFeedAddress": "0xc555c100DB24dF36D406243642C169CC5A937f09",
+      "isBolt": true
     },
     "BTC": {
-      "priceFeedAddress": "0xf0DEbDAE819b354D076b0D162e399BE013A856d3"
+      "priceFeedAddress": "0xf0DEbDAE819b354D076b0D162e399BE013A856d3",
+      "isBolt": true
     },
     "USDC": {
-      "priceFeedAddress": "0x4aF6b78d92432D32E3a635E824d3A541866f7a78"
+      "priceFeedAddress": "0x4aF6b78d92432D32E3a635E824d3A541866f7a78",
+      "isBolt": true
     },
     "USDT": {
-      "priceFeedAddress": "0x26FB59e5562405F42f55661f790fA1Bd2F410A3d"
+      "priceFeedAddress": "0x26FB59e5562405F42f55661f790fA1Bd2F410A3d",
+      "isBolt": true
     },
     "BNB": {
-      "priceFeedAddress": "0x65d0F14f7809CdC4f90c3978c753C4671b6B815b"
+      "priceFeedAddress": "0x65d0F14f7809CdC4f90c3978c753C4671b6B815b",
+      "isBolt": true
     },
     "XRP": {
-      "priceFeedAddress": "0xeC7C6AdcC867E1C22713D14797339750E36538E4"
+      "priceFeedAddress": "0xeC7C6AdcC867E1C22713D14797339750E36538E4",
+      "isBolt": true
     },
     "ADA": {
-      "priceFeedAddress": "0x98DC6E90D4c2f212ed9d124aD2aFBa4833268633"
+      "priceFeedAddress": "0x98DC6E90D4c2f212ed9d124aD2aFBa4833268633",
+      "isBolt": true
     },
     "SOL": {
-      "priceFeedAddress": "0xb9D0073aCb296719C26a8BF156e4b599174fe1d5"
+      "priceFeedAddress": "0xb9D0073aCb296719C26a8BF156e4b599174fe1d5",
+      "isBolt": true
     },
     "DOGE": {
-      "priceFeedAddress": "0xE23eCA12D7D2ED3829499556F6dCE06642AFd990"
+      "priceFeedAddress": "0xE23eCA12D7D2ED3829499556F6dCE06642AFd990",
+      "isBolt": true
     },
     "wstETH/ETH": {
       "priceFeedAddress": "0x31a36CdF4465ba61ce78F5CDbA26FDF8ec361803"
@@ -67,6 +76,13 @@
         "deviationPercentage": 0.25,
         "timeSinceLastUpdateInMilliseconds": 43200000
       }
+    },
+    "sUSDe": {
+      "priceFeedAddress": "0x7A532B1B204409472cB92cd07c8B0BB09DD2F520"
+    },
+    "JITOSOL": {
+      "priceFeedAddress": "0xD3A0C347b07Fd45F41270D557089B389Fa735C3d"
     }
-  }
+  },
+  "transactionAdapters": ["megaEthBoltMultiFeed", "megaEthReferenceMultiFeed"]
 }
