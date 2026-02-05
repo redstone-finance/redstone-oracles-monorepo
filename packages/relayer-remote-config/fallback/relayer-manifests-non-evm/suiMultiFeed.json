@@ -8,8 +8,8 @@
     "deviationPercentage": 0.5,
     "timeSinceLastUpdateInMilliseconds": 86400000
   },
-  "adapterContract": "0xbd6c028d49d92e7e7f5cf268a2c91c0551f20a3d1f79d27d02482a71a9eb6ac3",
-  "adapterContractPackageId": "0xc14f5281c41da172c1b72d07e3ae79e9ad1f12b6444b7bd23343b63bcf43ee46",
+  "adapterContract": "0x22794c3a37c5320e5acb6b9cdba6e256bc08867e9de8afd2a4b5d8ea7061fea3",
+  "adapterContractPackageId": "0xbd6c028d49d92e7e7f5cf268a2c91c0551f20a3d1f79d27d02482a71a9eb6ac3",
   "dataServiceId": "redstone-primary-prod",
   "priceFeeds": {
     "ETH": {},

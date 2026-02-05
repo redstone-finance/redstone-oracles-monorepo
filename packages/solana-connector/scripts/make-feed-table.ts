@@ -46,4 +46,11 @@ void makeFeedTable([
   "VBILL_SOLANA_FUNDAMENTAL",
   "LBTC_FUNDAMENTAL",
   "VBILL_SOLANA_DAILY_ACCRUAL",
+  "CETES",
+  "KTB",
+  "USTRY",
+  "TESOURO",
+  "EUROB",
+  "GILTS",
+  "MXNe",
 ]);
