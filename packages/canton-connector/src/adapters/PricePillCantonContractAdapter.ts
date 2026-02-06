@@ -18,7 +18,7 @@ import {
 import { makeActiveContractData } from "../utils";
 import { CantonContractAdapter } from "./CantonContractAdapter";
 
-export class PriceFeedEntryCantonContractAdapter
+export class PricePillCantonContractAdapter
   extends CantonContractAdapter
   implements IPriceFeedContractAdapter
 {
