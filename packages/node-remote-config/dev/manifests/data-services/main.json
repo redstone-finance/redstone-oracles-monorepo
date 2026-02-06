@@ -1985,7 +1985,8 @@
     "TRY_CEX": {
       "source": [
         "paribu-usdt-reversed",
-        "paribu-avax-reversed",
+        "paribu-eth-reversed",
+        "paribu-btc-reversed",
         "paribu-xrp-reversed",
         "btcturk-usdt-reversed",
         "btcturk-eth-reversed",
