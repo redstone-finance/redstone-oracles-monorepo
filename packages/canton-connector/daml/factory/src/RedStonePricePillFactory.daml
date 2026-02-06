@@ -1,4 +1,4 @@
-module RedStonePriceFeedFactory where
+module RedStonePricePillFactory where
 
 import RedStone.Config
 import RedStone.GetPrices as G
@@ -6,10 +6,10 @@ import Featured
 import IRedStoneCoreFeatured
 import IRedStoneCore
 import RedStoneTypes
-import RedStonePriceFeedEntry
+import RedStonePricePill
 import DA.Foldable (forA_)
 
-template RedStonePriceFeedFactory
+template RedStonePricePillFactory
   with
     coreId: Text
     owner : Party
@@ -19,7 +19,7 @@ template RedStonePriceFeedFactory
     signatory owner, beneficiary
     observer viewers
 
-    interface instance IRedStoneCoreFeatured for RedStonePriceFeedFactory where
+    interface instance IRedStoneCoreFeatured for RedStonePricePillFactory where
       view = RedStoneCoreView with viewers, coreId
 
       getPricesFeatured featuredCid feedIds currentTime payloadHex = do
@@ -29,10 +29,11 @@ template RedStonePriceFeedFactory
 
         forA_ pairs \(feedId, value) ->
           Featured.takeReward beneficiary featuredCid *>
-          create RedStonePriceFeedEntry with
+          create RedStonePricePill with
             owner
             viewers
             feedId
             priceData = RedStonePriceData with value, timestamp, writeTimestamp = config.currentTimestamp
+            stalenessMs = 60000
 
         pure (values, timestamp)

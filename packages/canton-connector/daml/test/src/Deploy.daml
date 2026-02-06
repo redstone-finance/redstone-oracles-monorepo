@@ -6,7 +6,7 @@ import DA.Map as M
 import RedStoneCore
 import RedStoneAdapter
 import RedStonePriceFeed
-import RedStonePriceFeedFactory
+import RedStonePricePillFactory
 import MockFeatured
 import RedStoneCoreFeaturedClient
 import Input
@@ -20,11 +20,9 @@ main input = script do
   let beneficiary = input.beneficiary
   let dso = input.dso
 
-  let adapterId = "RedStoneAdapter-043b"
-
   coreCid <- submit (actAs [owner] <> readAs [updater, viewer]) do
     createCmd RedStoneCore with
-      coreId = adapterId
+      coreId = Input.adapterId
       owner = owner
       viewers = [viewer]
 
@@ -32,7 +30,7 @@ main input = script do
 
   adapterCid <- submit (actAs [owner] <> readAs [updater, viewer]) do
     createCmd RedStoneAdapter with
-      adapterId
+      adapterId = Input.adapterId
       owner
       updaters = [updater]
       viewers = [viewer]
@@ -42,7 +40,7 @@ main input = script do
 
   feedCid <- submit (actAs [owner] <> readAs [viewer]) do
     createCmd RedStonePriceFeed with
-      adapterId
+      adapterId = Input.adapterId
       owner
       viewers = [viewer]
       feedId = head input.feedIds
@@ -51,13 +49,13 @@ main input = script do
   debug $ "RedStonePriceFeed " <> show feedCid
 
   factoryCoreCid <- submit (actAs owner <> actAs beneficiary) do
-    createCmd RedStonePriceFeedFactory with
-      coreId = adapterId
+    createCmd RedStonePricePillFactory with
+      coreId = Input.adapterId
       owner
       viewers = [viewer]
       beneficiary
 
-  debug $ "RedStonePriceFeedFactory " <> show factoryCoreCid
+  debug $ "RedStonePricePillFactory " <> show factoryCoreCid
 
   featuredCid <- submit dso do
     createCmd MockFeaturedAppRight with dso, provider = owner

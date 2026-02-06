@@ -4,8 +4,8 @@ import {
   CoreFeaturedCantonContractAdapter,
   ICORE_FEATURED_TEMPLATE_NAME,
 } from "./CoreFeaturedCantonContractAdapter";
-import { MultiFeedPriceEntryAdapter } from "./MultiFeedPriceEntryAdapter";
-import { PriceFeedEntryCantonContractAdapter } from "./PriceFeedEntryCantonContractAdapter";
+import { MultiPricePillCantonContractAdapter } from "./MultiPricePillCantonContractAdapter";
+import { PricePillCantonContractAdapter } from "./PricePillCantonContractAdapter";
 
 export class FactoryCantonContractAdapter
   extends CoreFeaturedCantonContractAdapter
@@ -61,13 +61,13 @@ export class FactoryCantonContractAdapter
   }
 
   private async readData(feedId: string, blockNumber: number | undefined) {
-    const adapter = new PriceFeedEntryCantonContractAdapter(this.client, feedId);
+    const adapter = new PricePillCantonContractAdapter(this.client, feedId);
 
     return await adapter.readData(blockNumber);
   }
 
   private async batchReadData(feedIds: string[], blockNumber?: number) {
-    const adapter = new MultiFeedPriceEntryAdapter(this.client, feedIds);
+    const adapter = new MultiPricePillCantonContractAdapter(this.client, feedIds);
 
     return await adapter.batchReadData(blockNumber);
   }
