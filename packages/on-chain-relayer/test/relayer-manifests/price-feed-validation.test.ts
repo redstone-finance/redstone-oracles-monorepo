@@ -12,13 +12,7 @@ import { expect } from "chai";
 import { describe, test } from "mocha";
 
 const INTEGRATIONS_NOT_FOR_TESTING = [
-  "megaEthTestnetMultiFeed", // remove once we get a publicRpc
-  "megaEthBoltMultiFeed", // remove once we get a publicRpc
-  "megaEthReferenceMultiFeed", // remove once we get a publicRpc
-  "megaEthMultiFeed", // remove once we get a publicRpc
-  "citreaMultiFeed", // remove once we get a publicRpc
   "westendHubMultiFeed", // remove it when the network is stable
-
   "stylusSepoliaMultiFeed", // non supported in stylus
 ];
 
@@ -77,6 +71,10 @@ if (process.env.RUN_NONDETERMINISTIC_TESTS) {
     for (const [name, manifest] of Object.entries(manifests)) {
       if (INTEGRATIONS_NOT_FOR_TESTING.includes(name)) {
         console.log(`Integration ${name} is disabled`);
+        continue;
+      }
+      if (getChainConfig(manifest.chain.id).publicRpcUrls.length === 0) {
+        console.log(`No rpc urls defined for chain ${name}.`);
         continue;
       }
       test(name, async () => {
