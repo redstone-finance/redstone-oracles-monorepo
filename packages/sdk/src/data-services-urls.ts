@@ -18,7 +18,7 @@ const allReadGateways = {
   },
   prod1_gcp: {
     url: "https://oracle-gateway-1.a.redstone.vip",
-    historical: true,
+    historical: false,
     metadata: false,
   },
   prod1_aws: {
