@@ -91,8 +91,11 @@ export class MegaProviderBuilder {
         );
         return provider;
       } else {
+        const url = new URL(rpcUrl);
         const provider = new providers.StaticJsonRpcProvider(
           {
+            user: url.username !== "" ? url.username : undefined,
+            password: url.password !== "" ? url.password : undefined,
             url: rpcUrl,
             timeout: this.options.timeout,
             throttleLimit: this.options.throttleLimit,

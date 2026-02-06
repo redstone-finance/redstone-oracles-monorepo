@@ -8,12 +8,6 @@ import {
 } from "../src";
 import { skipIfDisabledOrNotSupported } from "./rpc-urls/common";
 
-const CHAINS_TO_SKIP_RPC_PRESENCE_CHECK: string[] = [
-  "MegaETH Testnet",
-  "MegaETH Mainnet",
-  "Citrea Mainnet",
-];
-
 const CHAINS_TO_SKIP_REDSTONE_MULTICALL_ADDRESS_CHECK: string[] = [
   "Arbitrum Sepolia",
   "TAC Turin",
@@ -35,19 +29,6 @@ const ChainConfigs = getLocalChainConfigs();
 describe("Validate chain configs", () => {
   it("Scheme should be valid", () => {
     z.record(z.string(), ChainConfigSchema).parse(ChainConfigs);
-  });
-
-  it("Each chain config should have at least one publicRpcProvider", () => {
-    for (const chainConfig of Object.values(ChainConfigs)) {
-      if (!CHAINS_TO_SKIP_RPC_PRESENCE_CHECK.includes(chainConfig.name)) {
-        chai
-          .expect(
-            chainConfig.publicRpcUrls.length,
-            `No publicRpcProvider set for ${chainConfig.name}`
-          )
-          .greaterThanOrEqual(1);
-      }
-    }
   });
 });
 

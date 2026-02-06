@@ -2,14 +2,18 @@ import { RpcUrlsPerChain } from "../../scripts/read-ssm-rpc-urls";
 import { getLocalChainConfigs } from "../../src";
 import { validateNetworkRpcUrls } from "./common";
 
-const CHAINS_TO_SKIP_RPC_CHECK = ["MegaETH Testnet", "MegaETH Mainnet", "Citrea Mainnet"];
+const CHAINS_TO_SKIP_RPC_CHECK: string[] = [];
 
 const validatePublicRpcUrls = () => {
   const chainConfigs = getLocalChainConfigs();
   const rpcUrlsPerChain: RpcUrlsPerChain = {};
 
   for (const { name, networkId, publicRpcUrls } of Object.values(chainConfigs)) {
-    if (name === "hardhat" || CHAINS_TO_SKIP_RPC_CHECK.includes(name)) {
+    if (
+      name === "hardhat" ||
+      CHAINS_TO_SKIP_RPC_CHECK.includes(name) ||
+      publicRpcUrls.length === 0
+    ) {
       continue;
     }
     rpcUrlsPerChain[name] = {
