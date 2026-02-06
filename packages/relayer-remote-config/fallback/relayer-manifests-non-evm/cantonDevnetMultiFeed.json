@@ -8,9 +8,10 @@
     "deviationPercentage": 0.2,
     "timeSinceLastUpdateInMilliseconds": 7000
   },
-  "adapterContract": "00bd38e47f5966f047571ea0d3f62f5ee9b1e0b11fb387d53ac10f87ca5fcc6235ca121220dfbf39c42f1a6eb84f56649fe64e0fcaf4135040e923834d215363d6b9f96d07",
+  "adapterContract": "0093a42a94bd216e726c83d7686f19901cc87bb882c3fec476c05d8d42b5c85cf1ca121220605a89e351e3c372e323ca5e14e83ba5d1b6708618cca1b9526991510f18d9ff",
   "dataServiceId": "redstone-primary-prod",
   "priceFeeds": {
+    "CC": {},
     "ETH": {},
     "BTC": {}
   }

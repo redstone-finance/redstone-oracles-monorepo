@@ -1,7 +1,7 @@
 include ./ops.mk
 
-VERSION=0.4.4
-SVER=v7
+VERSION=0.4.5
+SVER=v8
 LEDGER_HOST=localhost
 LEDGER_PORT=6865
 DAML=daml # dpm

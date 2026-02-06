@@ -1,0 +1,32 @@
+module RedStonePricePill where
+
+import IRedStonePricePill
+import RedStoneTypes
+import DA.Date
+import DA.Time (addRelTime, milliseconds, time, isLedgerTimeGT)
+
+template RedStonePricePill
+  with
+    owner : Party
+    viewers : [Party]
+    feedId : RedStoneFeedId
+    priceData : RedStonePriceData RedStoneValue
+    stalenessMs : Int
+  where
+    signatory owner
+    observer viewers
+
+    interface instance IRedStonePricePill for RedStonePricePill where
+      view = RedStonePricePillView with viewers, feedId, priceData, stalenessMs
+
+      isDataStale =
+        let
+            unix_epoch_start = time (date 1970 Jan 1) 00 00 00
+            millisToTime m = addRelTime unix_epoch_start $ milliseconds m
+            maxTime = addRelTime (millisToTime priceData.timestamp) $ milliseconds stalenessMs
+        in
+            isLedgerTimeGT maxTime
+
+      assertDataNotStale = do
+           isStale <- isDataStale $ toInterface @IRedStonePricePill this
+           assertMsg "Price Data is stale and cannot be read" (not isStale)
