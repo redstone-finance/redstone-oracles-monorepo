@@ -5,7 +5,7 @@
   },
   "updateTriggers": {
     "deviationPercentage": 0.1,
-    "timeSinceLastUpdateInMilliseconds": 10000
+    "timeSinceLastUpdateInMilliseconds": 0
   },
   "adapterContract": "0x57677Bdc4F24D5c08ddCE87E06670C26a00Cac0b",
   "adapterContractType": "multi-feed",
@@ -13,40 +13,14 @@
   "isHidden": true,
   "dataPackagesNames": ["___FAST___"],
   "priceFeeds": {
-    "ETH": {
-      "updateTriggersOverrides": {
-        "timeSinceLastUpdateInMilliseconds": 0
-      }
-    },
-    "BTC": {
-      "updateTriggersOverrides": {
-        "timeSinceLastUpdateInMilliseconds": 0
-      }
-    },
-    "USDC": {
-      "updateTriggersOverrides": {
-        "deviationPercentage": 0.05,
-        "timeSinceLastUpdateInMilliseconds": 3600000
-      }
-    },
-    "USDT": {
-      "updateTriggersOverrides": {
-        "deviationPercentage": 0.05,
-        "timeSinceLastUpdateInMilliseconds": 3600000
-      }
-    },
-    "BNB": {
-      "updateTriggersOverrides": {
-        "timeSinceLastUpdateInMilliseconds": 0
-      }
-    },
+    "ETH": {},
+    "BTC": {},
+    "USDC": {},
+    "USDT": {},
+    "BNB": {},
     "XRP": {},
     "ADA": {},
-    "SOL": {
-      "updateTriggersOverrides": {
-        "timeSinceLastUpdateInMilliseconds": 0
-      }
-    },
+    "SOL": {},
     "DOGE": {},
     "wstETH/ETH": {},
     "cUSD_FUNDAMENTAL": {
