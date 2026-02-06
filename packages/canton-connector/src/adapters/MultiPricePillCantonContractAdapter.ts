@@ -14,7 +14,7 @@ import {
 import { makeActiveContractData } from "../utils";
 import { CantonContractAdapter } from "./CantonContractAdapter";
 
-export class MultiFeedPriceEntryAdapter extends CantonContractAdapter {
+export class MultiPricePillCantonContractAdapter extends CantonContractAdapter {
   private readonly arrayifiedFeedIds: Map<string, number[]>;
 
   constructor(

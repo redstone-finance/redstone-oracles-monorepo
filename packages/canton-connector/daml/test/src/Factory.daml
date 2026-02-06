@@ -8,9 +8,9 @@ import DA.Foldable(forA_)
 import Splice.Api.FeaturedAppRightV1
 
 import IRedStoneCoreFeatured
-import IRedStonePriceFeedEntry
+import IRedStonePricePill
 import RedStoneCoreFeaturedClient
-import RedStonePriceFeedFactory
+import RedStonePricePillFactory
 
 import Input
 import Utils
@@ -32,14 +32,14 @@ main input = script do
     createCmd MockFeaturedAppRight with dso, provider = owner
 
   coreCid <- submit (actAs owner <> actAs beneficiary) do
-    createCmd RedStonePriceFeedFactory with
+    createCmd RedStonePricePillFactory with
       coreId = "RedStoneCore-123"
       owner
       viewers = [viewer]
       beneficiary
 
   featuredDisclosure <- queryDisclosure @MockFeaturedAppRight owner featuredCid
-  coreDisclosure <- queryDisclosure @RedStonePriceFeedFactory owner coreCid
+  coreDisclosure <- queryDisclosure @RedStonePricePillFactory owner coreCid
 
   result <- submitDisclosed viewer [featuredDisclosure] do
     exerciseCmd (toInterfaceContractId @IRedStoneCoreFeatured coreCid) GetPricesFeatured with
@@ -80,7 +80,7 @@ verifyResult feedIds (beneficiary,dso,viewer) multiplier result = do
 
   length markers === multiplier * (length feedIds)
 
-  priceFeedEntries <- queryInterface @IRedStonePriceFeedEntry viewer
+  priceFeedEntries <- queryInterface @IRedStonePricePill viewer
   debug priceFeedEntries
 
   length priceFeedEntries === multiplier * length feedIds

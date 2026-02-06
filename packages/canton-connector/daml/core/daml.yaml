@@ -1,13 +1,13 @@
 sdk-version: 3.4.10
-name: redstone-core-v1
-version: 0.4.4
+name: redstone-core-v8
+version: 0.4.5
 source: src
 dependencies:
   - daml-prim
   - daml-stdlib
 data-dependencies:
-  - ../sdk/.daml/dist/redstone-sdk-v7-0.4.4.dar
-  - ../interface/.daml/dist/redstone-interface-v7-0.4.4.dar
-  - ../featured/.daml/dist/redstone-featured-v1-0.4.4.dar
+  - ../sdk/.daml/dist/redstone-sdk-v8-0.4.5.dar
+  - ../interface/.daml/dist/redstone-interface-v8-0.4.5.dar
+  - ../featured/.daml/dist/redstone-featured-v8-0.4.5.dar
 build-options:
   - --target=2.1
