@@ -41,20 +41,31 @@ export abstract class CantonContractAdapter {
 
   protected abstract getContractFilter(): ContractFilter;
 
-  private static buildCommands<Arg extends object>(
-    choices: ChoiceInput<Arg>[],
+  private static buildCommand<Arg extends object>(
+    { choice, argument, contractId }: ChoiceInput<Arg>,
     interfaceId: string,
     timestamp: Date,
     addCurrentTime: boolean
   ) {
-    return choices.map(({ choice, argument, contractId }) => ({
+    return {
       choice,
       contractId,
       templateId: interfaceId,
       choiceArgument: addCurrentTime
         ? { ...argument, currentTime: timestamp.toISOString() }
         : argument,
-    }));
+    };
+  }
+
+  private static buildCommands<Arg extends object>(
+    choices: ChoiceInput<Arg>[],
+    interfaceId: string,
+    timestamp: Date,
+    addCurrentTime: boolean
+  ) {
+    return choices.map((choice) =>
+      this.buildCommand(choice, interfaceId, timestamp, addCurrentTime)
+    );
   }
 
   private async withRetryAndLogging<T>(fn: () => Promise<T>): Promise<T> {
