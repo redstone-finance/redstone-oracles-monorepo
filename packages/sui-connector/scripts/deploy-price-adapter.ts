@@ -1,4 +1,4 @@
-import { SuiClient, SuiTransactionBlockResponse } from "@mysten/sui/client";
+import { SuiClient, SuiObjectChange } from "@mysten/sui/client";
 import { Transaction } from "@mysten/sui/transactions";
 import { RedstoneCommon } from "@redstone-finance/utils";
 import { spawn } from "child_process";
@@ -16,17 +16,21 @@ import {
   SuiNetworkSchema,
 } from "../src";
 
-interface ObjectChanges {
-  objectChanges?: Array<{
-    type: string;
-    objectType: string;
-    packageId?: string;
-    objectId?: string;
-  }>;
+interface CliChangedObject {
+  objectId: string;
+  inputState: string;
+  outputState: string;
+  objectType?: string;
+  idOperation?: string;
 }
 
-interface TransactionResult {
-  digest: string;
+interface CliTransactionResult {
+  effects: {
+    V2: {
+      transaction_digest: string;
+    };
+  };
+  changed_objects?: CliChangedObject[];
 }
 
 async function executeCommand(command: string, args: string[]): Promise<string> {
@@ -53,7 +57,7 @@ async function executeCommand(command: string, args: string[]): Promise<string> 
   });
 }
 
-async function executeSuiPublish(network: SuiNetworkName): Promise<ObjectChanges> {
+async function executeSuiPublish(network: SuiNetworkName): Promise<CliTransactionResult> {
   const cwd = process.cwd();
   try {
     const skipFaucet = RedstoneCommon.getFromEnv("SKIP_FAUCET", z.optional(z.boolean()));
@@ -86,7 +90,7 @@ async function executeSuiPublish(network: SuiNetworkName): Promise<ObjectChanges
 
     const json = output.slice(jsonStart, jsonEnd + 1);
 
-    return JSON.parse(json.split("Transaction digest:")[0]) as ObjectChanges;
+    return JSON.parse(json.split("Transaction digest:")[0]) as CliTransactionResult;
   } catch (error) {
     console.error("Error executing sui client publish:", error);
     throw error;
@@ -96,11 +100,7 @@ async function executeSuiPublish(network: SuiNetworkName): Promise<ObjectChanges
   }
 }
 
-async function initialize(
-  client: SuiClient,
-  packageId: string,
-  adminCap: string
-): Promise<TransactionResult> {
+async function initialize(client: SuiClient, packageId: string, adminCap: string) {
   const tx = new Transaction();
   const config = makeSuiDeployConfig();
   const keypair = makeSuiKeypair();
@@ -112,25 +112,42 @@ async function initialize(
   });
 }
 
-function findObject(changes: ObjectChanges, objectType: string) {
-  const created = changes.objectChanges?.filter((obj) => obj.type === "created");
+function findCliCreatedObject(response: CliTransactionResult, objectType: string) {
+  const created = response.changed_objects?.filter(
+    (obj) =>
+      obj.inputState === "INPUT_OBJECT_STATE_DOES_NOT_EXIST" &&
+      obj.outputState === "OUTPUT_OBJECT_STATE_OBJECT_WRITE"
+  );
 
   return created?.find((obj) => obj.objectType === objectType)?.objectId;
 }
 
-function getAdminCap(changes: ObjectChanges, packageId: string) {
-  return findObject(changes, `${packageId}::admin::AdminCap`);
+function getAdminCap(response: CliTransactionResult, packageId: string) {
+  return findCliCreatedObject(response, `${packageId}::admin::AdminCap`);
 }
 
-function getUpgradeCap(changes: ObjectChanges) {
-  return findObject(changes, `0x2::package::UpgradeCap`);
+function getUpgradeCap(response: CliTransactionResult) {
+  return findCliCreatedObject(
+    response,
+    "0x0000000000000000000000000000000000000000000000000000000000000002::package::UpgradeCap"
+  );
 }
 
-function getPriceAdapter(response: SuiTransactionBlockResponse, packageId: string) {
-  const created = response.objectChanges?.filter((obj) => obj.type === "created");
+function getPackageId(response: CliTransactionResult) {
+  return response.changed_objects?.find(
+    (obj) => obj.outputState === "OUTPUT_OBJECT_STATE_PACKAGE_WRITE"
+  )?.objectId;
+}
 
-  return created?.find((obj) => obj.objectType === `${packageId}::price_adapter::PriceAdapter`)
-    ?.objectId;
+function findSdkCreatedObject(objectChanges: SuiObjectChange[] | undefined, objectType: string) {
+  return objectChanges?.find(
+    (obj): obj is Extract<SuiObjectChange, { type: "created" }> =>
+      obj.type === "created" && obj.objectType === objectType
+  )?.objectId;
+}
+
+function getPriceAdapter(objectChanges: SuiObjectChange[] | undefined, packageId: string) {
+  return findSdkCreatedObject(objectChanges, `${packageId}::price_adapter::PriceAdapter`);
 }
 
 async function main() {
@@ -153,11 +170,15 @@ async function main() {
   }
 
   const publishResult = await executeSuiPublish(network);
-  const packageId = publishResult.objectChanges?.find((v) => v.type === "published")?.packageId;
+  console.dir(publishResult.changed_objects);
+
+  const packageId = getPackageId(publishResult);
   if (!packageId) {
     throw new Error("Package ID not found");
   }
+
   console.log("Publish result:", publishResult);
+
   const adminCap = getAdminCap(publishResult, packageId);
   if (!adminCap) {
     throw new Error("Admin cap not found");
@@ -176,8 +197,8 @@ async function main() {
     digest: res.digest,
     options: { showObjectChanges: true },
   });
-  const priceAdapterObjectId = getPriceAdapter(details, packageId);
 
+  const priceAdapterObjectId = getPriceAdapter(details.objectChanges!, packageId);
   if (!priceAdapterObjectId) {
     throw new Error("priceAdapterObjectId not found");
   }
