@@ -1,0 +1,20 @@
+{
+  "interval": 10000,
+  "priceAggregator": "median",
+  "sourceTimeout": 5000,
+  "minValidSourcesPercentage": 1,
+  "deviationCheck": {
+    "deviationWithRecentValues": {
+      "maxPercent": 100,
+      "maxDelayMilliseconds": 300000
+    }
+  },
+  "defaultSource": [],
+  "tokens": {
+    "KOSPI200": {
+      "source": ["ws-itick-indices"],
+      "denomination": "USD",
+      "rateFeed": false
+    }
+  }
+}
