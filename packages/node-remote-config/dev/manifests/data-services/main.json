@@ -8688,6 +8688,36 @@
       ],
       "denomination": "USD",
       "rateFeed": false
+    },
+    "LBXAUAM": {
+      "source": [],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "LBXAUPM": {
+      "source": [],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "LBXPDAM": {
+      "source": [],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "LBXPTAM": {
+      "source": [],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "LBXPDPM": {
+      "source": [],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "LBXPTPM": {
+      "source": [],
+      "denomination": "USD",
+      "rateFeed": false
     }
   }
 }
