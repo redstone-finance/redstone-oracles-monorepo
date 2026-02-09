@@ -8700,6 +8700,11 @@
       "denomination": "USD",
       "rateFeed": false
     },
+    "KOSPI200": {
+      "source": [],
+      "denomination": "USD",
+      "rateFeed": false
+    },
     "NGASH6": {
       "source": [
         "ws-lo-tech"
