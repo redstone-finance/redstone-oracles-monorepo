@@ -8073,7 +8073,12 @@
     "KOSPI": {
       "source": ["alltick-api"],
       "denomination": "USD",
-      "rateFeed": true
+      "rateFeed": false
+    },
+    "NGASH6": {
+      "source": ["ws-lo-tech"],
+      "denomination": "USD",
+      "rateFeed": false
     }
   }
 }
