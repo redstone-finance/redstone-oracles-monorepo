@@ -9,9 +9,7 @@
       "maxDelayMilliseconds": 120000
     }
   },
-  "defaultSource": [
-    "coingecko"
-  ],
+  "defaultSource": [],
   "tokens": {
     "ETH": {
       "source": [
@@ -32,7 +30,6 @@
         "binancecoinm-usd",
         "band",
         "bingx",
-        "coingecko",
         "dia",
         "kaiko",
         "xt",
@@ -57,7 +54,6 @@
         "binancecoinm-usd",
         "band",
         "bingx",
-        "coingecko",
         "kaiko",
         "kraken",
         "xt",
@@ -74,7 +70,6 @@
         "coinbase-usd",
         "kraken-eur",
         "bitstamp-usd",
-        "coingecko",
         "curve-dai",
         "curve-usdc",
         "uniswap-v3-ethereum-on-chain-weth-3000",
@@ -96,7 +91,6 @@
         "lbank-usdt",
         "bitrue-usdt",
         "binancecoinm-usd",
-        "coingecko",
         "xt",
         "bingx-usdt"
       ]
@@ -117,7 +111,6 @@
         "bitrue-usdt",
         "bitstamp-usd",
         "bitfinex",
-        "coingecko",
         "curve-dai",
         "maverick",
         "uniswap-v3-ethereum-on-chain-weth-500",
@@ -146,7 +139,6 @@
         "bitfinex-usd",
         "bitstamp-usd",
         "binancecoinm-usd",
-        "coingecko",
         "bingx-usdt"
       ]
     },
@@ -167,7 +159,6 @@
         "bitfinex-usd",
         "bitstamp-usd",
         "binancecoinm-usd",
-        "coingecko",
         "bingx-usdt"
       ]
     },
@@ -187,7 +178,6 @@
         "bitrue-usdt",
         "bitstamp-usd",
         "binancecoinm-usd",
-        "coingecko",
         "bingx-usdt"
       ]
     },
@@ -207,7 +197,6 @@
         "bitstamp-usd",
         "binancecoinm-usd",
         "bitfinex",
-        "coingecko",
         "kraken",
         "bingx-usdt"
       ]
@@ -216,8 +205,7 @@
       "source": [
         "binance-usdt",
         "coinbase-usd",
-        "bitrue-usdt",
-        "coingecko"
+        "bitrue-usdt"
       ]
     },
     "SOL": {
@@ -238,7 +226,6 @@
         "bitstamp-usd",
         "binancecoinm-usd",
         "bingx",
-        "coingecko",
         "xt",
         "bingx-usdt"
       ]
@@ -260,7 +247,6 @@
         "bitfinex-usd",
         "bitstamp-usd",
         "binancecoinm-usd",
-        "coingecko",
         "bingx-usdt"
       ]
     },
@@ -278,7 +264,6 @@
         "lbank-usdt",
         "bitrue-usdt",
         "bitstamp-usd",
-        "coingecko",
         "uniswap-v3-ethereum-on-chain-weth-3000",
         "bingx-usdt"
       ]
@@ -298,7 +283,6 @@
         "bitrue-usdt",
         "bitfinex-usd",
         "binancecoinm-usd",
-        "kaiko-v2",
         "bingx-usdt"
       ]
     },
@@ -316,7 +300,6 @@
         "bitrue-usdt",
         "bitfinex-usd",
         "bitstamp-usd",
-        "coingecko",
         "curve-usdc",
         "uniswap-v3-ethereum-on-chain-usdc-100",
         "xt",
@@ -340,7 +323,6 @@
         "bitfinex-usd",
         "bitstamp-usd",
         "binancecoinm-usd",
-        "coingecko",
         "bingx-usdt"
       ]
     },
@@ -362,7 +344,6 @@
         "binancecoinm-usd",
         "bingx",
         "bitfinex",
-        "coingecko",
         "kaiko",
         "bingx-usdt"
       ]
@@ -385,7 +366,6 @@
         "bitstamp-usd",
         "binancecoinm-usd",
         "bingx",
-        "coingecko",
         "uniswap-v3-ethereum-on-chain-weth-3000",
         "xt",
         "bingx-usdt"
@@ -405,7 +385,6 @@
         "bitstamp-btc",
         "bingx",
         "bitrue",
-        "coingecko",
         "uniswap-v3-ethereum-on-chain-weth-3000",
         "bingx-usdt"
       ]
@@ -427,7 +406,6 @@
         "binancecoinm-usd",
         "bitfinex",
         "bingx",
-        "coingecko",
         "xt",
         "bingx-usdt"
       ]
@@ -450,7 +428,6 @@
         "binancecoinm-usd",
         "bingx",
         "bitfinex",
-        "coingecko",
         "uniswap-v3-ethereum-on-chain-weth-3000",
         "xt",
         "bingx-usdt"
@@ -463,8 +440,7 @@
         "gate-usdt",
         "lbank-usdt",
         "bitrue-usdt",
-        "bitfinex-usd",
-        "coingecko"
+        "bitfinex-usd"
       ]
     },
     "OKB": {
@@ -475,7 +451,6 @@
         "bitmart-usdt",
         "lbank-usdt",
         "bitrue-usdt",
-        "coingecko",
         "bingx-usdt"
       ]
     },
@@ -494,7 +469,6 @@
         "bitrue-usdt",
         "bitfinex-usd",
         "binancecoinm-usd",
-        "coingecko",
         "kraken",
         "bingx-usdt"
       ]
@@ -508,8 +482,7 @@
         "binanceusdm-usdt",
         "kraken-usdt",
         "bitrue-usdt",
-        "bitfinex-usd",
-        "coingecko"
+        "bitfinex-usd"
       ]
     },
     "FIL": {
@@ -528,7 +501,6 @@
         "bitrue-usdt",
         "bitfinex-usd",
         "binancecoinm-usd",
-        "coingecko",
         "bingx-usdt"
       ]
     },
@@ -549,7 +521,6 @@
         "bitstamp-usd",
         "binancecoinm-usd",
         "bitfinex",
-        "coingecko",
         "bingx-usdt"
       ]
     },
@@ -569,7 +540,6 @@
         "bitrue-usdt",
         "bitfinex-usd",
         "binancecoinm-usd",
-        "coingecko",
         "bingx-usdt"
       ]
     },
@@ -589,7 +559,6 @@
         "bitfinex-usd",
         "bitstamp-usd",
         "binancecoinm-usd",
-        "coingecko",
         "kraken",
         "bingx-usdt"
       ]
@@ -611,7 +580,6 @@
         "bitstamp-usd",
         "binancecoinm-usd",
         "bitfinex",
-        "coingecko",
         "bingx-usdt"
       ]
     },
@@ -648,7 +616,6 @@
         "bitrue-usdt",
         "bitfinex-usd",
         "binancecoinm-usd",
-        "coingecko",
         "bingx-usdt"
       ]
     },
@@ -669,7 +636,6 @@
         "bitstamp-usd",
         "binancecoinm-usd",
         "bitfinex",
-        "coingecko",
         "kaiko",
         "uniswap-v3-ethereum-on-chain-weth-3000",
         "xt",
@@ -689,7 +655,6 @@
         "lbank-usdt",
         "bitrue-usdt",
         "bingx",
-        "coingecko",
         "bingx-usdt"
       ]
     },
@@ -707,7 +672,6 @@
         "bitrue-usdt",
         "bingx",
         "coinbase",
-        "coingecko",
         "bingx-usdt"
       ]
     },
@@ -725,7 +689,6 @@
         "lbank-usdt",
         "bitrue-usdt",
         "bingx",
-        "coingecko",
         "fraxswap-on-chain-frax",
         "bingx-usdt"
       ]
@@ -734,7 +697,6 @@
       "source": [
         "gate-usdt",
         "bitrue-usdt",
-        "coingecko",
         "curve-usdc-frax-multi-block",
         "fraxswap-on-chain-fxs",
         "uniswap-v3-ethereum-on-chain-fxs-10000",
@@ -744,7 +706,6 @@
     "OHM": {
       "source": [
         "bitrue-usdt",
-        "coingecko",
         "uniswap-v3-ethereum-on-chain-usdc-3000"
       ]
     },
@@ -755,7 +716,6 @@
         "gate-usdt",
         "bitmart-usdt",
         "bingx",
-        "coingecko",
         "bingx-usdt"
       ]
     },
@@ -772,7 +732,6 @@
         "kraken-usd",
         "lbank-usdt",
         "bitrue-usdt",
-        "coingecko",
         "bingx-usdt"
       ]
     },
@@ -784,7 +743,6 @@
         "bitmart-usdt",
         "bitrue-usdt",
         "bingx",
-        "coingecko",
         "uniswap-v3-ethereum-on-chain-weth-3000",
         "bingx-usdt"
       ]
@@ -811,7 +769,6 @@
         "mexc-usdt",
         "gate-usdt",
         "bitrue-usdt",
-        "coingecko",
         "bingx-usdt"
       ]
     },
@@ -875,7 +832,6 @@
       "source": [
         "bitget-usdt",
         "bitrue-usdt",
-        "coingecko",
         "camelot-weth"
       ]
     },
@@ -885,7 +841,6 @@
         "kucoin-usdt",
         "mexc-usdt",
         "gate-usdt",
-        "coingecko",
         "xt"
       ]
     },
@@ -901,7 +856,6 @@
         "lbank-usdt",
         "bitrue-usdt",
         "bingx",
-        "coingecko",
         "trader-joe-on-chain-wavax",
         "xt",
         "bingx-usdt"
@@ -912,7 +866,6 @@
         "coinbase-usd",
         "kraken-usd",
         "bitstamp-eur",
-        "coingecko",
         "trader-joe-v2-avalanche-on-chain-usdc",
         "uniswap-v3-ethereum-on-chain-usdc-500"
       ]
@@ -939,7 +892,6 @@
         "bitfinex-usd",
         "bitstamp-usd",
         "bingx",
-        "coingecko",
         "xt",
         "bingx-usdt"
       ]
@@ -964,8 +916,7 @@
     },
     "GHO": {
       "source": [
-        "balancer-ethereum-usdc",
-        "coingecko"
+        "balancer-ethereum-usdc"
       ]
     },
     "USDC.USDT": {
@@ -991,7 +942,6 @@
         "lbank-usdt",
         "bitrue-usdt",
         "bitstamp-usd",
-        "coingecko",
         "uniswap-v3-ethereum-on-chain-weth-3000",
         "bingx-usdt"
       ]
@@ -1012,7 +962,6 @@
         "bitrue-usdt",
         "bitfinex-usd",
         "bingx",
-        "coingecko",
         "uniswap-v3-arbitrum-on-chain-weth-500",
         "bingx-usdt"
       ]
@@ -1032,7 +981,6 @@
         "lbank-usdt",
         "bitrue-usdt",
         "binancecoinm-usd",
-        "coingecko",
         "xt",
         "uniswap-v3-optimism-on-chain-weth-3000",
         "bingx-usdt"
@@ -1052,7 +1000,6 @@
         "lbank-usdt",
         "bitrue-usdt",
         "bitstamp-usd",
-        "coingecko",
         "xt",
         "uniswap-v3-ethereum-on-chain-weth-3000",
         "bingx-usdt"
@@ -1066,7 +1013,6 @@
         "coinbase-usd",
         "kraken-usd",
         "bitrue-usdt",
-        "coingecko",
         "bingx-usdt"
       ]
     },
@@ -1102,7 +1048,6 @@
         "mexc-usdt",
         "bitrue-usdt",
         "bingx",
-        "coingecko",
         "bingx-usdt"
       ]
     },
@@ -1122,7 +1067,6 @@
         "bitrue-usdt",
         "bitfinex-usd",
         "balancer-ethereum-weth",
-        "coingecko",
         "xt",
         "bingx-usdt"
       ]
@@ -1292,7 +1236,6 @@
         "lbank-usdt",
         "bitrue-usdt",
         "bingx",
-        "coingecko",
         "uniswap-v3-arbitrum-on-chain-weth-3000",
         "xt",
         "bingx-usdt"
@@ -1313,7 +1256,6 @@
         "bitrue-usdt",
         "bitfinex-usd",
         "bingx",
-        "coingecko",
         "xt",
         "bingx-usdt"
       ]
@@ -1333,7 +1275,6 @@
         "bitrue-usdt",
         "bitfinex-usd",
         "bingx",
-        "coingecko",
         "bingx-usdt"
       ]
     },
@@ -1355,7 +1296,6 @@
         "bitstamp-usd",
         "binancecoinm-usd",
         "bingx",
-        "coingecko",
         "xt",
         "bingx-usdt"
       ]
@@ -1376,7 +1316,6 @@
         "bitrue-usdt",
         "bitstamp-usd",
         "bingx",
-        "coingecko",
         "bingx-usdt"
       ]
     },
@@ -1533,7 +1472,6 @@
         "bitfinex-usd",
         "bingx",
         "bitget",
-        "coingecko",
         "xt"
       ]
     },
@@ -2478,8 +2416,6 @@
         "bitmart-usdt",
         "lbank-usdt",
         "bitrue-usdt",
-        "coingecko",
-        "coinmarketcap",
         "xt",
         "bingx-usdt"
       ]
