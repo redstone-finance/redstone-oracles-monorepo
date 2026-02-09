@@ -122,6 +122,7 @@ packages/on-chain-relayer/price-feed-contract-address.txt
 
 packages/**/yarn*
 .env-*
+.envrc
 mock-prices.json
 mock-prices-*.json
 
