@@ -1,7 +1,7 @@
 {
   "interval": 10000,
   "priceAggregator": "median",
-  "defaultSource": ["coingecko"],
+  "defaultSource": [],
   "sourceTimeout": 7000,
   "minValidSourcesPercentage": 1,
   "deviationCheck": {
@@ -49,7 +49,6 @@
         "bitrue-usdt",
         "bitstamp-usd",
         "bybit-usdt",
-        "coingecko",
         "curve-ethereum-dai",
         "curve-ethereum-usdt",
         "gate-usdt",
@@ -95,15 +94,7 @@
       "rateFeed": false
     },
     "USDT": {
-      "source": [
-        "bitstamp-usd",
-        "coinbase-usd",
-        "coingecko",
-        "coinmarketcap",
-        "gemini-usd",
-        "kraken-usd",
-        "okx-usd"
-      ],
+      "source": ["bitstamp-usd", "coinbase-usd", "gemini-usd", "kraken-usd", "okx-usd"],
       "deviationCheck": {
         "deviationWithRecentValues": {
           "maxPercent": 5,
@@ -227,8 +218,6 @@
         "bitmart-usdt",
         "bitrue-usdt",
         "bybit-usdt",
-        "coingecko",
-        "coinmarketcap",
         "curve-ethereum-usdt",
         "gate-usdt",
         "kraken-usd",
@@ -672,8 +661,6 @@
         "binance-usdt",
         "binance-xrp-reversed",
         "bingx-usdt",
-        "coingecko",
-        "coinmarketcap",
         "gate-usdt",
         "mexc-usdt",
         "pancake-swap-bnb-usdt-100",
@@ -860,7 +847,6 @@
         "bitmart-usdt",
         "bitrue-usdt",
         "coinbase-usd",
-        "coingecko",
         "gate-usdt",
         "kraken-usd",
         "kucoin-usdt",
@@ -913,8 +899,6 @@
         "aerodrome-cl-base-usdc-2",
         "aerodrome-cl-base-weth",
         "coinbase-usdc",
-        "coingecko",
-        "coinmarketcap",
         "kraken-usd",
         "trader-joe-v2-avalanche-usdc",
         "uniswap-v3-ethereum-usdc-500"

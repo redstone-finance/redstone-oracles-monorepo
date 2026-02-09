@@ -21,8 +21,6 @@
         "bitmart-usdt",
         "bitrue-usdt",
         "bitstamp-usd",
-        "coingecko",
-        "coinmarketcap",
         "curve-ethereum-dai",
         "curve-ethereum-usdt",
         "kraken-usdt",
@@ -39,14 +37,7 @@
       }
     },
     "USDT": {
-      "source": [
-        "bitstamp-usd",
-        "coinbase-usd",
-        "coingecko",
-        "coinmarketcap",
-        "gate-usd",
-        "kraken-usd"
-      ],
+      "source": ["bitstamp-usd", "coinbase-usd", "gate-usd", "kraken-usd"],
       "deviationCheck": {
         "deviationWithRecentValues": {
           "maxPercent": 5,
@@ -61,8 +52,6 @@
         "binanceusdm-usdt",
         "bitget-usdt",
         "bitmart-usdt",
-        "coingecko",
-        "coinmarketcap",
         "kucoin-usdt",
         "lbank-usdt",
         "okx-usdt",
@@ -81,10 +70,6 @@
         "bitmart-usdt",
         "bitstamp-usd",
         "coinbase-usd",
-        "coingecko",
-        "coinmarketcap",
-        "kaiko",
-        "kaiko-v2",
         "kraken-usd",
         "kucoin-usdt",
         "lbank-usdt",
@@ -98,8 +83,6 @@
         "bitmart-usdt",
         "bitrue-usdt",
         "coinbase-usd",
-        "coingecko",
-        "coinmarketcap",
         "kraken-usd",
         "curve-ethereum-usdt",
         "okx-usdt",
@@ -119,8 +102,6 @@
         "bitget-usdt",
         "bitmart-usdc",
         "bitrue-usdt",
-        "coingecko",
-        "coinmarketcap",
         "lbank-usdt",
         "kucoin-usdt",
         "okx-usdt"
@@ -156,11 +137,7 @@
         "bitrue-usdt",
         "bitstamp-usd",
         "coinbase-usd",
-        "coingecko",
-        "coinmarketcap",
         "gate-usdt",
-        "kaiko",
-        "kaiko-v2",
         "kraken-usd",
         "kucoin-usdt",
         "lbank-usdt",
@@ -172,7 +149,6 @@
       "source": [
         "bingx-usdt",
         "bitget-usdt",
-        "coinmarketcap",
         "curve-ethereum-eth",
         "curve-ethereum-eth-2",
         "curve-ethereum-weth",
@@ -230,8 +206,6 @@
         "balancer-ethereum-usdc",
         "balancer-ethereum-usdt",
         "balancer-ethereum-wsteth",
-        "coingecko",
-        "coinmarketcap",
         "curve-ethereum-crvusd",
         "curve-ethereum-usde",
         "curve-ethereum-wbtc",
@@ -252,10 +226,6 @@
         "bitmart-usdt",
         "bitfinex-usd",
         "coinbase-usd",
-        "coingecko",
-        "coinmarketcap",
-        "kaiko",
-        "kaiko-v2",
         "kraken-usd",
         "kucoin-usdt",
         "lbank-usdt",
@@ -292,8 +262,6 @@
         "bitget-usdt",
         "bitrue-usdt",
         "gate-usdt",
-        "coinmarketcap",
-        "kaiko-v2",
         "kucoin-usdt",
         "lbank-usdt"
       ]
@@ -310,17 +278,10 @@
       "source": ["twap-local"]
     },
     "MNT": {
-      "source": [
-        "bingx-usdt",
-        "bitmart-usdt",
-        "coingecko",
-        "coinmarketcap",
-        "gate-usdt",
-        "uniswap-v3-ethereum-weth-3000"
-      ]
+      "source": ["bingx-usdt", "bitmart-usdt", "gate-usdt", "uniswap-v3-ethereum-weth-3000"]
     },
     "TLOS": {
-      "source": ["coinmarketcap", "gate-usdt", "kucoin-usdt", "bitget-usdt"]
+      "source": ["gate-usdt", "kucoin-usdt", "bitget-usdt"]
     },
     "ETHx": {
       "source": ["balancer-arbitrumone-wsteth", "balancer-ethereum-wsteth", "curve-ethereum-eth"]
@@ -334,7 +295,6 @@
         "bitget-usdt",
         "binance-usdt",
         "coinbase-usd",
-        "coinmarketcap",
         "gate-usdt",
         "kucoin-usdt",
         "okx-usdt",
@@ -413,8 +373,6 @@
         "bitmart-usdt",
         "bitrue-usdt",
         "coinbase-usd",
-        "coingecko",
-        "coinmarketcap",
         "gate-usdt",
         "kraken-usd",
         "kucoin-usdt",
@@ -433,8 +391,6 @@
         "bitmart-usdt",
         "bitrue-usdt",
         "coinbase-usd",
-        "coingecko",
-        "coinmarketcap",
         "gate-usdt",
         "kucoin-usdt",
         "okx-usdt",
@@ -454,8 +410,6 @@
         "bitget-usdt",
         "bitmart-usdt",
         "bitrue-usdt",
-        "coingecko",
-        "coinmarketcap",
         "gate-usdt",
         "kucoin-usdt",
         "okx-usdt"
@@ -470,8 +424,6 @@
         "bitstamp-api",
         "coinbase-api",
         "ecb",
-        "kaiko",
-        "kaiko-v2",
         "kraken-usd",
         "kucoin-api",
         "twelve-data"
@@ -490,12 +442,7 @@
       "source": ["non-usd-based"]
     },
     "EUROC": {
-      "source": [
-        "coingecko",
-        "coinmarketcap",
-        "trader-joe-v2-avalanche-usdc",
-        "uniswap-v3-ethereum-usdc-500"
-      ]
+      "source": ["trader-joe-v2-avalanche-usdc", "uniswap-v3-ethereum-usdc-500"]
     },
     "EUROC/EUR": {
       "source": ["non-usd-based"]
@@ -510,11 +457,7 @@
         "bitmart-usdt",
         "bitstamp-usd",
         "coinbase-usd",
-        "coingecko",
-        "coinmarketcap",
         "gate-usdt",
-        "kaiko",
-        "kaiko-v2",
         "kucoin-usdt",
         "lbank-usdt",
         "okx-usdt"
@@ -541,8 +484,6 @@
         "bitrue-usdt",
         "bingx-usdt",
         "coinbase-usd",
-        "coingecko",
-        "coinmarketcap",
         "gate-usdt",
         "kraken-usd",
         "kucoin-usdt",
@@ -552,7 +493,7 @@
       ]
     },
     "CANTO": {
-      "source": ["coingecko", "canto-canto-note", "canto-canto-atom", "canto-canto-eth"]
+      "source": ["canto-canto-note", "canto-canto-atom", "canto-canto-eth"]
     },
     "XAU": {
       "source": ["alltick-api", "financialmodelingprep", "twelve-data"]
@@ -564,8 +505,6 @@
         "binanceusdm-usdt",
         "bitfinex-usd",
         "bitstamp-usd",
-        "coingecko",
-        "coinmarketcap",
         "kraken-usd",
         "kucoin-usdt",
         "lbank-usdt",
@@ -581,8 +520,6 @@
         "bitget-usdt",
         "bitstamp-usd",
         "coinbase-usd",
-        "coingecko",
-        "coinmarketcap",
         "gate-usdt",
         "kraken-usd",
         "kucoin-usdt",
@@ -623,14 +560,7 @@
       }
     },
     "XVS": {
-      "source": [
-        "binance-usdt",
-        "binanceusdm-usdt",
-        "bingx-usdt",
-        "coinmarketcap",
-        "gate-usdt",
-        "lbank-usdt"
-      ]
+      "source": ["binance-usdt", "binanceusdm-usdt", "bingx-usdt", "gate-usdt", "lbank-usdt"]
     },
     "WBTC": {
       "source": [
@@ -638,8 +568,6 @@
         "bingx-usdt",
         "bitrue-btc",
         "coinbase-usd",
-        "coingecko",
-        "coinmarketcap",
         "kraken-usd",
         "okx-usdt",
         "uniswap-v3-ethereum-weth-3000",
@@ -658,8 +586,6 @@
         "bitmart-usdt",
         "bitstamp-usd",
         "coinbase-usd",
-        "coingecko",
-        "coinmarketcap",
         "gate-usdt",
         "kraken-usd",
         "kucoin-usdt",
@@ -679,8 +605,6 @@
         "bitmart-usdt",
         "bitstamp-usd",
         "coinbase-usd",
-        "coingecko",
-        "coinmarketcap",
         "gate-usdt",
         "kraken-usd",
         "kucoin-usdt",
@@ -699,8 +623,6 @@
         "bitmart-usdt",
         "bitrue-usdt",
         "coinbase-usd",
-        "coingecko",
-        "coinmarketcap",
         "gate-usdt",
         "kraken-usd",
         "kucoin-usdt",
@@ -718,8 +640,6 @@
         "bitmart-usdt",
         "bitrue-usdt",
         "coinbase-usd",
-        "coingecko",
-        "coinmarketcap",
         "gate-usdt",
         "kucoin-usdt",
         "lbank-usdt",
@@ -735,8 +655,6 @@
         "bitmart-usdt",
         "bitrue-usdt",
         "coinbase-usd",
-        "coingecko",
-        "coinmarketcap",
         "gate-usdt",
         "kraken-usd",
         "kucoin-usdt",
@@ -761,7 +679,6 @@
         "bingx-usdt",
         "bitget-usdt",
         "bitrue-usdt",
-        "coinmarketcap",
         "gate-usdt",
         "kucoin-usdt",
         "lbank-usdt"
@@ -802,8 +719,6 @@
         "bingx-usdt",
         "bitget-usdt",
         "bitmart-usdt",
-        "coingecko",
-        "coinmarketcap",
         "gate-usdt",
         "kucoin-usdt",
         "okx-usdt",
@@ -848,8 +763,6 @@
         "bitfinex-usd",
         "bitmart-usdt",
         "bitrue-usdt",
-        "coingecko",
-        "coinmarketcap",
         "gate-usdt",
         "kucoin-usdt",
         "okx-usdt",
@@ -865,8 +778,6 @@
         "bingx-usdt",
         "bitrue-usdt",
         "coinbase-usd",
-        "coingecko",
-        "coinmarketcap",
         "gate-usdt",
         "kraken-usd",
         "kucoin-usdt",
@@ -1008,8 +919,6 @@
         "bitmart-usdt",
         "bitrue-usdt",
         "coinbase-usd",
-        "coingecko",
-        "coinmarketcap",
         "gate-usdt",
         "kraken-usd",
         "kucoin-usdt",
@@ -1041,8 +950,6 @@
         "bingx-usdt",
         "bitmart-usdt",
         "bybit-usdt",
-        "coingecko",
-        "coinmarketcap",
         "gate-usdt",
         "kucoin-usdt",
         "okx-usdt",
@@ -1075,8 +982,6 @@
         "bitmart-usdt",
         "bybit-usdt",
         "bybit-usdc",
-        "coingecko",
-        "coinmarketcap",
         "gate-usdt",
         "kucoin-usdt",
         "lbank-usdt",
@@ -1104,12 +1009,9 @@
         "bitmart-usdt",
         "bitrue-usdt",
         "bybit-usdt",
-        "coingecko",
-        "coinmarketcap",
         "gate-usdt",
         "kucoin-usdt",
         "okx-usdt",
-        "coingecko",
         "xt"
       ]
     },
@@ -1129,8 +1031,6 @@
         "bitrue-usdt",
         "bybit-usdt",
         "coinbase-usd",
-        "coingecko",
-        "coinmarketcap",
         "gate-usdt",
         "kraken-usd",
         "kucoin-usdt",
@@ -1144,8 +1044,6 @@
         "bitmart-usdt",
         "bitget-usdt",
         "bybit-usdt",
-        "coingecko",
-        "coinmarketcap",
         "gate-usdt",
         "kucoin-usdt",
         "lbank-usdt",
