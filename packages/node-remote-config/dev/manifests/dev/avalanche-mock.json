@@ -11,10 +11,10 @@
   },
   "tokens": {
     "ETH": {
-      "source": ["binance", "kraken", "coingecko", "mock"]
+      "source": ["binance", "kraken", "mock"]
     },
     "USDT": {
-      "source": ["coingecko", "mock"],
+      "source": ["mock"],
       "deviationCheck": {
         "deviationWithRecentValues": {
           "maxPercent": 5,

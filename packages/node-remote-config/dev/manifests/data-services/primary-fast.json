@@ -1,7 +1,7 @@
 {
   "interval": 2000,
   "priceAggregator": "median",
-  "defaultSource": ["coingecko"],
+  "defaultSource": [],
   "sourceTimeout": 2000,
   "minValidSourcesPercentage": 1,
   "deviationCheck": {
@@ -33,14 +33,7 @@
       }
     },
     "USDT": {
-      "source": [
-        "bitstamp-usd",
-        "coinbase-usd",
-        "coingecko",
-        "coinmarketcap",
-        "gate-usd",
-        "kraken-usd"
-      ],
+      "source": ["bitstamp-usd", "coinbase-usd", "gate-usd", "kraken-usd"],
       "deviationCheck": {
         "deviationWithRecentValues": {
           "maxPercent": 5,
@@ -57,8 +50,6 @@
         "bitrue-usdt",
         "bybit-usdt",
         "coinbase-usd",
-        "coingecko",
-        "coinmarketcap",
         "curve-ethereum-usdt",
         "gate-usdt",
         "kraken-usd",
@@ -94,7 +85,6 @@
         "bitrue-usdt",
         "bitstamp-usd",
         "coinbase-usd",
-        "coingecko",
         "kraken-usd",
         "kucoin-usdt",
         "okx-usdt",
