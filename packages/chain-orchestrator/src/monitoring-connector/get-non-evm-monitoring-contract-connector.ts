@@ -44,7 +44,7 @@ export function getNonEvmMonitoringContractConnector(
       return getStellarContractConnector(rpcUrls, relayerManifest);
     case "fuel":
     case "canton":
-      throw new Error(`${relayerManifest.adapterContractType} is not supported in monitoring`);
+      throw new Error(`${chainType} is not supported in monitoring`);
     case "evm":
       throw new Error(
         `Evm relayer config with networkId: ${relayerManifest.chain.id} got passed to non-evm blockchain service builder.`
