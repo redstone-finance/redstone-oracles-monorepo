@@ -8054,7 +8054,7 @@
       "rateFeed": false
     },
     "KOSPI200": {
-      "source": ["alltick-api"],
+      "source": ["alltick-api", "ws-itick-indices"],
       "denomination": "USD",
       "rateFeed": false
     },
