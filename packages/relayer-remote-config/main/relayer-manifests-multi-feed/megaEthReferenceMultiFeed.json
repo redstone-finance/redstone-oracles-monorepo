@@ -59,6 +59,12 @@
         "deviationPercentage": 0.1,
         "timeSinceLastUpdateInMilliseconds": 21600000
       }
+    },
+    "HYPE": {
+      "updateTriggersOverrides": {
+        "deviationPercentage": 0.1,
+        "timeSinceLastUpdateInMilliseconds": 21600000
+      }
     }
   }
 }
