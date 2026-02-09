@@ -8075,6 +8075,11 @@
       "denomination": "USD",
       "rateFeed": false
     },
+    "KOSPI200": {
+      "source": ["alltick-api"],
+      "denomination": "USD",
+      "rateFeed": false
+    },
     "NGASH6": {
       "source": ["ws-lo-tech"],
       "denomination": "USD",
