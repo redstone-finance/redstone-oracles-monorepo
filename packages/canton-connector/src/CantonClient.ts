@@ -31,6 +31,7 @@ const RETRY_CONFIG: Omit<RedstoneCommon.RetryConfig, "fn"> = {
   },
 };
 
+const SENDER_SEPARATOR = "/";
 export class CantonClient {
   private readonly logger = loggerFactory("canton-client");
 
@@ -51,8 +52,7 @@ export class CantonClient {
   }
 
   async getActiveContractData(interfaceId: string, filter?: ContractFilter, atOffset?: number) {
-    const filtersByParty = makeInterfaceFilterByParty(interfaceId, this.partyId);
-    const offset = atOffset ?? (await this.getCurrentOffset());
+    const { filtersByParty, offset } = await this.resolveFilterAndOffset(interfaceId, atOffset);
     const contracts = await this.performRequest(
       () =>
         DefaultService.postV2StateActiveContracts({
@@ -73,6 +73,7 @@ export class CantonClient {
 
     if (adapters.length === 1 && isJsActiveContractEntry(adapters[0].contractEntry)) {
       const jsActiveContract = adapters[0].contractEntry.JsActiveContract;
+
       return makeActiveContractData(jsActiveContract.createdEvent, jsActiveContract.synchronizerId);
     }
 
@@ -85,21 +86,11 @@ export class CantonClient {
     atOffset?: number,
     deltaOffset = DEFAULT_DELTA_OFFSET
   ) {
-    const filtersByParty = makeInterfaceFilterByParty(interfaceId, this.partyId);
-    const offset = atOffset ?? (await this.getCurrentOffset());
-    const contracts = await this.performRequest(
-      () =>
-        DefaultService.postV2Updates({
-          beginExclusive: Math.max(0, offset - deltaOffset),
-          verbose: false,
-          updateFormat: {
-            includeTransactions: {
-              eventFormat: { filtersByParty, verbose: false },
-              transactionShape: TransactionFormat.transactionShape.TRANSACTION_SHAPE_ACS_DELTA,
-            },
-          },
-        }),
-      `postV2Updates ${RedstoneCommon.stringify(filtersByParty)}`
+    const { filtersByParty, offset } = await this.resolveFilterAndOffset(interfaceId, atOffset);
+    const contracts = await this.fetchUpdates(
+      filtersByParty,
+      Math.max(0, offset - deltaOffset),
+      TransactionFormat.transactionShape.TRANSACTION_SHAPE_ACS_DELTA
     );
 
     const createdEvents = contracts
@@ -115,6 +106,50 @@ export class CantonClient {
       .flat()
       .filter((createdEvent) => !filter || filter(createdEvent.CreatedEvent.createArgument))
       .map((createdEvent) => createdEvent.CreatedEvent);
+  }
+
+  async getGetPricesTransactions(interfaceId: string, from: number, to: number) {
+    const filtersByParty = makeInterfaceFilterByParty(interfaceId, this.partyId);
+    const result = await this.fetchUpdates(
+      filtersByParty,
+      Math.max(0, from),
+      TransactionFormat.transactionShape.TRANSACTION_SHAPE_LEDGER_EFFECTS,
+      to
+    );
+
+    const updates = [];
+
+    for (const { update } of result) {
+      if (!("Transaction" in update)) {
+        continue;
+      }
+
+      const events = update.Transaction.value.events!;
+
+      for (const event of events) {
+        if (!("ExercisedEvent" in event) || event.ExercisedEvent.choice !== "GetPricesFeatured") {
+          continue;
+        }
+
+        if (!("payloadHex" in event.ExercisedEvent.choiceArgument)) {
+          continue;
+        }
+
+        const choice = event.ExercisedEvent.choiceArgument as { payloadHex: string };
+
+        const arg = choice.payloadHex;
+        const block = event.ExercisedEvent.offset;
+        const timeSecs = RedstoneCommon.msToSecs(Date.parse(update.Transaction.value.recordTime));
+        const to = event.ExercisedEvent.contractId;
+        const from = event.ExercisedEvent.actingParties?.join(SENDER_SEPARATOR) ?? "";
+
+        const updateId = update.Transaction.value.updateId;
+
+        updates.push({ arg, block, timeSecs, from, to, updateId });
+      }
+    }
+
+    return updates;
   }
 
   async exerciseChoice<Arg extends object, Res = object>(
@@ -218,6 +253,36 @@ export class CantonClient {
     }
 
     return results;
+  }
+
+  private async resolveFilterAndOffset(interfaceId: string, atOffset?: number) {
+    const filtersByParty = makeInterfaceFilterByParty(interfaceId, this.partyId);
+    const offset = atOffset ?? (await this.getCurrentOffset());
+
+    return { filtersByParty, offset };
+  }
+
+  private async fetchUpdates(
+    filtersByParty: Record<string, object>,
+    beginExclusive: number,
+    transactionShape: TransactionFormat.transactionShape,
+    endInclusive?: number
+  ) {
+    return await this.performRequest(
+      () =>
+        DefaultService.postV2Updates({
+          beginExclusive,
+          endInclusive,
+          verbose: false,
+          updateFormat: {
+            includeTransactions: {
+              eventFormat: { filtersByParty, verbose: false },
+              transactionShape,
+            },
+          },
+        }),
+      `postV2Updates ${RedstoneCommon.stringify(filtersByParty)}`
+    );
   }
 
   private async performRequest<T>(
