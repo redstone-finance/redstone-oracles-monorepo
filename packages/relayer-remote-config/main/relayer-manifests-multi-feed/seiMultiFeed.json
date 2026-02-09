@@ -44,6 +44,13 @@
         "deviationPercentage": 0.01,
         "timeSinceLastUpdateInMilliseconds": 86400000
       }
+    },
+    "PYUSD": {
+      "priceFeedAddress": "0xEC34D1Cf550dda751ff20cD4eCC7FF9219551B04",
+      "updateTriggersOverrides": {
+        "deviationPercentage": 0.1,
+        "timeSinceLastUpdateInMilliseconds": 86400000
+      }
     }
   }
 }
