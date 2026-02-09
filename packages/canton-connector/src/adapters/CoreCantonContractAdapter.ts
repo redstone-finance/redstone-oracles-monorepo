@@ -36,7 +36,11 @@ export class CoreCantonContractAdapter extends CantonContractAdapter {
   protected static async getPayloadArguments(paramsProvider: ContractParamsProvider) {
     return {
       feedIds: paramsProvider.getArrayifiedFeedIds(),
-      payloadHex: await paramsProvider.getPayloadHex(false),
+      payloadHex: await paramsProvider.getPayloadHex(false, {
+        withUnsignedMetadata: true,
+        metadataTimestamp: Date.now(),
+        componentName: "canton-connector",
+      }),
     };
   }
 }

@@ -1,3 +1,4 @@
+import { CantonClientBuilder } from "@redstone-finance/canton-connector";
 import { MoveClientBuilder } from "@redstone-finance/move-connector";
 import { RadixClientBuilder } from "@redstone-finance/radix-connector";
 import {
@@ -17,6 +18,7 @@ import {
   SuiClientBuilder,
 } from "@redstone-finance/sui-connector";
 import { deconstructNetworkId, NetworkId, RedstoneCommon } from "@redstone-finance/utils";
+import { CantonBlockchainService } from "./CantonBlockchainService";
 import { MoveBlockchainService } from "./MoveBlockchainService";
 import { RadixBlockchainService } from "./RadixBlockchainService";
 import { SolanaBlockchainService } from "./SolanaBlockchainService";
@@ -68,9 +70,17 @@ export function getNonEvmBlockchainService(networkId: NetworkId, rpcUrls: string
 
       return new StellarBlockchainService(client);
     }
+    case "canton": {
+      const client = new CantonClientBuilder()
+        .withRpcUrls(rpcUrls)
+        .withNetworkId(networkId)
+        .withPartyId(RedstoneCommon.getFromEnv("VIEWER_PARTY_ID"))
+        .withDefaultAuth(RedstoneCommon.getFromEnv("PRIVATE_KEY"))
+        .build();
+
+      return new CantonBlockchainService(client);
+    }
     case "fuel":
-    case "canton":
-      throw new Error(`Not supported for ${chainType}`);
     case "evm":
       throw new Error(
         `Evm networkId ${networkId} got passed to non-evm blockchain service builder.`

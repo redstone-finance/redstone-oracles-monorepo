@@ -1,3 +1,4 @@
+export * from "./blockchain-service/CantonBlockchainService";
 export * from "./blockchain-service/EvmBlockchainService";
 export * from "./blockchain-service/get-blockchain-service";
 export * from "./blockchain-service/get-non-evm-blockchain-service";
