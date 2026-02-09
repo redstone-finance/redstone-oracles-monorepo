@@ -8062,6 +8062,36 @@
       "source": ["ws-lo-tech"],
       "denomination": "USD",
       "rateFeed": false
+    },
+    "LBXAUAM": {
+      "source": ["metals-api"],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "LBXAUPM": {
+      "source": ["metals-api"],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "LBXPDAM": {
+      "source": ["metals-api"],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "LBXPTAM": {
+      "source": ["metals-api"],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "LBXPDPM": {
+      "source": ["metals-api"],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "LBXPTPM": {
+      "source": ["metals-api"],
+      "denomination": "USD",
+      "rateFeed": false
     }
   }
 }
