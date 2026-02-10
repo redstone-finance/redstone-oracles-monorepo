@@ -1,6 +1,7 @@
 import { BlockchainService, BlockchainServiceWithTransfer } from "@redstone-finance/multichain-kit";
+import { RedstoneCommon } from "@redstone-finance/utils";
 import { Keypair } from "@stellar/stellar-sdk";
-import { StellarClient } from "./StellarClient";
+import { SECS_PER_LEDGER, StellarClient } from "./StellarClient";
 import { StellarSigner } from "./StellarSigner";
 
 export class StellarBlockchainService implements BlockchainService {
@@ -29,6 +30,15 @@ export class StellarBlockchainService implements BlockchainService {
 
   async getBalance(address: string) {
     return await this.getNormalizedBalance(address);
+  }
+
+  async getInstanceTtl(address: string) {
+    const ttlLedger = (await this.client.getInstanceTtl(address)) ?? 0;
+    const curLedger = await this.getBlockNumber();
+
+    return new Date(
+      Date.now() + RedstoneCommon.secsToMs((ttlLedger - curLedger) * SECS_PER_LEDGER)
+    );
   }
 }
 

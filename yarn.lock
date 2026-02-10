@@ -12161,6 +12161,7 @@ __metadata:
     "@redstone-finance/hl-hip3": "workspace:*"
     "@redstone-finance/internal-utils": "workspace:*"
     "@redstone-finance/monitoring-manifests": "workspace:*"
+    "@redstone-finance/multichain-kit": "workspace:*"
     "@redstone-finance/node-commons": "workspace:*"
     "@redstone-finance/on-chain-relayer-common": "workspace:*"
     "@redstone-finance/protocol": "workspace:*"
