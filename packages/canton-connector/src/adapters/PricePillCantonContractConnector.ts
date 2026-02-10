@@ -6,7 +6,7 @@ import { PricePillCantonContractAdapter } from "./PricePillCantonContractAdapter
 export class PricePillCantonContractConnector extends CantonContractConnector<IPriceFeedContractAdapter> {
   constructor(
     cantonClient: CantonClient,
-    private feedId: string
+    private readonly feedId: string
   ) {
     super(cantonClient);
   }
