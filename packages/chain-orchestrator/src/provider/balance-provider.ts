@@ -29,7 +29,7 @@ export async function getBalanceProviderWithRpcUrls(networkId: NetworkId, rpcUrl
 
   try {
     if (isNonEvmNetworkId(networkId)) {
-      return getNonEvmBlockchainService(networkId, rpcUrls);
+      return await getNonEvmBlockchainService(networkId, rpcUrls);
     } else {
       return new EvmBlockchainService(
         await getProviderWithRpcUrls(networkId, rpcUrls, {
