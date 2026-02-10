@@ -19,6 +19,10 @@ export class BackwardCompatibleConnector implements IContractConnector<BackwardC
   async waitForTransaction(txId: string) {
     return await this.connector.waitForTransaction(txId);
   }
+
+  async getInstanceTtl(address: string) {
+    return await this.connector.getInstanceTtl?.(address);
+  }
 }
 
 export class BackwardCompatibleReadOnlyConnector
@@ -39,5 +43,9 @@ export class BackwardCompatibleReadOnlyConnector
 
   async waitForTransaction(txId: string) {
     return await this.service.waitForTransaction(txId);
+  }
+
+  async getInstanceTtl(address: string) {
+    return await this.service.getInstanceTtl?.(address);
   }
 }
