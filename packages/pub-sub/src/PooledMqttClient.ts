@@ -25,10 +25,7 @@ export class PooledMqttClient implements PubSubClient {
     private readonly pubSubClientFactory: PubSubClientFactory,
     private readonly connectionsPerTopic: number,
     // first instance is created on first publish so we pass it explicit to avoid returning dummy value in getUniqueName()
-    private readonly uniqueName: string,
-    // When defined, only topics containing any of these filters will be subscribed.
-    // When undefined, all topics are subscribed (no filtering).
-    private readonly topicFilters?: string[]
+    private readonly uniqueName: string
   ) {}
 
   getUniqueName(): string {
@@ -60,23 +57,11 @@ export class PooledMqttClient implements PubSubClient {
   }
 
   async subscribe(topics: string[], onMessage: SubscribeCallback): Promise<void> {
-    const filteredTopics =
-      this.topicFilters === undefined
-        ? topics
-        : topics.filter((t) => this.topicFilters!.some((f) => t.includes(f)));
-
-    if (filteredTopics.length === 0) {
-      this.logger.info(
-        `No topics matched filters ${JSON.stringify(this.topicFilters)}, skipping subscribe`
-      );
-      return;
-    }
-
     await this.subscribeMutex.acquire();
     try {
-      await this._subscribe(filteredTopics, onMessage);
+      await this._subscribe(topics, onMessage);
       this.logger.info(
-        `Requested ${topics.length} topics, subscribed to ${filteredTopics.length} topics, active ${this.clientToTopics.length} connections`
+        `Requested ${topics.length} topics, subscribed to ${topics.length} topics, active ${this.clientToTopics.length} connections`
       );
     } finally {
       this.subscribeMutex.release();
@@ -125,27 +110,44 @@ export class PooledMqttClient implements PubSubClient {
 
   async _subscribe(topics: string[], onMessage: SubscribeCallback): Promise<void> {
     const topicToAdd = [...topics];
-    const freeClients = this.clientToTopics.filter(
+    const clientWithCapacity = this.clientToTopics.map(
+      ([_, topics]) => this.connectionsPerTopic - topics.length
+    );
+
+    const currentClientsCapacity = clientWithCapacity.reduce((prev, curr) => prev + curr, 0);
+    const neededClients = Math.ceil(
+      (topicToAdd.length - currentClientsCapacity) / this.connectionsPerTopic
+    );
+
+    if (neededClients > 0) {
+      const newClients = await Promise.all(
+        _.range(neededClients).map(() => this.pubSubClientFactory())
+      );
+      for (const newClient of newClients) {
+        this.clientToTopics.push([newClient, []]);
+      }
+    }
+
+    const clientsWithCapacity = this.clientToTopics.filter(
       ([_, topics]) => topics.length < this.connectionsPerTopic
     );
 
-    if (freeClients.length === 0) {
-      this.clientToTopics.push([await this.pubSubClientFactory(), []]);
-      await this._subscribe(topicToAdd, onMessage);
-      return;
-    }
-
-    for (const [client, subscribedTopics] of freeClients) {
+    const subscribePromises = [];
+    for (const [client, subscribedTopics] of clientsWithCapacity) {
       const topicsToSubscribe = topicToAdd.splice(
         0,
         this.connectionsPerTopic - subscribedTopics.length
       );
 
       if (topicsToSubscribe.length > 0) {
-        await client.subscribe(topicsToSubscribe, onMessage);
-        subscribedTopics.push(...topicsToSubscribe);
+        subscribePromises.push(
+          client.subscribe(topicsToSubscribe, onMessage).then(() => {
+            subscribedTopics.push(...topicsToSubscribe);
+          })
+        );
       }
     }
+    await Promise.all(subscribePromises);
 
     if (topicToAdd.length !== 0) {
       await this._subscribe(topicToAdd, onMessage);
