@@ -52,9 +52,8 @@ export function resolvePubSubClient(config: z.infer<typeof MultiPubSubEnvConfig>
     case "mqttUnauthenticated":
       return new PooledMqttClient(
         resolveMqttClientFactory(config),
-        config.expectedRequestPerSecondPerTopic,
-        config.host,
-        config.nodeAddresses
+        config.topicCountPerConnection,
+        config.host
       );
 
     default:

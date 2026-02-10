@@ -14,7 +14,7 @@ describe("PooledMqttClient", () => {
   let client: PooledMqttClient;
 
   const createMockClient = (): PubSubClient => ({
-    subscribe: jest.fn(),
+    subscribe: jest.fn().mockReturnValue(Promise.resolve()),
     unsubscribe: jest.fn(),
     publish: jest.fn(),
     stop: jest.fn(),
@@ -189,67 +189,6 @@ describe("PooledMqttClient", () => {
       expect(client.publishClients).toHaveLength(0);
     });
   });
-
-  describe("topic filtering", () => {
-    const onMessage = jest.fn();
-
-    it("should subscribe to all topics when topicFilters is undefined", async () => {
-      const clientWithoutFilters = new PooledMqttClient(fabric, 2, "unique-name-1", undefined);
-
-      await clientWithoutFilters.subscribe(["prices/nodeA", "prices/nodeB"], onMessage);
-
-      expect(fabric).toHaveBeenCalledTimes(1);
-      expect(mockClient.subscribe).toHaveBeenCalledWith(
-        ["prices/nodeA", "prices/nodeB"],
-        onMessage
-      );
-    });
-
-    it("should filter topics with single filter", async () => {
-      const clientWithFilter = new PooledMqttClient(fabric, 2, "unique-name-1", ["nodeA"]);
-
-      await clientWithFilter.subscribe(["prices/nodeA", "prices/nodeB"], onMessage);
-
-      expect(fabric).toHaveBeenCalledTimes(1);
-      expect(mockClient.subscribe).toHaveBeenCalledWith(["prices/nodeA"], onMessage);
-    });
-
-    it("should filter topics with multiple filters", async () => {
-      const clientWithFilters = new PooledMqttClient(fabric, 2, "unique-name-1", [
-        "nodeA",
-        "nodeC",
-      ]);
-
-      await clientWithFilters.subscribe(
-        ["prices/nodeA", "prices/nodeB", "prices/nodeC"],
-        onMessage
-      );
-
-      expect(fabric).toHaveBeenCalledTimes(1);
-      expect(mockClient.subscribe).toHaveBeenCalledWith(
-        ["prices/nodeA", "prices/nodeC"],
-        onMessage
-      );
-    });
-
-    it("should not subscribe when no topics match filters", async () => {
-      const clientWithFilter = new PooledMqttClient(fabric, 2, "unique-name-1", ["nodeX"]);
-
-      await clientWithFilter.subscribe(["prices/nodeA", "prices/nodeB"], onMessage);
-
-      expect(fabric).not.toHaveBeenCalled();
-      expect(mockClient.subscribe).not.toHaveBeenCalled();
-    });
-
-    it("should handle empty topics array with filters", async () => {
-      const clientWithFilter = new PooledMqttClient(fabric, 2, "unique-name-1", ["nodeA"]);
-
-      await clientWithFilter.subscribe([], onMessage);
-
-      expect(fabric).not.toHaveBeenCalled();
-      expect(mockClient.subscribe).not.toHaveBeenCalled();
-    });
-  });
 });
 
 describe("PooledMqttClient complex", () => {
@@ -263,14 +202,14 @@ describe("PooledMqttClient complex", () => {
   beforeEach(() => {
     clientIndex = 0;
     mockClient1 = {
-      subscribe: jest.fn(),
+      subscribe: jest.fn().mockReturnValue(Promise.resolve()),
       unsubscribe: jest.fn(),
       publish: jest.fn(),
       stop: jest.fn(),
       getUniqueName: () => "unique-name-1",
     };
     mockClient2 = {
-      subscribe: jest.fn(),
+      subscribe: jest.fn().mockReturnValue(Promise.resolve()),
       unsubscribe: jest.fn(),
       publish: jest.fn(),
       stop: jest.fn(),

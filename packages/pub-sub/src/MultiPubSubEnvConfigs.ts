@@ -5,10 +5,7 @@ import { calculateTopicCountPerConnection } from "./topics";
 export const MqttPubSubEnvConfigBase = z.object({
   host: z.string(),
   // important only in the context of reader
-  expectedRequestPerSecondPerTopic: z.number().default(calculateTopicCountPerConnection()),
-  // When defined, only topics containing any of these node addresses will be subscribed.
-  // When undefined, all topics are subscribed (no filtering).
-  nodeAddresses: z.string().array().optional(),
+  topicCountPerConnection: z.number().default(calculateTopicCountPerConnection()),
 });
 
 const MqttV4Sig = MqttPubSubEnvConfigBase.extend({
