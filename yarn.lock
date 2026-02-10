@@ -10137,6 +10137,7 @@ __metadata:
     ethers: "npm:^5.7.2"
     fuels: "npm:^0.97.0"
     lodash: "npm:^4.17.23"
+    zod: "npm:^4.1.12"
   languageName: unknown
   linkType: soft
 

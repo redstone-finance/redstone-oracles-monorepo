@@ -291,9 +291,6 @@ export class CantonClient {
   ) {
     OpenAPI.BASE = this.baseUrl;
     OpenAPI.TOKEN = this.tokenProvider;
-    OpenAPI.HEADERS = {
-      "Accept-Encoding": "identity",
-    };
 
     this.logger.info(`Calling ${fnName}`);
 
