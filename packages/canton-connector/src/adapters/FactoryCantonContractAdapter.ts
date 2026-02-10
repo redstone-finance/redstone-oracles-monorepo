@@ -1,4 +1,5 @@
 import { ContractParamsProvider, IExtendedPricesContractAdapter } from "@redstone-finance/sdk";
+import { RedstoneCommon } from "@redstone-finance/utils";
 import { CantonClient } from "../CantonClient";
 import {
   CoreFeaturedCantonContractAdapter,
@@ -67,8 +68,14 @@ export class FactoryCantonContractAdapter
   }
 
   private async batchReadData(feedIds: string[], blockNumber?: number) {
-    const adapter = new MultiPricePillCantonContractAdapter(this.client, feedIds);
+    try {
+      const adapter = new MultiPricePillCantonContractAdapter(this.client, feedIds);
 
-    return await adapter.batchReadData(blockNumber);
+      return await adapter.batchReadData(blockNumber);
+    } catch (e) {
+      this.logger.warn(`Error getting data from contracts: ${RedstoneCommon.stringifyError(e)}`);
+
+      return {};
+    }
   }
 }
