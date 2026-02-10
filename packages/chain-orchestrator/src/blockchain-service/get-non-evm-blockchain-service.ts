@@ -1,4 +1,5 @@
 import { CantonClientBuilder } from "@redstone-finance/canton-connector";
+import { getSSMParamWithEnvFallback } from "@redstone-finance/internal-utils";
 import { MoveClientBuilder } from "@redstone-finance/move-connector";
 import { RadixClientBuilder } from "@redstone-finance/radix-connector";
 import {
@@ -18,6 +19,7 @@ import {
   SuiClientBuilder,
 } from "@redstone-finance/sui-connector";
 import { deconstructNetworkId, NetworkId, RedstoneCommon } from "@redstone-finance/utils";
+import z from "zod";
 import { CantonBlockchainService } from "./CantonBlockchainService";
 import { MoveBlockchainService } from "./MoveBlockchainService";
 import { RadixBlockchainService } from "./RadixBlockchainService";
@@ -25,7 +27,7 @@ import { SolanaBlockchainService } from "./SolanaBlockchainService";
 import { StellarBlockchainService } from "./StellarBlockchainService";
 import { SuiBlockchainService } from "./SuiBlockchainService";
 
-export function getNonEvmBlockchainService(networkId: NetworkId, rpcUrls: string[]) {
+export async function getNonEvmBlockchainService(networkId: NetworkId, rpcUrls: string[]) {
   const { chainType } = deconstructNetworkId(networkId);
   switch (chainType) {
     case "sui": {
@@ -71,11 +73,15 @@ export function getNonEvmBlockchainService(networkId: NetworkId, rpcUrls: string
       return new StellarBlockchainService(client);
     }
     case "canton": {
+      const auth = await getSSMParamWithEnvFallback(
+        RedstoneCommon.getFromEnv("AUTH_ARN_PATH", z.string().optional()),
+        "PRIVATE_KEY"
+      );
       const client = new CantonClientBuilder()
         .withRpcUrls(rpcUrls)
         .withNetworkId(networkId)
         .withPartyId(RedstoneCommon.getFromEnv("VIEWER_PARTY_ID"))
-        .withDefaultAuth(RedstoneCommon.getFromEnv("PRIVATE_KEY"))
+        .withDefaultAuth(auth)
         .build();
 
       return new CantonBlockchainService(client);
