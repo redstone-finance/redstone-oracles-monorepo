@@ -19,7 +19,8 @@ import * as XdrUtils from "../XdrUtils";
 import { HorizonClient } from "./HorizonClient";
 import { StellarSigner } from "./StellarSigner";
 
-export const LEDGERS_PER_DAY = RedstoneCommon.hourToSecs(24) / 5;
+export const SECS_PER_LEDGER = 5;
+export const LEDGERS_PER_DAY = RedstoneCommon.hourToSecs(24) / SECS_PER_LEDGER;
 const REDSTONE_EVENT_TOPIC_QUALIFIER = "REDSTONE";
 const TRANSACTION_TIMEOUT_SEC = 30;
 const DAYS_TO_EXTEND_TTL_THRESHOLD = 7;
