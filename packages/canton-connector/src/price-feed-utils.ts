@@ -8,6 +8,7 @@ export const IPRICE_FEED_ENTRY_TEMPLATE_NAME = `IRedStonePricePill:IRedStonePric
 export const READ_DATA_CHOICE = "ReadData";
 export const READ_FEED_ID_CHOICE = "ReadFeedId";
 export const READ_DESCRIPTION_CHOICE = "ReadDescription";
+export const ARCHIVE = "Archive";
 
 export type PriceData = {
   value: string;
@@ -38,6 +39,17 @@ export function createFeedIdFilter(arrayifiedFeedIds: number[][]): ContractFilte
     arrayifiedFeedIds.some((arrayified) =>
       _.isEqual(createArgument.feedId.map(Number), arrayified)
     )) as ContractFilter;
+}
+
+export function createStalenessFilter(keepFresh: boolean = true): ContractFilter {
+  return ((createArgument: { priceData: { writeTimestamp: string }; stalenessMs: string }) => {
+    const currentTime = Date.now();
+    const writeTimestamp = Number(createArgument.priceData.writeTimestamp);
+    const stalenessMs = Number(createArgument.stalenessMs);
+    const isFresh = currentTime - writeTimestamp <= stalenessMs;
+
+    return keepFresh === isFresh;
+  }) as ContractFilter;
 }
 
 export function groupEventsByFeedId(
