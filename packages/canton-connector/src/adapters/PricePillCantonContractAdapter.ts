@@ -64,7 +64,9 @@ export class PricePillCantonContractAdapter
     const createdEvents = await client.getCreateContractEvents(
       this.getInterfaceId(),
       this.getContractFilter(),
-      offset
+      offset,
+      undefined,
+      true
     );
 
     const newest = findNewestContract(createdEvents);

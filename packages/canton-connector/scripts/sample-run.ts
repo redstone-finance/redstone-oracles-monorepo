@@ -9,12 +9,18 @@ import { makeDefaultClient } from "./utils";
 
 const VIEWER_PARTY_NAME = `RedStoneOracleViewer`;
 const UPDATER_PARTY_NAME = `RedStoneOracleUpdater`;
+const OWNER_PARTY_NAME = `RedStoneOracleOwner`;
 
 async function main() {
-  const [client, _updateClient] = [VIEWER_PARTY_NAME, UPDATER_PARTY_NAME].map(makeDefaultClient);
+  const [client, _updateClient, ownerClient] = [
+    VIEWER_PARTY_NAME,
+    UPDATER_PARTY_NAME,
+    OWNER_PARTY_NAME,
+  ].map(makeDefaultClient);
 
   const connector = new CoreFactoryCantonContractConnector(
     client,
+    ownerClient,
     client.Defs[DEFS_KEY_CORE_FEATURED].contractId
   );
 
