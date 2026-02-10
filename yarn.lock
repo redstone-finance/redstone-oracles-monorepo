@@ -10710,6 +10710,7 @@ __metadata:
     "@redstone-finance/sdk": "workspace:*"
     "@redstone-finance/utils": "workspace:*"
     "@redstone-finance/ws": "workspace:*"
+    axios: "npm:^1.13.2"
     dotenv: "npm:^16.0.3"
     ethers: "npm:^5.7.2"
     lodash: "npm:^4.17.23"
