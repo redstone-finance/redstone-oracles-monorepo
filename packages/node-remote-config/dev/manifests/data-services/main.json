@@ -8466,6 +8466,11 @@
       "rateFeed": false,
       "denomination": "USD"
     },
+    "NUSD_FUNDAMENTAL": {
+      "source": ["accountable-nusd"],
+      "denomination": "USD",
+      "rateFeed": true
+    },
     "DLF_FUNDAMENTAL": {
       "source": ["accountable-dlf"],
       "denomination": "TRY",
