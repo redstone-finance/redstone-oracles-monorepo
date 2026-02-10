@@ -15,5 +15,12 @@ export const getCantonContractConnector = (relayerConfig: PartialRelayerConfig) 
     .withDefaultAuth(privateKey)
     .build();
 
-  return new CoreFactoryCantonContractConnector(client, adapterContractAddress);
+  const ownerClient = new CantonClientBuilder()
+    .withRpcUrls(rpcUrls)
+    .withNetworkId(networkId)
+    .withPartyId(RedstoneCommon.getFromEnv("OWNER_PARTY_ID"))
+    .withDefaultAuth(privateKey)
+    .build();
+
+  return new CoreFactoryCantonContractConnector(client, ownerClient, adapterContractAddress);
 };
