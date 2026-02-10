@@ -58,7 +58,9 @@ export class MultiPricePillCantonContractAdapter extends CantonContractAdapter {
     const createdEvents = await this.client.getCreateContractEvents(
       this.getInterfaceId(),
       this.getContractFilter(),
-      blockNumber
+      blockNumber,
+      undefined,
+      true
     );
 
     const eventsByFeedId = groupEventsByFeedId(createdEvents, this.feedIds, this.arrayifiedFeedIds);

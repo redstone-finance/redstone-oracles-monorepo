@@ -19,7 +19,8 @@
     "run-sig-der": "yarn global:ts-node scripts/sig_der.ts",
     "sample-run": "yarn build:turbo && node dist/scripts/sample-run.js",
     "core-featured-client-sample": "yarn global:ts-node scripts/core-featured-client-sample.ts",
-    "core-featured-sample": "yarn global:ts-node scripts/core-featured-sample.ts"
+    "core-featured-sample": "yarn global:ts-node scripts/core-featured-sample.ts",
+    "clear-old-pills": "yarn global:ts-node scripts/clear-old-pills.ts"
   },
   "dependencies": {
     "@redstone-finance/sdk": "workspace:*",
