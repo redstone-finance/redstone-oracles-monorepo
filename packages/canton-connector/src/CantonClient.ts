@@ -22,6 +22,7 @@ export type ContractFilter = (createArgument: unknown) => boolean;
 
 const DEFAULT_DELTA_OFFSET = 1000;
 const LOCAL_USER = "redstone-canton-connector";
+const MAX_RESPONSE_LIMIT = 200;
 
 const RETRY_CONFIG: Omit<RedstoneCommon.RetryConfig, "fn"> = {
   maxRetries: 3,
@@ -51,40 +52,64 @@ export class CantonClient {
       .offset;
   }
 
-  async getActiveContractData(interfaceId: string, filter?: ContractFilter, atOffset?: number) {
+  private async fetchActiveContracts(
+    interfaceId: string,
+    filter?: ContractFilter,
+    atOffset?: number,
+    limit = MAX_RESPONSE_LIMIT
+  ) {
     const { filtersByParty, offset } = await this.resolveFilterAndOffset(interfaceId, atOffset);
     const contracts = await this.performRequest(
       () =>
-        DefaultService.postV2StateActiveContracts({
-          filter: {
-            filtersByParty,
+        DefaultService.postV2StateActiveContracts(
+          {
+            filter: { filtersByParty },
+            activeAtOffset: offset,
+            verbose: false,
           },
-          activeAtOffset: offset,
-          verbose: false,
-        }),
-      `postV2StateActiveContracts  ${RedstoneCommon.stringify(filtersByParty)}`
+          limit
+        ),
+      `postV2StateActiveContracts ${RedstoneCommon.stringify(filtersByParty)}`
     );
 
-    const adapters = contracts.filter(
+    return contracts.filter(
       (contract) =>
         isJsActiveContractEntry(contract.contractEntry) &&
         (!filter || filter(contract.contractEntry.JsActiveContract.createdEvent.createArgument))
     );
+  }
 
-    if (adapters.length === 1 && isJsActiveContractEntry(adapters[0].contractEntry)) {
-      const jsActiveContract = adapters[0].contractEntry.JsActiveContract;
+  async getActiveContractsData(
+    interfaceId: string,
+    filter?: ContractFilter,
+    atOffset?: number,
+    limit = MAX_RESPONSE_LIMIT
+  ) {
+    return await this.fetchActiveContracts(interfaceId, filter, atOffset, limit);
+  }
 
-      return makeActiveContractData(jsActiveContract.createdEvent, jsActiveContract.synchronizerId);
+  async getActiveContractData(interfaceId: string, filter?: ContractFilter, atOffset?: number) {
+    const adapters = await this.fetchActiveContracts(interfaceId, filter, atOffset);
+
+    if (adapters.length === 0) {
+      throw new Error("No active contract data");
+    }
+    const [adapter, ...rest] = adapters;
+    if (rest.length > 0 || !isJsActiveContractEntry(adapter.contractEntry)) {
+      throw new Error(`Unable to determine contract data: ${RedstoneCommon.stringify(adapters)}`);
     }
 
-    throw new Error(`Unable to determine contract data: ${RedstoneCommon.stringify(contracts)}`);
+    const { createdEvent, synchronizerId } = adapter.contractEntry.JsActiveContract;
+
+    return makeActiveContractData(createdEvent, synchronizerId);
   }
 
   async getCreateContractEvents(
     interfaceId: string,
     filter?: ContractFilter,
     atOffset?: number,
-    deltaOffset = DEFAULT_DELTA_OFFSET
+    deltaOffset = DEFAULT_DELTA_OFFSET,
+    excludeArchived = false
   ) {
     const { filtersByParty, offset } = await this.resolveFilterAndOffset(interfaceId, atOffset);
     const contracts = await this.fetchUpdates(
@@ -93,11 +118,22 @@ export class CantonClient {
       TransactionFormat.transactionShape.TRANSACTION_SHAPE_ACS_DELTA
     );
 
-    const createdEvents = contracts
+    const transactions = contracts
       .map((contract) =>
         isTransactionUpdate(contract.update) ? contract.update.Transaction : undefined
       )
-      .filter(RedstoneCommon.isDefined)
+      .filter(RedstoneCommon.isDefined);
+
+    const archivedContractIds = excludeArchived
+      ? new Set(
+          transactions
+            .flatMap((transaction) => transaction.value.events ?? [])
+            .filter((event) => "ArchivedEvent" in event)
+            .map((event) => event.ArchivedEvent.contractId)
+        )
+      : new Set();
+
+    const createdEvents = transactions
       .map((transaction) => transaction.value.events?.filter((event) => isCreatedEvent(event)))
       .filter((list) => list?.length)
       .filter(RedstoneCommon.isDefined);
@@ -105,7 +141,8 @@ export class CantonClient {
     return createdEvents
       .flat()
       .filter((createdEvent) => !filter || filter(createdEvent.CreatedEvent.createArgument))
-      .map((createdEvent) => createdEvent.CreatedEvent);
+      .map((createdEvent) => createdEvent.CreatedEvent)
+      .filter((createdEvent) => !archivedContractIds.has(createdEvent.contractId));
   }
 
   async getGetPricesTransactions(interfaceId: string, from: number, to: number) {

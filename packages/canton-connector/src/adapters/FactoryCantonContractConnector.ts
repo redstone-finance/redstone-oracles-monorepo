@@ -8,13 +8,18 @@ export class CoreFactoryCantonContractConnector extends CantonContractConnector<
 
   constructor(
     cantonClient: CantonClient,
-    private adapterId: string
+    private readonly ownerCantonClient: CantonClient,
+    private readonly adapterId: string
   ) {
     super(cantonClient);
   }
 
   getAdapter(): Promise<IExtendedPricesContractAdapter> {
-    this.adapter ??= new FactoryCantonContractAdapter(this.cantonClient, this.adapterId);
+    this.adapter ??= new FactoryCantonContractAdapter(
+      this.cantonClient,
+      this.ownerCantonClient,
+      this.adapterId
+    );
 
     return Promise.resolve(this.adapter);
   }

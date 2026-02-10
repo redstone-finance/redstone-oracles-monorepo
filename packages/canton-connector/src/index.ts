@@ -4,6 +4,7 @@ export * from "./adapters/CoreFeaturedCantonContractAdapter";
 export * from "./adapters/CoreFeaturedClientCantonContractAdapter";
 export * from "./adapters/FactoryCantonContractAdapter";
 export * from "./adapters/FactoryCantonContractConnector";
+export * from "./adapters/PillCleaner";
 export * from "./adapters/PricesCantonContractAdapter";
 export * from "./adapters/PricesCantonContractConnector";
 export * from "./CantonClient";
