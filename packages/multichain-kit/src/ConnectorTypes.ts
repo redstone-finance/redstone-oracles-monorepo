@@ -8,6 +8,8 @@ export interface BlockchainService {
   getNormalizedBalance(address: string, blockNumber?: number): Promise<bigint>;
 
   getBalance(addressOrName: string, blockTag?: number): Promise<bigint>;
+
+  getInstanceTtl?(address: string): Promise<Date>;
 }
 
 export interface ContractAdapter {
