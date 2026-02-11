@@ -8815,8 +8815,7 @@
     },
     "NATURALGAS": {
       "source": [
-        "metal-price-api",
-        "ws-itick-futures"
+        "metal-price-api"
       ],
       "denomination": "USD",
       "rateFeed": false
