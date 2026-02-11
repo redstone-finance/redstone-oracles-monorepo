@@ -1,4 +1,8 @@
-import { ContractParamsProvider, IExtendedPricesContractAdapter } from "@redstone-finance/sdk";
+import {
+  ContractParamsProvider,
+  IExtendedPricesContractAdapter,
+  UpdatePricesOptions,
+} from "@redstone-finance/sdk";
 import { ContractAdapter, WriteContractAdapter } from "./ConnectorTypes";
 
 export class BackwardCompatibleAdapter implements IExtendedPricesContractAdapter {
@@ -28,8 +32,11 @@ export class BackwardCompatibleAdapter implements IExtendedPricesContractAdapter
     return await this.connector.getPricesFromPayload(paramsProvider);
   }
 
-  async writePricesFromPayloadToContract(paramsProvider: ContractParamsProvider) {
-    return await this.connector.writePricesFromPayloadToContract(paramsProvider);
+  async writePricesFromPayloadToContract(
+    paramsProvider: ContractParamsProvider,
+    options?: UpdatePricesOptions
+  ) {
+    return await this.connector.writePricesFromPayloadToContract(paramsProvider, options);
   }
 
   async readPricesFromContract(paramsProvider: ContractParamsProvider, blockNumber?: number) {
