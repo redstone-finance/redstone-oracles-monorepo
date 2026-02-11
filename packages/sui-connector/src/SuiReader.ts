@@ -1,6 +1,7 @@
 import { PaginatedTransactionResponse, SuiClient, SuiObjectChange } from "@mysten/sui/client";
 import { SUI_TYPE_ARG } from "@mysten/sui/utils";
 import { RedstoneCommon } from "@redstone-finance/utils";
+import _ from "lodash";
 
 const TX_LOOKUP_COUNT_LIMIT = 100;
 
@@ -67,6 +68,7 @@ export class SuiReader {
   async getLatestReceivedCoin(
     address: string,
     minBalance: bigint,
+    purgeFun: (address: string[][]) => Promise<void>,
     coinType = SUI_TYPE_ARG,
     txLimitCount = TX_LOOKUP_COUNT_LIMIT
   ) {
@@ -77,7 +79,13 @@ export class SuiReader {
       limit: txLimitCount,
     });
 
-    const coins = await this.getCoinsWithSufficientBalance(address, minBalance, coinType);
+    const { coins, coinsToMerge } = await this.getCoinsWithSufficientBalance(
+      address,
+      minBalance,
+      coinType
+    );
+
+    await purgeFun(coinsToMerge.map((coins) => coins.map((coin) => coin.coinObjectId)));
 
     if (coins.length === 0) {
       throw new Error(
@@ -109,8 +117,11 @@ export class SuiReader {
   }
 
   async getCoinsWithSufficientBalance(address: string, minBalance: bigint, coinType: string) {
+    const maxPagesToFetch = 10;
     const coins = [];
+    const coinsToMerge = [];
     let cursor = null;
+    let page = 0;
 
     do {
       const { data, nextCursor, hasNextPage } = await this.client.getCoins({
@@ -119,11 +130,17 @@ export class SuiReader {
         cursor,
       });
 
-      coins.push(...data.filter((c) => BigInt(c.balance) > minBalance));
-      cursor = hasNextPage ? nextCursor : null;
-    } while (cursor);
+      const [sufficient, insufficient] = _.partition(data, (c) => BigInt(c.balance) > minBalance);
 
-    return coins;
+      coins.push(...sufficient);
+      if (insufficient.length) {
+        coinsToMerge.push(insufficient);
+      }
+      cursor = hasNextPage ? nextCursor : null;
+      page += 1;
+    } while (cursor && (page <= maxPagesToFetch || !coins.length));
+
+    return { coins, coinsToMerge };
   }
 
   private async findLatestVersionAtCheckpoint(objectId: string, checkpointNumber: number) {
