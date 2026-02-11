@@ -25,6 +25,7 @@
     },
     "FXS": {
       "priceFeedAddress": "0xbf228a9131AB3BB8ca8C7a4Ad574932253D99Cd1"
-    }
+    },
+    "frxUSD": {}
   }
 }
