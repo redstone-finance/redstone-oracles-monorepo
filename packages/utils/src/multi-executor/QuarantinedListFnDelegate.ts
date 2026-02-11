@@ -1,3 +1,4 @@
+import _ from "lodash";
 import { NetworkId } from "../NetworkId";
 import { CuratedRpcList } from "../curated-list";
 import { FnBox, FnDelegate } from "./FnBox";
@@ -16,8 +17,9 @@ export class QuarantinedListFnDelegate implements FnDelegate {
   } = {};
 
   static getCachedConfig(rpcUrls: string[], networkId: NetworkId) {
-    const urls = Array.from(new Set(rpcUrls)).toSorted();
-    const key = [networkId, ...urls].join("|");
+    const urls = _.uniq(rpcUrls);
+    const urlsKey = urls.toSorted();
+    const key = [networkId, ...urlsKey].join("|");
 
     this.configCache[key] ??= {
       descriptions: urls,
