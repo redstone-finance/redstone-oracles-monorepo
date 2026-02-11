@@ -12,7 +12,6 @@ import { FP, loggerFactory } from "@redstone-finance/utils";
 import { SuiConfig } from "./config";
 import { SuiCoinProvider } from "./SuiCoinProvider";
 import { SuiPricesContractWriter } from "./SuiPricesContractWriter";
-import { SuiReader } from "./SuiReader";
 
 const MAX_PARALLEL_TRANSACTION_COUNT = 5;
 const SPLIT_COIN_INITIAL_BALANCE_MULTIPLIER = 2n;
@@ -20,7 +19,6 @@ const SPLIT_COIN_INITIAL_BALANCE_MULTIPLIER = 2n;
 export class SuiContractUpdater implements ContractUpdater {
   protected readonly logger = loggerFactory("sui-contract-updater");
   private readonly writer: SuiPricesContractWriter;
-  private readonly suiReader: SuiReader;
   private readonly coinProvider: SuiCoinProvider;
 
   constructor(
@@ -30,8 +28,7 @@ export class SuiContractUpdater implements ContractUpdater {
     private executor?: ParallelTransactionExecutor
   ) {
     this.writer = new SuiPricesContractWriter(client, keypair, config);
-    this.suiReader = new SuiReader(client);
-    this.coinProvider = new SuiCoinProvider(client, keypair, this.suiReader);
+    this.coinProvider = new SuiCoinProvider(client);
   }
 
   async update(
@@ -103,7 +100,7 @@ export class SuiContractUpdater implements ContractUpdater {
       this.config.writePricesTxGasBudget *
       BigInt(MAX_PARALLEL_TRANSACTION_COUNT);
 
-    const sourceCoins = await this.coinProvider.getSourceCoins(minimumBalance);
+    const sourceCoins = await this.coinProvider.getSourceCoins(minimumBalance, this.keypair);
 
     const executor = new ParallelTransactionExecutor({
       client: this.client,
