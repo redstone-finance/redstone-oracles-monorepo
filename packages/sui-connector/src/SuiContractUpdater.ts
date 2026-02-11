@@ -8,8 +8,9 @@ import {
   ContractUpdateStatus,
 } from "@redstone-finance/multichain-kit";
 import { ContractParamsProvider } from "@redstone-finance/sdk";
-import { FP, loggerFactory, RedstoneCommon } from "@redstone-finance/utils";
+import { FP, loggerFactory } from "@redstone-finance/utils";
 import { SuiConfig } from "./config";
+import { SuiCoinProvider } from "./SuiCoinProvider";
 import { SuiPricesContractWriter } from "./SuiPricesContractWriter";
 import { SuiReader } from "./SuiReader";
 
@@ -20,6 +21,7 @@ export class SuiContractUpdater implements ContractUpdater {
   protected readonly logger = loggerFactory("sui-contract-updater");
   private readonly writer: SuiPricesContractWriter;
   private readonly suiReader: SuiReader;
+  private readonly coinProvider: SuiCoinProvider;
 
   constructor(
     private readonly client: SuiClient,
@@ -29,6 +31,7 @@ export class SuiContractUpdater implements ContractUpdater {
   ) {
     this.writer = new SuiPricesContractWriter(client, keypair, config);
     this.suiReader = new SuiReader(client);
+    this.coinProvider = new SuiCoinProvider(client, keypair, this.suiReader);
   }
 
   async update(
@@ -95,29 +98,12 @@ export class SuiContractUpdater implements ContractUpdater {
   }
 
   private async initializeExecutor() {
-    let sourceCoins = undefined;
-    try {
-      const minimumBalance =
-        SPLIT_COIN_INITIAL_BALANCE_MULTIPLIER *
-        this.config.writePricesTxGasBudget *
-        BigInt(MAX_PARALLEL_TRANSACTION_COUNT);
+    const minimumBalance =
+      SPLIT_COIN_INITIAL_BALANCE_MULTIPLIER *
+      this.config.writePricesTxGasBudget *
+      BigInt(MAX_PARALLEL_TRANSACTION_COUNT);
 
-      const coin = await this.suiReader.getLatestReceivedCoin(
-        this.keypair.getPublicKey().toSuiAddress(),
-        minimumBalance
-      );
-
-      if (coin) {
-        sourceCoins = [coin];
-        this.logger.info(`Using coin ${coin} for reinitialization of the executor`);
-      } else {
-        this.logger.warn(
-          `Error fetching latest coin: no coin or no coin has balance greater that: ${minimumBalance}`
-        );
-      }
-    } catch (e) {
-      this.logger.warn(`Error fetching latest coin: ${RedstoneCommon.stringifyError(e)}`);
-    }
+    const sourceCoins = await this.coinProvider.getSourceCoins(minimumBalance);
 
     const executor = new ParallelTransactionExecutor({
       client: this.client,
