@@ -4700,6 +4700,13 @@
       ],
       "denomination": "TRY",
       "rateFeed": true
+    },
+    "DLF_PUBLICATION_TS": {
+      "source": [
+        "accountable-dlf"
+      ],
+      "denomination": "other",
+      "rateFeed": false
     }
   },
   "multiPointPackages": {
