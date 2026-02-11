@@ -1,0 +1,306 @@
+{
+  "interval": 1000,
+  "priceAggregator": "median",
+  "defaultSource": [],
+  "sourceTimeout": 1000,
+  "minValidSourcesPercentage": 30,
+  "deviationCheck": {
+    "deviationWithRecentValues": {
+      "maxPercent": 1000000000,
+      "maxDelayMilliseconds": 1000
+    }
+  },
+  "tokens": {
+    "TSLA": {
+      "source": [
+        "alltick-stocks-api-deferred",
+        "databento",
+        "financialmodelingprep-deferred",
+        "ws-polygon-massive",
+        "ws-twelve-data",
+        "ws-dx-feed"
+      ],
+      "deviationCheck": {
+        "deviationWithRecentValues": {
+          "maxPercent": 30,
+          "maxDelayMilliseconds": 120000
+        }
+      },
+      "broadcasters": ["influx"],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "NVDA": {
+      "source": [
+        "alltick-stocks-api-deferred",
+        "databento",
+        "financialmodelingprep-deferred",
+        "ws-polygon-massive",
+        "ws-twelve-data",
+        "ws-dx-feed"
+      ],
+      "deviationCheck": {
+        "deviationWithRecentValues": {
+          "maxPercent": 30,
+          "maxDelayMilliseconds": 120000
+        }
+      },
+      "broadcasters": ["influx"],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "HOOD": {
+      "source": [
+        "alltick-stocks-api-deferred",
+        "databento",
+        "financialmodelingprep-deferred",
+        "ws-polygon-massive",
+        "ws-twelve-data",
+        "ws-dx-feed"
+      ],
+      "deviationCheck": {
+        "deviationWithRecentValues": {
+          "maxPercent": 30,
+          "maxDelayMilliseconds": 120000
+        }
+      },
+      "broadcasters": ["influx"],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "CRCL": {
+      "source": [
+        "alltick-stocks-api-deferred",
+        "databento",
+        "financialmodelingprep-deferred",
+        "ws-polygon-massive",
+        "ws-twelve-data",
+        "ws-dx-feed"
+      ],
+      "deviationCheck": {
+        "deviationWithRecentValues": {
+          "maxPercent": 30,
+          "maxDelayMilliseconds": 120000
+        }
+      },
+      "broadcasters": ["influx"],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "COIN": {
+      "source": [
+        "alltick-stocks-api-deferred",
+        "databento",
+        "financialmodelingprep-deferred",
+        "ws-polygon-massive",
+        "ws-twelve-data",
+        "ws-dx-feed"
+      ],
+      "deviationCheck": {
+        "deviationWithRecentValues": {
+          "maxPercent": 30,
+          "maxDelayMilliseconds": 120000
+        }
+      },
+      "broadcasters": ["influx"],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "XAU": {
+      "source": [
+        "alltick-api-deferred",
+        "financialmodelingprep-deferred",
+        "ws-lmax",
+        "ws-polygon-massive-commodities"
+      ],
+      "priceAggregator": "primarySource",
+      "primarySourceAggregatorConfig": {
+        "primarySource": "ws-lmax",
+        "maxAcceptableDeviation": 1.5,
+        "lowerClampPercent": 0.1,
+        "upperClampPercent": 0.1
+      },
+      "broadcasters": ["influx"],
+      "deviationCheck": {
+        "deviationWithRecentValues": {
+          "maxPercent": 30,
+          "maxDelayMilliseconds": 120000
+        }
+      },
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "XAG": {
+      "source": [
+        "alltick-api-deferred",
+        "financialmodelingprep-deferred",
+        "metal-price-api-deferred",
+        "ws-lmax",
+        "ws-polygon-massive-commodities"
+      ],
+      "priceAggregator": "primarySource",
+      "primarySourceAggregatorConfig": {
+        "primarySource": "ws-lmax",
+        "maxAcceptableDeviation": 1.5,
+        "lowerClampPercent": 0.1,
+        "upperClampPercent": 0.1
+      },
+      "broadcasters": ["influx"],
+      "deviationCheck": {
+        "deviationWithRecentValues": {
+          "maxPercent": 30,
+          "maxDelayMilliseconds": 120000
+        }
+      },
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "EUR": {
+      "source": [
+        "alltick-api-deferred",
+        "ws-polygon-massive-commodities",
+        "financialmodelingprep-deferred",
+        "ws-lmax"
+      ],
+      "priceAggregator": "primarySource",
+      "primarySourceAggregatorConfig": {
+        "primarySource": "ws-lmax",
+        "maxAcceptableDeviation": 1.5,
+        "lowerClampPercent": 0.1,
+        "upperClampPercent": 0.1
+      },
+      "deviationCheck": {
+        "deviationWithRecentValues": {
+          "maxPercent": 100,
+          "maxDelayMilliseconds": 120000
+        }
+      },
+      "denomination": "USD",
+      "rateFeed": false,
+      "broadcasters": ["influx"]
+    },
+    "WTI": {
+      "source": [
+        "alltick-api-deferred",
+        "metal-price-api-deferred",
+        "ws-lmax",
+        "ws-twelve-data-no-closing-price",
+        "ws-blocksize"
+      ],
+      "priceAggregator": "primarySource",
+      "primarySourceAggregatorConfig": {
+        "primarySource": "ws-lmax",
+        "maxAcceptableDeviation": 1.5,
+        "lowerClampPercent": 0.1,
+        "upperClampPercent": 0.1
+      },
+      "broadcasters": ["influx"],
+      "deviationCheck": {
+        "deviationWithRecentValues": {
+          "maxPercent": 30,
+          "maxDelayMilliseconds": 120000
+        }
+      },
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "SP500": {
+      "source": [
+        "alltick-api-deferred",
+        "financialmodelingprep-deferred",
+        "futures-implied-spot-price",
+        "ws-lmax"
+      ],
+      "priceAggregator": "primarySource",
+      "primarySourceAggregatorConfig": {
+        "primarySource": "ws-lmax",
+        "maxAcceptableDeviation": 1.5,
+        "lowerClampPercent": 0.1,
+        "upperClampPercent": 0.1
+      },
+      "broadcasters": ["influx"],
+      "deviationCheck": {
+        "deviationWithRecentValues": {
+          "maxPercent": 30,
+          "maxDelayMilliseconds": 120000
+        }
+      },
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "XCU": {
+      "source": ["ws-lmax", "alltick-api-deferred", "metal-price-api-deferred", "ws-blocksize"],
+      "priceAggregator": "primarySource",
+      "primarySourceAggregatorConfig": {
+        "primarySource": "ws-lmax",
+        "maxAcceptableDeviation": 1.5,
+        "lowerClampPercent": 0.1,
+        "upperClampPercent": 0.1
+      },
+      "broadcasters": ["influx"],
+      "deviationCheck": {
+        "deviationWithRecentValues": {
+          "maxPercent": 30,
+          "maxDelayMilliseconds": 120000
+        }
+      },
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "PALLADIUM": {
+      "source": [
+        "financialmodelingprep-deferred",
+        "finhub_deriv_deferred-usd",
+        "finhub_capital_deferred-usd",
+        "alltick-api-deferred",
+        "metal-price-api-deferred",
+        "ws-blocksize",
+        "ws-lmax",
+        "ws-twelve-data"
+      ],
+      "broadcasters": ["influx"],
+      "priceAggregator": "primarySource",
+      "primarySourceAggregatorConfig": {
+        "primarySource": "ws-lmax",
+        "maxAcceptableDeviation": 1.5,
+        "lowerClampPercent": 0.1,
+        "upperClampPercent": 0.1
+      },
+      "deviationCheck": {
+        "deviationWithRecentValues": {
+          "maxPercent": 30,
+          "maxDelayMilliseconds": 120000
+        }
+      },
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "PLATINUM": {
+      "source": [
+        "financialmodelingprep-deferred",
+        "finhub_deriv_deferred-usd",
+        "finhub_capital_deferred-usd",
+        "metal-price-api-deferred",
+        "ws-blocksize",
+        "ws-lmax",
+        "ws-twelve-data"
+      ],
+      "broadcasters": ["influx"],
+      "priceAggregator": "primarySource",
+      "primarySourceAggregatorConfig": {
+        "primarySource": "ws-lmax",
+        "maxAcceptableDeviation": 1.5,
+        "lowerClampPercent": 0.1,
+        "upperClampPercent": 0.1
+      },
+      "deviationCheck": {
+        "deviationWithRecentValues": {
+          "maxPercent": 30,
+          "maxDelayMilliseconds": 120000
+        }
+      },
+      "denomination": "USD",
+      "rateFeed": false
+    }
+  }
+}
