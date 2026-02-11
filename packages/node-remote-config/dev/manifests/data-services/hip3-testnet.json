@@ -2130,13 +2130,22 @@
       }
     },
     "XCU": {
-      "source": ["ws-lmax", "alltick-api-deferred", "metal-price-api-deferred", "ws-blocksize"],
-      "priceAggregator": "primarySource",
-      "primarySourceAggregatorConfig": {
+      "source": [
+        "ws-lmax",
+        "alltick-api-deferred",
+        "metal-price-api-deferred",
+        "ws-blocksize",
+        "finhub_capital_deferred-usd",
+        "finhub_fxcm_deferred-usd",
+        "finhub_oanda_deferred-usd",
+        "finhub_pepperstone_deferred-usd"
+      ],
+      "priceAggregator": "multiBrokerMedian",
+      "multiBrokerAggregatorConfig": {
         "primarySource": "ws-lmax",
-        "maxAcceptableDeviation": 1.5,
-        "lowerClampPercent": 0.1,
-        "upperClampPercent": 0.1
+        "rebaseCalculationInterval": 60000,
+        "maxAcceptableDeviationPercent": 1.5,
+        "clampPercent": 0.1
       },
       "broadcasters": ["influx"],
       "deviationCheck": {
@@ -2193,25 +2202,25 @@
       "rateFeed": false
     },
     "flx:COPPER_MARK_0": {
-      "source": ["hip3-felix-copper-mainnet-fetcher"],
+      "source": ["hip3-felix-commodities-mainnet-fetcher"],
       "broadcasters": ["hyperliquid-hip3"],
       "denomination": "USD",
       "rateFeed": false
     },
     "flx:COPPER_MARK_1": {
-      "source": ["hip3-felix-copper-mainnet-fetcher"],
+      "source": ["hip3-felix-commodities-mainnet-fetcher"],
       "broadcasters": ["hyperliquid-hip3"],
       "denomination": "USD",
       "rateFeed": false
     },
     "flx:COPPER_EXT": {
-      "source": ["hip3-felix-copper-mainnet-fetcher"],
+      "source": ["hip3-felix-commodities-mainnet-fetcher"],
       "broadcasters": ["hyperliquid-hip3"],
       "denomination": "USD",
       "rateFeed": false
     },
     "flx:COPPER": {
-      "source": ["hip3-felix-copper-mainnet-fetcher"],
+      "source": ["hip3-felix-commodities-mainnet-fetcher"],
       "broadcasters": ["hyperliquid-hip3"],
       "denomination": "USD",
       "rateFeed": false

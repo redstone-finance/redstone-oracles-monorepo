@@ -3234,12 +3234,7 @@
       "rateFeed": false
     },
     "URANIUM": {
-      "source": [
-        "tezos-uranium-price-api-deferred",
-        "commodity-price-api",
-        "metals-api",
-        "metal-price-api"
-      ],
+      "source": ["tezos-uranium-price-api-deferred", "commodity-price-api", "metals-api"],
       "priceAggregator": "primarySource",
       "primarySourceAggregatorConfig": {
         "primarySource": "tezos-uranium-price-api-deferred"
