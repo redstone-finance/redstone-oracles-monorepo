@@ -1,4 +1,4 @@
-import { SuiClient, SuiObjectChange } from "@mysten/sui/client";
+import { CoinStruct, SuiClient, SuiObjectChange } from "@mysten/sui/client";
 import { Keypair } from "@mysten/sui/cryptography";
 import { Transaction } from "@mysten/sui/transactions";
 import { SUI_TYPE_ARG } from "@mysten/sui/utils";
@@ -43,7 +43,7 @@ export class SuiCoinProvider {
     return sourceCoins;
   }
 
-  private async purge(coinsToPurge: string[][], keypair: Keypair) {
+  private async purge(coinsToPurge: CoinStruct[][], keypair: Keypair) {
     if (!coinsToPurge.length) {
       return;
     }
@@ -59,21 +59,20 @@ export class SuiCoinProvider {
     );
   }
 
-  private async mergeCoins(coinIds: string[], keypair: Keypair) {
-    if (coinIds.length > 1) {
+  private async mergeCoins(coins: CoinStruct[], keypair: Keypair) {
+    if (coins.length > 1) {
       const client = MultiExecutor.createForSubInstances(this.client, (client) => client, {
         signAndExecuteTransaction: MultiExecutor.ExecutionMode.FALLBACK,
       });
 
-      this.logger.log(`Purging ${coinIds.length} coin${RedstoneCommon.getS(coinIds.length)}`);
+      this.logger.log(`Purging ${coins.length} coin${RedstoneCommon.getS(coins.length)}`);
 
       try {
+        this.logger.debug(`Merging ${coins.map((coin) => coin.coinObjectId).toString()} `);
+
         const tx = new Transaction();
-        const [firstCoinId, ...remainingCoinIds] = coinIds;
-        tx.mergeCoins(
-          tx.object(firstCoinId),
-          remainingCoinIds.map((id) => tx.object(id))
-        );
+        tx.setGasPayment(coins.map((coin) => ({ ...coin, objectId: coin.coinObjectId })));
+        tx.transferObjects([tx.gas], keypair.toSuiAddress());
 
         await client.signAndExecuteTransaction({ transaction: tx, signer: keypair });
       } catch (e) {
@@ -87,7 +86,7 @@ export class SuiCoinProvider {
   private async getLatestReceivedCoin(
     address: string,
     minBalance: bigint,
-    purgeFun: (address: string[][]) => Promise<void>,
+    purgeFun: (address: CoinStruct[][]) => Promise<void>,
     coinType = SUI_TYPE_ARG,
     txLimitCount = COIN_TRANSFER_TX_LOOKUP_COUNT_LIMIT
   ) {
@@ -104,7 +103,7 @@ export class SuiCoinProvider {
       coinType
     );
 
-    await purgeFun(coinsToMerge.map((coins) => coins.map((coin) => coin.coinObjectId)));
+    await purgeFun(coinsToMerge);
 
     if (coins.length === 0) {
       throw new Error(
