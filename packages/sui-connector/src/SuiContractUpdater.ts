@@ -95,21 +95,20 @@ export class SuiContractUpdater implements ContractUpdater {
   }
 
   private async initializeExecutor() {
-    const minimumBalance =
-      SPLIT_COIN_INITIAL_BALANCE_MULTIPLIER *
-      this.config.writePricesTxGasBudget *
-      BigInt(MAX_PARALLEL_TRANSACTION_COUNT);
+    const initialCoinBalance =
+      SPLIT_COIN_INITIAL_BALANCE_MULTIPLIER * this.config.writePricesTxGasBudget;
+    const minimumBalance = initialCoinBalance * BigInt(MAX_PARALLEL_TRANSACTION_COUNT);
 
     const sourceCoins = await this.coinProvider.getSourceCoins(minimumBalance, this.keypair);
 
     const executor = new ParallelTransactionExecutor({
       client: this.client,
       signer: this.keypair,
-      initialCoinBalance:
-        SPLIT_COIN_INITIAL_BALANCE_MULTIPLIER * this.config.writePricesTxGasBudget,
+      initialCoinBalance,
       minimumCoinBalance: this.config.writePricesTxGasBudget,
       defaultGasBudget: this.config.writePricesTxGasBudget,
       maxPoolSize: MAX_PARALLEL_TRANSACTION_COUNT,
+      coinBatchSize: MAX_PARALLEL_TRANSACTION_COUNT,
       sourceCoins,
     });
 
