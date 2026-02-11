@@ -2934,12 +2934,12 @@
     },
     "XCU": {
       "source": [],
-      "priceAggregator": "primarySource",
-      "primarySourceAggregatorConfig": {
+      "priceAggregator": "multiBrokerMedian",
+      "multiBrokerAggregatorConfig": {
         "primarySource": "",
-        "maxAcceptableDeviation": 1.5,
-        "lowerClampPercent": 0.1,
-        "upperClampPercent": 0.1
+        "rebaseCalculationInterval": 60000,
+        "maxAcceptableDeviationPercent": 1.5,
+        "clampPercent": 0.1
       },
       "broadcasters": [
         "influx"
@@ -3019,7 +3019,7 @@
     },
     "flx:COPPER_MARK_0": {
       "source": [
-        "hip3-felix-copper-mainnet-fetcher"
+        "hip3-felix-commodities-mainnet-fetcher"
       ],
       "broadcasters": [
         "hyperliquid-hip3"
@@ -3029,7 +3029,7 @@
     },
     "flx:COPPER_MARK_1": {
       "source": [
-        "hip3-felix-copper-mainnet-fetcher"
+        "hip3-felix-commodities-mainnet-fetcher"
       ],
       "broadcasters": [
         "hyperliquid-hip3"
@@ -3039,7 +3039,7 @@
     },
     "flx:COPPER_EXT": {
       "source": [
-        "hip3-felix-copper-mainnet-fetcher"
+        "hip3-felix-commodities-mainnet-fetcher"
       ],
       "broadcasters": [
         "hyperliquid-hip3"
@@ -3049,7 +3049,7 @@
     },
     "flx:COPPER": {
       "source": [
-        "hip3-felix-copper-mainnet-fetcher"
+        "hip3-felix-commodities-mainnet-fetcher"
       ],
       "broadcasters": [
         "hyperliquid-hip3"

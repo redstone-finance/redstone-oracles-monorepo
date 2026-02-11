@@ -7964,8 +7964,7 @@
       "source": [
         "tezos-uranium-price-api-deferred",
         "commodity-price-api",
-        "metals-api",
-        "metal-price-api"
+        "metals-api"
       ],
       "priceAggregator": "primarySource",
       "primarySourceAggregatorConfig": {
