@@ -12,4 +12,6 @@ export interface IContractConnector<Adapter> {
   transfer?: (toAddress: string, amount: number) => Promise<void>;
 
   getSignerAddress?: () => Promise<string>;
+
+  getInstanceTtl?: (address: string) => Promise<Date | undefined>;
 }
