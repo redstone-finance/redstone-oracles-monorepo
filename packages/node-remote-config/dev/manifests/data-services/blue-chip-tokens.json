@@ -272,6 +272,7 @@
         "gate-usdt",
         "htx-usdt",
         "kraken-usd",
+        "lbank-usdt",
         "mexc-usdt"
       ]
     },
