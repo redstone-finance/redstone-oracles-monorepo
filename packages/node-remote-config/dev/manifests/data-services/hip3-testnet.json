@@ -2234,10 +2234,7 @@
         "alltick-api-deferred",
         "metal-price-api-deferred",
         "ws-blocksize",
-        "finhub_capital_deferred-usd",
-        "finhub_fxcm_deferred-usd",
-        "finhub_oanda_deferred-usd",
-        "finhub_pepperstone_deferred-usd"
+        "finhub_oanda_deferred-usd"
       ],
       "priceAggregator": "multiBrokerMedian",
       "multiBrokerAggregatorConfig": {
