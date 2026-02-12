@@ -1,6 +1,16 @@
 {
   "extends": ["//"],
   "tasks": {
+    "build": {
+      "inputs": [
+        "$TURBO_DEFAULT$",
+        "$TURBO_ROOT$/tsconfig-build-common.json",
+        "!test*/**",
+        "!tsconfig.json",
+        "scripts/**",
+        "sui/**"
+      ]
+    },
     "test": {
       "env": ["NETWORK"],
       "passThroughEnv": ["PRIVATE_KEY"]

@@ -15,6 +15,7 @@ import { SuiPricesContractWriter } from "./SuiPricesContractWriter";
 
 const MAX_PARALLEL_TRANSACTION_COUNT = 5;
 const SPLIT_COIN_INITIAL_BALANCE_MULTIPLIER = 2n;
+const SPLIT_COIN_TX_COST = MIST_PER_SUI / 100n;
 
 export class SuiContractUpdater implements ContractUpdater {
   protected readonly logger = loggerFactory("sui-contract-updater");
@@ -97,7 +98,8 @@ export class SuiContractUpdater implements ContractUpdater {
   private async initializeExecutor() {
     const initialCoinBalance =
       SPLIT_COIN_INITIAL_BALANCE_MULTIPLIER * this.config.writePricesTxGasBudget;
-    const minimumBalance = initialCoinBalance * BigInt(MAX_PARALLEL_TRANSACTION_COUNT);
+    const minimumBalance =
+      initialCoinBalance * BigInt(MAX_PARALLEL_TRANSACTION_COUNT) + SPLIT_COIN_TX_COST;
 
     const sourceCoins = await this.coinProvider.getSourceCoins(minimumBalance, this.keypair);
 
