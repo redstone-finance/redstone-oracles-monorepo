@@ -3999,6 +3999,12 @@
       "rateFeed": false
     },
     "GAS": {
+      "source": [
+        "yahoo-finance",
+        "ws-lo-tech",
+        "ws-itick-futures",
+        "ws-twelve-data-no-closing-price"
+      ],
       "denomination": "USD",
       "rateFeed": false
     },
@@ -8174,11 +8180,6 @@
         "finhub_capital-usd",
         "databento-cme-no-closing-price"
       ],
-      "denomination": "USD",
-      "rateFeed": false
-    },
-    "NATURALGAS": {
-      "source": ["metal-price-api"],
       "denomination": "USD",
       "rateFeed": false
     },
