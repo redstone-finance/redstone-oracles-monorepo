@@ -331,12 +331,7 @@
       }
     },
     "GAS": {
-      "source": [
-        "ws-lo-tech",
-        "ws-itick-futures",
-        "ws-twelve-data-no-closing-price",
-        "financialmodelingprep-deferred"
-      ],
+      "source": ["ws-lo-tech", "ws-itick-futures", "ws-twelve-data-no-closing-price"],
       "priceAggregator": "primarySource",
       "primarySourceAggregatorConfig": {
         "primarySource": "ws-lo-tech",
