@@ -4393,6 +4393,7 @@
       "rateFeed": false
     },
     "GAS": {
+      "source": [],
       "denomination": "USD",
       "rateFeed": false
     },
@@ -8778,13 +8779,6 @@
     },
     "NG": {
       "source": [],
-      "denomination": "USD",
-      "rateFeed": false
-    },
-    "NATURALGAS": {
-      "source": [
-        "metal-price-api"
-      ],
       "denomination": "USD",
       "rateFeed": false
     },
