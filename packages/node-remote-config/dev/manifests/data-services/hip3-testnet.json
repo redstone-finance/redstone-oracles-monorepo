@@ -334,7 +334,7 @@
       "source": [
         "ws-lo-tech",
         "ws-itick-futures",
-        "ws-twelve-data",
+        "ws-twelve-data-no-closing-price",
         "financialmodelingprep-deferred"
       ],
       "priceAggregator": "primarySource",
@@ -1720,7 +1720,7 @@
         "metal-price-api-deferred",
         "ws-blocksize",
         "ws-lmax",
-        "ws-twelve-data"
+        "ws-twelve-data-no-closing-price"
       ],
       "broadcasters": ["influx"],
       "priceAggregator": "primarySource",
@@ -1827,7 +1827,7 @@
         "metal-price-api-deferred",
         "ws-blocksize",
         "ws-lmax",
-        "ws-twelve-data"
+        "ws-twelve-data-no-closing-price"
       ],
       "broadcasters": ["influx"],
       "priceAggregator": "primarySource",
