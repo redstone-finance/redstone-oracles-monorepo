@@ -256,7 +256,7 @@
         "metal-price-api-deferred",
         "ws-blocksize",
         "ws-lmax",
-        "ws-twelve-data"
+        "ws-twelve-data-no-closing-price"
       ],
       "broadcasters": ["influx"],
       "priceAggregator": "primarySource",
@@ -283,7 +283,7 @@
         "metal-price-api-deferred",
         "ws-blocksize",
         "ws-lmax",
-        "ws-twelve-data"
+        "ws-twelve-data-no-closing-price"
       ],
       "broadcasters": ["influx"],
       "priceAggregator": "primarySource",
