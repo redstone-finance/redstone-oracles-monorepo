@@ -10030,6 +10030,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@redstone-finance/canton-connector@workspace:packages/canton-connector"
   dependencies:
+    "@redstone-finance/multichain-kit": "workspace:*"
     "@redstone-finance/sdk": "workspace:*"
     "@redstone-finance/utils": "workspace:*"
     axios: "npm:^1.13.2"

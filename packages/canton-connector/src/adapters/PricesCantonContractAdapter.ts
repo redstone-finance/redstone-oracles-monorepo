@@ -1,9 +1,5 @@
-import {
-  ContractData,
-  ContractParamsProvider,
-  IExtendedPricesContractAdapter,
-  LastRoundDetails,
-} from "@redstone-finance/sdk";
+import { WriteContractAdapter } from "@redstone-finance/multichain-kit";
+import { ContractData, ContractParamsProvider, LastRoundDetails } from "@redstone-finance/sdk";
 import { RedstoneCommon } from "@redstone-finance/utils";
 import _ from "lodash";
 import { CantonClient, ContractFilter } from "../CantonClient";
@@ -19,7 +15,7 @@ const GET_UNIQUE_SIGNER_THRESHOLD_CHOICE = "GetUniqueSignerThreshold";
 
 export class PricesCantonContractAdapter
   extends CoreCantonContractAdapter
-  implements IExtendedPricesContractAdapter
+  implements WriteContractAdapter
 {
   constructor(
     client: CantonClient,
@@ -66,13 +62,11 @@ export class PricesCantonContractAdapter
     return contractData[feedId].lastDataPackageTimestampMS;
   }
 
-  async readContractData(feedIds: string[], offset?: number) {
+  async readContractData(feedIds: string[], offset?: number): Promise<ContractData> {
     const result: ({ value: string; timestamp: string; writeTimestamp: string } | undefined)[] =
       await this.exerciseChoice(
         READ_PRICE_DATA_CHOICE,
-        {
-          feedIds: feedIds.map(getArrayifiedFeedId),
-        },
+        { feedIds: feedIds.map(getArrayifiedFeedId) },
         offset
       );
 
@@ -96,9 +90,7 @@ export class PricesCantonContractAdapter
   ): Promise<bigint[]> {
     const result: string[] = await this.exerciseChoice(
       READ_PRICES_CHOICE,
-      {
-        feedIds: paramsProvider.getArrayifiedFeedIds(),
-      },
+      { feedIds: paramsProvider.getArrayifiedFeedIds() },
       offset
     );
 

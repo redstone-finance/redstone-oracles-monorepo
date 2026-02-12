@@ -7,6 +7,7 @@ export * from "./adapters/FactoryCantonContractConnector";
 export * from "./adapters/PillCleaner";
 export * from "./adapters/PricesCantonContractAdapter";
 export * from "./adapters/PricesCantonContractConnector";
+export * from "./CantonBlockchainService";
 export * from "./CantonClient";
 export * from "./CantonClientBuilder";
 export * from "./CantonNetwork";
