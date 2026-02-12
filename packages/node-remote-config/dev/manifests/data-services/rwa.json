@@ -30,6 +30,82 @@
       "denomination": "USD",
       "rateFeed": false
     },
+    "GOOGL": {
+      "source": [
+        "alltick-stocks-api-deferred",
+        "databento",
+        "financialmodelingprep-deferred",
+        "ws-polygon-massive",
+        "ws-twelve-data",
+        "ws-dx-feed"
+      ],
+      "deviationCheck": {
+        "deviationWithRecentValues": {
+          "maxPercent": 30,
+          "maxDelayMilliseconds": 120000
+        }
+      },
+      "broadcasters": ["influx"],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "AMD": {
+      "source": [
+        "alltick-stocks-api-deferred",
+        "databento",
+        "financialmodelingprep-deferred",
+        "ws-polygon-massive",
+        "ws-twelve-data",
+        "ws-dx-feed"
+      ],
+      "deviationCheck": {
+        "deviationWithRecentValues": {
+          "maxPercent": 30,
+          "maxDelayMilliseconds": 120000
+        }
+      },
+      "broadcasters": ["influx"],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "MSTR": {
+      "source": [
+        "alltick-stocks-api-deferred",
+        "databento",
+        "financialmodelingprep-deferred",
+        "ws-polygon-massive",
+        "ws-twelve-data",
+        "ws-dx-feed"
+      ],
+      "deviationCheck": {
+        "deviationWithRecentValues": {
+          "maxPercent": 30,
+          "maxDelayMilliseconds": 120000
+        }
+      },
+      "broadcasters": ["influx"],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "AMZN": {
+      "source": [
+        "alltick-stocks-api-deferred",
+        "databento",
+        "financialmodelingprep-deferred",
+        "ws-polygon-massive",
+        "ws-twelve-data",
+        "ws-dx-feed"
+      ],
+      "deviationCheck": {
+        "deviationWithRecentValues": {
+          "maxPercent": 30,
+          "maxDelayMilliseconds": 120000
+        }
+      },
+      "broadcasters": ["influx"],
+      "denomination": "USD",
+      "rateFeed": false
+    },
     "NVDA": {
       "source": [
         "alltick-stocks-api-deferred",
@@ -205,12 +281,7 @@
       "rateFeed": false
     },
     "SP500": {
-      "source": [
-        "alltick-api-deferred",
-        "financialmodelingprep-deferred",
-        "futures-implied-spot-price",
-        "ws-lmax"
-      ],
+      "source": ["alltick-api-deferred", "financialmodelingprep-deferred", "ws-lmax"],
       "priceAggregator": "primarySource",
       "primarySourceAggregatorConfig": {
         "primarySource": "ws-lmax",
@@ -300,6 +371,11 @@
         }
       },
       "denomination": "USD",
+      "rateFeed": false
+    },
+    "IS_NY_STOCKS_MARKET_OPEN": {
+      "source": ["is-ny-stocks-market-open-deferred"],
+      "denomination": "other",
       "rateFeed": false
     }
   }
