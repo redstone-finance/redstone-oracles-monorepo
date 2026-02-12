@@ -3,7 +3,7 @@ import { DEFAULT_GAS_BUDGET } from "./SuiContractUtil";
 
 const DEFAULT_GAS_MULTIPLIER = 1.4;
 const DEFAULT_MAX_TX_SEND_ATTEMPTS = 8;
-const DEFAULT_EXPECTED_DELIVERY_TIME_MS = 6_000;
+const DEFAULT_EXPECTED_DELIVERY_TIME_MS = 8_000;
 
 export const SuiNetworkSchema = z.enum(["mainnet", "testnet", "localnet", "devnet"]);
 export type SuiNetworkName = z.infer<typeof SuiNetworkSchema>;
