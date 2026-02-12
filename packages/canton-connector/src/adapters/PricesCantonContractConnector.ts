@@ -1,26 +1,38 @@
-import { IExtendedPricesContractAdapter } from "@redstone-finance/sdk";
+import { FullConnector } from "@redstone-finance/multichain-kit";
+import { CantonBlockchainService } from "../CantonBlockchainService";
 import { CantonClient } from "../CantonClient";
-import { CantonContractConnector } from "./CantonContractConnector";
-import { PricesCantonContractAdapter } from "./PricesCantonContractAdapter";
+import { IADAPTER_TEMPLATE_NAME, PricesCantonContractAdapter } from "./PricesCantonContractAdapter";
 
-export class PricesCantonContractConnector extends CantonContractConnector<IExtendedPricesContractAdapter> {
-  private adapter?: IExtendedPricesContractAdapter;
+export class PricesCantonContractConnector
+  extends PricesCantonContractAdapter
+  implements FullConnector
+{
+  private readonly blockchainService: CantonBlockchainService;
 
   constructor(
-    cantonClient: CantonClient,
-    private updateCantonClient: CantonClient,
-    private adapterId: string
+    client: CantonClient,
+    updateClient: CantonClient,
+    adapterId: string,
+    interfaceId = client.Defs.interfaceId,
+    templateName = IADAPTER_TEMPLATE_NAME
   ) {
-    super(cantonClient);
+    super(client, updateClient, adapterId, interfaceId, templateName);
+    this.blockchainService = new CantonBlockchainService(client);
   }
 
-  getAdapter(): Promise<IExtendedPricesContractAdapter> {
-    this.adapter ??= new PricesCantonContractAdapter(
-      this.cantonClient,
-      this.updateCantonClient,
-      this.adapterId
-    );
+  async getBlockNumber() {
+    return await this.blockchainService.getBlockNumber();
+  }
 
-    return Promise.resolve(this.adapter);
+  async waitForTransaction(txId: string) {
+    return await this.blockchainService.waitForTransaction(txId);
+  }
+
+  async getNormalizedBalance(address: string, blockNumber?: number) {
+    return await this.blockchainService.getNormalizedBalance(address, blockNumber);
+  }
+
+  async getBalance(addressOrName: string, blockTag?: number) {
+    return await this.blockchainService.getBalance(addressOrName, blockTag);
   }
 }

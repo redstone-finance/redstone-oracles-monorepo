@@ -1,4 +1,4 @@
-import { CantonClientBuilder } from "@redstone-finance/canton-connector";
+import { CantonBlockchainService, CantonClientBuilder } from "@redstone-finance/canton-connector";
 import { getSSMParamWithEnvFallback } from "@redstone-finance/internal-utils";
 import { MoveClientBuilder } from "@redstone-finance/move-connector";
 import { RadixClientBuilder } from "@redstone-finance/radix-connector";
@@ -20,12 +20,12 @@ import {
 } from "@redstone-finance/sui-connector";
 import { deconstructNetworkId, NetworkId, RedstoneCommon } from "@redstone-finance/utils";
 import z from "zod";
-import { CantonBlockchainService } from "./CantonBlockchainService";
 import { MoveBlockchainService } from "./MoveBlockchainService";
 import { RadixBlockchainService } from "./RadixBlockchainService";
 import { SolanaBlockchainService } from "./SolanaBlockchainService";
 import { StellarBlockchainService } from "./StellarBlockchainService";
 import { SuiBlockchainService } from "./SuiBlockchainService";
+export { CantonBlockchainService } from "@redstone-finance/canton-connector";
 
 export async function getNonEvmBlockchainService(networkId: NetworkId, rpcUrls: string[]) {
   const { chainType } = deconstructNetworkId(networkId);
