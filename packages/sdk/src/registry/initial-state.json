@@ -692,6 +692,17 @@
       "evmAddress": "0x84cad9c5Abd4D18081262446eb2c3eC58568ae8F",
       "ecdsaPublicKey": "0x042f04d71e77b9d3e1fea48b886fe739f8531744ce7680a08abd20234aae6e54fc89fdb7c2e0a7ed1910377ec6067c03207cdfe460973cef7360a8ab254b613356",
       "dateAdded": "2025-10-16"
+    },
+    "0xfa52FC13c46C246DaD946E7748D92c088760B5bc": {
+      "url": "https://redstone.finance",
+      "logo": "https://redstone.finance/assets/img/redstone-logo-full.svg",
+      "name": "redstone-rwa-demo",
+      "ipAddress": "0.0.0.0",
+      "dataServiceId": "redstone-rwa-demo",
+      "description": "dev data feeds for RedStone RWA",
+      "evmAddress": "0xfa52FC13c46C246DaD946E7748D92c088760B5bc",
+      "ecdsaPublicKey": "0x0454f71f08f7c67409114bd70dbb3a6f71247fe8fc79cd67bb882ebf859a3ac1aa7328df2e7a3c1463053c6c7f1099a1e9a595cd1d3197608d8e7a19872722a947",
+      "dateAdded": "2026-02-12"
     }
   },
   "evolve": null,
@@ -768,6 +779,11 @@
       "logo": "https://redstone.finance/assets/img/redstone-logo-full.svg",
       "name": "RedStone hip3 prod",
       "description": "prod data feeds for Hyperliquid HIP3"
+    },
+    "redstone-rwa-demo": {
+      "logo": "https://redstone.finance/assets/img/redstone-logo-full.svg",
+      "name": "RedStone RWA Demo",
+      "description": "dev data feeds for RedStone RWA"
     }
   },
   "contractAdmins": [
