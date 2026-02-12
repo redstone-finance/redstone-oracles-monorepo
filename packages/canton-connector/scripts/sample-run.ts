@@ -1,3 +1,4 @@
+import { BackwardCompatibleConnector } from "@redstone-finance/multichain-kit";
 import {
   ContractParamsProvider,
   getSignersForDataServiceId,
@@ -33,7 +34,9 @@ async function main() {
 
   const ethPriceFeedConnector = new PricePillCantonContractConnector(client, "ETH");
 
-  await sampleRun(paramsProvider, connector, ethPriceFeedConnector);
+  const oldConnector = new BackwardCompatibleConnector(connector);
+
+  await sampleRun(paramsProvider, oldConnector, ethPriceFeedConnector);
 }
 
 void main();

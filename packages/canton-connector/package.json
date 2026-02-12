@@ -23,6 +23,7 @@
     "clear-old-pills": "yarn global:ts-node scripts/clear-old-pills.ts"
   },
   "dependencies": {
+    "@redstone-finance/multichain-kit": "workspace:*",
     "@redstone-finance/sdk": "workspace:*",
     "@redstone-finance/utils": "workspace:*",
     "decimal.js": "^10.4.3",
