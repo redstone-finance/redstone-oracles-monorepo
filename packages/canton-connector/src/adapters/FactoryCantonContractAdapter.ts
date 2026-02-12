@@ -1,4 +1,5 @@
-import { ContractParamsProvider, IExtendedPricesContractAdapter } from "@redstone-finance/sdk";
+import { WriteContractAdapter } from "@redstone-finance/multichain-kit";
+import { ContractData, ContractParamsProvider } from "@redstone-finance/sdk";
 import { RedstoneCommon } from "@redstone-finance/utils";
 import { CantonClient } from "../CantonClient";
 import {
@@ -11,7 +12,7 @@ import { PricePillCantonContractAdapter } from "./PricePillCantonContractAdapter
 
 export class FactoryCantonContractAdapter
   extends CoreFeaturedCantonContractAdapter
-  implements IExtendedPricesContractAdapter
+  implements WriteContractAdapter
 {
   private cleanerRunning = false;
   private readonly pillCleaner: PillCleaner;
@@ -41,7 +42,7 @@ export class FactoryCantonContractAdapter
     this.cleanerRunning = false;
   }
 
-  startCleaner() {
+  private startCleaner() {
     if (this.cleanerRunning) {
       return;
     }
@@ -50,7 +51,7 @@ export class FactoryCantonContractAdapter
     void this.runCleanerCycle();
   }
 
-  getUniqueSignerThreshold(_blockNumber?: number): Promise<number> {
+  getUniqueSignerThreshold(_offset?: number): Promise<number> {
     return Promise.resolve(3); // TODO: to be implemented in Factory
   }
 
@@ -60,45 +61,45 @@ export class FactoryCantonContractAdapter
     return await this.callGetPricesFromPayloadWithoutWaiting(paramsProvider);
   }
 
-  async readLatestUpdateBlockTimestamp(feedId?: string, blockNumber?: number) {
+  async readLatestUpdateBlockTimestamp(feedId?: string, offset?: number) {
     if (!feedId) {
       throw new Error("FeedId must be provided");
     }
 
-    return (await this.readData(feedId, blockNumber)).lastDataPackageTimestampMS;
+    return (await this.readData(feedId, offset)).lastDataPackageTimestampMS;
   }
 
   getSignerAddress() {
     return Promise.resolve(this.client.partyId);
   }
 
-  async readContractData(feedIds: string[], blockNumber?: number) {
-    return await this.batchReadData(feedIds, blockNumber);
+  async readContractData(feedIds: string[], offset?: number): Promise<ContractData> {
+    return await this.batchReadData(feedIds, offset);
   }
 
-  async readPricesFromContract(paramsProvider: ContractParamsProvider, blockNumber?: number) {
+  async readPricesFromContract(paramsProvider: ContractParamsProvider, offset?: number) {
     return (
       await Promise.all(
-        paramsProvider.getDataFeedIds().map((feedId) => this.readData(feedId, blockNumber))
+        paramsProvider.getDataFeedIds().map((feedId) => this.readData(feedId, offset))
       )
     ).map((data) => data.lastValue);
   }
 
-  async readTimestampFromContract(feedId: string, blockNumber?: number) {
-    return (await this.readData(feedId, blockNumber)).lastDataPackageTimestampMS;
+  async readTimestampFromContract(feedId: string, offset?: number) {
+    return (await this.readData(feedId, offset)).lastDataPackageTimestampMS;
   }
 
-  private async readData(feedId: string, blockNumber: number | undefined) {
+  private async readData(feedId: string, offset: number | undefined) {
     const adapter = new PricePillCantonContractAdapter(this.client, feedId);
 
-    return await adapter.readData(blockNumber);
+    return await adapter.readData(offset);
   }
 
-  private async batchReadData(feedIds: string[], blockNumber?: number) {
+  private async batchReadData(feedIds: string[], offset?: number) {
     try {
       const adapter = new MultiPricePillCantonContractAdapter(this.client, feedIds);
 
-      return await adapter.batchReadData(blockNumber);
+      return await adapter.batchReadData(offset);
     } catch (e) {
       this.logger.warn(`Error getting data from contracts: ${RedstoneCommon.stringifyError(e)}`);
 
