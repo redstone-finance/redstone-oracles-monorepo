@@ -504,6 +504,7 @@
         "gate-usdt",
         "htx-usdt",
         "kraken-usd",
+        "lbank-usdt",
         "mexc-usdt"
       ],
       "denomination": "USD",
@@ -527,12 +528,6 @@
     },
     "FRAX": {
       "source": [
-        "binance-usdt",
-        "bitget-usdt",
-        "bybit-usdt",
-        "gate-usdt",
-        "lbank-usdt",
-        "mexc-usdt",
         "curve-ethereum-3crv",
         "curve-ethereum-sdai",
         "curve-ethereum-usdc",
