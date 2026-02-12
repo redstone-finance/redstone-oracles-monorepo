@@ -15,7 +15,7 @@
     "lint:fix": "yarn global:eslint --fix .",
     "test": "yarn global:jest:cov",
     "deploy": "yarn global:ts-node scripts/deploy-price-adapter.ts",
-    "sample-run": "yarn global:ts-node scripts/sample-run.ts",
+    "sample-run": "yarn build:turbo && node dist/scripts/sample-run.js",
     "write-simultaneously": "yarn global:ts-node scripts/write-simultaneously.ts",
     "ledger-utils": "yarn global:ts-node scripts/ledger/ledger-utils.ts",
     "get-public-key": "yarn ledger-utils",
