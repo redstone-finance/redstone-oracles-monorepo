@@ -9,7 +9,7 @@ export interface BlockchainService {
 
   getBalance(addressOrName: string, blockTag?: number): Promise<bigint>;
 
-  getInstanceTtl?(address: string): Promise<Date>;
+  getInstanceTtl?: (address: string) => Promise<Date | undefined>;
 }
 
 export interface ContractAdapter {
