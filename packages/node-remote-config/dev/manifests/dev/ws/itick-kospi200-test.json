@@ -15,6 +15,11 @@
       "source": ["ws-itick-indices"],
       "denomination": "USD",
       "rateFeed": false
+    },
+    "GAS": {
+      "source": ["ws-itick-futures"],
+      "denomination": "USD",
+      "rateFeed": false
     }
   }
 }
