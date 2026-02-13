@@ -33,7 +33,7 @@
         "kucoin-usdt",
         "lbank-usdt",
         "mexc-usdt",
-        "xt"
+        "xt-usdt"
       ]
     },
     "BTC": {
@@ -58,7 +58,7 @@
         "lbank-usdt",
         "mexc-usdt",
         "okx-usd",
-        "xt"
+        "xt-usdt"
       ]
     },
     "USDT": {
@@ -158,7 +158,7 @@
         "lbank-usdt",
         "mexc-usdt",
         "okx-usdt",
-        "xt"
+        "xt-usdt"
       ]
     },
     "XTZ": {
@@ -177,7 +177,7 @@
         "lbank-usdt",
         "mexc-usdt",
         "okx-usdt",
-        "xt"
+        "xt-usdt"
       ]
     },
     "TRX": {
@@ -224,7 +224,7 @@
         "mexc-usdc",
         "mexc-usdt",
         "okx-usdt",
-        "xt"
+        "xt-usdt"
       ]
     },
     "CELO": {
@@ -258,7 +258,7 @@
         "mexc-usdc",
         "mexc-usdt",
         "okx-usdt",
-        "xt"
+        "xt-usdt"
       ]
     },
     "FXS": {
