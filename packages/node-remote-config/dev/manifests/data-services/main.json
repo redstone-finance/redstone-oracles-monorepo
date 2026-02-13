@@ -33,7 +33,7 @@
         "kucoin-usdt",
         "lbank-usdt",
         "mexc-usdt",
-        "xt"
+        "xt-usdt"
       ],
       "denomination": "USD",
       "rateFeed": false
@@ -60,7 +60,7 @@
         "lbank-usdt",
         "mexc-usdt",
         "okx-usd",
-        "xt"
+        "xt-usdt"
       ],
       "denomination": "USD",
       "rateFeed": false
@@ -98,7 +98,7 @@
         "lbank-usdt",
         "mexc-usdt",
         "okx-usdt",
-        "xt"
+        "xt-usdt"
       ],
       "denomination": "USD",
       "rateFeed": false
@@ -257,7 +257,7 @@
         "mexc-usdc",
         "mexc-usdt",
         "okx-usdt",
-        "xt"
+        "xt-usdt"
       ],
       "denomination": "USD",
       "rateFeed": false
@@ -284,7 +284,7 @@
         "mexc-usdc",
         "mexc-usdt",
         "okx-usdt",
-        "xt"
+        "xt-usdt"
       ],
       "denomination": "USD",
       "rateFeed": false
@@ -316,7 +316,7 @@
         "mexc-usdc",
         "mexc-usdt",
         "okx-usdt",
-        "xt"
+        "xt-usdt"
       ],
       "denomination": "USD",
       "rateFeed": false
@@ -342,7 +342,7 @@
         "mexc-usdc",
         "mexc-usdt",
         "okx-usdt",
-        "xt"
+        "xt-usdt"
       ],
       "denomination": "USD",
       "rateFeed": false
@@ -368,7 +368,7 @@
         "mexc-usdc",
         "mexc-usdt",
         "okx-usdt",
-        "xt"
+        "xt-usdt"
       ],
       "denomination": "USD",
       "rateFeed": false
@@ -440,7 +440,7 @@
         "mexc-usdc",
         "mexc-usdt",
         "okx-usdt",
-        "xt"
+        "xt-usdt"
       ],
       "denomination": "USD",
       "rateFeed": false
@@ -494,7 +494,7 @@
         "mexc-usdt",
         "okx-usdt",
         "uniswap-v3-ethereum-weth-3000",
-        "xt"
+        "xt-usdt"
       ],
       "denomination": "USD",
       "rateFeed": false
@@ -550,7 +550,7 @@
         "mexc-usdc",
         "mexc-usdt",
         "okx-usdt",
-        "xt"
+        "xt-usdt"
       ],
       "denomination": "USD",
       "rateFeed": false
@@ -578,7 +578,7 @@
         "mexc-usdt",
         "okx-usdt",
         "uniswap-v3-ethereum-weth-3000",
-        "xt"
+        "xt-usdt"
       ],
       "denomination": "USD",
       "rateFeed": false
@@ -606,7 +606,14 @@
       "rateFeed": false
     },
     "XMR": {
-      "source": ["bitfinex-usd", "kraken-usd", "kraken-usdt", "kucoin-usdt", "mexc-usdt", "xt"],
+      "source": [
+        "bitfinex-usd",
+        "kraken-usd",
+        "kraken-usdt",
+        "kucoin-usdt",
+        "mexc-usdt",
+        "xt-usdt"
+      ],
       "denomination": "USD",
       "rateFeed": false
     },
@@ -632,7 +639,7 @@
         "mexc-usdc",
         "mexc-usdt",
         "okx-usdt",
-        "xt"
+        "xt-usdt"
       ],
       "denomination": "USD",
       "rateFeed": false
@@ -657,7 +664,7 @@
         "lbank-usdt",
         "mexc-usdt",
         "okx-usdt",
-        "xt"
+        "xt-usdt"
       ],
       "denomination": "USD",
       "rateFeed": false
@@ -689,7 +696,7 @@
         "mexc-usdc",
         "mexc-usdt",
         "okx-usdt",
-        "xt"
+        "xt-usdt"
       ],
       "denomination": "USD",
       "rateFeed": false
@@ -705,7 +712,7 @@
         "kraken-usd",
         "kucoin-usdt",
         "okx-usdt",
-        "xt"
+        "xt-usdt"
       ],
       "denomination": "USD",
       "rateFeed": false
@@ -738,7 +745,7 @@
         "mexc-usdt",
         "okx-usdt",
         "uniswap-v3-ethereum-weth-3000",
-        "xt"
+        "xt-usdt"
       ],
       "denomination": "USD",
       "rateFeed": false
@@ -758,7 +765,7 @@
         "mexc-usdc",
         "mexc-usdt",
         "okx-usdt",
-        "xt"
+        "xt-usdt"
       ],
       "denomination": "USD",
       "rateFeed": false
@@ -912,7 +919,7 @@
       "rateFeed": false
     },
     "CMP": {
-      "source": ["xt"],
+      "source": ["xt-usdt"],
       "denomination": "USD",
       "rateFeed": false
     },
@@ -924,7 +931,7 @@
         "bitmart-usdt",
         "gate-usdt",
         "okx-usdt",
-        "xt"
+        "xt-usdt"
       ],
       "denomination": "USD",
       "rateFeed": false
@@ -964,7 +971,7 @@
         "mexc-usdt",
         "okx-usd",
         "okx-usdt",
-        "xt"
+        "xt-usdt"
       ],
       "denomination": "USD",
       "rateFeed": false
@@ -1068,7 +1075,7 @@
         "uniswap-v3-optimism-weth-3000",
         "velodrome-cl-optimism-weth",
         "velodrome-optimism-weth",
-        "xt"
+        "xt-usdt"
       ],
       "denomination": "USD",
       "rateFeed": false
@@ -1084,7 +1091,7 @@
         "lbank-usdt",
         "okx-usdt",
         "uniswap-v3-ethereum-weth-3000",
-        "xt"
+        "xt-usdt"
       ],
       "denomination": "USD",
       "rateFeed": false
@@ -1159,7 +1166,7 @@
         "mexc-usdc",
         "mexc-usdt",
         "okx-usdt",
-        "xt"
+        "xt-usdt"
       ],
       "denomination": "USD",
       "rateFeed": false
@@ -1301,7 +1308,7 @@
         "lbank-usdt",
         "okx-usdt",
         "uniswap-v3-arbitrumone-weth-3000",
-        "xt"
+        "xt-usdt"
       ],
       "denomination": "USD",
       "rateFeed": false
@@ -1317,7 +1324,7 @@
         "kraken-usd",
         "kucoin-usdt",
         "lbank-usdt",
-        "xt"
+        "xt-usdt"
       ],
       "denomination": "USD",
       "rateFeed": false
@@ -1356,7 +1363,7 @@
         "mexc-usdc",
         "mexc-usdt",
         "okx-usdt",
-        "xt"
+        "xt-usdt"
       ],
       "denomination": "USD",
       "rateFeed": false
@@ -1483,7 +1490,7 @@
         "mexc-usdc",
         "mexc-usdt",
         "okx-usdt",
-        "xt"
+        "xt-usdt"
       ],
       "denomination": "USD",
       "rateFeed": false
@@ -1530,7 +1537,7 @@
         "mexc-usdc",
         "mexc-usdt",
         "okx-usdt",
-        "xt"
+        "xt-usdt"
       ],
       "denomination": "USD",
       "rateFeed": false
@@ -1551,7 +1558,7 @@
         "lbank-usdt",
         "mexc-usdt",
         "okx-usdt",
-        "xt"
+        "xt-usdt"
       ],
       "denomination": "USD",
       "rateFeed": false
@@ -1655,7 +1662,7 @@
         "curve-ethereum-usdt",
         "uniswap-v3-ethereum-usdc-100",
         "uniswap-v4-ethereum-usdt-45",
-        "xt"
+        "xt-usdt"
       ],
       "denomination": "USD",
       "rateFeed": false
@@ -1713,7 +1720,7 @@
       "rateFeed": false
     },
     "MODE": {
-      "source": ["bybit-usdt", "gate-usdt", "mexc-usdt", "xt"],
+      "source": ["bybit-usdt", "gate-usdt", "mexc-usdt", "xt-usdt"],
       "denomination": "USD",
       "rateFeed": false
     },
@@ -1754,7 +1761,7 @@
         "lbank-usdt",
         "mexc-usdt",
         "okx-usdt",
-        "xt"
+        "xt-usdt"
       ],
       "denomination": "USD",
       "rateFeed": false
@@ -1785,7 +1792,7 @@
         "mexc-usdc",
         "mexc-usdt",
         "okx-usdt",
-        "xt"
+        "xt-usdt"
       ],
       "denomination": "USD",
       "rateFeed": false
@@ -1859,7 +1866,7 @@
         "mexc-usdc",
         "mexc-usdt",
         "okx-usdt",
-        "xt"
+        "xt-usdt"
       ],
       "denomination": "USD",
       "rateFeed": false
@@ -1982,7 +1989,7 @@
         "mexc-usdc",
         "mexc-usdt",
         "okx-usdt",
-        "xt"
+        "xt-usdt"
       ],
       "denomination": "USD",
       "rateFeed": false
@@ -2008,7 +2015,7 @@
         "kraken-usd",
         "kucoin-usdt",
         "lbank-usdt",
-        "xt"
+        "xt-usdt"
       ],
       "denomination": "USD",
       "rateFeed": false
@@ -2063,7 +2070,7 @@
         "mexc-usdc",
         "mexc-usdt",
         "okx-usdt",
-        "xt"
+        "xt-usdt"
       ],
       "denomination": "USD",
       "rateFeed": false
@@ -2077,7 +2084,7 @@
         "gate-usdt",
         "kucoin-usdt",
         "okx-usdt",
-        "xt"
+        "xt-usdt"
       ],
       "denomination": "USD",
       "rateFeed": false
@@ -2655,7 +2662,7 @@
       "rateFeed": false
     },
     "QI": {
-      "source": ["binance-usdt", "bitrue-usdt", "kucoin-usdt", "lbank-usdt", "xt"],
+      "source": ["binance-usdt", "bitrue-usdt", "kucoin-usdt", "lbank-usdt", "xt-usdt"],
       "denomination": "USD",
       "rateFeed": false
     },
@@ -2726,7 +2733,7 @@
         "aerodrome-base-weth",
         "aerodrome-cl-base-weth",
         "uniswap-v3-base-weth-3000",
-        "xt"
+        "xt-usdt"
       ],
       "denomination": "USD",
       "rateFeed": false
@@ -2789,7 +2796,7 @@
         "okx-usdc",
         "okx-usdt",
         "hyperliquid-api-fetcher",
-        "xt"
+        "xt-usdt"
       ],
       "denomination": "USD",
       "rateFeed": false
@@ -2851,7 +2858,7 @@
         "lbank-usdt",
         "mexc-usdc",
         "mexc-usdt",
-        "xt"
+        "xt-usdt"
       ],
       "denomination": "USD",
       "rateFeed": false
@@ -2918,7 +2925,7 @@
         "lbank-usdt",
         "mexc-usdc",
         "mexc-usdt",
-        "xt"
+        "xt-usdt"
       ],
       "denomination": "USD",
       "rateFeed": false
@@ -2976,7 +2983,7 @@
         "mexc-usdc",
         "mexc-usdt",
         "okx-usdt",
-        "xt"
+        "xt-usdt"
       ],
       "denomination": "USD",
       "rateFeed": false
@@ -2997,7 +3004,7 @@
         "mexc-usdc",
         "mexc-usdt",
         "okx-usdt",
-        "xt"
+        "xt-usdt"
       ],
       "denomination": "USD",
       "rateFeed": false
@@ -3019,7 +3026,7 @@
         "mexc-usdc",
         "mexc-usdt",
         "okx-usdt",
-        "xt"
+        "xt-usdt"
       ],
       "denomination": "USD",
       "rateFeed": false
@@ -3377,7 +3384,7 @@
         "mexc-usdc",
         "mexc-usdt",
         "okx-usdt",
-        "xt"
+        "xt-usdt"
       ],
       "denomination": "USD",
       "rateFeed": false
@@ -3400,7 +3407,7 @@
         "lbank-usdt",
         "mexc-usdc",
         "mexc-usdt",
-        "xt"
+        "xt-usdt"
       ],
       "denomination": "USD",
       "rateFeed": false
@@ -3426,7 +3433,7 @@
         "mexc-usdc",
         "mexc-usdt",
         "okx-usdt",
-        "xt"
+        "xt-usdt"
       ],
       "denomination": "USD",
       "rateFeed": false
@@ -6963,7 +6970,7 @@
         "mexc-usdt",
         "okx-usdt",
         "uniswap-v3-ethereum-usdc-3000",
-        "xt"
+        "xt-usdt"
       ],
       "denomination": "USD",
       "rateFeed": false
@@ -6983,7 +6990,7 @@
         "mexc-usdc",
         "mexc-usdt",
         "okx-usdt",
-        "xt"
+        "xt-usdt"
       ],
       "denomination": "USD",
       "rateFeed": false
@@ -7015,7 +7022,7 @@
         "kucoin-usdt",
         "lbank-usdt",
         "uniswap-v3-base-weth-10000",
-        "xt"
+        "xt-usdt"
       ],
       "denomination": "USD",
       "rateFeed": false
@@ -7055,7 +7062,7 @@
         "mexc-usdt",
         "okx-usd",
         "okx-usdt",
-        "xt"
+        "xt-usdt"
       ],
       "denomination": "USD",
       "rateFeed": false
@@ -7137,7 +7144,7 @@
         "gate-usdt",
         "kucoin-usdt",
         "mexc-usdt",
-        "xt"
+        "xt-usdt"
       ],
       "denomination": "USD",
       "rateFeed": false
@@ -7180,7 +7187,7 @@
         "lbank-usdt",
         "mexc-usdt",
         "okx-usdt",
-        "xt"
+        "xt-usdt"
       ],
       "denomination": "USD",
       "rateFeed": false
@@ -7264,7 +7271,7 @@
         "mexc-usdc",
         "mexc-usdt",
         "okx-usdt",
-        "xt"
+        "xt-usdt"
       ],
       "denomination": "USD",
       "rateFeed": false
@@ -7290,7 +7297,7 @@
         "mexc-usdc",
         "mexc-usdt",
         "okx-usdt",
-        "xt"
+        "xt-usdt"
       ],
       "denomination": "USD",
       "rateFeed": false
@@ -7316,7 +7323,7 @@
         "mexc-usdc",
         "mexc-usdt",
         "okx-usdt",
-        "xt"
+        "xt-usdt"
       ],
       "denomination": "USD",
       "rateFeed": false
@@ -7339,7 +7346,7 @@
         "mexc-usdc",
         "mexc-usdt",
         "okx-usdt",
-        "xt"
+        "xt-usdt"
       ],
       "denomination": "USD",
       "rateFeed": false
@@ -7357,7 +7364,7 @@
         "lbank-usdt",
         "mexc-usdt",
         "okx-usdt",
-        "xt"
+        "xt-usdt"
       ],
       "denomination": "USD",
       "rateFeed": false
@@ -7374,7 +7381,7 @@
         "lbank-usdt",
         "mexc-usdt",
         "uniswap-v2-ethereum-weth",
-        "xt"
+        "xt-usdt"
       ],
       "denomination": "USD",
       "rateFeed": false
@@ -7398,7 +7405,7 @@
         "mexc-usdc",
         "mexc-usdt",
         "okx-usdt",
-        "xt"
+        "xt-usdt"
       ],
       "denomination": "USD",
       "rateFeed": false
@@ -7414,7 +7421,7 @@
         "kucoin-usdt",
         "lbank-usdt",
         "okx-usdt",
-        "xt"
+        "xt-usdt"
       ],
       "denomination": "USD",
       "rateFeed": false
@@ -7452,7 +7459,7 @@
         "mexc-usdc",
         "mexc-usdt",
         "okx-usdt",
-        "xt"
+        "xt-usdt"
       ],
       "denomination": "USD",
       "rateFeed": false
@@ -7687,7 +7694,7 @@
         "mexc-usdt",
         "okx-usd",
         "okx-usdt",
-        "xt"
+        "xt-usdt"
       ],
       "denomination": "USD",
       "rateFeed": false
@@ -7791,7 +7798,7 @@
         "mexc-usdc",
         "mexc-usdt",
         "pancake-swap-bnb-usdt-100",
-        "xt"
+        "xt-usdt"
       ],
       "denomination": "USD",
       "rateFeed": false
@@ -7811,7 +7818,7 @@
         "kraken-usd",
         "lbank-usdt",
         "mexc-usdt",
-        "xt"
+        "xt-usdt"
       ],
       "denomination": "USD",
       "rateFeed": false
@@ -8042,7 +8049,7 @@
         "kucoin-usdt",
         "lbank-usdt",
         "mexc-usdt",
-        "xt"
+        "xt-usdt"
       ],
       "denomination": "USD",
       "rateFeed": false
@@ -8281,7 +8288,7 @@
         "pancake-swap-bnb-wbnb-2500",
         "pancake-swap-bnb-wbnb-500",
         "uniswap-v3-bnb-usdt-3000",
-        "xt"
+        "xt-usdt"
       ],
       "denomination": "USD",
       "rateFeed": false
@@ -8302,7 +8309,7 @@
         "mexc-usdt",
         "pancake-swap-bnb-usdt-2500",
         "pancake-swap-bnb-wbnb-2500",
-        "xt"
+        "xt-usdt"
       ],
       "denomination": "USD",
       "rateFeed": false
@@ -8392,7 +8399,7 @@
       "denomination": "USD"
     },
     "JITOSOL": {
-      "source": ["lbank-usdt", "okx-usdt", "bullish-usdc", "coinbase-usd", "kraken-usd", "xt"],
+      "source": ["lbank-usdt", "okx-usdt", "bullish-usdc", "coinbase-usd", "kraken-usd", "xt-usdt"],
       "denomination": "USD",
       "rateFeed": false
     },
@@ -8439,7 +8446,7 @@
         "kraken-usd",
         "kucoin-usdt",
         "mexc-usdc",
-        "xt"
+        "xt-usdt"
       ],
       "rateFeed": false,
       "denomination": "USD"
