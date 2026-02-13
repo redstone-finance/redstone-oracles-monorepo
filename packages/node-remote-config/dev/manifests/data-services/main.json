@@ -148,10 +148,15 @@
     },
     "USDC_V2": {
       "source": [
+        "binance-usd",
+        "bitget-usd",
         "bitstamp-usd",
         "gemini-usd",
         "kraken-usd",
+        "binance_stables_ratio-usd",
+        "bitget_stables_ratio-usd",
         "bitstamp_stables_ratio-usd",
+        "bullish_stables_ratio-usd",
         "coinbase_stables_ratio-usd",
         "gemini_stables_ratio-usd",
         "kraken_stables_ratio-usd",
@@ -168,11 +173,15 @@
     },
     "USDT_V2": {
       "source": [
+        "binance-usd",
+        "bitget-usd",
         "bitstamp-usd",
+        "bullish-usd",
         "coinbase-usd",
         "gemini-usd",
         "kraken-usd",
         "okx-usd",
+        "binance_stables_ratio-usd",
         "bitstamp_stables_ratio-usd",
         "gemini_stables_ratio-usd",
         "kraken_stables_ratio-usd"
@@ -189,14 +198,20 @@
     "USDC/USDT": {
       "source": [
         "binance-usdt-no-quoting",
+        "bingx-usdt-no-quoting",
         "bitget-usdt-no-quoting",
         "bitmart-usdt-no-quoting",
         "bitrue-usdt-no-quoting",
+        "bybit-usdt-no-quoting",
         "curve-ethereum-usdt-no-quoting",
+        "gate-usdt-no-quoting",
+        "htx-usdt-no-quoting",
         "kraken-usdt-no-quoting",
         "kucoin-usdt-no-quoting",
         "lbank-usdt-no-quoting",
-        "okx-usdt-no-quoting"
+        "mexc-usdt-no-quoting",
+        "okx-usdt-no-quoting",
+        "uniswap-v4-arbitrumone-usdt-8-no-quoting"
       ],
       "deviationCheck": {
         "deviationWithRecentValues": {
