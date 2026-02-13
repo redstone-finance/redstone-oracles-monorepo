@@ -62,7 +62,7 @@
         "kucoin-usdt",
         "lbank-usdt",
         "okx-usdt",
-        "xt"
+        "xt-usdt"
       ]
     },
     "BTC": {
@@ -81,7 +81,7 @@
         "kucoin-usdt",
         "lbank-usdt",
         "okx-usdt",
-        "xt"
+        "xt-usdt"
       ]
     },
     "DAI": {
@@ -93,7 +93,7 @@
         "kraken-usd",
         "curve-ethereum-usdt",
         "okx-usdt",
-        "xt"
+        "xt-usdt"
       ],
       "deviationCheck": {
         "deviationWithRecentValues": {
@@ -149,7 +149,7 @@
         "kucoin-usdt",
         "lbank-usdt",
         "okx-usdt",
-        "xt"
+        "xt-usdt"
       ]
     },
     "stETH": {
@@ -254,7 +254,7 @@
         "lbank-usdt",
         "okx-usdt",
         "uniswap-v3-ethereum-weth-3000",
-        "xt"
+        "xt-usdt"
       ]
     },
     "C3M": {
@@ -342,7 +342,7 @@
         "gate-usdt",
         "kucoin-usdt",
         "okx-usdt",
-        "xt"
+        "xt-usdt"
       ]
     },
     "weETH": {
@@ -458,7 +458,7 @@
         "gate-usdt",
         "kucoin-usdt",
         "okx-usdt",
-        "xt",
+        "xt-usdt",
         "uniswap-v3-optimism-usdc-3000",
         "uniswap-v3-optimism-weth-3000",
         "uniswap-v3-optimism-weth-500",
@@ -571,7 +571,7 @@
         "kucoin-usdt",
         "lbank-usdt",
         "okx-usdt",
-        "xt"
+        "xt-usdt"
       ]
     },
     "CANTO": {
@@ -611,7 +611,7 @@
         "kucoin-usdt",
         "lbank-usdt",
         "okx-usdt",
-        "xt"
+        "xt-usdt"
       ]
     },
     "USDC.e": {
@@ -684,7 +684,7 @@
         "lbank-usdt",
         "okx-usdt",
         "uniswap-v3-ethereum-weth-3000",
-        "xt"
+        "xt-usdt"
       ]
     },
     "LINK": {
@@ -703,7 +703,7 @@
         "lbank-usdt",
         "okx-usdt",
         "uniswap-v3-ethereum-weth-3000",
-        "xt"
+        "xt-usdt"
       ]
     },
     "CRV": {
@@ -720,7 +720,7 @@
         "kucoin-usdt",
         "lbank-usdt",
         "okx-usdt",
-        "xt"
+        "xt-usdt"
       ]
     },
     "APE": {
@@ -736,7 +736,7 @@
         "kucoin-usdt",
         "lbank-usdt",
         "okx-usdt",
-        "xt"
+        "xt-usdt"
       ]
     },
     "CVX": {
@@ -822,7 +822,7 @@
         "gate-usdt",
         "kucoin-usdt",
         "okx-usdt",
-        "xt"
+        "xt-usdt"
       ]
     },
     "ETH+": {
@@ -874,7 +874,7 @@
         "gate-usdt",
         "kucoin-usdt",
         "okx-usdt",
-        "xt"
+        "xt-usdt"
       ]
     },
     "XTZ": {
@@ -891,7 +891,7 @@
         "kucoin-usdt",
         "lbank-usdt",
         "okx-usdt",
-        "xt"
+        "xt-usdt"
       ]
     },
     "GBP": {
@@ -1064,7 +1064,7 @@
         "bitmart-usdt",
         "bybit-usdt",
         "gate-usdt",
-        "xt"
+        "xt-usdt"
       ]
     },
     "rsETH_FUNDAMENTAL": {
@@ -1101,7 +1101,7 @@
         "gate-usdt",
         "kucoin-usdt",
         "okx-usdt",
-        "xt"
+        "xt-usdt"
       ]
     },
     "KES": {
@@ -1145,7 +1145,7 @@
         "kucoin-usdt",
         "lbank-usdt",
         "okx-usdt",
-        "xt"
+        "xt-usdt"
       ]
     },
     "USD+": {
@@ -1171,7 +1171,7 @@
         "gate-usdt",
         "kucoin-usdt",
         "okx-usdt",
-        "xt"
+        "xt-usdt"
       ]
     },
     "ETH_CLE": {
@@ -1200,7 +1200,7 @@
         "kraken-usd",
         "kucoin-usdt",
         "lbank-usdt",
-        "xt"
+        "xt-usdt"
       ]
     },
     "ZKL": {
@@ -1212,7 +1212,7 @@
         "gate-usdt",
         "kucoin-usdt",
         "lbank-usdt",
-        "xt"
+        "xt-usdt"
       ]
     },
     "mETH_FUNDAMENTAL": {
