@@ -163,32 +163,6 @@
       "denomination": "USD",
       "rateFeed": false
     },
-    "AVAX": {
-      "source": [
-        "binance-usdc",
-        "binance-usdt",
-        "bingx-usdt",
-        "bitget-eur",
-        "bitget-usdt",
-        "bitmart-usdt",
-        "bitrue-usdc",
-        "bitrue-usdt",
-        "bitstamp-usd",
-        "bybit-usdt",
-        "coinbase-usd",
-        "gate-usdt",
-        "htx-usdt",
-        "kraken-eur",
-        "kraken-usd",
-        "kucoin-usdt",
-        "lbank-usdt",
-        "mexc-usdc",
-        "mexc-usdt",
-        "okx-usdt"
-      ],
-      "denomination": "USD",
-      "rateFeed": false
-    },
     "XRP": {
       "source": [
         "binance-usdc",
