@@ -131,7 +131,7 @@
         "lbank-usdt",
         "mexc-usdt",
         "okx-usd",
-        "xt"
+        "xt-usdt"
       ],
       "denomination": "USD",
       "rateFeed": false
@@ -158,7 +158,7 @@
         "kucoin-usdt",
         "lbank-usdt",
         "mexc-usdt",
-        "xt"
+        "xt-usdt"
       ],
       "denomination": "USD",
       "rateFeed": false
@@ -210,7 +210,7 @@
         "mexc-usdc",
         "mexc-usdt",
         "okx-usdt",
-        "xt"
+        "xt-usdt"
       ],
       "denomination": "USD",
       "rateFeed": false

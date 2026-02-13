@@ -63,7 +63,7 @@
         "bybit-usdt",
         "mexc-usdt",
         "curve-ethereum-usdt",
-        "xt-deferred",
+        "xt-usdt-deferred",
         "uniswap-v4-ethereum-usdt-45"
       ],
       "deviationCheck": {
@@ -157,7 +157,13 @@
       }
     },
     "XMR": {
-      "source": ["bitfinex-ust", "kraken_deferred-usd", "kucoin-usdt", "mexc-usdt", "xt-deferred"],
+      "source": [
+        "bitfinex-ust",
+        "kraken_deferred-usd",
+        "kucoin-usdt",
+        "mexc-usdt",
+        "xt-usdt-deferred"
+      ],
       "deviationCheck": {
         "deviationWithRecentValues": {
           "maxPercent": 100,
@@ -896,7 +902,7 @@
         "kucoin-usdt",
         "lbank-usdt",
         "okx-usdt",
-        "xt-deferred"
+        "xt-usdt-deferred"
       ],
       "broadcasters": ["influx"],
       "deviationCheck": {
@@ -1621,7 +1627,7 @@
         "kraken-usd",
         "kucoin-usdt",
         "okx-usdt",
-        "xt"
+        "xt-usdt"
       ],
       "deviationCheck": {
         "deviationWithRecentValues": {
