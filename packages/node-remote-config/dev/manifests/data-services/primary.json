@@ -4131,37 +4131,37 @@
       "rateFeed": false
     },
     "CETES": {
-      "source": ["etherfuse-api"],
+      "source": ["etherfuse-cetes-api"],
       "denomination": "USD",
       "rateFeed": false
     },
     "KTB": {
-      "source": ["etherfuse-api"],
+      "source": ["etherfuse-ktb-api"],
       "denomination": "USD",
       "rateFeed": false
     },
     "USTRY": {
-      "source": ["etherfuse-api"],
+      "source": ["etherfuse-ustry-api"],
       "denomination": "USD",
       "rateFeed": false
     },
     "TESOURO": {
-      "source": ["etherfuse-api"],
+      "source": ["etherfuse-tesouro-api"],
       "denomination": "USD",
       "rateFeed": false
     },
     "EUROB": {
-      "source": ["etherfuse-api"],
+      "source": ["etherfuse-eurob-api"],
       "denomination": "USD",
       "rateFeed": false
     },
     "GILTS": {
-      "source": ["etherfuse-api"],
+      "source": ["etherfuse-gilts-api"],
       "denomination": "USD",
       "rateFeed": false
     },
     "MXNe": {
-      "source": ["etherfuse-api"],
+      "source": ["etherfuse-mxne-api"],
       "denomination": "USD",
       "rateFeed": false
     },
