@@ -413,6 +413,20 @@
         "deviationPercentage": 0.15,
         "timeSinceLastUpdateInMilliseconds": 86400000
       }
+    },
+    "DLF_PUBLICATION_TS": {
+      "priceFeedAddress": "0x86F86Dae1851dC1E962529910B2732244C60AFA9",
+      "updateTriggersOverrides": {
+        "deviationPercentage": 0.001,
+        "timeSinceLastUpdateInMilliseconds": 86400000
+      }
+    },
+    "NUSD_FUNDAMENTAL": {
+      "priceFeedAddress": "0x5e7281f74e74D76347f0b8f4a36Fd3cb29c19d95",
+      "updateTriggersOverrides": {
+        "deviationPercentage": 0.5,
+        "timeSinceLastUpdateInMilliseconds": 43200000
+      }
     }
   }
 }
