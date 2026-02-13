@@ -52,6 +52,9 @@
     },
     "wstETH/ETH": {
       "priceFeedAddress": "0x4aF6b78d92432D32E3a635E824d3A541866f7a78"
+    },
+    "EUROC/EUR": {
+      "priceFeedAddress": "0x24c8964338Deb5204B096039147B8e8C3AEa42Cc"
     }
   }
 }
