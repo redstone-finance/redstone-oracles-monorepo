@@ -26,7 +26,7 @@
           "maxDelayMilliseconds": 120000
         }
       },
-      "broadcasters": ["influx"],
+      "broadcasters": ["influx", "redstone-packages"],
       "denomination": "USD",
       "rateFeed": false
     },
@@ -45,7 +45,7 @@
           "maxDelayMilliseconds": 120000
         }
       },
-      "broadcasters": ["influx"],
+      "broadcasters": ["influx", "redstone-packages"],
       "denomination": "USD",
       "rateFeed": false
     },
@@ -64,7 +64,7 @@
           "maxDelayMilliseconds": 120000
         }
       },
-      "broadcasters": ["influx"],
+      "broadcasters": ["influx", "redstone-packages"],
       "denomination": "USD",
       "rateFeed": false
     },
@@ -83,7 +83,7 @@
           "maxDelayMilliseconds": 120000
         }
       },
-      "broadcasters": ["influx"],
+      "broadcasters": ["influx", "redstone-packages"],
       "denomination": "USD",
       "rateFeed": false
     },
@@ -102,7 +102,7 @@
           "maxDelayMilliseconds": 120000
         }
       },
-      "broadcasters": ["influx"],
+      "broadcasters": ["influx", "redstone-packages"],
       "denomination": "USD",
       "rateFeed": false
     },
@@ -121,7 +121,7 @@
           "maxDelayMilliseconds": 120000
         }
       },
-      "broadcasters": ["influx"],
+      "broadcasters": ["influx", "redstone-packages"],
       "denomination": "USD",
       "rateFeed": false
     },
@@ -140,7 +140,7 @@
           "maxDelayMilliseconds": 120000
         }
       },
-      "broadcasters": ["influx"],
+      "broadcasters": ["influx", "redstone-packages"],
       "denomination": "USD",
       "rateFeed": false
     },
@@ -159,7 +159,7 @@
           "maxDelayMilliseconds": 120000
         }
       },
-      "broadcasters": ["influx"],
+      "broadcasters": ["influx", "redstone-packages"],
       "denomination": "USD",
       "rateFeed": false
     },
@@ -178,7 +178,7 @@
           "maxDelayMilliseconds": 120000
         }
       },
-      "broadcasters": ["influx"],
+      "broadcasters": ["influx", "redstone-packages"],
       "denomination": "USD",
       "rateFeed": false
     },
@@ -196,7 +196,7 @@
         "lowerClampPercent": 0.1,
         "upperClampPercent": 0.1
       },
-      "broadcasters": ["influx"],
+      "broadcasters": ["influx", "redstone-packages"],
       "deviationCheck": {
         "deviationWithRecentValues": {
           "maxPercent": 30,
@@ -221,7 +221,7 @@
         "lowerClampPercent": 0.1,
         "upperClampPercent": 0.1
       },
-      "broadcasters": ["influx"],
+      "broadcasters": ["influx", "redstone-packages"],
       "deviationCheck": {
         "deviationWithRecentValues": {
           "maxPercent": 30,
@@ -253,7 +253,7 @@
       },
       "denomination": "USD",
       "rateFeed": false,
-      "broadcasters": ["influx"]
+      "broadcasters": ["influx", "redstone-packages"]
     },
     "WTI": {
       "source": [
@@ -270,7 +270,7 @@
         "lowerClampPercent": 0.1,
         "upperClampPercent": 0.1
       },
-      "broadcasters": ["influx"],
+      "broadcasters": ["influx", "redstone-packages"],
       "deviationCheck": {
         "deviationWithRecentValues": {
           "maxPercent": 30,
@@ -289,7 +289,7 @@
         "lowerClampPercent": 0.1,
         "upperClampPercent": 0.1
       },
-      "broadcasters": ["influx"],
+      "broadcasters": ["influx", "redstone-packages"],
       "deviationCheck": {
         "deviationWithRecentValues": {
           "maxPercent": 30,
@@ -308,7 +308,7 @@
         "lowerClampPercent": 0.1,
         "upperClampPercent": 0.1
       },
-      "broadcasters": ["influx"],
+      "broadcasters": ["influx", "redstone-packages"],
       "deviationCheck": {
         "deviationWithRecentValues": {
           "maxPercent": 30,
@@ -329,7 +329,7 @@
         "ws-lmax",
         "ws-twelve-data-no-closing-price"
       ],
-      "broadcasters": ["influx"],
+      "broadcasters": ["influx", "redstone-packages"],
       "priceAggregator": "primarySource",
       "primarySourceAggregatorConfig": {
         "primarySource": "ws-lmax",
@@ -356,7 +356,7 @@
         "ws-lmax",
         "ws-twelve-data-no-closing-price"
       ],
-      "broadcasters": ["influx"],
+      "broadcasters": ["influx", "redstone-packages"],
       "priceAggregator": "primarySource",
       "primarySourceAggregatorConfig": {
         "primarySource": "ws-lmax",
