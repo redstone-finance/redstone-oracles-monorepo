@@ -24,7 +24,7 @@
     "@redstone-finance/protocol": "workspace:*",
     "@redstone-finance/utils": "workspace:*",
     "@types/lodash": "^4.14.195",
-    "axios": "^1.13.2",
+    "axios": "^1.13.5",
     "ethers": "^5.7.2",
     "lodash": "^4.17.23",
     "zod": "^4.1.12"
