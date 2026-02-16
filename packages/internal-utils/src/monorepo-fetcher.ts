@@ -16,3 +16,20 @@ export const fetchFromMonorepo = async (filePath: string): Promise<string> => {
 
   return data;
 };
+
+export const fetchCacheWithAxios = async <T>(urls: string[], apikey?: string) => {
+  for (const url of urls) {
+    try {
+      const response = await RedstoneCommon.axiosGetWithRetries<T>(url, {
+        maxRetries: 2,
+        headers: { apikey },
+      });
+      return response.data;
+    } catch (e) {
+      console.log(`Failed fetch from URL ${url}, error ${RedstoneCommon.stringifyError(e)}`);
+    }
+  }
+  throw new Error(
+    `failed to fetch from cache for ${JSON.stringify({ urls, hasApiKey: RedstoneCommon.isDefined(apikey) })}`
+  );
+};
