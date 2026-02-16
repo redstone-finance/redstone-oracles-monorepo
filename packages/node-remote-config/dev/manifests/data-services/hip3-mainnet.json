@@ -1512,14 +1512,14 @@
     "XCU": {
       "source": [
         "ws-lmax",
-        "alltick-api-deferred",
         "metal-price-api-deferred",
         "ws-blocksize",
-        "finhub_oanda_deferred-usd"
+        "finhub_oanda_deferred-usd",
+        "ws-lo-tech"
       ],
       "priceAggregator": "multiBrokerMedian",
       "multiBrokerAggregatorConfig": {
-        "primarySource": "ws-lmax",
+        "primarySource": "ws-lo-tech",
         "rebaseCalculationInterval": 60000,
         "maxAcceptableDeviationPercent": 1.5,
         "clampPercent": 0.1
