@@ -43,7 +43,7 @@
     "@redstone-finance/sdk": "workspace:*",
     "@redstone-finance/utils": "workspace:*",
     "@stellar/stellar-sdk": "14.4.3",
-    "axios": "^1.13.2",
+    "axios": "^1.13.5",
     "lodash": "^4.17.23",
     "zod": "^4.1.12"
   },
