@@ -11418,6 +11418,18 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@redstone-finance/lambda-mqtt-authorizer@workspace:packages/lambda/lambda-mqtt-authorizer":
+  version: 0.0.0-use.local
+  resolution: "@redstone-finance/lambda-mqtt-authorizer@workspace:packages/lambda/lambda-mqtt-authorizer"
+  dependencies:
+    "@redstone-finance/internal-utils": "workspace:*"
+    "@redstone-finance/utils": "workspace:*"
+    "@types/aws-lambda": "npm:^8.10.145"
+    dotenv: "npm:^16.0.3"
+    zod: "npm:^4.1.12"
+  languageName: unknown
+  linkType: soft
+
 "@redstone-finance/lambda-multi-share-private-key-manager@workspace:packages/lambda/lambda-multi-share-private-key-manager":
   version: 0.0.0-use.local
   resolution: "@redstone-finance/lambda-multi-share-private-key-manager@workspace:packages/lambda/lambda-multi-share-private-key-manager"
