@@ -1,11 +1,24 @@
 import {
   GenericMonitoringManifest,
   getRemoteMonitoringManifestConfigFromEnv,
+  LogMonitoring,
+  LogMonitoringType,
+  ManifestFallbackService,
   resolveMonitoringManifest,
 } from "@redstone-finance/internal-utils";
 import { RedstoneCommon } from "@redstone-finance/utils";
 import localChainConfigsManifest from "../manifest/chain-configs.json";
 import { ChainConfigs, ChainConfigsById, ChainConfigsInput, ChainConfigsSchema } from "./schemas";
+
+const FALLBACK_CHAIN_CONFIGS_TABLE_NAME_ENV = "FALLBACK_CHAIN_CONFIGS_TABLE_NAME";
+const FALLBACK_CHAIN_CONFIGS_METRIC_NAME_ENV = "FALLBACK_CHAIN_CONFIGS_METRIC_NAME";
+const FALLBACK_CHAIN_CONFIGS_METRIC_NAMESPACE_ENV = "FALLBACK_CHAIN_CONFIGS_METRIC_NAMESPACE";
+const FALLBACK_CHAIN_CONFIGS_RESOURCE_NAME_ENV = "RESOURCE_NAME";
+const MANIFEST_TYPE = "chain-configs" as const;
+
+const fallbackManifestDb = ManifestFallbackService.setupFallbackManifestDb<typeof MANIFEST_TYPE>(
+  FALLBACK_CHAIN_CONFIGS_TABLE_NAME_ENV
+);
 
 export const fetchChainConfigsWithAxios = async (
   manifestsHosts: string[],
@@ -49,7 +62,54 @@ export async function fetchChainConfigs(): Promise<ChainConfigs> {
   );
   const resolvedManifest = resolveMonitoringManifest(chainConfigsManifest);
 
-  return ChainConfigsSchema.parse(resolvedManifest);
+  let parsedManifest;
+  try {
+    parsedManifest = ChainConfigsSchema.parse(resolvedManifest);
+  } catch (e) {
+    console.error(`Error while parsing chain configs: ${RedstoneCommon.stringifyError(e)}`);
+
+    if (!fallbackManifestDb) {
+      throw e;
+    }
+    console.warn("Trying to use latest known good manifest");
+    try {
+      const hash = await fallbackManifestDb.getLatestWorkingManifestHash(MANIFEST_TYPE);
+      const fallbackManifest = await fetchChainConfigsWithCache(
+        config.manifestsHosts,
+        config.manifestsApiKey,
+        hash
+      );
+
+      const parsedManifest = ChainConfigsSchema.parse(resolveMonitoringManifest(fallbackManifest));
+
+      await ManifestFallbackService.triggerFallbackManifestMetric(
+        FALLBACK_CHAIN_CONFIGS_RESOURCE_NAME_ENV,
+        FALLBACK_CHAIN_CONFIGS_METRIC_NAME_ENV,
+        FALLBACK_CHAIN_CONFIGS_METRIC_NAMESPACE_ENV
+      );
+      return parsedManifest;
+    } catch (fallbackManifestError) {
+      throw new Error(
+        `Parsing manifest from main failed: ${RedstoneCommon.stringifyError(e)}. Fallback to last working version failed: ${RedstoneCommon.stringifyError(fallbackManifestError)}.`
+      );
+    }
+  }
+
+  if (fallbackManifestDb) {
+    try {
+      await fallbackManifestDb.trySaveCurrentManifestHash(
+        MANIFEST_TYPE,
+        config.manifestsApiKey,
+        config.manifestsVersionHosts
+      );
+    } catch (saveHashError) {
+      LogMonitoring.warn(
+        LogMonitoringType.FALLBACK_MANIFEST_HASH_SAVE_FAILED,
+        `Saving hash for working chain configs failed: ${RedstoneCommon.stringifyError(saveHashError)}`
+      );
+    }
+  }
+  return parsedManifest;
 }
 
 const LOCAL_CHAIN_CONFIGS = ChainConfigsSchema.parse(
