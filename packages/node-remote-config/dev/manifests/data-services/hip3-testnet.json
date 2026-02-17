@@ -593,20 +593,13 @@
     },
     "GAS": {
       "source": [],
-      "priceAggregator": "primarySource",
-      "primarySourceAggregatorConfig": {
-        "primarySource": "",
-        "maxAcceptableDeviation": 1.5,
-        "lowerClampPercent": 0.1,
-        "upperClampPercent": 0.1
-      },
       "broadcasters": [
         "influx"
       ],
       "deviationCheck": {
         "deviationWithRecentValues": {
-          "maxPercent": 30,
-          "maxDelayMilliseconds": 120000
+          "maxPercent": 10,
+          "maxDelayMilliseconds": 60000
         }
       },
       "denomination": "USD",
@@ -678,7 +671,7 @@
     },
     "flx:GAS_MARK_0": {
       "source": [
-        "hip3-felix-commodities-mainnet-fetcher"
+        "hip3-felix-commodities-mainnet-with-fallback-fetcher"
       ],
       "broadcasters": [
         "hyperliquid-hip3"
@@ -688,7 +681,7 @@
     },
     "flx:GAS_MARK_1": {
       "source": [
-        "hip3-felix-commodities-mainnet-fetcher"
+        "hip3-felix-commodities-mainnet-with-fallback-fetcher"
       ],
       "broadcasters": [
         "hyperliquid-hip3"
@@ -698,7 +691,7 @@
     },
     "flx:GAS_EXT": {
       "source": [
-        "hip3-felix-commodities-mainnet-fetcher"
+        "hip3-felix-commodities-mainnet-with-fallback-fetcher"
       ],
       "broadcasters": [
         "hyperliquid-hip3"
@@ -708,7 +701,7 @@
     },
     "flx:GAS": {
       "source": [
-        "hip3-felix-commodities-mainnet-fetcher"
+        "hip3-felix-commodities-mainnet-with-fallback-fetcher"
       ],
       "broadcasters": [
         "hyperliquid-hip3"
