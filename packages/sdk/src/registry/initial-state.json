@@ -703,6 +703,17 @@
       "evmAddress": "0xfa52FC13c46C246DaD946E7748D92c088760B5bc",
       "ecdsaPublicKey": "0x0454f71f08f7c67409114bd70dbb3a6f71247fe8fc79cd67bb882ebf859a3ac1aa7328df2e7a3c1463053c6c7f1099a1e9a595cd1d3197608d8e7a19872722a947",
       "dateAdded": "2026-02-12"
+    },
+    "0xEFC7F96c8E585610eB62D50211919866C1b47FF5": {
+      "url": "https://redstone.finance",
+      "logo": "https://redstone.finance/assets/img/redstone-logo-full.svg",
+      "name": "redstone-rwa-prod",
+      "ipAddress": "0.0.0.0",
+      "dataServiceId": "redstone-rwa-prod",
+      "description": "prod data feeds for RedStone RWA",
+      "evmAddress": "0xEFC7F96c8E585610eB62D50211919866C1b47FF5",
+      "ecdsaPublicKey": "0x0439bde39ff74f62660cdd6a20b79ecad877b39d2d6d6c6fd5629e66e45d20025298ebf8ad44743d0bf61ff1280ac3302bbb2bc350c74ce785e3dfda0cd316d897",
+      "dateAdded": "2026-02-16"
     }
   },
   "evolve": null,
@@ -784,6 +795,11 @@
       "logo": "https://redstone.finance/assets/img/redstone-logo-full.svg",
       "name": "RedStone RWA Demo",
       "description": "dev data feeds for RedStone RWA"
+    },
+    "redstone-rwa-prod": {
+      "logo": "https://redstone.finance/assets/img/redstone-logo-full.svg",
+      "name": "RedStone RWA Prod",
+      "description": "prod data feeds for RedStone RWA"
     }
   },
   "contractAdmins": [
