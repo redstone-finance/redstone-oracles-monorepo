@@ -96,7 +96,9 @@ export const sendHealthcheckMetric = async (
     storageResolution
   );
   if (logPerf) {
-    console.info(`Sent healthcheck metric in ${Date.now() - start}ms`);
+    console.info(
+      `Sent healthcheck metric in ${Date.now() - start}ms (metric name: ${healthcheckMetricName})`
+    );
   }
 };
 
