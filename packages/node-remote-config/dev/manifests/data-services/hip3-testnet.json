@@ -418,19 +418,12 @@
       }
     },
     "GAS": {
-      "source": ["ws-lo-tech", "ws-itick-futures", "ws-twelve-data-no-closing-price"],
-      "priceAggregator": "primarySource",
-      "primarySourceAggregatorConfig": {
-        "primarySource": "ws-lo-tech",
-        "maxAcceptableDeviation": 1.5,
-        "lowerClampPercent": 0.1,
-        "upperClampPercent": 0.1
-      },
+      "source": ["ws-lo-tech"],
       "broadcasters": ["influx"],
       "deviationCheck": {
         "deviationWithRecentValues": {
-          "maxPercent": 30,
-          "maxDelayMilliseconds": 120000
+          "maxPercent": 10,
+          "maxDelayMilliseconds": 60000
         }
       },
       "denomination": "USD",
@@ -481,25 +474,25 @@
       "rateFeed": false
     },
     "flx:GAS_MARK_0": {
-      "source": ["hip3-felix-commodities-mainnet-fetcher"],
+      "source": ["hip3-felix-commodities-mainnet-with-fallback-fetcher"],
       "broadcasters": ["hyperliquid-hip3"],
       "denomination": "USD",
       "rateFeed": false
     },
     "flx:GAS_MARK_1": {
-      "source": ["hip3-felix-commodities-mainnet-fetcher"],
+      "source": ["hip3-felix-commodities-mainnet-with-fallback-fetcher"],
       "broadcasters": ["hyperliquid-hip3"],
       "denomination": "USD",
       "rateFeed": false
     },
     "flx:GAS_EXT": {
-      "source": ["hip3-felix-commodities-mainnet-fetcher"],
+      "source": ["hip3-felix-commodities-mainnet-with-fallback-fetcher"],
       "broadcasters": ["hyperliquid-hip3"],
       "denomination": "USD",
       "rateFeed": false
     },
     "flx:GAS": {
-      "source": ["hip3-felix-commodities-mainnet-fetcher"],
+      "source": ["hip3-felix-commodities-mainnet-with-fallback-fetcher"],
       "broadcasters": ["hyperliquid-hip3"],
       "denomination": "USD",
       "rateFeed": false
