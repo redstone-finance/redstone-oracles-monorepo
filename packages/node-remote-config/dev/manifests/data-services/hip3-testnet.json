@@ -121,25 +121,25 @@
       "rateFeed": false
     },
     "flxn:USDE_MARK_0": {
-      "source": ["hip3-felix-crypto-testnet-fetcher"],
+      "source": ["hip3-felix-crypto-flxn-fetcher"],
       "broadcasters": ["hyperliquid-hip3"],
       "denomination": "USD",
       "rateFeed": false
     },
     "flxn:USDE_MARK_1": {
-      "source": ["hip3-felix-crypto-testnet-fetcher"],
+      "source": ["hip3-felix-crypto-flxn-fetcher"],
       "broadcasters": ["hyperliquid-hip3"],
       "denomination": "USD",
       "rateFeed": false
     },
     "flxn:USDE_EXT": {
-      "source": ["hip3-felix-crypto-testnet-fetcher"],
+      "source": ["hip3-felix-crypto-flxn-fetcher"],
       "broadcasters": ["hyperliquid-hip3"],
       "denomination": "USD",
       "rateFeed": false
     },
     "flxn:USDE": {
-      "source": ["hip3-felix-crypto-testnet-fetcher"],
+      "source": ["hip3-felix-crypto-flxn-fetcher"],
       "broadcasters": ["hyperliquid-hip3"],
       "denomination": "USD",
       "rateFeed": false
