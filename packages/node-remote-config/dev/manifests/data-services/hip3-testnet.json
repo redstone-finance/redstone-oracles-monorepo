@@ -153,7 +153,7 @@
     },
     "flxn:USDE_MARK_0": {
       "source": [
-        "hip3-felix-crypto-testnet-fetcher"
+        "hip3-felix-crypto-flxn-fetcher"
       ],
       "broadcasters": [
         "hyperliquid-hip3"
@@ -163,7 +163,7 @@
     },
     "flxn:USDE_MARK_1": {
       "source": [
-        "hip3-felix-crypto-testnet-fetcher"
+        "hip3-felix-crypto-flxn-fetcher"
       ],
       "broadcasters": [
         "hyperliquid-hip3"
@@ -173,7 +173,7 @@
     },
     "flxn:USDE_EXT": {
       "source": [
-        "hip3-felix-crypto-testnet-fetcher"
+        "hip3-felix-crypto-flxn-fetcher"
       ],
       "broadcasters": [
         "hyperliquid-hip3"
@@ -183,7 +183,7 @@
     },
     "flxn:USDE": {
       "source": [
-        "hip3-felix-crypto-testnet-fetcher"
+        "hip3-felix-crypto-flxn-fetcher"
       ],
       "broadcasters": [
         "hyperliquid-hip3"
