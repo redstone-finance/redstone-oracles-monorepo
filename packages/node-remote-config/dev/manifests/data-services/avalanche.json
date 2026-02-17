@@ -502,7 +502,6 @@
         "gate-usdt",
         "htx-usdt",
         "kraken-usd",
-        "lbank-usdt",
         "mexc-usdt"
       ],
       "denomination": "USD",
@@ -548,10 +547,11 @@
       "source": [
         "blackhole-avalanche-usdc-75",
         "bullish-btc-reversed",
+        "curve-ethereum-usdc",
         "pharaoh-avalanche-usdc-50",
-        "trader-joe-v2-avalanche-wavax",
         "trader-joe-v2-avalanche-usdc",
         "trader-joe-v2-avalanche-usdt",
+        "trader-joe-v2-avalanche-wavax",
         "uniswap-v4-ethereum-usdc-100"
       ],
       "deviationCheck": {
@@ -578,7 +578,9 @@
         "lbank-usdt",
         "mexc-usdt",
         "curve-ethereum-dai",
+        "curve-ethereum-usdc",
         "curve-ethereum-usdt",
+        "fluid-ethereum-usdt",
         "uniswap-v3-ethereum-usdc-100",
         "uniswap-v4-ethereum-usdt-45",
         "xt-usdt"
@@ -600,7 +602,8 @@
         "kucoin-usdt",
         "lbank-usdt",
         "mexc-usdc",
-        "mexc-usdt"
+        "mexc-usdt",
+        "uniswap-v3-ethereum-usde-3000"
       ],
       "denomination": "USD",
       "rateFeed": false,
