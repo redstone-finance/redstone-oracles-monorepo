@@ -2,7 +2,7 @@ import { SignedDataPackage } from "@redstone-finance/protocol";
 import { PackageResponse } from "./common";
 
 export class LastPublishedFeedState {
-  private lastPublishPerFeed: Map<string, number>;
+  private readonly lastPublishPerFeed: Map<string, number>;
 
   constructor(dataPackageIds: string[], initTimestamp: number) {
     this.lastPublishPerFeed = new Map(dataPackageIds.map((id) => [id, initTimestamp]));
