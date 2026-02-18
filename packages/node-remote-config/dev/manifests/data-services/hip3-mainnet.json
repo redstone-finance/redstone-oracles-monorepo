@@ -1510,8 +1510,8 @@
         "finhub_oanda_deferred-usd",
         "ws-lo-tech"
       ],
-      "priceAggregator": "multiBrokerMedian",
-      "multiBrokerAggregatorConfig": {
+      "priceAggregator": "primarySourceWithRebasing",
+      "primarySourceWithRebasingAggregatorConfig": {
         "primarySource": "ws-lo-tech",
         "rebaseCalculationInterval": 60000,
         "maxAcceptableDeviationPercent": 1.5,
