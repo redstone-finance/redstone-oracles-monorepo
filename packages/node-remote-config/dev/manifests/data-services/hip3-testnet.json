@@ -3188,8 +3188,8 @@
     },
     "XCU": {
       "source": [],
-      "priceAggregator": "multiBrokerMedian",
-      "multiBrokerAggregatorConfig": {
+      "priceAggregator": "primarySourceWithRebasing",
+      "primarySourceWithRebasingAggregatorConfig": {
         "primarySource": "",
         "rebaseCalculationInterval": 60000,
         "maxAcceptableDeviationPercent": 1.5,
