@@ -17,30 +17,46 @@ export async function batchPromises<T>(
   return assertThenReturnOrFail(results, errors, "batch operation failed", failOnError);
 }
 
-export async function batchPromisesAndSplitSettlements<T>(
+export async function batchSettled<T>(
   promises: (() => Promise<T>)[],
   batchSize: number,
-  msBetweenBatches: number
-): Promise<{ results: Awaited<T>[]; errors: Error[] }> {
-  const results = [];
-  const errors = [];
+  msBetweenBatches = 0
+) {
+  const batchResults = [];
   for (let i = 0; i < promises.length; i += batchSize) {
     if (i !== 0 && msBetweenBatches) {
       await sleep(msBetweenBatches);
     }
     const batch = promises.slice(i, i + batchSize);
-    const batchResults = await Promise.allSettled(batch.map((f) => f()));
-    const [filteredResults, filteredErrors] = _.partition(
-      batchResults,
-      (result) => result.status === "fulfilled"
-    );
-    results.push(...filteredResults.map((result) => result.value));
-    errors.push(...filteredErrors.map((r) => r.reason as Error));
+    batchResults.push(...(await Promise.allSettled(batch.map((f) => f()))));
   }
 
-  return { results, errors };
+  return batchResults;
+}
+
+export async function batchPromisesAndSplitSettlements<T>(
+  promises: (() => Promise<T>)[],
+  batchSize: number,
+  msBetweenBatches = 0
+): Promise<{ results: Awaited<T>[]; errors: Error[] }> {
+  const batchResults = await batchSettled(promises, batchSize, msBetweenBatches);
+
+  return splitSettlements(batchResults);
 }
 
 export async function splitAllSettled<T>(promises: (() => Promise<T>)[]) {
   return await batchPromisesAndSplitSettlements(promises, promises.length, 0);
+}
+
+export function splitSettlements<T>(batchResults: PromiseSettledResult<T>[]) {
+  const results = [];
+  const errors = [];
+  const [filteredResults, filteredErrors] = _.partition(
+    batchResults,
+    (result) => result.status === "fulfilled"
+  );
+  results.push(...filteredResults.map((result) => result.value));
+  errors.push(...filteredErrors.map((r) => r.reason as Error));
+
+  return { results, errors };
 }
