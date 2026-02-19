@@ -428,6 +428,8 @@
         "timeSinceLastUpdateInMilliseconds": 43200000
       }
     },
-    "weETH/ETH": {}
+    "weETH/ETH": {
+      "priceFeedAddress": "0x8751F736E94F6CD167e8C5B97E245680FbD9CC36"
+    }
   }
 }
