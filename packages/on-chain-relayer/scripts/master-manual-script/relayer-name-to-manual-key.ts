@@ -3,7 +3,6 @@ export const relayerNameToManualKeyArn: Record<string, string> = {
   arbitrumPremia: "/prod/on-chain-relayer/arbitrum/premia/manual/private-key",
   b2MultiPriceFeed: "/prod/on-chain-relayer/b2/multi-price-feed/manual/private_key",
   ethereumEtherfiWeeth: "/prod/on-chain-relayer/ethereum/etherfi/weeth/manual/private_key",
-  ethereumEtherfiWeetheth: "/prod/on-chain-relayer/ethereum/etherfi/weetheth/manual/private_key",
   ethereumPufStaking: "/prod/on-chain-relayer/ethereum/puf/staking/manual/private-key",
   mantaLayerBank: "/prod/on-chain-relayer/manta/layerbank/manual/private-key",
   mentoCeloMainnet: "/prod/on-chain-relayer/mento/celo/private-key",
