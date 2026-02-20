@@ -13,6 +13,8 @@ export * from "./contracts/UpdatePricesOptions";
 export * from "./data-feed-values";
 export * from "./data-services-urls";
 export * from "./DataPackagesResponseCache";
+export * from "./DataPackagesResponseStorage";
+export * from "./filter-and-select-data-packages";
 export * from "./oracle-registry";
 export * from "./pick-closest-to-median";
 export * from "./request-data-packages";

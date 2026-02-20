@@ -2,9 +2,17 @@ import { DataPackage } from "@redstone-finance/protocol";
 import { RedstoneCommon } from "@redstone-finance/utils";
 import axios from "axios";
 import { ethers } from "ethers";
-import { DataPackagesRequestParams, requestDataPackages } from "../src";
-import { requestRedstonePayload } from "../src/request-redstone-payload";
-import { mockSignedDataPackages } from "./mocks/mock-packages";
+import {
+  DataPackagesRequestParams,
+  DataPackagesResponseStorage,
+  requestDataPackages,
+  requestRedstonePayload,
+} from "../src";
+import {
+  MOCK_TIMESTAMP,
+  mockSignedDataPackages,
+  mockSignedDataPackagesResponse,
+} from "./mocks/mock-packages";
 import { server } from "./mocks/server";
 
 const TEST_PRIVATE_KEY = "0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80";
@@ -671,6 +679,76 @@ describe("request-data-packages", () => {
 
       const timePassed = performance.now() - start;
       expect(timePassed).toBe(20_000);
+    });
+  });
+
+  describe("requestDataPackages with storageInstance", () => {
+    const MOCK_NOW = MOCK_TIMESTAMP + 1000;
+
+    it("should return cached response when storageInstance has matching data", async () => {
+      jest.spyOn(Date, "now").mockReturnValue(MOCK_NOW);
+      const axiosGetSpy = jest.spyOn(axios, "get");
+      const storage = new DataPackagesResponseStorage();
+
+      storage.set(mockSignedDataPackagesResponse, {
+        ...getReqParams(),
+        historicalTimestamp: MOCK_TIMESTAMP,
+      });
+
+      const result = await requestDataPackages({
+        ...getReqParams(),
+        storageInstance: storage,
+        historicalTimestamp: MOCK_TIMESTAMP,
+        skipSignatureVerification: true,
+      });
+
+      expect(result["ETH"]).toBeDefined();
+      expect(result["BTC"]).toBeDefined();
+      expect(axiosGetSpy).not.toHaveBeenCalled();
+    });
+
+    it("should fetch from network when storageInstance has no matching data", async () => {
+      const storage = new DataPackagesResponseStorage();
+
+      const result = await requestDataPackages({
+        ...getReqParams(),
+        storageInstance: storage,
+      });
+
+      expect(result["ETH"]).toBeDefined();
+      expect(result["BTC"]).toBeDefined();
+    });
+
+    it("should store fetched response in storageInstance", async () => {
+      jest.spyOn(Date, "now").mockReturnValue(MOCK_NOW);
+      const axiosGetSpy = jest.spyOn(axios, "get");
+      axiosGetSpy.mockResolvedValue({ data: mockSignedDataPackages });
+
+      const storage = new DataPackagesResponseStorage();
+
+      await requestDataPackages({
+        ...getReqParams(),
+        storageInstance: storage,
+        urls: ["https://oracle-gateway-1.a.redstone.finance"],
+        historicalTimestamp: MOCK_TIMESTAMP,
+      });
+
+      const cached = storage.get({
+        ...getReqParams(),
+        historicalTimestamp: MOCK_TIMESTAMP,
+        skipSignatureVerification: true,
+      });
+
+      expect(cached).toBeDefined();
+      expect(cached!["ETH"]).toBeDefined();
+      expect(cached!["BTC"]).toBeDefined();
+    });
+
+    it("should work without storageInstance (no caching)", async () => {
+      const result = await requestDataPackages(getReqParams());
+
+      expect(result["ETH"]).toBeDefined();
+      expect(result["BTC"]).toBeDefined();
     });
   });
 });

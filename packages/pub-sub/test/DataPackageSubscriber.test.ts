@@ -1,4 +1,5 @@
 import { DataPackage, NumericDataPoint, SignedDataPackage } from "@redstone-finance/protocol";
+import { DataPackagesResponseStorage } from "@redstone-finance/sdk";
 import { RedstoneLogger } from "@redstone-finance/utils";
 import { ethers } from "ethers";
 import {
@@ -559,6 +560,58 @@ describe("subscribe-data-packages", () => {
       expect(callback).toBeCalledWith({
         ETH: [firstPackage, secondPackage],
       });
+    });
+
+    it("should add subsequent packages to the storage instance", async () => {
+      const pubSub = createMockPubSubClient();
+      const storageInstance = new DataPackagesResponseStorage();
+
+      const authorizedSigners = [MOCK_WALLET_1.address, MOCK_WALLET_2.address];
+      const subscriber = new DataPackageSubscriber(
+        pubSub,
+        createMockParams({
+          dataPackageIds: ["ETH", "BTC"],
+          authorizedSigners,
+          uniqueSignersCount: 1,
+          minimalOffChainSignersCount: 1,
+          ignoreMissingFeeds: true,
+          storageInstance,
+        })
+      );
+      const callback = jest.fn();
+      await subscriber.subscribe(callback);
+      const packageTimestamp = Date.now();
+
+      const firstPackage = await publishToPubSub(pubSub, {
+        dataPackageId: "ETH",
+        value: 12,
+        timestamp: packageTimestamp,
+        signer: MOCK_WALLET_1,
+      });
+
+      jest.advanceTimersByTime(200);
+      expect(callback).toBeCalledTimes(1);
+
+      const secondPackage = await publishToPubSub(pubSub, {
+        dataPackageId: "BTC",
+        value: 15,
+        timestamp: packageTimestamp,
+        signer: MOCK_WALLET_2,
+      });
+
+      jest.advanceTimersByTime(200);
+      expect(callback).toBeCalledTimes(2);
+
+      const result = storageInstance.get({
+        historicalTimestamp: packageTimestamp,
+        dataPackagesIds: ["BTC", "ETH"],
+        authorizedSigners,
+        dataServiceId,
+        ignoreMissingFeed: true,
+        uniqueSignersCount: 1,
+      });
+
+      expect(result).toEqual({ BTC: [secondPackage], ETH: [firstPackage] });
     });
   });
 

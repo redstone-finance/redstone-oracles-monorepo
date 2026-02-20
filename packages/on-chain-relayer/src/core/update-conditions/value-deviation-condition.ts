@@ -1,4 +1,5 @@
 import { DataPackagesResponse, getDataPackagesTimestamp } from "@redstone-finance/sdk";
+import { isFallbackConfig } from "../../config/config-checks";
 import { RelayerConfig } from "../../config/RelayerConfig";
 import { LastRoundDetails } from "../../types";
 import { checkValueDeviationCondition } from "./check-value-deviation-condition";
@@ -17,7 +18,7 @@ export const valueDeviationCondition = async (
     config
   );
 
-  const isFallback = config.fallbackOffsetInMilliseconds > 0;
+  const isFallback = isFallbackConfig(config);
   let historicalShouldUpdatePrices = true;
   let historicalWarningMessage = "";
   let historicalMaxDeviation = 0;

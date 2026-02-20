@@ -1,6 +1,7 @@
 import { GlobalLogMonitoring, LogMonitoringType } from "@redstone-finance/internal-utils";
 import { SignedDataPackage, SignedDataPackagePlainObj } from "@redstone-finance/protocol";
 import {
+  DataPackagesRequestParams,
   DataPackagesResponse,
   DataServiceIds,
   getSignersForDataServiceId,
@@ -356,6 +357,11 @@ export class DataPackageSubscriber {
       `Publishing packages timestamp=${packageTimestamp} latency=${Date.now() - packageTimestamp} dataPackageIds=${packageIdsToPublish.join(",")}`
     );
 
+    this.params.storageInstance?.set(
+      packagesToPublish,
+      dataPackagesRequestParamsFromSubscriberParams(this.params)
+    );
+
     if (!this.subscribeCallback) {
       this.logger.warn(`subscribeCallback is undefined - have already unsubscribed?`);
       return;
@@ -387,6 +393,7 @@ export class DataPackageSubscriber {
         packagesToPublish[dataPackageId] = potentialPackagesToPublish;
       }
     }
+
     return this.lastPublishedState.filterOutNotNewerPackages(packagesToPublish);
   }
 
@@ -406,4 +413,26 @@ export class DataPackageSubscriber {
 
     this.scheduledPublishes.removeOlderThen(Date.now());
   }
+}
+
+function dataPackagesRequestParamsFromSubscriberParams(
+  subscriberParams: DataPackageSubscriberParams
+): DataPackagesRequestParams {
+  const {
+    dataServiceId,
+    dataPackageIds: dataPackagesIds,
+    uniqueSignersCount,
+    ignoreMissingFeeds: ignoreMissingFeed,
+    authorizedSigners,
+    storageInstance,
+  } = subscriberParams;
+
+  return {
+    dataServiceId,
+    dataPackagesIds,
+    uniqueSignersCount,
+    ignoreMissingFeed,
+    authorizedSigners,
+    storageInstance,
+  };
 }

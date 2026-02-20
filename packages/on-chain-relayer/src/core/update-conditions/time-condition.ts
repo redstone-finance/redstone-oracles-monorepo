@@ -1,5 +1,6 @@
 import { RedstoneCommon } from "@redstone-finance/utils";
 import { RelayerConfig } from "../../config/RelayerConfig";
+import { isFallbackConfig } from "../../config/config-checks";
 
 export const timeUpdateCondition = (
   dataFeedId: string,
@@ -7,7 +8,7 @@ export const timeUpdateCondition = (
   config: RelayerConfig
 ) => {
   const { fallbackOffsetInMilliseconds } = config;
-  const isFallback = fallbackOffsetInMilliseconds > 0;
+  const isFallback = isFallbackConfig(config);
   let updatePriceInterval = config.updateTriggers[dataFeedId].timeSinceLastUpdateInMilliseconds;
 
   if (!RedstoneCommon.isDefined(updatePriceInterval)) {

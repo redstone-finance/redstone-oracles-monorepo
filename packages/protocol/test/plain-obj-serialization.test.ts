@@ -162,4 +162,71 @@ describe("Fixed size data package", () => {
       });
     }
   });
+
+  describe("SignedDataPackage.fromObjLazy", () => {
+    const plainObj: SignedDataPackagePlainObj = {
+      dataPoints: [{ dataFeedId: "ETH", value: 2000 }],
+      timestampMilliseconds: 1700000000000,
+      signature:
+        "NX5yd/Cs8HzVdNchrM59uOoSst7n9KK5Ou9pA6S5GTM0RwghGlFjA0S+SVfb85ipg4HzUTKATBZSqPXlWldEEhw=",
+      dataPackageId: "redstone-test",
+    };
+
+    it("should return a SignedDataPackage instance", () => {
+      const lazy = SignedDataPackage.fromObjLazy(plainObj);
+      expect(lazy).toBeInstanceOf(SignedDataPackage);
+    });
+
+    it("should not call fromObj until property is accessed", () => {
+      const spy = jest.spyOn(SignedDataPackage, "fromObj");
+      const lazy = SignedDataPackage.fromObjLazy(plainObj);
+
+      expect(spy).not.toHaveBeenCalled();
+
+      void lazy.dataPackage;
+
+      expect(spy).toHaveBeenCalledTimes(1);
+      expect(spy).toHaveBeenCalledWith(plainObj);
+
+      spy.mockRestore();
+    });
+
+    it("should trigger deserialization via signature access too", () => {
+      const spy = jest.spyOn(SignedDataPackage, "fromObj");
+      const lazy = SignedDataPackage.fromObjLazy(plainObj);
+
+      void lazy.signature;
+
+      expect(spy).toHaveBeenCalledTimes(1);
+
+      spy.mockRestore();
+    });
+
+    it("should deserialize only once across multiple accesses", () => {
+      const spy = jest.spyOn(SignedDataPackage, "fromObj");
+      const lazy = SignedDataPackage.fromObjLazy(plainObj);
+
+      void lazy.dataPackage;
+      void lazy.signature;
+      void lazy.dataPackage;
+
+      expect(spy).toHaveBeenCalledTimes(1);
+
+      spy.mockRestore();
+    });
+
+    it("should return the same dataPackage as fromObj", () => {
+      const lazy = SignedDataPackage.fromObjLazy(plainObj);
+      const eager = SignedDataPackage.fromObj(plainObj);
+
+      expect(lazy.dataPackage).toEqual(eager.dataPackage);
+    });
+
+    it("should return the same signature as fromObj", () => {
+      const lazy = SignedDataPackage.fromObjLazy(plainObj);
+      const eager = SignedDataPackage.fromObj(plainObj);
+
+      expect(lazy.signature).toEqual(eager.signature);
+    });
+  });
 });
