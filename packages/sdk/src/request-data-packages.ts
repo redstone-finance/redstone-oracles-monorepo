@@ -3,8 +3,12 @@ import { RedstoneCommon } from "@redstone-finance/utils";
 import axios from "axios";
 import { z } from "zod";
 import { resolveDataServiceUrls } from "./data-services-urls";
-import { pickDataFeedPackagesClosestToMedian } from "./pick-closest-to-median";
-import { getResponseTimestamp, type DataPackagesResponse } from "./request-data-packages-common";
+import { type DataPackagesResponseStorage } from "./DataPackagesResponseStorage";
+import {
+  checkAndGetSameTimestamp,
+  filterAndSelectDataPackages,
+} from "./filter-and-select-data-packages";
+import { type DataPackagesResponse, getResponseTimestamp } from "./request-data-packages-common";
 import { RequestDataPackagesLogger } from "./RequestDataPackagesLogger";
 
 const GET_REQUEST_TIMEOUT = 5_000;
@@ -29,7 +33,7 @@ type DataPackagesRequestParamsInternal = {
   returnAllPackages?: boolean;
   /**
    * ensure minimum number of signers for each token
-   * - 'uniqueSignersCount' packages closest to median of all fetched packages are returned (value 2 is recommended for prod nodes)
+   * - 'uniqueSignersCount' packages closest to median of all fetched packages are returned (value 3 is recommended for prod nodes)
    * - throws if there are less signers for any token
    */
   uniqueSignersCount: number;
@@ -84,6 +88,10 @@ type DataPackagesRequestParamsInternal = {
    * and thrown as a single AggregateError instead of failing on the first error.
    */
   aggregateErrors?: boolean;
+  /**
+   * Instance of the global storage to be used for caching responses
+   */
+  storageInstance?: DataPackagesResponseStorage;
 };
 
 type DataPackagesQuery =
@@ -100,28 +108,6 @@ export type DataPackagesRequestParams = DataPackagesRequestParamsInternal & Data
 
 export interface ValuesForDataFeeds {
   [dataFeedId: string]: bigint | undefined;
-}
-
-export enum DataFeedPackageErrorType {
-  MissingDataFeed = "MissingDataFeed",
-  NoDataPackages = "NoDataPackages",
-  TooFewSigners = "TooFewSigners",
-}
-
-/*
- * IMPORTANT: Monitoring depends on this error.
- * Any changes to DataFeedPackageError (or its attributes) must be accompanied
- * by a review of the monitoring logic to ensure that they still behave correctly.
- */
-export class DataFeedPackageError extends Error {
-  public dataFeedId: string;
-  public errorType: DataFeedPackageErrorType;
-
-  constructor(message: string, dataFeedId: string, errorType: DataFeedPackageErrorType) {
-    super(message);
-    this.dataFeedId = dataFeedId;
-    this.errorType = errorType;
-  }
 }
 
 export const SignedDataPackageSchema = z.object({
@@ -175,6 +161,12 @@ export const requestDataPackages = async (
   if (!reqParams.returnAllPackages && !reqParams.dataPackagesIds.length) {
     throw new Error("Please provide at least one dataFeed");
   }
+
+  const cached = reqParams.storageInstance?.get(reqParams);
+  if (cached) {
+    return filterAndSelectDataPackages(cached, reqParams);
+  }
+
   try {
     const urls = getUrlsForDataServiceId(reqParams);
     const requestDataPackagesLogger = reqParams.enableEnhancedLogs
@@ -294,101 +286,34 @@ const prepareDataPackagePromises = (
       reqParams.singleGatewayTimeoutMs
     );
 
-    return parseAndValidateDataPackagesResponse(
-      response.data,
-      reqParams,
-      requestDataPackagesLogger
-    );
+    const parsedResponse = parseGwResponse(response.data);
+
+    reqParams.storageInstance?.set(parsedResponse, reqParams);
+
+    return filterAndSelectDataPackages(parsedResponse, reqParams, requestDataPackagesLogger);
   });
 };
 
-function validateDataPackagesResponse(
-  dataFeedPackages: GwResponse[string] | undefined,
-  reqParams: DataPackagesRequestParams,
-  dataFeedId: string
-) {
-  if (!dataFeedPackages) {
-    const message = `Requested data feed id is not included in response: ${dataFeedId}`;
-    throw new DataFeedPackageError(message, dataFeedId, DataFeedPackageErrorType.MissingDataFeed);
+const maybeGetSignedDataPackage = (dataPackagePlainObj: SignedDataPackagePlainObj) => {
+  try {
+    return SignedDataPackage.fromObjLazy(dataPackagePlainObj);
+  } catch {
+    return undefined;
   }
+};
 
-  // filter out packages with not expected signers
-  dataFeedPackages = dataFeedPackages.filter((dp) => {
-    const signer = reqParams.skipSignatureVerification ? dp.signerAddress : maybeGetSigner(dp);
-    return signer ? reqParams.authorizedSigners.includes(signer) : false;
-  });
-
-  if (dataFeedPackages.length === 0) {
-    const message = `No data packages for the data feed: ${dataFeedId}`;
-    throw new DataFeedPackageError(message, dataFeedId, DataFeedPackageErrorType.NoDataPackages);
-  } else if (dataFeedPackages.length < reqParams.uniqueSignersCount) {
-    const message =
-      `Too few data packages with unique signers for the data feed: ${dataFeedId}. ` +
-      `Expected: ${reqParams.uniqueSignersCount}. ` +
-      `Received: ${dataFeedPackages.length}`;
-    throw new DataFeedPackageError(message, dataFeedId, DataFeedPackageErrorType.TooFewSigners);
-  }
-
-  const signedDataPackages = dataFeedPackages.map((dp) => SignedDataPackage.fromObj(dp));
-
-  const timestamp = checkAndGetSameTimestamp(signedDataPackages); // Needs to be before "if", because it checks the timestamps and throws
-
-  if (reqParams.maxTimestampDeviationMS) {
-    const deviation = Math.abs(Date.now() - timestamp);
-    if (deviation > reqParams.maxTimestampDeviationMS) {
-      const message = `Timestamp deviation exceeded - timestamp: ${timestamp}, deviation: ${deviation}, max deviation: ${reqParams.maxTimestampDeviationMS}`;
-      throw new Error(message);
-    }
-  }
-
-  return signedDataPackages;
-}
-
-const parseAndValidateDataPackagesResponse = (
-  responseData: unknown,
-  reqParams: DataPackagesRequestParams,
-  requestDataPackagesLogger?: RequestDataPackagesLogger
-): DataPackagesResponse => {
-  const parsedResponse: DataPackagesResponse = {};
-
+const parseGwResponse = (responseData: unknown): DataPackagesResponse => {
   RedstoneCommon.zodAssert<GwResponse>(GwResponseSchema, responseData);
 
-  const requestedDataFeedIds = reqParams.returnAllPackages
-    ? Object.keys(responseData)
-    : reqParams.dataPackagesIds;
+  return Object.fromEntries(
+    Object.entries(responseData).map(([dataFeedId, plainObjects]) => {
+      const signedDataPackages = plainObjects
+        ?.map(maybeGetSignedDataPackage)
+        .filter(RedstoneCommon.isDefined);
 
-  const errors = [];
-  for (const dataFeedId of requestedDataFeedIds) {
-    try {
-      const dataFeedPackagesResponse = responseData[dataFeedId];
-      const dataFeedPackages = validateDataPackagesResponse(
-        dataFeedPackagesResponse,
-        reqParams,
-        dataFeedId
-      );
-
-      parsedResponse[dataFeedId] = reqParams.disableMedianSelection
-        ? dataFeedPackages
-        : pickDataFeedPackagesClosestToMedian(
-            dataFeedPackages.map((dp) => dp.toObj()),
-            reqParams.uniqueSignersCount
-          );
-    } catch (e) {
-      if (reqParams.ignoreMissingFeed) {
-        requestDataPackagesLogger?.feedIsMissing((e as Error).message);
-      } else if (reqParams.aggregateErrors) {
-        errors.push(e);
-      } else {
-        throw e;
-      }
-    }
-  }
-
-  if (errors.length > 0) {
-    throw new AggregateError(errors, "requestDataPackages failed");
-  }
-
-  return parsedResponse;
+      return [dataFeedId, signedDataPackages?.length ? signedDataPackages : undefined];
+    })
+  );
 };
 
 const getUrlsForDataServiceId = (reqParams: DataPackagesRequestParams): string[] => {
@@ -413,14 +338,6 @@ function sendRequestToGateway(
   });
 }
 
-function maybeGetSigner(dp: SignedDataPackagePlainObj) {
-  try {
-    return SignedDataPackage.fromObj(dp).recoverSignerAddress();
-  } catch {
-    return undefined;
-  }
-}
-
 export const getDataPackagesTimestamp = (
   dataPackages: DataPackagesResponse,
   dataFeedId?: string
@@ -428,19 +345,6 @@ export const getDataPackagesTimestamp = (
   const signedDataPackages = extractSignedDataPackagesForFeedId(dataPackages, dataFeedId);
 
   return checkAndGetSameTimestamp(signedDataPackages);
-};
-
-export const checkAndGetSameTimestamp = (dataPackages: SignedDataPackage[]) => {
-  if (!dataPackages.length) {
-    throw new Error("No data packages for unique timestamp calculation");
-  }
-
-  const timestamps = dataPackages.map((dp) => dp.dataPackage.timestampMilliseconds);
-  if (new Set(timestamps).size !== 1) {
-    throw new Error(`Timestamps do not have the same value: ${timestamps.join(", ")}`);
-  }
-
-  return timestamps[0];
 };
 
 export const extractSignedDataPackagesForFeedId = (

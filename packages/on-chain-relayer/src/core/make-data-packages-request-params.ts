@@ -1,6 +1,7 @@
 import { isMultiFeedAdapterType } from "@redstone-finance/on-chain-relayer-common";
 import {
   DataPackagesRequestParams,
+  DataPackagesResponseStorage,
   DataServiceIds,
   getSignersForDataServiceId,
 } from "@redstone-finance/sdk";
@@ -43,5 +44,8 @@ export function makeDataPackagesRequestParams(
     ignoreMissingFeed: canIgnoreMissingFeeds(relayerConfig),
     waitForAllGatewaysTimeMs,
     enableEnhancedLogs: enableEnhancedRequestDataPackagesLogs,
+    storageInstance: relayerConfig.useGlobalDataPackagesResponseStorage
+      ? DataPackagesResponseStorage.getInstance()
+      : undefined,
   };
 }

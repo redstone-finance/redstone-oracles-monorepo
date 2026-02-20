@@ -196,7 +196,13 @@ export class MqttRunner implements MqttDataProcessingStrategyDelegate<RelayerCon
     requestParams: DataPackagesRequestParams,
     relayerConfig: RelayerConfig
   ): DataPackageSubscriberParams {
-    const { dataServiceId, dataPackagesIds, uniqueSignersCount, authorizedSigners } = requestParams;
+    const {
+      dataServiceId,
+      dataPackagesIds,
+      uniqueSignersCount,
+      authorizedSigners,
+      storageInstance,
+    } = requestParams;
     const {
       mqttMinimalOffChainSignersCount,
       mqttWaitForOtherSignersMs,
@@ -218,6 +224,7 @@ export class MqttRunner implements MqttDataProcessingStrategyDelegate<RelayerCon
       dataPackageIds: dataPackagesIds,
       uniqueSignersCount,
       authorizedSigners,
+      storageInstance,
       minimalOffChainSignersCount: mqttMinimalOffChainSignersCount,
       waitMsForOtherSignersAfterMinimalSignersCountSatisfied: mqttWaitForOtherSignersMs,
       ignoreMissingFeeds: canIgnoreMissingFeeds(relayerConfig),
