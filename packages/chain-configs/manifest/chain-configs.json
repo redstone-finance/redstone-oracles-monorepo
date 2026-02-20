@@ -1349,6 +1349,21 @@
       "twoDimensionalFees": false,
       "isMainnet": true
     },
+    "eden": {
+      "name": "Eden Mainnet",
+      "networkId": 714,
+      "currencySymbol": "TIA",
+      "publicRpcUrls": [],
+      "avgBlockTimeMs": 100,
+      "multicall3": {
+        "address": "0xaD6CC5a465E5c8284a49eC9eD10EFE275460678c",
+        "type": "RedstoneMulticall3",
+        "gasLimitPerCall": 1000000
+      },
+      "isAuctionModel": false,
+      "twoDimensionalFees": false,
+      "isMainnet": true
+    },
     "edenTestnet": {
       "name": "Eden Testnet (Celestia)",
       "networkId": 3735928814,

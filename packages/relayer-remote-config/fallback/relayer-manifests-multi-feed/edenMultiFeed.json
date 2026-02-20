@@ -1,0 +1,21 @@
+{
+  "chain": {
+    "name": "eden",
+    "id": 714
+  },
+  "updateTriggers": {
+    "deviationPercentage": 0.5,
+    "timeSinceLastUpdateInMilliseconds": 21600000
+  },
+  "adapterContract": "0x4154f0e4dc70DFA4219309fBea34322225E17b68",
+  "adapterContractType": "multi-feed",
+  "dataServiceId": "redstone-primary-prod",
+  "priceFeeds": {
+    "TIA": {
+      "priceFeedAddress": "0x818766399F558b717Bd8cdC72741F803BC87F615"
+    },
+    "ETH": {
+      "priceFeedAddress": "0x086762859Ea720432D59D59f022B04222Ef74d0f"
+    }
+  }
+}
