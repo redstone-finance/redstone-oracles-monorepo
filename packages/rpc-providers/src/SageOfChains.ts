@@ -1,6 +1,12 @@
 import { Provider } from "@ethersproject/providers";
 import { ChainConfig, getLocalChainConfigsByNetworkId } from "@redstone-finance/chain-configs";
-import { loggerFactory, NetworkId, NetworkIdSchema, RedstoneCommon } from "@redstone-finance/utils";
+import {
+  isEvmNetworkId,
+  loggerFactory,
+  NetworkId,
+  NetworkIdSchema,
+  RedstoneCommon,
+} from "@redstone-finance/utils";
 
 const logger = loggerFactory("SageOfChains");
 
@@ -46,7 +52,7 @@ export class SageOfChains {
   }
 
   getProvidersForRequiredNetworkIds(requiredNetworkIds: NetworkId[]): [NetworkId, Provider][] {
-    return requiredNetworkIds.map((networkId) => {
+    return requiredNetworkIds.filter(isEvmNetworkId).map((networkId) => {
       return [networkId, this.getProvider(networkId)];
     });
   }
