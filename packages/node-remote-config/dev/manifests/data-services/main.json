@@ -9132,6 +9132,15 @@
       "source": [],
       "denomination": "USD",
       "rateFeed": false
+    },
+    "JLP": {
+      "source": [
+        "orca-solana-mainnet-cbbtc",
+        "orca-solana-mainnet-usdc",
+        "orca-solana-mainnet-wsol"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
     }
   }
 }
