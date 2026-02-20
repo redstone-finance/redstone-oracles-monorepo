@@ -16,6 +16,7 @@ const config: HardhatUserConfig = {
       tac: "anything",
       katana: "anything",
       zeroGravity: "anything",
+      eden: "anything",
     },
     customChains: [
       {
@@ -48,6 +49,14 @@ const config: HardhatUserConfig = {
         urls: {
           apiURL: "https://chainscan.0g.ai/open/api",
           browserURL: "https://chainscan.0g.ai/",
+        },
+      },
+      {
+        network: "eden",
+        chainId: 714,
+        urls: {
+          apiURL: "https://eden.blockscout.com/api",
+          browserURL: "https://eden.blockscout.com",
         },
       },
     ],
