@@ -9103,13 +9103,6 @@
       "denomination": "USD",
       "rateFeed": false
     },
-    "NGASH6": {
-      "source": [
-        "ws-lo-tech"
-      ],
-      "denomination": "USD",
-      "rateFeed": false
-    },
     "LBXAUAM": {
       "source": [],
       "denomination": "USD",
