@@ -984,9 +984,10 @@
       "networkId": 130,
       "currencySymbol": "ETH",
       "publicRpcUrls": [
-        "https://unichain.drpc.org",
         "https://unichain-rpc.publicnode.com",
-        "https://unichain.api.onfinality.io/public"
+        "https://rpc.sentio.xyz/unichain-mainnet",
+        "https://unichain-mainnet.gateway.tatum.io",
+        "https://mainnet.unichain.org"
       ],
       "avgBlockTimeMs": 1000,
       "multicall3": {
