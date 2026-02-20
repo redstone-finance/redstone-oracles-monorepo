@@ -4044,7 +4044,7 @@
     "GAS": {
       "source": [
         "yahoo-finance",
-        "ws-lo-tech",
+        "ws-lo-tech-settlement-aware",
         "ws-itick-futures",
         "ws-twelve-data-no-closing-price"
       ],
@@ -8215,7 +8215,8 @@
         "alltick-api-deferred",
         "metal-price-api-deferred",
         "metals-api-deferred",
-        "ws-blocksize"
+        "ws-blocksize",
+        "ws-lo-tech-settlement-aware"
       ],
       "denomination": "USD",
       "rateFeed": false
@@ -8510,11 +8511,6 @@
     },
     "KOSPI200": {
       "source": ["alltick-api", "ws-itick-indices"],
-      "denomination": "USD",
-      "rateFeed": false
-    },
-    "NGASH6": {
-      "source": ["ws-lo-tech"],
       "denomination": "USD",
       "rateFeed": false
     },
