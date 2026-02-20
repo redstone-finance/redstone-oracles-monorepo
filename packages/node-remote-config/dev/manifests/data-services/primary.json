@@ -3325,7 +3325,6 @@
     "USDT0": {
       "source": [
         "camelot-v3-arbitrumone-usdc",
-        "fluid-arbitrumone-susde",
         "hyperliquid-api-fetcher",
         "hyperswap-hyperevm-whype-500",
         "kumbaya-megaeth-weth-3000",
