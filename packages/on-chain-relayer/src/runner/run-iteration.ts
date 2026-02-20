@@ -1,6 +1,6 @@
 import { loggerFactory } from "@redstone-finance/utils";
 import _ from "lodash";
-import { isOevRelayerConfig } from "../config/is-oev-relayer-config";
+import { isOevRelayerConfig } from "../config/config-checks";
 import { isPaused } from "../config/is-paused";
 import { RelayerConfig } from "../config/RelayerConfig";
 import { ContractFacade } from "../facade/ContractFacade";

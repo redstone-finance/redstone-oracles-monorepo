@@ -1,3 +1,5 @@
+import type { DataPackagesResponseStorage } from "@redstone-finance/sdk";
+
 /**
  * defines behavior of {@link DataPackageSubscriber}
  */
@@ -81,4 +83,8 @@ export type DataPackageSubscriberParams = {
    * { statsLogIntervalMs: 120_000 }
    */
   statsLogIntervalMs?: number;
+  /**
+   * Instance of the global storage to be used for caching responses
+   */
+  storageInstance?: DataPackagesResponseStorage;
 };

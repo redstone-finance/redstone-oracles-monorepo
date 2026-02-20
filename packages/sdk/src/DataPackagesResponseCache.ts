@@ -44,7 +44,8 @@ export class DataPackagesResponseCache {
 
   maybeExtend(
     dataPackagesResponse: DataPackagesResponse,
-    requestParams: DataPackagesRequestParams
+    requestParams: DataPackagesRequestParams,
+    skipLogging = false
   ) {
     if (!this.requestParams || !this.response) {
       this.update(dataPackagesResponse, requestParams);
@@ -70,14 +71,16 @@ export class DataPackagesResponseCache {
     const areDataPackageIdsDifferent = Object.keys(intersection).length === 0;
 
     if (!areRequestParamsConforming || !areDataPackageIdsDifferent) {
-      this.logger.error(
-        "Trying to extend cache when the new response is not conforming to the cached one",
-        {
-          requestParams,
-          cachedRequestParams: this.requestParams,
-          cachedResponse: this.response,
-        }
-      );
+      if (!skipLogging) {
+        this.logger.error(
+          "Trying to extend cache when the new response is not conforming to the cached one",
+          {
+            requestParams,
+            cachedRequestParams: this.requestParams,
+            cachedResponse: this.response,
+          }
+        );
+      }
 
       return false;
     }
