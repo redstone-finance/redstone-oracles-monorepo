@@ -4,12 +4,13 @@
     "id": 11155111
   },
   "updateTriggers": {
-    "deviationPercentage": 1,
-    "timeSinceLastUpdateInMilliseconds": 86400000
+    "deviationPercentage": 0.1,
+    "timeSinceLastUpdateInMilliseconds": 21600000
   },
   "adapterContract": "0xE2Ff0DeB9B24Ec6C4F1f1dEE39610A450B3238E0",
   "adapterContractType": "multi-feed",
   "dataServiceId": "redstone-primary-prod",
+  "dataPackagesNames": ["___FAST___"],
   "priceFeeds": {
     "ETH": {
       "priceFeedAddress": "0xefe76D1C11F267d8735D240f53317F238D8C77c9"
@@ -27,28 +28,28 @@
       "priceFeedAddress": "0x0d9b42a2a73Ec528759701D0B70Ccf974a327EBb",
       "updateTriggersOverrides": {
         "deviationPercentage": 0.01,
-        "timeSinceLastUpdateInMilliseconds": 86400000
+        "timeSinceLastUpdateInMilliseconds": 600000
       }
     },
     "ACRED_FUNDAMENTAL": {
       "priceFeedAddress": "0x6205DCc41329fb5dE3FB01e272eD49F8771cC715",
       "updateTriggersOverrides": {
         "deviationPercentage": 0.01,
-        "timeSinceLastUpdateInMilliseconds": 86400000
+        "timeSinceLastUpdateInMilliseconds": 600000
       }
     },
     "BUIDL_I_ETHEREUM_FUNDAMENTAL": {
       "priceFeedAddress": "0x5708d924Fc996EDee46962CdB6815f90639974e1",
       "updateTriggersOverrides": {
         "deviationPercentage": 0.01,
-        "timeSinceLastUpdateInMilliseconds": 86400000
+        "timeSinceLastUpdateInMilliseconds": 600000
       }
     },
     "VBILL_ETHEREUM_FUNDAMENTAL": {
       "priceFeedAddress": "0x4f67Fd74cff274Ef2942223c0f3166b856410AdD",
       "updateTriggersOverrides": {
         "deviationPercentage": 0.01,
-        "timeSinceLastUpdateInMilliseconds": 86400000
+        "timeSinceLastUpdateInMilliseconds": 600000
       }
     }
   }
