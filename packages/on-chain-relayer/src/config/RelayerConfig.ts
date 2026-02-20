@@ -99,4 +99,5 @@ export type OnChainRelayerEnv = {
   minAggregatedRewardsPerBlockForPercentile?: number;
   rewardsPerBlockAggregationAlgorithm: RewardsPerBlockAggregationAlgorithm;
   disableMultiPointPackages?: boolean;
+  useGlobalDataPackagesResponseStorage?: boolean;
 };

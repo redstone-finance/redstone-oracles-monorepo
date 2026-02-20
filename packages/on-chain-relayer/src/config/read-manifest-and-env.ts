@@ -9,6 +9,7 @@ import { RedstoneCommon } from "@redstone-finance/utils";
 import "dotenv/config";
 import { z } from "zod";
 import { MqttDataProcessingStrategyType, OnChainRelayerEnv } from "./RelayerConfig";
+import { isFallbackConfig } from "./config-checks";
 
 const DEFAULT_WAIT_FOR_ALL_GATEWAYS_TIME = 1000;
 
@@ -53,7 +54,14 @@ export const readManifestAndEnv = () => {
     gasLimit = numberOfFeeds * gasLimitPerFeed;
   }
 
+  const fallbackOffsetInMilliseconds = RedstoneCommon.getFromEnv(
+    "FALLBACK_OFFSET_IN_MILLISECONDS",
+    z.number().int()
+  );
+  const isFallback = isFallbackConfig({ fallbackOffsetInMilliseconds });
+
   const env: OnChainRelayerEnv = {
+    fallbackOffsetInMilliseconds,
     gasLimit,
     disableCustomGasOracle: RedstoneCommon.getFromEnv(
       "DISABLE_CUSTOM_GAS_ORACLE",
@@ -91,10 +99,6 @@ export const readManifestAndEnv = () => {
         .default(() =>
           RedstoneCommon.getFromEnv("TWO_DIMENSIONAL_FEES", z.boolean().default(false))
         )
-    ),
-    fallbackOffsetInMilliseconds: RedstoneCommon.getFromEnv(
-      "FALLBACK_OFFSET_IN_MILLISECONDS",
-      z.number().int()
     ),
     cacheServiceUrls: RedstoneCommon.getFromEnv("CACHE_SERVICE_URLS", z.array(z.url()).optional()),
     historicalPackagesGateways: RedstoneCommon.getFromEnv(
@@ -269,7 +273,11 @@ export const readManifestAndEnv = () => {
     ),
     disableMultiPointPackages: RedstoneCommon.getFromEnv(
       "DISABLE_MULTI_POINT_PACKAGES",
-      z.boolean().default(false)
+      z.boolean().default(isFallback)
+    ),
+    useGlobalDataPackagesResponseStorage: RedstoneCommon.getFromEnv(
+      "USE_GLOBAL_STORAGE",
+      z.boolean().default(isFallback)
     ),
   };
 

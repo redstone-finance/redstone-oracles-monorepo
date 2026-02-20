@@ -10,7 +10,8 @@ export interface DataPackagesResponse {
 }
 
 export const getResponseTimestamp = (response: DataPackagesResponse) =>
-  Object.values(response).at(0)?.at(0)?.dataPackage.timestampMilliseconds ?? 0;
+  Object.values(response).filter(RedstoneCommon.isDefined).at(0)?.at(0)?.dataPackage
+    .timestampMilliseconds ?? 0;
 
 export const getDataPackageFeedIds = (dp: SignedDataPackageLike) =>
   dp.dataPackage.dataPoints.map((dp) => dp.dataFeedId);
@@ -23,8 +24,12 @@ export function filterConsistentResponseFeedIds(responseFeedIds: string[][]) {
   );
 }
 
-export function getPackageDataFeedIds(packages: SignedDataPackage[]) {
-  return filterConsistentResponseFeedIds(packages.map(getDataPackageFeedIds));
+export function getPackageDataFeedIds(packages: SignedDataPackage[], dataPackageId?: string) {
+  return filterConsistentResponseFeedIds(
+    !dataPackageId || RedstoneCommon.isMultiPointDataPackageId(dataPackageId)
+      ? packages.map(getDataPackageFeedIds)
+      : [[dataPackageId]]
+  );
 }
 
 export function getDataPackagesWithFeedIds(
@@ -39,7 +44,7 @@ export function getDataPackagesWithFeedIds(
     )
     .map(([packageId, dataPackage]) => [
       packageId,
-      { feedIds: getPackageDataFeedIds(dataPackage!), dataPackage },
+      { feedIds: getPackageDataFeedIds(dataPackage!, packageId), dataPackage },
     ]);
 
   return Object.fromEntries(value) as {
@@ -96,9 +101,9 @@ export function getResponseFeedIds(response: DataPackagesResponse) {
     return dataPackageIds;
   }
 
-  const allFeedIds = Object.values(response)
-    .filter(RedstoneCommon.isDefined)
-    .flatMap(getPackageDataFeedIds);
+  const allFeedIds = Object.entries(response).flatMap(([dataPackageId, dataPackages]) =>
+    RedstoneCommon.isDefined(dataPackages) ? getPackageDataFeedIds(dataPackages, dataPackageId) : []
+  );
 
   return _.uniq(allFeedIds);
 }
@@ -111,3 +116,10 @@ export const getDataPointsForDataFeedId = (
     .flat()
     .flatMap((dataPackage) => dataPackage!.dataPackage.dataPoints)
     .filter((dataPoint) => dataPoint.dataFeedId === dataFeedId);
+
+export function isResponseEmpty(dataPackagesResponse: DataPackagesResponse) {
+  return (
+    Object.keys(dataPackagesResponse).length === 0 ||
+    Object.values(dataPackagesResponse).every((entry) => !RedstoneCommon.isDefined(entry))
+  );
+}
