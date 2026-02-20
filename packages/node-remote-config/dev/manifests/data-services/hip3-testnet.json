@@ -418,7 +418,7 @@
       }
     },
     "GAS": {
-      "source": ["ws-lo-tech"],
+      "source": ["ws-lo-tech-settlement-aware"],
       "broadcasters": ["influx"],
       "deviationCheck": {
         "deviationWithRecentValues": {
@@ -2314,11 +2314,11 @@
         "metal-price-api-deferred",
         "ws-blocksize",
         "finhub_oanda_deferred-usd",
-        "ws-lo-tech"
+        "ws-lo-tech-settlement-aware"
       ],
       "priceAggregator": "primarySourceWithRebasing",
       "primarySourceWithRebasingAggregatorConfig": {
-        "primarySource": "ws-lo-tech",
+        "primarySource": "ws-lo-tech-settlement-aware",
         "rebaseCalculationInterval": 60000,
         "maxAcceptableDeviationPercent": 1.5,
         "clampPercent": 0.1
