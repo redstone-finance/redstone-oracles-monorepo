@@ -22,8 +22,6 @@
         "bitrue-usdc",
         "bitrue-usdt",
         "bitstamp-usd",
-        "bullish-usdc",
-        "bullish-usdt",
         "bybit-usdc",
         "bybit-usdt",
         "coinbase-usd",
@@ -63,7 +61,6 @@
         "binance-usdc",
         "binance-usdt",
         "bitstamp-usd",
-        "bullish-usdc",
         "kraken-usd",
         "mexc-usdc",
         "mexc-usdt",
@@ -146,8 +143,6 @@
         "bitrue-usdc",
         "bitrue-usdt",
         "bitstamp-usd",
-        "bullish-usdc",
-        "bullish-usdt",
         "bybit-usdc",
         "coinbase-usd",
         "htx-usdt",
@@ -546,7 +541,6 @@
     "aUSD": {
       "source": [
         "blackhole-avalanche-usdc-75",
-        "bullish-btc-reversed",
         "curve-ethereum-usdc",
         "pharaoh-avalanche-usdc-50",
         "trader-joe-v2-avalanche-usdc",
