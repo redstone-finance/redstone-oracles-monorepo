@@ -10,7 +10,7 @@ export interface DataPackagesResponse {
 }
 
 export const getResponseTimestamp = (response: DataPackagesResponse) =>
-  Object.values(response).filter(RedstoneCommon.isDefined).at(0)?.at(0)?.dataPackage
+  Object.values(response).find(RedstoneCommon.isDefined)?.at(0)?.dataPackage
     .timestampMilliseconds ?? 0;
 
 export const getDataPackageFeedIds = (dp: SignedDataPackageLike) =>
