@@ -4238,6 +4238,11 @@
       ],
       "denomination": "USD",
       "rateFeed": false
+    },
+    "SPARK_LTV": {
+      "source": ["spark-anchorage-api"],
+      "denomination": "other",
+      "rateFeed": false
     }
   },
   "multiPointPackages": {
