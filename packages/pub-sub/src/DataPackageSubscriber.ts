@@ -44,6 +44,7 @@ type SubscriptionCallbackFn = (dataPackages: DataPackagesResponse) => unknown;
  *
  * 3. Package selection:
  * - Employs `pickDataFeedPackagesClosestToMedian` to select `uniqueSignersCount` packages
+ * - If `publishAllPackages` is true, selects all available packages instead (uniqueSignersCount still applies as minimum threshold)
  *
  * 4. Fallback mechanism (optional) {@link DataPackageSubscriber.enableFallback}
  * - Triggers if no packages are received within `maxDelayBetweenPublishes`
@@ -386,7 +387,7 @@ export class DataPackageSubscriber {
 
       const potentialPackagesToPublish = pickDataFeedPackagesClosestToMedian(
         packages.map((dp) => dp.toObj()),
-        this.params.uniqueSignersCount
+        this.params.publishAllPackages ? packages.length : this.params.uniqueSignersCount
       );
 
       if (potentialPackagesToPublish.length >= this.params.uniqueSignersCount) {
