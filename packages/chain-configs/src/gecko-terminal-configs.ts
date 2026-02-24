@@ -18,6 +18,7 @@ const networkToGeckoTerminalNameMap: {
   hyperevm: "hyperevm",
   unichain: "unichain",
   hemi: "hemi",
+  "solana-mainnet": "solana",
 };
 
 export function mapNetworkNameToGeckoTerminalNetworkName(
