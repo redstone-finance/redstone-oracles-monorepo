@@ -83,6 +83,14 @@ export type DataPackageSubscriberParams = {
    * { statsLogIntervalMs: 120_000 }
    */
   statsLogIntervalMs?: number;
+
+  /**
+   * If true, picks all available packages instead of limiting to uniqueSignersCount.
+   * The uniqueSignersCount threshold still applies as a minimum requirement.
+   * Useful for monitoring that needs to see packages from all signers.
+   */
+  publishAllPackages?: boolean;
+
   /**
    * Instance of the global storage to be used for caching responses
    */
