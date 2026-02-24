@@ -8991,6 +8991,8 @@
         "bullish-usdc",
         "coinbase-usd",
         "kraken-usd",
+        "meteora-solana-mainnet-wsol",
+        "orca-solana-mainnet-wsol",
         "xt-usdt"
       ],
       "denomination": "USD",
@@ -9121,6 +9123,8 @@
     },
     "JLP": {
       "source": [
+        "meteora-solana-mainnet-usdc",
+        "meteora-solana-mainnet-usdc-2",
         "orca-solana-mainnet-cbbtc",
         "orca-solana-mainnet-usdc",
         "orca-solana-mainnet-wsol"
