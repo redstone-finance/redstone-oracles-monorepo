@@ -8549,10 +8549,10 @@
       "denomination": "USD",
       "rateFeed": false
     },
-    "SPARK_LTV": {
+    "SPARK_LTV_FUNDAMENTAL": {
       "source": ["spark-anchorage-api"],
       "denomination": "other",
-      "rateFeed": false
+      "rateFeed": true
     }
   }
 }
