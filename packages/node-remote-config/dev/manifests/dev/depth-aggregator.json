@@ -816,8 +816,6 @@
         "balancer-ethereum-weeth",
         "camelot-v3-arbitrumone-weth",
         "curve-ethereum-weth",
-        "thruster-v3-blast-weth-3000",
-        "thruster-v3-blast-weth-500",
         "uniswap-v3-ethereum-weth-100",
         "uniswap-v3-ethereum-wsteth-500",
         "aerodrome-cl-base-weth"
@@ -860,33 +858,6 @@
     },
     "sUSDe": {
       "source": ["ethereum-evm-fetcher-ethena"],
-      "deviationCheck": {
-        "deviationWithRecentValues": {
-          "maxPercent": 5,
-          "maxDelayMilliseconds": 120000
-        }
-      }
-    },
-    "USDB": {
-      "source": [
-        "thruster-v3-blast-susde-500",
-        "thruster-v3-blast-usde-500",
-        "ambient-blast-eth",
-        "ringswap-blast-fwweth",
-        "thruster-blast-weth",
-        "thruster-v3-blast-weth-3000",
-        "thruster-v3-blast-weth-500"
-      ],
-      "localCacheTTL": "30m",
-      "deviationCheck": {
-        "deviationWithRecentValues": {
-          "maxPercent": 5,
-          "maxDelayMilliseconds": 120000
-        }
-      }
-    },
-    "USDB-TWAP-30": {
-      "source": ["twap-local"],
       "deviationCheck": {
         "deviationWithRecentValues": {
           "maxPercent": 5,
@@ -996,8 +967,7 @@
         "aerodrome-cl-base-weth",
         "aerodrome-cl-base-wsteth",
         "uniswap-v3-arbitrumone-usdt-100",
-        "uniswap-v3-arbitrumone-usdc-100",
-        "thruster-v3-blast-usdb-100"
+        "uniswap-v3-arbitrumone-usdc-100"
       ]
     },
     "AR": {

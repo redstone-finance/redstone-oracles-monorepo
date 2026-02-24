@@ -1565,23 +1565,6 @@
       "denomination": "USD",
       "rateFeed": false
     },
-    "USDB": {
-      "source": [
-        "ambient-blast-eth",
-        "ringswap-blast-fwweth",
-        "thruster-v3-blast-susde-500",
-        "thruster-v3-blast-usde-500",
-        "thruster-v3-blast-weth-500"
-      ],
-      "localCacheTTL": "30m",
-      "denomination": "USD",
-      "rateFeed": false
-    },
-    "USDB-TWAP-30": {
-      "source": ["twap-local"],
-      "denomination": "USD",
-      "rateFeed": false
-    },
     "sfrxETH": {
       "source": ["ethereum-evm-fetcher-frax"],
       "denomination": "USD",
@@ -1611,8 +1594,6 @@
         "aerodrome-cl-base-weth",
         "curve-fraxtal-frxeth",
         "fluid-ethereum-eth",
-        "thruster-v3-blast-weth-3000",
-        "thruster-v3-blast-weth-500",
         "uniswap-v4-arbitrumone-eth-500"
       ],
       "localCacheTTL": "60m",
@@ -8284,7 +8265,11 @@
       "rateFeed": false
     },
     "USDm": {
-      "source": ["kumbaya-megaeth-cusd-100", "kumbaya-megaeth-usdt0-100"],
+      "source": [
+        "kumbaya-megaeth-usdt0-100",
+        "kumbaya-megaeth-btc.b-3000",
+        "kumbaya-megaeth-weth-3000"
+      ],
       "denomination": "USD",
       "rateFeed": false
     },
