@@ -42,7 +42,7 @@
         "lbank-usdt",
         "mexc-usdt",
         "okx-usdt",
-        "uniswap-v4-ethereum-usdt-100"
+        "uniswap-v4-ethereum-usdt-10"
       ],
       "deviationCheck": {
         "deviationWithRecentValues": {
