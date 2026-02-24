@@ -1477,11 +1477,6 @@
         "xt-usdt"
       ]
     },
-    "USDB": {
-      "source": [
-        "fixed-value"
-      ]
-    },
     "sfrxETH": {
       "source": [
         "ethereum-evm-fetcher"
