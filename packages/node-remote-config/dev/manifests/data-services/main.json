@@ -1105,7 +1105,6 @@
         "mexc-usdc",
         "mexc-usdt",
         "okx-usdt",
-        "uniswap-v3-arbitrumone-weth-3000",
         "uniswap-v3-arbitrumone-weth-500"
       ],
       "denomination": "USD",
@@ -1318,7 +1317,6 @@
     "pxETH": {
       "source": [
         "curve-ethereum-steth-multi-block",
-        "curve-ethereum-weth",
         "pancake-swap-ethereum-weth-100",
         "uniswap-v3-ethereum-weth-100-multi-block"
       ],
@@ -1724,7 +1722,6 @@
     "rsETH": {
       "source": [
         "camelot-v3-arbitrumone-weth",
-        "curve-ethereum-sfrxeth",
         "uniswap-v3-ethereum-wsteth-500"
       ],
       "denomination": "USD",
@@ -1867,8 +1864,7 @@
     "MODE": {
       "source": [
         "gate-usdt",
-        "mexc-usdt",
-        "xt-usdt"
+        "mexc-usdt"
       ],
       "denomination": "USD",
       "rateFeed": false
@@ -2889,7 +2885,6 @@
     "LBTC": {
       "source": [
         "aerodrome-cl-base-cbbtc",
-        "curve-ethereum-wbtc",
         "curve-ethereum-wbtc-2",
         "uniswap-v3-ethereum-wbtc-100",
         "uniswap-v3-ethereum-wbtc-500"
@@ -3688,7 +3683,6 @@
       "source": [
         "aerodrome-base-usdc",
         "curve-ethereum-usdc",
-        "uniswap-v3-ethereum-usdc-500",
         "curve-ethereum-gho"
       ],
       "denomination": "USD",
@@ -7931,8 +7925,7 @@
         "bitget-usdt",
         "bybit-usdt",
         "kraken-usd",
-        "mexc-usdt",
-        "pancake-swap-bnb-usd1-500"
+        "mexc-usdt"
       ],
       "denomination": "USD",
       "rateFeed": false
@@ -8154,8 +8147,7 @@
         "uniswap-v3-arbitrumone-usdc-100",
         "uniswap-v3-arbitrumone-wbtc-500",
         "uniswap-v3-arbitrumone-weth-500",
-        "uniswap-v4-unichain-eth-500",
-        "uniswap-v4-unichain-wbtc-500"
+        "uniswap-v4-unichain-eth-500"
       ],
       "denomination": "USD",
       "rateFeed": false
@@ -8850,7 +8842,6 @@
         "pancake-swap-bnb-usdt-2500",
         "pancake-swap-bnb-wbnb-2500",
         "pancake-swap-bnb-wbnb-500",
-        "uniswap-v3-bnb-usdt-3000",
         "xt-usdt"
       ],
       "denomination": "USD",
