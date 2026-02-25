@@ -10884,7 +10884,6 @@ __metadata:
     "@types/lodash": "npm:^4.14.195"
     axios: "npm:^1.13.5"
     dayjs: "npm:^1.11.12"
-    googleapis: "npm:^159.0.0"
     lodash: "npm:^4.17.23"
     secp256k1: "npm:^5.0.1"
     zod: "npm:^4.1.12"
