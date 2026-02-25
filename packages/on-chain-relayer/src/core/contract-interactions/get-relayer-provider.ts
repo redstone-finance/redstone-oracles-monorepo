@@ -57,11 +57,7 @@ export const getRelayerProvider = (relayerConfig: RelayerConfig) => {
     blockNumberCacheOpts: { isCacheEnabled: false, ttl: 0 },
   })
     .addDecorator(
-      (factory) => ProviderDecorators.CallMetricDecorator(factory, sendMetric),
-      isRelayerTelemetryEnabled(relayerConfig)
-    )
-    .addDecorator(
-      (factory) => ProviderDecorators.GetBlockNumberMetricDecorator(factory, sendMetric),
+      (factory) => ProviderDecorators.SendMetricDecorator(factory, sendMetric),
       isRelayerTelemetryEnabled(relayerConfig)
     )
     .agreement(
