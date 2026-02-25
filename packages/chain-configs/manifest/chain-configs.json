@@ -1142,7 +1142,14 @@
       "name": "Solana Mainnet",
       "networkId": "solana/1",
       "currencySymbol": "SOL",
-      "publicRpcUrls": ["https://api.mainnet-beta.solana.com"],
+      "publicRpcUrls": [
+        "https://api.mainnet-beta.solana.com",
+        "https://go.getblock.us/86aac42ad4484f3c813079afc201451c",
+        "https://solana-mainnet.gateway.tatum.io/",
+        "https://solana-rpc.publicnode.com",
+        "https://api.blockeden.xyz/solana/KeCh6p22EX5AeRHxMSmc",
+        "https://solana.drpc.org/"
+      ],
       "avgBlockTimeMs": 1000,
       "multicall3": {
         "address": "",
