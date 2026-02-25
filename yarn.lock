@@ -6919,17 +6919,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@knowyourrpc/sdk@npm:0.5.2":
-  version: 0.5.2
-  resolution: "@knowyourrpc/sdk@npm:0.5.2"
-  dependencies:
-    "@ethersproject/wallet": "npm:^5.7.0"
-    express: "npm:^4.18.2"
-    node-fetch: "npm:^2.6.12"
-  checksum: 10c0/6f2c1dbbe6466389cee94497b99088814f24411b4c63fb8e980c7736e1278667dc5153d187f84926809d601205272f986f8725e47229f541ba81ca331ad2ae04
-  languageName: node
-  linkType: hard
-
 "@ledgerhq/cryptoassets-evm-signatures@npm:^13.5.2":
   version: 13.5.2
   resolution: "@ledgerhq/cryptoassets-evm-signatures@npm:13.5.2"
@@ -10889,19 +10878,6 @@ __metadata:
     zod: "npm:^4.1.12"
   bin:
     calculate-dir-hash: ./dist/src/cli/calculate-dir-hash.js
-  languageName: unknown
-  linkType: soft
-
-"@redstone-finance/kyr-proxy@workspace:packages/kyr-proxy":
-  version: 0.0.0-use.local
-  resolution: "@redstone-finance/kyr-proxy@workspace:packages/kyr-proxy"
-  dependencies:
-    "@knowyourrpc/sdk": "npm:0.5.2"
-    "@redstone-finance/chain-configs": "workspace:*"
-    "@redstone-finance/internal-utils": "workspace:*"
-    "@redstone-finance/utils": "workspace:*"
-    dotenv: "npm:^16.0.3"
-    zod: "npm:^4.1.12"
   languageName: unknown
   linkType: soft
 
