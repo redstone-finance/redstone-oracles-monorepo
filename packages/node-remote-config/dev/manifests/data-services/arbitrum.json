@@ -357,7 +357,6 @@
         "mexc-usdc",
         "mexc-usdt",
         "okx-usdt",
-        "uniswap-v3-arbitrumone-weth-3000",
         "uniswap-v3-arbitrumone-weth-500"
       ],
       "denomination": "USD",
@@ -544,11 +543,7 @@
       "rateFeed": false
     },
     "rsETH": {
-      "source": [
-        "camelot-v3-arbitrumone-weth",
-        "curve-ethereum-sfrxeth",
-        "uniswap-v3-ethereum-wsteth-500"
-      ],
+      "source": ["camelot-v3-arbitrumone-weth", "uniswap-v3-ethereum-wsteth-500"],
       "denomination": "USD",
       "rateFeed": false
     },
@@ -1003,7 +998,6 @@
     "LBTC": {
       "source": [
         "aerodrome-cl-base-cbbtc",
-        "curve-ethereum-wbtc",
         "curve-ethereum-wbtc-2",
         "uniswap-v3-ethereum-wbtc-100",
         "uniswap-v3-ethereum-wbtc-500"
