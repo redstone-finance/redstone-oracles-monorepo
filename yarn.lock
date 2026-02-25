@@ -11948,6 +11948,22 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@redstone-finance/merger@workspace:packages/merger":
+  version: 0.0.0-use.local
+  resolution: "@redstone-finance/merger@workspace:packages/merger"
+  dependencies:
+    "@redstone-finance/protocol": "workspace:*"
+    "@redstone-finance/pub-sub": "workspace:*"
+    "@redstone-finance/sdk": "workspace:*"
+    "@redstone-finance/utils": "workspace:*"
+    "@types/ws": "npm:^8.18.1"
+    dotenv: "npm:^16.0.3"
+    uWebSockets.js: "github:uNetworking/uWebSockets.js#v20.57.0"
+    ws: "npm:^8.18.3"
+    zod: "npm:^4.1.12"
+  languageName: unknown
+  linkType: soft
+
 "@redstone-finance/monitoring-manifests@workspace:*, @redstone-finance/monitoring-manifests@workspace:packages/monitoring-manifests":
   version: 0.0.0-use.local
   resolution: "@redstone-finance/monitoring-manifests@workspace:packages/monitoring-manifests"
@@ -39695,6 +39711,13 @@ __metadata:
   version: 5.2.0
   resolution: "typical@npm:5.2.0"
   checksum: 10c0/1cceaa20d4b77a02ab8eccfe4a20500729431aecc1e1b7dc70c0e726e7966efdca3bf0b4bee285555b751647e37818fd99154ea73f74b5c29adc95d3c13f5973
+  languageName: node
+  linkType: hard
+
+"uWebSockets.js@github:uNetworking/uWebSockets.js#v20.57.0":
+  version: 20.57.0
+  resolution: "uWebSockets.js@https://github.com/uNetworking/uWebSockets.js.git#commit=fcfc622a4286909593b7f390056d89e0ca3b56b9"
+  checksum: 10c0/aaf5e190c76379079396fc83ca9f66af4ac5dc9a363cacc8795a894a0cf7ece065b677d03a9908a7abbf7b1cda8f8c5e66d38ec17d09949083bd74c5e2cd7059
   languageName: node
   linkType: hard
 
