@@ -11,7 +11,6 @@ export * from "./aws/region";
 export * from "./aws/s3";
 export * from "./config-checks";
 export * from "./crypto";
-export * from "./email-utils";
 export * from "./fallback-manifests";
 export * from "./hash-utils";
 export * from "./influx/influxdb-config";
