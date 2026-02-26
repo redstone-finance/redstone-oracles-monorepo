@@ -36,18 +36,10 @@ describe("DataPackagesResponseStorage", () => {
     expect(result).toBeUndefined();
   });
 
-  it("should return undefined when request is not historical", () => {
+  it("should return undefined when request is not historical and latestTtlMs is not set", () => {
     sut.set(mockSignedDataPackagesResponse, makeReqParams());
 
     const result = sut.get(makeReqParams({ historicalTimestamp: undefined }));
-
-    expect(result).toBeUndefined();
-  });
-
-  it("should return undefined when returnAllPackages is true", () => {
-    sut.set(mockSignedDataPackagesResponse, makeReqParams());
-
-    const result = sut.get(makeReqParams({ returnAllPackages: true }));
 
     expect(result).toBeUndefined();
   });
@@ -90,7 +82,7 @@ describe("DataPackagesResponseStorage", () => {
   });
 
   it("should purge stale entries based on TTL", () => {
-    const shortTtlStorage = new DataPackagesResponseStorage(1000);
+    const shortTtlStorage = new DataPackagesResponseStorage({ ttlMs: 1000 });
 
     shortTtlStorage.set(mockSignedDataPackagesResponse, makeReqParams());
 
@@ -102,7 +94,7 @@ describe("DataPackagesResponseStorage", () => {
   });
 
   it("should not purge fresh entries", () => {
-    const shortTtlStorage = new DataPackagesResponseStorage(5000);
+    const shortTtlStorage = new DataPackagesResponseStorage({ ttlMs: 5000 });
 
     shortTtlStorage.set(mockSignedDataPackagesResponse, makeReqParams());
 
@@ -152,5 +144,119 @@ describe("DataPackagesResponseStorage", () => {
     const b = DataPackagesResponseStorage.getInstance();
 
     expect(a).toBe(b);
+  });
+
+  it("should not store empty response", () => {
+    sut.set({}, makeReqParams());
+
+    const result = sut.get(makeReqParams());
+
+    expect(result).toBeUndefined();
+  });
+
+  it("should strip storageInstance from request params during normalization", () => {
+    const reqParams = makeReqParams({ storageInstance: sut });
+    sut.set(mockSignedDataPackagesResponse, reqParams);
+
+    const result = sut.get(makeReqParams());
+
+    expect(result).toEqual(mockSignedDataPackagesResponse);
+  });
+
+  describe("getLatestEntry (non-historical lookups)", () => {
+    let latestSut: DataPackagesResponseStorage;
+
+    beforeEach(() => {
+      latestSut = new DataPackagesResponseStorage({ ttlMs: 60_000, latestTtlMs: 16_000 });
+    });
+
+    it("should return latest entry when latestTtlMs is configured and no historicalTimestamp", () => {
+      latestSut.set(mockSignedDataPackagesResponse, makeReqParams());
+
+      const result = latestSut.get(makeReqParams({ historicalTimestamp: undefined }));
+
+      expect(result).toEqual(mockSignedDataPackagesResponse);
+    });
+
+    it("should return undefined when latestTtlMs is not configured and no historicalTimestamp", () => {
+      const noLatestSut = new DataPackagesResponseStorage({ ttlMs: 60_000 });
+      noLatestSut.set(mockSignedDataPackagesResponse, makeReqParams());
+
+      const result = noLatestSut.get(makeReqParams({ historicalTimestamp: undefined }));
+
+      expect(result).toBeUndefined();
+    });
+
+    it("should return the entry with the highest timestamp", () => {
+      const ts2 = MOCK_TIMESTAMP + 5000;
+
+      const response2: DataPackagesResponse = {
+        ETH: [makeMockSignedDataPackage("ETH", 2000, ts2)],
+        BTC: [makeMockSignedDataPackage("BTC", 40000, ts2)],
+      };
+
+      latestSut.set(mockSignedDataPackagesResponse, makeReqParams());
+      latestSut.set(response2, makeReqParams({ historicalTimestamp: ts2 }));
+
+      jest.spyOn(Date, "now").mockReturnValue(ts2 + 1000);
+
+      const result = latestSut.get(makeReqParams({ historicalTimestamp: undefined }));
+
+      expect(result).toEqual(response2);
+    });
+
+    it("should return undefined when latest entry exceeds latestTtlMs", () => {
+      latestSut.set(mockSignedDataPackagesResponse, makeReqParams());
+
+      jest.spyOn(Date, "now").mockReturnValue(MOCK_TIMESTAMP + 20_000);
+
+      const result = latestSut.get(makeReqParams({ historicalTimestamp: undefined }));
+
+      expect(result).toBeUndefined();
+    });
+
+    it("should return latest entry when within latestTtlMs", () => {
+      latestSut.set(mockSignedDataPackagesResponse, makeReqParams());
+
+      jest.spyOn(Date, "now").mockReturnValue(MOCK_TIMESTAMP + 10_000);
+
+      const result = latestSut.get(makeReqParams({ historicalTimestamp: undefined }));
+
+      expect(result).toEqual(mockSignedDataPackagesResponse);
+    });
+
+    it("should return undefined when storage is empty", () => {
+      const result = latestSut.get(makeReqParams({ historicalTimestamp: undefined }));
+
+      expect(result).toBeUndefined();
+    });
+  });
+
+  describe("returnAllPackages handling", () => {
+    it("should cache and return response when returnAllPackages is true", () => {
+      sut.set(mockSignedDataPackagesResponse, makeReqParams({ returnAllPackages: true }));
+
+      const result = sut.get(makeReqParams({ returnAllPackages: true }));
+
+      expect(result).toEqual(mockSignedDataPackagesResponse);
+    });
+  });
+
+  describe("uniqueSignersCount conformance", () => {
+    it("should return cached response when requesting with lower uniqueSignersCount", () => {
+      sut.set(mockSignedDataPackagesResponse, makeReqParams({ uniqueSignersCount: 3 }));
+
+      const result = sut.get(makeReqParams({ uniqueSignersCount: 2 }));
+
+      expect(result).toEqual(mockSignedDataPackagesResponse);
+    });
+
+    it("should return undefined when requesting with higher uniqueSignersCount", () => {
+      sut.set(mockSignedDataPackagesResponse, makeReqParams({ uniqueSignersCount: 1 }));
+
+      const result = sut.get(makeReqParams({ uniqueSignersCount: 2 }));
+
+      expect(result).toBeUndefined();
+    });
   });
 });

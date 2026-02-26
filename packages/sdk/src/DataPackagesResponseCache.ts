@@ -137,7 +137,9 @@ export class DataPackagesResponseCache {
       return undefined;
     }
 
-    return filterDataPackages(this.response, requestParams.dataPackagesIds!);
+    return requestParams.returnAllPackages
+      ? this.response
+      : filterDataPackages(this.response, requestParams.dataPackagesIds);
   }
 }
 
@@ -148,7 +150,10 @@ function areConformingRequestParams(
   const thisComparableRequestParams = makeComparableRequestParams(thisRequestParams);
   const otherComparableRequestParams = makeComparableRequestParams(otherRequestParams);
 
-  return _.isEqual(thisComparableRequestParams, otherComparableRequestParams);
+  return (
+    _.isEqual(thisComparableRequestParams, otherComparableRequestParams) &&
+    !(otherRequestParams.uniqueSignersCount > thisRequestParams.uniqueSignersCount)
+  );
 }
 
 /**
@@ -185,20 +190,21 @@ export function isConforming(
 function makeComparableRequestParams(requestParams: DataPackagesRequestParams) {
   const {
     dataServiceId,
-    uniqueSignersCount,
     authorizedSigners,
     maxTimestampDeviationMS,
     historicalTimestamp,
     ignoreMissingFeed,
+    returnAllPackages,
   } = requestParams;
 
   return {
     dataServiceId,
-    uniqueSignersCount,
-    authorizedSigners,
+    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition -- Some problems with tests with non-full params
+    authorizedSigners: (authorizedSigners ?? []).toSorted(),
     maxTimestampDeviationMS,
     historicalTimestamp,
     ignoreMissingFeed,
+    returnAllPackages: !!returnAllPackages,
   };
 }
 

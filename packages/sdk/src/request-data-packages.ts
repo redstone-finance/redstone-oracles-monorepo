@@ -1,18 +1,12 @@
-import { SignedDataPackage, SignedDataPackagePlainObj } from "@redstone-finance/protocol";
 import { RedstoneCommon } from "@redstone-finance/utils";
-import axios from "axios";
-import { z } from "zod";
-import { resolveDataServiceUrls } from "./data-services-urls";
 import { type DataPackagesResponseStorage } from "./DataPackagesResponseStorage";
+import { fetchDataPackagesDedup } from "./fetch-data-packages";
 import {
   checkAndGetSameTimestamp,
   filterAndSelectDataPackages,
 } from "./filter-and-select-data-packages";
-import { type DataPackagesResponse, getResponseTimestamp } from "./request-data-packages-common";
-import { RequestDataPackagesLogger } from "./RequestDataPackagesLogger";
+import { type DataPackagesResponse } from "./request-data-packages-common";
 
-const GET_REQUEST_TIMEOUT = 5_000;
-const DEFAULT_WAIT_FOR_ALL_GATEWAYS_TIME = 500;
 export const HISTORICAL_DATA_PACKAGES_DENOMINATOR_MS = 10000;
 
 /**
@@ -89,7 +83,7 @@ type DataPackagesRequestParamsInternal = {
    */
   aggregateErrors?: boolean;
   /**
-   * Instance of the global storage to be used for caching responses
+   * Instance of the storage to be used for caching responses
    */
   storageInstance?: DataPackagesResponseStorage;
 };
@@ -109,33 +103,6 @@ export type DataPackagesRequestParams = DataPackagesRequestParamsInternal & Data
 export interface ValuesForDataFeeds {
   [dataFeedId: string]: bigint | undefined;
 }
-
-export const SignedDataPackageSchema = z.object({
-  dataPoints: z
-    .array(
-      z
-        .object({
-          dataFeedId: z.string(),
-          value: z.number(),
-          decimals: z.number().optional(),
-        })
-        .or(
-          z.object({
-            dataFeedId: z.string(),
-            value: z.string(),
-            decimals: z.number().optional(),
-          })
-        )
-    )
-    .min(1),
-  timestampMilliseconds: z.number(),
-  signature: z.string(),
-  signerAddress: z.string().optional(),
-  dataPackageId: z.string(),
-});
-
-const GwResponseSchema = z.record(z.string(), z.array(SignedDataPackageSchema));
-export type GwResponse = Partial<z.infer<typeof GwResponseSchema>>;
 
 export const calculateHistoricalPackagesTimestamp = (
   deviationCheckOffsetInMilliseconds: number,
@@ -164,23 +131,19 @@ export const requestDataPackages = async (
 
   const cached = reqParams.storageInstance?.get(reqParams);
   if (cached) {
-    return filterAndSelectDataPackages(cached, reqParams);
+    try {
+      return filterAndSelectDataPackages(cached, reqParams);
+    } catch {
+      // Falling back to non-cached flow
+
+      return await requestDataPackages({ ...reqParams, storageInstance: undefined });
+    }
   }
 
   try {
-    const urls = getUrlsForDataServiceId(reqParams);
-    const requestDataPackagesLogger = reqParams.enableEnhancedLogs
-      ? new RequestDataPackagesLogger(urls.length, !!reqParams.historicalTimestamp)
-      : undefined;
-    const promises = prepareDataPackagePromises(reqParams, urls, requestDataPackagesLogger);
+    const { requestDataPackagesLogger, response } = await fetchDataPackagesDedup(reqParams);
 
-    return await getTheMostRecentDataPackages(
-      promises,
-      reqParams.historicalTimestamp
-        ? 0 // we take the first response when historical packages are requested
-        : reqParams.waitForAllGatewaysTimeMs,
-      requestDataPackagesLogger
-    );
+    return filterAndSelectDataPackages(response, reqParams, requestDataPackagesLogger);
   } catch (e) {
     const errMessage = `Request failed: ${JSON.stringify({
       reqParams,
@@ -192,151 +155,6 @@ export const requestDataPackages = async (
     throw new Error(errMessage);
   }
 };
-
-const getTheMostRecentDataPackages = (
-  promises: Promise<DataPackagesResponse>[],
-  waitForAllGatewaysTimeMs = DEFAULT_WAIT_FOR_ALL_GATEWAYS_TIME,
-  requestDataPackagesLogger?: RequestDataPackagesLogger
-): Promise<DataPackagesResponse> => {
-  return new Promise((resolve, reject) => {
-    const collectedResponses: DataPackagesResponse[] = [];
-    const collectedErrors: Error[] = [];
-
-    let isTimedOut = false;
-    let didResolveOrReject = false;
-    let timer: NodeJS.Timeout | undefined;
-
-    if (waitForAllGatewaysTimeMs) {
-      timer = setTimeout(() => {
-        isTimedOut = true;
-        checkResults(true);
-      }, waitForAllGatewaysTimeMs);
-    } else {
-      isTimedOut = true;
-    }
-
-    const checkResults = (timeout = false) => {
-      requestDataPackagesLogger?.willCheckState(timeout, didResolveOrReject);
-
-      if (didResolveOrReject) {
-        return;
-      }
-
-      if (collectedErrors.length === promises.length) {
-        requestDataPackagesLogger?.willReject();
-        clearTimeout(timer);
-        didResolveOrReject = true;
-        reject(new AggregateError(collectedErrors, "requestDataPackages failed"));
-      } else if (
-        collectedResponses.length + collectedErrors.length === promises.length ||
-        (isTimedOut && collectedResponses.length !== 0)
-      ) {
-        const newestPackage = collectedResponses.reduce(
-          (a, b) => (getResponseTimestamp(b) > getResponseTimestamp(a) ? b : a),
-          {}
-        );
-
-        requestDataPackagesLogger?.willResolve(newestPackage);
-        clearTimeout(timer);
-        didResolveOrReject = true;
-        resolve(newestPackage);
-      }
-    };
-
-    for (let i = 0; i < promises.length; i++) {
-      promises[i]
-        .then((r) => {
-          collectedResponses.push(r);
-          requestDataPackagesLogger?.didReceiveResponse(r, i);
-        })
-        .catch((e) => {
-          collectedErrors.push(e as Error);
-          requestDataPackagesLogger?.didReceiveError(e, i);
-        })
-        .finally(checkResults);
-    }
-  });
-};
-
-const prepareDataPackagePromises = (
-  reqParams: DataPackagesRequestParams,
-  urls: string[],
-  requestDataPackagesLogger?: RequestDataPackagesLogger
-): Promise<DataPackagesResponse>[] => {
-  if (!reqParams.authorizedSigners.length) {
-    throw new Error("Authorized signers array cannot be empty");
-  }
-  const pathComponents = [
-    "v2",
-    "data-packages",
-    reqParams.historicalTimestamp ? "historical" : "latest",
-    reqParams.dataServiceId,
-  ];
-  if (reqParams.historicalTimestamp) {
-    pathComponents.push(`${reqParams.historicalTimestamp}`);
-  }
-  if (reqParams.hideMetadata === false) {
-    pathComponents.push("show-metadata");
-  }
-
-  return urls.map(async (url) => {
-    const response = await sendRequestToGateway(
-      url,
-      pathComponents,
-      reqParams.singleGatewayTimeoutMs
-    );
-
-    const parsedResponse = parseGwResponse(response.data);
-
-    reqParams.storageInstance?.set(parsedResponse, reqParams);
-
-    return filterAndSelectDataPackages(parsedResponse, reqParams, requestDataPackagesLogger);
-  });
-};
-
-const maybeGetSignedDataPackage = (dataPackagePlainObj: SignedDataPackagePlainObj) => {
-  try {
-    return SignedDataPackage.fromObjLazy(dataPackagePlainObj);
-  } catch {
-    return undefined;
-  }
-};
-
-const parseGwResponse = (responseData: unknown): DataPackagesResponse => {
-  RedstoneCommon.zodAssert<GwResponse>(GwResponseSchema, responseData);
-
-  return Object.fromEntries(
-    Object.entries(responseData).map(([dataFeedId, plainObjects]) => {
-      const signedDataPackages = plainObjects
-        ?.map(maybeGetSignedDataPackage)
-        .filter(RedstoneCommon.isDefined);
-
-      return [dataFeedId, signedDataPackages?.length ? signedDataPackages : undefined];
-    })
-  );
-};
-
-const getUrlsForDataServiceId = (reqParams: DataPackagesRequestParams): string[] => {
-  return (
-    reqParams.urls ??
-    resolveDataServiceUrls(reqParams.dataServiceId, {
-      historical: !!reqParams.historicalTimestamp,
-      metadata: reqParams.hideMetadata === false,
-    })
-  );
-};
-
-function sendRequestToGateway(
-  url: string,
-  pathComponents: string[],
-  timeout = GET_REQUEST_TIMEOUT
-) {
-  const sanitizedUrl = [url.replace(/\/+$/, "")].concat(pathComponents).join("/");
-
-  return axios.get<Record<string, SignedDataPackagePlainObj[]>>(sanitizedUrl, {
-    timeout,
-  });
-}
 
 export const getDataPackagesTimestamp = (
   dataPackages: DataPackagesResponse,
