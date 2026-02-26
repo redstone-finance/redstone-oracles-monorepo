@@ -147,6 +147,7 @@ export interface SignedDataPackagePlainObj extends DataPackagePlainObj {
  */
 export class SignedDataPackage extends Serializable implements SignedDataPackageLike {
   public readonly signature: Signature;
+  private computedSignerAddress?: string;
 
   constructor(
     public readonly dataPackage: DataPackage,
@@ -170,6 +171,16 @@ export class SignedDataPackage extends Serializable implements SignedDataPackage
 
   recoverSignerPublicKey(): Uint8Array {
     return recoverSignerPublicKey(this);
+  }
+
+  getSignerAddress(forceRecover = false): string {
+    if (forceRecover) {
+      this.computedSignerAddress = undefined;
+    }
+
+    this.computedSignerAddress ??= this.recoverSignerAddress();
+
+    return this.computedSignerAddress;
   }
 
   recoverSignerAddress(): string {
