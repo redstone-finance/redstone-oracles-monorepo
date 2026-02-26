@@ -1,39 +1,44 @@
-import { SuiClient } from "@mysten/sui/client";
-import { Keypair } from "@mysten/sui/cryptography";
+import type { Keypair } from "@mysten/sui/cryptography";
+import { SuiTransactionBlockResponseOptions } from "@mysten/sui/jsonRpc";
 import { Transaction } from "@mysten/sui/transactions";
 import { MIST_PER_SUI } from "@mysten/sui/utils";
-import { BlockchainService, BlockchainServiceWithTransfer } from "@redstone-finance/multichain-kit";
-import { SuiContractUpdater } from "./SuiContractUpdater";
+import type {
+  BlockchainService,
+  BlockchainServiceWithTransfer,
+} from "@redstone-finance/multichain-kit";
+import type { SuiClient } from "./SuiClient";
 
 export class SuiBlockchainService implements BlockchainService {
   constructor(protected readonly client: SuiClient) {}
 
   async getBlockNumber(): Promise<number> {
-    return Number(await this.client.getLatestCheckpointSequenceNumber());
+    return await this.client.getBlockNumber();
   }
 
   async getNormalizedBalance(address: string): Promise<bigint> {
-    return (
-      BigInt((await this.client.getBalance({ owner: address })).totalBalance) *
-      (10n ** 18n / MIST_PER_SUI)
-    );
+    const balance = await this.client.getBalance(address);
+
+    return balance * (10n ** 18n / MIST_PER_SUI);
   }
 
   async waitForTransaction(txId: string): Promise<boolean> {
-    await this.client.waitForTransaction({ digest: txId });
-    const response = await this.client.getTransactionBlock({
-      digest: txId,
-      options: {
-        showEffects: true,
-        showEvents: true,
-      },
-    });
-
-    return SuiContractUpdater.getStatus(response).success;
+    return await this.client.waitForTransaction(txId);
   }
 
   async getBalance(address: string) {
     return await this.getNormalizedBalance(address);
+  }
+
+  getTimeForBlock(block: number): Promise<Date> {
+    return this.client.getTimeForBlock(block);
+  }
+
+  queryTransactionBlocks(
+    objectId: string,
+    cursor: string | null | undefined,
+    options: SuiTransactionBlockResponseOptions
+  ) {
+    return this.client.queryTransactionBlocks(objectId, cursor, options);
   }
 }
 
@@ -55,12 +60,10 @@ export class SuiBlockchainServiceWithTransfer
     const [coin] = tx.splitCoins(tx.gas, [amount]);
     tx.transferObjects([coin], toAddress);
 
-    const resp = await this.client.signAndExecuteTransaction({
-      signer: this.keypair,
-      transaction: tx,
-    });
+    const result = await this.client.signAndExecute(tx, this.keypair);
+    const txData = result.Transaction ?? result.FailedTransaction;
 
-    await this.waitForTransaction(resp.digest);
+    await this.client.waitForTransaction(txData.digest);
   }
 
   getSignerAddress(): Promise<string> {

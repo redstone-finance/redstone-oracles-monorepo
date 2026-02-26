@@ -1,4 +1,3 @@
-import { SuiClient } from "@mysten/sui/client";
 import { Keypair } from "@mysten/sui/cryptography";
 import { Secp256k1Keypair } from "@mysten/sui/keypairs/secp256k1";
 import { Transaction } from "@mysten/sui/transactions";
@@ -10,7 +9,7 @@ import {
   PushTestEnvironment,
 } from "@redstone-finance/chain-agnostic-oracle-tests";
 import { ContractParamsProviderMock } from "@redstone-finance/sdk";
-import { createSandboxClient, SandboxClient } from "@redstone-finance/suiangria";
+import { createSandboxGrpcClient, SandboxClient } from "@redstone-finance/suiangria";
 import { RedstoneCommon } from "@redstone-finance/utils";
 import {
   buildPackage,
@@ -20,6 +19,7 @@ import {
   SuiConfig,
   SuiContractConnector,
 } from "../../src";
+import { GrpcSuiClient } from "../../src/GrpcSuiClient";
 import { SuiContractDeployer } from "../../src/SuiContractDeployer";
 
 export class SuiTestEnvironment implements PushTestEnvironment, PullTestEnvironment {
@@ -27,7 +27,7 @@ export class SuiTestEnvironment implements PushTestEnvironment, PullTestEnvironm
   private readonly config: SuiConfig;
 
   constructor(
-    private readonly sui: SuiClient,
+    private readonly sui: GrpcSuiClient,
     private readonly sandbox: SandboxClient,
     private readonly keypair: Keypair,
     private readonly packageId: string,
@@ -79,18 +79,13 @@ export class SuiTestEnvironment implements PushTestEnvironment, PullTestEnvironm
       this.adminCapId
     );
 
-    const bytes = await tx.build({ client: this.sui });
+    const response = await this.sui.signAndExecute(tx, this.keypair);
 
-    const response = await this.sui.signAndExecuteTransaction({
-      transaction: bytes,
-      signer: this.keypair,
-    });
-
-    if (response.errors) {
-      throw new Error(RedstoneCommon.stringifyError(new AggregateError(response.errors)));
+    if (response.$kind === "FailedTransaction") {
+      throw new Error(RedstoneCommon.stringifyError(response.FailedTransaction));
     }
 
-    await this.sui.waitForTransaction({ digest: response.digest });
+    await this.sui.waitForTransaction(response.Transaction.digest);
   }
 
   async update(
@@ -150,17 +145,19 @@ export function getTestEnvFunction() {
 export async function getTestEnv(build: { modules: string[]; dependencies: string[] }) {
   const keypair = Secp256k1Keypair.generate();
 
-  const { client, sandbox } = createSandboxClient();
+  const { client, sandbox } = createSandboxGrpcClient();
 
   sandbox.mintSui(keypair.toSuiAddress(), Number(100_000_000_000n * MIST_PER_SUI));
   sandbox.clockApi().setTimeMs(Date.now());
 
-  const deployer = new SuiContractDeployer(client, keypair);
+  const grpcClient = new GrpcSuiClient(client);
+
+  const deployer = new SuiContractDeployer(grpcClient, keypair);
 
   const { packageId, adminCapId, priceAdapterId } = await deployer.deployFromBuild(build);
 
   return new SuiTestEnvironment(
-    client as unknown as SuiClient,
+    grpcClient,
     sandbox,
     keypair,
     packageId,
