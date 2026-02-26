@@ -1,8 +1,8 @@
-import { SuiClient } from "@mysten/sui/client";
 import { ContractData, ContractParamsProvider } from "@redstone-finance/sdk";
-import { MultiExecutor } from "@redstone-finance/utils";
+import { MultiExecutor, RedstoneCommon } from "@redstone-finance/utils";
+import { SuiClient } from "./SuiClient";
 import { SuiReader } from "./SuiReader";
-import { PriceAdapterDataContent, PriceDataContent } from "./types";
+import { PriceAdapterDataContent, PriceAdapterDataJsonContent, PriceDataBcs } from "./types";
 
 export class SuiPricesContractReader {
   constructor(
@@ -24,13 +24,16 @@ export class SuiPricesContractReader {
     );
   }
 
-  async getPriceAdapterObjectDataContent(blockNumber?: number) {
-    const content = await this.suiReader.fetchObjectDataContent(
-      { objectId: this.priceAdapterObjectId },
-      blockNumber
-    );
+  async getPriceAdapterObjectDataContent(_blockNumber?: number) {
+    const content = await this.suiReader.fetchObjectDataContent({
+      objectId: this.priceAdapterObjectId,
+    });
 
-    return PriceAdapterDataContent.parse(content);
+    if (!RedstoneCommon.isDefined(content.content)) {
+      return PriceAdapterDataJsonContent.parse(content.json);
+    }
+
+    return PriceAdapterDataContent.parse(content.content);
   }
 
   async getContractDataFromPricesTable(pricesTableId: string, blockNumber?: number) {
@@ -56,12 +59,9 @@ export class SuiPricesContractReader {
     return Object.fromEntries(contractData) as ContractData;
   }
 
-  private async getPriceDataContent(pricesTableId: string, blockNumber?: number) {
-    const ids = await this.suiReader.getObjectIds(pricesTableId);
-    const values = await Promise.all(
-      ids.map((input) => this.suiReader.fetchObjectDataContent(input, blockNumber))
-    );
+  private async getPriceDataContent(pricesTableId: string, _blockNumber?: number) {
+    const contents = await this.suiReader.fetchAllDynamicFieldContents(pricesTableId);
 
-    return values.map((data) => PriceDataContent.parse(data).value);
+    return contents.map((data) => PriceDataBcs.parse(data.dynamicField.value.bcs));
   }
 }

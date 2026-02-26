@@ -15,8 +15,9 @@ import {
 } from "@redstone-finance/stellar-connector";
 import {
   makeSuiKeypair,
+  SuiBlockchainService,
   SuiBlockchainServiceWithTransfer,
-  SuiClientBuilder,
+  SuiClientBuilders,
 } from "@redstone-finance/sui-connector";
 import { deconstructNetworkId, NetworkId, RedstoneCommon } from "@redstone-finance/utils";
 import z from "zod";
@@ -24,14 +25,14 @@ import { MoveBlockchainService } from "./MoveBlockchainService";
 import { RadixBlockchainService } from "./RadixBlockchainService";
 import { SolanaBlockchainService } from "./SolanaBlockchainService";
 import { StellarBlockchainService } from "./StellarBlockchainService";
-import { SuiBlockchainService } from "./SuiBlockchainService";
 export { CantonBlockchainService } from "@redstone-finance/canton-connector";
+export { SuiBlockchainService } from "@redstone-finance/sui-connector";
 
 export async function getNonEvmBlockchainService(networkId: NetworkId, rpcUrls: string[]) {
   const { chainType } = deconstructNetworkId(networkId);
   switch (chainType) {
     case "sui": {
-      const suiClient = new SuiClientBuilder()
+      const suiClient = SuiClientBuilders.legacyClientBuilder()
         .withNetworkId(networkId)
         .withRpcUrls(rpcUrls)
         .build();
@@ -104,7 +105,7 @@ export function getNonEvmBlockchainServiceWithTransfer(
   const { chainType } = deconstructNetworkId(networkId);
   switch (chainType) {
     case "sui": {
-      const suiClient = new SuiClientBuilder()
+      const suiClient = SuiClientBuilders.legacyClientBuilder()
         .withNetworkId(networkId)
         .withRpcUrls(rpcUrls)
         .build();
