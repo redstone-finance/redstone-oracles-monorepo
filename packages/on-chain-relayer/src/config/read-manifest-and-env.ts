@@ -279,6 +279,7 @@ export const readManifestAndEnv = () => {
       "USE_GLOBAL_STORAGE",
       z.boolean().default(isFallback)
     ),
+    graphQLUrls: RedstoneCommon.getFromEnv("GRAPHQL_URLS", z.array(z.url()).optional()),
   };
 
   return { manifest, env };

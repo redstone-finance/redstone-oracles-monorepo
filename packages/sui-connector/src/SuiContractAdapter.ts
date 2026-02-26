@@ -1,4 +1,3 @@
-import { SuiClient } from "@mysten/sui/client";
 import { Transaction } from "@mysten/sui/transactions";
 import {
   ContractAdapter,
@@ -9,6 +8,7 @@ import { ContractData, ContractParamsProvider, getLastRoundDetails } from "@reds
 import { FP, loggerFactory, RedstoneCommon } from "@redstone-finance/utils";
 import _ from "lodash";
 import { SuiConfig } from "./config";
+import { SuiClient } from "./SuiClient";
 import { SuiContractUpdater } from "./SuiContractUpdater";
 import { SuiPricesContractReader } from "./SuiPricesContractReader";
 
@@ -29,7 +29,7 @@ export class SuiContractAdapter implements ContractAdapter {
     const priceAdapterDataContent =
       await this.getPriceAdapterObjectDataContentMemoized(blockNumber);
 
-    const pricesTableId = priceAdapterDataContent.prices.id.id;
+    const pricesTableId = priceAdapterDataContent.prices.id;
     if (!pricesTableId) {
       throw new Error("Prices table ID not found");
     }
@@ -62,6 +62,7 @@ export class SuiContractAdapter implements ContractAdapter {
       .map((feedId) => getLastRoundDetails(contractData, feedId))
       .map((data) => data.lastValue);
   }
+
   async readLatestUpdateBlockTimestamp(feedId: string, blockNumber?: number): Promise<number> {
     return (await this.readAnyRoundDetails(feedId, blockNumber)).lastBlockTimestampMS;
   }
@@ -108,9 +109,8 @@ export class SuiWriteContractAdapter extends SuiContractAdapter implements Write
     const [coin] = tx.splitCoins(tx.gas, [amount]);
     tx.transferObjects([coin], toAddress);
 
-    return await this.client.signAndExecuteTransaction({
-      signer: this.contractUpdater.getPrivateKey(),
-      transaction: tx,
-    });
+    const signer = this.contractUpdater.getPrivateKey();
+
+    return await this.client.signAndExecute(tx, signer);
   }
 }

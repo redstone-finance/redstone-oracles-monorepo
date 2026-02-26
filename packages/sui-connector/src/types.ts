@@ -1,53 +1,45 @@
+import { bcs } from "@mysten/sui/bcs";
 import { z } from "zod";
 
-function flattenFields<T>(data: { fields: T }): T {
-  return data.fields;
-}
-
-const ConfigContent = z
-  .object({
-    fields: z.object({
-      signer_count_threshold: z.number(),
-    }),
-  })
-  .transform(flattenFields);
-
-const PricesContent = z
-  .object({
-    fields: z.object({
-      id: z.object({
-        id: z.string(),
-      }),
-    }),
-  })
-  .transform(flattenFields);
-
-export const PriceAdapterDataContent = z
-  .object({
-    fields: z.object({
-      prices: PricesContent,
-      config: ConfigContent,
-    }),
-  })
-  .transform(flattenFields);
-
-const PriceData = z.object({
-  feed_id: z.array(z.number()),
-  timestamp: z.string(),
-  value: z.string(),
-  write_timestamp: z.string(),
+const ConfigContent = z.object({
+  signer_count_threshold: z.number(),
 });
 
-const ValueContent = z
-  .object({
-    fields: PriceData,
-  })
-  .transform(flattenFields);
+const PricesContent = z.object({
+  id: z.string(),
+});
 
-export const PriceDataContent = z
-  .object({
-    fields: z.object({
-      value: ValueContent,
-    }),
-  })
-  .transform(flattenFields);
+export const PriceAdapterDataJsonContent = z.object({
+  prices: PricesContent,
+  config: ConfigContent,
+});
+
+const ConfigBcs = bcs.struct("Config", {
+  signer_count_threshold: bcs.u8(),
+  signers: bcs.vector(bcs.vector(bcs.u8())),
+  max_timestamp_delay_ms: bcs.u64(),
+  max_timestamp_ahead_ms: bcs.u64(),
+  trusted_updaters: bcs.vector(bcs.Address),
+  min_interval_between_updates_ms: bcs.u64(),
+});
+
+const TableBcs = bcs.struct("Table", {
+  id: bcs.Address,
+  size: bcs.u64(),
+});
+
+export const PriceAdapterDataContent = bcs.struct("PriceAdapter", {
+  id: bcs.Address,
+  prices: TableBcs,
+  config: ConfigBcs,
+  version: bcs.u8(),
+});
+
+export const PriceDataBcs = bcs.struct("PriceData", {
+  feed_id: bcs.vector(bcs.u8()),
+  value: bcs.u256(),
+  timestamp: bcs.u64(),
+  write_timestamp: bcs.u64(),
+});
+
+export type PriceData = typeof PriceDataBcs.$inferType;

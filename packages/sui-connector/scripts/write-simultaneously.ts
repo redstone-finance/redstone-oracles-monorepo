@@ -9,11 +9,11 @@ import "dotenv/config";
 import {
   makeSuiKeypair,
   readSuiConfig,
-  SuiClientBuilder,
+  SuiClientBuilders,
   SuiContractConnector,
   SuiNetworkSchema,
 } from "../src";
-import { getRpcUrls } from "./get-rpc-urls";
+import { getGraphQLUrls, getRpcUrls } from "./get-rpc-urls";
 
 async function prepareParamsProviderWithData(requestParams: DataPackagesRequestParams) {
   const cache = new DataPackagesResponseCache();
@@ -27,7 +27,14 @@ async function prepareParamsProviderWithData(requestParams: DataPackagesRequestP
 export async function writeSimultaneously() {
   const network = RedstoneCommon.getFromEnv("NETWORK", SuiNetworkSchema);
   const rpcUrls = await getRpcUrls(network);
-  const suiClient = new SuiClientBuilder().withSuiNetwork(network).withRpcUrls(rpcUrls).build();
+  const graphqlUrls = getGraphQLUrls(network);
+
+  const suiClient = SuiClientBuilders.clientBuilder()
+    .withSuiNetwork(network)
+    .withRpcUrls(rpcUrls)
+    .withGraphqlUrls(graphqlUrls)
+    .withFullnodeUrl()
+    .build();
 
   const requestParams: DataPackagesRequestParams = {
     dataPackagesIds: ["ETH"],

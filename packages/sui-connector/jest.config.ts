@@ -9,6 +9,11 @@ const config: Config.InitialOptions = {
   setupFiles: ["./jest.setup.ts"],
   testPathIgnorePatterns: ["<rootDir>/dist/"],
   roots: ["<rootDir>/src/", "<rootDir>/test/"],
+  transformIgnorePatterns: ["node_modules/(?!(@mysten|@scure|@noble)/)"],
+  transform: {
+    "^.+\\.tsx?$": "ts-jest",
+    "^.+\\.m?js$": "@swc/jest",
+  },
 };
 
 export default config;
