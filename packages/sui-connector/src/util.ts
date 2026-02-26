@@ -1,6 +1,8 @@
 import { bcs, BcsType } from "@mysten/bcs";
-import { getFullnodeUrl, SuiClient } from "@mysten/sui/client";
 import type { Keypair } from "@mysten/sui/cryptography";
+import { SuiGraphQLClient } from "@mysten/sui/graphql";
+import { SuiGrpcClient } from "@mysten/sui/grpc";
+import { getJsonRpcFullnodeUrl, SuiJsonRpcClient } from "@mysten/sui/jsonRpc";
 import { Secp256k1Keypair } from "@mysten/sui/keypairs/secp256k1";
 import { RedstoneCommon } from "@redstone-finance/utils";
 import { execSync } from "child_process";
@@ -10,6 +12,13 @@ import path from "path";
 import { z } from "zod";
 import { makeSuiConfig, SuiNetworkName } from "./config";
 import { getSuiNetworkName } from "./network-ids";
+
+export const GRAPHQL_URLS = {
+  mainnet: "https://graphql.mainnet.sui.io/graphql",
+  testnet: "https://graphql.testnet.sui.io/graphql",
+  devnet: "https://graphql.devnet.sui.io/graphql",
+  localnet: "http://localhost:9125/graphql",
+};
 
 interface Ids {
   packageId: string;
@@ -60,8 +69,37 @@ export function makeSuiClient(network: SuiNetworkName | number, url?: string) {
     networkName = network;
   }
 
-  return new SuiClient({
-    url: url ?? getFullnodeUrl(networkName),
+  return new SuiGrpcClient({
+    baseUrl: url ?? getJsonRpcFullnodeUrl(networkName),
+    network: networkName,
+  });
+}
+
+export function makeSuiJsonRpcClient(network: SuiNetworkName | number, url?: string) {
+  let networkName;
+  if (typeof network === "number") {
+    networkName = getSuiNetworkName(network);
+  } else {
+    networkName = network;
+  }
+
+  return new SuiJsonRpcClient({
+    url: url ?? getJsonRpcFullnodeUrl(networkName),
+    network: networkName,
+  });
+}
+
+export function makeSuiGraphQLClient(network: SuiNetworkName | number, url?: string) {
+  let networkName;
+  if (typeof network === "number") {
+    networkName = getSuiNetworkName(network);
+  } else {
+    networkName = network;
+  }
+
+  return new SuiGraphQLClient({
+    url: url ?? GRAPHQL_URLS[networkName],
+    network: networkName,
   });
 }
 
@@ -99,7 +137,7 @@ export function uint8ArrayToBcs(uint8Array: Uint8Array) {
 }
 
 export function buildPackage(packagePath: string, environment: SuiNetworkName) {
-  const buildCmd = `sui move build --force --dump-bytecode-as-base64 --environment ${environment}`;
+  const buildCmd = `sui move build --force --dump-bytecode-as-base64 --build-env ${environment}`;
 
   return JSON.parse(
     execSync(`${buildCmd} --path ${packagePath}`, {

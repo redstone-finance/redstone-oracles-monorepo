@@ -1,11 +1,22 @@
 import { DataServiceIds, getSignersForDataServiceId } from "@redstone-finance/sdk";
 import { RedstoneCommon } from "@redstone-finance/utils";
-import { PriceAdapterConfig } from "../src/PriceAdapterConfig";
-import { DEFAULT_GAS_BUDGET } from "../src/SuiContractUtil";
+import { PriceAdapterConfig } from "./PriceAdapterConfig";
+import { DEFAULT_GAS_BUDGET } from "./SuiContractUtil";
+import { SuiNetworkName } from "./config";
+
+const DEFAULT_INTERVAL = RedstoneCommon.hourToMs(48);
 
 export function makeSuiDeployConfig(
-  dataServiceId: DataServiceIds = "redstone-primary-prod"
+  dataServiceId: DataServiceIds = "redstone-primary-prod",
+  network?: SuiNetworkName,
+  minIntervalBetweenUpdatesMs?: number
 ): PriceAdapterConfig {
+  const minInterval = minIntervalBetweenUpdatesMs ?? DEFAULT_INTERVAL;
+
+  if (minInterval !== DEFAULT_INTERVAL && network !== "localnet") {
+    throw new Error("Custom interval only available on localnet network");
+  }
+
   return {
     signerCountThreshold: 3,
     maxTimestampDelayMs: RedstoneCommon.minToMs(3),
@@ -17,7 +28,7 @@ export function makeSuiDeployConfig(
       "0x0b4e848b21b2a942f8bb0f4d4496462b059c206ae68d116091bed41a72408cbb",
       "0xb26ea44ea1b80e916875b47fe3ec335b8a0d37b65f46052a467fe4878165bc6d",
     ],
-    minIntervalBetweenUpdatesMs: RedstoneCommon.hourToMs(48), // 2 days between updated
+    minIntervalBetweenUpdatesMs: minInterval,
     initializeTxGasBudget: DEFAULT_GAS_BUDGET,
   };
 }

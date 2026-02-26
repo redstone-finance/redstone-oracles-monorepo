@@ -1,9 +1,10 @@
-import { CoinStruct, SuiClient, SuiObjectChange } from "@mysten/sui/client";
-import { Keypair } from "@mysten/sui/cryptography";
+import type { SuiClientTypes } from "@mysten/sui/client";
+import type { Keypair } from "@mysten/sui/cryptography";
 import { Transaction } from "@mysten/sui/transactions";
 import { SUI_TYPE_ARG } from "@mysten/sui/utils";
 import { loggerFactory, MultiExecutor, RedstoneCommon } from "@redstone-finance/utils";
 import _ from "lodash";
+import type { SuiClient } from "./SuiClient";
 
 const MERGE_COINS_BATCH_SIZE = 1;
 const MERGE_COINS_MS_BETWEEN_BATCHES = 0;
@@ -21,7 +22,7 @@ export class SuiCoinProvider {
   constructor(private readonly client: SuiClient) {}
 
   async getSourceCoins(minimumBalance: bigint, keypair: Keypair) {
-    let sourceCoins = undefined;
+    let sourceCoins: string[] | undefined = undefined;
     try {
       const coin = await this.getLatestReceivedCoin(
         keypair.getPublicKey().toSuiAddress(),
@@ -40,10 +41,11 @@ export class SuiCoinProvider {
     } catch (e) {
       this.logger.warn(`Error fetching latest coin: ${RedstoneCommon.stringifyError(e)}`);
     }
+
     return sourceCoins;
   }
 
-  private async purge(coinsToPurge: CoinStruct[][], keypair: Keypair) {
+  private async purge(coinsToPurge: SuiClientTypes.Coin[][], keypair: Keypair) {
     if (!coinsToPurge.length) {
       return;
     }
@@ -59,41 +61,47 @@ export class SuiCoinProvider {
     );
   }
 
-  private async mergeCoins(coins: CoinStruct[], keypair: Keypair) {
-    if (coins.length > 1) {
-      const client = MultiExecutor.createForSubInstances(this.client, (client) => client, {
-        signAndExecuteTransaction: MultiExecutor.ExecutionMode.FALLBACK,
-      });
-
-      this.logger.log(`Purging ${coins.length} coin${RedstoneCommon.getS(coins.length)}`);
-
-      try {
-        this.logger.debug(`Merging ${coins.map((coin) => coin.coinObjectId).toString()} `);
-
-        const tx = new Transaction();
-        tx.setGasPayment(coins.map((coin) => ({ ...coin, objectId: coin.coinObjectId })));
-        tx.transferObjects([tx.gas], keypair.toSuiAddress());
-
-        await client.signAndExecuteTransaction({ transaction: tx, signer: keypair });
-      } catch (e) {
-        this.logger.warn(RedstoneCommon.stringifyError(e));
-      }
-    } else {
+  private async mergeCoins(coins: SuiClientTypes.Coin[], keypair: Keypair) {
+    if (coins.length <= 1) {
       this.logger.log(`Not purging - not enough coins to purge in set`);
+
+      return;
+    }
+    const client = MultiExecutor.createForSubInstances(this.client, (client) => client, {
+      signAndExecute: MultiExecutor.ExecutionMode.FALLBACK,
+    });
+
+    this.logger.log(`Purging ${coins.length} coin${RedstoneCommon.getS(coins.length)}`);
+
+    try {
+      this.logger.debug(`Merging ${coins.map((c) => c.objectId).toString()} `);
+
+      const tx = new Transaction();
+      tx.setGasPayment(
+        coins.map((c) => ({
+          objectId: c.objectId,
+          version: c.version,
+          digest: c.digest,
+        }))
+      );
+      tx.transferObjects([tx.gas], keypair.toSuiAddress());
+
+      await client.signAndExecute(tx, keypair);
+    } catch (e) {
+      this.logger.warn(RedstoneCommon.stringifyError(e));
     }
   }
 
   private async getLatestReceivedCoin(
     address: string,
     minBalance: bigint,
-    purgeFun: (address: CoinStruct[][]) => Promise<void>,
+    purgeFun: (coins: SuiClientTypes.Coin[][]) => Promise<void>,
     coinType = SUI_TYPE_ARG,
     txLimitCount = COIN_TRANSFER_TX_LOOKUP_COUNT_LIMIT
   ) {
-    const txs = await this.client.queryTransactionBlocks({
-      filter: { ToAddress: address },
-      options: { showObjectChanges: true },
-      order: "descending",
+    const { objectIds: receivedObjectIds } = await this.client.getReceivedCoinObjectIds({
+      address,
+      coinType,
       limit: txLimitCount,
     });
 
@@ -111,23 +119,11 @@ export class SuiCoinProvider {
       );
     }
 
-    for (const tx of txs.data) {
-      const receivedCoin = tx.objectChanges?.find((change) =>
-        SuiCoinProvider.isReceivedCoin(change, coinType, address)
-      );
+    for (const objectId of receivedObjectIds) {
+      const coin = coins.find((c) => c.objectId === objectId);
 
-      if (!receivedCoin) {
-        continue;
-      }
-
-      const coin = coins.find((c) => c.coinObjectId === receivedCoin.objectId);
-
-      if (!coin) {
-        continue;
-      }
-
-      if (BigInt(coin.balance) >= minBalance) {
-        return receivedCoin.objectId;
+      if (coin && BigInt(coin.balance) >= minBalance) {
+        return objectId;
       }
     }
 
@@ -139,53 +135,36 @@ export class SuiCoinProvider {
     minBalance: bigint,
     coinType: string
   ) {
-    const coins = [];
-    const coinsToMerge = [];
+    const coins: SuiClientTypes.Coin[] = [];
+    const coinsToMerge: SuiClientTypes.Coin[][] = [];
     let cursor: string | null | undefined = null;
     let page = 0;
 
     do {
       this.logger.info(`Fetching coins of ${address}, page #${page}`);
-      const { data, nextCursor, hasNextPage } = await RedstoneCommon.retry({
+      const { objects, cursor: nextCursor } = await RedstoneCommon.retry({
         fn: () =>
-          this.client.getCoins({
+          this.client.listCoins({
             owner: address,
-            coinType,
             cursor,
+            coinType,
           }),
         ...RETRY_CONFIG,
       })();
 
-      const [sufficient, insufficient] = _.partition(data, (c) => BigInt(c.balance) > minBalance);
+      const [sufficient, insufficient] = _.partition(
+        objects,
+        (c) => BigInt(c.balance) > minBalance
+      );
 
       coins.push(...sufficient);
       if (insufficient.length) {
         coinsToMerge.push(insufficient);
       }
-      cursor = hasNextPage ? nextCursor : null;
+      cursor = nextCursor;
       page += 1;
     } while (cursor && (page < FETCH_COINS_PAGE_COUNT_LIMIT || !coins.length));
 
     return { coins, coinsToMerge };
-  }
-
-  private static isReceivedCoin(
-    change: SuiObjectChange,
-    coinType: string,
-    address: string
-  ): change is Extract<SuiObjectChange, { type: "created" | "mutated" }> {
-    if (change.type !== "created" && change.type !== "mutated") {
-      return false;
-    }
-
-    if (!change.objectType.includes(coinType)) {
-      return false;
-    }
-
-    if (typeof change.owner !== "object" || !("AddressOwner" in change.owner)) {
-      return false;
-    }
-
-    return change.owner.AddressOwner === address;
   }
 }

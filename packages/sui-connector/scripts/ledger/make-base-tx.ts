@@ -5,17 +5,14 @@ import assert from "assert";
 import { DEFAULT_GAS_BUDGET, makeSuiClient, SuiNetworkName, SuiNetworkSchema } from "../../src";
 
 async function fetchCoinObjects(network: SuiNetworkName, senderAddress: string) {
-  const coins = await makeSuiClient(network).getCoins({
-    coinType: SUI_TYPE_ARG,
+  const { objects, hasNextPage } = await makeSuiClient(network).core.listCoins({
     owner: senderAddress,
+    coinType: SUI_TYPE_ARG,
   });
-  assert(!coins.hasNextPage, "Too many coins");
 
-  return coins.data.map((data) => ({
-    objectId: data.coinObjectId,
-    version: data.version,
-    digest: data.digest,
-  }));
+  assert(!hasNextPage, "Too many coins");
+
+  return objects;
 }
 
 export async function makeBaseTx(
@@ -28,7 +25,6 @@ export async function makeBaseTx(
   tx.setSender(senderAddress);
   tx.setGasBudget(DEFAULT_GAS_BUDGET);
   tx.setGasPayment(await fetchCoinObjects(network, senderAddress));
-
   creator(tx, network);
 
   return { network, tx };

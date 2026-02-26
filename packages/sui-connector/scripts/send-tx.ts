@@ -10,19 +10,19 @@ async function main(creator: (tx: Transaction, network: SuiNetworkName) => void)
   const client = makeSuiClient(network);
 
   const txBytes = await tx.build({ client });
-  const signature = (await keypair.signTransaction(txBytes)).signature;
+  const { signature } = await keypair.signTransaction(txBytes);
 
-  const simulationResult = await client.dryRunTransactionBlock({
-    transactionBlock: txBytes,
+  const simulationResult = await client.core.simulateTransaction({
+    transaction: txBytes,
   });
-  if (simulationResult.effects.status.status === "success") {
-    const result = await client.executeTransactionBlock({
-      transactionBlock: txBytes,
-      signature,
-      options: {
-        showEffects: true,
-      },
+
+  if (simulationResult.Transaction) {
+    const result = await client.core.executeTransaction({
+      transaction: txBytes,
+      signatures: [signature],
+      include: { effects: true },
     });
+
     console.log("Result: ", result);
   } else {
     console.log("Simulation failed: ", simulationResult);

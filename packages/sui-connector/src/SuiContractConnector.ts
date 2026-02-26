@@ -1,8 +1,8 @@
-import { SuiClient } from "@mysten/sui/client";
 import { Keypair } from "@mysten/sui/cryptography";
 import { FullConnector } from "@redstone-finance/multichain-kit";
 import { SuiConfig } from "./config";
 import { SuiBlockchainService } from "./SuiBlockchainService";
+import { SuiClient } from "./SuiClient";
 import { SuiWriteContractAdapter } from "./SuiContractAdapter";
 import { SuiContractUpdater } from "./SuiContractUpdater";
 
@@ -12,7 +12,6 @@ export class SuiContractConnector extends SuiWriteContractAdapter implements Ful
 
   constructor(client: SuiClient, config: SuiConfig, keypair: Keypair) {
     super(client, SuiContractConnector.getContractUpdater(keypair, client, config), config);
-
     this.service = new SuiBlockchainService(client);
   }
 
@@ -29,8 +28,7 @@ export class SuiContractConnector extends SuiWriteContractAdapter implements Ful
   }
 
   static getContractUpdater(keypair: Keypair, client: SuiClient, config: SuiConfig) {
-    const cacheKey = keypair.getPublicKey().toSuiPublicKey();
-
+    const cacheKey = keypair.toSuiAddress();
     SuiContractConnector.contractUpdaterCache[cacheKey] ??= new SuiContractUpdater(
       client,
       keypair,
