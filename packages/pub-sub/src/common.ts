@@ -1,11 +1,9 @@
 import { SignedDataPackage } from "@redstone-finance/protocol";
 import { RedstoneCommon } from "@redstone-finance/utils";
-import { SignedDataPackageWithSavedSigner } from "./SignedDataPackageWithSavedSigner";
 
 export const MAX_PACKAGE_STALENESS = RedstoneCommon.minToMs(2);
 
-export type PackageResponse<P extends SignedDataPackage = SignedDataPackageWithSavedSigner> =
-  Record<string, P[] | undefined>;
+export type PackageResponse = Record<string, SignedDataPackage[] | undefined>;
 
 export function cleanStalePackages(
   packagesPerTimestamp: Map<number, PackageResponse>,

@@ -18,7 +18,6 @@ import { LastPublishedFeedState } from "./LastPublishedFeedState";
 import { PubSubClient, SubscribeCallback } from "./PubSubClient";
 import { RateLimitsCircuitBreaker } from "./RateLimitsCircuitBreaker";
 import { ReferenceValueVerifier } from "./ReferenceValueVerifier";
-import { SignedDataPackageWithSavedSigner } from "./SignedDataPackageWithSavedSigner";
 import { encodeDataPackageTopic } from "./topics";
 
 type SubscriptionCallbackFn = (dataPackages: DataPackagesResponse) => unknown;
@@ -233,7 +232,7 @@ export class DataPackageSubscriber {
       SignedDataPackageSchema,
       dataPackageFromMessage
     );
-    const signedDataPackage = SignedDataPackageWithSavedSigner.fromObj(dataPackageFromMessage);
+    const signedDataPackage = SignedDataPackage.fromObj(dataPackageFromMessage);
     const dataPackageId = signedDataPackage.dataPackage.dataPackageId;
     const packageTimestamp = signedDataPackage.dataPackage.timestampMilliseconds;
 
@@ -246,8 +245,7 @@ export class DataPackageSubscriber {
       return;
     }
 
-    const packageSigner = signedDataPackage.recoverSignerAddress();
-    signedDataPackage.packageSigner = packageSigner;
+    const packageSigner = signedDataPackage.getSignerAddress();
 
     //authorized signer
     if (!this.params.authorizedSigners.includes(packageSigner)) {
@@ -276,7 +274,7 @@ export class DataPackageSubscriber {
     const entryForTimestamp = this.packagesPerTimestamp.get(packageTimestamp) ?? {};
     entryForTimestamp[dataPackageId] ??= [];
 
-    if (entryForTimestamp[dataPackageId].some((dp) => dp.packageSigner === packageSigner)) {
+    if (entryForTimestamp[dataPackageId].some((dp) => dp.getSignerAddress() === packageSigner)) {
       this.logger.debug(
         `Package from ${description} was rejected because already have package from this signer`
       );

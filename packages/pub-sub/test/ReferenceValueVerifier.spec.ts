@@ -1,7 +1,6 @@
-import { DataPackage, NumericDataPoint, SignedDataPackage } from "@redstone-finance/protocol";
+import { DataPackage, NumericDataPoint } from "@redstone-finance/protocol";
 import { ethers } from "ethers";
 import { ReferenceValueVerifier } from "../src/ReferenceValueVerifier";
-import type { SignedDataPackageWithSavedSigner } from "../src/SignedDataPackageWithSavedSigner";
 
 // logger mocks
 const mockDebug = jest.fn();
@@ -42,16 +41,11 @@ const MOCK_WALLET_3 = new ethers.Wallet(
   "0xd56e1ee933657d6bcdec81f9956392aef47a7f8b1a1275b6e4ad551fb5d6b14c"
 );
 
-function makeSigned(
-  signer: ethers.Wallet,
-  dataPackageId: string,
-  tsMs: number,
-  value: number
-): SignedDataPackageWithSavedSigner {
+function makeSigned(signer: ethers.Wallet, dataPackageId: string, tsMs: number, value: number) {
   const dp = new NumericDataPoint({ dataFeedId: dataPackageId, value });
   const dataPackage = new DataPackage([dp], tsMs, dataPackageId);
-  const signed: SignedDataPackage = dataPackage.sign(signer.privateKey);
-  return Object.assign(signed, { packageSigner: signer.address });
+
+  return dataPackage.sign(signer.privateKey);
 }
 
 // Tests

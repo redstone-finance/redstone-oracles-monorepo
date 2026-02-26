@@ -92,7 +92,7 @@ export type DataPackageSubscriberParams = {
   publishAllPackages?: boolean;
 
   /**
-   * Instance of the global storage to be used for caching responses
+   * Instance of the storage to be used for caching responses
    */
   storageInstance?: DataPackagesResponseStorage;
 };
