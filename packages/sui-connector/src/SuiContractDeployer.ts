@@ -1,9 +1,10 @@
-import { SuiClient } from "@mysten/sui/client";
 import { Keypair } from "@mysten/sui/cryptography";
 import { Transaction } from "@mysten/sui/transactions";
 import { MIST_PER_SUI } from "@mysten/sui/utils";
+import { RedstoneCommon } from "@redstone-finance/utils";
 import { SuiNetworkName } from "./config";
 import { SuiAdapterContractOps } from "./SuiAdapterContractOps";
+import { SuiClient } from "./SuiClient";
 import { DEFAULT_GAS_BUDGET } from "./SuiContractUtil";
 import { buildPackage } from "./util";
 
@@ -21,43 +22,20 @@ export class SuiContractDeployer {
     const { modules, dependencies } = build;
 
     const tx = new Transaction();
-
-    const [upgradeCap] = tx.publish({
-      modules,
-      dependencies,
-    });
-
+    const [upgradeCap] = tx.publish({ modules, dependencies });
     tx.transferObjects([upgradeCap], this.keypair.getPublicKey().toSuiAddress());
-
     tx.setGasBudget(2n * MIST_PER_SUI);
 
-    const result = await this.sui.signAndExecuteTransaction({
-      transaction: tx,
-      signer: this.keypair,
-      options: {
-        showEffects: true,
-        showObjectChanges: true,
-      },
-    });
-
-    await this.sui.waitForTransaction({ digest: result.digest });
-
-    const packageId = result.objectChanges?.find(
-      (change) => change.type === "published"
-    )?.packageId;
-
-    const adminCapObject = result.objectChanges?.find(
-      (change) => change.type === "created" && change.objectType.includes("AdminCap")
-    );
-
-    if (adminCapObject?.type !== "created") {
-      throw new Error("Already checked");
-    }
-
-    const adminCapId = adminCapObject.objectId;
+    const { createdObjects, packageId } = await this.executeAndExtractCreated(tx);
 
     if (!packageId) {
       throw new Error("Failed to deploy package");
+    }
+
+    const adminCapId = createdObjects.find((obj) => obj.type?.includes("AdminCap"))?.objectId;
+
+    if (!adminCapId) {
+      throw new Error("AdminCap not found in deploy result");
     }
 
     const priceAdapterId = await this.initialize(packageId, adminCapId);
@@ -67,7 +45,6 @@ export class SuiContractDeployer {
 
   async initialize(packageId: string, adminCap: string) {
     const tx = new Transaction();
-
     const dummyConfig = {
       signers: [this.keypair.getPublicKey().toSuiAddress()],
       signerCountThreshold: 1,
@@ -80,25 +57,42 @@ export class SuiContractDeployer {
 
     SuiAdapterContractOps.initialize(tx, dummyConfig, packageId, adminCap);
 
-    const result = await this.sui.signAndExecuteTransaction({
-      transaction: tx,
-      signer: this.keypair,
-      options: {
-        showEffects: true,
-        showObjectChanges: true,
-      },
-    });
+    const { createdObjects } = await this.executeAndExtractCreated(tx);
 
-    const priceAdapterObject = result.objectChanges?.find(
-      (change) => change.type === "created" && change.objectType.includes("PriceAdapter")
-    );
+    const priceAdapterObject = createdObjects.find((obj) => obj.type?.includes("PriceAdapter"));
 
-    if (priceAdapterObject?.type !== "created") {
-      throw new Error("Already checked");
+    if (!priceAdapterObject) {
+      throw new Error("PriceAdapter not found in initialization result");
     }
 
-    await this.sui.waitForTransaction({ digest: result.digest });
-
     return priceAdapterObject.objectId;
+  }
+
+  private async executeAndExtractCreated(tx: Transaction) {
+    const result = await this.sui.signAndExecute(tx, this.keypair);
+
+    if (result.$kind === "FailedTransaction") {
+      throw new Error(
+        `Transaction failed, ${RedstoneCommon.stringifyError(result.FailedTransaction)}`
+      );
+    }
+    const txResult = result.Transaction;
+
+    await this.sui.waitForTransaction(txResult.digest);
+
+    const createdIds = txResult.effects.changedObjects
+      .filter((obj) => obj.inputState === "DoesNotExist")
+      .map((ref) => ref.objectId);
+
+    const response = await this.sui.getObjects(createdIds);
+
+    const createdObjects = response.map((obj) => ({
+      objectId: (obj as { objectId: string }).objectId,
+      type: (obj as { type?: string }).type,
+    }));
+
+    const packageId = createdObjects.find((obj) => obj.type === "package")?.objectId;
+
+    return { createdObjects, packageId, digest: txResult.digest };
   }
 }

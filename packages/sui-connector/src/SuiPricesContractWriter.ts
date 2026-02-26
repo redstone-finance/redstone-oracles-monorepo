@@ -1,10 +1,10 @@
-import { SuiClient } from "@mysten/sui/client";
 import type { Keypair } from "@mysten/sui/cryptography";
 import { Transaction } from "@mysten/sui/transactions";
 import { SUI_CLOCK_OBJECT_ID } from "@mysten/sui/utils";
 import { ContractParamsProvider } from "@redstone-finance/sdk";
 import { loggerFactory } from "@redstone-finance/utils";
 import { utils } from "ethers";
+import { SuiClient } from "./SuiClient";
 import { SuiContractUtil } from "./SuiContractUtil";
 import { SuiConfig } from "./config";
 import { makeFeedIdBytes, uint8ArrayToBcs } from "./util";
@@ -30,8 +30,8 @@ export class SuiPricesContractWriter {
     const tx = await SuiContractUtil.prepareBaseTransaction(
       this.client,
       this.config.gasMultiplier ** iterationIndex,
-      this.config.writePricesTxGasBudget,
-      this.keypair
+      this.keypair,
+      this.config.writePricesTxGasBudget
     );
 
     const unsignedMetadataArgs = {
@@ -47,6 +47,7 @@ export class SuiPricesContractWriter {
     for (const [feedId, payload] of Object.entries(payloads)) {
       this.writePrice(tx, feedId, payload);
     }
+
     return tx;
   }
 

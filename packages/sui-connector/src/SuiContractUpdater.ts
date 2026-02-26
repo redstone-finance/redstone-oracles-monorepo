@@ -1,4 +1,3 @@
-import { SuiClient, SuiTransactionBlockResponse } from "@mysten/sui/client";
 import type { Keypair } from "@mysten/sui/cryptography";
 import { ParallelTransactionExecutor, Transaction } from "@mysten/sui/transactions";
 import { MIST_PER_SUI } from "@mysten/sui/utils";
@@ -8,7 +7,7 @@ import {
   ContractUpdateStatus,
 } from "@redstone-finance/multichain-kit";
 import { ContractParamsProvider } from "@redstone-finance/sdk";
-import { FP, loggerFactory } from "@redstone-finance/utils";
+import { FP, loggerFactory, RedstoneCommon } from "@redstone-finance/utils";
 import { SuiConfig } from "./config";
 import { SuiCoinProvider } from "./SuiCoinProvider";
 import { SuiPricesContractWriter } from "./SuiPricesContractWriter";
@@ -16,6 +15,13 @@ import { SuiPricesContractWriter } from "./SuiPricesContractWriter";
 const MAX_PARALLEL_TRANSACTION_COUNT = 5;
 const SPLIT_COIN_INITIAL_BALANCE_MULTIPLIER = 2n;
 const SPLIT_COIN_TX_COST = MIST_PER_SUI / 100n;
+
+import type { SuiClientTypes } from "@mysten/sui/client";
+import { SuiClient } from "./SuiClient";
+
+type ExecutedTransaction = NonNullable<
+  SuiClientTypes.TransactionResult<{ effects: true; events: true }>["Transaction"]
+>;
 
 export class SuiContractUpdater implements ContractUpdater {
   protected readonly logger = loggerFactory("sui-contract-updater");
@@ -58,31 +64,35 @@ export class SuiContractUpdater implements ContractUpdater {
 
   private async performExecutingTx(tx: Transaction) {
     const date = Date.now();
-    const { digest, data } = await this.executeTxWithExecutor(tx, await this.getExecutor());
+    const result = await this.executeTxWithExecutor(tx, await this.getExecutor());
+
+    if (result.$kind === "FailedTransaction") {
+      throw new Error(
+        `Transaction failed, ${RedstoneCommon.stringifyError(result.FailedTransaction)}`
+      );
+    }
+    const txData = result.Transaction;
 
     const checkEventsForFailure = true;
-    const { status } = SuiContractUpdater.getStatus(data, checkEventsForFailure);
-    const cost = SuiContractUpdater.getCost(data);
+    const { status } = SuiContractUpdater.getStatus(txData, checkEventsForFailure);
+    const cost = SuiContractUpdater.getCost(txData.effects);
 
     this.logger.log(
-      `Transaction ${digest} finished in ${Date.now() - date} [ms], status: ${status.toUpperCase()}, cost: ${cost} SUI`,
+      `Transaction ${txData.digest} finished in ${Date.now() - date} [ms], status: ${status.toUpperCase()}, cost: ${cost} SUI`,
       {
-        errors: data.errors,
-        gasUsed: data.effects!.gasUsed,
-        gasData: data.transaction!.data.gasData,
+        gasUsed: txData.effects.gasUsed,
+        gasData: txData.effects.gasObject,
       }
     );
 
-    return digest;
+    return txData.digest;
   }
 
   private async executeTxWithExecutor(tx: Transaction, executor: ParallelTransactionExecutor) {
     try {
       return await executor.executeTransaction(tx, {
-        showEffects: true,
-        showBalanceChanges: true,
-        showInput: true,
-        showEvents: true,
+        effects: true,
+        events: true,
       });
     } catch (e) {
       this.logger.warn("Reinitializing gas objects...");
@@ -104,7 +114,7 @@ export class SuiContractUpdater implements ContractUpdater {
     const sourceCoins = await this.coinProvider.getSourceCoins(minimumBalance, this.keypair);
 
     const executor = new ParallelTransactionExecutor({
-      client: this.client,
+      client: this.client.clientForParallelExecutor(),
       signer: this.keypair,
       initialCoinBalance,
       minimumCoinBalance: this.config.writePricesTxGasBudget,
@@ -119,32 +129,27 @@ export class SuiContractUpdater implements ContractUpdater {
     return executor;
   }
 
-  static getStatus(response: SuiTransactionBlockResponse, checkEvents = false) {
-    let status = response.effects!.status.status;
-    const error = response.effects?.status.error;
-
-    let success = status === "success";
+  static getStatus(txData: ExecutedTransaction, checkEvents = false) {
+    let status = txData.effects.status.success ? "success" : "failure";
+    const error = txData.effects.status.error;
+    let success = txData.effects.status.success;
 
     if (checkEvents) {
-      const events = response.events;
+      const events = txData.events;
 
-      const writePriceEvent = events
-        ? events.every((event) => !event.type.includes("price_adapter::UpdateError"))
-        : false;
+      const noUpdateError = events.every(
+        (event) => !event.eventType.includes("price_adapter::UpdateError")
+      );
 
-      success = success && writePriceEvent;
+      success = success && noUpdateError;
       status = success ? status : "failure";
     }
 
     return { status, success, error };
   }
 
-  private static getCost(response: SuiTransactionBlockResponse) {
-    if (!response.effects) {
-      return 0;
-    }
-
-    const gasUsed = response.effects.gasUsed;
+  private static getCost(effects: ExecutedTransaction["effects"]) {
+    const { gasUsed } = effects;
     const totalMist =
       BigInt(gasUsed.computationCost) +
       BigInt(gasUsed.storageCost) -

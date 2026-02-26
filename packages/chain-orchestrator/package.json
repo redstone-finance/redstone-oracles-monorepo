@@ -18,7 +18,7 @@
     "test": ""
   },
   "dependencies": {
-    "@mysten/sui": "1.37.3",
+    "@mysten/sui": "^2.4.0",
     "@redstone-finance/canton-connector": "workspace:*",
     "@redstone-finance/chain-configs": "workspace:*",
     "@redstone-finance/evm-adapters": "workspace:*",
