@@ -13,7 +13,7 @@
     "pack-package": "yarn build && npm pack",
     "lint": "yarn global:eslint .",
     "lint:fix": "yarn global:eslint --fix .",
-    "test": "yarn global:jest:cov",
+    "test": "yarn global:jest:cov --runInBand",
     "deploy": "yarn global:ts-node scripts/deploy-price-adapter.ts",
     "sample-run": "yarn build:turbo && node dist/scripts/sample-run.js",
     "write-simultaneously": "yarn global:ts-node scripts/write-simultaneously.ts",
@@ -31,8 +31,8 @@
     "get-code-hashes": "yarn global:ts-node scripts/get-code-hashes.ts"
   },
   "dependencies": {
-    "@mysten/bcs": "1.7.0",
-    "@mysten/sui": "1.37.3",
+    "@mysten/bcs": "^2.0.2",
+    "@mysten/sui": "^2.4.0",
     "@redstone-finance/multichain-kit": "workspace:*",
     "@redstone-finance/sdk": "workspace:*",
     "@redstone-finance/utils": "workspace:*",
@@ -47,7 +47,8 @@
     "@mysten/ledgerjs-hw-app-sui": "^0.4.2",
     "@redstone-finance/chain-agnostic-oracle-tests": "workspace:*",
     "@redstone-finance/chain-configs": "workspace:*",
-    "@redstone-finance/suiangria": "git+https://github.com/redstone-finance/suiangria.git#v0.0.1-all",
+    "@redstone-finance/suiangria": "git+https://github.com/redstone-finance/suiangria.git#v0.0.3",
+    "@swc/jest": "^0.2.39",
     "secp256k1": "^5.0.1"
   },
   "files": [
