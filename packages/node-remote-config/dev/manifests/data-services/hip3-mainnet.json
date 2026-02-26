@@ -2090,7 +2090,7 @@
     },
     "flx:COPPER_MARK_0": {
       "source": [
-        "hip3-felix-commodities-mainnet-fetcher"
+        "hip3-felix-copper-mainnet-fetcher"
       ],
       "broadcasters": [
         "hyperliquid-hip3"
@@ -2100,7 +2100,7 @@
     },
     "flx:COPPER_MARK_1": {
       "source": [
-        "hip3-felix-commodities-mainnet-fetcher"
+        "hip3-felix-copper-mainnet-fetcher"
       ],
       "broadcasters": [
         "hyperliquid-hip3"
@@ -2110,7 +2110,7 @@
     },
     "flx:COPPER_EXT": {
       "source": [
-        "hip3-felix-commodities-mainnet-fetcher"
+        "hip3-felix-copper-mainnet-fetcher"
       ],
       "broadcasters": [
         "hyperliquid-hip3"
@@ -2120,7 +2120,7 @@
     },
     "flx:COPPER": {
       "source": [
-        "hip3-felix-commodities-mainnet-fetcher"
+        "hip3-felix-copper-mainnet-fetcher"
       ],
       "broadcasters": [
         "hyperliquid-hip3"
