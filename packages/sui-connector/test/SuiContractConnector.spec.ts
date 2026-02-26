@@ -7,6 +7,7 @@ import {
   SuiContractConnector,
   SuiNetworkSchema,
 } from "../src";
+import { GrpcSuiClient } from "../src/GrpcSuiClient";
 
 describe("SuiContractConnector", () => {
   let connector: SuiContractConnector;
@@ -15,7 +16,7 @@ describe("SuiContractConnector", () => {
     const network = RedstoneCommon.getFromEnv("NETWORK", SuiNetworkSchema);
 
     connector = new SuiContractConnector(
-      makeSuiClient(network),
+      new GrpcSuiClient(makeSuiClient(network)),
       readSuiConfig(network),
       makeSuiKeypair()
     );

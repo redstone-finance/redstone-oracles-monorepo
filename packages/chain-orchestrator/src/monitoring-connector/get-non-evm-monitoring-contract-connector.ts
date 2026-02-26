@@ -19,7 +19,7 @@ import {
 import {
   makeSuiConfig,
   SuiBlockchainService,
-  SuiClientBuilder,
+  SuiClientBuilders,
   SuiContractAdapter,
 } from "@redstone-finance/sui-connector";
 import { deconstructNetworkId, RedstoneCommon } from "@redstone-finance/utils";
@@ -83,7 +83,7 @@ function getSuiContractConnector(rpcUrls: string[], relayerManifest: AnyOnChainR
     throw new Error("adapterContractPackageId is required");
   }
 
-  const suiClient = new SuiClientBuilder()
+  const suiClient = SuiClientBuilders.legacyClientBuilder()
     .withNetworkId(relayerManifest.chain.id)
     .withRpcUrls(rpcUrls)
     .build();
