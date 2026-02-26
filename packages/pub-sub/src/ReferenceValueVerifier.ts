@@ -1,6 +1,5 @@
-import { DataPackage } from "@redstone-finance/protocol";
+import { DataPackage, SignedDataPackage } from "@redstone-finance/protocol";
 import { loggerFactory, MathUtils, RedstoneCommon } from "@redstone-finance/utils";
-import { SignedDataPackageWithSavedSigner } from "./SignedDataPackageWithSavedSigner";
 import { cleanStalePackages, PackageResponse } from "./common";
 
 const PACKAGE_TIMESTAMP_GRANULATION_MS = 1_000;
@@ -31,7 +30,7 @@ export class ReferenceValueVerifier {
     );
   }
 
-  registerDataPackage(signedDataPackage: SignedDataPackageWithSavedSigner) {
+  registerDataPackage(signedDataPackage: SignedDataPackage) {
     const dataPackage = signedDataPackage.dataPackage;
     const dataPackageId = dataPackage.dataPackageId;
     const packageTimestamp = ReferenceValueVerifier.getNormalizedDataPackageTimestamp(dataPackage);
@@ -42,9 +41,9 @@ export class ReferenceValueVerifier {
     this.packagesPerTimestamp.set(packageTimestamp, allEntry);
   }
 
-  verifyDataPackage(signedDataPackage: SignedDataPackageWithSavedSigner) {
+  verifyDataPackage(signedDataPackage: SignedDataPackage) {
     const dataPackage = signedDataPackage.dataPackage;
-    const packageSigner = signedDataPackage.packageSigner;
+    const packageSigner = signedDataPackage.getSignerAddress();
 
     if (this.isReferenceSigner(packageSigner)) {
       return signedDataPackage;
@@ -108,7 +107,7 @@ export class ReferenceValueVerifier {
       }
 
       packages.forEach((signedPackage) => {
-        const signer = signedPackage.packageSigner;
+        const signer = signedPackage.getSignerAddress();
         if (!signerValues.get(signer) && this.isReferenceSigner(signer)) {
           signerValues.set(signer, signedPackage.dataPackage.dataPoints[0].toObj().value);
         }

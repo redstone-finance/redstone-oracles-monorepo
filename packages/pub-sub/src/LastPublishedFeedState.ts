@@ -1,4 +1,3 @@
-import { SignedDataPackage } from "@redstone-finance/protocol";
 import { PackageResponse } from "./common";
 
 export class LastPublishedFeedState {
@@ -27,7 +26,7 @@ export class LastPublishedFeedState {
     }
   }
 
-  filterOutNotNewerPackages<P extends SignedDataPackage>(dataPackagesResponse: PackageResponse<P>) {
+  filterOutNotNewerPackages(dataPackagesResponse: PackageResponse) {
     return Object.fromEntries(
       Object.entries(dataPackagesResponse).filter(([dataPackageId, packages]) =>
         this.isNewerThanLastPublished(dataPackageId, packages![0].dataPackage.timestampMilliseconds)

@@ -151,6 +151,66 @@ describe("DataPackagesResponseCache tests", () => {
     const didExtend = sut.maybeExtend(mockSignedDataPackagesResponse, mockRequestParams);
     expect(didExtend).toBeFalsy();
   });
+
+  it("should return full response when returnAllPackages is true", () => {
+    const paramsWithReturnAll: DataPackagesRequestParams = {
+      dataServiceId: mockRequestParams.dataServiceId,
+      uniqueSignersCount: mockRequestParams.uniqueSignersCount,
+      authorizedSigners: mockRequestParams.authorizedSigners,
+      returnAllPackages: true,
+    };
+    sut.update(mockSignedDataPackagesResponse, paramsWithReturnAll);
+
+    const result = sut.get(paramsWithReturnAll);
+
+    expect(result).toEqual(mockSignedDataPackagesResponse);
+  });
+
+  it("should return filtered response when returnAllPackages is false", () => {
+    sut.update(mockSignedDataPackagesResponse, mockRequestParams);
+    const result = sut.get({
+      ...mockRequestParams,
+      dataPackagesIds: ["ETH"],
+      returnAllPackages: false,
+    });
+
+    expect(result).toEqual({ ETH: mockSignedDataPackagesResponse["ETH"] });
+  });
+
+  it("should conform when requesting with lower uniqueSignersCount", () => {
+    sut.update(mockSignedDataPackagesResponse, {
+      ...mockRequestParams,
+      uniqueSignersCount: 3,
+    });
+
+    const result = sut.get({ ...mockRequestParams, uniqueSignersCount: 2 });
+
+    expect(result).toEqual(mockSignedDataPackagesResponse);
+  });
+
+  it("should not conform when requesting with higher uniqueSignersCount", () => {
+    sut.update(mockSignedDataPackagesResponse, {
+      ...mockRequestParams,
+      uniqueSignersCount: 1,
+    });
+
+    const result = sut.get({ ...mockRequestParams, uniqueSignersCount: 2 });
+
+    expect(result).toBeUndefined();
+  });
+
+  it("should conform when authorizedSigners are in different order", () => {
+    const signers = ["0xAAA", "0xBBB", "0xCCC"];
+    const params = { ...mockRequestParams, authorizedSigners: signers };
+    sut.update(mockSignedDataPackagesResponse, params);
+
+    const result = sut.get({
+      ...mockRequestParams,
+      authorizedSigners: [...signers].reverse(),
+    });
+
+    expect(result).toEqual(mockSignedDataPackagesResponse);
+  });
 });
 
 describe("isConforming tests", () => {
@@ -199,7 +259,6 @@ describe("isConforming tests", () => {
   it("should return false if one of important request params is not equal", () => {
     for (const otherPrams of [
       { ...thisRequestParams, dataServiceId: "other-service" },
-      { ...thisRequestParams, uniqueSignersCount: 2 },
       { ...thisRequestParams, authorizedSigners: ["0x00"] },
       { ...thisRequestParams, maxTimestampDeviationMS: 123 },
       { ...thisRequestParams, historicalTimestamp: 123 },
@@ -209,13 +268,75 @@ describe("isConforming tests", () => {
     }
   });
 
+  it("should return false when other has higher uniqueSignersCount", () => {
+    expect(
+      isConforming(
+        { ...thisRequestParams, uniqueSignersCount: 1 },
+        { ...thisRequestParams, uniqueSignersCount: 2 },
+        ["ETH"]
+      )
+    ).toBe(false);
+  });
+
+  it("should return true when other has same uniqueSignersCount", () => {
+    expect(
+      isConforming(
+        { ...thisRequestParams, uniqueSignersCount: 2 },
+        { ...thisRequestParams, uniqueSignersCount: 2 },
+        ["ETH"]
+      )
+    ).toBe(true);
+  });
+
+  it("should return true when other has lower uniqueSignersCount", () => {
+    expect(
+      isConforming(
+        { ...thisRequestParams, uniqueSignersCount: 3 },
+        { ...thisRequestParams, uniqueSignersCount: 1 },
+        ["ETH"]
+      )
+    ).toBe(true);
+  });
+
   it("should return true if one of not important request params is not equal", () => {
     for (const otherPrams of [
       { ...thisRequestParams, waitForAllGatewaysTimeMs: 123 },
       { ...thisRequestParams, urls: ["https://"] },
       { ...thisRequestParams, enableEnhancedLogs: true },
+      { ...thisRequestParams, uniqueSignersCount: 1 },
     ]) {
       expect(isConforming(thisRequestParams, otherPrams, ["ETH"])).toBe(true);
     }
+  });
+
+  it("should conform when authorizedSigners are in different order", () => {
+    const signers = getSignersForDataServiceId("redstone-main-demo");
+    expect(
+      isConforming(
+        { ...thisRequestParams, authorizedSigners: signers },
+        { ...thisRequestParams, authorizedSigners: [...signers].reverse() },
+        ["ETH"]
+      )
+    ).toBe(true);
+  });
+
+  it("should treat returnAllPackages consistently", () => {
+    const { dataPackagesIds: _, ...baseParams } = thisRequestParams;
+    const returnAllParams: DataPackagesRequestParams = {
+      ...baseParams,
+      returnAllPackages: true,
+    };
+    const returnSpecificParams: DataPackagesRequestParams = {
+      ...thisRequestParams,
+      returnAllPackages: false,
+    };
+
+    expect(isConforming(returnAllParams, returnSpecificParams, ["ETH"])).toBe(false);
+
+    expect(
+      isConforming({ ...thisRequestParams, returnAllPackages: undefined }, returnSpecificParams, [
+        "ETH",
+      ])
+    ).toBe(true);
   });
 });
