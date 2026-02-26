@@ -129,7 +129,7 @@ function validateDataPackagesResponse(
 
 function maybeGetSigner(dp: SignedDataPackage) {
   try {
-    return dp.recoverSignerAddress();
+    return dp.getSignerAddress();
   } catch {
     return undefined;
   }
