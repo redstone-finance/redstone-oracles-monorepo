@@ -363,6 +363,9 @@
     },
     "IS_NY_STOCKS_MARKET_OPEN": {
       "source": [],
+      "broadcasters": [
+        "influx"
+      ],
       "denomination": "other",
       "rateFeed": false
     },
@@ -1881,6 +1884,9 @@
     "ESH6": {
       "source": [
         "databento-cme-no-closing-price"
+      ],
+      "broadcasters": [
+        "influx"
       ],
       "denomination": "USD",
       "rateFeed": false
