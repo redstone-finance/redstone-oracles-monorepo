@@ -143,7 +143,7 @@ export class MultiExecutorFactory<T extends object> {
 
     const result = this.getExecutor<R>(mode).execute(functions);
     const value = await timeoutOrResult(result, this.config.allExecutionsTimeoutMs);
-    this.logger.debug(`[${stringify(key)}] Returning ${stringify(value)}`);
+    this.logger.trace(`[${stringify(key)}] Returning ${stringify(value)}`);
     return value;
   }
 }
