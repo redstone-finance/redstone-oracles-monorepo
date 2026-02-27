@@ -28,7 +28,7 @@ export abstract class Executor<R> {
 
     try {
       const result = await timeoutOrResult(func.fn(), timeoutMs, "timed out");
-      logger.debug(`${message("returns")}: ${stringify(result)}${suffix}`);
+      logger.trace(`${message("returns")}: ${stringify(result)}${suffix}`);
       func.delegate?.didSucceed?.(func, result);
 
       return result;
