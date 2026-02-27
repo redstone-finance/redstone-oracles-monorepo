@@ -12349,6 +12349,7 @@ __metadata:
     "@redstone-finance/rpc-providers": "workspace:*"
     "@redstone-finance/sdk": "workspace:*"
     "@redstone-finance/utils": "workspace:*"
+    "@redstone-finance/ws": "workspace:*"
     "@typechain/ethers-v5": "npm:^10.2.0"
     "@typechain/hardhat": "npm:^6.1.2"
     "@types/chai": "npm:^4.3.4"
