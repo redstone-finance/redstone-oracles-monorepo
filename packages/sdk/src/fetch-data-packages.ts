@@ -118,7 +118,7 @@ const getTheMostRecentDataPackages = (
           {}
         );
 
-        requestDataPackagesLogger?.willResolve(newestPackage);
+        requestDataPackagesLogger?.willResolve(newestPackage, requestParams.dataServiceId);
         clearTimeout(timer);
         didResolveOrReject = true;
         resolve(newestPackage);
