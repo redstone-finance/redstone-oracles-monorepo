@@ -53,16 +53,18 @@ export class RequestDataPackagesLogger {
     );
   }
 
-  willResolve(dataPackagesResponse: DataPackagesResponse) {
-    const timestampDelta = Date.now() - getResponseTimestamp(dataPackagesResponse);
+  willResolve(dataPackagesResponse: DataPackagesResponse, dataServiceId: string) {
+    const responseTimestamp = getResponseTimestamp(dataPackagesResponse);
+    const timestampDelta = Date.now() - responseTimestamp;
     const collectedResponses = RequestDataPackagesLogger.filterOutUndefined(
       this.particularResponses
     );
     const particularTimestamps = this.particularTimestamps();
 
     this.logger.log(
-      `Resolving with the ${this.isHistorical ? "historical" : "newest"} package timestamp: ${getResponseTimestamp(dataPackagesResponse)} of ${collectedResponses.length} response(s)` +
-        `, ${timestampDelta / 1000} [s] ago`,
+      `Resolving with the ${this.isHistorical ? "historical" : "newest"} package for ${dataServiceId}, ` +
+        `timestamp: ${responseTimestamp} of ${collectedResponses.length} response(s)` +
+        `, ${RedstoneCommon.msToSecs(timestampDelta)} [s] ago`,
       {
         responseTimestamps: particularTimestamps,
         timestampDelta,
