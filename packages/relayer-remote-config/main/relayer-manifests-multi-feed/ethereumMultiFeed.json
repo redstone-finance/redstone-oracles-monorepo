@@ -430,6 +430,12 @@
     },
     "weETH/ETH": {
       "priceFeedAddress": "0x8751F736E94F6CD167e8C5B97E245680FbD9CC36"
+    },
+    "muBOND_FUNDAMENTAL": {
+      "priceFeedAddress": "0x636Eca78f6B46A69Ab233ef513C1fB4703e32A7b"
+    },
+    "AZND_FUNDAMENTAL": {
+      "priceFeedAddress": "0xc8A09cb2692724752352899f73f81ebE5Ef06Bad"
     }
   }
 }
