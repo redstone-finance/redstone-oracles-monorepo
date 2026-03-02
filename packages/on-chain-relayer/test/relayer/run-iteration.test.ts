@@ -1,10 +1,11 @@
 import { INumericDataPoint } from "@redstone-finance/protocol";
-import { DataPackagesRequestParams, DataPackagesResponseCache } from "@redstone-finance/sdk";
+import { DataPackagesResponseCache } from "@redstone-finance/sdk";
 import { RedstoneLogger } from "@redstone-finance/utils";
 import { expect } from "chai";
 import sinon from "sinon";
 import { ContractFacade, IterationArgsProvider, RelayerConfig, runIteration } from "../../src";
 import {
+  BASE_CACHE_PARAMS,
   ContractParamsProviderMock,
   DEFAULT_DATA_POINTS,
   ETH_PRICE,
@@ -55,8 +56,9 @@ describe("runIteration tests", () => {
       relayerConfig,
       getIterationArgsProviderMock(),
       new DataPackagesResponseCache().update(await getDataPackagesResponse(), {
+        ...BASE_CACHE_PARAMS,
         dataPackagesIds: ["ETH", "BTC"],
-      } as DataPackagesRequestParams)
+      })
     );
 
     expect(updatePricesStub.calledOnce).to.be.true;
@@ -70,9 +72,14 @@ describe("runIteration tests", () => {
     await performRunIterationTest(
       relayerConfig,
       getIterationArgsProviderMock(),
-      new DataPackagesResponseCache().update({}, {
-        dataServiceId: "other",
-      } as DataPackagesRequestParams)
+      new DataPackagesResponseCache().update(
+        {},
+        {
+          ...BASE_CACHE_PARAMS,
+          dataServiceId: "other",
+          dataPackagesIds: ["ETH"],
+        }
+      )
     );
 
     expect(updatePricesStub.calledOnce).to.be.true;
@@ -87,8 +94,9 @@ describe("runIteration tests", () => {
       relayerConfig,
       getIterationArgsProviderMock(),
       new DataPackagesResponseCache().update(await getMultiPointDataPackagesResponse(), {
+        ...BASE_CACHE_PARAMS,
         dataPackagesIds: [MULTI_POINT_DATA_PACKAGE_ID],
-      } as DataPackagesRequestParams)
+      })
     );
 
     expect(updatePricesStub.calledOnce).to.be.true;
@@ -106,8 +114,9 @@ describe("runIteration tests", () => {
       }),
       getIterationArgsProviderMock(),
       new DataPackagesResponseCache().update(await getMultiPointDataPackagesResponse(), {
+        ...BASE_CACHE_PARAMS,
         dataPackagesIds: [MULTI_POINT_DATA_PACKAGE_ID],
-      } as DataPackagesRequestParams),
+      }),
       [
         { dataFeedId: "ETH", value: ETH_PRICE },
         { dataFeedId: "DOGE", value: 0.01 },
