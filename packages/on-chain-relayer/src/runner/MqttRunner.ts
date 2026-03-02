@@ -202,6 +202,7 @@ export class MqttRunner implements MqttDataProcessingStrategyDelegate<RelayerCon
       uniqueSignersCount,
       authorizedSigners,
       storageInstance,
+      skipSignatureVerification,
     } = requestParams;
     const {
       mqttMinimalOffChainSignersCount,
@@ -224,6 +225,7 @@ export class MqttRunner implements MqttDataProcessingStrategyDelegate<RelayerCon
       dataPackageIds: dataPackagesIds,
       uniqueSignersCount,
       authorizedSigners,
+      skipSignatureVerification,
       storageInstance,
       minimalOffChainSignersCount: mqttMinimalOffChainSignersCount,
       waitMsForOtherSignersAfterMinimalSignersCountSatisfied: mqttWaitForOtherSignersMs,

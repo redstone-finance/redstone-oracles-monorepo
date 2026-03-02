@@ -92,6 +92,12 @@ export type DataPackageSubscriberParams = {
   publishAllPackages?: boolean;
 
   /**
+   * when returning multiple feeds signature verification is a heavy operation
+   * with this flag signature verification is skipped and the topic-address is taken
+   */
+  skipSignatureVerification?: boolean;
+
+  /**
    * Instance of the storage to be used for caching responses
    */
   storageInstance?: DataPackagesResponseStorage;
