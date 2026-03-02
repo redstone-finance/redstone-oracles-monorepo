@@ -204,6 +204,16 @@ export class SignedDataPackage extends Serializable implements SignedDataPackage
     return SignedDataPackage.fromObjLikeThis(deserializeSignedPackage(plainObject));
   }
 
+  public static fromObjWithSigner(
+    plainObject: SignedDataPackagePlainObj,
+    signerAddress: string
+  ): SignedDataPackage {
+    const pkg = SignedDataPackage.fromObj(plainObject);
+    pkg.computedSignerAddress = signerAddress;
+
+    return pkg;
+  }
+
   public static fromObjLazy(plainObject: SignedDataPackagePlainObj): SignedDataPackage {
     const dp = new SignedDataPackage(null as unknown as DataPackage, null as unknown as string);
     let decoded: SignedDataPackageLike | undefined;

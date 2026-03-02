@@ -18,7 +18,7 @@ import { LastPublishedFeedState } from "./LastPublishedFeedState";
 import { PubSubClient, SubscribeCallback } from "./PubSubClient";
 import { RateLimitsCircuitBreaker } from "./RateLimitsCircuitBreaker";
 import { ReferenceValueVerifier } from "./ReferenceValueVerifier";
-import { encodeDataPackageTopic } from "./topics";
+import { decodeDataPackageTopic, encodeDataPackageTopic } from "./topics";
 
 type SubscriptionCallbackFn = (dataPackages: DataPackagesResponse) => unknown;
 
@@ -171,7 +171,7 @@ export class DataPackageSubscriber {
     }
     this.subscribeCallback = subscribeCallback;
 
-    const internalCallback: SubscribeCallback = (_topicName, messagePayload, error) => {
+    const internalCallback: SubscribeCallback = (topicName, messagePayload, error) => {
       this.handleCircuitBreaker();
 
       try {
@@ -179,7 +179,7 @@ export class DataPackageSubscriber {
           throw new Error(error);
         }
 
-        this.processNewPackage(messagePayload);
+        this.processNewPackage(messagePayload, topicName);
       } catch (e) {
         this.logger.error(
           `Failed to process new package error=${RedstoneCommon.stringifyError(e)}`
@@ -226,13 +226,18 @@ export class DataPackageSubscriber {
     this.pubSubClient.stop();
   }
 
-  private processNewPackage(dataPackageFromMessage: unknown) {
+  private processNewPackage(dataPackageFromMessage: unknown, topicName: string) {
     //schema
     RedstoneCommon.zodAssert<SignedDataPackagePlainObj>(
       SignedDataPackageSchema,
       dataPackageFromMessage
     );
-    const signedDataPackage = SignedDataPackage.fromObj(dataPackageFromMessage);
+    const signedDataPackage = this.params.skipSignatureVerification
+      ? SignedDataPackage.fromObjWithSigner(
+          dataPackageFromMessage,
+          decodeDataPackageTopic(topicName).nodeAddress
+        )
+      : SignedDataPackage.fromObj(dataPackageFromMessage);
     const dataPackageId = signedDataPackage.dataPackage.dataPackageId;
     const packageTimestamp = signedDataPackage.dataPackage.timestampMilliseconds;
 
@@ -424,6 +429,7 @@ function dataPackagesRequestParamsFromSubscriberParams(
     ignoreMissingFeeds: ignoreMissingFeed,
     authorizedSigners,
     storageInstance,
+    skipSignatureVerification,
   } = subscriberParams;
 
   return {
@@ -433,5 +439,6 @@ function dataPackagesRequestParamsFromSubscriberParams(
     ignoreMissingFeed,
     authorizedSigners,
     storageInstance,
+    skipSignatureVerification,
   };
 }
