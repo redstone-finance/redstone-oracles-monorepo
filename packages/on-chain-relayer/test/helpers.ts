@@ -7,7 +7,6 @@ import {
 import {
   calculateHistoricalPackagesTimestamp,
   ContractParamsProvider,
-  DataPackagesRequestParams,
   DataPackagesResponse,
   DataPackagesResponseCache,
 } from "@redstone-finance/sdk";
@@ -19,6 +18,11 @@ export const btcDataFeed = formatBytes32String("BTC");
 export const ETH_PRICE = 1670.99;
 export const BTC_PRICE = 23077.68;
 export const MULTI_POINT_DATA_PACKAGE_ID = "__MULTI__";
+export const BASE_CACHE_PARAMS = {
+  authorizedSigners: ["0x01"],
+  dataServiceId: "redstone-main-demo",
+  uniqueSignersCount: 1,
+};
 
 export const dataFeedsIds = [ethDataFeed, btcDataFeed];
 
@@ -68,8 +72,9 @@ export class ContractParamsProviderMock extends ContractParamsProvider {
   ) {
     super(
       {
+        ...BASE_CACHE_PARAMS,
         dataPackagesIds: dataPoints.map((dp) => dp.dataFeedId),
-      } as unknown as DataPackagesRequestParams,
+      },
       cache,
       overrideRequestParamsPackagesIds
     );

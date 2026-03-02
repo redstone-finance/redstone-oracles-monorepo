@@ -8,6 +8,8 @@ import {
 import { RedstoneCommon } from "@redstone-finance/utils";
 import { RelayerConfig } from "../config/RelayerConfig";
 
+const storageInstance = new DataPackagesResponseStorage();
+
 export function canIgnoreMissingFeeds(relayerConfig: RelayerConfig) {
   return isMultiFeedAdapterType(relayerConfig.adapterContractType);
 }
@@ -45,7 +47,7 @@ export function makeDataPackagesRequestParams(
     waitForAllGatewaysTimeMs,
     enableEnhancedLogs: enableEnhancedRequestDataPackagesLogs,
     storageInstance: relayerConfig.useGlobalDataPackagesResponseStorage
-      ? DataPackagesResponseStorage.getInstance()
+      ? storageInstance
       : undefined,
   };
 }
