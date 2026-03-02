@@ -73,7 +73,7 @@ export abstract class ParallelExecutor<R> extends Executor<R> {
 
       if (isEnough) {
         const value = this.aggregate(successfulResults);
-        this.logger.debug(`Resolving with ${stringify(value)}`);
+        this.logger.trace(`Resolving with ${stringify(value)}`);
         resolve(value);
       }
 
