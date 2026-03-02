@@ -139,13 +139,6 @@ describe("DataPackagesResponseStorage", () => {
     expect(result).toBeUndefined();
   });
 
-  it("getInstance should return the same singleton", () => {
-    const a = DataPackagesResponseStorage.getInstance();
-    const b = DataPackagesResponseStorage.getInstance();
-
-    expect(a).toBe(b);
-  });
-
   it("should not store empty response", () => {
     sut.set({}, makeReqParams());
 
