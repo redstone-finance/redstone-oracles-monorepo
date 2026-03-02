@@ -199,8 +199,7 @@ function makeComparableRequestParams(requestParams: DataPackagesRequestParams) {
 
   return {
     dataServiceId,
-    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition -- Some problems with tests with non-full params
-    authorizedSigners: (authorizedSigners ?? []).toSorted(),
+    authorizedSigners: authorizedSigners.toSorted(),
     maxTimestampDeviationMS,
     historicalTimestamp,
     ignoreMissingFeed,

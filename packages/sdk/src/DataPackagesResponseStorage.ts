@@ -13,17 +13,12 @@ type Config = { ttlMs: number; latestTtlMs?: number };
 const DEFAULT_CONFIG: Config = { ttlMs: RedstoneCommon.minToMs(5) };
 
 export class DataPackagesResponseStorage {
-  private static instance = new DataPackagesResponseStorage();
   private readonly logger = loggerFactory("data-packages-response-storage");
   private readonly entries = new Map<number, DataPackagesResponseCache>();
   private readonly config: Config;
 
   constructor(configOverride?: Partial<Config>) {
     this.config = { ...DEFAULT_CONFIG, ...configOverride };
-  }
-
-  static getInstance() {
-    return DataPackagesResponseStorage.instance;
   }
 
   toJSON() {
