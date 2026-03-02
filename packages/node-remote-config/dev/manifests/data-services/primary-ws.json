@@ -1,8 +1,8 @@
 {
-  "interval": 5000,
+  "interval": 1000,
   "priceAggregator": "median",
   "defaultSource": [],
-  "sourceTimeout": 7000,
+  "sourceTimeout": 5000,
   "minValidSourcesPercentage": 1,
   "deviationCheck": {
     "deviationWithRecentValues": {
@@ -13,14 +13,14 @@
   "tokens": {
     "USDT": {
       "source": [
-        "binance-usd",
-        "bitget-usd",
-        "bitstamp-usd",
-        "bullish-usd",
-        "coinbase-usd",
-        "gemini-usd",
-        "kraken-usd",
-        "okx-usd"
+        "binance_deferred-usd",
+        "bitget_deferred-usd",
+        "bitstamp_deferred-usd",
+        "bullish_deferred-usd",
+        "coinbase_deferred-usd",
+        "gemini_deferred-usd",
+        "kraken_deferred-usd",
+        "okx_deferred-usd"
       ],
       "deviationCheck": {
         "deviationWithRecentValues": {
@@ -28,34 +28,35 @@
           "maxDelayMilliseconds": 120000
         }
       },
+      "skipBroadcasting": true,
       "denomination": "USD",
       "rateFeed": false
     },
     "USDC": {
       "source": [
-        "binance-usd",
-        "binance-usdt",
-        "bingx-usdt",
-        "bitget-usd",
-        "bitget-usdt",
-        "bitmart-usdt",
-        "bitrue-usdt",
-        "bitstamp-usd",
-        "bybit-usdt",
-        "gate-usdt",
-        "gemini-usd",
-        "htx-usdt",
-        "kraken-usd",
-        "kraken-usdt",
-        "kucoin-usdt",
-        "lbank-usdt",
-        "mexc-usdt",
-        "okx-usdt",
-        "curve-ethereum-dai",
-        "curve-ethereum-usdt",
-        "uniswap-v3-ethereum-dai-100",
-        "uniswap-v4-arbitrumone-usdt-8",
-        "uniswap-v4-ethereum-usdt-10"
+        "binance_deferred-usd",
+        "binance_deferred-usdt",
+        "bingx_deferred-usdt",
+        "bitget_deferred-usd",
+        "bitget_deferred-usdt",
+        "bitmart_deferred-usdt",
+        "bitrue_deferred-usdt",
+        "bitstamp_deferred-usd",
+        "bybit_deferred-usdt",
+        "gate_deferred-usdt",
+        "gemini_deferred-usd",
+        "htx_deferred-usdt",
+        "kraken_deferred-usd",
+        "kraken_deferred-usdt",
+        "kucoin_deferred-usdt",
+        "lbank_deferred-usdt",
+        "mexc_deferred-usdt",
+        "okx_deferred-usdt",
+        "curve-ethereum-dai-deferred",
+        "curve-ethereum-usdt-deferred",
+        "uniswap-v3-ethereum-dai-100-deferred",
+        "uniswap-v4-arbitrumone-usdt-8-deferred",
+        "uniswap-v4-ethereum-usdt-10-deferred"
       ],
       "deviationCheck": {
         "deviationWithRecentValues": {
@@ -63,24 +64,25 @@
           "maxDelayMilliseconds": 120000
         }
       },
+      "skipBroadcasting": true,
       "denomination": "USD",
       "rateFeed": false
     },
     "DAI": {
       "source": [
-        "bingx-usdt",
-        "bitget-usdt",
-        "bitmart-usdt",
-        "bitrue-usdt",
-        "bybit-usdt",
-        "gate-usdt",
-        "htx-usdt",
-        "kraken-usd",
-        "kraken-usdt",
-        "lbank-usdt",
-        "mexc-usdt",
-        "okx-usdt",
-        "curve-ethereum-usdt"
+        "bingx_deferred-usdt",
+        "bitget_deferred-usdt",
+        "bitmart_deferred-usdt",
+        "bitrue_deferred-usdt",
+        "bybit_deferred-usdt",
+        "gate_deferred-usdt",
+        "htx_deferred-usdt",
+        "kraken_deferred-usd",
+        "kraken_deferred-usdt",
+        "lbank_deferred-usdt",
+        "mexc_deferred-usdt",
+        "okx_deferred-usdt",
+        "curve-ethereum-usdt-deferred"
       ],
       "deviationCheck": {
         "deviationWithRecentValues": {
@@ -88,106 +90,111 @@
           "maxDelayMilliseconds": 120000
         }
       },
+      "skipBroadcasting": true,
       "denomination": "USD",
       "rateFeed": false
     },
     "EUR": {
       "source": [
-        "binance-usdc",
-        "binance-usdt",
-        "bitstamp-usd",
-        "kraken-usd",
-        "mexc-usdc",
-        "mexc-usdt",
-        "bitget-usdt-reversed",
-        "bitstamp-btc-reversed",
-        "coinbase-btc-reversed",
-        "kraken-usdt-reversed",
-        "okx-btc-reversed"
+        "binance_deferred-usdc",
+        "binance_deferred-usdt",
+        "bitstamp_deferred-usd",
+        "kraken_deferred-usd",
+        "mexc_deferred-usdc",
+        "mexc_deferred-usdt",
+        "bitget_deferred-usdt-reversed",
+        "bitstamp_deferred-btc-reversed",
+        "coinbase_deferred-btc-reversed",
+        "kraken_deferred-usdt-reversed",
+        "okx_deferred-btc-reversed"
       ],
+      "skipBroadcasting": true,
       "denomination": "USD",
       "rateFeed": false
     },
     "BTC": {
       "source": [
-        "binance-usdc",
-        "bingx-usdc",
-        "bingx-usdt",
-        "bitget-usdc",
-        "bitget-usdt",
-        "bitmart-usdt",
-        "bitrue-usdc",
-        "bitrue-usdt",
-        "bitstamp-usd",
-        "bybit-usdc",
-        "coinbase-usd",
-        "htx-usdt",
-        "kraken-usd",
-        "kraken-usdt",
-        "kucoin-usdt",
-        "lbank-usdt",
-        "mexc-usdt",
-        "okx-usd",
-        "xt-usdt"
+        "binance_deferred-usdc",
+        "bingx_deferred-usdc",
+        "bingx_deferred-usdt",
+        "bitget_deferred-usdc",
+        "bitget_deferred-usdt",
+        "bitmart_deferred-usdt",
+        "bitrue_deferred-usdc",
+        "bitrue_deferred-usdt",
+        "bitstamp_deferred-usd",
+        "bybit_deferred-usdc",
+        "coinbase_deferred-usd",
+        "htx_deferred-usdt",
+        "kraken_deferred-usd",
+        "kraken_deferred-usdt",
+        "kucoin_deferred-usdt",
+        "lbank_deferred-usdt",
+        "mexc_deferred-usdt",
+        "okx_deferred-usd",
+        "xt_deferred-usdt"
       ],
+      "skipBroadcasting": true,
       "denomination": "USD",
       "rateFeed": false
     },
     "ETH": {
       "source": [
-        "binance-usdt",
-        "bingx-usdc",
-        "bingx-usdt",
-        "bitget-usdc",
-        "bitget-usdt",
-        "bitmart-usdt",
-        "bitrue-usdc",
-        "bitrue-usdt",
-        "bitstamp-usd",
-        "bybit-usdc",
-        "bybit-usdt",
-        "coinbase-usd",
-        "htx-usdt",
-        "kraken-eur",
-        "kraken-usd",
-        "kucoin-usdt",
-        "lbank-usdt",
-        "mexc-usdt",
-        "xt-usdt"
+        "binance_deferred-usdt",
+        "bingx_deferred-usdc",
+        "bingx_deferred-usdt",
+        "bitget_deferred-usdc",
+        "bitget_deferred-usdt",
+        "bitmart_deferred-usdt",
+        "bitrue_deferred-usdc",
+        "bitrue_deferred-usdt",
+        "bitstamp_deferred-usd",
+        "bybit_deferred-usdc",
+        "bybit_deferred-usdt",
+        "coinbase_deferred-usd",
+        "htx_deferred-usdt",
+        "kraken_deferred-eur",
+        "kraken_deferred-usd",
+        "kucoin_deferred-usdt",
+        "lbank_deferred-usdt",
+        "mexc_deferred-usdt",
+        "xt_deferred-usdt"
       ],
+      "skipBroadcasting": true,
       "denomination": "USD",
       "rateFeed": false
     },
     "XRP": {
       "source": [
-        "binance-usdc",
-        "binance-usdt",
-        "bingx-usdc",
-        "bingx-usdt",
-        "bitget-usdc",
-        "bitget-usdt",
-        "bitmart-usdt",
-        "bitrue-usdc",
-        "bitrue-usdt",
-        "bitstamp-usd",
-        "bybit-usdt",
-        "coinbase-usd",
-        "kraken-eur",
-        "kraken-usd",
-        "lbank-usdc",
-        "lbank-usdt",
-        "mexc-usdc",
-        "mexc-usdt",
-        "okx-usdt",
-        "xt-usdt"
+        "binance_deferred-usdc",
+        "binance_deferred-usdt",
+        "bingx_deferred-usdc",
+        "bingx_deferred-usdt",
+        "bitget_deferred-usdc",
+        "bitget_deferred-usdt",
+        "bitmart_deferred-usdt",
+        "bitrue_deferred-usdc",
+        "bitrue_deferred-usdt",
+        "bitstamp_deferred-usd",
+        "bybit_deferred-usdt",
+        "coinbase_deferred-usd",
+        "kraken_deferred-eur",
+        "kraken_deferred-usd",
+        "lbank_deferred-usdc",
+        "lbank_deferred-usdt",
+        "mexc_deferred-usdc",
+        "mexc_deferred-usdt",
+        "okx_deferred-usdt",
+        "xt_deferred-usdt"
       ],
+      "skipBroadcasting": true,
       "denomination": "USD",
       "rateFeed": false
     },
     "SPXU": {
       "source": [
-        "twelve-data",
-        "financialmodelingprep",
+        "twelve-data-deferred",
+        "financialmodelingprep-deferred",
         "ws-dx-feed-no-close-price",
         "ws-polygon-massive"
       ],
@@ -196,12 +203,12 @@
     },
     "XAU": {
       "source": [
-        "alltick-api",
-        "commodity-price-api",
-        "financialmodelingprep",
-        "metals-api",
-        "metal-price-api",
-        "twelve-data",
+        "alltick-api-deferred",
+        "commodity-price-api-deferred",
+        "financialmodelingprep-deferred",
+        "metals-api-deferred",
+        "metal-price-api-deferred",
+        "twelve-data-deferred",
         "ws-polygon-massive-commodities"
       ],
       "denomination": "USD",
@@ -209,12 +216,12 @@
     },
     "XAG": {
       "source": [
-        "alltick-api",
-        "commodity-price-api",
-        "financialmodelingprep",
-        "metals-api",
-        "metal-price-api",
-        "twelve-data",
+        "alltick-api-deferred",
+        "commodity-price-api-deferred",
+        "financialmodelingprep-deferred",
+        "metals-api-deferred",
+        "metal-price-api-deferred",
+        "twelve-data-deferred",
         "ws-polygon-massive-commodities"
       ],
       "denomination": "USD",
@@ -222,19 +229,19 @@
     },
     "PHP": {
       "source": [
-        "financialmodelingprep",
-        "twelve-data",
+        "financialmodelingprep-deferred",
+        "twelve-data-deferred",
         "ws-polygon-massive-commodities",
-        "metal-price-api"
+        "metal-price-api-deferred"
       ],
       "denomination": "USD",
       "rateFeed": false
     },
     "TSLA": {
       "source": [
-        "alltick-stocks-api",
+        "alltick-stocks-api-deferred",
         "databento-no-closing-price",
-        "financialmodelingprep",
+        "financialmodelingprep-deferred",
         "ws-dx-feed-no-close-price",
         "ws-polygon-massive-no-closing-price",
         "ws-twelve-data-no-closing-price"
@@ -245,7 +252,7 @@
     "FGNXP": {
       "source": [
         "databento-no-closing-price",
-        "financialmodelingprep",
+        "financialmodelingprep-deferred",
         "ws-dx-feed-no-close-price",
         "ws-polygon-massive-no-closing-price",
         "ws-twelve-data-no-closing-price"
@@ -256,7 +263,7 @@
     "CEPT": {
       "source": [
         "databento-no-closing-price",
-        "financialmodelingprep",
+        "financialmodelingprep-deferred",
         "ws-dx-feed-no-close-price",
         "ws-polygon-massive-no-closing-price",
         "ws-twelve-data-no-closing-price"
@@ -267,7 +274,7 @@
     "FGNX": {
       "source": [
         "databento-no-closing-price",
-        "financialmodelingprep",
+        "financialmodelingprep-deferred",
         "ws-dx-feed-no-close-price",
         "ws-polygon-massive-no-closing-price",
         "ws-twelve-data-no-closing-price"
@@ -277,9 +284,9 @@
     },
     "NVDA": {
       "source": [
-        "alltick-stocks-api",
+        "alltick-stocks-api-deferred",
         "databento-no-closing-price",
-        "financialmodelingprep",
+        "financialmodelingprep-deferred",
         "ws-dx-feed-no-close-price",
         "ws-polygon-massive-no-closing-price",
         "ws-twelve-data-no-closing-price"
@@ -289,9 +296,9 @@
     },
     "PLTR": {
       "source": [
-        "alltick-stocks-api",
+        "alltick-stocks-api-deferred",
         "databento-no-closing-price",
-        "financialmodelingprep",
+        "financialmodelingprep-deferred",
         "ws-dx-feed-no-close-price",
         "ws-polygon-massive-no-closing-price",
         "ws-twelve-data-no-closing-price"
@@ -301,9 +308,9 @@
     },
     "AMD": {
       "source": [
-        "alltick-stocks-api",
+        "alltick-stocks-api-deferred",
         "databento-no-closing-price",
-        "financialmodelingprep",
+        "financialmodelingprep-deferred",
         "ws-dx-feed-no-close-price",
         "ws-polygon-massive-no-closing-price",
         "ws-twelve-data-no-closing-price"
@@ -313,9 +320,9 @@
     },
     "GOOGL": {
       "source": [
-        "alltick-stocks-api",
+        "alltick-stocks-api-deferred",
         "databento-no-closing-price",
-        "financialmodelingprep",
+        "financialmodelingprep-deferred",
         "ws-dx-feed-no-close-price",
         "ws-polygon-massive-no-closing-price",
         "ws-twelve-data-no-closing-price"
@@ -325,9 +332,9 @@
     },
     "META": {
       "source": [
-        "alltick-stocks-api",
+        "alltick-stocks-api-deferred",
         "databento-no-closing-price",
-        "financialmodelingprep",
+        "financialmodelingprep-deferred",
         "ws-dx-feed-no-close-price",
         "ws-polygon-massive-no-closing-price",
         "ws-twelve-data-no-closing-price"
@@ -337,9 +344,9 @@
     },
     "AMZN": {
       "source": [
-        "alltick-stocks-api",
+        "alltick-stocks-api-deferred",
         "databento-no-closing-price",
-        "financialmodelingprep",
+        "financialmodelingprep-deferred",
         "ws-dx-feed-no-close-price",
         "ws-polygon-massive-no-closing-price",
         "ws-twelve-data-no-closing-price"
@@ -349,9 +356,9 @@
     },
     "STRC": {
       "source": [
-        "alltick-stocks-api",
+        "alltick-stocks-api-deferred",
         "databento",
-        "financialmodelingprep",
+        "financialmodelingprep-deferred",
         "ws-dx-feed",
         "ws-polygon-massive",
         "ws-twelve-data"
@@ -361,40 +368,41 @@
     },
     "TRY_FX": {
       "source": [
-        "alltick-api-reversed",
-        "metal-price-api",
+        "alltick-api-reversed-deferred",
+        "metal-price-api-deferred",
         "ws-polygon-massive-commodities",
-        "twelve-data"
+        "twelve-data-deferred"
       ],
       "denomination": "USD",
       "rateFeed": false
     },
     "TRY_CEX": {
       "source": [
-        "paribu-usdt-reversed",
-        "paribu-eth-reversed",
-        "paribu-btc-reversed",
-        "paribu-xrp-reversed",
-        "btcturk-usdt-reversed",
-        "btcturk-eth-reversed",
-        "btcturk-btc-reversed",
-        "binancetr-usdt-reversed",
-        "binancetr-btc-reversed",
-        "binancetr-eth-reversed",
-        "okxtr-usdt-reversed",
-        "okxtr-btc-reversed",
-        "okxtr-eth-reversed"
+        "paribu_deferred-usdt-reversed",
+        "paribu_deferred-eth-reversed",
+        "paribu_deferred-btc-reversed",
+        "paribu_deferred-xrp-reversed",
+        "btcturk_deferred-usdt-reversed",
+        "btcturk_deferred-eth-reversed",
+        "btcturk_deferred-btc-reversed",
+        "binancetr_deferred-usdt-reversed",
+        "binancetr_deferred-btc-reversed",
+        "binancetr_deferred-eth-reversed",
+        "okxtr_deferred-usdt-reversed",
+        "okxtr_deferred-btc-reversed",
+        "okxtr_deferred-eth-reversed"
       ],
       "denomination": "USD",
       "rateFeed": false
     },
     "TRY": {
-      "source": ["try-condition-fetcher"],
+      "source": ["try-condition-fetcher-deferred"],
       "denomination": "USD",
       "rateFeed": false
     },
     "IS_NY_STOCKS_MARKET_OPEN": {
       "source": ["is-ny-stocks-market-open-deferred"],
+      "skipBroadcasting": true,
       "denomination": "other",
       "rateFeed": false
     }
