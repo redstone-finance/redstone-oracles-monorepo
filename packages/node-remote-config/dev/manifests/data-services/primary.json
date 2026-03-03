@@ -402,7 +402,8 @@
     "C3M": {
       "source": ["financialmodelingprep", "twelve-data"],
       "denomination": "USD",
-      "rateFeed": false
+      "rateFeed": false,
+      "types": ["rwa"]
     },
     "USDC.USDT": {
       "source": ["non-usd-based"],
@@ -1211,7 +1212,8 @@
         "okx-btc-reversed"
       ],
       "denomination": "USD",
-      "rateFeed": false
+      "rateFeed": false,
+      "types": ["rwa"]
     },
     "GBP": {
       "source": [
@@ -1428,7 +1430,8 @@
     "KES": {
       "source": ["alphavantage-usd", "financialmodelingprep", "twelve-data", "metal-price-api"],
       "denomination": "USD",
-      "rateFeed": false
+      "rateFeed": false,
+      "types": ["rwa"]
     },
     "COP": {
       "source": [
@@ -1438,7 +1441,8 @@
         "twelve-data"
       ],
       "denomination": "USD",
-      "rateFeed": false
+      "rateFeed": false,
+      "types": ["rwa"]
     },
     "bsdETH": {
       "source": ["aerodrome-base-weth", "aerodrome-cl-base-weth", "uniswap-v3-base-weth-100"],

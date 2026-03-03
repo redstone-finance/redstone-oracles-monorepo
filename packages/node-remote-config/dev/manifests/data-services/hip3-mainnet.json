@@ -273,13 +273,15 @@
       },
       "broadcasters": ["influx"],
       "denomination": "USD",
-      "rateFeed": false
+      "rateFeed": false,
+      "types": ["rwa"]
     },
     "IS_NY_STOCKS_MARKET_OPEN": {
       "source": ["is-ny-stocks-market-open"],
       "broadcasters": ["influx"],
       "denomination": "other",
-      "rateFeed": false
+      "rateFeed": false,
+      "types": ["rwa"]
     },
     "MARK_flx:TSLA": {
       "source": ["hyperliquid-mainnet-perps-ws-fetcher", "hydromancer-mainnet-perps-ws-fetcher"],
@@ -401,7 +403,8 @@
       },
       "broadcasters": ["influx"],
       "denomination": "USD",
-      "rateFeed": false
+      "rateFeed": false,
+      "types": ["rwa"]
     },
     "MARK_flx:NVDA": {
       "source": ["hyperliquid-mainnet-perps-ws-fetcher", "hydromancer-mainnet-perps-ws-fetcher"],
@@ -528,7 +531,8 @@
       },
       "broadcasters": ["influx"],
       "denomination": "USD",
-      "rateFeed": false
+      "rateFeed": false,
+      "types": ["rwa"]
     },
     "MARK_flx:HOOD": {
       "source": ["hyperliquid-mainnet-perps-ws-fetcher", "hydromancer-mainnet-perps-ws-fetcher"],
@@ -655,7 +659,8 @@
       },
       "broadcasters": ["influx"],
       "denomination": "USD",
-      "rateFeed": false
+      "rateFeed": false,
+      "types": ["rwa"]
     },
     "MARK_flx:CRCL": {
       "source": ["hyperliquid-mainnet-perps-ws-fetcher", "hydromancer-mainnet-perps-ws-fetcher"],
@@ -782,7 +787,8 @@
       },
       "broadcasters": ["influx"],
       "denomination": "USD",
-      "rateFeed": false
+      "rateFeed": false,
+      "types": ["rwa"]
     },
     "MARK_flx:COIN": {
       "source": ["hyperliquid-mainnet-perps-ws-fetcher", "hydromancer-mainnet-perps-ws-fetcher"],
@@ -937,7 +943,8 @@
         }
       },
       "denomination": "USD",
-      "rateFeed": false
+      "rateFeed": false,
+      "types": ["rwa"]
     },
     "MARK_flx:GOLD": {
       "source": ["hyperliquid-mainnet-perps-ws-fetcher", "hydromancer-mainnet-perps-ws-fetcher"],
@@ -1022,7 +1029,8 @@
         }
       },
       "denomination": "USD",
-      "rateFeed": false
+      "rateFeed": false,
+      "types": ["rwa"]
     },
     "MARK_flx:SILVER": {
       "source": ["hyperliquid-mainnet-perps-ws-fetcher", "hydromancer-mainnet-perps-ws-fetcher"],
@@ -1218,7 +1226,8 @@
       },
       "denomination": "USD",
       "rateFeed": false,
-      "broadcasters": ["influx"]
+      "broadcasters": ["influx"],
+      "types": ["rwa"]
     },
     "ORACLE_flx:EUR": {
       "source": ["hyperliquid-mainnet-perps-ws-fetcher", "hydromancer-mainnet-perps-ws-fetcher"],
@@ -1312,7 +1321,8 @@
         }
       },
       "denomination": "USD",
-      "rateFeed": false
+      "rateFeed": false,
+      "types": ["rwa"]
     },
     "MARK_flx:OIL": {
       "source": ["hyperliquid-mainnet-perps-ws-fetcher", "hydromancer-mainnet-perps-ws-fetcher"],
@@ -1416,7 +1426,8 @@
         }
       },
       "denomination": "USD",
-      "rateFeed": false
+      "rateFeed": false,
+      "types": ["rwa"]
     },
     "ESH6": {
       "source": ["databento-cme-no-closing-price"],
@@ -1527,7 +1538,8 @@
         }
       },
       "denomination": "USD",
-      "rateFeed": false
+      "rateFeed": false,
+      "types": ["rwa"]
     },
     "MARK_flx:COPPER": {
       "source": ["hyperliquid-mainnet-perps-ws-fetcher", "hydromancer-mainnet-perps-ws-fetcher"],
@@ -1770,7 +1782,8 @@
         }
       },
       "denomination": "USD",
-      "rateFeed": false
+      "rateFeed": false,
+      "types": ["rwa"]
     },
     "MARK_flx:PALLADIUM": {
       "source": ["hyperliquid-mainnet-perps-ws-fetcher", "hydromancer-mainnet-perps-ws-fetcher"],
@@ -1877,7 +1890,8 @@
         }
       },
       "denomination": "USD",
-      "rateFeed": false
+      "rateFeed": false,
+      "types": ["rwa"]
     },
     "MARK_flx:PLATINUM": {
       "source": ["hyperliquid-mainnet-perps-ws-fetcher", "hydromancer-mainnet-perps-ws-fetcher"],
