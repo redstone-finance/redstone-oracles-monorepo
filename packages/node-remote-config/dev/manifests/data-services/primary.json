@@ -4779,7 +4779,7 @@
       "source": [
         "spark-anchorage-api"
       ],
-      "denomination": "other",
+      "denomination": "ratio",
       "rateFeed": true
     }
   },
