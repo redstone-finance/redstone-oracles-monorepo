@@ -879,7 +879,10 @@
         "influx"
       ],
       "denomination": "other",
-      "rateFeed": false
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
     },
     "TSLA": {
       "source": [],
@@ -893,7 +896,10 @@
         "influx"
       ],
       "denomination": "USD",
-      "rateFeed": false
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
     },
     "MARK_flxn:TSLA": {
       "source": [
@@ -1061,7 +1067,10 @@
         "influx"
       ],
       "denomination": "USD",
-      "rateFeed": false
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
     },
     "MARK_flxn:NVDA": {
       "source": [
@@ -1537,7 +1546,10 @@
         "influx"
       ],
       "denomination": "USD",
-      "rateFeed": false
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
     },
     "MARK_flx:HOOD": {
       "source": [
@@ -1705,7 +1717,10 @@
         "influx"
       ],
       "denomination": "USD",
-      "rateFeed": false
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
     },
     "MARK_flx:CRCL": {
       "source": [
@@ -1873,7 +1888,10 @@
         "influx"
       ],
       "denomination": "USD",
-      "rateFeed": false
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
     },
     "MARK_flx:COIN": {
       "source": [
@@ -2072,7 +2090,10 @@
         }
       },
       "denomination": "USD",
-      "rateFeed": false
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
     },
     "MARK_flxn:GOLD": {
       "source": [
@@ -2265,7 +2286,10 @@
         }
       },
       "denomination": "USD",
-      "rateFeed": false
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
     },
     "MARK_flx:SILVER": {
       "source": [
@@ -2522,7 +2546,10 @@
         }
       },
       "denomination": "USD",
-      "rateFeed": false
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
     },
     "MARK_flx:PALLADIUM": {
       "source": [
@@ -2661,7 +2688,10 @@
         }
       },
       "denomination": "USD",
-      "rateFeed": false
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
     },
     "MARK_flx:PLATINUM": {
       "source": [
@@ -2800,6 +2830,9 @@
       "rateFeed": false,
       "broadcasters": [
         "influx"
+      ],
+      "types": [
+        "rwa"
       ]
     },
     "ORACLE_flx:EUR": {
@@ -2923,7 +2956,10 @@
         }
       },
       "denomination": "USD",
-      "rateFeed": false
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
     },
     "MARK_flx:OIL": {
       "source": [
@@ -3062,7 +3098,10 @@
         }
       },
       "denomination": "USD",
-      "rateFeed": false
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
     },
     "ESH6": {
       "source": [
@@ -3211,7 +3250,10 @@
         }
       },
       "denomination": "USD",
-      "rateFeed": false
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
     },
     "MARK_flx:COPPER": {
       "source": [
