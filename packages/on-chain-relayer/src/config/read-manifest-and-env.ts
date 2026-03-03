@@ -106,6 +106,11 @@ export const readManifestAndEnv = () => {
       z.array(z.url()).optional()
     ),
     isAuctionModel: RedstoneCommon.getFromEnv("IS_AUCTION_MODEL", z.boolean().default(false)),
+    isAuctionModelV2: RedstoneCommon.getFromEnv("IS_AUCTION_MODEL_V2", z.boolean().default(false)),
+    auctionModelGasMultipliers: RedstoneCommon.getFromEnv(
+      "AUCTION_MODEL_GAS_MULTIPLIERS",
+      z.number().gt(0).array().min(1).default([1, 1.5, 2, 2.5, 3, 4, 5, 8])
+    ),
     mentoMaxDeviationAllowed: RedstoneCommon.getFromEnv(
       "MENTO_MAX_DEVIATION_ALLOWED",
       z.number().gt(0).optional()

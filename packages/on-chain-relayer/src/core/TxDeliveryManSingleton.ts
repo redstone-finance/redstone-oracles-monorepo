@@ -18,6 +18,7 @@ export const getTxDeliveryMan = (
     multiplier: relayerConfig.gasMultiplier,
     maxAttempts: relayerConfig.maxTxSendAttempts,
     isAuctionModel: relayerConfig.isAuctionModel,
+    isAuctionModelV2: relayerConfig.isAuctionModelV2,
     forceDisableCustomGasOracle: relayerConfig.disableCustomGasOracle,
     percentileOfPriorityFee: relayerConfig.percentileOfPriorityFee,
     numberOfBlocksForFeeHistory: relayerConfig.numberOfBlocksForFeeHistory,
@@ -30,6 +31,7 @@ export const getTxDeliveryMan = (
     minAggregatedRewardsPerBlockForPercentile:
       relayerConfig.minAggregatedRewardsPerBlockForPercentile,
     rewardsPerBlockAggregationAlgorithm: relayerConfig.rewardsPerBlockAggregationAlgorithm,
+    auctionModelGasMultipliers: relayerConfig.auctionModelGasMultipliers,
   });
   return deliveryMan;
 };
