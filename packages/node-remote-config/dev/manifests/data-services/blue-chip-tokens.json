@@ -16,37 +16,38 @@
         "binance-usdt",
         "bingx-usdc",
         "bingx-usdt",
+        "bitget-eur",
         "bitget-usdc",
-        "bitget-usdt",
         "bitmart-usdt",
         "bitrue-usdc",
         "bitrue-usdt",
+        "bitstamp-eur",
         "bitstamp-usd",
         "bybit-usdc",
-        "bybit-usdt",
         "coinbase-usd",
+        "gemini-usdc",
         "htx-usdt",
         "kraken-eur",
         "kraken-usd",
-        "kucoin-usdt",
         "lbank-usdt",
         "mexc-usdt",
+        "okx-usd",
         "xt-usdt"
       ]
     },
     "BTC": {
       "source": [
         "binance-usdc",
+        "binance-usdt",
         "bingx-usdc",
         "bingx-usdt",
         "bitget-usdc",
         "bitget-usdt",
         "bitmart-usdt",
         "bitrue-usdc",
-        "bitrue-usdt",
         "bitstamp-usd",
         "bybit-usdc",
-        "coinbase-usd",
+        "gemini-usdc",
         "htx-usdt",
         "kraken-usd",
         "kraken-usdt",
@@ -54,6 +55,7 @@
         "lbank-usdt",
         "mexc-usdt",
         "okx-usd",
+        "xt-usdc",
         "xt-usdt"
       ]
     },
@@ -95,6 +97,7 @@
         "lbank-usdt",
         "mexc-usdt",
         "okx-usdt",
+        "xt-usdt",
         "curve-ethereum-dai",
         "curve-ethereum-usdt",
         "uniswap-v3-ethereum-dai-100",
@@ -141,7 +144,8 @@
         "bitrue-usdt",
         "gate-usdt",
         "lbank-usdt",
-        "mexc-usdt"
+        "mexc-usdt",
+        "xt-usdt"
       ]
     },
     "BNB": {
@@ -155,17 +159,16 @@
         "bitmart-usdt",
         "bitrue-usdc",
         "bitrue-usdt",
-        "bybit-usdc",
         "bybit-usdt",
         "gate-usdt",
         "htx-usdt",
-        "kraken-eur",
         "kraken-usdc",
-        "kucoin-usdc",
+        "kraken-usdt",
         "kucoin-usdt",
         "lbank-usdt",
         "mexc-usdt",
         "okx-usdt",
+        "xt-usdc",
         "xt-usdt"
       ]
     },
@@ -183,6 +186,7 @@
         "kraken-usd",
         "kucoin-usdt",
         "lbank-usdt",
+        "mexc-usdc",
         "mexc-usdt",
         "okx-usdt",
         "xt-usdt"
@@ -194,13 +198,13 @@
         "binance-usdt",
         "bingx-usdc",
         "bingx-usdt",
+        "bitget-usdc",
         "bitget-usdt",
         "bitmart-usdc",
         "bitmart-usdt",
         "bitrue-usdc",
         "bitrue-usdt",
         "bybit-usdt",
-        "gate-usdt",
         "htx-usdt",
         "kraken-eur",
         "kraken-usd",
@@ -209,7 +213,7 @@
         "lbank-usdt",
         "mexc-usdc",
         "mexc-usdt",
-        "okx-usdt"
+        "xt-usdt"
       ]
     },
     "ATOM": {
