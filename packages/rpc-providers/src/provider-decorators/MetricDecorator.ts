@@ -59,14 +59,6 @@ export function GetBlockNumberMetricDecorator(
   return newFactory;
 }
 
-const methodsToCollectTelemetryFrom = [
-  "eth_estimateGas",
-  "eth_blockNumber",
-  "eth_maxPriorityFeePerGas",
-  "eth_call",
-  "eth_feeHistory",
-];
-
 export function SendMetricDecorator(
   factory: () => providers.Provider,
   reportMetric: ReportMetricFn
@@ -81,50 +73,46 @@ export function SendMetricDecorator(
         params: Array<unknown> | Record<string, unknown>
       ) => Promise<unknown>;
       provider.send = async (method: string, params: unknown[]) =>
-        !methodsToCollectTelemetryFrom.includes(method)
-          ? await oldSend(method, params)
-          : await timeMethod(
-              () => oldSend(method, params),
-              reportMetric,
-              (duration, isFailure, result) => {
-                const point = createTelemetryPoint(
-                  method.replace("eth_", ""),
-                  chainId,
-                  url,
-                  isFailure,
-                  duration
-                );
-                if (
-                  method === "eth_estimateGas" ||
-                  method === "eth_blockNumber" ||
-                  method === "eth_maxPriorityFeePerGas"
-                ) {
-                  point.floatField(
-                    method.replace("eth_", ""),
-                    isFailure ? 0 : parseInt((result as BigNumber).toString())
-                  );
-                } else if (method === "eth_call") {
-                  point.tag(
-                    "isFailure",
-                    isFailure ? String(true) : ((result as string) === "0x").toString()
-                  );
-                } else if (method === "eth_feeHistory") {
-                  if (!isFailure && (result as FeeHistoryResponse).reward.length > 0) {
-                    const rewardsPerBlockForPercentile = (result as FeeHistoryResponse).reward
-                      .flat()
-                      .map((hex: string) => parseInt(hex, 16));
-                    const maxRewardsPerBlockForPercentile = Math.max(
-                      ...rewardsPerBlockForPercentile
-                    );
-                    point.floatField(
-                      "maxRewardsPerBlockForPercentile",
-                      maxRewardsPerBlockForPercentile
-                    );
-                  }
-                }
-                return point;
-              }
+        await timeMethod(
+          () => oldSend(method, params),
+          reportMetric,
+          (duration, isFailure, result) => {
+            const point = createTelemetryPoint(
+              method.replace("eth_", ""),
+              chainId,
+              url,
+              isFailure,
+              duration
             );
+            if (
+              method === "eth_estimateGas" ||
+              method === "eth_blockNumber" ||
+              method === "eth_maxPriorityFeePerGas"
+            ) {
+              point.floatField(
+                method.replace("eth_", ""),
+                isFailure ? 0 : parseInt((result as BigNumber).toString())
+              );
+            } else if (method === "eth_call") {
+              point.tag(
+                "isFailure",
+                isFailure ? String(true) : ((result as string) === "0x").toString()
+              );
+            } else if (method === "eth_feeHistory") {
+              if (!isFailure && (result as FeeHistoryResponse).reward.length > 0) {
+                const rewardsPerBlockForPercentile = (result as FeeHistoryResponse).reward
+                  .flat()
+                  .map((hex: string) => parseInt(hex, 16));
+                const maxRewardsPerBlockForPercentile = Math.max(...rewardsPerBlockForPercentile);
+                point.floatField(
+                  "maxRewardsPerBlockForPercentile",
+                  maxRewardsPerBlockForPercentile
+                );
+              }
+            }
+            return point;
+          }
+        );
     }
     return provider;
   };
