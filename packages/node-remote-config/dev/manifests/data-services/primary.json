@@ -418,7 +418,10 @@
     "C3M": {
       "source": [],
       "denomination": "USD",
-      "rateFeed": false
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
     },
     "USDC.USDT": {
       "source": [
@@ -1275,7 +1278,10 @@
     "EUR": {
       "source": [],
       "denomination": "USD",
-      "rateFeed": false
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
     },
     "GBP": {
       "source": [
@@ -1526,12 +1532,18 @@
     "KES": {
       "source": [],
       "denomination": "USD",
-      "rateFeed": false
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
     },
     "COP": {
       "source": [],
       "denomination": "USD",
-      "rateFeed": false
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
     },
     "bsdETH": {
       "source": [
