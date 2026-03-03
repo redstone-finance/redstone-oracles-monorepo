@@ -110,7 +110,8 @@
       ],
       "skipBroadcasting": true,
       "denomination": "USD",
-      "rateFeed": false
+      "rateFeed": false,
+      "types": ["rwa"]
     },
     "BTC": {
       "source": [
@@ -199,7 +200,8 @@
         "ws-polygon-massive"
       ],
       "denomination": "USD",
-      "rateFeed": false
+      "rateFeed": false,
+      "types": ["rwa"]
     },
     "XAU": {
       "source": [
@@ -212,7 +214,8 @@
         "ws-polygon-massive-commodities"
       ],
       "denomination": "USD",
-      "rateFeed": false
+      "rateFeed": false,
+      "types": ["rwa"]
     },
     "XAG": {
       "source": [
@@ -225,7 +228,8 @@
         "ws-polygon-massive-commodities"
       ],
       "denomination": "USD",
-      "rateFeed": false
+      "rateFeed": false,
+      "types": ["rwa"]
     },
     "PHP": {
       "source": [
@@ -235,7 +239,8 @@
         "metal-price-api-deferred"
       ],
       "denomination": "USD",
-      "rateFeed": false
+      "rateFeed": false,
+      "types": ["rwa"]
     },
     "TSLA": {
       "source": [
@@ -247,7 +252,8 @@
         "ws-twelve-data-no-closing-price"
       ],
       "denomination": "USD",
-      "rateFeed": false
+      "rateFeed": false,
+      "types": ["rwa"]
     },
     "FGNXP": {
       "source": [
@@ -258,7 +264,8 @@
         "ws-twelve-data-no-closing-price"
       ],
       "denomination": "USD",
-      "rateFeed": false
+      "rateFeed": false,
+      "types": ["rwa"]
     },
     "CEPT": {
       "source": [
@@ -269,7 +276,8 @@
         "ws-twelve-data-no-closing-price"
       ],
       "denomination": "USD",
-      "rateFeed": false
+      "rateFeed": false,
+      "types": ["rwa"]
     },
     "FGNX": {
       "source": [
@@ -280,7 +288,8 @@
         "ws-twelve-data-no-closing-price"
       ],
       "denomination": "USD",
-      "rateFeed": false
+      "rateFeed": false,
+      "types": ["rwa"]
     },
     "NVDA": {
       "source": [
@@ -292,7 +301,8 @@
         "ws-twelve-data-no-closing-price"
       ],
       "denomination": "USD",
-      "rateFeed": false
+      "rateFeed": false,
+      "types": ["rwa"]
     },
     "PLTR": {
       "source": [
@@ -304,7 +314,8 @@
         "ws-twelve-data-no-closing-price"
       ],
       "denomination": "USD",
-      "rateFeed": false
+      "rateFeed": false,
+      "types": ["rwa"]
     },
     "AMD": {
       "source": [
@@ -316,7 +327,8 @@
         "ws-twelve-data-no-closing-price"
       ],
       "denomination": "USD",
-      "rateFeed": false
+      "rateFeed": false,
+      "types": ["rwa"]
     },
     "GOOGL": {
       "source": [
@@ -328,7 +340,8 @@
         "ws-twelve-data-no-closing-price"
       ],
       "denomination": "USD",
-      "rateFeed": false
+      "rateFeed": false,
+      "types": ["rwa"]
     },
     "META": {
       "source": [
@@ -340,7 +353,8 @@
         "ws-twelve-data-no-closing-price"
       ],
       "denomination": "USD",
-      "rateFeed": false
+      "rateFeed": false,
+      "types": ["rwa"]
     },
     "AMZN": {
       "source": [
@@ -352,7 +366,8 @@
         "ws-twelve-data-no-closing-price"
       ],
       "denomination": "USD",
-      "rateFeed": false
+      "rateFeed": false,
+      "types": ["rwa"]
     },
     "STRC": {
       "source": [
@@ -364,7 +379,8 @@
         "ws-twelve-data"
       ],
       "denomination": "USD",
-      "rateFeed": false
+      "rateFeed": false,
+      "types": ["rwa"]
     },
     "TRY_FX": {
       "source": [
@@ -374,7 +390,8 @@
         "twelve-data-deferred"
       ],
       "denomination": "USD",
-      "rateFeed": false
+      "rateFeed": false,
+      "types": ["rwa"]
     },
     "TRY_CEX": {
       "source": [
@@ -404,7 +421,8 @@
       "source": ["is-ny-stocks-market-open"],
       "skipBroadcasting": true,
       "denomination": "other",
-      "rateFeed": false
+      "rateFeed": false,
+      "types": ["rwa"]
     }
   },
   "multiPointPackages": {}

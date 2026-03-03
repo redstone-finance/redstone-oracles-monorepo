@@ -2078,7 +2078,8 @@
     "AUD": {
       "source": ["kraken-usd", "twelve-data"],
       "denomination": "USD",
-      "rateFeed": false
+      "rateFeed": false,
+      "types": ["rwa"]
     },
     "EUR": {
       "source": [
@@ -2101,7 +2102,8 @@
         "ws-lmax"
       ],
       "denomination": "USD",
-      "rateFeed": false
+      "rateFeed": false,
+      "types": ["rwa"]
     },
     "GBP": {
       "source": [
@@ -2119,7 +2121,8 @@
     "KES": {
       "source": ["alphavantage-usd", "financialmodelingprep", "twelve-data", "metal-price-api"],
       "denomination": "USD",
-      "rateFeed": false
+      "rateFeed": false,
+      "types": ["rwa"]
     },
     "PHP": {
       "source": [
@@ -2129,7 +2132,8 @@
         "metal-price-api"
       ],
       "denomination": "USD",
-      "rateFeed": false
+      "rateFeed": false,
+      "types": ["rwa"]
     },
     "COP": {
       "source": [
@@ -2139,57 +2143,68 @@
         "twelve-data"
       ],
       "denomination": "USD",
-      "rateFeed": false
+      "rateFeed": false,
+      "types": ["rwa"]
     },
     "JPY": {
       "source": ["twelve-data"],
       "denomination": "USD",
-      "rateFeed": false
+      "rateFeed": false,
+      "types": ["rwa"]
     },
     "CHF": {
       "source": ["twelve-data"],
       "denomination": "USD",
-      "rateFeed": false
+      "rateFeed": false,
+      "types": ["rwa"]
     },
     "NOK": {
       "source": ["twelve-data"],
       "denomination": "USD",
-      "rateFeed": false
+      "rateFeed": false,
+      "types": ["rwa"]
     },
     "MXN": {
       "source": ["twelve-data"],
       "denomination": "USD",
-      "rateFeed": false
+      "rateFeed": false,
+      "types": ["rwa"]
     },
     "NZD": {
       "source": ["twelve-data"],
       "denomination": "USD",
-      "rateFeed": false
+      "rateFeed": false,
+      "types": ["rwa"]
     },
     "CAD": {
       "source": ["twelve-data"],
       "denomination": "USD",
-      "rateFeed": false
+      "rateFeed": false,
+      "types": ["rwa"]
     },
     "CNH": {
       "source": ["twelve-data"],
       "denomination": "USD",
-      "rateFeed": false
+      "rateFeed": false,
+      "types": ["rwa"]
     },
     "SGD": {
       "source": ["ecb", "twelve-data"],
       "denomination": "USD",
-      "rateFeed": false
+      "rateFeed": false,
+      "types": ["rwa"]
     },
     "SEK": {
       "source": ["ecb", "twelve-data"],
       "denomination": "USD",
-      "rateFeed": false
+      "rateFeed": false,
+      "types": ["rwa"]
     },
     "ZAR": {
       "source": ["ecb", "twelve-data"],
       "denomination": "USD",
-      "rateFeed": false
+      "rateFeed": false,
+      "types": ["rwa"]
     },
     "TRY_CEX": {
       "source": [
@@ -2218,7 +2233,8 @@
         "twelve-data"
       ],
       "denomination": "USD",
-      "rateFeed": false
+      "rateFeed": false,
+      "types": ["rwa"]
     },
     "TRY": {
       "source": ["try-condition-fetcher"],
@@ -2228,12 +2244,14 @@
     "PLN": {
       "source": ["ecb", "twelve-data"],
       "denomination": "USD",
-      "rateFeed": false
+      "rateFeed": false,
+      "types": ["rwa"]
     },
     "HUF": {
       "source": ["ecb", "twelve-data"],
       "denomination": "USD",
-      "rateFeed": false
+      "rateFeed": false,
+      "types": ["rwa"]
     },
     "BRL": {
       "source": [
@@ -2254,7 +2272,8 @@
     "SPY": {
       "source": ["twelve-data", "databento-no-closing-price"],
       "denomination": "USD",
-      "rateFeed": false
+      "rateFeed": false,
+      "types": ["rwa"]
     },
     "ESH6": {
       "source": ["databento-cme-no-closing-price"],
@@ -2264,32 +2283,38 @@
     "QQQ": {
       "source": ["twelve-data"],
       "denomination": "USD",
-      "rateFeed": false
+      "rateFeed": false,
+      "types": ["rwa"]
     },
     "IWM": {
       "source": ["twelve-data"],
       "denomination": "USD",
-      "rateFeed": false
+      "rateFeed": false,
+      "types": ["rwa"]
     },
     "DIA.ETF": {
       "source": ["twelve-data"],
       "denomination": "USD",
-      "rateFeed": false
+      "rateFeed": false,
+      "types": ["rwa"]
     },
     "SPX": {
       "source": ["twelve-data"],
       "denomination": "USD",
-      "rateFeed": false
+      "rateFeed": false,
+      "types": ["rwa"]
     },
     "EUROSTOXX50": {
       "source": ["twelve-data"],
       "denomination": "USD",
-      "rateFeed": false
+      "rateFeed": false,
+      "types": ["rwa"]
     },
     "NASDAQ": {
       "source": ["twelve-data"],
       "denomination": "USD",
-      "rateFeed": false
+      "rateFeed": false,
+      "types": ["rwa"]
     },
     "XAU": {
       "source": [
@@ -2303,7 +2328,8 @@
         "ws-keyrock"
       ],
       "denomination": "USD",
-      "rateFeed": false
+      "rateFeed": false,
+      "types": ["rwa"]
     },
     "XAG": {
       "source": [
@@ -2318,267 +2344,320 @@
         "ws-keyrock"
       ],
       "denomination": "USD",
-      "rateFeed": false
+      "rateFeed": false,
+      "types": ["rwa"]
     },
     "CRUDE": {
       "source": ["twelve-data"],
       "denomination": "USD",
-      "rateFeed": false
+      "rateFeed": false,
+      "types": ["rwa"]
     },
     "IBM": {
       "source": ["twelve-data"],
       "denomination": "USD",
-      "rateFeed": false
+      "rateFeed": false,
+      "types": ["rwa"]
     },
     "GOOG": {
       "source": ["twelve-data"],
       "denomination": "USD",
-      "rateFeed": false
+      "rateFeed": false,
+      "types": ["rwa"]
     },
     "COST": {
       "source": ["twelve-data"],
       "denomination": "USD",
-      "rateFeed": false
+      "rateFeed": false,
+      "types": ["rwa"]
     },
     "DIS": {
       "source": ["twelve-data"],
       "denomination": "USD",
-      "rateFeed": false
+      "rateFeed": false,
+      "types": ["rwa"]
     },
     "MA": {
       "source": ["twelve-data"],
       "denomination": "USD",
-      "rateFeed": false
+      "rateFeed": false,
+      "types": ["rwa"]
     },
     "MSFT": {
       "source": ["twelve-data"],
       "denomination": "USD",
-      "rateFeed": false
+      "rateFeed": false,
+      "types": ["rwa"]
     },
     "NKE": {
       "source": ["twelve-data"],
       "denomination": "USD",
-      "rateFeed": false
+      "rateFeed": false,
+      "types": ["rwa"]
     },
     "PINS": {
       "source": ["twelve-data"],
       "denomination": "USD",
-      "rateFeed": false
+      "rateFeed": false,
+      "types": ["rwa"]
     },
     "SHOP": {
       "source": ["twelve-data"],
       "denomination": "USD",
-      "rateFeed": false
+      "rateFeed": false,
+      "types": ["rwa"]
     },
     "SPOT": {
       "source": ["twelve-data"],
       "denomination": "USD",
-      "rateFeed": false
+      "rateFeed": false,
+      "types": ["rwa"]
     },
     "TDOC": {
       "source": ["twelve-data"],
       "denomination": "USD",
-      "rateFeed": false
+      "rateFeed": false,
+      "types": ["rwa"]
     },
     "ONEQ": {
       "source": ["twelve-data"],
       "denomination": "USD",
-      "rateFeed": false
+      "rateFeed": false,
+      "types": ["rwa"]
     },
     "EFA": {
       "source": ["twelve-data"],
       "denomination": "USD",
-      "rateFeed": false
+      "rateFeed": false,
+      "types": ["rwa"]
     },
     "VGK": {
       "source": ["twelve-data"],
       "denomination": "USD",
-      "rateFeed": false
+      "rateFeed": false,
+      "types": ["rwa"]
     },
     "INDA": {
       "source": ["twelve-data"],
       "denomination": "USD",
-      "rateFeed": false
+      "rateFeed": false,
+      "types": ["rwa"]
     },
     "RSX": {
       "source": ["twelve-data"],
       "denomination": "USD",
-      "rateFeed": false
+      "rateFeed": false,
+      "types": ["rwa"]
     },
     "C3M": {
       "source": ["financialmodelingprep", "twelve-data"],
       "denomination": "USD",
-      "rateFeed": false
+      "rateFeed": false,
+      "types": ["rwa"]
     },
     "PEN": {
       "source": ["twelve-data"],
       "denomination": "USD",
-      "rateFeed": false
+      "rateFeed": false,
+      "types": ["rwa"]
     },
     "ARS": {
       "source": ["twelve-data"],
       "denomination": "USD",
-      "rateFeed": false
+      "rateFeed": false,
+      "types": ["rwa"]
     },
     "BBBY": {
       "source": ["twelve-data"],
       "denomination": "USD",
-      "rateFeed": false
+      "rateFeed": false,
+      "types": ["rwa"]
     },
     "UPST": {
       "source": ["twelve-data"],
       "denomination": "USD",
-      "rateFeed": false
+      "rateFeed": false,
+      "types": ["rwa"]
     },
     "BIG": {
       "source": ["twelve-data"],
       "denomination": "USD",
-      "rateFeed": false
+      "rateFeed": false,
+      "types": ["rwa"]
     },
     "MSTR": {
       "source": ["twelve-data"],
       "denomination": "USD",
-      "rateFeed": false
+      "rateFeed": false,
+      "types": ["rwa"]
     },
     "HRTX": {
       "source": ["twelve-data"],
       "denomination": "USD",
-      "rateFeed": false
+      "rateFeed": false,
+      "types": ["rwa"]
     },
     "EVGO": {
       "source": ["twelve-data"],
       "denomination": "USD",
-      "rateFeed": false
+      "rateFeed": false,
+      "types": ["rwa"]
     },
     "BGFV": {
       "source": ["twelve-data"],
       "denomination": "USD",
-      "rateFeed": false
+      "rateFeed": false,
+      "types": ["rwa"]
     },
     "FUBO": {
       "source": ["twelve-data"],
       "denomination": "USD",
-      "rateFeed": false
+      "rateFeed": false,
+      "types": ["rwa"]
     },
     "CVNA": {
       "source": ["twelve-data"],
       "denomination": "USD",
-      "rateFeed": false
+      "rateFeed": false,
+      "types": ["rwa"]
     },
     "NKLA": {
       "source": ["twelve-data"],
       "denomination": "USD",
-      "rateFeed": false
+      "rateFeed": false,
+      "types": ["rwa"]
     },
     "W": {
       "source": ["twelve-data"],
       "denomination": "USD",
-      "rateFeed": false
+      "rateFeed": false,
+      "types": ["rwa"]
     },
     "BLNK": {
       "source": ["twelve-data"],
       "denomination": "USD",
-      "rateFeed": false
+      "rateFeed": false,
+      "types": ["rwa"]
     },
     "SRG": {
       "source": ["twelve-data"],
       "denomination": "USD",
-      "rateFeed": false
+      "rateFeed": false,
+      "types": ["rwa"]
     },
     "MVIS": {
       "source": ["twelve-data"],
       "denomination": "USD",
-      "rateFeed": false
+      "rateFeed": false,
+      "types": ["rwa"]
     },
     "PETS": {
       "source": ["twelve-data"],
       "denomination": "USD",
-      "rateFeed": false
+      "rateFeed": false,
+      "types": ["rwa"]
     },
     "IBRX": {
       "source": ["twelve-data"],
       "denomination": "USD",
-      "rateFeed": false
+      "rateFeed": false,
+      "types": ["rwa"]
     },
     "VUZI": {
       "source": ["twelve-data"],
       "denomination": "USD",
-      "rateFeed": false
+      "rateFeed": false,
+      "types": ["rwa"]
     },
     "SPCE": {
       "source": ["twelve-data"],
       "denomination": "USD",
-      "rateFeed": false
+      "rateFeed": false,
+      "types": ["rwa"]
     },
     "WKHS": {
       "source": ["twelve-data"],
       "denomination": "USD",
-      "rateFeed": false
+      "rateFeed": false,
+      "types": ["rwa"]
     },
     "LCID": {
       "source": ["twelve-data"],
       "denomination": "USD",
-      "rateFeed": false
+      "rateFeed": false,
+      "types": ["rwa"]
     },
     "FFIE": {
       "source": ["twelve-data"],
       "denomination": "USD",
-      "rateFeed": false
+      "rateFeed": false,
+      "types": ["rwa"]
     },
     "SFT": {
       "source": ["twelve-data"],
       "denomination": "USD",
-      "rateFeed": false
+      "rateFeed": false,
+      "types": ["rwa"]
     },
     "OCGN": {
       "source": ["twelve-data"],
       "denomination": "USD",
-      "rateFeed": false
+      "rateFeed": false,
+      "types": ["rwa"]
     },
     "REI": {
       "source": ["twelve-data"],
       "denomination": "USD",
-      "rateFeed": false
+      "rateFeed": false,
+      "types": ["rwa"]
     },
     "BKKT": {
       "source": ["twelve-data"],
       "denomination": "USD",
-      "rateFeed": false
+      "rateFeed": false,
+      "types": ["rwa"]
     },
     "KPTI": {
       "source": ["twelve-data"],
       "denomination": "USD",
-      "rateFeed": false
+      "rateFeed": false,
+      "types": ["rwa"]
     },
     "DNMR": {
       "source": ["twelve-data"],
       "denomination": "USD",
-      "rateFeed": false
+      "rateFeed": false,
+      "types": ["rwa"]
     },
     "GDRX": {
       "source": ["twelve-data"],
       "denomination": "USD",
-      "rateFeed": false
+      "rateFeed": false,
+      "types": ["rwa"]
     },
     "AMC": {
       "source": ["twelve-data"],
       "denomination": "USD",
-      "rateFeed": false
+      "rateFeed": false,
+      "types": ["rwa"]
     },
     "CSPX.L": {
       "source": ["twelve-data"],
       "denomination": "USD",
-      "rateFeed": false
+      "rateFeed": false,
+      "types": ["rwa"]
     },
     "IB01.L": {
       "source": ["twelve-data"],
       "denomination": "USD",
-      "rateFeed": false
+      "rateFeed": false,
+      "types": ["rwa"]
     },
     "IBTA.L": {
       "source": ["twelve-data"],
       "denomination": "USD",
-      "rateFeed": false
+      "rateFeed": false,
+      "types": ["rwa"]
     },
     "USDCf": {
       "source": ["twelve-data"],
@@ -2599,22 +2678,26 @@
     "AAPL": {
       "source": ["twelve-data"],
       "denomination": "USD",
-      "rateFeed": false
+      "rateFeed": false,
+      "types": ["rwa"]
     },
     "BYND": {
       "source": ["twelve-data"],
       "denomination": "USD",
-      "rateFeed": false
+      "rateFeed": false,
+      "types": ["rwa"]
     },
     "GME": {
       "source": ["twelve-data"],
       "denomination": "USD",
-      "rateFeed": false
+      "rateFeed": false,
+      "types": ["rwa"]
     },
     "NFLX": {
       "source": ["twelve-data"],
       "denomination": "USD",
-      "rateFeed": false
+      "rateFeed": false,
+      "types": ["rwa"]
     },
     "sAVAX": {
       "source": ["avalanche-evm-fetcher-oracle-adapter"],
@@ -4009,7 +4092,8 @@
         "ws-twelve-data-no-closing-price"
       ],
       "denomination": "USD",
-      "rateFeed": false
+      "rateFeed": false,
+      "types": ["rwa"]
     },
     "MINA": {
       "denomination": "USD",
@@ -8109,52 +8193,62 @@
     "HG": {
       "source": ["financialmodelingprep"],
       "denomination": "USD",
-      "rateFeed": false
+      "rateFeed": false,
+      "types": ["rwa"]
     },
     "HGH6": {
       "source": ["databento-cme-no-closing-price"],
       "denomination": "USD",
-      "rateFeed": false
+      "rateFeed": false,
+      "types": ["rwa"]
     },
     "HGH26": {
       "source": ["metals-api"],
       "denomination": "USD",
-      "rateFeed": false
+      "rateFeed": false,
+      "types": ["rwa"]
     },
     "HG00": {
       "source": ["metals-api"],
       "denomination": "USD",
-      "rateFeed": false
+      "rateFeed": false,
+      "types": ["rwa"]
     },
     "HG1": {
       "source": ["metals-api"],
       "denomination": "USD",
-      "rateFeed": false
+      "rateFeed": false,
+      "types": ["rwa"]
     },
     "HG-SPOT": {
       "source": ["commodity-price-api"],
       "denomination": "USD",
-      "rateFeed": false
+      "rateFeed": false,
+      "types": ["rwa"]
     },
     "COPPER": {
       "source": ["ws-blocksize"],
       "denomination": "USD",
-      "rateFeed": false
+      "rateFeed": false,
+      "types": ["rwa"]
     },
     "WTI": {
       "source": ["twelve-data", "alltick-api", "ws-lmax", "metal-price-api", "ws-blocksize"],
       "denomination": "USD",
-      "rateFeed": false
+      "rateFeed": false,
+      "types": ["rwa"]
     },
     "CLH6": {
       "source": ["databento-cme-no-closing-price"],
       "denomination": "USD",
-      "rateFeed": false
+      "rateFeed": false,
+      "types": ["rwa"]
     },
     "CLG6": {
       "source": ["databento-cme-no-closing-price"],
       "denomination": "USD",
-      "rateFeed": false
+      "rateFeed": false,
+      "types": ["rwa"]
     },
     "XCU": {
       "source": [
@@ -8166,12 +8260,14 @@
         "ws-lo-tech-settlement-aware"
       ],
       "denomination": "USD",
-      "rateFeed": false
+      "rateFeed": false,
+      "types": ["rwa"]
     },
     "XNG": {
       "source": ["ws-lmax"],
       "denomination": "USD",
-      "rateFeed": false
+      "rateFeed": false,
+      "types": ["rwa"]
     },
     "NG": {
       "source": [
@@ -8187,17 +8283,20 @@
         "databento-cme-no-closing-price"
       ],
       "denomination": "USD",
-      "rateFeed": false
+      "rateFeed": false,
+      "types": ["rwa"]
     },
     "SP500": {
       "source": ["ws-lmax", "alltick-api", "financialmodelingprep"],
       "denomination": "USD",
-      "rateFeed": false
+      "rateFeed": false,
+      "types": ["rwa"]
     },
     "SPXU": {
       "source": ["twelve-data", "financialmodelingprep", "ws-polygon-massive-no-closing-price"],
       "denomination": "USD",
-      "rateFeed": false
+      "rateFeed": false,
+      "types": ["rwa"]
     },
     "URNM": {
       "source": [
@@ -8208,7 +8307,8 @@
         "ws-polygon-massive-no-closing-price"
       ],
       "denomination": "USD",
-      "rateFeed": false
+      "rateFeed": false,
+      "types": ["rwa"]
     },
     "URA": {
       "source": [
@@ -8219,7 +8319,8 @@
         "ws-polygon-massive-no-closing-price"
       ],
       "denomination": "USD",
-      "rateFeed": false
+      "rateFeed": false,
+      "types": ["rwa"]
     },
     "SOYBEAN": {
       "source": [
@@ -8230,7 +8331,8 @@
         "finhub_fxcm_deferred-usd"
       ],
       "denomination": "USD",
-      "rateFeed": false
+      "rateFeed": false,
+      "types": ["rwa"]
     },
     "CORN": {
       "source": [
@@ -8243,7 +8345,8 @@
         "ws-blocksize"
       ],
       "denomination": "USD",
-      "rateFeed": false
+      "rateFeed": false,
+      "types": ["rwa"]
     },
     "USDm": {
       "source": [
@@ -8314,7 +8417,8 @@
         "twelve-data"
       ],
       "denomination": "USD",
-      "rateFeed": false
+      "rateFeed": false,
+      "types": ["rwa"]
     },
     "PALLADIUM": {
       "source": [
@@ -8329,7 +8433,8 @@
         "twelve-data"
       ],
       "denomination": "USD",
-      "rateFeed": false
+      "rateFeed": false,
+      "types": ["rwa"]
     },
     "slisBNB_FUNDAMENTAL": {
       "source": ["bnb-evm-fetcher-venus-slis"],
@@ -8466,12 +8571,14 @@
     "KOSPI": {
       "source": ["alltick-api"],
       "denomination": "USD",
-      "rateFeed": false
+      "rateFeed": false,
+      "types": ["rwa"]
     },
     "KOSPI200": {
       "source": ["alltick-api", "ws-itick-indices"],
       "denomination": "USD",
-      "rateFeed": false
+      "rateFeed": false,
+      "types": ["rwa"]
     },
     "LBXAUAM": {
       "source": ["metals-api"],
@@ -8481,27 +8588,32 @@
     "LBXAUPM": {
       "source": ["metals-api"],
       "denomination": "USD",
-      "rateFeed": false
+      "rateFeed": false,
+      "types": ["rwa"]
     },
     "LBXPDAM": {
       "source": ["metals-api"],
       "denomination": "USD",
-      "rateFeed": false
+      "rateFeed": false,
+      "types": ["rwa"]
     },
     "LBXPTAM": {
       "source": ["metals-api"],
       "denomination": "USD",
-      "rateFeed": false
+      "rateFeed": false,
+      "types": ["rwa"]
     },
     "LBXPDPM": {
       "source": ["metals-api"],
       "denomination": "USD",
-      "rateFeed": false
+      "rateFeed": false,
+      "types": ["rwa"]
     },
     "LBXPTPM": {
       "source": ["metals-api"],
       "denomination": "USD",
-      "rateFeed": false
+      "rateFeed": false,
+      "types": ["rwa"]
     },
     "JLP": {
       "source": [
