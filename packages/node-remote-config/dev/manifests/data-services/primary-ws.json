@@ -371,7 +371,6 @@
     },
     "STRC": {
       "source": [
-        "alltick-stocks-api-deferred",
         "databento",
         "financialmodelingprep-deferred",
         "ws-dx-feed",
