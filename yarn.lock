@@ -16929,7 +16929,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/secp256k1@npm:4.0.3, @types/secp256k1@npm:^4.0.1":
+"@types/secp256k1@npm:4.0.3":
   version: 4.0.3
   resolution: "@types/secp256k1@npm:4.0.3"
   dependencies:
@@ -16938,12 +16938,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/secp256k1@npm:^4.0.6":
-  version: 4.0.6
-  resolution: "@types/secp256k1@npm:4.0.6"
+"@types/secp256k1@npm:^4.0.1, @types/secp256k1@npm:^4.0.6":
+  version: 4.0.7
+  resolution: "@types/secp256k1@npm:4.0.7"
   dependencies:
     "@types/node": "npm:*"
-  checksum: 10c0/0e391316ae30c218779583b626382a56546ddbefb65f1ff9cf5e078af8a7118f67f3e66e30914399cc6f8710c424d0d8c3f34262ffb1f429c6ad911fd0d0bc26
+  checksum: 10c0/3e4a22bb699597adc723414a841d2e8a1fa71c95c3d018c6a2dd8482500b6e9fe2d78d87e758f18c1aabe333cac22ac2a96f456e3bc147df30b7fac4e6346618
   languageName: node
   linkType: hard
 
@@ -36432,7 +36432,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"secp256k1@npm:5.0.0, secp256k1@npm:^5.0.0":
+"secp256k1@npm:5.0.0":
   version: 5.0.0
   resolution: "secp256k1@npm:5.0.0"
   dependencies:
@@ -36444,19 +36444,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"secp256k1@npm:^4.0.1, secp256k1@npm:^4.0.2":
-  version: 4.0.3
-  resolution: "secp256k1@npm:4.0.3"
-  dependencies:
-    elliptic: "npm:^6.5.4"
-    node-addon-api: "npm:^2.0.0"
-    node-gyp: "npm:latest"
-    node-gyp-build: "npm:^4.2.0"
-  checksum: 10c0/de0a0e525a6f8eb2daf199b338f0797dbfe5392874285a145bb005a72cabacb9d42c0197d0de129a1a0f6094d2cc4504d1f87acb6a8bbfb7770d4293f252c401
-  languageName: node
-  linkType: hard
-
-"secp256k1@npm:^4.0.3":
+"secp256k1@npm:^4.0.1, secp256k1@npm:^4.0.2, secp256k1@npm:^4.0.3":
   version: 4.0.4
   resolution: "secp256k1@npm:4.0.4"
   dependencies:
@@ -36468,7 +36456,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"secp256k1@npm:^5.0.1":
+"secp256k1@npm:^5.0.0, secp256k1@npm:^5.0.1":
   version: 5.0.1
   resolution: "secp256k1@npm:5.0.1"
   dependencies:
