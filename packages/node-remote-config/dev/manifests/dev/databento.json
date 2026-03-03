@@ -11,7 +11,7 @@
   },
   "tokens": {
     "IS_NY_STOCKS_MARKET_OPEN": {
-      "source": ["is-ny-stocks-market-open-deferred"],
+      "source": ["is-ny-stocks-market-open"],
       "denomination": "other",
       "rateFeed": false
     },
