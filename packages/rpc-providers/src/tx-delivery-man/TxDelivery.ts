@@ -5,6 +5,7 @@ import { providers, utils } from "ethers";
 import _ from "lodash";
 import { EthersError, isEthersError } from "../common";
 import { AuctionModelGasEstimator } from "./AuctionModelGasEstimator";
+import { AuctionModelGasEstimatorV2 } from "./AuctionModelGasEstimatorV2";
 import {
   RewardsPerBlockAggregationAlgorithm,
   type DeliveryManTx,
@@ -38,6 +39,7 @@ const logger = loggerFactory("TxDelivery");
 
 export const DEFAULT_TX_DELIVERY_OPTS = {
   isAuctionModel: false,
+  isAuctionModelV2: false,
   maxAttempts: 8,
   multiplier: 1.4, //  1.4 ** 5 => 5.24 max scaler
   gasLimitMultiplier: 1.2,
@@ -83,7 +85,9 @@ export class TxDelivery {
     this.opts = _.merge({ ...DEFAULT_TX_DELIVERY_OPTS }, opts);
     this.overridePercentileIfProvided(opts);
     this.feeEstimator = this.opts.isAuctionModel
-      ? new AuctionModelGasEstimator(this.opts)
+      ? this.opts.isAuctionModelV2
+        ? new AuctionModelGasEstimatorV2(this.opts)
+        : new AuctionModelGasEstimator(this.opts)
       : this.opts.isEIP1559V2Estimator
         ? new Eip1559GasEstimatorV2(this.opts)
         : new Eip1559GasEstimatorV1(this.opts);
