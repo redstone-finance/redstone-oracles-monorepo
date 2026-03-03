@@ -401,7 +401,7 @@
       "rateFeed": false
     },
     "IS_NY_STOCKS_MARKET_OPEN": {
-      "source": ["is-ny-stocks-market-open-deferred"],
+      "source": ["is-ny-stocks-market-open"],
       "skipBroadcasting": true,
       "denomination": "other",
       "rateFeed": false

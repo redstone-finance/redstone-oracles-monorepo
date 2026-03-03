@@ -617,7 +617,7 @@
       }
     },
     "IS_NY_STOCKS_MARKET_OPEN": {
-      "source": ["is-ny-stocks-market-open-deferred"],
+      "source": ["is-ny-stocks-market-open"],
       "broadcasters": ["influx"],
       "denomination": "other",
       "rateFeed": false
