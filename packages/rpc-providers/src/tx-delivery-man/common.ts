@@ -154,6 +154,19 @@ export type TxDeliveryOpts = {
 
   // optional ChainConfigs object to use instead of local version
   chainConfigs?: ChainConfigs;
+
+  // Explicit per-attempt gas multipliers for auction model chains.
+  // When set and isAuctionModelV2 is true, multipliers[attempt] is used instead of multiplier ** attempt.
+  auctionModelGasMultipliers?: number[];
+
+  /**
+   * Whether to use the V2 auction model gas estimator.
+   * If true, AuctionModelGasEstimatorV2 (explicit per-attempt multipliers) will be used.
+   * If false, AuctionModelGasEstimator (exponential multiplier ** attempt) will be used.
+   * Only relevant when isAuctionModel is true.
+   * Default: false
+   */
+  isAuctionModelV2?: boolean;
 };
 
 export type TxDeliveryOptsValidated = Omit<
@@ -162,11 +175,13 @@ export type TxDeliveryOptsValidated = Omit<
   | "getSingleNonceTimeoutMs"
   | "minAggregatedRewardsPerBlockForPercentile"
   | "chainConfigs"
+  | "auctionModelGasMultipliers"
 > & {
   gasLimit?: number;
   getSingleNonceTimeoutMs?: number;
   minAggregatedRewardsPerBlockForPercentile?: number;
   chainConfigs?: ChainConfigs;
+  auctionModelGasMultipliers?: number[];
 };
 
 export const unsafeBnToNumber = (bn: BigNumber) => Number(bn.toString());
