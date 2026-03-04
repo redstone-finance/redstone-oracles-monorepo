@@ -9147,7 +9147,10 @@
     "URA---MARKET_HOURS": {
       "source": [],
       "denomination": "USD",
-      "rateFeed": false
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
     },
     "CME_MARKET_STATUS": {
       "source": [
