@@ -8690,6 +8690,13 @@
       "source": ["spark-anchorage-api"],
       "denomination": "ratio",
       "rateFeed": true
+    },
+    "IS_NY_STOCKS_MARKET_OPEN": {
+      "source": ["is-ny-stocks-market-open"],
+      "skipBroadcasting": true,
+      "denomination": "other",
+      "rateFeed": false,
+      "types": ["rwa"]
     }
   }
 }
