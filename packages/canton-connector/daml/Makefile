@@ -50,7 +50,7 @@ test-%: build_redstone_adapter build_redstone_core build_test
 		--dar $(TEST_DAR) \
 		--script-name $*:main
 
-test: test-DerTests test-U256Tests test-U256ConversionTests
+test: test-UnitTests
 
 integration_tests: prepare_data run_main run_test
 
