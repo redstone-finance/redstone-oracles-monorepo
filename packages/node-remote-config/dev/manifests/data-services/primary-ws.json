@@ -197,10 +197,10 @@
     },
     "SPXU": {
       "source": [
-        "twelve-data-deferred",
         "financialmodelingprep-deferred",
-        "ws-dx-feed-no-close-price",
-        "ws-polygon-massive"
+        "ws-dx-feed",
+        "ws-polygon-massive",
+        "ws-twelve-data"
       ],
       "denomination": "USD",
       "rateFeed": false,
@@ -213,8 +213,8 @@
         "financialmodelingprep-deferred",
         "metals-api-deferred",
         "metal-price-api-deferred",
-        "twelve-data-deferred",
-        "ws-polygon-massive-commodities"
+        "ws-polygon-massive-commodities",
+        "ws-twelve-data"
       ],
       "denomination": "USD",
       "rateFeed": false,
@@ -227,8 +227,8 @@
         "financialmodelingprep-deferred",
         "metals-api-deferred",
         "metal-price-api-deferred",
-        "twelve-data-deferred",
-        "ws-polygon-massive-commodities"
+        "ws-polygon-massive-commodities",
+        "ws-twelve-data"
       ],
       "denomination": "USD",
       "rateFeed": false,
@@ -237,9 +237,9 @@
     "PHP": {
       "source": [
         "financialmodelingprep-deferred",
-        "twelve-data-deferred",
+        "metal-price-api-deferred",
         "ws-polygon-massive-commodities",
-        "metal-price-api-deferred"
+        "ws-twelve-data"
       ],
       "denomination": "USD",
       "rateFeed": false,
@@ -389,7 +389,7 @@
         "alltick-api-reversed-deferred",
         "metal-price-api-deferred",
         "ws-polygon-massive-commodities",
-        "twelve-data-deferred"
+        "ws-twelve-data"
       ],
       "denomination": "USD",
       "rateFeed": false,

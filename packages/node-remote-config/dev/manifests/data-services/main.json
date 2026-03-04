@@ -2129,10 +2129,10 @@
     },
     "PHP": {
       "source": [
-        "financialmodelingprep",
-        "twelve-data",
+        "financialmodelingprep-deferred",
+        "metal-price-api-deferred",
         "ws-polygon-massive-commodities",
-        "metal-price-api"
+        "ws-twelve-data"
       ],
       "denomination": "USD",
       "rateFeed": false,
@@ -2231,10 +2231,10 @@
     },
     "TRY_FX": {
       "source": [
-        "alltick-api-reversed",
-        "metal-price-api",
+        "alltick-api-reversed-deferred",
+        "metal-price-api-deferred",
         "ws-polygon-massive-commodities",
-        "twelve-data"
+        "ws-twelve-data"
       ],
       "denomination": "USD",
       "rateFeed": false,
@@ -8328,7 +8328,12 @@
       "types": ["rwa"]
     },
     "SPXU": {
-      "source": ["twelve-data", "financialmodelingprep", "ws-polygon-massive-no-closing-price"],
+      "source": [
+        "financialmodelingprep-deferred",
+        "ws-dx-feed",
+        "ws-polygon-massive",
+        "ws-twelve-data"
+      ],
       "denomination": "USD",
       "rateFeed": false,
       "types": ["rwa"]
