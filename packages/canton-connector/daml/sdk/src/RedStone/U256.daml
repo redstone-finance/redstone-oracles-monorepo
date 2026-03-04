@@ -12,6 +12,7 @@ module RedStone.U256
     , toIntU256
     , u256ToInt
     , u256ToNumeric
+    , u256ToHex
   )
 where
 
@@ -71,16 +72,23 @@ u256ToInt (U256 (Bytes revList)) =
 
 u256ToNumeric (U256 (Bytes revList)) = leByteListToNumeric revList
 
+u256ToHex (U256 (Bytes revList)) = hexlify revList
+
 -- Private
 
 compareU256 (U256 (Bytes revList1)) (U256 (Bytes revList2)) = compare (L.reverse revList1) (L.reverse revList2)
+
+hexlify revList =
+  let
+    trimmed = (L.reverse $ trimTrailingZeros $ revList)
+  in if null trimmed then "00" else listToHex trimmed
 
 showU256 u =
   let
     (U256 (Bytes revList)) = u
     text = case u256ToInt u of
       Some n -> show n
-      None -> "0x" <> listToHex (L.reverse $ trimTrailingZeros $ revList)
+      None -> "0x" <> hexlify revList
   in text
 
 normalizeBytes Bytes{revList=xs}
