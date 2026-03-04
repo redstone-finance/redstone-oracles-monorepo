@@ -2,7 +2,7 @@
   "interval": 1000,
   "priceAggregator": "median",
   "defaultSource": [],
-  "sourceTimeout": 5000,
+  "sourceTimeout": 800,
   "minValidSourcesPercentage": 1,
   "deviationCheck": {
     "deviationWithRecentValues": {
