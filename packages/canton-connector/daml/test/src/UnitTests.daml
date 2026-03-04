@@ -1,0 +1,7 @@
+module UnitTests where
+
+import Daml.Script (Script)
+import RedStone.Tests.Tests
+
+main : Script ()
+main = runAllTests
