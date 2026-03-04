@@ -1,4 +1,4 @@
-sdk-version: 3.4.10
+sdk-version: 3.4.11
 packages:
   - ./sdk
   - ./interface
