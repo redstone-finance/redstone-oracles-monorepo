@@ -8362,6 +8362,21 @@
       "rateFeed": false,
       "types": ["rwa"]
     },
+    "URA---MARKET_HOURS": {
+      "source": ["cme-on-market"],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "CME_MARKET_STATUS": {
+      "source": ["cme-market-status"],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "US_EQUITY_MARKET_STATUS": {
+      "source": ["us-equity-market-status"],
+      "denomination": "USD",
+      "rateFeed": false
+    },
     "SOYBEAN": {
       "source": [
         "twelve-data",
