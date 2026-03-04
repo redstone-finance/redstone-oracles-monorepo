@@ -1,0 +1,20 @@
+module RedStone.Tests.Test
+where
+
+data TestCase input output  = TestCase with
+  name : Text
+  input : input
+  output : output
+    deriving (Eq, Show)
+
+data TestSuite input output = TestSuite with
+  name : Text
+  cases : [TestCase input output]
+  test : input -> output
+
+data Input a b = Input with
+    input : a
+    op : a -> b
+
+runTest tc =
+    tc.op tc.input

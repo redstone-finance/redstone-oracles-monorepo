@@ -1,0 +1,183 @@
+module RedStone.Tests.Suites.U256
+(
+    runTests
+)
+where
+
+import RedStone.Tests.Test
+import RedStone.Tests.Run
+import RedStone.U256
+import DA.List as L (sort)
+
+runTests : (Action m, ActionFail m, CanAbort m) => m ()
+runTests = do
+  runSuites testSuites
+  runSuites testSuitesComp
+  runSuites testSuitesSort
+
+testSuites = [
+    TestSuite with cases = testBasicOperations, name = "U256 Basic Operation Tests", test = runTest
+    , TestSuite with cases = testLargeNumbers, name = "U256 Basic Operation for Large Numbers Tests", test = runTest
+    , TestSuite with cases = testEdgeCases, name = "U256 Edge Case Tests", test = runTest
+    ]
+
+testSuitesComp = [
+    TestSuite with cases = testComparison, name = "U256 Comparison Tests", test = runTest
+    ]
+
+testSuitesSort = [
+    TestSuite with cases = testSort, name = "U256 Sorting", test = runTest
+    ]
+
+
+
+zero = u256FromBeByteList [0]
+one = u256FromBeByteList [1]
+two = u256FromBeByteList [2]
+five = u256FromBeByteList [5]
+ten = u256FromBeByteList [10]
+maxU256 = u256FromBeByteList $ replicate 32 255
+halfMax = u256FromBeByteList $ 127 :: replicate 31 255
+
+testBasicOperations =
+    [ TestCase with
+        name = "10 / 2 = 5"
+        input = Input with input = ten, op = divBy2
+        output = five
+    , TestCase with
+        name = "5 + 5 = 10"
+        input = Input with input = five, op = \x -> add x x
+        output = ten
+    , TestCase with
+        name = "10 mod 2 = 0"
+        input = Input with input = ten, op = mod2
+        output = zero
+    , TestCase with
+        name = "5 mod 2 = 1"
+        input = Input with input = five, op = mod2
+        output = one
+    , TestCase with
+        name = "255 / 2 = 127"
+        input = Input with input = u256FromBeByteList [255], op = divBy2
+        output = u256FromBeByteList [127]
+    ]
+
+testLargeNumbers =
+    [ TestCase with
+        name = "65536 / 2 = 32768"
+        input = Input with input = u256FromBeByteList [1, 0, 0], op = divBy2
+        output = u256FromBeByteList [128, 0]
+    , TestCase with
+        name = "2^24 / 2 = 2^23"
+        input = Input with input = u256FromBeByteList [1, 0, 0, 0], op = divBy2
+        output = u256FromBeByteList [128, 0, 0]
+    , TestCase with
+        name = "max32bit / 2 = 2147483647"
+        input = Input with input = u256FromBeByteList [255, 255, 255, 255], op = divBy2
+        output = u256FromBeByteList [127, 255, 255, 255]
+    , TestCase with
+        name = "large 128-bit / 2 "
+        input = Input with input = u256FromBeByteList $ replicate 16 255, op = divBy2
+        output = u256FromBeByteList $ 127 :: replicate 15 255
+    , TestCase with
+        name = "(max-1) / 2 "
+        input = Input with input = u256FromBeByteList $ replicate 31 255 ++ [254], op = divBy2
+        output = u256FromBeByteList $ 127 :: replicate 31 255
+    ]
+
+
+testEdgeCases =
+  -- Test: Zero
+    [ TestCase with
+        name = "0 / 2 = 0"
+        input = Input with input = zero, op = divBy2
+        output = zero
+    , TestCase with
+        name = "0 + 0 = 0"
+        input = Input with input = zero, op = \x -> add x x
+        output = zero
+    , TestCase with
+        name = "0 mod 2 = 0"
+        input = Input with input = zero, op = mod2
+        output = zero
+
+  -- Test: One
+    , TestCase with
+        name = "1 / 2 = 0"
+        input = Input with input = one, op = divBy2
+        output = zero
+    , TestCase with
+        name = "1 mod 2 = 1"
+        input = Input with input = one, op = mod2
+        output = one
+
+-- Test: Max U256
+    , TestCase with
+        name =  "maxU256 / 2"
+        input = Input with input = maxU256, op = divBy2
+        output = halfMax
+    , TestCase with
+        name = "maxU256 mod 2 = 1"
+        input = Input with input = maxU256, op = mod2
+        output = one
+
+  -- Test: Carry propagation
+    , TestCase with
+        name = "65535 + 1 = 65536"
+        input = Input with input = u256FromBeByteList [255, 255], op = add one
+        output = u256FromBeByteList [1, 0, 0]
+    , TestCase with
+        name = "carry through 16 bytes"
+        input = Input with input = u256FromBeByteList $ replicate 16 255, op = add one
+        output = u256FromBeByteList $ [1] ++ replicate 15 0 ++ [0]
+    ]
+
+
+testComparison =
+    [ TestCase with
+        name = "1 < 2"
+        input = Input with input = (one, two), op = uncurry (<)
+        output = True
+    , TestCase with
+        name = "2 > 1"
+        input = Input with input = (two, one), op = uncurry (>)
+        output = True
+    , TestCase with
+        name = "2 > 0"
+        input = Input with input = (two, zero), op = uncurry (>)
+        output = True
+    , TestCase with
+        name = "1 == 1"
+        input = Input with input = (one, one), op = uncurry (==)
+        output = True
+     , TestCase with
+        name = "256 < 257"
+        input = Input with input = (u256FromBeByteList [1, 0], u256FromBeByteList [1, 1]), op = uncurry (<)
+        output = True
+    ]
+
+testSort =
+    [ TestCase with
+        name = "sort"
+        input =  Input with
+            input = [halfMax, u256FromBeByteList [1, 0], one, u256FromBeByteList [255], two, maxU256, zero]
+            op = sort
+        output = [zero, one, two, u256FromBeByteList [255], u256FromBeByteList [1, 0], halfMax, maxU256]
+    ]
+
+-- TODO: Find a way of testing functions which throw
+-- testOverflow : Script ()
+-- testOverflow = do
+--   debug "-- Testing overflow handling --"
+
+--   let halfMax = u256FromBeByteList $ replicate 32 128
+--   let sum = add halfMax halfMax
+--   case sum of
+--     U256 (Bytes revList) ->
+--       assertEq "sum has 32 bytes" 32 (length revList)
+
+-- --   let testOverflow = do
+-- --     let _ = u256FromBeByteList $ replicate 33 1
+-- --     pure ()
+
+--   pure ()
