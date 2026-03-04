@@ -8630,7 +8630,7 @@
       "rateFeed": false
     },
     "KOSPI": {
-      "source": ["alltick-api"],
+      "source": ["alltick-api", "ws-aleno"],
       "denomination": "USD",
       "rateFeed": false,
       "types": ["rwa"]
@@ -8640,6 +8640,16 @@
       "denomination": "USD",
       "rateFeed": false,
       "types": ["rwa"]
+    },
+    "SAMSUNG": {
+      "source": ["ws-aleno"],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "SK_HYNIX": {
+      "source": ["ws-aleno"],
+      "denomination": "USD",
+      "rateFeed": false
     },
     "LBXAUAM": {
       "source": ["metals-api"],
