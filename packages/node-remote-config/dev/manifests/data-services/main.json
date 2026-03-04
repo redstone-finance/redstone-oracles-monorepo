@@ -9450,6 +9450,16 @@
         "rwa"
       ]
     },
+    "SAMSUNG": {
+      "source": [],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "SK_HYNIX": {
+      "source": [],
+      "denomination": "USD",
+      "rateFeed": false
+    },
     "LBXAUAM": {
       "source": [],
       "denomination": "USD",
