@@ -1,0 +1,39 @@
+module RedStone.Tests.Run
+(
+    runSuite
+, runSuites
+)
+where
+import DA.Foldable (forA_)
+
+test run tc = do
+  let output = run tc.input
+
+  assertEq
+    ("Testing " <> tc.name)
+    tc.output
+    output
+
+assertEq testName expected actual = do
+  if expected == actual
+    then debug $ "✓ " <> testName
+    else do
+      debug $ "✗ " <> testName <> " FAILED"
+      debug $ "  Expected: " <> show expected
+      debug $ "  Actual: " <> show actual
+      fail $ testName <> " failed"
+
+runSuite suite = do
+  debug $ "=== Starting " <> suite.name <> " ==="
+
+  forA_ suite.cases (test suite.test)
+
+  debug "=== All tests passed! ==="
+  debug $ ""
+
+  pure ()
+
+
+runSuites suites = do
+  forA_ suites runSuite
+  pure ()
