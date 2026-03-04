@@ -299,7 +299,8 @@
         "lbank-usdt",
         "mexc-usdt",
         "okx-usdt",
-        "curve-ethereum-usdt"
+        "curve-ethereum-usdt",
+        "uniswap-v3-ethereum-usdt-100"
       ],
       "deviationCheck": {
         "deviationWithRecentValues": {

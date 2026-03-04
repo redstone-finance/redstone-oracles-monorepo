@@ -244,7 +244,8 @@
         "lbank-usdt",
         "mexc-usdt",
         "okx-usdt",
-        "curve-ethereum-usdt"
+        "curve-ethereum-usdt",
+        "uniswap-v3-ethereum-usdt-100"
       ],
       "deviationCheck": {
         "deviationWithRecentValues": {
@@ -521,6 +522,7 @@
     "FRAX": {
       "source": [
         "curve-ethereum-3crv",
+        "curve-ethereum-pyusd",
         "curve-ethereum-sdai",
         "curve-ethereum-usdc",
         "curve-ethereum-usde",
@@ -537,6 +539,31 @@
       },
       "denomination": "USD",
       "rateFeed": false
+    },
+    "PYUSD": {
+      "source": [
+        "bingx-usdt",
+        "bitget-usdt",
+        "bitmart-usdt",
+        "bitrue-usdt",
+        "bybit-usdt",
+        "gate-usdt",
+        "htx-usdt",
+        "kraken-usd",
+        "kucoin-usdt",
+        "okx-usdt",
+        "curve-ethereum-usdc",
+        "uniswap-v3-ethereum-usdt-100"
+      ],
+      "deviationCheck": {
+        "deviationWithRecentValues": {
+          "maxPercent": 5,
+          "maxDelayMilliseconds": 120000
+        }
+      },
+      "denomination": "USD",
+      "rateFeed": false,
+      "skipBroadcasting": true
     },
     "aUSD": {
       "source": [

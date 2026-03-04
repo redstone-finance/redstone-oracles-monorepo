@@ -208,7 +208,8 @@
         "lbank-usdt",
         "mexc-usdt",
         "okx-usdt",
-        "curve-ethereum-usdt"
+        "curve-ethereum-usdt",
+        "uniswap-v3-ethereum-usdt-100"
       ],
       "deviationCheck": {
         "deviationWithRecentValues": {
@@ -236,6 +237,7 @@
     "FRAX": {
       "source": [
         "curve-ethereum-3crv",
+        "curve-ethereum-pyusd",
         "curve-ethereum-sdai",
         "curve-ethereum-usdc",
         "curve-ethereum-usde",
@@ -312,6 +314,7 @@
         "curve-ethereum-crvusd",
         "uniswap-v3-arbitrumone-weth-100",
         "uniswap-v3-ethereum-weth-100",
+        "uniswap-v4-ethereum-eth-100",
         "uniswap-v4-ethereum-wbtc-2500",
         "velodrome-cl-optimism-weth"
       ],
@@ -369,11 +372,12 @@
     "GHO": {
       "source": [
         "bitget-usdt",
+        "gate-usdt",
+        "curve-ethereum-cbbtc",
         "curve-ethereum-crvusd",
         "curve-ethereum-usde",
         "curve-ethereum-weth",
-        "curve-ethereum-cbbtc",
-        "gate-usdt",
+        "fluid-ethereum-susde",
         "fluid-ethereum-usdc"
       ],
       "deviationCheck": {
@@ -955,6 +959,7 @@
         "uniswap-v3-arbitrumone-usdc-500",
         "uniswap-v3-arbitrumone-weth-500",
         "uniswap-v3-ethereum-usdt-3000",
+        "uniswap-v3-ethereum-usdt-500",
         "uniswap-v3-ethereum-weth-3000",
         "uniswap-v3-ethereum-weth-500",
         "uniswap-v4-ethereum-usdt-3000"
@@ -1284,7 +1289,11 @@
       "rateFeed": false
     },
     "rsETH": {
-      "source": ["camelot-v3-arbitrumone-weth", "uniswap-v3-ethereum-wsteth-500"],
+      "source": [
+        "camelot-v3-arbitrumone-weth",
+        "curve-arbitrumone-weth",
+        "uniswap-v3-ethereum-wsteth-500"
+      ],
       "denomination": "USD",
       "rateFeed": false
     },
@@ -1332,7 +1341,8 @@
         "curve-ethereum-usdc",
         "curve-ethereum-usde",
         "curve-ethereum-usdt",
-        "curve-ethereum-weth"
+        "curve-ethereum-weth",
+        "curve-ethereum-weth-2"
       ],
       "deviationCheck": {
         "deviationWithRecentValues": {
@@ -1799,7 +1809,13 @@
         "aerodrome-cl-base-usdc-2",
         "aerodrome-cl-base-weth",
         "curve-ethereum-wbtc",
+        "curve-ethereum-wbtc-2",
         "curve-ethereum-weth",
+        "meteora-solana-mainnet-usdc",
+        "meteora-solana-mainnet-wsol",
+        "orca-solana-mainnet-usdc",
+        "orca-solana-mainnet-wbtc",
+        "orca-solana-mainnet-wsol",
         "pancake-swap-base-usdc-100",
         "pancake-swap-base-weth-100",
         "uniswap-v3-base-usdc-3000",
@@ -1807,6 +1823,7 @@
         "uniswap-v3-base-weth-3000",
         "uniswap-v3-base-weth-500",
         "uniswap-v3-ethereum-wbtc-100",
+        "uniswap-v3-ethereum-weth-100",
         "uniswap-v3-ethereum-weth-3000",
         "uniswap-v4-base-usdc-3000"
       ],
@@ -1817,6 +1834,7 @@
       "source": [
         "coinbase-usd",
         "aerodrome-cl-base-weth",
+        "curve-base-weth",
         "curve-ethereum-weth",
         "pancake-swap-base-weth-100",
         "uniswap-v3-base-weth-500",
