@@ -40,7 +40,7 @@
       ],
       "deviationCheck": {
         "deviationWithRecentValues": {
-          "maxPercent": 5,
+          "maxPercent": 2,
           "maxDelayMilliseconds": 120000
         }
       },
@@ -60,7 +60,7 @@
       ],
       "deviationCheck": {
         "deviationWithRecentValues": {
-          "maxPercent": 5,
+          "maxPercent": 2,
           "maxDelayMilliseconds": 120000
         }
       },
@@ -84,7 +84,7 @@
       ],
       "deviationCheck": {
         "deviationWithRecentValues": {
-          "maxPercent": 5,
+          "maxPercent": 2,
           "maxDelayMilliseconds": 120000
         }
       },
@@ -108,7 +108,7 @@
       ],
       "deviationCheck": {
         "deviationWithRecentValues": {
-          "maxPercent": 5,
+          "maxPercent": 2,
           "maxDelayMilliseconds": 120000
         }
       },
@@ -213,7 +213,7 @@
       ],
       "deviationCheck": {
         "deviationWithRecentValues": {
-          "maxPercent": 5,
+          "maxPercent": 2,
           "maxDelayMilliseconds": 120000
         }
       },
@@ -248,7 +248,7 @@
       ],
       "deviationCheck": {
         "deviationWithRecentValues": {
-          "maxPercent": 5,
+          "maxPercent": 2,
           "maxDelayMilliseconds": 120000
         }
       },
@@ -351,7 +351,13 @@
     "crvFRAX": {
       "source": ["ethereum-evm-fetcher-curve"],
       "denomination": "USD",
-      "rateFeed": true
+      "rateFeed": true,
+      "deviationCheck": {
+        "deviationWithRecentValues": {
+          "maxPercent": 2,
+          "maxDelayMilliseconds": 120000
+        }
+      }
     },
     "3Crv": {
       "source": ["ethereum-evm-fetcher-curve"],
@@ -362,7 +368,7 @@
       "source": ["curve-ethereum-3crv", "uniswap-v3-ethereum-usdc-500", "velodrome-optimism-usdc"],
       "deviationCheck": {
         "deviationWithRecentValues": {
-          "maxPercent": 5,
+          "maxPercent": 2,
           "maxDelayMilliseconds": 120000
         }
       },
@@ -382,7 +388,7 @@
       ],
       "deviationCheck": {
         "deviationWithRecentValues": {
-          "maxPercent": 5,
+          "maxPercent": 2,
           "maxDelayMilliseconds": 120000
         }
       },
@@ -802,7 +808,7 @@
       "source": ["curve-ethereum-3crv", "curve-ethereum-crvfrax", "velodrome-optimism-usdc"],
       "deviationCheck": {
         "deviationWithRecentValues": {
-          "maxPercent": 5,
+          "maxPercent": 2,
           "maxDelayMilliseconds": 120000
         }
       },
@@ -1146,7 +1152,7 @@
       ],
       "deviationCheck": {
         "deviationWithRecentValues": {
-          "maxPercent": 5,
+          "maxPercent": 2,
           "maxDelayMilliseconds": 120000
         }
       },
@@ -1346,7 +1352,7 @@
       ],
       "deviationCheck": {
         "deviationWithRecentValues": {
-          "maxPercent": 5,
+          "maxPercent": 2,
           "maxDelayMilliseconds": 120000
         }
       },
@@ -1377,7 +1383,7 @@
       ],
       "deviationCheck": {
         "deviationWithRecentValues": {
-          "maxPercent": 5,
+          "maxPercent": 2,
           "maxDelayMilliseconds": 120000
         }
       },
@@ -1585,7 +1591,7 @@
       ],
       "deviationCheck": {
         "deviationWithRecentValues": {
-          "maxPercent": 5,
+          "maxPercent": 2,
           "maxDelayMilliseconds": 120000
         }
       },
@@ -1861,7 +1867,7 @@
       ],
       "deviationCheck": {
         "deviationWithRecentValues": {
-          "maxPercent": 5,
+          "maxPercent": 2,
           "maxDelayMilliseconds": 120000
         }
       },
@@ -1898,7 +1904,7 @@
       ],
       "deviationCheck": {
         "deviationWithRecentValues": {
-          "maxPercent": 5,
+          "maxPercent": 2,
           "maxDelayMilliseconds": 120000
         }
       },
@@ -1931,7 +1937,7 @@
       ],
       "deviationCheck": {
         "deviationWithRecentValues": {
-          "maxPercent": 5,
+          "maxPercent": 2,
           "maxDelayMilliseconds": 120000
         }
       },
@@ -2614,7 +2620,7 @@
       "source": ["aerodrome-base-usdc", "curve-ethereum-usdc", "curve-ethereum-gho"],
       "deviationCheck": {
         "deviationWithRecentValues": {
-          "maxPercent": 5,
+          "maxPercent": 2,
           "maxDelayMilliseconds": 120000
         }
       },
@@ -2633,7 +2639,7 @@
       ],
       "deviationCheck": {
         "deviationWithRecentValues": {
-          "maxPercent": 5,
+          "maxPercent": 2,
           "maxDelayMilliseconds": 120000
         }
       },
@@ -2805,7 +2811,7 @@
       ],
       "deviationCheck": {
         "deviationWithRecentValues": {
-          "maxPercent": 5,
+          "maxPercent": 2,
           "maxDelayMilliseconds": 120000
         }
       },
@@ -2983,7 +2989,7 @@
       ],
       "deviationCheck": {
         "deviationWithRecentValues": {
-          "maxPercent": 5,
+          "maxPercent": 2,
           "maxDelayMilliseconds": 120000
         }
       },
@@ -3165,7 +3171,7 @@
       ],
       "deviationCheck": {
         "deviationWithRecentValues": {
-          "maxPercent": 5,
+          "maxPercent": 2,
           "maxDelayMilliseconds": 120000
         }
       },
@@ -3605,7 +3611,7 @@
       ],
       "deviationCheck": {
         "deviationWithRecentValues": {
-          "maxPercent": 5,
+          "maxPercent": 2,
           "maxDelayMilliseconds": 120000
         }
       },
@@ -3732,7 +3738,7 @@
       ],
       "deviationCheck": {
         "deviationWithRecentValues": {
-          "maxPercent": 5,
+          "maxPercent": 2,
           "maxDelayMilliseconds": 120000
         }
       },
@@ -4484,7 +4490,7 @@
       "rateFeed": false,
       "deviationCheck": {
         "deviationWithRecentValues": {
-          "maxPercent": 5,
+          "maxPercent": 2,
           "maxDelayMilliseconds": 120000
         }
       }
