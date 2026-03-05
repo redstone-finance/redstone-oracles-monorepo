@@ -40,7 +40,7 @@
       ],
       "deviationCheck": {
         "deviationWithRecentValues": {
-          "maxPercent": 5,
+          "maxPercent": 2,
           "maxDelayMilliseconds": 120000
         }
       },
@@ -60,7 +60,7 @@
       ],
       "deviationCheck": {
         "deviationWithRecentValues": {
-          "maxPercent": 5,
+          "maxPercent": 2,
           "maxDelayMilliseconds": 120000
         }
       },
@@ -84,7 +84,7 @@
       ],
       "deviationCheck": {
         "deviationWithRecentValues": {
-          "maxPercent": 5,
+          "maxPercent": 2,
           "maxDelayMilliseconds": 120000
         }
       },
@@ -108,7 +108,7 @@
       ],
       "deviationCheck": {
         "deviationWithRecentValues": {
-          "maxPercent": 5,
+          "maxPercent": 2,
           "maxDelayMilliseconds": 120000
         }
       },
@@ -213,7 +213,7 @@
       ],
       "deviationCheck": {
         "deviationWithRecentValues": {
-          "maxPercent": 5,
+          "maxPercent": 2,
           "maxDelayMilliseconds": 120000
         }
       },
@@ -248,7 +248,7 @@
       ],
       "deviationCheck": {
         "deviationWithRecentValues": {
-          "maxPercent": 5,
+          "maxPercent": 2,
           "maxDelayMilliseconds": 120000
         }
       },
@@ -361,7 +361,13 @@
         "ethereum-evm-fetcher-curve"
       ],
       "denomination": "USD",
-      "rateFeed": true
+      "rateFeed": true,
+      "deviationCheck": {
+        "deviationWithRecentValues": {
+          "maxPercent": 2,
+          "maxDelayMilliseconds": 120000
+        }
+      }
     },
     "3Crv": {
       "source": [
@@ -378,7 +384,7 @@
       ],
       "deviationCheck": {
         "deviationWithRecentValues": {
-          "maxPercent": 5,
+          "maxPercent": 2,
           "maxDelayMilliseconds": 120000
         }
       },
@@ -398,7 +404,7 @@
       ],
       "deviationCheck": {
         "deviationWithRecentValues": {
-          "maxPercent": 5,
+          "maxPercent": 2,
           "maxDelayMilliseconds": 120000
         }
       },
@@ -868,7 +874,7 @@
       ],
       "deviationCheck": {
         "deviationWithRecentValues": {
-          "maxPercent": 5,
+          "maxPercent": 2,
           "maxDelayMilliseconds": 120000
         }
       },
@@ -1220,7 +1226,7 @@
       ],
       "deviationCheck": {
         "deviationWithRecentValues": {
-          "maxPercent": 5,
+          "maxPercent": 2,
           "maxDelayMilliseconds": 120000
         }
       },
@@ -1424,7 +1430,7 @@
       ],
       "deviationCheck": {
         "deviationWithRecentValues": {
-          "maxPercent": 5,
+          "maxPercent": 2,
           "maxDelayMilliseconds": 120000
         }
       },
@@ -1455,7 +1461,7 @@
       ],
       "deviationCheck": {
         "deviationWithRecentValues": {
-          "maxPercent": 5,
+          "maxPercent": 2,
           "maxDelayMilliseconds": 120000
         }
       },
@@ -1688,7 +1694,7 @@
       ],
       "deviationCheck": {
         "deviationWithRecentValues": {
-          "maxPercent": 5,
+          "maxPercent": 2,
           "maxDelayMilliseconds": 120000
         }
       },
@@ -2000,7 +2006,7 @@
       ],
       "deviationCheck": {
         "deviationWithRecentValues": {
-          "maxPercent": 5,
+          "maxPercent": 2,
           "maxDelayMilliseconds": 120000
         }
       },
@@ -2037,7 +2043,7 @@
       ],
       "deviationCheck": {
         "deviationWithRecentValues": {
-          "maxPercent": 5,
+          "maxPercent": 2,
           "maxDelayMilliseconds": 120000
         }
       },
@@ -2070,7 +2076,7 @@
       ],
       "deviationCheck": {
         "deviationWithRecentValues": {
-          "maxPercent": 5,
+          "maxPercent": 2,
           "maxDelayMilliseconds": 120000
         }
       },
@@ -2864,7 +2870,7 @@
       ],
       "deviationCheck": {
         "deviationWithRecentValues": {
-          "maxPercent": 5,
+          "maxPercent": 2,
           "maxDelayMilliseconds": 120000
         }
       },
@@ -2883,7 +2889,7 @@
       ],
       "deviationCheck": {
         "deviationWithRecentValues": {
-          "maxPercent": 5,
+          "maxPercent": 2,
           "maxDelayMilliseconds": 120000
         }
       },
@@ -3073,7 +3079,7 @@
       ],
       "deviationCheck": {
         "deviationWithRecentValues": {
-          "maxPercent": 5,
+          "maxPercent": 2,
           "maxDelayMilliseconds": 120000
         }
       },
@@ -3271,7 +3277,7 @@
       ],
       "deviationCheck": {
         "deviationWithRecentValues": {
-          "maxPercent": 5,
+          "maxPercent": 2,
           "maxDelayMilliseconds": 120000
         }
       },
@@ -3463,7 +3469,7 @@
       ],
       "deviationCheck": {
         "deviationWithRecentValues": {
-          "maxPercent": 5,
+          "maxPercent": 2,
           "maxDelayMilliseconds": 120000
         }
       },
@@ -3950,7 +3956,7 @@
       ],
       "deviationCheck": {
         "deviationWithRecentValues": {
-          "maxPercent": 5,
+          "maxPercent": 2,
           "maxDelayMilliseconds": 120000
         }
       },
@@ -4089,7 +4095,7 @@
       ],
       "deviationCheck": {
         "deviationWithRecentValues": {
-          "maxPercent": 5,
+          "maxPercent": 2,
           "maxDelayMilliseconds": 120000
         }
       },
@@ -4919,7 +4925,7 @@
       "rateFeed": false,
       "deviationCheck": {
         "deviationWithRecentValues": {
-          "maxPercent": 5,
+          "maxPercent": 2,
           "maxDelayMilliseconds": 120000
         }
       }
