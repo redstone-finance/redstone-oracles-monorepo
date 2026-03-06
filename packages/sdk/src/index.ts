@@ -1,5 +1,6 @@
 import { default as redstoneOraclesInitialState } from "./registry/initial-state.json";
 
+export * from "./compute-median";
 export * from "./contracts/ContractData";
 export * from "./contracts/ContractParamsProvider";
 export * from "./contracts/ContractParamsProviderMock";
