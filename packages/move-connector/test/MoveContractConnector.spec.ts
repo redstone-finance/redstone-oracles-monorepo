@@ -19,7 +19,7 @@ import {
   REST_NODE_LOCALNET_URL,
 } from "./helpers";
 
-const WAIT_MS = 5_000;
+const WAIT_MS = 10_000;
 
 describe("MovePricesContractConnector", () => {
   let connector: MovePricesContractConnector;
