@@ -280,7 +280,7 @@
       "denomination": "USD",
       "rateFeed": false
     },
-    "SP500": {
+    "USA500": {
       "source": ["alltick-api-deferred", "financialmodelingprep-deferred", "ws-lmax"],
       "priceAggregator": "primarySource",
       "primarySourceAggregatorConfig": {
