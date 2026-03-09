@@ -10629,6 +10629,7 @@ __metadata:
     "@aws-sdk/util-arn-parser": "npm:^3.696.0"
     "@influxdata/influxdb-client": "npm:^1.35.0"
     "@influxdata/influxdb-client-apis": "npm:^1.35.0"
+    "@redstone-finance/on-chain-relayer-common": "workspace:*"
     "@redstone-finance/protocol": "workspace:*"
     "@redstone-finance/utils": "workspace:*"
     "@types/lodash": "npm:^4.14.195"

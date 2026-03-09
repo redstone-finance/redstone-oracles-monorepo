@@ -40,6 +40,12 @@ jest.mock("@redstone-finance/sdk", () => ({
   getOracleRegistryState: jest.fn(() => mockOracleRegistryState),
 }));
 
+const mockGetRwaFeedIds = jest.fn().mockResolvedValue(new Set<string>());
+jest.mock("../../src/utils/strip-rwa-metadata", () => ({
+  ...jest.requireActual<object>("../../src/utils/strip-rwa-metadata"),
+  getRwaFeedIds: (...args: unknown[]) => mockGetRwaFeedIds(...args),
+}));
+
 const ALL_FEEDS_KEY = consts.ALL_FEEDS_KEY;
 const dataPackagesIds = [ALL_FEEDS_KEY, "ETH", "AAVE", "BTC"];
 
@@ -562,6 +568,68 @@ describe("Data packages (e2e)", () => {
         .expect(200);
 
       expect(responseWithoutMetadata.body.BTC[0].dataPoints[0]).not.toHaveProperty("metadata");
+    });
+  });
+
+  describe("RWA metadata stripping", () => {
+    beforeEach(async () => {
+      const baseTimestamp = Date.now();
+      const mockDataPackage = mockDataPackages[0];
+      await DataPackage.insertMany([
+        {
+          ...mockDataPackage,
+          timestampMilliseconds: baseTimestamp,
+          isSignatureValid: true,
+          dataFeedId: "RWA_FEED",
+          dataPackageId: "RWA_FEED",
+          dataServiceId: "mock-data-service-1",
+          signerAddress: "0x1",
+          dataPoints: [
+            {
+              dataFeedId: "RWA_FEED",
+              value: "100",
+              metadata: { sources: { exchange_1: "99", exchange_2: "101" } },
+            },
+          ],
+        },
+        {
+          ...mockDataPackage,
+          timestampMilliseconds: baseTimestamp,
+          isSignatureValid: true,
+          dataFeedId: "ETH",
+          dataPackageId: "ETH",
+          dataServiceId: "mock-data-service-1",
+          signerAddress: "0x1",
+          dataPoints: [
+            {
+              dataFeedId: "ETH",
+              value: "3000",
+              metadata: { sources: { exchange_1: "2999", exchange_2: "3001" } },
+            },
+          ],
+        },
+      ]);
+      jest.spyOn(Date, "now").mockImplementation(() => baseTimestamp);
+    });
+
+    it("should strip RWA feed metadata even on show-metadata endpoint", async () => {
+      mockGetRwaFeedIds.mockResolvedValue(new Set(["RWA_FEED"]));
+
+      const response = await request(httpServer)
+        .get(`/v2/data-packages/latest/mock-data-service-1/show-metadata`)
+        .expect(200);
+
+      expect(response.body.RWA_FEED[0].dataPoints[0]).not.toHaveProperty("metadata");
+    });
+
+    it("should preserve non-RWA feed metadata on show-metadata endpoint", async () => {
+      mockGetRwaFeedIds.mockResolvedValue(new Set(["RWA_FEED"]));
+
+      const response = await request(httpServer)
+        .get(`/v2/data-packages/latest/mock-data-service-1/show-metadata`)
+        .expect(200);
+
+      expect(response.body.ETH[0].dataPoints[0]).toHaveProperty("metadata");
     });
   });
 
