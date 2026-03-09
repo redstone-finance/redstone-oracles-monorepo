@@ -234,7 +234,7 @@
       "denomination": "USD",
       "rateFeed": false
     },
-    "SP500": {
+    "USA500": {
       "source": [],
       "priceAggregator": "primarySource",
       "primarySourceAggregatorConfig": {
