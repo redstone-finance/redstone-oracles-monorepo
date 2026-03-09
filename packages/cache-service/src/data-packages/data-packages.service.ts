@@ -8,6 +8,7 @@ import { MongoBroadcaster } from "../broadcasters/mongo-broadcaster";
 import { EMPTY_DATA_PACKAGE_RESPONSE_ERROR_CODE } from "../common/errors";
 import config from "../config";
 import { getOracleState } from "../utils/get-oracle-state";
+import { getRwaFeedIds, stripRwaMetadata, type RwaFeedResult } from "../utils/strip-rwa-metadata";
 import {
   BulkPostRequestBody,
   DataPackagesResponse,
@@ -22,6 +23,7 @@ import {
 
 @Injectable()
 export class DataPackagesService implements OnModuleInit {
+  private static readonly staticLogger = new Logger(DataPackagesService.name);
   private readonly logger = new Logger(DataPackagesService.name);
   private readonly broadcasters: DataPackagesBroadcaster[] = [];
   private static allowedSigners: string[] | null = null;
@@ -215,6 +217,16 @@ export class DataPackagesService implements OnModuleInit {
       );
     }
 
+    let rwaFeedIds: RwaFeedResult = new Set();
+    try {
+      rwaFeedIds = await getRwaFeedIds(dataServiceId);
+    } catch (err) {
+      DataPackagesService.staticLogger.error(
+        `Failed to get RWA feed IDs for ${dataServiceId}: ${String(err)}`
+      );
+    }
+    fetchedPackages = stripRwaMetadata(fetchedPackages, rwaFeedIds);
+
     return filterOutliers(fetchedPackages);
   }
 
@@ -325,6 +337,14 @@ export class DataPackagesService implements OnModuleInit {
         fetchedPackagesPerDataFeed
       );
     }
+
+    let rwaFeedIds: RwaFeedResult = new Set();
+    try {
+      rwaFeedIds = await getRwaFeedIds(dataServiceId);
+    } catch (err) {
+      this.logger.error(`Failed to get RWA feed IDs for ${dataServiceId}: ${String(err)}`);
+    }
+    fetchedPackages = stripRwaMetadata(fetchedPackages, rwaFeedIds);
 
     return filterOutliers(fetchedPackages);
   }
