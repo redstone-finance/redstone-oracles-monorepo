@@ -121,6 +121,9 @@
         "deviationPercentage": 0.1,
         "timeSinceLastUpdateInMilliseconds": 86400000
       }
+    },
+    "XLM": {
+      "priceFeedAddress": "CAXRDLYBL7ZNE754UX33XTVGTA7MNTIFWURTFJBTRKHPTNP2P36TU2ZF"
     }
   }
 }
