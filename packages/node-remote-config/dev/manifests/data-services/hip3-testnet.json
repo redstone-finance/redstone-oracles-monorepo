@@ -2034,12 +2034,12 @@
         "ws-blocksize",
         "ws-twelve-data-no-closing-price"
       ],
-      "priceAggregator": "primarySource",
-      "primarySourceAggregatorConfig": {
+      "priceAggregator": "primarySourceWithRebasing",
+      "primarySourceWithRebasingAggregatorConfig": {
         "primarySource": "ws-lmax",
-        "maxAcceptableDeviation": 1.5,
-        "lowerClampPercent": 0.1,
-        "upperClampPercent": 0.1
+        "rebaseCalculationInterval": 60000,
+        "maxAcceptableDeviationPercent": 1.5,
+        "clampPercent": 0.1
       },
       "broadcasters": ["influx"],
       "deviationCheck": {
