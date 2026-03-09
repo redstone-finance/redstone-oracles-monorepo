@@ -1404,7 +1404,7 @@
         }
       }
     },
-    "SP500": {
+    "USA500": {
       "source": [
         "alltick-api-deferred",
         "financialmodelingprep-deferred",
@@ -1435,7 +1435,7 @@
       "denomination": "USD",
       "rateFeed": false
     },
-    "MARK_flx:SP500": {
+    "MARK_flx:USA500": {
       "source": ["hyperliquid-mainnet-perps-ws-fetcher", "hydromancer-mainnet-perps-ws-fetcher"],
       "customWeightsForWeightedMedian": {
         "hyperliquid-mainnet-perps-ws-fetcher": 10,
@@ -1446,7 +1446,7 @@
       "denomination": "USD",
       "rateFeed": false
     },
-    "ORACLE_flx:SP500": {
+    "ORACLE_flx:USA500": {
       "source": ["hyperliquid-mainnet-perps-ws-fetcher", "hydromancer-mainnet-perps-ws-fetcher"],
       "customWeightsForWeightedMedian": {
         "hyperliquid-mainnet-perps-ws-fetcher": 10,
@@ -1457,7 +1457,7 @@
       "denomination": "USD",
       "rateFeed": false
     },
-    "IMPACT_BUY_flx:SP500": {
+    "IMPACT_BUY_flx:USA500": {
       "source": ["hyperliquid-mainnet-perps-ws-fetcher", "hydromancer-mainnet-perps-ws-fetcher"],
       "customWeightsForWeightedMedian": {
         "hyperliquid-mainnet-perps-ws-fetcher": 10,
@@ -1468,7 +1468,7 @@
       "denomination": "USD",
       "rateFeed": false
     },
-    "IMPACT_SELL_flx:SP500": {
+    "IMPACT_SELL_flx:USA500": {
       "source": ["hyperliquid-mainnet-perps-ws-fetcher", "hydromancer-mainnet-perps-ws-fetcher"],
       "customWeightsForWeightedMedian": {
         "hyperliquid-mainnet-perps-ws-fetcher": 10,
@@ -1479,31 +1479,31 @@
       "denomination": "USD",
       "rateFeed": false
     },
-    "flx:SP500_MARK_0": {
-      "source": ["hip3-felix-sp500-mainnet-fetcher"],
+    "flx:USA500_MARK_0": {
+      "source": ["hip3-felix-usa500-mainnet-fetcher"],
       "broadcasters": ["hyperliquid-hip3"],
       "denomination": "USD",
       "rateFeed": false
     },
-    "flx:SP500_MARK_1": {
-      "source": ["hip3-felix-sp500-mainnet-fetcher"],
+    "flx:USA500_MARK_1": {
+      "source": ["hip3-felix-usa500-mainnet-fetcher"],
       "broadcasters": ["hyperliquid-hip3"],
       "denomination": "USD",
       "rateFeed": false
     },
-    "flx:SP500_EXT": {
-      "source": ["hip3-felix-sp500-mainnet-fetcher"],
+    "flx:USA500_EXT": {
+      "source": ["hip3-felix-usa500-mainnet-fetcher"],
       "broadcasters": ["hyperliquid-hip3"],
       "denomination": "USD",
       "rateFeed": false
     },
-    "flx:SP500": {
-      "source": ["hip3-felix-sp500-mainnet-fetcher"],
+    "flx:USA500": {
+      "source": ["hip3-felix-usa500-mainnet-fetcher"],
       "broadcasters": ["hyperliquid-hip3"],
       "denomination": "USD",
       "rateFeed": false
     },
-    "OPEN_INTEREST_flx:SP500": {
+    "OPEN_INTEREST_flx:USA500": {
       "source": ["hyperliquid-mainnet-perps-ws-fetcher"],
       "broadcasters": [],
       "denomination": "USD",

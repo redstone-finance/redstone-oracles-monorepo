@@ -8339,7 +8339,7 @@
       "rateFeed": false,
       "types": ["rwa"]
     },
-    "SP500": {
+    "USA500": {
       "source": ["ws-lmax", "alltick-api", "financialmodelingprep"],
       "denomination": "USD",
       "rateFeed": false,
