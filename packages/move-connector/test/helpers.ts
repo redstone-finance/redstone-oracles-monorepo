@@ -20,6 +20,7 @@ export class TestHelper {
   static makeLocal(): TestHelper {
     const client = makeAptos(NETWORK as Network, REST_NODE_LOCALNET_URL, REST_FAUCET_LOCALNET_URL);
     const account = makeAptosAccount(FAKE_PRIVKEY_SECP256K1);
+
     return new TestHelper(client, account);
   }
 
