@@ -15,6 +15,7 @@ const MAX_REQ_PER_SECOND_PER_CONNECTION = 100;
 export class PooledMqttClient implements PubSubClient {
   clientToTopics: [PubSubClient, string[]][] = [];
   publishClients: PubSubClient[] = [];
+  private onMessageHandler?: SubscribeCallback;
 
   // we have to use mutex to avoid concurrent modifications of clientToTopics array
   subscribeMutex = new Mutex();
@@ -56,10 +57,17 @@ export class PooledMqttClient implements PubSubClient {
     }
   }
 
-  async subscribe(topics: string[], onMessage: SubscribeCallback): Promise<void> {
+  setOnMessageHandler(onMessage: SubscribeCallback): void {
+    this.onMessageHandler = onMessage;
+    for (const [client] of this.clientToTopics) {
+      client.setOnMessageHandler(onMessage);
+    }
+  }
+
+  async subscribe(topics: string[]): Promise<void> {
     await this.subscribeMutex.acquire();
     try {
-      await this._subscribe(topics, onMessage);
+      await this._subscribe(topics);
       this.logger.info(
         `Requested ${topics.length} topics, subscribed to ${topics.length} topics, active ${this.clientToTopics.length} connections`
       );
@@ -108,7 +116,7 @@ export class PooledMqttClient implements PubSubClient {
     this.clientToTopics = [];
   }
 
-  async _subscribe(topics: string[], onMessage: SubscribeCallback): Promise<void> {
+  async _subscribe(topics: string[]): Promise<void> {
     const topicToAdd = [...topics];
     const clientWithCapacity = this.clientToTopics.map(
       ([_, topics]) => this.connectionsPerTopic - topics.length
@@ -140,8 +148,11 @@ export class PooledMqttClient implements PubSubClient {
       );
 
       if (topicsToSubscribe.length > 0) {
+        if (this.onMessageHandler) {
+          client.setOnMessageHandler(this.onMessageHandler);
+        }
         subscribePromises.push(
-          client.subscribe(topicsToSubscribe, onMessage).then(() => {
+          client.subscribe(topicsToSubscribe).then(() => {
             subscribedTopics.push(...topicsToSubscribe);
           })
         );
@@ -150,7 +161,7 @@ export class PooledMqttClient implements PubSubClient {
     await Promise.all(subscribePromises);
 
     if (topicToAdd.length !== 0) {
-      await this._subscribe(topicToAdd, onMessage);
+      await this._subscribe(topicToAdd);
     }
   }
 }

@@ -136,10 +136,13 @@ export class Mqtt5Client implements PubSubClient {
     await Promise.all(promises);
   }
 
-  /** onMessage is assigned to ALL topics, you can't specify onMessage per topic*/
-  async subscribe(topics: string[], onMessage: SubscribeCallback) {
-    await this.subscribeToTopics(topics);
+  setOnMessageHandler(onMessage: SubscribeCallback) {
     this.onMessageCallback = onMessage;
+  }
+
+  /** onMessage is assigned to ALL topics, you can't specify onMessage per topic*/
+  async subscribe(topics: string[]) {
+    await this.subscribeToTopics(topics);
 
     if (this._mqtt.listenerCount("messageReceived") === 0) {
       this._mqtt.on("messageReceived", ({ message }) => {

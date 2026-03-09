@@ -16,6 +16,7 @@ describe("withRateLimiter", () => {
     mockUnsubscribe = jest.fn().mockResolvedValue(undefined);
     mockPubSubClient = {
       publish: jest.fn(),
+      setOnMessageHandler: jest.fn(),
       subscribe: jest.fn(),
       unsubscribe: mockUnsubscribe,
       stop: jest.fn(),
@@ -340,6 +341,7 @@ describe("withRateLimiter", () => {
 
     const mockClient1 = {
       publish: jest.fn(),
+      setOnMessageHandler: jest.fn(),
       subscribe: jest.fn(),
       unsubscribe: jest.fn().mockResolvedValue(undefined),
       stop: mockStopClient1,
@@ -348,6 +350,7 @@ describe("withRateLimiter", () => {
 
     const mockClient2 = {
       publish: jest.fn(),
+      setOnMessageHandler: jest.fn(),
       subscribe: jest.fn(),
       unsubscribe: jest.fn().mockResolvedValue(undefined),
       stop: mockStopClient2,

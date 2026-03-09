@@ -209,8 +209,9 @@ export class DataPackageSubscriber {
             logIntervalMs: this.params.statsLogIntervalMs,
           });
 
+    this.pubSubClient.setOnMessageHandler(finalCallback);
     try {
-      await this.pubSubClient.subscribe(this.topics, finalCallback);
+      await this.pubSubClient.subscribe(this.topics);
     } catch (e) {
       if (this.fallbackInterval) {
         this.logger.warn("Failed to subscribe to topics, continuing because fallback is enabled");
