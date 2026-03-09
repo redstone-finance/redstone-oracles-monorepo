@@ -77,7 +77,8 @@ describe("PollingHttpClient", () => {
       MOCK.setData("topic1", [456, 789]);
       MOCK.setData("topic2", [999]);
 
-      await client.subscribe(["topic1", "topic2"], () => {});
+      client.setOnMessageHandler(() => {});
+      await client.subscribe(["topic1", "topic2"]);
 
       const data = await client.getData();
 
@@ -97,7 +98,8 @@ describe("PollingHttpClient", () => {
       MOCK.setData("topic1", [100, 200]);
       MOCK.setData("topic2", [300]);
 
-      await client.subscribe(["topic1", "topic2"], onMessage);
+      client.setOnMessageHandler(onMessage);
+      await client.subscribe(["topic1", "topic2"]);
       client.startPolling();
       await polling_cycle();
 
@@ -110,7 +112,8 @@ describe("PollingHttpClient", () => {
       const onMessage = jest.fn();
       MOCK.setData("topic1", [1]);
 
-      await client.subscribe(["topic1"], onMessage);
+      client.setOnMessageHandler(onMessage);
+      await client.subscribe(["topic1"]);
       client.startPolling();
 
       // First poll
@@ -160,7 +163,8 @@ describe("PollingHttpClient", () => {
     it("should subscribe and unsubscribe without SSE or sessions", async () => {
       const onMessage = jest.fn();
 
-      await client.subscribe(["topic1", "topic2"], onMessage);
+      client.setOnMessageHandler(onMessage);
+      await client.subscribe(["topic1", "topic2"]);
       expect(client["topics"].size).toBe(2);
       expect(client["topics"].has("topic1")).toBe(true);
       expect(client["topics"].has("topic2")).toBe(true);

@@ -37,9 +37,11 @@ export class PollingHttpClient implements PubSubClient {
     return await this.common.publish(payloads);
   }
 
-  subscribe(topics: string[], onMessage: SubscribeCallback) {
+  setOnMessageHandler(onMessage: SubscribeCallback) {
     this.callback = onMessage;
+  }
 
+  subscribe(topics: string[]) {
     for (const topic of topics) {
       this.topics.add(topic);
     }

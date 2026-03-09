@@ -403,6 +403,7 @@ describe("withStats decorator", () => {
     mockPubSubClient = {
       getUniqueName: jest.fn().mockReturnValue("test-client"),
       publish: jest.fn(),
+      setOnMessageHandler: jest.fn(),
       subscribe: jest.fn(),
       unsubscribe: jest.fn(),
       stop: jest.fn(),
