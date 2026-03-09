@@ -25,7 +25,6 @@
         "bitstamp-usd",
         "bybit-usdc",
         "coinbase-usd",
-        "gemini-usdc",
         "htx-usdt",
         "kraken-eur",
         "kraken-usd",
@@ -142,7 +141,6 @@
         "bitrue-usdc",
         "bitstamp-usd",
         "bybit-usdc",
-        "gemini-usdc",
         "htx-usdt",
         "kraken-usd",
         "kraken-usdt",
@@ -628,7 +626,6 @@
         "bybit-usdt",
         "coinbase-usd",
         "gate-usdt",
-        "gemini-usdc",
         "htx-usdt",
         "kraken-eur",
         "kraken-usd",
@@ -727,8 +724,7 @@
         "binance-eth-reversed",
         "binance-sol-reversed",
         "binance-xrp-reversed",
-        "pancake-swap-bnb-usdt-100",
-        "uniswap-v3-ethereum-usdt-100"
+        "pancake-swap-bnb-usdt-100"
       ],
       "denomination": "USD",
       "rateFeed": false
