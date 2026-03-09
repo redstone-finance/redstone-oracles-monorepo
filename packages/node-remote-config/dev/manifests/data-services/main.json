@@ -9127,7 +9127,7 @@
         "rwa"
       ]
     },
-    "SP500": {
+    "USA500": {
       "source": [],
       "denomination": "USD",
       "rateFeed": false,
