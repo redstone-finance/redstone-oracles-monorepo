@@ -41,10 +41,16 @@ export class MultiPubSubClient implements PubSubClient {
     );
   }
 
+  setOnMessageHandler(onMessage: SubscribeCallback): void {
+    for (const config of this.pubSubConfigs) {
+      config.client.setOnMessageHandler(onMessage);
+    }
+  }
+
   /** Receive data from multiple channels thus expect duplicates, fails only if all clients fail */
-  async subscribe(topics: string[], onMessage: SubscribeCallback): Promise<void> {
+  async subscribe(topics: string[]): Promise<void> {
     const results = await Promise.allSettled(
-      this.pubSubConfigs.map((config) => config.client.subscribe(topics, onMessage))
+      this.pubSubConfigs.map((config) => config.client.subscribe(topics))
     );
 
     if (results.some((r) => r.status === "fulfilled")) {

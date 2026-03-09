@@ -53,7 +53,8 @@ export type WithRateLimiterConfig = {
  *   topicIntervalMs: 1000,
  *   maxMessagesPerTopicInterval: 100
  * });
- * await pubSubClient.subscribe(topics, rateLimitedCallback);
+ * pubSubClient.setOnMessageHandler(rateLimitedCallback);
+ * await pubSubClient.subscribe(topics);
  * ```
  *
  * @example
@@ -66,7 +67,8 @@ export type WithRateLimiterConfig = {
  *   maxMessagesPerClientInterval: 1000,
  *   clientIntervalMs: 1000
  * });
- * await pubSubClient.subscribe(topics, rateLimitedCallback);
+ * pubSubClient.setOnMessageHandler(rateLimitedCallback);
+ * await pubSubClient.subscribe(topics);
  * ```
  */
 export function withRateLimiter({

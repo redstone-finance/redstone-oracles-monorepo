@@ -79,7 +79,7 @@ const createSubscriber = async (id: number) => {
     const newTopics = allTopics.slice(currentOffset, currentOffset + TOPICS_PER_SUBSCRIBER);
 
     await client.unsubscribe(oldTopics);
-    await client.subscribe(newTopics, callback);
+    await client.subscribe(newTopics);
 
     console.log(
       `Subscriber ${id} rotated: unsubscribed from ${oldTopics.slice(0, 3).join(", ")}..., subscribed to ${newTopics.slice(0, 3).join(", ")}...`
@@ -88,7 +88,8 @@ const createSubscriber = async (id: number) => {
 
   const initialTopics = allTopics.slice(currentOffset, currentOffset + TOPICS_PER_SUBSCRIBER);
 
-  await client.subscribe(initialTopics, callback);
+  client.setOnMessageHandler(callback);
+  await client.subscribe(initialTopics);
 
   setInterval(() => void rotateSubscriptions(), SUBSCRIPTION_ROTATION_MS);
 

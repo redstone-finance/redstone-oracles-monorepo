@@ -14,6 +14,7 @@ describe("PooledMqttClient", () => {
   let client: PooledMqttClient;
 
   const createMockClient = (): PubSubClient => ({
+    setOnMessageHandler: jest.fn(),
     subscribe: jest.fn().mockReturnValue(Promise.resolve()),
     unsubscribe: jest.fn(),
     publish: jest.fn(),
@@ -31,16 +32,19 @@ describe("PooledMqttClient", () => {
     const onMessage = jest.fn();
 
     it("should create new client when no clients exist", async () => {
-      await client.subscribe(["topic1"], onMessage);
+      client.setOnMessageHandler(onMessage);
+      await client.subscribe(["topic1"]);
 
       expect(fabric).toHaveBeenCalledTimes(1);
-      expect(mockClient.subscribe).toHaveBeenCalledWith(["topic1"], onMessage);
+      expect(mockClient.setOnMessageHandler).toHaveBeenCalledWith(onMessage);
+      expect(mockClient.subscribe).toHaveBeenCalledWith(["topic1"]);
       expect(client.clientToTopics).toHaveLength(1);
       expect(client.clientToTopics[0][1]).toEqual(["topic1"]);
     });
 
     it("should distribute topics across multiple clients", async () => {
-      await client.subscribe(["topic1", "topic2", "topic3"], onMessage);
+      client.setOnMessageHandler(onMessage);
+      await client.subscribe(["topic1", "topic2", "topic3"]);
 
       expect(fabric).toHaveBeenCalledTimes(2);
       expect(client.clientToTopics).toHaveLength(2);
@@ -49,8 +53,9 @@ describe("PooledMqttClient", () => {
     });
 
     it("should use existing client if it has capacity", async () => {
-      await client.subscribe(["topic1"], onMessage);
-      await client.subscribe(["topic2"], onMessage);
+      client.setOnMessageHandler(onMessage);
+      await client.subscribe(["topic1"]);
+      await client.subscribe(["topic2"]);
 
       expect(fabric).toHaveBeenCalledTimes(1);
       expect(client.clientToTopics).toHaveLength(1);
@@ -62,7 +67,8 @@ describe("PooledMqttClient", () => {
     const onMessage = jest.fn();
 
     beforeEach(async () => {
-      await client.subscribe(["topic1", "topic2", "topic3"], onMessage);
+      client.setOnMessageHandler(onMessage);
+      await client.subscribe(["topic1", "topic2", "topic3"]);
     });
 
     it("should unsubscribe topics from clients", async () => {
@@ -178,7 +184,8 @@ describe("PooledMqttClient", () => {
   describe("stop", () => {
     it("should stop all clients", async () => {
       const onMessage = jest.fn();
-      await client.subscribe(["topic1", "topic2", "topic3"], onMessage);
+      client.setOnMessageHandler(onMessage);
+      await client.subscribe(["topic1", "topic2", "topic3"]);
       const payloads = createPayloads(301);
       await client.publish(payloads, "deflate+json");
 
@@ -202,6 +209,7 @@ describe("PooledMqttClient complex", () => {
   beforeEach(() => {
     clientIndex = 0;
     mockClient1 = {
+      setOnMessageHandler: jest.fn(),
       subscribe: jest.fn().mockReturnValue(Promise.resolve()),
       unsubscribe: jest.fn(),
       publish: jest.fn(),
@@ -209,6 +217,7 @@ describe("PooledMqttClient complex", () => {
       getUniqueName: () => "unique-name-1",
     };
     mockClient2 = {
+      setOnMessageHandler: jest.fn(),
       subscribe: jest.fn().mockReturnValue(Promise.resolve()),
       unsubscribe: jest.fn(),
       publish: jest.fn(),
@@ -221,13 +230,14 @@ describe("PooledMqttClient complex", () => {
     });
 
     client = new PooledMqttClient(fabric, 2, "unique-name-1"); // 2 topics per connection
+    client.setOnMessageHandler(onMessage);
   });
 
   it("should handle subscribe -> unsubscribe -> subscribe sequence", async () => {
     // Initial subscribe
-    await client.subscribe(["topic1", "topic2"], onMessage);
+    await client.subscribe(["topic1", "topic2"]);
     expect(fabric).toHaveBeenCalledTimes(1);
-    expect(mockClient1.subscribe).toHaveBeenCalledWith(["topic1", "topic2"], onMessage);
+    expect(mockClient1.subscribe).toHaveBeenCalledWith(["topic1", "topic2"]);
     expect(client.clientToTopics).toHaveLength(1);
     expect(client.clientToTopics[0][1]).toEqual(["topic1", "topic2"]);
 
@@ -237,18 +247,18 @@ describe("PooledMqttClient complex", () => {
     expect(client.clientToTopics[0][1]).toEqual(["topic2"]);
 
     // Subscribe new topic
-    await client.subscribe(["topic3"], onMessage);
-    expect(mockClient1.subscribe).toHaveBeenCalledWith(["topic3"], onMessage);
+    await client.subscribe(["topic3"]);
+    expect(mockClient1.subscribe).toHaveBeenCalledWith(["topic3"]);
     expect(client.clientToTopics[0][1]).toEqual(["topic2", "topic3"]);
   });
 
   it("should handle multiple clients lifecycle", async () => {
     // Subscribe to topics that require two clients
-    await client.subscribe(["topic1", "topic2", "topic3", "topic4"], onMessage);
+    await client.subscribe(["topic1", "topic2", "topic3", "topic4"]);
 
     expect(fabric).toHaveBeenCalledTimes(2);
-    expect(mockClient1.subscribe).toHaveBeenCalledWith(["topic1", "topic2"], onMessage);
-    expect(mockClient2.subscribe).toHaveBeenCalledWith(["topic3", "topic4"], onMessage);
+    expect(mockClient1.subscribe).toHaveBeenCalledWith(["topic1", "topic2"]);
+    expect(mockClient2.subscribe).toHaveBeenCalledWith(["topic3", "topic4"]);
     expect(client.clientToTopics).toHaveLength(2);
 
     // Unsubscribe from all topics of first client
@@ -258,7 +268,7 @@ describe("PooledMqttClient complex", () => {
     expect(client.clientToTopics).toHaveLength(1);
 
     // Subscribe new topics
-    await client.subscribe(["topic5", "topic6"], onMessage);
+    await client.subscribe(["topic5", "topic6"]);
     expect(fabric).toHaveBeenCalledTimes(3);
     expect(client.clientToTopics).toHaveLength(2);
   });
@@ -266,9 +276,9 @@ describe("PooledMqttClient complex", () => {
   it("should handle concurrent subscribe operations", async () => {
     // Start multiple subscribe operations simultaneously
     const promises = [
-      client.subscribe(["topic1", "topic2"], onMessage),
-      client.subscribe(["topic3", "topic4"], onMessage),
-      client.subscribe(["topic5", "topic6"], onMessage),
+      client.subscribe(["topic1", "topic2"]),
+      client.subscribe(["topic3", "topic4"]),
+      client.subscribe(["topic5", "topic6"]),
     ];
 
     await Promise.all(promises);
@@ -284,8 +294,8 @@ describe("PooledMqttClient complex", () => {
 
   it("should handle subscribe -> unsubscribe -> stop sequence", async () => {
     // Initial subscriptions
-    await client.subscribe(["topic1", "topic2"], onMessage);
-    await client.subscribe(["topic3", "topic4"], onMessage);
+    await client.subscribe(["topic1", "topic2"]);
+    await client.subscribe(["topic3", "topic4"]);
 
     expect(client.clientToTopics).toHaveLength(2);
 
@@ -303,7 +313,7 @@ describe("PooledMqttClient complex", () => {
 
   it("should handle resubscribe to previously unsubscribed topics", async () => {
     // Initial subscribe
-    await client.subscribe(["topic1", "topic2"], onMessage);
+    await client.subscribe(["topic1", "topic2"]);
     expect(client.clientToTopics).toHaveLength(1);
     expect(fabric).toHaveBeenCalledTimes(1);
 
@@ -312,7 +322,7 @@ describe("PooledMqttClient complex", () => {
     expect(client.clientToTopics).toHaveLength(0);
 
     // Resubscribe to same topics
-    await client.subscribe(["topic1", "topic2"], onMessage);
+    await client.subscribe(["topic1", "topic2"]);
     expect(fabric).toHaveBeenCalledTimes(2); // New client created
     expect(client.clientToTopics).toHaveLength(1);
     expect(client.clientToTopics[0][1]).toEqual(["topic1", "topic2"]);

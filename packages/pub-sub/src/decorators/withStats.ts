@@ -142,7 +142,8 @@ export type WithStatsConfig = {
  *   callback: myCallback,
  *   logIntervalMs: 60000 // Log every minute
  * });
- * await pubSubClient.subscribe(topics, statsCallback);
+ * pubSubClient.setOnMessageHandler(statsCallback);
+ * await pubSubClient.subscribe(topics);
  * ```
  */
 export function withStats({

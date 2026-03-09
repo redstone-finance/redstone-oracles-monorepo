@@ -33,10 +33,15 @@ const dataServiceId = "data-service-1";
 
 class MockPubSubClient {
   topicToCallback: Map<string, SubscribeCallback> = new Map();
+  private onMessage?: SubscribeCallback;
 
-  subscribe(topics: string[], onMessage: SubscribeCallback) {
+  setOnMessageHandler(onMessage: SubscribeCallback) {
+    this.onMessage = onMessage;
+  }
+
+  subscribe(topics: string[]) {
     for (const topic of topics) {
-      this.topicToCallback.set(topic, onMessage);
+      this.topicToCallback.set(topic, this.onMessage!);
     }
   }
 

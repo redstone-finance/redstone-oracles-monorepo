@@ -84,7 +84,7 @@ export class SSEPubSubClient implements PubSubClient {
         this.logger.info("Resubscribing to topics after reconnection", {
           topicCount: topics.size,
         });
-        void this.subscribe(Array.from(topics.keys()), this.callback);
+        void this.subscribe(Array.from(topics.keys()));
       }
 
       const unsubscribedTopics = new Set(this.initialTopics);
@@ -153,9 +153,12 @@ export class SSEPubSubClient implements PubSubClient {
     return await this.common.publish(payloads);
   }
 
-  async subscribe(topics: string[], onMessage: SubscribeCallback) {
-    this.logger.debug("Subscribe requested", { topics, hasSession: !!this.sessionId });
+  setOnMessageHandler(onMessage: SubscribeCallback) {
     this.callback = onMessage;
+  }
+
+  async subscribe(topics: string[]) {
+    this.logger.debug("Subscribe requested", { topics, hasSession: !!this.sessionId });
 
     const newTopics: string[] = [];
 
