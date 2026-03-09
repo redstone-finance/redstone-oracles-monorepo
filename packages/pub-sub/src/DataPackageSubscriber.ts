@@ -131,8 +131,22 @@ export class DataPackageSubscriber {
             this.logger
           );
           const dataPackages = await fallbackFn();
-          const packageTimestamp =
-            Object.values(dataPackages)[0]![0].dataPackage.timestampMilliseconds;
+          const values = Object.values(dataPackages);
+
+          if (
+            values.length === 0 ||
+            !RedstoneCommon.isDefined(values[0]) ||
+            values[0].length === 0
+          ) {
+            GlobalLogMonitoring.error(
+              LogMonitoringType.MQTT_FALLBACK_FAILED,
+              `FallbackFn did not return any data packages`,
+              this.logger
+            );
+            throw new Error(`No data packages returned, got ${JSON.stringify(dataPackages)}`);
+          }
+
+          const packageTimestamp = values[0][0].dataPackage.timestampMilliseconds;
 
           this.logger.debug(
             `Received package from fallbackFn packageTimestamp=${packageTimestamp}`
