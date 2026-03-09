@@ -180,7 +180,6 @@
         "bitrue-usdc",
         "bitstamp-usd",
         "bybit-usdc",
-        "gemini-usdc",
         "htx-usdt",
         "kraken-usd",
         "kraken-usdt",
@@ -267,7 +266,6 @@
         "bitstamp-usd",
         "bybit-usdc",
         "coinbase-usd",
-        "gemini-usdc",
         "htx-usdt",
         "kraken-eur",
         "kraken-usd",
@@ -405,7 +403,6 @@
         "bybit-usdt",
         "coinbase-usd",
         "gate-usdt",
-        "gemini-usdc",
         "htx-usdt",
         "kraken-eur",
         "kraken-usd",
@@ -1538,7 +1535,6 @@
     },
     "COP": {
       "source": [
-        "mexc-usdt",
         "alphavantage-usd-reversed",
         "financialmodelingprep",
         "metal-price-api",
@@ -1860,8 +1856,7 @@
         "binance-eth-reversed",
         "binance-sol-reversed",
         "binance-xrp-reversed",
-        "pancake-swap-bnb-usdt-100",
-        "uniswap-v3-ethereum-usdt-100"
+        "pancake-swap-bnb-usdt-100"
       ],
       "deviationCheck": {
         "deviationWithRecentValues": {
@@ -2057,8 +2052,6 @@
         "bitstamp-usd",
         "bybit-usdt",
         "gate-usdt",
-        "gemini-usd",
-        "gemini-usdc",
         "htx-usdt",
         "kraken-eur",
         "kraken-usd",
@@ -2511,7 +2504,6 @@
         "bingx-usdt",
         "bitget-usdt",
         "bitmart-usdt",
-        "bitstamp-usd",
         "gate-usdt",
         "htx-usdt",
         "kraken-eur",
@@ -3246,7 +3238,6 @@
         "bybit-usdt",
         "gate-usdt",
         "gemini-usd",
-        "gemini-usdc",
         "htx-usdt",
         "kraken-eur",
         "kraken-usd",
@@ -3273,7 +3264,6 @@
         "bybit-usdt",
         "gate-usdt",
         "gemini-usd",
-        "gemini-usdc",
         "htx-usdt",
         "kraken-usd",
         "kucoin-usdt",
@@ -4290,7 +4280,6 @@
         "coinbase-usd",
         "gate-usdt",
         "gemini-usd",
-        "gemini-usdc",
         "htx-usdt",
         "kraken-eur",
         "kraken-usd",
