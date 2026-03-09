@@ -816,8 +816,6 @@
         "bitget-usdt",
         "bybit-usdt",
         "gate-usdt",
-        "htx-usdt",
-        "kraken-usd",
         "mexc-usdt"
       ],
       "denomination": "USD",
@@ -1421,8 +1419,6 @@
     "MAGIC": {
       "source": [
         "binance-usdt",
-        "bingx-usdt",
-        "bitget-usdt",
         "bitmart-usdt",
         "gate-usdt",
         "lbank-usdt",
@@ -8232,8 +8228,7 @@
     "URANIUM": {
       "source": [
         "tezos-uranium-price-api-deferred",
-        "commodity-price-api",
-        "metals-api"
+        "commodity-price-api"
       ],
       "priceAggregator": "primarySource",
       "primarySourceAggregatorConfig": {
@@ -9352,7 +9347,6 @@
         "lbank-usdt",
         "okx-usdt",
         "bullish-usdc",
-        "coinbase-usd",
         "kraken-usd",
         "meteora-solana-mainnet-wsol",
         "orca-solana-mainnet-wsol",
