@@ -526,8 +526,6 @@
         "bitget-usdt",
         "bybit-usdt",
         "gate-usdt",
-        "htx-usdt",
-        "kraken-usd",
         "mexc-usdt"
       ],
       "denomination": "USD",
