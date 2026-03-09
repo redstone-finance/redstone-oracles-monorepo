@@ -25,11 +25,17 @@ export interface PubSubClient {
   publish(payloads: PubSubPayload[], contentType: ContentTypes): Promise<void>;
 
   /**
-   * Subscribes to multiple topics and handles incoming messages
-   * @param topics Array of topics to subscribe to
+   * Sets the callback to handle incoming messages.
+   * Must be called before subscribe.
    * @param onMessage Callback function for handling received messages
    */
-  subscribe(topics: string[], onMessage: SubscribeCallback): Promise<void>;
+  setOnMessageHandler(onMessage: SubscribeCallback): void;
+
+  /**
+   * Subscribes to multiple topics
+   * @param topics Array of topics to subscribe to
+   */
+  subscribe(topics: string[]): Promise<void>;
 
   /**
    * Unsubscribes from specified topics

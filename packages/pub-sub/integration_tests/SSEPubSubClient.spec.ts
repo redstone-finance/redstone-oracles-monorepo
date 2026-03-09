@@ -81,7 +81,8 @@ describe("SSEPubSubClient", () => {
 
   it("should receive only and all data subscribed for", async () => {
     const onMessage = jest.fn();
-    await client.subscribe(["topic1", "topic2"], onMessage);
+    client.setOnMessageHandler(onMessage);
+    await client.subscribe(["topic1", "topic2"]);
 
     await client.publish([{ topic: "topic1", data: 123 }]);
     await RedstoneCommon.sleep(PUBLISH_WAIT);
@@ -113,10 +114,12 @@ describe("SSEPubSubClient", () => {
 
   it("should handle multiple clients properly", async () => {
     const onMessage1 = jest.fn();
-    await client1.subscribe(["topic1", "topic2"], onMessage1);
+    client1.setOnMessageHandler(onMessage1);
+    await client1.subscribe(["topic1", "topic2"]);
 
     const onMessage2 = jest.fn();
-    await client2.subscribe(["topic2", "topic3"], onMessage2);
+    client2.setOnMessageHandler(onMessage2);
+    await client2.subscribe(["topic2", "topic3"]);
 
     await Promise.all([
       client1.publish([{ topic: "topic1", data: "data1" }]),
@@ -146,7 +149,8 @@ describe("SSEPubSubClient", () => {
 
   it("should handle long awaited reconnection", async () => {
     const onMessage = jest.fn();
-    await client.subscribe(["topic1"], onMessage);
+    client.setOnMessageHandler(onMessage);
+    await client.subscribe(["topic1"]);
 
     await client.publish([{ topic: "topic1", data: 123 }]);
     await RedstoneCommon.sleep(PUBLISH_WAIT);
@@ -183,7 +187,8 @@ describe("SSEPubSubClient", () => {
 
   it("should handle reconnection with no initial topics", async () => {
     const onMessage = jest.fn();
-    await client.subscribe(["topic1"], onMessage);
+    client.setOnMessageHandler(onMessage);
+    await client.subscribe(["topic1"]);
 
     await client.publish([{ topic: "topic1", data: 123 }]);
     await RedstoneCommon.sleep(PUBLISH_WAIT);
@@ -220,7 +225,8 @@ describe("SSEPubSubClient", () => {
 
   it("should handle reconnection with all initial topics", async () => {
     const onMessage = jest.fn();
-    await client.subscribe(["topic1"], onMessage);
+    client.setOnMessageHandler(onMessage);
+    await client.subscribe(["topic1"]);
 
     // Start again to set up initialTopics
     client["eventSource"]?.close();
@@ -257,14 +263,15 @@ describe("SSEPubSubClient", () => {
 
   it("should handle reconnection with some initial topics", async () => {
     const onMessage = jest.fn();
-    await client.subscribe(["topic1", "topic2"], onMessage);
+    client.setOnMessageHandler(onMessage);
+    await client.subscribe(["topic1", "topic2"]);
 
     // Start again to set up initialTopics
     client["eventSource"]?.close();
     client.start();
     await RedstoneCommon.sleep(3_000);
 
-    await client.subscribe(["topic3"], onMessage);
+    await client.subscribe(["topic3"]);
     await client.unsubscribe(["topic2"]);
 
     await client.publish([{ topic: "topic1", data: 123 }]);
@@ -307,7 +314,8 @@ describe("SSEPubSubClient", () => {
 
   it("should handle many fast reconnections", async () => {
     const onMessage = jest.fn();
-    await client.subscribe(["topic1"], onMessage);
+    client.setOnMessageHandler(onMessage);
+    await client.subscribe(["topic1"]);
 
     for (let i = 0; i < 10; i++) {
       await client.publish([{ topic: "topic1", data: i }]);

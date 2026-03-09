@@ -17,12 +17,12 @@ async function main() {
     },
   });
 
-  await mqttClient.subscribe(
-    [TOPIC],
+  mqttClient.setOnMessageHandler(
     (topicName: string, messagePayload: unknown, error: string | null, _client: PubSubClient) => {
       console.dir({ topicName, payload: messagePayload, error }, { depth: null });
     }
   );
+  await mqttClient.subscribe([TOPIC]);
 }
 
 void main();

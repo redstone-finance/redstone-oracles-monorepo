@@ -95,7 +95,8 @@ describe("SSEPubSubClient", () => {
   });
 
   it("should subscribe properly", async () => {
-    await client.subscribe(["topic1"], () => {});
+    client.setOnMessageHandler(() => {});
+    await client.subscribe(["topic1"]);
 
     expect(MOCK.postMock).toHaveBeenCalledWith(
       `${GATEWAY_ADDRESS}/subscribe_to_topics`,
@@ -105,7 +106,8 @@ describe("SSEPubSubClient", () => {
   });
 
   it("should subscribe properly when called multiple times", async () => {
-    await client.subscribe(["topic1"], () => {});
+    client.setOnMessageHandler(() => {});
+    await client.subscribe(["topic1"]);
 
     expect(MOCK.postMock).toHaveBeenCalledWith(
       `${GATEWAY_ADDRESS}/subscribe_to_topics`,
@@ -113,7 +115,7 @@ describe("SSEPubSubClient", () => {
       { headers: { "Content-Type": "application/json" } }
     );
 
-    await client.subscribe(["topic1", "topic2"], () => {});
+    await client.subscribe(["topic1", "topic2"]);
 
     expect(MOCK.postMock).toHaveBeenCalledWith(
       `${GATEWAY_ADDRESS}/subscribe_to_topics`,
@@ -121,7 +123,7 @@ describe("SSEPubSubClient", () => {
       { headers: { "Content-Type": "application/json" } }
     );
 
-    await client.subscribe(["topic3", "topic4"], () => {});
+    await client.subscribe(["topic3", "topic4"]);
 
     expect(MOCK.postMock).toHaveBeenCalledWith(
       `${GATEWAY_ADDRESS}/subscribe_to_topics`,
@@ -137,7 +139,8 @@ describe("SSEPubSubClient", () => {
   });
 
   it("should unsubscribe only from topics subscribed to before", async () => {
-    await client.subscribe(["topic1", "topic2", "topic3"], () => {});
+    client.setOnMessageHandler(() => {});
+    await client.subscribe(["topic1", "topic2", "topic3"]);
     await client.unsubscribe(["topic1", "topic2", "topic4"]);
 
     expect(MOCK.postMock).toHaveBeenCalledWith(
@@ -149,7 +152,8 @@ describe("SSEPubSubClient", () => {
 
   it("should call callback with proper values", async () => {
     const onMessage = jest.fn();
-    await client.subscribe(["topic1", "topic2"], onMessage);
+    client.setOnMessageHandler(onMessage);
+    await client.subscribe(["topic1", "topic2"]);
 
     await client.publish([{ topic: "topic1", data: 123 }]);
     expect(onMessage).toHaveBeenCalledWith("topic1", 123, null, expect.anything());
@@ -164,7 +168,8 @@ describe("SSEPubSubClient", () => {
 
   it("should call callback with error on failure", async () => {
     const onMessage = jest.fn();
-    await client.subscribe(["topic1"], onMessage);
+    client.setOnMessageHandler(onMessage);
+    await client.subscribe(["topic1"]);
 
     MOCK.batchCallbacks[0]({
       data: JSON.stringify([{ topic: "topic1", data: "invalid-base64-data" }]),
@@ -183,7 +188,8 @@ describe("SSEPubSubClient", () => {
       throw new Error("Network error");
     });
 
-    await expect(client.subscribe(["topic1", "topic2"], () => {})).rejects.toThrow(
+    client.setOnMessageHandler(() => {});
+    await expect(client.subscribe(["topic1", "topic2"])).rejects.toThrow(
       "Subscription failed for topics=topic1, topic2"
     );
 
@@ -207,7 +213,8 @@ describe("SSEPubSubClient", () => {
       }
     });
 
-    await client.subscribe(["topic1"], onMessage);
+    client.setOnMessageHandler(onMessage);
+    await client.subscribe(["topic1"]);
 
     MOCK.batchCallbacks[0]({
       data: JSON.stringify([{ topic: "topic1", data: "invalid-base64-data" }]),
