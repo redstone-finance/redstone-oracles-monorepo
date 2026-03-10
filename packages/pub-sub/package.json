@@ -33,6 +33,7 @@
     "ethers": "^5.7.2",
     "eventsource": "^4.0.0",
     "lodash": "^4.17.23",
+    "nats": "^2.29.3",
     "zod": "^4.1.12"
   },
   "devDependencies": {

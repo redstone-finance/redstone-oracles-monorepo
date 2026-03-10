@@ -2,6 +2,7 @@ import { loggerFactory, RedstoneCommon } from "@redstone-finance/utils";
 import { z } from "zod";
 import { MultiPubSubClient, MultiPubSubConfig } from "./MultiPubSubClient";
 import { MultiPubSubEnvConfig, MultiPubSubEnvConfigs } from "./MultiPubSubEnvConfigs";
+import { NatsClient } from "./NatsClient";
 import { PooledMqttClient } from "./PooledMqttClient";
 import { createMqtt5ClientFactory, PubSubClientFactory } from "./PubSubClientFactory";
 import { PollingHttpClient, SSEPubSubClient } from "./light-gateway-clients";
@@ -46,6 +47,14 @@ export function resolvePubSubClient(config: z.infer<typeof MultiPubSubEnvConfig>
 
     case "polling":
       return new PollingHttpClient(config.host, config.pollingIntervalMs);
+
+    case "nats":
+      return new NatsClient({
+        host: config.host,
+        connectionTimeoutMs: config.connectionTimeoutMs,
+        user: config.user,
+        pass: RedstoneCommon.getFromEnv(config.passwordEnvPath),
+      });
 
     case "mqttAWSV4Sig":
     case "mqttCert":
