@@ -7,6 +7,7 @@ export * from "./light-gateway-clients/index";
 export * from "./Mqtt5Client";
 export * from "./MultiPubSubClient";
 export * from "./MultiPubSubEnvConfigs";
+export * from "./NatsClient";
 export * from "./PooledMqttClient";
 export * from "./PubSubClient";
 export * from "./PubSubClientConfig";

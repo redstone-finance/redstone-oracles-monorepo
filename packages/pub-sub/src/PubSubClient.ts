@@ -16,6 +16,16 @@ export type SubscribeCallback = (
   client: PubSubClient
 ) => unknown;
 
+/**
+ * Topic strings follow MQTT conventions throughout this interface:
+ *  - Segments are separated by "/"  e.g. "data-package/redstone-primary/BTC/0xabc"
+ *  - "+" matches exactly one segment  e.g. "data-package/redstone-primary/+/0xabc"
+ *  - "#" matches zero or more trailing segments  e.g. "data-package/redstone-primary/#"
+ *
+ * Implementations that use a different native format (e.g. NATS uses "." as separator
+ * and "*" / ">" as wildcards) are responsible for translating topics at the boundary.
+ * See NatsClient for a reference implementation of such translation.
+ */
 export interface PubSubClient {
   /**
    * Publishes multiple payloads in a single batch
