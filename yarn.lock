@@ -11243,6 +11243,7 @@ __metadata:
     "@redstone-finance/utils": "workspace:*"
     dotenv: "npm:^16.0.3"
     ethers: "npm:^5.7.2"
+    zod: "npm:^4.1.12"
   languageName: unknown
   linkType: soft
 
