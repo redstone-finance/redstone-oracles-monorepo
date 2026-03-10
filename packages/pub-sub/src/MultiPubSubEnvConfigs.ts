@@ -43,11 +43,24 @@ const Polling = z.object({
   pollingIntervalMs: z.number().optional(),
 });
 
+const NatsConfig = z.object({
+  type: z.enum(["nats"]),
+  host: z.string(),
+  connectionTimeoutMs: z.number().optional(),
+  user: z.string().optional(),
+  passwordEnvPath: z.string().superRefine((path, ctx) => {
+    if (!RedstoneCommon.isDefined(process.env[path])) {
+      ctx.addIssue(`Expected ENV ${path} by nats authentication - passwordEnvPath`);
+    }
+  }),
+});
+
 export const MultiPubSubEnvConfig = z.discriminatedUnion("type", [
   MqttV4Sig,
   MqttCert,
   MqttUnauthenticated,
   SSE,
   Polling,
+  NatsConfig,
 ]);
 export const MultiPubSubEnvConfigs = MultiPubSubEnvConfig.array().min(1);
