@@ -134,3 +134,11 @@ function validateExpirationTimestamp(timestamp: number) {
   }
   return timestamp;
 }
+
+export function getManifestUrls(defaultUrls: string[], manifestFilename?: string) {
+  if (!RedstoneCommon.isDefined(manifestFilename)) {
+    return defaultUrls;
+  }
+
+  return defaultUrls.map((url) => url.replace(/[^/]+\.json$/, manifestFilename));
+}
