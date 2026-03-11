@@ -4717,6 +4717,17 @@
       "source": ["spark-anchorage-api"],
       "denomination": "ratio",
       "rateFeed": true
+    },
+    "eUSD_FUNDAMENTAL/USD": {
+      "source": ["evm-fetcher-parallel-eusd"],
+      "denomination": "USD",
+      "rateFeed": true,
+      "deviationCheck": {
+        "deviationWithRecentValues": {
+          "maxPercent": 1.0,
+          "maxDelayMilliseconds": 120000
+        }
+      }
     }
   },
   "multiPointPackages": {
