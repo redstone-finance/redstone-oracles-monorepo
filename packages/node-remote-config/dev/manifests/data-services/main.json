@@ -9530,6 +9530,13 @@
       "types": [
         "rwa"
       ]
+    },
+    "eUSD_FUNDAMENTAL/USD": {
+      "source": [
+        "evm-fetcher-parallel-eusd"
+      ],
+      "denomination": "USD",
+      "rateFeed": true
     }
   }
 }
