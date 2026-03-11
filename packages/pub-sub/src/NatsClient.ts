@@ -8,6 +8,7 @@ import {
   NatsConnection,
   NatsError,
   headers as natsHeaders,
+  nkeyAuthenticator,
   Subscription,
 } from "nats";
 import { PubSubClient, PubSubPayload, SubscribeCallback } from "./PubSubClient";
@@ -28,7 +29,6 @@ export function mqttTopicToNatsSubject(topic: string): string {
     .join(".");
 }
 
-/** Translates a NATS subject back to an MQTT-style topic: . → / */
 export function natsSubjectToMqttTopic(subject: string): string {
   return subject.split(".").join("/");
 }
@@ -37,8 +37,8 @@ export interface NatsClientConfig {
   /** NATS server host, e.g. "localhost:4222" or "nats://localhost:4222" */
   host: string;
   connectionTimeoutMs?: number;
-  user?: string;
-  pass?: string;
+  /** NKey seed string (e.g. "SUAMLK..."). If omitted, connects without authentication. */
+  nkeySeed?: string;
 }
 
 export class NatsClient implements PubSubClient {
@@ -64,7 +64,7 @@ export class NatsClient implements PubSubClient {
       return this.nc;
     }
     if (!this.connecting) {
-      // guard again multplie connection in Promise.all pattern
+      // guard against multiple connections in Promise.all pattern
       this.connecting = connect({
         // When you pass multiple servers to connect, the NATS client
         // connects to exactly one at a time and uses the others as
@@ -75,8 +75,9 @@ export class NatsClient implements PubSubClient {
         reconnectJitterTLS: 1000,
         // into infinity
         maxReconnectAttempts: -1,
-        user: this.config.user,
-        pass: this.config.pass,
+        authenticator: this.config.nkeySeed
+          ? nkeyAuthenticator(new TextEncoder().encode(this.config.nkeySeed))
+          : undefined,
       })
         .then((nc) => {
           this.nc = nc;
@@ -84,7 +85,7 @@ export class NatsClient implements PubSubClient {
           this.watchStatus(nc);
           return nc;
         })
-        .catch((e: unknown) => {
+        .catch((e) => {
           this.connecting = undefined;
           this.logger.error("Failed to connect to NATS", {
             host: this.config.host,

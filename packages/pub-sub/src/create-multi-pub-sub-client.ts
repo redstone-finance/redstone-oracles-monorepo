@@ -52,8 +52,9 @@ export function resolvePubSubClient(config: z.infer<typeof MultiPubSubEnvConfig>
       return new NatsClient({
         host: config.host,
         connectionTimeoutMs: config.connectionTimeoutMs,
-        user: config.user,
-        pass: RedstoneCommon.getFromEnv(config.passwordEnvPath),
+        nkeySeed: config.nkeySeedEnvPath
+          ? RedstoneCommon.getFromEnv(config.nkeySeedEnvPath)
+          : undefined,
       });
 
     case "mqttAWSV4Sig":
