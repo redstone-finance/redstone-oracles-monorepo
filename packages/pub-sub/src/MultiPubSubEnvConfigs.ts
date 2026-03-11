@@ -47,12 +47,14 @@ const NatsConfig = z.object({
   type: z.enum(["nats"]),
   host: z.string(),
   connectionTimeoutMs: z.number().optional(),
-  user: z.string().optional(),
-  passwordEnvPath: z.string().superRefine((path, ctx) => {
-    if (!RedstoneCommon.isDefined(process.env[path])) {
-      ctx.addIssue(`Expected ENV ${path} by nats authentication - passwordEnvPath`);
-    }
-  }),
+  nkeySeedEnvPath: z
+    .string()
+    .optional()
+    .superRefine((path, ctx) => {
+      if (path !== undefined && !RedstoneCommon.isDefined(process.env[path])) {
+        ctx.addIssue(`Expected ENV ${path} by nats nkey authentication - nkeySeedEnvPath`);
+      }
+    }),
 });
 
 export const MultiPubSubEnvConfig = z.discriminatedUnion("type", [

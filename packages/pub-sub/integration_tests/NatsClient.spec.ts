@@ -4,9 +4,10 @@ import { NatsClient } from "../src/NatsClient";
 
 /**
  * Set NATS_INTEGRATION_HOST=localhost:4222 to enable these tests.
- * In CI a NATS service container is started automatically by the workflow.
+ * (optional) Set NATS_NKEY_SEED to the NKey seed matching nats/nats-server.conf.
  */
 const NATS_HOST = RedstoneCommon.getFromEnv("NATS_INTEGRATION_HOST", z.string().optional());
+const NATS_NKEY_SEED = RedstoneCommon.getFromEnv("NATS_NKEY_SEED", z.string().optional());
 const PUBLISH_WAIT_MS = 100;
 
 const describeIfEnabled = NATS_HOST ? describe : describe.skip;
@@ -18,8 +19,8 @@ describeIfEnabled("NatsClient integration", () => {
   let subscriber: NatsClient;
 
   beforeEach(() => {
-    publisher = new NatsClient({ host: NATS_HOST! });
-    subscriber = new NatsClient({ host: NATS_HOST! });
+    publisher = new NatsClient({ host: NATS_HOST!, nkeySeed: NATS_NKEY_SEED });
+    subscriber = new NatsClient({ host: NATS_HOST!, nkeySeed: NATS_NKEY_SEED });
   });
 
   afterEach(() => {
@@ -85,7 +86,7 @@ describeIfEnabled("NatsClient integration", () => {
   it("should handle multiple subscribers on the same topic", async () => {
     const onMessage1 = jest.fn();
     const onMessage2 = jest.fn();
-    const subscriber2 = new NatsClient({ host: NATS_HOST! });
+    const subscriber2 = new NatsClient({ host: NATS_HOST!, nkeySeed: NATS_NKEY_SEED });
 
     subscriber.setOnMessageHandler(onMessage1);
     subscriber2.setOnMessageHandler(onMessage2);
@@ -126,7 +127,7 @@ describeIfEnabled("NatsClient integration", () => {
   it("should support both deflate+json and gzip+json content types", async () => {
     const onMessageDeflate = jest.fn();
     const onMessageGzip = jest.fn();
-    const gzipSubscriber = new NatsClient({ host: NATS_HOST! });
+    const gzipSubscriber = new NatsClient({ host: NATS_HOST!, nkeySeed: NATS_NKEY_SEED });
 
     subscriber.setOnMessageHandler(onMessageDeflate);
     gzipSubscriber.setOnMessageHandler(onMessageGzip);
