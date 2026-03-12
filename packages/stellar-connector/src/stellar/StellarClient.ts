@@ -160,27 +160,7 @@ export class StellarClient {
   }
 
   async getContractEntries(contract: string | Address | Contract, feeds: xdr.ScVal[]) {
-    let scAddress: xdr.ScAddress;
-
-    if (typeof contract === "string") {
-      scAddress = new Contract(contract).address().toScAddress();
-    } else if (contract instanceof Address) {
-      scAddress = contract.toScAddress();
-    } else if (contract instanceof Contract) {
-      scAddress = contract.address().toScAddress();
-    } else {
-      throw new Error("Unsupported contract type in getContractEntries");
-    }
-
-    const keys = feeds.map((feed) =>
-      xdr.LedgerKey.contractData(
-        new xdr.LedgerKeyContractData({
-          contract: scAddress,
-          key: feed,
-          durability: xdr.ContractDataDurability.persistent(),
-        })
-      )
-    );
+    const keys = feeds.map((feed) => contractDataKey(contract, feed));
 
     return (await this.server.getLedgerEntries(...keys)).entries.map(
       XdrUtils.maybeParsePriceDataFromContractData
@@ -374,6 +354,16 @@ export class StellarClient {
     ).liveUntilLedgerSeq;
   }
 
+  async getInstanceTtls(contracts: (string | Address | Contract)[]) {
+    const keys = contracts.map((contract) =>
+      contractDataKey(contract, xdr.ScVal.scvLedgerKeyContractInstance())
+    );
+
+    const response = await this.server.getLedgerEntries(...keys);
+
+    return response.entries.map((entry) => entry.liveUntilLedgerSeq);
+  }
+
   async extendInstanceTtl(
     contractId: string,
     signer: StellarSigner,
@@ -381,13 +371,7 @@ export class StellarClient {
     fee = BASE_EXTEND_TTL_FEE.toString(),
     timeout = TRANSACTION_TIMEOUT_SEC
   ) {
-    const instanceKey = xdr.LedgerKey.contractData(
-      new xdr.LedgerKeyContractData({
-        contract: new Address(contractId).toScAddress(),
-        key: xdr.ScVal.scvLedgerKeyContractInstance(),
-        durability: xdr.ContractDataDurability.persistent(),
-      })
-    );
+    const instanceKey = contractDataKey(contractId, xdr.ScVal.scvLedgerKeyContractInstance());
 
     const operation = Operation.extendFootprintTtl({ extendTo });
     const sorobanData = new SorobanDataBuilder().setReadOnly([instanceKey]).build();
@@ -428,4 +412,32 @@ export class StellarClient {
   async getNetworkStats(force = false): Promise<Horizon.HorizonApi.FeeStatsResponse | undefined> {
     return await this.horizon?.getNetworkStats(force);
   }
+}
+
+function toScAddress(contract: string | Address | Contract) {
+  if (typeof contract === "string") {
+    return new Address(contract).toScAddress();
+  }
+  if (contract instanceof Address) {
+    return contract.toScAddress();
+  }
+  if (contract instanceof Contract) {
+    return contract.address().toScAddress();
+  }
+
+  throw new Error("Unsupported contract type");
+}
+
+function contractDataKey(
+  contract: string | Address | Contract,
+  key: xdr.ScVal,
+  durability = xdr.ContractDataDurability.persistent()
+) {
+  return xdr.LedgerKey.contractData(
+    new xdr.LedgerKeyContractData({
+      contract: toScAddress(contract),
+      key,
+      durability,
+    })
+  );
 }

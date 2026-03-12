@@ -13,5 +13,5 @@ export interface IContractConnector<Adapter> {
 
   getSignerAddress?: () => Promise<string>;
 
-  getInstanceTtl?: (address: string) => Promise<Date | undefined>;
+  getInstanceTtls?: (addresses: string[]) => Promise<(Date | undefined)[] | undefined>;
 }
