@@ -32,12 +32,17 @@ export class StellarBlockchainService implements BlockchainService {
     return await this.getNormalizedBalance(address);
   }
 
-  async getInstanceTtl(address: string) {
-    const ttlLedger = (await this.client.getInstanceTtl(address)) ?? 0;
-    const curLedger = await this.getBlockNumber();
+  async getInstanceTtls(addresses: string[]) {
+    const [ttlLedgers, curLedger] = await Promise.all([
+      this.client.getInstanceTtls(addresses),
+      this.getBlockNumber(),
+    ]);
 
-    return new Date(
-      Date.now() + RedstoneCommon.secsToMs((ttlLedger - curLedger) * SECS_PER_LEDGER)
+    return ttlLedgers.map(
+      (ttlLedger) =>
+        new Date(
+          Date.now() + RedstoneCommon.secsToMs(((ttlLedger ?? 0) - curLedger) * SECS_PER_LEDGER)
+        )
     );
   }
 }
