@@ -362,6 +362,38 @@
       "types": [
         "rwa"
       ]
+    },
+    "KOSPI200": {
+      "source": [],
+      "denomination": "KRW",
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
+    },
+    "NIKKEI225": {
+      "source": [],
+      "denomination": "JPY",
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
+    },
+    "MSCI": {
+      "source": [],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
+    },
+    "URTH": {
+      "source": [],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
     }
   },
   "multiPointPackages": {}
