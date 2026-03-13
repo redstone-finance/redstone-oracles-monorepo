@@ -9435,7 +9435,7 @@
     },
     "KOSPI": {
       "source": [],
-      "denomination": "USD",
+      "denomination": "KRW",
       "rateFeed": false,
       "types": [
         "rwa"
@@ -9443,7 +9443,7 @@
     },
     "KOSPI200": {
       "source": [],
-      "denomination": "USD",
+      "denomination": "KRW",
       "rateFeed": false,
       "types": [
         "rwa"
@@ -9521,6 +9521,62 @@
       ],
       "denomination": "ratio",
       "rateFeed": true
+    },
+    "FTSE": {
+      "source": [],
+      "denomination": "GBP",
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
+    },
+    "FTSE100": {
+      "source": [],
+      "denomination": "GBP",
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
+    },
+    "KRW": {
+      "source": [],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
+    },
+    "DAX": {
+      "source": [],
+      "denomination": "EUR",
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
+    },
+    "NIKKEI225": {
+      "source": [],
+      "denomination": "JPY",
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
+    },
+    "MSCI": {
+      "source": [],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
+    },
+    "URTH": {
+      "source": [],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
     },
     "IS_NY_STOCKS_MARKET_OPEN": {
       "source": [],
