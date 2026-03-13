@@ -14,7 +14,7 @@ import DA.Assert
 import DA.List as L
 import DA.Time
 import RedStone.Internal.Error
-import RedStone.Internal.Time
+import Time
 
 -- Public
 

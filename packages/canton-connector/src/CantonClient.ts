@@ -24,14 +24,6 @@ const DEFAULT_DELTA_OFFSET = 1000;
 const LOCAL_USER = "redstone-canton-connector";
 const MAX_RESPONSE_LIMIT = 200;
 
-const RETRY_CONFIG: Omit<RedstoneCommon.RetryConfig, "fn"> = {
-  maxRetries: 3,
-  waitBetweenMs: 500,
-  backOff: {
-    backOffBase: 1.5,
-  },
-};
-
 const SENDER_SEPARATOR = "/";
 export class CantonClient {
   private readonly logger = loggerFactory("canton-client");
@@ -331,11 +323,6 @@ export class CantonClient {
 
     this.logger.info(`Calling ${fnName}`);
 
-    return await RedstoneCommon.retry({
-      ...RETRY_CONFIG,
-      fn: () => unwrapResponse(promise()),
-      logger: this.logger.log.bind(this),
-      fnName,
-    })();
+    return await unwrapResponse(promise());
   }
 }

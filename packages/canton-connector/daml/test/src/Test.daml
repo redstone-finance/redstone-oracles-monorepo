@@ -1,12 +1,10 @@
 module Test where
 
 import Daml.Script
-import DA.List
+import DA.Assert
 import DA.Map as M
 import RedStoneAdapter
 import IRedStoneAdapter
-import RedStonePriceFeed
-import IRedStonePriceFeed
 import Input
 import VerifyResults
 
@@ -23,14 +21,7 @@ main input = script do
       updaters = [updater]
       viewers = [viewer]
       feedData = M.empty
-
-  feedCid <- submit owner do
-    createCmd RedStonePriceFeed with
-      owner = owner
-      viewers = [viewer]
-      adapterId = "RedStoneAdapter-123"
-      feedId = head input.feedIds
-      description = "RedStone Feed Id"
+      pillFactory = None
 
   currentTime <- getTime
 
@@ -42,6 +33,11 @@ main input = script do
 
   debug $ "Processed result: " <> show result
 
+  signerCount <- submit viewer do
+    exerciseCmd (toInterfaceContractId @IRedStoneAdapter adapterCid) GetUniqueSignerThreshold
+
+  signerCount === 3
+
   newCid <- submit updater do
     exerciseCmd (toInterfaceContractId @IRedStoneAdapter adapterCid) WritePrices with
       payloadHex = input.payload
@@ -52,8 +48,4 @@ main input = script do
     exerciseCmd newCid ReadPriceData with
       feedIds = input.feedIds
 
-  feedResult <- submit viewer do
-    exerciseCmd (toInterfaceContractId @IRedStonePriceFeed feedCid) ReadData with
-      adapterCid = newCid
-
-  verifyResults currentTime readResult feedResult
+  verifyWithResult currentTime readResult result

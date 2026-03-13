@@ -1,9 +1,9 @@
 import { RedstoneCommon } from "@redstone-finance/utils";
 import { CantonClient, ContractFilter } from "../CantonClient";
 import {
-  ARCHIVE,
+  ARCHIVE_CHOICE,
   createStalenessFilter,
-  IPRICE_FEED_ENTRY_TEMPLATE_NAME,
+  IPRICE_PILL_TEMPLATE_NAME,
 } from "../price-feed-utils";
 import { isJsActiveContractEntry } from "../utils";
 import { CantonContractAdapter } from "./CantonContractAdapter";
@@ -16,7 +16,7 @@ export class PillCleaner extends CantonContractAdapter {
     client: CantonClient,
     private readonly ownerClient: CantonClient,
     interfaceId = client.Defs.interfaceId,
-    templateName = IPRICE_FEED_ENTRY_TEMPLATE_NAME
+    templateName = IPRICE_PILL_TEMPLATE_NAME
   ) {
     super(client, interfaceId, templateName);
   }
@@ -43,7 +43,7 @@ export class PillCleaner extends CantonContractAdapter {
       .map((contract) => contract.contractEntry)
       .filter((contract) => isJsActiveContractEntry(contract))
       .map((entry) => ({
-        choice: ARCHIVE,
+        choice: ARCHIVE_CHOICE,
         argument: {},
         contractId: entry.JsActiveContract.createdEvent.contractId,
       }));

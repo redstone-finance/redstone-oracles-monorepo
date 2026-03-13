@@ -5,27 +5,25 @@ import RedStoneTypes
 interface IRedStonePricePill where
   viewtype RedStonePricePillView
 
-  isDataStale: Update Bool
-  assertDataNotStale: Update ()
+  iRedStonePricePill_IsDataStaleImpl: Update Bool
+  iRedStonePricePill_AssertDataNotStaleImpl: Update ()
 
   nonconsuming choice IsDataStale :  Bool
     controller (view this).viewers
     do
-      isStale <- isDataStale this
-
-      pure isStale
+      iRedStonePricePill_IsDataStaleImpl this
 
   nonconsuming choice ReadData : (RedStonePriceData RedStoneValue)
     controller (view this).viewers
     do
-      assertDataNotStale this
+      iRedStonePricePill_AssertDataNotStaleImpl this
 
       pure (view this).priceData
 
   nonconsuming choice ReadPrice : RedStoneValue
     controller (view this).viewers
     do
-      assertDataNotStale this
+      iRedStonePricePill_AssertDataNotStaleImpl this
 
       pure (view this).priceData.value
 
@@ -43,12 +41,19 @@ interface IRedStonePricePill where
     controller (view this).viewers
     do
       let timestamp = (view this).priceData.timestamp
-      pure $ "RedStone Price Pill " <> (show (view this).feedId) <> " " <> (show timestamp)<> " valid to " <> (show (timestamp + (view this).stalenessMs))
+      pure $ "RedStone Price Pill of " <> (show (view this).feedId) <> ", created by " <> (view this).adapterId <> "; " <> (show timestamp) <> " valid to " <> (show (timestamp + (view this).stalenessMs))
+
+  choice ArchivePill : ()
+    controller (view this).creators
+    do
+      return ()
 
 data RedStonePricePillView = RedStonePricePillView
   with
     viewers : [Party]
+    creators : [Party]
     feedId : RedStoneFeedId
     priceData : RedStonePriceData RedStoneValue
     stalenessMs : Int
+    adapterId : Text
   deriving (Eq, Show, Ord)

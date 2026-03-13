@@ -13,11 +13,15 @@ template RedStoneCoreClient
 
     nonconsuming choice GetPricesDisclosed : RedStoneResult
       with
+        caller : Party
         feedIds : [RedStoneFeedId]
         currentTime : Time
         payloadHex : Text
         adapterCid : ContractId IRedStoneCore
       controller viewers
       do
-        adapter <- fetch adapterCid
-        getPrices adapter feedIds currentTime payloadHex
+          exercise adapterCid GetPricesWithCaller with
+            caller
+            feedIds
+            currentTime
+            payloadHex

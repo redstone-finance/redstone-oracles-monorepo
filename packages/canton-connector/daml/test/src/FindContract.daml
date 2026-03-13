@@ -1,17 +1,31 @@
 module FindContract (
     findOneAdapter
     , findAnyAdapter
-    , findOnePriceFeed
-    , findAnyPriceFeed
+    , findOnePricePill
+    , findAnyPricePill
+    , findAnyAppRight
 ) where
 
 import Daml.Script
 import DA.Foldable (forA_)
 import DA.List as L
 import DA.Optional (fromSome)
+import Splice.Api.FeaturedAppRightV1
 import IRedStoneAdapter
-import IRedStonePriceFeed
+import IRedStonePricePill
 import RedStoneTypes
+
+-- Public
+
+findOneAdapter = findAdapter True
+findAnyAdapter = findAdapter False
+
+findOnePricePill = findPricePill True
+findAnyPricePill = findPricePill False
+
+findAnyAppRight = findAppRight False
+
+-- Private
 
 findContract checkIsUnique test party contracts = do
   let filtered = filter (\(_, view) -> test view) $ map (\(cid, view) -> (cid, fromSome view)) contracts
@@ -21,7 +35,8 @@ findContract checkIsUnique test party contracts = do
       -> do debug $ "Contract ID: " <> show cid
             debug $ "Contract data: " <> show view
 
-  assertMsg ("Contract length is " <> show (L.length contracts)) $  not checkIsUnique || L.length contracts == 1
+  assertMsg "No contract found" $ not . null $ contracts
+  assertMsg ("Contract length is " <> show (L.length filtered)) $  not checkIsUnique || L.length filtered == 1
 
   let (contractCid, _) = L.head filtered
 
@@ -33,15 +48,14 @@ findAdapter checkIsUnique adapterId party = do
 
     findContract checkIsUnique (\view -> view.adapterId == adapterId) party contracts
 
-findPriceFeed: Bool -> Text -> RedStoneFeedId -> Party -> Script (ContractId IRedStonePriceFeed)
-findPriceFeed checkIsUnique adapterId feedId party = do
-    contracts <- queryInterface @IRedStonePriceFeed party
+findPricePill: Bool -> Text -> RedStoneFeedId -> Party -> Script (ContractId IRedStonePricePill)
+findPricePill checkIsUnique adapterId feedId party = do
+   contracts <- queryInterface @IRedStonePricePill party
 
-    findContract checkIsUnique (\view -> view.adapterId == adapterId && view.feedId == feedId) party contracts
+   findContract checkIsUnique (\view -> view.feedId == feedId) party contracts
 
-findOneAdapter = findAdapter True
-findAnyAdapter = findAdapter False
+findAppRight: Bool -> Party -> Script (ContractId FeaturedAppRight)
+findAppRight checkIsUnique party = do
+   contracts <- queryInterface @FeaturedAppRight party
 
-findOnePriceFeed = findPriceFeed True
-
-findAnyPriceFeed = findPriceFeed False
+   findContract checkIsUnique (\view -> view.provider == party) party contracts
