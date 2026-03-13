@@ -1,0 +1,223 @@
+module RedStone.Tests.Suites.MedianExtended
+(
+    runTests
+)
+where
+
+import RedStone.Tests.Test
+import RedStone.Tests.Run
+import RedStone.Tests.Helpers
+import RedStone.U256
+import RedStone.Internal.Median
+
+runTests : (Action m, ActionFail m, CanAbort m) => m ()
+runTests = do
+  runSuite medianIntSuite
+  runSuite medianU256Suite
+  runSuite avgU256Suite
+
+medianIntSuite = TestSuite with
+  cases = medianIntCases
+  name = "Median Int Tests"
+  test = median
+
+medianIntCases =
+    -- Single element
+    [ TestCase with name = "median [1] = 1", input = [1 : Int], output = 1
+
+    -- Two elements
+    , TestCase with name = "median [1,3] = 2", input = [1, 3], output = 2
+    , TestCase with name = "median [3,1] = 2", input = [3, 1], output = 2
+    , TestCase with name = "median [1,2] = 1", input = [1, 2], output = 1
+    , TestCase with name = "median [2,1] = 1", input = [2, 1], output = 1
+    , TestCase with name = "median [1,1] = 1", input = [1, 1], output = 1
+
+    -- Three elements
+    , TestCase with name = "median [1,2,3] = 2", input = [1, 2, 3], output = 2
+    , TestCase with name = "median [3,2,1] = 2", input = [3, 2, 1], output = 2
+    , TestCase with name = "median [2,1,3] = 2", input = [2, 1, 3], output = 2
+    , TestCase with name = "median [1,3,2] = 2", input = [1, 3, 2], output = 2
+    , TestCase with name = "median [3,1,2] = 2", input = [3, 1, 2], output = 2
+    , TestCase with name = "median [2,3,1] = 2", input = [2, 3, 1], output = 2
+    , TestCase with name = "median [1,1,2] = 1", input = [1, 1, 2], output = 1
+    , TestCase with name = "median [2,1,1] = 1", input = [2, 1, 1], output = 1
+    , TestCase with name = "median [1,2,1] = 1", input = [1, 2, 1], output = 1
+    , TestCase with name = "median [1,2,2] = 2", input = [1, 2, 2], output = 2
+    , TestCase with name = "median [2,1,2] = 2", input = [2, 1, 2], output = 2
+    , TestCase with name = "median [2,2,1] = 2", input = [2, 2, 1], output = 2
+    , TestCase with name = "median [1,1,1] = 1", input = [1, 1, 1], output = 1
+
+    -- Four elements
+    , TestCase with name = "median [1,2,3,4] = 2", input = [1, 2, 3, 4], output = 2
+    , TestCase with name = "median [4,3,2,1] = 2", input = [4, 3, 2, 1], output = 2
+    , TestCase with name = "median [1,2,4,4] = 3", input = [1, 2, 4, 4], output = 3
+    , TestCase with name = "median [4,4,2,1] = 3", input = [4, 4, 2, 1], output = 3
+    , TestCase with name = "median [1,1,3,3] = 2", input = [1, 1, 3, 3], output = 2
+    , TestCase with name = "median [3,1,3,1] = 2", input = [3, 1, 3, 1], output = 2
+    , TestCase with name = "median [1,1,3,4] = 2", input = [1, 1, 3, 4], output = 2
+    , TestCase with name = "median [1,1,1,3] = 1", input = [1, 1, 1, 3], output = 1
+    , TestCase with name = "median [1,3,3,3] = 3", input = [1, 3, 3, 3], output = 3
+    , TestCase with name = "median [1,1,1,1] = 1", input = [1, 1, 1, 1], output = 1
+
+    -- Five elements
+    , TestCase with name = "median [1,2,3,4,5] = 3", input = [1, 2, 3, 4, 5], output = 3
+    , TestCase with name = "median [5,4,3,2,1] = 3", input = [5, 4, 3, 2, 1], output = 3
+    , TestCase with name = "median [1,1,3,4,5] = 3", input = [1, 1, 3, 4, 5], output = 3
+    , TestCase with name = "median [1,1,1,4,5] = 1", input = [1, 1, 1, 4, 5], output = 1
+    , TestCase with name = "median [1,1,1,3,3] = 1", input = [1, 1, 1, 3, 3], output = 1
+    , TestCase with name = "median [1,1,3,3,5] = 3", input = [1, 1, 3, 3, 5], output = 3
+    , TestCase with name = "median [1,2,3,5,5] = 3", input = [1, 2, 3, 5, 5], output = 3
+    , TestCase with name = "median [1,2,5,5,5] = 5", input = [1, 2, 5, 5, 5], output = 5
+    , TestCase with name = "median [1,1,3,3,3] = 3", input = [1, 1, 3, 3, 3], output = 3
+    , TestCase with name = "median [1,3,3,5,5] = 3", input = [1, 3, 3, 5, 5], output = 3
+    , TestCase with name = "median [1,2,2,2,2] = 2", input = [1, 2, 2, 2, 2], output = 2
+    , TestCase with name = "median [1,1,1,1,2] = 1", input = [1, 1, 1, 1, 2], output = 1
+    , TestCase with name = "median [1,1,1,1,1] = 1", input = [1, 1, 1, 1, 1], output = 1
+
+    -- Six elements
+    , TestCase with name = "median [1,2,3,4,5,6] = 3", input = [1, 2, 3, 4, 5, 6], output = 3
+    , TestCase with name = "median [6,5,4,3,2,1] = 3", input = [6, 5, 4, 3, 2, 1], output = 3
+
+    -- Seven elements
+    , TestCase with name = "median [1,2,3,4,5,6,7] = 4", input = [1, 2, 3, 4, 5, 6, 7], output = 4
+    , TestCase with name = "median [7,6,5,4,3,2,1] = 4", input = [7, 6, 5, 4, 3, 2, 1], output = 4
+
+    -- Shuffled orderings
+    , TestCase with name = "median [3,1,4,1,5] = 3", input = [3, 1, 4, 1, 5], output = 3
+    , TestCase with name = "median [5,1,1,4,3] = 3", input = [5, 1, 1, 4, 3], output = 3
+    , TestCase with name = "median [4,2,3,1] = 2", input = [4, 2, 3, 1], output = 2
+    , TestCase with name = "median [3,4,1,2] = 2", input = [3, 4, 1, 2], output = 2
+    ]
+
+-- U256-based median tests
+
+medianU256Suite = TestSuite with
+  cases = medianU256Cases
+  name = "Median U256 Tests"
+  test = median
+
+medianU256Cases =
+    -- Two values
+    [ TestCase with
+        name = "U256 median [1,3] = 2"
+        input = [n 1, n 3]
+        output = n 2
+    , TestCase with
+        name = "U256 median [3,1] = 2"
+        input = [n 3, n 1]
+        output = n 2
+    , TestCase with
+        name = "U256 median [1,2] = 1"
+        input = [n 1, n 2]
+        output = n 1
+    , TestCase with
+        name = "U256 median [2,1] = 1"
+        input = [n 2, n 1]
+        output = n 1
+    , TestCase with
+        name = "U256 median [1,1] = 1"
+        input = [n 1, n 1]
+        output = n 1
+
+    -- Three values
+    , TestCase with
+        name = "U256 median [1,2,3] = 2"
+        input = [n 1, n 2, n 3]
+        output = n 2
+    , TestCase with
+        name = "U256 median [3,1,2] = 2"
+        input = [n 3, n 1, n 2]
+        output = n 2
+    , TestCase with
+        name = "U256 median [2,3,1] = 2"
+        input = [n 2, n 3, n 1]
+        output = n 2
+    , TestCase with
+        name = "U256 median [1,1,2] = 1"
+        input = [n 1, n 1, n 2]
+        output = n 1
+    , TestCase with
+        name = "U256 median [1,2,2] = 2"
+        input = [n 1, n 2, n 2]
+        output = n 2
+    , TestCase with
+        name = "U256 median [1,1,1] = 1"
+        input = [n 1, n 1, n 1]
+        output = n 1
+
+    -- Four values
+    , TestCase with
+        name = "U256 median [1,2,3,4] = 2"
+        input = [n 1, n 2, n 3, n 4]
+        output = n 2
+    , TestCase with
+        name = "U256 median [1,2,4,4] = 3"
+        input = [n 1, n 2, n 4, n 4]
+        output = n 3
+    , TestCase with
+        name = "U256 median [1,1,3,3] = 2"
+        input = [n 1, n 1, n 3, n 3]
+        output = n 2
+    , TestCase with
+        name = "U256 median [1,1,3,4] = 2"
+        input = [n 1, n 1, n 3, n 4]
+        output = n 2
+    , TestCase with
+        name = "U256 median [1,1,1,3] = 1"
+        input = [n 1, n 1, n 1, n 3]
+        output = n 1
+    , TestCase with
+        name = "U256 median [1,3,3,3] = 3"
+        input = [n 1, n 3, n 3, n 3]
+        output = n 3
+    , TestCase with
+        name = "U256 median [1,1,1,1] = 1"
+        input = [n 1, n 1, n 1, n 1]
+        output = n 1
+    , TestCase with
+        name = "U256 median [1,2,3,4,5,6] = 3"
+        input = [n 1, n 2, n 3, n 4, n 5, n 6]
+        output = n 3
+    ]
+
+-- Avg U256 tests
+
+avgU256Suite = TestSuite with
+  cases = avgU256Cases
+  name = "Avg U256 Tests"
+  test = uncurry avg
+
+avgU256Cases =
+    [ TestCase with
+        name = "avg(maxU256, 0) = maxU256/2"
+        input = (maxU256, n 0)
+        output = maxDiv2
+    , TestCase with
+        name = "avg(maxU256, 1) = maxU256/2 + 1"
+        input = (maxU256, n 1)
+        output = add maxDiv2 (n 1)
+    , TestCase with
+        name = "avg(maxU256-1, maxU256) = maxU256-1"
+        input = (maxSub1, maxU256)
+        output = maxSub1
+    , TestCase with
+        name = "avg(maxU256, maxU256) = maxU256"
+        input = (maxU256, maxU256)
+        output = maxU256
+    , TestCase with
+        name = "avg(maxU256-1, 0) = maxU256/2"
+        input = (maxSub1, n 0)
+        output = maxDiv2
+    , TestCase with
+        name = "avg(maxU256-1, 1) = maxU256/2"
+        input = (maxSub1, n 1)
+        output = maxDiv2
+    , TestCase with
+        name = "avg(maxU256-1, maxU256-1) = maxU256-1"
+        input = (maxSub1, maxSub1)
+        output = maxSub1
+    , TestCase with
+        name = "avg(maxU256-1, maxU256) = maxU256-1"
+        input = (maxSub1, maxU256)
+        output = maxSub1
+    ]

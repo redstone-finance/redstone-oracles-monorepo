@@ -5,6 +5,7 @@ module RedStone.Internal.Median
 ) where
 
 import DA.List as L
+import DA.Optional
 import RedStone.U256
 
 -- Public
@@ -25,16 +26,7 @@ median : (Ord a, Averageable a) => [a] -> a
 median [] = error "Empty list"
 median [a] = a
 median [a, b] = avg a b
-median [a, b, c] =
-  case maybePickMedian a b c of
-    Some result -> result
-    None ->
-      case maybePickMedian b a c of
-        Some result -> result
-        None ->
-          case maybePickMedian b c a of
-            Some result -> result
-            None -> error "This should never happen for 3 elements"
+median [a, b, c] = fromOptional (fromOptional c $ maybePickMedian b a c) $ maybePickMedian a b c
 
 median l =
   let

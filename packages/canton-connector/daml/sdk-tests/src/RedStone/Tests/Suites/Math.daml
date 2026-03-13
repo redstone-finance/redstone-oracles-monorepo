@@ -1,0 +1,129 @@
+module RedStone.Tests.Suites.Math
+(
+    runTests
+)
+where
+
+import RedStone.Tests.Test
+import RedStone.Tests.Run
+import RedStone.Internal.Math
+
+runTests : (Action m, ActionFail m, CanAbort m) => m ()
+runTests = do
+  runSuites [beByteListToIntSuite, leByteListToIntSuite]
+
+-- Big-endian byte list to Int tests
+
+beByteListToIntSuite = TestSuite with
+  cases = beByteListToIntCases
+  name = "BE ByteList to Int Tests"
+  test = beByteListToInt
+
+beByteListToIntCases =
+    [ TestCase with
+        name = "beByteListToInt [0] = 0"
+        input = [0]
+        output = 0
+    , TestCase with
+        name = "beByteListToInt [1] = 1"
+        input = [1]
+        output = 1
+    , TestCase with
+        name = "beByteListToInt [255] = 255"
+        input = [255]
+        output = 255
+    , TestCase with
+        name = "beByteListToInt [1,0] = 256"
+        input = [1, 0]
+        output = 256
+    , TestCase with
+        name = "beByteListToInt [1,0,0] = 65536"
+        input = [1, 0, 0]
+        output = 65536
+    , TestCase with
+        name = "beByteListToInt [0,15] = 15"
+        input = [0, 15]
+        output = 15
+    , TestCase with
+        name = "beByteListToInt timestamp bytes"
+        input = [1, 141, 121, 191, 11, 160]
+        output = 1707144580000
+    , TestCase with
+        name = "beByteListToInt [0,15] = 15 (data package count)"
+        input = [0, 15]
+        output = 15
+    , TestCase with
+        name = "beByteListToInt [0,0,0] = 0 (metadata count)"
+        input = [0, 0, 0]
+        output = 0
+    , TestCase with
+        name = "beByteListToInt [0,0,16] = 16 (metadata count)"
+        input = [0, 0, 16]
+        output = 16
+    , TestCase with
+        name = "beByteListToInt [] = 0"
+        input = []
+        output = 0
+    , TestCase with
+        name = "beByteListToInt [0,0,0,0] = 0"
+        input = [0, 0, 0, 0]
+        output = 0
+    , TestCase with
+        name = "beByteListToInt [255,255] = 65535"
+        input = [255, 255]
+        output = 65535
+    , TestCase with
+        name = "beByteListToInt [255,255,255] = 16777215"
+        input = [255, 255, 255]
+        output = 16777215
+    , TestCase with
+        name = "beByteListToInt [255,255,255,255] = 4294967295"
+        input = [255, 255, 255, 255]
+        output = 4294967295
+    ]
+
+-- Little-endian byte list to Int tests
+
+leByteListToIntSuite = TestSuite with
+  cases = leByteListToIntCases
+  name = "LE ByteList to Int Tests"
+  test = leByteListToInt
+
+leByteListToIntCases =
+    [ TestCase with
+        name = "leByteListToInt [0] = 0"
+        input = [0]
+        output = 0
+    , TestCase with
+        name = "leByteListToInt [1] = 1"
+        input = [1]
+        output = 1
+    , TestCase with
+        name = "leByteListToInt [255] = 255"
+        input = [255]
+        output = 255
+    , TestCase with
+        name = "leByteListToInt [0,1] = 256"
+        input = [0, 1]
+        output = 256
+    , TestCase with
+        name = "leByteListToInt [0,0,1] = 65536"
+        input = [0, 0, 1]
+        output = 65536
+    , TestCase with
+        name = "leByteListToInt [] = 0"
+        input = []
+        output = 0
+    , TestCase with
+        name = "leByteListToInt [255,255] = 65535"
+        input = [255, 255]
+        output = 65535
+    , TestCase with
+        name = "leByteListToInt [1,2] = 513"
+        input = [1, 2]
+        output = 513
+    , TestCase with
+        name = "leByteListToInt [0,0,0,0] = 0"
+        input = [0, 0, 0, 0]
+        output = 0
+    ]
