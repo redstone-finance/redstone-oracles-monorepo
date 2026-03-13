@@ -1,6 +1,6 @@
 module Input where
 
-adapterId = "RedStoneAdapter-0.4.5"
+adapterId = "RedStoneAdapter-v2-0.4.0"
 
 data Input = Input with
   owner: Party

@@ -1,0 +1,31 @@
+module IRedStonePricePillFactory where
+
+import DA.Foldable (forA_)
+import RedStoneTypes
+import IRedStonePricePill
+
+interface IRedStonePricePillFactory where
+  viewtype RedStonePricePillFactoryView
+
+  iRedStonePricePillFactory_CreatePricePillsImpl: [Party] -> Text -> Int -> [(RedStoneFeedId, RedStonePriceData RedStoneValue)] -> Update [ContractId IRedStonePricePill]
+
+  nonconsuming choice CreatePricePills : [ContractId IRedStonePricePill]
+    with
+      viewers : [Party]
+      stalenessMs : Int
+      adapterId : Text
+      inputData : [(RedStoneFeedId, RedStonePriceData RedStoneValue)]
+    controller (view this).creators
+    do
+      iRedStonePricePillFactory_CreatePricePillsImpl this viewers adapterId stalenessMs inputData
+
+  nonconsuming choice ArchivePricePills : ()
+    with
+      contractIds: [ContractId IRedStonePricePill]
+    controller (view this).creators
+    do forA_ contractIds (`exercise` ArchivePill)
+
+data RedStonePricePillFactoryView = RedStonePricePillFactoryView
+  with
+    creators : [Party]
+  deriving (Eq, Show, Ord)

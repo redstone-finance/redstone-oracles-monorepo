@@ -33,7 +33,7 @@ export class CoreCantonContractAdapter extends CantonContractAdapter {
     return result._1.map(convertDecimalValue);
   }
 
-  protected static async getPayloadArguments(paramsProvider: ContractParamsProvider) {
+  public static async getPayloadArguments(paramsProvider: ContractParamsProvider) {
     return {
       feedIds: paramsProvider.getArrayifiedFeedIds(),
       payloadHex: await paramsProvider.getPayloadHex(false, {

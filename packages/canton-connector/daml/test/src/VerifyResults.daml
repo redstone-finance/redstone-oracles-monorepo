@@ -1,20 +1,28 @@
 module VerifyResults where
 
 import DA.Assert
-import DA.Date
 import DA.List
 import DA.Optional
 import DA.Time
+import Time
+import RedStoneTypes
 
-unix_epoch_start = time (date 1970 Jan 1) 00 00 00
-millisToTime m = addRelTime unix_epoch_start $ milliseconds m
-
-verifyResults currentTime readResult feedResult = do
+verifyOneResult currentTime readResult feedResult = do
   debug $ "Read result: " <> show readResult
   debug $ "Feed result: " <> show feedResult
 
-  feedResult === fromSome (head readResult)
+  feedResult === readResult
 
-  let timeDiff = subTime currentTime (millisToTime feedResult.writeTimestamp)
+  let timeDiff = subTime currentTime $ millisToTime feedResult.writeTimestamp
   assert $ timeDiff <= milliseconds 1
   assert $ timeDiff >= microseconds 0
+
+verifyResults currentTime readResult = verifyOneResult currentTime (fromSome . head $ readResult)
+
+verifyWithResult currentTime readResult result = do
+  let feedResult = RedStonePriceData with
+        writeTimestamp = timeToMillis currentTime
+        value = head . fst $ result
+        timestamp = snd result
+
+  verifyResults currentTime readResult feedResult

@@ -1,4 +1,4 @@
-import { PillCleaner } from "../src";
+import { PillCleaner } from "../src/adapters/PillCleaner";
 import { makeDefaultClient } from "./utils";
 
 const VIEWER_PARTY_NAME = `RedStoneOracleViewer`;

@@ -8,7 +8,7 @@ import { getArrayifiedFeedId, REDSTONE_DECIMALS } from "../conversions";
 import {
   createFeedIdFilter,
   findNewestContract,
-  IPRICE_FEED_ENTRY_TEMPLATE_NAME,
+  IPRICE_PILL_TEMPLATE_NAME,
   parsePriceData,
   PriceData,
   READ_DATA_CHOICE,
@@ -26,11 +26,14 @@ export class PricePillCantonContractAdapter
 
   constructor(
     client: CantonClient,
+    protected adapterId: string,
     protected feedId: string,
+
     interfaceId = client.Defs.interfaceId,
-    templateName = IPRICE_FEED_ENTRY_TEMPLATE_NAME
+    templateName = IPRICE_PILL_TEMPLATE_NAME
   ) {
     super(client, interfaceId, templateName);
+
     this.arrayifiedFeedId = getArrayifiedFeedId(feedId);
   }
 
@@ -44,6 +47,7 @@ export class PricePillCantonContractAdapter
 
   async readData(offset?: number) {
     const result: PriceData = await this.exerciseChoice(READ_DATA_CHOICE, {}, offset);
+
     return parsePriceData(result);
   }
 
@@ -57,6 +61,7 @@ export class PricePillCantonContractAdapter
 
   async getDataFeedId(offset?: number) {
     const feedId: string[] = await this.exerciseChoice(READ_FEED_ID_CHOICE, {}, offset);
+
     return ContractParamsProvider.unhexlifyFeedId(feedId.map(Number));
   }
 
@@ -78,6 +83,6 @@ export class PricePillCantonContractAdapter
   }
 
   protected override getContractFilter(): ContractFilter {
-    return createFeedIdFilter([this.arrayifiedFeedId]);
+    return createFeedIdFilter([this.arrayifiedFeedId], this.adapterId);
   }
 }

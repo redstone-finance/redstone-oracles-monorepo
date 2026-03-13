@@ -1,16 +1,16 @@
 import { ContractParamsProvider, getSignersForDataServiceId } from "@redstone-finance/sdk";
-import { CoreFeaturedClientCantonContractAdapter } from "../src";
+import { CoreClientCantonContractAdapter } from "../src";
 import { makeDefaultClient } from "./utils";
 
 const partyName = `Client`;
-const packageId = "f1474b5ecd985e07e1bd561f54412e7db334d63d61d962c4d3c3801e2949e7b6";
+const packageId = "#redstone-core-v2";
 const contractId =
-  "005bed7fbb75069ff40226f9649f5b6c8b5e83a248b5d84b91099f86e4899663c3ca121220bd08f4a9b1f32c7b16e1a1ab54a5895061365efbc422633d6ec2aaa6e1f0f508";
+  "008a2bdfb2ed5fe9c0423a2e69249bd5304dbabdf8430f97b73da292b1e3cd837eca1212200a9b1951afdec72efba48a2a35b8f25a8b00016ce4057b1de1bbc544019df895";
 
-export async function coreFeaturedClientSample() {
+export async function coreClientSample() {
   const client = makeDefaultClient(partyName);
 
-  const adapter = new CoreFeaturedClientCantonContractAdapter(client, contractId, packageId);
+  const adapter = new CoreClientCantonContractAdapter(client, contractId, packageId);
   const paramsProvider = new ContractParamsProvider({
     dataPackagesIds: ["ETH", "BTC"],
     dataServiceId: "redstone-primary-prod",
@@ -21,4 +21,4 @@ export async function coreFeaturedClientSample() {
   console.log(await adapter.getPricesFromPayload(paramsProvider));
 }
 
-void coreFeaturedClientSample();
+void coreClientSample();
