@@ -6,7 +6,7 @@ import {
   createFeedIdFilter,
   findNewestContract,
   groupEventsByFeedId,
-  IPRICE_FEED_ENTRY_TEMPLATE_NAME,
+  IPRICE_PILL_TEMPLATE_NAME,
   parsePriceData,
   PriceData,
   READ_DATA_CHOICE,
@@ -21,7 +21,7 @@ export class MultiPricePillCantonContractAdapter extends CantonContractAdapter {
     client: CantonClient,
     private readonly feedIds: string[],
     interfaceId = client.Defs.interfaceId,
-    templateName = IPRICE_FEED_ENTRY_TEMPLATE_NAME
+    templateName = IPRICE_PILL_TEMPLATE_NAME
   ) {
     super(client, interfaceId, templateName);
     this.arrayifiedFeedIds = buildArrayifiedFeedIds(feedIds);

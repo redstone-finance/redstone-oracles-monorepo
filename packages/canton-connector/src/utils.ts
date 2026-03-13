@@ -1,7 +1,6 @@
 import { RedstoneCommon } from "@redstone-finance/utils";
 import z from "zod";
 import {
-  ApiError,
   CreatedEvent,
   Event,
   JsCantonError,
@@ -15,20 +14,46 @@ export type DamlTuple2<T = string, U = string> = { _1: T; _2: U };
 
 const CONTRACT_NOT_FOUND_ERROR = "CONTRACT_NOT_FOUND";
 
-export function isContractNotFoundError(e: unknown): e is ApiError & { body: { code: string } } {
-  const error = e as Error & { body: { code: string } };
+export function isApiError(e: unknown): e is Error & { body: { code: string; cause: string } } {
+  const error = e as Error & { body: { code: string; cause: string } };
 
-  return error.body.code === CONTRACT_NOT_FOUND_ERROR;
+  return (
+    "body" in error &&
+    RedstoneCommon.isDefined(error.body) &&
+    typeof error.body === "object" &&
+    "code" in error.body &&
+    "cause" in error.body
+  );
+}
+
+export function isContractNotFoundError(
+  e: unknown
+): e is Error & { message: typeof CONTRACT_NOT_FOUND_ERROR } {
+  if (e instanceof AggregateError) {
+    return e.errors.some(isContractNotFoundError);
+  }
+
+  const error = e as Error;
+
+  return "message" in error && error.message === CONTRACT_NOT_FOUND_ERROR;
 }
 
 export async function unwrapResponse<T>(promise: Promise<T | JsCantonError>) {
-  const response = await promise;
+  try {
+    const response = await promise;
 
-  if (typeof response === "object" && response !== null && "code" in response) {
-    throw new Error(response.cause);
+    if (typeof response === "object" && response !== null && "cause" in response) {
+      throw new Error(response.cause);
+    }
+
+    return response;
+  } catch (error) {
+    if (isApiError(error)) {
+      throw new Error(error.body.code, { cause: error.body.cause });
+    }
+
+    throw error;
   }
-
-  return response;
 }
 
 export function makeInterfaceFilterByParty(interfaceId: string, partyId: string) {

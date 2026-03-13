@@ -6,12 +6,15 @@ import { PricePillCantonContractAdapter } from "./PricePillCantonContractAdapter
 export class PricePillCantonContractConnector extends CantonContractConnector<IPriceFeedContractAdapter> {
   constructor(
     cantonClient: CantonClient,
-    private readonly feedId: string
+    private readonly feedId: string,
+    protected adapterId: string
   ) {
     super(cantonClient);
   }
 
   getAdapter(): Promise<IPriceFeedContractAdapter> {
-    return Promise.resolve(new PricePillCantonContractAdapter(this.cantonClient, this.feedId));
+    return Promise.resolve(
+      new PricePillCantonContractAdapter(this.cantonClient, this.adapterId, this.feedId)
+    );
   }
 }

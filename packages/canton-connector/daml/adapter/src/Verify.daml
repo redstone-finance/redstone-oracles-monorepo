@@ -1,0 +1,31 @@
+module Verify
+(
+    determineNewValues
+, entriesFromValues
+)
+where
+
+import DA.List as L
+import DA.Map as M
+import RedStone.Result
+import RedStoneTypes
+
+verify (currentTimestamp, currentFeedData) (feedId, value, timestamp) =
+    case value of
+    Error t -> Error (t <> " for " <> show feedId)
+    Ok v -> case M.lookup feedId currentFeedData of
+        None -> value
+        Some [] -> value
+        Some (newest :: _)
+            | newest.priceData.timestamp < timestamp && newest.priceData.writeTimestamp < currentTimestamp -> value
+            | otherwise -> Error ("Wrong timestamps for " <> show feedId)
+
+determineNewValues (currentTimestamp, currentFeedData) feedIds (values, timestamp) =
+    let
+        verifiedValues = zipWith (\feedId val -> (feedId, verify (currentTimestamp, currentFeedData) (feedId, val, timestamp))) feedIds values
+        filteredValues = L.filter (resultIsOk . snd) verifiedValues
+        unwrappedValues = map (\(feedId, value) -> (feedId, resultUnwrap value)) filteredValues
+    in unwrappedValues
+
+entriesFromValues currentTimestamp timestamp newValues =
+    map (\(feedId, value) -> (feedId, RedStonePriceData with value, timestamp, writeTimestamp = currentTimestamp)) newValues

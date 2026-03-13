@@ -89,7 +89,7 @@ GetPricesDisclosed choice:
 - `adapterCid`: Contract ID of the disclosed Core contract (`IRedStoneCoreFeatured`)
 - `featuredCid`: Contract ID of the disclosed `FeaturedAppRight` for reward attribution
 
-### [TypeScript Contract Wrapper](../../src/adapters/CoreFeaturedClientCantonContractAdapter.ts)
+### [TypeScript Contract Wrapper](../../src/adapters/CoreClientCantonContractAdapter.ts)
 
 See the full example in [core-featured-sample.ts](../../scripts/core-featured-sample.ts).
 

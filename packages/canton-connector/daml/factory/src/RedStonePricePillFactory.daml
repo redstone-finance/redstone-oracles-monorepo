@@ -1,39 +1,33 @@
 module RedStonePricePillFactory where
 
-import RedStone.Config
-import RedStone.GetPrices as G
 import Featured
-import IRedStoneCoreFeatured
-import IRedStoneCore
-import RedStoneTypes
+import IRedStonePricePillFactory
+import IRedStonePricePill
 import RedStonePricePill
-import DA.Foldable (forA_)
 
 template RedStonePricePillFactory
   with
-    coreId: Text
     owner : Party
-    viewers : [Party]
+    creators : [Party]
     beneficiary : Party
+    featuredCid : RedStoneFeaturedContract
   where
     signatory owner, beneficiary
-    observer viewers
+    observer creators
 
-    interface instance IRedStoneCoreFeatured for RedStonePricePillFactory where
-      view = RedStoneCoreView with viewers, coreId
+    interface instance IRedStonePricePillFactory for RedStonePricePillFactory where
+      view = RedStonePricePillFactoryView with creators
 
-      getPricesFeatured featuredCid feedIds currentTime payloadHex = do
-        let config = redstonePrimaryProdDefaultConfig feedIds currentTime
-        (values, timestamp) <- G.getPricesNumeric config payloadHex
-        let pairs = zip feedIds values
-
-        forA_ pairs \(feedId, value) ->
-          Featured.takeReward beneficiary featuredCid *>
-          create RedStonePricePill with
-            owner
-            viewers
-            feedId
-            priceData = RedStonePriceData with value, timestamp, writeTimestamp = config.currentTimestamp
-            stalenessMs = 60000
-
-        pure (values, timestamp)
+      iRedStonePricePillFactory_CreatePricePillsImpl viewers adapterId stalenessMs inputData =
+        forA inputData \(feedId, priceData) ->
+          takeReward beneficiary featuredCid *>
+            (toInterfaceContractId @IRedStonePricePill <$> create RedStonePricePill
+              with
+                owner
+                viewers
+                creators
+                feedId
+                priceData
+                stalenessMs
+                adapterId
+            )

@@ -8,7 +8,7 @@
     "deviationPercentage": 0.2,
     "timeSinceLastUpdateInMilliseconds": 7000
   },
-  "adapterContract": "0093a42a94bd216e726c83d7686f19901cc87bb882c3fec476c05d8d42b5c85cf1ca121220605a89e351e3c372e323ca5e14e83ba5d1b6708618cca1b9526991510f18d9ff",
+  "adapterContract": "RedStoneAdapter-v2-0.4.0",
   "dataServiceId": "redstone-primary-prod",
   "priceFeeds": {
     "CC": {},

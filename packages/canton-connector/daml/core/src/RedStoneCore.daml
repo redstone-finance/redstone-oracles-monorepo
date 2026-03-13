@@ -1,19 +1,28 @@
 module RedStoneCore where
 
-import RedStone.Config
 import RedStone.GetPrices as G
+import Featured
 import IRedStoneCore
+import Config
 
 template RedStoneCore
   with
     coreId: Text
     owner : Party
     viewers : [Party]
+    beneficiary : Optional Party
+    featuredCid : Optional RedStoneFeaturedContract
   where
-    signatory owner
+    signatory owner, beneficiary
     observer viewers
 
     interface instance IRedStoneCore for RedStoneCore where
       view = RedStoneCoreView with viewers, coreId
 
-      getPrices feedIds currentTime = G.getPricesNumeric $ redstonePrimaryProdDefaultConfig feedIds currentTime
+      iRedStoneCore_GetPricesImpl feedIds currentTime payloadHex = do
+          case (featuredCid, beneficiary) of
+            (Some featured, Some party) -> takeReward party featured
+            _ -> pure ()
+
+          let config = adapter_config_fun feedIds currentTime
+          G.getPricesNumeric config payloadHex
