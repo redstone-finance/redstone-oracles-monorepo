@@ -10,6 +10,7 @@ module RedStone.U256
     , isZero
     , isNotZero
     , toIntU256
+    , u256FromInt
     , u256ToInt
     , u256ToNumeric
     , u256ToHex
@@ -74,7 +75,15 @@ u256ToNumeric (U256 (Bytes revList)) = leByteListToNumeric revList
 
 u256ToHex (U256 (Bytes revList)) = hexlify revList
 
+u256FromInt n =
+  if n < 0 then error $ "Value should be non-negative" else
+    u256FromBeByteList $ u256FromIntAcc [] n
+
 -- Private
+
+u256FromIntAcc acc remaining =
+  if remaining == 0 then acc else
+    u256FromIntAcc ((remaining % 256) :: acc) ((remaining - remaining % 256) / 256)
 
 compareU256 (U256 (Bytes revList1)) (U256 (Bytes revList2)) = compare (L.reverse revList1) (L.reverse revList2)
 

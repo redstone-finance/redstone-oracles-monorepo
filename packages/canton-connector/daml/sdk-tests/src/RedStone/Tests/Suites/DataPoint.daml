@@ -1,0 +1,29 @@
+module RedStone.Tests.Suites.DataPoint
+(
+    runTests
+)
+where
+
+import RedStone.Tests.Test
+import RedStone.Tests.Run
+import RedStone.Internal.Bytes
+import RedStone.Internal.DataPoint
+import RedStone.U256
+
+runTests : (Action m, ActionFail m, CanAbort m) => m ()
+runTests = do
+  runSuite dataPointTupleSuite
+
+-- Data point tuple parsing test
+
+dataPointTupleSuite = TestSuite with
+  cases = dataPointTupleCases
+  name = "DataPoint Tests"
+  test = snd . trimDataPoint 32
+
+dataPointTupleCases =
+    [ TestCase with
+        name = "trimDataPoint extracts feed_id and value"
+        input = fromList ([69, 84, 72] ++ replicate 29 0 ++ replicate 31 0 ++ [10])
+        output = DataPoint with feedId = [69, 84, 72], value = u256FromBeByteList [10]
+    ]

@@ -6,6 +6,7 @@ where
 
 import RedStone.Tests.Test
 import RedStone.Tests.Run
+import RedStone.Tests.Helpers
 import RedStone.U256
 import RedStone.Internal.Median
 
@@ -15,56 +16,39 @@ runTests = do
 
 testSuite = TestSuite with cases = testCases, name = "U256 Median Tests", test = median
 
-n0 = u256FromBeByteList [0]
-n1 = u256FromBeByteList [1]
-n10 = u256FromBeByteList [10]
-n11 = u256FromBeByteList [11]
-n13 = u256FromBeByteList [13]
-n15 = u256FromBeByteList [15]
-n17 = u256FromBeByteList [17]
-n18 = u256FromBeByteList [18]
-n20 = u256FromBeByteList [20]
-n25 = u256FromBeByteList [25]
-n30 = u256FromBeByteList [30]
-n40 = u256FromBeByteList [40]
-
-maxU256 = u256FromBeByteList $ replicate 32 255
-maxSub1 = u256FromBeByteList $ replicate 31 255 ++ [254]
-maxDiv2 = u256FromBeByteList $ 127 :: replicate 31 255
-
 testCases =
     [ TestCase with
         name = "median [10] = 10"
-        input = [n10]
-        output = n10
+        input = [n 10]
+        output = n 10
     , TestCase with
         name = "median [10,20] = 15"
-        input = [n10, n20]
-        output = n15
+        input = [n 10, n 20]
+        output = n 15
     , TestCase with
         name = "median [11,15] = 13"
-        input = [n11, n15]
-        output = n13
+        input = [n 11, n 15]
+        output = n 13
     , TestCase with
         name = "median [11,25] = 18"
-        input = [n11,n25]
-        output = n18
+        input = [n 11, n 25]
+        output = n 18
     , TestCase with
         name = "median [10,25] = 17"
-        input = [n10, n25]
-        output = n17
+        input = [n 10, n 25]
+        output = n 17
     , TestCase with
         name = "median [10,30,20] = 20"
-        input = [n10, n30, n20]
-        output = n20
+        input = [n 10, n 30, n 20]
+        output = n 20
     , TestCase with
         name = "median [10,20,30] = 20"
-        input = [n10, n20, n30]
-        output = n20
+        input = [n 10, n 20, n 30]
+        output = n 20
     , TestCase with
         name = "median [10,40,30,20] = 25"
-        input = [n10, n40, n30, n20]
-        output = n25
+        input = [n 10, n 40, n 30, n 20]
+        output = n 25
     , TestCase with
         name = "median [65536,131072] = 98304"
         input = [u256FromBeByteList [1, 0, 0], u256FromBeByteList [2, 0, 0]]
@@ -83,10 +67,10 @@ testCases =
         output = maxSub1
     , TestCase with
         name = "median [maxU256,0] = maxU256/2"
-        input = [maxU256, n0]
+        input = [maxU256, n 0]
         output = maxDiv2
     , TestCase with
         name = "median [maxU256,1] = maxU256/2 + 1"
-        input = [maxU256, n1]
-        output = add maxDiv2 n1
+        input = [maxU256, n 1]
+        output = add maxDiv2 (n 1)
     ]
