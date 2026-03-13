@@ -13,7 +13,7 @@
   "tokens": {
     "KOSPI200": {
       "source": ["ws-itick-indices"],
-      "denomination": "USD",
+      "denomination": "KRW",
       "rateFeed": false
     },
     "GAS": {
