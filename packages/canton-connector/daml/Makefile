@@ -32,7 +32,7 @@ clean:
 	$(DAML) clean --all
 	rm -f $(ADAPTER_ID_TXT) $(PRICE_FEED_ID_TXT) $(CORE_ID_TXT) refresh_token.txt token.txt test/input.json test/sample_data/payload.hex
 
-lint: lint-common lint-sdk lint-core lint-adapter lint-price_feed lint-interface lint-test lint-featured lint-factory
+lint: lint-common lint-sdk lint-sdk-tests lint-core lint-adapter lint-price_feed lint-interface lint-featured lint-factory lint-test
 	./lint-whitespaces.sh
 
 build: build_test
