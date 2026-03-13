@@ -6,6 +6,7 @@ import { CantonClient, ContractFilter } from "../CantonClient";
 import { convertDecimalValue, getArrayifiedFeedId } from "../conversions";
 import { ActiveContractData } from "../utils";
 import { CoreCantonContractAdapter } from "./CoreCantonContractAdapter";
+import { DEFS_KEY_FEATURED_APP_RIGHT } from "./CoreClientCantonContractAdapter";
 
 export const IADAPTER_TEMPLATE_NAME = `IRedStoneAdapter:IRedStoneAdapter`;
 const WRITE_PRICES_CHOICE = "WritePrices";
@@ -103,10 +104,12 @@ export class PricesCantonContractAdapter
       await CoreCantonContractAdapter.getPayloadArguments(paramsProvider),
       undefined,
       true,
-      this.updateClient
+      this.updateClient,
+      [this.updateClient.Defs[DEFS_KEY_FEATURED_APP_RIGHT]]
     );
 
-    this.activeContractData = result;
+    // TODO: restore when it's fixed the return value
+    this.activeContractData = undefined;
 
     return result.contractId;
   }

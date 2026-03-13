@@ -5,7 +5,7 @@ import RedStoneTypes
 interface IRedStoneCore where
   viewtype RedStoneCoreView
 
-  getPrices : [RedStoneFeedId] -> Time -> PayloadHex -> Update RedStoneResult
+  iRedStoneCore_GetPricesImpl : [RedStoneFeedId] -> Time -> PayloadHex -> Update RedStoneResult
 
   nonconsuming choice GetPrices : RedStoneResult
     with
@@ -14,7 +14,17 @@ interface IRedStoneCore where
       payloadHex : PayloadHex
     controller (view this).viewers
     do
-      getPrices this feedIds currentTime payloadHex
+      iRedStoneCore_GetPricesImpl this feedIds currentTime payloadHex
+
+  nonconsuming choice GetPricesWithCaller : RedStoneResult
+    with
+      caller : Party
+      feedIds : [RedStoneFeedId]
+      currentTime : Time
+      payloadHex : PayloadHex
+    controller caller
+    do
+      iRedStoneCore_GetPricesImpl this feedIds currentTime payloadHex
 
 data RedStoneCoreView = RedStoneCoreView
   with

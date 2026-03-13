@@ -1,0 +1,60 @@
+module PillRecord
+(
+  PillRecord(..)
+, partitionRecords
+, createNewRecords
+, addToFeedData
+) where
+
+import DA.List as L
+import DA.Map as M
+import DA.Optional (fromOptional, isSome, isNone)
+import IRedStonePricePill
+import RedStoneTypes
+import Config(pill_keep_ms)
+
+data PillRecord = PillRecord
+  with
+    priceData: RedStonePriceData RedStoneValue
+    pillCid : Optional (ContractId IRedStonePricePill)
+  deriving (Eq, Show)
+
+-- Public
+
+createNewRecords inputData newPills = zip (map fst inputData) $ zipWith PillRecord (map snd inputData) newPills
+
+addToFeedData currentFeedData (feedId, newest) =
+    let
+        existing = fromOptional [] $ M.lookup feedId currentFeedData
+    in M.insert feedId (newest :: existing) currentFeedData
+
+partitionRecords currentTimestamp currentFeedData =
+  let
+    entries = M.toList currentFeedData
+
+    (newEntries, toArchive) = L.foldl (\(cleaned, toArchive) (feedId, pills) ->
+      let
+         (remaining, stale) = partitionFeedPills currentTimestamp pills
+      in ((feedId, remaining) :: cleaned, stale ++ toArchive))
+      ([], []) entries
+
+  in (newEntries, toArchive)
+
+-- Private
+
+mergedHistory newEntries = L.foldl addToFeedData newEntries
+
+shouldArchive currentTimestamp record =
+  isSome record.pillCid && currentTimestamp - record.priceData.writeTimestamp > pill_keep_ms
+
+shouldDrop record =
+  isNone record.pillCid
+
+partitionFeedPills _ [] = ([], [])
+partitionFeedPills _ [newest] = ([newest], [])
+partitionFeedPills _ [newest, previous] = ([newest, previous], [])
+partitionFeedPills currentTimestamp (newest :: previous :: otherRecords) =
+  let
+    toArchive = L.filter (shouldArchive currentTimestamp) otherRecords
+    toKeep = L.filter (\p -> not (shouldArchive currentTimestamp p) && not (shouldDrop p)) otherRecords
+  in (newest :: previous :: toKeep, toArchive)

@@ -16,6 +16,8 @@ main input = script do
       coreId = "RedStoneCore-123"
       owner = owner
       viewers = [viewer]
+      beneficiary = None
+      featuredCid = None
 
   currentTime <- getTime
 
@@ -34,6 +36,7 @@ main input = script do
 
   result <- submit viewer do
     exerciseCmd coreClientCid GetPricesDisclosed with
+      caller = viewer
       payloadHex = input.payload
       feedIds = input.feedIds
       currentTime
