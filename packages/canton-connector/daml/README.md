@@ -9,8 +9,8 @@
     * [RedStone SDK](#redstone-sdk)
     * [RedStone Interface](#redstone-interface)
     * [RedStone Core](#redstone-core)
-    * [RedStone Adapter - experimental](#redstone-adapter---experimental)
-    * [RedStone PriceFeed - experimental](#redstone-pricefeed---experimental)
+    * [RedStone Adapter](#redstone-adapter)
+    * [RedStone PricePill](#redstone-pricepill)
     * [Test](#test)
   * [The current state of development](#the-current-state-of-development)
 <!-- TOC -->
@@ -51,11 +51,9 @@
 
 ### [RedStone SDK](./sdk)
 
-1. Provides a set of methods for processing and verifying the hex payload
+1. Provides a set of methods for processing and verifying the hex payload using `secp256k1` [`crypto verification`](./sdk/src/RedStone/Internal/CryptoVerify.daml)
 2. Implements `U256` type for larger values
    1. But also `DecimalValue` works to values up to `2^99` with the `8`-fixed-point scale (`2^126` as multiplied value from nodes)
-3. Provides [`CryptoVerify`](./sdk/src/RedStone/Internal/CryptoVerify.daml)  mechanisms for `secp256k1` crypto verification
-   1. It works with  DAML`3.4.0-snapshot-2025-10-06` or `3.3.0-snapshot.20250930.0`+++
 
 See more about the [RedStone SDK](./sdk/README.md) library.
 
@@ -63,7 +61,7 @@ See more about the [RedStone SDK](./sdk/README.md) library.
 
 1. Having unchanged interfaces, it's easier to find/call the contract by the interface it implements
 2. It defines the [`IRedStoneCore`](./interface/src/IRedStoneCore.daml) interface for processing the payload data on-ledger
-3. It defines the [`IRedStoneAdapter`](./interface/src/IRedStoneAdapter.daml) and [`IRedStonePriceFeed`](./interface/src/IRedStonePriceFeed.daml) experimental interfaces
+3. It defines the [`IRedStoneAdapter`](./interface/src/IRedStoneAdapter.daml) and [`IRedStonePricePill`](./interface/src/IRedStonePricePill.daml) interfaces
 4. Also defines the [`RedStoneTypes`](./interface/src/RedStoneTypes.daml), like `RedStoneValue` or `RedStonePriceData`
 
 ### [RedStone Core](./adapter)
@@ -82,7 +80,7 @@ See more about the [RedStone SDK](./sdk/README.md) library.
 
 See more about the Pull model [here](./core/README.md)
 
-### [RedStone Adapter](./adapter) - experimental
+### [RedStone Adapter](./adapter)
 
 1. Provides a [template](./adapter/src/RedStoneAdapter.daml) of a contract implementing the `IRedStoneAdapter` interface
 2. The contract code may change, but until the interface remains unchanged, it can be found by the interface package id.
@@ -113,39 +111,26 @@ See more about the Pull model [here](./core/README.md)
     controller (view this).viewers
 ```
 
-### [RedStone PriceFeed](./price_feed) - experimental
+### [RedStone PricePill](./price_feed)
 
-1. Provides a [template](./price_feed/src/RedStonePriceFeed.daml) of a contract implementing the `IRedStonePriceFeed` interface
-2. Every method needs to have `adapterCid` passed, because the `adapterCid` still changes.
-   1. Having it saved to the PriceFeed, it will change the PriceFeed address when the adapter is changed
-   2. So it's easier to find the current `adapterCid` and pass it here, with a check if the custom `adapterId` suits.
+1. Provides a [template](./price_feed/src/RedStonePricePill.daml) of a contract implementing the `IRedStonePricePill` interface
+2. Every pill contains a saved data which exist at least one minute from creation, but the newest created data lives until it's replaced
 
 ```haskell
   nonconsuming choice ReadData : (RedStonePriceData RedStoneValue)
-    with
-      adapterCid : RedStoneAdapterCid
     controller (view this).viewers
-    do
-      readData this adapterCid
 
   nonconsuming choice ReadPrice : RedStoneValue
-    with
-      adapterCid : RedStoneAdapterCid
     controller (view this).viewers
-    do
-      readPrice this adapterCid
 
   nonconsuming choice ReadTimestamp : Int
-    with
-      adapterCid : RedStoneAdapterCid
     controller (view this).viewers
-    do
-      readTimestamp this adapterCid
 
-  nonconsuming choice GetDescription : Text
+  nonconsuming choice ReadFeedId : RedStoneFeedId
     controller (view this).viewers
-    do
-      getDescription this ()
+
+  nonconsuming choice ReadDescription : Text
+    controller (view this).viewers
 ```
 
 ### [Test](./test)

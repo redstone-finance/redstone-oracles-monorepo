@@ -7,19 +7,22 @@ import DA.Optional(fromSome)
 import DA.Foldable(forA_)
 import Splice.Api.FeaturedAppRightV1
 
-import IRedStoneCoreFeatured
 import IRedStonePricePill
-import RedStoneCoreFeaturedClient
 import RedStonePricePillFactory
+import IRedStonePricePillFactory
+import IRedStoneAdapter
+import RedStoneAdapter
+import Time
 
+import MockFeatured
 import Input
 import Utils
-import MockFeatured
 
 main : Input -> Script ()
 main input = script do
   dso <- allocateParty "DSO"
   owner <- allocateParty "RedStoneOracleOwner"
+  updater <- allocateParty "RedStoneOracleUpdater"
   viewer <- allocateParty "RedStoneOracleViewer"
   beneficiary <- allocateParty "RedStoneBeneficiary"
   client <- allocateParty "Client"
@@ -28,65 +31,60 @@ main input = script do
 
   let verifier = verifyResult input.feedIds (beneficiary,dso,viewer)
 
-  featuredCid <- submit dso do
-    createCmd MockFeaturedAppRight with dso, provider = owner
+  featuredCid <- submit (actAs dso <> readAs beneficiary) do
+    createCmd MockFeaturedAppRight with dso, provider = beneficiary
 
-  coreCid <- submit (actAs owner <> actAs beneficiary) do
+  pillFactoryCid <- submit (actAs owner <> actAs beneficiary) do
     createCmd RedStonePricePillFactory with
-      coreId = "RedStoneCore-123"
       owner
-      viewers = [viewer]
+      creators = [updater]
       beneficiary
+      featuredCid = toInterfaceContractId @FeaturedAppRight featuredCid
 
-  featuredDisclosure <- queryDisclosure @MockFeaturedAppRight owner featuredCid
-  coreDisclosure <- queryDisclosure @RedStonePricePillFactory owner coreCid
+  featuredDisclosure <- queryDisclosure @MockFeaturedAppRight beneficiary featuredCid
+  factoryDisclosure <- queryDisclosure @RedStonePricePillFactory updater pillFactoryCid
 
-  result <- submitDisclosed viewer [featuredDisclosure] do
-    exerciseCmd (toInterfaceContractId @IRedStoneCoreFeatured coreCid) GetPricesFeatured with
+  adapterCid <- submit (actAs [owner] <> readAs [updater, viewer]) do
+    createCmd RedStoneAdapter with
+      adapterId = Input.adapterId
+      owner
+      updaters = [updater]
+      viewers = [viewer]
+      feedData = M.empty
+      pillFactory = Some $ toInterfaceContractId @IRedStonePricePillFactory pillFactoryCid
+
+  debug $ "Adapter CID: " <> show adapterCid
+
+  newCid <- submitDisclosed updater [featuredDisclosure, factoryDisclosure] do
+    exerciseCmd (toInterfaceContractId @IRedStoneAdapter adapterCid) WritePrices with
       payloadHex = input.payload
       feedIds = input.feedIds
       currentTime
-      caller = viewer
-      featuredCid = toInterfaceContractId @FeaturedAppRight featuredCid
 
-  debug $ "Processed result: " <> show result
+  debug $ "New CID: " <> show newCid
 
-  verifier 1 result
-
-  coreClientCid <- submit owner do
-    createCmd RedStoneCoreFeaturedClient with
-      owner = owner
-      viewers = [client]
-
-  currentTime <- getTime
-
-  result <- submitDisclosed client [featuredDisclosure, coreDisclosure] do
-    exerciseCmd coreClientCid GetPricesDisclosed with
-      payloadHex = input.payload
+  readResult <- submit viewer do
+    exerciseCmd newCid ReadPriceData with
       feedIds = input.feedIds
-      currentTime
-      adapterCid = (toInterfaceContractId @IRedStoneCoreFeatured coreCid)
-      featuredCid = toInterfaceContractId @FeaturedAppRight featuredCid
-      caller = client
 
-  debug $ "Client result: " <> show result
+  debug $ "Read result: " <> show readResult
 
-  verifier 2 result
+  verifier 1 currentTime
 
 
-verifyResult feedIds (beneficiary,dso,viewer) multiplier result = do
+verifyResult feedIds (beneficiary,dso,viewer) multiplier currentTime = do
   markers <- queryInterface @FeaturedAppActivityMarker beneficiary
   debug markers
 
   length markers === multiplier * (length feedIds)
 
-  priceFeedEntries <- queryInterface @IRedStonePricePill viewer
-  debug priceFeedEntries
+  pillEntries <- queryInterface @IRedStonePricePill viewer
+  debug pillEntries
 
-  length priceFeedEntries === multiplier * length feedIds
+  length pillEntries === multiplier * length feedIds
 
-  let entryMap = M.fromList [ (view.feedId, view) | (_, Some view) <- priceFeedEntries ]
+  let entryMap = M.fromList [ (view.feedId, view) | (_, Some view) <- pillEntries ]
 
-  forA_ (zip feedIds $ fst result) \(feedId, expectedValue) -> do
+  forA_ feedIds \feedId -> do
     let entry = fromSome $ M.lookup feedId entryMap
-    entry.priceData.value === expectedValue
+    entry.priceData.writeTimestamp === timeToMillis currentTime

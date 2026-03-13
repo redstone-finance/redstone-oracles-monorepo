@@ -1,18 +1,21 @@
 module Run where
 
 import Daml.Script
-import DA.List
-import DA.Assert
 import IRedStoneAdapter
-import IRedStonePriceFeed
 import Input
 import FindContract
 import VerifyResults
+import MockFeatured
+import Utils
+import Splice.Api.FeaturedAppRightV1
 
 main : Input -> Script ()
 main input = script do
   let updater = input.updater
   let viewer = input.viewer
+  let beneficiary = input.beneficiary
+  let owner = input.owner
+  let dso = input.dso
 
   currentTime <- getTime
   adapterCid <- findOneAdapter Input.adapterId updater
@@ -24,7 +27,11 @@ main input = script do
       currentTime
   debug $ "Processed result: " <> show values
 
-  newCid <- submit updater do
+  appRightCid <- findAnyAppRight beneficiary
+  let featuredCid = coerceContractId @FeaturedAppRight @MockFeaturedAppRight appRightCid
+  featuredDisclosure <- queryDisclosure @MockFeaturedAppRight beneficiary featuredCid
+
+  newCid <- submitDisclosed updater [featuredDisclosure] do
     exerciseCmd adapterCid WritePrices with
       payloadHex = input.payload
       feedIds = input.feedIds
@@ -36,17 +43,6 @@ main input = script do
     exerciseCmd adapterCid ReadPriceData with
       feedIds = input.feedIds
 
-  feedCid <- findOnePriceFeed Input.adapterId (head input.feedIds) viewer
-
-  feedResult <- submit viewer do
-    exerciseCmd feedCid ReadData with
-      adapterCid
-
-  signerCount <- submit viewer do
-    exerciseCmd adapterCid GetUniqueSignerThreshold
-
-  signerCount === 3
-
-  verifyResults currentTime readResult feedResult
+  verifyWithResult currentTime readResult values
 
   pure ()

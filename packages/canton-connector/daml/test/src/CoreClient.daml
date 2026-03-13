@@ -1,11 +1,11 @@
-module Featured where
+module CoreClient where
 
 import Daml.Script
 import Splice.Api.FeaturedAppRightV1
 
-import IRedStoneCoreFeatured
-import RedStoneCoreFeaturedClient
-import RedStoneCoreFeatured
+import IRedStoneCore
+import RedStoneCore
+import RedStoneCoreClient
 
 import Input
 import MockFeatured
@@ -25,27 +25,27 @@ main input = script do
     createCmd MockFeaturedAppRight with dso, provider = owner
 
   coreCid <- submit (actAs owner <> actAs beneficiary) do
-    createCmd RedStoneCoreFeatured with
+    createCmd RedStoneCore with
       coreId = "RedStoneCore-123"
       owner
       viewers = [viewer]
-      beneficiary
+      beneficiary = Some beneficiary
+      featuredCid = Some $ toInterfaceContractId @FeaturedAppRight featuredCid
 
   featuredDisclosure <- queryDisclosure @MockFeaturedAppRight owner featuredCid
-  coreDisclosure <- queryDisclosure @RedStoneCoreFeatured owner coreCid
+  coreDisclosure <- queryDisclosure @RedStoneCore owner coreCid
 
   result <- submitDisclosed viewer [featuredDisclosure] do
-    exerciseCmd (toInterfaceContractId @IRedStoneCoreFeatured coreCid) GetPricesFeatured with
+    exerciseCmd (toInterfaceContractId @IRedStoneCore coreCid) GetPricesWithCaller with
       payloadHex = input.payload
       feedIds = input.feedIds
       currentTime
       caller = viewer
-      featuredCid = toInterfaceContractId @FeaturedAppRight featuredCid
 
   debug $ "Processed result: " <> show result
 
   coreClientCid <- submit owner do
-    createCmd RedStoneCoreFeaturedClient with
+    createCmd RedStoneCoreClient with
       owner = owner
       viewers = [client]
 
@@ -56,8 +56,7 @@ main input = script do
       payloadHex = input.payload
       feedIds = input.feedIds
       currentTime
-      adapterCid = (toInterfaceContractId @IRedStoneCoreFeatured coreCid)
-      featuredCid = toInterfaceContractId @FeaturedAppRight featuredCid
+      adapterCid = (toInterfaceContractId @IRedStoneCore coreCid)
       caller = client
 
   debug $ "Client result: " <> show result

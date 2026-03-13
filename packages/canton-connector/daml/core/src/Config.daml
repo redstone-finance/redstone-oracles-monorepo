@@ -1,0 +1,5 @@
+module Config where
+
+import RedStone.Config
+
+adapter_config_fun = redstonePrimaryProdDefaultConfig

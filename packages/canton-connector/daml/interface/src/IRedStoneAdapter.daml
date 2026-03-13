@@ -5,11 +5,11 @@ import RedStoneTypes
 interface IRedStoneAdapter where
   viewtype RedStoneAdapterView
 
-  getPrices : [RedStoneFeedId] -> Time -> PayloadHex -> Update RedStoneResult
-  writePrices : [RedStoneFeedId] -> Time -> PayloadHex -> Update (ContractId IRedStoneAdapter)
-  readPriceData : [RedStoneFeedId] -> Update [Optional (RedStonePriceData RedStoneValue)]
-  readPrices : [RedStoneFeedId] -> Update [RedStoneValue]
-  getUniqueSignerThreshold: () -> Update Int
+  iRedStoneAdapter_GetPricesImpl : [RedStoneFeedId] -> Time -> PayloadHex -> Update RedStoneResult
+  iRedStoneAdapter_WritePricesImpl : (ContractId IRedStoneAdapter) -> [RedStoneFeedId] -> Time -> PayloadHex -> Update (ContractId IRedStoneAdapter)
+  iRedStoneAdapter_ReadPriceDataImpl : [RedStoneFeedId] -> Update [Optional (RedStonePriceData RedStoneValue)]
+  iRedStoneAdapter_ReadPricesImpl : [RedStoneFeedId] -> Update [RedStoneValue]
+  iRedStoneAdapter_GetUniqueSignerThresholdImpl: () -> Update Int
 
   nonconsuming choice GetPrices : RedStoneResult
     with
@@ -18,35 +18,35 @@ interface IRedStoneAdapter where
       payloadHex : PayloadHex
     controller (view this).viewers
     do
-      getPrices this feedIds currentTime payloadHex
+      iRedStoneAdapter_GetPricesImpl this feedIds currentTime payloadHex
 
-  choice WritePrices : ContractId IRedStoneAdapter
+  nonconsuming choice WritePrices : ContractId IRedStoneAdapter
     with
       feedIds : [RedStoneFeedId]
       currentTime : Time
       payloadHex : PayloadHex
     controller (view this).updaters
     do
-      writePrices this feedIds currentTime payloadHex
+      iRedStoneAdapter_WritePricesImpl this self feedIds currentTime payloadHex
 
   nonconsuming choice ReadPrices : [RedStoneValue]
     with
       feedIds : [RedStoneFeedId]
     controller (view this).viewers
     do
-      readPrices this feedIds
+      iRedStoneAdapter_ReadPricesImpl this feedIds
 
   nonconsuming choice ReadPriceData : [Optional (RedStonePriceData RedStoneValue)]
     with
       feedIds : [RedStoneFeedId]
     controller (view this).viewers
     do
-      readPriceData this feedIds
+      iRedStoneAdapter_ReadPriceDataImpl this feedIds
 
   nonconsuming choice GetUniqueSignerThreshold : Int
     controller (view this).viewers
     do
-      getUniqueSignerThreshold this ()
+      iRedStoneAdapter_GetUniqueSignerThresholdImpl this ()
 
 data RedStoneAdapterView = RedStoneAdapterView
   with
