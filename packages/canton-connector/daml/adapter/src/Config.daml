@@ -1,0 +1,10 @@
+module Config where
+
+import Time
+import RedStone.Config
+
+adapter_config_fun = redstonePrimaryProdDefaultConfig
+unique_signer_count = redstonePrimaryProdDefaultBaseConfig.signerCountThreshold
+
+pill_staleness_ms = one_day_ms
+pill_keep_ms = one_min_ms
