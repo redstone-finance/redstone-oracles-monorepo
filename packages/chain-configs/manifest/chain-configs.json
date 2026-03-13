@@ -1465,6 +1465,10 @@
       "name": "Tempo Mainnet",
       "networkId": 4217,
       "currencySymbol": "pathUSD",
+      "gasCurrencyToken": {
+        "address": "0x20c0000000000000000000000000000000000000",
+        "decimals": 6
+      },
       "publicRpcUrls": ["https://tempo-mainnet.drpc.org"],
       "avgBlockTimeMs": 1000,
       "multicall3": {
@@ -1479,7 +1483,11 @@
     "tempoTestnet": {
       "name": "Tempo Testnet (Moderato)",
       "networkId": 42431,
-      "currencySymbol": "USD",
+      "currencySymbol": "AlphaUSD",
+      "gasCurrencyToken": {
+        "address": "0x20c0000000000000000000000000000000000001",
+        "decimals": 6
+      },
       "publicRpcUrls": ["https://rpc.moderato.tempo.xyz"],
       "avgBlockTimeMs": 1000,
       "multicall3": {

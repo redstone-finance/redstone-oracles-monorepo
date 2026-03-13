@@ -4,11 +4,18 @@ import chainConfigs from "../manifest/chain-configs.json";
 
 export { chainConfigs };
 
+export const Erc20TokenSchema = z.object({
+  address: z.string(),
+  decimals: z.number().int().nonnegative(),
+});
+
 export const ChainConfigSchema = z.object({
   networkId: NetworkIdSchema,
   name: z.string(),
   publicRpcUrls: z.url().array(),
   currencySymbol: z.string(),
+  // Should be defined only for chains where we pay gas with ERC20 tokens instead of native gas token (eg. Tempo)
+  gasCurrencyToken: Erc20TokenSchema.optional(),
   avgBlockTimeMs: z.number(),
   isAuctionModel: z.boolean(),
   twoDimensionalFees: z.boolean(),
@@ -59,13 +66,7 @@ export const SupportedNetworkNamesSchema = z.custom<SupportedNetworkNames>(
   }
 );
 
-export const TokenMapSchema = z.record(
-  z.string(),
-  z.object({
-    address: z.string(),
-    decimals: z.number().int().nonnegative(),
-  })
-);
+export const TokenMapSchema = z.record(z.string(), Erc20TokenSchema);
 
 export const ChainTokenMapSchema = z.record(SupportedNetworkNamesSchema, TokenMapSchema.optional());
 
