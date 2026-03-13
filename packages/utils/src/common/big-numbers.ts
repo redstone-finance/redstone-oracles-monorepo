@@ -15,3 +15,10 @@ export const normalizeDecimals = (reserve: BigNumber, decimals: number): BigNumb
   const decimalsRequired = DEFAULT_DECIMALS - decimals;
   return reserve.mul(parseUnits("1.0", decimalsRequired));
 };
+
+export function toReadableNumber(
+  number: number | BigNumber | string | bigint,
+  decimals: number = 18
+) {
+  return Number(number) / 10 ** decimals;
+}
