@@ -16,6 +16,13 @@
     },
     "ETH": {
       "priceFeedAddress": "0x086762859Ea720432D59D59f022B04222Ef74d0f"
+    },
+    "eUSD_FUNDAMENTAL/USD": {
+      "priceFeedAddress": "0xb81131B6368b3F0a83af09dB4E39Ac23DA96C2Db",
+      "updateTriggersOverrides": {
+        "deviationPercentage": 0.2,
+        "timeSinceLastUpdateInMilliseconds": 43200000
+      }
     }
   }
 }
