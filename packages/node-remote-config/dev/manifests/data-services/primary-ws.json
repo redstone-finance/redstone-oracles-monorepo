@@ -442,6 +442,44 @@
       "denomination": "USD",
       "rateFeed": false,
       "types": ["rwa"]
+    },
+    "KOSPI200": {
+      "source": ["alltick-api", "ws-itick-indices"],
+      "denomination": "KRW",
+      "rateFeed": false,
+      "types": ["rwa"]
+    },
+    "NIKKEI225": {
+      "source": ["alltick-api", "finhub_fxcm-usd", "finhub_oanda-usd", "ws-itick-indices"],
+      "denomination": "JPY",
+      "rateFeed": false,
+      "types": ["rwa"]
+    },
+    "MSCI": {
+      "source": [
+        "alltick-stocks-api",
+        "ws-aleno",
+        "ws-blocksize",
+        "databento-no-closing-price",
+        "ws-polygon-massive",
+        "ws-dx-feed"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": ["rwa"]
+    },
+    "URTH": {
+      "source": [
+        "ws-aleno",
+        "ws-blocksize",
+        "databento-no-closing-price",
+        "ws-polygon-massive",
+        "ws-dx-feed",
+        "twelve-data"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": ["rwa"]
     }
   },
   "multiPointPackages": {}
