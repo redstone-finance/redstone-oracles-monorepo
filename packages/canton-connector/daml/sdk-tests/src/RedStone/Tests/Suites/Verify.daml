@@ -1,0 +1,70 @@
+module RedStone.Tests.Suites.Verify
+(
+    runTests
+)
+where
+
+import RedStone.Tests.Test
+import RedStone.Tests.Run
+import RedStone.Internal.Verify
+
+runTests : (Action m, ActionFail m, CanAbort m) => m ()
+runTests = do
+  runSuite timestampSuite
+
+testBlockTimestamp = 2_000_000_000_000
+testMaxDelayMs = 900_000
+testMaxAheadMs = 180_000
+someDiffMs = 60_000
+
+data ConfigLike = ConfigLike with
+  currentTimestamp : Int
+  maxDelayMs : Int
+  maxAheadMs : Int
+    deriving (Eq, Show)
+
+mkConfig ts = ConfigLike with
+  currentTimestamp = ts
+  maxDelayMs = testMaxDelayMs
+  maxAheadMs = testMaxAheadMs
+
+data DataPackageLike = DataPackageLike with
+  timestamp : Int
+    deriving (Eq, Show)
+
+mkDataPackage ts = DataPackageLike with
+  timestamp = ts
+
+timestampSuite = TestSuite with
+  cases = timestampCases
+  name = "Verify Timestamps"
+  test = runTimestampTest
+
+runTimestampTest (blockTs, pkgTs) = verifyTimestamps (mkConfig blockTs) (map mkDataPackage pkgTs)
+
+timestampCases =
+    [ TestCase with
+        name = "same timestamp as block timestamp"
+        input = (testBlockTimestamp, [testBlockTimestamp])
+        output = testBlockTimestamp
+    , TestCase with
+        name = "timestamp slightly ahead"
+        input = (testBlockTimestamp, [testBlockTimestamp + someDiffMs])
+        output = testBlockTimestamp + someDiffMs
+    , TestCase with
+        name = "timestamp at max ahead boundary"
+        input = (testBlockTimestamp, [testBlockTimestamp + testMaxAheadMs])
+        output = testBlockTimestamp + testMaxAheadMs
+    , TestCase with
+        name = "timestamp at max delay boundary"
+        input = (testBlockTimestamp, [testBlockTimestamp - testMaxDelayMs])
+        output = testBlockTimestamp - testMaxDelayMs
+    , TestCase with
+        name = "timestamp slightly behind"
+        input = (testBlockTimestamp, [testBlockTimestamp - someDiffMs])
+        output = testBlockTimestamp - someDiffMs
+    , TestCase with
+        name = "all timestamps equal across packages"
+        input = (testBlockTimestamp, [testBlockTimestamp, testBlockTimestamp, testBlockTimestamp])
+        output = testBlockTimestamp
+    ]

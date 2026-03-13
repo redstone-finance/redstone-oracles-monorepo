@@ -37,13 +37,7 @@ aggregate = map (mapResult median show)
 
 processPayloadBytes config bytes =
   let
-    (markerRest, marker) = bytesTrim redstone_marker_size bytes
-
-    _ = marker == redstone_marker ??? RedStoneError Processing "Wrong RedStone marker" marker
-
-    (unsMetadataByteCountRest, unsignedMetadataByteCount) = bytesTrimNum uns_metadata_count_bs markerRest
-    (unsMetadataRest, _) = bytesTrim unsignedMetadataByteCount unsMetadataByteCountRest
-    (dataPackageCountRest, dataPackageCount) = bytesTrimNum data_packages_bs unsMetadataRest
+    (dataPackageCountRest, dataPackageCount) = trimMetadata bytes
     (Bytes{revList=dataPackagesRest}, dataPackages) = trimMulti trimDataPackage dataPackageCount dataPackageCountRest
 
     _ = L.null dataPackagesRest ??? RedStoneError Processing "Non-empty payload remainder" (L.reverse dataPackagesRest)

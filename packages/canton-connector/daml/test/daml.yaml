@@ -13,6 +13,7 @@ data-dependencies:
   - ../adapter/.daml/dist/redstone-adapter-v2-0.4.0.dar
   - ../price_feed/.daml/dist/redstone-price-feed-v2-0.4.0.dar
   - ../sdk/.daml/dist/redstone-sdk-v2-0.4.0.dar
+  - ../sdk-tests/.daml/dist/redstone-sdk-tests-v2-0.4.0.dar
   - ../featured/.daml/dist/redstone-featured-v2-0.4.0.dar
   - ../factory/.daml/dist/redstone-factory-v2-0.4.0.dar
   - ../featured/dars/splice-api-featured-app-v1-1.0.0.dar

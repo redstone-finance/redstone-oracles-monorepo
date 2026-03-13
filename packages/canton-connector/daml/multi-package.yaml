@@ -2,6 +2,7 @@ sdk-version: 3.4.11
 packages:
   - ./common
   - ./sdk
+  - ./sdk-tests
   - ./interface
   - ./core
   - ./adapter

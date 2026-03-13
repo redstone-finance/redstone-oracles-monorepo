@@ -1,0 +1,56 @@
+module RedStone.Tests.Suites.Protocol
+(
+    runTests
+)
+where
+
+import RedStone.Tests.Test
+import RedStone.Tests.Run
+import RedStone.Internal.Protocol
+import RedStone.Internal.Bytes
+import RedStone.Internal.Hex
+
+runTests : (Action m, ActionFail m, CanAbort m) => m ()
+runTests = do
+  runSuite markerSuite
+  runSuite metadataSuite
+
+markerHex = "000002ed57011e0000"
+payloadTailHex = "1c000f000000000002ed57011e0000"
+payloadTailBytes = hexToList payloadTailHex
+
+-- RedStone marker tests
+
+markerSuite = TestSuite with
+  cases = markerCases
+  name = "RedStone Marker Tests"
+  test = bytesTrim redstone_marker_size
+
+markerCases =
+    [ TestCase with
+        name = "redstone marker matches expected bytes"
+        input = fromList payloadTailBytes
+        output = (Bytes [0, 0, 0, 15, 0, 28], redstone_marker)
+    ]
+
+-- Metadata trimming tests
+
+metadataSuite = TestSuite with
+  cases = metadataCases
+  name = "Metadata Checking Tests"
+  test = trimMetadata . fromList  .hexToList
+
+metadataCases =
+    [ TestCase with
+        name = "parse data package count = 15"
+        input = "9e0294371c" <> "000f000000" <> markerHex
+        output = (Bytes [0x1c, 0x37, 0x94, 0x02, 0x9e], 15)
+    , TestCase with
+        name = "check metadata with 1 byte of unsigned metadata"
+        input = "9e0294371c" <> "aabb000f55000001" <> markerHex
+        output = (Bytes [0xbb, 0xaa, 0x1c, 0x37, 0x94, 0x02, 0x9e], 15)
+    , TestCase with
+        name = "check metadata with 16 bytes of unsigned metadata"
+        input = "9e0294371c" <> "000f11223344556677889900aabbccddeeff000010" <> markerHex
+        output = (Bytes [0x1c, 0x37, 0x94, 0x02, 0x9e], 15)
+    ]

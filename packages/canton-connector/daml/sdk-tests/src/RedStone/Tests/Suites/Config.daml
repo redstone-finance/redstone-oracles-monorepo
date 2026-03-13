@@ -1,0 +1,84 @@
+module RedStone.Tests.Suites.Config
+(
+    runTests
+)
+where
+
+import DA.Date
+import DA.Time
+import RedStone.Tests.Test
+import RedStone.Tests.Run
+import RedStone.Config
+
+runTests : (Action m, ActionFail m, CanAbort m) => m ()
+runTests = do
+  runSuite configFeedIdsSuite
+  runSuite configSignersSuite
+  runSuite configThresholdSuite
+
+testTime = time (date 2026 Jan 1) 12 0 0
+
+testSigners =
+  [ "049a0e6cada7938a0fc616578aff2b11337d90ec4e99e9fee95e57e9d8371562b31698225fb73c666ba586842b913e67ad289f374f7a46fc873342f805a8683d4e"
+  , "04683f7100d67fbaccae68db4d146f7bc3090c5cbcb1351e333efd58d42f609ceeada12b0af28a6e789d6edfe25fe784dd1e86798240d4cee9f60e56848cb55965"
+  , "04490f08821dea02d23683f170459aa6317dd65b544aac1df514f2e657f87ac00b81757edce3e78785e00dcd92e2dc8ddd9a680dc929a0c91062d87ae000a217ce"
+  ]
+
+mkConfig (feedIds, signers, threshold) =
+  config (defaultBaseConfig signers) { signerCountThreshold = threshold } feedIds testTime
+
+-- Feed IDs validation
+
+configFeedIdsSuite = TestSuite with
+  cases = configFeedIdsCases
+  name = "Config Feed IDs Validation"
+  test = (\a -> a.feedIds) . mkConfig
+
+
+
+configFeedIdsCases =
+    [ TestCase with
+        name = "correct feed ids accepted"
+        input = ([[69,84,72], [66,84,67], [83,79,76]], testSigners, 2)
+        output = [[69,84,72], [66,84,67], [83,79,76]]
+    , TestCase with
+        name = "single feed id accepted"
+        input = ([[69,84,72]], testSigners, 2)
+        output = [[69,84,72]]
+    ]
+
+-- Signers validation
+
+configSignersSuite = TestSuite with
+  cases = configSignersCases
+  name = "Config Signers Validation"
+  test = length . (\a -> a.signers) . mkConfig
+
+configSignersCases =
+    [ TestCase with
+        name = "correct signers accepted"
+        input = ([[69,84,72]], testSigners, 2)
+        output = 3
+    , TestCase with
+        name = "signers count matches input"
+        input = ([[69,84,72]], take 2 testSigners, 2)
+        output = 2
+    ]
+
+-- Threshold validation
+
+configThresholdSuite = TestSuite with
+  cases = configThresholdCases
+  name = "Config Threshold Validation"
+  test = (\a -> a.signerCountThreshold). mkConfig
+
+configThresholdCases =
+    [ TestCase with
+        name = "threshold equal to signer count accepted"
+        input = ([[69,84,72]], testSigners, 3)
+        output = 3
+    , TestCase with
+        name = "threshold less than signer count accepted"
+        input = ([[69,84,72]], testSigners, 1)
+        output = 1
+    ]
