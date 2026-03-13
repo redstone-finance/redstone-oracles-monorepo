@@ -4,7 +4,7 @@ import {
   getSignersForDataServiceId,
   sampleRun,
 } from "@redstone-finance/sdk";
-import { CoreFactoryCantonContractConnector, DEFS_KEY_CORE_FEATURED } from "../src";
+import { PricesCantonContractConnector } from "../src";
 import { PricePillCantonContractConnector } from "../src/adapters/PricePillCantonContractConnector";
 import { makeDefaultClient } from "./utils";
 
@@ -12,18 +12,16 @@ const VIEWER_PARTY_NAME = `RedStoneOracleViewer`;
 const UPDATER_PARTY_NAME = `RedStoneOracleUpdater`;
 const OWNER_PARTY_NAME = `RedStoneOracleOwner`;
 
+const ADAPTER_ID = "RedStoneAdapter-v2-0.4.0";
+
 async function main() {
-  const [client, _updateClient, ownerClient] = [
+  const [client, updateClient, _ownerClient] = [
     VIEWER_PARTY_NAME,
     UPDATER_PARTY_NAME,
     OWNER_PARTY_NAME,
   ].map(makeDefaultClient);
 
-  const connector = new CoreFactoryCantonContractConnector(
-    client,
-    ownerClient,
-    client.Defs[DEFS_KEY_CORE_FEATURED].contractId
-  );
+  const connector = new PricesCantonContractConnector(client, updateClient, ADAPTER_ID);
 
   const paramsProvider = new ContractParamsProvider({
     dataPackagesIds: ["ETH", "BTC"],
@@ -32,8 +30,7 @@ async function main() {
     authorizedSigners: getSignersForDataServiceId("redstone-primary-prod"),
   });
 
-  const ethPriceFeedConnector = new PricePillCantonContractConnector(client, "ETH");
-
+  const ethPriceFeedConnector = new PricePillCantonContractConnector(client, "ETH", ADAPTER_ID);
   const oldConnector = new BackwardCompatibleConnector(connector);
 
   await sampleRun(paramsProvider, oldConnector, ethPriceFeedConnector);

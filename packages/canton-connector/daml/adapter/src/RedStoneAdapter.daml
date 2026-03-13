@@ -2,22 +2,25 @@ module RedStoneAdapter where
 
 import DA.List as L
 import DA.Map as M
-import RedStone.Config
+import RedStone.Config(verifyConfigAgainstLedger)
 import RedStone.GetPrices as G
 import RedStone.Processor
-import RedStone.ProcessorResult
-import RedStone.Result
-import RedStone.U256
 import RedStoneTypes
 import IRedStoneAdapter
+import IRedStonePricePillFactory
+import Config(unique_signer_count, adapter_config_fun)
+import NewFeedData
+import Verify
+import PillRecord
 
 template RedStoneAdapter
   with
-    adapterId: Text
+    adapterId : Text
     owner : Party
     updaters : [Party]
     viewers : [Party]
-    feedData : M.Map [Int] (RedStonePriceData U256)
+    feedData : M.Map RedStoneFeedId [PillRecord]
+    pillFactory : Optional (ContractId IRedStonePricePillFactory)
   where
     signatory owner
     observer viewers, updaters
@@ -25,48 +28,40 @@ template RedStoneAdapter
     interface instance IRedStoneAdapter for RedStoneAdapter where
       view = RedStoneAdapterView with updaters, viewers, adapterId
 
-      getPrices feedIds currentTime = G.getPricesNumeric $ redstonePrimaryProdDefaultConfig feedIds currentTime
+      iRedStoneAdapter_GetPricesImpl feedIds currentTime = G.getPricesNumeric $ adapter_config_fun feedIds currentTime
 
-      writePrices feedIds currentTime payloadHex = do
-        config <- verifyConfigAgainstLedger $ redstonePrimaryProdDefaultConfig feedIds currentTime
+      iRedStoneAdapter_WritePricesImpl self feedIds currentTime payloadHex = do
+        config <- verifyConfigAgainstLedger $ adapter_config_fun feedIds currentTime
 
-        let (values, timestamp) = processPayload config payloadHex
+        let (values, timestamp) = processPayloadNumeric config payloadHex
+        let newValues = determineNewValues (config.currentTimestamp, feedData) feedIds (values, timestamp)
 
-        let verify (feedId, value) =
-              case value of
-                Error t -> Error (t <> " for " <> show feedId)
-                Ok v -> case M.lookup feedId feedData of
-                  None -> value
-                  Some priceData
-                    | priceData.timestamp < timestamp && priceData.writeTimestamp < config.currentTimestamp -> value
-                    | otherwise -> Error ("Wrong timestamps for " <> show feedId)
+        if L.null newValues then
+          return self
+        else do
+          newData <- newFeedData viewers pillFactory adapterId feedData config.currentTimestamp timestamp newValues
 
-        let verifiedValues = zipWith (\feedId val -> (feedId, verify (feedId, val))) feedIds values
-        let filteredValues = L.filter (resultIsOk . snd) verifiedValues
-        let unwrappedValues = map (\(feedId, value) -> (feedId, resultUnwrap value)) filteredValues
+          newCid <- create this with
+            feedData = newData
+          archive self
 
-        let newEntries = M.fromList $ map (\(feedId, value) ->
-              (feedId, RedStonePriceData value timestamp config.currentTimestamp))
-              unwrappedValues
-        let updatedFeedData = M.union newEntries feedData
+          return $ toInterfaceContractId @IRedStoneAdapter newCid
 
-        newCid <- create this with feedData = updatedFeedData
-
-        return $ toInterfaceContractId @IRedStoneAdapter newCid
-
-      readPriceData feedIds = do
+      iRedStoneAdapter_ReadPriceDataImpl feedIds = do
         let getPriceData feedId =
               case M.lookup feedId feedData of
                 None -> None
-                Some priceData -> Some $ RedStonePriceData{value = u256ToDecimalValue priceData.value,timestamp=priceData.timestamp,writeTimestamp=priceData.writeTimestamp}
+                Some (newest :: _) -> Some newest.priceData
+                Some [] -> None
         return $ map getPriceData feedIds
 
-      readPrices feedIds = do
+      iRedStoneAdapter_ReadPricesImpl feedIds = do
         let getPriceValue feedId =
               case M.lookup feedId feedData of
                 None -> error $ "Value not found " <> show feedId
-                Some priceData -> u256ToDecimalValue priceData.value
+                Some (newest :: _) -> newest.priceData.value
+                Some [] -> error $ "Value not found " <> show feedId
         return $ map getPriceValue feedIds
 
-      getUniqueSignerThreshold () = do
-       return redstonePrimaryProdDefaultBaseConfig.signerCountThreshold
+      iRedStoneAdapter_GetUniqueSignerThresholdImpl () = do
+        return unique_signer_count
