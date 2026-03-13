@@ -1,0 +1,16 @@
+module RedStone.Tests.Helpers
+(
+    n
+  , maxU256
+  , maxSub1
+  , maxDiv2
+)
+where
+
+import RedStone.U256
+
+n v = u256FromBeByteList [v]
+
+maxU256 = u256FromBeByteList $ replicate 32 255
+maxSub1 = u256FromBeByteList $ replicate 31 255 ++ [254]
+maxDiv2 = u256FromBeByteList $ 127 :: replicate 31 255

@@ -1,0 +1,35 @@
+module RedStone.Tests.Tests
+(
+    runAllTests
+)
+where
+
+import RedStone.Tests.Suites.Config as Config
+import RedStone.Tests.Suites.DataPackage as DataPackage
+import RedStone.Tests.Suites.DataPoint as DataPoint
+import RedStone.Tests.Suites.Der as Der
+import RedStone.Tests.Suites.Hex as Hex
+import RedStone.Tests.Suites.Math as Math
+import RedStone.Tests.Suites.Median as Median
+import RedStone.Tests.Suites.MedianExtended as MedianExtended
+import RedStone.Tests.Suites.Protocol as Protocol
+import RedStone.Tests.Suites.Trim as Trim
+import RedStone.Tests.Suites.U256 as U256
+import RedStone.Tests.Suites.U256Conversion as U256Conversion
+import RedStone.Tests.Suites.Verify as Verify
+
+runAllTests : (Action m, ActionFail m, CanAbort m) => m ()
+runAllTests = do
+  U256Conversion.runTests
+  U256.runTests
+  Median.runTests
+  MedianExtended.runTests
+  Der.runTests
+  Hex.runTests
+  Math.runTests
+  Protocol.runTests
+  Trim.runTests
+  DataPoint.runTests
+  Config.runTests
+  DataPackage.runTests
+  Verify.runTests

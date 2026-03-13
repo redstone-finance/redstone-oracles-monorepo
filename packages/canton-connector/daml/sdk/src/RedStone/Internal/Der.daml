@@ -61,5 +61,8 @@ isCanonicalS sBytes = sBytes <= secp256k1_N_div_2
 
 derEncodeList list =
   let
-    list' = (\list -> if head list >= 0x80 then 0x00 :: list else list) $ L.dropWhile (== 0x00) list
+    stripped = L.dropWhile (== 0x00) list
+    list' = case stripped of
+      [] -> [0x00]
+      (h :: _) -> if h >= 0x80 then 0x00 :: stripped else stripped
   in 0x02 :: (L.length list') :: list'

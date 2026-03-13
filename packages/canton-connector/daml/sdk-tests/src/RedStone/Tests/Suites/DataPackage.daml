@@ -1,0 +1,87 @@
+module RedStone.Tests.Suites.DataPackage
+(
+    runTests
+)
+where
+
+import DA.List as L
+import RedStone.Tests.Test
+import RedStone.Tests.Run
+import RedStone.Internal.Bytes
+import RedStone.Internal.DataPackage
+import RedStone.Internal.DataPoint
+import RedStone.Internal.Hex
+import RedStone.Internal.Trim
+import RedStone.U256
+
+runTests : (Action m, ActionFail m, CanAbort m) => m ()
+runTests = do
+  runSuite parseSuite
+  runSuite structureSuite
+
+dataPackageHex1 = "4554480000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000360cafc94e018d79bf0ba00000002000000151afa8c5c3caf6004b42c0fb17723e524f993b9ecbad3b9bce5ec74930fa436a3660e8edef10e96ee5f222de7ef5787c02ca467c0ec18daa2907b43ac20c63c11c"
+dataPackageHex2 = "4554480000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000360cdd851e018d79bf0ba000000020000001473fd9dc72e6814a7de719b403cf4c9eba08934a643fd0666c433b806b31e69904f2226ffd3c8ef75861b11b5e32a1fda4b1458e0da4605a772dfba2a812f3ee1b"
+twoPackagesHex = dataPackageHex1 <> dataPackageHex2
+parseMultiPackages n = trimMulti trimDataPackage n . fromList . hexToList
+
+parseSuite = TestSuite with
+  cases = parseCases
+  name  = "DataPackage Parse"
+  test = \(hex, count) -> (fst . parseMultiPackages count) hex
+
+parseCases =
+    [ TestCase with
+        name = "remainder is empty after parsing"
+        input = (dataPackageHex1, 1)
+        output = Bytes []
+    , TestCase with
+        name = "remains second package after parsing first"
+        input = (twoPackagesHex, 1)
+        output =  Bytes . L.reverse $ hexToList dataPackageHex1
+    , TestCase with
+        name = "two package remainder is empty"
+        input = (twoPackagesHex, 2)
+        output =  Bytes []
+    , TestCase with
+        name = "prefixed two-package input preserves prefix"
+        input = ("da4687f1914a1c" <> twoPackagesHex, 2)
+        output =  Bytes . L.reverse $ hexToList "da4687f1914a1c"
+    ]
+
+
+dp1 = DataPackage with
+          dataPoints = [DataPoint [69, 84, 72] $ u256FromInt 232141080910]
+          timestamp = 1707144580000
+          signature = HexBytes $ hexToList "51afa8c5c3caf6004b42c0fb17723e524f993b9ecbad3b9bce5ec74930fa436a3660e8edef10e96ee5f222de7ef5787c02ca467c0ec18daa2907b43ac20c63c11c"
+          signableBytes = HexBytes $ hexToList "4554480000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000360cafc94e018d79bf0ba000000020000001"
+
+dp2 = DataPackage with
+          dataPoints = [DataPoint [69, 84, 72] $ u256FromBeByteList [0x36, 0x0c, 0xdd, 0x85, 0x1e]]
+          timestamp = 1707144580000
+          signature = HexBytes $ hexToList "473fd9dc72e6814a7de719b403cf4c9eba08934a643fd0666c433b806b31e69904f2226ffd3c8ef75861b11b5e32a1fda4b1458e0da4605a772dfba2a812f3ee1b"
+          signableBytes = HexBytes $ hexToList "4554480000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000360cdd851e018d79bf0ba000000020000001"
+
+
+structureSuite = TestSuite with
+  cases = structureCases
+  name = "DataPackage Structure"
+  test = \(hex, count) -> (snd . parseMultiPackages count) hex
+
+structureCases =
+    [ TestCase with
+        name = "single data point, correct feedId and value"
+        input = (dataPackageHex1, 1)
+        output = [dp1]
+    , TestCase with
+        name = "second package value"
+        input = (dataPackageHex2, 1)
+        output = [dp2]
+    , TestCase with
+        name = "two packages parsed from concatenated input"
+        input = (twoPackagesHex, 2)
+        output = [dp1, dp2]
+    , TestCase with
+        name = "two packages parsed from concatenated input with prefix"
+        input = ("da4687f1914a1c" <> twoPackagesHex, 2)
+        output = [dp1, dp2]
+    ]
