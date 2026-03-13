@@ -20,6 +20,6 @@ verifyTimestamps config dataPackages =
 
         timestamp = head ts
 
-        _ = timestamp <= config.currentTimestamp + config.maxAheadMs ??? verificationError "Timestamp to future" (timestamp, config.currentTimestamp + config.maxAheadMs)
-        _ = timestamp >= config.currentTimestamp - config.maxDelayMs ??? verificationError "Timestamp to old" (timestamp, config.currentTimestamp - config.maxAheadMs)
+        _ = timestamp <= config.currentTimestamp + config.maxAheadMs ??? verificationError "Timestamp too far in the future" (timestamp, config.currentTimestamp + config.maxAheadMs)
+        _ = timestamp >= config.currentTimestamp - config.maxDelayMs ??? verificationError "Timestamp too old" (timestamp, config.currentTimestamp - config.maxDelayMs)
     in timestamp

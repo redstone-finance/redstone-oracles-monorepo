@@ -1,5 +1,8 @@
 module RedStone.Internal.Protocol where
 
+import RedStone.Internal.Bytes as B
+import RedStone.Internal.Error
+
 -- Public
 
 signature_bs = 65
@@ -12,3 +15,14 @@ redstone_marker = [0,0,2,237,87,1,30,0,0]
 uns_metadata_count_bs = 3
 data_packages_bs = 2
 decimals = 8
+
+
+trimMetadata bytes =
+  let
+    (markerRest, marker) = bytesTrim redstone_marker_size bytes
+
+    _ = marker == redstone_marker ??? RedStoneError Processing "Wrong RedStone marker" marker
+
+    (unsMetadataByteCountRest, unsignedMetadataByteCount) = bytesTrimNum uns_metadata_count_bs markerRest
+    (unsMetadataRest, _) = bytesTrim unsignedMetadataByteCount unsMetadataByteCountRest
+  in bytesTrimNum data_packages_bs unsMetadataRest
