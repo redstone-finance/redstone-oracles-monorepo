@@ -8633,13 +8633,13 @@
     },
     "KOSPI": {
       "source": ["alltick-api", "ws-aleno"],
-      "denomination": "USD",
+      "denomination": "KRW",
       "rateFeed": false,
       "types": ["rwa"]
     },
     "KOSPI200": {
       "source": ["alltick-api", "ws-itick-indices"],
-      "denomination": "USD",
+      "denomination": "KRW",
       "rateFeed": false,
       "types": ["rwa"]
     },
@@ -8703,6 +8703,81 @@
       "source": ["spark-anchorage-api"],
       "denomination": "ratio",
       "rateFeed": true
+    },
+    "FTSE": {
+      "source": ["twelve-data"],
+      "denomination": "GBP",
+      "rateFeed": false,
+      "types": ["rwa"]
+    },
+    "FTSE100": {
+      "source": [
+        "alltick-api",
+        "finhub_capital-usd",
+        "finhub_fxcm-usd",
+        "finhub_oanda-usd",
+        "ws-lmax",
+        "ws-itick-indices"
+      ],
+      "denomination": "GBP",
+      "rateFeed": false,
+      "types": ["rwa"]
+    },
+    "KRW": {
+      "source": [
+        "twelve-data",
+        "finhub_pepperstone-usd-reversed",
+        "alltick-api-reversed",
+        "ws-polygon-massive",
+        "metal-price-api"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": ["rwa"]
+    },
+    "DAX": {
+      "source": [
+        "ws-aleno",
+        "databento-no-closing-price",
+        "ws-polygon-massive",
+        "ws-dx-feed",
+        "twelve-data"
+      ],
+      "denomination": "EUR",
+      "rateFeed": false,
+      "types": ["rwa"]
+    },
+    "NIKKEI225": {
+      "source": ["alltick-api", "finhub_fxcm-usd", "finhub_oanda-usd", "ws-itick-indices"],
+      "denomination": "JPY",
+      "rateFeed": false,
+      "types": ["rwa"]
+    },
+    "MSCI": {
+      "source": [
+        "alltick-stocks-api",
+        "ws-aleno",
+        "ws-blocksize",
+        "databento-no-closing-price",
+        "ws-polygon-massive",
+        "ws-dx-feed"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": ["rwa"]
+    },
+    "URTH": {
+      "source": [
+        "ws-aleno",
+        "ws-blocksize",
+        "databento-no-closing-price",
+        "ws-polygon-massive",
+        "ws-dx-feed",
+        "twelve-data"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": ["rwa"]
     },
     "IS_NY_STOCKS_MARKET_OPEN": {
       "source": ["is-ny-stocks-market-open"],
