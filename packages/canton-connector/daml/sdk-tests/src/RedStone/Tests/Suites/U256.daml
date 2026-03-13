@@ -6,6 +6,7 @@ where
 
 import RedStone.Tests.Test
 import RedStone.Tests.Run
+import RedStone.Tests.Helpers
 import RedStone.U256
 import DA.List as L (sort)
 
@@ -29,33 +30,23 @@ testSuitesSort = [
     TestSuite with cases = testSort, name = "U256 Sorting", test = runTest
     ]
 
-
-
-zero = u256FromBeByteList [0]
-one = u256FromBeByteList [1]
-two = u256FromBeByteList [2]
-five = u256FromBeByteList [5]
-ten = u256FromBeByteList [10]
-maxU256 = u256FromBeByteList $ replicate 32 255
-halfMax = u256FromBeByteList $ 127 :: replicate 31 255
-
 testBasicOperations =
     [ TestCase with
         name = "10 / 2 = 5"
-        input = Input with input = ten, op = divBy2
-        output = five
+        input = Input with input = n 10, op = divBy2
+        output = n 5
     , TestCase with
         name = "5 + 5 = 10"
-        input = Input with input = five, op = \x -> add x x
-        output = ten
+        input = Input with input = n 5, op = \x -> add x x
+        output = n 10
     , TestCase with
         name = "10 mod 2 = 0"
-        input = Input with input = ten, op = mod2
-        output = zero
+        input = Input with input = n 10, op = mod2
+        output = n 0
     , TestCase with
         name = "5 mod 2 = 1"
-        input = Input with input = five, op = mod2
-        output = one
+        input = Input with input = n 5, op = mod2
+        output = n 1
     , TestCase with
         name = "255 / 2 = 127"
         input = Input with input = u256FromBeByteList [255], op = divBy2
@@ -90,45 +81,45 @@ testEdgeCases =
   -- Test: Zero
     [ TestCase with
         name = "0 / 2 = 0"
-        input = Input with input = zero, op = divBy2
-        output = zero
+        input = Input with input = n 0, op = divBy2
+        output = n 0
     , TestCase with
         name = "0 + 0 = 0"
-        input = Input with input = zero, op = \x -> add x x
-        output = zero
+        input = Input with input = n 0, op = \x -> add x x
+        output = n 0
     , TestCase with
         name = "0 mod 2 = 0"
-        input = Input with input = zero, op = mod2
-        output = zero
+        input = Input with input = n 0, op = mod2
+        output = n 0
 
   -- Test: One
     , TestCase with
         name = "1 / 2 = 0"
-        input = Input with input = one, op = divBy2
-        output = zero
+        input = Input with input = n 1, op = divBy2
+        output = n 0
     , TestCase with
         name = "1 mod 2 = 1"
-        input = Input with input = one, op = mod2
-        output = one
+        input = Input with input = n 1, op = mod2
+        output = n 1
 
 -- Test: Max U256
     , TestCase with
         name =  "maxU256 / 2"
         input = Input with input = maxU256, op = divBy2
-        output = halfMax
+        output = maxDiv2
     , TestCase with
         name = "maxU256 mod 2 = 1"
         input = Input with input = maxU256, op = mod2
-        output = one
+        output = n 1
 
   -- Test: Carry propagation
     , TestCase with
         name = "65535 + 1 = 65536"
-        input = Input with input = u256FromBeByteList [255, 255], op = add one
+        input = Input with input = u256FromBeByteList [255, 255], op = add $ n 1
         output = u256FromBeByteList [1, 0, 0]
     , TestCase with
         name = "carry through 16 bytes"
-        input = Input with input = u256FromBeByteList $ replicate 16 255, op = add one
+        input = Input with input = u256FromBeByteList $ replicate 16 255, op = add $ n 1
         output = u256FromBeByteList $ [1] ++ replicate 15 0 ++ [0]
     ]
 
@@ -136,19 +127,19 @@ testEdgeCases =
 testComparison =
     [ TestCase with
         name = "1 < 2"
-        input = Input with input = (one, two), op = uncurry (<)
+        input = Input with input = (n 1, n 2), op = uncurry (<)
         output = True
     , TestCase with
         name = "2 > 1"
-        input = Input with input = (two, one), op = uncurry (>)
+        input = Input with input = (n 2, n 1), op = uncurry (>)
         output = True
     , TestCase with
         name = "2 > 0"
-        input = Input with input = (two, zero), op = uncurry (>)
+        input = Input with input = (n 2, n 0), op = uncurry (>)
         output = True
     , TestCase with
         name = "1 == 1"
-        input = Input with input = (one, one), op = uncurry (==)
+        input = Input with input = (n 1, n 1), op = uncurry (==)
         output = True
      , TestCase with
         name = "256 < 257"
@@ -160,9 +151,9 @@ testSort =
     [ TestCase with
         name = "sort"
         input =  Input with
-            input = [halfMax, u256FromBeByteList [1, 0], one, u256FromBeByteList [255], two, maxU256, zero]
+            input = [maxDiv2, u256FromBeByteList [1, 0], n 1, u256FromBeByteList [255], n 2, maxU256, n 0]
             op = sort
-        output = [zero, one, two, u256FromBeByteList [255], u256FromBeByteList [1, 0], halfMax, maxU256]
+        output = [n 0, n 1, n 2, u256FromBeByteList [255], u256FromBeByteList [1, 0], maxDiv2, maxU256]
     ]
 
 -- TODO: Find a way of testing functions which throw

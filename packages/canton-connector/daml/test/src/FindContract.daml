@@ -52,7 +52,7 @@ findPricePill: Bool -> Text -> RedStoneFeedId -> Party -> Script (ContractId IRe
 findPricePill checkIsUnique adapterId feedId party = do
    contracts <- queryInterface @IRedStonePricePill party
 
-   findContract checkIsUnique (\view -> view.feedId == feedId) party contracts
+   findContract checkIsUnique (\view -> view.feedId == feedId && view.adapterId == adapterId) party contracts
 
 findAppRight: Bool -> Party -> Script (ContractId FeaturedAppRight)
 findAppRight checkIsUnique party = do

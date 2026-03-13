@@ -1,0 +1,156 @@
+module RedStone.Tests.Suites.Hex
+(
+    runTests
+)
+where
+
+import RedStone.Tests.Test
+import RedStone.Tests.Run
+import RedStone.Internal.Hex
+
+runTests : (Action m, ActionFail m, CanAbort m) => m ()
+runTests = do
+  runSuite hexToListSuite
+  runSuite listToHexSuite
+  runSuite roundTripHexSuite
+  runSuite roundTripBytesSuite
+
+-- hexToList tests
+
+hexToListSuite = TestSuite with
+  cases = hexToListCases
+  name = "Hex to List Tests"
+  test = hexToList
+
+hexToListCases =
+    [ TestCase with
+        name = "hexToList empty"
+        input = ""
+        output = []
+    , TestCase with
+        name = "hexToList '00'"
+        input = "00"
+        output = [0]
+    , TestCase with
+        name = "hexToList 'ff'"
+        input = "ff"
+        output = [255]
+    , TestCase with
+        name = "hexToList 'FF'"
+        input = "FF"
+        output = [255]
+    , TestCase with
+        name = "hexToList '0a'"
+        input = "0a"
+        output = [10]
+    , TestCase with
+        name = "hexToList '0A'"
+        input = "0A"
+        output = [10]
+    , TestCase with
+        name = "hexToList '0102ff'"
+        input = "0102ff"
+        output = [1, 2, 255]
+    , TestCase with
+        name = "hexToList 'deadbeef'"
+        input = "deadbeef"
+        output = [222, 173, 190, 239]
+    , TestCase with
+        name = "hexToList redstone marker hex"
+        input = "000002ed57011e0000"
+        output = [0, 0, 2, 237, 87, 1, 30, 0, 0]
+    , TestCase with
+        name = "hexToList ETH ascii"
+        input = "455448"
+        output = [69, 84, 72]
+    , TestCase with
+        name = "hexToList signer address"
+        input = "1ea62d73edf8ac05dfcea1a34b9796e937a29eff"
+        output = [30, 166, 45, 115, 237, 248, 172, 5, 223, 206, 161, 163, 75, 151, 150, 233, 55, 162, 158, 255]
+    ]
+
+-- listToHex tests
+
+listToHexSuite = TestSuite with
+  cases = listToHexCases
+  name = "List to Hex Tests"
+  test = listToHex
+
+listToHexCases =
+    [ TestCase with
+        name = "listToHex [0]"
+        input = [0]
+        output = "00"
+    , TestCase with
+        name = "listToHex [255]"
+        input = [255]
+        output = "ff"
+    , TestCase with
+        name = "listToHex [1,2,255]"
+        input = [1, 2, 255]
+        output = "0102ff"
+    , TestCase with
+        name = "listToHex [222,173,190,239]"
+        input = [222, 173, 190, 239]
+        output = "deadbeef"
+    , TestCase with
+        name = "listToHex redstone marker"
+        input = [0, 0, 2, 237, 87, 1, 30, 0, 0]
+        output = "000002ed57011e0000"
+    , TestCase with
+        name = "listToHex ETH bytes"
+        input = [69, 84, 72]
+        output = "455448"
+    , TestCase with
+        name = "listToHex [10]"
+        input = [10]
+        output = "0a"
+    , TestCase with
+        name = "listToHex [16]"
+        input = [16]
+        output = "10"
+    , TestCase with
+        name = "listToHex [128]"
+        input = [128]
+        output = "80"
+    ]
+
+-- Round-trip tests (hex -> bytes -> hex)
+
+roundTripHexSuite = TestSuite with
+  cases = roundTripHexCases
+  name = "Hex Round-Trip Tests (hex -> bytes -> hex)"
+  test = listToHex . hexToList
+
+roundTripHexCases =
+    [ TestCase with
+        name = "round-trip 'deadbeef'"
+        input = "deadbeef"
+        output = "deadbeef"
+    , TestCase with
+        name = "round-trip '000002ed57011e0000'"
+        input = "000002ed57011e0000"
+        output = "000002ed57011e0000"
+    , TestCase with
+        name = "round-trip '0102030405060708090a0b0c0d0e0f'"
+        input = "0102030405060708090a0b0c0d0e0f"
+        output = "0102030405060708090a0b0c0d0e0f"
+    ]
+
+-- Round-trip tests (bytes -> hex -> bytes)
+
+roundTripBytesSuite = TestSuite with
+  cases = roundTripBytesCases
+  name = "Hex Round-Trip Tests (bytes -> hex -> bytes)"
+  test = hexToList . listToHex
+
+roundTripBytesCases =
+    [ TestCase with
+        name = "round-trip bytes [0..15]"
+        input = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]
+        output = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]
+    , TestCase with
+        name = "round-trip bytes [240..255]"
+        input = [240, 241, 242, 243, 244, 245, 246, 247, 248, 249, 250, 251, 252, 253, 254, 255]
+        output = [240, 241, 242, 243, 244, 245, 246, 247, 248, 249, 250, 251, 252, 253, 254, 255]
+    ]
