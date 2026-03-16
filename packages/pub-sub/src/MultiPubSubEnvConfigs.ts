@@ -55,6 +55,14 @@ const NatsConfig = z.object({
         ctx.addIssue(`Expected ENV ${path} by nats nkey authentication - nkeySeedEnvPath`);
       }
     }),
+  caCertEnvPath: z
+    .string()
+    .optional()
+    .superRefine((path, ctx) => {
+      if (path !== undefined && !RedstoneCommon.isDefined(process.env[path])) {
+        ctx.addIssue(`Expected ENV ${path} by nats TLS - caCertEnvPath`);
+      }
+    }),
 });
 
 export const MultiPubSubEnvConfig = z.discriminatedUnion("type", [
