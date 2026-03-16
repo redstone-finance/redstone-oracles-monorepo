@@ -300,12 +300,6 @@ export class CantonClient {
           ) as unknown as Res;
           continue;
         }
-
-        results[exercisedEvent.contractId] = {
-          contractId: resultStr,
-          synchronizerId,
-        } as unknown as Res;
-        continue;
       }
 
       results[exercisedEvent.contractId] = exercisedEvent.exerciseResult as Res;
