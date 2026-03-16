@@ -81,7 +81,7 @@ export async function getNonEvmBlockchainService(networkId: NetworkId, rpcUrls: 
       const client = new CantonClientBuilder()
         .withRpcUrls(rpcUrls)
         .withNetworkId(networkId)
-        .withPartyId(RedstoneCommon.getFromEnv("VIEWER_PARTY_ID"))
+        .withPartyId(RedstoneCommon.getFromEnv("UPDATER_PARTY_ID"))
         .withDefaultAuth(auth)
         .build();
 
