@@ -593,6 +593,10 @@
     },
     "GAS": {
       "source": [],
+      "priceAggregator": "redstoneX",
+      "redstoneXAggregatorConfig": {
+        "priceDiscoverySources": []
+      },
       "broadcasters": [
         "influx"
       ],
@@ -892,6 +896,10 @@
           "maxDelayMilliseconds": 120000
         }
       },
+      "priceAggregator": "redstoneX",
+      "redstoneXAggregatorConfig": {
+        "priceDiscoverySources": []
+      },
       "broadcasters": [
         "influx"
       ],
@@ -1062,6 +1070,10 @@
           "maxPercent": 30,
           "maxDelayMilliseconds": 120000
         }
+      },
+      "priceAggregator": "redstoneX",
+      "redstoneXAggregatorConfig": {
+        "priceDiscoverySources": []
       },
       "broadcasters": [
         "influx"
@@ -1542,6 +1554,10 @@
           "maxDelayMilliseconds": 120000
         }
       },
+      "priceAggregator": "redstoneX",
+      "redstoneXAggregatorConfig": {
+        "priceDiscoverySources": []
+      },
       "broadcasters": [
         "influx"
       ],
@@ -1713,6 +1729,10 @@
           "maxDelayMilliseconds": 120000
         }
       },
+      "priceAggregator": "redstoneX",
+      "redstoneXAggregatorConfig": {
+        "priceDiscoverySources": []
+      },
       "broadcasters": [
         "influx"
       ],
@@ -1883,6 +1903,10 @@
           "maxPercent": 30,
           "maxDelayMilliseconds": 120000
         }
+      },
+      "priceAggregator": "redstoneX",
+      "redstoneXAggregatorConfig": {
+        "priceDiscoverySources": []
       },
       "broadcasters": [
         "influx"
