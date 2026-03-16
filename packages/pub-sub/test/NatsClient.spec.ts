@@ -108,6 +108,35 @@ describe("NatsClient", () => {
       );
     });
 
+    it("should use tls:// scheme and pass tls.ca when caCert is set", async () => {
+      const caCert = "-----BEGIN CERTIFICATE-----\nMIIB...\n-----END CERTIFICATE-----";
+      const c = new NatsClient({ host: "myhost:4222", caCert });
+      await c.publish([{ topic: "t1", data: {} }], "deflate+json");
+      expect(mockConnect).toHaveBeenCalledWith(
+        expect.objectContaining({
+          servers: "tls://myhost:4222",
+          tls: { ca: caCert },
+        })
+      );
+    });
+
+    it("should not set tls when caCert is absent", async () => {
+      const c = new NatsClient({ host: "myhost:4222" });
+      await c.publish([{ topic: "t1", data: {} }], "deflate+json");
+      expect(mockConnect).toHaveBeenCalledWith(
+        expect.objectContaining({ servers: "nats://myhost:4222", tls: null })
+      );
+    });
+
+    it("should preserve tls:// prefix when caCert is set and host already has it", async () => {
+      const caCert = "-----BEGIN CERTIFICATE-----\nMIIB...\n-----END CERTIFICATE-----";
+      const c = new NatsClient({ host: "tls://myhost:4222", caCert });
+      await c.publish([{ topic: "t1", data: {} }], "deflate+json");
+      expect(mockConnect).toHaveBeenCalledWith(
+        expect.objectContaining({ servers: "tls://myhost:4222", tls: { ca: caCert } })
+      );
+    });
+
     it("should use custom connectionTimeoutMs", async () => {
       const c = new NatsClient({ host: "localhost:4222", connectionTimeoutMs: 5_000 });
       await c.publish([{ topic: "t1", data: {} }], "deflate+json");
