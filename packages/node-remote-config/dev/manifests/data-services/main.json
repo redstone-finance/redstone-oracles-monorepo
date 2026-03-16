@@ -8632,13 +8632,13 @@
       "rateFeed": false
     },
     "KOSPI": {
-      "source": ["alltick-api", "ws-aleno"],
+      "source": ["alltick-api", "ws-itick-indices"],
       "denomination": "KRW",
       "rateFeed": false,
       "types": ["rwa"]
     },
     "KOSPI200": {
-      "source": ["alltick-api", "ws-itick-indices"],
+      "source": ["alltick-api", "ws-itick-indices", "ws-aleno"],
       "denomination": "KRW",
       "rateFeed": false,
       "types": ["rwa"]

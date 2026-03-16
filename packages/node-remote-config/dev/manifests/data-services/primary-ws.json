@@ -444,7 +444,7 @@
       "types": ["rwa"]
     },
     "KOSPI200": {
-      "source": ["alltick-api", "ws-itick-indices"],
+      "source": ["alltick-api", "ws-itick-indices", "ws-aleno"],
       "denomination": "KRW",
       "rateFeed": false,
       "types": ["rwa"]
