@@ -137,7 +137,7 @@ export class CantonClient {
       .filter((createdEvent) => !archivedContractIds.has(createdEvent.contractId));
   }
 
-  async getGetPricesTransactions(interfaceId: string, from: number, to: number) {
+  async getGetPricesTransactions(interfaceId: string, from: number, to: number, method: string) {
     const filtersByParty = makeInterfaceFilterByParty(interfaceId, this.partyId);
     const result = await this.fetchUpdates(
       filtersByParty,
@@ -155,8 +155,12 @@ export class CantonClient {
 
       const events = update.Transaction.value.events!;
 
+      const createdEvent = events.find((e) => "CreatedEvent" in e)?.CreatedEvent;
+      const adapterId =
+        (createdEvent?.createArgument as { adapterId: string } | undefined)?.adapterId ?? "";
+
       for (const event of events) {
-        if (!("ExercisedEvent" in event) || event.ExercisedEvent.choice !== "GetPricesFeatured") {
+        if (!("ExercisedEvent" in event) || event.ExercisedEvent.choice !== method) {
           continue;
         }
 
@@ -169,7 +173,7 @@ export class CantonClient {
         const arg = choice.payloadHex;
         const block = event.ExercisedEvent.offset;
         const timeSecs = RedstoneCommon.msToSecs(Date.parse(update.Transaction.value.recordTime));
-        const to = event.ExercisedEvent.contractId;
+        const to = adapterId;
         const from = event.ExercisedEvent.actingParties?.join(SENDER_SEPARATOR) ?? "";
 
         const updateId = update.Transaction.value.updateId;
