@@ -55,6 +55,7 @@ export function resolvePubSubClient(config: z.infer<typeof MultiPubSubEnvConfig>
         nkeySeed: config.nkeySeedEnvPath
           ? RedstoneCommon.getFromEnv(config.nkeySeedEnvPath)
           : undefined,
+        caCert: config.caCertEnvPath ? RedstoneCommon.getFromEnv(config.caCertEnvPath) : undefined,
       });
 
     case "mqttAWSV4Sig":
