@@ -647,7 +647,6 @@
         "priceDiscoverySources": [
           "alltick-stocks-api-deferred",
           "financialmodelingprep-deferred",
-          "databento",
           "ws-twelve-data"
         ]
       },
@@ -779,7 +778,6 @@
         "priceDiscoverySources": [
           "alltick-stocks-api-deferred",
           "financialmodelingprep-deferred",
-          "databento",
           "ws-twelve-data"
         ]
       },
@@ -1117,7 +1115,6 @@
         "priceDiscoverySources": [
           "alltick-stocks-api-deferred",
           "financialmodelingprep-deferred",
-          "databento",
           "ws-twelve-data"
         ]
       },
@@ -1249,7 +1246,6 @@
         "priceDiscoverySources": [
           "alltick-stocks-api-deferred",
           "financialmodelingprep-deferred",
-          "databento",
           "ws-twelve-data"
         ]
       },
@@ -1381,7 +1377,6 @@
         "priceDiscoverySources": [
           "alltick-stocks-api-deferred",
           "financialmodelingprep-deferred",
-          "databento",
           "ws-twelve-data"
         ]
       },
