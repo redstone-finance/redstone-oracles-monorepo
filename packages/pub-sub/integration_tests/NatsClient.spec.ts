@@ -1,4 +1,5 @@
 import { RedstoneCommon } from "@redstone-finance/utils";
+import { readFileSync } from "fs";
 import { z } from "zod";
 import { NatsClient } from "../src/NatsClient";
 
@@ -9,6 +10,7 @@ import { NatsClient } from "../src/NatsClient";
 const NATS_HOST = RedstoneCommon.getFromEnv("NATS_INTEGRATION_HOST", z.string().optional());
 const NATS_NKEY_SEED = RedstoneCommon.getFromEnv("NATS_NKEY_SEED", z.string().optional());
 const PUBLISH_WAIT_MS = 100;
+const CA_CERT = readFileSync(`${__dirname}/../nats/test-certs/ca.crt`, "utf8");
 
 const describeIfEnabled = NATS_HOST ? describe : describe.skip;
 
@@ -19,8 +21,8 @@ describeIfEnabled("NatsClient integration", () => {
   let subscriber: NatsClient;
 
   beforeEach(() => {
-    publisher = new NatsClient({ host: NATS_HOST!, nkeySeed: NATS_NKEY_SEED });
-    subscriber = new NatsClient({ host: NATS_HOST!, nkeySeed: NATS_NKEY_SEED });
+    publisher = new NatsClient({ host: NATS_HOST!, nkeySeed: NATS_NKEY_SEED, caCert: CA_CERT });
+    subscriber = new NatsClient({ host: NATS_HOST!, nkeySeed: NATS_NKEY_SEED, caCert: CA_CERT });
   });
 
   afterEach(() => {
@@ -86,7 +88,11 @@ describeIfEnabled("NatsClient integration", () => {
   it("should handle multiple subscribers on the same topic", async () => {
     const onMessage1 = jest.fn();
     const onMessage2 = jest.fn();
-    const subscriber2 = new NatsClient({ host: NATS_HOST!, nkeySeed: NATS_NKEY_SEED });
+    const subscriber2 = new NatsClient({
+      host: NATS_HOST!,
+      nkeySeed: NATS_NKEY_SEED,
+      caCert: CA_CERT,
+    });
 
     subscriber.setOnMessageHandler(onMessage1);
     subscriber2.setOnMessageHandler(onMessage2);
@@ -127,7 +133,11 @@ describeIfEnabled("NatsClient integration", () => {
   it("should support both deflate+json and gzip+json content types", async () => {
     const onMessageDeflate = jest.fn();
     const onMessageGzip = jest.fn();
-    const gzipSubscriber = new NatsClient({ host: NATS_HOST!, nkeySeed: NATS_NKEY_SEED });
+    const gzipSubscriber = new NatsClient({
+      host: NATS_HOST!,
+      nkeySeed: NATS_NKEY_SEED,
+      caCert: CA_CERT,
+    });
 
     subscriber.setOnMessageHandler(onMessageDeflate);
     gzipSubscriber.setOnMessageHandler(onMessageGzip);
@@ -210,5 +220,21 @@ describeIfEnabled("NatsClient integration", () => {
       null,
       subscriber
     );
+  });
+
+  it("should connect and publish without a CA cert", async () => {
+    const onMessage = jest.fn();
+    const plainPublisher = new NatsClient({ host: NATS_HOST!, nkeySeed: NATS_NKEY_SEED });
+    const plainSubscriber = new NatsClient({ host: NATS_HOST!, nkeySeed: NATS_NKEY_SEED });
+    plainSubscriber.setOnMessageHandler(onMessage);
+    await plainSubscriber.subscribe(["tls/plain"]);
+
+    await plainPublisher.publish([{ topic: "tls/plain", data: { plain: true } }], "deflate+json");
+    await RedstoneCommon.sleep(PUBLISH_WAIT_MS);
+
+    expect(onMessage).toHaveBeenCalledWith("tls/plain", { plain: true }, null, plainSubscriber);
+
+    plainPublisher.stop();
+    plainSubscriber.stop();
   });
 });

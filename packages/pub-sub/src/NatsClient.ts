@@ -39,6 +39,8 @@ export interface NatsClientConfig {
   connectionTimeoutMs?: number;
   /** NKey seed string (e.g. "SUAMLK..."). If omitted, connects without authentication. */
   nkeySeed?: string;
+  /** PEM-encoded CA certificate. When set, connects via TLS and verifies server cert against this CA. */
+  caCert?: string;
 }
 
 export class NatsClient implements PubSubClient {
@@ -56,7 +58,10 @@ export class NatsClient implements PubSubClient {
 
   private getNatsUrl(): string {
     const { host } = this.config;
-    return host.startsWith("nats://") ? host : `nats://${host}`;
+    if (host.startsWith("nats://") || host.startsWith("tls://")) {
+      return host;
+    }
+    return this.config.caCert ? `tls://${host}` : `nats://${host}`;
   }
 
   private async getConnection(): Promise<NatsConnection> {
@@ -78,6 +83,9 @@ export class NatsClient implements PubSubClient {
         authenticator: this.config.nkeySeed
           ? nkeyAuthenticator(new TextEncoder().encode(this.config.nkeySeed))
           : undefined,
+        // nats.js auto-upgrades to TLS whenever the server reply with tls_available:true,
+        // unless tls is explicitly set to null. Without caCert we pass null to force plain connection
+        tls: this.config.caCert ? { ca: this.config.caCert } : null,
       })
         .then((nc) => {
           this.nc = nc;
