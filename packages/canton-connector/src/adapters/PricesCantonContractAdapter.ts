@@ -9,7 +9,7 @@ import { CoreCantonContractAdapter } from "./CoreCantonContractAdapter";
 import { DEFS_KEY_FEATURED_APP_RIGHT } from "./CoreClientCantonContractAdapter";
 
 export const IADAPTER_TEMPLATE_NAME = `IRedStoneAdapter:IRedStoneAdapter`;
-const WRITE_PRICES_CHOICE = "WritePrices";
+export const WRITE_PRICES_CHOICE = "WritePrices";
 const READ_PRICES_CHOICE = "ReadPrices";
 const READ_PRICE_DATA_CHOICE = "ReadPriceData";
 const GET_UNIQUE_SIGNER_THRESHOLD_CHOICE = "GetUniqueSignerThreshold";
