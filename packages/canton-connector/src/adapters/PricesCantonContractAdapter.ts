@@ -99,18 +99,23 @@ export class PricesCantonContractAdapter
   }
 
   async writePricesFromPayloadToContract(paramsProvider: ContractParamsProvider): Promise<string> {
-    const result: ActiveContractData = await this.exerciseChoice(
-      WRITE_PRICES_CHOICE,
-      await CoreCantonContractAdapter.getPayloadArguments(paramsProvider),
-      undefined,
-      true,
-      this.updateClient,
-      [this.updateClient.Defs[DEFS_KEY_FEATURED_APP_RIGHT]]
-    );
+    try {
+      const result: ActiveContractData = await this.exerciseChoice(
+        WRITE_PRICES_CHOICE,
+        await CoreCantonContractAdapter.getPayloadArguments(paramsProvider),
+        undefined,
+        true,
+        this.updateClient,
+        [this.updateClient.Defs[DEFS_KEY_FEATURED_APP_RIGHT]]
+      );
 
-    // TODO: restore when it's fixed the return value
-    this.activeContractData = undefined;
+      this.activeContractData = result;
 
-    return result.contractId;
+      return result.contractId;
+    } catch (e) {
+      this.activeContractData = undefined;
+
+      throw e;
+    }
   }
 }
