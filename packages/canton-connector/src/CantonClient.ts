@@ -280,6 +280,32 @@ export class CantonClient {
           ) as unknown as Res;
           continue;
         }
+
+        continue;
+      }
+
+      const resultStr =
+        typeof exercisedEvent.exerciseResult === "string"
+          ? exercisedEvent.exerciseResult
+          : undefined;
+
+      if (resultStr) {
+        const matchingCreate = events.find(
+          (e) => "CreatedEvent" in e && e.CreatedEvent.contractId === resultStr
+        );
+        if (matchingCreate && "CreatedEvent" in matchingCreate) {
+          results[exercisedEvent.contractId] = makeActiveContractData(
+            matchingCreate.CreatedEvent,
+            synchronizerId
+          ) as unknown as Res;
+          continue;
+        }
+
+        results[exercisedEvent.contractId] = {
+          contractId: resultStr,
+          synchronizerId,
+        } as unknown as Res;
+        continue;
       }
 
       results[exercisedEvent.contractId] = exercisedEvent.exerciseResult as Res;
