@@ -4908,6 +4908,12 @@
         "kumbaya-megaeth-btc.b-3000",
         "kumbaya-megaeth-weth-3000"
       ],
+      "priceAggregator": "primarySource",
+      "primarySourceAggregatorConfig": {
+        "primarySource": "kumbaya-megaeth-usdt0-100",
+        "lowerClampPercent": 0.1,
+        "upperClampPercent": 0.1
+      },
       "denomination": "USD",
       "rateFeed": false,
       "deviationCheck": {
@@ -4916,6 +4922,13 @@
           "maxDelayMilliseconds": 120000
         }
       }
+    },
+    "USDm-TWAP-60": {
+      "source": [
+        "twap-local"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
     },
     "slisBNB_FUNDAMENTAL": {
       "source": [
