@@ -8426,6 +8426,36 @@
       "denomination": "timestamp",
       "rateFeed": false
     },
+    "KRX_MARKET_CURRENT_STATUS": {
+      "source": ["krx-market-timeline"],
+      "denomination": "enum",
+      "rateFeed": false
+    },
+    "KRX_MARKET_NEXT_STATUS": {
+      "source": ["krx-market-timeline"],
+      "denomination": "enum",
+      "rateFeed": false
+    },
+    "KRX_MARKET_NEXT_CHANGE_TIME": {
+      "source": ["krx-market-timeline"],
+      "denomination": "timestamp",
+      "rateFeed": false
+    },
+    "JPX_MARKET_CURRENT_STATUS": {
+      "source": ["jpx-market-timeline"],
+      "denomination": "enum",
+      "rateFeed": false
+    },
+    "JPX_MARKET_NEXT_STATUS": {
+      "source": ["jpx-market-timeline"],
+      "denomination": "enum",
+      "rateFeed": false
+    },
+    "JPX_MARKET_NEXT_CHANGE_TIME": {
+      "source": ["jpx-market-timeline"],
+      "denomination": "timestamp",
+      "rateFeed": false
+    },
     "SOYBEAN": {
       "source": [
         "twelve-data",
