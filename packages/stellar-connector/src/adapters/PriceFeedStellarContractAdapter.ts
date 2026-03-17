@@ -10,73 +10,88 @@ export class PriceFeedStellarContractAdapter implements IPriceFeedContractAdapte
     protected readonly contract: Contract
   ) {}
 
-  async getPriceAndTimestamp() {
-    return await this.readPriceAndTimestamp();
+  async getPriceAndTimestamp(blockNumber?: number) {
+    return await this.readPriceAndTimestamp(blockNumber);
   }
 
-  async getDescription() {
+  async getDescription(blockNumber?: number) {
     const operation = this.contract.call("description");
 
-    return await this.client.simulateOperation(operation, RANDOM_ACCOUNT_FOR_SIMULATION, (sim) =>
-      XdrUtils.parsePrimitiveFromSimulation(sim, String)
+    return await this.client.simulateOperation(
+      operation,
+      RANDOM_ACCOUNT_FOR_SIMULATION,
+      (sim) => XdrUtils.parsePrimitiveFromSimulation(sim, String),
+      blockNumber
     );
   }
 
-  async getDataFeedId() {
-    return await this.feedId();
+  async getDataFeedId(blockNumber?: number) {
+    return await this.feedId(blockNumber);
   }
 
-  async decimals() {
+  async decimals(blockNumber?: number) {
     const operation = this.contract.call("decimals");
 
-    return await this.client.simulateOperation(operation, RANDOM_ACCOUNT_FOR_SIMULATION, (sim) =>
-      XdrUtils.parsePrimitiveFromSimulation(sim, Number)
+    return await this.client.simulateOperation(
+      operation,
+      RANDOM_ACCOUNT_FOR_SIMULATION,
+      (sim) => XdrUtils.parsePrimitiveFromSimulation(sim, Number),
+      blockNumber
     );
   }
 
-  async feedId() {
+  async feedId(blockNumber?: number) {
     const operation = this.contract.call("feed_id");
 
-    return await this.client.simulateOperation(operation, RANDOM_ACCOUNT_FOR_SIMULATION, (sim) =>
-      XdrUtils.parsePrimitiveFromSimulation(sim, String)
+    return await this.client.simulateOperation(
+      operation,
+      RANDOM_ACCOUNT_FOR_SIMULATION,
+      (sim) => XdrUtils.parsePrimitiveFromSimulation(sim, String),
+      blockNumber
     );
   }
 
-  async readPrice() {
+  async readPrice(blockNumber?: number) {
     const operation = this.contract.call("read_price");
 
     return await this.client.simulateOperation(
       operation,
       RANDOM_ACCOUNT_FOR_SIMULATION,
-      XdrUtils.parseBigIntFromSimulation
+      XdrUtils.parseBigIntFromSimulation,
+      blockNumber
     );
   }
 
-  async readTimestamp() {
+  async readTimestamp(blockNumber?: number) {
     const operation = this.contract.call("read_timestamp");
 
-    return await this.client.simulateOperation(operation, RANDOM_ACCOUNT_FOR_SIMULATION, (sim) =>
-      XdrUtils.parsePrimitiveFromSimulation(sim, Number)
+    return await this.client.simulateOperation(
+      operation,
+      RANDOM_ACCOUNT_FOR_SIMULATION,
+      (sim) => XdrUtils.parsePrimitiveFromSimulation(sim, Number),
+      blockNumber
     );
   }
 
-  async readPriceAndTimestamp() {
+  async readPriceAndTimestamp(blockNumber?: number) {
     const operation = this.contract.call("read_price_and_timestamp");
 
     return await this.client.simulateOperation(
       operation,
       RANDOM_ACCOUNT_FOR_SIMULATION,
-      XdrUtils.parseReadPriceAndTimestampSimulation
+      XdrUtils.parseReadPriceAndTimestampSimulation,
+      blockNumber
     );
   }
 
-  async readPriceData() {
+  async readPriceData(blockNumber?: number) {
     const operation = this.contract.call("read_price_data");
 
     return await this.client.simulateOperation(
       operation,
       RANDOM_ACCOUNT_FOR_SIMULATION,
-      XdrUtils.parseReadSinglePriceDataSimulation
+      XdrUtils.parseReadSinglePriceDataSimulation,
+      blockNumber
     );
   }
 }

@@ -1,4 +1,3 @@
-import { fetchParsedRpcUrlsFromSsmByNetworkId } from "@redstone-finance/chain-configs";
 import {
   EvmPriceFeedContract,
   PriceFeedWithRounds,
@@ -7,7 +6,10 @@ import {
 import { IPriceFeedContract } from "@redstone-finance/sdk";
 import { isEvmNetworkId, NetworkId } from "@redstone-finance/utils";
 import { Contract, providers } from "ethers";
-import { getProviderMemoized } from "../provider/get-provider";
+import {
+  fetchParsedRpcUrlsFromSsmByNetworkIdMemoized,
+  getProviderMemoized,
+} from "../provider/get-provider";
 import { MonitoringEnv } from "./get-monitoring-contract-connector";
 import { getPriceFeedContractConnector } from "./get-price-feed-contract-connector";
 import { NonEvmPriceFeedContract } from "./NonEvmPriceFeedContract";
@@ -47,7 +49,8 @@ async function getNonEvmPriceFeedContractCreator(
   env: MonitoringEnv,
   overrideRpcUrls?: string[]
 ): Promise<PriceFeedContractCreator> {
-  const rpcUrls = overrideRpcUrls ?? (await fetchParsedRpcUrlsFromSsmByNetworkId(networkId, env));
+  const rpcUrls =
+    overrideRpcUrls ?? (await fetchParsedRpcUrlsFromSsmByNetworkIdMemoized(networkId, env));
 
   return async (address) =>
     await NonEvmPriceFeedContract.createWithConnector(
