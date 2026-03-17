@@ -8464,6 +8464,7 @@
         "lowerClampPercent": 0.1,
         "upperClampPercent": 0.1
       },
+      "localCacheTTL": "60m",
       "denomination": "USD",
       "rateFeed": false
     },
