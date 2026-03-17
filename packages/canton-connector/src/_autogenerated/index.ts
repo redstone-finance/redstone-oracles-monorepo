@@ -85,6 +85,8 @@ export type { GenerateExternalPartyTopologyRequest } from './models/GenerateExte
 export type { GenerateExternalPartyTopologyResponse } from './models/GenerateExternalPartyTopologyResponse';
 export type { GetActiveContractsRequest } from './models/GetActiveContractsRequest';
 export type { GetConnectedSynchronizersResponse } from './models/GetConnectedSynchronizersResponse';
+export type { GetContractRequest } from './models/GetContractRequest';
+export type { GetContractResponse } from './models/GetContractResponse';
 export type { GetEventsByContractIdRequest } from './models/GetEventsByContractIdRequest';
 export type { GetIdentityProviderConfigResponse } from './models/GetIdentityProviderConfigResponse';
 export type { GetLatestPrunedOffsetsResponse } from './models/GetLatestPrunedOffsetsResponse';
