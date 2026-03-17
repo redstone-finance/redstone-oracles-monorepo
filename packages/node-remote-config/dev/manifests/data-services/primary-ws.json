@@ -451,6 +451,13 @@
     },
     "NIKKEI225": {
       "source": ["alltick-api", "finhub_oanda-usd", "ws-itick-indices"],
+      "priceAggregator": "primarySourceWithRebasing",
+      "primarySourceWithRebasingAggregatorConfig": {
+        "primarySource": "alltick-api",
+        "rebaseCalculationInterval": 60000,
+        "maxAcceptableDeviationPercent": 1,
+        "clampPercent": 0.05
+      },
       "denomination": "JPY",
       "rateFeed": false,
       "types": ["rwa"]
@@ -464,6 +471,10 @@
         "ws-dx-feed",
         "ws-twelve-data"
       ],
+      "priceAggregator": "redstoneX",
+      "redstoneXAggregatorConfig": {
+        "priceDiscoverySources": ["ws-aleno", "ws-blocksize", "ws-twelve-data"]
+      },
       "denomination": "USD",
       "rateFeed": false,
       "types": ["rwa"]
