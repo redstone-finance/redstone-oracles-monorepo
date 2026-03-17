@@ -418,7 +418,7 @@
       }
     },
     "GAS": {
-      "source": ["ws-lo-tech-settlement-aware", "databento"],
+      "source": ["ws-lo-tech-settlement-aware"],
       "priceAggregator": "redstoneX",
       "redstoneXAggregatorConfig": {
         "priceDiscoverySources": ["ws-lo-tech-settlement-aware"]
