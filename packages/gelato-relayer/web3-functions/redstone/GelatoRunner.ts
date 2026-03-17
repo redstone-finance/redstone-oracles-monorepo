@@ -5,17 +5,17 @@ import {
   getEvmContractConnector,
 } from "@redstone-finance/evm-adapters";
 import {
+  BlockProvider,
+  ForwardCompatibleFromRedstoneAdapter,
+  WriteContractAdapter,
+} from "@redstone-finance/multichain-kit";
+import {
   ContractFacade,
   makeRelayerConfig,
   RelayerConfig,
   runIteration,
 } from "@redstone-finance/on-chain-relayer";
-import {
-  DataPackagesResponseCache,
-  IContractConnector,
-  IExtendedPricesContractAdapter,
-  IRedstoneContractAdapter,
-} from "@redstone-finance/sdk";
+import { DataPackagesResponseCache } from "@redstone-finance/sdk";
 import { providers } from "ethers";
 import { IterationArgsProviderEnv } from "../IterationArgsProviderInterface";
 import { GelatoDeliveryMan } from "./GelatoDeliveryMan";
@@ -38,7 +38,8 @@ export class GelatoRunner {
         getEvmContractAdapter(config, getEvmContract(config, provider), deliveryMan)
       );
 
-      this.runIteration(connector, config, logger)
+      ForwardCompatibleFromRedstoneAdapter.fromConnector(connector)
+        .then((adapter) => this.runIteration(adapter, connector, config, logger))
         .then((didUpdate) => {
           if (didUpdate) {
             return;
@@ -52,12 +53,13 @@ export class GelatoRunner {
 
   // eslint-disable-next-line @typescript-eslint/class-methods-use-this -- To be overridden
   protected runIteration(
-    connector: IContractConnector<IExtendedPricesContractAdapter | IRedstoneContractAdapter>,
+    adapter: WriteContractAdapter,
+    provider: BlockProvider,
     config: RelayerConfig,
     logger: GelatoLogger
   ) {
     return runIteration(
-      new ContractFacade(connector, config, new DataPackagesResponseCache()),
+      new ContractFacade(adapter, provider, config, new DataPackagesResponseCache()),
       config,
       { logger }
     );

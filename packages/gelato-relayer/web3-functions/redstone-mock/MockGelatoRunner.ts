@@ -1,26 +1,23 @@
 import { Web3FunctionContext } from "@gelatonetwork/web3-functions-sdk";
+import { BlockProvider, WriteContractAdapter } from "@redstone-finance/multichain-kit";
 import {
   IterationArgsProvider,
   RelayerConfig,
   runIteration,
 } from "@redstone-finance/on-chain-relayer";
-import {
-  DataPackagesRequestParams,
-  IContractConnector,
-  IExtendedPricesContractAdapter,
-  IRedstoneContractAdapter,
-} from "@redstone-finance/sdk";
+import { DataPackagesRequestParams } from "@redstone-finance/sdk";
 import { GelatoLogger } from "../redstone/GelatoLogger";
 import { GelatoRunner } from "../redstone/GelatoRunner";
 import { MockContractFacade } from "./MockContractFacade";
 
 export class MockGelatoRunner extends GelatoRunner {
   override runIteration(
-    connector: IContractConnector<IExtendedPricesContractAdapter | IRedstoneContractAdapter>,
+    adapter: WriteContractAdapter,
+    provider: BlockProvider,
     config: RelayerConfig,
     logger: GelatoLogger
   ) {
-    return runIteration(new MockContractFacade(connector), config, {
+    return runIteration(new MockContractFacade(adapter, provider), config, {
       logger,
       iterationArgsProvider: getIterationArgsProviderFromContext(this.context),
     });

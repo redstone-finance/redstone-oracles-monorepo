@@ -3,33 +3,37 @@ import {
   getEvmContractAdapter,
   getEvmContractConnector,
 } from "@redstone-finance/evm-adapters";
+import {
+  ContractAdapter,
+  ForwardCompatibleFromRedstoneAdapter,
+} from "@redstone-finance/multichain-kit";
 import { AnyOnChainRelayerManifest } from "@redstone-finance/on-chain-relayer-common";
 import { isNonEvmNetworkId } from "@redstone-finance/utils";
 import {
   fetchParsedRpcUrlsFromSsmByNetworkIdMemoized,
   getProviderMemoized,
 } from "../provider/get-provider";
-import { getNonEvmMonitoringContractConnector } from "./get-non-evm-monitoring-contract-connector";
+import { getNonEvmMonitoringContractAdapter } from "./get-non-evm-monitoring-contract-adapter";
 
 export type MonitoringEnv = "prod" | "dev";
 
-export async function getMonitoringContractConnector(
+export async function getMonitoringContractAdapter(
   relayerManifest: AnyOnChainRelayerManifest,
   env: MonitoringEnv
-) {
+): Promise<ContractAdapter> {
   if (isNonEvmNetworkId(relayerManifest.chain.id)) {
     const rpcUrls = await fetchParsedRpcUrlsFromSsmByNetworkIdMemoized(
       relayerManifest.chain.id,
       env
     );
 
-    return getNonEvmMonitoringContractConnector(relayerManifest, rpcUrls);
+    return await getNonEvmMonitoringContractAdapter(relayerManifest, rpcUrls);
   }
 
-  return await getEvmMonitoringContractConnector(relayerManifest, env);
+  return await getEvmMonitoringContractAdapter(relayerManifest, env);
 }
 
-async function getEvmMonitoringContractConnector(
+async function getEvmMonitoringContractAdapter(
   relayerManifest: AnyOnChainRelayerManifest,
   env: MonitoringEnv
 ) {
@@ -43,5 +47,7 @@ async function getEvmMonitoringContractConnector(
   );
   const adapter = getEvmContractAdapter(relayerManifest, adapterContract);
 
-  return getEvmContractConnector(provider, adapter);
+  const connector = getEvmContractConnector(provider, adapter);
+
+  return await ForwardCompatibleFromRedstoneAdapter.fromConnector(connector);
 }

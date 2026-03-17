@@ -20,6 +20,7 @@
   "dependencies": {
     "@gelatonetwork/web3-functions-sdk": "^2.4.4",
     "@redstone-finance/evm-adapters": "workspace:*",
+    "@redstone-finance/multichain-kit": "workspace:*",
     "@redstone-finance/on-chain-relayer": "workspace:*",
     "@redstone-finance/sdk": "workspace:*",
     "@redstone-finance/utils": "workspace:*"

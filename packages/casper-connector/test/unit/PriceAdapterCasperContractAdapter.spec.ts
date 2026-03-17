@@ -22,7 +22,7 @@ describe("PriceAdapterCasperContractAdapter tests", () => {
   beforeEach(async () => {
     connection = getMockCasperConnection();
     connector = new PriceAdapterCasperContractConnector(connection, "");
-    adapter = (await connector.getAdapter()) as PriceAdapterCasperContractAdapter;
+    adapter = await connector.getAdapter();
     mockStateRootHashImplementations(connection);
   });
 

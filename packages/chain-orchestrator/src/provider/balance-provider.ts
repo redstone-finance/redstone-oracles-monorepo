@@ -1,9 +1,9 @@
 import { Env, fetchChainConfigs, getChainConfigByNetworkId } from "@redstone-finance/chain-configs";
+import { BalanceProvider } from "@redstone-finance/multichain-kit";
 import { isNonEvmNetworkId, NetworkId, RedstoneCommon } from "@redstone-finance/utils";
 import { providers } from "ethers";
 import { EvmBlockchainService } from "../blockchain-service/EvmBlockchainService";
 import { getNonEvmBlockchainService } from "../blockchain-service/get-non-evm-blockchain-service";
-import { BalanceProvider } from "./BalanceProvider";
 import { CurrencyTokenBalanceProvider } from "./CurrencyTokenBalanceProvider";
 import {
   fetchParsedRpcUrlsFromSsmByNetworkIdMemoized,

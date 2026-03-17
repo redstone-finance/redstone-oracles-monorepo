@@ -35,14 +35,13 @@ describe.skip("E2E tests", () => {
     connection = await makeCasperConnection(config);
 
     pricesConnector = new PriceAdapterCasperContractConnector(connection, ADAPTER_ADDRESS);
-    pricesAdapter = (await pricesConnector.getAdapter()) as PriceAdapterCasperContractAdapter;
+    pricesAdapter = await pricesConnector.getAdapter();
 
     priceRelayConnector = new PriceRelayAdapterCasperContractConnector(
       connection,
       RELAY_ADAPTER_ADDRESS
     );
-    pricesRelayAdapter =
-      (await priceRelayConnector.getAdapter()) as PriceRelayAdapterCasperContractAdapter;
+    pricesRelayAdapter = await priceRelayConnector.getAdapter();
 
     priceFeedConnector = new PriceFeedCasperContractConnector(connection, FEED_ADDRESS);
     priceFeedAdapter = await priceFeedConnector.getAdapter();

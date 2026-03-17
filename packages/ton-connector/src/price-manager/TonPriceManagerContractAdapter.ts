@@ -1,8 +1,8 @@
-import { ContractParamsProvider, IPricesContractAdapter } from "@redstone-finance/sdk";
+import { ContractParamsProvider } from "@redstone-finance/sdk";
 import { TonPriceManager } from "../../wrappers/TonPriceManager";
 import { AnyTonOpenedContract } from "../network/TonNetwork";
 
-export class TonPriceManagerContractAdapter implements IPricesContractAdapter {
+export class TonPriceManagerContractAdapter {
   constructor(public readonly contract: AnyTonOpenedContract<TonPriceManager>) {}
 
   async sendDeploy(): Promise<void> {

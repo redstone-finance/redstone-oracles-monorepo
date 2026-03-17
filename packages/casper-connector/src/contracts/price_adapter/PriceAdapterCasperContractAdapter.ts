@@ -1,4 +1,4 @@
-import { ContractParamsProvider, IPricesContractAdapter } from "@redstone-finance/sdk";
+import { ContractData, ContractParamsProvider } from "@redstone-finance/sdk";
 import assert from "assert";
 import { BigNumber } from "ethers";
 import { casperBlake2b } from "../../casper/casper-blake2b";
@@ -12,10 +12,7 @@ import {
   STORAGE_KEY_VALUES,
 } from "../constants";
 
-export class PriceAdapterCasperContractAdapter
-  extends CasperContractAdapter
-  implements IPricesContractAdapter
-{
+export class PriceAdapterCasperContractAdapter extends CasperContractAdapter {
   static SINGLE_PACKAGE_PROCESS_CSPR = 8.5;
 
   async writePricesFromPayloadToContract(
@@ -33,6 +30,7 @@ export class PriceAdapterCasperContractAdapter
     );
   }
 
+  // eslint-disable-next-line @typescript-eslint/class-methods-use-this -- for interface
   getPricesFromPayload(_paramsProvider: ContractParamsProvider): Promise<bigint[]> {
     throw new Error("Method not supported. Use price_relay_adapter contract instead");
   }
@@ -72,6 +70,7 @@ export class PriceAdapterCasperContractAdapter
       } bytes.
       Use price_relay_adapter contract instead`
     );
+
     const runtimeArgs = RuntimeArgsFactory.makePayloadRuntimeArgs(feedIds, payloadHex);
 
     return await this.callEntrypoint(
@@ -83,5 +82,37 @@ export class PriceAdapterCasperContractAdapter
 
   private readPriceValue(feedId: string) {
     return this.queryContractDictionary(STORAGE_KEY_VALUES, feedId);
+  }
+
+  // eslint-disable-next-line @typescript-eslint/class-methods-use-this -- for interface
+  getUniqueSignerThreshold(_blockNumber?: number): Promise<number> {
+    throw new Error("Method not supported on Casper");
+  }
+
+  // eslint-disable-next-line @typescript-eslint/class-methods-use-this -- for interface
+  readLatestUpdateBlockTimestamp(
+    _feedId?: string,
+    _blockNumber?: number
+  ): Promise<number | undefined> {
+    throw new Error("Method not supported on Casper");
+  }
+
+  // eslint-disable-next-line @typescript-eslint/class-methods-use-this -- for interface
+  getSignerAddress(): Promise<string | undefined> {
+    throw new Error("Method not supported on Casper");
+  }
+
+  // eslint-disable-next-line @typescript-eslint/class-methods-use-this -- for interface
+  getDataFeedIds(_blockTag?: number): Promise<string[] | undefined> {
+    throw new Error("Method not supported on Casper");
+  }
+
+  // eslint-disable-next-line @typescript-eslint/class-methods-use-this -- for interface
+  readContractData(
+    _feedIds: string[],
+    _blockNumber?: number,
+    _withDataFeedValues?: boolean
+  ): Promise<ContractData> {
+    throw new Error("Method not supported on Casper");
   }
 }

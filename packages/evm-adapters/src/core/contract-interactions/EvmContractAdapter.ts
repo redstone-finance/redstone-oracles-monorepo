@@ -1,15 +1,8 @@
-import {
-  ContractData,
-  ContractParamsProvider,
-  IRedstoneContractAdapter,
-  UpdatePricesOptions,
-} from "@redstone-finance/sdk";
+import { ContractData, ContractParamsProvider, UpdatePricesOptions } from "@redstone-finance/sdk";
 import { Tx } from "@redstone-finance/utils";
 import { RedstoneEvmContract } from "../../facade/evm/RedstoneEvmContract";
 
-export abstract class EvmContractAdapter<Contract extends RedstoneEvmContract>
-  implements IRedstoneContractAdapter
-{
+export abstract class EvmContractAdapter<Contract extends RedstoneEvmContract> {
   constructor(
     public adapterContract: Contract,
     protected txDeliveryMan: Tx.ITxDeliveryMan<
@@ -19,10 +12,6 @@ export abstract class EvmContractAdapter<Contract extends RedstoneEvmContract>
       }
     >
   ) {}
-
-  getDataFeedIds(_blockTag: number): Promise<string[] | undefined> {
-    return Promise.resolve(undefined);
-  }
 
   getSignerAddress(): Promise<string | undefined> {
     return this.adapterContract.signer.getAddress();
@@ -67,6 +56,7 @@ export abstract class EvmContractAdapter<Contract extends RedstoneEvmContract>
     });
   }
 
+  // eslint-disable-next-line @typescript-eslint/class-methods-use-this -- abstract class base method
   protected getBaseIterationTxParamsProvider(
     paramsProvider: ContractParamsProvider,
     _options?: UpdatePricesOptions
