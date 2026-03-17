@@ -10,9 +10,15 @@ import { NatsClient } from "../src/NatsClient";
 const NATS_HOST = RedstoneCommon.getFromEnv("NATS_INTEGRATION_HOST", z.string().optional());
 const NATS_NKEY_SEED = RedstoneCommon.getFromEnv("NATS_NKEY_SEED", z.string().optional());
 const PUBLISH_WAIT_MS = 100;
-const CA_CERT = readFileSync(`${__dirname}/../nats/test-certs/ca.crt`, "utf8");
+const CERTS_DIR = `${__dirname}/../nats/test-certs`;
+const CA_CERT = readFileSync(`${CERTS_DIR}/ca.crt`, "utf8");
+// Local NATS requires mTLS — reuse server cert/key as client identity (both signed by ca.crt)
+const CLIENT_CERT = readFileSync(`${CERTS_DIR}/server.crt`, "utf8");
+const CLIENT_KEY = readFileSync(`${CERTS_DIR}/server.key`, "utf8");
 
 const describeIfEnabled = NATS_HOST ? describe : describe.skip;
+
+const TLS_CONFIG = { caCert: CA_CERT, clientCert: CLIENT_CERT, clientKey: CLIENT_KEY };
 
 // All topics use MQTT-style conventions (/ separator, + and # wildcards)
 // NatsClient translates them to NATS subjects internally
@@ -21,8 +27,8 @@ describeIfEnabled("NatsClient integration", () => {
   let subscriber: NatsClient;
 
   beforeEach(() => {
-    publisher = new NatsClient({ host: NATS_HOST!, nkeySeed: NATS_NKEY_SEED, caCert: CA_CERT });
-    subscriber = new NatsClient({ host: NATS_HOST!, nkeySeed: NATS_NKEY_SEED, caCert: CA_CERT });
+    publisher = new NatsClient({ host: NATS_HOST!, nkeySeed: NATS_NKEY_SEED, ...TLS_CONFIG });
+    subscriber = new NatsClient({ host: NATS_HOST!, nkeySeed: NATS_NKEY_SEED, ...TLS_CONFIG });
   });
 
   afterEach(() => {
@@ -91,7 +97,7 @@ describeIfEnabled("NatsClient integration", () => {
     const subscriber2 = new NatsClient({
       host: NATS_HOST!,
       nkeySeed: NATS_NKEY_SEED,
-      caCert: CA_CERT,
+      ...TLS_CONFIG,
     });
 
     subscriber.setOnMessageHandler(onMessage1);
@@ -136,7 +142,7 @@ describeIfEnabled("NatsClient integration", () => {
     const gzipSubscriber = new NatsClient({
       host: NATS_HOST!,
       nkeySeed: NATS_NKEY_SEED,
-      caCert: CA_CERT,
+      ...TLS_CONFIG,
     });
 
     subscriber.setOnMessageHandler(onMessageDeflate);
