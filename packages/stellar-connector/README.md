@@ -41,20 +41,22 @@ the [whole RedStone Oracle model](https://docs.redstone.finance/docs/introductio
 
 ## 🔥 Connecting to the contract
 
-First, you need to import the connector code to your project
+First, you need to import the adapter code to your project
 
 ```ts
 // Typescript
 import {
-  PriceAdapterStellarContractConnector,
-  makeStellarConnection,
+  StellarWriteContractAdapter,
+  StellarClientBuilder,
+  makeKeypair,
 } from "@redstone-finance/stellar-connector";
 import { ContractParamsProvider, getSignersForDataServiceId } from "@redstone-finance/sdk";
 
 // Javascript
 const {
-  PriceAdapterStellarContractConnector,
-  makeStellarConnection,
+  StellarWriteContractAdapter,
+  StellarClientBuilder,
+  makeKeypair,
 } = require("@redstone-finance/stellar-connector");
 const { ContractParamsProvider, getSignersForDataServiceId } = require("@redstone-finance/sdk");
 ```
@@ -63,17 +65,13 @@ Then you can invoke the contract methods described above pointing to the
 selected [RedStone data service](https://app.redstone.finance) and requested data feeds.
 
 ```ts
-  const client = new StellarClientBuilder()
+const client = new StellarClientBuilder()
   .withStellarNetwork("testnet")
   .withRpcUrl("https://soroban-testnet.stellar.org")
   .build();
 
-const prices = new PriceAdapterStellarContractConnector(
-  client,
-  yourContractAddress,
-  keypair,
-  yourConfig // optional
-);
+const keypair = makeKeypair();
+const adapter = new StellarWriteContractAdapter(client, yourContractAddress, keypair);
 
 const paramsProvider = new ContractParamsProvider({
   dataServiceId: "redstone-primary-prod",
@@ -83,16 +81,15 @@ const paramsProvider = new ContractParamsProvider({
 });
 ```
 
-The `yourConfig` param is optional. The example value can be found in
-the [StellarTxDeliveryManConfig.ts](src/stellar/StellarTxDeliveryManConfig.ts) file.
-
 Now you can access any of the contract's methods by invoking the code:
 
 ```ts
-(await prices.getAdapter()).getPricesFromPayload(paramsProvider); // the method is available only for PriceRelayAdapterStellarContractConnector
-(await prices.getAdapter()).writePricesFromPayloadToContract(paramsProvider);
-(await prices.getAdapter()).readPricesFromContract(paramsProvider);
-(await prices.getAdapter()).readTimestampFromContract();
+const feedId = paramsProvider.getDataFeedIds()[0];
+
+await adapter.getPricesFromPayload(paramsProvider);
+await adapter.writePricesFromPayloadToContract(paramsProvider);
+await adapter.readPricesFromContract(paramsProvider);
+await adapter.readTimestampFromContract(feedId);
 ```
 
 ### Installing the dependencies

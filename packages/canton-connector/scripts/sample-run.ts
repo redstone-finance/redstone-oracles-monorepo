@@ -1,14 +1,17 @@
 import { sampleRun } from "@redstone-finance/multichain-kit";
 import { ContractParamsProvider, getSignersForDataServiceId } from "@redstone-finance/sdk";
-import { CantonBlockchainService, PricesCantonContractAdapter } from "../src";
-import { PricePillCantonContractConnector } from "../src/adapters/PricePillCantonContractConnector";
+import {
+  CantonBlockchainService,
+  PricePillCantonContractConnector,
+  PricesCantonContractAdapter,
+} from "../src";
 import { makeDefaultClient } from "./utils";
 
 const VIEWER_PARTY_NAME = `RedStoneOracleViewer`;
 const UPDATER_PARTY_NAME = `RedStoneOracleUpdater`;
 const OWNER_PARTY_NAME = `RedStoneOracleOwner`;
 
-const ADAPTER_ID = "RedStoneAdapter-v2-0.4.0";
+const ADAPTER_ID = "RedStoneAdapter-v10-0.4.0";
 
 async function main() {
   const [client, updateClient, _ownerClient] = [
@@ -18,7 +21,6 @@ async function main() {
   ].map(makeDefaultClient);
 
   const adapter = new PricesCantonContractAdapter(client, updateClient, ADAPTER_ID);
-
   const service = new CantonBlockchainService(client);
 
   const paramsProvider = new ContractParamsProvider({
