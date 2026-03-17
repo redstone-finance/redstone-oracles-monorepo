@@ -18,6 +18,7 @@ export class PriceFeedStellarContractConnector {
   getAdapter() {
     return Promise.resolve(this.priceFeedAdapter);
   }
+
   async getBlockNumber() {
     return await this.client.getBlockNumber();
   }

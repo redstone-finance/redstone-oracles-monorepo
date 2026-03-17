@@ -53,7 +53,7 @@ describe("Gas Usage of integrated and initialized prices contract", () => {
     let gasUsage = await adapter.getPricesFromPayload(paramsProvider);
     logAndSaveResults("get_prices", uniqueSignerCount, dataFeeds, Number(gasUsage[0]));
 
-    gasUsage = (await adapter.writePricesFromPayloadToContract(paramsProvider)) as bigint[];
+    gasUsage = await adapter.writePricesFromPayloadToContract(paramsProvider);
     logAndSaveResults("write_prices", uniqueSignerCount, dataFeeds, Number(gasUsage[0]));
 
     gasUsage = await adapter.readPricesFromContract(paramsProvider);

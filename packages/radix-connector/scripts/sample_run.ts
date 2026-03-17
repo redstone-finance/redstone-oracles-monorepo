@@ -1,11 +1,11 @@
 import {
-  ContractParamsProvider,
-  convertValue,
   describeContractData,
   describeTimestamp,
-  getSignersForDataServiceId,
+  ForwardCompatibleWriteContractAdapter,
   sampleRun,
-} from "@redstone-finance/sdk";
+} from "@redstone-finance/multichain-kit";
+import { ContractParamsProvider, getSignersForDataServiceId } from "@redstone-finance/sdk";
+import { RedstoneCommon } from "@redstone-finance/utils";
 import { PriceAdapterRadixContractConnector, PriceFeedRadixContractConnector } from "../src";
 import {
   DATA_SERVICE_ID,
@@ -15,6 +15,8 @@ import {
   PRICE_ADAPTER_NAME,
   PROXY_NAME,
 } from "./constants";
+
+const DEFAULT_NUM_VALUE_DECIMALS = 8;
 
 async function main() {
   const paramsProvider = new ContractParamsProvider({
@@ -37,7 +39,8 @@ async function main() {
     await loadAddress(`component`, PROXY_NAME, FEED_ID)
   );
 
-  await sampleRun(paramsProvider, connector, priceFeed);
+  const adapter = await ForwardCompatibleWriteContractAdapter.fromConnector(connector);
+  await sampleRun(paramsProvider, adapter, connector, await priceFeed.getAdapter());
 
   priceAdapter.readMode = "CallReadMethod";
   const timestampRead = await priceAdapter.readTimestampFromContract(
@@ -50,7 +53,7 @@ async function main() {
     `Values read by using method read_prices: \n${(
       await priceAdapter.readPricesFromContract(paramsProvider)
     )
-      .map(convertValue)
+      .map((v) => RedstoneCommon.convertValueDec(v, DEFAULT_NUM_VALUE_DECIMALS))
       .toString()}`
   );
   console.log(

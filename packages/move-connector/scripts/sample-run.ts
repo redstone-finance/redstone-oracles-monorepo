@@ -1,8 +1,5 @@
-import {
-  ContractParamsProvider,
-  getSignersForDataServiceId,
-  sampleRun,
-} from "@redstone-finance/sdk";
+import { ForwardCompatibleWriteContractAdapter, sampleRun } from "@redstone-finance/multichain-kit";
+import { ContractParamsProvider, getSignersForDataServiceId } from "@redstone-finance/sdk";
 import { RedstoneCommon } from "@redstone-finance/utils";
 import { z } from "zod";
 import { makeAptosAccount, MoveClientBuilder, MovePricesContractConnector } from "../src";
@@ -41,8 +38,14 @@ async function main() {
     account
   );
 
+  const adapter = await ForwardCompatibleWriteContractAdapter.fromConnector(moveContractConnector);
   const ethPriceFeedConnector = new MovePriceFeedContractConnector(client, feedAddress.toString());
-  await sampleRun(paramsProvider, moveContractConnector, ethPriceFeedConnector);
+  await sampleRun(
+    paramsProvider,
+    adapter,
+    moveContractConnector,
+    await ethPriceFeedConnector.getAdapter()
+  );
 }
 
 void main();

@@ -19,6 +19,7 @@
     "lint:fix": "yarn global:eslint --fix ."
   },
   "dependencies": {
+    "@redstone-finance/multichain-kit": "workspace:*",
     "@redstone-finance/sdk": "workspace:*",
     "@redstone-finance/utils": "workspace:*",
     "dotenv": "^16.0.3",

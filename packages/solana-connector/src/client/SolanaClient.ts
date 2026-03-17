@@ -164,4 +164,10 @@ export class SolanaClient {
 
     await sendAndConfirmTransaction(this.connection, transaction, [from]);
   }
+
+  async getTimeForBlock(slot: number): Promise<Date> {
+    const timestamp = await this.connection.getBlockTime(slot);
+
+    return new Date((timestamp || 0) * 1000);
+  }
 }

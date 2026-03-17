@@ -1,12 +1,5 @@
 import { execSync } from "child_process";
-import {
-  AnchorReadonlyProvider,
-  DEFAULT_SOLANA_CONFIG,
-  PriceAdapterContract,
-  SolanaClient,
-  SolanaContractUpdater,
-  SolanaWriteContractAdapter,
-} from "../src";
+import { DEFAULT_SOLANA_CONFIG, SolanaWriteContractAdapter } from "../src";
 import { ConnectionStateScenario, LiteSVMConnection } from "./LiteSVMConnection";
 import { setUpEnv } from "./setup-env";
 import { testSample } from "./test-data";
@@ -18,25 +11,14 @@ function getSolanaPricesContractAdapter(trusted: "trusted" | "untrusted") {
   const state = new ConnectionStateScenario(svm);
   const connection = new LiteSVMConnection(state);
 
-  const client = new SolanaClient(connection);
-  const contractAdapter = new PriceAdapterContract(
-    programId.toBase58(),
-    new AnchorReadonlyProvider(connection, client, signer.publicKey),
-    client
-  );
-
   const writePriceAdapter = new SolanaWriteContractAdapter(
-    contractAdapter,
-    client,
-    new SolanaContractUpdater(
-      client,
-      {
-        ...DEFAULT_SOLANA_CONFIG,
-        useAggressiveGasOracle: false,
-      },
-      signer,
-      contractAdapter
-    )
+    connection,
+    programId.toBase58(),
+    signer,
+    {
+      ...DEFAULT_SOLANA_CONFIG,
+      useAggressiveGasOracle: false,
+    }
   );
 
   return {
