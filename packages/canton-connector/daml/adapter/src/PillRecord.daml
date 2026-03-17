@@ -42,8 +42,6 @@ partitionRecords currentTimestamp currentFeedData =
 
 -- Private
 
-mergedHistory newEntries = L.foldl addToFeedData newEntries
-
 shouldArchive currentTimestamp record =
   isSome record.pillCid && currentTimestamp - record.priceData.writeTimestamp > pill_keep_ms
 
