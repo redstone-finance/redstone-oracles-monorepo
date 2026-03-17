@@ -4481,6 +4481,7 @@
       },
       "denomination": "USD",
       "rateFeed": false,
+      "localCacheTTL": "60m",
       "deviationCheck": {
         "deviationWithRecentValues": {
           "maxPercent": 2,
