@@ -10,9 +10,9 @@
     * [RedStone Interface](#redstone-interface)
     * [RedStone Core](#redstone-core)
     * [RedStone Adapter](#redstone-adapter)
+    * [RedStone PricePillFactory](#redstone-pricepillfactory)
     * [RedStone PricePill](#redstone-pricepill)
     * [Test](#test)
-  * [The current state of development](#the-current-state-of-development)
 <!-- TOC -->
 
 ## Intellect.eu & Keycloak
@@ -64,7 +64,7 @@ See more about the [RedStone SDK](./sdk/README.md) library.
 3. It defines the [`IRedStoneAdapter`](./interface/src/IRedStoneAdapter.daml) and [`IRedStonePricePill`](./interface/src/IRedStonePricePill.daml) interfaces
 4. Also defines the [`RedStoneTypes`](./interface/src/RedStoneTypes.daml), like `RedStoneValue` or `RedStonePriceData`
 
-### [RedStone Core](./adapter)
+### [RedStone Core](./core)
 
 1. Provides a [template](./core/src/RedStoneCore.daml) of a contract implementing the `IRedStoneCore` interface
 2. The contract code may change, but until the interface remains unchanged, it can be found by the interface package id.
@@ -78,12 +78,14 @@ See more about the [RedStone SDK](./sdk/README.md) library.
     controller (view this).viewers
 ```
 
-See more about the Pull model [here](./core/README.md)
+See more about the Pull model and the Disclosed Core Contract [here](./core/README.md)
 
 ### [RedStone Adapter](./adapter)
 
 1. Provides a [template](./adapter/src/RedStoneAdapter.daml) of a contract implementing the `IRedStoneAdapter` interface
 2. The contract code may change, but until the interface remains unchanged, it can be found by the interface package id.
+
+See more about the Push model, PricePill lifecycle and all choices [here](./adapter/README.md)
 
 ```haskell
   nonconsuming choice GetPrices : RedStoneResult
@@ -93,7 +95,7 @@ See more about the Pull model [here](./core/README.md)
       payloadHex : Text
     controller (view this).viewers
 
-  choice WritePrices : ContractId IRedStoneAdapter
+  nonconsuming choice WritePrices : ContractId IRedStoneAdapter
     with
       feedIds : [RedStoneFeedId]
       currentTime : Time
@@ -109,14 +111,35 @@ See more about the Pull model [here](./core/README.md)
     with
       feedIds : [RedStoneFeedId]
     controller (view this).viewers
+
+  nonconsuming choice GetUniqueSignerThreshold : Int
+    controller (view this).viewers
 ```
+
+The `WritePrices` choice creates a new adapter contract with updated feed data and archives the old one within the same transaction.
+When a `PricePillFactory` is configured, `WritePrices` also creates `PricePill` contracts for each feed, enabling individual feed reads.
+
+### [RedStone PricePillFactory](./factory)
+
+1. Provides a [template](./factory/src/RedStonePricePillFactory.daml) of a contract implementing the `IRedStonePricePillFactory` interface
+2. Creates `PricePill` contracts when the adapter's `WritePrices` choice is exercised
+3. Manages pill lifecycle: creates new pills and archives stale ones
+4. Integrates with `FeaturedAppRight` for Canton app rewards
 
 ### [RedStone PricePill](./price_feed)
 
+![RedStonePricePill.png](./test/RedStonePricePill.png)
+
 1. Provides a [template](./price_feed/src/RedStonePricePill.daml) of a contract implementing the `IRedStonePricePill` interface
-2. Every pill contains a saved data which exist at least one minute from creation, but the newest created data lives until it's replaced
+2. Each pill is tagged with an `adapterId` and `feedId` for filtering
+3. Pills are created by the `PricePillFactory` when the adapter's `WritePrices` choice is exercised
+
+See the detailed [PricePill lifecycle](./adapter/README.md#-pricepill-lifecycle) in the Push Oracle docs.
 
 ```haskell
+  nonconsuming choice IsDataStale : Bool
+    controller (view this).viewers
+
   nonconsuming choice ReadData : (RedStonePriceData RedStoneValue)
     controller (view this).viewers
 
@@ -131,6 +154,9 @@ See more about the Pull model [here](./core/README.md)
 
   nonconsuming choice ReadDescription : Text
     controller (view this).viewers
+
+  choice ArchivePill : ()
+    controller (view this).creators
 ```
 
 ### [Test](./test)
@@ -138,12 +164,3 @@ See more about the Pull model [here](./core/README.md)
 1. Contains some tests as scripts as there's no a native unit-tests mechanism
 2. Provides also integration tests for local/ide/ledger deploying and running.
 3. Must be extended to cover more cases
-
-## The current state of development
-
-1. It's possible to deploy all components above to the predefined intellect.eu participant and operate with them with the predefined user
-   1. The components' system client/reader has been tested on a single domain in 2 intellect.eu node-participants for daml `2.7.9` (so with most of the checks disabled).
-   2. Creating a new user in the Keycloak, they can connect to the provider, is in progress (*it always uses the admin user in the participant*)
-2. Contracts' visibility in the global Canton world, outside intellect.eu, is a mystery
-    1. it depends on the Parties defined in other participants
-3. Managing users and participants is quite aggravating

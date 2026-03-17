@@ -1,16 +1,12 @@
 module RedStoneAdapter where
 
-import DA.List as L
 import DA.Map as M
-import RedStone.Config(verifyConfigAgainstLedger)
 import RedStone.GetPrices as G
-import RedStone.Processor
 import RedStoneTypes
 import IRedStoneAdapter
 import IRedStonePricePillFactory
 import Config(unique_signer_count, adapter_config_fun)
-import NewFeedData
-import Verify
+import ProcessPayload
 import PillRecord
 
 template RedStoneAdapter
@@ -31,21 +27,12 @@ template RedStoneAdapter
       iRedStoneAdapter_GetPricesImpl feedIds currentTime = G.getPricesNumeric $ adapter_config_fun feedIds currentTime
 
       iRedStoneAdapter_WritePricesImpl self feedIds currentTime payloadHex = do
-        config <- verifyConfigAgainstLedger $ adapter_config_fun feedIds currentTime
+        hasNewValues <- hasNewPrices feedData feedIds currentTime payloadHex
 
-        let (values, timestamp) = processPayloadNumeric config payloadHex
-        let newValues = determineNewValues (config.currentTimestamp, feedData) feedIds (values, timestamp)
-
-        if L.null newValues then
+        if not hasNewValues then
           return self
-        else do
-          newData <- newFeedData viewers pillFactory adapterId feedData config.currentTimestamp timestamp newValues
-
-          newCid <- create this with
-            feedData = newData
-          archive self
-
-          return $ toInterfaceContractId @IRedStoneAdapter newCid
+        else
+          exercise (coerceContractId @IRedStoneAdapter @RedStoneAdapter self) WritePricesConsuming with feedIds, currentTime, payloadHex
 
       iRedStoneAdapter_ReadPriceDataImpl feedIds = do
         let getPriceData feedId =
@@ -58,10 +45,23 @@ template RedStoneAdapter
       iRedStoneAdapter_ReadPricesImpl feedIds = do
         let getPriceValue feedId =
               case M.lookup feedId feedData of
-                None -> error $ "Value not found " <> show feedId
+                None -> error $ "Value not found for " <> show feedId
                 Some (newest :: _) -> newest.priceData.value
-                Some [] -> error $ "Value not found " <> show feedId
+                Some [] -> error $ "Value not found for " <> show feedId
         return $ map getPriceValue feedIds
 
       iRedStoneAdapter_GetUniqueSignerThresholdImpl () = do
         return unique_signer_count
+
+    -- Internal consuming choice for atomic write-and-replace with full payload verification
+    choice WritePricesConsuming : ContractId IRedStoneAdapter
+      with
+        feedIds : [RedStoneFeedId]
+        currentTime : Time
+        payloadHex : PayloadHex
+      controller updaters
+      do
+        newData <- processAndWritePrices viewers pillFactory adapterId feedData feedIds currentTime payloadHex
+        newCid <- create this with feedData = newData
+        
+        return $ toInterfaceContractId @IRedStoneAdapter newCid

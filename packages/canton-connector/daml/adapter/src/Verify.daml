@@ -25,7 +25,7 @@ determineNewValues (currentTimestamp, currentFeedData) feedIds (values, timestam
         verifiedValues = zipWith (\feedId val -> (feedId, verify (currentTimestamp, currentFeedData) (feedId, val, timestamp))) feedIds values
         filteredValues = L.filter (resultIsOk . snd) verifiedValues
         unwrappedValues = map (\(feedId, value) -> (feedId, resultUnwrap value)) filteredValues
-    in unwrappedValues
+    in (unwrappedValues, timestamp)
 
 entriesFromValues currentTimestamp timestamp newValues =
     map (\(feedId, value) -> (feedId, RedStonePriceData with value, timestamp, writeTimestamp = currentTimestamp)) newValues
