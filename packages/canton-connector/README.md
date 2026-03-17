@@ -29,41 +29,43 @@ the [whole RedStone Oracle model](https://docs.redstone.finance/docs/introductio
 
 ## 🔥 Connecting to the contract
 
-### Pull model
+### Push model (Adapter + PricePill)
 
-First, you need to import the connector code to your project
+The adapter stores price data on-ledger and creates `PricePill` contracts for individual feed reads.
 
 ```ts
-// Typescript
-import {
-  PriceAdapterCantonContractConnector,
-  makeCantonConnection,
-} from "@redstone-finance/canton-connector";
-import { ContractParamsProvider, getSignersForDataServiceId } from "@redstone-finance/sdk";
+import { PricesCantonContractConnector } from "@redstone-finance/canton-connector";
+import { BackwardCompatibleConnector } from "@redstone-finance/multichain-kit";
+import { ContractParamsProvider, getSignersForDataServiceId, sampleRun } from "@redstone-finance/sdk";
 
-// Javascript
-const {
-  CoreCantonContractAdapter,
-  keycloakTokenProvider,
-} = require("@redstone-finance/canton-connector");
-const { ContractParamsProvider, getSignersForDataServiceId } = require("@redstone-finance/sdk");
+const ADAPTER_ID = "RedStoneAdapter-v2-0.4.0";
+
+const client = makeDefaultClient("RedStoneOracleViewer");
+const updateClient = makeDefaultClient("RedStoneOracleUpdater");
+
+const connector = new PricesCantonContractConnector(client, updateClient, ADAPTER_ID);
+
+const paramsProvider = new ContractParamsProvider({
+  dataPackagesIds: ["ETH", "BTC"],
+  dataServiceId: "redstone-primary-prod",
+  uniqueSignersCount: 3,
+  authorizedSigners: getSignersForDataServiceId("redstone-primary-prod"),
+});
+
+const oldConnector = new BackwardCompatibleConnector(connector);
+await sampleRun(paramsProvider, oldConnector);
 ```
 
-Then you can invoke the contract methods described above pointing to the
-selected [RedStone data service](https://app.redstone.finance/app/pull-model/redstone-primary-prod) and requested data feeds.
+### Pull model (Core)
+
+The pull model processes data directly in the transaction without persisting it on-ledger.
 
 ```ts
- // use tokenProvider you want; for keycloakTokenProvider you need the ENV variable defined as in '.env.example'
-const tokenProvider = () => keycloakTokenProvider();
+import { CoreCantonContractAdapter } from "@redstone-finance/canton-connector";
+import { ContractParamsProvider, getSignersForDataServiceId } from "@redstone-finance/sdk";
 
-// The party ID you'll be using to interact with the contract; one of defined during contract's initialization
-const partyId = `RedStoneOracleViewer::1220a0242797a84e1d8c492f1259b3f87d561fcbde2e4b2cebc4572ddfc515b44c28`;
-
-// The coreId defined during contract's initialization; NOT THE contractId - it will be fetched automatically by package ids
-const coreId = "RedStoneAdapter-040";
-
-// RedStone Canton Client; Needs to have the `PARTICIPANT` env variable defined
-const client = new CantonClient(partyId, getJsonApiUrl(), tokenProvider); 
+const client = makeDefaultClient("RedStoneOracleViewer");
+const coreId = "RedStoneCore-v2-0.4.0";
 
 const adapter = new CoreCantonContractAdapter(client, coreId);
 const paramsProvider = new ContractParamsProvider({
@@ -72,11 +74,21 @@ const paramsProvider = new ContractParamsProvider({
   uniqueSignersCount: 3,
   authorizedSigners: getSignersForDataServiceId("redstone-primary-prod"),
 });
+
+await adapter.getPricesFromPayload(paramsProvider);
 ```
-Now you can decode the prices by invoking the code:
+
+### Reading individual price feeds (PricePill)
 
 ```ts
-await adapter.getPricesFromPayload(paramsProvider);
+import { PricePillCantonContractConnector } from "@redstone-finance/canton-connector";
+
+const client = makeDefaultClient("RedStoneOracleViewer");
+const ADAPTER_ID = "RedStoneAdapter-v2-0.4.0";
+
+const ethFeedConnector = new PricePillCantonContractConnector(client, ADAPTER_ID, "ETH");
+const adapter = await ethFeedConnector.getAdapter();
+const price = await adapter.readLatestRoundDetails();
 ```
 
 ### Installing the dependencies

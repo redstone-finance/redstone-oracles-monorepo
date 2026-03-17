@@ -19,6 +19,8 @@ import type { GenerateExternalPartyTopologyRequest } from '../models/GenerateExt
 import type { GenerateExternalPartyTopologyResponse } from '../models/GenerateExternalPartyTopologyResponse';
 import type { GetActiveContractsRequest } from '../models/GetActiveContractsRequest';
 import type { GetConnectedSynchronizersResponse } from '../models/GetConnectedSynchronizersResponse';
+import type { GetContractRequest } from '../models/GetContractRequest';
+import type { GetContractResponse } from '../models/GetContractResponse';
 import type { GetEventsByContractIdRequest } from '../models/GetEventsByContractIdRequest';
 import type { GetIdentityProviderConfigResponse } from '../models/GetIdentityProviderConfigResponse';
 import type { GetLatestPrunedOffsetsResponse } from '../models/GetLatestPrunedOffsetsResponse';
@@ -455,6 +457,8 @@ export class DefaultService {
     }
     /**
      * List all known parties.
+     * @param identityProviderId
+     * @param filterParty
      * @param pageSize maximum number of elements in a returned page
      * @param pageToken token - to continue results from a given page, leave empty to start from the beginning of the list, obtain token from the result of previous page
      * @returns ListKnownPartiesResponse
@@ -462,6 +466,8 @@ export class DefaultService {
      * @throws ApiError
      */
     public static getV2Parties(
+        identityProviderId?: string,
+        filterParty?: string,
         pageSize?: number,
         pageToken?: string,
     ): CancelablePromise<ListKnownPartiesResponse | JsCantonError> {
@@ -469,11 +475,13 @@ export class DefaultService {
             method: 'GET',
             url: '/v2/parties',
             query: {
+                'identity-provider-id': identityProviderId,
+                'filter-party': filterParty,
                 'pageSize': pageSize,
                 'pageToken': pageToken,
             },
             errors: {
-                400: `Invalid value for: query parameter pageSize, Invalid value for: query parameter pageToken, Invalid value for: headers`,
+                400: `Invalid value for: query parameter identity-provider-id, Invalid value for: query parameter filter-party, Invalid value for: query parameter pageSize, Invalid value for: query parameter pageToken, Invalid value for: headers`,
             },
         });
     }
@@ -1396,6 +1404,30 @@ export class DefaultService {
         return __request(OpenAPI, {
             method: 'POST',
             url: '/v2/interactive-submission/preferred-packages',
+            body: requestBody,
+            mediaType: 'application/json',
+            errors: {
+                400: `Invalid value for: body, Invalid value for: headers`,
+            },
+        });
+    }
+    /**
+     * Looking up contract data by contract ID.
+     * This endpoint is experimental / alpha, therefore no backwards compatibility is guaranteed.
+     * This endpoint must not be used to look up contracts which entered the participant via party replication
+     * or repair service.
+     *
+     * @param requestBody
+     * @returns GetContractResponse
+     * @returns JsCantonError
+     * @throws ApiError
+     */
+    public static postV2ContractsContractById(
+        requestBody: GetContractRequest,
+    ): CancelablePromise<GetContractResponse | JsCantonError> {
+        return __request(OpenAPI, {
+            method: 'POST',
+            url: '/v2/contracts/contract-by-id',
             body: requestBody,
             mediaType: 'application/json',
             errors: {

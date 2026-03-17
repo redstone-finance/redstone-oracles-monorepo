@@ -16,7 +16,7 @@ runTests = do
   runSuite configSignersSuite
   runSuite configThresholdSuite
 
-testTime = time (date 2026 Jan 1) 12 0 0
+testTime = time (date 2026 Apr 1) 12 0 0
 
 testSigners =
   [ "049a0e6cada7938a0fc616578aff2b11337d90ec4e99e9fee95e57e9d8371562b31698225fb73c666ba586842b913e67ad289f374f7a46fc873342f805a8683d4e"
