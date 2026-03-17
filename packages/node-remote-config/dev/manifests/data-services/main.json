@@ -9599,14 +9599,6 @@
       "denomination": "ratio",
       "rateFeed": true
     },
-    "FTSE": {
-      "source": [],
-      "denomination": "GBP",
-      "rateFeed": false,
-      "types": [
-        "rwa"
-      ]
-    },
     "FTSE100": {
       "source": [],
       "denomination": "GBP",
