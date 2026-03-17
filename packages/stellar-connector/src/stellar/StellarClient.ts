@@ -140,12 +140,23 @@ export class StellarClient {
     return (sorobanData ? builder.setSorobanData(sorobanData) : builder).build();
   }
 
+  async waitForBlockNumber(blockNumber?: number) {
+    if (!RedstoneCommon.isDefined(blockNumber)) {
+      return;
+    }
+
+    await RedstoneCommon.waitForBlockNumber(() => this.getBlockNumber(), blockNumber);
+  }
+
   async simulateOperation<T>(
     operation: xdr.Operation<Operation.InvokeHostFunction>,
     sender: string | Account,
-    transform: (sim: rpc.Api.SimulateTransactionSuccessResponse) => T
+    transform: (sim: rpc.Api.SimulateTransactionSuccessResponse) => T,
+    blockNumber?: number
   ) {
     const tx = await this.buildTransaction(operation, sender);
+
+    await this.waitForBlockNumber(blockNumber);
 
     return transform(await this.simulateTransaction(tx));
   }
@@ -154,12 +165,21 @@ export class StellarClient {
     contract: string | Address | Contract,
     key: xdr.ScVal,
     transform: (result: rpc.Api.LedgerEntryResult) => T,
-    durability?: rpc.Durability
+    durability?: rpc.Durability,
+    blockNumber?: number
   ) {
+    await this.waitForBlockNumber(blockNumber);
+
     return transform(await this.server.getContractData(contract, key, durability));
   }
 
-  async getContractEntries(contract: string | Address | Contract, feeds: xdr.ScVal[]) {
+  async getContractEntries(
+    contract: string | Address | Contract,
+    feeds: xdr.ScVal[],
+    blockNumber?: number
+  ) {
+    await this.waitForBlockNumber(blockNumber);
+
     const keys = feeds.map((feed) => contractDataKey(contract, feed));
 
     return (await this.server.getLedgerEntries(...keys)).entries.map(
@@ -179,6 +199,7 @@ export class StellarClient {
       asset: Asset.native(),
       amount: String(amount),
     });
+
     return await this.buildAndSendTransaction(sender, operation);
   }
 
@@ -354,10 +375,12 @@ export class StellarClient {
     ).liveUntilLedgerSeq;
   }
 
-  async getInstanceTtls(contracts: (string | Address | Contract)[]) {
+  async getInstanceTtls(contracts: (string | Address | Contract)[], blockNumber?: number) {
     const keys = contracts.map((contract) =>
       contractDataKey(contract, xdr.ScVal.scvLedgerKeyContractInstance())
     );
+
+    await this.waitForBlockNumber(blockNumber);
 
     const response = await this.server.getLedgerEntries(...keys);
 
@@ -393,17 +416,11 @@ export class StellarClient {
     addresses: string[],
     updateTtlThreshold = LEDGERS_PER_DAY * DAYS_TO_EXTEND_TTL_THRESHOLD
   ) {
-    const [currentLedger, ttls] = await Promise.all([
-      this.getBlockNumber(),
-      Promise.allSettled(addresses.map(this.getInstanceTtl.bind(this))),
-    ]);
+    const currentLedger = await this.getBlockNumber();
+    const ttls = await this.getInstanceTtls(addresses, currentLedger);
 
     return _.zip(addresses, ttls)
-      .filter(([_, ttl]) => ttl?.status === "fulfilled")
-      .filter(
-        ([_, ttl]) =>
-          (ttl as PromiseFulfilledResult<number>).value - currentLedger < updateTtlThreshold
-      )
+      .filter(([_, ttl]) => (ttl ?? 0) - currentLedger < updateTtlThreshold) // treat unknown ttl as an error state
       .map(([address]) => address!);
   }
 
@@ -417,15 +434,11 @@ export class StellarClient {
 function toScAddress(contract: string | Address | Contract) {
   if (typeof contract === "string") {
     return new Address(contract).toScAddress();
-  }
-  if (contract instanceof Address) {
+  } else if (contract instanceof Address) {
     return contract.toScAddress();
-  }
-  if (contract instanceof Contract) {
+  } else {
     return contract.address().toScAddress();
   }
-
-  throw new Error("Unsupported contract type");
 }
 
 function contractDataKey(
