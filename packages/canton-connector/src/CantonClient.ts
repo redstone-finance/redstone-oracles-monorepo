@@ -153,7 +153,7 @@ export class CantonClient {
         continue;
       }
 
-      const events = update.Transaction.value.events!;
+      const events = update.Transaction.value.events ?? [];
 
       const createdEvent = events.find((e) => "CreatedEvent" in e)?.CreatedEvent;
       const adapterId =

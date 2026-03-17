@@ -22,13 +22,13 @@ async function main() {
   const service = new CantonBlockchainService(client);
 
   const paramsProvider = new ContractParamsProvider({
-    dataPackagesIds: ["ETH", "BTC"],
+    dataPackagesIds: ["ETH", "BTC", "CC"],
     dataServiceId: "redstone-primary-prod",
     uniqueSignersCount: 3,
     authorizedSigners: getSignersForDataServiceId("redstone-primary-prod"),
   });
 
-  const ethPriceFeedConnector = new PricePillCantonContractConnector(client, "ETH", ADAPTER_ID);
+  const ethPriceFeedConnector = new PricePillCantonContractConnector(client, ADAPTER_ID, "ETH");
 
   await sampleRun(paramsProvider, adapter, service, await ethPriceFeedConnector.getAdapter());
 }
