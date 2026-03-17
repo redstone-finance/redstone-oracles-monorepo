@@ -450,21 +450,8 @@
       "types": ["rwa"]
     },
     "NIKKEI225": {
-      "source": ["alltick-api", "finhub_fxcm-usd", "finhub_oanda-usd", "ws-itick-indices"],
+      "source": ["alltick-api", "finhub_oanda-usd", "ws-itick-indices"],
       "denomination": "JPY",
-      "rateFeed": false,
-      "types": ["rwa"]
-    },
-    "MSCI": {
-      "source": [
-        "alltick-stocks-api",
-        "ws-aleno",
-        "ws-blocksize",
-        "databento-no-closing-price",
-        "ws-polygon-massive",
-        "ws-dx-feed"
-      ],
-      "denomination": "USD",
       "rateFeed": false,
       "types": ["rwa"]
     },
@@ -475,7 +462,7 @@
         "databento-no-closing-price",
         "ws-polygon-massive",
         "ws-dx-feed",
-        "twelve-data"
+        "ws-twelve-data"
       ],
       "denomination": "USD",
       "rateFeed": false,
