@@ -30,7 +30,7 @@ NETWORK=localnet yarn deploy
 
 ### Tests
 
-To test MovementPricesContractAdapter i MovementPricesContractConnector follow the steps below.
+To test MovePricesContractAdapter and MovePricesContractConnector, follow the steps below.
 
 * Start the node locally.
 
