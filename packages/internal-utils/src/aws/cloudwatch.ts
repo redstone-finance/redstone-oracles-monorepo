@@ -77,6 +77,9 @@ function isTagDefined(tag: Tag) {
   return tag.Key !== undefined && tag.Value !== undefined;
 }
 
+const DEFAULT_HEALTHCHECK_METRIC_MIN_INTERVAL_MS = 45_000;
+const lastHealthcheckSentAt: Record<string, number> = {};
+
 export const sendHealthcheckMetric = async (
   healthcheckMetricName?: string,
   logPerf = true,
@@ -86,7 +89,19 @@ export const sendHealthcheckMetric = async (
   if (!healthcheckMetricName) {
     return;
   }
-  const start = Date.now();
+  const minIntervalMs =
+    Number(process.env["HEALTHCHECK_METRIC_MIN_INTERVAL_MS"]) ||
+    DEFAULT_HEALTHCHECK_METRIC_MIN_INTERVAL_MS;
+  const now = Date.now();
+  const lastSentAt = lastHealthcheckSentAt[healthcheckMetricName] ?? 0;
+  if (now - lastSentAt < minIntervalMs) {
+    console.info(
+      `Skipping healthcheck metric [${healthcheckMetricName}] - throttled, next send allowed in ${minIntervalMs - (now - lastSentAt)}ms`
+    );
+    return;
+  }
+  lastHealthcheckSentAt[healthcheckMetricName] = now;
+  const start = now;
   await sendMetrics(
     METRICS_NAMESPACE,
     healthcheckMetricName,
