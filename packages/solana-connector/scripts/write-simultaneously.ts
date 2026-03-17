@@ -6,7 +6,7 @@ import {
 } from "@redstone-finance/sdk";
 import { RedstoneCommon } from "@redstone-finance/utils";
 import { hexlify } from "ethers/lib/utils";
-import { readCluster, SolanaConnectionBuilder, SolanaContractConnector } from "../src";
+import { readCluster, SolanaConnectionBuilder, SolanaWriteContractAdapter } from "../src";
 import { readProgramAddress } from "./consts";
 import { getRpcUrls } from "./get-rpc-urls";
 import { readKeypair } from "./utils";
@@ -34,7 +34,7 @@ export async function writeSimultaneously() {
     enableEnhancedLogs: true,
   };
 
-  const solanaContractConnector = new SolanaContractConnector(
+  const adapter = new SolanaWriteContractAdapter(
     connection,
     readProgramAddress(readCluster()),
     keypair
@@ -47,7 +47,7 @@ export async function writeSimultaneously() {
 
   await Promise.allSettled(
     [paramsProvider2, paramsProvider].map((paramsProvider) =>
-      solanaContractConnector.writePricesFromPayloadToContract(paramsProvider)
+      adapter.writePricesFromPayloadToContract(paramsProvider)
     )
   );
 }

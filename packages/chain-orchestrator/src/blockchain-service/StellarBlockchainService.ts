@@ -14,10 +14,6 @@ export class StellarBlockchainService extends Service {
     super(client);
   }
 
-  async getTimeForBlock(sequence: number) {
-    return await this.client.getTimeForBlock(sequence);
-  }
-
   async getTransactions(
     startLedger: number,
     endLedger: number

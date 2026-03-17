@@ -5,9 +5,10 @@ import {
   MovePricesContractConnector,
 } from "@redstone-finance/move-connector";
 
+import { ForwardCompatibleWriteContractAdapter } from "@redstone-finance/multichain-kit";
 import { PartialRelayerConfig } from "./partial-relayer-config";
 
-export const getMoveContractConnector = (
+export const getMoveContractAdapter = async (
   relayerConfig: PartialRelayerConfig,
   adapterType: "aptos" | "movement"
 ) => {
@@ -32,7 +33,7 @@ export const getMoveContractConnector = (
 
   const account = makeAptosAccount(privateKey);
 
-  return new MovePricesContractConnector(
+  const connector = new MovePricesContractConnector(
     aptosClient,
     {
       packageObjectAddress: adapterContractPackageId,
@@ -41,4 +42,6 @@ export const getMoveContractConnector = (
     account,
     configFromOptionals(gasLimit, maxTxSendAttempts)
   );
+
+  return await ForwardCompatibleWriteContractAdapter.fromConnector(connector);
 };

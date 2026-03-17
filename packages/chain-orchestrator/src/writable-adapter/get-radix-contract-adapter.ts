@@ -1,3 +1,4 @@
+import { ForwardCompatibleWriteContractAdapter } from "@redstone-finance/multichain-kit";
 import {
   DEFAULT_RADIX_CLIENT_CONFIG,
   PriceAdapterRadixContractConnector,
@@ -5,7 +6,7 @@ import {
 } from "@redstone-finance/radix-connector";
 import { PartialRelayerConfig } from "./partial-relayer-config";
 
-export const getRadixContractConnector = (relayerConfig: PartialRelayerConfig) => {
+export const getRadixContractAdapter = async (relayerConfig: PartialRelayerConfig) => {
   const {
     privateKey,
     adapterContractAddress,
@@ -34,5 +35,7 @@ export const getRadixContractConnector = (relayerConfig: PartialRelayerConfig) =
     .withQuarantineEnabled()
     .build();
 
-  return new PriceAdapterRadixContractConnector(client, adapterContractAddress);
+  const connector = new PriceAdapterRadixContractConnector(client, adapterContractAddress);
+
+  return await ForwardCompatibleWriteContractAdapter.fromConnector(connector);
 };

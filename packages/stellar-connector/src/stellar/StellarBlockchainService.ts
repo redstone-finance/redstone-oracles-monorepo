@@ -43,6 +43,10 @@ export class StellarBlockchainService implements BlockchainService {
         )
     );
   }
+
+  async getTimeForBlock(sequence: number) {
+    return await this.client.getTimeForBlock(sequence);
+  }
 }
 
 export class StellarBlockchainServiceWithTransfer

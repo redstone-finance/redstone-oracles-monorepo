@@ -1,16 +1,15 @@
+import { BlockProvider, WriteContractAdapter } from "@redstone-finance/multichain-kit";
 import {
   ContractParamsProvider,
   DataServiceIds,
   getSignersForDataServiceId,
-  IContractConnector,
-  IRedstoneContractAdapter,
 } from "@redstone-finance/sdk";
 import { IterationArgsMessage, RelayerConfig } from "../../src";
 import { ContractData, ShouldUpdateContext } from "../../src/types";
 
-class ContractAdapterMock implements IRedstoneContractAdapter {
-  getSignerAddress(): Promise<string | undefined> {
-    return Promise.resolve(undefined);
+export class ContractAdapterMock implements WriteContractAdapter {
+  getSignerAddress(): Promise<string> {
+    return Promise.resolve("");
   }
 
   getUniqueSignerThreshold(_blockNumber?: number): Promise<number> {
@@ -36,24 +35,34 @@ class ContractAdapterMock implements IRedstoneContractAdapter {
     return this.readLatestRoundContractData(feedIds, blockNumber);
   }
 
-  writePricesFromPayloadToContract(_paramsProvider: ContractParamsProvider): Promise<void> {
-    return Promise.resolve();
+  writePricesFromPayloadToContract(_paramsProvider: ContractParamsProvider): Promise<string> {
+    return Promise.resolve("");
+  }
+
+  getDataFeedIds?(): Promise<string[] | undefined> {
+    throw new Error("Method not implemented.");
+  }
+
+  getPricesFromPayload(): Promise<bigint[]> {
+    throw new Error("Method not implemented.");
+  }
+
+  readPricesFromContract(): Promise<bigint[]> {
+    throw new Error("Method not implemented.");
+  }
+
+  readTimestampFromContract(): Promise<number> {
+    throw new Error("Method not implemented.");
+  }
+
+  readLatestUpdateBlockTimestamp(): Promise<number | undefined> {
+    throw new Error("Method not implemented.");
   }
 }
 
-export class ContractConnectorMock implements IContractConnector<ContractAdapterMock> {
-  private adapter = new ContractAdapterMock();
-
-  getAdapter(): Promise<ContractAdapterMock> {
-    return Promise.resolve(this.adapter);
-  }
-
+export class BlockProviderMock implements BlockProvider {
   getBlockNumber(): Promise<number> {
     return Promise.resolve(123432);
-  }
-
-  waitForTransaction(_txId: string): Promise<boolean> {
-    return Promise.resolve(true);
   }
 }
 

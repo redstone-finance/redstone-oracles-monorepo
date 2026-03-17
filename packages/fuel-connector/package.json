@@ -23,6 +23,7 @@
     "run-node": "fuel-core run --db-type in-memory --debug"
   },
   "dependencies": {
+    "@redstone-finance/multichain-kit": "workspace:*",
     "@redstone-finance/sdk": "workspace:*",
     "fuels": "^0.97.0",
     "lodash": "^4.17.23"

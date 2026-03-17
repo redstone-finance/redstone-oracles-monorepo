@@ -15,10 +15,6 @@ export abstract class NonEvmBlockchainServiceWithTransfer implements BlockchainS
     return await this.service.getBlockNumber();
   }
 
-  async waitForTransaction(txId: string) {
-    return await this.service.waitForTransaction(txId);
-  }
-
   async getNormalizedBalance(address: string, blockNumber?: number) {
     return await this.service.getNormalizedBalance(address, blockNumber);
   }
@@ -27,5 +23,7 @@ export abstract class NonEvmBlockchainServiceWithTransfer implements BlockchainS
     return await this.service.getNormalizedBalance(addressOrName, blockTag);
   }
 
-  abstract getTimeForBlock(blockHeight: number): Promise<Date>;
+  async getTimeForBlock(blockHeight: number): Promise<Date> {
+    return await this.service.getTimeForBlock(blockHeight);
+  }
 }

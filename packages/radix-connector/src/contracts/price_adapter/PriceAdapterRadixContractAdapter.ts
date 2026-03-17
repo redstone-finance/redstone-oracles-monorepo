@@ -1,8 +1,4 @@
-import {
-  ContractData,
-  ContractParamsProvider,
-  IExtendedPricesContractAdapter,
-} from "@redstone-finance/sdk";
+import { ContractData, ContractParamsProvider } from "@redstone-finance/sdk";
 import { BigNumber, BigNumberish } from "ethers";
 import _ from "lodash";
 import { RadixClient } from "../../radix/RadixClient";
@@ -16,10 +12,7 @@ import { ReadTimestampRadixMethod } from "./methods/ReadTimestampRadixMethod";
 import { WritePricesRadixMethod } from "./methods/WritePricesRadixMethod";
 import { WritePricesTrustedRadixMethod } from "./methods/WritePricesTrustedRadixMethod";
 
-export class PriceAdapterRadixContractAdapter
-  extends RadixContractAdapter
-  implements IExtendedPricesContractAdapter
-{
+export class PriceAdapterRadixContractAdapter extends RadixContractAdapter {
   private trustedUpdaterProofBadge?: NonFungibleGlobalIdInput;
 
   async getSignerAddress() {

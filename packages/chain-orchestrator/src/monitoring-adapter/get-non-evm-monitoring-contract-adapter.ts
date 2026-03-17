@@ -1,30 +1,20 @@
 import { MoveClientBuilder, MovePricesContractConnector } from "@redstone-finance/move-connector";
-import { BackwardCompatibleReadOnlyConnector } from "@redstone-finance/multichain-kit";
+import { ForwardCompatibleContractAdapter } from "@redstone-finance/multichain-kit";
 import { AnyOnChainRelayerManifest } from "@redstone-finance/on-chain-relayer-common";
 import {
   PriceAdapterRadixContractConnector,
   RadixClientBuilder,
 } from "@redstone-finance/radix-connector";
-import {
-  SolanaBlockchainService,
-  SolanaClient,
-  SolanaConnectionBuilder,
-  SolanaContractAdapter,
-} from "@redstone-finance/solana-connector";
-import {
-  StellarBlockchainService,
-  StellarClientBuilder,
-  StellarContractAdapter,
-} from "@redstone-finance/stellar-connector";
+import { SolanaConnectionBuilder, SolanaContractAdapter } from "@redstone-finance/solana-connector";
+import { StellarClientBuilder, StellarContractAdapter } from "@redstone-finance/stellar-connector";
 import {
   makeSuiConfig,
-  SuiBlockchainService,
   SuiClientBuilders,
   SuiContractAdapter,
 } from "@redstone-finance/sui-connector";
 import { deconstructNetworkId, RedstoneCommon } from "@redstone-finance/utils";
 
-export function getNonEvmMonitoringContractConnector(
+export async function getNonEvmMonitoringContractAdapter(
   relayerManifest: AnyOnChainRelayerManifest,
   rpcUrls: string[]
 ) {
@@ -32,16 +22,16 @@ export function getNonEvmMonitoringContractConnector(
 
   switch (chainType) {
     case "radix":
-      return getRadixContractConnector(rpcUrls, relayerManifest);
+      return await getRadixContractAdapter(rpcUrls, relayerManifest);
     case "sui":
-      return getSuiContractConnector(rpcUrls, relayerManifest);
+      return getSuiContractAdapter(rpcUrls, relayerManifest);
     case "aptos":
     case "movement":
-      return getMoveContractConnector(rpcUrls, relayerManifest, chainType);
+      return await getMoveContractAdapter(rpcUrls, relayerManifest, chainType);
     case "solana":
-      return getSolanaContractConnector(rpcUrls, relayerManifest);
+      return getSolanaContractAdapter(rpcUrls, relayerManifest);
     case "stellar":
-      return getStellarContractConnector(rpcUrls, relayerManifest);
+      return getStellarContractAdapter(rpcUrls, relayerManifest);
     case "fuel":
     case "canton":
       throw new Error(`${chainType} is not supported in monitoring`);
@@ -54,31 +44,33 @@ export function getNonEvmMonitoringContractConnector(
   }
 }
 
-function getRadixContractConnector(rpcUrls: string[], relayerManifest: AnyOnChainRelayerManifest) {
+async function getRadixContractAdapter(
+  rpcUrls: string[],
+  relayerManifest: AnyOnChainRelayerManifest
+) {
   const client = new RadixClientBuilder()
     .withNetworkId(relayerManifest.chain.id)
     .withRpcUrls(rpcUrls)
     .build();
 
-  return new PriceAdapterRadixContractConnector(client, relayerManifest.adapterContract);
+  const connector = new PriceAdapterRadixContractConnector(client, relayerManifest.adapterContract);
+
+  return await ForwardCompatibleContractAdapter.fromConnector(connector);
 }
 
-function getSolanaContractConnector(rpcUrls: string[], relayerManifest: AnyOnChainRelayerManifest) {
+function getSolanaContractAdapter(rpcUrls: string[], relayerManifest: AnyOnChainRelayerManifest) {
   const connection = new SolanaConnectionBuilder()
     .withNetworkId(relayerManifest.chain.id)
     .withRpcUrls(rpcUrls)
     .build();
 
-  const adapter = SolanaContractAdapter.fromConnectionAndAddress(
+  return SolanaContractAdapter.fromConnectionAndAddress(
     connection,
     relayerManifest.adapterContract
   );
-  const service = new SolanaBlockchainService(new SolanaClient(connection));
-
-  return new BackwardCompatibleReadOnlyConnector(adapter, service);
 }
 
-function getSuiContractConnector(rpcUrls: string[], relayerManifest: AnyOnChainRelayerManifest) {
+function getSuiContractAdapter(rpcUrls: string[], relayerManifest: AnyOnChainRelayerManifest) {
   if (!relayerManifest.adapterContractPackageId) {
     throw new Error("adapterContractPackageId is required");
   }
@@ -92,13 +84,11 @@ function getSuiContractConnector(rpcUrls: string[], relayerManifest: AnyOnChainR
     packageId: relayerManifest.adapterContractPackageId,
     priceAdapterObjectId: relayerManifest.adapterContract,
   });
-  const adapter = new SuiContractAdapter(suiClient, config);
-  const service = new SuiBlockchainService(suiClient);
 
-  return new BackwardCompatibleReadOnlyConnector(adapter, service);
+  return new SuiContractAdapter(suiClient, config);
 }
 
-function getMoveContractConnector(
+async function getMoveContractAdapter(
   rpcUrls: string[],
   relayerManifest: AnyOnChainRelayerManifest,
   adapterType: "aptos" | "movement"
@@ -111,23 +101,19 @@ function getMoveContractConnector(
     .withRpcUrls(rpcUrls)
     .build();
 
-  return new MovePricesContractConnector(aptosClient, {
+  const connector = new MovePricesContractConnector(aptosClient, {
     packageObjectAddress: relayerManifest.adapterContractPackageId,
     priceAdapterObjectAddress: relayerManifest.adapterContract,
   });
+
+  return await ForwardCompatibleContractAdapter.fromConnector(connector);
 }
 
-function getStellarContractConnector(
-  rpcUrls: string[],
-  relayerManifest: AnyOnChainRelayerManifest
-) {
+function getStellarContractAdapter(rpcUrls: string[], relayerManifest: AnyOnChainRelayerManifest) {
   const client = new StellarClientBuilder()
     .withNetworkId(relayerManifest.chain.id)
     .withRpcUrls(rpcUrls)
     .build();
 
-  const adapter = new StellarContractAdapter(client, relayerManifest.adapterContract);
-  const service = new StellarBlockchainService(client);
-
-  return new BackwardCompatibleReadOnlyConnector(adapter, service);
+  return new StellarContractAdapter(client, relayerManifest.adapterContract);
 }

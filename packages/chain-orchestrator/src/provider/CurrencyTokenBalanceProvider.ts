@@ -1,15 +1,15 @@
+import { BalanceProvider, BlockProvider } from "@redstone-finance/multichain-kit";
 import { RedstoneCommon } from "@redstone-finance/utils";
 import { Contract, providers } from "ethers";
-import { BalanceProvider } from "./BalanceProvider";
 
-export class CurrencyTokenBalanceProvider implements BalanceProvider {
+export class CurrencyTokenBalanceProvider implements BalanceProvider, BlockProvider {
   constructor(
     private readonly provider: providers.Provider,
     private readonly currencyTokenAddress: string
   ) {}
 
   async getBalance(addressOrName: string, blockTag?: number) {
-    return await this.balanceOf(this.currencyTokenAddress, addressOrName, blockTag);
+    return (await this.balanceOf(this.currencyTokenAddress, addressOrName, blockTag)).toBigInt();
   }
 
   getBlockNumber() {

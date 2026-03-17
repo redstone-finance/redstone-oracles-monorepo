@@ -35,7 +35,7 @@ describe("StellarPricesContractAdapter", () => {
     const deployer = new StellarContractDeployer(client, writer);
     const { contractId: adapterId } = await deployer.deploy(wasmFilePath(PRICE_ADAPTER));
 
-    adapter = new StellarWriteContractAdapter(client, adapterId, writer);
+    adapter = new StellarWriteContractAdapter(client, adapterId, keypair);
     contractOps = new StellarContractOps(client, new Contract(adapterId), writer);
 
     await contractOps.initContract(keypair.publicKey());

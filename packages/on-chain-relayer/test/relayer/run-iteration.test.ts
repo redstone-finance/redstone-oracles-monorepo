@@ -1,3 +1,4 @@
+import { WriteContractAdapter } from "@redstone-finance/multichain-kit";
 import { INumericDataPoint } from "@redstone-finance/protocol";
 import { DataPackagesResponseCache } from "@redstone-finance/sdk";
 import { RedstoneLogger } from "@redstone-finance/utils";
@@ -14,7 +15,11 @@ import {
   mockConfig,
   MULTI_POINT_DATA_PACKAGE_ID,
 } from "../helpers";
-import { ContractConnectorMock, getIterationArgsProviderMock } from "./run-iteration-mocks";
+import {
+  BlockProviderMock,
+  ContractAdapterMock,
+  getIterationArgsProviderMock,
+} from "./run-iteration-mocks";
 
 const UPDATE_CONDITION_SATISFIED_REGEXP =
   /Update condition satisfied; block_number=123432 iteration_duration=/;
@@ -22,7 +27,7 @@ const UPDATE_CONDITION_NOT_SATISFIED_REGEXP =
   /Update condition NOT satisfied; block_number=123432 iteration_duration=/;
 
 describe("runIteration tests", () => {
-  let connector: ContractConnectorMock;
+  let adapter: WriteContractAdapter;
   let sendHealthcheckPingStub: sinon.SinonStub;
   let updatePricesStub: sinon.SinonStub;
   let loggerStub: { log: sinon.SinonStub };
@@ -159,11 +164,10 @@ describe("runIteration tests", () => {
     cache?: DataPackagesResponseCache,
     dataPoints?: INumericDataPoint[]
   ) {
-    connector = new ContractConnectorMock();
-    const adapter = await connector.getAdapter();
+    adapter = new ContractAdapterMock();
     updatePricesStub = sinon.stub(adapter, "writePricesFromPayloadToContract").resolves();
 
-    const facade = new ContractFacade(connector, relayerConfig, cache);
+    const facade = new ContractFacade(adapter, new BlockProviderMock(), relayerConfig, cache);
     const contractParamsProvider = new ContractParamsProviderMock(
       dataPoints ?? DEFAULT_DATA_POINTS,
       undefined,

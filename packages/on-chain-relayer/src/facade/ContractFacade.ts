@@ -1,10 +1,9 @@
-import type { IRedstoneContractAdapter, UpdatePricesOptions } from "@redstone-finance/sdk";
+import { BlockProvider, WriteContractAdapter } from "@redstone-finance/multichain-kit";
+import type { UpdatePricesOptions } from "@redstone-finance/sdk";
 import {
   ContractParamsProvider,
   DataPackagesRequestParams,
   DataPackagesResponseCache,
-  IContractConnector,
-  IExtendedPricesContractAdapter,
 } from "@redstone-finance/sdk";
 import { loggerFactory, RedstoneCommon } from "@redstone-finance/utils";
 import { RelayerConfig } from "../config/RelayerConfig";
@@ -16,9 +15,8 @@ export class ContractFacade {
   private readonly getUniqueSignerThresholdMemoized: (blockTag?: number) => Promise<number>;
 
   constructor(
-    protected readonly connector: IContractConnector<
-      IExtendedPricesContractAdapter | IRedstoneContractAdapter
-    >,
+    protected readonly adapter: WriteContractAdapter,
+    protected readonly blockProvider: BlockProvider,
     opts: Pick<RelayerConfig, "uniqueSignerThresholdCacheTtlMs"> = {
       uniqueSignerThresholdCacheTtlMs: 0,
     },
@@ -38,7 +36,7 @@ export class ContractFacade {
     blockTag: number,
     withDataFeedValues: boolean
   ): Promise<ContractData> {
-    return await (await this.getAdapter()).readContractData(feedIds, blockTag, withDataFeedValues);
+    return await this.adapter.readContractData(feedIds, blockTag, withDataFeedValues);
   }
 
   async getShouldUpdateContext(relayerConfig: RelayerConfig): Promise<ShouldUpdateContext> {
@@ -62,7 +60,7 @@ export class ContractFacade {
   }
 
   getBlockNumber() {
-    return this.connector.getBlockNumber();
+    return this.blockProvider.getBlockNumber();
   }
 
   private async getContractData(relayerConfig: RelayerConfig) {
@@ -90,26 +88,14 @@ export class ContractFacade {
   }
 
   async getUniqueSignerThresholdFromContract(blockTag?: number) {
-    return await (
-      await this.getAdapter()
-    ).getUniqueSignerThreshold(blockTag ?? (await this.getBlockNumber()));
+    return await this.adapter.getUniqueSignerThreshold(blockTag ?? (await this.getBlockNumber()));
   }
 
-  async updatePrices(args: UpdatePricesArgs, options?: UpdatePricesOptions): Promise<void> {
-    const adapter = await this.getAdapter();
-
-    const result = await adapter.writePricesFromPayloadToContract(
+  async updatePrices(args: UpdatePricesArgs, options?: UpdatePricesOptions) {
+    await this.adapter.writePricesFromPayloadToContract(
       this.getContractParamsProvider(args.updateRequestParams, args.dataFeedsToUpdate),
       options
     );
-
-    if (typeof result === "string") {
-      // TODO: split it to wait and describe, also for evm connector
-      this.connector
-        .waitForTransaction(result)
-        .then((_) => {})
-        .catch((error) => this.logger.error(RedstoneCommon.stringifyError(error)));
-    }
   }
 
   getContractParamsProvider(
@@ -140,10 +126,6 @@ export class ContractFacade {
   }
 
   async getDataFeedIds(blockNumber: number) {
-    return await (await this.getAdapter()).getDataFeedIds?.(blockNumber);
-  }
-
-  private async getAdapter() {
-    return await this.connector.getAdapter();
+    return await this.adapter.getDataFeedIds?.(blockNumber);
   }
 }

@@ -12,12 +12,6 @@ export class MoveBlockchainService extends NonEvmBlockchainServiceWithTransfer {
     super(new MoveContractConnector(client, privateKey));
   }
 
-  async getTimeForBlock(blockHeight: number) {
-    const block = await this.client.getMultiAptos().getBlockByHeight({ blockHeight });
-
-    return new Date(Math.floor(Number(block.block_timestamp) / 1000));
-  }
-
   async tryGetBlock(blockHeight: number) {
     try {
       return await this.client.getMultiAptos().getBlockByHeight({

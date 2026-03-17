@@ -1,4 +1,3 @@
-import { FuelPricesContractAdapter } from "../src";
 import { provider } from "./common/provider";
 import { deployPricesContract } from "./prices/prices-contract-test-utils";
 
@@ -6,7 +5,7 @@ const IS_LOCAL = false as boolean;
 const SALT = "0x0000000000000000000000000000000000000000000000000000000000000013";
 
 async function main() {
-  const adapter = (await deployPricesContract(await provider(IS_LOCAL), {
+  const adapter = await deployPricesContract(await provider(IS_LOCAL), {
     allowedSigners: [
       "0x12470f7aba85c8b81d63137dd5925d6ee114952b",
       "0x109B4a318A4F5ddcbCA6349B45f881B4137deaFB",
@@ -17,7 +16,7 @@ async function main() {
     ],
     signerCountThreshold: 1,
     salt: SALT,
-  })) as FuelPricesContractAdapter;
+  });
 
   console.log(`Deployed ${adapter.contract.id.toHexString()}`);
 }

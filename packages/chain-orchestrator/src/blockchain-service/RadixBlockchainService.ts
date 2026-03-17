@@ -10,12 +10,6 @@ export class RadixBlockchainService extends NonEvmBlockchainServiceWithTransfer 
     super(new RadixContractConnector(client));
   }
 
-  // eslint-disable-next-line @typescript-eslint/class-methods-use-this -- add reason here, please
-  getTimeForBlock(_blockHeight: number) {
-    console.warn("getTimeForBlock is not supported for Radix");
-    return Promise.resolve(new Date(0));
-  }
-
   async getTransactions(
     fromStateVersion: number,
     toStateVersion: number,

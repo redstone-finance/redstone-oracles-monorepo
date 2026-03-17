@@ -10,7 +10,7 @@ import {
   fetchParsedRpcUrlsFromSsmByNetworkIdMemoized,
   getProviderMemoized,
 } from "../provider/get-provider";
-import { MonitoringEnv } from "./get-monitoring-contract-connector";
+import { MonitoringEnv } from "./get-monitoring-contract-adapter";
 import { getPriceFeedContractConnector } from "./get-price-feed-contract-connector";
 import { NonEvmPriceFeedContract } from "./NonEvmPriceFeedContract";
 
