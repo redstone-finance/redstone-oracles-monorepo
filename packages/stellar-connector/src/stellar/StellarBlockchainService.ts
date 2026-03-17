@@ -32,11 +32,9 @@ export class StellarBlockchainService implements BlockchainService {
     return await this.getNormalizedBalance(address);
   }
 
-  async getInstanceTtls(addresses: string[]) {
-    const [ttlLedgers, curLedger] = await Promise.all([
-      this.client.getInstanceTtls(addresses),
-      this.getBlockNumber(),
-    ]);
+  async getInstanceTtls(addresses: string[], blockNumber?: number) {
+    const curLedger = blockNumber ?? (await this.getBlockNumber());
+    const ttlLedgers = await this.client.getInstanceTtls(addresses, curLedger);
 
     return ttlLedgers.map(
       (ttlLedger) =>

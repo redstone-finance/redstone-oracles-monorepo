@@ -46,32 +46,37 @@ export class StellarContractAdapter implements ContractAdapter {
     this.contract = new Contract(contract);
   }
 
-  async readPricesFromContract(paramsProvider: ContractParamsProvider, _blockNumber?: number) {
+  async readPricesFromContract(paramsProvider: ContractParamsProvider, blockNumber?: number) {
     const feedIds = paramsProvider.getDataFeedIds();
 
-    return (await this.getContractData(feedIds)).map((data) => data[1]?.lastValue ?? 0n);
+    return (await this.getContractData(feedIds, blockNumber)).map(
+      (data) => data[1]?.lastValue ?? 0n
+    );
   }
 
-  async readTimestampFromContract(feedId: string, _blockNumber?: number) {
-    return (await this.readContractData([feedId]))[feedId].lastDataPackageTimestampMS;
+  async readTimestampFromContract(feedId: string, blockNumber?: number) {
+    return (await this.readContractData([feedId], blockNumber))[feedId].lastDataPackageTimestampMS;
   }
 
-  async readContractData(feedIds: string[], _blockNumber?: number) {
-    const data = await this.getContractData(feedIds);
+  async readContractData(feedIds: string[], blockNumber?: number) {
+    const data = await this.getContractData(feedIds, blockNumber);
 
     return Object.fromEntries(data) as ContractData;
   }
 
-  async getUniqueSignerThreshold(_blockNumber?: number) {
+  async getUniqueSignerThreshold(blockNumber?: number) {
     const operation = this.contract.call("unique_signer_threshold");
 
-    return await this.client.simulateOperation(operation, RANDOM_ACCOUNT_FOR_SIMULATION, (sim) =>
-      XdrUtils.parsePrimitiveFromSimulation(sim, Number)
+    return await this.client.simulateOperation(
+      operation,
+      RANDOM_ACCOUNT_FOR_SIMULATION,
+      (sim) => XdrUtils.parsePrimitiveFromSimulation(sim, Number),
+      blockNumber
     );
   }
 
-  async readLatestUpdateBlockTimestamp(feedId: string, _blockNumber?: number) {
-    return (await this.getContractData([feedId]))[0][1]!.lastBlockTimestampMS;
+  async readLatestUpdateBlockTimestamp(feedId: string, blockNumber?: number) {
+    return (await this.getContractData([feedId], blockNumber))[0][1]!.lastBlockTimestampMS;
   }
 
   async getPricesFromPayload(paramsProvider: ContractParamsProvider) {
@@ -98,11 +103,13 @@ export class StellarContractAdapter implements ContractAdapter {
   }
 
   private async getContractData(
-    feedIds: string[]
+    feedIds: string[],
+    blockNumber?: number
   ): Promise<[string, LastRoundDetails | undefined][]> {
     const data = await this.client.getContractEntries(
       this.contract,
-      feedIds.map(XdrUtils.stringToScVal)
+      feedIds.map(XdrUtils.stringToScVal),
+      blockNumber
     );
 
     return _.zip(feedIds, data) as [string, LastRoundDetails | undefined][];
