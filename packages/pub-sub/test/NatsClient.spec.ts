@@ -115,7 +115,7 @@ describe("NatsClient", () => {
       expect(mockConnect).toHaveBeenCalledWith(
         expect.objectContaining({
           servers: "tls://myhost:4222",
-          tls: { ca: caCert },
+          tls: { ca: caCert, cert: undefined, key: undefined, handshakeFirst: true },
         })
       );
     });
@@ -133,7 +133,24 @@ describe("NatsClient", () => {
       const c = new NatsClient({ host: "tls://myhost:4222", caCert });
       await c.publish([{ topic: "t1", data: {} }], "deflate+json");
       expect(mockConnect).toHaveBeenCalledWith(
-        expect.objectContaining({ servers: "tls://myhost:4222", tls: { ca: caCert } })
+        expect.objectContaining({
+          servers: "tls://myhost:4222",
+          tls: { ca: caCert, cert: undefined, key: undefined, handshakeFirst: true },
+        })
+      );
+    });
+
+    it("should pass clientCert and clientKey in tls when set alongside caCert", async () => {
+      const caCert = "-----BEGIN CERTIFICATE-----\nMIIB...\n-----END CERTIFICATE-----";
+      const clientCert = "-----BEGIN CERTIFICATE-----\nCLIENT...\n-----END CERTIFICATE-----";
+      const clientKey = "-----BEGIN PRIVATE KEY-----\nKEY...\n-----END PRIVATE KEY-----";
+      const c = new NatsClient({ host: "myhost:4222", caCert, clientCert, clientKey });
+      await c.publish([{ topic: "t1", data: {} }], "deflate+json");
+      expect(mockConnect).toHaveBeenCalledWith(
+        expect.objectContaining({
+          servers: "tls://myhost:4222",
+          tls: { ca: caCert, cert: clientCert, key: clientKey, handshakeFirst: true },
+        })
       );
     });
 
