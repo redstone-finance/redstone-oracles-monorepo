@@ -1,0 +1,65 @@
+module ProcessPayload
+(
+  processAndWritePrices
+  , hasNewPrices
+) where
+
+import DA.Assert
+import DA.List as L
+import DA.Map as M
+import DA.Optional
+import RedStone.Config(verifyConfigAgainstLedger)
+import RedStone.Processor
+import IRedStonePricePillFactory
+import PillRecord
+import Verify
+import Config(adapter_config_fun, pill_staleness_ms)
+
+hasNewPrices feedData feedIds currentTime payloadHex = do
+  ((newValues, _), _) <- checkNewValues feedData feedIds currentTime payloadHex
+
+  return $ not $ L.null newValues
+
+processAndWritePrices viewers pillFactory adapterId feedData feedIds currentTime payloadHex = do
+  (result, config) <- checkNewValues feedData feedIds currentTime payloadHex
+
+  if L.null $ fst result then
+    pure feedData
+  else
+    newFeedData viewers pillFactory adapterId feedData config.currentTimestamp result
+
+-- Private
+
+checkNewValues feedData feedIds currentTime payloadHex = do
+  config <- verifyConfigAgainstLedger $ adapter_config_fun feedIds currentTime
+  let result = processPayloadNumeric config payloadHex
+
+  pure $ (determineNewValues (config.currentTimestamp, feedData) feedIds result, config)
+
+newFeedData viewers pillFactory adapterId feedData currentTimestamp (newValues, timestamp)  = do
+  let newEntries = entriesFromValues currentTimestamp timestamp newValues
+
+  case pillFactory of
+    None -> let
+      newRecords = createNewRecords newEntries $ map (\(_, _) -> None) newEntries
+      newFeedData = M.fromList $ map (\(feedId, record) -> (feedId, [record])) newRecords
+      in
+        pure $ M.union newFeedData feedData
+
+    Some factory -> do
+      newPills <- exercise factory CreatePricePills with
+        viewers
+        stalenessMs = pill_staleness_ms
+        adapterId
+        inputData = newEntries
+
+      length newPills === length newValues
+
+      let newRecords = createNewRecords newEntries $ map Some newPills
+      let mergedFeedData = L.foldl addToFeedData feedData newRecords
+
+      let (newItems, toArchive) = partitionRecords currentTimestamp mergedFeedData
+
+      exercise factory ArchivePricePills with contractIds = map (\record -> fromSome $ record.pillCid) toArchive
+
+      pure $ M.fromList newItems
