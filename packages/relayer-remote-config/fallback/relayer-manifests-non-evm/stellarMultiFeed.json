@@ -124,6 +124,13 @@
     },
     "XLM": {
       "priceFeedAddress": "CAXRDLYBL7ZNE754UX33XTVGTA7MNTIFWURTFJBTRKHPTNP2P36TU2ZF"
+    },
+    "SolvBTC": {
+      "priceFeedAddress": "CA5ZDXNDNOR7RA6M6HAB5ZPITD2NU3DIW2AFJCBTV2MJHRUPQXNI2LSE",
+      "updateTriggersOverrides": {
+        "deviationPercentage": 0.2,
+        "timeSinceLastUpdateInMilliseconds": 21600000
+      }
     }
   }
 }
