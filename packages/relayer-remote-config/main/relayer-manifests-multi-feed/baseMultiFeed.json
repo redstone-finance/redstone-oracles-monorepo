@@ -176,6 +176,12 @@
         "deviationPercentage": 0.1,
         "timeSinceLastUpdateInMilliseconds": 86400000
       }
+    },
+    "ETH": {
+      "priceFeedAddress": "0xe8D9FbC10e00ecc9f0694617075fDAF657a76FB2"
+    },
+    "USDC": {
+      "priceFeedAddress": "0xDd87FD0FD6F68AcB6897d05fCf31F3AB1165a49F"
     }
   }
 }
