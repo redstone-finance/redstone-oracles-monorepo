@@ -373,6 +373,13 @@
     },
     "NIKKEI225": {
       "source": [],
+      "priceAggregator": "primarySourceWithRebasing",
+      "primarySourceWithRebasingAggregatorConfig": {
+        "primarySource": "",
+        "rebaseCalculationInterval": 60000,
+        "maxAcceptableDeviationPercent": 1,
+        "clampPercent": 0.05
+      },
       "denomination": "JPY",
       "rateFeed": false,
       "types": [
@@ -381,6 +388,10 @@
     },
     "URTH": {
       "source": [],
+      "priceAggregator": "redstoneX",
+      "redstoneXAggregatorConfig": {
+        "priceDiscoverySources": []
+      },
       "denomination": "USD",
       "rateFeed": false,
       "types": [
