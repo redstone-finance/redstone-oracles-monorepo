@@ -63,6 +63,22 @@ const NatsConfig = z.object({
         ctx.addIssue(`Expected ENV ${path} by nats TLS - caCertEnvPath`);
       }
     }),
+  clientCertEnvPath: z
+    .string()
+    .optional()
+    .superRefine((path, ctx) => {
+      if (path !== undefined && !RedstoneCommon.isDefined(process.env[path])) {
+        ctx.addIssue(`Expected ENV ${path} by nats mTLS - clientCertEnvPath`);
+      }
+    }),
+  clientKeyEnvPath: z
+    .string()
+    .optional()
+    .superRefine((path, ctx) => {
+      if (path !== undefined && !RedstoneCommon.isDefined(process.env[path])) {
+        ctx.addIssue(`Expected ENV ${path} by nats mTLS - clientKeyEnvPath`);
+      }
+    }),
 });
 
 export const MultiPubSubEnvConfig = z.discriminatedUnion("type", [

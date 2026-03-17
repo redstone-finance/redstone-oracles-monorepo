@@ -41,6 +41,10 @@ export interface NatsClientConfig {
   nkeySeed?: string;
   /** PEM-encoded CA certificate. When set, connects via TLS and verifies server cert against this CA. */
   caCert?: string;
+  /** PEM-encoded client certificate for mTLS. Requires clientKey. */
+  clientCert?: string;
+  /** PEM-encoded client private key for mTLS. Requires clientCert. */
+  clientKey?: string;
 }
 
 export class NatsClient implements PubSubClient {
@@ -85,7 +89,14 @@ export class NatsClient implements PubSubClient {
           : undefined,
         // nats.js auto-upgrades to TLS whenever the server reply with tls_available:true,
         // unless tls is explicitly set to null. Without caCert we pass null to force plain connection
-        tls: this.config.caCert ? { ca: this.config.caCert } : null,
+        tls: this.config.caCert
+          ? {
+              ca: this.config.caCert,
+              cert: this.config.clientCert,
+              key: this.config.clientKey,
+              handshakeFirst: true,
+            }
+          : null,
       })
         .then((nc) => {
           this.nc = nc;
