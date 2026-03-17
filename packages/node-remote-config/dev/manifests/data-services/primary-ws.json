@@ -379,14 +379,6 @@
         "rwa"
       ]
     },
-    "MSCI": {
-      "source": [],
-      "denomination": "USD",
-      "rateFeed": false,
-      "types": [
-        "rwa"
-      ]
-    },
     "URTH": {
       "source": [],
       "denomination": "USD",
