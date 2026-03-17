@@ -1,5 +1,5 @@
 sdk-version: 3.4.11
-name: redstone-featured-v2
+name: redstone-featured-v10
 version: 0.4.0
 source: src
 dependencies:
