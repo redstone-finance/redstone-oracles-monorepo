@@ -1,12 +1,14 @@
-import { BackwardCompatibleConnector } from "@redstone-finance/multichain-kit";
-import {
-  ContractParamsProvider,
-  getSignersForDataServiceId,
-  sampleRun,
-} from "@redstone-finance/sdk";
+import { sampleRun } from "@redstone-finance/multichain-kit";
+import { ContractParamsProvider, getSignersForDataServiceId } from "@redstone-finance/sdk";
 import "dotenv/config";
 import { hexlify } from "ethers/lib/utils";
-import { readCluster, SolanaConnectionBuilder, SolanaContractConnector } from "../src";
+import {
+  readCluster,
+  SolanaBlockchainService,
+  SolanaClient,
+  SolanaConnectionBuilder,
+  SolanaWriteContractAdapter,
+} from "../src";
 import { readProgramAddress } from "./consts";
 import { getRpcUrls } from "./get-rpc-urls";
 import { readKeypair } from "./utils";
@@ -27,15 +29,15 @@ async function main() {
     authorizedSigners: getSignersForDataServiceId("redstone-primary-prod"),
   });
 
-  const solanaContractConnector = new SolanaContractConnector(
+  const adapter = new SolanaWriteContractAdapter(
     connection,
     readProgramAddress(readCluster()),
     keypair
   );
 
-  const oldConnector = new BackwardCompatibleConnector(solanaContractConnector);
+  const service = new SolanaBlockchainService(new SolanaClient(connection));
 
-  await sampleRun(paramsProvider, oldConnector);
+  await sampleRun(paramsProvider, adapter, service);
 }
 
 void main();

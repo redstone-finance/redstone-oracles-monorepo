@@ -1,8 +1,11 @@
 import { IContractConnector } from "@redstone-finance/sdk";
+import { loggerFactory } from "@redstone-finance/utils";
 import { utils } from "ethers";
 import { RadixClient } from "./RadixClient";
 
 export class RadixContractConnector<Adapter> implements IContractConnector<Adapter> {
+  private readonly logger = loggerFactory("radix-connector");
+
   constructor(
     protected client: RadixClient,
     protected componentId?: string
@@ -34,5 +37,11 @@ export class RadixContractConnector<Adapter> implements IContractConnector<Adapt
 
   async getSignerAddress() {
     return await this.client.getAccountAddress();
+  }
+
+  getTimeForBlock(_blockHeight: number) {
+    this.logger.warn("getTimeForBlock is not supported for Radix");
+
+    return Promise.resolve(new Date(0));
   }
 }

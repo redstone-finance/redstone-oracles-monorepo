@@ -72,4 +72,10 @@ export class MoveContractConnector<Adapter> implements IContractConnector<Adapte
     }
     return Promise.resolve(this.account.accountAddress.toString());
   }
+
+  async getTimeForBlock(blockHeight: number) {
+    const block = await this.client.getMultiAptos().getBlockByHeight({ blockHeight });
+
+    return new Date(Math.floor(Number(block.block_timestamp) / 1000));
+  }
 }

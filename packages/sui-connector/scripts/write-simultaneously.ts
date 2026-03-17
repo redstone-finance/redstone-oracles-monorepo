@@ -10,8 +10,8 @@ import {
   makeSuiKeypair,
   readSuiConfig,
   SuiClientBuilders,
-  SuiContractConnector,
   SuiNetworkSchema,
+  SuiWriteContractAdapter,
 } from "../src";
 import { getGraphQLUrls, getRpcUrls } from "./get-rpc-urls";
 
@@ -44,11 +44,7 @@ export async function writeSimultaneously() {
     enableEnhancedLogs: true,
   };
 
-  const suiContractConnector = new SuiContractConnector(
-    suiClient,
-    readSuiConfig(network),
-    makeSuiKeypair()
-  );
+  const adapter = new SuiWriteContractAdapter(suiClient, makeSuiKeypair(), readSuiConfig(network));
 
   const paramsProvider = await prepareParamsProviderWithData(requestParams);
   await RedstoneCommon.sleep(11_000);
@@ -57,7 +53,7 @@ export async function writeSimultaneously() {
 
   await Promise.allSettled(
     [paramsProvider2, paramsProvider].map((paramsProvider) =>
-      suiContractConnector.writePricesFromPayloadToContract(paramsProvider)
+      adapter.writePricesFromPayloadToContract(paramsProvider)
     )
   );
 }

@@ -1,8 +1,5 @@
-import {
-  ContractParamsProvider,
-  getSignersForDataServiceId,
-  sampleRun,
-} from "@redstone-finance/sdk";
+import { ForwardCompatibleWriteContractAdapter, sampleRun } from "@redstone-finance/multichain-kit";
+import { ContractParamsProvider, getSignersForDataServiceId } from "@redstone-finance/sdk";
 import {
   PriceAdapterStarknetContractConnector,
   PriceFeedStarknetContractConnector,
@@ -21,9 +18,11 @@ async function main(config: StarknetConfig) {
   const account = getAccount(config);
   const pricesConnector = new PriceAdapterStarknetContractConnector(account, PRICE_ADAPTER_ADDRESS);
 
+  const adapter = await ForwardCompatibleWriteContractAdapter.fromConnector(pricesConnector);
+
   const feedConnector = new PriceFeedStarknetContractConnector(account, PRICE_FEED_ADDRESS);
 
-  await sampleRun(paramsProvider, pricesConnector, feedConnector);
+  await sampleRun(paramsProvider, adapter, pricesConnector, await feedConnector.getAdapter());
 }
 
 void main(config);
