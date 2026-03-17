@@ -1,4 +1,4 @@
-import { BigNumber } from "ethers";
+import { BigNumber, BigNumberish } from "ethers";
 import { formatUnits, parseUnits } from "ethers/lib/utils";
 
 const DEFAULT_DECIMALS = 18;
@@ -15,6 +15,10 @@ export const normalizeDecimals = (reserve: BigNumber, decimals: number): BigNumb
   const decimalsRequired = DEFAULT_DECIMALS - decimals;
   return reserve.mul(parseUnits("1.0", decimalsRequired));
 };
+
+export function convertValueDec(v: BigNumberish, decimals: number) {
+  return BigNumber.from(v).toNumber() / 10 ** decimals;
+}
 
 export function toReadableNumber(
   number: number | BigNumber | string | bigint,

@@ -1,6 +1,8 @@
-import { ChainConfig } from "@redstone-finance/chain-configs";
+import { ChainConfig, fetchParsedRpcUrlsFromSsmByNetworkId } from "@redstone-finance/chain-configs";
+import { BlockchainService } from "@redstone-finance/multichain-kit";
 import { MegaProviderBuilder } from "@redstone-finance/rpc-providers";
 import { isNonEvmNetworkId } from "@redstone-finance/utils";
+import { MonitoringEnv } from "../monitoring-adapter/get-monitoring-contract-adapter";
 import { EvmBlockchainService } from "./EvmBlockchainService";
 import { getNonEvmBlockchainService } from "./get-non-evm-blockchain-service";
 
@@ -32,4 +34,13 @@ export async function getBlockchainService(rpcUrls: string[], chainConfig: Chain
     .build();
 
   return new EvmBlockchainService(provider);
+}
+
+export async function getMonitoringBlockchainService(
+  chainConfig: ChainConfig,
+  env: MonitoringEnv
+): Promise<BlockchainService> {
+  const rpcUrls = await fetchParsedRpcUrlsFromSsmByNetworkId(chainConfig.networkId, env);
+
+  return await getBlockchainService(rpcUrls, chainConfig);
 }

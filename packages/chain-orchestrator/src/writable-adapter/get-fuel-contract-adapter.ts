@@ -1,9 +1,10 @@
 import { FuelPricesContractConnector } from "@redstone-finance/fuel-connector";
+import { ForwardCompatibleWriteContractAdapter } from "@redstone-finance/multichain-kit";
 import { ChainTypeEnum, deconstructNetworkId, RedstoneCommon } from "@redstone-finance/utils";
 import { Provider, Wallet } from "fuels";
 import { PartialRelayerConfig } from "./partial-relayer-config";
 
-export const getFuelContractConnector = async (relayerConfig: PartialRelayerConfig) => {
+export const getFuelContractAdapter = async (relayerConfig: PartialRelayerConfig) => {
   const { privateKey, adapterContractAddress, rpcUrls, gasLimit, networkId } = relayerConfig;
   const { chainType, chainId } = deconstructNetworkId(networkId);
   if (chainType !== ChainTypeEnum.enum.fuel) {
@@ -21,5 +22,7 @@ export const getFuelContractConnector = async (relayerConfig: PartialRelayerConf
     `The chainId from manifest: ${chainId} is different than fetched from provider: ${wallet.provider.getChainId()}`
   );
 
-  return new FuelPricesContractConnector(wallet, adapterContractAddress, gasLimit);
+  const connector = new FuelPricesContractConnector(wallet, adapterContractAddress, gasLimit);
+
+  return await ForwardCompatibleWriteContractAdapter.fromConnector(connector);
 };

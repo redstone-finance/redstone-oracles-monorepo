@@ -1,11 +1,8 @@
-import {
-  ContractParamsProvider,
-  ContractParamsProviderMock,
-  IPricesContractAdapter,
-} from "@redstone-finance/sdk";
+import { ContractParamsProviderMock } from "@redstone-finance/sdk";
 import { BigNumberish } from "ethers";
 import fs from "fs";
 import path from "path";
+import { FuelPricesContractAdapter } from "../../src";
 import { SAMPLE_PACKAGES_TIMESTAMP, deployPricesContract } from "./prices-contract-test-utils";
 
 jest.setTimeout(120000);
@@ -19,35 +16,31 @@ describe("Prices contract", () => {
   });
 
   it("get_prices should return the price data", async () => {
-    const values = await performPayloadTest(
-      async (adapter: IPricesContractAdapter, paramsProvider: ContractParamsProvider) => {
-        return await adapter.getPricesFromPayload(paramsProvider);
-      }
-    );
+    const values = await performPayloadTest(async (adapter, paramsProvider) => {
+      return await adapter.getPricesFromPayload(paramsProvider);
+    });
 
     expect(values[0]).toBe(341899770128n);
     expect(values[1]).toBe(6371750000000n);
   });
 
   it("write_prices should write the price data that can be read then", async () => {
-    const values = await performPayloadTest(
-      async (adapter: IPricesContractAdapter, paramsProvider: ContractParamsProviderMock) => {
-        await adapter.writePricesFromPayloadToContract(paramsProvider);
+    const values = await performPayloadTest(async (adapter, paramsProvider) => {
+      await adapter.writePricesFromPayloadToContract(paramsProvider);
 
-        paramsProvider.overriddenFeedIds = ["ETH", "AVAX", "BTC"];
+      paramsProvider.overriddenFeedIds = ["ETH", "AVAX", "BTC"];
 
-        const results = await Promise.all([
-          adapter.readPricesFromContract(paramsProvider),
-          adapter.readTimestampFromContract(),
-        ]);
-        const prices = results[0];
-        const timestamp = results[1];
+      const results = await Promise.all([
+        adapter.readPricesFromContract(paramsProvider),
+        adapter.readTimestampFromContract(),
+      ]);
+      const prices = results[0];
+      const timestamp = results[1];
 
-        expect(timestamp / 1000).toBe(SAMPLE_PACKAGES_TIMESTAMP);
+      expect(timestamp / 1000).toBe(SAMPLE_PACKAGES_TIMESTAMP);
 
-        return prices;
-      }
-    );
+      return prices;
+    });
 
     expect(values[0]).toBe(341899770128n);
     expect(values[1]).toBe(0n);
@@ -55,17 +48,15 @@ describe("Prices contract", () => {
   });
 
   it("write_prices should overwrite prices", async () => {
-    const values = await performPayloadTest(
-      async (adapter: IPricesContractAdapter, paramsProvider: ContractParamsProviderMock) => {
-        await adapter.writePricesFromPayloadToContract(paramsProvider);
+    const values = await performPayloadTest(async (adapter, paramsProvider) => {
+      await adapter.writePricesFromPayloadToContract(paramsProvider);
 
-        const newParamsProvider = createContractParamsProviderMock("3sig_ETH_BTC_newer");
-        newParamsProvider.overriddenFeedIds = ["BTC"];
+      const newParamsProvider = createContractParamsProviderMock("3sig_ETH_BTC_newer");
+      newParamsProvider.overriddenFeedIds = ["BTC"];
 
-        await adapter.writePricesFromPayloadToContract(newParamsProvider);
-        return await adapter.readPricesFromContract(paramsProvider);
-      }
-    );
+      await adapter.writePricesFromPayloadToContract(newParamsProvider);
+      return await adapter.readPricesFromContract(paramsProvider);
+    });
 
     expect(values[0]).toBe(0n);
     expect(values[1]).toBe(6379275977691n);
@@ -73,20 +64,18 @@ describe("Prices contract", () => {
 
   it("write_prices should not write the same price data twice", async () => {
     await expect(
-      performPayloadTest(
-        async (adapter: IPricesContractAdapter, paramsProvider: ContractParamsProviderMock) => {
-          await adapter.writePricesFromPayloadToContract(paramsProvider);
+      performPayloadTest(async (adapter, paramsProvider) => {
+        await adapter.writePricesFromPayloadToContract(paramsProvider);
 
-          return (await adapter.writePricesFromPayloadToContract(paramsProvider)) as BigNumberish[];
-        }
-      )
+        return (await adapter.writePricesFromPayloadToContract(paramsProvider)) as BigNumberish[];
+      })
     ).rejects.toThrow();
   });
 
   it("get_prices should panic with insufficient number of signers", async () => {
     await expect(
       performPayloadTest(
-        async (adapter: IPricesContractAdapter, paramsProvider: ContractParamsProviderMock) => {
+        async (adapter, paramsProvider) => {
           return await adapter.getPricesFromPayload(paramsProvider);
         },
         ["ETH", "BTC", "AVAX"]
@@ -105,7 +94,7 @@ describe("Prices contract", () => {
 
   const performPayloadTest = async (
     callback: (
-      adapter: IPricesContractAdapter,
+      adapter: FuelPricesContractAdapter,
       paramsProvider: ContractParamsProviderMock
     ) => Promise<BigNumberish[]>,
     dataFeeds = ["ETH", "BTC"],

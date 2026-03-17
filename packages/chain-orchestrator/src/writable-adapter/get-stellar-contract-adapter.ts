@@ -1,10 +1,9 @@
-import { BackwardCompatibleConnector } from "@redstone-finance/multichain-kit";
 import {
   getStellarNetwork,
   makeKeypair,
   StellarClientBuilder,
-  StellarContractConnector,
   StellarNetwork,
+  StellarWriteContractAdapter,
 } from "@redstone-finance/stellar-connector";
 import { deconstructNetworkId, RedstoneCommon } from "@redstone-finance/utils";
 import { PartialRelayerConfig } from "./partial-relayer-config";
@@ -25,7 +24,7 @@ function getHorizonUrl(network: StellarNetwork) {
   }
 }
 
-export const getStellarContractConnector = (relayerConfig: PartialRelayerConfig) => {
+export const getStellarContractAdapter = (relayerConfig: PartialRelayerConfig) => {
   const {
     adapterContractAddress,
     privateKey,
@@ -54,12 +53,10 @@ export const getStellarContractConnector = (relayerConfig: PartialRelayerConfig)
     expectedTxDeliveryTimeInMS,
   };
 
-  const connector = new StellarContractConnector(
+  return new StellarWriteContractAdapter(
     client,
     adapterContractAddress,
     makeKeypair(privateKey),
     txDeliveryManConfig
   );
-
-  return new BackwardCompatibleConnector(connector);
 };

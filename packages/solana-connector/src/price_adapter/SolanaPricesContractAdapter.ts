@@ -1,21 +1,25 @@
 import { ContractAdapter, WriteContractAdapter } from "@redstone-finance/multichain-kit";
 import { ContractData, ContractParamsProvider, getLastRoundDetails } from "@redstone-finance/sdk";
 import { FP, RedstoneCommon } from "@redstone-finance/utils";
-import { Connection } from "@solana/web3.js";
+import { Connection, Keypair } from "@solana/web3.js";
 import { AnchorReadonlyProvider } from "../client/AnchorReadonlyProvider";
 import { SolanaClient } from "../client/SolanaClient";
 import { SolanaContractUpdater } from "../client/SolanaContractUpdater";
+import { DEFAULT_SOLANA_CONFIG } from "../config";
 import { PriceAdapterContract } from "./PriceAdapterContract";
 
 export class SolanaContractAdapter implements ContractAdapter {
-  constructor(private contract: PriceAdapterContract) {}
+  constructor(
+    private contract: PriceAdapterContract,
+    protected readonly client: SolanaClient
+  ) {}
 
   static fromConnectionAndAddress(connection: Connection, address: string) {
     const client = new SolanaClient(connection);
     const provider = new AnchorReadonlyProvider(connection, client);
     const contract = new PriceAdapterContract(address, provider, client);
 
-    return new SolanaContractAdapter(contract);
+    return new SolanaContractAdapter(contract, client);
   }
 
   getPricesFromPayload(_: ContractParamsProvider): Promise<bigint[]> {
@@ -84,12 +88,20 @@ export class SolanaWriteContractAdapter
   extends SolanaContractAdapter
   implements WriteContractAdapter
 {
+  private readonly updater: SolanaContractUpdater;
   constructor(
-    contract: PriceAdapterContract,
-    private readonly client: SolanaClient,
-    private readonly updater: SolanaContractUpdater
+    connection: Connection,
+    address: string,
+    keypair: Keypair,
+    config = DEFAULT_SOLANA_CONFIG
   ) {
-    super(contract);
+    const client = new SolanaClient(connection);
+    const provider = new AnchorReadonlyProvider(connection, client, keypair.publicKey);
+    const contract = new PriceAdapterContract(address, provider, client);
+
+    super(contract, client);
+
+    this.updater = new SolanaContractUpdater(client, config, keypair, contract);
   }
 
   async writePricesFromPayloadToContract(paramsProvider: ContractParamsProvider) {

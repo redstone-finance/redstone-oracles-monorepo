@@ -1,13 +1,12 @@
-import { BackwardCompatibleConnector } from "@redstone-finance/multichain-kit";
 import {
   makeSuiConfig,
   makeSuiKeypair,
   SuiClientBuilders,
-  SuiContractConnector,
+  SuiWriteContractAdapter,
 } from "@redstone-finance/sui-connector";
 import { PartialRelayerConfig } from "./partial-relayer-config";
 
-export const getSuiContractConnector = (relayerConfig: PartialRelayerConfig) => {
+export const getSuiContractAdapter = (relayerConfig: PartialRelayerConfig) => {
   const {
     privateKey,
     rpcUrls,
@@ -43,7 +42,5 @@ export const getSuiContractConnector = (relayerConfig: PartialRelayerConfig) => 
     expectedTxDeliveryTimeInMs: expectedTxDeliveryTimeInMS,
   });
 
-  const fullConnector = new SuiContractConnector(suiClient, config, makeSuiKeypair(privateKey));
-
-  return new BackwardCompatibleConnector(fullConnector);
+  return new SuiWriteContractAdapter(suiClient, makeSuiKeypair(privateKey), config);
 };
