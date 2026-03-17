@@ -8761,16 +8761,10 @@
       "denomination": "ratio",
       "rateFeed": true
     },
-    "FTSE": {
-      "source": ["twelve-data"],
-      "denomination": "GBP",
-      "rateFeed": false,
-      "types": ["rwa"]
-    },
     "FTSE100": {
       "source": [
+        "twelve-data",
         "alltick-api",
-        "finhub_capital-usd",
         "finhub_fxcm-usd",
         "finhub_oanda-usd",
         "ws-lmax",
@@ -8805,7 +8799,7 @@
       "types": ["rwa"]
     },
     "NIKKEI225": {
-      "source": ["alltick-api", "finhub_fxcm-usd", "finhub_oanda-usd", "ws-itick-indices"],
+      "source": ["alltick-api", "finhub_oanda-usd", "ws-itick-indices"],
       "denomination": "JPY",
       "rateFeed": false,
       "types": ["rwa"]
@@ -8830,7 +8824,7 @@
         "databento-no-closing-price",
         "ws-polygon-massive",
         "ws-dx-feed",
-        "twelve-data"
+        "ws-twelve-data"
       ],
       "denomination": "USD",
       "rateFeed": false,
