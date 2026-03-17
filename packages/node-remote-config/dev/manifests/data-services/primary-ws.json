@@ -480,6 +480,51 @@
       "denomination": "USD",
       "rateFeed": false,
       "types": ["rwa"]
+    },
+    "CME_MARKET_CURRENT_STATUS": {
+      "source": ["cme-market-timeline"],
+      "denomination": "enum",
+      "rateFeed": false
+    },
+    "CME_MARKET_NEXT_STATUS": {
+      "source": ["cme-market-timeline"],
+      "denomination": "enum",
+      "rateFeed": false
+    },
+    "CME_MARKET_NEXT_CHANGE_TIME": {
+      "source": ["cme-market-timeline"],
+      "denomination": "timestamp",
+      "rateFeed": false
+    },
+    "FOREX_MARKET_CURRENT_STATUS": {
+      "source": ["forex-market-timeline"],
+      "denomination": "enum",
+      "rateFeed": false
+    },
+    "FOREX_MARKET_NEXT_STATUS": {
+      "source": ["forex-market-timeline"],
+      "denomination": "enum",
+      "rateFeed": false
+    },
+    "FOREX_MARKET_NEXT_CHANGE_TIME": {
+      "source": ["forex-market-timeline"],
+      "denomination": "timestamp",
+      "rateFeed": false
+    },
+    "NY_MARKET_CURRENT_STATUS": {
+      "source": ["ny-market-timeline"],
+      "denomination": "enum",
+      "rateFeed": false
+    },
+    "NY_MARKET_NEXT_STATUS": {
+      "source": ["ny-market-timeline"],
+      "denomination": "enum",
+      "rateFeed": false
+    },
+    "NY_MARKET_NEXT_CHANGE_TIME": {
+      "source": ["ny-market-timeline"],
+      "denomination": "timestamp",
+      "rateFeed": false
     }
   },
   "multiPointPackages": {}
