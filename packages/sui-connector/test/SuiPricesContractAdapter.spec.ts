@@ -13,24 +13,25 @@ import {
 import { GrpcSuiClient } from "../src/GrpcSuiClient";
 import { LegacyJsonRpcClient } from "../src/LegacyClient";
 import { SuiClient } from "../src/SuiClient";
-import { SuiContractUpdater } from "../src/SuiContractUpdater";
 
 const DATA_SERVICE_ID = "redstone-primary-prod";
 const WRITE_TEST_TIMEOUT = RedstoneCommon.secsToMs(40);
 
 const makeClients: Record<string, () => SuiClient> = {
   grpc: () => {
+    const network = RedstoneCommon.getFromEnv("NETWORK", SuiNetworkSchema);
     execSync("yarn deploy", {
       stdio: ["inherit", "inherit", "inherit"],
     });
-    const network = RedstoneCommon.getFromEnv("NETWORK", SuiNetworkSchema);
+
     return new GrpcSuiClient(makeSuiClient(network));
   },
   legacy: () => {
+    const network = RedstoneCommon.getFromEnv("NETWORK", SuiNetworkSchema);
     execSync("yarn deploy", {
       stdio: ["inherit", "inherit", "inherit"],
     });
-    const network = RedstoneCommon.getFromEnv("NETWORK", SuiNetworkSchema);
+
     return new LegacyJsonRpcClient(makeSuiJsonRpcClient(network));
   },
 };
@@ -43,19 +44,12 @@ for (const [name, makeClient] of Object.entries(makeClients)) {
 
     beforeAll(() => {
       const network = RedstoneCommon.getFromEnv("NETWORK", SuiNetworkSchema);
-      const config = readSuiConfig(network);
       client = makeClient();
+      const config = readSuiConfig(network);
 
       const keypair = makeSuiKeypair();
-
-      adapter = new SuiWriteContractAdapter(
-        client,
-        new SuiContractUpdater(client, keypair, {
-          ...config,
-          expectedTxDeliveryTimeInMs: 11000000,
-        }),
-        config
-      );
+      SuiWriteContractAdapter.contractUpdaterCache = {};
+      adapter = new SuiWriteContractAdapter(client, keypair, config);
     }, WRITE_TEST_TIMEOUT);
 
     beforeEach(() => {

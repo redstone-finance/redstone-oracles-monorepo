@@ -9895,6 +9895,7 @@ __metadata:
   resolution: "@redstone-finance/casper-connector@workspace:packages/casper-connector"
   dependencies:
     "@noble/hashes": "npm:^1.3.3"
+    "@redstone-finance/multichain-kit": "workspace:*"
     "@redstone-finance/sdk": "workspace:*"
     "@redstone-finance/utils": "workspace:*"
     axios: "npm:^1.13.5"
@@ -10458,6 +10459,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@redstone-finance/fuel-connector@workspace:packages/fuel-connector"
   dependencies:
+    "@redstone-finance/multichain-kit": "workspace:*"
     "@redstone-finance/sdk": "workspace:*"
     "@redstone-finance/utils": "workspace:*"
     dotenv: "npm:^16.0.3"
@@ -10484,6 +10486,7 @@ __metadata:
     "@nomiclabs/hardhat-etherscan": "npm:^3.1.7"
     "@openzeppelin/contracts": "npm:^4.8.1"
     "@redstone-finance/evm-adapters": "workspace:*"
+    "@redstone-finance/multichain-kit": "workspace:*"
     "@redstone-finance/on-chain-relayer": "workspace:*"
     "@redstone-finance/protocol": "workspace:*"
     "@redstone-finance/rpc-providers": "workspace:*"
@@ -11375,6 +11378,7 @@ __metadata:
     "@redstone-finance/evm-adapters": "workspace:*"
     "@redstone-finance/internal-utils": "workspace:*"
     "@redstone-finance/monitoring-manifests": "workspace:*"
+    "@redstone-finance/multichain-kit": "workspace:*"
     "@redstone-finance/node-remote-config": "workspace:*"
     "@redstone-finance/on-chain-relayer-common": "workspace:*"
     "@redstone-finance/rpc-providers": "workspace:*"
@@ -11532,6 +11536,7 @@ __metadata:
     "@redstone-finance/evm-multicall": "workspace:*"
     "@redstone-finance/internal-utils": "workspace:*"
     "@redstone-finance/monitoring-manifests": "workspace:*"
+    "@redstone-finance/multichain-kit": "workspace:*"
     "@redstone-finance/node-remote-config": "workspace:*"
     "@redstone-finance/on-chain-relayer-common": "workspace:*"
     "@redstone-finance/protocol": "workspace:*"
@@ -11633,6 +11638,7 @@ __metadata:
     "@redstone-finance/chain-orchestrator": "workspace:*"
     "@redstone-finance/internal-utils": "workspace:*"
     "@redstone-finance/monitoring-manifests": "workspace:*"
+    "@redstone-finance/multichain-kit": "workspace:*"
     "@redstone-finance/node-remote-config": "workspace:*"
     "@redstone-finance/utils": "workspace:*"
     dotenv: "npm:^16.0.3"
@@ -11726,6 +11732,7 @@ __metadata:
     "@ethersproject/bytes": "npm:^5.6.1"
     "@ledgerhq/hw-app-aptos": "npm:^6.31.0"
     "@ledgerhq/hw-transport-node-hid": "npm:^6.29.5"
+    "@redstone-finance/multichain-kit": "workspace:*"
     "@redstone-finance/sdk": "workspace:*"
     "@redstone-finance/utils": "workspace:*"
     "@types/chai": "npm:^4.3.4"
@@ -11743,6 +11750,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@redstone-finance/multichain-kit@workspace:packages/multichain-kit"
   dependencies:
+    "@redstone-finance/protocol": "workspace:*"
     "@redstone-finance/sdk": "workspace:*"
     "@redstone-finance/utils": "workspace:*"
   languageName: unknown
@@ -11805,6 +11813,7 @@ __metadata:
     "@redstone-finance/evm-connector": "workspace:*"
     "@redstone-finance/healthcheck": "workspace:*"
     "@redstone-finance/internal-utils": "workspace:*"
+    "@redstone-finance/multichain-kit": "workspace:*"
     "@redstone-finance/on-chain-relayer-common": "workspace:*"
     "@redstone-finance/protocol": "workspace:*"
     "@redstone-finance/pub-sub": "workspace:*"
@@ -12003,6 +12012,7 @@ __metadata:
     "@ledgerhq/hw-transport-node-hid": "npm:^6.29.5"
     "@radixdlt/babylon-gateway-api-sdk": "npm:^1.10.1"
     "@radixdlt/radix-engine-toolkit": "npm:^1.0.5"
+    "@redstone-finance/multichain-kit": "workspace:*"
     "@redstone-finance/sdk": "workspace:*"
     "@redstone-finance/utils": "workspace:*"
     axios: "npm:^1.13.5"
@@ -12195,6 +12205,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@redstone-finance/starknet-connector@workspace:packages/starknet-connector"
   dependencies:
+    "@redstone-finance/multichain-kit": "workspace:*"
     "@redstone-finance/sdk": "workspace:*"
     "@redstone-finance/utils": "workspace:*"
     dotenv: "npm:^16.0.3"

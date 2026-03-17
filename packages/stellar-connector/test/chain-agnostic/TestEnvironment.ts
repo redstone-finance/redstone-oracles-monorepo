@@ -10,9 +10,9 @@ import { Keypair } from "@stellar/stellar-sdk";
 import { execSync } from "child_process";
 import {
   StellarClient,
-  StellarContractConnector,
   StellarContractDeployer,
   StellarOperationSender,
+  StellarWriteContractAdapter,
 } from "../../src";
 import { StellarSigner } from "../../src/stellar/StellarSigner";
 
@@ -22,7 +22,7 @@ const WASM_PATH = "stellar/target/agnostic-tests/redstone_adapter.wasm";
 export class StellarTestEnvironment implements PushTestEnvironment, PullTestEnvironment {
   constructor(
     private readonly rover: MarsRover,
-    private readonly connector: StellarContractConnector
+    private readonly adapter: StellarWriteContractAdapter
   ) {}
 
   configure(_: ContractConfiguration): Promise<void> {
@@ -47,14 +47,12 @@ export class StellarTestEnvironment implements PushTestEnvironment, PullTestEnvi
       return Buffer.from(payload.replace("0x", ""));
     });
 
-    const hash = await this.connector.writePricesFromPayloadToContract(paramsProvider);
-
-    await this.connector.waitForTransaction(hash);
+    await this.adapter.writePricesFromPayloadToContract(paramsProvider);
   }
 
   async read(dataFeedIds: string[]): Promise<number[]> {
     return (
-      await this.connector.readPricesFromContract(
+      await this.adapter.readPricesFromContract(
         new ContractParamsProviderMock(dataFeedIds, "", () => Buffer.from([]))
       )
     ).map((bn) => Number(bn));
@@ -96,7 +94,7 @@ export class StellarTestEnvironment implements PushTestEnvironment, PullTestEnvi
       return Buffer.from(payload.replace("0x", ""));
     });
 
-    return (await this.connector.getPricesFromPayload(paramsProvider)).map((bn) => Number(bn));
+    return (await this.adapter.getPricesFromPayload(paramsProvider)).map((bn) => Number(bn));
   }
 
   finish(): Promise<void> {
@@ -124,7 +122,7 @@ export async function getTestEnv() {
 
   return new StellarTestEnvironment(
     marsRover,
-    new StellarContractConnector(client, contractId, keypair, {
+    new StellarWriteContractAdapter(client, contractId, keypair, {
       expectedTxDeliveryTimeInMs: 10,
       maxTxSendAttempts: 2,
     })

@@ -1,10 +1,6 @@
-import { BackwardCompatibleConnector } from "@redstone-finance/multichain-kit";
-import {
-  ContractParamsProvider,
-  getSignersForDataServiceId,
-  sampleRun,
-} from "@redstone-finance/sdk";
-import { PricesCantonContractConnector } from "../src";
+import { sampleRun } from "@redstone-finance/multichain-kit";
+import { ContractParamsProvider, getSignersForDataServiceId } from "@redstone-finance/sdk";
+import { CantonBlockchainService, PricesCantonContractAdapter } from "../src";
 import { PricePillCantonContractConnector } from "../src/adapters/PricePillCantonContractConnector";
 import { makeDefaultClient } from "./utils";
 
@@ -21,7 +17,9 @@ async function main() {
     OWNER_PARTY_NAME,
   ].map(makeDefaultClient);
 
-  const connector = new PricesCantonContractConnector(client, updateClient, ADAPTER_ID);
+  const adapter = new PricesCantonContractAdapter(client, updateClient, ADAPTER_ID);
+
+  const service = new CantonBlockchainService(client);
 
   const paramsProvider = new ContractParamsProvider({
     dataPackagesIds: ["ETH", "BTC"],
@@ -31,9 +29,8 @@ async function main() {
   });
 
   const ethPriceFeedConnector = new PricePillCantonContractConnector(client, "ETH", ADAPTER_ID);
-  const oldConnector = new BackwardCompatibleConnector(connector);
 
-  await sampleRun(paramsProvider, oldConnector, ethPriceFeedConnector);
+  await sampleRun(paramsProvider, adapter, service, await ethPriceFeedConnector.getAdapter());
 }
 
 void main();

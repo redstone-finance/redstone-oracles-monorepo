@@ -43,11 +43,11 @@ describe("PriceRelayAdapterCasperContractAdapter", () => {
   beforeEach(async () => {
     connection = getMockCasperConnection();
     connector = new PriceRelayAdapterCasperContractConnector(connection, "556677");
-    adapter = (await connector.getAdapter()) as PriceRelayAdapterCasperContractAdapter;
-    wrappedAdapter = (await new PriceAdapterCasperContractConnector(
+    adapter = await connector.getAdapter();
+    wrappedAdapter = await new PriceAdapterCasperContractConnector(
       connection,
       "112233"
-    ).getAdapter()) as PriceAdapterCasperContractAdapter;
+    ).getAdapter();
     adapter.wrappedContractAdapter = wrappedAdapter;
     mockStateRootHashImplementations(connection);
   });
