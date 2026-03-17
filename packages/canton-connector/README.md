@@ -34,16 +34,17 @@ the [whole RedStone Oracle model](https://docs.redstone.finance/docs/introductio
 The adapter stores price data on-ledger and creates `PricePill` contracts for individual feed reads.
 
 ```ts
-import { PricesCantonContractConnector } from "@redstone-finance/canton-connector";
-import { BackwardCompatibleConnector } from "@redstone-finance/multichain-kit";
-import { ContractParamsProvider, getSignersForDataServiceId, sampleRun } from "@redstone-finance/sdk";
+import { PricesCantonContractAdapter, CantonBlockchainService } from "@redstone-finance/canton-connector";
+import { sampleRun } from "@redstone-finance/multichain-kit";
+import { ContractParamsProvider, getSignersForDataServiceId } from "@redstone-finance/sdk";
 
-const ADAPTER_ID = "RedStoneAdapter-v2-0.4.0";
+const ADAPTER_ID = "RedStoneAdapter-v10-0.4.0";
 
 const client = makeDefaultClient("RedStoneOracleViewer");
 const updateClient = makeDefaultClient("RedStoneOracleUpdater");
 
-const connector = new PricesCantonContractConnector(client, updateClient, ADAPTER_ID);
+const adapter = new PricesCantonContractAdapter(client, updateClient, ADAPTER_ID);
+const service = new CantonBlockchainService(client);
 
 const paramsProvider = new ContractParamsProvider({
   dataPackagesIds: ["ETH", "BTC"],
@@ -52,8 +53,7 @@ const paramsProvider = new ContractParamsProvider({
   authorizedSigners: getSignersForDataServiceId("redstone-primary-prod"),
 });
 
-const oldConnector = new BackwardCompatibleConnector(connector);
-await sampleRun(paramsProvider, oldConnector);
+await sampleRun(paramsProvider, adapter, service);
 ```
 
 ### Pull model (Core)
@@ -65,7 +65,7 @@ import { CoreCantonContractAdapter } from "@redstone-finance/canton-connector";
 import { ContractParamsProvider, getSignersForDataServiceId } from "@redstone-finance/sdk";
 
 const client = makeDefaultClient("RedStoneOracleViewer");
-const coreId = "RedStoneCore-v2-0.4.0";
+const coreId = "RedStoneCore-v10-0.4.0";
 
 const adapter = new CoreCantonContractAdapter(client, coreId);
 const paramsProvider = new ContractParamsProvider({
@@ -84,7 +84,7 @@ await adapter.getPricesFromPayload(paramsProvider);
 import { PricePillCantonContractConnector } from "@redstone-finance/canton-connector";
 
 const client = makeDefaultClient("RedStoneOracleViewer");
-const ADAPTER_ID = "RedStoneAdapter-v2-0.4.0";
+const ADAPTER_ID = "RedStoneAdapter-v10-0.4.0";
 
 const ethFeedConnector = new PricePillCantonContractConnector(client, ADAPTER_ID, "ETH");
 const adapter = await ethFeedConnector.getAdapter();
