@@ -1,12 +1,8 @@
-import {
-  ContractData,
-  ContractParamsProvider,
-  IExtendedPricesContractAdapter,
-} from "@redstone-finance/sdk";
+import { ContractData, ContractParamsProvider } from "@redstone-finance/sdk";
 import { MovePriceAdapterContractViewer } from "./MovePriceAdapterContractViewer";
 import { MovePriceAdapterContractWriter } from "./MovePriceAdapterContractWriter";
 
-export class MovePricesContractAdapter implements IExtendedPricesContractAdapter {
+export class MovePricesContractAdapter {
   constructor(
     private readonly viewer: MovePriceAdapterContractViewer,
     private readonly writer?: MovePriceAdapterContractWriter
@@ -16,8 +12,8 @@ export class MovePricesContractAdapter implements IExtendedPricesContractAdapter
     return Promise.resolve(this.writer?.getSignerAddress().toString());
   }
 
-  // eslint-disable-next-line @typescript-eslint/require-await -- add reason here, please
-  async getPricesFromPayload(_paramsProvider: ContractParamsProvider): Promise<bigint[]> {
+  // eslint-disable-next-line @typescript-eslint/class-methods-use-this -- .
+  getPricesFromPayload(_paramsProvider: ContractParamsProvider): Promise<bigint[]> {
     throw new Error("Pull model not supported");
   }
 

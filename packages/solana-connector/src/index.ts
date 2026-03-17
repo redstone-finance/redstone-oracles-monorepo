@@ -11,5 +11,4 @@ export * from "./price_adapter/SolanaPricesContractAdapter";
 export * from "./price_adapter/SolanaRustSdkErrorHandler";
 export * from "./SolanaBlockchainService";
 export * from "./SolanaConnectionBuilder";
-export * from "./SolanaContractConnector";
 export * from "./utils";

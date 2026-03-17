@@ -8,7 +8,7 @@ import { ContractParamsProviderMock } from "@redstone-finance/sdk";
 import { RedstoneCommon } from "@redstone-finance/utils";
 import { execSync } from "child_process";
 import { LiteSVM } from "litesvm";
-import { createSolanaConfig, SolanaContractConnector } from "../../src";
+import { createSolanaConfig, SolanaWriteContractAdapter } from "../../src";
 import { setUpEnv } from "../setup-env";
 import { LiteSVMAgnosticTestsConnection } from "./TestConnection";
 
@@ -16,7 +16,7 @@ const MS_IN_SECS = 1_000;
 
 export class SolanaTestEnvironment implements PushTestEnvironment, PullTestEnvironment {
   constructor(
-    private readonly connector: SolanaContractConnector,
+    private readonly adapter: SolanaWriteContractAdapter,
     private readonly svm: LiteSVM
   ) {}
 
@@ -43,9 +43,7 @@ export class SolanaTestEnvironment implements PushTestEnvironment, PullTestEnvir
     });
 
     try {
-      const hash = await this.connector.writePricesFromPayloadToContract(paramsProvider);
-
-      await this.connector.waitForTransaction(hash);
+      await this.adapter.writePricesFromPayloadToContract(paramsProvider);
     } catch {
       console.error(`Failed tx`);
     }
@@ -53,7 +51,7 @@ export class SolanaTestEnvironment implements PushTestEnvironment, PullTestEnvir
 
   async read(dataFeedIds: string[]): Promise<number[]> {
     return (
-      await this.connector.readPricesFromContract(
+      await this.adapter.readPricesFromContract(
         new ContractParamsProviderMock(dataFeedIds, "", () => Buffer.from([]))
       )
     ).map((bn) => Number(bn));
@@ -90,9 +88,7 @@ export class SolanaTestEnvironment implements PushTestEnvironment, PullTestEnvir
 
       return Buffer.from(payload.replace("0x", ""));
     });
-    const digest = await this.connector.writePricesFromPayloadToContract(paramsProvider);
-
-    await this.connector.waitForTransaction(digest);
+    await this.adapter.writePricesFromPayloadToContract(paramsProvider);
 
     return await this.read(dataFeedIds);
   }
@@ -115,7 +111,7 @@ export function getTestEnv() {
   svm.setClock(clock);
 
   const connection = new LiteSVMAgnosticTestsConnection(svm);
-  const connector = new SolanaContractConnector(
+  const connector = new SolanaWriteContractAdapter(
     connection,
     programId.toBase58(),
     trustedSigner,

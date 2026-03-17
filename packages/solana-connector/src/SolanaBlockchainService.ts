@@ -13,14 +13,14 @@ export class SolanaBlockchainService implements BlockchainService {
     return await this.client.getSlot("finalized");
   }
 
-  async waitForTransaction(_txId: string): Promise<boolean> {
-    return await Promise.resolve(true);
-  }
-
   async getNormalizedBalance(address: string, slot?: number): Promise<bigint> {
     const balance = await this.client.getBalance(new PublicKey(address), slot);
 
     return BigInt(balance) * (BigInt(10 ** 18) / BigInt(LAMPORTS_PER_SOL));
+  }
+
+  async getTimeForBlock(slot: number): Promise<Date> {
+    return await this.client.getTimeForBlock(slot);
   }
 }
 

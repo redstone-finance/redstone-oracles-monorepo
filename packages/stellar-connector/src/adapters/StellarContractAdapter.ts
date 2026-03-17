@@ -13,6 +13,8 @@ import { splitParamsIntoBatches } from "../split-params-into-batches";
 import { StellarClient } from "../stellar/StellarClient";
 import { StellarContractUpdater } from "../stellar/StellarContractUpdater";
 import { StellarOperationSender } from "../stellar/StellarOperationSender";
+import { StellarSigner } from "../stellar/StellarSigner";
+import { StellarTxDeliveryManConfig } from "../stellar/StellarTxDeliveryManConfig";
 
 export const RANDOM_ACCOUNT_FOR_SIMULATION = new Account(Keypair.random().publicKey(), "1");
 
@@ -121,13 +123,17 @@ export class StellarWriteContractAdapter
   implements WriteContractAdapter
 {
   private readonly logger = loggerFactory("stellar-write-price-adapter");
+  private readonly operationSender: StellarOperationSender;
 
   constructor(
     client: StellarClient,
-    contract: string,
-    protected readonly operationSender: StellarOperationSender
+    contractAddress: string,
+    keypair: Keypair,
+    config?: Partial<StellarTxDeliveryManConfig>
   ) {
-    super(client, contract);
+    super(client, contractAddress);
+
+    this.operationSender = new StellarOperationSender(new StellarSigner(keypair), client, config);
   }
 
   async writePricesFromPayloadToContract(
@@ -142,7 +148,11 @@ export class StellarWriteContractAdapter
       void this.maybeExtendTtlForPriceFeeds(feedAddresses);
     }
 
-    return FP.unwrapSuccess(result).transactionHash;
+    const hash = FP.unwrapSuccess(result).transactionHash;
+
+    await this.client.waitForTx(hash);
+
+    return hash;
   }
 
   getSignerAddress(): Promise<string> {

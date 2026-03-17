@@ -1,12 +1,11 @@
 import {
   CantonClientBuilder,
-  PricesCantonContractConnector,
+  PricesCantonContractAdapter,
 } from "@redstone-finance/canton-connector";
-import { BackwardCompatibleConnector } from "@redstone-finance/multichain-kit";
 import { RedstoneCommon } from "@redstone-finance/utils";
 import { PartialRelayerConfig } from "./partial-relayer-config";
 
-export const getCantonContractConnector = (relayerConfig: PartialRelayerConfig) => {
+export const getCantonContractAdapter = (relayerConfig: PartialRelayerConfig) => {
   const { adapterContractAddress, rpcUrls, networkId, privateKey } = relayerConfig;
 
   const client = new CantonClientBuilder()
@@ -23,7 +22,5 @@ export const getCantonContractConnector = (relayerConfig: PartialRelayerConfig) 
     .withDefaultAuth(privateKey)
     .build();
 
-  return new BackwardCompatibleConnector(
-    new PricesCantonContractConnector(client, updaterClient, adapterContractAddress)
-  );
+  return new PricesCantonContractAdapter(client, updaterClient, adapterContractAddress);
 };

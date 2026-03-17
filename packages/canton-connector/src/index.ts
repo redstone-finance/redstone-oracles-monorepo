@@ -2,7 +2,6 @@ export * from "./adapters/CantonContractAdapter";
 export * from "./adapters/CoreCantonContractAdapter";
 export * from "./adapters/CoreClientCantonContractAdapter";
 export * from "./adapters/PricesCantonContractAdapter";
-export * from "./adapters/PricesCantonContractConnector";
 export * from "./CantonBlockchainService";
 export * from "./CantonClient";
 export * from "./CantonClientBuilder";

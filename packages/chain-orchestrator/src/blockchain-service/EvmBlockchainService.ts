@@ -1,7 +1,7 @@
+import { BlockchainService } from "@redstone-finance/multichain-kit";
 import { providers } from "ethers";
-import { IBlockchainService } from "./IBlockchainService";
 
-export class EvmBlockchainService implements IBlockchainService {
+export class EvmBlockchainService implements BlockchainService {
   constructor(private readonly provider: providers.Provider) {}
 
   async getBlockNumber() {
@@ -24,6 +24,10 @@ export class EvmBlockchainService implements IBlockchainService {
   }
 
   async getBalance(addressOrName: string, blockTag?: number) {
-    return await this.provider.getBalance(addressOrName, blockTag);
+    return (await this.provider.getBalance(addressOrName, blockTag)).toBigInt();
+  }
+
+  async getNormalizedBalance(address: string, blockNumber?: number) {
+    return await this.getBalance(address, blockNumber);
   }
 }

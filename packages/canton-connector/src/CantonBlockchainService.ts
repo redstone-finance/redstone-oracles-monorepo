@@ -13,10 +13,6 @@ export class CantonBlockchainService implements BlockchainService {
     return this.cantonClient.getGetPricesTransactions(interfaceId, from, to, WRITE_PRICES_CHOICE);
   }
 
-  waitForTransaction(_txId: string) {
-    return Promise.resolve(true);
-  }
-
   getTimeForBlock(): Promise<Date> {
     return Promise.resolve(new Date());
   }

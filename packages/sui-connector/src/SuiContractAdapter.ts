@@ -1,3 +1,4 @@
+import { Keypair } from "@mysten/sui/cryptography";
 import { Transaction } from "@mysten/sui/transactions";
 import {
   ContractAdapter,
@@ -21,7 +22,10 @@ export class SuiContractAdapter implements ContractAdapter {
     ttl: 1_000,
   });
 
-  constructor(client: SuiClient, config: SuiConfig) {
+  constructor(
+    protected readonly client: SuiClient,
+    config: SuiConfig
+  ) {
     this.reader = SuiPricesContractReader.createMultiReader(client, config.priceAdapterObjectId);
   }
 
@@ -77,17 +81,17 @@ export class SuiContractAdapter implements ContractAdapter {
 }
 
 export class SuiWriteContractAdapter extends SuiContractAdapter implements WriteContractAdapter {
+  static contractUpdaterCache: { [p: string]: SuiContractUpdater | undefined } = {};
+
   private readonly txDeliveryMan: TxDeliveryMan;
+  private readonly contractUpdater: SuiContractUpdater;
   private readonly logger = loggerFactory("sui-prices-contract-adapter");
 
-  constructor(
-    protected readonly client: SuiClient,
-    private readonly contractUpdater: SuiContractUpdater,
-    config: SuiConfig
-  ) {
+  constructor(client: SuiClient, keypair: Keypair, config: SuiConfig) {
     super(client, config);
 
     this.txDeliveryMan = new TxDeliveryMan(config);
+    this.contractUpdater = SuiWriteContractAdapter.getContractUpdater(keypair, client, config);
   }
 
   async writePricesFromPayloadToContract(paramsProvider: ContractParamsProvider): Promise<string> {
@@ -95,7 +99,11 @@ export class SuiWriteContractAdapter extends SuiContractAdapter implements Write
 
     this.logger.info(`write-prices status: ${RedstoneCommon.stringify(result)}`);
 
-    return FP.unwrapSuccess(result).transactionHash;
+    const hash = FP.unwrapSuccess(result).transactionHash;
+
+    await this.client.waitForTransaction(hash);
+
+    return hash;
   }
 
   getSignerAddress(): Promise<string> {
@@ -112,5 +120,16 @@ export class SuiWriteContractAdapter extends SuiContractAdapter implements Write
     const signer = this.contractUpdater.getPrivateKey();
 
     return await this.client.signAndExecute(tx, signer);
+  }
+
+  static getContractUpdater(keypair: Keypair, client: SuiClient, config: SuiConfig) {
+    const cacheKey = keypair.toSuiAddress();
+    SuiWriteContractAdapter.contractUpdaterCache[cacheKey] ??= new SuiContractUpdater(
+      client,
+      keypair,
+      config
+    );
+
+    return SuiWriteContractAdapter.contractUpdaterCache[cacheKey];
   }
 }

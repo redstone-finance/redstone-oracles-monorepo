@@ -7,7 +7,6 @@ export * from "./SuiBlockchainService";
 export * from "./SuiClient";
 export * from "./SuiClientBuilder";
 export * from "./SuiContractAdapter";
-export * from "./SuiContractConnector";
 export * from "./SuiContractUtil";
 export * from "./SuiJsonRpcClientBuilder";
 export * from "./SuiReader";

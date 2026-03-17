@@ -14,12 +14,6 @@ export class SolanaBlockchainService extends Service {
     super(new SolanaClient(connection));
   }
 
-  async getTimeForBlock(slot: number): Promise<Date> {
-    const timestamp = await this.connection.getBlockTime(slot);
-
-    return new Date((timestamp || 0) * 1000);
-  }
-
   async getBlockWithTransactions(slot: number) {
     return await this.connection.getBlock(slot, {
       maxSupportedTransactionVersion: 0,

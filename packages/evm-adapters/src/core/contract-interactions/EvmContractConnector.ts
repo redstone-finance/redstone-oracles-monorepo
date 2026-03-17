@@ -1,9 +1,7 @@
-import { IContractConnector, IRedstoneContractAdapter } from "@redstone-finance/sdk";
+import { IContractConnector } from "@redstone-finance/sdk";
 import { providers } from "ethers";
 
-export class EvmContractConnector<Adapter extends IRedstoneContractAdapter>
-  implements IContractConnector<Adapter>
-{
+export class EvmContractConnector<Adapter> implements IContractConnector<Adapter> {
   constructor(
     private provider: providers.Provider,
     private adapter: Adapter

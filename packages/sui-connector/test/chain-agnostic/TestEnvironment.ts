@@ -17,13 +17,13 @@ import {
   makeSuiConfig,
   SuiAdapterContractOps,
   SuiConfig,
-  SuiContractConnector,
+  SuiWriteContractAdapter,
 } from "../../src";
 import { GrpcSuiClient } from "../../src/GrpcSuiClient";
 import { SuiContractDeployer } from "../../src/SuiContractDeployer";
 
 export class SuiTestEnvironment implements PushTestEnvironment, PullTestEnvironment {
-  private readonly connector: SuiContractConnector;
+  private readonly adapter: SuiWriteContractAdapter;
   private readonly config: SuiConfig;
 
   constructor(
@@ -41,7 +41,7 @@ export class SuiTestEnvironment implements PushTestEnvironment, PullTestEnvironm
       gasMultiplier: 1.1,
     });
 
-    this.connector = new SuiContractConnector(sui, this.config, keypair);
+    this.adapter = new SuiWriteContractAdapter(sui, keypair, this.config);
   }
 
   async pull(
@@ -53,9 +53,7 @@ export class SuiTestEnvironment implements PushTestEnvironment, PullTestEnvironm
 
       return Buffer.from(payload.replace("0x", ""));
     });
-    const digest = await this.connector.writePricesFromPayloadToContract(paramsProvider);
-
-    await this.connector.waitForTransaction(digest);
+    await this.adapter.writePricesFromPayloadToContract(paramsProvider);
 
     return await this.read(dataFeedIds);
   }
@@ -101,14 +99,13 @@ export class SuiTestEnvironment implements PushTestEnvironment, PullTestEnvironm
 
       return Buffer.from(payload.replace("0x", ""));
     });
-    const digest = await this.connector.writePricesFromPayloadToContract(paramsProvider);
 
-    await this.connector.waitForTransaction(digest);
+    await this.adapter.writePricesFromPayloadToContract(paramsProvider);
   }
 
   async read(dataFeedIds: string[]): Promise<number[]> {
     return (
-      await this.connector.readPricesFromContract(
+      await this.adapter.readPricesFromContract(
         new ContractParamsProviderMock(dataFeedIds, "", () => Buffer.from([]))
       )
     ).map((bn) => Number(bn));
