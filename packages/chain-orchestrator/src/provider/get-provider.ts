@@ -20,7 +20,7 @@ export const getProvider = async (
 ): Promise<providers.Provider> => {
   return await getProviderWithRpcUrls(
     networkId,
-    await fetchParsedRpcUrlsFromSsmByNetworkId(networkId, env),
+    await fetchParsedRpcUrlsFromSsmByNetworkIdMemoized(networkId, env),
     config
   );
 };
@@ -60,4 +60,9 @@ export const getProviderWithRpcUrls = async (
 export const getProviderMemoized = RedstoneCommon.memoize({
   functionToMemoize: getProvider,
   ttl: 60_000,
+});
+
+export const fetchParsedRpcUrlsFromSsmByNetworkIdMemoized = RedstoneCommon.memoize({
+  functionToMemoize: fetchParsedRpcUrlsFromSsmByNetworkId,
+  ttl: 58_000, // time for reaction for getProvider
 });
