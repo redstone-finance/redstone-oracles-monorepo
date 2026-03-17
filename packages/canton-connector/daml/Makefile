@@ -1,11 +1,11 @@
 include ./ops.mk
 
-VERSION=v2-0.4.0
+VERSION=-v10-0.4.0
 LEDGER_HOST=localhost
 LEDGER_PORT=6865
 DAML=daml # dpm
 
-TEST_DAR=.daml/dist/redstone-test-$(VERSION).dar
+TEST_DAR=.daml/dist/redstone-test$(VERSION).dar
 
 .PHONY: get_party_suffix
 
