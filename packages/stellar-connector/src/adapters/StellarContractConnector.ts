@@ -38,7 +38,7 @@ export class StellarContractConnector extends StellarWriteContractAdapter implem
     return await this.service.getBalance(address);
   }
 
-  async getInstanceTtls(addresses: string[]) {
-    return await this.service.getInstanceTtls(addresses);
+  async getInstanceTtls(addresses: string[], blockNumber?: number) {
+    return await this.service.getInstanceTtls(addresses, blockNumber);
   }
 }
