@@ -6,7 +6,8 @@ import { RedstoneCommon } from "@redstone-finance/utils";
 import { PartialRelayerConfig } from "./partial-relayer-config";
 
 export const getCantonContractAdapter = (relayerConfig: PartialRelayerConfig) => {
-  const { adapterContractAddress, rpcUrls, networkId, privateKey } = relayerConfig;
+  const { adapterContractAddress, adapterContractPackageId, rpcUrls, networkId, privateKey } =
+    relayerConfig;
 
   const client = new CantonClientBuilder()
     .withRpcUrls(rpcUrls)
@@ -22,5 +23,10 @@ export const getCantonContractAdapter = (relayerConfig: PartialRelayerConfig) =>
     .withDefaultAuth(privateKey)
     .build();
 
-  return new PricesCantonContractAdapter(client, updaterClient, adapterContractAddress);
+  return new PricesCantonContractAdapter(
+    client,
+    updaterClient,
+    adapterContractAddress,
+    adapterContractPackageId
+  );
 };

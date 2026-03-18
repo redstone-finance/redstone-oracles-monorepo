@@ -1,6 +1,6 @@
 import { loggerFactory, RedstoneCommon } from "@redstone-finance/utils";
 import { CantonClient, ContractFilter } from "../CantonClient";
-import { ActiveContractData, isContractNotFoundError } from "../utils";
+import { ActiveContractData, combineIntoId, isContractNotFoundError } from "../utils";
 
 const RETRY_CONFIG: Omit<RedstoneCommon.RetryConfig, "fn"> = {
   maxRetries: 3,
@@ -35,7 +35,7 @@ export abstract class CantonContractAdapter {
   }
 
   protected getInterfaceId() {
-    return `${this.interfaceId}:${this.templateName}`;
+    return combineIntoId(this.interfaceId, this.templateName);
   }
 
   protected abstract getContractFilter(): ContractFilter;
