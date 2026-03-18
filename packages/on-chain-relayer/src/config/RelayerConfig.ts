@@ -102,5 +102,6 @@ export type OnChainRelayerEnv = {
   disableMultiPointPackages?: boolean;
   graphQLUrls?: string[];
   useGlobalDataPackagesResponseStorage?: boolean;
+  dataPackagesResponseStorageLatestTtlMs?: number;
   auctionModelGasMultipliers?: number[];
 };
