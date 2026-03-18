@@ -1,6 +1,10 @@
 import { BlockchainService } from "@redstone-finance/multichain-kit";
 import { CantonClient } from "./CantonClient";
-import { WRITE_PRICES_CHOICE } from "./adapters/PricesCantonContractAdapter";
+import {
+  IADAPTER_TEMPLATE_NAME,
+  WRITE_PRICES_CHOICE,
+} from "./adapters/PricesCantonContractAdapter";
+import { combineIntoId } from "./utils";
 
 export class CantonBlockchainService implements BlockchainService {
   constructor(protected readonly cantonClient: CantonClient) {}
@@ -9,8 +13,15 @@ export class CantonBlockchainService implements BlockchainService {
     return await this.cantonClient.getCurrentOffset();
   }
 
-  getTransactionsInWindow(interfaceId: string, from: number, to: number) {
-    return this.cantonClient.getGetPricesTransactions(interfaceId, from, to, WRITE_PRICES_CHOICE);
+  getTransactionsInWindow(
+    interfaceId: string,
+    from: number,
+    to: number,
+    templateName = IADAPTER_TEMPLATE_NAME
+  ) {
+    const id = combineIntoId(interfaceId, templateName);
+
+    return this.cantonClient.getTransactionsForInterface(id, from, to, WRITE_PRICES_CHOICE);
   }
 
   getTimeForBlock(): Promise<Date> {
