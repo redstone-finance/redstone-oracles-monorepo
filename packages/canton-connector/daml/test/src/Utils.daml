@@ -1,7 +1,13 @@
 module Utils where
 
 import Daml.Script
+import DA.Assert
 import DA.Foldable
+import DA.List
 import DA.Optional
 
-submitDisclosed subject disclosures cmds = (actAs subject <> foldMap (disclose . fromSome) disclosures) `submit` cmds
+submitDisclosed subject disclosures cmds = do
+    let areSome = dedup $ map isSome disclosures
+    areSome === [True]
+
+    (actAs subject <> foldMap (disclose . fromSome) disclosures) `submit` cmds
