@@ -1,6 +1,5 @@
 import { SignedDataPackage, SignedDataPackagePlainObj } from "@redstone-finance/protocol";
 import { RedstoneCommon } from "@redstone-finance/utils";
-import axios from "axios";
 import { z } from "zod";
 import { RequestDataPackagesLogger } from "./RequestDataPackagesLogger";
 import { resolveDataServiceUrls } from "./data-services-urls";
@@ -221,7 +220,8 @@ function sendRequestToGateway(
 ) {
   const sanitizedUrl = [url.replace(/\/+$/, "")].concat(pathComponents).join("/");
 
-  return axios.get<Record<string, SignedDataPackagePlainObj[]>>(sanitizedUrl, {
-    timeout,
-  });
+  return RedstoneCommon.Fetcher.get<Record<string, SignedDataPackagePlainObj[]>>(
+    sanitizedUrl,
+    timeout
+  );
 }

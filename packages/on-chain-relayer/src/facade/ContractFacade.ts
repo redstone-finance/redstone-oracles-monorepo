@@ -27,7 +27,9 @@ export class ContractFacade {
       ttl: opts.uniqueSignerThresholdCacheTtlMs,
       cacheKeyBuilder: () => "uniqueSignerThresholdCached",
       cacheReporter: (isMissing) =>
-        RedstoneCommon.reportMemoizeCacheUsage(isMissing, "uniqueSignerThreshold", this.logger),
+        opts.uniqueSignerThresholdCacheTtlMs || !isMissing
+          ? RedstoneCommon.reportMemoizeCacheUsage(isMissing, "uniqueSignerThreshold", this.logger)
+          : undefined,
     });
   }
 
