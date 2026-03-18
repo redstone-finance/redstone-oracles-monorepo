@@ -8,7 +8,7 @@ import {
 import { RedstoneCommon } from "@redstone-finance/utils";
 import { RelayerConfig } from "../config/RelayerConfig";
 
-const storageInstance = new DataPackagesResponseStorage();
+let storageInstance: DataPackagesResponseStorage | undefined = undefined;
 
 export function canIgnoreMissingFeeds(relayerConfig: RelayerConfig) {
   return isMultiFeedAdapterType(relayerConfig.adapterContractType);
@@ -33,6 +33,10 @@ export function makeDataPackagesRequestParams(
   if (signers.length === 0) {
     signers = getSignersForDataServiceId(dataServiceId as DataServiceIds);
   }
+
+  storageInstance ??= new DataPackagesResponseStorage({
+    latestTtlMs: relayerConfig.dataPackagesResponseStorageLatestTtlMs,
+  });
 
   return {
     dataServiceId,

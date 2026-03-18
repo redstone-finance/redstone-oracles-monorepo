@@ -284,6 +284,10 @@ export const readManifestAndEnv = () => {
       "USE_GLOBAL_STORAGE",
       z.boolean().default(isFallback)
     ),
+    dataPackagesResponseStorageLatestTtlMs: RedstoneCommon.getFromEnv(
+      "GLOBAL_STORAGE_LATEST_PACKAGES_TTL_MS",
+      z.number().optional()
+    ),
     graphQLUrls: RedstoneCommon.getFromEnv("GRAPHQL_URLS", z.array(z.url()).optional()),
   };
 
