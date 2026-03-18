@@ -27,7 +27,7 @@ template RedStoneAdapter
       iRedStoneAdapter_GetPricesImpl feedIds currentTime = G.getPricesNumeric $ adapter_config_fun feedIds currentTime
 
       iRedStoneAdapter_WritePricesImpl self feedIds currentTime payloadHex = do
-        hasNewValues <- hasNewPrices feedData feedIds currentTime payloadHex
+        hasNewValues <- hasNewPrices (owner, updaters, viewers) adapterId feedData feedIds currentTime payloadHex
 
         if not hasNewValues then
           return self
@@ -61,7 +61,7 @@ template RedStoneAdapter
         payloadHex : PayloadHex
       controller updaters
       do
-        newData <- processAndWritePrices viewers pillFactory adapterId feedData feedIds currentTime payloadHex
+        newData <- processAndWritePrices (owner, updaters, viewers) pillFactory adapterId feedData feedIds currentTime payloadHex
         newCid <- create this with feedData = newData
         
         return $ toInterfaceContractId @IRedStoneAdapter newCid
