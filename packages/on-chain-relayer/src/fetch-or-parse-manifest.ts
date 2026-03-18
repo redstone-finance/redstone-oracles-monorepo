@@ -1,6 +1,5 @@
 import { AnyOnChainRelayerManifestSchema } from "@redstone-finance/on-chain-relayer-common";
-import { loggerFactory } from "@redstone-finance/utils";
-import axios from "axios";
+import { RedstoneCommon, loggerFactory } from "@redstone-finance/utils";
 
 export async function fetchOrParseManifest(manifestUrls: string[], localManifestData?: unknown) {
   const manifestData = localManifestData ?? (await fetchManifestFromUrls(manifestUrls));
@@ -16,7 +15,7 @@ async function fetchManifestFromUrls(manifestUrls: string[]) {
 
   for (const url of manifestUrls) {
     try {
-      manifestData = (await axios.get(url)).data;
+      manifestData = (await RedstoneCommon.Fetcher.get(url)).data;
       if (manifestData) {
         break;
       }
