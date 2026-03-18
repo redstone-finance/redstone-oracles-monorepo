@@ -137,7 +137,7 @@ export class CantonClient {
       .filter((createdEvent) => !archivedContractIds.has(createdEvent.contractId));
   }
 
-  async getGetPricesTransactions(interfaceId: string, from: number, to: number, method: string) {
+  async getTransactionsForInterface(interfaceId: string, from: number, to: number, method: string) {
     const filtersByParty = makeInterfaceFilterByParty(interfaceId, this.partyId);
     const result = await this.fetchUpdates(
       filtersByParty,

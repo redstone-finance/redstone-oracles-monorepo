@@ -13,6 +13,7 @@ import {
 export type DamlTuple2<T = string, U = string> = { _1: T; _2: U };
 
 const CONTRACT_NOT_FOUND_ERROR = "CONTRACT_NOT_FOUND";
+const SEP = ":";
 
 export function isApiError(e: unknown): e is Error & { body: { code: string; cause: string } } {
   const error = e as Error & { body: { code: string; cause: string } };
@@ -117,4 +118,8 @@ export function readPartyIds() {
 
 export function readPartySuffix() {
   return RedstoneCommon.getFromEnv("PARTY_SUFFIX");
+}
+
+export function combineIntoId(interfaceId: string, templateName: string) {
+  return `${interfaceId}${SEP}${templateName}`;
 }
