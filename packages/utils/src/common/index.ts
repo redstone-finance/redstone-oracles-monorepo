@@ -10,6 +10,7 @@ export * from "./env";
 export * from "./erc20";
 export * from "./errors";
 export * from "./fetch-with-fallback";
+export * from "./Fetcher";
 export * from "./fs-path-safe";
 export * from "./js-utils";
 export * from "./memoize";
