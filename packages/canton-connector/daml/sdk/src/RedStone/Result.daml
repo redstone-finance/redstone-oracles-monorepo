@@ -19,6 +19,9 @@ resultFromOptional message None  = Error message
 resultUnwrap (Ok x) = x
 resultUnwrap (Error e) = error $ "Trying to unwrap Error " <> (show e)
 
+resultError (Error e) = e
+resultError (Ok x) = error $ "Trying to unwrap error from Ok " <> (show x)
+
 resultIsOk (Ok _) = True
 resultIsOk (Error _) = False
 
