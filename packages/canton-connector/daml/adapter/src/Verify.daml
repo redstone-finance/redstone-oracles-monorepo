@@ -17,15 +17,21 @@ verify (currentTimestamp, currentFeedData) (feedId, value, timestamp) =
         None -> value
         Some [] -> value
         Some (newest :: _)
-            | newest.priceData.timestamp < timestamp && newest.priceData.writeTimestamp < currentTimestamp -> value
+            | verifyPriceData currentTimestamp newest.priceData timestamp -> value
             | otherwise -> Error ("Wrong timestamps for " <> show feedId)
+
+verifyPriceData currentTimestamp priceData newDataTimestamp = priceData.timestamp < newDataTimestamp && priceData.writeTimestamp < currentTimestamp
 
 determineNewValues (currentTimestamp, currentFeedData) feedIds (values, timestamp) =
     let
         verifiedValues = zipWith (\feedId val -> (feedId, verify (currentTimestamp, currentFeedData) (feedId, val, timestamp))) feedIds values
+        
         filteredValues = L.filter (resultIsOk . snd) verifiedValues
-        unwrappedValues = map (\(feedId, value) -> (feedId, resultUnwrap value)) filteredValues
-    in (unwrappedValues, timestamp)
+        newValues = map (\(feedId, value) -> (feedId, resultUnwrap value)) filteredValues
+
+        unfilteredValues = L.filter (not . resultIsOk . snd) verifiedValues
+        rejectedValues = map (\(feedId, value) -> (feedId, resultError value)) unfilteredValues
+    in (newValues, timestamp, rejectedValues)
 
 entriesFromValues currentTimestamp timestamp newValues =
     map (\(feedId, value) -> (feedId, RedStonePriceData with value, timestamp, writeTimestamp = currentTimestamp)) newValues
