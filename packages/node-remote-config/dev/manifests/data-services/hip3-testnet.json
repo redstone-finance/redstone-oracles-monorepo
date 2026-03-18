@@ -593,10 +593,6 @@
     },
     "GAS": {
       "source": [],
-      "priceAggregator": "redstoneX",
-      "redstoneXAggregatorConfig": {
-        "priceDiscoverySources": []
-      },
       "broadcasters": [
         "influx"
       ],
