@@ -419,10 +419,6 @@
     },
     "GAS": {
       "source": ["ws-lo-tech-settlement-aware"],
-      "priceAggregator": "redstoneX",
-      "redstoneXAggregatorConfig": {
-        "priceDiscoverySources": ["ws-lo-tech-settlement-aware"]
-      },
       "broadcasters": ["influx"],
       "deviationCheck": {
         "deviationWithRecentValues": {
