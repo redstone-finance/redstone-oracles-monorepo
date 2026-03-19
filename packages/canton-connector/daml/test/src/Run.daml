@@ -36,6 +36,7 @@ main input = script do
       payloadHex = input.payload
       feedIds = input.feedIds
       currentTime
+      additionalPillViewers = None
 
   adapterCid <- findOneAdapter Input.adapterId viewer
 

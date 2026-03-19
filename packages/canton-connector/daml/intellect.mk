@@ -2,17 +2,19 @@ sinclude ../.env
 
 CANTON_API=$(PARTICIPANT)$(API_PATH)
 
-ADAPTER_NAME=RedStoneAdapter-v10-0.4.2
-ADAPTER_TEMPLATE_ID=7b1090300d6193c60f14f092689fc289666756abadbd9bbfa7d39fd03bb0bfd3:RedStoneAdapter:RedStoneAdapter
+ADAPTER_NAME=RedStoneAdapter-v11-0.4.0
+ADAPTER_TEMPLATE_ID=076a291a751e4e6b0b2db21e04e1750413012c97b0d17be09b6a0828bb74d601:RedStoneAdapter:RedStoneAdapter
 
-CORE_NAME=RedStoneCore-v10-0.4.0
-CORE_ID := c38cfefb5f034476e1f84c86c952d5b5b11db169482b7336105e944ad780ce12
+CORE_NAME=RedStoneCore-v11-0.4.0
+CORE_ID := bf0439ec4718095a46c368c6b5e9008b6a242c200a73b24b251b04745ed933cc
 CORE_TEMPLATE_ID := $(CORE_ID):RedStoneCore:RedStoneCore
 CORE_CLIENT_TEMPLATE_ID := $(CORE_ID):RedStoneCoreClient:RedStoneCoreClient
 
-FACTORY_TEMPLATE_ID=cf4d9072192a36c38d2c4b52751c30be8f32bc1d65075aa560d399c119a3fde7:RedStonePricePillFactory:RedStonePricePillFactory
+FACTORY_TEMPLATE_ID=3671c6e984d14745c156038b74a15566b5122cf979dfb2be3d77ea09cefb23d5:RedStonePricePillFactory:RedStonePricePillFactory
 
-INTERFACE_ID=\#redstone-interface-v10
+FACTORY_ID=0039e1ac69693ff0c4babc78f4e3b44b5bbd48f90765c4142eaec29b6f06638766ca121220e123424e0ab83d0fbfb209dde64085fa285851f96497f4c9b1c29c1292006bb7
+
+INTERFACE_ID=\#redstone-interface-v11
 IADAPTER_TEMPLATE_ID=$(INTERFACE_ID):IRedStoneAdapter:IRedStoneAdapter
 ICORE_TEMPLATE_ID=$(INTERFACE_ID):IRedStoneCore:IRedStoneCore
 
@@ -125,7 +127,7 @@ deploy-adapter: get-token
 					"owner": "RedStoneOracleOwner::$(PARTY_SUFFIX)", \
 					"updaters": ["RedStoneOracleUpdater::$(PARTY_SUFFIX)"], \
 					"viewers": ["RedStoneOracleViewer::$(PARTY_SUFFIX)"], \
-					"pillFactory": "004068e92742a29a6cc7371e5cf202f74f04f450ae01bc5cf28d3f3c99f5029abdca121220dc4e2d9f6dfbfbd034cf4ca1b41e7ee1699c549ebec1a92f5f68c879fb9a2473", \
+					"pillFactory": "$(FACTORY_ID)", \
 					"feedData": []}}}], \
 		"actAs": ["RedStoneOracleOwner::$(PARTY_SUFFIX)"], \
 		"commandId": "deploy-adapter-$(shell date +%s)"}' | jq '.'
