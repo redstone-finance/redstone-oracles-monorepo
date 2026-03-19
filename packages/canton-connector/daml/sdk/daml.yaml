@@ -1,6 +1,6 @@
 sdk-version: 3.4.11
-name: redstone-sdk-v10
-version: 0.4.1
+name: redstone-sdk-v11
+version: 0.4.0
 source: src
 dependencies:
   - daml-prim
@@ -12,7 +12,7 @@ exposed-modules:
   - RedStone.Result
   - RedStone.U256
 data-dependencies:
-  - ../common/.daml/dist/redstone-common-v10-0.4.0.dar
+  - ../common/.daml/dist/redstone-common-v11-0.4.0.dar
 build-options:
   - -Wno-crypto-text-is-alpha
   - --target=2.1
