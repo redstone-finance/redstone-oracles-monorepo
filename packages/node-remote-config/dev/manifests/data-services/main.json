@@ -2527,7 +2527,7 @@
     },
     "ESH6": {
       "source": [
-        "databento-cme-no-closing-price"
+        "databento-cme"
       ],
       "denomination": "USD",
       "rateFeed": false
@@ -9137,14 +9137,6 @@
       ]
     },
     "URA": {
-      "source": [],
-      "denomination": "USD",
-      "rateFeed": false,
-      "types": [
-        "rwa"
-      ]
-    },
-    "URA---MARKET_HOURS": {
       "source": [],
       "denomination": "USD",
       "rateFeed": false,

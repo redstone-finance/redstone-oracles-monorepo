@@ -65,6 +65,57 @@ export function memoize<
   }) as F;
 }
 
+type MemoizeSyncCache<T> = { value: T; lastSet: number };
+
+type MemoizeSyncArgs<F extends (...args: unknown[]) => unknown> = {
+  functionToMemoize: F;
+  ttl: number;
+  cleanEveryNIteration?: number;
+  cacheKeyBuilder?: (...args: Parameters<F>) => string;
+  cacheReporter?: (isMiss: boolean) => void;
+};
+
+export function memoizeSync<
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any -- mirrors memoize convention
+  F extends (...args: any[]) => unknown,
+>({
+  functionToMemoize,
+  ttl,
+  cacheKeyBuilder = (...args: unknown[]) => JSON.stringify(args),
+  cacheReporter = () => {},
+  cleanEveryNIteration = CLEAN_EVERY_N_ITERATION_DEFAULT,
+}: MemoizeSyncArgs<F>): F {
+  const cache: Partial<Record<string, MemoizeSyncCache<ReturnType<F>>>> = {};
+  let iterationCounter = 0;
+
+  return ((...args: Parameters<F>) => {
+    const cacheKey = cacheKeyBuilder(...args);
+
+    assertWithLog(
+      cacheKey.length < EXPECTED_MAX_CACHE_KEY_LENGTH_PER_FN,
+      `Assumed cache key will not be longer than ${EXPECTED_MAX_CACHE_KEY_LENGTH_PER_FN}. Suspicious key ${cacheKey}`
+    );
+
+    iterationCounter = (iterationCounter + 1) % cleanEveryNIteration;
+    if (iterationCounter === 0) {
+      cleanStaleCacheEntries(cache, ttl);
+    }
+
+    const isMiss = !cache[cacheKey] || Date.now() - cache[cacheKey].lastSet > ttl;
+
+    if (isMiss) {
+      cache[cacheKey] = {
+        lastSet: Date.now(),
+        value: functionToMemoize(...args) as ReturnType<F>,
+      };
+    }
+
+    cacheReporter(isMiss);
+
+    return cache[cacheKey]!.value;
+  }) as F;
+}
+
 export function reportMemoizeCacheUsage(
   isMissing: boolean,
   desc: string,
@@ -77,8 +128,8 @@ export function reportMemoizeCacheUsage(
   }
 }
 
-const cleanStaleCacheEntries = <T>(
-  cache: Partial<Record<string, MemoizeCache<T>>>,
+const cleanStaleCacheEntries = (
+  cache: Partial<Record<string, { lastSet: number }>>,
   ttl: number
 ) => {
   const now = Date.now();
