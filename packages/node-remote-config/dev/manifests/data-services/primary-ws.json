@@ -186,7 +186,6 @@
     },
     "SPXU": {
       "source": [],
-      "skipBroadcasting": true,
       "denomination": "USD",
       "rateFeed": false,
       "types": [
@@ -210,7 +209,6 @@
         "lowerClampPercent": 0.1,
         "upperClampPercent": 0.1
       },
-      "skipBroadcasting": true,
       "denomination": "USD",
       "rateFeed": false,
       "types": [
@@ -302,7 +300,6 @@
     },
     "FGNX": {
       "source": [],
-      "skipBroadcasting": true,
       "denomination": "USD",
       "rateFeed": false,
       "types": [
@@ -421,7 +418,6 @@
     },
     "STRC": {
       "source": [],
-      "skipBroadcasting": true,
       "denomination": "USD",
       "rateFeed": false,
       "types": [
