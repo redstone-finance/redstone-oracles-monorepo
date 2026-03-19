@@ -201,7 +201,6 @@
         "ws-polygon-massive",
         "ws-twelve-data"
       ],
-      "skipBroadcasting": true,
       "denomination": "USD",
       "rateFeed": false,
       "types": ["rwa"]
@@ -229,7 +228,6 @@
         "lowerClampPercent": 0.1,
         "upperClampPercent": 0.1
       },
-      "skipBroadcasting": true,
       "denomination": "USD",
       "rateFeed": false,
       "types": ["rwa"]
@@ -334,7 +332,6 @@
         "ws-polygon-massive",
         "ws-twelve-data"
       ],
-      "skipBroadcasting": true,
       "denomination": "USD",
       "rateFeed": false,
       "types": ["rwa"]
@@ -473,7 +470,6 @@
         "ws-polygon-massive",
         "ws-twelve-data"
       ],
-      "skipBroadcasting": true,
       "denomination": "USD",
       "rateFeed": false,
       "types": ["rwa"]
