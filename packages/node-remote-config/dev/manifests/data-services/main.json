@@ -2284,13 +2284,13 @@
       "rateFeed": false
     },
     "SPY": {
-      "source": ["twelve-data", "databento-no-closing-price"],
+      "source": ["twelve-data", "databento"],
       "denomination": "USD",
       "rateFeed": false,
       "types": ["rwa"]
     },
     "ESH6": {
-      "source": ["databento-cme-no-closing-price"],
+      "source": ["databento-cme"],
       "denomination": "USD",
       "rateFeed": false
     },
@@ -4119,7 +4119,7 @@
         "yahoo-finance",
         "ws-lo-tech-settlement-aware",
         "ws-itick-futures",
-        "ws-twelve-data-no-closing-price"
+        "ws-twelve-data"
       ],
       "denomination": "USD",
       "rateFeed": false,
@@ -8235,7 +8235,7 @@
       "types": ["rwa"]
     },
     "HGH6": {
-      "source": ["databento-cme-no-closing-price"],
+      "source": ["databento-cme"],
       "denomination": "USD",
       "rateFeed": false,
       "types": ["rwa"]
@@ -8277,13 +8277,13 @@
       "types": ["rwa"]
     },
     "CLH6": {
-      "source": ["databento-cme-no-closing-price"],
+      "source": ["databento-cme"],
       "denomination": "USD",
       "rateFeed": false,
       "types": ["rwa"]
     },
     "CLG6": {
-      "source": ["databento-cme-no-closing-price"],
+      "source": ["databento-cme"],
       "denomination": "USD",
       "rateFeed": false,
       "types": ["rwa"]
@@ -8318,7 +8318,7 @@
         "finhub_pepperstoneuk-usd",
         "finhub_fxpig-usd",
         "finhub_capital-usd",
-        "databento-cme-no-closing-price"
+        "databento-cme"
       ],
       "denomination": "USD",
       "rateFeed": false,
@@ -8346,8 +8346,8 @@
         "ws-blocksize",
         "twelve-data",
         "financialmodelingprep",
-        "databento-no-closing-price",
-        "ws-polygon-massive-no-closing-price"
+        "databento",
+        "ws-polygon-massive"
       ],
       "denomination": "USD",
       "rateFeed": false,
@@ -8355,18 +8355,12 @@
     },
     "URA": {
       "source": [
-        "databento-no-closing-price",
+        "databento",
         "financialmodelingprep",
         "ws-blocksize",
-        "ws-polygon-massive-no-closing-price",
-        "ws-twelve-data-no-closing-price"
+        "ws-polygon-massive",
+        "ws-twelve-data"
       ],
-      "denomination": "USD",
-      "rateFeed": false,
-      "types": ["rwa"]
-    },
-    "URA---MARKET_HOURS": {
-      "source": ["us-equity-on-market"],
       "denomination": "USD",
       "rateFeed": false,
       "types": ["rwa"]
@@ -8459,7 +8453,7 @@
     "SOYBEAN": {
       "source": [
         "twelve-data",
-        "databento-cme-no-closing-price",
+        "databento-cme",
         "commodity-price-api",
         "ws-blocksize",
         "finhub_fxcm_deferred-usd"
@@ -8471,7 +8465,7 @@
     "CORN": {
       "source": [
         "twelve-data",
-        "databento-cme-no-closing-price",
+        "databento-cme",
         "financialmodelingprep",
         "commodity-price-api",
         "finhub_fxcm_deferred-usd",
@@ -8817,13 +8811,7 @@
       "types": ["rwa"]
     },
     "DAX": {
-      "source": [
-        "ws-aleno",
-        "databento-no-closing-price",
-        "ws-polygon-massive",
-        "ws-dx-feed",
-        "twelve-data"
-      ],
+      "source": ["ws-aleno", "databento", "ws-polygon-massive", "ws-dx-feed", "twelve-data"],
       "denomination": "EUR",
       "rateFeed": false,
       "types": ["rwa"]
@@ -8839,7 +8827,7 @@
         "alltick-stocks-api",
         "ws-aleno",
         "ws-blocksize",
-        "databento-no-closing-price",
+        "databento",
         "ws-polygon-massive",
         "ws-dx-feed"
       ],
@@ -8851,7 +8839,7 @@
       "source": [
         "ws-aleno",
         "ws-blocksize",
-        "databento-no-closing-price",
+        "databento",
         "ws-polygon-massive",
         "ws-dx-feed",
         "ws-twelve-data"
