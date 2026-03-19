@@ -43,6 +43,7 @@ main input = script do
       payloadHex = input.payload
       feedIds = input.feedIds
       currentTime
+      additionalPillViewers = None
 
   readResult <- submit viewer do
     exerciseCmd newCid ReadPriceData with
