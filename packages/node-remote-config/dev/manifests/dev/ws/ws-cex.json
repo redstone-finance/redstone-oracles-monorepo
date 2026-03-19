@@ -12,22 +12,22 @@
   },
   "tokens": {
     "TSLA": {
-      "source": ["ws-twelve-data", "ws-twelve-data-no-closing-price"],
+      "source": ["ws-twelve-data"],
       "denomination": "USD",
       "rateFeed": false
     },
     "GOOG": {
-      "source": ["ws-twelve-data", "ws-twelve-data-no-closing-price"],
+      "source": ["ws-twelve-data"],
       "denomination": "USD",
       "rateFeed": false
     },
     "AAPL": {
-      "source": ["ws-twelve-data", "ws-twelve-data-no-closing-price"],
+      "source": ["ws-twelve-data"],
       "denomination": "USD",
       "rateFeed": false
     },
     "META": {
-      "source": ["ws-twelve-data", "ws-twelve-data-no-closing-price"],
+      "source": ["ws-twelve-data"],
       "denomination": "USD",
       "rateFeed": false
     },

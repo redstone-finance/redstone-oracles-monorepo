@@ -201,6 +201,13 @@
         "ws-polygon-massive",
         "ws-twelve-data"
       ],
+      "skipBroadcasting": true,
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": ["rwa"]
+    },
+    "SPXU---REGULAR": {
+      "source": ["us-equity-on-market"],
       "denomination": "USD",
       "rateFeed": false,
       "types": ["rwa"]
@@ -215,6 +222,20 @@
         "ws-polygon-massive-commodities",
         "ws-twelve-data"
       ],
+      "priceAggregator": "primarySource",
+      "primarySourceAggregatorConfig": {
+        "primarySource": "ws-lmax",
+        "maxAcceptableDeviation": 1.5,
+        "lowerClampPercent": 0.1,
+        "upperClampPercent": 0.1
+      },
+      "skipBroadcasting": true,
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": ["rwa"]
+    },
+    "XAU---REGULAR": {
+      "source": ["cme-on-market"],
       "denomination": "USD",
       "rateFeed": false,
       "types": ["rwa"]
@@ -229,17 +250,20 @@
         "ws-polygon-massive-commodities",
         "ws-twelve-data"
       ],
+      "skipBroadcasting": true,
+      "priceAggregator": "primarySource",
+      "primarySourceAggregatorConfig": {
+        "primarySource": "ws-lmax",
+        "maxAcceptableDeviation": 1.5,
+        "lowerClampPercent": 0.1,
+        "upperClampPercent": 0.1
+      },
       "denomination": "USD",
       "rateFeed": false,
       "types": ["rwa"]
     },
-    "PHP": {
-      "source": [
-        "financialmodelingprep-deferred",
-        "metal-price-api-deferred",
-        "ws-polygon-massive-commodities",
-        "ws-twelve-data"
-      ],
+    "XAG---REGULAR": {
+      "source": ["cme-on-market"],
       "denomination": "USD",
       "rateFeed": false,
       "types": ["rwa"]
@@ -247,48 +271,76 @@
     "TSLA": {
       "source": [
         "alltick-stocks-api-deferred",
-        "databento-no-closing-price",
+        "databento",
         "financialmodelingprep-deferred",
-        "ws-dx-feed-no-close-price",
-        "ws-polygon-massive-no-closing-price",
-        "ws-twelve-data-no-closing-price"
+        "ws-dx-feed",
+        "ws-polygon-massive",
+        "ws-twelve-data"
       ],
+      "skipBroadcasting": true,
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": ["rwa"]
+    },
+    "TSLA---REGULAR": {
+      "source": ["us-equity-on-market"],
       "denomination": "USD",
       "rateFeed": false,
       "types": ["rwa"]
     },
     "FGNXP": {
       "source": [
-        "databento-no-closing-price",
+        "databento",
         "financialmodelingprep-deferred",
-        "ws-dx-feed-no-close-price",
-        "ws-polygon-massive-no-closing-price",
-        "ws-twelve-data-no-closing-price"
+        "ws-dx-feed",
+        "ws-polygon-massive",
+        "ws-twelve-data"
       ],
+      "skipBroadcasting": true,
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": ["rwa"]
+    },
+    "FGNXP---REGULAR": {
+      "source": ["us-equity-on-market"],
       "denomination": "USD",
       "rateFeed": false,
       "types": ["rwa"]
     },
     "CEPT": {
       "source": [
-        "databento-no-closing-price",
+        "databento",
         "financialmodelingprep-deferred",
-        "ws-dx-feed-no-close-price",
-        "ws-polygon-massive-no-closing-price",
-        "ws-twelve-data-no-closing-price"
+        "ws-dx-feed",
+        "ws-polygon-massive",
+        "ws-twelve-data"
       ],
+      "skipBroadcasting": true,
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": ["rwa"]
+    },
+    "CEPT---REGULAR": {
+      "source": ["us-equity-on-market"],
       "denomination": "USD",
       "rateFeed": false,
       "types": ["rwa"]
     },
     "FGNX": {
       "source": [
-        "databento-no-closing-price",
+        "databento",
         "financialmodelingprep-deferred",
-        "ws-dx-feed-no-close-price",
-        "ws-polygon-massive-no-closing-price",
-        "ws-twelve-data-no-closing-price"
+        "ws-dx-feed",
+        "ws-polygon-massive",
+        "ws-twelve-data"
       ],
+      "skipBroadcasting": true,
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": ["rwa"]
+    },
+    "FGNX---REGULAR": {
+      "source": ["us-equity-on-market"],
       "denomination": "USD",
       "rateFeed": false,
       "types": ["rwa"]
@@ -296,12 +348,19 @@
     "NVDA": {
       "source": [
         "alltick-stocks-api-deferred",
-        "databento-no-closing-price",
+        "databento",
         "financialmodelingprep-deferred",
-        "ws-dx-feed-no-close-price",
-        "ws-polygon-massive-no-closing-price",
-        "ws-twelve-data-no-closing-price"
+        "ws-dx-feed",
+        "ws-polygon-massive",
+        "ws-twelve-data"
       ],
+      "skipBroadcasting": true,
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": ["rwa"]
+    },
+    "NVDA---REGULAR": {
+      "source": ["us-equity-on-market"],
       "denomination": "USD",
       "rateFeed": false,
       "types": ["rwa"]
@@ -309,12 +368,19 @@
     "PLTR": {
       "source": [
         "alltick-stocks-api-deferred",
-        "databento-no-closing-price",
+        "databento",
         "financialmodelingprep-deferred",
-        "ws-dx-feed-no-close-price",
-        "ws-polygon-massive-no-closing-price",
-        "ws-twelve-data-no-closing-price"
+        "ws-dx-feed",
+        "ws-polygon-massive",
+        "ws-twelve-data"
       ],
+      "skipBroadcasting": true,
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": ["rwa"]
+    },
+    "PLTR---REGULAR": {
+      "source": ["us-equity-on-market"],
       "denomination": "USD",
       "rateFeed": false,
       "types": ["rwa"]
@@ -322,12 +388,19 @@
     "AMD": {
       "source": [
         "alltick-stocks-api-deferred",
-        "databento-no-closing-price",
+        "databento",
         "financialmodelingprep-deferred",
-        "ws-dx-feed-no-close-price",
-        "ws-polygon-massive-no-closing-price",
-        "ws-twelve-data-no-closing-price"
+        "ws-dx-feed",
+        "ws-polygon-massive",
+        "ws-twelve-data"
       ],
+      "skipBroadcasting": true,
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": ["rwa"]
+    },
+    "AMD---REGULAR": {
+      "source": ["us-equity-on-market"],
       "denomination": "USD",
       "rateFeed": false,
       "types": ["rwa"]
@@ -335,12 +408,19 @@
     "GOOGL": {
       "source": [
         "alltick-stocks-api-deferred",
-        "databento-no-closing-price",
+        "databento",
         "financialmodelingprep-deferred",
-        "ws-dx-feed-no-close-price",
-        "ws-polygon-massive-no-closing-price",
-        "ws-twelve-data-no-closing-price"
+        "ws-dx-feed",
+        "ws-polygon-massive",
+        "ws-twelve-data"
       ],
+      "skipBroadcasting": true,
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": ["rwa"]
+    },
+    "GOOGL---REGULAR": {
+      "source": ["us-equity-on-market"],
       "denomination": "USD",
       "rateFeed": false,
       "types": ["rwa"]
@@ -348,12 +428,19 @@
     "META": {
       "source": [
         "alltick-stocks-api-deferred",
-        "databento-no-closing-price",
+        "databento",
         "financialmodelingprep-deferred",
-        "ws-dx-feed-no-close-price",
-        "ws-polygon-massive-no-closing-price",
-        "ws-twelve-data-no-closing-price"
+        "ws-dx-feed",
+        "ws-polygon-massive",
+        "ws-twelve-data"
       ],
+      "skipBroadcasting": true,
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": ["rwa"]
+    },
+    "META---REGULAR": {
+      "source": ["us-equity-on-market"],
       "denomination": "USD",
       "rateFeed": false,
       "types": ["rwa"]
@@ -361,12 +448,19 @@
     "AMZN": {
       "source": [
         "alltick-stocks-api-deferred",
-        "databento-no-closing-price",
+        "databento",
         "financialmodelingprep-deferred",
-        "ws-dx-feed-no-close-price",
-        "ws-polygon-massive-no-closing-price",
-        "ws-twelve-data-no-closing-price"
+        "ws-dx-feed",
+        "ws-polygon-massive",
+        "ws-twelve-data"
       ],
+      "skipBroadcasting": true,
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": ["rwa"]
+    },
+    "AMZN---REGULAR": {
+      "source": ["us-equity-on-market"],
       "denomination": "USD",
       "rateFeed": false,
       "types": ["rwa"]
@@ -379,6 +473,13 @@
         "ws-polygon-massive",
         "ws-twelve-data"
       ],
+      "skipBroadcasting": true,
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": ["rwa"]
+    },
+    "STRC---REGULAR": {
+      "source": ["us-equity-on-market"],
       "denomination": "USD",
       "rateFeed": false,
       "types": ["rwa"]
@@ -418,14 +519,13 @@
       "denomination": "USD",
       "rateFeed": false
     },
-    "IS_NY_STOCKS_MARKET_OPEN": {
-      "source": ["is-ny-stocks-market-open"],
-      "skipBroadcasting": true,
-      "denomination": "other",
+    "URA---MARKET_HOURS": {
+      "source": ["alias"],
+      "denomination": "USD",
       "rateFeed": false,
       "types": ["rwa"]
     },
-    "URA---MARKET_HOURS": {
+    "URA---REGULAR": {
       "source": ["us-equity-on-market"],
       "denomination": "USD",
       "rateFeed": false,
@@ -433,18 +533,26 @@
     },
     "URA": {
       "source": [
-        "databento-no-closing-price",
+        "databento",
         "financialmodelingprep-deferred",
         "ws-blocksize",
-        "ws-polygon-massive-no-closing-price",
-        "ws-twelve-data-no-closing-price"
+        "ws-polygon-massive",
+        "ws-twelve-data"
       ],
+      "skipBroadcasting": true,
       "denomination": "USD",
       "rateFeed": false,
       "types": ["rwa"]
     },
     "KOSPI200": {
       "source": ["alltick-api", "ws-itick-indices", "ws-aleno"],
+      "skipBroadcasting": true,
+      "denomination": "KRW",
+      "rateFeed": false,
+      "types": ["rwa"]
+    },
+    "KOSPI200---REGULAR": {
+      "source": ["krx-on-market"],
       "denomination": "KRW",
       "rateFeed": false,
       "types": ["rwa"]
@@ -458,6 +566,13 @@
         "maxAcceptableDeviationPercent": 1,
         "clampPercent": 0.05
       },
+      "skipBroadcasting": true,
+      "denomination": "JPY",
+      "rateFeed": false,
+      "types": ["rwa"]
+    },
+    "NIKKEI225---REGULAR": {
+      "source": ["jpx-on-market"],
       "denomination": "JPY",
       "rateFeed": false,
       "types": ["rwa"]
@@ -466,7 +581,7 @@
       "source": [
         "ws-aleno",
         "ws-blocksize",
-        "databento-no-closing-price",
+        "databento",
         "ws-polygon-massive",
         "ws-dx-feed",
         "ws-twelve-data"
@@ -475,6 +590,13 @@
       "redstoneXAggregatorConfig": {
         "priceDiscoverySources": ["ws-aleno", "ws-blocksize", "ws-twelve-data"]
       },
+      "skipBroadcasting": true,
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": ["rwa"]
+    },
+    "URTH---REGULAR": {
+      "source": ["us-equity-on-market"],
       "denomination": "USD",
       "rateFeed": false,
       "types": ["rwa"]

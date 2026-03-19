@@ -1764,7 +1764,7 @@
         "metal-price-api-deferred",
         "ws-blocksize",
         "ws-lmax",
-        "ws-twelve-data-no-closing-price"
+        "ws-twelve-data"
       ],
       "broadcasters": ["influx"],
       "priceAggregator": "primarySource",
@@ -1872,7 +1872,7 @@
         "metal-price-api-deferred",
         "ws-blocksize",
         "ws-lmax",
-        "ws-twelve-data-no-closing-price"
+        "ws-twelve-data"
       ],
       "broadcasters": ["influx"],
       "priceAggregator": "primarySource",
@@ -2072,7 +2072,7 @@
         "metal-price-api-deferred",
         "ws-lmax",
         "ws-blocksize",
-        "ws-twelve-data-no-closing-price"
+        "ws-twelve-data"
       ],
       "priceAggregator": "primarySourceWithRebasing",
       "primarySourceWithRebasingAggregatorConfig": {
@@ -2198,7 +2198,7 @@
       "types": ["rwa"]
     },
     "ESH6": {
-      "source": ["databento-cme-no-closing-price"],
+      "source": ["databento-cme"],
       "broadcasters": ["influx"],
       "denomination": "USD",
       "rateFeed": false
