@@ -1,13 +1,13 @@
 sdk-version: 3.4.11
-name: redstone-adapter-v10
-version: 0.4.2
+name: redstone-adapter-v11
+version: 0.4.0
 source: src
 dependencies:
   - daml-prim
   - daml-stdlib
 data-dependencies:
-  - ../common/.daml/dist/redstone-common-v10-0.4.0.dar
-  - ../sdk/.daml/dist/redstone-sdk-v10-0.4.1.dar
-  - ../interface/.daml/dist/redstone-interface-v10-0.4.0.dar
+  - ../common/.daml/dist/redstone-common-v11-0.4.0.dar
+  - ../sdk/.daml/dist/redstone-sdk-v11-0.4.0.dar
+  - ../interface/.daml/dist/redstone-interface-v11-0.4.0.dar
 build-options:
   - --target=2.1

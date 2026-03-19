@@ -60,6 +60,7 @@ main input = script do
       payloadHex = input.payload
       feedIds = input.feedIds
       currentTime
+      additionalPillViewers = None
 
   debug $ "New CID: " <> show newCid
 

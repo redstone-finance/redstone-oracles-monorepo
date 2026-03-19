@@ -158,7 +158,7 @@ See the full example in [core-client-sample.ts](../../scripts/core-client-sample
 
 ```ts
 const partyId = `Client::1220a0242797a84e1d8c492f1259b3f87d561fcbde2e4b2cebc4572ddfc515b44c28`;
-const packageId = "#redstone-core-v10";
+const packageId = "#redstone-core-v11";
 const contractId =
         "<your-RedStoneCoreClient-contract-id>";
 
