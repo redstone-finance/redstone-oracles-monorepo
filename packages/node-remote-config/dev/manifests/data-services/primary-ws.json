@@ -186,6 +186,15 @@
     },
     "SPXU": {
       "source": [],
+      "skipBroadcasting": true,
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
+    },
+    "SPXU---REGULAR": {
+      "source": [],
       "denomination": "USD",
       "rateFeed": false,
       "types": [
@@ -193,6 +202,22 @@
       ]
     },
     "XAU": {
+      "source": [],
+      "priceAggregator": "primarySource",
+      "primarySourceAggregatorConfig": {
+        "primarySource": "",
+        "maxAcceptableDeviation": 1.5,
+        "lowerClampPercent": 0.1,
+        "upperClampPercent": 0.1
+      },
+      "skipBroadcasting": true,
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
+    },
+    "XAU---REGULAR": {
       "source": [],
       "denomination": "USD",
       "rateFeed": false,
@@ -202,13 +227,21 @@
     },
     "XAG": {
       "source": [],
+      "skipBroadcasting": true,
+      "priceAggregator": "primarySource",
+      "primarySourceAggregatorConfig": {
+        "primarySource": "",
+        "maxAcceptableDeviation": 1.5,
+        "lowerClampPercent": 0.1,
+        "upperClampPercent": 0.1
+      },
       "denomination": "USD",
       "rateFeed": false,
       "types": [
         "rwa"
       ]
     },
-    "PHP": {
+    "XAG---REGULAR": {
       "source": [],
       "denomination": "USD",
       "rateFeed": false,
@@ -218,6 +251,15 @@
     },
     "TSLA": {
       "source": [],
+      "skipBroadcasting": true,
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
+    },
+    "TSLA---REGULAR": {
+      "source": [],
       "denomination": "USD",
       "rateFeed": false,
       "types": [
@@ -225,6 +267,15 @@
       ]
     },
     "FGNXP": {
+      "source": [],
+      "skipBroadcasting": true,
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
+    },
+    "FGNXP---REGULAR": {
       "source": [],
       "denomination": "USD",
       "rateFeed": false,
@@ -234,6 +285,15 @@
     },
     "CEPT": {
       "source": [],
+      "skipBroadcasting": true,
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
+    },
+    "CEPT---REGULAR": {
+      "source": [],
       "denomination": "USD",
       "rateFeed": false,
       "types": [
@@ -241,6 +301,15 @@
       ]
     },
     "FGNX": {
+      "source": [],
+      "skipBroadcasting": true,
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
+    },
+    "FGNX---REGULAR": {
       "source": [],
       "denomination": "USD",
       "rateFeed": false,
@@ -250,6 +319,15 @@
     },
     "NVDA": {
       "source": [],
+      "skipBroadcasting": true,
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
+    },
+    "NVDA---REGULAR": {
+      "source": [],
       "denomination": "USD",
       "rateFeed": false,
       "types": [
@@ -257,6 +335,15 @@
       ]
     },
     "PLTR": {
+      "source": [],
+      "skipBroadcasting": true,
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
+    },
+    "PLTR---REGULAR": {
       "source": [],
       "denomination": "USD",
       "rateFeed": false,
@@ -266,6 +353,15 @@
     },
     "AMD": {
       "source": [],
+      "skipBroadcasting": true,
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
+    },
+    "AMD---REGULAR": {
+      "source": [],
       "denomination": "USD",
       "rateFeed": false,
       "types": [
@@ -273,6 +369,15 @@
       ]
     },
     "GOOGL": {
+      "source": [],
+      "skipBroadcasting": true,
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
+    },
+    "GOOGL---REGULAR": {
       "source": [],
       "denomination": "USD",
       "rateFeed": false,
@@ -282,6 +387,15 @@
     },
     "META": {
       "source": [],
+      "skipBroadcasting": true,
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
+    },
+    "META---REGULAR": {
+      "source": [],
       "denomination": "USD",
       "rateFeed": false,
       "types": [
@@ -290,6 +404,15 @@
     },
     "AMZN": {
       "source": [],
+      "skipBroadcasting": true,
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
+    },
+    "AMZN---REGULAR": {
+      "source": [],
       "denomination": "USD",
       "rateFeed": false,
       "types": [
@@ -297,6 +420,15 @@
       ]
     },
     "STRC": {
+      "source": [],
+      "skipBroadcasting": true,
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
+    },
+    "STRC---REGULAR": {
       "source": [],
       "denomination": "USD",
       "rateFeed": false,
@@ -338,16 +470,15 @@
       "denomination": "USD",
       "rateFeed": false
     },
-    "IS_NY_STOCKS_MARKET_OPEN": {
+    "URA---MARKET_HOURS": {
       "source": [],
-      "skipBroadcasting": true,
-      "denomination": "other",
+      "denomination": "USD",
       "rateFeed": false,
       "types": [
         "rwa"
       ]
     },
-    "URA---MARKET_HOURS": {
+    "URA---REGULAR": {
       "source": [],
       "denomination": "USD",
       "rateFeed": false,
@@ -357,6 +488,7 @@
     },
     "URA": {
       "source": [],
+      "skipBroadcasting": true,
       "denomination": "USD",
       "rateFeed": false,
       "types": [
@@ -364,6 +496,15 @@
       ]
     },
     "KOSPI200": {
+      "source": [],
+      "skipBroadcasting": true,
+      "denomination": "KRW",
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
+    },
+    "KOSPI200---REGULAR": {
       "source": [],
       "denomination": "KRW",
       "rateFeed": false,
@@ -380,6 +521,15 @@
         "maxAcceptableDeviationPercent": 1,
         "clampPercent": 0.05
       },
+      "skipBroadcasting": true,
+      "denomination": "JPY",
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
+    },
+    "NIKKEI225---REGULAR": {
+      "source": [],
       "denomination": "JPY",
       "rateFeed": false,
       "types": [
@@ -392,6 +542,15 @@
       "redstoneXAggregatorConfig": {
         "priceDiscoverySources": []
       },
+      "skipBroadcasting": true,
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
+    },
+    "URTH---REGULAR": {
+      "source": [],
       "denomination": "USD",
       "rateFeed": false,
       "types": [
