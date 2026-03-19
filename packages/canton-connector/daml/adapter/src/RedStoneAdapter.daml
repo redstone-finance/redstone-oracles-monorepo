@@ -1,6 +1,8 @@
 module RedStoneAdapter where
 
+import DA.List(dedup)
 import DA.Map as M
+import DA.Optional(fromOptional)
 import RedStone.GetPrices as G
 import RedStoneTypes
 import IRedStoneAdapter
@@ -26,13 +28,13 @@ template RedStoneAdapter
 
       iRedStoneAdapter_GetPricesImpl feedIds currentTime = G.getPricesNumeric $ adapter_config_fun feedIds currentTime
 
-      iRedStoneAdapter_WritePricesImpl self feedIds currentTime payloadHex = do
+      iRedStoneAdapter_WritePricesImpl self feedIds currentTime payloadHex additionalPillViewers = do
         hasNewValues <- hasNewPrices (owner, updaters, viewers) adapterId feedData feedIds currentTime payloadHex
 
         if not hasNewValues then
           return self
         else
-          exercise (coerceContractId @IRedStoneAdapter @RedStoneAdapter self) WritePricesConsuming with feedIds, currentTime, payloadHex
+          exercise (coerceContractId @IRedStoneAdapter @RedStoneAdapter self) WritePricesConsuming with feedIds, currentTime, payloadHex, additionalPillViewers
 
       iRedStoneAdapter_ReadPriceDataImpl feedIds = do
         let getPriceData feedId =
@@ -59,9 +61,12 @@ template RedStoneAdapter
         feedIds : [RedStoneFeedId]
         currentTime : Time
         payloadHex : PayloadHex
+        additionalPillViewers : Optional [Party]
       controller updaters
       do
-        newData <- processAndWritePrices (owner, updaters, viewers) pillFactory adapterId feedData feedIds currentTime payloadHex
+        let allViewers = dedup $ viewers <> fromOptional [] additionalPillViewers
+
+        newData <- processAndWritePrices (owner, updaters, allViewers) pillFactory adapterId feedData feedIds currentTime payloadHex
         newCid <- create this with feedData = newData
         
         return $ toInterfaceContractId @IRedStoneAdapter newCid
