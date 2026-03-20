@@ -1,6 +1,7 @@
 import { ContractParamsProvider } from "@redstone-finance/sdk";
-import { CantonClient, ContractFilter } from "../CantonClient";
+import { CantonClient } from "../CantonClient";
 import { convertDecimalValue } from "../conversions";
+import { ContractFilter } from "../price-feed-utils";
 import { ActiveContractData, DamlTuple2 } from "../utils";
 import { CantonContractAdapter } from "./CantonContractAdapter";
 import { CoreCantonContractAdapter } from "./CoreCantonContractAdapter";
