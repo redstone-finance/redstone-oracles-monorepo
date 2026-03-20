@@ -12,3 +12,7 @@ export function convertDecimalValue(value: string) {
 export function getArrayifiedFeedId(feedId: string) {
   return ContractParamsProvider.arrayifyFeedId(ContractParamsProvider.hexlifyFeedId(feedId));
 }
+
+export function decodeFeedId(feedId: string[]) {
+  return ContractParamsProvider.unhexlifyFeedId(feedId.map(Number));
+}
