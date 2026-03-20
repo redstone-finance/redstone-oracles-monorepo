@@ -1473,7 +1473,7 @@
     "canton-devnet": {
       "name": "Canton Devnet",
       "networkId": "canton/2",
-      "currencySymbol": "XLM",
+      "currencySymbol": "CC",
       "publicRpcUrls": ["https://localhost:7575"],
       "avgBlockTimeMs": 10000,
       "multicall3": {
@@ -1483,6 +1483,20 @@
       "isAuctionModel": false,
       "twoDimensionalFees": false,
       "isMainnet": false
+    },
+    "canton-mainnet": {
+      "name": "Canton Mainnet",
+      "networkId": "canton/1",
+      "currencySymbol": "CC",
+      "publicRpcUrls": ["https://localhost:7575"],
+      "avgBlockTimeMs": 10000,
+      "multicall3": {
+        "address": "",
+        "type": "Multicall3"
+      },
+      "isAuctionModel": false,
+      "twoDimensionalFees": false,
+      "isMainnet": true
     },
     "gensyn": {
       "name": "Gensyn Mainnet",
