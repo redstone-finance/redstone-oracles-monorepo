@@ -1,18 +1,18 @@
 {
   "mainnet": {
-    "interfaceId": "",
-    "featuredInterfaceId": "",
+    "interfaceId": "#redstone-interface-v11",
+    "featuredInterfaceId": "7804375fe5e4c6d5afe067bd314c42fe0b7d005a1300019c73154dd939da4dda",
     "core": {
-      "contractId": "",
-      "synchronizerId": "",
+      "synchronizerId": "global-domain::1220b1431ef217342db44d516bb9befde802be7d8899637d290895fa58880f19accc",
       "coreId": "",
+      "contractId": "",
       "templateId": "",
       "createdEventBlob": ""
     },
     "featured-app-right": {
-      "contractId": "",
-      "synchronizerId": "",
-      "createdEventBlob": ""
+      "contractId": "00453547032c154787ce2f52d0830cc302c26abea295b1f4680cf1e795b1095481ca12122043a38116cf841f91ed3d6c1d260cbc85a4cff6b54282d22cf701299422b89d18",
+      "synchronizerId": "global-domain::1220b1431ef217342db44d516bb9befde802be7d8899637d290895fa58880f19accc",
+      "createdEventBlob": "CgMyLjESzQQKRQBFNUcDLBVHh84vUtCDDMMCwmq+opWx9GgM8eeVsQlUgcoSEiBDo4EWz4Qfke09bB0mDLyFpM/2tUKC0iz3ASmUIridGBINc3BsaWNlLWFtdWxldBpkCkA2N2ZhYzJmODUzYmNlOGRiZjBiOTgxN2JiNWJhN2M1OWYxMGU4MTIwYjdjODA4Njk2ZjcwMTBlNWYwYzhhNzkxEgZTcGxpY2USBkFtdWxldBoQRmVhdHVyZWRBcHBSaWdodCKyAWqvAQpNCks6SURTTzo6MTIyMGIxNDMxZWYyMTczNDJkYjQ0ZDUxNmJiOWJlZmRlODAyYmU3ZDg4OTk2MzdkMjkwODk1ZmE1ODg4MGYxOWFjY2MKXgpcOlpSZWRzdG9uZS12YWxpZGF0b3ItMTo6MTIyMGE2ZjdjMjMxNWVkN2JhMjMwMzk3YTQ1OWIwMzZiZmU5ZjM2NzYzYTBlODQ4ZGFkNzQxYzRlOWQyMGQ4NTY4N2MqSURTTzo6MTIyMGIxNDMxZWYyMTczNDJkYjQ0ZDUxNmJiOWJlZmRlODAyYmU3ZDg4OTk2MzdkMjkwODk1ZmE1ODg4MGYxOWFjY2MyWlJlZHN0b25lLXZhbGlkYXRvci0xOjoxMjIwYTZmN2MyMzE1ZWQ3YmEyMzAzOTdhNDU5YjAzNmJmZTlmMzY3NjNhMGU4NDhkYWQ3NDFjNGU5ZDIwZDg1Njg3YzkOAj3uJ0wGAEIqCiYKJAgBEiBAXB4ET8QieptLKAVXb72K76M7qlcbxTQh8hQ2rGK2axAe"
     }
   },
   "devnet": {

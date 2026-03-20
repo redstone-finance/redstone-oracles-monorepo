@@ -1,0 +1,17 @@
+{
+  "adapterContractType": "multi-feed",
+  "isHidden": true,
+  "chain": {
+    "name": "canton-mainnet",
+    "id": "canton/1"
+  },
+  "updateTriggers": {
+    "timeSinceLastUpdateInMilliseconds": 59000
+  },
+  "adapterContract": "RedStoneAdapter-v11-0.4.1",
+  "adapterContractPackageId": "#redstone-interface-v11",
+  "dataServiceId": "redstone-primary-prod",
+  "priceFeeds": {
+    "BTC": {}
+  }
+}
