@@ -101,7 +101,9 @@
       "networkId": 137,
       "currencySymbol": "POL",
       "publicRpcUrls": [
-        "https://polygon-rpc.com",
+        "https://polygon-public.nodies.app",
+        "https://polygon.gateway.tenderly.co",
+        "https://polygon.api.onfinality.io/public",
         "https://1rpc.io/matic",
         "https://rpc-mainnet.matic.quiknode.pro"
       ],
