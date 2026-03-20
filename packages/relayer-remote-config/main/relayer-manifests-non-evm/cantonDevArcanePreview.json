@@ -6,7 +6,7 @@
     "id": "canton/1"
   },
   "updateTriggers": {
-    "timeSinceLastUpdateInMilliseconds": 59000
+    "timeSinceLastUpdateInMilliseconds": 3590000
   },
   "adapterContract": "RedStoneAdapter-v11-0.4.1",
   "adapterContractPackageId": "#redstone-interface-v11",
