@@ -1,7 +1,8 @@
 import { RedstoneCommon } from "@redstone-finance/utils";
-import { CantonClient, ContractFilter } from "../CantonClient";
+import { CantonClient } from "../CantonClient";
 import {
   ARCHIVE_CHOICE,
+  ContractFilter,
   createStalenessFilter,
   IPRICE_PILL_TEMPLATE_NAME,
 } from "../price-feed-utils";
