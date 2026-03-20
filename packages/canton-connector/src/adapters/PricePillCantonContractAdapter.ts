@@ -3,9 +3,10 @@ import {
   IPriceFeedContractAdapter,
   PriceAndTimestamp,
 } from "@redstone-finance/sdk";
-import { CantonClient, ContractFilter } from "../CantonClient";
+import { CantonClient } from "../CantonClient";
 import { getArrayifiedFeedId, REDSTONE_DECIMALS } from "../conversions";
 import {
+  ContractFilter,
   createFeedIdFilter,
   findNewestContract,
   IPRICE_PILL_TEMPLATE_NAME,

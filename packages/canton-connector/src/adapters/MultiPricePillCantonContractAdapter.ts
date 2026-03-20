@@ -1,8 +1,9 @@
 import { LastRoundDetails } from "@redstone-finance/sdk";
 import { RedstoneCommon } from "@redstone-finance/utils";
-import { CantonClient, ContractFilter } from "../CantonClient";
+import { CantonClient } from "../CantonClient";
 import {
   buildArrayifiedFeedIds,
+  ContractFilter,
   createFeedIdFilter,
   findNewestContract,
   groupEventsByFeedId,
