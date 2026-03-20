@@ -1922,6 +1922,11 @@
       "denomination": "BTC",
       "rateFeed": true
     },
+    "SolvBTC_FUNDAMENTAL/USD": {
+      "source": ["usd-based"],
+      "denomination": "USD",
+      "rateFeed": true
+    },
     "SolvBTC.BBN_FUNDAMENTAL": {
       "source": ["ethereum-evm-fetcher-curve-rate-provider"],
       "denomination": "SolvBTC",
@@ -7519,6 +7524,11 @@
         "xt-usdt"
       ],
       "denomination": "USD",
+      "rateFeed": false
+    },
+    "XAUt/USDT": {
+      "source": ["non-usd-based"],
+      "denomination": "USDT",
       "rateFeed": false
     },
     "USR_FUNDAMENTAL": {
