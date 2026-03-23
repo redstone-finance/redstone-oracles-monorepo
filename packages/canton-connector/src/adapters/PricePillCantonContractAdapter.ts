@@ -7,8 +7,8 @@ import { CantonClient } from "../CantonClient";
 import { getArrayifiedFeedId, REDSTONE_DECIMALS } from "../conversions";
 import {
   ContractFilter,
+  CreatedArgumentCallback,
   createFeedIdFilter,
-  findNewestContract,
   IPRICE_PILL_TEMPLATE_NAME,
   parsePriceData,
   PriceData,
@@ -16,7 +16,6 @@ import {
   READ_DESCRIPTION_CHOICE,
   READ_FEED_ID_CHOICE,
 } from "../price-feed-utils";
-import { makeActiveContractData } from "../utils";
 import { CantonContractAdapter } from "./CantonContractAdapter";
 
 export class PricePillCantonContractAdapter
@@ -29,7 +28,6 @@ export class PricePillCantonContractAdapter
     client: CantonClient,
     protected adapterId: string,
     protected feedId: string,
-
     interfaceId = client.Defs.interfaceId,
     templateName = IPRICE_PILL_TEMPLATE_NAME
   ) {
@@ -67,20 +65,13 @@ export class PricePillCantonContractAdapter
   }
 
   override async fetchContractData(offset?: number, client = this.client) {
-    const createdEvents = await client.getCreateContractEvents(
+    return await client.getMostActiveContractData(
       this.getInterfaceId(),
       this.getContractFilter(),
       offset,
-      undefined,
-      true
+      ((createArgument: { priceData?: PriceData }) =>
+        -Number(createArgument.priceData?.timestamp ?? 0)) as CreatedArgumentCallback // newest first
     );
-
-    const newest = findNewestContract(createdEvents);
-    if (!newest) {
-      throw new Error("Didn't find any contract");
-    }
-
-    return makeActiveContractData(newest);
   }
 
   protected override getContractFilter(): ContractFilter {
