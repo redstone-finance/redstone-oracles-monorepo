@@ -1,9 +1,8 @@
-import { IPriceFeedContractAdapter } from "@redstone-finance/sdk";
 import { CantonClient } from "../CantonClient";
 import { CantonContractConnector } from "./CantonContractConnector";
 import { PricePillCantonContractAdapter } from "./PricePillCantonContractAdapter";
 
-export class PricePillCantonContractConnector extends CantonContractConnector<IPriceFeedContractAdapter> {
+export class PricePillCantonContractConnector extends CantonContractConnector<PricePillCantonContractAdapter> {
   constructor(
     cantonClient: CantonClient,
     protected adapterId: string,
@@ -12,7 +11,7 @@ export class PricePillCantonContractConnector extends CantonContractConnector<IP
     super(cantonClient);
   }
 
-  getAdapter(): Promise<IPriceFeedContractAdapter> {
+  getAdapter(): Promise<PricePillCantonContractAdapter> {
     return Promise.resolve(
       new PricePillCantonContractAdapter(this.cantonClient, this.adapterId, this.feedId)
     );

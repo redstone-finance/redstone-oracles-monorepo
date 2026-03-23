@@ -3,6 +3,7 @@ import {
   PricesCantonContractAdapter,
 } from "@redstone-finance/canton-connector";
 import { RedstoneCommon } from "@redstone-finance/utils";
+import { z } from "zod";
 import { PartialRelayerConfig } from "./partial-relayer-config";
 
 export const getCantonContractAdapter = (relayerConfig: PartialRelayerConfig) => {
@@ -23,10 +24,16 @@ export const getCantonContractAdapter = (relayerConfig: PartialRelayerConfig) =>
     .withDefaultAuth(privateKey)
     .build();
 
+  const additionalPillViewers = RedstoneCommon.getFromEnv(
+    "ADDITIONAL_PILL_VIEWERS",
+    z.array(z.string()).optional()
+  );
+
   return new PricesCantonContractAdapter(
     client,
     updaterClient,
     adapterContractAddress,
+    additionalPillViewers,
     adapterContractPackageId
   );
 };
