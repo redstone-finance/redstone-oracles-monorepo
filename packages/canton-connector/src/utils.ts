@@ -3,8 +3,10 @@ import z from "zod";
 import {
   CreatedEvent,
   Event,
+  JsActiveContract,
   JsCantonError,
   JsContractEntry,
+  JsGetActiveContractsResponse,
   Map_Filters,
   Transaction,
   Update,
@@ -80,7 +82,14 @@ export function makeInterfaceFilterByParty(interfaceId: string, partyId: string)
   return filtersByParty;
 }
 
-export function isJsActiveContractEntry(contractEntry: JsContractEntry) {
+export function isJsActiveContract(response: JsGetActiveContractsResponse): response is {
+  workflowId: string;
+  contractEntry: { JsActiveContract: JsActiveContract };
+} {
+  return isJsActiveContractEntry(response.contractEntry);
+}
+
+function isJsActiveContractEntry(contractEntry: JsContractEntry) {
   return "JsActiveContract" in contractEntry;
 }
 
