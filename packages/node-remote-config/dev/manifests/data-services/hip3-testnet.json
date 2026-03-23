@@ -417,15 +417,151 @@
         }
       }
     },
-    "GAS": {
-      "source": ["ws-lo-tech-settlement-aware"],
+    "USA100_CURRENT": {
+      "source": ["databento-cme-futures", "ws-polygon-massive-cme-futures"],
       "broadcasters": ["influx"],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "USA100_FRONT": {
+      "source": ["databento-cme-futures", "ws-polygon-massive-cme-futures"],
+      "broadcasters": ["influx"],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "USA100": {
+      "source": [
+        "alltick-api-deferred",
+        "ws-itick-indices",
+        "financialmodelingprep-deferred",
+        "ws-lmax",
+        "rollover-blend"
+      ],
+      "priceAggregator": "redstoneX",
+      "redstoneXAggregatorConfig": {
+        "priceDiscoverySources": [
+          "alltick-api-deferred",
+          "financialmodelingprep-deferred",
+          "futures-implied-spot-price",
+          "ws-lmax"
+        ]
+      },
+      "broadcasters": ["influx"],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "MARK_flx:USA100": {
+      "source": ["hyperliquid-mainnet-perps-ws-fetcher", "hydromancer-mainnet-perps-ws-fetcher"],
+      "customWeightsForWeightedMedian": {
+        "hyperliquid-mainnet-perps-ws-fetcher": 10,
+        "hydromancer-mainnet-perps-ws-fetcher": 1
+      },
+      "priceAggregator": "constantWeightMedian",
+      "broadcasters": ["influx"],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "ORACLE_flx:USA100": {
+      "source": ["hyperliquid-mainnet-perps-ws-fetcher", "hydromancer-mainnet-perps-ws-fetcher"],
+      "customWeightsForWeightedMedian": {
+        "hyperliquid-mainnet-perps-ws-fetcher": 10,
+        "hydromancer-mainnet-perps-ws-fetcher": 1
+      },
+      "priceAggregator": "constantWeightMedian",
+      "broadcasters": ["influx"],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "IMPACT_BUY_flx:USA100": {
+      "source": ["hyperliquid-mainnet-perps-ws-fetcher", "hydromancer-mainnet-perps-ws-fetcher"],
+      "customWeightsForWeightedMedian": {
+        "hyperliquid-mainnet-perps-ws-fetcher": 10,
+        "hydromancer-mainnet-perps-ws-fetcher": 1
+      },
+      "priceAggregator": "constantWeightMedian",
+      "broadcasters": ["influx"],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "IMPACT_SELL_flx:USA100": {
+      "source": ["hyperliquid-mainnet-perps-ws-fetcher", "hydromancer-mainnet-perps-ws-fetcher"],
+      "customWeightsForWeightedMedian": {
+        "hyperliquid-mainnet-perps-ws-fetcher": 10,
+        "hydromancer-mainnet-perps-ws-fetcher": 1
+      },
+      "priceAggregator": "constantWeightMedian",
+      "broadcasters": ["influx"],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "flx:USA100_MARK_0": {
+      "source": ["hip3-felix-usa100-mainnet-fetcher"],
+      "broadcasters": ["hyperliquid-hip3"],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "flx:USA100_MARK_1": {
+      "source": ["hip3-felix-usa100-mainnet-fetcher"],
+      "broadcasters": ["hyperliquid-hip3"],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "flx:USA100_EXT": {
+      "source": ["hip3-felix-usa100-mainnet-fetcher"],
+      "broadcasters": ["hyperliquid-hip3"],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "flx:USA100": {
+      "source": ["hip3-felix-usa100-mainnet-fetcher"],
+      "broadcasters": ["hyperliquid-hip3"],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "OPEN_INTEREST_flx:USA100": {
+      "source": ["hyperliquid-mainnet-perps-ws-fetcher"],
+      "broadcasters": [],
+      "denomination": "USD",
+      "rateFeed": false,
       "deviationCheck": {
         "deviationWithRecentValues": {
-          "maxPercent": 10,
-          "maxDelayMilliseconds": 60000
+          "maxPercent": 1000000000,
+          "maxDelayMilliseconds": 1000
         }
+      }
+    },
+    "GAS_CURRENT": {
+      "source": ["databento-cme-futures", "ws-polygon-massive-nymex-futures"],
+      "broadcasters": ["influx"],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "GAS_FRONT": {
+      "source": ["databento-cme-futures", "ws-polygon-massive-nymex-futures"],
+      "broadcasters": ["influx"],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "GAS": {
+      "source": [
+        "ws-itick-futures",
+        "ws-twelve-data",
+        "alltick-api-deferred",
+        "financialmodelingprep-deferred",
+        "ws-lmax",
+        "rollover-blend"
+      ],
+      "priceAggregator": "redstoneX",
+      "redstoneXAggregatorConfig": {
+        "priceDiscoverySources": [
+          "ws-itick-futures",
+          "ws-twelve-data",
+          "alltick-api-deferred",
+          "financialmodelingprep-deferred",
+          "ws-lmax"
+        ]
       },
+      "broadcasters": ["influx"],
       "denomination": "USD",
       "rateFeed": false
     },
@@ -2508,30 +2644,6 @@
     },
     "flx:BTC": {
       "source": ["hip3-crypto-mainnet-fetcher"],
-      "broadcasters": ["hyperliquid-hip3"],
-      "denomination": "USD",
-      "rateFeed": false
-    },
-    "GAS_CURRENT": {
-      "source": ["databento-cme-futures", "ws-polygon-massive-nymex-futures"],
-      "broadcasters": ["hyperliquid-hip3"],
-      "denomination": "USD",
-      "rateFeed": false
-    },
-    "GAS_FRONT": {
-      "source": ["databento-cme-futures", "ws-polygon-massive-nymex-futures"],
-      "broadcasters": ["hyperliquid-hip3"],
-      "denomination": "USD",
-      "rateFeed": false
-    },
-    "USA100_CURRENT": {
-      "source": ["databento-cme-futures", "ws-polygon-massive-cme-futures"],
-      "broadcasters": ["hyperliquid-hip3"],
-      "denomination": "USD",
-      "rateFeed": false
-    },
-    "USA100_FRONT": {
-      "source": ["databento-cme-futures", "ws-polygon-massive-cme-futures"],
       "broadcasters": ["hyperliquid-hip3"],
       "denomination": "USD",
       "rateFeed": false
