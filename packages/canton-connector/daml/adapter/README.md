@@ -29,7 +29,7 @@
 
 ## 💡 How RedStone Push Oracle works with Canton
 
-![RedStonePricePill.png](../test/RedStonePricePill.png)
+![RedStonePricePill.png](RedStonePricePill.png)
 
 _RedStone_ Push Oracle persists price data on the Canton ledger. An off-chain relayer periodically calls `WritePrices`
 on the adapter contract, which processes the RedStone payload, verifies signatures, and stores aggregated values.

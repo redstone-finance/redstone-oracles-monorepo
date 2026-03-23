@@ -3,11 +3,11 @@ import { CantonClient } from "../CantonClient";
 import { ContractFilter } from "../price-feed-utils";
 import { ActiveContractData, combineIntoId, isContractNotFoundError } from "../utils";
 
-const RETRY_CONFIG: Omit<RedstoneCommon.RetryConfig, "fn"> = {
-  maxRetries: 3,
-  waitBetweenMs: 100,
+export const RETRY_CONFIG: Omit<RedstoneCommon.RetryConfig, "fn"> = {
+  maxRetries: 5,
+  waitBetweenMs: 500,
   backOff: {
-    backOffBase: 1.5,
+    backOffBase: 2,
   },
 };
 

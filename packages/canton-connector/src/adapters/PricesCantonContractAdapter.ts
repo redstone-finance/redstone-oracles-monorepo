@@ -23,6 +23,7 @@ export class PricesCantonContractAdapter
     client: CantonClient,
     private updateClient: CantonClient,
     adapterId: string,
+    private readonly additionalPillViewers?: string[],
     interfaceId = client.Defs.interfaceId,
     templateName = IADAPTER_TEMPLATE_NAME
   ) {
@@ -103,7 +104,10 @@ export class PricesCantonContractAdapter
     try {
       const result: ActiveContractData | string = await this.exerciseChoice(
         WRITE_PRICES_CHOICE,
-        await CoreCantonContractAdapter.getPayloadArguments(paramsProvider),
+        {
+          ...(await CoreCantonContractAdapter.getPayloadArguments(paramsProvider)),
+          additionalPillViewers: this.additionalPillViewers,
+        },
         undefined,
         true,
         this.updateClient,
