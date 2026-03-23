@@ -2512,6 +2512,30 @@
       "denomination": "USD",
       "rateFeed": false
     },
+    "GAS_CURRENT": {
+      "source": ["databento-cme-futures", "ws-polygon-massive-nymex-futures"],
+      "broadcasters": ["hyperliquid-hip3"],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "GAS_FRONT": {
+      "source": ["databento-cme-futures", "ws-polygon-massive-nymex-futures"],
+      "broadcasters": ["hyperliquid-hip3"],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "USA100_CURRENT": {
+      "source": ["databento-cme-futures", "ws-polygon-massive-cme-futures"],
+      "broadcasters": ["hyperliquid-hip3"],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "USA100_FRONT": {
+      "source": ["databento-cme-futures", "ws-polygon-massive-cme-futures"],
+      "broadcasters": ["hyperliquid-hip3"],
+      "denomination": "USD",
+      "rateFeed": false
+    },
     "OPEN_INTEREST_flx:BTC": {
       "source": ["hyperliquid-mainnet-perps-ws-fetcher"],
       "broadcasters": [],
