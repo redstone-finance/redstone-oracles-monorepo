@@ -128,7 +128,7 @@ When a `PricePillFactory` is configured, `WritePrices` also creates `PricePill` 
 
 ### [RedStone PricePill](./price_feed)
 
-![RedStonePricePill.png](./test/RedStonePricePill.png)
+![RedStonePricePill.png](adapter/RedStonePricePill.png)
 
 1. Provides a [template](./price_feed/src/RedStonePricePill.daml) of a contract implementing the `IRedStonePricePill` interface
 2. Each pill is tagged with an `adapterId` and `feedId` for filtering
