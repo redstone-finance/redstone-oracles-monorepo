@@ -2,14 +2,14 @@ module Deploy where
 
 import Daml.Script
 import DA.Map as M
+import Splice.Api.FeaturedAppRightV1
 import IRedStonePricePillFactory
 import RedStoneCore
 import RedStoneCoreClient
 import RedStoneAdapter
 import RedStonePricePillFactory
-import MockFeatured
 import Input
-import Splice.Api.FeaturedAppRightV1
+import Helpers.MockFeatured
 
 main : Input -> Script ()
 main input = script do
@@ -25,18 +25,19 @@ main input = script do
 
   debug $ "MockFeaturedAppRight " <> show featuredCid
 
-  coreCid <- submit (actAs [owner, beneficiary] <> readAs [updater, viewer]) do
+  coreCid <- submit (actAs [owner, beneficiary]) do
     createCmd RedStoneCore with
+      viewers = [viewer]
       coreId = Input.adapterId
       owner = owner
-      viewers = [viewer]
       beneficiary = Some beneficiary
       featuredCid = Some $ toInterfaceContractId @FeaturedAppRight featuredCid
 
   debug $ "RedStoneCore " <> show coreCid
 
-  pillFactoryCid <- submit (actAs owner <> actAs beneficiary) do
+  pillFactoryCid <- submit (actAs [owner, beneficiary]) do
     createCmd RedStonePricePillFactory with
+      factoryId = "Factory for " <> Input.adapterId
       owner
       creators = [updater]
       featuredCid = toInterfaceContractId @FeaturedAppRight featuredCid
@@ -44,7 +45,7 @@ main input = script do
 
   debug $ "RedStonePricePillFactory " <> show pillFactoryCid
 
-  adapterCid <- submit (actAs [owner] <> readAs [updater, viewer]) do
+  adapterCid <- submit owner do
       createCmd RedStoneAdapter with
         adapterId = Input.adapterId
         owner

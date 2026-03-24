@@ -125,6 +125,24 @@ export abstract class CantonContractAdapter {
     });
   }
 
+  protected async exerciseChoiceWithCaller<Res, Arg extends object = object>(
+    choice: string,
+    argument: Arg,
+    offset: number | undefined = undefined,
+    addCurrentTime = false,
+    client = this.client,
+    disclosedContractData?: Required<ActiveContractData>[]
+  ): Promise<Res> {
+    return await this.exerciseChoice<Res, Arg>(
+      choice,
+      { ...argument, caller: client.partyId } as Arg,
+      offset,
+      addCurrentTime,
+      client,
+      disclosedContractData
+    );
+  }
+
   protected async exerciseChoices<Res, Arg extends object = object>(
     choices: ChoiceInput<Arg>[],
     interfaceId: string,

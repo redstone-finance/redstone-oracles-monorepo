@@ -24,17 +24,20 @@ template RedStoneAdapter
     observer viewers, updaters
 
     interface instance IRedStoneAdapter for RedStoneAdapter where
-      view = RedStoneAdapterView with updaters, viewers, adapterId
+      view = RedStoneAdapterView with adapterId
+
+      iRedStoneAdapter_VerifyUpdater caller = do
+        assertMsg "WritePrices: caller must be an updater" $ caller `elem` updaters
 
       iRedStoneAdapter_GetPricesImpl feedIds currentTime = G.getPricesNumeric $ adapter_config_fun feedIds currentTime
 
-      iRedStoneAdapter_WritePricesImpl self feedIds currentTime payloadHex additionalPillViewers = do
+      iRedStoneAdapter_WritePricesImpl caller self feedIds currentTime payloadHex additionalPillViewers = do
         hasNewValues <- hasNewPrices (owner, updaters, viewers) adapterId feedData feedIds currentTime payloadHex
 
         if not hasNewValues then
           return self
         else
-          exercise (coerceContractId @IRedStoneAdapter @RedStoneAdapter self) WritePricesConsuming with feedIds, currentTime, payloadHex, additionalPillViewers
+          exercise (coerceContractId @IRedStoneAdapter @RedStoneAdapter self) WritePricesConsuming with caller, feedIds, currentTime, payloadHex, additionalPillViewers
 
       iRedStoneAdapter_ReadPriceDataImpl feedIds = do
         let getPriceData feedId =
@@ -58,15 +61,18 @@ template RedStoneAdapter
     -- Internal consuming choice for atomic write-and-replace with full payload verification
     choice WritePricesConsuming : ContractId IRedStoneAdapter
       with
+        caller : Party
         feedIds : [RedStoneFeedId]
         currentTime : Time
         payloadHex : PayloadHex
         additionalPillViewers : Optional [Party]
-      controller updaters
+      controller caller
       do
+        assertMsg "WritePricesConsuming: caller must be an updater" $ caller `elem` updaters
+        
         let allViewers = dedup $ viewers <> fromOptional [] additionalPillViewers
 
-        newData <- processAndWritePrices (owner, updaters, allViewers) pillFactory adapterId feedData feedIds currentTime payloadHex
+        newData <- processAndWritePrices (caller, owner, updaters, allViewers) pillFactory adapterId feedData feedIds currentTime payloadHex
         newCid <- create this with feedData = newData
         
         return $ toInterfaceContractId @IRedStoneAdapter newCid

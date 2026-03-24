@@ -14,7 +14,7 @@ export class PillCleaner extends CantonContractAdapter {
   constructor(
     client: CantonClient,
     private readonly ownerClient: CantonClient,
-    interfaceId = client.Defs.interfaceId,
+    interfaceId = client.Defs.pricePillInterfaceId,
     templateName = IPRICE_PILL_TEMPLATE_NAME
   ) {
     super(client, interfaceId, templateName);

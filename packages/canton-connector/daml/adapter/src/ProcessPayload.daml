@@ -18,6 +18,9 @@ import Config(adapter_config_fun, pill_staleness_ms)
 
 -- Public
 
+-- Note: emitErrorEvents creates PriceUpdateEvent with signatory=owner.
+-- This works because hasNewPrices runs within a choice on RedStoneAdapter (signatory owner),
+-- so the owner's authority is available via DAML's authority propagation rules.
 hasNewPrices (owner, updaters, viewers) adapterId feedData feedIds currentTime payloadHex = do
   ((newValues, _, rejectedValues), _) <- checkNewValues feedData feedIds currentTime payloadHex
   _ <- emitErrorEvents (owner, updaters) adapterId rejectedValues
@@ -40,7 +43,7 @@ checkNewValues feedData feedIds currentTime payloadHex = do
 
   pure $ (determineNewValues (config.currentTimestamp, feedData) feedIds result, config)
 
-newFeedData (owner, updaters, viewers) pillFactory adapterId feedData currentTimestamp (newValues, timestamp)  = do
+newFeedData (caller, owner, updaters, viewers) pillFactory adapterId feedData currentTimestamp (newValues, timestamp)  = do
   let newEntries = entriesFromValues currentTimestamp timestamp newValues
 
   case pillFactory of
@@ -55,6 +58,7 @@ newFeedData (owner, updaters, viewers) pillFactory adapterId feedData currentTim
 
     Some factory -> do
       newPills <- exercise factory CreatePricePills with
+        caller
         viewers
         stalenessMs = pill_staleness_ms
         adapterId
@@ -67,6 +71,6 @@ newFeedData (owner, updaters, viewers) pillFactory adapterId feedData currentTim
 
       let (newItems, toArchive) = partitionRecords currentTimestamp mergedFeedData
 
-      exercise factory ArchivePricePills with contractIds = map (\record -> fromSome $ record.pillCid) toArchive
+      exercise factory ArchivePricePills with caller, contractIds = map (\record -> fromSome $ record.pillCid) toArchive
 
       pure $ M.fromList newItems

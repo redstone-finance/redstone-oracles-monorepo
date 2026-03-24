@@ -2,7 +2,6 @@ module Core where
 
 import Daml.Script
 import RedStoneCore
-import RedStoneCoreClient
 import IRedStoneCore
 import Input
 
@@ -23,23 +22,9 @@ main input = script do
 
   result <- submit viewer do
     exerciseCmd (toInterfaceContractId @IRedStoneCore coreCid) GetPrices with
+      caller = viewer
       payloadHex = input.payload
       feedIds = input.feedIds
       currentTime
 
   debug $ "Processed result: " <> show result
-
-  coreClientCid <- submit owner do
-    createCmd RedStoneCoreClient with
-      owner = owner
-      viewers = [viewer]
-
-  result <- submit viewer do
-    exerciseCmd coreClientCid GetPricesDisclosed with
-      caller = viewer
-      payloadHex = input.payload
-      feedIds = input.feedIds
-      currentTime
-      adapterCid = (toInterfaceContractId @IRedStoneCore coreCid)
-
-  debug $ "Client result: " <> show result

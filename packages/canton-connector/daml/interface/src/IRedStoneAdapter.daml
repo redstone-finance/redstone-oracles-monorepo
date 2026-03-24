@@ -5,53 +5,60 @@ import RedStoneTypes
 interface IRedStoneAdapter where
   viewtype RedStoneAdapterView
 
+  iRedStoneAdapter_VerifyUpdater : Party -> Update ()
   iRedStoneAdapter_GetPricesImpl : [RedStoneFeedId] -> Time -> PayloadHex -> Update RedStoneResult
-  iRedStoneAdapter_WritePricesImpl : (ContractId IRedStoneAdapter) -> [RedStoneFeedId] -> Time -> PayloadHex -> Optional [Party] -> Update (ContractId IRedStoneAdapter)
+  iRedStoneAdapter_WritePricesImpl : Party -> (ContractId IRedStoneAdapter) -> [RedStoneFeedId] -> Time -> PayloadHex -> Optional [Party] -> Update (ContractId IRedStoneAdapter)
   iRedStoneAdapter_ReadPriceDataImpl : [RedStoneFeedId] -> Update [Optional (RedStonePriceData RedStoneValue)]
   iRedStoneAdapter_ReadPricesImpl : [RedStoneFeedId] -> Update [RedStoneValue]
   iRedStoneAdapter_GetUniqueSignerThresholdImpl: () -> Update Int
 
   nonconsuming choice GetPrices : RedStoneResult
     with
+      caller : Party
       feedIds : [RedStoneFeedId]
       currentTime : Time
       payloadHex : PayloadHex
-    controller (view this).viewers
+    controller caller
     do
       iRedStoneAdapter_GetPricesImpl this feedIds currentTime payloadHex
 
   nonconsuming choice WritePrices : ContractId IRedStoneAdapter
     with
+      caller : Party
       feedIds : [RedStoneFeedId]
       currentTime : Time
       payloadHex : PayloadHex
       additionalPillViewers : Optional [Party]
-    controller (view this).updaters
+    controller caller
     do
-      iRedStoneAdapter_WritePricesImpl this self feedIds currentTime payloadHex additionalPillViewers
+      _ <- iRedStoneAdapter_VerifyUpdater this caller
+
+      iRedStoneAdapter_WritePricesImpl this caller self feedIds currentTime payloadHex additionalPillViewers
 
   nonconsuming choice ReadPrices : [RedStoneValue]
     with
+      caller : Party
       feedIds : [RedStoneFeedId]
-    controller (view this).viewers
+    controller caller
     do
       iRedStoneAdapter_ReadPricesImpl this feedIds
 
   nonconsuming choice ReadPriceData : [Optional (RedStonePriceData RedStoneValue)]
     with
+      caller : Party
       feedIds : [RedStoneFeedId]
-    controller (view this).viewers
+    controller caller
     do
       iRedStoneAdapter_ReadPriceDataImpl this feedIds
 
   nonconsuming choice GetUniqueSignerThreshold : Int
-    controller (view this).viewers
+    with
+      caller : Party
+    controller caller
     do
       iRedStoneAdapter_GetUniqueSignerThresholdImpl this ()
 
 data RedStoneAdapterView = RedStoneAdapterView
   with
-    updaters : [Party]
-    viewers : [Party]
     adapterId : Text
   deriving (Eq, Show, Ord)

@@ -2,14 +2,12 @@ module CoreClient where
 
 import Daml.Script
 import Splice.Api.FeaturedAppRightV1
-
 import IRedStoneCore
 import RedStoneCore
 import RedStoneCoreClient
-
 import Input
-import MockFeatured
-import Utils
+import Helpers.MockFeatured
+import Helpers.Utils
 
 main : Input -> Script ()
 main input = script do
@@ -24,7 +22,7 @@ main input = script do
   featuredCid <- submit dso do
     createCmd MockFeaturedAppRight with dso, provider = owner
 
-  coreCid <- submit (actAs owner <> actAs beneficiary) do
+  coreCid <- submit (actAs [owner, beneficiary]) do
     createCmd RedStoneCore with
       coreId = "RedStoneCore-123"
       owner
@@ -36,7 +34,7 @@ main input = script do
   coreDisclosure <- queryDisclosure @RedStoneCore owner coreCid
 
   result <- submitDisclosed viewer [featuredDisclosure] do
-    exerciseCmd (toInterfaceContractId @IRedStoneCore coreCid) GetPricesWithCaller with
+    exerciseCmd (toInterfaceContractId @IRedStoneCore coreCid) GetPrices with
       payloadHex = input.payload
       feedIds = input.feedIds
       currentTime
