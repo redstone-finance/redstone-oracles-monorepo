@@ -8230,7 +8230,8 @@
     "URANIUM": {
       "source": [
         "tezos-uranium-price-api-deferred",
-        "commodity-price-api"
+        "commodity-price-api",
+        "ws-itick-futures"
       ],
       "priceAggregator": "primarySource",
       "primarySourceAggregatorConfig": {
