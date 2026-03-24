@@ -9,7 +9,6 @@
     * [Example usage](#example-usage)
   * [Disclosed Core Contract](#disclosed-core-contract)
     * [Example Client Contract Template](#example-client-contract-template)
-      * [Dependency](#dependency)
       * [Parameter list](#parameter-list)
     * [TypeScript Contract Wrapper](#typescript-contract-wrapper)
       * [Parameters](#parameters)
@@ -37,15 +36,6 @@ interface IRedStoneCore where
 
   nonconsuming choice GetPrices : RedStoneResult
     with
-      feedIds : [RedStoneFeedId]
-      currentTime : Time
-      payloadHex : PayloadHex
-    controller (view this).viewers
-    do
-      iRedStoneCore_GetPricesImpl this feedIds currentTime payloadHex
-
-  nonconsuming choice GetPricesWithCaller : RedStoneResult
-    with
       caller : Party
       feedIds : [RedStoneFeedId]
       currentTime : Time
@@ -55,13 +45,13 @@ interface IRedStoneCore where
       iRedStoneCore_GetPricesImpl this feedIds currentTime payloadHex
 ```
 
-The `GetPricesWithCaller` choice allows any party to call the contract directly (used for disclosed contract access).
+The `caller : Party` pattern allows any party to call the contract directly, including for disclosed contract access. See the [Caller Pattern](../README.md#caller-pattern) section for details.
 
 #### Contract template
 
 * By calling the nonconsuming `GetPrices` choice of the [`RedStoneCore`](./src/RedStoneCore.daml) template,
 the payload data is processed as described in the [`RedStone SDK]`](../sdk/README.md) library
-and the [`RedStoneResult`](../interface/src/RedStoneTypes.daml) is returned to the caller.
+and the [`RedStoneResult`](../types/src/RedStoneTypes.daml) is returned to the caller.
 * The `RedStoneCore` template optionally supports `FeaturedAppRight` integration via `beneficiary` and `featuredCid` fields.
 * The `iRedStoneCore_GetPricesImpl` implementation:
 
@@ -122,18 +112,14 @@ template RedStoneCoreClient
         currentTime : Time
         payloadHex : Text
         adapterCid : ContractId IRedStoneCore
-      controller viewers
+      controller caller
       do
-          exercise adapterCid GetPricesWithCaller with
+          exercise adapterCid GetPrices with
             caller
             feedIds
             currentTime
             payloadHex
 ```
-
-#### Dependency
-
-The contract requires `redstone-featured-vX-A.B.C.dar` to be added as a data-dependency in the daml.yaml file.
 
 #### Parameter list
 
@@ -144,7 +130,7 @@ Template fields:
 
 GetPricesDisclosed choice:
 
-- `caller`: Party executing the transaction (must be in viewers)
+- `caller`: Party executing the transaction (used as controller)
 - `feedIds`: List of price feed identifiers to query. Each feed ID is represented as a list of ASCII character codes
    (e.g., `ETH = [69, 84, 72]`, `BTC = [66, 84, 67]`)
 - `currentTime`: Current real-world timestamp for price validation (ensures payload freshness)
@@ -158,7 +144,7 @@ See the full example in [core-client-sample.ts](../../scripts/core-client-sample
 
 ```ts
 const partyId = `Client::1220a0242797a84e1d8c492f1259b3f87d561fcbde2e4b2cebc4572ddfc515b44c28`;
-const packageId = "#redstone-core-v11";
+const packageId = "#redstone-core-v12";
 const contractId =
         "<your-RedStoneCoreClient-contract-id>";
 

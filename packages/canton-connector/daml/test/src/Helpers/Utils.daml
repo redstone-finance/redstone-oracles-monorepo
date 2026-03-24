@@ -1,4 +1,4 @@
-module Utils where
+module Helpers.Utils where
 
 import Daml.Script
 import DA.Assert

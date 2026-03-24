@@ -6,17 +6,15 @@ import DA.Map as M
 import DA.Optional(fromSome)
 import DA.Foldable(forA_)
 import Splice.Api.FeaturedAppRightV1
-
 import IRedStonePricePill
 import RedStonePricePillFactory
 import IRedStonePricePillFactory
 import IRedStoneAdapter
 import RedStoneAdapter
 import Time
-
-import MockFeatured
 import Input
-import Utils
+import Helpers.MockFeatured
+import Helpers.Utils
 
 main : Input -> Script ()
 main input = script do
@@ -34,8 +32,9 @@ main input = script do
   featuredCid <- submit (actAs dso <> readAs beneficiary) do
     createCmd MockFeaturedAppRight with dso, provider = beneficiary
 
-  pillFactoryCid <- submit (actAs owner <> actAs beneficiary) do
+  pillFactoryCid <- submit (actAs [owner, beneficiary]) do
     createCmd RedStonePricePillFactory with
+      factoryId = "Factory"
       owner
       creators = [updater]
       beneficiary
@@ -49,7 +48,7 @@ main input = script do
       adapterId = Input.adapterId
       owner
       updaters = [updater]
-      viewers = [viewer]
+      viewers = [viewer, client]
       feedData = M.empty
       pillFactory = Some $ toInterfaceContractId @IRedStonePricePillFactory pillFactoryCid
 
@@ -57,21 +56,31 @@ main input = script do
 
   newCid <- submitDisclosed updater [featuredDisclosure, factoryDisclosure] do
     exerciseCmd (toInterfaceContractId @IRedStoneAdapter adapterCid) WritePrices with
+      caller = updater
       payloadHex = input.payload
       feedIds = input.feedIds
       currentTime
-      additionalPillViewers = None
+      additionalPillViewers = Some [client]
 
   debug $ "New CID: " <> show newCid
 
   readResult <- submit viewer do
     exerciseCmd newCid ReadPriceData with
+      caller = viewer
       feedIds = input.feedIds
 
-  debug $ "Read result: " <> show readResult
+  debug $ "Read result Viewer: " <> show readResult
 
   verifier 1 currentTime
 
+  readResult <- submit client do
+    exerciseCmd newCid ReadPriceData with
+      caller = client
+      feedIds = input.feedIds
+
+  debug $ "Read result Client: " <> show readResult
+
+  verifier 1 currentTime
 
 verifyResult feedIds (beneficiary,dso,viewer) multiplier currentTime = do
   markers <- queryInterface @FeaturedAppActivityMarker beneficiary

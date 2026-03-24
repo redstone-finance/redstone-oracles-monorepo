@@ -36,7 +36,9 @@ The direct path should look like:
 Do audit:
 
 * [sdk](./daml/sdk) — RedStone DAML SDK: payload parsing, cryptographic signature verification (secp256k1 ECDSA), median aggregation, U256 arithmetic
-* [interface](./daml/interface) — Interface definitions: IRedStoneCore, IRedStoneAdapter, IRedStonePricePill, IRedStonePricePillFactory
+* [types](./daml/types) — RedStone type definitions (RedStoneFeedId, RedStoneValue, RedStonePriceData, etc.)
+* [interface](./daml/interface) — Interface definitions: IRedStoneCore, IRedStoneAdapter, IRedStonePricePillFactory
+* [price_pill](./daml/price_pill) — IRedStonePricePill interface definition (price pill read/archive choices)
 * [core](./daml/core) — RedStoneCore template: price retrieval via disclosed contracts
 * [adapter](./daml/adapter) — RedStoneAdapter template: write/read prices, pill record management, staleness verification
 * [factory](./daml/factory) — RedStonePricePillFactory template: creates price pill contracts

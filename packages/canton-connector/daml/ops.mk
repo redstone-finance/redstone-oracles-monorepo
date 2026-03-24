@@ -2,6 +2,8 @@ sinclude ../.env
 include ./intellect.mk
 include ./data.mk
 
+ETH=["69","84","72"]
+BTC=["66","84","67"]
 FEED_IDS=[$(ETH),$(BTC)]
 PARTY_UPDATER="RedStoneOracleUpdater::$(PARTY_SUFFIX)"
 PARTY_READER="RedStoneOracleViewer::$(PARTY_SUFFIX)"
@@ -18,6 +20,7 @@ get-prices-core: prepare_data get-core-id-by-interface get-token
 	    		"contractId": "$(CORE_ID)", \
 	    		"choice": "GetPrices", \
 				"choiceArgument": { \
+					"caller": $(PARTY_READER), \
 	      			"feedIds": $(FEED_IDS), \
 	      			"currentTime": "$(CURRENT_TIME)", \
 					"payloadHex": "$(PAYLOAD)"}}}], \
@@ -35,6 +38,7 @@ write-prices: prepare_data get-adapter-id-by-interface get-token
 	    		"contractId": "$(ADAPTER_ID)", \
 	    		"choice": "WritePrices", \
 				"choiceArgument": { \
+					"caller": $(PARTY_UPDATER), \
 	      			"feedIds": $(FEED_IDS), \
 	      			"currentTime": "$(CURRENT_TIME)", \
 					"payloadHex": "$(PAYLOAD)"}}}], \
@@ -52,6 +56,7 @@ get-prices: prepare_data get-adapter-id-by-interface get-token
 	    		"contractId": "$(ADAPTER_ID)", \
 	    		"choice": "GetPrices", \
 				"choiceArgument": { \
+					"caller": $(PARTY_READER), \
 	      			"feedIds": $(FEED_IDS), \
 	      			"currentTime": "$(CURRENT_TIME)", \
 					"payloadHex": "$(PAYLOAD)"}}}], \
@@ -69,6 +74,7 @@ read-price-data: get-adapter-id-by-interface get-token
 	    		"contractId": "$(ADAPTER_ID)", \
 	    		"choice": "ReadPriceData", \
 				"choiceArgument": { \
+					"caller": $(PARTY_READER), \
 	      			"feedIds": $(FEED_IDS)}}}], \
 	    "actAs": [$(PARTY_READER)], \
 		"commandId": "read-price-data-$(shell date +%s)"}' | jq '.transactionTree.eventsById.["0"].ExercisedTreeEvent.value.exerciseResult'
@@ -84,6 +90,6 @@ read-data: get-adapter-id-by-interface get-price-feed-id-by-interface get-token
 	    		"contractId": "$(PRICE_FEED_ID)", \
 	    		"choice": "ReadData", \
 				"choiceArgument": { \
-	      			"adapterCid": "$(ADAPTER_ID)"}}}], \
+					"caller": $(PARTY_READER)}}}], \
 	    "actAs": [$(PARTY_READER)], \
 		"commandId": "read-data-$(shell date +%s)"}' | jq '.transactionTree.eventsById.["0"].ExercisedTreeEvent.value.exerciseResult'

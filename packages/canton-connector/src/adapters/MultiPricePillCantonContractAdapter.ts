@@ -21,7 +21,7 @@ export class MultiPricePillCantonContractAdapter extends CantonContractAdapter {
   constructor(
     client: CantonClient,
     private readonly feedIds: string[],
-    interfaceId = client.Defs.interfaceId,
+    interfaceId = client.Defs.pricePillInterfaceId,
     templateName = IPRICE_PILL_TEMPLATE_NAME
   ) {
     super(client, interfaceId, templateName);
@@ -33,7 +33,7 @@ export class MultiPricePillCantonContractAdapter extends CantonContractAdapter {
 
     const choices = contractData.map(({ contractId }) => ({
       choice: READ_DATA_CHOICE,
-      argument: {},
+      argument: { caller: this.client.partyId },
       contractId,
     }));
 

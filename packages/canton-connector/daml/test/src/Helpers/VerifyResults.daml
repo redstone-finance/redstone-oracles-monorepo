@@ -1,4 +1,4 @@
-module VerifyResults where
+module Helpers.VerifyResults where
 
 import DA.Assert
 import DA.List

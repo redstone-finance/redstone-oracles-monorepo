@@ -1,6 +1,6 @@
 include ./ops.mk
 
-VERSION=-v11-0.4.0
+VERSION=-v12-0.4.0
 LEDGER_HOST=localhost
 LEDGER_PORT=6865
 DAML=daml # dpm
@@ -32,7 +32,7 @@ clean:
 	$(DAML) clean --all
 	rm -f $(ADAPTER_ID_TXT) $(PRICE_FEED_ID_TXT) $(CORE_ID_TXT) refresh_token.txt token.txt test/input.json test/sample_data/payload.hex
 
-lint: lint-common lint-sdk lint-sdk-tests lint-core lint-adapter lint-price_feed lint-interface lint-featured lint-factory lint-test
+lint: lint-common lint-types lint-sdk lint-sdk-tests lint-core lint-adapter lint-price_pill lint-price_feed lint-interface lint-featured lint-factory lint-test
 	./lint-whitespaces.sh
 
 build: build_test
@@ -42,7 +42,7 @@ lint-%:
 
 run_main: run-Main
 
-run_test: build_test lint-test run-Test run-Core run-CoreClient run-Factory
+run_test: build_test lint-test run-Test run-Core run-Factory
 
 test-%: build_redstone_adapter build_redstone_core build_test
 	cd test && $(DAML) script --ide-ledger \

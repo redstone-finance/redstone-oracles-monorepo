@@ -9,15 +9,6 @@ interface IRedStoneCore where
 
   nonconsuming choice GetPrices : RedStoneResult
     with
-      feedIds : [RedStoneFeedId]
-      currentTime : Time
-      payloadHex : PayloadHex
-    controller (view this).viewers
-    do
-      iRedStoneCore_GetPricesImpl this feedIds currentTime payloadHex
-
-  nonconsuming choice GetPricesWithCaller : RedStoneResult
-    with
       caller : Party
       feedIds : [RedStoneFeedId]
       currentTime : Time
@@ -28,6 +19,5 @@ interface IRedStoneCore where
 
 data RedStoneCoreView = RedStoneCoreView
   with
-    viewers : [Party]
     coreId : Text
   deriving (Eq, Show, Ord)

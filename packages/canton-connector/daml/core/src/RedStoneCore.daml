@@ -17,7 +17,7 @@ template RedStoneCore
     observer viewers
 
     interface instance IRedStoneCore for RedStoneCore where
-      view = RedStoneCoreView with viewers, coreId
+      view = RedStoneCoreView with coreId
 
       iRedStoneCore_GetPricesImpl feedIds currentTime payloadHex = do
           case (featuredCid, beneficiary) of

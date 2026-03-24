@@ -1,4 +1,4 @@
-module FindContract (
+module Helpers.FindContract (
     findOneAdapter
     , findAnyAdapter
     , findOnePricePill
