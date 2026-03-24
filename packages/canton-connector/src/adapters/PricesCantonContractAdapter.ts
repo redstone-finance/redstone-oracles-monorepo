@@ -40,7 +40,7 @@ export class PricesCantonContractAdapter
   }
 
   async getUniqueSignerThreshold(offset?: number) {
-    const result: number | undefined = await this.exerciseChoice(
+    const result: number | undefined = await this.exerciseChoiceWithCaller(
       GET_UNIQUE_SIGNER_THRESHOLD_CHOICE,
       {},
       offset
@@ -67,11 +67,17 @@ export class PricesCantonContractAdapter
 
   async readContractData(feedIds: string[], offset?: number): Promise<ContractData> {
     const result: ({ value: string; timestamp: string; writeTimestamp: string } | undefined)[] =
-      await this.exerciseChoice(
+      await this.exerciseChoiceWithCaller(
         READ_PRICE_DATA_CHOICE,
         { feedIds: feedIds.map(getArrayifiedFeedId) },
         offset
       );
+
+    if (result.length !== feedIds.length) {
+      throw new Error(
+        `ReadPriceData result length mismatch: expected ${feedIds.length}, got ${result.length}`
+      );
+    }
 
     const data = _.zip(feedIds, result).map(([feedId, r]) => [
       feedId!,
@@ -91,7 +97,7 @@ export class PricesCantonContractAdapter
     paramsProvider: ContractParamsProvider,
     offset?: number
   ): Promise<bigint[]> {
-    const result: string[] = await this.exerciseChoice(
+    const result: string[] = await this.exerciseChoiceWithCaller(
       READ_PRICES_CHOICE,
       { feedIds: paramsProvider.getArrayifiedFeedIds() },
       offset
@@ -102,7 +108,7 @@ export class PricesCantonContractAdapter
 
   async writePricesFromPayloadToContract(paramsProvider: ContractParamsProvider): Promise<string> {
     try {
-      const result: ActiveContractData | string = await this.exerciseChoice(
+      const result: ActiveContractData | string = await this.exerciseChoiceWithCaller(
         WRITE_PRICES_CHOICE,
         {
           ...(await CoreCantonContractAdapter.getPayloadArguments(paramsProvider)),
