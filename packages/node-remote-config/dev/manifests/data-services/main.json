@@ -2294,7 +2294,7 @@
       "rateFeed": false,
       "types": ["rwa"]
     },
-    "ESH6": {
+    "ESM6": {
       "source": ["databento-cme"],
       "denomination": "USD",
       "rateFeed": false
