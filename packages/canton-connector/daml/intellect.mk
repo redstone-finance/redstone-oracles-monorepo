@@ -2,19 +2,20 @@ sinclude ../.env
 
 CANTON_API=$(PARTICIPANT)$(API_PATH)
 
-ADAPTER_NAME=RedStoneAdapter-v11-0.4.0
-ADAPTER_TEMPLATE_ID=076a291a751e4e6b0b2db21e04e1750413012c97b0d17be09b6a0828bb74d601:RedStoneAdapter:RedStoneAdapter
+ADAPTER_NAME=RedStoneAdapter-v12-0.4.0
+ADAPTER_TEMPLATE_ID=4b09751144ad16495651812c12cba13aeacdff7750e232654c418bd975710968:RedStoneAdapter:RedStoneAdapter
 
-CORE_NAME=RedStoneCore-v11-0.4.0
-CORE_ID := bf0439ec4718095a46c368c6b5e9008b6a242c200a73b24b251b04745ed933cc
+CORE_NAME=RedStoneCore-v12-0.4.1
+CORE_ID := 1c47e8e0c8ebd8e36a56f070c64e061b7544adb15f7a8eba4a88fa4c49502a46
 CORE_TEMPLATE_ID := $(CORE_ID):RedStoneCore:RedStoneCore
 CORE_CLIENT_TEMPLATE_ID := $(CORE_ID):RedStoneCoreClient:RedStoneCoreClient
 
-FACTORY_TEMPLATE_ID=3671c6e984d14745c156038b74a15566b5122cf979dfb2be3d77ea09cefb23d5:RedStonePricePillFactory:RedStonePricePillFactory
+FACTORY_NAME=RedStonePricePillFactory-v12-0.4.0
+FACTORY_TEMPLATE_ID=86c358756961e573b2ef4a5d86cf7624aa86a334d6ee8bb8a916a12918def8e2:RedStonePricePillFactory:RedStonePricePillFactory
 
-FACTORY_ID=0039e1ac69693ff0c4babc78f4e3b44b5bbd48f90765c4142eaec29b6f06638766ca121220e123424e0ab83d0fbfb209dde64085fa285851f96497f4c9b1c29c1292006bb7
+FACTORY_ID=005b5d02ef0625209ace42fe50b07843a0b13ddbf6ee48ff05b13c7b7b5479fdcaca1212205610d8411bbc534ee01bed5e7da441bcb895cb294123f2afdf1545e05bf79e29
 
-INTERFACE_ID=\#redstone-interface-v11
+INTERFACE_ID=\#redstone-interface-v12
 IADAPTER_TEMPLATE_ID=$(INTERFACE_ID):IRedStoneAdapter:IRedStoneAdapter
 ICORE_TEMPLATE_ID=$(INTERFACE_ID):IRedStoneCore:IRedStoneCore
 
@@ -22,8 +23,6 @@ BENEFICIARY=8b4399ba-c401-4a97-a1fe-59077a8b3b14
 FEATURED_CID=00deaaad88568938379d75d095961036688c49cca81efa596de41f578fe1ac1c2fca121220a86ed774b5e19df71fe79139d3fbb08e603db71977437cd997c7e1771efab2cc
 
 TOKEN=$(shell cat token.txt)
-ETH=["69","84","72"]
-BTC=["66","84","67"]
 CORE_ID_TXT=core_id.txt
 ADAPTER_ID_TXT=adapter_id.txt
 PRICE_FEED_ID_TXT=price_feed_id.txt
@@ -78,9 +77,9 @@ deploy-core: get-token
 				"createArguments": { \
 					"coreId": "$(CORE_NAME)", \
 					"owner": "RedStoneOracleOwner::$(PARTY_SUFFIX)", \
+					"viewers": ["RedStoneOracleViewer::$(PARTY_SUFFIX)"], \
 					"beneficiary": "$(BENEFICIARY)::$(PARTY_SUFFIX)", \
-					"featuredCid": "$(FEATURED_CID)", \
-					"viewers": ["RedStoneOracleViewer::$(PARTY_SUFFIX)"]}}}], \
+					"featuredCid": "$(FEATURED_CID)"}}}], \
 		"actAs": ["RedStoneOracleOwner::$(PARTY_SUFFIX)","$(BENEFICIARY)::$(PARTY_SUFFIX)"], \
 		"commandId": "deploy-core-$(shell date +%s)"}' | jq '.'
 
@@ -107,6 +106,7 @@ deploy-factory: get-token
 			"CreateCommand": { \
 				"templateId": "$(FACTORY_TEMPLATE_ID)", \
 				"createArguments": { \
+					"factoryId": "$(FACTORY_NAME)", \
 					"owner": "RedStoneOracleOwner::$(PARTY_SUFFIX)", \
 					"beneficiary": "$(BENEFICIARY)::$(PARTY_SUFFIX)", \
 					"featuredCid": "$(FEATURED_CID)", \

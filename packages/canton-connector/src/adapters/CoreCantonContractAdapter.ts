@@ -24,7 +24,7 @@ export class CoreCantonContractAdapter extends CantonContractAdapter {
   }
 
   async getPricesFromPayload(paramsProvider: ContractParamsProvider) {
-    const result: DamlTuple2<string[]> = await this.exerciseChoice(
+    const result: DamlTuple2<string[]> = await this.exerciseChoiceWithCaller(
       GET_PRICES_CHOICE,
       await CoreCantonContractAdapter.getPayloadArguments(paramsProvider),
       undefined,

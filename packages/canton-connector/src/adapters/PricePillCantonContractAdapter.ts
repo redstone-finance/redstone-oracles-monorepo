@@ -28,7 +28,7 @@ export class PricePillCantonContractAdapter
     client: CantonClient,
     protected adapterId: string,
     protected feedId: string,
-    interfaceId = client.Defs.interfaceId,
+    interfaceId = client.Defs.pricePillInterfaceId,
     templateName = IPRICE_PILL_TEMPLATE_NAME
   ) {
     super(client, interfaceId, templateName);
@@ -45,7 +45,7 @@ export class PricePillCantonContractAdapter
   }
 
   async readData(offset?: number) {
-    const result: PriceData = await this.exerciseChoice(READ_DATA_CHOICE, {}, offset);
+    const result: PriceData = await this.exerciseChoiceWithCaller(READ_DATA_CHOICE, {}, offset);
 
     return parsePriceData(result);
   }
@@ -55,11 +55,11 @@ export class PricePillCantonContractAdapter
   }
 
   async getDescription(offset?: number) {
-    return await this.exerciseChoice<string>(READ_DESCRIPTION_CHOICE, {}, offset);
+    return await this.exerciseChoiceWithCaller<string>(READ_DESCRIPTION_CHOICE, {}, offset);
   }
 
   async getDataFeedId(offset?: number) {
-    const feedId: string[] = await this.exerciseChoice(READ_FEED_ID_CHOICE, {}, offset);
+    const feedId: string[] = await this.exerciseChoiceWithCaller(READ_FEED_ID_CHOICE, {}, offset);
 
     return ContractParamsProvider.unhexlifyFeedId(feedId.map(Number));
   }

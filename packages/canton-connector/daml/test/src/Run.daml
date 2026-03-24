@@ -1,13 +1,13 @@
 module Run where
 
 import Daml.Script
+import Splice.Api.FeaturedAppRightV1
 import IRedStoneAdapter
 import Input
-import FindContract
-import VerifyResults
-import MockFeatured
-import Utils
-import Splice.Api.FeaturedAppRightV1
+import Helpers.FindContract
+import Helpers.MockFeatured
+import Helpers.Utils
+import Helpers.VerifyResults
 
 main : Input -> Script ()
 main input = script do
@@ -22,6 +22,7 @@ main input = script do
 
   values <- submit viewer do
     exerciseCmd adapterCid GetPrices with
+      caller = viewer
       payloadHex = input.payload
       feedIds = input.feedIds
       currentTime
@@ -33,6 +34,7 @@ main input = script do
 
   newCid <- submitDisclosed updater [featuredDisclosure] do
     exerciseCmd adapterCid WritePrices with
+      caller = updater
       payloadHex = input.payload
       feedIds = input.feedIds
       currentTime
@@ -42,6 +44,7 @@ main input = script do
 
   readResult <- submit viewer do
     exerciseCmd adapterCid ReadPriceData with
+      caller = viewer
       feedIds = input.feedIds
 
   verifyWithResult currentTime readResult values

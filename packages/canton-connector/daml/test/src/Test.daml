@@ -6,7 +6,7 @@ import DA.Map as M
 import RedStoneAdapter
 import IRedStoneAdapter
 import Input
-import VerifyResults
+import Helpers.VerifyResults
 
 main : Input -> Script ()
 main input = script do
@@ -27,6 +27,7 @@ main input = script do
 
   result <- submit viewer do
     exerciseCmd (toInterfaceContractId @IRedStoneAdapter adapterCid) GetPrices with
+      caller = viewer
       payloadHex = input.payload
       feedIds = input.feedIds
       currentTime
@@ -34,12 +35,14 @@ main input = script do
   debug $ "Processed result: " <> show result
 
   signerCount <- submit viewer do
-    exerciseCmd (toInterfaceContractId @IRedStoneAdapter adapterCid) GetUniqueSignerThreshold
+    exerciseCmd (toInterfaceContractId @IRedStoneAdapter adapterCid) GetUniqueSignerThreshold with
+      caller = viewer
 
   signerCount === 3
 
   newCid <- submit updater do
     exerciseCmd (toInterfaceContractId @IRedStoneAdapter adapterCid) WritePrices with
+      caller = updater
       payloadHex = input.payload
       feedIds = input.feedIds
       currentTime
@@ -47,6 +50,7 @@ main input = script do
 
   readResult <- submit viewer do
     exerciseCmd newCid ReadPriceData with
+      caller = viewer
       feedIds = input.feedIds
 
   verifyWithResult currentTime readResult result

@@ -1,11 +1,13 @@
 sdk-version: 3.4.11
 packages:
   - ./common
+  - ./types
   - ./sdk
   - ./sdk-tests
   - ./interface
   - ./core
   - ./adapter
+  - ./price_pill
   - ./price_feed
   - ./test
   - ./featured

@@ -39,7 +39,6 @@ export class CoreClientCantonContractAdapter extends CantonContractAdapter {
       argument: {
         ...(await CoreCantonContractAdapter.getPayloadArguments(paramsProvider)),
         adapterCid: this.coreActiveContractData.contractId,
-        caller: this.client.partyId,
       },
       offset: undefined,
       addCurrentTime: true,
@@ -52,7 +51,7 @@ export class CoreClientCantonContractAdapter extends CantonContractAdapter {
     const { choice, argument, offset, addCurrentTime, client, disclosedContractData } =
       await this.getDisclosedPricesParams(paramsProvider);
 
-    const result: DamlTuple2<string[]> = await this.exerciseChoice(
+    const result: DamlTuple2<string[]> = await this.exerciseChoiceWithCaller(
       choice,
       argument,
       offset,
