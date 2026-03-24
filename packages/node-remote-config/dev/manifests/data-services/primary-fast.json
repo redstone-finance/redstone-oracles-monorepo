@@ -34,7 +34,7 @@
       ],
       "deviationCheck": {
         "deviationWithRecentValues": {
-          "maxPercent": 5,
+          "maxPercent": 2,
           "maxDelayMilliseconds": 120000
         }
       }
@@ -50,7 +50,7 @@
       ],
       "deviationCheck": {
         "deviationWithRecentValues": {
-          "maxPercent": 5,
+          "maxPercent": 2,
           "maxDelayMilliseconds": 120000
         }
       }
@@ -70,7 +70,7 @@
       ],
       "deviationCheck": {
         "deviationWithRecentValues": {
-          "maxPercent": 5,
+          "maxPercent": 2,
           "maxDelayMilliseconds": 120000
         }
       }
