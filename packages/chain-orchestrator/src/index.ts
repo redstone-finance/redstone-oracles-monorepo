@@ -11,6 +11,7 @@ export * from "./monitoring-adapter/get-monitoring-contract-adapter";
 export * from "./monitoring-adapter/get-price-feed-contract-connector";
 export * from "./monitoring-adapter/get-price-feed-contract-creator";
 export * from "./monitoring-adapter/NonEvmPriceFeedContract";
+export * from "./provider/balance-provider";
 export * from "./provider/chain-provider";
 export * from "./provider/CurrencyTokenBalanceProvider";
 export * from "./provider/get-provider";
