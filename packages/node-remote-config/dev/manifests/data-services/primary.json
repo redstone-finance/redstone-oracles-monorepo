@@ -21,6 +21,7 @@
         "bitmart-usdt",
         "bitrue-usdt",
         "bitstamp-usd",
+        "bitstamp-usdt",
         "bybit-usdt",
         "gate-usdt",
         "gemini-usd",
@@ -156,8 +157,8 @@
         "bybit-usdt",
         "gate-usdt",
         "htx-usdt",
-        "kraken-usdc",
-        "kraken-usdt",
+        "kraken-eur",
+        "kraken-usd",
         "kucoin-usdt",
         "lbank-usdt",
         "mexc-usdt",
@@ -171,19 +172,19 @@
     "BTC": {
       "source": [
         "binance-usdc",
-        "binance-usdt",
         "bingx-usdc",
         "bingx-usdt",
         "bitget-usdc",
         "bitget-usdt",
+        "bitmart-usdc",
         "bitmart-usdt",
         "bitrue-usdc",
+        "bitrue-usdt",
         "bitstamp-usd",
-        "bybit-usdc",
         "htx-usdt",
         "kraken-usd",
         "kraken-usdt",
-        "kucoin-usdt",
+        "lbank-usdc",
         "lbank-usdt",
         "mexc-usdt",
         "okx-usd",
@@ -207,6 +208,7 @@
         "lbank-usdt",
         "mexc-usdt",
         "okx-usdt",
+        "xt-usdt",
         "curve-ethereum-usdt",
         "uniswap-v3-ethereum-usdt-100"
       ],
@@ -257,18 +259,19 @@
         "binance-usdt",
         "bingx-usdc",
         "bingx-usdt",
-        "bitget-eur",
         "bitget-usdc",
+        "bitget-usdt",
         "bitmart-usdt",
         "bitrue-usdc",
         "bitrue-usdt",
-        "bitstamp-eur",
         "bitstamp-usd",
         "bybit-usdc",
         "coinbase-usd",
         "htx-usdt",
         "kraken-eur",
         "kraken-usd",
+        "kucoin-usdt",
+        "lbank-usdc",
         "lbank-usdt",
         "mexc-usdt",
         "okx-usd",
@@ -323,7 +326,7 @@
       "rateFeed": false,
       "deviationCheck": {
         "deviationWithRecentValues": {
-          "maxPercent": 1.0,
+          "maxPercent": 1,
           "maxDelayMilliseconds": 120000
         }
       }
@@ -339,7 +342,7 @@
       "rateFeed": true,
       "deviationCheck": {
         "deviationWithRecentValues": {
-          "maxPercent": 1.0,
+          "maxPercent": 1,
           "maxDelayMilliseconds": 120000
         }
       }
@@ -400,6 +403,7 @@
         "bitget-usdt",
         "bitmart-usdt",
         "bitrue-usdt",
+        "bitstamp-usd",
         "bybit-usdt",
         "coinbase-usd",
         "gate-usdt",
@@ -423,7 +427,7 @@
       "rateFeed": false,
       "deviationCheck": {
         "deviationWithRecentValues": {
-          "maxPercent": 1.0,
+          "maxPercent": 1,
           "maxDelayMilliseconds": 120000
         }
       },
@@ -458,7 +462,6 @@
         "binance-usdt",
         "bingx-usdc",
         "bingx-usdt",
-        "bitget-usdc",
         "bitget-usdt",
         "bitmart-usdc",
         "bitmart-usdt",
@@ -473,6 +476,7 @@
         "lbank-usdt",
         "mexc-usdc",
         "mexc-usdt",
+        "okx-usdt",
         "xt-usdt"
       ],
       "denomination": "USD",
@@ -520,7 +524,7 @@
       "rateFeed": false,
       "deviationCheck": {
         "deviationWithRecentValues": {
-          "maxPercent": 1.0,
+          "maxPercent": 1,
           "maxDelayMilliseconds": 120000
         }
       }
@@ -573,7 +577,7 @@
       "rateFeed": true,
       "deviationCheck": {
         "deviationWithRecentValues": {
-          "maxPercent": 1.0,
+          "maxPercent": 1,
           "maxDelayMilliseconds": 120000
         }
       }
@@ -671,7 +675,7 @@
         "bitmart-usdc",
         "bitmart-usdt",
         "bitrue-usdt",
-        "bitstamp-usd",
+        "bybit-usdc",
         "bybit-usdt",
         "gate-usdt",
         "htx-usdt",
@@ -703,13 +707,15 @@
         "kucoin-usdt",
         "lbank-usdt",
         "mexc-usdt",
-        "okx-usdt"
+        "okx-usdt",
+        "xt-usdt"
       ],
       "denomination": "USD",
       "rateFeed": false
     },
     "BRL": {
       "source": [
+        "lbank-usdt",
         "mexc-usdt",
         "binance-btc-reversed",
         "binance-usdt-reversed",
@@ -787,9 +793,9 @@
         "bybit-usdt",
         "coinbase-usd",
         "gate-usdt",
+        "htx-usdt",
         "kraken-eur",
         "kraken-usd",
-        "kucoin-usdt",
         "lbank-usdt",
         "mexc-usdc",
         "mexc-usdt",
@@ -846,6 +852,7 @@
         "binance-usdt",
         "bingx-usdc",
         "bingx-usdt",
+        "bitget-usdc",
         "bitget-usdt",
         "bitmart-usdt",
         "bitrue-usdc",
@@ -853,13 +860,12 @@
         "bitstamp-usd",
         "bybit-usdt",
         "coinbase-usd",
+        "kraken-eur",
         "kraken-usd",
-        "kraken-usdt",
         "lbank-usdc",
         "lbank-usdt",
         "mexc-usdc",
         "mexc-usdt",
-        "okx-usd",
         "okx-usdt",
         "xt-usdt"
       ],
@@ -1011,7 +1017,7 @@
         "coinbase-usd",
         "gate-usdt",
         "htx-usdt",
-        "kraken-eur",
+        "kraken-usdc",
         "kraken-usdt",
         "lbank-usdt",
         "mexc-usdc",
@@ -1084,6 +1090,7 @@
         "kucoin-usdt",
         "lbank-usdt",
         "mexc-usdc",
+        "mexc-usdt",
         "xt-usdt",
         "curve-ethereum-weth"
       ],
@@ -1120,7 +1127,7 @@
       "rateFeed": false,
       "deviationCheck": {
         "deviationWithRecentValues": {
-          "maxPercent": 1.0,
+          "maxPercent": 1,
           "maxDelayMilliseconds": 120000
         }
       }
@@ -1209,13 +1216,13 @@
         "bitmart-usdt",
         "bitrue-usdc",
         "bitrue-usdt",
-        "bitstamp-usd",
         "bybit-usdc",
         "bybit-usdt",
         "gate-usdt",
         "htx-usdt",
         "kraken-eur",
         "kraken-usd",
+        "kucoin-usdc",
         "kucoin-usdt",
         "lbank-usdt",
         "mexc-usdc",
@@ -1254,7 +1261,6 @@
         "binance-usdt",
         "bitstamp-usd",
         "kraken-usd",
-        "mexc-usdc",
         "mexc-usdt",
         "bitget-usdt-reversed",
         "bitstamp-btc-reversed",
@@ -1320,7 +1326,7 @@
       "rateFeed": false,
       "deviationCheck": {
         "deviationWithRecentValues": {
-          "maxPercent": 1.0,
+          "maxPercent": 1,
           "maxDelayMilliseconds": 120000
         }
       }
@@ -1391,7 +1397,7 @@
       "rateFeed": true,
       "deviationCheck": {
         "deviationWithRecentValues": {
-          "maxPercent": 1.0,
+          "maxPercent": 1,
           "maxDelayMilliseconds": 120000
         }
       }
@@ -1402,7 +1408,7 @@
       "rateFeed": true,
       "deviationCheck": {
         "deviationWithRecentValues": {
-          "maxPercent": 1.0,
+          "maxPercent": 1,
           "maxDelayMilliseconds": 120000
         }
       }
@@ -1413,7 +1419,7 @@
       "rateFeed": true,
       "deviationCheck": {
         "deviationWithRecentValues": {
-          "maxPercent": 1.0,
+          "maxPercent": 1,
           "maxDelayMilliseconds": 120000
         }
       }
@@ -1468,7 +1474,7 @@
       "rateFeed": true,
       "deviationCheck": {
         "deviationWithRecentValues": {
-          "maxPercent": 1.0,
+          "maxPercent": 1,
           "maxDelayMilliseconds": 120000
         }
       }
@@ -1479,7 +1485,7 @@
       "rateFeed": true,
       "deviationCheck": {
         "deviationWithRecentValues": {
-          "maxPercent": 1.0,
+          "maxPercent": 1,
           "maxDelayMilliseconds": 120000
         }
       }
@@ -1490,7 +1496,7 @@
       "rateFeed": true,
       "deviationCheck": {
         "deviationWithRecentValues": {
-          "maxPercent": 1.0,
+          "maxPercent": 1,
           "maxDelayMilliseconds": 120000
         }
       }
@@ -1501,7 +1507,7 @@
       "rateFeed": true,
       "deviationCheck": {
         "deviationWithRecentValues": {
-          "maxPercent": 1.0,
+          "maxPercent": 1,
           "maxDelayMilliseconds": 120000
         }
       }
@@ -1535,6 +1541,8 @@
     },
     "COP": {
       "source": [
+        "lbank-usdt",
+        "mexc-usdt",
         "alphavantage-usd-reversed",
         "financialmodelingprep",
         "metal-price-api",
@@ -1668,7 +1676,7 @@
       "rateFeed": true,
       "deviationCheck": {
         "deviationWithRecentValues": {
-          "maxPercent": 1.0,
+          "maxPercent": 1,
           "maxDelayMilliseconds": 120000
         }
       }
@@ -1679,7 +1687,7 @@
       "rateFeed": true,
       "deviationCheck": {
         "deviationWithRecentValues": {
-          "maxPercent": 1.0,
+          "maxPercent": 1,
           "maxDelayMilliseconds": 120000
         }
       }
@@ -1690,7 +1698,7 @@
       "rateFeed": true,
       "deviationCheck": {
         "deviationWithRecentValues": {
-          "maxPercent": 1.0,
+          "maxPercent": 1,
           "maxDelayMilliseconds": 120000
         }
       }
@@ -1705,7 +1713,7 @@
       "rateFeed": false,
       "deviationCheck": {
         "deviationWithRecentValues": {
-          "maxPercent": 1.0,
+          "maxPercent": 1,
           "maxDelayMilliseconds": 120000
         }
       }
@@ -1716,7 +1724,7 @@
       "rateFeed": true,
       "deviationCheck": {
         "deviationWithRecentValues": {
-          "maxPercent": 1.0,
+          "maxPercent": 1,
           "maxDelayMilliseconds": 120000
         }
       }
@@ -1800,7 +1808,7 @@
       "rateFeed": true,
       "deviationCheck": {
         "deviationWithRecentValues": {
-          "maxPercent": 1.0,
+          "maxPercent": 1,
           "maxDelayMilliseconds": 120000
         }
       }
@@ -2018,7 +2026,7 @@
     },
     "LSK": {
       "source": [
-        "binance-btc",
+        "binance-usdc",
         "binance-usdt",
         "bingx-usdt",
         "bitget-usdt",
@@ -2037,7 +2045,7 @@
       "rateFeed": true,
       "deviationCheck": {
         "deviationWithRecentValues": {
-          "maxPercent": 1.0,
+          "maxPercent": 1,
           "maxDelayMilliseconds": 120000
         }
       }
@@ -2049,6 +2057,7 @@
         "bitmart-usdt",
         "bitrue-usdt",
         "bitso-usd",
+        "bitstamp-eur",
         "bitstamp-usd",
         "bybit-usdt",
         "gate-usdt",
@@ -2060,6 +2069,7 @@
         "lbank-usdt",
         "mexc-usdc",
         "mexc-usdt",
+        "okx-usdc",
         "okx-usdt",
         "xt-usdt",
         "hyperliquid-api-fetcher"
@@ -2073,7 +2083,7 @@
       "rateFeed": true,
       "deviationCheck": {
         "deviationWithRecentValues": {
-          "maxPercent": 1.0,
+          "maxPercent": 1,
           "maxDelayMilliseconds": 120000
         }
       }
@@ -2084,7 +2094,7 @@
       "rateFeed": true,
       "deviationCheck": {
         "deviationWithRecentValues": {
-          "maxPercent": 1.0,
+          "maxPercent": 1,
           "maxDelayMilliseconds": 120000
         }
       }
@@ -2095,7 +2105,7 @@
       "rateFeed": true,
       "deviationCheck": {
         "deviationWithRecentValues": {
-          "maxPercent": 1.0,
+          "maxPercent": 1,
           "maxDelayMilliseconds": 120000
         }
       }
@@ -2117,7 +2127,7 @@
       "rateFeed": true,
       "deviationCheck": {
         "deviationWithRecentValues": {
-          "maxPercent": 1.0,
+          "maxPercent": 1,
           "maxDelayMilliseconds": 120000
         }
       }
@@ -2128,7 +2138,7 @@
       "rateFeed": true,
       "deviationCheck": {
         "deviationWithRecentValues": {
-          "maxPercent": 1.0,
+          "maxPercent": 1,
           "maxDelayMilliseconds": 120000
         }
       }
@@ -2139,7 +2149,7 @@
       "rateFeed": true,
       "deviationCheck": {
         "deviationWithRecentValues": {
-          "maxPercent": 1.0,
+          "maxPercent": 1,
           "maxDelayMilliseconds": 120000
         }
       }
@@ -2150,7 +2160,7 @@
       "rateFeed": true,
       "deviationCheck": {
         "deviationWithRecentValues": {
-          "maxPercent": 1.0,
+          "maxPercent": 1,
           "maxDelayMilliseconds": 120000
         }
       }
@@ -2362,7 +2372,7 @@
       "rateFeed": true,
       "deviationCheck": {
         "deviationWithRecentValues": {
-          "maxPercent": 1.0,
+          "maxPercent": 1,
           "maxDelayMilliseconds": 120000
         }
       }
@@ -2373,7 +2383,7 @@
       "rateFeed": true,
       "deviationCheck": {
         "deviationWithRecentValues": {
-          "maxPercent": 1.0,
+          "maxPercent": 1,
           "maxDelayMilliseconds": 120000
         }
       }
@@ -2504,6 +2514,7 @@
         "bingx-usdt",
         "bitget-usdt",
         "bitmart-usdt",
+        "bitstamp-usd",
         "gate-usdt",
         "htx-usdt",
         "kraken-eur",
@@ -2527,6 +2538,7 @@
         "bitmart-usdt",
         "bitrue-usdt",
         "bitstamp-usd",
+        "bybit-usdc",
         "bybit-usdt",
         "gate-usdt",
         "htx-usdt",
@@ -2601,7 +2613,7 @@
       "rateFeed": true,
       "deviationCheck": {
         "deviationWithRecentValues": {
-          "maxPercent": 1.0,
+          "maxPercent": 1,
           "maxDelayMilliseconds": 120000
         }
       }
@@ -2655,6 +2667,7 @@
         "bybit-usdt",
         "coinbase-usd",
         "gate-usdt",
+        "kraken-eur",
         "kraken-usd",
         "kucoin-usdt",
         "lbank-usdt",
@@ -2673,7 +2686,7 @@
       "rateFeed": true,
       "deviationCheck": {
         "deviationWithRecentValues": {
-          "maxPercent": 1.0,
+          "maxPercent": 1,
           "maxDelayMilliseconds": 120000
         }
       }
@@ -2762,7 +2775,8 @@
         "lbank-usdt",
         "mexc-usdc",
         "mexc-usdt",
-        "okx-usdt"
+        "okx-usdt",
+        "xt-usdt"
       ],
       "denomination": "USD",
       "rateFeed": false
@@ -2773,7 +2787,7 @@
       "rateFeed": true,
       "deviationCheck": {
         "deviationWithRecentValues": {
-          "maxPercent": 1.0,
+          "maxPercent": 1,
           "maxDelayMilliseconds": 120000
         }
       }
@@ -2784,7 +2798,7 @@
       "rateFeed": true,
       "deviationCheck": {
         "deviationWithRecentValues": {
-          "maxPercent": 1.0,
+          "maxPercent": 1,
           "maxDelayMilliseconds": 120000
         }
       }
@@ -2814,7 +2828,7 @@
       "rateFeed": true,
       "deviationCheck": {
         "deviationWithRecentValues": {
-          "maxPercent": 1.0,
+          "maxPercent": 1,
           "maxDelayMilliseconds": 120000
         }
       }
@@ -2920,7 +2934,7 @@
       "rateFeed": true,
       "deviationCheck": {
         "deviationWithRecentValues": {
-          "maxPercent": 1.0,
+          "maxPercent": 1,
           "maxDelayMilliseconds": 120000
         }
       },
@@ -2992,7 +3006,7 @@
       "rateFeed": true,
       "deviationCheck": {
         "deviationWithRecentValues": {
-          "maxPercent": 1.0,
+          "maxPercent": 1,
           "maxDelayMilliseconds": 120000
         }
       }
@@ -3017,7 +3031,7 @@
       "rateFeed": true,
       "deviationCheck": {
         "deviationWithRecentValues": {
-          "maxPercent": 1.0,
+          "maxPercent": 1,
           "maxDelayMilliseconds": 120000
         }
       }
@@ -3064,8 +3078,8 @@
         "htx-usdt",
         "kraken-usd",
         "kraken-usdt",
-        "kucoin-usdt",
         "lbank-usdt",
+        "mexc-usdc",
         "mexc-usdt",
         "okx-usdt",
         "xt-usdt"
@@ -3079,17 +3093,17 @@
         "binance-usdt",
         "bingx-usdc",
         "bingx-usdt",
-        "bitget-usdc",
         "bitget-usdt",
         "bitmart-usdc",
         "bitmart-usdt",
         "bitrue-usdc",
         "bitrue-usdt",
-        "bitstamp-usd",
+        "bybit-usdt",
         "coinbase-usd",
         "htx-usdt",
         "kraken-eur",
-        "kraken-usdc",
+        "kraken-usdt",
+        "kucoin-usdt",
         "lbank-usdt",
         "mexc-usdc",
         "mexc-usdt",
@@ -3136,8 +3150,8 @@
         "kraken-usd",
         "kucoin-usdt",
         "lbank-usdt",
+        "mexc-usdc",
         "mexc-usdt",
-        "okx-usd",
         "okx-usdt",
         "xt-usdt"
       ],
@@ -3185,8 +3199,8 @@
         "bitrue-usdc",
         "bitrue-usdt",
         "bitstamp-usd",
-        "bybit-usdt",
         "htx-usdt",
+        "kraken-eur",
         "kraken-usd",
         "lbank-usdc",
         "lbank-usdt",
@@ -3213,9 +3227,9 @@
         "bitstamp-usd",
         "bybit-usdt",
         "gate-usdt",
+        "htx-usdt",
         "kraken-eur",
         "kraken-usd",
-        "kucoin-usdt",
         "lbank-usdt",
         "mexc-usdc",
         "mexc-usdt",
@@ -3236,6 +3250,7 @@
         "bitmart-usdt",
         "bitstamp-usd",
         "bybit-usdt",
+        "gate-usdc",
         "gate-usdt",
         "gemini-usd",
         "htx-usdt",
@@ -3260,11 +3275,12 @@
         "bitmart-usdt",
         "bitrue-usdt",
         "bitrue-xrp",
+        "bitso-usd",
         "bitstamp-usd",
         "bybit-usdt",
         "gate-usdt",
-        "gemini-usd",
         "htx-usdt",
+        "kraken-eur",
         "kraken-usd",
         "kucoin-usdt",
         "lbank-usdt",
@@ -3396,7 +3412,7 @@
       "rateFeed": true,
       "deviationCheck": {
         "deviationWithRecentValues": {
-          "maxPercent": 1.0,
+          "maxPercent": 1,
           "maxDelayMilliseconds": 120000
         }
       }
@@ -3407,7 +3423,7 @@
       "rateFeed": true,
       "deviationCheck": {
         "deviationWithRecentValues": {
-          "maxPercent": 1.0,
+          "maxPercent": 1,
           "maxDelayMilliseconds": 120000
         }
       }
@@ -3451,7 +3467,7 @@
       "rateFeed": true,
       "deviationCheck": {
         "deviationWithRecentValues": {
-          "maxPercent": 1.0,
+          "maxPercent": 1,
           "maxDelayMilliseconds": 120000
         }
       }
@@ -3462,7 +3478,7 @@
       "rateFeed": true,
       "deviationCheck": {
         "deviationWithRecentValues": {
-          "maxPercent": 1.0,
+          "maxPercent": 1,
           "maxDelayMilliseconds": 120000
         }
       }
@@ -3473,7 +3489,7 @@
       "rateFeed": true,
       "deviationCheck": {
         "deviationWithRecentValues": {
-          "maxPercent": 1.0,
+          "maxPercent": 1,
           "maxDelayMilliseconds": 120000
         }
       }
@@ -3494,7 +3510,7 @@
       "rateFeed": true,
       "deviationCheck": {
         "deviationWithRecentValues": {
-          "maxPercent": 1.0,
+          "maxPercent": 1,
           "maxDelayMilliseconds": 120000
         }
       }
@@ -3522,7 +3538,7 @@
       "rateFeed": true,
       "deviationCheck": {
         "deviationWithRecentValues": {
-          "maxPercent": 1.0,
+          "maxPercent": 1,
           "maxDelayMilliseconds": 120000
         }
       }
@@ -3533,7 +3549,7 @@
       "rateFeed": true,
       "deviationCheck": {
         "deviationWithRecentValues": {
-          "maxPercent": 1.0,
+          "maxPercent": 1,
           "maxDelayMilliseconds": 120000
         }
       }
@@ -3544,7 +3560,7 @@
       "rateFeed": true,
       "deviationCheck": {
         "deviationWithRecentValues": {
-          "maxPercent": 1.0,
+          "maxPercent": 1,
           "maxDelayMilliseconds": 120000
         }
       }
@@ -3566,7 +3582,7 @@
       "rateFeed": true,
       "deviationCheck": {
         "deviationWithRecentValues": {
-          "maxPercent": 1.0,
+          "maxPercent": 1,
           "maxDelayMilliseconds": 120000
         }
       }
@@ -3635,7 +3651,7 @@
       "rateFeed": true,
       "deviationCheck": {
         "deviationWithRecentValues": {
-          "maxPercent": 1.0,
+          "maxPercent": 1,
           "maxDelayMilliseconds": 120000
         }
       }
@@ -3802,7 +3818,7 @@
       "rateFeed": true,
       "deviationCheck": {
         "deviationWithRecentValues": {
-          "maxPercent": 1.0,
+          "maxPercent": 1,
           "maxDelayMilliseconds": 120000
         }
       }
@@ -3813,7 +3829,7 @@
       "rateFeed": true,
       "deviationCheck": {
         "deviationWithRecentValues": {
-          "maxPercent": 1.0,
+          "maxPercent": 1,
           "maxDelayMilliseconds": 120000
         }
       }
@@ -3853,7 +3869,7 @@
       "rateFeed": true,
       "deviationCheck": {
         "deviationWithRecentValues": {
-          "maxPercent": 1.0,
+          "maxPercent": 1,
           "maxDelayMilliseconds": 120000
         }
       }
@@ -3864,7 +3880,7 @@
       "rateFeed": true,
       "deviationCheck": {
         "deviationWithRecentValues": {
-          "maxPercent": 1.0,
+          "maxPercent": 1,
           "maxDelayMilliseconds": 120000
         }
       }
@@ -3941,6 +3957,7 @@
         "kraken-eur",
         "kraken-usd",
         "kucoin-usdt",
+        "lbank-usdt",
         "mexc-usdc",
         "mexc-usdt",
         "okx-usdt",
@@ -3955,7 +3972,7 @@
       "rateFeed": true,
       "deviationCheck": {
         "deviationWithRecentValues": {
-          "maxPercent": 1.0,
+          "maxPercent": 1,
           "maxDelayMilliseconds": 120000
         }
       }
@@ -3966,7 +3983,7 @@
       "rateFeed": true,
       "deviationCheck": {
         "deviationWithRecentValues": {
-          "maxPercent": 1.0,
+          "maxPercent": 1,
           "maxDelayMilliseconds": 120000
         }
       }
@@ -3992,7 +4009,7 @@
       "rateFeed": true,
       "deviationCheck": {
         "deviationWithRecentValues": {
-          "maxPercent": 1.0,
+          "maxPercent": 1,
           "maxDelayMilliseconds": 120000
         }
       }
@@ -4052,7 +4069,7 @@
       "rateFeed": true,
       "deviationCheck": {
         "deviationWithRecentValues": {
-          "maxPercent": 1.0,
+          "maxPercent": 1,
           "maxDelayMilliseconds": 120000
         }
       }
@@ -4063,7 +4080,7 @@
       "rateFeed": true,
       "deviationCheck": {
         "deviationWithRecentValues": {
-          "maxPercent": 1.0,
+          "maxPercent": 1,
           "maxDelayMilliseconds": 120000
         }
       }
@@ -4074,7 +4091,7 @@
       "rateFeed": true,
       "deviationCheck": {
         "deviationWithRecentValues": {
-          "maxPercent": 1.0,
+          "maxPercent": 1,
           "maxDelayMilliseconds": 120000
         }
       }
@@ -4096,7 +4113,7 @@
       "rateFeed": true,
       "deviationCheck": {
         "deviationWithRecentValues": {
-          "maxPercent": 1.0,
+          "maxPercent": 1,
           "maxDelayMilliseconds": 120000
         }
       }
@@ -4112,7 +4129,7 @@
       "rateFeed": true,
       "deviationCheck": {
         "deviationWithRecentValues": {
-          "maxPercent": 1.0,
+          "maxPercent": 1,
           "maxDelayMilliseconds": 120000
         }
       }
@@ -4144,6 +4161,7 @@
         "kraken-usd",
         "kucoin-usdt",
         "lbank-usdt",
+        "mexc-usdc",
         "mexc-usdt",
         "xt-usdt"
       ],
@@ -4156,7 +4174,7 @@
       "rateFeed": true,
       "deviationCheck": {
         "deviationWithRecentValues": {
-          "maxPercent": 1.0,
+          "maxPercent": 1,
           "maxDelayMilliseconds": 120000
         }
       }
@@ -4198,8 +4216,8 @@
         "bitrue-usdc",
         "bitrue-usdt",
         "bitstamp-usd",
+        "bybit-usdc",
         "bybit-usdt",
-        "coinbase-usd",
         "kraken-eur",
         "kraken-usd",
         "kucoin-usdt",
@@ -4226,11 +4244,11 @@
         "bitstamp-usd",
         "bybit-usdt",
         "gate-usdt",
-        "htx-usdt",
         "kraken-eur",
         "kraken-usd",
         "kucoin-usdt",
         "lbank-usdt",
+        "mexc-usdc",
         "mexc-usdt",
         "okx-usdt",
         "xt-usdc",
@@ -4253,13 +4271,13 @@
         "coinbase-usd",
         "gate-usdt",
         "htx-usdt",
+        "kraken-eur",
         "kraken-usd",
         "kucoin-usdt",
         "lbank-usdt",
         "mexc-usdc",
         "mexc-usdt",
         "okx-usdt",
-        "xt-usdc",
         "xt-usdt"
       ],
       "denomination": "USD",
@@ -4329,7 +4347,7 @@
       "rateFeed": true,
       "deviationCheck": {
         "deviationWithRecentValues": {
-          "maxPercent": 1.0,
+          "maxPercent": 1,
           "maxDelayMilliseconds": 120000
         }
       }
@@ -4345,7 +4363,7 @@
       "rateFeed": true,
       "deviationCheck": {
         "deviationWithRecentValues": {
-          "maxPercent": 1.0,
+          "maxPercent": 1,
           "maxDelayMilliseconds": 120000
         }
       }
@@ -4376,16 +4394,17 @@
         "coinbase-usd",
         "gate-usdt",
         "htx-usdt",
+        "kraken-eur",
         "kraken-usd",
         "kucoin-usdt",
         "lbank-usdt",
         "mexc-usdc",
         "mexc-usdt",
+        "xt-usdt",
         "pancake-swap-bnb-btcb-2500",
         "pancake-swap-bnb-usdt-2500",
         "pancake-swap-bnb-wbnb-2500",
-        "pancake-swap-bnb-wbnb-500",
-        "xt-usdt"
+        "pancake-swap-bnb-wbnb-500"
       ],
       "denomination": "USD",
       "rateFeed": false
@@ -4424,11 +4443,11 @@
         "bingx-usdt",
         "bitget-usdt",
         "bitmart-usdt",
+        "bitrue-usdc",
         "bitrue-usdt",
         "bybit-usdt",
         "coinbase-usd",
         "gate-usdt",
-        "htx-usdt",
         "kraken-eur",
         "kraken-usd",
         "kucoin-usdt",
@@ -4496,7 +4515,7 @@
       "rateFeed": true,
       "deviationCheck": {
         "deviationWithRecentValues": {
-          "maxPercent": 1.0,
+          "maxPercent": 1,
           "maxDelayMilliseconds": 120000
         }
       }
@@ -4507,7 +4526,7 @@
       "rateFeed": true,
       "deviationCheck": {
         "deviationWithRecentValues": {
-          "maxPercent": 1.0,
+          "maxPercent": 1,
           "maxDelayMilliseconds": 120000
         }
       }
@@ -4518,7 +4537,7 @@
       "rateFeed": true,
       "deviationCheck": {
         "deviationWithRecentValues": {
-          "maxPercent": 1.0,
+          "maxPercent": 1,
           "maxDelayMilliseconds": 120000
         }
       }
@@ -4545,7 +4564,7 @@
       "rateFeed": true,
       "deviationCheck": {
         "deviationWithRecentValues": {
-          "maxPercent": 1.0,
+          "maxPercent": 1,
           "maxDelayMilliseconds": 120000
         }
       }
@@ -4556,7 +4575,7 @@
       "rateFeed": true,
       "deviationCheck": {
         "deviationWithRecentValues": {
-          "maxPercent": 1.0,
+          "maxPercent": 1,
           "maxDelayMilliseconds": 120000
         }
       }
@@ -4567,7 +4586,7 @@
       "rateFeed": true,
       "deviationCheck": {
         "deviationWithRecentValues": {
-          "maxPercent": 1.0,
+          "maxPercent": 1,
           "maxDelayMilliseconds": 120000
         }
       }
@@ -4578,7 +4597,7 @@
       "rateFeed": true,
       "deviationCheck": {
         "deviationWithRecentValues": {
-          "maxPercent": 1.0,
+          "maxPercent": 1,
           "maxDelayMilliseconds": 120000
         }
       }
@@ -4589,7 +4608,7 @@
       "rateFeed": true,
       "deviationCheck": {
         "deviationWithRecentValues": {
-          "maxPercent": 1.0,
+          "maxPercent": 1,
           "maxDelayMilliseconds": 120000
         }
       }
@@ -4634,7 +4653,7 @@
       "rateFeed": false,
       "deviationCheck": {
         "deviationWithRecentValues": {
-          "maxPercent": 1.0,
+          "maxPercent": 1,
           "maxDelayMilliseconds": 120000
         }
       }
@@ -4666,8 +4685,8 @@
         "bybit-usdc",
         "bybit-usdt",
         "gate-usdt",
+        "kraken-eur",
         "kraken-usd",
-        "kraken-usdc",
         "kucoin-usdt",
         "mexc-usdc",
         "mexc-usdt",
@@ -4732,7 +4751,7 @@
       "rateFeed": true,
       "deviationCheck": {
         "deviationWithRecentValues": {
-          "maxPercent": 1.0,
+          "maxPercent": 1,
           "maxDelayMilliseconds": 120000
         }
       }
