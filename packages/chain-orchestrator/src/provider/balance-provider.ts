@@ -1,4 +1,8 @@
-import { Env, fetchChainConfigs, getChainConfigByNetworkId } from "@redstone-finance/chain-configs";
+import {
+  Env,
+  getChainConfigByNetworkId,
+  getLocalChainConfigs,
+} from "@redstone-finance/chain-configs";
 import { BalanceProvider } from "@redstone-finance/multichain-kit";
 import { isNonEvmNetworkId, NetworkId, RedstoneCommon } from "@redstone-finance/utils";
 import { providers } from "ethers";
@@ -42,7 +46,7 @@ export async function getBalanceProviderWithRpcUrls(
         allProvidersOperationTimeout: ALL_RPC_TIMEOUT_MILLISECONDS,
       });
 
-      return await getEvmBalanceProvider(provider, networkId);
+      return getEvmBalanceProvider(provider, networkId);
     }
   } catch (e) {
     console.error(RedstoneCommon.stringifyError(e));
@@ -51,11 +55,11 @@ export async function getBalanceProviderWithRpcUrls(
   }
 }
 
-export async function getEvmBalanceProvider(
+export function getEvmBalanceProvider(
   provider: providers.Provider,
   networkId: NetworkId
-): Promise<BalanceProvider> {
-  const { gasCurrencyToken } = getChainConfigByNetworkId(await fetchChainConfigs(), networkId);
+): BalanceProvider {
+  const { gasCurrencyToken } = getChainConfigByNetworkId(getLocalChainConfigs(), networkId);
 
   return gasCurrencyToken
     ? new CurrencyTokenBalanceProvider(provider, gasCurrencyToken.address)
