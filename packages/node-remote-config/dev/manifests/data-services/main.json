@@ -2532,10 +2532,8 @@
         "rwa"
       ]
     },
-    "ESH6": {
-      "source": [
-        "databento-cme"
-      ],
+    "ESM6": {
+      "source": [],
       "denomination": "USD",
       "rateFeed": false
     },

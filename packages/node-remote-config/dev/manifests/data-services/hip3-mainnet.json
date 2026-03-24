@@ -2074,10 +2074,8 @@
         "rwa"
       ]
     },
-    "ESH6": {
-      "source": [
-        "databento-cme"
-      ],
+    "ESM6": {
+      "source": [],
       "broadcasters": [
         "influx"
       ],
