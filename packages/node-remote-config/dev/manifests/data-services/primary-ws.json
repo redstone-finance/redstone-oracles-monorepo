@@ -671,6 +671,15 @@
       "source": ["jpx-market-timeline"],
       "denomination": "timestamp",
       "rateFeed": false
+    },
+    "URANIUM": {
+      "source": ["tezos-uranium-price-api-deferred", "commodity-price-api", "ws-itick-futures"],
+      "priceAggregator": "primarySource",
+      "primarySourceAggregatorConfig": {
+        "primarySource": "tezos-uranium-price-api-deferred"
+      },
+      "denomination": "USD",
+      "rateFeed": false
     }
   },
   "multiPointPackages": {}

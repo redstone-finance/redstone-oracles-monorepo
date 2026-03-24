@@ -7605,7 +7605,7 @@
       "rateFeed": false
     },
     "URANIUM": {
-      "source": ["tezos-uranium-price-api-deferred", "commodity-price-api"],
+      "source": ["tezos-uranium-price-api-deferred", "commodity-price-api", "ws-itick-futures"],
       "priceAggregator": "primarySource",
       "primarySourceAggregatorConfig": {
         "primarySource": "tezos-uranium-price-api-deferred"

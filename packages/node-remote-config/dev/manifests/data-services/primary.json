@@ -3488,15 +3488,6 @@
       "denomination": "USD",
       "rateFeed": false
     },
-    "URANIUM": {
-      "source": ["tezos-uranium-price-api-deferred", "commodity-price-api"],
-      "priceAggregator": "primarySource",
-      "primarySourceAggregatorConfig": {
-        "primarySource": "tezos-uranium-price-api-deferred"
-      },
-      "denomination": "USD",
-      "rateFeed": false
-    },
     "lstHYPE_FUNDAMENTAL": {
       "source": ["hyperevm-evm-fetcher-hyperbeat-oracle"],
       "denomination": "HYPE",
