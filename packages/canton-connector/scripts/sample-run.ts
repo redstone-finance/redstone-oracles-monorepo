@@ -11,7 +11,7 @@ const VIEWER_PARTY_NAME = `RedStoneOracleViewer`;
 const UPDATER_PARTY_NAME = `RedStoneOracleUpdater`;
 const OWNER_PARTY_NAME = `RedStoneOracleOwner`;
 
-const ADAPTER_ID = "RedStoneAdapter-v11-0.4.0";
+const ADAPTER_ID = "RedStoneAdapter-v12-0.4.0";
 
 async function main() {
   const [client, updateClient, _ownerClient] = [

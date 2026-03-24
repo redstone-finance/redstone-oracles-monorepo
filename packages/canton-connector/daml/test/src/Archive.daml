@@ -2,13 +2,13 @@ module Archive where
 
 import Daml.Script
 import Input
-import FindContract (findAnyAdapter)
+import Helpers.FindContract (findAnyAdapter)
 
 main : Input -> Script ()
 main input = script do
   let owner = input.owner
 
-  cid <- findAnyAdapter "RedStoneAdapter-456" owner
+  cid <- findAnyAdapter Input.adapterId owner
 
   submit owner do
     archiveCmd cid
