@@ -1,4 +1,4 @@
-module MockFeatured where
+module Helpers.MockFeatured where
 
 import Splice.Api.FeaturedAppRightV1
 

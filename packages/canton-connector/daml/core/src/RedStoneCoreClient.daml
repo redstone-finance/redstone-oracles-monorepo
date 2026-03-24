@@ -18,9 +18,9 @@ template RedStoneCoreClient
         currentTime : Time
         payloadHex : Text
         adapterCid : ContractId IRedStoneCore
-      controller viewers
+      controller caller
       do
-          exercise adapterCid GetPricesWithCaller with
+          exercise adapterCid GetPrices with
             caller
             feedIds
             currentTime

@@ -41,6 +41,10 @@ the [RedStone docs](https://docs.redstone.finance/docs/introduction)
 
 ## ✨ General parameter disclaimer
 
+All choices take `caller : Party` as the first parameter. The caller is used as the `controller` for the choice.
+Authorization checks (e.g., verifying the caller is an updater) are performed inside the choice body where needed.
+See the [Caller Pattern](../README.md#caller-pattern) section for details.
+
 In the function parameters below, each `feedId` is a `RedStoneFeedId` (`[Int]`) — a list of ASCII character codes
 (e.g., `ETH = [69, 84, 72]`, `BTC = [66, 84, 67]`).
 
@@ -63,10 +67,11 @@ It implements the [`IRedStoneAdapter`](../interface/src/IRedStoneAdapter.daml) i
 ```haskell
 nonconsuming choice GetPrices : RedStoneResult
   with
+    caller : Party
     feedIds : [RedStoneFeedId]
     currentTime : Time
     payloadHex : PayloadHex
-  controller (view this).viewers
+  controller caller
 ```
 
 The choice processes on-chain the `payloadHex` passed as an argument and returns a `RedStoneResult` tuple
@@ -79,17 +84,20 @@ The method doesn't modify the contract's storage.
 ```haskell
 nonconsuming choice WritePrices : ContractId IRedStoneAdapter
   with
+    caller : Party
     feedIds : [RedStoneFeedId]
     currentTime : Time
     payloadHex : PayloadHex
-  controller (view this).updaters
+    additionalPillViewers : Optional [Party]
+  controller caller
 ```
 
 Besides on-the-fly processing, this choice processes the `payloadHex` on-chain and saves the aggregated values
 to the adapter's `feedData` storage. Only values with newer timestamps than existing data are written.
 When a `PricePillFactory` is configured, it also creates `PricePill` contracts for each updated feed.
 
-The choice first checks if any values pass timestamp validation. If no new values exist, it returns `self` without
+The choice asserts that the caller is an updater (`caller must be an updater`).
+It first checks if any values pass timestamp validation. If no new values exist, it returns `self` without
 any state change. Otherwise, it delegates to an internal consuming `WritePricesConsuming` choice that atomically:
 re-verifies the payload, creates pills via the factory, archives the old adapter, and creates a new one with updated data.
 The consuming choice takes the same payload parameters and performs full verification — it cannot be called with
@@ -104,8 +112,9 @@ The method modifies the contract's storage (only when new values are written).
 ```haskell
 nonconsuming choice ReadPrices : [RedStoneValue]
   with
+    caller : Party
     feedIds : [RedStoneFeedId]
-  controller (view this).viewers
+  controller caller
 ```
 
 The choice reads the values persisting in the adapter's `feedData` and returns a list of `RedStoneValue`s
@@ -119,8 +128,9 @@ The method doesn't modify the contract's storage.
 ```haskell
 nonconsuming choice ReadPriceData : [Optional (RedStonePriceData RedStoneValue)]
   with
+    caller : Party
     feedIds : [RedStoneFeedId]
-  controller (view this).viewers
+  controller caller
 ```
 
 The choice reads the values persisting in the adapter's `feedData` and returns `RedStonePriceData` records
@@ -133,7 +143,9 @@ The method doesn't modify the contract's storage.
 
 ```haskell
 nonconsuming choice GetUniqueSignerThreshold : Int
-  controller (view this).viewers
+  with
+    caller : Party
+  controller caller
 ```
 
 Returns the minimum number of unique signers required for data to be accepted.
@@ -151,15 +163,17 @@ Integrates with `FeaturedAppRight` for Canton app rewards.
 ```haskell
 nonconsuming choice CreatePricePills : [ContractId IRedStonePricePill]
   with
+    caller : Party
     viewers : [Party]
     stalenessMs : Int
     adapterId : Text
     inputData : [(RedStoneFeedId, RedStonePriceData RedStoneValue)]
-  controller (view this).creators
+  controller caller
 ```
 
 Creates a new `PricePill` contract for each entry in `inputData`. Each pill is tagged with the `adapterId`
-and configured with a `stalenessMs` window. Returns the list of created pill contract IDs.
+and configured with a `stalenessMs` window. The caller is verified via `iRedStonePricePillFactory_VerifyCreator`.
+Returns the list of created pill contract IDs.
 
 The method doesn't modify the contract's storage.
 
@@ -168,24 +182,28 @@ The method doesn't modify the contract's storage.
 ```haskell
 nonconsuming choice ArchivePricePills : ()
   with
+    caller : Party
     contractIds: [ContractId IRedStonePricePill]
-  controller (view this).creators
+  controller caller
 ```
 
 Archives the specified `PricePill` contracts by exercising `ArchivePill` on each.
+The caller is verified via `iRedStonePricePillFactory_VerifyArchiver`.
 
 The method doesn't modify the contract's storage.
 
 ### [RedStone PricePill](../price_feed/src/RedStonePricePill.daml)
 
-An individual price data contract implementing the [`IRedStonePricePill`](../interface/src/IRedStonePricePill.daml) interface.
+An individual price data contract implementing the [`IRedStonePricePill`](../price_pill/src/IRedStonePricePill.daml) interface.
 Each pill contains a snapshot of price data for a single feed, created by the `PricePillFactory`.
 
 #### ∮ ReadData
 
 ```haskell
 nonconsuming choice ReadData : (RedStonePriceData RedStoneValue)
-  controller (view this).viewers
+  with
+    caller : Party
+  controller caller
 ```
 
 Returns the full `RedStonePriceData` (value, timestamp, writeTimestamp) stored in the pill.
@@ -195,7 +213,9 @@ Asserts the pill is not stale before returning.
 
 ```haskell
 nonconsuming choice ReadPrice : RedStoneValue
-  controller (view this).viewers
+  with
+    caller : Party
+  controller caller
 ```
 
 Returns only the price value stored in the pill.
@@ -205,7 +225,9 @@ Asserts the pill is not stale before returning.
 
 ```haskell
 nonconsuming choice ReadTimestamp : Int
-  controller (view this).viewers
+  with
+    caller : Party
+  controller caller
 ```
 
 Returns the data timestamp (in milliseconds) stored in the pill.
@@ -214,7 +236,9 @@ Returns the data timestamp (in milliseconds) stored in the pill.
 
 ```haskell
 nonconsuming choice ReadFeedId : RedStoneFeedId
-  controller (view this).viewers
+  with
+    caller : Party
+  controller caller
 ```
 
 Returns the feed identifier of the pill.
@@ -223,7 +247,9 @@ Returns the feed identifier of the pill.
 
 ```haskell
 nonconsuming choice ReadDescription : Text
-  controller (view this).viewers
+  with
+    caller : Party
+  controller caller
 ```
 
 Returns a human-readable description of the pill including feed ID, adapter ID, and validity period.
@@ -232,7 +258,9 @@ Returns a human-readable description of the pill including feed ID, adapter ID, 
 
 ```haskell
 nonconsuming choice IsDataStale : Bool
-  controller (view this).viewers
+  with
+    caller : Party
+  controller caller
 ```
 
 Returns `True` if the current ledger time exceeds the pill's staleness window
@@ -242,10 +270,12 @@ Returns `True` if the current ledger time exceeds the pill's staleness window
 
 ```haskell
 choice ArchivePill : ()
-  controller (view this).creators
+  with
+    caller : Party
+  controller caller
 ```
 
-A consuming choice that archives (deletes) the pill contract. Can only be exercised by `creators`.
+A consuming choice that archives (deletes) the pill contract. Validates that the caller is a creator.
 
 ## 💊 PricePill lifecycle
 

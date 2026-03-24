@@ -5,55 +5,68 @@ import RedStoneTypes
 interface IRedStonePricePill where
   viewtype RedStonePricePillView
 
+  iRedStonePricePill_VerifyArchiver: Party -> Update ()
   iRedStonePricePill_IsDataStaleImpl: Update Bool
   iRedStonePricePill_AssertDataNotStaleImpl: Update ()
 
-  nonconsuming choice IsDataStale :  Bool
-    controller (view this).viewers
+  nonconsuming choice IsDataStale : Bool
+    with
+      caller : Party
+    controller caller
     do
       iRedStonePricePill_IsDataStaleImpl this
 
   nonconsuming choice ReadData : (RedStonePriceData RedStoneValue)
-    controller (view this).viewers
+    with
+      caller : Party
+    controller caller
     do
       iRedStonePricePill_AssertDataNotStaleImpl this
 
       pure (view this).priceData
 
   nonconsuming choice ReadPrice : RedStoneValue
-    controller (view this).viewers
+    with
+      caller : Party
+    controller caller
     do
       iRedStonePricePill_AssertDataNotStaleImpl this
 
       pure (view this).priceData.value
 
   nonconsuming choice ReadTimestamp : Int
-    controller (view this).viewers
+    with
+      caller : Party
+    controller caller
     do
       pure (view this).priceData.timestamp
 
   nonconsuming choice ReadFeedId : RedStoneFeedId
-    controller (view this).viewers
+    with
+      caller : Party
+    controller caller
     do
       pure (view this).feedId
 
   nonconsuming choice ReadDescription : Text
-    controller (view this).viewers
+    with
+      caller : Party
+    controller caller
     do
       let timestamp = (view this).priceData.timestamp
       pure $ "RedStone Price Pill of " <> (show (view this).feedId) <> ", created by " <> (view this).adapterId <> "; " <> (show timestamp) <> " valid to " <> (show (timestamp + (view this).stalenessMs))
 
   choice ArchivePill : ()
-    controller (view this).creators
+    with
+      caller : Party
+    controller caller
     do
-      return ()
+      iRedStonePricePill_VerifyArchiver this caller
 
 data RedStonePricePillView = RedStonePricePillView
   with
-    viewers : [Party]
-    creators : [Party]
+    adapterId : Text
     feedId : RedStoneFeedId
     priceData : RedStonePriceData RedStoneValue
     stalenessMs : Int
-    adapterId : Text
   deriving (Eq, Show, Ord)
