@@ -138,7 +138,7 @@ export const readManifestAndEnv = () => {
     ),
     multiFeedSyncHeartbeats: RedstoneCommon.getFromEnv(
       "MULTI_FEED_SYNC_HEARTBEATS",
-      z.boolean().default(true)
+      z.boolean().default(false)
     ),
     oevAuctionUrl: RedstoneCommon.getFromEnv("OEV_AUCTION_URL", z.string().optional()),
     oevAuctionApiKey: RedstoneCommon.getFromEnv("OEV_AUCTION_API_KEY", z.string().optional()),
