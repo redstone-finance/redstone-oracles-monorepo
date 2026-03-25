@@ -68,7 +68,11 @@ export class CantonClient {
       .filter(isJsActiveContract)
       .filter(
         (contract) =>
-          !filter || filter(contract.contractEntry.JsActiveContract.createdEvent.createArgument)
+          !filter ||
+          filter(
+            contract.contractEntry.JsActiveContract.createdEvent.createArgument,
+            contract.contractEntry.JsActiveContract.createdEvent.signatories
+          )
       );
   }
 
@@ -83,10 +87,10 @@ export class CantonClient {
 
   async getActiveContractData(interfaceId: string, filter?: ContractFilter, atOffset?: number) {
     const adapters = await this.fetchActiveContracts(interfaceId, filter, atOffset);
-
     if (adapters.length === 0) {
       throw new Error("No active contract data");
     }
+
     const [adapter, ...rest] = adapters;
     if (rest.length > 0) {
       throw new Error(`Unable to determine contract data of ${adapters.length} contracts`);
@@ -104,16 +108,19 @@ export class CantonClient {
     sorter?: CreatedArgumentCallback
   ) {
     let adapters = await this.fetchActiveContracts(interfaceId, filter, atOffset);
-
-    if (sorter) {
-      adapters = _.sortBy(adapters, (contract) =>
-        sorter(contract.contractEntry.JsActiveContract.createdEvent.createArgument)
-      );
-    }
-
     if (adapters.length === 0) {
       throw new Error("No active contract data");
     }
+
+    if (sorter) {
+      adapters = _.sortBy(adapters, (contract) =>
+        sorter(
+          contract.contractEntry.JsActiveContract.createdEvent.createArgument,
+          contract.contractEntry.JsActiveContract.createdEvent.signatories
+        )
+      );
+    }
+
     const [adapter] = adapters;
 
     const { createdEvent, synchronizerId } = adapter.contractEntry.JsActiveContract;
@@ -157,7 +164,11 @@ export class CantonClient {
 
     return createdEvents
       .flat()
-      .filter((createdEvent) => !filter || filter(createdEvent.CreatedEvent.createArgument))
+      .filter(
+        (createdEvent) =>
+          !filter ||
+          filter(createdEvent.CreatedEvent.createArgument, createdEvent.CreatedEvent.signatories)
+      )
       .map((createdEvent) => createdEvent.CreatedEvent)
       .filter((createdEvent) => !archivedContractIds.has(createdEvent.contractId));
   }

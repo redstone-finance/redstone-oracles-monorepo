@@ -1,5 +1,7 @@
 import { sampleRun } from "@redstone-finance/multichain-kit";
 import { ContractParamsProvider, getSignersForDataServiceId } from "@redstone-finance/sdk";
+import { RedstoneCommon } from "@redstone-finance/utils";
+import { z } from "zod";
 import {
   CantonBlockchainService,
   PricePillCantonContractConnector,
@@ -20,19 +22,25 @@ async function main() {
     OWNER_PARTY_NAME,
   ].map(makeDefaultClient);
 
-  const adapter = new PricesCantonContractAdapter(client, updateClient, ADAPTER_ID);
+  const adapter = new PricesCantonContractAdapter(
+    client,
+    updateClient,
+    ADAPTER_ID,
+    RedstoneCommon.getFromEnv("ADDITIONAL_PILL_VIEWERS", z.array(z.string()).optional())
+  );
   const service = new CantonBlockchainService(client);
 
   const paramsProvider = new ContractParamsProvider({
-    dataPackagesIds: ["ETH", "BTC", "CC"],
+    dataPackagesIds: ["BTC"],
     dataServiceId: "redstone-primary-prod",
     uniqueSignersCount: 3,
     authorizedSigners: getSignersForDataServiceId("redstone-primary-prod"),
   });
 
-  const ethPriceFeedConnector = new PricePillCantonContractConnector(client, ADAPTER_ID, "ETH");
+  const ethPriceFeedConnector = new PricePillCantonContractConnector(client, ADAPTER_ID, "BTC");
+  const feedAdapter = await ethPriceFeedConnector.getAdapter();
 
-  await sampleRun(paramsProvider, adapter, service, await ethPriceFeedConnector.getAdapter());
+  await sampleRun(paramsProvider, adapter, service, feedAdapter);
 }
 
 void main();
