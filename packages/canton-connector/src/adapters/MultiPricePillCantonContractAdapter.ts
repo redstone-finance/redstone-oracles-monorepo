@@ -58,7 +58,7 @@ export class MultiPricePillCantonContractAdapter extends CantonContractAdapter {
   private async fetchAllContractData(blockNumber?: number) {
     const createdEvents = await this.client.getCreateContractEvents(
       this.getInterfaceId(),
-      this.getContractFilter(),
+      this.getCombinedSignatoryContractFilter(),
       blockNumber,
       undefined,
       true

@@ -67,7 +67,7 @@ export class PricePillCantonContractAdapter
   override async fetchContractData(offset?: number, client = this.client) {
     return await client.getMostActiveContractData(
       this.getInterfaceId(),
-      this.getContractFilter(),
+      this.getCombinedSignatoryContractFilter(),
       offset,
       ((createArgument: { priceData?: PriceData }) =>
         -Number(createArgument.priceData?.timestamp ?? 0)) as CreatedArgumentCallback // newest first

@@ -1,7 +1,7 @@
-import { loggerFactory, RedstoneCommon } from "@redstone-finance/utils";
+import { FP, loggerFactory, RedstoneCommon } from "@redstone-finance/utils";
 import { CantonClient } from "../CantonClient";
 import { ContractFilter } from "../price-feed-utils";
-import { ActiveContractData, combineIntoId, isContractNotFoundError } from "../utils";
+import { ActiveContractData, combineIntoId, isWrongContractError } from "../utils";
 
 export const RETRY_CONFIG: Omit<RedstoneCommon.RetryConfig, "fn"> = {
   maxRetries: 5,
@@ -30,7 +30,7 @@ export abstract class CantonContractAdapter {
   async fetchContractData(offset?: number, client = this.client) {
     return await client.getActiveContractData(
       this.getInterfaceId(),
-      this.getContractFilter(),
+      this.getCombinedSignatoryContractFilter(),
       offset
     );
   }
@@ -39,7 +39,18 @@ export abstract class CantonContractAdapter {
     return combineIntoId(this.interfaceId, this.templateName);
   }
 
-  protected abstract getContractFilter(): ContractFilter;
+  // eslint-disable-next-line @typescript-eslint/class-methods-use-this -- To be overridden
+  protected getContractFilter(): ContractFilter {
+    return () => true;
+  }
+
+  protected getCombinedSignatoryContractFilter(
+    signatory = this.client.Defs.signatory
+  ): ContractFilter {
+    return ((adapter: unknown, signatories) =>
+      signatories?.includes(signatory) &&
+      this.getContractFilter()(adapter, signatories)) as ContractFilter;
+  }
 
   private static buildCommand<Arg extends object>(
     { choice, argument, contractId }: ChoiceInput<Arg>,
@@ -68,11 +79,30 @@ export abstract class CantonContractAdapter {
     );
   }
 
-  private async withRetryAndLogging<T>(fn: () => Promise<T>): Promise<T> {
+  private async withRetryAndLogging<T>(fun: () => Promise<T>) {
+    const fn = async () => {
+      return FP.mapErr(await FP.tryCallAsync(fun), (error) => {
+        if (isWrongContractError(error)) {
+          return error;
+        }
+
+        throw error;
+      });
+    };
+
     try {
-      return await RedstoneCommon.retry({ ...RETRY_CONFIG, fn })();
+      const retryResult = await RedstoneCommon.retry({
+        ...RETRY_CONFIG,
+        fn,
+        logger: (message) => this.logger.info(message),
+      })();
+
+      return FP.unwrapOrElse(retryResult, (error) => {
+        throw error;
+      });
     } catch (error) {
       this.logger.error(`${RedstoneCommon.stringifyError(error)}`);
+
       throw error;
     }
   }
@@ -88,13 +118,14 @@ export abstract class CantonContractAdapter {
     try {
       return await fn(this.activeContractData.contractId);
     } catch (error) {
-      if (isContractNotFoundError(error)) {
+      if (isWrongContractError(error)) {
         this.activeContractData = undefined;
 
         if (remainingDepth > 0) {
           return await this.withContractDataCaching(offset, client, fn, remainingDepth - 1);
         }
       }
+
       throw error;
     }
   }
