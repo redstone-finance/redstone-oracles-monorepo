@@ -14,7 +14,8 @@ import {
 
 export type DamlTuple2<T = string, U = string> = { _1: T; _2: U };
 
-const CONTRACT_NOT_FOUND_ERROR = "CONTRACT_NOT_FOUND";
+const CONTRACT_NOT_FOUND_ERROR = "CONTRACT_NOT_FOUND" as const;
+const LOCAL_VERDICT_INACTIVE_CONTRACTS_ERROR = "LOCAL_VERDICT_INACTIVE_CONTRACTS" as const;
 const SEP = ":";
 
 export function isApiError(e: unknown): e is Error & { body: { code: string; cause: string } } {
@@ -29,16 +30,20 @@ export function isApiError(e: unknown): e is Error & { body: { code: string; cau
   );
 }
 
-export function isContractNotFoundError(
-  e: unknown
-): e is Error & { message: typeof CONTRACT_NOT_FOUND_ERROR } {
+export function isWrongContractError(e: unknown): e is Error & {
+  message: typeof CONTRACT_NOT_FOUND_ERROR | typeof LOCAL_VERDICT_INACTIVE_CONTRACTS_ERROR;
+} {
   if (e instanceof AggregateError) {
-    return e.errors.some(isContractNotFoundError);
+    return e.errors.some(isWrongContractError);
   }
 
   const error = e as Error;
 
-  return "message" in error && error.message === CONTRACT_NOT_FOUND_ERROR;
+  return (
+    "message" in error &&
+    (error.message === CONTRACT_NOT_FOUND_ERROR ||
+      error.message === LOCAL_VERDICT_INACTIVE_CONTRACTS_ERROR)
+  );
 }
 
 export async function unwrapResponse<T>(promise: Promise<T | JsCantonError>) {
