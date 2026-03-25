@@ -1,5 +1,6 @@
 {
   "mainnet": {
+    "signatory": "RedStoneOracleOwner::1220a6f7c2315ed7ba230397a459b036bfe9f36763a0e848dad741c4e9d20d85687c",
     "interfaceId": "#redstone-interface-v11",
     "pricePillInterfaceId": "#redstone-interface-v11",
     "featuredInterfaceId": "7804375fe5e4c6d5afe067bd314c42fe0b7d005a1300019c73154dd939da4dda",
@@ -17,6 +18,7 @@
     }
   },
   "devnet": {
+    "signatory": "RedStoneOracleOwner::1220a0242797a84e1d8c492f1259b3f87d561fcbde2e4b2cebc4572ddfc515b44c28",
     "interfaceId": "#redstone-interface-v12",
     "pricePillInterfaceId": "#redstone-price-pill-v12",
     "featuredInterfaceId": "7804375fe5e4c6d5afe067bd314c42fe0b7d005a1300019c73154dd939da4dda",
@@ -34,6 +36,7 @@
     }
   },
   "localnet": {
+    "signatory": "RedStoneOracleOwner::",
     "interfaceId": "#redstone-interface-v12",
     "pricePillInterfaceId": "#redstone-price-pill-v12",
     "featuredInterfaceId": "#redstone-featured-v12",

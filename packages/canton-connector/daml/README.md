@@ -162,7 +162,7 @@ When a `PricePillFactory` is configured, `WritePrices` also creates `PricePill` 
 
 ### [RedStone PricePill](./price_feed)
 
-![RedStone PricePill](test/RedStonePricePill.png)
+![RedStone PricePill](adapter/RedStonePricePill.png)
 
 A **PricePill** is an individual Daml contract representing a single price feed data point.
 Each pill is created by the `RedStonePricePillFactory` when the adapter has a factory configured,
