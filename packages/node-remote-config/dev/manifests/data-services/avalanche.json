@@ -566,10 +566,13 @@
       "source": [
         "blackhole-avalanche-usdc-75",
         "curve-ethereum-usdc",
+        "pancake-swap-monad-usdc-100",
         "pharaoh-avalanche-usdc-50",
         "trader-joe-v2-avalanche-usdc",
         "trader-joe-v2-avalanche-usdt",
         "trader-joe-v2-avalanche-wavax",
+        "trader-joe-v2-monad-usdc",
+        "uniswap-v3-ethereum-usdc-100",
         "uniswap-v4-ethereum-usdc-100"
       ],
       "deviationCheck": {
