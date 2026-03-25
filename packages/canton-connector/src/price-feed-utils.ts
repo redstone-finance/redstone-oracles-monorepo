@@ -11,7 +11,10 @@ export const READ_FEED_ID_CHOICE = "ReadFeedId";
 export const READ_DESCRIPTION_CHOICE = "ReadDescription";
 export const ARCHIVE_CHOICE = "Archive";
 
-export type CreatedArgumentCallback<R = unknown> = (createArgument: unknown) => R;
+export type CreatedArgumentCallback<R = unknown> = (
+  createArgument: unknown,
+  signatories?: string[]
+) => R;
 export type ContractFilter = CreatedArgumentCallback<boolean>;
 
 export type PriceData = {
