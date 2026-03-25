@@ -138,6 +138,7 @@
     },
     "XVS": {
       "source": [
+        "binance-btc",
         "binance-usdt",
         "bingx-usdt",
         "bitrue-usdt",
