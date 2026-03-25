@@ -311,6 +311,7 @@
         "aerodrome-cl-base-weth",
         "camelot-v3-arbitrumone-weth",
         "curve-ethereum-crvusd",
+        "fluid-ethereum-eth",
         "uniswap-v3-arbitrumone-weth-100",
         "uniswap-v3-ethereum-weth-100",
         "uniswap-v4-ethereum-eth-100",
@@ -561,7 +562,8 @@
         "fluid-base-eth",
         "fluid-ethereum-eth",
         "uniswap-v3-arbitrumone-weth-3000",
-        "uniswap-v3-ethereum-weth-100"
+        "uniswap-v3-ethereum-weth-100",
+        "uniswap-v3-ethereum-weth-500"
       ],
       "denomination": "USD",
       "rateFeed": false
@@ -806,7 +808,12 @@
       "rateFeed": false
     },
     "ALUSD": {
-      "source": ["curve-ethereum-3crv", "curve-ethereum-crvfrax", "velodrome-optimism-usdc"],
+      "source": [
+        "curve-ethereum-3crv",
+        "curve-ethereum-crvfrax",
+        "curve-ethereum-frxusd",
+        "velodrome-optimism-usdc"
+      ],
       "deviationCheck": {
         "deviationWithRecentValues": {
           "maxPercent": 2,
@@ -1299,6 +1306,7 @@
       "source": [
         "camelot-v3-arbitrumone-weth",
         "curve-arbitrumone-weth",
+        "fluid-ethereum-eth",
         "uniswap-v3-ethereum-wsteth-500"
       ],
       "denomination": "USD",
@@ -1930,10 +1938,13 @@
       "source": [
         "blackhole-avalanche-usdc-75",
         "curve-ethereum-usdc",
+        "pancake-swap-monad-usdc-100",
         "pharaoh-avalanche-usdc-50",
         "trader-joe-v2-avalanche-usdc",
         "trader-joe-v2-avalanche-usdt",
         "trader-joe-v2-avalanche-wavax",
+        "trader-joe-v2-monad-usdc",
+        "uniswap-v3-ethereum-usdc-100",
         "uniswap-v4-ethereum-usdc-100"
       ],
       "deviationCheck": {
@@ -3600,6 +3611,7 @@
     "USDT0": {
       "source": [
         "camelot-v3-arbitrumone-usdc",
+        "fluid-arbitrumone-susde",
         "hyperliquid-api-fetcher",
         "hyperswap-hyperevm-whype-500",
         "kumbaya-megaeth-weth-3000",
