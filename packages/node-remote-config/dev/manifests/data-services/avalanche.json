@@ -564,6 +564,7 @@
     },
     "aUSD": {
       "source": [
+        "kraken-usd",
         "blackhole-avalanche-usdc-75",
         "curve-ethereum-usdc",
         "pancake-swap-monad-usdc-100",

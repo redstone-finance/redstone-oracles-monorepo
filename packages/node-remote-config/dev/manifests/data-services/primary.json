@@ -938,6 +938,7 @@
     },
     "XVS": {
       "source": [
+        "binance-btc",
         "binance-usdt",
         "bingx-usdt",
         "bitrue-usdt",
@@ -1936,6 +1937,7 @@
     },
     "aUSD": {
       "source": [
+        "kraken-usd",
         "blackhole-avalanche-usdc-75",
         "curve-ethereum-usdc",
         "pancake-swap-monad-usdc-100",
