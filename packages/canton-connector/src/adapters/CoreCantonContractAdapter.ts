@@ -24,11 +24,10 @@ export class CoreCantonContractAdapter extends CantonContractAdapter {
   }
 
   async getPricesFromPayload(paramsProvider: ContractParamsProvider) {
-    const result: DamlTuple2<string[]> = await this.exerciseChoiceWithCaller(
+    const result: DamlTuple2<string[]> = await this.exerciseChoice(
       GET_PRICES_CHOICE,
       await CoreCantonContractAdapter.getPayloadArguments(paramsProvider),
-      undefined,
-      true
+      { withCurrentTime: true, withCaller: true, withRetry: true }
     );
 
     return result._1.map(convertDecimalValue);

@@ -3,7 +3,7 @@ import { CantonClient } from "../CantonClient";
 import { convertDecimalValue } from "../conversions";
 import { ContractFilter } from "../price-feed-utils";
 import { ActiveContractData, DamlTuple2 } from "../utils";
-import { CantonContractAdapter } from "./CantonContractAdapter";
+import { CantonContractAdapter, ExerciseChoiceOptions } from "./CantonContractAdapter";
 import { CoreCantonContractAdapter } from "./CoreCantonContractAdapter";
 
 export const DEFS_KEY_FEATURED_APP_RIGHT = "featured-app-right";
@@ -22,7 +22,6 @@ export class CoreClientCantonContractAdapter extends CantonContractAdapter {
     templateName = CORE_CLIENT_TEMPLATE_NAME
   ) {
     super(client, packageId, templateName);
-
     this.activeContractData = {
       contractId,
     };
@@ -33,31 +32,30 @@ export class CoreClientCantonContractAdapter extends CantonContractAdapter {
       createArgument.contractId === this.activeContractData?.contractId) as ContractFilter;
   }
 
-  private async getDisclosedPricesParams(paramsProvider: ContractParamsProvider) {
+  private async getDisclosedPricesParams(
+    paramsProvider: ContractParamsProvider
+  ): Promise<{ argument: object; options: ExerciseChoiceOptions }> {
     return {
-      choice: GET_PRICES_DISCLOSED_CHOICE,
       argument: {
         ...(await CoreCantonContractAdapter.getPayloadArguments(paramsProvider)),
         adapterCid: this.coreActiveContractData.contractId,
       },
-      offset: undefined,
-      addCurrentTime: true,
-      client: this.client,
-      disclosedContractData: [this.featuredActiveContractData, this.coreActiveContractData],
+      options: {
+        withCurrentTime: true,
+        disclosedContractData: [this.featuredActiveContractData, this.coreActiveContractData],
+        withCaller: true,
+        withRetry: true,
+      },
     };
   }
 
   async getPricesFromPayload(paramsProvider: ContractParamsProvider) {
-    const { choice, argument, offset, addCurrentTime, client, disclosedContractData } =
-      await this.getDisclosedPricesParams(paramsProvider);
+    const { argument, options } = await this.getDisclosedPricesParams(paramsProvider);
 
-    const result: DamlTuple2<string[]> = await this.exerciseChoiceWithCaller(
-      choice,
+    const result: DamlTuple2<string[]> = await this.exerciseChoice(
+      GET_PRICES_DISCLOSED_CHOICE,
       argument,
-      offset,
-      addCurrentTime,
-      client,
-      disclosedContractData
+      options
     );
 
     return result._1.map(convertDecimalValue);
