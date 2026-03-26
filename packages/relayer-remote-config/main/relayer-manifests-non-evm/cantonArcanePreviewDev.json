@@ -8,8 +8,8 @@
   "updateTriggers": {
     "timeSinceLastUpdateInMilliseconds": 3590000
   },
-  "adapterContract": "RedStoneAdapter-v11-0.4.1",
-  "adapterContractPackageId": "#redstone-interface-v11",
+  "adapterContract": "RedStoneAdapter-v12-0.4.0",
+  "adapterContractPackageId": "#redstone-interface-v12",
   "dataServiceId": "redstone-primary-prod",
   "priceFeeds": {
     "BTC": {}
