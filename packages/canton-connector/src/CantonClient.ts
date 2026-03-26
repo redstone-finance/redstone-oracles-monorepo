@@ -23,8 +23,8 @@ import {
 const DEFAULT_DELTA_OFFSET = 1000;
 const LOCAL_USER = "redstone-canton-connector";
 const MAX_RESPONSE_LIMIT = 200;
-
 const SENDER_SEPARATOR = "/";
+
 export class CantonClient {
   private readonly logger = loggerFactory("canton-client");
 
