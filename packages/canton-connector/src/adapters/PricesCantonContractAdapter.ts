@@ -1,11 +1,11 @@
-import { WriteContractAdapter } from "@redstone-finance/multichain-kit";
+import { TxDeliveryMan, WriteContractAdapter } from "@redstone-finance/multichain-kit";
 import { ContractData, ContractParamsProvider, LastRoundDetails } from "@redstone-finance/sdk";
-import { RedstoneCommon } from "@redstone-finance/utils";
+import { FP, RedstoneCommon } from "@redstone-finance/utils";
 import _ from "lodash";
 import { CantonClient } from "../CantonClient";
+import { CantonContractUpdater } from "../CantonContractUpdater";
 import { convertDecimalValue, getArrayifiedFeedId } from "../conversions";
 import { ContractFilter } from "../price-feed-utils";
-import { ActiveContractData } from "../utils";
 import { CoreCantonContractAdapter } from "./CoreCantonContractAdapter";
 import { DEFS_KEY_FEATURED_APP_RIGHT } from "./CoreClientCantonContractAdapter";
 
@@ -15,19 +15,29 @@ const READ_PRICES_CHOICE = "ReadPrices";
 const READ_PRICE_DATA_CHOICE = "ReadPriceData";
 const GET_UNIQUE_SIGNER_THRESHOLD_CHOICE = "GetUniqueSignerThreshold";
 
+const TX_MAN_CONFIG = {
+  maxTxSendAttempts: 5,
+  expectedTxDeliveryTimeInMs: RedstoneCommon.secsToMs(15),
+};
+
 export class PricesCantonContractAdapter
   extends CoreCantonContractAdapter
   implements WriteContractAdapter
 {
+  private readonly txDeliveryMan: TxDeliveryMan;
+  private readonly contractUpdater: CantonContractUpdater;
+
   constructor(
     client: CantonClient,
-    private updateClient: CantonClient,
+    updateClient: CantonClient,
     adapterId: string,
     private readonly additionalPillViewers?: string[],
     interfaceId = client.Defs.interfaceId,
     templateName = IADAPTER_TEMPLATE_NAME
   ) {
     super(client, adapterId, interfaceId, templateName);
+    this.txDeliveryMan = new TxDeliveryMan(TX_MAN_CONFIG);
+    this.contractUpdater = new CantonContractUpdater(this, updateClient);
   }
 
   protected override getContractFilter() {
@@ -36,14 +46,14 @@ export class PricesCantonContractAdapter
   }
 
   getSignerAddress() {
-    return Promise.resolve(this.updateClient.partyId);
+    return Promise.resolve(this.contractUpdater.getSignerAddress());
   }
 
   async getUniqueSignerThreshold(offset?: number) {
-    const result: number | undefined = await this.exerciseChoiceWithCaller(
+    const result: number | undefined = await this.exerciseChoice(
       GET_UNIQUE_SIGNER_THRESHOLD_CHOICE,
       {},
-      offset
+      { offset, withCaller: true, withRetry: true }
     );
 
     if (result === undefined) {
@@ -67,10 +77,10 @@ export class PricesCantonContractAdapter
 
   async readContractData(feedIds: string[], offset?: number): Promise<ContractData> {
     const result: ({ value: string; timestamp: string; writeTimestamp: string } | undefined)[] =
-      await this.exerciseChoiceWithCaller(
+      await this.exerciseChoice(
         READ_PRICE_DATA_CHOICE,
         { feedIds: feedIds.map(getArrayifiedFeedId) },
-        offset
+        { offset, withCaller: true, withRetry: true }
       );
 
     if (result.length !== feedIds.length) {
@@ -97,45 +107,53 @@ export class PricesCantonContractAdapter
     paramsProvider: ContractParamsProvider,
     offset?: number
   ): Promise<bigint[]> {
-    const result: string[] = await this.exerciseChoiceWithCaller(
+    const result: string[] = await this.exerciseChoice(
       READ_PRICES_CHOICE,
       { feedIds: paramsProvider.getArrayifiedFeedIds() },
-      offset
+      { offset, withCaller: true, withRetry: true }
     );
 
     return result.map(convertDecimalValue);
   }
 
+  exerciseWriteChoice<Res, Arg extends object>(
+    updateClient: CantonClient,
+    argument: Arg
+  ): Promise<Res> {
+    return this.exerciseChoice(
+      WRITE_PRICES_CHOICE,
+      {
+        ...argument,
+        additionalPillViewers: this.additionalPillViewers,
+      },
+      {
+        withCurrentTime: true,
+        client: updateClient,
+        disclosedContractData: [updateClient.Defs[DEFS_KEY_FEATURED_APP_RIGHT]],
+        withCaller: true,
+      }
+    );
+  }
+
   async writePricesFromPayloadToContract(paramsProvider: ContractParamsProvider): Promise<string> {
     try {
-      const result: ActiveContractData | string = await this.exerciseChoiceWithCaller(
-        WRITE_PRICES_CHOICE,
-        {
-          ...(await CoreCantonContractAdapter.getPayloadArguments(paramsProvider)),
-          additionalPillViewers: this.additionalPillViewers,
-        },
-        undefined,
-        true,
-        this.updateClient,
-        [this.updateClient.Defs[DEFS_KEY_FEATURED_APP_RIGHT]]
-      );
+      const result = await this.txDeliveryMan.updateContract(this.contractUpdater, paramsProvider);
 
-      if (typeof result === "string") {
-        this.activeContractData = {
-          contractId: result,
-          synchronizerId: this.activeContractData?.synchronizerId,
-        };
+      const contractId = FP.unwrapSuccess(result).transactionHash;
 
-        return result;
-      } else {
-        this.activeContractData = result;
+      this.activeContractData = {
+        contractId,
+        synchronizerId: this.activeContractData?.synchronizerId,
+      };
 
-        return result.contractId;
-      }
+      return contractId;
     } catch (e) {
       this.activeContractData = undefined;
-
       throw e;
     }
+  }
+
+  onError() {
+    this.activeContractData = undefined;
   }
 }
