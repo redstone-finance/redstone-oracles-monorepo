@@ -50,10 +50,13 @@ export class PillCleaner extends CantonContractAdapter {
       return false;
     }
 
-    await this.exerciseChoices(cmds, this.getInterfaceId(), false, this.ownerClient);
+    await this.exerciseChoices(cmds, this.getInterfaceId(), {
+      withRetry: true,
+      client: this.ownerClient,
+    });
+
     const lastActive = active[active.length - 1];
     const createdAt = lastActive.contractEntry.JsActiveContract.createdEvent.createdAt;
-
     this.logger.log(`Archived ${cmds.length} contracts, last contract created at: ${createdAt}`);
 
     return true;
