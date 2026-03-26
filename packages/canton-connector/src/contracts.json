@@ -1,15 +1,15 @@
 {
   "mainnet": {
     "signatory": "RedStoneOracleOwner::1220a6f7c2315ed7ba230397a459b036bfe9f36763a0e848dad741c4e9d20d85687c",
-    "interfaceId": "#redstone-interface-v11",
-    "pricePillInterfaceId": "#redstone-interface-v11",
+    "interfaceId": "#redstone-interface-v12",
+    "pricePillInterfaceId": "#redstone-price-pill-v12",
     "featuredInterfaceId": "7804375fe5e4c6d5afe067bd314c42fe0b7d005a1300019c73154dd939da4dda",
     "core": {
       "synchronizerId": "global-domain::1220b1431ef217342db44d516bb9befde802be7d8899637d290895fa58880f19accc",
-      "coreId": "",
-      "contractId": "",
-      "templateId": "",
-      "createdEventBlob": ""
+      "coreId": "RedStoneCore-v12-0.4.1",
+      "contractId": "007b962a5b7b30db5431dee8091e82a823f1df6ac7f32b31130cfa8f0eca6f1228ca121220addb30181ac1619f012e1bc6243ee65ba2f1bed394cb1feb8c582422f5d55416",
+      "templateId": "1c47e8e0c8ebd8e36a56f070c64e061b7544adb15f7a8eba4a88fa4c49502a46:RedStoneCore:RedStoneCore",
+      "createdEventBlob": "CgMyLjESmgcKRQB7lipbezDbVDHe6Akegqgj8d9qx/MrMRMM+o8Oym8SKMoSEiCt2zAYGsFhnwEuG8YkPuZbovG+05TLH+uMWCQi9dVUFhIRcmVkc3RvbmUtY29yZS12MTIaXgpAMWM0N2U4ZTBjOGViZDhlMzZhNTZmMDcwYzY0ZTA2MWI3NTQ0YWRiMTVmN2E4ZWJhNGE4OGZhNGM0OTUwMmE0NhIMUmVkU3RvbmVDb3JlGgxSZWRTdG9uZUNvcmUilQNqkgMKGgoYQhZSZWRTdG9uZUNvcmUtdjEyLTAuNC4xCl0KWzpZUmVkU3RvbmVPcmFjbGVPd25lcjo6MTIyMGE2ZjdjMjMxNWVkN2JhMjMwMzk3YTQ1OWIwMzZiZmU5ZjM2NzYzYTBlODQ4ZGFkNzQxYzRlOWQyMGQ4NTY4N2MKYgpgWl4KXDpaUmVkU3RvbmVPcmFjbGVWaWV3ZXI6OjEyMjBhNmY3YzIzMTVlZDdiYTIzMDM5N2E0NTliMDM2YmZlOWYzNjc2M2EwZTg0OGRhZDc0MWM0ZTlkMjBkODU2ODdjCmIKYFJeClw6WlJlZHN0b25lLXZhbGlkYXRvci0xOjoxMjIwYTZmN2MyMzE1ZWQ3YmEyMzAzOTdhNDU5YjAzNmJmZTlmMzY3NjNhMGU4NDhkYWQ3NDFjNGU5ZDIwZDg1Njg3YwpNCktSSQpHSkUARTVHAywVR4fOL1LQgwzDAsJqvqKVsfRoDPHnlbEJVIHKEhIgQ6OBFs+EH5HtPWwdJgy8haTP9rVCgtIs9wEplCK4nRgqWVJlZFN0b25lT3JhY2xlT3duZXI6OjEyMjBhNmY3YzIzMTVlZDdiYTIzMDM5N2E0NTliMDM2YmZlOWYzNjc2M2EwZTg0OGRhZDc0MWM0ZTlkMjBkODU2ODdjKlpSZWRzdG9uZS12YWxpZGF0b3ItMTo6MTIyMGE2ZjdjMjMxNWVkN2JhMjMwMzk3YTQ1OWIwMzZiZmU5ZjM2NzYzYTBlODQ4ZGFkNzQxYzRlOWQyMGQ4NTY4N2MyWlJlZFN0b25lT3JhY2xlVmlld2VyOjoxMjIwYTZmN2MyMzE1ZWQ3YmEyMzAzOTdhNDU5YjAzNmJmZTlmMzY3NjNhMGU4NDhkYWQ3NDFjNGU5ZDIwZDg1Njg3Yzlrodlb1k0GAEIqCiYKJAgBEiAkKp9DpY6Gmag8nPgNlrS/WutrAwZET44GhghWleGZyBAe"
     },
     "featured-app-right": {
       "contractId": "00453547032c154787ce2f52d0830cc302c26abea295b1f4680cf1e795b1095481ca12122043a38116cf841f91ed3d6c1d260cbc85a4cff6b54282d22cf701299422b89d18",
