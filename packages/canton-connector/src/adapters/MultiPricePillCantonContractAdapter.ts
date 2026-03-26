@@ -40,15 +40,13 @@ export class MultiPricePillCantonContractAdapter extends CantonContractAdapter {
     const resultsByContractId = await this.exerciseChoices<PriceData>(
       choices,
       this.getInterfaceId(),
-      false,
-      this.client
+      { withRetry: true }
     );
 
     return Object.fromEntries(
       contractData
         .map(({ feedId, contractId }) => {
           const result = resultsByContractId[contractId];
-
           return [feedId, parsePriceData(result)] as const;
         })
         .filter(RedstoneCommon.isDefined)
@@ -72,7 +70,6 @@ export class MultiPricePillCantonContractAdapter extends CantonContractAdapter {
         if (!newest) {
           return undefined;
         }
-
         return {
           feedId,
           contractId: makeActiveContractData(newest).contractId,
