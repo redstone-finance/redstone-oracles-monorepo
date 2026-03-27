@@ -85,6 +85,29 @@ export class CantonClient {
     return await this.fetchActiveContracts(interfaceId, filter, atOffset, limit);
   }
 
+  async getActiveContractWithPayload<T = unknown>(
+    interfaceId: string,
+    filter?: ContractFilter,
+    atOffset?: number
+  ) {
+    const adapters = await this.fetchActiveContracts(interfaceId, filter, atOffset);
+    if (adapters.length === 0) {
+      throw new Error("No active contract data");
+    }
+
+    const [adapter, ...rest] = adapters;
+    if (rest.length > 0) {
+      throw new Error(`Unable to determine contract data of ${adapters.length} contracts`);
+    }
+
+    const { createdEvent, synchronizerId } = adapter.contractEntry.JsActiveContract;
+
+    return {
+      ...makeActiveContractData(createdEvent, synchronizerId),
+      createArgument: createdEvent.createArgument as T,
+    };
+  }
+
   async getActiveContractData(interfaceId: string, filter?: ContractFilter, atOffset?: number) {
     const adapters = await this.fetchActiveContracts(interfaceId, filter, atOffset);
     if (adapters.length === 0) {
