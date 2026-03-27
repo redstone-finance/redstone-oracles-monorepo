@@ -1,7 +1,6 @@
 import { TxDeliveryMan, WriteContractAdapter } from "@redstone-finance/multichain-kit";
 import { ContractData, ContractParamsProvider, LastRoundDetails } from "@redstone-finance/sdk";
 import { FP, RedstoneCommon } from "@redstone-finance/utils";
-import _ from "lodash";
 import { CantonClient } from "../CantonClient";
 import { CantonContractUpdater } from "../CantonContractUpdater";
 import { convertDecimalValue, getArrayifiedFeedId } from "../conversions";
@@ -11,14 +10,57 @@ import { DEFS_KEY_FEATURED_APP_RIGHT } from "./CoreClientCantonContractAdapter";
 
 export const IADAPTER_TEMPLATE_NAME = `IRedStoneAdapter:IRedStoneAdapter`;
 export const WRITE_PRICES_CHOICE = "WritePrices";
-const READ_PRICES_CHOICE = "ReadPrices";
-const READ_PRICE_DATA_CHOICE = "ReadPriceData";
-const GET_UNIQUE_SIGNER_THRESHOLD_CHOICE = "GetUniqueSignerThreshold";
+
+const DEFAULT_UNIQUE_SIGNER_THRESHOLD = 3;
 
 const TX_MAN_CONFIG = {
   maxTxSendAttempts: 5,
   expectedTxDeliveryTimeInMs: RedstoneCommon.secsToMs(15),
 };
+
+interface DamlPriceData {
+  value: string;
+  timestamp: string;
+  writeTimestamp: string;
+}
+
+interface DamlPillRecord {
+  priceData: DamlPriceData;
+}
+
+type DamlFeedData = [string[], DamlPillRecord[]][];
+
+interface RedStoneAdapterPayload {
+  adapterId: string;
+  owner: string;
+  updaters: string[];
+  viewers: string[];
+  feedData: DamlFeedData;
+  pillFactory: string | null;
+}
+
+function feedDataEntryByFeedId(
+  feedData: DamlFeedData,
+  feedId: string
+): DamlPillRecord[] | undefined {
+  const target = getArrayifiedFeedId(feedId);
+
+  const entry = feedData.find(
+    ([key]) => key.length === target.length && key.every((byte, i) => Number(byte) === target[i])
+  );
+
+  return entry?.[1];
+}
+
+function newestPriceData(feedData: DamlFeedData, feedId: string): DamlPriceData | undefined {
+  const records = feedDataEntryByFeedId(feedData, feedId);
+
+  if (!records || records.length === 0) {
+    return undefined;
+  }
+
+  return records[0].priceData;
+}
 
 export class PricesCantonContractAdapter
   extends CoreCantonContractAdapter
@@ -33,7 +75,8 @@ export class PricesCantonContractAdapter
     adapterId: string,
     private readonly additionalPillViewers?: string[],
     interfaceId = client.Defs.interfaceId,
-    templateName = IADAPTER_TEMPLATE_NAME
+    templateName = IADAPTER_TEMPLATE_NAME,
+    private readonly uniqueSignerThreshold: number = DEFAULT_UNIQUE_SIGNER_THRESHOLD
   ) {
     super(client, adapterId, interfaceId, templateName);
     this.txDeliveryMan = new TxDeliveryMan(TX_MAN_CONFIG);
@@ -49,18 +92,14 @@ export class PricesCantonContractAdapter
     return Promise.resolve(this.contractUpdater.getSignerAddress());
   }
 
-  async getUniqueSignerThreshold(offset?: number) {
-    const result: number | undefined = await this.exerciseChoice(
-      GET_UNIQUE_SIGNER_THRESHOLD_CHOICE,
-      {},
-      { offset, withCaller: true, withRetry: true }
-    );
+  private async readFeedData(offset?: number): Promise<DamlFeedData> {
+    const { createArgument } = await this.fetchContractWithPayload<RedStoneAdapterPayload>(offset);
 
-    if (result === undefined) {
-      throw new Error("Failed to get unique signer threshold: result is undefined");
-    }
+    return createArgument.feedData;
+  }
 
-    return result;
+  async getUniqueSignerThreshold(_offset?: number) {
+    return await Promise.resolve(this.uniqueSignerThreshold);
   }
 
   async readLatestUpdateBlockTimestamp(feedId: string, offset?: number) {
@@ -76,29 +115,22 @@ export class PricesCantonContractAdapter
   }
 
   async readContractData(feedIds: string[], offset?: number): Promise<ContractData> {
-    const result: ({ value: string; timestamp: string; writeTimestamp: string } | undefined)[] =
-      await this.exerciseChoice(
-        READ_PRICE_DATA_CHOICE,
-        { feedIds: feedIds.map(getArrayifiedFeedId) },
-        { offset, withCaller: true, withRetry: true }
-      );
+    const feedData = await this.readFeedData(offset);
 
-    if (result.length !== feedIds.length) {
-      throw new Error(
-        `ReadPriceData result length mismatch: expected ${feedIds.length}, got ${result.length}`
-      );
-    }
+    const data = feedIds.map((feedId) => {
+      const priceData = newestPriceData(feedData, feedId);
 
-    const data = _.zip(feedIds, result).map(([feedId, r]) => [
-      feedId!,
-      RedstoneCommon.isDefined(r)
-        ? ({
-            lastDataPackageTimestampMS: Number(r.timestamp),
-            lastBlockTimestampMS: Number(r.writeTimestamp),
-            lastValue: convertDecimalValue(r.value),
-          } as LastRoundDetails)
-        : undefined,
-    ]);
+      return [
+        feedId,
+        RedstoneCommon.isDefined(priceData)
+          ? ({
+              lastDataPackageTimestampMS: Number(priceData.timestamp),
+              lastBlockTimestampMS: Number(priceData.writeTimestamp),
+              lastValue: convertDecimalValue(priceData.value),
+            } as LastRoundDetails)
+          : undefined,
+      ];
+    });
 
     return Object.fromEntries(data) as ContractData;
   }
@@ -107,13 +139,17 @@ export class PricesCantonContractAdapter
     paramsProvider: ContractParamsProvider,
     offset?: number
   ): Promise<bigint[]> {
-    const result: string[] = await this.exerciseChoice(
-      READ_PRICES_CHOICE,
-      { feedIds: paramsProvider.getArrayifiedFeedIds() },
-      { offset, withCaller: true, withRetry: true }
-    );
+    const feedData = await this.readFeedData(offset);
 
-    return result.map(convertDecimalValue);
+    return paramsProvider.getDataFeedIds().map((feedId) => {
+      const priceData = newestPriceData(feedData, feedId);
+
+      if (!RedstoneCommon.isDefined(priceData)) {
+        throw new Error(`Value not found for ${feedId}`);
+      }
+
+      return convertDecimalValue(priceData.value);
+    });
   }
 
   exerciseWriteChoice<Res, Arg extends object>(
