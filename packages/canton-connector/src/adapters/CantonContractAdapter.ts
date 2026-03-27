@@ -51,6 +51,14 @@ export abstract class CantonContractAdapter {
     );
   }
 
+  async fetchContractWithPayload<T = unknown>(offset?: number, client = this.client) {
+    return await client.getActiveContractWithPayload<T>(
+      this.getInterfaceId(),
+      this.getCombinedSignatoryContractFilter(),
+      offset
+    );
+  }
+
   protected getInterfaceId() {
     return combineIntoId(this.interfaceId, this.templateName);
   }
