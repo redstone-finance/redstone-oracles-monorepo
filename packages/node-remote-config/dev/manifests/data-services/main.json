@@ -2422,12 +2422,6 @@
       "rateFeed": false,
       "types": ["rwa"]
     },
-    "MSFT": {
-      "source": ["twelve-data"],
-      "denomination": "USD",
-      "rateFeed": false,
-      "types": ["rwa"]
-    },
     "NKE": {
       "source": ["twelve-data"],
       "denomination": "USD",
@@ -2713,12 +2707,6 @@
       },
       "denomination": "USD",
       "rateFeed": false
-    },
-    "AAPL": {
-      "source": ["twelve-data"],
-      "denomination": "USD",
-      "rateFeed": false,
-      "types": ["rwa"]
     },
     "BYND": {
       "source": ["twelve-data"],
@@ -7878,36 +7866,6 @@
       ],
       "denomination": "USD",
       "rateFeed": false
-    },
-    "ORACLE_BTC": {
-      "source": ["hyperliquid-testnet-perps-ws-fetcher"],
-      "denomination": "USD",
-      "rateFeed": true
-    },
-    "ORACLE_sekaw:BTC": {
-      "source": ["hyperliquid-testnet-perps-ws-fetcher"],
-      "denomination": "USD",
-      "rateFeed": true
-    },
-    "MARK_BTC": {
-      "source": ["hyperliquid-testnet-perps-ws-fetcher"],
-      "denomination": "USD",
-      "rateFeed": true
-    },
-    "MARK_sekaw:BTC": {
-      "source": ["hyperliquid-testnet-perps-ws-fetcher"],
-      "denomination": "USD",
-      "rateFeed": true
-    },
-    "MID_BTC": {
-      "source": ["hyperliquid-testnet-perps-ws-fetcher"],
-      "denomination": "USD",
-      "rateFeed": true
-    },
-    "MID_sekaw:BTC": {
-      "source": ["hyperliquid-testnet-perps-ws-fetcher"],
-      "denomination": "USD",
-      "rateFeed": true
     },
     "USDH": {
       "source": [
