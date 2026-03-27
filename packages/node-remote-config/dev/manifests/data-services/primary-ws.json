@@ -288,6 +288,46 @@
       "rateFeed": false,
       "types": ["rwa"]
     },
+    "MSFT": {
+      "source": [
+        "alltick-stocks-api-deferred",
+        "databento",
+        "financialmodelingprep-deferred",
+        "ws-dx-feed",
+        "ws-polygon-massive",
+        "ws-twelve-data"
+      ],
+      "skipBroadcasting": true,
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": ["rwa"]
+    },
+    "MSFT---REGULAR": {
+      "source": ["us-equity-on-market"],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": ["rwa"]
+    },
+    "AAPL": {
+      "source": [
+        "alltick-stocks-api-deferred",
+        "databento",
+        "financialmodelingprep-deferred",
+        "ws-dx-feed",
+        "ws-polygon-massive",
+        "ws-twelve-data"
+      ],
+      "skipBroadcasting": true,
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": ["rwa"]
+    },
+    "AAPL---REGULAR": {
+      "source": ["us-equity-on-market"],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": ["rwa"]
+    },
     "FGNXP": {
       "source": [
         "databento",
@@ -682,6 +722,90 @@
       },
       "denomination": "USD",
       "rateFeed": false
+    },
+    "TSLA---PERP": {
+      "source": ["ws-hyperliquid-perps-xyz", "ws-hydromancer-perps-xyz"],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": ["rwa"]
+    },
+    "TSLA---24_7": {
+      "source": ["us-equity-24-7"],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": ["rwa"]
+    },
+    "NVDA---PERP": {
+      "source": ["ws-hyperliquid-perps-xyz", "ws-hydromancer-perps-xyz"],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": ["rwa"]
+    },
+    "NVDA---24_7": {
+      "source": ["us-equity-24-7"],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": ["rwa"]
+    },
+    "AAPL---PERP": {
+      "source": ["ws-hyperliquid-perps-xyz", "ws-hydromancer-perps-xyz"],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": ["rwa"]
+    },
+    "AAPL---24_7": {
+      "source": ["us-equity-24-7"],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": ["rwa"]
+    },
+    "MSFT---PERP": {
+      "source": ["ws-hyperliquid-perps-xyz", "ws-hydromancer-perps-xyz"],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": ["rwa"]
+    },
+    "MSFT---24_7": {
+      "source": ["us-equity-24-7"],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": ["rwa"]
+    },
+    "AMZN---PERP": {
+      "source": ["ws-hyperliquid-perps-xyz", "ws-hydromancer-perps-xyz"],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": ["rwa"]
+    },
+    "AMZN---24_7": {
+      "source": ["us-equity-24-7"],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": ["rwa"]
+    },
+    "GOOGL---PERP": {
+      "source": ["ws-hyperliquid-perps-xyz", "ws-hydromancer-perps-xyz"],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": ["rwa"]
+    },
+    "GOOGL---24_7": {
+      "source": ["us-equity-24-7"],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": ["rwa"]
+    },
+    "META---PERP": {
+      "source": ["ws-hyperliquid-perps-xyz", "ws-hydromancer-perps-xyz"],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": ["rwa"]
+    },
+    "META---24_7": {
+      "source": ["us-equity-24-7"],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": ["rwa"]
     }
   },
   "multiPointPackages": {}
