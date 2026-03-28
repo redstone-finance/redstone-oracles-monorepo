@@ -22,6 +22,8 @@ async function main() {
     OWNER_PARTY_NAME,
   ].map(makeDefaultClient);
 
+  console.log(await client.getRemainingTraffic());
+
   const adapter = new PricesCantonContractAdapter(
     client,
     updateClient,

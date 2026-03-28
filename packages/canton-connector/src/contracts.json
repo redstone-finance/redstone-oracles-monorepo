@@ -4,6 +4,11 @@
     "interfaceId": "#redstone-interface-v12",
     "pricePillInterfaceId": "#redstone-price-pill-v12",
     "featuredInterfaceId": "7804375fe5e4c6d5afe067bd314c42fe0b7d005a1300019c73154dd939da4dda",
+    "node": {
+      "scanApiUrl": "https://scan.sv-1.global.canton.network.sync.global/api/scan/v0",
+      "globalDomain": "global-domain::1220b1431ef217342db44d516bb9befde802be7d8899637d290895fa58880f19accc",
+      "participantPartyId": "Redstone-validator-1::1220a6f7c2315ed7ba230397a459b036bfe9f36763a0e848dad741c4e9d20d85687c"
+    },
     "core": {
       "synchronizerId": "global-domain::1220b1431ef217342db44d516bb9befde802be7d8899637d290895fa58880f19accc",
       "coreId": "RedStoneCore-v12-0.4.1",
@@ -22,6 +27,11 @@
     "interfaceId": "#redstone-interface-v12",
     "pricePillInterfaceId": "#redstone-price-pill-v12",
     "featuredInterfaceId": "7804375fe5e4c6d5afe067bd314c42fe0b7d005a1300019c73154dd939da4dda",
+    "node": {
+      "scanApiUrl": "https://scan.sv-1.dev.global.canton.network.sync.global/api/scan/v0",
+      "globalDomain": "global-domain::1220be58c29e65de40bf273be1dc2b266d43a9a002ea5b18955aeef7aac881bb471a",
+      "participantPartyId": "redstone-validator::1220a0242797a84e1d8c492f1259b3f87d561fcbde2e4b2cebc4572ddfc515b44c28"
+    },
     "core": {
       "synchronizerId": "global-domain::1220be58c29e65de40bf273be1dc2b266d43a9a002ea5b18955aeef7aac881bb471a",
       "coreId": "RedStoneCore-v12-0.4.0",
@@ -40,6 +50,11 @@
     "interfaceId": "#redstone-interface-v12",
     "pricePillInterfaceId": "#redstone-price-pill-v12",
     "featuredInterfaceId": "#redstone-featured-v12",
+    "node": {
+      "scanApiUrl": "/v0",
+      "globalDomain": "",
+      "participantPartyId": ""
+    },
     "core": {
       "contractId": "007240099258472e1045de2a41cd8f92cafbae32824873f5904be30ce3fc5c2c4dca121220b6c41656fb41b814054747695f739d578016b3b678f992e0f6e2c68298552282",
       "synchronizerId": "mysynchronizer::12208d6051c72fbe8b89e30ec9f06738a2ca0cb921d510681f64898678e4cd9e13dd",
