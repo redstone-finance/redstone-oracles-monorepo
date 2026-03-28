@@ -28,10 +28,14 @@ export class CantonBlockchainService implements BlockchainService {
     return Promise.resolve(new Date());
   }
 
-  getNormalizedBalance(_address: string, _blockNumber?: number): Promise<bigint> {
-    throw new Error("Method not implemented.");
+  async getNormalizedBalance(_address: string, _blockNumber?: number) {
+    const NORM_MULTIPLIER = 10n ** (18n - 6n); // MegaBytes to 10^18
+
+    // Temporarily returning remaining traffic for whole validator
+    return BigInt(await this.cantonClient.getRemainingTraffic()) * NORM_MULTIPLIER;
   }
-  getBalance(_addressOrName: string, _blockTag?: number): Promise<bigint> {
-    throw new Error("Method not implemented.");
+
+  async getBalance(addressOrName: string, blockTag?: number): Promise<bigint> {
+    return await this.getNormalizedBalance(addressOrName, blockTag);
   }
 }
