@@ -4987,6 +4987,11 @@
       "source": ["avalanche-evm-fetcher-oracle-adapter"],
       "denomination": "USD",
       "rateFeed": false
+    },
+    "USST_FUNDAMENTAL": {
+      "source": ["ethereum-evm-fetcher-stbl"],
+      "denomination": "USD",
+      "rateFeed": true
     }
   },
   "multiPointPackages": {
