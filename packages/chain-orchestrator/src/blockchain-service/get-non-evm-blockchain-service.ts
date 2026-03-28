@@ -75,7 +75,10 @@ export async function getNonEvmBlockchainService(networkId: NetworkId, rpcUrls: 
     }
     case "canton": {
       const auth = await getSSMParamWithEnvFallback(
-        RedstoneCommon.getFromEnv("AUTH_ARN_PATH", z.string().optional()),
+        RedstoneCommon.getFromEnv(
+          `CANTON_AUTH_ARN_PATH_${deconstructNetworkId(networkId).chainId}`,
+          z.string().optional()
+        ),
         "PRIVATE_KEY"
       );
       const client = new CantonClientBuilder()
