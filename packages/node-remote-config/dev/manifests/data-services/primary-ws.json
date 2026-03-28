@@ -223,13 +223,6 @@
         "ws-polygon-massive-commodities",
         "ws-twelve-data"
       ],
-      "priceAggregator": "primarySource",
-      "primarySourceAggregatorConfig": {
-        "primarySource": "ws-lmax",
-        "maxAcceptableDeviation": 1.5,
-        "lowerClampPercent": 0.1,
-        "upperClampPercent": 0.1
-      },
       "denomination": "USD",
       "rateFeed": false,
       "types": ["rwa"]
@@ -251,13 +244,6 @@
         "ws-twelve-data"
       ],
       "skipBroadcasting": true,
-      "priceAggregator": "primarySource",
-      "primarySourceAggregatorConfig": {
-        "primarySource": "ws-lmax",
-        "maxAcceptableDeviation": 1.5,
-        "lowerClampPercent": 0.1,
-        "upperClampPercent": 0.1
-      },
       "denomination": "USD",
       "rateFeed": false,
       "types": ["rwa"]
