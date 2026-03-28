@@ -9678,6 +9678,13 @@
       ],
       "denomination": "USD",
       "rateFeed": true
+    },
+    "USST_FUNDAMENTAL": {
+      "source": [
+        "ethereum-evm-fetcher-stbl"
+      ],
+      "denomination": "USD",
+      "rateFeed": true
     }
   }
 }

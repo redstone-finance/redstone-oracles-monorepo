@@ -5529,6 +5529,13 @@
       ],
       "denomination": "USD",
       "rateFeed": false
+    },
+    "USST_FUNDAMENTAL": {
+      "source": [
+        "ethereum-evm-fetcher-stbl"
+      ],
+      "denomination": "USD",
+      "rateFeed": true
     }
   },
   "multiPointPackages": {
