@@ -42,6 +42,15 @@ export function terminateWithRemoteConfigError(errorDetails: string): never {
   process.exit(ExitCodes.NodeRemoteConfigError);
 }
 
+export function terminateWithMissingEnvVariable(configKey: string): never {
+  logger.error(
+    `Missing required environment variable for config key: ${configKey}.\n` +
+      `Terminating with exit code ${ExitCodes.NodeRemoteConfigError}`
+  );
+
+  process.exit(ExitCodes.NodeRemoteConfigError);
+}
+
 export function terminateWithRpcsConfigError(errorDetails: string): never {
   logger.error(
     `RPCs URLs configuration error: ${errorDetails}.\n` +
