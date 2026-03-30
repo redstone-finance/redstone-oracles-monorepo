@@ -1,0 +1,25 @@
+{
+  "chain": {
+    "name": "celo",
+    "id": 42220
+  },
+  "updateTriggers": {
+    "deviationPercentage": 0.5,
+    "timeSinceLastUpdateInMilliseconds": 21600000
+  },
+  "adapterContract": "0x65d0F14f7809CdC4f90c3978c753C4671b6B815b",
+  "adapterContractType": "multi-feed",
+  "dataServiceId": "redstone-primary-prod",
+  "priceFeeds": {
+    "USDT": {
+      "priceFeedAddress": "0xeC7C6AdcC867E1C22713D14797339750E36538E4",
+      "updateTriggersOverrides": {
+        "deviationPercentage": 0.5,
+        "timeSinceLastUpdateInMilliseconds": 86400000
+      }
+    },
+    "XAUt/USDT": {
+      "priceFeedAddress": "0x98DC6E90D4c2f212ed9d124aD2aFBa4833268633"
+    }
+  }
+}
