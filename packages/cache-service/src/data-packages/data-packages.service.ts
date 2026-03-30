@@ -1,4 +1,11 @@
-import { HttpException, Injectable, Logger, OnModuleInit, Optional } from "@nestjs/common";
+import {
+  HttpException,
+  Injectable,
+  Logger,
+  OnModuleDestroy,
+  OnModuleInit,
+  Optional,
+} from "@nestjs/common";
 import { filterOutliers } from "@redstone-finance/internal-utils";
 import { UniversalSigner, recoverDeserializedSignerAddress } from "@redstone-finance/protocol";
 import { EXTERNAL_SIGNERS_CUTOFF_DATE, getDataServiceIdForSigner } from "@redstone-finance/sdk";
@@ -8,7 +15,7 @@ import { MongoBroadcaster } from "../broadcasters/mongo-broadcaster";
 import { EMPTY_DATA_PACKAGE_RESPONSE_ERROR_CODE } from "../common/errors";
 import config from "../config";
 import { getOracleState } from "../utils/get-oracle-state";
-import { getRwaFeedIds, stripRwaMetadata, type RwaFeedResult } from "../utils/strip-rwa-metadata";
+import { rwaFeedIdsProvider, stripRwaMetadata } from "../utils/strip-rwa-metadata";
 import {
   BulkPostRequestBody,
   DataPackagesResponse,
@@ -22,8 +29,7 @@ import {
 } from "./data-packages.model";
 
 @Injectable()
-export class DataPackagesService implements OnModuleInit {
-  private static readonly staticLogger = new Logger(DataPackagesService.name);
+export class DataPackagesService implements OnModuleInit, OnModuleDestroy {
   private readonly logger = new Logger(DataPackagesService.name);
   private readonly broadcasters: DataPackagesBroadcaster[] = [];
   private static allowedSigners: string[] | null = null;
@@ -41,7 +47,11 @@ export class DataPackagesService implements OnModuleInit {
   }
 
   async onModuleInit() {
-    await this.initializeAllowedSigners();
+    await Promise.all([this.initializeAllowedSigners(), rwaFeedIdsProvider.start()]);
+  }
+
+  onModuleDestroy() {
+    rwaFeedIdsProvider.stop();
   }
 
   private async initializeAllowedSigners() {
@@ -210,24 +220,11 @@ export class DataPackagesService implements OnModuleInit {
       );
     }
 
-    let fetchedPackages = fetchedPackagesPerDataFeed;
-    if (hideMetadata) {
-      fetchedPackages = DataPackagesService.filterMetadataFromDataPackages(
-        fetchedPackagesPerDataFeed
-      );
-    }
-
-    let rwaFeedIds: RwaFeedResult = new Set();
-    try {
-      rwaFeedIds = await getRwaFeedIds(dataServiceId);
-    } catch (err) {
-      DataPackagesService.staticLogger.error(
-        `Failed to get RWA feed IDs for ${dataServiceId}: ${String(err)}`
-      );
-    }
-    fetchedPackages = stripRwaMetadata(fetchedPackages, rwaFeedIds);
-
-    return filterOutliers(fetchedPackages);
+    return DataPackagesService.applyPostProcessing(
+      fetchedPackagesPerDataFeed,
+      dataServiceId,
+      hideMetadata
+    );
   }
 
   /**
@@ -331,21 +328,25 @@ export class DataPackagesService implements OnModuleInit {
       );
     }
 
-    let fetchedPackages = fetchedPackagesPerDataFeed;
+    return DataPackagesService.applyPostProcessing(
+      fetchedPackagesPerDataFeed,
+      dataServiceId,
+      hideMetadata
+    );
+  }
+
+  private static applyPostProcessing(
+    fetchedPackages: DataPackagesResponse,
+    dataServiceId: string,
+    hideMetadata: boolean
+  ): DataPackagesResponse {
     if (hideMetadata) {
-      fetchedPackages = DataPackagesService.filterMetadataFromDataPackages(
-        fetchedPackagesPerDataFeed
-      );
+      fetchedPackages = DataPackagesService.filterMetadataFromDataPackages(fetchedPackages);
     }
-
-    let rwaFeedIds: RwaFeedResult = new Set();
-    try {
-      rwaFeedIds = await getRwaFeedIds(dataServiceId);
-    } catch (err) {
-      this.logger.error(`Failed to get RWA feed IDs for ${dataServiceId}: ${String(err)}`);
+    const rwaFeedIds = rwaFeedIdsProvider.getRwaFeedIds(dataServiceId);
+    if (rwaFeedIds) {
+      fetchedPackages = stripRwaMetadata(fetchedPackages, rwaFeedIds);
     }
-    fetchedPackages = stripRwaMetadata(fetchedPackages, rwaFeedIds);
-
     return filterOutliers(fetchedPackages);
   }
 

@@ -23,6 +23,10 @@ describe("Oracle registry state (e2e)", () => {
     await app.init();
   });
 
+  afterEach(async () => {
+    await app.close();
+  });
+
   it("/oracle-registry-state (GET)", async () => {
     const testResponse = await request(app.getHttpServer())
       .get("/oracle-registry-state")

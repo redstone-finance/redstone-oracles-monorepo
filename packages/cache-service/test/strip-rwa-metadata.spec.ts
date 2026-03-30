@@ -1,5 +1,5 @@
 import { DataPackagesResponse } from "../src/data-packages/data-packages.interface";
-import { RwaFeedResult, stripRwaMetadata } from "../src/utils/strip-rwa-metadata";
+import { stripRwaMetadata } from "../src/utils/strip-rwa-metadata";
 
 const makeResponse = (
   entries: Record<
@@ -41,8 +41,7 @@ describe("stripRwaMetadata", () => {
       ],
     });
 
-    const rwaFeedIds: RwaFeedResult = new Set(["RWA_FEED"]);
-    const result = stripRwaMetadata(response, rwaFeedIds);
+    const result = stripRwaMetadata(response, new Set(["RWA_FEED"]));
 
     expect(result.RWA_FEED![0].dataPoints[0].metadata).toBeUndefined();
     expect(result.ETH![0].dataPoints[0].metadata).toEqual({ sources: { ex: "3000" } });
@@ -63,28 +62,6 @@ describe("stripRwaMetadata", () => {
     expect(result.ETH![0].dataPoints[0].metadata).toEqual({ sources: { ex: "3000" } });
   });
 
-  it('strips all metadata when rwaFeedIds is "ALL"', () => {
-    const response = makeResponse({
-      ETH: [
-        {
-          dataPoints: [{ dataFeedId: "ETH", value: "3000", metadata: { sources: { ex: "3000" } } }],
-        },
-      ],
-      BTC: [
-        {
-          dataPoints: [
-            { dataFeedId: "BTC", value: "50000", metadata: { sources: { ex: "50000" } } },
-          ],
-        },
-      ],
-    });
-
-    const result = stripRwaMetadata(response, "ALL");
-
-    expect(result.ETH![0].dataPoints[0].metadata).toBeUndefined();
-    expect(result.BTC![0].dataPoints[0].metadata).toBeUndefined();
-  });
-
   it("handles ___ALL_FEEDS___ multi-point packages (per-dataPoint check)", () => {
     const response = makeResponse({
       ___ALL_FEEDS___: [
@@ -97,8 +74,7 @@ describe("stripRwaMetadata", () => {
       ],
     });
 
-    const rwaFeedIds: RwaFeedResult = new Set(["RWA_FEED"]);
-    const result = stripRwaMetadata(response, rwaFeedIds);
+    const result = stripRwaMetadata(response, new Set(["RWA_FEED"]));
 
     const points = result["___ALL_FEEDS___"]![0].dataPoints;
     expect(points[0].metadata).toBeUndefined();
@@ -107,7 +83,7 @@ describe("stripRwaMetadata", () => {
 
   it("handles undefined packages in response", () => {
     const response: DataPackagesResponse = { ETH: undefined };
-    const result = stripRwaMetadata(response, "ALL");
+    const result = stripRwaMetadata(response, new Set(["ETH"]));
     expect(result.ETH).toBeUndefined();
   });
 });
