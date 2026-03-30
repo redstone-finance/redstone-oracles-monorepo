@@ -219,23 +219,6 @@
         "rwa"
       ]
     },
-    "XAG": {
-      "source": [],
-      "skipBroadcasting": true,
-      "denomination": "USD",
-      "rateFeed": false,
-      "types": [
-        "rwa"
-      ]
-    },
-    "XAG---REGULAR": {
-      "source": [],
-      "denomination": "USD",
-      "rateFeed": false,
-      "types": [
-        "rwa"
-      ]
-    },
     "TSLA": {
       "source": [],
       "skipBroadcasting": true,
@@ -280,56 +263,6 @@
       ]
     },
     "AAPL---REGULAR": {
-      "source": [],
-      "denomination": "USD",
-      "rateFeed": false,
-      "types": [
-        "rwa"
-      ]
-    },
-    "FGNXP": {
-      "source": [],
-      "skipBroadcasting": true,
-      "denomination": "USD",
-      "rateFeed": false,
-      "types": [
-        "rwa"
-      ]
-    },
-    "FGNXP---REGULAR": {
-      "source": [],
-      "denomination": "USD",
-      "rateFeed": false,
-      "types": [
-        "rwa"
-      ]
-    },
-    "CEPT": {
-      "source": [],
-      "skipBroadcasting": true,
-      "denomination": "USD",
-      "rateFeed": false,
-      "types": [
-        "rwa"
-      ]
-    },
-    "CEPT---REGULAR": {
-      "source": [],
-      "denomination": "USD",
-      "rateFeed": false,
-      "types": [
-        "rwa"
-      ]
-    },
-    "FGNX": {
-      "source": [],
-      "denomination": "USD",
-      "rateFeed": false,
-      "types": [
-        "rwa"
-      ]
-    },
-    "FGNX---REGULAR": {
       "source": [],
       "denomination": "USD",
       "rateFeed": false,
