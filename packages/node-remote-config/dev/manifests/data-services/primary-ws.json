@@ -233,27 +233,6 @@
       "rateFeed": false,
       "types": ["rwa"]
     },
-    "XAG": {
-      "source": [
-        "alltick-api-deferred",
-        "commodity-price-api-deferred",
-        "financialmodelingprep-deferred",
-        "metals-api-deferred",
-        "metal-price-api-deferred",
-        "ws-polygon-massive-commodities",
-        "ws-twelve-data"
-      ],
-      "skipBroadcasting": true,
-      "denomination": "USD",
-      "rateFeed": false,
-      "types": ["rwa"]
-    },
-    "XAG---REGULAR": {
-      "source": ["cme-on-market"],
-      "denomination": "USD",
-      "rateFeed": false,
-      "types": ["rwa"]
-    },
     "TSLA": {
       "source": [
         "alltick-stocks-api-deferred",
@@ -309,62 +288,6 @@
       "types": ["rwa"]
     },
     "AAPL---REGULAR": {
-      "source": ["us-equity-on-market"],
-      "denomination": "USD",
-      "rateFeed": false,
-      "types": ["rwa"]
-    },
-    "FGNXP": {
-      "source": [
-        "databento",
-        "financialmodelingprep-deferred",
-        "ws-dx-feed",
-        "ws-polygon-massive",
-        "ws-twelve-data"
-      ],
-      "skipBroadcasting": true,
-      "denomination": "USD",
-      "rateFeed": false,
-      "types": ["rwa"]
-    },
-    "FGNXP---REGULAR": {
-      "source": ["us-equity-on-market"],
-      "denomination": "USD",
-      "rateFeed": false,
-      "types": ["rwa"]
-    },
-    "CEPT": {
-      "source": [
-        "databento",
-        "financialmodelingprep-deferred",
-        "ws-dx-feed",
-        "ws-polygon-massive",
-        "ws-twelve-data"
-      ],
-      "skipBroadcasting": true,
-      "denomination": "USD",
-      "rateFeed": false,
-      "types": ["rwa"]
-    },
-    "CEPT---REGULAR": {
-      "source": ["us-equity-on-market"],
-      "denomination": "USD",
-      "rateFeed": false,
-      "types": ["rwa"]
-    },
-    "FGNX": {
-      "source": [
-        "databento",
-        "financialmodelingprep-deferred",
-        "ws-dx-feed",
-        "ws-polygon-massive",
-        "ws-twelve-data"
-      ],
-      "denomination": "USD",
-      "rateFeed": false,
-      "types": ["rwa"]
-    },
-    "FGNX---REGULAR": {
       "source": ["us-equity-on-market"],
       "denomination": "USD",
       "rateFeed": false,
