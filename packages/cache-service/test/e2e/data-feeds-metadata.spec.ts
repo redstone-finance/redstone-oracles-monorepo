@@ -16,6 +16,10 @@ describe("Data feeds metadata (e2e)", () => {
     await app.init();
   });
 
+  afterEach(async () => {
+    await app.close();
+  });
+
   it("/data-feeds-metadata (GET)", async () => {
     await request(app.getHttpServer())
       .get("/data-feeds-metadata")
