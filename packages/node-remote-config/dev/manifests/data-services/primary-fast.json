@@ -91,8 +91,6 @@
         "gate-usdt",
         "kraken-eur",
         "kraken-usd",
-        "kraken-usdc",
-        "kraken-usdt",
         "kucoin-usdt",
         "okx-usdt",
         "xt-usdc",
@@ -102,7 +100,6 @@
     "BTC": {
       "source": [
         "binance-usdc",
-        "binance-usdt",
         "bingx-usdc",
         "bingx-usdt",
         "bitget-usdc",
@@ -112,10 +109,8 @@
         "bitrue-usdc",
         "bitrue-usdt",
         "bitstamp-usd",
-        "bybit-usdc",
         "kraken-usd",
         "kraken-usdt",
-        "kucoin-usdt",
         "okx-usd",
         "xt-usdc",
         "xt-usdt"
@@ -126,18 +121,17 @@
         "binance-usdt",
         "bingx-usdc",
         "bingx-usdt",
-        "bitget-eur",
         "bitget-usdc",
         "bitget-usdt",
         "bitmart-usdt",
         "bitrue-usdc",
         "bitrue-usdt",
-        "bitstamp-eur",
         "bitstamp-usd",
         "bybit-usdc",
         "coinbase-usd",
         "kraken-eur",
         "kraken-usd",
+        "kucoin-usdt",
         "okx-usd",
         "xt-usdt"
       ]
