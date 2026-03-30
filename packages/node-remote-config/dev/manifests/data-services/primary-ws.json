@@ -794,5 +794,31 @@
       "types": ["rwa"]
     }
   },
-  "multiPointPackages": {}
+  "multiPointPackages": {
+    "CME_MARKET_STATUS": [
+      "CME_MARKET_CURRENT_STATUS",
+      "CME_MARKET_NEXT_STATUS",
+      "CME_MARKET_NEXT_CHANGE_TIME"
+    ],
+    "FOREX_MARKET_STATUS": [
+      "FOREX_MARKET_CURRENT_STATUS",
+      "FOREX_MARKET_NEXT_STATUS",
+      "FOREX_MARKET_NEXT_CHANGE_TIME"
+    ],
+    "NY_MARKET_STATUS": [
+      "NY_MARKET_CURRENT_STATUS",
+      "NY_MARKET_NEXT_STATUS",
+      "NY_MARKET_NEXT_CHANGE_TIME"
+    ],
+    "KRX_MARKET_STATUS": [
+      "KRX_MARKET_CURRENT_STATUS",
+      "KRX_MARKET_NEXT_STATUS",
+      "KRX_MARKET_NEXT_CHANGE_TIME"
+    ],
+    "JPX_MARKET_STATUS": [
+      "JPX_MARKET_CURRENT_STATUS",
+      "JPX_MARKET_NEXT_STATUS",
+      "JPX_MARKET_NEXT_CHANGE_TIME"
+    ]
+  }
 }
