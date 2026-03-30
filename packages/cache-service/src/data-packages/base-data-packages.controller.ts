@@ -4,6 +4,7 @@ import {
   Header,
   HttpException,
   HttpStatus,
+  OnModuleDestroy,
   Param,
   Post,
   Req,
@@ -18,7 +19,7 @@ import { BulkPostRequestBody, DataPackagesResponse } from "./data-packages.inter
 import { DataPackagesService } from "./data-packages.service";
 
 @UsePipes(new ValidationPipe({ transform: true }))
-export abstract class BaseDataPackagesController {
+export abstract class BaseDataPackagesController implements OnModuleDestroy {
   private readonly apiKeysUsageTracker?: ApiKeysUsageTracker;
 
   constructor(protected readonly dataPackagesService: DataPackagesService) {
@@ -29,6 +30,10 @@ export abstract class BaseDataPackagesController {
         serviceName: `cache-service-${config.env}`,
       });
     }
+  }
+
+  async onModuleDestroy() {
+    await this.apiKeysUsageTracker?.shutdown();
   }
 
   protected abstract readonly allowExternalSigners: boolean;

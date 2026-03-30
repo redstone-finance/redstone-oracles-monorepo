@@ -40,10 +40,14 @@ jest.mock("@redstone-finance/sdk", () => ({
   getOracleRegistryState: jest.fn(() => mockOracleRegistryState),
 }));
 
-const mockGetRwaFeedIds = jest.fn().mockResolvedValue(new Set<string>());
+const mockGetRwaFeedIds = jest.fn().mockReturnValue(new Set<string>());
 jest.mock("../../src/utils/strip-rwa-metadata", () => ({
   ...jest.requireActual<object>("../../src/utils/strip-rwa-metadata"),
-  getRwaFeedIds: (...args: unknown[]) => mockGetRwaFeedIds(...args),
+  rwaFeedIdsProvider: {
+    getRwaFeedIds: (...args: unknown[]) => mockGetRwaFeedIds(...args),
+    start: jest.fn().mockResolvedValue(undefined),
+    stop: jest.fn(),
+  },
 }));
 
 const ALL_FEEDS_KEY = consts.ALL_FEEDS_KEY;
@@ -161,6 +165,7 @@ describe("Data packages (e2e)", () => {
 
   afterEach(async () => {
     jest.restoreAllMocks();
+    await app.close();
     await dropTestDatabase();
   });
 
@@ -613,7 +618,7 @@ describe("Data packages (e2e)", () => {
     });
 
     it("should strip RWA feed metadata even on show-metadata endpoint", async () => {
-      mockGetRwaFeedIds.mockResolvedValue(new Set(["RWA_FEED"]));
+      mockGetRwaFeedIds.mockReturnValue(new Set(["RWA_FEED"]));
 
       const response = await request(httpServer)
         .get(`/v2/data-packages/latest/mock-data-service-1/show-metadata`)
@@ -623,7 +628,7 @@ describe("Data packages (e2e)", () => {
     });
 
     it("should preserve non-RWA feed metadata on show-metadata endpoint", async () => {
-      mockGetRwaFeedIds.mockResolvedValue(new Set(["RWA_FEED"]));
+      mockGetRwaFeedIds.mockReturnValue(new Set(["RWA_FEED"]));
 
       const response = await request(httpServer)
         .get(`/v2/data-packages/latest/mock-data-service-1/show-metadata`)
