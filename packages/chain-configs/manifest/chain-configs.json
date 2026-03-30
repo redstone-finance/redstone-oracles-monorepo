@@ -121,9 +121,13 @@
       "name": "Celo Mainnet",
       "networkId": 42220,
       "currencySymbol": "CELO",
-      "publicRpcUrls": ["https://forno.celo.org"],
+      "publicRpcUrls": [
+        "https://rpc.ankr.com/celo",
+        "https://celo-json-rpc.stakely.io",
+        "https://forno.celo.org"
+      ],
       "etherScanApi": "https://api.celoscan.io",
-      "avgBlockTimeMs": 5000,
+      "avgBlockTimeMs": 1000,
       "multicall3": {
         "address": "0xaD6CC5a465E5c8284a49eC9eD10EFE275460678c",
         "type": "RedstoneMulticall3",
