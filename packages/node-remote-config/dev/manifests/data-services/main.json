@@ -2173,8 +2173,6 @@
     },
     "COP": {
       "source": [
-        "lbank-usdt",
-        "mexc-usdt",
         "alphavantage-usd-reversed",
         "financialmodelingprep",
         "metal-price-api",
@@ -2838,7 +2836,6 @@
     "RIF": {
       "source": [
         "binance-usdt",
-        "bingx-usdt",
         "bitget-usdt",
         "bitrue-usdt",
         "gate-usdt",
@@ -2950,7 +2947,6 @@
         "bingx-usdt",
         "bitget-usdt",
         "bitmart-usdt",
-        "bitstamp-usd",
         "gate-usdt",
         "htx-usdt",
         "kraken-eur",
@@ -3478,13 +3474,11 @@
         "bybit-usdt",
         "coinbase-usd",
         "gate-usdt",
-        "kraken-eur",
         "kraken-usd",
         "kucoin-usdt",
         "lbank-usdt",
         "mexc-usdc",
         "mexc-usdt",
-        "okx-eur",
         "okx-usdt",
         "xt-usdt"
       ],
@@ -3652,8 +3646,6 @@
         "gate-usdt",
         "gemini-usd",
         "htx-usdt",
-        "kraken-eur",
-        "kraken-usd",
         "kucoin-usdt",
         "mexc-usdc",
         "mexc-usdt",
