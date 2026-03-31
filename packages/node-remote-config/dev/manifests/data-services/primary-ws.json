@@ -623,15 +623,6 @@
       "denomination": "timestamp",
       "rateFeed": false
     },
-    "URANIUM": {
-      "source": ["tezos-uranium-price-api-deferred", "commodity-price-api", "ws-itick-futures"],
-      "priceAggregator": "primarySource",
-      "primarySourceAggregatorConfig": {
-        "primarySource": "tezos-uranium-price-api-deferred"
-      },
-      "denomination": "USD",
-      "rateFeed": false
-    },
     "TSLA---PERP": {
       "source": ["ws-hyperliquid-perps-xyz", "ws-hydromancer-perps-xyz"],
       "denomination": "USD",
