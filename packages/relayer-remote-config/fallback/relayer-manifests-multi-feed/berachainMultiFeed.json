@@ -106,13 +106,6 @@
         "timeSinceLastUpdateInMilliseconds": 86400000
       }
     },
-    "USR": {
-      "priceFeedAddress": "0x29D295409d5A20b2C851df18054D32A442791346",
-      "updateTriggersOverrides": {
-        "deviationPercentage": 0.2,
-        "timeSinceLastUpdateInMilliseconds": 86400000
-      }
-    },
     "BERA": {
       "priceFeedAddress": "0x29d2fEC890B037B2d34f061F9a50f76F85ddBcAE",
       "updateTriggersOverrides": {

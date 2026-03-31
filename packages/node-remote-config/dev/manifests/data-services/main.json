@@ -1142,11 +1142,6 @@
       "denomination": "USD",
       "rateFeed": false
     },
-    "agEUR": {
-      "source": ["curve-ethereum-euroc"],
-      "denomination": "USD",
-      "rateFeed": false
-    },
     "ETHx": {
       "source": ["curve-ethereum-eth", "uniswap-v3-ethereum-wsteth-100"],
       "denomination": "USD",
@@ -1754,22 +1749,6 @@
       "denomination": "USD",
       "rateFeed": true
     },
-    "MERL": {
-      "source": [
-        "bingx-usdt",
-        "bitget-usdt",
-        "bitmart-usdt",
-        "bybit-usdt",
-        "gate-usdt",
-        "kraken-usd",
-        "kucoin-usdt",
-        "lbank-usdt",
-        "mexc-usdt",
-        "okx-usdt"
-      ],
-      "denomination": "USD",
-      "rateFeed": false
-    },
     "bsdETH": {
       "source": ["aerodrome-base-weth", "aerodrome-cl-base-weth", "uniswap-v3-base-weth-100"],
       "denomination": "USD",
@@ -1900,16 +1879,6 @@
       ],
       "denomination": "USD",
       "rateFeed": false
-    },
-    "sdeUSD_FUNDAMENTAL": {
-      "source": ["ethereum-evm-fetcher-elixir"],
-      "denomination": "deUSD",
-      "rateFeed": true
-    },
-    "sfastUSD_FUNDAMENTAL": {
-      "source": ["sei-evm-fetcher-fast"],
-      "denomination": "deUSD",
-      "rateFeed": true
     },
     "SolvBTC": {
       "source": ["pancake-swap-bnb-btcb-500", "uniswap-v3-ethereum-wbtc-500", "thena-v3-bnb-btcb"],
@@ -2480,12 +2449,6 @@
       "rateFeed": false,
       "types": ["rwa"]
     },
-    "C3M": {
-      "source": ["financialmodelingprep", "twelve-data"],
-      "denomination": "USD",
-      "rateFeed": false,
-      "types": ["rwa"]
-    },
     "PEN": {
       "source": ["twelve-data"],
       "denomination": "USD",
@@ -3038,25 +3001,6 @@
       "source": ["ethereum-evm-fetcher-veda"],
       "denomination": "ETH",
       "rateFeed": true
-    },
-    "BIO": {
-      "source": [
-        "binance-usdc",
-        "binance-usdt",
-        "bingx-usdt",
-        "bitget-usdt",
-        "bitmart-usdt",
-        "bitrue-usdt",
-        "gate-usdt",
-        "kraken-usd",
-        "kucoin-usdt",
-        "mexc-usdc",
-        "mexc-usdt",
-        "okx-usdt",
-        "xt-usdt"
-      ],
-      "denomination": "USD",
-      "rateFeed": false
     },
     "zkETH_FUNDAMENTAL": {
       "source": ["zksync-evm-fetcher-dinero-branded-eth"],
@@ -8173,16 +8117,6 @@
     },
     "CMC20_FUNDAMENTAL": {
       "source": ["bnb-evm-fetcher-reserve"],
-      "denomination": "USD",
-      "rateFeed": true
-    },
-    "stMNT_FUNDAMENTAL": {
-      "source": ["ethereum-evm-fetcher-mantle-liq"],
-      "denomination": "MNT",
-      "rateFeed": true
-    },
-    "stMNT_FUNDAMENTAL/USD": {
-      "source": ["usd-based"],
       "denomination": "USD",
       "rateFeed": true
     },
