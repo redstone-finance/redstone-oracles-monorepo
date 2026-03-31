@@ -706,22 +706,6 @@
       "twoDimensionalFees": false,
       "isMainnet": true
     },
-    "cornTestnet": {
-      "name": "Corn Testnet",
-      "networkId": 21000001,
-      "currencySymbol": "BTCN",
-      "publicRpcUrls": ["https://testnet-rpc.usecorn.com", "https://rpc.ankr.com/corn_testnet"],
-      "avgBlockTimeMs": 60000,
-      "multicall3": {
-        "address": "0xaD6CC5a465E5c8284a49eC9eD10EFE275460678c",
-        "type": "RedstoneMulticall3",
-        "gasLimitPerCall": 1000000
-      },
-      "isAuctionModel": false,
-      "fallbackToEthMaxPriorityFeePerGas": true,
-      "twoDimensionalFees": false,
-      "isMainnet": false
-    },
     "swellchain": {
       "name": "Swellchain",
       "networkId": 1923,
@@ -1234,21 +1218,6 @@
       "fallbackToEthMaxPriorityFeePerGas": true,
       "twoDimensionalFees": false,
       "isMainnet": true
-    },
-    "westendHub": {
-      "name": "Westend Asset Hub",
-      "networkId": 420420421,
-      "currencySymbol": "WND",
-      "publicRpcUrls": ["https://westend-asset-hub-eth-rpc.polkadot.io"],
-      "avgBlockTimeMs": 10000,
-      "multicall3": {
-        "address": "0x566178C2D428e74C38FD8e7617cED52B99fa6741",
-        "type": "RedstoneMulticall3",
-        "gasLimitPerCall": 1000000
-      },
-      "isAuctionModel": false,
-      "twoDimensionalFees": false,
-      "isMainnet": false
     },
     "katana": {
       "name": "Katana",
