@@ -176,7 +176,6 @@
       "rateFeed": false,
       "broadcasters": ["influx"]
     },
-
     "ORACLE_flx:XMR": {
       "source": ["ws-hyperliquid-perps-flx", "ws-hydromancer-perps-flx"],
       "customWeightsForWeightedMedian": {
@@ -1118,13 +1117,15 @@
       "source": ["databento-cme-futures", "ws-polygon-massive-cme-futures"],
       "broadcasters": ["influx"],
       "denomination": "USD",
-      "rateFeed": false
+      "rateFeed": false,
+      "types": ["rwa"]
     },
     "USA100_FRONT": {
       "source": ["databento-cme-futures", "ws-polygon-massive-cme-futures"],
       "broadcasters": ["influx"],
       "denomination": "USD",
-      "rateFeed": false
+      "rateFeed": false,
+      "types": ["rwa"]
     },
     "USA100": {
       "source": [
@@ -1145,7 +1146,8 @@
       },
       "broadcasters": ["influx"],
       "denomination": "USD",
-      "rateFeed": false
+      "rateFeed": false,
+      "types": ["rwa"]
     },
     "MARK_flx:USA100": {
       "source": ["ws-hyperliquid-perps-flx", "ws-hydromancer-perps-flx"],
@@ -1231,13 +1233,15 @@
       "source": ["databento-cme-futures", "ws-polygon-massive-nymex-futures"],
       "broadcasters": ["influx"],
       "denomination": "USD",
-      "rateFeed": false
+      "rateFeed": false,
+      "types": ["rwa"]
     },
     "GAS_FRONT": {
       "source": ["databento-cme-futures", "ws-polygon-massive-nymex-futures"],
       "broadcasters": ["influx"],
       "denomination": "USD",
-      "rateFeed": false
+      "rateFeed": false,
+      "types": ["rwa"]
     },
     "GAS": {
       "source": [
@@ -1260,7 +1264,8 @@
       },
       "broadcasters": ["influx"],
       "denomination": "USD",
-      "rateFeed": false
+      "rateFeed": false,
+      "types": ["rwa"]
     },
     "MARK_flx:GAS": {
       "source": ["ws-hyperliquid-perps-flx", "ws-hydromancer-perps-flx"],
@@ -1571,7 +1576,8 @@
       "source": ["databento-cme"],
       "broadcasters": ["influx"],
       "denomination": "USD",
-      "rateFeed": false
+      "rateFeed": false,
+      "types": ["rwa"]
     },
     "MARK_flx:USA500": {
       "source": ["ws-hyperliquid-perps-flx", "ws-hydromancer-perps-flx"],
