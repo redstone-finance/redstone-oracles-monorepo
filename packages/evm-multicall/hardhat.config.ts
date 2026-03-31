@@ -83,9 +83,6 @@ const config: HardhatUserConfig = {
     corn: {
       url: "https://rpc.ankr.com/corn_maizenet",
     },
-    cornTestnet: {
-      url: "https://testnet-rpc.usecorn.com",
-    },
     sonic: {
       url: "https://rpc.soniclabs.com",
     },
