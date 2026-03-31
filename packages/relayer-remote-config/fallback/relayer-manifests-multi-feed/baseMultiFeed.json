@@ -45,13 +45,6 @@
         "timeSinceLastUpdateInMilliseconds": 86400000
       }
     },
-    "BIO": {
-      "priceFeedAddress": "0x13433B1949d9141Be52Ae13Ad7e7E4911228414e",
-      "updateTriggersOverrides": {
-        "deviationPercentage": 1,
-        "timeSinceLastUpdateInMilliseconds": 86400000
-      }
-    },
     "USR": {
       "priceFeedAddress": "0x4BAD96DD1C7D541270a0C92e1D4e5f12EEEA7a57",
       "updateTriggersOverrides": {

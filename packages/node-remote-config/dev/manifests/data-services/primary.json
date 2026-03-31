@@ -422,18 +422,6 @@
       "denomination": "USD",
       "rateFeed": false
     },
-    "C3M": {
-      "source": ["financialmodelingprep", "twelve-data"],
-      "denomination": "USD",
-      "rateFeed": false,
-      "deviationCheck": {
-        "deviationWithRecentValues": {
-          "maxPercent": 1,
-          "maxDelayMilliseconds": 120000
-        }
-      },
-      "types": ["rwa"]
-    },
     "USDC.USDT": {
       "source": ["non-usd-based"],
       "deviationCheck": {
@@ -916,17 +904,6 @@
         "uniswap-v3-arbitrumone-weth-3000",
         "uniswap-v3-arbitrumone-weth-500"
       ],
-      "deviationCheck": {
-        "deviationWithRecentValues": {
-          "maxPercent": 5,
-          "maxDelayMilliseconds": 120000
-        }
-      },
-      "denomination": "USD",
-      "rateFeed": false
-    },
-    "agEUR": {
-      "source": ["curve-ethereum-euroc"],
       "deviationCheck": {
         "deviationWithRecentValues": {
           "maxPercent": 5,
@@ -1526,22 +1503,6 @@
       "denomination": "USD",
       "rateFeed": true
     },
-    "MERL": {
-      "source": [
-        "bingx-usdt",
-        "bitget-usdt",
-        "bitmart-usdt",
-        "bybit-usdt",
-        "gate-usdt",
-        "kraken-usd",
-        "kucoin-usdt",
-        "lbank-usdt",
-        "mexc-usdt",
-        "okx-usdt"
-      ],
-      "denomination": "USD",
-      "rateFeed": false
-    },
     "KES": {
       "source": ["alphavantage-usd", "financialmodelingprep", "twelve-data", "metal-price-api"],
       "denomination": "USD",
@@ -1724,22 +1685,6 @@
           "maxDelayMilliseconds": 120000
         }
       }
-    },
-    "sdeUSD_FUNDAMENTAL": {
-      "source": ["ethereum-evm-fetcher-elixir"],
-      "denomination": "deUSD",
-      "rateFeed": true,
-      "deviationCheck": {
-        "deviationWithRecentValues": {
-          "maxPercent": 1,
-          "maxDelayMilliseconds": 120000
-        }
-      }
-    },
-    "sfastUSD_FUNDAMENTAL": {
-      "source": ["sei-evm-fetcher-fast"],
-      "denomination": "deUSD",
-      "rateFeed": true
     },
     "CESR": {
       "source": ["coindesk-cesr"],
@@ -2239,25 +2184,6 @@
         "lbank-usdt",
         "mexc-usdc",
         "mexc-usdt",
-        "xt-usdt"
-      ],
-      "denomination": "USD",
-      "rateFeed": false
-    },
-    "BIO": {
-      "source": [
-        "binance-usdc",
-        "binance-usdt",
-        "bingx-usdt",
-        "bitget-usdt",
-        "bitmart-usdt",
-        "bitrue-usdt",
-        "gate-usdt",
-        "kraken-usd",
-        "kucoin-usdt",
-        "mexc-usdc",
-        "mexc-usdt",
-        "okx-usdt",
         "xt-usdt"
       ],
       "denomination": "USD",
@@ -4316,22 +4242,6 @@
     },
     "CMC20_FUNDAMENTAL": {
       "source": ["bnb-evm-fetcher-reserve"],
-      "denomination": "USD",
-      "rateFeed": true
-    },
-    "stMNT_FUNDAMENTAL": {
-      "source": ["ethereum-evm-fetcher-mantle-liq"],
-      "denomination": "MNT",
-      "rateFeed": true,
-      "deviationCheck": {
-        "deviationWithRecentValues": {
-          "maxPercent": 0.1,
-          "maxDelayMilliseconds": 120000
-        }
-      }
-    },
-    "stMNT_FUNDAMENTAL/USD": {
-      "source": ["usd-based"],
       "denomination": "USD",
       "rateFeed": true
     },
