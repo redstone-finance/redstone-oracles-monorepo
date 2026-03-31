@@ -4894,6 +4894,15 @@
       "source": ["ethereum-evm-fetcher-stbl"],
       "denomination": "USD",
       "rateFeed": true
+    },
+    "URANIUM": {
+      "source": ["tezos-uranium-price-api-deferred", "commodity-price-api", "itick-futures"],
+      "priceAggregator": "primarySource",
+      "primarySourceAggregatorConfig": {
+        "primarySource": "tezos-uranium-price-api-deferred"
+      },
+      "denomination": "USD",
+      "rateFeed": false
     }
   },
   "multiPointPackages": {
