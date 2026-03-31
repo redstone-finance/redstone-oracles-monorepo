@@ -1502,7 +1502,10 @@
         "influx"
       ],
       "denomination": "USD",
-      "rateFeed": false
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
     },
     "USA100_FRONT": {
       "source": [],
@@ -1510,7 +1513,10 @@
         "influx"
       ],
       "denomination": "USD",
-      "rateFeed": false
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
     },
     "USA100": {
       "source": [],
@@ -1522,7 +1528,10 @@
         "influx"
       ],
       "denomination": "USD",
-      "rateFeed": false
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
     },
     "MARK_flx:USA100": {
       "source": [
@@ -1648,7 +1657,10 @@
         "influx"
       ],
       "denomination": "USD",
-      "rateFeed": false
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
     },
     "GAS_FRONT": {
       "source": [],
@@ -1656,7 +1668,10 @@
         "influx"
       ],
       "denomination": "USD",
-      "rateFeed": false
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
     },
     "GAS": {
       "source": [],
@@ -1668,7 +1683,10 @@
         "influx"
       ],
       "denomination": "USD",
-      "rateFeed": false
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
     },
     "MARK_flx:GAS": {
       "source": [
@@ -2086,7 +2104,10 @@
         "influx"
       ],
       "denomination": "USD",
-      "rateFeed": false
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
     },
     "MARK_flx:USA500": {
       "source": [
