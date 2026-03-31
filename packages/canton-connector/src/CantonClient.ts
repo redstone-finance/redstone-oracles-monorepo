@@ -136,7 +136,7 @@ export class CantonClient {
     return makeActiveContractData(createdEvent, synchronizerId);
   }
 
-  async getMostActiveContractData(
+  async getMostActiveContractWithPayload<T = unknown>(
     interfaceId: string,
     filter?: ContractFilter,
     atOffset?: number,
@@ -157,10 +157,28 @@ export class CantonClient {
     }
 
     const [adapter] = adapters;
-
     const { createdEvent, synchronizerId } = adapter.contractEntry.JsActiveContract;
 
-    return makeActiveContractData(createdEvent, synchronizerId);
+    return {
+      ...makeActiveContractData(createdEvent, synchronizerId),
+      createArgument: createdEvent.createArgument as T,
+    };
+  }
+
+  async getMostActiveContractData(
+    interfaceId: string,
+    filter?: ContractFilter,
+    atOffset?: number,
+    sorter?: CreatedArgumentCallback
+  ) {
+    const { createArgument: _, ...contractData } = await this.getMostActiveContractWithPayload(
+      interfaceId,
+      filter,
+      atOffset,
+      sorter
+    );
+
+    return contractData;
   }
 
   async getCreateContractEvents(
