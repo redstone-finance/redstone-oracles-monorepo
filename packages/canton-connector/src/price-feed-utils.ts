@@ -6,9 +6,6 @@ import { convertDecimalValue, decodeFeedId, getArrayifiedFeedId } from "./conver
 export const IPRICE_PILL_TEMPLATE_NAME = `IRedStonePricePill:IRedStonePricePill`;
 export const PRICE_PILL_TEMPLATE_NAME = `RedStonePricePill:RedStonePricePill`;
 export const PRICE_UPDATE_EVENT_TEMPLATE_NAME = `PriceUpdateEvent:PriceUpdateEvent`;
-export const READ_DATA_CHOICE = "ReadData";
-export const READ_FEED_ID_CHOICE = "ReadFeedId";
-export const READ_DESCRIPTION_CHOICE = "ReadDescription";
 export const ARCHIVE_CHOICE = "Archive";
 
 export type CreatedArgumentCallback<R = unknown> = (
