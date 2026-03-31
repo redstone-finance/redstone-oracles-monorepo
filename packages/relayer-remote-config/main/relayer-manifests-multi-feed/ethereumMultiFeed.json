@@ -72,12 +72,6 @@
         "timeSinceLastUpdateInMilliseconds": 86400000
       }
     },
-    "C3M": {
-      "priceFeedAddress": "0x6E27A25999B3C665E44D903B2139F5a4Be2B6C26",
-      "updateTriggersOverrides": {
-        "cron": ["00 12 * * *"]
-      }
-    },
     "ETHx/ETH": {
       "priceFeedAddress": "0xc799194cAa24E2874Efa89b4Bf5c92a530B047FF"
     },
@@ -144,13 +138,6 @@
     },
     "BTC": {
       "priceFeedAddress": "0xAB7f623fb2F6fea6601D4350FA0E2290663C28Fc"
-    },
-    "BIO": {
-      "priceFeedAddress": "0xeC7C6AdcC867E1C22713D14797339750E36538E4",
-      "updateTriggersOverrides": {
-        "deviationPercentage": 1,
-        "timeSinceLastUpdateInMilliseconds": 86400000
-      }
     },
     "BUIDL_FUNDAMENTAL": {
       "priceFeedAddress": "0xb9BD795BB71012c0F3cd1D9c9A4c686F2d3524A4",
