@@ -410,7 +410,7 @@
     "DLF_FUNDAMENTAL": {
       "priceFeedAddress": "0xFFD1339908E0deBE2416E03df0843B896b8944Fe",
       "updateTriggersOverrides": {
-        "deviationPercentage": 0.15,
+        "deviationPercentage": 0.015,
         "timeSinceLastUpdateInMilliseconds": 86400000
       }
     },
