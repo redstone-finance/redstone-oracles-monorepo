@@ -229,6 +229,9 @@
         "deviationPercentage": 0.01,
         "timeSinceLastUpdateInMilliseconds": 86400000
       }
+    },
+    "SolvBTC_FUNDAMENTAL/USD": {
+      "priceFeedAddress": "0x9a7FAe39f78f7711d46F28E9fd2271ECdca58f9a"
     }
   }
 }
