@@ -12,11 +12,15 @@ import {
   IPRICE_PILL_TEMPLATE_NAME,
   parsePriceData,
   PriceData,
-  READ_DATA_CHOICE,
-  READ_DESCRIPTION_CHOICE,
-  READ_FEED_ID_CHOICE,
 } from "../price-feed-utils";
 import { CantonContractAdapter } from "./CantonContractAdapter";
+
+interface PricePillView {
+  adapterId: string;
+  feedId: string[];
+  priceData: PriceData;
+  stalenessMs: string;
+}
 
 export class PricePillCantonContractAdapter
   extends CantonContractAdapter
@@ -45,17 +49,9 @@ export class PricePillCantonContractAdapter
   }
 
   async readData(offset?: number) {
-    const result: PriceData = await this.exerciseChoice(
-      READ_DATA_CHOICE,
-      {},
-      {
-        offset,
-        withCaller: true,
-        withRetry: true,
-      }
-    );
+    const { priceData } = await this.readView(offset);
 
-    return parsePriceData(result);
+    return parsePriceData(priceData);
   }
 
   decimals(_offset?: number) {
@@ -63,27 +59,14 @@ export class PricePillCantonContractAdapter
   }
 
   async getDescription(offset?: number) {
-    return await this.exerciseChoice<string>(
-      READ_DESCRIPTION_CHOICE,
-      {},
-      {
-        offset,
-        withCaller: true,
-        withRetry: true,
-      }
-    );
+    const view = await this.readView(offset);
+    const timestamp = view.priceData.timestamp;
+
+    return `RedStone Price Pill of ${JSON.stringify(view.feedId)}, created by ${view.adapterId}; ${timestamp} valid to ${Number(timestamp) + Number(view.stalenessMs)}`;
   }
 
   async getDataFeedId(offset?: number) {
-    const feedId: string[] = await this.exerciseChoice(
-      READ_FEED_ID_CHOICE,
-      {},
-      {
-        offset,
-        withCaller: true,
-        withRetry: true,
-      }
-    );
+    const { feedId } = await this.readView(offset);
 
     return ContractParamsProvider.unhexlifyFeedId(feedId.map(Number));
   }
@@ -93,12 +76,27 @@ export class PricePillCantonContractAdapter
       this.getInterfaceId(),
       this.getCombinedSignatoryContractFilter(),
       offset,
-      ((createArgument: { priceData?: PriceData }) =>
-        -Number(createArgument.priceData?.timestamp ?? 0)) as CreatedArgumentCallback // newest first
+      PricePillCantonContractAdapter.newestPillSorter()
     );
   }
 
   protected override getContractFilter(): ContractFilter {
     return createFeedIdFilter([this.arrayifiedFeedId], this.adapterId);
+  }
+
+  private async readView(offset?: number): Promise<PricePillView> {
+    const { createArgument } = await this.client.getMostActiveContractWithPayload<PricePillView>(
+      this.getInterfaceId(),
+      this.getCombinedSignatoryContractFilter(),
+      offset,
+      PricePillCantonContractAdapter.newestPillSorter()
+    );
+
+    return createArgument;
+  }
+
+  private static newestPillSorter() {
+    return ((createArgument: { priceData?: PriceData }) =>
+      -Number(createArgument.priceData?.timestamp ?? 0)) as CreatedArgumentCallback;
   }
 }
