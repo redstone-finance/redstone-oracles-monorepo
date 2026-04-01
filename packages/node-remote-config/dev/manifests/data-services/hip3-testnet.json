@@ -618,25 +618,25 @@
       "rateFeed": false
     },
     "flx:GAS_MARK_0": {
-      "source": ["hip3-felix-commodities-mainnet-with-fallback-fetcher"],
+      "source": ["hip3-felix-energy-mainnet-fetcher"],
       "broadcasters": ["hyperliquid-hip3"],
       "denomination": "USD",
       "rateFeed": false
     },
     "flx:GAS_MARK_1": {
-      "source": ["hip3-felix-commodities-mainnet-with-fallback-fetcher"],
+      "source": ["hip3-felix-energy-mainnet-fetcher"],
       "broadcasters": ["hyperliquid-hip3"],
       "denomination": "USD",
       "rateFeed": false
     },
     "flx:GAS_EXT": {
-      "source": ["hip3-felix-commodities-mainnet-with-fallback-fetcher"],
+      "source": ["hip3-felix-energy-mainnet-fetcher"],
       "broadcasters": ["hyperliquid-hip3"],
       "denomination": "USD",
       "rateFeed": false
     },
     "flx:GAS": {
-      "source": ["hip3-felix-commodities-mainnet-with-fallback-fetcher"],
+      "source": ["hip3-felix-energy-mainnet-fetcher"],
       "broadcasters": ["hyperliquid-hip3"],
       "denomination": "USD",
       "rateFeed": false
@@ -1864,25 +1864,25 @@
       "rateFeed": false
     },
     "flx:SILVER_MARK_0": {
-      "source": ["hip3-felix-commodities-mainnet-fetcher"],
+      "source": ["hip3-felix-lmax-mainnet-fetcher"],
       "broadcasters": ["hyperliquid-hip3"],
       "denomination": "USD",
       "rateFeed": false
     },
     "flx:SILVER_MARK_1": {
-      "source": ["hip3-felix-commodities-mainnet-fetcher"],
+      "source": ["hip3-felix-lmax-mainnet-fetcher"],
       "broadcasters": ["hyperliquid-hip3"],
       "denomination": "USD",
       "rateFeed": false
     },
     "flx:SILVER_EXT": {
-      "source": ["hip3-felix-commodities-mainnet-fetcher"],
+      "source": ["hip3-felix-lmax-mainnet-fetcher"],
       "broadcasters": ["hyperliquid-hip3"],
       "denomination": "USD",
       "rateFeed": false
     },
     "flx:SILVER": {
-      "source": ["hip3-felix-commodities-mainnet-fetcher"],
+      "source": ["hip3-felix-lmax-mainnet-fetcher"],
       "broadcasters": ["hyperliquid-hip3"],
       "denomination": "USD",
       "rateFeed": false
@@ -1973,25 +1973,25 @@
       "rateFeed": false
     },
     "flx:PALLADIUM_MARK_0": {
-      "source": ["hip3-felix-commodities-mainnet-fetcher"],
+      "source": ["hip3-felix-lmax-mainnet-fetcher"],
       "broadcasters": ["hyperliquid-hip3"],
       "denomination": "USD",
       "rateFeed": false
     },
     "flx:PALLADIUM_MARK_1": {
-      "source": ["hip3-felix-commodities-mainnet-fetcher"],
+      "source": ["hip3-felix-lmax-mainnet-fetcher"],
       "broadcasters": ["hyperliquid-hip3"],
       "denomination": "USD",
       "rateFeed": false
     },
     "flx:PALLADIUM_EXT": {
-      "source": ["hip3-felix-commodities-mainnet-fetcher"],
+      "source": ["hip3-felix-lmax-mainnet-fetcher"],
       "broadcasters": ["hyperliquid-hip3"],
       "denomination": "USD",
       "rateFeed": false
     },
     "flx:PALLADIUM": {
-      "source": ["hip3-felix-commodities-mainnet-fetcher"],
+      "source": ["hip3-felix-lmax-mainnet-fetcher"],
       "broadcasters": ["hyperliquid-hip3"],
       "denomination": "USD",
       "rateFeed": false
@@ -2081,25 +2081,25 @@
       "rateFeed": false
     },
     "flx:PLATINUM_MARK_0": {
-      "source": ["hip3-felix-commodities-mainnet-fetcher"],
+      "source": ["hip3-felix-lmax-mainnet-fetcher"],
       "broadcasters": ["hyperliquid-hip3"],
       "denomination": "USD",
       "rateFeed": false
     },
     "flx:PLATINUM_MARK_1": {
-      "source": ["hip3-felix-commodities-mainnet-fetcher"],
+      "source": ["hip3-felix-lmax-mainnet-fetcher"],
       "broadcasters": ["hyperliquid-hip3"],
       "denomination": "USD",
       "rateFeed": false
     },
     "flx:PLATINUM_EXT": {
-      "source": ["hip3-felix-commodities-mainnet-fetcher"],
+      "source": ["hip3-felix-lmax-mainnet-fetcher"],
       "broadcasters": ["hyperliquid-hip3"],
       "denomination": "USD",
       "rateFeed": false
     },
     "flx:PLATINUM": {
-      "source": ["hip3-felix-commodities-mainnet-fetcher"],
+      "source": ["hip3-felix-lmax-mainnet-fetcher"],
       "broadcasters": ["hyperliquid-hip3"],
       "denomination": "USD",
       "rateFeed": false
@@ -2523,25 +2523,25 @@
       "rateFeed": false
     },
     "flx:COPPER_MARK_0": {
-      "source": ["hip3-felix-commodities-mainnet-with-fallback-fetcher"],
+      "source": ["hip3-felix-copper-mainnet-fetcher"],
       "broadcasters": ["hyperliquid-hip3"],
       "denomination": "USD",
       "rateFeed": false
     },
     "flx:COPPER_MARK_1": {
-      "source": ["hip3-felix-commodities-mainnet-with-fallback-fetcher"],
+      "source": ["hip3-felix-copper-mainnet-fetcher"],
       "broadcasters": ["hyperliquid-hip3"],
       "denomination": "USD",
       "rateFeed": false
     },
     "flx:COPPER_EXT": {
-      "source": ["hip3-felix-commodities-mainnet-with-fallback-fetcher"],
+      "source": ["hip3-felix-copper-mainnet-fetcher"],
       "broadcasters": ["hyperliquid-hip3"],
       "denomination": "USD",
       "rateFeed": false
     },
     "flx:COPPER": {
-      "source": ["hip3-felix-commodities-mainnet-with-fallback-fetcher"],
+      "source": ["hip3-felix-copper-mainnet-fetcher"],
       "broadcasters": ["hyperliquid-hip3"],
       "denomination": "USD",
       "rateFeed": false
