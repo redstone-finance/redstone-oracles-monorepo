@@ -30,6 +30,7 @@ export class PricePillCantonContractAdapter
 
   constructor(
     client: CantonClient,
+    private readonly partyId: string,
     protected adapterId: string,
     protected feedId: string,
     interfaceId = client.Defs.pricePillInterfaceId,
@@ -71,8 +72,9 @@ export class PricePillCantonContractAdapter
     return ContractParamsProvider.unhexlifyFeedId(feedId.map(Number));
   }
 
-  override async fetchContractData(offset?: number, client = this.client) {
+  override async fetchContractData(actAs: string, offset?: number, client = this.client) {
     return await client.getMostActiveContractData(
+      actAs,
       this.getInterfaceId(),
       this.getCombinedSignatoryContractFilter(),
       offset,
@@ -86,6 +88,7 @@ export class PricePillCantonContractAdapter
 
   private async readView(offset?: number): Promise<PricePillView> {
     const { createArgument } = await this.client.getMostActiveContractWithPayload<PricePillView>(
+      this.partyId,
       this.getInterfaceId(),
       this.getCombinedSignatoryContractFilter(),
       offset,

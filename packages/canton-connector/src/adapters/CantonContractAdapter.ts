@@ -43,16 +43,22 @@ export abstract class CantonContractAdapter {
     protected readonly templateName: string
   ) {}
 
-  async fetchContractData(offset?: number, client = this.client) {
+  async fetchContractData(actAs: string, offset?: number, client = this.client) {
     return await client.getActiveContractData(
+      actAs,
       this.getInterfaceId(),
       this.getCombinedSignatoryContractFilter(),
       offset
     );
   }
 
-  async fetchContractWithPayload<T = unknown>(offset?: number, client = this.client) {
+  async fetchContractWithPayload<T = unknown>(
+    actAs: string,
+    offset?: number,
+    client = this.client
+  ) {
     return await client.getActiveContractWithPayload<T>(
+      actAs,
       this.getInterfaceId(),
       this.getCombinedSignatoryContractFilter(),
       offset
@@ -132,12 +138,13 @@ export abstract class CantonContractAdapter {
   }
 
   private async withContractDataCaching<T>(
+    actAs: string,
     offset: number | undefined,
     client: CantonClient,
     fn: (contractId: string) => Promise<T>,
     remainingDepth = RETRY_CONFIG.maxRetries
   ): Promise<T> {
-    this.activeContractData ??= await this.fetchContractData(offset, client);
+    this.activeContractData ??= await this.fetchContractData(actAs, offset, client);
 
     try {
       return await fn(this.activeContractData.contractId);
@@ -146,7 +153,7 @@ export abstract class CantonContractAdapter {
         this.activeContractData = undefined;
 
         if (remainingDepth > 0) {
-          return await this.withContractDataCaching(offset, client, fn, remainingDepth - 1);
+          return await this.withContractDataCaching(actAs, offset, client, fn, remainingDepth - 1);
         }
       }
 
@@ -155,6 +162,8 @@ export abstract class CantonContractAdapter {
   }
 
   protected async exerciseChoice<Res, Arg extends object = object>(
+    actAsViewer: string,
+    actAsUpdater: string,
     choice: string,
     argument: Arg,
     options: ExerciseChoiceOptions = {}
@@ -168,9 +177,9 @@ export abstract class CantonContractAdapter {
       withCaller = false,
     } = options;
 
-    const finalArgument = withCaller ? ({ ...argument, caller: client.partyId } as Arg) : argument;
+    const finalArgument = withCaller ? ({ ...argument, caller: actAsUpdater } as Arg) : argument;
 
-    return await this.withContractDataCaching(offset, client, async (contractId) => {
+    return await this.withContractDataCaching(actAsViewer, offset, client, async (contractId) => {
       const timestamp = new Date();
       const commands = CantonContractAdapter.buildCommands(
         [{ choice, argument: finalArgument, contractId }],
@@ -180,7 +189,7 @@ export abstract class CantonContractAdapter {
       );
 
       const execute = () =>
-        client.exerciseChoices<Arg, Res>(commands, timestamp, disclosedContractData);
+        client.exerciseChoices<Arg, Res>(actAsUpdater, commands, timestamp, disclosedContractData);
 
       const results = withRetry ? await this.withRetryAndLogging(execute) : await execute();
 
@@ -194,6 +203,7 @@ export abstract class CantonContractAdapter {
   }
 
   protected async exerciseChoices<Res, Arg extends object = object>(
+    actAs: string,
     choices: ChoiceInput<Arg>[],
     interfaceId: string,
     options: ExerciseChoicesOptions = {}
@@ -214,12 +224,14 @@ export abstract class CantonContractAdapter {
     );
 
     const execute = () =>
-      client.exerciseChoices<Arg, Res>(commands, timestamp, disclosedContractData);
+      client.exerciseChoices<Arg, Res>(actAs, commands, timestamp, disclosedContractData);
 
     return withRetry ? await this.withRetryAndLogging(execute) : await execute();
   }
 
   protected async exerciseChoiceWithoutWaiting<Arg extends object = object>(
+    actAsViewer: string,
+    actAsUpdater: string,
     choice: string,
     argument: Arg,
     options: ExerciseChoiceOptions = {}
@@ -232,7 +244,7 @@ export abstract class CantonContractAdapter {
       withRetry = false,
     } = options;
 
-    return await this.withContractDataCaching(offset, client, (contractId) => {
+    return await this.withContractDataCaching(actAsViewer, offset, client, (contractId) => {
       const timestamp = new Date();
       const commands = CantonContractAdapter.buildCommands(
         [{ choice, argument, contractId }],
@@ -242,7 +254,12 @@ export abstract class CantonContractAdapter {
       );
 
       const execute = () =>
-        client.exerciseChoicesWithoutWaiting<Arg>(commands, timestamp, disclosedContractData);
+        client.exerciseChoicesWithoutWaiting<Arg>(
+          actAsUpdater,
+          commands,
+          timestamp,
+          disclosedContractData
+        );
 
       return withRetry ? this.withRetryAndLogging(execute) : execute();
     });

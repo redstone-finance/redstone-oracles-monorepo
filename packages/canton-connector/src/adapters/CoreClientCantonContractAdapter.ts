@@ -13,6 +13,7 @@ const GET_PRICES_DISCLOSED_CHOICE = "GetPricesDisclosed";
 export class CoreClientCantonContractAdapter extends CantonContractAdapter {
   constructor(
     client: CantonClient,
+    private readonly partyId: string,
     contractId: string,
     packageId: string,
     private coreActiveContractData: Required<ActiveContractData> = client.Defs.core,
@@ -26,7 +27,6 @@ export class CoreClientCantonContractAdapter extends CantonContractAdapter {
       contractId,
     };
   }
-
   protected override getContractFilter() {
     return ((createArgument: { contractId: string }) =>
       createArgument.contractId === this.activeContractData?.contractId) as ContractFilter;
@@ -53,6 +53,8 @@ export class CoreClientCantonContractAdapter extends CantonContractAdapter {
     const { argument, options } = await this.getDisclosedPricesParams(paramsProvider);
 
     const result: DamlTuple2<string[]> = await this.exerciseChoice(
+      this.partyId,
+      this.partyId,
       GET_PRICES_DISCLOSED_CHOICE,
       argument,
       options
