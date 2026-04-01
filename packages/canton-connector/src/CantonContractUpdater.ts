@@ -55,7 +55,7 @@ export class CantonContractUpdater implements ContractUpdater {
       throw new Error(RedstoneCommon.stringifyError(payloadHexSettled.reason));
     }
 
-    const balance = balanceSettled.status === "rejected" ? undefined : balanceSettled.value;
+    const initialTraffic = balanceSettled.status === "rejected" ? undefined : balanceSettled.value;
 
     const startTime = Date.now();
     const feedIds = paramsProvider.getArrayifiedFeedIds();
@@ -64,23 +64,23 @@ export class CantonContractUpdater implements ContractUpdater {
       { feedIds: feedIds, payloadHex: payloadHexSettled.value }
     );
 
-    let newBalance: number | undefined;
+    let remainingTraffic: number | undefined;
     try {
-      newBalance = await this.exerciser.getRemainingTraffic();
+      remainingTraffic = await this.exerciser.getRemainingTraffic();
     } catch (e) {
       CantonContractUpdater.logger.warn(
         `Failed to fetch remaining traffic: ${RedstoneCommon.stringifyError(e)}`
       );
     } finally {
-      const usedBalance =
-        RedstoneCommon.isDefined(balance) && RedstoneCommon.isDefined(newBalance)
-          ? balance - newBalance
+      const usedTraffic =
+        RedstoneCommon.isDefined(initialTraffic) && RedstoneCommon.isDefined(remainingTraffic)
+          ? initialTraffic - remainingTraffic
           : undefined;
 
       const duration = Date.now() - startTime;
       CantonContractUpdater.logger.info(
-        `exerciseWriteChoice of ${feedIds.length} feed${RedstoneCommon.getS(feedIds.length)} took ${duration} [ms]; trafficCost: ${usedBalance} bytes`,
-        { duration, usedBalance, feedCount: feedIds.length }
+        `exerciseWriteChoice of ${feedIds.length} feed${RedstoneCommon.getS(feedIds.length)} took ${duration} [ms]; trafficCost: ${usedTraffic} bytes (${remainingTraffic ? remainingTraffic / 1024 : remainingTraffic} kB remaining)`,
+        { duration, usedTraffic, feedCount: feedIds.length, remainingTraffic }
       );
     }
 
