@@ -9,13 +9,7 @@ type TokenProvider = () => Promise<string>;
 
 export class CantonClientBuilder extends MultiExecutor.ClientBuilder<CantonClient> {
   protected override chainType = ChainTypeEnum.enum.canton;
-  private partyId?: string;
   private tokenProvider?: TokenProvider;
-
-  withPartyId(partyId: string) {
-    this.partyId = partyId;
-    return this;
-  }
 
   withTokenProvider(provider?: TokenProvider) {
     this.tokenProvider = provider;
@@ -37,12 +31,9 @@ export class CantonClientBuilder extends MultiExecutor.ClientBuilder<CantonClien
     if (!this.chainId) {
       throw new Error("chainId is required");
     }
-    if (!this.partyId) {
-      throw new Error("partyId is required");
-    }
 
     const network = chainIdToNetwork(this.chainId);
 
-    return new CantonClient(this.partyId, this.urls[0], network, this.tokenProvider);
+    return new CantonClient(this.urls[0], network, this.tokenProvider);
   }
 }

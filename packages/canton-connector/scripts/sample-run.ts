@@ -7,26 +7,22 @@ import {
   PricePillCantonContractConnector,
   PricesCantonContractAdapter,
 } from "../src";
-import { makeDefaultClient } from "./utils";
+import { makeDefaultClient, makePartyId } from "./utils";
 
 const VIEWER_PARTY_NAME = `RedStoneOracleViewer`;
 const UPDATER_PARTY_NAME = `RedStoneOracleUpdater`;
-const OWNER_PARTY_NAME = `RedStoneOracleOwner`;
 
 const ADAPTER_ID = "RedStoneAdapter-v12-0.4.0";
 
 async function main() {
-  const [client, updateClient, _ownerClient] = [
-    VIEWER_PARTY_NAME,
-    UPDATER_PARTY_NAME,
-    OWNER_PARTY_NAME,
-  ].map(makeDefaultClient);
+  const client = makeDefaultClient();
 
   console.log(await client.getRemainingTraffic());
 
   const adapter = new PricesCantonContractAdapter(
     client,
-    updateClient,
+    makePartyId(VIEWER_PARTY_NAME),
+    makePartyId(UPDATER_PARTY_NAME),
     ADAPTER_ID,
     RedstoneCommon.getFromEnv("ADDITIONAL_PILL_VIEWERS", z.array(z.string()).optional())
   );
@@ -39,7 +35,12 @@ async function main() {
     authorizedSigners: getSignersForDataServiceId("redstone-primary-prod"),
   });
 
-  const ethPriceFeedConnector = new PricePillCantonContractConnector(client, ADAPTER_ID, "BTC");
+  const ethPriceFeedConnector = new PricePillCantonContractConnector(
+    client,
+    makePartyId(VIEWER_PARTY_NAME),
+    ADAPTER_ID,
+    "BTC"
+  );
   const feedAdapter = await ethPriceFeedConnector.getAdapter();
 
   await sampleRun(paramsProvider, adapter, service, feedAdapter);

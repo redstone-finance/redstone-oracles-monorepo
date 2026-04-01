@@ -13,14 +13,6 @@ export const getCantonContractAdapter = (relayerConfig: PartialRelayerConfig) =>
   const client = new CantonClientBuilder()
     .withRpcUrls(rpcUrls)
     .withNetworkId(networkId)
-    .withPartyId(RedstoneCommon.getFromEnv("VIEWER_PARTY_ID"))
-    .withDefaultAuth(privateKey)
-    .build();
-
-  const updaterClient = new CantonClientBuilder()
-    .withRpcUrls(rpcUrls)
-    .withNetworkId(networkId)
-    .withPartyId(RedstoneCommon.getFromEnv("UPDATER_PARTY_ID"))
     .withDefaultAuth(privateKey)
     .build();
 
@@ -31,7 +23,8 @@ export const getCantonContractAdapter = (relayerConfig: PartialRelayerConfig) =>
 
   return new PricesCantonContractAdapter(
     client,
-    updaterClient,
+    RedstoneCommon.getFromEnv("VIEWER_PARTY_ID"),
+    RedstoneCommon.getFromEnv("UPDATER_PARTY_ID"),
     adapterContractAddress,
     additionalPillViewers,
     adapterContractPackageId

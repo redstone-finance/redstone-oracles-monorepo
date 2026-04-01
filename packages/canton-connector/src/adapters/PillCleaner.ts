@@ -13,19 +13,20 @@ const ARCHIVE_BATCH_SIZE = 200;
 export class PillCleaner extends CantonContractAdapter {
   constructor(
     client: CantonClient,
-    private readonly ownerClient: CantonClient,
+    private readonly viewerPartyId: string,
+    private readonly ownerPartyId: string,
     interfaceId = client.Defs.pricePillInterfaceId,
     templateName = IPRICE_PILL_TEMPLATE_NAME
   ) {
     super(client, interfaceId, templateName);
   }
-
   protected override getContractFilter(): ContractFilter {
     return createStalenessFilter(true);
   }
 
   private async archiveIteration() {
     const active = await this.client.getActiveContractsData(
+      this.viewerPartyId,
       this.getInterfaceId(),
       createStalenessFilter(false),
       undefined,
@@ -50,9 +51,8 @@ export class PillCleaner extends CantonContractAdapter {
       return false;
     }
 
-    await this.exerciseChoices(cmds, this.getInterfaceId(), {
+    await this.exerciseChoices(this.ownerPartyId, cmds, this.getInterfaceId(), {
       withRetry: true,
-      client: this.ownerClient,
     });
 
     const lastActive = active[active.length - 1];

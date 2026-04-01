@@ -5,21 +5,17 @@ import {
 } from "@redstone-finance/multichain-kit";
 import { ContractParamsProvider } from "@redstone-finance/sdk";
 import { FP } from "@redstone-finance/utils";
-import { CantonClient } from "./CantonClient";
 import { ActiveContractData } from "./utils";
 
 export interface CantonChoiceExerciser {
-  exerciseWriteChoice<Res, Arg extends object>(
-    updateClient: CantonClient,
-    argument: Arg
-  ): Promise<Res>;
+  exerciseWriteChoice<Res, Arg extends object>(actAs: string, argument: Arg): Promise<Res>;
   onError(): void;
 }
 
 export class CantonContractUpdater implements ContractUpdater {
   constructor(
     private readonly exerciser: CantonChoiceExerciser,
-    private readonly updateClient: CantonClient
+    private readonly actAs: string
   ) {}
 
   async update(
@@ -29,7 +25,7 @@ export class CantonContractUpdater implements ContractUpdater {
     const txResult = await FP.tryCallAsyncStringifyError(
       async () =>
         await this.exerciser.exerciseWriteChoice<ActiveContractData | string, object>(
-          this.updateClient,
+          this.actAs,
           await CantonContractUpdater.getPayloadArguments(paramsProvider, context)
         )
     );
@@ -58,6 +54,6 @@ export class CantonContractUpdater implements ContractUpdater {
   }
 
   getSignerAddress() {
-    return this.updateClient.partyId;
+    return this.actAs;
   }
 }
