@@ -8,9 +8,10 @@ import { CantonContractAdapter } from "./CantonContractAdapter";
 export const ICORE_TEMPLATE_NAME = `IRedStoneCore:IRedStoneCore`;
 const GET_PRICES_CHOICE = "GetPrices";
 
-export class CoreCantonContractAdapter extends CantonContractAdapter {
+export abstract class CoreCantonContractAdapter extends CantonContractAdapter {
   constructor(
     client: CantonClient,
+    private readonly actAs: string,
     protected adapterId = client.Defs.core.coreId,
     interfaceId = client.Defs.interfaceId,
     templateName = ICORE_TEMPLATE_NAME
@@ -25,6 +26,8 @@ export class CoreCantonContractAdapter extends CantonContractAdapter {
 
   async getPricesFromPayload(paramsProvider: ContractParamsProvider) {
     const result: DamlTuple2<string[]> = await this.exerciseChoice(
+      this.actAs,
+      this.actAs,
       GET_PRICES_CHOICE,
       await CoreCantonContractAdapter.getPayloadArguments(paramsProvider),
       { withCurrentTime: true, withCaller: true, withRetry: true }
