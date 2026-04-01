@@ -80,6 +80,7 @@ export class PricesCantonContractAdapter
     private readonly uniqueSignerThreshold: number = DEFAULT_UNIQUE_SIGNER_THRESHOLD
   ) {
     super(client, viewerPartyId, adapterId, interfaceId, templateName);
+
     this.txDeliveryMan = new TxDeliveryMan(TX_MAN_CONFIG);
     this.contractUpdater = new CantonContractUpdater(this, updaterPartyId);
   }
@@ -193,5 +194,9 @@ export class PricesCantonContractAdapter
 
   onError() {
     this.activeContractData = undefined;
+  }
+
+  getRemainingTraffic(): Promise<number> {
+    return this.client.getRemainingTraffic();
   }
 }
