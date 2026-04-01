@@ -4610,14 +4610,6 @@
       "denomination": "USD",
       "rateFeed": false
     },
-    "GAS": {
-      "source": [],
-      "denomination": "USD",
-      "rateFeed": false,
-      "types": [
-        "rwa"
-      ]
-    },
     "MINA": {
       "denomination": "USD",
       "rateFeed": false
