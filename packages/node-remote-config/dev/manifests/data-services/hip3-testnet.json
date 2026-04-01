@@ -855,7 +855,7 @@
     },
     "flx:GAS_MARK_0": {
       "source": [
-        "hip3-felix-commodities-mainnet-with-fallback-fetcher"
+        "hip3-felix-energy-mainnet-fetcher"
       ],
       "broadcasters": [
         "hyperliquid-hip3"
@@ -865,7 +865,7 @@
     },
     "flx:GAS_MARK_1": {
       "source": [
-        "hip3-felix-commodities-mainnet-with-fallback-fetcher"
+        "hip3-felix-energy-mainnet-fetcher"
       ],
       "broadcasters": [
         "hyperliquid-hip3"
@@ -875,7 +875,7 @@
     },
     "flx:GAS_EXT": {
       "source": [
-        "hip3-felix-commodities-mainnet-with-fallback-fetcher"
+        "hip3-felix-energy-mainnet-fetcher"
       ],
       "broadcasters": [
         "hyperliquid-hip3"
@@ -885,7 +885,7 @@
     },
     "flx:GAS": {
       "source": [
-        "hip3-felix-commodities-mainnet-with-fallback-fetcher"
+        "hip3-felix-energy-mainnet-fetcher"
       ],
       "broadcasters": [
         "hyperliquid-hip3"
@@ -2561,7 +2561,7 @@
     },
     "flx:SILVER_MARK_0": {
       "source": [
-        "hip3-felix-commodities-mainnet-fetcher"
+        "hip3-felix-lmax-mainnet-fetcher"
       ],
       "broadcasters": [
         "hyperliquid-hip3"
@@ -2571,7 +2571,7 @@
     },
     "flx:SILVER_MARK_1": {
       "source": [
-        "hip3-felix-commodities-mainnet-fetcher"
+        "hip3-felix-lmax-mainnet-fetcher"
       ],
       "broadcasters": [
         "hyperliquid-hip3"
@@ -2581,7 +2581,7 @@
     },
     "flx:SILVER_EXT": {
       "source": [
-        "hip3-felix-commodities-mainnet-fetcher"
+        "hip3-felix-lmax-mainnet-fetcher"
       ],
       "broadcasters": [
         "hyperliquid-hip3"
@@ -2591,7 +2591,7 @@
     },
     "flx:SILVER": {
       "source": [
-        "hip3-felix-commodities-mainnet-fetcher"
+        "hip3-felix-lmax-mainnet-fetcher"
       ],
       "broadcasters": [
         "hyperliquid-hip3"
@@ -2703,7 +2703,7 @@
     },
     "flx:PALLADIUM_MARK_0": {
       "source": [
-        "hip3-felix-commodities-mainnet-fetcher"
+        "hip3-felix-lmax-mainnet-fetcher"
       ],
       "broadcasters": [
         "hyperliquid-hip3"
@@ -2713,7 +2713,7 @@
     },
     "flx:PALLADIUM_MARK_1": {
       "source": [
-        "hip3-felix-commodities-mainnet-fetcher"
+        "hip3-felix-lmax-mainnet-fetcher"
       ],
       "broadcasters": [
         "hyperliquid-hip3"
@@ -2723,7 +2723,7 @@
     },
     "flx:PALLADIUM_EXT": {
       "source": [
-        "hip3-felix-commodities-mainnet-fetcher"
+        "hip3-felix-lmax-mainnet-fetcher"
       ],
       "broadcasters": [
         "hyperliquid-hip3"
@@ -2733,7 +2733,7 @@
     },
     "flx:PALLADIUM": {
       "source": [
-        "hip3-felix-commodities-mainnet-fetcher"
+        "hip3-felix-lmax-mainnet-fetcher"
       ],
       "broadcasters": [
         "hyperliquid-hip3"
@@ -2845,7 +2845,7 @@
     },
     "flx:PLATINUM_MARK_0": {
       "source": [
-        "hip3-felix-commodities-mainnet-fetcher"
+        "hip3-felix-lmax-mainnet-fetcher"
       ],
       "broadcasters": [
         "hyperliquid-hip3"
@@ -2855,7 +2855,7 @@
     },
     "flx:PLATINUM_MARK_1": {
       "source": [
-        "hip3-felix-commodities-mainnet-fetcher"
+        "hip3-felix-lmax-mainnet-fetcher"
       ],
       "broadcasters": [
         "hyperliquid-hip3"
@@ -2865,7 +2865,7 @@
     },
     "flx:PLATINUM_EXT": {
       "source": [
-        "hip3-felix-commodities-mainnet-fetcher"
+        "hip3-felix-lmax-mainnet-fetcher"
       ],
       "broadcasters": [
         "hyperliquid-hip3"
@@ -2875,7 +2875,7 @@
     },
     "flx:PLATINUM": {
       "source": [
-        "hip3-felix-commodities-mainnet-fetcher"
+        "hip3-felix-lmax-mainnet-fetcher"
       ],
       "broadcasters": [
         "hyperliquid-hip3"
@@ -3434,7 +3434,7 @@
     },
     "flx:COPPER_MARK_0": {
       "source": [
-        "hip3-felix-commodities-mainnet-with-fallback-fetcher"
+        "hip3-felix-copper-mainnet-fetcher"
       ],
       "broadcasters": [
         "hyperliquid-hip3"
@@ -3444,7 +3444,7 @@
     },
     "flx:COPPER_MARK_1": {
       "source": [
-        "hip3-felix-commodities-mainnet-with-fallback-fetcher"
+        "hip3-felix-copper-mainnet-fetcher"
       ],
       "broadcasters": [
         "hyperliquid-hip3"
@@ -3454,7 +3454,7 @@
     },
     "flx:COPPER_EXT": {
       "source": [
-        "hip3-felix-commodities-mainnet-with-fallback-fetcher"
+        "hip3-felix-copper-mainnet-fetcher"
       ],
       "broadcasters": [
         "hyperliquid-hip3"
@@ -3464,7 +3464,7 @@
     },
     "flx:COPPER": {
       "source": [
-        "hip3-felix-commodities-mainnet-with-fallback-fetcher"
+        "hip3-felix-copper-mainnet-fetcher"
       ],
       "broadcasters": [
         "hyperliquid-hip3"
