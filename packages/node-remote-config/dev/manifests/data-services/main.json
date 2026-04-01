@@ -4069,17 +4069,6 @@
       "denomination": "USD",
       "rateFeed": false
     },
-    "GAS": {
-      "source": [
-        "yahoo-finance",
-        "ws-lo-tech-settlement-aware",
-        "ws-itick-futures",
-        "ws-twelve-data"
-      ],
-      "denomination": "USD",
-      "rateFeed": false,
-      "types": ["rwa"]
-    },
     "MINA": {
       "denomination": "USD",
       "rateFeed": false
