@@ -14,6 +14,7 @@ export class CantonBlockchainService implements BlockchainService {
   }
 
   getTransactionsInWindow(
+    actAs: string,
     interfaceId: string,
     from: number,
     to: number,
@@ -21,7 +22,7 @@ export class CantonBlockchainService implements BlockchainService {
   ) {
     const id = combineIntoId(interfaceId, templateName);
 
-    return this.cantonClient.getTransactionsForInterface(id, from, to, WRITE_PRICES_CHOICE);
+    return this.cantonClient.getTransactionsForInterface(actAs, id, from, to, WRITE_PRICES_CHOICE);
   }
 
   getTimeForBlock(): Promise<Date> {
@@ -31,7 +32,6 @@ export class CantonBlockchainService implements BlockchainService {
   async getNormalizedBalance(_address: string, _blockNumber?: number) {
     const NORM_MULTIPLIER = 10n ** (18n - 6n); // MegaBytes to 10^18
 
-    // Temporarily returning remaining traffic for whole validator
     return BigInt(await this.cantonClient.getRemainingTraffic()) * NORM_MULTIPLIER;
   }
 

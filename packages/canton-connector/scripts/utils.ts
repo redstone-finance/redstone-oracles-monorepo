@@ -56,11 +56,14 @@ export async function fileTokenProvider(
   return (await readFile(filePath, "utf-8")).trim();
 }
 
-export function makeDefaultClient(partyName: string) {
+export function makePartyId(partyName: string) {
+  return `${partyName}::${readPartySuffix()}`;
+}
+
+export function makeDefaultClient() {
   return new CantonClientBuilder()
     .withChainId(networkToChainId(readNetwork()))
     .withTokenProvider(getTokenProvider())
     .withRpcUrl(getJsonApiUrl())
-    .withPartyId(`${partyName}::${readPartySuffix()}`)
     .build();
 }

@@ -2,7 +2,7 @@ import { TxDeliveryMan, WriteContractAdapter } from "@redstone-finance/multichai
 import { ContractData, ContractParamsProvider, LastRoundDetails } from "@redstone-finance/sdk";
 import { FP, RedstoneCommon } from "@redstone-finance/utils";
 import { CantonClient } from "../CantonClient";
-import { CantonContractUpdater } from "../CantonContractUpdater";
+import { CantonChoiceExerciser, CantonContractUpdater } from "../CantonContractUpdater";
 import { convertDecimalValue, getArrayifiedFeedId } from "../conversions";
 import { ContractFilter } from "../price-feed-utils";
 import { CoreCantonContractAdapter } from "./CoreCantonContractAdapter";
@@ -64,23 +64,24 @@ function newestPriceData(feedData: DamlFeedData, feedId: string): DamlPriceData 
 
 export class PricesCantonContractAdapter
   extends CoreCantonContractAdapter
-  implements WriteContractAdapter
+  implements WriteContractAdapter, CantonChoiceExerciser
 {
   private readonly txDeliveryMan: TxDeliveryMan;
   private readonly contractUpdater: CantonContractUpdater;
 
   constructor(
     client: CantonClient,
-    updateClient: CantonClient,
+    private readonly viewerPartyId: string,
+    updaterPartyId: string,
     adapterId: string,
     private readonly additionalPillViewers?: string[],
     interfaceId = client.Defs.interfaceId,
     templateName = IADAPTER_TEMPLATE_NAME,
     private readonly uniqueSignerThreshold: number = DEFAULT_UNIQUE_SIGNER_THRESHOLD
   ) {
-    super(client, adapterId, interfaceId, templateName);
+    super(client, viewerPartyId, adapterId, interfaceId, templateName);
     this.txDeliveryMan = new TxDeliveryMan(TX_MAN_CONFIG);
-    this.contractUpdater = new CantonContractUpdater(this, updateClient);
+    this.contractUpdater = new CantonContractUpdater(this, updaterPartyId);
   }
 
   protected override getContractFilter() {
@@ -93,7 +94,10 @@ export class PricesCantonContractAdapter
   }
 
   private async readFeedData(offset?: number): Promise<DamlFeedData> {
-    const { createArgument } = await this.fetchContractWithPayload<RedStoneAdapterPayload>(offset);
+    const { createArgument } = await this.fetchContractWithPayload<RedStoneAdapterPayload>(
+      this.viewerPartyId,
+      offset
+    );
 
     return createArgument.feedData;
   }
@@ -152,11 +156,10 @@ export class PricesCantonContractAdapter
     });
   }
 
-  exerciseWriteChoice<Res, Arg extends object>(
-    updateClient: CantonClient,
-    argument: Arg
-  ): Promise<Res> {
+  exerciseWriteChoice<Res, Arg extends object>(actAs: string, argument: Arg): Promise<Res> {
     return this.exerciseChoice(
+      this.viewerPartyId,
+      actAs,
       WRITE_PRICES_CHOICE,
       {
         ...argument,
@@ -164,8 +167,7 @@ export class PricesCantonContractAdapter
       },
       {
         withCurrentTime: true,
-        client: updateClient,
-        disclosedContractData: [updateClient.Defs[DEFS_KEY_FEATURED_APP_RIGHT]],
+        disclosedContractData: [this.client.Defs[DEFS_KEY_FEATURED_APP_RIGHT]],
         withCaller: true,
       }
     );
