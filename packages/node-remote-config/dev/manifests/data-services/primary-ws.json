@@ -706,6 +706,90 @@
       "denomination": "USD",
       "rateFeed": false,
       "types": ["rwa"]
+    },
+    "GAS_CURRENT": {
+      "source": ["databento-cme-futures", "ws-polygon-massive-nymex-futures"],
+      "skipBroadcasting": true,
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": ["rwa"]
+    },
+    "GAS_FRONT": {
+      "source": ["databento-cme-futures", "ws-polygon-massive-nymex-futures"],
+      "skipBroadcasting": true,
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": ["rwa"]
+    },
+    "GAS.V": {
+      "source": [
+        "rollover-volume",
+        "ws-itick-futures",
+        "ws-twelve-data",
+        "alltick-api-deferred",
+        "financialmodelingprep-deferred",
+        "ws-lmax"
+      ],
+      "denomination": "USD",
+      "priceAggregator": "redstoneX",
+      "redstoneXAggregatorConfig": {
+        "priceDiscoverySources": [
+          "ws-itick-futures",
+          "ws-twelve-data",
+          "alltick-api-deferred",
+          "financialmodelingprep-deferred",
+          "ws-lmax"
+        ]
+      },
+      "rateFeed": false,
+      "types": ["rwa"]
+    },
+    "GAS_MONTH.V": {
+      "source": ["rollover-volume"],
+      "denomination": "enum",
+      "rateFeed": false
+    },
+    "WTI_CURRENT": {
+      "source": ["databento-cme-futures", "ws-polygon-massive-nymex-futures"],
+      "skipBroadcasting": true,
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": ["rwa"]
+    },
+    "WTI_FRONT": {
+      "source": ["databento-cme-futures", "ws-polygon-massive-nymex-futures"],
+      "skipBroadcasting": true,
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": ["rwa"]
+    },
+    "WTI.V": {
+      "source": [
+        "rollover-volume",
+        "alltick-api-deferred",
+        "metal-price-api-deferred",
+        "ws-lmax",
+        "ws-twelve-data",
+        "ws-blocksize"
+      ],
+      "priceAggregator": "redstoneX",
+      "redstoneXAggregatorConfig": {
+        "priceDiscoverySources": [
+          "alltick-api-deferred",
+          "metal-price-api-deferred",
+          "ws-lmax",
+          "ws-twelve-data",
+          "ws-blocksize"
+        ]
+      },
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": ["rwa"]
+    },
+    "WTI_MONTH.V": {
+      "source": ["rollover-volume"],
+      "denomination": "enum",
+      "rateFeed": false
     }
   },
   "multiPointPackages": {
