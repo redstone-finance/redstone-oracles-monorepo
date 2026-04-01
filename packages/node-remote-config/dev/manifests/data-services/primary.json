@@ -3058,7 +3058,7 @@
       "localCacheTTL": "60m",
       "valueCapConfig": {
         "lower": {
-          "value": 1
+          "value": 0.99
         }
       },
       "rateFeed": false
@@ -3070,7 +3070,7 @@
       "denomination": "BERA",
       "valueCapConfig": {
         "lower": {
-          "value": 1
+          "value": 0.99
         }
       },
       "rateFeed": false
