@@ -414,7 +414,6 @@
         "ws-hydromancer-perps-flx": 1
       },
       "priceAggregator": "constantWeightMedian",
-
       "broadcasters": ["influx"],
       "denomination": "USD",
       "rateFeed": false
@@ -426,7 +425,6 @@
         "ws-hydromancer-perps-flx": 1
       },
       "priceAggregator": "constantWeightMedian",
-
       "broadcasters": ["influx"],
       "denomination": "USD",
       "rateFeed": false
@@ -438,7 +436,6 @@
         "ws-hydromancer-perps-flx": 1
       },
       "priceAggregator": "constantWeightMedian",
-
       "broadcasters": ["influx"],
       "denomination": "USD",
       "rateFeed": false
@@ -450,7 +447,6 @@
         "ws-hydromancer-perps-flx": 1
       },
       "priceAggregator": "constantWeightMedian",
-
       "broadcasters": ["influx"],
       "denomination": "USD",
       "rateFeed": false
@@ -468,7 +464,6 @@
         "ws-hydromancer-perps-flx": 1
       },
       "priceAggregator": "constantWeightMedian",
-
       "broadcasters": ["influx"],
       "denomination": "USD",
       "rateFeed": false
@@ -542,7 +537,6 @@
         "ws-hydromancer-perps-flx": 1
       },
       "priceAggregator": "constantWeightMedian",
-
       "broadcasters": ["influx"],
       "denomination": "USD",
       "rateFeed": false
@@ -554,7 +548,6 @@
         "ws-hydromancer-perps-flx": 1
       },
       "priceAggregator": "constantWeightMedian",
-
       "broadcasters": ["influx"],
       "denomination": "USD",
       "rateFeed": false
@@ -566,7 +559,6 @@
         "ws-hydromancer-perps-flx": 1
       },
       "priceAggregator": "constantWeightMedian",
-
       "broadcasters": ["influx"],
       "denomination": "USD",
       "rateFeed": false
@@ -578,7 +570,6 @@
         "ws-hydromancer-perps-flx": 1
       },
       "priceAggregator": "constantWeightMedian",
-
       "broadcasters": ["influx"],
       "denomination": "USD",
       "rateFeed": false
@@ -596,7 +587,6 @@
         "ws-hydromancer-perps-flx": 1
       },
       "priceAggregator": "constantWeightMedian",
-
       "broadcasters": ["influx"],
       "denomination": "USD",
       "rateFeed": false
@@ -670,7 +660,6 @@
         "ws-hydromancer-perps-flx": 1
       },
       "priceAggregator": "constantWeightMedian",
-
       "broadcasters": ["influx"],
       "denomination": "USD",
       "rateFeed": false
@@ -682,7 +671,6 @@
         "ws-hydromancer-perps-flx": 1
       },
       "priceAggregator": "constantWeightMedian",
-
       "broadcasters": ["influx"],
       "denomination": "USD",
       "rateFeed": false
@@ -694,7 +682,6 @@
         "ws-hydromancer-perps-flx": 1
       },
       "priceAggregator": "constantWeightMedian",
-
       "broadcasters": ["influx"],
       "denomination": "USD",
       "rateFeed": false
@@ -706,7 +693,6 @@
         "ws-hydromancer-perps-flx": 1
       },
       "priceAggregator": "constantWeightMedian",
-
       "broadcasters": ["influx"],
       "denomination": "USD",
       "rateFeed": false
@@ -724,7 +710,6 @@
         "ws-hydromancer-perps-flx": 1
       },
       "priceAggregator": "constantWeightMedian",
-
       "broadcasters": ["influx"],
       "denomination": "USD",
       "rateFeed": false
@@ -798,7 +783,6 @@
         "ws-hydromancer-perps-flx": 1
       },
       "priceAggregator": "constantWeightMedian",
-
       "broadcasters": ["influx"],
       "denomination": "USD",
       "rateFeed": false
@@ -810,7 +794,6 @@
         "ws-hydromancer-perps-flx": 1
       },
       "priceAggregator": "constantWeightMedian",
-
       "broadcasters": ["influx"],
       "denomination": "USD",
       "rateFeed": false
@@ -822,7 +805,6 @@
         "ws-hydromancer-perps-flx": 1
       },
       "priceAggregator": "constantWeightMedian",
-
       "broadcasters": ["influx"],
       "denomination": "USD",
       "rateFeed": false
@@ -834,7 +816,6 @@
         "ws-hydromancer-perps-flx": 1
       },
       "priceAggregator": "constantWeightMedian",
-
       "broadcasters": ["influx"],
       "denomination": "USD",
       "rateFeed": false
@@ -852,7 +833,6 @@
         "ws-hydromancer-perps-flx": 1
       },
       "priceAggregator": "constantWeightMedian",
-
       "broadcasters": ["influx"],
       "denomination": "USD",
       "rateFeed": false
@@ -954,7 +934,6 @@
         "ws-hydromancer-perps-flx": 1
       },
       "priceAggregator": "constantWeightMedian",
-
       "broadcasters": ["influx"],
       "denomination": "USD",
       "rateFeed": false
@@ -966,7 +945,6 @@
         "ws-hydromancer-perps-flx": 1
       },
       "priceAggregator": "constantWeightMedian",
-
       "broadcasters": ["influx"],
       "denomination": "USD",
       "rateFeed": false
@@ -1078,25 +1056,25 @@
       "rateFeed": false
     },
     "flx:SILVER_MARK_0": {
-      "source": ["hip3-felix-commodities-mainnet-fetcher"],
+      "source": ["hip3-felix-lmax-mainnet-fetcher"],
       "broadcasters": ["hyperliquid-hip3"],
       "denomination": "USD",
       "rateFeed": false
     },
     "flx:SILVER_MARK_1": {
-      "source": ["hip3-felix-commodities-mainnet-fetcher"],
+      "source": ["hip3-felix-lmax-mainnet-fetcher"],
       "broadcasters": ["hyperliquid-hip3"],
       "denomination": "USD",
       "rateFeed": false
     },
     "flx:SILVER_EXT": {
-      "source": ["hip3-felix-commodities-mainnet-fetcher"],
+      "source": ["hip3-felix-lmax-mainnet-fetcher"],
       "broadcasters": ["hyperliquid-hip3"],
       "denomination": "USD",
       "rateFeed": false
     },
     "flx:SILVER": {
-      "source": ["hip3-felix-commodities-mainnet-fetcher"],
+      "source": ["hip3-felix-lmax-mainnet-fetcher"],
       "broadcasters": ["hyperliquid-hip3"],
       "denomination": "USD",
       "rateFeed": false
@@ -1312,25 +1290,25 @@
       "rateFeed": false
     },
     "flx:GAS_MARK_0": {
-      "source": ["hip3-felix-commodities-mainnet-with-fallback-fetcher"],
+      "source": ["hip3-felix-energy-mainnet-fetcher"],
       "broadcasters": ["hyperliquid-hip3"],
       "denomination": "USD",
       "rateFeed": false
     },
     "flx:GAS_MARK_1": {
-      "source": ["hip3-felix-commodities-mainnet-with-fallback-fetcher"],
+      "source": ["hip3-felix-energy-mainnet-fetcher"],
       "broadcasters": ["hyperliquid-hip3"],
       "denomination": "USD",
       "rateFeed": false
     },
     "flx:GAS_EXT": {
-      "source": ["hip3-felix-commodities-mainnet-with-fallback-fetcher"],
+      "source": ["hip3-felix-energy-mainnet-fetcher"],
       "broadcasters": ["hyperliquid-hip3"],
       "denomination": "USD",
       "rateFeed": false
     },
     "flx:GAS": {
-      "source": ["hip3-felix-commodities-mainnet-with-fallback-fetcher"],
+      "source": ["hip3-felix-energy-mainnet-fetcher"],
       "broadcasters": ["hyperliquid-hip3"],
       "denomination": "USD",
       "rateFeed": false
@@ -1512,25 +1490,25 @@
       "rateFeed": false
     },
     "flx:OIL_MARK_0": {
-      "source": ["hip3-felix-commodities-mainnet-fetcher"],
+      "source": ["hip3-felix-lmax-mainnet-fetcher"],
       "broadcasters": ["hyperliquid-hip3"],
       "denomination": "USD",
       "rateFeed": false
     },
     "flx:OIL_MARK_1": {
-      "source": ["hip3-felix-commodities-mainnet-fetcher"],
+      "source": ["hip3-felix-lmax-mainnet-fetcher"],
       "broadcasters": ["hyperliquid-hip3"],
       "denomination": "USD",
       "rateFeed": false
     },
     "flx:OIL_EXT": {
-      "source": ["hip3-felix-commodities-mainnet-fetcher"],
+      "source": ["hip3-felix-lmax-mainnet-fetcher"],
       "broadcasters": ["hyperliquid-hip3"],
       "denomination": "USD",
       "rateFeed": false
     },
     "flx:OIL": {
-      "source": ["hip3-felix-commodities-mainnet-fetcher"],
+      "source": ["hip3-felix-lmax-mainnet-fetcher"],
       "broadcasters": ["hyperliquid-hip3"],
       "denomination": "USD",
       "rateFeed": false
@@ -1974,25 +1952,25 @@
       "rateFeed": false
     },
     "flx:PALLADIUM_MARK_0": {
-      "source": ["hip3-felix-commodities-mainnet-fetcher"],
+      "source": ["hip3-felix-lmax-mainnet-fetcher"],
       "broadcasters": ["hyperliquid-hip3"],
       "denomination": "USD",
       "rateFeed": false
     },
     "flx:PALLADIUM_MARK_1": {
-      "source": ["hip3-felix-commodities-mainnet-fetcher"],
+      "source": ["hip3-felix-lmax-mainnet-fetcher"],
       "broadcasters": ["hyperliquid-hip3"],
       "denomination": "USD",
       "rateFeed": false
     },
     "flx:PALLADIUM_EXT": {
-      "source": ["hip3-felix-commodities-mainnet-fetcher"],
+      "source": ["hip3-felix-lmax-mainnet-fetcher"],
       "broadcasters": ["hyperliquid-hip3"],
       "denomination": "USD",
       "rateFeed": false
     },
     "flx:PALLADIUM": {
-      "source": ["hip3-felix-commodities-mainnet-fetcher"],
+      "source": ["hip3-felix-lmax-mainnet-fetcher"],
       "broadcasters": ["hyperliquid-hip3"],
       "denomination": "USD",
       "rateFeed": false
@@ -2082,25 +2060,25 @@
       "rateFeed": false
     },
     "flx:PLATINUM_MARK_0": {
-      "source": ["hip3-felix-commodities-mainnet-fetcher"],
+      "source": ["hip3-felix-lmax-mainnet-fetcher"],
       "broadcasters": ["hyperliquid-hip3"],
       "denomination": "USD",
       "rateFeed": false
     },
     "flx:PLATINUM_MARK_1": {
-      "source": ["hip3-felix-commodities-mainnet-fetcher"],
+      "source": ["hip3-felix-lmax-mainnet-fetcher"],
       "broadcasters": ["hyperliquid-hip3"],
       "denomination": "USD",
       "rateFeed": false
     },
     "flx:PLATINUM_EXT": {
-      "source": ["hip3-felix-commodities-mainnet-fetcher"],
+      "source": ["hip3-felix-lmax-mainnet-fetcher"],
       "broadcasters": ["hyperliquid-hip3"],
       "denomination": "USD",
       "rateFeed": false
     },
     "flx:PLATINUM": {
-      "source": ["hip3-felix-commodities-mainnet-fetcher"],
+      "source": ["hip3-felix-lmax-mainnet-fetcher"],
       "broadcasters": ["hyperliquid-hip3"],
       "denomination": "USD",
       "rateFeed": false
