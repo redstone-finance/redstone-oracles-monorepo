@@ -33,7 +33,6 @@ export class CantonClient {
   scanApiClient: CantonScanApiClient;
 
   constructor(
-    readonly partyId: string,
     private readonly baseUrl: string,
     network: CantonNetwork = "devnet",
     private readonly tokenProvider?: (options: ApiRequestOptions) => Promise<string>
@@ -57,12 +56,17 @@ export class CantonClient {
   }
 
   private async fetchActiveContracts(
+    actAs: string,
     interfaceId: string,
     filter?: ContractFilter,
     atOffset?: number,
     limit = MAX_RESPONSE_LIMIT
   ) {
-    const { filtersByParty, offset } = await this.resolveFilterAndOffset(interfaceId, atOffset);
+    const { filtersByParty, offset } = await this.resolveFilterAndOffset(
+      actAs,
+      interfaceId,
+      atOffset
+    );
     const contracts = await this.performRequest(
       () =>
         DefaultService.postV2StateActiveContracts(
@@ -89,20 +93,22 @@ export class CantonClient {
   }
 
   async getActiveContractsData(
+    actAs: string,
     interfaceId: string,
     filter?: ContractFilter,
     atOffset?: number,
     limit = MAX_RESPONSE_LIMIT
   ) {
-    return await this.fetchActiveContracts(interfaceId, filter, atOffset, limit);
+    return await this.fetchActiveContracts(actAs, interfaceId, filter, atOffset, limit);
   }
 
   async getActiveContractWithPayload<T = unknown>(
+    actAs: string,
     interfaceId: string,
     filter?: ContractFilter,
     atOffset?: number
   ) {
-    const adapters = await this.fetchActiveContracts(interfaceId, filter, atOffset);
+    const adapters = await this.fetchActiveContracts(actAs, interfaceId, filter, atOffset);
     if (adapters.length === 0) {
       throw new Error("No active contract data");
     }
@@ -120,8 +126,13 @@ export class CantonClient {
     };
   }
 
-  async getActiveContractData(interfaceId: string, filter?: ContractFilter, atOffset?: number) {
-    const adapters = await this.fetchActiveContracts(interfaceId, filter, atOffset);
+  async getActiveContractData(
+    actAs: string,
+    interfaceId: string,
+    filter?: ContractFilter,
+    atOffset?: number
+  ) {
+    const adapters = await this.fetchActiveContracts(actAs, interfaceId, filter, atOffset);
     if (adapters.length === 0) {
       throw new Error("No active contract data");
     }
@@ -137,12 +148,13 @@ export class CantonClient {
   }
 
   async getMostActiveContractWithPayload<T = unknown>(
+    actAs: string,
     interfaceId: string,
     filter?: ContractFilter,
     atOffset?: number,
     sorter?: CreatedArgumentCallback
   ) {
-    let adapters = await this.fetchActiveContracts(interfaceId, filter, atOffset);
+    let adapters = await this.fetchActiveContracts(actAs, interfaceId, filter, atOffset);
     if (adapters.length === 0) {
       throw new Error("No active contract data");
     }
@@ -166,12 +178,14 @@ export class CantonClient {
   }
 
   async getMostActiveContractData(
+    actAs: string,
     interfaceId: string,
     filter?: ContractFilter,
     atOffset?: number,
     sorter?: CreatedArgumentCallback
   ) {
     const { createArgument: _, ...contractData } = await this.getMostActiveContractWithPayload(
+      actAs,
       interfaceId,
       filter,
       atOffset,
@@ -182,13 +196,18 @@ export class CantonClient {
   }
 
   async getCreateContractEvents(
+    actAs: string,
     interfaceId: string,
     filter?: ContractFilter,
     atOffset?: number,
     deltaOffset = DEFAULT_DELTA_OFFSET,
     excludeArchived = false
   ) {
-    const { filtersByParty, offset } = await this.resolveFilterAndOffset(interfaceId, atOffset);
+    const { filtersByParty, offset } = await this.resolveFilterAndOffset(
+      actAs,
+      interfaceId,
+      atOffset
+    );
     const contracts = await this.fetchUpdates(
       filtersByParty,
       Math.max(0, offset - deltaOffset),
@@ -226,8 +245,14 @@ export class CantonClient {
       .filter((createdEvent) => !archivedContractIds.has(createdEvent.contractId));
   }
 
-  async getTransactionsForInterface(interfaceId: string, from: number, to: number, method: string) {
-    const filtersByParty = makeInterfaceFilterByParty(interfaceId, this.partyId);
+  async getTransactionsForInterface(
+    actAs: string,
+    interfaceId: string,
+    from: number,
+    to: number,
+    method: string
+  ) {
+    const filtersByParty = makeInterfaceFilterByParty(interfaceId, actAs);
     const result = await this.fetchUpdates(
       filtersByParty,
       Math.max(0, from),
@@ -252,7 +277,7 @@ export class CantonClient {
                 transactionShape:
                   TransactionFormat.transactionShape.TRANSACTION_SHAPE_LEDGER_EFFECTS,
                 eventFormat: {
-                  filtersByParty: { [this.partyId]: {} },
+                  filtersByParty: { [actAs]: {} },
                   verbose: false,
                 },
               },
@@ -301,11 +326,17 @@ export class CantonClient {
   }
 
   async exerciseChoice<Arg extends object, Res = object>(
+    actAs: string,
     command: { templateId: string; contractId: string; choice: string; choiceArgument: Arg },
     timestamp: Date,
     disclosedContracts?: DisclosedContract[]
   ): Promise<Res> {
-    const results = await this.exerciseChoices<Arg, Res>([command], timestamp, disclosedContracts);
+    const results = await this.exerciseChoices<Arg, Res>(
+      actAs,
+      [command],
+      timestamp,
+      disclosedContracts
+    );
     const [result] = Object.values(results);
 
     if (!result) {
@@ -316,6 +347,7 @@ export class CantonClient {
   }
 
   async exerciseChoicesWithoutWaiting<Arg extends object>(
+    actAs: string,
     commands: { templateId: string; contractId: string; choice: string; choiceArgument: Arg }[],
     timestamp: Date,
     disclosedContracts?: DisclosedContract[]
@@ -328,7 +360,7 @@ export class CantonClient {
         DefaultService.postV2CommandsAsyncSubmit({
           commands: commands.map((command) => ({ ExerciseCommand: command })),
           commandId,
-          actAs: [this.partyId],
+          actAs: [actAs],
           disclosedContracts,
           userId: !this.tokenProvider ? LOCAL_USER : undefined,
         }),
@@ -339,6 +371,7 @@ export class CantonClient {
   }
 
   async exerciseChoices<Arg extends object, Res = object>(
+    actAs: string,
     commands: { templateId: string; contractId: string; choice: string; choiceArgument: Arg }[],
     timestamp: Date,
     disclosedContracts?: DisclosedContract[]
@@ -351,14 +384,14 @@ export class CantonClient {
           commands: {
             commands: commands.map((command) => ({ ExerciseCommand: command })),
             commandId: `batch-${choices}-${commands.length}-${timestamp.getTime()}`,
-            actAs: [this.partyId],
+            actAs: [actAs],
             disclosedContracts,
             userId: !this.tokenProvider ? LOCAL_USER : undefined,
           },
           transactionFormat: {
             transactionShape: TransactionFormat.transactionShape.TRANSACTION_SHAPE_LEDGER_EFFECTS,
             eventFormat: {
-              filtersByParty: { [this.partyId]: {} },
+              filtersByParty: { [actAs]: {} },
               verbose: false,
             },
           },
@@ -423,8 +456,8 @@ export class CantonClient {
     return results;
   }
 
-  private async resolveFilterAndOffset(interfaceId: string, atOffset?: number) {
-    const filtersByParty = makeInterfaceFilterByParty(interfaceId, this.partyId);
+  private async resolveFilterAndOffset(actAs: string, interfaceId: string, atOffset?: number) {
+    const filtersByParty = makeInterfaceFilterByParty(interfaceId, actAs);
     const offset = atOffset ?? (await this.getCurrentOffset());
 
     return { filtersByParty, offset };
