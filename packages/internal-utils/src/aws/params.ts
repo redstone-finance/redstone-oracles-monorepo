@@ -166,6 +166,50 @@ export async function getSSMParamWithEnvFallback(
   return RedstoneCommon.getFromEnv(envVarName, optional ? z.string().optional() : z.string());
 }
 
+export async function getEnvWithSSMParamFallback(
+  envVarName: string,
+  parameterNameOrArn: string | undefined,
+  optional: true,
+  region?: string
+): Promise<string | undefined>;
+export async function getEnvWithSSMParamFallback(
+  envVarName: string,
+  parameterNameOrArn: string | undefined,
+  optional: false,
+  region?: string
+): Promise<string>;
+export async function getEnvWithSSMParamFallback(
+  envVarName: string,
+  parameterNameOrArn: string | undefined,
+  optional?: undefined,
+  region?: string
+): Promise<string>;
+export async function getEnvWithSSMParamFallback(
+  envVarName: string,
+  parameterNameOrArn: string | undefined,
+  optional = false,
+  region?: string
+): Promise<string | undefined> {
+  const envValue = RedstoneCommon.getFromEnv(envVarName, z.string().optional());
+
+  if (envValue !== undefined) {
+    return envValue;
+  }
+
+  if (parameterNameOrArn) {
+    const value = await getSSMParameterValue(parameterNameOrArn, region);
+    if (value !== undefined) {
+      return value;
+    }
+  }
+
+  if (!optional) {
+    return RedstoneCommon.getFromEnv(envVarName, z.string());
+  }
+
+  return undefined;
+}
+
 const getRegionFromArn = (arnOrName: string) => {
   if (!ArnParser.validate(arnOrName)) {
     return undefined;
