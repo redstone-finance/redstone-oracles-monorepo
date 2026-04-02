@@ -12,6 +12,12 @@ export enum ExitCodes {
   RestartConfigExitCode = 100,
 }
 
+export const MISCONFIGURATION_EXIT_CODES = [
+  ExitCodes.ManifestConfigError,
+  ExitCodes.NodeRemoteConfigError,
+  ExitCodes.RpcsConfigError,
+];
+
 export function terminateWithManifestConfigError(errorDetails: string): never {
   logger.error(
     `Manifest configuration error: ${errorDetails}.\n` +
