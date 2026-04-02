@@ -76,5 +76,7 @@ export type JsTransaction = {
      * Optional
      */
     externalTransactionHash?: string;
+
+    paidTrafficCost?: number;
 };
 
