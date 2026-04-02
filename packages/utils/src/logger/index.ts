@@ -45,6 +45,10 @@ const MethodToLogLevel: Record<string, LogLevel> = {
 
 let customLogLevels: undefined | null | Record<string, LogLevel> = undefined;
 
+export function isInfoEnabled(): boolean {
+  return getLogLevel() >= LogLevels.info;
+}
+
 export function isDebugEnabled(): boolean {
   return getLogLevel() >= LogLevels.debug;
 }
