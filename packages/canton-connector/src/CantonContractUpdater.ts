@@ -4,7 +4,7 @@ import {
   ContractUpdateStatus,
 } from "@redstone-finance/multichain-kit";
 import { ContractParamsProvider } from "@redstone-finance/sdk";
-import { FP, loggerFactory, RedstoneCommon } from "@redstone-finance/utils";
+import { FP, isInfoEnabled, loggerFactory, RedstoneCommon } from "@redstone-finance/utils";
 import { ActiveContractData } from "./utils";
 
 export interface CantonChoiceExerciser {
@@ -20,6 +20,10 @@ export class CantonContractUpdater implements ContractUpdater {
     private readonly exerciser: CantonChoiceExerciser,
     private readonly actAs: string
   ) {}
+
+  getSignerAddress() {
+    return this.actAs;
+  }
 
   async update(
     paramsProvider: ContractParamsProvider,
@@ -48,7 +52,7 @@ export class CantonContractUpdater implements ContractUpdater {
         metadataTimestamp: context.updateStartTimeMs,
         componentName: "canton-connector",
       }),
-      this.exerciser.getRemainingTraffic(),
+      this.getRemainingTrafficForLog(),
     ]);
 
     if (payloadHexSettled.status === "rejected") {
@@ -64,30 +68,49 @@ export class CantonContractUpdater implements ContractUpdater {
       { feedIds: feedIds, payloadHex: payloadHexSettled.value }
     );
 
-    let remainingTraffic: number | undefined;
-    try {
-      remainingTraffic = await this.exerciser.getRemainingTraffic();
-    } catch (e) {
-      CantonContractUpdater.logger.warn(
-        `Failed to fetch remaining traffic: ${RedstoneCommon.stringifyError(e)}`
-      );
-    } finally {
-      const usedTraffic =
-        RedstoneCommon.isDefined(initialTraffic) && RedstoneCommon.isDefined(remainingTraffic)
-          ? initialTraffic - remainingTraffic
-          : undefined;
-
-      const duration = Date.now() - startTime;
-      CantonContractUpdater.logger.info(
-        `exerciseWriteChoice of ${feedIds.length} feed${RedstoneCommon.getS(feedIds.length)} took ${duration} [ms]; trafficCost: ${usedTraffic} bytes (${remainingTraffic ? remainingTraffic / 1024 : remainingTraffic} kB remaining)`,
-        { duration, usedTraffic, feedCount: feedIds.length, remainingTraffic }
-      );
-    }
+    this.logMetadata(feedIds.length, startTime, initialTraffic).catch((e) =>
+      CantonContractUpdater.logger.warn(`Failed to logMetadata ${RedstoneCommon.stringifyError(e)}`)
+    );
 
     return result;
   }
 
-  getSignerAddress() {
-    return this.actAs;
+  private static shouldLogTraffic() {
+    return isInfoEnabled();
+  }
+
+  private async logMetadata(feedCount: number, startTime: number, initialTraffic?: number) {
+    const KB_IN_MB = 1024;
+    const DIGITS = 3;
+
+    const remainingTraffic = await this.getRemainingTrafficForLog();
+    const usedTraffic =
+      RedstoneCommon.isDefined(initialTraffic) && RedstoneCommon.isDefined(remainingTraffic)
+        ? initialTraffic - remainingTraffic
+        : undefined;
+
+    const duration = Date.now() - startTime;
+
+    CantonContractUpdater.logger.info(
+      `exerciseWriteChoice of ${feedCount} feed${RedstoneCommon.getS(feedCount)} took ${duration} [ms]; ` +
+        `trafficCost: ${usedTraffic} bytes (${remainingTraffic ? (remainingTraffic / KB_IN_MB).toFixed(DIGITS) : remainingTraffic} kB remaining)`,
+      { duration, usedTraffic, feedCount, remainingTraffic }
+    );
+  }
+
+  private async getRemainingTrafficForLog() {
+    if (!CantonContractUpdater.shouldLogTraffic()) {
+      return;
+    }
+
+    try {
+      return await this.exerciser.getRemainingTraffic();
+    } catch (e) {
+      CantonContractUpdater.logger.warn(
+        `Failed to fetch remaining traffic: ${RedstoneCommon.stringifyError(e)}`
+      );
+
+      return undefined;
+    }
   }
 }
