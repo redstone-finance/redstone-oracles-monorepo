@@ -1,0 +1,18 @@
+{
+  "chain": {
+    "name": "kaiaTestnet",
+    "id": 1001
+  },
+  "updateTriggers": {
+    "deviationPercentage": 0.5,
+    "timeSinceLastUpdateInMilliseconds": 21600000
+  },
+  "adapterContract": "0x071cA9EC0bAf0390bfE29CD6d54c70ADD3cD4600",
+  "adapterContractType": "multi-feed",
+  "dataServiceId": "redstone-primary-prod",
+  "priceFeeds": {
+    "USDT": {
+      "priceFeedAddress": "0x13d3B27c7C100621CB3B714deAb858Ee06d41db1"
+    }
+  }
+}
