@@ -317,8 +317,9 @@ export class CantonClient {
         const from = event.ExercisedEvent.actingParties?.join(SENDER_SEPARATOR) ?? "";
 
         const updateId = update.Transaction.value.updateId;
+        const cost = update.Transaction.value.paidTrafficCost;
 
-        updates.push({ arg, block, timeSecs, from, to, updateId, priceEvents });
+        updates.push({ arg, block, timeSecs, from, to, updateId, priceEvents, cost });
       }
     }
 
@@ -398,6 +399,10 @@ export class CantonClient {
         }),
       `postV2CommandsSubmitAndWaitForTransaction batch[${commands.length}]`
     );
+
+    if (result.transaction.paidTrafficCost) {
+      this.logger.info("tx cost", { paidTraffix: result.transaction.paidTrafficCost });
+    }
 
     const { events, synchronizerId } = result.transaction;
     if (!RedstoneCommon.isDefined(events)) {
