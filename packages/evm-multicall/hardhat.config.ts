@@ -134,6 +134,9 @@ const config: HardhatUserConfig = {
     plume: {
       url: "https://plume.drpc.org",
     },
+    kaiaTestnet: {
+      url: "https://public-en-kairos.node.kaia.io",
+    },
   },
 };
 
