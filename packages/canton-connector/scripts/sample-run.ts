@@ -31,7 +31,10 @@ async function main() {
   const SUFFIX_24_7 = "---24_7";
 
   const paramsProvider = new ContractParamsProvider({
-    dataPackagesIds: ["AAPL", "TSLA", "NVDA", "GOOGL"].map((feed) => `${feed}${SUFFIX_24_7}`),
+    dataPackagesIds: [
+      "XYZ100---PERP",
+      ...["AAPL", "TSLA", "NVDA", "GOOGL"].map((feed) => `${feed}${SUFFIX_24_7}`),
+    ],
     dataServiceId: "redstone-primary-prod",
     uniqueSignersCount: 3,
     authorizedSigners: getSignersForDataServiceId("redstone-primary-prod"),
