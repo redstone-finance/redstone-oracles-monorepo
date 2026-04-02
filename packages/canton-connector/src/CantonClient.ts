@@ -401,7 +401,7 @@ export class CantonClient {
     );
 
     if (result.transaction.paidTrafficCost) {
-      this.logger.info("tx cost", { paidTraffix: result.transaction.paidTrafficCost });
+      this.logger.info("tx cost", { paidTrafficCost: result.transaction.paidTrafficCost });
     }
 
     const { events, synchronizerId } = result.transaction;

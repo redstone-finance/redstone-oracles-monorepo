@@ -28,8 +28,10 @@ async function main() {
   );
   const service = new CantonBlockchainService(client);
 
+  const SUFFIX_24_7 = "---24_7";
+
   const paramsProvider = new ContractParamsProvider({
-    dataPackagesIds: ["BTC"],
+    dataPackagesIds: ["AAPL", "TSLA", "NVDA", "GOOGL"].map((feed) => `${feed}${SUFFIX_24_7}`),
     dataServiceId: "redstone-primary-prod",
     uniqueSignersCount: 3,
     authorizedSigners: getSignersForDataServiceId("redstone-primary-prod"),
@@ -39,7 +41,7 @@ async function main() {
     client,
     makePartyId(VIEWER_PARTY_NAME),
     ADAPTER_ID,
-    "BTC"
+    `TSLA${SUFFIX_24_7}`
   );
   const feedAdapter = await ethPriceFeedConnector.getAdapter();
 
