@@ -1655,8 +1655,7 @@
         "alltick-api-deferred",
         "financialmodelingprep-deferred",
         "ws-lmax",
-        "ws-polygon-massive-commodities",
-        "ws-keyrock"
+        "ws-polygon-massive-commodities"
       ],
       "priceAggregator": "primarySource",
       "primarySourceAggregatorConfig": {
@@ -1798,8 +1797,7 @@
         "financialmodelingprep-deferred",
         "metal-price-api-deferred",
         "ws-lmax",
-        "ws-polygon-massive-commodities",
-        "ws-keyrock"
+        "ws-polygon-massive-commodities"
       ],
       "broadcasters": ["influx"],
       "priceAggregator": "primarySource",
@@ -1903,9 +1901,7 @@
       "source": [
         "financialmodelingprep-deferred",
         "finhub_deriv_deferred-usd",
-        "finhub_capital_deferred-usd",
         "alltick-api-deferred",
-        "metal-price-api-deferred",
         "ws-blocksize",
         "ws-lmax",
         "ws-twelve-data"
@@ -2012,8 +2008,6 @@
       "source": [
         "financialmodelingprep-deferred",
         "finhub_deriv_deferred-usd",
-        "finhub_capital_deferred-usd",
-        "metal-price-api-deferred",
         "ws-blocksize",
         "ws-lmax",
         "ws-twelve-data"

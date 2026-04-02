@@ -1882,9 +1882,7 @@
       "source": [
         "financialmodelingprep-deferred",
         "finhub_deriv_deferred-usd",
-        "finhub_capital_deferred-usd",
         "alltick-api-deferred",
-        "metal-price-api-deferred",
         "ws-blocksize",
         "ws-lmax",
         "ws-twelve-data"
@@ -1991,8 +1989,6 @@
       "source": [
         "financialmodelingprep-deferred",
         "finhub_deriv_deferred-usd",
-        "finhub_capital_deferred-usd",
-        "metal-price-api-deferred",
         "ws-blocksize",
         "ws-lmax",
         "ws-twelve-data"
