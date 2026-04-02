@@ -62,6 +62,7 @@ function getSolanaContractAdapter(rpcUrls: string[], relayerManifest: AnyOnChain
   const connection = new SolanaConnectionBuilder()
     .withNetworkId(relayerManifest.chain.id)
     .withRpcUrls(rpcUrls)
+    .withRedStoneConnection()
     .build();
 
   return SolanaContractAdapter.fromConnectionAndAddress(

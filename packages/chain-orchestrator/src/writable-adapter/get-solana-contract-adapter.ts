@@ -29,6 +29,7 @@ export const getSolanaContractAdapter = (relayerConfig: PartialRelayerConfig) =>
     .withNetworkId(networkId)
     .withRpcUrls(rpcUrls)
     .withQuarantineEnabled()
+    .withRedStoneConnection()
     .build();
 
   return new SolanaWriteContractAdapter(connection, adapterContractAddress, keypair, solanaConfig);
