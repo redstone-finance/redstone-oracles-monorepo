@@ -2517,25 +2517,25 @@
       "rateFeed": false
     },
     "flx:COPPER_MARK_0": {
-      "source": ["hip3-felix-copper-mainnet-fetcher"],
+      "source": ["hip3-felix-metals-mainnet-fetcher"],
       "broadcasters": ["hyperliquid-hip3"],
       "denomination": "USD",
       "rateFeed": false
     },
     "flx:COPPER_MARK_1": {
-      "source": ["hip3-felix-copper-mainnet-fetcher"],
+      "source": ["hip3-felix-metals-mainnet-fetcher"],
       "broadcasters": ["hyperliquid-hip3"],
       "denomination": "USD",
       "rateFeed": false
     },
     "flx:COPPER_EXT": {
-      "source": ["hip3-felix-copper-mainnet-fetcher"],
+      "source": ["hip3-felix-metals-mainnet-fetcher"],
       "broadcasters": ["hyperliquid-hip3"],
       "denomination": "USD",
       "rateFeed": false
     },
     "flx:COPPER": {
-      "source": ["hip3-felix-copper-mainnet-fetcher"],
+      "source": ["hip3-felix-metals-mainnet-fetcher"],
       "broadcasters": ["hyperliquid-hip3"],
       "denomination": "USD",
       "rateFeed": false
