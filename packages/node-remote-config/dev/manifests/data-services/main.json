@@ -8779,6 +8779,23 @@
       "source": ["ethereum-evm-fetcher-stbl"],
       "denomination": "USD",
       "rateFeed": true
+    },
+    "KAIA": {
+      "source": [
+        "binance-usdt",
+        "binance-usdc",
+        "bingx-usdt",
+        "bitget-usdt",
+        "lbank-usdt",
+        "bybit-usdt",
+        "gate-usdt",
+        "kucoin-usdt",
+        "mexc-usdc",
+        "mexc-usdt",
+        "okx-usdt"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
     }
   }
 }
