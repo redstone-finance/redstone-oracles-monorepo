@@ -1,0 +1,13 @@
+module RedStoneTypes where
+
+type RedStoneValue = Numeric 8
+type RedStoneResult = ([RedStoneValue], Int)
+type RedStoneFeedId = [Int]
+type PayloadHex = Text
+
+data RedStonePriceData a = RedStonePriceData
+  with
+    value: a
+    timestamp: Int
+    writeTimestamp: Int
+  deriving (Eq, Show, Ord)
