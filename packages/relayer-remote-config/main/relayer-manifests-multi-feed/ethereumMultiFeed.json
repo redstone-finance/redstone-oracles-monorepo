@@ -430,6 +430,13 @@
         "deviationPercentage": 0.01,
         "timeSinceLastUpdateInMilliseconds": 86400000
       }
+    },
+    "USST_FUNDAMENTAL": {
+      "priceFeedAddress": "0xa6f809091eFbF1bC98875B9a169d36f006bD56cB",
+      "updateTriggersOverrides": {
+        "deviationPercentage": 0.5,
+        "timeSinceLastUpdateInMilliseconds": 43200000
+      }
     }
   }
 }
