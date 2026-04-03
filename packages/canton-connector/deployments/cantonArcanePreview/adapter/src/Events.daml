@@ -1,0 +1,28 @@
+module Events where
+
+import DA.Foldable(forA_)
+import PriceUpdateEvent
+
+emitErrorEvents (owner, updaters) adapterId errorValues = do
+  forA_ errorValues \(feedId, error) -> createAndExercise
+      (PriceUpdateEvent with
+        adapterId = Some adapterId
+        feedId
+        priceData = None
+        isSkipped = True
+        error = Some error
+        owner
+        updaters)
+      PriceUpdateEvent_Archive
+
+emitPriceDataEvents (owner, updaters) adapterId values = do
+  forA_ values \(feedId, priceData) -> createAndExercise
+      (PriceUpdateEvent with
+        adapterId = Some adapterId
+        feedId
+        priceData = Some priceData
+        isSkipped = False
+        error = None
+        owner
+        updaters)
+      PriceUpdateEvent_Archive
