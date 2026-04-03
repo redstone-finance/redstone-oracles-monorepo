@@ -71,9 +71,8 @@ export const fetchNodeManifest = async <ManifestType = NodeManifest>(
   for (const manifestUrl of manifestUrls) {
     try {
       const manifestUrlWithHash = manifestUrl
-        // split("-") handles versions like "hotfix-primary-12345678"
-        .replace("${main}", nodeVersion.main.split("-").at(-1)!)
-        .replace("${fallback}", (nodeVersion.fallback ?? "").split("-").at(-1)!);
+        .replace("${main}", nodeVersion.main)
+        .replace("${fallback}", nodeVersion.fallback ?? "");
       return await fetchWithCache<ManifestType>(manifestUrlWithHash, headers);
     } catch (e) {
       console.log(
