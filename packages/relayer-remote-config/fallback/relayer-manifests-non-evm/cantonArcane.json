@@ -12,10 +12,10 @@
   "adapterContractPackageId": "#redstone-interface-v12",
   "dataServiceId": "redstone-primary-prod",
   "priceFeeds": {
-    "AAPL---24_7": {},
-    "TSLA---24_7": {},
-    "NVDA---24_7": {},
-    "GOOGL---24_7": {},
-    "XYZ100---PERP": {}
+    "AAPL---24_7": { "priceFeedAddress": "RedStoneAdapter-v12-0.4.0" },
+    "TSLA---24_7": { "priceFeedAddress": "RedStoneAdapter-v12-0.4.0" },
+    "NVDA---24_7": { "priceFeedAddress": "RedStoneAdapter-v12-0.4.0" },
+    "GOOGL---24_7": { "priceFeedAddress": "RedStoneAdapter-v12-0.4.0" },
+    "XYZ100---PERP": { "priceFeedAddress": "RedStoneAdapter-v12-0.4.0" }
   }
 }
