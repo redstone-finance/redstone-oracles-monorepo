@@ -1,0 +1,9 @@
+sdk-version: 3.4.11
+name: redstone-types-v12
+version: 0.4.0
+source: src
+dependencies:
+  - daml-prim
+  - daml-stdlib
+build-options:
+  - --target=2.1
