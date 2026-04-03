@@ -55,6 +55,13 @@
     },
     "EUROC/EUR": {
       "priceFeedAddress": "0x24c8964338Deb5204B096039147B8e8C3AEa42Cc"
+    },
+    "SolvBTC_FUNDAMENTAL": {
+      "priceFeedAddress": "0x26FB59e5562405F42f55661f790fA1Bd2F410A3d",
+      "updateTriggersOverrides": {
+        "deviationPercentage": 0.01,
+        "timeSinceLastUpdateInMilliseconds": 86400000
+      }
     }
   }
 }
