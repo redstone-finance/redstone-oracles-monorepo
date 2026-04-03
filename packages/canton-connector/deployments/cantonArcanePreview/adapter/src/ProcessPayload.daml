@@ -1,0 +1,76 @@
+module ProcessPayload
+(
+  processAndWritePrices
+  , hasNewPrices
+) where
+
+import DA.Assert
+import DA.List as L
+import DA.Map as M
+import DA.Optional
+import RedStone.Config(verifyConfigAgainstLedger)
+import RedStone.Processor
+import IRedStonePricePillFactory
+import Events
+import PillRecord
+import Verify
+import Config(adapter_config_fun, pill_staleness_ms)
+
+-- Public
+
+-- Note: emitErrorEvents creates PriceUpdateEvent with signatory=owner.
+-- This works because hasNewPrices runs within a choice on RedStoneAdapter (signatory owner),
+-- so the owner's authority is available via DAML's authority propagation rules.
+hasNewPrices (owner, updaters, viewers) adapterId feedData feedIds currentTime payloadHex = do
+  ((newValues, _, rejectedValues), _) <- checkNewValues feedData feedIds currentTime payloadHex
+  _ <- emitErrorEvents (owner, updaters) adapterId rejectedValues
+
+  return $ not . L.null $ newValues
+
+processAndWritePrices parties pillFactory adapterId feedData feedIds currentTime payloadHex = do
+  ((newValues, timestamp, rejectedValues), config) <- checkNewValues feedData feedIds currentTime payloadHex
+
+  if L.null $ newValues then do
+    pure feedData
+  else
+    newFeedData parties pillFactory adapterId feedData config.currentTimestamp (newValues, timestamp)
+
+-- Private
+
+checkNewValues feedData feedIds currentTime payloadHex = do
+  config <- verifyConfigAgainstLedger $ adapter_config_fun feedIds currentTime
+  let result = processPayloadNumeric config payloadHex
+
+  pure $ (determineNewValues (config.currentTimestamp, feedData) feedIds result, config)
+
+newFeedData (caller, owner, updaters, viewers) pillFactory adapterId feedData currentTimestamp (newValues, timestamp)  = do
+  let newEntries = entriesFromValues currentTimestamp timestamp newValues
+
+  case pillFactory of
+    None -> let
+      newRecords = createNewRecords newEntries $ map (\(_, _) -> None) newEntries
+      newFeedData = M.fromList $ map (\(feedId, record) -> (feedId, [record])) newRecords
+      in do
+        -- emitting only when no pill factory is passed
+        _ <- emitPriceDataEvents (owner, updaters) adapterId $ map (\(feedId, record) -> (feedId, record.priceData)) newRecords
+
+        pure $ M.union newFeedData feedData
+
+    Some factory -> do
+      newPills <- exercise factory CreatePricePills with
+        caller
+        viewers
+        stalenessMs = pill_staleness_ms
+        adapterId
+        inputData = newEntries
+
+      length newPills === length newValues
+
+      let newRecords = createNewRecords newEntries $ map Some newPills
+      let mergedFeedData = L.foldl addToFeedData feedData newRecords
+
+      let (newItems, toArchive) = partitionRecords currentTimestamp mergedFeedData
+
+      exercise factory ArchivePricePills with caller, contractIds = map (\record -> fromSome $ record.pillCid) toArchive
+
+      pure $ M.fromList newItems
