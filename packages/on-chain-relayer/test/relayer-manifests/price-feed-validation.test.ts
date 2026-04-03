@@ -22,7 +22,13 @@ export const RETRY_CONFIG: Omit<RedstoneCommon.RetryConfig, "fn"> = {
 };
 
 function getDisabledNetworks() {
-  return ["radix/1", "radix/2", ...(process.env.DISABLED_NETWORKS ?? ([] as NetworkId[]))];
+  return [
+    "radix/1",
+    "radix/2",
+    "canton/1",
+    "canton/2",
+    ...(process.env.DISABLED_NETWORKS ?? ([] as NetworkId[])),
+  ];
 }
 
 function getChainConfig(networkId: NetworkId) {

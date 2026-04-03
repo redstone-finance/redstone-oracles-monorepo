@@ -12,8 +12,8 @@
   "adapterContractPackageId": "#redstone-interface-v12",
   "dataServiceId": "redstone-primary-prod",
   "priceFeeds": {
-    "CC": {},
-    "ETH": {},
-    "BTC": {}
+    "CC": { "priceFeedAddress": "RedStoneAdapter-v12-0.4.0" },
+    "ETH": { "priceFeedAddress": "RedStoneAdapter-v12-0.4.0" },
+    "BTC": { "priceFeedAddress": "RedStoneAdapter-v12-0.4.0" }
   }
 }

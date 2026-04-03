@@ -14,7 +14,7 @@ import { MonitoringEnv } from "./get-monitoring-contract-adapter";
 import { getPriceFeedContractConnector } from "./get-price-feed-contract-connector";
 import { NonEvmPriceFeedContract } from "./NonEvmPriceFeedContract";
 
-type PriceFeedContractCreator = (address: string) => Promise<IPriceFeedContract>;
+type PriceFeedContractCreator = (address: string, feedName?: string) => Promise<IPriceFeedContract>;
 
 export async function getPriceFeedContractCreator(
   networkId: NetworkId,
@@ -52,8 +52,8 @@ async function getNonEvmPriceFeedContractCreator(
   const rpcUrls =
     overrideRpcUrls ?? (await fetchParsedRpcUrlsFromSsmByNetworkIdMemoized(networkId, env));
 
-  return async (address) =>
+  return async (address, feedName) =>
     await NonEvmPriceFeedContract.createWithConnector(
-      getPriceFeedContractConnector(networkId, address, rpcUrls)
+      await getPriceFeedContractConnector(networkId, address, rpcUrls, feedName)
     );
 }

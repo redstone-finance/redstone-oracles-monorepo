@@ -1,3 +1,7 @@
+import {
+  CantonClientBuilder,
+  PricesCantonReadOnlyAdapter,
+} from "@redstone-finance/canton-connector";
 import { MoveClientBuilder, MovePricesContractConnector } from "@redstone-finance/move-connector";
 import { ForwardCompatibleContractAdapter } from "@redstone-finance/multichain-kit";
 import { AnyOnChainRelayerManifest } from "@redstone-finance/on-chain-relayer-common";
@@ -13,6 +17,7 @@ import {
   SuiContractAdapter,
 } from "@redstone-finance/sui-connector";
 import { deconstructNetworkId, RedstoneCommon } from "@redstone-finance/utils";
+import { getCantonAuth } from "../utils";
 
 export async function getNonEvmMonitoringContractAdapter(
   relayerManifest: AnyOnChainRelayerManifest,
@@ -34,7 +39,7 @@ export async function getNonEvmMonitoringContractAdapter(
       return getStellarContractAdapter(rpcUrls, relayerManifest);
     case "fuel":
     case "canton":
-      throw new Error(`${chainType} is not supported in monitoring`);
+      return await getCantonContractAdapter(rpcUrls, relayerManifest);
     case "evm":
       throw new Error(
         `Evm relayer config with networkId: ${relayerManifest.chain.id} got passed to non-evm blockchain service builder.`
@@ -117,4 +122,23 @@ function getStellarContractAdapter(rpcUrls: string[], relayerManifest: AnyOnChai
     .build();
 
   return new StellarContractAdapter(client, relayerManifest.adapterContract);
+}
+
+async function getCantonContractAdapter(
+  rpcUrls: string[],
+  relayerManifest: AnyOnChainRelayerManifest
+) {
+  const auth = await getCantonAuth(deconstructNetworkId(relayerManifest.chain.id).chainId);
+  const client = new CantonClientBuilder()
+    .withNetworkId(relayerManifest.chain.id)
+    .withRpcUrls(rpcUrls)
+    .withDefaultAuth(auth)
+    .build();
+
+  return new PricesCantonReadOnlyAdapter(
+    client,
+    RedstoneCommon.getFromEnv("VIEWER_PARTY_ID"),
+    relayerManifest.adapterContract,
+    relayerManifest.adapterContractPackageId
+  );
 }
