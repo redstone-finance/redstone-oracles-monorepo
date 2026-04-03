@@ -1,0 +1,64 @@
+module IRedStoneAdapter where
+
+import RedStoneTypes
+
+interface IRedStoneAdapter where
+  viewtype RedStoneAdapterView
+
+  iRedStoneAdapter_VerifyUpdater : Party -> Update ()
+  iRedStoneAdapter_GetPricesImpl : [RedStoneFeedId] -> Time -> PayloadHex -> Update RedStoneResult
+  iRedStoneAdapter_WritePricesImpl : Party -> (ContractId IRedStoneAdapter) -> [RedStoneFeedId] -> Time -> PayloadHex -> Optional [Party] -> Update (ContractId IRedStoneAdapter)
+  iRedStoneAdapter_ReadPriceDataImpl : [RedStoneFeedId] -> Update [Optional (RedStonePriceData RedStoneValue)]
+  iRedStoneAdapter_ReadPricesImpl : [RedStoneFeedId] -> Update [RedStoneValue]
+  iRedStoneAdapter_GetUniqueSignerThresholdImpl: () -> Update Int
+
+  nonconsuming choice GetPrices : RedStoneResult
+    with
+      caller : Party
+      feedIds : [RedStoneFeedId]
+      currentTime : Time
+      payloadHex : PayloadHex
+    controller caller
+    do
+      iRedStoneAdapter_GetPricesImpl this feedIds currentTime payloadHex
+
+  nonconsuming choice WritePrices : ContractId IRedStoneAdapter
+    with
+      caller : Party
+      feedIds : [RedStoneFeedId]
+      currentTime : Time
+      payloadHex : PayloadHex
+      additionalPillViewers : Optional [Party]
+    controller caller
+    do
+      _ <- iRedStoneAdapter_VerifyUpdater this caller
+
+      iRedStoneAdapter_WritePricesImpl this caller self feedIds currentTime payloadHex additionalPillViewers
+
+  nonconsuming choice ReadPrices : [RedStoneValue]
+    with
+      caller : Party
+      feedIds : [RedStoneFeedId]
+    controller caller
+    do
+      iRedStoneAdapter_ReadPricesImpl this feedIds
+
+  nonconsuming choice ReadPriceData : [Optional (RedStonePriceData RedStoneValue)]
+    with
+      caller : Party
+      feedIds : [RedStoneFeedId]
+    controller caller
+    do
+      iRedStoneAdapter_ReadPriceDataImpl this feedIds
+
+  nonconsuming choice GetUniqueSignerThreshold : Int
+    with
+      caller : Party
+    controller caller
+    do
+      iRedStoneAdapter_GetUniqueSignerThresholdImpl this ()
+
+data RedStoneAdapterView = RedStoneAdapterView
+  with
+    adapterId : Text
+  deriving (Eq, Show, Ord)

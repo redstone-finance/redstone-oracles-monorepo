@@ -1,0 +1,20 @@
+module PriceUpdateEvent where
+
+import RedStoneTypes
+
+template PriceUpdateEvent
+  with
+    feedId : RedStoneFeedId
+    isSkipped : Bool
+    priceData : Optional (RedStonePriceData RedStoneValue)
+    error : Optional Text
+    owner : Party
+    updaters : [Party]
+    adapterId : Optional Text
+  where
+    signatory owner
+    observer updaters
+
+    choice PriceUpdateEvent_Archive : ()
+      controller owner
+      do pure ()

@@ -1,0 +1,78 @@
+module RedStoneAdapter where
+
+import DA.List(dedup)
+import DA.Map as M
+import DA.Optional(fromOptional)
+import RedStone.GetPrices as G
+import RedStoneTypes
+import IRedStoneAdapter
+import IRedStonePricePillFactory
+import Config(unique_signer_count, adapter_config_fun)
+import ProcessPayload
+import PillRecord
+
+template RedStoneAdapter
+  with
+    adapterId : Text
+    owner : Party
+    updaters : [Party]
+    viewers : [Party]
+    feedData : M.Map RedStoneFeedId [PillRecord]
+    pillFactory : Optional (ContractId IRedStonePricePillFactory)
+  where
+    signatory owner
+    observer viewers, updaters
+
+    interface instance IRedStoneAdapter for RedStoneAdapter where
+      view = RedStoneAdapterView with adapterId
+
+      iRedStoneAdapter_VerifyUpdater caller = do
+        assertMsg "WritePrices: caller must be an updater" $ caller `elem` updaters
+
+      iRedStoneAdapter_GetPricesImpl feedIds currentTime = G.getPricesNumeric $ adapter_config_fun feedIds currentTime
+
+      iRedStoneAdapter_WritePricesImpl caller self feedIds currentTime payloadHex additionalPillViewers = do
+        hasNewValues <- hasNewPrices (owner, updaters, viewers) adapterId feedData feedIds currentTime payloadHex
+
+        if not hasNewValues then
+          return self
+        else
+          exercise (coerceContractId @IRedStoneAdapter @RedStoneAdapter self) WritePricesConsuming with caller, feedIds, currentTime, payloadHex, additionalPillViewers
+
+      iRedStoneAdapter_ReadPriceDataImpl feedIds = do
+        let getPriceData feedId =
+              case M.lookup feedId feedData of
+                None -> None
+                Some (newest :: _) -> Some newest.priceData
+                Some [] -> None
+        return $ map getPriceData feedIds
+
+      iRedStoneAdapter_ReadPricesImpl feedIds = do
+        let getPriceValue feedId =
+              case M.lookup feedId feedData of
+                None -> error $ "Value not found for " <> show feedId
+                Some (newest :: _) -> newest.priceData.value
+                Some [] -> error $ "Value not found for " <> show feedId
+        return $ map getPriceValue feedIds
+
+      iRedStoneAdapter_GetUniqueSignerThresholdImpl () = do
+        return unique_signer_count
+
+    -- Internal consuming choice for atomic write-and-replace with full payload verification
+    choice WritePricesConsuming : ContractId IRedStoneAdapter
+      with
+        caller : Party
+        feedIds : [RedStoneFeedId]
+        currentTime : Time
+        payloadHex : PayloadHex
+        additionalPillViewers : Optional [Party]
+      controller caller
+      do
+        assertMsg "WritePricesConsuming: caller must be an updater" $ caller `elem` updaters
+        
+        let allViewers = dedup $ viewers <> fromOptional [] additionalPillViewers
+
+        newData <- processAndWritePrices (caller, owner, updaters, allViewers) pillFactory adapterId feedData feedIds currentTime payloadHex
+        newCid <- create this with feedData = newData
+        
+        return $ toInterfaceContractId @IRedStoneAdapter newCid
