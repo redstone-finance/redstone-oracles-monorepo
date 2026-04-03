@@ -364,25 +364,25 @@
       }
     },
     "flx:TSLA_MARK_0": {
-      "source": ["hyperliquid-hip3-felix-mainnet-fetcher"],
+      "source": ["hip3-felix-stocks-mainnet-fetcher"],
       "broadcasters": ["hyperliquid-hip3"],
       "denomination": "USD",
       "rateFeed": false
     },
     "flx:TSLA_MARK_1": {
-      "source": ["hyperliquid-hip3-felix-mainnet-fetcher"],
+      "source": ["hip3-felix-stocks-mainnet-fetcher"],
       "broadcasters": ["hyperliquid-hip3"],
       "denomination": "USD",
       "rateFeed": false
     },
     "flx:TSLA_EXT": {
-      "source": ["hyperliquid-hip3-felix-mainnet-fetcher"],
+      "source": ["hip3-felix-stocks-mainnet-fetcher"],
       "broadcasters": ["hyperliquid-hip3"],
       "denomination": "USD",
       "rateFeed": false
     },
     "flx:TSLA": {
-      "source": ["hyperliquid-hip3-felix-mainnet-fetcher"],
+      "source": ["hip3-felix-stocks-mainnet-fetcher"],
       "broadcasters": ["hyperliquid-hip3"],
       "denomination": "USD",
       "rateFeed": false
@@ -475,25 +475,25 @@
       "rateFeed": false
     },
     "flx:NVDA_MARK_0": {
-      "source": ["hyperliquid-hip3-felix-mainnet-fetcher"],
+      "source": ["hip3-felix-stocks-mainnet-fetcher"],
       "broadcasters": ["hyperliquid-hip3"],
       "denomination": "USD",
       "rateFeed": false
     },
     "flx:NVDA_MARK_1": {
-      "source": ["hyperliquid-hip3-felix-mainnet-fetcher"],
+      "source": ["hip3-felix-stocks-mainnet-fetcher"],
       "broadcasters": ["hyperliquid-hip3"],
       "denomination": "USD",
       "rateFeed": false
     },
     "flx:NVDA_EXT": {
-      "source": ["hyperliquid-hip3-felix-mainnet-fetcher"],
+      "source": ["hip3-felix-stocks-mainnet-fetcher"],
       "broadcasters": ["hyperliquid-hip3"],
       "denomination": "USD",
       "rateFeed": false
     },
     "flx:NVDA": {
-      "source": ["hyperliquid-hip3-felix-mainnet-fetcher"],
+      "source": ["hip3-felix-stocks-mainnet-fetcher"],
       "broadcasters": ["hyperliquid-hip3"],
       "denomination": "USD",
       "rateFeed": false
@@ -598,25 +598,25 @@
       "rateFeed": false
     },
     "flx:HOOD_MARK_0": {
-      "source": ["hyperliquid-hip3-felix-mainnet-fetcher"],
+      "source": ["hip3-felix-stocks-mainnet-fetcher"],
       "broadcasters": ["hyperliquid-hip3"],
       "denomination": "USD",
       "rateFeed": false
     },
     "flx:HOOD_MARK_1": {
-      "source": ["hyperliquid-hip3-felix-mainnet-fetcher"],
+      "source": ["hip3-felix-stocks-mainnet-fetcher"],
       "broadcasters": ["hyperliquid-hip3"],
       "denomination": "USD",
       "rateFeed": false
     },
     "flx:HOOD_EXT": {
-      "source": ["hyperliquid-hip3-felix-mainnet-fetcher"],
+      "source": ["hip3-felix-stocks-mainnet-fetcher"],
       "broadcasters": ["hyperliquid-hip3"],
       "denomination": "USD",
       "rateFeed": false
     },
     "flx:HOOD": {
-      "source": ["hyperliquid-hip3-felix-mainnet-fetcher"],
+      "source": ["hip3-felix-stocks-mainnet-fetcher"],
       "broadcasters": ["hyperliquid-hip3"],
       "denomination": "USD",
       "rateFeed": false
@@ -721,25 +721,25 @@
       "rateFeed": false
     },
     "flx:CRCL_MARK_0": {
-      "source": ["hyperliquid-hip3-felix-mainnet-fetcher"],
+      "source": ["hip3-felix-stocks-mainnet-fetcher"],
       "broadcasters": ["hyperliquid-hip3"],
       "denomination": "USD",
       "rateFeed": false
     },
     "flx:CRCL_MARK_1": {
-      "source": ["hyperliquid-hip3-felix-mainnet-fetcher"],
+      "source": ["hip3-felix-stocks-mainnet-fetcher"],
       "broadcasters": ["hyperliquid-hip3"],
       "denomination": "USD",
       "rateFeed": false
     },
     "flx:CRCL_EXT": {
-      "source": ["hyperliquid-hip3-felix-mainnet-fetcher"],
+      "source": ["hip3-felix-stocks-mainnet-fetcher"],
       "broadcasters": ["hyperliquid-hip3"],
       "denomination": "USD",
       "rateFeed": false
     },
     "flx:CRCL": {
-      "source": ["hyperliquid-hip3-felix-mainnet-fetcher"],
+      "source": ["hip3-felix-stocks-mainnet-fetcher"],
       "broadcasters": ["hyperliquid-hip3"],
       "denomination": "USD",
       "rateFeed": false
@@ -844,25 +844,25 @@
       "rateFeed": false
     },
     "flx:COIN_MARK_0": {
-      "source": ["hyperliquid-hip3-felix-mainnet-fetcher"],
+      "source": ["hip3-felix-stocks-mainnet-fetcher"],
       "broadcasters": ["hyperliquid-hip3"],
       "denomination": "USD",
       "rateFeed": false
     },
     "flx:COIN_MARK_1": {
-      "source": ["hyperliquid-hip3-felix-mainnet-fetcher"],
+      "source": ["hip3-felix-stocks-mainnet-fetcher"],
       "broadcasters": ["hyperliquid-hip3"],
       "denomination": "USD",
       "rateFeed": false
     },
     "flx:COIN_EXT": {
-      "source": ["hyperliquid-hip3-felix-mainnet-fetcher"],
+      "source": ["hip3-felix-stocks-mainnet-fetcher"],
       "broadcasters": ["hyperliquid-hip3"],
       "denomination": "USD",
       "rateFeed": false
     },
     "flx:COIN": {
-      "source": ["hyperliquid-hip3-felix-mainnet-fetcher"],
+      "source": ["hip3-felix-stocks-mainnet-fetcher"],
       "broadcasters": ["hyperliquid-hip3"],
       "denomination": "USD",
       "rateFeed": false
