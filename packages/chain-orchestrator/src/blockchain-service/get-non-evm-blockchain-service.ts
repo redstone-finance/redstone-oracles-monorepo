@@ -1,5 +1,4 @@
 import { CantonBlockchainService, CantonClientBuilder } from "@redstone-finance/canton-connector";
-import { getEnvWithSSMParamFallback } from "@redstone-finance/internal-utils";
 import { MoveClientBuilder } from "@redstone-finance/move-connector";
 import { RadixClientBuilder } from "@redstone-finance/radix-connector";
 import {
@@ -20,7 +19,7 @@ import {
   SuiClientBuilders,
 } from "@redstone-finance/sui-connector";
 import { deconstructNetworkId, NetworkId, RedstoneCommon } from "@redstone-finance/utils";
-import z from "zod";
+import { getCantonAuth } from "../utils";
 import { MoveBlockchainService } from "./MoveBlockchainService";
 import { RadixBlockchainService } from "./RadixBlockchainService";
 import { SolanaBlockchainService } from "./SolanaBlockchainService";
@@ -76,11 +75,7 @@ export async function getNonEvmBlockchainService(networkId: NetworkId, rpcUrls: 
     case "canton": {
       const chainId = deconstructNetworkId(networkId).chainId;
 
-      const auth = await getEnvWithSSMParamFallback(
-        `CANTON_${chainId}_AUTH`,
-        RedstoneCommon.getFromEnv(`CANTON_${chainId}_AUTH_ARN_PATH`, z.string().optional()),
-        true
-      );
+      const auth = await getCantonAuth(chainId);
 
       const client = new CantonClientBuilder()
         .withRpcUrls(rpcUrls)
