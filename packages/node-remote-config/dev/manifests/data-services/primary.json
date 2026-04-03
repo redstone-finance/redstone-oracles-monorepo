@@ -4660,6 +4660,31 @@
       "denomination": "ratio",
       "rateFeed": true
     },
+    "SPARK_COLL_BTC": {
+      "source": ["spark-anchorage-api"],
+      "denomination": "BTC",
+      "rateFeed": false
+    },
+    "SPARK_COLL_BTC_USD": {
+      "source": ["spark-anchorage-api"],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "SPARK_COLL_TOTAL_USD": {
+      "source": ["spark-anchorage-api"],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "SPARK_LOAN_USD": {
+      "source": ["spark-anchorage-api"],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "SPARK_LOAN_TOTAL_USD": {
+      "source": ["spark-anchorage-api"],
+      "denomination": "USD",
+      "rateFeed": false
+    },
     "eUSD_FUNDAMENTAL/USD": {
       "source": ["evm-fetcher-parallel-eusd"],
       "denomination": "USD",
