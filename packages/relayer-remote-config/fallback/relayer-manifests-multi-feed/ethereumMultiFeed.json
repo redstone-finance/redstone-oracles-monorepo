@@ -423,6 +423,20 @@
     },
     "AZND_FUNDAMENTAL": {
       "priceFeedAddress": "0xc8A09cb2692724752352899f73f81ebE5Ef06Bad"
+    },
+    "SolvBTC_FUNDAMENTAL": {
+      "priceFeedAddress": "0x8D89d6c114193154f111D7C83299D285C9cC5BBC",
+      "updateTriggersOverrides": {
+        "deviationPercentage": 0.01,
+        "timeSinceLastUpdateInMilliseconds": 86400000
+      }
+    },
+    "USST_FUNDAMENTAL": {
+      "priceFeedAddress": "0xa6f809091eFbF1bC98875B9a169d36f006bD56cB",
+      "updateTriggersOverrides": {
+        "deviationPercentage": 0.5,
+        "timeSinceLastUpdateInMilliseconds": 43200000
+      }
     }
   }
 }

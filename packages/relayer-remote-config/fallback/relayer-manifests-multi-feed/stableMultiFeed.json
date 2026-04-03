@@ -52,6 +52,13 @@
     },
     "weETH_FUNDAMENTAL": {
       "priceFeedAddress": "0xD57b79401956BE4872D3d03F0C920639335e350F"
+    },
+    "SolvBTC_FUNDAMENTAL": {
+      "priceFeedAddress": "0x58fa68A373956285dDfb340EDf755246f8DfCA16",
+      "updateTriggersOverrides": {
+        "deviationPercentage": 0.01,
+        "timeSinceLastUpdateInMilliseconds": 86400000
+      }
     }
   }
 }

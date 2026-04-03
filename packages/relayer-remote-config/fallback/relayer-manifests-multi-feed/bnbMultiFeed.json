@@ -219,6 +219,19 @@
         "deviationPercentage": 0.01,
         "timeSinceLastUpdateInMilliseconds": 86400000
       }
+    },
+    "SolvBTC/BTC": {
+      "priceFeedAddress": "0x8D89d6c114193154f111D7C83299D285C9cC5BBC"
+    },
+    "SolvBTC_FUNDAMENTAL": {
+      "priceFeedAddress": "0x77471661568DC65d4574EAd9544DfF1e618Adfb2",
+      "updateTriggersOverrides": {
+        "deviationPercentage": 0.01,
+        "timeSinceLastUpdateInMilliseconds": 86400000
+      }
+    },
+    "SolvBTC_FUNDAMENTAL/USD": {
+      "priceFeedAddress": "0x9a7FAe39f78f7711d46F28E9fd2271ECdca58f9a"
     }
   }
 }
