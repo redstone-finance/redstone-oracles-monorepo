@@ -46,7 +46,7 @@ const assertMinVersion = (actualVersion: string, minimumVersion: string, context
   }
 };
 
-const MINIMAL_NODE_VERSION_REQUIRED = "22";
+const MINIMAL_NODE_VERSION_REQUIRED = "24";
 const nodeVersion = RedstoneCommon.getNodeVersion();
 if (RedstoneCommon.isDefined(nodeVersion)) {
   assertMinVersion(nodeVersion, MINIMAL_NODE_VERSION_REQUIRED, "Node");
