@@ -243,9 +243,10 @@ describe("MultiFeedAdapterWithoutRoundsWithReference", () => {
     );
     await updatePrices({ ETH: "402" }, refAdapter, defaultDataTimestamp);
     await updatePrices({ ETH: "403" }, gasConsumingAdapter, defaultDataTimestamp + 1);
-    expect((await gasConsumingAdapter.getLastUpdateDetails(ETH_ID_B32)).lastValue).to.eq("403");
+    expect((async () => (await gasConsumingAdapter.getLastUpdateDetails(ETH_ID_B32)).lastValue)())
+      .to.be.rejected;
     await expectPrice("402"); // main will hit gas limit
-    expect(await priceFeed.latestAnswer({ gasLimit: 40_000_000 })).to.eq("403"); // will not hit with custom gas limit
+    expect(priceFeed.latestAnswer({ gasLimit: 40_000_000 })).to.be.rejected;
   });
 
   it("Should use main data if ref adapter tried to consume too much gas", async () => {
@@ -254,10 +255,11 @@ describe("MultiFeedAdapterWithoutRoundsWithReference", () => {
       "ref"
     );
     await updatePrices({ ETH: "42" }, gasConsumingAdapter, defaultDataTimestamp);
-    expect((await gasConsumingAdapter.getLastUpdateDetails(ETH_ID_B32)).lastValue).to.eq("42");
+    expect((async () => (await gasConsumingAdapter.getLastUpdateDetails(ETH_ID_B32)).lastValue)())
+      .to.be.rejected;
     await updatePrices({ ETH: "43" }, mainAdapter, defaultDataTimestamp);
     await expectPrice("43"); // ref will hit gas limit
-    expect(await priceFeed.latestAnswer({ gasLimit: 40_000_000 })).to.eq("42"); // will not hit with custom gas limit
+    expect(priceFeed.latestAnswer({ gasLimit: 40_000_000 })).to.be.rejected;
   });
 
   describe("Deviation tests", () => {
