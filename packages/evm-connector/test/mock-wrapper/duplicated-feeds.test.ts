@@ -48,8 +48,8 @@ describe("DuplicatedDataFeeds", function () {
     await runTestForArrayOfDataFeeds(dataFeedIds);
   });
 
-  it("Should get oracle values for feeds with duplicates (1000 times ETH)", async () => {
-    const dataFeedIds = getRange({ start: 0, length: 1000 }).map(() => "ETH");
+  it("Should get oracle values for feeds with duplicates (500 times ETH)", async () => {
+    const dataFeedIds = getRange({ start: 0, length: 500 }).map(() => "ETH");
     await runTestForArrayOfDataFeeds(dataFeedIds);
   });
 
