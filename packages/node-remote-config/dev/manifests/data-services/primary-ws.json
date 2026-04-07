@@ -235,7 +235,7 @@
       "types": ["rwa"]
     },
     "XAU---REGULAR": {
-      "source": ["cme-on-market"],
+      "source": ["cme-metals-on-market"],
       "denomination": "USD",
       "rateFeed": false,
       "types": ["rwa"]
@@ -714,6 +714,12 @@
       "rateFeed": false,
       "types": ["rwa"]
     },
+    "XYZ100---PERP": {
+      "source": ["ws-hyperliquid-perps-xyz", "ws-hydromancer-perps-xyz"],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": ["rwa"]
+    },
     "GAS_CURRENT": {
       "source": ["databento-cme-futures", "ws-polygon-massive-nymex-futures"],
       "skipBroadcasting": true,
@@ -748,6 +754,13 @@
           "ws-lmax"
         ]
       },
+      "broadcasters": ["influx"],
+      "rateFeed": false,
+      "types": ["rwa"]
+    },
+    "GAS.V---REGULAR": {
+      "source": ["cme-energy-on-market"],
+      "denomination": "USD",
       "rateFeed": false,
       "types": ["rwa"]
     },
@@ -789,6 +802,13 @@
           "ws-blocksize"
         ]
       },
+      "broadcasters": ["influx"],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": ["rwa"]
+    },
+    "WTI.V---REGULAR": {
+      "source": ["cme-energy-on-market"],
       "denomination": "USD",
       "rateFeed": false,
       "types": ["rwa"]
