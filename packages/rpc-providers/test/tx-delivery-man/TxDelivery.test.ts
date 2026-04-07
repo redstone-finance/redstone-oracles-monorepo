@@ -305,7 +305,7 @@ describe("TxDelivery", () => {
       });
       //
       expect(Number(parseTransaction(sendStub.firstCall.args[0]).gasPrice)).to.be.closeTo(
-        1768378450,
+        1_767_063_194,
         1_000_000
       );
 
@@ -317,7 +317,7 @@ describe("TxDelivery", () => {
       });
 
       expect(Number(parseTransaction(sendStub.secondCall.args[0]).gasPrice)).to.be.closeTo(
-        1989425756,
+        1_987_946_093,
         1_000_000
       );
     });
