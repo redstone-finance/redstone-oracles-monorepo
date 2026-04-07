@@ -741,6 +741,14 @@
         "rwa"
       ]
     },
+    "XYZ100---PERP": {
+      "source": [],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
+    },
     "GAS_CURRENT": {
       "source": [],
       "skipBroadcasting": true,
@@ -766,6 +774,17 @@
       "redstoneXAggregatorConfig": {
         "priceDiscoverySources": []
       },
+      "broadcasters": [
+        "influx"
+      ],
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
+    },
+    "GAS.V---REGULAR": {
+      "source": [],
+      "denomination": "USD",
       "rateFeed": false,
       "types": [
         "rwa"
@@ -802,6 +821,17 @@
       "redstoneXAggregatorConfig": {
         "priceDiscoverySources": []
       },
+      "broadcasters": [
+        "influx"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
+    },
+    "WTI.V---REGULAR": {
+      "source": [],
       "denomination": "USD",
       "rateFeed": false,
       "types": [
