@@ -1,0 +1,829 @@
+{
+  "interval": 500,
+  "priceAggregator": "median",
+  "defaultSource": [],
+  "sourceTimeout": 800,
+  "minValidSourcesPercentage": 1,
+  "deviationCheck": {
+    "deviationWithRecentValues": {
+      "maxPercent": 30,
+      "maxDelayMilliseconds": 120000
+    }
+  },
+  "tokens": {
+    "USDT": {
+      "source": [
+        "binance_deferred-usd",
+        "bitget_deferred-usd",
+        "bitstamp_deferred-usd",
+        "bullish_deferred-usd",
+        "coinbase_deferred-usd",
+        "gemini_deferred-usd",
+        "kraken_deferred-usd",
+        "okx_deferred-usd"
+      ],
+      "deviationCheck": {
+        "deviationWithRecentValues": {
+          "maxPercent": 2,
+          "maxDelayMilliseconds": 120000
+        }
+      },
+      "skipBroadcasting": true,
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "USDC": {
+      "source": [
+        "binance_deferred-usd",
+        "binance_deferred-usdt",
+        "bingx_deferred-usdt",
+        "bitget_deferred-usd",
+        "bitget_deferred-usdt",
+        "bitmart_deferred-usdt",
+        "bitrue_deferred-usdt",
+        "bitstamp_deferred-usd",
+        "bitstamp_deferred-usdt",
+        "bybit_deferred-usdt",
+        "gate_deferred-usdt",
+        "gemini_deferred-usd",
+        "htx_deferred-usdt",
+        "kraken_deferred-usd",
+        "kraken_deferred-usdt",
+        "kucoin_deferred-usdt",
+        "lbank_deferred-usdt",
+        "mexc_deferred-usdt",
+        "okx_deferred-usdt",
+        "xt_deferred-usdt",
+        "curve-ethereum-dai-deferred",
+        "curve-ethereum-usdt-deferred",
+        "uniswap-v3-ethereum-dai-100-deferred",
+        "uniswap-v4-arbitrumone-usdt-8-deferred",
+        "uniswap-v4-ethereum-usdt-10-deferred"
+      ],
+      "deviationCheck": {
+        "deviationWithRecentValues": {
+          "maxPercent": 2,
+          "maxDelayMilliseconds": 120000
+        }
+      },
+      "skipBroadcasting": true,
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "DAI": {
+      "source": [
+        "bingx_deferred-usdt",
+        "bitget_deferred-usdt",
+        "bitmart_deferred-usdt",
+        "bitrue_deferred-usdt",
+        "bybit_deferred-usdt",
+        "gate_deferred-usdt",
+        "htx_deferred-usdt",
+        "kraken_deferred-usd",
+        "kraken_deferred-usdt",
+        "lbank_deferred-usdt",
+        "mexc_deferred-usdt",
+        "okx_deferred-usdt",
+        "xt_deferred-usdt",
+        "curve-ethereum-usdt-deferred",
+        "uniswap-v3-ethereum-usdt-100-deferred"
+      ],
+      "deviationCheck": {
+        "deviationWithRecentValues": {
+          "maxPercent": 2,
+          "maxDelayMilliseconds": 120000
+        }
+      },
+      "skipBroadcasting": true,
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "EUR": {
+      "source": [
+        "alltick-api-deferred",
+        "ws-polygon-massive-commodities",
+        "financialmodelingprep-deferred",
+        "ws-lmax"
+      ],
+      "priceAggregator": "primarySource",
+      "primarySourceAggregatorConfig": {
+        "primarySource": "ws-lmax",
+        "maxAcceptableDeviation": 1.5,
+        "lowerClampPercent": 0.1,
+        "upperClampPercent": 0.1
+      },
+      "skipBroadcasting": true,
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": ["rwa"]
+    },
+    "EUR---REGULAR": {
+      "source": ["forex-on-market"],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": ["rwa"]
+    },
+    "BTC": {
+      "source": [
+        "binance_deferred-usdc",
+        "bingx_deferred-usdc",
+        "bingx_deferred-usdt",
+        "bitget_deferred-usdc",
+        "bitget_deferred-usdt",
+        "bitmart_deferred-usdc",
+        "bitmart_deferred-usdt",
+        "bitrue_deferred-usdc",
+        "bitrue_deferred-usdt",
+        "bitstamp_deferred-usd",
+        "htx_deferred-usdt",
+        "kraken_deferred-usd",
+        "kraken_deferred-usdt",
+        "lbank_deferred-usdc",
+        "lbank_deferred-usdt",
+        "mexc_deferred-usdt",
+        "okx_deferred-usd",
+        "xt_deferred-usdc",
+        "xt_deferred-usdt"
+      ],
+      "skipBroadcasting": true,
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "ETH": {
+      "source": [
+        "binance_deferred-usdt",
+        "bingx_deferred-usdc",
+        "bingx_deferred-usdt",
+        "bitget_deferred-usdc",
+        "bitget_deferred-usdt",
+        "bitmart_deferred-usdt",
+        "bitrue_deferred-usdc",
+        "bitrue_deferred-usdt",
+        "bitstamp_deferred-usd",
+        "bybit_deferred-usdc",
+        "coinbase_deferred-usd",
+        "htx_deferred-usdt",
+        "kraken_deferred-eur",
+        "kraken_deferred-usd",
+        "kucoin_deferred-usdt",
+        "lbank_deferred-usdc",
+        "lbank_deferred-usdt",
+        "mexc_deferred-usdt",
+        "okx_deferred-usd",
+        "xt_deferred-usdt"
+      ],
+      "skipBroadcasting": true,
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "XRP": {
+      "source": [
+        "binance_deferred-usdc",
+        "binance_deferred-usdt",
+        "bingx_deferred-usdc",
+        "bingx_deferred-usdt",
+        "bitget_deferred-usdc",
+        "bitget_deferred-usdt",
+        "bitmart_deferred-usdt",
+        "bitrue_deferred-usdc",
+        "bitrue_deferred-usdt",
+        "bitstamp_deferred-usd",
+        "bybit_deferred-usdt",
+        "coinbase_deferred-usd",
+        "kraken_deferred-eur",
+        "kraken_deferred-usd",
+        "lbank_deferred-usdc",
+        "lbank_deferred-usdt",
+        "mexc_deferred-usdc",
+        "mexc_deferred-usdt",
+        "okx_deferred-usdt",
+        "xt_deferred-usdt"
+      ],
+      "skipBroadcasting": true,
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "SPXU": {
+      "source": [
+        "financialmodelingprep-deferred",
+        "ws-dx-feed",
+        "ws-polygon-massive",
+        "ws-twelve-data"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": ["rwa"]
+    },
+    "SPXU---REGULAR": {
+      "source": ["us-equity-on-market"],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": ["rwa"]
+    },
+    "XAU": {
+      "source": [
+        "alltick-api-deferred",
+        "commodity-price-api-deferred",
+        "financialmodelingprep-deferred",
+        "metals-api-deferred",
+        "metal-price-api-deferred",
+        "ws-polygon-massive-commodities",
+        "ws-twelve-data"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": ["rwa"]
+    },
+    "XAU---REGULAR": {
+      "source": ["cme-on-market"],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": ["rwa"]
+    },
+    "TSLA": {
+      "source": [
+        "alltick-stocks-api-deferred",
+        "databento",
+        "financialmodelingprep-deferred",
+        "ws-dx-feed",
+        "ws-polygon-massive",
+        "ws-twelve-data"
+      ],
+      "skipBroadcasting": true,
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": ["rwa"]
+    },
+    "TSLA---REGULAR": {
+      "source": ["us-equity-on-market"],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": ["rwa"]
+    },
+    "MSFT": {
+      "source": [
+        "alltick-stocks-api-deferred",
+        "databento",
+        "financialmodelingprep-deferred",
+        "ws-dx-feed",
+        "ws-polygon-massive",
+        "ws-twelve-data"
+      ],
+      "skipBroadcasting": true,
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": ["rwa"]
+    },
+    "MSFT---REGULAR": {
+      "source": ["us-equity-on-market"],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": ["rwa"]
+    },
+    "AAPL": {
+      "source": [
+        "alltick-stocks-api-deferred",
+        "databento",
+        "financialmodelingprep-deferred",
+        "ws-dx-feed",
+        "ws-polygon-massive",
+        "ws-twelve-data"
+      ],
+      "skipBroadcasting": true,
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": ["rwa"]
+    },
+    "AAPL---REGULAR": {
+      "source": ["us-equity-on-market"],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": ["rwa"]
+    },
+    "NVDA": {
+      "source": [
+        "alltick-stocks-api-deferred",
+        "databento",
+        "financialmodelingprep-deferred",
+        "ws-dx-feed",
+        "ws-polygon-massive",
+        "ws-twelve-data"
+      ],
+      "skipBroadcasting": true,
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": ["rwa"]
+    },
+    "NVDA---REGULAR": {
+      "source": ["us-equity-on-market"],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": ["rwa"]
+    },
+    "PLTR": {
+      "source": [
+        "alltick-stocks-api-deferred",
+        "databento",
+        "financialmodelingprep-deferred",
+        "ws-dx-feed",
+        "ws-polygon-massive",
+        "ws-twelve-data"
+      ],
+      "skipBroadcasting": true,
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": ["rwa"]
+    },
+    "PLTR---REGULAR": {
+      "source": ["us-equity-on-market"],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": ["rwa"]
+    },
+    "AMD": {
+      "source": [
+        "alltick-stocks-api-deferred",
+        "databento",
+        "financialmodelingprep-deferred",
+        "ws-dx-feed",
+        "ws-polygon-massive",
+        "ws-twelve-data"
+      ],
+      "skipBroadcasting": true,
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": ["rwa"]
+    },
+    "AMD---REGULAR": {
+      "source": ["us-equity-on-market"],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": ["rwa"]
+    },
+    "GOOGL": {
+      "source": [
+        "alltick-stocks-api-deferred",
+        "databento",
+        "financialmodelingprep-deferred",
+        "ws-dx-feed",
+        "ws-polygon-massive",
+        "ws-twelve-data"
+      ],
+      "skipBroadcasting": true,
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": ["rwa"]
+    },
+    "GOOGL---REGULAR": {
+      "source": ["us-equity-on-market"],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": ["rwa"]
+    },
+    "META": {
+      "source": [
+        "alltick-stocks-api-deferred",
+        "databento",
+        "financialmodelingprep-deferred",
+        "ws-dx-feed",
+        "ws-polygon-massive",
+        "ws-twelve-data"
+      ],
+      "skipBroadcasting": true,
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": ["rwa"]
+    },
+    "META---REGULAR": {
+      "source": ["us-equity-on-market"],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": ["rwa"]
+    },
+    "AMZN": {
+      "source": [
+        "alltick-stocks-api-deferred",
+        "databento",
+        "financialmodelingprep-deferred",
+        "ws-dx-feed",
+        "ws-polygon-massive",
+        "ws-twelve-data"
+      ],
+      "skipBroadcasting": true,
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": ["rwa"]
+    },
+    "AMZN---REGULAR": {
+      "source": ["us-equity-on-market"],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": ["rwa"]
+    },
+    "STRC": {
+      "source": [
+        "databento",
+        "financialmodelingprep-deferred",
+        "ws-dx-feed",
+        "ws-polygon-massive",
+        "ws-twelve-data"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": ["rwa"]
+    },
+    "STRC---REGULAR": {
+      "source": ["us-equity-on-market"],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": ["rwa"]
+    },
+    "TRY_FX": {
+      "source": [
+        "alltick-api-reversed-deferred",
+        "metal-price-api-deferred",
+        "ws-polygon-massive-commodities",
+        "ws-twelve-data"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": ["rwa"]
+    },
+    "TRY_CEX": {
+      "source": [
+        "paribu_deferred-usdt-reversed",
+        "paribu_deferred-eth-reversed",
+        "paribu_deferred-btc-reversed",
+        "paribu_deferred-xrp-reversed",
+        "btcturk_deferred-usdt-reversed",
+        "btcturk_deferred-eth-reversed",
+        "btcturk_deferred-btc-reversed",
+        "binancetr_deferred-usdt-reversed",
+        "binancetr_deferred-btc-reversed",
+        "binancetr_deferred-eth-reversed",
+        "okxtr_deferred-usdt-reversed",
+        "okxtr_deferred-btc-reversed",
+        "okxtr_deferred-eth-reversed"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "TRY": {
+      "source": ["try-condition-fetcher-deferred"],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "URA---MARKET_HOURS": {
+      "source": ["alias"],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": ["rwa"]
+    },
+    "URA---REGULAR": {
+      "source": ["us-equity-on-market"],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": ["rwa"]
+    },
+    "URA": {
+      "source": [
+        "databento",
+        "financialmodelingprep-deferred",
+        "ws-blocksize",
+        "ws-polygon-massive",
+        "ws-twelve-data"
+      ],
+      "skipBroadcasting": true,
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": ["rwa"]
+    },
+    "KOSPI200": {
+      "source": ["alltick-api", "ws-itick-indices", "ws-aleno"],
+      "skipBroadcasting": true,
+      "denomination": "KRW",
+      "rateFeed": false,
+      "types": ["rwa"]
+    },
+    "KOSPI200---REGULAR": {
+      "source": ["krx-on-market"],
+      "denomination": "KRW",
+      "rateFeed": false,
+      "types": ["rwa"]
+    },
+    "NIKKEI225": {
+      "source": ["alltick-api", "finhub_oanda-usd", "ws-itick-indices"],
+      "priceAggregator": "primarySourceWithRebasing",
+      "primarySourceWithRebasingAggregatorConfig": {
+        "primarySource": "alltick-api",
+        "rebaseCalculationInterval": 60000,
+        "maxAcceptableDeviationPercent": 1,
+        "clampPercent": 0.05
+      },
+      "skipBroadcasting": true,
+      "denomination": "JPY",
+      "rateFeed": false,
+      "types": ["rwa"]
+    },
+    "NIKKEI225---REGULAR": {
+      "source": ["jpx-on-market"],
+      "denomination": "JPY",
+      "rateFeed": false,
+      "types": ["rwa"]
+    },
+    "URTH": {
+      "source": [
+        "ws-aleno",
+        "ws-blocksize",
+        "databento",
+        "ws-polygon-massive",
+        "ws-dx-feed",
+        "ws-twelve-data"
+      ],
+      "priceAggregator": "redstoneX",
+      "redstoneXAggregatorConfig": {
+        "priceDiscoverySources": ["ws-aleno", "ws-blocksize", "ws-twelve-data"]
+      },
+      "skipBroadcasting": true,
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": ["rwa"]
+    },
+    "URTH---REGULAR": {
+      "source": ["us-equity-on-market"],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": ["rwa"]
+    },
+    "CME_MARKET_CURRENT_STATUS": {
+      "source": ["cme-market-timeline"],
+      "denomination": "enum",
+      "rateFeed": false
+    },
+    "CME_MARKET_NEXT_STATUS": {
+      "source": ["cme-market-timeline"],
+      "denomination": "enum",
+      "rateFeed": false
+    },
+    "CME_MARKET_NEXT_CHANGE_TIME": {
+      "source": ["cme-market-timeline"],
+      "denomination": "timestamp",
+      "rateFeed": false
+    },
+    "FOREX_MARKET_CURRENT_STATUS": {
+      "source": ["forex-market-timeline"],
+      "denomination": "enum",
+      "rateFeed": false
+    },
+    "FOREX_MARKET_NEXT_STATUS": {
+      "source": ["forex-market-timeline"],
+      "denomination": "enum",
+      "rateFeed": false
+    },
+    "FOREX_MARKET_NEXT_CHANGE_TIME": {
+      "source": ["forex-market-timeline"],
+      "denomination": "timestamp",
+      "rateFeed": false
+    },
+    "NY_MARKET_CURRENT_STATUS": {
+      "source": ["ny-market-timeline"],
+      "denomination": "enum",
+      "rateFeed": false
+    },
+    "NY_MARKET_NEXT_STATUS": {
+      "source": ["ny-market-timeline"],
+      "denomination": "enum",
+      "rateFeed": false
+    },
+    "NY_MARKET_NEXT_CHANGE_TIME": {
+      "source": ["ny-market-timeline"],
+      "denomination": "timestamp",
+      "rateFeed": false
+    },
+    "KRX_MARKET_CURRENT_STATUS": {
+      "source": ["krx-market-timeline"],
+      "denomination": "enum",
+      "rateFeed": false
+    },
+    "KRX_MARKET_NEXT_STATUS": {
+      "source": ["krx-market-timeline"],
+      "denomination": "enum",
+      "rateFeed": false
+    },
+    "KRX_MARKET_NEXT_CHANGE_TIME": {
+      "source": ["krx-market-timeline"],
+      "denomination": "timestamp",
+      "rateFeed": false
+    },
+    "JPX_MARKET_CURRENT_STATUS": {
+      "source": ["jpx-market-timeline"],
+      "denomination": "enum",
+      "rateFeed": false
+    },
+    "JPX_MARKET_NEXT_STATUS": {
+      "source": ["jpx-market-timeline"],
+      "denomination": "enum",
+      "rateFeed": false
+    },
+    "JPX_MARKET_NEXT_CHANGE_TIME": {
+      "source": ["jpx-market-timeline"],
+      "denomination": "timestamp",
+      "rateFeed": false
+    },
+    "TSLA---PERP": {
+      "source": ["ws-hyperliquid-perps-xyz", "ws-hydromancer-perps-xyz"],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": ["rwa"]
+    },
+    "TSLA---24_7": {
+      "source": ["us-equity-24-7"],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": ["rwa"]
+    },
+    "NVDA---PERP": {
+      "source": ["ws-hyperliquid-perps-xyz", "ws-hydromancer-perps-xyz"],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": ["rwa"]
+    },
+    "NVDA---24_7": {
+      "source": ["us-equity-24-7"],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": ["rwa"]
+    },
+    "AAPL---PERP": {
+      "source": ["ws-hyperliquid-perps-xyz", "ws-hydromancer-perps-xyz"],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": ["rwa"]
+    },
+    "AAPL---24_7": {
+      "source": ["us-equity-24-7"],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": ["rwa"]
+    },
+    "MSFT---PERP": {
+      "source": ["ws-hyperliquid-perps-xyz", "ws-hydromancer-perps-xyz"],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": ["rwa"]
+    },
+    "MSFT---24_7": {
+      "source": ["us-equity-24-7"],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": ["rwa"]
+    },
+    "AMZN---PERP": {
+      "source": ["ws-hyperliquid-perps-xyz", "ws-hydromancer-perps-xyz"],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": ["rwa"]
+    },
+    "AMZN---24_7": {
+      "source": ["us-equity-24-7"],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": ["rwa"]
+    },
+    "GOOGL---PERP": {
+      "source": ["ws-hyperliquid-perps-xyz", "ws-hydromancer-perps-xyz"],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": ["rwa"]
+    },
+    "GOOGL---24_7": {
+      "source": ["us-equity-24-7"],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": ["rwa"]
+    },
+    "META---PERP": {
+      "source": ["ws-hyperliquid-perps-xyz", "ws-hydromancer-perps-xyz"],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": ["rwa"]
+    },
+    "META---24_7": {
+      "source": ["us-equity-24-7"],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": ["rwa"]
+    },
+    "GAS_CURRENT": {
+      "source": ["databento-cme-futures", "ws-polygon-massive-nymex-futures"],
+      "skipBroadcasting": true,
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": ["rwa"]
+    },
+    "GAS_FRONT": {
+      "source": ["databento-cme-futures", "ws-polygon-massive-nymex-futures"],
+      "skipBroadcasting": true,
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": ["rwa"]
+    },
+    "GAS.V": {
+      "source": [
+        "rollover-volume",
+        "ws-itick-futures",
+        "ws-twelve-data",
+        "alltick-api-deferred",
+        "financialmodelingprep-deferred",
+        "ws-lmax"
+      ],
+      "denomination": "USD",
+      "priceAggregator": "redstoneX",
+      "redstoneXAggregatorConfig": {
+        "priceDiscoverySources": [
+          "ws-itick-futures",
+          "ws-twelve-data",
+          "alltick-api-deferred",
+          "financialmodelingprep-deferred",
+          "ws-lmax"
+        ]
+      },
+      "rateFeed": false,
+      "types": ["rwa"]
+    },
+    "GAS_MONTH.V": {
+      "source": ["rollover-volume"],
+      "denomination": "enum",
+      "rateFeed": false
+    },
+    "WTI_CURRENT": {
+      "source": ["databento-cme-futures", "ws-polygon-massive-nymex-futures"],
+      "skipBroadcasting": true,
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": ["rwa"]
+    },
+    "WTI_FRONT": {
+      "source": ["databento-cme-futures", "ws-polygon-massive-nymex-futures"],
+      "skipBroadcasting": true,
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": ["rwa"]
+    },
+    "WTI.V": {
+      "source": [
+        "rollover-volume",
+        "alltick-api-deferred",
+        "metal-price-api-deferred",
+        "ws-lmax",
+        "ws-twelve-data",
+        "ws-blocksize"
+      ],
+      "priceAggregator": "redstoneX",
+      "redstoneXAggregatorConfig": {
+        "priceDiscoverySources": [
+          "alltick-api-deferred",
+          "metal-price-api-deferred",
+          "ws-lmax",
+          "ws-twelve-data",
+          "ws-blocksize"
+        ]
+      },
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": ["rwa"]
+    },
+    "WTI_MONTH.V": {
+      "source": ["rollover-volume"],
+      "denomination": "enum",
+      "rateFeed": false
+    }
+  },
+  "multiPointPackages": {
+    "CME_MARKET_STATUS": [
+      "CME_MARKET_CURRENT_STATUS",
+      "CME_MARKET_NEXT_STATUS",
+      "CME_MARKET_NEXT_CHANGE_TIME"
+    ],
+    "FOREX_MARKET_STATUS": [
+      "FOREX_MARKET_CURRENT_STATUS",
+      "FOREX_MARKET_NEXT_STATUS",
+      "FOREX_MARKET_NEXT_CHANGE_TIME"
+    ],
+    "NY_MARKET_STATUS": [
+      "NY_MARKET_CURRENT_STATUS",
+      "NY_MARKET_NEXT_STATUS",
+      "NY_MARKET_NEXT_CHANGE_TIME"
+    ],
+    "KRX_MARKET_STATUS": [
+      "KRX_MARKET_CURRENT_STATUS",
+      "KRX_MARKET_NEXT_STATUS",
+      "KRX_MARKET_NEXT_CHANGE_TIME"
+    ],
+    "JPX_MARKET_STATUS": [
+      "JPX_MARKET_CURRENT_STATUS",
+      "JPX_MARKET_NEXT_STATUS",
+      "JPX_MARKET_NEXT_CHANGE_TIME"
+    ]
+  }
+}
