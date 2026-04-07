@@ -3047,13 +3047,22 @@
     },
     "WTI": {
       "source": [],
-      "priceAggregator": "redstoneX",
-      "redstoneXAggregatorConfig": {
-        "priceDiscoverySources": []
+      "priceAggregator": "primarySourceWithRebasing",
+      "primarySourceWithRebasingAggregatorConfig": {
+        "primarySource": "",
+        "rebaseCalculationInterval": 60000,
+        "maxAcceptableDeviationPercent": 1.5,
+        "clampPercent": 0.1
       },
       "broadcasters": [
         "influx"
       ],
+      "deviationCheck": {
+        "deviationWithRecentValues": {
+          "maxPercent": 30,
+          "maxDelayMilliseconds": 120000
+        }
+      },
       "denomination": "USD",
       "rateFeed": false,
       "types": [
@@ -3126,7 +3135,7 @@
     },
     "flx:OIL_MARK_0": {
       "source": [
-        "hip3-felix-wti-mainnet-fetcher"
+        "hip3-felix-lmax-mainnet-fetcher"
       ],
       "broadcasters": [
         "hyperliquid-hip3"
@@ -3136,7 +3145,7 @@
     },
     "flx:OIL_MARK_1": {
       "source": [
-        "hip3-felix-wti-mainnet-fetcher"
+        "hip3-felix-lmax-mainnet-fetcher"
       ],
       "broadcasters": [
         "hyperliquid-hip3"
@@ -3146,7 +3155,7 @@
     },
     "flx:OIL_EXT": {
       "source": [
-        "hip3-felix-wti-mainnet-fetcher"
+        "hip3-felix-lmax-mainnet-fetcher"
       ],
       "broadcasters": [
         "hyperliquid-hip3"
@@ -3156,7 +3165,7 @@
     },
     "flx:OIL": {
       "source": [
-        "hip3-felix-wti-mainnet-fetcher"
+        "hip3-felix-lmax-mainnet-fetcher"
       ],
       "broadcasters": [
         "hyperliquid-hip3"
