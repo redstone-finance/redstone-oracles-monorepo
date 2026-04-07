@@ -125,11 +125,7 @@ export class DataPackageSubscriber {
     this.fallbackInterval = setInterval(async () => {
       try {
         if (this.lastPublishedState.isAnyFeedNotPublishedIn(maxDelayBetweenPublishes)) {
-          GlobalLogMonitoring.warn(
-            LogMonitoringType.MQTT_FALLBACK_USED,
-            `Fallback triggered now=${Date.now()} lastPublishedTimestamp=${this.lastPublishedState.toString()}`,
-            this.logger
-          );
+          const fallbackTriggeredMessage = `Fallback triggered now=${Date.now()} lastPublishedTimestamp=${this.lastPublishedState.toString()}`;
           const dataPackages = await fallbackFn();
           const values = Object.values(dataPackages);
 
@@ -139,12 +135,17 @@ export class DataPackageSubscriber {
             values[0].length === 0
           ) {
             GlobalLogMonitoring.error(
-              LogMonitoringType.MQTT_FALLBACK_FAILED,
-              `FallbackFn did not return any data packages`,
+              LogMonitoringType.MQTT_FALLBACK_USED_AND_FAILED,
+              `${fallbackTriggeredMessage}, no data packages returned`,
               this.logger
             );
             throw new Error(`No data packages returned, got ${JSON.stringify(dataPackages)}`);
           }
+          GlobalLogMonitoring.warn(
+            LogMonitoringType.MQTT_FALLBACK_USED_BUT_USEFUL,
+            fallbackTriggeredMessage,
+            this.logger
+          );
 
           const packageTimestamp = values[0][0].dataPackage.timestampMilliseconds;
 
@@ -155,7 +156,6 @@ export class DataPackageSubscriber {
           const newerPackagesOnly = this.lastPublishedState.filterOutNotNewerPackages(dataPackages);
 
           const newDataPackagesIds = Object.keys(newerPackagesOnly);
-
           if (newDataPackagesIds.length > 0) {
             this.logger.info(
               `Publishing packages from fallback method timestamp=${packageTimestamp} latency=${Date.now() - packageTimestamp} dataPackageIds=${newDataPackagesIds.join(",")}`
