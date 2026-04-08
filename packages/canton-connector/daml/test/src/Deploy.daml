@@ -2,7 +2,7 @@ module Deploy where
 
 import Daml.Script
 import DA.Map as M
-import Splice.Api.FeaturedAppRightV1
+import Splice.Api.FeaturedAppRightV2
 import IRedStonePricePillFactory
 import RedStoneCore
 import RedStoneCoreClient

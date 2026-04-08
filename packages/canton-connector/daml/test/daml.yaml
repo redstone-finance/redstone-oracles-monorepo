@@ -12,13 +12,13 @@ data-dependencies:
   - ../interface/.daml/dist/redstone-interface-v12-0.4.0.dar
   - ../price_pill/.daml/dist/redstone-price-pill-v12-0.4.0.dar
   - ../core/.daml/dist/redstone-core-v12-0.4.1.dar
-  - ../adapter/.daml/dist/redstone-adapter-v12-0.4.0.dar
+  - ../adapter/.daml/dist/redstone-adapter-v12-0.4.1.dar
   - ../price_feed/.daml/dist/redstone-price-feed-v12-0.4.0.dar
   - ../sdk/.daml/dist/redstone-sdk-v12-0.4.0.dar
   - ../sdk-tests/.daml/dist/redstone-sdk-tests-v12-0.4.0.dar
-  - ../featured/.daml/dist/redstone-featured-v12-0.4.0.dar
-  - ../factory/.daml/dist/redstone-factory-v12-0.4.0.dar
-  - ../featured/dars/splice-api-featured-app-v1-1.0.0.dar
+  - ../featured/.daml/dist/redstone-featured-v13-0.4.0.dar
+  - ../factory/.daml/dist/redstone-factory-v13-0.4.1.dar
+  - ../featured/dars/splice-api-featured-app-v2-1.0.0.dar
 build-options:
   - --target=2.1
   - -Wno-template-interface-depends-on-daml-script
