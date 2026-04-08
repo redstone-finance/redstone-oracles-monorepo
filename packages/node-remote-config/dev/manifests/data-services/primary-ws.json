@@ -797,6 +797,36 @@
       "denomination": "enum",
       "rateFeed": false
     },
+    "GAS.T": {
+      "source": [],
+      "denomination": "USD",
+      "priceAggregator": "redstoneX",
+      "redstoneXAggregatorConfig": {
+        "priceDiscoverySources": []
+      },
+      "broadcasters": [
+        "influx"
+      ],
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
+    },
+    "GAS.T---REGULAR": {
+      "source": [],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
+    },
+    "GAS_MONTH.T": {
+      "source": [
+        "rollover-time-hourly"
+      ],
+      "denomination": "enum",
+      "rateFeed": false
+    },
     "WTI_CURRENT": {
       "source": [],
       "skipBroadcasting": true,
@@ -841,6 +871,36 @@
     "WTI_MONTH.V": {
       "source": [
         "rollover-volume"
+      ],
+      "denomination": "enum",
+      "rateFeed": false
+    },
+    "WTI.T": {
+      "source": [],
+      "priceAggregator": "redstoneX",
+      "redstoneXAggregatorConfig": {
+        "priceDiscoverySources": []
+      },
+      "broadcasters": [
+        "influx"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
+    },
+    "WTI.T---REGULAR": {
+      "source": [],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
+    },
+    "WTI_MONTH.T": {
+      "source": [
+        "rollover-time-hourly"
       ],
       "denomination": "enum",
       "rateFeed": false
