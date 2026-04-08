@@ -1,15 +1,18 @@
 module Featured where
 
-import Splice.Api.FeaturedAppRightV1
+import Splice.Api.FeaturedAppRightV2
 
 type RedStoneFeaturedContract = ContractId FeaturedAppRight
 
-takeReward beneficiary featuredAppRightCid  =
+takeRewards rewardWeight beneficiary featuredAppRightCid  =
     do
         _ <- exercise featuredAppRightCid FeaturedAppRight_CreateActivityMarker with
             beneficiaries = [AppRewardBeneficiary with
                                 beneficiary
                                 weight = 1.0
                             ]
+            weight = Some rewardWeight
 
         return ()
+
+takeReward beneficiary featuredAppRightCid = takeRewards 1.0 beneficiary featuredAppRightCid

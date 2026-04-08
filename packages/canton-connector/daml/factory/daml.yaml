@@ -1,6 +1,6 @@
 sdk-version: 3.4.11
-name: redstone-factory-v12
-version: 0.4.0
+name: redstone-factory-v13
+version: 0.4.1
 source: src
 dependencies:
   - daml-prim
@@ -10,6 +10,6 @@ data-dependencies:
   - ../interface/.daml/dist/redstone-interface-v12-0.4.0.dar
   - ../price_pill/.daml/dist/redstone-price-pill-v12-0.4.0.dar
   - ../price_feed/.daml/dist/redstone-price-feed-v12-0.4.0.dar
-  - ../featured/.daml/dist/redstone-featured-v12-0.4.0.dar
+  - ../featured/.daml/dist/redstone-featured-v13-0.4.0.dar
 build-options:
   - --target=2.1

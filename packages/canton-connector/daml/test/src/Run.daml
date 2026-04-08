@@ -1,7 +1,7 @@
 module Run where
 
 import Daml.Script
-import Splice.Api.FeaturedAppRightV1
+import Splice.Api.FeaturedAppRightV2
 import IRedStoneAdapter
 import Input
 import Helpers.FindContract
