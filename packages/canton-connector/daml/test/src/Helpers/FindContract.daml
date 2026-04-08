@@ -10,7 +10,7 @@ import Daml.Script
 import DA.Foldable (forA_)
 import DA.List as L
 import DA.Optional (fromSome)
-import Splice.Api.FeaturedAppRightV1
+import Splice.Api.FeaturedAppRightV2
 import IRedStoneAdapter
 import IRedStonePricePill
 import RedStoneTypes

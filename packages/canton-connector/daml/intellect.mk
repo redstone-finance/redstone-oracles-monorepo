@@ -3,17 +3,17 @@ sinclude ../.env
 CANTON_API=$(PARTICIPANT)$(API_PATH)
 
 ADAPTER_NAME=RedStoneAdapter-v12-0.4.0
-ADAPTER_TEMPLATE_ID=4b09751144ad16495651812c12cba13aeacdff7750e232654c418bd975710968:RedStoneAdapter:RedStoneAdapter
+ADAPTER_TEMPLATE_ID=b75e539dfb519e0c2285cac39eeb9b90e34457a1bc2a24ebb81942051ebbdd5f:RedStoneAdapter:RedStoneAdapter
 
 CORE_NAME=RedStoneCore-v12-0.4.1
 CORE_ID := 1c47e8e0c8ebd8e36a56f070c64e061b7544adb15f7a8eba4a88fa4c49502a46
 CORE_TEMPLATE_ID := $(CORE_ID):RedStoneCore:RedStoneCore
 CORE_CLIENT_TEMPLATE_ID := $(CORE_ID):RedStoneCoreClient:RedStoneCoreClient
 
-FACTORY_NAME=RedStonePricePillFactory-v12-0.4.0
-FACTORY_TEMPLATE_ID=86c358756961e573b2ef4a5d86cf7624aa86a334d6ee8bb8a916a12918def8e2:RedStonePricePillFactory:RedStonePricePillFactory
+FACTORY_NAME=RedStonePricePillFactory-v13-0.4.0
+FACTORY_TEMPLATE_ID=a83ac20b1fdfb7f74592d70249887368a918e7eb3b5a6e40058166bb626d67ed:RedStonePricePillFactory:RedStonePricePillFactory
 
-FACTORY_ID=005b5d02ef0625209ace42fe50b07843a0b13ddbf6ee48ff05b13c7b7b5479fdcaca1212205610d8411bbc534ee01bed5e7da441bcb895cb294123f2afdf1545e05bf79e29
+FACTORY_ID=00dd997cef759b94c5a3043ff45d1ed40a4d347c8be53ae60082f7d7d632b72327ca121220f7c513b2e81359d91ec7338220dccb8a3a42e1ff4081a1a84b371f1a5cab2bef
 
 INTERFACE_ID=\#redstone-interface-v12
 IADAPTER_TEMPLATE_ID=$(INTERFACE_ID):IRedStoneAdapter:IRedStoneAdapter
@@ -175,7 +175,7 @@ get-core-id-by-interface: get-token
 	  -d '{ \
 	    "filter": { \
 	      "filtersByParty": { \
-	        "RedStoneOracleOwner::$(PARTY_SUFFIX)": { \
+	        "RedStoneOracleViewer::$(PARTY_SUFFIX)": { \
 	          "cumulative": [{ \
 	            "identifierFilter": { \
 	              "InterfaceFilter": { \
@@ -244,7 +244,7 @@ get-featured-app-right: get-token
 							"identifierFilter": { \
 								"InterfaceFilter": { \
 									"value": { \
-										"interfaceId": "7804375fe5e4c6d5afe067bd314c42fe0b7d005a1300019c73154dd939da4dda:Splice.Api.FeaturedAppRightV1:FeaturedAppRight", \
+										"interfaceId": "dd22e3e168a8c7fd0313171922dabf1f7a3b131bd9bfc9ff98e606f8c57707ea:Splice.Api.FeaturedAppRightV2:FeaturedAppRight", \
 										"includeInterfaceView": true, \
 										"includeCreatedEventBlob": true \
 									} \
@@ -269,7 +269,7 @@ get-active-contracts: get-token
 		-d '{ \
 			"filter": { \
 				"filtersByParty": { \
-					"Client::$(PARTY_SUFFIX)": { \
+					"$(BENEFICIARY)::$(PARTY_SUFFIX)": { \
 						"cumulative": [ \
 							{ \
 							  "identifierFilter": { \

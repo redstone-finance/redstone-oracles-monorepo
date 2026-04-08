@@ -76,3 +76,9 @@ template RedStoneAdapter
         newCid <- create this with feedData = newData
         
         return $ toInterfaceContractId @IRedStoneAdapter newCid
+
+    choice UpdatePillFactory : ContractId RedStoneAdapter
+      with newPillFactory : Optional (ContractId IRedStonePricePillFactory)
+      controller owner
+      do
+        create this with pillFactory = newPillFactory
