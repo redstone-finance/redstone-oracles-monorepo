@@ -7,7 +7,9 @@ BTC=["66","84","67"]
 FEED_IDS=[$(ETH),$(BTC)]
 PARTY_UPDATER="RedStoneOracleUpdater::$(PARTY_SUFFIX)"
 PARTY_READER="RedStoneOracleViewer::$(PARTY_SUFFIX)"
+PARTY_OWNER="RedStoneOracleOwner::$(PARTY_SUFFIX)"
 CURRENT_TIME=$(shell date -u +"%Y-%m-%dT%H:%M:%SZ")
+ADAPTER_ID=$(shell cat adapter_id.txt)
 
 get-prices-core: prepare_data get-core-id-by-interface get-token
 	@curl -X POST -H "Authorization: Bearer $(TOKEN)" \
@@ -79,17 +81,17 @@ read-price-data: get-adapter-id-by-interface get-token
 	    "actAs": [$(PARTY_READER)], \
 		"commandId": "read-price-data-$(shell date +%s)"}' | jq '.transactionTree.eventsById.["0"].ExercisedTreeEvent.value.exerciseResult'
 
-read-data: get-adapter-id-by-interface get-price-feed-id-by-interface get-token
+update-factory-id: get-adapter-id-by-interface get-token
 	curl -X POST -H "Authorization: Bearer $(TOKEN)" \
 	  -H "Content-Type: application/json" \
 	  "$(CANTON_API)/v2/commands/submit-and-wait-for-transaction-tree" \
 	  -d '{ \
 		"commands": [{ \
 			"ExerciseCommand": { \
-	    		"templateId": "$(IPRICE_FEED_TEMPLATE_ID)", \
-	    		"contractId": "$(PRICE_FEED_ID)", \
-	    		"choice": "ReadData", \
+	    		"templateId": "$(ADAPTER_TEMPLATE_ID)", \
+	    		"contractId": "$(ADAPTER_ID)", \
+	    		"choice": "UpdatePillFactory", \
 				"choiceArgument": { \
-					"caller": $(PARTY_READER)}}}], \
-	    "actAs": [$(PARTY_READER)], \
-		"commandId": "read-data-$(shell date +%s)"}' | jq '.transactionTree.eventsById.["0"].ExercisedTreeEvent.value.exerciseResult'
+					"newPillFactory": "$(FACTORY_ID)"}}}], \
+	    "actAs": [$(PARTY_OWNER)], \
+		"commandId": "update-pill-factory-$(shell date +%s)"}' | jq '.'

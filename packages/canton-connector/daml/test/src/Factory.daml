@@ -5,7 +5,7 @@ import DA.Assert
 import DA.Map as M
 import DA.Optional(fromSome)
 import DA.Foldable(forA_)
-import Splice.Api.FeaturedAppRightV1
+import Splice.Api.FeaturedAppRightV2
 import IRedStonePricePill
 import RedStonePricePillFactory
 import IRedStonePricePillFactory
@@ -71,7 +71,7 @@ main input = script do
 
   debug $ "Read result Viewer: " <> show readResult
 
-  verifier 1 currentTime
+  verifier 1.0 currentTime
 
   readResult <- submit client do
     exerciseCmd newCid ReadPriceData with
@@ -80,18 +80,19 @@ main input = script do
 
   debug $ "Read result Client: " <> show readResult
 
-  verifier 1 currentTime
+  verifier 1.0 currentTime
 
 verifyResult feedIds (beneficiary,dso,viewer) multiplier currentTime = do
   markers <- queryInterface @FeaturedAppActivityMarker beneficiary
-  debug markers
+  let weightSum = sum $ map (\(_, view) -> (fromSome view).weight) markers
+  let decLength = intToDecimal . length
 
-  length markers === multiplier * (length feedIds)
+  weightSum === multiplier * decLength feedIds
 
   pillEntries <- queryInterface @IRedStonePricePill viewer
   debug pillEntries
 
-  length pillEntries === multiplier * length feedIds
+  decLength pillEntries === multiplier * decLength feedIds
 
   let entryMap = M.fromList [ (view.feedId, view) | (_, Some view) <- pillEntries ]
 
