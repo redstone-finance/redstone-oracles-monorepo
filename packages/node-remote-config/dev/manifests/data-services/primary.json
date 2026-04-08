@@ -4963,6 +4963,11 @@
       ],
       "denomination": "USD",
       "rateFeed": false
+    },
+    "stKAIA_FUNDAMENTAL": {
+      "source": ["kaia-evm-fetcher-st-kaia"],
+      "denomination": "KAIA",
+      "rateFeed": true
     }
   },
   "multiPointPackages": {

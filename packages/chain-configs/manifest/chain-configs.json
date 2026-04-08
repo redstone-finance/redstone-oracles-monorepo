@@ -1504,6 +1504,24 @@
       "isAuctionModel": false,
       "twoDimensionalFees": false,
       "isMainnet": false
+    },
+    "kaia": {
+      "name": "Kaia Mainnet",
+      "networkId": 8217,
+      "currencySymbol": "KAIA",
+      "publicRpcUrls": [
+        "https://public-en.node.kaia.io",
+        "https://alpha-hardworking-orb.kaia-mainnet.quiknode.pro"
+      ],
+      "avgBlockTimeMs": 1000,
+      "multicall3": {
+        "address": "0xaD6CC5a465E5c8284a49eC9eD10EFE275460678c",
+        "type": "RedstoneMulticall3",
+        "gasLimitPerCall": 1000000
+      },
+      "isAuctionModel": false,
+      "twoDimensionalFees": false,
+      "isMainnet": true
     }
   },
   "temporaryConfigUpdates": {
