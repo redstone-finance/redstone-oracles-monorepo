@@ -26,15 +26,22 @@ template RedStonePricePillFactory
         assertMsg "Caller must be a creator" $ caller `elem` creators
         
       iRedStonePricePillFactory_CreatePricePillsImpl viewers adapterId stalenessMs inputData =
-        forA inputData \(feedId, priceData) ->
-          takeReward beneficiary featuredCid *>
-            (toInterfaceContractId @IRedStonePricePill <$> create RedStonePricePill
-              with
-                owner
-                viewers
-                creators
-                feedId
-                priceData
-                stalenessMs
-                adapterId
-            )
+          let
+            total = length inputData
+            frac_num = 1
+            frac_den = 1
+            rewardWeight = intToDecimal (total * frac_num) / intToDecimal frac_den
+          in do
+            takeRewards rewardWeight beneficiary featuredCid
+            
+            forA inputData \(feedId, priceData) ->
+              (toInterfaceContractId @IRedStonePricePill <$> create RedStonePricePill
+                with
+                  owner
+                  viewers
+                  creators
+                  feedId
+                  priceData
+                  stalenessMs
+                  adapterId
+              )
