@@ -3,17 +3,17 @@ sinclude ../../.env
 CANTON_API=$(PARTICIPANT)$(API_PATH)
 
 ADAPTER_NAME=RedStoneAdapter-v12-0.4.0
-ADAPTER_TEMPLATE_ID=4b09751144ad16495651812c12cba13aeacdff7750e232654c418bd975710968:RedStoneAdapter:RedStoneAdapter
+ADAPTER_TEMPLATE_ID=b75e539dfb519e0c2285cac39eeb9b90e34457a1bc2a24ebb81942051ebbdd5f:RedStoneAdapter:RedStoneAdapter
 
 CORE_NAME=RedStoneCore-v12-0.4.1
 CORE_ID := 1c47e8e0c8ebd8e36a56f070c64e061b7544adb15f7a8eba4a88fa4c49502a46
 CORE_TEMPLATE_ID := $(CORE_ID):RedStoneCore:RedStoneCore
 CORE_CLIENT_TEMPLATE_ID := $(CORE_ID):RedStoneCoreClient:RedStoneCoreClient
 
-FACTORY_NAME=RedStonePricePillFactory-v12-0.4.0
-FACTORY_TEMPLATE_ID=86c358756961e573b2ef4a5d86cf7624aa86a334d6ee8bb8a916a12918def8e2:RedStonePricePillFactory:RedStonePricePillFactory
+FACTORY_NAME=RedStonePricePillFactory-v13-0.4.0
+FACTORY_TEMPLATE_ID=a83ac20b1fdfb7f74592d70249887368a918e7eb3b5a6e40058166bb626d67ed:RedStonePricePillFactory:RedStonePricePillFactory
 
-FACTORY_ID=004009c4c2190567b16a9ab97f1af51709586b6200de2920870b31ce3db03d4345ca121220446e7ebda2e5afe4e1970e18abdaf9c9321db0cb0e78e1bc78d2db5061d8557a
+FACTORY_ID=0051cb9b88c47c440f481dc3ad42ecd93e6e4f1c9bf8b0c9591fe0a580246c6c10ca121220aa98f0d6dad6b34bc2604188072fcd07faa1743f95df5e2330bd0d7bd3e60afa
 
 INTERFACE_ID=\#redstone-interface-v12
 IADAPTER_TEMPLATE_ID=$(INTERFACE_ID):IRedStoneAdapter:IRedStoneAdapter
@@ -175,7 +175,7 @@ get-core-id-by-interface: get-token
 	  -d '{ \
 	    "filter": { \
 	      "filtersByParty": { \
-	        "RedStoneOracleOwner::$(PARTY_SUFFIX)": { \
+	        "RedStoneOracleViewer::$(PARTY_SUFFIX)": { \
 	          "cumulative": [{ \
 	            "identifierFilter": { \
 	              "InterfaceFilter": { \
@@ -244,7 +244,7 @@ get-featured-app-right: get-token
 							"identifierFilter": { \
 								"InterfaceFilter": { \
 									"value": { \
-										"interfaceId": "913a7fbb09560a7bc436fbf695ae973bdb6e0ff070d1563f28f51939938138d6:IRedStonePricePill:IRedStonePricePill", \
+										"interfaceId": "dd22e3e168a8c7fd0313171922dabf1f7a3b131bd9bfc9ff98e606f8c57707ea:Splice.Api.FeaturedAppRightV2:FeaturedAppActivityMarker", \
 										"includeInterfaceView": true, \
 										"includeCreatedEventBlob": true \
 									} \

@@ -8,7 +8,7 @@ dependencies:
 data-dependencies:
   - ../types/.daml/dist/redstone-types-v12-0.4.0.dar
   - ../sdk/.daml/dist/redstone-sdk-v12-0.4.0.dar
-  - ../featured/.daml/dist/redstone-featured-v12-0.4.0.dar
+  - ../featured/.daml/dist/redstone-featured-v13-0.4.0.dar
   - ../interface/.daml/dist/redstone-interface-v12-0.4.0.dar
 build-options:
   - --target=2.1
