@@ -769,6 +769,41 @@
       "denomination": "enum",
       "rateFeed": false
     },
+    "GAS.T": {
+      "source": [
+        "rollover-time-hourly",
+        "ws-itick-futures",
+        "ws-twelve-data",
+        "alltick-api-deferred",
+        "financialmodelingprep-deferred",
+        "ws-lmax"
+      ],
+      "denomination": "USD",
+      "priceAggregator": "redstoneX",
+      "redstoneXAggregatorConfig": {
+        "priceDiscoverySources": [
+          "ws-itick-futures",
+          "ws-twelve-data",
+          "alltick-api-deferred",
+          "financialmodelingprep-deferred",
+          "ws-lmax"
+        ]
+      },
+      "broadcasters": ["influx"],
+      "rateFeed": false,
+      "types": ["rwa"]
+    },
+    "GAS.T---REGULAR": {
+      "source": ["cme-energy-on-market"],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": ["rwa"]
+    },
+    "GAS_MONTH.T": {
+      "source": ["rollover-time-hourly"],
+      "denomination": "enum",
+      "rateFeed": false
+    },
     "WTI_CURRENT": {
       "source": ["databento-cme-futures", "ws-polygon-massive-nymex-futures"],
       "skipBroadcasting": true,
@@ -815,6 +850,41 @@
     },
     "WTI_MONTH.V": {
       "source": ["rollover-volume"],
+      "denomination": "enum",
+      "rateFeed": false
+    },
+    "WTI.T": {
+      "source": [
+        "rollover-time-hourly",
+        "alltick-api-deferred",
+        "metal-price-api-deferred",
+        "ws-lmax",
+        "ws-twelve-data",
+        "ws-blocksize"
+      ],
+      "priceAggregator": "redstoneX",
+      "redstoneXAggregatorConfig": {
+        "priceDiscoverySources": [
+          "alltick-api-deferred",
+          "metal-price-api-deferred",
+          "ws-lmax",
+          "ws-twelve-data",
+          "ws-blocksize"
+        ]
+      },
+      "broadcasters": ["influx"],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": ["rwa"]
+    },
+    "WTI.T---REGULAR": {
+      "source": ["cme-energy-on-market"],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": ["rwa"]
+    },
+    "WTI_MONTH.T": {
+      "source": ["rollover-time-hourly"],
       "denomination": "enum",
       "rateFeed": false
     }
