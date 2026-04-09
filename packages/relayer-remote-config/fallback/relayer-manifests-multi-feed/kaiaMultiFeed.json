@@ -1,0 +1,24 @@
+{
+  "chain": {
+    "name": "kaia",
+    "id": 8217
+  },
+  "updateTriggers": {
+    "deviationPercentage": 0.5,
+    "timeSinceLastUpdateInMilliseconds": 21600000
+  },
+  "adapterContract": "0xda359D67520b702327a8b829A3e35CDF078F9fC1",
+  "adapterContractType": "multi-feed",
+  "dataServiceId": "redstone-primary-prod",
+  "priceFeeds": {
+    "ETH": {
+      "priceFeedAddress": "0xb728dbB1D8504fD521db0e87bdDdF33466bCabAD"
+    },
+    "BTC": {
+      "priceFeedAddress": "0x6AEE1334b4053B0148907649D447557560CC8126"
+    },
+    "USDT": {
+      "priceFeedAddress": "0xE08bcb1407E8496d434eFe4ecf2a20E27068a14A"
+    }
+  }
+}
