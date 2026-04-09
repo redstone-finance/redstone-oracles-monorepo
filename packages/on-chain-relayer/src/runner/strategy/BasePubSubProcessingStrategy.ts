@@ -1,7 +1,7 @@
 import { DataPackagesRequestParams, DataPackagesResponse } from "@redstone-finance/sdk";
-import { MqttDataProcessingStrategy } from "./MqttDataProcessingStrategy";
+import { PubSubDataProcessingStrategy } from "./PubSubDataProcessingStrategy";
 
-export class BaseMqttDataProcessingStrategy<C, Q = string> extends MqttDataProcessingStrategy<
+export class BasePubSubDataProcessingStrategy<C, Q = string> extends PubSubDataProcessingStrategy<
   C,
   Q
 > {

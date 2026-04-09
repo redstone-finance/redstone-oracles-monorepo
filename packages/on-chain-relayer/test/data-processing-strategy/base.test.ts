@@ -1,10 +1,10 @@
-import { BaseMqttDataProcessingStrategy } from "../../src/runner/strategy/BaseMqttProcessingStrategy";
+import { BasePubSubDataProcessingStrategy } from "../../src/runner/strategy/BasePubSubProcessingStrategy";
 import { BTC_DATA_POINT, ETH_DATA_POINT, later, LATER_TS, USDT_DATA_POINT } from "./mock-utils";
-import { testMqttDataProcessingStrategy } from "./test-mqtt-data-processing.strategy";
+import { testPubSubDataProcessingStrategy } from "./test-pub-sub-data-processing.strategy";
 
-testMqttDataProcessingStrategy(
-  "Base Mqtt Data Processing Strategy",
-  (cache) => new BaseMqttDataProcessingStrategy<void>(cache),
+testPubSubDataProcessingStrategy(
+  "Base PubSub Data Processing Strategy",
+  (cache) => new BasePubSubDataProcessingStrategy<void>(cache),
   (performTest) => {
     /// Differences
 

@@ -13,7 +13,7 @@ import {
 } from "@redstone-finance/sdk";
 import { loggerFactory, RedstoneCommon } from "@redstone-finance/utils";
 import _ from "lodash";
-import { MqttDataProcessingStrategyType, RelayerConfig } from "../config/RelayerConfig";
+import { PubSubDataProcessingStrategyType, RelayerConfig } from "../config/RelayerConfig";
 import {
   canIgnoreMissingFeeds,
   makeDataPackagesRequestParams,
@@ -22,29 +22,29 @@ import { ContractFacade } from "../facade/ContractFacade";
 import { getContractFacade } from "../facade/get-contract-facade";
 import { createPubSubClient } from "./create-pub-sub-client";
 import { IterationOptions, runIteration } from "./run-iteration";
-import { BaseMqttDataProcessingStrategy } from "./strategy/BaseMqttProcessingStrategy";
+import { BasePubSubDataProcessingStrategy } from "./strategy/BasePubSubProcessingStrategy";
+import { OptimizedPubSubDataProcessingStrategy } from "./strategy/OptimizedPubSubDataProcessingStrategy";
 import {
-  MqttDataProcessingStrategy,
-  MqttDataProcessingStrategyDelegate,
-} from "./strategy/MqttDataProcessingStrategy";
-import { OptimizedMqttDataProcessingStrategy } from "./strategy/OptimizedMqttDataProcessingStrategy";
-import { TimestampMqttDataProcessingStrategy } from "./strategy/TimestampMqttDataProcessingStrategy";
+  PubSubDataProcessingStrategy,
+  PubSubDataProcessingStrategyDelegate,
+} from "./strategy/PubSubDataProcessingStrategy";
+import { TimestampPubSubDataProcessingStrategy } from "./strategy/TimestampPubSubDataProcessingStrategy";
 
 const RETRY_CONFIG: Omit<RedstoneCommon.RetryConfig, "fn"> = {
   maxRetries: 3,
   waitBetweenMs: 1000,
 };
 
-export class MqttRunner implements MqttDataProcessingStrategyDelegate<RelayerConfig> {
+export class PubSubRunner implements PubSubDataProcessingStrategyDelegate<RelayerConfig> {
   private subscriber?: DataPackageSubscriber;
-  readonly logger = loggerFactory("relayer/mqtt-runner");
+  readonly logger = loggerFactory("relayer/pub-sub-runner");
   private readonly rateLimitCircuitBreaker = new RateLimitsCircuitBreaker(1_000, 10_000);
   private shouldGracefullyShutdown: boolean = false;
 
   constructor(
     private readonly client: PubSubClient,
     private readonly contractFacade: ContractFacade,
-    private readonly strategy: MqttDataProcessingStrategy<RelayerConfig, unknown>,
+    private readonly strategy: PubSubDataProcessingStrategy<RelayerConfig, unknown>,
     private readonly iterationOptionsOverride: Partial<IterationOptions>
   ) {
     process.on("SIGTERM", () => {
@@ -61,10 +61,15 @@ export class MqttRunner implements MqttDataProcessingStrategyDelegate<RelayerCon
   ) {
     const cache = new DataPackagesResponseCache();
     const contractFacade = await getContractFacade(relayerConfig, cache);
-    const strategy = new (this.getStrategyClass(relayerConfig.mqttDataProcessingStrategy))(cache);
+    const strategy = new (this.getStrategyClass(relayerConfig.pubSubDataProcessingStrategy))(cache);
 
     const pubSubClient = createPubSubClient(relayerConfig);
-    const runner = new MqttRunner(pubSubClient, contractFacade, strategy, iterationOptionsOverride);
+    const runner = new PubSubRunner(
+      pubSubClient,
+      contractFacade,
+      strategy,
+      iterationOptionsOverride
+    );
 
     await RedstoneCommon.retry({
       ...RETRY_CONFIG,
@@ -77,29 +82,29 @@ export class MqttRunner implements MqttDataProcessingStrategyDelegate<RelayerCon
     return runner;
   }
 
-  private static getStrategyClass(mqttDataProcessingStrategy?: MqttDataProcessingStrategyType) {
-    switch (mqttDataProcessingStrategy) {
-      case MqttDataProcessingStrategyType.Timestamp:
-        return TimestampMqttDataProcessingStrategy<RelayerConfig>;
-      case MqttDataProcessingStrategyType.Optimized:
-        return OptimizedMqttDataProcessingStrategy<RelayerConfig>;
+  private static getStrategyClass(pubSubDataProcessingStrategy?: PubSubDataProcessingStrategyType) {
+    switch (pubSubDataProcessingStrategy) {
+      case PubSubDataProcessingStrategyType.Timestamp:
+        return TimestampPubSubDataProcessingStrategy<RelayerConfig>;
+      case PubSubDataProcessingStrategyType.Optimized:
+        return OptimizedPubSubDataProcessingStrategy<RelayerConfig>;
       default:
-        return BaseMqttDataProcessingStrategy<RelayerConfig>;
+        return BasePubSubDataProcessingStrategy<RelayerConfig>;
     }
   }
 
   private setUpSubscriptionUpdates(relayerConfig: RelayerConfig) {
-    if (!RedstoneCommon.isDefined(relayerConfig.mqttUpdateSubscriptionIntervalMs)) {
+    if (!RedstoneCommon.isDefined(relayerConfig.pubSubUpdateSubscriptionIntervalMs)) {
       throw new Error(
-        "Relayer is going to run with mqtt but mqttUpdateSubscriptionIntervalMs is not set"
+        "Relayer is going to run with pub-sub but pubSubUpdateSubscriptionIntervalMs is not set"
       );
     }
 
-    if (relayerConfig.mqttUpdateSubscriptionIntervalMs > 0) {
+    if (relayerConfig.pubSubUpdateSubscriptionIntervalMs > 0) {
       // eslint-disable-next-line @typescript-eslint/no-misused-promises -- add reason here, please
       setInterval(async () => {
         await this.updateSubscription(relayerConfig, false);
-      }, relayerConfig.mqttUpdateSubscriptionIntervalMs);
+      }, relayerConfig.pubSubUpdateSubscriptionIntervalMs);
     }
   }
 
@@ -125,7 +130,7 @@ export class MqttRunner implements MqttDataProcessingStrategyDelegate<RelayerCon
   }
 
   private async subscribe(requestParams: DataPackagesRequestParams, relayerConfig: RelayerConfig) {
-    const params = MqttRunner.prepareDataPackageSubscriberParams(requestParams, relayerConfig);
+    const params = PubSubRunner.prepareDataPackageSubscriberParams(requestParams, relayerConfig);
 
     if (_.isEqual(params, this.subscriber?.params)) {
       this.logger.debug("Params remain unchanged, doesn't need to resubscribe");
@@ -153,24 +158,24 @@ export class MqttRunner implements MqttDataProcessingStrategyDelegate<RelayerCon
     requestParams: DataPackagesRequestParams
   ) {
     if (
-      !relayerConfig.mqttFallbackCheckIntervalMs ||
-      !relayerConfig.mqttFallbackMaxDelayBetweenPublishesMs
+      !relayerConfig.pubSubFallbackCheckIntervalMs ||
+      !relayerConfig.pubSubFallbackMaxDelayBetweenPublishesMs
     ) {
       this.logger.warn(
-        `Fallback IS NOT enabled. mqttFallbackCheckIntervalMs or mqttFallbackMaxDelayBetweenPublishesMs is missing`
+        `Fallback IS NOT enabled. pubSubFallbackCheckIntervalMs or pubSubFallbackMaxDelayBetweenPublishesMs is missing`
       );
       return;
     }
 
     this.subscriber!.enableFallback(
       async () => await new ContractParamsProvider(requestParams).requestDataPackages(),
-      relayerConfig.mqttFallbackMaxDelayBetweenPublishesMs,
-      relayerConfig.mqttFallbackCheckIntervalMs
+      relayerConfig.pubSubFallbackMaxDelayBetweenPublishesMs,
+      relayerConfig.pubSubFallbackCheckIntervalMs
     );
   }
 
   async strategyRunIteration(
-    _strategy: MqttDataProcessingStrategy<RelayerConfig>,
+    _strategy: PubSubDataProcessingStrategy<RelayerConfig>,
     config: RelayerConfig
   ): Promise<void> {
     try {
@@ -205,20 +210,23 @@ export class MqttRunner implements MqttDataProcessingStrategyDelegate<RelayerCon
       skipSignatureVerification,
     } = requestParams;
     const {
-      mqttMinimalOffChainSignersCount,
-      mqttWaitForOtherSignersMs,
-      mqttMaxReferenceValueDeviationPercent,
-      mqttMaxReferenceValueDelayInSeconds,
-      mqttMinReferenceValues,
+      pubSubMinimalOffChainSignersCount,
+      pubSubWaitForOtherSignersMs,
+      pubSubMaxReferenceValueDeviationPercent,
+      pubSubMaxReferenceValueDelayInSeconds,
+      pubSubMinReferenceValues,
     } = relayerConfig;
 
-    if (!mqttMinimalOffChainSignersCount || !RedstoneCommon.isDefined(mqttWaitForOtherSignersMs)) {
+    if (
+      !pubSubMinimalOffChainSignersCount ||
+      !RedstoneCommon.isDefined(pubSubWaitForOtherSignersMs)
+    ) {
       throw new Error(
-        "Relayer is going to update mqtt subscription but mqttMinimalOffChainSignersCount or mqttWaitMsForOtherSignersMs is not set"
+        "Relayer is going to update pub-sub subscription but pubSubMinimalOffChainSignersCount or pubSubWaitForOtherSignersMs is not set"
       );
     }
 
-    RedstoneCommon.assert(dataPackagesIds, "property dataPackageIds is required in mqtt");
+    RedstoneCommon.assert(dataPackagesIds, "property dataPackageIds is required in pub-sub");
 
     return {
       dataServiceId,
@@ -227,12 +235,12 @@ export class MqttRunner implements MqttDataProcessingStrategyDelegate<RelayerCon
       authorizedSigners,
       skipSignatureVerification,
       storageInstance,
-      minimalOffChainSignersCount: mqttMinimalOffChainSignersCount,
-      waitMsForOtherSignersAfterMinimalSignersCountSatisfied: mqttWaitForOtherSignersMs,
+      minimalOffChainSignersCount: pubSubMinimalOffChainSignersCount,
+      waitMsForOtherSignersAfterMinimalSignersCountSatisfied: pubSubWaitForOtherSignersMs,
       ignoreMissingFeeds: canIgnoreMissingFeeds(relayerConfig),
-      maxReferenceValueDeviationPercent: mqttMaxReferenceValueDeviationPercent,
-      maxReferenceValueDelayInSeconds: mqttMaxReferenceValueDelayInSeconds,
-      minReferenceValues: mqttMinReferenceValues,
+      maxReferenceValueDeviationPercent: pubSubMaxReferenceValueDeviationPercent,
+      maxReferenceValueDelayInSeconds: pubSubMaxReferenceValueDelayInSeconds,
+      minReferenceValues: pubSubMinReferenceValues,
     };
   }
 }

@@ -4,9 +4,9 @@ import {
   getResponseFeedIds,
 } from "@redstone-finance/sdk";
 import { SetOperationQueue } from "@redstone-finance/utils";
-import { BaseMqttDataProcessingStrategy } from "./BaseMqttProcessingStrategy";
+import { BasePubSubDataProcessingStrategy } from "./BasePubSubProcessingStrategy";
 
-export class OptimizedMqttDataProcessingStrategy<C> extends BaseMqttDataProcessingStrategy<
+export class OptimizedPubSubDataProcessingStrategy<C> extends BasePubSubDataProcessingStrategy<
   C,
   Set<string>
 > {
