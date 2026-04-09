@@ -1,0 +1,28 @@
+module RedStoneRewardFactory where
+
+import IRedStoneCore
+import Featured
+import RewardConfig
+
+-- Implements IRedStoneCore temporarily to avoid introducing a new interface.
+-- The feedIds parameter encodes the pill count (its length), while Time and PayloadHex are unused.
+template RedStoneRewardFactory
+  with
+    factoryId: Text
+    owner : Party
+    viewers : [Party]
+    beneficiary : Party
+    featuredCid : RedStoneFeaturedContract
+  where
+    signatory owner, beneficiary
+    observer viewers
+
+    interface instance IRedStoneCore for RedStoneRewardFactory where
+      view = RedStoneCoreView with coreId = factoryId
+
+      -- feedIds length encodes the accumulated pill count; Time and PayloadHex are unused
+      iRedStoneCore_GetPricesImpl feedIds _currentTime _payloadHex = do
+        let weight = rewardWeight $ length feedIds
+        takeRewards weight beneficiary featuredCid
+
+        pure ([], 0)
