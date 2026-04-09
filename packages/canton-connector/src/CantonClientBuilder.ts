@@ -1,9 +1,8 @@
 import { ChainTypeEnum, MultiExecutor } from "@redstone-finance/utils";
 import { CantonClient } from "./CantonClient";
 import { chainIdToNetwork, networkToChainId } from "./CantonNetwork";
-
 import { KeycloakTokenProviderParams } from "./KeycloakTokenProviderParams";
-import { keycloakTokenProvider } from "./keycloak-token-provider";
+import { KeycloakTokenProvider } from "./keycloak-token-provider";
 
 type TokenProvider = () => Promise<string>;
 
@@ -13,6 +12,7 @@ export class CantonClientBuilder extends MultiExecutor.ClientBuilder<CantonClien
 
   withTokenProvider(provider?: TokenProvider) {
     this.tokenProvider = provider;
+
     return this;
   }
 
@@ -21,7 +21,9 @@ export class CantonClientBuilder extends MultiExecutor.ClientBuilder<CantonClien
   }
 
   withKeycloakAuth(opts?: KeycloakTokenProviderParams | string) {
-    return this.withTokenProvider(() => keycloakTokenProvider(opts));
+    const tokenProvider = new KeycloakTokenProvider(opts);
+
+    return this.withTokenProvider(tokenProvider.getToken.bind(tokenProvider));
   }
 
   build() {
