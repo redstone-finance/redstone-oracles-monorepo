@@ -7,6 +7,8 @@ import DA.Optional(fromSome)
 import DA.Foldable(forA_)
 import Splice.Api.FeaturedAppRightV2
 import IRedStonePricePill
+import IRedStoneCore
+import RedStoneRewardFactory
 import RedStonePricePillFactory
 import IRedStonePricePillFactory
 import IRedStoneAdapter
@@ -32,11 +34,17 @@ main input = script do
   featuredCid <- submit (actAs dso <> readAs beneficiary) do
     createCmd MockFeaturedAppRight with dso, provider = beneficiary
 
-  pillFactoryCid <- submit (actAs [owner, beneficiary]) do
+  pillFactoryCid <- submit (actAs owner) do
     createCmd RedStonePricePillFactory with
       factoryId = "Factory"
       owner
       creators = [updater]
+
+  rewardFactoryCid <- submit (actAs [owner, beneficiary]) do
+    createCmd RedStoneRewardFactory with
+      factoryId = "RewardFactory"
+      owner
+      viewers = [updater]
       beneficiary
       featuredCid = toInterfaceContractId @FeaturedAppRight featuredCid
 
@@ -51,6 +59,8 @@ main input = script do
       viewers = [viewer, client]
       feedData = M.empty
       pillFactory = Some $ toInterfaceContractId @IRedStonePricePillFactory pillFactoryCid
+      rewardState = None
+      rewardFactory = Some $ toInterfaceContractId @IRedStoneCore rewardFactoryCid
 
   debug $ "Adapter CID: " <> show adapterCid
 
@@ -71,7 +81,7 @@ main input = script do
 
   debug $ "Read result Viewer: " <> show readResult
 
-  verifier 1.0 currentTime
+  verifier 0.625 currentTime
 
   readResult <- submit client do
     exerciseCmd newCid ReadPriceData with
@@ -80,7 +90,7 @@ main input = script do
 
   debug $ "Read result Client: " <> show readResult
 
-  verifier 1.0 currentTime
+  verifier 0.625 currentTime
 
 verifyResult feedIds (beneficiary,dso,viewer) multiplier currentTime = do
   markers <- queryInterface @FeaturedAppActivityMarker beneficiary
@@ -92,7 +102,7 @@ verifyResult feedIds (beneficiary,dso,viewer) multiplier currentTime = do
   pillEntries <- queryInterface @IRedStonePricePill viewer
   debug pillEntries
 
-  decLength pillEntries === multiplier * decLength feedIds
+  length pillEntries === length feedIds
 
   let entryMap = M.fromList [ (view.feedId, view) | (_, Some view) <- pillEntries ]
 
