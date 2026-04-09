@@ -1,14 +1,22 @@
 import {
+  CANTON_CONTRACT_ADAPTER_DEFAULT_CONFIG,
   CantonClientBuilder,
   PricesCantonContractAdapter,
+  readAdditionalPillViewers,
 } from "@redstone-finance/canton-connector";
 import { RedstoneCommon } from "@redstone-finance/utils";
-import { z } from "zod";
 import { PartialRelayerConfig } from "./partial-relayer-config";
 
 export const getCantonContractAdapter = (relayerConfig: PartialRelayerConfig) => {
-  const { adapterContractAddress, adapterContractPackageId, rpcUrls, networkId, privateKey } =
-    relayerConfig;
+  const {
+    adapterContractAddress,
+    adapterContractPackageId,
+    rpcUrls,
+    networkId,
+    privateKey,
+    expectedTxDeliveryTimeInMS,
+    maxTxSendAttempts,
+  } = relayerConfig;
 
   const client = new CantonClientBuilder()
     .withRpcUrls(rpcUrls)
@@ -16,17 +24,20 @@ export const getCantonContractAdapter = (relayerConfig: PartialRelayerConfig) =>
     .withDefaultAuth(privateKey)
     .build();
 
-  const additionalPillViewers = RedstoneCommon.getFromEnv(
-    "ADDITIONAL_PILL_VIEWERS",
-    z.array(z.string()).optional()
-  );
-
   return new PricesCantonContractAdapter(
     client,
-    RedstoneCommon.getFromEnv("VIEWER_PARTY_ID"),
-    RedstoneCommon.getFromEnv("UPDATER_PARTY_ID"),
-    adapterContractAddress,
-    additionalPillViewers,
+    {
+      ...CANTON_CONTRACT_ADAPTER_DEFAULT_CONFIG,
+      viewerPartyId: RedstoneCommon.getFromEnv("VIEWER_PARTY_ID"),
+      updaterPartyId: RedstoneCommon.getFromEnv("UPDATER_PARTY_ID"),
+      additionalPillViewers: readAdditionalPillViewers(),
+      adapterId: adapterContractAddress,
+      maxTxSendAttempts:
+        maxTxSendAttempts ?? CANTON_CONTRACT_ADAPTER_DEFAULT_CONFIG.maxTxSendAttempts,
+      expectedTxDeliveryTimeInMs:
+        expectedTxDeliveryTimeInMS ??
+        CANTON_CONTRACT_ADAPTER_DEFAULT_CONFIG.expectedTxDeliveryTimeInMs,
+    },
     adapterContractPackageId
   );
 };
