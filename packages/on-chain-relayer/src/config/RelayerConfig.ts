@@ -8,7 +8,7 @@ import { NetworkId } from "@redstone-finance/utils";
 export type RelayerConfig = OnChainRelayerEnv & ManifestConfig;
 
 export type ConditionCheckNames = "time" | "value-deviation" | "cron";
-export enum MqttDataProcessingStrategyType {
+export enum PubSubDataProcessingStrategyType {
   Base = "base",
   Timestamp = "timestamp",
   Optimized = "optimized",
@@ -68,17 +68,17 @@ export type OnChainRelayerEnv = {
   influxUrl?: string;
   influxToken?: string;
   ethersPollingIntervalInMs?: number;
-  runWithMqtt?: boolean;
-  mqttEndpoint?: string;
-  mqttUpdateSubscriptionIntervalMs?: number;
-  mqttMinimalOffChainSignersCount?: number;
-  mqttWaitForOtherSignersMs?: number;
-  mqttFallbackMaxDelayBetweenPublishesMs?: number;
-  mqttFallbackCheckIntervalMs?: number;
-  mqttDataProcessingStrategy?: MqttDataProcessingStrategyType;
-  mqttMaxReferenceValueDeviationPercent?: number;
-  mqttMaxReferenceValueDelayInSeconds?: number;
-  mqttMinReferenceValues?: number;
+  runWithPubSub?: boolean;
+  pubSubEndpoint?: string;
+  pubSubUpdateSubscriptionIntervalMs?: number;
+  pubSubMinimalOffChainSignersCount?: number;
+  pubSubWaitForOtherSignersMs?: number;
+  pubSubFallbackMaxDelayBetweenPublishesMs?: number;
+  pubSubFallbackCheckIntervalMs?: number;
+  pubSubDataProcessingStrategy?: PubSubDataProcessingStrategyType;
+  pubSubMaxReferenceValueDeviationPercent?: number;
+  pubSubMaxReferenceValueDelayInSeconds?: number;
+  pubSubMinReferenceValues?: number;
   authorizedSigners?: string[];
   includeAdditionalFeedsForGasOptimization: boolean;
   percentileOfPriorityFee?: number | number[];

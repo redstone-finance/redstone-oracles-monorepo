@@ -8,7 +8,7 @@ import {
 import { RedstoneCommon } from "@redstone-finance/utils";
 import "dotenv/config";
 import { z } from "zod";
-import { MqttDataProcessingStrategyType, OnChainRelayerEnv } from "./RelayerConfig";
+import { OnChainRelayerEnv, PubSubDataProcessingStrategyType } from "./RelayerConfig";
 import { isFallbackConfig } from "./config-checks";
 
 const DEFAULT_WAIT_FOR_ALL_GATEWAYS_TIME = 1000;
@@ -35,7 +35,19 @@ const readManifest = () => {
   }
 };
 
+const assertNoDeprecatedMqttVariables = () => {
+  const deprecatedVars = Object.keys(process.env).filter((key) => key.startsWith("MQTT_"));
+  if (deprecatedVars.length > 0) {
+    throw new Error(
+      `Detected deprecated MQTT_* environment variables: ${deprecatedVars.join(", ")}. ` +
+        `MQTT_* variables have been migrated to PUB_SUB_* (e.g. MQTT_PUB_SUB_CONFIGS -> PUB_SUB_CONFIGS). ` +
+        `Please update your deployment configuration accordingly.`
+    );
+  }
+};
+
 export const readManifestAndEnv = () => {
+  assertNoDeprecatedMqttVariables();
   const manifest = readManifest();
 
   let gasLimit = RedstoneCommon.getFromEnv("GAS_LIMIT", z.number().positive().int().optional());
@@ -171,42 +183,42 @@ export const readManifestAndEnv = () => {
       "ETHERS_POLLING_INTERVAL_IN_MS",
       z.number().default(4000)
     ),
-    runWithMqtt: RedstoneCommon.getFromEnv("RUN_WITH_MQTT", z.boolean().default(false)),
-    mqttEndpoint: RedstoneCommon.getFromEnv("MQTT_ENDPOINT", z.string().optional()),
-    mqttUpdateSubscriptionIntervalMs: RedstoneCommon.getFromEnv(
-      "MQTT_UPDATE_SUBSCRIPTION_INTERVAL_MS",
+    runWithPubSub: RedstoneCommon.getFromEnv("RUN_WITH_PUB_SUB", z.boolean().default(false)),
+    pubSubEndpoint: RedstoneCommon.getFromEnv("PUB_SUB_ENDPOINT", z.string().optional()),
+    pubSubUpdateSubscriptionIntervalMs: RedstoneCommon.getFromEnv(
+      "PUB_SUB_UPDATE_SUBSCRIPTION_INTERVAL_MS",
       z.number().default(RedstoneCommon.minToMs(3))
     ),
-    mqttMinimalOffChainSignersCount: RedstoneCommon.getFromEnv(
-      "MQTT_MINIMAL_OFFCHAIN_SIGNERS_COUNT",
+    pubSubMinimalOffChainSignersCount: RedstoneCommon.getFromEnv(
+      "PUB_SUB_MINIMAL_OFFCHAIN_SIGNERS_COUNT",
       z.number().optional()
     ),
-    mqttWaitForOtherSignersMs: RedstoneCommon.getFromEnv(
-      "MQTT_WAIT_FOR_OTHER_SIGNERS_MS",
+    pubSubWaitForOtherSignersMs: RedstoneCommon.getFromEnv(
+      "PUB_SUB_WAIT_FOR_OTHER_SIGNERS_MS",
       z.number().optional()
     ),
-    mqttFallbackMaxDelayBetweenPublishesMs: RedstoneCommon.getFromEnv(
-      "MQTT_FALLBACK_MAX_DELAY_BETWEEN_PUBLISHES_MS",
+    pubSubFallbackMaxDelayBetweenPublishesMs: RedstoneCommon.getFromEnv(
+      "PUB_SUB_FALLBACK_MAX_DELAY_BETWEEN_PUBLISHES_MS",
       z.number().optional()
     ),
-    mqttFallbackCheckIntervalMs: RedstoneCommon.getFromEnv(
-      "MQTT_FALLBACK_CHECK_INTERVAL_MS",
+    pubSubFallbackCheckIntervalMs: RedstoneCommon.getFromEnv(
+      "PUB_SUB_FALLBACK_CHECK_INTERVAL_MS",
       z.number().optional()
     ),
-    mqttDataProcessingStrategy: RedstoneCommon.getFromEnv(
-      "MQTT_DATA_PROCESSING_STRATEGY",
-      z.enum(MqttDataProcessingStrategyType).default(MqttDataProcessingStrategyType.Optimized)
+    pubSubDataProcessingStrategy: RedstoneCommon.getFromEnv(
+      "PUB_SUB_DATA_PROCESSING_STRATEGY",
+      z.enum(PubSubDataProcessingStrategyType).default(PubSubDataProcessingStrategyType.Optimized)
     ),
-    mqttMaxReferenceValueDeviationPercent: RedstoneCommon.getFromEnv(
-      "MQTT_MAX_REFERENCE_VALUE_DEVIATION_PERCENT",
+    pubSubMaxReferenceValueDeviationPercent: RedstoneCommon.getFromEnv(
+      "PUB_SUB_MAX_REFERENCE_VALUE_DEVIATION_PERCENT",
       z.number().optional()
     ),
-    mqttMaxReferenceValueDelayInSeconds: RedstoneCommon.getFromEnv(
-      "MQTT_MAX_REFERENCE_VALUE_DEVIATION_DELAY_IN_SECONDS",
+    pubSubMaxReferenceValueDelayInSeconds: RedstoneCommon.getFromEnv(
+      "PUB_SUB_MAX_REFERENCE_VALUE_DEVIATION_DELAY_IN_SECONDS",
       z.number().optional()
     ),
-    mqttMinReferenceValues: RedstoneCommon.getFromEnv(
-      "MQTT_MIN_REFERENCE_VALUES",
+    pubSubMinReferenceValues: RedstoneCommon.getFromEnv(
+      "PUB_SUB_MIN_REFERENCE_VALUES",
       z.number().optional()
     ),
     includeAdditionalFeedsForGasOptimization: RedstoneCommon.getFromEnv(

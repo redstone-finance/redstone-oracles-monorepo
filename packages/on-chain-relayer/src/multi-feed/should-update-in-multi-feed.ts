@@ -15,7 +15,7 @@ export const shouldUpdateInMultiFeed = async (
   const infoMessages: IterationArgsMessage[] = [];
   const dataFeedsDeviationRatios: Record<string, number> = {};
   const heartbeatUpdates: Set<number> = new Set();
-  const pictogram = config.runWithMqtt ? "ℹ️" : "⛔";
+  const pictogram = config.runWithPubSub ? "ℹ️" : "⛔";
   const missingDataFeedIds = [];
   const responseFeedIds = getResponseFeedIds(context.dataPackages);
 

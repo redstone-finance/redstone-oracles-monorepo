@@ -1,7 +1,7 @@
 import { DataPackagesResponse, DataPackagesResponseCache } from "@redstone-finance/sdk";
 import { expect } from "chai";
 import sinon from "sinon";
-import { MqttDataProcessingStrategy } from "../../src/runner/strategy/MqttDataProcessingStrategy";
+import { PubSubDataProcessingStrategy } from "../../src/runner/strategy/PubSubDataProcessingStrategy";
 import {
   BTC_DATA_POINT,
   DataPackagesResponseInput,
@@ -15,9 +15,9 @@ import {
   USDT_DATA_POINT,
 } from "./mock-utils";
 
-export function testMqttDataProcessingStrategy(
+export function testPubSubDataProcessingStrategy(
   strategyName: string,
-  createStrategy: (cache: DataPackagesResponseCache) => MqttDataProcessingStrategy<void>,
+  createStrategy: (cache: DataPackagesResponseCache) => PubSubDataProcessingStrategy<void>,
   otherTests: (
     performTest: (
       inputs: DataPackagesResponseInput[][],
@@ -30,7 +30,7 @@ export function testMqttDataProcessingStrategy(
     let clock: sinon.SinonFakeTimers;
     let delegate: MockStrategyDelegate;
     let facadeCache: DataPackagesResponseCache;
-    let sut: MqttDataProcessingStrategy<void>;
+    let sut: PubSubDataProcessingStrategy<void>;
 
     beforeEach(() => {
       clock = sinon.useFakeTimers();
