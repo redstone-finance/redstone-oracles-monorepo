@@ -5,11 +5,11 @@ import {
   getDataPackagesTimestamp,
 } from "@redstone-finance/sdk";
 import { RedstoneCommon } from "@redstone-finance/utils";
-import { MqttDataProcessingStrategy } from "./MqttDataProcessingStrategy";
+import { PubSubDataProcessingStrategy } from "./PubSubDataProcessingStrategy";
 
 const NOT_PROCESSED_KEY_WARNING_MS = RedstoneCommon.secsToMs(60);
 
-export class TimestampMqttDataProcessingStrategy<C> extends MqttDataProcessingStrategy<C> {
+export class TimestampPubSubDataProcessingStrategy<C> extends PubSubDataProcessingStrategy<C> {
   private readonly timestampCaches: { [p: number]: DataPackagesResponseCache | undefined } = {};
 
   override processResponse(

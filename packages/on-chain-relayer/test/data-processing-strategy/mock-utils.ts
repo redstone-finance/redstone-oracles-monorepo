@@ -2,9 +2,9 @@ import { SignedDataPackage, SignedDataPackagePlainObj } from "@redstone-finance/
 import { DataPackagesResponse, getSignersForDataServiceId } from "@redstone-finance/sdk";
 import { RedstoneCommon } from "@redstone-finance/utils";
 import {
-  MqttDataProcessingStrategy,
-  MqttDataProcessingStrategyDelegate,
-} from "../../src/runner/strategy/MqttDataProcessingStrategy";
+  PubSubDataProcessingStrategy,
+  PubSubDataProcessingStrategyDelegate,
+} from "../../src/runner/strategy/PubSubDataProcessingStrategy";
 
 export interface DataPackagesResponseInput {
   dataFeedId: string;
@@ -66,12 +66,12 @@ export const mockRequestParams = {
   ignoreMissingFeed: true,
 };
 
-export class MockStrategyDelegate implements MqttDataProcessingStrategyDelegate<void> {
+export class MockStrategyDelegate implements PubSubDataProcessingStrategyDelegate<void> {
   readonly logger = console;
 
   constructor() {}
 
-  async strategyRunIteration(_strategy: MqttDataProcessingStrategy<void>) {
+  async strategyRunIteration(_strategy: PubSubDataProcessingStrategy<void>) {
     await RedstoneCommon.sleep(SINGLE_RUN_MS);
   }
 }

@@ -13,7 +13,7 @@ import { splitRelayerConfig } from "./config/split-relayer-config";
 import { timelyOverrideSinceLastUpdate } from "./config/timely-override-since-last-update";
 import { runNonIterationTelemetry } from "./run-non-iteration-telemetry.ts";
 import { AsyncTaskRunner } from "./runner/AsyncTaskRunner";
-import { MqttRunner } from "./runner/MqttRunner";
+import { PubSubRunner } from "./runner/PubSubRunner";
 import { IterationOptions } from "./runner/run-iteration";
 import { SendHealthcheckCollector } from "./SendHealthcheckCollector";
 
@@ -91,8 +91,8 @@ function run(
     runNonIterationTelemetry(relayerConfig);
   }
 
-  if (relayerConfig.runWithMqtt) {
-    void MqttRunner.run(relayerConfig, iterationOptionsOverride);
+  if (relayerConfig.runWithPubSub) {
+    void PubSubRunner.run(relayerConfig, iterationOptionsOverride);
   } else {
     void AsyncTaskRunner.run(relayerConfig, logger, iterationOptionsOverride);
   }

@@ -7,14 +7,17 @@ import {
 } from "@redstone-finance/sdk";
 import { OperationQueue, RedstoneCommon, RedstoneLogger } from "@redstone-finance/utils";
 
-export interface MqttDataProcessingStrategyDelegate<C> {
-  strategyRunIteration(strategy: MqttDataProcessingStrategy<C, unknown>, config: C): Promise<void>;
+export interface PubSubDataProcessingStrategyDelegate<C> {
+  strategyRunIteration(
+    strategy: PubSubDataProcessingStrategy<C, unknown>,
+    config: C
+  ): Promise<void>;
 
   logger: RedstoneLogger;
 }
 
-export abstract class MqttDataProcessingStrategy<C, Q = string> {
-  delegate?: WeakRef<MqttDataProcessingStrategyDelegate<C>>;
+export abstract class PubSubDataProcessingStrategy<C, Q = string> {
+  delegate?: WeakRef<PubSubDataProcessingStrategyDelegate<C>>;
 
   constructor(
     protected facadeCache: DataPackagesResponseCache,
