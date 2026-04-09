@@ -2,7 +2,7 @@ module RewardConfig (
     rewardWeight
 ) where
 
-reward_factor_frac_num = 5
-reward_factor_frac_den = 8
+reward_factor_frac_num = 4
+reward_factor_frac_den = 5
 
 rewardWeight total = intToDecimal (total * reward_factor_frac_num) / intToDecimal reward_factor_frac_den
