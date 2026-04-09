@@ -27,7 +27,7 @@ const config: HardhatUserConfig = {
   },
   networks: {
     hardhat: {
-      blockGasLimit: 30_000_000,
+      blockGasLimit: 0x1fffffffffffff, // this particular value allows to override EIP-7825 transaction gas cap limit
     },
   },
 };
