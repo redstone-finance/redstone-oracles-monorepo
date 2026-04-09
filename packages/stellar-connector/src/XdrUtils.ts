@@ -3,6 +3,7 @@ import { Address, rpc, scValToBigInt, scValToNative, StrKey, xdr } from "@stella
 const PRICE_KEY = xdr.ScVal.scvSymbol("price");
 const PACKAGE_TIMESTAMP_KEY = xdr.ScVal.scvSymbol("package_timestamp");
 const WRITE_TIMESTAMP_KEY = xdr.ScVal.scvSymbol("write_timestamp");
+const PRICE_DATA_KEY = xdr.ScVal.scvSymbol("price_data");
 
 function expectValue<T>(val: T | null | undefined, name: string) {
   if (val === null || val === undefined) {
@@ -43,6 +44,10 @@ export function numbersToScvBytes(val: number[]) {
 
 export function stringToScVal(val: string) {
   return xdr.ScVal.scvString(val);
+}
+
+export function storageKeyFeed(feed: xdr.ScVal) {
+  return xdr.ScVal.scvVec([xdr.ScVal.scvSymbol("Feed"), feed]);
 }
 
 export function bytesToScVal(val: Buffer) {
@@ -105,10 +110,40 @@ export function parseBigIntFromSimulation(sim: rpc.Api.SimulateTransactionSucces
   return parseSimValAs(sim, (val) => scValToBigInt(val));
 }
 
-export function parsePriceDataFromContractData(result: rpc.Api.LedgerEntryResult) {
+export function parsePriceDataFromContractDataLegacy(result: rpc.Api.LedgerEntryResult) {
   const map = expectValue(result.val.contractData().val().map(), "contract data as map");
 
   return lastRoundDetailsFromXdrMap(map);
+}
+
+export function maybeParsePriceDataFromContractDataLegacy(result: rpc.Api.LedgerEntryResult) {
+  try {
+    return parsePriceDataFromContractDataLegacy(result);
+  } catch {
+    return undefined;
+  }
+}
+
+export function parsePriceDataStorageFromContractData(result: rpc.Api.LedgerEntryResult) {
+  const map = expectValue(result.val.contractData().val().map(), "contract data as map");
+  const priceDatasEntry = expectValue(findVal(map, PRICE_DATA_KEY), "price_datas in storage map");
+  const priceDatasVec = expectValue(priceDatasEntry.val().vec(), "price_datas as vec");
+
+  return priceDatasVec.map((entry) => {
+    const entryMap = expectValue(entry.map(), "price data entry as map");
+
+    return lastRoundDetailsFromXdrMap(entryMap);
+  });
+}
+
+export function parsePriceDataFromContractData(result: rpc.Api.LedgerEntryResult) {
+  const entries = parsePriceDataStorageFromContractData(result);
+
+  if (entries.length === 0) {
+    throw new Error("Empty PriceDataStorage");
+  }
+
+  return entries[entries.length - 1];
 }
 
 export function maybeParsePriceDataFromContractData(result: rpc.Api.LedgerEntryResult) {
