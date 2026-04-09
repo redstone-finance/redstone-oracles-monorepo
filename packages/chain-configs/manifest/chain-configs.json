@@ -1511,7 +1511,11 @@
       "currencySymbol": "KAIA",
       "publicRpcUrls": [
         "https://public-en.node.kaia.io",
-        "https://alpha-hardworking-orb.kaia-mainnet.quiknode.pro"
+        "https://alpha-hardworking-orb.kaia-mainnet.quiknode.pro",
+        "https://kaia.blockpi.network/v1/rpc/public",
+        "https://kaia-mainnet.rpc.grove.city/v1/803ceedf",
+        "https://go.getblock.io/d7094dbd80ab474ba7042603fe912332",
+        "https://klaytn.drpc.org"
       ],
       "avgBlockTimeMs": 1000,
       "multicall3": {
