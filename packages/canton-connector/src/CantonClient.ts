@@ -1,5 +1,6 @@
 import { loggerFactory, RedstoneCommon } from "@redstone-finance/utils";
 import _ from "lodash";
+import { performance } from "perf_hooks";
 import {
   DefaultService,
   DisclosedContract,
@@ -67,6 +68,13 @@ export class CantonClient {
       interfaceId,
       atOffset
     );
+    const filterDesc = Object.entries(filtersByParty)
+      .map(
+        ([partyId, filters]) =>
+          `${partyId}:${filters.cumulative?.map((filter) => RedstoneCommon.stringify(filter.identifierFilter)).join(",")}`
+      )
+      .join(",");
+
     const contracts = await this.performRequest(
       () =>
         DefaultService.postV2StateActiveContracts(
@@ -77,7 +85,7 @@ export class CantonClient {
           },
           limit
         ),
-      `postV2StateActiveContracts ${RedstoneCommon.stringify(filtersByParty)}`
+      `postV2StateActiveContracts ${filterDesc}`
     );
 
     return contracts
@@ -365,7 +373,7 @@ export class CantonClient {
           disclosedContracts,
           userId: !this.tokenProvider ? LOCAL_USER : undefined,
         }),
-      `postV2CommandsAsyncSubmit batch[${commands.length}]`
+      `postV2CommandsAsyncSubmit ${CantonClient.describeCommandBatch(commands)}`
     );
 
     return commandId;
@@ -397,11 +405,11 @@ export class CantonClient {
             },
           },
         }),
-      `postV2CommandsSubmitAndWaitForTransaction batch[${commands.length}]`
+      `postV2CommandsSubmitAndWaitForTransaction ${CantonClient.describeCommandBatch(commands)}`
     );
 
     if (result.transaction.paidTrafficCost) {
-      this.logger.info("tx cost", { paidTrafficCost: result.transaction.paidTrafficCost });
+      this.logger.info(`Traffic cost: ${result.transaction.paidTrafficCost}`);
     }
 
     const { events, synchronizerId } = result.transaction;
@@ -500,6 +508,26 @@ export class CantonClient {
 
     this.logger.info(`Calling ${fnName}`);
 
-    return await unwrapResponse(promise());
+    return await unwrapResponse(this.logPerf(promise, fnName));
+  }
+
+  private async logPerf<T>(fn: () => Promise<T>, label: string): Promise<T> {
+    const startTime = performance.now();
+    try {
+      return await fn();
+    } finally {
+      const duration = performance.now() - startTime;
+      this.logger.info(`${label}: ${duration}[ms]`, { duration });
+    }
+  }
+
+  private static describeCommandBatch<Arg>(
+    commands: { templateId: string; contractId: string; choice: string; choiceArgument: Arg }[]
+  ) {
+    const commandDesc = commands
+      .map(({ contractId, choice }) => `${contractId}:${choice}`)
+      .join(", ");
+
+    return `batch[${commands.length}] (${commandDesc})`;
   }
 }

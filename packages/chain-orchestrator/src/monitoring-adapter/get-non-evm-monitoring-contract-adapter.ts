@@ -1,4 +1,5 @@
 import {
+  CANTON_CONTRACT_ADAPTER_DEFAULT_CONFIG,
   CantonClientBuilder,
   PricesCantonReadOnlyAdapter,
 } from "@redstone-finance/canton-connector";
@@ -137,8 +138,11 @@ async function getCantonContractAdapter(
 
   return new PricesCantonReadOnlyAdapter(
     client,
-    RedstoneCommon.getFromEnv("VIEWER_PARTY_ID"),
-    relayerManifest.adapterContract,
+    {
+      ...CANTON_CONTRACT_ADAPTER_DEFAULT_CONFIG,
+      viewerPartyId: RedstoneCommon.getFromEnv("VIEWER_PARTY_ID"),
+      adapterId: relayerManifest.adapterContract,
+    },
     relayerManifest.adapterContractPackageId
   );
 }

@@ -7,7 +7,7 @@ import {
   CantonClientBuilder,
   CantonNetwork,
   CantonNetworks,
-  keycloakTokenProvider,
+  KeycloakTokenProvider,
   networkToChainId,
 } from "../src";
 
@@ -41,8 +41,11 @@ export function getTokenProvider() {
   const providerType = readProviderType();
 
   switch (providerType) {
-    case "keycloak":
-      return () => keycloakTokenProvider();
+    case "keycloak": {
+      const tokenProvider = new KeycloakTokenProvider();
+
+      return tokenProvider.getToken.bind(tokenProvider);
+    }
     case "file":
       return () => fileTokenProvider();
     case "none":
