@@ -20,11 +20,12 @@ describe("DuplicatedDataFeeds", function () {
       WrapperBuilder.wrap(contract).usingMockDataPackages(mockNumericPackages);
 
     const tx = await wrappedContract.saveOracleValuesInStorage(
-      dataFeedIds.map(utils.convertStringToBytes32)
+      dataFeedIds.map(utils.convertStringToBytes32),
+      { gasLimit: 40_000_000 }
     );
     await tx.wait();
 
-    const values = await contract.getValuesFromStorage();
+    const values = await contract.getValuesFromStorage({ gasLimit: 40_000_000 });
     for (let symbolIndex = 0; symbolIndex < dataFeedIds.length; symbolIndex++) {
       const symbol = dataFeedIds[symbolIndex];
       expect(values[symbolIndex].toNumber()).to.eql(expectedNumericValues[symbol]);
@@ -48,8 +49,8 @@ describe("DuplicatedDataFeeds", function () {
     await runTestForArrayOfDataFeeds(dataFeedIds);
   });
 
-  it("Should get oracle values for feeds with duplicates (500 times ETH)", async () => {
-    const dataFeedIds = getRange({ start: 0, length: 500 }).map(() => "ETH");
+  it("Should get oracle values for feeds with duplicates (1000 times ETH)", async () => {
+    const dataFeedIds = getRange({ start: 0, length: 1000 }).map(() => "ETH");
     await runTestForArrayOfDataFeeds(dataFeedIds);
   });
 

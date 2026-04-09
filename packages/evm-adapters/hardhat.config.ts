@@ -45,6 +45,9 @@ const config: HardhatUserConfig = {
       url: "https://eth-goerli.public.blastapi.io",
       accounts,
     },
+    hardhat: {
+      blockGasLimit: 0x1fffffffffffff, // this particular value allows to override EIP-7825 transaction gas cap limit
+    },
     "zk-evm-testnet": {
       url: "https://rpc.public.zkevm-test.net",
       accounts,
