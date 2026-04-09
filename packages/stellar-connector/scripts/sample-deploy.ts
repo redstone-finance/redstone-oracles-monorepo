@@ -10,7 +10,7 @@ import {
 } from "../src";
 import { StellarSigner } from "../src/stellar/StellarSigner";
 import { FEEDS } from "./consts";
-import { initPriceFeed } from "./instantiate-price-feed";
+import { initPriceFeed } from "./instantiate-price-feed-utils";
 import {
   PRICE_ADAPTER,
   PRICE_FEED,

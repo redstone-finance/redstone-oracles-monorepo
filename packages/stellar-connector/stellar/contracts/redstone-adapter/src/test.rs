@@ -27,7 +27,7 @@ use soroban_sdk::{
 use self::test_contract::TestContract;
 use crate::{
     config::{FEED_TTL_EXTEND_TO, FEED_TTL_SECS, FEED_TTL_THRESHOLD, STELLAR_CONFIG},
-    RedStoneAdapter, RedStoneAdapterClient, DATA_STALENESS,
+    RedStoneAdapter, RedStoneAdapterClient, StorageKey, DATA_STALENESS,
 };
 
 #[test]
@@ -189,8 +189,9 @@ fn write_prices(client: &RedStoneAdapterClient, sample: Sample, expected_ttl: u3
         &payload,
     );
 
+    let key = StorageKey::Feed(btc);
     env.as_contract(&client.address, || {
-        let ttl = env.storage().persistent().get_ttl(&btc);
+        let ttl = env.storage().persistent().get_ttl(&key);
         assert!(ttl >= FEED_TTL_SECS / 5);
         assert_eq!(ttl, expected_ttl);
     });
