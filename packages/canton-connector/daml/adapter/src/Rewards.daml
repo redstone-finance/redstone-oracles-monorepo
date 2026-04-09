@@ -1,0 +1,50 @@
+module Rewards (
+    RewardState,
+    maybeMakeRewards,
+    IIRewardFactory
+) where
+
+import DA.Optional(fromOptional)
+import IRedStoneCore
+import Time
+import Config
+
+
+-- TODO: Introduce a dedicated IRewardFactory interface instead of reusing IRedStoneCore.
+-- The double "II" prefix is intentional to distinguish from the actual IRedStoneCore usage.
+type IIRewardFactory = IRedStoneCore
+
+data RewardState = RewardState
+  with
+    accumulatedPillCount: Int
+    lastUpdateTimestamp: Int
+  deriving (Eq, Show)
+
+empty_state : RewardState
+empty_state = RewardState with
+  accumulatedPillCount = 0
+  lastUpdateTimestamp = 0
+
+-- | Accumulates pill counts and batches reward creation calls.
+-- Rewards are only created when the time since last reward exceeds min_reward_creation_ms
+-- and there are accumulated pills to reward.
+maybeMakeRewards caller rewardFactory rewardState currentTimestamp count = do
+  let state = fromOptional empty_state rewardState
+  let newCount = count + state.accumulatedPillCount
+
+  case rewardFactory of
+    Some factory
+      | newCount > 0 && currentTimestamp - state.lastUpdateTimestamp > min_reward_creation_ms ->
+          callTakeRewards caller factory currentTimestamp newCount
+    _ -> pure $ state with accumulatedPillCount = newCount
+
+callTakeRewards caller factory currentTimestamp count = do
+  -- Encode the pill count as feedIds length: each element is an empty list.
+  -- The RedStoneRewardFactory recovers the count via `length feedIds`.
+  _ <- exercise factory GetPrices with
+    caller
+    feedIds = map (const []) [0..(count - 1)]
+    currentTime = millisToTime currentTimestamp
+    payloadHex = ""
+
+  pure $ empty_state with lastUpdateTimestamp = currentTimestamp

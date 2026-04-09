@@ -12,3 +12,4 @@ packages:
   - ./test
   - ./featured
   - ./factory
+  - ./reward_factory

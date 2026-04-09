@@ -22,6 +22,8 @@ main input = script do
       viewers = [viewer]
       feedData = M.empty
       pillFactory = None
+      rewardState = None
+      rewardFactory = None
 
   currentTime <- getTime
 

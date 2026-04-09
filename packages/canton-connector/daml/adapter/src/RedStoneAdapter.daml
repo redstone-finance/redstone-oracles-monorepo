@@ -10,6 +10,7 @@ import IRedStonePricePillFactory
 import Config(unique_signer_count, adapter_config_fun)
 import ProcessPayload
 import PillRecord
+import Rewards
 
 template RedStoneAdapter
   with
@@ -19,6 +20,8 @@ template RedStoneAdapter
     viewers : [Party]
     feedData : M.Map RedStoneFeedId [PillRecord]
     pillFactory : Optional (ContractId IRedStonePricePillFactory)
+    rewardState: Optional RewardState
+    rewardFactory : Optional (ContractId IIRewardFactory)
   where
     signatory owner
     observer viewers, updaters
@@ -32,7 +35,8 @@ template RedStoneAdapter
       iRedStoneAdapter_GetPricesImpl feedIds currentTime = G.getPricesNumeric $ adapter_config_fun feedIds currentTime
 
       iRedStoneAdapter_WritePricesImpl caller self feedIds currentTime payloadHex additionalPillViewers = do
-        hasNewValues <- hasNewPrices (owner, updaters, viewers) adapterId feedData feedIds currentTime payloadHex
+        let ctx = WriteContext with caller, owner, updaters, viewers
+        hasNewValues <- hasNewPrices ctx adapterId feedData feedIds currentTime payloadHex
 
         if not hasNewValues then
           return self
@@ -71,9 +75,12 @@ template RedStoneAdapter
         assertMsg "WritePricesConsuming: caller must be an updater" $ caller `elem` updaters
         
         let allViewers = dedup $ viewers <> fromOptional [] additionalPillViewers
+        let ctx = WriteContext with caller, owner, updaters, viewers = allViewers
+        let factories = Factories with pillFactory, rewardFactory
+        let currentState = AdapterState with feedData, rewardState
 
-        newData <- processAndWritePrices (caller, owner, updaters, allViewers) pillFactory adapterId feedData feedIds currentTime payloadHex
-        newCid <- create this with feedData = newData
+        newState <- processAndWritePrices ctx factories adapterId currentState feedIds currentTime payloadHex
+        newCid <- create this with feedData = newState.feedData, rewardState = newState.rewardState
         
         return $ toInterfaceContractId @IRedStoneAdapter newCid
 
@@ -82,3 +89,9 @@ template RedStoneAdapter
       controller owner
       do
         create this with pillFactory = newPillFactory
+
+    choice UpdateRewardFactory : ContractId RedStoneAdapter
+      with newRewardFactory : Optional (ContractId IIRewardFactory)
+      controller owner
+      do
+        create this with rewardFactory = newRewardFactory
