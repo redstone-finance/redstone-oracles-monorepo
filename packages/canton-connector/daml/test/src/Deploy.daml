@@ -4,10 +4,12 @@ import Daml.Script
 import DA.Map as M
 import Splice.Api.FeaturedAppRightV2
 import IRedStonePricePillFactory
+import IRedStoneCore
 import RedStoneCore
 import RedStoneCoreClient
 import RedStoneAdapter
 import RedStonePricePillFactory
+import RedStoneRewardFactory
 import Input
 import Helpers.MockFeatured
 
@@ -35,15 +37,23 @@ main input = script do
 
   debug $ "RedStoneCore " <> show coreCid
 
-  pillFactoryCid <- submit (actAs [owner, beneficiary]) do
+  pillFactoryCid <- submit (actAs owner) do
     createCmd RedStonePricePillFactory with
       factoryId = "Factory for " <> Input.adapterId
       owner
       creators = [updater]
+
+  debug $ "RedStonePricePillFactory " <> show pillFactoryCid
+
+  rewardFactoryCid <- submit (actAs [owner, beneficiary]) do
+    createCmd RedStoneRewardFactory with
+      factoryId = "RewardFactory for " <> Input.adapterId
+      owner
+      viewers = [updater]
       featuredCid = toInterfaceContractId @FeaturedAppRight featuredCid
       beneficiary
 
-  debug $ "RedStonePricePillFactory " <> show pillFactoryCid
+  debug $ "RedStoneRewardFactory " <> show rewardFactoryCid
 
   adapterCid <- submit owner do
       createCmd RedStoneAdapter with
@@ -53,6 +63,8 @@ main input = script do
         viewers = [viewer]
         feedData = M.empty
         pillFactory = Some $ toInterfaceContractId @IRedStonePricePillFactory pillFactoryCid
+        rewardState = None
+        rewardFactory = Some $ toInterfaceContractId @IRedStoneCore rewardFactoryCid
 
   debug $ "RedStoneAdapter " <> show adapterCid
 
