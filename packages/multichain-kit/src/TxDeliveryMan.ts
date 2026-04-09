@@ -50,7 +50,7 @@ export class TxDeliveryMan {
       const result = FP.flatten(wrappedResult);
 
       this.logger.log(
-        `Attempt: ${attempt + 1}, Submission status: ${RedstoneCommon.stringify(result)}`
+        `Attempt ${attempt + 1} - Submission status: ${RedstoneCommon.stringify(result)}`
       );
 
       return result;

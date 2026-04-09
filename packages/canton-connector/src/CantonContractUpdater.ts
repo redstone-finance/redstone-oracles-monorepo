@@ -46,26 +46,22 @@ export class CantonContractUpdater implements ContractUpdater {
     paramsProvider: ContractParamsProvider,
     context: ContractUpdateContext
   ) {
-    const [payloadHexSettled, balanceSettled] = await Promise.allSettled([
-      paramsProvider.getPayloadHex(false, {
-        withUnsignedMetadata: true,
-        metadataTimestamp: context.updateStartTimeMs,
-        componentName: "canton-connector",
-      }),
-      this.getRemainingTrafficForLog(),
-    ]);
+    let initialTraffic: number | undefined;
+    this.getRemainingTrafficForLog()
+      .then((value) => (initialTraffic = value))
+      .catch(() => {});
 
-    if (payloadHexSettled.status === "rejected") {
-      throw new Error(RedstoneCommon.stringifyError(payloadHexSettled.reason));
-    }
-
-    const initialTraffic = balanceSettled.status === "rejected" ? undefined : balanceSettled.value;
+    const payloadHex = await paramsProvider.getPayloadHex(false, {
+      withUnsignedMetadata: true,
+      metadataTimestamp: context.updateStartTimeMs,
+      componentName: "canton-connector",
+    });
 
     const startTime = Date.now();
     const feedIds = paramsProvider.getArrayifiedFeedIds();
     const result = await this.exerciser.exerciseWriteChoice<ActiveContractData | string, object>(
       this.actAs,
-      { feedIds: feedIds, payloadHex: payloadHexSettled.value }
+      { feedIds: feedIds, payloadHex }
     );
 
     this.logMetadata(feedIds.length, startTime, initialTraffic).catch((e) =>

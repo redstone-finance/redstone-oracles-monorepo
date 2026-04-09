@@ -1,9 +1,7 @@
 import { BlockchainService } from "@redstone-finance/multichain-kit";
 import { CantonClient } from "./CantonClient";
-import {
-  IADAPTER_TEMPLATE_NAME,
-  WRITE_PRICES_CHOICE,
-} from "./adapters/PricesCantonContractAdapter";
+import { WRITE_PRICES_CHOICE } from "./adapters/PricesCantonContractAdapter";
+import { IADAPTER_TEMPLATE_NAME } from "./adapters/PricesCantonReadOnlyAdapter";
 import { combineIntoId } from "./utils";
 
 export class CantonBlockchainService implements BlockchainService {

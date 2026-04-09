@@ -1,11 +1,11 @@
 import { sampleRun } from "@redstone-finance/multichain-kit";
 import { ContractParamsProvider, getSignersForDataServiceId } from "@redstone-finance/sdk";
-import { RedstoneCommon } from "@redstone-finance/utils";
-import { z } from "zod";
 import {
+  CANTON_CONTRACT_ADAPTER_DEFAULT_CONFIG,
   CantonBlockchainService,
   PricePillCantonContractConnector,
   PricesCantonContractAdapter,
+  readAdditionalPillViewers,
 } from "../src";
 import { makeDefaultClient, makePartyId } from "./utils";
 
@@ -19,13 +19,13 @@ async function main() {
 
   console.log(await client.getRemainingTraffic());
 
-  const adapter = new PricesCantonContractAdapter(
-    client,
-    makePartyId(VIEWER_PARTY_NAME),
-    makePartyId(UPDATER_PARTY_NAME),
-    ADAPTER_ID,
-    RedstoneCommon.getFromEnv("ADDITIONAL_PILL_VIEWERS", z.array(z.string()).optional())
-  );
+  const adapter = new PricesCantonContractAdapter(client, {
+    ...CANTON_CONTRACT_ADAPTER_DEFAULT_CONFIG,
+    viewerPartyId: makePartyId(VIEWER_PARTY_NAME),
+    updaterPartyId: makePartyId(UPDATER_PARTY_NAME),
+    adapterId: ADAPTER_ID,
+    additionalPillViewers: readAdditionalPillViewers(),
+  });
   const service = new CantonBlockchainService(client);
 
   const SUFFIX_24_7 = "---24_7";

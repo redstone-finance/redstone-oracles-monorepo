@@ -144,7 +144,11 @@ export function stringifyError(e: unknown, noStack = false): string {
         showStack(error.stack)
       );
     } else if (error instanceof Error) {
-      const causeString = error.cause ? `cause: ${stringifyError(error.cause, noStack)}` : "";
+      const causeString = error.cause
+        ? typeof error.cause === "object"
+          ? `cause: ${stringifyError(error.cause, noStack)}`
+          : stringify(error.cause)
+        : "";
       return [error.message, noStack ? "" : showStack(error.stack), causeString]
         .filter((str) => str.length > 0)
         .join(" ");
