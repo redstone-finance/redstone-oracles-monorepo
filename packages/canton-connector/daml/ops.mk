@@ -95,3 +95,18 @@ update-factory-id: get-adapter-id-by-interface get-token
 					"newPillFactory": "$(FACTORY_ID)"}}}], \
 	    "actAs": [$(PARTY_OWNER)], \
 		"commandId": "update-pill-factory-$(shell date +%s)"}' | jq '.'
+
+update-reward-factory-id: get-adapter-id-by-interface get-token
+	curl -X POST -H "Authorization: Bearer $(TOKEN)" \
+	  -H "Content-Type: application/json" \
+	  "$(CANTON_API)/v2/commands/submit-and-wait-for-transaction-tree" \
+	  -d '{ \
+		"commands": [{ \
+			"ExerciseCommand": { \
+	    		"templateId": "$(ADAPTER_TEMPLATE_ID)", \
+	    		"contractId": "$(ADAPTER_ID)", \
+	    		"choice": "UpdateRewardFactory", \
+				"choiceArgument": { \
+					"newRewardFactory": "$(REWARD_FACTORY_ID)"}}}], \
+	    "actAs": [$(PARTY_OWNER)], \
+		"commandId": "update-reward-factory-$(shell date +%s)"}' | jq '.'

@@ -2,6 +2,9 @@ module ProcessPayload
 (
   processAndWritePrices
   , hasNewPrices
+  , WriteContext(..)
+  , Factories(..)
+  , AdapterState(..)
 ) where
 
 import DA.Assert
@@ -11,29 +14,55 @@ import DA.Optional
 import RedStone.Config(verifyConfigAgainstLedger)
 import RedStone.Processor
 import IRedStonePricePillFactory
+import RedStoneTypes
 import Events
 import PillRecord
 import Verify
+import Rewards
 import Config(adapter_config_fun, pill_staleness_ms)
+
+data WriteContext = WriteContext
+  with
+    caller : Party
+    owner : Party
+    updaters : [Party]
+    viewers : [Party]
+  deriving (Eq, Show)
+
+data Factories = Factories
+  with
+    pillFactory : Optional (ContractId IRedStonePricePillFactory)
+    rewardFactory : Optional (ContractId IIRewardFactory)
+
+data AdapterState = AdapterState
+  with
+    feedData : M.Map RedStoneFeedId [PillRecord]
+    rewardState : Optional RewardState
 
 -- Public
 
 -- Note: emitErrorEvents creates PriceUpdateEvent with signatory=owner.
 -- This works because hasNewPrices runs within a choice on RedStoneAdapter (signatory owner),
 -- so the owner's authority is available via DAML's authority propagation rules.
-hasNewPrices (owner, updaters, viewers) adapterId feedData feedIds currentTime payloadHex = do
+hasNewPrices ctx adapterId feedData feedIds currentTime payloadHex = do
   ((newValues, _, rejectedValues), _) <- checkNewValues feedData feedIds currentTime payloadHex
-  _ <- emitErrorEvents (owner, updaters) adapterId rejectedValues
+  _ <- emitErrorEvents (ctx.owner, ctx.updaters) adapterId rejectedValues
 
   return $ not . L.null $ newValues
 
-processAndWritePrices parties pillFactory adapterId feedData feedIds currentTime payloadHex = do
-  ((newValues, timestamp, rejectedValues), config) <- checkNewValues feedData feedIds currentTime payloadHex
+-- | Processes the payload, writes new price pills, and accumulates/batches reward creation.
+-- Reward state tracks accumulated pill count and is flushed to the RewardFactory
+-- when the configured time threshold (min_reward_creation_ms) is exceeded.
+processAndWritePrices ctx factories adapterId currentState feedIds currentTime payloadHex = do
+  ((newValues, timestamp, rejectedValues), config) <- checkNewValues currentState.feedData feedIds currentTime payloadHex
 
   if L.null $ newValues then do
-    pure feedData
-  else
-    newFeedData parties pillFactory adapterId feedData config.currentTimestamp (newValues, timestamp)
+    pure currentState
+  else do
+    newData <- newFeedData ctx factories.pillFactory adapterId currentState.feedData config.currentTimestamp (newValues, timestamp)
+    newRewardState <- maybeMakeRewards ctx.caller factories.rewardFactory currentState.rewardState config.currentTimestamp $ length newValues
+
+    pure $ AdapterState with feedData = newData, rewardState = Some newRewardState
 
 -- Private
 
@@ -43,7 +72,7 @@ checkNewValues feedData feedIds currentTime payloadHex = do
 
   pure $ (determineNewValues (config.currentTimestamp, feedData) feedIds result, config)
 
-newFeedData (caller, owner, updaters, viewers) pillFactory adapterId feedData currentTimestamp (newValues, timestamp)  = do
+newFeedData ctx pillFactory adapterId feedData currentTimestamp (newValues, timestamp)  = do
   let newEntries = entriesFromValues currentTimestamp timestamp newValues
 
   case pillFactory of
@@ -52,14 +81,14 @@ newFeedData (caller, owner, updaters, viewers) pillFactory adapterId feedData cu
       newFeedData = M.fromList $ map (\(feedId, record) -> (feedId, [record])) newRecords
       in do
         -- emitting only when no pill factory is passed
-        _ <- emitPriceDataEvents (owner, updaters) adapterId $ map (\(feedId, record) -> (feedId, record.priceData)) newRecords
+        _ <- emitPriceDataEvents (ctx.owner, ctx.updaters) adapterId $ map (\(feedId, record) -> (feedId, record.priceData)) newRecords
 
         pure $ M.union newFeedData feedData
 
     Some factory -> do
       newPills <- exercise factory CreatePricePills with
-        caller
-        viewers
+        caller = ctx.caller
+        viewers = ctx.viewers
         stalenessMs = pill_staleness_ms
         adapterId
         inputData = newEntries
@@ -71,6 +100,6 @@ newFeedData (caller, owner, updaters, viewers) pillFactory adapterId feedData cu
 
       let (newItems, toArchive) = partitionRecords currentTimestamp mergedFeedData
 
-      exercise factory ArchivePricePills with caller, contractIds = map (\record -> fromSome $ record.pillCid) toArchive
+      exercise factory ArchivePricePills with caller = ctx.caller, contractIds = map (\record -> fromSome $ record.pillCid) toArchive
 
       pure $ M.fromList newItems

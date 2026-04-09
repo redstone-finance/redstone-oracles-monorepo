@@ -3,17 +3,22 @@ sinclude ../../.env
 CANTON_API=$(PARTICIPANT)$(API_PATH)
 
 ADAPTER_NAME=RedStoneAdapter-v12-0.4.0
-ADAPTER_TEMPLATE_ID=b75e539dfb519e0c2285cac39eeb9b90e34457a1bc2a24ebb81942051ebbdd5f:RedStoneAdapter:RedStoneAdapter
+ADAPTER_TEMPLATE_ID=ecf4b17926927cfc17426df7c734d6a71d8012bac5cfda1be7918b24b90c56c4:RedStoneAdapter:RedStoneAdapter
 
 CORE_NAME=RedStoneCore-v12-0.4.1
 CORE_ID := 1c47e8e0c8ebd8e36a56f070c64e061b7544adb15f7a8eba4a88fa4c49502a46
 CORE_TEMPLATE_ID := $(CORE_ID):RedStoneCore:RedStoneCore
 CORE_CLIENT_TEMPLATE_ID := $(CORE_ID):RedStoneCoreClient:RedStoneCoreClient
 
-FACTORY_NAME=RedStonePricePillFactory-v13-0.4.0
-FACTORY_TEMPLATE_ID=a83ac20b1fdfb7f74592d70249887368a918e7eb3b5a6e40058166bb626d67ed:RedStonePricePillFactory:RedStonePricePillFactory
+FACTORY_NAME=RedStonePricePillFactory-v14-0.4.0
+FACTORY_TEMPLATE_ID=1d66e71ee50b50a164ac6b9d4095e8489916d3fc87c6d63312a3d6352215fde2:RedStonePricePillFactory:RedStonePricePillFactory
 
-FACTORY_ID=0051cb9b88c47c440f481dc3ad42ecd93e6e4f1c9bf8b0c9591fe0a580246c6c10ca121220aa98f0d6dad6b34bc2604188072fcd07faa1743f95df5e2330bd0d7bd3e60afa
+FACTORY_ID=00d1c4f847b7bcd51fadd0b05e2082c4825d3cdd6df845c4754c765414a7101a2eca12122095cfb1908aaae7ae89d014e52dda0c8f9bca5c5f4e547c87ec52dbbf4bb62ad9
+
+REWARD_FACTORY_NAME=RedStoneRewardFactory-v12-0.4.0
+REWARD_FACTORY_TEMPLATE_ID=d00e8447ba36a1afc8ace4f8202847ad7035dfe4b4ffe2cbaf5fbf411343c55c:RedStoneRewardFactory:RedStoneRewardFactory
+
+REWARD_FACTORY_ID=003567818023d384826008c2befd5517e4366d4344b22d1c3002085c53d8381d4cca121220988b001b19df8c36628394ed2313d197f38c822d234a03cdd6bfd355b6919581
 
 INTERFACE_ID=\#redstone-interface-v12
 IADAPTER_TEMPLATE_ID=$(INTERFACE_ID):IRedStoneAdapter:IRedStoneAdapter
@@ -108,11 +113,26 @@ deploy-factory: get-token
 				"createArguments": { \
 					"factoryId": "$(FACTORY_NAME)", \
 					"owner": "RedStoneOracleOwner::$(PARTY_SUFFIX)", \
+					"creators": ["RedStoneOracleUpdater::$(PARTY_SUFFIX)"]}}}], \
+		"actAs": ["RedStoneOracleOwner::$(PARTY_SUFFIX)"], \
+		"commandId": "deploy-factory-$(shell date +%s)"}' | jq '.'
+
+deploy-reward-factory: get-token
+	@curl -X POST -H "Authorization: Bearer $(TOKEN)" \
+	  -H "Content-Type: application/json" \
+	  "$(CANTON_API)/v2/commands/submit-and-wait-for-transaction-tree" \
+	  -d '{ \
+		"commands": [{ \
+			"CreateCommand": { \
+				"templateId": "$(REWARD_FACTORY_TEMPLATE_ID)", \
+				"createArguments": { \
+					"factoryId": "$(REWARD_FACTORY_NAME)", \
+					"owner": "RedStoneOracleOwner::$(PARTY_SUFFIX)", \
 					"beneficiary": "$(BENEFICIARY)::$(PARTY_SUFFIX)", \
 					"featuredCid": "$(FEATURED_CID)", \
-					"creators": ["RedStoneOracleUpdater::$(PARTY_SUFFIX)"]}}}], \
+					"viewers": ["RedStoneOracleUpdater::$(PARTY_SUFFIX)"]}}}], \
 		"actAs": ["RedStoneOracleOwner::$(PARTY_SUFFIX)", "$(BENEFICIARY)::$(PARTY_SUFFIX)"], \
-		"commandId": "deploy-factory-$(shell date +%s)"}' | jq '.'
+		"commandId": "deploy-reward-factory-$(shell date +%s)"}' | jq '.'
 
 deploy-adapter: get-token
 	@curl -X POST -H "Authorization: Bearer $(TOKEN)" \
@@ -128,6 +148,8 @@ deploy-adapter: get-token
 					"updaters": ["RedStoneOracleUpdater::$(PARTY_SUFFIX)"], \
 					"viewers": ["RedStoneOracleViewer::$(PARTY_SUFFIX)"], \
 					"pillFactory": "$(FACTORY_ID)", \
+					"rewardFactory": "$(REWARD_FACTORY_ID)", \
+					"rewardState": null, \
 					"feedData": []}}}], \
 		"actAs": ["RedStoneOracleOwner::$(PARTY_SUFFIX)"], \
 		"commandId": "deploy-adapter-$(shell date +%s)"}' | jq '.'
