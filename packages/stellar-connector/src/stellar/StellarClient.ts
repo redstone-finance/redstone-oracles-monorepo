@@ -180,11 +180,44 @@ export class StellarClient {
   ) {
     await this.waitForBlockNumber(blockNumber);
 
-    const keys = feeds.map((feed) => contractDataKey(contract, feed));
+    const newKeys = feeds.map((feed) => contractDataKey(contract, XdrUtils.storageKeyFeed(feed)));
 
-    return (await this.server.getLedgerEntries(...keys)).entries.map(
-      XdrUtils.maybeParsePriceDataFromContractData
+    const newEntries = await this.fetchEntriesByKey(newKeys);
+
+    const missingIndices = newEntries
+      .map((entry, i) => (entry ? undefined : i))
+      .filter((i): i is number => i !== undefined);
+
+    const results = newEntries.map((entry) =>
+      entry ? XdrUtils.maybeParsePriceDataFromContractData(entry) : undefined
     );
+
+    if (missingIndices.length === 0) {
+      return results;
+    }
+
+    const oldKeys = missingIndices.map((i) => contractDataKey(contract, feeds[i]));
+    const oldEntries = await this.fetchEntriesByKey(oldKeys);
+
+    for (const [offset, i] of missingIndices.entries()) {
+      const entry = oldEntries[offset];
+      if (entry) {
+        results[i] = XdrUtils.maybeParsePriceDataFromContractDataLegacy(entry);
+      }
+    }
+
+    return results;
+  }
+
+  private async fetchEntriesByKey(keys: xdr.LedgerKey[]) {
+    if (keys.length === 0) {
+      return [];
+    }
+
+    const { entries = [] } = await this.server.getLedgerEntries(...keys);
+    const entriesByXdr = new Map(entries.map((e) => [e.key.toXDR("base64"), e]));
+
+    return keys.map((key) => entriesByXdr.get(key.toXDR("base64")));
   }
 
   async sendTransaction(tx: Transaction) {
