@@ -2190,7 +2190,12 @@
       "rateFeed": false
     },
     "BUIDL_FUNDAMENTAL": {
-      "source": ["securitize-api"],
+      "source": ["securitize-tsso", "securitize-api"],
+      "priceAggregator": "primarySource",
+      "primarySourceAggregatorConfig": {
+        "primarySource": "securitize-tsso",
+        "maxAcceptableDeviation": 0.01
+      },
       "denomination": "USD",
       "rateFeed": true,
       "deviationCheck": {
@@ -2201,12 +2206,22 @@
       }
     },
     "BUIDL_DAILY_INTEREST_ACCRUAL": {
-      "source": ["securitize-api"],
+      "source": ["securitize-tsso", "securitize-api"],
+      "priceAggregator": "primarySource",
+      "primarySourceAggregatorConfig": {
+        "primarySource": "securitize-tsso",
+        "maxAcceptableDeviation": 0.01
+      },
       "denomination": "percentage",
       "rateFeed": false
     },
     "BUIDL_I_ETHEREUM_FUNDAMENTAL": {
-      "source": ["securitize-api"],
+      "source": ["securitize-tsso", "securitize-api"],
+      "priceAggregator": "primarySource",
+      "primarySourceAggregatorConfig": {
+        "primarySource": "securitize-tsso",
+        "maxAcceptableDeviation": 0.01
+      },
       "denomination": "USD",
       "rateFeed": true,
       "deviationCheck": {
@@ -2217,12 +2232,22 @@
       }
     },
     "BUIDL_I_ETHEREUM_DAILY_ACCRUAL": {
-      "source": ["securitize-api"],
+      "source": ["securitize-tsso", "securitize-api"],
+      "priceAggregator": "primarySource",
+      "primarySourceAggregatorConfig": {
+        "primarySource": "securitize-tsso",
+        "maxAcceptableDeviation": 0.01
+      },
       "denomination": "percentage",
       "rateFeed": false
     },
     "BUIDL_ARBITRUM_FUNDAMENTAL": {
-      "source": ["securitize-api"],
+      "source": ["securitize-tsso", "securitize-api"],
+      "priceAggregator": "primarySource",
+      "primarySourceAggregatorConfig": {
+        "primarySource": "securitize-tsso",
+        "maxAcceptableDeviation": 0.01
+      },
       "denomination": "USD",
       "rateFeed": true,
       "deviationCheck": {
@@ -2233,12 +2258,22 @@
       }
     },
     "BUIDL_ARBITRUM_DAILY_ACCRUAL": {
-      "source": ["securitize-api"],
+      "source": ["securitize-tsso", "securitize-api"],
+      "priceAggregator": "primarySource",
+      "primarySourceAggregatorConfig": {
+        "primarySource": "securitize-tsso",
+        "maxAcceptableDeviation": 0.01
+      },
       "denomination": "percentage",
       "rateFeed": false
     },
     "BUIDL_OPTIMISM_FUNDAMENTAL": {
-      "source": ["securitize-api"],
+      "source": ["securitize-tsso", "securitize-api"],
+      "priceAggregator": "primarySource",
+      "primarySourceAggregatorConfig": {
+        "primarySource": "securitize-tsso",
+        "maxAcceptableDeviation": 0.01
+      },
       "denomination": "USD",
       "rateFeed": true,
       "deviationCheck": {
@@ -2249,12 +2284,22 @@
       }
     },
     "BUIDL_OPTIMISM_DAILY_ACCRUAL": {
-      "source": ["securitize-api"],
+      "source": ["securitize-tsso", "securitize-api"],
+      "priceAggregator": "primarySource",
+      "primarySourceAggregatorConfig": {
+        "primarySource": "securitize-tsso",
+        "maxAcceptableDeviation": 0.01
+      },
       "denomination": "percentage",
       "rateFeed": false
     },
     "BUIDL_AVALANCHE_FUNDAMENTAL": {
-      "source": ["securitize-api"],
+      "source": ["securitize-tsso", "securitize-api"],
+      "priceAggregator": "primarySource",
+      "primarySourceAggregatorConfig": {
+        "primarySource": "securitize-tsso",
+        "maxAcceptableDeviation": 0.01
+      },
       "denomination": "USD",
       "rateFeed": true,
       "deviationCheck": {
@@ -2265,12 +2310,22 @@
       }
     },
     "BUIDL_AVALANCHE_DAILY_ACCRUAL": {
-      "source": ["securitize-api"],
+      "source": ["securitize-tsso", "securitize-api"],
+      "priceAggregator": "primarySource",
+      "primarySourceAggregatorConfig": {
+        "primarySource": "securitize-tsso",
+        "maxAcceptableDeviation": 0.01
+      },
       "denomination": "percentage",
       "rateFeed": false
     },
     "BUIDL_POLYGON_FUNDAMENTAL": {
-      "source": ["securitize-api"],
+      "source": ["securitize-tsso", "securitize-api"],
+      "priceAggregator": "primarySource",
+      "primarySourceAggregatorConfig": {
+        "primarySource": "securitize-tsso",
+        "maxAcceptableDeviation": 0.01
+      },
       "denomination": "USD",
       "rateFeed": true,
       "deviationCheck": {
@@ -2281,12 +2336,22 @@
       }
     },
     "BUIDL_POLYGON_DAILY_ACCRUAL": {
-      "source": ["securitize-api"],
+      "source": ["securitize-tsso", "securitize-api"],
+      "priceAggregator": "primarySource",
+      "primarySourceAggregatorConfig": {
+        "primarySource": "securitize-tsso",
+        "maxAcceptableDeviation": 0.01
+      },
       "denomination": "percentage",
       "rateFeed": false
     },
     "BUIDL_SOLANA_FUNDAMENTAL": {
-      "source": ["securitize-api"],
+      "source": ["securitize-tsso", "securitize-api"],
+      "priceAggregator": "primarySource",
+      "primarySourceAggregatorConfig": {
+        "primarySource": "securitize-tsso",
+        "maxAcceptableDeviation": 0.01
+      },
       "denomination": "USD",
       "rateFeed": true,
       "deviationCheck": {
@@ -2297,12 +2362,22 @@
       }
     },
     "BUIDL_SOLANA_DAILY_ACCRUAL": {
-      "source": ["securitize-api"],
+      "source": ["securitize-tsso", "securitize-api"],
+      "priceAggregator": "primarySource",
+      "primarySourceAggregatorConfig": {
+        "primarySource": "securitize-tsso",
+        "maxAcceptableDeviation": 0.01
+      },
       "denomination": "percentage",
       "rateFeed": false
     },
     "ACRED_FUNDAMENTAL": {
-      "source": ["securitize-api"],
+      "source": ["securitize-tsso", "securitize-api"],
+      "priceAggregator": "primarySource",
+      "primarySourceAggregatorConfig": {
+        "primarySource": "securitize-tsso",
+        "maxAcceptableDeviation": 0.01
+      },
       "denomination": "USD",
       "rateFeed": true,
       "deviationCheck": {
@@ -2313,7 +2388,12 @@
       }
     },
     "ACRED_SOLANA_FUNDAMENTAL": {
-      "source": ["securitize-api"],
+      "source": ["securitize-tsso", "securitize-api"],
+      "priceAggregator": "primarySource",
+      "primarySourceAggregatorConfig": {
+        "primarySource": "securitize-tsso",
+        "maxAcceptableDeviation": 0.01
+      },
       "denomination": "USD",
       "rateFeed": true,
       "deviationCheck": {
@@ -2324,27 +2404,52 @@
       }
     },
     "HLScope_FUNDAMENTAL": {
-      "source": ["securitize-api"],
+      "source": ["securitize-tsso", "securitize-api"],
+      "priceAggregator": "primarySource",
+      "primarySourceAggregatorConfig": {
+        "primarySource": "securitize-tsso",
+        "maxAcceptableDeviation": 0.01
+      },
       "denomination": "USD",
       "rateFeed": true
     },
     "HLScope_PLUME_FUNDAMENTAL": {
-      "source": ["securitize-api"],
+      "source": ["securitize-tsso", "securitize-api"],
+      "priceAggregator": "primarySource",
+      "primarySourceAggregatorConfig": {
+        "primarySource": "securitize-tsso",
+        "maxAcceptableDeviation": 0.01
+      },
       "denomination": "USD",
       "rateFeed": true
     },
     "EXOD_FUNDAMENTAL": {
-      "source": ["securitize-api"],
+      "source": ["securitize-tsso", "securitize-api"],
+      "priceAggregator": "primarySource",
+      "primarySourceAggregatorConfig": {
+        "primarySource": "securitize-tsso",
+        "maxAcceptableDeviation": 0.01
+      },
       "denomination": "USD",
       "rateFeed": true
     },
     "BCAP_FUNDAMENTAL": {
-      "source": ["securitize-api"],
+      "source": ["securitize-tsso", "securitize-api"],
+      "priceAggregator": "primarySource",
+      "primarySourceAggregatorConfig": {
+        "primarySource": "securitize-tsso",
+        "maxAcceptableDeviation": 0.01
+      },
       "denomination": "USD",
       "rateFeed": true
     },
     "VBILL_ETHEREUM_FUNDAMENTAL": {
-      "source": ["securitize-api"],
+      "source": ["securitize-tsso", "securitize-api"],
+      "priceAggregator": "primarySource",
+      "primarySourceAggregatorConfig": {
+        "primarySource": "securitize-tsso",
+        "maxAcceptableDeviation": 0.01
+      },
       "denomination": "USD",
       "rateFeed": true,
       "deviationCheck": {
@@ -2355,7 +2460,12 @@
       }
     },
     "VBILL_AVALANCHE_FUNDAMENTAL": {
-      "source": ["securitize-api"],
+      "source": ["securitize-tsso", "securitize-api"],
+      "priceAggregator": "primarySource",
+      "primarySourceAggregatorConfig": {
+        "primarySource": "securitize-tsso",
+        "maxAcceptableDeviation": 0.01
+      },
       "denomination": "USD",
       "rateFeed": true,
       "deviationCheck": {
@@ -2366,7 +2476,12 @@
       }
     },
     "VBILL_BNB_FUNDAMENTAL": {
-      "source": ["securitize-api"],
+      "source": ["securitize-tsso", "securitize-api"],
+      "priceAggregator": "primarySource",
+      "primarySourceAggregatorConfig": {
+        "primarySource": "securitize-tsso",
+        "maxAcceptableDeviation": 0.01
+      },
       "denomination": "USD",
       "rateFeed": true,
       "deviationCheck": {
@@ -2377,7 +2492,12 @@
       }
     },
     "VBILL_SOLANA_FUNDAMENTAL": {
-      "source": ["securitize-api"],
+      "source": ["securitize-tsso", "securitize-api"],
+      "priceAggregator": "primarySource",
+      "primarySourceAggregatorConfig": {
+        "primarySource": "securitize-tsso",
+        "maxAcceptableDeviation": 0.01
+      },
       "denomination": "USD",
       "rateFeed": true,
       "deviationCheck": {
@@ -2388,32 +2508,62 @@
       }
     },
     "VBILL_ETHEREUM_DAILY_ACCRUAL": {
-      "source": ["securitize-api"],
+      "source": ["securitize-tsso", "securitize-api"],
+      "priceAggregator": "primarySource",
+      "primarySourceAggregatorConfig": {
+        "primarySource": "securitize-tsso",
+        "maxAcceptableDeviation": 0.01
+      },
       "denomination": "percentage",
       "rateFeed": true
     },
     "VBILL_AVALANCHE_DAILY_ACCRUAL": {
-      "source": ["securitize-api"],
+      "source": ["securitize-tsso", "securitize-api"],
+      "priceAggregator": "primarySource",
+      "primarySourceAggregatorConfig": {
+        "primarySource": "securitize-tsso",
+        "maxAcceptableDeviation": 0.01
+      },
       "denomination": "percentage",
       "rateFeed": true
     },
     "VBILL_BNB_DAILY_ACCRUAL": {
-      "source": ["securitize-api"],
+      "source": ["securitize-tsso", "securitize-api"],
+      "priceAggregator": "primarySource",
+      "primarySourceAggregatorConfig": {
+        "primarySource": "securitize-tsso",
+        "maxAcceptableDeviation": 0.01
+      },
       "denomination": "percentage",
       "rateFeed": true
     },
     "VBILL_SOLANA_DAILY_ACCRUAL": {
-      "source": ["securitize-api"],
+      "source": ["securitize-tsso", "securitize-api"],
+      "priceAggregator": "primarySource",
+      "primarySourceAggregatorConfig": {
+        "primarySource": "securitize-tsso",
+        "maxAcceptableDeviation": 0.01
+      },
       "denomination": "percentage",
       "rateFeed": true
     },
     "MI4_MANTLE_FUNDAMENTAL": {
-      "source": ["securitize-api"],
+      "source": ["securitize-tsso", "securitize-api"],
+      "priceAggregator": "primarySource",
+      "primarySourceAggregatorConfig": {
+        "primarySource": "securitize-tsso",
+        "maxAcceptableDeviation": 0.01
+      },
       "denomination": "USD",
       "rateFeed": true
     },
     "STAC_FUNDAMENTAL": {
-      "source": ["securitize-api"],
+      "source": ["securitize-tsso", "securitize-api"],
+      "priceAggregator": "primarySource",
+      "primarySourceAggregatorConfig": {
+        "primarySource": "securitize-tsso",
+        "maxAcceptableDeviation": 0.01
+      },
       "denomination": "USD",
       "rateFeed": true
     },
