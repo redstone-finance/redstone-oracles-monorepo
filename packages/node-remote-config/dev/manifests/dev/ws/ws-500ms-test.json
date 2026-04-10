@@ -2,7 +2,7 @@
   "interval": 500,
   "priceAggregator": "median",
   "defaultSource": [],
-  "sourceTimeout": 800,
+  "sourceTimeout": 300,
   "minValidSourcesPercentage": 1,
   "deviationCheck": {
     "deviationWithRecentValues": {
@@ -481,13 +481,6 @@
     },
     "NIKKEI225": {
       "source": [],
-      "priceAggregator": "primarySourceWithRebasing",
-      "primarySourceWithRebasingAggregatorConfig": {
-        "primarySource": "",
-        "rebaseCalculationInterval": 60000,
-        "maxAcceptableDeviationPercent": 1,
-        "clampPercent": 0.05
-      },
       "skipBroadcasting": true,
       "denomination": "JPY",
       "rateFeed": false,
