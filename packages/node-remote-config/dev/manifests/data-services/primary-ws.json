@@ -499,7 +499,7 @@
       "types": ["rwa"]
     },
     "KOSPI200": {
-      "source": ["alltick-api", "ws-itick-indices", "ws-aleno"],
+      "source": ["alltick-api-deferred", "ws-itick-indices", "ws-aleno"],
       "skipBroadcasting": true,
       "denomination": "KRW",
       "rateFeed": false,
@@ -512,14 +512,7 @@
       "types": ["rwa"]
     },
     "NIKKEI225": {
-      "source": ["alltick-api", "finhub_oanda-usd", "ws-itick-indices"],
-      "priceAggregator": "primarySourceWithRebasing",
-      "primarySourceWithRebasingAggregatorConfig": {
-        "primarySource": "alltick-api",
-        "rebaseCalculationInterval": 60000,
-        "maxAcceptableDeviationPercent": 1,
-        "clampPercent": 0.05
-      },
+      "source": ["alltick-api-deferred", "finhub_oanda-usd", "ws-itick-indices"],
       "skipBroadcasting": true,
       "denomination": "JPY",
       "rateFeed": false,
