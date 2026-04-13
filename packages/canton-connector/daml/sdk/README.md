@@ -80,30 +80,38 @@ processPayload: Config -> Text -> ProcessorRawResult
 
 Configuration module contains configuration for the [`Processor`](#processor).
 
-The [`Config`](./src/RedStone/Config.daml) structure consists of:
-* `feedIds` to be processed by the `Processor`
-  * Represented as ascii-numbers of particular letters, for example `ETH = [69,84,72]` and `BTC=[66,84,67]`
-* `currentTimestamp`
-  * The ledger doesn't have access to real world timestamp, so it's necessary to pass off-chain `currentTimestamp`
-    where later the methods like [`isLedgerTimeLE/LT/GE/GT`](https://docs.digitalasset.com/build/3.4/reference/daml/stdlib/DA-Time.html#function-da-time-isledgertimelt-78120) or [`assertWithDeadline`](https://docs.digitalasset.com/build/3.4/reference/daml/stdlib/DA-Assert.html#function-da-assert-assertwithindeadline-85580`) are used to have it verified
-* `signers` the authorized signers of the data
-* `signerCountThreshold` - the threshold of different signers for the data to use it
-* `maxDelayMs`/`maxAheadMs` - the acceptable data timestamp window, in relation to the `currentTimestamp`
+The [`Config`](./src/RedStone/Config.daml) uses a two-level approach:
+* `BaseConfig` holds signer-related settings:
+  * `signers` - the authorized signers of the data
+  * `signerCountThreshold` - the threshold of different signers for the data to use it
+  * `maxDelayMs`/`maxAheadMs` - the acceptable data timestamp window, in relation to the `currentTimestamp`
+* `Config` is the full configuration including:
+  * `feedIds` to be processed by the `Processor`
+    * Represented as ascii-numbers of particular letters, for example `ETH = [69,84,72]` and `BTC=[66,84,67]`
+  * `currentTimestamp`
+    * The ledger doesn't have access to real world timestamp, so it's necessary to pass off-chain `currentTimestamp`
+      where later the methods like [`isLedgerTimeLE/LT/GE/GT`](https://docs.digitalasset.com/build/3.4/reference/daml/stdlib/DA-Time.html#function-da-time-isledgertimelt-78120) or [`assertWithDeadline`](https://docs.digitalasset.com/build/3.4/reference/daml/stdlib/DA-Assert.html#function-da-assert-assertwithindeadline-85580`) are used to have it verified
+  * All fields from `BaseConfig` (signers, signerCountThreshold, maxDelayMs, maxAheadMs)
+* `config baseConfig feedIds currentTime` creates a `Config` from a `BaseConfig`
 
 ### Supporting functions
 
 To create a config, use one of the following functions
 
 ```haskell
-config maxAheadMs maxDelayMs signerCountThreshold signers feedIds currentTime
+config baseConfig feedIds currentTime
 ```
 
-Common contract default config for different signers
+Common contract default base config for different signers
 
 ```haskell
 default_signer_count_threshold = 3
 
-defaultConfig = config (1 * one_min_ms) (3 * one_min_ms) default_signer_count_threshold
+defaultBaseConfig signers = BaseConfig with
+    signers
+    signerCountThreshold = default_signer_count_threshold
+    maxDelayMs = 3 * one_min_ms
+    maxAheadMs = 1 * one_min_ms
 ```
 
 Complete config for `redstone-primary-prod` dataServiceId, to use with passing only `feedIds` and `currentTimestamp`
@@ -111,7 +119,8 @@ Complete config for `redstone-primary-prod` dataServiceId, to use with passing o
 ```haskell
 redstone_primary_prod_public_keys = ...
 
-redstonePrimaryProdDefaultConfig = defaultConfig redstone_primary_prod_public_keys
+redstonePrimaryProdDefaultBaseConfig = defaultBaseConfig redstone_primary_prod_public_keys
+redstonePrimaryProdDefaultConfig = config redstonePrimaryProdDefaultBaseConfig
 ```
 
 ## Example usage

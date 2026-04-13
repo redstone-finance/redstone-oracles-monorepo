@@ -1,0 +1,39 @@
+module Internal.Rewards (
+    RewardState,
+    maybeCreateRewards,
+    maybeCreateRewardsWithoutState
+) where
+
+import DA.Optional(fromOptional)
+import IRedStoneRewardFactory
+import Config
+
+data RewardState = RewardState
+  with
+    accumulatedPillCount: Int
+    lastCreateTimestamp: Int
+  deriving (Eq, Show)
+
+empty_state : RewardState
+empty_state = RewardState with
+  accumulatedPillCount = 0
+  lastCreateTimestamp = 0
+
+-- | Accumulates pill counts and batches reward creation calls.
+-- Rewards are only created when the time since last reward exceeds min_reward_creation_ms
+-- and there are accumulated pills to reward.
+maybeCreateRewards caller rewardFactory rewardState currentTimestamp count = do
+  let state = fromOptional empty_state rewardState
+  let newCount = count + state.accumulatedPillCount
+
+  case rewardFactory of
+    Some factory
+      | newCount > 0 && currentTimestamp >= state.lastCreateTimestamp + min_reward_creation_ms ->
+          callCreateRewards caller factory currentTimestamp newCount
+    _ -> pure $ state with accumulatedPillCount = newCount
+
+maybeCreateRewardsWithoutState caller rewardFactory = maybeCreateRewards caller rewardFactory None min_reward_creation_ms
+
+callCreateRewards caller factory currentTimestamp count =
+  exercise factory CreateRewards with caller, count
+    >> pure empty_state with lastCreateTimestamp = currentTimestamp
