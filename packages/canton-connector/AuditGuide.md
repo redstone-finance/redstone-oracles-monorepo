@@ -25,6 +25,7 @@ The direct path should look like:
 * SDK (payload processing & crypto verification) [daml/sdk/README.md](./daml/sdk/README.md)
 * Core (RedStoneCore template) [daml/core/README.md](./daml/core/README.md)
 * Adapter (RedStoneAdapter template with write/read) [daml/adapter/README.md](./daml/adapter/README.md)
+* Reward Factory (RedStoneRewardFactory template) [daml/reward_factory/README.md](./daml/reward_factory/README.md)
 * RedStone DAML SDK [daml/sdk/src/RedStone/](./daml/sdk/src/RedStone/)
 * General [RedStone Blockchain oracles docs](https://docs.redstone.finance/docs/architecture/#data-formatting--processing)
   * Especially [The push model docs](https://docs.redstone.finance/docs/dapps/redstone-push/)
@@ -37,12 +38,13 @@ Do audit:
 
 * [sdk](./daml/sdk) — RedStone DAML SDK: payload parsing, cryptographic signature verification (secp256k1 ECDSA), median aggregation, U256 arithmetic
 * [types](./daml/types) — RedStone type definitions (RedStoneFeedId, RedStoneValue, RedStonePriceData, etc.)
-* [interface](./daml/interface) — Interface definitions: IRedStoneCore, IRedStoneAdapter, IRedStonePricePillFactory
+* [interface](./daml/interface) — Interface definitions: IRedStoneCore, IRedStoneAdapter, IRedStonePricePillFactory, IRedStoneRewardFactory
 * [price_pill](./daml/price_pill) — IRedStonePricePill interface definition (price pill read/archive choices)
 * [core](./daml/core) — RedStoneCore template: price retrieval via disclosed contracts
 * [adapter](./daml/adapter) — RedStoneAdapter template: write/read prices, pill record management, staleness verification
 * [factory](./daml/factory) — RedStonePricePillFactory template: creates price pill contracts
 * [price_feed](./daml/price_feed) — RedStonePricePill template: individual price feed contracts with staleness checks
+* [reward_factory](./daml/reward_factory) — RedStoneRewardFactory template: batched reward creation via FeaturedAppRight
 * [featured](./daml/featured) — Featured app integration (Splice/Canton Network rewards)
 * [common](./daml/common) — Common utilities (time conversions)
 

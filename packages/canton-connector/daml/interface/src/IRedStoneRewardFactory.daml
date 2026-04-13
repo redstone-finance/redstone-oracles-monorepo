@@ -1,0 +1,21 @@
+module IRedStoneRewardFactory where
+
+interface IRedStoneRewardFactory where
+  viewtype RedStoneRewardFactoryView
+
+  iRedStoneRewardFactory_VerifyCreator: Party -> Update ()
+  iRedStoneRewardFactory_CreateRewardsImpl: Int -> Update Decimal
+
+  nonconsuming choice CreateRewards : Decimal
+    with
+      caller : Party
+      count : Int
+    controller caller
+    do
+      iRedStoneRewardFactory_VerifyCreator this caller
+        >> iRedStoneRewardFactory_CreateRewardsImpl this count
+
+data RedStoneRewardFactoryView = RedStoneRewardFactoryView
+  with
+    factoryId: Text
+  deriving (Eq, Show, Ord)

@@ -8,7 +8,7 @@ import { CantonContractAdapter } from "./CantonContractAdapter";
 export const ICORE_TEMPLATE_NAME = `IRedStoneCore:IRedStoneCore`;
 const GET_PRICES_CHOICE = "GetPrices";
 
-export abstract class CoreCantonContractAdapter extends CantonContractAdapter {
+export class CoreCantonContractAdapter extends CantonContractAdapter {
   constructor(
     client: CantonClient,
     private readonly actAs: string,

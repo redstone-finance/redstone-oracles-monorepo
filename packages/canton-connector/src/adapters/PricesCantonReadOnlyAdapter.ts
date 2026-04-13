@@ -4,15 +4,15 @@ import { RedstoneCommon } from "@redstone-finance/utils";
 import { CantonClient } from "../CantonClient";
 import { convertDecimalValue, getArrayifiedFeedId } from "../conversions";
 import { ContractFilter } from "../price-feed-utils";
+import { CantonContractAdapter } from "./CantonContractAdapter";
 import { CantonContractAdapterConfig } from "./CantonContractAdapterConfig";
 import { CoreCantonContractAdapter } from "./CoreCantonContractAdapter";
 
 export const IADAPTER_TEMPLATE_NAME = `IRedStoneAdapter:IRedStoneAdapter`;
 
-export class PricesCantonReadOnlyAdapter
-  extends CoreCantonContractAdapter
-  implements ContractAdapter
-{
+export class PricesCantonReadOnlyAdapter extends CantonContractAdapter implements ContractAdapter {
+  private readonly coreAdapter: CoreCantonContractAdapter;
+
   constructor(
     client: CantonClient,
     protected readonly config: Pick<
@@ -22,12 +22,19 @@ export class PricesCantonReadOnlyAdapter
     interfaceId = client.Defs.interfaceId,
     templateName = IADAPTER_TEMPLATE_NAME
   ) {
-    super(client, config.viewerPartyId, config.adapterId, interfaceId, templateName);
+    super(client, interfaceId, templateName);
+
+    this.coreAdapter = new CoreCantonContractAdapter(
+      client,
+      config.viewerPartyId,
+      config.adapterId,
+      interfaceId
+    );
   }
 
   protected override getContractFilter() {
     return ((createArgument: { adapterId: string }) =>
-      createArgument.adapterId === this.adapterId) as ContractFilter;
+      createArgument.adapterId === this.config.adapterId) as ContractFilter;
   }
 
   protected async readFeedData(offset?: number): Promise<DamlFeedData> {
@@ -95,6 +102,10 @@ export class PricesCantonReadOnlyAdapter
 
       return convertDecimalValue(priceData.value);
     });
+  }
+
+  async getPricesFromPayload(paramsProvider: ContractParamsProvider) {
+    return await this.coreAdapter.getPricesFromPayload(paramsProvider);
   }
 }
 

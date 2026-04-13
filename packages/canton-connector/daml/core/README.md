@@ -27,12 +27,16 @@ The models and architecture of data are described in the [RedStone docs](https:/
 
 #### Interface
 
-* The contract implements [`IRedStoneCore`](../interface/src/IRedStoneCore.daml) interface, basically by implementing
-the `iRedStoneCore_GetPricesImpl` function.
+* The contract implements [`IRedStoneCore`](../interface/src/IRedStoneCore.daml) interface, by implementing
+the `iRedStoneCore_ShouldVerifyViewer`, `iRedStoneCore_VerifyViewer` and `iRedStoneCore_GetPricesImpl` functions.
 
 ```haskell
 interface IRedStoneCore where
-  iRedStoneCore_GetPricesImpl : [RedStoneFeedId] -> Time -> PayloadHex -> Update RedStoneResult
+  viewtype RedStoneCoreView
+
+  iRedStoneCore_ShouldVerifyViewer : Party -> Bool
+  iRedStoneCore_VerifyViewer : Party -> Update ()
+  iRedStoneCore_GetPricesImpl : Party -> [RedStoneFeedId] -> Time -> PayloadHex -> Update RedStoneResult
 
   nonconsuming choice GetPrices : RedStoneResult
     with
@@ -42,10 +46,15 @@ interface IRedStoneCore where
       payloadHex : PayloadHex
     controller caller
     do
-      iRedStoneCore_GetPricesImpl this feedIds currentTime payloadHex
+      if iRedStoneCore_ShouldVerifyViewer this caller then
+         iRedStoneCore_VerifyViewer this caller
+      else
+         pure ()
+
+      iRedStoneCore_GetPricesImpl this caller feedIds currentTime payloadHex
 ```
 
-The `caller : Party` pattern allows any party to call the contract directly, including for disclosed contract access. See the [Caller Pattern](../README.md#caller-pattern) section for details.
+The `caller : Party` pattern is used as the `controller`. The `iRedStoneCore_ShouldVerifyViewer` controls whether viewer authorization is enforced — when `True`, `iRedStoneCore_VerifyViewer` checks that the caller is in the `viewers` list. This allows templates like `RedStoneCore` (disclosed contract pattern) to disable the check while `RedStoneAdapter` enforces it. See the [Caller Pattern](../README.md#caller-pattern) section for details.
 
 #### Contract template
 
@@ -53,10 +62,24 @@ The `caller : Party` pattern allows any party to call the contract directly, inc
 the payload data is processed as described in the [`RedStone SDK]`](../sdk/README.md) library
 and the [`RedStoneResult`](../types/src/RedStoneTypes.daml) is returned to the caller.
 * The `RedStoneCore` template optionally supports `FeaturedAppRight` integration via `beneficiary` and `featuredCid` fields.
+* The `shouldVerifyViewer` field controls whether `GetPrices` enforces viewer authorization (set to `False` for disclosed contract access).
 * The `iRedStoneCore_GetPricesImpl` implementation:
 
 ```haskell
-  iRedStoneCore_GetPricesImpl feedIds currentTime payloadHex = do
+template RedStoneCore
+  with
+    coreId: Text
+    owner : Party
+    viewers : [Party]
+    shouldVerifyViewer : Bool
+    beneficiary : Optional Party
+    featuredCid : Optional RedStoneFeaturedContract
+
+  iRedStoneCore_ShouldVerifyViewer caller = shouldVerifyViewer
+
+  iRedStoneCore_VerifyViewer caller = assertMsg "GetPrices: caller must be a viewer" $ caller `elem` viewers
+
+  iRedStoneCore_GetPricesImpl caller feedIds currentTime payloadHex = do
       case (featuredCid, beneficiary) of
         (Some featured, Some party) -> takeReward party featured
         _ -> pure ()
@@ -144,7 +167,7 @@ See the full example in [core-client-sample.ts](../../scripts/core-client-sample
 
 ```ts
 const partyId = `Client::1220a0242797a84e1d8c492f1259b3f87d561fcbde2e4b2cebc4572ddfc515b44c28`;
-const packageId = "#redstone-core-v12";
+const packageId = "#redstone-core-v16";
 const contractId =
         "<your-RedStoneCoreClient-contract-id>";
 

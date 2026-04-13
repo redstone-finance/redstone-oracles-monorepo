@@ -20,9 +20,8 @@ interface IRedStonePricePillFactory where
       inputData : [(RedStoneFeedId, RedStonePriceData RedStoneValue)]
     controller caller
     do
-      _ <- iRedStonePricePillFactory_VerifyCreator this caller
-
-      iRedStonePricePillFactory_CreatePricePillsImpl this viewers adapterId stalenessMs inputData
+      iRedStonePricePillFactory_VerifyCreator this caller
+        >> iRedStonePricePillFactory_CreatePricePillsImpl this viewers adapterId stalenessMs inputData
 
   nonconsuming choice ArchivePricePills : ()
     with
@@ -30,9 +29,8 @@ interface IRedStonePricePillFactory where
       contractIds: [ContractId IRedStonePricePill]
     controller caller
     do
-      _ <- iRedStonePricePillFactory_VerifyArchiver this caller
-
-      forA_ contractIds (\pillCid -> exercise pillCid ArchivePill with caller)
+      iRedStonePricePillFactory_VerifyArchiver this caller
+        >> forA_ contractIds (\pillCid -> exercise pillCid ArchivePill with caller)
 
 data RedStonePricePillFactoryView = RedStonePricePillFactoryView
   with
