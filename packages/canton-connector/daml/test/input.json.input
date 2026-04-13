@@ -1,10 +1,10 @@
 {
-  "owner": "RedStoneOracleOwner::1220fac3ac963c0089e4237889e9872ccbb0e01e6f0ef9b6facfd4b23b504178aa08",
-  "updater": "RedStoneOracleUpdater::1220fac3ac963c0089e4237889e9872ccbb0e01e6f0ef9b6facfd4b23b504178aa08",
-  "viewer": "RedStoneOracleViewer::1220fac3ac963c0089e4237889e9872ccbb0e01e6f0ef9b6facfd4b23b504178aa08",
-  "client": "Client::1220fac3ac963c0089e4237889e9872ccbb0e01e6f0ef9b6facfd4b23b504178aa08",
-  "beneficiary": "Beneficiary::1220fac3ac963c0089e4237889e9872ccbb0e01e6f0ef9b6facfd4b23b504178aa08",
-  "dso": "sandbox::1220fac3ac963c0089e4237889e9872ccbb0e01e6f0ef9b6facfd4b23b504178aa08",
+  "owner": "RedStoneOracleOwner::1220f14721cb1c1cc6dcc542c98ca1fc3afe20f1dae0542e3e999e1861884396d9ea",
+  "updater": "RedStoneOracleUpdater::1220f14721cb1c1cc6dcc542c98ca1fc3afe20f1dae0542e3e999e1861884396d9ea",
+  "viewer": "RedStoneOracleViewer::1220f14721cb1c1cc6dcc542c98ca1fc3afe20f1dae0542e3e999e1861884396d9ea",
+  "client": "Client::1220f14721cb1c1cc6dcc542c98ca1fc3afe20f1dae0542e3e999e1861884396d9ea",
+  "beneficiary": "Beneficiary::1220f14721cb1c1cc6dcc542c98ca1fc3afe20f1dae0542e3e999e1861884396d9ea",
+  "dso": "sandbox::1220f14721cb1c1cc6dcc542c98ca1fc3afe20f1dae0542e3e999e1861884396d9ea",
   "feedIds": [[69,84,72], [66,84,67]],
   "payload": 
     "##PAYLOAD##"

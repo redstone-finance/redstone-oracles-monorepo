@@ -1,4 +1,4 @@
-module PillRecord
+module Internal.PillRecord
 (
   PillRecord(..)
 , partitionRecords

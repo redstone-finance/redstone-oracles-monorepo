@@ -4,6 +4,7 @@ import Daml.Script
 import DA.Assert
 import DA.Map as M
 import RedStoneAdapter
+import IRedStoneCore
 import IRedStoneAdapter
 import Input
 import Helpers.VerifyResults
@@ -28,7 +29,7 @@ main input = script do
   currentTime <- getTime
 
   result <- submit viewer do
-    exerciseCmd (toInterfaceContractId @IRedStoneAdapter adapterCid) GetPrices with
+    exerciseCmd (coerceContractId @RedStoneAdapter @IRedStoneCore adapterCid) GetPrices with
       caller = viewer
       payloadHex = input.payload
       feedIds = input.feedIds

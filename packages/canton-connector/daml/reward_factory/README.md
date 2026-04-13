@@ -14,18 +14,26 @@ allowing rewards to be accumulated and submitted in batches with a configurable 
    each time new prices are written.
 2. When the time since the last reward creation exceeds `min_reward_creation_ms` (configured in
    [`Config.daml`](../adapter/src/Config.daml)), the adapter calls the `RedStoneRewardFactory`
-   via the `IRedStoneCore.GetPrices` interface.
-3. The pill count is encoded as the length of the `feedIds` parameter (each element is an empty list).
+   via the [`IRedStoneRewardFactory.CreateRewards`](../interface/src/IRedStoneRewardFactory.daml) choice.
+3. The accumulated pill count is passed directly as the `count` parameter to `CreateRewards`.
 4. The `RedStoneRewardFactory` calculates a weighted reward using [`RewardConfig`](src/RewardConfig.daml)
    and creates a `FeaturedAppActivityMarker` via the `FeaturedAppRight` contract.
 
-### Interface reuse
+### Dedicated interface
 
-The `RedStoneRewardFactory` implements the [`IRedStoneCore`](../interface/src/IRedStoneCore.daml) interface
-as a temporary measure to avoid introducing a new interface. The `GetPrices` choice is repurposed:
-- `feedIds` length encodes the accumulated pill count
-- `Time` and `PayloadHex` parameters are unused
-- The return value `([], 0)` is ignored by the caller
+The `RedStoneRewardFactory` implements the [`IRedStoneRewardFactory`](../interface/src/IRedStoneRewardFactory.daml) interface
+with a dedicated `CreateRewards` choice:
+
+```haskell
+nonconsuming choice CreateRewards : Decimal
+  with
+    caller : Party
+    count : Int
+  controller caller
+```
+
+- `count` is the accumulated pill count
+- The return value is the calculated reward weight
 
 ### Reward weight calculation
 
@@ -35,7 +43,7 @@ The reward weight is calculated in [`RewardConfig.daml`](src/RewardConfig.daml):
 weight = pillCount * reward_factor_frac_num / reward_factor_frac_den
 ```
 
-With default values `1/2`, this means each pill contributes `0.5` to the reward weight.
+With default values `3/4`, this means each pill contributes `0.75` to the reward weight.
 
 ## Contract template
 
@@ -44,7 +52,7 @@ template RedStoneRewardFactory
   with
     factoryId: Text        -- Unique identifier for this factory instance
     owner : Party          -- Contract owner (signatory)
-    viewers : [Party]      -- Parties that can observe the contract
+    creators : [Party]     -- Parties authorized to create rewards (updaters)
     beneficiary : Party    -- Party receiving the rewards (signatory)
     featuredCid : RedStoneFeaturedContract  -- FeaturedAppRight contract ID
 ```
@@ -72,4 +80,4 @@ make update-reward-factory-id
 ### Configuration
 
 - `min_reward_creation_ms`: Minimum interval between reward creation calls (default: 7 minutes)
-- `reward_factor_frac_num / reward_factor_frac_den`: Reward weight per pill (default: 1/2 = 0.5)
+- `reward_factor_frac_num / reward_factor_frac_den`: Reward weight per pill (default: 3/4 = 0.75)

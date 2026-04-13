@@ -21,8 +21,8 @@ template RedStonePricePill
     interface instance IRedStonePricePill for RedStonePricePill where
       view = RedStonePricePillView with feedId, priceData, stalenessMs, adapterId
 
-      iRedStonePricePill_VerifyArchiver caller = do
-        assertMsg "Caller must be a creator" $ caller `elem` creators
+      iRedStonePricePill_VerifyArchiver caller = assertMsg "ArchivePill: Caller must be a creator" $ caller `elem` creators
+      iRedStonePricePill_VerifyViewer caller = assertMsg "Read: Caller must be a viewer or a creator" $ caller `elem` (viewers ++ creators)
 
       iRedStonePricePill_IsDataStaleImpl =
         let
