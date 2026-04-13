@@ -66,6 +66,7 @@
         "gate-usdt",
         "kraken-usd",
         "kraken-usdt",
+        "okx-usd",
         "okx-usdt",
         "curve-ethereum-usdt"
       ],
@@ -91,6 +92,7 @@
         "gate-usdt",
         "kraken-eur",
         "kraken-usd",
+        "kraken-usdc",
         "kucoin-usdt",
         "okx-usdt",
         "xt-usdc",
@@ -121,8 +123,10 @@
         "binance-usdt",
         "bingx-usdc",
         "bingx-usdt",
+        "bitget-eur",
         "bitget-usdc",
         "bitget-usdt",
+        "bitmart-usdc",
         "bitmart-usdt",
         "bitrue-usdc",
         "bitrue-usdt",
@@ -133,6 +137,7 @@
         "kraken-usd",
         "kucoin-usdt",
         "okx-usd",
+        "okx-usdt",
         "xt-usdt"
       ]
     },
@@ -149,6 +154,7 @@
         "bitrue-usdt",
         "bybit-usdt",
         "coinbase-usd",
+        "kraken-eur",
         "kraken-usd",
         "kraken-usdc",
         "okx-usdt",
