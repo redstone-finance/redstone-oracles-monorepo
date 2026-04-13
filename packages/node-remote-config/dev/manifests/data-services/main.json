@@ -9577,6 +9577,13 @@
       ],
       "denomination": "KAIA",
       "rateFeed": true
+    },
+    "AVLT_FUNDAMENTAL/USD": {
+      "source": [
+        "hyperevm-evm-fetcher-altura"
+      ],
+      "denomination": "USD",
+      "rateFeed": true
     }
   }
 }
