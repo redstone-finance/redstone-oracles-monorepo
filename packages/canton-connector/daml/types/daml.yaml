@@ -1,5 +1,5 @@
 sdk-version: 3.4.11
-name: redstone-types-v12
+name: redstone-types-v16
 version: 0.4.0
 source: src
 dependencies:

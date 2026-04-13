@@ -14,6 +14,7 @@
     * [RedStone Core](#redstone-core)
     * [RedStone Adapter](#redstone-adapter)
     * [RedStone PricePillFactory](#redstone-pricepillfactory)
+    * [RedStone Reward Factory](#redstone-reward-factory)
     * [RedStone PricePill](#redstone-pricepill)
       * [Pill Data Fields](#pill-data-fields)
       * [Pill Lifecycle](#pill-lifecycle)
@@ -83,6 +84,7 @@ See more about the [RedStone SDK](./sdk/README.md) library.
 2. It defines the [`IRedStoneCore`](./interface/src/IRedStoneCore.daml) interface for processing the payload data on-ledger
 3. It defines the [`IRedStoneAdapter`](./interface/src/IRedStoneAdapter.daml) and [`IRedStonePricePillFactory`](./interface/src/IRedStonePricePillFactory.daml) interfaces
 4. Interfaces use `verify*` methods (e.g., `iRedStoneAdapter_VerifyUpdater`, `iRedStonePricePillFactory_VerifyCreator`) for authorization instead of inline `assertMsg` with view fields
+5. It defines the [`IRedStoneRewardFactory`](./interface/src/IRedStoneRewardFactory.daml) interface for batched reward creation via `FeaturedAppRight`
 
 ### [RedStone PricePill Interface](./price_pill)
 
@@ -101,8 +103,15 @@ See more about the [RedStone SDK](./sdk/README.md) library.
       caller : Party
       feedIds : [RedStoneFeedId]
       currentTime : Time
-      payloadHex : Text
+      payloadHex : PayloadHex
     controller caller
+    do
+      if iRedStoneCore_ShouldVerifyViewer this caller then
+         iRedStoneCore_VerifyViewer this caller
+      else
+         pure ()
+
+      iRedStoneCore_GetPricesImpl this caller feedIds currentTime payloadHex
 ```
 
 See more about the Pull model and the Disclosed Core Contract [here](./core/README.md)
@@ -120,7 +129,7 @@ See more about the Push model, PricePill lifecycle and all choices [here](./adap
       caller : Party
       feedIds : [RedStoneFeedId]
       currentTime : Time
-      payloadHex : Text
+      payloadHex : PayloadHex
     controller caller
 
   nonconsuming choice WritePrices : ContractId IRedStoneAdapter
@@ -158,7 +167,14 @@ When a `PricePillFactory` is configured, `WritePrices` also creates `PricePill` 
 1. Provides a [template](./factory/src/RedStonePricePillFactory.daml) of a contract implementing the `IRedStonePricePillFactory` interface
 2. Creates `PricePill` contracts when the adapter's `WritePrices` choice is exercised
 3. Manages pill lifecycle: creates new pills and archives stale ones
-4. Integrates with `FeaturedAppRight` for Canton app rewards
+
+### [RedStone Reward Factory](./reward_factory)
+
+1. Provides a [template](./reward_factory/src/RedStoneRewardFactory.daml) implementing the `IRedStoneRewardFactory` interface
+2. Handles batched creation of `FeaturedAppRight` activity markers (rewards) for oracle usage
+3. Decouples reward creation from the adapter — rewards are accumulated and submitted in batches with a time-based throttle
+
+See more about the Reward Factory [here](./reward_factory/README.md)
 
 ### [RedStone PricePill](./price_feed)
 
@@ -236,12 +252,12 @@ All choices take `caller : Party` as the first parameter:
     controller caller
 ```
 
-- **`ReadData`** — returns full `RedStonePriceData` (value, timestamp, writeTimestamp)
-- **`ReadPrice`** — returns just the price value
+- **`ReadData`** — verifies the caller is a viewer, asserts the pill is not stale, then returns full `RedStonePriceData` (value, timestamp, writeTimestamp)
+- **`ReadPrice`** — verifies the caller is a viewer, asserts the pill is not stale, then returns just the price value
 - **`ReadTimestamp`** — returns the data timestamp
 - **`ReadFeedId`** — returns the feed ID
 - **`ReadDescription`** — returns human-readable description
-- **`IsDataStale`** — checks if `timestamp + stalenessMs < currentLedgerTime`
+- **`IsDataStale`** — checks if `currentLedgerTime > timestamp + stalenessMs`
 - **`ArchivePill`** — consuming choice, validates caller is a creator
 
 #### How Pills Interact with the Adapter

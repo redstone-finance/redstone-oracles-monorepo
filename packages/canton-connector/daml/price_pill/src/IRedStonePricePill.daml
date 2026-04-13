@@ -5,6 +5,7 @@ import RedStoneTypes
 interface IRedStonePricePill where
   viewtype RedStonePricePillView
 
+  iRedStonePricePill_VerifyViewer: Party -> Update ()
   iRedStonePricePill_VerifyArchiver: Party -> Update ()
   iRedStonePricePill_IsDataStaleImpl: Update Bool
   iRedStonePricePill_AssertDataNotStaleImpl: Update ()
@@ -21,18 +22,18 @@ interface IRedStonePricePill where
       caller : Party
     controller caller
     do
-      iRedStonePricePill_AssertDataNotStaleImpl this
-
-      pure (view this).priceData
+      iRedStonePricePill_VerifyViewer this caller
+        >> iRedStonePricePill_AssertDataNotStaleImpl this
+        >> pure (view this).priceData
 
   nonconsuming choice ReadPrice : RedStoneValue
     with
       caller : Party
     controller caller
     do
-      iRedStonePricePill_AssertDataNotStaleImpl this
-
-      pure (view this).priceData.value
+      iRedStonePricePill_VerifyViewer this caller
+        >> iRedStonePricePill_AssertDataNotStaleImpl this
+        >> pure (view this).priceData.value
 
   nonconsuming choice ReadTimestamp : Int
     with
