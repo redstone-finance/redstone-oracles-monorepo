@@ -2278,11 +2278,6 @@
       "rateFeed": false,
       "types": ["rwa"]
     },
-    "ESM6": {
-      "source": ["databento-cme"],
-      "denomination": "USD",
-      "rateFeed": false
-    },
     "QQQ": {
       "source": ["twelve-data"],
       "denomination": "USD",
@@ -2309,13 +2304,7 @@
     },
     "EUROSTOXX50": {
       "source": ["twelve-data"],
-      "denomination": "USD",
-      "rateFeed": false,
-      "types": ["rwa"]
-    },
-    "NASDAQ": {
-      "source": ["twelve-data"],
-      "denomination": "USD",
+      "denomination": "EUR",
       "rateFeed": false,
       "types": ["rwa"]
     },
@@ -2346,12 +2335,6 @@
         "ws-blocksize",
         "ws-keyrock"
       ],
-      "denomination": "USD",
-      "rateFeed": false,
-      "types": ["rwa"]
-    },
-    "CRUDE": {
-      "source": ["twelve-data"],
       "denomination": "USD",
       "rateFeed": false,
       "types": ["rwa"]
@@ -2472,7 +2455,7 @@
     },
     "BIG": {
       "source": ["twelve-data"],
-      "denomination": "USD",
+      "denomination": "EUR",
       "rateFeed": false,
       "types": ["rwa"]
     },
@@ -2489,12 +2472,6 @@
       "types": ["rwa"]
     },
     "EVGO": {
-      "source": ["twelve-data"],
-      "denomination": "USD",
-      "rateFeed": false,
-      "types": ["rwa"]
-    },
-    "BGFV": {
       "source": ["twelve-data"],
       "denomination": "USD",
       "rateFeed": false,
@@ -2586,7 +2563,7 @@
     },
     "SFT": {
       "source": ["twelve-data"],
-      "denomination": "USD",
+      "denomination": "EUR",
       "rateFeed": false,
       "types": ["rwa"]
     },
@@ -2634,7 +2611,7 @@
     },
     "CSPX.L": {
       "source": ["twelve-data"],
-      "denomination": "USD",
+      "denomination": "EUR",
       "rateFeed": false,
       "types": ["rwa"]
     },
@@ -2649,11 +2626,6 @@
       "denomination": "USD",
       "rateFeed": false,
       "types": ["rwa"]
-    },
-    "USDCf": {
-      "source": ["twelve-data"],
-      "denomination": "USD",
-      "rateFeed": false
     },
     "ENTROPY": {
       "source": ["drand"],
@@ -8140,62 +8112,8 @@
       "denomination": "USD",
       "rateFeed": false
     },
-    "HG": {
-      "source": ["financialmodelingprep"],
-      "denomination": "USD",
-      "rateFeed": false,
-      "types": ["rwa"]
-    },
-    "HGH6": {
-      "source": ["databento-cme"],
-      "denomination": "USD",
-      "rateFeed": false,
-      "types": ["rwa"]
-    },
-    "HGH26": {
-      "source": ["metals-api"],
-      "denomination": "USD",
-      "rateFeed": false,
-      "types": ["rwa"]
-    },
-    "HG00": {
-      "source": ["metals-api"],
-      "denomination": "USD",
-      "rateFeed": false,
-      "types": ["rwa"]
-    },
-    "HG1": {
-      "source": ["metals-api"],
-      "denomination": "USD",
-      "rateFeed": false,
-      "types": ["rwa"]
-    },
-    "HG-SPOT": {
-      "source": ["commodity-price-api"],
-      "denomination": "USD",
-      "rateFeed": false,
-      "types": ["rwa"]
-    },
-    "COPPER": {
-      "source": ["ws-blocksize"],
-      "denomination": "USD",
-      "rateFeed": false,
-      "types": ["rwa"]
-    },
     "WTI": {
       "source": ["twelve-data", "alltick-api", "ws-lmax", "metal-price-api", "ws-blocksize"],
-      "denomination": "USD",
-      "rateFeed": false,
-      "types": ["rwa"]
-    },
-    "CLH6": {
-      "source": ["databento-cme"],
-      "denomination": "USD",
-      "rateFeed": false,
-      "types": ["rwa"]
-    },
-    "CLG6": {
-      "source": ["databento-cme"],
       "denomination": "USD",
       "rateFeed": false,
       "types": ["rwa"]
@@ -8209,12 +8127,6 @@
         "ws-blocksize",
         "ws-lo-tech-settlement-aware"
       ],
-      "denomination": "USD",
-      "rateFeed": false,
-      "types": ["rwa"]
-    },
-    "XNG": {
-      "source": ["ws-lmax"],
       "denomination": "USD",
       "rateFeed": false,
       "types": ["rwa"]
@@ -8639,18 +8551,21 @@
     },
     "SAMSUNG": {
       "source": ["ws-aleno"],
-      "denomination": "USD",
-      "rateFeed": false
+      "denomination": "KRW",
+      "rateFeed": false,
+      "types": ["rwa"]
     },
     "SK_HYNIX": {
       "source": ["ws-aleno"],
-      "denomination": "USD",
-      "rateFeed": false
+      "denomination": "KRW",
+      "rateFeed": false,
+      "types": ["rwa"]
     },
     "LBXAUAM": {
       "source": ["metals-api"],
       "denomination": "USD",
-      "rateFeed": false
+      "rateFeed": false,
+      "types": ["rwa"]
     },
     "LBXAUPM": {
       "source": ["metals-api"],
