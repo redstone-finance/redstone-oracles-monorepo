@@ -19,6 +19,12 @@
     },
     "USDT": {
       "priceFeedAddress": "0xE08bcb1407E8496d434eFe4ecf2a20E27068a14A"
+    },
+    "KAIA": {
+      "priceFeedAddress": "0xa2F3430ac9cfc37aEF88449DADf36af676211A64"
+    },
+    "stKAIA_FUNDAMENTAL": {
+      "priceFeedAddress": "0x6b860bE3CCc3b69C912ff2f7975Ea0d1194928a7"
     }
   }
 }
