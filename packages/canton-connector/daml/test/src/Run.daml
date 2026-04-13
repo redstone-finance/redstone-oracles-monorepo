@@ -2,6 +2,7 @@ module Run where
 
 import Daml.Script
 import Splice.Api.FeaturedAppRightV2
+import IRedStoneCore
 import IRedStoneAdapter
 import Input
 import Helpers.FindContract
@@ -20,17 +21,17 @@ main input = script do
   currentTime <- getTime
   adapterCid <- findOneAdapter Input.adapterId updater
 
-  values <- submit viewer do
-    exerciseCmd adapterCid GetPrices with
+  appRightCid <- findAnyAppRight beneficiary
+  let featuredCid = coerceContractId @FeaturedAppRight @MockFeaturedAppRight appRightCid
+  featuredDisclosure <- queryDisclosure @MockFeaturedAppRight beneficiary featuredCid
+
+  values <- submitDisclosed viewer [featuredDisclosure] do
+    exerciseCmd (coerceContractId @IRedStoneAdapter @IRedStoneCore adapterCid) GetPrices with
       caller = viewer
       payloadHex = input.payload
       feedIds = input.feedIds
       currentTime
   debug $ "Processed result: " <> show values
-
-  appRightCid <- findAnyAppRight beneficiary
-  let featuredCid = coerceContractId @FeaturedAppRight @MockFeaturedAppRight appRightCid
-  featuredDisclosure <- queryDisclosure @MockFeaturedAppRight beneficiary featuredCid
 
   newCid <- submitDisclosed updater [featuredDisclosure] do
     exerciseCmd adapterCid WritePrices with

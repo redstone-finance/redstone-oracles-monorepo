@@ -2,15 +2,18 @@ module RedStoneAdapter where
 
 import DA.List(dedup)
 import DA.Map as M
-import DA.Optional(fromOptional)
+import DA.Optional(fromOptional, mapOptional)
 import RedStone.GetPrices as G
 import RedStoneTypes
+import IRedStoneCore
 import IRedStoneAdapter
+import IRedStonePricePill
 import IRedStonePricePillFactory
+import IRedStoneRewardFactory
+import Internal.ProcessPayload
+import Internal.PillRecord
+import Internal.Rewards
 import Config(unique_signer_count, adapter_config_fun)
-import ProcessPayload
-import PillRecord
-import Rewards
 
 template RedStoneAdapter
   with
@@ -21,18 +24,27 @@ template RedStoneAdapter
     feedData : M.Map RedStoneFeedId [PillRecord]
     pillFactory : Optional (ContractId IRedStonePricePillFactory)
     rewardState: Optional RewardState
-    rewardFactory : Optional (ContractId IIRewardFactory)
+    rewardFactory : Optional (ContractId IRedStoneRewardFactory)
   where
     signatory owner
     observer viewers, updaters
 
+    interface instance IRedStoneCore for RedStoneAdapter where
+      view = RedStoneCoreView with coreId = adapterId
+
+      iRedStoneCore_ShouldVerifyViewer _ = True
+      iRedStoneCore_VerifyViewer caller = assertMsg "GetPrices: caller must be a viewer or an updater" $ caller `elem` (viewers ++ updaters)
+
+      iRedStoneCore_GetPricesImpl caller feedIds currentTime payloadHex =
+        maybeCreateRewardsWithoutState caller rewardFactory (length feedIds)
+          >> G.getPricesNumeric (adapter_config_fun feedIds currentTime) payloadHex
+
+
     interface instance IRedStoneAdapter for RedStoneAdapter where
       view = RedStoneAdapterView with adapterId
 
-      iRedStoneAdapter_VerifyUpdater caller = do
-        assertMsg "WritePrices: caller must be an updater" $ caller `elem` updaters
-
-      iRedStoneAdapter_GetPricesImpl feedIds currentTime = G.getPricesNumeric $ adapter_config_fun feedIds currentTime
+      iRedStoneAdapter_VerifyUpdater caller = assertMsg "WritePrices: caller must be an updater" $ caller `elem` updaters
+      iRedStoneAdapter_VerifyViewer caller = assertMsg "Read: caller must be a viewer or an updater" $ caller `elem` (viewers ++ updaters)
 
       iRedStoneAdapter_WritePricesImpl caller self feedIds currentTime payloadHex additionalPillViewers = do
         let ctx = WriteContext with caller, owner, updaters, viewers
@@ -91,7 +103,18 @@ template RedStoneAdapter
         create this with pillFactory = newPillFactory
 
     choice UpdateRewardFactory : ContractId RedStoneAdapter
-      with newRewardFactory : Optional (ContractId IIRewardFactory)
+      with newRewardFactory : Optional (ContractId IRedStoneRewardFactory)
       controller owner
       do
         create this with rewardFactory = newRewardFactory
+
+    choice UnlinkAllPills : ([ContractId IRedStonePricePill], ContractId RedStoneAdapter)
+      controller owner
+      do
+        let feedDataList = M.toList feedData
+        let linkedPills = concatMap (\(_, vs) -> mapOptional (\r -> r.pillCid) vs) feedDataList
+        let unlinkAll = map (\(k, vs) -> (k, map (\r -> r with pillCid = None) vs)) feedDataList
+        
+        adapterCid <- create this with feedData = M.fromList unlinkAll
+
+        return (linkedPills, adapterCid)

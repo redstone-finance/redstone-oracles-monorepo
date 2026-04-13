@@ -7,7 +7,7 @@ import DA.Optional(fromSome)
 import DA.Foldable(forA_)
 import Splice.Api.FeaturedAppRightV2
 import IRedStonePricePill
-import IRedStoneCore
+import IRedStoneRewardFactory
 import RedStoneRewardFactory
 import RedStonePricePillFactory
 import IRedStonePricePillFactory
@@ -44,7 +44,7 @@ main input = script do
     createCmd RedStoneRewardFactory with
       factoryId = "RewardFactory"
       owner
-      viewers = [updater]
+      creators = [updater]
       beneficiary
       featuredCid = toInterfaceContractId @FeaturedAppRight featuredCid
 
@@ -60,7 +60,7 @@ main input = script do
       feedData = M.empty
       pillFactory = Some $ toInterfaceContractId @IRedStonePricePillFactory pillFactoryCid
       rewardState = None
-      rewardFactory = Some $ toInterfaceContractId @IRedStoneCore rewardFactoryCid
+      rewardFactory = Some $ toInterfaceContractId @IRedStoneRewardFactory rewardFactoryCid
 
   debug $ "Adapter CID: " <> show adapterCid
 
@@ -81,7 +81,7 @@ main input = script do
 
   debug $ "Read result Viewer: " <> show readResult
 
-  verifier 0.625 currentTime
+  verifier 0.75 currentTime
 
   readResult <- submit client do
     exerciseCmd newCid ReadPriceData with
@@ -90,7 +90,7 @@ main input = script do
 
   debug $ "Read result Client: " <> show readResult
 
-  verifier 0.625 currentTime
+  verifier 0.75 currentTime
 
 verifyResult feedIds (beneficiary,dso,viewer) multiplier currentTime = do
   markers <- queryInterface @FeaturedAppActivityMarker beneficiary

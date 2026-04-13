@@ -16,11 +16,8 @@ template RedStonePricePillFactory
     interface instance IRedStonePricePillFactory for RedStonePricePillFactory where
       view = RedStonePricePillFactoryView with factoryId
 
-      iRedStonePricePillFactory_VerifyCreator caller = do
-        assertMsg "Caller must be a creator" $ caller `elem` creators
-
-      iRedStonePricePillFactory_VerifyArchiver caller = do
-        assertMsg "Caller must be a creator" $ caller `elem` creators
+      iRedStonePricePillFactory_VerifyCreator caller =  assertMsg "Caller must be a creator" $ caller `elem` creators
+      iRedStonePricePillFactory_VerifyArchiver caller = assertMsg "Caller must be a creator" $ caller `elem` creators
         
       iRedStonePricePillFactory_CreatePricePillsImpl viewers adapterId stalenessMs inputData = do
         forA inputData \(feedId, priceData) ->

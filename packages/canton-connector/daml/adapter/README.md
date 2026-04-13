@@ -77,7 +77,7 @@ nonconsuming choice GetPrices : RedStoneResult
 The choice processes on-chain the `payloadHex` passed as an argument and returns a `RedStoneResult` tuple
 representing the aggregated values (of each feed passed inside `feedIds`) and the data timestamp.
 
-The method doesn't modify the contract's storage.
+The method doesn't modify the contract.
 
 #### ⨒ WritePrices
 
@@ -105,7 +105,7 @@ arbitrary data.
 
 The method modifies the contract's storage (only when new values are written).
 
-📚 See [Verify.daml](./src/Verify.daml) for timestamp validation logic and [ProcessPayload.daml](./src/ProcessPayload.daml) for payload processing and pill creation.
+📚 See [Verify.daml](./src/Internal/Verify.daml) for timestamp validation logic and [ProcessPayload.daml](./src/Internal/ProcessPayload.daml) for payload processing and pill creation.
 
 #### ⨗ ReadPrices
 
@@ -120,8 +120,9 @@ nonconsuming choice ReadPrices : [RedStoneValue]
 The choice reads the values persisting in the adapter's `feedData` and returns a list of `RedStoneValue`s
 corresponding to the passed `feedIds`.
 The choice can read only aggregated values saved by using [`WritePrices`](#-writeprices).
+The choice verifies the caller is a viewer or updater before reading.
 
-The method doesn't modify the contract's storage.
+The method doesn't modify the contract.
 
 #### ∮ ReadPriceData
 
@@ -136,8 +137,9 @@ nonconsuming choice ReadPriceData : [Optional (RedStonePriceData RedStoneValue)]
 The choice reads the values persisting in the adapter's `feedData` and returns `RedStonePriceData` records
 containing the value, data timestamp, and write timestamp for each feed.
 Returns `None` for feeds that have not been written yet.
+The choice verifies the caller is a viewer or updater before reading.
 
-The method doesn't modify the contract's storage.
+The method doesn't modify the contract.
 
 #### ∮ GetUniqueSignerThreshold
 
@@ -149,6 +151,7 @@ nonconsuming choice GetUniqueSignerThreshold : Int
 ```
 
 Returns the minimum number of unique signers required for data to be accepted.
+The choice verifies the caller is a viewer or updater.
 
 The method doesn't modify the contract's storage.
 
@@ -156,7 +159,7 @@ The method doesn't modify the contract's storage.
 
 The factory contract that creates and manages `PricePill` contracts.
 It implements the [`IRedStonePricePillFactory`](../interface/src/IRedStonePricePillFactory.daml) interface.
-Integrates with `FeaturedAppRight` for Canton app rewards.
+
 
 #### ⨒ CreatePricePills
 
@@ -190,7 +193,7 @@ nonconsuming choice ArchivePricePills : ()
 Archives the specified `PricePill` contracts by exercising `ArchivePill` on each.
 The caller is verified via `iRedStonePricePillFactory_VerifyArchiver`.
 
-The method doesn't modify the contract's storage.
+The method doesn't modify the contract.
 
 ### [RedStone PricePill](../price_feed/src/RedStonePricePill.daml)
 
@@ -206,8 +209,7 @@ nonconsuming choice ReadData : (RedStonePriceData RedStoneValue)
   controller caller
 ```
 
-Returns the full `RedStonePriceData` (value, timestamp, writeTimestamp) stored in the pill.
-Asserts the pill is not stale before returning.
+Verifies the caller is a viewer, asserts the pill is not stale, then returns the full `RedStonePriceData` (value, timestamp, writeTimestamp) stored in the pill.
 
 #### ∮ ReadPrice
 
@@ -218,8 +220,7 @@ nonconsuming choice ReadPrice : RedStoneValue
   controller caller
 ```
 
-Returns only the price value stored in the pill.
-Asserts the pill is not stale before returning.
+Verifies the caller is a viewer, asserts the pill is not stale, then returns only the price value stored in the pill.
 
 #### ∮ ReadTimestamp
 

@@ -10,6 +10,7 @@ template RedStoneCore
     coreId: Text
     owner : Party
     viewers : [Party]
+    shouldVerifyViewer : Bool
     beneficiary : Optional Party
     featuredCid : Optional RedStoneFeaturedContract
   where
@@ -19,7 +20,11 @@ template RedStoneCore
     interface instance IRedStoneCore for RedStoneCore where
       view = RedStoneCoreView with coreId
 
-      iRedStoneCore_GetPricesImpl feedIds currentTime payloadHex = do
+      iRedStoneCore_ShouldVerifyViewer caller = shouldVerifyViewer
+
+      iRedStoneCore_VerifyViewer caller = assertMsg "GetPrices: caller must be a viewer" $ caller `elem` viewers
+
+      iRedStoneCore_GetPricesImpl caller feedIds currentTime payloadHex = do
           case (featuredCid, beneficiary) of
             (Some featured, Some party) -> takeReward party featured
             _ -> pure ()

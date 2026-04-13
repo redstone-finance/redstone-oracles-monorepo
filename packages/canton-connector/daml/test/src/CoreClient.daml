@@ -27,6 +27,7 @@ main input = script do
       coreId = "RedStoneCore-123"
       owner
       viewers = [viewer]
+      shouldVerifyViewer = False
       beneficiary = Some beneficiary
       featuredCid = Some $ toInterfaceContractId @FeaturedAppRight featuredCid
 
