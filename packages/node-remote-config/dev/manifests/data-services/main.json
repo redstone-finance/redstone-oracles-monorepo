@@ -396,16 +396,13 @@
     },
     "DAI": {
       "source": [
-        "bingx-usdt",
         "bitget-usdt",
         "bitmart-usdt",
         "bitrue-usdt",
         "bybit-usdt",
         "gate-usdt",
-        "htx-usdt",
         "kraken-usd",
         "kraken-usdt",
-        "lbank-usdt",
         "mexc-usdt",
         "okx-usdt",
         "xt-usdt",

@@ -72,16 +72,13 @@
     },
     "DAI": {
       "source": [
-        "bingx_deferred-usdt",
         "bitget_deferred-usdt",
         "bitmart_deferred-usdt",
         "bitrue_deferred-usdt",
         "bybit_deferred-usdt",
         "gate_deferred-usdt",
-        "htx_deferred-usdt",
         "kraken_deferred-usd",
         "kraken_deferred-usdt",
-        "lbank_deferred-usdt",
         "mexc_deferred-usdt",
         "okx_deferred-usdt",
         "xt_deferred-usdt",
