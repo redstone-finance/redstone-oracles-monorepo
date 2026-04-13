@@ -437,6 +437,9 @@
         "deviationPercentage": 0.5,
         "timeSinceLastUpdateInMilliseconds": 43200000
       }
+    },
+    "cbBTC": {
+      "priceFeedAddress": "0xE13e2BBaB029BFb324f49048CED0E95Ea30AE049"
     }
   }
 }

@@ -92,6 +92,12 @@
         "deviationPercentage": 0.01,
         "timeSinceLastUpdateInMilliseconds": 86400000
       }
+    },
+    "wstETH": {
+      "priceFeedAddress": "0x4C89968338b75551243C99B452c84a01888282fD"
+    },
+    "cbBTC": {
+      "priceFeedAddress": "0x5e21f6530f656A38caE4F55500944753F662D184"
     }
   }
 }
