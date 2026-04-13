@@ -1,4 +1,4 @@
-module Events where
+module Internal.Events where
 
 import DA.Foldable(forA_)
 import PriceUpdateEvent

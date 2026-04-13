@@ -1,28 +1,27 @@
 sinclude ../.env
 
 CANTON_API=$(PARTICIPANT)$(API_PATH)
+PACKAGE_IDS=package-ids.json
 
-ADAPTER_NAME=RedStoneAdapter-v12-0.4.0
-ADAPTER_TEMPLATE_ID=ecf4b17926927cfc17426df7c734d6a71d8012bac5cfda1be7918b24b90c56c4:RedStoneAdapter:RedStoneAdapter
+ADAPTER_NAME=RedStoneAdapter-v16-0.4.0
+ADAPTER_TEMPLATE_ID=$(shell jq -r '.templates.adapter' $(PACKAGE_IDS))
 
-CORE_NAME=RedStoneCore-v12-0.4.1
-CORE_ID := 1c47e8e0c8ebd8e36a56f070c64e061b7544adb15f7a8eba4a88fa4c49502a46
-CORE_TEMPLATE_ID := $(CORE_ID):RedStoneCore:RedStoneCore
-CORE_CLIENT_TEMPLATE_ID := $(CORE_ID):RedStoneCoreClient:RedStoneCoreClient
+CORE_NAME=RedStoneCore-v16-0.4.0
+CORE_TEMPLATE_ID=$(shell jq -r '.templates.core' $(PACKAGE_IDS))
+CORE_CLIENT_TEMPLATE_ID=$(shell jq -r '.templates.core_client' $(PACKAGE_IDS))
 
-FACTORY_NAME=RedStonePricePillFactory-v14-0.4.0
-FACTORY_TEMPLATE_ID=1d66e71ee50b50a164ac6b9d4095e8489916d3fc87c6d63312a3d6352215fde2:RedStonePricePillFactory:RedStonePricePillFactory
+FACTORY_NAME=RedStonePricePillFactory-v16-0.4.0
+FACTORY_TEMPLATE_ID=$(shell jq -r '.templates.factory' $(PACKAGE_IDS))
 
-FACTORY_ID=0090986eb911bf63dda2833b9a442c011e60d087e4417a31fb55067c2923347197ca121220931e41f25c285cf88b31d17baf95738cf32fd69b7a2b1eb5de710ab9e8e2be25
+FACTORY_ID=0084b099b9bfae802b94d95a40d31df83e768b44f82b2301e30a519df8cb99f0c7ca121220f1e3ec9b32be23d97115807831744ec5776151365c082b28dc0162efcf12208a
 
-REWARD_FACTORY_NAME=RedStoneRewardFactory-v12-0.4.0
-REWARD_FACTORY_TEMPLATE_ID=1776c03fcfdd8007648663a7bfc1f1c1c18fba7bc41b691318e8d45e3ad0f2a7:RedStoneRewardFactory:RedStoneRewardFactory
+REWARD_FACTORY_NAME=RedStoneRewardFactory-v16-0.4.0
+REWARD_FACTORY_TEMPLATE_ID=$(shell jq -r '.templates.reward_factory' $(PACKAGE_IDS))
 
-REWARD_FACTORY_ID=00323b75bade9ef014d09b5759712611d1b9ac8cafb1b8a05389edc7630ab4e69cca12122090965472b7b9641bf29450d5ee9e6fd6ecb4bff5dd1a92bb55e48847fb4dcaa4
+REWARD_FACTORY_ID=00c4f0617f731ea035905db5ae18ffec76ca26820369e2ea08259775c604d97edbca121220093dadb7bdc6acb801fffa5624b87e0c7e5de926a6da4eb19c18066bc2817c0f
 
-INTERFACE_ID=\#redstone-interface-v12
-IADAPTER_TEMPLATE_ID=$(INTERFACE_ID):IRedStoneAdapter:IRedStoneAdapter
-ICORE_TEMPLATE_ID=$(INTERFACE_ID):IRedStoneCore:IRedStoneCore
+IADAPTER_TEMPLATE_ID=$(shell jq -r '.interfaces.adapter' $(PACKAGE_IDS))
+ICORE_TEMPLATE_ID=$(shell jq -r '.interfaces.core' $(PACKAGE_IDS))
 
 BENEFICIARY=8b4399ba-c401-4a97-a1fe-59077a8b3b14
 FEATURED_CID=00deaaad88568938379d75d095961036688c49cca81efa596de41f578fe1ac1c2fca121220a86ed774b5e19df71fe79139d3fbb08e603db71977437cd997c7e1771efab2cc
@@ -34,6 +33,12 @@ PRICE_FEED_ID_TXT=price_feed_id.txt
 CORE_ID=$(shell cat $(CORE_ID_TXT))
 ADAPTER_ID=$(shell cat $(ADAPTER_ID_TXT))
 PRICE_FEED_ID=$(shell cat $(PRICE_FEED_ID_TXT))
+
+PARTY_UPDATER=RedStoneOracleUpdater::$(PARTY_SUFFIX)
+PARTY_VIEWER=RedStoneOracleViewer::$(PARTY_SUFFIX)
+PARTY_OWNER=RedStoneOracleOwner::$(PARTY_SUFFIX)
+PARTY_CLIENT=Client::$(PARTY_SUFFIX)
+PARTY_BENEFICIARY=$(BENEFICIARY)::$(PARTY_SUFFIX)
 
 get-token:
 	@test -n "$(KEYCLOAK_USERNAME)" || (echo "Set KEYCLOAK_USERNAME env variable" && exit 1)
@@ -72,7 +77,7 @@ list-parties: get-token
 	  "$(CANTON_API)/v2/parties" | jq '.'
 
 deploy-core: get-token
-	@curl -X POST -H "Authorization: Bearer $(TOKEN)" \
+	curl -X POST -H "Authorization: Bearer $(TOKEN)" \
 	  -H "Content-Type: application/json" \
 	  "$(CANTON_API)/v2/commands/submit-and-wait-for-transaction-tree" \
 	  -d '{ \
@@ -81,11 +86,12 @@ deploy-core: get-token
 				"templateId": "$(CORE_TEMPLATE_ID)", \
 				"createArguments": { \
 					"coreId": "$(CORE_NAME)", \
-					"owner": "RedStoneOracleOwner::$(PARTY_SUFFIX)", \
-					"viewers": ["RedStoneOracleViewer::$(PARTY_SUFFIX)"], \
-					"beneficiary": "$(BENEFICIARY)::$(PARTY_SUFFIX)", \
+					"owner": "$(PARTY_OWNER)", \
+					"viewers": ["$(PARTY_VIEWER)"], \
+					"shouldVerifyViewer": false, \
+					"beneficiary": "$(PARTY_BENEFICIARY)", \
 					"featuredCid": "$(FEATURED_CID)"}}}], \
-		"actAs": ["RedStoneOracleOwner::$(PARTY_SUFFIX)","$(BENEFICIARY)::$(PARTY_SUFFIX)"], \
+		"actAs": ["$(PARTY_OWNER)","$(PARTY_BENEFICIARY)"], \
 		"commandId": "deploy-core-$(shell date +%s)"}' | jq '.'
 
 deploy-core-client: get-token
@@ -97,9 +103,9 @@ deploy-core-client: get-token
 			"CreateCommand": { \
 				"templateId": "$(CORE_CLIENT_TEMPLATE_ID)", \
 				"createArguments": { \
-					"owner": "RedStoneOracleOwner::$(PARTY_SUFFIX)", \
+					"owner": "$(PARTY_OWNER)", \
 					"viewers": ["Client::$(PARTY_SUFFIX)"]}}}], \
-		"actAs": ["RedStoneOracleOwner::$(PARTY_SUFFIX)"], \
+		"actAs": ["$(PARTY_OWNER)"], \
 		"commandId": "deploy-core-client-$(shell date +%s)"}' | jq '.'
 
 deploy-factory: get-token
@@ -112,9 +118,9 @@ deploy-factory: get-token
 				"templateId": "$(FACTORY_TEMPLATE_ID)", \
 				"createArguments": { \
 					"factoryId": "$(FACTORY_NAME)", \
-					"owner": "RedStoneOracleOwner::$(PARTY_SUFFIX)", \
-					"creators": ["RedStoneOracleUpdater::$(PARTY_SUFFIX)"]}}}], \
-		"actAs": ["RedStoneOracleOwner::$(PARTY_SUFFIX)"], \
+					"owner": "$(PARTY_OWNER)", \
+					"creators": ["$(PARTY_UPDATER)"]}}}], \
+		"actAs": ["$(PARTY_OWNER)"], \
 		"commandId": "deploy-factory-$(shell date +%s)"}' | jq '.'
 
 deploy-reward-factory: get-token
@@ -127,11 +133,11 @@ deploy-reward-factory: get-token
 				"templateId": "$(REWARD_FACTORY_TEMPLATE_ID)", \
 				"createArguments": { \
 					"factoryId": "$(REWARD_FACTORY_NAME)", \
-					"owner": "RedStoneOracleOwner::$(PARTY_SUFFIX)", \
-					"beneficiary": "$(BENEFICIARY)::$(PARTY_SUFFIX)", \
+					"owner": "$(PARTY_OWNER)", \
+					"beneficiary": "$(PARTY_BENEFICIARY)", \
 					"featuredCid": "$(FEATURED_CID)", \
-					"viewers": ["RedStoneOracleUpdater::$(PARTY_SUFFIX)"]}}}], \
-		"actAs": ["RedStoneOracleOwner::$(PARTY_SUFFIX)", "$(BENEFICIARY)::$(PARTY_SUFFIX)"], \
+					"creators": ["$(PARTY_UPDATER)","$(PARTY_VIEWER)"]}}}], \
+		"actAs": ["$(PARTY_OWNER)", "$(PARTY_BENEFICIARY)"], \
 		"commandId": "deploy-reward-factory-$(shell date +%s)"}' | jq '.'
 
 deploy-adapter: get-token
@@ -144,12 +150,14 @@ deploy-adapter: get-token
 				"templateId": "$(ADAPTER_TEMPLATE_ID)", \
 				"createArguments": { \
 					"adapterId": "$(ADAPTER_NAME)", \
-					"owner": "RedStoneOracleOwner::$(PARTY_SUFFIX)", \
-					"updaters": ["RedStoneOracleUpdater::$(PARTY_SUFFIX)"], \
-					"viewers": ["RedStoneOracleViewer::$(PARTY_SUFFIX)"], \
+					"owner": "$(PARTY_OWNER)", \
+					"updaters": ["$(PARTY_UPDATER)"], \
+					"viewers": ["$(PARTY_VIEWER)"], \
 					"pillFactory": "$(FACTORY_ID)", \
+					"rewardFactory": "$(REWARD_FACTORY_ID)", \
+					"rewardState": null, \
 					"feedData": []}}}], \
-		"actAs": ["RedStoneOracleOwner::$(PARTY_SUFFIX)"], \
+		"actAs": ["$(PARTY_OWNER)"], \
 		"commandId": "deploy-adapter-$(shell date +%s)"}' | jq '.'
 
 get-adapter-id: get-token
@@ -164,7 +172,7 @@ get-adapter-id: get-token
 	  -d '{ \
 	    "filter": { \
 	      "filtersByParty": { \
-	        "RedStoneOracleOwner::$(PARTY_SUFFIX)": { \
+	        "$(PARTY_OWNER)": { \
 	          "cumulative": [{ \
 	            "identifierFilter": { \
 	              "TemplateFilter": { \
@@ -195,7 +203,7 @@ get-core-id-by-interface: get-token
 	  -d '{ \
 	    "filter": { \
 	      "filtersByParty": { \
-	        "RedStoneOracleViewer::$(PARTY_SUFFIX)": { \
+	        "$(PARTY_VIEWER)": { \
 	          "cumulative": [{ \
 	            "identifierFilter": { \
 	              "InterfaceFilter": { \
@@ -227,7 +235,7 @@ get-adapter-id-by-interface: get-token
 	  -d '{ \
 	    "filter": { \
 	      "filtersByParty": { \
-	        "RedStoneOracleOwner::$(PARTY_SUFFIX)": { \
+	        "$(PARTY_OWNER)": { \
 	          "cumulative": [{ \
 	            "identifierFilter": { \
 	              "InterfaceFilter": { \
@@ -247,7 +255,7 @@ get-adapter-id-by-interface: get-token
 	echo "$$CONTRACT_ID" > $(ADAPTER_ID_TXT); \
 	echo "Adapter ID saved: $$CONTRACT_ID at offset $$LEDGER_END"
 
-get-featured-app-right: get-token
+get-contract-by-interface: get-token
 	@LEDGER_END=$$(curl -s -X GET \
 		-H "Authorization: Bearer $(TOKEN)" \
 		-H "Content-Type: application/json" \
@@ -259,12 +267,12 @@ get-featured-app-right: get-token
 		-d '{ \
 			"filter": { \
 				"filtersByParty": { \
-					"$(BENEFICIARY)::$(PARTY_SUFFIX)": { \
+					"$(PARTY_VIEWER)": { \
 						"cumulative": [{ \
 							"identifierFilter": { \
 								"InterfaceFilter": { \
 									"value": { \
-										"interfaceId": "dd22e3e168a8c7fd0313171922dabf1f7a3b131bd9bfc9ff98e606f8c57707ea:Splice.Api.FeaturedAppRightV2:FeaturedAppRight", \
+										"interfaceId": "$(ICORE_TEMPLATE_ID)", \
 										"includeInterfaceView": true, \
 										"includeCreatedEventBlob": true \
 									} \
@@ -289,7 +297,7 @@ get-active-contracts: get-token
 		-d '{ \
 			"filter": { \
 				"filtersByParty": { \
-					"$(BENEFICIARY)::$(PARTY_SUFFIX)": { \
+					"$(PARTY_BENEFICIARY)": { \
 						"cumulative": [ \
 							{ \
 							  "identifierFilter": { \
