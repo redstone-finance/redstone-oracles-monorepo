@@ -8808,6 +8808,11 @@
       "source": ["hyperevm-evm-fetcher-altura"],
       "denomination": "USD",
       "rateFeed": true
+    },
+    "syrupUSDC_FUNDAMENTAL": {
+      "source": ["ethereum-evm-fetcher-maple"],
+      "denomination": "USDC",
+      "rateFeed": true
     }
   }
 }
