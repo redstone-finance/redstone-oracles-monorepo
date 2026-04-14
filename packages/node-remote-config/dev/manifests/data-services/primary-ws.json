@@ -789,11 +789,6 @@
       "rateFeed": false,
       "types": ["rwa"]
     },
-    "GAS_MONTH.T": {
-      "source": ["rollover-time-hourly"],
-      "denomination": "enum",
-      "rateFeed": false
-    },
     "WTI_CURRENT": {
       "source": ["databento-cme-futures", "ws-polygon-massive-nymex-futures"],
       "skipBroadcasting": true,
@@ -873,10 +868,98 @@
       "rateFeed": false,
       "types": ["rwa"]
     },
-    "WTI_MONTH.T": {
-      "source": ["rollover-time-hourly"],
-      "denomination": "enum",
-      "rateFeed": false
+    "SOFR": {
+      "source": ["new-york-fed-deferred"],
+      "denomination": "percent",
+      "deviationCheck": {
+        "deviationWithRecentValues": {
+          "maxPercent": 5,
+          "maxDelayMilliseconds": 120000
+        }
+      },
+      "rateFeed": true
+    },
+    "USA100_CURRENT": {
+      "source": ["databento-cme-futures", "ws-polygon-massive-cme-futures"],
+      "broadcasters": ["influx"],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": ["rwa"]
+    },
+    "USA100_FRONT": {
+      "source": ["databento-cme-futures", "ws-polygon-massive-cme-futures"],
+      "broadcasters": ["influx"],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": ["rwa"]
+    },
+    "USA100.T": {
+      "source": [
+        "rollover-time-blend-equities",
+        "alltick-api-deferred",
+        "ws-itick-indices",
+        "financialmodelingprep-deferred",
+        "ws-lmax"
+      ],
+      "priceAggregator": "redstoneX",
+      "redstoneXAggregatorConfig": {
+        "priceDiscoverySources": [
+          "alltick-api-deferred",
+          "ws-itick-indices",
+          "financialmodelingprep-deferred",
+          "ws-lmax"
+        ]
+      },
+      "broadcasters": ["influx"],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": ["rwa"]
+    },
+    "USA100.T---REGULAR": {
+      "source": ["cme-equities-on-market"],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": ["rwa"]
+    },
+    "USA500_CURRENT": {
+      "source": ["databento-cme-futures", "ws-polygon-massive-cme-futures"],
+      "broadcasters": ["influx"],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": ["rwa"]
+    },
+    "USA500_FRONT": {
+      "source": ["databento-cme-futures", "ws-polygon-massive-cme-futures"],
+      "broadcasters": ["influx"],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": ["rwa"]
+    },
+    "USA500.T": {
+      "source": [
+        "rollover-time-blend-equities",
+        "alltick-api-deferred",
+        "financialmodelingprep-deferred",
+        "ws-lmax"
+      ],
+      "priceAggregator": "redstoneX",
+      "redstoneXAggregatorConfig": {
+        "priceDiscoverySources": [
+          "alltick-api-deferred",
+          "financialmodelingprep-deferred",
+          "ws-lmax"
+        ]
+      },
+      "broadcasters": ["influx"],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": ["rwa"]
+    },
+    "USA500.T---REGULAR": {
+      "source": ["cme-equities-on-market"],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": ["rwa"]
     }
   },
   "multiPointPackages": {

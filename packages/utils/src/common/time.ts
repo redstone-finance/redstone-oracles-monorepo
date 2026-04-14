@@ -76,6 +76,8 @@ export const msToHours = (ms: number) => ms / 3_600_000;
 
 export const msToDays = (ms: number) => ms / (3_600_000 * 24);
 
+export const nsToMs = (ns: number) => ns / 1_000_000;
+
 export const hourToSecs = (hours: number) => hours * 3_600;
 
 export const secsToHours = (secs: number) => secs / 3_600;
