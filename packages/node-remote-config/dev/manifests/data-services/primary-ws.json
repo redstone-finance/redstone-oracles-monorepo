@@ -810,13 +810,6 @@
         "rwa"
       ]
     },
-    "GAS_MONTH.T": {
-      "source": [
-        "rollover-time-hourly"
-      ],
-      "denomination": "enum",
-      "rateFeed": false
-    },
     "WTI_CURRENT": {
       "source": [],
       "skipBroadcasting": true,
@@ -888,12 +881,108 @@
         "rwa"
       ]
     },
-    "WTI_MONTH.T": {
+    "SOFR": {
       "source": [
-        "rollover-time-hourly"
+        "new-york-fed-deferred"
       ],
-      "denomination": "enum",
-      "rateFeed": false
+      "denomination": "percent",
+      "deviationCheck": {
+        "deviationWithRecentValues": {
+          "maxPercent": 5,
+          "maxDelayMilliseconds": 120000
+        }
+      },
+      "rateFeed": true
+    },
+    "USA100_CURRENT": {
+      "source": [],
+      "broadcasters": [
+        "influx"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
+    },
+    "USA100_FRONT": {
+      "source": [],
+      "broadcasters": [
+        "influx"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
+    },
+    "USA100.T": {
+      "source": [],
+      "priceAggregator": "redstoneX",
+      "redstoneXAggregatorConfig": {
+        "priceDiscoverySources": []
+      },
+      "broadcasters": [
+        "influx"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
+    },
+    "USA100.T---REGULAR": {
+      "source": [],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
+    },
+    "USA500_CURRENT": {
+      "source": [],
+      "broadcasters": [
+        "influx"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
+    },
+    "USA500_FRONT": {
+      "source": [],
+      "broadcasters": [
+        "influx"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
+    },
+    "USA500.T": {
+      "source": [],
+      "priceAggregator": "redstoneX",
+      "redstoneXAggregatorConfig": {
+        "priceDiscoverySources": []
+      },
+      "broadcasters": [
+        "influx"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
+    },
+    "USA500.T---REGULAR": {
+      "source": [],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
     }
   },
   "multiPointPackages": {
