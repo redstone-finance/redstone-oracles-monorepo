@@ -1,0 +1,14 @@
+{
+  "interval": 10000,
+  "priceAggregator": "median",
+  "defaultSource": [],
+  "sourceTimeout": 7000,
+  "minValidSourcesPercentage": 1,
+  "deviationCheck": {
+    "deviationWithRecentValues": {
+      "maxPercent": 30,
+      "maxDelayMilliseconds": 120000
+    }
+  },
+  "tokens": {}
+}
