@@ -8814,7 +8814,7 @@
       "denomination": "USDC",
       "rateFeed": true
     },
-    "pathUSDf": {
+    "pathUSD_FV": {
       "source": ["fixed-value"],
       "fixedValue": 1,
       "skipBroadcasting": true,
