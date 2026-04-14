@@ -5749,6 +5749,22 @@
       ],
       "denomination": "USDC",
       "rateFeed": true
+    },
+    "pathUSDf": {
+      "source": [
+        "fixed-value"
+      ],
+      "fixedValue": 1,
+      "skipBroadcasting": true,
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "pathUSD": {
+      "source": [
+        "alias"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
     }
   },
   "multiPointPackages": {
