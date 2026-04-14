@@ -5750,7 +5750,7 @@
       "denomination": "USDC",
       "rateFeed": true
     },
-    "pathUSDf": {
+    "pathUSD_FV": {
       "source": [
         "fixed-value"
       ],
