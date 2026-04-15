@@ -58,7 +58,6 @@
     },
     "DAI": {
       "source": [
-        "bingx-usdt",
         "bitget-usdt",
         "bitmart-usdt",
         "bitrue-usdt",
@@ -66,7 +65,6 @@
         "gate-usdt",
         "kraken-usd",
         "kraken-usdt",
-        "okx-usd",
         "okx-usdt",
         "curve-ethereum-usdt"
       ],
