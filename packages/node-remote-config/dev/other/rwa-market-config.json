@@ -117,14 +117,14 @@
   "USA500": "CmeEquities",
   "ESM6": "CmeEquities",
 
-  "DNMR": "Dev",
-  "FTSE100": "Dev",
-  "SOYBEAN": "Dev",
-  "CORN": "Dev",
-  "LBXAUAM": "Dev",
-  "LBXAUPM": "Dev",
-  "LBXPDAM": "Dev",
-  "LBXPTAM": "Dev",
-  "LBXPDPM": "Dev",
-  "LBXPTPM": "Dev"
+  "DNMR": "AlwaysOpen",
+  "FTSE100": "AlwaysOpen",
+  "SOYBEAN": "AlwaysOpen",
+  "CORN": "AlwaysOpen",
+  "LBXAUAM": "AlwaysOpen",
+  "LBXAUPM": "AlwaysOpen",
+  "LBXPDAM": "AlwaysOpen",
+  "LBXPTAM": "AlwaysOpen",
+  "LBXPDPM": "AlwaysOpen",
+  "LBXPTPM": "AlwaysOpen"
 }

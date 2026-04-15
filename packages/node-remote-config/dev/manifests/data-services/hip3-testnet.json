@@ -1057,17 +1057,6 @@
         }
       }
     },
-    "IS_NY_STOCKS_MARKET_OPEN": {
-      "source": [],
-      "broadcasters": [
-        "influx"
-      ],
-      "denomination": "other",
-      "rateFeed": false,
-      "types": [
-        "rwa"
-      ]
-    },
     "TSLA": {
       "source": [],
       "deviationCheck": {

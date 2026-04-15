@@ -110,14 +110,6 @@
         "rwa"
       ]
     },
-    "EUR---REGULAR": {
-      "source": [],
-      "denomination": "USD",
-      "rateFeed": false,
-      "types": [
-        "rwa"
-      ]
-    },
     "BTC": {
       "source": [
         "binance_deferred-usdc",
@@ -206,23 +198,7 @@
         "rwa"
       ]
     },
-    "SPXU---REGULAR": {
-      "source": [],
-      "denomination": "USD",
-      "rateFeed": false,
-      "types": [
-        "rwa"
-      ]
-    },
     "XAU": {
-      "source": [],
-      "denomination": "USD",
-      "rateFeed": false,
-      "types": [
-        "rwa"
-      ]
-    },
-    "XAU---REGULAR": {
       "source": [],
       "denomination": "USD",
       "rateFeed": false,
@@ -232,15 +208,6 @@
     },
     "TSLA": {
       "source": [],
-      "skipBroadcasting": true,
-      "denomination": "USD",
-      "rateFeed": false,
-      "types": [
-        "rwa"
-      ]
-    },
-    "TSLA---REGULAR": {
-      "source": [],
       "denomination": "USD",
       "rateFeed": false,
       "types": [
@@ -248,15 +215,6 @@
       ]
     },
     "MSFT": {
-      "source": [],
-      "skipBroadcasting": true,
-      "denomination": "USD",
-      "rateFeed": false,
-      "types": [
-        "rwa"
-      ]
-    },
-    "MSFT---REGULAR": {
       "source": [],
       "denomination": "USD",
       "rateFeed": false,
@@ -266,15 +224,6 @@
     },
     "AAPL": {
       "source": [],
-      "skipBroadcasting": true,
-      "denomination": "USD",
-      "rateFeed": false,
-      "types": [
-        "rwa"
-      ]
-    },
-    "AAPL---REGULAR": {
-      "source": [],
       "denomination": "USD",
       "rateFeed": false,
       "types": [
@@ -282,15 +231,6 @@
       ]
     },
     "NVDA": {
-      "source": [],
-      "skipBroadcasting": true,
-      "denomination": "USD",
-      "rateFeed": false,
-      "types": [
-        "rwa"
-      ]
-    },
-    "NVDA---REGULAR": {
       "source": [],
       "denomination": "USD",
       "rateFeed": false,
@@ -300,15 +240,6 @@
     },
     "PLTR": {
       "source": [],
-      "skipBroadcasting": true,
-      "denomination": "USD",
-      "rateFeed": false,
-      "types": [
-        "rwa"
-      ]
-    },
-    "PLTR---REGULAR": {
-      "source": [],
       "denomination": "USD",
       "rateFeed": false,
       "types": [
@@ -316,15 +247,6 @@
       ]
     },
     "AMD": {
-      "source": [],
-      "skipBroadcasting": true,
-      "denomination": "USD",
-      "rateFeed": false,
-      "types": [
-        "rwa"
-      ]
-    },
-    "AMD---REGULAR": {
       "source": [],
       "denomination": "USD",
       "rateFeed": false,
@@ -334,15 +256,6 @@
     },
     "GOOGL": {
       "source": [],
-      "skipBroadcasting": true,
-      "denomination": "USD",
-      "rateFeed": false,
-      "types": [
-        "rwa"
-      ]
-    },
-    "GOOGL---REGULAR": {
-      "source": [],
       "denomination": "USD",
       "rateFeed": false,
       "types": [
@@ -350,15 +263,6 @@
       ]
     },
     "META": {
-      "source": [],
-      "skipBroadcasting": true,
-      "denomination": "USD",
-      "rateFeed": false,
-      "types": [
-        "rwa"
-      ]
-    },
-    "META---REGULAR": {
       "source": [],
       "denomination": "USD",
       "rateFeed": false,
@@ -368,15 +272,6 @@
     },
     "AMZN": {
       "source": [],
-      "skipBroadcasting": true,
-      "denomination": "USD",
-      "rateFeed": false,
-      "types": [
-        "rwa"
-      ]
-    },
-    "AMZN---REGULAR": {
-      "source": [],
       "denomination": "USD",
       "rateFeed": false,
       "types": [
@@ -384,14 +279,6 @@
       ]
     },
     "STRC": {
-      "source": [],
-      "denomination": "USD",
-      "rateFeed": false,
-      "types": [
-        "rwa"
-      ]
-    },
-    "STRC---REGULAR": {
       "source": [],
       "denomination": "USD",
       "rateFeed": false,
@@ -441,17 +328,8 @@
         "rwa"
       ]
     },
-    "URA---REGULAR": {
-      "source": [],
-      "denomination": "USD",
-      "rateFeed": false,
-      "types": [
-        "rwa"
-      ]
-    },
     "URA": {
       "source": [],
-      "skipBroadcasting": true,
       "denomination": "USD",
       "rateFeed": false,
       "types": [
@@ -460,7 +338,6 @@
     },
     "KOSPI200": {
       "source": [],
-      "skipBroadcasting": true,
       "denomination": "KRW",
       "rateFeed": false,
       "types": [
@@ -477,7 +354,6 @@
     },
     "NIKKEI225": {
       "source": [],
-      "skipBroadcasting": true,
       "denomination": "JPY",
       "rateFeed": false,
       "types": [
@@ -498,7 +374,6 @@
       "redstoneXAggregatorConfig": {
         "priceDiscoverySources": []
       },
-      "skipBroadcasting": true,
       "denomination": "USD",
       "rateFeed": false,
       "types": [
@@ -771,14 +646,6 @@
         "rwa"
       ]
     },
-    "GAS.V---REGULAR": {
-      "source": [],
-      "denomination": "USD",
-      "rateFeed": false,
-      "types": [
-        "rwa"
-      ]
-    },
     "GAS_MONTH.V": {
       "source": [
         "rollover-volume"
@@ -796,14 +663,6 @@
       "broadcasters": [
         "influx"
       ],
-      "rateFeed": false,
-      "types": [
-        "rwa"
-      ]
-    },
-    "GAS.T---REGULAR": {
-      "source": [],
-      "denomination": "USD",
       "rateFeed": false,
       "types": [
         "rwa"
@@ -842,14 +701,6 @@
         "rwa"
       ]
     },
-    "WTI.V---REGULAR": {
-      "source": [],
-      "denomination": "USD",
-      "rateFeed": false,
-      "types": [
-        "rwa"
-      ]
-    },
     "WTI_MONTH.V": {
       "source": [
         "rollover-volume"
@@ -866,14 +717,6 @@
       "broadcasters": [
         "influx"
       ],
-      "denomination": "USD",
-      "rateFeed": false,
-      "types": [
-        "rwa"
-      ]
-    },
-    "WTI.T---REGULAR": {
-      "source": [],
       "denomination": "USD",
       "rateFeed": false,
       "types": [
@@ -930,14 +773,6 @@
         "rwa"
       ]
     },
-    "USA100.T---REGULAR": {
-      "source": [],
-      "denomination": "USD",
-      "rateFeed": false,
-      "types": [
-        "rwa"
-      ]
-    },
     "USA500_CURRENT": {
       "source": [],
       "broadcasters": [
@@ -969,14 +804,6 @@
       "broadcasters": [
         "influx"
       ],
-      "denomination": "USD",
-      "rateFeed": false,
-      "types": [
-        "rwa"
-      ]
-    },
-    "USA500.T---REGULAR": {
-      "source": [],
       "denomination": "USD",
       "rateFeed": false,
       "types": [

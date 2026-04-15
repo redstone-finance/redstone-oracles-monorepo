@@ -114,14 +114,6 @@
         "rwa"
       ]
     },
-    "EUR---REGULAR": {
-      "source": [],
-      "denomination": "USD",
-      "rateFeed": false,
-      "types": [
-        "rwa"
-      ]
-    },
     "BTC": {
       "source": [
         "binance_deferred-usdc",
@@ -210,23 +202,7 @@
         "rwa"
       ]
     },
-    "SPXU---REGULAR": {
-      "source": [],
-      "denomination": "USD",
-      "rateFeed": false,
-      "types": [
-        "rwa"
-      ]
-    },
     "XAU": {
-      "source": [],
-      "denomination": "USD",
-      "rateFeed": false,
-      "types": [
-        "rwa"
-      ]
-    },
-    "XAU---REGULAR": {
       "source": [],
       "denomination": "USD",
       "rateFeed": false,
@@ -243,25 +219,9 @@
         "rwa"
       ]
     },
-    "TSLA---REGULAR": {
-      "source": [],
-      "denomination": "USD",
-      "rateFeed": false,
-      "types": [
-        "rwa"
-      ]
-    },
     "MSFT": {
       "source": [],
       "skipBroadcasting": true,
-      "denomination": "USD",
-      "rateFeed": false,
-      "types": [
-        "rwa"
-      ]
-    },
-    "MSFT---REGULAR": {
-      "source": [],
       "denomination": "USD",
       "rateFeed": false,
       "types": [
@@ -277,25 +237,9 @@
         "rwa"
       ]
     },
-    "AAPL---REGULAR": {
-      "source": [],
-      "denomination": "USD",
-      "rateFeed": false,
-      "types": [
-        "rwa"
-      ]
-    },
     "NVDA": {
       "source": [],
       "skipBroadcasting": true,
-      "denomination": "USD",
-      "rateFeed": false,
-      "types": [
-        "rwa"
-      ]
-    },
-    "NVDA---REGULAR": {
-      "source": [],
       "denomination": "USD",
       "rateFeed": false,
       "types": [
@@ -311,25 +255,9 @@
         "rwa"
       ]
     },
-    "PLTR---REGULAR": {
-      "source": [],
-      "denomination": "USD",
-      "rateFeed": false,
-      "types": [
-        "rwa"
-      ]
-    },
     "AMD": {
       "source": [],
       "skipBroadcasting": true,
-      "denomination": "USD",
-      "rateFeed": false,
-      "types": [
-        "rwa"
-      ]
-    },
-    "AMD---REGULAR": {
-      "source": [],
       "denomination": "USD",
       "rateFeed": false,
       "types": [
@@ -345,25 +273,9 @@
         "rwa"
       ]
     },
-    "GOOGL---REGULAR": {
-      "source": [],
-      "denomination": "USD",
-      "rateFeed": false,
-      "types": [
-        "rwa"
-      ]
-    },
     "META": {
       "source": [],
       "skipBroadcasting": true,
-      "denomination": "USD",
-      "rateFeed": false,
-      "types": [
-        "rwa"
-      ]
-    },
-    "META---REGULAR": {
-      "source": [],
       "denomination": "USD",
       "rateFeed": false,
       "types": [
@@ -379,23 +291,7 @@
         "rwa"
       ]
     },
-    "AMZN---REGULAR": {
-      "source": [],
-      "denomination": "USD",
-      "rateFeed": false,
-      "types": [
-        "rwa"
-      ]
-    },
     "STRC": {
-      "source": [],
-      "denomination": "USD",
-      "rateFeed": false,
-      "types": [
-        "rwa"
-      ]
-    },
-    "STRC---REGULAR": {
       "source": [],
       "denomination": "USD",
       "rateFeed": false,
@@ -438,14 +334,6 @@
       "rateFeed": false
     },
     "URA---MARKET_HOURS": {
-      "source": [],
-      "denomination": "USD",
-      "rateFeed": false,
-      "types": [
-        "rwa"
-      ]
-    },
-    "URA---REGULAR": {
       "source": [],
       "denomination": "USD",
       "rateFeed": false,
