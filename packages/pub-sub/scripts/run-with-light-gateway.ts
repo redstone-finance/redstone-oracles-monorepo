@@ -5,6 +5,7 @@ import { PollingHttpClient, SSEPubSubClient } from "../src";
 const GATEWAY_URL = "http://localhost:3000";
 const NUM_PUBLISHERS = 5;
 const NUM_SUBSCRIBERS = 10;
+const NUM_WILDCARD_SUBSCRIBERS = 3;
 const TOPICS_PER_SUBSCRIBER = 20;
 const PUBLISH_INTERVAL_MS = 100;
 const SUBSCRIPTION_ROTATION_MS = 5000;
@@ -20,7 +21,7 @@ type Package = {
 };
 
 const generateTopics = (count: number, id: number, prefix: string) =>
-  Array.from({ length: count }, (_, i) => `${prefix}_${id * count + i}`);
+  Array.from({ length: count }, (_, i) => `${prefix}_${id}/${i}`);
 
 const createPublisher = (id: number) => {
   const topics = generateTopics(10, id, `topic`);
@@ -51,7 +52,7 @@ const createPublisher = (id: number) => {
 };
 
 const createSubscriber = async (id: number) => {
-  const allTopics = generateTopics(50, 0, "topic");
+  const allTopics = Array.from({ length: 50 }, (_, i) => `topic_${Math.floor(i / 10)}/${i % 10}`);
   const client = new clientToUse(GATEWAY_URL);
   const messageCount = new Map<string, number>();
 
@@ -96,14 +97,61 @@ const createSubscriber = async (id: number) => {
   return client;
 };
 
+const createWildcardSubscriber = async (id: number) => {
+  const client = new clientToUse(GATEWAY_URL);
+  const messageCount = new Map<string, number>();
+
+  const wildcardPatterns = [[`topic_0/#`], [`topic_1/+`], [`+/5`, `+/7`]];
+
+  let currentPatternIndex = id % wildcardPatterns.length;
+
+  const callback = (topic: string, data: unknown) => {
+    const count = messageCount.get(topic) || 0;
+    messageCount.set(topic, count + 1);
+
+    if (count % 10 === 0) {
+      const decoded = data as Package;
+      console.log(`${Date.now().toLocaleString()} WildcardSub ${id} - ${topic}:`, {
+        count,
+        latency: Date.now() - decoded.timestamp,
+        value: decoded.value.toFixed(2),
+      });
+    }
+  };
+
+  const rotatePatterns = async () => {
+    const oldPatterns = wildcardPatterns[currentPatternIndex];
+
+    currentPatternIndex = (currentPatternIndex + 1) % wildcardPatterns.length;
+
+    const newPatterns = wildcardPatterns[currentPatternIndex];
+
+    await client.unsubscribe(oldPatterns);
+    await client.subscribe(newPatterns, callback);
+
+    console.log(`WildcardSub ${id} rotated: ${oldPatterns.join(", ")} → ${newPatterns.join(", ")}`);
+  };
+
+  const initialPatterns = wildcardPatterns[currentPatternIndex];
+
+  await client.subscribe(initialPatterns, callback);
+
+  setInterval(() => void rotatePatterns(), SUBSCRIPTION_ROTATION_MS);
+
+  return client;
+};
+
 const main = async () => {
   console.log("Starting publishers and subscribers...\n");
 
   const publishers = Array.from({ length: NUM_PUBLISHERS }, (_, i) => createPublisher(i));
   const subscribers = Array.from({ length: NUM_SUBSCRIBERS }, (_, i) => createSubscriber(i));
+  const wildcardSubscribers = Array.from({ length: NUM_WILDCARD_SUBSCRIBERS }, (_, i) =>
+    createWildcardSubscriber(i)
+  );
 
   await Promise.race(publishers);
-  await Promise.all(subscribers);
+  await Promise.all([...subscribers, ...wildcardSubscribers]);
 };
 
 main().catch(console.error);
