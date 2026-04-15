@@ -127,16 +127,18 @@ const createWildcardSubscriber = async (id: number) => {
     const newPatterns = wildcardPatterns[currentPatternIndex];
 
     await client.unsubscribe(oldPatterns);
-    await client.subscribe(newPatterns, callback);
+    await client.subscribe(newPatterns);
 
     console.log(`WildcardSub ${id} rotated: ${oldPatterns.join(", ")} → ${newPatterns.join(", ")}`);
   };
 
   const initialPatterns = wildcardPatterns[currentPatternIndex];
 
-  await client.subscribe(initialPatterns, callback);
+  await client.subscribe(initialPatterns);
 
   setInterval(() => void rotatePatterns(), SUBSCRIPTION_ROTATION_MS);
+
+  client.setOnMessageHandler(callback);
 
   return client;
 };
