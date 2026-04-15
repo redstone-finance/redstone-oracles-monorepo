@@ -19,13 +19,13 @@
     },
     "SPX500": {
       "source": [
-        "finhub_icmarkets_deferred-usd",
-        "finhub_oanda_deferred-usd",
-        "finhub_pepperstone_deferred-usd",
-        "finhub_pepperstoneuk_deferred-usd",
-        "finhub_fxcm_deferred-usd",
-        "finhub_fxpig_deferred-usd",
-        "finhub_capital_deferred-usd"
+        "finhub_icmarkets_deferred",
+        "finhub_oanda_deferred",
+        "finhub_pepperstone_deferred",
+        "finhub_pepperstoneuk_deferred",
+        "finhub_fxcm_deferred",
+        "finhub_fxpig_deferred",
+        "finhub_capital_deferred"
       ],
       "denomination": "USD",
       "rateFeed": false
@@ -47,21 +47,21 @@
     },
     "OIL": {
       "source": [
-        "finhub_icmarkets_deferred-usd",
-        "finhub_oanda_deferred-usd",
-        "finhub_pepperstone_deferred-usd",
-        "finhub_pepperstoneuk_deferred-usd",
-        "finhub_fxpig_deferred-usd",
-        "finhub_capital_deferred-usd"
+        "finhub_icmarkets_deferred",
+        "finhub_oanda_deferred",
+        "finhub_pepperstone_deferred",
+        "finhub_pepperstoneuk_deferred",
+        "finhub_fxpig_deferred",
+        "finhub_capital_deferred"
       ],
       "denomination": "USD",
       "rateFeed": false
     },
     "BRENT": {
       "source": [
-        "finhub_pepperstoneuk_deferred-usd",
-        "finhub_fxpig_deferred-usd",
-        "finhub_capital_deferred-usd"
+        "finhub_pepperstoneuk_deferred",
+        "finhub_fxpig_deferred",
+        "finhub_capital_deferred"
       ],
       "denomination": "USD",
       "rateFeed": false
