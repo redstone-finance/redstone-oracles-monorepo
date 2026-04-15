@@ -370,17 +370,6 @@
         "rwa"
       ]
     },
-    "IS_NY_STOCKS_MARKET_OPEN": {
-      "source": [],
-      "broadcasters": [
-        "influx"
-      ],
-      "denomination": "other",
-      "rateFeed": false,
-      "types": [
-        "rwa"
-      ]
-    },
     "MARK_flx:TSLA": {
       "source": [
         "ws-hyperliquid-perps-flx",
