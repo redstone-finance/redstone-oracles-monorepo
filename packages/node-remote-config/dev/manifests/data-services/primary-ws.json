@@ -81,7 +81,6 @@
         "kraken_deferred-usdt",
         "mexc_deferred-usdt",
         "okx_deferred-usdt",
-        "xt_deferred-usdt",
         "curve-ethereum-usdt-deferred",
         "uniswap-v3-ethereum-usdt-100-deferred"
       ],
