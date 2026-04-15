@@ -12,98 +12,98 @@
   "tokens": {
     "NG": {
       "source": [
-        "finhub_oanda_deferred-usd",
-        "finhub_pepperstone_deferred-usd",
-        "finhub_pepperstoneuk_deferred-usd",
-        "finhub_fxpig_deferred-usd",
-        "finhub_capital_deferred-usd"
+        "finhub_oanda_deferred",
+        "finhub_pepperstone_deferred",
+        "finhub_pepperstoneuk_deferred",
+        "finhub_fxpig_deferred",
+        "finhub_capital_deferred"
       ],
       "denomination": "USD",
       "rateFeed": false
     },
     "SPX500": {
       "source": [
-        "finhub_icmarkets_deferred-usd",
-        "finhub_oanda_deferred-usd",
-        "finhub_pepperstone_deferred-usd",
-        "finhub_pepperstoneuk_deferred-usd",
-        "finhub_fxcm_deferred-usd",
-        "finhub_fxpig_deferred-usd",
-        "finhub_capital_deferred-usd"
+        "finhub_icmarkets_deferred",
+        "finhub_oanda_deferred",
+        "finhub_pepperstone_deferred",
+        "finhub_pepperstoneuk_deferred",
+        "finhub_fxcm_deferred",
+        "finhub_fxpig_deferred",
+        "finhub_capital_deferred"
       ],
       "denomination": "USD",
       "rateFeed": false
     },
     "URNM": {
-      "source": ["finhub_pepperstoneuk_deferred-usd"],
+      "source": ["finhub_pepperstoneuk_deferred"],
       "denomination": "USD",
       "rateFeed": false
     },
     "SOYBEAN": {
-      "source": ["finhub_pepperstoneuk_deferred-usd"],
+      "source": ["finhub_pepperstoneuk_deferred"],
       "denomination": "USD",
       "rateFeed": false
     },
     "CORN": {
       "source": [
-        "finhub_oanda_deferred-usd",
-        "finhub_pepperstone_deferred-usd",
-        "finhub_pepperstoneuk_deferred-usd",
-        "finhub_fxcm_deferred-usd",
-        "finhub_capital_deferred-usd"
+        "finhub_oanda_deferred",
+        "finhub_pepperstone_deferred",
+        "finhub_pepperstoneuk_deferred",
+        "finhub_fxcm_deferred",
+        "finhub_capital_deferred"
       ],
       "denomination": "USD",
       "rateFeed": false
     },
     "OIL": {
       "source": [
-        "finhub_icmarkets_deferred-usd",
-        "finhub_oanda_deferred-usd",
-        "finhub_pepperstone_deferred-usd",
-        "finhub_pepperstoneuk_deferred-usd",
-        "finhub_fxpig_deferred-usd",
-        "finhub_capital_deferred-usd"
+        "finhub_icmarkets_deferred",
+        "finhub_oanda_deferred",
+        "finhub_pepperstone_deferred",
+        "finhub_pepperstoneuk_deferred",
+        "finhub_fxpig_deferred",
+        "finhub_capital_deferred"
       ],
       "denomination": "USD",
       "rateFeed": false
     },
     "BRENT": {
       "source": [
-        "finhub_pepperstoneuk_deferred-usd",
-        "finhub_fxpig_deferred-usd",
-        "finhub_capital_deferred-usd"
+        "finhub_pepperstoneuk_deferred",
+        "finhub_fxpig_deferred",
+        "finhub_capital_deferred"
       ],
       "denomination": "USD",
       "rateFeed": false
     },
     "XAU": {
       "source": [
-        "finhub_icmarkets_deferred-usd",
-        "finhub_oanda_deferred-usd",
-        "finhub_pepperstone_deferred-usd",
-        "finhub_pepperstoneuk_deferred-usd",
-        "finhub_fxcm_deferred-usd",
-        "finhub_fxpig_deferred-usd",
-        "finhub_capital_deferred-usd"
+        "finhub_icmarkets_deferred",
+        "finhub_oanda_deferred",
+        "finhub_pepperstone_deferred",
+        "finhub_pepperstoneuk_deferred",
+        "finhub_fxcm_deferred",
+        "finhub_fxpig_deferred",
+        "finhub_capital_deferred"
       ],
       "denomination": "USD",
       "rateFeed": false
     },
     "XAG": {
       "source": [
-        "finhub_icmarkets_deferred-usd",
-        "finhub_oanda_deferred-usd",
-        "finhub_pepperstone_deferred-usd",
-        "finhub_pepperstoneuk_deferred-usd",
-        "finhub_fxcm_deferred-usd",
-        "finhub_fxpig_deferred-usd",
-        "finhub_capital_deferred-usd"
+        "finhub_icmarkets_deferred",
+        "finhub_oanda_deferred",
+        "finhub_pepperstone_deferred",
+        "finhub_pepperstoneuk_deferred",
+        "finhub_fxcm_deferred",
+        "finhub_fxpig_deferred",
+        "finhub_capital_deferred"
       ],
       "denomination": "USD",
       "rateFeed": false
     },
     "XCU": {
-      "source": ["finhub_pepperstone_deferred-usd"],
+      "source": ["finhub_pepperstone_deferred"],
       "denomination": "USD",
       "rateFeed": false
     }

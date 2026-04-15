@@ -8173,11 +8173,11 @@
         "alltick-api",
         "financialmodelingprep",
         "ws-blocksize",
-        "finhub_oanda-usd",
-        "finhub_pepperstone-usd",
-        "finhub_pepperstoneuk-usd",
-        "finhub_fxpig-usd",
-        "finhub_capital-usd",
+        "finhub_oanda",
+        "finhub_pepperstone",
+        "finhub_pepperstoneuk",
+        "finhub_fxpig",
+        "finhub_capital",
         "databento-cme"
       ],
       "denomination": "USD",
@@ -8316,7 +8316,7 @@
         "databento-cme",
         "commodity-price-api",
         "ws-blocksize",
-        "finhub_fxcm_deferred-usd"
+        "finhub_fxcm_deferred"
       ],
       "denomination": "USD",
       "rateFeed": false,
@@ -8328,8 +8328,8 @@
         "databento-cme",
         "financialmodelingprep",
         "commodity-price-api",
-        "finhub_fxcm_deferred-usd",
-        "finhub_capital_deferred-usd",
+        "finhub_fxcm_deferred",
+        "finhub_capital_deferred",
         "ws-blocksize"
       ],
       "denomination": "USD",
@@ -8409,8 +8409,8 @@
     "PLATINUM": {
       "source": [
         "ws-blocksize",
-        "finhub_deriv-usd",
-        "finhub_capital_deferred-usd",
+        "finhub_deriv",
+        "finhub_capital_deferred",
         "alltick-api-deferred",
         "metal-price-api-deferred",
         "ws-lmax",
@@ -8425,8 +8425,8 @@
       "source": [
         "financialmodelingprep-deferred",
         "ws-blocksize",
-        "finhub_deriv-usd",
-        "finhub_capital_deferred-usd",
+        "finhub_deriv",
+        "finhub_capital_deferred",
         "alltick-api-deferred",
         "metal-price-api-deferred",
         "ws-lmax",
@@ -8678,8 +8678,8 @@
       "source": [
         "twelve-data",
         "alltick-api",
-        "finhub_fxcm-usd",
-        "finhub_oanda-usd",
+        "finhub_fxcm",
+        "finhub_oanda",
         "ws-lmax",
         "ws-itick-indices"
       ],
@@ -8690,7 +8690,7 @@
     "KRW": {
       "source": [
         "twelve-data",
-        "finhub_pepperstone-usd-reversed",
+        "finhub_pepperstone",
         "alltick-api-reversed",
         "ws-polygon-massive",
         "metal-price-api"
@@ -8706,7 +8706,7 @@
       "types": ["rwa"]
     },
     "NIKKEI225": {
-      "source": ["alltick-api", "finhub_oanda-usd", "ws-itick-indices"],
+      "source": ["alltick-api", "finhub_oanda", "ws-itick-indices"],
       "denomination": "JPY",
       "rateFeed": false,
       "types": ["rwa"]
@@ -8734,13 +8734,6 @@
         "ws-twelve-data"
       ],
       "denomination": "USD",
-      "rateFeed": false,
-      "types": ["rwa"]
-    },
-    "IS_NY_STOCKS_MARKET_OPEN": {
-      "source": ["is-ny-stocks-market-open"],
-      "skipBroadcasting": true,
-      "denomination": "other",
       "rateFeed": false,
       "types": ["rwa"]
     },
