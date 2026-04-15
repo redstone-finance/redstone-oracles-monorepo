@@ -413,7 +413,7 @@
       "types": ["rwa"]
     },
     "NIKKEI225": {
-      "source": ["alltick-api-deferred", "finhub_oanda", "ws-itick-indices"],
+      "source": ["alltick-api-deferred", "finhub_oanda_deferred", "ws-itick-indices"],
       "denomination": "JPY",
       "rateFeed": false,
       "types": ["rwa"]
@@ -626,35 +626,6 @@
       "rateFeed": false,
       "types": ["rwa"]
     },
-    "GAS.V": {
-      "source": [
-        "rollover-volume",
-        "ws-itick-futures",
-        "ws-twelve-data",
-        "alltick-api-deferred",
-        "financialmodelingprep-deferred",
-        "ws-lmax"
-      ],
-      "denomination": "USD",
-      "priceAggregator": "redstoneX",
-      "redstoneXAggregatorConfig": {
-        "priceDiscoverySources": [
-          "ws-itick-futures",
-          "ws-twelve-data",
-          "alltick-api-deferred",
-          "financialmodelingprep-deferred",
-          "ws-lmax"
-        ]
-      },
-      "broadcasters": ["influx"],
-      "rateFeed": false,
-      "types": ["rwa"]
-    },
-    "GAS_MONTH.V": {
-      "source": ["rollover-volume"],
-      "denomination": "enum",
-      "rateFeed": false
-    },
     "GAS.T": {
       "source": [
         "rollover-time-hourly",
@@ -693,9 +664,9 @@
       "rateFeed": false,
       "types": ["rwa"]
     },
-    "WTI.V": {
+    "WTI.T": {
       "source": [
-        "rollover-volume",
+        "rollover-time-hourly",
         "alltick-api-deferred",
         "metal-price-api-deferred",
         "ws-lmax",
@@ -717,28 +688,153 @@
       "rateFeed": false,
       "types": ["rwa"]
     },
-    "WTI_MONTH.V": {
-      "source": ["rollover-volume"],
-      "denomination": "enum",
-      "rateFeed": false
+    "XAG_CURRENT": {
+      "source": ["databento-cme-futures", "ws-polygon-massive-comex-futures"],
+      "skipBroadcasting": true,
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": ["rwa"]
     },
-    "WTI.T": {
+    "XAG_FRONT": {
+      "source": ["databento-cme-futures", "ws-polygon-massive-comex-futures"],
+      "skipBroadcasting": true,
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": ["rwa"]
+    },
+    "XAG.T": {
       "source": [
         "rollover-time-hourly",
         "alltick-api-deferred",
+        "financialmodelingprep-deferred",
         "metal-price-api-deferred",
+        "ws-blocksize",
         "ws-lmax",
-        "ws-twelve-data",
-        "ws-blocksize"
+        "ws-polygon-massive-commodities"
       ],
       "priceAggregator": "redstoneX",
       "redstoneXAggregatorConfig": {
         "priceDiscoverySources": [
           "alltick-api-deferred",
+          "financialmodelingprep-deferred",
           "metal-price-api-deferred",
+          "ws-blocksize",
           "ws-lmax",
-          "ws-twelve-data",
-          "ws-blocksize"
+          "ws-polygon-massive-commodities"
+        ]
+      },
+      "broadcasters": ["influx"],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": ["rwa"]
+    },
+    "XAU_CURRENT": {
+      "source": ["databento-cme-futures", "ws-polygon-massive-comex-futures"],
+      "skipBroadcasting": true,
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": ["rwa"]
+    },
+    "XAU_FRONT": {
+      "source": ["databento-cme-futures", "ws-polygon-massive-comex-futures"],
+      "skipBroadcasting": true,
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": ["rwa"]
+    },
+    "XAU.T": {
+      "source": [
+        "rollover-time-hourly",
+        "alltick-api-deferred",
+        "financialmodelingprep-deferred",
+        "ws-blocksize",
+        "ws-lmax",
+        "ws-polygon-massive-commodities"
+      ],
+      "priceAggregator": "redstoneX",
+      "redstoneXAggregatorConfig": {
+        "priceDiscoverySources": [
+          "alltick-api-deferred",
+          "financialmodelingprep-deferred",
+          "ws-lmax",
+          "ws-blocksize",
+          "ws-polygon-massive-commodities"
+        ]
+      },
+      "broadcasters": ["influx"],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": ["rwa"]
+    },
+    "XPT_CURRENT": {
+      "source": ["databento-cme-futures", "ws-polygon-massive-nymex-futures"],
+      "skipBroadcasting": true,
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": ["rwa"]
+    },
+    "XPT_FRONT": {
+      "source": ["databento-cme-futures", "ws-polygon-massive-nymex-futures"],
+      "skipBroadcasting": true,
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": ["rwa"]
+    },
+    "XPT.T": {
+      "source": [
+        "rollover-time-hourly",
+        "financialmodelingprep-deferred",
+        "finhub_deriv_deferred",
+        "ws-blocksize",
+        "ws-lmax",
+        "ws-twelve-data"
+      ],
+      "priceAggregator": "redstoneX",
+      "redstoneXAggregatorConfig": {
+        "priceDiscoverySources": [
+          "financialmodelingprep-deferred",
+          "finhub_deriv_deferred",
+          "ws-blocksize",
+          "ws-lmax",
+          "ws-twelve-data"
+        ]
+      },
+      "broadcasters": ["influx"],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": ["rwa"]
+    },
+    "XCU_CURRENT": {
+      "source": ["databento-cme-futures", "ws-polygon-massive-comex-futures"],
+      "skipBroadcasting": true,
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": ["rwa"]
+    },
+    "XCU_FRONT": {
+      "source": ["databento-cme-futures", "ws-polygon-massive-comex-futures"],
+      "skipBroadcasting": true,
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": ["rwa"]
+    },
+    "XCU.T": {
+      "source": [
+        "rollover-time-hourly",
+        "ws-lmax",
+        "alltick-api-deferred",
+        "metal-price-api-deferred",
+        "ws-blocksize",
+        "finhub_oanda_deferred"
+      ],
+      "priceAggregator": "redstoneX",
+      "redstoneXAggregatorConfig": {
+        "priceDiscoverySources": [
+          "ws-lmax",
+          "alltick-api-deferred",
+          "metal-price-api-deferred",
+          "ws-blocksize",
+          "finhub_oanda_deferred"
         ]
       },
       "broadcasters": ["influx"],
