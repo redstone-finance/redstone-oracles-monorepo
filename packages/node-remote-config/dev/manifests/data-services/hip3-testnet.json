@@ -760,13 +760,6 @@
         }
       }
     },
-    "IS_NY_STOCKS_MARKET_OPEN": {
-      "source": ["is-ny-stocks-market-open"],
-      "broadcasters": ["influx"],
-      "denomination": "other",
-      "rateFeed": false,
-      "types": ["rwa"]
-    },
     "TSLA": {
       "source": [
         "alltick-stocks-api-deferred",
@@ -1900,7 +1893,7 @@
     "PALLADIUM": {
       "source": [
         "financialmodelingprep-deferred",
-        "finhub_deriv_deferred-usd",
+        "finhub_deriv_deferred",
         "alltick-api-deferred",
         "ws-blocksize",
         "ws-lmax",
@@ -2007,7 +2000,7 @@
     "PLATINUM": {
       "source": [
         "financialmodelingprep-deferred",
-        "finhub_deriv_deferred-usd",
+        "finhub_deriv_deferred",
         "ws-blocksize",
         "ws-lmax",
         "ws-twelve-data"
@@ -2456,7 +2449,7 @@
         "alltick-api-deferred",
         "metal-price-api-deferred",
         "ws-blocksize",
-        "finhub_oanda_deferred-usd",
+        "finhub_oanda_deferred",
         "rollover-blend"
       ],
       "priceAggregator": "redstoneX",
@@ -2466,7 +2459,7 @@
           "alltick-api-deferred",
           "metal-price-api-deferred",
           "ws-blocksize",
-          "finhub_oanda_deferred-usd"
+          "finhub_oanda_deferred"
         ]
       },
       "broadcasters": ["influx"],
