@@ -1495,25 +1495,25 @@
       "rateFeed": false
     },
     "flx:OIL_MARK_0": {
-      "source": ["hip3-felix-energy-mainnet-fetcher"],
+      "source": ["hip3-felix-wti-mainnet-fetcher"],
       "broadcasters": ["hyperliquid-hip3"],
       "denomination": "USD",
       "rateFeed": false
     },
     "flx:OIL_MARK_1": {
-      "source": ["hip3-felix-energy-mainnet-fetcher"],
+      "source": ["hip3-felix-wti-mainnet-fetcher"],
       "broadcasters": ["hyperliquid-hip3"],
       "denomination": "USD",
       "rateFeed": false
     },
     "flx:OIL_EXT": {
-      "source": ["hip3-felix-energy-mainnet-fetcher"],
+      "source": ["hip3-felix-wti-mainnet-fetcher"],
       "broadcasters": ["hyperliquid-hip3"],
       "denomination": "USD",
       "rateFeed": false
     },
     "flx:OIL": {
-      "source": ["hip3-felix-energy-mainnet-fetcher"],
+      "source": ["hip3-felix-wti-mainnet-fetcher"],
       "broadcasters": ["hyperliquid-hip3"],
       "denomination": "USD",
       "rateFeed": false
