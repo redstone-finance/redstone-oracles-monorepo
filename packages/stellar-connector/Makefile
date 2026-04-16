@@ -51,19 +51,10 @@ account:
 	stellar keys generate --global $(ACCOUNT) --network $(NETWORK) --fund
 
 build: setup-env
-	cd $(DEPLOY_DIR) && stellar contract build
-	cd $(DEPLOY_DIR) && stellar contract optimize \
-		--wasm target/$(WASM_TARGET)/release/$(ADAPTER_CONTRACT).wasm \
-		--wasm-out target/$(WASM_TARGET)/release/$(ADAPTER_CONTRACT).wasm
-	cd $(DEPLOY_DIR) && stellar contract optimize \
-		--wasm target/$(WASM_TARGET)/release/$(PRICE_FEED_CONTRACT).wasm \
-		--wasm-out target/$(WASM_TARGET)/release/$(PRICE_FEED_CONTRACT).wasm
+	cd $(DEPLOY_DIR) && stellar contract build --optimize
 
 build-test: setup-env
-	cd $(DEPLOY_DIR) && stellar contract build --features agnostic-tests --out-dir target/agnostic-tests
-	cd $(DEPLOY_DIR) && stellar contract optimize \
-		--wasm target/agnostic-tests/$(ADAPTER_CONTRACT).wasm \
-		--wasm-out target/agnostic-tests/$(ADAPTER_CONTRACT).wasm
+	cd $(DEPLOY_DIR) && stellar contract build --features agnostic-tests --out-dir target/agnostic-tests --optimize
 
 deploy: build
 	cd $(DEPLOY_DIR) && adapter_id=`stellar contract deploy \
@@ -158,6 +149,11 @@ set-adapter-address:
 		> $(DEPLOY_DIR)/contracts/redstone-price-feed/src/config.rs.tmp
 	@mv $(DEPLOY_DIR)/contracts/redstone-price-feed/src/config.rs.tmp \
 		$(DEPLOY_DIR)/contracts/redstone-price-feed/src/config.rs
+	@sed 's/ADAPTER_ADDRESS: &str = "[^"]*"/ADAPTER_ADDRESS: \&str = "$(ADDRESS)"/' \
+		$(DEPLOY_DIR)/contracts/redstone-sep-40/src/config.rs \
+		> $(DEPLOY_DIR)/contracts/redstone-sep-40/src/config.rs.tmp
+	@mv $(DEPLOY_DIR)/contracts/redstone-sep-40/src/config.rs.tmp \
+		$(DEPLOY_DIR)/contracts/redstone-sep-40/src/config.rs
 
 prepare_data:
 	make -C $(DATA_DIR) DATA_NAME=$(DATA_NAME) prepare_data

@@ -10,7 +10,9 @@ mod utils;
 
 use core::num::NonZero;
 
-use common::{ownable::Ownable, upgradable::Upgradable, PriceData};
+use common::{
+    ownable::Ownable, redstone_adapter::RedStoneAdapterTrait, upgradable::Upgradable, PriceData,
+};
 use redstone::{
     contract::verification::{verify_data_staleness, UpdateTimestampVerifier},
     core::process_payload,
@@ -168,11 +170,10 @@ impl RedStoneAdapter {
         let storage = env.get_data_for_feed(&feed_id)?;
         let data = storage.get_all();
 
-        if let Some(start) = data.len().checked_sub(limit) {
-            return Ok(data.slice(start..));
+        match data.len().checked_sub(limit) {
+            Some(0) | None => Ok(data),
+            Some(start) => return Ok(data.slice(start..)),
         }
-
-        Ok(data)
     }
 
     pub fn check_price_data(env: &Env, price_data: PriceData) -> Result<PriceData, Error> {
@@ -184,6 +185,16 @@ impl RedStoneAdapter {
 
     pub fn unique_signer_threshold(_: &Env) -> u64 {
         STELLAR_CONFIG.signer_count_threshold as u64
+    }
+}
+
+impl RedStoneAdapterTrait for RedStoneAdapter {
+    fn read_price_data_for_feed(env: &Env, feed_id: String) -> Result<PriceData, Error> {
+        Self::read_price_data_for_feed(env, feed_id)
+    }
+
+    fn read_price_history(env: &Env, feed_id: String, limit: u32) -> Result<Vec<PriceData>, Error> {
+        Self::read_price_history(env, feed_id, limit)
     }
 }
 
