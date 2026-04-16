@@ -632,7 +632,9 @@
         "ws-twelve-data",
         "alltick-api-deferred",
         "financialmodelingprep-deferred",
-        "ws-lmax"
+        "ws-lmax",
+        "ws-hyperliquid-perps-xyz",
+        "ws-hydromancer-perps-xyz"
       ],
       "denomination": "USD",
       "priceAggregator": "redstoneX",
@@ -642,7 +644,9 @@
           "ws-twelve-data",
           "alltick-api-deferred",
           "financialmodelingprep-deferred",
-          "ws-lmax"
+          "ws-lmax",
+          "ws-hyperliquid-perps-xyz",
+          "ws-hydromancer-perps-xyz"
         ]
       },
       "rateFeed": false,
@@ -669,7 +673,9 @@
         "metal-price-api-deferred",
         "ws-lmax",
         "ws-twelve-data",
-        "ws-blocksize"
+        "ws-blocksize",
+        "ws-hyperliquid-perps-xyz",
+        "ws-hydromancer-perps-xyz"
       ],
       "priceAggregator": "redstoneX",
       "redstoneXAggregatorConfig": {
@@ -678,7 +684,9 @@
           "metal-price-api-deferred",
           "ws-lmax",
           "ws-twelve-data",
-          "ws-blocksize"
+          "ws-blocksize",
+          "ws-hyperliquid-perps-xyz",
+          "ws-hydromancer-perps-xyz"
         ]
       },
       "denomination": "USD",
@@ -717,7 +725,9 @@
           "metal-price-api-deferred",
           "ws-blocksize",
           "ws-lmax",
-          "ws-polygon-massive-commodities"
+          "ws-polygon-massive-commodities",
+          "ws-hyperliquid-perps-xyz",
+          "ws-hydromancer-perps-xyz"
         ]
       },
       "denomination": "USD",
@@ -745,7 +755,9 @@
         "financialmodelingprep-deferred",
         "ws-blocksize",
         "ws-lmax",
-        "ws-polygon-massive-commodities"
+        "ws-polygon-massive-commodities",
+        "ws-hyperliquid-perps-xyz",
+        "ws-hydromancer-perps-xyz"
       ],
       "priceAggregator": "redstoneX",
       "redstoneXAggregatorConfig": {
@@ -754,7 +766,9 @@
           "financialmodelingprep-deferred",
           "ws-lmax",
           "ws-blocksize",
-          "ws-polygon-massive-commodities"
+          "ws-polygon-massive-commodities",
+          "ws-hyperliquid-perps-xyz",
+          "ws-hydromancer-perps-xyz"
         ]
       },
       "denomination": "USD",
@@ -782,7 +796,9 @@
         "finhub_deriv_deferred",
         "ws-blocksize",
         "ws-lmax",
-        "ws-twelve-data"
+        "ws-twelve-data",
+        "ws-hyperliquid-perps-xyz",
+        "ws-hydromancer-perps-xyz"
       ],
       "priceAggregator": "redstoneX",
       "redstoneXAggregatorConfig": {
@@ -791,7 +807,9 @@
           "finhub_deriv_deferred",
           "ws-blocksize",
           "ws-lmax",
-          "ws-twelve-data"
+          "ws-twelve-data",
+          "ws-hyperliquid-perps-xyz",
+          "ws-hydromancer-perps-xyz"
         ]
       },
       "denomination": "USD",
@@ -819,7 +837,9 @@
         "alltick-api-deferred",
         "metal-price-api-deferred",
         "ws-blocksize",
-        "finhub_oanda_deferred"
+        "finhub_oanda_deferred",
+        "ws-hyperliquid-perps-xyz",
+        "ws-hydromancer-perps-xyz"
       ],
       "priceAggregator": "redstoneX",
       "redstoneXAggregatorConfig": {
@@ -828,7 +848,9 @@
           "alltick-api-deferred",
           "metal-price-api-deferred",
           "ws-blocksize",
-          "finhub_oanda_deferred"
+          "finhub_oanda_deferred",
+          "ws-hyperliquid-perps-xyz",
+          "ws-hydromancer-perps-xyz"
         ]
       },
       "denomination": "USD",
@@ -866,7 +888,9 @@
         "alltick-api-deferred",
         "ws-itick-indices",
         "financialmodelingprep-deferred",
-        "ws-lmax"
+        "ws-lmax",
+        "ws-hyperliquid-perps-xyz",
+        "ws-hydromancer-perps-xyz"
       ],
       "priceAggregator": "redstoneX",
       "redstoneXAggregatorConfig": {
@@ -874,7 +898,9 @@
           "alltick-api-deferred",
           "ws-itick-indices",
           "financialmodelingprep-deferred",
-          "ws-lmax"
+          "ws-lmax",
+          "ws-hyperliquid-perps-xyz",
+          "ws-hydromancer-perps-xyz"
         ]
       },
       "denomination": "USD",
@@ -900,14 +926,18 @@
         "rollover-time-blend-equities",
         "alltick-api-deferred",
         "financialmodelingprep-deferred",
-        "ws-lmax"
+        "ws-lmax",
+        "ws-hyperliquid-perps-xyz",
+        "ws-hydromancer-perps-xyz"
       ],
       "priceAggregator": "redstoneX",
       "redstoneXAggregatorConfig": {
         "priceDiscoverySources": [
           "alltick-api-deferred",
           "financialmodelingprep-deferred",
-          "ws-lmax"
+          "ws-lmax",
+          "ws-hyperliquid-perps-xyz",
+          "ws-hydromancer-perps-xyz"
         ]
       },
       "denomination": "USD",
