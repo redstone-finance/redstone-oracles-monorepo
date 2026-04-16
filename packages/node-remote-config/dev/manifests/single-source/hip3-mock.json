@@ -72,11 +72,13 @@
       "rateFeed": false
     },
     "flxn:TSLA_MARK_0": {
+      "source": ["hip3-felix-stocks-mock-fetcher"],
       "broadcasters": ["hyperliquid-hip3"],
       "denomination": "USD",
       "rateFeed": false
     },
     "flxn:TSLA_MARK_1": {
+      "source": ["hip3-felix-stocks-mock-fetcher"],
       "broadcasters": ["hyperliquid-hip3"],
       "denomination": "USD",
       "rateFeed": false
@@ -87,6 +89,7 @@
       "rateFeed": false
     },
     "flxn:TSLA": {
+      "source": ["hip3-felix-stocks-mock-fetcher"],
       "broadcasters": ["hyperliquid-hip3"],
       "denomination": "USD",
       "rateFeed": false
