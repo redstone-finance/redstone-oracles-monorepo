@@ -638,9 +638,6 @@
       "redstoneXAggregatorConfig": {
         "priceDiscoverySources": []
       },
-      "broadcasters": [
-        "influx"
-      ],
       "rateFeed": false,
       "types": [
         "rwa"
@@ -670,9 +667,6 @@
       "redstoneXAggregatorConfig": {
         "priceDiscoverySources": []
       },
-      "broadcasters": [
-        "influx"
-      ],
       "denomination": "USD",
       "rateFeed": false,
       "types": [
@@ -703,9 +697,6 @@
       "redstoneXAggregatorConfig": {
         "priceDiscoverySources": []
       },
-      "broadcasters": [
-        "influx"
-      ],
       "denomination": "USD",
       "rateFeed": false,
       "types": [
@@ -736,9 +727,6 @@
       "redstoneXAggregatorConfig": {
         "priceDiscoverySources": []
       },
-      "broadcasters": [
-        "influx"
-      ],
       "denomination": "USD",
       "rateFeed": false,
       "types": [
@@ -769,9 +757,6 @@
       "redstoneXAggregatorConfig": {
         "priceDiscoverySources": []
       },
-      "broadcasters": [
-        "influx"
-      ],
       "denomination": "USD",
       "rateFeed": false,
       "types": [
@@ -802,9 +787,6 @@
       "redstoneXAggregatorConfig": {
         "priceDiscoverySources": []
       },
-      "broadcasters": [
-        "influx"
-      ],
       "denomination": "USD",
       "rateFeed": false,
       "types": [
@@ -826,9 +808,7 @@
     },
     "USA100_CURRENT": {
       "source": [],
-      "broadcasters": [
-        "influx"
-      ],
+      "skipBroadcasting": true,
       "denomination": "USD",
       "rateFeed": false,
       "types": [
@@ -837,9 +817,7 @@
     },
     "USA100_FRONT": {
       "source": [],
-      "broadcasters": [
-        "influx"
-      ],
+      "skipBroadcasting": true,
       "denomination": "USD",
       "rateFeed": false,
       "types": [
@@ -852,9 +830,6 @@
       "redstoneXAggregatorConfig": {
         "priceDiscoverySources": []
       },
-      "broadcasters": [
-        "influx"
-      ],
       "denomination": "USD",
       "rateFeed": false,
       "types": [
@@ -863,9 +838,7 @@
     },
     "USA500_CURRENT": {
       "source": [],
-      "broadcasters": [
-        "influx"
-      ],
+      "skipBroadcasting": true,
       "denomination": "USD",
       "rateFeed": false,
       "types": [
@@ -874,9 +847,7 @@
     },
     "USA500_FRONT": {
       "source": [],
-      "broadcasters": [
-        "influx"
-      ],
+      "skipBroadcasting": true,
       "denomination": "USD",
       "rateFeed": false,
       "types": [
@@ -889,9 +860,6 @@
       "redstoneXAggregatorConfig": {
         "priceDiscoverySources": []
       },
-      "broadcasters": [
-        "influx"
-      ],
       "denomination": "USD",
       "rateFeed": false,
       "types": [
