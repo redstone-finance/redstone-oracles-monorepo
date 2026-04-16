@@ -22,6 +22,7 @@ export async function getPriceFeedContractConnector(
       const client = new StellarClientBuilder()
         .withNetworkId(networkId)
         .withRpcUrls(rpcUrls)
+        .withMulticall()
         .build();
 
       return new PriceFeedStellarContractConnector(client, address);

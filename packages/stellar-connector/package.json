@@ -19,12 +19,13 @@
     "preversion": "yarn build",
     "pack-package": "yarn build && cd dist && npm pack",
     "convert-keys": "yarn global:ts-node scripts/convert-keys.ts",
-    "sample-run": "yarn global:ts-node scripts/sample-run.ts",
+    "sample-run": "yarn build:turbo && node dist/scripts/sample-run.js",
     "sample-deploy": "yarn global:ts-node scripts/sample-deploy.ts",
     "deploy-sep-40": "yarn global:ts-node scripts/deploy-sep-40.ts",
-    "check-sep-40": "yarn global:ts-node scripts/check-sep-40.ts",
+    "check-sep-40": "yarn build:turbo && node dist/scripts/check-sep-40.js",
     "sample-upgrade": "yarn global:ts-node scripts/sample-upgrade.ts",
     "sample-upgrade-tx": "yarn global:ts-node scripts/ledger/sample-upgrade-tx.ts",
+    "deploy-multicall": "yarn global:ts-node scripts/deploy-multicall.ts",
     "get-ledger-data": "yarn global:ts-node ./scripts/ledger/get-ledger-data.ts",
     "create-multisig": "yarn global:ts-node ./scripts/ledger/create-multisig.ts",
     "change-owner": "yarn global:ts-node scripts/change-owner.ts",
@@ -41,6 +42,7 @@
     "extend-instance-ttl": "yarn global:ts-node scripts/extend-instance-ttl.ts"
   },
   "dependencies": {
+    "@creit-tech/stellar-router-sdk": "npm:@jsr/creit-tech__stellar-router-sdk@^0.2.0",
     "@redstone-finance/multichain-kit": "workspace:*",
     "@redstone-finance/sdk": "workspace:*",
     "@redstone-finance/utils": "workspace:*",
