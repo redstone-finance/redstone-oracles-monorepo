@@ -2,7 +2,13 @@ import { IPriceFeedContractAdapter } from "@redstone-finance/sdk";
 import { Contract } from "@stellar/stellar-sdk";
 import { StellarClient } from "../stellar/StellarClient";
 import * as XdrUtils from "../XdrUtils";
-import { RANDOM_ACCOUNT_FOR_SIMULATION } from "./StellarContractAdapter";
+
+const DECIMALS_METHOD = "decimals";
+const FEED_ID_METHOD = "feed_id";
+const READ_PRICE_METHOD = "read_price";
+const READ_TIMESTAMP_METHOD = "read_timestamp";
+const READ_PRICE_AND_TIMESTAMP_METHOD = "read_price_and_timestamp";
+const READ_PRICE_DATA_METHOD = "read_price_data";
 
 export class PriceFeedStellarContractAdapter implements IPriceFeedContractAdapter {
   constructor(
@@ -15,12 +21,11 @@ export class PriceFeedStellarContractAdapter implements IPriceFeedContractAdapte
   }
 
   async getDescription(blockNumber?: number) {
-    const operation = this.contract.call("description");
-
-    return await this.client.simulateOperation(
-      operation,
-      RANDOM_ACCOUNT_FOR_SIMULATION,
-      (sim) => XdrUtils.parsePrimitiveFromSimulation(sim, String),
+    return await this.client.call<string>(
+      {
+        method: "description",
+        contract: this.contract,
+      },
       blockNumber
     );
   }
@@ -30,68 +35,66 @@ export class PriceFeedStellarContractAdapter implements IPriceFeedContractAdapte
   }
 
   async decimals(blockNumber?: number) {
-    const operation = this.contract.call("decimals");
-
-    return await this.client.simulateOperation(
-      operation,
-      RANDOM_ACCOUNT_FOR_SIMULATION,
-      (sim) => XdrUtils.parsePrimitiveFromSimulation(sim, Number),
-      blockNumber
+    return await this.client.call(
+      {
+        method: DECIMALS_METHOD,
+        contract: this.contract,
+      },
+      blockNumber,
+      Number
     );
   }
 
   async feedId(blockNumber?: number) {
-    const operation = this.contract.call("feed_id");
-
-    return await this.client.simulateOperation(
-      operation,
-      RANDOM_ACCOUNT_FOR_SIMULATION,
-      (sim) => XdrUtils.parsePrimitiveFromSimulation(sim, String),
+    return await this.client.call<string>(
+      {
+        method: FEED_ID_METHOD,
+        contract: this.contract,
+      },
       blockNumber
     );
   }
 
   async readPrice(blockNumber?: number) {
-    const operation = this.contract.call("read_price");
-
-    return await this.client.simulateOperation(
-      operation,
-      RANDOM_ACCOUNT_FOR_SIMULATION,
-      XdrUtils.parseBigIntFromSimulation,
+    return await this.client.call<bigint>(
+      {
+        method: READ_PRICE_METHOD,
+        contract: this.contract,
+      },
       blockNumber
     );
   }
 
   async readTimestamp(blockNumber?: number) {
-    const operation = this.contract.call("read_timestamp");
-
-    return await this.client.simulateOperation(
-      operation,
-      RANDOM_ACCOUNT_FOR_SIMULATION,
-      (sim) => XdrUtils.parsePrimitiveFromSimulation(sim, Number),
-      blockNumber
+    return await this.client.call(
+      {
+        method: READ_TIMESTAMP_METHOD,
+        contract: this.contract,
+      },
+      blockNumber,
+      Number
     );
   }
 
   async readPriceAndTimestamp(blockNumber?: number) {
-    const operation = this.contract.call("read_price_and_timestamp");
-
-    return await this.client.simulateOperation(
-      operation,
-      RANDOM_ACCOUNT_FOR_SIMULATION,
-      XdrUtils.parseReadPriceAndTimestampSimulation,
-      blockNumber
+    return await this.client.call(
+      {
+        method: READ_PRICE_AND_TIMESTAMP_METHOD,
+        contract: this.contract,
+      },
+      blockNumber,
+      XdrUtils.parsePriceAndTimestamp
     );
   }
 
   async readPriceData(blockNumber?: number) {
-    const operation = this.contract.call("read_price_data");
-
-    return await this.client.simulateOperation(
-      operation,
-      RANDOM_ACCOUNT_FOR_SIMULATION,
-      XdrUtils.parseReadSinglePriceDataSimulation,
-      blockNumber
+    return await this.client.call(
+      {
+        method: READ_PRICE_DATA_METHOD,
+        contract: this.contract,
+      },
+      blockNumber,
+      XdrUtils.parsePriceData
     );
   }
 }

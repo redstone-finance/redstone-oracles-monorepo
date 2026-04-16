@@ -20,10 +20,10 @@ export async function sampleRun(
   const blockNumber = await provider.getBlockNumber();
   await executePushModel(adapter, paramsProvider, blockNumber, refreshStateCallback);
 
-  await readFromPriceAdapter(adapter, paramsProvider, blockNumber);
+  await readFromContractAdapter(adapter, paramsProvider, blockNumber);
 
   if (ethFeedConnector) {
-    await readFromEthFeed(ethFeedConnector, blockNumber);
+    await readFromPriceFeed(ethFeedConnector, blockNumber);
   }
 
   logHeader("FINISHING");
@@ -64,14 +64,13 @@ async function executePushModel(
   console.log(`Current block number: ${blockNumber}`);
 
   logHeader("Viewing values from contract");
-  const values = await adapter.readPricesFromContract(paramsProvider, blockNumber);
+  const [values, readTimestamp] = await Promise.all([
+    adapter.readPricesFromContract(paramsProvider, blockNumber),
+    adapter.readTimestampFromContract(paramsProvider.getDataFeedIds()[0], blockNumber),
+  ]);
 
   console.log(
     `Values read from contract: ${String(values.map((v) => RedstoneCommon.convertValueDec(v, consts.DEFAULT_NUM_VALUE_DECIMALS)))}`
-  );
-  const readTimestamp = await adapter.readTimestampFromContract(
-    paramsProvider.getDataFeedIds()[0],
-    blockNumber
   );
   console.log(
     `Timestamp read from contract: ${readTimestamp} (${describeTimestamp(readTimestamp)})`
@@ -80,39 +79,41 @@ async function executePushModel(
   return blockNumber;
 }
 
-async function readFromPriceAdapter(
+async function readFromContractAdapter(
   adapter: ContractAdapter,
   paramsProvider: ContractParamsProvider,
   blockNumber: number
 ) {
   try {
-    const lastUpdateBlockTimestamp = await adapter.readLatestUpdateBlockTimestamp(
-      paramsProvider.getDataFeedIds()[0],
-      blockNumber
-    );
+    const [lastUpdateBlockTimestamp, uniqueSignerThreshold, contractData] = await Promise.all([
+      adapter.readLatestUpdateBlockTimestamp(paramsProvider.getDataFeedIds()[0], blockNumber),
+      adapter.getUniqueSignerThreshold(blockNumber),
+      adapter.readContractData(paramsProvider.getDataFeedIds(), blockNumber),
+    ]);
     console.log(
       `Last update block timestamp: ${lastUpdateBlockTimestamp} (${describeTimestamp(lastUpdateBlockTimestamp!)})`
     );
-
-    const uniqueSignerThreshold = await adapter.getUniqueSignerThreshold(blockNumber);
     console.log(`Unique signer count: ${uniqueSignerThreshold}`);
-  } catch {
-    console.log(
-      `Price data: \n${describeContractData(
-        await adapter.readContractData(paramsProvider.getDataFeedIds(), blockNumber)
-      )}`
-    );
+    console.log(`Price data: \n${describeContractData(contractData)}`);
+  } catch (e) {
+    console.error(e);
   }
 }
 
-async function readFromEthFeed(feedAdapter: IPriceFeedContractAdapter, blockNumber?: number) {
-  const description = (await feedAdapter.getDescription?.(blockNumber)) ?? "ETH(???) PriceFeed";
+async function readFromPriceFeed(
+  feedAdapter: IPriceFeedContractAdapter,
+  blockNumber?: number,
+  defaultFeedId = "ETH(???)"
+) {
+  const description =
+    (await feedAdapter.getDescription?.(blockNumber)) ?? `${defaultFeedId} PriceFeed`;
   logHeader(`Viewing data from [${description}]`);
 
-  const { value, timestamp } = await feedAdapter.getPriceAndTimestamp(blockNumber);
-
-  const feedId = (await feedAdapter.getDataFeedId?.(blockNumber)) ?? "ETH(???)";
-  const decimals = (await feedAdapter.decimals?.(blockNumber)) ?? consts.DEFAULT_NUM_VALUE_DECIMALS;
+  const [{ value, timestamp }, feedId, decimals] = await Promise.all([
+    feedAdapter.getPriceAndTimestamp(blockNumber),
+    feedAdapter.getDataFeedId?.(blockNumber) ?? "ETH(???)",
+    feedAdapter.decimals?.(blockNumber) ?? consts.DEFAULT_NUM_VALUE_DECIMALS,
+  ]);
 
   console.log(
     `${feedId} price: $${RedstoneCommon.convertValueDec(value, decimals)} (${describeTimestamp(timestamp)}) (${decimals} decimals)`

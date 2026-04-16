@@ -6,8 +6,15 @@ const config: Config.InitialOptions = {
   coverageDirectory: "<rootDir>/coverage",
   coverageReporters: ["html"],
   preset: "ts-jest",
-  transformIgnorePatterns: ["prices-contract-binary.js"],
+  transformIgnorePatterns: [
+    "node_modules/(?!@creit-tech/stellar-router-sdk)",
+    "prices-contract-binary.js",
+  ],
   testPathIgnorePatterns: ["<rootDir>/dist/"],
+  transform: {
+    "^.+\\.tsx?$": "ts-jest",
+    "node_modules/@creit-tech/.+\\.js$": "ts-jest",
+  },
 };
 
 export default config;

@@ -21,6 +21,7 @@ async function main() {
   const client = new StellarClientBuilder()
     .withStellarNetwork(network)
     .withRpcUrls(await getRpcUrls(network))
+    .withMulticall()
     .build();
   const adapter = new StellarWriteContractAdapter(client, adapterId, keypair);
 
