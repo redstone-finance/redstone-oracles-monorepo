@@ -32,6 +32,30 @@
         "deviationPercentage": 0.5,
         "timeSinceLastUpdateInMilliseconds": 43200000
       }
+    },
+    "pathUSD": {
+      "priceFeedAddress": "0xf5528a63c0d6E5F23Fe8A4f0Dac2Ae7A04174753"
+    },
+    "cbBTC": {
+      "priceFeedAddress": "0x6b1E20c88fE56Ba3BBD488556170927C3c799084",
+      "updateTriggersOverrides": {
+        "deviationPercentage": 0.5,
+        "timeSinceLastUpdateInMilliseconds": 86400000
+      }
+    },
+    "WBTC": {
+      "priceFeedAddress": "0xb81131B6368b3F0a83af09dB4E39Ac23DA96C2Db",
+      "updateTriggersOverrides": {
+        "deviationPercentage": 0.5,
+        "timeSinceLastUpdateInMilliseconds": 86400000
+      }
+    },
+    "syrupUSDC_FUNDAMENTAL": {
+      "priceFeedAddress": "0x24c8964338Deb5204B096039147B8e8C3AEa42Cc",
+      "updateTriggersOverrides": {
+        "deviationPercentage": 0.1,
+        "timeSinceLastUpdateInMilliseconds": 43200000
+      }
     }
   }
 }
