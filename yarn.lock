@@ -11264,12 +11264,12 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@redstone-finance/mars-rover@git+https://github.com/redstone-finance/mars-rover.git#v0.0.2":
+"@redstone-finance/mars-rover@git+https://github.com/redstone-finance/mars-rover.git#v0.0.3":
   version: 0.0.1
-  resolution: "@redstone-finance/mars-rover@https://github.com/redstone-finance/mars-rover.git#commit=27b82b18f80faf76c2f734df70f7ecbb51c2009c"
+  resolution: "@redstone-finance/mars-rover@https://github.com/redstone-finance/mars-rover.git#commit=2da7829e2ccd604f0503372bd64ba376c6cc5077"
   peerDependencies:
     "@stellar/stellar-sdk": 14.1.0
-  checksum: 10c0/56c87cc8a145ebf172f956504efa62a2c4741c52d579bc8cd1e8712520ac58cbedb0b0b7b58e5d3e7afad61f3f3812a22162d33c4841ba512ee361db523f323c
+  checksum: 10c0/ac937335123154ce80ac21b0abd99b374fccef60fd6c4b1ff6069f1d56081c2513e79a2b8762da0d58112890bcf33ef8fb8630ce82492dbb094042e5c71ee4dd
   languageName: node
   linkType: hard
 
@@ -11802,7 +11802,7 @@ __metadata:
     "@ledgerhq/hw-transport-node-hid-singleton": "npm:^6.31.10"
     "@redstone-finance/chain-agnostic-oracle-tests": "workspace:*"
     "@redstone-finance/chain-configs": "workspace:*"
-    "@redstone-finance/mars-rover": "git+https://github.com/redstone-finance/mars-rover.git#v0.0.2"
+    "@redstone-finance/mars-rover": "git+https://github.com/redstone-finance/mars-rover.git#v0.0.3"
     "@redstone-finance/multichain-kit": "workspace:*"
     "@redstone-finance/sdk": "workspace:*"
     "@redstone-finance/utils": "workspace:*"

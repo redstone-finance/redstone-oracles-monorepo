@@ -21,6 +21,8 @@
     "convert-keys": "yarn global:ts-node scripts/convert-keys.ts",
     "sample-run": "yarn global:ts-node scripts/sample-run.ts",
     "sample-deploy": "yarn global:ts-node scripts/sample-deploy.ts",
+    "deploy-sep-40": "yarn global:ts-node scripts/deploy-sep-40.ts",
+    "check-sep-40": "yarn global:ts-node scripts/check-sep-40.ts",
     "sample-upgrade": "yarn global:ts-node scripts/sample-upgrade.ts",
     "sample-upgrade-tx": "yarn global:ts-node scripts/ledger/sample-upgrade-tx.ts",
     "get-ledger-data": "yarn global:ts-node ./scripts/ledger/get-ledger-data.ts",
@@ -52,7 +54,7 @@
     "@ledgerhq/hw-transport-node-hid-singleton": "^6.31.10",
     "@redstone-finance/chain-agnostic-oracle-tests": "workspace:*",
     "@redstone-finance/chain-configs": "workspace:*",
-    "@redstone-finance/mars-rover": "git+https://github.com/redstone-finance/mars-rover.git#v0.0.2",
+    "@redstone-finance/mars-rover": "git+https://github.com/redstone-finance/mars-rover.git#v0.0.3",
     "@types/urijs": "^1.19.25",
     "dotenv": "^16.0.3",
     "ethers": "^5.7.2"

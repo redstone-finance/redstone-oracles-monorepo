@@ -16,6 +16,6 @@ impl Event for WritePrices {
     }
 
     fn data(&self, env: &soroban_sdk::Env) -> soroban_sdk::Val {
-        self.to_xdr(env).to_val()
+        ToXdr::to_xdr(self, env).to_val()
     }
 }
