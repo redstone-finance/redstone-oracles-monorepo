@@ -68,6 +68,13 @@
         "deviationPercentage": 0.01,
         "timeSinceLastUpdateInMilliseconds": 86400000
       }
+    },
+    "AVLT_FUNDAMENTAL/USD": {
+      "priceFeedAddress": "0x6ED89c637A6a42E0dc625Fbc16888263fa724d51",
+      "updateTriggersOverrides": {
+        "deviationPercentage": 0.1,
+        "timeSinceLastUpdateInMilliseconds": 300000
+      }
     }
   }
 }
