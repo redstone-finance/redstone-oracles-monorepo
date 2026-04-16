@@ -6,6 +6,7 @@ import {
   BASE_FEE,
   Contract,
   type Horizon,
+  Keypair,
   Operation,
   rpc,
   SorobanDataBuilder,
@@ -14,8 +15,10 @@ import {
   xdr,
 } from "@stellar/stellar-sdk";
 import _ from "lodash";
+import { IStellarCaller, StellarInvocation } from "../IStellarCaller";
 import { getLedgerCloseDate } from "../utils";
 import * as XdrUtils from "../XdrUtils";
+import { parseSimValAs } from "../XdrUtils";
 import { HorizonClient } from "./HorizonClient";
 import { StellarSigner } from "./StellarSigner";
 
@@ -26,8 +29,9 @@ const TRANSACTION_TIMEOUT_SEC = 30;
 const DAYS_TO_EXTEND_TTL_THRESHOLD = 7;
 const DAYS_TO_EXTEND_TTL = 30;
 const BASE_EXTEND_TTL_FEE = 1e7;
+const RANDOM_ACCOUNT_FOR_SIMULATION = new Account(Keypair.random().publicKey(), "1");
 
-export class StellarClient {
+export class StellarClient implements IStellarCaller {
   private readonly logger = loggerFactory("stellar-client");
 
   private getNetwork = RedstoneCommon.memoize({
@@ -43,7 +47,8 @@ export class StellarClient {
 
   constructor(
     private readonly server: rpc.Server,
-    private readonly horizon?: HorizonClient
+    private readonly horizon?: HorizonClient,
+    private readonly multicall?: IStellarCaller
   ) {}
 
   private async getAccount(publicKey: string): Promise<Account> {
@@ -148,17 +153,36 @@ export class StellarClient {
     await RedstoneCommon.waitForBlockNumber(() => this.getBlockNumber(), blockNumber);
   }
 
+  async call<T>(
+    invocation: StellarInvocation,
+    blockNumber?: number,
+    transform = (retVal: unknown) => retVal as T
+  ): Promise<T> {
+    if (this.multicall) {
+      return await this.multicall.call(invocation, blockNumber, transform);
+    }
+
+    const operation = invocation.contract.call(invocation.method, ...(invocation.args ?? []));
+
+    return await this.simulateOperation(
+      operation,
+      RANDOM_ACCOUNT_FOR_SIMULATION,
+      transform,
+      blockNumber
+    );
+  }
+
   async simulateOperation<T>(
     operation: xdr.Operation<Operation.InvokeHostFunction>,
     sender: string | Account,
-    transform: (sim: rpc.Api.SimulateTransactionSuccessResponse) => T,
+    transform: (retVal: unknown) => T,
     blockNumber?: number
   ) {
     const tx = await this.buildTransaction(operation, sender);
 
     await this.waitForBlockNumber(blockNumber);
 
-    return transform(await this.simulateTransaction(tx));
+    return parseSimValAs(await this.simulateTransaction(tx), transform);
   }
 
   async getContractData<T>(

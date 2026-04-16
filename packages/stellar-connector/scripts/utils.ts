@@ -6,11 +6,16 @@ import path from "path";
 import { z } from "zod";
 import { StellarNetwork } from "../src";
 
-type StellarContract = typeof PRICE_ADAPTER | typeof PRICE_FEED | typeof SEP40_CONTRACT;
+type StellarContract =
+  | typeof PRICE_ADAPTER
+  | typeof PRICE_FEED
+  | typeof SEP40_CONTRACT
+  | typeof MULTICALL;
 
 export const PRICE_ADAPTER = "redstone_adapter";
 export const PRICE_FEED = "redstone_price_feed";
 export const SEP40_CONTRACT = "redstone_sep_40";
+export const MULTICALL = "stellar_router_v0";
 
 const OUTPUT_DIR = readDeployDir();
 
@@ -46,8 +51,20 @@ export function saveAdapterId(adapterId: string, dir = OUTPUT_DIR) {
   console.log(`✅ Id saved to ${filepath}`);
 }
 
+export function saveMulticallId(multicallId: string, dir = OUTPUT_DIR) {
+  const filepath = getIdFilepath(MULTICALL, dir);
+
+  writeFileSync(filepath, multicallId);
+
+  console.log(`✅ Id saved to ${filepath}`);
+}
+
 export function loadAdapterId(dir = OUTPUT_DIR) {
   return readFileSync(getIdFilepath(PRICE_ADAPTER, dir)).toString("utf-8");
+}
+
+export function loadMulticallId(dir = OUTPUT_DIR) {
+  return readFileSync(getIdFilepath(MULTICALL, dir)).toString("utf-8");
 }
 
 export function savePriceFeedId(priceFeedContractId: string, feedId: string, dir = OUTPUT_DIR) {
@@ -69,7 +86,7 @@ export function wasmFilePath(contractName: StellarContract, dir = OUTPUT_DIR) {
 export function loadContractName() {
   return RedstoneCommon.getFromEnv(
     "CONTRACT_NAME",
-    z.enum([PRICE_ADAPTER, PRICE_FEED]).optional().default(PRICE_ADAPTER)
+    z.enum([PRICE_ADAPTER, PRICE_FEED, MULTICALL]).optional().default(PRICE_ADAPTER)
   );
 }
 
@@ -80,6 +97,8 @@ export function loadContractId(outputDir = OUTPUT_DIR) {
       return loadAdapterId(outputDir);
     case PRICE_FEED:
       return loadPriceFeedId(readPriceFeedId(), outputDir);
+    case MULTICALL:
+      return loadMulticallId(outputDir);
   }
 }
 

@@ -1,12 +1,14 @@
 import { ChainTypeEnum, MultiExecutor, RedstoneCommon } from "@redstone-finance/utils";
 import { Horizon, rpc } from "@stellar/stellar-sdk";
 import { HorizonClient } from "./HorizonClient";
+import { getStellarChainId, NETWORK_NAMES, StellarNetwork } from "./network-ids";
 import { StellarClient } from "./StellarClient";
-import { getStellarChainId, StellarNetwork } from "./network-ids";
+import { StellarMulticall } from "./StellarMulticall";
 
 export class StellarClientBuilder extends MultiExecutor.ClientBuilder<StellarClient> {
   protected override chainType = ChainTypeEnum.enum.stellar;
   private horizonUrl?: string;
+  private isWithMulticall = false;
 
   withStellarNetwork(network: StellarNetwork) {
     return this.withChainId(getStellarChainId(network));
@@ -14,6 +16,12 @@ export class StellarClientBuilder extends MultiExecutor.ClientBuilder<StellarCli
 
   withHorizonUrl(horizonUrl?: string) {
     this.horizonUrl = horizonUrl;
+
+    return this;
+  }
+
+  withMulticall(withMulticall = true) {
+    this.isWithMulticall = withMulticall;
 
     return this;
   }
@@ -28,7 +36,14 @@ export class StellarClientBuilder extends MultiExecutor.ClientBuilder<StellarCli
       : undefined;
 
     return this.makeMultiExecutor(
-      (url) => new StellarClient(new rpc.Server(url, { allowHttp: true }), horizon),
+      (url) =>
+        new StellarClient(
+          new rpc.Server(url, { allowHttp: true }),
+          horizon,
+          this.isWithMulticall
+            ? StellarMulticall.instanceForUrl(url, NETWORK_NAMES[this.chainId!])
+            : undefined
+        ),
       {
         getBlockNumber: StellarClientBuilder.blockNumberConsensusExecutor,
         sendTransaction: MultiExecutor.ExecutionMode.RACE,
