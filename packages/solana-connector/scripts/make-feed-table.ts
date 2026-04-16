@@ -53,4 +53,7 @@ void makeFeedTable([
   "EUROB",
   "GILTS",
   "MXNe",
+  "USDC",
+  "SOL",
+  "NUSD_FUNDAMENTAL",
 ]);
