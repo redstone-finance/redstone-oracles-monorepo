@@ -139,3 +139,6 @@ pub struct Initialize<'info> {
 | EUROB                      | HJpgmbTmVG49iLtYqQWacBqBs1XxVbAGAmpcB2ANhK4e | x                                            | x                                            |
 | GILTS                      | 7MNCZy8ucFRLzRitc24tBeXRNuzmfTKu469riUYSACq1 | x                                            | x                                            |
 | MXNe                       | 8QuwResPgdQdja4gdTbvNxeUznc58XX8baUM3cCwfVW2 | x                                            | x                                            |
+| USDC                       | 6sX9HsaAPhAT1MCskQFTjreuNCqFgkJWKJ4hfdvTbJET | x                                            | x                                            |
+| SOL                        | 9FboGHATJTgJA7fzG3fKeV1VuLqDsV5HtCGUR2PqZor3 | x                                            | x                                            |
+| NUSD_FUNDAMENTAL           | F5PCF1BEEYmtcDiuCQ3Ru7LCdTo85jo8qEaQcAABWYj9 | x                                            | x                                            |
