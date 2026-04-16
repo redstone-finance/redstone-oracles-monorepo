@@ -404,7 +404,6 @@
         "kraken-usd",
         "kraken-usdt",
         "mexc-usdt",
-        "okx-usdt",
         "curve-ethereum-usdt",
         "uniswap-v3-ethereum-usdt-100"
       ],
@@ -1157,7 +1156,7 @@
       "rateFeed": false
     },
     "BAL": {
-      "source": ["bitget-usdt", "gate-usdt", "kucoin-usdt", "lbank-usdt"],
+      "source": ["gate-usdt", "kucoin-usdt"],
       "denomination": "USD",
       "rateFeed": false
     },
@@ -2923,7 +2922,6 @@
     },
     "SWELL": {
       "source": [
-        "bingx-usdt",
         "bitget-usdt",
         "bitmart-usdt",
         "bitrue-usdt",
