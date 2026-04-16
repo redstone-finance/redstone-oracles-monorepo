@@ -646,7 +646,6 @@
           "ws-lmax"
         ]
       },
-      "broadcasters": ["influx"],
       "rateFeed": false,
       "types": ["rwa"]
     },
@@ -683,7 +682,6 @@
           "ws-blocksize"
         ]
       },
-      "broadcasters": ["influx"],
       "denomination": "USD",
       "rateFeed": false,
       "types": ["rwa"]
@@ -723,7 +721,6 @@
           "ws-polygon-massive-commodities"
         ]
       },
-      "broadcasters": ["influx"],
       "denomination": "USD",
       "rateFeed": false,
       "types": ["rwa"]
@@ -761,7 +758,6 @@
           "ws-polygon-massive-commodities"
         ]
       },
-      "broadcasters": ["influx"],
       "denomination": "USD",
       "rateFeed": false,
       "types": ["rwa"]
@@ -799,7 +795,6 @@
           "ws-twelve-data"
         ]
       },
-      "broadcasters": ["influx"],
       "denomination": "USD",
       "rateFeed": false,
       "types": ["rwa"]
@@ -837,7 +832,6 @@
           "finhub_oanda_deferred"
         ]
       },
-      "broadcasters": ["influx"],
       "denomination": "USD",
       "rateFeed": false,
       "types": ["rwa"]
@@ -855,14 +849,14 @@
     },
     "USA100_CURRENT": {
       "source": ["databento-cme-futures", "ws-polygon-massive-cme-futures"],
-      "broadcasters": ["influx"],
+      "skipBroadcasting": true,
       "denomination": "USD",
       "rateFeed": false,
       "types": ["rwa"]
     },
     "USA100_FRONT": {
       "source": ["databento-cme-futures", "ws-polygon-massive-cme-futures"],
-      "broadcasters": ["influx"],
+      "skipBroadcasting": true,
       "denomination": "USD",
       "rateFeed": false,
       "types": ["rwa"]
@@ -884,21 +878,20 @@
           "ws-lmax"
         ]
       },
-      "broadcasters": ["influx"],
       "denomination": "USD",
       "rateFeed": false,
       "types": ["rwa"]
     },
     "USA500_CURRENT": {
       "source": ["databento-cme-futures", "ws-polygon-massive-cme-futures"],
-      "broadcasters": ["influx"],
+      "skipBroadcasting": true,
       "denomination": "USD",
       "rateFeed": false,
       "types": ["rwa"]
     },
     "USA500_FRONT": {
       "source": ["databento-cme-futures", "ws-polygon-massive-cme-futures"],
-      "broadcasters": ["influx"],
+      "skipBroadcasting": true,
       "denomination": "USD",
       "rateFeed": false,
       "types": ["rwa"]
@@ -918,7 +911,6 @@
           "ws-lmax"
         ]
       },
-      "broadcasters": ["influx"],
       "denomination": "USD",
       "rateFeed": false,
       "types": ["rwa"]
