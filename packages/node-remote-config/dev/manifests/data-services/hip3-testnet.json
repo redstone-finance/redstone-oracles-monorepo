@@ -3115,7 +3115,7 @@
     },
     "flx:OIL_MARK_0": {
       "source": [
-        "hip3-felix-energy-mainnet-fetcher"
+        "hip3-felix-wti-mainnet-fetcher"
       ],
       "broadcasters": [
         "hyperliquid-hip3"
@@ -3125,7 +3125,7 @@
     },
     "flx:OIL_MARK_1": {
       "source": [
-        "hip3-felix-energy-mainnet-fetcher"
+        "hip3-felix-wti-mainnet-fetcher"
       ],
       "broadcasters": [
         "hyperliquid-hip3"
@@ -3135,7 +3135,7 @@
     },
     "flx:OIL_EXT": {
       "source": [
-        "hip3-felix-energy-mainnet-fetcher"
+        "hip3-felix-wti-mainnet-fetcher"
       ],
       "broadcasters": [
         "hyperliquid-hip3"
@@ -3145,7 +3145,7 @@
     },
     "flx:OIL": {
       "source": [
-        "hip3-felix-energy-mainnet-fetcher"
+        "hip3-felix-wti-mainnet-fetcher"
       ],
       "broadcasters": [
         "hyperliquid-hip3"
