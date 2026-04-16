@@ -4164,6 +4164,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@creit-tech/stellar-router-sdk@npm:@jsr/creit-tech__stellar-router-sdk@^0.2.0":
+  version: 0.2.0
+  resolution: "@jsr/creit-tech__stellar-router-sdk@npm:0.2.0::__archiveUrl=https%3A%2F%2Fnpm.jsr.io%2F~%2F11%2F%40jsr%2Fcreit-tech__stellar-router-sdk%2F0.2.0.tgz"
+  dependencies:
+    "@stellar/stellar-sdk": "npm:^14.1.1"
+  checksum: 10c0/93d57e62c62fc0068ecd11e5d3c705d43ba5a69a9cad74ed44250843cdff874f9a251990c583698b4bfc7b12afc7b62733c3810912c5655afcc9f4cd05ee7219
+  languageName: node
+  linkType: hard
+
 "@cspotcode/source-map-support@npm:^0.8.0":
   version: 0.8.1
   resolution: "@cspotcode/source-map-support@npm:0.8.1"
@@ -11798,6 +11807,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@redstone-finance/stellar-connector@workspace:packages/stellar-connector"
   dependencies:
+    "@creit-tech/stellar-router-sdk": "npm:@jsr/creit-tech__stellar-router-sdk@^0.2.0"
     "@ledgerhq/hw-app-str": "npm:^7.2.5"
     "@ledgerhq/hw-transport-node-hid-singleton": "npm:^6.31.10"
     "@redstone-finance/chain-agnostic-oracle-tests": "workspace:*"
@@ -14824,7 +14834,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@stellar/stellar-sdk@npm:^14.6.1":
+"@stellar/stellar-sdk@npm:^14.1.1, @stellar/stellar-sdk@npm:^14.6.1":
   version: 14.6.1
   resolution: "@stellar/stellar-sdk@npm:14.6.1"
   dependencies:

@@ -64,50 +64,11 @@ export function addressToScVal(address: string) {
 
 export function parseSimValAs<T>(
   sim: rpc.Api.SimulateTransactionSuccessResponse,
-  parseFn: (val: xdr.ScVal) => T
+  transform: (val: unknown) => T
 ) {
   const retVal = expectValue(sim.result, "simulationResult").retval;
 
-  return parseFn(retVal);
-}
-
-export function parseReadPriceAndTimestampSimulation(
-  sim: rpc.Api.SimulateTransactionSuccessResponse
-) {
-  return parseSimValAs(sim, (val) => {
-    const vec = expectValue<xdr.ScVal[]>(val.vec(), "simRetValAsVec");
-
-    return parsePriceAndTimestamp(vec);
-  });
-}
-
-export function parseGetPricesSimulation(sim: rpc.Api.SimulateTransactionSuccessResponse) {
-  return parseSimValAs(sim, (val) => {
-    const vec = expectValue<xdr.ScVal[]>(val.vec(), "simRetValAsVec");
-
-    return parseGetPrices(vec);
-  });
-}
-
-export function parseReadSinglePriceDataSimulation(
-  sim: rpc.Api.SimulateTransactionSuccessResponse
-) {
-  return parseSimValAs(sim, (val) => {
-    const map = expectValue(val.map(), "simRetValAsMap");
-
-    return lastRoundDetailsFromXdrMap(map);
-  });
-}
-
-export function parsePrimitiveFromSimulation<P>(
-  sim: rpc.Api.SimulateTransactionSuccessResponse,
-  transform: (val: unknown) => P
-) {
-  return parseSimValAs(sim, (val) => transform(scValToNative(val)));
-}
-
-export function parseBigIntFromSimulation(sim: rpc.Api.SimulateTransactionSuccessResponse) {
-  return parseSimValAs(sim, (val) => scValToBigInt(val));
+  return transform(scValToNative(retVal));
 }
 
 export function parsePriceDataFromContractDataLegacy(result: rpc.Api.LedgerEntryResult) {
@@ -179,26 +140,29 @@ export function findVal(map: xdr.ScMapEntry[], key: xdr.ScVal) {
   return map.find((entry) => entry.key().toXDR().equals(key.toXDR()));
 }
 
-export function parsePriceAndTimestamp(values: xdr.ScVal[]) {
-  const value = scValToBigInt(values[0]);
-  const timestamp = Number(scValToNative(values[1]));
-
-  if (Number.isNaN(timestamp)) {
-    throw new Error("Unexpected type");
-  }
+export function parsePriceData(retVal: unknown) {
+  const value = retVal as { package_timestamp: bigint; price: bigint; write_timestamp: bigint };
 
   return {
-    value,
-    timestamp,
+    lastDataPackageTimestampMS: Number(value.package_timestamp),
+    lastBlockTimestampMS: Number(value.write_timestamp),
+    lastValue: value.price,
   };
 }
 
-export function parseGetPrices(values: xdr.ScVal[]) {
-  const timestamp = Number(scValToNative(values[0]));
-  const prices = expectValue(values[1].vec(), "PricesAsVec").map(scValToBigInt);
+export function parsePriceAndTimestamp(values: unknown) {
+  const [value, timestamp] = values as [bigint, bigint];
 
   return {
-    timestamp,
+    value,
+    timestamp: Number(timestamp),
+  };
+}
+
+export function parseGetPrices(values: unknown) {
+  const [timestamp, prices] = values as [number, bigint[]];
+  return {
+    timestamp: Number(timestamp),
     prices,
   };
 }
