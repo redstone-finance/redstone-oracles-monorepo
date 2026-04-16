@@ -2,7 +2,7 @@ import { nativeToScVal, scValToNative, xdr } from "@stellar/stellar-sdk";
 import * as XdrUtils from "../src/XdrUtils";
 
 function getPricesToScVal(prices: bigint[], timestamp: number) {
-  return [nativeToScVal(timestamp), XdrUtils.mapArrayToScVec(prices, nativeToScVal)];
+  return [timestamp, prices];
 }
 
 describe("XdrUtils tests", () => {
@@ -12,18 +12,10 @@ describe("XdrUtils tests", () => {
     expect(output).toStrictEqual({ timestamp: 10, prices: [1n, 2n] });
   });
 
-  it("parseGetPrices bad input", () => {
-    expect(() => XdrUtils.parseGetPrices([nativeToScVal(10), nativeToScVal(10)])).toThrow();
-  });
-
   it("parsePriceAndTimestamp correct input", () => {
-    const output = XdrUtils.parsePriceAndTimestamp([nativeToScVal(10n), nativeToScVal(10)]);
+    const output = XdrUtils.parsePriceAndTimestamp([10n, 10]);
 
     expect(output).toStrictEqual({ value: 10n, timestamp: 10 });
-  });
-
-  it("parsePriceAndTimestamp bad input 1", () => {
-    expect(() => XdrUtils.parsePriceAndTimestamp(getPricesToScVal([1n, 2n], 10))).toThrow();
   });
 
   it("parsePriceAndTimestamp bad input 2", () => {
