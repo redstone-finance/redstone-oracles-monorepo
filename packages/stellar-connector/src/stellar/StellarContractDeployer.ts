@@ -1,4 +1,4 @@
-import { Address, Operation } from "@stellar/stellar-sdk";
+import { Address, Operation, xdr } from "@stellar/stellar-sdk";
 import { readFileSync } from "fs";
 import { StellarClient } from "./StellarClient";
 import { StellarOperationSender } from "./StellarOperationSender";
@@ -9,9 +9,9 @@ export class StellarContractDeployer {
     private readonly operationSender: StellarOperationSender
   ) {}
 
-  async deploy(wasmPath: string) {
+  async deploy(wasmPath: string, constructorArgs?: xdr.ScVal[]) {
     const wasmHash = await this.upload(wasmPath);
-    const contractId = await this.createContract(wasmHash);
+    const contractId = await this.createContract(wasmHash, constructorArgs);
 
     return {
       wasmHash: wasmHash.toString("hex"),
@@ -29,11 +29,11 @@ export class StellarContractDeployer {
     return (await this.client.getTransaction(hash, (returnValue) => returnValue.bytes())).value!;
   }
 
-  async createContract(wasmHash: Buffer) {
+  async createContract(wasmHash: Buffer, constructorArgs?: xdr.ScVal[]) {
     const address = Address.fromString(await this.operationSender.getPublicKey());
 
     const hash = await this.operationSender.sendTransaction(
-      Operation.createCustomContract({ wasmHash, address })
+      Operation.createCustomContract({ wasmHash, address, constructorArgs })
     );
 
     return (await this.client.getTransaction(hash, Address.fromScVal)).value!;
