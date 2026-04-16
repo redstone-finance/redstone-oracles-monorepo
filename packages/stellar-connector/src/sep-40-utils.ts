@@ -1,8 +1,14 @@
-import { Address, nativeToScVal, rpc, scValToNative, xdr } from "@stellar/stellar-sdk";
+import { RedstoneCommon } from "@redstone-finance/utils";
+import { Address, nativeToScVal, xdr } from "@stellar/stellar-sdk";
 
-export type Asset = { tag: "Stellar"; address: Address } | { tag: "Other"; symbol: string };
+const STELLAR_ASSET = "Stellar" as const;
+const OTHER_ASSET = "Other" as const;
 
-export function feedMappingsToScVal(mappings: { feed: string; asset: Asset }[]) {
+export type Sep40Asset =
+  | { tag: typeof STELLAR_ASSET; address: Address }
+  | { tag: typeof OTHER_ASSET; symbol: string };
+
+export function feedMappingsToScVal(mappings: { feed: string; asset: Sep40Asset }[]) {
   return xdr.ScVal.scvVec(
     mappings.map((m) =>
       xdr.ScVal.scvVec([nativeToScVal(m.feed, { type: "string" }), assetToScVal(m.asset)])
@@ -10,58 +16,53 @@ export function feedMappingsToScVal(mappings: { feed: string; asset: Asset }[]) 
   );
 }
 
-export function assetToScVal(asset: Asset) {
-  if (asset.tag === "Stellar") {
-    return xdr.ScVal.scvVec([xdr.ScVal.scvSymbol("Stellar"), asset.address.toScVal()]);
+export function assetToScVal(asset: Sep40Asset) {
+  switch (asset.tag) {
+    case STELLAR_ASSET:
+      return xdr.ScVal.scvVec([xdr.ScVal.scvSymbol(STELLAR_ASSET), asset.address.toScVal()]);
+    case OTHER_ASSET:
+      return xdr.ScVal.scvVec([
+        xdr.ScVal.scvSymbol(OTHER_ASSET),
+        xdr.ScVal.scvSymbol(asset.symbol),
+      ]);
+    default:
+      RedstoneCommon.throwUnsupportedParamError(asset);
   }
-
-  return xdr.ScVal.scvVec([xdr.ScVal.scvSymbol("Other"), xdr.ScVal.scvSymbol(asset.symbol)]);
 }
 
-export function parseAsset(val: xdr.ScVal): Asset {
-  const vec = val.vec()!;
-  const tag = vec[0].sym().toString();
+export function parseAsset(retVal: unknown): Sep40Asset {
+  const [tag, value] = retVal as [string, unknown];
 
-  if (tag === "Stellar") {
-    return { tag: "Stellar", address: Address.fromScVal(vec[1]) };
+  switch (tag) {
+    case STELLAR_ASSET:
+      return { tag, address: Address.fromString(value as string) };
+    default:
+      return { tag: OTHER_ASSET, symbol: value as string };
   }
-
-  return { tag: "Other", symbol: vec[1].sym().toString() };
 }
 
-function parsePriceData(val: xdr.ScVal) {
-  const fields = val.map()!;
-  const obj: Record<string, xdr.ScVal> = {};
-  for (const entry of fields) {
-    obj[entry.key().sym().toString()] = entry.val();
-  }
-
-  return {
-    price: scValToNative(obj["price"]) as bigint,
-    timestamp: Number(scValToNative(obj["timestamp"])),
-  };
+export function parseAssets(retVal: unknown) {
+  return (retVal as unknown[]).map(parseAsset);
 }
 
-export function getReturnValue(sim: rpc.Api.SimulateTransactionSuccessResponse): xdr.ScVal {
-  return sim.result!.retval;
+function parseSep40PriceData(retVal: unknown) {
+  const { price, timestamp } = retVal as { price: bigint; timestamp: bigint };
+
+  return { price, timestamp: Number(timestamp) };
 }
 
-export function parseOptionalPriceData(sim: rpc.Api.SimulateTransactionSuccessResponse) {
-  const retval = getReturnValue(sim);
-
-  if (retval.switch().name === "scvVoid") {
+export function parseOptionalPriceData(retVal: unknown) {
+  if (!RedstoneCommon.isDefined(retVal)) {
     return undefined;
   }
 
-  return parsePriceData(retval);
+  return parseSep40PriceData(retVal);
 }
 
-export function parseOptionalPriceDataVec(sim: rpc.Api.SimulateTransactionSuccessResponse) {
-  const retval = getReturnValue(sim);
-
-  if (retval.switch().name === "scvVoid") {
+export function parseOptionalPriceDataVec(retVal: unknown) {
+  if (!RedstoneCommon.isDefined(retVal)) {
     return undefined;
   }
 
-  return retval.vec()!.map(parsePriceData);
+  return (retVal as unknown[]).map(parseSep40PriceData);
 }

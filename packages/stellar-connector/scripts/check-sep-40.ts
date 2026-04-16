@@ -1,6 +1,6 @@
 import { Contract } from "@stellar/stellar-sdk";
 import { StellarClientBuilder } from "../src";
-import { Sep40StellarContractAdapter } from "../src/adapters/Sep40Adapter";
+import { Sep40StellarContractAdapter } from "../src/adapters/Sep40StellarContractAdapter";
 import { FEEDS } from "./consts";
 import { loadSep40Id, readNetwork, readUrl } from "./utils";
 
