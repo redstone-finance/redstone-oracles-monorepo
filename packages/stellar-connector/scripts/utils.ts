@@ -6,10 +6,11 @@ import path from "path";
 import { z } from "zod";
 import { StellarNetwork } from "../src";
 
-type StellarContract = typeof PRICE_ADAPTER | typeof PRICE_FEED;
+type StellarContract = typeof PRICE_ADAPTER | typeof PRICE_FEED | typeof SEP40_CONTRACT;
 
 export const PRICE_ADAPTER = "redstone_adapter";
 export const PRICE_FEED = "redstone_price_feed";
+export const SEP40_CONTRACT = "redstone_sep_40";
 
 const OUTPUT_DIR = readDeployDir();
 
@@ -80,4 +81,14 @@ export function loadContractId(outputDir = OUTPUT_DIR) {
     case PRICE_FEED:
       return loadPriceFeedId(readPriceFeedId(), outputDir);
   }
+}
+
+export function saveSep40Id(contractId: string, dir = OUTPUT_DIR) {
+  const filepath = getIdFilepath(SEP40_CONTRACT, dir);
+  writeFileSync(filepath, contractId);
+  console.log(`✅ Id saved to ${filepath}`);
+}
+
+export function loadSep40Id(dir = OUTPUT_DIR) {
+  return readFileSync(getIdFilepath(SEP40_CONTRACT, dir)).toString("utf-8");
 }

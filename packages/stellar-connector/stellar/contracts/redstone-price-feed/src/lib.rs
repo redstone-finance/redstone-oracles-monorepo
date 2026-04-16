@@ -4,26 +4,17 @@ extern crate alloc;
 mod config;
 
 use common::{
-    flatten_call_result, ownable::Ownable, upgradable::Upgradable, PriceData,
-    CONTRACT_TTL_EXTEND_TO_LEDGERS, CONTRACT_TTL_THRESHOLD_LEDGERS, MISSING_STORAGE_ENTRY,
+    flatten_call_result, ownable::Ownable, redstone_adapter::RedStoneAdapterClient,
+    upgradable::Upgradable, PriceData, CONTRACT_TTL_EXTEND_TO_LEDGERS,
+    CONTRACT_TTL_THRESHOLD_LEDGERS, MISSING_STORAGE_ENTRY,
 };
 use soroban_sdk::{
-    contract, contractclient, contractimpl, contracttype,
+    contract, contractimpl, contracttype,
     xdr::{ScErrorCode, ScErrorType},
     Address, Bytes, BytesN, Env, Error, String, U256,
 };
 
 use self::config::{ADAPTER_ADDRESS, DECIMALS, DESCRIPTION_PREFIX};
-
-// IMPORTANT: Macro contractclient generates two methods for each `fn name() ->
-// Result<T, Error>`. One called `name` that unwraps internally and returns T.
-// And another one named `try_name` that returns `Result<Result<T,
-// ConversionError>, Result<Error, InvokeError>>`. Remember to use "try" version
-// if you want to handle or propagate errors.
-#[contractclient(name = "RedStoneAdapterClient")]
-pub trait RedStoneAdapter {
-    fn read_price_data_for_feed(feed_id: String) -> Result<PriceData, Error>;
-}
 
 #[contracttype]
 pub enum DataKey {
@@ -115,7 +106,7 @@ impl RedStonePriceFeed {
     }
 }
 
-fn get_adapter_client(env: &Env) -> RedStoneAdapterClient {
+fn get_adapter_client(env: &Env) -> RedStoneAdapterClient<'_> {
     let adapter_address = Address::from_str(env, ADAPTER_ADDRESS);
 
     RedStoneAdapterClient::new(env, &adapter_address)

@@ -1,6 +1,7 @@
 #![no_std]
 
 pub mod ownable;
+pub mod redstone_adapter;
 pub mod upgradable;
 
 use soroban_sdk::{

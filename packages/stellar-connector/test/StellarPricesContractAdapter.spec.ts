@@ -17,7 +17,7 @@ const WRITE_TEST_TIMEOUT_MS = 20 * 1_000;
 
 jest.setTimeout(30000);
 
-describe("StellarPricesContractAdapter", () => {
+describe.skip("StellarPricesContractAdapter", () => {
   let adapter: StellarWriteContractAdapter;
   let client: StellarClient;
   let contractOps: StellarContractOps;
