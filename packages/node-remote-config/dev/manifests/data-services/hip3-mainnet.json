@@ -532,7 +532,8 @@
       "priceAggregator": "constantWeightMedian",
       "broadcasters": ["influx"],
       "denomination": "USD",
-      "rateFeed": false
+      "rateFeed": false,
+      "types": ["snoozed"]
     },
     "IMPACT_BUY_flx:HOOD": {
       "source": ["ws-hyperliquid-perps-flx", "ws-hydromancer-perps-flx"],
@@ -543,7 +544,8 @@
       "priceAggregator": "constantWeightMedian",
       "broadcasters": ["influx"],
       "denomination": "USD",
-      "rateFeed": false
+      "rateFeed": false,
+      "types": ["snoozed"]
     },
     "IMPACT_SELL_flx:HOOD": {
       "source": ["ws-hyperliquid-perps-flx", "ws-hydromancer-perps-flx"],
@@ -554,7 +556,8 @@
       "priceAggregator": "constantWeightMedian",
       "broadcasters": ["influx"],
       "denomination": "USD",
-      "rateFeed": false
+      "rateFeed": false,
+      "types": ["snoozed"]
     },
     "ORACLE_flx:HOOD": {
       "source": ["ws-hyperliquid-perps-flx", "ws-hydromancer-perps-flx"],
@@ -565,13 +568,15 @@
       "priceAggregator": "constantWeightMedian",
       "broadcasters": ["influx"],
       "denomination": "USD",
-      "rateFeed": false
+      "rateFeed": false,
+      "types": ["snoozed"]
     },
     "ORACLE_flx:HOOD_EMA_150S": {
       "source": ["ema"],
       "broadcasters": ["influx"],
       "denomination": "USD",
-      "rateFeed": false
+      "rateFeed": false,
+      "types": ["snoozed"]
     },
     "MID_flx:HOOD": {
       "source": ["ws-hyperliquid-perps-flx", "ws-hydromancer-perps-flx"],
@@ -582,37 +587,43 @@
       "priceAggregator": "constantWeightMedian",
       "broadcasters": ["influx"],
       "denomination": "USD",
-      "rateFeed": false
+      "rateFeed": false,
+      "types": ["snoozed"]
     },
     "MID_flx:HOOD_EMA_150S": {
       "source": ["ema"],
       "broadcasters": ["influx"],
       "denomination": "USD",
-      "rateFeed": false
+      "rateFeed": false,
+      "types": ["snoozed"]
     },
     "flx:HOOD_MARK_0": {
       "source": ["hip3-felix-stocks-mainnet-fetcher"],
       "broadcasters": ["hyperliquid-hip3"],
       "denomination": "USD",
-      "rateFeed": false
+      "rateFeed": false,
+      "types": ["snoozed"]
     },
     "flx:HOOD_MARK_1": {
       "source": ["hip3-felix-stocks-mainnet-fetcher"],
       "broadcasters": ["hyperliquid-hip3"],
       "denomination": "USD",
-      "rateFeed": false
+      "rateFeed": false,
+      "types": ["snoozed"]
     },
     "flx:HOOD_EXT": {
       "source": ["hip3-felix-stocks-mainnet-fetcher"],
       "broadcasters": ["hyperliquid-hip3"],
       "denomination": "USD",
-      "rateFeed": false
+      "rateFeed": false,
+      "types": ["snoozed"]
     },
     "flx:HOOD": {
       "source": ["hip3-felix-stocks-mainnet-fetcher"],
       "broadcasters": ["hyperliquid-hip3"],
       "denomination": "USD",
-      "rateFeed": false
+      "rateFeed": false,
+      "types": ["snoozed"]
     },
     "OPEN_INTEREST_flx:HOOD": {
       "source": ["ws-hyperliquid-perps-flx"],
@@ -624,7 +635,8 @@
           "maxPercent": 1000000000,
           "maxDelayMilliseconds": 1000
         }
-      }
+      },
+      "types": ["snoozed"]
     },
     "CRCL": {
       "source": [
@@ -1352,7 +1364,8 @@
       "priceAggregator": "constantWeightMedian",
       "broadcasters": ["influx"],
       "denomination": "USD",
-      "rateFeed": false
+      "rateFeed": false,
+      "types": ["snoozed"]
     },
     "MARK_flx:EUR": {
       "source": ["ws-hyperliquid-perps-flx", "ws-hydromancer-perps-flx"],
@@ -1363,7 +1376,8 @@
       "priceAggregator": "constantWeightMedian",
       "broadcasters": ["influx"],
       "denomination": "USD",
-      "rateFeed": false
+      "rateFeed": false,
+      "types": ["snoozed"]
     },
     "MID_flx:EUR": {
       "source": ["ws-hyperliquid-perps-flx", "ws-hydromancer-perps-flx"],
@@ -1374,31 +1388,36 @@
       "priceAggregator": "constantWeightMedian",
       "broadcasters": ["influx"],
       "denomination": "USD",
-      "rateFeed": false
+      "rateFeed": false,
+      "types": ["snoozed"]
     },
     "flx:EUR_MARK_0": {
       "source": ["hip3-felix-fx-mainnet-fetcher"],
       "broadcasters": ["hyperliquid-hip3"],
       "denomination": "USD",
-      "rateFeed": false
+      "rateFeed": false,
+      "types": ["snoozed"]
     },
     "flx:EUR_MARK_1": {
       "source": ["hip3-felix-fx-mainnet-fetcher"],
       "broadcasters": ["hyperliquid-hip3"],
       "denomination": "USD",
-      "rateFeed": false
+      "rateFeed": false,
+      "types": ["snoozed"]
     },
     "flx:EUR_EXT": {
       "source": ["hip3-felix-fx-mainnet-fetcher"],
       "broadcasters": ["hyperliquid-hip3"],
       "denomination": "USD",
-      "rateFeed": false
+      "rateFeed": false,
+      "types": ["snoozed"]
     },
     "flx:EUR": {
       "source": ["hip3-felix-fx-mainnet-fetcher"],
       "broadcasters": ["hyperliquid-hip3"],
       "denomination": "USD",
-      "rateFeed": false
+      "rateFeed": false,
+      "types": ["snoozed"]
     },
     "OPEN_INTEREST_flx:EUR": {
       "source": ["ws-hyperliquid-perps-flx"],
@@ -1410,7 +1429,8 @@
           "maxPercent": 1000000000,
           "maxDelayMilliseconds": 1000
         }
-      }
+      },
+      "types": ["snoozed"]
     },
     "WTI_CURRENT": {
       "source": ["databento-cme-futures", "ws-polygon-massive-nymex-futures"],
@@ -1823,13 +1843,15 @@
       "priceAggregator": "constantWeightMedian",
       "broadcasters": ["influx"],
       "denomination": "USD",
-      "rateFeed": false
+      "rateFeed": false,
+      "types": ["snoozed"]
     },
     "ORACLE_flx:BTC_EMA_150S": {
       "source": ["ema"],
       "broadcasters": ["influx"],
       "denomination": "USD",
-      "rateFeed": false
+      "rateFeed": false,
+      "types": ["snoozed"]
     },
     "MARK_flx:BTC": {
       "source": ["ws-hyperliquid-perps-flx", "ws-hydromancer-perps-flx"],
@@ -1840,7 +1862,8 @@
       "priceAggregator": "constantWeightMedian",
       "broadcasters": ["influx"],
       "denomination": "USD",
-      "rateFeed": false
+      "rateFeed": false,
+      "types": ["snoozed"]
     },
     "MID_flx:BTC": {
       "source": ["ws-hyperliquid-perps-flx", "ws-hydromancer-perps-flx"],
@@ -1851,37 +1874,43 @@
       "priceAggregator": "constantWeightMedian",
       "broadcasters": ["influx"],
       "denomination": "USD",
-      "rateFeed": false
+      "rateFeed": false,
+      "types": ["snoozed"]
     },
     "MID_flx:BTC_EMA_150S": {
       "source": ["ema"],
       "broadcasters": ["influx"],
       "denomination": "USD",
-      "rateFeed": false
+      "rateFeed": false,
+      "types": ["snoozed"]
     },
     "flx:BTC_MARK_0": {
       "source": ["hip3-crypto-mainnet-fetcher"],
       "broadcasters": ["hyperliquid-hip3"],
       "denomination": "USD",
-      "rateFeed": false
+      "rateFeed": false,
+      "types": ["snoozed"]
     },
     "flx:BTC_MARK_1": {
       "source": ["hip3-crypto-mainnet-fetcher"],
       "broadcasters": ["hyperliquid-hip3"],
       "denomination": "USD",
-      "rateFeed": false
+      "rateFeed": false,
+      "types": ["snoozed"]
     },
     "flx:BTC_EXT": {
       "source": ["hip3-crypto-mainnet-fetcher"],
       "broadcasters": ["hyperliquid-hip3"],
       "denomination": "USD",
-      "rateFeed": false
+      "rateFeed": false,
+      "types": ["snoozed"]
     },
     "flx:BTC": {
       "source": ["hip3-crypto-mainnet-fetcher"],
       "broadcasters": ["hyperliquid-hip3"],
       "denomination": "USD",
-      "rateFeed": false
+      "rateFeed": false,
+      "types": ["snoozed"]
     },
     "OPEN_INTEREST_flx:BTC": {
       "source": ["ws-hyperliquid-perps-flx"],
@@ -1893,7 +1922,8 @@
           "maxPercent": 1000000000,
           "maxDelayMilliseconds": 1000
         }
-      }
+      },
+      "types": ["snoozed"]
     },
     "PALLADIUM": {
       "source": [
