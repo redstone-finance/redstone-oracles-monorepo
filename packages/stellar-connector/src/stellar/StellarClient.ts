@@ -30,6 +30,7 @@ const DAYS_TO_EXTEND_TTL_THRESHOLD = 7;
 const DAYS_TO_EXTEND_TTL = 30;
 const BASE_EXTEND_TTL_FEE = 1e7;
 const RANDOM_ACCOUNT_FOR_SIMULATION = new Account(Keypair.random().publicKey(), "1");
+const MAX_LEDGER_ENTRIES_PER_REQUEST = 195;
 
 export class StellarClient implements IStellarCaller {
   private readonly logger = loggerFactory("stellar-client");
@@ -212,13 +213,19 @@ export class StellarClient implements IStellarCaller {
     );
   }
 
-  private async fetchEntriesByKey(keys: xdr.LedgerKey[]) {
+  async fetchEntriesByKey(keys: xdr.LedgerKey[]) {
     if (keys.length === 0) {
       return [];
     }
 
-    const { entries = [] } = await this.server.getLedgerEntries(...keys);
-    const entriesByXdr = new Map(entries.map((e) => [e.key.toXDR("base64"), e]));
+    const batches = _.chunk(keys, MAX_LEDGER_ENTRIES_PER_REQUEST).map(
+      (batch) => () => this.server.getLedgerEntries(...batch)
+    );
+    const results = await RedstoneCommon.batchPromises(1, 0, batches, true);
+
+    const entriesByXdr = new Map(
+      results.flatMap(({ entries = [] }) => entries.map((e) => [e.key.toXDR("base64"), e]))
+    );
 
     return keys.map((key) => entriesByXdr.get(key.toXDR("base64")));
   }
@@ -423,6 +430,23 @@ export class StellarClient implements IStellarCaller {
     return response.entries.map((entry) => entry.liveUntilLedgerSeq);
   }
 
+  async getEntriesTtls(
+    contract: string | Address | Contract,
+    keys: (xdr.ScVal | "instance")[],
+    blockNumber?: number
+  ) {
+    await this.waitForBlockNumber(blockNumber);
+
+    const ledgerKeys = keys.map((key) =>
+      contractDataKey(contract, key === "instance" ? xdr.ScVal.scvLedgerKeyContractInstance() : key)
+    );
+
+    const { entries = [] } = await this.server.getLedgerEntries(...ledgerKeys);
+    const byXdr = new Map(entries.map((e) => [e.key.toXDR("base64"), e.liveUntilLedgerSeq]));
+
+    return ledgerKeys.map((key) => byXdr.get(key.toXDR("base64")));
+  }
+
   async extendInstanceTtl(
     contractId: string,
     signer: StellarSigner,
@@ -477,7 +501,7 @@ function toScAddress(contract: string | Address | Contract) {
   }
 }
 
-function contractDataKey(
+export function contractDataKey(
   contract: string | Address | Contract,
   key: xdr.ScVal,
   durability = xdr.ContractDataDurability.persistent()
