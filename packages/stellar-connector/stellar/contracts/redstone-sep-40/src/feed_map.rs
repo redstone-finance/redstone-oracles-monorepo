@@ -1,11 +1,12 @@
 use sep_40_oracle::Asset;
 use soroban_sdk::{Env, Error, String, Vec};
 
-use crate::{asset_eq, error::Sep40Error, storage::EnvExt};
+use crate::{config::DECIMALS, error::Sep40Error, storage::EnvExt, utils::asset_eq, FeedMapping};
 
 pub struct FeedMap<'a> {
     env: &'a Env,
     assets: Vec<Asset>,
+    max_decimals: u32,
 }
 
 impl<'a> FeedMap<'a> {
@@ -13,23 +14,29 @@ impl<'a> FeedMap<'a> {
         env: &'a Env,
         f: impl FnOnce(&mut FeedMap) -> Result<(), Error>,
     ) -> Result<(), Error> {
+        let assets = env.get_assets();
+        let max_decimals = env.get_max_decimals();
+
         let mut map = Self {
             env,
-            assets: env.get_assets(),
+            assets,
+            max_decimals,
         };
 
         f(&mut map)?;
+
         env.set_assets(&map.assets);
+        env.set_max_decimals(map.max_decimals);
 
         Ok(())
     }
 
-    pub fn add(&mut self, feed: &String, asset: &Asset) -> Result<(), Error> {
-        if self.env.has_feed(feed) {
+    pub fn add(&mut self, feed_mapping: FeedMapping) -> Result<(), Error> {
+        if self.env.has_feed(&feed_mapping.feed) {
             return Err(Sep40Error::DuplicatedFeed.into());
         }
 
-        self.insert(feed, asset)
+        self.insert(feed_mapping)
     }
 
     pub fn remove(&mut self, feed: &String) -> Result<(), Error> {
@@ -39,17 +46,27 @@ impl<'a> FeedMap<'a> {
             .ok_or(Error::from_contract_error(Sep40Error::FeedNotFound as u32))?;
 
         self.detach(feed, &asset);
-
         Ok(())
     }
 
-    fn insert(&mut self, feed: &String, asset: &Asset) -> Result<(), Error> {
-        if self.env.has_asset(asset) {
+    fn insert(&mut self, feed_mapping: FeedMapping) -> Result<(), Error> {
+        let FeedMapping {
+            feed,
+            asset,
+            decimals,
+        } = feed_mapping;
+
+        if self.env.has_asset(&asset) {
             return Err(Sep40Error::DuplicatedAsset.into());
         }
 
         self.assets.push_back(asset.clone());
-        self.env.set_mapping(feed, asset);
+        self.env.set_mapping(&feed, &asset);
+
+        let decimals = decimals.unwrap_or(DECIMALS);
+
+        self.env.set_feed_decimals(&feed, decimals);
+        self.max_decimals = self.max_decimals.max(decimals);
 
         Ok(())
     }
@@ -58,7 +75,28 @@ impl<'a> FeedMap<'a> {
         if let Some(idx) = self.assets.iter().position(|a| asset_eq(&a, asset)) {
             self.assets.remove(idx as u32);
         }
-
         self.env.remove_mapping(feed, asset);
+
+        let removed_decimals = self.env.get_feed_decimals(feed);
+        self.env.remove_feed_decimals(feed);
+
+        if removed_decimals == self.max_decimals {
+            self.max_decimals = self.recompute_max_decimals();
+        }
+    }
+
+    fn recompute_max_decimals(&self) -> u32 {
+        let mut max = 0;
+
+        for asset in self.assets.iter() {
+            let Some(feed) = self.env.get_feed_for_asset(&asset) else {
+                continue;
+            };
+            let d = self.env.get_feed_decimals(&feed);
+
+            max = max.max(d);
+        }
+
+        max
     }
 }

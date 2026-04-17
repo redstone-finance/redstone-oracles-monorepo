@@ -8,14 +8,6 @@ export type Sep40Asset =
   | { tag: typeof STELLAR_ASSET; address: Address }
   | { tag: typeof OTHER_ASSET; symbol: string };
 
-export function feedMappingsToScVal(mappings: { feed: string; asset: Sep40Asset }[]) {
-  return xdr.ScVal.scvVec(
-    mappings.map((m) =>
-      xdr.ScVal.scvVec([nativeToScVal(m.feed, { type: "string" }), assetToScVal(m.asset)])
-    )
-  );
-}
-
 export function assetToScVal(asset: Sep40Asset) {
   switch (asset.tag) {
     case STELLAR_ASSET:
@@ -43,6 +35,36 @@ export function parseAsset(retVal: unknown): Sep40Asset {
 
 export function parseAssets(retVal: unknown) {
   return (retVal as unknown[]).map(parseAsset);
+}
+
+export function assetLabelFor(asset: Sep40Asset) {
+  return asset.tag === "Stellar" ? asset.address.toString() : asset.symbol;
+}
+
+export function feedMappingsToScVal(
+  mappings: { feed: string; asset: Sep40Asset; decimals?: number }[]
+) {
+  return xdr.ScVal.scvVec(
+    mappings.map((m) =>
+      xdr.ScVal.scvMap([
+        new xdr.ScMapEntry({
+          key: xdr.ScVal.scvSymbol("asset"),
+          val: assetToScVal(m.asset),
+        }),
+        new xdr.ScMapEntry({
+          key: xdr.ScVal.scvSymbol("decimals"),
+          val:
+            m.decimals === undefined
+              ? xdr.ScVal.scvVoid()
+              : nativeToScVal(m.decimals, { type: "u32" }),
+        }),
+        new xdr.ScMapEntry({
+          key: xdr.ScVal.scvSymbol("feed"),
+          val: nativeToScVal(m.feed, { type: "string" }),
+        }),
+      ])
+    )
+  );
 }
 
 function parseSep40PriceData(retVal: unknown) {

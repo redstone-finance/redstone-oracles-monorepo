@@ -1,13 +1,14 @@
-import { Contract, nativeToScVal } from "@stellar/stellar-sdk";
+import { Contract, nativeToScVal, xdr } from "@stellar/stellar-sdk";
+import { assetToFeedKey, getEntriesKeysWithLabels } from "../sep-40-keys";
 import {
-  Sep40Asset,
   assetToScVal,
   parseAsset,
   parseAssets,
   parseOptionalPriceData,
   parseOptionalPriceDataVec,
-} from "../sep-40-utils";
-import { StellarClient } from "../stellar/StellarClient";
+  Sep40Asset,
+} from "../sep-40-types";
+import { contractDataKey, StellarClient } from "../stellar/StellarClient";
 
 const BASE_METHOD = "base";
 const ASSETS_METHOD = "assets";
@@ -102,5 +103,28 @@ export class Sep40StellarContractAdapter {
       blockNumber,
       parseOptionalPriceData
     );
+  }
+
+  async getEntryTtls(blockNumber?: number) {
+    const assets = await this.assets(blockNumber);
+
+    const assetEntries = await this.client.fetchEntriesByKey(
+      assets.map((asset) => contractDataKey(this.contract, assetToFeedKey(asset)))
+    );
+
+    const feeds = assetEntries.map((entry, i) => {
+      if (!entry) {
+        throw new Error(`Missing AssetToFeed entry for asset at index ${i}`);
+      }
+
+      return entry.val.contractData().val().str().toString();
+    });
+
+    const { keys, labels }: { keys: (xdr.ScVal | "instance")[]; labels: string[] } =
+      getEntriesKeysWithLabels(assets, feeds);
+
+    const ttls = await this.client.getEntriesTtls(this.contract, keys, blockNumber);
+
+    return new Map(labels.map((label, i) => [label, ttls[i]]));
   }
 }
