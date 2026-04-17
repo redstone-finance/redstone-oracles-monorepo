@@ -14,8 +14,9 @@ pub trait EnvExt {
     fn extend_instance_ttl(&self);
     fn get_data_for_feed(&self, feed: &String) -> Result<PriceDataStorage, Error>;
     fn get_data_for_feed_or_default(&self, feed: &String) -> PriceDataStorage;
-    fn get_last_data_for_feed(&self, feed: &String) -> Result<PriceData, Error>;
-    fn save_feed(&self, feed: &String, storage: &PriceDataStorage);
+    fn get_latest_price_data_for_feed(&self, feed: &String) -> Option<PriceData>;
+    fn try_get_latest_price_data_for_feed(&self, feed: &String) -> Result<PriceData, Error>;
+    fn save_feed(&self, feed: &String, storage: &PriceDataStorage, latest: &PriceData);
 }
 
 impl EnvExt for Env {
@@ -40,17 +41,23 @@ impl EnvExt for Env {
             .unwrap_or_else(|| PriceDataStorage::empty(self))
     }
 
-    fn get_last_data_for_feed(&self, feed: &String) -> Result<PriceData, Error> {
-        self.get_data_for_feed(feed)?
-            .get_last()
+    fn get_latest_price_data_for_feed(&self, feed: &String) -> Option<PriceData> {
+        self.storage().persistent().get(feed)
+    }
+
+    fn try_get_latest_price_data_for_feed(&self, feed: &String) -> Result<PriceData, Error> {
+        self.get_latest_price_data_for_feed(feed)
             .ok_or(MISSING_STORAGE_ENTRY)
     }
 
-    fn save_feed(&self, feed: &String, storage: &PriceDataStorage) {
-        let key = StorageKey::Feed(feed.clone());
+    fn save_feed(&self, feed: &String, storage: &PriceDataStorage, latest: &PriceData) {
         let db = self.storage().persistent();
+        let feed_key = StorageKey::Feed(feed.clone());
 
-        db.set(&key, storage);
-        db.extend_ttl(&key, FEED_TTL_THRESHOLD, FEED_TTL_EXTEND_TO);
+        db.set(&feed_key, storage);
+        db.extend_ttl(&feed_key, FEED_TTL_THRESHOLD, FEED_TTL_EXTEND_TO);
+
+        db.set(feed, latest);
+        db.extend_ttl(feed, FEED_TTL_THRESHOLD, FEED_TTL_EXTEND_TO);
     }
 }
