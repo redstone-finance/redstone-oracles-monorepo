@@ -715,7 +715,9 @@
         "metal-price-api-deferred",
         "ws-blocksize",
         "ws-lmax",
-        "ws-polygon-massive-commodities"
+        "ws-polygon-massive-commodities",
+        "ws-hyperliquid-perps-xyz",
+        "ws-hydromancer-perps-xyz"
       ],
       "priceAggregator": "redstoneX",
       "redstoneXAggregatorConfig": {
