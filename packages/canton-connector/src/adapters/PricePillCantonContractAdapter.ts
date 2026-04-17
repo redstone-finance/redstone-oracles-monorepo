@@ -1,8 +1,5 @@
-import {
-  ContractParamsProvider,
-  IPriceFeedContractAdapter,
-  PriceAndTimestamp,
-} from "@redstone-finance/sdk";
+import { PriceFeedAdapter } from "@redstone-finance/multichain-kit";
+import { ContractParamsProvider } from "@redstone-finance/sdk";
 import { CantonClient } from "../CantonClient";
 import { getArrayifiedFeedId, REDSTONE_DECIMALS } from "../conversions";
 import {
@@ -24,7 +21,7 @@ interface PricePillView {
 
 export class PricePillCantonContractAdapter
   extends CantonContractAdapter
-  implements IPriceFeedContractAdapter
+  implements PriceFeedAdapter
 {
   private readonly arrayifiedFeedId: number[];
 
@@ -40,7 +37,7 @@ export class PricePillCantonContractAdapter
     this.arrayifiedFeedId = getArrayifiedFeedId(feedId);
   }
 
-  async getPriceAndTimestamp(offset?: number): Promise<PriceAndTimestamp> {
+  async getPriceAndTimestamp(offset?: number) {
     const result = await this.readData(offset);
 
     return {
@@ -55,7 +52,7 @@ export class PricePillCantonContractAdapter
     return parsePriceData(priceData);
   }
 
-  decimals(_offset?: number) {
+  getDecimals(_offset?: number) {
     return Promise.resolve(REDSTONE_DECIMALS);
   }
 
