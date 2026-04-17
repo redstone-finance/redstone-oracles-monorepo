@@ -129,7 +129,7 @@ impl RedStoneAdapter {
         let mut prices = Vec::new(env);
 
         for feed_id in feed_ids {
-            let last = env.get_last_data_for_feed(&feed_id)?;
+            let last = env.try_get_latest_price_data_for_feed(&feed_id)?;
             let checked = Self::check_price_data(env, last)?;
             prices.push_back(checked.price);
         }
@@ -138,14 +138,14 @@ impl RedStoneAdapter {
     }
 
     pub fn read_timestamp(env: &Env, feed_id: String) -> Result<u64, Error> {
-        let last = env.get_last_data_for_feed(&feed_id)?;
+        let last = env.try_get_latest_price_data_for_feed(&feed_id)?;
         let checked = Self::check_price_data(env, last)?;
 
         Ok(checked.package_timestamp)
     }
 
     pub fn read_price_data_for_feed(env: &Env, feed_id: String) -> Result<PriceData, Error> {
-        let last = env.get_last_data_for_feed(&feed_id)?;
+        let last = env.try_get_latest_price_data_for_feed(&feed_id)?;
 
         Self::check_price_data(env, last)
     }
@@ -154,7 +154,7 @@ impl RedStoneAdapter {
         let mut price_data = Vec::new(env);
 
         for feed_id in feed_ids {
-            let last = env.get_last_data_for_feed(&feed_id)?;
+            let last = env.try_get_latest_price_data_for_feed(&feed_id)?;
             let checked = Self::check_price_data(env, last)?;
             price_data.push_back(checked);
         }
@@ -232,7 +232,7 @@ fn update_feed(
     limit: u32,
 ) -> bool {
     let mut storage = env.get_data_for_feed_or_default(feed_id);
-    let old_price_data = storage.get_last();
+    let old_price_data = env.get_latest_price_data_for_feed(feed_id);
 
     if verifier
         .verify_timestamp(
@@ -253,7 +253,7 @@ fn update_feed(
         return false;
     }
 
-    env.save_feed(feed_id, &storage);
+    env.save_feed(feed_id, &storage, price_data);
 
     true
 }
