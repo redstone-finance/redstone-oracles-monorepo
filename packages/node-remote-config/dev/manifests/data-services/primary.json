@@ -3632,7 +3632,7 @@
       }
     },
     "thBILL_FUNDAMENTAL": {
-      "source": ["ethereum-evm-fetcher-theo"],
+      "source": ["ethereum-evm-fetcher-theo-thbill"],
       "denomination": "USDC",
       "rateFeed": true,
       "deviationCheck": {
@@ -5180,6 +5180,11 @@
     "earnUSDT_FUNDAMENTAL": {
       "source": ["kaia-evm-fetcher-super-earn"],
       "denomination": "USDT",
+      "rateFeed": true
+    },
+    "sthUSD_FUNDAMENTAL": {
+      "source": ["ethereum-evm-fetcher-theo-sthusd"],
+      "denomination": "thUSD",
       "rateFeed": true
     }
   },
