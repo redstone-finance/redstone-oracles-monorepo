@@ -1,19 +1,9 @@
 import type { Config } from "@jest/types";
+import redstoneConfig from "@redstone-finance/jest-config";
 
 const config: Config.InitialOptions = {
-  collectCoverage: true,
-  collectCoverageFrom: ["<rootDir>/src/**/*.(t|j)s"],
-  coverageDirectory: "<rootDir>/coverage",
-  coverageReporters: ["html"],
-  preset: "ts-jest",
-  setupFiles: ["./jest.setup.ts"],
-  testPathIgnorePatterns: ["<rootDir>/dist/"],
-  roots: ["<rootDir>/src/", "<rootDir>/test/"],
-  transformIgnorePatterns: ["node_modules/(?!(@mysten|@scure|@noble)/)"],
-  transform: {
-    "^.+\\.tsx?$": "ts-jest",
-    "^.+\\.m?js$": "@swc/jest",
-  },
+  ...redstoneConfig,
+  setupFiles: ["<rootDir>/jest.setup.ts"],
 };
 
 export default config;

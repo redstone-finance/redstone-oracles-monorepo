@@ -1,0 +1,24 @@
+{
+  "name": "@redstone-finance/jest-config",
+  "version": "0.9.0",
+  "main": "./redstone-jest-config.ts",
+  "exports": "./redstone-jest-config.ts",
+  "license": "MIT",
+  "scripts": {
+    "clean": "yarn global:ts-clean",
+    "typecheck": "yarn global:tsc --noEmit",
+    "typecheck:turbo": "yarn global:turbo typecheck",
+    "build": "yarn global:tsc -p tsconfig.build.json",
+    "build:turbo": "yarn global:turbo build",
+    "lint": "yarn global:eslint .",
+    "lint:fix": "yarn global:eslint --fix ."
+  },
+  "devDependencies": {
+    "@swc/jest": "^0.2.39",
+    "@types/jest": "^29.5.4",
+    "ts-jest": "^29.4.5"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}
