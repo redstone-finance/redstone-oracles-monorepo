@@ -1,6 +1,6 @@
 import { getChainConfigByNetworkId, getLocalChainConfigs } from "@redstone-finance/chain-configs";
 import {
-  getPriceFeedContractCreator,
+  getPriceFeedAdapterCreator,
   getProviderWithRpcUrls,
 } from "@redstone-finance/chain-orchestrator";
 import {
@@ -41,7 +41,7 @@ const checkDataFeedIdInContract = async (
   networkId: NetworkId
 ) => {
   const { publicRpcUrls } = getChainConfig(networkId);
-  const priceFeedCreator = await getPriceFeedContractCreator(networkId, "dev", {
+  const priceFeedCreator = await getPriceFeedAdapterCreator(networkId, "dev", {
     provider: isEvmNetworkId(networkId)
       ? await getProviderWithRpcUrls(networkId, publicRpcUrls)
       : undefined,

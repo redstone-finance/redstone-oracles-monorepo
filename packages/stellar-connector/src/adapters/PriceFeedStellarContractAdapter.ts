@@ -1,4 +1,4 @@
-import { IPriceFeedContractAdapter } from "@redstone-finance/sdk";
+import { PriceFeedAdapter } from "@redstone-finance/multichain-kit";
 import { Contract } from "@stellar/stellar-sdk";
 import { StellarClient } from "../stellar/StellarClient";
 import * as XdrUtils from "../XdrUtils";
@@ -10,11 +10,15 @@ const READ_TIMESTAMP_METHOD = "read_timestamp";
 const READ_PRICE_AND_TIMESTAMP_METHOD = "read_price_and_timestamp";
 const READ_PRICE_DATA_METHOD = "read_price_data";
 
-export class PriceFeedStellarContractAdapter implements IPriceFeedContractAdapter {
+export class PriceFeedStellarContractAdapter implements PriceFeedAdapter {
+  protected readonly contract: Contract;
+
   constructor(
     protected readonly client: StellarClient,
-    protected readonly contract: Contract
-  ) {}
+    readonly contractAddress: string
+  ) {
+    this.contract = new Contract(contractAddress);
+  }
 
   async getPriceAndTimestamp(blockNumber?: number) {
     return await this.readPriceAndTimestamp(blockNumber);
@@ -34,7 +38,7 @@ export class PriceFeedStellarContractAdapter implements IPriceFeedContractAdapte
     return await this.feedId(blockNumber);
   }
 
-  async decimals(blockNumber?: number) {
+  async getDecimals(blockNumber?: number) {
     return await this.client.call(
       {
         method: DECIMALS_METHOD,

@@ -1,4 +1,4 @@
-import { IPriceFeedContractAdapter, PriceAndTimestamp } from "@redstone-finance/sdk";
+import { PriceFeedAdapter } from "@redstone-finance/multichain-kit";
 import { RadixClient } from "../../radix/RadixClient";
 import { RadixContractAdapter, ReadMode } from "../../radix/RadixContractAdapter";
 import { ReadDescriptionRadixMethod } from "./methods/ReadDescriptionRadixMethod";
@@ -7,13 +7,13 @@ import { ReadPriceAndTimestampRadixMethod } from "./methods/ReadPriceAndTimestam
 
 export class PriceFeedRadixContractAdapter
   extends RadixContractAdapter
-  implements IPriceFeedContractAdapter
+  implements PriceFeedAdapter
 {
   constructor(client: RadixClient, componentId: string, readMode: ReadMode = "CallReadMethod") {
     super(client, componentId, readMode);
   }
 
-  async getPriceAndTimestamp(): Promise<PriceAndTimestamp> {
+  async getPriceAndTimestamp() {
     return await this.client.call(new ReadPriceAndTimestampRadixMethod(this.componentId));
   }
 
@@ -23,5 +23,9 @@ export class PriceFeedRadixContractAdapter
 
   async getDataFeedId() {
     return await this.client.call(new ReadFeedIdRadixMethod(this.componentId));
+  }
+
+  getDecimals() {
+    return Promise.resolve(undefined);
   }
 }

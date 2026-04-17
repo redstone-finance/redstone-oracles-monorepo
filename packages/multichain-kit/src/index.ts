@@ -6,6 +6,7 @@ export * from "./compatibility-layer/ForwardCompatibleWriteAdapter";
 export * from "./ContractAdapter";
 export * from "./ContractUpdater";
 export * from "./MultiTxDeliveryMan";
+export * from "./PriceFeedAdapter";
 export * from "./sample-run";
 export * from "./TxDeliveryMan";
 export * from "./WriteContractAdapter";

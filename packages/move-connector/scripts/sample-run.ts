@@ -3,7 +3,7 @@ import { ContractParamsProvider, getSignersForDataServiceId } from "@redstone-fi
 import { RedstoneCommon } from "@redstone-finance/utils";
 import { z } from "zod";
 import { makeAptosAccount, MoveClientBuilder, MovePricesContractConnector } from "../src";
-import { MovePriceFeedContractConnector } from "../src/price_feed/MovePriceFeedContractConnector";
+import { MovePriceFeedContractAdapter } from "../src/price_feed/MovePriceFeedContractAdapter";
 import { PRICE_ADAPTER, PRICE_FEED } from "./contract-name-enum";
 import { readObjectAddress } from "./deploy-utils";
 import { getEnvNetworkEnum } from "./get-env";
@@ -39,13 +39,8 @@ async function main() {
   );
 
   const adapter = await ForwardCompatibleWriteContractAdapter.fromConnector(moveContractConnector);
-  const ethPriceFeedConnector = new MovePriceFeedContractConnector(client, feedAddress.toString());
-  await sampleRun(
-    paramsProvider,
-    adapter,
-    moveContractConnector,
-    await ethPriceFeedConnector.getAdapter()
-  );
+  const ethPriceFeedAdapter = new MovePriceFeedContractAdapter(client, feedAddress.toString());
+  await sampleRun(paramsProvider, adapter, moveContractConnector, ethPriceFeedAdapter);
 }
 
 void main();

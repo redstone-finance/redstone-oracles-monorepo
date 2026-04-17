@@ -3,7 +3,7 @@ import { ContractParamsProvider, getSignersForDataServiceId } from "@redstone-fi
 import {
   CANTON_CONTRACT_ADAPTER_DEFAULT_CONFIG,
   CantonBlockchainService,
-  PricePillCantonContractConnector,
+  PricePillCantonContractAdapter,
   PricesCantonContractAdapter,
   readAdditionalPillViewers,
 } from "../src";
@@ -40,13 +40,12 @@ async function main() {
     authorizedSigners: getSignersForDataServiceId("redstone-primary-prod"),
   });
 
-  const ethPriceFeedConnector = new PricePillCantonContractConnector(
+  const feedAdapter = new PricePillCantonContractAdapter(
     client,
     makePartyId(VIEWER_PARTY_NAME),
     ADAPTER_ID,
     `TSLA${SUFFIX_24_7}`
   );
-  const feedAdapter = await ethPriceFeedConnector.getAdapter();
 
   await sampleRun(paramsProvider, adapter, service, feedAdapter);
 }

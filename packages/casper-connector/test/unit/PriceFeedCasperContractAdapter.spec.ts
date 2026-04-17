@@ -6,7 +6,6 @@ import {
   STORAGE_KEY_VALUE,
 } from "../../src/contracts/constants";
 import { PriceFeedCasperContractAdapter } from "../../src/contracts/price_feed/PriceFeedCasperContractAdapter";
-import { PriceFeedCasperContractConnector } from "../../src/contracts/price_feed/PriceFeedCasperContractConnector";
 import {
   callEntrypointMock,
   contractDataMock,
@@ -16,13 +15,11 @@ import {
 
 describe("PriceFeedCasperContractAdapter tests", () => {
   let connection: jest.Mocked<ICasperConnection>;
-  let connector: PriceFeedCasperContractConnector;
   let adapter: PriceFeedCasperContractAdapter;
 
-  beforeEach(async () => {
+  beforeEach(() => {
     connection = getMockCasperConnection();
-    connector = new PriceFeedCasperContractConnector(connection, "0x5555");
-    adapter = await connector.getAdapter();
+    adapter = new PriceFeedCasperContractAdapter(connection, "0x5555");
     mockStateRootHashImplementations(connection);
   });
 
@@ -40,8 +37,8 @@ describe("PriceFeedCasperContractAdapter tests", () => {
       contractDataMock(adapter, STORAGE_KEY_VALUE, BigNumber.from(12345))
     );
 
-    const timestamp = await adapter.readValueFromContract();
-    expect(timestamp).toEqual(BigNumber.from(12345));
+    const value = await adapter.readValueFromContract();
+    expect(value).toEqual(12345n);
   });
 
   it("getPriceAndTimestamp should callEntrypoint ENTRY_POINT_GET_PRICE_AND_TIMESTAMP about STORAGE_KEY_VALUE", async () => {
@@ -61,6 +58,6 @@ describe("PriceFeedCasperContractAdapter tests", () => {
 
     const { value, timestamp } = await adapter.getPriceAndTimestamp();
     expect(timestamp).toEqual(2233);
-    expect(value).toEqual(BigNumber.from(54321));
+    expect(value).toEqual(54321n);
   });
 });

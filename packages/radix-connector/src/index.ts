@@ -2,7 +2,6 @@ export * from "./contracts/price_adapter/PriceAdapterRadixContractAdapter";
 export * from "./contracts/price_adapter/PriceAdapterRadixContractConnector";
 export * from "./contracts/price_adapter/PriceAdapterRadixContractDeployer";
 export * from "./contracts/price_feed/PriceFeedRadixContractAdapter";
-export * from "./contracts/price_feed/PriceFeedRadixContractConnector";
 export * from "./contracts/price_feed/PriceFeedRadixContractDeployer";
 export * from "./contracts/proxy/ProxyRadixContractAdapter";
 export * from "./contracts/proxy/ProxyRadixContractConnector";
