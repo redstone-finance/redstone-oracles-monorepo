@@ -9607,6 +9607,13 @@
       ],
       "denomination": "thUSD",
       "rateFeed": true
+    },
+    "wiTRY_FUNDAMENTAL": {
+      "source": [
+        "ethereum-evm-fetcher-brix"
+      ],
+      "denomination": "iTRY",
+      "rateFeed": true
     }
   }
 }
