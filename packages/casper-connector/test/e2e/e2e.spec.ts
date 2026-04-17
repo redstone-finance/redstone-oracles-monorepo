@@ -1,4 +1,3 @@
-import { BigNumber } from "ethers";
 import {
   makeCasperConnection,
   PriceAdapterCasperContractAdapter,
@@ -8,7 +7,6 @@ import {
 } from "../../src";
 import { ICasperConnection } from "../../src/casper/ICasperConnection";
 import { PriceFeedCasperContractAdapter } from "../../src/contracts/price_feed/PriceFeedCasperContractAdapter";
-import { PriceFeedCasperContractConnector } from "../../src/contracts/price_feed/PriceFeedCasperContractConnector";
 import {
   ADAPTER_ADDRESS,
   FEED_ADDRESS,
@@ -26,7 +24,6 @@ describe.skip("E2E tests", () => {
   let pricesAdapter: PriceAdapterCasperContractAdapter;
   let priceRelayConnector: PriceRelayAdapterCasperContractConnector;
   let pricesRelayAdapter: PriceRelayAdapterCasperContractAdapter;
-  let priceFeedConnector: PriceFeedCasperContractConnector;
   let priceFeedAdapter: PriceFeedCasperContractAdapter;
 
   beforeAll(async () => {
@@ -43,8 +40,7 @@ describe.skip("E2E tests", () => {
     );
     pricesRelayAdapter = await priceRelayConnector.getAdapter();
 
-    priceFeedConnector = new PriceFeedCasperContractConnector(connection, FEED_ADDRESS);
-    priceFeedAdapter = await priceFeedConnector.getAdapter();
+    priceFeedAdapter = new PriceFeedCasperContractAdapter(connection, FEED_ADDRESS);
   });
 
   it("PriceRelayAdapter.getPricesFromPayload should return prices", async () => {
@@ -85,6 +81,6 @@ describe.skip("E2E tests", () => {
       await priceFeedAdapter.getPriceAndTimestamp();
 
     expect(feedTimestamp).toBe(timestamp);
-    expect(BigNumber.from(ethValue).toNumber()).toBe(BigNumber.from(values[0]).toNumber());
+    expect(ethValue).toBe(values[0]);
   }
 });
