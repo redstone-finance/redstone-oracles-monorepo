@@ -9593,6 +9593,13 @@
       ],
       "denomination": "USD",
       "rateFeed": false
+    },
+    "earnUSDT_FUNDAMENTAL": {
+      "source": [
+        "kaia-evm-fetcher-super-earn"
+      ],
+      "denomination": "USDT",
+      "rateFeed": true
     }
   }
 }
