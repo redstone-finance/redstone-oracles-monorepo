@@ -61,6 +61,9 @@ async function main() {
       }
     }
   }
+
+  console.log(`\n--- TTL ---`);
+  console.dir(await adapter.getEntryTtls());
 }
 
 void main().catch(console.error);
