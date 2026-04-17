@@ -1,12 +1,9 @@
-import { IPriceFeedContractAdapter, PriceAndTimestamp } from "@redstone-finance/sdk";
+import { PriceFeedAdapter } from "@redstone-finance/multichain-kit";
 import { BigNumber } from "ethers";
 import { MoveClient } from "../MoveClient";
 import { MoveContractViewer } from "../MoveContractViewer";
 
-export class MovePriceFeedContractAdapter
-  extends MoveContractViewer
-  implements IPriceFeedContractAdapter
-{
+export class MovePriceFeedContractAdapter extends MoveContractViewer implements PriceFeedAdapter {
   constructor(client: MoveClient, packageAddress: string) {
     super(client, "price_feed", packageAddress);
   }
@@ -15,9 +12,9 @@ export class MovePriceFeedContractAdapter
     const result = await this.viewOnChain("read_price_and_timestamp");
 
     return {
-      value: BigNumber.from(result[0]),
+      value: BigNumber.from(result[0]).toBigInt(),
       timestamp: Number(result[1]),
-    } as PriceAndTimestamp;
+    };
   }
 
   async getDataFeedId() {
@@ -30,5 +27,9 @@ export class MovePriceFeedContractAdapter
     const result = await this.viewOnChain("description");
 
     return result[0] as string;
+  }
+
+  getDecimals() {
+    return Promise.resolve(undefined);
   }
 }
