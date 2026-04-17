@@ -5196,7 +5196,7 @@
   "multiPointPackages": {
     "___FAST___": ["USDC", "USDT", "DAI", "BNB", "BTC", "ETH", "SOL", "MON"],
     "__FRAXTAL__": ["BTC", "CRV", "ETH", "FRAX", "FXS"],
-    "___ALL_FEEDS___": [
+    "___ALL_DELTA_PRIME_FEEDS___": [
       "3Crv",
       "AAVE",
       "AERO",
