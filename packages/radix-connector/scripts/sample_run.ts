@@ -6,7 +6,7 @@ import {
 } from "@redstone-finance/multichain-kit";
 import { ContractParamsProvider, getSignersForDataServiceId } from "@redstone-finance/sdk";
 import { RedstoneCommon } from "@redstone-finance/utils";
-import { PriceAdapterRadixContractConnector, PriceFeedRadixContractConnector } from "../src";
+import { PriceAdapterRadixContractConnector, PriceFeedRadixContractAdapter } from "../src";
 import {
   DATA_SERVICE_ID,
   FEED_ID,
@@ -34,13 +34,13 @@ async function main() {
   );
   const priceAdapter = await connector.getAdapter();
 
-  const priceFeed = new PriceFeedRadixContractConnector(
+  const priceFeedAdapter = new PriceFeedRadixContractAdapter(
     client,
     await loadAddress(`component`, PROXY_NAME, FEED_ID)
   );
 
   const adapter = await ForwardCompatibleWriteContractAdapter.fromConnector(connector);
-  await sampleRun(paramsProvider, adapter, connector, await priceFeed.getAdapter());
+  await sampleRun(paramsProvider, adapter, connector, priceFeedAdapter);
 
   priceAdapter.readMode = "CallReadMethod";
   const timestampRead = await priceAdapter.readTimestampFromContract(

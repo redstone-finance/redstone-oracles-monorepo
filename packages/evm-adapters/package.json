@@ -29,6 +29,7 @@
     "@openzeppelin/contracts": "^4.8.1",
     "@openzeppelin/contracts-upgradeable": "^4.8.3",
     "@redstone-finance/evm-connector": "workspace:*",
+    "@redstone-finance/multichain-kit": "workspace:*",
     "@redstone-finance/protocol": "workspace:*",
     "@redstone-finance/sdk": "workspace:*",
     "@redstone-finance/utils": "workspace:*",
