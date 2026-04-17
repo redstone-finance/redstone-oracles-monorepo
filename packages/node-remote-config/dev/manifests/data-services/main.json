@@ -8825,6 +8825,11 @@
       "source": ["ethereum-evm-fetcher-theo-sthusd"],
       "denomination": "thUSD",
       "rateFeed": true
+    },
+    "wiTRY_FUNDAMENTAL": {
+      "source": ["ethereum-evm-fetcher-brix"],
+      "denomination": "iTRY",
+      "rateFeed": true
     }
   }
 }
