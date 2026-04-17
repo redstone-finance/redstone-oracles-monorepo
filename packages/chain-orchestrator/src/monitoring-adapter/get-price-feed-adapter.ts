@@ -1,20 +1,21 @@
 import {
   CantonClientBuilder,
-  PricePillCantonContractConnector,
+  PricePillCantonContractAdapter,
 } from "@redstone-finance/canton-connector";
+import { PriceFeedAdapter } from "@redstone-finance/multichain-kit";
 import {
-  PriceFeedStellarContractConnector,
+  PriceFeedStellarContractAdapter,
   StellarClientBuilder,
 } from "@redstone-finance/stellar-connector";
 import { deconstructNetworkId, NetworkId, RedstoneCommon } from "@redstone-finance/utils";
 import { getCantonAuth } from "../utils";
 
-export async function getPriceFeedContractConnector(
+export async function getPriceFeedAdapter(
   networkId: NetworkId,
   address: string,
   rpcUrls: string[],
   feedName?: string
-) {
+): Promise<PriceFeedAdapter> {
   const { chainType } = deconstructNetworkId(networkId);
 
   switch (chainType) {
@@ -25,7 +26,7 @@ export async function getPriceFeedContractConnector(
         .withMulticall()
         .build();
 
-      return new PriceFeedStellarContractConnector(client, address);
+      return new PriceFeedStellarContractAdapter(client, address);
     }
     case "canton": {
       if (!feedName) {
@@ -39,7 +40,7 @@ export async function getPriceFeedContractConnector(
         .withDefaultAuth(auth)
         .build();
 
-      return new PricePillCantonContractConnector(
+      return new PricePillCantonContractAdapter(
         client,
         RedstoneCommon.getFromEnv("VIEWER_PARTY_ID"),
         address,
@@ -53,7 +54,7 @@ export async function getPriceFeedContractConnector(
     case "movement":
     case "solana":
     case "evm":
-      throw new Error(`${networkId} is not supported for getPriceFeedContractConnector`);
+      throw new Error(`${networkId} is not supported for getPriceFeedAdapter`);
     default:
       return RedstoneCommon.throwUnsupportedParamError(chainType);
   }

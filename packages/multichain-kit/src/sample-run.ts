@@ -1,19 +1,16 @@
 import { consts } from "@redstone-finance/protocol";
-import {
-  ContractData,
-  ContractParamsProvider,
-  IPriceFeedContractAdapter,
-} from "@redstone-finance/sdk";
+import { ContractData, ContractParamsProvider } from "@redstone-finance/sdk";
 import { RedstoneCommon } from "@redstone-finance/utils";
 import { BlockProvider } from "./BlockchainService";
 import { ContractAdapter } from "./ContractAdapter";
+import { PriceFeedAdapter } from "./PriceFeedAdapter";
 import { WriteContractAdapter } from "./WriteContractAdapter";
 
 export async function sampleRun(
   paramsProvider: ContractParamsProvider,
   adapter: WriteContractAdapter,
   provider: BlockProvider,
-  ethFeedConnector?: IPriceFeedContractAdapter,
+  priceFeedAdapter?: PriceFeedAdapter,
   refreshStateCallback = async () => {}
 ) {
   await executePullModel(adapter, paramsProvider);
@@ -22,8 +19,8 @@ export async function sampleRun(
 
   await readFromContractAdapter(adapter, paramsProvider, blockNumber);
 
-  if (ethFeedConnector) {
-    await readFromPriceFeed(ethFeedConnector, blockNumber);
+  if (priceFeedAdapter) {
+    await readFromPriceFeed(priceFeedAdapter, blockNumber);
   }
 
   logHeader("FINISHING");
@@ -101,22 +98,22 @@ async function readFromContractAdapter(
 }
 
 async function readFromPriceFeed(
-  feedAdapter: IPriceFeedContractAdapter,
+  feedAdapter: PriceFeedAdapter,
   blockNumber?: number,
   defaultFeedId = "ETH(???)"
 ) {
   const description =
-    (await feedAdapter.getDescription?.(blockNumber)) ?? `${defaultFeedId} PriceFeed`;
+    (await feedAdapter.getDescription(blockNumber)) ?? `${defaultFeedId} PriceFeed`;
   logHeader(`Viewing data from [${description}]`);
 
   const [{ value, timestamp }, feedId, decimals] = await Promise.all([
     feedAdapter.getPriceAndTimestamp(blockNumber),
-    feedAdapter.getDataFeedId?.(blockNumber) ?? "ETH(???)",
-    feedAdapter.decimals?.(blockNumber) ?? consts.DEFAULT_NUM_VALUE_DECIMALS,
+    feedAdapter.getDataFeedId(blockNumber),
+    feedAdapter.getDecimals(blockNumber),
   ]);
 
   console.log(
-    `${feedId} price: $${RedstoneCommon.convertValueDec(value, decimals)} (${describeTimestamp(timestamp)}) (${decimals} decimals)`
+    `${feedId ?? defaultFeedId} price: $${RedstoneCommon.convertValueDec(value, decimals ?? consts.DEFAULT_NUM_VALUE_DECIMALS)} (${describeTimestamp(timestamp)}) (${decimals} decimals)`
   );
 }
 

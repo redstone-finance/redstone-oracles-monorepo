@@ -3,7 +3,6 @@ export { abi as ISortedOraclesAbi } from "../artifacts/contracts/custom-integrat
 export { abi as MentoAdapterBaseAbi } from "../artifacts/contracts/custom-integrations/mento/MentoAdapterBase.sol/MentoAdapterBase.json";
 export { abi as IPriceFeedAbi } from "../artifacts/contracts/price-feeds/interfaces/IPriceFeed.sol/IPriceFeed.json";
 export { abi as PriceFeedsAdapterWithRoundsAbi } from "../artifacts/contracts/price-feeds/with-rounds/PriceFeedsAdapterWithRounds.sol/PriceFeedsAdapterWithRounds.json";
-export { abi as PriceFeedWithRoundsAbi } from "../artifacts/contracts/price-feeds/with-rounds/PriceFeedWithRounds.sol/PriceFeedWithRounds.json";
 export { abi as MultiFeedAdapterWithoutRoundsAbi } from "../artifacts/contracts/price-feeds/without-rounds/MultiFeedAdapterWithoutRounds.sol/MultiFeedAdapterWithoutRounds.json";
 import PriceFeedsAdapterWithRoundsOneSignerMockArtifact from "../artifacts/contracts/mocks/PriceFeedsAdapterWithRoundsOneSignerMock.sol/PriceFeedsAdapterWithRoundsOneSignerMock.json";
 import PriceFeedWithRoundsMockArtifact, {
@@ -29,7 +28,7 @@ export { MentoEvmContractAdapter } from "./core/contract-interactions/MentoEvmCo
 export { MultiFeedEvmContractAdapter } from "./core/contract-interactions/MultiFeedEvmContractAdapter";
 export { PriceFeedsEvmContractAdapter } from "./core/contract-interactions/PriceFeedsEvmContractAdapter";
 export { getSortedOraclesContractAtAddress } from "./custom-integrations/mento/get-sorted-oracles-contract-at-address";
-export { EvmPriceFeedContract } from "./facade/evm/EvmPriceFeedContract";
+export { EvmPriceFeedContractAdapter } from "./facade/evm/EvmPriceFeedContractAdapter";
 export { getEvmContract } from "./facade/evm/get-evm-contract";
 export { getEvmContractAdapter } from "./facade/evm/get-evm-contract-adapter";
 export { getEvmContractConnector } from "./facade/evm/get-evm-contract-connector";

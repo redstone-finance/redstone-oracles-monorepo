@@ -5,8 +5,6 @@ export * from "./contracts/ContractData";
 export * from "./contracts/ContractParamsProvider";
 export * from "./contracts/ContractParamsProviderMock";
 export * from "./contracts/IContractConnector";
-export * from "./contracts/prices/IPriceFeedContract";
-export * from "./contracts/prices/IPriceFeedContractAdapter";
 export * from "./contracts/UpdatePricesOptions";
 export * from "./data-feed-values";
 export * from "./data-services-urls";

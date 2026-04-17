@@ -1,6 +1,6 @@
 import { ForwardCompatibleWriteContractAdapter, sampleRun } from "@redstone-finance/multichain-kit";
 import { CasperConfig, makeCasperConnection, PriceAdapterCasperContractConnector } from "../../src";
-import { PriceFeedCasperContractConnector } from "../../src/contracts/price_feed/PriceFeedCasperContractConnector";
+import { PriceFeedCasperContractAdapter } from "../../src/contracts/price_feed/PriceFeedCasperContractAdapter";
 import { config } from "./config";
 import { FEED_ADDRESS, makeContractParamsProvider, RELAY_ADAPTER_ADDRESS } from "./e2e-utils";
 
@@ -17,7 +17,7 @@ async function main(config: CasperConfig) {
     paramsProvider,
     adapter,
     pricesConnector,
-    await new PriceFeedCasperContractConnector(connection, FEED_ADDRESS).getAdapter(),
+    new PriceFeedCasperContractAdapter(connection, FEED_ADDRESS),
     async () => {
       await connection.refreshStateRootHash();
     }

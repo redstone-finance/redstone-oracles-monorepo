@@ -2,7 +2,7 @@ import { sampleRun } from "@redstone-finance/multichain-kit";
 import { ContractParamsProvider, getSignersForDataServiceId } from "@redstone-finance/sdk";
 import {
   makeKeypair,
-  PriceFeedStellarContractConnector,
+  PriceFeedStellarContractAdapter,
   StellarBlockchainService,
   StellarClientBuilder,
   StellarWriteContractAdapter,
@@ -41,10 +41,10 @@ async function main() {
     return;
   }
 
-  const ethPriceFeedConnector = new PriceFeedStellarContractConnector(client, loadPriceFeedId());
+  const ethPriceFeedConnector = new PriceFeedStellarContractAdapter(client, loadPriceFeedId());
   const service = new StellarBlockchainService(client);
 
-  await sampleRun(paramsProvider, adapter, service, await ethPriceFeedConnector.getAdapter());
+  await sampleRun(paramsProvider, adapter, service, ethPriceFeedConnector);
 }
 
 void main().catch((err) => console.log(err));
