@@ -10229,6 +10229,16 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@redstone-finance/jest-config@workspace:*, @redstone-finance/jest-config@workspace:packages/jest-config":
+  version: 0.0.0-use.local
+  resolution: "@redstone-finance/jest-config@workspace:packages/jest-config"
+  dependencies:
+    "@swc/jest": "npm:^0.2.39"
+    "@types/jest": "npm:^29.5.4"
+    ts-jest: "npm:^29.4.5"
+  languageName: unknown
+  linkType: soft
+
 "@redstone-finance/lambda-admin-access-monitor@workspace:packages/lambda/lambda-admin-access-monitor":
   version: 0.0.0-use.local
   resolution: "@redstone-finance/lambda-admin-access-monitor@workspace:packages/lambda/lambda-admin-access-monitor"
@@ -11485,6 +11495,7 @@ __metadata:
   dependencies:
     "@jest/types": "npm:^29.5.4"
     "@redstone-finance/eslint-plugin": "workspace:*"
+    "@redstone-finance/jest-config": "workspace:*"
     "@rollup/plugin-commonjs": "npm:^25.0.4"
     "@rollup/plugin-json": "npm:^6.0.0"
     "@rollup/plugin-node-resolve": "npm:^15.2.3"
