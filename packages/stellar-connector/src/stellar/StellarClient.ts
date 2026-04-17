@@ -204,33 +204,12 @@ export class StellarClient implements IStellarCaller {
   ) {
     await this.waitForBlockNumber(blockNumber);
 
-    const newKeys = feeds.map((feed) => contractDataKey(contract, XdrUtils.storageKeyFeed(feed)));
+    const keys = feeds.map((feed) => contractDataKey(contract, feed));
+    const entries = await this.fetchEntriesByKey(keys);
 
-    const newEntries = await this.fetchEntriesByKey(newKeys);
-
-    const missingIndices = newEntries
-      .map((entry, i) => (entry ? undefined : i))
-      .filter((i): i is number => i !== undefined);
-
-    const results = newEntries.map((entry) =>
+    return entries.map((entry) =>
       entry ? XdrUtils.maybeParsePriceDataFromContractData(entry) : undefined
     );
-
-    if (missingIndices.length === 0) {
-      return results;
-    }
-
-    const oldKeys = missingIndices.map((i) => contractDataKey(contract, feeds[i]));
-    const oldEntries = await this.fetchEntriesByKey(oldKeys);
-
-    for (const [offset, i] of missingIndices.entries()) {
-      const entry = oldEntries[offset];
-      if (entry) {
-        results[i] = XdrUtils.maybeParsePriceDataFromContractDataLegacy(entry);
-      }
-    }
-
-    return results;
   }
 
   private async fetchEntriesByKey(keys: xdr.LedgerKey[]) {
