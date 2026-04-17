@@ -110,7 +110,10 @@ export default defineConfig([
       "prefer-promise-reject-errors": "error",
       "import-x/no-extraneous-dependencies": [
         "error",
-        { includeTypes: true, whitelist: ["@jest/types", "typescript"] },
+        {
+          includeTypes: true,
+          whitelist: ["@jest/types", "typescript", "@redstone-finance/jest-config"],
+        },
       ],
       "import-x/no-named-as-default": ["off"],
       "import-x/no-named-as-default-member": ["off"],
