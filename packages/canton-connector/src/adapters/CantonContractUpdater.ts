@@ -4,12 +4,17 @@ import {
   ContractUpdateStatus,
 } from "@redstone-finance/multichain-kit";
 import { ContractParamsProvider } from "@redstone-finance/sdk";
-import { FP, isInfoEnabled, loggerFactory, RedstoneCommon } from "@redstone-finance/utils";
-import { ActiveContractData } from "./utils";
+import { FP, loggerFactory, RedstoneCommon } from "@redstone-finance/utils";
+import { TransactionMetadata } from "../CantonClient";
+import { ActiveContractData } from "../utils";
 
 export interface CantonChoiceExerciser {
-  exerciseWriteChoice<Res, Arg extends object>(actAs: string, argument: Arg): Promise<Res>;
+  exerciseWritePricesChoice(
+    actAs: string,
+    argument: object
+  ): Promise<{ result: ActiveContractData | string; metadata: TransactionMetadata }>;
   onError(): void;
+  addPaidTrafficCost(paidTrafficCost?: number): void;
   getRemainingTraffic(): Promise<number>;
 }
 
@@ -47,7 +52,7 @@ export class CantonContractUpdater implements ContractUpdater {
     context: ContractUpdateContext
   ) {
     let initialTraffic: number | undefined;
-    this.getRemainingTrafficForLog()
+    this.getRemainingTraffic()
       .then((value) => (initialTraffic = value))
       .catch(() => {});
 
@@ -59,27 +64,35 @@ export class CantonContractUpdater implements ContractUpdater {
 
     const startTime = Date.now();
     const feedIds = paramsProvider.getArrayifiedFeedIds();
-    const result = await this.exerciser.exerciseWriteChoice<ActiveContractData | string, object>(
-      this.actAs,
-      { feedIds: feedIds, payloadHex }
-    );
+    const { result, metadata } = await this.exerciser.exerciseWritePricesChoice(this.actAs, {
+      feedIds: feedIds,
+      payloadHex,
+    });
 
-    this.logMetadata(feedIds.length, startTime, initialTraffic).catch((e) =>
-      CantonContractUpdater.logger.warn(`Failed to logMetadata ${RedstoneCommon.stringifyError(e)}`)
-    );
+    const hasTrafficCost = RedstoneCommon.isDefined(metadata.paidTrafficCost);
+    if (hasTrafficCost) {
+      this.exerciser.addPaidTrafficCost(metadata.paidTrafficCost);
+    }
+    this.checkTraffic(feedIds.length, startTime, initialTraffic)
+      .then((paidTrafficCount) => {
+        if (!hasTrafficCost) {
+          this.exerciser.addPaidTrafficCost(paidTrafficCount);
+        }
+      })
+      .catch((e) =>
+        CantonContractUpdater.logger.warn(
+          `Failed to checkTraffic ${RedstoneCommon.stringifyError(e)}`
+        )
+      );
 
     return result;
   }
 
-  private static shouldLogTraffic() {
-    return isInfoEnabled();
-  }
-
-  private async logMetadata(feedCount: number, startTime: number, initialTraffic?: number) {
+  private async checkTraffic(feedCount: number, startTime: number, initialTraffic?: number) {
     const KB_IN_MB = 1024;
     const DIGITS = 3;
 
-    const remainingTraffic = await this.getRemainingTrafficForLog();
+    const remainingTraffic = await this.getRemainingTraffic();
     const usedTraffic =
       RedstoneCommon.isDefined(initialTraffic) && RedstoneCommon.isDefined(remainingTraffic)
         ? initialTraffic - remainingTraffic
@@ -92,13 +105,11 @@ export class CantonContractUpdater implements ContractUpdater {
         `trafficCost: ${usedTraffic} bytes (${remainingTraffic ? (remainingTraffic / KB_IN_MB).toFixed(DIGITS) : remainingTraffic} kB remaining)`,
       { duration, usedTraffic, feedCount, remainingTraffic }
     );
+
+    return usedTraffic;
   }
 
-  private async getRemainingTrafficForLog() {
-    if (!CantonContractUpdater.shouldLogTraffic()) {
-      return;
-    }
-
+  private async getRemainingTraffic() {
     try {
       return await this.exerciser.getRemainingTraffic();
     } catch (e) {
