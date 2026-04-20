@@ -1,0 +1,73 @@
+module RedStone.Tests.Suites.VerifyErrors
+(
+    runTests
+)
+where
+
+import DA.Exception (ActionCatch)
+import DA.List as L
+import DA.Text as T
+import RedStone.Tests.Test
+import RedStone.Tests.Run
+import RedStone.Internal.Const
+import RedStone.Internal.Verify
+
+runTests : (Action m, ActionFail m, ActionCatch m, CanAbort m) => m ()
+runTests = do
+  runErrorSuite verifyTimestampErrorSuite
+  runErrorSuite verifyPayloadLengthErrorSuite
+
+testBlockTimestamp = 2_000_000_000_000
+testMaxDelayMs = 900_000
+testMaxAheadMs = 180_000
+
+data ConfigLike = ConfigLike with
+  currentTimestamp : Int
+  maxDelayMs : Int
+  maxAheadMs : Int
+    deriving (Eq, Show)
+
+mkConfig ts = ConfigLike with
+  currentTimestamp = ts
+  maxDelayMs = testMaxDelayMs
+  maxAheadMs = testMaxAheadMs
+
+data DataPackageLike = DataPackageLike with
+  timestamp : Int
+    deriving (Eq, Show)
+
+mkPkg ts = DataPackageLike with
+  timestamp = ts
+
+runVerifyTimestamps (blockTs, pkgTs) =
+  show $ verifyTimestamps (mkConfig blockTs) $ map mkPkg pkgTs
+
+verifyTimestampErrorSuite = ErrorTestSuite with
+  name = "Verify Timestamps Errors"
+  run = runVerifyTimestamps
+  cases =
+    [ ErrorTestCase with
+        name = "non-equal timestamps across packages rejected"
+        input = (testBlockTimestamp, [testBlockTimestamp, testBlockTimestamp + 1])
+        expectedSubstring = "Timestamps are non-equal"
+    , ErrorTestCase with
+        name = "timestamp too far in the future rejected"
+        input = (testBlockTimestamp, [testBlockTimestamp + testMaxAheadMs + 1])
+        expectedSubstring = "Timestamp too far in the future"
+    , ErrorTestCase with
+        name = "timestamp too old rejected"
+        input = (testBlockTimestamp, [testBlockTimestamp - testMaxDelayMs - 1])
+        expectedSubstring = "Timestamp too old"
+    ]
+
+runVerifyPayloadLength hex = show $ verifyPayloadLength hex
+
+verifyPayloadLengthErrorSuite = ErrorTestSuite with
+  name = "Verify Payload Length Errors"
+  run = runVerifyPayloadLength
+  cases =
+    [ ErrorTestCase with
+        name = "payload over max_payload_hex_chars rejected"
+        input = T.implode (L.replicate (max_payload_hex_chars + 2) "a")
+        expectedSubstring = "Payload too large"
+    ]

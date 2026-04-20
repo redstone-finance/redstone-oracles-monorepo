@@ -1,5 +1,11 @@
 module RedStone.Internal.Const where
 
 byte_value = 256
+byte_max = byte_value - 1
 int_size = 8
 u256_size = 32
+
+-- Safety bounds (DoS / malformed input mitigation).
+-- Per-feed and per-byte limits live with the protocol constants in RedStone.Internal.Protocol.
+max_payload_hex_chars = 131_072    -- 128 KB hex = 64 KB binary
+max_feed_ids = 256                 -- bound caller-supplied feedIds list

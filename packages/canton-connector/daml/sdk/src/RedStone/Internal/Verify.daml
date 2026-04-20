@@ -2,9 +2,12 @@ module RedStone.Internal.Verify
     (
         verificationError
         , verifyTimestamps
+        , verifyPayloadLength
     ) where
 
 import DA.List as L
+import DA.Text as T
+import RedStone.Internal.Const
 import RedStone.Internal.Error
 
 -- Public
@@ -23,3 +26,6 @@ verifyTimestamps config dataPackages =
         _ = timestamp <= config.currentTimestamp + config.maxAheadMs ??? verificationError "Timestamp too far in the future" (timestamp, config.currentTimestamp + config.maxAheadMs)
         _ = timestamp >= config.currentTimestamp - config.maxDelayMs ??? verificationError "Timestamp too old" (timestamp, config.currentTimestamp - config.maxDelayMs)
     in timestamp
+
+verifyPayloadLength hex =
+    T.length hex <= max_payload_hex_chars ??? RedStoneError Processing "Payload too large" (T.length hex, max_payload_hex_chars)

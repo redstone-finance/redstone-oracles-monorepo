@@ -13,7 +13,9 @@ module RedStone.Config
 import DA.Assert
 import DA.List as L
 import DA.Time
+import RedStone.Internal.Const
 import RedStone.Internal.Error
+import RedStone.Internal.Protocol(feed_id_bs)
 import Time
 
 -- Public
@@ -47,6 +49,8 @@ config baseConfig feedIds currentTime =
     BaseConfig{signers, signerCountThreshold, maxDelayMs, maxAheadMs} = baseConfig
 
     _ = unique feedIds && feedIds /= [] ??? configError "feedIds are empty or not unique" feedIds
+    _ = L.length feedIds <= max_feed_ids ??? configError "Too many feedIds" (L.length feedIds, max_feed_ids)
+    _ = L.all isValidFeedId feedIds ??? configError "Malformed feedId (length > 32 or byte out of range)" feedIds
     _ = unique signers && signers /= [] ??? configError "signers are empty or not unique" signers
     _ = signerCountThreshold <= L.length signers ??? configError "signerCountThreshold exceeds signer length" (signerCountThreshold, L.length signers)
     _ = signerCountThreshold > 0 ??? configError "signerCountThreshold must be positive" signerCountThreshold
@@ -83,6 +87,9 @@ verifyCurrentTimeVsLedger config = do
   else pure config
 
 -- Private
+
+isValidFeedId feedId =
+  L.length feedId <= feed_id_bs && L.all (\b -> b >= 0 && b <= byte_max) feedId
 
 default_signer_count_threshold = 3
 

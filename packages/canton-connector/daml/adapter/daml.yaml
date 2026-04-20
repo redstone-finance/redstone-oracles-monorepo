@@ -1,6 +1,6 @@
 sdk-version: 3.4.11
 name: redstone-adapter-v16
-version: 0.4.0
+version: 0.4.1
 source: src
 dependencies:
   - daml-prim
@@ -11,7 +11,7 @@ exposed-modules:
 data-dependencies:
   - ../common/.daml/dist/redstone-common-v16-0.4.0.dar
   - ../types/.daml/dist/redstone-types-v16-0.4.0.dar
-  - ../sdk/.daml/dist/redstone-sdk-v16-0.4.0.dar
+  - ../sdk/.daml/dist/redstone-sdk-v16-0.4.1.dar
   - ../interface/.daml/dist/redstone-interface-v16-0.4.0.dar
   - ../price_pill/.daml/dist/redstone-price-pill-v16-0.4.0.dar
 build-options:

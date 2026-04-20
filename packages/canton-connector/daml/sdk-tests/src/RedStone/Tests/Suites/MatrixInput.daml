@@ -1,0 +1,86 @@
+module RedStone.Tests.Suites.MatrixInput
+(
+    runTests
+)
+where
+
+import DA.Map as M
+import DA.Set as S
+import RedStone.Tests.Test
+import RedStone.Tests.Run
+import RedStone.Tests.Helpers (n)
+import RedStone.Internal.DataPoint
+import RedStone.Processor (buildMatrixInput)
+import RedStone.Result
+
+runTests : (Action m, ActionFail m, CanAbort m) => m ()
+runTests = do
+  runSuite conflictSuite
+  runSuite thresholdSuite
+
+eth = [69, 84, 72]
+btc = [66, 84, 67]
+
+dp feedId v = DataPoint with feedId, value = n v
+point feedId v idx = (dp feedId v, Ok idx)
+errPoint feedId v err = (dp feedId v, Error err)
+
+conflictedFeeds input = S.toList $ snd $ buildMatrixInput input
+matrixEntries input = M.size $ fst $ buildMatrixInput input
+
+conflictSuite = TestSuite with
+  name = "buildMatrixInput signer-conflict detection"
+  cases = conflictCases
+  test = conflictedFeeds
+
+conflictCases =
+  [ TestCase with
+      name = "same signer, same feed, same value -> no conflict"
+      input = [point eth 10 0, point eth 10 0]
+      output = []
+  , TestCase with
+      name = "same signer, same feed, different values -> conflict"
+      input = [point eth 10 0, point eth 11 0]
+      output = [eth]
+  , TestCase with
+      name = "different signers, same feed, different values -> no conflict"
+      input = [point eth 10 0, point eth 11 1]
+      output = []
+  , TestCase with
+      name = "same signer conflicting on two feeds -> both conflicted"
+      input = [point eth 10 0, point eth 11 0, point btc 20 0, point btc 22 0]
+      output = [btc, eth]
+  , TestCase with
+      name = "conflict isolated to one feed"
+      input = [point eth 10 0, point eth 11 0, point btc 20 0, point btc 20 0]
+      output = [eth]
+  , TestCase with
+      name = "error signer-index entries are skipped and never conflict"
+      input = [point eth 10 0, errPoint eth 99 "bad"]
+      output = []
+  ]
+
+thresholdSuite : TestSuite [(DataPoint, Result Int Text)] Int
+thresholdSuite = TestSuite with
+  name = "buildMatrixInput matrix size (for Signer count not achieved)"
+  cases = thresholdCases
+  test = matrixEntries
+
+thresholdCases =
+  [ TestCase with
+      name = "single valid entry -> 1 matrix slot"
+      input = [point eth 10 0]
+      output = 1
+  , TestCase with
+      name = "two valid different signers -> 2 slots"
+      input = [point eth 10 0, point eth 10 1]
+      output = 2
+  , TestCase with
+      name = "duplicate (signer, feed) does not double-count"
+      input = [point eth 10 0, point eth 10 0]
+      output = 1
+  , TestCase with
+      name = "empty input -> 0 slots"
+      input = []
+      output = 0
+  ]
