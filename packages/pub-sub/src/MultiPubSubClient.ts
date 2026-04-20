@@ -7,11 +7,16 @@ export type MultiPubSubConfig = {
   name: string;
 };
 
+const DEFAULT_TIMEOUT_PER_CLIENT = 10_000;
+
 export class MultiPubSubClient implements PubSubClient {
   logger = loggerFactory("multi-pub-sub-client");
   private readonly uniqueName: string;
 
-  constructor(private readonly pubSubConfigs: MultiPubSubConfig[]) {
+  constructor(
+    private readonly pubSubConfigs: MultiPubSubConfig[],
+    readonly timeoutPerClient = DEFAULT_TIMEOUT_PER_CLIENT
+  ) {
     RedstoneCommon.assert(
       pubSubConfigs.length > 0,
       `MultiPubSubClient requires at least one client`
@@ -26,7 +31,9 @@ export class MultiPubSubClient implements PubSubClient {
   /** Publish data to all channels, fails only if all clients fail */
   async publish(payloads: PubSubPayload[], contentType: ContentTypes): Promise<void> {
     const results = await Promise.allSettled(
-      this.pubSubConfigs.map((config) => config.client.publish(payloads, contentType))
+      this.pubSubConfigs.map((config) =>
+        RedstoneCommon.timeout(config.client.publish(payloads, contentType), this.timeoutPerClient)
+      )
     );
 
     if (results.some((r) => r.status === "fulfilled")) {
@@ -50,7 +57,9 @@ export class MultiPubSubClient implements PubSubClient {
   /** Receive data from multiple channels thus expect duplicates, fails only if all clients fail */
   async subscribe(topics: string[]): Promise<void> {
     const results = await Promise.allSettled(
-      this.pubSubConfigs.map((config) => config.client.subscribe(topics))
+      this.pubSubConfigs.map((config) =>
+        RedstoneCommon.timeout(config.client.subscribe(topics), this.timeoutPerClient)
+      )
     );
 
     if (results.some((r) => r.status === "fulfilled")) {
@@ -67,7 +76,11 @@ export class MultiPubSubClient implements PubSubClient {
 
   /** Fails if any of pub-sub clients fail **/
   async unsubscribe(topics: string[]): Promise<void> {
-    await Promise.all(this.pubSubConfigs.map((config) => config.client.unsubscribe(topics)));
+    await Promise.all(
+      this.pubSubConfigs.map((config) =>
+        RedstoneCommon.timeout(config.client.unsubscribe(topics), this.timeoutPerClient)
+      )
+    );
   }
 
   stop(): void {
