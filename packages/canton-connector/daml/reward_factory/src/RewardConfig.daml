@@ -2,7 +2,16 @@ module RewardConfig (
     rewardWeight
 ) where
 
-reward_factor_frac_num = 3
-reward_factor_frac_den = 4
+one_kb = 1000 -- or 1024, to test
+one_mb = one_kb * one_kb
+one_mb_price = 60
 
-rewardWeight total = intToDecimal (total * reward_factor_frac_num) / intToDecimal reward_factor_frac_den
+reward_factor_frac_num = one_mb_price
+reward_factor_frac_den = one_mb
+reward_min_count = 0
+
+rewardWeight total =
+   if total > reward_min_count then
+     intToDecimal ((total - reward_min_count) * reward_factor_frac_num) / intToDecimal reward_factor_frac_den
+   else
+     0.0

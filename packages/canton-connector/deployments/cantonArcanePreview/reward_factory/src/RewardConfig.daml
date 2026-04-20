@@ -2,7 +2,12 @@ module RewardConfig (
     rewardWeight
 ) where
 
-reward_factor_frac_num = 19
+reward_min_count = 150
+reward_factor_frac_num = 15
 reward_factor_frac_den = 100
 
-rewardWeight total = intToDecimal (total * reward_factor_frac_num) / intToDecimal reward_factor_frac_den
+rewardWeight total =
+   if total >= reward_min_count then
+     intToDecimal ((total - reward_min_count) * reward_factor_frac_num) / intToDecimal reward_factor_frac_den
+   else
+     0.0
