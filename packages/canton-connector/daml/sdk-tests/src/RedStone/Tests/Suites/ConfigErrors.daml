@@ -1,0 +1,119 @@
+module RedStone.Tests.Suites.ConfigErrors
+(
+    runTests
+)
+where
+
+import DA.Date
+import DA.Exception (ActionCatch)
+import DA.List as L
+import DA.Time
+import RedStone.Tests.Test
+import RedStone.Tests.Run
+import RedStone.Config
+import RedStone.Internal.Const
+
+runTests : (Action m, ActionFail m, ActionCatch m, CanAbort m) => m ()
+runTests = do
+  runErrorSuite configErrorSuite
+
+okTime = time (date 2026 Apr 1) 12 0 0
+preMinTime = time (date 2024 Jan 1) 12 0 0
+
+okSigners =
+  [ "049a0e6cada7938a0fc616578aff2b11337d90ec4e99e9fee95e57e9d8371562b31698225fb73c666ba586842b913e67ad289f374f7a46fc873342f805a8683d4e"
+  , "04683f7100d67fbaccae68db4d146f7bc3090c5cbcb1351e333efd58d42f609ceeada12b0af28a6e789d6edfe25fe784dd1e86798240d4cee9f60e56848cb55965"
+  , "04490f08821dea02d23683f170459aa6317dd65b544aac1df514f2e657f87ac00b81757edce3e78785e00dcd92e2dc8ddd9a680dc929a0c91062d87ae000a217ce"
+  ]
+
+okFeedIds = [[69,84,72]]
+
+data CfgInput = CfgInput with
+    feedIds : [[Int]]
+    signers : [Text]
+    threshold : Int
+    maxAheadMs : Int
+    maxDelayMs : Int
+    currentTime : Time
+  deriving (Eq, Show)
+
+defaultInput = CfgInput with
+  feedIds = okFeedIds
+  signers = okSigners
+  threshold = 2
+  maxAheadMs = 60_000
+  maxDelayMs = 180_000
+  currentTime = okTime
+
+mkConfig inp =
+  let
+    base = (defaultBaseConfig inp.signers)
+      { signerCountThreshold = inp.threshold
+      , maxAheadMs = inp.maxAheadMs
+      , maxDelayMs = inp.maxDelayMs
+      }
+  in config base inp.feedIds inp.currentTime
+
+runConfig inp = show (mkConfig inp)
+
+configErrorSuite = ErrorTestSuite with
+  name = "Config Errors"
+  run = runConfig
+  cases =
+    [ ErrorTestCase with
+        name = "empty feedIds rejected"
+        input = defaultInput { feedIds = [] }
+        expectedSubstring = "feedIds are empty or not unique"
+    , ErrorTestCase with
+        name = "duplicate feedIds rejected"
+        input = defaultInput { feedIds = [[69,84,72], [69,84,72]] }
+        expectedSubstring = "feedIds are empty or not unique"
+    , ErrorTestCase with
+        name = "too many feedIds rejected"
+        input = defaultInput { feedIds = map (\i -> [i, 0, 0]) [0 .. max_feed_ids] }
+        expectedSubstring = "Too many feedIds"
+    , ErrorTestCase with
+        name = "feedId longer than 32 bytes rejected"
+        input = defaultInput { feedIds = [L.replicate 33 65] }
+        expectedSubstring = "Malformed feedId"
+    , ErrorTestCase with
+        name = "feedId byte > 255 rejected"
+        input = defaultInput { feedIds = [[256]] }
+        expectedSubstring = "Malformed feedId"
+    , ErrorTestCase with
+        name = "feedId byte < 0 rejected"
+        input = defaultInput { feedIds = [[-1]] }
+        expectedSubstring = "Malformed feedId"
+    , ErrorTestCase with
+        name = "empty signers rejected"
+        input = defaultInput { signers = [], threshold = 1 }
+        expectedSubstring = "signers are empty or not unique"
+    , ErrorTestCase with
+        name = "duplicate signers rejected"
+        input = defaultInput { signers = [head okSigners, head okSigners] }
+        expectedSubstring = "signers are empty or not unique"
+    , ErrorTestCase with
+        name = "threshold greater than signer count rejected"
+        input = defaultInput { threshold = L.length okSigners + 1 }
+        expectedSubstring = "signerCountThreshold exceeds signer length"
+    , ErrorTestCase with
+        name = "threshold zero rejected"
+        input = defaultInput { threshold = 0 }
+        expectedSubstring = "signerCountThreshold must be positive"
+    , ErrorTestCase with
+        name = "negative threshold rejected"
+        input = defaultInput { threshold = -1 }
+        expectedSubstring = "signerCountThreshold must be positive"
+    , ErrorTestCase with
+        name = "negative maxAheadMs rejected"
+        input = defaultInput { maxAheadMs = -1 }
+        expectedSubstring = "maxAheadMs must be non-negative"
+    , ErrorTestCase with
+        name = "negative maxDelayMs rejected"
+        input = defaultInput { maxDelayMs = -1 }
+        expectedSubstring = "maxDelayMs must be non-negative"
+    , ErrorTestCase with
+        name = "currentTime before min_acceptable_timestamp rejected"
+        input = defaultInput { currentTime = preMinTime }
+        expectedSubstring = "Wrong currentTimestamp"
+    ]

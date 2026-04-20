@@ -18,3 +18,14 @@ data Input a b = Input with
 
 runTest tc =
     tc.op tc.input
+
+data ErrorTestCase input = ErrorTestCase with
+  name : Text
+  input : input
+  expectedSubstring : Text
+    deriving (Eq, Show)
+
+data ErrorTestSuite input = ErrorTestSuite with
+  name : Text
+  cases : [ErrorTestCase input]
+  run : input -> Text
