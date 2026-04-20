@@ -381,24 +381,6 @@
       "denomination": "USD",
       "rateFeed": false
     },
-    "URA---MARKET_HOURS": {
-      "source": ["alias"],
-      "denomination": "USD",
-      "rateFeed": false,
-      "types": ["rwa"]
-    },
-    "URA": {
-      "source": [
-        "databento",
-        "financialmodelingprep-deferred",
-        "ws-blocksize",
-        "ws-polygon-massive",
-        "ws-twelve-data"
-      ],
-      "denomination": "USD",
-      "rateFeed": false,
-      "types": ["rwa"]
-    },
     "KOSPI200": {
       "source": ["alltick-api-deferred", "ws-itick-indices", "ws-aleno"],
       "denomination": "KRW",

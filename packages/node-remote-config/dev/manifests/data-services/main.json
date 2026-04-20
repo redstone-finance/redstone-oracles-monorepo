@@ -8211,18 +8211,6 @@
       "rateFeed": false,
       "types": ["rwa"]
     },
-    "URA": {
-      "source": [
-        "databento",
-        "financialmodelingprep",
-        "ws-blocksize",
-        "ws-polygon-massive",
-        "ws-twelve-data"
-      ],
-      "denomination": "USD",
-      "rateFeed": false,
-      "types": ["rwa"]
-    },
     "CME_MARKET_STATUS": {
       "source": ["cme-market-status"],
       "denomination": "USD",
