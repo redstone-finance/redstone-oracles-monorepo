@@ -1,0 +1,54 @@
+module RedStone.Tests.Suites.ProcessorErrors
+(
+    runTests
+)
+where
+
+import DA.Date
+import DA.Exception (ActionCatch)
+import DA.List as L
+import DA.Text as T
+import DA.Time
+import RedStone.Tests.Test
+import RedStone.Tests.Run
+import RedStone.Config
+import RedStone.Internal.Const
+import RedStone.Processor
+
+runTests : (Action m, ActionFail m, ActionCatch m, CanAbort m) => m ()
+runTests = do
+  runErrorSuite processPayloadErrorSuite
+
+okTime = time (date 2026 Apr 1) 12 0 0
+
+okSigners =
+  [ "049a0e6cada7938a0fc616578aff2b11337d90ec4e99e9fee95e57e9d8371562b31698225fb73c666ba586842b913e67ad289f374f7a46fc873342f805a8683d4e"
+  , "04683f7100d67fbaccae68db4d146f7bc3090c5cbcb1351e333efd58d42f609ceeada12b0af28a6e789d6edfe25fe784dd1e86798240d4cee9f60e56848cb55965"
+  , "04490f08821dea02d23683f170459aa6317dd65b544aac1df514f2e657f87ac00b81757edce3e78785e00dcd92e2dc8ddd9a680dc929a0c91062d87ae000a217ce"
+  ]
+
+okConfig = config (defaultBaseConfig okSigners) { signerCountThreshold = 2 } [[69,84,72]] okTime
+
+runProcess hex = show (processPayload okConfig hex)
+
+processPayloadErrorSuite = ErrorTestSuite with
+  name = "Processor processPayload Errors"
+  run = runProcess
+  cases =
+    [ ErrorTestCase with
+        name = "payload over max_payload_hex_chars rejected"
+        input = T.implode (L.replicate (max_payload_hex_chars + 2) "a")
+        expectedSubstring = "Payload too large"
+    , ErrorTestCase with
+        name = "payload with wrong RedStone marker rejected"
+        input = "ffffffffffffffffffffffffffffff"
+        expectedSubstring = "Wrong RedStone marker"
+    , ErrorTestCase with
+        name = "payload with non-empty remainder after parsing rejected"
+        input =
+          "ff" <>
+          "0000" <>
+          "000000" <>
+          "000002ed57011e0000"
+        expectedSubstring = "Non-empty payload remainder"
+    ]

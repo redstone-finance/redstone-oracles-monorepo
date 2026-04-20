@@ -2,9 +2,12 @@ module RedStone.Tests.Run
 (
     runSuite
 , runSuites
+, runErrorSuite
 )
 where
 import DA.Foldable (forA_)
+import DA.Exception (message, ActionCatch)
+import DA.Text as T
 
 test run tc = do
   let output = run tc.input
@@ -29,11 +32,37 @@ runSuite suite = do
   forA_ suite.cases (test suite.test)
 
   debug "=== All tests passed! ==="
-  debug $ ""
+  debug ""
 
-  pure ()
-
-
-runSuites suites = do
+runSuites suites =
   forA_ suites runSuite
-  pure ()
+
+runErrorSuite suite = do
+  debug $ "=== Starting " <> suite.name <> " ==="
+  forA_ suite.cases $ runErrorTest suite.run
+  debug "=== All tests passed! ==="
+  debug ""
+
+attempt : ActionCatch m => (t -> b) -> t -> m (Either Text b)
+attempt run input =
+  try do
+    pure $ Right $ run input
+  catch
+    (e : AnyException) -> pure $ Left $ message e
+
+runErrorTest run tc = do
+  outcome <- attempt run tc.input
+  case outcome of
+    Right val -> do
+      debug $ "✗ " <> tc.name <> " FAILED"
+      debug $ "  Expected error containing: " <> show tc.expectedSubstring
+      debug $ "  Got value:                  " <> val
+      fail $ tc.name <> " failed: expected error but call returned normally"
+    Left msg ->
+      if T.isInfixOf tc.expectedSubstring msg
+        then debug $ "✓ " <> tc.name
+        else do
+          debug $ "✗ " <> tc.name <> " FAILED"
+          debug $ "  Expected substring: " <> show tc.expectedSubstring
+          debug $ "  Actual message:     " <> msg
+          fail $ tc.name <> " failed: error message did not contain expected substring"

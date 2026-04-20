@@ -1,0 +1,74 @@
+module Helpers.Setup where
+
+import Daml.Script
+import DA.Map as M
+import Splice.Api.FeaturedAppRightV2
+import IRedStoneAdapter
+import IRedStonePricePillFactory
+import IRedStoneRewardFactory
+import RedStoneAdapter
+import RedStonePricePillFactory
+import RedStoneRewardFactory
+import Helpers.MockFeatured
+
+data TestParties = TestParties with
+  dso, owner, updater, viewer, beneficiary : Party
+
+data TestSetup = TestSetup with
+  parties : TestParties
+  featuredDisclosure : Optional Disclosure
+  factoryDisclosure : Optional Disclosure
+  adapterCid : ContractId IRedStoneAdapter
+
+allocateTestParties = do
+  dso <- allocateParty "DSO"
+  owner <- allocateParty "RedStoneOracleOwner"
+  updater <- allocateParty "RedStoneOracleUpdater"
+  viewer <- allocateParty "RedStoneOracleViewer"
+  beneficiary <- allocateParty "RedStoneBeneficiary"
+  pure TestParties with ..
+
+setUpAdapter : Text -> Bool -> TestParties -> Script TestSetup
+setUpAdapter adapterId withRewards parties = do
+  let TestParties{dso, owner, updater, viewer, beneficiary} = parties
+
+  featuredCid <- submit (actAs dso <> readAs beneficiary) do
+    createCmd MockFeaturedAppRight with dso, provider = beneficiary
+
+  pillFactoryCid <- submit (actAs owner) do
+    createCmd RedStonePricePillFactory with
+      factoryId = "Factory-" <> adapterId
+      owner
+      creators = [updater]
+
+  rewardFactory <- if withRewards
+    then do
+      cid <- submit (actAs [owner, beneficiary]) do
+        createCmd RedStoneRewardFactory with
+          factoryId = "RewardFactory-" <> adapterId
+          owner
+          creators = [updater]
+          beneficiary
+          featuredCid = toInterfaceContractId @FeaturedAppRight featuredCid
+      pure $ Some $ toInterfaceContractId @IRedStoneRewardFactory cid
+    else pure None
+
+  featuredDisclosure <- queryDisclosure @MockFeaturedAppRight beneficiary featuredCid
+  factoryDisclosure  <- queryDisclosure @RedStonePricePillFactory updater pillFactoryCid
+
+  rawCid <- submit (actAs [owner] <> readAs [updater, viewer]) do
+    createCmd RedStoneAdapter with
+      adapterId
+      owner
+      updaters = [updater]
+      viewers = [viewer]
+      feedData = M.empty
+      pillFactory = Some $ toInterfaceContractId @IRedStonePricePillFactory pillFactoryCid
+      rewardState = None
+      rewardFactory
+
+  pure TestSetup with
+    parties
+    featuredDisclosure
+    factoryDisclosure
+    adapterCid = toInterfaceContractId @IRedStoneAdapter rawCid

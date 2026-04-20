@@ -1,0 +1,47 @@
+module RedStone.Tests.Suites.U256Errors
+(
+    runTests
+) where
+
+import DA.Exception (ActionCatch)
+import RedStone.Tests.Test
+import RedStone.Tests.Run
+import RedStone.Tests.Helpers (maxU256)
+import RedStone.U256
+
+runTests : (Action m, ActionFail m, ActionCatch m, CanAbort m) => m ()
+runTests = do
+  runErrorSuite overflowSuite
+  runErrorSuite fromIntSuite
+
+data OverflowInput = FromBeByteList [Int] | AddOverflow
+  deriving (Eq, Show)
+
+runOverflow (FromBeByteList bs) = show $ u256FromBeByteList bs
+runOverflow AddOverflow = show $ add maxU256 (u256FromBeByteList [1])
+
+overflowSuite = ErrorTestSuite with
+  name = "U256 Overflow Errors"
+  run = runOverflow
+  cases =
+    [ ErrorTestCase with
+        name = "u256FromBeByteList with 33 bytes rejected"
+        input = FromBeByteList (replicate 33 1)
+        expectedSubstring = "U256 overflow"
+    , ErrorTestCase with
+        name = "add maxU256 + 1 overflow rejected"
+        input = AddOverflow
+        expectedSubstring = "U256 overflow"
+    ]
+
+runFromInt n = show $ u256FromInt n
+
+fromIntSuite = ErrorTestSuite with
+  name = "U256 FromInt Errors"
+  run = runFromInt
+  cases =
+    [ ErrorTestCase with
+        name = "u256FromInt negative rejected"
+        input = -1
+        expectedSubstring = "non-negative"
+    ]
