@@ -1,13 +1,14 @@
 module IRedStoneAdapter where
 
 import RedStoneTypes
+import WritePricesContext
 
 interface IRedStoneAdapter where
   viewtype RedStoneAdapterView
 
   iRedStoneAdapter_VerifyViewer : Party -> Update ()
   iRedStoneAdapter_VerifyUpdater : Party -> Update ()
-  iRedStoneAdapter_WritePricesImpl : Party -> (ContractId IRedStoneAdapter) -> [RedStoneFeedId] -> Time -> PayloadHex -> Optional [Party] -> Update (ContractId IRedStoneAdapter)
+  iRedStoneAdapter_WritePricesImpl : Party -> (ContractId IRedStoneAdapter) -> [RedStoneFeedId] -> Time -> PayloadHex -> Optional WritePricesContext -> Update (ContractId IRedStoneAdapter)
   iRedStoneAdapter_ReadPriceDataImpl : [RedStoneFeedId] -> Update [Optional (RedStonePriceData RedStoneValue)]
   iRedStoneAdapter_ReadPricesImpl : [RedStoneFeedId] -> Update [RedStoneValue]
   iRedStoneAdapter_GetUniqueSignerThresholdImpl: () -> Update Int
@@ -18,11 +19,11 @@ interface IRedStoneAdapter where
       feedIds : [RedStoneFeedId]
       currentTime : Time
       payloadHex : PayloadHex
-      additionalPillViewers : Optional [Party]
+      context : Optional WritePricesContext
     controller caller
     do
       iRedStoneAdapter_VerifyUpdater this caller
-        >> iRedStoneAdapter_WritePricesImpl this caller self feedIds currentTime payloadHex additionalPillViewers
+        >> iRedStoneAdapter_WritePricesImpl this caller self feedIds currentTime payloadHex context
 
   nonconsuming choice ReadPrices : [RedStoneValue]
     with

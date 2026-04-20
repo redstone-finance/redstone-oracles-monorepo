@@ -29,7 +29,7 @@ main input = script do
           payloadHex = input.payload
           feedIds
           currentTime
-          additionalPillViewers = None
+          context = None
 
   debug "=== Write #1: feedA only ==="
   cid1 <- write [feedA] adapterCid

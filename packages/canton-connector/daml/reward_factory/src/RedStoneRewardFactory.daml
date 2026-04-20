@@ -22,6 +22,9 @@ template RedStoneRewardFactory
 
       iRedStoneRewardFactory_CreateRewardsImpl count = do
         let weight = rewardWeight count
-        takeRewards weight beneficiary featuredCid
 
-        pure weight
+        if weight >= 1.0 then
+          takeRewards weight beneficiary featuredCid
+            >> pure weight
+        else
+          pure 0.0
