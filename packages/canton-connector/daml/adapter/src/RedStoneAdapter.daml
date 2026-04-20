@@ -39,7 +39,6 @@ template RedStoneAdapter
         maybeCreateRewardsWithoutState caller rewardFactory (length feedIds)
           >> G.getPricesNumeric (adapter_config_fun feedIds currentTime) payloadHex
 
-
     interface instance IRedStoneAdapter for RedStoneAdapter where
       view = RedStoneAdapterView with adapterId
 
@@ -51,7 +50,7 @@ template RedStoneAdapter
         hasNewValues <- hasNewPrices ctx adapterId feedData feedIds currentTime payloadHex
 
         if not hasNewValues then
-          return self
+          pure self
         else
           exercise (coerceContractId @IRedStoneAdapter @RedStoneAdapter self) WritePricesConsuming with caller, feedIds, currentTime, payloadHex, additionalPillViewers
 
@@ -61,7 +60,7 @@ template RedStoneAdapter
                 None -> None
                 Some (newest :: _) -> Some newest.priceData
                 Some [] -> None
-        return $ map getPriceData feedIds
+        pure $ map getPriceData feedIds
 
       iRedStoneAdapter_ReadPricesImpl feedIds = do
         let getPriceValue feedId =
@@ -69,10 +68,10 @@ template RedStoneAdapter
                 None -> error $ "Value not found for " <> show feedId
                 Some (newest :: _) -> newest.priceData.value
                 Some [] -> error $ "Value not found for " <> show feedId
-        return $ map getPriceValue feedIds
+        pure $ map getPriceValue feedIds
 
       iRedStoneAdapter_GetUniqueSignerThresholdImpl () = do
-        return unique_signer_count
+        pure unique_signer_count
 
     -- Internal consuming choice for atomic write-and-replace with full payload verification
     choice WritePricesConsuming : ContractId IRedStoneAdapter
@@ -94,7 +93,7 @@ template RedStoneAdapter
         newState <- processAndWritePrices ctx factories adapterId currentState feedIds currentTime payloadHex
         newCid <- create this with feedData = newState.feedData, rewardState = newState.rewardState
         
-        return $ toInterfaceContractId @IRedStoneAdapter newCid
+        pure $ toInterfaceContractId @IRedStoneAdapter newCid
 
     choice UpdatePillFactory : ContractId RedStoneAdapter
       with newPillFactory : Optional (ContractId IRedStonePricePillFactory)
@@ -117,4 +116,4 @@ template RedStoneAdapter
         
         adapterCid <- create this with feedData = M.fromList unlinkAll
 
-        return (linkedPills, adapterCid)
+        pure (linkedPills, adapterCid)

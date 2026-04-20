@@ -1,6 +1,6 @@
 sdk-version: 3.4.11
 name: redstone-test-v16
-version: 0.4.0
+version: 0.4.1
 source: src
 dependencies:
   - daml-prim
@@ -11,11 +11,11 @@ data-dependencies:
   - ../types/.daml/dist/redstone-types-v16-0.4.0.dar
   - ../interface/.daml/dist/redstone-interface-v16-0.4.0.dar
   - ../price_pill/.daml/dist/redstone-price-pill-v16-0.4.0.dar
-  - ../core/.daml/dist/redstone-core-v16-0.4.0.dar
-  - ../adapter/.daml/dist/redstone-adapter-v16-0.4.0.dar
+  - ../core/.daml/dist/redstone-core-v16-0.4.1.dar
+  - ../adapter/.daml/dist/redstone-adapter-v16-0.4.1.dar
   - ../price_feed/.daml/dist/redstone-price-feed-v16-0.4.0.dar
-  - ../sdk/.daml/dist/redstone-sdk-v16-0.4.0.dar
-  - ../sdk-tests/.daml/dist/redstone-sdk-tests-v16-0.4.0.dar
+  - ../sdk/.daml/dist/redstone-sdk-v16-0.4.1.dar
+  - ../sdk-tests/.daml/dist/redstone-sdk-tests-v16-0.4.1.dar
   - ../featured/.daml/dist/redstone-featured-v16-0.4.0.dar
   - ../factory/.daml/dist/redstone-factory-v16-0.4.0.dar
   - ../reward_factory/.daml/dist/redstone-reward-factory-v16-0.4.0.dar
