@@ -82,8 +82,9 @@ export class NatsClient implements PubSubClient {
         timeout: this.config.connectionTimeoutMs ?? DEFAULT_CONNECTION_TIMEOUT_MS,
         reconnectJitter: 200,
         reconnectJitterTLS: 1000,
-        // into infinity
+        // into infinity — both for reconnects and the initial connect
         maxReconnectAttempts: -1,
+        waitOnFirstConnect: true,
         authenticator: this.config.nkeySeed
           ? nkeyAuthenticator(new TextEncoder().encode(this.config.nkeySeed))
           : undefined,
