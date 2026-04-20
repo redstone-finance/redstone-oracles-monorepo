@@ -25,7 +25,7 @@ export class CoreCantonContractAdapter extends CantonContractAdapter {
   }
 
   async getPricesFromPayload(paramsProvider: ContractParamsProvider) {
-    const result: DamlTuple2<string[]> = await this.exerciseChoice(
+    const { result } = await this.exerciseChoice(
       this.actAs,
       this.actAs,
       GET_PRICES_CHOICE,
@@ -33,7 +33,7 @@ export class CoreCantonContractAdapter extends CantonContractAdapter {
       { withCurrentTime: true, withCaller: true, withRetry: true }
     );
 
-    return result._1.map(convertDecimalValue);
+    return (result as DamlTuple2<string[]>)._1.map(convertDecimalValue);
   }
 
   public static async getPayloadArguments(paramsProvider: ContractParamsProvider) {

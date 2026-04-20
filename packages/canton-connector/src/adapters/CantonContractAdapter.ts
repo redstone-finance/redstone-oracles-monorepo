@@ -167,7 +167,7 @@ export abstract class CantonContractAdapter {
     choice: string,
     argument: Arg,
     options: ExerciseChoiceOptions = {}
-  ): Promise<Res> {
+  ) {
     const {
       offset,
       withCurrentTime: addCurrentTime = false,
@@ -191,14 +191,15 @@ export abstract class CantonContractAdapter {
       const execute = () =>
         client.exerciseChoices<Arg, Res>(actAsUpdater, commands, timestamp, disclosedContractData);
 
-      const results = withRetry ? await this.withRetryAndLogging(execute) : await execute();
+      const executed = withRetry ? await this.withRetryAndLogging(execute) : await execute();
+      const results = executed.results;
 
       const [result] = Object.values(results);
       if (!result) {
         throw new Error(`No result for choice ${choice}`);
       }
 
-      return result;
+      return { result, metadata: executed.metadata };
     });
   }
 
@@ -207,7 +208,7 @@ export abstract class CantonContractAdapter {
     choices: ChoiceInput<Arg>[],
     interfaceId: string,
     options: ExerciseChoicesOptions = {}
-  ): Promise<Record<string, Res>> {
+  ) {
     const {
       addCurrentTime = false,
       client = this.client,

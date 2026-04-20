@@ -12,6 +12,7 @@ import RedStoneRewardFactory
 import RedStonePricePillFactory
 import IRedStonePricePillFactory
 import IRedStoneAdapter
+import WritePricesContext
 import RedStoneAdapter
 import Time
 import Input
@@ -29,6 +30,7 @@ main input = script do
 
   currentTime <- getTime
 
+  let paidTrafficCost = Some 17000
   let verifier = verifyResult input.feedIds (beneficiary,dso,viewer)
 
   featuredCid <- submit (actAs dso <> readAs beneficiary) do
@@ -70,7 +72,7 @@ main input = script do
       payloadHex = input.payload
       feedIds = input.feedIds
       currentTime
-      additionalPillViewers = Some [client]
+      context = Some $ empty_write_prices_context with additionalPillViewers = Some [client], paidTrafficCost
 
   debug $ "New CID: " <> show newCid
 
@@ -81,7 +83,7 @@ main input = script do
 
   debug $ "Read result Viewer: " <> show readResult
 
-  verifier 0.75 currentTime
+  verifier (intToDecimal $ fromSome paidTrafficCost) currentTime
 
   readResult <- submit client do
     exerciseCmd newCid ReadPriceData with
@@ -90,14 +92,14 @@ main input = script do
 
   debug $ "Read result Client: " <> show readResult
 
-  verifier 0.75 currentTime
+  verifier (intToDecimal $ fromSome paidTrafficCost) currentTime
 
-verifyResult feedIds (beneficiary,dso,viewer) multiplier currentTime = do
+verifyResult feedIds (beneficiary,dso,viewer) cost currentTime = do
   markers <- queryInterface @FeaturedAppActivityMarker beneficiary
   let weightSum = sum $ map (\(_, view) -> (fromSome view).weight) markers
   let decLength = intToDecimal . length
 
-  weightSum === multiplier * decLength feedIds
+  weightSum === cost * 60.0 / 1_000_000.0
 
   pillEntries <- queryInterface @IRedStonePricePill viewer
   debug pillEntries

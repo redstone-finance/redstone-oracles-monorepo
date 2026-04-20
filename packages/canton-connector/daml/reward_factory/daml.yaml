@@ -1,5 +1,5 @@
 sdk-version: 3.4.11
-name: redstone-reward-factory-v16
+name: redstone-reward-factory-v17
 version: 0.4.0
 source: src
 dependencies:
@@ -8,6 +8,6 @@ dependencies:
 data-dependencies:
   - ../types/.daml/dist/redstone-types-v16-0.4.0.dar
   - ../featured/.daml/dist/redstone-featured-v16-0.4.0.dar
-  - ../interface/.daml/dist/redstone-interface-v16-0.4.0.dar
+  - ../interface/.daml/dist/redstone-interface-v17-0.4.0.dar
 build-options:
   - --target=2.1

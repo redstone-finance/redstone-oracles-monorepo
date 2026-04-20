@@ -10,26 +10,27 @@ import Config
 
 data RewardState = RewardState
   with
-    accumulatedPillCount: Int
+    paidTrafficCost: Int
     lastCreateTimestamp: Int
+
   deriving (Eq, Show)
 
 empty_state : RewardState
 empty_state = RewardState with
-  accumulatedPillCount = 0
+  paidTrafficCost = 0
   lastCreateTimestamp = 0
 
 maybeCreateRewards rewardFactory = maybeCreateRewardsForState (\(state, currentTimestamp) -> currentTimestamp >= state.lastCreateTimestamp + min_reward_creation_ms) rewardFactory
 
 maybeCreateRewardsForState stateCheck caller rewardFactory rewardState currentTimestamp count = do
   let state = fromOptional empty_state rewardState
-  let newCount = count + state.accumulatedPillCount
+  let newCount = count + state.paidTrafficCost
 
   case rewardFactory of
     Some factory
       | newCount > 0 && stateCheck (state, currentTimestamp) ->
           callCreateRewards caller factory currentTimestamp newCount
-    _ -> pure $ state with accumulatedPillCount = newCount
+    _ -> pure $ state with paidTrafficCost = newCount
 
 maybeCreateRewardsWithoutState caller rewardFactory count = do
   maybeCreateRewardsForState (const True) caller rewardFactory None 0 count

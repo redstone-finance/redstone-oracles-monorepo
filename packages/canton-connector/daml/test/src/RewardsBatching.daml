@@ -7,6 +7,7 @@ import DA.Optional (fromSome)
 import DA.Time
 import Splice.Api.FeaturedAppRightV2
 import IRedStoneAdapter
+import WritePricesContext
 import RedStoneAdapter
 import Input
 import Helpers.Setup
@@ -14,6 +15,7 @@ import Helpers.Utils
 
 getRewardState updater = do
   (cid, adapter) <- head <$> query @RedStoneAdapter updater
+
   pure (toInterfaceContractId @IRedStoneAdapter cid, fromSome adapter.rewardState)
 
 main : Input -> Script ()
@@ -22,6 +24,7 @@ main input = script do
   TestSetup{adapterCid, featuredDisclosure, factoryDisclosure} <-
     setUpAdapter "RewardsBatching" True parties
 
+  let paidTrafficCost = Some 17000
   let (feedA :: feedB :: _) = input.feedIds
 
   let write feedIds currentTime cid =
@@ -31,7 +34,7 @@ main input = script do
             payloadHex = input.payload
             feedIds
             currentTime
-            additionalPillViewers = None
+            context = Some $ empty_write_prices_context with paidTrafficCost
 
   let countMarkers = length <$> queryInterface @FeaturedAppActivityMarker parties.beneficiary
 
@@ -46,7 +49,7 @@ main input = script do
 
   (adapterCid1, state1) <- getRewardState parties.updater
   debug $ "rewardState after write #1: " <> show state1
-  state1.accumulatedPillCount === 0
+  state1.paidTrafficCost === 0
 
   let currentTimeT1 = addRelTime currentTimeT0 (seconds 1)
   debug "=== Write #2 at T0 + 1s ==="
@@ -59,7 +62,7 @@ main input = script do
 
   (_, state2) <- getRewardState parties.updater
   debug $ "rewardState after batched write: " <> show state2
-  state2.accumulatedPillCount === 1
+  state2.paidTrafficCost === fromSome paidTrafficCost
   state2.lastCreateTimestamp === state1.lastCreateTimestamp
 
   debug "=== RewardsBatching test passed ==="

@@ -28,6 +28,7 @@ data WriteContext = WriteContext
     owner : Party
     updaters : [Party]
     viewers : [Party]
+    paidTrafficCost : Optional Int
   deriving (Eq, Show)
 
 data Factories = Factories
@@ -60,7 +61,7 @@ processAndWritePrices ctx factories adapterId currentState feedIds currentTime p
     pure currentState
   else do
     newData <- newFeedData ctx factories.pillFactory adapterId currentState.feedData config.currentTimestamp (newValues, timestamp)
-    newRewardState <- maybeCreateRewards ctx.caller factories.rewardFactory currentState.rewardState config.currentTimestamp $ length newValues
+    newRewardState <- maybeCreateRewards ctx.caller factories.rewardFactory currentState.rewardState config.currentTimestamp $ fromOptional 0 ctx.paidTrafficCost
 
     pure $ AdapterState with feedData = newData, rewardState = Some newRewardState
 

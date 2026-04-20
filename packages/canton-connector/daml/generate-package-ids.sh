@@ -38,6 +38,7 @@ REWARD_FACTORY_HASH=$(extract_hash reward_factory)
 PRICE_FEED_HASH=$(extract_hash price_feed)
 PRICE_PILL_HASH=$(extract_hash price_pill)
 FEATURED_HASH=$(extract_hash featured)
+SDK_HASH=$(extract_hash sdk)
 
 jq -n \
   --arg interface "$INTERFACE_HASH" \
@@ -48,7 +49,9 @@ jq -n \
   --arg price_feed "$PRICE_FEED_HASH" \
   --arg price_pill "$PRICE_PILL_HASH" \
   --arg featured "$FEATURED_HASH" \
+  --arg sdk "$SDK_HASH" \
   '{
+    redstone_sdk: $sdk,
     interface: $interface,
     core: $core,
     adapter: $adapter,
