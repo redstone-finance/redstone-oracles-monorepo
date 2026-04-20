@@ -1,5 +1,3 @@
-NIGHTLY_TOOLCHAIN := nightly-2025-04-14
-
 prepare:
 	rustup component add clippy rustfmt
 
@@ -18,10 +16,10 @@ build-verifiable:
 	anchor build --verifiable
 
 build:
-	anchor build
+	anchor build --ignore-keys
 
 build-test:
-	anchor build -- --features agnostic-tests
+	anchor build --ignore-keys -- --features agnostic-tests
 
 copy-program:
 	@mkdir -p target/deploy
