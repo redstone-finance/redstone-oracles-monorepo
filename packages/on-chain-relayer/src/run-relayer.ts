@@ -78,7 +78,19 @@ function run(
     timelyOverrideSinceLastUpdate(relayerConfig, relayerConfig.temporaryUpdatePriceInterval);
   }
 
-  RedstoneHealthcheck.enableWithDefaultConfig();
+  const healthChecks = new Map<string, RedstoneHealthcheck.HealthCheck>();
+  if (relayerConfig.enableIterationHealthCheck) {
+    const iterationsHealthCheck = new RedstoneHealthcheck.IterationsHealthCheck({
+      periodInS: relayerConfig.iterationHealthCheckPeriodInS ?? 600,
+      startPeriodInS: 60,
+    });
+    healthChecks.set("iteration-healthcheck", iterationsHealthCheck);
+    iterationOptionsOverride = {
+      ...iterationOptionsOverride,
+      registerIterationCallback: () => iterationsHealthCheck.registerIteration(),
+    };
+  }
+  RedstoneHealthcheck.enableWithDefaultConfig(healthChecks);
 
   process.on("unhandledRejection", (reason) => {
     logger.error(

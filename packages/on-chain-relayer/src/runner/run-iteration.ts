@@ -1,4 +1,4 @@
-import { loggerFactory } from "@redstone-finance/utils";
+import { loggerFactory, RedstoneCommon } from "@redstone-finance/utils";
 import _ from "lodash";
 import { isOevRelayerConfig } from "../config/config-checks";
 import { isPaused } from "../config/is-paused";
@@ -19,6 +19,7 @@ export type IterationOptions = {
   iterationArgsProvider: IterationArgsProvider;
   sendHealthcheckPingCallback?: (healthcheckPingUrl?: string) => Promise<void>;
   sendHealthcheckMetricCallback?: (healthcheckMetricName?: string) => Promise<void>;
+  registerIterationCallback?: () => void;
 };
 
 const defaultLogger = loggerFactory("relayer/run-iteration");
@@ -39,6 +40,7 @@ export const runIteration = async (
     iterationArgsProvider,
     sendHealthcheckPingCallback,
     sendHealthcheckMetricCallback,
+    registerIterationCallback,
   } = {
     ...defaultIterationOptions(relayerConfig),
     ...options,
@@ -56,6 +58,9 @@ export const runIteration = async (
   const iterationArgs = await iterationArgsProvider(shouldUpdateContext, relayerConfig);
   void sendHealthcheckPingCallback?.(relayerConfig.healthcheckPingUrl);
   void sendHealthcheckMetricCallback?.(relayerConfig.healthcheckMetricName);
+  if (RedstoneCommon.isDefined(registerIterationCallback)) {
+    registerIterationCallback();
+  }
   const messages = _.map(iterationArgs.messages, "message");
   const message = `Update condition ${
     iterationArgs.shouldUpdatePrices ? "" : "NOT "

@@ -104,4 +104,6 @@ export type OnChainRelayerEnv = {
   useGlobalDataPackagesResponseStorage?: boolean;
   dataPackagesResponseStorageLatestTtlMs?: number;
   auctionModelGasMultipliers?: number[];
+  enableIterationHealthCheck?: boolean;
+  iterationHealthCheckPeriodInS?: number;
 };
