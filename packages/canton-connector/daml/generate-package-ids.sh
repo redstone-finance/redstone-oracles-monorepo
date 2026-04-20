@@ -71,7 +71,4 @@ jq -n \
       reward_factory: ($interface + ":IRedStoneRewardFactory:IRedStoneRewardFactory"),
       pill: ($price_pill + ":IRedStonePricePill:IRedStonePricePill")
     }
-  }' >package-ids.json
-
-echo "Written to package-ids.json" >&2
-cat package-ids.json
+  }'

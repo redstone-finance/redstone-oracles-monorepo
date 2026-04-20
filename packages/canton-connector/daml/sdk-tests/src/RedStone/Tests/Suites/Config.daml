@@ -34,8 +34,6 @@ configFeedIdsSuite = TestSuite with
   name = "Config Feed IDs Validation"
   test = (\a -> a.feedIds) . mkConfig
 
-
-
 configFeedIdsCases =
     [ TestCase with
         name = "correct feed ids accepted"
@@ -70,7 +68,7 @@ configSignersCases =
 configThresholdSuite = TestSuite with
   cases = configThresholdCases
   name = "Config Threshold Validation"
-  test = (\a -> a.signerCountThreshold). mkConfig
+  test = (\a -> a.signerCountThreshold) . mkConfig
 
 configThresholdCases =
     [ TestCase with

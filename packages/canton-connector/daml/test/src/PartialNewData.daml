@@ -1,0 +1,54 @@
+module PartialNewData where
+
+import Daml.Script
+import DA.Assert
+import DA.Map as M
+import IRedStoneAdapter
+import IRedStonePricePill
+import Input
+import Helpers.Setup
+import Helpers.Utils
+
+pillMap viewer = do
+  pills <- queryInterface @IRedStonePricePill viewer
+  pure $ M.fromList [ (view.feedId, view) | (_, Some view) <- pills ]
+
+main : Input -> Script ()
+main input = script do
+  parties <- allocateTestParties
+  TestSetup{adapterCid, featuredDisclosure, factoryDisclosure} <-
+    setUpAdapter "PartialNew" False parties
+
+  currentTime <- getTime
+
+  let (feedA :: feedB :: _) = input.feedIds
+
+  let write feedIds cid = submitDisclosed parties.updater [featuredDisclosure, factoryDisclosure] do
+        exerciseCmd cid WritePrices with
+          caller = parties.updater
+          payloadHex = input.payload
+          feedIds
+          currentTime
+          additionalPillViewers = None
+
+  debug "=== Write #1: feedA only ==="
+  cid1 <- write [feedA] adapterCid
+  m1 <- pillMap parties.viewer
+  debug $ "After 1st write, pill count = " <> show (M.size m1)
+  M.size m1 === 1
+
+  debug "=== Write #2: feedA + feedB ==="
+  cid2 <- write [feedA, feedB] cid1
+  m2 <- pillMap parties.viewer
+  debug $ "After 2nd write, pill count = " <> show (M.size m2)
+  M.size m2 === 2
+  assertMsg "Missing pill for feedA" $ M.member feedA m2
+  assertMsg "Missing pill for feedB" $ M.member feedB m2
+
+  debug "=== Write #3: same feeds, expect no-op ==="
+  cid3 <- write [feedA, feedB] cid2
+  cid3 === cid2
+  m3 <- pillMap parties.viewer
+  M.size m3 === 2
+
+  debug "=== PartialNewData test passed ==="

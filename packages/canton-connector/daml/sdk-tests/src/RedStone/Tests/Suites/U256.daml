@@ -76,7 +76,6 @@ testLargeNumbers =
         output = u256FromBeByteList $ 127 :: replicate 31 255
     ]
 
-
 testEdgeCases =
   -- Test: Zero
     [ TestCase with
@@ -120,9 +119,8 @@ testEdgeCases =
     , TestCase with
         name = "carry through 16 bytes"
         input = Input with input = u256FromBeByteList $ replicate 16 255, op = add $ n 1
-        output = u256FromBeByteList $ [1] ++ replicate 15 0 ++ [0]
+        output = u256FromBeByteList $ 1 :: replicate 16 0
     ]
-
 
 testComparison =
     [ TestCase with
@@ -155,20 +153,3 @@ testSort =
             op = sort
         output = [n 0, n 1, n 2, u256FromBeByteList [255], u256FromBeByteList [1, 0], maxDiv2, maxU256]
     ]
-
--- TODO: Find a way of testing functions which throw
--- testOverflow : Script ()
--- testOverflow = do
---   debug "-- Testing overflow handling --"
-
---   let halfMax = u256FromBeByteList $ replicate 32 128
---   let sum = add halfMax halfMax
---   case sum of
---     U256 (Bytes revList) ->
---       assertEq "sum has 32 bytes" 32 (length revList)
-
--- --   let testOverflow = do
--- --     let _ = u256FromBeByteList $ replicate 33 1
--- --     pure ()
-
---   pure ()

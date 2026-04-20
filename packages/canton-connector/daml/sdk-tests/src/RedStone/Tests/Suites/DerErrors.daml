@@ -1,0 +1,56 @@
+module RedStone.Tests.Suites.DerErrors
+(
+    runTests
+) where
+
+import DA.Exception (ActionCatch)
+import RedStone.Tests.Test
+import RedStone.Tests.Run
+import RedStone.Internal.Der
+import RedStone.Internal.Hex
+
+runTests : (Action m, ActionFail m, ActionCatch m, CanAbort m) => m ()
+runTests = do
+  runErrorSuite signatureToDerErrorSuite
+  runErrorSuite publicKeyToDerErrorSuite
+
+runSig hex = listToHex (signatureToDer (hexToList hex))
+
+signatureToDerErrorSuite = ErrorTestSuite with
+  name = "Der signatureToDer Errors"
+  run = runSig
+  cases =
+    [ ErrorTestCase with
+        name = "wrong signature length (10 bytes) rejected"
+        input = "00112233445566778899"
+        expectedSubstring = "Wrong signature length"
+    , ErrorTestCase with
+        name = "wrong signature length (63 bytes) rejected"
+        input = "00112233445566778899aabbccddeeff" <>
+                "00112233445566778899aabbccddeeff" <>
+                "00112233445566778899aabbccddeeff" <>
+                "00112233445566778899aabbccddee"
+        expectedSubstring = "Wrong signature length"
+    , ErrorTestCase with
+        name = "non-canonical s value (s > N/2) rejected"
+        input = "0000000000000000000000000000000000000000000000000000000000000001" <>
+                "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff"
+        expectedSubstring = "Signature s value is over N/2"
+    ]
+
+runPubKey hex = publicKeyToDer hex
+
+publicKeyToDerErrorSuite = ErrorTestSuite with
+  name = "Der publicKeyToDer Errors"
+  run = runPubKey
+  cases =
+    [ ErrorTestCase with
+        name = "key with wrong length rejected"
+        input = "00112233445566778899"
+        expectedSubstring = "Expected 65 bytes"
+    , ErrorTestCase with
+        name = "65-byte key without 04 prefix rejected"
+        input = "05" <>
+          "00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000"
+        expectedSubstring = "Expected 65 bytes"
+    ]

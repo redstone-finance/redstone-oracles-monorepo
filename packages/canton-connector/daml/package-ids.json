@@ -1,16 +1,16 @@
 {
   "interface": "375ba10f12052dbd2e301a98f4370b8758515ece42fe42245feced239790621e",
-  "core": "3db29b8ca341ebfe5eb3cc4098332d65918f59aad50b642c0f4ff7abf8df4cdf",
-  "adapter": "b33c5adb59bb0b8a88662c7c30ea96d2607c2510a710a27275bb55c34880092d",
+  "core": "bf80972e37eee7326517bab916afd53e3fca81ba817c920924b16f1f13ee5133",
+  "adapter": "130cb12dcab6c958b3942da815580232b344a747cf5f07c4da24716ed7b3891c",
   "factory": "9979d589830f403cdbacfa88b8e430b87e4624df615a770d8023073ae8fe4f6e",
   "reward_factory": "50b182ae53517b8357b9ace790f112fe6e2c13fc854a8d663389ad60adc1f23c",
   "price_feed": "cdcc9627153648616871b497af3232c3fc64edce394fc3ff8e257a2ab41d9bae",
   "price_pill": "b3dd1f9044cb8bc66a462f7c52eb5f8dbf153ea8607b621929fbd3631d356361",
   "featured": "ca346f6fe97723ef90b70284d7daf53105a542c573155f7993b75e2f35524e1a",
   "templates": {
-    "adapter": "b33c5adb59bb0b8a88662c7c30ea96d2607c2510a710a27275bb55c34880092d:RedStoneAdapter:RedStoneAdapter",
-    "core": "3db29b8ca341ebfe5eb3cc4098332d65918f59aad50b642c0f4ff7abf8df4cdf:RedStoneCore:RedStoneCore",
-    "core_client": "3db29b8ca341ebfe5eb3cc4098332d65918f59aad50b642c0f4ff7abf8df4cdf:RedStoneCoreClient:RedStoneCoreClient",
+    "adapter": "130cb12dcab6c958b3942da815580232b344a747cf5f07c4da24716ed7b3891c:RedStoneAdapter:RedStoneAdapter",
+    "core": "bf80972e37eee7326517bab916afd53e3fca81ba817c920924b16f1f13ee5133:RedStoneCore:RedStoneCore",
+    "core_client": "bf80972e37eee7326517bab916afd53e3fca81ba817c920924b16f1f13ee5133:RedStoneCoreClient:RedStoneCoreClient",
     "factory": "9979d589830f403cdbacfa88b8e430b87e4624df615a770d8023073ae8fe4f6e:RedStonePricePillFactory:RedStonePricePillFactory",
     "reward_factory": "50b182ae53517b8357b9ace790f112fe6e2c13fc854a8d663389ad60adc1f23c:RedStoneRewardFactory:RedStoneRewardFactory"
   },

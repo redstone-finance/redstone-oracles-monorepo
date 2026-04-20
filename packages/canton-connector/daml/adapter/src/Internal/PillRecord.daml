@@ -17,11 +17,15 @@ data PillRecord = PillRecord
   with
     priceData: RedStonePriceData RedStoneValue
     pillCid : Optional (ContractId IRedStonePricePill)
+    demotedTimestamp : Optional Int
   deriving (Eq, Show)
 
 -- Public
 
-createNewRecords inputData newPills = zip (map fst inputData) $ zipWith PillRecord (map snd inputData) newPills
+createNewRecords inputData newPills =
+    zip (map fst inputData) $
+      zipWith (\pd cid -> PillRecord with priceData = pd, pillCid = cid, demotedTimestamp = None)
+              (map snd inputData) newPills
 
 addToFeedData currentFeedData (feedId, newest) =
     let
@@ -43,16 +47,24 @@ partitionRecords currentTimestamp currentFeedData =
 -- Private
 
 shouldArchive currentTimestamp record =
-  isSome record.pillCid && currentTimestamp - record.priceData.writeTimestamp > pill_keep_ms
+  isSome record.pillCid && case record.demotedTimestamp of
+    None -> False
+    Some demoted -> currentTimestamp - demoted > pill_keep_ms
 
 shouldDrop record =
   isNone record.pillCid
+
+markDemoted currentTimestamp record =
+  case record.demotedTimestamp of
+    None -> record with demotedTimestamp = Some currentTimestamp
+    Some _ -> record
 
 partitionFeedPills _ [] = ([], [])
 partitionFeedPills _ [newest] = ([newest], [])
 partitionFeedPills _ [newest, previous] = ([newest, previous], [])
 partitionFeedPills currentTimestamp (newest :: previous :: otherRecords) =
   let
-    toArchive = L.filter (shouldArchive currentTimestamp) otherRecords
-    toKeep = L.filter (\p -> not (shouldArchive currentTimestamp p) && not (shouldDrop p)) otherRecords
+    stamped = map (markDemoted currentTimestamp) otherRecords
+    toArchive = L.filter (shouldArchive currentTimestamp) stamped
+    toKeep = L.filter (\p -> not (shouldArchive currentTimestamp p || shouldDrop p)) stamped
   in (newest :: previous :: toKeep, toArchive)
