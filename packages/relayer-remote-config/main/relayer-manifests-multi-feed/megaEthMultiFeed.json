@@ -60,6 +60,9 @@
     "USDm": {
       "priceFeedAddress": "0x90196F6D52fce394C79D1614265d36D3F0033Ccf"
     },
+    "USDm-TWAP-60": {
+      "priceFeedAddress": "0x90196F6D52fce394C79D1614265d36D3F0033Ccf"
+    },
     "TRY": {
       "priceFeedAddress": "0x1b0FDa12D125B864756Bbf191ad20eaB10915a6F"
     },
