@@ -6,7 +6,7 @@ use soroban_sdk::{
 };
 
 use crate::{
-    config::{ADAPTER_ADDRESS, DECIMALS, ONE_SEC},
+    config::{ADAPTER_ADDRESS, DECIMALS, RESOLUTION},
     error::Sep40Error,
     utils::asset_eq,
     FeedMapping, RedStoneSep40, RedStoneSep40Client,
@@ -274,7 +274,7 @@ fn decimals_falls_back_to_default_after_removing_all_explicit() {
 fn resolution_is_one_second() {
     let (client, ..) = set_up();
 
-    assert_eq!(client.resolution(), ONE_SEC.as_secs() as u32);
+    assert_eq!(client.resolution(), RESOLUTION);
 }
 
 #[test]
