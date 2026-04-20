@@ -7,9 +7,6 @@ skip-lint = false
 [programs.localnet]
 redstone-solana-price-adapter = "7ivV97oED3baoFikEVxat7fqcAqUVPvXv4MkPR3tMPBv"
 
-[registry]
-url = "https://api.apr.dev"
-
 [provider]
 cluster = "localnet"
 wallet = "~/.config/solana/id.json"
