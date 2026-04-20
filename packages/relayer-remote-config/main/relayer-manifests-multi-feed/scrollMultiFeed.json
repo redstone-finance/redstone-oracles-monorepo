@@ -17,9 +17,6 @@
     "STONE": {
       "priceFeedAddress": "0xd9a66Ff1D660aD943F48e9c606D09eA672f312E8"
     },
-    "rsETH": {
-      "priceFeedAddress": "0x9b2C948dbA5952A1f5Ab6fA16101c1392b8da1ab"
-    },
     "ETH": {
       "priceFeedAddress": "0x1bB8f2dF000553E5Af2AEd5c42FEd3a73cd5144b"
     },
