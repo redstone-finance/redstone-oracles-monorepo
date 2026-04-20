@@ -30,6 +30,7 @@
       }
     },
     "USDm": {},
+    "USDm-TWAP-60": {},
     "TRY": {
       "updateTriggersOverrides": {
         "deviationPercentage": 0.1,
