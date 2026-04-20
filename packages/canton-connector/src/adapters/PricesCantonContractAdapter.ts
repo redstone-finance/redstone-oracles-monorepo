@@ -2,8 +2,9 @@ import { TxDeliveryMan, WriteContractAdapter } from "@redstone-finance/multichai
 import { ContractParamsProvider } from "@redstone-finance/sdk";
 import { FP } from "@redstone-finance/utils";
 import { CantonClient } from "../CantonClient";
-import { CantonChoiceExerciser, CantonContractUpdater } from "../CantonContractUpdater";
+import { ActiveContractData } from "../utils";
 import { CantonContractAdapterConfig } from "./CantonContractAdapterConfig";
+import { CantonChoiceExerciser, CantonContractUpdater } from "./CantonContractUpdater";
 import { DEFS_KEY_FEATURED_APP_RIGHT } from "./CoreClientCantonContractAdapter";
 import { IADAPTER_TEMPLATE_NAME, PricesCantonReadOnlyAdapter } from "./PricesCantonReadOnlyAdapter";
 
@@ -16,6 +17,7 @@ export class PricesCantonContractAdapter
   private readonly txDeliveryMan: TxDeliveryMan;
   private readonly contractUpdater: CantonContractUpdater;
   private readonly additionalPillViewers?: string[];
+  private accumulatedPaidTrafficCost?: number;
 
   constructor(
     client: CantonClient,
@@ -34,14 +36,23 @@ export class PricesCantonContractAdapter
     return Promise.resolve(this.contractUpdater.getSignerAddress());
   }
 
-  exerciseWriteChoice<Res, Arg extends object>(actAs: string, argument: Arg): Promise<Res> {
-    return this.exerciseChoice(
+  async exerciseWritePricesChoice(actAs: string, argument: object) {
+    const paidTrafficCost = this.accumulatedPaidTrafficCost;
+    this.accumulatedPaidTrafficCost = 0;
+
+    if (paidTrafficCost) {
+      this.logger.info(`Consuming accumulatedPaidTrafficCost: ${paidTrafficCost}`, {
+        paidTrafficCost,
+      });
+    }
+
+    const { result, metadata } = await this.exerciseChoice<ActiveContractData | string>(
       this.config.viewerPartyId,
       actAs,
       WRITE_PRICES_CHOICE,
       {
         ...argument,
-        additionalPillViewers: this.additionalPillViewers,
+        context: { additionalPillViewers: this.additionalPillViewers, paidTrafficCost },
       },
       {
         withCurrentTime: true,
@@ -50,6 +61,13 @@ export class PricesCantonContractAdapter
         withRetry: false,
       }
     );
+
+    if (typeof result === "string") {
+      // returning paidTrafficCost when no update was performed
+      this.addPaidTrafficCost(paidTrafficCost);
+    }
+
+    return { result, metadata };
   }
 
   async writePricesFromPayloadToContract(paramsProvider: ContractParamsProvider): Promise<string> {
@@ -67,6 +85,16 @@ export class PricesCantonContractAdapter
       this.activeContractData = undefined;
       throw e;
     }
+  }
+
+  addPaidTrafficCost(paidTrafficCost?: number) {
+    if (!paidTrafficCost) {
+      return;
+    }
+    this.logger.info(`Used paidTrafficCost: ${paidTrafficCost}`, { paidTrafficCost });
+
+    this.accumulatedPaidTrafficCost ??= 0;
+    this.accumulatedPaidTrafficCost += paidTrafficCost;
   }
 
   onError() {

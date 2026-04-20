@@ -22,7 +22,12 @@ template RedStoneRewardFactory
 
       -- feedIds length encodes the accumulated pill count; Time and PayloadHex are unused
       iRedStoneCore_GetPricesImpl feedIds _currentTime _payloadHex = do
-        let weight = rewardWeight $ length feedIds
-        takeRewards weight beneficiary featuredCid
+        let count = length feedIds
+        let weight = rewardWeight $ count
+
+        if weight >= 1.0 then
+            takeRewards weight beneficiary featuredCid
+        else
+            pure ()
 
         pure ([], 0)
