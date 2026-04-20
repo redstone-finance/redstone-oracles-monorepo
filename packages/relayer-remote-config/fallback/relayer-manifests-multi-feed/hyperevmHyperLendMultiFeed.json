@@ -1,0 +1,45 @@
+{
+  "chain": {
+    "name": "hyperevm",
+    "id": 999
+  },
+  "updateTriggers": {
+    "deviationPercentage": 0.5,
+    "timeSinceLastUpdateInMilliseconds": 21600000
+  },
+  "adapterContract": "0xe4aE88743c3834d0c492eAbC47384c84BcADC6a6",
+  "adapterContractType": "multi-feed",
+  "dataServiceId": "redstone-primary-prod",
+  "priceFeeds": {
+    "kHYPE_FUNDAMENTAL/USD": {
+      "priceFeedAddress": "0x4cDbABC43Fb0671Eef5Ce9586CEB311DbDDA3C1e"
+    },
+    "HYPE": {
+      "priceFeedAddress": "0xb60224122830FD6cF5119f548477a190310D2c94"
+    },
+    "USDC": {
+      "priceFeedAddress": "0xEdC6287D3D41b322AF600317628D7E226DD3add4"
+    },
+    "wstHYPE_FUNDAMENTAL": {
+      "priceFeedAddress": "0x9e37DBF40fE5Fe9320E45fe6B95b000aa05459A9"
+    },
+    "UBTC": {
+      "priceFeedAddress": "0x4B2C406f0Dbf7624a32971277DA7B4C43A7A942b"
+    },
+    "USDT": {
+      "priceFeedAddress": "0x61376924BAbe5A0Fa982FfF2c8be8013Be3D6Bb6"
+    },
+    "beHYPE_MAIN_FUNDAMENTAL": {
+      "priceFeedAddress": "0x6682c5b9b47eC0D18BeB2088779F14535fC7BF47"
+    },
+    "SOL": {
+      "priceFeedAddress": "0xE5c1A89887C572c3C345EFE2BBBe797AC5B22461"
+    },
+    "USDe": {
+      "priceFeedAddress": "0x18c9B9500D8006574329Ff95dEB47F9576011A9f"
+    },
+    "sUSDe": {
+      "priceFeedAddress": "0x573BB572049ff50156E94823BB99920D406e96F8"
+    }
+  }
+}
