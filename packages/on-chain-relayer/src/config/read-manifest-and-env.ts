@@ -301,6 +301,14 @@ export const readManifestAndEnv = () => {
       z.number().optional()
     ),
     graphQLUrls: RedstoneCommon.getFromEnv("GRAPHQL_URLS", z.array(z.url()).optional()),
+    enableIterationHealthCheck: RedstoneCommon.getFromEnv(
+      "ENABLE_ITERATION_HEALTHCHECK",
+      z.boolean().default(false)
+    ),
+    iterationHealthCheckPeriodInS: RedstoneCommon.getFromEnv(
+      "ITERATION_HEALTHCHECK_PERIOD_IN_S",
+      z.number().default(600)
+    ),
   };
 
   return { manifest, env };
