@@ -1,0 +1,9 @@
+module WritePricesContext where
+
+data WritePricesContext = WritePricesContext
+  with
+    additionalPillViewers : Optional [Party]
+    paidTrafficCost : Optional Int
+  deriving (Eq, Show, Ord)
+
+empty_write_prices_context = WritePricesContext with additionalPillViewers = None, paidTrafficCost = None

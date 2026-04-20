@@ -12,7 +12,7 @@ import { makeDefaultClient, makePartyId } from "./utils";
 const VIEWER_PARTY_NAME = `RedStoneOracleViewer`;
 const UPDATER_PARTY_NAME = `RedStoneOracleUpdater`;
 
-const ADAPTER_ID = "RedStoneAdapter-v16-0.4.0";
+const ADAPTER_ID = "RedStoneAdapter-v17-0.4.0";
 
 async function main() {
   const client = makeDefaultClient();

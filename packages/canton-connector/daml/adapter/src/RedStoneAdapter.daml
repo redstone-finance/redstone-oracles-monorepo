@@ -10,6 +10,7 @@ import IRedStoneAdapter
 import IRedStonePricePill
 import IRedStonePricePillFactory
 import IRedStoneRewardFactory
+import WritePricesContext
 import Internal.ProcessPayload
 import Internal.PillRecord
 import Internal.Rewards
@@ -45,14 +46,16 @@ template RedStoneAdapter
       iRedStoneAdapter_VerifyUpdater caller = assertMsg "WritePrices: caller must be an updater" $ caller `elem` updaters
       iRedStoneAdapter_VerifyViewer caller = assertMsg "Read: caller must be a viewer or an updater" $ caller `elem` (viewers ++ updaters)
 
-      iRedStoneAdapter_WritePricesImpl caller self feedIds currentTime payloadHex additionalPillViewers = do
-        let ctx = WriteContext with caller, owner, updaters, viewers
+      iRedStoneAdapter_WritePricesImpl caller self feedIds currentTime payloadHex contextOrNone = do
+        let context = fromOptional empty_write_prices_context contextOrNone
+
+        let ctx = WriteContext with caller, owner, updaters, viewers, paidTrafficCost = None
         hasNewValues <- hasNewPrices ctx adapterId feedData feedIds currentTime payloadHex
 
         if not hasNewValues then
           pure self
         else
-          exercise (coerceContractId @IRedStoneAdapter @RedStoneAdapter self) WritePricesConsuming with caller, feedIds, currentTime, payloadHex, additionalPillViewers
+          exercise (coerceContractId @IRedStoneAdapter @RedStoneAdapter self) WritePricesConsuming with caller, feedIds, currentTime, payloadHex, context
 
       iRedStoneAdapter_ReadPriceDataImpl feedIds = do
         let getPriceData feedId =
@@ -80,13 +83,13 @@ template RedStoneAdapter
         feedIds : [RedStoneFeedId]
         currentTime : Time
         payloadHex : PayloadHex
-        additionalPillViewers : Optional [Party]
+        context : WritePricesContext
       controller caller
       do
         assertMsg "WritePricesConsuming: caller must be an updater" $ caller `elem` updaters
         
-        let allViewers = dedup $ viewers <> fromOptional [] additionalPillViewers
-        let ctx = WriteContext with caller, owner, updaters, viewers = allViewers
+        let allViewers = dedup $ viewers <> fromOptional [] context.additionalPillViewers
+        let ctx = WriteContext with caller, owner, updaters, viewers = allViewers, paidTrafficCost = context.paidTrafficCost
         let factories = Factories with pillFactory, rewardFactory
         let currentState = AdapterState with feedData, rewardState
 

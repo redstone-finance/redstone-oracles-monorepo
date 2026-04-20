@@ -52,7 +52,7 @@ export class CoreClientCantonContractAdapter extends CantonContractAdapter {
   async getPricesFromPayload(paramsProvider: ContractParamsProvider) {
     const { argument, options } = await this.getDisclosedPricesParams(paramsProvider);
 
-    const result: DamlTuple2<string[]> = await this.exerciseChoice(
+    const { result } = await this.exerciseChoice(
       this.partyId,
       this.partyId,
       GET_PRICES_DISCLOSED_CHOICE,
@@ -60,6 +60,6 @@ export class CoreClientCantonContractAdapter extends CantonContractAdapter {
       options
     );
 
-    return result._1.map(convertDecimalValue);
+    return (result as DamlTuple2<string[]>)._1.map(convertDecimalValue);
   }
 }
