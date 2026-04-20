@@ -51,7 +51,7 @@ hasNewPrices ctx adapterId feedData feedIds currentTime payloadHex = do
   ((newValues, _, rejectedValues), _) <- checkNewValues feedData feedIds currentTime payloadHex
   _ <- emitErrorEvents (ctx.owner, ctx.updaters) adapterId rejectedValues
 
-  return $ not . L.null $ newValues
+  pure $ not $ L.null newValues
 
 processAndWritePrices ctx factories adapterId currentState feedIds currentTime payloadHex = do
   ((newValues, timestamp, rejectedValues), config) <- checkNewValues currentState.feedData feedIds currentTime payloadHex
@@ -77,7 +77,7 @@ newFeedData ctx pillFactory adapterId feedData currentTimestamp (newValues, time
 
   case pillFactory of
     None -> let
-      newRecords = createNewRecords newEntries $ map (\(_, _) -> None) newEntries
+      newRecords = createNewRecords newEntries $ map (const None) newEntries
       newFeedData = M.fromList $ map (\(feedId, record) -> (feedId, [record])) newRecords
       in do
         -- emitting only when no pill factory is passed

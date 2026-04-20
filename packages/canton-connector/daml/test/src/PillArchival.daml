@@ -1,0 +1,89 @@
+module PillArchival where
+
+import Daml.Script
+import DA.Assert
+import DA.List (sort)
+import DA.Map as M
+import Internal.PillRecord
+import IRedStonePricePill
+import RedStoneTypes
+import Time (one_min_ms)
+
+pill_keep_ms = 60_000
+
+ethFeed : RedStoneFeedId
+ethFeed = [69, 84, 72]
+
+mkData : Int -> RedStonePriceData RedStoneValue
+mkData ts = RedStonePriceData with
+  value = 0.0
+  timestamp = ts
+  writeTimestamp = ts
+
+linked cid ts demoted = PillRecord with
+  priceData = mkData ts
+  pillCid = Some cid
+  demotedTimestamp = demoted
+
+unlinked ts demoted = PillRecord with
+  priceData = mkData ts
+  pillCid = None
+  demotedTimestamp = demoted
+
+template DummyPill
+  with owner : Party
+  where signatory owner
+
+singleFeed pills = M.fromList [(ethFeed, pills)]
+
+assertSingleFeed kept expectedLen =
+  case kept of
+    [(_, recs)] -> length recs === expectedLen
+    other       -> fail $ "expected 1 feed, got " <> show (length other)
+
+assertPartition t0 feedData (expectedArchived, expectedKeptLen) = do
+  let (kept, archived) = partitionRecords t0 feedData
+  length archived === expectedArchived
+  assertSingleFeed kept expectedKeptLen
+
+main : Script ()
+main = script do
+  debug $ "pill_keep_ms = " <> show pill_keep_ms
+  one_min_ms === pill_keep_ms
+
+  owner <- allocateParty "PillArchivalOwner"
+  dummyCid <- submit owner do createCmd DummyPill with owner
+  let pill = coerceContractId @DummyPill @IRedStonePricePill dummyCid
+  let mk = linked pill
+
+  let t0 = 2_000_000_000_000
+
+  assertPartition t0
+    (singleFeed [mk (t0 + 2) None, mk (t0 + 1) None])
+    (0, 2)
+
+  assertPartition t0
+    (singleFeed [mk (t0 + 3) None, mk (t0 + 2) None, mk (t0 + 1) None])
+    (0, 3)
+
+  assertPartition t0
+    (singleFeed [mk (t0 + 3) None, mk (t0 + 2) None, mk (t0 + 1) (Some (t0 - 2 * pill_keep_ms))])
+    (1, 2)
+
+  assertPartition t0
+    (singleFeed [mk (t0 + 3) None, mk (t0 + 2) None, mk (t0 + 1) (Some (t0 - (pill_keep_ms - 1)))])
+    (0, 3)
+
+  assertPartition t0
+    (singleFeed [mk (t0 + 3) None, mk (t0 + 2) None, unlinked (t0 + 1) (Some (t0 - 2 * pill_keep_ms))])
+    (0, 2)
+
+  let btcFeed = [66, 84, 67]
+  let (kept6, archive6) = partitionRecords t0 $ M.fromList
+        [ (ethFeed, [mk (t0 + 3) None, mk (t0 + 2) None, mk (t0 + 1) (Some (t0 - 2 * pill_keep_ms))])
+        , (btcFeed, [mk (t0 + 2) None, mk (t0 + 1) None])
+        ]
+  length archive6 === 1
+  sort (map (length . snd) kept6) === [2, 2]
+
+  debug "=== PillArchival test passed ==="

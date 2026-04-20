@@ -1,0 +1,65 @@
+module RewardsBatching where
+
+import Daml.Script
+import DA.Assert
+import DA.List (head)
+import DA.Optional (fromSome)
+import DA.Time
+import Splice.Api.FeaturedAppRightV2
+import IRedStoneAdapter
+import RedStoneAdapter
+import Input
+import Helpers.Setup
+import Helpers.Utils
+
+getRewardState updater = do
+  (cid, adapter) <- head <$> query @RedStoneAdapter updater
+  pure (toInterfaceContractId @IRedStoneAdapter cid, fromSome adapter.rewardState)
+
+main : Input -> Script ()
+main input = script do
+  parties <- allocateTestParties
+  TestSetup{adapterCid, featuredDisclosure, factoryDisclosure} <-
+    setUpAdapter "RewardsBatching" True parties
+
+  let (feedA :: feedB :: _) = input.feedIds
+
+  let write feedIds currentTime cid =
+        submitDisclosed parties.updater [featuredDisclosure, factoryDisclosure] do
+          exerciseCmd cid WritePrices with
+            caller = parties.updater
+            payloadHex = input.payload
+            feedIds
+            currentTime
+            additionalPillViewers = None
+
+  let countMarkers = length <$> queryInterface @FeaturedAppActivityMarker parties.beneficiary
+
+  currentTimeT0 <- getTime
+  debug "=== Write #1 at T0 ==="
+
+  _ <- write [feedA] currentTimeT0 adapterCid
+
+  m1 <- countMarkers
+  debug $ "After write #1, reward markers = " <> show m1
+  m1 === 1
+
+  (adapterCid1, state1) <- getRewardState parties.updater
+  debug $ "rewardState after write #1: " <> show state1
+  state1.accumulatedPillCount === 0
+
+  let currentTimeT1 = addRelTime currentTimeT0 (seconds 1)
+  debug "=== Write #2 at T0 + 1s ==="
+
+  _ <- write [feedA, feedB] currentTimeT1 adapterCid1
+
+  m2 <- countMarkers
+  debug $ "After write #2 (within 7-min window), reward markers = " <> show m2
+  m2 === 1
+
+  (_, state2) <- getRewardState parties.updater
+  debug $ "rewardState after batched write: " <> show state2
+  state2.accumulatedPillCount === 1
+  state2.lastCreateTimestamp === state1.lastCreateTimestamp
+
+  debug "=== RewardsBatching test passed ==="

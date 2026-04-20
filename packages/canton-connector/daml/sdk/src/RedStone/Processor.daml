@@ -2,11 +2,15 @@ module RedStone.Processor
  (
   processPayload
   , processPayloadNumeric
+  -- Exposed for testing — pure helpers of the aggregation pipeline.
+  , buildMatrixInput
  ) where
 
 import DA.List as L
 import DA.Map as M
 import DA.Optional
+import DA.Set as S
+import RedStone.Internal.DataPoint(DataPoint(..))
 import RedStone.Config
 import RedStone.ProcessorResult
 import RedStone.Result
@@ -23,7 +27,10 @@ import RedStone.Internal.Verify
 
 -- Public
 
-processPayload config hex = processPayloadBytes config (B.fromList (hexToList hex))
+processPayload config hex =
+  let
+    _ = verifyPayloadLength hex
+  in processPayloadBytes config (B.fromList (hexToList hex))
 
 processPayloadNumeric: Config -> Text -> ProcessorResult
 processPayloadNumeric config hex =
@@ -52,9 +59,25 @@ getFeedValues config dataPackages =
     seqlt n = [0..(n-1)]
     dataPointsWithSignerIndices = getDataPointsWithSignerIndices $ getDataPackageSignerIndices config.signers dataPackages
     makeMatrix input = map (\feedId -> map (\signerIndex -> M.lookup (feedId, Ok signerIndex) input) (seqlt $ L.length config.signers)) config.feedIds
-    matrixInput = foldl (\m (dataPoint, index) -> insert (dataPoint.feedId, index) dataPoint.value m) empty dataPointsWithSignerIndices
+    (matrixInput, conflictedFeeds) = buildMatrixInput dataPointsWithSignerIndices
     feedValues = map catOptionals (makeMatrix matrixInput)
-  in map (\values -> if L.length values >= config.signerCountThreshold then Ok values else Error $ verificationError "Signer count not achieved" values) feedValues
+
+    classify (feedId, values)
+      | S.member feedId conflictedFeeds = Error $ verificationError  "Same signer submitted conflicting values for feed" $ map Some values
+      | L.length values < config.signerCountThreshold = Error $ verificationError "Signer count not achieved" $ map Some values
+      | otherwise = Ok values
+  in zipWith (curry classify) config.feedIds feedValues
+
+buildMatrixInput dataPointsWithSignerIndices =
+  let
+    step (matrix, conflicts) (DataPoint{feedId, value}, index) =
+      let key = (feedId, index)
+      in case M.lookup key matrix of
+        None -> (M.insert key value matrix, conflicts)
+        Some existing
+          | existing == value -> (matrix, conflicts)
+          | otherwise -> (matrix, S.insert feedId conflicts)
+  in L.foldl step (M.empty, S.empty) dataPointsWithSignerIndices
 
 getDataPointsWithSignerIndices dataPackageSignerIndices =
   let
