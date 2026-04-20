@@ -8909,14 +8909,6 @@
         "rwa"
       ]
     },
-    "URA": {
-      "source": [],
-      "denomination": "USD",
-      "rateFeed": false,
-      "types": [
-        "rwa"
-      ]
-    },
     "CME_MARKET_STATUS": {
       "source": [
         "cme-market-status"
