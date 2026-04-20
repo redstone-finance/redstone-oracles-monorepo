@@ -7,7 +7,11 @@ use soroban_sdk::{contract, contractimpl, contracttype, Address, Env, Error, Str
 use storage::EnvExt;
 use utils::price_data_to_sep_40;
 
-use crate::{config::ONE_SEC, feed_map::FeedMap, utils::get_adapter_client};
+use crate::{
+    config::{ONE_SEC, RESOLUTION},
+    feed_map::FeedMap,
+    utils::get_adapter_client,
+};
 
 mod config;
 mod error;
@@ -115,7 +119,7 @@ impl PriceFeedTrait for RedStoneSep40 {
     }
 
     fn resolution(_: Env) -> u32 {
-        ONE_SEC.as_secs() as u32
+        RESOLUTION
     }
 
     fn price(env: Env, asset: Asset, timestamp: u64) -> Option<Sep40PriceData> {
