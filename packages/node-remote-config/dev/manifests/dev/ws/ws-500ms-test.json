@@ -333,23 +333,6 @@
       "denomination": "USD",
       "rateFeed": false
     },
-    "URA---MARKET_HOURS": {
-      "source": [],
-      "denomination": "USD",
-      "rateFeed": false,
-      "types": [
-        "rwa"
-      ]
-    },
-    "URA": {
-      "source": [],
-      "skipBroadcasting": true,
-      "denomination": "USD",
-      "rateFeed": false,
-      "types": [
-        "rwa"
-      ]
-    },
     "KOSPI200": {
       "source": [],
       "skipBroadcasting": true,

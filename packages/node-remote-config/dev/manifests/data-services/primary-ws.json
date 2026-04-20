@@ -319,22 +319,6 @@
       "denomination": "USD",
       "rateFeed": false
     },
-    "URA---MARKET_HOURS": {
-      "source": [],
-      "denomination": "USD",
-      "rateFeed": false,
-      "types": [
-        "rwa"
-      ]
-    },
-    "URA": {
-      "source": [],
-      "denomination": "USD",
-      "rateFeed": false,
-      "types": [
-        "rwa"
-      ]
-    },
     "KOSPI200": {
       "source": [],
       "denomination": "KRW",
