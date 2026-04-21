@@ -332,7 +332,8 @@
         "mexc-usdt",
         "okx-usdt",
         "xt-usdt",
-        "uniswap-v3-ethereum-weth-3000"
+        "uniswap-v3-ethereum-weth-3000",
+        "uniswap-v4-ethereum-eth-3000"
       ],
       "denomination": "USD",
       "rateFeed": false
@@ -407,6 +408,7 @@
         "uniswap-v3-ethereum-weth-100",
         "uniswap-v4-ethereum-eth-100",
         "uniswap-v4-ethereum-wbtc-2500",
+        "uniswap-v4-ethereum-weeth-100",
         "velodrome-cl-optimism-weth"
       ],
       "denomination": "USD",
@@ -428,7 +430,7 @@
       "rateFeed": false
     },
     "BAL": {
-      "source": ["gate-usdt", "kucoin-usdt"],
+      "source": ["gate-usdt", "kraken-usd", "kucoin-usdt"],
       "denomination": "USD",
       "rateFeed": false
     },
@@ -554,7 +556,8 @@
         "camelot-v3-arbitrumone-weth",
         "curve-arbitrumone-weth",
         "fluid-ethereum-eth",
-        "uniswap-v3-ethereum-wsteth-500"
+        "uniswap-v3-ethereum-wsteth-500",
+        "uniswap-v4-ethereum-wsteth-394"
       ],
       "denomination": "USD",
       "rateFeed": false
@@ -1015,13 +1018,14 @@
     },
     "EUROC": {
       "source": [
+        "coinbase-usdc",
+        "kraken-usd",
         "aerodrome-cl-base-usdc",
         "aerodrome-cl-base-usdc-2",
         "aerodrome-cl-base-weth",
-        "coinbase-usdc",
-        "kraken-usd",
         "trader-joe-v2-avalanche-usdc",
-        "uniswap-v3-ethereum-usdc-500"
+        "uniswap-v3-ethereum-usdc-500",
+        "uniswap-v4-ethereum-usdc-500"
       ],
       "denomination": "USD",
       "rateFeed": false
@@ -1113,6 +1117,7 @@
         "fluid-ethereum-usdt",
         "uniswap-v3-ethereum-usdc-100",
         "uniswap-v4-ethereum-usdt-45",
+        "uniswap-v4-ethereum-usdt-10",
         "xt-usdt"
       ],
       "denomination": "USD",
