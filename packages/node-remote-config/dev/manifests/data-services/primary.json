@@ -1873,8 +1873,7 @@
         "curve-ethereum-eusd",
         "curve-ethereum-frxusd",
         "curve-ethereum-gho",
-        "curve-ethereum-usdc",
-        "curve-ethereum-alusd"
+        "curve-ethereum-usdc"
       ],
       "deviationCheck": {
         "deviationWithRecentValues": {
