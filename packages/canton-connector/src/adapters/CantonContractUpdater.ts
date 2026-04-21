@@ -69,16 +69,8 @@ export class CantonContractUpdater implements ContractUpdater {
       payloadHex,
     });
 
-    const hasTrafficCost = RedstoneCommon.isDefined(metadata.paidTrafficCost);
-    if (hasTrafficCost) {
-      this.exerciser.addPaidTrafficCost(metadata.paidTrafficCost);
-    }
-    this.checkTraffic(feedIds.length, startTime, initialTraffic)
-      .then((paidTrafficCount) => {
-        if (!hasTrafficCost) {
-          this.exerciser.addPaidTrafficCost(paidTrafficCount);
-        }
-      })
+    this.checkTraffic(feedIds.length, startTime, metadata, initialTraffic)
+      .then(this.exerciser.addPaidTrafficCost.bind(this.exerciser))
       .catch((e) =>
         CantonContractUpdater.logger.warn(
           `Failed to checkTraffic ${RedstoneCommon.stringifyError(e)}`
@@ -88,7 +80,12 @@ export class CantonContractUpdater implements ContractUpdater {
     return result;
   }
 
-  private async checkTraffic(feedCount: number, startTime: number, initialTraffic?: number) {
+  private async checkTraffic(
+    feedCount: number,
+    startTime: number,
+    metadata: TransactionMetadata,
+    initialTraffic?: number
+  ) {
     const KB_IN_MB = 1024;
     const DIGITS = 3;
 
@@ -102,8 +99,15 @@ export class CantonContractUpdater implements ContractUpdater {
 
     CantonContractUpdater.logger.info(
       `exerciseWriteChoice of ${feedCount} feed${RedstoneCommon.getS(feedCount)} took ${duration} [ms]; ` +
-        `trafficCost: ${usedTraffic} bytes (${remainingTraffic ? (remainingTraffic / KB_IN_MB).toFixed(DIGITS) : remainingTraffic} kB remaining)`,
-      { duration, usedTraffic, feedCount, remainingTraffic }
+        `trafficCost: ${usedTraffic} bytes (${remainingTraffic ? (remainingTraffic / KB_IN_MB).toFixed(DIGITS) : remainingTraffic} kB remaining); ` +
+        `metadata paidTrafficCost: ${metadata.paidTrafficCost}`,
+      {
+        duration,
+        usedTraffic,
+        feedCount,
+        remainingTraffic,
+        metadata,
+      }
     );
 
     return usedTraffic;
