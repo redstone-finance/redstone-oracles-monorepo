@@ -1,0 +1,22 @@
+{
+  "USA100": {
+    "dividendYield": 0.007,
+    "settlementDatesKey": "USA100"
+  },
+  "USA500": {
+    "dividendYield": 0.0121,
+    "settlementDatesKey": "USA500"
+  },
+  "XAG": {
+    "dividendYield": 0.027,
+    "settlementDatesKey": "XAG"
+  },
+  "XAU": {
+    "dividendYield": 0.014,
+    "settlementDatesKey": "XAU"
+  },
+  "XPT": {
+    "dividendYield": 0.021,
+    "settlementDatesKey": "XPT"
+  }
+}

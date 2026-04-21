@@ -120,6 +120,9 @@
   "XPT_CURRENT": "CmeMetals",
   "PALLADIUM_CURRENT": "CmeMetals",
   "PLATINUM_CURRENT": "CmeMetals",
+  "XAG_LR": "CmeMetals",
+  "XAU_LR": "CmeMetals",
+  "XPT_LR": "CmeMetals",
 
   "XAU_FRONT": "CmeMetals",
   "XAG_FRONT": "CmeMetals",
