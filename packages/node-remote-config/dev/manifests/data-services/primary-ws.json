@@ -203,20 +203,6 @@
       "rateFeed": false,
       "types": ["rwa"]
     },
-    "XAU": {
-      "source": [
-        "alltick-api-deferred",
-        "commodity-price-api-deferred",
-        "financialmodelingprep-deferred",
-        "metals-api-deferred",
-        "metal-price-api-deferred",
-        "ws-polygon-massive-commodities",
-        "ws-twelve-data"
-      ],
-      "denomination": "USD",
-      "rateFeed": false,
-      "types": ["rwa"]
-    },
     "TSLA": {
       "source": [
         "alltick-stocks-api-deferred",
@@ -689,9 +675,45 @@
       "rateFeed": false,
       "types": ["rwa"]
     },
+    "XAG_LR": {
+      "source": ["lease-rate"],
+      "broadcasters": ["influx"],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": ["rwa"]
+    },
+    "XAG": {
+      "source": [
+        "alltick-api-deferred",
+        "financialmodelingprep-deferred",
+        "metal-price-api-deferred",
+        "ws-blocksize",
+        "ws-lmax",
+        "ws-polygon-massive-commodities",
+        "ws-hyperliquid-perps-xyz",
+        "ws-hydromancer-perps-xyz"
+      ],
+      "priceAggregator": "primarySource",
+      "primarySourceAggregatorConfig": {
+        "primarySource": "ws-lmax",
+        "maxAcceptableDeviation": 1.5,
+        "lowerClampPercent": 0.1,
+        "upperClampPercent": 0.1
+      },
+      "broadcasters": ["influx"],
+      "deviationCheck": {
+        "deviationWithRecentValues": {
+          "maxPercent": 30,
+          "maxDelayMilliseconds": 120000
+        }
+      },
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": ["rwa"]
+    },
     "XAG.T": {
       "source": [
-        "rollover-time-hourly",
+        "rollover-time-blend-implied-spot",
         "alltick-api-deferred",
         "financialmodelingprep-deferred",
         "metal-price-api-deferred",
@@ -732,9 +754,44 @@
       "rateFeed": false,
       "types": ["rwa"]
     },
+    "XAU_LR": {
+      "source": ["lease-rate"],
+      "broadcasters": ["influx"],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": ["rwa"]
+    },
+    "XAU": {
+      "source": [
+        "alltick-api-deferred",
+        "financialmodelingprep-deferred",
+        "ws-blocksize",
+        "ws-lmax",
+        "ws-polygon-massive-commodities",
+        "ws-hyperliquid-perps-xyz",
+        "ws-hydromancer-perps-xyz"
+      ],
+      "priceAggregator": "primarySource",
+      "primarySourceAggregatorConfig": {
+        "primarySource": "ws-lmax",
+        "maxAcceptableDeviation": 1.5,
+        "lowerClampPercent": 0.1,
+        "upperClampPercent": 0.1
+      },
+      "broadcasters": ["influx"],
+      "deviationCheck": {
+        "deviationWithRecentValues": {
+          "maxPercent": 30,
+          "maxDelayMilliseconds": 120000
+        }
+      },
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": ["rwa"]
+    },
     "XAU.T": {
       "source": [
-        "rollover-time-hourly",
+        "rollover-time-blend-implied-spot",
         "alltick-api-deferred",
         "financialmodelingprep-deferred",
         "ws-blocksize",
@@ -773,9 +830,44 @@
       "rateFeed": false,
       "types": ["rwa"]
     },
+    "XPT_LR": {
+      "source": ["lease-rate"],
+      "broadcasters": ["influx"],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": ["rwa"]
+    },
+    "XPT": {
+      "source": [
+        "financialmodelingprep-deferred",
+        "finhub_deriv_deferred",
+        "ws-blocksize",
+        "ws-lmax",
+        "ws-twelve-data",
+        "ws-hyperliquid-perps-xyz",
+        "ws-hydromancer-perps-xyz"
+      ],
+      "priceAggregator": "primarySource",
+      "primarySourceAggregatorConfig": {
+        "primarySource": "ws-lmax",
+        "maxAcceptableDeviation": 1.5,
+        "lowerClampPercent": 0.1,
+        "upperClampPercent": 0.1
+      },
+      "broadcasters": ["influx"],
+      "deviationCheck": {
+        "deviationWithRecentValues": {
+          "maxPercent": 30,
+          "maxDelayMilliseconds": 120000
+        }
+      },
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": ["rwa"]
+    },
     "XPT.T": {
       "source": [
-        "rollover-time-hourly",
+        "rollover-time-blend-implied-spot",
         "financialmodelingprep-deferred",
         "finhub_deriv_deferred",
         "ws-blocksize",
@@ -868,7 +960,7 @@
     },
     "USA100.T": {
       "source": [
-        "rollover-time-blend-equities",
+        "rollover-time-blend-implied-spot",
         "alltick-api-deferred",
         "ws-itick-indices",
         "financialmodelingprep-deferred",
@@ -907,7 +999,7 @@
     },
     "USA500.T": {
       "source": [
-        "rollover-time-blend-equities",
+        "rollover-time-blend-implied-spot",
         "alltick-api-deferred",
         "financialmodelingprep-deferred",
         "ws-lmax",
