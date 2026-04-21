@@ -33,6 +33,13 @@
         "deviationPercentage": 0.1,
         "timeSinceLastUpdateInMilliseconds": 43200000
       }
+    },
+    "earnUSDT_FUNDAMENTAL": {
+      "priceFeedAddress": "0x6334c5EAE8CD1E2aD2fe32989775C92e7F729e71",
+      "updateTriggersOverrides": {
+        "deviationPercentage": 0.5,
+        "timeSinceLastUpdateInMilliseconds": 43200000
+      }
     }
   }
 }
