@@ -110,7 +110,7 @@ export class CantonContractUpdater implements ContractUpdater {
       }
     );
 
-    return usedTraffic;
+    return usedTraffic ?? metadata.paidTrafficCost;
   }
 
   private async getRemainingTraffic() {
