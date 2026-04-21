@@ -2,6 +2,16 @@ import { RedstoneCommon } from "@redstone-finance/utils";
 import z from "zod";
 import { readS3Object } from "./aws/s3";
 
+type LargeEnvConfig =
+  | {
+      region?: string;
+      bucketName: string;
+      useLocal: false;
+    }
+  | {
+      useLocal: true;
+    };
+
 const LARGE_ENV_KEYS_ENV_VAR = "LARGE_ENV_BUCKET_KEYS";
 const LARGE_ENV_BUCKET_NAME_ENV_VAR = "LARGE_ENV_BUCKET_NAME";
 const LARGE_ENV_REGION_ENV_VAR = "LARGE_ENV_REGION";
@@ -16,9 +26,7 @@ export const getLargeEnv: GetLargeEnvType = async <T = string>(
   key: string,
   schema?: z.ZodType<T, T | undefined>
 ) => {
-  const { region, bucketName } = getBucketInfoFromEnv();
-
-  const { value } = await handleLargeEnv(key, bucketName, region, schema);
+  const { value } = await handleLargeEnv(key, schema);
 
   return value;
 };
@@ -29,28 +37,39 @@ export const fetchLargeEnvs = async (schemaByKey: Record<string, z.ZodType> = {}
     return {};
   }
 
-  const { region, bucketName } = getBucketInfoFromEnv();
-
-  const data = await Promise.all(
-    keys.map((key) => handleLargeEnv(key, bucketName, region, schemaByKey[key]))
-  );
+  const data = await Promise.all(keys.map((key) => handleLargeEnv(key, schemaByKey[key])));
   return Object.fromEntries(data.map(({ key, value }) => [key, value]));
 };
 
-const handleLargeEnv = async <T = string>(
-  key: string,
-  bucketName: string,
-  region?: string,
-  schema?: z.ZodType<T, T | undefined>
-) => {
-  const value = await readS3Object<string>(bucketName, key, region);
+const handleLargeEnv = async <T = string>(key: string, schema?: z.ZodType<T, T | undefined>) => {
+  const bucketInfo = getBucketInfoFromEnv();
+
+  if (bucketInfo.useLocal) {
+    return { key, value: RedstoneCommon.getFromEnv(key, schema) };
+  }
+
+  const value = await readS3Object<string>(bucketInfo.bucketName, key, bucketInfo.region);
 
   return { key, value: (schema ?? z.string()).parse(value) };
 };
 
-const getBucketInfoFromEnv = () => {
-  return {
-    region: RedstoneCommon.getFromEnv(LARGE_ENV_REGION_ENV_VAR, z.string().optional()),
-    bucketName: RedstoneCommon.getFromEnv(LARGE_ENV_BUCKET_NAME_ENV_VAR),
-  };
+let largeEnvConfig: LargeEnvConfig | undefined;
+const getBucketInfoFromEnv = (): LargeEnvConfig => {
+  if (!largeEnvConfig) {
+    const useLocal = RedstoneCommon.getFromEnv("USE_LOCAL_LARGE_ENV", z.boolean().default(false));
+
+    if (useLocal) {
+      largeEnvConfig = {
+        useLocal,
+      };
+    } else {
+      largeEnvConfig = {
+        useLocal: false,
+        region: RedstoneCommon.getFromEnv(LARGE_ENV_REGION_ENV_VAR, z.string().optional()),
+        bucketName: RedstoneCommon.getFromEnv(LARGE_ENV_BUCKET_NAME_ENV_VAR),
+      };
+    }
+  }
+
+  return largeEnvConfig;
 };
