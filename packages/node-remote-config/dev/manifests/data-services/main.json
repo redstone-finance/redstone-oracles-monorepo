@@ -574,7 +574,8 @@
         "mexc-usdt",
         "okx-usdt",
         "xt-usdt",
-        "uniswap-v3-ethereum-weth-3000"
+        "uniswap-v3-ethereum-weth-3000",
+        "uniswap-v4-ethereum-eth-3000"
       ],
       "denomination": "USD",
       "rateFeed": false
@@ -906,6 +907,7 @@
         "uniswap-v3-ethereum-weth-100",
         "uniswap-v4-ethereum-eth-100",
         "uniswap-v4-ethereum-wbtc-2500",
+        "uniswap-v4-ethereum-weeth-100",
         "velodrome-cl-optimism-weth"
       ],
       "denomination": "USD",
@@ -958,13 +960,14 @@
     },
     "EUROC": {
       "source": [
+        "coinbase-usdc",
+        "kraken-usd",
         "aerodrome-cl-base-usdc",
         "aerodrome-cl-base-usdc-2",
         "aerodrome-cl-base-weth",
-        "coinbase-usdc",
-        "kraken-usd",
         "trader-joe-v2-avalanche-usdc",
-        "uniswap-v3-ethereum-usdc-500"
+        "uniswap-v3-ethereum-usdc-500",
+        "uniswap-v4-ethereum-usdc-500"
       ],
       "denomination": "USD",
       "rateFeed": false
@@ -1154,7 +1157,7 @@
       "rateFeed": false
     },
     "BAL": {
-      "source": ["gate-usdt", "kucoin-usdt"],
+      "source": ["gate-usdt", "kraken-usd", "kucoin-usdt"],
       "denomination": "USD",
       "rateFeed": false
     },
@@ -1230,7 +1233,7 @@
       "rateFeed": false
     },
     "osETH": {
-      "source": ["curve-ethereum-reth"],
+      "source": ["curve-ethereum-reth", "fluid-ethereum-eth"],
       "denomination": "USD",
       "rateFeed": false
     },
@@ -1303,7 +1306,9 @@
         "curve-ethereum-3crv",
         "curve-ethereum-crvfrax",
         "curve-ethereum-frxusd",
-        "velodrome-optimism-usdc"
+        "velodrome-optimism-usdc",
+        "curve-ethereum-usdc",
+        "curve-arbitrumone-usdc"
       ],
       "denomination": "USD",
       "rateFeed": false
@@ -1609,7 +1614,8 @@
         "camelot-v3-arbitrumone-weth",
         "curve-arbitrumone-weth",
         "fluid-ethereum-eth",
-        "uniswap-v3-ethereum-wsteth-500"
+        "uniswap-v3-ethereum-wsteth-500",
+        "uniswap-v4-ethereum-wsteth-394"
       ],
       "denomination": "USD",
       "rateFeed": false
@@ -1678,6 +1684,7 @@
         "fluid-ethereum-usdt",
         "uniswap-v3-ethereum-usdc-100",
         "uniswap-v4-ethereum-usdt-45",
+        "uniswap-v4-ethereum-usdt-10",
         "xt-usdt"
       ],
       "denomination": "USD",
@@ -1905,7 +1912,15 @@
       "rateFeed": false
     },
     "SolvBTC": {
-      "source": ["pancake-swap-bnb-btcb-500", "uniswap-v3-ethereum-wbtc-500", "thena-v3-bnb-btcb"],
+      "source": [
+        "pancake-swap-bnb-btcb-100",
+        "pancake-swap-bnb-btcb-500",
+        "thena-v3-bnb-btcb",
+        "thena-v3-bnb-wbnb",
+        "uniswap-v3-bnb-btcb-100",
+        "uniswap-v3-ethereum-wbtc-500",
+        "blackhole-avalanche-btc.b-5000"
+      ],
       "denomination": "USD",
       "rateFeed": false,
       "valueCapConfig": {
@@ -2014,7 +2029,8 @@
         "curve-ethereum-eusd",
         "curve-ethereum-frxusd",
         "curve-ethereum-gho",
-        "curve-ethereum-usdc"
+        "curve-ethereum-usdc",
+        "curve-ethereum-alusd"
       ],
       "deviationCheck": {
         "deviationWithRecentValues": {
@@ -7546,7 +7562,13 @@
       "rateFeed": true
     },
     "TAC": {
-      "source": ["bitget-usdt", "bybit-usdt", "kraken-usd", "mexc-usdt"],
+      "source": [
+        "bitget-usdt",
+        "bybit-usdt",
+        "kraken-usd",
+        "mexc-usdt",
+        "pancake-swap-bnb-usd1-500"
+      ],
       "denomination": "USD",
       "rateFeed": false
     },
