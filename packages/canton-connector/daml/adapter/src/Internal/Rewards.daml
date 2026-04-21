@@ -22,20 +22,20 @@ empty_state = RewardState with
 
 maybeCreateRewards rewardFactory = maybeCreateRewardsForState (\(state, currentTimestamp) -> currentTimestamp >= state.lastCreateTimestamp + min_reward_creation_ms) rewardFactory
 
-maybeCreateRewardsForState stateCheck caller rewardFactory rewardState currentTimestamp count = do
+maybeCreateRewardsForState stateCheck caller rewardFactory rewardState currentTimestamp cost = do
   let state = fromOptional empty_state rewardState
-  let newCount = count + state.paidTrafficCost
+  let newCost = cost + state.paidTrafficCost
 
   case rewardFactory of
     Some factory
-      | newCount > 0 && stateCheck (state, currentTimestamp) ->
-          callCreateRewards caller factory currentTimestamp newCount
-    _ -> pure $ state with paidTrafficCost = newCount
+      | newCost > 0 && stateCheck (state, currentTimestamp) ->
+          callCreateRewards caller factory currentTimestamp newCost
+    _ -> pure $ state with paidTrafficCost = newCost
 
-maybeCreateRewardsWithoutState caller rewardFactory count = do
-  maybeCreateRewardsForState (const True) caller rewardFactory None 0 count
+maybeCreateRewardsWithoutState caller rewardFactory cost = do
+  maybeCreateRewardsForState (const True) caller rewardFactory None 0 cost
     >> pure ()
 
-callCreateRewards caller factory currentTimestamp count =
-  exercise factory CreateRewards with caller, count
+callCreateRewards caller factory currentTimestamp cost =
+  exercise factory CreateRewards with caller, count = cost
     >> pure empty_state with lastCreateTimestamp = currentTimestamp

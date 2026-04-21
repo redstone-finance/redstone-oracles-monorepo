@@ -24,7 +24,7 @@ main input = script do
   TestSetup{adapterCid, featuredDisclosure, factoryDisclosure} <-
     setUpAdapter "RewardsBatching" True parties
 
-  let paidTrafficCost = Some 17000
+  let paidTrafficCost = Some 23000
   let (feedA :: feedB :: _) = input.feedIds
 
   let write feedIds currentTime cid =
