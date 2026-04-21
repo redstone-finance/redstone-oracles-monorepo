@@ -98,6 +98,13 @@
     },
     "cbBTC": {
       "priceFeedAddress": "0x5e21f6530f656A38caE4F55500944753F662D184"
+    },
+    "sthUSD_FUNDAMENTAL": {
+      "priceFeedAddress": "0xcA727511c9d542AAb9eF406d24E5bbbE4567c22d",
+      "updateTriggersOverrides": {
+        "deviationPercentage": 0.5,
+        "timeSinceLastUpdateInMilliseconds": 43200000
+      }
     }
   }
 }
