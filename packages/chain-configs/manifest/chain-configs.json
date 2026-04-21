@@ -1526,6 +1526,26 @@
       "isAuctionModel": false,
       "twoDimensionalFees": false,
       "isMainnet": true
+    },
+    "arcTestnet": {
+      "name": "Arc Testnet",
+      "networkId": 5042002,
+      "currencySymbol": "USDC",
+      "publicRpcUrls": [
+        "https://rpc.testnet.arc.network",
+        "https://rpc.blockdaemon.testnet.arc.network",
+        "https://rpc.drpc.testnet.arc.network",
+        "https://rpc.quicknode.testnet.arc.network"
+      ],
+      "avgBlockTimeMs": 500,
+      "multicall3": {
+        "address": "0xaD6CC5a465E5c8284a49eC9eD10EFE275460678c",
+        "type": "RedstoneMulticall3",
+        "gasLimitPerCall": 1000000
+      },
+      "isAuctionModel": false,
+      "twoDimensionalFees": false,
+      "isMainnet": false
     }
   },
   "temporaryConfigUpdates": {

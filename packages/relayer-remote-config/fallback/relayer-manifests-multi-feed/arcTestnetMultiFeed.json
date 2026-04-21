@@ -1,0 +1,21 @@
+{
+  "chain": {
+    "name": "arcTestnet",
+    "id": 5042002
+  },
+  "updateTriggers": {
+    "deviationPercentage": 0.5,
+    "timeSinceLastUpdateInMilliseconds": 21600000
+  },
+  "adapterContract": "0x17B0887c92575b147AcB34F2Ce63071b0D8841fb",
+  "adapterContractType": "multi-feed",
+  "dataServiceId": "redstone-primary-prod",
+  "priceFeeds": {
+    "EUROC": {
+      "priceFeedAddress": "0xEB9972BE4202493316cd7459F1722de0E806D394"
+    },
+    "USDC": {
+      "priceFeedAddress": "0xab6982a14e811DF558F49C79923723281D0DD16A"
+    }
+  }
+}
