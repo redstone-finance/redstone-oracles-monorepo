@@ -30,7 +30,7 @@ main input = script do
 
   currentTime <- getTime
 
-  let paidTrafficCost = Some 17000
+  let paidTrafficCost = Some 23000
   let verifier = verifyResult input.feedIds (beneficiary,dso,viewer)
 
   featuredCid <- submit (actAs dso <> readAs beneficiary) do
@@ -99,7 +99,7 @@ verifyResult feedIds (beneficiary,dso,viewer) cost currentTime = do
   let weightSum = sum $ map (\(_, view) -> (fromSome view).weight) markers
   let decLength = intToDecimal . length
 
-  weightSum === cost * 60.0 / 1_000_000.0
+  weightSum === (cost - 6000.0) * 60.0 / 1_000_000.0
 
   pillEntries <- queryInterface @IRedStonePricePill viewer
   debug pillEntries
