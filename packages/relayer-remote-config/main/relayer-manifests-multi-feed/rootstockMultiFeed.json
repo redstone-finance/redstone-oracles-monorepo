@@ -12,7 +12,11 @@
   "dataServiceId": "redstone-primary-prod",
   "priceFeeds": {
     "BTC": {
-      "priceFeedAddress": "0x197225B3B017eb9b72Ac356D6B3c267d0c04c57c"
+      "priceFeedAddress": "0x197225B3B017eb9b72Ac356D6B3c267d0c04c57c",
+      "updateTriggersOverrides": {
+        "deviationPercentage": 0.5,
+        "timeSinceLastUpdateInMilliseconds": 21600000
+      }
     },
     "RIF": {
       "priceFeedAddress": "0xbbF121624c3b85C929Ac83872bf6c86b0976A55e"

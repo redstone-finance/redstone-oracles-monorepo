@@ -66,6 +66,12 @@
         "deviationPercentage": 0.1,
         "timeSinceLastUpdateInMilliseconds": 21600000
       }
+    },
+    "wiTRY_FUNDAMENTAL": {
+      "updateTriggersOverrides": {
+        "deviationPercentage": 0.000001,
+        "timeSinceLastUpdateInMilliseconds": 60000
+      }
     }
   }
 }
