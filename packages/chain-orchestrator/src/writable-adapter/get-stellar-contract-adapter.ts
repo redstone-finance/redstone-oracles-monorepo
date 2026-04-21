@@ -44,6 +44,7 @@ export const getStellarContractAdapter = (relayerConfig: PartialRelayerConfig) =
     .withRpcUrls(rpcUrls)
     .withQuarantineEnabled()
     .withHorizonUrl(horizonUrl)
+    .withMulticall()
     .build();
 
   const txDeliveryManConfig = {

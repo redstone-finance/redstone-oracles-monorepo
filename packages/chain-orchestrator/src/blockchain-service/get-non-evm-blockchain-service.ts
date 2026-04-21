@@ -68,6 +68,7 @@ export async function getNonEvmBlockchainService(networkId: NetworkId, rpcUrls: 
       const client = new StellarClientBuilder()
         .withNetworkId(networkId)
         .withRpcUrls(rpcUrls)
+        .withMulticall()
         .build();
 
       return new StellarBlockchainService(client);
@@ -142,6 +143,7 @@ export function getNonEvmBlockchainServiceWithTransfer(
       const client = new StellarClientBuilder()
         .withNetworkId(networkId)
         .withRpcUrls(rpcUrls)
+        .withMulticall()
         .build();
       const keypair = makeStellarKeypair(privateKey.value);
 

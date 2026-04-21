@@ -120,6 +120,7 @@ function getStellarContractAdapter(rpcUrls: string[], relayerManifest: AnyOnChai
   const client = new StellarClientBuilder()
     .withNetworkId(relayerManifest.chain.id)
     .withRpcUrls(rpcUrls)
+    .withMulticall()
     .build();
 
   return new StellarContractAdapter(client, relayerManifest.adapterContract);
