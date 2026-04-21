@@ -313,7 +313,3 @@ get-active-contracts: get-token
 			}, \
 			"activeAtOffset": '"$$LEDGER_END"' \
 		}' | jq -r '.'
-
-xxx:
-	curl -s -H "Authorization: Bearer $(TOKEN)" \
-	  "$(CANTON_API)/v2/packages" | jq '.packageIds[] | select(endswith("794a7d"))'

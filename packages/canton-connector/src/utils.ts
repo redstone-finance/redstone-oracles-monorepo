@@ -16,6 +16,7 @@ export type DamlTuple2<T = string, U = string> = { _1: T; _2: U };
 
 const CONTRACT_NOT_FOUND_ERROR = "CONTRACT_NOT_FOUND" as const;
 const LOCAL_VERDICT_INACTIVE_CONTRACTS_ERROR = "LOCAL_VERDICT_INACTIVE_CONTRACTS" as const;
+const LOCAL_VERDICT_LOCKED_CONTRACTS = "LOCAL_VERDICT_LOCKED_CONTRACTS" as const;
 const SEP = ":";
 
 export function isApiError(e: unknown): e is Error & { body: { code: string; cause: string } } {
@@ -31,7 +32,10 @@ export function isApiError(e: unknown): e is Error & { body: { code: string; cau
 }
 
 export function isWrongContractError(e: unknown): e is Error & {
-  message: typeof CONTRACT_NOT_FOUND_ERROR | typeof LOCAL_VERDICT_INACTIVE_CONTRACTS_ERROR;
+  message:
+    | typeof CONTRACT_NOT_FOUND_ERROR
+    | typeof LOCAL_VERDICT_INACTIVE_CONTRACTS_ERROR
+    | typeof LOCAL_VERDICT_LOCKED_CONTRACTS;
 } {
   if (e instanceof AggregateError) {
     return e.errors.some(isWrongContractError);
@@ -42,7 +46,8 @@ export function isWrongContractError(e: unknown): e is Error & {
   return (
     "message" in error &&
     (error.message === CONTRACT_NOT_FOUND_ERROR ||
-      error.message === LOCAL_VERDICT_INACTIVE_CONTRACTS_ERROR)
+      error.message === LOCAL_VERDICT_INACTIVE_CONTRACTS_ERROR ||
+      error.message === LOCAL_VERDICT_LOCKED_CONTRACTS)
   );
 }
 

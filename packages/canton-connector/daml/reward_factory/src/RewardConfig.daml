@@ -8,7 +8,7 @@ one_mb_price = 60
 
 reward_factor_frac_num = one_mb_price
 reward_factor_frac_den = one_mb
-reward_min_count = 0
+reward_min_count = 6 * one_kb -- estimated cost of creating marker
 
 rewardWeight total =
    if total > reward_min_count then

@@ -1,6 +1,6 @@
 import { TxDeliveryMan, WriteContractAdapter } from "@redstone-finance/multichain-kit";
 import { ContractParamsProvider } from "@redstone-finance/sdk";
-import { FP } from "@redstone-finance/utils";
+import { FP, RedstoneCommon } from "@redstone-finance/utils";
 import { CantonClient } from "../CantonClient";
 import { ActiveContractData } from "../utils";
 import { CantonContractAdapterConfig } from "./CantonContractAdapterConfig";
@@ -88,7 +88,7 @@ export class PricesCantonContractAdapter
   }
 
   addPaidTrafficCost(paidTrafficCost?: number) {
-    if (!paidTrafficCost) {
+    if (!RedstoneCommon.isDefined(paidTrafficCost) || paidTrafficCost < 0) {
       return;
     }
     this.logger.info(`Used paidTrafficCost: ${paidTrafficCost}`, { paidTrafficCost });
