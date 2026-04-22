@@ -8,15 +8,15 @@
     "settlementDatesKey": "USA500"
   },
   "XAG": {
-    "dividendYield": 0.027,
+    "dividendYield": 0.03,
     "settlementDatesKey": "XAG"
   },
   "XAU": {
-    "dividendYield": 0.014,
+    "dividendYield": 0.0145,
     "settlementDatesKey": "XAU"
   },
   "XPT": {
-    "dividendYield": 0.021,
+    "dividendYield": 0.022,
     "settlementDatesKey": "XPT"
   }
 }
