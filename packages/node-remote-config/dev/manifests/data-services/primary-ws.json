@@ -4,6 +4,7 @@
   "defaultSource": [],
   "sourceTimeout": 800,
   "minValidSourcesPercentage": 1,
+  "useCustomScheduler": true,
   "deviationCheck": {
     "deviationWithRecentValues": {
       "maxPercent": 30,
