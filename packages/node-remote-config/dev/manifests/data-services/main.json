@@ -2348,10 +2348,7 @@
     "EUR": {
       "source": [],
       "denomination": "USD",
-      "rateFeed": false,
-      "types": [
-        "rwa"
-      ]
+      "rateFeed": false
     },
     "GBP": {
       "source": [
