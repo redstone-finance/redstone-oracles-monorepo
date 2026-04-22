@@ -31,17 +31,16 @@ export class CantonScanApiClient {
     this.Defs = AllDefs[network];
   }
 
-  async getRemainingTraffic() {
+  async getTrafficStatus() {
     const nodeDefs = this.Defs.node;
 
     const result = await this.postWithProxy<TrafficStatusResponse>(
       `${nodeDefs.scanApiUrl}/domains/${nodeDefs.globalDomain}/members/PAR::${nodeDefs.participantPartyId}/traffic-status`
     );
-    const actual = result.data.traffic_status.actual;
 
     CantonScanApiClient.logger.info("Transfer response", { ...result.data });
 
-    return actual.total_limit - actual.total_consumed;
+    return result.data;
   }
 
   private async postWithProxy<T>(url: string, method = "GET") {

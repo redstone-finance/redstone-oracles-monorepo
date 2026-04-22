@@ -16,6 +16,7 @@ export const getCantonContractAdapter = (relayerConfig: PartialRelayerConfig) =>
     privateKey,
     expectedTxDeliveryTimeInMS,
     maxTxSendAttempts,
+    fallbackOffsetInMilliseconds,
   } = relayerConfig;
 
   const client = new CantonClientBuilder()
@@ -37,6 +38,7 @@ export const getCantonContractAdapter = (relayerConfig: PartialRelayerConfig) =>
       expectedTxDeliveryTimeInMs:
         expectedTxDeliveryTimeInMS ??
         CANTON_CONTRACT_ADAPTER_DEFAULT_CONFIG.expectedTxDeliveryTimeInMs,
+      shouldAccumulateTraffic: fallbackOffsetInMilliseconds === 0,
     },
     adapterContractPackageId
   );

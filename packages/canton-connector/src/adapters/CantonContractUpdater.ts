@@ -15,7 +15,7 @@ export interface CantonChoiceExerciser {
   ): Promise<{ result: ActiveContractData | string; metadata: TransactionMetadata }>;
   onError(): void;
   addPaidTrafficCost(paidTrafficCost?: number): void;
-  getRemainingTraffic(): Promise<number>;
+  getTotalConsumedTraffic(): Promise<number>;
 }
 
 export class CantonContractUpdater implements ContractUpdater {
@@ -52,7 +52,7 @@ export class CantonContractUpdater implements ContractUpdater {
     context: ContractUpdateContext
   ) {
     let initialTraffic: number | undefined;
-    this.getRemainingTraffic()
+    this.getTotalConsumedTraffic()
       .then((value) => (initialTraffic = value))
       .catch(() => {});
 
@@ -86,26 +86,23 @@ export class CantonContractUpdater implements ContractUpdater {
     metadata: TransactionMetadata,
     initialTraffic?: number
   ) {
-    const KB_IN_MB = 1024;
-    const DIGITS = 3;
-
-    const remainingTraffic = await this.getRemainingTraffic();
+    const totalConsumedTraffic = await this.getTotalConsumedTraffic();
     const usedTraffic =
-      RedstoneCommon.isDefined(initialTraffic) && RedstoneCommon.isDefined(remainingTraffic)
-        ? initialTraffic - remainingTraffic
+      RedstoneCommon.isDefined(initialTraffic) && RedstoneCommon.isDefined(totalConsumedTraffic)
+        ? totalConsumedTraffic - initialTraffic
         : undefined;
 
     const duration = Date.now() - startTime;
 
     CantonContractUpdater.logger.info(
       `exerciseWriteChoice of ${feedCount} feed${RedstoneCommon.getS(feedCount)} took ${duration} [ms]; ` +
-        `trafficCost: ${usedTraffic} bytes (${remainingTraffic ? (remainingTraffic / KB_IN_MB).toFixed(DIGITS) : remainingTraffic} kB remaining); ` +
+        `trafficCost: ${usedTraffic} bytes; ` +
         `metadata paidTrafficCost: ${metadata.paidTrafficCost}`,
       {
         duration,
         usedTraffic,
         feedCount,
-        remainingTraffic,
+        totalConsumedTraffic,
         metadata,
       }
     );
@@ -113,12 +110,12 @@ export class CantonContractUpdater implements ContractUpdater {
     return usedTraffic ?? metadata.paidTrafficCost;
   }
 
-  private async getRemainingTraffic() {
+  private async getTotalConsumedTraffic() {
     try {
-      return await this.exerciser.getRemainingTraffic();
+      return await this.exerciser.getTotalConsumedTraffic();
     } catch (e) {
       CantonContractUpdater.logger.warn(
-        `Failed to fetch remaining traffic: ${RedstoneCommon.stringifyError(e)}`
+        `Failed to fetch total consumed traffic: ${RedstoneCommon.stringifyError(e)}`
       );
 
       return undefined;

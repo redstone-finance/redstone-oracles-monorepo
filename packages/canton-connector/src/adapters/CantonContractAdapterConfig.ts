@@ -9,15 +9,20 @@ export type CantonContractAdapterConfig = {
   maxTxSendAttempts: number;
   expectedTxDeliveryTimeInMs: number;
   uniqueSignerThreshold: number;
+  shouldAccumulateTraffic: boolean;
 };
 
 export const CANTON_CONTRACT_ADAPTER_DEFAULT_CONFIG: Pick<
   CantonContractAdapterConfig,
-  "maxTxSendAttempts" | "expectedTxDeliveryTimeInMs" | "uniqueSignerThreshold"
+  | "maxTxSendAttempts"
+  | "expectedTxDeliveryTimeInMs"
+  | "uniqueSignerThreshold"
+  | "shouldAccumulateTraffic"
 > = {
   maxTxSendAttempts: 5,
   expectedTxDeliveryTimeInMs: RedstoneCommon.secsToMs(15),
   uniqueSignerThreshold: 3,
+  shouldAccumulateTraffic: true,
 };
 
 export function readAdditionalPillViewers() {
