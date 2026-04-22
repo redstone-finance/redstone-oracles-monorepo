@@ -34,6 +34,8 @@ const MAX_LEDGER_ENTRIES_PER_REQUEST = 195;
 
 export class StellarClient implements IStellarCaller {
   private readonly logger = loggerFactory("stellar-client");
+  private lastBlockNumber = 0;
+  private getBlockNumberPromise?: Promise<number>;
 
   private getNetwork = RedstoneCommon.memoize({
     functionToMemoize: () => this.server.getNetwork(),
@@ -65,7 +67,27 @@ export class StellarClient implements IStellarCaller {
   }
 
   async getBlockNumber() {
-    return (await this.server.getLatestLedger()).sequence;
+    if (this.getBlockNumberPromise) {
+      return await this.getBlockNumberPromise;
+    }
+
+    this.getBlockNumberPromise = this.server.getLatestLedger().then((value) => value.sequence);
+
+    try {
+      const blockNumber = await this.getBlockNumberPromise;
+
+      if (blockNumber < this.lastBlockNumber) {
+        throw new Error(
+          `Compromised block number: ${blockNumber} when ${this.lastBlockNumber} was previously set`
+        );
+      }
+
+      this.lastBlockNumber = blockNumber;
+
+      return blockNumber;
+    } finally {
+      this.getBlockNumberPromise = undefined;
+    }
   }
 
   async getTransaction<T>(hash: string, valueTransform?: (returnValue: xdr.ScVal) => T) {
@@ -151,7 +173,11 @@ export class StellarClient implements IStellarCaller {
       return;
     }
 
-    await RedstoneCommon.waitForBlockNumber(() => this.getBlockNumber(), blockNumber);
+    if (this.lastBlockNumber >= blockNumber) {
+      return;
+    }
+
+    await RedstoneCommon.waitForBlockNumber(this.getBlockNumber.bind(this), blockNumber);
   }
 
   async call<T>(

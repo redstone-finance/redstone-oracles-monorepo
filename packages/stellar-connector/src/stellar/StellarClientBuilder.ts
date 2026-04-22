@@ -45,7 +45,10 @@ export class StellarClientBuilder extends MultiExecutor.ClientBuilder<StellarCli
             : undefined
         ),
       {
-        getBlockNumber: StellarClientBuilder.blockNumberConsensusExecutor,
+        getBlockNumber: new MultiExecutor.CeilMedianConsensusExecutor(
+          MultiExecutor.DEFAULT_CONFIG.consensusQuorumRatio,
+          MultiExecutor.BLOCK_NUMBER_EXECUTION_TIMEOUT_MS * 2
+        ),
         sendTransaction: MultiExecutor.ExecutionMode.RACE,
         simulateOperation: MultiExecutor.ExecutionMode.AGREEMENT,
         getAccountBalance: MultiExecutor.ExecutionMode.AGREEMENT,
