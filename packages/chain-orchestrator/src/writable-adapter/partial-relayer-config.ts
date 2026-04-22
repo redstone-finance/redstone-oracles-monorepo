@@ -14,4 +14,5 @@ export type PartialRelayerConfig = {
   maxTxSendAttempts?: number;
   expectedTxDeliveryTimeInMS?: number;
   graphQLUrls?: string[];
+  fallbackOffsetInMilliseconds?: number;
 };

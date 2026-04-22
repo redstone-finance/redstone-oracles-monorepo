@@ -17,7 +17,7 @@ export class PricesCantonReadOnlyAdapter extends CantonContractAdapter implement
     client: CantonClient,
     protected readonly config: Pick<
       CantonContractAdapterConfig,
-      "adapterId" | "viewerPartyId" | "uniqueSignerThreshold"
+      "adapterId" | "viewerPartyId" | "uniqueSignerThreshold" | "shouldAccumulateTraffic"
     >,
     interfaceId = client.Defs.interfaceId,
     templateName = IADAPTER_TEMPLATE_NAME
