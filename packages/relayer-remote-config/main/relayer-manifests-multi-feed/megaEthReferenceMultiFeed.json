@@ -29,7 +29,6 @@
         "timeSinceLastUpdateInMilliseconds": 86400000
       }
     },
-    "USDm": {},
     "USDm-TWAP-60": {},
     "TRY": {
       "updateTriggersOverrides": {
