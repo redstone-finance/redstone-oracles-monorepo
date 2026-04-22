@@ -96,6 +96,12 @@
     },
     "EUR": {
       "source": [],
+      "skipBroadcasting": true,
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "EUR_FX": {
+      "source": [],
       "priceAggregator": "primarySource",
       "primarySourceAggregatorConfig": {
         "primarySource": "",
@@ -103,7 +109,6 @@
         "lowerClampPercent": 0.1,
         "upperClampPercent": 0.1
       },
-      "skipBroadcasting": true,
       "denomination": "USD",
       "rateFeed": false,
       "types": [
