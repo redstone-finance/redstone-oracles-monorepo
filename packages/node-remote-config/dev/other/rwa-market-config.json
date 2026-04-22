@@ -67,6 +67,7 @@
   "URNM": "UsEquity",
   "DAX": "UsEquity",
   "MSCI": "UsEquity",
+  "CURR": "UsEquity",
 
   "KOSPI": "Krx",
   "KOSPI200": "Krx",

@@ -945,6 +945,14 @@
       "types": [
         "rwa"
       ]
+    },
+    "CURR": {
+      "source": [],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
     }
   },
   "multiPointPackages": {
