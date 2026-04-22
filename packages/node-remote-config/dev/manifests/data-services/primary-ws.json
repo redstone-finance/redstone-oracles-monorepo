@@ -96,6 +96,23 @@
     },
     "EUR": {
       "source": [
+        "binance_deferred-usdc",
+        "binance_deferred-usdt",
+        "bitstamp_deferred-usd",
+        "kraken_deferred-usd",
+        "mexc_deferred-usdt",
+        "bitget_deferred-usdt-reversed",
+        "bitstamp_deferred-btc-reversed",
+        "coinbase_deferred-btc-reversed",
+        "kraken_deferred-usdt-reversed",
+        "okx_deferred-btc-reversed"
+      ],
+      "skipBroadcasting": true,
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "EUR_FX": {
+      "source": [
         "alltick-api-deferred",
         "ws-polygon-massive-commodities",
         "financialmodelingprep-deferred",
@@ -108,7 +125,6 @@
         "lowerClampPercent": 0.1,
         "upperClampPercent": 0.1
       },
-      "skipBroadcasting": true,
       "denomination": "USD",
       "rateFeed": false,
       "types": ["rwa"]
