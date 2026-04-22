@@ -1019,6 +1019,19 @@
       "denomination": "USD",
       "rateFeed": false,
       "types": ["rwa"]
+    },
+    "CURR": {
+      "source": [
+        "ws-aleno",
+        "databento",
+        "financialmodelingprep-deferred",
+        "ws-dx-feed",
+        "ws-polygon-massive",
+        "ws-twelve-data"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": ["rwa"]
     }
   },
   "multiPointPackages": {
