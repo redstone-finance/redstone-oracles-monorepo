@@ -88,9 +88,14 @@ export class PricesCantonContractAdapter
   }
 
   addPaidTrafficCost(paidTrafficCost?: number) {
-    if (!RedstoneCommon.isDefined(paidTrafficCost) || paidTrafficCost < 0) {
+    if (
+      !this.config.shouldAccumulateTraffic ||
+      !RedstoneCommon.isDefined(paidTrafficCost) ||
+      paidTrafficCost < 0
+    ) {
       return;
     }
+
     this.logger.info(`Used paidTrafficCost: ${paidTrafficCost}`, { paidTrafficCost });
 
     this.accumulatedPaidTrafficCost ??= 0;
@@ -101,7 +106,7 @@ export class PricesCantonContractAdapter
     this.activeContractData = undefined;
   }
 
-  getRemainingTraffic(): Promise<number> {
-    return this.client.getRemainingTraffic();
+  getTotalConsumedTraffic(): Promise<number> {
+    return this.client.getTotalConsumedTraffic();
   }
 }

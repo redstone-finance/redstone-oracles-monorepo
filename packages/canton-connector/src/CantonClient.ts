@@ -58,8 +58,17 @@ export class CantonClient {
       .offset;
   }
 
+  async getTotalConsumedTraffic() {
+    const status = await this.scanApiClient.getTrafficStatus();
+
+    return status.traffic_status.actual.total_consumed;
+  }
+
   async getRemainingTraffic() {
-    return await this.scanApiClient.getRemainingTraffic();
+    const status = await this.scanApiClient.getTrafficStatus();
+    const actual = status.traffic_status.actual;
+
+    return actual.total_limit - actual.total_consumed;
   }
 
   private async fetchActiveContracts(
