@@ -2146,8 +2146,7 @@
         "okx-btc-reversed"
       ],
       "denomination": "USD",
-      "rateFeed": false,
-      "types": ["rwa"]
+      "rateFeed": false
     },
     "GBP": {
       "source": [
