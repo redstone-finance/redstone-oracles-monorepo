@@ -13,7 +13,6 @@ export * from "./config-checks";
 export * from "./crypto";
 export * from "./fallback-manifests";
 export * from "./fetch-node-manifest";
-export * from "./fetch-relayer-manifest";
 export * from "./hash-utils";
 export * from "./influx/influxdb-config";
 export * from "./influx/InfluxService";
