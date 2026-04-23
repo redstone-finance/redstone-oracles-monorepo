@@ -2,7 +2,7 @@ import { ContractAdapter } from "@redstone-finance/multichain-kit";
 import { ContractData, ContractParamsProvider, LastRoundDetails } from "@redstone-finance/sdk";
 import { RedstoneCommon } from "@redstone-finance/utils";
 import { CantonClient } from "../client/CantonClient";
-import { convertDecimalValue, getArrayifiedFeedId } from "../utils/conversions";
+import { convertDecimalValue, decodeFeedId, getArrayifiedFeedId } from "../utils/conversions";
 import { ContractFilter } from "../utils/price-feed-utils";
 import { CantonContractAdapter } from "./CantonContractAdapter";
 import { CantonContractAdapterConfig } from "./CantonContractAdapterConfig";
@@ -30,6 +30,12 @@ export class PricesCantonReadOnlyAdapter extends CantonContractAdapter implement
       config.adapterId,
       interfaceId
     );
+  }
+
+  async getDataFeedIds(offset?: number) {
+    const feedData = await this.readFeedData(offset);
+
+    return feedData.map(([feedId]) => decodeFeedId(feedId));
   }
 
   protected override getContractFilter() {
