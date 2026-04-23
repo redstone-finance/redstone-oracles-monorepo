@@ -1,6 +1,6 @@
 import { ChainTypeEnum, MultiExecutor } from "@redstone-finance/utils";
+import { chainIdToNetwork, networkToChainId } from "../CantonNetwork";
 import { CantonClient } from "./CantonClient";
-import { chainIdToNetwork, networkToChainId } from "./CantonNetwork";
 import { KeycloakTokenProviderParams } from "./KeycloakTokenProviderParams";
 import { KeycloakTokenProvider } from "./keycloak-token-provider";
 

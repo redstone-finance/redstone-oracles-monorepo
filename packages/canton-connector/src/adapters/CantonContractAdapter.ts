@@ -1,7 +1,7 @@
 import { FP, loggerFactory, RedstoneCommon } from "@redstone-finance/utils";
-import { CantonClient } from "../CantonClient";
-import { ContractFilter } from "../price-feed-utils";
-import { ActiveContractData, combineIntoId, isWrongContractError } from "../utils";
+import { CantonClient } from "../client/CantonClient";
+import { ContractFilter } from "../utils/price-feed-utils";
+import { ActiveContractData, combineIntoId, isWrongContractError } from "../utils/utils";
 
 export const RETRY_CONFIG: Omit<RedstoneCommon.RetryConfig, "fn"> = {
   maxRetries: 5,

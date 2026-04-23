@@ -2,7 +2,6 @@ import {
   ContractUpdater,
   MultiTxDeliveryMan,
   TxDeliveryMan,
-  TxDeliveryManUpdateStatus,
 } from "@redstone-finance/multichain-kit";
 import { ContractParamsProvider } from "@redstone-finance/sdk";
 import { FP, RedstoneCommon } from "@redstone-finance/utils";
@@ -44,10 +43,7 @@ export class StellarOperationSender {
     return this.executor;
   }
 
-  async updateContract(
-    updater: ContractUpdater,
-    params: ContractParamsProvider
-  ): Promise<TxDeliveryManUpdateStatus> {
+  async updateContract(updater: ContractUpdater, params: ContractParamsProvider) {
     return await this.txDeliveryMan.updateContract(updater, params);
   }
 

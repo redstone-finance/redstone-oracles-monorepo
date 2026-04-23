@@ -1,23 +1,26 @@
-import { TxDeliveryMan, WriteContractAdapter } from "@redstone-finance/multichain-kit";
+import { WriteContractAdapter } from "@redstone-finance/multichain-kit";
 import { ContractParamsProvider } from "@redstone-finance/sdk";
-import { FP, RedstoneCommon } from "@redstone-finance/utils";
-import { CantonClient } from "../CantonClient";
-import { ActiveContractData } from "../utils";
+import { FP } from "@redstone-finance/utils";
+import { CantonClient } from "../client/CantonClient";
+import { CantonChoiceExerciser, CantonContractUpdater } from "../tx/CantonContractUpdater";
+import { CantonTrafficMeter } from "../tx/CantonTrafficMeter";
+import { CantonTxDeliveryMan } from "../tx/CantonTxDeliveryMan";
+import { ActiveContractData } from "../utils/utils";
 import { CantonContractAdapterConfig } from "./CantonContractAdapterConfig";
-import { CantonChoiceExerciser, CantonContractUpdater } from "./CantonContractUpdater";
 import { DEFS_KEY_FEATURED_APP_RIGHT } from "./CoreClientCantonContractAdapter";
 import { IADAPTER_TEMPLATE_NAME, PricesCantonReadOnlyAdapter } from "./PricesCantonReadOnlyAdapter";
 
 export const WRITE_PRICES_CHOICE = "WritePrices";
+const LEGACY_INTERFACE_ID = "#redstone-interface-v12";
 
 export class PricesCantonContractAdapter
   extends PricesCantonReadOnlyAdapter
   implements WriteContractAdapter, CantonChoiceExerciser
 {
-  private readonly txDeliveryMan: TxDeliveryMan;
+  private readonly txDeliveryMan: CantonTxDeliveryMan;
   private readonly contractUpdater: CantonContractUpdater;
+  private readonly trafficMeter: CantonTrafficMeter;
   private readonly additionalPillViewers?: string[];
-  private accumulatedPaidTrafficCost?: number;
 
   constructor(
     client: CantonClient,
@@ -28,7 +31,12 @@ export class PricesCantonContractAdapter
     super(client, config, interfaceId, templateName);
 
     this.additionalPillViewers = config.additionalPillViewers;
-    this.txDeliveryMan = new TxDeliveryMan(config);
+    this.trafficMeter = new CantonTrafficMeter(config.shouldAccumulateTraffic);
+    this.txDeliveryMan = new CantonTxDeliveryMan(
+      config,
+      this.trafficMeter,
+      this.client.getTotalConsumedTraffic.bind(this.client)
+    );
     this.contractUpdater = new CantonContractUpdater(this, config.updaterPartyId);
   }
 
@@ -37,14 +45,11 @@ export class PricesCantonContractAdapter
   }
 
   async exerciseWritePricesChoice(actAs: string, argument: object) {
-    const paidTrafficCost = this.accumulatedPaidTrafficCost;
-    this.accumulatedPaidTrafficCost = 0;
-
-    if (paidTrafficCost) {
-      this.logger.info(`Consuming accumulatedPaidTrafficCost: ${paidTrafficCost}`, {
-        paidTrafficCost,
-      });
-    }
+    const paidTrafficCost = this.trafficMeter.consumeAccumulated();
+    const context =
+      this.interfaceId === LEGACY_INTERFACE_ID
+        ? { additionalPillViewers: this.additionalPillViewers }
+        : { context: { additionalPillViewers: this.additionalPillViewers, paidTrafficCost } };
 
     const { result, metadata } = await this.exerciseChoice<ActiveContractData | string>(
       this.config.viewerPartyId,
@@ -52,7 +57,7 @@ export class PricesCantonContractAdapter
       WRITE_PRICES_CHOICE,
       {
         ...argument,
-        context: { additionalPillViewers: this.additionalPillViewers, paidTrafficCost },
+        ...context,
       },
       {
         withCurrentTime: true,
@@ -63,8 +68,8 @@ export class PricesCantonContractAdapter
     );
 
     if (typeof result === "string") {
-      // returning paidTrafficCost when no update was performed
-      this.addPaidTrafficCost(paidTrafficCost);
+      // no update was performed — return the consumed cost back to the meter
+      this.trafficMeter.register(undefined, undefined, { paidTrafficCost });
     }
 
     return { result, metadata };
@@ -87,26 +92,7 @@ export class PricesCantonContractAdapter
     }
   }
 
-  addPaidTrafficCost(paidTrafficCost?: number) {
-    if (
-      !this.config.shouldAccumulateTraffic ||
-      !RedstoneCommon.isDefined(paidTrafficCost) ||
-      paidTrafficCost < 0
-    ) {
-      return;
-    }
-
-    this.logger.info(`Used paidTrafficCost: ${paidTrafficCost}`, { paidTrafficCost });
-
-    this.accumulatedPaidTrafficCost ??= 0;
-    this.accumulatedPaidTrafficCost += paidTrafficCost;
-  }
-
   onError() {
     this.activeContractData = undefined;
-  }
-
-  getTotalConsumedTraffic(): Promise<number> {
-    return this.client.getTotalConsumedTraffic();
   }
 }
