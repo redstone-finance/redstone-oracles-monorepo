@@ -6,6 +6,8 @@ import { StellarClient } from "./StellarClient";
 import { StellarMulticall } from "./StellarMulticall";
 
 export class StellarClientBuilder extends MultiExecutor.ClientBuilder<StellarClient> {
+  private static instances: { [p: string]: StellarClient | undefined } = {};
+
   protected override chainType = ChainTypeEnum.enum.stellar;
   private horizonUrl?: string;
   private isWithMulticall = false;
@@ -36,14 +38,7 @@ export class StellarClientBuilder extends MultiExecutor.ClientBuilder<StellarCli
       : undefined;
 
     return this.makeMultiExecutor(
-      (url) =>
-        new StellarClient(
-          new rpc.Server(url, { allowHttp: true }),
-          horizon,
-          this.isWithMulticall
-            ? StellarMulticall.instanceForUrl(url, NETWORK_NAMES[this.chainId!])
-            : undefined
-        ),
+      (url) => StellarClientBuilder.getStellarClient(this, url, horizon),
       {
         getBlockNumber: new MultiExecutor.CeilMedianConsensusExecutor(
           MultiExecutor.DEFAULT_CONFIG.consensusQuorumRatio,
@@ -58,5 +53,22 @@ export class StellarClientBuilder extends MultiExecutor.ClientBuilder<StellarCli
         getInstanceTtl: MultiExecutor.ExecutionMode.AGREEMENT,
       }
     );
+  }
+
+  private static getStellarClient(
+    builder: StellarClientBuilder,
+    url: string,
+    horizon?: HorizonClient
+  ) {
+    const networkName = NETWORK_NAMES[builder.chainId!];
+    const key = `${networkName}#${url}#${builder.horizonUrl}#${builder.isWithMulticall}`;
+
+    this.instances[key] ??= new StellarClient(
+      new rpc.Server(url, { allowHttp: true }),
+      horizon,
+      builder.isWithMulticall ? StellarMulticall.instanceForUrl(url, networkName) : undefined
+    );
+
+    return this.instances[key];
   }
 }
