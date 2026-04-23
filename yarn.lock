@@ -10452,10 +10452,13 @@ __metadata:
     "@redstone-finance/node-commons": "workspace:*"
     "@redstone-finance/node-remote-config": "workspace:*"
     "@redstone-finance/oracle-node": "workspace:*"
+    "@redstone-finance/sdk": "workspace:*"
     "@redstone-finance/utils": "workspace:*"
     "@types/aws-lambda": "npm:^8.10.145"
     axios: "npm:^1.13.5"
+    decimal.js: "npm:^10.4.3"
     dotenv: "npm:^16.0.3"
+    ethers: "npm:^5.7.2"
     zod: "npm:^4.1.12"
   languageName: unknown
   linkType: soft
