@@ -2,9 +2,9 @@ module RewardConfig (
     rewardWeight
 ) where
 
-reward_min_count = 150
-reward_factor_frac_num = 15
-reward_factor_frac_den = 100
+reward_min_count = 0
+reward_factor_frac_num = 111
+reward_factor_frac_den = 1000
 
 rewardWeight total =
    if total >= reward_min_count then
