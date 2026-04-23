@@ -1,11 +1,11 @@
 import { RedstoneCommon } from "@redstone-finance/utils";
-import { CantonClient } from "../CantonClient";
+import { CantonClient } from "../client/CantonClient";
 import {
   ARCHIVE_CHOICE,
   ContractFilter,
   createStalenessFilter,
   IPRICE_PILL_TEMPLATE_NAME,
-} from "../price-feed-utils";
+} from "../utils/price-feed-utils";
 import { CantonContractAdapter, RETRY_CONFIG } from "./CantonContractAdapter";
 
 const ARCHIVE_BATCH_SIZE = 200;

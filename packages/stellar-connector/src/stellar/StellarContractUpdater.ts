@@ -1,4 +1,4 @@
-import { ContractUpdater, ContractUpdateStatus } from "@redstone-finance/multichain-kit";
+import { ContractUpdater } from "@redstone-finance/multichain-kit";
 import { ContractParamsProvider } from "@redstone-finance/sdk";
 import { FP } from "@redstone-finance/utils";
 import { Contract } from "@stellar/stellar-sdk";
@@ -10,16 +10,15 @@ import {
 
 const WRITE_PRICES_METHOD = "write_prices";
 
-export class StellarContractUpdater implements ContractUpdater<StellarContractUpdateContext> {
+export class StellarContractUpdater
+  implements ContractUpdater<unknown, StellarContractUpdateContext>
+{
   constructor(
     private readonly executor: StellarTransactionExecutor,
     private readonly contract: Contract
   ) {}
 
-  async update(
-    paramsProvider: ContractParamsProvider,
-    context: StellarContractUpdateContext
-  ): Promise<ContractUpdateStatus> {
+  async update(paramsProvider: ContractParamsProvider, context: StellarContractUpdateContext) {
     const updater = XdrUtils.addressToScVal(await this.executor.getPublicKey());
 
     const args = await this.prepareCallArgs(paramsProvider, context.updateStartTimeMs);

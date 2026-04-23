@@ -1,11 +1,7 @@
 import type { Keypair } from "@mysten/sui/cryptography";
 import { ParallelTransactionExecutor, Transaction } from "@mysten/sui/transactions";
 import { MIST_PER_SUI } from "@mysten/sui/utils";
-import {
-  ContractUpdateContext,
-  ContractUpdater,
-  ContractUpdateStatus,
-} from "@redstone-finance/multichain-kit";
+import { ContractUpdateContext, ContractUpdater } from "@redstone-finance/multichain-kit";
 import { ContractParamsProvider } from "@redstone-finance/sdk";
 import { FP, loggerFactory, RedstoneCommon } from "@redstone-finance/utils";
 import { SuiConfig } from "./config";
@@ -42,7 +38,7 @@ export class SuiContractUpdater implements ContractUpdater {
     paramsProvider: ContractParamsProvider,
     context: ContractUpdateContext,
     attempt: number
-  ): Promise<ContractUpdateStatus> {
+  ) {
     const txResult = await FP.tryCallAsyncStringifyError(() =>
       this.writer.prepareWritePricesTransaction(paramsProvider, context.updateStartTimeMs, attempt)
     );
