@@ -1531,14 +1531,6 @@
       "denomination": "USD",
       "rateFeed": false
     },
-    "MODE": {
-      "source": [
-        "gate-usdt",
-        "mexc-usdt"
-      ],
-      "denomination": "USD",
-      "rateFeed": false
-    },
     "rsETH_FUNDAMENTAL": {
       "source": [
         "ethereum-evm-fetcher-kelp"
