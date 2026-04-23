@@ -6,7 +6,6 @@
   "types": "dist/src/index.d.ts",
   "license": "MIT",
   "scripts": {
-    "test": "yarn global:jest:cov",
     "clean": "yarn global:ts-clean",
     "build": "yarn global:tsc -p tsconfig.build.json",
     "build:turbo": "yarn global:turbo build",
@@ -16,6 +15,7 @@
     "pack-package": "yarn build && cd dist && npm pack",
     "lint": "yarn global:eslint .",
     "lint:fix": "yarn global:eslint --fix .",
+    "test": "yarn global:jest:cov",
     "run-sig-der": "yarn global:ts-node scripts/sig_der.ts",
     "sample-run": "yarn build:turbo && node dist/scripts/sample-run.js",
     "core-client-sample": "yarn build:turbo && node dist/scripts/core-client-sample.js",
@@ -30,6 +30,7 @@
     "lodash": "^4.17.23"
   },
   "devDependencies": {
+    "@redstone-finance/jest-config": "workspace:*",
     "axios": "^1.13.5",
     "dotenv": "^16.0.3",
     "openapi-typescript-codegen": "^0.29.0",
