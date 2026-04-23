@@ -795,7 +795,6 @@
         "lowerClampPercent": 0.1,
         "upperClampPercent": 0.1
       },
-      "broadcasters": ["influx"],
       "deviationCheck": {
         "deviationWithRecentValues": {
           "maxPercent": 30,
