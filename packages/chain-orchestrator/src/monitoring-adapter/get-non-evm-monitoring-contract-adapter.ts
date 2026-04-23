@@ -11,7 +11,11 @@ import {
   RadixClientBuilder,
 } from "@redstone-finance/radix-connector";
 import { SolanaConnectionBuilder, SolanaContractAdapter } from "@redstone-finance/solana-connector";
-import { StellarClientBuilder, StellarContractAdapter } from "@redstone-finance/stellar-connector";
+import {
+  Sep40StellarContractAdapter,
+  StellarClientBuilder,
+  StellarContractAdapter,
+} from "@redstone-finance/stellar-connector";
 import {
   makeSuiConfig,
   SuiClientBuilders,
@@ -37,7 +41,7 @@ export async function getNonEvmMonitoringContractAdapter(
     case "solana":
       return getSolanaContractAdapter(rpcUrls, relayerManifest);
     case "stellar":
-      return getStellarContractAdapter(rpcUrls, relayerManifest);
+      return getStellarContractAdapter(rpcUrls, relayerManifest, relayerManifest.withRounds);
     case "fuel":
     case "canton":
       return await getCantonContractAdapter(rpcUrls, relayerManifest);
@@ -116,14 +120,21 @@ async function getMoveContractAdapter(
   return await ForwardCompatibleContractAdapter.fromConnector(connector);
 }
 
-function getStellarContractAdapter(rpcUrls: string[], relayerManifest: AnyOnChainRelayerManifest) {
+function getStellarContractAdapter(
+  rpcUrls: string[],
+  relayerManifest: AnyOnChainRelayerManifest,
+  withRounds?: boolean
+) {
   const client = new StellarClientBuilder()
     .withNetworkId(relayerManifest.chain.id)
     .withRpcUrls(rpcUrls)
     .withMulticall()
     .build();
 
-  return new StellarContractAdapter(client, relayerManifest.adapterContract);
+  return new (withRounds ? Sep40StellarContractAdapter : StellarContractAdapter)(
+    client,
+    relayerManifest.adapterContract
+  );
 }
 
 async function getCantonContractAdapter(

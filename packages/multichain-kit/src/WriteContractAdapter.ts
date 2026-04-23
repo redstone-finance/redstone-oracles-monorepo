@@ -7,4 +7,6 @@ export interface WriteContractAdapter extends ContractAdapter {
     options?: UpdatePricesOptions
   ): Promise<string>;
   getSignerAddress(): Promise<string>;
+  getUniqueSignerThreshold(blockNumber?: number): Promise<number>;
+  getPricesFromPayload(paramsProvider: ContractParamsProvider): Promise<bigint[]>;
 }

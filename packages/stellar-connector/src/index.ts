@@ -1,4 +1,6 @@
 export * from "./adapters/PriceFeedStellarContractAdapter";
+export * from "./adapters/Sep40ContractReader";
+export * from "./adapters/Sep40StellarContractAdapter";
 export * from "./adapters/StellarContractAdapter";
 export * from "./adapters/StellarContractOps";
 export * from "./adapters/StellarWriteContractAdapter";

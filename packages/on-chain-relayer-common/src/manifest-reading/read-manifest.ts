@@ -1,4 +1,5 @@
 import {
+  CommonManifestSchemaStrict,
   MANIFEST_TYPE_MULTI_FEED,
   MANIFEST_TYPE_NON_EVM,
   MANIFEST_TYPE_PRICE_FEEDS,
@@ -8,7 +9,12 @@ import {
   OnChainRelayerManifest,
   OnChainRelayerManifestSchemaStrict,
 } from "../schemas";
-import { getOnChainRelayerBasePath, readData } from "./read-utils";
+import {
+  getOnChainRelayerBasePath,
+  readData,
+  readDataFromDir,
+  splitManifestUrl,
+} from "./read-utils";
 
 export function readAnyManifest(
   type: ManifestType,
@@ -47,4 +53,14 @@ export function readManifest(
   directory = getOnChainRelayerBasePath()
 ) {
   return readAnyManifest(type, name, directory);
+}
+
+export function readAnyRelayerManifestWithUrl(
+  url: string,
+  manifestsDir = getOnChainRelayerBasePath()
+) {
+  const { dir, filename } = splitManifestUrl(url);
+  const data = readDataFromDir(filename, dir, manifestsDir);
+
+  return CommonManifestSchemaStrict.strict().parse(JSON.parse(data.toString()));
 }

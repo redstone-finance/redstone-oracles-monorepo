@@ -1,8 +1,8 @@
 import { RedstoneCommon } from "@redstone-finance/utils";
 import { Address, nativeToScVal, xdr } from "@stellar/stellar-sdk";
 
-const STELLAR_ASSET = "Stellar" as const;
-const OTHER_ASSET = "Other" as const;
+export const STELLAR_ASSET = "Stellar" as const;
+export const OTHER_ASSET = "Other" as const;
 
 export type Sep40Asset =
   | { tag: typeof STELLAR_ASSET; address: Address }
@@ -37,8 +37,16 @@ export function parseAssets(retVal: unknown) {
   return (retVal as unknown[]).map(parseAsset);
 }
 
+export function isOtherAsset(asset: Sep40Asset) {
+  return asset.tag === OTHER_ASSET;
+}
+
+export function isStellarAsset(asset: Sep40Asset) {
+  return asset.tag === STELLAR_ASSET;
+}
+
 export function assetLabelFor(asset: Sep40Asset) {
-  return asset.tag === "Stellar" ? asset.address.toString() : asset.symbol;
+  return isStellarAsset(asset) ? asset.address.toString() : asset.symbol;
 }
 
 export function feedMappingsToScVal(

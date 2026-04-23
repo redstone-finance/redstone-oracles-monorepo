@@ -9,4 +9,5 @@ export * from "./MultiTxDeliveryMan";
 export * from "./PriceFeedAdapter";
 export * from "./sample-run";
 export * from "./TxDeliveryMan";
+export * from "./write-simultaneously";
 export * from "./WriteContractAdapter";

@@ -1,15 +1,14 @@
 import { ContractAdapter } from "@redstone-finance/multichain-kit";
 import { ContractData, ContractParamsProvider, LastRoundDetails } from "@redstone-finance/sdk";
+import { loggerFactory } from "@redstone-finance/utils";
 import { Contract } from "@stellar/stellar-sdk";
 import _ from "lodash";
-import { splitParamsIntoBatches } from "../split-params-into-batches";
 import { StellarClient } from "../stellar/StellarClient";
 import * as XdrUtils from "../XdrUtils";
 
-const GET_PRICES_METHOD = "get_prices";
-const UNIQUE_SIGNER_COUNT_METHOD = "unique_signer_threshold";
-
 export class StellarContractAdapter implements ContractAdapter {
+  protected static logger = loggerFactory("stellar-contract-adapter");
+
   protected readonly contract: Contract;
 
   constructor(
@@ -37,46 +36,11 @@ export class StellarContractAdapter implements ContractAdapter {
     return Object.fromEntries(data) as ContractData;
   }
 
-  async getUniqueSignerThreshold(blockNumber?: number) {
-    return await this.client.call(
-      {
-        method: UNIQUE_SIGNER_COUNT_METHOD,
-        contract: this.contract,
-      },
-      blockNumber,
-      Number
-    );
-  }
-
   async readLatestUpdateBlockTimestamp(feedId: string, blockNumber?: number) {
     return (await this.getContractData([feedId], blockNumber))[0][1]!.lastBlockTimestampMS;
   }
 
-  async getPricesFromPayload(paramsProvider: ContractParamsProvider) {
-    const paramsProviders = splitParamsIntoBatches(paramsProvider);
-
-    const promises = paramsProviders.map(async (paramsProvider) => {
-      const args = await prepareCallArgs(paramsProvider);
-
-      const sim = await this.client.call(
-        {
-          method: GET_PRICES_METHOD,
-          contract: this.contract,
-          args,
-        },
-        undefined,
-        XdrUtils.parseGetPrices
-      );
-
-      return sim.prices;
-    });
-
-    const prices = await Promise.all(promises);
-
-    return prices.flat();
-  }
-
-  private async getContractData(
+  protected async getContractData(
     feedIds: string[],
     blockNumber?: number
   ): Promise<[string, LastRoundDetails | undefined][]> {
@@ -88,24 +52,4 @@ export class StellarContractAdapter implements ContractAdapter {
 
     return _.zip(feedIds, data) as [string, LastRoundDetails | undefined][];
   }
-}
-
-async function prepareCallArgs(
-  paramsProvider: ContractParamsProvider,
-  metadataTimestamp = Date.now()
-) {
-  const feedIdsScVal = XdrUtils.mapArrayToScVec(
-    paramsProvider.getDataFeedIds(),
-    XdrUtils.stringToScVal
-  );
-
-  const payloadScVal = XdrUtils.numbersToScvBytes(
-    await paramsProvider.getPayloadData({
-      withUnsignedMetadata: true,
-      metadataTimestamp,
-      componentName: "stellar-connector",
-    })
-  );
-
-  return [feedIdsScVal, payloadScVal];
 }

@@ -1,10 +1,11 @@
-import { Contract } from "@stellar/stellar-sdk";
-import { StellarClientBuilder } from "../src";
-import { Sep40StellarContractAdapter } from "../src/adapters/Sep40StellarContractAdapter";
-import { FEEDS } from "./consts";
+import { readFromContractAdapter } from "@redstone-finance/multichain-kit";
+import { Sep40StellarContractAdapter, StellarClientBuilder } from "../src";
+import { OTHER_ASSET } from "../src/sep-40-types";
+import { FEEDS as BASE_FEEDS } from "./consts";
 import { loadSep40Id, readNetwork, readUrl } from "./utils";
 
-const ASSETS = FEEDS.map((feed) => ({ tag: "Other" as const, symbol: feed }));
+const FEEDS = [...BASE_FEEDS, "__MISSING_FEED__"];
+const ASSETS = FEEDS.map((feed) => ({ tag: OTHER_ASSET, symbol: feed }));
 const RECORDS = 3;
 
 async function main() {
@@ -12,11 +13,15 @@ async function main() {
   const client = new StellarClientBuilder()
     .withStellarNetwork(network)
     .withRpcUrl(readUrl())
+    .withMulticall()
     .build();
 
   const sep40Id = loadSep40Id();
-  const contract = new Contract(sep40Id);
-  const adapter = new Sep40StellarContractAdapter(client, contract);
+  const priceAdapter = new Sep40StellarContractAdapter(client, sep40Id);
+
+  await readFromContractAdapter(priceAdapter, BASE_FEEDS);
+
+  const adapter = priceAdapter.reader;
 
   console.log(`\nSEP-40 contract: ${sep40Id}\n`);
 

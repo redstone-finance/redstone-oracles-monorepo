@@ -6,9 +6,7 @@ export interface ContractAdapter {
     blockNumber?: number,
     withDataFeedValues?: boolean
   ): Promise<ContractData>;
-  getUniqueSignerThreshold(blockNumber?: number): Promise<number>;
   getDataFeedIds?(blockNumber?: number): Promise<string[] | undefined>;
-  getPricesFromPayload(paramsProvider: ContractParamsProvider): Promise<bigint[]>;
   readPricesFromContract(
     paramsProvider: ContractParamsProvider,
     blockNumber?: number
