@@ -1,9 +1,5 @@
-import {
-  ContractParamsProvider,
-  DataPackagesRequestParams,
-  DataPackagesResponseCache,
-  getSignersForDataServiceId,
-} from "@redstone-finance/sdk";
+import { writeSimultaneously } from "@redstone-finance/multichain-kit";
+import { DataPackagesRequestParams, getSignersForDataServiceId } from "@redstone-finance/sdk";
 import { RedstoneCommon } from "@redstone-finance/utils";
 import "dotenv/config";
 import {
@@ -15,16 +11,7 @@ import {
 } from "../src";
 import { getGraphQLUrls, getRpcUrls } from "./get-rpc-urls";
 
-async function prepareParamsProviderWithData(requestParams: DataPackagesRequestParams) {
-  const cache = new DataPackagesResponseCache();
-  const paramsProvider = new ContractParamsProvider(requestParams, cache);
-  const data = await paramsProvider.requestDataPackages();
-  cache.update(data, requestParams);
-
-  return paramsProvider;
-}
-
-export async function writeSimultaneously() {
+async function writeSimultaneouslyToSui() {
   const network = RedstoneCommon.getFromEnv("NETWORK", SuiNetworkSchema);
   const rpcUrls = await getRpcUrls(network);
   const graphqlUrls = getGraphQLUrls(network);
@@ -46,20 +33,11 @@ export async function writeSimultaneously() {
 
   const adapter = new SuiWriteContractAdapter(suiClient, makeSuiKeypair(), readSuiConfig(network));
 
-  const paramsProvider = await prepareParamsProviderWithData(requestParams);
-  await RedstoneCommon.sleep(11_000);
-  const paramsProvider2 = await prepareParamsProviderWithData(requestParams);
-  await RedstoneCommon.sleep(3_000);
-
-  await Promise.allSettled(
-    [paramsProvider2, paramsProvider].map((paramsProvider) =>
-      adapter.writePricesFromPayloadToContract(paramsProvider)
-    )
-  );
+  await writeSimultaneously(requestParams, adapter);
 }
 
 async function main() {
-  await writeSimultaneously();
+  await writeSimultaneouslyToSui();
 }
 
 void main();
