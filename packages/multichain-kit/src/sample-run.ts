@@ -17,7 +17,7 @@ export async function sampleRun(
   const blockNumber = await provider.getBlockNumber();
   await executePushModel(adapter, paramsProvider, blockNumber, refreshStateCallback);
 
-  await readFromContractAdapter(adapter, paramsProvider, blockNumber);
+  await readFromContractAdapter(adapter, paramsProvider.getDataFeedIds(), blockNumber);
 
   if (priceFeedAdapter) {
     await readFromPriceFeed(priceFeedAdapter, blockNumber);
@@ -33,7 +33,10 @@ function logHeader(text: string, lineSize = 80) {
   console.log("-".repeat(lineSize));
 }
 
-async function executePullModel(adapter: ContractAdapter, paramsProvider: ContractParamsProvider) {
+async function executePullModel(
+  adapter: WriteContractAdapter,
+  paramsProvider: ContractParamsProvider
+) {
   logHeader("Pulling values using core model");
   try {
     const coreValues = await adapter.getPricesFromPayload(paramsProvider);
@@ -61,11 +64,13 @@ async function executePushModel(
   console.log(`Current block number: ${blockNumber}`);
 
   logHeader("Viewing values from contract");
-  const [values, readTimestamp] = await Promise.all([
+  const [values, readTimestamp, uniqueSignerThreshold] = await Promise.all([
     adapter.readPricesFromContract(paramsProvider, blockNumber),
     adapter.readTimestampFromContract(paramsProvider.getDataFeedIds()[0], blockNumber),
+    adapter.getUniqueSignerThreshold(blockNumber),
   ]);
 
+  console.log(`Unique signer count: ${uniqueSignerThreshold}`);
   console.log(
     `Values read from contract: ${String(values.map((v) => RedstoneCommon.convertValueDec(v, consts.DEFAULT_NUM_VALUE_DECIMALS)))}`
   );
@@ -76,21 +81,19 @@ async function executePushModel(
   return blockNumber;
 }
 
-async function readFromContractAdapter(
+export async function readFromContractAdapter(
   adapter: ContractAdapter,
-  paramsProvider: ContractParamsProvider,
-  blockNumber: number
+  feedIds: string[],
+  blockNumber?: number
 ) {
   try {
-    const [lastUpdateBlockTimestamp, uniqueSignerThreshold, contractData] = await Promise.all([
-      adapter.readLatestUpdateBlockTimestamp(paramsProvider.getDataFeedIds()[0], blockNumber),
-      adapter.getUniqueSignerThreshold(blockNumber),
-      adapter.readContractData(paramsProvider.getDataFeedIds(), blockNumber),
+    const [lastUpdateBlockTimestamp, contractData] = await Promise.all([
+      adapter.readLatestUpdateBlockTimestamp(feedIds[0], blockNumber),
+      adapter.readContractData(feedIds, blockNumber),
     ]);
     console.log(
       `Last update block timestamp: ${lastUpdateBlockTimestamp} (${describeTimestamp(lastUpdateBlockTimestamp!)})`
     );
-    console.log(`Unique signer count: ${uniqueSignerThreshold}`);
     console.log(`Price data: \n${describeContractData(contractData)}`);
   } catch (e) {
     console.error(e);
