@@ -5,16 +5,20 @@ export class CantonTrafficMeter {
   private static logger = loggerFactory("canton-traffic-meter");
   private lastRegisteredConsumed?: number;
   private accumulatedPaidTrafficCost?: number;
-  private static createdInstance?: CantonTrafficMeter;
+  private static accumulatingInstance?: CantonTrafficMeter;
 
   constructor(private readonly shouldAccumulateTraffic: boolean) {
-    if (CantonTrafficMeter.createdInstance) {
+    if (!shouldAccumulateTraffic) {
+      return;
+    }
+
+    if (CantonTrafficMeter.accumulatingInstance) {
       throw new Error(
-        "Creating a new instance of CantonTrafficMeter may lead to unexpected behaviour and is not supported now for one validator"
+        "Creating a new accumulating instance of CantonTrafficMeter may lead to unexpected behaviour and is not supported now for one validator"
       );
     }
 
-    CantonTrafficMeter.createdInstance = this;
+    CantonTrafficMeter.accumulatingInstance = this;
   }
 
   register(
