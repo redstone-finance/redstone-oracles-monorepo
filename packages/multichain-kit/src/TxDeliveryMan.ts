@@ -2,14 +2,17 @@ import { ContractParamsProvider } from "@redstone-finance/sdk";
 import { FP, loggerFactory, RedstoneCommon, RedstoneLogger } from "@redstone-finance/utils";
 import { ContractUpdater } from "./ContractUpdater";
 
-export type TxDeliveryManUpdateStatus = FP.Result<{ transactionHash: string }, string[]>;
+export type TxDeliveryManUpdateStatus<T = unknown> = FP.Result<
+  { transactionHash: string } & T,
+  string[]
+>;
 
 export type TxDeliveryManConfig = {
   maxTxSendAttempts: number;
   expectedTxDeliveryTimeInMs: number;
 };
 
-export class TxDeliveryMan {
+export class TxDeliveryMan<TxResultExt = unknown> {
   protected readonly logger: RedstoneLogger;
 
   constructor(
@@ -26,9 +29,9 @@ export class TxDeliveryMan {
   }
 
   async updateContract(
-    updater: ContractUpdater,
+    updater: ContractUpdater<TxResultExt>,
     paramsProvider: ContractParamsProvider
-  ): Promise<TxDeliveryManUpdateStatus> {
+  ): Promise<TxDeliveryManUpdateStatus<TxResultExt>> {
     const updateStartTimeMs = Date.now();
     const context = { updateStartTimeMs };
 
