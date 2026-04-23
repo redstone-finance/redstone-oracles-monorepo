@@ -1,8 +1,8 @@
 import { ContractParamsProvider } from "@redstone-finance/sdk";
-import { CantonClient } from "../CantonClient";
-import { convertDecimalValue } from "../conversions";
-import { ContractFilter } from "../price-feed-utils";
-import { DamlTuple2 } from "../utils";
+import { CantonClient } from "../client/CantonClient";
+import { convertDecimalValue } from "../utils/conversions";
+import { ContractFilter } from "../utils/price-feed-utils";
+import { DamlTuple2 } from "../utils/utils";
 import { CantonContractAdapter } from "./CantonContractAdapter";
 
 export const ICORE_TEMPLATE_NAME = `IRedStoneCore:IRedStoneCore`;

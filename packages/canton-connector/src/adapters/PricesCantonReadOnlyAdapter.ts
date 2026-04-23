@@ -1,9 +1,9 @@
 import { ContractAdapter } from "@redstone-finance/multichain-kit";
 import { ContractData, ContractParamsProvider, LastRoundDetails } from "@redstone-finance/sdk";
 import { RedstoneCommon } from "@redstone-finance/utils";
-import { CantonClient } from "../CantonClient";
-import { convertDecimalValue, getArrayifiedFeedId } from "../conversions";
-import { ContractFilter } from "../price-feed-utils";
+import { CantonClient } from "../client/CantonClient";
+import { convertDecimalValue, getArrayifiedFeedId } from "../utils/conversions";
+import { ContractFilter } from "../utils/price-feed-utils";
 import { CantonContractAdapter } from "./CantonContractAdapter";
 import { CantonContractAdapterConfig } from "./CantonContractAdapterConfig";
 import { CoreCantonContractAdapter } from "./CoreCantonContractAdapter";
@@ -17,7 +17,7 @@ export class PricesCantonReadOnlyAdapter extends CantonContractAdapter implement
     client: CantonClient,
     protected readonly config: Pick<
       CantonContractAdapterConfig,
-      "adapterId" | "viewerPartyId" | "uniqueSignerThreshold" | "shouldAccumulateTraffic"
+      "adapterId" | "viewerPartyId" | "uniqueSignerThreshold"
     >,
     interfaceId = client.Defs.interfaceId,
     templateName = IADAPTER_TEMPLATE_NAME

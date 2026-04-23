@@ -1,7 +1,7 @@
 import { ContractParamsProvider, DataPackagesRequestParams } from "@redstone-finance/sdk";
 import { RedstoneCommon } from "@redstone-finance/utils";
 import { ContractUpdater } from "./ContractUpdater";
-import { TxDeliveryMan, TxDeliveryManConfig, TxDeliveryManUpdateStatus } from "./TxDeliveryMan";
+import { TxDeliveryMan, TxDeliveryManConfig } from "./TxDeliveryMan";
 
 const DEFAULT_MAX_PARALLEL_TX_COUNT = 100;
 
@@ -21,7 +21,7 @@ export class MultiTxDeliveryMan extends TxDeliveryMan {
   override async updateContract(
     updater: ContractUpdater,
     multiParamsProvider: ContractParamsProvider
-  ): Promise<TxDeliveryManUpdateStatus> {
+  ) {
     const paramsProviders = multiParamsProvider.splitIntoFeedBatches(
       this.multiConfig.batchSizePerRequestParams(multiParamsProvider.requestParams)
     );
