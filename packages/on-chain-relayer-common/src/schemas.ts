@@ -114,9 +114,9 @@ export type ManifestType =
   | typeof MANIFEST_TYPE_MULTI_FEED
   | typeof MANIFEST_TYPE_NON_EVM;
 
-export const MANIFEST_TYPE_PRICE_FEEDS = "price-feeds";
-export const MANIFEST_TYPE_MULTI_FEED = "multi-feed";
-export const MANIFEST_TYPE_NON_EVM = "non-evm";
+export const MANIFEST_TYPE_PRICE_FEEDS = "price-feeds" as const;
+export const MANIFEST_TYPE_MULTI_FEED = "multi-feed" as const;
+export const MANIFEST_TYPE_NON_EVM = "non-evm" as const;
 
 export const MANIFEST_DIRS: Record<ManifestType, string> = {
   [MANIFEST_TYPE_PRICE_FEEDS]: "relayer-manifests",

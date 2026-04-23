@@ -38,3 +38,17 @@ export function splitManifestUrl(urlString: string) {
     filename: match[2],
   };
 }
+
+export function createManifestUrls(
+  manifestType: ManifestType,
+  relayerName: string,
+  manifestsHosts: string[],
+  gitref = "main"
+) {
+  const manifestPath = MANIFEST_DIRS[manifestType];
+
+  return manifestsHosts.map(
+    (manifestsHost) =>
+      `https://${manifestsHost}/redstone-finance/redstone-monorepo-priv/${gitref}/packages/relayer-remote-config/main/${manifestPath}/${relayerName}.json`
+  );
+}
