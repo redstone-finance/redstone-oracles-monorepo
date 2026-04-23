@@ -1168,6 +1168,25 @@
         "rwa"
       ]
     },
+    "TSLA---PERP": {
+      "source": [],
+      "broadcasters": [
+        "influx"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "ORACLE_xyz:TSLA": {
+      "source": [
+        "ws-hyperliquid-perps-xyz",
+        "ws-hydromancer-perps-xyz"
+      ],
+      "broadcasters": [
+        "influx"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
     "MARK_flxn:TSLA": {
       "source": [
         "ws-hyperliquid-perps-flxn",
@@ -1378,6 +1397,25 @@
       "types": [
         "rwa"
       ]
+    },
+    "NVDA---PERP": {
+      "source": [],
+      "broadcasters": [
+        "influx"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "ORACLE_xyz:NVDA": {
+      "source": [
+        "ws-hyperliquid-perps-xyz",
+        "ws-hydromancer-perps-xyz"
+      ],
+      "broadcasters": [
+        "influx"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
     },
     "MARK_flxn:NVDA": {
       "source": [
@@ -1898,6 +1936,28 @@
         "rwa"
       ]
     },
+    "HOOD---PERP": {
+      "source": [
+        "ws-hyperliquid-perps-xyz",
+        "ws-hydromancer-perps-xyz"
+      ],
+      "broadcasters": [
+        "influx"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "ORACLE_xyz:HOOD": {
+      "source": [
+        "ws-hyperliquid-perps-xyz",
+        "ws-hydromancer-perps-xyz"
+      ],
+      "broadcasters": [
+        "influx"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
     "MARK_flx:HOOD": {
       "source": [
         "ws-hyperliquid-perps-flx",
@@ -2109,6 +2169,28 @@
         "rwa"
       ]
     },
+    "CRCL---PERP": {
+      "source": [
+        "ws-hyperliquid-perps-xyz",
+        "ws-hydromancer-perps-xyz"
+      ],
+      "broadcasters": [
+        "influx"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "ORACLE_xyz:CRCL": {
+      "source": [
+        "ws-hyperliquid-perps-xyz",
+        "ws-hydromancer-perps-xyz"
+      ],
+      "broadcasters": [
+        "influx"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
     "MARK_flx:CRCL": {
       "source": [
         "ws-hyperliquid-perps-flx",
@@ -2283,6 +2365,28 @@
       "types": [
         "rwa"
       ]
+    },
+    "COIN---PERP": {
+      "source": [
+        "ws-hyperliquid-perps-xyz",
+        "ws-hydromancer-perps-xyz"
+      ],
+      "broadcasters": [
+        "influx"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "ORACLE_xyz:COIN": {
+      "source": [
+        "ws-hyperliquid-perps-xyz",
+        "ws-hydromancer-perps-xyz"
+      ],
+      "broadcasters": [
+        "influx"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
     },
     "MARK_flx:COIN": {
       "source": [
