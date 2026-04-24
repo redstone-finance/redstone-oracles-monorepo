@@ -1054,7 +1054,6 @@
       "source": [
         "alltick-api-deferred",
         "financialmodelingprep-deferred",
-        "metal-price-api-deferred",
         "ws-lmax",
         "ws-polygon-massive-commodities"
       ],
@@ -1509,7 +1508,6 @@
     "WTI": {
       "source": [
         "alltick-api-deferred",
-        "metal-price-api-deferred",
         "ws-lmax",
         "ws-twelve-data",
         "ws-blocksize",
@@ -1519,7 +1517,6 @@
       "redstoneXAggregatorConfig": {
         "priceDiscoverySources": [
           "alltick-api-deferred",
-          "metal-price-api-deferred",
           "ws-lmax",
           "ws-twelve-data",
           "ws-blocksize"
@@ -1740,7 +1737,6 @@
       "source": [
         "ws-lmax",
         "alltick-api-deferred",
-        "metal-price-api-deferred",
         "ws-blocksize",
         "finhub_oanda_deferred",
         "rollover-blend"
@@ -1750,7 +1746,6 @@
         "priceDiscoverySources": [
           "ws-lmax",
           "alltick-api-deferred",
-          "metal-price-api-deferred",
           "ws-blocksize",
           "finhub_oanda_deferred"
         ]

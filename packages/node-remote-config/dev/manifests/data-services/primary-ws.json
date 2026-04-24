@@ -655,7 +655,6 @@
       "source": [
         "rollover-time-hourly",
         "alltick-api-deferred",
-        "metal-price-api-deferred",
         "ws-lmax",
         "ws-twelve-data",
         "ws-blocksize",
@@ -666,7 +665,6 @@
       "redstoneXAggregatorConfig": {
         "priceDiscoverySources": [
           "alltick-api-deferred",
-          "metal-price-api-deferred",
           "ws-lmax",
           "ws-twelve-data",
           "ws-blocksize",
@@ -703,7 +701,6 @@
       "source": [
         "alltick-api-deferred",
         "financialmodelingprep-deferred",
-        "metal-price-api-deferred",
         "ws-blocksize",
         "ws-lmax",
         "ws-polygon-massive-commodities",
@@ -733,7 +730,6 @@
         "rollover-time-blend-implied-spot",
         "alltick-api-deferred",
         "financialmodelingprep-deferred",
-        "metal-price-api-deferred",
         "ws-blocksize",
         "ws-lmax",
         "ws-polygon-massive-commodities",
@@ -745,7 +741,6 @@
         "priceDiscoverySources": [
           "alltick-api-deferred",
           "financialmodelingprep-deferred",
-          "metal-price-api-deferred",
           "ws-blocksize",
           "ws-lmax",
           "ws-polygon-massive-commodities",
@@ -927,7 +922,6 @@
         "rollover-time-hourly",
         "ws-lmax",
         "alltick-api-deferred",
-        "metal-price-api-deferred",
         "ws-blocksize",
         "finhub_oanda_deferred",
         "ws-hyperliquid-perps-xyz",
@@ -938,7 +932,6 @@
         "priceDiscoverySources": [
           "ws-lmax",
           "alltick-api-deferred",
-          "metal-price-api-deferred",
           "ws-blocksize",
           "finhub_oanda_deferred",
           "ws-hyperliquid-perps-xyz",
