@@ -84,7 +84,9 @@ export class SSEPubSubClient implements PubSubClient {
         this.logger.info("Resubscribing to topics after reconnection", {
           topicCount: topics.size,
         });
-        void this.subscribe(Array.from(topics.keys()));
+        void this.subscribe(Array.from(topics.keys())).catch((e) =>
+          this.logger.error(`Resubscribe failed: ${RedstoneCommon.stringifyError(e)}`)
+        );
       }
 
       const unsubscribedTopics = new Set(this.initialTopics);
@@ -96,7 +98,9 @@ export class SSEPubSubClient implements PubSubClient {
           topics: Array.from(unsubscribedTopics.keys()),
         });
       }
-      void this.unsubscribe(Array.from(unsubscribedTopics.keys()));
+      void this.unsubscribe(Array.from(unsubscribedTopics.keys())).catch((e) =>
+        this.logger.error(`Stale topic unsubscribe failed: ${RedstoneCommon.stringifyError(e)}`)
+      );
     } catch (error) {
       this.logger.info("Failed to parse connected event", { error });
     }
