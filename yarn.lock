@@ -5765,6 +5765,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@googleapis/gmail@npm:^16.1.1":
+  version: 16.1.1
+  resolution: "@googleapis/gmail@npm:16.1.1"
+  dependencies:
+    googleapis-common: "npm:^8.0.0"
+  checksum: 10c0/d45f114dc1d7a2c2e9cfe362f3b62dac5f63ec58867791a5d07faf7de5cf73de0dc609795683e2b5adfd1c3ea22979481a0a8d8a0bbe2e23b399834e0777eee0
+  languageName: node
+  linkType: hard
+
 "@gql.tada/cli-utils@npm:1.6.3":
   version: 1.6.3
   resolution: "@gql.tada/cli-utils@npm:1.6.3"
@@ -9995,6 +10004,7 @@ __metadata:
     "@ethersproject/abi": "npm:^5.6.3"
     "@ethersproject/abstract-provider": "npm:^5.7.0"
     "@ethersproject/constants": "npm:^5.7.0"
+    "@googleapis/gmail": "npm:^16.1.1"
     "@meteora-ag/dlmm": "npm:^1.9.3"
     "@orca-so/common-sdk": "npm:^0.7.0"
     "@orca-so/whirlpools-sdk": "npm:^0.19.0"
@@ -10032,7 +10042,6 @@ __metadata:
     ethers: "npm:^5.7.2"
     fast-xml-parser: "npm:^4.4.1"
     google-auth-library: "npm:^10.3.0"
-    googleapis: "npm:^159.0.0"
     jest-mock-extended: "npm:^3.0.4"
     lodash: "npm:^4.17.23"
     luxon: "npm:^3.3.0"
@@ -11455,6 +11464,7 @@ __metadata:
   resolution: "@redstone-finance/oracle-node@workspace:packages/oracle-node"
   dependencies:
     "@ethereumjs/util": "npm:^10.0.0"
+    "@googleapis/gmail": "npm:^16.1.1"
     "@influxdata/influxdb-client": "npm:^1.35.0"
     "@metamask/eth-sig-util": "npm:^4.0.1"
     "@redstone-finance/agents": "workspace:*"
@@ -11482,7 +11492,7 @@ __metadata:
     ethers-v6: "npm:ethers@6.13.5"
     express: "npm:^4.18.1"
     fastify: "npm:^4.25.1"
-    googleapis: "npm:^159.0.0"
+    google-auth-library: "npm:^10.3.0"
     jest-mock-extended: "npm:^3.0.4"
     jszip: "npm:^3.10.1"
     lodash: "npm:^4.17.23"
@@ -25774,7 +25784,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"google-auth-library@npm:^10.1.0, google-auth-library@npm:^10.2.0, google-auth-library@npm:^10.3.0":
+"google-auth-library@npm:^10.1.0, google-auth-library@npm:^10.3.0":
   version: 10.5.0
   resolution: "google-auth-library@npm:10.5.0"
   dependencies:
@@ -25813,16 +25823,6 @@ __metadata:
     qs: "npm:^6.7.0"
     url-template: "npm:^2.0.8"
   checksum: 10c0/ee939fdfcaea32c528e7be64621b3e6b35e612f2456c8d4aca835e0a01ccec52f4ea2ac9509b083128398631a6cd66512c400adb4d0375a4638c55888ccdea7f
-  languageName: node
-  linkType: hard
-
-"googleapis@npm:^159.0.0":
-  version: 159.0.0
-  resolution: "googleapis@npm:159.0.0"
-  dependencies:
-    google-auth-library: "npm:^10.2.0"
-    googleapis-common: "npm:^8.0.0"
-  checksum: 10c0/6bc6ad0561dc7978a93e1bfc1612097ecbe1d1490ad642927858d45c35c6e355aa6521ec14de45fb7cc460f12fc26cce18ba574966d256792f8c923d53836d8f
   languageName: node
   linkType: hard
 
