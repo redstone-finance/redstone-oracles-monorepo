@@ -2862,7 +2862,7 @@
         "okx-usdc",
         "okx-usdt",
         "xt-usdt",
-        "hyperliquid-api-fetcher"
+        "hyperliquid-api-fetcher-usdc"
       ],
       "denomination": "USD",
       "rateFeed": false
@@ -7139,7 +7139,8 @@
     },
     "UBTC": {
       "source": [
-        "hyperliquid-api-fetcher",
+        "hyperliquid-api-fetcher-usdc",
+        "hyperliquid-api-fetcher-usdh",
         "hyperswap-hyperevm-whype-3000",
         "kittenswap-hyperevm-whype",
         "project-x-hyperevm-usdt0-500",
@@ -7718,7 +7719,7 @@
       "source": [
         "camelot-v3-arbitrumone-usdc",
         "fluid-arbitrumone-susde",
-        "hyperliquid-api-fetcher",
+        "hyperliquid-api-fetcher-usdc",
         "hyperswap-hyperevm-whype-500",
         "kumbaya-megaeth-weth-3000",
         "project-x-hyperevm-whype-500",
@@ -7812,7 +7813,7 @@
     },
     "USDH": {
       "source": [
-        "hyperliquid-api-fetcher",
+        "hyperliquid-api-fetcher-usdc",
         "nest-hyperevm-whype",
         "project-x-hyperevm-usdt0-100",
         "project-x-hyperevm-whype-3000"
