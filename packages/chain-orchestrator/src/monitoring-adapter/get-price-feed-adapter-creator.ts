@@ -9,7 +9,11 @@ import {
 import { MonitoringEnv } from "./get-monitoring-contract-adapter";
 import { getPriceFeedAdapter } from "./get-price-feed-adapter";
 
-type PriceFeedAdapterCreator = (address: string, feedName?: string) => Promise<PriceFeedAdapter>;
+type PriceFeedAdapterCreator = (
+  address: string,
+  feedName?: string,
+  withRounds?: boolean
+) => Promise<PriceFeedAdapter>;
 
 export async function getPriceFeedAdapterCreator(
   networkId: NetworkId,
@@ -43,6 +47,6 @@ async function getNonEvmPriceFeedAdapterCreator(
   const rpcUrls =
     overrideRpcUrls ?? (await fetchParsedRpcUrlsFromSsmByNetworkIdMemoized(networkId, env));
 
-  return async (address, feedName) =>
-    await getPriceFeedAdapter(networkId, address, rpcUrls, feedName);
+  return async (address, feedId, withRounds) =>
+    await getPriceFeedAdapter(networkId, address, rpcUrls, feedId, withRounds);
 }

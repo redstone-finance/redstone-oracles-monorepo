@@ -38,7 +38,6 @@ export const CommonManifestSchema = z.object({
   adapterContractType: AdapterTypesEnum,
   dataServiceId: z.string(),
   isHidden: z.boolean().optional(),
-  withRounds: z.boolean().optional(),
   priceFeeds: z.record(z.string(), z.any()),
   dataPackagesNames: z
     .array(z.string().refine(RedstoneCommon.isMultiPointDataPackageId), {

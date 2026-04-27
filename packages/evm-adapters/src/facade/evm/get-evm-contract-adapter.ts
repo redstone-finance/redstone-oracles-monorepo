@@ -3,11 +3,13 @@ import {
   IStylusAdapter,
   MentoAdapterBase,
   MultiFeedAdapterWithoutRounds,
+  PriceFeedsAdapterWithRounds,
   RedstoneAdapterBase,
 } from "../../../typechain-types";
 import { MentoEvmContractAdapter } from "../../core/contract-interactions/MentoEvmContractAdapter";
 import { MultiFeedEvmContractAdapter } from "../../core/contract-interactions/MultiFeedEvmContractAdapter";
 import { PriceFeedsEvmContractAdapter } from "../../core/contract-interactions/PriceFeedsEvmContractAdapter";
+import { PriceFeedsEvmContractAdapterWithRounds } from "../../core/contract-interactions/PriceFeedsEvmContractAdapterWithRounds";
 import { StylusContractAdapter } from "../../core/contract-interactions/StylusContractAdapter";
 import { RedstoneEvmContract } from "./RedstoneEvmContract";
 import { EvmAdapterType } from "./get-evm-contract";
@@ -23,39 +25,44 @@ export function getEvmContractAdapter(
     adapterContractType: EvmAdapterType;
     mentoMaxDeviationAllowed?: number;
     oevAuctionUrl?: string;
+    withRounds?: boolean;
   },
   adapterContract: RedstoneEvmContract,
   txDeliveryMan = emptyTxDeliveryMan
 ) {
   switch (config.adapterContractType) {
-    case "multi-feed": {
+    case "multi-feed":
       return new MultiFeedEvmContractAdapter(
         adapterContract as MultiFeedAdapterWithoutRounds,
         txDeliveryMan,
         RedstoneCommon.isTruthy(config.oevAuctionUrl?.length)
       );
-    }
 
     case "price-feeds": {
+      if (config.withRounds) {
+        return new PriceFeedsEvmContractAdapterWithRounds(
+          adapterContract as PriceFeedsAdapterWithRounds,
+          txDeliveryMan
+        );
+      }
+
       return new PriceFeedsEvmContractAdapter(
         adapterContract as RedstoneAdapterBase,
         txDeliveryMan
       );
     }
 
-    case "mento": {
+    case "mento":
       return new MentoEvmContractAdapter(
         adapterContract as MentoAdapterBase,
         txDeliveryMan,
         config.mentoMaxDeviationAllowed
       );
-    }
 
-    case "stylus": {
+    case "stylus":
       return new StylusContractAdapter(
         adapterContract as IStylusAdapter & MultiFeedAdapterWithoutRounds,
         txDeliveryMan
       );
-    }
   }
 }

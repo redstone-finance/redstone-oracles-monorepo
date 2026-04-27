@@ -17,35 +17,41 @@ import { getNonEvmMonitoringContractAdapter } from "./get-non-evm-monitoring-con
 
 export type MonitoringEnv = "prod" | "dev";
 
+export type MonitoringContractAdapterOpts = {
+  env: MonitoringEnv;
+  withRounds?: boolean;
+};
+
 export async function getMonitoringContractAdapter(
   relayerManifest: AnyOnChainRelayerManifest,
-  env: MonitoringEnv
+  opts: MonitoringContractAdapterOpts
 ): Promise<ContractAdapter> {
   if (isNonEvmNetworkId(relayerManifest.chain.id)) {
     const rpcUrls = await fetchParsedRpcUrlsFromSsmByNetworkIdMemoized(
       relayerManifest.chain.id,
-      env
+      opts.env
     );
 
-    return await getNonEvmMonitoringContractAdapter(relayerManifest, rpcUrls);
+    return await getNonEvmMonitoringContractAdapter(relayerManifest, rpcUrls, opts.withRounds);
   }
 
-  return await getEvmMonitoringContractAdapter(relayerManifest, env);
+  return await getEvmMonitoringContractAdapter(relayerManifest, opts);
 }
 
 async function getEvmMonitoringContractAdapter(
   relayerManifest: AnyOnChainRelayerManifest,
-  env: MonitoringEnv
+  { env, withRounds }: MonitoringContractAdapterOpts
 ) {
   const provider = await getProviderMemoized(relayerManifest.chain.id, env);
   const adapterContract = getEvmContract(
     {
       adapterContractType: relayerManifest.adapterContractType,
       adapterContractAddress: relayerManifest.adapterContract,
+      withRounds,
     },
     provider
   );
-  const adapter = getEvmContractAdapter(relayerManifest, adapterContract);
+  const adapter = getEvmContractAdapter({ ...relayerManifest, withRounds }, adapterContract);
 
   const connector = getEvmContractConnector(provider, adapter);
 

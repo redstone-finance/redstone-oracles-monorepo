@@ -26,7 +26,8 @@ import { getCantonAuth } from "../utils";
 
 export async function getNonEvmMonitoringContractAdapter(
   relayerManifest: AnyOnChainRelayerManifest,
-  rpcUrls: string[]
+  rpcUrls: string[],
+  withRounds?: boolean
 ) {
   const { chainType } = deconstructNetworkId(relayerManifest.chain.id);
 
@@ -41,7 +42,7 @@ export async function getNonEvmMonitoringContractAdapter(
     case "solana":
       return getSolanaContractAdapter(rpcUrls, relayerManifest);
     case "stellar":
-      return getStellarContractAdapter(rpcUrls, relayerManifest, relayerManifest.withRounds);
+      return getStellarContractAdapter(rpcUrls, relayerManifest, withRounds);
     case "fuel":
     case "canton":
       return await getCantonContractAdapter(rpcUrls, relayerManifest);

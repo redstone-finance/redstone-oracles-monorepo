@@ -1,6 +1,5 @@
 {
   "adapterContractType": "multi-feed",
-  "withRounds": true,
   "chain": {
     "name": "stellar-testnet",
     "id": "stellar/2"
@@ -13,7 +12,11 @@
   "dataServiceId": "redstone-primary-prod",
   "isHidden": true,
   "priceFeeds": {
-    "ETH": {},
-    "BTC": {}
+    "ETH": {
+      "priceFeedAddress": "CAG4IAF653IHU7HLWRRCKCKKOEQKZVKCSRL5AWBCAJBGNDGQWTQIYBHM"
+    },
+    "BTC": {
+      "priceFeedAddress": "CAG4IAF653IHU7HLWRRCKCKKOEQKZVKCSRL5AWBCAJBGNDGQWTQIYBHM"
+    }
   }
 }

@@ -122,12 +122,10 @@ export function MulticallDecorator<T extends providers.Provider>(
     blockTag?: BlockTag | Promise<BlockTag>
   ): Promise<string> => {
     chainId = await chainIdPromise;
-    const multicall3Request = await prepareMulticall3Request(
-      transaction,
-      chainId,
-      options.chainConfigs
-    );
-    const resolvedBlockTag = await blockTag;
+    const [multicall3Request, resolvedBlockTag] = await Promise.all([
+      prepareMulticall3Request(transaction, chainId, options.chainConfigs),
+      blockTag,
+    ]);
 
     const { promise, resolve, reject } = createDeferredPromise<string>();
     const entry = {
