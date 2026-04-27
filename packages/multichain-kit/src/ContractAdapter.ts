@@ -16,4 +16,11 @@ export interface ContractAdapter {
     feedId?: string,
     blockNumber?: number
   ): Promise<number | undefined>;
+
+  getLatestRoundIds?(
+    feedIds: string[],
+    numberOfRounds: number,
+    blockNumber?: number
+  ): Promise<(bigint[] | undefined)[]>;
+  getValueForDataFeedAndRound?(feedId: string, roundId: bigint, blockTag?: number): Promise<bigint>;
 }
