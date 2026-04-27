@@ -51,25 +51,27 @@ export class ForwardCompatibleFromRedstoneAdapter implements WriteContractAdapte
   }
 
   getPricesFromPayload(_paramsProvider: ContractParamsProvider): Promise<bigint[]> {
-    throw new Error("getPricesFromPayload not available on OldIRedstoneContractAdapter");
+    throw new Error("getPricesFromPayload not available on LegacyIRedstoneContractAdapter");
   }
 
   readPricesFromContract(
     _paramsProvider: ContractParamsProvider,
     _blockNumber?: number
   ): Promise<bigint[]> {
-    throw new Error("readPricesFromContract not available on OldIRedstoneContractAdapter");
+    throw new Error("readPricesFromContract not available on LegacyIRedstoneContractAdapter");
   }
 
   readTimestampFromContract(_feedId?: string, _blockNumber?: number): Promise<number> {
-    throw new Error("readTimestampFromContract not available on OldIRedstoneContractAdapter");
+    throw new Error("readTimestampFromContract not available on LegacyIRedstoneContractAdapter");
   }
 
   readLatestUpdateBlockTimestamp(
     _feedId?: string,
     _blockNumber?: number
   ): Promise<number | undefined> {
-    throw new Error("readLatestUpdateBlockTimestamp not available on OldIRedstoneContractAdapter");
+    throw new Error(
+      "readLatestUpdateBlockTimestamp not available on LegacyIRedstoneContractAdapter"
+    );
   }
 
   async getBlockNumber() {
@@ -78,5 +80,13 @@ export class ForwardCompatibleFromRedstoneAdapter implements WriteContractAdapte
 
   getInnerLegacyAdapter() {
     return this.adapter;
+  }
+
+  async getLatestRoundIds(feedIds: string[], numberOfRounds: number, blockTag?: number) {
+    return (await this.adapter.getLatestRoundIds?.(feedIds, numberOfRounds, blockTag))!;
+  }
+
+  async getValueForDataFeedAndRound(feedId: string, roundId: bigint, blockTag?: number) {
+    return (await this.adapter.getValueForDataFeedAndRound?.(feedId, roundId, blockTag))!;
   }
 }
