@@ -3,7 +3,11 @@ import { BalanceProvider, BlockProvider } from "@redstone-finance/multichain-kit
 import { isNonEvmNetworkId, NetworkId, RedstoneCommon } from "@redstone-finance/utils";
 import { EvmBlockchainService } from "../blockchain-service/EvmBlockchainService";
 import { getNonEvmBlockchainService } from "../blockchain-service/get-non-evm-blockchain-service";
-import { getProviderMemoized, getProviderWithRpcUrls } from "./get-provider";
+import {
+  DEFAULT_PROVIDER_CONFIG,
+  getProviderMemoized,
+  getProviderWithRpcUrls,
+} from "./get-provider";
 
 const SINGLE_RPC_TIMEOUT_MILLISECONDS = RedstoneCommon.secsToMs(10);
 const ALL_RPC_TIMEOUT_MILLISECONDS = RedstoneCommon.secsToMs(40);
@@ -41,6 +45,7 @@ async function getChainProviderWithRpcUrls(
     } else {
       return new EvmBlockchainService(
         await getProviderWithRpcUrls(networkId, rpcUrls, {
+          ...DEFAULT_PROVIDER_CONFIG,
           singleProviderOperationTimeout: SINGLE_RPC_TIMEOUT_MILLISECONDS,
           allProvidersOperationTimeout: ALL_RPC_TIMEOUT_MILLISECONDS,
         })
@@ -53,16 +58,24 @@ async function getChainProviderWithRpcUrls(
   }
 }
 
-export const getBlockProvider = async (
+export async function getBlockProvider(
   networkId: NetworkId,
-  env: Env
-): Promise<BlockProvider | undefined> => {
-  return await getChainProvider(networkId, env);
-};
-
-export async function getBlockProviderWithRpcUrls(
-  networkId: NetworkId,
-  rpcUrls: string[]
+  rpcUrlsOrEnv: string[] | Env
 ): Promise<BlockProvider | undefined> {
-  return await getChainProviderWithRpcUrls(networkId, rpcUrls);
+  return Array.isArray(rpcUrlsOrEnv)
+    ? await getChainProviderWithRpcUrls(networkId, rpcUrlsOrEnv)
+    : await getChainProvider(networkId, rpcUrlsOrEnv);
+}
+
+export async function forceGetBlockProvider(
+  networkId: NetworkId,
+  rpcUrlsOrEnv: string[] | Env
+): Promise<BlockProvider> {
+  const blockProvider = await getBlockProvider(networkId, rpcUrlsOrEnv);
+
+  if (!RedstoneCommon.isDefined(blockProvider)) {
+    throw new Error(`Block provider is not defined for ${networkId}`);
+  }
+
+  return blockProvider;
 }

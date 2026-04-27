@@ -1,5 +1,5 @@
 import {
-  CommonManifestSchemaStrict,
+  AnyOnChainRelayerManifestSchema,
   MANIFEST_TYPE_MULTI_FEED,
   MANIFEST_TYPE_NON_EVM,
   MANIFEST_TYPE_PRICE_FEEDS,
@@ -62,5 +62,5 @@ export function readAnyRelayerManifestWithUrl(
   const { dir, filename } = splitManifestUrl(url);
   const data = readDataFromDir(filename, dir, manifestsDir);
 
-  return CommonManifestSchemaStrict.strict().parse(JSON.parse(data.toString()));
+  return AnyOnChainRelayerManifestSchema.parse(JSON.parse(data.toString()));
 }

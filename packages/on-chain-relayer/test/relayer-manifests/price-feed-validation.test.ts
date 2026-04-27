@@ -14,6 +14,7 @@ import { describe, test } from "mocha";
 const INTEGRATIONS_NOT_FOR_TESTING = [
   "westendHubMultiFeed", // remove it when the network is stable
   "stylusSepoliaMultiFeed", // non supported in stylus
+  "stellarTestnetSep40", // price adapter, not price feed
 ];
 
 export const RETRY_CONFIG: Omit<RedstoneCommon.RetryConfig, "fn"> = {

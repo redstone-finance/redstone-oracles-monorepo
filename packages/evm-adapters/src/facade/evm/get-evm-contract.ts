@@ -4,11 +4,13 @@ import { Contract, Signer } from "ethers";
 import { abi as redstoneAdapterABI } from "../../../artifacts/contracts/core/RedstoneAdapterBase.sol/RedstoneAdapterBase.json";
 import { abi as mentoAdapterABI } from "../../../artifacts/contracts/custom-integrations/mento/MentoAdapterBase.sol/MentoAdapterBase.json";
 import { abi as stylusAdapterABI } from "../../../artifacts/contracts/custom-integrations/stylus/IStylusAdapter.sol/IStylusAdapter.json";
+import { abi as priceAdapterWithRoundsABI } from "../../../artifacts/contracts/price-feeds/with-rounds/PriceFeedsAdapterWithRounds.sol/PriceFeedsAdapterWithRounds.json";
 import { abi as multifeedAdapterABI } from "../../../artifacts/contracts/price-feeds/without-rounds/MultiFeedAdapterWithoutRounds.sol/MultiFeedAdapterWithoutRounds.json";
 import {
   IStylusAdapter,
   MentoAdapterBase,
   MultiFeedAdapterWithoutRounds,
+  PriceFeedsAdapterWithRounds,
   RedstoneAdapterBase,
 } from "../../../typechain-types";
 import { RedstoneEvmContract } from "./RedstoneEvmContract";
@@ -20,21 +22,29 @@ export function getEvmContract(
     networkId?: NetworkId;
     adapterContractAddress: string;
     adapterContractType: EvmAdapterType;
+    withRounds?: boolean;
   },
   signerOrProvider?: Signer | Provider
 ): RedstoneEvmContract {
-  const { adapterContractAddress, adapterContractType } = config;
+  const { adapterContractAddress, adapterContractType, withRounds } = config;
 
   switch (adapterContractType) {
-    case "multi-feed": {
+    case "multi-feed":
       return new Contract(
         adapterContractAddress,
         multifeedAdapterABI,
         signerOrProvider
       ) as MultiFeedAdapterWithoutRounds;
-    }
 
     case "price-feeds": {
+      if (withRounds) {
+        return new Contract(
+          adapterContractAddress,
+          priceAdapterWithRoundsABI,
+          signerOrProvider
+        ) as PriceFeedsAdapterWithRounds;
+      }
+
       return new Contract(
         adapterContractAddress,
         redstoneAdapterABI,
@@ -42,20 +52,18 @@ export function getEvmContract(
       ) as RedstoneAdapterBase;
     }
 
-    case "mento": {
+    case "mento":
       return new Contract(
         adapterContractAddress,
         mentoAdapterABI,
         signerOrProvider
       ) as MentoAdapterBase;
-    }
 
-    case "stylus": {
+    case "stylus":
       return new Contract(
         adapterContractAddress,
         stylusAdapterABI,
         signerOrProvider
       ) as IStylusAdapter & RedstoneAdapterBase;
-    }
   }
 }

@@ -28,7 +28,7 @@ export async function fetchAnyManifestWithHosts(
 ): Promise<OnChainRelayerManifest | MultiFeedOnChainRelayerManifest> {
   const manifestUrls = createManifestUrls(manifestType, relayerName, manifestsHosts, gitref);
 
-  if (manifestType === "price-feeds") {
+  if (manifestType === MANIFEST_TYPE_PRICE_FEEDS) {
     return await fetchAndParseRelayerManifest(manifestUrls, OnChainRelayerManifestSchema, apikey);
   }
 

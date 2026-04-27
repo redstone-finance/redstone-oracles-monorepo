@@ -51,6 +51,7 @@ export class StellarClientBuilder extends MultiExecutor.ClientBuilder<StellarCli
         getTransaction: MultiExecutor.ExecutionMode.AGREEMENT,
         waitForTx: MultiExecutor.ExecutionMode.AGREEMENT,
         getInstanceTtl: MultiExecutor.ExecutionMode.AGREEMENT,
+        call: MultiExecutor.ExecutionMode.AGREEMENT,
       }
     );
   }

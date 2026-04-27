@@ -14,8 +14,8 @@ import { getLatestTimestampsFromContract } from "./get-latest-timestamps-from-co
 export class PriceFeedsEvmContractAdapter<
   Contract extends RedstoneAdapterBase,
 > extends EvmContractAdapter<Contract> {
-  async getDataFeedIds(blockTag: number): Promise<string[] | undefined> {
-    return await this.adapterContract.getDataFeedIds({ blockTag });
+  async getDataFeedIds(blockTag: number) {
+    return (await this.adapterContract.getDataFeedIds({ blockTag })).map(utils.parseBytes32String);
   }
 
   override async makeUpdateTx(

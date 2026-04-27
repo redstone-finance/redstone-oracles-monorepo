@@ -10,6 +10,7 @@ import { EvmBlockchainService } from "../blockchain-service/EvmBlockchainService
 import { getNonEvmBlockchainService } from "../blockchain-service/get-non-evm-blockchain-service";
 import { CurrencyTokenBalanceProvider } from "./CurrencyTokenBalanceProvider";
 import {
+  DEFAULT_PROVIDER_CONFIG,
   fetchParsedRpcUrlsFromSsmByNetworkIdMemoized,
   getProviderWithRpcUrls,
 } from "./get-provider";
@@ -42,6 +43,7 @@ export async function getBalanceProviderWithRpcUrls(
       return await getNonEvmBlockchainService(networkId, rpcUrls);
     } else {
       const provider = await getProviderWithRpcUrls(networkId, rpcUrls, {
+        ...DEFAULT_PROVIDER_CONFIG,
         singleProviderOperationTimeout: SINGLE_RPC_TIMEOUT_MILLISECONDS,
         allProvidersOperationTimeout: ALL_RPC_TIMEOUT_MILLISECONDS,
       });

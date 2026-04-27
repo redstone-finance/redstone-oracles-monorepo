@@ -1,4 +1,5 @@
 import _ from "lodash";
+import { isDefined } from "./objects";
 
 export function roundToSignificantDigits(num: number, number = 2): number {
   if (num === 0) {
@@ -43,7 +44,7 @@ export function stringify<R>(result: R): string {
     return result;
   }
 
-  if (result === undefined || result === null) {
+  if (!isDefined(result)) {
     return String(result);
   }
 

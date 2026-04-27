@@ -5,6 +5,7 @@ import {
 import { PriceFeedAdapter } from "@redstone-finance/multichain-kit";
 import {
   PriceFeedStellarContractAdapter,
+  Sep40PriceFeedStellarContractAdapter,
   StellarClientBuilder,
 } from "@redstone-finance/stellar-connector";
 import { deconstructNetworkId, NetworkId, RedstoneCommon } from "@redstone-finance/utils";
@@ -14,7 +15,8 @@ export async function getPriceFeedAdapter(
   networkId: NetworkId,
   address: string,
   rpcUrls: string[],
-  feedName?: string
+  feedId?: string,
+  withRounds?: boolean
 ): Promise<PriceFeedAdapter> {
   const { chainType } = deconstructNetworkId(networkId);
 
@@ -26,11 +28,19 @@ export async function getPriceFeedAdapter(
         .withMulticall()
         .build();
 
+      if (withRounds) {
+        if (!feedId) {
+          throw new Error("Stellar SEP-40 requires feedId");
+        }
+
+        return new Sep40PriceFeedStellarContractAdapter(client, address, feedId);
+      }
+
       return new PriceFeedStellarContractAdapter(client, address);
     }
     case "canton": {
-      if (!feedName) {
-        throw new Error("Canton need feed name for price-feed");
+      if (!feedId) {
+        throw new Error("Canton needs feed name for price-feed");
       }
 
       const auth = await getCantonAuth(deconstructNetworkId(networkId).chainId);
@@ -44,7 +54,7 @@ export async function getPriceFeedAdapter(
         client,
         RedstoneCommon.getFromEnv("VIEWER_PARTY_ID"),
         address,
-        feedName
+        feedId
       );
     }
     case "radix":
