@@ -1,10 +1,11 @@
 import { InvocationV0, InvocationV1, StellarRouterSdk } from "@creit-tech/stellar-router-sdk";
 import { loggerFactory, RedstoneCommon } from "@redstone-finance/utils";
+import { scValToNative } from "@stellar/stellar-sdk";
 import _ from "lodash";
 import { IStellarCaller, StellarInvocation } from "../IStellarCaller";
 import { StellarNetwork } from "./network-ids";
 
-const MAX_NUMBER_OF_CALLS = 10;
+const MAX_NUMBER_OF_CALLS = 16;
 const DEFAULT_COLLECTING_INTERVAL_MS = 10;
 const TESTNET_MULTICALL_ADDRESS = "CBM4TX2P6JAKDJ3RJEYZUXDQVGMYRFX5KGW2XMVHTZ4E3RF7D54F3TMD";
 
@@ -77,9 +78,7 @@ export class StellarMulticall implements IStellarCaller {
 
     try {
       const chunkPromises = chunks.map((chunk) => {
-        this.logger.info(
-          `Simulating call for ${chunk.length} invocation${RedstoneCommon.getS(chunk.length)}`
-        );
+        this.logChunk(chunk);
 
         return this.router.simResult<[unknown]>(chunk.map((ch) => ch.invocation));
       });
@@ -91,6 +90,24 @@ export class StellarMulticall implements IStellarCaller {
     } catch (err) {
       entries.forEach((entry) => entry.reject(err));
     }
+  }
+
+  private logChunk(chunk: { invocation: InvocationV0 | InvocationV1 }[]) {
+    const invocations: { [p: string]: string[] | undefined } = {};
+
+    chunk.forEach((invocation) => {
+      const inv = invocation.invocation;
+      invocations[inv.contract.toString()] ??= [];
+      const args: unknown[] = inv.args.map(scValToNative);
+      invocations[inv.contract.toString()]!.push(
+        `${inv.method}(${RedstoneCommon.stringify(args.length > 1 ? args : (args.at(0) ?? "")).replaceAll('"', "")})`
+      );
+    });
+
+    this.logger.info(
+      `Simulating call for ${chunk.length} invocation${RedstoneCommon.getS(chunk.length)} on ${this.rpcUrl}`,
+      { invocations }
+    );
   }
 
   dispose() {

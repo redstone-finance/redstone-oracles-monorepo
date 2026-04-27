@@ -84,6 +84,13 @@ export interface LegacyIRedstoneContractAdapter {
     blockNumber: number,
     withDataFeedValues: boolean
   ): Promise<ContractData>;
+
+  getLatestRoundIds?(
+    feedIds: string[],
+    numberOfRounds: number,
+    blockNumber?: number
+  ): Promise<(bigint[] | undefined)[]>;
+  getValueForDataFeedAndRound?(feedId: string, roundId: bigint, blockTag?: number): Promise<bigint>;
 }
 
 export interface LegacyIRedstoneContractAdapterWithBlockNumber

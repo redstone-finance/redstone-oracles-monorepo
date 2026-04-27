@@ -35,6 +35,14 @@ export class Sep40ContractReader {
     return await this.lastprice({ tag: OTHER_ASSET, symbol: feedId }, blockNumber);
   }
 
+  async readPrices(feedId: string, numberOfRounds: number, blockNumber?: number) {
+    return await this.prices({ tag: OTHER_ASSET, symbol: feedId }, numberOfRounds, blockNumber);
+  }
+
+  async readRoundData(feedId: string, roundId: bigint, blockNumber?: number) {
+    return await this.price({ tag: OTHER_ASSET, symbol: feedId }, Number(roundId), blockNumber);
+  }
+
   async base(blockNumber?: number) {
     return await this.client.call(
       {
