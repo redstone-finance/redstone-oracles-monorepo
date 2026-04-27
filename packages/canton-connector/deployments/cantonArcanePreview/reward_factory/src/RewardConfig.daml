@@ -3,7 +3,7 @@ module RewardConfig (
 ) where
 
 reward_min_count = 0
-reward_factor_frac_num = 111
+reward_factor_frac_num = 128
 reward_factor_frac_den = 1000
 
 rewardWeight total =
