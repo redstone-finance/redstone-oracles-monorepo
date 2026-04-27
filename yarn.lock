@@ -11663,6 +11663,7 @@ __metadata:
     "@redstone-finance/healthcheck": "workspace:*"
     "@redstone-finance/hl-hip3": "workspace:*"
     "@redstone-finance/internal-utils": "workspace:*"
+    "@redstone-finance/jest-config": "workspace:*"
     "@redstone-finance/monitoring-manifests": "workspace:*"
     "@redstone-finance/multichain-kit": "workspace:*"
     "@redstone-finance/node-commons": "workspace:*"
