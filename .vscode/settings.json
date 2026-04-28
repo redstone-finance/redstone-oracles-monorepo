@@ -35,5 +35,11 @@
     "typechain",
     "Winsorization",
     "winsorize"
+  ],
+  "json.schemas": [
+    {
+      "fileMatch": ["hard-limits-config*.json"],
+      "url": "./schemas/hard-limits-config.schema.json"
+    }
   ]
 }
