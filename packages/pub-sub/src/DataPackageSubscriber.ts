@@ -135,14 +135,14 @@ export class DataPackageSubscriber {
             values[0].length === 0
           ) {
             GlobalLogMonitoring.error(
-              LogMonitoringType.MQTT_FALLBACK_USED_AND_FAILED,
+              LogMonitoringType.PUB_SUB_FALLBACK_USED_AND_FAILED,
               `${fallbackTriggeredMessage}, no data packages returned`,
               this.logger
             );
             throw new Error(`No data packages returned, got ${JSON.stringify(dataPackages)}`);
           }
           GlobalLogMonitoring.warn(
-            LogMonitoringType.MQTT_FALLBACK_USED_BUT_USEFUL,
+            LogMonitoringType.PUB_SUB_FALLBACK_USED_BUT_USEFUL,
             fallbackTriggeredMessage,
             this.logger
           );
