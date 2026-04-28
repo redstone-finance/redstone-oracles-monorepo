@@ -8582,10 +8582,17 @@
       "types": ["rwa"]
     },
     "KOSPI200": {
-      "source": ["alltick-api", "ws-itick-indices", "ws-aleno"],
+      "source": ["alltick-api-deferred", "ws-itick-indices", "ws-aleno"],
       "denomination": "KRW",
       "rateFeed": false,
-      "types": ["rwa"]
+      "types": ["rwa"],
+      "priceAggregator": "primarySource",
+      "primarySourceAggregatorConfig": {
+        "primarySource": "ws-aleno",
+        "maxAcceptableDeviation": 1.0,
+        "lowerClampPercent": 0.1,
+        "upperClampPercent": 0.1
+      }
     },
     "SAMSUNG": {
       "source": ["ws-aleno"],
@@ -8708,10 +8715,17 @@
       "types": ["rwa"]
     },
     "NIKKEI225": {
-      "source": ["alltick-api", "finhub_oanda", "ws-itick-indices"],
+      "source": ["alltick-api-deferred", "ws-itick-indices", "ws-aleno"],
       "denomination": "JPY",
       "rateFeed": false,
-      "types": ["rwa"]
+      "types": ["rwa"],
+      "priceAggregator": "primarySource",
+      "primarySourceAggregatorConfig": {
+        "primarySource": "ws-aleno",
+        "maxAcceptableDeviation": 1.0,
+        "lowerClampPercent": 0.1,
+        "upperClampPercent": 0.1
+      }
     },
     "MSCI": {
       "source": [
