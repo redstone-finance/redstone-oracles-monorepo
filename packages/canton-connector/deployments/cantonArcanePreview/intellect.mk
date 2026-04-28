@@ -266,7 +266,7 @@ get-featured-app-right: get-token
 							"identifierFilter": { \
 								"InterfaceFilter": { \
 									"value": { \
-										"interfaceId": "dd22e3e168a8c7fd0313171922dabf1f7a3b131bd9bfc9ff98e606f8c57707ea:Splice.Api.FeaturedAppRightV2:FeaturedAppActivityMarker", \
+										"interfaceId": "dd22e3e168a8c7fd0313171922dabf1f7a3b131bd9bfc9ff98e606f8c57707ea:Splice.Api.FeaturedAppRightV2:FeaturedAppRight", \
 										"includeInterfaceView": true, \
 										"includeCreatedEventBlob": true \
 									} \
