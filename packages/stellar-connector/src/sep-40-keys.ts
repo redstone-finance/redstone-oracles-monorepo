@@ -1,11 +1,11 @@
 import { nativeToScVal, xdr } from "@stellar/stellar-sdk";
 import { assetLabelFor, assetToScVal, Sep40Asset } from "./sep-40-types";
 
-export const INSTANCE_LABEL = "Instance";
-export const ASSETS_LABEL = "Assets";
-export const ASSET_TO_FEED_LABEL = "AssetToFeed";
-export const FEED_TO_ASSET_LABEL = "FeedToAsset";
-export const FEED_DECIMALS_LABEL = "FeedDecimals";
+const INSTANCE_LABEL = "Instance";
+const ASSETS_LABEL = "Assets";
+const ASSET_TO_FEED_LABEL = "AssetToFeed";
+const FEED_TO_ASSET_LABEL = "FeedToAsset";
+const FEED_DECIMALS_LABEL = "FeedDecimals";
 
 export const ASSETS_KEY = xdr.ScVal.scvVec([xdr.ScVal.scvSymbol(ASSETS_LABEL)]);
 
