@@ -2,14 +2,22 @@ import { getChainConfigByNetworkId, getLocalChainConfigs } from "@redstone-finan
 import {
   getPriceFeedAdapterCreator,
   getProviderWithRpcUrls,
+  PriceFeedAdapterCreator,
 } from "@redstone-finance/chain-orchestrator";
 import {
+  CommonRelayerManifest,
   getRelayerManifestFeedsWithAddresses,
   ManifestReading,
 } from "@redstone-finance/on-chain-relayer-common";
-import { isEvmNetworkId, NetworkId, RedstoneCommon } from "@redstone-finance/utils";
+import {
+  isEvmNetworkId,
+  NetworkId,
+  NetworkIdSchema,
+  RedstoneCommon,
+} from "@redstone-finance/utils";
 import { expect } from "chai";
 import { describe, test } from "mocha";
+import { z } from "zod";
 
 const INTEGRATIONS_NOT_FOR_TESTING = [
   "westendHubMultiFeed", // remove it when the network is stable
@@ -22,14 +30,80 @@ export const RETRY_CONFIG: Omit<RedstoneCommon.RetryConfig, "fn"> = {
   waitBetweenMs: 1000,
 };
 
-function getDisabledNetworks() {
+function getDisabledNetworks(): NetworkId[] {
   return [
     "radix/1",
     "radix/2",
     "canton/1",
     "canton/2",
-    ...(process.env.DISABLED_NETWORKS ?? ([] as NetworkId[])),
+    ...RedstoneCommon.getFromEnv("DISABLED_NETWORKS", z.array(NetworkIdSchema).default([])),
   ];
+}
+
+const priceFeedsCreators: Record<NetworkId, Promise<PriceFeedAdapterCreator>> = {};
+
+function getPriceFeedCreatorFor(networkId: NetworkId) {
+  return (priceFeedsCreators[networkId] ??= (async () => {
+    const publicRpcUrls = getChainConfig(networkId).publicRpcUrls;
+
+    return await getPriceFeedAdapterCreator(networkId, "dev", {
+      provider: isEvmNetworkId(networkId)
+        ? await getProviderWithRpcUrls(networkId, publicRpcUrls)
+        : undefined,
+      rpcUrls: publicRpcUrls,
+    });
+  })());
+}
+
+if (process.env.RUN_NONDETERMINISTIC_TESTS) {
+  describe("Price feed contract should return the same dataFeedId as in relayer manifest", () => {
+    const disabledNetworks = getDisabledNetworks();
+    const manifests = ManifestReading.readAllManifestsAsCommon();
+
+    const enabled = Object.entries(manifests).filter(([name, manifest]) =>
+      checkShouldRun(manifest, name, disabledNetworks)
+    );
+
+    for (const [name, manifest] of enabled) {
+      const networkId = manifest.chain.id;
+
+      test(name, async () => {
+        const priceFeedCreator = await getPriceFeedCreatorFor(networkId);
+        const { manifestFeedsWithAddresses } = getRelayerManifestFeedsWithAddresses(manifest);
+        const results = await Promise.all(
+          // Multicall batches it
+          manifestFeedsWithAddresses.map(([dataFeedId, priceFeedAddress]) =>
+            checkDataFeedIdInContract(dataFeedId, priceFeedAddress, priceFeedCreator)
+          )
+        );
+
+        for (const result of results) {
+          expect(result).to.be.true;
+        }
+      });
+    }
+  });
+}
+
+function checkShouldRun(
+  manifest: CommonRelayerManifest,
+  name: string,
+  disabledNetworks: NetworkId[]
+) {
+  if (INTEGRATIONS_NOT_FOR_TESTING.includes(name)) {
+    console.log(`Integration ${name} is disabled`);
+    return false;
+  }
+  if (getChainConfig(manifest.chain.id).publicRpcUrls.length === 0) {
+    console.log(`No rpc urls defined for chain ${name}.`);
+    return false;
+  }
+  if (disabledNetworks.includes(manifest.chain.id)) {
+    console.log(`Network ${manifest.chain.id} is disabled`);
+    return false;
+  }
+
+  return true;
 }
 
 function getChainConfig(networkId: NetworkId) {
@@ -39,16 +113,10 @@ function getChainConfig(networkId: NetworkId) {
 const checkDataFeedIdInContract = async (
   dataFeedId: string,
   address: string,
-  networkId: NetworkId
+  priceFeedCreator: PriceFeedAdapterCreator,
+  withRounds?: boolean
 ) => {
-  const { publicRpcUrls } = getChainConfig(networkId);
-  const priceFeedCreator = await getPriceFeedAdapterCreator(networkId, "dev", {
-    provider: isEvmNetworkId(networkId)
-      ? await getProviderWithRpcUrls(networkId, publicRpcUrls)
-      : undefined,
-    rpcUrls: publicRpcUrls,
-  });
-  const contract = await priceFeedCreator(address);
+  const contract = await priceFeedCreator(address, dataFeedId, withRounds);
 
   try {
     const dataFeedIdFromContract = await RedstoneCommon.retry({
@@ -70,32 +138,3 @@ const checkDataFeedIdInContract = async (
     return false;
   }
 };
-
-if (process.env.RUN_NONDETERMINISTIC_TESTS) {
-  describe("Price feed contract should return the same dataFeedId as in relayer manifest", () => {
-    const disabledNetworks = getDisabledNetworks();
-    const manifests = ManifestReading.readAllManifestsAsCommon();
-    for (const [name, manifest] of Object.entries(manifests)) {
-      if (INTEGRATIONS_NOT_FOR_TESTING.includes(name)) {
-        console.log(`Integration ${name} is disabled`);
-        continue;
-      }
-      if (getChainConfig(manifest.chain.id).publicRpcUrls.length === 0) {
-        console.log(`No rpc urls defined for chain ${name}.`);
-        continue;
-      }
-      test(name, async () => {
-        if (disabledNetworks.includes(manifest.chain.id)) {
-          console.log(`Network ${manifest.chain.id} is disabled`);
-          return;
-        }
-        const { manifestFeedsWithAddresses } = getRelayerManifestFeedsWithAddresses(manifest);
-
-        for (const [dataFeedId, priceFeedAddress] of manifestFeedsWithAddresses) {
-          expect(await checkDataFeedIdInContract(dataFeedId, priceFeedAddress, manifest.chain.id))
-            .to.be.true;
-        }
-      });
-    }
-  });
-}
