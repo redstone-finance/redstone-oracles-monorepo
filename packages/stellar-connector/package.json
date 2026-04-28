@@ -39,7 +39,11 @@
     "create-account": "yarn global:ts-node ./scripts/create-account-with-funds.ts",
     "get-stellar-address": "yarn global:ts-node ./scripts/get-stellar-address.ts",
     "instantiate-price-feed": "CONTRACT_NAME=redstone_price_feed yarn global:ts-node scripts/instantiate-price-feed.ts",
-    "extend-instance-ttl": "yarn global:ts-node scripts/extend-instance-ttl.ts"
+    "extend-instance-ttl": "yarn global:ts-node scripts/extend-instance-ttl.ts",
+    "sep-40-add-feed-tx": "yarn global:ts-node scripts/ledger/sep-40/add-feed-tx.ts",
+    "sep-40-remove-feed-tx": "yarn global:ts-node scripts/ledger/sep-40/remove-feed-tx.ts",
+    "sep-40-update-feed-tx": "yarn global:ts-node scripts/ledger/sep-40/update-feed-tx.ts",
+    "extend-sep-40-ttl": "yarn global:ts-node scripts/extend-sep-40-ttl.ts"
   },
   "dependencies": {
     "@creit-tech/stellar-router-sdk": "npm:@jsr/creit-tech__stellar-router-sdk@^0.2.0",
