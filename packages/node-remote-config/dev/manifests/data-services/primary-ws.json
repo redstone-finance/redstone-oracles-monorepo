@@ -1,8 +1,8 @@
 {
-  "interval": 1000,
+  "interval": 500,
   "priceAggregator": "median",
   "defaultSource": [],
-  "sourceTimeout": 800,
+  "sourceTimeout": 300,
   "minValidSourcesPercentage": 1,
   "useCustomScheduler": true,
   "deviationCheck": {
