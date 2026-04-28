@@ -10606,6 +10606,7 @@ __metadata:
   resolution: "@redstone-finance/lambda-hard-limits-monitoring@workspace:packages/lambda/lambda-hard-limits-monitoring"
   dependencies:
     "@redstone-finance/internal-utils": "workspace:*"
+    "@redstone-finance/lambda-hard-limits": "workspace:*"
     "@redstone-finance/monitoring-manifests": "workspace:*"
     "@redstone-finance/node-remote-config": "workspace:*"
     "@redstone-finance/protocol": "workspace:*"
@@ -10620,7 +10621,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@redstone-finance/lambda-hard-limits@workspace:packages/lambda/lambda-hard-limits":
+"@redstone-finance/lambda-hard-limits@workspace:*, @redstone-finance/lambda-hard-limits@workspace:packages/lambda/lambda-hard-limits":
   version: 0.0.0-use.local
   resolution: "@redstone-finance/lambda-hard-limits@workspace:packages/lambda/lambda-hard-limits"
   dependencies:
@@ -11664,6 +11665,7 @@ __metadata:
     "@redstone-finance/hl-hip3": "workspace:*"
     "@redstone-finance/internal-utils": "workspace:*"
     "@redstone-finance/jest-config": "workspace:*"
+    "@redstone-finance/lambda-hard-limits": "workspace:*"
     "@redstone-finance/monitoring-manifests": "workspace:*"
     "@redstone-finance/multichain-kit": "workspace:*"
     "@redstone-finance/node-commons": "workspace:*"
