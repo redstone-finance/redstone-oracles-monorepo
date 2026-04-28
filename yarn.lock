@@ -10520,7 +10520,6 @@ __metadata:
   resolution: "@redstone-finance/lambda-fallback-notifier@workspace:packages/lambda/lambda-fallback-notifier"
   dependencies:
     "@redstone-finance/internal-utils": "workspace:*"
-    "@redstone-finance/monitoring-manifests": "workspace:*"
     "@redstone-finance/node-remote-config": "workspace:*"
     "@redstone-finance/utils": "workspace:*"
     "@types/aws-lambda": "npm:^8.10.145"
