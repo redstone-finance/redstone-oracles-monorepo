@@ -103,6 +103,12 @@
         "deviationPercentage": 0.5,
         "timeSinceLastUpdateInMilliseconds": 21600000
       }
+    },
+    "CURR": {
+      "updateTriggersOverrides": {
+        "deviationPercentage": 0.5,
+        "timeSinceLastUpdateInMilliseconds": 1800000
+      }
     }
   }
 }
