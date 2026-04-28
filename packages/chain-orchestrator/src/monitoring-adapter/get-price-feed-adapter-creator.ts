@@ -9,7 +9,7 @@ import {
 import { MonitoringEnv } from "./get-monitoring-contract-adapter";
 import { getPriceFeedAdapter } from "./get-price-feed-adapter";
 
-type PriceFeedAdapterCreator = (
+export type PriceFeedAdapterCreator = (
   address: string,
   feedName?: string,
   withRounds?: boolean
