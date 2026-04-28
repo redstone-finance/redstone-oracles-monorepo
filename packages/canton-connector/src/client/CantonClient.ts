@@ -2,8 +2,12 @@ import { loggerFactory, RedstoneCommon } from "@redstone-finance/utils";
 import _ from "lodash";
 import { performance } from "perf_hooks";
 import {
+  AllocateExternalPartyRequest,
+  AllocateExternalPartyResponse,
   DefaultService,
   DisclosedContract,
+  GenerateExternalPartyTopologyRequest,
+  GenerateExternalPartyTopologyResponse,
   JsCantonError,
   OpenAPI,
   TransactionFormat,
@@ -69,6 +73,48 @@ export class CantonClient {
     const actual = status.traffic_status.actual;
 
     return actual.total_limit - actual.total_consumed;
+  }
+
+  async getConnectedSynchronizers() {
+    const response = await this.performRequest(
+      () => DefaultService.getV2StateConnectedSynchronizers(),
+      "getConnectedSynchronizers"
+    );
+
+    return response.connectedSynchronizers ?? [];
+  }
+
+  async getSynchronizerId() {
+    const synchronizers = await this.getConnectedSynchronizers();
+
+    if (synchronizers.length !== 1) {
+      const available = synchronizers
+        .map(({ synchronizerAlias, synchronizerId }) => `${synchronizerAlias}: ${synchronizerId}`)
+        .join(", ");
+      throw new Error(
+        `Expected exactly 1 connected synchronizer, found ${synchronizers.length}: ${available}`
+      );
+    }
+
+    return synchronizers[0].synchronizerId;
+  }
+
+  async generateExternalPartyTopology(
+    request: GenerateExternalPartyTopologyRequest
+  ): Promise<GenerateExternalPartyTopologyResponse> {
+    return await this.performRequest(
+      () => DefaultService.postV2PartiesExternalGenerateTopology(request),
+      "generateExternalPartyTopology"
+    );
+  }
+
+  async allocateExternalParty(
+    request: AllocateExternalPartyRequest
+  ): Promise<AllocateExternalPartyResponse> {
+    return await this.performRequest(
+      () => DefaultService.postV2PartiesExternalAllocate(request),
+      "allocateExternalParty"
+    );
   }
 
   private async fetchActiveContracts(
