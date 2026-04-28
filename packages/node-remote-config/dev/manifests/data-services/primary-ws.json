@@ -323,7 +323,14 @@
       "rateFeed": false,
       "types": [
         "rwa"
-      ]
+      ],
+      "priceAggregator": "primarySource",
+      "primarySourceAggregatorConfig": {
+        "primarySource": "",
+        "maxAcceptableDeviation": 1.0,
+        "lowerClampPercent": 0.1,
+        "upperClampPercent": 0.1
+      }
     },
     "KOSPI200---REGULAR": {
       "source": [],
@@ -339,7 +346,14 @@
       "rateFeed": false,
       "types": [
         "rwa"
-      ]
+      ],
+      "priceAggregator": "primarySource",
+      "primarySourceAggregatorConfig": {
+        "primarySource": "",
+        "maxAcceptableDeviation": 1.0,
+        "lowerClampPercent": 0.1,
+        "upperClampPercent": 0.1
+      }
     },
     "NIKKEI225---REGULAR": {
       "source": [],
