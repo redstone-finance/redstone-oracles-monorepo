@@ -142,3 +142,4 @@ pub struct Initialize<'info> {
 | USDC                       | 6sX9HsaAPhAT1MCskQFTjreuNCqFgkJWKJ4hfdvTbJET | x                                            | x                                            |
 | SOL                        | 9FboGHATJTgJA7fzG3fKeV1VuLqDsV5HtCGUR2PqZor3 | x                                            | x                                            |
 | NUSD_FUNDAMENTAL           | F5PCF1BEEYmtcDiuCQ3Ru7LCdTo85jo8qEaQcAABWYj9 | x                                            | x                                            |
+| CURR                       | 3749gbBexamKzeY9ivJ8vaVCZqkxWzrhrgqKxEffie5f | x                                            | x                                            |
