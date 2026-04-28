@@ -18,7 +18,7 @@ data-dependencies:
   - ../sdk-tests/.daml/dist/redstone-sdk-tests-v16-0.4.1.dar
   - ../featured/.daml/dist/redstone-featured-v16-0.4.0.dar
   - ../factory/.daml/dist/redstone-factory-v17-0.4.0.dar
-  - ../reward_factory/.daml/dist/redstone-reward-factory-v17-0.4.2.dar
+  - ../reward_factory/.daml/dist/redstone-reward-factory-v17-0.4.5.dar
   - ../featured/dars/splice-api-featured-app-v2-1.0.0.dar
 build-options:
   - --target=2.1
