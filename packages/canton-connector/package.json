@@ -30,6 +30,7 @@
     "lodash": "^4.17.23"
   },
   "devDependencies": {
+    "@redstone-finance/internal-utils": "workspace:*",
     "@redstone-finance/jest-config": "workspace:*",
     "axios": "^1.13.5",
     "dotenv": "^16.0.3",
