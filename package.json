@@ -97,7 +97,7 @@
   "resolutions": {
     "elliptic": "^6.6.1",
     "node-datachannel": "0.25.0",
-    "axios": "^1.13.5"
+    "axios": "^1.15.1"
   },
   "dependenciesMeta": {
     "@redstone-finance/mars-rover": {
