@@ -105,7 +105,10 @@ fn set_up() -> (RedStoneSep40Client<'static>, Address, Address, Env) {
         Some(8),
     ));
 
-    let contract_id = env.register(RedStoneSep40, (owner.clone(), base_asset, mappings));
+    let contract_id = env.register(
+        RedStoneSep40,
+        (owner.clone(), base_asset, mappings, RESOLUTION),
+    );
 
     let client = RedStoneSep40Client::new(&env, &contract_id);
 
@@ -163,7 +166,12 @@ fn constructor_duplicate_feed_fails() {
 
     env.register(
         RedStoneSep40,
-        (owner, Asset::Other(symbol_short!("USD")), mappings),
+        (
+            owner,
+            Asset::Other(symbol_short!("USD")),
+            mappings,
+            RESOLUTION,
+        ),
     );
 }
 
@@ -182,7 +190,12 @@ fn constructor_duplicate_asset_fails() {
 
     env.register(
         RedStoneSep40,
-        (owner, Asset::Other(symbol_short!("USD")), mappings),
+        (
+            owner,
+            Asset::Other(symbol_short!("USD")),
+            mappings,
+            RESOLUTION,
+        ),
     );
 }
 
@@ -271,7 +284,7 @@ fn decimals_falls_back_to_default_after_removing_all_explicit() {
 }
 
 #[test]
-fn resolution_is_one_second() {
+fn resolution_returns_configured_value() {
     let (client, ..) = set_up();
 
     assert_eq!(client.resolution(), RESOLUTION);
