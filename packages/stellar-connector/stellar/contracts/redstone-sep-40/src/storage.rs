@@ -2,13 +2,14 @@ use common::{CONTRACT_TTL_EXTEND_TO_LEDGERS, CONTRACT_TTL_THRESHOLD_LEDGERS};
 use sep_40_oracle::Asset;
 use soroban_sdk::{contracttype, Env, IntoVal, String, Val, Vec};
 
-use crate::config::DECIMALS;
+use crate::config::{DECIMALS, RESOLUTION};
 
 #[contracttype]
 pub enum StorageKey {
     BaseAsset,
     MaxDecimals,
     Assets,
+    Resolution,
     FeedToAsset(String),
     AssetToFeed(Asset),
     FeedDecimals(String),
@@ -17,6 +18,8 @@ pub enum StorageKey {
 pub trait EnvExt {
     fn get_base_asset(&self) -> Asset;
     fn set_base_asset(&self, asset: &Asset);
+    fn get_resolution(&self) -> u32;
+    fn set_resolution(&self, resolution: u32);
     fn get_max_decimals(&self) -> u32;
     fn set_max_decimals(&self, decimals: u32);
     fn get_assets(&self) -> Vec<Asset>;
@@ -43,6 +46,19 @@ impl EnvExt for Env {
 
     fn set_base_asset(&self, asset: &Asset) {
         self.storage().instance().set(&StorageKey::BaseAsset, asset);
+    }
+
+    fn get_resolution(&self) -> u32 {
+        self.storage()
+            .instance()
+            .get(&StorageKey::Resolution)
+            .unwrap_or(RESOLUTION)
+    }
+
+    fn set_resolution(&self, resolution: u32) {
+        self.storage()
+            .instance()
+            .set(&StorageKey::Resolution, &resolution);
     }
 
     fn get_max_decimals(&self) -> u32 {
