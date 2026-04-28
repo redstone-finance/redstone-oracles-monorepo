@@ -1,3 +1,4 @@
+import { RedstoneCommon } from "@redstone-finance/utils";
 import { Address } from "@stellar/stellar-sdk";
 import { makeKeypair, StellarClientBuilder, StellarOperationSender } from "../src";
 import { StellarSep40ContractDeployer } from "../src/stellar/StellarSep40ContractDeployer";
@@ -11,6 +12,7 @@ const FEED_MAPPINGS = FEEDS.map((feed) => ({
   feed,
   asset: { tag: "Other" as const, symbol: feed },
 }));
+const RESOLUTION_SECS = RedstoneCommon.hourToSecs(12);
 
 async function deploySep40() {
   const keypair = makeKeypair();
@@ -28,7 +30,8 @@ async function deploySep40() {
     wasmFilePath(SEP40_CONTRACT),
     owner,
     BASE_ASSET,
-    FEED_MAPPINGS
+    FEED_MAPPINGS,
+    RESOLUTION_SECS
   );
 
   saveSep40Id(result.contractId);

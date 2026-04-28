@@ -3,15 +3,11 @@ extern crate alloc;
 
 use common::{ownable::Ownable, upgradable::Upgradable, PriceData};
 use sep_40_oracle::{Asset, PriceFeedTrait};
-use soroban_sdk::{contract, contractimpl, contracttype, Address, Env, Error, String, Vec};
+use soroban_sdk::{contract, contractimpl, contracttype, Address, BytesN, Env, Error, String, Vec};
 use storage::EnvExt;
 use utils::price_data_to_sep_40;
 
-use crate::{
-    config::{ONE_SEC, RESOLUTION},
-    feed_map::FeedMap,
-    utils::get_adapter_client,
-};
+use crate::{config::ONE_SEC, feed_map::FeedMap, utils::get_adapter_client};
 
 mod config;
 mod error;
@@ -44,8 +40,10 @@ impl RedStoneSep40 {
         owner: Address,
         base_asset: Asset,
         feed_mappings: Vec<FeedMapping>,
+        resolution: u32,
     ) -> Result<(), Error> {
         env.set_base_asset(&base_asset);
+        env.set_resolution(resolution);
 
         FeedMap::with(env, |map| {
             for mapping in feed_mappings.iter() {
@@ -79,6 +77,14 @@ impl RedStoneSep40 {
         })
     }
 
+    pub fn set_resolution(env: &Env, new_resolution: u32) -> Result<(), Error> {
+        Self::_assert_owner(env)?;
+
+        env.set_resolution(new_resolution);
+
+        Ok(())
+    }
+
     pub fn change_owner(env: &Env, new_owner: Address) -> Result<(), Error> {
         Self::_change_owner(env, new_owner)
     }
@@ -89,6 +95,10 @@ impl RedStoneSep40 {
 
     pub fn cancel_ownership_transfer(env: &Env) -> Result<(), Error> {
         Self::_cancel_ownership_transfer(env)
+    }
+
+    pub fn upgrade(env: &Env, new_wasm_hash: BytesN<32>) -> Result<(), Error> {
+        Self::_upgrade(env, new_wasm_hash)
     }
 
     pub fn extend_entries_ttl(env: &Env) {
@@ -114,12 +124,22 @@ impl PriceFeedTrait for RedStoneSep40 {
         env.get_assets()
     }
 
+    /// Returns the maximum decimal precision across all registered feeds.
+    ///
+    /// **Deviation from SEP-40:** The standard requires `decimals` to be
+    /// immutable after deployment. This implementation does not uphold that
+    /// guarantee: the value increases when a feed with higher precision is
+    /// added and may decrease when the feed that currently defines the
+    /// maximum is removed. The value is stable within a single transaction
+    /// — it can only change through owner-gated admin calls (`add_feed`,
+    /// `remove_feed`, `update_feed`). Integrators must not cache this value
+    /// across administrative operations.
     fn decimals(env: Env) -> u32 {
         env.get_max_decimals()
     }
 
-    fn resolution(_: Env) -> u32 {
-        RESOLUTION
+    fn resolution(env: Env) -> u32 {
+        env.get_resolution()
     }
 
     fn price(env: Env, asset: Asset, timestamp: u64) -> Option<Sep40PriceData> {
