@@ -56,4 +56,5 @@ void makeFeedTable([
   "USDC",
   "SOL",
   "NUSD_FUNDAMENTAL",
+  "CURR",
 ]);
