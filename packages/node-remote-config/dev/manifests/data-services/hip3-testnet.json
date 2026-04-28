@@ -4036,6 +4036,3127 @@
       "types": [
         "snoozed"
       ]
+    },
+    "ORACLE_hyna:BTC": {
+      "source": [
+        "ws-hyperliquid-perps-hyna",
+        "ws-hydromancer-perps-hyna"
+      ],
+      "customWeightsForWeightedMedian": {
+        "ws-hyperliquid-perps-hyna": 10,
+        "ws-hydromancer-perps-hyna": 1
+      },
+      "priceAggregator": "constantWeightMedian",
+      "broadcasters": [
+        "influx"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "ORACLE_hyna:BTC_EMA_150S": {
+      "source": [
+        "ema"
+      ],
+      "broadcasters": [
+        "influx"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "MARK_hyna:BTC": {
+      "source": [
+        "ws-hyperliquid-perps-hyna",
+        "ws-hydromancer-perps-hyna"
+      ],
+      "customWeightsForWeightedMedian": {
+        "ws-hyperliquid-perps-hyna": 10,
+        "ws-hydromancer-perps-hyna": 1
+      },
+      "priceAggregator": "constantWeightMedian",
+      "broadcasters": [
+        "influx"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "MID_hyna:BTC": {
+      "source": [
+        "ws-hyperliquid-perps-hyna",
+        "ws-hydromancer-perps-hyna"
+      ],
+      "customWeightsForWeightedMedian": {
+        "ws-hyperliquid-perps-hyna": 10,
+        "ws-hydromancer-perps-hyna": 1
+      },
+      "priceAggregator": "constantWeightMedian",
+      "broadcasters": [
+        "influx"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "MID_hyna:BTC_EMA_150S": {
+      "source": [
+        "ema"
+      ],
+      "broadcasters": [
+        "influx"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "hyna:BTC_MARK_0": {
+      "source": [
+        "hip3-crypto-mainnet-fetcher"
+      ],
+      "broadcasters": [
+        "hyperliquid-hip3"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "hyna:BTC_MARK_1": {
+      "source": [
+        "hip3-crypto-mainnet-fetcher"
+      ],
+      "broadcasters": [
+        "hyperliquid-hip3"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "hyna:BTC_EXT": {
+      "source": [
+        "hip3-crypto-mainnet-fetcher"
+      ],
+      "broadcasters": [
+        "hyperliquid-hip3"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "hyna:BTC": {
+      "source": [
+        "hip3-crypto-mainnet-fetcher"
+      ],
+      "broadcasters": [
+        "hyperliquid-hip3"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "OPEN_INTEREST_hyna:BTC": {
+      "source": [
+        "ws-hyperliquid-perps-hyna"
+      ],
+      "broadcasters": [],
+      "denomination": "USD",
+      "rateFeed": false,
+      "deviationCheck": {
+        "deviationWithRecentValues": {
+          "maxPercent": 1000000000,
+          "maxDelayMilliseconds": 1000
+        }
+      }
+    },
+    "ETH_PERP": {
+      "source": [
+        "ws-perp-binance-usdt",
+        "ws-perp-bybit-usdt",
+        "ws-perp-gate-usdt",
+        "ws-perp-mexc-usdt",
+        "ws-perp-okx-usdt"
+      ],
+      "priceAggregator": "constantWeightMedian",
+      "customWeightsForWeightedMedian": {
+        "ws-perp-binance-usdt": 3,
+        "ws-perp-okx-usdt": 2,
+        "ws-perp-bybit-usdt": 2
+      },
+      "broadcasters": [
+        "influx"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "ORACLE_ETH": {
+      "source": [
+        "ws-hyperliquid-perps-native",
+        "ws-hydromancer-perps-native"
+      ],
+      "customWeightsForWeightedMedian": {
+        "ws-hyperliquid-perps-native": 10,
+        "ws-hydromancer-perps-native": 1
+      },
+      "priceAggregator": "constantWeightMedian",
+      "broadcasters": [
+        "influx"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "ORACLE_hyna:ETH": {
+      "source": [
+        "ws-hyperliquid-perps-hyna",
+        "ws-hydromancer-perps-hyna"
+      ],
+      "customWeightsForWeightedMedian": {
+        "ws-hyperliquid-perps-hyna": 10,
+        "ws-hydromancer-perps-hyna": 1
+      },
+      "priceAggregator": "constantWeightMedian",
+      "broadcasters": [
+        "influx"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "ORACLE_hyna:ETH_EMA_150S": {
+      "source": [
+        "ema"
+      ],
+      "broadcasters": [
+        "influx"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "MARK_hyna:ETH": {
+      "source": [
+        "ws-hyperliquid-perps-hyna",
+        "ws-hydromancer-perps-hyna"
+      ],
+      "customWeightsForWeightedMedian": {
+        "ws-hyperliquid-perps-hyna": 10,
+        "ws-hydromancer-perps-hyna": 1
+      },
+      "priceAggregator": "constantWeightMedian",
+      "broadcasters": [
+        "influx"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "MID_hyna:ETH": {
+      "source": [
+        "ws-hyperliquid-perps-hyna",
+        "ws-hydromancer-perps-hyna"
+      ],
+      "customWeightsForWeightedMedian": {
+        "ws-hyperliquid-perps-hyna": 10,
+        "ws-hydromancer-perps-hyna": 1
+      },
+      "priceAggregator": "constantWeightMedian",
+      "broadcasters": [
+        "influx"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "MID_hyna:ETH_EMA_150S": {
+      "source": [
+        "ema"
+      ],
+      "broadcasters": [
+        "influx"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "hyna:ETH_MARK_0": {
+      "source": [
+        "hip3-crypto-mainnet-fetcher"
+      ],
+      "broadcasters": [
+        "hyperliquid-hip3"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "hyna:ETH_MARK_1": {
+      "source": [
+        "hip3-crypto-mainnet-fetcher"
+      ],
+      "broadcasters": [
+        "hyperliquid-hip3"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "hyna:ETH_EXT": {
+      "source": [
+        "hip3-crypto-mainnet-fetcher"
+      ],
+      "broadcasters": [
+        "hyperliquid-hip3"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "hyna:ETH": {
+      "source": [
+        "hip3-crypto-mainnet-fetcher"
+      ],
+      "broadcasters": [
+        "hyperliquid-hip3"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "OPEN_INTEREST_hyna:ETH": {
+      "source": [
+        "ws-hyperliquid-perps-hyna"
+      ],
+      "broadcasters": [],
+      "denomination": "USD",
+      "rateFeed": false,
+      "deviationCheck": {
+        "deviationWithRecentValues": {
+          "maxPercent": 1000000000,
+          "maxDelayMilliseconds": 1000
+        }
+      }
+    },
+    "BNB_PERP": {
+      "source": [
+        "ws-perp-binance-usdt",
+        "ws-perp-bybit-usdt",
+        "ws-perp-gate-usdt",
+        "ws-perp-mexc-usdt",
+        "ws-perp-okx-usdt"
+      ],
+      "priceAggregator": "constantWeightMedian",
+      "customWeightsForWeightedMedian": {
+        "ws-perp-binance-usdt": 3,
+        "ws-perp-okx-usdt": 2,
+        "ws-perp-bybit-usdt": 2
+      },
+      "broadcasters": [
+        "influx"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "ORACLE_BNB": {
+      "source": [
+        "ws-hyperliquid-perps-native",
+        "ws-hydromancer-perps-native"
+      ],
+      "customWeightsForWeightedMedian": {
+        "ws-hyperliquid-perps-native": 10,
+        "ws-hydromancer-perps-native": 1
+      },
+      "priceAggregator": "constantWeightMedian",
+      "broadcasters": [
+        "influx"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "ORACLE_hyna:BNB": {
+      "source": [
+        "ws-hyperliquid-perps-hyna",
+        "ws-hydromancer-perps-hyna"
+      ],
+      "customWeightsForWeightedMedian": {
+        "ws-hyperliquid-perps-hyna": 10,
+        "ws-hydromancer-perps-hyna": 1
+      },
+      "priceAggregator": "constantWeightMedian",
+      "broadcasters": [
+        "influx"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "ORACLE_hyna:BNB_EMA_150S": {
+      "source": [
+        "ema"
+      ],
+      "broadcasters": [
+        "influx"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "MARK_hyna:BNB": {
+      "source": [
+        "ws-hyperliquid-perps-hyna",
+        "ws-hydromancer-perps-hyna"
+      ],
+      "customWeightsForWeightedMedian": {
+        "ws-hyperliquid-perps-hyna": 10,
+        "ws-hydromancer-perps-hyna": 1
+      },
+      "priceAggregator": "constantWeightMedian",
+      "broadcasters": [
+        "influx"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "MID_hyna:BNB": {
+      "source": [
+        "ws-hyperliquid-perps-hyna",
+        "ws-hydromancer-perps-hyna"
+      ],
+      "customWeightsForWeightedMedian": {
+        "ws-hyperliquid-perps-hyna": 10,
+        "ws-hydromancer-perps-hyna": 1
+      },
+      "priceAggregator": "constantWeightMedian",
+      "broadcasters": [
+        "influx"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "MID_hyna:BNB_EMA_150S": {
+      "source": [
+        "ema"
+      ],
+      "broadcasters": [
+        "influx"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "hyna:BNB_MARK_0": {
+      "source": [
+        "hip3-crypto-mainnet-fetcher"
+      ],
+      "broadcasters": [
+        "hyperliquid-hip3"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "hyna:BNB_MARK_1": {
+      "source": [
+        "hip3-crypto-mainnet-fetcher"
+      ],
+      "broadcasters": [
+        "hyperliquid-hip3"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "hyna:BNB_EXT": {
+      "source": [
+        "hip3-crypto-mainnet-fetcher"
+      ],
+      "broadcasters": [
+        "hyperliquid-hip3"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "hyna:BNB": {
+      "source": [
+        "hip3-crypto-mainnet-fetcher"
+      ],
+      "broadcasters": [
+        "hyperliquid-hip3"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "OPEN_INTEREST_hyna:BNB": {
+      "source": [
+        "ws-hyperliquid-perps-hyna"
+      ],
+      "broadcasters": [],
+      "denomination": "USD",
+      "rateFeed": false,
+      "deviationCheck": {
+        "deviationWithRecentValues": {
+          "maxPercent": 1000000000,
+          "maxDelayMilliseconds": 1000
+        }
+      }
+    },
+    "HYPE_PERP": {
+      "source": [
+        "ws-perp-binance-usdt",
+        "ws-perp-bybit-usdt",
+        "ws-perp-gate-usdt",
+        "ws-perp-mexc-usdt",
+        "ws-perp-okx-usdt"
+      ],
+      "priceAggregator": "constantWeightMedian",
+      "customWeightsForWeightedMedian": {
+        "ws-perp-binance-usdt": 3,
+        "ws-perp-okx-usdt": 2,
+        "ws-perp-bybit-usdt": 2
+      },
+      "broadcasters": [
+        "influx"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "ORACLE_HYPE": {
+      "source": [
+        "ws-hyperliquid-perps-native",
+        "ws-hydromancer-perps-native"
+      ],
+      "customWeightsForWeightedMedian": {
+        "ws-hyperliquid-perps-native": 10,
+        "ws-hydromancer-perps-native": 1
+      },
+      "priceAggregator": "constantWeightMedian",
+      "broadcasters": [
+        "influx"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "ORACLE_hyna:HYPE": {
+      "source": [
+        "ws-hyperliquid-perps-hyna",
+        "ws-hydromancer-perps-hyna"
+      ],
+      "customWeightsForWeightedMedian": {
+        "ws-hyperliquid-perps-hyna": 10,
+        "ws-hydromancer-perps-hyna": 1
+      },
+      "priceAggregator": "constantWeightMedian",
+      "broadcasters": [
+        "influx"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "ORACLE_hyna:HYPE_EMA_150S": {
+      "source": [
+        "ema"
+      ],
+      "broadcasters": [
+        "influx"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "MARK_hyna:HYPE": {
+      "source": [
+        "ws-hyperliquid-perps-hyna",
+        "ws-hydromancer-perps-hyna"
+      ],
+      "customWeightsForWeightedMedian": {
+        "ws-hyperliquid-perps-hyna": 10,
+        "ws-hydromancer-perps-hyna": 1
+      },
+      "priceAggregator": "constantWeightMedian",
+      "broadcasters": [
+        "influx"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "MID_hyna:HYPE": {
+      "source": [
+        "ws-hyperliquid-perps-hyna",
+        "ws-hydromancer-perps-hyna"
+      ],
+      "customWeightsForWeightedMedian": {
+        "ws-hyperliquid-perps-hyna": 10,
+        "ws-hydromancer-perps-hyna": 1
+      },
+      "priceAggregator": "constantWeightMedian",
+      "broadcasters": [
+        "influx"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "MID_hyna:HYPE_EMA_150S": {
+      "source": [
+        "ema"
+      ],
+      "broadcasters": [
+        "influx"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "hyna:HYPE_MARK_0": {
+      "source": [
+        "hip3-crypto-mainnet-fetcher"
+      ],
+      "broadcasters": [
+        "hyperliquid-hip3"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "hyna:HYPE_MARK_1": {
+      "source": [
+        "hip3-crypto-mainnet-fetcher"
+      ],
+      "broadcasters": [
+        "hyperliquid-hip3"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "hyna:HYPE_EXT": {
+      "source": [
+        "hip3-crypto-mainnet-fetcher"
+      ],
+      "broadcasters": [
+        "hyperliquid-hip3"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "hyna:HYPE": {
+      "source": [
+        "hip3-crypto-mainnet-fetcher"
+      ],
+      "broadcasters": [
+        "hyperliquid-hip3"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "OPEN_INTEREST_hyna:HYPE": {
+      "source": [
+        "ws-hyperliquid-perps-hyna"
+      ],
+      "broadcasters": [],
+      "denomination": "USD",
+      "rateFeed": false,
+      "deviationCheck": {
+        "deviationWithRecentValues": {
+          "maxPercent": 1000000000,
+          "maxDelayMilliseconds": 1000
+        }
+      }
+    },
+    "SOL_PERP": {
+      "source": [
+        "ws-perp-binance-usdt",
+        "ws-perp-bybit-usdt",
+        "ws-perp-gate-usdt",
+        "ws-perp-mexc-usdt",
+        "ws-perp-okx-usdt"
+      ],
+      "priceAggregator": "constantWeightMedian",
+      "customWeightsForWeightedMedian": {
+        "ws-perp-binance-usdt": 3,
+        "ws-perp-okx-usdt": 2,
+        "ws-perp-bybit-usdt": 2
+      },
+      "broadcasters": [
+        "influx"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "ORACLE_SOL": {
+      "source": [
+        "ws-hyperliquid-perps-native",
+        "ws-hydromancer-perps-native"
+      ],
+      "customWeightsForWeightedMedian": {
+        "ws-hyperliquid-perps-native": 10,
+        "ws-hydromancer-perps-native": 1
+      },
+      "priceAggregator": "constantWeightMedian",
+      "broadcasters": [
+        "influx"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "ORACLE_hyna:SOL": {
+      "source": [
+        "ws-hyperliquid-perps-hyna",
+        "ws-hydromancer-perps-hyna"
+      ],
+      "customWeightsForWeightedMedian": {
+        "ws-hyperliquid-perps-hyna": 10,
+        "ws-hydromancer-perps-hyna": 1
+      },
+      "priceAggregator": "constantWeightMedian",
+      "broadcasters": [
+        "influx"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "ORACLE_hyna:SOL_EMA_150S": {
+      "source": [
+        "ema"
+      ],
+      "broadcasters": [
+        "influx"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "MARK_hyna:SOL": {
+      "source": [
+        "ws-hyperliquid-perps-hyna",
+        "ws-hydromancer-perps-hyna"
+      ],
+      "customWeightsForWeightedMedian": {
+        "ws-hyperliquid-perps-hyna": 10,
+        "ws-hydromancer-perps-hyna": 1
+      },
+      "priceAggregator": "constantWeightMedian",
+      "broadcasters": [
+        "influx"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "MID_hyna:SOL": {
+      "source": [
+        "ws-hyperliquid-perps-hyna",
+        "ws-hydromancer-perps-hyna"
+      ],
+      "customWeightsForWeightedMedian": {
+        "ws-hyperliquid-perps-hyna": 10,
+        "ws-hydromancer-perps-hyna": 1
+      },
+      "priceAggregator": "constantWeightMedian",
+      "broadcasters": [
+        "influx"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "MID_hyna:SOL_EMA_150S": {
+      "source": [
+        "ema"
+      ],
+      "broadcasters": [
+        "influx"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "hyna:SOL_MARK_0": {
+      "source": [
+        "hip3-crypto-mainnet-fetcher"
+      ],
+      "broadcasters": [
+        "hyperliquid-hip3"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "hyna:SOL_MARK_1": {
+      "source": [
+        "hip3-crypto-mainnet-fetcher"
+      ],
+      "broadcasters": [
+        "hyperliquid-hip3"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "hyna:SOL_EXT": {
+      "source": [
+        "hip3-crypto-mainnet-fetcher"
+      ],
+      "broadcasters": [
+        "hyperliquid-hip3"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "hyna:SOL": {
+      "source": [
+        "hip3-crypto-mainnet-fetcher"
+      ],
+      "broadcasters": [
+        "hyperliquid-hip3"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "OPEN_INTEREST_hyna:SOL": {
+      "source": [
+        "ws-hyperliquid-perps-hyna"
+      ],
+      "broadcasters": [],
+      "denomination": "USD",
+      "rateFeed": false,
+      "deviationCheck": {
+        "deviationWithRecentValues": {
+          "maxPercent": 1000000000,
+          "maxDelayMilliseconds": 1000
+        }
+      }
+    },
+    "XRP_PERP": {
+      "source": [
+        "ws-perp-binance-usdt",
+        "ws-perp-bybit-usdt",
+        "ws-perp-gate-usdt",
+        "ws-perp-mexc-usdt",
+        "ws-perp-okx-usdt"
+      ],
+      "priceAggregator": "constantWeightMedian",
+      "customWeightsForWeightedMedian": {
+        "ws-perp-binance-usdt": 3,
+        "ws-perp-okx-usdt": 2,
+        "ws-perp-bybit-usdt": 2
+      },
+      "broadcasters": [
+        "influx"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "ORACLE_XRP": {
+      "source": [
+        "ws-hyperliquid-perps-native",
+        "ws-hydromancer-perps-native"
+      ],
+      "customWeightsForWeightedMedian": {
+        "ws-hyperliquid-perps-native": 10,
+        "ws-hydromancer-perps-native": 1
+      },
+      "priceAggregator": "constantWeightMedian",
+      "broadcasters": [
+        "influx"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "ORACLE_hyna:XRP": {
+      "source": [
+        "ws-hyperliquid-perps-hyna",
+        "ws-hydromancer-perps-hyna"
+      ],
+      "customWeightsForWeightedMedian": {
+        "ws-hyperliquid-perps-hyna": 10,
+        "ws-hydromancer-perps-hyna": 1
+      },
+      "priceAggregator": "constantWeightMedian",
+      "broadcasters": [
+        "influx"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "ORACLE_hyna:XRP_EMA_150S": {
+      "source": [
+        "ema"
+      ],
+      "broadcasters": [
+        "influx"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "MARK_hyna:XRP": {
+      "source": [
+        "ws-hyperliquid-perps-hyna",
+        "ws-hydromancer-perps-hyna"
+      ],
+      "customWeightsForWeightedMedian": {
+        "ws-hyperliquid-perps-hyna": 10,
+        "ws-hydromancer-perps-hyna": 1
+      },
+      "priceAggregator": "constantWeightMedian",
+      "broadcasters": [
+        "influx"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "MID_hyna:XRP": {
+      "source": [
+        "ws-hyperliquid-perps-hyna",
+        "ws-hydromancer-perps-hyna"
+      ],
+      "customWeightsForWeightedMedian": {
+        "ws-hyperliquid-perps-hyna": 10,
+        "ws-hydromancer-perps-hyna": 1
+      },
+      "priceAggregator": "constantWeightMedian",
+      "broadcasters": [
+        "influx"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "MID_hyna:XRP_EMA_150S": {
+      "source": [
+        "ema"
+      ],
+      "broadcasters": [
+        "influx"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "hyna:XRP_MARK_0": {
+      "source": [
+        "hip3-crypto-mainnet-fetcher"
+      ],
+      "broadcasters": [
+        "hyperliquid-hip3"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "hyna:XRP_MARK_1": {
+      "source": [
+        "hip3-crypto-mainnet-fetcher"
+      ],
+      "broadcasters": [
+        "hyperliquid-hip3"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "hyna:XRP_EXT": {
+      "source": [
+        "hip3-crypto-mainnet-fetcher"
+      ],
+      "broadcasters": [
+        "hyperliquid-hip3"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "hyna:XRP": {
+      "source": [
+        "hip3-crypto-mainnet-fetcher"
+      ],
+      "broadcasters": [
+        "hyperliquid-hip3"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "OPEN_INTEREST_hyna:XRP": {
+      "source": [
+        "ws-hyperliquid-perps-hyna"
+      ],
+      "broadcasters": [],
+      "denomination": "USD",
+      "rateFeed": false,
+      "deviationCheck": {
+        "deviationWithRecentValues": {
+          "maxPercent": 1000000000,
+          "maxDelayMilliseconds": 1000
+        }
+      }
+    },
+    "1000PEPE_PERP": {
+      "source": [
+        "ws-perp-binance-usdt",
+        "ws-perp-bybit-usdt",
+        "ws-perp-gate-usdt",
+        "ws-perp-mexc-usdt",
+        "ws-perp-okx-usdt"
+      ],
+      "priceAggregator": "constantWeightMedian",
+      "customWeightsForWeightedMedian": {
+        "ws-perp-binance-usdt": 3,
+        "ws-perp-okx-usdt": 2,
+        "ws-perp-bybit-usdt": 2
+      },
+      "broadcasters": [
+        "influx"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "ORACLE_1000PEPE": {
+      "source": [
+        "ws-hyperliquid-perps-native",
+        "ws-hydromancer-perps-native"
+      ],
+      "customWeightsForWeightedMedian": {
+        "ws-hyperliquid-perps-native": 10,
+        "ws-hydromancer-perps-native": 1
+      },
+      "priceAggregator": "constantWeightMedian",
+      "broadcasters": [
+        "influx"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "ORACLE_hyna:1000PEPE": {
+      "source": [
+        "ws-hyperliquid-perps-hyna",
+        "ws-hydromancer-perps-hyna"
+      ],
+      "customWeightsForWeightedMedian": {
+        "ws-hyperliquid-perps-hyna": 10,
+        "ws-hydromancer-perps-hyna": 1
+      },
+      "priceAggregator": "constantWeightMedian",
+      "broadcasters": [
+        "influx"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "ORACLE_hyna:1000PEPE_EMA_150S": {
+      "source": [
+        "ema"
+      ],
+      "broadcasters": [
+        "influx"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "MARK_hyna:1000PEPE": {
+      "source": [
+        "ws-hyperliquid-perps-hyna",
+        "ws-hydromancer-perps-hyna"
+      ],
+      "customWeightsForWeightedMedian": {
+        "ws-hyperliquid-perps-hyna": 10,
+        "ws-hydromancer-perps-hyna": 1
+      },
+      "priceAggregator": "constantWeightMedian",
+      "broadcasters": [
+        "influx"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "MID_hyna:1000PEPE": {
+      "source": [
+        "ws-hyperliquid-perps-hyna",
+        "ws-hydromancer-perps-hyna"
+      ],
+      "customWeightsForWeightedMedian": {
+        "ws-hyperliquid-perps-hyna": 10,
+        "ws-hydromancer-perps-hyna": 1
+      },
+      "priceAggregator": "constantWeightMedian",
+      "broadcasters": [
+        "influx"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "MID_hyna:1000PEPE_EMA_150S": {
+      "source": [
+        "ema"
+      ],
+      "broadcasters": [
+        "influx"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "hyna:1000PEPE_MARK_0": {
+      "source": [
+        "hip3-crypto-mainnet-fetcher"
+      ],
+      "broadcasters": [
+        "hyperliquid-hip3"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "hyna:1000PEPE_MARK_1": {
+      "source": [
+        "hip3-crypto-mainnet-fetcher"
+      ],
+      "broadcasters": [
+        "hyperliquid-hip3"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "hyna:1000PEPE_EXT": {
+      "source": [
+        "hip3-crypto-mainnet-fetcher"
+      ],
+      "broadcasters": [
+        "hyperliquid-hip3"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "hyna:1000PEPE": {
+      "source": [
+        "hip3-crypto-mainnet-fetcher"
+      ],
+      "broadcasters": [
+        "hyperliquid-hip3"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "OPEN_INTEREST_hyna:1000PEPE": {
+      "source": [
+        "ws-hyperliquid-perps-hyna"
+      ],
+      "broadcasters": [],
+      "denomination": "USD",
+      "rateFeed": false,
+      "deviationCheck": {
+        "deviationWithRecentValues": {
+          "maxPercent": 1000000000,
+          "maxDelayMilliseconds": 1000
+        }
+      }
+    },
+    "ZEC_PERP": {
+      "source": [
+        "ws-perp-binance-usdt",
+        "ws-perp-bybit-usdt",
+        "ws-perp-gate-usdt",
+        "ws-perp-mexc-usdt",
+        "ws-perp-okx-usdt"
+      ],
+      "priceAggregator": "constantWeightMedian",
+      "customWeightsForWeightedMedian": {
+        "ws-perp-binance-usdt": 3,
+        "ws-perp-okx-usdt": 2,
+        "ws-perp-bybit-usdt": 2
+      },
+      "broadcasters": [
+        "influx"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "ORACLE_ZEC": {
+      "source": [
+        "ws-hyperliquid-perps-native",
+        "ws-hydromancer-perps-native"
+      ],
+      "customWeightsForWeightedMedian": {
+        "ws-hyperliquid-perps-native": 10,
+        "ws-hydromancer-perps-native": 1
+      },
+      "priceAggregator": "constantWeightMedian",
+      "broadcasters": [
+        "influx"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "ORACLE_hyna:ZEC": {
+      "source": [
+        "ws-hyperliquid-perps-hyna",
+        "ws-hydromancer-perps-hyna"
+      ],
+      "customWeightsForWeightedMedian": {
+        "ws-hyperliquid-perps-hyna": 10,
+        "ws-hydromancer-perps-hyna": 1
+      },
+      "priceAggregator": "constantWeightMedian",
+      "broadcasters": [
+        "influx"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "ORACLE_hyna:ZEC_EMA_150S": {
+      "source": [
+        "ema"
+      ],
+      "broadcasters": [
+        "influx"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "MARK_hyna:ZEC": {
+      "source": [
+        "ws-hyperliquid-perps-hyna",
+        "ws-hydromancer-perps-hyna"
+      ],
+      "customWeightsForWeightedMedian": {
+        "ws-hyperliquid-perps-hyna": 10,
+        "ws-hydromancer-perps-hyna": 1
+      },
+      "priceAggregator": "constantWeightMedian",
+      "broadcasters": [
+        "influx"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "MID_hyna:ZEC": {
+      "source": [
+        "ws-hyperliquid-perps-hyna",
+        "ws-hydromancer-perps-hyna"
+      ],
+      "customWeightsForWeightedMedian": {
+        "ws-hyperliquid-perps-hyna": 10,
+        "ws-hydromancer-perps-hyna": 1
+      },
+      "priceAggregator": "constantWeightMedian",
+      "broadcasters": [
+        "influx"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "MID_hyna:ZEC_EMA_150S": {
+      "source": [
+        "ema"
+      ],
+      "broadcasters": [
+        "influx"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "hyna:ZEC_MARK_0": {
+      "source": [
+        "hip3-crypto-mainnet-fetcher"
+      ],
+      "broadcasters": [
+        "hyperliquid-hip3"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "hyna:ZEC_MARK_1": {
+      "source": [
+        "hip3-crypto-mainnet-fetcher"
+      ],
+      "broadcasters": [
+        "hyperliquid-hip3"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "hyna:ZEC_EXT": {
+      "source": [
+        "hip3-crypto-mainnet-fetcher"
+      ],
+      "broadcasters": [
+        "hyperliquid-hip3"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "hyna:ZEC": {
+      "source": [
+        "hip3-crypto-mainnet-fetcher"
+      ],
+      "broadcasters": [
+        "hyperliquid-hip3"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "OPEN_INTEREST_hyna:ZEC": {
+      "source": [
+        "ws-hyperliquid-perps-hyna"
+      ],
+      "broadcasters": [],
+      "denomination": "USD",
+      "rateFeed": false,
+      "deviationCheck": {
+        "deviationWithRecentValues": {
+          "maxPercent": 1000000000,
+          "maxDelayMilliseconds": 1000
+        }
+      }
+    },
+    "FARTCOIN_PERP": {
+      "source": [
+        "ws-perp-binance-usdt",
+        "ws-perp-bybit-usdt",
+        "ws-perp-gate-usdt",
+        "ws-perp-mexc-usdt",
+        "ws-perp-okx-usdt"
+      ],
+      "priceAggregator": "constantWeightMedian",
+      "customWeightsForWeightedMedian": {
+        "ws-perp-binance-usdt": 3,
+        "ws-perp-okx-usdt": 2,
+        "ws-perp-bybit-usdt": 2
+      },
+      "broadcasters": [
+        "influx"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "ORACLE_FARTCOIN": {
+      "source": [
+        "ws-hyperliquid-perps-native",
+        "ws-hydromancer-perps-native"
+      ],
+      "customWeightsForWeightedMedian": {
+        "ws-hyperliquid-perps-native": 10,
+        "ws-hydromancer-perps-native": 1
+      },
+      "priceAggregator": "constantWeightMedian",
+      "broadcasters": [
+        "influx"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "ORACLE_hyna:FARTCOIN": {
+      "source": [
+        "ws-hyperliquid-perps-hyna",
+        "ws-hydromancer-perps-hyna"
+      ],
+      "customWeightsForWeightedMedian": {
+        "ws-hyperliquid-perps-hyna": 10,
+        "ws-hydromancer-perps-hyna": 1
+      },
+      "priceAggregator": "constantWeightMedian",
+      "broadcasters": [
+        "influx"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "ORACLE_hyna:FARTCOIN_EMA_150S": {
+      "source": [
+        "ema"
+      ],
+      "broadcasters": [
+        "influx"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "MARK_hyna:FARTCOIN": {
+      "source": [
+        "ws-hyperliquid-perps-hyna",
+        "ws-hydromancer-perps-hyna"
+      ],
+      "customWeightsForWeightedMedian": {
+        "ws-hyperliquid-perps-hyna": 10,
+        "ws-hydromancer-perps-hyna": 1
+      },
+      "priceAggregator": "constantWeightMedian",
+      "broadcasters": [
+        "influx"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "MID_hyna:FARTCOIN": {
+      "source": [
+        "ws-hyperliquid-perps-hyna",
+        "ws-hydromancer-perps-hyna"
+      ],
+      "customWeightsForWeightedMedian": {
+        "ws-hyperliquid-perps-hyna": 10,
+        "ws-hydromancer-perps-hyna": 1
+      },
+      "priceAggregator": "constantWeightMedian",
+      "broadcasters": [
+        "influx"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "MID_hyna:FARTCOIN_EMA_150S": {
+      "source": [
+        "ema"
+      ],
+      "broadcasters": [
+        "influx"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "hyna:FARTCOIN_MARK_0": {
+      "source": [
+        "hip3-crypto-mainnet-fetcher"
+      ],
+      "broadcasters": [
+        "hyperliquid-hip3"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "hyna:FARTCOIN_MARK_1": {
+      "source": [
+        "hip3-crypto-mainnet-fetcher"
+      ],
+      "broadcasters": [
+        "hyperliquid-hip3"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "hyna:FARTCOIN_EXT": {
+      "source": [
+        "hip3-crypto-mainnet-fetcher"
+      ],
+      "broadcasters": [
+        "hyperliquid-hip3"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "hyna:FARTCOIN": {
+      "source": [
+        "hip3-crypto-mainnet-fetcher"
+      ],
+      "broadcasters": [
+        "hyperliquid-hip3"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "OPEN_INTEREST_hyna:FARTCOIN": {
+      "source": [
+        "ws-hyperliquid-perps-hyna"
+      ],
+      "broadcasters": [],
+      "denomination": "USD",
+      "rateFeed": false,
+      "deviationCheck": {
+        "deviationWithRecentValues": {
+          "maxPercent": 1000000000,
+          "maxDelayMilliseconds": 1000
+        }
+      }
+    },
+    "LINK_PERP": {
+      "source": [
+        "ws-perp-binance-usdt",
+        "ws-perp-bybit-usdt",
+        "ws-perp-gate-usdt",
+        "ws-perp-mexc-usdt",
+        "ws-perp-okx-usdt"
+      ],
+      "priceAggregator": "constantWeightMedian",
+      "customWeightsForWeightedMedian": {
+        "ws-perp-binance-usdt": 3,
+        "ws-perp-okx-usdt": 2,
+        "ws-perp-bybit-usdt": 2
+      },
+      "broadcasters": [
+        "influx"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "ORACLE_LINK": {
+      "source": [
+        "ws-hyperliquid-perps-native",
+        "ws-hydromancer-perps-native"
+      ],
+      "customWeightsForWeightedMedian": {
+        "ws-hyperliquid-perps-native": 10,
+        "ws-hydromancer-perps-native": 1
+      },
+      "priceAggregator": "constantWeightMedian",
+      "broadcasters": [
+        "influx"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "ORACLE_hyna:LINK": {
+      "source": [
+        "ws-hyperliquid-perps-hyna",
+        "ws-hydromancer-perps-hyna"
+      ],
+      "customWeightsForWeightedMedian": {
+        "ws-hyperliquid-perps-hyna": 10,
+        "ws-hydromancer-perps-hyna": 1
+      },
+      "priceAggregator": "constantWeightMedian",
+      "broadcasters": [
+        "influx"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "ORACLE_hyna:LINK_EMA_150S": {
+      "source": [
+        "ema"
+      ],
+      "broadcasters": [
+        "influx"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "MARK_hyna:LINK": {
+      "source": [
+        "ws-hyperliquid-perps-hyna",
+        "ws-hydromancer-perps-hyna"
+      ],
+      "customWeightsForWeightedMedian": {
+        "ws-hyperliquid-perps-hyna": 10,
+        "ws-hydromancer-perps-hyna": 1
+      },
+      "priceAggregator": "constantWeightMedian",
+      "broadcasters": [
+        "influx"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "MID_hyna:LINK": {
+      "source": [
+        "ws-hyperliquid-perps-hyna",
+        "ws-hydromancer-perps-hyna"
+      ],
+      "customWeightsForWeightedMedian": {
+        "ws-hyperliquid-perps-hyna": 10,
+        "ws-hydromancer-perps-hyna": 1
+      },
+      "priceAggregator": "constantWeightMedian",
+      "broadcasters": [
+        "influx"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "MID_hyna:LINK_EMA_150S": {
+      "source": [
+        "ema"
+      ],
+      "broadcasters": [
+        "influx"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "hyna:LINK_MARK_0": {
+      "source": [
+        "hip3-crypto-mainnet-fetcher"
+      ],
+      "broadcasters": [
+        "hyperliquid-hip3"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "hyna:LINK_MARK_1": {
+      "source": [
+        "hip3-crypto-mainnet-fetcher"
+      ],
+      "broadcasters": [
+        "hyperliquid-hip3"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "hyna:LINK_EXT": {
+      "source": [
+        "hip3-crypto-mainnet-fetcher"
+      ],
+      "broadcasters": [
+        "hyperliquid-hip3"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "hyna:LINK": {
+      "source": [
+        "hip3-crypto-mainnet-fetcher"
+      ],
+      "broadcasters": [
+        "hyperliquid-hip3"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "OPEN_INTEREST_hyna:LINK": {
+      "source": [
+        "ws-hyperliquid-perps-hyna"
+      ],
+      "broadcasters": [],
+      "denomination": "USD",
+      "rateFeed": false,
+      "deviationCheck": {
+        "deviationWithRecentValues": {
+          "maxPercent": 1000000000,
+          "maxDelayMilliseconds": 1000
+        }
+      }
+    },
+    "SUI_PERP": {
+      "source": [
+        "ws-perp-binance-usdt",
+        "ws-perp-bybit-usdt",
+        "ws-perp-gate-usdt",
+        "ws-perp-mexc-usdt",
+        "ws-perp-okx-usdt"
+      ],
+      "priceAggregator": "constantWeightMedian",
+      "customWeightsForWeightedMedian": {
+        "ws-perp-binance-usdt": 3,
+        "ws-perp-okx-usdt": 2,
+        "ws-perp-bybit-usdt": 2
+      },
+      "broadcasters": [
+        "influx"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "ORACLE_SUI": {
+      "source": [
+        "ws-hyperliquid-perps-native",
+        "ws-hydromancer-perps-native"
+      ],
+      "customWeightsForWeightedMedian": {
+        "ws-hyperliquid-perps-native": 10,
+        "ws-hydromancer-perps-native": 1
+      },
+      "priceAggregator": "constantWeightMedian",
+      "broadcasters": [
+        "influx"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "ORACLE_hyna:SUI": {
+      "source": [
+        "ws-hyperliquid-perps-hyna",
+        "ws-hydromancer-perps-hyna"
+      ],
+      "customWeightsForWeightedMedian": {
+        "ws-hyperliquid-perps-hyna": 10,
+        "ws-hydromancer-perps-hyna": 1
+      },
+      "priceAggregator": "constantWeightMedian",
+      "broadcasters": [
+        "influx"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "ORACLE_hyna:SUI_EMA_150S": {
+      "source": [
+        "ema"
+      ],
+      "broadcasters": [
+        "influx"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "MARK_hyna:SUI": {
+      "source": [
+        "ws-hyperliquid-perps-hyna",
+        "ws-hydromancer-perps-hyna"
+      ],
+      "customWeightsForWeightedMedian": {
+        "ws-hyperliquid-perps-hyna": 10,
+        "ws-hydromancer-perps-hyna": 1
+      },
+      "priceAggregator": "constantWeightMedian",
+      "broadcasters": [
+        "influx"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "MID_hyna:SUI": {
+      "source": [
+        "ws-hyperliquid-perps-hyna",
+        "ws-hydromancer-perps-hyna"
+      ],
+      "customWeightsForWeightedMedian": {
+        "ws-hyperliquid-perps-hyna": 10,
+        "ws-hydromancer-perps-hyna": 1
+      },
+      "priceAggregator": "constantWeightMedian",
+      "broadcasters": [
+        "influx"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "MID_hyna:SUI_EMA_150S": {
+      "source": [
+        "ema"
+      ],
+      "broadcasters": [
+        "influx"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "hyna:SUI_MARK_0": {
+      "source": [
+        "hip3-crypto-mainnet-fetcher"
+      ],
+      "broadcasters": [
+        "hyperliquid-hip3"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "hyna:SUI_MARK_1": {
+      "source": [
+        "hip3-crypto-mainnet-fetcher"
+      ],
+      "broadcasters": [
+        "hyperliquid-hip3"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "hyna:SUI_EXT": {
+      "source": [
+        "hip3-crypto-mainnet-fetcher"
+      ],
+      "broadcasters": [
+        "hyperliquid-hip3"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "hyna:SUI": {
+      "source": [
+        "hip3-crypto-mainnet-fetcher"
+      ],
+      "broadcasters": [
+        "hyperliquid-hip3"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "OPEN_INTEREST_hyna:SUI": {
+      "source": [
+        "ws-hyperliquid-perps-hyna"
+      ],
+      "broadcasters": [],
+      "denomination": "USD",
+      "rateFeed": false,
+      "deviationCheck": {
+        "deviationWithRecentValues": {
+          "maxPercent": 1000000000,
+          "maxDelayMilliseconds": 1000
+        }
+      }
+    },
+    "XMR_PERP": {
+      "source": [
+        "ws-perp-binance-usdt",
+        "ws-perp-bybit-usdt",
+        "ws-perp-gate-usdt",
+        "ws-perp-mexc-usdt"
+      ],
+      "priceAggregator": "constantWeightMedian",
+      "customWeightsForWeightedMedian": {
+        "ws-perp-binance-usdt": 3,
+        "ws-perp-okx-usdt": 2,
+        "ws-perp-bybit-usdt": 2
+      },
+      "broadcasters": [
+        "influx"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "ORACLE_XMR": {
+      "source": [
+        "ws-hyperliquid-perps-native",
+        "ws-hydromancer-perps-native"
+      ],
+      "customWeightsForWeightedMedian": {
+        "ws-hyperliquid-perps-native": 10,
+        "ws-hydromancer-perps-native": 1
+      },
+      "priceAggregator": "constantWeightMedian",
+      "broadcasters": [
+        "influx"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "ORACLE_hyna:XMR": {
+      "source": [
+        "ws-hyperliquid-perps-hyna",
+        "ws-hydromancer-perps-hyna"
+      ],
+      "customWeightsForWeightedMedian": {
+        "ws-hyperliquid-perps-hyna": 10,
+        "ws-hydromancer-perps-hyna": 1
+      },
+      "priceAggregator": "constantWeightMedian",
+      "broadcasters": [
+        "influx"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "ORACLE_hyna:XMR_EMA_150S": {
+      "source": [
+        "ema"
+      ],
+      "broadcasters": [
+        "influx"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "MARK_hyna:XMR": {
+      "source": [
+        "ws-hyperliquid-perps-hyna",
+        "ws-hydromancer-perps-hyna"
+      ],
+      "customWeightsForWeightedMedian": {
+        "ws-hyperliquid-perps-hyna": 10,
+        "ws-hydromancer-perps-hyna": 1
+      },
+      "priceAggregator": "constantWeightMedian",
+      "broadcasters": [
+        "influx"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "MID_hyna:XMR": {
+      "source": [
+        "ws-hyperliquid-perps-hyna",
+        "ws-hydromancer-perps-hyna"
+      ],
+      "customWeightsForWeightedMedian": {
+        "ws-hyperliquid-perps-hyna": 10,
+        "ws-hydromancer-perps-hyna": 1
+      },
+      "priceAggregator": "constantWeightMedian",
+      "broadcasters": [
+        "influx"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "MID_hyna:XMR_EMA_150S": {
+      "source": [
+        "ema"
+      ],
+      "broadcasters": [
+        "influx"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "hyna:XMR_MARK_0": {
+      "source": [
+        "hip3-crypto-mainnet-fetcher"
+      ],
+      "broadcasters": [
+        "hyperliquid-hip3"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "hyna:XMR_MARK_1": {
+      "source": [
+        "hip3-crypto-mainnet-fetcher"
+      ],
+      "broadcasters": [
+        "hyperliquid-hip3"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "hyna:XMR_EXT": {
+      "source": [
+        "hip3-crypto-mainnet-fetcher"
+      ],
+      "broadcasters": [
+        "hyperliquid-hip3"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "hyna:XMR": {
+      "source": [
+        "hip3-crypto-mainnet-fetcher"
+      ],
+      "broadcasters": [
+        "hyperliquid-hip3"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "OPEN_INTEREST_hyna:XMR": {
+      "source": [
+        "ws-hyperliquid-perps-hyna"
+      ],
+      "broadcasters": [],
+      "denomination": "USD",
+      "rateFeed": false,
+      "deviationCheck": {
+        "deviationWithRecentValues": {
+          "maxPercent": 1000000000,
+          "maxDelayMilliseconds": 1000
+        }
+      }
+    },
+    "DOGE_PERP": {
+      "source": [
+        "ws-perp-binance-usdt",
+        "ws-perp-bybit-usdt",
+        "ws-perp-gate-usdt",
+        "ws-perp-mexc-usdt",
+        "ws-perp-okx-usdt"
+      ],
+      "priceAggregator": "constantWeightMedian",
+      "customWeightsForWeightedMedian": {
+        "ws-perp-binance-usdt": 3,
+        "ws-perp-okx-usdt": 2,
+        "ws-perp-bybit-usdt": 2
+      },
+      "broadcasters": [
+        "influx"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "ORACLE_DOGE": {
+      "source": [
+        "ws-hyperliquid-perps-native",
+        "ws-hydromancer-perps-native"
+      ],
+      "customWeightsForWeightedMedian": {
+        "ws-hyperliquid-perps-native": 10,
+        "ws-hydromancer-perps-native": 1
+      },
+      "priceAggregator": "constantWeightMedian",
+      "broadcasters": [
+        "influx"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "ORACLE_hyna:DOGE": {
+      "source": [
+        "ws-hyperliquid-perps-hyna",
+        "ws-hydromancer-perps-hyna"
+      ],
+      "customWeightsForWeightedMedian": {
+        "ws-hyperliquid-perps-hyna": 10,
+        "ws-hydromancer-perps-hyna": 1
+      },
+      "priceAggregator": "constantWeightMedian",
+      "broadcasters": [
+        "influx"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "ORACLE_hyna:DOGE_EMA_150S": {
+      "source": [
+        "ema"
+      ],
+      "broadcasters": [
+        "influx"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "MARK_hyna:DOGE": {
+      "source": [
+        "ws-hyperliquid-perps-hyna",
+        "ws-hydromancer-perps-hyna"
+      ],
+      "customWeightsForWeightedMedian": {
+        "ws-hyperliquid-perps-hyna": 10,
+        "ws-hydromancer-perps-hyna": 1
+      },
+      "priceAggregator": "constantWeightMedian",
+      "broadcasters": [
+        "influx"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "MID_hyna:DOGE": {
+      "source": [
+        "ws-hyperliquid-perps-hyna",
+        "ws-hydromancer-perps-hyna"
+      ],
+      "customWeightsForWeightedMedian": {
+        "ws-hyperliquid-perps-hyna": 10,
+        "ws-hydromancer-perps-hyna": 1
+      },
+      "priceAggregator": "constantWeightMedian",
+      "broadcasters": [
+        "influx"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "MID_hyna:DOGE_EMA_150S": {
+      "source": [
+        "ema"
+      ],
+      "broadcasters": [
+        "influx"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "hyna:DOGE_MARK_0": {
+      "source": [
+        "hip3-crypto-mainnet-fetcher"
+      ],
+      "broadcasters": [
+        "hyperliquid-hip3"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "hyna:DOGE_MARK_1": {
+      "source": [
+        "hip3-crypto-mainnet-fetcher"
+      ],
+      "broadcasters": [
+        "hyperliquid-hip3"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "hyna:DOGE_EXT": {
+      "source": [
+        "hip3-crypto-mainnet-fetcher"
+      ],
+      "broadcasters": [
+        "hyperliquid-hip3"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "hyna:DOGE": {
+      "source": [
+        "hip3-crypto-mainnet-fetcher"
+      ],
+      "broadcasters": [
+        "hyperliquid-hip3"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "OPEN_INTEREST_hyna:DOGE": {
+      "source": [
+        "ws-hyperliquid-perps-hyna"
+      ],
+      "broadcasters": [],
+      "denomination": "USD",
+      "rateFeed": false,
+      "deviationCheck": {
+        "deviationWithRecentValues": {
+          "maxPercent": 1000000000,
+          "maxDelayMilliseconds": 1000
+        }
+      }
+    },
+    "XPL_PERP": {
+      "source": [
+        "ws-perp-binance-usdt",
+        "ws-perp-bybit-usdt",
+        "ws-perp-gate-usdt",
+        "ws-perp-mexc-usdt",
+        "ws-perp-okx-usdt"
+      ],
+      "priceAggregator": "constantWeightMedian",
+      "customWeightsForWeightedMedian": {
+        "ws-perp-binance-usdt": 3,
+        "ws-perp-okx-usdt": 2,
+        "ws-perp-bybit-usdt": 2
+      },
+      "broadcasters": [
+        "influx"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "ORACLE_XPL": {
+      "source": [
+        "ws-hyperliquid-perps-native",
+        "ws-hydromancer-perps-native"
+      ],
+      "customWeightsForWeightedMedian": {
+        "ws-hyperliquid-perps-native": 10,
+        "ws-hydromancer-perps-native": 1
+      },
+      "priceAggregator": "constantWeightMedian",
+      "broadcasters": [
+        "influx"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "ORACLE_hyna:XPL": {
+      "source": [
+        "ws-hyperliquid-perps-hyna",
+        "ws-hydromancer-perps-hyna"
+      ],
+      "customWeightsForWeightedMedian": {
+        "ws-hyperliquid-perps-hyna": 10,
+        "ws-hydromancer-perps-hyna": 1
+      },
+      "priceAggregator": "constantWeightMedian",
+      "broadcasters": [
+        "influx"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "ORACLE_hyna:XPL_EMA_150S": {
+      "source": [
+        "ema"
+      ],
+      "broadcasters": [
+        "influx"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "MARK_hyna:XPL": {
+      "source": [
+        "ws-hyperliquid-perps-hyna",
+        "ws-hydromancer-perps-hyna"
+      ],
+      "customWeightsForWeightedMedian": {
+        "ws-hyperliquid-perps-hyna": 10,
+        "ws-hydromancer-perps-hyna": 1
+      },
+      "priceAggregator": "constantWeightMedian",
+      "broadcasters": [
+        "influx"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "MID_hyna:XPL": {
+      "source": [
+        "ws-hyperliquid-perps-hyna",
+        "ws-hydromancer-perps-hyna"
+      ],
+      "customWeightsForWeightedMedian": {
+        "ws-hyperliquid-perps-hyna": 10,
+        "ws-hydromancer-perps-hyna": 1
+      },
+      "priceAggregator": "constantWeightMedian",
+      "broadcasters": [
+        "influx"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "MID_hyna:XPL_EMA_150S": {
+      "source": [
+        "ema"
+      ],
+      "broadcasters": [
+        "influx"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "hyna:XPL_MARK_0": {
+      "source": [
+        "hip3-crypto-mainnet-fetcher"
+      ],
+      "broadcasters": [
+        "hyperliquid-hip3"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "hyna:XPL_MARK_1": {
+      "source": [
+        "hip3-crypto-mainnet-fetcher"
+      ],
+      "broadcasters": [
+        "hyperliquid-hip3"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "hyna:XPL_EXT": {
+      "source": [
+        "hip3-crypto-mainnet-fetcher"
+      ],
+      "broadcasters": [
+        "hyperliquid-hip3"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "hyna:XPL": {
+      "source": [
+        "hip3-crypto-mainnet-fetcher"
+      ],
+      "broadcasters": [
+        "hyperliquid-hip3"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "OPEN_INTEREST_hyna:XPL": {
+      "source": [
+        "ws-hyperliquid-perps-hyna"
+      ],
+      "broadcasters": [],
+      "denomination": "USD",
+      "rateFeed": false,
+      "deviationCheck": {
+        "deviationWithRecentValues": {
+          "maxPercent": 1000000000,
+          "maxDelayMilliseconds": 1000
+        }
+      }
+    },
+    "IP_PERP": {
+      "source": [
+        "ws-perp-binance-usdt",
+        "ws-perp-bybit-usdt",
+        "ws-perp-gate-usdt",
+        "ws-perp-mexc-usdt",
+        "ws-perp-okx-usdt"
+      ],
+      "priceAggregator": "constantWeightMedian",
+      "customWeightsForWeightedMedian": {
+        "ws-perp-binance-usdt": 3,
+        "ws-perp-okx-usdt": 2,
+        "ws-perp-bybit-usdt": 2
+      },
+      "broadcasters": [
+        "influx"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "ORACLE_IP": {
+      "source": [
+        "ws-hyperliquid-perps-native",
+        "ws-hydromancer-perps-native"
+      ],
+      "customWeightsForWeightedMedian": {
+        "ws-hyperliquid-perps-native": 10,
+        "ws-hydromancer-perps-native": 1
+      },
+      "priceAggregator": "constantWeightMedian",
+      "broadcasters": [
+        "influx"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "ORACLE_hyna:IP": {
+      "source": [
+        "ws-hyperliquid-perps-hyna",
+        "ws-hydromancer-perps-hyna"
+      ],
+      "customWeightsForWeightedMedian": {
+        "ws-hyperliquid-perps-hyna": 10,
+        "ws-hydromancer-perps-hyna": 1
+      },
+      "priceAggregator": "constantWeightMedian",
+      "broadcasters": [
+        "influx"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "ORACLE_hyna:IP_EMA_150S": {
+      "source": [
+        "ema"
+      ],
+      "broadcasters": [
+        "influx"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "MARK_hyna:IP": {
+      "source": [
+        "ws-hyperliquid-perps-hyna",
+        "ws-hydromancer-perps-hyna"
+      ],
+      "customWeightsForWeightedMedian": {
+        "ws-hyperliquid-perps-hyna": 10,
+        "ws-hydromancer-perps-hyna": 1
+      },
+      "priceAggregator": "constantWeightMedian",
+      "broadcasters": [
+        "influx"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "MID_hyna:IP": {
+      "source": [
+        "ws-hyperliquid-perps-hyna",
+        "ws-hydromancer-perps-hyna"
+      ],
+      "customWeightsForWeightedMedian": {
+        "ws-hyperliquid-perps-hyna": 10,
+        "ws-hydromancer-perps-hyna": 1
+      },
+      "priceAggregator": "constantWeightMedian",
+      "broadcasters": [
+        "influx"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "MID_hyna:IP_EMA_150S": {
+      "source": [
+        "ema"
+      ],
+      "broadcasters": [
+        "influx"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "hyna:IP_MARK_0": {
+      "source": [
+        "hip3-crypto-mainnet-fetcher"
+      ],
+      "broadcasters": [
+        "hyperliquid-hip3"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "hyna:IP_MARK_1": {
+      "source": [
+        "hip3-crypto-mainnet-fetcher"
+      ],
+      "broadcasters": [
+        "hyperliquid-hip3"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "hyna:IP_EXT": {
+      "source": [
+        "hip3-crypto-mainnet-fetcher"
+      ],
+      "broadcasters": [
+        "hyperliquid-hip3"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "hyna:IP": {
+      "source": [
+        "hip3-crypto-mainnet-fetcher"
+      ],
+      "broadcasters": [
+        "hyperliquid-hip3"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "OPEN_INTEREST_hyna:IP": {
+      "source": [
+        "ws-hyperliquid-perps-hyna"
+      ],
+      "broadcasters": [],
+      "denomination": "USD",
+      "rateFeed": false,
+      "deviationCheck": {
+        "deviationWithRecentValues": {
+          "maxPercent": 1000000000,
+          "maxDelayMilliseconds": 1000
+        }
+      }
+    },
+    "ADA_PERP": {
+      "source": [
+        "ws-perp-binance-usdt",
+        "ws-perp-bybit-usdt",
+        "ws-perp-gate-usdt",
+        "ws-perp-mexc-usdt",
+        "ws-perp-okx-usdt"
+      ],
+      "priceAggregator": "constantWeightMedian",
+      "customWeightsForWeightedMedian": {
+        "ws-perp-binance-usdt": 3,
+        "ws-perp-okx-usdt": 2,
+        "ws-perp-bybit-usdt": 2
+      },
+      "broadcasters": [
+        "influx"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "ORACLE_ADA": {
+      "source": [
+        "ws-hyperliquid-perps-native",
+        "ws-hydromancer-perps-native"
+      ],
+      "customWeightsForWeightedMedian": {
+        "ws-hyperliquid-perps-native": 10,
+        "ws-hydromancer-perps-native": 1
+      },
+      "priceAggregator": "constantWeightMedian",
+      "broadcasters": [
+        "influx"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "ORACLE_hyna:ADA": {
+      "source": [
+        "ws-hyperliquid-perps-hyna",
+        "ws-hydromancer-perps-hyna"
+      ],
+      "customWeightsForWeightedMedian": {
+        "ws-hyperliquid-perps-hyna": 10,
+        "ws-hydromancer-perps-hyna": 1
+      },
+      "priceAggregator": "constantWeightMedian",
+      "broadcasters": [
+        "influx"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "ORACLE_hyna:ADA_EMA_150S": {
+      "source": [
+        "ema"
+      ],
+      "broadcasters": [
+        "influx"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "MARK_hyna:ADA": {
+      "source": [
+        "ws-hyperliquid-perps-hyna",
+        "ws-hydromancer-perps-hyna"
+      ],
+      "customWeightsForWeightedMedian": {
+        "ws-hyperliquid-perps-hyna": 10,
+        "ws-hydromancer-perps-hyna": 1
+      },
+      "priceAggregator": "constantWeightMedian",
+      "broadcasters": [
+        "influx"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "MID_hyna:ADA": {
+      "source": [
+        "ws-hyperliquid-perps-hyna",
+        "ws-hydromancer-perps-hyna"
+      ],
+      "customWeightsForWeightedMedian": {
+        "ws-hyperliquid-perps-hyna": 10,
+        "ws-hydromancer-perps-hyna": 1
+      },
+      "priceAggregator": "constantWeightMedian",
+      "broadcasters": [
+        "influx"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "MID_hyna:ADA_EMA_150S": {
+      "source": [
+        "ema"
+      ],
+      "broadcasters": [
+        "influx"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "hyna:ADA_MARK_0": {
+      "source": [
+        "hip3-crypto-mainnet-fetcher"
+      ],
+      "broadcasters": [
+        "hyperliquid-hip3"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "hyna:ADA_MARK_1": {
+      "source": [
+        "hip3-crypto-mainnet-fetcher"
+      ],
+      "broadcasters": [
+        "hyperliquid-hip3"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "hyna:ADA_EXT": {
+      "source": [
+        "hip3-crypto-mainnet-fetcher"
+      ],
+      "broadcasters": [
+        "hyperliquid-hip3"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "hyna:ADA": {
+      "source": [
+        "hip3-crypto-mainnet-fetcher"
+      ],
+      "broadcasters": [
+        "hyperliquid-hip3"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "OPEN_INTEREST_hyna:ADA": {
+      "source": [
+        "ws-hyperliquid-perps-hyna"
+      ],
+      "broadcasters": [],
+      "denomination": "USD",
+      "rateFeed": false,
+      "deviationCheck": {
+        "deviationWithRecentValues": {
+          "maxPercent": 1000000000,
+          "maxDelayMilliseconds": 1000
+        }
+      }
+    },
+    "PUMP_PERP": {
+      "source": [
+        "ws-perp-binance-usdt",
+        "ws-perp-gate-usdt",
+        "ws-perp-okx-usdt"
+      ],
+      "priceAggregator": "constantWeightMedian",
+      "customWeightsForWeightedMedian": {
+        "ws-perp-binance-usdt": 3,
+        "ws-perp-okx-usdt": 2,
+        "ws-perp-bybit-usdt": 2
+      },
+      "broadcasters": [
+        "influx"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "ORACLE_PUMP": {
+      "source": [
+        "ws-hyperliquid-perps-native",
+        "ws-hydromancer-perps-native"
+      ],
+      "customWeightsForWeightedMedian": {
+        "ws-hyperliquid-perps-native": 10,
+        "ws-hydromancer-perps-native": 1
+      },
+      "priceAggregator": "constantWeightMedian",
+      "broadcasters": [
+        "influx"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "ORACLE_hyna:PUMP": {
+      "source": [
+        "ws-hyperliquid-perps-hyna",
+        "ws-hydromancer-perps-hyna"
+      ],
+      "customWeightsForWeightedMedian": {
+        "ws-hyperliquid-perps-hyna": 10,
+        "ws-hydromancer-perps-hyna": 1
+      },
+      "priceAggregator": "constantWeightMedian",
+      "broadcasters": [
+        "influx"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "ORACLE_hyna:PUMP_EMA_150S": {
+      "source": [
+        "ema"
+      ],
+      "broadcasters": [
+        "influx"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "MARK_hyna:PUMP": {
+      "source": [
+        "ws-hyperliquid-perps-hyna",
+        "ws-hydromancer-perps-hyna"
+      ],
+      "customWeightsForWeightedMedian": {
+        "ws-hyperliquid-perps-hyna": 10,
+        "ws-hydromancer-perps-hyna": 1
+      },
+      "priceAggregator": "constantWeightMedian",
+      "broadcasters": [
+        "influx"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "MID_hyna:PUMP": {
+      "source": [
+        "ws-hyperliquid-perps-hyna",
+        "ws-hydromancer-perps-hyna"
+      ],
+      "customWeightsForWeightedMedian": {
+        "ws-hyperliquid-perps-hyna": 10,
+        "ws-hydromancer-perps-hyna": 1
+      },
+      "priceAggregator": "constantWeightMedian",
+      "broadcasters": [
+        "influx"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "MID_hyna:PUMP_EMA_150S": {
+      "source": [
+        "ema"
+      ],
+      "broadcasters": [
+        "influx"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "hyna:PUMP_MARK_0": {
+      "source": [
+        "hip3-crypto-mainnet-fetcher"
+      ],
+      "broadcasters": [
+        "hyperliquid-hip3"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "hyna:PUMP_MARK_1": {
+      "source": [
+        "hip3-crypto-mainnet-fetcher"
+      ],
+      "broadcasters": [
+        "hyperliquid-hip3"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "hyna:PUMP_EXT": {
+      "source": [
+        "hip3-crypto-mainnet-fetcher"
+      ],
+      "broadcasters": [
+        "hyperliquid-hip3"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "hyna:PUMP": {
+      "source": [
+        "hip3-crypto-mainnet-fetcher"
+      ],
+      "broadcasters": [
+        "hyperliquid-hip3"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "OPEN_INTEREST_hyna:PUMP": {
+      "source": [
+        "ws-hyperliquid-perps-hyna"
+      ],
+      "broadcasters": [],
+      "denomination": "USD",
+      "rateFeed": false,
+      "deviationCheck": {
+        "deviationWithRecentValues": {
+          "maxPercent": 1000000000,
+          "maxDelayMilliseconds": 1000
+        }
+      }
+    },
+    "LTC_PERP": {
+      "source": [
+        "ws-perp-binance-usdt",
+        "ws-perp-bybit-usdt",
+        "ws-perp-gate-usdt",
+        "ws-perp-mexc-usdt",
+        "ws-perp-okx-usdt"
+      ],
+      "priceAggregator": "constantWeightMedian",
+      "customWeightsForWeightedMedian": {
+        "ws-perp-binance-usdt": 3,
+        "ws-perp-okx-usdt": 2,
+        "ws-perp-bybit-usdt": 2
+      },
+      "broadcasters": [
+        "influx"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "ORACLE_LTC": {
+      "source": [
+        "ws-hyperliquid-perps-native",
+        "ws-hydromancer-perps-native"
+      ],
+      "customWeightsForWeightedMedian": {
+        "ws-hyperliquid-perps-native": 10,
+        "ws-hydromancer-perps-native": 1
+      },
+      "priceAggregator": "constantWeightMedian",
+      "broadcasters": [
+        "influx"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "ORACLE_hyna:LTC": {
+      "source": [
+        "ws-hyperliquid-perps-hyna",
+        "ws-hydromancer-perps-hyna"
+      ],
+      "customWeightsForWeightedMedian": {
+        "ws-hyperliquid-perps-hyna": 10,
+        "ws-hydromancer-perps-hyna": 1
+      },
+      "priceAggregator": "constantWeightMedian",
+      "broadcasters": [
+        "influx"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "ORACLE_hyna:LTC_EMA_150S": {
+      "source": [
+        "ema"
+      ],
+      "broadcasters": [
+        "influx"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "MARK_hyna:LTC": {
+      "source": [
+        "ws-hyperliquid-perps-hyna",
+        "ws-hydromancer-perps-hyna"
+      ],
+      "customWeightsForWeightedMedian": {
+        "ws-hyperliquid-perps-hyna": 10,
+        "ws-hydromancer-perps-hyna": 1
+      },
+      "priceAggregator": "constantWeightMedian",
+      "broadcasters": [
+        "influx"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "MID_hyna:LTC": {
+      "source": [
+        "ws-hyperliquid-perps-hyna",
+        "ws-hydromancer-perps-hyna"
+      ],
+      "customWeightsForWeightedMedian": {
+        "ws-hyperliquid-perps-hyna": 10,
+        "ws-hydromancer-perps-hyna": 1
+      },
+      "priceAggregator": "constantWeightMedian",
+      "broadcasters": [
+        "influx"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "MID_hyna:LTC_EMA_150S": {
+      "source": [
+        "ema"
+      ],
+      "broadcasters": [
+        "influx"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "hyna:LTC_MARK_0": {
+      "source": [
+        "hip3-crypto-mainnet-fetcher"
+      ],
+      "broadcasters": [
+        "hyperliquid-hip3"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "hyna:LTC_MARK_1": {
+      "source": [
+        "hip3-crypto-mainnet-fetcher"
+      ],
+      "broadcasters": [
+        "hyperliquid-hip3"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "hyna:LTC_EXT": {
+      "source": [
+        "hip3-crypto-mainnet-fetcher"
+      ],
+      "broadcasters": [
+        "hyperliquid-hip3"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "hyna:LTC": {
+      "source": [
+        "hip3-crypto-mainnet-fetcher"
+      ],
+      "broadcasters": [
+        "hyperliquid-hip3"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "OPEN_INTEREST_hyna:LTC": {
+      "source": [
+        "ws-hyperliquid-perps-hyna"
+      ],
+      "broadcasters": [],
+      "denomination": "USD",
+      "rateFeed": false,
+      "deviationCheck": {
+        "deviationWithRecentValues": {
+          "maxPercent": 1000000000,
+          "maxDelayMilliseconds": 1000
+        }
+      }
+    },
+    "BCH_PERP": {
+      "source": [
+        "ws-perp-binance-usdt",
+        "ws-perp-bybit-usdt",
+        "ws-perp-gate-usdt",
+        "ws-perp-mexc-usdt",
+        "ws-perp-okx-usdt"
+      ],
+      "priceAggregator": "constantWeightMedian",
+      "customWeightsForWeightedMedian": {
+        "ws-perp-binance-usdt": 3,
+        "ws-perp-okx-usdt": 2,
+        "ws-perp-bybit-usdt": 2
+      },
+      "broadcasters": [
+        "influx"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "ORACLE_BCH": {
+      "source": [
+        "ws-hyperliquid-perps-native",
+        "ws-hydromancer-perps-native"
+      ],
+      "customWeightsForWeightedMedian": {
+        "ws-hyperliquid-perps-native": 10,
+        "ws-hydromancer-perps-native": 1
+      },
+      "priceAggregator": "constantWeightMedian",
+      "broadcasters": [
+        "influx"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "ORACLE_hyna:BCH": {
+      "source": [
+        "ws-hyperliquid-perps-hyna",
+        "ws-hydromancer-perps-hyna"
+      ],
+      "customWeightsForWeightedMedian": {
+        "ws-hyperliquid-perps-hyna": 10,
+        "ws-hydromancer-perps-hyna": 1
+      },
+      "priceAggregator": "constantWeightMedian",
+      "broadcasters": [
+        "influx"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "ORACLE_hyna:BCH_EMA_150S": {
+      "source": [
+        "ema"
+      ],
+      "broadcasters": [
+        "influx"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "MARK_hyna:BCH": {
+      "source": [
+        "ws-hyperliquid-perps-hyna",
+        "ws-hydromancer-perps-hyna"
+      ],
+      "customWeightsForWeightedMedian": {
+        "ws-hyperliquid-perps-hyna": 10,
+        "ws-hydromancer-perps-hyna": 1
+      },
+      "priceAggregator": "constantWeightMedian",
+      "broadcasters": [
+        "influx"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "MID_hyna:BCH": {
+      "source": [
+        "ws-hyperliquid-perps-hyna",
+        "ws-hydromancer-perps-hyna"
+      ],
+      "customWeightsForWeightedMedian": {
+        "ws-hyperliquid-perps-hyna": 10,
+        "ws-hydromancer-perps-hyna": 1
+      },
+      "priceAggregator": "constantWeightMedian",
+      "broadcasters": [
+        "influx"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "MID_hyna:BCH_EMA_150S": {
+      "source": [
+        "ema"
+      ],
+      "broadcasters": [
+        "influx"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "hyna:BCH_MARK_0": {
+      "source": [
+        "hip3-crypto-mainnet-fetcher"
+      ],
+      "broadcasters": [
+        "hyperliquid-hip3"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "hyna:BCH_MARK_1": {
+      "source": [
+        "hip3-crypto-mainnet-fetcher"
+      ],
+      "broadcasters": [
+        "hyperliquid-hip3"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "hyna:BCH_EXT": {
+      "source": [
+        "hip3-crypto-mainnet-fetcher"
+      ],
+      "broadcasters": [
+        "hyperliquid-hip3"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "hyna:BCH": {
+      "source": [
+        "hip3-crypto-mainnet-fetcher"
+      ],
+      "broadcasters": [
+        "hyperliquid-hip3"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "OPEN_INTEREST_hyna:BCH": {
+      "source": [
+        "ws-hyperliquid-perps-hyna"
+      ],
+      "broadcasters": [],
+      "denomination": "USD",
+      "rateFeed": false,
+      "deviationCheck": {
+        "deviationWithRecentValues": {
+          "maxPercent": 1000000000,
+          "maxDelayMilliseconds": 1000
+        }
+      }
+    },
+    "ENA_PERP": {
+      "source": [
+        "ws-perp-binance-usdt",
+        "ws-perp-bybit-usdt",
+        "ws-perp-gate-usdt",
+        "ws-perp-mexc-usdt",
+        "ws-perp-okx-usdt"
+      ],
+      "priceAggregator": "constantWeightMedian",
+      "customWeightsForWeightedMedian": {
+        "ws-perp-binance-usdt": 3,
+        "ws-perp-okx-usdt": 2,
+        "ws-perp-bybit-usdt": 2
+      },
+      "broadcasters": [
+        "influx"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "ORACLE_ENA": {
+      "source": [
+        "ws-hyperliquid-perps-native",
+        "ws-hydromancer-perps-native"
+      ],
+      "customWeightsForWeightedMedian": {
+        "ws-hyperliquid-perps-native": 10,
+        "ws-hydromancer-perps-native": 1
+      },
+      "priceAggregator": "constantWeightMedian",
+      "broadcasters": [
+        "influx"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "ORACLE_hyna:ENA": {
+      "source": [
+        "ws-hyperliquid-perps-hyna",
+        "ws-hydromancer-perps-hyna"
+      ],
+      "customWeightsForWeightedMedian": {
+        "ws-hyperliquid-perps-hyna": 10,
+        "ws-hydromancer-perps-hyna": 1
+      },
+      "priceAggregator": "constantWeightMedian",
+      "broadcasters": [
+        "influx"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "ORACLE_hyna:ENA_EMA_150S": {
+      "source": [
+        "ema"
+      ],
+      "broadcasters": [
+        "influx"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "MARK_hyna:ENA": {
+      "source": [
+        "ws-hyperliquid-perps-hyna",
+        "ws-hydromancer-perps-hyna"
+      ],
+      "customWeightsForWeightedMedian": {
+        "ws-hyperliquid-perps-hyna": 10,
+        "ws-hydromancer-perps-hyna": 1
+      },
+      "priceAggregator": "constantWeightMedian",
+      "broadcasters": [
+        "influx"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "MID_hyna:ENA": {
+      "source": [
+        "ws-hyperliquid-perps-hyna",
+        "ws-hydromancer-perps-hyna"
+      ],
+      "customWeightsForWeightedMedian": {
+        "ws-hyperliquid-perps-hyna": 10,
+        "ws-hydromancer-perps-hyna": 1
+      },
+      "priceAggregator": "constantWeightMedian",
+      "broadcasters": [
+        "influx"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "MID_hyna:ENA_EMA_150S": {
+      "source": [
+        "ema"
+      ],
+      "broadcasters": [
+        "influx"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "hyna:ENA_MARK_0": {
+      "source": [
+        "hip3-crypto-mainnet-fetcher"
+      ],
+      "broadcasters": [
+        "hyperliquid-hip3"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "hyna:ENA_MARK_1": {
+      "source": [
+        "hip3-crypto-mainnet-fetcher"
+      ],
+      "broadcasters": [
+        "hyperliquid-hip3"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "hyna:ENA_EXT": {
+      "source": [
+        "hip3-crypto-mainnet-fetcher"
+      ],
+      "broadcasters": [
+        "hyperliquid-hip3"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "hyna:ENA": {
+      "source": [
+        "hip3-crypto-mainnet-fetcher"
+      ],
+      "broadcasters": [
+        "hyperliquid-hip3"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "OPEN_INTEREST_hyna:ENA": {
+      "source": [
+        "ws-hyperliquid-perps-hyna"
+      ],
+      "broadcasters": [],
+      "denomination": "USD",
+      "rateFeed": false,
+      "deviationCheck": {
+        "deviationWithRecentValues": {
+          "maxPercent": 1000000000,
+          "maxDelayMilliseconds": 1000
+        }
+      }
     }
   }
 }

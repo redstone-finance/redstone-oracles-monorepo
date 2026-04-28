@@ -2548,33 +2548,6 @@
         }
       }
     },
-    "BTC": {
-      "source": [
-        "binance-usdt",
-        "bingx-usdt",
-        "bitfinex-usd",
-        "bitget-usdt",
-        "bitmart-usdt",
-        "bitrue-usdt",
-        "bitstamp-usd",
-        "coinbase-usd",
-        "kraken-usd",
-        "kucoin-usdt",
-        "okx-usdt",
-        "xt-usdt"
-      ],
-      "deviationCheck": {
-        "deviationWithRecentValues": {
-          "maxPercent": 50,
-          "maxDelayMilliseconds": 120000
-        }
-      },
-      "broadcasters": [
-        "influx"
-      ],
-      "denomination": "USD",
-      "rateFeed": false
-    },
     "BTC_PERP": {
       "source": [
         "ws-perp-binance-usdt",
