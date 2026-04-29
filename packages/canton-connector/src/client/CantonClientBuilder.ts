@@ -21,7 +21,7 @@ export class CantonClientBuilder extends MultiExecutor.ClientBuilder<CantonClien
   }
 
   withKeycloakAuth(opts?: KeycloakTokenProviderParams | string) {
-    const tokenProvider = new KeycloakTokenProvider(opts);
+    const tokenProvider = KeycloakTokenProvider.getInstance(opts);
 
     return this.withTokenProvider(tokenProvider.getToken.bind(tokenProvider));
   }
