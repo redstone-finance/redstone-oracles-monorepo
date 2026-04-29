@@ -16,12 +16,6 @@ describe("topics", () => {
       expect(encodeTopic(["xd", "$", "+", "#"])).toEqual("xd/%24/+/#");
       expect(decodeTopic(encodeTopic(["xd", "$", "+", "#"]))).toEqual("xd/$/+/#");
     });
-
-    it("should throw when a part contains '/' (separator cannot appear in a part)", () => {
-      expect(() => encodeTopic(["xd", "A/B", "+", "#"])).toThrow(
-        `Topic part must not contain '/': "A/B"`
-      );
-    });
   });
 
   describe("NATS wildcards", () => {
