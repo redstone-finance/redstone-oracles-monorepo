@@ -42,7 +42,7 @@ export function getTokenProvider() {
 
   switch (providerType) {
     case "keycloak": {
-      const tokenProvider = new KeycloakTokenProvider();
+      const tokenProvider = KeycloakTokenProvider.getInstance();
 
       return tokenProvider.getToken.bind(tokenProvider);
     }

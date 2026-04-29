@@ -3,10 +3,16 @@ import { LegacyIContractConnector, LegacyIRedstoneContractAdapter } from "../Leg
 import { WriteContractAdapter } from "../WriteContractAdapter";
 
 export class ForwardCompatibleFromRedstoneAdapter implements WriteContractAdapter {
+  readonly getLatestRoundIds?: LegacyIRedstoneContractAdapter["getLatestRoundIds"];
+  readonly getValueForDataFeedAndRound?: LegacyIRedstoneContractAdapter["getValueForDataFeedAndRound"];
+
   constructor(
     private readonly adapter: LegacyIRedstoneContractAdapter,
     private readonly getBlock: () => Promise<number>
-  ) {}
+  ) {
+    this.getLatestRoundIds = adapter.getLatestRoundIds?.bind(adapter);
+    this.getValueForDataFeedAndRound = adapter.getValueForDataFeedAndRound?.bind(adapter);
+  }
 
   static async fromConnector(connector: LegacyIContractConnector<LegacyIRedstoneContractAdapter>) {
     const getBlockNumber = connector.getBlockNumber.bind(connector);
@@ -80,13 +86,5 @@ export class ForwardCompatibleFromRedstoneAdapter implements WriteContractAdapte
 
   getInnerLegacyAdapter() {
     return this.adapter;
-  }
-
-  async getLatestRoundIds(feedIds: string[], numberOfRounds: number, blockTag?: number) {
-    return (await this.adapter.getLatestRoundIds?.(feedIds, numberOfRounds, blockTag))!;
-  }
-
-  async getValueForDataFeedAndRound(feedId: string, roundId: bigint, blockTag?: number) {
-    return (await this.adapter.getValueForDataFeedAndRound?.(feedId, roundId, blockTag))!;
   }
 }
