@@ -54,7 +54,7 @@ mkConfig inp =
       }
   in config base inp.feedIds inp.currentTime
 
-runConfig inp = show (mkConfig inp)
+runConfig inp = show $ mkConfig inp
 
 configErrorSuite = ErrorTestSuite with
   name = "Config Errors"

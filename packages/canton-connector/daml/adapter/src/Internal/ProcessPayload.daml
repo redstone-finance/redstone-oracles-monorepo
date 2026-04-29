@@ -57,7 +57,7 @@ hasNewPrices ctx adapterId feedData feedIds currentTime payloadHex = do
 processAndWritePrices ctx factories adapterId currentState feedIds currentTime payloadHex = do
   ((newValues, timestamp, rejectedValues), config) <- checkNewValues currentState.feedData feedIds currentTime payloadHex
 
-  if L.null $ newValues then do
+  if L.null newValues then do
     pure currentState
   else do
     newData <- newFeedData ctx factories.pillFactory adapterId currentState.feedData config.currentTimestamp (newValues, timestamp)
@@ -70,8 +70,9 @@ processAndWritePrices ctx factories adapterId currentState feedIds currentTime p
 checkNewValues feedData feedIds currentTime payloadHex = do
   config <- verifyConfigAgainstLedger $ adapter_config_fun feedIds currentTime
   let result = processPayloadNumeric config payloadHex
+  let newValues = determineNewValues (config.currentTimestamp, feedData) feedIds result
 
-  pure $ (determineNewValues (config.currentTimestamp, feedData) feedIds result, config)
+  pure $ (newValues, config)
 
 newFeedData ctx pillFactory adapterId feedData currentTimestamp (newValues, timestamp)  = do
   let newEntries = entriesFromValues currentTimestamp timestamp newValues

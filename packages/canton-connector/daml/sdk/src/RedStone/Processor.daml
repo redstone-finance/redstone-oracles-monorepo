@@ -30,7 +30,7 @@ import RedStone.Internal.Verify
 processPayload config hex =
   let
     _ = verifyPayloadLength hex
-  in processPayloadBytes config (B.fromList (hexToList hex))
+  in processPayloadBytes config (B.fromList $ hexToList hex)
 
 processPayloadNumeric: Config -> Text -> ProcessorResult
 processPayloadNumeric config hex =
@@ -60,7 +60,7 @@ getFeedValues config dataPackages =
     dataPointsWithSignerIndices = getDataPointsWithSignerIndices $ getDataPackageSignerIndices config.signers dataPackages
     makeMatrix input = map (\feedId -> map (\signerIndex -> M.lookup (feedId, Ok signerIndex) input) (seqlt $ L.length config.signers)) config.feedIds
     (matrixInput, conflictedFeeds) = buildMatrixInput dataPointsWithSignerIndices
-    feedValues = map catOptionals (makeMatrix matrixInput)
+    feedValues = map catOptionals $ makeMatrix matrixInput
 
     classify (feedId, values)
       | S.member feedId conflictedFeeds = Error $ verificationError  "Same signer submitted conflicting values for feed" $ map Some values
