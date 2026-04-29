@@ -29,7 +29,7 @@ assertEq testName expected actual = do
 runSuite suite = do
   debug $ "=== Starting " <> suite.name <> " ==="
 
-  forA_ suite.cases (test suite.test)
+  forA_ suite.cases $ test suite.test
 
   debug "=== All tests passed! ==="
   debug ""

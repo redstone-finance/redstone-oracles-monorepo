@@ -1,19 +1,19 @@
 {
-  "redstone_sdk": "5a486f54e242c11f508cabc849806f0b1930a5ad6a9628bb3c0f7fc4c41dd6e2",
+  "redstone_sdk": "16eb0d9065abf28b035ddd61db3d4dd307b7de8da1e17c7d95ca06a822321b08",
   "interface": "3c8ba795759bf148ef7424975973999938a4e0f456855812fb08595079ce6f7c",
-  "core": "cfbd8cae8865e0a70293825dedf3794a9585073f3e6cbb2be0321aaa1489b454",
-  "adapter": "67e456825734da172649bf3bbe01dbb5b458a29525546982a1883fa656147557",
+  "core": "52bfa09936e1a3f0d2ef2bed715ce94bdf756ad37e3163166c98b103f55c1d66",
+  "adapter": "6f81152a4d60268304f247c76e2b69f966c2e608bb64c06e01f66936065f0999",
   "factory": "3ee5e4addf25943c9ef6990ff495b47b004d729c3778ebe6f104f045f962c3cc",
-  "reward_factory": "d42700a302ab1223f06cd88e08f17f6f536585223cef7f1df339aa195e97a2f4",
+  "reward_factory": "c582075a1dd3b1dc4bbd763d1ea706e071c06fd4b842714fbd428fa953890cd3",
   "price_feed": "cdcc9627153648616871b497af3232c3fc64edce394fc3ff8e257a2ab41d9bae",
   "price_pill": "b3dd1f9044cb8bc66a462f7c52eb5f8dbf153ea8607b621929fbd3631d356361",
   "featured": "ca346f6fe97723ef90b70284d7daf53105a542c573155f7993b75e2f35524e1a",
   "templates": {
-    "adapter": "67e456825734da172649bf3bbe01dbb5b458a29525546982a1883fa656147557:RedStoneAdapter:RedStoneAdapter",
-    "core": "cfbd8cae8865e0a70293825dedf3794a9585073f3e6cbb2be0321aaa1489b454:RedStoneCore:RedStoneCore",
-    "core_client": "cfbd8cae8865e0a70293825dedf3794a9585073f3e6cbb2be0321aaa1489b454:RedStoneCoreClient:RedStoneCoreClient",
+    "adapter": "6f81152a4d60268304f247c76e2b69f966c2e608bb64c06e01f66936065f0999:RedStoneAdapter:RedStoneAdapter",
+    "core": "52bfa09936e1a3f0d2ef2bed715ce94bdf756ad37e3163166c98b103f55c1d66:RedStoneCore:RedStoneCore",
+    "core_client": "52bfa09936e1a3f0d2ef2bed715ce94bdf756ad37e3163166c98b103f55c1d66:RedStoneCoreClient:RedStoneCoreClient",
     "factory": "3ee5e4addf25943c9ef6990ff495b47b004d729c3778ebe6f104f045f962c3cc:RedStonePricePillFactory:RedStonePricePillFactory",
-    "reward_factory": "d42700a302ab1223f06cd88e08f17f6f536585223cef7f1df339aa195e97a2f4:RedStoneRewardFactory:RedStoneRewardFactory"
+    "reward_factory": "c582075a1dd3b1dc4bbd763d1ea706e071c06fd4b842714fbd428fa953890cd3:RedStoneRewardFactory:RedStoneRewardFactory"
   },
   "interfaces": {
     "adapter": "3c8ba795759bf148ef7424975973999938a4e0f456855812fb08595079ce6f7c:IRedStoneAdapter:IRedStoneAdapter",
