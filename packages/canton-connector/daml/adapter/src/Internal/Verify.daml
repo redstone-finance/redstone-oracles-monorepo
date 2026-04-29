@@ -12,13 +12,13 @@ import RedStoneTypes
 
 verify (currentTimestamp, currentFeedData) (feedId, value, timestamp) =
     case value of
-    Error t -> Error (t <> " for " <> show feedId)
+    Error t -> Error $ t <> " for " <> show feedId
     Ok v -> case M.lookup feedId currentFeedData of
         None -> value
         Some [] -> value
         Some (newest :: _)
             | verifyPriceData currentTimestamp newest.priceData timestamp -> value
-            | otherwise -> Error ("Wrong timestamps for " <> show feedId)
+            | otherwise -> Error $ "Wrong timestamps for " <> show feedId
 
 verifyPriceData currentTimestamp priceData newDataTimestamp = priceData.timestamp < newDataTimestamp && priceData.writeTimestamp < currentTimestamp
 

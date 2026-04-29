@@ -15,5 +15,5 @@ let config = (redstonePrimaryProdDefaultConfig input.feedIds currentTime) with m
 let resultNumeric = processPayloadNumeric config input.payload
 let result = processPayload config input.payload
 
-debug (resultNumeric)
-debug (result)
+debug resultNumeric
+debug result

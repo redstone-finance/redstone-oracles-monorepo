@@ -51,7 +51,7 @@ main input = script do
   debug $ "rewardState after write #1: " <> show state1
   state1.paidTrafficCost === 0
 
-  let currentTimeT1 = addRelTime currentTimeT0 (seconds 1)
+  let currentTimeT1 = addRelTime currentTimeT0 $ seconds 1
   debug "=== Write #2 at T0 + 1s ==="
 
   _ <- write [feedA, feedB] currentTimeT1 adapterCid1

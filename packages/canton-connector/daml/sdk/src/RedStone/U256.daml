@@ -83,13 +83,13 @@ u256FromInt n =
 
 u256FromIntAcc acc remaining =
   if remaining == 0 then acc else
-    u256FromIntAcc ((remaining % 256) :: acc) ((remaining - remaining % 256) / 256)
+    u256FromIntAcc ((remaining % byte_range) :: acc) ((remaining - remaining % byte_range) / byte_range)
 
 compareU256 (U256 (Bytes revList1)) (U256 (Bytes revList2)) = compare (L.reverse revList1) (L.reverse revList2)
 
 hexlify revList =
   let
-    trimmed = (L.reverse $ trimTrailingZeros $ revList)
+    trimmed = L.reverse $ trimTrailingZeros revList
   in if null trimmed then "00" else listToHex trimmed
 
 showU256 u =
@@ -114,9 +114,9 @@ normalizeBytes Bytes{revList=xs}
 divideBytes [] _ = []
 divideBytes (x::xs) carry =
     let
-    val = x + carry * byte_value
-    newByte = val / 2
-    newCarry = val % 2
+      val = x + carry * byte_range
+      newByte = val / 2
+      newCarry = val % 2
     in newByte :: divideBytes xs newCarry
 
 addBytes [] [] 0 = []
@@ -125,7 +125,7 @@ addBytes [] ys carry = error "Different lengths"
 addBytes xs [] carry = error "Different lengths"
 addBytes (x::xs) (y::ys) carry =
     let
-    sum = x + y + carry
-    newByte = sum % byte_value
-    newCarry = sum / byte_value
+      sum = x + y + carry
+      newByte = sum % byte_range
+      newCarry = sum / byte_range
     in newByte :: addBytes xs ys newCarry
