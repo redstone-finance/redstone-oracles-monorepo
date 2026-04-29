@@ -7,6 +7,7 @@ const TIMEOUT_SEC = 3600;
 const FN_ADD_FEED = "add_feed";
 const FN_REMOVE_FEED = "remove_feed";
 const FN_UPDATE_FEED = "update_feed";
+const FN_SET_RESOLUTION = "set_resolution";
 const FN_EXTEND_ENTRIES_TTL = "extend_entries_ttl";
 
 export class StellarSep40ContractOps extends StellarContractOps {
@@ -42,9 +43,9 @@ export class StellarSep40ContractOps extends StellarContractOps {
     );
   }
 
-  async extendEntriesTtlTx(sender: string, fee = BASE_FEE, timeout = TIMEOUT_SEC) {
+  async setResolutionTx(sender: string, resolution: number, fee = BASE_FEE, timeout = TIMEOUT_SEC) {
     return await this.client.prepareTransaction(
-      this.contract.call(FN_EXTEND_ENTRIES_TTL),
+      this.contract.call(FN_SET_RESOLUTION, nativeToScVal(resolution, { type: "u32" })),
       sender,
       fee,
       timeout
@@ -66,6 +67,12 @@ export class StellarSep40ContractOps extends StellarContractOps {
   async updateFeed(feedMapping: FeedMapping) {
     return await this.operationSender?.sendTransaction(
       this.contract.call(FN_UPDATE_FEED, feedMappingToScVal(feedMapping))
+    );
+  }
+
+  async setResolution(resolution: number) {
+    return await this.operationSender?.sendTransaction(
+      this.contract.call(FN_SET_RESOLUTION, nativeToScVal(resolution, { type: "u32" }))
     );
   }
 
