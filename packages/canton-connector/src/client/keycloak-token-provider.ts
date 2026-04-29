@@ -1,4 +1,5 @@
 import { loggerFactory, RedstoneCommon } from "@redstone-finance/utils";
+import { createHash } from "node:crypto";
 import { KeycloakTokenProviderParams, makeKeycloakParams } from "./KeycloakTokenProviderParams";
 
 const EXPIRATION_MARGIN_MS = RedstoneCommon.secsToMs(30);
@@ -32,11 +33,7 @@ type GetTokenResponse = {
 
 export class KeycloakTokenProvider {
   private static logger = loggerFactory("keycloak-token-provider");
-
-  private readonly tokenUrl: string;
-  private readonly clientId: string;
-  private readonly username: string;
-  private readonly password: string;
+  private static instances: { [key: string]: KeycloakTokenProvider | undefined } = {};
 
   private accessToken?: string;
   private refreshToken?: string;
@@ -46,20 +43,36 @@ export class KeycloakTokenProvider {
   private timer?: NodeJS.Timeout;
   private refreshingPromise?: Promise<string>;
 
-  constructor(opts?: KeycloakTokenProviderParams | string) {
+  static getInstance(opts?: KeycloakTokenProviderParams | string) {
     const { url, realm, clientId, username, password } = makeKeycloakParams(opts);
 
-    this.tokenUrl = `${url}/auth/realms/${realm}/protocol/openid-connect/token`;
-    this.clientId = clientId;
-    this.username = username;
-    this.password = password;
+    const tokenUrl = `${url}/auth/realms/${realm}/protocol/openid-connect/token`;
+
+    const key = [
+      tokenUrl,
+      clientId,
+      username,
+      createHash("sha256").update(password).digest("hex"),
+    ].join("#");
+
+    this.instances[key] ??= new KeycloakTokenProvider(tokenUrl, clientId, username, password);
+
+    return this.instances[key];
   }
+
+  private constructor(
+    private readonly tokenUrl: string,
+    private readonly clientId: string,
+    private readonly username: string,
+    private readonly password: string
+  ) {}
 
   async getToken() {
     this.used = true;
 
     if (this.accessToken && Date.now() < this.expiresAt - EXPIRATION_MARGIN_MS) {
       KeycloakTokenProvider.logToken("cache-hit", this.accessToken);
+
       return this.accessToken;
     }
 
