@@ -1,4 +1,5 @@
 import { mqttTopicToNatsSubject, NatsClient, natsSubjectToMqttTopic } from "../src/NatsClient";
+import { decodeDataPackageTopic, encodeDataPackageTopic } from "../src/topics";
 
 const mockSub1 = { unsubscribe: jest.fn() };
 const mockSub2 = { unsubscribe: jest.fn() };
@@ -328,6 +329,55 @@ describe("NatsClient", () => {
     it("should not throw if called before any connection is established", () => {
       expect(() => client.stop()).not.toThrow();
       expect(mockNc.drain).not.toHaveBeenCalled();
+    });
+  });
+
+  describe("dot in feed id end-to-end", () => {
+    it("subscribe+receive round-trip preserves dot in dataPackageId", async () => {
+      // Encode the MQTT topic — '.' in dataPackageId must survive conversion to NATS subject
+      const mqttTopic = encodeDataPackageTopic({
+        dataServiceId: "redstone-primary-prod",
+        dataPackageId: "feed.id",
+        nodeAddress: "0xABC",
+      });
+
+      // MQTT topic uses %2E so the dot doesn't become a NATS separator
+      expect(mqttTopic).toBe("data-package/redstone-primary-prod/feed%2Eid/0xABC");
+
+      // The NATS subject must also keep %2E intact — only slashes become dots
+      const natsSubject = mqttTopicToNatsSubject(mqttTopic);
+      expect(natsSubject).toBe("data-package.redstone-primary-prod.feed%2Eid.0xABC");
+
+      // Subscribe and verify the client passes the correct NATS subject to nc.subscribe
+      const onMessage = jest.fn();
+      client.setOnMessageHandler(onMessage);
+      await client.subscribe([mqttTopic]);
+
+      expect(mockNc.subscribe).toHaveBeenCalledWith(natsSubject, expect.any(Object));
+
+      // Simulate an incoming NATS message on that subject
+      const subscribeCall = mockNc.subscribe.mock.calls[0] as [
+        string,
+        { callback: (err: null, msg: unknown) => void },
+      ];
+      const callback = subscribeCall[1].callback;
+      const testData = { price: 42 };
+      callback(null, {
+        subject: natsSubject,
+        data: Buffer.from(JSON.stringify(testData)),
+        headers: { get: () => "deflate+json" },
+      });
+
+      // onMessage receives the MQTT topic (dots still encoded as %2E after natsSubjectToMqttTopic)
+      expect(onMessage).toHaveBeenCalledWith(mqttTopic, testData, null, client);
+
+      // Decoding the received topic fully restores the original dot
+      const decoded = decodeDataPackageTopic(mqttTopic);
+      expect(decoded).toEqual({
+        dataServiceId: "redstone-primary-prod",
+        dataPackageId: "feed.id",
+        nodeAddress: "0xABC",
+      });
     });
   });
 
