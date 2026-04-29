@@ -69,17 +69,32 @@ export function decodeDataPackageTopic(encodedTopic: string): DataPackageTopic {
   };
 }
 
+// MQTT wildcards: + (single-level), # (multi-level)
+// NATS wildcards: * (single-token), > (multi-token)
+const WILDCARDS = new Set(["+", "#", "*", ">"]);
+
+// '/' is the topic separator — a part containing it cannot round-trip through
+// split("/") after decoding, so we reject it at the source.
+// '.' is the NATS subject separator — encodeURIComponent leaves it unencoded,
+// so we encode it explicitly to survive the MQTT↔NATS conversion.
+const encodePart = (part: string) => {
+  if (part.includes("/")) {
+    throw new Error(`Topic part must not contain '/': "${part}"`);
+  }
+  return encodeURIComponent(part).replace(/\./g, "%2E");
+};
+
 export const encodeTopic = (parts: string[]) => {
   const encodedParts = [];
 
   let index = 0;
   for (const part of parts) {
-    if (part === "+" || part === "#") {
+    if (WILDCARDS.has(part)) {
       encodedParts.push(part);
     } else if (part.startsWith("$") && index === 0) {
       encodedParts.push(part);
     } else {
-      encodedParts.push(encodeURIComponent(part));
+      encodedParts.push(encodePart(part));
     }
     index++;
   }
@@ -93,7 +108,7 @@ export const decodeTopic = (topic: string) => {
 
   let index = 0;
   for (const encodedPart of encodedParts) {
-    if (encodedPart === "+" || encodedPart === "#") {
+    if (WILDCARDS.has(encodedPart)) {
       parts.push(encodedPart);
     } else if (encodedPart.startsWith("$") && index === 0) {
       parts.push(encodedPart);

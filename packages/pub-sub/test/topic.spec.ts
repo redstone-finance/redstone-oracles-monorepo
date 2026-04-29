@@ -1,17 +1,59 @@
 import { decodeTopic, encodeTopic } from "../src/topics";
 
 describe("topics", () => {
-  it("should encode and decode topic", () => {
-    expect(encodeTopic(["$SYS", "1", "2+", "#"])).toEqual("$SYS/1/2%2B/#");
-    expect(decodeTopic(encodeTopic(["$SYS", "1", "2+", "#"]))).toEqual("$SYS/1/2+/#");
+  describe("MQTT wildcards", () => {
+    it("should preserve + and # wildcards without encoding", () => {
+      expect(encodeTopic(["$SYS", "1", "+", "#"])).toEqual("$SYS/1/+/#");
+      expect(decodeTopic(encodeTopic(["$SYS", "1", "+", "#"]))).toEqual("$SYS/1/+/#");
+    });
 
-    expect(encodeTopic(["$SYS", "1", "+", "#"])).toEqual("$SYS/1/+/#");
-    expect(decodeTopic(encodeTopic(["$SYS", "1", "+", "#"]))).toEqual("$SYS/1/+/#");
+    it("should encode + and # when embedded in a part", () => {
+      expect(encodeTopic(["$SYS", "1", "2+", "#"])).toEqual("$SYS/1/2%2B/#");
+      expect(decodeTopic(encodeTopic(["$SYS", "1", "2+", "#"]))).toEqual("$SYS/1/2+/#");
+    });
 
-    expect(encodeTopic(["xd", "$", "+", "#"])).toEqual("xd/%24/+/#");
-    expect(decodeTopic(encodeTopic(["xd", "$", "+", "#"]))).toEqual("xd/$/+/#");
+    it("should encode $ when not at position 0", () => {
+      expect(encodeTopic(["xd", "$", "+", "#"])).toEqual("xd/%24/+/#");
+      expect(decodeTopic(encodeTopic(["xd", "$", "+", "#"]))).toEqual("xd/$/+/#");
+    });
 
-    expect(encodeTopic(["xd", "A/B", "+", "#"])).toEqual("xd/A%2FB/+/#");
-    expect(decodeTopic(encodeTopic(["xd", "A/B", "+", "#"]))).toEqual("xd/A/B/+/#");
+    it("should throw when a part contains '/' (separator cannot appear in a part)", () => {
+      expect(() => encodeTopic(["xd", "A/B", "+", "#"])).toThrow(
+        `Topic part must not contain '/': "A/B"`
+      );
+    });
+  });
+
+  describe("NATS wildcards", () => {
+    it("should preserve * and > wildcards without encoding", () => {
+      expect(encodeTopic(["prefix", "*", ">"])).toEqual("prefix/*/>");
+      expect(decodeTopic(encodeTopic(["prefix", "*", ">"]))).toEqual("prefix/*/>");
+    });
+
+    it("should encode > when embedded in a part (encodeURIComponent leaves * unreserved)", () => {
+      // encodeURIComponent does not encode *, so feed* stays as-is
+      expect(encodeTopic(["prefix", "feed*", "end>"])).toEqual("prefix/feed*/end%3E");
+      expect(decodeTopic(encodeTopic(["prefix", "feed*", "end>"]))).toEqual("prefix/feed*/end>");
+    });
+
+    it("should preserve standalone * wildcard for NATS single-token subscriptions", () => {
+      expect(encodeTopic(["data-package", "service-1", "*", "0xABC"])).toEqual(
+        "data-package/service-1/*/0xABC"
+      );
+      expect(decodeTopic(encodeTopic(["data-package", "service-1", "*", "0xABC"]))).toEqual(
+        "data-package/service-1/*/0xABC"
+      );
+    });
+
+    it("should preserve standalone > wildcard for NATS multi-token subscriptions", () => {
+      expect(encodeTopic(["data-package", ">"])).toEqual("data-package/>");
+      expect(decodeTopic(encodeTopic(["data-package", ">"]))).toEqual("data-package/>");
+    });
+
+    it("should encode . within a part so it survives NATS subject conversion", () => {
+      // NATS uses '.' as separator — a '.' inside a part must be encoded
+      expect(encodeTopic(["prefix", "feed.id"])).toEqual("prefix/feed%2Eid");
+      expect(decodeTopic(encodeTopic(["prefix", "feed.id"]))).toEqual("prefix/feed.id");
+    });
   });
 });
