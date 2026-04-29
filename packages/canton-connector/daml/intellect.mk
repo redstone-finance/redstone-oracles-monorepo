@@ -23,7 +23,6 @@ REWARD_FACTORY_ID=0089c0c6c1fc974986d0f25f7189bf16ecc2daa2a3f55584e9522d60a51984
 IADAPTER_TEMPLATE_ID=$(shell jq -r '.interfaces.adapter' $(PACKAGE_IDS))
 ICORE_TEMPLATE_ID=$(shell jq -r '.interfaces.core' $(PACKAGE_IDS))
 
-BENEFICIARY=8b4399ba-c401-4a97-a1fe-59077a8b3b14
 FEATURED_CID=00deaaad88568938379d75d095961036688c49cca81efa596de41f578fe1ac1c2fca121220a86ed774b5e19df71fe79139d3fbb08e603db71977437cd997c7e1771efab2cc
 
 TOKEN=$(shell cat token.txt)
@@ -312,4 +311,4 @@ get-active-contracts: get-token
 				} \
 			}, \
 			"activeAtOffset": '"$$LEDGER_END"' \
-		}' | jq -r '.'
+		}' | jq '[.[] | select(.contractEntry.JsActiveContract.createdEvent.templateId | test("ValidatorRight")) | .contractEntry.JsActiveContract.createdEvent | {contractId, amount: .createArgument.amount}]'
