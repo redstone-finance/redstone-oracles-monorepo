@@ -43,7 +43,7 @@
     "@radixdlt/radix-engine-toolkit": "^1.0.5",
     "@redstone-finance/multichain-kit": "workspace:*",
     "@redstone-finance/sdk": "workspace:*",
-    "axios": "^1.15.1",
+    "axios": "^1.15.2",
     "ethers": "^5.7.2",
     "lodash": "^4.17.23"
   },
