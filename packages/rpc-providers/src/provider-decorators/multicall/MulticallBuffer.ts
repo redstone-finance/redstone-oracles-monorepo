@@ -84,7 +84,7 @@ export class MulticallBuffer {
   }
 }
 
-function blockTagToBlockId(candidate?: BlockTag): number {
+export function blockTagToBlockId(candidate?: BlockTag): number {
   switch (candidate) {
     case undefined:
     case "earliest":

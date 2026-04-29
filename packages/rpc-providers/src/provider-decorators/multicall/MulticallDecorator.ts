@@ -4,12 +4,12 @@ import {
   getLocalChainConfigs,
   type ChainConfigs,
 } from "@redstone-finance/chain-configs";
-import { RedstoneCommon, loggerFactory } from "@redstone-finance/utils";
+import { loggerFactory, RedstoneCommon } from "@redstone-finance/utils";
 import { providers } from "ethers";
 import { Deferrable } from "ethers/lib/utils";
 import { z } from "zod";
 import { Multicall3Request, safeExecuteMulticall3 } from "./Multicall3Caller";
-import { MulticallBuffer } from "./MulticallBuffer";
+import { blockTagToBlockId, MulticallBuffer } from "./MulticallBuffer";
 
 async function prepareMulticall3Request(
   tx: Deferrable<TransactionRequest>,
@@ -70,6 +70,7 @@ export function MulticallDecorator<T extends providers.Provider>(
   buildProvider: () => T,
   options: MulticallDecoratorOptions = {}
 ): () => T {
+  const timeouts: Map<number, NodeJS.Timeout> = new Map();
   const config = parseMulticallConfig(options);
   const originalProvider = buildProvider();
   const modifiedProvider = RedstoneCommon.cloneClassInstance(originalProvider);
@@ -79,6 +80,9 @@ export function MulticallDecorator<T extends providers.Provider>(
   const chainIdPromise = originalProvider.getNetwork().then((n) => n.chainId);
 
   const executeCallsFromQueue = (blockTag: BlockTag | undefined) => {
+    const blockId = blockTagToBlockId(blockTag);
+    clearTimeout(timeouts.get(blockId));
+    timeouts.delete(blockId);
     const callDataSize = queue.callDataSize(blockTag);
     const callEntries = queue.flush(blockTag);
 
@@ -140,6 +144,16 @@ export function MulticallDecorator<T extends providers.Provider>(
     }
 
     queue.push(resolvedBlockTag, entry);
+    if (config.autoResolveInterval > 0) {
+      const blockId = blockTagToBlockId(resolvedBlockTag);
+      if (!timeouts.has(blockId)) {
+        const timeout = setTimeout(
+          () => executeCallsFromQueue(resolvedBlockTag),
+          config.autoResolveInterval
+        );
+        timeouts.set(blockId, timeout);
+      }
+    }
 
     if (queue.isCallsCountFull(resolvedBlockTag)) {
       executeCallsFromQueue(resolvedBlockTag);
@@ -147,18 +161,6 @@ export function MulticallDecorator<T extends providers.Provider>(
 
     return await promise;
   };
-
-  const resolveBuffersForAllBlocks = () => {
-    const flushedCallsByBlockId = queue.pickAll();
-    for (const [_, callEntries] of flushedCallsByBlockId) {
-      executeCallsFromQueue(callEntries[0].blockTag);
-    }
-  };
-
-  if (config.autoResolveInterval > 0) {
-    const interval = setInterval(resolveBuffersForAllBlocks, config.autoResolveInterval);
-    interval.unref();
-  }
 
   modifiedProvider.call = call;
 
