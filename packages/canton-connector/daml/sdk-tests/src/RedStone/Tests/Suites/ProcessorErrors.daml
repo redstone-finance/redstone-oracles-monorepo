@@ -29,7 +29,7 @@ okSigners =
 
 okConfig = config (defaultBaseConfig okSigners) { signerCountThreshold = 2 } [[69,84,72]] okTime
 
-runProcess hex = show (processPayload okConfig hex)
+runProcess hex = show $ processPayload okConfig hex
 
 processPayloadErrorSuite = ErrorTestSuite with
   name = "Processor processPayload Errors"

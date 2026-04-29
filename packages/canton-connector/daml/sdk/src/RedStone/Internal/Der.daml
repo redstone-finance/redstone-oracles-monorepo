@@ -41,7 +41,7 @@ publicKeyToDer pubKeyHex =
 
        in fullDER
      else if keyLength == public_key_length
-     then publicKeyToDer ("04" <> pubKeyHex)
+     then publicKeyToDer $ "04" <> pubKeyHex
      else error $ "Error: Expected 65 bytes starting with 04 (or 64 bytes without prefix)" <> show (T.take prefixLen pubKeyHex)
 
 -- Private

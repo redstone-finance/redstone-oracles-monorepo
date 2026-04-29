@@ -30,5 +30,5 @@ template MockFeaturedAppRight
       featuredAppRight_CreateActivityMarkerImpl self arg = do
         cids <- forA arg.beneficiaries \b -> do
           cid <- create MockFeaturedAppActivityMarker with dso, provider, beneficiary = b.beneficiary, weight = arg.weight
-          pure (toInterfaceContractId @FeaturedAppActivityMarker cid)
+          pure $ toInterfaceContractId @FeaturedAppActivityMarker cid
         pure FeaturedAppRight_CreateActivityMarkerResult with activityMarkerCids = cids

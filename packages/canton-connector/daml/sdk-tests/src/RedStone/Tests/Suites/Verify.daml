@@ -40,7 +40,7 @@ timestampSuite = TestSuite with
   name = "Verify Timestamps"
   test = runTimestampTest
 
-runTimestampTest (blockTs, pkgTs) = verifyTimestamps (mkConfig blockTs) (map mkDataPackage pkgTs)
+runTimestampTest (blockTs, pkgTs) = verifyTimestamps (mkConfig blockTs) $ map mkDataPackage pkgTs
 
 timestampCases =
     [ TestCase with

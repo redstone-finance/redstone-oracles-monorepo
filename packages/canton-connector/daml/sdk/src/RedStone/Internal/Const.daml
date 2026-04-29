@@ -1,7 +1,7 @@
 module RedStone.Internal.Const where
 
-byte_value = 256
-byte_max = byte_value - 1
+byte_range = 256
+byte_max = byte_range - 1
 int_size = 8
 u256_size = 32
 
