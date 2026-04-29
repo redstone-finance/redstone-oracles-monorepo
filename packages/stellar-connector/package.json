@@ -43,6 +43,7 @@
     "sep-40-add-feed-tx": "yarn global:ts-node scripts/ledger/sep-40/add-feed-tx.ts",
     "sep-40-remove-feed-tx": "yarn global:ts-node scripts/ledger/sep-40/remove-feed-tx.ts",
     "sep-40-update-feed-tx": "yarn global:ts-node scripts/ledger/sep-40/update-feed-tx.ts",
+    "sep-40-set-resolution-tx": "yarn global:ts-node scripts/ledger/sep-40/set-resolution-tx.ts",
     "extend-sep-40-ttl": "yarn global:ts-node scripts/extend-sep-40-ttl.ts"
   },
   "dependencies": {
