@@ -9624,6 +9624,18 @@
       ],
       "denomination": "iTRY",
       "rateFeed": true
+    },
+    "MEGA": {
+      "source": [
+        "coinbase-usd",
+        "bybit-usdt",
+        "kucoin-usdt",
+        "gate-usdt",
+        "bitget-usdt",
+        "kraken-usd"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
     }
   }
 }
