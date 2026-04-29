@@ -10,8 +10,5 @@ export interface PriceFeedAdapter {
   getDescription(blockTag?: number): Promise<string | undefined>;
   getDataFeedId(blockTag?: number): Promise<string | undefined>;
 
-  getRoundData?: (
-    roundId: bigint,
-    blockTag?: number
-  ) => Promise<{ answer: bigint; roundId: bigint }>;
+  getRoundData?(roundId: bigint, blockTag?: number): Promise<{ answer: bigint; roundId: bigint }>;
 }
