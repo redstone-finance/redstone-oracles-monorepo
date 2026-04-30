@@ -16,3 +16,14 @@ export function getArrayifiedFeedId(feedId: string) {
 export function decodeFeedId(feedId: string[]) {
   return ContractParamsProvider.unhexlifyFeedId(feedId.map(Number));
 }
+
+// CC has 10 decimal places; 1 CC = 10^10 normalized units
+const CC_SCALE = 10 ** 10;
+
+export function ccToNormalized(cc: string) {
+  return BigInt(new Decimal(cc).mul(CC_SCALE).toFixed(0));
+}
+
+export function normalizedToCC(normalized: number) {
+  return normalized / CC_SCALE;
+}
