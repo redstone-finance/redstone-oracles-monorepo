@@ -31,7 +31,7 @@ export function encodeHLPackageTopic({ dataServiceId, dexId, nodeAddress }: HLPa
 }
 
 export function decodeHLPackageTopic(encodedTopic: string): HLPackageTopic {
-  const [packageType, dataServiceId, dexId, nodeAddress] = decodeTopic(encodedTopic).split("/");
+  const [packageType, dataServiceId, dexId, nodeAddress] = decodeTopic(encodedTopic);
 
   RedstoneCommon.assert(
     packageType === PackagesTypes.HyperLiquidHIP3Package.toString(),
@@ -63,8 +63,7 @@ export function encodeLegacyDataPackageTopic({
 }
 
 export function decodeDataPackageTopic(encodedTopic: string): DataPackageTopic {
-  const [packageType, dataServiceId, dataPackageId, nodeAddress] =
-    decodeTopic(encodedTopic).split("/");
+  const [packageType, dataServiceId, dataPackageId, nodeAddress] = decodeTopic(encodedTopic);
 
   RedstoneCommon.assert(
     packageType === PackagesTypes.DataPackage.toString(),
@@ -108,7 +107,7 @@ export const encodeTopic = (parts: string[]) => {
   return encodedParts.join("/");
 };
 
-export const decodeTopic = (topic: string) => {
+export const decodeTopic = (topic: string): string[] => {
   const parts = [];
   const encodedParts = topic.split("/");
 
@@ -124,5 +123,5 @@ export const decodeTopic = (topic: string) => {
     index++;
   }
 
-  return parts.join("/");
+  return parts;
 };
