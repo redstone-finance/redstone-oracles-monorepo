@@ -31,7 +31,9 @@ describe("MqttStatsTracker", () => {
       statsTracker = new MqttStatsTracker(60_000);
 
       // Verify constructor logged the start message
-      expect(mockLoggerInfo).toHaveBeenCalledWith("MQTT stats tracker started, will log every 60s");
+      expect(mockLoggerInfo).toHaveBeenCalledWith(
+        "PubSub stats tracker started, will log every 60s"
+      );
 
       mockLoggerInfo.mockClear();
 
@@ -51,7 +53,7 @@ describe("MqttStatsTracker", () => {
 
       // Verify logger was called for topics
       expect(mockLoggerInfo).toHaveBeenCalledWith(
-        "MQTT Stats - Per Topic (msgs/sec):",
+        "PubSub Stats - Per Topic (msgs/sec):",
         expect.objectContaining({
           topics: expect.arrayContaining([
             expect.objectContaining({
@@ -78,7 +80,7 @@ describe("MqttStatsTracker", () => {
 
       // Verify logger was called for clients
       expect(mockLoggerInfo).toHaveBeenCalledWith(
-        "MQTT Stats - Per Client (msgs/sec):",
+        "PubSub Stats - Per Client (msgs/sec):",
         expect.objectContaining({
           clients: expect.arrayContaining([
             expect.objectContaining({
