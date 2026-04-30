@@ -1,4 +1,6 @@
-import { decodeTopic, encodeTopic } from "../src/topics";
+import { decodeTopic as decodeTopicToParts, encodeTopic } from "../src/topics";
+
+const decodeTopic = (t: string) => decodeTopicToParts(t).join("/");
 
 describe("topics", () => {
   describe("MQTT wildcards", () => {
@@ -15,6 +17,17 @@ describe("topics", () => {
     it("should encode $ when not at position 0", () => {
       expect(encodeTopic(["xd", "$", "+", "#"])).toEqual("xd/%24/+/#");
       expect(decodeTopic(encodeTopic(["xd", "$", "+", "#"]))).toEqual("xd/$/+/#");
+    });
+
+    it("should correctly encode and decode when a part contains '/'", () => {
+      expect(encodeTopic(["xd", "A/B", "+", "#"])).toEqual("xd/A%2FB/+/#");
+      expect(decodeTopic(encodeTopic(["xd", "A/B", "+", "#"]))).toEqual("xd/A/B/+/#");
+      expect(decodeTopicToParts(encodeTopic(["xd", "A/B", "+", "#"]))).toEqual([
+        "xd",
+        "A/B",
+        "+",
+        "#",
+      ]);
     });
   });
 
