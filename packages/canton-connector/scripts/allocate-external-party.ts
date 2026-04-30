@@ -1,11 +1,10 @@
 import { getSSMParameterValue } from "@redstone-finance/internal-utils";
 import { RedstoneCommon } from "@redstone-finance/utils";
-import { createPrivateKey, createPublicKey, sign } from "node:crypto";
+import { createPublicKey, sign } from "node:crypto";
 import { z } from "zod";
+import { makeEd25519PrivateKey } from "../src/utils/ed25519";
 import { makeDefaultClient } from "./utils";
 
-// PKCS#8 DER header for Ed25519 (RFC 8410)
-const ED25519_PKCS8_DER_PREFIX = Buffer.from("302e020100300506032b657004220420", "hex");
 const PUBLIC_KEY_FORMAT = "CRYPTO_KEY_FORMAT_DER_X509_SUBJECT_PUBLIC_KEY_INFO";
 const PUBLIC_KEY_SPEC = "SIGNING_KEY_SPEC_EC_CURVE25519";
 const SIGNATURE_FORMAT = "SIGNATURE_FORMAT_CONCAT";
@@ -34,15 +33,6 @@ function normalizeHex(value: string) {
   }
 
   return normalized.toLowerCase();
-}
-
-function makeEd25519PrivateKey(privateKeyHex: string) {
-  const privateKeyPkcs8Der = Buffer.concat([
-    ED25519_PKCS8_DER_PREFIX,
-    Buffer.from(privateKeyHex, "hex"),
-  ]);
-
-  return createPrivateKey({ key: privateKeyPkcs8Der, format: "der", type: "pkcs8" });
 }
 
 async function main() {

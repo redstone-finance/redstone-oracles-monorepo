@@ -6,8 +6,12 @@
     "featuredInterfaceId": "7804375fe5e4c6d5afe067bd314c42fe0b7d005a1300019c73154dd939da4dda",
     "node": {
       "scanApiUrl": "https://scan.sv-1.global.canton.network.sync.global/api/scan/v0",
+      "validatorApiUrl": "https://wallet-validator-redstone.canton.redstone.catalyst.intellecteu.io/api/validator",
+      "walletClientId": "validator-redstone-wallet-ui",
       "globalDomain": "global-domain::1220b1431ef217342db44d516bb9befde802be7d8899637d290895fa58880f19accc",
-      "participantPartyId": "Redstone-validator-1::1220a6f7c2315ed7ba230397a459b036bfe9f36763a0e848dad741c4e9d20d85687c"
+      "participantPartyId": "Redstone-validator-1::1220a6f7c2315ed7ba230397a459b036bfe9f36763a0e848dad741c4e9d20d85687c",
+      "walletPartyId": "PAR::Redstone-validator-1::1220a6f7c2315ed7ba230397a459b036bfe9f36763a0e848dad741c4e9d20d85687c",
+      "zrodelkoPartyId": "zrodelko::1220f9207af5b0f8af8edbf1a7ed0e4a808503de0177e555bce7206094b4d56d1d3b"
     },
     "core": {
       "synchronizerId": "global-domain::1220b1431ef217342db44d516bb9befde802be7d8899637d290895fa58880f19accc",
@@ -29,8 +33,12 @@
     "featuredInterfaceId": "7804375fe5e4c6d5afe067bd314c42fe0b7d005a1300019c73154dd939da4dda",
     "node": {
       "scanApiUrl": "https://scan.sv-1.dev.global.canton.network.sync.global/api/scan/v0",
+      "validatorApiUrl": "https://wallet-redstone-validator.canton.dev.redstone.catalyst.intellecteu.io/api/validator",
+      "walletClientId": "redstone-validator-wallet-ui",
       "globalDomain": "global-domain::1220be58c29e65de40bf273be1dc2b266d43a9a002ea5b18955aeef7aac881bb471a",
-      "participantPartyId": "redstone-validator::1220a0242797a84e1d8c492f1259b3f87d561fcbde2e4b2cebc4572ddfc515b44c28"
+      "participantPartyId": "redstone-validator::1220a0242797a84e1d8c492f1259b3f87d561fcbde2e4b2cebc4572ddfc515b44c28",
+      "walletPartyId": "8b4399ba-c401-4a97-a1fe-59077a8b3b14::1220a0242797a84e1d8c492f1259b3f87d561fcbde2e4b2cebc4572ddfc515b44c28",
+      "zrodelkoPartyId": "zrodelko::1220d01915f7ed718557f5a785d263c0f5457440f539e4bc9f671fedd21e6da3fab5"
     },
     "core": {
       "synchronizerId": "global-domain::1220be58c29e65de40bf273be1dc2b266d43a9a002ea5b18955aeef7aac881bb471a",
@@ -52,8 +60,12 @@
     "featuredInterfaceId": "#redstone-featured-v16",
     "node": {
       "scanApiUrl": "/v0",
+      "validatorApiUrl": "",
+      "walletClientId": "",
       "globalDomain": "",
-      "participantPartyId": ""
+      "participantPartyId": "",
+      "walletPartyId": "",
+      "zrodelkoPartyId": ""
     },
     "core": {
       "contractId": "007240099258472e1045de2a41cd8f92cafbae32824873f5904be30ce3fc5c2c4dca121220b6c41656fb41b814054747695f739d578016b3b678f992e0f6e2c68298552282",
