@@ -14,8 +14,7 @@ interface HostnameData {
   hasVersionInfo: boolean;
 }
 
-const DAY_IN_MS = 24 * 3600 * 1000;
-const MAX_EXPIRATION_PERIOD = 7 * DAY_IN_MS;
+const MAX_EXPIRATION_PERIOD = RedstoneCommon.daysToMs(7);
 
 const arrayNamesToConcat = new Set([
   "symbolsToSkip",
@@ -129,7 +128,7 @@ function parseExpirationTimestamp(timestamp: string | number | undefined): numbe
 function validateExpirationTimestamp(timestamp: number) {
   if (timestamp > Date.now() + MAX_EXPIRATION_PERIOD) {
     throw new Error(
-      `expirationTimestamp is bigger than ${(MAX_EXPIRATION_PERIOD / DAY_IN_MS).toFixed(0)} days`
+      `expirationTimestamp is bigger than ${(MAX_EXPIRATION_PERIOD / RedstoneCommon.daysToMs(1)).toFixed(0)} days`
     );
   }
   return timestamp;
