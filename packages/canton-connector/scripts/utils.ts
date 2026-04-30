@@ -7,7 +7,10 @@ import {
   CantonClientBuilder,
   CantonNetwork,
   CantonNetworks,
+  CantonValidatorClient,
   KeycloakTokenProvider,
+  getCantonNodeConfig,
+  makeKeycloakParams,
   networkToChainId,
 } from "../src";
 
@@ -69,4 +72,21 @@ export function makeDefaultClient() {
     .withTokenProvider(getTokenProvider())
     .withRpcUrl(getJsonApiUrl())
     .build();
+}
+
+export function makeWalletTokenProvider(): () => Promise<string> {
+  const params = makeKeycloakParams();
+  const tokenProvider = KeycloakTokenProvider.getInstance({
+    ...params,
+    clientId: getCantonNodeConfig(readNetwork()).walletClientId,
+  });
+
+  return () => tokenProvider.getToken();
+}
+
+export function makeValidatorClient(): CantonValidatorClient {
+  return new CantonValidatorClient(
+    getCantonNodeConfig(readNetwork()).validatorApiUrl,
+    makeWalletTokenProvider()
+  );
 }
