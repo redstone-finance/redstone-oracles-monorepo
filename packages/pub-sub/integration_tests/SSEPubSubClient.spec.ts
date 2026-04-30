@@ -312,6 +312,36 @@ describe("SSEPubSubClient", () => {
     expect(onMessage).toHaveBeenCalledWith("topic1", 321, null, client);
   });
 
+  it("should handle MQTT-style wildcard topics (+ and #)", async () => {
+    const onMessage = jest.fn();
+    client.setOnMessageHandler(onMessage);
+    await client.subscribe(["sensor/+/temperature", "sensor/#"]);
+
+    await client.publish([{ topic: "sensor/living_room/temperature", data: 1 }]);
+    await RedstoneCommon.sleep(PUBLISH_WAIT);
+
+    expect(onMessage).toHaveBeenCalledTimes(1);
+    expect(onMessage).toHaveBeenCalledWith("sensor/living_room/temperature", 1, null, client);
+    onMessage.mockClear();
+
+    await client.publish([{ topic: "sensor/living_room/humidity", data: 2 }]);
+    await RedstoneCommon.sleep(PUBLISH_WAIT);
+
+    expect(onMessage).toHaveBeenCalledTimes(1);
+    expect(onMessage).toHaveBeenCalledWith("sensor/living_room/humidity", 2, null, client);
+    onMessage.mockClear();
+
+    await client.publish([
+      { topic: "sensor/bedroom/temperature", data: 3 },
+      { topic: "sensor/kitchen/pressure", data: 4 },
+    ]);
+    await RedstoneCommon.sleep(PUBLISH_WAIT);
+
+    expect(onMessage).toHaveBeenCalledTimes(2);
+    expect(onMessage).toHaveBeenCalledWith("sensor/bedroom/temperature", 3, null, client);
+    expect(onMessage).toHaveBeenCalledWith("sensor/kitchen/pressure", 4, null, client);
+  });
+
   it("should handle many fast reconnections", async () => {
     const onMessage = jest.fn();
     client.setOnMessageHandler(onMessage);

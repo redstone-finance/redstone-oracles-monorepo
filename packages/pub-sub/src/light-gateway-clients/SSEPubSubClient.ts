@@ -51,7 +51,8 @@ export class SSEPubSubClient implements PubSubClient {
   private connect() {
     this.initialTopics = new Set(this.topics);
     const initialTopics = Array.from(this.initialTopics.keys());
-    const query = initialTopics.length > 0 ? `?topics=${initialTopics.join(",")}` : "";
+    const query =
+      initialTopics.length > 0 ? `?topics=${initialTopics.map(encodeURIComponent).join(",")}` : "";
     const url = this.common.getUrl(`${SUBSCRIBE_SSE_ROUTE}${query}`);
 
     this.logger.info("Establishing SSE connection", { url, topicCount: initialTopics.length });
