@@ -1,7 +1,7 @@
 import { loggerFactory, RedstoneCommon } from "@redstone-finance/utils";
 import { PubSubClient, SubscribeCallback } from "../PubSubClient";
 
-const logger = loggerFactory("mqtt-stats");
+const logger = loggerFactory("pub-sub-stats");
 
 interface StatsMetrics {
   max: number;
@@ -23,7 +23,7 @@ export class MqttStatsTracker {
       this.logAndClearStatistics();
     }, this.logIntervalMs).unref();
 
-    logger.info(`MQTT stats tracker started, will log every ${this.logIntervalMs / 1000}s`);
+    logger.info(`PubSub stats tracker started, will log every ${this.logIntervalMs / 1000}s`);
   }
 
   recordMessage(topicName: string, clientName: string): void {
@@ -75,18 +75,18 @@ export class MqttStatsTracker {
     const clientMetrics = this.getClientMetrics();
 
     if (topicMetrics.length === 0 && clientMetrics.length === 0) {
-      logger.info("MQTT Stats: No messages received in the last interval");
+      logger.info("PubSub Stats: No messages received in the last interval");
       return;
     }
 
     if (topicMetrics.length > 0) {
-      logger.info("MQTT Stats - Per Topic (msgs/sec):", {
+      logger.info("PubSub Stats - Per Topic (msgs/sec):", {
         topics: topicMetrics,
       });
     }
 
     if (clientMetrics.length > 0) {
-      logger.info("MQTT Stats - Per Client (msgs/sec):", {
+      logger.info("PubSub Stats - Per Client (msgs/sec):", {
         clients: clientMetrics,
       });
     }

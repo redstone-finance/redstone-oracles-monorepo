@@ -53,6 +53,15 @@ export function encodeDataPackageTopic({
   return encodeTopic([PackagesTypes.DataPackage, dataServiceId, dataPackageId, nodeAddress]);
 }
 
+export function encodeLegacyDataPackageTopic({
+  dataServiceId,
+  dataPackageId,
+  nodeAddress,
+}: DataPackageTopic) {
+  const parts = [PackagesTypes.DataPackage, dataServiceId, dataPackageId, nodeAddress];
+  return parts.map((part) => (WILDCARDS.has(part) ? part : encodeURIComponent(part))).join("/");
+}
+
 export function decodeDataPackageTopic(encodedTopic: string): DataPackageTopic {
   const [packageType, dataServiceId, dataPackageId, nodeAddress] =
     decodeTopic(encodedTopic).split("/");

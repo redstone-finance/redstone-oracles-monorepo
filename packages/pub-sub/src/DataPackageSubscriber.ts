@@ -18,7 +18,11 @@ import { LastPublishedFeedState } from "./LastPublishedFeedState";
 import { PubSubClient, SubscribeCallback } from "./PubSubClient";
 import { RateLimitsCircuitBreaker } from "./RateLimitsCircuitBreaker";
 import { ReferenceValueVerifier } from "./ReferenceValueVerifier";
-import { decodeDataPackageTopic, encodeDataPackageTopic } from "./topics";
+import {
+  decodeDataPackageTopic,
+  encodeDataPackageTopic,
+  encodeLegacyDataPackageTopic,
+} from "./topics";
 
 type SubscriptionCallbackFn = (dataPackages: DataPackagesResponse) => unknown;
 
@@ -101,13 +105,20 @@ export class DataPackageSubscriber {
 
     for (const dataPackageId of params.dataPackageIds) {
       for (const signer of params.authorizedSigners) {
-        this.topics.push(
-          encodeDataPackageTopic({
-            dataPackageId,
-            dataServiceId: this.params.dataServiceId,
-            nodeAddress: signer,
-          })
-        );
+        const topicArgs = {
+          dataPackageId,
+          dataServiceId: this.params.dataServiceId,
+          nodeAddress: signer,
+        };
+        const topic = encodeDataPackageTopic(topicArgs);
+        this.topics.push(topic);
+        // TODO: remove subscribeLegacyTopics support once all prod nodes publish with %2E-encoded topics
+        if (params.subscribeLegacyTopics) {
+          const legacyTopic = encodeLegacyDataPackageTopic(topicArgs);
+          if (legacyTopic !== topic) {
+            this.topics.push(legacyTopic);
+          }
+        }
       }
     }
   }
