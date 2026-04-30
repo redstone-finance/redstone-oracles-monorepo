@@ -64,12 +64,26 @@ export class StellarClientBuilder extends MultiExecutor.ClientBuilder<StellarCli
     const networkName = NETWORK_NAMES[builder.chainId!];
     const key = `${networkName}#${url}#${builder.horizonUrl}#${builder.isWithMulticall}`;
 
-    this.instances[key] ??= new StellarClient(
-      new rpc.Server(url, { allowHttp: true }),
-      horizon,
-      builder.isWithMulticall ? StellarMulticall.instanceForUrl(url, networkName) : undefined
-    );
+    this.instances[key] ??= this.getStellarClientInstance(url, networkName, builder, horizon);
 
     return this.instances[key];
+  }
+
+  private static getStellarClientInstance(
+    url: string,
+    networkName: StellarNetwork,
+    builder: StellarClientBuilder,
+    horizon?: HorizonClient
+  ) {
+    const multicall = builder.isWithMulticall
+      ? StellarMulticall.instanceForUrl(url, networkName)
+      : undefined;
+    const client = new StellarClient(new rpc.Server(url, { allowHttp: true }), horizon, multicall);
+
+    if (multicall) {
+      multicall.delegateClient = new WeakRef(client);
+    }
+
+    return client;
   }
 }

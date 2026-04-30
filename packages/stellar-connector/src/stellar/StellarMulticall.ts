@@ -2,12 +2,21 @@ import { InvocationV0, InvocationV1, StellarRouterSdk } from "@creit-tech/stella
 import { loggerFactory, RedstoneCommon } from "@redstone-finance/utils";
 import { scValToNative } from "@stellar/stellar-sdk";
 import _ from "lodash";
-import { IStellarCaller, StellarInvocation } from "../IStellarCaller";
+import { IStellarCaller, IStellarCallerDelegate, StellarInvocation } from "../IStellarCaller";
 import { StellarNetwork } from "./network-ids";
 
 const MAX_NUMBER_OF_CALLS = 16;
 const DEFAULT_COLLECTING_INTERVAL_MS = 10;
 const TESTNET_MULTICALL_ADDRESS = "CBM4TX2P6JAKDJ3RJEYZUXDQVGMYRFX5KGW2XMVHTZ4E3RF7D54F3TMD";
+
+type WaitingEntry = {
+  invocation: InvocationV0 | InvocationV1;
+  blockNumber?: number;
+  baseInvocation: StellarInvocation;
+  transform: (value: unknown) => unknown;
+  resolve: (value: unknown) => void;
+  reject: (err: unknown) => void;
+};
 
 export class StellarMulticall implements IStellarCaller {
   private static instanceForUrls: { [p: string]: StellarMulticall | undefined } = {};
@@ -21,14 +30,11 @@ export class StellarMulticall implements IStellarCaller {
     return StellarMulticall.instanceForUrls[rpcUrl];
   }
 
+  delegateClient?: WeakRef<IStellarCallerDelegate>;
+
   private readonly router: StellarRouterSdk;
 
-  private waitingEntries: {
-    invocation: InvocationV0 | InvocationV1;
-    transform: (value: unknown) => unknown;
-    resolve: (value: unknown) => void;
-    reject: (err: unknown) => void;
-  }[] = [];
+  private waitingEntries: WaitingEntry[] = [];
 
   private logger = loggerFactory("stellar-multicall");
   private timer?: NodeJS.Timeout;
@@ -42,19 +48,21 @@ export class StellarMulticall implements IStellarCaller {
   }
 
   async call<T>(
-    invocation: StellarInvocation,
-    _blockNumber?: number,
+    baseInvocation: StellarInvocation,
+    blockNumber?: number,
     transform = (retVal: unknown) => retVal as T
   ): Promise<T> {
-    const operation = new InvocationV0({
-      ...invocation,
-      contract: invocation.contract.contractId(),
-      args: invocation.args ?? [],
+    const invocation = new InvocationV0({
+      ...baseInvocation,
+      contract: baseInvocation.contract.contractId(),
+      args: baseInvocation.args ?? [],
     });
 
     return await new Promise((resolve, reject) => {
       this.waitingEntries.push({
-        invocation: operation,
+        invocation,
+        blockNumber,
+        baseInvocation,
         resolve: resolve as (retVal: unknown) => void,
         reject,
         transform: transform,
@@ -77,11 +85,7 @@ export class StellarMulticall implements IStellarCaller {
     const chunks = _.chunk(entries, MAX_NUMBER_OF_CALLS);
 
     try {
-      const chunkPromises = chunks.map((chunk) => {
-        this.logChunk(chunk);
-
-        return this.router.simResult<[unknown]>(chunk.map((ch) => ch.invocation));
-      });
+      const chunkPromises = chunks.map(this.getSimResult.bind(this));
       const allResults = (await Promise.all(chunkPromises)).flat();
 
       _.zip(entries, allResults).forEach(([entry, result]) =>
@@ -90,6 +94,29 @@ export class StellarMulticall implements IStellarCaller {
     } catch (err) {
       entries.forEach((entry) => entry.reject(err));
     }
+  }
+
+  private async getSimResult(chunk: WaitingEntry[]) {
+    this.logChunk(chunk);
+
+    if (chunk.length === 0) {
+      return [];
+    }
+
+    const delegateClient = this.delegateClient?.deref();
+    await delegateClient?.waitForBlockNumber(_.maxBy(chunk, "blockNumber")?.blockNumber);
+
+    if (chunk.length === 1 && delegateClient) {
+      const waitingEntry = chunk[0];
+      const result = await delegateClient.simulateInvocation(
+        waitingEntry.baseInvocation,
+        waitingEntry.blockNumber
+      );
+
+      return [result];
+    }
+
+    return await this.router.simResult<unknown[]>(chunk.map((ch) => ch.invocation));
   }
 
   private logChunk(chunk: { invocation: InvocationV0 | InvocationV1 }[]) {
@@ -104,7 +131,7 @@ export class StellarMulticall implements IStellarCaller {
       );
     });
 
-    this.logger.info(
+    this.logger.debug(
       `Simulating call for ${chunk.length} invocation${RedstoneCommon.getS(chunk.length)} on ${this.rpcUrl}`,
       { invocations }
     );
