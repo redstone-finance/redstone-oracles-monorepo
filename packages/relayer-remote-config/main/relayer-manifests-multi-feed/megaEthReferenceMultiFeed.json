@@ -71,6 +71,7 @@
         "deviationPercentage": 0.000001,
         "timeSinceLastUpdateInMilliseconds": 60000
       }
-    }
+    },
+    "MEGA": {}
   }
 }
