@@ -107,7 +107,9 @@ export class StellarClient implements IStellarCaller {
   }
 
   async waitForTx(hash: string) {
-    return await this.server.pollTransaction(hash);
+    return await this.server
+      .pollTransaction(hash)
+      .then((result) => ({ status: result.status, txHash: result.txHash }));
   }
 
   async simulateTransaction(transaction: Transaction) {
@@ -184,11 +186,17 @@ export class StellarClient implements IStellarCaller {
     invocation: StellarInvocation,
     blockNumber?: number,
     transform = (retVal: unknown) => retVal as T
-  ): Promise<T> {
-    if (this.multicall) {
-      return await this.multicall.call(invocation, blockNumber, transform);
-    }
+  ) {
+    return this.multicall
+      ? await this.multicall.call(invocation, blockNumber, transform)
+      : await this.simulateInvocation(invocation, blockNumber, transform);
+  }
 
+  async simulateInvocation<T>(
+    invocation: StellarInvocation,
+    blockNumber: number | undefined,
+    transform = (retVal: unknown) => retVal as T
+  ) {
     const operation = invocation.contract.call(invocation.method, ...(invocation.args ?? []));
 
     return await this.simulateOperation(
