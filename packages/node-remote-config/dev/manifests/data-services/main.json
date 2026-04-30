@@ -8857,6 +8857,8 @@
         "gate-usdt",
         "bitget-usdt",
         "kraken-usd",
+        "binance-usd",
+        "binance-usdt",
         "kumbaya-megaeth-usdm-10000"
       ],
       "denomination": "USD",

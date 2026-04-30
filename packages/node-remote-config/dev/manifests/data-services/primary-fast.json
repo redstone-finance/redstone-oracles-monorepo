@@ -193,7 +193,8 @@
         "gate-usdt",
         "bitget-usdt",
         "kraken-usd",
-        "kumbaya-megaeth-usdm-10000"
+        "binance-usd",
+        "binance-usdt"
       ]
     }
   },
