@@ -9632,7 +9632,8 @@
         "kucoin-usdt",
         "gate-usdt",
         "bitget-usdt",
-        "kraken-usd"
+        "kraken-usd",
+        "kumbaya-megaeth-usdm-10000"
       ],
       "denomination": "USD",
       "rateFeed": false
