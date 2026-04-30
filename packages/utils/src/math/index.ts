@@ -143,6 +143,87 @@ export function weightedMedian(values: number[], weights: number[]) {
   throw new Error(`failed to calculate weighted median`);
 }
 
+/**
+ * Partition arr[lo..hi] so that arr[k] is the element that would appear at
+ * position k in a sorted copy of the array.  All elements at indices < k are
+ * ≤ arr[k]; all elements at indices > k are ≥ arr[k].
+ *
+ * Uses the middle element as pivot — good enough for the random/near-random
+ * numeric data this function is designed for.
+ *
+ * MUTATES arr in place.
+ */
+function quickSelect(arr: number[], lo: number, hi: number, k: number): void {
+  while (lo < hi) {
+    const pivotPos = (lo + hi) >> 1;
+    const pivot = arr[pivotPos];
+    arr[pivotPos] = arr[hi];
+    arr[hi] = pivot;
+
+    let store = lo;
+    for (let i = lo; i < hi; i++) {
+      if (arr[i] <= pivot) {
+        const tmp = arr[store];
+        arr[store] = arr[i];
+        arr[i] = tmp;
+        store++;
+      }
+    }
+    arr[hi] = arr[store];
+    arr[store] = pivot;
+
+    if (store === k) {
+      return;
+    }
+    if (store < k) {
+      lo = store + 1;
+    } else {
+      hi = store - 1;
+    }
+  }
+}
+
+/**
+ * Returns the median of `arr` in **O(n) average time** using the QuickSelect
+ * algorithm, with no extra allocation.
+ *
+ * **MUTATES the input array.**  Only call this with an array you own and
+ * will not read again after the call.  If you need to preserve the original
+ * order, copy the array first: `superFastMedian([...original])`.
+ *
+ * For even-length arrays the median is the average of the two middle elements
+ * (same definition as `MathUtils.getMedian`).
+ *
+ * Why this is faster than a sort-based median:
+ *   - O(n) average comparisons vs O(n log n) for a full sort
+ *   - No copy allocation
+ *   - Tight numeric loop — no JS comparator function call per comparison
+ */
+export function superFastMedian(arr: number[]): number {
+  if (arr.length === 0) {
+    throw new Error("Cannot get median of an empty array");
+  }
+
+  const n = arr.length;
+  const mid = n >> 1;
+  quickSelect(arr, 0, n - 1, mid);
+
+  if (n % 2 === 1) {
+    return arr[mid];
+  }
+
+  // Even-length: arr[mid] is the upper median after partitioning.
+  // All arr[0..mid-1] are ≤ arr[mid], so the lower median is simply
+  // the maximum of that left partition — found in one O(n) linear scan.
+  let lowerMedian = arr[0];
+  for (let i = 1; i < mid; i++) {
+    if (arr[i] > lowerMedian) {
+      lowerMedian = arr[i];
+    }
+  }
+  return (lowerMedian + arr[mid]) / 2;
+}
+
 export class Clamper {
   readonly upperClampMultiplier: ISafeNumber;
   readonly lowerClampMultiplier: ISafeNumber;
