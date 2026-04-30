@@ -96,6 +96,10 @@
         "deviationPercentage": 0.000001,
         "timeSinceLastUpdateInMilliseconds": 60000
       }
+    },
+    "MEGA": {
+      "priceFeedAddress": "0x36108eCFCc146D8774A31644b751B560F0CD61fa",
+      "isBolt": true
     }
   },
   "transactionAdapters": ["megaEthBoltMultiFeed", "megaEthReferenceMultiFeed"]
