@@ -134,3 +134,4 @@ tmp
 
 *.zip
 *.tsbuildinfo
+*.cpuprofile
