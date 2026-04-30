@@ -198,7 +198,7 @@ The `partyId`, `packageId` and `contractId` are identifiers obtained when creati
 
 ### Existing Disclosed Contracts
 
-The existing disclosed contract data are available in the [contracts.json](../../src/contracts.json) file.
+The existing disclosed contract data are available in the [canton-defs.json](../../src/canton-defs.json) file.
 
 ### Data fetching (direct way)
 
