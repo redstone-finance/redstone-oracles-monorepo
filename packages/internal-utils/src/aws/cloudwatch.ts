@@ -6,7 +6,10 @@ import {
   StateValue,
   Tag,
 } from "@aws-sdk/client-cloudwatch";
+import { loggerFactory } from "@redstone-finance/utils";
 import { getCloudwatch, getCloudWatchClient } from "./aws-clients";
+
+const logger = loggerFactory("healthcheck");
 
 export async function sendMetrics(
   namespace: string,
@@ -95,7 +98,7 @@ export const sendHealthcheckMetric = async (
   const now = Date.now();
   const lastSentAt = lastHealthcheckSentAt[healthcheckMetricName] ?? 0;
   if (now - lastSentAt < minIntervalMs) {
-    console.info(
+    logger.debug(
       `Skipping healthcheck metric [${healthcheckMetricName}] - throttled, next send allowed in ${minIntervalMs - (now - lastSentAt)}ms`
     );
     return;
@@ -111,7 +114,7 @@ export const sendHealthcheckMetric = async (
     storageResolution
   );
   if (logPerf) {
-    console.info(
+    logger.info(
       `Sent healthcheck metric in ${Date.now() - start}ms (metric name: ${healthcheckMetricName})`
     );
   }
