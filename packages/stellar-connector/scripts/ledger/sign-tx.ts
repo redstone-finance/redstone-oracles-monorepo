@@ -4,13 +4,14 @@ import { makeStellar } from "./ledger-utils";
 
 export async function sign(envelopeRaw: string) {
   const stellar = await makeStellar(ACCOUNT_ID);
+  const publicKey = await stellar.publicKey();
   const tx = await deserializeTx(envelopeRaw);
 
   const signature = await stellar.sign(tx.hash());
 
   console.log({
     signature: signature.toString("base64"),
-    publicKey: await stellar.publicKey(),
+    publicKey,
   });
 }
 
