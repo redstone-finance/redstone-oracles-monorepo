@@ -89,4 +89,4 @@ export const MultiPubSubEnvConfig = z.discriminatedUnion("type", [
   Polling,
   NatsConfig,
 ]);
-export const MultiPubSubEnvConfigs = MultiPubSubEnvConfig.array().min(1);
+export const MultiPubSubEnvConfigs = MultiPubSubEnvConfig.array();
