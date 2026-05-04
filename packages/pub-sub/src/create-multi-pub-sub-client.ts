@@ -18,7 +18,7 @@ export function createMultiPubSubClientFromEnv(
   envPath = "PUB_SUB_CONFIGS"
 ): MultiPubSubClient | undefined {
   const configs = RedstoneCommon.getFromEnv(envPath, MultiPubSubEnvConfigs.optional());
-  if (!configs) {
+  if (!configs || configs.length === 0) {
     return undefined;
   }
 
