@@ -57,8 +57,8 @@
     "zod": "^4.1.12"
   },
   "devDependencies": {
-    "@ledgerhq/hw-app-str": "^7.2.5",
-    "@ledgerhq/hw-transport-node-hid-singleton": "^6.31.10",
+    "@ledgerhq/hw-app-str": "^7.7.1",
+    "@ledgerhq/hw-transport-node-hid-singleton": "^6.35.1",
     "@redstone-finance/chain-agnostic-oracle-tests": "workspace:*",
     "@redstone-finance/chain-configs": "workspace:*",
     "@redstone-finance/mars-rover": "git+https://github.com/redstone-finance/mars-rover.git#v0.0.3",
