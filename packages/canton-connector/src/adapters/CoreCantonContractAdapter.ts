@@ -1,6 +1,6 @@
 import { ContractParamsProvider } from "@redstone-finance/sdk";
 import { CantonClient } from "../client/CantonClient";
-import { convertDecimalValue, getArrayifiedFeedId } from "../utils/conversions";
+import { convertDecimalValue, getCantonFeedId } from "../utils/conversions";
 import { ContractFilter } from "../utils/price-feed-utils";
 import { DamlTuple2 } from "../utils/utils";
 import { CantonContractAdapter } from "./CantonContractAdapter";
@@ -41,7 +41,7 @@ export class CoreCantonContractAdapter extends CantonContractAdapter {
     metadataTimestamp = Date.now()
   ) {
     return {
-      feedIds: paramsProvider.getDataFeedIds().map(getArrayifiedFeedId),
+      feedIds: paramsProvider.getDataFeedIds().map(getCantonFeedId),
       payloadHex: await paramsProvider.getPayloadHex(false, {
         withUnsignedMetadata: true,
         metadataTimestamp,

@@ -1,7 +1,7 @@
 import { PriceFeedAdapter } from "@redstone-finance/multichain-kit";
 import { ContractParamsProvider } from "@redstone-finance/sdk";
 import { CantonClient } from "../client/CantonClient";
-import { CantonFeedId, getArrayifiedFeedId, REDSTONE_DECIMALS } from "../utils/conversions";
+import { CantonFeedId, getCantonFeedId, REDSTONE_DECIMALS } from "../utils/conversions";
 import {
   ContractFilter,
   CreatedArgumentCallback,
@@ -23,7 +23,7 @@ export class PricePillCantonContractAdapter
   extends CantonContractAdapter
   implements PriceFeedAdapter
 {
-  private readonly arrayifiedFeedId: CantonFeedId;
+  private readonly cantonFeedId: CantonFeedId;
 
   constructor(
     client: CantonClient,
@@ -34,7 +34,7 @@ export class PricePillCantonContractAdapter
     templateName = IPRICE_PILL_TEMPLATE_NAME
   ) {
     super(client, interfaceId, templateName);
-    this.arrayifiedFeedId = getArrayifiedFeedId(feedId);
+    this.cantonFeedId = getCantonFeedId(feedId);
   }
 
   async getPriceAndTimestamp(offset?: number) {
@@ -80,7 +80,7 @@ export class PricePillCantonContractAdapter
   }
 
   protected override getContractFilter(): ContractFilter {
-    return createFeedIdFilter([this.arrayifiedFeedId], this.adapterId);
+    return createFeedIdFilter([this.cantonFeedId], this.adapterId);
   }
 
   private async readView(offset?: number): Promise<PricePillView> {

@@ -1,7 +1,7 @@
 import {
   convertDecimalValue,
-  decodeFeedId,
-  getArrayifiedFeedId,
+  decodeCantonFeedId,
+  getCantonFeedId,
   REDSTONE_DECIMALS,
 } from "../src/utils/conversions";
 
@@ -35,24 +35,24 @@ describe("convertDecimalValue", () => {
 
 describe("feed id encoding", () => {
   it("arrayifies ETH into its UTF-8 byte code strings", () => {
-    expect(getArrayifiedFeedId("ETH")).toEqual(["69", "84", "72"]);
+    expect(getCantonFeedId("ETH")).toEqual(["69", "84", "72"]);
   });
 
   it("arrayifies BTC into its UTF-8 byte code strings", () => {
-    expect(getArrayifiedFeedId("BTC")).toEqual(["66", "84", "67"]);
+    expect(getCantonFeedId("BTC")).toEqual(["66", "84", "67"]);
   });
 
   it("arrayifies CC into its UTF-8 byte code strings", () => {
-    expect(getArrayifiedFeedId("CC")).toEqual(["67", "67"]);
+    expect(getCantonFeedId("CC")).toEqual(["67", "67"]);
   });
 
   it.each(["ETH", "BTC", "CC"])("round-trips %s through decodeFeedId", (feedId) => {
-    const arrayified = getArrayifiedFeedId(feedId);
-    expect(decodeFeedId(arrayified.map(String))).toBe(feedId);
+    const arrayified = getCantonFeedId(feedId);
+    expect(decodeCantonFeedId(arrayified.map(String))).toBe(feedId);
   });
 
   it("strips trailing zero padding when decoding", () => {
-    const padded = [...getArrayifiedFeedId("ETH"), 0, 0, 0, 0, 0];
-    expect(decodeFeedId(padded.map(String))).toBe("ETH");
+    const padded = [...getCantonFeedId("ETH"), 0, 0, 0, 0, 0];
+    expect(decodeCantonFeedId(padded.map(String))).toBe("ETH");
   });
 });

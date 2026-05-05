@@ -49,7 +49,12 @@ export class PricesCantonContractAdapter
     const context =
       this.interfaceId === LEGACY_INTERFACE_ID
         ? { additionalPillViewers: this.additionalPillViewers }
-        : { context: { additionalPillViewers: this.additionalPillViewers, paidTrafficCost } };
+        : {
+            context: {
+              additionalPillViewers: this.additionalPillViewers,
+              paidTrafficCost: paidTrafficCost?.toString(),
+            },
+          };
 
     const { result, metadata } = await this.exerciseChoice<ActiveContractData | string>(
       this.config.viewerPartyId,
