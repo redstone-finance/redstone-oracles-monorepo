@@ -1719,14 +1719,14 @@
         }
       }
     },
-    "XCU_CURRENT": {
+    "XCU_FELIX_CURRENT": {
       "source": ["databento-cme-futures", "ws-polygon-massive-comex-futures"],
       "broadcasters": ["influx"],
       "denomination": "USD",
       "rateFeed": false,
       "types": ["rwa"]
     },
-    "XCU_FRONT": {
+    "XCU_FELIX_FRONT": {
       "source": ["databento-cme-futures", "ws-polygon-massive-comex-futures"],
       "broadcasters": ["influx"],
       "denomination": "USD",
