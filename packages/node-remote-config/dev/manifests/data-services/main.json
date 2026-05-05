@@ -8843,6 +8843,22 @@
       "denomination": "ETH",
       "rateFeed": false,
       "skipBroadcasting": true
+    },
+    "AI": {
+      "source": [
+        "bingx-usdt",
+        "bitget-usdt",
+        "coinbase-usd",
+        "kraken-eur",
+        "kraken-usd",
+        "kucoin-usdt",
+        "lbank-usdt",
+        "mexc-usdc",
+        "mexc-usdt",
+        "uniswap-v3-ethereum-usdc-100"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
     }
   }
 }
