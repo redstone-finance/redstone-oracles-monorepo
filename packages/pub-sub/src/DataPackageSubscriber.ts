@@ -152,11 +152,6 @@ export class DataPackageSubscriber {
             );
             throw new Error(`No data packages returned, got ${JSON.stringify(dataPackages)}`);
           }
-          GlobalLogMonitoring.warn(
-            LogMonitoringType.PUB_SUB_FALLBACK_USED_BUT_USEFUL,
-            fallbackTriggeredMessage,
-            this.logger
-          );
 
           const packageTimestamp = values[0][0].dataPackage.timestampMilliseconds;
 
@@ -173,6 +168,11 @@ export class DataPackageSubscriber {
             );
             this.subscribeCallback!(dataPackages);
             this.lastPublishedState.update(Object.keys(newerPackagesOnly), packageTimestamp);
+            GlobalLogMonitoring.warn(
+              LogMonitoringType.PUB_SUB_FALLBACK_USED_BUT_USEFUL,
+              fallbackTriggeredMessage,
+              this.logger
+            );
           }
         }
       } catch (e) {
