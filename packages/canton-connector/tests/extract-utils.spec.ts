@@ -10,9 +10,9 @@ import { PRICE_PILL_TEMPLATE_NAME } from "../src/utils/price-feed-utils";
 import {
   BASE_TS,
   BLOB,
-  BTC_STR,
+  BTC_ARR,
   CID,
-  ETH_STR,
+  ETH_ARR,
   getPackageTemplateName,
   makeArchivedEvent,
   makeCreatedEvent,
@@ -118,16 +118,16 @@ describe("extractCreatedEvents", () => {
   it("applies the provided filter predicate", () => {
     const eth = makeCreatedEvent({
       contractId: CID.eth,
-      createArgument: { feedId: ETH_STR },
+      createArgument: { feedId: ETH_ARR },
     });
     const btc = makeCreatedEvent({
       contractId: CID.btc,
-      createArgument: { feedId: BTC_STR },
+      createArgument: { feedId: BTC_ARR },
     });
 
     const result = extractCreatedEvents(
       [wrap([{ CreatedEvent: eth }, { CreatedEvent: btc }])],
-      (arg) => (arg as { feedId?: CantonFeedId }).feedId?.join(",") === ETH_STR.join(","),
+      (arg) => (arg as { feedId?: CantonFeedId }).feedId?.join(",") === ETH_ARR.join(","),
       false
     );
 
@@ -190,7 +190,7 @@ describe("extractUpdateMetadata", () => {
         templateId: getPackageTemplateName(PRICE_PILL_TEMPLATE_NAME),
         contractId: CID.ethPill,
         createArgument: {
-          feedId: ETH_STR,
+          feedId: ETH_ARR,
           priceData: {
             value: "25000",
             timestamp: String(BASE_TS),
