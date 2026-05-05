@@ -1,6 +1,8 @@
 import { ContractParamsProvider } from "@redstone-finance/sdk";
 import Decimal from "decimal.js";
 
+export type CantonFeedId = string[];
+
 export const REDSTONE_DECIMALS = 8;
 
 export function convertDecimalValue(value: string) {
@@ -9,11 +11,13 @@ export function convertDecimalValue(value: string) {
   return BigInt(decimal.toFixed());
 }
 
-export function getArrayifiedFeedId(feedId: string) {
-  return ContractParamsProvider.arrayifyFeedId(ContractParamsProvider.hexlifyFeedId(feedId));
+export function getArrayifiedFeedId(feedId: string): CantonFeedId {
+  return ContractParamsProvider.arrayifyFeedId(ContractParamsProvider.hexlifyFeedId(feedId)).map(
+    String
+  );
 }
 
-export function decodeFeedId(feedId: string[]) {
+export function decodeFeedId(feedId: CantonFeedId) {
   return ContractParamsProvider.unhexlifyFeedId(feedId.map(Number));
 }
 
