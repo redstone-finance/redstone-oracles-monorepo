@@ -32,6 +32,30 @@
         "deviationPercentage": 0.01,
         "timeSinceLastUpdateInMilliseconds": 86400000
       }
+    },
+    "USDT0": {
+      "priceFeedAddress": "0xaE02D5bE17a23C8fdd0676C6A5f9143d91237979"
+    },
+    "ezETH": {
+      "priceFeedAddress": "0xa8a94Da411425634e3Ed6C331a32ab4fd774aa43"
+    },
+    "GHO": {
+      "priceFeedAddress": "0x3587a73AA02519335A8a6053a97657BECe0bC2Cc"
+    },
+    "SolvBTC": {
+      "priceFeedAddress": "0x4BAD96DD1C7D541270a0C92e1D4e5f12EEEA7a57"
+    },
+    "USDe": {
+      "priceFeedAddress": "0x3fd49f2146FE0e10c4AE7E3fE04b3d5126385Ac4"
+    },
+    "weETH": {
+      "priceFeedAddress": "0x197225B3B017eb9b72Ac356D6B3c267d0c04c57c"
+    },
+    "sUSDe": {
+      "priceFeedAddress": "0xbbF121624c3b85C929Ac83872bf6c86b0976A55e"
+    },
+    "syrupUSDC_FUNDAMENTAL": {
+      "priceFeedAddress": "0x09639692CE6ff12A06CA3AE9A24b3Aae4CD80DC8"
     }
   }
 }
