@@ -11520,6 +11520,7 @@ __metadata:
     "@jest/types": "npm:^29.5.4"
     "@redstone-finance/eslint-plugin": "workspace:*"
     "@redstone-finance/jest-config": "workspace:*"
+    "@rharkor/caching-for-turbo": "npm:2.2.0"
     "@rollup/plugin-commonjs": "npm:^25.0.4"
     "@rollup/plugin-json": "npm:^6.0.0"
     "@rollup/plugin-node-resolve": "npm:^15.2.3"
@@ -12000,6 +12001,15 @@ __metadata:
     ws: "npm:^8.18.3"
   languageName: unknown
   linkType: soft
+
+"@rharkor/caching-for-turbo@npm:2.2.0":
+  version: 2.2.0
+  resolution: "@rharkor/caching-for-turbo@npm:2.2.0"
+  bin:
+    turbogha: dist/cli/index.js
+  checksum: 10c0/e8c766bde54571f25b6b8e69a40c73ecba9b2d7c040415eed34439df4748f75987ecd189d2cdd10f7e5f3c2cc23677923c483a26ae60ef84ddf475573577cbc4
+  languageName: node
+  linkType: hard
 
 "@rollup/plugin-commonjs@npm:^25.0.4":
   version: 25.0.4
