@@ -11,100 +11,122 @@
   "adapterContract": "REDSTBDUecGjwXd6YGPzHSvEUBHQqVRfCcjUVgPiHsr",
   "dataServiceId": "redstone-primary-prod",
   "priceFeeds": {
-    "ETH": {},
-    "BTC": {},
+    "ETH": {
+      "priceFeedAddress": "HPmPoq3eUTPePsDB5U4G6msu5RpeZHhMemc5VnqxQ9Lx"
+    },
+    "BTC": {
+      "priceFeedAddress": "74o5fhuMC33HgfUqvv2TdpYiKvEWfcRTS1E8zxK6ESjN"
+    },
     "BUIDL_SOLANA_FUNDAMENTAL": {
+      "priceFeedAddress": "ESxdEASDcYRN4ybnYNCJJuPHcF2SGJN1MypQq1yfY9Kz",
       "updateTriggersOverrides": {
         "deviationPercentage": 0.01,
         "timeSinceLastUpdateInMilliseconds": 86400000
       }
     },
     "BUIDL_SOLANA_DAILY_ACCRUAL": {
+      "priceFeedAddress": "CPKJ57Kvxf8Xrz1o3hqBK52SqqEUAPp1NVdCK94bDGSX",
       "updateTriggersOverrides": {
         "deviationPercentage": 0.01,
         "timeSinceLastUpdateInMilliseconds": 86400000
       }
     },
     "ACRED_SOLANA_FUNDAMENTAL": {
+      "priceFeedAddress": "6sK8czVw8Xy6T8YbH6VC8p5ovNZD2mXf5vUTv8sgnUJf",
       "updateTriggersOverrides": {
         "deviationPercentage": 0.01,
         "timeSinceLastUpdateInMilliseconds": 590000
       }
     },
     "VBILL_SOLANA_FUNDAMENTAL": {
+      "priceFeedAddress": "H9ckR9pZtPZCjRYz9RXBPhc2X6m4e3ndpxgVe7HgYVMd",
       "updateTriggersOverrides": {
         "deviationPercentage": 0.01,
         "timeSinceLastUpdateInMilliseconds": 86400000
       }
     },
-    "LBTC_FUNDAMENTAL": {},
+    "LBTC_FUNDAMENTAL": {
+      "priceFeedAddress": "EjN4MxDvAbBEofxFwpvCsz2u8wZ96kHMsLmk2N5Bvomt"
+    },
     "VBILL_SOLANA_DAILY_ACCRUAL": {
+      "priceFeedAddress": "8aMjLzsmjSEGmgybHWELTEinTw4kn3okfos5zHrt2TJG",
       "updateTriggersOverrides": {
         "deviationPercentage": 0.01,
         "timeSinceLastUpdateInMilliseconds": 86400000
       }
     },
     "CETES": {
+      "priceFeedAddress": "BBQbMAJxEjJQcPigdTDbMphzGoasBDKfsGKDNjuw41sn",
       "updateTriggersOverrides": {
         "deviationPercentage": 0.1,
         "timeSinceLastUpdateInMilliseconds": 86400000
       }
     },
     "KTB": {
+      "priceFeedAddress": "7LpHkWowUSxwqpYEX71juUpNszR7EZ3ZiFnwt2fj3ubc",
       "updateTriggersOverrides": {
         "deviationPercentage": 0.1,
         "timeSinceLastUpdateInMilliseconds": 86400000
       }
     },
     "USTRY": {
+      "priceFeedAddress": "FQfn746CH96toaGvFAP4FaN1rhvcEPrH4AGjWcSMhP1P",
       "updateTriggersOverrides": {
         "deviationPercentage": 0.1,
         "timeSinceLastUpdateInMilliseconds": 86400000
       }
     },
     "TESOURO": {
+      "priceFeedAddress": "Fx7SbwDDiir4C42Q1ESH4cm8NGcDjQucgA7QAHFso8ob",
       "updateTriggersOverrides": {
         "deviationPercentage": 0.1,
         "timeSinceLastUpdateInMilliseconds": 86400000
       }
     },
     "EUROB": {
+      "priceFeedAddress": "HJpgmbTmVG49iLtYqQWacBqBs1XxVbAGAmpcB2ANhK4e",
       "updateTriggersOverrides": {
         "deviationPercentage": 0.1,
         "timeSinceLastUpdateInMilliseconds": 86400000
       }
     },
     "GILTS": {
+      "priceFeedAddress": "7MNCZy8ucFRLzRitc24tBeXRNuzmfTKu469riUYSACq1",
       "updateTriggersOverrides": {
         "deviationPercentage": 0.1,
         "timeSinceLastUpdateInMilliseconds": 86400000
       }
     },
     "MXNe": {
+      "priceFeedAddress": "8QuwResPgdQdja4gdTbvNxeUznc58XX8baUM3cCwfVW2",
       "updateTriggersOverrides": {
         "deviationPercentage": 0.1,
         "timeSinceLastUpdateInMilliseconds": 86400000
       }
     },
     "USDC": {
+      "priceFeedAddress": "6sX9HsaAPhAT1MCskQFTjreuNCqFgkJWKJ4hfdvTbJET",
       "updateTriggersOverrides": {
         "deviationPercentage": 0.1,
         "timeSinceLastUpdateInMilliseconds": 21600000
       }
     },
     "SOL": {
+      "priceFeedAddress": "9FboGHATJTgJA7fzG3fKeV1VuLqDsV5HtCGUR2PqZor3",
       "updateTriggersOverrides": {
         "deviationPercentage": 0.1,
         "timeSinceLastUpdateInMilliseconds": 21600000
       }
     },
     "NUSD_FUNDAMENTAL": {
+      "priceFeedAddress": "F5PCF1BEEYmtcDiuCQ3Ru7LCdTo85jo8qEaQcAABWYj9",
       "updateTriggersOverrides": {
         "deviationPercentage": 0.5,
         "timeSinceLastUpdateInMilliseconds": 21600000
       }
     },
     "CURR": {
+      "priceFeedAddress": "3749gbBexamKzeY9ivJ8vaVCZqkxWzrhrgqKxEffie5f",
       "updateTriggersOverrides": {
         "deviationPercentage": 0.5,
         "timeSinceLastUpdateInMilliseconds": 1800000

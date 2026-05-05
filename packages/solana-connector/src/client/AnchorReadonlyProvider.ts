@@ -1,5 +1,4 @@
-import { Provider } from "@coral-xyz/anchor";
-import { SuccessfulTxSimulationResponse } from "@coral-xyz/anchor/dist/cjs/utils/rpc";
+import { Provider, utils } from "@coral-xyz/anchor";
 import { RedstoneCommon } from "@redstone-finance/utils";
 import {
   Commitment,
@@ -25,7 +24,7 @@ export class AnchorReadonlyProvider implements Provider {
     _signers?: Signer[],
     commitment?: Commitment,
     _includeAccounts?: boolean | PublicKey[]
-  ): Promise<SuccessfulTxSimulationResponse> {
+  ): Promise<utils.rpc.SuccessfulTxSimulationResponse> {
     const versionedTransaction = await this.getVersionedTransaction(tx);
     const options = {
       sigVerify: false,
