@@ -2,7 +2,7 @@ import axios, { AxiosError } from "axios";
 import { LogLevels } from "consola";
 import { ethers } from "ethers";
 import { getLogLevel, loggerFactory, sanitizeLogMessage } from "../logger";
-import { stringify } from "./misc";
+import { JSONstringify, stringify } from "./misc";
 
 export class UnrecoverableError extends Error {
   unrecoverable?: boolean = true;
@@ -126,8 +126,8 @@ export function stringifyError(e: unknown, noStack = false): string {
         "; "
       )}`;
     } else if (axios.isAxiosError<unknown>(error)) {
-      const urlAsString = `url: "${sanitizeLogMessage(JSON.stringify(error.config?.url))}"`;
-      const dataAsString = `data: "${JSON.stringify(error.response?.data)}"`;
+      const urlAsString = `url: "${sanitizeLogMessage(JSONstringify(error.config?.url))}"`;
+      const dataAsString = `data: "${JSONstringify(error.response?.data)}"`;
       const message = `${urlAsString}, ${dataAsString}, ${error.message}`;
       return noStack ? message : `${message}, ${showStack(error.stack)}`;
     } else if (isEthers_5_7_Error(error)) {
@@ -137,7 +137,7 @@ export function stringifyError(e: unknown, noStack = false): string {
           .filter((prop) => Object.hasOwn(error, prop))
           .map((prop) =>
             prop === "url"
-              ? `[${prop}: "${sanitizeLogMessage(JSON.stringify(error[prop]))}"]`
+              ? `[${prop}: "${sanitizeLogMessage(JSONstringify(error[prop]))}"]`
               : `[${prop}: "${error[prop]}"]`
           )
           .join("") +
@@ -153,7 +153,7 @@ export function stringifyError(e: unknown, noStack = false): string {
         .filter((str) => str.length > 0)
         .join(" ");
     } else if (typeof error.toJSON === "function") {
-      return JSON.stringify(error.toJSON());
+      return JSONstringify(error.toJSON());
     } else {
       return `Error couldn't be handled by the stringifyError function: ${stringify(e)}`;
     }

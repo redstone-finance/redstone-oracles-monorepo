@@ -39,6 +39,21 @@ export function toOrdinal(n: number): string {
   }
 }
 
+export function JSONstringify(
+  value: unknown,
+  replacer?: (key: string, value: unknown) => unknown,
+  space?: string | number
+) {
+  return JSON.stringify(
+    value,
+    (key, val: unknown) => {
+      const next = replacer ? replacer(key, val) : val;
+      return typeof next === "bigint" ? next.toString() : next;
+    },
+    space
+  );
+}
+
 export function stringify<R>(result: R): string {
   if (typeof result === "string") {
     return result;
@@ -62,9 +77,9 @@ export function stringify<R>(result: R): string {
       return `{${stringify(Array.from(result))}}`;
     }
 
-    return unescapeString(JSON.stringify(result));
+    return unescapeString(JSONstringify(result));
   } catch {
-    if (typeof result.toString === "function" && result.toString !== Object.prototype.toString) {
+    if (typeof result.toString === "function" && hasCustomToString(result)) {
       return unescapeString(result.toString());
     }
 
@@ -94,7 +109,18 @@ export function jitter(minSeconds: number, maxSeconds: number): number {
   return randomSeconds * 1000;
 }
 
-function unescapeString(s: string) {
+function hasCustomToString(obj: unknown): boolean {
+  do {
+    if (Object.prototype.hasOwnProperty.call(obj, "toString")) {
+      return true;
+    }
+    obj = Object.getPrototypeOf(obj);
+  } while (obj && obj !== Object.prototype);
+
+  return false;
+}
+
+export function unescapeString(s: string) {
   return _.unescape(s).replace(/\\"/g, '"').replace(/\\\\/g, "\\");
 }
 
