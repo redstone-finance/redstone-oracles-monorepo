@@ -11,7 +11,7 @@ import {
 } from "@solana/web3.js";
 import bs58 from "bs58";
 import { FailedTransactionMetadata, LiteSVM, TransactionMetadata } from "litesvm";
-import { toNumber } from "../src";
+import { bigIntFromBeBytes } from "../src";
 import { LiteSVMAgnosticTestsConnection } from "./chain-agnostic/TestConnection";
 import { DEFAULT_FEE, DUMMY_CONTEXT, DUMMY_SIGNATURE, Status, transactionStatus } from "./utils";
 
@@ -120,7 +120,7 @@ export class ConnectionStateScenario {
     const data = feeInstruction.data;
     const bigEndian = data.subarray(1).reverse();
 
-    this.fees.push(toNumber(Array.from(bigEndian)));
+    this.fees.push(Number(bigIntFromBeBytes(Array.from(bigEndian))));
   }
 }
 

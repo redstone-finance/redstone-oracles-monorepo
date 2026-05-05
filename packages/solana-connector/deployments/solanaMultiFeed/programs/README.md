@@ -121,25 +121,4 @@ pub struct Initialize<'info> {
 
 ### Feed accounts
 
-|                            | mainnet-beta                                 | testnet                                      | devnet                                       |
-| -------------------------- | -------------------------------------------- | -------------------------------------------- | -------------------------------------------- |
-| ETH                        | HPmPoq3eUTPePsDB5U4G6msu5RpeZHhMemc5VnqxQ9Lx | BsFkAfSgub54ZMHxZpCXqB3zpWXF8NwAswbuNX1Jq55g | 6bgjyNJ18vWGjw2qjjseSBaDK4QbJF8sjsHAhwy8EuBW |
-| BTC                        | 74o5fhuMC33HgfUqvv2TdpYiKvEWfcRTS1E8zxK6ESjN | FbTaAY9o6MU3xZKXT65xE3wATNrxU7nTnZZPmg4gS9Ad | AhQGbBqhbcqJhV7WJ5GktjtjM7dHBPYv2uFhL7Cy7gzQ |
-| BUIDL_SOLANA_FUNDAMENTAL   | ESxdEASDcYRN4ybnYNCJJuPHcF2SGJN1MypQq1yfY9Kz | x                                            | x                                            |
-| BUIDL_SOLANA_DAILY_ACCRUAL | CPKJ57Kvxf8Xrz1o3hqBK52SqqEUAPp1NVdCK94bDGSX | x                                            | x                                            |
-| ACRED_SOLANA_FUNDAMENTAL   | 6sK8czVw8Xy6T8YbH6VC8p5ovNZD2mXf5vUTv8sgnUJf | x                                            | x                                            |
-| sUSDS_FUNDAMENTAL          | x                                            | x                                            | BsakcTH9iP8vqvf9SvA6jQQfjn48qhCrUdP1EX4h1smY |
-| VBILL_SOLANA_FUNDAMENTAL   | H9ckR9pZtPZCjRYz9RXBPhc2X6m4e3ndpxgVe7HgYVMd | x                                            | x                                            |
-| LBTC_FUNDAMENTAL           | EjN4MxDvAbBEofxFwpvCsz2u8wZ96kHMsLmk2N5Bvomt | x                                            | x                                            |
-| VBILL_SOLANA_DAILY_ACCRUAL | 8aMjLzsmjSEGmgybHWELTEinTw4kn3okfos5zHrt2TJG | x                                            | x                                            |
-| CETES                      | BBQbMAJxEjJQcPigdTDbMphzGoasBDKfsGKDNjuw41sn | x                                            | x                                            |
-| KTB                        | 7LpHkWowUSxwqpYEX71juUpNszR7EZ3ZiFnwt2fj3ubc | x                                            | x                                            |
-| USTRY                      | FQfn746CH96toaGvFAP4FaN1rhvcEPrH4AGjWcSMhP1P | x                                            | x                                            |
-| TESOURO                    | Fx7SbwDDiir4C42Q1ESH4cm8NGcDjQucgA7QAHFso8ob | x                                            | x                                            |
-| EUROB                      | HJpgmbTmVG49iLtYqQWacBqBs1XxVbAGAmpcB2ANhK4e | x                                            | x                                            |
-| GILTS                      | 7MNCZy8ucFRLzRitc24tBeXRNuzmfTKu469riUYSACq1 | x                                            | x                                            |
-| MXNe                       | 8QuwResPgdQdja4gdTbvNxeUznc58XX8baUM3cCwfVW2 | x                                            | x                                            |
-| USDC                       | 6sX9HsaAPhAT1MCskQFTjreuNCqFgkJWKJ4hfdvTbJET | x                                            | x                                            |
-| SOL                        | 9FboGHATJTgJA7fzG3fKeV1VuLqDsV5HtCGUR2PqZor3 | x                                            | x                                            |
-| NUSD_FUNDAMENTAL           | F5PCF1BEEYmtcDiuCQ3Ru7LCdTo85jo8qEaQcAABWYj9 | x                                            | x                                            |
-| CURR                       | 3749gbBexamKzeY9ivJ8vaVCZqkxWzrhrgqKxEffie5f | x                                            | x                                            |
+The list of feeds is moved to the RedStone app: https://app.redstone.finance/push-feeds?networks=solana&testnets=false

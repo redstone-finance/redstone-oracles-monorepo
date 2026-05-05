@@ -1,3 +1,5 @@
+ANCHOR=RUSTUP_TOOLCHAIN=nightly-2026-04-19 anchor
+
 prepare:
 	rustup component add clippy rustfmt
 
@@ -13,13 +15,13 @@ fmt-check: prepare
 lint: clippy fmt-check
 
 build-verifiable:
-	anchor build --verifiable
+	$(ANCHOR) build --verifiable
 
 build:
-	anchor build --ignore-keys
+	$(ANCHOR) build --ignore-keys
 
 build-test:
-	anchor build --ignore-keys -- --features agnostic-tests
+	$(ANCHOR) build --ignore-keys -- --features agnostic-tests
 
 copy-program:
 	@mkdir -p target/deploy

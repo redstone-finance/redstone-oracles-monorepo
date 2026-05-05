@@ -1,24 +1,27 @@
 import { RedstoneCommon } from "@redstone-finance/utils";
-import { GetAccountsInfoRequestCollector } from "../src/GetAccountsInfoRequestCollector";
+import {
+  CollectableCommitmentOrConfig,
+  GetAccountsInfoRequestCollector,
+} from "../src/GetAccountsInfoRequestCollector";
 import { makeAccountInfo, makePublicKey, MockDelegate } from "./test-helpers";
 
-function setUp(collectingIntervalMs = 10) {
-  const collector = new GetAccountsInfoRequestCollector(collectingIntervalMs);
+function setUp(commitmentOrConfig?: CollectableCommitmentOrConfig, collectingIntervalMs = 10) {
+  const collector = new GetAccountsInfoRequestCollector(commitmentOrConfig, collectingIntervalMs);
   const delegate = new MockDelegate();
   collector.delegate = new WeakRef(delegate);
 
-  return { collector, delegate };
+  return { sut: collector, delegate };
 }
 
 describe("GetAccountsInfoRequestCollector", () => {
   describe("basic functionality", () => {
     it("should fetch a single key", async () => {
-      const { collector, delegate } = setUp();
+      const { sut, delegate } = setUp();
       const key = makePublicKey(1);
       const info = makeAccountInfo(1);
       delegate.results.set(key.toBase58(), info);
 
-      const result = await collector.getMultipleAccountInfoCollected([key]);
+      const result = await sut.getMultipleAccountInfoCollected([key]);
 
       expect(result).toEqual([info]);
       expect(delegate.calls).toHaveLength(1);
@@ -26,11 +29,11 @@ describe("GetAccountsInfoRequestCollector", () => {
     });
 
     it("should fetch multiple keys in one call", async () => {
-      const { collector, delegate } = setUp();
+      const { sut, delegate } = setUp();
       const keys = [makePublicKey(1), makePublicKey(2), makePublicKey(3)];
       keys.forEach((k, i) => delegate.results.set(k.toBase58(), makeAccountInfo(i + 1)));
 
-      const result = await collector.getMultipleAccountInfoCollected(keys);
+      const result = await sut.getMultipleAccountInfoCollected(keys);
 
       expect(result).toHaveLength(3);
       expect(result[0]!.lamports).toBe(1);
@@ -40,10 +43,10 @@ describe("GetAccountsInfoRequestCollector", () => {
     });
 
     it("should return null for missing accounts", async () => {
-      const { collector } = setUp();
+      const { sut } = setUp();
       const keys = [makePublicKey(1)];
 
-      const result = await collector.getMultipleAccountInfoCollected(keys);
+      const result = await sut.getMultipleAccountInfoCollected(keys);
 
       expect(result).toEqual([null]);
     });
@@ -51,15 +54,15 @@ describe("GetAccountsInfoRequestCollector", () => {
 
   describe("batching / collecting behavior", () => {
     it("should batch concurrent requests into a single RPC call", async () => {
-      const { collector, delegate } = setUp(50);
+      const { sut, delegate } = setUp(undefined, 50);
       const key1 = makePublicKey(1);
       const key2 = makePublicKey(2);
       delegate.results.set(key1.toBase58(), makeAccountInfo(1));
       delegate.results.set(key2.toBase58(), makeAccountInfo(2));
 
       const [result1, result2] = await Promise.all([
-        collector.getMultipleAccountInfoCollected([key1]),
-        collector.getMultipleAccountInfoCollected([key2]),
+        sut.getMultipleAccountInfoCollected([key1]),
+        sut.getMultipleAccountInfoCollected([key2]),
       ]);
 
       expect(result1).toEqual([makeAccountInfo(1)]);
@@ -69,14 +72,14 @@ describe("GetAccountsInfoRequestCollector", () => {
     });
 
     it("should make separate calls for sequential requests (after timer fires)", async () => {
-      const { collector, delegate } = setUp(5);
+      const { sut, delegate } = setUp(undefined, 5);
       const key1 = makePublicKey(1);
       const key2 = makePublicKey(2);
       delegate.results.set(key1.toBase58(), makeAccountInfo(1));
       delegate.results.set(key2.toBase58(), makeAccountInfo(2));
 
-      await collector.getMultipleAccountInfoCollected([key1]);
-      await collector.getMultipleAccountInfoCollected([key2]);
+      await sut.getMultipleAccountInfoCollected([key1]);
+      await sut.getMultipleAccountInfoCollected([key2]);
 
       expect(delegate.calls).toHaveLength(2);
     });
@@ -84,7 +87,7 @@ describe("GetAccountsInfoRequestCollector", () => {
 
   describe("MAX_NUMBER_OF_ACCOUNTS_TO_FETCH limit", () => {
     it("should flush first batch when total keys exceed 100", async () => {
-      const { collector, delegate } = setUp(1000);
+      const { sut, delegate } = setUp(undefined, 1000);
 
       const keys1 = Array.from({ length: 60 }, (_, i) => makePublicKey(i + 1));
       keys1.forEach((k, i) => delegate.results.set(k.toBase58(), makeAccountInfo(i + 1)));
@@ -93,8 +96,8 @@ describe("GetAccountsInfoRequestCollector", () => {
       keys2.forEach((k, i) => delegate.results.set(k.toBase58(), makeAccountInfo(i + 100)));
 
       const [result1, result2] = await Promise.all([
-        collector.getMultipleAccountInfoCollected(keys1),
-        collector.getMultipleAccountInfoCollected(keys2),
+        sut.getMultipleAccountInfoCollected(keys1),
+        sut.getMultipleAccountInfoCollected(keys2),
       ]);
 
       expect(result1).toHaveLength(60);
@@ -106,7 +109,7 @@ describe("GetAccountsInfoRequestCollector", () => {
     });
 
     it("should split multiple batches that exceed 100 keys", async () => {
-      const { collector, delegate } = setUp(1000);
+      const { sut, delegate } = setUp(undefined, 1000);
 
       const keys1 = Array.from({ length: 90 }, (_, i) => makePublicKey(i + 1));
       keys1.forEach((k, i) => delegate.results.set(k.toBase58(), makeAccountInfo(i + 1)));
@@ -118,9 +121,9 @@ describe("GetAccountsInfoRequestCollector", () => {
       keys3.forEach((k, i) => delegate.results.set(k.toBase58(), makeAccountInfo(i + 200)));
 
       const [r1, r2, r3] = await Promise.all([
-        collector.getMultipleAccountInfoCollected(keys1),
-        collector.getMultipleAccountInfoCollected(keys2),
-        collector.getMultipleAccountInfoCollected(keys3),
+        sut.getMultipleAccountInfoCollected(keys1),
+        sut.getMultipleAccountInfoCollected(keys2),
+        sut.getMultipleAccountInfoCollected(keys3),
       ]);
 
       expect(r1).toHaveLength(90);
@@ -135,19 +138,19 @@ describe("GetAccountsInfoRequestCollector", () => {
     });
 
     it("should correctly count keys (not groups) for the overflow check", async () => {
-      const { collector, delegate } = setUp(1000);
+      const { sut, delegate } = setUp(undefined, 1000);
 
       // 99 individual single-key requests = 99 keys in 99 groups
       const singleKeyPromises = Array.from({ length: 99 }, (_, i) => {
         const key = makePublicKey(i + 1);
         delegate.results.set(key.toBase58(), makeAccountInfo(i + 1));
-        return collector.getMultipleAccountInfoCollected([key]);
+        return sut.getMultipleAccountInfoCollected([key]);
       });
 
       // 10-key batch: total = 109 keys > 100, should trigger flush
       const batchKeys = Array.from({ length: 10 }, (_, i) => makePublicKey(i + 200));
       batchKeys.forEach((k, i) => delegate.results.set(k.toBase58(), makeAccountInfo(i + 200)));
-      const batchPromise = collector.getMultipleAccountInfoCollected(batchKeys);
+      const batchPromise = sut.getMultipleAccountInfoCollected(batchKeys);
 
       const results = await Promise.all([...singleKeyPromises, batchPromise]);
       expect(results).toHaveLength(100);
@@ -160,7 +163,7 @@ describe("GetAccountsInfoRequestCollector", () => {
 
   describe("error handling", () => {
     it("should reject when delegate is not set", async () => {
-      const collector = new GetAccountsInfoRequestCollector(5);
+      const collector = new GetAccountsInfoRequestCollector(undefined, 5);
 
       await expect(collector.getMultipleAccountInfoCollected([makePublicKey(1)])).rejects.toThrow(
         "Connection not set"
@@ -168,35 +171,33 @@ describe("GetAccountsInfoRequestCollector", () => {
     });
 
     it("should propagate delegate errors to all waiting callers", async () => {
-      const { collector, delegate } = setUp(50);
+      const { sut, delegate } = setUp(undefined, 50);
       delegate.rejectNext = new Error("RPC error");
 
       const key1 = makePublicKey(1);
       const key2 = makePublicKey(2);
 
-      const promise1 = collector.getMultipleAccountInfoCollected([key1]);
-      const promise2 = collector.getMultipleAccountInfoCollected([key2]);
+      const promise1 = sut.getMultipleAccountInfoCollected([key1]);
+      const promise2 = sut.getMultipleAccountInfoCollected([key2]);
 
       await expect(promise1).rejects.toThrow("RPC error");
       await expect(promise2).rejects.toThrow("RPC error");
     });
 
     it("should recover after an error and handle next batch", async () => {
-      const { collector, delegate } = setUp(5);
+      const { sut, delegate } = setUp(undefined, 5);
       const key1 = makePublicKey(1);
       delegate.results.set(key1.toBase58(), makeAccountInfo(1));
 
       delegate.rejectNext = new Error("Transient error");
-      await expect(collector.getMultipleAccountInfoCollected([key1])).rejects.toThrow(
-        "Transient error"
-      );
+      await expect(sut.getMultipleAccountInfoCollected([key1])).rejects.toThrow("Transient error");
 
-      const result = await collector.getMultipleAccountInfoCollected([key1]);
+      const result = await sut.getMultipleAccountInfoCollected([key1]);
       expect(result).toEqual([makeAccountInfo(1)]);
     });
 
     it("should reject all callers when one chunk fails in a multi-chunk batch", async () => {
-      const { collector, delegate } = setUp(1000);
+      const { sut, delegate } = setUp(undefined, 1000);
 
       // 60 keys in first group, 60 in second → 120 total → 2 chunks of 100+20
       const keys1 = Array.from({ length: 60 }, (_, i) => makePublicKey(i + 1));
@@ -220,8 +221,8 @@ describe("GetAccountsInfoRequestCollector", () => {
         return originalFn(publicKeys, config);
       };
 
-      const promise1 = collector.getMultipleAccountInfoCollected(keys1);
-      const promise2 = collector.getMultipleAccountInfoCollected(keys2);
+      const promise1 = sut.getMultipleAccountInfoCollected(keys1);
+      const promise2 = sut.getMultipleAccountInfoCollected(keys2);
 
       // First group resolves (flushed before second group arrives)
       const result1 = await promise1;
@@ -232,7 +233,7 @@ describe("GetAccountsInfoRequestCollector", () => {
     });
 
     it("should reject callers when error occurs during overflow flush", async () => {
-      const { collector, delegate } = setUp(1000);
+      const { sut, delegate } = setUp(undefined, 1000);
 
       const keys1 = Array.from({ length: 60 }, (_, i) => makePublicKey(i + 1));
       keys1.forEach((k, i) => delegate.results.set(k.toBase58(), makeAccountInfo(i + 1)));
@@ -242,8 +243,8 @@ describe("GetAccountsInfoRequestCollector", () => {
 
       delegate.rejectNext = new Error("Overflow flush failed");
 
-      const promise1 = collector.getMultipleAccountInfoCollected(keys1);
-      const promise2 = collector.getMultipleAccountInfoCollected(keys2);
+      const promise1 = sut.getMultipleAccountInfoCollected(keys1);
+      const promise2 = sut.getMultipleAccountInfoCollected(keys2);
 
       // First group was flushed and failed
       await expect(promise1).rejects.toThrow("Overflow flush failed");
@@ -256,17 +257,17 @@ describe("GetAccountsInfoRequestCollector", () => {
 
   describe("pending deduplication", () => {
     it("should reuse pending promise for already-requested keys", async () => {
-      const { collector, delegate } = setUp(50);
+      const { sut, delegate } = setUp(undefined, 50);
       delegate.delay = 100;
 
       const key = makePublicKey(1);
       delegate.results.set(key.toBase58(), makeAccountInfo(1));
 
-      const promise1 = collector.getMultipleAccountInfoCollected([key]);
+      const promise1 = sut.getMultipleAccountInfoCollected([key]);
 
       await RedstoneCommon.sleep(60);
 
-      const promise2 = collector.getMultipleAccountInfoCollected([key]);
+      const promise2 = sut.getMultipleAccountInfoCollected([key]);
 
       const [result1, result2] = await Promise.all([promise1, promise2]);
 
@@ -275,7 +276,7 @@ describe("GetAccountsInfoRequestCollector", () => {
     });
 
     it("should only register remaining (non-pending) keys for new calls", async () => {
-      const { collector, delegate } = setUp(50);
+      const { sut, delegate } = setUp(undefined, 50);
       delegate.delay = 100;
 
       const key1 = makePublicKey(1);
@@ -286,13 +287,13 @@ describe("GetAccountsInfoRequestCollector", () => {
       delegate.results.set(key3.toBase58(), makeAccountInfo(3));
 
       // First call requests key1 and key2
-      const promise1 = collector.getMultipleAccountInfoCollected([key1, key2]);
+      const promise1 = sut.getMultipleAccountInfoCollected([key1, key2]);
 
       await RedstoneCommon.sleep(60);
 
       // Second call requests key2 (pending) and key3 (new)
       // Should only register key3 in the new batch
-      const promise2 = collector.getMultipleAccountInfoCollected([key2, key3]);
+      const promise2 = sut.getMultipleAccountInfoCollected([key2, key3]);
 
       const [result1, result2] = await Promise.all([promise1, promise2]);
 
@@ -308,12 +309,12 @@ describe("GetAccountsInfoRequestCollector", () => {
 
   describe("cleanup after resolution", () => {
     it("should clean up pending entries after promise resolves", async () => {
-      const { collector, delegate } = setUp(5);
+      const { sut, delegate } = setUp(undefined, 5);
       const key = makePublicKey(1);
       delegate.results.set(key.toBase58(), makeAccountInfo(1));
 
-      await collector.getMultipleAccountInfoCollected([key]);
-      await collector.getMultipleAccountInfoCollected([key]);
+      await sut.getMultipleAccountInfoCollected([key]);
+      await sut.getMultipleAccountInfoCollected([key]);
 
       expect(delegate.calls).toHaveLength(2);
     });
@@ -321,20 +322,97 @@ describe("GetAccountsInfoRequestCollector", () => {
 
   describe("dispose", () => {
     it("should clear the timer on dispose", async () => {
-      const { collector, delegate } = setUp(5000);
+      const { sut, delegate } = setUp(undefined, 5000);
       const key = makePublicKey(1);
       delegate.results.set(key.toBase58(), makeAccountInfo(1));
 
       // Start a request that will set a timer
-      const promise = collector.getMultipleAccountInfoCollected([key]);
+      const promise = sut.getMultipleAccountInfoCollected([key]);
 
       // Dispose before the timer fires — promise will hang, but no timer leak
-      collector.dispose();
+      sut.dispose();
 
       // The promise won't resolve since we disposed, so race it
       const result = RedstoneCommon.timeout(promise, 100, "timeout");
 
       await expect(result).rejects.toThrowError("GetAccountsInfoRequestCollector disposed");
+    });
+  });
+
+  describe("commitmentOrConfig handling", () => {
+    it("should forward constructor's commitmentOrConfig to the delegate fetch call", async () => {
+      const { sut, delegate } = setUp("finalized", 5);
+      const key = makePublicKey(1);
+      delegate.results.set(key.toBase58(), makeAccountInfo(1));
+
+      await sut.getMultipleAccountInfoCollected([key], "finalized");
+
+      expect(delegate.commitmentOrConfigs).toEqual(["finalized"]);
+    });
+
+    it("should reject when per-call commitmentOrConfig differs from constructor's", async () => {
+      const { sut } = setUp("confirmed", 5);
+
+      await expect(
+        sut.getMultipleAccountInfoCollected([makePublicKey(1)], "finalized")
+      ).rejects.toThrow(/commitmentOrConfig doesn't match/);
+    });
+
+    it("should accept when both constructor and call have undefined commitmentOrConfig", async () => {
+      const { sut, delegate } = setUp();
+      const key = makePublicKey(1);
+      delegate.results.set(key.toBase58(), makeAccountInfo(1));
+
+      const result = await sut.getMultipleAccountInfoCollected([key], undefined);
+
+      expect(result).toEqual([makeAccountInfo(1)]);
+      expect(delegate.commitmentOrConfigs).toEqual([undefined]);
+    });
+
+    it("should accept equivalent config objects per-call vs in constructor", async () => {
+      const { sut, delegate } = setUp({ commitment: "confirmed", minContextSlot: 7 }, 5);
+      const key = makePublicKey(1);
+      delegate.results.set(key.toBase58(), makeAccountInfo(1));
+
+      const result = await sut.getMultipleAccountInfoCollected([key], {
+        commitment: "confirmed",
+        minContextSlot: 7,
+      });
+
+      expect(result).toEqual([makeAccountInfo(1)]);
+    });
+  });
+
+  describe("delegate dispose notification", () => {
+    it("should call delegate.dispose after a successful flush", async () => {
+      const { sut, delegate } = setUp(undefined, 5);
+      const key = makePublicKey(1);
+      delegate.results.set(key.toBase58(), makeAccountInfo(1));
+
+      await sut.getMultipleAccountInfoCollected([key]);
+
+      expect(delegate.disposeCalls).toEqual([undefined]);
+    });
+
+    it("should call delegate.dispose even when fetch fails", async () => {
+      const { sut, delegate } = setUp(undefined, 5);
+      delegate.rejectNext = new Error("RPC fail");
+
+      await expect(sut.getMultipleAccountInfoCollected([makePublicKey(1)])).rejects.toThrow(
+        "RPC fail"
+      );
+
+      expect(delegate.disposeCalls).toEqual([undefined]);
+    });
+
+    it("should pass own commitmentOrConfig to delegate.dispose", async () => {
+      const { sut, delegate } = setUp("processed", 5);
+      const key = makePublicKey(1);
+      delegate.results.set(key.toBase58(), makeAccountInfo(1));
+
+      await sut.getMultipleAccountInfoCollected([key], "processed");
+
+      expect(delegate.disposeCalls).toEqual(["processed"]);
     });
   });
 });
