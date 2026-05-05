@@ -1130,11 +1130,6 @@
       "denomination": "USD",
       "rateFeed": false
     },
-    "AURA": {
-      "source": ["balancer-ethereum-weth"],
-      "denomination": "USD",
-      "rateFeed": false
-    },
     "PREMIA": {
       "source": ["camelot-v3-arbitrumone-weth", "sushiswap-ethereum-weth"],
       "localCacheTTL": "60m",
@@ -3400,7 +3395,6 @@
     },
     "HONEY": {
       "source": [
-        "beraswap-berachain-wbera",
         "kodiak-berachain-susde-500",
         "kodiak-berachain-usdc.e-100",
         "kodiak-berachain-usde-500",
