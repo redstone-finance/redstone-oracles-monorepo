@@ -5225,13 +5225,17 @@
     "MEGA": {
       "source": [
         "coinbase-usd",
-        "bybit-usdt",
-        "kucoin-usdt",
-        "gate-usdt",
-        "bitget-usdt",
-        "kraken-usd",
-        "binance-usd",
+        "binance-usdc",
         "binance-usdt",
+        "bingx-usdt",
+        "bitget-usdt",
+        "bitmart-usdt",
+        "bybit-usdt",
+        "gate-usdt",
+        "kraken-usd",
+        "kucoin-usdt",
+        "mexc-usdt",
+        "okx-usdt",
         "kumbaya-megaeth-usdm-10000"
       ],
       "denomination": "USD",
