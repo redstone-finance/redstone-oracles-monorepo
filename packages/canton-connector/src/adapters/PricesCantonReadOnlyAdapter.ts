@@ -2,7 +2,12 @@ import { ContractAdapter } from "@redstone-finance/multichain-kit";
 import { ContractData, ContractParamsProvider, LastRoundDetails } from "@redstone-finance/sdk";
 import { RedstoneCommon } from "@redstone-finance/utils";
 import { CantonClient } from "../client/CantonClient";
-import { convertDecimalValue, decodeFeedId, getArrayifiedFeedId } from "../utils/conversions";
+import {
+  CantonFeedId,
+  convertDecimalValue,
+  decodeFeedId,
+  getArrayifiedFeedId,
+} from "../utils/conversions";
 import { ContractFilter } from "../utils/price-feed-utils";
 import { CantonContractAdapter } from "./CantonContractAdapter";
 import { CantonContractAdapterConfig } from "./CantonContractAdapterConfig";
@@ -125,7 +130,7 @@ interface DamlPillRecord {
   priceData: DamlPriceData;
 }
 
-type DamlFeedData = [string[], DamlPillRecord[]][];
+type DamlFeedData = [CantonFeedId, DamlPillRecord[]][];
 
 interface RedStoneAdapterPayload {
   adapterId: string;
@@ -143,7 +148,7 @@ function feedDataEntryByFeedId(
   const target = getArrayifiedFeedId(feedId);
 
   const entry = feedData.find(
-    ([key]) => key.length === target.length && key.every((byte, i) => Number(byte) === target[i])
+    ([key]) => key.length === target.length && key.every((byte, i) => byte === target[i])
   );
 
   return entry?.[1];
