@@ -503,22 +503,6 @@
       "denomination": "USD",
       "rateFeed": false
     },
-    "PREMIA": {
-      "source": [
-        "camelot-v3-arbitrumone-weth",
-        "sushiswap-ethereum-weth"
-      ],
-      "denomination": "USD",
-      "localCacheTTL": "60m",
-      "rateFeed": false
-    },
-    "PREMIA-TWAP-60": {
-      "source": [
-        "twap-local"
-      ],
-      "denomination": "USD",
-      "rateFeed": false
-    },
     "MNT": {
       "source": [
         "bingx-usdt",
@@ -5072,19 +5056,6 @@
       "deviationCheck": {
         "deviationWithRecentValues": {
           "maxPercent": 1,
-          "maxDelayMilliseconds": 120000
-        }
-      }
-    },
-    "BUCK_FUNDAMENTAL/USD": {
-      "source": [
-        "ethereum-evm-fetcher-buck"
-      ],
-      "denomination": "USD",
-      "rateFeed": true,
-      "deviationCheck": {
-        "deviationWithRecentValues": {
-          "maxPercent": 0.1,
           "maxDelayMilliseconds": 120000
         }
       }

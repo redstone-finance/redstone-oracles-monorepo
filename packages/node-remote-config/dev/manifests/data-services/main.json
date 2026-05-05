@@ -1191,22 +1191,6 @@
       "denomination": "USD",
       "rateFeed": false
     },
-    "PREMIA": {
-      "source": [
-        "camelot-v3-arbitrumone-weth",
-        "sushiswap-ethereum-weth"
-      ],
-      "localCacheTTL": "60m",
-      "denomination": "USD",
-      "rateFeed": false
-    },
-    "PREMIA-TWAP-60": {
-      "source": [
-        "twap-local"
-      ],
-      "denomination": "USD",
-      "rateFeed": false
-    },
     "MOO_GMX": {
       "source": [
         "arbitrum-evm-fetcher-beefy"
@@ -9134,13 +9118,6 @@
         "bnb-evm-fetcher-venus-wb"
       ],
       "denomination": "ETH",
-      "rateFeed": true
-    },
-    "BUCK_FUNDAMENTAL/USD": {
-      "source": [
-        "ethereum-evm-fetcher-buck"
-      ],
-      "denomination": "USD",
       "rateFeed": true
     },
     "USDp_FUNDAMENTAL/USD": {
