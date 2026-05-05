@@ -14,12 +14,9 @@ import {
 import {
   BASE_TS,
   BTC_ARR,
-  BTC_STR,
   CC_ARR,
-  CC_STR,
   CID,
   ETH_ARR,
-  ETH_STR,
   getPackageTemplateName,
   makeArchivedEvent,
   makeCreatedEvent,
@@ -102,29 +99,29 @@ describe("createFeedIdFilter", () => {
   it("accepts only the listed feed ids", () => {
     const filter = createFeedIdFilter([ETH_ARR]);
 
-    expect(filter({ feedId: ETH_STR, adapterId: "a" })).toBe(true);
-    expect(filter({ feedId: BTC_STR, adapterId: "a" })).toBe(false);
+    expect(filter({ feedId: ETH_ARR, adapterId: "a" })).toBe(true);
+    expect(filter({ feedId: BTC_ARR, adapterId: "a" })).toBe(false);
   });
 
   it("accepts multiple allowed feed ids (BTC, CC)", () => {
     const filter = createFeedIdFilter([BTC_ARR, CC_ARR]);
 
-    expect(filter({ feedId: BTC_STR, adapterId: "a" })).toBe(true);
-    expect(filter({ feedId: CC_STR, adapterId: "a" })).toBe(true);
-    expect(filter({ feedId: ETH_STR, adapterId: "a" })).toBe(false);
+    expect(filter({ feedId: BTC_ARR, adapterId: "a" })).toBe(true);
+    expect(filter({ feedId: CC_ARR, adapterId: "a" })).toBe(true);
+    expect(filter({ feedId: ETH_ARR, adapterId: "a" })).toBe(false);
   });
 
   it("also requires adapterId match when provided", () => {
     const filter = createFeedIdFilter([ETH_ARR], PRICE_ADAPTER_ID);
 
-    expect(filter({ feedId: ETH_STR, adapterId: PRICE_ADAPTER_ID })).toBe(true);
-    expect(filter({ feedId: ETH_STR, adapterId: "other" })).toBe(false);
+    expect(filter({ feedId: ETH_ARR, adapterId: PRICE_ADAPTER_ID })).toBe(true);
+    expect(filter({ feedId: ETH_ARR, adapterId: "other" })).toBe(false);
   });
 
   it("ignores adapterId when none is supplied", () => {
     const filter = createFeedIdFilter([ETH_ARR]);
 
-    expect(filter({ feedId: ETH_STR, adapterId: "anything" })).toBe(true);
+    expect(filter({ feedId: ETH_ARR, adapterId: "anything" })).toBe(true);
   });
 });
 
@@ -187,9 +184,9 @@ describe("buildArrayifiedFeedIds", () => {
 
 describe("groupEventsByFeedId", () => {
   it("groups events under their textual feed id", () => {
-    const eth = makeCreatedEvent({ contractId: CID.eth, createArgument: { feedId: ETH_STR } });
-    const btc = makeCreatedEvent({ contractId: CID.btc, createArgument: { feedId: BTC_STR } });
-    const cc = makeCreatedEvent({ contractId: CID.cc, createArgument: { feedId: CC_STR } });
+    const eth = makeCreatedEvent({ contractId: CID.eth, createArgument: { feedId: ETH_ARR } });
+    const btc = makeCreatedEvent({ contractId: CID.btc, createArgument: { feedId: BTC_ARR } });
+    const cc = makeCreatedEvent({ contractId: CID.cc, createArgument: { feedId: CC_ARR } });
 
     const grouped = groupEventsByFeedId(
       [eth, btc, cc],
@@ -238,7 +235,7 @@ describe("extractPriceEvents", () => {
     const notSkipped: Event = {
       CreatedEvent: makeCreatedEvent({
         templateId: getPackageTemplateName(PRICE_UPDATE_EVENT_TEMPLATE_NAME),
-        createArgument: { feedId: ETH_STR, isSkipped: false },
+        createArgument: { feedId: ETH_ARR, isSkipped: false },
       }),
     };
 
