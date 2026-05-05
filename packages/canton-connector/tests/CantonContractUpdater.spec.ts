@@ -1,7 +1,7 @@
 import { ContractParamsProvider } from "@redstone-finance/sdk";
 import { FP } from "@redstone-finance/utils";
 import { CantonChoiceExerciser, CantonContractUpdater } from "../src/tx/CantonContractUpdater";
-import { getArrayifiedFeedId } from "../src/utils/conversions";
+import { getCantonFeedId } from "../src/utils/conversions";
 import { BASE_TS, CID, SIGNATORY, TX_HASH } from "./test-helpers";
 
 const ACT_AS = SIGNATORY;
@@ -11,7 +11,9 @@ const makeParamsProvider = (feedIds: string[], payloadHex = "0xdeadbeef") => {
   const getPayloadHex = jest.fn().mockResolvedValue(payloadHex);
   const paramsProvider = {
     getPayloadHex,
-    getArrayifiedFeedIds: jest.fn().mockReturnValue(feedIds.map(getArrayifiedFeedId)),
+    getArrayifiedFeedIds: jest
+      .fn()
+      .mockReturnValue(feedIds.map((id) => getCantonFeedId(id).map(Number))),
     getDataFeedIds: jest.fn().mockReturnValue(feedIds),
   } as unknown as ContractParamsProvider;
 
@@ -93,7 +95,7 @@ describe("CantonContractUpdater", () => {
     await updater.update(paramsProvider, CONTEXT);
 
     expect(exerciseWritePricesChoice).toHaveBeenCalledWith(ACT_AS, {
-      feedIds: [getArrayifiedFeedId("BTC"), getArrayifiedFeedId("CC")],
+      feedIds: [getCantonFeedId("BTC"), getCantonFeedId("CC")],
       payloadHex: "0xc0ffee",
     });
     expect(getPayloadHex).toHaveBeenCalledWith(false, {

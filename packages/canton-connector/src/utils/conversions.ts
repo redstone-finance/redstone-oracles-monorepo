@@ -11,13 +11,13 @@ export function convertDecimalValue(value: string) {
   return BigInt(decimal.toFixed());
 }
 
-export function getArrayifiedFeedId(feedId: string): CantonFeedId {
+export function getCantonFeedId(feedId: string): CantonFeedId {
   return ContractParamsProvider.arrayifyFeedId(ContractParamsProvider.hexlifyFeedId(feedId)).map(
     String
   );
 }
 
-export function decodeFeedId(feedId: CantonFeedId) {
+export function decodeCantonFeedId(feedId: CantonFeedId) {
   return ContractParamsProvider.unhexlifyFeedId(feedId.map(Number));
 }
 
