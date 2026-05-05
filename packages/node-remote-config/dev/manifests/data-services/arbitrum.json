@@ -537,7 +537,9 @@
         "curve-ethereum-wsteth-2",
         "uniswap-v3-ethereum-weth-100",
         "uniswap-v3-ethereum-weth-500",
-        "uniswap-v4-ethereum-eth-200"
+        "uniswap-v4-ethereum-eth-200",
+        "balancer-v3-arbitrumone-waarbweth",
+        "balancer-v3-ethereum-waethweth"
       ],
       "denomination": "USD",
       "rateFeed": false
@@ -1283,6 +1285,22 @@
       ],
       "denomination": "USD",
       "rateFeed": true,
+      "skipBroadcasting": true
+    },
+    "waEthWETH_FUNDAMENTAL": {
+      "source": [
+        "ethereum-evm-fetcher-aave-waeth"
+      ],
+      "denomination": "ETH",
+      "rateFeed": false,
+      "skipBroadcasting": true
+    },
+    "waArbWETH_FUNDAMENTAL": {
+      "source": [
+        "arbitrum-evm-fetcher-aave-waeth"
+      ],
+      "denomination": "ETH",
+      "rateFeed": false,
       "skipBroadcasting": true
     }
   },
