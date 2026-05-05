@@ -5,8 +5,8 @@ import { CantonClient } from "../client/CantonClient";
 import {
   CantonFeedId,
   convertDecimalValue,
-  decodeFeedId,
-  getArrayifiedFeedId,
+  decodeCantonFeedId,
+  getCantonFeedId,
 } from "../utils/conversions";
 import { ContractFilter } from "../utils/price-feed-utils";
 import { CantonContractAdapter } from "./CantonContractAdapter";
@@ -40,7 +40,7 @@ export class PricesCantonReadOnlyAdapter extends CantonContractAdapter implement
   async getDataFeedIds(offset?: number) {
     const feedData = await this.readFeedData(offset);
 
-    return feedData.map(([feedId]) => decodeFeedId(feedId));
+    return feedData.map(([feedId]) => decodeCantonFeedId(feedId));
   }
 
   protected override getContractFilter() {
@@ -145,7 +145,7 @@ function feedDataEntryByFeedId(
   feedData: DamlFeedData,
   feedId: string
 ): DamlPillRecord[] | undefined {
-  const target = getArrayifiedFeedId(feedId);
+  const target = getCantonFeedId(feedId);
 
   const entry = feedData.find(
     ([key]) => key.length === target.length && key.every((byte, i) => byte === target[i])
