@@ -21,7 +21,7 @@ const MAX_NUMBER_OF_ACCOUNTS_TO_FETCH = 100; // solana requirement
 export class GetAccountsInfoRequestCollector {
   delegate?: WeakRef<GetAccountsInfoRequestCollectorDelegate>;
 
-  private logger = loggerFactory("get-accounts-info-cache");
+  private logger = loggerFactory("get-accounts-info-request-collector");
 
   private requestedCalls = 0;
   private actualCalls = 0;

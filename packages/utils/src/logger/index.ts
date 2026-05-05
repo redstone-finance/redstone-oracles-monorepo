@@ -7,6 +7,7 @@ import {
 } from "consola/basic";
 import { z } from "zod";
 import { getFromEnv } from "../common/env";
+import { JSONstringify, unescapeString } from "../common/misc";
 import { isNodeRuntime } from "../common/runtime";
 
 const DEFAULT_ENABLE_JSON_LOGS = true;
@@ -247,6 +248,6 @@ class JSONReporter {
   // eslint-disable-next-line @typescript-eslint/class-methods-use-this -- add reason here, please
   log(logObj: LogObject) {
     // used only in node environment
-    process.stdout.write(JSON.stringify(logObj) + "\n");
+    process.stdout.write(unescapeString(JSONstringify(logObj)) + "\n");
   }
 }
