@@ -17,7 +17,7 @@
     "test": "yarn global:jest:cov --runInBand",
     "preversion": "yarn build",
     "pack-package": "yarn build && cd dist && npm pack",
-    "sample-run": "yarn global:ts-node scripts/sample-run.ts",
+    "sample-run": "yarn build:turbo && node dist/scripts/sample-run.js",
     "write-simultaneously": "yarn global:ts-node scripts/write-simultaneously.ts",
     "anchor-deploy": "yarn global:ts-node scripts/anchor-deploy.ts",
     "verify-program": "yarn global:ts-node scripts/verify-program.ts",

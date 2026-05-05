@@ -14,6 +14,7 @@ import {
   CollectableCommitmentOrConfig,
   GetAccountsInfoRequestCollector,
   GetAccountsInfoRequestCollectorDelegate,
+  getCommitmentOrConfigKey,
 } from "./GetAccountsInfoRequestCollector";
 
 export class RedStoneConnection
@@ -21,46 +22,44 @@ export class RedStoneConnection
   implements GetAccountsInfoRequestCollectorDelegate
 {
   private logger = loggerFactory("redstone-solana-connection");
-  private getAccountsInfoRequestCollector = new GetAccountsInfoRequestCollector();
+  private getAccountsInfoRequestCollectors: Map<string, GetAccountsInfoRequestCollector> =
+    new Map();
   private getEpochInfoPromise?: Promise<EpochInfo>;
   private getSlotPromise?: Promise<number>;
 
   constructor(endpoint: string, commitmentOrConfig?: Commitment | ConnectionConfig) {
     super(endpoint, commitmentOrConfig);
+  }
 
-    this.getAccountsInfoRequestCollector.delegate = new WeakRef(this);
+  private getAccountsInfoRequestCollector(commitmentOrConfig?: CollectableCommitmentOrConfig) {
+    const commitmentOrConfigKey = getCommitmentOrConfigKey(commitmentOrConfig);
+
+    if (!this.getAccountsInfoRequestCollectors.has(commitmentOrConfigKey)) {
+      const collector = new GetAccountsInfoRequestCollector(commitmentOrConfig);
+      collector.delegate = new WeakRef(this);
+
+      this.getAccountsInfoRequestCollectors.set(commitmentOrConfigKey, collector);
+    }
+
+    return this.getAccountsInfoRequestCollectors.get(commitmentOrConfigKey)!;
   }
 
   override async getMultipleAccountsInfo(
     publicKeys: PublicKey[],
     commitmentOrConfig?: Commitment | GetMultipleAccountsConfig
   ) {
-    if (commitmentOrConfig) {
-      this.logger.debug("getMultipleAccountsInfo - skips collecting due to commitmentOrConfig set");
-
-      return await super.getMultipleAccountsInfo(publicKeys, commitmentOrConfig);
-    }
-
-    return await this.getAccountsInfoRequestCollector.getMultipleAccountInfoCollected(
-      publicKeys,
+    return await this.getAccountsInfoRequestCollector(
       commitmentOrConfig
-    );
+    ).getMultipleAccountInfoCollected(publicKeys, commitmentOrConfig);
   }
 
   override async getAccountInfo(
     publicKey: PublicKey,
     commitmentOrConfig?: Commitment | GetAccountInfoConfig
   ) {
-    if (commitmentOrConfig) {
-      this.logger.debug("getAccountInfo - skips collecting due to commitmentOrConfig set");
-
-      return await super.getAccountInfo(publicKey, commitmentOrConfig);
-    }
-
-    const result = await this.getAccountsInfoRequestCollector.getMultipleAccountInfoCollected(
-      [publicKey],
+    const result = await this.getAccountsInfoRequestCollector(
       commitmentOrConfig
-    );
+    ).getMultipleAccountInfoCollected([publicKey], commitmentOrConfig);
 
     return result[0];
   }
@@ -103,8 +102,12 @@ export class RedStoneConnection
 
   getAccountsInfoRequestCollectorGetMultipleAccountsInfo(
     publicKeys: PublicKey[],
-    commitmentOrConfig: CollectableCommitmentOrConfig
+    commitmentOrConfig?: CollectableCommitmentOrConfig
   ) {
     return super.getMultipleAccountsInfo(publicKeys, commitmentOrConfig);
+  }
+
+  getAccountsInfoRequestCollectorDispose(commitmentOrConfig?: CollectableCommitmentOrConfig) {
+    this.getAccountsInfoRequestCollectors.delete(getCommitmentOrConfigKey(commitmentOrConfig));
   }
 }

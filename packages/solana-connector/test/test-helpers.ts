@@ -22,15 +22,18 @@ export function makeAccountInfo(label: number): AccountInfo<Buffer> {
 
 export class MockDelegate implements GetAccountsInfoRequestCollectorDelegate {
   calls: PublicKey[][] = [];
+  commitmentOrConfigs: (CollectableCommitmentOrConfig | undefined)[] = [];
   results: Map<string, AccountInfo<Buffer> | null> = new Map();
   delay = 0;
   rejectNext?: Error;
+  disposeCalls: (CollectableCommitmentOrConfig | undefined)[] = [];
 
   getAccountsInfoRequestCollectorGetMultipleAccountsInfo(
     publicKeys: PublicKey[],
-    _commitmentOrConfig: CollectableCommitmentOrConfig
+    commitmentOrConfig?: CollectableCommitmentOrConfig
   ): Promise<(AccountInfo<Buffer> | null)[]> {
     this.calls.push([...publicKeys]);
+    this.commitmentOrConfigs.push(commitmentOrConfig);
 
     if (this.rejectNext) {
       const err = this.rejectNext;
@@ -46,5 +49,9 @@ export class MockDelegate implements GetAccountsInfoRequestCollectorDelegate {
     }
 
     return Promise.resolve(result);
+  }
+
+  getAccountsInfoRequestCollectorDispose(commitmentOrConfig?: CollectableCommitmentOrConfig) {
+    this.disposeCalls.push(commitmentOrConfig);
   }
 }
