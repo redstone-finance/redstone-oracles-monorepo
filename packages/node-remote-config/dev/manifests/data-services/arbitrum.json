@@ -1027,28 +1027,6 @@
       "denomination": "USD",
       "rateFeed": false
     },
-    "USD+": {
-      "source": [
-        "aerodrome-cl-base-weth",
-        "aerodrome-cl-base-usdc",
-        "pancake-swap-base-usdc-100",
-        "uniswap-v3-arbitrumone-usdc-100",
-        "uniswap-v3-arbitrumone-weth-500",
-        "uniswap-v3-base-usdc-100",
-        "uniswap-v3-base-weth-500",
-        "uniswap-v4-base-usdc-100",
-        "uniswap-v4-base-eth-500",
-        "uniswap-v4-base-usdc-48"
-      ],
-      "deviationCheck": {
-        "deviationWithRecentValues": {
-          "maxPercent": 5,
-          "maxDelayMilliseconds": 120000
-        }
-      },
-      "denomination": "USD",
-      "rateFeed": false
-    },
     "EUROC": {
       "source": [
         "coinbase-usdc",
@@ -1367,7 +1345,6 @@
       "GM_SEI_WETH_USDC",
       "KAITO",
       "SEI",
-      "USD+",
       "EUROC",
       "LBTC",
       "cbBTC"
