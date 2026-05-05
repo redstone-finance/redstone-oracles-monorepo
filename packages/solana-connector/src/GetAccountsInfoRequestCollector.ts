@@ -1,13 +1,17 @@
 import { loggerFactory, RedstoneCommon } from "@redstone-finance/utils";
-import { AccountInfo, PublicKey } from "@solana/web3.js";
+import { AccountInfo, Commitment, DataSlice, PublicKey } from "@solana/web3.js";
 import _ from "lodash";
 
-export type CollectableCommitmentOrConfig = undefined;
+export type CollectableCommitmentOrConfig =
+  | Commitment
+  | { minContextSlot?: number; commitment?: Commitment; dataSlice?: DataSlice };
+
 export type GetAccountsInfoRequestCollectorDelegate = {
-  getAccountsInfoRequestCollectorGetMultipleAccountsInfo: (
+  getAccountsInfoRequestCollectorGetMultipleAccountsInfo(
     publicKeys: PublicKey[],
-    commitmentOrConfig: CollectableCommitmentOrConfig
-  ) => GetMultipleAccountsInfoResult;
+    commitmentOrConfig?: CollectableCommitmentOrConfig
+  ): GetMultipleAccountsInfoResult;
+  getAccountsInfoRequestCollectorDispose?(commitmentOrConfig?: CollectableCommitmentOrConfig): void;
 };
 type GetMultipleAccountsInfoResult = Promise<(AccountInfo<Buffer> | null)[]>;
 
@@ -23,7 +27,10 @@ export class GetAccountsInfoRequestCollector {
   private actualCalls = 0;
   private timer?: NodeJS.Timeout;
 
-  constructor(private readonly collectingIntervalMs = DEFAULT_COLLECTING_INTERVAL_MS) {}
+  constructor(
+    private readonly commitmentOrConfig?: CollectableCommitmentOrConfig,
+    private readonly collectingIntervalMs = DEFAULT_COLLECTING_INTERVAL_MS
+  ) {}
 
   private getMultipleAccountsInfoPending: {
     [key: string]: { promise: GetMultipleAccountsInfoResult; index: number } | undefined;
@@ -55,6 +62,13 @@ export class GetAccountsInfoRequestCollector {
     publicKeys: PublicKey[],
     commitmentOrConfig?: CollectableCommitmentOrConfig
   ) {
+    const commitmentOrConfigKey = getCommitmentOrConfigKey(commitmentOrConfig);
+    const thisCommitmentOrConfigKey = getCommitmentOrConfigKey(this.commitmentOrConfig);
+    RedstoneCommon.assert(
+      thisCommitmentOrConfigKey === commitmentOrConfigKey,
+      `commitmentOrConfig doesn't match: ${thisCommitmentOrConfigKey} !== ${commitmentOrConfigKey}`
+    );
+
     const remaining = publicKeys.filter(
       (publicKey) => !this.getMultipleAccountsInfoPending[publicKey.toBase58()]
     );
@@ -62,7 +76,7 @@ export class GetAccountsInfoRequestCollector {
     let promise: GetMultipleAccountsInfoResult | undefined;
 
     if (remaining.length) {
-      const call = this.registerMultipleAccountsInfoCall(remaining, commitmentOrConfig);
+      const call = this.registerMultipleAccountsInfoCall(remaining);
 
       remaining.forEach(
         (publicKey, index) =>
@@ -103,8 +117,7 @@ export class GetAccountsInfoRequestCollector {
   }
 
   private async registerMultipleAccountsInfoCall(
-    publicKeys: PublicKey[],
-    commitmentOrConfig?: CollectableCommitmentOrConfig
+    publicKeys: PublicKey[]
   ): Promise<(AccountInfo<Buffer> | null)[]> {
     const waitingKeysCount = this.waitingEntries.reduce(
       (sum, entry) => sum + entry.publicKeys.length,
@@ -112,14 +125,14 @@ export class GetAccountsInfoRequestCollector {
     );
 
     if (publicKeys.length + waitingKeysCount > MAX_NUMBER_OF_ACCOUNTS_TO_FETCH) {
-      await this.consumeWaitingEntries(commitmentOrConfig);
+      await this.consumeWaitingEntries();
     }
 
     return await new Promise((resolve, reject) => {
       this.waitingEntries.push({ publicKeys, resolve, reject });
       this.timer ??= setTimeout(
         () =>
-          void this.consumeWaitingEntries(commitmentOrConfig).catch((e) =>
+          void this.consumeWaitingEntries().catch((e) =>
             this.logger.error(`consumeWaitingEntries failed: ${RedstoneCommon.stringifyError(e)}`)
           ),
         this.collectingIntervalMs
@@ -127,7 +140,7 @@ export class GetAccountsInfoRequestCollector {
     });
   }
 
-  private async consumeWaitingEntries(commitmentOrConfig?: CollectableCommitmentOrConfig) {
+  private async consumeWaitingEntries() {
     const entries = this.waitingEntries;
     this.waitingEntries = [];
     this.clearTimer();
@@ -153,7 +166,7 @@ export class GetAccountsInfoRequestCollector {
 
         return connection.getAccountsInfoRequestCollectorGetMultipleAccountsInfo(
           chunk,
-          commitmentOrConfig
+          this.commitmentOrConfig
         );
       });
       const allResults = (await Promise.all(chunkPromises)).flat();
@@ -165,6 +178,8 @@ export class GetAccountsInfoRequestCollector {
       }
     } catch (err) {
       entries.forEach((entry) => entry.reject(err));
+    } finally {
+      connection.getAccountsInfoRequestCollectorDispose?.(this.commitmentOrConfig);
     }
   }
 
@@ -172,4 +187,24 @@ export class GetAccountsInfoRequestCollector {
     clearTimeout(this.timer);
     this.timer = undefined;
   }
+}
+
+export function getCommitmentOrConfigKey(commitmentOrConfig?: CollectableCommitmentOrConfig) {
+  return !commitmentOrConfig
+    ? ""
+    : typeof commitmentOrConfig === "string"
+      ? commitmentOrConfig
+      : [
+          ...(commitmentOrConfig.commitment ||
+          commitmentOrConfig.minContextSlot ||
+          commitmentOrConfig.dataSlice
+            ? [commitmentOrConfig.commitment]
+            : []),
+          ...(commitmentOrConfig.minContextSlot || commitmentOrConfig.dataSlice
+            ? [commitmentOrConfig.minContextSlot]
+            : []),
+          ...(commitmentOrConfig.dataSlice
+            ? [commitmentOrConfig.dataSlice.length, commitmentOrConfig.dataSlice.offset]
+            : []),
+        ].join("#");
 }

@@ -5,8 +5,8 @@ import path from "path";
 export const SAMPLE_PACKAGES_TIMESTAMP = 1744563500000;
 export const SAMPLE_PACKAGES_TIMESTAMP_NEWER = 1744563600000;
 
-export const ETH_PRICE = 159504422175;
-export const ETH_PRICE_NEWER = 159526674144;
+export const ETH_PRICE = 159504422175n;
+export const ETH_PRICE_NEWER = 159526674144n;
 
 export type SampleType = "default" | "newer" | "2-signatures";
 
@@ -37,7 +37,7 @@ export function testSample(type: SampleType) {
     case "2-signatures":
       return {
         timestamp: 0,
-        price: 0,
+        price: 0n,
         provider: new ContractParamsProviderMock(
           ["ETH"],
           path.join(__dirname, `sample-data/eth_primary_2sig.hex`),

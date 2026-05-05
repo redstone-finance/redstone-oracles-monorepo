@@ -52,7 +52,7 @@ describe("SolanaPricesContractAdapter tests", () => {
 
     const data = (await priceAdapter.readContractData(["ETH"]))["ETH"];
 
-    expect(data.lastValue).toBeCloseTo(price, 0);
+    expect(Number(data.lastValue)).toBeCloseTo(Number(price), 0);
     expect(data.lastDataPackageTimestampMS).toBe(timestamp);
   });
 

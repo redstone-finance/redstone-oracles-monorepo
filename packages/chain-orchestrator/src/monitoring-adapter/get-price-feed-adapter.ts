@@ -4,6 +4,10 @@ import {
 } from "@redstone-finance/canton-connector";
 import { PriceFeedAdapter } from "@redstone-finance/multichain-kit";
 import {
+  SolanaConnectionBuilder,
+  SolanaPriceFeedContractAdapter,
+} from "@redstone-finance/solana-connector";
+import {
   PriceFeedStellarContractAdapter,
   Sep40PriceFeedStellarContractAdapter,
   StellarClientBuilder,
@@ -57,12 +61,20 @@ export async function getPriceFeedAdapter(
         feedId
       );
     }
+    case "solana": {
+      const connection = new SolanaConnectionBuilder()
+        .withNetworkId(networkId)
+        .withRpcUrls(rpcUrls)
+        .withRedStoneConnection()
+        .build();
+
+      return SolanaPriceFeedContractAdapter.fromConnectionAndAddress(connection, address);
+    }
     case "radix":
     case "fuel":
     case "sui":
     case "aptos":
     case "movement":
-    case "solana":
     case "evm":
       throw new Error(`${networkId} is not supported for getPriceFeedAdapter`);
     default:
