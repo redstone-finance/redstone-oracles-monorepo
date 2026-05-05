@@ -26,6 +26,7 @@ export enum LogMonitoringType {
   HIP3_NOT_ENOUGH_SAMPLES_FOR_EMA = "HIP3_NOT_ENOUGH_SAMPLES_FOR_EMA",
   HIP3_FAILED_TO_FETCH_DEX_META = "HIP3_FAILED_TO_FETCH_DEX_META",
   HIP3_MAX_DEVIATION_BETWEEN_UPDATES_CROSSED = "HIP3_MAX_DEVIATION_BETWEEN_UPDATES_CROSSED",
+  HIP3_FALLBACK_TO_EMA = "HIP3_FALLBACK_TO_EMA",
   // when fallback is activated but we get nonce duplicated error this means that fallback and main
   // when fallback is activated, but we get nonce duplicated error this means that fallback and main
   // in parallel are trying to deliver data, this SHOULD happen only once when main was down and later
