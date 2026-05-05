@@ -5,6 +5,7 @@ import {
 } from "@redstone-finance/multichain-kit";
 import { ContractParamsProvider } from "@redstone-finance/sdk";
 import { FP } from "@redstone-finance/utils";
+import { CoreCantonContractAdapter } from "../adapters/CoreCantonContractAdapter";
 import { TransactionMetadata } from "../client/CantonClient";
 import { ActiveContractData } from "../utils/utils";
 
@@ -49,16 +50,9 @@ export class CantonContractUpdater implements ContractUpdater<CantonTxResultExt>
     paramsProvider: ContractParamsProvider,
     context: ContractUpdateContext
   ) {
-    const payloadHex = await paramsProvider.getPayloadHex(false, {
-      withUnsignedMetadata: true,
-      metadataTimestamp: context.updateStartTimeMs,
-      componentName: "canton-connector",
-    });
-
-    const feedIds = paramsProvider.getArrayifiedFeedIds();
-    return await this.exerciser.exerciseWritePricesChoice(this.actAs, {
-      feedIds,
-      payloadHex,
-    });
+    return await this.exerciser.exerciseWritePricesChoice(
+      this.actAs,
+      await CoreCantonContractAdapter.getPayloadArguments(paramsProvider, context.updateStartTimeMs)
+    );
   }
 }

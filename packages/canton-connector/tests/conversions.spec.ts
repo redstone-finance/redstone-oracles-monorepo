@@ -34,16 +34,16 @@ describe("convertDecimalValue", () => {
 });
 
 describe("feed id encoding", () => {
-  it("arrayifies ETH into its UTF-8 byte codes", () => {
-    expect(getArrayifiedFeedId("ETH")).toEqual([69, 84, 72]);
+  it("arrayifies ETH into its UTF-8 byte code strings", () => {
+    expect(getArrayifiedFeedId("ETH")).toEqual(["69", "84", "72"]);
   });
 
-  it("arrayifies BTC into its UTF-8 byte codes", () => {
-    expect(getArrayifiedFeedId("BTC")).toEqual([66, 84, 67]);
+  it("arrayifies BTC into its UTF-8 byte code strings", () => {
+    expect(getArrayifiedFeedId("BTC")).toEqual(["66", "84", "67"]);
   });
 
-  it("arrayifies CC into its UTF-8 byte codes", () => {
-    expect(getArrayifiedFeedId("CC")).toEqual([67, 67]);
+  it("arrayifies CC into its UTF-8 byte code strings", () => {
+    expect(getArrayifiedFeedId("CC")).toEqual(["67", "67"]);
   });
 
   it.each(["ETH", "BTC", "CC"])("round-trips %s through decodeFeedId", (feedId) => {
