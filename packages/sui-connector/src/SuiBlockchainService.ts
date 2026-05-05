@@ -1,7 +1,7 @@
 import type { Keypair } from "@mysten/sui/cryptography";
 import { SuiTransactionBlockResponseOptions } from "@mysten/sui/jsonRpc";
 import { Transaction } from "@mysten/sui/transactions";
-import { MIST_PER_SUI } from "@mysten/sui/utils";
+import { MIST_PER_SUI, SUI_DECIMALS } from "@mysten/sui/utils";
 import type {
   BlockchainService,
   BlockchainServiceWithTransfer,
@@ -54,7 +54,7 @@ export class SuiBlockchainServiceWithTransfer
   }
 
   async transfer(toAddress: string, amount: number): Promise<void> {
-    amount = amount * 10 ** 9;
+    amount = amount * 10 ** SUI_DECIMALS;
 
     const tx = new Transaction();
     const [coin] = tx.splitCoins(tx.gas, [amount]);
