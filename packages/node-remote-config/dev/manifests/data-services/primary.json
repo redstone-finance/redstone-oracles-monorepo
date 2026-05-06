@@ -5150,6 +5150,16 @@
       "denomination": "USDC",
       "rateFeed": true
     },
+    "syrupUSDT_FUNDAMENTAL": {
+      "source": ["ethereum-evm-fetcher-maple"],
+      "denomination": "USDT",
+      "rateFeed": true
+    },
+    "syrupUSDT_FUNDAMENTAL/USD": {
+      "source": ["usd-based"],
+      "denomination": "USD",
+      "rateFeed": true
+    },
     "pathUSD_FV": {
       "source": ["fixed-value"],
       "fixedValue": 1,
@@ -5208,6 +5218,22 @@
         "mexc-usdc",
         "mexc-usdt",
         "uniswap-v3-ethereum-usdc-100"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "USDG": {
+      "source": [
+        "bitmart-usdt",
+        "curve-ethereum-usdc",
+        "gate-usdt",
+        "kraken-usd",
+        "kraken-usdc",
+        "kucoin-usdt",
+        "okx-usdt",
+        "orca-solana-mainnet-usdc",
+        "orca-solana-mainnet-wsol",
+        "xt-usdt"
       ],
       "denomination": "USD",
       "rateFeed": false
