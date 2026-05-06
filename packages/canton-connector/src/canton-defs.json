@@ -28,9 +28,9 @@
   },
   "devnet": {
     "signatory": "RedStoneOracleOwner::1220a0242797a84e1d8c492f1259b3f87d561fcbde2e4b2cebc4572ddfc515b44c28",
-    "interfaceId": "#redstone-interface-v17",
-    "pricePillInterfaceId": "#redstone-price-pill-v16",
-    "featuredInterfaceId": "7804375fe5e4c6d5afe067bd314c42fe0b7d005a1300019c73154dd939da4dda",
+    "interfaceId": "#redstone-interface-v18",
+    "pricePillInterfaceId": "#redstone-price-pill-v18",
+    "featuredInterfaceId": "#splice-api-featured-app-v2:Splice.Api.FeaturedAppRightV2:FeaturedAppRight",
     "node": {
       "scanApiUrl": "https://scan.sv-1.dev.global.canton.network.sync.global/api/scan/v0",
       "validatorApiUrl": "https://wallet-redstone-validator.canton.dev.redstone.catalyst.intellecteu.io/api/validator",
@@ -42,10 +42,10 @@
     },
     "core": {
       "synchronizerId": "global-domain::1220be58c29e65de40bf273be1dc2b266d43a9a002ea5b18955aeef7aac881bb471a",
-      "coreId": "RedStoneCore-v17-0.4.0",
-      "contractId": "00f08a4604ca08e2ef58b6c4761154a5e8b381d908e9f6f3d72fc5bf0c78a96179ca1212201ce504f6205f68bc77f885316232fa3c0c437bcb9d7ce8d664e9540e027d3bd0",
-      "templateId": "cfbd8cae8865e0a70293825dedf3794a9585073f3e6cbb2be0321aaa1489b454:RedStoneCore:RedStoneCore",
-      "createdEventBlob": "CgMyLjESwAcKRQDwikYEygji71i2xHYRVKXos4HZCOn289cvxb8MeKlhecoSEiAc5QT2IF9ovHf4hTFiMvo8DEN7y5186NZk6VQOAn070BIRcmVkc3RvbmUtY29yZS12MTcaXgpAY2ZiZDhjYWU4ODY1ZTBhNzAyOTM4MjVkZWRmMzc5NGE5NTg1MDczZjNlNmNiYjJiZTAzMjFhYWExNDg5YjQ1NBIMUmVkU3RvbmVDb3JlGgxSZWRTdG9uZUNvcmUiqwNqqAMKGgoYQhZSZWRTdG9uZUNvcmUtdjE3LTAuNC4wCl0KWzpZUmVkU3RvbmVPcmFjbGVPd25lcjo6MTIyMGEwMjQyNzk3YTg0ZTFkOGM0OTJmMTI1OWIzZjg3ZDU2MWZjYmRlMmU0YjJjZWJjNDU3MmRkZmM1MTViNDRjMjgKYgpgWl4KXDpaUmVkU3RvbmVPcmFjbGVWaWV3ZXI6OjEyMjBhMDI0Mjc5N2E4NGUxZDhjNDkyZjEyNTliM2Y4N2Q1NjFmY2JkZTJlNGIyY2ViYzQ1NzJkZGZjNTE1YjQ0YzI4CgQKAhAACnIKcFJuCmw6ajhiNDM5OWJhLWM0MDEtNGE5Ny1hMWZlLTU5MDc3YThiM2IxNDo6MTIyMGEwMjQyNzk3YTg0ZTFkOGM0OTJmMTI1OWIzZjg3ZDU2MWZjYmRlMmU0YjJjZWJjNDU3MmRkZmM1MTViNDRjMjgKTQpLUkkKR0pFAN6qrYhWiTg3nXXQlZYQNmiMScyoHvpZbeQfV4/hrBwvyhISIKhu13S14Z33H+eROdP7sI5gPbcZd0N82ZfH4Xce+rLMKmo4YjQzOTliYS1jNDAxLTRhOTctYTFmZS01OTA3N2E4YjNiMTQ6OjEyMjBhMDI0Mjc5N2E4NGUxZDhjNDkyZjEyNTliM2Y4N2Q1NjFmY2JkZTJlNGIyY2ViYzQ1NzJkZGZjNTE1YjQ0YzI4KllSZWRTdG9uZU9yYWNsZU93bmVyOjoxMjIwYTAyNDI3OTdhODRlMWQ4YzQ5MmYxMjU5YjNmODdkNTYxZmNiZGUyZTRiMmNlYmM0NTcyZGRmYzUxNWI0NGMyODJaUmVkU3RvbmVPcmFjbGVWaWV3ZXI6OjEyMjBhMDI0Mjc5N2E4NGUxZDhjNDkyZjEyNTliM2Y4N2Q1NjFmY2JkZTJlNGIyY2ViYzQ1NzJkZGZjNTE1YjQ0YzI4OatWMEnjTwYAQioKJgokCAESIMn6Fj47N4e0hyb/Y6rfq+If0/hHsiFEPdEE2E+nhn4qEB4="
+      "coreId": "RedStoneCore-v18-0.4.0",
+      "contractId": "00d3da92964ab3e93444818901294e20cfd3867a8d99fc58cfaddf715e829c0382ca121220a539e7fcc5de9828b41d132e9acddf6be04b849d52f17181ec1adfc68ff34bc1",
+      "templateId": "a7631a8bbe6892f2b7b6bb2bf2f09ccc82783450036773318b7a136af3f2b690:RedStoneCore:RedStoneCore",
+      "createdEventBlob": "CgMyLjESwAcKRQDT2pKWSrPpNESBiQEpTiDP04Z6jZn8WM+t33FegpwDgsoSEiClOef8xd6YKLQdEy6azd9r4EuEnVLxcYHsGt/Gj/NLwRIRcmVkc3RvbmUtY29yZS12MTgaXgpAYTc2MzFhOGJiZTY4OTJmMmI3YjZiYjJiZjJmMDljY2M4Mjc4MzQ1MDAzNjc3MzMxOGI3YTEzNmFmM2YyYjY5MBIMUmVkU3RvbmVDb3JlGgxSZWRTdG9uZUNvcmUiqwNqqAMKGgoYQhZSZWRTdG9uZUNvcmUtdjE4LTAuNC4wCl0KWzpZUmVkU3RvbmVPcmFjbGVPd25lcjo6MTIyMGEwMjQyNzk3YTg0ZTFkOGM0OTJmMTI1OWIzZjg3ZDU2MWZjYmRlMmU0YjJjZWJjNDU3MmRkZmM1MTViNDRjMjgKYgpgWl4KXDpaUmVkU3RvbmVPcmFjbGVWaWV3ZXI6OjEyMjBhMDI0Mjc5N2E4NGUxZDhjNDkyZjEyNTliM2Y4N2Q1NjFmY2JkZTJlNGIyY2ViYzQ1NzJkZGZjNTE1YjQ0YzI4CgQKAhAACnIKcFJuCmw6ajhiNDM5OWJhLWM0MDEtNGE5Ny1hMWZlLTU5MDc3YThiM2IxNDo6MTIyMGEwMjQyNzk3YTg0ZTFkOGM0OTJmMTI1OWIzZjg3ZDU2MWZjYmRlMmU0YjJjZWJjNDU3MmRkZmM1MTViNDRjMjgKTQpLUkkKR0pFAN6qrYhWiTg3nXXQlZYQNmiMScyoHvpZbeQfV4/hrBwvyhISIKhu13S14Z33H+eROdP7sI5gPbcZd0N82ZfH4Xce+rLMKmo4YjQzOTliYS1jNDAxLTRhOTctYTFmZS01OTA3N2E4YjNiMTQ6OjEyMjBhMDI0Mjc5N2E4NGUxZDhjNDkyZjEyNTliM2Y4N2Q1NjFmY2JkZTJlNGIyY2ViYzQ1NzJkZGZjNTE1YjQ0YzI4KllSZWRTdG9uZU9yYWNsZU93bmVyOjoxMjIwYTAyNDI3OTdhODRlMWQ4YzQ5MmYxMjU5YjNmODdkNTYxZmNiZGUyZTRiMmNlYmM0NTcyZGRmYzUxNWI0NGMyODJaUmVkU3RvbmVPcmFjbGVWaWV3ZXI6OjEyMjBhMDI0Mjc5N2E4NGUxZDhjNDkyZjEyNTliM2Y4N2Q1NjFmY2JkZTJlNGIyY2ViYzQ1NzJkZGZjNTE1YjQ0YzI4OUap8ygRUQYAQioKJgokCAESIEfPPd0Yx+X2debPf/WNx9rYRCy6tYaNoW4hEoqRF1r4EB4="
     },
     "featured-app-right": {
       "synchronizerId": "global-domain::1220be58c29e65de40bf273be1dc2b266d43a9a002ea5b18955aeef7aac881bb471a",
@@ -55,9 +55,9 @@
   },
   "localnet": {
     "signatory": "RedStoneOracleOwner::",
-    "interfaceId": "#redstone-interface-v16",
-    "pricePillInterfaceId": "#redstone-price-pill-v16",
-    "featuredInterfaceId": "#redstone-featured-v16",
+    "interfaceId": "#redstone-interface-v18",
+    "pricePillInterfaceId": "#redstone-price-pill-v18",
+    "featuredInterfaceId": "#redstone-featured-v18",
     "node": {
       "scanApiUrl": "/v0",
       "validatorApiUrl": "",
