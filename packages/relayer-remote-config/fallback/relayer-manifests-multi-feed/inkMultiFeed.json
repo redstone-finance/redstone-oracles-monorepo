@@ -56,6 +56,12 @@
     },
     "syrupUSDC_FUNDAMENTAL": {
       "priceFeedAddress": "0x09639692CE6ff12A06CA3AE9A24b3Aae4CD80DC8"
+    },
+    "USDG": {
+      "priceFeedAddress": "0x83c6f7F61A55Fc7A1337AbD45733AD9c1c68076D"
+    },
+    "syrupUSDT_FUNDAMENTAL/USD": {
+      "priceFeedAddress": "0x3401DAF2b1f150Ef0c709Cc0283b5F2e55c3DF29"
     }
   }
 }
