@@ -60,7 +60,7 @@ All choices across all contracts (`IRedStoneCore`, `IRedStoneAdapter`, `IRedSton
 1. There's impossible to use a `TypeScript` or other SDK, because of the [4.](#intellecteu--keycloak) above.
 2. It provides functions for
    1. Local development
-   2. Calling [intellect.eu](./intellect.mk) methods with keycloak authorization
+   2. Calling [deploy](./deploy.mk) methods with keycloak authorization
    3. Making [operations](./ops.mk) (calling/deploying) contracts on external provider
 
 ## Components
