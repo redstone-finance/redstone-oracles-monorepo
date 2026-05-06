@@ -3,9 +3,9 @@ import { CoreClientCantonContractAdapter } from "../src";
 import { makeDefaultClient, makePartyId } from "./utils";
 
 const partyName = `Client`;
-const packageId = "#redstone-core-v17";
+const packageId = "#redstone-core-v18";
 const contractId =
-  "0023ea562371487a4c7993b4b9f63efc0b7034853990f854234a812b312ef328e9ca12122024f7dc9666fbf8a71e7a4b91658948ca5aa1ec0b389d3e49ae6e575b2373b7e1";
+  "003a6f1c0cd28b06baaeac77919b7367e29dc49e5441977adf8ef1f3926a74c2adca121220c74f36b168e04d70a1a508e9754b89b8e2b96449221066f188a9eb226ac68750";
 
 export async function coreClientSample() {
   const client = makeDefaultClient();

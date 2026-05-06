@@ -8,35 +8,69 @@ set -euo pipefail
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 cd "$SCRIPT_DIR"
 
-extract_hash() {
+extract_dar_field() {
   local dir=$1
+  local field=$2
+
   local dar
   dar=$(find "$dir"/.daml/dist -maxdepth 1 -name '*.dar' -print -quit 2>/dev/null)
+
   if [ -z "$dar" ]; then
     echo "ERROR: No DAR found in $dir/.daml/dist/" >&2
     exit 1
   fi
-  local name
-  name=$(basename "$dar" .dar)
-  local hash
-  hash=$(daml damlc inspect-dar --no-legacy-assistant-warning "$dar" 2>&1 |
-    grep "$name-" | head -1 | grep -o '[a-f0-9]\{64\}' | head -1)
-  if [ -z "$hash" ]; then
-    echo "ERROR: Could not extract package hash from $dar" >&2
+
+  local dar_name
+  dar_name=$(basename "$dar" .dar)
+
+  local line
+  line=$(daml damlc inspect-dar --no-legacy-assistant-warning "$dar" 2>&1 |
+    grep "^$dar_name-" |
+    head -1)
+
+  if [ -z "$line" ]; then
+    echo "ERROR: Could not find package line for $dar_name in $dar" >&2
     exit 1
   fi
-  echo "$hash"
+
+  case "$field" in
+  hash)
+    echo "$line" | grep -o '[a-f0-9]\{64\}' | head -1
+    ;;
+  name)
+    echo "$line" | sed -E 's/^(.+)-[0-9]+\.[0-9]+\.[0-9]+-[a-f0-9]{64}.*/\1/'
+    ;;
+  version)
+    echo "$line" | sed -E 's/^.+-([0-9]+\.[0-9]+\.[0-9]+)-[a-f0-9]{64}.*/\1/'
+    ;;
+  *)
+    echo "ERROR: Unknown field: $field. Expected: hash, name, version" >&2
+    exit 1
+    ;;
+  esac
+}
+
+extract_hash() {
+  extract_dar_field "$1" hash
+}
+
+extract_name() {
+  extract_dar_field "$1" name
+}
+
+extract_version() {
+  extract_dar_field "$1" version
 }
 
 echo "Extracting package IDs from DARs..." >&2
 
-INTERFACE_HASH=$(extract_hash interface)
+INTERFACE_HASH=\#$(extract_name interface)
 CORE_HASH=$(extract_hash core)
 ADAPTER_HASH=$(extract_hash adapter)
 FACTORY_HASH=$(extract_hash factory)
 REWARD_FACTORY_HASH=$(extract_hash reward_factory)
 PRICE_FEED_HASH=$(extract_hash price_feed)
-PRICE_PILL_HASH=$(extract_hash price_pill)
+PRICE_PILL_HASH=\#$(extract_name price_pill)
 FEATURED_HASH=$(extract_hash featured)
 SDK_HASH=$(extract_hash sdk)
 
