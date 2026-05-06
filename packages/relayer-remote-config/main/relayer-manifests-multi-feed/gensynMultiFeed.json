@@ -16,6 +16,13 @@
     },
     "USDC": {
       "priceFeedAddress": "0xf0DEbDAE819b354D076b0D162e399BE013A856d3"
+    },
+    "AI": {
+      "priceFeedAddress": "0x6C019699232b02B1f418220c714C72d60bf750dB",
+      "updateTriggersOverrides": {
+        "deviationPercentage": 0.5,
+        "timeSinceLastUpdateInMilliseconds": 86400000
+      }
     }
   }
 }
