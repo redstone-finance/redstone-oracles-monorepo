@@ -8,6 +8,8 @@ const KeycloakTokenProviderParamsSchema = z.object({
   clientId: z.string(),
   username: z.string(),
   password: z.string(),
+  walletUsername: z.string().optional(),
+  walletPassword: z.string().optional(),
 });
 
 export function makeKeycloakParams(opts?: KeycloakTokenProviderParams | string) {
@@ -33,5 +35,7 @@ function readKeycloakParams(): KeycloakTokenProviderParams {
     clientId: RedstoneCommon.getFromEnv("CLIENT_ID"),
     username: RedstoneCommon.getFromEnv("KEYCLOAK_USERNAME"),
     password: RedstoneCommon.getFromEnv("KEYCLOAK_PASSWORD"),
+    walletUsername: RedstoneCommon.getFromEnv("WALLET_KEYCLOAK_USERNAME", z.string().optional()),
+    walletPassword: RedstoneCommon.getFromEnv("WALLET_KEYCLOAK_PASSWORD", z.string().optional()),
   };
 }

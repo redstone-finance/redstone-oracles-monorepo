@@ -1,43 +1,17 @@
-import { getSSMParameterValue } from "@redstone-finance/internal-utils";
 import { RedstoneCommon } from "@redstone-finance/utils";
 import { createPublicKey, sign } from "node:crypto";
 import { z } from "zod";
 import { makeEd25519PrivateKey } from "../src/utils/ed25519";
-import { makeDefaultClient } from "./utils";
+import { makeDefaultClient, readZrodelkoPrivateKeyHex } from "./utils";
 
 const PUBLIC_KEY_FORMAT = "CRYPTO_KEY_FORMAT_DER_X509_SUBJECT_PUBLIC_KEY_INFO";
 const PUBLIC_KEY_SPEC = "SIGNING_KEY_SPEC_EC_CURVE25519";
 const SIGNATURE_FORMAT = "SIGNATURE_FORMAT_CONCAT";
 const SIGNING_ALGORITHM = "SIGNING_ALGORITHM_SPEC_ED25519";
 
-async function readPrivateKeyHex() {
-  const ssmParamPath = RedstoneCommon.getFromEnv(
-    "SSM_PARAM_PATH",
-    z.string().default("/prod/canton/zrodelko/private-key")
-  );
-  const awsRegion = RedstoneCommon.getFromEnv("AWS_REGION", z.string().default("eu-west-1"));
-  const privateKey = await getSSMParameterValue(ssmParamPath, awsRegion);
-
-  if (!privateKey) {
-    throw new Error(`Parameter ${ssmParamPath} not found in SSM`);
-  }
-
-  return normalizeHex(privateKey);
-}
-
-function normalizeHex(value: string) {
-  const normalized = value.replace(/^0x/i, "");
-
-  if (!/^[a-f0-9]{64}$/i.test(normalized)) {
-    throw new Error("Ed25519 private key must be a 32-byte hex string");
-  }
-
-  return normalized.toLowerCase();
-}
-
 async function main() {
   const client = makeDefaultClient();
-  const privateKey = makeEd25519PrivateKey(await readPrivateKeyHex());
+  const privateKey = makeEd25519PrivateKey(await readZrodelkoPrivateKeyHex());
 
   const exportedPublicKey = createPublicKey(privateKey).export({
     format: "der",
