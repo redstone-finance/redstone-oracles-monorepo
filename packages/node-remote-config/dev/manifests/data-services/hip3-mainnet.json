@@ -159,7 +159,7 @@
     },
     "flx:USDE_MARK_0": {
       "source": [
-        "hip3-felix-crypto-mainnet-fetcher"
+        "hip3-felix-crypto-spot-mainnet-fetcher"
       ],
       "broadcasters": [
         "hyperliquid-hip3"
@@ -169,7 +169,7 @@
     },
     "flx:USDE_MARK_1": {
       "source": [
-        "hip3-felix-crypto-mainnet-fetcher"
+        "hip3-felix-crypto-spot-mainnet-fetcher"
       ],
       "broadcasters": [
         "hyperliquid-hip3"
@@ -179,7 +179,7 @@
     },
     "flx:USDE_EXT": {
       "source": [
-        "hip3-felix-crypto-mainnet-fetcher"
+        "hip3-felix-crypto-spot-mainnet-fetcher"
       ],
       "broadcasters": [
         "hyperliquid-hip3"
@@ -189,7 +189,7 @@
     },
     "flx:USDE": {
       "source": [
-        "hip3-felix-crypto-mainnet-fetcher"
+        "hip3-felix-crypto-spot-mainnet-fetcher"
       ],
       "broadcasters": [
         "hyperliquid-hip3"
@@ -301,7 +301,7 @@
     },
     "flx:XMR_MARK_0": {
       "source": [
-        "hip3-felix-crypto-mainnet-fetcher"
+        "hip3-felix-crypto-spot-mainnet-fetcher"
       ],
       "broadcasters": [
         "hyperliquid-hip3"
@@ -311,7 +311,7 @@
     },
     "flx:XMR_MARK_1": {
       "source": [
-        "hip3-felix-crypto-mainnet-fetcher"
+        "hip3-felix-crypto-spot-mainnet-fetcher"
       ],
       "broadcasters": [
         "hyperliquid-hip3"
@@ -321,7 +321,7 @@
     },
     "flx:XMR_EXT": {
       "source": [
-        "hip3-felix-crypto-mainnet-fetcher"
+        "hip3-felix-crypto-spot-mainnet-fetcher"
       ],
       "broadcasters": [
         "hyperliquid-hip3"
@@ -331,7 +331,7 @@
     },
     "flx:XMR": {
       "source": [
-        "hip3-felix-crypto-mainnet-fetcher"
+        "hip3-felix-crypto-spot-mainnet-fetcher"
       ],
       "broadcasters": [
         "hyperliquid-hip3"
@@ -2669,7 +2669,7 @@
     },
     "flx:BTC_MARK_0": {
       "source": [
-        "hip3-crypto-mainnet-fetcher"
+        "hip3-felix-crypto-mainnet-fetcher"
       ],
       "broadcasters": [
         "hyperliquid-hip3"
@@ -2682,7 +2682,7 @@
     },
     "flx:BTC_MARK_1": {
       "source": [
-        "hip3-crypto-mainnet-fetcher"
+        "hip3-felix-crypto-mainnet-fetcher"
       ],
       "broadcasters": [
         "hyperliquid-hip3"
@@ -2695,7 +2695,7 @@
     },
     "flx:BTC_EXT": {
       "source": [
-        "hip3-crypto-mainnet-fetcher"
+        "hip3-felix-crypto-mainnet-fetcher"
       ],
       "broadcasters": [
         "hyperliquid-hip3"
@@ -2708,7 +2708,7 @@
     },
     "flx:BTC": {
       "source": [
-        "hip3-crypto-mainnet-fetcher"
+        "hip3-felix-crypto-mainnet-fetcher"
       ],
       "broadcasters": [
         "hyperliquid-hip3"

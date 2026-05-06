@@ -311,7 +311,7 @@
     },
     "flx:USDE_MARK_0": {
       "source": [
-        "hip3-felix-crypto-mainnet-fetcher"
+        "hip3-felix-crypto-spot-mainnet-fetcher"
       ],
       "broadcasters": [
         "hyperliquid-hip3"
@@ -321,7 +321,7 @@
     },
     "flx:USDE_MARK_1": {
       "source": [
-        "hip3-felix-crypto-mainnet-fetcher"
+        "hip3-felix-crypto-spot-mainnet-fetcher"
       ],
       "broadcasters": [
         "hyperliquid-hip3"
@@ -331,7 +331,7 @@
     },
     "flx:USDE_EXT": {
       "source": [
-        "hip3-felix-crypto-mainnet-fetcher"
+        "hip3-felix-crypto-spot-mainnet-fetcher"
       ],
       "broadcasters": [
         "hyperliquid-hip3"
@@ -341,7 +341,7 @@
     },
     "flx:USDE": {
       "source": [
-        "hip3-felix-crypto-mainnet-fetcher"
+        "hip3-felix-crypto-spot-mainnet-fetcher"
       ],
       "broadcasters": [
         "hyperliquid-hip3"
@@ -453,7 +453,7 @@
     },
     "flx:XMR_MARK_0": {
       "source": [
-        "hip3-felix-crypto-mainnet-fetcher"
+        "hip3-felix-crypto-spot-mainnet-fetcher"
       ],
       "broadcasters": [
         "hyperliquid-hip3"
@@ -463,7 +463,7 @@
     },
     "flx:XMR_MARK_1": {
       "source": [
-        "hip3-felix-crypto-mainnet-fetcher"
+        "hip3-felix-crypto-spot-mainnet-fetcher"
       ],
       "broadcasters": [
         "hyperliquid-hip3"
@@ -473,7 +473,7 @@
     },
     "flx:XMR_EXT": {
       "source": [
-        "hip3-felix-crypto-mainnet-fetcher"
+        "hip3-felix-crypto-spot-mainnet-fetcher"
       ],
       "broadcasters": [
         "hyperliquid-hip3"
@@ -483,7 +483,7 @@
     },
     "flx:XMR": {
       "source": [
-        "hip3-felix-crypto-mainnet-fetcher"
+        "hip3-felix-crypto-spot-mainnet-fetcher"
       ],
       "broadcasters": [
         "hyperliquid-hip3"
@@ -590,7 +590,7 @@
     },
     "sekaw:BTC_MARK_0": {
       "source": [
-        "hip3-crypto-testnet-fetcher"
+        "hip3-felix-crypto-testnet-fetcher"
       ],
       "broadcasters": [
         "hyperliquid-hip3"
@@ -603,7 +603,7 @@
     },
     "sekaw:BTC_MARK_1": {
       "source": [
-        "hip3-crypto-testnet-fetcher"
+        "hip3-felix-crypto-testnet-fetcher"
       ],
       "broadcasters": [
         "hyperliquid-hip3"
@@ -616,7 +616,7 @@
     },
     "sekaw:BTC_EXT": {
       "source": [
-        "hip3-crypto-testnet-fetcher"
+        "hip3-felix-crypto-testnet-fetcher"
       ],
       "broadcasters": [
         "hyperliquid-hip3"
@@ -629,7 +629,7 @@
     },
     "sekaw:BTC": {
       "source": [
-        "hip3-crypto-testnet-fetcher"
+        "hip3-felix-crypto-testnet-fetcher"
       ],
       "broadcasters": [
         "hyperliquid-hip3"
@@ -3970,7 +3970,7 @@
     },
     "flx:BTC_MARK_0": {
       "source": [
-        "hip3-crypto-mainnet-fetcher"
+        "hip3-felix-crypto-mainnet-fetcher"
       ],
       "broadcasters": [
         "hyperliquid-hip3"
@@ -3983,7 +3983,7 @@
     },
     "flx:BTC_MARK_1": {
       "source": [
-        "hip3-crypto-mainnet-fetcher"
+        "hip3-felix-crypto-mainnet-fetcher"
       ],
       "broadcasters": [
         "hyperliquid-hip3"
@@ -3996,7 +3996,7 @@
     },
     "flx:BTC_EXT": {
       "source": [
-        "hip3-crypto-mainnet-fetcher"
+        "hip3-felix-crypto-mainnet-fetcher"
       ],
       "broadcasters": [
         "hyperliquid-hip3"
@@ -4009,7 +4009,7 @@
     },
     "flx:BTC": {
       "source": [
-        "hip3-crypto-mainnet-fetcher"
+        "hip3-felix-crypto-mainnet-fetcher"
       ],
       "broadcasters": [
         "hyperliquid-hip3"
@@ -4107,7 +4107,7 @@
     },
     "hyna:BTC_MARK_0": {
       "source": [
-        "hip3-crypto-mainnet-fetcher"
+        "hip3-hyena-crypto-mainnet-fetcher"
       ],
       "broadcasters": [
         "hyperliquid-hip3"
@@ -4117,7 +4117,7 @@
     },
     "hyna:BTC_MARK_1": {
       "source": [
-        "hip3-crypto-mainnet-fetcher"
+        "hip3-hyena-crypto-mainnet-fetcher"
       ],
       "broadcasters": [
         "hyperliquid-hip3"
@@ -4127,7 +4127,7 @@
     },
     "hyna:BTC_EXT": {
       "source": [
-        "hip3-crypto-mainnet-fetcher"
+        "hip3-hyena-crypto-mainnet-fetcher"
       ],
       "broadcasters": [
         "hyperliquid-hip3"
@@ -4137,7 +4137,7 @@
     },
     "hyna:BTC": {
       "source": [
-        "hip3-crypto-mainnet-fetcher"
+        "hip3-hyena-crypto-mainnet-fetcher"
       ],
       "broadcasters": [
         "hyperliquid-hip3"
@@ -4265,7 +4265,7 @@
     },
     "hyna:ETH_MARK_0": {
       "source": [
-        "hip3-crypto-mainnet-fetcher"
+        "hip3-hyena-crypto-mainnet-fetcher"
       ],
       "broadcasters": [
         "hyperliquid-hip3"
@@ -4275,7 +4275,7 @@
     },
     "hyna:ETH_MARK_1": {
       "source": [
-        "hip3-crypto-mainnet-fetcher"
+        "hip3-hyena-crypto-mainnet-fetcher"
       ],
       "broadcasters": [
         "hyperliquid-hip3"
@@ -4285,7 +4285,7 @@
     },
     "hyna:ETH_EXT": {
       "source": [
-        "hip3-crypto-mainnet-fetcher"
+        "hip3-hyena-crypto-mainnet-fetcher"
       ],
       "broadcasters": [
         "hyperliquid-hip3"
@@ -4295,7 +4295,7 @@
     },
     "hyna:ETH": {
       "source": [
-        "hip3-crypto-mainnet-fetcher"
+        "hip3-hyena-crypto-mainnet-fetcher"
       ],
       "broadcasters": [
         "hyperliquid-hip3"
@@ -4423,7 +4423,7 @@
     },
     "hyna:BNB_MARK_0": {
       "source": [
-        "hip3-crypto-mainnet-fetcher"
+        "hip3-hyena-crypto-mainnet-fetcher"
       ],
       "broadcasters": [
         "hyperliquid-hip3"
@@ -4433,7 +4433,7 @@
     },
     "hyna:BNB_MARK_1": {
       "source": [
-        "hip3-crypto-mainnet-fetcher"
+        "hip3-hyena-crypto-mainnet-fetcher"
       ],
       "broadcasters": [
         "hyperliquid-hip3"
@@ -4443,7 +4443,7 @@
     },
     "hyna:BNB_EXT": {
       "source": [
-        "hip3-crypto-mainnet-fetcher"
+        "hip3-hyena-crypto-mainnet-fetcher"
       ],
       "broadcasters": [
         "hyperliquid-hip3"
@@ -4453,7 +4453,7 @@
     },
     "hyna:BNB": {
       "source": [
-        "hip3-crypto-mainnet-fetcher"
+        "hip3-hyena-crypto-mainnet-fetcher"
       ],
       "broadcasters": [
         "hyperliquid-hip3"
@@ -4581,7 +4581,7 @@
     },
     "hyna:HYPE_MARK_0": {
       "source": [
-        "hip3-crypto-mainnet-fetcher"
+        "hip3-hyena-crypto-mainnet-fetcher"
       ],
       "broadcasters": [
         "hyperliquid-hip3"
@@ -4591,7 +4591,7 @@
     },
     "hyna:HYPE_MARK_1": {
       "source": [
-        "hip3-crypto-mainnet-fetcher"
+        "hip3-hyena-crypto-mainnet-fetcher"
       ],
       "broadcasters": [
         "hyperliquid-hip3"
@@ -4601,7 +4601,7 @@
     },
     "hyna:HYPE_EXT": {
       "source": [
-        "hip3-crypto-mainnet-fetcher"
+        "hip3-hyena-crypto-mainnet-fetcher"
       ],
       "broadcasters": [
         "hyperliquid-hip3"
@@ -4611,7 +4611,7 @@
     },
     "hyna:HYPE": {
       "source": [
-        "hip3-crypto-mainnet-fetcher"
+        "hip3-hyena-crypto-mainnet-fetcher"
       ],
       "broadcasters": [
         "hyperliquid-hip3"
@@ -4739,7 +4739,7 @@
     },
     "hyna:SOL_MARK_0": {
       "source": [
-        "hip3-crypto-mainnet-fetcher"
+        "hip3-hyena-crypto-mainnet-fetcher"
       ],
       "broadcasters": [
         "hyperliquid-hip3"
@@ -4749,7 +4749,7 @@
     },
     "hyna:SOL_MARK_1": {
       "source": [
-        "hip3-crypto-mainnet-fetcher"
+        "hip3-hyena-crypto-mainnet-fetcher"
       ],
       "broadcasters": [
         "hyperliquid-hip3"
@@ -4759,7 +4759,7 @@
     },
     "hyna:SOL_EXT": {
       "source": [
-        "hip3-crypto-mainnet-fetcher"
+        "hip3-hyena-crypto-mainnet-fetcher"
       ],
       "broadcasters": [
         "hyperliquid-hip3"
@@ -4769,7 +4769,7 @@
     },
     "hyna:SOL": {
       "source": [
-        "hip3-crypto-mainnet-fetcher"
+        "hip3-hyena-crypto-mainnet-fetcher"
       ],
       "broadcasters": [
         "hyperliquid-hip3"
@@ -4897,7 +4897,7 @@
     },
     "hyna:XRP_MARK_0": {
       "source": [
-        "hip3-crypto-mainnet-fetcher"
+        "hip3-hyena-crypto-mainnet-fetcher"
       ],
       "broadcasters": [
         "hyperliquid-hip3"
@@ -4907,7 +4907,7 @@
     },
     "hyna:XRP_MARK_1": {
       "source": [
-        "hip3-crypto-mainnet-fetcher"
+        "hip3-hyena-crypto-mainnet-fetcher"
       ],
       "broadcasters": [
         "hyperliquid-hip3"
@@ -4917,7 +4917,7 @@
     },
     "hyna:XRP_EXT": {
       "source": [
-        "hip3-crypto-mainnet-fetcher"
+        "hip3-hyena-crypto-mainnet-fetcher"
       ],
       "broadcasters": [
         "hyperliquid-hip3"
@@ -4927,7 +4927,7 @@
     },
     "hyna:XRP": {
       "source": [
-        "hip3-crypto-mainnet-fetcher"
+        "hip3-hyena-crypto-mainnet-fetcher"
       ],
       "broadcasters": [
         "hyperliquid-hip3"
@@ -5055,7 +5055,7 @@
     },
     "hyna:1000PEPE_MARK_0": {
       "source": [
-        "hip3-crypto-mainnet-fetcher"
+        "hip3-hyena-crypto-mainnet-fetcher"
       ],
       "broadcasters": [
         "hyperliquid-hip3"
@@ -5065,7 +5065,7 @@
     },
     "hyna:1000PEPE_MARK_1": {
       "source": [
-        "hip3-crypto-mainnet-fetcher"
+        "hip3-hyena-crypto-mainnet-fetcher"
       ],
       "broadcasters": [
         "hyperliquid-hip3"
@@ -5075,7 +5075,7 @@
     },
     "hyna:1000PEPE_EXT": {
       "source": [
-        "hip3-crypto-mainnet-fetcher"
+        "hip3-hyena-crypto-mainnet-fetcher"
       ],
       "broadcasters": [
         "hyperliquid-hip3"
@@ -5085,7 +5085,7 @@
     },
     "hyna:1000PEPE": {
       "source": [
-        "hip3-crypto-mainnet-fetcher"
+        "hip3-hyena-crypto-mainnet-fetcher"
       ],
       "broadcasters": [
         "hyperliquid-hip3"
@@ -5213,7 +5213,7 @@
     },
     "hyna:ZEC_MARK_0": {
       "source": [
-        "hip3-crypto-mainnet-fetcher"
+        "hip3-hyena-crypto-mainnet-fetcher"
       ],
       "broadcasters": [
         "hyperliquid-hip3"
@@ -5223,7 +5223,7 @@
     },
     "hyna:ZEC_MARK_1": {
       "source": [
-        "hip3-crypto-mainnet-fetcher"
+        "hip3-hyena-crypto-mainnet-fetcher"
       ],
       "broadcasters": [
         "hyperliquid-hip3"
@@ -5233,7 +5233,7 @@
     },
     "hyna:ZEC_EXT": {
       "source": [
-        "hip3-crypto-mainnet-fetcher"
+        "hip3-hyena-crypto-mainnet-fetcher"
       ],
       "broadcasters": [
         "hyperliquid-hip3"
@@ -5243,7 +5243,7 @@
     },
     "hyna:ZEC": {
       "source": [
-        "hip3-crypto-mainnet-fetcher"
+        "hip3-hyena-crypto-mainnet-fetcher"
       ],
       "broadcasters": [
         "hyperliquid-hip3"
@@ -5371,7 +5371,7 @@
     },
     "hyna:FARTCOIN_MARK_0": {
       "source": [
-        "hip3-crypto-mainnet-fetcher"
+        "hip3-hyena-crypto-mainnet-fetcher"
       ],
       "broadcasters": [
         "hyperliquid-hip3"
@@ -5381,7 +5381,7 @@
     },
     "hyna:FARTCOIN_MARK_1": {
       "source": [
-        "hip3-crypto-mainnet-fetcher"
+        "hip3-hyena-crypto-mainnet-fetcher"
       ],
       "broadcasters": [
         "hyperliquid-hip3"
@@ -5391,7 +5391,7 @@
     },
     "hyna:FARTCOIN_EXT": {
       "source": [
-        "hip3-crypto-mainnet-fetcher"
+        "hip3-hyena-crypto-mainnet-fetcher"
       ],
       "broadcasters": [
         "hyperliquid-hip3"
@@ -5401,7 +5401,7 @@
     },
     "hyna:FARTCOIN": {
       "source": [
-        "hip3-crypto-mainnet-fetcher"
+        "hip3-hyena-crypto-mainnet-fetcher"
       ],
       "broadcasters": [
         "hyperliquid-hip3"
@@ -5529,7 +5529,7 @@
     },
     "hyna:LINK_MARK_0": {
       "source": [
-        "hip3-crypto-mainnet-fetcher"
+        "hip3-hyena-crypto-mainnet-fetcher"
       ],
       "broadcasters": [
         "hyperliquid-hip3"
@@ -5539,7 +5539,7 @@
     },
     "hyna:LINK_MARK_1": {
       "source": [
-        "hip3-crypto-mainnet-fetcher"
+        "hip3-hyena-crypto-mainnet-fetcher"
       ],
       "broadcasters": [
         "hyperliquid-hip3"
@@ -5549,7 +5549,7 @@
     },
     "hyna:LINK_EXT": {
       "source": [
-        "hip3-crypto-mainnet-fetcher"
+        "hip3-hyena-crypto-mainnet-fetcher"
       ],
       "broadcasters": [
         "hyperliquid-hip3"
@@ -5559,7 +5559,7 @@
     },
     "hyna:LINK": {
       "source": [
-        "hip3-crypto-mainnet-fetcher"
+        "hip3-hyena-crypto-mainnet-fetcher"
       ],
       "broadcasters": [
         "hyperliquid-hip3"
@@ -5687,7 +5687,7 @@
     },
     "hyna:SUI_MARK_0": {
       "source": [
-        "hip3-crypto-mainnet-fetcher"
+        "hip3-hyena-crypto-mainnet-fetcher"
       ],
       "broadcasters": [
         "hyperliquid-hip3"
@@ -5697,7 +5697,7 @@
     },
     "hyna:SUI_MARK_1": {
       "source": [
-        "hip3-crypto-mainnet-fetcher"
+        "hip3-hyena-crypto-mainnet-fetcher"
       ],
       "broadcasters": [
         "hyperliquid-hip3"
@@ -5707,7 +5707,7 @@
     },
     "hyna:SUI_EXT": {
       "source": [
-        "hip3-crypto-mainnet-fetcher"
+        "hip3-hyena-crypto-mainnet-fetcher"
       ],
       "broadcasters": [
         "hyperliquid-hip3"
@@ -5717,7 +5717,7 @@
     },
     "hyna:SUI": {
       "source": [
-        "hip3-crypto-mainnet-fetcher"
+        "hip3-hyena-crypto-mainnet-fetcher"
       ],
       "broadcasters": [
         "hyperliquid-hip3"
@@ -5844,7 +5844,7 @@
     },
     "hyna:XMR_MARK_0": {
       "source": [
-        "hip3-crypto-mainnet-fetcher"
+        "hip3-hyena-crypto-mainnet-fetcher"
       ],
       "broadcasters": [
         "hyperliquid-hip3"
@@ -5854,7 +5854,7 @@
     },
     "hyna:XMR_MARK_1": {
       "source": [
-        "hip3-crypto-mainnet-fetcher"
+        "hip3-hyena-crypto-mainnet-fetcher"
       ],
       "broadcasters": [
         "hyperliquid-hip3"
@@ -5864,7 +5864,7 @@
     },
     "hyna:XMR_EXT": {
       "source": [
-        "hip3-crypto-mainnet-fetcher"
+        "hip3-hyena-crypto-mainnet-fetcher"
       ],
       "broadcasters": [
         "hyperliquid-hip3"
@@ -5874,7 +5874,7 @@
     },
     "hyna:XMR": {
       "source": [
-        "hip3-crypto-mainnet-fetcher"
+        "hip3-hyena-crypto-mainnet-fetcher"
       ],
       "broadcasters": [
         "hyperliquid-hip3"
@@ -6002,7 +6002,7 @@
     },
     "hyna:DOGE_MARK_0": {
       "source": [
-        "hip3-crypto-mainnet-fetcher"
+        "hip3-hyena-crypto-mainnet-fetcher"
       ],
       "broadcasters": [
         "hyperliquid-hip3"
@@ -6012,7 +6012,7 @@
     },
     "hyna:DOGE_MARK_1": {
       "source": [
-        "hip3-crypto-mainnet-fetcher"
+        "hip3-hyena-crypto-mainnet-fetcher"
       ],
       "broadcasters": [
         "hyperliquid-hip3"
@@ -6022,7 +6022,7 @@
     },
     "hyna:DOGE_EXT": {
       "source": [
-        "hip3-crypto-mainnet-fetcher"
+        "hip3-hyena-crypto-mainnet-fetcher"
       ],
       "broadcasters": [
         "hyperliquid-hip3"
@@ -6032,7 +6032,7 @@
     },
     "hyna:DOGE": {
       "source": [
-        "hip3-crypto-mainnet-fetcher"
+        "hip3-hyena-crypto-mainnet-fetcher"
       ],
       "broadcasters": [
         "hyperliquid-hip3"
@@ -6160,7 +6160,7 @@
     },
     "hyna:XPL_MARK_0": {
       "source": [
-        "hip3-crypto-mainnet-fetcher"
+        "hip3-hyena-crypto-mainnet-fetcher"
       ],
       "broadcasters": [
         "hyperliquid-hip3"
@@ -6170,7 +6170,7 @@
     },
     "hyna:XPL_MARK_1": {
       "source": [
-        "hip3-crypto-mainnet-fetcher"
+        "hip3-hyena-crypto-mainnet-fetcher"
       ],
       "broadcasters": [
         "hyperliquid-hip3"
@@ -6180,7 +6180,7 @@
     },
     "hyna:XPL_EXT": {
       "source": [
-        "hip3-crypto-mainnet-fetcher"
+        "hip3-hyena-crypto-mainnet-fetcher"
       ],
       "broadcasters": [
         "hyperliquid-hip3"
@@ -6190,7 +6190,7 @@
     },
     "hyna:XPL": {
       "source": [
-        "hip3-crypto-mainnet-fetcher"
+        "hip3-hyena-crypto-mainnet-fetcher"
       ],
       "broadcasters": [
         "hyperliquid-hip3"
@@ -6318,7 +6318,7 @@
     },
     "hyna:IP_MARK_0": {
       "source": [
-        "hip3-crypto-mainnet-fetcher"
+        "hip3-hyena-crypto-mainnet-fetcher"
       ],
       "broadcasters": [
         "hyperliquid-hip3"
@@ -6328,7 +6328,7 @@
     },
     "hyna:IP_MARK_1": {
       "source": [
-        "hip3-crypto-mainnet-fetcher"
+        "hip3-hyena-crypto-mainnet-fetcher"
       ],
       "broadcasters": [
         "hyperliquid-hip3"
@@ -6338,7 +6338,7 @@
     },
     "hyna:IP_EXT": {
       "source": [
-        "hip3-crypto-mainnet-fetcher"
+        "hip3-hyena-crypto-mainnet-fetcher"
       ],
       "broadcasters": [
         "hyperliquid-hip3"
@@ -6348,7 +6348,7 @@
     },
     "hyna:IP": {
       "source": [
-        "hip3-crypto-mainnet-fetcher"
+        "hip3-hyena-crypto-mainnet-fetcher"
       ],
       "broadcasters": [
         "hyperliquid-hip3"
@@ -6476,7 +6476,7 @@
     },
     "hyna:ADA_MARK_0": {
       "source": [
-        "hip3-crypto-mainnet-fetcher"
+        "hip3-hyena-crypto-mainnet-fetcher"
       ],
       "broadcasters": [
         "hyperliquid-hip3"
@@ -6486,7 +6486,7 @@
     },
     "hyna:ADA_MARK_1": {
       "source": [
-        "hip3-crypto-mainnet-fetcher"
+        "hip3-hyena-crypto-mainnet-fetcher"
       ],
       "broadcasters": [
         "hyperliquid-hip3"
@@ -6496,7 +6496,7 @@
     },
     "hyna:ADA_EXT": {
       "source": [
-        "hip3-crypto-mainnet-fetcher"
+        "hip3-hyena-crypto-mainnet-fetcher"
       ],
       "broadcasters": [
         "hyperliquid-hip3"
@@ -6506,7 +6506,7 @@
     },
     "hyna:ADA": {
       "source": [
-        "hip3-crypto-mainnet-fetcher"
+        "hip3-hyena-crypto-mainnet-fetcher"
       ],
       "broadcasters": [
         "hyperliquid-hip3"
@@ -6632,7 +6632,7 @@
     },
     "hyna:PUMP_MARK_0": {
       "source": [
-        "hip3-crypto-mainnet-fetcher"
+        "hip3-hyena-crypto-mainnet-fetcher"
       ],
       "broadcasters": [
         "hyperliquid-hip3"
@@ -6642,7 +6642,7 @@
     },
     "hyna:PUMP_MARK_1": {
       "source": [
-        "hip3-crypto-mainnet-fetcher"
+        "hip3-hyena-crypto-mainnet-fetcher"
       ],
       "broadcasters": [
         "hyperliquid-hip3"
@@ -6652,7 +6652,7 @@
     },
     "hyna:PUMP_EXT": {
       "source": [
-        "hip3-crypto-mainnet-fetcher"
+        "hip3-hyena-crypto-mainnet-fetcher"
       ],
       "broadcasters": [
         "hyperliquid-hip3"
@@ -6662,7 +6662,7 @@
     },
     "hyna:PUMP": {
       "source": [
-        "hip3-crypto-mainnet-fetcher"
+        "hip3-hyena-crypto-mainnet-fetcher"
       ],
       "broadcasters": [
         "hyperliquid-hip3"
@@ -6790,7 +6790,7 @@
     },
     "hyna:LTC_MARK_0": {
       "source": [
-        "hip3-crypto-mainnet-fetcher"
+        "hip3-hyena-crypto-mainnet-fetcher"
       ],
       "broadcasters": [
         "hyperliquid-hip3"
@@ -6800,7 +6800,7 @@
     },
     "hyna:LTC_MARK_1": {
       "source": [
-        "hip3-crypto-mainnet-fetcher"
+        "hip3-hyena-crypto-mainnet-fetcher"
       ],
       "broadcasters": [
         "hyperliquid-hip3"
@@ -6810,7 +6810,7 @@
     },
     "hyna:LTC_EXT": {
       "source": [
-        "hip3-crypto-mainnet-fetcher"
+        "hip3-hyena-crypto-mainnet-fetcher"
       ],
       "broadcasters": [
         "hyperliquid-hip3"
@@ -6820,7 +6820,7 @@
     },
     "hyna:LTC": {
       "source": [
-        "hip3-crypto-mainnet-fetcher"
+        "hip3-hyena-crypto-mainnet-fetcher"
       ],
       "broadcasters": [
         "hyperliquid-hip3"
@@ -6948,7 +6948,7 @@
     },
     "hyna:BCH_MARK_0": {
       "source": [
-        "hip3-crypto-mainnet-fetcher"
+        "hip3-hyena-crypto-mainnet-fetcher"
       ],
       "broadcasters": [
         "hyperliquid-hip3"
@@ -6958,7 +6958,7 @@
     },
     "hyna:BCH_MARK_1": {
       "source": [
-        "hip3-crypto-mainnet-fetcher"
+        "hip3-hyena-crypto-mainnet-fetcher"
       ],
       "broadcasters": [
         "hyperliquid-hip3"
@@ -6968,7 +6968,7 @@
     },
     "hyna:BCH_EXT": {
       "source": [
-        "hip3-crypto-mainnet-fetcher"
+        "hip3-hyena-crypto-mainnet-fetcher"
       ],
       "broadcasters": [
         "hyperliquid-hip3"
@@ -6978,7 +6978,7 @@
     },
     "hyna:BCH": {
       "source": [
-        "hip3-crypto-mainnet-fetcher"
+        "hip3-hyena-crypto-mainnet-fetcher"
       ],
       "broadcasters": [
         "hyperliquid-hip3"
@@ -7106,7 +7106,7 @@
     },
     "hyna:ENA_MARK_0": {
       "source": [
-        "hip3-crypto-mainnet-fetcher"
+        "hip3-hyena-crypto-mainnet-fetcher"
       ],
       "broadcasters": [
         "hyperliquid-hip3"
@@ -7116,7 +7116,7 @@
     },
     "hyna:ENA_MARK_1": {
       "source": [
-        "hip3-crypto-mainnet-fetcher"
+        "hip3-hyena-crypto-mainnet-fetcher"
       ],
       "broadcasters": [
         "hyperliquid-hip3"
@@ -7126,7 +7126,7 @@
     },
     "hyna:ENA_EXT": {
       "source": [
-        "hip3-crypto-mainnet-fetcher"
+        "hip3-hyena-crypto-mainnet-fetcher"
       ],
       "broadcasters": [
         "hyperliquid-hip3"
@@ -7136,7 +7136,7 @@
     },
     "hyna:ENA": {
       "source": [
-        "hip3-crypto-mainnet-fetcher"
+        "hip3-hyena-crypto-mainnet-fetcher"
       ],
       "broadcasters": [
         "hyperliquid-hip3"
