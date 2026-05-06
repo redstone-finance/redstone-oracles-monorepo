@@ -1,6 +1,6 @@
 sdk-version: 3.4.11
-name: redstone-adapter-v17
-version: 0.4.2
+name: redstone-adapter-v18
+version: 0.4.0
 source: src
 dependencies:
   - daml-prim
@@ -9,10 +9,10 @@ exposed-modules:
   - RedStoneAdapter
   - PriceUpdateEvent
 data-dependencies:
-  - ../common/.daml/dist/redstone-common-v16-0.4.0.dar
-  - ../types/.daml/dist/redstone-types-v16-0.4.0.dar
-  - ../sdk/.daml/dist/redstone-sdk-v16-0.4.2.dar
-  - ../interface/.daml/dist/redstone-interface-v17-0.4.0.dar
-  - ../price_pill/.daml/dist/redstone-price-pill-v16-0.4.0.dar
+  - ../common/.daml/dist/redstone-common-v18-0.4.0.dar
+  - ../types/.daml/dist/redstone-types-v18-0.4.0.dar
+  - ../sdk/.daml/dist/redstone-sdk-v18-0.4.0.dar
+  - ../interface/.daml/dist/redstone-interface-v18-0.4.0.dar
+  - ../price_pill/.daml/dist/redstone-price-pill-v18-0.4.0.dar
 build-options:
   - --target=2.1

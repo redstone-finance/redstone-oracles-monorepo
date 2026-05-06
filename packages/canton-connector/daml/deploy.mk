@@ -3,22 +3,22 @@ sinclude ../.env
 CANTON_API=$(PARTICIPANT)$(API_PATH)
 PACKAGE_IDS=package-ids.json
 
-ADAPTER_NAME=RedStoneAdapter-v17-0.4.0
+ADAPTER_NAME=RedStoneAdapter-v18-0.4.0
 ADAPTER_TEMPLATE_ID=$(shell jq -r '.templates.adapter' $(PACKAGE_IDS))
 
-CORE_NAME=RedStoneCore-v17-0.4.0
+CORE_NAME=RedStoneCore-v18-0.4.0
 CORE_TEMPLATE_ID=$(shell jq -r '.templates.core' $(PACKAGE_IDS))
 CORE_CLIENT_TEMPLATE_ID=$(shell jq -r '.templates.core_client' $(PACKAGE_IDS))
 
-FACTORY_NAME=RedStonePricePillFactory-v17-0.4.0
+FACTORY_NAME=RedStonePricePillFactory-v18-0.4.0
 FACTORY_TEMPLATE_ID=$(shell jq -r '.templates.factory' $(PACKAGE_IDS))
 
-FACTORY_ID=00dcf463a3ebbc003a95f06cb738fc4c70abdc760fa52d34da0beed3a2896559dcca12122055635c0eb3cf22584577261b921fc33afdd6ef5304301c39b903876f2c4b1af3
+FACTORY_ID=00bb4c5a65459397fd271db9974b7676918ead3665a78021c989786ba4e816d9ecca121220a34627fe4e022950869cc98fd3a4eba41e335f367d088e67dfd033652ddef904
 
-REWARD_FACTORY_NAME=RedStoneRewardFactory-v17-0.4.0
+REWARD_FACTORY_NAME=RedStoneRewardFactory-v18-0.4.0
 REWARD_FACTORY_TEMPLATE_ID=$(shell jq -r '.templates.reward_factory' $(PACKAGE_IDS))
 
-REWARD_FACTORY_ID=0089c0c6c1fc974986d0f25f7189bf16ecc2daa2a3f55584e9522d60a5198415b9ca121220b3c2a04dfb026ba762ea444c6cffa631ac5ec72f9648eae1ab8c52f94abedd3a
+REWARD_FACTORY_ID=00b4609d19935ee375eeaa6145b91b18ac38ce0871d29c42544d5ec0222d107622ca1212205369fd2da5bf16b6b2596282cfc69376136118f6555621a030d597a70f963520
 
 IADAPTER_TEMPLATE_ID=$(shell jq -r '.interfaces.adapter' $(PACKAGE_IDS))
 ICORE_TEMPLATE_ID=$(shell jq -r '.interfaces.core' $(PACKAGE_IDS))
@@ -26,12 +26,6 @@ ICORE_TEMPLATE_ID=$(shell jq -r '.interfaces.core' $(PACKAGE_IDS))
 FEATURED_CID=00deaaad88568938379d75d095961036688c49cca81efa596de41f578fe1ac1c2fca121220a86ed774b5e19df71fe79139d3fbb08e603db71977437cd997c7e1771efab2cc
 
 TOKEN=$(shell cat token.txt)
-CORE_ID_TXT=core_id.txt
-ADAPTER_ID_TXT=adapter_id.txt
-PRICE_FEED_ID_TXT=price_feed_id.txt
-CORE_ID=$(shell cat $(CORE_ID_TXT))
-ADAPTER_ID=$(shell cat $(ADAPTER_ID_TXT))
-PRICE_FEED_ID=$(shell cat $(PRICE_FEED_ID_TXT))
 
 PARTY_UPDATER=RedStoneOracleUpdater::$(PARTY_SUFFIX)
 PARTY_VIEWER=RedStoneOracleViewer::$(PARTY_SUFFIX)
@@ -159,101 +153,6 @@ deploy-adapter: get-token
 		"actAs": ["$(PARTY_OWNER)"], \
 		"commandId": "deploy-adapter-$(shell date +%s)"}' | jq '.'
 
-get-adapter-id: get-token
-	@LEDGER_END=$$(curl -s -X GET \
-	  -H "Authorization: Bearer $(TOKEN)" \
-	  -H "Content-Type: application/json" \
-	  "$(CANTON_API)/v2/state/ledger-end" | jq -r '.offset'); \
-	CONTRACT_ID=$$(curl -s -X POST \
-	  -H "Authorization: Bearer $(TOKEN)" \
-	  -H "Content-Type: application/json" \
-	  "$(CANTON_API)/v2/state/active-contracts" \
-	  -d '{ \
-	    "filter": { \
-	      "filtersByParty": { \
-	        "$(PARTY_OWNER)": { \
-	          "cumulative": [{ \
-	            "identifierFilter": { \
-	              "TemplateFilter": { \
-	                "value": { \
-	                  "templateId": "$(ADAPTER_TEMPLATE_ID)", \
-	                  "includeCreatedEventBlob": true \
-	                } \
-	              } \
-	            } \
-	          }] \
-	        } \
-	      } \
-	    }, \
-	    "activeAtOffset": '"$$LEDGER_END"' \
-	  }' | jq -r '.[].contractEntry.JsActiveContract.createdEvent | select(.createArgument.adapterId == "$(ADAPTER_NAME)") | .contractId'); \
-	echo "$$CONTRACT_ID" > $(ADAPTER_ID_TXT); \
-	echo "Adapter ID saved: $$CONTRACT_ID at offset $$LEDGER_END"
-
-get-core-id-by-interface: get-token
-	@LEDGER_END=$$(curl -s -X GET \
-	  -H "Authorization: Bearer $(TOKEN)" \
-	  -H "Content-Type: application/json" \
-	  "$(CANTON_API)/v2/state/ledger-end" | jq -r '.offset'); \
-	CONTRACT_ID=$$(curl -s -X POST \
-	  -H "Authorization: Bearer $(TOKEN)" \
-	  -H "Content-Type: application/json" \
-	  "$(CANTON_API)/v2/state/active-contracts" \
-	  -d '{ \
-	    "filter": { \
-	      "filtersByParty": { \
-	        "$(PARTY_VIEWER)": { \
-	          "cumulative": [{ \
-	            "identifierFilter": { \
-	              "InterfaceFilter": { \
-	                "value": { \
-	                  "interfaceId": "$(ICORE_TEMPLATE_ID)", \
-	                  "includeInterfaceView": true, \
-	                  "includeCreatedEventBlob": false \
-	                } \
-	              } \
-	            } \
-	          }] \
-	        } \
-	      } \
-	    }, \
-	    "activeAtOffset": '"$$LEDGER_END"' \
-	  }' | jq -r '.[].contractEntry.JsActiveContract.createdEvent | select(.createArgument.coreId == "$(ADAPTER_NAME)") | .contractId'); \
-	echo "$$CONTRACT_ID" > $(CORE_ID_TXT); \
-	echo "Core ID saved: $$CONTRACT_ID at offset $$LEDGER_END"
-
-get-adapter-id-by-interface: get-token
-	@LEDGER_END=$$(curl -s -X GET \
-	  -H "Authorization: Bearer $(TOKEN)" \
-	  -H "Content-Type: application/json" \
-	  "$(CANTON_API)/v2/state/ledger-end" | jq -r '.offset'); \
-	CONTRACT_ID=$$(curl -s -X POST \
-	  -H "Authorization: Bearer $(TOKEN)" \
-	  -H "Content-Type: application/json" \
-	  "$(CANTON_API)/v2/state/active-contracts" \
-	  -d '{ \
-	    "filter": { \
-	      "filtersByParty": { \
-	        "$(PARTY_OWNER)": { \
-	          "cumulative": [{ \
-	            "identifierFilter": { \
-	              "InterfaceFilter": { \
-	                "value": { \
-	                  "interfaceId": "$(IADAPTER_TEMPLATE_ID)", \
-	                  "includeInterfaceView": true, \
-	                  "includeCreatedEventBlob": false \
-	                } \
-	              } \
-	            } \
-	          }] \
-	        } \
-	      } \
-	    }, \
-	    "activeAtOffset": '"$$LEDGER_END"' \
-	  }' | jq -r '.[].contractEntry.JsActiveContract.createdEvent | select(.createArgument.adapterId == "$(ADAPTER_NAME)") | .contractId'); \
-	echo "$$CONTRACT_ID" > $(ADAPTER_ID_TXT); \
-	echo "Adapter ID saved: $$CONTRACT_ID at offset $$LEDGER_END"
-
 get-contract-by-interface: get-token
 	@LEDGER_END=$$(curl -s -X GET \
 		-H "Authorization: Bearer $(TOKEN)" \
@@ -271,7 +170,7 @@ get-contract-by-interface: get-token
 							"identifierFilter": { \
 								"InterfaceFilter": { \
 									"value": { \
-										"interfaceId": "$(ICORE_TEMPLATE_ID)", \
+										"interfaceId": "$(IADAPTER_TEMPLATE_ID)", \
 										"includeInterfaceView": true, \
 										"includeCreatedEventBlob": true \
 									} \
@@ -311,4 +210,4 @@ get-active-contracts: get-token
 				} \
 			}, \
 			"activeAtOffset": '"$$LEDGER_END"' \
-		}' | jq '[.[] | select(.contractEntry.JsActiveContract.createdEvent.templateId | test("ValidatorRight")) | .contractEntry.JsActiveContract.createdEvent | {contractId, amount: .createArgument.amount}]'
+		}' | jq '[.[] | select(.contractEntry.JsActiveContract.createdEvent.templateId | test("CoreClient"))]'

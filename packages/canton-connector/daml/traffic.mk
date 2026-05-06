@@ -1,4 +1,4 @@
-include ./intellect.mk
+include ./deploy.mk
 
 get-traffic-status: get-token
 	curl -s -X POST \

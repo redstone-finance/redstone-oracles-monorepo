@@ -1,25 +1,25 @@
 {
-  "redstone_sdk": "16eb0d9065abf28b035ddd61db3d4dd307b7de8da1e17c7d95ca06a822321b08",
-  "interface": "3c8ba795759bf148ef7424975973999938a4e0f456855812fb08595079ce6f7c",
-  "core": "52bfa09936e1a3f0d2ef2bed715ce94bdf756ad37e3163166c98b103f55c1d66",
-  "adapter": "6f81152a4d60268304f247c76e2b69f966c2e608bb64c06e01f66936065f0999",
-  "factory": "3ee5e4addf25943c9ef6990ff495b47b004d729c3778ebe6f104f045f962c3cc",
-  "reward_factory": "c582075a1dd3b1dc4bbd763d1ea706e071c06fd4b842714fbd428fa953890cd3",
-  "price_feed": "cdcc9627153648616871b497af3232c3fc64edce394fc3ff8e257a2ab41d9bae",
-  "price_pill": "b3dd1f9044cb8bc66a462f7c52eb5f8dbf153ea8607b621929fbd3631d356361",
-  "featured": "ca346f6fe97723ef90b70284d7daf53105a542c573155f7993b75e2f35524e1a",
+  "redstone_sdk": "ef9e04a8f2e0040c4b8f1197d571ac906a651268fff9762506e20c2ebe16c7e0",
+  "interface": "#redstone-interface-v18",
+  "core": "a7631a8bbe6892f2b7b6bb2bf2f09ccc82783450036773318b7a136af3f2b690",
+  "adapter": "978b154772c68fb3e7ce30dca2fa8bf281b4d23488d4dee04de469a5cacebaef",
+  "factory": "49e080961029330345c09d2f6a90e9a4d3f35fea780fe7bba327253ed4a59c2d",
+  "reward_factory": "2253fc5ff44e92f24988fc40fa6037fa78520ff99a9bd6d1f2dc74790b18a745",
+  "price_feed": "d2be1019ee9b7acc553058bd91797a39d1e945dfde24dc3e08fd9bd89769244c",
+  "price_pill": "#redstone-price-pill-v18",
+  "featured": "e7d2664509a3d69df9f784ef5343ee0b6d292dcb9c0152059a539664c9419f8b",
   "templates": {
-    "adapter": "6f81152a4d60268304f247c76e2b69f966c2e608bb64c06e01f66936065f0999:RedStoneAdapter:RedStoneAdapter",
-    "core": "52bfa09936e1a3f0d2ef2bed715ce94bdf756ad37e3163166c98b103f55c1d66:RedStoneCore:RedStoneCore",
-    "core_client": "52bfa09936e1a3f0d2ef2bed715ce94bdf756ad37e3163166c98b103f55c1d66:RedStoneCoreClient:RedStoneCoreClient",
-    "factory": "3ee5e4addf25943c9ef6990ff495b47b004d729c3778ebe6f104f045f962c3cc:RedStonePricePillFactory:RedStonePricePillFactory",
-    "reward_factory": "c582075a1dd3b1dc4bbd763d1ea706e071c06fd4b842714fbd428fa953890cd3:RedStoneRewardFactory:RedStoneRewardFactory"
+    "adapter": "978b154772c68fb3e7ce30dca2fa8bf281b4d23488d4dee04de469a5cacebaef:RedStoneAdapter:RedStoneAdapter",
+    "core": "a7631a8bbe6892f2b7b6bb2bf2f09ccc82783450036773318b7a136af3f2b690:RedStoneCore:RedStoneCore",
+    "core_client": "a7631a8bbe6892f2b7b6bb2bf2f09ccc82783450036773318b7a136af3f2b690:RedStoneCoreClient:RedStoneCoreClient",
+    "factory": "49e080961029330345c09d2f6a90e9a4d3f35fea780fe7bba327253ed4a59c2d:RedStonePricePillFactory:RedStonePricePillFactory",
+    "reward_factory": "2253fc5ff44e92f24988fc40fa6037fa78520ff99a9bd6d1f2dc74790b18a745:RedStoneRewardFactory:RedStoneRewardFactory"
   },
   "interfaces": {
-    "adapter": "3c8ba795759bf148ef7424975973999938a4e0f456855812fb08595079ce6f7c:IRedStoneAdapter:IRedStoneAdapter",
-    "core": "3c8ba795759bf148ef7424975973999938a4e0f456855812fb08595079ce6f7c:IRedStoneCore:IRedStoneCore",
-    "pill_factory": "3c8ba795759bf148ef7424975973999938a4e0f456855812fb08595079ce6f7c:IRedStonePricePillFactory:IRedStonePricePillFactory",
-    "reward_factory": "3c8ba795759bf148ef7424975973999938a4e0f456855812fb08595079ce6f7c:IRedStoneRewardFactory:IRedStoneRewardFactory",
-    "pill": "b3dd1f9044cb8bc66a462f7c52eb5f8dbf153ea8607b621929fbd3631d356361:IRedStonePricePill:IRedStonePricePill"
+    "adapter": "#redstone-interface-v18:IRedStoneAdapter:IRedStoneAdapter",
+    "core": "#redstone-interface-v18:IRedStoneCore:IRedStoneCore",
+    "pill_factory": "#redstone-interface-v18:IRedStonePricePillFactory:IRedStonePricePillFactory",
+    "reward_factory": "#redstone-interface-v18:IRedStoneRewardFactory:IRedStoneRewardFactory",
+    "pill": "#redstone-price-pill-v18:IRedStonePricePill:IRedStonePricePill"
   }
 }
