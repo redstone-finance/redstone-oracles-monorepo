@@ -22,6 +22,9 @@
     },
     "USDT": {
       "priceFeedAddress": "0xED2B1ca5D7E246f615c2291De309643D41FeC97e"
+    },
+    "0G": {
+      "priceFeedAddress": "0xFd7457B6f09990243Bf8E4C6C956EB909C0E6417"
     }
   }
 }
