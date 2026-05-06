@@ -77,6 +77,12 @@ impl RedStoneSep40 {
         })
     }
 
+    /// **Deviation from SEP-40:** The standard states that `resolution` should
+    /// never change after deployment. This implementation intentionally allows
+    /// the owner to update it to accommodate evolving data-source update
+    /// frequencies. The value is stable within a single transaction — it can
+    /// only change through this owner-gated admin call. Integrators must not
+    /// cache this value across administrative operations.
     pub fn set_resolution(env: &Env, new_resolution: u32) -> Result<(), Error> {
         Self::_assert_owner(env)?;
 
