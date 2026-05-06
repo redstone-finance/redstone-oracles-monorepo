@@ -7,12 +7,12 @@ import {
   PricesCantonContractAdapter,
   readAdditionalPillViewers,
 } from "../src";
-import { makeDefaultClient, makePartyId } from "./utils";
+import { makeDefaultClient, makePartyId, readNetwork } from "./utils";
 
 const VIEWER_PARTY_NAME = `RedStoneOracleViewer`;
 const UPDATER_PARTY_NAME = `RedStoneOracleUpdater`;
 
-const ADAPTER_ID = "RedStoneAdapter-v17-0.4.0";
+const ADAPTER_ID = "RedStoneAdapter-v18-0.4.0";
 
 async function main() {
   const client = makeDefaultClient();
@@ -29,12 +29,15 @@ async function main() {
   const service = new CantonBlockchainService(client);
 
   const SUFFIX_24_7 = "---24_7";
-
+  const dataPackagesIds =
+    readNetwork() === "mainnet"
+      ? [
+          "XYZ100---PERP",
+          ...["AAPL", "TSLA", "NVDA", "GOOGL"].map((feed) => `${feed}${SUFFIX_24_7}`),
+        ]
+      : ["ETH", "BTC", "CC"];
   const paramsProvider = new ContractParamsProvider({
-    dataPackagesIds: [
-      "XYZ100---PERP",
-      ...["AAPL", "TSLA", "NVDA", "GOOGL"].map((feed) => `${feed}${SUFFIX_24_7}`),
-    ],
+    dataPackagesIds,
     dataServiceId: "redstone-primary-prod",
     uniqueSignersCount: 3,
     authorizedSigners: getSignersForDataServiceId("redstone-primary-prod"),
@@ -44,7 +47,7 @@ async function main() {
     client,
     makePartyId(VIEWER_PARTY_NAME),
     ADAPTER_ID,
-    `TSLA${SUFFIX_24_7}`
+    dataPackagesIds[0]
   );
 
   await sampleRun(paramsProvider, adapter, service, feedAdapter);
