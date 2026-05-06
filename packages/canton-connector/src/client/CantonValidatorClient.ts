@@ -16,6 +16,19 @@ type SubmitSendResponse = {
   update_id: string;
 };
 
+type SetupProposalResponse = {
+  contract_id: string;
+};
+
+type PrepareAcceptResponse = {
+  transaction: string;
+  tx_hash: string;
+};
+
+type SubmitAcceptResponse = {
+  update_id: string;
+};
+
 export class CantonValidatorClient {
   constructor(
     private readonly validatorApiUrl: string,
@@ -57,6 +70,38 @@ export class CantonValidatorClient {
   ): Promise<SubmitSendResponse> {
     return await this.post<SubmitSendResponse>(
       "/v0/admin/external-party/transfer-preapproval/submit-send",
+      {
+        submission: {
+          party_id: partyId,
+          transaction,
+          signed_tx_hash: signedTxHash,
+          public_key: publicKey,
+        },
+      }
+    );
+  }
+
+  async setupProposal(userPartyId: string): Promise<SetupProposalResponse> {
+    return await this.post<SetupProposalResponse>("/v0/admin/external-party/setup-proposal", {
+      user_party_id: userPartyId,
+    });
+  }
+
+  async prepareAccept(contractId: string, userPartyId: string): Promise<PrepareAcceptResponse> {
+    return await this.post<PrepareAcceptResponse>(
+      "/v0/admin/external-party/setup-proposal/prepare-accept",
+      { contract_id: contractId, user_party_id: userPartyId }
+    );
+  }
+
+  async submitAccept(
+    partyId: string,
+    transaction: string,
+    signedTxHash: string,
+    publicKey: string
+  ): Promise<SubmitAcceptResponse> {
+    return await this.post<SubmitAcceptResponse>(
+      "/v0/admin/external-party/setup-proposal/submit-accept",
       {
         submission: {
           party_id: partyId,
