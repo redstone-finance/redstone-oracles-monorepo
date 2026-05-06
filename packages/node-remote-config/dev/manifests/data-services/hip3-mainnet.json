@@ -123,25 +123,25 @@
       "rateFeed": false
     },
     "flx:USDE_MARK_0": {
-      "source": ["hip3-felix-crypto-mainnet-fetcher"],
+      "source": ["hip3-felix-crypto-spot-mainnet-fetcher"],
       "broadcasters": ["hyperliquid-hip3"],
       "denomination": "USD",
       "rateFeed": false
     },
     "flx:USDE_MARK_1": {
-      "source": ["hip3-felix-crypto-mainnet-fetcher"],
+      "source": ["hip3-felix-crypto-spot-mainnet-fetcher"],
       "broadcasters": ["hyperliquid-hip3"],
       "denomination": "USD",
       "rateFeed": false
     },
     "flx:USDE_EXT": {
-      "source": ["hip3-felix-crypto-mainnet-fetcher"],
+      "source": ["hip3-felix-crypto-spot-mainnet-fetcher"],
       "broadcasters": ["hyperliquid-hip3"],
       "denomination": "USD",
       "rateFeed": false
     },
     "flx:USDE": {
-      "source": ["hip3-felix-crypto-mainnet-fetcher"],
+      "source": ["hip3-felix-crypto-spot-mainnet-fetcher"],
       "broadcasters": ["hyperliquid-hip3"],
       "denomination": "USD",
       "rateFeed": false
@@ -222,25 +222,25 @@
       "rateFeed": false
     },
     "flx:XMR_MARK_0": {
-      "source": ["hip3-felix-crypto-mainnet-fetcher"],
+      "source": ["hip3-felix-crypto-spot-mainnet-fetcher"],
       "broadcasters": ["hyperliquid-hip3"],
       "denomination": "USD",
       "rateFeed": false
     },
     "flx:XMR_MARK_1": {
-      "source": ["hip3-felix-crypto-mainnet-fetcher"],
+      "source": ["hip3-felix-crypto-spot-mainnet-fetcher"],
       "broadcasters": ["hyperliquid-hip3"],
       "denomination": "USD",
       "rateFeed": false
     },
     "flx:XMR_EXT": {
-      "source": ["hip3-felix-crypto-mainnet-fetcher"],
+      "source": ["hip3-felix-crypto-spot-mainnet-fetcher"],
       "broadcasters": ["hyperliquid-hip3"],
       "denomination": "USD",
       "rateFeed": false
     },
     "flx:XMR": {
-      "source": ["hip3-felix-crypto-mainnet-fetcher"],
+      "source": ["hip3-felix-crypto-spot-mainnet-fetcher"],
       "broadcasters": ["hyperliquid-hip3"],
       "denomination": "USD",
       "rateFeed": false
@@ -1915,28 +1915,28 @@
       "types": ["snoozed"]
     },
     "flx:BTC_MARK_0": {
-      "source": ["hip3-crypto-mainnet-fetcher"],
+      "source": ["hip3-felix-crypto-mainnet-fetcher"],
       "broadcasters": ["hyperliquid-hip3"],
       "denomination": "USD",
       "rateFeed": false,
       "types": ["snoozed"]
     },
     "flx:BTC_MARK_1": {
-      "source": ["hip3-crypto-mainnet-fetcher"],
+      "source": ["hip3-felix-crypto-mainnet-fetcher"],
       "broadcasters": ["hyperliquid-hip3"],
       "denomination": "USD",
       "rateFeed": false,
       "types": ["snoozed"]
     },
     "flx:BTC_EXT": {
-      "source": ["hip3-crypto-mainnet-fetcher"],
+      "source": ["hip3-felix-crypto-mainnet-fetcher"],
       "broadcasters": ["hyperliquid-hip3"],
       "denomination": "USD",
       "rateFeed": false,
       "types": ["snoozed"]
     },
     "flx:BTC": {
-      "source": ["hip3-crypto-mainnet-fetcher"],
+      "source": ["hip3-felix-crypto-mainnet-fetcher"],
       "broadcasters": ["hyperliquid-hip3"],
       "denomination": "USD",
       "rateFeed": false,
