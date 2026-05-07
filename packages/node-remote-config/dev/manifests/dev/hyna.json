@@ -1,0 +1,170 @@
+{
+  "interval": 1000,
+  "priceAggregator": "median",
+  "defaultSource": ["coingecko"],
+  "sourceTimeout": 8000,
+  "minValidSourcesPercentage": 1,
+  "deviationCheck": {
+    "deviationWithRecentValues": {
+      "maxPercent": 25,
+      "maxDelayMilliseconds": 120000
+    }
+  },
+  "tokens": {
+    "LIGHTER_PERP": {
+      "source": [
+        "ws-perp-binance-usdt",
+        "ws-perp-bybit-usdt",
+        "ws-perp-gate-usdt",
+        "ws-perp-mexc-usdt",
+        "ws-perp-okx-usdt"
+      ],
+      "priceAggregator": "constantWeightMedian",
+      "customWeightsForWeightedMedian": {
+        "ws-perp-binance-usdt": 3,
+        "ws-perp-okx-usdt": 2,
+        "ws-perp-bybit-usdt": 2
+      },
+      "broadcasters": ["influx"],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "ORACLE_LIGHTER": {
+      "source": ["ws-hyperliquid-perps-native", "ws-hydromancer-perps-native"],
+      "customWeightsForWeightedMedian": {
+        "ws-hyperliquid-perps-native": 10,
+        "ws-hydromancer-perps-native": 1
+      },
+      "priceAggregator": "constantWeightMedian",
+      "broadcasters": ["influx"],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "BEST_BID_hyna:LIGHTER": {
+      "source": ["ws-hyperliquid-perps-hyna", "ws-hydromancer-perps-hyna"],
+      "customWeightsForWeightedMedian": {
+        "ws-hyperliquid-perps-hyna": 10,
+        "ws-hydromancer-perps-hyna": 1
+      },
+      "priceAggregator": "constantWeightMedian",
+      "broadcasters": ["influx"],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "BEST_ASK_hyna:LIGHTER": {
+      "source": ["ws-hyperliquid-perps-hyna", "ws-hydromancer-perps-hyna"],
+      "customWeightsForWeightedMedian": {
+        "ws-hyperliquid-perps-hyna": 10,
+        "ws-hydromancer-perps-hyna": 1
+      },
+      "priceAggregator": "constantWeightMedian",
+      "broadcasters": ["influx"],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "LAST_TRADE_hyna:LIGHTER": {
+      "source": ["ws-hyperliquid-perps-hyna", "ws-hydromancer-perps-hyna"],
+      "customWeightsForWeightedMedian": {
+        "ws-hyperliquid-perps-hyna": 10,
+        "ws-hydromancer-perps-hyna": 1
+      },
+      "priceAggregator": "constantWeightMedian",
+      "broadcasters": ["influx"],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "MARKET_MEDIAN_hyna:LIGHTER": {
+      "source": ["hyperliquid-market-median"],
+      "broadcasters": ["influx"],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "MARKET_MEDIAN_hyna:LIGHTER_EMA_30S": {
+      "source": ["ema"],
+      "broadcasters": ["influx"],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "ORACLE_hyna:LIGHTER": {
+      "source": ["ws-hyperliquid-perps-hyna", "ws-hydromancer-perps-hyna"],
+      "customWeightsForWeightedMedian": {
+        "ws-hyperliquid-perps-hyna": 10,
+        "ws-hydromancer-perps-hyna": 1
+      },
+      "priceAggregator": "constantWeightMedian",
+      "broadcasters": ["influx"],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "ORACLE_hyna:LIGHTER_EMA_150S": {
+      "source": ["ema"],
+      "broadcasters": ["influx"],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "MARK_hyna:LIGHTER": {
+      "source": ["ws-hyperliquid-perps-hyna", "ws-hydromancer-perps-hyna"],
+      "customWeightsForWeightedMedian": {
+        "ws-hyperliquid-perps-hyna": 10,
+        "ws-hydromancer-perps-hyna": 1
+      },
+      "priceAggregator": "constantWeightMedian",
+      "broadcasters": ["influx"],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "MID_hyna:LIGHTER": {
+      "source": ["ws-hyperliquid-perps-hyna", "ws-hydromancer-perps-hyna"],
+      "customWeightsForWeightedMedian": {
+        "ws-hyperliquid-perps-hyna": 10,
+        "ws-hydromancer-perps-hyna": 1
+      },
+      "priceAggregator": "constantWeightMedian",
+      "broadcasters": ["influx"],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "MID_hyna:LIGHTER_EMA_150S": {
+      "source": ["ema"],
+      "broadcasters": ["influx"],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "hyna:LIGHTER_MARK_0": {
+      "source": ["hip3-hyena-crypto-mainnet-fetcher"],
+      "broadcasters": ["hyperliquid-hip3"],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "hyna:LIGHTER_MARK_1": {
+      "source": ["hip3-hyena-crypto-mainnet-fetcher"],
+      "broadcasters": ["hyperliquid-hip3"],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "hyna:LIGHTER_EXT": {
+      "source": ["hip3-hyena-crypto-mainnet-fetcher"],
+      "broadcasters": ["hyperliquid-hip3"],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "hyna:LIGHTER": {
+      "source": ["hip3-hyena-crypto-mainnet-fetcher"],
+      "broadcasters": ["hyperliquid-hip3"],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "OPEN_INTEREST_hyna:LIGHTER": {
+      "source": ["ws-hyperliquid-perps-hyna"],
+      "broadcasters": [],
+      "denomination": "USD",
+      "rateFeed": false,
+      "deviationCheck": {
+        "deviationWithRecentValues": {
+          "maxPercent": 1000000000,
+          "maxDelayMilliseconds": 1000
+        }
+      }
+    }
+  }
+}
