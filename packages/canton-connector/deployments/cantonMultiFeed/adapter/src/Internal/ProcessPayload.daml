@@ -1,0 +1,107 @@
+module Internal.ProcessPayload
+(
+  processAndWritePrices
+  , hasNewPrices
+  , WriteContext(..)
+  , Factories(..)
+  , AdapterState(..)
+) where
+
+import DA.Assert
+import DA.List as L
+import DA.Map as M
+import DA.Optional
+import RedStone.Config(verifyConfigAgainstLedger)
+import RedStone.Processor
+import IRedStonePricePillFactory
+import IRedStoneRewardFactory
+import RedStoneTypes
+import Internal.Events
+import Internal.PillRecord
+import Internal.Rewards
+import Internal.Verify
+import Config(adapter_config_fun, pill_staleness_ms)
+
+data WriteContext = WriteContext
+  with
+    caller : Party
+    owner : Party
+    updaters : [Party]
+    viewers : [Party]
+    paidTrafficCost : Optional Int
+  deriving (Eq, Show)
+
+data Factories = Factories
+  with
+    pillFactory : Optional (ContractId IRedStonePricePillFactory)
+    rewardFactory : Optional (ContractId IRedStoneRewardFactory)
+  deriving (Eq, Show)
+
+data AdapterState = AdapterState
+  with
+    feedData : M.Map RedStoneFeedId [PillRecord]
+    rewardState : Optional RewardState
+  deriving (Eq, Show)
+
+-- Public
+
+-- Note: emitErrorEvents creates PriceUpdateEvent with signatory=owner.
+-- This works because hasNewPrices runs within a choice on RedStoneAdapter (signatory owner),
+-- so the owner's authority is available via DAML's authority propagation rules.
+hasNewPrices ctx adapterId feedData feedIds currentTime payloadHex = do
+  ((newValues, _, rejectedValues), _) <- checkNewValues feedData feedIds currentTime payloadHex
+  _ <- emitErrorEvents (ctx.owner, ctx.updaters) adapterId rejectedValues
+
+  pure $ not $ L.null newValues
+
+processAndWritePrices ctx factories adapterId currentState feedIds currentTime payloadHex = do
+  ((newValues, timestamp, rejectedValues), config) <- checkNewValues currentState.feedData feedIds currentTime payloadHex
+
+  if L.null newValues then do
+    pure currentState
+  else do
+    newData <- newFeedData ctx factories.pillFactory adapterId currentState.feedData config.currentTimestamp (newValues, timestamp)
+    newRewardState <- maybeCreateRewards ctx.caller factories.rewardFactory currentState.rewardState config.currentTimestamp $ fromOptional 0 ctx.paidTrafficCost
+
+    pure $ AdapterState with feedData = newData, rewardState = Some newRewardState
+
+-- Private
+
+checkNewValues feedData feedIds currentTime payloadHex = do
+  config <- verifyConfigAgainstLedger $ adapter_config_fun feedIds currentTime
+  let result = processPayloadNumeric config payloadHex
+  let newValues = determineNewValues (config.currentTimestamp, feedData) feedIds result
+
+  pure $ (newValues, config)
+
+newFeedData ctx pillFactory adapterId feedData currentTimestamp (newValues, timestamp)  = do
+  let newEntries = entriesFromValues currentTimestamp timestamp newValues
+
+  case pillFactory of
+    None -> let
+      newRecords = createNewRecords newEntries $ map (const None) newEntries
+      newFeedData = M.fromList $ map (\(feedId, record) -> (feedId, [record])) newRecords
+      in do
+        -- emitting only when no pill factory is passed
+        _ <- emitPriceDataEvents (ctx.owner, ctx.updaters) adapterId $ map (\(feedId, record) -> (feedId, record.priceData)) newRecords
+
+        pure $ M.union newFeedData feedData
+
+    Some factory -> do
+      newPills <- exercise factory CreatePricePills with
+        caller = ctx.caller
+        viewers = ctx.viewers
+        stalenessMs = pill_staleness_ms
+        adapterId
+        inputData = newEntries
+
+      length newPills === length newValues
+
+      let newRecords = createNewRecords newEntries $ map Some newPills
+      let mergedFeedData = L.foldl addToFeedData feedData newRecords
+
+      let (newItems, toArchive) = partitionRecords currentTimestamp mergedFeedData
+
+      exercise factory ArchivePricePills with caller = ctx.caller, contractIds = map (\record -> fromSome $ record.pillCid) toArchive
+
+      pure $ M.fromList newItems

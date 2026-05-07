@@ -1,0 +1,27 @@
+module Time
+(
+    timeToMillis
+    , millisToTime
+    , min_acceptable_timestamp
+    , one_min_ms
+    , one_day_ms
+    , unix_epoch_start
+) where
+
+import DA.Date
+import DA.Time
+
+-- Public
+
+unix_epoch_start = time (date 1970 Jan 1) 00 00 00
+min_acceptable_timestamp = 1_773_705_600_000 -- Tue, 17 Mar 2026 00:00:00 GMT
+
+one_min_ms = 60_000
+one_day_ms = one_min_ms * 60 * 24
+
+timeToMillis t =
+  let diff = subTime t unix_epoch_start
+      micros = convertRelTimeToMicroseconds diff
+  in micros / 1_000
+
+millisToTime m = addRelTime unix_epoch_start $ milliseconds m
