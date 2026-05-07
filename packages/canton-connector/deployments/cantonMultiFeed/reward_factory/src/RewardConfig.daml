@@ -1,0 +1,15 @@
+module RewardConfig (
+    rewardWeight
+) where
+
+one_kb = 1000 -- or 1024, to test
+one_mb = one_kb * one_kb
+one_mb_price = 60
+
+reward_factor_frac_num = one_mb_price * 11
+reward_factor_frac_den = one_mb * 10
+reward_min_count = 5 * one_kb -- estimated cost of creating marker
+each_update_reward = 70 * one_kb -- 14400.0 / (1440.0 / 7)
+
+rewardWeight _ =
+    intToDecimal ((each_update_reward - reward_min_count) * reward_factor_frac_num) / intToDecimal reward_factor_frac_den
