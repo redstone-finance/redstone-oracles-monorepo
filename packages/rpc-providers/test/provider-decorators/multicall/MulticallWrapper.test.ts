@@ -4,7 +4,12 @@ import chaiAsPromised from "chai-as-promised";
 import { BigNumber, Contract, ContractFactory, Wallet, ethers } from "ethers";
 import hardhat from "hardhat";
 import Sinon from "sinon";
-import { MulticallDecorator, ProviderWithAgreement, ProviderWithFallback } from "../../../src";
+import {
+  MULTICALL3_SELF_TARGET,
+  MulticallDecorator,
+  ProviderWithAgreement,
+  ProviderWithFallback,
+} from "../../../src";
 import * as multicallUtils from "../../../src/provider-decorators/multicall/Multicall3Caller";
 import { Counter } from "../../../typechain-types";
 import { deployCounter } from "../../helpers";
@@ -286,6 +291,85 @@ const describeMultiWrapperSuite = (
       expect(multicallFnSpy.getCalls().length).to.eq(2);
     });
 
+    it("should return native balance via getBalance through multicall3", async () => {
+      await performGetBalanceTest({
+        provider: getProvider(multicall.address, providerFabric, 1),
+        walletIndex: 1,
+      });
+      expect(multicallFnSpy.getCalls().length).to.eq(1);
+    });
+
+    it("should batch getBalance with a contract call into a single multicall3 flush", async () => {
+      const multicallProvider = getProvider(multicall.address, providerFabric);
+      const counterConnected = counter.connect(multicallProvider);
+      await performGetBalanceTest({
+        provider: multicallProvider,
+        walletIndex: 2,
+        parallelOp: async (_, blockTag) => {
+          const count = await counterConnected.getCount({ blockTag });
+          expect(count.toNumber()).to.eq(1);
+        },
+      });
+      expect(multicallFnSpy.getCalls().length).to.eq(1);
+    });
+
+    it("should resolve Promise<string> address passed to getBalance", async () => {
+      await performGetBalanceTest({
+        provider: getProvider(multicall.address, providerFabric, 1),
+        walletIndex: 3,
+        wrapAddressIn: (addr) => Promise.resolve(addr),
+      });
+    });
+
+    it("should bypass multicall for getBalance when useGetBalanceMulticall=false", async () => {
+      const multicallProvider = MulticallDecorator(providerFabric, {
+        autoResolveInterval: -1,
+        maxCallsCount: 1,
+        maxCallDataSize: 100000000,
+        multicallAddress: multicall.address,
+        useGetBalanceMulticall: false,
+      })();
+      await performGetBalanceTest({ provider: multicallProvider, walletIndex: 5 });
+      // multicall3 must not be invoked at all for getBalance when the flag is off.
+      expect(multicallFnSpy.getCalls().length).to.eq(0);
+    });
+
+    it("should fall back to provider.getBalance when multicall3 fails (retryBySingleCalls)", async () => {
+      type ProviderCall = typeof ethers.providers.Provider.prototype.call;
+      let callStub!: Sinon.SinonStub<Parameters<ProviderCall>, ReturnType<ProviderCall>>;
+      let getBalanceSpy!: Sinon.SinonSpy;
+
+      const customProviderFabric = () => {
+        const provider = providerFabric();
+        // Force the multicall3 RPC to fail so we hit the retryBySingleCalls fallback.
+        callStub = Sinon.stub<Parameters<ProviderCall>, ReturnType<ProviderCall>>().rejects(
+          new Error("multicall rpc error")
+        );
+        provider.call = callStub;
+        // Native getBalance on the underlying provider must still work.
+        getBalanceSpy = Sinon.spy(provider, "getBalance");
+        return provider;
+      };
+
+      const { wallet, blockTag } = await performGetBalanceTest({
+        provider: getProvider(
+          NOT_MULTICALL_ADDRESS,
+          customProviderFabric,
+          1,
+          undefined,
+          undefined,
+          true
+        ),
+        walletIndex: 4,
+      });
+
+      // Sentinel must never leak to provider.call - it should go straight to provider.getBalance.
+      for (const c of callStub.getCalls()) {
+        expect((c.args[0] as { to?: string }).to).to.not.eq(MULTICALL3_SELF_TARGET);
+      }
+      expect(getBalanceSpy.calledWith(wallet.address, blockTag)).to.eq(true);
+    });
+
     it("it should work when fallback fails partially", async () => {
       type ProviderCall = typeof ethers.providers.Provider.prototype.call;
       type Params = Parameters<ProviderCall>;
@@ -336,6 +420,44 @@ const describeMultiWrapperSuite = (
       expect(count2Casted.status).eq("fulfilled");
       expect(count2Casted.value.toString()).eq("1");
     });
+
+    /** Drives a getBalance round-trip through the multicall provider and asserts that the
+     *  returned value matches the underlying hardhat provider. To rule out vacuously-equal
+     *  zeros, the helper funds the chosen wallet with a deterministic amount first and
+     *  asserts the balance reflects that funding. Caller controls the provider, wallet
+     *  index, address-arg shape and any parallel op that should ride along in the flush. */
+    async function performGetBalanceTest(opts: {
+      provider: ethers.providers.Provider;
+      walletIndex: number;
+      wrapAddressIn?: (addr: string) => string | Promise<string>;
+      parallelOp?: (provider: ethers.providers.Provider, blockTag: number) => Promise<void>;
+    }) {
+      const signers = await hardhat.ethers.getSigners();
+      const wallet = signers[opts.walletIndex];
+      const funder = signers[0];
+
+      // Fund deterministically so the asserted balance has a known floor (above whatever
+      // the default hardhat starting balance is, in case the signer was reused).
+      const fundedAmount = ethers.utils.parseEther("3.14");
+      await funder
+        .sendTransaction({ to: wallet.address, value: fundedAmount })
+        .then((t) => t.wait());
+
+      const blockTag = await opts.provider.getBlockNumber();
+      const addrArg = opts.wrapAddressIn?.(wallet.address) ?? wallet.address;
+
+      const [multicallBalance, directBalance] = await Promise.all([
+        opts.provider.getBalance(addrArg, blockTag),
+        hardhat.ethers.provider.getBalance(wallet.address, blockTag),
+        opts.parallelOp?.(opts.provider, blockTag),
+      ]);
+
+      // (1) consistency with the canonical RPC, (2) actual non-zero balance reflecting
+      // our funding tx — neither check alone catches "both providers vacuously returned 0".
+      expect(multicallBalance.eq(directBalance)).to.eq(true);
+      expect(multicallBalance.gte(fundedAmount)).to.eq(true);
+      return { wallet, blockTag, multicallBalance };
+    }
   });
 };
 
