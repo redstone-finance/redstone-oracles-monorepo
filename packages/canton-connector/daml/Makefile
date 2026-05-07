@@ -30,7 +30,7 @@ run-%: build_test
 
 clean:
 	$(DAML) clean --all
-	rm -f $(ADAPTER_ID_TXT) $(PRICE_FEED_ID_TXT) $(CORE_ID_TXT) refresh_token.txt token.txt test/input.json test/sample_data/payload.hex
+	rm -f $(ADAPTER_ID_TXT) $(CORE_ID_TXT) refresh_token.txt token.txt test/input.json test/sample_data/payload.hex
 
 lint: lint-common lint-types lint-sdk lint-sdk-tests lint-core lint-adapter lint-price_pill lint-price_feed lint-interface lint-featured lint-factory lint-reward_factory lint-test
 	./lint-whitespaces.sh

@@ -1,0 +1,122 @@
+module RedStoneAdapter where
+
+import DA.List(dedup)
+import DA.Map as M
+import DA.Optional(fromOptional, mapOptional)
+import RedStone.GetPrices as G
+import RedStoneTypes
+import IRedStoneCore
+import IRedStoneAdapter
+import IRedStonePricePill
+import IRedStonePricePillFactory
+import IRedStoneRewardFactory
+import WritePricesContext
+import Internal.ProcessPayload
+import Internal.PillRecord
+import Internal.Rewards
+import Config(unique_signer_count, adapter_config_fun)
+
+template RedStoneAdapter
+  with
+    adapterId : Text
+    owner : Party
+    updaters : [Party]
+    viewers : [Party]
+    feedData : M.Map RedStoneFeedId [PillRecord]
+    pillFactory : Optional (ContractId IRedStonePricePillFactory)
+    rewardState: Optional RewardState
+    rewardFactory : Optional (ContractId IRedStoneRewardFactory)
+  where
+    signatory owner
+    observer viewers, updaters
+
+    interface instance IRedStoneCore for RedStoneAdapter where
+      view = RedStoneCoreView with coreId = adapterId
+
+      iRedStoneCore_ShouldVerifyViewer _ = True
+      iRedStoneCore_VerifyViewer caller = assertMsg "GetPrices: caller must be a viewer or an updater" $ caller `elem` (viewers ++ updaters)
+
+      iRedStoneCore_GetPricesImpl caller feedIds currentTime payloadHex =
+        maybeCreateRewardsWithoutState caller rewardFactory (length feedIds)
+          >> G.getPricesNumeric (adapter_config_fun feedIds currentTime) payloadHex
+
+    interface instance IRedStoneAdapter for RedStoneAdapter where
+      view = RedStoneAdapterView with adapterId
+
+      iRedStoneAdapter_VerifyUpdater caller = assertMsg "WritePrices: caller must be an updater" $ caller `elem` updaters
+      iRedStoneAdapter_VerifyViewer caller = assertMsg "Read: caller must be a viewer or an updater" $ caller `elem` (viewers ++ updaters)
+
+      iRedStoneAdapter_WritePricesImpl caller self feedIds currentTime payloadHex contextOrNone = do
+        let context = fromOptional empty_write_prices_context contextOrNone
+
+        let ctx = WriteContext with caller, owner, updaters, viewers, paidTrafficCost = None
+        hasNewValues <- hasNewPrices ctx adapterId feedData feedIds currentTime payloadHex
+
+        if not hasNewValues then
+          pure self
+        else
+          exercise (coerceContractId @IRedStoneAdapter @RedStoneAdapter self) WritePricesConsuming with caller, feedIds, currentTime, payloadHex, context
+
+      iRedStoneAdapter_ReadPriceDataImpl feedIds = do
+        let getPriceData feedId =
+              case M.lookup feedId feedData of
+                None -> None
+                Some (newest :: _) -> Some newest.priceData
+                Some [] -> None
+        pure $ map getPriceData feedIds
+
+      iRedStoneAdapter_ReadPricesImpl feedIds = do
+        let getPriceValue feedId =
+              case M.lookup feedId feedData of
+                None -> error $ "Value not found for " <> show feedId
+                Some (newest :: _) -> newest.priceData.value
+                Some [] -> error $ "Value not found for " <> show feedId
+        pure $ map getPriceValue feedIds
+
+      iRedStoneAdapter_GetUniqueSignerThresholdImpl () = do
+        pure unique_signer_count
+
+    -- Internal consuming choice for atomic write-and-replace with full payload verification
+    choice WritePricesConsuming : ContractId IRedStoneAdapter
+      with
+        caller : Party
+        feedIds : [RedStoneFeedId]
+        currentTime : Time
+        payloadHex : PayloadHex
+        context : WritePricesContext
+      controller caller
+      do
+        assertMsg "WritePricesConsuming: caller must be an updater" $ caller `elem` updaters
+        
+        let allViewers = dedup $ viewers <> fromOptional [] context.additionalPillViewers
+        let ctx = WriteContext with caller, owner, updaters, viewers = allViewers, paidTrafficCost = context.paidTrafficCost
+        let factories = Factories with pillFactory, rewardFactory
+        let currentState = AdapterState with feedData, rewardState
+
+        newState <- processAndWritePrices ctx factories adapterId currentState feedIds currentTime payloadHex
+        newCid <- create this with feedData = newState.feedData, rewardState = newState.rewardState
+        
+        pure $ toInterfaceContractId @IRedStoneAdapter newCid
+
+    choice UpdatePillFactory : ContractId RedStoneAdapter
+      with newPillFactory : Optional (ContractId IRedStonePricePillFactory)
+      controller owner
+      do
+        create this with pillFactory = newPillFactory
+
+    choice UpdateRewardFactory : ContractId RedStoneAdapter
+      with newRewardFactory : Optional (ContractId IRedStoneRewardFactory)
+      controller owner
+      do
+        create this with rewardFactory = newRewardFactory
+
+    choice UnlinkAllPills : ([ContractId IRedStonePricePill], ContractId RedStoneAdapter)
+      controller owner
+      do
+        let feedDataList = M.toList feedData
+        let linkedPills = concatMap (\(_, vs) -> mapOptional (\r -> r.pillCid) vs) feedDataList
+        let unlinkAll = map (\(k, vs) -> (k, map (\r -> r with pillCid = None) vs)) feedDataList
+        
+        adapterCid <- create this with feedData = M.fromList unlinkAll
+
+        pure (linkedPills, adapterCid)

@@ -200,7 +200,7 @@ get-core-id-by-interface: get-token
 	      } \
 	    }, \
 	    "activeAtOffset": '"$$LEDGER_END"' \
-	  }' | jq -r '.[].contractEntry.JsActiveContract.createdEvent | select(.createArgument.coreId == "$(ADAPTER_NAME)") | .contractId'); \
+	  }' | jq -r '.[].contractEntry.JsActiveContract.createdEvent | select(.createArgument.coreId == "$(CORE_NAME)") | .contractId'); \
 	echo "$$CONTRACT_ID" > $(CORE_ID_TXT); \
 	echo "Core ID saved: $$CONTRACT_ID at offset $$LEDGER_END"
 
