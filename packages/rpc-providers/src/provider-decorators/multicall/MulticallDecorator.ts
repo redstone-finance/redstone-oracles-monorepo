@@ -1,27 +1,43 @@
 import { BlockTag, TransactionRequest } from "@ethersproject/abstract-provider";
 import {
+  type ChainConfigs,
   getChainConfigByNetworkId,
   getLocalChainConfigs,
-  type ChainConfigs,
 } from "@redstone-finance/chain-configs";
 import { loggerFactory, RedstoneCommon } from "@redstone-finance/utils";
-import { providers } from "ethers";
+import { BigNumber, providers } from "ethers";
 import { Deferrable } from "ethers/lib/utils";
 import { z } from "zod";
-import { Multicall3Request, safeExecuteMulticall3 } from "./Multicall3Caller";
+import {
+  GET_ETH_BALANCE_FN,
+  MULTICALL3_INTERFACE,
+  MULTICALL3_SELF_TARGET,
+  Multicall3Request,
+  safeExecuteMulticall3,
+} from "./Multicall3Caller";
 import { blockTagToBlockId, MulticallBuffer } from "./MulticallBuffer";
 
-async function prepareMulticall3Request(
-  tx: Deferrable<TransactionRequest>,
-  chainId: number,
-  chainConfigs?: ChainConfigs
-) {
-  const call: Multicall3Request = {
+async function prepareMulticall3Call(
+  tx: Deferrable<TransactionRequest>
+): Promise<Multicall3Request> {
+  return {
     callData: (await tx["data"]) as string,
     target: (await tx["to"]) as string,
     allowFailure: true,
   };
+}
 
+function prepareMulticall3GetBalanceCall(resolvedAddress: string): Multicall3Request {
+  const callData = MULTICALL3_INTERFACE.encodeFunctionData(GET_ETH_BALANCE_FN, [resolvedAddress]);
+
+  return { callData, allowFailure: true, target: MULTICALL3_SELF_TARGET };
+}
+
+function decorateMulticall3Request(
+  call: Multicall3Request,
+  chainId: number,
+  chainConfigs?: ChainConfigs
+) {
   const multicall3Info = getChainConfigByNetworkId(
     chainConfigs ?? getLocalChainConfigs(),
     chainId
@@ -43,6 +59,7 @@ export type MulticallDecoratorOptions = {
   autoResolveInterval?: number;
   multicallAddress?: string;
   retryBySingleCalls?: boolean;
+  useGetBalanceMulticall?: boolean;
   chainConfigs?: ChainConfigs;
 };
 
@@ -63,6 +80,9 @@ const parseMulticallConfig = (opts: MulticallDecoratorOptions) => {
     retryBySingleCalls:
       opts.retryBySingleCalls ??
       RedstoneCommon.getFromEnv("MULTICALL_RETRY_BY_SINGLE_CALLS", z.boolean().default(false)),
+    useGetBalanceMulticall:
+      opts.useGetBalanceMulticall ??
+      RedstoneCommon.getFromEnv("MULTICALL_USE_GET_BALANCE", z.boolean().default(true)),
   };
 };
 
@@ -121,17 +141,9 @@ export function MulticallDecorator<T extends providers.Provider>(
       });
   };
 
-  const call = async (
-    transaction: Deferrable<TransactionRequest>,
-    blockTag?: BlockTag | Promise<BlockTag>
-  ): Promise<string> => {
-    chainId = await chainIdPromise;
-    const [multicall3Request, resolvedBlockTag] = await Promise.all([
-      prepareMulticall3Request(transaction, chainId, options.chainConfigs),
-      blockTag,
-    ]);
-
+  function pushEntry(multicall3Request: Multicall3Request, resolvedBlockTag?: BlockTag) {
     const { promise, resolve, reject } = createDeferredPromise<string>();
+
     const entry = {
       ...multicall3Request,
       blockTag: resolvedBlockTag,
@@ -159,10 +171,52 @@ export function MulticallDecorator<T extends providers.Provider>(
       executeCallsFromQueue(resolvedBlockTag);
     }
 
-    return await promise;
+    return promise;
+  }
+
+  const call = async (
+    transaction: Deferrable<TransactionRequest>,
+    blockTag?: BlockTag | Promise<BlockTag>
+  ): Promise<string> => {
+    const [resolvedChainId, requestCall, resolvedBlockTag] = await Promise.all([
+      chainIdPromise,
+      prepareMulticall3Call(transaction),
+      blockTag,
+    ]);
+    chainId = resolvedChainId;
+
+    const multicall3Request = decorateMulticall3Request(requestCall, chainId, options.chainConfigs);
+
+    return await pushEntry(multicall3Request, resolvedBlockTag);
+  };
+
+  const getBalance = async (
+    addressOrName: string | Promise<string>,
+    blockTag?: BlockTag | Promise<BlockTag>
+  ): Promise<BigNumber> => {
+    const [resolvedChainId, resolvedAddress, resolvedBlockTag] = await Promise.all([
+      chainIdPromise,
+      addressOrName,
+      blockTag,
+    ]);
+    chainId = resolvedChainId;
+    const multicall3getBalanceRequest = prepareMulticall3GetBalanceCall(resolvedAddress);
+
+    const multicall3Request = decorateMulticall3Request(
+      multicall3getBalanceRequest,
+      chainId,
+      options.chainConfigs
+    );
+
+    const result = await pushEntry(multicall3Request, resolvedBlockTag);
+
+    return BigNumber.from(result);
   };
 
   modifiedProvider.call = call;
+  if (config.useGetBalanceMulticall) {
+    modifiedProvider.getBalance = getBalance;
+  }
 
   return () => modifiedProvider;
 }
