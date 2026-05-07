@@ -1,0 +1,31 @@
+module RedStone.Internal.Verify
+    (
+        verificationError
+        , verifyTimestamps
+        , verifyPayloadLength
+    ) where
+
+import DA.List as L
+import DA.Text as T
+import RedStone.Internal.Const
+import RedStone.Internal.Error
+
+-- Public
+
+verificationError = RedStoneError Verification
+
+verifyTimestamps config dataPackages =
+    let
+        timestamps dataPackages = dedup (map (\dataPackage -> dataPackage.timestamp) dataPackages)
+        ts = timestamps dataPackages
+
+        _ = L.length ts == 1 ??? verificationError "Timestamps are non-equal" ts
+
+        timestamp = head ts
+
+        _ = timestamp <= config.currentTimestamp + config.maxAheadMs ??? verificationError "Timestamp too far in the future" (timestamp, config.currentTimestamp + config.maxAheadMs)
+        _ = timestamp >= config.currentTimestamp - config.maxDelayMs ??? verificationError "Timestamp too old" (timestamp, config.currentTimestamp - config.maxDelayMs)
+    in timestamp
+
+verifyPayloadLength hex =
+    T.length hex <= max_payload_hex_chars ??? RedStoneError Processing "Payload too large" (T.length hex, max_payload_hex_chars)

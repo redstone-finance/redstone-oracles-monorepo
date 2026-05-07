@@ -45,7 +45,7 @@ export class CantonClient {
 
   constructor(
     private readonly baseUrl: string,
-    network: CantonNetwork = "devnet",
+    public readonly network: CantonNetwork = "devnet",
     private readonly tokenProvider?: (options: ApiRequestOptions) => Promise<string>
   ) {
     this.Defs = AllDefs[network];

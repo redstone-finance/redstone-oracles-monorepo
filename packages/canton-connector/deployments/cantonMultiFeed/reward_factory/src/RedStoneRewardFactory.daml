@@ -1,0 +1,30 @@
+module RedStoneRewardFactory where
+
+import IRedStoneRewardFactory
+import Featured
+import RewardConfig
+
+template RedStoneRewardFactory
+  with
+    factoryId: Text
+    owner : Party
+    creators : [Party]
+    beneficiary : Party
+    featuredCid : RedStoneFeaturedContract
+  where
+    signatory owner, beneficiary
+    observer creators
+
+    interface instance IRedStoneRewardFactory for RedStoneRewardFactory where
+      view = RedStoneRewardFactoryView with factoryId
+
+      iRedStoneRewardFactory_VerifyCreator caller = assertMsg "CreateRewards: caller must be a creator" $ caller `elem` creators
+
+      iRedStoneRewardFactory_CreateRewardsImpl count = do
+        let weight = rewardWeight count
+
+        if weight >= 1.0 then
+          takeRewards weight beneficiary featuredCid
+            >> pure weight
+        else
+          pure 0.0

@@ -7,7 +7,7 @@ import {
   PricesCantonContractAdapter,
   readAdditionalPillViewers,
 } from "../src";
-import { makeDefaultClient, makePartyId, readNetwork } from "./utils";
+import { makeDefaultClient, makePartyId } from "./utils";
 
 const VIEWER_PARTY_NAME = `RedStoneOracleViewer`;
 const UPDATER_PARTY_NAME = `RedStoneOracleUpdater`;
@@ -30,7 +30,7 @@ async function main() {
 
   const SUFFIX_24_7 = "---24_7";
   const dataPackagesIds =
-    readNetwork() === "mainnet"
+    client.network === "mainnet"
       ? [
           "XYZ100---PERP",
           ...["AAPL", "TSLA", "NVDA", "GOOGL"].map((feed) => `${feed}${SUFFIX_24_7}`),
