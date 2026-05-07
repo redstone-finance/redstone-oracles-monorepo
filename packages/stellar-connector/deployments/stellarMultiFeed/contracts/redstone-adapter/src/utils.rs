@@ -3,6 +3,18 @@ use soroban_sdk::{Env, String};
 
 const MS_IN_SEC: u64 = 1_000;
 
+/// Converts a `FeedId` (32-byte array) to a Soroban `String` by stripping
+/// leading and trailing zero bytes.
+///
+/// **Normalization caveat:** This function strips *all* leading and trailing
+/// zero bytes, so two distinct `FeedId` values can produce the same string. For
+/// example, `[0x00, 'B', 'T', 'C', 0x00, ...]` and `[0x00, 0x00, 'B', 'T', 'C',
+/// 0x00, ...]` both normalize to `"BTC"`. In practice this is not a problem
+/// because feed IDs arriving from the RedStone payload are always left-aligned
+/// with trailing zeros and will never carry leading zeros. However, any future
+/// code that deduplicates or indexes feed IDs must call this function *before*
+/// comparing — comparing raw `FeedId` bytes would incorrectly treat the two
+/// examples above as different feeds.
 pub fn feed_to_string(env: &Env, feed: FeedId) -> String {
     let feed_bytes = feed.to_array();
 

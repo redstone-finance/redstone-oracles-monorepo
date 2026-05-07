@@ -2,32 +2,43 @@
 extern crate alloc;
 
 mod config;
+mod env_extensions;
 mod event;
+mod price_data_storage;
 mod utils;
 
+use core::num::NonZero;
+
 use common::{
-    ownable::Ownable, upgradable::Upgradable, PriceData, CONTRACT_TTL_EXTEND_TO_LEDGERS,
-    CONTRACT_TTL_THRESHOLD_LEDGERS, MISSING_STORAGE_ENTRY,
+    ownable::Ownable, redstone_adapter::RedStoneAdapterTrait, upgradable::Upgradable, PriceData,
 };
 use redstone::{
     contract::verification::{verify_data_staleness, UpdateTimestampVerifier},
     core::process_payload,
     network::error::Error as RedStoneError,
-    soroban::helpers::ToBytes,
-    FeedValue,
+    soroban::{helpers::ToBytes, SorobanRedStoneConfig},
+    ConfigFactory, FeedValue,
 };
 use soroban_sdk::{
-    contract, contractimpl, storage::Persistent, Address, Bytes, BytesN, Env, Error, String, Vec,
-    U256,
+    contract, contractimpl, contracttype, Address, Bytes, BytesN, Env, Error, String, Vec, U256,
 };
 
-use self::config::{DATA_STALENESS, FEED_TTL_EXTEND_TO, FEED_TTL_THRESHOLD, STELLAR_CONFIG};
+use self::config::{DATA_STALENESS, STELLAR_CONFIG};
 use crate::{
+    env_extensions::EnvExt,
     event::WritePrices,
     utils::{feed_to_string, now},
 };
 
 const MISSING_FEED_CODE: u32 = 10;
+const HISTORY_LIMIT: NonZero<u32> = NonZero::new(10).unwrap();
+
+#[contracttype]
+#[derive(Clone, Debug)]
+enum StorageKey {
+    Feed(String),
+    HistoryLimit,
+}
 
 #[contract]
 pub struct RedStoneAdapter;
@@ -82,11 +93,7 @@ impl RedStoneAdapter {
         payload: Bytes,
     ) -> Result<(), Error> {
         updater.require_auth();
-
-        env.storage().instance().extend_ttl(
-            CONTRACT_TTL_THRESHOLD_LEDGERS,
-            CONTRACT_TTL_EXTEND_TO_LEDGERS,
-        );
+        env.extend_instance_ttl();
 
         let verifier =
             UpdateTimestampVerifier::verifier(&updater, &STELLAR_CONFIG.trusted_updaters(env));
@@ -94,8 +101,6 @@ impl RedStoneAdapter {
         let (package_timestamp, prices) =
             get_prices_from_payload(env, &feed_ids, &payload).map_err(error_from_redstone_error)?;
         let write_timestamp = now(env);
-
-        let db = env.storage().persistent();
 
         let mut updated_feeds = Vec::new(env);
 
@@ -106,7 +111,7 @@ impl RedStoneAdapter {
                 write_timestamp: write_timestamp.as_millis(),
             };
 
-            if update_feed(&db, &verifier, &feed_id, &price_data) {
+            if update_feed(env, &verifier, &feed_id, &price_data, HISTORY_LIMIT.get()) {
                 updated_feeds.push_back(price_data.clone());
             }
         }
@@ -122,51 +127,52 @@ impl RedStoneAdapter {
     pub fn read_prices(env: &Env, feed_ids: Vec<String>) -> Result<Vec<U256>, Error> {
         let mut prices = Vec::new(env);
 
-        let db = env.storage().persistent();
         for feed_id in feed_ids {
-            let feed_data = db.get(&feed_id).ok_or(MISSING_STORAGE_ENTRY)?;
-            let checked_feed_data = Self::check_price_data(env, feed_data)?;
-
-            prices.push_back(checked_feed_data.price);
+            let last = env.try_get_latest_price_data_for_feed(&feed_id)?;
+            let checked = Self::check_price_data(env, last)?;
+            prices.push_back(checked.price);
         }
 
         Ok(prices)
     }
 
     pub fn read_timestamp(env: &Env, feed_id: String) -> Result<u64, Error> {
-        let price_data = env
-            .storage()
-            .persistent()
-            .get(&feed_id)
-            .ok_or(MISSING_STORAGE_ENTRY)?;
+        let last = env.try_get_latest_price_data_for_feed(&feed_id)?;
+        let checked = Self::check_price_data(env, last)?;
 
-        let checked_priced_data = Self::check_price_data(env, price_data)?;
-
-        Ok(checked_priced_data.package_timestamp)
+        Ok(checked.package_timestamp)
     }
 
     pub fn read_price_data_for_feed(env: &Env, feed_id: String) -> Result<PriceData, Error> {
-        let price_data = env
-            .storage()
-            .persistent()
-            .get(&feed_id)
-            .ok_or(MISSING_STORAGE_ENTRY)?;
+        let last = env.try_get_latest_price_data_for_feed(&feed_id)?;
 
-        Self::check_price_data(env, price_data)
+        Self::check_price_data(env, last)
     }
 
     pub fn read_price_data(env: &Env, feed_ids: Vec<String>) -> Result<Vec<PriceData>, Error> {
         let mut price_data = Vec::new(env);
 
-        let db = env.storage().persistent();
         for feed_id in feed_ids {
-            let feed_data = db.get(&feed_id).ok_or(MISSING_STORAGE_ENTRY)?;
-            let checked_feed_data = Self::check_price_data(env, feed_data)?;
-
-            price_data.push_back(checked_feed_data);
+            let last = env.try_get_latest_price_data_for_feed(&feed_id)?;
+            let checked = Self::check_price_data(env, last)?;
+            price_data.push_back(checked);
         }
 
         Ok(price_data)
+    }
+
+    pub fn read_price_history(
+        env: &Env,
+        feed_id: String,
+        limit: u32,
+    ) -> Result<Vec<PriceData>, Error> {
+        let storage = env.get_data_for_feed(&feed_id)?;
+        let data = storage.get_all();
+
+        match data.len().checked_sub(limit) {
+            Some(0) | None => Ok(data),
+            Some(start) => return Ok(data.slice(start..)),
+        }
     }
 
     pub fn check_price_data(env: &Env, price_data: PriceData) -> Result<PriceData, Error> {
@@ -181,6 +187,16 @@ impl RedStoneAdapter {
     }
 }
 
+impl RedStoneAdapterTrait for RedStoneAdapter {
+    fn read_price_data_for_feed(env: &Env, feed_id: String) -> Result<PriceData, Error> {
+        Self::read_price_data_for_feed(env, feed_id)
+    }
+
+    fn read_price_history(env: &Env, feed_id: String, limit: u32) -> Result<Vec<PriceData>, Error> {
+        Self::read_price_history(env, feed_id, limit)
+    }
+}
+
 fn get_prices_from_payload(
     env: &Env,
     feed_ids: &Vec<String>,
@@ -192,7 +208,8 @@ fn get_prices_from_payload(
         .collect();
     let block_timestamp = now(env);
 
-    let mut config = STELLAR_CONFIG.redstone_config(env, feed_ids, block_timestamp)?;
+    let mut config: SorobanRedStoneConfig<'_> =
+        STELLAR_CONFIG.redstone_config(env, feed_ids, block_timestamp)?;
     let result = process_payload(&mut config, payload.to_alloc_vec())?;
 
     let mut prices = Vec::new(env);
@@ -207,12 +224,14 @@ fn get_prices_from_payload(
 }
 
 fn update_feed(
-    db: &Persistent,
+    env: &Env,
     verifier: &UpdateTimestampVerifier,
     feed_id: &String,
     price_data: &PriceData,
+    limit: u32,
 ) -> bool {
-    let old_price_data: Option<PriceData> = db.get(feed_id);
+    let mut storage = env.get_data_for_feed_or_default(feed_id);
+    let old_price_data = env.get_latest_price_data_for_feed(feed_id);
 
     if verifier
         .verify_timestamp(
@@ -229,8 +248,11 @@ fn update_feed(
         return false;
     }
 
-    db.set(feed_id, price_data);
-    db.extend_ttl(feed_id, FEED_TTL_THRESHOLD, FEED_TTL_EXTEND_TO);
+    if storage.push(price_data.clone(), limit).is_err() {
+        return false;
+    }
+
+    env.save_feed(feed_id, &storage, price_data);
 
     true
 }
