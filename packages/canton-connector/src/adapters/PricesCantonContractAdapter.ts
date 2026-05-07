@@ -11,7 +11,7 @@ import { DEFS_KEY_FEATURED_APP_RIGHT } from "./CoreClientCantonContractAdapter";
 import { IADAPTER_TEMPLATE_NAME, PricesCantonReadOnlyAdapter } from "./PricesCantonReadOnlyAdapter";
 
 export const WRITE_PRICES_CHOICE = "WritePrices";
-const LEGACY_INTERFACE_ID = "#redstone-interface-v12";
+const MIN_TRAFFIC_COST_TO_SEND = 1;
 
 export class PricesCantonContractAdapter
   extends PricesCantonReadOnlyAdapter
@@ -45,16 +45,15 @@ export class PricesCantonContractAdapter
   }
 
   async exerciseWritePricesChoice(actAs: string, argument: object) {
-    const paidTrafficCost = this.trafficMeter.consumeAccumulated();
-    const context =
-      this.interfaceId === LEGACY_INTERFACE_ID
-        ? { additionalPillViewers: this.additionalPillViewers }
-        : {
-            context: {
-              additionalPillViewers: this.additionalPillViewers,
-              paidTrafficCost: paidTrafficCost?.toString(),
-            },
-          };
+    let paidTrafficCost = this.trafficMeter.consumeAccumulated();
+    paidTrafficCost = Math.max(paidTrafficCost ?? 0, MIN_TRAFFIC_COST_TO_SEND);
+
+    const context = {
+      context: {
+        additionalPillViewers: this.additionalPillViewers,
+        paidTrafficCost: paidTrafficCost.toString(),
+      },
+    };
 
     const { result, metadata } = await this.exerciseChoice<ActiveContractData | string>(
       this.config.viewerPartyId,
