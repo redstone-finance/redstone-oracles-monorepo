@@ -8,13 +8,9 @@ export async function batchPromises<T>(
   promises: (() => Promise<T>)[],
   failOnError = false
 ): Promise<Awaited<T>[]> {
-  const { results, errors } = await batchPromisesAndSplitSettlements(
-    promises,
-    batchSize,
-    msBetweenBatches
-  );
+  const batchResults = await batchSettled(promises, batchSize, msBetweenBatches);
 
-  return assertThenReturnOrFail(results, errors, "batch operation failed", failOnError);
+  return splitSettlementsAndAssert(batchResults, failOnError);
 }
 
 export async function batchSettled<T>(
@@ -22,13 +18,18 @@ export async function batchSettled<T>(
   batchSize: number,
   msBetweenBatches = 0
 ) {
+  const batches = _.chunk(promises, batchSize);
+
+  return await runPromiseBatches(batches, msBetweenBatches);
+}
+
+export async function runPromiseBatches<T>(batches: (() => Promise<T>)[][], msBetweenBatches = 0) {
   const batchResults = [];
-  for (let i = 0; i < promises.length; i += batchSize) {
+  for (let i = 0; i < batches.length; i += 1) {
     if (i !== 0 && msBetweenBatches) {
       await sleep(msBetweenBatches);
     }
-    const batch = promises.slice(i, i + batchSize);
-    batchResults.push(...(await Promise.allSettled(batch.map((f) => f()))));
+    batchResults.push(...(await Promise.allSettled(batches[i].map((f) => f()))));
   }
 
   return batchResults;
@@ -59,4 +60,13 @@ export function splitSettlements<T>(batchResults: PromiseSettledResult<T>[]) {
   errors.push(...filteredErrors.map((r) => r.reason as Error));
 
   return { results, errors };
+}
+
+export function splitSettlementsAndAssert<T>(
+  batchResults: PromiseSettledResult<T>[],
+  failOnError = false
+) {
+  const { results, errors } = splitSettlements(batchResults);
+
+  return assertThenReturnOrFail(results, errors, "batch operation failed", failOnError);
 }
