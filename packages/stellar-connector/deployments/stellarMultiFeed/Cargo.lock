@@ -953,8 +953,8 @@ dependencies = [
 
 [[package]]
 name = "redstone"
-version = "4.0.0-pre1"
-source = "git+https://github.com/redstone-finance/rust-sdk?tag=4.0.0-pre1#09bf0648701c1325fa3f22d5b44c9c173d9d4bc6"
+version = "4.0.0"
+source = "git+https://github.com/redstone-finance/rust-sdk?tag=4.0.0#50cd703eb908d249d65f322192af1757e56afc97"
 dependencies = [
  "hex-literal 0.4.1",
  "soroban-sdk",
