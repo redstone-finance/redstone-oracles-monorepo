@@ -2681,17 +2681,6 @@
         }
       }
     },
-    "USR": {
-      "source": ["aerodrome-base-usdc", "curve-ethereum-usdc", "curve-ethereum-gho"],
-      "deviationCheck": {
-        "deviationWithRecentValues": {
-          "maxPercent": 2,
-          "maxDelayMilliseconds": 120000
-        }
-      },
-      "denomination": "USD",
-      "rateFeed": false
-    },
     "HONEY": {
       "source": [
         "kodiak-berachain-susde-500",
@@ -3458,39 +3447,6 @@
       "source": ["non-usd-based"],
       "denomination": "USDT",
       "rateFeed": false
-    },
-    "USR_FUNDAMENTAL": {
-      "source": ["ethereum-evm-fetcher-reserve"],
-      "denomination": "USD",
-      "rateFeed": true,
-      "deviationCheck": {
-        "deviationWithRecentValues": {
-          "maxPercent": 0.1,
-          "maxDelayMilliseconds": 120000
-        }
-      }
-    },
-    "RLP_FUNDAMENTAL": {
-      "source": ["ethereum-evm-fetcher-resolv-price-provider"],
-      "denomination": "USD",
-      "rateFeed": true,
-      "deviationCheck": {
-        "deviationWithRecentValues": {
-          "maxPercent": 1,
-          "maxDelayMilliseconds": 120000
-        }
-      }
-    },
-    "wstUSR_FUNDAMENTAL": {
-      "source": ["ethereum-evm-fetcher-resolv"],
-      "denomination": "USR",
-      "rateFeed": true,
-      "deviationCheck": {
-        "deviationWithRecentValues": {
-          "maxPercent": 1,
-          "maxDelayMilliseconds": 120000
-        }
-      }
     },
     "SUSHI": {
       "source": [

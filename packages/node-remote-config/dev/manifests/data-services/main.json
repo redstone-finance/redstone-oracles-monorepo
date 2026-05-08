@@ -3340,11 +3340,6 @@
       "denomination": "ETH",
       "rateFeed": true
     },
-    "USR": {
-      "source": ["aerodrome-base-usdc", "curve-ethereum-usdc", "curve-ethereum-gho"],
-      "denomination": "USD",
-      "rateFeed": false
-    },
     "HONEY": {
       "source": [
         "kodiak-berachain-susde-500",
@@ -7434,21 +7429,6 @@
       "source": ["non-usd-based"],
       "denomination": "USDT",
       "rateFeed": false
-    },
-    "USR_FUNDAMENTAL": {
-      "source": ["ethereum-evm-fetcher-reserve"],
-      "denomination": "USD",
-      "rateFeed": true
-    },
-    "RLP_FUNDAMENTAL": {
-      "source": ["ethereum-evm-fetcher-resolv-price-provider"],
-      "denomination": "USD",
-      "rateFeed": true
-    },
-    "wstUSR_FUNDAMENTAL": {
-      "source": ["ethereum-evm-fetcher-resolv"],
-      "denomination": "USR",
-      "rateFeed": true
     },
     "SUSHI": {
       "source": [
