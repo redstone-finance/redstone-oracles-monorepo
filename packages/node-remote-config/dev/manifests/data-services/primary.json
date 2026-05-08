@@ -3636,8 +3636,19 @@
       }
     },
     "cUSD_FUNDAMENTAL": {
-      "source": ["ethereum-evm-fetcher-cap"],
+      "source": ["ethereum-evm-fetcher-cap-cusd"],
       "denomination": "USD",
+      "rateFeed": true,
+      "deviationCheck": {
+        "deviationWithRecentValues": {
+          "maxPercent": 5,
+          "maxDelayMilliseconds": 120000
+        }
+      }
+    },
+    "stcUSD_FUNDAMENTAL": {
+      "source": ["ethereum-evm-fetcher-cap-stcusd"],
+      "denomination": "cUSD",
       "rateFeed": true,
       "deviationCheck": {
         "deviationWithRecentValues": {
