@@ -1,5 +1,0 @@
-module RedStone.Internal.Const where
-
-byte_value = 256
-int_size = 8
-u256_size = 32
