@@ -21,7 +21,7 @@ type FeeHistoryResponse = { reward: string[] };
 const BASE_FEE_SCALER = 2;
 
 // Protection against "replacement transaction underpriced" errors
-const ANTI_UNDERPRICE_BUMP = 1.01;
+const ANTI_UNDERPRICE_BUMP = 1.11;
 
 /**
  * Gas estimator for EIP-1559 compatible chains.
@@ -31,7 +31,7 @@ const ANTI_UNDERPRICE_BUMP = 1.01;
  *   for fee estimation across retry attempts. This helps transactions get included faster
  *   on subsequent attempts without immediately jumping to very high fees.
  * - Anti-underprice protection: Tracks previously used fees and ensures each retry is at least
- *   1% higher to prevent "replacement transaction underpriced" errors.
+ *   11% higher to prevent "replacement transaction underpriced" errors.
  */
 export class Eip1559GasEstimatorV2 implements GasEstimator<Eip1559Fee> {
   private previousFee: Eip1559Fee = {
@@ -186,7 +186,7 @@ export class Eip1559GasEstimatorV2 implements GasEstimator<Eip1559Fee> {
     const wasBumped = scaledPriorityFee < minRequiredPriorityFee;
     if (wasBumped) {
       this.opts.logger(
-        `New fee ${scaledPriorityFee} is smaller than previous fee bumped by 1% (${minRequiredPriorityFee}), using bumped value to avoid underpriced error`
+        `New fee ${scaledPriorityFee} is smaller than previous fee bumped by 11% (${minRequiredPriorityFee}), using bumped value to avoid underpriced error`
       );
     }
   }
