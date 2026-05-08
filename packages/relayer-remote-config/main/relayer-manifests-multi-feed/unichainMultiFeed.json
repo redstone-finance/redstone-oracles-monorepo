@@ -81,9 +81,6 @@
     },
     "wstETH/stETH": {
       "priceFeedAddress": "0xC3346631E0A9720582fB9CAbdBEA22BC2F57741b"
-    },
-    "USR_FUNDAMENTAL": {
-      "priceFeedAddress": "0xbbF121624c3b85C929Ac83872bf6c86b0976A55e"
     }
   }
 }
