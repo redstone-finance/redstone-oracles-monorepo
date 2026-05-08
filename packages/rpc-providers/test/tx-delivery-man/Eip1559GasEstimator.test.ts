@@ -111,7 +111,7 @@ describe("Eip1559GasEstimatorV2", () => {
     });
 
     describe("anti-underprice protection", () => {
-      it("should enforce 1% minimum increase when network fees drop", () => {
+      it("should enforce 11% minimum increase when network fees drop", () => {
         const estimator = createEip1559Estimator({
           percentileOfPriorityFee: 50,
           multiplier: 1.1,
@@ -125,16 +125,16 @@ describe("Eip1559GasEstimatorV2", () => {
         expect(firstScaled.maxPriorityFeePerGas).to.equal(550);
         expect(firstScaled.maxFeePerGas).to.equal(1050); // 1000 + (550 - 500)
 
-        // Second attempt with lower network fees - should be bumped to 1% above previous
+        // Second attempt with lower network fees - should be bumped to 11% above previous
         // Without protection: 50 * 1.1^1 = 55
-        // With protection: ceil(550 * 1.01) = 556
+        // With protection: ceil(550 * 1.11) = 611
         const secondScaled = estimator.scaleFees(
           { maxFeePerGas: 100, maxPriorityFeePerGas: 50 },
           1
         );
 
-        expect(secondScaled.maxPriorityFeePerGas).to.equal(556); // Bumped from 55 to 556
-        expect(secondScaled.maxFeePerGas).to.equal(1061); // ceil(1050 * 1.01)
+        expect(secondScaled.maxPriorityFeePerGas).to.equal(611); // Bumped from 55 to 611
+        expect(secondScaled.maxFeePerGas).to.equal(1166); // ceil(1050 * 1.11)
       });
 
       it("should log bump message when anti-underprice protection activates", () => {
@@ -148,7 +148,7 @@ describe("Eip1559GasEstimatorV2", () => {
         estimator.scaleFees({ maxFeePerGas: 1000, maxPriorityFeePerGas: 500 }, 1);
         estimator.scaleFees({ maxFeePerGas: 100, maxPriorityFeePerGas: 50 }, 1);
 
-        expect(logs.some((log) => log.includes("smaller than previous fee bumped by 1%"))).to.be
+        expect(logs.some((log) => log.includes("smaller than previous fee bumped by 11%"))).to.be
           .true;
       });
 
@@ -164,7 +164,7 @@ describe("Eip1559GasEstimatorV2", () => {
         estimator.scaleFees({ maxFeePerGas: 1000, maxPriorityFeePerGas: 100 }, 2);
 
         // No bump should occur since fees naturally increase (100*2^1=200, 100*2^2=400)
-        expect(logs.some((log) => log.includes("smaller than previous fee bumped by 1%"))).to.be
+        expect(logs.some((log) => log.includes("smaller than previous fee bumped by 11%"))).to.be
           .false;
       });
 
@@ -185,8 +185,8 @@ describe("Eip1559GasEstimatorV2", () => {
           { maxFeePerGas: 1000, maxPriorityFeePerGas: 500 },
           2
         );
-        expect(firstTxAttempt2.maxPriorityFeePerGas).to.equal(605);
-        expect(firstTxAttempt2.maxFeePerGas).to.equal(1105);
+        expect(firstTxAttempt2.maxPriorityFeePerGas).to.equal(611);
+        expect(firstTxAttempt2.maxFeePerGas).to.equal(1166);
 
         const secondTxAttempt0 = estimator.scaleFees(
           { maxFeePerGas: 800, maxPriorityFeePerGas: 200 },
@@ -199,8 +199,8 @@ describe("Eip1559GasEstimatorV2", () => {
           { maxFeePerGas: 800, maxPriorityFeePerGas: 200 },
           1
         );
-        expect(secondTxAttempt1.maxPriorityFeePerGas).to.equal(220);
-        expect(secondTxAttempt1.maxFeePerGas).to.equal(820);
+        expect(secondTxAttempt1.maxPriorityFeePerGas).to.equal(223);
+        expect(secondTxAttempt1.maxFeePerGas).to.equal(889);
       });
     });
 
@@ -615,12 +615,12 @@ describe("Eip1559GasEstimatorV2", () => {
       // Scale for attempt 2: 100 * 1.25^2 = 156.25 -> 156
       const scaled2 = estimator.scaleFees(baseFees, 2);
       expect(scaled2.maxPriorityFeePerGas).to.equal(156);
-      expect(scaled2.maxFeePerGas).to.equal(356); // 300 + (156 - 100)
+      expect(scaled2.maxFeePerGas).to.equal(361); // ceil(325 * 1.11)
 
       // Scale for attempt 3: 100 * 1.25^3 = 195.3125 -> 195
       const scaled3 = estimator.scaleFees(baseFees, 3);
       expect(scaled3.maxPriorityFeePerGas).to.equal(195);
-      expect(scaled3.maxFeePerGas).to.equal(395); // 300 + (195 - 100)
+      expect(scaled3.maxFeePerGas).to.equal(401); // ceil(361 * 1.11)
     });
 
     it("should combine percentile progression, scaling, and anti-underprice protection", async () => {
@@ -669,22 +669,23 @@ describe("Eip1559GasEstimatorV2", () => {
       // Verify percentile progression
       expect(capturedPercentiles).to.deep.equal([50, 75, 95, 99, 99, 99]);
 
-      // Verify anti-underprice protection: each attempt must be at least 1% higher
+      // Verify anti-underprice protection: each attempt must be at least 11% higher
       for (let i = 1; i < allFees.length; i++) {
-        const minRequired = Math.ceil(allFees[i - 1].maxPriorityFeePerGas * 1.01);
+        const minRequired = Math.ceil(allFees[i - 1].maxPriorityFeePerGas * 1.11);
         expect(allFees[i].maxPriorityFeePerGas).to.be.at.least(
           minRequired,
-          `Attempt ${i}: priority fee must increase by at least 1%`
+          `Attempt ${i}: priority fee must increase by at least 11%`
         );
-        const minRequiredMax = Math.ceil(allFees[i - 1].maxFeePerGas * 1.01);
+        const minRequiredMax = Math.ceil(allFees[i - 1].maxFeePerGas * 1.11);
         expect(allFees[i].maxFeePerGas).to.be.at.least(
           minRequiredMax,
-          `Attempt ${i}: max fee must increase by at least 1%`
+          `Attempt ${i}: max fee must increase by at least 11%`
         );
       }
 
       // Verify bump message was logged when anti-underprice protection kicked in
-      expect(logs.some((log) => log.includes("smaller than previous fee bumped by 1%"))).to.be.true;
+      expect(logs.some((log) => log.includes("smaller than previous fee bumped by 11%"))).to.be
+        .true;
     });
 
     it("should use 1 gwei fallback and scale it on retry", async () => {
