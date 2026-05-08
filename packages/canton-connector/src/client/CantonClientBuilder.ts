@@ -1,17 +1,18 @@
 import { ChainTypeEnum, MultiExecutor } from "@redstone-finance/utils";
 import { chainIdToNetwork, networkToChainId } from "../CantonNetwork";
 import { CantonClient } from "./CantonClient";
-import { KeycloakTokenProviderParams } from "./KeycloakTokenProviderParams";
+import { TokenProvider } from "./CantonScanApiClient";
 import { KeycloakTokenProvider } from "./keycloak-token-provider";
-
-type TokenProvider = () => Promise<string>;
+import { KeycloakTokenProviderParams, makeKeycloakParams } from "./KeycloakTokenProviderParams";
 
 export class CantonClientBuilder extends MultiExecutor.ClientBuilder<CantonClient> {
   protected override chainType = ChainTypeEnum.enum.canton;
   private tokenProvider?: TokenProvider;
+  private scanApiTokenProvider?: TokenProvider;
 
   withTokenProvider(provider?: TokenProvider) {
     this.tokenProvider = provider;
+    this.scanApiTokenProvider = undefined;
 
     return this;
   }
@@ -21,9 +22,19 @@ export class CantonClientBuilder extends MultiExecutor.ClientBuilder<CantonClien
   }
 
   withKeycloakAuth(opts?: KeycloakTokenProviderParams | string) {
-    const tokenProvider = KeycloakTokenProvider.getInstance(opts);
+    const parsedOpts = makeKeycloakParams(opts);
 
-    return this.withTokenProvider(tokenProvider.getToken.bind(tokenProvider));
+    const ledgerClientId = parsedOpts.walletClientId ?? parsedOpts.clientId;
+    const ledgerProvider = KeycloakTokenProvider.getInstance({
+      ...parsedOpts,
+      clientId: ledgerClientId,
+    });
+    const scanProvider = KeycloakTokenProvider.getInstance(parsedOpts);
+
+    this.tokenProvider = ledgerProvider.getToken.bind(ledgerProvider);
+    this.scanApiTokenProvider = scanProvider.getToken.bind(scanProvider);
+
+    return this;
   }
 
   build() {
@@ -34,8 +45,11 @@ export class CantonClientBuilder extends MultiExecutor.ClientBuilder<CantonClien
       throw new Error("chainId is required");
     }
 
-    const network = chainIdToNetwork(this.chainId);
-
-    return new CantonClient(this.urls[0], network, this.tokenProvider);
+    return new CantonClient(
+      this.urls[0],
+      chainIdToNetwork(this.chainId),
+      this.tokenProvider,
+      this.scanApiTokenProvider
+    );
   }
 }
