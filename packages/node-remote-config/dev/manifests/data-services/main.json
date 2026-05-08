@@ -1205,15 +1205,6 @@
       "denomination": "USD",
       "rateFeed": false
     },
-    "BAL": {
-      "source": [
-        "gate-usdt",
-        "kraken-usd",
-        "kucoin-usdt"
-      ],
-      "denomination": "USD",
-      "rateFeed": false
-    },
     "ETHx": {
       "source": [
         "curve-ethereum-eth",
