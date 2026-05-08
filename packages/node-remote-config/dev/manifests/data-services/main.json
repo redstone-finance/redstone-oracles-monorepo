@@ -1595,22 +1595,6 @@
       "denomination": "ETH",
       "rateFeed": false
     },
-    "rsETH": {
-      "source": [
-        "camelot-v3-arbitrumone-weth",
-        "curve-arbitrumone-weth",
-        "fluid-ethereum-eth",
-        "uniswap-v3-ethereum-wsteth-500",
-        "uniswap-v4-ethereum-wsteth-394"
-      ],
-      "denomination": "USD",
-      "rateFeed": false
-    },
-    "rsETH/ETH": {
-      "source": ["non-usd-based"],
-      "denomination": "ETH",
-      "rateFeed": false
-    },
     "ezETH": {
       "source": [
         "aerodrome-cl-base-weth",

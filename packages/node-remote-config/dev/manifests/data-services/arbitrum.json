@@ -553,17 +553,6 @@
       "denomination": "USD",
       "rateFeed": false
     },
-    "rsETH": {
-      "source": [
-        "camelot-v3-arbitrumone-weth",
-        "curve-arbitrumone-weth",
-        "fluid-ethereum-eth",
-        "uniswap-v3-ethereum-wsteth-500",
-        "uniswap-v4-ethereum-wsteth-394"
-      ],
-      "denomination": "USD",
-      "rateFeed": false
-    },
     "CVX": {
       "source": [
         "binance-usdc",
@@ -1285,7 +1274,6 @@
       "ezETH",
       "frxETH",
       "rETH",
-      "rsETH",
       "sfrxETH",
       "stETH",
       "weETH",
