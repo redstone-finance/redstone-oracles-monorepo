@@ -32,12 +32,6 @@
     "wstETH/ETH": {
       "priceFeedAddress": "0xE23eCA12D7D2ED3829499556F6dCE06642AFd990"
     },
-    "RLP_FUNDAMENTAL": {
-      "priceFeedAddress": "0xb81131B6368b3F0a83af09dB4E39Ac23DA96C2Db"
-    },
-    "wstUSR_FUNDAMENTAL": {
-      "priceFeedAddress": "0x24c8964338Deb5204B096039147B8e8C3AEa42Cc"
-    },
     "TAC": {
       "priceFeedAddress": "0x85C4F855Bc0609D2584405819EdAEa3aDAbfE97D"
     },
