@@ -344,15 +344,6 @@
       "denomination": "USD",
       "rateFeed": false
     },
-    "BAL": {
-      "source": [
-        "gate-usdt",
-        "kraken-usd",
-        "kucoin-usdt"
-      ],
-      "denomination": "USD",
-      "rateFeed": false
-    },
     "WOMBAT_ggAVAX_AVAX_LP_AVAX": {
       "source": [
         "avalanche-evm-fetcher-wombat"
@@ -676,7 +667,6 @@
   "multiPointPackages": {
     "___ALL_FEEDS___": [
       "AVAX",
-      "BAL",
       "BTC",
       "EUR",
       "DAI",
