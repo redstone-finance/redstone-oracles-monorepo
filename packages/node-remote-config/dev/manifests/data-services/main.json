@@ -8119,9 +8119,16 @@
     },
     "cUSD_FUNDAMENTAL": {
       "source": [
-        "ethereum-evm-fetcher-cap"
+        "ethereum-evm-fetcher-cap-cusd"
       ],
       "denomination": "USD",
+      "rateFeed": true
+    },
+    "stcUSD_FUNDAMENTAL": {
+      "source": [
+        "ethereum-evm-fetcher-cap-stcusd"
+      ],
+      "denomination": "cUSD",
       "rateFeed": true
     },
     "stHYPE_LP_FUNDAMENTAL": {
