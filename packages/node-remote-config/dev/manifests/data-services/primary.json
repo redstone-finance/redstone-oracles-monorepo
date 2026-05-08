@@ -4826,11 +4826,6 @@
         }
       }
     },
-    "BAL": {
-      "source": ["gate-usdt", "kraken-usd", "kucoin-usdt"],
-      "denomination": "USD",
-      "rateFeed": false
-    },
     "BRETT": {
       "source": [
         "bitget-usdt",
@@ -5232,7 +5227,6 @@
       "AERO",
       "ARB",
       "ATOM",
-      "BAL",
       "BNB",
       "BRETT",
       "BTC",

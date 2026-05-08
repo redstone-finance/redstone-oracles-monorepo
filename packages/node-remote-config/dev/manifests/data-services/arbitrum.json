@@ -429,11 +429,6 @@
       "denomination": "USD",
       "rateFeed": false
     },
-    "BAL": {
-      "source": ["gate-usdt", "kraken-usd", "kucoin-usdt"],
-      "denomination": "USD",
-      "rateFeed": false
-    },
     "MOO_GMX": {
       "source": ["arbitrum-evm-fetcher-beefy"],
       "denomination": "USD",
@@ -1238,7 +1233,6 @@
       "AAVE",
       "ARB",
       "ATOM",
-      "BAL",
       "BNB",
       "BTC",
       "EUR",
