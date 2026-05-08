@@ -142,7 +142,8 @@ async function getCantonContractAdapter(
   rpcUrls: string[],
   relayerManifest: AnyOnChainRelayerManifest
 ) {
-  const auth = await getCantonAuth(deconstructNetworkId(relayerManifest.chain.id).chainId);
+  const chainId = deconstructNetworkId(relayerManifest.chain.id).chainId;
+  const auth = await getCantonAuth(chainId);
   const client = new CantonClientBuilder()
     .withNetworkId(relayerManifest.chain.id)
     .withRpcUrls(rpcUrls)

@@ -47,7 +47,8 @@ export async function getPriceFeedAdapter(
         throw new Error("Canton needs feed name for price-feed");
       }
 
-      const auth = await getCantonAuth(deconstructNetworkId(networkId).chainId);
+      const chainId = deconstructNetworkId(networkId).chainId;
+      const auth = await getCantonAuth(chainId);
       const client = new CantonClientBuilder()
         .withNetworkId(networkId)
         .withRpcUrls(rpcUrls)
