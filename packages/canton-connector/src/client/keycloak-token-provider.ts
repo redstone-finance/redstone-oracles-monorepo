@@ -43,8 +43,8 @@ export class KeycloakTokenProvider {
   private timer?: NodeJS.Timeout;
   private refreshingPromise?: Promise<string>;
 
-  static getInstance(opts?: KeycloakTokenProviderParams | string) {
-    const { url, realm, clientId, username, password } = makeKeycloakParams(opts);
+  static getInstance(opts?: KeycloakTokenProviderParams) {
+    const { url, realm, clientId, username, password } = opts ?? makeKeycloakParams();
 
     const tokenUrl = `${url}/auth/realms/${realm}/protocol/openid-connect/token`;
 

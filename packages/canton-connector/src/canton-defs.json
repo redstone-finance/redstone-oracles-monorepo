@@ -6,6 +6,7 @@
     "featuredInterfaceId": "#splice-api-featured-app-v2:Splice.Api.FeaturedAppRightV2:FeaturedAppRight",
     "node": {
       "scanApiUrl": "https://scan.sv-1.global.canton.network.sync.global/api/scan/v0",
+      "scanApiProxyUrl": "https://canton.redstone.catalyst.intellecteu.io/api/http-proxy",
       "validatorApiUrl": "https://wallet-validator-redstone.canton.redstone.catalyst.intellecteu.io/api/validator",
       "walletClientId": "validator-redstone-wallet-ui",
       "globalDomain": "global-domain::1220b1431ef217342db44d516bb9befde802be7d8899637d290895fa58880f19accc",
@@ -33,6 +34,7 @@
     "featuredInterfaceId": "#splice-api-featured-app-v2:Splice.Api.FeaturedAppRightV2:FeaturedAppRight",
     "node": {
       "scanApiUrl": "https://scan.sv-1.dev.global.canton.network.sync.global/api/scan/v0",
+      "scanApiProxyUrl": "https://canton.dev.redstone.catalyst.intellecteu.io/api/http-proxy",
       "validatorApiUrl": "https://wallet-redstone-validator.canton.dev.redstone.catalyst.intellecteu.io/api/validator",
       "walletClientId": "redstone-validator-wallet-ui",
       "globalDomain": "global-domain::1220be58c29e65de40bf273be1dc2b266d43a9a002ea5b18955aeef7aac881bb471a",
@@ -60,6 +62,7 @@
     "featuredInterfaceId": "#redstone-featured-v18",
     "node": {
       "scanApiUrl": "/v0",
+      "scanApiProxyUrl": "",
       "validatorApiUrl": "",
       "walletClientId": "",
       "globalDomain": "",
