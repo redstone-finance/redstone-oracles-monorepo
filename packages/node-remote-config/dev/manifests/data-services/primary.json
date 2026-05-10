@@ -199,7 +199,6 @@
         "bitget-usdt",
         "bitmart-usdt",
         "bitrue-usdt",
-        "bybit-usdt",
         "gate-usdt",
         "kraken-usd",
         "kraken-usdt",
@@ -1972,8 +1971,7 @@
         "gate-usdt",
         "kraken-usd",
         "kucoin-usdt",
-        "lbank-usdt",
-        "xt-usdt"
+        "lbank-usdt"
       ],
       "denomination": "USD",
       "rateFeed": false
@@ -2095,7 +2093,6 @@
         "binance-usdc",
         "binance-usdt",
         "bingx-usdt",
-        "bitget-usdt",
         "bitrue-usdt",
         "gate-usdt",
         "kraken-usd",
@@ -3368,8 +3365,7 @@
         "bybit-usdt",
         "gate-usdt",
         "kucoin-usdt",
-        "mexc-usdt",
-        "xt-usdt"
+        "mexc-usdt"
       ],
       "denomination": "USD",
       "rateFeed": false
@@ -3604,7 +3600,6 @@
         "binance-usdc",
         "binance-usdt",
         "bingx-usdt",
-        "bitget-eur",
         "bitget-usdt",
         "bitmart-usdt",
         "bitstamp-usd",
@@ -5439,8 +5434,7 @@
         "gate-usdt",
         "lbank-usdt",
         "mexc-usdt",
-        "okx-usdt",
-        "xt-usdt"
+        "okx-usdt"
       ],
       "denomination": "USD",
       "rateFeed": false
@@ -5458,7 +5452,6 @@
         "binance-usdt",
         "bingx-usdc",
         "bingx-usdt",
-        "bitget-usdc",
         "bitget-usdt",
         "bitmart-usdt",
         "bitrue-usdt",
