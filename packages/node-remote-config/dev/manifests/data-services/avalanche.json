@@ -233,8 +233,7 @@
         "gate-usdt",
         "lbank-usdt",
         "mexc-usdt",
-        "okx-usdt",
-        "xt-usdt"
+        "okx-usdt"
       ],
       "denomination": "USD",
       "rateFeed": false
@@ -244,7 +243,6 @@
         "bitget-usdt",
         "bitmart-usdt",
         "bitrue-usdt",
-        "bybit-usdt",
         "gate-usdt",
         "kraken-usd",
         "kraken-usdt",

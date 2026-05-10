@@ -76,7 +76,6 @@
         "bitget_deferred-usdt",
         "bitmart_deferred-usdt",
         "bitrue_deferred-usdt",
-        "bybit_deferred-usdt",
         "gate_deferred-usdt",
         "kraken_deferred-usd",
         "kraken_deferred-usdt",
@@ -392,7 +391,7 @@
       "priceAggregator": "primarySource",
       "primarySourceAggregatorConfig": {
         "primarySource": "ws-aleno",
-        "maxAcceptableDeviation": 1.0,
+        "maxAcceptableDeviation": 1,
         "lowerClampPercent": 0.1,
         "upperClampPercent": 0.1
       }
@@ -411,7 +410,7 @@
       "priceAggregator": "primarySource",
       "primarySourceAggregatorConfig": {
         "primarySource": "ws-aleno",
-        "maxAcceptableDeviation": 1.0,
+        "maxAcceptableDeviation": 1,
         "lowerClampPercent": 0.1,
         "upperClampPercent": 0.1
       }
