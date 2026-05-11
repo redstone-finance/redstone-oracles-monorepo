@@ -1,4 +1,6 @@
 *[Tt]oken*
 test/input.json
 *_id.txt
+!factory_id.txt
+!reward_factory_id.txt
 test/sample-data/*

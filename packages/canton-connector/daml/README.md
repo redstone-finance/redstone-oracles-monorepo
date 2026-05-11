@@ -55,13 +55,16 @@ All choices across all contracts (`IRedStoneCore`, `IRedStoneAdapter`, `IRedSton
 5. Upgrading requires the new package is a superset of the package upgraded
    1. especially all module files, types and `Choice`s in each dependent module must suit.
 
-## [Makefile](./Makefile)
+## [Makefile](../Makefile)
 
 1. There's impossible to use a `TypeScript` or other SDK, because of the [4.](#intellecteu--keycloak) above.
 2. It provides functions for
    1. Local development
-   2. Calling [deploy](./deploy.mk) methods with keycloak authorization
-   3. Making [operations](./ops.mk) (calling/deploying) contracts on external provider
+   2. Calling [deploy](../deploy.mk) methods with keycloak authorization
+   3. Making [operations](../ops.mk) (calling/deploying) contracts on external provider
+3. `DEPLOY_DIR` (default `daml`) and `NETWORK` are set in `../.env`. Per-deployment
+   state files (`factory_id.txt`, `reward_factory_id.txt`, `adapter_id.txt`,
+   `core_id.txt`) live under `$(DEPLOY_DIR)`.
 
 ## Components
 
