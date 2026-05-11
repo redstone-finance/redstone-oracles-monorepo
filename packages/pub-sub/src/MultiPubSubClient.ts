@@ -14,7 +14,7 @@ export class MultiPubSubClient implements PubSubClient {
   private readonly uniqueName: string;
 
   constructor(
-    private readonly pubSubConfigs: MultiPubSubConfig[],
+    readonly pubSubConfigs: MultiPubSubConfig[],
     readonly timeoutPerClient = DEFAULT_TIMEOUT_PER_CLIENT
   ) {
     RedstoneCommon.assert(
