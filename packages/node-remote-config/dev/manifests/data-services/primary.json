@@ -4620,6 +4620,11 @@
         }
       }
     },
+    "savUSD_FUNDAMENTAL": {
+      "source": ["avalanche-evm-fetcher-avant"],
+      "denomination": "avUSD",
+      "rateFeed": true
+    },
     "GUSD_FUNDAMENTAL/USD": {
       "source": ["ethereum-evm-fetcher-generic-gusd"],
       "denomination": "USD",
