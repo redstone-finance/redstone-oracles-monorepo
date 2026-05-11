@@ -166,7 +166,7 @@ export class DataPackageSubscriber {
             this.logger.info(
               `Publishing packages from fallback method timestamp=${packageTimestamp} latency=${Date.now() - packageTimestamp} dataPackageIds=${newDataPackagesIds.join(",")}`
             );
-            this.subscribeCallback!(dataPackages);
+            this.subscribeCallback!(newerPackagesOnly);
             this.lastPublishedState.update(Object.keys(newerPackagesOnly), packageTimestamp);
             GlobalLogMonitoring.warn(
               LogMonitoringType.PUB_SUB_FALLBACK_USED_BUT_USEFUL,
