@@ -12,6 +12,12 @@ export type NodeManifest = {
   interval: number;
   defaultSource: string[];
   multiPointPackages?: Record<string, string[]>;
+  analysers?: {
+    candle?: {
+      interval: string;
+      tokens: Record<string, { broadcasters?: string[] }>;
+    };
+  };
 };
 
 type NodesVersions = {
