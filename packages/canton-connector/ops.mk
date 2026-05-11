@@ -1,4 +1,4 @@
-sinclude ../.env
+sinclude .env
 include ./deploy.mk
 include ./data.mk
 
@@ -8,10 +8,10 @@ FEED_IDS=[$(ETH),$(BTC)]
 
 CURRENT_TIME=$(shell date -u +"%Y-%m-%dT%H:%M:%SZ")
 
-CORE_ID_TXT=core_id.txt
-ADAPTER_ID_TXT=adapter_id.txt
-CORE_ID=$(shell cat $(CORE_ID_TXT))
-ADAPTER_ID=$(shell cat $(ADAPTER_ID_TXT))
+CORE_ID_TXT=$(DEPLOY_DIR)/core_id.txt
+ADAPTER_ID_TXT=$(DEPLOY_DIR)/adapter_id.txt
+CORE_ID=$(shell cat $(CORE_ID_TXT) 2>/dev/null)
+ADAPTER_ID=$(shell cat $(ADAPTER_ID_TXT) 2>/dev/null)
 
 get-prices-core: prepare_data get-core-id-by-interface get-token
 	@curl -X POST -H "Authorization: Bearer $(TOKEN)" \

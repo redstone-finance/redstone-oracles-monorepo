@@ -28,7 +28,7 @@ Traffic-weighted reward calculation, write-prices context object, pill demotion 
 | `test/src/PartialNewData.daml` | Test for partial-new-data path (only some feeds new) |
 | `test/src/PillArchival.daml` | Test for demotion-based pill archival |
 | `test/src/RewardsBatching.daml` | Test for traffic-weighted reward batching across writes |
-| `daml/buy-traffic.sh` | Helper script for purchasing traffic on testnets |
+| `scripts/buy-traffic.sh` | Helper script for purchasing traffic on testnets |
 | `daml/traffic.mk` | Makefile fragment exposing `buy-traffic` and traffic-status targets |
 | `sdk-tests/src/RedStone/Tests/Suites/ConfigErrors.daml` | New error-path suite for config validation |
 | `sdk-tests/src/RedStone/Tests/Suites/DerErrors.daml` | DER decoding error cases |
@@ -342,4 +342,4 @@ All `daml.yaml` files now share `name: redstone-*-v18` and `version: 0.4.0`. All
 
 > Mainnet section in `canton-defs.json` is left at `v12` — those entries reference contracts already deployed on mainnet and must be regenerated only after redeployment.
 
-After a fresh `daml build --all`, regenerate `daml/package-ids.json` via `daml/generate-package-ids.sh`.
+After a fresh `daml build --all`, regenerate `daml/package-ids.json` via `make generate-package-ids` (uses `scripts/generate-package-ids.sh` under the hood).

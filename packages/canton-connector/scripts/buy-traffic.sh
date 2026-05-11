@@ -2,7 +2,7 @@
 set -euo pipefail
 
 #shellcheck disable=SC1091
-. ../.env
+. ./.env
 
 CANTON_API="${PARTICIPANT}${API_PATH}"
 SCAN_PROXY="${API}/http-proxy"
