@@ -3086,6 +3086,637 @@
       "types": ["snoozed"]
     },
 
+    "BEST_BID_rrrrr:BTC": {
+      "source": ["ws-hyperliquid-perps-rrrrr", "ws-hydromancer-perps-rrrrr"],
+      "customWeightsForWeightedMedian": {
+        "ws-hyperliquid-perps-rrrrr": 10,
+        "ws-hydromancer-perps-rrrrr": 1
+      },
+      "priceAggregator": "constantWeightMedian",
+      "broadcasters": ["influx"],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "BEST_ASK_rrrrr:BTC": {
+      "source": ["ws-hyperliquid-perps-rrrrr", "ws-hydromancer-perps-rrrrr"],
+      "customWeightsForWeightedMedian": {
+        "ws-hyperliquid-perps-rrrrr": 10,
+        "ws-hydromancer-perps-rrrrr": 1
+      },
+      "priceAggregator": "constantWeightMedian",
+      "broadcasters": ["influx"],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "LAST_TRADE_rrrrr:BTC": {
+      "source": ["ws-hyperliquid-perps-rrrrr", "ws-hydromancer-perps-rrrrr"],
+      "customWeightsForWeightedMedian": {
+        "ws-hyperliquid-perps-rrrrr": 10,
+        "ws-hydromancer-perps-rrrrr": 1
+      },
+      "priceAggregator": "constantWeightMedian",
+      "broadcasters": ["influx"],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "MARKET_MEDIAN_rrrrr:BTC": {
+      "source": ["hyperliquid-market-median"],
+      "broadcasters": ["influx"],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "MARKET_MEDIAN_rrrrr:BTC_EMA_30S": {
+      "source": ["ema"],
+      "broadcasters": ["influx"],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "ORACLE_rrrrr:BTC": {
+      "source": ["ws-hyperliquid-perps-rrrrr", "ws-hydromancer-perps-rrrrr"],
+      "customWeightsForWeightedMedian": {
+        "ws-hyperliquid-perps-rrrrr": 10,
+        "ws-hydromancer-perps-rrrrr": 1
+      },
+      "priceAggregator": "constantWeightMedian",
+      "broadcasters": ["influx"],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "ORACLE_rrrrr:BTC_EMA_150S": {
+      "source": ["ema"],
+      "broadcasters": ["influx"],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "MARK_rrrrr:BTC": {
+      "source": ["ws-hyperliquid-perps-rrrrr", "ws-hydromancer-perps-rrrrr"],
+      "customWeightsForWeightedMedian": {
+        "ws-hyperliquid-perps-rrrrr": 10,
+        "ws-hydromancer-perps-rrrrr": 1
+      },
+      "priceAggregator": "constantWeightMedian",
+      "broadcasters": ["influx"],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "MID_rrrrr:BTC": {
+      "source": ["ws-hyperliquid-perps-rrrrr", "ws-hydromancer-perps-rrrrr"],
+      "customWeightsForWeightedMedian": {
+        "ws-hyperliquid-perps-rrrrr": 10,
+        "ws-hydromancer-perps-rrrrr": 1
+      },
+      "priceAggregator": "constantWeightMedian",
+      "broadcasters": ["influx"],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "MID_rrrrr:BTC_EMA_150S": {
+      "source": ["ema"],
+      "broadcasters": ["influx"],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "rrrrr:BTC_MARK_0": {
+      "source": ["hip3-hyena-crypto-testnet-fetcher"],
+      "broadcasters": ["hyperliquid-hip3"],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "rrrrr:BTC_MARK_1": {
+      "source": ["hip3-hyena-crypto-testnet-fetcher"],
+      "broadcasters": ["hyperliquid-hip3"],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "rrrrr:BTC_EXT": {
+      "source": ["hip3-hyena-crypto-testnet-fetcher"],
+      "broadcasters": ["hyperliquid-hip3"],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "rrrrr:BTC": {
+      "source": ["hip3-hyena-crypto-testnet-fetcher"],
+      "broadcasters": ["hyperliquid-hip3"],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "OPEN_INTEREST_rrrrr:BTC": {
+      "source": ["ws-hyperliquid-perps-rrrrr"],
+      "broadcasters": [],
+      "denomination": "USD",
+      "rateFeed": false,
+      "deviationCheck": {
+        "deviationWithRecentValues": {
+          "maxPercent": 1000000000,
+          "maxDelayMilliseconds": 1000
+        }
+      }
+    },
+    "BEST_BID_rrrrr:ETH": {
+      "source": ["ws-hyperliquid-perps-rrrrr", "ws-hydromancer-perps-rrrrr"],
+      "customWeightsForWeightedMedian": {
+        "ws-hyperliquid-perps-rrrrr": 10,
+        "ws-hydromancer-perps-rrrrr": 1
+      },
+      "priceAggregator": "constantWeightMedian",
+      "broadcasters": ["influx"],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "BEST_ASK_rrrrr:ETH": {
+      "source": ["ws-hyperliquid-perps-rrrrr", "ws-hydromancer-perps-rrrrr"],
+      "customWeightsForWeightedMedian": {
+        "ws-hyperliquid-perps-rrrrr": 10,
+        "ws-hydromancer-perps-rrrrr": 1
+      },
+      "priceAggregator": "constantWeightMedian",
+      "broadcasters": ["influx"],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "LAST_TRADE_rrrrr:ETH": {
+      "source": ["ws-hyperliquid-perps-rrrrr", "ws-hydromancer-perps-rrrrr"],
+      "customWeightsForWeightedMedian": {
+        "ws-hyperliquid-perps-rrrrr": 10,
+        "ws-hydromancer-perps-rrrrr": 1
+      },
+      "priceAggregator": "constantWeightMedian",
+      "broadcasters": ["influx"],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "MARKET_MEDIAN_rrrrr:ETH": {
+      "source": ["hyperliquid-market-median"],
+      "broadcasters": ["influx"],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "MARKET_MEDIAN_rrrrr:ETH_EMA_30S": {
+      "source": ["ema"],
+      "broadcasters": ["influx"],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "ORACLE_rrrrr:ETH": {
+      "source": ["ws-hyperliquid-perps-rrrrr", "ws-hydromancer-perps-rrrrr"],
+      "customWeightsForWeightedMedian": {
+        "ws-hyperliquid-perps-rrrrr": 10,
+        "ws-hydromancer-perps-rrrrr": 1
+      },
+      "priceAggregator": "constantWeightMedian",
+      "broadcasters": ["influx"],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "ORACLE_rrrrr:ETH_EMA_150S": {
+      "source": ["ema"],
+      "broadcasters": ["influx"],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "MARK_rrrrr:ETH": {
+      "source": ["ws-hyperliquid-perps-rrrrr", "ws-hydromancer-perps-rrrrr"],
+      "customWeightsForWeightedMedian": {
+        "ws-hyperliquid-perps-rrrrr": 10,
+        "ws-hydromancer-perps-rrrrr": 1
+      },
+      "priceAggregator": "constantWeightMedian",
+      "broadcasters": ["influx"],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "MID_rrrrr:ETH": {
+      "source": ["ws-hyperliquid-perps-rrrrr", "ws-hydromancer-perps-rrrrr"],
+      "customWeightsForWeightedMedian": {
+        "ws-hyperliquid-perps-rrrrr": 10,
+        "ws-hydromancer-perps-rrrrr": 1
+      },
+      "priceAggregator": "constantWeightMedian",
+      "broadcasters": ["influx"],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "MID_rrrrr:ETH_EMA_150S": {
+      "source": ["ema"],
+      "broadcasters": ["influx"],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "rrrrr:ETH_MARK_0": {
+      "source": ["hip3-hyena-crypto-testnet-fetcher"],
+      "broadcasters": ["hyperliquid-hip3"],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "rrrrr:ETH_MARK_1": {
+      "source": ["hip3-hyena-crypto-testnet-fetcher"],
+      "broadcasters": ["hyperliquid-hip3"],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "rrrrr:ETH_EXT": {
+      "source": ["hip3-hyena-crypto-testnet-fetcher"],
+      "broadcasters": ["hyperliquid-hip3"],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "rrrrr:ETH": {
+      "source": ["hip3-hyena-crypto-testnet-fetcher"],
+      "broadcasters": ["hyperliquid-hip3"],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "OPEN_INTEREST_rrrrr:ETH": {
+      "source": ["ws-hyperliquid-perps-rrrrr"],
+      "broadcasters": [],
+      "denomination": "USD",
+      "rateFeed": false,
+      "deviationCheck": {
+        "deviationWithRecentValues": {
+          "maxPercent": 1000000000,
+          "maxDelayMilliseconds": 1000
+        }
+      }
+    },
+    "BEST_BID_rrrrr:HYPE": {
+      "source": ["ws-hyperliquid-perps-rrrrr", "ws-hydromancer-perps-rrrrr"],
+      "customWeightsForWeightedMedian": {
+        "ws-hyperliquid-perps-rrrrr": 10,
+        "ws-hydromancer-perps-rrrrr": 1
+      },
+      "priceAggregator": "constantWeightMedian",
+      "broadcasters": ["influx"],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "BEST_ASK_rrrrr:HYPE": {
+      "source": ["ws-hyperliquid-perps-rrrrr", "ws-hydromancer-perps-rrrrr"],
+      "customWeightsForWeightedMedian": {
+        "ws-hyperliquid-perps-rrrrr": 10,
+        "ws-hydromancer-perps-rrrrr": 1
+      },
+      "priceAggregator": "constantWeightMedian",
+      "broadcasters": ["influx"],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "LAST_TRADE_rrrrr:HYPE": {
+      "source": ["ws-hyperliquid-perps-rrrrr", "ws-hydromancer-perps-rrrrr"],
+      "customWeightsForWeightedMedian": {
+        "ws-hyperliquid-perps-rrrrr": 10,
+        "ws-hydromancer-perps-rrrrr": 1
+      },
+      "priceAggregator": "constantWeightMedian",
+      "broadcasters": ["influx"],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "MARKET_MEDIAN_rrrrr:HYPE": {
+      "source": ["hyperliquid-market-median"],
+      "broadcasters": ["influx"],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "MARKET_MEDIAN_rrrrr:HYPE_EMA_30S": {
+      "source": ["ema"],
+      "broadcasters": ["influx"],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "ORACLE_rrrrr:HYPE": {
+      "source": ["ws-hyperliquid-perps-rrrrr", "ws-hydromancer-perps-rrrrr"],
+      "customWeightsForWeightedMedian": {
+        "ws-hyperliquid-perps-rrrrr": 10,
+        "ws-hydromancer-perps-rrrrr": 1
+      },
+      "priceAggregator": "constantWeightMedian",
+      "broadcasters": ["influx"],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "ORACLE_rrrrr:HYPE_EMA_150S": {
+      "source": ["ema"],
+      "broadcasters": ["influx"],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "MARK_rrrrr:HYPE": {
+      "source": ["ws-hyperliquid-perps-rrrrr", "ws-hydromancer-perps-rrrrr"],
+      "customWeightsForWeightedMedian": {
+        "ws-hyperliquid-perps-rrrrr": 10,
+        "ws-hydromancer-perps-rrrrr": 1
+      },
+      "priceAggregator": "constantWeightMedian",
+      "broadcasters": ["influx"],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "MID_rrrrr:HYPE": {
+      "source": ["ws-hyperliquid-perps-rrrrr", "ws-hydromancer-perps-rrrrr"],
+      "customWeightsForWeightedMedian": {
+        "ws-hyperliquid-perps-rrrrr": 10,
+        "ws-hydromancer-perps-rrrrr": 1
+      },
+      "priceAggregator": "constantWeightMedian",
+      "broadcasters": ["influx"],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "MID_rrrrr:HYPE_EMA_150S": {
+      "source": ["ema"],
+      "broadcasters": ["influx"],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "rrrrr:HYPE_MARK_0": {
+      "source": ["hip3-hyena-crypto-testnet-fetcher"],
+      "broadcasters": ["hyperliquid-hip3"],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "rrrrr:HYPE_MARK_1": {
+      "source": ["hip3-hyena-crypto-testnet-fetcher"],
+      "broadcasters": ["hyperliquid-hip3"],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "rrrrr:HYPE_EXT": {
+      "source": ["hip3-hyena-crypto-testnet-fetcher"],
+      "broadcasters": ["hyperliquid-hip3"],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "rrrrr:HYPE": {
+      "source": ["hip3-hyena-crypto-testnet-fetcher"],
+      "broadcasters": ["hyperliquid-hip3"],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "OPEN_INTEREST_rrrrr:HYPE": {
+      "source": ["ws-hyperliquid-perps-rrrrr"],
+      "broadcasters": [],
+      "denomination": "USD",
+      "rateFeed": false,
+      "deviationCheck": {
+        "deviationWithRecentValues": {
+          "maxPercent": 1000000000,
+          "maxDelayMilliseconds": 1000
+        }
+      }
+    },
+    "BEST_BID_rrrrr:SOL": {
+      "source": ["ws-hyperliquid-perps-rrrrr", "ws-hydromancer-perps-rrrrr"],
+      "customWeightsForWeightedMedian": {
+        "ws-hyperliquid-perps-rrrrr": 10,
+        "ws-hydromancer-perps-rrrrr": 1
+      },
+      "priceAggregator": "constantWeightMedian",
+      "broadcasters": ["influx"],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "BEST_ASK_rrrrr:SOL": {
+      "source": ["ws-hyperliquid-perps-rrrrr", "ws-hydromancer-perps-rrrrr"],
+      "customWeightsForWeightedMedian": {
+        "ws-hyperliquid-perps-rrrrr": 10,
+        "ws-hydromancer-perps-rrrrr": 1
+      },
+      "priceAggregator": "constantWeightMedian",
+      "broadcasters": ["influx"],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "LAST_TRADE_rrrrr:SOL": {
+      "source": ["ws-hyperliquid-perps-rrrrr", "ws-hydromancer-perps-rrrrr"],
+      "customWeightsForWeightedMedian": {
+        "ws-hyperliquid-perps-rrrrr": 10,
+        "ws-hydromancer-perps-rrrrr": 1
+      },
+      "priceAggregator": "constantWeightMedian",
+      "broadcasters": ["influx"],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "MARKET_MEDIAN_rrrrr:SOL": {
+      "source": ["hyperliquid-market-median"],
+      "broadcasters": ["influx"],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "MARKET_MEDIAN_rrrrr:SOL_EMA_30S": {
+      "source": ["ema"],
+      "broadcasters": ["influx"],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "ORACLE_rrrrr:SOL": {
+      "source": ["ws-hyperliquid-perps-rrrrr", "ws-hydromancer-perps-rrrrr"],
+      "customWeightsForWeightedMedian": {
+        "ws-hyperliquid-perps-rrrrr": 10,
+        "ws-hydromancer-perps-rrrrr": 1
+      },
+      "priceAggregator": "constantWeightMedian",
+      "broadcasters": ["influx"],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "ORACLE_rrrrr:SOL_EMA_150S": {
+      "source": ["ema"],
+      "broadcasters": ["influx"],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "MARK_rrrrr:SOL": {
+      "source": ["ws-hyperliquid-perps-rrrrr", "ws-hydromancer-perps-rrrrr"],
+      "customWeightsForWeightedMedian": {
+        "ws-hyperliquid-perps-rrrrr": 10,
+        "ws-hydromancer-perps-rrrrr": 1
+      },
+      "priceAggregator": "constantWeightMedian",
+      "broadcasters": ["influx"],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "MID_rrrrr:SOL": {
+      "source": ["ws-hyperliquid-perps-rrrrr", "ws-hydromancer-perps-rrrrr"],
+      "customWeightsForWeightedMedian": {
+        "ws-hyperliquid-perps-rrrrr": 10,
+        "ws-hydromancer-perps-rrrrr": 1
+      },
+      "priceAggregator": "constantWeightMedian",
+      "broadcasters": ["influx"],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "MID_rrrrr:SOL_EMA_150S": {
+      "source": ["ema"],
+      "broadcasters": ["influx"],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "rrrrr:SOL_MARK_0": {
+      "source": ["hip3-hyena-crypto-testnet-fetcher"],
+      "broadcasters": ["hyperliquid-hip3"],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "rrrrr:SOL_MARK_1": {
+      "source": ["hip3-hyena-crypto-testnet-fetcher"],
+      "broadcasters": ["hyperliquid-hip3"],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "rrrrr:SOL_EXT": {
+      "source": ["hip3-hyena-crypto-testnet-fetcher"],
+      "broadcasters": ["hyperliquid-hip3"],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "rrrrr:SOL": {
+      "source": ["hip3-hyena-crypto-testnet-fetcher"],
+      "broadcasters": ["hyperliquid-hip3"],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "OPEN_INTEREST_rrrrr:SOL": {
+      "source": ["ws-hyperliquid-perps-rrrrr"],
+      "broadcasters": [],
+      "denomination": "USD",
+      "rateFeed": false,
+      "deviationCheck": {
+        "deviationWithRecentValues": {
+          "maxPercent": 1000000000,
+          "maxDelayMilliseconds": 1000
+        }
+      }
+    },
+    "BEST_BID_rrrrr:BASED": {
+      "source": ["ws-hyperliquid-perps-rrrrr", "ws-hydromancer-perps-rrrrr"],
+      "customWeightsForWeightedMedian": {
+        "ws-hyperliquid-perps-rrrrr": 10,
+        "ws-hydromancer-perps-rrrrr": 1
+      },
+      "priceAggregator": "constantWeightMedian",
+      "broadcasters": ["influx"],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "BEST_ASK_rrrrr:BASED": {
+      "source": ["ws-hyperliquid-perps-rrrrr", "ws-hydromancer-perps-rrrrr"],
+      "customWeightsForWeightedMedian": {
+        "ws-hyperliquid-perps-rrrrr": 10,
+        "ws-hydromancer-perps-rrrrr": 1
+      },
+      "priceAggregator": "constantWeightMedian",
+      "broadcasters": ["influx"],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "LAST_TRADE_rrrrr:BASED": {
+      "source": ["ws-hyperliquid-perps-rrrrr", "ws-hydromancer-perps-rrrrr"],
+      "customWeightsForWeightedMedian": {
+        "ws-hyperliquid-perps-rrrrr": 10,
+        "ws-hydromancer-perps-rrrrr": 1
+      },
+      "priceAggregator": "constantWeightMedian",
+      "broadcasters": ["influx"],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "MARKET_MEDIAN_rrrrr:BASED": {
+      "source": ["hyperliquid-market-median"],
+      "broadcasters": ["influx"],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "MARKET_MEDIAN_rrrrr:BASED_EMA_30S": {
+      "source": ["ema"],
+      "broadcasters": ["influx"],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "ORACLE_rrrrr:BASED": {
+      "source": ["ws-hyperliquid-perps-rrrrr", "ws-hydromancer-perps-rrrrr"],
+      "customWeightsForWeightedMedian": {
+        "ws-hyperliquid-perps-rrrrr": 10,
+        "ws-hydromancer-perps-rrrrr": 1
+      },
+      "priceAggregator": "constantWeightMedian",
+      "broadcasters": ["influx"],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "ORACLE_rrrrr:BASED_EMA_150S": {
+      "source": ["ema"],
+      "broadcasters": ["influx"],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "MARK_rrrrr:BASED": {
+      "source": ["ws-hyperliquid-perps-rrrrr", "ws-hydromancer-perps-rrrrr"],
+      "customWeightsForWeightedMedian": {
+        "ws-hyperliquid-perps-rrrrr": 10,
+        "ws-hydromancer-perps-rrrrr": 1
+      },
+      "priceAggregator": "constantWeightMedian",
+      "broadcasters": ["influx"],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "MID_rrrrr:BASED": {
+      "source": ["ws-hyperliquid-perps-rrrrr", "ws-hydromancer-perps-rrrrr"],
+      "customWeightsForWeightedMedian": {
+        "ws-hyperliquid-perps-rrrrr": 10,
+        "ws-hydromancer-perps-rrrrr": 1
+      },
+      "priceAggregator": "constantWeightMedian",
+      "broadcasters": ["influx"],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "MID_rrrrr:BASED_EMA_150S": {
+      "source": ["ema"],
+      "broadcasters": ["influx"],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "rrrrr:BASED_MARK_0": {
+      "source": ["hip3-hyena-crypto-spot-testnet-fetcher"],
+      "broadcasters": ["hyperliquid-hip3"],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "rrrrr:BASED_MARK_1": {
+      "source": ["hip3-hyena-crypto-spot-testnet-fetcher"],
+      "broadcasters": ["hyperliquid-hip3"],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "rrrrr:BASED_EXT": {
+      "source": ["hip3-hyena-crypto-spot-testnet-fetcher"],
+      "broadcasters": ["hyperliquid-hip3"],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "rrrrr:BASED": {
+      "source": ["hip3-hyena-crypto-spot-testnet-fetcher"],
+      "broadcasters": ["hyperliquid-hip3"],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "OPEN_INTEREST_rrrrr:BASED": {
+      "source": ["ws-hyperliquid-perps-rrrrr"],
+      "broadcasters": [],
+      "denomination": "USD",
+      "rateFeed": false,
+      "deviationCheck": {
+        "deviationWithRecentValues": {
+          "maxPercent": 1000000000,
+          "maxDelayMilliseconds": 1000
+        }
+      }
+    },
+
     "BEST_BID_hyna:BTC": {
       "source": ["ws-hyperliquid-perps-hyna", "ws-hydromancer-perps-hyna"],
       "customWeightsForWeightedMedian": {
