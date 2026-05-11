@@ -12,8 +12,8 @@ const simpleLog =
     process.stdout.write(`${colors[level]}` + args.join(" ") + `${colors.reset}\n`);
   };
 
-global.console = {
-  ...global.console,
+globalThis.console = {
+  ...globalThis.console,
   log: simpleLog("reset"),
   warn: simpleLog("warn"),
   debug: simpleLog("debug"),

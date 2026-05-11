@@ -1,6 +1,6 @@
-const stringify = global.JSON.stringify;
+const stringify = globalThis.JSON.stringify;
 
-global.JSON.stringify = (value, _, space) => {
+globalThis.JSON.stringify = (value, _, space) => {
   return stringify(
     value,
     (_, value) => (typeof value === "bigint" ? value.toString() : value),
