@@ -1,7 +1,9 @@
-sinclude ../.env
+DEPLOY_DIR ?= daml
+
+sinclude .env
 
 CANTON_API=$(PARTICIPANT)$(API_PATH)
-PACKAGE_IDS=package-ids.json
+PACKAGE_IDS=$(DEPLOY_DIR)/package-ids.json
 
 ADAPTER_NAME=RedStoneAdapter-v18-0.4.0
 ADAPTER_TEMPLATE_ID=$(shell jq -r '.templates.adapter' $(PACKAGE_IDS))
@@ -13,17 +15,24 @@ CORE_CLIENT_TEMPLATE_ID=$(shell jq -r '.templates.core_client' $(PACKAGE_IDS))
 FACTORY_NAME=RedStonePricePillFactory-v18-0.4.0
 FACTORY_TEMPLATE_ID=$(shell jq -r '.templates.factory' $(PACKAGE_IDS))
 
-FACTORY_ID=00bb4c5a65459397fd271db9974b7676918ead3665a78021c989786ba4e816d9ecca121220a34627fe4e022950869cc98fd3a4eba41e335f367d088e67dfd033652ddef904
+FACTORY_ID=$(shell cat $(DEPLOY_DIR)/factory_id.txt 2>/dev/null)
 
 REWARD_FACTORY_NAME=RedStoneRewardFactory-v18-0.4.0
 REWARD_FACTORY_TEMPLATE_ID=$(shell jq -r '.templates.reward_factory' $(PACKAGE_IDS))
 
-REWARD_FACTORY_ID=00b4609d19935ee375eeaa6145b91b18ac38ce0871d29c42544d5ec0222d107622ca1212205369fd2da5bf16b6b2596282cfc69376136118f6555621a030d597a70f963520
+REWARD_FACTORY_ID=$(shell cat $(DEPLOY_DIR)/reward_factory_id.txt 2>/dev/null)
 
 IADAPTER_TEMPLATE_ID=$(shell jq -r '.interfaces.adapter' $(PACKAGE_IDS))
 ICORE_TEMPLATE_ID=$(shell jq -r '.interfaces.core' $(PACKAGE_IDS))
 
-FEATURED_CID=00deaaad88568938379d75d095961036688c49cca81efa596de41f578fe1ac1c2fca121220a86ed774b5e19df71fe79139d3fbb08e603db71977437cd997c7e1771efab2cc
+ifeq ($(NETWORK),mainnet)
+  BENEFICIARY ?= Redstone-validator-1
+  FEATURED_CID ?= 00453547032c154787ce2f52d0830cc302c26abea295b1f4680cf1e795b1095481ca12122043a38116cf841f91ed3d6c1d260cbc85a4cff6b54282d22cf701299422b89d18
+endif
+ifeq ($(NETWORK),devnet)
+  BENEFICIARY ?= 8b4399ba-c401-4a97-a1fe-59077a8b3b14
+  FEATURED_CID ?= 00deaaad88568938379d75d095961036688c49cca81efa596de41f578fe1ac1c2fca121220a86ed774b5e19df71fe79139d3fbb08e603db71977437cd997c7e1771efab2cc
+endif
 
 TOKEN=$(shell cat token.txt)
 

@@ -5,9 +5,6 @@ set -euo pipefail
 # Usage: ./generate-package-ids.sh
 # Requires: daml CLI, jq
 
-SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
-cd "$SCRIPT_DIR"
-
 extract_dar_field() {
   local dir=$1
   local field=$2

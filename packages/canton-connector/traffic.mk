@@ -15,4 +15,4 @@ get-remaining-traffic: get-token
 		-d '{"method":"GET","url":"$(SCAN_API)/domains/$(GLOBAL_DOMAIN)/members/$(PAR)/traffic-status","headers":{"Content-Type":"application/json"},"body":"{}"}' | jq '.traffic_status | .actual.total_limit - .actual.total_consumed'
 
 buy-traffic: get-token
-	@TOKEN=$$(cat token.txt) bash buy-traffic.sh
+	@TOKEN=$$(cat token.txt) bash scripts/buy-traffic.sh
