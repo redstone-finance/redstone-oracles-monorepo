@@ -68,6 +68,7 @@
   "DAX": "UsEquity",
   "MSCI": "UsEquity",
   "CURR": "UsEquity",
+  "AVGO": "UsEquity",
 
   "KOSPI": "Krx",
   "KOSPI200": "Krx",
