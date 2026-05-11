@@ -2829,7 +2829,7 @@
       "rateFeed": false
     },
     "sUSDS_FUNDAMENTAL/USD": {
-      "source": ["ethereum-evm-fetcher-savings-usds"],
+      "source": ["usd-based"],
       "denomination": "USD",
       "rateFeed": true,
       "deviationCheck": {
@@ -3510,7 +3510,7 @@
       }
     },
     "kHYPE_FUNDAMENTAL/USD": {
-      "source": ["hyperevm-evm-fetcher-kinetiq"],
+      "source": ["usd-based"],
       "denomination": "USD",
       "rateFeed": true
     },

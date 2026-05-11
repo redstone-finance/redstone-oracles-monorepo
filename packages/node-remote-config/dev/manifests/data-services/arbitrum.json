@@ -1205,8 +1205,14 @@
       "rateFeed": false,
       "skipBroadcasting": true
     },
-    "sUSDS_FUNDAMENTAL/USD": {
+    "sUSDS_FUNDAMENTAL": {
       "source": ["ethereum-evm-fetcher-savings-usds"],
+      "denomination": "USDS",
+      "rateFeed": true,
+      "skipBroadcasting": true
+    },
+    "sUSDS_FUNDAMENTAL/USD": {
+      "source": ["usd-based"],
       "denomination": "USD",
       "rateFeed": true,
       "skipBroadcasting": true
