@@ -21,7 +21,6 @@
       * [Pill Duration & Staleness](#pill-duration--staleness)
       * [Pill Choices](#pill-choices)
       * [How Pills Interact with the Adapter](#how-pills-interact-with-the-adapter)
-    * [Test](#test)
 <!-- TOC -->
 
 ## Caller Pattern
@@ -55,13 +54,15 @@ All choices across all contracts (`IRedStoneCore`, `IRedStoneAdapter`, `IRedSton
 5. Upgrading requires the new package is a superset of the package upgraded
    1. especially all module files, types and `Choice`s in each dependent module must suit.
 
-## [Makefile](./Makefile)
+## [Makefile](../../Makefile)
 
 1. There's impossible to use a `TypeScript` or other SDK, because of the [4.](#intellecteu--keycloak) above.
 2. It provides functions for
    1. Local development
-   2. Calling [deploy](./deploy.mk) methods with keycloak authorization
-   3. Making [operations](./ops.mk) (calling/deploying) contracts on external provider
+   2. Calling [deploy](../../deploy.mk) methods with keycloak authorization
+   3. Making [operations](../../ops.mk) (calling/deploying) contracts on external provider
+3. Run from the canton-connector root with `DEPLOY_DIR=deployments/cantonMultiFeed`,
+   e.g. `make deploy-adapter DEPLOY_DIR=deployments/cantonMultiFeed`.
 
 ## Components
 
@@ -267,9 +268,3 @@ All choices take `caller : Party` as the first parameter:
 - The `PillCleaner` TypeScript utility archives stale pills in batches of 200
 
 See the detailed [PricePill lifecycle](./adapter/README.md#-pricepill-lifecycle) in the Push Oracle docs.
-
-### [Test](./test)
-
-1. Contains some tests as scripts as there's no a native unit-tests mechanism
-2. Provides also integration tests for local/ide/ledger deploying and running.
-3. Must be extended to cover more cases
