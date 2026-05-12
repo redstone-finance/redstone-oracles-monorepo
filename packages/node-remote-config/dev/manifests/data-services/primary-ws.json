@@ -128,6 +128,87 @@
       "rateFeed": false,
       "types": ["rwa"]
     },
+    "KRW": {
+      "source": [
+        "ws-twelve-data",
+        "finhub_pepperstone",
+        "alltick-api-deferred-reversed",
+        "ws-polygon-massive-commodities",
+        "metal-price-api"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": ["rwa"]
+    },
+    "JPY": {
+      "source": [
+        "ws-twelve-data",
+        "alltick-api-deferred-reversed",
+        "ws-polygon-massive-commodities",
+        "ws-lmax",
+        "ws-aleno",
+        "ws-blocksize",
+        "finhub_pepperstone_deferred",
+        "finhub_deriv_deferred",
+        "finhub_fxcm_deferred",
+        "finhub_forex_deferred",
+        "finhub_icmarkets_deferred",
+        "finhub_oanda_deferred"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": ["rwa"]
+    },
+    "MYR": {
+      "source": ["ws-twelve-data", "ws-polygon-massive-commodities", "ws-aleno"],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": ["rwa"]
+    },
+    "THB": {
+      "source": [
+        "ws-twelve-data",
+        "alltick-api-deferred-reversed",
+        "ws-polygon-massive-commodities",
+        "ws-lmax",
+        "ws-aleno",
+        "finhub_pepperstone_deferred",
+        "finhub_forex_deferred",
+        "finhub_icmarkets_deferred",
+        "finhub_oanda_deferred"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": ["rwa"]
+    },
+    "IDR": {
+      "source": [
+        "ws-twelve-data",
+        "ws-polygon-massive-commodities",
+        "ws-aleno",
+        "finhub_pepperstone_deferred"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": ["rwa"]
+    },
+    "SGD": {
+      "source": [
+        "ws-twelve-data",
+        "alltick-api-deferred-reversed",
+        "ws-polygon-massive-commodities",
+        "ws-lmax",
+        "ws-aleno",
+        "ws-blocksize",
+        "finhub_pepperstone_deferred",
+        "finhub_forex_deferred",
+        "finhub_icmarkets_deferred",
+        "finhub_oanda_deferred"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": ["rwa"]
+    },
     "BTC": {
       "source": [
         "binance_deferred-usdc",

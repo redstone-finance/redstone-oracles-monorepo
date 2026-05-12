@@ -2140,12 +2140,6 @@
       "rateFeed": false,
       "types": ["rwa"]
     },
-    "JPY": {
-      "source": ["twelve-data"],
-      "denomination": "USD",
-      "rateFeed": false,
-      "types": ["rwa"]
-    },
     "CHF": {
       "source": ["twelve-data"],
       "denomination": "USD",
@@ -2178,12 +2172,6 @@
     },
     "CNH": {
       "source": ["twelve-data"],
-      "denomination": "USD",
-      "rateFeed": false,
-      "types": ["rwa"]
-    },
-    "SGD": {
-      "source": ["ecb", "twelve-data"],
       "denomination": "USD",
       "rateFeed": false,
       "types": ["rwa"]
@@ -8640,18 +8628,6 @@
         "ws-itick-indices"
       ],
       "denomination": "GBP",
-      "rateFeed": false,
-      "types": ["rwa"]
-    },
-    "KRW": {
-      "source": [
-        "twelve-data",
-        "finhub_pepperstone",
-        "alltick-api-reversed",
-        "ws-polygon-massive",
-        "metal-price-api"
-      ],
-      "denomination": "USD",
       "rateFeed": false,
       "types": ["rwa"]
     },
