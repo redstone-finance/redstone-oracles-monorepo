@@ -22,13 +22,15 @@ export type ManifestConfig = {
   dataFeeds: string[];
   dataFeedAddresses: Record<string, string>;
   dataPackagesNames?: string[];
-  feedsToBeUpdatedTogether?: string[][];
   updateTriggers: Record<string, UpdateTriggers>;
   updateConditions: Record<string, ConditionCheckNames[]>;
   adapterContractType: AdapterType;
   adapterContractPackageId?: string;
   authorizedSigners?: string[];
+  // removes feeds from update when any feed in the group is missing
+  feedsToBeUpdatedTogether?: string[][];
 };
+
 export type OnChainRelayerEnv = {
   relayerIterationInterval: number;
   rpcUrls: string[];

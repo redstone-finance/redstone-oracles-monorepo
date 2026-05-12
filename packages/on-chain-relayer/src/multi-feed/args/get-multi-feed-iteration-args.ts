@@ -58,6 +58,13 @@ export const getMultiFeedIterationArgs = async (
     );
     iterationArgs.shouldUpdatePrices = iterationArgs.args.dataFeedsToUpdate.length > 0;
 
+    if (feedsToRemove.length > 0) {
+      iterationArgs.messages.push({
+        message: `Feeds removed due to feeds to be updated together constraint: ${feedsToRemove.join(", ")}`,
+        args: [{ feedsToRemove }],
+      });
+    }
+
     iterationArgs.additionalUpdateMessages.push({
       message: "Data feeds to be updated:",
       args: [[...iterationArgs.args.dataFeedsToUpdate]],
