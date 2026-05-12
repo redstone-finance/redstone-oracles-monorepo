@@ -808,6 +808,24 @@ describe("Data packages (e2e)", () => {
           expect(response.body.error).toMatch(/Too many dataFeedIds/);
         });
 
+        it("should return 400 when dataFeedIds contain empty values", async () => {
+          const response = await request(httpServer)
+            .get(
+              `${version}/data-packages/latest-by-data-feeds/mock-data-service-1?dataFeedIds=ETH,,BTC`
+            )
+            .expect(400);
+          expect(response.body.error).toMatch(/empty/);
+        });
+
+        it("should return 400 when dataFeedIds contain whitespace-padded values", async () => {
+          const response = await request(httpServer)
+            .get(
+              `${version}/data-packages/latest-by-data-feeds/mock-data-service-1?dataFeedIds= ETH`
+            )
+            .expect(400);
+          expect(response.body.error).toMatch(/whitespace/);
+        });
+
         it("should return 513 when no feeds match", async () => {
           const dpTimestamp = mockDataPackages[0].timestampMilliseconds;
           jest.spyOn(Date, "now").mockImplementation(() => dpTimestamp);
