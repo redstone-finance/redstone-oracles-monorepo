@@ -61,6 +61,7 @@
     "@jest/types": "^29.5.4",
     "@redstone-finance/eslint-plugin": "workspace:*",
     "@redstone-finance/jest-config": "workspace:*",
+    "@redstone-finance/typescript-config": "workspace:*",
     "@rharkor/caching-for-turbo": "2.2.0",
     "@rollup/plugin-commonjs": "^25.0.4",
     "@rollup/plugin-json": "^6.0.0",
