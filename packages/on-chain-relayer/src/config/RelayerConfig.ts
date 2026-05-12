@@ -22,6 +22,7 @@ export type ManifestConfig = {
   dataFeeds: string[];
   dataFeedAddresses: Record<string, string>;
   dataPackagesNames?: string[];
+  feedsToBeUpdatedTogether?: string[][];
   updateTriggers: Record<string, UpdateTriggers>;
   updateConditions: Record<string, ConditionCheckNames[]>;
   adapterContractType: AdapterType;
