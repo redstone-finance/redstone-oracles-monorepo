@@ -5775,6 +5775,13 @@
       ],
       "denomination": "USD",
       "rateFeed": false
+    },
+    "AMCASH+_FUNDAMENTAL": {
+      "source": [
+        "sync-nav-api"
+      ],
+      "denomination": "USD",
+      "rateFeed": true
     }
   },
   "multiPointPackages": {
