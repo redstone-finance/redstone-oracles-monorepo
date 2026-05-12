@@ -2586,7 +2586,7 @@
         "rwa"
       ]
     },
-    "XCU": {
+    "XCU_FELIX": {
       "source": [],
       "priceAggregator": "redstoneX",
       "redstoneXAggregatorConfig": {
