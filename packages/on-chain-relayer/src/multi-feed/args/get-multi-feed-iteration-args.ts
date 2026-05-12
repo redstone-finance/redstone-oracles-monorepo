@@ -2,16 +2,21 @@ import { DataPackagesResponse, getDataPackagesWithFeedIds } from "@redstone-fina
 import _ from "lodash";
 import { RelayerConfig } from "../../config/RelayerConfig";
 import { makeDataPackagesRequestParams } from "../../core/make-data-packages-request-params";
-import { IterationArgs, MultiFeedUpdatePricesArgs, ShouldUpdateContext } from "../../types";
-import { addExtraFeedsToUpdateParams } from "../gas-optimization/add-extra-feeds";
+import { MultiFeedIterationArgs, ShouldUpdateContext } from "../../types";
+import { getExtraFeedsToUpdateParams } from "../gas-optimization/get-extra-feeds";
 import { shouldUpdateInMultiFeed } from "../should-update-in-multi-feed";
 
 export const getMultiFeedIterationArgs = async (
   context: ShouldUpdateContext,
   relayerConfig: RelayerConfig
 ) => {
-  const { dataFeedsToUpdate, dataFeedsDeviationRatios, heartbeatUpdates, messages } =
-    await shouldUpdateInMultiFeed(context, relayerConfig);
+  const {
+    dataFeedsToUpdate,
+    dataFeedsDeviationRatios,
+    heartbeatUpdates,
+    messages,
+    missingDataFeedIds,
+  } = await shouldUpdateInMultiFeed(context, relayerConfig);
 
   const updateRequestParams = makeDataPackagesRequestParams(
     relayerConfig,
@@ -19,7 +24,7 @@ export const getMultiFeedIterationArgs = async (
     dataFeedsToUpdate
   );
 
-  const iterationArgs = {
+  const iterationArgs: MultiFeedIterationArgs = {
     shouldUpdatePrices: dataFeedsToUpdate.length > 0,
     args: {
       dataFeedsToUpdate,
@@ -27,56 +32,81 @@ export const getMultiFeedIterationArgs = async (
       heartbeatUpdates,
       blockTag: context.blockTag,
       updateRequestParams,
+      missingDataFeedIds,
     },
     messages,
   };
 
   if (iterationArgs.shouldUpdatePrices) {
-    addExtraFeedsAndMessagesToUpdateParams(relayerConfig, iterationArgs, context.dataPackages);
+    const { messages, additionalDataFeedsToUpdate } = getExtraFeedsAndMessagesToUpdateParams(
+      relayerConfig,
+      iterationArgs,
+      context.dataPackages
+    );
+
+    iterationArgs.additionalUpdateMessages = messages;
+    iterationArgs.args.dataFeedsToUpdate.push(...additionalDataFeedsToUpdate);
+
+    const feedsToRemove = getFeedsToRemoveIfMissingFeedToBeUpdatedTogether(
+      iterationArgs.args.dataFeedsToUpdate,
+      iterationArgs.args.missingDataFeedIds,
+      relayerConfig
+    );
+
+    iterationArgs.args.dataFeedsToUpdate = iterationArgs.args.dataFeedsToUpdate.filter(
+      (feed) => !feedsToRemove.includes(feed)
+    );
+    iterationArgs.shouldUpdatePrices = iterationArgs.args.dataFeedsToUpdate.length > 0;
+
+    iterationArgs.additionalUpdateMessages.push({
+      message: "Data feeds to be updated:",
+      args: [[...iterationArgs.args.dataFeedsToUpdate]],
+    });
   }
 
   return iterationArgs;
 };
 
-function addExtraFeedsAndMessagesToUpdateParams(
+function getExtraFeedsAndMessagesToUpdateParams(
   relayerConfig: RelayerConfig,
-  iterationArgs: IterationArgs,
+  iterationArgs: MultiFeedIterationArgs,
   dataPackages: DataPackagesResponse
 ) {
   const messages = [];
+  const additionalDataFeedsToUpdate: string[] = [];
 
   messages.push({
     message: "Data feeds that require update:",
-    args: [[...(iterationArgs.args as MultiFeedUpdatePricesArgs).dataFeedsToUpdate]],
+    args: [[...iterationArgs.args.dataFeedsToUpdate]],
   });
 
   if (relayerConfig.includeAdditionalFeedsForGasOptimization) {
-    const message = addExtraFeedsToUpdateParams(
+    const { message, extraFeedsToUpdate } = getExtraFeedsToUpdateParams(
       relayerConfig,
-      iterationArgs.args as MultiFeedUpdatePricesArgs
+      iterationArgs.args
     );
+    additionalDataFeedsToUpdate.push(...extraFeedsToUpdate);
     messages.push({ message });
 
-    const remainingFeedsMessage = addRemainingMultiDataPackageDataFeeds(
+    const remainingFeedsMessage = getRemainingMultiDataPackageDataFeeds(
       dataPackages,
       relayerConfig.dataFeeds,
-      iterationArgs.args.dataFeedsToUpdate
+      [...iterationArgs.args.dataFeedsToUpdate, ...extraFeedsToUpdate]
     );
 
     if (remainingFeedsMessage) {
       messages.push(remainingFeedsMessage);
+      additionalDataFeedsToUpdate.push(...remainingFeedsMessage.args);
     }
   }
 
-  messages.push({
-    message: "Data feeds to be updated:",
-    args: [[...(iterationArgs.args as MultiFeedUpdatePricesArgs).dataFeedsToUpdate]],
-  });
-
-  iterationArgs.additionalUpdateMessages = messages;
+  return {
+    messages,
+    additionalDataFeedsToUpdate,
+  };
 }
 
-function addRemainingMultiDataPackageDataFeeds(
+function getRemainingMultiDataPackageDataFeeds(
   dataPackages: DataPackagesResponse,
   allowedDataFeedIds: string[],
   dataFeedsToUpdate: string[]
@@ -95,10 +125,28 @@ function addRemainingMultiDataPackageDataFeeds(
     return undefined;
   }
 
-  dataFeedsToUpdate.push(...multiPackageAdditionalFeedIds);
-
   return {
     message: "MultiPackage remaining feeds added: ",
     args: multiPackageAdditionalFeedIds,
   };
+}
+
+export function getFeedsToRemoveIfMissingFeedToBeUpdatedTogether(
+  dataFeedsToUpdate: string[],
+  missingDataFeedIds: string[],
+  relayerConfig: RelayerConfig
+) {
+  const feedsToRemove: string[] = [];
+  if (!relayerConfig.feedsToBeUpdatedTogether) {
+    return feedsToRemove;
+  }
+
+  return relayerConfig.feedsToBeUpdatedTogether
+    .filter(
+      (tokensUpdatedTogether) =>
+        !tokensUpdatedTogether.every(
+          (token) => dataFeedsToUpdate.includes(token) && !missingDataFeedIds.includes(token)
+        )
+    )
+    .flat();
 }

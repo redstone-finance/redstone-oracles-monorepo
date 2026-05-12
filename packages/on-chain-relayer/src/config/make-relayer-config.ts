@@ -25,6 +25,7 @@ const createManifestConfig = (manifest: AnyOnChainRelayerManifest): ManifestConf
     dataFeeds: Object.keys(manifest.priceFeeds),
     dataFeedAddresses: Object.fromEntries(manifestFeedsWithAddresses),
     dataPackagesNames: manifest.dataPackagesNames,
+    feedsToBeUpdatedTogether: manifest.feedsToBeUpdatedTogether,
     updateConditions,
     updateTriggers,
     adapterContractType: manifest.adapterContractType,

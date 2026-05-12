@@ -86,5 +86,6 @@ export const shouldUpdateInMultiFeed = async (
     dataFeedsDeviationRatios,
     heartbeatUpdates: Array.from(heartbeatUpdates),
     messages: [...warningMessages, ...infoMessages],
+    missingDataFeedIds,
   };
 };

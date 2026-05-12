@@ -5,10 +5,12 @@ export const includeFeedsCloseToDeviation = (
   dataFeedsDeviations: Record<string, number>,
   config: RelayerConfig
 ) => {
+  const extraFeedsFromDeviation: string[] = [];
+
   const { multiFeedAdditionalUpdatesDeviationThreshold } = config;
   if (!multiFeedAdditionalUpdatesDeviationThreshold) {
     return {
-      dataFeedsToUpdate,
+      extraFeedsFromDeviation,
       message: "",
     };
   }
@@ -21,11 +23,11 @@ export const includeFeedsCloseToDeviation = (
       messages.push(
         `DataFeed: ${dataFeedId} deviated enough: ${Number(deviation.toFixed(2)) * 100}% of deviation condition, to be included in update`
       );
-      dataFeedsToUpdate.push(dataFeedId);
+      extraFeedsFromDeviation.push(dataFeedId);
     }
   }
   return {
-    dataFeedsToUpdate,
+    extraFeedsFromDeviation,
     message: messages.join("; "),
   };
 };
