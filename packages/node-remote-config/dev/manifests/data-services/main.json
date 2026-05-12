@@ -2325,14 +2325,6 @@
         "rwa"
       ]
     },
-    "JPY": {
-      "source": [],
-      "denomination": "USD",
-      "rateFeed": false,
-      "types": [
-        "rwa"
-      ]
-    },
     "CHF": {
       "source": [],
       "denomination": "USD",
@@ -2374,14 +2366,6 @@
       ]
     },
     "CNH": {
-      "source": [],
-      "denomination": "USD",
-      "rateFeed": false,
-      "types": [
-        "rwa"
-      ]
-    },
-    "SGD": {
       "source": [],
       "denomination": "USD",
       "rateFeed": false,
@@ -9388,14 +9372,6 @@
     "FTSE100": {
       "source": [],
       "denomination": "GBP",
-      "rateFeed": false,
-      "types": [
-        "rwa"
-      ]
-    },
-    "KRW": {
-      "source": [],
-      "denomination": "USD",
       "rateFeed": false,
       "types": [
         "rwa"
