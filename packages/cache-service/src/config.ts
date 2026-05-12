@@ -16,6 +16,10 @@ interface CacheServiceConfig {
   secondMongoDbUrl?: string;
   maxAllowedTimestampDelay: number;
   dataPackagesTTL: number;
+  dataFeedsByFeedsEndpointMaxLimit: number;
+  historicalDataPackagesTTL: number;
+  metadataApiKeyPrefix?: string;
+  enableMetadataApiKeyPrefixCheck: boolean;
   streamrStreamNamePattern: string;
   keepAliveTimeoutInSeconds: number;
   influxUrl?: string;
@@ -55,6 +59,19 @@ const config: CacheServiceConfig = {
     z.number().positive().default(RedstoneConstants.DEFAULT_LATEST_DATA_PACKAGES_MAX_DELAY_MS)
   ),
   dataPackagesTTL: RedstoneCommon.getFromEnv("DATA_PACKAGES_TTL", z.number().default(CACHE_TTL)),
+  dataFeedsByFeedsEndpointMaxLimit: RedstoneCommon.getFromEnv(
+    "DATA_FEEDS_BY_FEEDS_ENDPOINT_MAX_LIMIT",
+    z.number().default(100)
+  ),
+  historicalDataPackagesTTL: RedstoneCommon.getFromEnv(
+    "HISTORICAL_DATA_PACKAGES_TTL",
+    z.number().default(30000)
+  ),
+  metadataApiKeyPrefix: RedstoneCommon.getFromEnv("METADATA_API_KEY_PREFIX", z.string().optional()),
+  enableMetadataApiKeyPrefixCheck: RedstoneCommon.getFromEnv(
+    "ENABLE_METADATA_API_KEY_PREFIX_CHECK",
+    z.boolean().default(false)
+  ),
   streamrStreamNamePattern: RedstoneCommon.getFromEnv(
     "STREAMR_STREAM_NAME_PATTERN",
     z.string().default("/redstone-oracle-node/{evmAddress}/data-packages")

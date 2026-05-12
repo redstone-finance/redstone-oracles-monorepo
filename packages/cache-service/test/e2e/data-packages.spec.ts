@@ -17,6 +17,7 @@ import { Wallet } from "ethers-v6";
 import { json, urlencoded } from "express";
 import request from "supertest";
 import { AppModule } from "../../src/app.module";
+import config from "../../src/config";
 import { DataPackage, DataPackageDocument } from "../../src/data-packages/data-packages.model";
 import { DataPackagesService } from "../../src/data-packages/data-packages.service";
 import {
@@ -781,6 +782,332 @@ describe("Data packages (e2e)", () => {
 
       expect(response.body.BTC).toHaveLength(1);
       expect(response.body.BTC[0].signerAddress).toBe("0xExternalSigner");
+    });
+  });
+
+  describe("latest-by-data-feeds endpoint", () => {
+    ["", "/v2"].forEach((version) => {
+      describe(`API ${version}`, () => {
+        it("should return 400 when dataFeedIds param is missing", async () => {
+          const response = await request(httpServer)
+            .get(`${version}/data-packages/latest-by-data-feeds/mock-data-service-1`)
+            .expect(400);
+          expect(response.body.error).toMatch(/dataFeedIds/);
+        });
+
+        it("should return 400 when too many dataFeedIds are provided", async () => {
+          const tooManyIds = Array.from(
+            { length: config.dataFeedsByFeedsEndpointMaxLimit + 1 },
+            (_, i) => `FEED_${i}`
+          ).join(",");
+          const response = await request(httpServer)
+            .get(
+              `${version}/data-packages/latest-by-data-feeds/mock-data-service-1?dataFeedIds=${tooManyIds}`
+            )
+            .expect(400);
+          expect(response.body.error).toMatch(/Too many dataFeedIds/);
+        });
+
+        it("should return 513 when no feeds match", async () => {
+          const dpTimestamp = mockDataPackages[0].timestampMilliseconds;
+          jest.spyOn(Date, "now").mockImplementation(() => dpTimestamp);
+          const response = await request(httpServer)
+            .get(
+              `${version}/data-packages/latest-by-data-feeds/mock-data-service-1?dataFeedIds=NONEXISTENT_FEED`
+            )
+            .expect(513);
+          expect(response.body.message).toBe("Data packages response is empty");
+        });
+
+        it("should return filtered packages for matching feeds", async () => {
+          const dpTimestamp = mockDataPackages[0].timestampMilliseconds;
+          jest.spyOn(Date, "now").mockImplementation(() => dpTimestamp);
+          const response = await request(httpServer)
+            .get(
+              `${version}/data-packages/latest-by-data-feeds/mock-data-service-1?dataFeedIds=ETH,BTC`
+            )
+            .expect(200);
+          expect(response.body).toHaveProperty("ETH");
+          expect(response.body).toHaveProperty("BTC");
+          expect(response.body).not.toHaveProperty("AAVE");
+          expect(response.body).not.toHaveProperty(ALL_FEEDS_KEY);
+          expect(response.body.ETH.length).toBeGreaterThan(0);
+          expect(response.body.BTC.length).toBeGreaterThan(0);
+        });
+
+        it("should handle single feed id", async () => {
+          const dpTimestamp = mockDataPackages[0].timestampMilliseconds;
+          jest.spyOn(Date, "now").mockImplementation(() => dpTimestamp);
+          const response = await request(httpServer)
+            .get(
+              `${version}/data-packages/latest-by-data-feeds/mock-data-service-1?dataFeedIds=AAVE`
+            )
+            .expect(200);
+          expect(response.body).toHaveProperty("AAVE");
+          expect(Object.keys(response.body)).toHaveLength(1);
+        });
+      });
+    });
+
+    describe("cache", () => {
+      it("should serve cached result for concurrent requests to latest-by-data-feeds", async () => {
+        const dpTimestamp = mockDataPackages[0].timestampMilliseconds;
+        jest.spyOn(Date, "now").mockImplementation(() => dpTimestamp);
+
+        const dataPackageService = app.get(DataPackagesService);
+        const getLatestSpy = jest.spyOn(
+          dataPackageService,
+          "getLatestDataPackagesFromDbWithSameTimestamp"
+        );
+
+        const firstRequest = request(httpServer)
+          .get(`/data-packages/latest-by-data-feeds/mock-data-service-1?dataFeedIds=ETH`)
+          .expect(200);
+        const secondConcurrentRequest = request(httpServer)
+          .get(`/data-packages/latest-by-data-feeds/mock-data-service-1?dataFeedIds=BTC`)
+          .expect(200);
+
+        await Promise.all([firstRequest, secondConcurrentRequest]);
+        expect(getLatestSpy).toBeCalledTimes(1);
+      });
+
+      it("should call DB separately for different data services", async () => {
+        const dpTimestamp = mockDataPackages[0].timestampMilliseconds;
+        jest.spyOn(Date, "now").mockImplementation(() => dpTimestamp);
+
+        const dataPackageService = app.get(DataPackagesService);
+        const getLatestSpy = jest.spyOn(
+          dataPackageService,
+          "getLatestDataPackagesFromDbWithSameTimestamp"
+        );
+
+        await Promise.all([
+          request(httpServer)
+            .get(`/data-packages/latest-by-data-feeds/mock-data-service-1?dataFeedIds=ETH`)
+            .expect(200),
+          request(httpServer)
+            .get(`/data-packages/latest-by-data-feeds/mock-data-service-2?dataFeedIds=ETH`)
+            .expect(200),
+        ]);
+        expect(getLatestSpy).toBeCalledTimes(2);
+      });
+    });
+  });
+
+  describe("historical-by-data-feeds endpoint", () => {
+    ["", "/v2"].forEach((version) => {
+      describe(`API ${version}`, () => {
+        it("should return 400 when dataFeedIds param is missing", async () => {
+          const historicalTimestamp = mockDataPackages[0].timestampMilliseconds - 1000;
+          const response = await request(httpServer)
+            .get(
+              `${version}/data-packages/historical-by-data-feeds/mock-data-service-1/${historicalTimestamp}`
+            )
+            .expect(400);
+          expect(response.body.error).toMatch(/dataFeedIds/);
+        });
+
+        it("should return 400 when too many dataFeedIds are provided", async () => {
+          const historicalTimestamp = mockDataPackages[0].timestampMilliseconds - 1000;
+          const tooManyIds = Array.from(
+            { length: config.dataFeedsByFeedsEndpointMaxLimit + 1 },
+            (_, i) => `FEED_${i}`
+          ).join(",");
+          const response = await request(httpServer)
+            .get(
+              `${version}/data-packages/historical-by-data-feeds/mock-data-service-1/${historicalTimestamp}?dataFeedIds=${tooManyIds}`
+            )
+            .expect(400);
+          expect(response.body.error).toMatch(/Too many dataFeedIds/);
+        });
+
+        it("should return 513 when no feeds match", async () => {
+          const historicalTimestamp = mockDataPackages[0].timestampMilliseconds - 1000;
+          const response = await request(httpServer)
+            .get(
+              `${version}/data-packages/historical-by-data-feeds/mock-data-service-1/${historicalTimestamp}?dataFeedIds=NONEXISTENT_FEED`
+            )
+            .expect(513);
+          expect(response.body.message).toBe("Data packages response is empty");
+        });
+
+        it("should return filtered historical packages for matching feeds", async () => {
+          const historicalTimestamp = mockDataPackages[0].timestampMilliseconds - 1000;
+          const response = await request(httpServer)
+            .get(
+              `${version}/data-packages/historical-by-data-feeds/mock-data-service-1/${historicalTimestamp}?dataFeedIds=ETH,BTC`
+            )
+            .expect(200);
+          expect(response.body).toHaveProperty("ETH");
+          expect(response.body).toHaveProperty("BTC");
+          expect(response.body).not.toHaveProperty("AAVE");
+          expect(response.body.ETH[0].timestampMilliseconds).toBe(historicalTimestamp);
+          expect(response.body.BTC[0].timestampMilliseconds).toBe(historicalTimestamp);
+        });
+      });
+    });
+
+    describe("cache", () => {
+      it("should serve cached result for concurrent requests to historical-by-data-feeds", async () => {
+        const historicalTimestamp = mockDataPackages[0].timestampMilliseconds - 1000;
+        const getTimestampSpy = jest.spyOn(DataPackagesService, "getDataPackagesByTimestamp");
+
+        const firstRequest = request(httpServer)
+          .get(
+            `/data-packages/historical-by-data-feeds/mock-data-service-1/${historicalTimestamp}?dataFeedIds=ETH`
+          )
+          .expect(200);
+        const secondConcurrentRequest = request(httpServer)
+          .get(
+            `/data-packages/historical-by-data-feeds/mock-data-service-1/${historicalTimestamp}?dataFeedIds=BTC`
+          )
+          .expect(200);
+
+        await Promise.all([firstRequest, secondConcurrentRequest]);
+        expect(getTimestampSpy).toBeCalledTimes(1);
+      });
+    });
+  });
+
+  describe("validateMetadataAccess", () => {
+    describe("when enableMetadataApiKeyPrefixCheck=false (default)", () => {
+      it("/v2 show-metadata should not require API key", async () => {
+        const dpTimestamp = mockDataPackages[0].timestampMilliseconds;
+        jest.spyOn(Date, "now").mockImplementation(() => dpTimestamp);
+        await request(httpServer)
+          .get(`/v2/data-packages/latest/mock-data-service-1/show-metadata`)
+          .expect(200);
+      });
+
+      it("/v2 historical show-metadata should not require API key", async () => {
+        const historicalTimestamp = mockDataPackages[0].timestampMilliseconds - 1000;
+        await request(httpServer)
+          .get(
+            `/v2/data-packages/historical/mock-data-service-1/${historicalTimestamp}/show-metadata`
+          )
+          .expect(200);
+      });
+
+      it("latest-by-data-feeds with show-metadata should not require API key", async () => {
+        const dpTimestamp = mockDataPackages[0].timestampMilliseconds;
+        jest.spyOn(Date, "now").mockImplementation(() => dpTimestamp);
+        await request(httpServer)
+          .get(
+            `/data-packages/latest-by-data-feeds/mock-data-service-1/show-metadata?dataFeedIds=ETH`
+          )
+          .expect(200);
+      });
+    });
+
+    describe("when enableMetadataApiKeyPrefixCheck=true", () => {
+      const VALID_API_KEY = "test-prefix-secret123";
+      const WRONG_API_KEY = "wrong-prefix-secret123";
+
+      beforeEach(() => {
+        config.enableMetadataApiKeyPrefixCheck = true;
+        config.metadataApiKeyPrefix = "test-prefix-";
+      });
+
+      afterEach(() => {
+        config.enableMetadataApiKeyPrefixCheck = false;
+        config.metadataApiKeyPrefix = undefined;
+      });
+
+      it("/v2 show-metadata should return 403 without API key", async () => {
+        const dpTimestamp = mockDataPackages[0].timestampMilliseconds;
+        jest.spyOn(Date, "now").mockImplementation(() => dpTimestamp);
+        await request(httpServer)
+          .get(`/v2/data-packages/latest/mock-data-service-1/show-metadata`)
+          .expect(403);
+      });
+
+      it("/v2 show-metadata should return 403 with wrong API key prefix", async () => {
+        const dpTimestamp = mockDataPackages[0].timestampMilliseconds;
+        jest.spyOn(Date, "now").mockImplementation(() => dpTimestamp);
+        await request(httpServer)
+          .get(`/v2/data-packages/latest/mock-data-service-1/show-metadata`)
+          .set("x-api-key", WRONG_API_KEY)
+          .expect(403);
+      });
+
+      it("/v2 show-metadata should return 200 with valid API key", async () => {
+        const dpTimestamp = mockDataPackages[0].timestampMilliseconds;
+        jest.spyOn(Date, "now").mockImplementation(() => dpTimestamp);
+        await request(httpServer)
+          .get(`/v2/data-packages/latest/mock-data-service-1/show-metadata`)
+          .set("x-api-key", VALID_API_KEY)
+          .expect(200);
+      });
+
+      it("/v2 historical show-metadata should return 403 without API key", async () => {
+        const historicalTimestamp = mockDataPackages[0].timestampMilliseconds - 1000;
+        await request(httpServer)
+          .get(
+            `/v2/data-packages/historical/mock-data-service-1/${historicalTimestamp}/show-metadata`
+          )
+          .expect(403);
+      });
+
+      it("/v2 historical show-metadata should return 200 with valid API key", async () => {
+        const historicalTimestamp = mockDataPackages[0].timestampMilliseconds - 1000;
+        await request(httpServer)
+          .get(
+            `/v2/data-packages/historical/mock-data-service-1/${historicalTimestamp}/show-metadata`
+          )
+          .set("x-api-key", VALID_API_KEY)
+          .expect(200);
+      });
+
+      it("latest-by-data-feeds show-metadata should return 403 without API key", async () => {
+        const dpTimestamp = mockDataPackages[0].timestampMilliseconds;
+        jest.spyOn(Date, "now").mockImplementation(() => dpTimestamp);
+        await request(httpServer)
+          .get(
+            `/data-packages/latest-by-data-feeds/mock-data-service-1/show-metadata?dataFeedIds=ETH`
+          )
+          .expect(403);
+      });
+
+      it("latest-by-data-feeds show-metadata should return 403 with wrong API key prefix", async () => {
+        const dpTimestamp = mockDataPackages[0].timestampMilliseconds;
+        jest.spyOn(Date, "now").mockImplementation(() => dpTimestamp);
+        await request(httpServer)
+          .get(
+            `/data-packages/latest-by-data-feeds/mock-data-service-1/show-metadata?dataFeedIds=ETH`
+          )
+          .set("x-api-key", WRONG_API_KEY)
+          .expect(403);
+      });
+
+      it("latest-by-data-feeds show-metadata should return 200 with valid API key", async () => {
+        const dpTimestamp = mockDataPackages[0].timestampMilliseconds;
+        jest.spyOn(Date, "now").mockImplementation(() => dpTimestamp);
+        await request(httpServer)
+          .get(
+            `/data-packages/latest-by-data-feeds/mock-data-service-1/show-metadata?dataFeedIds=ETH`
+          )
+          .set("x-api-key", VALID_API_KEY)
+          .expect(200);
+      });
+
+      it("historical-by-data-feeds show-metadata should return 403 without API key", async () => {
+        const historicalTimestamp = mockDataPackages[0].timestampMilliseconds - 1000;
+        await request(httpServer)
+          .get(
+            `/data-packages/historical-by-data-feeds/mock-data-service-1/${historicalTimestamp}/show-metadata?dataFeedIds=ETH`
+          )
+          .expect(403);
+      });
+
+      it("historical-by-data-feeds show-metadata should return 200 with valid API key", async () => {
+        const historicalTimestamp = mockDataPackages[0].timestampMilliseconds - 1000;
+        await request(httpServer)
+          .get(
+            `/data-packages/historical-by-data-feeds/mock-data-service-1/${historicalTimestamp}/show-metadata?dataFeedIds=ETH`
+          )
+          .set("x-api-key", VALID_API_KEY)
+          .expect(200);
+      });
     });
   });
 });

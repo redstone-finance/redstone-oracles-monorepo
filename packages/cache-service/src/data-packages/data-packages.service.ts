@@ -121,6 +121,34 @@ export class DataPackagesService implements OnModuleInit, OnModuleDestroy {
     ttl: config.dataPackagesTTL,
   });
 
+  private getLatestDataPackagesForFeedsFilterWithCache = RedstoneCommon.memoize({
+    functionToMemoize: async (
+      dataServiceId: string,
+      hideMetadata?: boolean,
+      allowExternalSigners?: boolean
+    ) =>
+      await this.getLatestDataPackagesFromDbWithSameTimestamp(
+        dataServiceId,
+        hideMetadata,
+        allowExternalSigners
+      ),
+    ttl: config.dataPackagesTTL,
+  });
+
+  async getLatestDataPackagesByFeedIdsWithCache(
+    dataServiceId: string,
+    dataFeedIds: string[],
+    hideMetadata?: boolean,
+    allowExternalSigners?: boolean
+  ): Promise<DataPackagesResponse> {
+    const allPackages = await this.getLatestDataPackagesForFeedsFilterWithCache(
+      dataServiceId,
+      hideMetadata,
+      allowExternalSigners
+    );
+    return DataPackagesService.filterByDataFeedIds(allPackages, dataFeedIds);
+  }
+
   static async getDataPackagesByTimestamp(
     dataServiceId: string,
     timestamp: number,
@@ -133,6 +161,54 @@ export class DataPackagesService implements OnModuleInit, OnModuleDestroy {
       hideMetadata,
       allowExternalSigners
     );
+  }
+
+  private getHistoricalDataPackagesWithCache = RedstoneCommon.memoize({
+    functionToMemoize: async (
+      dataServiceId: string,
+      timestamp: number,
+      hideMetadata?: boolean,
+      allowExternalSigners?: boolean
+    ) =>
+      await DataPackagesService.getDataPackagesByTimestamp(
+        dataServiceId,
+        timestamp,
+        hideMetadata,
+        allowExternalSigners
+      ),
+    ttl: config.historicalDataPackagesTTL,
+  });
+
+  async getDataPackagesByTimestampAndFeedIds(
+    dataServiceId: string,
+    timestamp: number,
+    dataFeedIds: string[],
+    hideMetadata?: boolean,
+    allowExternalSigners?: boolean
+  ): Promise<DataPackagesResponse> {
+    const allPackages = await this.getHistoricalDataPackagesWithCache(
+      dataServiceId,
+      timestamp,
+      hideMetadata,
+      allowExternalSigners
+    );
+    return DataPackagesService.filterByDataFeedIds(allPackages, dataFeedIds);
+  }
+
+  private static filterByDataFeedIds(
+    allPackages: DataPackagesResponse,
+    dataFeedIds: string[]
+  ): DataPackagesResponse {
+    const filtered = Object.fromEntries(
+      Object.entries(allPackages).filter(([key]) => dataFeedIds.includes(key))
+    );
+    if (Object.keys(filtered).length === 0) {
+      throw new HttpException(
+        "Data packages response is empty",
+        EMPTY_DATA_PACKAGE_RESPONSE_ERROR_CODE
+      );
+    }
+    return filtered;
   }
 
   static async isDataServiceIdValid(dataServiceId: string): Promise<boolean> {

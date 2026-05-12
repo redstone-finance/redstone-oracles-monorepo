@@ -1,4 +1,5 @@
-import { Controller, Get, Header, Param, ServiceUnavailableException } from "@nestjs/common";
+import { Controller, Get, Header, Param, Req, ServiceUnavailableException } from "@nestjs/common";
+import type { Request } from "express";
 import config from "../config";
 import { BaseDataPackagesController } from "./base-data-packages.controller";
 import { DataPackagesResponse } from "./data-packages.interface";
@@ -47,8 +48,10 @@ export class DataPackagesControllerV2 extends BaseDataPackagesController {
   @Get("latest/:DATA_SERVICE_ID/show-metadata")
   @Header("Cache-Control", "max-age=5")
   async getAllLatestWithMetadata(
-    @Param("DATA_SERVICE_ID") dataServiceId: string
+    @Param("DATA_SERVICE_ID") dataServiceId: string,
+    @Req() req: Request
   ): Promise<DataPackagesResponse> {
+    BaseDataPackagesController.validateMetadataAccess(req);
     await BaseDataPackagesController.validateDataServiceId(dataServiceId);
     return await this.dataPackagesService.getLatestDataPackagesWithSameTimestampWithCache(
       dataServiceId,
@@ -61,13 +64,15 @@ export class DataPackagesControllerV2 extends BaseDataPackagesController {
   @Header("Cache-Control", "max-age=5")
   async getDataPackagesByTimestampWithMetadata(
     @Param("DATA_SERVICE_ID") dataServiceId: string,
-    @Param("TIMESTAMP") timestamp: string
+    @Param("TIMESTAMP") timestamp: string,
+    @Req() req: Request
   ): Promise<DataPackagesResponse> {
     if (!config.enableHistoricalDataServing) {
       throw new ServiceUnavailableException(
         `historical/* routes are not enabled in this cache-service configuration`
       );
     }
+    BaseDataPackagesController.validateMetadataAccess(req);
     await DataPackagesControllerV2.validateDataServiceId(dataServiceId);
 
     return await DataPackagesService.getDataPackagesByTimestamp(
