@@ -7548,6 +7548,11 @@
       "denomination": "cUSD",
       "rateFeed": true
     },
+    "stcUSD_FUNDAMENTAL/USD": {
+      "source": ["usd-based"],
+      "denomination": "USD",
+      "rateFeed": true
+    },
     "stHYPE_LP_FUNDAMENTAL": {
       "source": ["hyperevm-evm-fetcher-valantis-lp"],
       "denomination": "HYPE",
