@@ -2813,7 +2813,7 @@
       "rateFeed": false,
       "types": ["rwa"]
     },
-    "XCU": {
+    "XCU_FELIX": {
       "source": [
         "ws-lmax",
         "alltick-api-deferred",
