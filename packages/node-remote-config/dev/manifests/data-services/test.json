@@ -10,5 +10,21 @@
       "maxDelayMilliseconds": 120000
     }
   },
-  "tokens": {}
+  "tokens": {
+    "WBTC/BTC": {
+      "source": ["non-usd-based"],
+      "denomination": "BTC",
+      "rateFeed": false
+    },
+    "WBTC": {
+      "source": ["kraken-usd"],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "BTC": {
+      "source": ["kraken-usd"],
+      "denomination": "USD",
+      "rateFeed": false
+    }
+  }
 }
