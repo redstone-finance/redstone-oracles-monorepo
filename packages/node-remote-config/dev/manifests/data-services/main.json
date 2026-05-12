@@ -529,6 +529,13 @@
       "denomination": "USD",
       "rateFeed": false
     },
+    "WBTC/BTC": {
+      "source": [
+        "non-usd-based"
+      ],
+      "denomination": "BTC",
+      "rateFeed": false
+    },
     "ETH/USDC": {
       "source": [
         "non-usd-based"
