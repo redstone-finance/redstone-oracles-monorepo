@@ -189,7 +189,16 @@ export abstract class BaseDataPackagesController implements OnModuleDestroy {
     }
     await BaseDataPackagesController.validateDataServiceId(dataServiceId);
     const rawIds = Array.isArray(dataFeedIdsParam) ? dataFeedIdsParam : dataFeedIdsParam.split(",");
-    const dataFeedIds = rawIds.map((id) => id.trim()).filter(Boolean);
+    if (rawIds.some((id) => !id || id.trim() !== id)) {
+      throw new HttpException(
+        {
+          status: HttpStatus.BAD_REQUEST,
+          error: "dataFeedIds must not contain empty or whitespace-padded values",
+        },
+        HttpStatus.BAD_REQUEST
+      );
+    }
+    const dataFeedIds = rawIds;
     if (dataFeedIds.length > config.dataFeedsByFeedsEndpointMaxLimit) {
       throw new HttpException(
         {
