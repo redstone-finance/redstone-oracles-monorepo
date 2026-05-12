@@ -1,4 +1,4 @@
 {
-  "extends": ["./tsconfig.json", "../../tsconfig-build-common.json"],
+  "extends": ["./tsconfig.json", "@redstone-finance/typescript-config/tsconfig-build-common.json"],
   "exclude": ["node_modules", "dist", "test", "**/*spec.ts", "cairo"]
 }
