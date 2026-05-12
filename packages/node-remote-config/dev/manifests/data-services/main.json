@@ -880,12 +880,13 @@
         "bingx-usdt",
         "bitget-usdt",
         "bybit-usdt",
+        "okx-eth",
         "okx-usdt",
         "curve-ethereum-eth",
         "curve-ethereum-eth-2",
         "curve-ethereum-weth",
-        "okx-eth",
-        "uniswap-v2-ethereum-weth"
+        "uniswap-v2-ethereum-weth",
+        "uniswap-v3-ethereum-weth-10000"
       ],
       "denomination": "USD",
       "rateFeed": false
@@ -1590,7 +1591,8 @@
     "ezETH": {
       "source": [
         "aerodrome-cl-base-weth",
-        "curve-fraxtal-frxeth",
+        "curve-fraxtal-wfrxeth",
+        "fluid-arbitrumone-eth",
         "fluid-ethereum-eth",
         "uniswap-v4-arbitrumone-eth-500"
       ],
@@ -1860,7 +1862,8 @@
         "thena-v3-bnb-wbnb",
         "uniswap-v3-bnb-btcb-100",
         "uniswap-v3-ethereum-wbtc-500",
-        "blackhole-avalanche-btc.b-5000"
+        "blackhole-avalanche-btc.b-5000",
+        "trader-joe-v2-avalanche-btc.b"
       ],
       "denomination": "USD",
       "rateFeed": false,
@@ -1967,6 +1970,7 @@
     },
     "fxUSD": {
       "source": [
+        "curve-ethereum-alusd",
         "curve-ethereum-eusd",
         "curve-ethereum-frxusd",
         "curve-ethereum-gho",
@@ -1999,11 +2003,13 @@
         "kraken-usd",
         "blackhole-avalanche-usdc-75",
         "curve-ethereum-usdc",
+        "curve-monad-usdc",
         "pancake-swap-monad-usdc-100",
         "pharaoh-avalanche-usdc-50",
         "trader-joe-v2-avalanche-usdc",
         "trader-joe-v2-avalanche-usdt",
         "trader-joe-v2-avalanche-wavax",
+        "trader-joe-v2-monad-usdc",
         "uniswap-v3-ethereum-usdc-100",
         "uniswap-v4-ethereum-usdc-100"
       ],
@@ -2741,7 +2747,9 @@
         "xt-usdt",
         "aerodrome-base-usdc",
         "aerodrome-base-weth",
+        "aerodrome-cl-base-usdc-2",
         "aerodrome-cl-base-weth",
+        "aerodrome-cl-base-weth-2",
         "uniswap-v3-base-weth-3000"
       ],
       "denomination": "USD",
@@ -7081,6 +7089,7 @@
         "hyperliquid-api-fetcher-usdh",
         "hyperswap-hyperevm-whype-3000",
         "kittenswap-hyperevm-whype",
+        "nest-hyperevm-whype",
         "project-x-hyperevm-usdt0-500",
         "project-x-hyperevm-whype-3000"
       ],
@@ -7741,6 +7750,7 @@
       "source": [
         "hyperliquid-api-fetcher-usdc",
         "nest-hyperevm-whype",
+        "nest-hyperevm-usdc",
         "project-x-hyperevm-usdt0-100",
         "project-x-hyperevm-whype-3000"
       ],
@@ -8268,6 +8278,7 @@
       "source": [
         "kumbaya-megaeth-usdt0-100",
         "kumbaya-megaeth-btc.b-3000",
+        "kumbaya-megaeth-usde-100",
         "kumbaya-megaeth-weth-3000"
       ],
       "priceAggregator": "primarySource",
@@ -8827,7 +8838,8 @@
         "lbank-usdt",
         "mexc-usdc",
         "mexc-usdt",
-        "uniswap-v3-ethereum-usdc-100"
+        "uniswap-v3-ethereum-usdc-100",
+        "uniswap-v4-ethereum-usdc-9888"
       ],
       "denomination": "USD",
       "rateFeed": false
@@ -8835,15 +8847,16 @@
     "USDG": {
       "source": [
         "bitmart-usdt",
-        "curve-ethereum-usdc",
         "gate-usdt",
         "kraken-usd",
         "kraken-usdc",
         "kucoin-usdt",
         "okx-usdt",
+        "xt-usdt",
+        "curve-ethereum-usdc",
         "orca-solana-mainnet-usdc",
         "orca-solana-mainnet-wsol",
-        "xt-usdt"
+        "uniswap-v4-ethereum-usdc-100"
       ],
       "denomination": "USD",
       "rateFeed": false
