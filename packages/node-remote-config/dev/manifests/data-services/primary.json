@@ -3953,6 +3953,19 @@
         }
       }
     },
+    "stcUSD_FUNDAMENTAL/USD": {
+      "source": [
+        "usd-based"
+      ],
+      "denomination": "USD",
+      "rateFeed": true,
+      "deviationCheck": {
+        "deviationWithRecentValues": {
+          "maxPercent": 5,
+          "maxDelayMilliseconds": 120000
+        }
+      }
+    },
     "stHYPE_LP_FUNDAMENTAL": {
       "source": [
         "hyperevm-evm-fetcher-valantis-lp"
