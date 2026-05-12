@@ -4746,6 +4746,16 @@
         }
       }
     },
+    "mzUSD_FUNDAMENTAL": {
+      "source": ["accountable-mzusd"],
+      "denomination": "USD",
+      "rateFeed": true
+    },
+    "mzUSD_TOTAL_SUPPLY": {
+      "source": ["accountable-mzusd-total-supply"],
+      "denomination": "other",
+      "rateFeed": false
+    },
     "DLF_FUNDAMENTAL": {
       "source": ["accountable-dlf"],
       "denomination": "TRY",
