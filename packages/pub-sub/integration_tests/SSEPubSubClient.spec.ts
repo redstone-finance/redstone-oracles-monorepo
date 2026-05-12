@@ -223,15 +223,10 @@ describe("SSEPubSubClient", () => {
     expect(onMessage).toHaveBeenCalledWith("topic1", 321, null, client);
   });
 
-  it("should handle reconnection with all initial topics", async () => {
+  it("should resubscribe all topics via POST on reconnection", async () => {
     const onMessage = jest.fn();
     client.setOnMessageHandler(onMessage);
     await client.subscribe(["topic1"]);
-
-    // Start again to set up initialTopics
-    client["eventSource"]?.close();
-    client.start();
-    await RedstoneCommon.sleep(3_000);
 
     await client.publish([{ topic: "topic1", data: 123 }]);
     await RedstoneCommon.sleep(PUBLISH_WAIT);
@@ -252,7 +247,12 @@ describe("SSEPubSubClient", () => {
     postSpy.mockClear();
     gatewayProc = await runGateway();
     await RedstoneCommon.sleep(3_000);
-    expect(postSpy).toHaveBeenCalledTimes(0);
+    expect(postSpy).toHaveBeenCalledTimes(1);
+    expect(postSpy).toHaveBeenCalledWith(
+      `${GATEWAY_ADDRESS}/subscribe_to_topics`,
+      { session_id: expect.anything() as string, topics: ["topic1"] },
+      expect.anything()
+    );
 
     await client.publish([{ topic: "topic1", data: 321 }]);
     await RedstoneCommon.sleep(PUBLISH_WAIT);
@@ -261,15 +261,10 @@ describe("SSEPubSubClient", () => {
     expect(onMessage).toHaveBeenCalledWith("topic1", 321, null, client);
   });
 
-  it("should handle reconnection with some initial topics", async () => {
+  it("should resubscribe only current topics via POST on reconnection after subscribe/unsubscribe changes", async () => {
     const onMessage = jest.fn();
     client.setOnMessageHandler(onMessage);
     await client.subscribe(["topic1", "topic2"]);
-
-    // Start again to set up initialTopics
-    client["eventSource"]?.close();
-    client.start();
-    await RedstoneCommon.sleep(3_000);
 
     await client.subscribe(["topic3"]);
     await client.unsubscribe(["topic2"]);
@@ -293,15 +288,10 @@ describe("SSEPubSubClient", () => {
     postSpy.mockClear();
     gatewayProc = await runGateway();
     await RedstoneCommon.sleep(3_000);
-    expect(postSpy).toHaveBeenCalledTimes(2);
+    expect(postSpy).toHaveBeenCalledTimes(1);
     expect(postSpy).toHaveBeenCalledWith(
       `${GATEWAY_ADDRESS}/subscribe_to_topics`,
-      { session_id: expect.anything() as string, topics: ["topic3"] },
-      expect.anything()
-    );
-    expect(postSpy).toHaveBeenCalledWith(
-      `${GATEWAY_ADDRESS}/unsubscribe_from_topics`,
-      { session_id: expect.anything() as string, topics: ["topic2"] },
+      { session_id: expect.anything() as string, topics: ["topic1", "topic3"] },
       expect.anything()
     );
 
