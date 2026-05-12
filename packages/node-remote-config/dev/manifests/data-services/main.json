@@ -6929,11 +6929,6 @@
       "source": ["non-usd-based"],
       "denomination": "BERA",
       "localCacheTTL": "60m",
-      "valueCapConfig": {
-        "lower": {
-          "value": 0.99
-        }
-      },
       "rateFeed": false
     },
     "iBGT/BERA-TWAP-60": {
