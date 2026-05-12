@@ -573,12 +573,13 @@
         "bingx-usdt",
         "bitget-usdt",
         "bybit-usdt",
+        "okx-eth",
+        "okx-usdt",
         "curve-ethereum-eth",
         "curve-ethereum-eth-2",
         "curve-ethereum-weth",
-        "okx-eth",
-        "okx-usdt",
-        "uniswap-v2-ethereum-weth"
+        "uniswap-v2-ethereum-weth",
+        "uniswap-v3-ethereum-weth-10000"
       ],
       "denomination": "USD",
       "rateFeed": false
@@ -605,7 +606,8 @@
     "ezETH": {
       "source": [
         "aerodrome-cl-base-weth",
-        "curve-fraxtal-frxeth",
+        "curve-fraxtal-wfrxeth",
+        "fluid-arbitrumone-eth",
         "fluid-ethereum-eth",
         "uniswap-v4-arbitrumone-eth-500"
       ],
@@ -869,7 +871,9 @@
         "xt-usdt",
         "aerodrome-base-usdc",
         "aerodrome-base-weth",
+        "aerodrome-cl-base-usdc-2",
         "aerodrome-cl-base-weth",
+        "aerodrome-cl-base-weth-2",
         "uniswap-v3-base-weth-3000"
       ],
       "denomination": "USD",
