@@ -5,7 +5,7 @@
     "build": {
       "inputs": [
         "$TURBO_DEFAULT$",
-        "$TURBO_ROOT$/tsconfig-build-common.json",
+        "$TURBO_ROOT$/packages/typescript-config/tsconfig-build-common.json",
         "!test*/**",
         "!scripts/**",
         "!tsconfig.json"
@@ -22,7 +22,7 @@
     },
     // Perform a *full* typecheck according to tsconfig.json (usually includes tests and scripts).
     "typecheck": {
-      "inputs": ["$TURBO_DEFAULT$", "$TURBO_ROOT$/tsconfig-common.json", "!tsconfig.build.json"],
+      "inputs": ["$TURBO_DEFAULT$", "$TURBO_ROOT$/packages/typescript-config/tsconfig-common.json", "!tsconfig.build.json"],
       "dependsOn": ["setup-dev"]
     },
     "compile": {

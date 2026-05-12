@@ -1,0 +1,14 @@
+{
+  "name": "@redstone-finance/typescript-config",
+  "version": "0.9.0",
+  "main": "./tsconfig-common.json",
+  "exports": {
+    ".": "./tsconfig-common.json",
+    "./tsconfig-common.json": "./tsconfig-common.json",
+    "./tsconfig-build-common.json": "./tsconfig-build-common.json"
+  },
+  "license": "MIT",
+  "publishConfig": {
+    "access": "public"
+  }
+}

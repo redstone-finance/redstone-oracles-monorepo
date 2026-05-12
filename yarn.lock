@@ -10209,6 +10209,7 @@ __metadata:
     "@redstone-finance/pub-sub": "workspace:*"
     "@redstone-finance/remote-config": "workspace:*"
     "@redstone-finance/sdk": "workspace:*"
+    "@redstone-finance/typescript-config": "workspace:*"
     "@redstone-finance/utils": "workspace:*"
     "@types/express": "npm:^4.17.14"
     axios: "npm:^1.15.2"
@@ -11540,6 +11541,7 @@ __metadata:
     "@jest/types": "npm:^29.5.4"
     "@redstone-finance/eslint-plugin": "workspace:*"
     "@redstone-finance/jest-config": "workspace:*"
+    "@redstone-finance/typescript-config": "workspace:*"
     "@rharkor/caching-for-turbo": "npm:2.2.0"
     "@rollup/plugin-commonjs": "npm:^25.0.4"
     "@rollup/plugin-json": "npm:^6.0.0"
@@ -11963,6 +11965,12 @@ __metadata:
     "@ton/test-utils": "npm:^0.4.2"
     "@ton/ton": "npm:^13.11.1"
     ethers: "npm:^5.7.2"
+  languageName: unknown
+  linkType: soft
+
+"@redstone-finance/typescript-config@workspace:*, @redstone-finance/typescript-config@workspace:packages/typescript-config":
+  version: 0.0.0-use.local
+  resolution: "@redstone-finance/typescript-config@workspace:packages/typescript-config"
   languageName: unknown
   linkType: soft
 
