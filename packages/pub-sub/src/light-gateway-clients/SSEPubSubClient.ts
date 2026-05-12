@@ -27,7 +27,6 @@ type PackageBatch = Package[];
 export class SSEPubSubClient implements PubSubClient {
   private readonly logger = loggerFactory("sse-pub-sub-client");
   private topics: Set<string> = new Set();
-  private initialTopics: Set<string> = new Set();
   private readonly httpClient: HttpClient;
   private readonly common: ClientCommon;
 
@@ -49,13 +48,9 @@ export class SSEPubSubClient implements PubSubClient {
   }
 
   private connect() {
-    this.initialTopics = new Set(this.topics);
-    const initialTopics = Array.from(this.initialTopics.keys());
-    const query =
-      initialTopics.length > 0 ? `?topics=${initialTopics.map(encodeURIComponent).join(",")}` : "";
-    const url = this.common.getUrl(`${SUBSCRIBE_SSE_ROUTE}${query}`);
+    const url = this.common.getUrl(SUBSCRIBE_SSE_ROUTE);
 
-    this.logger.info("Establishing SSE connection", { url, topicCount: initialTopics.length });
+    this.logger.info("Establishing SSE connection", { url, topicCount: this.topics.size });
 
     this.eventSource = new EventSource(url);
     this.eventSource.addEventListener(CONNECTED_EVENT, (e) => this.handleConnected(e));
@@ -74,33 +69,12 @@ export class SSEPubSubClient implements PubSubClient {
       const data = JSON.parse(event.data as string) as ConnectedEvent;
       this.sessionId = data.session_id;
 
-      this.logger.info("Connected to stream", {
-        sessionId: this.sessionId,
-        topics: Array.from(this.initialTopics.keys()),
-      });
+      this.logger.info("Connected to stream", { sessionId: this.sessionId });
 
-      const topics = this.topics;
-      this.topics = new Set(this.initialTopics);
-      if (this.callback !== undefined) {
-        this.logger.info("Resubscribing to topics after reconnection", {
-          topicCount: topics.size,
-        });
-        void this.subscribe(Array.from(topics.keys())).catch((e) =>
-          this.logger.error(`Resubscribe failed: ${RedstoneCommon.stringifyError(e)}`)
-        );
-      }
-
-      const unsubscribedTopics = new Set(this.initialTopics);
-      for (const topic of topics) {
-        unsubscribedTopics.delete(topic);
-      }
-      if (unsubscribedTopics.size > 0) {
-        this.logger.info("Cleaning up stale topics", {
-          topics: Array.from(unsubscribedTopics.keys()),
-        });
-      }
-      void this.unsubscribe(Array.from(unsubscribedTopics.keys())).catch((e) =>
-        this.logger.error(`Stale topic unsubscribe failed: ${RedstoneCommon.stringifyError(e)}`)
+      const topicsToSubscribe = Array.from(this.topics.keys());
+      this.topics = new Set();
+      void this.subscribe(topicsToSubscribe).catch((e) =>
+        this.logger.error(`Subscribe failed: ${RedstoneCommon.stringifyError(e)}`)
       );
     } catch (error) {
       this.logger.info("Failed to parse connected event", { error });
