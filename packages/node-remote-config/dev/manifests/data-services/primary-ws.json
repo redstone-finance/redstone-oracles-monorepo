@@ -136,6 +136,13 @@
         "ws-polygon-massive-commodities",
         "metal-price-api"
       ],
+      "priceAggregator": "primarySource",
+      "primarySourceAggregatorConfig": {
+        "primarySource": "ws-polygon-massive-commodities",
+        "maxAcceptableDeviation": 1.5,
+        "lowerClampPercent": 0.1,
+        "upperClampPercent": 0.1
+      },
       "denomination": "USD",
       "rateFeed": false,
       "types": ["rwa"]
@@ -146,15 +153,16 @@
         "alltick-api-deferred-reversed",
         "ws-polygon-massive-commodities",
         "ws-lmax",
-        "ws-aleno",
         "ws-blocksize",
-        "finhub_pepperstone_deferred",
-        "finhub_deriv_deferred",
-        "finhub_fxcm_deferred",
-        "finhub_forex_deferred",
-        "finhub_icmarkets_deferred",
-        "finhub_oanda_deferred"
+        "finhub_forex_deferred"
       ],
+      "priceAggregator": "primarySource",
+      "primarySourceAggregatorConfig": {
+        "primarySource": "ws-lmax",
+        "maxAcceptableDeviation": 1.5,
+        "lowerClampPercent": 0.1,
+        "upperClampPercent": 0.1
+      },
       "denomination": "USD",
       "rateFeed": false,
       "types": ["rwa"]
@@ -171,23 +179,28 @@
         "alltick-api-deferred-reversed",
         "ws-polygon-massive-commodities",
         "ws-lmax",
-        "ws-aleno",
-        "finhub_pepperstone_deferred",
-        "finhub_forex_deferred",
-        "finhub_icmarkets_deferred",
-        "finhub_oanda_deferred"
+        "finhub_forex_deferred"
       ],
+      "priceAggregator": "primarySource",
+      "primarySourceAggregatorConfig": {
+        "primarySource": "ws-lmax",
+        "maxAcceptableDeviation": 1.5,
+        "lowerClampPercent": 0.1,
+        "upperClampPercent": 0.1
+      },
       "denomination": "USD",
       "rateFeed": false,
       "types": ["rwa"]
     },
     "IDR": {
-      "source": [
-        "ws-twelve-data",
-        "ws-polygon-massive-commodities",
-        "ws-aleno",
-        "finhub_pepperstone_deferred"
-      ],
+      "source": ["ws-twelve-data", "ws-polygon-massive-commodities", "finhub_pepperstone_deferred"],
+      "priceAggregator": "primarySource",
+      "primarySourceAggregatorConfig": {
+        "primarySource": "ws-polygon-massive-commodities",
+        "maxAcceptableDeviation": 1.5,
+        "lowerClampPercent": 0.1,
+        "upperClampPercent": 0.1
+      },
       "denomination": "USD",
       "rateFeed": false,
       "types": ["rwa"]
@@ -195,16 +208,18 @@
     "SGD": {
       "source": [
         "ws-twelve-data",
-        "alltick-api-deferred-reversed",
         "ws-polygon-massive-commodities",
         "ws-lmax",
-        "ws-aleno",
         "ws-blocksize",
-        "finhub_pepperstone_deferred",
-        "finhub_forex_deferred",
-        "finhub_icmarkets_deferred",
-        "finhub_oanda_deferred"
+        "finhub_forex_deferred"
       ],
+      "priceAggregator": "primarySource",
+      "primarySourceAggregatorConfig": {
+        "primarySource": "ws-lmax",
+        "maxAcceptableDeviation": 1.5,
+        "lowerClampPercent": 0.1,
+        "upperClampPercent": 0.1
+      },
       "denomination": "USD",
       "rateFeed": false,
       "types": ["rwa"]
