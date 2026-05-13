@@ -23,6 +23,25 @@ export function assetToScVal(asset: Sep40Asset) {
   }
 }
 
+export function assetFromScVal(scVal: xdr.ScVal): Sep40Asset {
+  const vec = scVal.vec();
+  if (vec?.length !== 2) {
+    throw new Error(`Invalid Sep40Asset ScVal: expected vec of length 2`);
+  }
+
+  const [tagVal, payloadVal] = vec;
+  const tag = tagVal.sym().toString();
+
+  switch (tag) {
+    case STELLAR_ASSET:
+      return { tag: STELLAR_ASSET, address: Address.fromScVal(payloadVal) };
+    case OTHER_ASSET:
+      return { tag: OTHER_ASSET, symbol: payloadVal.sym().toString() };
+    default:
+      RedstoneCommon.throwUnsupportedParamError(tag as never);
+  }
+}
+
 export function parseAsset(retVal: unknown): Sep40Asset {
   const [tag, value] = retVal as [string, unknown];
 
