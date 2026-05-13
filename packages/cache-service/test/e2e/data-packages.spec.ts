@@ -988,7 +988,7 @@ describe("Data packages (e2e)", () => {
   });
 
   describe("validateMetadataAccess", () => {
-    describe("when enableMetadataApiKeyPrefixCheck=false (default)", () => {
+    describe("when enableMetadataApiKeySuffixCheck=false (default)", () => {
       it("/v2 show-metadata should not require API key", async () => {
         const dpTimestamp = mockDataPackages[0].timestampMilliseconds;
         jest.spyOn(Date, "now").mockImplementation(() => dpTimestamp);
@@ -1017,18 +1017,18 @@ describe("Data packages (e2e)", () => {
       });
     });
 
-    describe("when enableMetadataApiKeyPrefixCheck=true", () => {
-      const VALID_API_KEY = "test-prefix-secret123";
-      const WRONG_API_KEY = "wrong-prefix-secret123";
+    describe("when enableMetadataApiKeySuffixCheck=true", () => {
+      const VALID_API_KEY = "secret123-test-suffix";
+      const WRONG_API_KEY = "secret123-wrong-suffix";
 
       beforeEach(() => {
-        config.enableMetadataApiKeyPrefixCheck = true;
-        config.metadataApiKeyPrefix = "test-prefix-";
+        config.enableMetadataApiKeySuffixCheck = true;
+        config.metadataApiKeySuffix = "-test-suffix";
       });
 
       afterEach(() => {
-        config.enableMetadataApiKeyPrefixCheck = false;
-        config.metadataApiKeyPrefix = undefined;
+        config.enableMetadataApiKeySuffixCheck = false;
+        config.metadataApiKeySuffix = undefined;
       });
 
       it("/v2 show-metadata should return 403 without API key", async () => {
@@ -1039,7 +1039,7 @@ describe("Data packages (e2e)", () => {
           .expect(403);
       });
 
-      it("/v2 show-metadata should return 403 with wrong API key prefix", async () => {
+      it("/v2 show-metadata should return 403 with wrong API key suffix", async () => {
         const dpTimestamp = mockDataPackages[0].timestampMilliseconds;
         jest.spyOn(Date, "now").mockImplementation(() => dpTimestamp);
         await request(httpServer)
@@ -1086,7 +1086,7 @@ describe("Data packages (e2e)", () => {
           .expect(403);
       });
 
-      it("latest-by-data-feeds show-metadata should return 403 with wrong API key prefix", async () => {
+      it("latest-by-data-feeds show-metadata should return 403 with wrong API key suffix", async () => {
         const dpTimestamp = mockDataPackages[0].timestampMilliseconds;
         jest.spyOn(Date, "now").mockImplementation(() => dpTimestamp);
         await request(httpServer)

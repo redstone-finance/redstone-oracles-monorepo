@@ -212,15 +212,11 @@ export abstract class BaseDataPackagesController implements OnModuleDestroy {
   }
 
   protected static validateMetadataAccess(req: Request): void {
-    if (!config.enableMetadataApiKeyPrefixCheck) {
+    if (!config.enableMetadataApiKeySuffixCheck) {
       return;
     }
     const apiKey = (req.headers as Record<string, string | undefined>)["x-api-key"];
-    if (
-      !apiKey ||
-      !config.metadataApiKeyPrefix ||
-      !apiKey.startsWith(config.metadataApiKeyPrefix)
-    ) {
+    if (!apiKey || !config.metadataApiKeySuffix || !apiKey.endsWith(config.metadataApiKeySuffix)) {
       throw new HttpException(
         { status: HttpStatus.FORBIDDEN, error: "Access to metadata requires a valid API key" },
         HttpStatus.FORBIDDEN

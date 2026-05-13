@@ -18,8 +18,8 @@ interface CacheServiceConfig {
   dataPackagesTTL: number;
   dataFeedsByFeedsEndpointMaxLimit: number;
   historicalDataPackagesTTL: number;
-  metadataApiKeyPrefix?: string;
-  enableMetadataApiKeyPrefixCheck: boolean;
+  metadataApiKeySuffix?: string;
+  enableMetadataApiKeySuffixCheck: boolean;
   streamrStreamNamePattern: string;
   keepAliveTimeoutInSeconds: number;
   influxUrl?: string;
@@ -67,9 +67,9 @@ const config: CacheServiceConfig = {
     "HISTORICAL_DATA_PACKAGES_TTL",
     z.number().default(30000)
   ),
-  metadataApiKeyPrefix: RedstoneCommon.getFromEnv("METADATA_API_KEY_PREFIX", z.string().optional()),
-  enableMetadataApiKeyPrefixCheck: RedstoneCommon.getFromEnv(
-    "ENABLE_METADATA_API_KEY_PREFIX_CHECK",
+  metadataApiKeySuffix: RedstoneCommon.getFromEnv("METADATA_API_KEY_SUFFIX", z.string().optional()),
+  enableMetadataApiKeySuffixCheck: RedstoneCommon.getFromEnv(
+    "ENABLE_METADATA_API_KEY_SUFFIX_CHECK",
     z.boolean().default(false)
   ),
   streamrStreamNamePattern: RedstoneCommon.getFromEnv(
