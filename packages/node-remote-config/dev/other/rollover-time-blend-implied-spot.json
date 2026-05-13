@@ -1,17 +1,17 @@
 {
   "USA100": {
-    "dividendYield": 0.007
+    "dividendYield": 0.0065
   },
   "USA500": {
-    "dividendYield": 0.0121
+    "dividendYield": 0.0147
   },
   "XAG": {
-    "dividendYield": 0.03
+    "dividendYield": 0.02
   },
   "XAU": {
-    "dividendYield": 0.0145
+    "dividendYield": 0.018
   },
   "XPT": {
-    "dividendYield": 0.022
+    "dividendYield": 0.028
   }
 }

@@ -9400,14 +9400,7 @@
       "rateFeed": false,
       "types": [
         "rwa"
-      ],
-      "priceAggregator": "primarySource",
-      "primarySourceAggregatorConfig": {
-        "primarySource": "",
-        "maxAcceptableDeviation": 1,
-        "lowerClampPercent": 0.1,
-        "upperClampPercent": 0.1
-      }
+      ]
     },
     "MSCI": {
       "source": [],
