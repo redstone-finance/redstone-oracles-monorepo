@@ -778,6 +778,31 @@
       "rateFeed": false,
       "types": ["rwa"]
     },
+    "WTI.Y": {
+      "source": [
+        "rollover-blend",
+        "alltick-api-deferred",
+        "ws-lmax",
+        "ws-twelve-data",
+        "ws-blocksize",
+        "ws-hyperliquid-perps-xyz",
+        "ws-hydromancer-perps-xyz"
+      ],
+      "priceAggregator": "redstoneX",
+      "redstoneXAggregatorConfig": {
+        "priceDiscoverySources": [
+          "alltick-api-deferred",
+          "ws-lmax",
+          "ws-twelve-data",
+          "ws-blocksize",
+          "ws-hyperliquid-perps-xyz",
+          "ws-hydromancer-perps-xyz"
+        ]
+      },
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": ["rwa"]
+    },
     "XAG_CURRENT": {
       "source": ["databento-cme-futures", "ws-polygon-massive-comex-futures"],
       "skipBroadcasting": true,
