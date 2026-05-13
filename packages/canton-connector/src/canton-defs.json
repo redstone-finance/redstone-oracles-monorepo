@@ -5,10 +5,6 @@
     "pricePillInterfaceId": "#redstone-price-pill-v18",
     "featuredInterfaceId": "#splice-api-featured-app-v2:Splice.Api.FeaturedAppRightV2:FeaturedAppRight",
     "node": {
-      "scanApiUrl": "https://scan.sv-1.global.canton.network.sync.global/api/scan/v0",
-      "scanApiProxyUrl": "https://canton.redstone.catalyst.intellecteu.io/api/http-proxy",
-      "validatorApiUrl": "https://wallet-validator-redstone.canton.redstone.catalyst.intellecteu.io/api/validator",
-      "walletClientId": "validator-redstone-wallet-ui",
       "globalDomain": "global-domain::1220b1431ef217342db44d516bb9befde802be7d8899637d290895fa58880f19accc",
       "participantPartyId": "Redstone-validator-1::1220a6f7c2315ed7ba230397a459b036bfe9f36763a0e848dad741c4e9d20d85687c",
       "walletPartyId": "PAR::Redstone-validator-1::1220a6f7c2315ed7ba230397a459b036bfe9f36763a0e848dad741c4e9d20d85687c",
@@ -33,10 +29,6 @@
     "pricePillInterfaceId": "#redstone-price-pill-v18",
     "featuredInterfaceId": "#splice-api-featured-app-v2:Splice.Api.FeaturedAppRightV2:FeaturedAppRight",
     "node": {
-      "scanApiUrl": "https://scan.sv-1.dev.global.canton.network.sync.global/api/scan/v0",
-      "scanApiProxyUrl": "https://canton.dev.redstone.catalyst.intellecteu.io/api/http-proxy",
-      "validatorApiUrl": "https://wallet-redstone-validator.canton.dev.redstone.catalyst.intellecteu.io/api/validator",
-      "walletClientId": "redstone-validator-wallet-ui",
       "globalDomain": "global-domain::1220be58c29e65de40bf273be1dc2b266d43a9a002ea5b18955aeef7aac881bb471a",
       "participantPartyId": "redstone-validator::1220a0242797a84e1d8c492f1259b3f87d561fcbde2e4b2cebc4572ddfc515b44c28",
       "walletPartyId": "8b4399ba-c401-4a97-a1fe-59077a8b3b14::1220a0242797a84e1d8c492f1259b3f87d561fcbde2e4b2cebc4572ddfc515b44c28",
@@ -61,10 +53,6 @@
     "pricePillInterfaceId": "#redstone-price-pill-v18",
     "featuredInterfaceId": "#redstone-featured-v18",
     "node": {
-      "scanApiUrl": "/v0",
-      "scanApiProxyUrl": "",
-      "validatorApiUrl": "",
-      "walletClientId": "",
       "globalDomain": "",
       "participantPartyId": "",
       "walletPartyId": "",

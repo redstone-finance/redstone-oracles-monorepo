@@ -23,6 +23,7 @@ export const getCantonContractAdapter = (relayerConfig: PartialRelayerConfig) =>
     .withRpcUrls(rpcUrls)
     .withNetworkId(networkId)
     .withDefaultAuth(privateKey)
+    .withQuarantineEnabled()
     .build();
 
   return new PricesCantonContractAdapter(

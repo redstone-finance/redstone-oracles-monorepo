@@ -1,6 +1,7 @@
 import { RedstoneCommon } from "@redstone-finance/utils";
+import { CantonApi } from "./CantonApi";
 
-const HEADERS = { "Content-Type": "application/json" };
+const DEFAULT_HEADERS = { "Content-Type": "application/json" };
 const MAX_RETRIES = 3;
 
 type SendCCResponse = Record<string, unknown>;
@@ -30,13 +31,10 @@ type SubmitAcceptResponse = {
 };
 
 export class CantonValidatorClient {
-  constructor(
-    private readonly validatorApiUrl: string,
-    private readonly tokenProvider: () => Promise<string>
-  ) {}
+  constructor(private readonly api: ValidatorCantonApi) {}
 
   async sendCC(receiverPartyId: string, amount: number, deduplicationId?: string) {
-    return await this.post<SendCCResponse>("/v0/wallet/transfer-preapproval/send", {
+    return await this.api.post<SendCCResponse>("/v0/wallet/transfer-preapproval/send", {
       receiver_party_id: receiverPartyId,
       amount: amount.toString(),
       deduplication_id: deduplicationId ?? `send-cc-${Date.now()}`,
@@ -50,7 +48,7 @@ export class CantonValidatorClient {
     expiresAt: Date,
     nonce: number
   ): Promise<PrepareSendResponse> {
-    return await this.post<PrepareSendResponse>(
+    return await this.api.post<PrepareSendResponse>(
       "/v0/admin/external-party/transfer-preapproval/prepare-send",
       {
         sender_party_id: senderPartyId,
@@ -68,7 +66,7 @@ export class CantonValidatorClient {
     signedTxHash: string,
     publicKey: string
   ): Promise<SubmitSendResponse> {
-    return await this.post<SubmitSendResponse>(
+    return await this.api.post<SubmitSendResponse>(
       "/v0/admin/external-party/transfer-preapproval/submit-send",
       {
         submission: {
@@ -82,13 +80,13 @@ export class CantonValidatorClient {
   }
 
   async setupProposal(userPartyId: string): Promise<SetupProposalResponse> {
-    return await this.post<SetupProposalResponse>("/v0/admin/external-party/setup-proposal", {
+    return await this.api.post<SetupProposalResponse>("/v0/admin/external-party/setup-proposal", {
       user_party_id: userPartyId,
     });
   }
 
   async prepareAccept(contractId: string, userPartyId: string): Promise<PrepareAcceptResponse> {
-    return await this.post<PrepareAcceptResponse>(
+    return await this.api.post<PrepareAcceptResponse>(
       "/v0/admin/external-party/setup-proposal/prepare-accept",
       { contract_id: contractId, user_party_id: userPartyId }
     );
@@ -100,7 +98,7 @@ export class CantonValidatorClient {
     signedTxHash: string,
     publicKey: string
   ): Promise<SubmitAcceptResponse> {
-    return await this.post<SubmitAcceptResponse>(
+    return await this.api.post<SubmitAcceptResponse>(
       "/v0/admin/external-party/setup-proposal/submit-accept",
       {
         submission: {
@@ -112,20 +110,25 @@ export class CantonValidatorClient {
       }
     );
   }
+}
 
-  private async authHeaders() {
-    const token = await this.tokenProvider();
-
-    return { ...HEADERS, Authorization: `Bearer ${token}` };
-  }
-
-  private async post<T>(path: string, body: object) {
-    const { data } = await RedstoneCommon.axiosPostWithRetries<T>(
-      `${this.validatorApiUrl}${path}`,
-      body,
-      { maxRetries: MAX_RETRIES, headers: await this.authHeaders() }
-    );
+export class ValidatorCantonApi extends CantonApi {
+  async post<T>(path: string, body: object) {
+    const { data } = await RedstoneCommon.axiosPostWithRetries<T>(`${this.baseUrl}${path}`, body, {
+      maxRetries: MAX_RETRIES,
+      headers: await this.authHeaders(),
+    });
 
     return data;
+  }
+
+  private async authHeaders() {
+    if (!this.tokenProvider) {
+      return DEFAULT_HEADERS;
+    }
+
+    const token = await this.tokenProvider();
+
+    return { ...DEFAULT_HEADERS, Authorization: `Bearer ${token}` };
   }
 }
