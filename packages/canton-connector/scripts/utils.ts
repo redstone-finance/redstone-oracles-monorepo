@@ -1,24 +1,21 @@
 import { getSSMParameterValue } from "@redstone-finance/internal-utils";
 import { RedstoneCommon } from "@redstone-finance/utils";
 import "dotenv/config";
-import { readFile } from "node:fs/promises";
-import path from "node:path";
 import { z } from "zod";
 import {
+  CantonClient,
   CantonClientBuilder,
   CantonNetwork,
   CantonNetworks,
   CantonValidatorClient,
   KeycloakTokenProvider,
-  getCantonNodeConfig,
   makeKeycloakParams,
   networkToChainId,
+  TokenProvider,
 } from "../src";
 
-const TOKEN_PROVIDER_TYPE = z.enum(["keycloak", "file", "none"]);
-
-export function readParticipantUrl() {
-  return RedstoneCommon.getFromEnv("PARTICIPANT", z.url());
+export function readApiUrl() {
+  return RedstoneCommon.getFromEnv("API", z.url());
 }
 
 export function readNetwork(): CantonNetwork {
@@ -29,38 +26,8 @@ export function readPartySuffix() {
   return RedstoneCommon.getFromEnv("PARTY_SUFFIX");
 }
 
-export function readApiPath() {
-  return RedstoneCommon.getFromEnv("API_PATH", z.string().default("/jsonapi"));
-}
-
-export function getJsonApiUrl(participantUrl = readParticipantUrl(), path = readApiPath()) {
-  return `${participantUrl}${path}`;
-}
-
-export function readProviderType() {
-  return RedstoneCommon.getFromEnv("TOKEN_PROVIDER_TYPE", TOKEN_PROVIDER_TYPE.default("keycloak"));
-}
-
-export function getTokenProvider() {
-  const providerType = readProviderType();
-
-  switch (providerType) {
-    case "keycloak": {
-      const tokenProvider = KeycloakTokenProvider.getInstance();
-
-      return tokenProvider.getToken.bind(tokenProvider);
-    }
-    case "file":
-      return () => fileTokenProvider();
-    case "none":
-      return undefined;
-  }
-}
-
-export async function fileTokenProvider(
-  filePath = path.join(__dirname, "..", "daml", "token.txt")
-) {
-  return (await readFile(filePath, "utf-8")).trim();
+export function readRpcUrls() {
+  return RedstoneCommon.getFromEnv("RPC_URLS", z.array(z.url()).default([readApiUrl()]));
 }
 
 export function makePartyId(partyName: string) {
@@ -68,18 +35,38 @@ export function makePartyId(partyName: string) {
 }
 
 export function makeDefaultClient() {
-  return new CantonClientBuilder()
-    .withChainId(networkToChainId(readNetwork()))
-    .withTokenProvider(getTokenProvider())
-    .withRpcUrl(getJsonApiUrl())
-    .build();
+  return makeDefaultClientWithValidator().client;
 }
 
-export function makeWalletTokenProvider(): () => Promise<string> {
+export function makeDefaultClientWithValidator(mustValidatorClientBeDefined: true): {
+  client: CantonClient;
+  validatorClient: CantonValidatorClient;
+};
+export function makeDefaultClientWithValidator(mustValidatorClientBeDefined?: false): {
+  client: CantonClient;
+  validatorClient: CantonValidatorClient | undefined;
+};
+export function makeDefaultClientWithValidator(mustValidatorClientBeDefined = false) {
+  const builder = new CantonClientBuilder()
+    .withChainId(networkToChainId(readNetwork()))
+    .withDefaultAuth()
+    .withRpcUrls(readRpcUrls())
+    .withQuarantineEnabled();
+
+  const validatorClient = builder.buildValidatorClient();
+
+  if (mustValidatorClientBeDefined && !RedstoneCommon.isDefined(validatorClient)) {
+    throw new Error("Validator Client is expected to be defined but is not");
+  }
+
+  return { client: builder.build(), validatorClient };
+}
+
+export function makeWalletTokenProvider(): TokenProvider {
   const params = makeKeycloakParams();
   const tokenProvider = KeycloakTokenProvider.getInstance({
     ...params,
-    clientId: getCantonNodeConfig(readNetwork()).walletClientId,
+    clientId: params.walletClientId ?? params.clientId,
     username: params.walletUsername ?? params.username,
     password: params.walletPassword ?? params.password,
   });
@@ -107,11 +94,4 @@ export async function readZrodelkoPrivateKeyHex(): Promise<string> {
   }
 
   return normalized;
-}
-
-export function makeValidatorClient(): CantonValidatorClient {
-  return new CantonValidatorClient(
-    getCantonNodeConfig(readNetwork()).validatorApiUrl,
-    makeWalletTokenProvider()
-  );
 }

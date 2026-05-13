@@ -1,7 +1,7 @@
 import { sign } from "node:crypto";
 import * as AllDefs from "../src/canton-defs.json";
 import { ed25519PublicKeyHex, makeEd25519PrivateKey } from "../src/utils/ed25519";
-import { makeValidatorClient, readNetwork, readZrodelkoPrivateKeyHex } from "./utils";
+import { makeDefaultClientWithValidator, readNetwork, readZrodelkoPrivateKeyHex } from "./utils";
 
 /**
  * Sets up a TransferPreapproval for zrodelko (external party) by signing the setup proposal
@@ -10,8 +10,7 @@ import { makeValidatorClient, readNetwork, readZrodelkoPrivateKeyHex } from "./u
 async function main() {
   const network = readNetwork();
   const { zrodelkoPartyId } = AllDefs[network].node as { zrodelkoPartyId: string };
-
-  const validatorClient = makeValidatorClient();
+  const { validatorClient } = makeDefaultClientWithValidator(true);
 
   const { contract_id } = await validatorClient.setupProposal(zrodelkoPartyId);
   console.log(`Created setup proposal: ${contract_id}`);

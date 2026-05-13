@@ -25,7 +25,7 @@ export class PricesCantonContractAdapter
   constructor(
     client: CantonClient,
     config: CantonContractAdapterConfig,
-    interfaceId = client.Defs.interfaceId,
+    interfaceId = client.getDefs().interfaceId,
     templateName = IADAPTER_TEMPLATE_NAME
   ) {
     super(client, config, interfaceId, templateName);
@@ -65,7 +65,7 @@ export class PricesCantonContractAdapter
       },
       {
         withCurrentTime: true,
-        disclosedContractData: [this.client.Defs[DEFS_KEY_FEATURED_APP_RIGHT]],
+        disclosedContractData: [this.client.getDefs()[DEFS_KEY_FEATURED_APP_RIGHT]],
         withCaller: true,
         withRetry: false,
       }

@@ -21,21 +21,21 @@ Traffic-weighted reward calculation, write-prices context object, pill demotion 
 
 ## New files
 
-| File | Description |
-|------|-------------|
-| `interface/src/WritePricesContext.daml` | New `WritePricesContext` record bundling `additionalPillViewers : Optional [Party]` and `paidTrafficCost : Optional Int`; `empty_write_prices_context` helper |
-| `test/src/Helpers/Setup.daml` | Reusable `allocateTestParties` and `setUpAdapter` for new test suites |
-| `test/src/PartialNewData.daml` | Test for partial-new-data path (only some feeds new) |
-| `test/src/PillArchival.daml` | Test for demotion-based pill archival |
-| `test/src/RewardsBatching.daml` | Test for traffic-weighted reward batching across writes |
-| `scripts/buy-traffic.sh` | Helper script for purchasing traffic on testnets |
-| `daml/traffic.mk` | Makefile fragment exposing `buy-traffic` and traffic-status targets |
-| `sdk-tests/src/RedStone/Tests/Suites/ConfigErrors.daml` | New error-path suite for config validation |
-| `sdk-tests/src/RedStone/Tests/Suites/DerErrors.daml` | DER decoding error cases |
-| `sdk-tests/src/RedStone/Tests/Suites/MatrixInput.daml` | Matrix-input building tests (replaces inline cases) |
+| File                                                       | Description |
+|------------------------------------------------------------|-------------|
+| `interface/src/WritePricesContext.daml`                    | New `WritePricesContext` record bundling `additionalPillViewers : Optional [Party]` and `paidTrafficCost : Optional Int`; `empty_write_prices_context` helper |
+| `test/src/Helpers/Setup.daml`                              | Reusable `allocateTestParties` and `setUpAdapter` for new test suites |
+| `test/src/PartialNewData.daml`                             | Test for partial-new-data path (only some feeds new) |
+| `test/src/PillArchival.daml`                               | Test for demotion-based pill archival |
+| `test/src/RewardsBatching.daml`                            | Test for traffic-weighted reward batching across writes |
+| `scripts/buy-traffic.sh`                                   | Helper script for purchasing traffic on testnets |
+| `scripts/traffic.mk`                                       | Makefile fragment exposing `buy-traffic` and traffic-status targets |
+| `sdk-tests/src/RedStone/Tests/Suites/ConfigErrors.daml`    | New error-path suite for config validation |
+| `sdk-tests/src/RedStone/Tests/Suites/DerErrors.daml`       | DER decoding error cases |
+| `sdk-tests/src/RedStone/Tests/Suites/MatrixInput.daml`     | Matrix-input building tests (replaces inline cases) |
 | `sdk-tests/src/RedStone/Tests/Suites/ProcessorErrors.daml` | Processor error-path coverage |
-| `sdk-tests/src/RedStone/Tests/Suites/U256Errors.daml` | U256 overflow / invalid-input cases |
-| `sdk-tests/src/RedStone/Tests/Suites/VerifyErrors.daml` | Signature/timestamp verification error cases |
+| `sdk-tests/src/RedStone/Tests/Suites/U256Errors.daml`      | U256 overflow / invalid-input cases |
+| `sdk-tests/src/RedStone/Tests/Suites/VerifyErrors.daml`    | Signature/timestamp verification error cases |
 
 ---
 

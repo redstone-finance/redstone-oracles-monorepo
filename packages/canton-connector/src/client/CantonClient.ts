@@ -1,13 +1,10 @@
-import { loggerFactory, RedstoneCommon } from "@redstone-finance/utils";
+import { RedstoneCommon } from "@redstone-finance/utils";
 import _ from "lodash";
-import { performance } from "perf_hooks";
 import {
   AllocateExternalPartyRequest,
-  AllocateExternalPartyResponse,
   DefaultService,
   DisclosedContract,
   GenerateExternalPartyTopologyRequest,
-  GenerateExternalPartyTopologyResponse,
   JsCantonError,
   OpenAPI,
   TransactionFormat,
@@ -26,7 +23,8 @@ import {
   makeInterfaceFilterByParty,
   unwrapResponse,
 } from "../utils/utils";
-import { CantonScanApiClient, type TokenProvider } from "./CantonScanApiClient";
+import { CantonApi } from "./CantonApi";
+import { CantonScanApiClient, ScanCantonApi } from "./CantonScanApiClient";
 
 const DEFAULT_DELTA_OFFSET = 1000;
 const LOCAL_USER = "redstone-canton-connector";
@@ -37,41 +35,44 @@ export interface TransactionMetadata {
 }
 
 export class CantonClient {
-  private readonly logger = loggerFactory("canton-client");
-
-  Defs: (typeof AllDefs)["devnet"];
-  scanApiClient: CantonScanApiClient;
+  scanApiClient?: CantonScanApiClient;
 
   constructor(
-    private readonly baseUrl: string,
+    private readonly api: JsonCantonApi,
     public network: CantonNetwork = "devnet",
-    private readonly tokenProvider?: TokenProvider,
-    scanApiTokenProvider?: TokenProvider
+    scanApi?: ScanCantonApi
   ) {
-    this.Defs = AllDefs[network];
-    this.scanApiClient = new CantonScanApiClient(network, scanApiTokenProvider ?? tokenProvider);
+    this.scanApiClient = scanApi ? new CantonScanApiClient(scanApi, network) : undefined;
+  }
+
+  getDefs() {
+    return AllDefs[this.network];
   }
 
   async getCurrentOffset() {
-    return (await this.performRequest(DefaultService.getV2StateLedgerEnd, "getCurrentOffset"))
+    return (await this.api.performRequest(DefaultService.getV2StateLedgerEnd, "getCurrentOffset"))
       .offset;
   }
 
   async getTotalConsumedTraffic() {
-    const status = await this.scanApiClient.getTrafficStatus();
+    const status = await this.scanApiClient?.getTrafficStatus();
 
-    return status.traffic_status.actual.total_consumed;
+    return status?.traffic_status.actual.total_consumed;
   }
 
   async getRemainingTraffic() {
-    const status = await this.scanApiClient.getTrafficStatus();
-    const actual = status.traffic_status.actual;
+    const status = await this.scanApiClient?.getTrafficStatus();
+    const actual = status?.traffic_status.actual;
+
+    if (!RedstoneCommon.isDefined(actual)) {
+      return undefined;
+    }
 
     return actual.total_limit - actual.total_consumed;
   }
 
   async getConnectedSynchronizers() {
-    const response = await this.performRequest(
+    const response = await this.api.performRequest(
       () => DefaultService.getV2StateConnectedSynchronizers(),
       "getConnectedSynchronizers"
     );
@@ -94,31 +95,27 @@ export class CantonClient {
     return synchronizers[0].synchronizerId;
   }
 
-  async generateExternalPartyTopology(
-    request: GenerateExternalPartyTopologyRequest
-  ): Promise<GenerateExternalPartyTopologyResponse> {
-    return await this.performRequest(
+  async generateExternalPartyTopology(request: GenerateExternalPartyTopologyRequest) {
+    return await this.api.performRequest(
       () => DefaultService.postV2PartiesExternalGenerateTopology(request),
       "generateExternalPartyTopology"
     );
   }
 
-  async allocateExternalParty(
-    request: AllocateExternalPartyRequest
-  ): Promise<AllocateExternalPartyResponse> {
-    return await this.performRequest(
+  async allocateExternalParty(request: AllocateExternalPartyRequest) {
+    return await this.api.performRequest(
       () => DefaultService.postV2PartiesExternalAllocate(request),
       "allocateExternalParty"
     );
   }
 
-  async getAmuletBalance(partyId: string): Promise<string> {
-    const summary = await this.scanApiClient.getAmuletHoldingsSummary(partyId);
+  async getAmuletBalance(partyId: string) {
+    const summary = await this.scanApiClient?.getAmuletHoldingsSummary(partyId);
 
     return summary?.total_available_coin ?? "0";
   }
 
-  private async fetchActiveContracts(
+  async getActiveContractsData(
     actAs: string,
     interfaceId: string,
     filter?: ContractFilter,
@@ -137,7 +134,8 @@ export class CantonClient {
       )
       .join(",");
 
-    const contracts = await this.performRequest(
+    const collectingKey = `postV2StateActiveContracts {offset: ${offset}, limit: ${limit}, filter: [${filterDesc}]}`;
+    const contracts = await this.api.performRequestCollected(
       () =>
         DefaultService.postV2StateActiveContracts(
           {
@@ -147,7 +145,7 @@ export class CantonClient {
           },
           limit
         ),
-      `postV2StateActiveContracts ${filterDesc}`
+      collectingKey
     );
 
     return contracts
@@ -162,23 +160,13 @@ export class CantonClient {
       );
   }
 
-  async getActiveContractsData(
-    actAs: string,
-    interfaceId: string,
-    filter?: ContractFilter,
-    atOffset?: number,
-    limit = MAX_RESPONSE_LIMIT
-  ) {
-    return await this.fetchActiveContracts(actAs, interfaceId, filter, atOffset, limit);
-  }
-
-  async getActiveContractWithPayload<T = unknown>(
+  async getActiveContractData<T = unknown>(
     actAs: string,
     interfaceId: string,
     filter?: ContractFilter,
     atOffset?: number
   ) {
-    const adapters = await this.fetchActiveContracts(actAs, interfaceId, filter, atOffset);
+    const adapters = await this.getActiveContractsData(actAs, interfaceId, filter, atOffset);
     if (adapters.length === 0) {
       throw new Error("No active contract data");
     }
@@ -190,41 +178,17 @@ export class CantonClient {
 
     const { createdEvent, synchronizerId } = adapter.contractEntry.JsActiveContract;
 
-    return {
-      ...makeActiveContractData(createdEvent, synchronizerId),
-      createArgument: createdEvent.createArgument as T,
-    };
+    return makeActiveContractData<T>(createdEvent, synchronizerId);
   }
 
-  async getActiveContractData(
-    actAs: string,
-    interfaceId: string,
-    filter?: ContractFilter,
-    atOffset?: number
-  ) {
-    const adapters = await this.fetchActiveContracts(actAs, interfaceId, filter, atOffset);
-    if (adapters.length === 0) {
-      throw new Error("No active contract data");
-    }
-
-    const [adapter, ...rest] = adapters;
-    if (rest.length > 0) {
-      throw new Error(`Unable to determine contract data of ${adapters.length} contracts`);
-    }
-
-    const { createdEvent, synchronizerId } = adapter.contractEntry.JsActiveContract;
-
-    return makeActiveContractData(createdEvent, synchronizerId);
-  }
-
-  async getMostActiveContractWithPayload<T = unknown>(
+  async getMostActiveContractData<T = unknown>(
     actAs: string,
     interfaceId: string,
     filter?: ContractFilter,
     atOffset?: number,
     sorter?: CreatedArgumentCallback
   ) {
-    let adapters = await this.fetchActiveContracts(actAs, interfaceId, filter, atOffset);
+    let adapters = await this.getActiveContractsData(actAs, interfaceId, filter, atOffset);
     if (adapters.length === 0) {
       throw new Error("No active contract data");
     }
@@ -241,28 +205,7 @@ export class CantonClient {
     const [adapter] = adapters;
     const { createdEvent, synchronizerId } = adapter.contractEntry.JsActiveContract;
 
-    return {
-      ...makeActiveContractData(createdEvent, synchronizerId),
-      createArgument: createdEvent.createArgument as T,
-    };
-  }
-
-  async getMostActiveContractData(
-    actAs: string,
-    interfaceId: string,
-    filter?: ContractFilter,
-    atOffset?: number,
-    sorter?: CreatedArgumentCallback
-  ) {
-    const { createArgument: _, ...contractData } = await this.getMostActiveContractWithPayload(
-      actAs,
-      interfaceId,
-      filter,
-      atOffset,
-      sorter
-    );
-
-    return contractData;
+    return makeActiveContractData<T>(createdEvent, synchronizerId);
   }
 
   async getCreateContractEvents(
@@ -310,7 +253,7 @@ export class CantonClient {
       }
 
       const updateId = update.Transaction.value.updateId;
-      const fullUpdate = await this.performRequest(
+      const fullUpdate = await this.api.performRequest(
         () =>
           DefaultService.postV2UpdatesUpdateById({
             updateId,
@@ -371,14 +314,14 @@ export class CantonClient {
     const choices = [...new Set(commands.map((c) => c.choice))].join(",");
     const commandId = CantonClient.getCommandId(choices, commands, timestamp);
 
-    await this.performRequest(
+    await this.api.performRequest(
       () =>
         DefaultService.postV2CommandsAsyncSubmit({
           commands: commands.map((command) => ({ ExerciseCommand: command })),
           commandId,
           actAs: [actAs],
           disclosedContracts,
-          userId: !this.tokenProvider ? LOCAL_USER : undefined,
+          userId: !this.api.tokenProvider ? LOCAL_USER : undefined,
         }),
       `postV2CommandsAsyncSubmit ${CantonClient.describeCommandBatch(commands)}`
     );
@@ -395,7 +338,7 @@ export class CantonClient {
     const choices = [...new Set(commands.map((c) => c.choice))].join(",");
     const commandId = CantonClient.getCommandId(choices, commands, timestamp);
 
-    const result = await this.performRequest(
+    const result = await this.api.performRequest(
       () => {
         return DefaultService.postV2CommandsSubmitAndWaitForTransaction({
           commands: {
@@ -403,7 +346,7 @@ export class CantonClient {
             commandId,
             actAs: [actAs],
             disclosedContracts,
-            userId: !this.tokenProvider ? LOCAL_USER : undefined,
+            userId: !this.api.tokenProvider ? LOCAL_USER : undefined,
           },
           transactionFormat: {
             transactionShape: TransactionFormat.transactionShape.TRANSACTION_SHAPE_LEDGER_EFFECTS,
@@ -439,7 +382,7 @@ export class CantonClient {
     transactionShape: TransactionFormat.transactionShape,
     endInclusive?: number
   ) {
-    return await this.performRequest(
+    return await this.api.performRequest(
       () =>
         DefaultService.postV2Updates({
           beginExclusive,
@@ -456,28 +399,6 @@ export class CantonClient {
     );
   }
 
-  private async performRequest<T>(
-    promise: () => Promise<T | JsCantonError>,
-    fnName = "performRequest"
-  ) {
-    OpenAPI.BASE = this.baseUrl;
-    OpenAPI.TOKEN = this.tokenProvider;
-
-    this.logger.info(`Calling ${fnName}`);
-
-    return await unwrapResponse(this.logPerf(promise, fnName));
-  }
-
-  private async logPerf<T>(fn: () => Promise<T>, label: string): Promise<T> {
-    const startTime = performance.now();
-    try {
-      return await fn();
-    } finally {
-      const duration = performance.now() - startTime;
-      this.logger.info(`${label}: ${duration}[ms]`, { duration });
-    }
-  }
-
   private static getCommandId(choices: string, commands: unknown[], timestamp: Date) {
     return `batch-${choices}-${commands.length}-${timestamp.getTime()}-${Math.random().toFixed(4).substring(2)}`;
   }
@@ -490,5 +411,36 @@ export class CantonClient {
       .join(", ");
 
     return `batch[${commands.length}] (${commandDesc})`;
+  }
+}
+
+export class JsonCantonApi extends CantonApi {
+  private runningPromises: { [p: string]: Promise<unknown> | undefined } = {};
+
+  async performRequestCollected<T>(
+    promise: () => Promise<JsCantonError | T>,
+    collectingKey: string
+  ): Promise<T> {
+    if (this.runningPromises[collectingKey]) {
+      return (await this.runningPromises[collectingKey]) as T;
+    }
+
+    try {
+      this.runningPromises[collectingKey] = this.performRequest(promise, collectingKey);
+
+      return (await this.runningPromises[collectingKey]) as T;
+    } finally {
+      delete this.runningPromises[collectingKey];
+    }
+  }
+
+  async performRequest<T>(promise: () => Promise<T | JsCantonError>, fnName = "performRequest") {
+    OpenAPI.BASE = this.baseUrl;
+    OpenAPI.TOKEN = this.tokenProvider;
+
+    const name = `${fnName} with ${this.baseUrl}`;
+    this.logger.info(`Calling ${name}`);
+
+    return await unwrapResponse(this.logPerf(promise, name));
   }
 }

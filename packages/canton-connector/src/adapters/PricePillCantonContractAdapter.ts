@@ -30,7 +30,7 @@ export class PricePillCantonContractAdapter
     private readonly partyId: string,
     protected adapterId: string,
     protected feedId: string,
-    interfaceId = client.Defs.pricePillInterfaceId,
+    interfaceId = client.getDefs().pricePillInterfaceId,
     templateName = IPRICE_PILL_TEMPLATE_NAME
   ) {
     super(client, interfaceId, templateName);
@@ -84,7 +84,7 @@ export class PricePillCantonContractAdapter
   }
 
   private async readView(offset?: number): Promise<PricePillView> {
-    const { createArgument } = await this.client.getMostActiveContractWithPayload<PricePillView>(
+    const { createArgument } = await this.client.getMostActiveContractData<PricePillView>(
       this.partyId,
       this.getInterfaceId(),
       this.getCombinedSignatoryContractFilter(),
