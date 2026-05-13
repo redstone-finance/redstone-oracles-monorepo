@@ -19,7 +19,10 @@ export class Sep40StellarContractAdapter extends StellarContractAdapter {
   }
 
   protected override async getContractData(feedIds: string[], blockNumber?: number) {
-    const promises = feedIds.map((feedId) => this.reader.readLatestData(feedId, blockNumber));
+    const assets = await this.reader.feedsToAssets(feedIds);
+    const promises = assets.map((asset) =>
+      asset ? this.reader.readLatestData(asset, blockNumber) : Promise.resolve(undefined)
+    );
     const latestData = await Promise.allSettled(promises);
 
     const data = latestData.map((result, index) => {
@@ -43,8 +46,11 @@ export class Sep40StellarContractAdapter extends StellarContractAdapter {
   }
 
   async getLatestRoundIds(feedIds: string[], numberOfRounds = 1, blockNumber?: number) {
-    const promises = feedIds.map((feedId) =>
-      this.reader.readPrices(feedId, numberOfRounds, blockNumber)
+    const assets = await this.reader.feedsToAssets(feedIds);
+    const promises = assets.map((asset) =>
+      asset
+        ? this.reader.readPrices(asset, numberOfRounds, blockNumber)
+        : Promise.resolve(undefined)
     );
 
     const results = await Promise.allSettled(promises);
@@ -63,7 +69,11 @@ export class Sep40StellarContractAdapter extends StellarContractAdapter {
   }
 
   async getValueForDataFeedAndRound(feedId: string, roundId: bigint, blockNumber?: number) {
-    const data = await this.reader.readRoundData(feedId, roundId, blockNumber);
+    const data = await this.reader.readRoundData(
+      await this.reader.feedToAsset(feedId),
+      roundId,
+      blockNumber
+    );
     if (!data) {
       throw new Error(`Couldn't find round data for ${feedId} in round ${roundId}`);
     }
