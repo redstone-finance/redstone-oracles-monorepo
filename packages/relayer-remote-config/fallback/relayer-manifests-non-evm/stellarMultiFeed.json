@@ -6,7 +6,7 @@
   },
   "updateTriggers": {
     "deviationPercentage": 0.2,
-    "timeSinceLastUpdateInMilliseconds": 86400000
+    "timeSinceLastUpdateInMilliseconds": 43200000
   },
   "adapterContract": "CA526Y2NQWGWVVQ7RFFPGAZMU66PSYJ3UC2MTVAV4ZU7OM5BOPHDXUSG",
   "dataServiceId": "redstone-primary-prod",
@@ -21,14 +21,14 @@
       "priceFeedAddress": "CB3PNR7FSAHQH3UAVYKSJVPLWEQRPPYVFL2UIR4P3RYEPZLTOF7PL2L4",
       "updateTriggersOverrides": {
         "deviationPercentage": 0.05,
-        "timeSinceLastUpdateInMilliseconds": 86400000
+        "timeSinceLastUpdateInMilliseconds": 43200000
       }
     },
     "USDC": {
       "priceFeedAddress": "CC2GB2TZTX24XIAM375YDWUDXA3PR2GDMNFUL2Z5VNXUMKPPOBES3CXM",
       "updateTriggersOverrides": {
         "deviationPercentage": 0.1,
-        "timeSinceLastUpdateInMilliseconds": 86400000
+        "timeSinceLastUpdateInMilliseconds": 43200000
       }
     },
     "EUROC/EUR": {
@@ -77,7 +77,7 @@
       "priceFeedAddress": "CCYGBQZ5JKE2TGK2XNNVIZRKFEIT27NZADS3XJFSO4CCIH3LHIUP34LG",
       "updateTriggersOverrides": {
         "deviationPercentage": 0.1,
-        "timeSinceLastUpdateInMilliseconds": 86400000
+        "timeSinceLastUpdateInMilliseconds": 43200000
       }
     },
     "KTB": {
@@ -91,14 +91,14 @@
       "priceFeedAddress": "CAEGYZFAJ3HLSDBUIVJ77SK5HLLS4MPE4LO5OB2W3L2TEDMAS6RCTMZ4",
       "updateTriggersOverrides": {
         "deviationPercentage": 0.1,
-        "timeSinceLastUpdateInMilliseconds": 86400000
+        "timeSinceLastUpdateInMilliseconds": 43200000
       }
     },
     "TESOURO": {
       "priceFeedAddress": "CAO3JDDO52PV5SNIR4WRLBNTE72CY6B4JO5PNSSRRM4TC5DZ5X5ZSJVC",
       "updateTriggersOverrides": {
         "deviationPercentage": 0.1,
-        "timeSinceLastUpdateInMilliseconds": 86400000
+        "timeSinceLastUpdateInMilliseconds": 43200000
       }
     },
     "EUROB": {
@@ -130,6 +130,12 @@
       "updateTriggersOverrides": {
         "deviationPercentage": 0.2,
         "timeSinceLastUpdateInMilliseconds": 21600000
+      }
+    },
+    "EUROC": {
+      "updateTriggersOverrides": {
+        "deviationPercentage": 0.1,
+        "timeSinceLastUpdateInMilliseconds": 43200000
       }
     }
   }
