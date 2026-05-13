@@ -15,11 +15,6 @@
       "source": [],
       "denomination": "KRW",
       "rateFeed": false
-    },
-    "GAS": {
-      "source": [],
-      "denomination": "USD",
-      "rateFeed": false
     }
   }
 }
