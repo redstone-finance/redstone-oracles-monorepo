@@ -1,7 +1,7 @@
 import { isDefined } from "../common";
 import { ChainType, constructNetworkId, deconstructNetworkId, NetworkId } from "../NetworkId";
 import { CeilMedianConsensusExecutor } from "./CeilMedianConsensusExecutor";
-import { DEFAULT_CONFIG, makeBaseConfig, NestedMethodConfig } from "./config";
+import { DEFAULT_CONFIG, makeBaseConfig, MultiExecutorConfig, NestedMethodConfig } from "./config";
 import { create } from "./MultiExecutorFactory";
 import { QuarantinedListFnDelegate } from "./QuarantinedListFnDelegate";
 
@@ -55,21 +55,27 @@ export abstract class ClientBuilder<C, URL extends string | undefined = string> 
     return this;
   }
 
+  protected getEligibleUrls() {
+    return this.urls;
+  }
+
   protected makeMultiExecutor<T extends object>(
     creator: (url: URL) => T,
     methodConfig: NestedMethodConfig<T>,
     config = {
       singleExecutionTimeoutMs: SINGLE_EXECUTION_TIMEOUT_MS,
       allExecutionsTimeoutMs: ALL_EXECUTIONS_TIMEOUT_MS,
-    }
+    } as Partial<MultiExecutorConfig>
   ): T {
+    const urls = this.getEligibleUrls();
+
     return create(
-      this.urls.map(creator),
+      urls.map(creator),
       methodConfig,
       makeBaseConfig(
         this.isQuarantineEnabled && this.chainId
           ? QuarantinedListFnDelegate.getCachedConfig(
-              this.urls.filter(isDefined),
+              urls.filter(isDefined),
               constructNetworkId(this.chainId, this.chainType)
             )
           : {},

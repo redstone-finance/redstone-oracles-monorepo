@@ -2,7 +2,6 @@ import {
   CantonBlockchainService,
   CantonBlockchainServiceWithTransfer,
   CantonClientBuilder,
-  CantonValidatorClient,
   chainIdToNetwork,
   getCantonNodeConfig,
 } from "@redstone-finance/canton-connector";
@@ -163,15 +162,17 @@ export async function getNonEvmBlockchainServiceWithTransfer(
       if (!auth) {
         throw new Error(`Canton auth not configured for chain ${chainId}`);
       }
-      const { validatorApiUrl, zrodelkoPartyId } = getCantonNodeConfig(network);
-      const client = new CantonClientBuilder()
+      const { zrodelkoPartyId } = getCantonNodeConfig(network);
+      const cantonClientBuilder = new CantonClientBuilder()
         .withRpcUrls(rpcUrls)
         .withNetworkId(networkId)
-        .withDefaultAuth(auth)
-        .build();
-      const validatorClient = new CantonValidatorClient(validatorApiUrl, () =>
-        Promise.resolve(auth)
-      );
+        .withDefaultAuth(auth);
+      const client = cantonClientBuilder.build();
+      const validatorClient = cantonClientBuilder.buildValidatorClient();
+      if (!validatorClient) {
+        throw new Error(`Canton validatorClient not configured for chain ${chainId}`);
+      }
+
       return new CantonBlockchainServiceWithTransfer(
         client,
         validatorClient,

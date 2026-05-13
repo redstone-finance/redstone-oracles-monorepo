@@ -24,12 +24,12 @@ export class PricesCantonReadOnlyAdapter extends CantonContractAdapter implement
       CantonContractAdapterConfig,
       "adapterId" | "viewerPartyId" | "uniqueSignerThreshold"
     >,
-    interfaceId = client.Defs.interfaceId,
+    interfaceId = client.getDefs().interfaceId,
     templateName = IADAPTER_TEMPLATE_NAME
   ) {
     super(client, interfaceId, templateName);
 
-    this.coreAdapter = new CoreCantonContractAdapter(
+    this.coreAdapter = new CoreInsidePricesCantonContractAdapter(
       client,
       config.viewerPartyId,
       config.adapterId,
@@ -162,4 +162,11 @@ function newestPriceData(feedData: DamlFeedData, feedId: string): DamlPriceData 
   }
 
   return records[0].priceData;
+}
+
+class CoreInsidePricesCantonContractAdapter extends CoreCantonContractAdapter {
+  protected override getContractFilter() {
+    return ((createArgument: { adapterId: string }) =>
+      createArgument.adapterId === this.adapterId) as ContractFilter;
+  }
 }

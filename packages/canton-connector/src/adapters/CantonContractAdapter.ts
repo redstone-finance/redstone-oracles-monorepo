@@ -1,7 +1,12 @@
 import { FP, loggerFactory, RedstoneCommon } from "@redstone-finance/utils";
 import { CantonClient } from "../client/CantonClient";
 import { ContractFilter } from "../utils/price-feed-utils";
-import { ActiveContractData, combineIntoId, isWrongContractError } from "../utils/utils";
+import {
+  ActiveContractData,
+  combineIntoId,
+  DisclosedContractData,
+  isWrongContractError,
+} from "../utils/utils";
 
 export const RETRY_CONFIG: Omit<RedstoneCommon.RetryConfig, "fn"> = {
   maxRetries: 5,
@@ -21,7 +26,7 @@ export type ExerciseChoiceOptions = {
   offset?: number;
   withCurrentTime?: boolean;
   client?: CantonClient;
-  disclosedContractData?: Required<ActiveContractData>[];
+  disclosedContractData?: DisclosedContractData[];
   withRetry?: boolean;
   withCaller?: boolean;
 };
@@ -29,7 +34,7 @@ export type ExerciseChoiceOptions = {
 export type ExerciseChoicesOptions = {
   addCurrentTime?: boolean;
   client?: CantonClient;
-  disclosedContractData?: Required<ActiveContractData>[];
+  disclosedContractData?: DisclosedContractData[];
   withRetry?: boolean;
 };
 
@@ -57,7 +62,7 @@ export abstract class CantonContractAdapter {
     offset?: number,
     client = this.client
   ) {
-    return await client.getActiveContractWithPayload<T>(
+    return await client.getActiveContractData<T>(
       actAs,
       this.getInterfaceId(),
       this.getCombinedSignatoryContractFilter(),
@@ -75,7 +80,7 @@ export abstract class CantonContractAdapter {
   }
 
   protected getCombinedSignatoryContractFilter(
-    signatory = this.client.Defs.signatory
+    signatory = this.client.getDefs().signatory
   ): ContractFilter {
     return ((adapter: unknown, signatories) =>
       signatories?.includes(signatory) &&

@@ -2,7 +2,7 @@ import { RedstoneCommon } from "@redstone-finance/utils";
 import Decimal from "decimal.js";
 import "dotenv/config";
 import * as AllDefs from "../src/canton-defs.json";
-import { makeDefaultClient, makeValidatorClient, readNetwork } from "./utils";
+import { makeDefaultClientWithValidator, readNetwork } from "./utils";
 
 const BENEFICIARY_BALANCE_LIMIT = 100000;
 
@@ -17,7 +17,8 @@ async function main() {
     zrodelkoPartyId: string;
   };
 
-  const client = makeDefaultClient();
+  const { client, validatorClient } = makeDefaultClientWithValidator(true);
+
   const beneficiaryBalanceStr = await client.getAmuletBalance(walletPartyId);
   const beneficiaryBalance = new Decimal(beneficiaryBalanceStr);
 
@@ -34,7 +35,6 @@ async function main() {
   const transferAmount = beneficiaryBalance.minus(BENEFICIARY_BALANCE_LIMIT / 2).toNumber();
   console.log(`Transferring ${transferAmount} CC from ${walletPartyId} to ${zrodelkoPartyId}...`);
 
-  const validatorClient = makeValidatorClient();
   const result = await validatorClient.sendCC(zrodelkoPartyId, transferAmount);
   if (result.status === "success") {
     console.log(`Transfer successful: ${String(result.amount)} CC sent to ${zrodelkoPartyId}`);

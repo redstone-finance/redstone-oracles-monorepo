@@ -4,7 +4,6 @@ set -euo pipefail
 #shellcheck disable=SC1091
 . ./.env
 
-CANTON_API="${PARTICIPANT}${API_PATH}"
 SCAN_PROXY="${API}/http-proxy"
 TRAFFIC_AMOUNT=200000 # must be greater than 200_000
 
