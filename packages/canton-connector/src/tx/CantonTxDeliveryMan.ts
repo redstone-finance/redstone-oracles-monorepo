@@ -8,7 +8,7 @@ export class CantonTxDeliveryMan extends TxDeliveryMan<CantonTxResultExt> {
   constructor(
     config: TxDeliveryManConfig,
     private readonly trafficMeter: CantonTrafficMeter,
-    private readonly fetchTotalConsumedTraffic: () => Promise<number>
+    private readonly fetchTotalConsumedTraffic: () => Promise<number | undefined>
   ) {
     super(config);
   }

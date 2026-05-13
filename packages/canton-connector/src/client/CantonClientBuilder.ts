@@ -1,21 +1,26 @@
-import { ChainTypeEnum, MultiExecutor } from "@redstone-finance/utils";
+import { ChainTypeEnum, MultiExecutor, RedstoneCommon } from "@redstone-finance/utils";
 import { chainIdToNetwork, networkToChainId } from "../CantonNetwork";
-import { CantonClient } from "./CantonClient";
-import { TokenProvider } from "./CantonScanApiClient";
+import {
+  API_TYPE_JSON,
+  API_TYPE_SCAN,
+  API_TYPE_SCAN_PROXY,
+  API_TYPE_VALIDATOR,
+  CantonApi,
+  TokenProvider,
+} from "./CantonApi";
+import { CantonClient, JsonCantonApi } from "./CantonClient";
+import { ScanCantonApi } from "./CantonScanApiClient";
+import { CantonValidatorClient, ValidatorCantonApi } from "./CantonValidatorClient";
 import { KeycloakTokenProvider } from "./keycloak-token-provider";
 import { KeycloakTokenProviderParams, makeKeycloakParams } from "./KeycloakTokenProviderParams";
 
+const SINGLE_EXECUTION_TIMEOUT_MS = 20_000;
+const ALL_EXECUTIONS_TIMEOUT_MS = 45_000;
+
 export class CantonClientBuilder extends MultiExecutor.ClientBuilder<CantonClient> {
   protected override chainType = ChainTypeEnum.enum.canton;
-  private tokenProvider?: TokenProvider;
-  private scanApiTokenProvider?: TokenProvider;
-
-  withTokenProvider(provider?: TokenProvider) {
-    this.tokenProvider = provider;
-    this.scanApiTokenProvider = undefined;
-
-    return this;
-  }
+  private tokenProviders: Record<string, TokenProvider | undefined> = {};
+  private defaultClientId?: string;
 
   withDefaultAuth(opts?: KeycloakTokenProviderParams | string) {
     return this.chainId !== networkToChainId("localnet") ? this.withKeycloakAuth(opts) : this;
@@ -24,32 +29,94 @@ export class CantonClientBuilder extends MultiExecutor.ClientBuilder<CantonClien
   withKeycloakAuth(opts?: KeycloakTokenProviderParams | string) {
     const parsedOpts = makeKeycloakParams(opts);
 
-    const ledgerClientId = parsedOpts.walletClientId ?? parsedOpts.clientId;
-    const ledgerProvider = KeycloakTokenProvider.getInstance({
-      ...parsedOpts,
-      clientId: ledgerClientId,
-    });
-    const scanProvider = KeycloakTokenProvider.getInstance(parsedOpts);
+    const tokenProvider = KeycloakTokenProvider.getInstance(parsedOpts);
+    this.tokenProviders[parsedOpts.clientId] = tokenProvider.getToken.bind(tokenProvider);
+    this.defaultClientId = parsedOpts.clientId;
 
-    this.tokenProvider = ledgerProvider.getToken.bind(ledgerProvider);
-    this.scanApiTokenProvider = scanProvider.getToken.bind(scanProvider);
+    if (parsedOpts.walletClientId) {
+      const walletParsedOpts = {
+        ...parsedOpts,
+        clientId: parsedOpts.walletClientId,
+        username: parsedOpts.walletUsername ?? parsedOpts.username,
+        password: parsedOpts.walletPassword ?? parsedOpts.password,
+      };
+      const walletTokenProvider = KeycloakTokenProvider.getInstance(walletParsedOpts);
+      this.tokenProviders[walletParsedOpts.clientId] =
+        walletTokenProvider.getToken.bind(walletTokenProvider);
+    }
 
     return this;
   }
 
+  protected override getEligibleUrls() {
+    return CantonApi.splitUrls(this.urls)[API_TYPE_JSON]?.map((api) => api.urlString) ?? [];
+  }
+
   build() {
-    if (this.urls.length !== 1) {
-      throw new Error("Only single URL is required");
-    }
-    if (!this.chainId) {
+    const chainId = this.chainId;
+
+    if (!chainId) {
       throw new Error("chainId is required");
     }
 
-    return new CantonClient(
-      this.urls[0],
-      chainIdToNetwork(this.chainId),
-      this.tokenProvider,
-      this.scanApiTokenProvider
+    const apis = CantonApi.splitUrls(this.urls);
+    const jsonApis = apis[API_TYPE_JSON];
+
+    if (!jsonApis?.length) {
+      throw new Error(`At least one ${API_TYPE_JSON} URL is required`);
+    }
+
+    const scanApi = apis[API_TYPE_SCAN]?.at(0);
+    const scanApiProxy = apis[API_TYPE_SCAN_PROXY]?.at(0);
+
+    const scanApiClient =
+      scanApi && scanApiProxy?.clientId
+        ? new ScanCantonApi(
+            scanApiProxy.baseUrl,
+            scanApi.baseUrl,
+            this.tokenProviders[scanApiProxy.clientId]
+          )
+        : undefined;
+
+    return this.makeMultiExecutor(
+      (url) => {
+        const jsonApi = CantonApi.parseUrl(url); // is eligible
+        const clientId = jsonApi.clientId ?? this.defaultClientId;
+        if (!clientId) {
+          throw new Error(`Client id is required for ${RedstoneCommon.stringify(jsonApi)}`);
+        }
+
+        return new CantonClient(
+          new JsonCantonApi(jsonApi.baseUrl, this.tokenProviders[clientId]),
+          chainIdToNetwork(chainId),
+          scanApiClient
+        );
+      },
+      {
+        exerciseChoices: MultiExecutor.ExecutionMode.FALLBACK,
+        // the following use scan-api:
+        getRemainingTraffic: MultiExecutor.ExecutionMode.FALLBACK,
+        getTotalConsumedTraffic: MultiExecutor.ExecutionMode.FALLBACK,
+        getAmuletBalance: MultiExecutor.ExecutionMode.FALLBACK,
+      },
+      {
+        singleExecutionTimeoutMs: SINGLE_EXECUTION_TIMEOUT_MS,
+        allExecutionsTimeoutMs: ALL_EXECUTIONS_TIMEOUT_MS,
+        defaultMode: MultiExecutor.ExecutionMode.RACE,
+      }
+    );
+  }
+
+  buildValidatorClient() {
+    const apis = CantonApi.splitUrls(this.urls)[API_TYPE_VALIDATOR];
+    const validatorApi = apis?.at(0);
+
+    if (!validatorApi?.clientId) {
+      return undefined;
+    }
+
+    return new CantonValidatorClient(
+      new ValidatorCantonApi(validatorApi.baseUrl, this.tokenProviders[validatorApi.clientId])
     );
   }
 }
