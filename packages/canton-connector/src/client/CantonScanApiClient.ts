@@ -1,8 +1,7 @@
 import { loggerFactory, RedstoneCommon } from "@redstone-finance/utils";
 import * as AllDefs from "../canton-defs.json";
 import { CantonNetwork } from "../CantonNetwork";
-
-export type TokenProvider = () => Promise<string>;
+import { CantonApi, TokenProvider } from "./CantonApi";
 
 type TrafficStatusResponse = {
   traffic_status: {
@@ -38,23 +37,22 @@ export class CantonScanApiClient {
   private migrationIdCache?: Promise<number>;
 
   constructor(
-    readonly network: CantonNetwork = "devnet",
-    private readonly tokenProvider?: TokenProvider
+    private readonly api: ScanCantonApi,
+    readonly network: CantonNetwork = "devnet"
   ) {
     this.Defs = AllDefs[network];
   }
 
   async getAmuletHoldingsSummary(partyId: string) {
-    const nodeDefs = this.Defs.node;
     const before = new Date().toISOString();
 
-    const migrationId = await this.getCachedMigrationId(nodeDefs.scanApiUrl);
+    const migrationId = await this.getCachedMigrationId();
 
-    const snapshotUrl = `${nodeDefs.scanApiUrl}/state/acs/snapshot-timestamp?before=${encodeURIComponent(before)}&migration_id=${migrationId}`;
-    const snapshot = await this.requestWithProxy<AcsSnapshotTimestampResponse>(snapshotUrl);
+    const snapshotPath = `/v0/state/acs/snapshot-timestamp?before=${encodeURIComponent(before)}&migration_id=${migrationId}`;
+    const snapshot = await this.api.requestWithProxy<AcsSnapshotTimestampResponse>(snapshotPath);
 
-    const result = await this.requestWithProxy<HoldingsSummaryResponse>(
-      `${nodeDefs.scanApiUrl}/holdings/summary`,
+    const result = await this.api.requestWithProxy<HoldingsSummaryResponse>(
+      `/v0/holdings/summary`,
       {
         method: "POST",
         body: JSON.stringify({
@@ -68,16 +66,14 @@ export class CantonScanApiClient {
     return result.data.summaries.find((s) => s.party_id === partyId);
   }
 
-  private getCachedMigrationId(scanApiUrl: string): Promise<number> {
-    this.migrationIdCache ??= this.findLatestMigrationId(scanApiUrl);
+  private getCachedMigrationId(): Promise<number> {
+    this.migrationIdCache ??= this.findLatestMigrationId();
 
     return this.migrationIdCache;
   }
 
-  private async findLatestMigrationId(scanApiUrl: string): Promise<number> {
-    const result = await this.requestWithProxy<DsoSequencersResponse>(
-      `${scanApiUrl}/dso-sequencers`
-    );
+  private async findLatestMigrationId(): Promise<number> {
+    const result = await this.api.requestWithProxy<DsoSequencersResponse>(`/v0/dso-sequencers`);
     const migrationIds = result.data.domainSequencers
       .flatMap((d) => d.sequencers)
       .map((s) => s.migrationId);
@@ -92,24 +88,35 @@ export class CantonScanApiClient {
   async getTrafficStatus() {
     const nodeDefs = this.Defs.node;
 
-    const result = await this.requestWithProxy<TrafficStatusResponse>(
-      `${nodeDefs.scanApiUrl}/domains/${nodeDefs.globalDomain}/members/PAR::${nodeDefs.participantPartyId}/traffic-status`
+    const result = await this.api.requestWithProxy<TrafficStatusResponse>(
+      `/v0/domains/${nodeDefs.globalDomain}/members/PAR::${nodeDefs.participantPartyId}/traffic-status`
     );
 
     CantonScanApiClient.logger.info("Traffic status response", { ...result.data });
 
     return result.data;
   }
+}
 
-  private async requestWithProxy<T>(
-    url: string,
+export class ScanCantonApi extends CantonApi {
+  constructor(
+    readonly scanApiProxyUrl: string,
+    private readonly scanApiUrl: string,
+    tokenProvider?: TokenProvider
+  ) {
+    super(scanApiProxyUrl, tokenProvider);
+  }
+
+  async requestWithProxy<T>(
+    path: string,
     options: { method: "GET" } | { method: "POST"; body: string } = { method: "GET" }
   ): Promise<{ data: T }> {
     const token = await this.tokenProvider?.();
     const authHeader = token ? { Authorization: `Bearer ${token}` } : undefined;
+    const url = `${this.scanApiUrl}${path}`;
 
     return await RedstoneCommon.axiosPostWithRetries<T>(
-      this.Defs.node.scanApiProxyUrl,
+      this.baseUrl,
       {
         method: options.method,
         url,

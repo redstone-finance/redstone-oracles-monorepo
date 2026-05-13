@@ -111,19 +111,23 @@ export function isCreatedEvent(event: Event) {
   return "CreatedEvent" in event;
 }
 
-export interface ActiveContractData {
+export type DisclosedContractData = Required<Omit<ActiveContractData, "createArgument">>;
+
+export interface ActiveContractData<T = unknown> {
   contractId: string;
+  createArgument?: T;
   synchronizerId?: string;
   createdEventBlob?: string;
 }
 
-export function makeActiveContractData(
+export function makeActiveContractData<T = unknown>(
   createdEvent: CreatedEvent,
   synchronizerId: string = ""
-): ActiveContractData {
+): ActiveContractData<T> & Required<Pick<ActiveContractData<T>, "createArgument">> {
   return {
     contractId: createdEvent.contractId,
     synchronizerId,
+    createArgument: createdEvent.createArgument as T,
     createdEventBlob: RedstoneCommon.useDefaultIfEmpty(createdEvent.createdEventBlob, undefined),
   };
 }

@@ -12,8 +12,8 @@ export class CoreCantonContractAdapter extends CantonContractAdapter {
   constructor(
     client: CantonClient,
     private readonly actAs: string,
-    protected adapterId = client.Defs.core.coreId,
-    interfaceId = client.Defs.interfaceId,
+    protected readonly adapterId = client.getDefs().core.coreId,
+    interfaceId = client.getDefs().interfaceId,
     templateName = ICORE_TEMPLATE_NAME
   ) {
     super(client, interfaceId, templateName);

@@ -1,5 +1,6 @@
 import { sampleRun } from "@redstone-finance/multichain-kit";
 import { ContractParamsProvider, getSignersForDataServiceId } from "@redstone-finance/sdk";
+import { RedstoneCommon } from "@redstone-finance/utils";
 import {
   CANTON_CONTRACT_ADAPTER_DEFAULT_CONFIG,
   CantonBlockchainService,
@@ -17,7 +18,11 @@ const ADAPTER_ID = "RedStoneAdapter-v18-0.4.0";
 async function main() {
   const client = makeDefaultClient();
 
-  console.log(await client.getRemainingTraffic());
+  try {
+    console.log(await client.getRemainingTraffic());
+  } catch (error) {
+    console.error(RedstoneCommon.stringifyError(error));
+  }
 
   const adapter = new PricesCantonContractAdapter(client, {
     ...CANTON_CONTRACT_ADAPTER_DEFAULT_CONFIG,

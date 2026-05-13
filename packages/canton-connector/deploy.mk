@@ -2,7 +2,7 @@ DEPLOY_DIR ?= daml
 
 sinclude .env
 
-CANTON_API=$(PARTICIPANT)$(API_PATH)
+CANTON_API=$(API)
 PACKAGE_IDS=$(DEPLOY_DIR)/package-ids.json
 
 ADAPTER_NAME=RedStoneAdapter-v18-0.4.0

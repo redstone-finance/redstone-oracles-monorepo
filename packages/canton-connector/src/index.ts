@@ -8,6 +8,7 @@ export * from "./adapters/PricesCantonReadOnlyAdapter";
 export * from "./CantonBlockchainService";
 export * from "./CantonBlockchainServiceWithTransfer";
 export * from "./CantonNetwork";
+export * from "./client/CantonApi";
 export * from "./client/CantonClient";
 export * from "./client/CantonClientBuilder";
 export * from "./client/CantonValidatorClient";

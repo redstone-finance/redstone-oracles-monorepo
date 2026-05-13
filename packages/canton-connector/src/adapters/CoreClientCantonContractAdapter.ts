@@ -2,7 +2,7 @@ import { ContractParamsProvider } from "@redstone-finance/sdk";
 import { CantonClient } from "../client/CantonClient";
 import { convertDecimalValue } from "../utils/conversions";
 import { ContractFilter } from "../utils/price-feed-utils";
-import { ActiveContractData, DamlTuple2 } from "../utils/utils";
+import { DamlTuple2, DisclosedContractData } from "../utils/utils";
 import { CantonContractAdapter, ExerciseChoiceOptions } from "./CantonContractAdapter";
 import { CoreCantonContractAdapter } from "./CoreCantonContractAdapter";
 
@@ -16,8 +16,8 @@ export class CoreClientCantonContractAdapter extends CantonContractAdapter {
     private readonly partyId: string,
     contractId: string,
     packageId: string,
-    private coreActiveContractData: Required<ActiveContractData> = client.Defs.core,
-    private featuredActiveContractData: Required<ActiveContractData> = client.Defs[
+    private coreActiveContractData: DisclosedContractData = client.getDefs().core,
+    private featuredActiveContractData: DisclosedContractData = client.getDefs()[
       DEFS_KEY_FEATURED_APP_RIGHT
     ],
     templateName = CORE_CLIENT_TEMPLATE_NAME
