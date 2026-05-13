@@ -8643,17 +8643,10 @@
       "types": ["rwa"]
     },
     "NIKKEI225": {
-      "source": ["alltick-api-deferred", "ws-itick-indices", "ws-aleno"],
+      "source": ["alltick-api-deferred", "finhub_oanda_deferred", "ws-itick-indices"],
       "denomination": "JPY",
       "rateFeed": false,
-      "types": ["rwa"],
-      "priceAggregator": "primarySource",
-      "primarySourceAggregatorConfig": {
-        "primarySource": "ws-aleno",
-        "maxAcceptableDeviation": 1,
-        "lowerClampPercent": 0.1,
-        "upperClampPercent": 0.1
-      }
+      "types": ["rwa"]
     },
     "MSCI": {
       "source": [
