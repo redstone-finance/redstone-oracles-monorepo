@@ -743,6 +743,18 @@
         "rwa"
       ]
     },
+    "WTI.Y": {
+      "source": [],
+      "priceAggregator": "redstoneX",
+      "redstoneXAggregatorConfig": {
+        "priceDiscoverySources": []
+      },
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
+    },
     "XAG_CURRENT": {
       "source": [],
       "skipBroadcasting": true,
