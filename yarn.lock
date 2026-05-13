@@ -11577,6 +11577,7 @@ __metadata:
   dependencies:
     "@aws-sdk/client-cloudwatch": "npm:^3.696.0"
     "@aws-sdk/client-cloudwatch-logs": "npm:^3.696.0"
+    "@aws-sdk/client-ec2": "npm:^3.696.0"
     "@aws-sdk/client-ecs": "npm:^3.696.0"
     "@aws-sdk/client-s3": "npm:^3.696.0"
     "@redstone-finance/chain-configs": "workspace:*"
