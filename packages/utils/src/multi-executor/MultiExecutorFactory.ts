@@ -10,6 +10,13 @@ import { MultiAgreementExecutor } from "./MultiAgreementExecutor";
 import { RaceExecutor } from "./RaceExecutor";
 import { DEFAULT_CONFIG, ExecutionMode, MultiExecutorConfig, NestedMethodConfig } from "./config";
 
+interface ProxyMeta<T extends object> {
+  instances: T[];
+  config: MultiExecutorConfig;
+}
+
+const PROXY_META = new WeakMap<object, ProxyMeta<object>>();
+
 export class MultiExecutorFactory<T extends object> {
   private readonly logger = loggerFactory("multi-executor-proxy");
 
@@ -74,17 +81,13 @@ export class MultiExecutorFactory<T extends object> {
   createProxy(): T {
     // eslint-disable-next-line @typescript-eslint/no-this-alias -- add reason here, please
     const that = this;
-    Object.assign(this.instances[0], {
-      __instances: this.instances,
-      __config: this.config,
-    });
 
-    return new Proxy(this.instances[0], {
+    const proxy = new Proxy(this.instances[0], {
       get(target: T, prop: string | symbol): unknown {
         const key = prop as keyof T;
         const method = target[key];
 
-        if (Object(method) !== method || ["__instances", "__config"].includes(key as string)) {
+        if (Object(method) !== method) {
           return method;
         }
 
@@ -111,6 +114,10 @@ export class MultiExecutorFactory<T extends object> {
         };
       },
     });
+
+    PROXY_META.set(proxy, { instances: this.instances, config: this.config });
+
+    return proxy;
   }
 
   private static makeFnBox<T>(
@@ -166,11 +173,9 @@ export function createForSubInstances<T extends object, U extends object>(
   methodConfig: NestedMethodConfig<U> = {},
   config: MultiExecutorConfig = DEFAULT_CONFIG
 ) {
-  const instances =
-    "__instances" in subject ? (subject.__instances as T[]).map(callback) : [callback(subject)];
-
-  const baseConfig = "__config" in subject ? subject.__config : undefined;
-  const mergedConfig = baseConfig ? _.assign({}, baseConfig, config) : config;
+  const meta = PROXY_META.get(subject) as ProxyMeta<T> | undefined;
+  const instances = meta ? meta.instances.map(callback) : [callback(subject)];
+  const mergedConfig = meta ? _.assign({}, meta.config, config) : config;
 
   return create(instances, methodConfig, mergedConfig);
 }
