@@ -3,6 +3,7 @@ export * from "./axios-retry";
 export * from "./base64";
 export * from "./batch-promises";
 export * from "./big-numbers";
+export * from "./CacheWithTtl";
 export * from "./clone";
 export * from "./conversions";
 export * from "./date-utils";

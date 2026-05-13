@@ -3,15 +3,16 @@ import { Address } from "@stellar/stellar-sdk";
 import { makeKeypair, StellarClientBuilder, StellarOperationSender } from "../src";
 import { StellarSep40ContractDeployer } from "../src/stellar/StellarSep40ContractDeployer";
 import { StellarSigner } from "../src/stellar/StellarSigner";
-import { FEEDS } from "./consts";
+import { MULTISIG_ADDRESS, STELLAR_ASSETS } from "./consts";
 import { readNetwork, readUrl, saveSep40Id, SEP40_CONTRACT, wasmFilePath } from "./utils";
 
 const BASE_ASSET = { tag: "Other" as const, symbol: "USD" };
 
-const FEED_MAPPINGS = FEEDS.map((feed) => ({
+const FEED_MAPPINGS = Object.entries(STELLAR_ASSETS).map(([feed, address]) => ({
   feed,
-  asset: { tag: "Other" as const, symbol: feed },
+  asset: { tag: "Stellar" as const, address: Address.fromString(address) },
 }));
+
 const RESOLUTION_SECS = RedstoneCommon.hourToSecs(12);
 
 async function deploySep40() {
@@ -24,7 +25,7 @@ async function deploySep40() {
   const sender = new StellarOperationSender(new StellarSigner(keypair), client);
   const deployer = new StellarSep40ContractDeployer(client, sender);
 
-  const owner = Address.fromString(keypair.publicKey());
+  const owner = Address.fromString(MULTISIG_ADDRESS);
 
   const result = await deployer.deploySep40(
     wasmFilePath(SEP40_CONTRACT),
