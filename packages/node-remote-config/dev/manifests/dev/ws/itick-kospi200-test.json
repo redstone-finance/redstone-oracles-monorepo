@@ -15,11 +15,6 @@
       "source": ["ws-itick-indices"],
       "denomination": "KRW",
       "rateFeed": false
-    },
-    "GAS": {
-      "source": ["ws-itick-futures"],
-      "denomination": "USD",
-      "rateFeed": false
     }
   }
 }

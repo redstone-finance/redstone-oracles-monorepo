@@ -1412,7 +1412,6 @@
     },
     "GAS": {
       "source": [
-        "ws-itick-futures",
         "ws-twelve-data",
         "alltick-api-deferred",
         "financialmodelingprep-deferred",
@@ -1422,7 +1421,6 @@
       "priceAggregator": "redstoneX",
       "redstoneXAggregatorConfig": {
         "priceDiscoverySources": [
-          "ws-itick-futures",
           "ws-twelve-data",
           "alltick-api-deferred",
           "financialmodelingprep-deferred",
