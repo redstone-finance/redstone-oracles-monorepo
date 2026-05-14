@@ -441,7 +441,7 @@ export class DataPackageSubscriber {
     cleanStalePackages(this.packagesPerTimestamp);
     this.verifier?.cleanStalePackages();
 
-    this.scheduledPublishes.removeOlderThen(Date.now());
+    this.scheduledPublishes.removeOlderThan(Date.now());
   }
 }
 
