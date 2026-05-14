@@ -114,7 +114,7 @@
         "rwa"
       ]
     },
-    "KRW": {
+    "KRW_FX": {
       "source": [],
       "priceAggregator": "primarySource",
       "primarySourceAggregatorConfig": {
@@ -129,7 +129,7 @@
         "rwa"
       ]
     },
-    "JPY": {
+    "JPY_FX": {
       "source": [],
       "priceAggregator": "primarySource",
       "primarySourceAggregatorConfig": {
@@ -144,7 +144,7 @@
         "rwa"
       ]
     },
-    "MYR": {
+    "MYR_FX": {
       "source": [],
       "denomination": "USD",
       "rateFeed": false,
@@ -152,22 +152,7 @@
         "rwa"
       ]
     },
-    "THB": {
-      "source": [],
-      "priceAggregator": "primarySource",
-      "primarySourceAggregatorConfig": {
-        "primarySource": "",
-        "maxAcceptableDeviation": 1.5,
-        "lowerClampPercent": 0.1,
-        "upperClampPercent": 0.1
-      },
-      "denomination": "USD",
-      "rateFeed": false,
-      "types": [
-        "rwa"
-      ]
-    },
-    "IDR": {
+    "THB_FX": {
       "source": [],
       "priceAggregator": "primarySource",
       "primarySourceAggregatorConfig": {
@@ -182,7 +167,22 @@
         "rwa"
       ]
     },
-    "SGD": {
+    "IDR_FX": {
+      "source": [],
+      "priceAggregator": "primarySource",
+      "primarySourceAggregatorConfig": {
+        "primarySource": "",
+        "maxAcceptableDeviation": 1.5,
+        "lowerClampPercent": 0.1,
+        "upperClampPercent": 0.1
+      },
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
+    },
+    "SGD_FX": {
       "source": [],
       "priceAggregator": "primarySource",
       "primarySourceAggregatorConfig": {
