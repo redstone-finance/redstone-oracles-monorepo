@@ -108,6 +108,9 @@
     "@redstone-finance/suiangria": {
       "built": true
     },
+    "bigint-buffer": {
+      "built": true
+    },
     "deno-bin": {
       "built": true
     },
