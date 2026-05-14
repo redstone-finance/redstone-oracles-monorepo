@@ -32,8 +32,8 @@
     "USDm-TWAP-60": {},
     "TRY": {
       "updateTriggersOverrides": {
-        "deviationPercentage": 0.1,
-        "timeSinceLastUpdateInMilliseconds": 21600000
+        "deviationPercentage": 0.01,
+        "timeSinceLastUpdateInMilliseconds": 900000
       }
     },
     "LBTC_FUNDAMENTAL": {

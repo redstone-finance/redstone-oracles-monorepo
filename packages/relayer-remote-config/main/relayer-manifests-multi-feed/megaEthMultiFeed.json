@@ -61,7 +61,11 @@
       "priceFeedAddress": "0x90196F6D52fce394C79D1614265d36D3F0033Ccf"
     },
     "TRY": {
-      "priceFeedAddress": "0x1b0FDa12D125B864756Bbf191ad20eaB10915a6F"
+      "priceFeedAddress": "0x1b0FDa12D125B864756Bbf191ad20eaB10915a6F",
+      "updateTriggersOverrides": {
+        "deviationPercentage": 0.01,
+        "timeSinceLastUpdateInMilliseconds": 900000
+      }
     },
     "LBTC_FUNDAMENTAL": {
       "priceFeedAddress": "0x0bE6929FD4ad87347e97A525DB6ac8E884FCDCeC",
