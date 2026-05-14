@@ -169,8 +169,9 @@ describe("request-data-packages", () => {
     expect(dataPackages["ETH"]![3].toObj().dataPoints[0].value).toBe(990);
   });
 
-  test("Should get the most fresh data-packages", async () => {
+  test("Should get packages from first gateway even if packages from other gateways would be fresher", async () => {
     const axiosGetSpy = jest.spyOn(axios, "get");
+    // if the first gateway fails to respond, the freshest packages from others should be returned.
     axiosGetSpy.mockResolvedValueOnce({
       data: {
         ETH: [
@@ -187,6 +188,62 @@ describe("request-data-packages", () => {
         ],
       },
     });
+
+    axiosGetSpy.mockResolvedValueOnce({
+      data: {
+        ETH: [
+          {
+            dataPoints: [{ dataFeedId: "ETH", value: 1000 }],
+            timestampMilliseconds: 1654353400000 + 420,
+            signature:
+              "NX5yd/Cs8HzVdNchrM59uOoSst7n9KK5Ou9pA6S5GTM0RwghGlFjA0S+SVfb85ipg4HzUTKATBZSqPXlWldEEhw=",
+            dataServiceId: "service-1",
+            dataFeedId: "ETH",
+            dataPackageId: "ETH",
+            signerAddress: "0xe98fF207D73bF34959f05fb671cbcA2431012E02",
+          },
+        ],
+      },
+    });
+    axiosGetSpy.mockResolvedValueOnce({
+      data: {
+        ETH: [
+          {
+            dataPoints: [{ dataFeedId: "ETH", value: 1000 }],
+            timestampMilliseconds: 1654353400000,
+            signature:
+              "NX5yd/Cs8HzVdNchrM59uOoSst7n9KK5Ou9pA6S5GTM0RwghGlFjA0S+SVfb85ipg4HzUTKATBZSqPXlWldEEhw=",
+            dataServiceId: "service-1",
+            dataFeedId: "ETH",
+            dataPackageId: "ETH",
+            signerAddress: "0x2",
+          },
+        ],
+      },
+    });
+
+    // signer addresses of the packages
+    const signerAddresses = [
+      "0xe98fF207D73bF34959f05fb671cbcA2431012E02",
+      "0x43c6AF28BBa09EB95534CC853D8887DB0Cda6226",
+    ];
+
+    const dataPackages = await requestDataPackages({
+      ...getReqParams(),
+      authorizedSigners: signerAddresses,
+      urls: ["1", "2"],
+      uniqueSignersCount: 1,
+      dataPackagesIds: ["ETH"],
+      returnAllPackages: false,
+    });
+
+    expect(dataPackages["ETH"]![0].dataPackage.timestampMilliseconds).toBe(1654353400000 + 69);
+  });
+
+  test("Should get the most fresh data-packages", async () => {
+    const axiosGetSpy = jest.spyOn(axios, "get");
+    // if the first gateway fails to respond, the freshest packages from others should be returned.
+    axiosGetSpy.mockRejectedValueOnce(new Error("Network error"));
     axiosGetSpy.mockResolvedValueOnce({
       data: {
         ETH: [
@@ -592,13 +649,16 @@ describe("request-data-packages", () => {
 
     it("two gateways respond immediately one timeouts", async () => {
       const axiosGetSpy = jest.spyOn(axios, "get");
+      const firstGatewayTimeout = 1_000;
       axiosGetSpy
-        .mockImplementationOnce(() => new Promise((_, reject) => setTimeout(reject, 20_000)))
+        .mockImplementationOnce(
+          () => new Promise((_, reject) => setTimeout(reject, firstGatewayTimeout))
+        )
         .mockImplementationOnce(() => Promise.resolve(SAMPLE_RESPONSE))
         .mockImplementationOnce(() => Promise.resolve(SAMPLE_RESPONSE));
 
       const start = performance.now();
-      void jest.advanceTimersByTimeAsync(650);
+      void jest.advanceTimersByTimeAsync(1_200);
       await requestDataPackages({
         ...getReqParams(),
         urls: ["1", "2", "3"],
@@ -608,7 +668,7 @@ describe("request-data-packages", () => {
       });
 
       const timePassed = performance.now() - start;
-      expect(timePassed).toBe(500);
+      expect(timePassed).toBe(1_000);
     });
 
     it("two gateways timeouts one respond", async () => {
@@ -629,17 +689,22 @@ describe("request-data-packages", () => {
       });
 
       const timePassed = performance.now() - start;
-      expect(timePassed).toBe(500);
+      expect(timePassed).toBe(0);
     });
 
     it("three gateways timeout", async () => {
       const axiosGetSpy = jest.spyOn(axios, "get");
+      const timeout1 = 1_000;
+      const timeout2 = 20_000;
+      axiosGetSpy.mockImplementationOnce(
+        () => new Promise((_, reject) => setTimeout(() => reject(new Error("timeout")), timeout1))
+      );
       axiosGetSpy.mockImplementation(
-        () => new Promise((_, reject) => setTimeout(() => reject(new Error("timeout")), 20_000))
+        () => new Promise((_, reject) => setTimeout(() => reject(new Error("timeout")), timeout2))
       );
 
       const start = performance.now();
-      void jest.advanceTimersByTimeAsync(21_000);
+      void jest.advanceTimersByTimeAsync(timeout1 + timeout2 + 1_000);
       const packagesPromise = requestDataPackages({
         ...getReqParams(),
         urls: ["1", "2", "3"],
@@ -650,7 +715,7 @@ describe("request-data-packages", () => {
 
       await expect(packagesPromise).rejects.toThrowError(/timeout/);
       const timePassed = performance.now() - start;
-      expect(timePassed).toBe(20_000);
+      expect(timePassed).toBe(timeout1 + timeout2);
     });
 
     it("two gateways timeout last respond after wait for all gateways", async () => {

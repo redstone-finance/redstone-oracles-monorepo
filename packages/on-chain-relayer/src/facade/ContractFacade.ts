@@ -17,17 +17,15 @@ export class ContractFacade {
   constructor(
     protected readonly adapter: WriteContractAdapter,
     protected readonly blockProvider: BlockProvider,
-    opts: Pick<RelayerConfig, "uniqueSignerThresholdCacheTtlMs"> = {
-      uniqueSignerThresholdCacheTtlMs: 0,
-    },
+    { uniqueSignerThresholdCacheTtlMs = 0 } = {},
     protected cache?: DataPackagesResponseCache
   ) {
     this.getUniqueSignerThresholdMemoized = RedstoneCommon.memoize({
       functionToMemoize: (blockTag?: number) => this.getUniqueSignerThresholdFromContract(blockTag),
-      ttl: opts.uniqueSignerThresholdCacheTtlMs,
+      ttl: uniqueSignerThresholdCacheTtlMs,
       cacheKeyBuilder: () => "uniqueSignerThresholdCached",
       cacheReporter: (isMissing) =>
-        opts.uniqueSignerThresholdCacheTtlMs || !isMissing
+        uniqueSignerThresholdCacheTtlMs || !isMissing
           ? RedstoneCommon.reportMemoizeCacheUsage(isMissing, "uniqueSignerThreshold", this.logger)
           : undefined,
     });

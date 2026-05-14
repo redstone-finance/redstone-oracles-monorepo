@@ -109,4 +109,5 @@ export type OnChainRelayerEnv = {
   auctionModelGasMultipliers?: number[];
   enableIterationHealthCheck?: boolean;
   iterationHealthCheckPeriodInS?: number;
+  disableMultiPhaseFetching?: boolean;
 };
