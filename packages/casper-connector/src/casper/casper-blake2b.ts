@@ -1,4 +1,4 @@
-import { blake2b } from "@noble/hashes/blake2b";
+import { blake2b } from "@noble/hashes/blake2";
 import { arrayify, hexlify } from "ethers/lib/utils";
 
 export function casperBlake2b(dataHex: string, withPrefix = false) {
