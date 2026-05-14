@@ -128,7 +128,7 @@
       "rateFeed": false,
       "types": ["rwa"]
     },
-    "KRW": {
+    "KRW_FX": {
       "source": [
         "ws-twelve-data",
         "finhub_pepperstone",
@@ -147,7 +147,7 @@
       "rateFeed": false,
       "types": ["rwa"]
     },
-    "JPY": {
+    "JPY_FX": {
       "source": [
         "ws-twelve-data",
         "alltick-api-deferred-reversed",
@@ -167,13 +167,13 @@
       "rateFeed": false,
       "types": ["rwa"]
     },
-    "MYR": {
+    "MYR_FX": {
       "source": ["ws-twelve-data", "ws-polygon-massive-commodities", "ws-aleno"],
       "denomination": "USD",
       "rateFeed": false,
       "types": ["rwa"]
     },
-    "THB": {
+    "THB_FX": {
       "source": [
         "ws-twelve-data",
         "alltick-api-deferred-reversed",
@@ -192,7 +192,7 @@
       "rateFeed": false,
       "types": ["rwa"]
     },
-    "IDR": {
+    "IDR_FX": {
       "source": ["ws-twelve-data", "ws-polygon-massive-commodities", "finhub_pepperstone_deferred"],
       "priceAggregator": "primarySource",
       "primarySourceAggregatorConfig": {
@@ -205,7 +205,7 @@
       "rateFeed": false,
       "types": ["rwa"]
     },
-    "SGD": {
+    "SGD_FX": {
       "source": [
         "ws-twelve-data",
         "ws-polygon-massive-commodities",
