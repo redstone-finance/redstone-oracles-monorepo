@@ -15,9 +15,9 @@ export class SetWithTTL {
     return this.state.has(item);
   }
 
-  removeOlderThen(olderThen: number) {
+  removeOlderThan(olderThan: number) {
     for (const [key, value] of this.state.entries()) {
-      if (value < olderThen) {
+      if (value < olderThan) {
         this.state.delete(key);
       }
     }
