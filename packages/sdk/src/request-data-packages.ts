@@ -86,6 +86,10 @@ type DataPackagesRequestParamsInternal = {
    * Instance of the storage to be used for caching responses
    */
   storageInstance?: DataPackagesResponseStorage;
+  /**
+   * temporary flag to allow disabling multi-phase fetching mechanism. This should be removed after the mechanism is fully tested and stable, which should happen in the next few months.
+   */
+  disableMultiPhaseFetching?: boolean;
 };
 
 type DataPackagesQuery =
@@ -127,6 +131,9 @@ export const requestDataPackages = async (
 ): Promise<DataPackagesResponse> => {
   if (!reqParams.returnAllPackages && !reqParams.dataPackagesIds.length) {
     throw new Error("Please provide at least one dataFeed");
+  }
+  if (!reqParams.authorizedSigners.length) {
+    throw new Error("Authorized signers array cannot be empty");
   }
 
   const cached = reqParams.storageInstance?.get(reqParams);
