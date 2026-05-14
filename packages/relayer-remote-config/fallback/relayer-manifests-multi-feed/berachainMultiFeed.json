@@ -157,6 +157,20 @@
     },
     "IR": {
       "priceFeedAddress": "0x4F4E639745CfB234B6176E96c6afd83269baF52E"
+    },
+    "savUSD_FUNDAMENTAL": {
+      "priceFeedAddress": "0x2b9824644D9c03FDa5fddc40A7AeAB282b867c23",
+      "updateTriggersOverrides": {
+        "deviationPercentage": 0.05,
+        "timeSinceLastUpdateInMilliseconds": 86400000
+      }
+    },
+    "SolvBTC_FUNDAMENTAL": {
+      "priceFeedAddress": "0x4E202A7E713d00804F9cE397260362bF5E0EaaA8",
+      "updateTriggersOverrides": {
+        "deviationPercentage": 0.5,
+        "timeSinceLastUpdateInMilliseconds": 86400000
+      }
     }
   }
 }
