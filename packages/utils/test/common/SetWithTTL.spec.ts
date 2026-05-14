@@ -23,7 +23,7 @@ describe("SetWithTTL", () => {
 
     expect(set.size).toBe(3);
 
-    set.removeOlderThen(3);
+    set.removeOlderThan(3);
     expect(set.size).toBe(1);
     expect(set.has("3")).toBe(true);
     expect(set.has("1")).toBe(false);
