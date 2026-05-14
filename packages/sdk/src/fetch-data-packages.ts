@@ -43,7 +43,7 @@ const pendingPromises: Record<
 
 export async function fetchDataPackagesDedup(reqParams: DataPackagesRequestParams) {
   const key = getPathComponents(reqParams).join("/");
-  pendingPromises[key] ??= fetchDataPackages(reqParams);
+  pendingPromises[key] ??= fetchInStages(reqParams);
 
   try {
     return await pendingPromises[key];
@@ -52,11 +52,43 @@ export async function fetchDataPackagesDedup(reqParams: DataPackagesRequestParam
   }
 }
 
-async function fetchDataPackages(reqParams: DataPackagesRequestParams) {
+const FIRST_GATEWAY_WAIT_TIME_MS = 1_000;
+
+async function fetchInStages(reqParams: DataPackagesRequestParams) {
   const urls = getUrlsForDataServiceId(reqParams);
+  if (urls.length === 0) {
+    throw new Error(`Empty urls array provided. Cannot fetch data packages.`);
+  }
+  if (reqParams.disableMultiPhaseFetching) {
+    return await fetchWithLogger(reqParams, urls);
+  }
+  // first try a single gateway for 1 sec or the provided timeout. If it fails, try all gateways with the provided timeout
+  try {
+    const stageUrls = [urls[0]];
+    const stageReqParams = { ...reqParams, singleGatewayTimeoutMs: FIRST_GATEWAY_WAIT_TIME_MS };
+    return await fetchWithLogger(stageReqParams, stageUrls);
+  } catch (e) {
+    const stageUrls = urls.slice(1);
+    if (stageUrls.length === 0) {
+      throw e;
+    }
+    return await fetchWithLogger(reqParams, stageUrls);
+  }
+}
+
+async function fetchWithLogger(reqParams: DataPackagesRequestParams, urls: string[]) {
   const requestDataPackagesLogger = reqParams.enableEnhancedLogs
     ? new RequestDataPackagesLogger(urls.length, !!reqParams.historicalTimestamp)
     : undefined;
+  const { response } = await fetchDataPackages(reqParams, urls, requestDataPackagesLogger);
+  return { requestDataPackagesLogger, response };
+}
+
+async function fetchDataPackages(
+  reqParams: DataPackagesRequestParams,
+  urls: string[],
+  requestDataPackagesLogger?: RequestDataPackagesLogger
+) {
   const promises = prepareDataPackagePromises(reqParams, urls);
 
   const response = await getTheMostRecentDataPackages(
@@ -165,9 +197,6 @@ const prepareDataPackagePromises = (
   reqParams: DataPackagesRequestParams,
   urls: string[]
 ): Promise<DataPackagesResponse>[] => {
-  if (!reqParams.authorizedSigners.length) {
-    throw new Error("Authorized signers array cannot be empty");
-  }
   const pathComponents = getPathComponents(reqParams);
 
   return urls.map(async (url) => {

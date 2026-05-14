@@ -45,7 +45,8 @@ const allReadGateways = {
 
 const DEV_GWS = [allReadGateways.dev1_aws, allReadGateways.dev1_gcp];
 
-const PROD_GWS = [allReadGateways.prod1_gcp, allReadGateways.prod1_aws, allReadGateways.prod2_aws];
+// order matters here, as the first gateway is being tried first by requestDataPackages function
+const PROD_GWS = [allReadGateways.prod2_aws, allReadGateways.prod1_gcp, allReadGateways.prod1_aws];
 
 const REDSTONE_DATA_SERVICES_URLS: Partial<Record<string, Gateway[]>> = {
   "redstone-primary-prod": PROD_GWS,
@@ -62,7 +63,7 @@ const REDSTONE_DATA_SERVICES_URLS: Partial<Record<string, Gateway[]>> = {
 
 export const resolveDataServiceUrls = (
   dataServiceId: string,
-  opts?: { historical?: boolean; metadata?: boolean }
+  { historical = false, metadata = false } = {}
 ): string[] => {
   const gateways = REDSTONE_DATA_SERVICES_URLS[dataServiceId];
   if (!gateways) {
@@ -70,9 +71,6 @@ export const resolveDataServiceUrls = (
   }
 
   return gateways
-    .filter(
-      (gateway) =>
-        (!opts?.historical || gateway.historical) && (!opts?.metadata || gateway.metadata)
-    )
+    .filter((gateway) => (!historical || gateway.historical) && (!metadata || gateway.metadata))
     .map((gw) => gw.url);
 };
