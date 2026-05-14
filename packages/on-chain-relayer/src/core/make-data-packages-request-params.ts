@@ -27,6 +27,7 @@ export function makeDataPackagesRequestParams(
     waitForAllGatewaysTimeMs,
     enableEnhancedRequestDataPackagesLogs,
     authorizedSigners,
+    disableMultiPhaseFetching,
   } = relayerConfig;
 
   let signers: string[] = authorizedSigners ?? [];
@@ -53,5 +54,6 @@ export function makeDataPackagesRequestParams(
     storageInstance: relayerConfig.useGlobalDataPackagesResponseStorage
       ? storageInstance
       : undefined,
+    disableMultiPhaseFetching,
   };
 }

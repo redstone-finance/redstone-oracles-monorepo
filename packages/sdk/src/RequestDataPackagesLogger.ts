@@ -1,6 +1,7 @@
 import { loggerFactory, RedstoneCommon } from "@redstone-finance/utils";
 import { type DataPackagesResponse, getResponseTimestamp } from "./request-data-packages-common";
 
+const PACKAGE_STALENESS_WARN_THRESHOLD = RedstoneCommon.secsToMs(15);
 export class RequestDataPackagesLogger {
   private readonly initialDate: number;
   private readonly particularResponses: (DataPackagesResponse | undefined)[];
@@ -29,6 +30,14 @@ export class RequestDataPackagesLogger {
   }
 
   didReceiveResponse(response: DataPackagesResponse, index: number) {
+    const packageTimestamp = getResponseTimestamp(response);
+    const timestampDelta = Date.now() - packageTimestamp;
+    if (timestampDelta > PACKAGE_STALENESS_WARN_THRESHOLD) {
+      this.logger.warn(
+        `Received stale package: timestampDelta=${timestampDelta} ms for response index ${index}`
+      );
+    }
+
     this.particularResponses[index] = response;
     this.particularTimes[index] = Date.now() - this.initialDate;
   }

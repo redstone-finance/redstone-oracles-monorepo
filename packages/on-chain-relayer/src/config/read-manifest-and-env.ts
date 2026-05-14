@@ -309,6 +309,10 @@ export const readManifestAndEnv = () => {
       "ITERATION_HEALTHCHECK_PERIOD_IN_S",
       z.number().default(600)
     ),
+    disableMultiPhaseFetching: RedstoneCommon.getFromEnv(
+      "DISABLE_MULTI_PHASE_DATA_PACKAGES_FETCHING",
+      z.boolean().default(true)
+    ),
   };
 
   return { manifest, env };
