@@ -440,6 +440,30 @@
         "deviationPercentage": 0.5,
         "timeSinceLastUpdateInMilliseconds": 86400000
       }
+    },
+    "mzUSD_FUNDAMENTAL": {
+      "priceFeedAddress": "0x33062364438b61A4fff3623A7cD4A2BA1Ad817E4",
+      "updateTriggersOverrides": {
+        "deviationPercentage": 0.1,
+        "timeSinceLastUpdateInMilliseconds": 43200000
+      }
+    },
+    "mzUSD_TOTAL_SUPPLY": {
+      "priceFeedAddress": "0x2A69dc28f8Ca9184f33bCa0e7c049E6307828887",
+      "updateTriggersOverrides": {
+        "deviationPercentage": 0.1,
+        "timeSinceLastUpdateInMilliseconds": 43200000
+      }
+    },
+    "AMCASH+_FUNDAMENTAL": {
+      "priceFeedAddress": "0x767B8971CA1dc117F624d3EE3053d2881d241Db9",
+      "updateTriggersOverrides": {
+        "deviationPercentage": 0.000001,
+        "timeSinceLastUpdateInMilliseconds": 86400000
+      }
+    },
+    "WBTC/BTC": {
+      "priceFeedAddress": "0xD260596f85C6D91Ccd40f7076eEb62ACb3B2ad53"
     }
   }
 }
