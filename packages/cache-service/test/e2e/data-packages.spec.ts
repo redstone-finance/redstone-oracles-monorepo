@@ -988,7 +988,7 @@ describe("Data packages (e2e)", () => {
   });
 
   describe("validateMetadataAccess", () => {
-    describe("when enableMetadataApiKeySuffixCheck=false (default)", () => {
+    describe("when metadataAccessApiKeyRegex is not set (default)", () => {
       it("/v2 show-metadata should not require API key", async () => {
         const dpTimestamp = mockDataPackages[0].timestampMilliseconds;
         jest.spyOn(Date, "now").mockImplementation(() => dpTimestamp);
@@ -1017,18 +1017,16 @@ describe("Data packages (e2e)", () => {
       });
     });
 
-    describe("when enableMetadataApiKeySuffixCheck=true", () => {
+    describe("when metadataAccessApiKeyRegex is set", () => {
       const VALID_API_KEY = "secret123-test-suffix";
       const WRONG_API_KEY = "secret123-wrong-suffix";
 
       beforeEach(() => {
-        config.enableMetadataApiKeySuffixCheck = true;
-        config.metadataApiKeySuffix = "-test-suffix";
+        config.metadataAccessApiKeyRegex = /-test-suffix$/;
       });
 
       afterEach(() => {
-        config.enableMetadataApiKeySuffixCheck = false;
-        config.metadataApiKeySuffix = undefined;
+        config.metadataAccessApiKeyRegex = undefined;
       });
 
       it("/v2 show-metadata should return 403 without API key", async () => {
@@ -1122,6 +1120,145 @@ describe("Data packages (e2e)", () => {
         await request(httpServer)
           .get(
             `/data-packages/historical-by-data-feeds/mock-data-service-1/${historicalTimestamp}/show-metadata?dataFeedIds=ETH`
+          )
+          .set("x-api-key", VALID_API_KEY)
+          .expect(200);
+      });
+    });
+  });
+
+  describe("validateAllFeedsAccess", () => {
+    const VALID_API_KEY = "secret123-ALLF";
+    const WRONG_API_KEY = "secret123-XXXX";
+
+    describe("when allFeedsAccessApiKeyRegex is not set (default)", () => {
+      it("latest should not require API key", async () => {
+        const dpTimestamp = mockDataPackages[0].timestampMilliseconds;
+        jest.spyOn(Date, "now").mockImplementation(() => dpTimestamp);
+        await request(httpServer).get(`/data-packages/latest/mock-data-service-1`).expect(200);
+      });
+
+      it("latest-not-aligned-by-time should not require API key", async () => {
+        const dpTimestamp = mockDataPackages[0].timestampMilliseconds;
+        jest.spyOn(Date, "now").mockImplementation(() => dpTimestamp);
+        await request(httpServer)
+          .get(`/data-packages/latest-not-aligned-by-time/mock-data-service-1`)
+          .expect(200);
+      });
+
+      it("latest-by-data-feeds should not require API key", async () => {
+        const dpTimestamp = mockDataPackages[0].timestampMilliseconds;
+        jest.spyOn(Date, "now").mockImplementation(() => dpTimestamp);
+        await request(httpServer)
+          .get(`/data-packages/latest-by-data-feeds/mock-data-service-1?dataFeedIds=ETH`)
+          .expect(200);
+      });
+    });
+
+    describe("when allFeedsAccessApiKeyRegex is set", () => {
+      beforeEach(() => {
+        config.allFeedsAccessApiKeyRegex = /ALLF$/;
+      });
+
+      afterEach(() => {
+        config.allFeedsAccessApiKeyRegex = undefined;
+      });
+
+      it("latest should return 403 without API key", async () => {
+        const dpTimestamp = mockDataPackages[0].timestampMilliseconds;
+        jest.spyOn(Date, "now").mockImplementation(() => dpTimestamp);
+        await request(httpServer).get(`/data-packages/latest/mock-data-service-1`).expect(403);
+      });
+
+      it("latest should return 403 with wrong API key", async () => {
+        const dpTimestamp = mockDataPackages[0].timestampMilliseconds;
+        jest.spyOn(Date, "now").mockImplementation(() => dpTimestamp);
+        await request(httpServer)
+          .get(`/data-packages/latest/mock-data-service-1`)
+          .set("x-api-key", WRONG_API_KEY)
+          .expect(403);
+      });
+
+      it("latest should return 200 with valid API key", async () => {
+        const dpTimestamp = mockDataPackages[0].timestampMilliseconds;
+        jest.spyOn(Date, "now").mockImplementation(() => dpTimestamp);
+        await request(httpServer)
+          .get(`/data-packages/latest/mock-data-service-1`)
+          .set("x-api-key", VALID_API_KEY)
+          .expect(200);
+      });
+
+      it("latest-not-aligned-by-time should return 403 without API key", async () => {
+        const dpTimestamp = mockDataPackages[0].timestampMilliseconds;
+        jest.spyOn(Date, "now").mockImplementation(() => dpTimestamp);
+        await request(httpServer)
+          .get(`/data-packages/latest-not-aligned-by-time/mock-data-service-1`)
+          .expect(403);
+      });
+
+      it("latest-not-aligned-by-time should return 200 with valid API key", async () => {
+        const dpTimestamp = mockDataPackages[0].timestampMilliseconds;
+        jest.spyOn(Date, "now").mockImplementation(() => dpTimestamp);
+        await request(httpServer)
+          .get(`/data-packages/latest-not-aligned-by-time/mock-data-service-1`)
+          .set("x-api-key", VALID_API_KEY)
+          .expect(200);
+      });
+
+      it("historical should return 403 without API key", async () => {
+        const historicalTimestamp = mockDataPackages[0].timestampMilliseconds - 1000;
+        await request(httpServer)
+          .get(`/data-packages/historical/mock-data-service-1/${historicalTimestamp}`)
+          .expect(403);
+      });
+
+      it("historical should return 200 with valid API key", async () => {
+        const historicalTimestamp = mockDataPackages[0].timestampMilliseconds - 1000;
+        await request(httpServer)
+          .get(`/data-packages/historical/mock-data-service-1/${historicalTimestamp}`)
+          .set("x-api-key", VALID_API_KEY)
+          .expect(200);
+      });
+
+      it("latest-by-data-feeds should not require API key", async () => {
+        const dpTimestamp = mockDataPackages[0].timestampMilliseconds;
+        jest.spyOn(Date, "now").mockImplementation(() => dpTimestamp);
+        await request(httpServer)
+          .get(`/data-packages/latest-by-data-feeds/mock-data-service-1?dataFeedIds=ETH`)
+          .expect(200);
+      });
+
+      it("/v2 show-metadata should return 403 without API key", async () => {
+        const dpTimestamp = mockDataPackages[0].timestampMilliseconds;
+        jest.spyOn(Date, "now").mockImplementation(() => dpTimestamp);
+        await request(httpServer)
+          .get(`/v2/data-packages/latest/mock-data-service-1/show-metadata`)
+          .expect(403);
+      });
+
+      it("/v2 show-metadata should return 200 with valid all-feeds key", async () => {
+        const dpTimestamp = mockDataPackages[0].timestampMilliseconds;
+        jest.spyOn(Date, "now").mockImplementation(() => dpTimestamp);
+        await request(httpServer)
+          .get(`/v2/data-packages/latest/mock-data-service-1/show-metadata`)
+          .set("x-api-key", VALID_API_KEY)
+          .expect(200);
+      });
+
+      it("/v2 historical show-metadata should return 403 without API key", async () => {
+        const historicalTimestamp = mockDataPackages[0].timestampMilliseconds - 1000;
+        await request(httpServer)
+          .get(
+            `/v2/data-packages/historical/mock-data-service-1/${historicalTimestamp}/show-metadata`
+          )
+          .expect(403);
+      });
+
+      it("/v2 historical show-metadata should return 200 with valid all-feeds key", async () => {
+        const historicalTimestamp = mockDataPackages[0].timestampMilliseconds - 1000;
+        await request(httpServer)
+          .get(
+            `/v2/data-packages/historical/mock-data-service-1/${historicalTimestamp}/show-metadata`
           )
           .set("x-api-key", VALID_API_KEY)
           .expect(200);
