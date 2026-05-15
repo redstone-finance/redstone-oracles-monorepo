@@ -55,8 +55,10 @@ export abstract class BaseDataPackagesController implements OnModuleDestroy {
   @Get("latest/:DATA_SERVICE_ID")
   @Header("Cache-Control", "max-age=5")
   async getAllLatest(
-    @Param("DATA_SERVICE_ID") dataServiceId: string
+    @Param("DATA_SERVICE_ID") dataServiceId: string,
+    @Req() req: Request
   ): Promise<DataPackagesResponse> {
+    BaseDataPackagesController.validateAllFeedsAccess(req);
     await BaseDataPackagesController.validateDataServiceId(dataServiceId);
     return await this.dataPackagesService.getLatestDataPackagesWithSameTimestampWithCache(
       dataServiceId,
@@ -68,8 +70,10 @@ export abstract class BaseDataPackagesController implements OnModuleDestroy {
   @Get("latest-not-aligned-by-time/:DATA_SERVICE_ID")
   @Header("Cache-Control", "max-age=5")
   async getMostRecent(
-    @Param("DATA_SERVICE_ID") dataServiceId: string
+    @Param("DATA_SERVICE_ID") dataServiceId: string,
+    @Req() req: Request
   ): Promise<DataPackagesResponse> {
+    BaseDataPackagesController.validateAllFeedsAccess(req);
     await BaseDataPackagesController.validateDataServiceId(dataServiceId);
     return await this.dataPackagesService.getLatestDataPackagesWithCache(
       dataServiceId,
@@ -82,13 +86,15 @@ export abstract class BaseDataPackagesController implements OnModuleDestroy {
   @Header("Cache-Control", "max-age=5")
   async getDataPackagesByTimestamp(
     @Param("DATA_SERVICE_ID") dataServiceId: string,
-    @Param("TIMESTAMP") timestamp: string
+    @Param("TIMESTAMP") timestamp: string,
+    @Req() req: Request
   ): Promise<DataPackagesResponse> {
     if (!config.enableHistoricalDataServing) {
       throw new ServiceUnavailableException(
         `historical/* routes are not enabled in this cache-service configuration`
       );
     }
+    BaseDataPackagesController.validateAllFeedsAccess(req);
     await BaseDataPackagesController.validateDataServiceId(dataServiceId);
 
     return await DataPackagesService.getDataPackagesByTimestamp(
@@ -211,12 +217,28 @@ export abstract class BaseDataPackagesController implements OnModuleDestroy {
     return dataFeedIds;
   }
 
-  protected static validateMetadataAccess(req: Request): void {
-    if (!config.enableMetadataApiKeySuffixCheck) {
+  protected static validateAllFeedsAccess(req: Request): void {
+    if (!config.allFeedsAccessApiKeyRegex) {
       return;
     }
     const apiKey = (req.headers as Record<string, string | undefined>)["x-api-key"];
-    if (!apiKey || !config.metadataApiKeySuffix || !apiKey.endsWith(config.metadataApiKeySuffix)) {
+    if (!apiKey || !config.allFeedsAccessApiKeyRegex.test(apiKey)) {
+      throw new HttpException(
+        {
+          status: HttpStatus.FORBIDDEN,
+          error: "Access to all-feeds endpoints requires a valid API key",
+        },
+        HttpStatus.FORBIDDEN
+      );
+    }
+  }
+
+  protected static validateMetadataAccess(req: Request): void {
+    if (!config.metadataAccessApiKeyRegex) {
+      return;
+    }
+    const apiKey = (req.headers as Record<string, string | undefined>)["x-api-key"];
+    if (!apiKey || !config.metadataAccessApiKeyRegex.test(apiKey)) {
       throw new HttpException(
         { status: HttpStatus.FORBIDDEN, error: "Access to metadata requires a valid API key" },
         HttpStatus.FORBIDDEN

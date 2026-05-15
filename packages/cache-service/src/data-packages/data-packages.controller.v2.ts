@@ -13,8 +13,10 @@ export class DataPackagesControllerV2 extends BaseDataPackagesController {
   @Get("latest/:DATA_SERVICE_ID/hide-metadata")
   @Header("Cache-Control", "max-age=5")
   async getAllLatestWithNoMetadata(
-    @Param("DATA_SERVICE_ID") dataServiceId: string
+    @Param("DATA_SERVICE_ID") dataServiceId: string,
+    @Req() req: Request
   ): Promise<DataPackagesResponse> {
+    BaseDataPackagesController.validateAllFeedsAccess(req);
     await BaseDataPackagesController.validateDataServiceId(dataServiceId);
     return await this.dataPackagesService.getLatestDataPackagesWithSameTimestampWithCache(
       dataServiceId,
@@ -28,13 +30,15 @@ export class DataPackagesControllerV2 extends BaseDataPackagesController {
   @Header("Cache-Control", "max-age=5")
   async getDataPackagesByTimestampWithNoMetadata(
     @Param("DATA_SERVICE_ID") dataServiceId: string,
-    @Param("TIMESTAMP") timestamp: string
+    @Param("TIMESTAMP") timestamp: string,
+    @Req() req: Request
   ): Promise<DataPackagesResponse> {
     if (!config.enableHistoricalDataServing) {
       throw new ServiceUnavailableException(
         `historical/* routes are not enabled in this cache-service configuration`
       );
     }
+    BaseDataPackagesController.validateAllFeedsAccess(req);
     await DataPackagesControllerV2.validateDataServiceId(dataServiceId);
 
     return await DataPackagesService.getDataPackagesByTimestamp(
@@ -51,6 +55,7 @@ export class DataPackagesControllerV2 extends BaseDataPackagesController {
     @Param("DATA_SERVICE_ID") dataServiceId: string,
     @Req() req: Request
   ): Promise<DataPackagesResponse> {
+    BaseDataPackagesController.validateAllFeedsAccess(req);
     BaseDataPackagesController.validateMetadataAccess(req);
     await BaseDataPackagesController.validateDataServiceId(dataServiceId);
     return await this.dataPackagesService.getLatestDataPackagesWithSameTimestampWithCache(
@@ -72,6 +77,7 @@ export class DataPackagesControllerV2 extends BaseDataPackagesController {
         `historical/* routes are not enabled in this cache-service configuration`
       );
     }
+    BaseDataPackagesController.validateAllFeedsAccess(req);
     BaseDataPackagesController.validateMetadataAccess(req);
     await DataPackagesControllerV2.validateDataServiceId(dataServiceId);
 
