@@ -21,6 +21,7 @@
   "dependencies": {
     "@aws-sdk/client-cloudwatch": "^3.696.0",
     "@aws-sdk/client-dynamodb": "^3.696.0",
+    "@aws-sdk/client-ecr-public": "^3.696.0",
     "@aws-sdk/client-ecs": "^3.696.0",
     "@aws-sdk/client-lambda": "^3.696.0",
     "@aws-sdk/client-s3": "^3.696.0",

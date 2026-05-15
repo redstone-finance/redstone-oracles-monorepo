@@ -3,6 +3,7 @@ import { RedstoneCommon } from "@redstone-finance/utils";
 export * from "./ApiKeysUsageTracker";
 export * from "./aws/cloudwatch";
 export * from "./aws/DynamoDbService";
+export * from "./aws/ecr-public";
 export * from "./aws/ecs";
 export * from "./aws/lambda";
 export * from "./aws/params";

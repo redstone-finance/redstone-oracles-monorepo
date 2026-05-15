@@ -1,5 +1,6 @@
 import { CloudWatch, CloudWatchClient } from "@aws-sdk/client-cloudwatch";
 import { DynamoDBClient } from "@aws-sdk/client-dynamodb";
+import { ECRPUBLICClient } from "@aws-sdk/client-ecr-public";
 import { ECSClient } from "@aws-sdk/client-ecs";
 import { LambdaClient } from "@aws-sdk/client-lambda";
 import { S3 } from "@aws-sdk/client-s3";
@@ -11,6 +12,9 @@ export const getCloudwatch = regionalCache((region: string) => new CloudWatch({ 
 export const getCloudWatchClient = regionalCache(
   (region: string) => new CloudWatchClient({ region })
 );
+
+const _getEcrPublicClient = regionalCache((region: string) => new ECRPUBLICClient({ region }));
+export const getEcrPublicClient = () => _getEcrPublicClient("us-east-1");
 
 export const getEcsClient = regionalCache((region: string) => new ECSClient({ region }));
 
