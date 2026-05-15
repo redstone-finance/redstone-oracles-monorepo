@@ -77,6 +77,7 @@ async function main() {
 
   console.log(`\n--- TTL ---`);
   console.dir(await adapter.getEntryTtls());
+  console.dir(await adapter.getDataFeedIds());
 }
 
 void main().catch(console.error);

@@ -5,7 +5,6 @@ import {
   assetFromScVal,
   assetLabelFor,
   assetToScVal,
-  isOtherAsset,
   parseAsset,
   parseAssets,
   parseOptionalPriceData,
@@ -25,8 +24,15 @@ const PRICE_METHOD = "price";
 const ASSET_MAPPING_TTL = RedstoneCommon.minToMs(10);
 
 export class Sep40ContractReader {
-  private static readonly caches: Map<string, RedstoneCommon.CacheWithTtl<string, Sep40Asset>> =
-    new Map();
+  private static readonly feedToAssetCaches: Map<
+    string,
+    RedstoneCommon.CacheWithTtl<string, Sep40Asset>
+  > = new Map();
+
+  private static readonly assetToFeedCaches: Map<
+    string,
+    RedstoneCommon.CacheWithTtl<string, string>
+  > = new Map();
 
   constructor(
     protected readonly client: StellarClient,
@@ -34,7 +40,9 @@ export class Sep40ContractReader {
   ) {}
 
   async getDataFeedIds(blockNumber?: number) {
-    return (await this.assets(blockNumber)).filter(isOtherAsset).map(assetLabelFor);
+    const assets = await this.assets(blockNumber);
+
+    return (await this.assetToFeeds(assets)).filter(RedstoneCommon.isDefined);
   }
 
   async readLatestData(asset: Sep40Asset, blockNumber?: number) {
@@ -160,7 +168,7 @@ export class Sep40ContractReader {
   }
 
   async feedToAsset(feedId: string) {
-    const cache = this.getOrCreateCache();
+    const cache = this.getOrCreateCache(Sep40ContractReader.feedToAssetCaches);
     const cached = cache.get(feedId);
     if (RedstoneCommon.isDefined(cached)) {
       return cached;
@@ -176,31 +184,55 @@ export class Sep40ContractReader {
   }
 
   async feedsToAssets(feedIds: string[]) {
-    const cache = this.getOrCreateCache();
+    return await this.batchLookup(
+      feedIds,
+      this.getOrCreateCache(Sep40ContractReader.feedToAssetCaches),
+      (feed) => feed,
+      feedToAssetKey,
+      (data) => assetFromScVal(data.val())
+    );
+  }
 
-    const results = new Array<Sep40Asset | undefined>(feedIds.length);
+  async assetToFeeds(assets: Sep40Asset[]) {
+    return await this.batchLookup(
+      assets,
+      this.getOrCreateCache(Sep40ContractReader.assetToFeedCaches),
+      assetLabelFor,
+      assetToFeedKey,
+      (data) => data.val().str().toString()
+    );
+  }
+
+  private async batchLookup<K, V>(
+    inputs: K[],
+    cache: RedstoneCommon.CacheWithTtl<string, V>,
+    cacheKey: (input: K) => string,
+    contractKey: (input: K) => xdr.ScVal,
+    parse: (data: xdr.ContractDataEntry) => V
+  ): Promise<(V | undefined)[]> {
+    const results = new Array<V | undefined>(inputs.length);
     const missingIndices: number[] = [];
-    const missingFeedIds: string[] = [];
+    const missingInputs: K[] = [];
 
-    for (const [i, feedId] of feedIds.entries()) {
-      const cached = cache.get(feedId);
+    for (const [i, input] of inputs.entries()) {
+      const cached = cache.get(cacheKey(input));
       if (RedstoneCommon.isDefined(cached)) {
         results[i] = cached;
       } else {
         missingIndices.push(i);
-        missingFeedIds.push(feedId);
+        missingInputs.push(input);
       }
     }
 
-    if (missingFeedIds.length === 0) {
+    if (missingInputs.length === 0) {
       return results;
     }
 
-    const feedEntries = await this.client.fetchEntriesByKey(
-      missingFeedIds.map((feed) => contractDataKey(this.contract, feedToAssetKey(feed)))
+    const entries = await this.client.fetchEntriesByKey(
+      missingInputs.map((input) => contractDataKey(this.contract, contractKey(input)))
     );
 
-    for (const [j, entry] of feedEntries.entries()) {
+    for (const [j, entry] of entries.entries()) {
       const targetIndex = missingIndices[j];
 
       if (!RedstoneCommon.isDefined(entry)) {
@@ -208,23 +240,25 @@ export class Sep40ContractReader {
         continue;
       }
 
-      const asset = assetFromScVal(entry.val.contractData().val());
-      cache.set(missingFeedIds[j], asset);
-      results[targetIndex] = asset;
+      const value = parse(entry.val.contractData());
+      cache.set(cacheKey(missingInputs[j]), value);
+      results[targetIndex] = value;
     }
 
     return results;
   }
 
-  private getOrCreateCache() {
+  private getOrCreateCache<V>(
+    caches: Map<string, RedstoneCommon.CacheWithTtl<string, V>>
+  ): RedstoneCommon.CacheWithTtl<string, V> {
     const address = this.contract.address().toString();
-    const existing = Sep40ContractReader.caches.get(address);
+    const existing = caches.get(address);
     if (RedstoneCommon.isDefined(existing)) {
       return existing;
     }
 
-    const cache = new RedstoneCommon.CacheWithTtl<string, Sep40Asset>(ASSET_MAPPING_TTL);
-    Sep40ContractReader.caches.set(address, cache);
+    const cache = new RedstoneCommon.CacheWithTtl<string, V>(ASSET_MAPPING_TTL);
+    caches.set(address, cache);
 
     return cache;
   }
