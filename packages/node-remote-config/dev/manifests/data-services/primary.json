@@ -5817,6 +5817,19 @@
       ],
       "denomination": "USD",
       "rateFeed": true
+    },
+    "CHECK": {
+      "source": [
+        "bingx-usdt",
+        "coinbase-usd",
+        "gate-usdt",
+        "htx-usdt",
+        "kraken-usd",
+        "mexc-usdt",
+        "aerodrome-cl-base-usdc"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
     }
   },
   "multiPointPackages": {
