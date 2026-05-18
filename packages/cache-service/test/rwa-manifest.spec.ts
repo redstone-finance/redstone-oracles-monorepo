@@ -57,6 +57,35 @@ describe("RwaFeedIdsProvider", () => {
       "https://d3cu28sut4ahjk.cloudfront.net/redstone-finance/redstone-monorepo-priv/${main}/packages/node-remote-config/dev/manifests/data-services/primary.json",
       "https://d13fu63cj82rby.cloudfront.net/redstone-finance/redstone-monorepo-priv/${main}/packages/node-remote-config/dev/manifests/data-services/primary.json",
     ]);
+    expect(mockFetchNodeManifest).toHaveBeenCalledWith("redstone-primary-demo", [
+      "https://d3cu28sut4ahjk.cloudfront.net/redstone-finance/redstone-monorepo-priv/${main}/packages/node-remote-config/dev/manifests/data-services/primary-ws.json",
+      "https://d13fu63cj82rby.cloudfront.net/redstone-finance/redstone-monorepo-priv/${main}/packages/node-remote-config/dev/manifests/data-services/primary-ws.json",
+    ]);
+  });
+
+  it("merges RWA feed IDs from multiple manifests", async () => {
+    mockFetchNodeManifest.mockImplementation((_dataServiceId, manifestUrls) => {
+      if (manifestUrls[0].includes("primary-ws.json")) {
+        return Promise.resolve(
+          makeManifest({
+            AAPL: { types: ["rwa"] },
+            MSFT: { types: ["rwa"] },
+            BTC: {},
+          })
+        );
+      }
+      return Promise.resolve(
+        makeManifest({
+          ETH: {},
+          KES: { types: ["rwa"] },
+        })
+      );
+    });
+
+    await provider.start();
+
+    const result = provider.getRwaFeedIds("redstone-primary-demo");
+    expect(result).toEqual(new Set(["KES", "AAPL", "MSFT"]));
   });
 
   it("returns empty set for unknown data service", () => {
