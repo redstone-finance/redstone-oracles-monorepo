@@ -1,0 +1,47 @@
+import { loggerFactory, RedstoneCommon } from "@redstone-finance/utils";
+import { Keypair } from "@stellar/stellar-sdk";
+import { StellarClient } from "../stellar/StellarClient";
+import { StellarSigner } from "../stellar/StellarSigner";
+
+export class PriceFeedTtlExtender {
+  static readonly logger = loggerFactory("stellar-price-feed-ttl-extender");
+  private readonly signer: StellarSigner;
+
+  constructor(
+    private readonly client: StellarClient,
+    private readonly addresses: string[],
+    keypair: Keypair
+  ) {
+    this.signer = new StellarSigner(keypair);
+  }
+
+  async extendTtlIfNeeded() {
+    if (this.addresses.length === 0) {
+      PriceFeedTtlExtender.logger.warn("No price-feed addresses to monitor");
+      return;
+    }
+
+    const addressesToExtend = await this.client.getAddressesToExtendInstanceTtl(this.addresses);
+
+    if (addressesToExtend.length === 0) {
+      PriceFeedTtlExtender.logger.info("No price-feed contracts need TTL extension");
+      return;
+    }
+
+    PriceFeedTtlExtender.logger.info(
+      `Extending TTL for ${addressesToExtend.length} price-feed contract(s): [${addressesToExtend.join(", ")}]`
+    );
+
+    await RedstoneCommon.runWithPartialFailure(
+      addressesToExtend,
+      async (address) => {
+        await this.client.extendInstanceTtl(address, this.signer);
+      },
+      (error) =>
+        PriceFeedTtlExtender.logger.error(
+          `TTL extension failed: ${RedstoneCommon.stringifyError(error)}`
+        ),
+      "All price-feed TTL extension attempts failed"
+    );
+  }
+}
