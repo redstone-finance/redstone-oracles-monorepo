@@ -14,8 +14,7 @@ use redstone_price_adapter::redstone_sdk_data_package::{
     data_points,
     new_data_point,
     new_data_package,
-    timestamp,
-    signer_address
+    timestamp
 };
 use redstone_price_adapter::redstone_sdk_median::try_calculate_median;
 use redstone_price_adapter::redstone_sdk_validate::{

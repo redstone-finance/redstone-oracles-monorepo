@@ -103,7 +103,6 @@ export type OnChainRelayerEnv = {
   minAggregatedRewardsPerBlockForPercentile?: number;
   rewardsPerBlockAggregationAlgorithm: RewardsPerBlockAggregationAlgorithm;
   disableMultiPointPackages?: boolean;
-  graphQLUrls?: string[];
   useGlobalDataPackagesResponseStorage?: boolean;
   dataPackagesResponseStorageLatestTtlMs?: number;
   auctionModelGasMultipliers?: number[];

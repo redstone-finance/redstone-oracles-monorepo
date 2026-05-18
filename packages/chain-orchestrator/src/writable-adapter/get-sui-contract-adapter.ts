@@ -1,7 +1,7 @@
 import {
   makeSuiConfig,
   makeSuiKeypair,
-  SuiClientBuilders,
+  SuiClientBuilder,
   SuiWriteContractAdapter,
 } from "@redstone-finance/sui-connector";
 import { PartialRelayerConfig } from "./partial-relayer-config";
@@ -17,17 +17,12 @@ export const getSuiContractAdapter = (relayerConfig: PartialRelayerConfig) => {
     gasMultiplier,
     maxTxSendAttempts,
     expectedTxDeliveryTimeInMS,
-    graphQLUrls,
   } = relayerConfig;
   if (!adapterContractPackageId) {
     throw new Error("adapterContractPackageId is required");
   }
 
-  const suiClient = (
-    graphQLUrls !== undefined
-      ? SuiClientBuilders.clientBuilder().withGraphqlUrls(graphQLUrls)
-      : SuiClientBuilders.legacyClientBuilder()
-  )
+  const suiClient = new SuiClientBuilder()
     .withNetworkId(networkId)
     .withRpcUrls(rpcUrls)
     .withQuarantineEnabled()

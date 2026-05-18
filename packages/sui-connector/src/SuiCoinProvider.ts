@@ -4,7 +4,7 @@ import { Transaction } from "@mysten/sui/transactions";
 import { SUI_TYPE_ARG } from "@mysten/sui/utils";
 import { loggerFactory, MultiExecutor, RedstoneCommon } from "@redstone-finance/utils";
 import _ from "lodash";
-import type { SuiClient } from "./SuiClient";
+import type { SuiClient } from "./client/SuiClient";
 
 const MERGE_COINS_BATCH_SIZE = 1;
 const MERGE_COINS_MS_BETWEEN_BATCHES = 0;

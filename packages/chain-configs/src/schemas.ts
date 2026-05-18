@@ -1,4 +1,4 @@
-import { NetworkIdSchema } from "@redstone-finance/utils";
+import { NetworkIdSchema, RedstoneCommon } from "@redstone-finance/utils";
 import { z } from "zod";
 import chainConfigs from "../manifest/chain-configs.json";
 
@@ -12,7 +12,7 @@ export const Erc20TokenSchema = z.object({
 export const ChainConfigSchema = z.object({
   networkId: NetworkIdSchema,
   name: z.string(),
-  publicRpcUrls: z.url().array(),
+  publicRpcUrls: RedstoneCommon.urlOrHostSchema.array(),
   currencySymbol: z.string(),
   // Should be defined only for chains where we pay gas with ERC20 tokens instead of native gas token (eg. Tempo)
   gasCurrencyToken: Erc20TokenSchema.optional(),

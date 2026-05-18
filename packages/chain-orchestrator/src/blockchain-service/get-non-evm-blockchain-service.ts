@@ -22,7 +22,7 @@ import {
   makeSuiKeypair,
   SuiBlockchainService,
   SuiBlockchainServiceWithTransfer,
-  SuiClientBuilders,
+  SuiClientBuilder,
 } from "@redstone-finance/sui-connector";
 import { deconstructNetworkId, NetworkId, RedstoneCommon } from "@redstone-finance/utils";
 import { getCantonAuth } from "../utils";
@@ -37,7 +37,7 @@ export async function getNonEvmBlockchainService(networkId: NetworkId, rpcUrls: 
   const { chainType } = deconstructNetworkId(networkId);
   switch (chainType) {
     case "sui": {
-      const suiClient = SuiClientBuilders.legacyClientBuilder()
+      const suiClient = new SuiClientBuilder()
         .withNetworkId(networkId)
         .withRpcUrls(rpcUrls)
         .build();
@@ -110,7 +110,7 @@ export async function getNonEvmBlockchainServiceWithTransfer(
   const { chainType } = deconstructNetworkId(networkId);
   switch (chainType) {
     case "sui": {
-      const suiClient = SuiClientBuilders.legacyClientBuilder()
+      const suiClient = new SuiClientBuilder()
         .withNetworkId(networkId)
         .withRpcUrls(rpcUrls)
         .build();

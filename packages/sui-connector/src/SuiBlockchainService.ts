@@ -1,15 +1,18 @@
 import type { Keypair } from "@mysten/sui/cryptography";
-import { SuiTransactionBlockResponseOptions } from "@mysten/sui/jsonRpc";
 import { Transaction } from "@mysten/sui/transactions";
 import { MIST_PER_SUI, SUI_DECIMALS } from "@mysten/sui/utils";
 import type {
   BlockchainService,
   BlockchainServiceWithTransfer,
 } from "@redstone-finance/multichain-kit";
-import type { SuiClient } from "./SuiClient";
+import type { SuiClient } from "./client/SuiClient";
 
 export class SuiBlockchainService implements BlockchainService {
-  constructor(protected readonly client: SuiClient) {}
+  readonly queryTransactionBlocks?: SuiClient["queryTransactionBlocks"];
+
+  constructor(protected readonly client: SuiClient) {
+    this.queryTransactionBlocks = client.queryTransactionBlocks?.bind(client);
+  }
 
   async getBlockNumber(): Promise<number> {
     return await this.client.getBlockNumber();
@@ -31,14 +34,6 @@ export class SuiBlockchainService implements BlockchainService {
 
   getTimeForBlock(block: number): Promise<Date> {
     return this.client.getTimeForBlock(block);
-  }
-
-  queryTransactionBlocks(
-    objectId: string,
-    cursor: string | null | undefined,
-    options: SuiTransactionBlockResponseOptions
-  ) {
-    return this.client.queryTransactionBlocks(objectId, cursor, options);
   }
 }
 
