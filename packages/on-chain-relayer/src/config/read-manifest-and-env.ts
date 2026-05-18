@@ -82,7 +82,7 @@ export const readManifestAndEnv = () => {
     relayerIterationInterval: Number(
       RedstoneCommon.getFromEnv("RELAYER_ITERATION_INTERVAL", z.number())
     ),
-    rpcUrls: RedstoneCommon.getFromEnv("RPC_URLS", z.array(z.url())),
+    rpcUrls: RedstoneCommon.getFromEnv("RPC_URLS", z.array(RedstoneCommon.urlOrHostSchema)),
     singleProviderOperationTimeout: RedstoneCommon.getFromEnv(
       "SINGLE_PROVIDER_OPERATION_TIMEOUT",
       z.number().default(5_000)
@@ -300,7 +300,6 @@ export const readManifestAndEnv = () => {
       "GLOBAL_STORAGE_LATEST_PACKAGES_TTL_MS",
       z.number().optional()
     ),
-    graphQLUrls: RedstoneCommon.getFromEnv("GRAPHQL_URLS", z.array(z.url()).optional()),
     enableIterationHealthCheck: RedstoneCommon.getFromEnv(
       "ENABLE_ITERATION_HEALTHCHECK",
       z.boolean().default(true)

@@ -4448,6 +4448,30 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@grpc/grpc-js@npm:^1.14.3":
+  version: 1.14.3
+  resolution: "@grpc/grpc-js@npm:1.14.3"
+  dependencies:
+    "@grpc/proto-loader": "npm:^0.8.0"
+    "@js-sdsl/ordered-map": "npm:^4.4.2"
+  checksum: 10c0/f41f06a311b93cca8c472d56e21387e0f7b57bb2337a91d15ea4279bac8ec4fa0de6bd0d881201229ab800c0f0c55277911ecb850e057f20a828d0ddd623551d
+  languageName: node
+  linkType: hard
+
+"@grpc/proto-loader@npm:^0.8.0":
+  version: 0.8.0
+  resolution: "@grpc/proto-loader@npm:0.8.0"
+  dependencies:
+    lodash.camelcase: "npm:^4.3.0"
+    long: "npm:^5.0.0"
+    protobufjs: "npm:^7.5.3"
+    yargs: "npm:^17.7.2"
+  bin:
+    proto-loader-gen-types: build/bin/proto-loader-gen-types.js
+  checksum: 10c0/a27da3b85d5d17bab956d536786c717287eae46ca264ea9ec774db90ff571955bae2705809f431b4622fbf3be9951d7c7bbb1360b2015ee88abe1587cf3d6fe0
+  languageName: node
+  linkType: hard
+
 "@httptoolkit/websocket-stream@npm:^6.0.1":
   version: 6.0.1
   resolution: "@httptoolkit/websocket-stream@npm:6.0.1"
@@ -5415,6 +5439,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@js-sdsl/ordered-map@npm:^4.4.2":
+  version: 4.4.2
+  resolution: "@js-sdsl/ordered-map@npm:4.4.2"
+  checksum: 10c0/cc7e15dc4acf6d9ef663757279600bab70533d847dcc1ab01332e9e680bd30b77cdf9ad885cc774276f51d98b05a013571c940e5b360985af5eb798dc1a2ee2b
+  languageName: node
+  linkType: hard
+
 "@jsdevtools/ono@npm:^7.1.3":
   version: 7.1.3
   resolution: "@jsdevtools/ono@npm:7.1.3"
@@ -6165,13 +6196,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@mysten/bcs@npm:^2.0.2":
-  version: 2.0.2
-  resolution: "@mysten/bcs@npm:2.0.2"
+"@mysten/bcs@npm:2.0.3, @mysten/bcs@npm:^2.0.2":
+  version: 2.0.3
+  resolution: "@mysten/bcs@npm:2.0.3"
   dependencies:
     "@mysten/utils": "npm:^0.3.1"
     "@scure/base": "npm:^2.0.0"
-  checksum: 10c0/91e3abb0396924e604c78b240193dadb58e1a3fa8d4c0b268a052e1f2be0cc34c083d1efb19692bf86485b8273a439199dc4b32e4db558f157ad7235f6e79876
+  checksum: 10c0/27be1c7b1614d883baac5249634539ac9751fd78cc014bb75a60444ad088f12efdd83ba39d6f27efc9aec28e497ce053a019c25a213fdf475d19d2c24d3d29aa
   languageName: node
   linkType: hard
 
@@ -6205,7 +6236,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@mysten/sui@npm:^2.4.0":
+"@mysten/sui@npm:2.4.0":
   version: 2.4.0
   resolution: "@mysten/sui@npm:2.4.0"
   dependencies:
@@ -7694,6 +7725,18 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@protobuf-ts/grpc-transport@npm:^2.11.1":
+  version: 2.11.1
+  resolution: "@protobuf-ts/grpc-transport@npm:2.11.1"
+  dependencies:
+    "@protobuf-ts/runtime": "npm:^2.11.1"
+    "@protobuf-ts/runtime-rpc": "npm:^2.11.1"
+  peerDependencies:
+    "@grpc/grpc-js": ^1.6.0
+  checksum: 10c0/e7bae05752220e92ebe715559fc3fbb7d4e8e496932d11e2828022dab281b0c919ecb69939ddcb4e720557928bbddcecca23ea415e87ac0d770976f6025d617b
+  languageName: node
+  linkType: hard
+
 "@protobuf-ts/grpcweb-transport@npm:^2.11.1":
   version: 2.11.1
   resolution: "@protobuf-ts/grpcweb-transport@npm:2.11.1"
@@ -7734,10 +7777,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@protobufjs/codegen@npm:^2.0.4":
-  version: 2.0.4
-  resolution: "@protobufjs/codegen@npm:2.0.4"
-  checksum: 10c0/26ae337c5659e41f091606d16465bbcc1df1f37cc1ed462438b1f67be0c1e28dfb2ca9f294f39100c52161aef82edf758c95d6d75650a1ddf31f7ddee1440b43
+"@protobufjs/codegen@npm:^2.0.4, @protobufjs/codegen@npm:^2.0.5":
+  version: 2.0.5
+  resolution: "@protobufjs/codegen@npm:2.0.5"
+  checksum: 10c0/1b8a2ae56ee60a56e9d205cd4b6072a1503c5069b8ebb905710f974ff0098a0d0700641c137e0a8d98dedf14423156a106a9433695cbf52574810f55000fdcab
   languageName: node
   linkType: hard
 
@@ -7765,10 +7808,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@protobufjs/inquire@npm:^1.1.0":
-  version: 1.1.0
-  resolution: "@protobufjs/inquire@npm:1.1.0"
-  checksum: 10c0/64372482efcba1fb4d166a2664a6395fa978b557803857c9c03500e0ac1013eb4b1aacc9ed851dd5fc22f81583670b4f4431bae186f3373fedcfde863ef5921a
+"@protobufjs/inquire@npm:^1.1.0, @protobufjs/inquire@npm:^1.1.1":
+  version: 1.1.1
+  resolution: "@protobufjs/inquire@npm:1.1.1"
+  checksum: 10c0/a638d981adabdbdd61fba04e5045e0d2f98fa557eb0e705482a6dc25e84318bc736b0cd4aaee5d6b9941f121b488ece872c203af2a665b6dfefa95c903bb0cc8
   languageName: node
   linkType: hard
 
@@ -7786,10 +7829,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@protobufjs/utf8@npm:^1.1.0":
-  version: 1.1.0
-  resolution: "@protobufjs/utf8@npm:1.1.0"
-  checksum: 10c0/a3fe31fe3fa29aa3349e2e04ee13dc170cc6af7c23d92ad49e3eeaf79b9766264544d3da824dba93b7855bd6a2982fb40032ef40693da98a136d835752beb487
+"@protobufjs/utf8@npm:^1.1.0, @protobufjs/utf8@npm:^1.1.1":
+  version: 1.1.1
+  resolution: "@protobufjs/utf8@npm:1.1.1"
+  checksum: 10c0/641fc145f00626405e8984b6e90b9edcbcc072ffc82d0647ca3176e09c730b2d022f988e65f011a7a17e2e4d77cde7733643aa10d8ac2bfa30f134dbcad553fd
   languageName: node
   linkType: hard
 
@@ -8002,7 +8045,6 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@redstone-finance/chain-orchestrator@workspace:packages/chain-orchestrator"
   dependencies:
-    "@mysten/sui": "npm:^2.4.0"
     "@redstone-finance/canton-connector": "workspace:*"
     "@redstone-finance/chain-configs": "workspace:*"
     "@redstone-finance/evm-adapters": "workspace:*"
@@ -9513,7 +9555,7 @@ __metadata:
     "@ethersproject/abstract-provider": "npm:^5.7.0"
     "@ethersproject/transactions": "npm:^5.7.0"
     "@influxdata/influxdb-client": "npm:^1.35.0"
-    "@mysten/sui": "npm:^2.4.0"
+    "@mysten/sui": "npm:2.4.0"
     "@redstone-finance/chain-configs": "workspace:*"
     "@redstone-finance/chain-orchestrator": "workspace:*"
     "@redstone-finance/evm-multicall": "workspace:*"
@@ -10272,10 +10314,13 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@redstone-finance/sui-connector@workspace:packages/sui-connector"
   dependencies:
+    "@grpc/grpc-js": "npm:^1.14.3"
     "@ledgerhq/hw-transport-node-hid": "npm:^6.29.5"
-    "@mysten/bcs": "npm:^2.0.2"
+    "@mysten/bcs": "npm:2.0.3"
     "@mysten/ledgerjs-hw-app-sui": "npm:^0.4.2"
-    "@mysten/sui": "npm:^2.4.0"
+    "@mysten/sui": "npm:2.4.0"
+    "@protobuf-ts/grpc-transport": "npm:^2.11.1"
+    "@protobuf-ts/runtime-rpc": "npm:^2.11.1"
     "@redstone-finance/chain-agnostic-oracle-tests": "workspace:*"
     "@redstone-finance/chain-configs": "workspace:*"
     "@redstone-finance/multichain-kit": "workspace:*"
@@ -29284,23 +29329,23 @@ __metadata:
   languageName: node
   linkType: hard
 
-"protobufjs@npm:^7.0.0, protobufjs@npm:^7.4.0":
-  version: 7.5.2
-  resolution: "protobufjs@npm:7.5.2"
+"protobufjs@npm:^7.0.0, protobufjs@npm:^7.4.0, protobufjs@npm:^7.5.3":
+  version: 7.5.6
+  resolution: "protobufjs@npm:7.5.6"
   dependencies:
     "@protobufjs/aspromise": "npm:^1.1.2"
     "@protobufjs/base64": "npm:^1.1.2"
-    "@protobufjs/codegen": "npm:^2.0.4"
+    "@protobufjs/codegen": "npm:^2.0.5"
     "@protobufjs/eventemitter": "npm:^1.1.0"
     "@protobufjs/fetch": "npm:^1.1.0"
     "@protobufjs/float": "npm:^1.0.2"
-    "@protobufjs/inquire": "npm:^1.1.0"
+    "@protobufjs/inquire": "npm:^1.1.1"
     "@protobufjs/path": "npm:^1.1.2"
     "@protobufjs/pool": "npm:^1.1.0"
-    "@protobufjs/utf8": "npm:^1.1.0"
+    "@protobufjs/utf8": "npm:^1.1.1"
     "@types/node": "npm:>=13.7.0"
     long: "npm:^5.0.0"
-  checksum: 10c0/c4ac6298280dfe6116e7a1b722310de807037b1abed816db2af2a595ddc9dc6160447eebd4ad8e2968d41f0f85375f62e893adfe760af1a943d195931c7bb875
+  checksum: 10c0/220df6c3cf6d2346748639a9b0b688fecc994bff9fee7018a93167e8cd45ab0ee3b4270d9eaa6be33a11adb46514ef9dce7e8217fd578c36726a9e70b96327cd
   languageName: node
   linkType: hard
 

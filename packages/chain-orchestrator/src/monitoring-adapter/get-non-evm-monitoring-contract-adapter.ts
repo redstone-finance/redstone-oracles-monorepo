@@ -18,7 +18,7 @@ import {
 } from "@redstone-finance/stellar-connector";
 import {
   makeSuiConfig,
-  SuiClientBuilders,
+  SuiClientBuilder,
   SuiContractAdapter,
 } from "@redstone-finance/sui-connector";
 import { deconstructNetworkId, RedstoneCommon } from "@redstone-finance/utils";
@@ -87,7 +87,7 @@ function getSuiContractAdapter(rpcUrls: string[], relayerManifest: AnyOnChainRel
     throw new Error("adapterContractPackageId is required");
   }
 
-  const suiClient = SuiClientBuilders.legacyClientBuilder()
+  const suiClient = new SuiClientBuilder()
     .withNetworkId(relayerManifest.chain.id)
     .withRpcUrls(rpcUrls)
     .build();

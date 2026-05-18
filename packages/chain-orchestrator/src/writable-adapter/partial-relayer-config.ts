@@ -13,6 +13,5 @@ export type PartialRelayerConfig = {
   gasMultiplier?: number;
   maxTxSendAttempts?: number;
   expectedTxDeliveryTimeInMS?: number;
-  graphQLUrls?: string[];
   fallbackOffsetInMilliseconds?: number;
 };

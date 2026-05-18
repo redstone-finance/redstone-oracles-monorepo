@@ -90,7 +90,7 @@ export class CuratedRpcList {
     this.freeFromQuarantineTimer ??= setInterval(
       () => this.freeOneRpcFromQuarantine(),
       this.config.resetQuarantineInterval
-    );
+    ).unref();
   }
 
   private updateEvaluationTimer() {
@@ -103,7 +103,7 @@ export class CuratedRpcList {
 
     this.evaluationTimer ??= setInterval(() => {
       this.config.rpcIdentifiers.map((rpc) => this.evaluateRpcScore(rpc));
-    }, this.config.evaluationInterval);
+    }, this.config.evaluationInterval).unref();
   }
 
   scoreRpc(rpc: RpcIdentifier, score: ScoreReport): void {

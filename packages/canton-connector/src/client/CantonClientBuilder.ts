@@ -48,8 +48,12 @@ export class CantonClientBuilder extends MultiExecutor.ClientBuilder<CantonClien
     return this;
   }
 
+  private splitUrls(urls = this.urls) {
+    return RedstoneCommon.splitUrls(urls, (urlString) => CantonApi.parseUrl(urlString));
+  }
+
   protected override getEligibleUrls() {
-    return CantonApi.splitUrls(this.urls)[API_TYPE_JSON]?.map((api) => api.urlString) ?? [];
+    return this.splitUrls()[API_TYPE_JSON]?.map((api) => api.urlString) ?? [];
   }
 
   build() {
@@ -59,7 +63,7 @@ export class CantonClientBuilder extends MultiExecutor.ClientBuilder<CantonClien
       throw new Error("chainId is required");
     }
 
-    const apis = CantonApi.splitUrls(this.urls);
+    const apis = this.splitUrls();
     const jsonApis = apis[API_TYPE_JSON];
 
     if (!jsonApis?.length) {
@@ -108,7 +112,7 @@ export class CantonClientBuilder extends MultiExecutor.ClientBuilder<CantonClien
   }
 
   buildValidatorClient() {
-    const apis = CantonApi.splitUrls(this.urls)[API_TYPE_VALIDATOR];
+    const apis = this.splitUrls()[API_TYPE_VALIDATOR];
     const validatorApi = apis?.at(0);
 
     if (!validatorApi?.clientId) {

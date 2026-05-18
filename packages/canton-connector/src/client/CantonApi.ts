@@ -1,24 +1,22 @@
-import { loggerFactory } from "@redstone-finance/utils";
-import _ from "lodash";
-
-export type ApiType =
-  | typeof API_TYPE_JSON
-  | typeof API_TYPE_VALIDATOR
-  | typeof API_TYPE_SCAN
-  | typeof API_TYPE_SCAN_PROXY;
+import { loggerFactory, RedstoneCommon } from "@redstone-finance/utils";
 
 export const API_TYPE_JSON = "json-api";
 export const API_TYPE_SCAN = "scan-api";
 export const API_TYPE_SCAN_PROXY = "scan-api-proxy";
 export const API_TYPE_VALIDATOR = "validator-api";
 
+const CANTON_API_TYPES = [
+  API_TYPE_JSON,
+  API_TYPE_SCAN,
+  API_TYPE_SCAN_PROXY,
+  API_TYPE_VALIDATOR,
+] as const;
+export type ApiType = (typeof CANTON_API_TYPES)[number];
+
 export type TokenProvider = () => Promise<string>;
 
-export interface CantonApiSetup {
-  baseUrl: string;
-  type: string;
+export interface CantonApiSetup extends RedstoneCommon.ApiSetup<ApiType> {
   clientId?: string;
-  urlString: string;
 }
 
 export class CantonApi {
@@ -29,20 +27,10 @@ export class CantonApi {
     readonly tokenProvider?: TokenProvider
   ) {}
 
-  static splitUrls(urlStrings: string[]) {
-    const parsedUrls = urlStrings.map(CantonApi.parseUrl);
-
-    return _.groupBy(parsedUrls, "type") as Partial<Record<ApiType, CantonApiSetup[]>>;
-  }
-
   static parseUrl(urlString: string): CantonApiSetup {
-    const url = new URL(urlString);
-    const params = new URLSearchParams(url.hash.slice(1)); // removing '#'
-    const type = (params.get("type") ?? API_TYPE_JSON) as ApiType;
-    const clientId = params.get("clientId") ?? undefined;
-    const baseUrl = url.origin + url.pathname;
+    const setup = RedstoneCommon.parseUrl(urlString, API_TYPE_JSON, CANTON_API_TYPES);
 
-    return { baseUrl, type, clientId, urlString };
+    return { ...setup, clientId: setup.params.get("clientId") ?? undefined };
   }
 
   protected async logPerf<T>(fn: () => Promise<T>, label: string): Promise<T> {

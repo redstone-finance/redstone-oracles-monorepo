@@ -1,8 +1,8 @@
 import { bcs } from "@mysten/bcs";
 import { Transaction } from "@mysten/sui/transactions";
-import { SuiConfig } from "./config";
+import { SuiConfig } from "../config";
+import { serialize, serializeAddresses, serializeSigners } from "../util";
 import { PriceAdapterConfig } from "./PriceAdapterConfig";
-import { serialize, serializeAddresses, serializeSigners } from "./util";
 
 export class SuiAdapterContractOps {
   static initialize(

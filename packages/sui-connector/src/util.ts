@@ -1,7 +1,6 @@
 import { bcs, BcsType } from "@mysten/bcs";
 import type { Keypair } from "@mysten/sui/cryptography";
 import { SuiGraphQLClient } from "@mysten/sui/graphql";
-import { SuiGrpcClient } from "@mysten/sui/grpc";
 import { getJsonRpcFullnodeUrl, SuiJsonRpcClient } from "@mysten/sui/jsonRpc";
 import { Secp256k1Keypair } from "@mysten/sui/keypairs/secp256k1";
 import { RedstoneCommon } from "@redstone-finance/utils";
@@ -10,10 +9,11 @@ import { arrayify, isHexString } from "ethers/lib/utils";
 import fs from "fs";
 import path from "path";
 import { z } from "zod";
+import { makeSuiGrpcClient } from "./client/make-sui-grpc-client";
 import { makeSuiConfig, SuiNetworkName } from "./config";
 import { getSuiNetworkName } from "./network-ids";
 
-export const GRAPHQL_URLS = {
+export const GRAPHQL_URL = {
   mainnet: "https://graphql.mainnet.sui.io/graphql",
   testnet: "https://graphql.testnet.sui.io/graphql",
   devnet: "https://graphql.devnet.sui.io/graphql",
@@ -61,7 +61,7 @@ export function makeSuiKeypair(privateKey?: string): Keypair {
   );
 }
 
-export function makeSuiClient(network: SuiNetworkName | number, url?: string) {
+export function makeSuiClient(network: SuiNetworkName | number, url?: string, token?: string) {
   let networkName;
   if (typeof network === "number") {
     networkName = getSuiNetworkName(network);
@@ -69,10 +69,7 @@ export function makeSuiClient(network: SuiNetworkName | number, url?: string) {
     networkName = network;
   }
 
-  return new SuiGrpcClient({
-    baseUrl: url ?? getJsonRpcFullnodeUrl(networkName),
-    network: networkName,
-  });
+  return makeSuiGrpcClient(networkName, url ?? getJsonRpcFullnodeUrl(networkName), token);
 }
 
 export function makeSuiJsonRpcClient(network: SuiNetworkName | number, url?: string) {
@@ -98,7 +95,7 @@ export function makeSuiGraphQLClient(network: SuiNetworkName | number, url?: str
   }
 
   return new SuiGraphQLClient({
-    url: url ?? GRAPHQL_URLS[networkName],
+    url: url ?? GRAPHQL_URL[networkName],
     network: networkName,
   });
 }
