@@ -1,6 +1,6 @@
 import { readFromContractAdapter } from "@redstone-finance/multichain-kit";
-import { Address } from "@stellar/stellar-sdk";
-import { Sep40StellarContractAdapter, StellarClientBuilder } from "../src";
+import { Address, Contract } from "@stellar/stellar-sdk";
+import { Sep40ContractReader, Sep40StellarContractAdapter, StellarClientBuilder } from "../src";
 import { STELLAR_ASSET } from "../src/sep-40-types";
 import { STELLAR_ASSETS } from "./consts";
 import { loadSep40Id, readNetwork, readUrl } from "./utils";
@@ -27,9 +27,9 @@ async function main() {
 
   const sep40Id = loadSep40Id();
   const priceAdapter = new Sep40StellarContractAdapter(client, sep40Id);
+  const adapter = new Sep40ContractReader(client, new Contract(sep40Id));
 
   await readFromContractAdapter(priceAdapter, BASE_FEEDS);
-  const adapter = priceAdapter.reader;
 
   console.log(`\nSEP-40 contract: ${sep40Id}\n`);
 
