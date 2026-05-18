@@ -47,6 +47,8 @@ const NatsConfig = z.object({
   type: z.enum(["nats"]),
   host: z.string(),
   connectionTimeoutMs: z.number().optional(),
+  reconnectBaseDelayMs: z.number().optional(),
+  reconnectMaxDelayMs: z.number().optional(),
   nkeySeedEnvPath: z
     .string()
     .optional()

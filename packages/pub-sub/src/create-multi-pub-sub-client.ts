@@ -52,6 +52,8 @@ export function resolvePubSubClient(config: z.infer<typeof MultiPubSubEnvConfig>
       return new NatsClient({
         host: config.host,
         connectionTimeoutMs: config.connectionTimeoutMs,
+        reconnectBaseDelayMs: config.reconnectBaseDelayMs,
+        reconnectMaxDelayMs: config.reconnectMaxDelayMs,
         nkeySeed: config.nkeySeedEnvPath
           ? RedstoneCommon.getFromEnv(config.nkeySeedEnvPath)
           : undefined,
