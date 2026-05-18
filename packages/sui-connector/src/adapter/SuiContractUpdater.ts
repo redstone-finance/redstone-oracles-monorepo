@@ -1,19 +1,18 @@
+import type { SuiClientTypes } from "@mysten/sui/client";
 import type { Keypair } from "@mysten/sui/cryptography";
 import { ParallelTransactionExecutor, Transaction } from "@mysten/sui/transactions";
 import { MIST_PER_SUI } from "@mysten/sui/utils";
 import { ContractUpdateContext, ContractUpdater } from "@redstone-finance/multichain-kit";
 import { ContractParamsProvider } from "@redstone-finance/sdk";
 import { FP, loggerFactory, RedstoneCommon } from "@redstone-finance/utils";
-import { SuiConfig } from "./config";
-import { SuiCoinProvider } from "./SuiCoinProvider";
+import { SuiClient } from "../client/SuiClient";
+import { SuiConfig } from "../config";
+import { SuiCoinProvider } from "../SuiCoinProvider";
 import { SuiPricesContractWriter } from "./SuiPricesContractWriter";
 
 const MAX_PARALLEL_TRANSACTION_COUNT = 5;
 const SPLIT_COIN_INITIAL_BALANCE_MULTIPLIER = 2n;
 const SPLIT_COIN_TX_COST = MIST_PER_SUI / 100n;
-
-import type { SuiClientTypes } from "@mysten/sui/client";
-import { SuiClient } from "./SuiClient";
 
 type ExecutedTransaction = NonNullable<
   SuiClientTypes.TransactionResult<{ effects: true; events: true }>["Transaction"]
@@ -110,7 +109,7 @@ export class SuiContractUpdater implements ContractUpdater {
     const sourceCoins = await this.coinProvider.getSourceCoins(minimumBalance, this.keypair);
 
     const executor = new ParallelTransactionExecutor({
-      client: this.client.clientForParallelExecutor(),
+      client: this.client.clientWithCoreApi,
       signer: this.keypair,
       initialCoinBalance,
       minimumCoinBalance: this.config.writePricesTxGasBudget,

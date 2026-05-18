@@ -19,8 +19,8 @@ import {
   SuiConfig,
   SuiWriteContractAdapter,
 } from "../../src";
-import { GrpcSuiClient } from "../../src/GrpcSuiClient";
-import { SuiContractDeployer } from "../../src/SuiContractDeployer";
+import { SuiContractDeployer } from "../../src/adapter/SuiContractDeployer";
+import { GrpcSuiClient } from "../../src/client/GrpcSuiClient";
 
 export class SuiTestEnvironment implements PushTestEnvironment, PullTestEnvironment {
   private readonly adapter: SuiWriteContractAdapter;

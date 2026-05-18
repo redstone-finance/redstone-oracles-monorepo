@@ -27,7 +27,10 @@ export function readPartySuffix() {
 }
 
 export function readRpcUrls() {
-  return RedstoneCommon.getFromEnv("RPC_URLS", z.array(z.url()).default([readApiUrl()]));
+  return RedstoneCommon.getFromEnv(
+    "RPC_URLS",
+    z.array(RedstoneCommon.urlOrHostSchema).default([readApiUrl()])
+  );
 }
 
 export function makePartyId(partyName: string) {
