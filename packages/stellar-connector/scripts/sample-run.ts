@@ -11,8 +11,6 @@ import { FEEDS } from "./consts";
 import { getRpcUrls } from "./get-rpc-urls";
 import { loadAdapterId, loadPriceFeedId, readNetwork } from "./utils";
 
-const WITH_TTL_EXTENDING = false as boolean;
-
 async function main() {
   const keypair = makeKeypair();
   const adapterId = loadAdapterId();
@@ -31,15 +29,6 @@ async function main() {
     uniqueSignersCount: 3,
     authorizedSigners: getSignersForDataServiceId("redstone-primary-prod"),
   });
-
-  if (WITH_TTL_EXTENDING) {
-    await adapter.writePricesFromPayloadToContract(paramsProvider, {
-      allFeedIds: FEEDS,
-      feedAddresses: Object.fromEntries(FEEDS.map((feedId) => [feedId, loadPriceFeedId(feedId)])),
-    });
-
-    return;
-  }
 
   const ethPriceFeedConnector = new PriceFeedStellarContractAdapter(client, loadPriceFeedId());
   const service = new StellarBlockchainService(client);

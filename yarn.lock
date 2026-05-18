@@ -9583,6 +9583,20 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@redstone-finance/lambda-stellar-ttl-extender@workspace:packages/lambda/lambda-stellar-ttl-extender":
+  version: 0.0.0-use.local
+  resolution: "@redstone-finance/lambda-stellar-ttl-extender@workspace:packages/lambda/lambda-stellar-ttl-extender"
+  dependencies:
+    "@redstone-finance/chain-configs": "workspace:*"
+    "@redstone-finance/internal-utils": "workspace:*"
+    "@redstone-finance/monitoring-manifests": "workspace:*"
+    "@redstone-finance/on-chain-relayer-common": "workspace:*"
+    "@redstone-finance/stellar-connector": "workspace:*"
+    "@redstone-finance/utils": "workspace:*"
+    dotenv: "npm:^16.0.3"
+  languageName: unknown
+  linkType: soft
+
 "@redstone-finance/lambda-token-info@workspace:packages/lambda/lambda-token-info":
   version: 0.0.0-use.local
   resolution: "@redstone-finance/lambda-token-info@workspace:packages/lambda/lambda-token-info"

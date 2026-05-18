@@ -78,7 +78,6 @@ export const runIteration = async (
     await contractFacade.updatePrices(iterationArgs.args, {
       canOmitFallbackAfterFailing: !iterationArgs.shouldUpdatePrices,
       allFeedIds: relayerConfig.dataFeeds,
-      feedAddresses: relayerConfig.dataFeedAddresses,
     });
   }
 

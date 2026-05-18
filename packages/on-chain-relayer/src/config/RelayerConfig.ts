@@ -20,7 +20,6 @@ export type ManifestConfig = {
   adapterContractAddress: string;
   dataServiceId: string;
   dataFeeds: string[];
-  dataFeedAddresses: Record<string, string>;
   dataPackagesNames?: string[];
   updateTriggers: Record<string, UpdateTriggers>;
   updateConditions: Record<string, ConditionCheckNames[]>;
