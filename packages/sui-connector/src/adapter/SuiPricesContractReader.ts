@@ -1,6 +1,6 @@
 import { ContractData, ContractParamsProvider } from "@redstone-finance/sdk";
 import { MultiExecutor, RedstoneCommon } from "@redstone-finance/utils";
-import { SuiClient } from "./SuiClient";
+import { SuiClient } from "../client/SuiClient";
 import { SuiReader } from "./SuiReader";
 import { PriceAdapterDataContent, PriceAdapterDataJsonContent, PriceDataBcs } from "./types";
 

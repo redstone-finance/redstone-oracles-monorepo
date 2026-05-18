@@ -1,7 +1,7 @@
 import { DataServiceIds, getSignersForDataServiceId } from "@redstone-finance/sdk";
 import { RedstoneCommon } from "@redstone-finance/utils";
-import { PriceAdapterConfig } from "./PriceAdapterConfig";
-import { DEFAULT_GAS_BUDGET } from "./SuiContractUtil";
+import { PriceAdapterConfig } from "./adapter/PriceAdapterConfig";
+import { DEFAULT_GAS_BUDGET } from "./adapter/SuiContractUtil";
 import { SuiNetworkName } from "./config";
 
 const DEFAULT_INTERVAL = RedstoneCommon.hourToMs(48);

@@ -3,7 +3,7 @@ import { Transaction } from "@mysten/sui/transactions";
 import { MIST_PER_SUI } from "@mysten/sui/utils";
 import { loggerFactory } from "@redstone-finance/utils";
 import Decimal from "decimal.js";
-import { SuiClient } from "./SuiClient";
+import { SuiClient } from "../client/SuiClient";
 
 export const DEFAULT_GAS_BUDGET = MIST_PER_SUI / 10n; // 0.1 SUI
 

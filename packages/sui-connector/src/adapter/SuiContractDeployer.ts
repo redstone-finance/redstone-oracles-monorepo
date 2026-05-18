@@ -2,11 +2,11 @@ import { Keypair } from "@mysten/sui/cryptography";
 import { Transaction } from "@mysten/sui/transactions";
 import { MIST_PER_SUI } from "@mysten/sui/utils";
 import { RedstoneCommon } from "@redstone-finance/utils";
-import { SuiNetworkName } from "./config";
+import { SuiClient } from "../client/SuiClient";
+import { SuiNetworkName } from "../config";
+import { buildPackage } from "../util";
 import { SuiAdapterContractOps } from "./SuiAdapterContractOps";
-import { SuiClient } from "./SuiClient";
 import { DEFAULT_GAS_BUDGET } from "./SuiContractUtil";
-import { buildPackage } from "./util";
 
 export class SuiContractDeployer {
   constructor(

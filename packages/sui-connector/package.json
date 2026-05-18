@@ -31,8 +31,11 @@
     "get-code-hashes": "yarn global:ts-node scripts/get-code-hashes.ts"
   },
   "dependencies": {
-    "@mysten/bcs": "^2.0.2",
-    "@mysten/sui": "^2.4.0",
+    "@grpc/grpc-js": "^1.14.3",
+    "@mysten/bcs": "2.0.3",
+    "@mysten/sui": "2.4.0",
+    "@protobuf-ts/grpc-transport": "^2.11.1",
+    "@protobuf-ts/runtime-rpc": "^2.11.1",
     "@redstone-finance/multichain-kit": "workspace:*",
     "@redstone-finance/sdk": "workspace:*",
     "@redstone-finance/utils": "workspace:*",

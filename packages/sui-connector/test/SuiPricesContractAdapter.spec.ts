@@ -7,12 +7,12 @@ import {
   makeSuiJsonRpcClient,
   makeSuiKeypair,
   readSuiConfig,
+  SuiClient,
   SuiNetworkSchema,
   SuiWriteContractAdapter,
 } from "../src";
-import { GrpcSuiClient } from "../src/GrpcSuiClient";
-import { LegacyJsonRpcClient } from "../src/LegacyClient";
-import { SuiClient } from "../src/SuiClient";
+import { GrpcSuiClient } from "../src/client/GrpcSuiClient";
+import { LegacySuiClient } from "../src/client/LegacySuiClient";
 
 const DATA_SERVICE_ID = "redstone-primary-prod";
 const WRITE_TEST_TIMEOUT = RedstoneCommon.secsToMs(40);
@@ -32,7 +32,7 @@ const makeClients: Record<string, () => SuiClient> = {
       stdio: ["inherit", "inherit", "inherit"],
     });
 
-    return new LegacyJsonRpcClient(makeSuiJsonRpcClient(network));
+    return new LegacySuiClient(makeSuiJsonRpcClient(network));
   },
 };
 
@@ -48,7 +48,7 @@ for (const [name, makeClient] of Object.entries(makeClients)) {
       const config = readSuiConfig(network);
 
       const keypair = makeSuiKeypair();
-      SuiWriteContractAdapter.contractUpdaterCache = {};
+      SuiWriteContractAdapter.contractUpdaterCache = new Map();
       adapter = new SuiWriteContractAdapter(client, keypair, config);
     }, WRITE_TEST_TIMEOUT);
 
