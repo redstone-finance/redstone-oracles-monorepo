@@ -1,8 +1,8 @@
 import { SuiGraphQLClient } from "@mysten/sui/graphql";
 import { ChainTypeEnum, MultiExecutor } from "@redstone-finance/utils";
-import { SuiNetworkName } from "./config";
-import { getSuiChainId, getSuiNetworkName } from "./network-ids";
-import { makeSuiGraphQLClient } from "./util";
+import { SuiNetworkName } from "../config";
+import { getSuiChainId, getSuiNetworkName } from "../network-ids";
+import { makeSuiGraphQLClient } from "../util";
 
 export class SuiGraphQLClientBuilder extends MultiExecutor.ClientBuilder<SuiGraphQLClient> {
   protected override chainType = ChainTypeEnum.enum.sui;

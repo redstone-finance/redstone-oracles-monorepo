@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { DEFAULT_GAS_BUDGET } from "./SuiContractUtil";
+import { DEFAULT_GAS_BUDGET } from "./adapter/SuiContractUtil";
 
 const DEFAULT_GAS_MULTIPLIER = 1.4;
 const DEFAULT_MAX_TX_SEND_ATTEMPTS = 8;

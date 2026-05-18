@@ -20,7 +20,7 @@ export const MULTICALL = "stellar_router_v0";
 const OUTPUT_DIR = readDeployDir();
 
 export function readUrl() {
-  return RedstoneCommon.getFromEnv("RPC_URL", z.url());
+  return RedstoneCommon.getFromEnv("RPC_URL", RedstoneCommon.urlOrHostSchema);
 }
 
 export function readNetwork(): StellarNetwork {

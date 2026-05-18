@@ -8,8 +8,8 @@ import {
 import { ContractData, ContractParamsProvider, getLastRoundDetails } from "@redstone-finance/sdk";
 import { FP, loggerFactory, RedstoneCommon } from "@redstone-finance/utils";
 import _ from "lodash";
-import { SuiConfig } from "./config";
-import { SuiClient } from "./SuiClient";
+import { SuiClient } from "../client/SuiClient";
+import { SuiConfig } from "../config";
 import { SuiContractUpdater } from "./SuiContractUpdater";
 import { SuiPricesContractReader } from "./SuiPricesContractReader";
 
@@ -81,7 +81,7 @@ export class SuiContractAdapter implements ContractAdapter {
 }
 
 export class SuiWriteContractAdapter extends SuiContractAdapter implements WriteContractAdapter {
-  static contractUpdaterCache: { [p: string]: SuiContractUpdater | undefined } = {};
+  static contractUpdaterCache = new Map<string, SuiContractUpdater>();
 
   private readonly txDeliveryMan: TxDeliveryMan;
   private readonly contractUpdater: SuiContractUpdater;
@@ -124,12 +124,13 @@ export class SuiWriteContractAdapter extends SuiContractAdapter implements Write
 
   static getContractUpdater(keypair: Keypair, client: SuiClient, config: SuiConfig) {
     const cacheKey = keypair.toSuiAddress();
-    SuiWriteContractAdapter.contractUpdaterCache[cacheKey] ??= new SuiContractUpdater(
-      client,
-      keypair,
-      config
-    );
+    const cache = SuiWriteContractAdapter.contractUpdaterCache;
+    let updater = cache.get(cacheKey);
+    if (!updater) {
+      updater = new SuiContractUpdater(client, keypair, config);
+      cache.set(cacheKey, updater);
+    }
 
-    return SuiWriteContractAdapter.contractUpdaterCache[cacheKey];
+    return updater;
   }
 }

@@ -1,4 +1,4 @@
-import type { SuiClient } from "./SuiClient";
+import type { SuiClient } from "../client/SuiClient";
 
 const LIMIT = 50;
 

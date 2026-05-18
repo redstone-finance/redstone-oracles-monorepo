@@ -4,10 +4,10 @@ import z from "zod";
 import { getStellarChainId, StellarNetwork } from "../src";
 
 export async function getRpcUrls(network: StellarNetwork) {
-  const rpcUrl = RedstoneCommon.getFromEnv("RPC_URL", z.url().optional());
+  const rpcUrl = RedstoneCommon.getFromEnv("RPC_URL", RedstoneCommon.urlOrHostSchema.optional());
   const rpcUrls = rpcUrl
     ? [rpcUrl]
-    : RedstoneCommon.getFromEnv("RPC_URLS", z.array(z.url()).optional());
+    : RedstoneCommon.getFromEnv("RPC_URLS", z.array(RedstoneCommon.urlOrHostSchema).optional());
 
   return (
     rpcUrls ??
