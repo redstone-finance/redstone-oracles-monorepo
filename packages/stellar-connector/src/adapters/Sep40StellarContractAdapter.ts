@@ -6,7 +6,7 @@ import { Sep40ContractReader } from "./Sep40ContractReader";
 import { StellarContractAdapter } from "./StellarContractAdapter";
 
 export class Sep40StellarContractAdapter extends StellarContractAdapter {
-  readonly reader: Sep40ContractReader;
+  private readonly reader: Sep40ContractReader;
 
   constructor(client: StellarClient, contract: string) {
     super(client, contract);

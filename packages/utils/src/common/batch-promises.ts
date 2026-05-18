@@ -62,6 +62,24 @@ export function splitSettlements<T>(batchResults: PromiseSettledResult<T>[]) {
   return { results, errors };
 }
 
+export async function runWithPartialFailure<T>(
+  items: T[],
+  fn: (item: T) => Promise<void>,
+  onError: (error: unknown) => void,
+  allFailedMessage: string
+) {
+  const settled = await Promise.allSettled(items.map(fn));
+  const { errors } = splitSettlements(settled);
+
+  if (items.length > 0 && errors.length === items.length) {
+    throw new AggregateError(errors, allFailedMessage);
+  }
+
+  for (const error of errors) {
+    onError(error);
+  }
+}
+
 export function splitSettlementsAndAssert<T>(
   batchResults: PromiseSettledResult<T>[],
   failOnError = false
