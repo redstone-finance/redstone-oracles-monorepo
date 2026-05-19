@@ -692,6 +692,17 @@
       "evmAddress": "0x84cad9c5Abd4D18081262446eb2c3eC58568ae8F",
       "ecdsaPublicKey": "0x042f04d71e77b9d3e1fea48b886fe739f8531744ce7680a08abd20234aae6e54fc89fdb7c2e0a7ed1910377ec6067c03207cdfe460973cef7360a8ab254b613356",
       "dateAdded": "2025-10-16"
+    },
+    "0x7D3414935540cea461ca67aE44fC719Cb7E84BB1": {
+      "url": "https://redstone.finance",
+      "logo": "https://redstone.finance/assets/img/redstone-logo-full.svg",
+      "name": "redstone-subsecond",
+      "ipAddress": "0.0.0.0",
+      "dataServiceId": "primary-demo",
+      "description": "RedStone subsecond node",
+      "evmAddress": "0x7D3414935540cea461ca67aE44fC719Cb7E84BB1",
+      "ecdsaPublicKey": "0x04dce3231d6342ed3f75bf628b4d0ec6709795c60b0095050682cd14064a742e09b3535f838e2b242dbc2e441db570ce882e07d924f218e4e1e6d23f3ccfdd49aa",
+      "dateAdded": "2026-05-19"
     }
   },
   "evolve": null,
