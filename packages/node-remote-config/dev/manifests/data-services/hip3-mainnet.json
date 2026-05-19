@@ -2580,11 +2580,6 @@
       "source": [
         "ws-hyperliquid-perps-flx"
       ],
-      "customWeightsForWeightedMedian": {
-        "ws-hyperliquid-perps-flx": 10,
-        "ws-hydromancer-perps-flx": 1
-      },
-      "priceAggregator": "constantWeightMedian",
       "broadcasters": [
         "influx"
       ],
@@ -2598,11 +2593,6 @@
       "source": [
         "ws-hyperliquid-perps-flx"
       ],
-      "customWeightsForWeightedMedian": {
-        "ws-hyperliquid-perps-flx": 10,
-        "ws-hydromancer-perps-flx": 1
-      },
-      "priceAggregator": "constantWeightMedian",
       "broadcasters": [
         "influx"
       ],
@@ -2616,11 +2606,6 @@
       "source": [
         "ws-hyperliquid-perps-flx"
       ],
-      "customWeightsForWeightedMedian": {
-        "ws-hyperliquid-perps-flx": 10,
-        "ws-hydromancer-perps-flx": 1
-      },
-      "priceAggregator": "constantWeightMedian",
       "broadcasters": [
         "influx"
       ],
@@ -3091,14 +3076,8 @@
     },
     "BEST_BID_hyna:BTC": {
       "source": [
-        "ws-hyperliquid-perps-hyna",
-        "ws-hydromancer-perps-hyna"
+        "ws-hyperliquid-perps-hyna"
       ],
-      "customWeightsForWeightedMedian": {
-        "ws-hyperliquid-perps-hyna": 10,
-        "ws-hydromancer-perps-hyna": 1
-      },
-      "priceAggregator": "constantWeightMedian",
       "broadcasters": [
         "influx"
       ],
@@ -3107,14 +3086,8 @@
     },
     "BEST_ASK_hyna:BTC": {
       "source": [
-        "ws-hyperliquid-perps-hyna",
-        "ws-hydromancer-perps-hyna"
+        "ws-hyperliquid-perps-hyna"
       ],
-      "customWeightsForWeightedMedian": {
-        "ws-hyperliquid-perps-hyna": 10,
-        "ws-hydromancer-perps-hyna": 1
-      },
-      "priceAggregator": "constantWeightMedian",
       "broadcasters": [
         "influx"
       ],
@@ -3125,11 +3098,6 @@
       "source": [
         "ws-hyperliquid-perps-hyna"
       ],
-      "customWeightsForWeightedMedian": {
-        "ws-hyperliquid-perps-hyna": 10,
-        "ws-hydromancer-perps-hyna": 1
-      },
-      "priceAggregator": "constantWeightMedian",
       "broadcasters": [
         "influx"
       ],
@@ -3316,14 +3284,8 @@
     },
     "BEST_BID_hyna:ETH": {
       "source": [
-        "ws-hyperliquid-perps-hyna",
-        "ws-hydromancer-perps-hyna"
+        "ws-hyperliquid-perps-hyna"
       ],
-      "customWeightsForWeightedMedian": {
-        "ws-hyperliquid-perps-hyna": 10,
-        "ws-hydromancer-perps-hyna": 1
-      },
-      "priceAggregator": "constantWeightMedian",
       "broadcasters": [
         "influx"
       ],
@@ -3332,14 +3294,8 @@
     },
     "BEST_ASK_hyna:ETH": {
       "source": [
-        "ws-hyperliquid-perps-hyna",
-        "ws-hydromancer-perps-hyna"
+        "ws-hyperliquid-perps-hyna"
       ],
-      "customWeightsForWeightedMedian": {
-        "ws-hyperliquid-perps-hyna": 10,
-        "ws-hydromancer-perps-hyna": 1
-      },
-      "priceAggregator": "constantWeightMedian",
       "broadcasters": [
         "influx"
       ],
@@ -3350,11 +3306,6 @@
       "source": [
         "ws-hyperliquid-perps-hyna"
       ],
-      "customWeightsForWeightedMedian": {
-        "ws-hyperliquid-perps-hyna": 10,
-        "ws-hydromancer-perps-hyna": 1
-      },
-      "priceAggregator": "constantWeightMedian",
       "broadcasters": [
         "influx"
       ],
@@ -3541,14 +3492,8 @@
     },
     "BEST_BID_hyna:BNB": {
       "source": [
-        "ws-hyperliquid-perps-hyna",
-        "ws-hydromancer-perps-hyna"
+        "ws-hyperliquid-perps-hyna"
       ],
-      "customWeightsForWeightedMedian": {
-        "ws-hyperliquid-perps-hyna": 10,
-        "ws-hydromancer-perps-hyna": 1
-      },
-      "priceAggregator": "constantWeightMedian",
       "broadcasters": [
         "influx"
       ],
@@ -3557,14 +3502,8 @@
     },
     "BEST_ASK_hyna:BNB": {
       "source": [
-        "ws-hyperliquid-perps-hyna",
-        "ws-hydromancer-perps-hyna"
+        "ws-hyperliquid-perps-hyna"
       ],
-      "customWeightsForWeightedMedian": {
-        "ws-hyperliquid-perps-hyna": 10,
-        "ws-hydromancer-perps-hyna": 1
-      },
-      "priceAggregator": "constantWeightMedian",
       "broadcasters": [
         "influx"
       ],
@@ -3575,11 +3514,6 @@
       "source": [
         "ws-hyperliquid-perps-hyna"
       ],
-      "customWeightsForWeightedMedian": {
-        "ws-hyperliquid-perps-hyna": 10,
-        "ws-hydromancer-perps-hyna": 1
-      },
-      "priceAggregator": "constantWeightMedian",
       "broadcasters": [
         "influx"
       ],
@@ -3766,14 +3700,8 @@
     },
     "BEST_BID_hyna:HYPE": {
       "source": [
-        "ws-hyperliquid-perps-hyna",
-        "ws-hydromancer-perps-hyna"
+        "ws-hyperliquid-perps-hyna"
       ],
-      "customWeightsForWeightedMedian": {
-        "ws-hyperliquid-perps-hyna": 10,
-        "ws-hydromancer-perps-hyna": 1
-      },
-      "priceAggregator": "constantWeightMedian",
       "broadcasters": [
         "influx"
       ],
@@ -3782,14 +3710,8 @@
     },
     "BEST_ASK_hyna:HYPE": {
       "source": [
-        "ws-hyperliquid-perps-hyna",
-        "ws-hydromancer-perps-hyna"
+        "ws-hyperliquid-perps-hyna"
       ],
-      "customWeightsForWeightedMedian": {
-        "ws-hyperliquid-perps-hyna": 10,
-        "ws-hydromancer-perps-hyna": 1
-      },
-      "priceAggregator": "constantWeightMedian",
       "broadcasters": [
         "influx"
       ],
@@ -3800,11 +3722,6 @@
       "source": [
         "ws-hyperliquid-perps-hyna"
       ],
-      "customWeightsForWeightedMedian": {
-        "ws-hyperliquid-perps-hyna": 10,
-        "ws-hydromancer-perps-hyna": 1
-      },
-      "priceAggregator": "constantWeightMedian",
       "broadcasters": [
         "influx"
       ],
@@ -3991,14 +3908,8 @@
     },
     "BEST_BID_hyna:SOL": {
       "source": [
-        "ws-hyperliquid-perps-hyna",
-        "ws-hydromancer-perps-hyna"
+        "ws-hyperliquid-perps-hyna"
       ],
-      "customWeightsForWeightedMedian": {
-        "ws-hyperliquid-perps-hyna": 10,
-        "ws-hydromancer-perps-hyna": 1
-      },
-      "priceAggregator": "constantWeightMedian",
       "broadcasters": [
         "influx"
       ],
@@ -4007,14 +3918,8 @@
     },
     "BEST_ASK_hyna:SOL": {
       "source": [
-        "ws-hyperliquid-perps-hyna",
-        "ws-hydromancer-perps-hyna"
+        "ws-hyperliquid-perps-hyna"
       ],
-      "customWeightsForWeightedMedian": {
-        "ws-hyperliquid-perps-hyna": 10,
-        "ws-hydromancer-perps-hyna": 1
-      },
-      "priceAggregator": "constantWeightMedian",
       "broadcasters": [
         "influx"
       ],
@@ -4025,11 +3930,6 @@
       "source": [
         "ws-hyperliquid-perps-hyna"
       ],
-      "customWeightsForWeightedMedian": {
-        "ws-hyperliquid-perps-hyna": 10,
-        "ws-hydromancer-perps-hyna": 1
-      },
-      "priceAggregator": "constantWeightMedian",
       "broadcasters": [
         "influx"
       ],
@@ -4216,14 +4116,8 @@
     },
     "BEST_BID_hyna:XRP": {
       "source": [
-        "ws-hyperliquid-perps-hyna",
-        "ws-hydromancer-perps-hyna"
+        "ws-hyperliquid-perps-hyna"
       ],
-      "customWeightsForWeightedMedian": {
-        "ws-hyperliquid-perps-hyna": 10,
-        "ws-hydromancer-perps-hyna": 1
-      },
-      "priceAggregator": "constantWeightMedian",
       "broadcasters": [
         "influx"
       ],
@@ -4232,14 +4126,8 @@
     },
     "BEST_ASK_hyna:XRP": {
       "source": [
-        "ws-hyperliquid-perps-hyna",
-        "ws-hydromancer-perps-hyna"
+        "ws-hyperliquid-perps-hyna"
       ],
-      "customWeightsForWeightedMedian": {
-        "ws-hyperliquid-perps-hyna": 10,
-        "ws-hydromancer-perps-hyna": 1
-      },
-      "priceAggregator": "constantWeightMedian",
       "broadcasters": [
         "influx"
       ],
@@ -4250,11 +4138,6 @@
       "source": [
         "ws-hyperliquid-perps-hyna"
       ],
-      "customWeightsForWeightedMedian": {
-        "ws-hyperliquid-perps-hyna": 10,
-        "ws-hydromancer-perps-hyna": 1
-      },
-      "priceAggregator": "constantWeightMedian",
       "broadcasters": [
         "influx"
       ],
@@ -4441,14 +4324,8 @@
     },
     "BEST_BID_hyna:1000PEPE": {
       "source": [
-        "ws-hyperliquid-perps-hyna",
-        "ws-hydromancer-perps-hyna"
+        "ws-hyperliquid-perps-hyna"
       ],
-      "customWeightsForWeightedMedian": {
-        "ws-hyperliquid-perps-hyna": 10,
-        "ws-hydromancer-perps-hyna": 1
-      },
-      "priceAggregator": "constantWeightMedian",
       "broadcasters": [
         "influx"
       ],
@@ -4457,14 +4334,8 @@
     },
     "BEST_ASK_hyna:1000PEPE": {
       "source": [
-        "ws-hyperliquid-perps-hyna",
-        "ws-hydromancer-perps-hyna"
+        "ws-hyperliquid-perps-hyna"
       ],
-      "customWeightsForWeightedMedian": {
-        "ws-hyperliquid-perps-hyna": 10,
-        "ws-hydromancer-perps-hyna": 1
-      },
-      "priceAggregator": "constantWeightMedian",
       "broadcasters": [
         "influx"
       ],
@@ -4475,11 +4346,6 @@
       "source": [
         "ws-hyperliquid-perps-hyna"
       ],
-      "customWeightsForWeightedMedian": {
-        "ws-hyperliquid-perps-hyna": 10,
-        "ws-hydromancer-perps-hyna": 1
-      },
-      "priceAggregator": "constantWeightMedian",
       "broadcasters": [
         "influx"
       ],
@@ -4666,14 +4532,8 @@
     },
     "BEST_BID_hyna:ZEC": {
       "source": [
-        "ws-hyperliquid-perps-hyna",
-        "ws-hydromancer-perps-hyna"
+        "ws-hyperliquid-perps-hyna"
       ],
-      "customWeightsForWeightedMedian": {
-        "ws-hyperliquid-perps-hyna": 10,
-        "ws-hydromancer-perps-hyna": 1
-      },
-      "priceAggregator": "constantWeightMedian",
       "broadcasters": [
         "influx"
       ],
@@ -4682,14 +4542,8 @@
     },
     "BEST_ASK_hyna:ZEC": {
       "source": [
-        "ws-hyperliquid-perps-hyna",
-        "ws-hydromancer-perps-hyna"
+        "ws-hyperliquid-perps-hyna"
       ],
-      "customWeightsForWeightedMedian": {
-        "ws-hyperliquid-perps-hyna": 10,
-        "ws-hydromancer-perps-hyna": 1
-      },
-      "priceAggregator": "constantWeightMedian",
       "broadcasters": [
         "influx"
       ],
@@ -4700,11 +4554,6 @@
       "source": [
         "ws-hyperliquid-perps-hyna"
       ],
-      "customWeightsForWeightedMedian": {
-        "ws-hyperliquid-perps-hyna": 10,
-        "ws-hydromancer-perps-hyna": 1
-      },
-      "priceAggregator": "constantWeightMedian",
       "broadcasters": [
         "influx"
       ],
@@ -4891,14 +4740,8 @@
     },
     "BEST_BID_hyna:FARTCOIN": {
       "source": [
-        "ws-hyperliquid-perps-hyna",
-        "ws-hydromancer-perps-hyna"
+        "ws-hyperliquid-perps-hyna"
       ],
-      "customWeightsForWeightedMedian": {
-        "ws-hyperliquid-perps-hyna": 10,
-        "ws-hydromancer-perps-hyna": 1
-      },
-      "priceAggregator": "constantWeightMedian",
       "broadcasters": [
         "influx"
       ],
@@ -4907,14 +4750,8 @@
     },
     "BEST_ASK_hyna:FARTCOIN": {
       "source": [
-        "ws-hyperliquid-perps-hyna",
-        "ws-hydromancer-perps-hyna"
+        "ws-hyperliquid-perps-hyna"
       ],
-      "customWeightsForWeightedMedian": {
-        "ws-hyperliquid-perps-hyna": 10,
-        "ws-hydromancer-perps-hyna": 1
-      },
-      "priceAggregator": "constantWeightMedian",
       "broadcasters": [
         "influx"
       ],
@@ -4925,11 +4762,6 @@
       "source": [
         "ws-hyperliquid-perps-hyna"
       ],
-      "customWeightsForWeightedMedian": {
-        "ws-hyperliquid-perps-hyna": 10,
-        "ws-hydromancer-perps-hyna": 1
-      },
-      "priceAggregator": "constantWeightMedian",
       "broadcasters": [
         "influx"
       ],
@@ -5116,14 +4948,8 @@
     },
     "BEST_BID_hyna:LINK": {
       "source": [
-        "ws-hyperliquid-perps-hyna",
-        "ws-hydromancer-perps-hyna"
+        "ws-hyperliquid-perps-hyna"
       ],
-      "customWeightsForWeightedMedian": {
-        "ws-hyperliquid-perps-hyna": 10,
-        "ws-hydromancer-perps-hyna": 1
-      },
-      "priceAggregator": "constantWeightMedian",
       "broadcasters": [
         "influx"
       ],
@@ -5132,14 +4958,8 @@
     },
     "BEST_ASK_hyna:LINK": {
       "source": [
-        "ws-hyperliquid-perps-hyna",
-        "ws-hydromancer-perps-hyna"
+        "ws-hyperliquid-perps-hyna"
       ],
-      "customWeightsForWeightedMedian": {
-        "ws-hyperliquid-perps-hyna": 10,
-        "ws-hydromancer-perps-hyna": 1
-      },
-      "priceAggregator": "constantWeightMedian",
       "broadcasters": [
         "influx"
       ],
@@ -5150,11 +4970,6 @@
       "source": [
         "ws-hyperliquid-perps-hyna"
       ],
-      "customWeightsForWeightedMedian": {
-        "ws-hyperliquid-perps-hyna": 10,
-        "ws-hydromancer-perps-hyna": 1
-      },
-      "priceAggregator": "constantWeightMedian",
       "broadcasters": [
         "influx"
       ],
@@ -5341,14 +5156,8 @@
     },
     "BEST_BID_hyna:SUI": {
       "source": [
-        "ws-hyperliquid-perps-hyna",
-        "ws-hydromancer-perps-hyna"
+        "ws-hyperliquid-perps-hyna"
       ],
-      "customWeightsForWeightedMedian": {
-        "ws-hyperliquid-perps-hyna": 10,
-        "ws-hydromancer-perps-hyna": 1
-      },
-      "priceAggregator": "constantWeightMedian",
       "broadcasters": [
         "influx"
       ],
@@ -5357,14 +5166,8 @@
     },
     "BEST_ASK_hyna:SUI": {
       "source": [
-        "ws-hyperliquid-perps-hyna",
-        "ws-hydromancer-perps-hyna"
+        "ws-hyperliquid-perps-hyna"
       ],
-      "customWeightsForWeightedMedian": {
-        "ws-hyperliquid-perps-hyna": 10,
-        "ws-hydromancer-perps-hyna": 1
-      },
-      "priceAggregator": "constantWeightMedian",
       "broadcasters": [
         "influx"
       ],
@@ -5375,11 +5178,6 @@
       "source": [
         "ws-hyperliquid-perps-hyna"
       ],
-      "customWeightsForWeightedMedian": {
-        "ws-hyperliquid-perps-hyna": 10,
-        "ws-hydromancer-perps-hyna": 1
-      },
-      "priceAggregator": "constantWeightMedian",
       "broadcasters": [
         "influx"
       ],
@@ -5565,14 +5363,8 @@
     },
     "BEST_BID_hyna:XMR": {
       "source": [
-        "ws-hyperliquid-perps-hyna",
-        "ws-hydromancer-perps-hyna"
+        "ws-hyperliquid-perps-hyna"
       ],
-      "customWeightsForWeightedMedian": {
-        "ws-hyperliquid-perps-hyna": 10,
-        "ws-hydromancer-perps-hyna": 1
-      },
-      "priceAggregator": "constantWeightMedian",
       "broadcasters": [
         "influx"
       ],
@@ -5581,14 +5373,8 @@
     },
     "BEST_ASK_hyna:XMR": {
       "source": [
-        "ws-hyperliquid-perps-hyna",
-        "ws-hydromancer-perps-hyna"
+        "ws-hyperliquid-perps-hyna"
       ],
-      "customWeightsForWeightedMedian": {
-        "ws-hyperliquid-perps-hyna": 10,
-        "ws-hydromancer-perps-hyna": 1
-      },
-      "priceAggregator": "constantWeightMedian",
       "broadcasters": [
         "influx"
       ],
@@ -5599,11 +5385,6 @@
       "source": [
         "ws-hyperliquid-perps-hyna"
       ],
-      "customWeightsForWeightedMedian": {
-        "ws-hyperliquid-perps-hyna": 10,
-        "ws-hydromancer-perps-hyna": 1
-      },
-      "priceAggregator": "constantWeightMedian",
       "broadcasters": [
         "influx"
       ],
@@ -5790,14 +5571,8 @@
     },
     "BEST_BID_hyna:DOGE": {
       "source": [
-        "ws-hyperliquid-perps-hyna",
-        "ws-hydromancer-perps-hyna"
+        "ws-hyperliquid-perps-hyna"
       ],
-      "customWeightsForWeightedMedian": {
-        "ws-hyperliquid-perps-hyna": 10,
-        "ws-hydromancer-perps-hyna": 1
-      },
-      "priceAggregator": "constantWeightMedian",
       "broadcasters": [
         "influx"
       ],
@@ -5806,14 +5581,8 @@
     },
     "BEST_ASK_hyna:DOGE": {
       "source": [
-        "ws-hyperliquid-perps-hyna",
-        "ws-hydromancer-perps-hyna"
+        "ws-hyperliquid-perps-hyna"
       ],
-      "customWeightsForWeightedMedian": {
-        "ws-hyperliquid-perps-hyna": 10,
-        "ws-hydromancer-perps-hyna": 1
-      },
-      "priceAggregator": "constantWeightMedian",
       "broadcasters": [
         "influx"
       ],
@@ -5824,11 +5593,6 @@
       "source": [
         "ws-hyperliquid-perps-hyna"
       ],
-      "customWeightsForWeightedMedian": {
-        "ws-hyperliquid-perps-hyna": 10,
-        "ws-hydromancer-perps-hyna": 1
-      },
-      "priceAggregator": "constantWeightMedian",
       "broadcasters": [
         "influx"
       ],
@@ -6015,14 +5779,8 @@
     },
     "BEST_BID_hyna:XPL": {
       "source": [
-        "ws-hyperliquid-perps-hyna",
-        "ws-hydromancer-perps-hyna"
+        "ws-hyperliquid-perps-hyna"
       ],
-      "customWeightsForWeightedMedian": {
-        "ws-hyperliquid-perps-hyna": 10,
-        "ws-hydromancer-perps-hyna": 1
-      },
-      "priceAggregator": "constantWeightMedian",
       "broadcasters": [
         "influx"
       ],
@@ -6031,14 +5789,8 @@
     },
     "BEST_ASK_hyna:XPL": {
       "source": [
-        "ws-hyperliquid-perps-hyna",
-        "ws-hydromancer-perps-hyna"
+        "ws-hyperliquid-perps-hyna"
       ],
-      "customWeightsForWeightedMedian": {
-        "ws-hyperliquid-perps-hyna": 10,
-        "ws-hydromancer-perps-hyna": 1
-      },
-      "priceAggregator": "constantWeightMedian",
       "broadcasters": [
         "influx"
       ],
@@ -6049,11 +5801,6 @@
       "source": [
         "ws-hyperliquid-perps-hyna"
       ],
-      "customWeightsForWeightedMedian": {
-        "ws-hyperliquid-perps-hyna": 10,
-        "ws-hydromancer-perps-hyna": 1
-      },
-      "priceAggregator": "constantWeightMedian",
       "broadcasters": [
         "influx"
       ],
@@ -6240,14 +5987,8 @@
     },
     "BEST_BID_hyna:IP": {
       "source": [
-        "ws-hyperliquid-perps-hyna",
-        "ws-hydromancer-perps-hyna"
+        "ws-hyperliquid-perps-hyna"
       ],
-      "customWeightsForWeightedMedian": {
-        "ws-hyperliquid-perps-hyna": 10,
-        "ws-hydromancer-perps-hyna": 1
-      },
-      "priceAggregator": "constantWeightMedian",
       "broadcasters": [
         "influx"
       ],
@@ -6256,14 +5997,8 @@
     },
     "BEST_ASK_hyna:IP": {
       "source": [
-        "ws-hyperliquid-perps-hyna",
-        "ws-hydromancer-perps-hyna"
+        "ws-hyperliquid-perps-hyna"
       ],
-      "customWeightsForWeightedMedian": {
-        "ws-hyperliquid-perps-hyna": 10,
-        "ws-hydromancer-perps-hyna": 1
-      },
-      "priceAggregator": "constantWeightMedian",
       "broadcasters": [
         "influx"
       ],
@@ -6274,11 +6009,6 @@
       "source": [
         "ws-hyperliquid-perps-hyna"
       ],
-      "customWeightsForWeightedMedian": {
-        "ws-hyperliquid-perps-hyna": 10,
-        "ws-hydromancer-perps-hyna": 1
-      },
-      "priceAggregator": "constantWeightMedian",
       "broadcasters": [
         "influx"
       ],
@@ -6465,14 +6195,8 @@
     },
     "BEST_BID_hyna:ADA": {
       "source": [
-        "ws-hyperliquid-perps-hyna",
-        "ws-hydromancer-perps-hyna"
+        "ws-hyperliquid-perps-hyna"
       ],
-      "customWeightsForWeightedMedian": {
-        "ws-hyperliquid-perps-hyna": 10,
-        "ws-hydromancer-perps-hyna": 1
-      },
-      "priceAggregator": "constantWeightMedian",
       "broadcasters": [
         "influx"
       ],
@@ -6481,14 +6205,8 @@
     },
     "BEST_ASK_hyna:ADA": {
       "source": [
-        "ws-hyperliquid-perps-hyna",
-        "ws-hydromancer-perps-hyna"
+        "ws-hyperliquid-perps-hyna"
       ],
-      "customWeightsForWeightedMedian": {
-        "ws-hyperliquid-perps-hyna": 10,
-        "ws-hydromancer-perps-hyna": 1
-      },
-      "priceAggregator": "constantWeightMedian",
       "broadcasters": [
         "influx"
       ],
@@ -6499,11 +6217,6 @@
       "source": [
         "ws-hyperliquid-perps-hyna"
       ],
-      "customWeightsForWeightedMedian": {
-        "ws-hyperliquid-perps-hyna": 10,
-        "ws-hydromancer-perps-hyna": 1
-      },
-      "priceAggregator": "constantWeightMedian",
       "broadcasters": [
         "influx"
       ],
@@ -6688,14 +6401,8 @@
     },
     "BEST_BID_hyna:PUMP": {
       "source": [
-        "ws-hyperliquid-perps-hyna",
-        "ws-hydromancer-perps-hyna"
+        "ws-hyperliquid-perps-hyna"
       ],
-      "customWeightsForWeightedMedian": {
-        "ws-hyperliquid-perps-hyna": 10,
-        "ws-hydromancer-perps-hyna": 1
-      },
-      "priceAggregator": "constantWeightMedian",
       "broadcasters": [
         "influx"
       ],
@@ -6704,14 +6411,8 @@
     },
     "BEST_ASK_hyna:PUMP": {
       "source": [
-        "ws-hyperliquid-perps-hyna",
-        "ws-hydromancer-perps-hyna"
+        "ws-hyperliquid-perps-hyna"
       ],
-      "customWeightsForWeightedMedian": {
-        "ws-hyperliquid-perps-hyna": 10,
-        "ws-hydromancer-perps-hyna": 1
-      },
-      "priceAggregator": "constantWeightMedian",
       "broadcasters": [
         "influx"
       ],
@@ -6722,11 +6423,6 @@
       "source": [
         "ws-hyperliquid-perps-hyna"
       ],
-      "customWeightsForWeightedMedian": {
-        "ws-hyperliquid-perps-hyna": 10,
-        "ws-hydromancer-perps-hyna": 1
-      },
-      "priceAggregator": "constantWeightMedian",
       "broadcasters": [
         "influx"
       ],
@@ -6913,14 +6609,8 @@
     },
     "BEST_BID_hyna:LTC": {
       "source": [
-        "ws-hyperliquid-perps-hyna",
-        "ws-hydromancer-perps-hyna"
+        "ws-hyperliquid-perps-hyna"
       ],
-      "customWeightsForWeightedMedian": {
-        "ws-hyperliquid-perps-hyna": 10,
-        "ws-hydromancer-perps-hyna": 1
-      },
-      "priceAggregator": "constantWeightMedian",
       "broadcasters": [
         "influx"
       ],
@@ -6929,14 +6619,8 @@
     },
     "BEST_ASK_hyna:LTC": {
       "source": [
-        "ws-hyperliquid-perps-hyna",
-        "ws-hydromancer-perps-hyna"
+        "ws-hyperliquid-perps-hyna"
       ],
-      "customWeightsForWeightedMedian": {
-        "ws-hyperliquid-perps-hyna": 10,
-        "ws-hydromancer-perps-hyna": 1
-      },
-      "priceAggregator": "constantWeightMedian",
       "broadcasters": [
         "influx"
       ],
@@ -6947,11 +6631,6 @@
       "source": [
         "ws-hyperliquid-perps-hyna"
       ],
-      "customWeightsForWeightedMedian": {
-        "ws-hyperliquid-perps-hyna": 10,
-        "ws-hydromancer-perps-hyna": 1
-      },
-      "priceAggregator": "constantWeightMedian",
       "broadcasters": [
         "influx"
       ],
@@ -7138,14 +6817,8 @@
     },
     "BEST_BID_hyna:BCH": {
       "source": [
-        "ws-hyperliquid-perps-hyna",
-        "ws-hydromancer-perps-hyna"
+        "ws-hyperliquid-perps-hyna"
       ],
-      "customWeightsForWeightedMedian": {
-        "ws-hyperliquid-perps-hyna": 10,
-        "ws-hydromancer-perps-hyna": 1
-      },
-      "priceAggregator": "constantWeightMedian",
       "broadcasters": [
         "influx"
       ],
@@ -7154,14 +6827,8 @@
     },
     "BEST_ASK_hyna:BCH": {
       "source": [
-        "ws-hyperliquid-perps-hyna",
-        "ws-hydromancer-perps-hyna"
+        "ws-hyperliquid-perps-hyna"
       ],
-      "customWeightsForWeightedMedian": {
-        "ws-hyperliquid-perps-hyna": 10,
-        "ws-hydromancer-perps-hyna": 1
-      },
-      "priceAggregator": "constantWeightMedian",
       "broadcasters": [
         "influx"
       ],
@@ -7172,11 +6839,6 @@
       "source": [
         "ws-hyperliquid-perps-hyna"
       ],
-      "customWeightsForWeightedMedian": {
-        "ws-hyperliquid-perps-hyna": 10,
-        "ws-hydromancer-perps-hyna": 1
-      },
-      "priceAggregator": "constantWeightMedian",
       "broadcasters": [
         "influx"
       ],
@@ -7363,14 +7025,8 @@
     },
     "BEST_BID_hyna:ENA": {
       "source": [
-        "ws-hyperliquid-perps-hyna",
-        "ws-hydromancer-perps-hyna"
+        "ws-hyperliquid-perps-hyna"
       ],
-      "customWeightsForWeightedMedian": {
-        "ws-hyperliquid-perps-hyna": 10,
-        "ws-hydromancer-perps-hyna": 1
-      },
-      "priceAggregator": "constantWeightMedian",
       "broadcasters": [
         "influx"
       ],
@@ -7379,14 +7035,8 @@
     },
     "BEST_ASK_hyna:ENA": {
       "source": [
-        "ws-hyperliquid-perps-hyna",
-        "ws-hydromancer-perps-hyna"
+        "ws-hyperliquid-perps-hyna"
       ],
-      "customWeightsForWeightedMedian": {
-        "ws-hyperliquid-perps-hyna": 10,
-        "ws-hydromancer-perps-hyna": 1
-      },
-      "priceAggregator": "constantWeightMedian",
       "broadcasters": [
         "influx"
       ],
@@ -7397,11 +7047,6 @@
       "source": [
         "ws-hyperliquid-perps-hyna"
       ],
-      "customWeightsForWeightedMedian": {
-        "ws-hyperliquid-perps-hyna": 10,
-        "ws-hydromancer-perps-hyna": 1
-      },
-      "priceAggregator": "constantWeightMedian",
       "broadcasters": [
         "influx"
       ],
@@ -7588,14 +7233,8 @@
     },
     "BEST_BID_hyna:LIGHTER": {
       "source": [
-        "ws-hyperliquid-perps-hyna",
-        "ws-hydromancer-perps-hyna"
+        "ws-hyperliquid-perps-hyna"
       ],
-      "customWeightsForWeightedMedian": {
-        "ws-hyperliquid-perps-hyna": 10,
-        "ws-hydromancer-perps-hyna": 1
-      },
-      "priceAggregator": "constantWeightMedian",
       "broadcasters": [
         "influx"
       ],
@@ -7604,14 +7243,8 @@
     },
     "BEST_ASK_hyna:LIGHTER": {
       "source": [
-        "ws-hyperliquid-perps-hyna",
-        "ws-hydromancer-perps-hyna"
+        "ws-hyperliquid-perps-hyna"
       ],
-      "customWeightsForWeightedMedian": {
-        "ws-hyperliquid-perps-hyna": 10,
-        "ws-hydromancer-perps-hyna": 1
-      },
-      "priceAggregator": "constantWeightMedian",
       "broadcasters": [
         "influx"
       ],
@@ -7622,11 +7255,6 @@
       "source": [
         "ws-hyperliquid-perps-hyna"
       ],
-      "customWeightsForWeightedMedian": {
-        "ws-hyperliquid-perps-hyna": 10,
-        "ws-hydromancer-perps-hyna": 1
-      },
-      "priceAggregator": "constantWeightMedian",
       "broadcasters": [
         "influx"
       ],
@@ -7818,14 +7446,8 @@
     },
     "BEST_BID_hyna:BASED": {
       "source": [
-        "ws-hyperliquid-perps-hyna",
-        "ws-hydromancer-perps-hyna"
+        "ws-hyperliquid-perps-hyna"
       ],
-      "customWeightsForWeightedMedian": {
-        "ws-hyperliquid-perps-hyna": 10,
-        "ws-hydromancer-perps-hyna": 1
-      },
-      "priceAggregator": "constantWeightMedian",
       "broadcasters": [
         "influx"
       ],
@@ -7834,14 +7456,8 @@
     },
     "BEST_ASK_hyna:BASED": {
       "source": [
-        "ws-hyperliquid-perps-hyna",
-        "ws-hydromancer-perps-hyna"
+        "ws-hyperliquid-perps-hyna"
       ],
-      "customWeightsForWeightedMedian": {
-        "ws-hyperliquid-perps-hyna": 10,
-        "ws-hydromancer-perps-hyna": 1
-      },
-      "priceAggregator": "constantWeightMedian",
       "broadcasters": [
         "influx"
       ],
@@ -7852,11 +7468,6 @@
       "source": [
         "ws-hyperliquid-perps-hyna"
       ],
-      "customWeightsForWeightedMedian": {
-        "ws-hyperliquid-perps-hyna": 10,
-        "ws-hydromancer-perps-hyna": 1
-      },
-      "priceAggregator": "constantWeightMedian",
       "broadcasters": [
         "influx"
       ],
