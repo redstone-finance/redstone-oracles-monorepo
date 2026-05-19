@@ -182,7 +182,8 @@
         "coinbase-btc-reversed",
         "kraken-usdt-reversed",
         "okx-btc-reversed"
-      ]
+      ],
+      "broadcasters": ["influx"]
     },
     "MEGA": {
       "source": [
@@ -202,6 +203,6 @@
     }
   },
   "multiPointPackages": {
-    "___FAST___": ["USDC", "USDT", "DAI", "BNB", "BTC", "ETH", "SOL", "MON"]
+    "___FAST___": ["USDC", "USDT", "DAI", "BNB", "BTC", "ETH", "SOL", "MON", "MEGA"]
   }
 }
