@@ -34,8 +34,8 @@ export class SuiCoinProvider {
         sourceCoins = [coin];
         this.logger.info(`Using coin ${coin} for reinitialization of the executor`);
       } else {
-        this.logger.warn(
-          `Error fetching latest coin: no coin or no coin has balance greater than: ${minimumBalance}`
+        this.logger.info(
+          `No coin with balance greater than ${minimumBalance} available for executor reinitialization`
         );
       }
     } catch (e) {

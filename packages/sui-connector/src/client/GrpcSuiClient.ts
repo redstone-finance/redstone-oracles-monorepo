@@ -8,19 +8,19 @@ import { RECEIVED_TRANSACTIONS_QUERY, ReceivedTransactionsData } from "./queries
 import { SUB_INSTANCE_MODES, SuiClient } from "./SuiClient";
 
 export class GrpcSuiClient extends SuiClient {
+  private readonly batchingClient: SuiGrpcClient;
+
   constructor(
     private readonly client: SuiGrpcClient,
     private readonly graphqlClient?: SuiGraphQLClient
   ) {
-    super();
-  }
+    super(client.core);
 
-  get core() {
-    return this.client.core;
+    this.batchingClient = this.objects.wrapClient(client);
   }
 
   get clientWithCoreApi() {
-    return MultiExecutor.createForSubInstances(this, (c: GrpcSuiClient) => c.client, {
+    return MultiExecutor.createForSubInstances(this, (c: GrpcSuiClient) => c.batchingClient, {
       ...SUB_INSTANCE_MODES,
       executeTransaction: MultiExecutor.ExecutionMode.RACE,
     });
@@ -75,7 +75,7 @@ export class GrpcSuiClient extends SuiClient {
     const data = result.data;
 
     if (!RedstoneCommon.isDefined(data) || !RedstoneCommon.isDefined(data.transactions)) {
-      return { objectIds: [], cursor: null };
+      return { objectIds: [] };
     }
 
     const objectIds = GrpcSuiClient.extractCoinObjectIds(
@@ -88,12 +88,10 @@ export class GrpcSuiClient extends SuiClient {
 
     return {
       objectIds,
-      cursor: hasNextPage ? endCursor : null,
+      cursor: hasNextPage ? (endCursor ?? undefined) : undefined,
     };
   }
 
-  // suiangria sandbox `core` doesn't implement `signAndExecuteTransaction` (only `executeTransaction`);
-  // the top-level `client.signAndExecuteTransaction` works in both sandbox and real gRPC, so route through it
   override async signAndExecute(tx: Transaction, keypair: Keypair) {
     return await this.client.signAndExecuteTransaction({
       transaction: tx,

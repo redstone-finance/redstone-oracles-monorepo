@@ -6,7 +6,7 @@ import { GRAPHQL_URL, makeSuiClient, makeSuiGraphQLClient, makeSuiJsonRpcClient 
 import { GrpcSuiClient } from "./GrpcSuiClient";
 import { LegacySuiClient } from "./LegacySuiClient";
 import { API_TYPE_GRAPHQL, API_TYPE_GRPC, SuiApi } from "./SuiApi";
-import { SuiClient } from "./SuiClient";
+import { SUB_INSTANCE_MODES, SuiClient } from "./SuiClient";
 
 export class SuiClientBuilder extends MultiExecutor.ClientBuilder<SuiClient> {
   protected override chainType = ChainTypeEnum.enum.sui;
@@ -55,6 +55,7 @@ export class SuiClientBuilder extends MultiExecutor.ClientBuilder<SuiClient> {
         getReceivedCoinObjectIds: MultiExecutor.ExecutionMode.AGREEMENT,
         getTimeForBlock: MultiExecutor.ExecutionMode.AGREEMENT,
         queryTransactionBlocks: MultiExecutor.ExecutionMode.AGREEMENT,
+        clientWithCoreApi: { core: SUB_INSTANCE_MODES.core },
       }
     );
   }

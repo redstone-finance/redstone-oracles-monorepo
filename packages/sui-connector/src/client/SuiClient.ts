@@ -6,8 +6,7 @@ import {
 } from "@mysten/sui/jsonRpc";
 import type { Transaction } from "@mysten/sui/transactions";
 import { MultiExecutor } from "@redstone-finance/utils";
-
-export const OBJECT_INCLUDE = { json: true, content: true } as const;
+import { SuiObjectsClient } from "./SuiObjectsClient";
 
 const CORE_SUB_INSTANCE_MODES = {
   getBalance: MultiExecutor.ExecutionMode.AGREEMENT,
@@ -34,7 +33,12 @@ export const SUB_INSTANCE_MODES = {
 };
 
 export abstract class SuiClient {
-  abstract get core(): CoreClient;
+  readonly objects: SuiObjectsClient;
+
+  constructor(readonly core: CoreClient) {
+    this.objects = new SuiObjectsClient(core);
+  }
+
   abstract get clientWithCoreApi(): ClientWithCoreApi;
 
   abstract getBlockNumber(): Promise<number>;
@@ -48,7 +52,7 @@ export abstract class SuiClient {
     cursor?: string;
   }): Promise<{
     objectIds: string[];
-    cursor: string | null;
+    cursor?: string;
   }>;
 
   readonly queryTransactionBlocks?: (
@@ -105,32 +109,23 @@ export abstract class SuiClient {
     return { objects, cursor: hasNextPage ? nextCursor : null };
   }
 
-  async getObjects(objectIds: string[]) {
-    const { objects } = await this.core.getObjects({
-      objectIds,
-      include: OBJECT_INCLUDE,
-    });
-
-    return objects.map((obj) => {
-      if (obj instanceof Error) {
-        throw obj;
-      }
-
-      return obj;
-    });
+  getObjects(objectIds: string[], include?: SuiClientTypes.ObjectInclude) {
+    return this.objects.getObjects(objectIds, include);
   }
 
-  async getObject(objectId: string) {
-    const [obj] = await this.getObjects([objectId]);
-
-    return obj;
+  getObject(objectId: string, include?: SuiClientTypes.ObjectInclude) {
+    return this.objects.getObject(objectId, include);
   }
 
   async listDynamicFields(params: { parentId: string; limit?: number; cursor?: string }) {
     return await this.core.listDynamicFields(params);
   }
 
-  async getDynamicFieldValue(parentId: string, name: SuiClientTypes.DynamicFieldName) {
-    return await this.core.getDynamicField({ parentId, name });
+  getDynamicFieldValue(parentId: string, name: SuiClientTypes.DynamicFieldName) {
+    return this.objects.getDynamicFieldValue(parentId, name);
+  }
+
+  disposeCollectors() {
+    this.objects.dispose();
   }
 }
