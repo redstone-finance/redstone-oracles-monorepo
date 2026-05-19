@@ -3948,6 +3948,13 @@
       "denomination": "USD",
       "rateFeed": true
     },
+    "sVUSD_FUNDAMENTAL": {
+      "source": [
+        "ethereum-evm-fetcher-svusd"
+      ],
+      "denomination": "USD",
+      "rateFeed": true
+    },
     "stcUSD_FUNDAMENTAL": {
       "source": [
         "ethereum-evm-fetcher-cap-stcusd"
