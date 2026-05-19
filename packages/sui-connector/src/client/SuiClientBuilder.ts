@@ -54,7 +54,7 @@ export class SuiClientBuilder extends MultiExecutor.ClientBuilder<SuiClient> {
         getDynamicFieldValue: MultiExecutor.ExecutionMode.AGREEMENT,
         getReceivedCoinObjectIds: MultiExecutor.ExecutionMode.AGREEMENT,
         getTimeForBlock: MultiExecutor.ExecutionMode.AGREEMENT,
-        queryTransactionBlocks: MultiExecutor.ExecutionMode.AGREEMENT,
+        txLookup: { queryAffectedObjectTransactions: MultiExecutor.ExecutionMode.FALLBACK },
         clientWithCoreApi: { core: SUB_INSTANCE_MODES.core },
       }
     );
