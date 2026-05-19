@@ -172,7 +172,10 @@
       ]
     },
     "EUR": {
-      "source": []
+      "source": [],
+      "broadcasters": [
+        "influx"
+      ]
     },
     "MEGA": {
       "source": [
@@ -200,7 +203,8 @@
       "BTC",
       "ETH",
       "SOL",
-      "MON"
+      "MON",
+      "MEGA"
     ]
   }
 }
