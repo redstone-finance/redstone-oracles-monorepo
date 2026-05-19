@@ -1,28 +1,16 @@
-import { InvocationV0, InvocationV1, StellarRouterSdk } from "@creit-tech/stellar-router-sdk";
-import { loggerFactory, RedstoneCommon } from "@redstone-finance/utils";
-import { scValToNative } from "@stellar/stellar-sdk";
-import _ from "lodash";
+import { InvocationV0, StellarRouterSdk } from "@creit-tech/stellar-router-sdk";
+import { Collector } from "@redstone-finance/utils";
 import { IStellarCaller, IStellarCallerDelegate, StellarInvocation } from "../IStellarCaller";
+import { SimulationCollector, StellarKey } from "./SimulationCollector";
 import { StellarNetwork } from "./network-ids";
 
-const MAX_NUMBER_OF_CALLS = 16;
 const DEFAULT_COLLECTING_INTERVAL_MS = 10;
 const TESTNET_MULTICALL_ADDRESS = "CBM4TX2P6JAKDJ3RJEYZUXDQVGMYRFX5KGW2XMVHTZ4E3RF7D54F3TMD";
-
-type WaitingEntry = {
-  invocation: InvocationV0 | InvocationV1;
-  blockNumber?: number;
-  baseInvocation: StellarInvocation;
-  transform: (value: unknown) => unknown;
-  resolve: (value: unknown) => void;
-  reject: (err: unknown) => void;
-};
 
 export class StellarMulticall implements IStellarCaller {
   private static instanceForUrls: { [p: string]: StellarMulticall | undefined } = {};
 
   static instanceForUrl(rpcUrl: string, network: StellarNetwork) {
-    // Default for mainnet
     const multicallAddress = network === "mainnet" ? undefined : TESTNET_MULTICALL_ADDRESS;
 
     StellarMulticall.instanceForUrls[rpcUrl] ??= new StellarMulticall(rpcUrl, multicallAddress);
@@ -33,18 +21,25 @@ export class StellarMulticall implements IStellarCaller {
   delegateClient?: WeakRef<IStellarCallerDelegate>;
 
   private readonly router: StellarRouterSdk;
-
-  private waitingEntries: WaitingEntry[] = [];
-
-  private logger = loggerFactory("stellar-multicall");
-  private timer?: NodeJS.Timeout;
+  private readonly collectors: Collector.CollectorRegistry<number | undefined, StellarKey, unknown>;
 
   constructor(
     readonly rpcUrl: string,
     routerContract?: string,
-    private readonly collectingIntervalMs = DEFAULT_COLLECTING_INTERVAL_MS
+    collectingIntervalMs = DEFAULT_COLLECTING_INTERVAL_MS
   ) {
     this.router = new StellarRouterSdk({ rpcUrl, routerContract });
+    this.collectors = new Collector.CollectorRegistry(
+      (blockNumber?: number) => String(blockNumber ?? "latest"),
+      (blockNumber?: number) =>
+        new SimulationCollector(
+          this.router,
+          () => this.delegateClient?.deref(),
+          rpcUrl,
+          blockNumber,
+          collectingIntervalMs
+        )
+    );
   }
 
   async call<T>(
@@ -58,103 +53,12 @@ export class StellarMulticall implements IStellarCaller {
       args: baseInvocation.args ?? [],
     });
 
-    return await new Promise((resolve, reject) => {
-      this.waitingEntries.push({
-        invocation,
-        blockNumber,
-        baseInvocation,
-        resolve: resolve as (retVal: unknown) => void,
-        reject,
-        transform: transform,
-      });
-      this.timer ??= setTimeout(
-        () =>
-          void this.consumeWaitingEntries().catch((e) =>
-            this.logger.error(`consumeWaitingEntries failed: ${RedstoneCommon.stringifyError(e)}`)
-          ),
-        this.collectingIntervalMs
-      );
-    });
-  }
+    const result = await this.collectors.get(blockNumber).collect({ baseInvocation, invocation });
 
-  protected async consumeWaitingEntries() {
-    const entries = this.waitingEntries;
-    this.waitingEntries = [];
-    this.clearTimer();
-
-    const chunks = _.chunk(entries, MAX_NUMBER_OF_CALLS);
-
-    try {
-      const chunkPromises = chunks.map(this.getSimResult.bind(this));
-      const allResults = (await Promise.all(chunkPromises)).flat();
-
-      _.zip(entries, allResults).forEach(([entry, result]) =>
-        entry!.resolve(entry!.transform(result))
-      );
-    } catch (err) {
-      entries.forEach((entry) => entry.reject(err));
-    }
-  }
-
-  private async getSimResult(chunk: WaitingEntry[]) {
-    this.logChunk(chunk);
-
-    if (chunk.length === 0) {
-      return [];
-    }
-
-    const delegateClient = this.delegateClient?.deref();
-    await delegateClient?.waitForBlockNumber(_.maxBy(chunk, "blockNumber")?.blockNumber);
-
-    if (chunk.length === 1 && delegateClient) {
-      const waitingEntry = chunk[0];
-      const result = await delegateClient.simulateInvocation(
-        waitingEntry.baseInvocation,
-        waitingEntry.blockNumber
-      );
-
-      return [result];
-    }
-
-    return await this.router.simResult<unknown[]>(chunk.map((ch) => ch.invocation));
-  }
-
-  private logChunk(chunk: { invocation: InvocationV0 | InvocationV1 }[]) {
-    const invocations: { [p: string]: string[] | undefined } = {};
-
-    chunk.forEach((invocation) => {
-      const inv = invocation.invocation;
-      invocations[inv.contract.toString()] ??= [];
-      const args: unknown[] = inv.args.map(scValToNative);
-      invocations[inv.contract.toString()]!.push(
-        `${inv.method}(${RedstoneCommon.stringify(args.length > 1 ? args : (args.at(0) ?? "")).replaceAll('"', "")})`
-      );
-    });
-
-    this.logger.debug(
-      `Simulating call for ${chunk.length} invocation${RedstoneCommon.getS(chunk.length)} on ${this.rpcUrl}`,
-      { invocations }
-    );
+    return transform(result);
   }
 
   dispose() {
-    this.clearTimer();
-
-    const error = new Error("StellarMulticall disposed");
-
-    for (const entry of this.waitingEntries) {
-      try {
-        entry.reject(error);
-      } catch (e) {
-        this.logger.warn(`dispose reject error: ${RedstoneCommon.stringifyError(e)}`);
-      }
-    }
-
-    this.waitingEntries = [];
-  }
-
-  private clearTimer() {
-    clearTimeout(this.timer);
-    this.timer = undefined;
+    this.collectors.disposeAll();
   }
 }
