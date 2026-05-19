@@ -1584,22 +1584,6 @@
       "denomination": "USD",
       "rateFeed": true
     },
-    "KES": {
-      "source": [],
-      "denomination": "USD",
-      "rateFeed": false,
-      "types": [
-        "rwa"
-      ]
-    },
-    "COP": {
-      "source": [],
-      "denomination": "USD",
-      "rateFeed": false,
-      "types": [
-        "rwa"
-      ]
-    },
     "bsdETH": {
       "source": [
         "aerodrome-base-weth",
