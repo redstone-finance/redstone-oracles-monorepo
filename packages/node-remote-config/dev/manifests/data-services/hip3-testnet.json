@@ -12,7 +12,7 @@
   },
   "tokens": {
     "USDT": {
-      "source": ["bitstamp-usd", "coinbase-usd", "gemini-usd", "kraken_deferred-usd", "okx-usd"],
+      "source": ["bitstamp-usd", "coinbase-usd", "gemini-usd", "kraken-usd", "okx-usd"],
       "deviationCheck": {
         "deviationWithRecentValues": {
           "maxPercent": 5,
@@ -64,7 +64,7 @@
         "bybit-usdt",
         "mexc-usdt",
         "curve-ethereum-usdt",
-        "xt-usdt-deferred",
+        "xt-usdt",
         "uniswap-v4-ethereum-usdt-45"
       ],
       "deviationCheck": {
@@ -250,13 +250,7 @@
       }
     },
     "XMR": {
-      "source": [
-        "bitfinex-ust",
-        "kraken_deferred-usd",
-        "kucoin-usdt",
-        "mexc-usdt",
-        "xt-usdt-deferred"
-      ],
+      "source": ["bitfinex-ust", "kraken-usd", "kucoin-usdt", "mexc-usdt", "xt-usdt"],
       "deviationCheck": {
         "deviationWithRecentValues": {
           "maxPercent": 100,
@@ -1690,10 +1684,10 @@
         "bitrue-usdt",
         "bybit-usdt",
         "gate-usdt",
-        "kraken_deferred-usd",
+        "kraken-usd",
         "kucoin-usdt",
         "okx-usdt",
-        "xt-usdt-deferred"
+        "xt-usdt"
       ],
       "broadcasters": ["influx"],
       "deviationCheck": {
@@ -6661,18 +6655,18 @@
 
     "BASED": {
       "source": [
-        "okx_deferred-usdt",
-        "bybit_deferred-usdt",
-        "binancealpha_deferred-usdt",
-        "mexc_deferred-usdt",
-        "kraken_deferred-usd",
-        "kucoin_deferred-usdt",
-        "coinbase_deferred-usd"
+        "okx-usdt",
+        "bybit-usdt",
+        "binancealpha-usdt",
+        "mexc-usdt",
+        "kraken-usd",
+        "kucoin-usdt",
+        "coinbase-usd"
       ],
       "priceAggregator": "constantWeightMedian",
       "customWeightsForWeightedMedian": {
-        "okx_deferred-usdt": 2,
-        "bybit_deferred-usdt": 2
+        "okx-usdt": 2,
+        "bybit-usdt": 2
       },
       "broadcasters": ["influx"],
       "denomination": "USD",
