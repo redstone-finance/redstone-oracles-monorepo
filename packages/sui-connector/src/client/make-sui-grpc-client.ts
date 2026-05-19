@@ -7,18 +7,15 @@ import { SuiNetworkName } from "../config";
 
 export function makeSuiGrpcClient(networkName: SuiNetworkName, url: string, token?: string) {
   if (!token) {
-    // public gRPC over gRPC-Web/fetch — needs full URL with scheme
     return new SuiGrpcClient({ baseUrl: url, network: networkName });
   }
 
-  // raw gRPC over HTTP/2 — needs host:port without scheme
   const host = new URL(RedstoneCommon.ensureUrlScheme(url)).host;
   const transport = new GrpcTransport({
     host,
     channelCredentials: ChannelCredentials.createSsl(),
   });
 
-  // forward both header names — different providers gate on different keys (could be moved to URL hash if it ever needs to be provider-specific)
   const authedTransport = withGrpcMetadata(transport, { "x-token": token, "x-api-key": token });
 
   return new SuiGrpcClient({
@@ -27,7 +24,7 @@ export function makeSuiGrpcClient(networkName: SuiNetworkName, url: string, toke
   });
 }
 
-function withGrpcMetadata(transport: RpcTransport, meta: RpcMetadata): RpcTransport {
+function withGrpcMetadata(transport: RpcTransport, meta: RpcMetadata) {
   const addMeta = (options?: RpcOptions): RpcOptions => ({
     ...options,
     meta: { ...options?.meta, ...meta },
@@ -41,8 +38,6 @@ function withGrpcMetadata(transport: RpcTransport, meta: RpcMetadata): RpcTransp
       }
 
       return function (...args: unknown[]) {
-        // scan from the end for the RpcOptions slot (plain object or undefined);
-        // MethodInfo and proto messages have non-Object prototypes so they're skipped
         for (let i = args.length - 1; i >= 0; i--) {
           if (isRpcOptionsLike(args[i])) {
             args[i] = addMeta(args[i] as RpcOptions | undefined);
@@ -55,7 +50,7 @@ function withGrpcMetadata(transport: RpcTransport, meta: RpcMetadata): RpcTransp
   });
 }
 
-function isRpcOptionsLike(x: unknown): boolean {
+function isRpcOptionsLike(x: unknown) {
   if (x === undefined) {
     return true;
   }

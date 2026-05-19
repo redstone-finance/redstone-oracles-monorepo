@@ -1,3 +1,4 @@
+export * as Collector from "./Collector";
 export * as RedstoneCommon from "./common";
 export * as RedstoneConstants from "./constants";
 export * as RedstoneCrypto from "./crypto";

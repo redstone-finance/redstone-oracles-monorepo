@@ -20,10 +20,10 @@ export class SuiReader {
         cursor,
       });
 
-      for (const field of page.dynamicFields) {
-        const obj = await this.client.getDynamicFieldValue(parentId, field.name);
-        results.push(obj);
-      }
+      const pageValues = await Promise.all(
+        page.dynamicFields.map((field) => this.client.getDynamicFieldValue(parentId, field.name))
+      );
+      results.push(...pageValues);
 
       cursor = page.hasNextPage ? (page.cursor ?? undefined) : undefined;
     } while (cursor);
