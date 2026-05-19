@@ -6,12 +6,13 @@ import type {
   BlockchainServiceWithTransfer,
 } from "@redstone-finance/multichain-kit";
 import type { SuiClient } from "./client/SuiClient";
+import type { SuiTxLookup } from "./client/lookup/SuiTxLookup";
 
 export class SuiBlockchainService implements BlockchainService {
-  readonly queryTransactionBlocks?: SuiClient["queryTransactionBlocks"];
+  constructor(protected readonly client: SuiClient) {}
 
-  constructor(protected readonly client: SuiClient) {
-    this.queryTransactionBlocks = client.queryTransactionBlocks?.bind(client);
+  get txLookup(): SuiTxLookup {
+    return this.client.txLookup;
   }
 
   async getBlockNumber(): Promise<number> {
