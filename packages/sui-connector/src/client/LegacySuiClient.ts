@@ -12,16 +12,16 @@ const RETRY_CONFIG: Omit<RedstoneCommon.RetryConfig, "fn"> = {
 };
 
 export class LegacySuiClient extends SuiClient {
-  constructor(private readonly client: SuiJsonRpcClient) {
-    super();
-  }
+  private readonly batchingClient: SuiJsonRpcClient;
 
-  get core() {
-    return this.client.core;
+  constructor(private readonly client: SuiJsonRpcClient) {
+    super(client.core);
+
+    this.batchingClient = this.objects.wrapClient(client);
   }
 
   get clientWithCoreApi() {
-    return MultiExecutor.createForSubInstances(this, (c: LegacySuiClient) => c.client, {
+    return MultiExecutor.createForSubInstances(this, (c: LegacySuiClient) => c.batchingClient, {
       ...SUB_INSTANCE_MODES,
       getChainIdentifier: MultiExecutor.ExecutionMode.CONSENSUS_ALL_EQUAL,
     });
@@ -83,7 +83,7 @@ export class LegacySuiClient extends SuiClient {
 
     return {
       objectIds,
-      cursor: nextCursor ?? null,
+      cursor: nextCursor,
     };
   }
 

@@ -6,6 +6,7 @@ export * from "./adapter/SuiReader";
 export * from "./client/SuiApi";
 export * from "./client/SuiClient";
 export * from "./client/SuiClientBuilder";
+export * from "./client/SuiObjectsClient";
 export * from "./config";
 export * from "./make-price-adapter-config";
 export * from "./network-ids";

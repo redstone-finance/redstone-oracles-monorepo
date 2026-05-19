@@ -25,7 +25,7 @@ export function parseUrl<T extends string>(
   urlString: string,
   defaultType: T,
   validTypes?: readonly T[]
-): ApiSetup<T> {
+) {
   const validated = urlOrHostSchema.parse(urlString);
   const url = new URL(ensureUrlScheme(validated));
   const params = new URLSearchParams(url.hash.slice(1));
