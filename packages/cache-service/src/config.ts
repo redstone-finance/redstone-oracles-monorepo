@@ -9,18 +9,14 @@ interface CacheServiceConfig {
   mongoDbUrl?: string;
   mongoDbTTLSeconds: number;
   enableDirectPostingRoutes: boolean;
-  apiKeyForAccessToAdminRoutes: string;
-  allowedStreamrDataServiceIds: string[];
   useMockOracleRegistryState: boolean;
   enableHistoricalDataServing: boolean;
-  secondMongoDbUrl?: string;
   maxAllowedTimestampDelay: number;
   dataPackagesTTL: number;
   dataFeedsByFeedsEndpointMaxLimit: number;
   historicalDataPackagesTTL: number;
   metadataAccessApiKeyRegex?: RegExp;
   allFeedsAccessApiKeyRegex?: RegExp;
-  streamrStreamNamePattern: string;
   keepAliveTimeoutInSeconds: number;
   influxUrl?: string;
   influxToken?: string;
@@ -40,11 +36,6 @@ const config: CacheServiceConfig = {
   mongoDbUrl: RedstoneCommon.getFromEnv("MONGO_DB_URL", z.string().optional()),
   mongoDbTTLSeconds: RedstoneCommon.getFromEnv("MONGO_DB_TTL_SECONDS", z.number().default(0)),
   enableDirectPostingRoutes: RedstoneCommon.getFromEnv("ENABLE_DIRECT_POSTING_ROUTES", z.boolean()),
-  apiKeyForAccessToAdminRoutes: RedstoneCommon.getFromEnv("API_KEY_FOR_ACCESS_TO_ADMIN_ROUTES"),
-  allowedStreamrDataServiceIds: RedstoneCommon.getFromEnv(
-    "ALLOWED_STREAMR_DATA_SERVICE_IDS",
-    z.array(z.string()).default([])
-  ),
   useMockOracleRegistryState: RedstoneCommon.getFromEnv(
     "USE_MOCK_ORACLE_STATE",
     z.boolean().default(false)
@@ -53,7 +44,6 @@ const config: CacheServiceConfig = {
     "ENABLE_HISTORICAL_DATA_SERVING",
     z.boolean().default(false)
   ),
-  secondMongoDbUrl: RedstoneCommon.getFromEnv("SECOND_MONGO_DB_URL", z.url().optional()),
   maxAllowedTimestampDelay: RedstoneCommon.getFromEnv(
     "MAX_ALLOWED_TIMESTAMP_DELAY",
     z.number().positive().default(RedstoneConstants.DEFAULT_LATEST_DATA_PACKAGES_MAX_DELAY_MS)
@@ -80,10 +70,6 @@ const config: CacheServiceConfig = {
       .string()
       .optional()
       .transform((s) => (s ? new RegExp(s) : undefined))
-  ),
-  streamrStreamNamePattern: RedstoneCommon.getFromEnv(
-    "STREAMR_STREAM_NAME_PATTERN",
-    z.string().default("/redstone-oracle-node/{evmAddress}/data-packages")
   ),
   keepAliveTimeoutInSeconds: RedstoneCommon.getFromEnv(
     "KEEP_ALIVE_TIMEOUT_IN_SECONDS",
