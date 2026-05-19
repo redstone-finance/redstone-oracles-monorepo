@@ -9763,6 +9763,8 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@redstone-finance/merger@workspace:packages/merger"
   dependencies:
+    "@redstone-finance/agents": "workspace:*"
+    "@redstone-finance/internal-utils": "workspace:*"
     "@redstone-finance/protocol": "workspace:*"
     "@redstone-finance/pub-sub": "workspace:*"
     "@redstone-finance/sdk": "workspace:*"
