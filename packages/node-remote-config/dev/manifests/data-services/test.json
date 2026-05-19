@@ -1,7 +1,7 @@
 {
   "interval": 10000,
   "priceAggregator": "median",
-  "defaultSource": [],
+  "defaultSource": ["kraken-usd"],
   "sourceTimeout": 7000,
   "minValidSourcesPercentage": 1,
   "deviationCheck": {
@@ -10,21 +10,5 @@
       "maxDelayMilliseconds": 120000
     }
   },
-  "tokens": {
-    "WBTC/BTC": {
-      "source": ["non-usd-based"],
-      "denomination": "BTC",
-      "rateFeed": false
-    },
-    "WBTC": {
-      "source": ["kraken-usd"],
-      "denomination": "USD",
-      "rateFeed": false
-    },
-    "BTC": {
-      "source": ["kraken-usd"],
-      "denomination": "USD",
-      "rateFeed": false
-    }
-  }
+  "tokens": {}
 }
