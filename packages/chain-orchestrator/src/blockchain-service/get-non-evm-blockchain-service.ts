@@ -24,7 +24,12 @@ import {
   SuiBlockchainServiceWithTransfer,
   SuiClientBuilder,
 } from "@redstone-finance/sui-connector";
-import { deconstructNetworkId, NetworkId, RedstoneCommon } from "@redstone-finance/utils";
+import {
+  ChainTypeEnum,
+  deconstructNetworkId,
+  NetworkId,
+  RedstoneCommon,
+} from "@redstone-finance/utils";
 import { getCantonAuth } from "../utils";
 import { MoveBlockchainService } from "./MoveBlockchainService";
 import { RadixBlockchainService } from "./RadixBlockchainService";
@@ -36,7 +41,7 @@ export { SuiBlockchainService } from "@redstone-finance/sui-connector";
 export async function getNonEvmBlockchainService(networkId: NetworkId, rpcUrls: string[]) {
   const { chainType } = deconstructNetworkId(networkId);
   switch (chainType) {
-    case "sui": {
+    case ChainTypeEnum.enum.sui: {
       const suiClient = new SuiClientBuilder()
         .withNetworkId(networkId)
         .withRpcUrls(rpcUrls)
@@ -44,8 +49,8 @@ export async function getNonEvmBlockchainService(networkId: NetworkId, rpcUrls: 
 
       return new SuiBlockchainService(suiClient);
     }
-    case "movement":
-    case "aptos": {
+    case ChainTypeEnum.enum.movement:
+    case ChainTypeEnum.enum.aptos: {
       const moveClient = MoveClientBuilder.getInstance(chainType)
         .withNetworkId(networkId)
         .withRpcUrls(rpcUrls)
@@ -53,7 +58,7 @@ export async function getNonEvmBlockchainService(networkId: NetworkId, rpcUrls: 
 
       return new MoveBlockchainService(moveClient, undefined);
     }
-    case "radix": {
+    case ChainTypeEnum.enum.radix: {
       const radixClient = new RadixClientBuilder()
         .withNetworkId(networkId)
         .withRpcUrls(rpcUrls)
@@ -62,7 +67,7 @@ export async function getNonEvmBlockchainService(networkId: NetworkId, rpcUrls: 
 
       return new RadixBlockchainService(radixClient);
     }
-    case "solana": {
+    case ChainTypeEnum.enum.solana: {
       const connection = new SolanaConnectionBuilder()
         .withNetworkId(networkId)
         .withRpcUrls(rpcUrls)
@@ -70,7 +75,7 @@ export async function getNonEvmBlockchainService(networkId: NetworkId, rpcUrls: 
 
       return new SolanaBlockchainService(connection);
     }
-    case "stellar": {
+    case ChainTypeEnum.enum.stellar: {
       const client = new StellarClientBuilder()
         .withNetworkId(networkId)
         .withRpcUrls(rpcUrls)
@@ -79,7 +84,7 @@ export async function getNonEvmBlockchainService(networkId: NetworkId, rpcUrls: 
 
       return new StellarBlockchainService(client);
     }
-    case "canton": {
+    case ChainTypeEnum.enum.canton: {
       const chainId = deconstructNetworkId(networkId).chainId;
 
       const auth = await getCantonAuth(chainId);
@@ -92,8 +97,8 @@ export async function getNonEvmBlockchainService(networkId: NetworkId, rpcUrls: 
 
       return new CantonBlockchainService(client);
     }
-    case "fuel":
-    case "evm":
+    case ChainTypeEnum.enum.fuel:
+    case ChainTypeEnum.enum.evm:
       throw new Error(
         `Evm networkId ${networkId} got passed to non-evm blockchain service builder.`
       );
@@ -109,7 +114,7 @@ export async function getNonEvmBlockchainServiceWithTransfer(
 ) {
   const { chainType } = deconstructNetworkId(networkId);
   switch (chainType) {
-    case "sui": {
+    case ChainTypeEnum.enum.sui: {
       const suiClient = new SuiClientBuilder()
         .withNetworkId(networkId)
         .withRpcUrls(rpcUrls)
@@ -118,8 +123,8 @@ export async function getNonEvmBlockchainServiceWithTransfer(
 
       return new SuiBlockchainServiceWithTransfer(suiClient, keypair);
     }
-    case "movement":
-    case "aptos": {
+    case ChainTypeEnum.enum.movement:
+    case ChainTypeEnum.enum.aptos: {
       const moveClient = MoveClientBuilder.getInstance(chainType)
         .withNetworkId(networkId)
         .withRpcUrls(rpcUrls)
@@ -127,7 +132,7 @@ export async function getNonEvmBlockchainServiceWithTransfer(
 
       return new MoveBlockchainService(moveClient, privateKey);
     }
-    case "radix": {
+    case ChainTypeEnum.enum.radix: {
       const radixClient = new RadixClientBuilder()
         .withNetworkId(networkId)
         .withRpcUrls(rpcUrls)
@@ -136,7 +141,7 @@ export async function getNonEvmBlockchainServiceWithTransfer(
 
       return new RadixBlockchainService(radixClient);
     }
-    case "solana": {
+    case ChainTypeEnum.enum.solana: {
       const connection = new SolanaConnectionBuilder()
         .withNetworkId(networkId)
         .withRpcUrls(rpcUrls)
@@ -145,7 +150,7 @@ export async function getNonEvmBlockchainServiceWithTransfer(
 
       return new SolanaBlockchainServiceWithTransfer(new SolanaClient(connection), keypair);
     }
-    case "stellar": {
+    case ChainTypeEnum.enum.stellar: {
       const client = new StellarClientBuilder()
         .withNetworkId(networkId)
         .withRpcUrls(rpcUrls)
@@ -155,7 +160,7 @@ export async function getNonEvmBlockchainServiceWithTransfer(
 
       return new StellarBlockchainServiceWithTransfer(client, keypair);
     }
-    case "canton": {
+    case ChainTypeEnum.enum.canton: {
       const { chainId } = deconstructNetworkId(networkId);
       const network = chainIdToNetwork(chainId);
       const auth = await getCantonAuth(chainId);
@@ -180,9 +185,9 @@ export async function getNonEvmBlockchainServiceWithTransfer(
         privateKey.value
       );
     }
-    case "fuel":
+    case ChainTypeEnum.enum.fuel:
       throw new Error(`Not supported for ${chainType}`);
-    case "evm":
+    case ChainTypeEnum.enum.evm:
       throw new Error(
         `Evm networkId ${networkId} got passed to non-evm blockchain service builder.`
       );

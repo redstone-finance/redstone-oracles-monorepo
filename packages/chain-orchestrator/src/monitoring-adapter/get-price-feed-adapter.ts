@@ -12,7 +12,12 @@ import {
   Sep40PriceFeedStellarContractAdapter,
   StellarClientBuilder,
 } from "@redstone-finance/stellar-connector";
-import { deconstructNetworkId, NetworkId, RedstoneCommon } from "@redstone-finance/utils";
+import {
+  ChainTypeEnum,
+  deconstructNetworkId,
+  NetworkId,
+  RedstoneCommon,
+} from "@redstone-finance/utils";
 import { getCantonAuth } from "../utils";
 
 export async function getPriceFeedAdapter(
@@ -25,7 +30,7 @@ export async function getPriceFeedAdapter(
   const { chainType } = deconstructNetworkId(networkId);
 
   switch (chainType) {
-    case "stellar": {
+    case ChainTypeEnum.enum.stellar: {
       const client = new StellarClientBuilder()
         .withNetworkId(networkId)
         .withRpcUrls(rpcUrls)
@@ -42,7 +47,7 @@ export async function getPriceFeedAdapter(
 
       return new PriceFeedStellarContractAdapter(client, address);
     }
-    case "canton": {
+    case ChainTypeEnum.enum.canton: {
       if (!feedId) {
         throw new Error("Canton needs feed name for price-feed");
       }
@@ -62,7 +67,7 @@ export async function getPriceFeedAdapter(
         feedId
       );
     }
-    case "solana": {
+    case ChainTypeEnum.enum.solana: {
       const connection = new SolanaConnectionBuilder()
         .withNetworkId(networkId)
         .withRpcUrls(rpcUrls)
@@ -71,12 +76,12 @@ export async function getPriceFeedAdapter(
 
       return SolanaPriceFeedContractAdapter.fromConnectionAndAddress(connection, address);
     }
-    case "radix":
-    case "fuel":
-    case "sui":
-    case "aptos":
-    case "movement":
-    case "evm":
+    case ChainTypeEnum.enum.radix:
+    case ChainTypeEnum.enum.fuel:
+    case ChainTypeEnum.enum.sui:
+    case ChainTypeEnum.enum.aptos:
+    case ChainTypeEnum.enum.movement:
+    case ChainTypeEnum.enum.evm:
       throw new Error(`${networkId} is not supported for getPriceFeedAdapter`);
     default:
       return RedstoneCommon.throwUnsupportedParamError(chainType);

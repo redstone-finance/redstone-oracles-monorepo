@@ -21,7 +21,7 @@ import {
   SuiClientBuilder,
   SuiContractAdapter,
 } from "@redstone-finance/sui-connector";
-import { deconstructNetworkId, RedstoneCommon } from "@redstone-finance/utils";
+import { ChainTypeEnum, deconstructNetworkId, RedstoneCommon } from "@redstone-finance/utils";
 import { getCantonAuth } from "../utils";
 
 export async function getNonEvmMonitoringContractAdapter(
@@ -32,21 +32,21 @@ export async function getNonEvmMonitoringContractAdapter(
   const { chainType } = deconstructNetworkId(relayerManifest.chain.id);
 
   switch (chainType) {
-    case "radix":
+    case ChainTypeEnum.enum.radix:
       return await getRadixContractAdapter(rpcUrls, relayerManifest);
-    case "sui":
+    case ChainTypeEnum.enum.sui:
       return getSuiContractAdapter(rpcUrls, relayerManifest);
-    case "aptos":
-    case "movement":
+    case ChainTypeEnum.enum.aptos:
+    case ChainTypeEnum.enum.movement:
       return await getMoveContractAdapter(rpcUrls, relayerManifest, chainType);
-    case "solana":
+    case ChainTypeEnum.enum.solana:
       return getSolanaContractAdapter(rpcUrls, relayerManifest);
-    case "stellar":
+    case ChainTypeEnum.enum.stellar:
       return getStellarContractAdapter(rpcUrls, relayerManifest, withRounds);
-    case "fuel":
-    case "canton":
+    case ChainTypeEnum.enum.fuel:
+    case ChainTypeEnum.enum.canton:
       return await getCantonContractAdapter(rpcUrls, relayerManifest);
-    case "evm":
+    case ChainTypeEnum.enum.evm:
       throw new Error(
         `Evm relayer config with networkId: ${relayerManifest.chain.id} got passed to non-evm blockchain service builder.`
       );
