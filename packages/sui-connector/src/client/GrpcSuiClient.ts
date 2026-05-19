@@ -5,7 +5,7 @@ import { Transaction } from "@mysten/sui/transactions";
 import { SUI_TYPE_ARG } from "@mysten/sui/utils";
 import { MultiExecutor, RedstoneCommon } from "@redstone-finance/utils";
 import type { ReceivedTransactionNodes } from "./graphql-types";
-import { GrpcSuiTxLookup } from "./lookup/GrpcSuiTxLookup";
+import { GraphQLSuiTxLookup } from "./lookup/GraphQLSuiTxLookup";
 import { RECEIVED_TRANSACTIONS_QUERY } from "./queries";
 import { SUB_INSTANCE_MODES, SuiClient } from "./SuiClient";
 
@@ -33,7 +33,7 @@ export class GrpcSuiClient extends SuiClient {
       throw new Error("GrpcSuiClient.txLookup requires a GraphQL client");
     }
 
-    return new GrpcSuiTxLookup(this.graphqlClient);
+    return new GraphQLSuiTxLookup(this.graphqlClient);
   }
 
   async getBlockNumber() {

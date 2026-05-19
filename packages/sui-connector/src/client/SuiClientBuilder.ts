@@ -100,7 +100,7 @@ export class SuiClientBuilder extends MultiExecutor.ClientBuilder<SuiClient> {
 
     return MultiExecutor.create(
       urls.map((url) => makeSuiGraphQLClient(suiNetwork, url)),
-      { query: MultiExecutor.ExecutionMode.AGREEMENT }
+      { query: MultiExecutor.ExecutionMode.FALLBACK }
     );
   }
 }

@@ -1,6 +1,5 @@
 import { SuiGraphQLClient } from "@mysten/sui/graphql";
 import { loggerFactory } from "@redstone-finance/utils";
-import { hexlify } from "ethers/lib/utils";
 import type { RawGqlInput, RawGqlTx, RawGqlTxn } from "../graphql-types";
 import { AFFECTED_OBJECT_TRANSACTIONS_QUERY } from "../queries";
 import type { NormalizedSuiTx, SuiTxLookup, SuiTxLookupPage } from "./SuiTxLookup";
@@ -25,7 +24,7 @@ const GQL_STATUS_FAILURE = "failure";
 const STATUS_FAILURE = "failure";
 const STATUS_SUCCESS = "success";
 
-export class GrpcSuiTxLookup implements SuiTxLookup {
+export class GraphQLSuiTxLookup implements SuiTxLookup {
   constructor(private readonly graphqlClient: SuiGraphQLClient) {}
 
   async queryAffectedObjectTransactions({
@@ -52,7 +51,7 @@ export class GrpcSuiTxLookup implements SuiTxLookup {
 
     const data = [...transactions.nodes]
       .reverse()
-      .map((tx) => GrpcSuiTxLookup.normalize(tx as unknown as RawGqlTx));
+      .map((tx) => GraphQLSuiTxLookup.normalize(tx as unknown as RawGqlTx));
 
     logger.debug(
       `Fetched ${data.length} txs for objectId=${objectId} cursor=${cursor ?? "<none>"} hasPrev=${transactions.pageInfo.hasPreviousPage} startCursor=${transactions.pageInfo.startCursor ?? "<none>"}`
@@ -66,8 +65,8 @@ export class GrpcSuiTxLookup implements SuiTxLookup {
   }
 
   private static normalize(tx: RawGqlTx): NormalizedSuiTx {
-    const inputs = GrpcSuiTxLookup.parseInputs(tx.kind?.inputs?.nodes ?? []);
-    const moveCalls = GrpcSuiTxLookup.parseMoveCalls(tx.kind?.commands?.nodes ?? []);
+    const inputs = GraphQLSuiTxLookup.parseInputs(tx.kind?.inputs?.nodes ?? []);
+    const moveCalls = GraphQLSuiTxLookup.parseMoveCalls(tx.kind?.commands?.nodes ?? []);
 
     return {
       checkpoint: Number(tx.effects?.checkpoint?.sequenceNumber ?? 0),
@@ -80,8 +79,8 @@ export class GrpcSuiTxLookup implements SuiTxLookup {
       gasPrice: String(tx.gasInput?.gasPrice ?? "0"),
       writePricePayloads: extractWritePricePayloads(inputs, moveCalls),
       targetObjectId: extractSharedObjectId(inputs),
-      effects: GrpcSuiTxLookup.normalizeEffects(tx.effects),
-      events: GrpcSuiTxLookup.normalizeEvents(tx.effects),
+      effects: GraphQLSuiTxLookup.normalizeEffects(tx.effects),
+      events: GraphQLSuiTxLookup.normalizeEvents(tx.effects),
     };
   }
 
@@ -109,10 +108,10 @@ export class GrpcSuiTxLookup implements SuiTxLookup {
   private static parseInputs(rawInputs: RawGqlInput[]): ParsedInput[] {
     return rawInputs.map((input) => {
       if (input.__typename === GQL_TYPENAME_PURE && typeof input.bytes === "string") {
-        return { kind: "pure", hexBytes: hexlify(Buffer.from(input.bytes, "base64")) };
+        return { kind: "pure", rawValue: Buffer.from(input.bytes, "base64") };
       }
       if (input.__typename === GQL_TYPENAME_MOVE_VALUE && typeof input.bcs === "string") {
-        return { kind: "pure", hexBytes: hexlify(Buffer.from(input.bcs, "base64")) };
+        return { kind: "pure", rawValue: Buffer.from(input.bcs, "base64") };
       }
       if (input.__typename === GQL_TYPENAME_SHARED_INPUT && typeof input.address === "string") {
         return { kind: "shared", objectId: input.address };
