@@ -9732,6 +9732,21 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@redstone-finance/lambda-whitelist-monitoring-s3-cleaner@workspace:packages/lambda/lambda-whitelist-monitoring-s3-cleaner":
+  version: 0.0.0-use.local
+  resolution: "@redstone-finance/lambda-whitelist-monitoring-s3-cleaner@workspace:packages/lambda/lambda-whitelist-monitoring-s3-cleaner"
+  dependencies:
+    "@aws-sdk/client-s3": "npm:^3.696.0"
+    "@redstone-finance/utils": "workspace:*"
+    "@swc/jest": "npm:^0.2.39"
+    "@types/aws-lambda": "npm:^8.10.145"
+    "@types/jest": "npm:^29.5.4"
+    jest: "npm:^29.7.0"
+    ts-jest: "npm:^29.4.5"
+    zod: "npm:^4.1.12"
+  languageName: unknown
+  linkType: soft
+
 "@redstone-finance/lambda-zrodelko-balance-monitoring@workspace:packages/lambda/lambda-zrodelko-balance-monitoring":
   version: 0.0.0-use.local
   resolution: "@redstone-finance/lambda-zrodelko-balance-monitoring@workspace:packages/lambda/lambda-zrodelko-balance-monitoring"
