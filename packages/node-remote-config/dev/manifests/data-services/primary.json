@@ -611,9 +611,7 @@
         "curve-ethereum-wsteth-2",
         "uniswap-v3-ethereum-weth-100",
         "uniswap-v3-ethereum-weth-500",
-        "uniswap-v4-ethereum-eth-200",
-        "balancer-v3-arbitrumone-waarbweth",
-        "balancer-v3-ethereum-waethweth"
+        "uniswap-v4-ethereum-eth-200"
       ],
       "denomination": "USD",
       "rateFeed": false
