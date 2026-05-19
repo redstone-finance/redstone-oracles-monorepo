@@ -1,4 +1,4 @@
-import { graphql, ResultOf } from "@mysten/sui/graphql/schema";
+import { graphql } from "@mysten/sui/graphql/schema";
 
 export const RECEIVED_TRANSACTIONS_QUERY = graphql(`
   query ReceivedTransactions($address: SuiAddress!, $first: Int, $after: String) {
@@ -36,4 +36,82 @@ export const RECEIVED_TRANSACTIONS_QUERY = graphql(`
   }
 `);
 
-export type ReceivedTransactionsData = ResultOf<typeof RECEIVED_TRANSACTIONS_QUERY>;
+export const AFFECTED_OBJECT_TRANSACTIONS_QUERY = graphql(`
+  query AffectedObjectTransactions($objectId: SuiAddress!, $last: Int, $before: String) {
+    transactions(last: $last, before: $before, filter: { affectedObject: $objectId }) {
+      pageInfo {
+        hasPreviousPage
+        startCursor
+      }
+      nodes {
+        digest
+        sender {
+          address
+        }
+        effects {
+          checkpoint {
+            sequenceNumber
+            timestamp
+          }
+          status
+          gasEffects {
+            gasSummary {
+              computationCost
+              storageCost
+              storageRebate
+              nonRefundableStorageFee
+            }
+          }
+          events {
+            nodes {
+              contents {
+                type {
+                  repr
+                }
+              }
+            }
+          }
+        }
+        gasInput {
+          gasBudget
+          gasPrice
+        }
+        kind {
+          __typename
+          ... on ProgrammableTransaction {
+            inputs {
+              nodes {
+                __typename
+                ... on Pure {
+                  bytes
+                }
+                ... on MoveValue {
+                  bcs
+                }
+                ... on SharedInput {
+                  address
+                }
+              }
+            }
+            commands {
+              nodes {
+                __typename
+                ... on MoveCallCommand {
+                  function {
+                    name
+                  }
+                  arguments {
+                    __typename
+                    ... on Input {
+                      ix
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+`);

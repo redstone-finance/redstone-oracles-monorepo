@@ -9565,6 +9565,7 @@ __metadata:
     "@redstone-finance/node-remote-config": "workspace:*"
     "@redstone-finance/on-chain-relayer-common": "workspace:*"
     "@redstone-finance/protocol": "workspace:*"
+    "@redstone-finance/sui-connector": "workspace:*"
     "@redstone-finance/utils": "workspace:*"
     "@solana/web3.js": "npm:^1.98.2"
     "@stellar/stellar-sdk": "npm:^14.6.1"

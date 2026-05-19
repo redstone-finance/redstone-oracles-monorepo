@@ -4,7 +4,9 @@ import { SuiGrpcClient } from "@mysten/sui/grpc";
 import { Transaction } from "@mysten/sui/transactions";
 import { SUI_TYPE_ARG } from "@mysten/sui/utils";
 import { MultiExecutor, RedstoneCommon } from "@redstone-finance/utils";
-import { RECEIVED_TRANSACTIONS_QUERY, ReceivedTransactionsData } from "./queries";
+import type { ReceivedTransactionNodes } from "./graphql-types";
+import { GrpcSuiTxLookup } from "./lookup/GrpcSuiTxLookup";
+import { RECEIVED_TRANSACTIONS_QUERY } from "./queries";
 import { SUB_INSTANCE_MODES, SuiClient } from "./SuiClient";
 
 export class GrpcSuiClient extends SuiClient {
@@ -24,6 +26,14 @@ export class GrpcSuiClient extends SuiClient {
       ...SUB_INSTANCE_MODES,
       executeTransaction: MultiExecutor.ExecutionMode.RACE,
     });
+  }
+
+  get txLookup() {
+    if (!this.graphqlClient) {
+      throw new Error("GrpcSuiClient.txLookup requires a GraphQL client");
+    }
+
+    return new GrpcSuiTxLookup(this.graphqlClient);
   }
 
   async getBlockNumber() {
@@ -101,7 +111,7 @@ export class GrpcSuiClient extends SuiClient {
   }
 
   private static extractCoinObjectIds(
-    txNodes: NonNullable<ReceivedTransactionsData["transactions"]>["nodes"],
+    txNodes: ReceivedTransactionNodes,
     coinType: string,
     address: string
   ): string[] {
