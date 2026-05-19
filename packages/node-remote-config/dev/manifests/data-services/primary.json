@@ -5814,6 +5814,145 @@
       ],
       "denomination": "USD",
       "rateFeed": false
+    },
+    "ASTER": {
+      "source": [
+        "binance-usdc",
+        "binance-usdt",
+        "bingx-usdt",
+        "bitget-usdt",
+        "bitmart-usdt",
+        "bybit-usdt",
+        "coinbase-usd",
+        "gate-usdt",
+        "htx-usdt",
+        "kraken-usd",
+        "kucoin-usdt",
+        "lbank-usdt",
+        "mexc-usdt",
+        "okx-usdt",
+        "pancake-swap-bnb-usdt-500",
+        "xt-usdt"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "JUP": {
+      "source": [
+        "binance-usdc",
+        "binance-usdt",
+        "bingx-usdt",
+        "bitget-usdt",
+        "bitmart-usdt",
+        "bybit-usdt",
+        "coinbase-usd",
+        "gate-usdt",
+        "htx-usdt",
+        "kraken-usd",
+        "kucoin-usdt",
+        "mexc-usdt",
+        "meteora-solana-mainnet-wsol",
+        "okx-usdt",
+        "xt-usdt"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "LIT": {
+      "source": [
+        "bingx-usdt",
+        "bitget-usdt",
+        "bitmart-usdt",
+        "bybit-usdt",
+        "coinbase-usd",
+        "gate-usdt",
+        "htx-usdt",
+        "kucoin-usdt",
+        "lbank-usdt",
+        "mexc-usdt",
+        "okx-usdt",
+        "xt-usdt"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "ONDO": {
+      "source": [
+        "binance-usdt",
+        "bingx-usdt",
+        "bitget-usdt",
+        "bitmart-usdt",
+        "bybit-usdt",
+        "coinbase-usd",
+        "gate-usdt",
+        "htx-usdt",
+        "kraken-usd",
+        "kucoin-usdt",
+        "lbank-usdt",
+        "mexc-usdt",
+        "okx-usdt",
+        "xt-usdt"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "PUMP": {
+      "source": [
+        "binance-usdt",
+        "bingx-usdt",
+        "bitget-usdt",
+        "bitmart-usdt",
+        "bybit-usdt",
+        "coinbase-usd",
+        "gate-usdt",
+        "htx-usdt",
+        "hyperliquid-api-fetcher-usdc",
+        "kraken-usd",
+        "kucoin-usdt",
+        "lbank-usdt",
+        "mexc-usdt",
+        "okx-usdt",
+        "xt-usdt"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "XMR": {
+      "source": [
+        "bitfinex-usd",
+        "bitfinex-usdt",
+        "bitmart-usdt",
+        "htx-usdt",
+        "kraken-usd",
+        "kraken-usdt",
+        "kucoin-eth",
+        "kucoin-usdt",
+        "mexc-usdt",
+        "xt-usdt"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "ZRO": {
+      "source": [
+        "binance-usdt",
+        "bingx-usdt",
+        "bitget-usdt",
+        "bitmart-usdt",
+        "bybit-usdt",
+        "coinbase-usd",
+        "gate-usdt",
+        "htx-usdt",
+        "kraken-usd",
+        "kraken-usd",
+        "kucoin-usdt",
+        "lbank-usdt",
+        "mexc-usdt",
+        "okx-usdt",
+        "xt-usdt"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
     }
   },
   "multiPointPackages": {
