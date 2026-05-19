@@ -4,7 +4,6 @@ import {
   TransactionBlockData,
 } from "@mysten/sui/jsonRpc";
 import { RedstoneCommon } from "@redstone-finance/utils";
-import { hexlify } from "ethers/lib/utils";
 import type { NormalizedSuiTx, SuiTxLookup, SuiTxLookupPage } from "./SuiTxLookup";
 import {
   extractSharedObjectId,
@@ -81,7 +80,7 @@ export class LegacySuiTxLookup implements SuiTxLookup {
 
     return transactionData.transaction.inputs.map((input) => {
       if (input.type === INPUT_TYPE_PURE) {
-        return { kind: "pure", hexBytes: hexlify(input.value as number[]) };
+        return { kind: "pure", rawValue: input.value };
       }
       if (input.type === INPUT_TYPE_OBJECT && input.objectType === OBJECT_TYPE_SHARED) {
         return { kind: "shared", objectId: input.objectId };
