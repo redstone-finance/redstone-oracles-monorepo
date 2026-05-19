@@ -1496,25 +1496,6 @@
       "denomination": "USD",
       "rateFeed": true
     },
-    "KES": {
-      "source": ["alphavantage-usd", "financialmodelingprep", "twelve-data", "metal-price-api"],
-      "denomination": "USD",
-      "rateFeed": false,
-      "types": ["rwa"]
-    },
-    "COP": {
-      "source": [
-        "lbank-usdt",
-        "mexc-usdt",
-        "alphavantage-usd-reversed",
-        "financialmodelingprep",
-        "metal-price-api",
-        "twelve-data"
-      ],
-      "denomination": "USD",
-      "rateFeed": false,
-      "types": ["rwa"]
-    },
     "bsdETH": {
       "source": ["aerodrome-base-weth", "aerodrome-cl-base-weth", "uniswap-v3-base-weth-100"],
       "denomination": "USD",
