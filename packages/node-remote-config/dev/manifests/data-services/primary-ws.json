@@ -1206,7 +1206,7 @@
         "bybit_deferred-usdt",
         "gate_deferred-usdt",
         "htx_deferred-usdt",
-        "hyperliquid-api-fetcher-usdc_deferred",
+        "hyperliquid-api-fetcher-usdc-deferred",
         "kraken_deferred-eur",
         "kraken_deferred-usd",
         "kucoin_deferred-usdc",
@@ -1428,7 +1428,7 @@
         "coinbase_deferred-usd",
         "gate_deferred-usdt",
         "htx_deferred-usdt",
-        "hyperliquid-api-fetcher-usdc_deferred",
+        "hyperliquid-api-fetcher-usdc-deferred",
         "kraken_deferred-usd",
         "kucoin_deferred-usdt",
         "lbank_deferred-usdt",
@@ -1822,7 +1822,7 @@
     "USDT0": {
       "source": [
         "camelot-v3-arbitrumone-usdc-deferred",
-        "hyperliquid-api-fetcher-usdc_deferred",
+        "hyperliquid-api-fetcher-usdc-deferred",
         "hyperswap-hyperevm-whype-500-deferred",
         "kumbaya-megaeth-weth-3000-deferred",
         "project-x-hyperevm-whype-500-deferred",
