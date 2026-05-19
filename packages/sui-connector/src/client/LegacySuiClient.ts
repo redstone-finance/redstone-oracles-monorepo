@@ -1,15 +1,8 @@
-import { SuiJsonRpcClient, SuiTransactionBlockResponseOptions } from "@mysten/sui/jsonRpc";
+import { SuiJsonRpcClient } from "@mysten/sui/jsonRpc";
 import { SUI_TYPE_ARG } from "@mysten/sui/utils";
-import { MultiExecutor, RedstoneCommon } from "@redstone-finance/utils";
+import { MultiExecutor } from "@redstone-finance/utils";
+import { LegacySuiTxLookup } from "./lookup/LegacySuiTxLookup";
 import { SUB_INSTANCE_MODES, SuiClient } from "./SuiClient";
-
-const RETRY_CONFIG: Omit<RedstoneCommon.RetryConfig, "fn"> = {
-  maxRetries: 6,
-  waitBetweenMs: 1000,
-  backOff: {
-    backOffBase: 2,
-  },
-};
 
 export class LegacySuiClient extends SuiClient {
   private readonly batchingClient: SuiJsonRpcClient;
@@ -25,6 +18,10 @@ export class LegacySuiClient extends SuiClient {
       ...SUB_INSTANCE_MODES,
       getChainIdentifier: MultiExecutor.ExecutionMode.CONSENSUS_ALL_EQUAL,
     });
+  }
+
+  get txLookup() {
+    return new LegacySuiTxLookup(this.client);
   }
 
   async getBlockNumber() {
@@ -86,20 +83,4 @@ export class LegacySuiClient extends SuiClient {
       cursor: nextCursor,
     };
   }
-
-  override readonly queryTransactionBlocks = async (
-    objectId: string,
-    cursor: string | null | undefined,
-    options: SuiTransactionBlockResponseOptions
-  ) => {
-    return await RedstoneCommon.retry({
-      ...RETRY_CONFIG,
-      fn: async () =>
-        await this.client.queryTransactionBlocks({
-          filter: { InputObject: objectId },
-          cursor,
-          options,
-        }),
-    })();
-  };
 }

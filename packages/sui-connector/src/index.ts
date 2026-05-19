@@ -3,6 +3,7 @@ export * from "./adapter/SuiAdapterContractOps";
 export * from "./adapter/SuiContractAdapter";
 export * from "./adapter/SuiContractUtil";
 export * from "./adapter/SuiReader";
+export * from "./client/lookup/SuiTxLookup";
 export * from "./client/SuiApi";
 export * from "./client/SuiClient";
 export * from "./client/SuiClientBuilder";

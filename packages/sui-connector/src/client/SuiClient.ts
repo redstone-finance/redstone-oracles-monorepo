@@ -1,12 +1,9 @@
 import type { ClientWithCoreApi, CoreClient, SuiClientTypes } from "@mysten/sui/client";
 import type { Keypair } from "@mysten/sui/cryptography";
-import {
-  PaginatedTransactionResponse,
-  SuiTransactionBlockResponseOptions,
-} from "@mysten/sui/jsonRpc";
 import type { Transaction } from "@mysten/sui/transactions";
 import { MultiExecutor } from "@redstone-finance/utils";
 import { SuiObjectsClient } from "./SuiObjectsClient";
+import { SuiTxLookup } from "./lookup/SuiTxLookup";
 
 const CORE_SUB_INSTANCE_MODES = {
   getBalance: MultiExecutor.ExecutionMode.AGREEMENT,
@@ -40,6 +37,7 @@ export abstract class SuiClient {
   }
 
   abstract get clientWithCoreApi(): ClientWithCoreApi;
+  abstract get txLookup(): SuiTxLookup;
 
   abstract getBlockNumber(): Promise<number>;
   abstract getReferenceGasPrice(): Promise<bigint>;
@@ -54,12 +52,6 @@ export abstract class SuiClient {
     objectIds: string[];
     cursor?: string;
   }>;
-
-  readonly queryTransactionBlocks?: (
-    objectId: string,
-    cursor: string | null | undefined,
-    options: SuiTransactionBlockResponseOptions
-  ) => Promise<PaginatedTransactionResponse>;
 
   async getChainIdentifier() {
     return (await this.core.getChainIdentifier()).chainIdentifier;
