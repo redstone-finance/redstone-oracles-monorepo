@@ -1896,6 +1896,11 @@
       "denomination": "SolvBTC",
       "rateFeed": true
     },
+    "SolvBTC.BBN_FUNDAMENTAL/USD": {
+      "source": ["usd-based"],
+      "denomination": "USD",
+      "rateFeed": true
+    },
     "SUSDz_FUNDAMENTAL": {
       "source": ["ethereum-evm-fetcher-anzen"],
       "denomination": "USDz",

@@ -1704,6 +1704,11 @@
         }
       }
     },
+    "SolvBTC.BBN_FUNDAMENTAL/USD": {
+      "source": ["usd-based"],
+      "denomination": "USD",
+      "rateFeed": true
+    },
     "pumpBTC_FUNDAMENTAL": {
       "source": ["pump-btc"],
       "denomination": "BTC",
