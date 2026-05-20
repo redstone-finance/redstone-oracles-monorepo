@@ -3,7 +3,7 @@ import { loggerFactory } from "@redstone-finance/utils";
 import { utils } from "ethers";
 import { RadixClient } from "./RadixClient";
 
-export class RadixContractConnector<Adapter> implements IContractConnector<Adapter> {
+export class RadixContractConnector<Adapter = never> implements IContractConnector<Adapter> {
   private readonly logger = loggerFactory("radix-connector");
 
   constructor(

@@ -2,16 +2,16 @@ import type { Keypair } from "@mysten/sui/cryptography";
 import { Transaction } from "@mysten/sui/transactions";
 import { MIST_PER_SUI, SUI_DECIMALS } from "@mysten/sui/utils";
 import type {
-  BlockchainService,
   BlockchainServiceWithTransfer,
+  BlockchainServiceWithTxLookup,
+  TxLookup,
 } from "@redstone-finance/multichain-kit";
 import type { SuiClient } from "./client/SuiClient";
-import type { SuiTxLookup } from "./client/lookup/SuiTxLookup";
 
-export class SuiBlockchainService implements BlockchainService {
+export class SuiBlockchainService implements BlockchainServiceWithTxLookup {
   constructor(protected readonly client: SuiClient) {}
 
-  get txLookup(): SuiTxLookup {
+  get txLookup(): TxLookup {
     return this.client.txLookup;
   }
 

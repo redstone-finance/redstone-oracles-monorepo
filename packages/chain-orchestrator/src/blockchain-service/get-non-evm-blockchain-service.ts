@@ -5,16 +5,23 @@ import {
   chainIdToNetwork,
   getCantonNodeConfig,
 } from "@redstone-finance/canton-connector";
-import { MoveClientBuilder } from "@redstone-finance/move-connector";
-import { RadixClientBuilder } from "@redstone-finance/radix-connector";
+import {
+  AptosBlockchainService,
+  MoveClientBuilder,
+  MovementBlockchainService,
+} from "@redstone-finance/move-connector";
+import { BlockchainService, BlockchainServiceWithTxLookup } from "@redstone-finance/multichain-kit";
+import { RadixBlockchainService, RadixClientBuilder } from "@redstone-finance/radix-connector";
 import {
   makeKeypair as makeSolanaKeypair,
+  SolanaBlockchainService,
   SolanaBlockchainServiceWithTransfer,
   SolanaClient,
   SolanaConnectionBuilder,
 } from "@redstone-finance/solana-connector";
 import {
   makeKeypair as makeStellarKeypair,
+  StellarBlockchainService,
   StellarBlockchainServiceWithTransfer,
   StellarClientBuilder,
 } from "@redstone-finance/stellar-connector";
@@ -31,14 +38,25 @@ import {
   RedstoneCommon,
 } from "@redstone-finance/utils";
 import { getCantonAuth } from "../utils";
-import { MoveBlockchainService } from "./MoveBlockchainService";
-import { RadixBlockchainService } from "./RadixBlockchainService";
-import { SolanaBlockchainService } from "./SolanaBlockchainService";
-import { StellarBlockchainService } from "./StellarBlockchainService";
 export { CantonBlockchainService } from "@redstone-finance/canton-connector";
 export { SuiBlockchainService } from "@redstone-finance/sui-connector";
 
-export async function getNonEvmBlockchainService(networkId: NetworkId, rpcUrls: string[]) {
+export async function getNonEvmBlockchainService(
+  networkId: number,
+  rpcUrls: string[]
+): Promise<never>;
+export async function getNonEvmBlockchainService(
+  networkId: `radix/${number}`,
+  rpcUrls: string[]
+): Promise<BlockchainService>;
+export async function getNonEvmBlockchainService(
+  networkId: NetworkId,
+  rpcUrls: string[]
+): Promise<BlockchainServiceWithTxLookup>;
+export async function getNonEvmBlockchainService(
+  networkId: NetworkId,
+  rpcUrls: string[]
+): Promise<BlockchainService> {
   const { chainType } = deconstructNetworkId(networkId);
   switch (chainType) {
     case ChainTypeEnum.enum.sui: {
@@ -49,14 +67,21 @@ export async function getNonEvmBlockchainService(networkId: NetworkId, rpcUrls: 
 
       return new SuiBlockchainService(suiClient);
     }
-    case ChainTypeEnum.enum.movement:
     case ChainTypeEnum.enum.aptos: {
       const moveClient = MoveClientBuilder.getInstance(chainType)
         .withNetworkId(networkId)
         .withRpcUrls(rpcUrls)
         .build();
 
-      return new MoveBlockchainService(moveClient, undefined);
+      return new AptosBlockchainService(moveClient);
+    }
+    case ChainTypeEnum.enum.movement: {
+      const moveClient = MoveClientBuilder.getInstance(chainType)
+        .withNetworkId(networkId)
+        .withRpcUrls(rpcUrls)
+        .build();
+
+      return new MovementBlockchainService(moveClient);
     }
     case ChainTypeEnum.enum.radix: {
       const radixClient = new RadixClientBuilder()
@@ -73,7 +98,7 @@ export async function getNonEvmBlockchainService(networkId: NetworkId, rpcUrls: 
         .withRpcUrls(rpcUrls)
         .build();
 
-      return new SolanaBlockchainService(connection);
+      return new SolanaBlockchainService(new SolanaClient(connection));
     }
     case ChainTypeEnum.enum.stellar: {
       const client = new StellarClientBuilder()
@@ -123,14 +148,21 @@ export async function getNonEvmBlockchainServiceWithTransfer(
 
       return new SuiBlockchainServiceWithTransfer(suiClient, keypair);
     }
-    case ChainTypeEnum.enum.movement:
     case ChainTypeEnum.enum.aptos: {
       const moveClient = MoveClientBuilder.getInstance(chainType)
         .withNetworkId(networkId)
         .withRpcUrls(rpcUrls)
         .build();
 
-      return new MoveBlockchainService(moveClient, privateKey);
+      return new AptosBlockchainService(moveClient, privateKey);
+    }
+    case ChainTypeEnum.enum.movement: {
+      const moveClient = MoveClientBuilder.getInstance(chainType)
+        .withNetworkId(networkId)
+        .withRpcUrls(rpcUrls)
+        .build();
+
+      return new MovementBlockchainService(moveClient, privateKey);
     }
     case ChainTypeEnum.enum.radix: {
       const radixClient = new RadixClientBuilder()
