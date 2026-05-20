@@ -2202,19 +2202,6 @@
         }
       }
     },
-    "stS_FUNDAMENTAL": {
-      "source": [
-        "sonic-evm-fetcher-beets"
-      ],
-      "denomination": "S",
-      "rateFeed": true,
-      "deviationCheck": {
-        "deviationWithRecentValues": {
-          "maxPercent": 1,
-          "maxDelayMilliseconds": 120000
-        }
-      }
-    },
     "sUSDX_ARB_FUNDAMENTAL": {
       "source": [
         "arbitrum-evm-fetcher-stables-labs"
@@ -5086,19 +5073,6 @@
     "sUSDp_HYPEREVM_FUNDAMENTAL/USD": {
       "source": [
         "hyperevm-evm-fetcher-parallel-susdp"
-      ],
-      "denomination": "USD",
-      "rateFeed": true,
-      "deviationCheck": {
-        "deviationWithRecentValues": {
-          "maxPercent": 1,
-          "maxDelayMilliseconds": 120000
-        }
-      }
-    },
-    "sUSDp_SONIC_FUNDAMENTAL/USD": {
-      "source": [
-        "sonic-evm-fetcher-parallel-susdp"
       ],
       "denomination": "USD",
       "rateFeed": true,
