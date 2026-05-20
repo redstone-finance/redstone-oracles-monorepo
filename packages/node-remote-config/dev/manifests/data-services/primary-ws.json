@@ -174,12 +174,7 @@
       "types": ["rwa"]
     },
     "MYR_FX": {
-      "source": [
-        "ws-twelve-data",
-        "ws-polygon-massive-commodities",
-        "ws-aleno",
-        "metal-price-api-deferred"
-      ],
+      "source": ["ws-twelve-data", "ws-polygon-massive-commodities", "metal-price-api-deferred"],
       "denomination": "USD",
       "rateFeed": false,
       "types": ["rwa"]
@@ -205,12 +200,7 @@
       "types": ["rwa"]
     },
     "IDR_FX": {
-      "source": [
-        "ws-twelve-data",
-        "ws-polygon-massive-commodities",
-        "finhub_pepperstone_deferred",
-        "metal-price-api-deferred"
-      ],
+      "source": ["ws-twelve-data", "ws-polygon-massive-commodities", "metal-price-api-deferred"],
       "priceAggregator": "primarySource",
       "primarySourceAggregatorConfig": {
         "primarySource": "ws-polygon-massive-commodities",
@@ -467,8 +457,18 @@
         "alltick-api-reversed-deferred",
         "metal-price-api-deferred",
         "ws-polygon-massive-commodities",
-        "ws-twelve-data"
+        "finhub_forex_deferred",
+        "ws-twelve-data",
+        "ws-lmax",
+        "ws-blocksize"
       ],
+      "priceAggregator": "primarySource",
+      "primarySourceAggregatorConfig": {
+        "primarySource": "ws-lmax",
+        "maxAcceptableDeviation": 1.5,
+        "lowerClampPercent": 0.1,
+        "upperClampPercent": 0.1
+      },
       "denomination": "USD",
       "rateFeed": false,
       "types": ["rwa"]

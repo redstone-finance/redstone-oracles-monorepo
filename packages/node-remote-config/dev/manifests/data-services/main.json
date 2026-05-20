@@ -2090,22 +2090,6 @@
       "denomination": "USD",
       "rateFeed": false
     },
-    "TRY_FX": {
-      "source": [
-        "alltick-api-reversed-deferred",
-        "metal-price-api-deferred",
-        "ws-polygon-massive-commodities",
-        "ws-twelve-data"
-      ],
-      "denomination": "USD",
-      "rateFeed": false,
-      "types": ["rwa"]
-    },
-    "TRY": {
-      "source": ["try-condition-fetcher"],
-      "denomination": "USD",
-      "rateFeed": false
-    },
     "PLN": {
       "source": ["ecb", "twelve-data"],
       "denomination": "USD",
