@@ -42,9 +42,6 @@
     "GHO": {
       "priceFeedAddress": "0x3587a73AA02519335A8a6053a97657BECe0bC2Cc"
     },
-    "SolvBTC": {
-      "priceFeedAddress": "0x4BAD96DD1C7D541270a0C92e1D4e5f12EEEA7a57"
-    },
     "USDe": {
       "priceFeedAddress": "0x3fd49f2146FE0e10c4AE7E3fE04b3d5126385Ac4"
     },
