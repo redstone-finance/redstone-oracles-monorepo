@@ -3,13 +3,13 @@ import {
   SuiTransactionBlockResponse,
   TransactionBlockData,
 } from "@mysten/sui/jsonRpc";
+import type { TxLookup, TxLookupArgs } from "@redstone-finance/multichain-kit";
 import { RedstoneCommon } from "@redstone-finance/utils";
-import type { NormalizedSuiTx, SuiTxLookup, SuiTxLookupPage } from "./SuiTxLookup";
 import {
+  computeSuiGasUsed,
+  computeSuiIsFailed,
   extractSharedObjectId,
   extractWritePricePayloads,
-  ParsedInput,
-  ParsedMoveCall,
 } from "./SuiTxParsing";
 
 const RETRY_CONFIG: Omit<RedstoneCommon.RetryConfig, "fn"> = {
@@ -27,70 +27,78 @@ const INPUT_TYPE_OBJECT = "object";
 const OBJECT_TYPE_SHARED = "sharedObject";
 const ARG_DISCRIMINATOR_INPUT = "Input";
 
-export class LegacySuiTxLookup implements SuiTxLookup {
+export class LegacySuiTxLookup implements TxLookup {
   constructor(private readonly client: SuiJsonRpcClient) {}
 
-  async queryAffectedObjectTransactions({
-    objectId,
-    cursor,
-  }: {
-    objectId: string;
-    cursor?: string;
-  }): Promise<SuiTxLookupPage> {
+  async fetchPage({ adapterContract, cursor }: TxLookupArgs) {
     const response = await RedstoneCommon.retry({
       ...RETRY_CONFIG,
       fn: async () =>
         await this.client.queryTransactionBlocks({
-          filter: { InputObject: objectId },
+          filter: { InputObject: adapterContract },
           cursor: cursor ?? null,
           options: { showInput: true, showEffects: true, showEvents: true },
         }),
     })();
 
     return {
-      data: response.data.map((tx) => LegacySuiTxLookup.normalize(tx)),
+      data: response.data.flatMap((tx) => LegacySuiTxLookup.normalize(tx)),
       hasNextPage: response.hasNextPage,
       nextCursor: response.nextCursor ?? undefined,
     };
   }
 
-  private static normalize(tx: SuiTransactionBlockResponse): NormalizedSuiTx {
+  private static normalize(tx: SuiTransactionBlockResponse) {
     const transactionData = tx.transaction!.data;
     const inputs = LegacySuiTxLookup.parseInputs(transactionData);
     const moveCalls = LegacySuiTxLookup.parseMoveCalls(transactionData);
+    const payloads = extractWritePricePayloads(inputs, moveCalls);
+    const targetObjectId = extractSharedObjectId(inputs);
 
-    return {
-      checkpoint: Number(tx.checkpoint ?? "0"),
-      timestampMs: Number(tx.timestampMs ?? "0"),
-      digest: tx.digest,
-      sender: transactionData.sender,
-      gasBudget: transactionData.gasData.budget,
+    if (!payloads.length || !targetObjectId) {
+      return [];
+    }
+
+    const effects = tx.effects;
+    const events = (tx.events ?? []).map((e) => ({ type: e.type }));
+    const isFailed = computeSuiIsFailed(effects?.status.status ?? "", events);
+    const gasUsed = effects?.gasUsed ? computeSuiGasUsed(effects.gasUsed) : 0;
+
+    const checkpoint = Number(tx.checkpoint ?? "0");
+    const timestampSec = RedstoneCommon.msToSecs(Number(tx.timestampMs ?? "0"));
+
+    return payloads.map((payload) => ({
+      blockNumber: checkpoint,
+      blockTimestamp: timestampSec,
+      hash: tx.digest,
+      from: transactionData.sender,
+      to: targetObjectId,
+      data: payload,
+      gasLimit: transactionData.gasData.budget,
       gasPrice: transactionData.gasData.price,
-      writePricePayloads: extractWritePricePayloads(inputs, moveCalls),
-      targetObjectId: extractSharedObjectId(inputs),
-      effects: tx.effects,
-      events: tx.events,
-    };
+      isFailed,
+      gasUsed,
+    }));
   }
 
-  private static parseInputs(transactionData: TransactionBlockData): ParsedInput[] {
+  private static parseInputs(transactionData: TransactionBlockData) {
     if (transactionData.transaction.kind !== KIND_PROGRAMMABLE_TRANSACTION) {
       return [];
     }
 
     return transactionData.transaction.inputs.map((input) => {
       if (input.type === INPUT_TYPE_PURE) {
-        return { kind: "pure", rawValue: input.value };
+        return { kind: "pure" as const, rawValue: input.value };
       }
       if (input.type === INPUT_TYPE_OBJECT && input.objectType === OBJECT_TYPE_SHARED) {
-        return { kind: "shared", objectId: input.objectId };
+        return { kind: "shared" as const, objectId: input.objectId };
       }
 
-      return { kind: "other" };
+      return { kind: "other" as const };
     });
   }
 
-  private static parseMoveCalls(transactionData: TransactionBlockData): ParsedMoveCall[] {
+  private static parseMoveCalls(transactionData: TransactionBlockData) {
     if (transactionData.transaction.kind !== KIND_PROGRAMMABLE_TRANSACTION) {
       return [];
     }

@@ -6,6 +6,7 @@ export * from "./contracts/price_feed/PriceFeedRadixContractDeployer";
 export * from "./contracts/proxy/ProxyRadixContractAdapter";
 export * from "./contracts/proxy/ProxyRadixContractConnector";
 export * from "./contracts/proxy/ProxyRadixContractDeployer";
+export * from "./radix/RadixBlockchainService";
 export * from "./radix/RadixClient";
 export * from "./radix/RadixClientBuilder";
 export * from "./radix/RadixClientConfig";
