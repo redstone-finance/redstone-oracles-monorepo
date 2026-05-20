@@ -6196,11 +6196,12 @@
         "mexc-usdt",
         "kraken-usd",
         "kucoin-usdt",
-        "coinbase-usd"
+        "coinbase-usd",
+        "hyperliquid-api-fetcher-usdc-deferred"
       ],
       "priceAggregator": "constantWeightMedian",
       "customWeightsForWeightedMedian": {
-        "okx-usdt": 2,
+        "okx-usdt": 3,
         "bybit-usdt": 2
       },
       "broadcasters": ["influx"],

@@ -113,10 +113,14 @@
     },
     "EUR_FX": {
       "source": [
+        "ws-twelve-data",
         "alltick-api-deferred",
         "ws-polygon-massive-commodities",
         "financialmodelingprep-deferred",
-        "ws-lmax"
+        "finhub_forex_deferred",
+        "ws-lmax",
+        "ws-blocksize",
+        "metal-price-api-deferred"
       ],
       "priceAggregator": "primarySource",
       "primarySourceAggregatorConfig": {
@@ -132,10 +136,10 @@
     "KRW_FX": {
       "source": [
         "ws-twelve-data",
-        "finhub_pepperstone",
+        "finhub_pepperstone_deferred",
         "alltick-api-deferred-reversed",
         "ws-polygon-massive-commodities",
-        "metal-price-api"
+        "metal-price-api-deferred"
       ],
       "priceAggregator": "primarySource",
       "primarySourceAggregatorConfig": {
@@ -155,7 +159,8 @@
         "ws-polygon-massive-commodities",
         "ws-lmax",
         "ws-blocksize",
-        "finhub_forex_deferred"
+        "finhub_forex_deferred",
+        "metal-price-api-deferred"
       ],
       "priceAggregator": "primarySource",
       "primarySourceAggregatorConfig": {
@@ -169,7 +174,12 @@
       "types": ["rwa"]
     },
     "MYR_FX": {
-      "source": ["ws-twelve-data", "ws-polygon-massive-commodities", "ws-aleno"],
+      "source": [
+        "ws-twelve-data",
+        "ws-polygon-massive-commodities",
+        "ws-aleno",
+        "metal-price-api-deferred"
+      ],
       "denomination": "USD",
       "rateFeed": false,
       "types": ["rwa"]
@@ -180,7 +190,8 @@
         "alltick-api-deferred-reversed",
         "ws-polygon-massive-commodities",
         "ws-lmax",
-        "finhub_forex_deferred"
+        "finhub_forex_deferred",
+        "metal-price-api-deferred"
       ],
       "priceAggregator": "primarySource",
       "primarySourceAggregatorConfig": {
@@ -194,7 +205,12 @@
       "types": ["rwa"]
     },
     "IDR_FX": {
-      "source": ["ws-twelve-data", "ws-polygon-massive-commodities", "finhub_pepperstone_deferred"],
+      "source": [
+        "ws-twelve-data",
+        "ws-polygon-massive-commodities",
+        "finhub_pepperstone_deferred",
+        "metal-price-api-deferred"
+      ],
       "priceAggregator": "primarySource",
       "primarySourceAggregatorConfig": {
         "primarySource": "ws-polygon-massive-commodities",
@@ -212,7 +228,8 @@
         "ws-polygon-massive-commodities",
         "ws-lmax",
         "ws-blocksize",
-        "finhub_forex_deferred"
+        "finhub_forex_deferred",
+        "metal-price-api-deferred"
       ],
       "priceAggregator": "primarySource",
       "primarySourceAggregatorConfig": {
