@@ -59,13 +59,6 @@
     "pumpBTC/BTC": {
       "priceFeedAddress": "0x83c6f7F61A55Fc7A1337AbD45733AD9c1c68076D"
     },
-    "SolvBTC/BTC": {
-      "priceFeedAddress": "0x3401DAF2b1f150Ef0c709Cc0283b5F2e55c3DF29",
-      "updateTriggersOverrides": {
-        "deviationPercentage": 0.5,
-        "timeSinceLastUpdateInMilliseconds": 86400000
-      }
-    },
     "STONE": {
       "priceFeedAddress": "0x6A1c87d11dDe3D1d52c24f8EC59B91019f14170D",
       "updateTriggersOverrides": {
