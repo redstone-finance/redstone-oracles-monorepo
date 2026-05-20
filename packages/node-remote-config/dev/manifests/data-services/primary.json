@@ -2055,39 +2055,6 @@
         }
       }
     },
-    "sUSDX_ARB_FUNDAMENTAL": {
-      "source": ["arbitrum-evm-fetcher-stables-labs"],
-      "denomination": "USDX",
-      "rateFeed": true,
-      "deviationCheck": {
-        "deviationWithRecentValues": {
-          "maxPercent": 1,
-          "maxDelayMilliseconds": 120000
-        }
-      }
-    },
-    "sUSDX_BNB_FUNDAMENTAL": {
-      "source": ["bnb-evm-fetcher-stables-labs"],
-      "denomination": "USDX",
-      "rateFeed": true,
-      "deviationCheck": {
-        "deviationWithRecentValues": {
-          "maxPercent": 1,
-          "maxDelayMilliseconds": 120000
-        }
-      }
-    },
-    "sUSDX_ETH_FUNDAMENTAL": {
-      "source": ["ethereum-evm-fetcher-stables-labs"],
-      "denomination": "USDX",
-      "rateFeed": true,
-      "deviationCheck": {
-        "deviationWithRecentValues": {
-          "maxPercent": 1,
-          "maxDelayMilliseconds": 120000
-        }
-      }
-    },
     "SWELL": {
       "source": [
         "bitget-usdt",
