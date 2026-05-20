@@ -50,6 +50,7 @@ export async function handleTx(aptos: Aptos, transaction: SimpleTransaction, sig
 
   console.log(`TransactionHash: ${pendingResponse.hash}`);
   return await aptos.waitForTransaction({
+    options: { timeoutSecs: 60 },
     transactionHash: pendingResponse.hash,
   });
 }

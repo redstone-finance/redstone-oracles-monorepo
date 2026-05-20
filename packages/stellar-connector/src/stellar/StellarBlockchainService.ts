@@ -1,11 +1,19 @@
-import { BlockchainService, BlockchainServiceWithTransfer } from "@redstone-finance/multichain-kit";
+import {
+  BlockchainServiceWithTransfer,
+  BlockchainServiceWithTxLookup,
+} from "@redstone-finance/multichain-kit";
 import { RedstoneCommon } from "@redstone-finance/utils";
 import { Keypair } from "@stellar/stellar-sdk";
 import { SECS_PER_LEDGER, StellarClient } from "./StellarClient";
 import { StellarSigner } from "./StellarSigner";
+import { StellarTxLookup } from "./StellarTxLookup";
 
-export class StellarBlockchainService implements BlockchainService {
+export class StellarBlockchainService implements BlockchainServiceWithTxLookup {
   constructor(protected readonly client: StellarClient) {}
+
+  get txLookup() {
+    return new StellarTxLookup(this.client);
+  }
 
   async getBlockNumber() {
     return await this.client.getBlockNumber();

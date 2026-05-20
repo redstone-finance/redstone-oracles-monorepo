@@ -25,8 +25,11 @@ export const DATA_PACKAGES_COUNT_BS = 2;
 // Number of bytes reserved for unsigned metadata byte size
 export const UNSIGNED_METADATA_BYTE_SIZE_BS = 3;
 
+// RedStone marker hex (raw bytes as hex, no "0x" prefix). Convenient for endsWith/indexOf on raw hex strings.
+export const REDSTONE_MARKER_HEX_PURE = "000002ed57011e0000";
+
 // RedStone marker, which will be appended in the end of each transaction
-export const REDSTONE_MARKER_HEX = "0x000002ed57011e0000";
+export const REDSTONE_MARKER_HEX = `0x${REDSTONE_MARKER_HEX_PURE}`;
 
 // Byte size of RedStone marker
 // we subtract 1 because of the 0x prefix

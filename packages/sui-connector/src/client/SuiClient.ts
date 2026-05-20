@@ -1,9 +1,9 @@
 import type { ClientWithCoreApi, CoreClient, SuiClientTypes } from "@mysten/sui/client";
 import type { Keypair } from "@mysten/sui/cryptography";
 import type { Transaction } from "@mysten/sui/transactions";
+import type { TxLookup } from "@redstone-finance/multichain-kit";
 import { MultiExecutor } from "@redstone-finance/utils";
 import { SuiObjectsClient } from "./SuiObjectsClient";
-import { SuiTxLookup } from "./lookup/SuiTxLookup";
 
 const CORE_SUB_INSTANCE_MODES = {
   getBalance: MultiExecutor.ExecutionMode.AGREEMENT,
@@ -37,7 +37,7 @@ export abstract class SuiClient {
   }
 
   abstract get clientWithCoreApi(): ClientWithCoreApi;
-  abstract get txLookup(): SuiTxLookup;
+  abstract get txLookup(): TxLookup;
 
   abstract getBlockNumber(): Promise<number>;
   abstract getReferenceGasPrice(): Promise<bigint>;

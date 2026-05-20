@@ -7,7 +7,7 @@ import { makeAptosAccount } from "./utils";
 
 export const TIMEOUT_IN_SEC = 20;
 
-export class MoveContractConnector<Adapter> implements IContractConnector<Adapter> {
+export class MoveContractConnector<Adapter = never> implements IContractConnector<Adapter> {
   private readonly logger = loggerFactory("move-contract-connector");
   private readonly account?: Account;
 

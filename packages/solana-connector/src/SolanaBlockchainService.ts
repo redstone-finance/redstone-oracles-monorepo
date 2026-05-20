@@ -1,9 +1,17 @@
-import { BlockchainService, BlockchainServiceWithTransfer } from "@redstone-finance/multichain-kit";
+import {
+  BlockchainServiceWithTransfer,
+  BlockchainServiceWithTxLookup,
+} from "@redstone-finance/multichain-kit";
 import { Keypair, LAMPORTS_PER_SOL, PublicKey } from "@solana/web3.js";
 import { SolanaClient } from "./client/SolanaClient";
+import { SolanaTxLookup } from "./SolanaTxLookup";
 
-export class SolanaBlockchainService implements BlockchainService {
+export class SolanaBlockchainService implements BlockchainServiceWithTxLookup {
   constructor(protected readonly client: SolanaClient) {}
+
+  get txLookup() {
+    return new SolanaTxLookup(this.client);
+  }
 
   async getBalance(addressOrName: string, slot?: number): Promise<bigint> {
     return await this.getNormalizedBalance(addressOrName, slot);
