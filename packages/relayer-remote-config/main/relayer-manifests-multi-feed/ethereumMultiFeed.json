@@ -35,13 +35,6 @@
         "timeSinceLastUpdateInMilliseconds": 86400000
       }
     },
-    "SolvBTC": {
-      "priceFeedAddress": "0x24c8964338Deb5204B096039147B8e8C3AEa42Cc",
-      "updateTriggersOverrides": {
-        "deviationPercentage": 0.5,
-        "timeSinceLastUpdateInMilliseconds": 21600000
-      }
-    },
     "pumpBTC/BTC": {
       "priceFeedAddress": "0x13433B1949d9141Be52Ae13Ad7e7E4911228414e",
       "updateTriggersOverrides": {
@@ -57,13 +50,6 @@
       "updateTriggersOverrides": {
         "deviationPercentage": 0.2,
         "timeSinceLastUpdateInMilliseconds": 86400000
-      }
-    },
-    "SolvBTC/BTC": {
-      "priceFeedAddress": "0x3fd49f2146FE0e10c4AE7E3fE04b3d5126385Ac4",
-      "updateTriggersOverrides": {
-        "deviationPercentage": 0.5,
-        "timeSinceLastUpdateInMilliseconds": 21600000
       }
     },
     "PUFFER": {

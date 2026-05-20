@@ -41,9 +41,6 @@
     "sfrxUSD_FUNDAMENTAL": {
       "priceFeedAddress": "0x71784611831b9566df7301A78bC1B3d29a8737bF"
     },
-    "SolvBTC": {
-      "priceFeedAddress": "0xF2B77433dE1820a5254a5a04705DB2C82d627bC0"
-    },
     "sfrxETH/ETH": {
       "priceFeedAddress": "0x29533E113D803ab1967F6CB9495B95DC8C1EA594"
     },
