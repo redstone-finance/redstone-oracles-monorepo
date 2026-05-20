@@ -20,9 +20,6 @@
     "USDT": {
       "priceFeedAddress": "0xf57bA29437C130e155Ca4b65128630777638F05D"
     },
-    "SolvBTC": {
-      "priceFeedAddress": "0xF5F641fF3c7E39876A76e77E84041C300DFa4550"
-    },
     "wstETH/ETH": {
       "priceFeedAddress": "0xE7e734789954e6CffD8C295CBD0916A0A5747D27"
     },
@@ -216,9 +213,6 @@
         "deviationPercentage": 0.01,
         "timeSinceLastUpdateInMilliseconds": 86400000
       }
-    },
-    "SolvBTC/BTC": {
-      "priceFeedAddress": "0x8D89d6c114193154f111D7C83299D285C9cC5BBC"
     },
     "SolvBTC_FUNDAMENTAL": {
       "priceFeedAddress": "0x77471661568DC65d4574EAd9544DfF1e618Adfb2",
