@@ -1,7 +1,8 @@
-import { MultiExecutor, RedstoneCommon } from "@redstone-finance/utils";
+import { loggerFactory, MultiExecutor, RedstoneCommon } from "@redstone-finance/utils";
 import {
   AccountInfo,
   Commitment,
+  ConfirmedSignatureInfo,
   ConfirmOptions,
   Connection,
   GetRecentPrioritizationFeesConfig,
@@ -15,6 +16,9 @@ import {
   VersionedTransaction,
 } from "@solana/web3.js";
 import { SolanaConnectionBuilder } from "../SolanaConnectionBuilder";
+
+const TX_FETCHING_BATCH_SIZE = 1000;
+const txLogger = loggerFactory("solana-client-get-transactions");
 
 export const SOLANA_SLOT_TIME_INTERVAL_MS = 400;
 
@@ -169,5 +173,55 @@ export class SolanaClient {
     const timestamp = await this.connection.getBlockTime(slot);
 
     return new Date((timestamp || 0) * 1000);
+  }
+
+  async getTransactions(fromSlot: number, toSlot: number, addresses: string[]) {
+    let fromSlotSignature, toSlotSignature;
+    try {
+      const [fromSlotSignatures, toSlotSignatures] = await Promise.all([
+        this.connection.getBlockSignatures(fromSlot),
+        this.connection.getBlockSignatures(toSlot),
+      ]);
+      fromSlotSignature = fromSlotSignatures.signatures[0];
+      toSlotSignature = toSlotSignatures.signatures[toSlotSignatures.signatures.length - 1];
+    } catch (error) {
+      txLogger.warn(
+        `Slot is missing, using latest ${TX_FETCHING_BATCH_SIZE} signatures; ${RedstoneCommon.stringifyError(error)}`
+      );
+    }
+
+    const allSignatures: ConfirmedSignatureInfo[] = [];
+    for (const address of addresses) {
+      allSignatures.push(
+        ...(await this.getAllSignatureInfos(address, fromSlotSignature, toSlotSignature))
+      );
+    }
+
+    const filtered = allSignatures.filter((sig) => sig.slot >= fromSlot && sig.slot <= toSlot);
+
+    return await Promise.all(
+      filtered.map((sig) =>
+        this.connection.getTransaction(sig.signature, { maxSupportedTransactionVersion: 0 })
+      )
+    );
+  }
+
+  private async getAllSignatureInfos(
+    address: string,
+    minTxSig?: string,
+    maxTxSig?: string
+  ): Promise<ConfirmedSignatureInfo[]> {
+    const result = await this.connection.getSignaturesForAddress(new PublicKey(address), {
+      limit: TX_FETCHING_BATCH_SIZE,
+      before: maxTxSig,
+      until: minTxSig,
+    });
+
+    if (result.length === TX_FETCHING_BATCH_SIZE && minTxSig && maxTxSig) {
+      const previous = await this.getAllSignatureInfos(address, minTxSig, result[0].signature);
+      result.push(...previous);
+    }
+
+    return result;
   }
 }
