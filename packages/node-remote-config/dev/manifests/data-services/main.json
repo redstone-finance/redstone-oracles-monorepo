@@ -2277,21 +2277,6 @@
       "denomination": "USD",
       "rateFeed": false
     },
-    "TRY_FX": {
-      "source": [],
-      "denomination": "USD",
-      "rateFeed": false,
-      "types": [
-        "rwa"
-      ]
-    },
-    "TRY": {
-      "source": [
-        "try-condition-fetcher"
-      ],
-      "denomination": "USD",
-      "rateFeed": false
-    },
     "PLN": {
       "source": [],
       "denomination": "USD",
