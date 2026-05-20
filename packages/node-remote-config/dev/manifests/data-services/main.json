@@ -2031,38 +2031,6 @@
       "denomination": "USD",
       "rateFeed": false
     },
-    "SolvBTC": {
-      "source": [
-        "pancake-swap-bnb-btcb-100",
-        "pancake-swap-bnb-btcb-500",
-        "thena-v3-bnb-btcb",
-        "thena-v3-bnb-wbnb",
-        "uniswap-v3-bnb-btcb-100",
-        "uniswap-v3-ethereum-wbtc-500",
-        "blackhole-avalanche-btc.b-5000",
-        "trader-joe-v2-avalanche-btc.b"
-      ],
-      "denomination": "USD",
-      "rateFeed": false,
-      "valueCapConfig": {
-        "upper": {
-          "token": "BTC",
-          "multiplier": 1.01
-        }
-      }
-    },
-    "SolvBTC/BTC": {
-      "source": [
-        "non-usd-based"
-      ],
-      "denomination": "BTC",
-      "rateFeed": false,
-      "valueCapConfig": {
-        "upper": {
-          "value": 1.01
-        }
-      }
-    },
     "SolvBTC_FUNDAMENTAL": {
       "source": [
         "ethereum-evm-fetcher-solv-rate-provider"
@@ -2081,7 +2049,7 @@
       "source": [
         "ethereum-evm-fetcher-curve-rate-provider"
       ],
-      "denomination": "SolvBTC",
+      "denomination": "SolvBTC_FUNDAMENTAL",
       "rateFeed": true
     },
     "SolvBTC.BBN_FUNDAMENTAL/USD": {
