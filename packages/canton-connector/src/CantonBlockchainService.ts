@@ -1,26 +1,16 @@
-import { BlockchainService } from "@redstone-finance/multichain-kit";
-import { WRITE_PRICES_CHOICE } from "./adapters/PricesCantonContractAdapter";
-import { IADAPTER_TEMPLATE_NAME } from "./adapters/PricesCantonReadOnlyAdapter";
+import { BlockchainServiceWithTxLookup } from "@redstone-finance/multichain-kit";
+import { CantonTxLookup } from "./CantonTxLookup";
 import { CantonClient } from "./client/CantonClient";
-import { combineIntoId } from "./utils/utils";
 
-export class CantonBlockchainService implements BlockchainService {
+export class CantonBlockchainService implements BlockchainServiceWithTxLookup {
   constructor(protected readonly cantonClient: CantonClient) {}
+
+  get txLookup() {
+    return new CantonTxLookup(this.cantonClient);
+  }
 
   async getBlockNumber() {
     return await this.cantonClient.getCurrentOffset();
-  }
-
-  getTransactionsInWindow(
-    actAs: string,
-    interfaceId: string,
-    from: number,
-    to: number,
-    templateName = IADAPTER_TEMPLATE_NAME
-  ) {
-    const id = combineIntoId(interfaceId, templateName);
-
-    return this.cantonClient.getTransactionsForInterface(actAs, id, from, to, WRITE_PRICES_CHOICE);
   }
 
   getTimeForBlock(): Promise<Date> {
