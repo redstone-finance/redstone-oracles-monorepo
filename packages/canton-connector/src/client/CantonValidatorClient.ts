@@ -41,6 +41,7 @@ export class CantonValidatorClient {
 
   async getWalletPartyId(): Promise<string> {
     const { party_id } = await this.api.get<UserStatusResponse>("/v0/wallet/user-status");
+
     return party_id;
   }
 

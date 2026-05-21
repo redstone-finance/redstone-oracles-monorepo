@@ -133,6 +133,7 @@ async function getTransferDetails() {
         initial: "0.1",
         validate: (value: string) => {
           const num = parseFloat(value);
+
           return !isNaN(num) && num > 0 ? true : "Amount must be a valid number greater than 0";
         },
         format: (value: string) => parseFloat(value), // Ensure it's converted to a number

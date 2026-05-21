@@ -72,6 +72,7 @@ function formatAddressFilename(
   entityType: "component" | "package"
 ) {
   const clientNameString = clientName ? `${clientName}.` : "";
+
   return `${clientNameString}${NETWORK.name}.${entityType}.addr`;
 }
 

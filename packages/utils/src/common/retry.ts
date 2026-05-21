@@ -26,6 +26,7 @@ export function retry<P extends unknown[], R extends Promise<unknown>>(config: R
   if (config.maxRetries === 0) {
     throw new Error(`Setting 'config.maxRetries' to 0 will never call the underlying function`);
   }
+
   return async (...args: P): Promise<Awaited<R>> => {
     return await executeWithRetries(config, args);
   };
@@ -67,6 +68,7 @@ export async function executeWithRetries<P extends unknown[], R extends Promise<
       }
     }
   }
+
   throw new AggregateError(errors, `Retry failed after ${i} attempts of ${fnName}`);
 }
 

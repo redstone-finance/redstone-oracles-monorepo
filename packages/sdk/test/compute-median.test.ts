@@ -22,6 +22,7 @@ function makePackage(value: number, wallet = WALLET_1, feedId = "ETH"): SignedDa
     1_000_000,
     feedId
   );
+
   return dp.sign(wallet.privateKey).toObj();
 }
 

@@ -119,6 +119,7 @@ export const calculateHistoricalPackagesTimestamp = (
       Math.floor((baseTimestamp - deviationCheckOffsetInMilliseconds) / denominator) * denominator
     );
   }
+
   return undefined;
 };
 
@@ -157,8 +158,10 @@ export const requestDataPackages = async (
     })}, Original error: ${RedstoneCommon.stringifyError(e)}`;
     if (e instanceof AggregateError) {
       e.message = errMessage;
+
       throw e;
     }
+
     throw new Error(errMessage);
   }
 };

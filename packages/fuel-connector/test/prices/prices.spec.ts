@@ -55,6 +55,7 @@ describe("Prices contract", () => {
       newParamsProvider.overriddenFeedIds = ["BTC"];
 
       await adapter.writePricesFromPayloadToContract(newParamsProvider);
+
       return await adapter.readPricesFromContract(paramsProvider);
     });
 

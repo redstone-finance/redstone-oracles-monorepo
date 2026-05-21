@@ -20,6 +20,7 @@ export abstract class BaseWrapper<T extends Contract> {
 
   async getBytesDataForAppending(): Promise<string> {
     const shouldBeMultipleOf32 = false;
+
     return await this.prepareRedstonePayload(shouldBeMultipleOf32);
   }
 
@@ -30,6 +31,7 @@ export abstract class BaseWrapper<T extends Contract> {
     this.setContractForFetchingDefaultParams(contract);
     const shouldBeMultipleOf32 = true;
     const payloadWithoutZeroExPrefix = await this.prepareRedstonePayload(shouldBeMultipleOf32);
+
     return "0x" + payloadWithoutZeroExPrefix;
   }
 
@@ -99,6 +101,7 @@ export abstract class BaseWrapper<T extends Contract> {
       const originalTx = await contract.populateTransaction[functionName](...args);
       const dataToAppend = await this.getBytesDataForAppending();
       originalTx.data += dataToAppend;
+
       return originalTx;
     };
   }
@@ -122,6 +125,7 @@ export abstract class BaseWrapper<T extends Contract> {
         const result = await contract[shouldUseSigner ? "signer" : "provider"].call(tx, blockTag);
 
         const decoded = contract.interface.decodeFunctionResult(functionName, result);
+
         // eslint-disable-next-line @typescript-eslint/no-unsafe-return -- add reason here, please
         return decoded.length === 1 ? decoded[0] : decoded;
       } else {
@@ -147,6 +151,7 @@ export abstract class BaseWrapper<T extends Contract> {
       delete overrides.blockTag;
       args.push(overrides);
     }
+
     return blockTag;
   }
 

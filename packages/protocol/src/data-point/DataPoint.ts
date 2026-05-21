@@ -39,6 +39,7 @@ export class DataPoint extends Serializable {
 
   toBytes(): Uint8Array {
     const serializedDataFeedId = this.serializeDataFeedId();
+
     return concat([serializedDataFeedId, this.value]);
   }
 }

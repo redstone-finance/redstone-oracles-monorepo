@@ -124,6 +124,7 @@ export function createSanitizedLogger(logger: RedstoneLogger): RedstoneLogger {
               ? // eslint-disable-next-line @typescript-eslint/no-unsafe-call -- add reason here, please
                 arg()
               : arg;
+
           // eslint-disable-next-line @typescript-eslint/no-unsafe-return -- add reason here, please
           return sanitizeValue(val);
         });
@@ -132,6 +133,7 @@ export function createSanitizedLogger(logger: RedstoneLogger): RedstoneLogger {
       };
     }
   });
+
   return sanitizedLogger;
 }
 
@@ -146,6 +148,7 @@ function getCustomLogLevel(
   if (logLevels["*"]) {
     return logLevels["*"];
   }
+
   return defaultLogLevel;
 }
 
@@ -165,6 +168,7 @@ function sanitize(val: unknown, seen: WeakSet<object>, depth: number = 0): unkno
     seen.add(val);
     const result = val.map((item) => sanitize(item, seen, depth + 1));
     seen.delete(val);
+
     return result;
   } else if (val !== null && typeof val === "object") {
     if (seen.has(val)) {
@@ -176,13 +180,16 @@ function sanitize(val: unknown, seen: WeakSet<object>, depth: number = 0): unkno
       result[key] = sanitize(item, seen, depth + 1);
     }
     seen.delete(val);
+
     return result;
   }
+
   return val;
 }
 
 export function sanitizeValue<T>(value: T): T {
   const seen = new WeakSet();
+
   return sanitize(value, seen) as T;
 }
 

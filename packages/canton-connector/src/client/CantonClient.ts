@@ -83,6 +83,7 @@ export class CantonClient {
       const available = synchronizers
         .map(({ synchronizerAlias, synchronizerId }) => `${synchronizerAlias}: ${synchronizerId}`)
         .join(", ");
+
       throw new Error(
         `Expected exactly 1 connected synchronizer, found ${synchronizers.length}: ${available}`
       );
@@ -114,6 +115,7 @@ export class CantonClient {
     if (!party) {
       throw new Error("No primary party found for authenticated user");
     }
+
     return party;
   }
 
@@ -129,6 +131,7 @@ export class CantonClient {
         "Scan API client is not configured. Add API_TYPE_SCAN and API_TYPE_SCAN_PROXY URLs to RPC_URLS."
       );
     }
+
     return this.scanApiClient;
   }
 

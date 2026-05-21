@@ -70,7 +70,7 @@ export class OperationQueue<T = string> {
     // nop
   }
 
-  private async processQueue(): Promise<void> {
+  private async processQueue() {
     if (this.isProcessing) {
       return;
     }

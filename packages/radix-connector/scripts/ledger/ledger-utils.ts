@@ -24,11 +24,13 @@ export class LedgerSigner implements IRadixSigner {
 
   async signIntentToSignatureWithKey(hashIntent: Uint8Array) {
     const sig = await this.signHash(hashIntent);
+
     return new SignatureWithPublicKey.Ed25519(sig, (await this.publicKey()).bytes);
   }
 
   async signIntent(hashIntent: Uint8Array) {
     const sig = await this.signHash(hashIntent);
+
     return new Signature.Ed25519(sig);
   }
 
@@ -38,11 +40,13 @@ export class LedgerSigner implements IRadixSigner {
 
   async publicKey() {
     const pk = await getPublicKey(this.aptos, this.accountId, this.networkId);
+
     return pk.ed;
   }
 
   async publicKeyHex() {
     const pk = await getPublicKey(this.aptos, this.accountId, this.networkId);
+
     return pk.ed.hexString();
   }
 

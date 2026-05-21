@@ -56,6 +56,7 @@ export class DataPackage extends Serializable {
   getEachDataPointByteSize() {
     if (this.dataPoints.length === 0) {
       assert(allowUnsafeEmptyDataPackages, "Empty data packages are not allowed");
+
       return 32;
     }
 
@@ -81,6 +82,7 @@ export class DataPackage extends Serializable {
 
   public static fromObj(plainObject: DataPackagePlainObj): DataPackage {
     const dataPoints = plainObject.dataPoints.map(deserializeDataPointFromObj);
+
     return new DataPackage(
       dataPoints,
       plainObject.timestampMilliseconds,
@@ -91,6 +93,7 @@ export class DataPackage extends Serializable {
   getSignableHash(): Uint8Array {
     const serializedDataPackage = this.toBytes();
     const signableHashHex = keccak256(serializedDataPackage);
+
     return arrayify(signableHashHex);
   }
 
@@ -101,6 +104,7 @@ export class DataPackage extends Serializable {
     // Generating a signature
     const signingKey = new SigningKey(privateKey);
     const fullSignature = signingKey.signDigest(signableHashBytes);
+
     // Return a signed data package
     return new SignedDataPackage(this, fullSignature);
   }
@@ -117,8 +121,10 @@ export class DataPackage extends Serializable {
         comparisonResult !== 0 || allowUnsafeDataPackagesWithDuplications,
         `Duplicated dataFeedId found: ${dp1.dataFeedId}`
       );
+
       return comparisonResult;
     });
+
     return concat(this.dataPoints.map((dp) => dp.toBytes()));
   }
 
@@ -221,6 +227,7 @@ export class SignedDataPackage extends Serializable implements SignedDataPackage
     Object.defineProperty(dp, "dataPackage", {
       get() {
         decoded ??= SignedDataPackage.fromObj(plainObject);
+
         return decoded.dataPackage;
       },
     });
@@ -228,6 +235,7 @@ export class SignedDataPackage extends Serializable implements SignedDataPackage
     Object.defineProperty(dp, "signature", {
       get() {
         decoded ??= SignedDataPackage.fromObj(plainObject);
+
         return decoded.signature;
       },
     });
