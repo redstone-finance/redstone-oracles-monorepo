@@ -447,6 +447,20 @@
     },
     "WBTC/BTC": {
       "priceFeedAddress": "0xD260596f85C6D91Ccd40f7076eEb62ACb3B2ad53"
+    },
+    "VUSD_FUNDAMENTAL": {
+      "priceFeedAddress": "0x02775557a7790cdBb6bb0Fcd65c7BB72c4d32e4C",
+      "updateTriggersOverrides": {
+        "deviationPercentage": 0.05,
+        "timeSinceLastUpdateInMilliseconds": 86400000
+      }
+    },
+    "sVUSD_FUNDAMENTAL": {
+      "priceFeedAddress": "0x6a8da9723FE0f1dF00eCe03ECb6dFfB39C6ED0de",
+      "updateTriggersOverrides": {
+        "deviationPercentage": 0.05,
+        "timeSinceLastUpdateInMilliseconds": 86400000
+      }
     }
   }
 }
