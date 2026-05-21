@@ -1,9 +1,9 @@
 import {
   createMqtt5ClientFactory,
   createMultiPubSubClientFromEnv,
-  MqttTopics,
   PooledMqttClient,
   PubSubClient,
+  PubSubTopics,
 } from "@redstone-finance/pub-sub";
 import { RelayerConfig } from "../config/RelayerConfig";
 
@@ -30,7 +30,7 @@ export function createPubSubClient(relayerConfig: RelayerConfig): PubSubClient {
         type: "AWSSigV4",
       },
     }),
-    MqttTopics.calculateTopicCountPerConnection(),
+    PubSubTopics.calculateTopicCountPerConnection(),
     relayerConfig.pubSubEndpoint
   );
 }

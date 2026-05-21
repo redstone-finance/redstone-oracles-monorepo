@@ -13,4 +13,4 @@ export * from "./PubSubClient";
 export * from "./PubSubClientConfig";
 export * from "./PubSubClientFactory";
 export * from "./RateLimitsCircuitBreaker";
-export * as MqttTopics from "./topics";
+export * as PubSubTopics from "./topics";

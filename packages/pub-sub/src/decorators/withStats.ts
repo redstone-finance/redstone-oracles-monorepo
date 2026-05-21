@@ -11,10 +11,10 @@ interface StatsMetrics {
 }
 
 /**
- * Tracks MQTT message statistics per topic and per client
+ * Tracks pub-sub message statistics per topic and per client
  * Aggregates messages per second until logged, then clears the data
  */
-export class MqttStatsTracker {
+export class PubSubStatsTracker {
   private readonly topicStats = new Map<string, Map<number, number>>();
   private readonly clientStats = new Map<string, Map<number, number>>();
 
@@ -30,8 +30,8 @@ export class MqttStatsTracker {
     const now = Date.now();
     const currentSecond = Math.floor(now / 1000);
 
-    MqttStatsTracker.updateStats(this.topicStats, topicName, currentSecond);
-    MqttStatsTracker.updateStats(this.clientStats, clientName, currentSecond);
+    PubSubStatsTracker.updateStats(this.topicStats, topicName, currentSecond);
+    PubSubStatsTracker.updateStats(this.clientStats, clientName, currentSecond);
   }
 
   private static updateStats(
@@ -102,14 +102,14 @@ export class MqttStatsTracker {
   getTopicMetrics(): Array<{ topic: string; metrics: StatsMetrics }> {
     return Array.from(this.topicStats.entries(), ([topic, countsPerSecond]) => ({
       topic,
-      metrics: MqttStatsTracker.computeMetrics(countsPerSecond),
+      metrics: PubSubStatsTracker.computeMetrics(countsPerSecond),
     }));
   }
 
   getClientMetrics(): Array<{ client: string; metrics: StatsMetrics }> {
     return Array.from(this.clientStats.entries(), ([client, countsPerSecond]) => ({
       client,
-      metrics: MqttStatsTracker.computeMetrics(countsPerSecond),
+      metrics: PubSubStatsTracker.computeMetrics(countsPerSecond),
     }));
   }
 }
@@ -150,7 +150,7 @@ export function withStats({
   callback,
   logIntervalMs = 60_000,
 }: WithStatsConfig): SubscribeCallback {
-  const tracker = new MqttStatsTracker(logIntervalMs);
+  const tracker = new PubSubStatsTracker(logIntervalMs);
 
   const wrappedCallback: SubscribeCallback = (
     topicName: string,

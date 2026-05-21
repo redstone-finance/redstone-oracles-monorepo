@@ -5,10 +5,10 @@ import { ethers } from "ethers";
 import {
   DataPackageSubscriber,
   DataPackageSubscriberParams,
-  MqttTopics,
   PooledMqttClient,
   PubSubClient,
   PubSubPayload,
+  PubSubTopics,
   RateLimitsCircuitBreaker,
   SubscribeCallback,
 } from "../src";
@@ -97,7 +97,7 @@ async function publishToPubSub(
   await pubSub.publish(
     [
       {
-        topic: MqttTopics.encodeDataPackageTopic({
+        topic: PubSubTopics.encodeDataPackageTopic({
           dataServiceId,
           dataPackageId: dataPackage.dataPackage.dataPackageId,
           nodeAddress: MOCK_WALLET_1.address,
@@ -281,7 +281,7 @@ describe("subscribe-data-packages", () => {
       await pubSub.publish(
         [
           {
-            topic: MqttTopics.encodeDataPackageTopic({
+            topic: PubSubTopics.encodeDataPackageTopic({
               dataServiceId,
               dataPackageId: "ETH",
               nodeAddress: MOCK_WALLET_1.address,
@@ -305,7 +305,7 @@ describe("subscribe-data-packages", () => {
       await pubSub.publish(
         [
           {
-            topic: MqttTopics.encodeDataPackageTopic({
+            topic: PubSubTopics.encodeDataPackageTopic({
               dataServiceId,
               dataPackageId: "ETH",
               nodeAddress: MOCK_WALLET_1.address,
@@ -327,7 +327,7 @@ describe("subscribe-data-packages", () => {
       await pubSub.publish(
         [
           {
-            topic: MqttTopics.encodeDataPackageTopic({
+            topic: PubSubTopics.encodeDataPackageTopic({
               dataServiceId,
               dataPackageId: "ETH",
               nodeAddress: MOCK_WALLET_1.address,
@@ -442,7 +442,7 @@ describe("subscribe-data-packages", () => {
       await pubSub.publish(
         [
           {
-            topic: MqttTopics.encodeDataPackageTopic({
+            topic: PubSubTopics.encodeDataPackageTopic({
               dataServiceId,
               dataPackageId: "ETH",
               nodeAddress: MOCK_WALLET_1.address,

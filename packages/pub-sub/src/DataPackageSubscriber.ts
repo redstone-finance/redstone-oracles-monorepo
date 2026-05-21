@@ -27,7 +27,7 @@ import {
 type SubscriptionCallbackFn = (dataPackages: DataPackagesResponse) => unknown;
 
 /**
- * The DataPackageSubscriber class is responsible for aggregation and verification of packages broadcasted via mqtt.
+ * The DataPackageSubscriber class is responsible for aggregation and verification of packages broadcasted via pub-sub.
  * The implementation MUST include all checks from {@link requestDataPackages}
  *
  * ## Behavior

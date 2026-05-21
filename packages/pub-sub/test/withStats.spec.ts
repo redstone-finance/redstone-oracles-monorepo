@@ -10,11 +10,11 @@ jest.mock("@redstone-finance/utils", () => ({
   }),
 }));
 
-import { MqttStatsTracker, withStats } from "../src/decorators/withStats";
+import { PubSubStatsTracker, withStats } from "../src/decorators/withStats";
 import { PubSubClient } from "../src/PubSubClient";
 
-describe("MqttStatsTracker", () => {
-  let statsTracker: MqttStatsTracker;
+describe("PubSubStatsTracker", () => {
+  let statsTracker: PubSubStatsTracker;
 
   beforeEach(() => {
     jest.useFakeTimers();
@@ -28,7 +28,7 @@ describe("MqttStatsTracker", () => {
   describe("logging", () => {
     /* eslint-disable @typescript-eslint/no-unsafe-assignment */
     it("should log statistics with logger when messages are recorded and clear data", () => {
-      statsTracker = new MqttStatsTracker(60_000);
+      statsTracker = new PubSubStatsTracker(60_000);
 
       // Verify constructor logged the start message
       expect(mockLoggerInfo).toHaveBeenCalledWith(
@@ -107,7 +107,7 @@ describe("MqttStatsTracker", () => {
 
   describe("recordMessage", () => {
     it("should record single message for topic", () => {
-      statsTracker = new MqttStatsTracker(60_000);
+      statsTracker = new PubSubStatsTracker(60_000);
       statsTracker.recordMessage("test-topic", "test-client");
 
       const topicMetrics = statsTracker.getTopicMetrics();
@@ -117,7 +117,7 @@ describe("MqttStatsTracker", () => {
     });
 
     it("should record single message for client", () => {
-      statsTracker = new MqttStatsTracker(60_000);
+      statsTracker = new PubSubStatsTracker(60_000);
       statsTracker.recordMessage("test-topic", "test-client");
 
       const clientMetrics = statsTracker.getClientMetrics();
@@ -127,7 +127,7 @@ describe("MqttStatsTracker", () => {
     });
 
     it("should record multiple messages in same second", () => {
-      statsTracker = new MqttStatsTracker(60_000);
+      statsTracker = new PubSubStatsTracker(60_000);
       statsTracker.recordMessage("test-topic", "test-client");
       statsTracker.recordMessage("test-topic", "test-client");
       statsTracker.recordMessage("test-topic", "test-client");
@@ -139,7 +139,7 @@ describe("MqttStatsTracker", () => {
     });
 
     it("should track messages across different seconds", () => {
-      statsTracker = new MqttStatsTracker(60_000);
+      statsTracker = new PubSubStatsTracker(60_000);
       // Record 3 messages in first second
       statsTracker.recordMessage("test-topic", "test-client");
       statsTracker.recordMessage("test-topic", "test-client");
@@ -163,7 +163,7 @@ describe("MqttStatsTracker", () => {
     });
 
     it("should track multiple topics independently", () => {
-      statsTracker = new MqttStatsTracker(60_000);
+      statsTracker = new PubSubStatsTracker(60_000);
       statsTracker.recordMessage("topic-1", "client-1");
       statsTracker.recordMessage("topic-1", "client-1");
       statsTracker.recordMessage("topic-2", "client-1");
@@ -179,7 +179,7 @@ describe("MqttStatsTracker", () => {
     });
 
     it("should track multiple clients independently", () => {
-      statsTracker = new MqttStatsTracker(60_000);
+      statsTracker = new PubSubStatsTracker(60_000);
       statsTracker.recordMessage("topic-1", "client-1");
       statsTracker.recordMessage("topic-1", "client-1");
       statsTracker.recordMessage("topic-2", "client-2");
@@ -199,7 +199,7 @@ describe("MqttStatsTracker", () => {
 
   describe("metrics computation", () => {
     it("should compute max correctly", () => {
-      statsTracker = new MqttStatsTracker(60_000);
+      statsTracker = new PubSubStatsTracker(60_000);
       // Second 1: 2 messages
       statsTracker.recordMessage("test-topic", "test-client");
       statsTracker.recordMessage("test-topic", "test-client");
@@ -223,7 +223,7 @@ describe("MqttStatsTracker", () => {
     });
 
     it("should compute min correctly", () => {
-      statsTracker = new MqttStatsTracker(60_000);
+      statsTracker = new PubSubStatsTracker(60_000);
       // Second 1: 5 messages
       for (let i = 0; i < 5; i++) {
         statsTracker.recordMessage("test-topic", "test-client");
@@ -247,7 +247,7 @@ describe("MqttStatsTracker", () => {
     });
 
     it("should compute avg correctly", () => {
-      statsTracker = new MqttStatsTracker(60_000);
+      statsTracker = new PubSubStatsTracker(60_000);
       // Second 1: 2 messages
       statsTracker.recordMessage("test-topic", "test-client");
       statsTracker.recordMessage("test-topic", "test-client");
@@ -272,7 +272,7 @@ describe("MqttStatsTracker", () => {
     });
 
     it("should handle gaps in time correctly", () => {
-      statsTracker = new MqttStatsTracker(60_000);
+      statsTracker = new PubSubStatsTracker(60_000);
       // Record messages in second 1
       statsTracker.recordMessage("test-topic", "test-client");
       statsTracker.recordMessage("test-topic", "test-client");
@@ -294,7 +294,7 @@ describe("MqttStatsTracker", () => {
 
   describe("data management", () => {
     it("should accumulate data continuously", () => {
-      statsTracker = new MqttStatsTracker(60_000);
+      statsTracker = new PubSubStatsTracker(60_000);
 
       // Record messages over several seconds
       for (let i = 0; i < 5; i++) {
@@ -309,7 +309,7 @@ describe("MqttStatsTracker", () => {
     });
 
     it("should clear data after logging", () => {
-      statsTracker = new MqttStatsTracker(60_000);
+      statsTracker = new PubSubStatsTracker(60_000);
       statsTracker.recordMessage("test-topic", "test-client");
       statsTracker.recordMessage("test-topic", "test-client");
 
@@ -327,7 +327,7 @@ describe("MqttStatsTracker", () => {
     });
 
     it("should accumulate data again after clearing", () => {
-      statsTracker = new MqttStatsTracker(60_000);
+      statsTracker = new PubSubStatsTracker(60_000);
       statsTracker.recordMessage("test-topic", "test-client");
 
       // Trigger log (clears data)
@@ -346,7 +346,7 @@ describe("MqttStatsTracker", () => {
 
   describe("periodic logging", () => {
     it("should trigger periodic logging at specified interval and clear data", () => {
-      statsTracker = new MqttStatsTracker(60_000);
+      statsTracker = new PubSubStatsTracker(60_000);
       statsTracker.recordMessage("test-topic", "test-client");
 
       // Get initial metrics
@@ -362,7 +362,7 @@ describe("MqttStatsTracker", () => {
     });
 
     it("should continue logging at regular intervals", () => {
-      statsTracker = new MqttStatsTracker(60_000);
+      statsTracker = new PubSubStatsTracker(60_000);
 
       // First interval
       statsTracker.recordMessage("test-topic", "test-client");
@@ -379,7 +379,7 @@ describe("MqttStatsTracker", () => {
     });
 
     it("should handle logging when no data is available", () => {
-      statsTracker = new MqttStatsTracker(60_000);
+      statsTracker = new PubSubStatsTracker(60_000);
 
       // No messages recorded
       const metrics = statsTracker.getTopicMetrics();
