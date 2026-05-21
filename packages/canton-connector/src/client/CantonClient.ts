@@ -55,18 +55,14 @@ export class CantonClient {
   }
 
   async getTotalConsumedTraffic() {
-    const status = await this.scanApiClient?.getTrafficStatus();
+    const status = await this.requireScanApiClient().getTrafficStatus();
 
-    return status?.traffic_status.actual.total_consumed;
+    return status.traffic_status.actual.total_consumed;
   }
 
   async getRemainingTraffic() {
-    const status = await this.scanApiClient?.getTrafficStatus();
-    const actual = status?.traffic_status.actual;
-
-    if (!RedstoneCommon.isDefined(actual)) {
-      return undefined;
-    }
+    const status = await this.requireScanApiClient().getTrafficStatus();
+    const actual = status.traffic_status.actual;
 
     return actual.total_limit - actual.total_consumed;
   }
@@ -109,10 +105,31 @@ export class CantonClient {
     );
   }
 
+  async getAuthenticatedPartyId(): Promise<string> {
+    const response = await this.api.performRequest(
+      () => DefaultService.getV2AuthenticatedUser(),
+      "getAuthenticatedPartyId"
+    );
+    const party = response.user?.primaryParty;
+    if (!party) {
+      throw new Error("No primary party found for authenticated user");
+    }
+    return party;
+  }
+
   async getAmuletBalance(partyId: string) {
-    const summary = await this.scanApiClient?.getAmuletHoldingsSummary(partyId);
+    const summary = await this.requireScanApiClient().getAmuletHoldingsSummary(partyId);
 
     return summary?.total_available_coin ?? "0";
+  }
+
+  private requireScanApiClient(): CantonScanApiClient {
+    if (!this.scanApiClient) {
+      throw new Error(
+        "Scan API client is not configured. Add API_TYPE_SCAN and API_TYPE_SCAN_PROXY URLs to RPC_URLS."
+      );
+    }
+    return this.scanApiClient;
   }
 
   async getActiveContractsData(

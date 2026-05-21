@@ -6,6 +6,12 @@ const MAX_RETRIES = 3;
 
 type SendCCResponse = Record<string, unknown>;
 
+type UserStatusResponse = {
+  party_id: string;
+  user_onboarded: boolean;
+  user_wallet_feature_app_right: boolean;
+};
+
 type PrepareSendResponse = {
   transaction: string;
   tx_hash: string;
@@ -32,6 +38,11 @@ type SubmitAcceptResponse = {
 
 export class CantonValidatorClient {
   constructor(private readonly api: ValidatorCantonApi) {}
+
+  async getWalletPartyId(): Promise<string> {
+    const { party_id } = await this.api.get<UserStatusResponse>("/v0/wallet/user-status");
+    return party_id;
+  }
 
   async sendCC(receiverPartyId: string, amount: number, deduplicationId?: string) {
     return await this.api.post<SendCCResponse>("/v0/wallet/transfer-preapproval/send", {
@@ -113,6 +124,15 @@ export class CantonValidatorClient {
 }
 
 export class ValidatorCantonApi extends CantonApi {
+  async get<T>(path: string) {
+    const { data } = await RedstoneCommon.axiosGetWithRetries<T>(`${this.baseUrl}${path}`, {
+      maxRetries: MAX_RETRIES,
+      headers: await this.authHeaders(),
+    });
+
+    return data;
+  }
+
   async post<T>(path: string, body: object) {
     const { data } = await RedstoneCommon.axiosPostWithRetries<T>(`${this.baseUrl}${path}`, body, {
       maxRetries: MAX_RETRIES,
