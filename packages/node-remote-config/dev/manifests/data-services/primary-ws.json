@@ -105,7 +105,7 @@
       "priceAggregator": "primarySource",
       "primarySourceAggregatorConfig": {
         "primarySource": "",
-        "maxAcceptableDeviation": 1.5,
+        "maxAcceptableDeviation": 1.0,
         "lowerClampPercent": 0.1,
         "upperClampPercent": 0.1
       },
@@ -135,7 +135,7 @@
       "priceAggregator": "primarySource",
       "primarySourceAggregatorConfig": {
         "primarySource": "",
-        "maxAcceptableDeviation": 1.5,
+        "maxAcceptableDeviation": 1.0,
         "lowerClampPercent": 0.1,
         "upperClampPercent": 0.1
       },
@@ -797,13 +797,10 @@
       "priceAggregator": "primarySource",
       "primarySourceAggregatorConfig": {
         "primarySource": "",
-        "maxAcceptableDeviation": 1.5,
+        "maxAcceptableDeviation": 1.0,
         "lowerClampPercent": 0.1,
         "upperClampPercent": 0.1
       },
-      "broadcasters": [
-        "influx"
-      ],
       "deviationCheck": {
         "deviationWithRecentValues": {
           "maxPercent": 30,
@@ -862,7 +859,7 @@
       "priceAggregator": "primarySource",
       "primarySourceAggregatorConfig": {
         "primarySource": "",
-        "maxAcceptableDeviation": 1.5,
+        "maxAcceptableDeviation": 1.0,
         "lowerClampPercent": 0.1,
         "upperClampPercent": 0.1
       },
@@ -924,13 +921,10 @@
       "priceAggregator": "primarySource",
       "primarySourceAggregatorConfig": {
         "primarySource": "",
-        "maxAcceptableDeviation": 1.5,
+        "maxAcceptableDeviation": 1.0,
         "lowerClampPercent": 0.1,
         "upperClampPercent": 0.1
       },
-      "broadcasters": [
-        "influx"
-      ],
       "deviationCheck": {
         "deviationWithRecentValues": {
           "maxPercent": 30,
