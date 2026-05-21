@@ -35,6 +35,7 @@ export class Sep40StellarContractAdapter extends StellarContractAdapter {
       }
 
       const timestampMS = RedstoneCommon.secsToMs(result.value.timestamp);
+
       return {
         lastDataPackageTimestampMS: timestampMS,
         lastBlockTimestampMS: timestampMS,

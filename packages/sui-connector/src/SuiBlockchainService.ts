@@ -49,7 +49,7 @@ export class SuiBlockchainServiceWithTransfer
     super(client);
   }
 
-  async transfer(toAddress: string, amount: number): Promise<void> {
+  async transfer(toAddress: string, amount: number) {
     amount = amount * 10 ** SUI_DECIMALS;
 
     const tx = new Transaction();

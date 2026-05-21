@@ -22,6 +22,7 @@ export function assertThenReturn<T>(value: T | undefined, errMsg: string): T {
   if (!value) {
     throw new Error(`Assertion failed: ${errMsg}`);
   }
+
   return value;
 }
 
@@ -76,6 +77,7 @@ const showStack = (stack: string | undefined): string => {
   if (trace) {
     return stack + ";";
   }
+
   return "";
 };
 
@@ -122,6 +124,7 @@ export function stringifyError(e: unknown, noStack = false): string {
       return "undefined";
     } else if (error instanceof AggregateError) {
       const errorMessages: string[] = error.errors.map((e) => stringifyError(e, noStack));
+
       return `AggregateError: ${error.message ? error.message : "<no message>"}, errors: ${errorMessages.join(
         "; "
       )}`;
@@ -129,6 +132,7 @@ export function stringifyError(e: unknown, noStack = false): string {
       const urlAsString = `url: "${sanitizeLogMessage(JSONstringify(error.config?.url))}"`;
       const dataAsString = `data: "${JSONstringify(error.response?.data)}"`;
       const message = `${urlAsString}, ${dataAsString}, ${error.message}`;
+
       return noStack ? message : `${message}, ${showStack(error.stack)}`;
     } else if (isEthers_5_7_Error(error)) {
       return (
@@ -149,6 +153,7 @@ export function stringifyError(e: unknown, noStack = false): string {
           ? `cause: ${stringifyError(error.cause, noStack)}`
           : stringify(error.cause)
         : "";
+
       return [error.message, noStack ? "" : showStack(error.stack), causeString]
         .filter((str) => str.length > 0)
         .join(" ");
@@ -177,6 +182,7 @@ export function simplifyErrorMessage(error: unknown) {
 
       errorMessages.add(shortenedError);
     }
+
     return Array.from(errorMessages).join("\n");
   } else {
     return stringifyError(error);

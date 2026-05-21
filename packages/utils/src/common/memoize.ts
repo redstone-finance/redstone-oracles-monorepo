@@ -54,6 +54,7 @@ export function memoize<
         promise: functionToMemoize(...args).catch((err: unknown) => {
           // don't propagate cache when promise resolves to error
           delete cache[cacheKey];
+
           throw err;
         }) as Promise<R>,
       };

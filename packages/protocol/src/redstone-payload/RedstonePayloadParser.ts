@@ -59,6 +59,7 @@ export class RedstonePayloadParser {
     });
 
     signedDataPackages.reverse(); // reversing, because we read from the end
+
     return {
       signedDataPackages,
       unsignedMetadata,
@@ -170,6 +171,7 @@ export class RedstonePayloadParser {
 
   private extractNumber(sliceConfig: SliceConfig): number {
     const bytesArr = this.slice(sliceConfig);
+
     return convertBytesToNumber(bytesArr);
   }
 
@@ -177,6 +179,7 @@ export class RedstonePayloadParser {
     const { negativeOffset, length } = sliceConfig;
     const end = this.bytesData.length - negativeOffset;
     const start = end - length;
+
     return this.bytesData.slice(start, end);
   }
 }

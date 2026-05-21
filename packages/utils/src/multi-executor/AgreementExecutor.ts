@@ -45,6 +45,7 @@ export class AgreementExecutor<R> extends ParallelExecutor<R> {
       this.logger.debug(
         `Returning, still doesn't have enough of ${quorum} results: ${successfulResults.length} successes + ${errorResults.length} errors`
       );
+
       return false;
     }
 
@@ -55,6 +56,7 @@ export class AgreementExecutor<R> extends ParallelExecutor<R> {
     }
 
     const failedCount = errorResults.length;
+
     throw new AggregateError(
       errorResults,
       `Agreement failed: got max ${maxCount} equal result${getS(maxCount)}, needed at least ${quorum}` +

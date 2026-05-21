@@ -66,12 +66,14 @@ async function fetchInStages(reqParams: DataPackagesRequestParams) {
   try {
     const stageUrls = [urls[0]];
     const stageReqParams = { ...reqParams, singleGatewayTimeoutMs: FIRST_GATEWAY_WAIT_TIME_MS };
+
     return await fetchWithLogger(stageReqParams, stageUrls);
   } catch (e) {
     const stageUrls = urls.slice(1);
     if (stageUrls.length === 0) {
       throw e;
     }
+
     return await fetchWithLogger(reqParams, stageUrls);
   }
 }
@@ -81,6 +83,7 @@ async function fetchWithLogger(reqParams: DataPackagesRequestParams, urls: strin
     ? new RequestDataPackagesLogger(urls.length, !!reqParams.historicalTimestamp)
     : undefined;
   const { response } = await fetchDataPackages(reqParams, urls, requestDataPackagesLogger);
+
   return { requestDataPackagesLogger, response };
 }
 

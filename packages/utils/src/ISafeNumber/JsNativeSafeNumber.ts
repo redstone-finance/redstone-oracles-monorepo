@@ -67,21 +67,25 @@ export class JsNativeSafeNumber implements ISafeNumber {
 
   abs(): JsNativeSafeNumber {
     const result = Math.abs(this._value);
+
     return this.produceNewSafeNumber(result);
   }
 
   log2(): JsNativeSafeNumber {
     const result = Math.log2(this._value);
+
     return this.produceNewSafeNumber(result);
   }
 
   mod(divisor: NumberArg): JsNativeSafeNumber {
     const result = this._value % JsNativeSafeNumber.from(divisor).unsafeToNumber();
+
     return this.produceNewSafeNumber(result);
   }
 
   round(): JsNativeSafeNumber {
     const result = Math.round(this._value);
+
     // no validation needed
     return new JsNativeSafeNumber(result);
   }
@@ -156,6 +160,7 @@ export class JsNativeSafeNumber implements ISafeNumber {
   private produceNewSafeNumber(result: number) {
     const newNumber = new JsNativeSafeNumber(result);
     newNumber.assertValidAndRound();
+
     return newNumber;
   }
 

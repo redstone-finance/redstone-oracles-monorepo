@@ -34,11 +34,13 @@ export function makeOwnerUpdatableRole(accessRule: Value) {
 
 export function publicKeyHash(pk: string) {
   const pkHash = hash(Buffer.from(pk, "hex")).subarray(-29);
+
   return Buffer.from(pkHash).toString("hex");
 }
 
 export async function edResource(networkId: number) {
   const addressBook = await RadixEngineToolkit.Utils.knownAddresses(networkId);
+
   return addressBook.resourceAddresses.ed25519SignatureVirtualBadge;
 }
 

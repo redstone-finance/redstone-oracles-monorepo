@@ -92,6 +92,7 @@ export class PricesCantonContractAdapter
       return contractId;
     } catch (e) {
       this.activeContractData = undefined;
+
       throw e;
     }
   }

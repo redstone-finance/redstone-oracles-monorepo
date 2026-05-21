@@ -80,6 +80,7 @@ export abstract class ParallelExecutor<R> extends Executor<R> {
       return isEnough;
     } catch (error) {
       reject(error);
+
       return true;
     }
   }

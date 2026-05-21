@@ -40,6 +40,7 @@ async function combineSignatures(
       if (response.status === rpc.Api.GetTransactionStatus.SUCCESS) {
         return response;
       }
+
       throw new Error(
         `Transaction did not succeed: ${transaction.hash}, status: ${response.status}`
       );

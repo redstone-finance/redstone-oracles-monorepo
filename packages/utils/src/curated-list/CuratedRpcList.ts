@@ -106,14 +106,14 @@ export class CuratedRpcList {
     }, this.config.evaluationInterval).unref();
   }
 
-  scoreRpc(rpc: RpcIdentifier, score: ScoreReport): void {
+  scoreRpc(rpc: RpcIdentifier, score: ScoreReport) {
     this.state[rpc].callsCount += 1;
     this.state[rpc].errorsCount += score.error ? 1 : 0;
 
     this.updateEvaluationTimer();
   }
 
-  evaluateRpcScore(rpc: RpcIdentifier): void {
+  evaluateRpcScore(rpc: RpcIdentifier) {
     const stats = this.state[rpc];
     const errorRate = stats.errorsCount / stats.callsCount;
     if (errorRate > this.config.maxErrorRate) {
@@ -151,7 +151,7 @@ export class CuratedRpcList {
     return healthyProviders;
   }
 
-  freeOneRpcFromQuarantine(): void {
+  freeOneRpcFromQuarantine() {
     const providersInQuarantine = this.getProvidersInQuarantine();
 
     const weights = providersInQuarantine.map((v) => 1 / v[1].quarantineCounter);

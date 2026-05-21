@@ -15,12 +15,14 @@ export async function signerPublicKey(signer: Signer) {
   if (signer.type === "local") {
     return signer.signer.publicKey;
   }
+
   return (await signer.signer.getPublicKey()).ed;
 }
 
 export async function sign(signer: Signer, tx: VersionedTransaction) {
   if (signer.type === "local") {
     tx.sign([signer.signer]);
+
     return;
   }
   await signer.signer.signTransaction(tx);

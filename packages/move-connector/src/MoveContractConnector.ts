@@ -70,6 +70,7 @@ export class MoveContractConnector<Adapter = never> implements IContractConnecto
     if (!this.account) {
       throw new Error("Private Key was not provided.");
     }
+
     return Promise.resolve(this.account.accountAddress.toString());
   }
 

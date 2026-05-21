@@ -105,6 +105,7 @@ export class RadixClient {
 
   async getXRDBalance(address: string, stateVersion?: number) {
     const addressBook = await RadixEngineToolkit.Utils.knownAddresses(this.networkId);
+
     return await this.apiClient.getFungibleBalance(
       address,
       addressBook.resourceAddresses.xrd,
@@ -181,6 +182,7 @@ export class RadixClient {
         }
         case "CommittedSuccess": {
           this.logger.debug(logMessage);
+
           return true;
         }
         case "CommittedFailure":
@@ -207,6 +209,7 @@ export class RadixClient {
 
   async getTransactionHeader(iterationIndex = 0) {
     const currentEpochNumber = await this.apiClient.getCurrentEpochNumber();
+
     return {
       networkId: this.networkId,
       startEpochInclusive: currentEpochNumber,

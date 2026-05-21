@@ -18,6 +18,7 @@ const PRIVATE_KEY_FOR_TESTS_1 =
 
 const prepareSignedDataPackageForTests = (dataPoints: DataPoint[]): SignedDataPackage => {
   const dataPackage = new DataPackage(dataPoints, TIMESTAMP_FOR_TESTS, "__RANDOM_NAME__");
+
   return dataPackage.sign(PRIVATE_KEY_FOR_TESTS_1);
 };
 
