@@ -20,7 +20,7 @@ export class CantonBlockchainService implements BlockchainServiceWithTxLookup {
   async getNormalizedBalance(_address: string, _blockNumber?: number) {
     const NORM_MULTIPLIER = 10n ** (18n - 6n); // MegaBytes to 10^18
 
-    return BigInt((await this.cantonClient.getRemainingTraffic()) ?? 0) * NORM_MULTIPLIER;
+    return BigInt(await this.cantonClient.getRemainingTraffic()) * NORM_MULTIPLIER;
   }
 
   async getBalance(addressOrName: string, blockTag?: number): Promise<bigint> {
