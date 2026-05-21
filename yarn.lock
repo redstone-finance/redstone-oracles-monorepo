@@ -9303,19 +9303,6 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@redstone-finance/lambda-multi-share-private-key-manager@workspace:packages/lambda/lambda-multi-share-private-key-manager":
-  version: 0.0.0-use.local
-  resolution: "@redstone-finance/lambda-multi-share-private-key-manager@workspace:packages/lambda/lambda-multi-share-private-key-manager"
-  dependencies:
-    "@aws-sdk/client-ssm": "npm:^3.696.0"
-    "@aws-sdk/client-sts": "npm:^3.696.0"
-    "@redstone-finance/node-remote-config": "workspace:*"
-    aws-sdk-client-mock: "npm:^4.1.0"
-    ethers: "npm:^5.7.2"
-    secrets.js-grempe: "npm:^2.0.0"
-  languageName: unknown
-  linkType: soft
-
 "@redstone-finance/lambda-multi-top-up@workspace:packages/lambda/lambda-multi-top-up":
   version: 0.0.0-use.local
   resolution: "@redstone-finance/lambda-multi-top-up@workspace:packages/lambda/lambda-multi-top-up"
@@ -13209,7 +13196,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/sinon@npm:*, @types/sinon@npm:^17.0.3":
+"@types/sinon@npm:*":
   version: 17.0.3
   resolution: "@types/sinon@npm:17.0.3"
   dependencies:
@@ -15526,17 +15513,6 @@ __metadata:
     "@aws-sdk/util-utf8-browser": "npm:^3.109.0"
     aws-crt: "npm:1.21.8"
   checksum: 10c0/40da4b6245d0b51f6a8fd1e34a0850cc065829c7eebc699710737501f0ccb37e011d68c7e0d4e10539b0fa0c16daab9558f18844c46723ff718bcc8cc14761af
-  languageName: node
-  linkType: hard
-
-"aws-sdk-client-mock@npm:^4.1.0":
-  version: 4.1.0
-  resolution: "aws-sdk-client-mock@npm:4.1.0"
-  dependencies:
-    "@types/sinon": "npm:^17.0.3"
-    sinon: "npm:^18.0.1"
-    tslib: "npm:^2.1.0"
-  checksum: 10c0/045caad0cff0ffeb08e69849dcae51aac8999163c58d71220bf47a82c237aabab2abf92bf6bf3bd7666e6e8984513c628e01a89eafa46fb230201d6587bc01e9
   languageName: node
   linkType: hard
 
@@ -30698,13 +30674,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"secrets.js-grempe@npm:^2.0.0":
-  version: 2.0.0
-  resolution: "secrets.js-grempe@npm:2.0.0"
-  checksum: 10c0/a14d33b375279a72c61901ec1e447a2d4817f49d0e3255b429fa757f527c75e65127a4e43b5fb264e5315151c7b16e5068d63495aa36cb0d792aebe5d29eda58
-  languageName: node
-  linkType: hard
-
 "secure-compare@npm:3.0.1":
   version: 3.0.1
   resolution: "secure-compare@npm:3.0.1"
@@ -31109,7 +31078,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"sinon@npm:^18.0.0, sinon@npm:^18.0.1":
+"sinon@npm:^18.0.0":
   version: 18.0.1
   resolution: "sinon@npm:18.0.1"
   dependencies:
