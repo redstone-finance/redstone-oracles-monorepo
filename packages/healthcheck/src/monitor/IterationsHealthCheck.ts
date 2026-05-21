@@ -32,12 +32,14 @@ export class IterationsHealthCheck implements HealthCheck {
       IterationsHealthCheck.secondsBetween(this.startDate, fireDate) <= this.params.startPeriodInS;
     if (isWithinStartupPeriod) {
       logger.info("Still within startup period");
+
       return healthy();
     }
 
     const referenceDate = this.lastIterationDate ?? this.startDate;
     if (fireDate.getTime() < referenceDate.getTime()) {
       logger.warn("Possible overlapping iterations", { referenceDate, fireDate });
+
       // note: yes, we consider "overlapping" iterations as "healthy"
       return healthy();
     }
@@ -45,10 +47,12 @@ export class IterationsHealthCheck implements HealthCheck {
 
     if (elapsed <= periodInS) {
       logger.info(`Last iteration (${this.lastIterationDate?.toISOString()}) within ${periodInS}s`);
+
       return healthy();
     }
 
     const msg = `Last iteration (${this.lastIterationDate?.toISOString() ?? "none registered"}) NOT within ${periodInS}s`;
+
     return unhealthy([msg]);
   }
 
@@ -59,6 +63,7 @@ export class IterationsHealthCheck implements HealthCheck {
 
   private static secondsBetween(earlier: Date, later: Date): number {
     const msDiff = later.getTime() - earlier.getTime();
+
     return msDiff / 1000;
   }
 }

@@ -90,6 +90,7 @@ function validateDataPackagesResponse(
 ) {
   if (!dataFeedPackages) {
     const message = `Requested data feed id is not included in response: ${dataFeedId}`;
+
     throw new DataFeedPackageError(message, dataFeedId, DataFeedPackageErrorType.MissingDataFeed);
   }
 
@@ -100,17 +101,20 @@ function validateDataPackagesResponse(
     }
 
     const signer = maybeGetSigner(dp);
+
     return signer ? reqParams.authorizedSigners.includes(signer) : false;
   });
 
   if (dataFeedPackages.length === 0) {
     const message = `No data packages for the data feed: ${dataFeedId}`;
+
     throw new DataFeedPackageError(message, dataFeedId, DataFeedPackageErrorType.NoDataPackages);
   } else if (dataFeedPackages.length < reqParams.uniqueSignersCount) {
     const message =
       `Too few data packages with unique signers for the data feed: ${dataFeedId}. ` +
       `Expected: ${reqParams.uniqueSignersCount}. ` +
       `Received: ${dataFeedPackages.length}`;
+
     throw new DataFeedPackageError(message, dataFeedId, DataFeedPackageErrorType.TooFewSigners);
   }
 
@@ -120,6 +124,7 @@ function validateDataPackagesResponse(
     const deviation = Math.abs(Date.now() - timestamp);
     if (deviation > reqParams.maxTimestampDeviationMS) {
       const message = `Timestamp deviation exceeded - timestamp: ${timestamp}, deviation: ${deviation}, max deviation: ${reqParams.maxTimestampDeviationMS}`;
+
       throw new Error(message);
     }
   }

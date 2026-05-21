@@ -35,6 +35,7 @@ async function setUpMultiSig(
       `Set the value as MULTI_SIG_ADDRESS inside consts.ts file\n` +
       `and also fund that account with some ${getCurrencySymbol()} coins`
   );
+
   return await builder.createMultiSigTx();
 }
 

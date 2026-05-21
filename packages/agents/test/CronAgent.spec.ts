@@ -25,6 +25,7 @@ describe("IntervalAgent", () => {
       timeout: 2000,
       ...partialArgs,
     };
+
     return new CronAgent(defaultArgs);
   }
 

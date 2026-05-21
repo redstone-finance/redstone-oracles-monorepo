@@ -13,6 +13,7 @@ export class LastPublishedFeedState {
 
   isAnyFeedNotPublishedIn(maxDelay: number) {
     const now = Date.now();
+
     return [...this.lastPublishPerFeed.values()].some((timestamp) => now - timestamp > maxDelay);
   }
 

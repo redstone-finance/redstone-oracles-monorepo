@@ -33,6 +33,7 @@ export const getTxDeliveryMan = (
     rewardsPerBlockAggregationAlgorithm: relayerConfig.rewardsPerBlockAggregationAlgorithm,
     auctionModelGasMultipliers: relayerConfig.auctionModelGasMultipliers,
   });
+
   return deliveryMan;
 };
 

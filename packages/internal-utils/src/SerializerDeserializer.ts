@@ -42,6 +42,7 @@ export class GZipJson implements SerializerDeserializer {
 
   async deserializeAsync<T = unknown>(buffer: Buffer): Promise<T> {
     const unzipped = await gunzipAsync(buffer);
+
     return JSON.parse(unzipped.toString("utf-8")) as T;
   }
 }
@@ -62,6 +63,7 @@ export class DeflateJson implements SerializerDeserializer {
 
   async deserializeAsync<T = unknown>(buffer: Buffer): Promise<T> {
     const inflated = await inflateAsync(buffer);
+
     return JSON.parse(inflated.toString("utf-8")) as T;
   }
 }

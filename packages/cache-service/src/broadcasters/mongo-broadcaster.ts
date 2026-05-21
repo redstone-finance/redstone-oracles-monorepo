@@ -4,7 +4,7 @@ import { DataPackagesBroadcaster } from "./data-packages-broadcaster";
 
 @Injectable()
 export class MongoBroadcaster implements DataPackagesBroadcaster {
-  async broadcast(dataPackages: CachedDataPackage[], _nodeEvmAddress: string): Promise<void> {
+  async broadcast(dataPackages: CachedDataPackage[], _nodeEvmAddress: string) {
     await DataPackage.insertMany(dataPackages);
   }
 }

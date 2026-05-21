@@ -17,6 +17,7 @@ export function splitRelayerConfig<T extends RelayerSplitConfig>(relayerConfig: 
 
   const configs: T[] = feedsSplit.map((feeds) => {
     const dataFeeds = feeds.filter((feedId) => relayerConfig.dataFeeds.includes(feedId));
+
     return changeRelayerConfigFeeds({ ...relayerConfig }, dataFeeds);
   });
 

@@ -29,6 +29,7 @@ export class MentoEvmContractAdapter extends PriceFeedsEvmContractAdapter<MentoA
     const sortedOraclesAddress = await this.adapterContract.getSortedOracles({
       blockTag,
     });
+
     return await getValuesForMentoDataFeeds(
       this.adapterContract,
       getSortedOraclesContractAtAddress(sortedOraclesAddress, this.adapterContract.provider),

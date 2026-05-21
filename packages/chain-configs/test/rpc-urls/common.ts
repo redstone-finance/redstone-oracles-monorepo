@@ -61,6 +61,7 @@ const getBlockNumberWithTimeout = async (rpcUrl: string, timeout: number): Promi
     fnName: `provider.getBlockNumber() for ${host}`,
     logger: logger.log.bind(logger),
   })();
+
   return blockNumber;
 };
 
@@ -83,12 +84,14 @@ export const validateBlockNumberAgreementBetweenRpcs = (
           rpcUrls.map(async (rpcUrl) => {
             try {
               const blockNumber = await getBlockNumberWithTimeout(rpcUrl, 5000);
+
               return { rpcUrl, blockNumber };
             } catch (error) {
               logger.warn(`Failed to fetch block number`, {
                 rpcUrl: sanitizeLogMessage(rpcUrl),
                 error,
               });
+
               throw new Error(
                 `Failed to fetch block number for RPC: ${sanitizeLogMessage(rpcUrl)}`
               );
@@ -134,6 +137,7 @@ export const validateBlockNumberAgreementBetweenRpcs = (
 
 const getRpcHost = (rpcUrl: string): string => {
   const url = new URL(rpcUrl);
+
   return url.host;
 };
 

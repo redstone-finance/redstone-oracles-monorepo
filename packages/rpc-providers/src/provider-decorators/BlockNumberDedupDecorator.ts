@@ -35,6 +35,7 @@ export function BlockNumberDedupDecorator(factory: () => providers.Provider) {
         runningPromise = undefined;
       }
     };
+
     return provider;
   };
 }

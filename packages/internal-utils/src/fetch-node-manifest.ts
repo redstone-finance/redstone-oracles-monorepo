@@ -54,6 +54,7 @@ const getNodesVersionsPrefixUrl = () => {
       z.string().optional()
     );
   }
+
   return nodesVersionsPrefixUrl;
 };
 
@@ -79,6 +80,7 @@ export const fetchNodeManifest = async <ManifestType = NodeManifest>(
       const manifestUrlWithHash = manifestUrl
         .replace("${main}", nodeVersion.main)
         .replace("${fallback}", nodeVersion.fallback ?? "");
+
       return await fetchWithCache<ManifestType>(manifestUrlWithHash, headers);
     } catch (e) {
       console.log(
@@ -86,6 +88,7 @@ export const fetchNodeManifest = async <ManifestType = NodeManifest>(
       );
     }
   }
+
   throw new Error(
     `failed to fetch node manifest for ${dataServiceId}, URLs ${String(manifestUrls)}, node versions ${JSON.stringify(nodeVersion)}`
   );

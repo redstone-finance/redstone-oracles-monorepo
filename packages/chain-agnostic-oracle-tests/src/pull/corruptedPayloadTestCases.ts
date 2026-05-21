@@ -19,6 +19,7 @@ export const corruptedPayloadTestCases = {
           `Expected to get a payload with redstone marker in the end. Got: ${originalPayload}`
         );
       }
+
       return originalPayload.slice(0, REDSTONE_MARKER_HEX.length);
     },
   },

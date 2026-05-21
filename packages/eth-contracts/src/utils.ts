@@ -12,6 +12,7 @@ export const generateSaltForVote = async (disputeId: number, signer: Signer): Pr
   const seedMessage = toUtf8Bytes(disputeId + "REDSTONE_DISPUTE_SALT");
   const signature = await signer.signMessage(seedMessage);
   const salt = keccak256(signature);
+
   return salt;
 };
 

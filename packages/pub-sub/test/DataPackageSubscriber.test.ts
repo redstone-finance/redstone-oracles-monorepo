@@ -55,6 +55,7 @@ class MockPubSubClient {
 
   unsubscribe() {
     this.topicToCallback.clear();
+
     return Promise.resolve();
   }
 }
@@ -151,6 +152,7 @@ async function singleSignerSetUp() {
 
   const callback = jest.fn();
   await subscriber.subscribe(callback);
+
   return { pubSub, callback, logger, subscriber, loggerDebug };
 }
 

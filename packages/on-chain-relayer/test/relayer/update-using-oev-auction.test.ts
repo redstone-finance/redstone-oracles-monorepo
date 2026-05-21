@@ -33,6 +33,7 @@ describe("update-using-oev-auction", () => {
     provider.getGasPrice = () => Promise.resolve(BigNumber.from("1")); // gas price in transaction is 24000000000
     provider.waitForTransaction = async () => {
       await RedstoneCommon.sleep(5);
+
       return await Promise.resolve({ status: 1 } as TransactionReceipt);
     };
     const wallet = new Wallet(TEST_PRIVATE_KEY).connect(provider);
@@ -50,6 +51,7 @@ describe("update-using-oev-auction", () => {
     provider.getGasPrice = () => Promise.resolve(BigNumber.from("1")); // gas price in transaction is 24000000000
     provider.waitForTransaction = async () => {
       await RedstoneCommon.sleep(80);
+
       return await Promise.resolve({ status: 1 } as TransactionReceipt);
     };
 

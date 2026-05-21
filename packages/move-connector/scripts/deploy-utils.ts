@@ -71,6 +71,7 @@ export function readObjectAddress(contractName: string, networkName = getEnvNetw
 
 export async function objectAddressForDeployment(aptos: Aptos, address: AccountAddress) {
   const info = await aptos.account.getAccountInfo({ accountAddress: address });
+
   return createObjectAddress(address, objectSeed(+info.sequence_number + 1)).toString();
 }
 
@@ -193,6 +194,7 @@ export function prepareDepAddresses(
       depsAddresses["price_adapter_object_address"] = getPriceAdapterObjectAddress(
         depsAddresses[PRICE_ADAPTER]!
       );
+
       return depsAddresses;
     }
     default:

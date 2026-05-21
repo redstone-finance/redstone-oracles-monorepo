@@ -10,6 +10,7 @@ export async function getImpersonatedSigner(address: string): Promise<SignerWith
     method: "hardhat_impersonateAccount",
     params: [address],
   });
+
   return await ethers.getSigner(address);
 }
 
@@ -25,5 +26,6 @@ export function permutations<T>(list: T[]): T[][] {
       result.push([list[i], ...tail]);
     }
   }
+
   return result;
 }

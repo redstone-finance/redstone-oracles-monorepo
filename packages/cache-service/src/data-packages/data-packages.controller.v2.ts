@@ -18,6 +18,7 @@ export class DataPackagesControllerV2 extends BaseDataPackagesController {
   ): Promise<DataPackagesResponse> {
     BaseDataPackagesController.validateAllFeedsAccess(req);
     await BaseDataPackagesController.validateDataServiceId(dataServiceId);
+
     return await this.dataPackagesService.getLatestDataPackagesWithSameTimestampWithCache(
       dataServiceId,
       true,
@@ -58,6 +59,7 @@ export class DataPackagesControllerV2 extends BaseDataPackagesController {
     BaseDataPackagesController.validateAllFeedsAccess(req);
     BaseDataPackagesController.validateMetadataAccess(req);
     await BaseDataPackagesController.validateDataServiceId(dataServiceId);
+
     return await this.dataPackagesService.getLatestDataPackagesWithSameTimestampWithCache(
       dataServiceId,
       false,

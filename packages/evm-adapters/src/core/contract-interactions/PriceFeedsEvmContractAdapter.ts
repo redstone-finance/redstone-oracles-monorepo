@@ -72,6 +72,7 @@ export class PriceFeedsEvmContractAdapter<
     for (const [index, dataFeedId] of dataFeeds.entries()) {
       dataFeedsValues[dataFeedId] = valuesFromContractAsBigNumber[index].toBigInt();
     }
+
     return dataFeedsValues;
   }
 }

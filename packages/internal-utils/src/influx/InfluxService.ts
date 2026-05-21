@@ -116,6 +116,7 @@ export class InfluxService {
     if (!buckets.buckets?.length) {
       throw new Error(`Bucket "${this.authParams.bucketName}" not found`);
     }
+
     return buckets.buckets[0];
   }
 }

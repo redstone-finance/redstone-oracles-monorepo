@@ -30,5 +30,6 @@ export const getEnv = (): Record<string, string> => {
   if (isDenoRuntime()) {
     return denoGlobalThis.Deno!.env.toObject();
   }
+
   return {};
 };

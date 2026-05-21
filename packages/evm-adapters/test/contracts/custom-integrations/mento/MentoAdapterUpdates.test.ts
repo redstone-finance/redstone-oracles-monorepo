@@ -192,6 +192,7 @@ describe("MentoAdapterUpdates", () => {
   it("Should fail if list of locations is too short", async () => {
     const modifier: LocationsModifierFn = (arr) => {
       arr.pop(); // remove the last element
+
       return arr;
     };
     await expect(testModifiedLocations(modifier)).to.be.revertedWithPanic(0x32);

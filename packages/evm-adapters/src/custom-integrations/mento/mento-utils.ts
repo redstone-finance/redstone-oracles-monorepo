@@ -55,6 +55,7 @@ export const calculateLinkedListPosition = (
       logger.log(
         `deviation ${deviation} is higher than max acceptable deviation ${maxDeviationAllowedInPercent}. Sorted oracles median price: ${currentMedian}. RedStone price:${valueToInsert.toString()}`
       );
+
       return undefined;
     }
   }
@@ -112,6 +113,7 @@ export const prepareLinkedListLocationsForMentoAdapterReport = async (
     );
     if (!locationInSortedLinkedList) {
       logger.log(`price for ${dataFeeds[dataFeedIndex].dataFeedId} deviates too much`);
+
       return undefined;
     }
     locationsInSortedLinkedLists.push(locationInSortedLinkedList);
@@ -133,6 +135,7 @@ const tokenAddressToValue = async (
   if (redstoneOracleIndex === -1) {
     return undefined;
   }
+
   return rates[1][redstoneOracleIndex].div(BigNumber.from(10).pow(16)).toBigInt();
 };
 
@@ -146,6 +149,7 @@ const dataFeedToTokenAddress = (
   if (dataFeedIndex === -1) {
     throw new Error(`data feed ${dataFeedId} not present in contract`);
   }
+
   return contractFeeds[dataFeedIndex].tokenAddress;
 };
 
@@ -158,10 +162,12 @@ export const getValuesForMentoDataFeeds = async (
   const dataFeedsFromContract = await mentoAdapter.getDataFeeds({ blockTag });
   const promises = dataFeeds.map(async (dataFeedId) => {
     const tokenAddress = dataFeedToTokenAddress(dataFeedId, dataFeedsFromContract);
+
     return [
       dataFeedId,
       await tokenAddressToValue(tokenAddress, sortedOracles, mentoAdapter, blockTag),
     ] as const;
   });
+
   return Object.fromEntries(await Promise.all(promises));
 };

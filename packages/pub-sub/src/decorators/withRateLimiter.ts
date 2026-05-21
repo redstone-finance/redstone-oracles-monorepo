@@ -123,6 +123,7 @@ export function withRateLimiter({
           pubSubClient.stop();
 
           logger.warn(`Disabled entire pubSubClient due to rate limit: ${clientUniqueName}`);
+
           return;
         }
       }

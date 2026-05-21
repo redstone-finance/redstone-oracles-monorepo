@@ -26,6 +26,7 @@ describe("BlockNumberDedupDecorator", () => {
 
     const mockProvider = createMockProvider(() => {
       callCount++;
+
       return new Promise<number>((resolve) => {
         resolvePromise = resolve;
       });
@@ -55,6 +56,7 @@ describe("BlockNumberDedupDecorator", () => {
 
     const mockProvider = createMockProvider(() => {
       callCount++;
+
       return new Promise<number>((resolve) => resolve(100 + callCount));
     });
 
@@ -79,6 +81,7 @@ describe("BlockNumberDedupDecorator", () => {
 
     const mockProvider = createMockProvider(() => {
       callCount++;
+
       return new Promise<number>((_resolve, reject) => {
         rejectPromise = reject;
       });
@@ -105,6 +108,7 @@ describe("BlockNumberDedupDecorator", () => {
       if (callCount === 1) {
         throw new Error("First call fails");
       }
+
       return new Promise<number>((resolve) => resolve(100));
     });
 
@@ -125,6 +129,7 @@ describe("BlockNumberDedupDecorator", () => {
     const mockProvider = createMockProvider(async () => {
       callCount++;
       await RedstoneCommon.sleep(smallDelayMS);
+
       return callCount * 10;
     });
 

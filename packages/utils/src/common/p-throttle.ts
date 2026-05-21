@@ -101,6 +101,7 @@ export const pThrottle = ({
     if (now - currentTick > interval) {
       activeCount = 1;
       currentTick = now;
+
       return 0;
     }
 
@@ -127,6 +128,7 @@ export const pThrottle = ({
     // If the queue is not full, add the current time and execute immediately
     if (strictTicks.length < limit) {
       strictTicks.push(now);
+
       return 0;
     }
 
@@ -152,6 +154,7 @@ export const pThrottle = ({
       }
 
       let timeoutId: NodeJS.Timeout;
+
       return new Promise((resolve, reject) => {
         const execute = () => {
           // @ts-ignore

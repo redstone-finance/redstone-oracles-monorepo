@@ -229,6 +229,7 @@ export class RedstoneProvider {
       for (const item of value) {
         result.push(RedstoneProvider.stripLeadingZerosFromValue(item));
       }
+
       return result as T;
     }
 
@@ -237,6 +238,7 @@ export class RedstoneProvider {
       for (const [key, val] of Object.entries(value)) {
         result[key] = RedstoneProvider.stripLeadingZerosFromValue(val);
       }
+
       return result as T;
     }
 
@@ -312,6 +314,7 @@ export class RedstoneEthers5Provider implements ethers.providers.Provider {
         ttl: ttl ?? RedstoneEthers5Provider.DEFAULT_BLOCK_NUMBER_CACHE_TTL_MS,
       }) as () => Promise<number>;
     }
+
     return this.getBlockNumberImpl.bind(this);
   }
 
@@ -325,11 +328,13 @@ export class RedstoneEthers5Provider implements ethers.providers.Provider {
 
   private async getBlockNumberImpl(): Promise<number> {
     const blockNumberInHex = await this.rpc.send<string>("eth_blockNumber", []);
+
     return Number.parseInt(blockNumberInHex, 16);
   }
 
   async getGasPrice(): Promise<ethers.BigNumber> {
     const gasPriceInHex = await this.rpc.send("eth_gasPrice", []);
+
     return BigNumber.from(gasPriceInHex);
   }
 
@@ -351,6 +356,7 @@ export class RedstoneEthers5Provider implements ethers.providers.Provider {
       };
     } else {
       const baseBaseFeePerGas = BigNumber.from(block.baseFeePerGas);
+
       // EIP-1559
       return {
         gasPrice,
@@ -369,6 +375,7 @@ export class RedstoneEthers5Provider implements ethers.providers.Provider {
       await resolveAddress(addressOrName),
       await resolveBlockTag(blockTag),
     ]);
+
     return BigNumber.from(balance);
   }
 
@@ -380,6 +387,7 @@ export class RedstoneEthers5Provider implements ethers.providers.Provider {
       await resolveAddress(addressOrName),
       await resolveBlockTag(blockTag),
     ]);
+
     return Number.parseInt(nonceHex, 16);
   }
 
@@ -504,6 +512,7 @@ export class RedstoneEthers5Provider implements ethers.providers.Provider {
     };
 
     const gasHex = await this.rpc.send<string>("eth_estimateGas", [callParams]);
+
     return BigNumber.from(gasHex);
   }
 
@@ -728,6 +737,7 @@ export class RedstoneEthers5Provider implements ethers.providers.Provider {
       "waitForTransaction",
       `Timeout waiting for transaction receipt hash=${transactionHash} timeout=${timeout}`
     );
+
     return RedstoneCommon.timeoutWithCustomError(
       this._waitForReceipt(transactionHash, confirmations, timeout),
       timeout,
@@ -792,6 +802,7 @@ export class RedstoneEthers5Provider implements ethers.providers.Provider {
     if (RedstoneCommon.isDefined(block.baseFeePerGas)) {
       response.baseFeePerGas = BigNumber.from(block.baseFeePerGas);
     }
+
     return response;
   }
 
@@ -840,6 +851,7 @@ export class RedstoneEthers5Provider implements ethers.providers.Provider {
       wait: (confirmations?: number) =>
         this.waitForTransaction(transactionHash, confirmations, this.waitForTransactionTimeout),
     };
+
     return response;
   }
 
@@ -943,6 +955,7 @@ async function resolveBlockTag(
   if (typeof blockTagAwaited === "string") {
     return blockTagAwaited;
   }
+
   return "0x" + blockTagAwaited.toString(16);
 }
 
@@ -950,6 +963,7 @@ async function resolveAddress(address: string | Promise<string> | undefined) {
   if (!RedstoneCommon.isDefined(address)) {
     return address;
   }
+
   return (await address).toLowerCase();
 }
 
@@ -963,6 +977,7 @@ function bigNumberishToHex(bigNumberish: BigNumberish | undefined | null): strin
   if (typeof bigNumberish === "number") {
     return "0x" + bigNumberish.toString(16);
   }
+
   return BigNumber.from(bigNumberish).toHexString();
 }
 

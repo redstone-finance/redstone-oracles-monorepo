@@ -21,6 +21,7 @@ const makeResponse = (
       signerAddress: "0x1",
     }));
   }
+
   return result;
 };
 

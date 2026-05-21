@@ -20,6 +20,7 @@ export type StateValue = keyof typeof _StateValues;
 const getCurrentManifestVersionWithAxios = async (apikey: string, hosts: string[]) => {
   if (hosts.length === 0) {
     console.error("No url specified for getting manifest version, skipping saving new fallback");
+
     return undefined;
   }
 
@@ -47,6 +48,7 @@ export class ManifestFallbackService<ManifestType extends string> extends Dynamo
   async getLatestWorkingManifestHash(type: ManifestType) {
     if (this.cachedHashes[type]) {
       console.log(`Using cached manifest hash for ${type} monitoring manifest`);
+
       return this.cachedHashes[type];
     }
 
@@ -54,16 +56,19 @@ export class ManifestFallbackService<ManifestType extends string> extends Dynamo
       const item = await this.get<ManifestFallbackEntry<ManifestType>>({ type });
       if (!item) {
         console.warn(`Did not find a working manifest for type ${type} in table ${this.tableName}`);
+
         return undefined;
       }
 
       const { hash } = item;
 
       this.cachedHashes[type] = hash;
+
       return hash;
     } catch (e) {
       const errorMessage = `Error while getting manifest hash for type ${type} in table ${this.tableName}: ${RedstoneCommon.stringifyError(e)}`;
       console.error(errorMessage);
+
       throw new Error(errorMessage);
     }
   }
@@ -71,6 +76,7 @@ export class ManifestFallbackService<ManifestType extends string> extends Dynamo
   async saveManifestHash(type: ManifestType, manifestHash: string) {
     if (this.cachedHashes[type] === manifestHash) {
       console.log(`Already saved hash ${manifestHash} for ${type} manifest, skipping db call`);
+
       return;
     }
 
@@ -83,6 +89,7 @@ export class ManifestFallbackService<ManifestType extends string> extends Dynamo
       const manifestHash = await getCurrentManifestVersion(apiKey, hosts);
       if (!manifestHash) {
         console.error("Could not find current manifest hash in S3");
+
         return;
       }
 
@@ -99,6 +106,7 @@ export class ManifestFallbackService<ManifestType extends string> extends Dynamo
     if (tableName) {
       return new ManifestFallbackService<T>(tableName);
     }
+
     return undefined;
   }
 
@@ -121,6 +129,7 @@ export class ManifestFallbackService<ManifestType extends string> extends Dynamo
       const errorMessage =
         "Tried to trigger fallback monitoring manifest metric, but metric data is not defined";
       console.error(errorMessage);
+
       throw new Error(errorMessage);
     }
 

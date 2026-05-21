@@ -37,6 +37,7 @@ export const timestampToWarsawTime = (timestamp: string | number): string => {
     timeZone: "Europe/Warsaw",
   };
   const locale = "pl-PL";
+
   return new Date(timestamp).toLocaleString(locale, options);
 };
 

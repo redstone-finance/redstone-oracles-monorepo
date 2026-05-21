@@ -95,5 +95,6 @@ export const UNAUTHORISED_SIGNER_INDEX = 19;
 export const getBlockTimestampMilliseconds = async () => {
   const blockNum = await ethers.provider.getBlockNumber();
   const block = await ethers.provider.getBlock(blockNum);
+
   return block.timestamp * 1000;
 };

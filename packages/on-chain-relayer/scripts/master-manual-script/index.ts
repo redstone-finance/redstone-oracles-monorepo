@@ -38,9 +38,11 @@ function getManualKeySSMName(manifestName: string) {
         // If the uppercase letter is right after a slash, convert it to lowercase
         return `/${p1.toLowerCase()}`;
       }
+
       // Otherwise, replace the uppercase letter with hyphen + lowercase
       return `-${p2.toLowerCase()}`;
     });
+
   return `/prod/on-chain-relayer/${encodedManifestName}/manual/private-key`;
 }
 
@@ -60,14 +62,17 @@ async function setUpEnvVariables(
       privateKeyOverride ?? (await getSSMParameterValue(getManualKeySSMName(manifestName)));
   } catch {
     console.log(`📛Failed to fetch wallet key: ${getManualKeySSMName(manifestName)}📛`);
+
     return false;
   }
   try {
     process.env.RPC_URLS = await getSSMParameterValue(`/prod/rpc/${networkId}/urls`);
   } catch {
     console.log(`📛Failed to fetch rpc urls: /prod/rpc/${networkId}/urls📛`);
+
     return false;
   }
+
   return true;
 }
 

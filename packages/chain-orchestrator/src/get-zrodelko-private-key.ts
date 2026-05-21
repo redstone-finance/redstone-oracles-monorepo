@@ -14,6 +14,7 @@ export async function getNonEvmZrodelkoPrivateKey(
   if (!privateKey) {
     throw new Error(`parameter ${ssmPath} not found in SSM`);
   }
+
   return {
     scheme: ed25519Chains.includes(chainType) ? "ed25519" : "secp256k1",
     value: privateKey,

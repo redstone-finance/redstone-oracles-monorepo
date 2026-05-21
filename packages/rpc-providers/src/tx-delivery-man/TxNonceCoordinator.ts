@@ -85,6 +85,7 @@ export class TxNonceCoordinator {
     const attempt = this.pendingNonces.get(next)?.attempts ?? 0;
 
     logger.log(`Allocated nonce=${next} attempt=${attempt}`);
+
     return { nonce: next, attempt };
   }
 
@@ -140,6 +141,7 @@ export class TxNonceCoordinator {
     if (!this.address) {
       this.address = await this.signer.getAddress();
     }
+
     return this.address;
   }
 
@@ -213,6 +215,7 @@ export class TxNonceCoordinator {
   private async reconcileSinglePendingNonce(nonce: number, pendingNonce: PendingNonce) {
     if (this.lastConfirmedNonce !== undefined && nonce <= this.lastConfirmedNonce) {
       this.pendingNonces.delete(nonce);
+
       return;
     }
 

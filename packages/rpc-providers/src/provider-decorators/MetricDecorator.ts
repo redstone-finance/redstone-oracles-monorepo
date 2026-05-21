@@ -23,6 +23,7 @@ export function CallMetricDecorator(
         (duration, isFailure, result) => {
           isFailure = isFailure || result === "0x";
           const point = createTelemetryPoint("call", chainId, url, isFailure, duration);
+
           return point;
         }
       );
@@ -49,6 +50,7 @@ export function GetBlockNumberMetricDecorator(
         (duration, isFailure, result) => {
           const point = createTelemetryPoint("blockNumber", chainId, url, isFailure, duration);
           point.floatField("blockNumber", isFailure ? 0 : Number(result));
+
           return point;
         }
       );
@@ -110,12 +112,15 @@ export function SendMetricDecorator(
                 );
               }
             }
+
             return point;
           }
         );
     }
+
     return provider;
   };
+
   return newFactory;
 }
 
@@ -130,9 +135,11 @@ async function timeMethod<T>(
 
   try {
     result = await fn();
+
     return result;
   } catch (e) {
     isFailure = true;
+
     throw e;
   } finally {
     const duration = performance.now() - start;

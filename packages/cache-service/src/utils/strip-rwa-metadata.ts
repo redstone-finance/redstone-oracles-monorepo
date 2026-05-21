@@ -88,16 +88,18 @@ async function fetchRwaFeedIdsForDataService(
       }
     }
   }
+
   return rwaFeeds;
 }
 
 export class RwaFeedIdsProvider {
   private agents = new Map<string, CronAgent<Set<string>>>();
 
-  async start(): Promise<void> {
+  async start() {
     const envUrls = MANIFEST_URLS[config.env] as Record<string, string[][]> | undefined;
     if (!envUrls) {
       logger.info(`No manifest URLs for env ${config.env}, skipping RWA agent init`);
+
       return;
     }
 
@@ -115,6 +117,7 @@ export class RwaFeedIdsProvider {
         if (!success) {
           logger.warn(`Failed initial fetch for ${dataServiceId}`);
         }
+
         return success;
       })
     );
@@ -131,7 +134,7 @@ export class RwaFeedIdsProvider {
     return agent.getLastFreshMessageOrDefault();
   }
 
-  stop(): void {
+  stop() {
     for (const agent of this.agents.values()) {
       agent.stop();
     }
@@ -160,5 +163,6 @@ export function stripRwaMetadata(
       }
     }
   }
+
   return response;
 }

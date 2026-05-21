@@ -8,11 +8,13 @@ export const currentAwsRegion = (defaultRegion = DEFAULT_AWS_REGION) =>
 
 export const regionalCache = <T>(fun: (region: string) => T) => {
   const cache: Record<string, T> = {};
+
   return (region?: string) => {
     region ??= currentAwsRegion();
     if (!(region in cache)) {
       cache[region] = fun(region);
     }
+
     return cache[region];
   };
 };

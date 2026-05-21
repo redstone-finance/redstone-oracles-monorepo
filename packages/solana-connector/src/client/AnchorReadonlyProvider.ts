@@ -36,6 +36,7 @@ export class AnchorReadonlyProvider implements Provider {
     if (result.value.err) {
       throw new Error(`Simulation failed: ${RedstoneCommon.stringifyError(result.value.err)}`);
     }
+
     return result.value;
   }
 
@@ -63,6 +64,7 @@ export class AnchorReadonlyProvider implements Provider {
     }
 
     const account = await this.connection.getSlotLeader();
+
     return new PublicKey(account);
   }
 }

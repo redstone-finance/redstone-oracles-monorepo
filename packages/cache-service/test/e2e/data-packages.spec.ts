@@ -81,6 +81,7 @@ const postBulk = async (
     const res = await req;
 
     expect(res.statusCode).toBe(expectedStatus);
+
     return res;
   } else {
     return await request(httpServer).post(endpoint).send(body).expect(expectedStatus);
@@ -105,6 +106,7 @@ const checkDataPackagesInDBCleaned = async (dataPackages: SignedDataPackagePlain
     const { _id, __v, ...rest } = dp.toJSON() as any;
 
     rest.dataFeedId = rest.dataPackageId;
+
     return rest;
   });
   expect(dataPackagesInDBCleaned).toEqual(

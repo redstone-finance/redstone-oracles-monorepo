@@ -10,6 +10,7 @@ export class AwsEcrPublic {
       imageIds: [{ imageDigest }],
     });
     const { imageDetails } = await this.client.send(command);
+
     return imageDetails?.[0]?.imageTags ?? [];
   }
 }

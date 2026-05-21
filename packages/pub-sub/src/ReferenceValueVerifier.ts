@@ -121,6 +121,7 @@ export class ReferenceValueVerifier {
         `Not enough reference values ${logDescription} (required: ${this.minReferenceValues}, found: ${values.length})`,
         { deviationPercent: 0 }
       );
+
       return 0;
     }
 

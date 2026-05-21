@@ -181,5 +181,6 @@ const getStubProviders = (count: number) => {
     const spy = sinon.stub(stubProvider, "getBlockNumber");
     stubs.push({ stubProvider, spy });
   }
+
   return stubs;
 };

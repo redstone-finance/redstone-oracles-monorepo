@@ -174,6 +174,7 @@ function checkNumberOfPackages(
 function getMaxDeviation(values1: number[], values2: number[]): number {
   if (values1.length === 0 || values2.length === 0) {
     console.log(`Deviation can not be calculated correctly. One of the arrays is empty.`);
+
     return EXCEPTIONAL_DEVIATION;
   }
 
@@ -303,7 +304,7 @@ function extractAllTimestamps(dataPackages: DataPackagesResponse): Set<number> {
   return new Set(Object.keys(dataPackages).map(Number));
 }
 
-function checkMissesInSets<T>(context: string, set1: Set<T>, set2: Set<T>): void {
+function checkMissesInSets<T>(context: string, set1: Set<T>, set2: Set<T>) {
   const onlyInFirst = [...set1].filter((element) => !set2.has(element));
   const onlyInSecond = [...set2].filter((element) => !set1.has(element));
   console.log(context, {
@@ -320,11 +321,13 @@ function calcDeviation(value1: number, value2: number): number {
   if (value1 <= 0 || value2 <= 0) {
     throw new Error(`Values must be positive. Received: ${value1} and ${value2}`);
   }
+
   return (Math.abs(value1 - value2) / Math.min(value1, value2)) * 100;
 }
 
 function getIntersection<T>(set1: Set<T>, set2: Set<T>) {
   const intersection = new Set([...set1].filter((element) => set2.has(element)));
+
   return intersection;
 }
 

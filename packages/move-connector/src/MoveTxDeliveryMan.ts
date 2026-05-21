@@ -67,6 +67,7 @@ export class MoveTxDeliveryMan {
         await this.processTransactionError(e);
       }
     }
+
     throw new Error(
       `${data.identifier} failed to send in ${this.config.maxTxSendAttempts} attempt${RedstoneCommon.getS(this.config.maxTxSendAttempts)}`
     );
@@ -207,6 +208,7 @@ export class MoveTxDeliveryMan {
     if (e instanceof AggregateError) {
       return e.errors.some(MoveTxDeliveryMan.isSequenceNumberTooOldError);
     }
+
     return (
       e instanceof AptosApiError && e.message.toLowerCase().includes(SEQUENCE_NUMBER_TOO_OLD_CODE)
     );

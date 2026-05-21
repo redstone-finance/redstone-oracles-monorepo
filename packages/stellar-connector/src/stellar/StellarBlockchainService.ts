@@ -33,6 +33,7 @@ export class StellarBlockchainService implements BlockchainServiceWithTxLookup {
     const balance = await this.client.getAccountBalance(address);
 
     const NORMALIZED_BALANCE_MULTIPLIER = 10n ** (18n - 7n);
+
     return balance * NORMALIZED_BALANCE_MULTIPLIER;
   }
 

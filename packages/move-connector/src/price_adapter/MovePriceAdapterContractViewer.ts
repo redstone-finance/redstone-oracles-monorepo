@@ -21,6 +21,7 @@ export class MovePriceAdapterContractViewer extends MoveContractViewer {
 
   async viewUniqueSignerThreshold(): Promise<number> {
     const [data] = await this.viewOnChain<string[]>("signer_count_threshold");
+
     return parseInt(data);
   }
 
@@ -37,6 +38,7 @@ export class MovePriceAdapterContractViewer extends MoveContractViewer {
         lastValue: BigNumber.from(data.value).toBigInt(),
       };
     }
+
     return contractData;
   }
 

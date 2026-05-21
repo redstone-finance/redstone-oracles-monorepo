@@ -326,6 +326,7 @@ export class StellarClient implements IStellarCaller {
       return getLedgerCloseDate(Number(response.ledgers[0].ledgerCloseTime));
     } catch {
       this.logger.warn(`Could not get time of ledger ${sequence}`);
+
       return new Date(0);
     }
   }
@@ -414,6 +415,7 @@ export class StellarClient implements IStellarCaller {
       if (tx.status === rpc.Api.GetTransactionStatus.NOT_FOUND) {
         throw new Error(`Transaction ${txHash} not found for event ${id}`);
       }
+
       return tx;
     });
     const txs = await Promise.all(txsPromises);

@@ -32,6 +32,7 @@ export class ProviderExecutor<T, I extends ProviderWithIdentifier = ProviderWith
 
     if (runningPromise) {
       ProviderExecutor.skippedRuns++;
+
       return await runningPromise;
     }
 

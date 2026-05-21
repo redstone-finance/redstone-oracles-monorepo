@@ -33,6 +33,7 @@ describe("MockSortedOracles", () => {
     const tx = await contract
       .connect(signer)
       .report(mockTokenAddress, valueToReport, lesserKey, greaterKey);
+
     return await tx.wait();
   };
 

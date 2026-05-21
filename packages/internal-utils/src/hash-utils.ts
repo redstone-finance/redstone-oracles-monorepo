@@ -27,21 +27,25 @@ export function calculateSHA256Hex(buffer: Buffer): string {
 
 export function calculateFileHash(filePath: string): string {
   const content = fs.readFileSync(filePath);
+
   return calculateSHA256Hex(content);
 }
 
 export function calculateBuffersHash(buffers: Buffer[]): string {
   const hashes = buffers.map((buffer) => calculateSHA256Hex(buffer));
+
   return calculateCombinedHash(hashes);
 }
 
 export function calculateCombinedHash(hashes: string[]): string {
   const sortedHashes = [...hashes].sort();
+
   return calculateSHA256Hex(Buffer.from(sortedHashes.join("")));
 }
 
 export function calculateDirectoryHash(directoryPath: string): string {
   const allFilePaths = getAllFiles(directoryPath);
   const fileHashes = allFilePaths.map((filePath) => calculateFileHash(filePath));
+
   return calculateCombinedHash(fileHashes);
 }

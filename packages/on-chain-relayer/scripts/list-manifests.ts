@@ -13,6 +13,7 @@ async function main() {
 
   const manifestInfo = manifests.map((m, i) => {
     const priceFeeds = Object.keys(m.priceFeeds).join(",");
+
     return `
 ${dir[i].replaceAll(".json", "")}
   - priceFeeds: ${priceFeeds}

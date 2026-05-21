@@ -150,6 +150,7 @@ export class DataPackageSubscriber {
               `${fallbackTriggeredMessage}, no data packages returned`,
               this.logger
             );
+
             throw new Error(`No data packages returned, got ${JSON.stringify(dataPackages)}`);
           }
 
@@ -192,6 +193,7 @@ export class DataPackageSubscriber {
   async subscribe(subscribeCallback: SubscriptionCallbackFn) {
     if (this.subscribeCallback) {
       this.logger.warn("You tried to subscribe twice using same subscriber, aborted this action");
+
       return;
     }
     this.subscribeCallback = subscribeCallback;
@@ -226,6 +228,7 @@ export class DataPackageSubscriber {
     } catch (e) {
       if (this.fallbackInterval) {
         this.logger.warn("Failed to subscribe to topics, continuing because fallback is enabled");
+
         return;
       } else {
         throw e;
@@ -273,6 +276,7 @@ export class DataPackageSubscriber {
       this.logger.debug(
         `Received package with unexpected id=${dataPackageId} expectedIds=${this.params.dataPackageIds.join(",")}`
       );
+
       return;
     }
 
@@ -299,6 +303,7 @@ export class DataPackageSubscriber {
       this.logger.debug(
         `Package from ${description} was rejected because packageTimestamp=${packageTimestamp} <= lastPublishedTimestamp=${this.lastPublishedState.getLastPublishTime(dataPackageId)}`
       );
+
       return;
     }
 
@@ -309,6 +314,7 @@ export class DataPackageSubscriber {
       this.logger.debug(
         `Package from ${description} was rejected because already have package from this signer`
       );
+
       return;
     }
 
@@ -322,6 +328,7 @@ export class DataPackageSubscriber {
         `Got packages from all signers timestamp=${packageTimestamp}, will try to publish instantly`
       );
       this.publish(packageTimestamp);
+
       return;
     }
 
@@ -336,6 +343,7 @@ export class DataPackageSubscriber {
         `Got packages from enough authorized signers timestamp=${packageTimestamp},  will try to publish instantly because waitMsForOtherSignersAfterMinimalSignersCountSatisfied is <= 0`
       );
       this.publish(packageTimestamp);
+
       return;
     }
 
@@ -360,10 +368,12 @@ export class DataPackageSubscriber {
   /** Check if minimalOffChainSignersCount is satisfied */
   private hasGotPackagesFromEnoughSigners(entryForTimestamp: PackageResponse) {
     const quantifier = this.params.ignoreMissingFeeds ? "some" : "every";
+
     return this.params.dataPackageIds[quantifier]((dpId) => {
       if (!entryForTimestamp[dpId]) {
         return false;
       }
+
       return entryForTimestamp[dpId].length >= this.params.minimalOffChainSignersCount;
     });
   }
@@ -372,6 +382,7 @@ export class DataPackageSubscriber {
     const entryForTimestamp = this.packagesPerTimestamp.get(packageTimestamp);
     if (!entryForTimestamp) {
       this.logger.warn(`No packages available for timestamp=${packageTimestamp}`);
+
       return;
     }
 
@@ -394,6 +405,7 @@ export class DataPackageSubscriber {
 
     if (!this.subscribeCallback) {
       this.logger.warn(`subscribeCallback is undefined - have already unsubscribed?`);
+
       return;
     }
 

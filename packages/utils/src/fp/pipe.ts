@@ -8,6 +8,7 @@ export function pipe(value: unknown, ...fns: Array<(arg: unknown) => unknown>): 
   for (const fn of fns) {
     current = fn(current);
   }
+
   return current;
 }
 

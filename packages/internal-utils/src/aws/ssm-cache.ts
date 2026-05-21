@@ -38,6 +38,7 @@ export const saveToSsmCache = (
 
   if (value === undefined) {
     console.log(`Value provided for ${parameterName} is undefined, not saving to cache`);
+
     return;
   }
 

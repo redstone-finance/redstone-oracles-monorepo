@@ -7,6 +7,7 @@ export const safelyConvertAnyValueToNumber = (value: unknown): number => {
     return Number(value);
   } else {
     logger.warn(`Value can not be converted to a valid number. Received: ${String(value)}`);
+
     return NaN;
   }
 };

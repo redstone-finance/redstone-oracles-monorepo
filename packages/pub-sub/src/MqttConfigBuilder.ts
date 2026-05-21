@@ -13,21 +13,25 @@ export class MqttConfigBuilder {
 
   withConnectProperties(connectPacket: mqtt5.ConnectPacket) {
     this.config.connectProperties = connectPacket;
+
     return this;
   }
 
   withOfflineQueueBehavior(offlineQueueBehavior: mqtt5.ClientOperationQueueBehavior) {
     this.config.offlineQueueBehavior = offlineQueueBehavior;
+
     return this;
   }
 
   withSessionBehavior(sessionBehavior: mqtt5.ClientSessionBehavior) {
     this.config.sessionBehavior = sessionBehavior;
+
     return this;
   }
 
   withRetryJitterMode(retryJitterMode: mqtt5.RetryJitterType) {
     this.config.retryJitterMode = retryJitterMode;
+
     return this;
   }
 

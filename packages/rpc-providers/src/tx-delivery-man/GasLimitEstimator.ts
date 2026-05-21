@@ -32,6 +32,7 @@ export class GasLimitEstimator {
     if (!this.opts.twoDimensionalFees) {
       return gasLimit;
     }
+
     return Math.round(gasLimit * this.opts.gasLimitMultiplier ** attempt);
   }
 

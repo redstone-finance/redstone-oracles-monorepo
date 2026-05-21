@@ -137,6 +137,7 @@ export const getDataPackagesResponse = async (
       signedDataPackages[dataPointObj.dataFeedId]!.push(signedDataPackage);
     }
   }
+
   return signedDataPackages;
 };
 
@@ -162,6 +163,7 @@ export const getMultiPointDataPackagesResponse = async (
     signedDataPackages[dataPackageId] ??= [];
     signedDataPackages[dataPackageId].push(signedDataPackage);
   }
+
   return signedDataPackages;
 };
 

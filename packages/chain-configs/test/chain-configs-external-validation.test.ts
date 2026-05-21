@@ -31,6 +31,7 @@ if (process.env.RUN_NONDETERMINISTIC_TESTS) {
           console.log(
             `multicall verification failed for ${chainConfig.name} (${chainConfig.networkId}), error ${RedstoneCommon.stringifyError(e)} `
           );
+
           throw e;
         }
       });
@@ -54,6 +55,7 @@ async function verifyMulticallAddress(chainConfig: ChainConfig, index = 0) {
     console.log(`${chainConfig.name} - RPC ${chainConfig.publicRpcUrls[index]} failed.`);
     if (index === chainConfig.publicRpcUrls.length - 1) {
       console.log(`${chainConfig.name} - All RPCs failed`);
+
       throw e;
     }
 

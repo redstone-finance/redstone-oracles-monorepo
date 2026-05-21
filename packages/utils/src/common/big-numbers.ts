@@ -13,6 +13,7 @@ export const normalizeDecimals = (reserve: BigNumber, decimals: number): BigNumb
     throw new Error(`Can not normalize reserve decimals: ${decimals}`);
   }
   const decimalsRequired = DEFAULT_DECIMALS - decimals;
+
   return reserve.mul(parseUnits("1.0", decimalsRequired));
 };
 

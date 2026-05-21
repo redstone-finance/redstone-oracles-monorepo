@@ -29,7 +29,7 @@ export class MultiPubSubClient implements PubSubClient {
   }
 
   /** Publish data to all channels, fails only if all clients fail */
-  async publish(payloads: PubSubPayload[], contentType: ContentTypes): Promise<void> {
+  async publish(payloads: PubSubPayload[], contentType: ContentTypes) {
     const results = await Promise.allSettled(
       this.pubSubConfigs.map((config) =>
         RedstoneCommon.timeout(config.client.publish(payloads, contentType), this.timeoutPerClient)
@@ -48,14 +48,14 @@ export class MultiPubSubClient implements PubSubClient {
     );
   }
 
-  setOnMessageHandler(onMessage: SubscribeCallback): void {
+  setOnMessageHandler(onMessage: SubscribeCallback) {
     for (const config of this.pubSubConfigs) {
       config.client.setOnMessageHandler(onMessage);
     }
   }
 
   /** Receive data from multiple channels thus expect duplicates, fails only if all clients fail */
-  async subscribe(topics: string[]): Promise<void> {
+  async subscribe(topics: string[]) {
     const results = await Promise.allSettled(
       this.pubSubConfigs.map((config) =>
         RedstoneCommon.timeout(config.client.subscribe(topics), this.timeoutPerClient)
@@ -75,7 +75,7 @@ export class MultiPubSubClient implements PubSubClient {
   }
 
   /** Fails if any of pub-sub clients fail **/
-  async unsubscribe(topics: string[]): Promise<void> {
+  async unsubscribe(topics: string[]) {
     await Promise.all(
       this.pubSubConfigs.map((config) =>
         RedstoneCommon.timeout(config.client.unsubscribe(topics), this.timeoutPerClient)
@@ -83,7 +83,7 @@ export class MultiPubSubClient implements PubSubClient {
     );
   }
 
-  stop(): void {
+  stop() {
     this.pubSubConfigs.forEach((config) => config.client.stop());
   }
 }

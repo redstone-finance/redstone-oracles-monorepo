@@ -7,7 +7,7 @@ import { readFileSync, writeFileSync } from "fs";
  * This code is not intended to be used in runtime, only in CI checks
  * @throws Error if duplicate keys are found at any level
  */
-export function checkForDuplicateKeys(jsonString: string): void {
+export function checkForDuplicateKeys(jsonString: string) {
   let inString = false;
   let escape = false;
   let currentKey = "";

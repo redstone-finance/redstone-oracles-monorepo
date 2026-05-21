@@ -24,6 +24,7 @@ async function main() {
     console.log(
       `Beneficiary balance (${beneficiaryBalance.toString()} CC) is within the limit (${BENEFICIARY_BALANCE_LIMIT} CC). No transfer needed.`
     );
+
     return;
   }
   console.log(

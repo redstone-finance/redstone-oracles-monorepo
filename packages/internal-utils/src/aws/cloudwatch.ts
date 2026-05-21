@@ -101,6 +101,7 @@ export const sendHealthcheckMetric = async (
     logger.debug(
       `Skipping healthcheck metric [${healthcheckMetricName}] - throttled, next send allowed in ${minIntervalMs - (now - lastSentAt)}ms`
     );
+
     return;
   }
   lastHealthcheckSentAt[healthcheckMetricName] = now;

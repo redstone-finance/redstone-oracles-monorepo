@@ -3,9 +3,11 @@ import { RedstoneCommon } from "@redstone-finance/utils";
 export const isSecp256k1Native = () => {
   try {
     assertSecp256k1Native();
+
     return true;
   } catch (e) {
     console.log(RedstoneCommon.stringifyError(e));
+
     return false;
   }
 };

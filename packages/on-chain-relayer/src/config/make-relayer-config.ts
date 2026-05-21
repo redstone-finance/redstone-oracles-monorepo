@@ -15,6 +15,7 @@ import {
 
 const createManifestConfig = (manifest: AnyOnChainRelayerManifest): ManifestConfig => {
   const { updateConditions, updateTriggers } = makeUpdateConditions(manifest);
+
   return {
     chainName: manifest.chain.name,
     networkId: manifest.chain.id,
@@ -35,6 +36,7 @@ export const makeRelayerConfig = (
   env: OnChainRelayerEnv
 ): RelayerConfig => {
   const manifestConfig = createManifestConfig(manifest);
+
   return {
     ...manifestConfig,
     ...env,

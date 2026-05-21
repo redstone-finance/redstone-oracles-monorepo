@@ -38,6 +38,7 @@ const handlers = [
   ),
   http.get("http://slower-cache.com/v2/data-packages/latest/*", async () => {
     await delay(200);
+
     return HttpResponse.json(getValidDataPackagesResponse());
   }),
 ];

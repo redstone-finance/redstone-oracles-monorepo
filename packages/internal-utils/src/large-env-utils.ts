@@ -38,6 +38,7 @@ export const fetchLargeEnvs = async (schemaByKey: Record<string, z.ZodType> = {}
   }
 
   const data = await Promise.all(keys.map((key) => handleLargeEnv(key, schemaByKey[key])));
+
   return Object.fromEntries(data.map(({ key, value }) => [key, value]));
 };
 

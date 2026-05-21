@@ -23,27 +23,32 @@ export class TelemetryPoint {
 
   timestamp(timestamp: Date | number | string): TelemetryPoint {
     this.time = timestamp;
+
     return this;
   }
 
   tag(key: string, value: string): TelemetryPoint {
     this.tags[key] = value;
+
     return this;
   }
 
   floatField(key: string, value: string | number | undefined): TelemetryPoint {
     this.fields.float[key] = value;
+
     return this;
   }
 
   stringField(key: string, value: string | undefined): TelemetryPoint {
     this.fields.string[key] = value;
+
     return this;
   }
 
   safeFloatField(key: string, value: string | number | undefined): TelemetryPoint {
     if (!RedstoneCommon.isDefined(value)) {
       logger.warn(`Will not save value for ${key} - undefined`);
+
       return this;
     }
     try {
@@ -84,6 +89,7 @@ export class TelemetrySendService implements ITelemetrySendService {
   private static parseInfluxUrl(influxUrl: string): InfluxConnectionInfo {
     const parsedUrl = new URL(influxUrl);
     const pathNameWithoutInfluxApi = parsedUrl.pathname.replace("/api/v2/write", "");
+
     return {
       url: `${parsedUrl.protocol}//${parsedUrl.host}${pathNameWithoutInfluxApi}`,
       org: parsedUrl.searchParams.get("org") || "",
@@ -112,6 +118,7 @@ export class TelemetrySendService implements ITelemetrySendService {
         options.headers = {};
       }
       options.headers["x-api-key"] = this.authParams.token; // add additional header in case we send request to API Gateway proxy
+
       return originalSend(path, body, options, callbacks);
     };
   }
@@ -189,6 +196,7 @@ export function getTelemetrySendService(
       });
     }
   }
+
   return telemetrySendServiceInstance;
 }
 
@@ -226,6 +234,7 @@ function groupTelemetryPoints(points: TelemetryPoint[]): Map<string, TelemetryPo
     }
     grouped.get(tagKey)!.push(telemetryPoint);
   }
+
   return grouped;
 }
 

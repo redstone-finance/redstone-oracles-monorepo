@@ -14,6 +14,7 @@ async function deployFastPriceFeed(
   const factory = await ethers.getContractFactory("FastPriceFeedWithRoundsMock");
   const feed = await factory.deploy(adapter.address, DATA_FEED_ID);
   await feed.deployed();
+
   return feed;
 }
 

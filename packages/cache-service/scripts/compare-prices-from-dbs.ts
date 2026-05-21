@@ -126,6 +126,7 @@ async function fetchDataPackagesFromBothMongoDbs(timestampIntervals: TimestampIn
     timestampIntervals,
     SECOND_DATA_SERVICE_ID
   );
+
   return { dataPackagesFromFirst, dataPackagesFromSecond };
 }
 
@@ -146,9 +147,11 @@ async function fetchDataPackages(
     console.log(`Fetched ${dataPackages.length} data packages`);
     await mongoConnection.disconnect();
     console.log("MongoDB disconnected");
+
     return dataPackages;
   } catch (error) {
     console.log(error);
+
     return [];
   }
 }
@@ -176,6 +179,7 @@ function compareDataPointsValuesFromFirstAndSecond(
       );
     }
   }
+
   return warnings;
 }
 
@@ -196,6 +200,7 @@ function getDataPointsFromSecond(dataPackagesFromSecond: CachedDataPackage[], da
       ...findDataPointsFromSecondByDataFeedId(dataPackageFromSecond, dataFeedId)
     );
   }
+
   return dataPointsFromSecond;
 }
 
@@ -209,6 +214,7 @@ function findDataPointsFromSecondByDataFeedId(
       dataPointsToAdd.push(dataPointFromSecond);
     }
   }
+
   return dataPointsToAdd;
 }
 
@@ -229,6 +235,7 @@ function compareEachSetInTwoArrays(
       }
     }
   }
+
   return diffs;
 }
 
@@ -242,6 +249,7 @@ function compareDataPointsSets(leftSet: Set<string>, rightSet: Set<string>) {
   const filteredDiffValues = diffValues.filter(
     (diffValue) => !TOKENS_ONLY_IN_ONE_DB.includes(diffValue)
   );
+
   return new Set(filteredDiffValues);
 }
 

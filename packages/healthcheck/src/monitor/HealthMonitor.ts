@@ -38,7 +38,7 @@ export class HealthMonitor {
     scheduleJob(cronExpr, this.runChecks.bind(this));
   }
 
-  private async runChecks(fireDate: Date): Promise<void> {
+  private async runChecks(fireDate: Date) {
     try {
       logger.debug(`Running health checks`);
       const data = await this.collectHealthData(fireDate);
@@ -75,6 +75,7 @@ export class HealthMonitor {
           healthCheck.check(fireDate),
           3000
         );
+
         return { key, status, errors };
       } catch (err) {
         // If it throws (e.g. timeout), treat as unhealthy
@@ -87,7 +88,7 @@ export class HealthMonitor {
     });
   }
 
-  private async atomicWriteStateFile(newStatus: HealthStatus): Promise<void> {
+  private async atomicWriteStateFile(newStatus: HealthStatus) {
     const tmpPath = `${this.healthcheckFile}.tmp`;
 
     // Write to a .tmp file first...

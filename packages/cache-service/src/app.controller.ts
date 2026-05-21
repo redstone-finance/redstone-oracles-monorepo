@@ -7,6 +7,7 @@ export class AppController {
   @Get()
   getRootRouteResponse(): string {
     this.logger.log("Received a request to the root route");
+
     return `Hello! I am working correctly`;
   }
 }

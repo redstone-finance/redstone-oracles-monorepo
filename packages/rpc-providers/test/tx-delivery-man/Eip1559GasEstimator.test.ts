@@ -289,6 +289,7 @@ describe("Eip1559GasEstimatorV2", () => {
             if (method === "eth_feeHistory") {
               return { reward: testCase.rewards };
             }
+
             throw new Error(`Unexpected method: ${method}`);
           });
 
@@ -481,8 +482,10 @@ describe("Eip1559GasEstimatorV2", () => {
             // Verify decimal format is used (not hex)
             expect(params[0]).to.equal(5);
             expect(params[0]).to.not.equal("0x5");
+
             return { reward: [["0x5"]] };
           }
+
           throw new Error(`Unexpected method: ${method}`);
         });
 
@@ -514,8 +517,10 @@ describe("Eip1559GasEstimatorV2", () => {
           if (method === "eth_feeHistory") {
             // Verify hex format is used (10 = 0xa)
             expect(params[0]).to.equal("0xa");
+
             return { reward: [["0x5"]] };
           }
+
           throw new Error(`Unexpected method: ${method}`);
         });
 
@@ -645,14 +650,17 @@ describe("Eip1559GasEstimatorV2", () => {
       const providerMock = new HardhatProviderMocker(hardhat.ethers.provider, {
         getBlock: Sinon.stub().callsFake(() => {
           const fee = networkFees[Math.min(callCount, networkFees.length - 1)];
+
           return Promise.resolve({ baseFeePerGas: BigNumber.from(fee.baseFee) });
         }),
         send: Sinon.stub().callsFake((method: string, params: unknown[]) => {
           if (method === "eth_feeHistory") {
             capturedPercentiles.push((params[2] as number[])[0]);
             const fee = networkFees[Math.min(callCount, networkFees.length - 1)];
+
             return { reward: [[fee.priorityFee]] };
           }
+
           throw new Error(`Unexpected method: ${method}`);
         }),
       });

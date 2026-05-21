@@ -24,6 +24,7 @@ export const checkIfDataPackagesDecimalsAreAcceptable = (
           const message = `Cannot update prices in mento adapter, some decimals are different than ${MENTO_SUPPORTED_DECIMALS} ${JSON.stringify(
             { dataFeedId, dataPoint: dataPoint.toObj() }
           )}`;
+
           return { shouldNotUpdatePrice: true, messages: [{ message }] };
         }
       }

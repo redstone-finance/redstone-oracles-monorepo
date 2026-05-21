@@ -42,6 +42,7 @@ export const basicPullModelTestConfig: PullModelTestCase = {
         mockSignerIndex: i as MockSignerIndex,
         timestampMilliseconds: timestamp,
       });
+
       return SignedDataPackage.fromObj(mdp);
     });
 

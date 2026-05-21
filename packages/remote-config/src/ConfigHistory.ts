@@ -31,6 +31,7 @@ export class ConfigHistory {
     const historicalConfig = this.history.find((c) => c.configHash === configHash);
     if (!historicalConfig) {
       logger.warn(`Historical config with hash ${configHash} not found - cannot blacklist`);
+
       return;
     }
     historicalConfig.blacklisted = true;
@@ -42,6 +43,7 @@ export class ConfigHistory {
         return historicalConfigHash;
       }
     }
+
     return null;
   }
 }

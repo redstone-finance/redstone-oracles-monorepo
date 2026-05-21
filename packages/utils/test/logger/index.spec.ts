@@ -256,6 +256,7 @@ describe("Logger Sanitization Logic", () => {
       if (depth === 0) {
         return { url: "https://example.com/secret?key=12345", value: depth };
       }
+
       return {
         nested: createDeepObject(depth - 1),
         url: `https://example.com/level${depth}?key=secret${depth}`,
@@ -271,6 +272,7 @@ describe("Logger Sanitization Logic", () => {
       if (obj.nested === "[Max Depth Reached]") {
         return 1;
       }
+
       return 1 + checkDepth(obj.nested!);
     };
 

@@ -23,16 +23,19 @@ class MockHttpClient {
       const deflateJson = new DeflateJson();
       const response = topics.map((topic) => {
         const data = this.data.get(topic) || [];
+
         return {
           topic,
           data: data.map((d) => Buffer.from(deflateJson.serialize(d)).toString("base64")),
         };
       });
       this.postMock(urlSuffix, topics, config);
+
       return Promise.resolve({ data: response });
     }
 
     this.postMock(urlSuffix, msg, config);
+
     return Promise.resolve({ data: {} });
   }
 }

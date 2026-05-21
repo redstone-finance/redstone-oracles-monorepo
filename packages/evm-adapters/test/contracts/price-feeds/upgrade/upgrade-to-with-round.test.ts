@@ -182,6 +182,7 @@ async function updatePriceInAdapter(adapterWithoutRounds: IRedstoneAdapter, valu
 
   // round 1
   await wrappedContract.updateDataFeedsValues(timestamp);
+
   return {
     wrappedContract,
     timestamp: timestamp.toString(),

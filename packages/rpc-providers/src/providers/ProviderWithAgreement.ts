@@ -174,6 +174,7 @@ export class ProviderWithAgreement extends ProviderWithFallback {
       return blockNumber;
     } catch (e) {
       this.updateScore(identifier, true);
+
       throw e;
     }
   }
@@ -419,6 +420,7 @@ export class ProviderWithAgreement extends ProviderWithFallback {
       );
     } catch (e) {
       singleProviderAbort = true;
+
       throw e;
     }
   }
@@ -441,12 +443,14 @@ async function withDebugLog<T>(
       duration: performance.now() - start,
       value: opts.logValue ? result : "hidden",
     });
+
     return result;
   } catch (e) {
     opts.logger.debug(`${opts.description}`, {
       duration: performance.now() - start,
       error: RedstoneCommon.stringifyError(e),
     });
+
     throw e;
   }
 }

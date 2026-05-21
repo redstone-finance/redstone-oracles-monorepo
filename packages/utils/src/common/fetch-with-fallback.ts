@@ -10,5 +10,6 @@ export const fetchWithFallbacks = <T>(args: AxiosGetRequest<T>): Promise<AxiosRe
   const makeGetRequest = args.makeGetRequest ?? axios.get.bind(axios);
 
   const requests = args.urls.map((url) => makeGetRequest(url, args.axiosConfig));
+
   return Promise.any(requests);
 };

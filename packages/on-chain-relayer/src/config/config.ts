@@ -19,5 +19,6 @@ export const config = (isInvokedConsciously?: typeof ConsciouslyInvoked) => {
   } catch {
     throw new Error(`Adapter contract type not supported: ${relayerConfig.adapterContractType}`);
   }
+
   return relayerConfig;
 };
