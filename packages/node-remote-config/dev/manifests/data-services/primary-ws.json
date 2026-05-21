@@ -125,7 +125,7 @@
       "priceAggregator": "primarySource",
       "primarySourceAggregatorConfig": {
         "primarySource": "ws-lmax",
-        "maxAcceptableDeviation": 1.5,
+        "maxAcceptableDeviation": 1.0,
         "lowerClampPercent": 0.1,
         "upperClampPercent": 0.1
       },
@@ -165,7 +165,7 @@
       "priceAggregator": "primarySource",
       "primarySourceAggregatorConfig": {
         "primarySource": "ws-lmax",
-        "maxAcceptableDeviation": 1.5,
+        "maxAcceptableDeviation": 1.0,
         "lowerClampPercent": 0.1,
         "upperClampPercent": 0.1
       },
@@ -846,18 +846,17 @@
         "financialmodelingprep-deferred",
         "ws-blocksize",
         "ws-lmax",
+        "rollover-time-blend-implied-spot",
         "ws-polygon-massive-commodities",
-        "ws-hyperliquid-perps-xyz",
-        "ws-hydromancer-perps-xyz"
+        "ws-hyperliquid-perps-xyz"
       ],
       "priceAggregator": "primarySource",
       "primarySourceAggregatorConfig": {
-        "primarySource": "ws-lmax",
-        "maxAcceptableDeviation": 1.5,
+        "primarySource": "ws-polygon-massive-commodities",
+        "maxAcceptableDeviation": 1.0,
         "lowerClampPercent": 0.1,
         "upperClampPercent": 0.1
       },
-      "broadcasters": ["influx"],
       "deviationCheck": {
         "deviationWithRecentValues": {
           "maxPercent": 30,
@@ -918,18 +917,18 @@
     },
     "XAU": {
       "source": [
+        "rollover-time-blend-implied-spot",
         "alltick-api-deferred",
         "financialmodelingprep-deferred",
         "ws-blocksize",
         "ws-lmax",
-        "ws-polygon-massive-commodities",
         "ws-hyperliquid-perps-xyz",
-        "ws-hydromancer-perps-xyz"
+        "ws-polygon-massive-commodities"
       ],
       "priceAggregator": "primarySource",
       "primarySourceAggregatorConfig": {
-        "primarySource": "ws-lmax",
-        "maxAcceptableDeviation": 1.5,
+        "primarySource": "ws-polygon-massive-commodities",
+        "maxAcceptableDeviation": 1.0,
         "lowerClampPercent": 0.1,
         "upperClampPercent": 0.1
       },
@@ -993,22 +992,21 @@
     },
     "XPT": {
       "source": [
+        "rollover-time-blend-implied-spot",
         "financialmodelingprep-deferred",
         "finhub_deriv_deferred",
         "ws-blocksize",
         "ws-lmax",
         "ws-twelve-data",
-        "ws-hyperliquid-perps-xyz",
-        "ws-hydromancer-perps-xyz"
+        "ws-hyperliquid-perps-xyz"
       ],
       "priceAggregator": "primarySource",
       "primarySourceAggregatorConfig": {
         "primarySource": "ws-lmax",
-        "maxAcceptableDeviation": 1.5,
+        "maxAcceptableDeviation": 1.0,
         "lowerClampPercent": 0.1,
         "upperClampPercent": 0.1
       },
-      "broadcasters": ["influx"],
       "deviationCheck": {
         "deviationWithRecentValues": {
           "maxPercent": 30,
