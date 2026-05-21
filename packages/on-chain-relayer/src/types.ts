@@ -25,7 +25,6 @@ export interface ShouldUpdateResponse {
   dataFeedsDeviationRatios: Record<string, number>;
   heartbeatUpdates: number[];
   messages: IterationArgsMessage[];
-  missingDataFeedIds: string[];
 }
 
 export interface ConditionCheckResponse {
@@ -41,10 +40,6 @@ export type IterationArgs = {
   additionalUpdateMessages?: IterationArgsMessage[];
 };
 
-export type MultiFeedIterationArgs = Omit<IterationArgs, "args"> & {
-  args: MultiFeedUpdatePricesArgs;
-};
-
 export type UpdatePricesArgs = {
   blockTag: number;
   updateRequestParams: DataPackagesRequestParams;
@@ -54,5 +49,4 @@ export type UpdatePricesArgs = {
 export type MultiFeedUpdatePricesArgs = UpdatePricesArgs & {
   dataFeedsDeviationRatios: Record<string, number>;
   heartbeatUpdates: number[];
-  missingDataFeedIds: string[];
 };

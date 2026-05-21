@@ -1,10 +1,6 @@
 import { WriteContractAdapter } from "@redstone-finance/multichain-kit";
 import { INumericDataPoint } from "@redstone-finance/protocol";
-import {
-  ContractParamsProvider,
-  DataPackagesRequestParams,
-  DataPackagesResponseCache,
-} from "@redstone-finance/sdk";
+import { DataPackagesResponseCache } from "@redstone-finance/sdk";
 import { RedstoneLogger } from "@redstone-finance/utils";
 import { expect } from "chai";
 import sinon from "sinon";
@@ -119,12 +115,7 @@ describe("runIteration tests", () => {
     await performRunIterationTest(
       mockConfig({
         dataFeeds: ["ETH", "DOGE"],
-        updateConditions: { ETH: ["value-deviation"], DOGE: ["value-deviation"] },
-        updateTriggers: {
-          ETH: { deviationPercentage: 10, timeSinceLastUpdateInMilliseconds: 1000 },
-          BTC: { deviationPercentage: 10, timeSinceLastUpdateInMilliseconds: 1000 },
-          USDC: { deviationPercentage: 10, timeSinceLastUpdateInMilliseconds: 1000 },
-        },
+        updateConditions: { ETH: ["time"], DOGE: ["time"] },
       }),
       getIterationArgsProviderMock(),
       new DataPackagesResponseCache().update(await getMultiPointDataPackagesResponse(), {
@@ -165,52 +156,6 @@ describe("runIteration tests", () => {
 
     expect(loggerStub.log.calledWith("Additional message")).to.be.true;
     expect(loggerStub.log.calledWith("Other message")).to.be.true;
-  });
-
-  it("feed removed because of missing feedToBeUpdatedTogether should not be present in writePricesFromPayloadToContract through full relayer flow", async () => {
-    const config = mockConfig({
-      dataFeeds: ["ETH", "BTC", "USDC"],
-      adapterContractType: "multi-feed",
-      updateConditions: {
-        ETH: ["value-deviation"],
-        BTC: ["value-deviation"],
-        USDC: ["value-deviation"],
-      },
-      updateTriggers: {
-        ETH: { deviationPercentage: 10, timeSinceLastUpdateInMilliseconds: 1000 },
-        BTC: { deviationPercentage: 10, timeSinceLastUpdateInMilliseconds: 1000 },
-        USDC: { deviationPercentage: 10, timeSinceLastUpdateInMilliseconds: 1000 },
-      },
-      feedsToBeUpdatedTogether: [["ETH", "BTC"]],
-    });
-
-    adapter = new ContractAdapterMock();
-    updatePricesStub = sinon.stub(adapter, "writePricesFromPayloadToContract").resolves();
-
-    const facade = new ContractFacade(adapter, new BlockProviderMock(), config);
-
-    sinon.stub(facade, "getContractParamsProvider").callsFake(
-      (_requestParams: DataPackagesRequestParams, feedIds?: string[]) =>
-        new ContractParamsProviderMock(
-          feedIds
-            ? feedIds.map((id) => ({ dataFeedId: id, value: 0 }))
-            : [
-                { dataFeedId: "ETH", value: ETH_PRICE },
-                { dataFeedId: "USDC", value: 1.0 },
-              ]
-        )
-    );
-
-    await runIteration(facade, config, {
-      logger: loggerStub as unknown as RedstoneLogger,
-      sendHealthcheckPingCallback: sendHealthcheckPingStub,
-    });
-
-    expect(updatePricesStub.calledOnce).to.be.true;
-    const paramsProvider = updatePricesStub.getCall(0).args[0] as ContractParamsProvider;
-    expect(paramsProvider.getDataFeedIds()).not.to.include("ETH");
-    expect(paramsProvider.getDataFeedIds()).not.to.include("BTC");
-    expect(paramsProvider.getDataFeedIds()).to.deep.equal(["USDC"]);
   });
 
   async function performRunIterationTest(

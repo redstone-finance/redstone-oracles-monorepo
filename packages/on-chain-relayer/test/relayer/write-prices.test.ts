@@ -8,12 +8,10 @@ import {
   performWritePricesTests,
 } from "@redstone-finance/evm-adapters";
 import { ProviderWithAgreement } from "@redstone-finance/rpc-providers";
-import { Tx } from "@redstone-finance/utils";
 import chai, { expect } from "chai";
 import chaiAsPromised from "chai-as-promised";
 import { parseUnits } from "ethers/lib/utils";
 import { ethers } from "hardhat";
-import Sinon from "sinon";
 import { getTxDeliveryMan } from "../../src/core/TxDeliveryManSingleton";
 import {
   BTC_PRICE,
@@ -92,32 +90,6 @@ describe("write-prices", () => {
 
     // to price-feeds are written only the feedIds available in contract
     await checkDataValues(adapterContract, [{ feedId: btcDataFeed, price: BTC_PRICE }]);
-  });
-
-  it("deferredCallData on TxDelivery retry re-uses the filtered paramsProvider", async () => {
-    const filteredParamsProvider = new ContractParamsProviderMock([
-      { dataFeedId: "ETH", value: ETH_PRICE },
-    ]);
-
-    let capturedDeferredCallData: (() => Promise<string>) | undefined;
-
-    await performWritePricesTests(
-      provider,
-      { adapterContractType: "multi-feed" },
-      deployMultiFeedAdapterWithoutRoundsMock,
-      () => ({
-        deliver: (_call: Tx.TxDeliveryCall, context: Tx.TxDeliveryManContext): Promise<unknown> => {
-          capturedDeferredCallData = context.deferredCallData;
-          return Promise.resolve();
-        },
-      }),
-      filteredParamsProvider
-    );
-
-    const getIdsSpy = Sinon.spy(filteredParamsProvider, "getDataFeedIds");
-    await capturedDeferredCallData!();
-    expect(getIdsSpy.callCount).to.equal(1);
-    expect(getIdsSpy.returnValues[0]).to.deep.equal(["ETH"]);
   });
 
   it("should update prices in mento adapter", async () => {

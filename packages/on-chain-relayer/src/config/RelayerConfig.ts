@@ -26,10 +26,7 @@ export type ManifestConfig = {
   adapterContractType: AdapterType;
   adapterContractPackageId?: string;
   authorizedSigners?: string[];
-  // removes feeds from update when any feed in the group is missing
-  feedsToBeUpdatedTogether?: string[][];
 };
-
 export type OnChainRelayerEnv = {
   relayerIterationInterval: number;
   rpcUrls: string[];
