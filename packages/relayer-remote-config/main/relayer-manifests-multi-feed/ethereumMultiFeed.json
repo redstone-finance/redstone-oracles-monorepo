@@ -10,7 +10,6 @@
   "adapterContract": "0xd72a6BA4a87DDB33e801b3f1c7750b2d0911fC6C",
   "adapterContractType": "multi-feed",
   "dataServiceId": "redstone-primary-prod",
-  "feedsToBeUpdatedTogether": [["mzUSD_FUNDAMENTAL", "mzUSD_TOTAL_SUPPLY"]],
   "priceFeeds": {
     "LBTC_FUNDAMENTAL": {
       "priceFeedAddress": "0xb415eAA355D8440ac7eCB602D3fb67ccC1f0bc81",
