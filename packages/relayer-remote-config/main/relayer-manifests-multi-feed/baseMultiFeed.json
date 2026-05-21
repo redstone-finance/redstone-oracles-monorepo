@@ -163,6 +163,13 @@
     },
     "cbBTC": {
       "priceFeedAddress": "0x8B4736f5eaD8ed579Ecf65a13F9c1E8B44dEdF20"
+    },
+    "CHECK": {
+      "priceFeedAddress": "0xcE4D1F8e561b10c03b719677A0c01363D2233a20",
+      "updateTriggersOverrides": {
+        "deviationPercentage": 0.5,
+        "timeSinceLastUpdateInMilliseconds": 21600000
+      }
     }
   }
 }
