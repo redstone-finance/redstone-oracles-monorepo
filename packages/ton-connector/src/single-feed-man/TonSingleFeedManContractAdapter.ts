@@ -5,7 +5,7 @@ import { AnyTonOpenedContract } from "../network/TonNetwork";
 export class TonSingleFeedManContractAdapter {
   constructor(public readonly contract: AnyTonOpenedContract<TonSingleFeedMan>) {}
 
-  async sendDeploy(): Promise<void> {
+  async sendDeploy() {
     await this.contract.sendDeploy();
   }
 

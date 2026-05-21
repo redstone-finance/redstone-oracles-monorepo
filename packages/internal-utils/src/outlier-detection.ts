@@ -42,6 +42,7 @@ export function filterOutliers<T extends Record<string, DataPackagePlainObj[] | 
         baseValue: median,
         deviatedValue: pkg.value,
       });
+
       return deviation <= MAX_DEVIATION_PERCENT;
     });
 

@@ -9,6 +9,7 @@ describe("outlier-detection", () => {
       timestamp,
       "test-source"
     );
+
     return dataPackage.toObj();
   };
 

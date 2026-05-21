@@ -21,6 +21,7 @@ export abstract class ConsensusExecutor<R> extends ParallelExecutor<R> {
       this.logger.debug(
         `Returning, still doesn't have all of ${totalLength} results: ${successfulResults.length} successes + ${errorResults.length} errors`
       );
+
       return false;
     }
 
@@ -31,6 +32,7 @@ export abstract class ConsensusExecutor<R> extends ParallelExecutor<R> {
     }
 
     const failedCount = errorResults.length;
+
     throw new AggregateError(
       errorResults,
       `Consensus failed: got ${successfulResults.length} successful result${getS(successfulResults.length)}, needed at least ${quorum}` +

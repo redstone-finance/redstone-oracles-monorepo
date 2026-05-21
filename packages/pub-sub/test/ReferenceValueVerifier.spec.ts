@@ -22,6 +22,7 @@ jest.mock("@redstone-finance/utils", () => {
     jest.spyOn(logger, "error").mockImplementation((...args: Parameters<typeof logger.error>) => {
       mockError(...args);
     });
+
     return logger;
   };
 

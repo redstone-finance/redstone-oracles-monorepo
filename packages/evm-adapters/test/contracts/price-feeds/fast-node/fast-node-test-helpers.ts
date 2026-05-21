@@ -99,6 +99,7 @@ export async function deployAdapter() {
   const factory = await ethers.getContractFactory("FastMultiFeedAdapterWithRoundsMock");
   const adapter = await factory.deploy();
   await adapter.deployed();
+
   return adapter;
 }
 

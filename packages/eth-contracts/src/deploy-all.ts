@@ -61,6 +61,7 @@ async function deployTokenContract() {
   const TokenContractFactory = await ethers.getContractFactory("RedstoneToken");
   const contract = await TokenContractFactory.deploy(toEthBN(INITIAL_SUPPLY));
   await contract.deployed();
+
   return contract.address;
 }
 
@@ -71,6 +72,7 @@ async function deployLockingContract(tokenAddress: string) {
     AUTHORISED_SLASHER,
     DELAY_FOR_UNLOCKING_SECONDS,
   ]);
+
   return locking.address;
 }
 

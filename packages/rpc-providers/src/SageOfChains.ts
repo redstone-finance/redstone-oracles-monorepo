@@ -38,6 +38,7 @@ export class SageOfChains {
     const chainConfig = SageOfChains.getChainConfig(networkId);
     const provider = providerFactory(chainConfig);
     this.networkIdToProvider[networkId] = provider;
+
     return provider;
   }
 
@@ -48,6 +49,7 @@ export class SageOfChains {
     if (!chainConfig) {
       throw new Error(`SageOfChains: missing local chain config for ${networkId}`);
     }
+
     return chainConfig;
   }
 
@@ -63,6 +65,7 @@ export class SageOfChains {
         const chainConfig = SageOfChains.getChainConfig(NetworkIdSchema.parse(networkId));
         const provider = providerFactory(chainConfig);
         const blockNumber = await getBlockNumberWithRetries(provider, timeout);
+
         return [networkId, blockNumber];
       })
     );
@@ -76,6 +79,7 @@ export class SageOfChains {
             Object.keys(this.networkIdToProviderFactory)[index]
           } after 2 retries: ${RedstoneCommon.stringifyError(result.reason)}`
         );
+
         return false;
       })
       .filter((r) => !!r) as [string, number][];

@@ -67,6 +67,7 @@ export class TxDeliveryMan implements Tx.ITxDeliveryMan {
         const rpcUrl = getProviderNetworkInfo(provider).url;
         const message = `RpcUrl=${rpcUrl} Delivery in progress; Skipping`;
         logger.log(message);
+
         throw new Error(message);
       }
     });
@@ -77,6 +78,7 @@ export class TxDeliveryMan implements Tx.ITxDeliveryMan {
     this.logTxResponse(txReceiptPromise);
 
     await this.waitForMinDeliveryTime(startedAt);
+
     return () => txReceiptPromise;
   }
 
@@ -126,6 +128,7 @@ export class TxDeliveryMan implements Tx.ITxDeliveryMan {
               WAITING_FOR_CONFIRMATION_TIMEOUT
             );
           }
+
           return undefined;
         })
       )
@@ -170,6 +173,7 @@ function extractProviders(
   if (provider instanceof ProviderWithFallback || provider instanceof ProviderWithAgreement) {
     return Object.freeze(provider.providers) as ethers.providers.JsonRpcProvider[];
   }
+
   return Object.freeze([provider]);
 }
 
@@ -182,6 +186,7 @@ function createTxDelivery(
   allocatedNonce?: AllocatedNonce
 ): TxDelivery {
   const rpcUrl = getProviderNetworkInfo(provider).url;
+
   return new TxDelivery(
     {
       ...opts,
@@ -197,6 +202,7 @@ function createTxDelivery(
 
 const getTxReceiptDesc = (receipt: TransactionReceipt) => {
   const statusDesc = receipt.status === 1 ? "SUCCESS" : "REVERTED";
+
   return `Transaction ${receipt.transactionHash} mined with ${statusDesc}(status: ${
     receipt.status
   }) in block #${receipt.blockNumber}[tx index: ${

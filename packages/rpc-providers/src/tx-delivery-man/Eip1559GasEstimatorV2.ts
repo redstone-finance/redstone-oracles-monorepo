@@ -133,6 +133,7 @@ export class Eip1559GasEstimatorV2 implements GasEstimator<Eip1559Fee> {
       await provider.send("eth_maxPriorityFeePerGas", [])
     );
     this.opts.logger(`Fallback to eth_maxPriorityFeePerGas=${ethMaxPriorityFeePerGasResult}`);
+
     return ethMaxPriorityFeePerGasResult;
   }
 
@@ -179,6 +180,7 @@ export class Eip1559GasEstimatorV2 implements GasEstimator<Eip1559Fee> {
 
   private getPercentileForAttempt(attempt: number): number {
     const index = Math.min(attempt, this.percentiles.length - 1);
+
     return this.percentiles[index];
   }
 
@@ -199,6 +201,7 @@ export class Eip1559GasEstimatorV2 implements GasEstimator<Eip1559Fee> {
 
   private getScaledPriorityFee(currentFees: Eip1559Fee, attempt: number): number {
     const multiplier = this.getMultiplier(attempt);
+
     return Math.round(currentFees.maxPriorityFeePerGas * multiplier);
   }
 

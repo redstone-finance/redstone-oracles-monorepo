@@ -25,14 +25,17 @@ export class HardhatProviderMocker {
             return (self.toMock as any)[property](...args);
           };
         }
+
         return originalValue;
       },
       set(_target: providers.JsonRpcProvider, p, newValue) {
         if (p.toString() === "call") {
           // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment -- add reason here, please
           self.set({ ...toMock, call: newValue });
+
           return true;
         }
+
         return false;
       },
     });
@@ -84,6 +87,7 @@ export function createBasicProviderMock(
       if (method === "eth_feeHistory") {
         return { reward: [[priorityFeeHex]] };
       }
+
       throw new Error(`Unexpected method: ${method}`);
     }),
   });
@@ -107,8 +111,10 @@ export function createFallbackProviderMock(
         if (fallbackHex === null) {
           throw new Error("Should not call eth_maxPriorityFeePerGas");
         }
+
         return fallbackHex;
       }
+
       throw new Error(`Unexpected method: ${method}`);
     }),
   });
@@ -127,8 +133,10 @@ export function createPercentileCaptureProviderMock(
     send: Sinon.stub().callsFake((method: string, params: unknown[]) => {
       if (method === "eth_feeHistory") {
         captureArray.push((params[2] as number[])[0]);
+
         return { reward: [[rewardHex]] };
       }
+
       throw new Error(`Unexpected method: ${method}`);
     }),
   });

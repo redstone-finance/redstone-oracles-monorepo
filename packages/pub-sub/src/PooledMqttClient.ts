@@ -34,7 +34,7 @@ export class PooledMqttClient implements PubSubClient {
   }
 
   /** Created clients are not recycled */
-  async publish(payloads: PubSubPayload[], contentType: ContentTypes): Promise<void> {
+  async publish(payloads: PubSubPayload[], contentType: ContentTypes) {
     await this.publishMutex.acquire();
 
     try {
@@ -57,14 +57,14 @@ export class PooledMqttClient implements PubSubClient {
     }
   }
 
-  setOnMessageHandler(onMessage: SubscribeCallback): void {
+  setOnMessageHandler(onMessage: SubscribeCallback) {
     this.onMessageHandler = onMessage;
     for (const [client] of this.clientToTopics) {
       client.setOnMessageHandler(onMessage);
     }
   }
 
-  async subscribe(topics: string[]): Promise<void> {
+  async subscribe(topics: string[]) {
     await this.subscribeMutex.acquire();
     try {
       await this._subscribe(topics);
@@ -76,7 +76,7 @@ export class PooledMqttClient implements PubSubClient {
     }
   }
 
-  async unsubscribe(topics: string[]): Promise<void> {
+  async unsubscribe(topics: string[]) {
     await this.subscribeMutex.acquire();
 
     try {
@@ -105,7 +105,7 @@ export class PooledMqttClient implements PubSubClient {
     );
   }
 
-  stop(): void {
+  stop() {
     for (const [client, _] of this.clientToTopics) {
       client.stop();
     }
@@ -116,7 +116,7 @@ export class PooledMqttClient implements PubSubClient {
     this.clientToTopics = [];
   }
 
-  async _subscribe(topics: string[]): Promise<void> {
+  async _subscribe(topics: string[]) {
     const topicToAdd = [...topics];
     const clientWithCapacity = this.clientToTopics.map(
       ([_, topics]) => this.connectionsPerTopic - topics.length

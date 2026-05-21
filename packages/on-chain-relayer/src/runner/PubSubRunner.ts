@@ -134,6 +134,7 @@ export class PubSubRunner implements PubSubDataProcessingStrategyDelegate<Relaye
 
     if (_.isEqual(params, this.subscriber?.params)) {
       this.logger.debug("Params remain unchanged, doesn't need to resubscribe");
+
       return;
     }
 
@@ -164,6 +165,7 @@ export class PubSubRunner implements PubSubDataProcessingStrategyDelegate<Relaye
       this.logger.warn(
         `Fallback IS NOT enabled. pubSubFallbackCheckIntervalMs or pubSubFallbackMaxDelayBetweenPublishesMs is missing`
       );
+
       return;
     }
 
@@ -177,10 +179,11 @@ export class PubSubRunner implements PubSubDataProcessingStrategyDelegate<Relaye
   async strategyRunIteration(
     _strategy: PubSubDataProcessingStrategy<RelayerConfig>,
     config: RelayerConfig
-  ): Promise<void> {
+  ) {
     try {
       if (this.shouldGracefullyShutdown) {
         this.logger.info(`Shutdown scheduled, not running next iteration`);
+
         return;
       }
 

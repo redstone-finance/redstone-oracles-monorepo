@@ -137,6 +137,7 @@ export class TxDelivery {
                 ethersError
               )}`
             );
+
             throw ethersError;
           default:
             this.opts.logger(
@@ -144,6 +145,7 @@ export class TxDelivery {
                 ethersError
               )}`
             );
+
             throw ethersError;
         }
       }
@@ -154,6 +156,7 @@ export class TxDelivery {
 
       try {
         await this.txWaitingStrategy.waitForTx(tx);
+
         return result;
       } catch {
         this.opts.logger("Trying with new fees...");
@@ -186,6 +189,7 @@ export class TxDelivery {
     const result = await this.provider.sendTransaction(signedTx);
     this.txNonceCoordinator.registerPendingTx(tx.nonce, result.hash, this.getNonceAttempt());
     this.opts.logger(`Transaction ${result.hash} broadcasted successfully`);
+
     return result;
   }
 
@@ -218,6 +222,7 @@ export class TxDelivery {
 
     if (TxDelivery.isAlreadyKnownError(ethersError)) {
       this.opts.logger(`Transaction ${result?.hash} already known, nonce: ${nonce}`);
+
       return TransactionBroadcastErrorResult.AlreadyKnown;
     } else if (TxDelivery.isNonceExpiredError(ethersError)) {
       // if not by us, then it was delivered by someone else
@@ -225,6 +230,7 @@ export class TxDelivery {
         this.opts.logger(
           `Transaction with same nonce ${nonce} was delivered by someone else originalError=${RedstoneCommon.stringifyError(ethersError)}`
         );
+
         return TransactionBroadcastErrorResult.AlreadyDelivered;
       } else {
         // it means that in meantime between check if transaction is delivered and sending new transaction
@@ -232,6 +238,7 @@ export class TxDelivery {
         this.opts.logger(
           `Nonce expired error: Transaction hash=${result.hash} nonce=${nonce} mined originalError=${RedstoneCommon.stringifyError(ethersError)}`
         );
+
         return TransactionBroadcastErrorResult.AlreadyDelivered;
       }
       // if underpriced then bump fee and skip sleeping
@@ -239,11 +246,13 @@ export class TxDelivery {
       this.opts.logger(
         `Underpriced error occurred, trying with scaled fees without sleep originalError=${RedstoneCommon.stringifyError(ethersError)}`
       );
+
       return TransactionBroadcastErrorResult.Underpriced;
     } else if (TxDelivery.isInsufficientFundsError(ethersError)) {
       this.opts.logger(
         `Insufficient funds error occurred, updater doesn't have enough tokens originalError=${RedstoneCommon.stringifyError(ethersError)}`
       );
+
       return TransactionBroadcastErrorResult.InsufficientFunds;
     }
 
@@ -381,6 +390,7 @@ export class TxDelivery {
       logger.error(
         `Custom gas oracle failed. Will fallback to feeEstimator. error=${RedstoneCommon.stringifyError(e)}`
       );
+
       throw e;
     }
   }
@@ -389,13 +399,14 @@ export class TxDelivery {
     if (this.deferredCallData) {
       return await this.deferredCallData();
     }
+
     return tx.data;
   }
   /**
    * Override percentileOfPriorityFee if provided to avoid _.merge's array merging behavior.
    * Without this, _.merge would merge arrays element-by-element
    */
-  private overridePercentileIfProvided(opts: TxDeliveryOpts): void {
+  private overridePercentileIfProvided(opts: TxDeliveryOpts) {
     if (opts.percentileOfPriorityFee !== undefined) {
       this.opts.percentileOfPriorityFee = opts.percentileOfPriorityFee;
     }
@@ -408,6 +419,7 @@ function logPerf<T>(
   originalLogger: RedstoneLogger
 ): Promise<T> {
   const startTime = performance.now();
+
   return fn().finally(() => {
     const duration = performance.now() - startTime;
     originalLogger.debug(`${label}: ${duration}[ms]`, { duration });

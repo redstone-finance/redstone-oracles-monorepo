@@ -150,6 +150,7 @@ export class SolanaContractUpdater implements ContractUpdater {
           if (SolanaRustSdkErrroHandler.canSkipError(result.error)) {
             return true;
           }
+
           throw new Error(RedstoneCommon.stringify(result.error));
         }
 

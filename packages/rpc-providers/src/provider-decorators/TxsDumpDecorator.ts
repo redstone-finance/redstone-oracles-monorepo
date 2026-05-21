@@ -21,6 +21,7 @@ export function TxDumpDecorator(factory: () => providers.Provider) {
 
       return await oldCall(transaction, blockTag);
     };
+
     return provider;
   };
 

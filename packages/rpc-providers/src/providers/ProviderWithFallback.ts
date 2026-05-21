@@ -88,11 +88,13 @@ export class ProviderWithFallback extends ProviderWithFallbackBase implements Pr
 
   override on(eventName: EventType, listener: Listener): Provider {
     this.saveGlobalListener(eventName, listener);
+
     return this.currentProvider.on(eventName, listener);
   }
 
   override once(eventName: EventType, listener: Listener): Provider {
     this.saveGlobalListener(eventName, listener, true);
+
     return this.currentProvider.once(eventName, listener);
   }
 
@@ -191,6 +193,7 @@ export class ProviderWithFallback extends ProviderWithFallbackBase implements Pr
         alreadyRetriedCount,
         providerIndexForThisAttempt
       );
+
       return await this.doExecuteWithFallback(alreadyRetriedCount + 1, fnName, ...args);
     }
   }
@@ -217,9 +220,10 @@ export class ProviderWithFallback extends ProviderWithFallbackBase implements Pr
     error: EthersError,
     retryNumber: number,
     lastUsedProviderIndex: number
-  ): void {
+  ) {
     if (error.code && this.providerWithFallbackConfig.unrecoverableErrors.includes(error.code)) {
       logger.warn(`Unrecoverable error ${error.code}, rethrowing error`);
+
       throw error;
     }
 
@@ -231,6 +235,7 @@ export class ProviderWithFallback extends ProviderWithFallbackBase implements Pr
 
     if (retryNumber === this.providers.length - 1) {
       logger.warn(`All providers failed to execute action, rethrowing error`);
+
       throw error;
     }
 

@@ -20,11 +20,13 @@ export const convertHexToNumber = (hex: string): number => {
   if (Number.isNaN(number)) {
     throw new Error(`Failed to parse ${hex} to number`);
   }
+
   return number;
 };
 
 export const isEthersError = (e: unknown): e is EthersError => {
   const error = e as Partial<EthersError>;
+
   return !!error.code && !!error.message;
 };
 
@@ -56,6 +58,7 @@ export function getProviderNetworkInfo(
 /** In fact it is sync function cause our provider has static assigned network id */
 export async function getProviderNetworkId(provider: providers.Provider): Promise<NetworkId> {
   const network = await provider.getNetwork();
+
   return network.chainId;
 }
 

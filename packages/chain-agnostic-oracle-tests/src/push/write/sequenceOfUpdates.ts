@@ -23,6 +23,7 @@ export const sequenceOfUpdates: Nested<PushModelTestCase> = {
           });
         }
         const testConfig = generateTestConfigForSequenceOfUpdates(updates);
+
         return [`Should properly update ${numberOfUpdates} times`, testConfig];
       })
     ),
@@ -47,6 +48,7 @@ export const sequenceOfUpdates: Nested<PushModelTestCase> = {
           }
         }
         const testConfig = generateTestConfigForSequenceOfUpdates(updates);
+
         return [`Values to be pushed: ${updates.map((u) => u.valueToPush).join(", ")}`, testConfig];
       })
     ),
@@ -71,6 +73,7 @@ export const sequenceOfUpdates: Nested<PushModelTestCase> = {
           }
         }
         const testConfig = generateTestConfigForSequenceOfUpdates(updates);
+
         return [
           `Values to be pushed (| separates blocks): ${updates.map((u) => `${u.waitForNewBlockBeforeUpdate ? " |" : ""} ${u.valueToPush}`).join("")}`,
           testConfig,

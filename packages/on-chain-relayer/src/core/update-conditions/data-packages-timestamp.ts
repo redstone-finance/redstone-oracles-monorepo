@@ -16,6 +16,7 @@ export const checkIfDataPackageTimestampIsNewer = (
       lastDataPackageTimestampMS,
       dataPackageTimestamp,
     })}`;
+
     return { shouldNotUpdatePrice: true, messages: [{ message }] };
   }
 

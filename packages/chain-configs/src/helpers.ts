@@ -25,6 +25,7 @@ export function getChainConfigUnsafe(
 export function getNetworkName(chainConfigs: ChainConfigs, networkId: NetworkId): string {
   const networkName = Object.entries(chainConfigs).find(([_, v]) => v.networkId === networkId)?.[0];
   RedstoneCommon.assert(networkName, `Couldn't find network for network id=${networkId}`);
+
   return networkName;
 }
 

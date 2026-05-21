@@ -27,6 +27,7 @@ export function makeAptos(
       rpcUrl ?? RedstoneCommon.getFromEnv("RPC_URL", z.url().optional()) ?? DEFAULT_TESTNET_RPC_URL,
     faucet: faucetUrl ?? DEFAULT_TESTNET_FAUCET_URL,
   });
+
   return new Aptos(config);
 }
 
@@ -49,6 +50,7 @@ export async function handleTx(aptos: Aptos, transaction: SimpleTransaction, sig
   const pendingResponse = await signAndSubmit(aptos, transaction, signer);
 
   console.log(`TransactionHash: ${pendingResponse.hash}`);
+
   return await aptos.waitForTransaction({
     options: { timeoutSecs: 60 },
     transactionHash: pendingResponse.hash,

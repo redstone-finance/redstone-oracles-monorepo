@@ -140,6 +140,7 @@ export function weightedMedian(values: number[], weights: number[]) {
       return val;
     }
   }
+
   throw new Error(`failed to calculate weighted median`);
 }
 
@@ -153,7 +154,7 @@ export function weightedMedian(values: number[], weights: number[]) {
  *
  * MUTATES arr in place.
  */
-function quickSelect(arr: number[], lo: number, hi: number, k: number): void {
+function quickSelect(arr: number[], lo: number, hi: number, k: number) {
   while (lo < hi) {
     const pivotPos = (lo + hi) >> 1;
     const pivot = arr[pivotPos];
@@ -221,6 +222,7 @@ export function superFastMedian(arr: number[]): number {
       lowerMedian = arr[i];
     }
   }
+
   return (lowerMedian + arr[mid]) / 2;
 }
 

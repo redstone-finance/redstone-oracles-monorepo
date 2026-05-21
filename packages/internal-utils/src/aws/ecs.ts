@@ -28,6 +28,7 @@ export class AwsEcs {
       ({ clusterArns, nextToken } = await this.client.send(command));
       result.push(...(clusterArns ?? []));
     } while (nextToken);
+
     return result;
   }
 

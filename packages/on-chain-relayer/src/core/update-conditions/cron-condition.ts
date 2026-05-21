@@ -24,6 +24,7 @@ export const cronCondition = (
       warningMessages.push(cronCheck.warningMessage);
     }
   }
+
   return {
     shouldUpdatePrices,
     messages: warningMessages.map((message) => ({ message })),

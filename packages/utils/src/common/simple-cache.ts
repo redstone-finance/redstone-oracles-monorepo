@@ -9,6 +9,7 @@ export class SimpleCache<T> {
       this.value = comp();
       this.timestamp = Date.now();
     }
+
     return this.value;
   }
 }

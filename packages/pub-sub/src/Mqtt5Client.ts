@@ -87,6 +87,7 @@ export class Mqtt5Client implements PubSubClient {
     switch (authType) {
       case "AWSSigV4": {
         const credentialsProvider = auth.AwsCredentialsProvider.newDefault();
+
         return iot.AwsIotMqtt5ClientConfigBuilder.newWebsocketMqttBuilderWithSigv4Auth(
           config.endpoint,
           { credentialsProvider }
@@ -159,6 +160,7 @@ export class Mqtt5Client implements PubSubClient {
             `Error occurred when tried to parse message error=${RedstoneCommon.stringifyError(e)}`,
             this
           );
+
           return;
         }
         this.onMessageCallback!(message.topicName, deserializedData, null, this);

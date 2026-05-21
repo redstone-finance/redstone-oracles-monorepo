@@ -33,6 +33,7 @@ export class GraphQLSuiTxLookup implements TxLookup {
 
     if (result.errors?.length) {
       const message = result.errors.map((e) => e.message).join("; ");
+
       throw new Error(`GraphQL errors for objectId=${adapterContract}: ${message}`);
     }
 

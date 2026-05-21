@@ -34,6 +34,7 @@ export function parseOracleNodeEnv(raw: string | undefined): OracleNodeEnv | und
 
 export function getSignaturesRepositoryPath(nodeEnv = OracleNodeEnv.Dev) {
   const remoteConfigPath = findNodeRemoteConfigOrThrow(nodeEnv);
+
   return path.join(remoteConfigPath, "..", REMOTE_CONFIG_SIGNATURES_FOLDER, nodeEnv);
 }
 
@@ -72,5 +73,6 @@ export function findDirOrThrow(searchedDir: string) {
     }
     dir = parentDir;
   }
+
   throw new Error(`Could not find ${searchedDir} directory, starting from ${startDir}`);
 }

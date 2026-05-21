@@ -14,10 +14,12 @@ export const signOnDemandDataPackage = (
   });
 
   const dataPackage = new DataPackage([dataPoint], timestamp, address);
+
   return dataPackage.sign(privateKey);
 };
 
 export const prepareMessageToSign = (timestamp: number) => {
   const utcDate = new Date(timestamp).toUTCString();
+
   return `Allow verification of my account on ${utcDate}`;
 };

@@ -67,6 +67,7 @@ export const getSSMParameterValues = async (
   }
 
   saveManyToSsmCache(collectedParameters);
+
   return { ...collectedParameters, ...cachedParameters };
 };
 
@@ -105,12 +106,13 @@ export const getS3ConfigurationValue = async <T>() => {
   if (!bucketName || !objectKey) {
     throw new Error("S3 configuration not set");
   }
+
   return await readS3Object<T>(bucketName, objectKey);
 };
 
 // Get ENV variables that end with "_ARN"
 // Try to get the value from SSM and set it in the ENV, but rename the key to remove "_ARN"
-export const secretsToEnv = async (): Promise<void> => {
+export const secretsToEnv = async () => {
   const promises = Object.entries(process.env)
     .filter(([key]) => key.endsWith("_ARN"))
     .map(async ([key, value]) => {
@@ -216,5 +218,6 @@ const getRegionFromArn = (arnOrName: string) => {
   }
 
   const parsed = ArnParser.parse(arnOrName);
+
   return parsed.region;
 };

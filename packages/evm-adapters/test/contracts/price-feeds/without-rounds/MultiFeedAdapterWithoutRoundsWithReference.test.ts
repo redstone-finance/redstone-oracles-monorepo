@@ -35,6 +35,7 @@ const deployContract = async <T>(contractName: string): Promise<T> => {
   const contractFactory = await ethers.getContractFactory(contractName);
   const contract = await contractFactory.deploy();
   await contract.deployed();
+
   return contract as T;
 };
 
@@ -80,6 +81,7 @@ describe("MultiFeedAdapterWithoutRoundsWithReference", () => {
       adapterType === "ref" ? newAdapter.address : currentRefAdapter
     );
     await adapterWithRefInitTx.wait();
+
     return newAdapter as T;
   };
 

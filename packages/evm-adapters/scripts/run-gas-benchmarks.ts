@@ -61,5 +61,6 @@ async function deployContract(contractName: string) {
   const contract = await factory.deploy();
   await contract.deployed();
   console.log("Contract deployed to: " + contract.address);
+
   return contract;
 }

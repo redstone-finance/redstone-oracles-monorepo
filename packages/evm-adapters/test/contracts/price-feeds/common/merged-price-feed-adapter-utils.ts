@@ -33,6 +33,7 @@ export const describeCommonMergedPriceFeedAdapterTests = ({
 }: PriceFeedTestsParams) => {
   const deployBehindProxy = async () => {
     const factory = await ethers.getContractFactory(mergedPriceFeedAdapterContractName);
+
     return (await upgrades.deployProxy(factory)) as MergedPriceFeedAdapterWithRounds;
   };
 

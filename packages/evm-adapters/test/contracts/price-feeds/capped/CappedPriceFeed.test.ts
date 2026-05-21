@@ -17,6 +17,7 @@ const fromPercent = (percent: number) => percent * 1e2;
 
 const createContract = async () => {
   const contract = (await ethers.deployContract("MockCappedPriceFeed")) as MockCappedPriceFeed;
+
   return contract;
 };
 
@@ -40,6 +41,7 @@ const createAndInitContract = async (
 ) => {
   const contract = await createContract();
   await initContract(contract, maxYearlyRatioGrowthPercent, maxMarketDeviationPercent);
+
   return contract;
 };
 

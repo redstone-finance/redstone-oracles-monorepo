@@ -47,6 +47,7 @@ const handlers = [
       value: 1234,
       privateKey: MOCK_PRIVATE_KEYS[2],
     });
+
     return HttpResponse.json(signedDataPackage.toObj());
   }),
 ];

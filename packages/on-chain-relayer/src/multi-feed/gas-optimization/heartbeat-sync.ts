@@ -36,6 +36,7 @@ export const includeSynchronizedHeartbeatUpdates = (
       }
     }
   }
+
   return {
     dataFeedsToUpdate,
     message: messages.join("; "),

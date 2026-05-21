@@ -99,6 +99,7 @@ export class KeycloakTokenProvider {
       KeycloakTokenProvider.logger.error(
         `Failed to get token! ${RedstoneCommon.stringifyError(e)}`
       );
+
       throw e;
     } finally {
       if (this.refreshingPromise === promise) {
@@ -139,6 +140,7 @@ export class KeycloakTokenProvider {
     this.timer = setTimeout(() => {
       if (!this.used) {
         KeycloakTokenProvider.logger.debug("Token unused, skipping auto-refresh");
+
         return;
       }
       this.used = false;

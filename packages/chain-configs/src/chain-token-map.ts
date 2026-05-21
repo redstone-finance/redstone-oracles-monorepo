@@ -29,6 +29,7 @@ function readAndValidateChainTokenMapConfig(): ChainTokenMap {
       terminateWithRemoteConfigError(RedstoneCommon.stringifyError(error));
     }
   }
+
   return chainTokenMap;
 }
 

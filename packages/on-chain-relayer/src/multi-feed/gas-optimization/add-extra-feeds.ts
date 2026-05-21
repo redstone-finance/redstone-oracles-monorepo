@@ -26,5 +26,6 @@ export const addExtraFeedsToUpdateParams = (
         "\n" +
         heartbeatMessage
       : "No additional feeds were included in the update.";
+
   return message;
 };

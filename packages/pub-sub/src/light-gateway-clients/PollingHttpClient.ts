@@ -118,6 +118,7 @@ export class PollingHttpClient implements PubSubClient {
       return result;
     } catch (error) {
       this.logger.error(`Failed to fetch data, error=${RedstoneCommon.stringifyError(error)}`);
+
       throw error;
     }
   }
@@ -141,6 +142,7 @@ export class PollingHttpClient implements PubSubClient {
   startPolling() {
     if (this.isPolling) {
       this.logger.debug("Polling is already active");
+
       return;
     }
 
@@ -174,11 +176,13 @@ export class PollingHttpClient implements PubSubClient {
   private async pollData() {
     if (this.topics.size === 0) {
       this.logger.warn("Attempt to poll data for 0 topics");
+
       return;
     }
 
     if (!this.isPolling || !this.callback) {
       this.logger.warn("Attempt to pull data when client is in inconsistent state");
+
       return;
     }
 
@@ -187,6 +191,7 @@ export class PollingHttpClient implements PubSubClient {
       dataByTopic = await this.getData();
     } catch (error) {
       this.logger.warn(`Failed to poll data, error=${RedstoneCommon.stringifyError(error)}`);
+
       return;
     }
 

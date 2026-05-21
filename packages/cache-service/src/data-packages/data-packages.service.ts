@@ -65,6 +65,7 @@ export class DataPackagesService implements OnModuleInit, OnModuleDestroy {
     if (DataPackagesService.allowedSigners === null) {
       throw new Error("AllowedSigners not initialized");
     }
+
     return DataPackagesService.allowedSigners;
   }
 
@@ -85,6 +86,7 @@ export class DataPackagesService implements OnModuleInit, OnModuleDestroy {
             broadcaster.constructor.name
           }] failed to ${message}. ${RedstoneCommon.stringifyError(error)}`
         );
+
         throw error;
       }
     });
@@ -146,6 +148,7 @@ export class DataPackagesService implements OnModuleInit, OnModuleDestroy {
       hideMetadata,
       allowExternalSigners
     );
+
     return DataPackagesService.filterByDataFeedIds(allPackages, dataFeedIds);
   }
 
@@ -192,6 +195,7 @@ export class DataPackagesService implements OnModuleInit, OnModuleDestroy {
       hideMetadata,
       allowExternalSigners
     );
+
     return DataPackagesService.filterByDataFeedIds(allPackages, dataFeedIds);
   }
 
@@ -208,11 +212,13 @@ export class DataPackagesService implements OnModuleInit, OnModuleDestroy {
         EMPTY_DATA_PACKAGE_RESPONSE_ERROR_CODE
       );
     }
+
     return filtered;
   }
 
   static async isDataServiceIdValid(dataServiceId: string): Promise<boolean> {
     const oracleRegistryState = await getOracleState();
+
     return !!oracleRegistryState.dataServices[dataServiceId];
   }
 
@@ -423,6 +429,7 @@ export class DataPackagesService implements OnModuleInit, OnModuleDestroy {
     if (rwaFeedIds) {
       fetchedPackages = stripRwaMetadata(fetchedPackages, rwaFeedIds);
     }
+
     return filterOutliers(fetchedPackages);
   }
 
@@ -457,6 +464,7 @@ export class DataPackagesService implements OnModuleInit, OnModuleDestroy {
     const signature = aggregate.signatures[i];
     const timestampMilliseconds = aggregate._id.timestampMilliseconds.getTime();
     const isSignatureValid = aggregate.isSignatureValid[i];
+
     return {
       timestampMilliseconds,
       signature,
@@ -518,6 +526,7 @@ export class DataPackagesService implements OnModuleInit, OnModuleDestroy {
       signerAddress,
       isSignatureValid,
     };
+
     return cachedDataPackage;
   }
 

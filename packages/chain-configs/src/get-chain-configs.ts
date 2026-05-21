@@ -31,6 +31,7 @@ export const fetchChainConfigsWithAxios = async (
       const response = await RedstoneCommon.axiosGetWithRetries<
         GenericMonitoringManifest<ChainConfigsInput>
       >(manifestUrl, { maxRetries: 2, headers: { apikey } });
+
       return response.data;
     } catch (e) {
       console.log(
@@ -38,6 +39,7 @@ export const fetchChainConfigsWithAxios = async (
       );
     }
   }
+
   throw new Error(
     `failed to fetch chain configs for ${JSON.stringify({ manifestsHosts, apikey })}`
   );
@@ -87,6 +89,7 @@ export async function fetchChainConfigs(): Promise<ChainConfigs> {
         FALLBACK_CHAIN_CONFIGS_METRIC_NAME_ENV,
         FALLBACK_CHAIN_CONFIGS_METRIC_NAMESPACE_ENV
       );
+
       return parsedManifest;
     } catch (fallbackManifestError) {
       throw new Error(
@@ -109,6 +112,7 @@ export async function fetchChainConfigs(): Promise<ChainConfigs> {
       );
     }
   }
+
   return parsedManifest;
 }
 
@@ -122,6 +126,7 @@ export function getLocalChainConfigs(): ChainConfigs {
 
 function groupChainConfigsByNetworkId(chainConfigs: ChainConfigs): ChainConfigsById {
   const entries = Object.values(chainConfigs).map((chain) => [chain.networkId, chain]);
+
   return Object.fromEntries(entries) as ChainConfigsById;
 }
 

@@ -78,6 +78,7 @@ export class FuelPricesContractAdapter {
     const value = (
       await this.contract.functions.read_last_update_block_timestamp().get()
     ).value?.toNumber();
+
     return value ? value * 1000 : undefined;
   }
 

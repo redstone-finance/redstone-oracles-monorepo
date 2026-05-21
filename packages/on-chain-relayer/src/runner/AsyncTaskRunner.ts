@@ -27,6 +27,7 @@ export class AsyncTaskRunner {
         try {
           if (shouldGracefullyShutdown) {
             logger.info(`Shutdown scheduled, not running next iteration`);
+
             return;
           }
           await runIteration(contractFacade, relayerConfig, iterationOptionsOverride);

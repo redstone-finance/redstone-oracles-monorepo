@@ -108,6 +108,7 @@ async function safeFallbackCall(
     logger.debug(
       `fallback call succeeded to=${call3.target} data=${call3.callData} blockTag=${blockTag}`
     );
+
     return {
       returnData: callResult,
       success: true,
@@ -116,6 +117,7 @@ async function safeFallbackCall(
     logger.log(
       `fallback call failed to=${call3.target} data=${call3.callData} blockTag=${blockTag}`
     );
+
     return {
       returnData: "0x",
       fallbackRejectReason: e,
@@ -140,6 +142,7 @@ async function safeFallbackSelfCall(
       const [addr] = args as [string];
       const balance = await provider.getBalance(addr, blockTag);
       logger.debug(`fallback self-call getEthBalance succeeded addr=${addr} blockTag=${blockTag}`);
+
       // ABI-encode as uint256 (32-byte big-endian) to match what aggregate3 would return.
       return { returnData: utils.hexZeroPad(balance.toHexString(), 32), success: true };
     }
@@ -149,6 +152,7 @@ async function safeFallbackSelfCall(
     logger.log(
       `fallback self-call failed data=${call3.callData} blockTag=${blockTag} error=${RedstoneCommon.stringifyError(e)}`
     );
+
     return {
       returnData: "0x",
       fallbackRejectReason: e,

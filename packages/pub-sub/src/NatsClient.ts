@@ -72,6 +72,7 @@ export class NatsClient implements PubSubClient {
     if (host.startsWith("nats://") || host.startsWith("tls://")) {
       return host;
     }
+
     return this.config.caCert ? `tls://${host}` : `nats://${host}`;
   }
 
@@ -101,6 +102,7 @@ export class NatsClient implements PubSubClient {
               nextDelayMs: Math.round(delay),
             });
           }
+
           return delay;
         },
         // into infinity — both for reconnects and the initial connect
@@ -125,6 +127,7 @@ export class NatsClient implements PubSubClient {
           this.reconnectAttempts = 0;
           this.logger.info("Connected to NATS", { host: this.config.host });
           this.watchStatus(nc);
+
           return nc;
         })
         .catch((e) => {
@@ -135,14 +138,16 @@ export class NatsClient implements PubSubClient {
             host: this.config.host,
             error: RedstoneCommon.stringifyError(e),
           });
+
           throw e;
         });
     }
+
     return await this.connecting;
   }
 
   /** We don't wait for ACK from server */
-  async publish(payloads: PubSubPayload[], contentType: ContentTypes): Promise<void> {
+  async publish(payloads: PubSubPayload[], contentType: ContentTypes) {
     const nc = await this.getConnection();
     const serializer = getSerializerDeserializer(contentType);
     for (const payload of payloads) {
@@ -153,11 +158,11 @@ export class NatsClient implements PubSubClient {
     }
   }
 
-  setOnMessageHandler(onMessage: SubscribeCallback): void {
+  setOnMessageHandler(onMessage: SubscribeCallback) {
     this.onMessageCallback = onMessage;
   }
 
-  async subscribe(topics: string[]): Promise<void> {
+  async subscribe(topics: string[]) {
     const nc = await this.getConnection();
     for (const topic of topics) {
       if (this.subscriptions.has(topic)) {
@@ -167,6 +172,7 @@ export class NatsClient implements PubSubClient {
       const callback = (err: NatsError | null, msg: Msg) => {
         if (err) {
           this.onMessageCallback?.(topic, null, err.message, this);
+
           return;
         }
         const contentType = msg.headers?.get(CONTENT_TYPE_HEADER) as ContentTypes | undefined;
@@ -185,6 +191,7 @@ export class NatsClient implements PubSubClient {
             RedstoneCommon.stringifyError(e),
             this
           );
+
           return;
         }
         this.onMessageCallback?.(natsSubjectToMqttTopic(msg.subject), data, null, this);
@@ -199,7 +206,7 @@ export class NatsClient implements PubSubClient {
     await nc.flush();
   }
 
-  async unsubscribe(topics: string[]): Promise<void> {
+  async unsubscribe(topics: string[]) {
     for (const topic of topics) {
       const sub = this.subscriptions.get(topic);
       if (sub) {
@@ -211,11 +218,11 @@ export class NatsClient implements PubSubClient {
     await this.nc?.flush();
   }
 
-  stop(): void {
+  stop() {
     void this.nc?.drain();
   }
 
-  private watchStatus(nc: NatsConnection): void {
+  private watchStatus(nc: NatsConnection) {
     const host = this.config.host;
     void (async () => {
       for await (const status of nc.status()) {

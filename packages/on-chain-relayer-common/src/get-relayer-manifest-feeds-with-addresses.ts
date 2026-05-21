@@ -15,6 +15,7 @@ export function getRelayerManifestFeedsWithAddresses(
       RedstoneCommon.isDefined(addr) &&
       !symbolsToSkip.includes(feedId)
   );
+
   return { allManifestFeeds, manifestFeedsWithAddresses };
 }
 

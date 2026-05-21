@@ -93,14 +93,17 @@ function checkShouldRun(
 ) {
   if (INTEGRATIONS_NOT_FOR_TESTING.includes(name)) {
     console.log(`Integration ${name} is disabled`);
+
     return false;
   }
   if (getChainConfig(manifest.chain.id).publicRpcUrls.length === 0) {
     console.log(`No rpc urls defined for chain ${name}.`);
+
     return false;
   }
   if (disabledNetworks.includes(manifest.chain.id)) {
     console.log(`Network ${manifest.chain.id} is disabled`);
+
     return false;
   }
 
@@ -130,12 +133,14 @@ const checkDataFeedIdInContract = async (
       console.log(
         `unexpected data feed id in contract: ${dataFeedIdFromContract}, expected: ${dataFeedId}`
       );
+
       return false;
     }
   } catch (e) {
     console.log(
       `contract.getDataFeedId failed for ${dataFeedId} with error: ${RedstoneCommon.stringifyError(e)}`
     );
+
     return false;
   }
 };

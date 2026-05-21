@@ -74,6 +74,7 @@ export class ConfigUpdater extends EventEmitter {
           logger.warn(
             `Tried to load an already blacklisted config with update hash ${newUpdateHash}, skipping update`
           );
+
           return;
         }
 
@@ -90,6 +91,7 @@ export class ConfigUpdater extends EventEmitter {
                 updateHash: newUpdateHash,
                 blacklisted: true,
               });
+
               return;
             }
           }
@@ -157,6 +159,7 @@ export class ConfigUpdater extends EventEmitter {
       return `Not enough trusted signatures for config with hash ${configHash}.
        Expected ${this.signatures.minRequiredSignatures}, actual: ${uniqueAddresses.size}`;
     }
+
     return null;
   }
 
@@ -170,6 +173,7 @@ export class ConfigUpdater extends EventEmitter {
       return ethers.utils.verifyMessage(configHash, signature);
     } catch (e) {
       logger.error(`Error while verifying signature ${RedstoneCommon.stringifyError(e)}`);
+
       return null;
     }
   }
@@ -192,6 +196,7 @@ export class ConfigUpdater extends EventEmitter {
     } catch (err) {
       logger.error("Error during config update transaction, rolling back:", err);
       fs.rmSync(tempDir, { recursive: true, force: true });
+
       throw err;
     }
   }
@@ -252,6 +257,7 @@ export class ConfigUpdater extends EventEmitter {
       // within the Docker container or directly on the host machine.
       if (fs.existsSync(`${BACKUP_CONFIG_DIR}`)) {
         logger.warn("Backup config folder already exists, not creating a new one");
+
         return calculateDirectoryHash(BACKUP_CONFIG_DIR);
       }
 
@@ -280,6 +286,7 @@ export class ConfigUpdater extends EventEmitter {
         // the Docker image is built.
         fs.rmSync(`./${this.configBasePath}`, { recursive: true });
       }
+
       return configHash;
     } catch (e) {
       // not recoverable, process will be stopped.

@@ -54,6 +54,7 @@ export class RadixParser {
 
     if (obj.kind === ValueKind.Blob && obj.value.length === U256_VALUE_SIZE) {
       const value = BigNumber.from(obj.value);
+
       return asKeyName ? value.toHexString() : value;
     }
 
@@ -85,6 +86,7 @@ export class RadixParser {
         array.elements.length === 4
       ) {
         const u256 = RadixParser.parseU256Digits(array as U256Digits);
+
         return asKeyName ? u256.toHexString() : u256;
       } else {
         return array.elements.map((element) => RadixParser.extractValue(element));

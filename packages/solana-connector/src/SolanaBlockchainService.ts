@@ -47,7 +47,7 @@ export class SolanaBlockchainServiceWithTransfer
     return Promise.resolve(this.keypair.publicKey.toBase58());
   }
 
-  async transfer(toAddress: string, amount: number): Promise<void> {
+  async transfer(toAddress: string, amount: number) {
     return await this.client.transfer(this.keypair, toAddress, amount);
   }
 }

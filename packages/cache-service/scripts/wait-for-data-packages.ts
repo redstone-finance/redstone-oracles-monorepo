@@ -36,5 +36,6 @@ async function checkDataPackagesCount() {
 
 async function queryDataPackages(dataPackageId: string) {
   const dataPackages = await DataPackage.find({ dataPackageId });
+
   return dataPackages.length;
 }

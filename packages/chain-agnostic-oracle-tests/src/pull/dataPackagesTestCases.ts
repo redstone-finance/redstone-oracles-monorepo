@@ -67,6 +67,7 @@ export const dataPackagesTestCases = {
         [0, 1, 2].map((i) => {
           const dataPointsForPackages = [...testDataPoints];
           dataPointsForPackages[i] = duplicatedDataFeeds;
+
           return [
             `${toOrdinal(i + 1)} data package has a duplicated feed, rest is good`,
             generateDataPackagesTest(dataPointsForPackages, false),
@@ -84,6 +85,7 @@ export const dataPackagesTestCases = {
       [0, 1, 2].map((i) => {
         const dataPointsForPackages = [...testDataPoints];
         dataPointsForPackages[i] = [];
+
         return [
           `${toOrdinal(i + 1)} data package is empty, rest is good`,
           generateDataPackagesTest(dataPointsForPackages, false),
@@ -105,6 +107,7 @@ export const dataPackagesTestCases = {
       ].map((order) => {
         const dps = [...testDataPoints];
         const reorderedTestsDataPoints = [dps[order[0]], dps[order[1]], dps[order[2]]];
+
         return [
           `Order ${JSON.stringify(order)} should yield the same result`,
           generateDataPackagesTest(reorderedTestsDataPoints, true),
@@ -136,6 +139,7 @@ export const dataPackagesTestCases = {
         ].map(({ title, indexes }) => {
           const dps = [...testDataPoints];
           const dataPointsForPackages = indexes.map((i) => dps[i]);
+
           return [title, generateDataPackagesTest(dataPointsForPackages, true)];
         })
       ),
@@ -168,6 +172,7 @@ export const dataPackagesTestCases = {
         ].map(({ title, indexes, newValue }) => {
           const dps = [...testDataPoints];
           const dataPointsForPackages = indexes.map((i) => dps[i]);
+
           return [
             title,
             generateDataPackagesTest(dataPointsForPackages, true, to8Decimals(newValue)),
@@ -214,6 +219,7 @@ export const nonEvmAdditionalTests = {
       ].map(({ title, indexes, newValue }) => {
         const dps = [...testDataPoints];
         const dataPointsForPackages = indexes.map((i) => dps[i]);
+
         return [
           title,
           generateDataPackagesTest(dataPointsForPackages, true, to8Decimals(newValue)),

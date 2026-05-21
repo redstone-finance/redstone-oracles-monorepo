@@ -76,6 +76,7 @@ export async function getRemoteMonitoringManifestConfigFromEnv(): Promise<
     logger.warn(
       `OVERRIDE_REMOTE_MANIFEST_WITH_LOCAL is set to true, overriding remote manifest with local. SHOULD BE SEEN ONLY IN TESTS OR DEV ENV`
     );
+
     return { shouldUseLocal: true, manifestsApiKey };
   }
 
@@ -122,6 +123,7 @@ function parseExpirationTimestamp(timestamp: string | number | undefined): numbe
   if (isNaN(parsedTimestamp)) {
     throw new Error(`provided timestamp ${timestamp} cannot be parsed`);
   }
+
   return parsedTimestamp;
 }
 
@@ -131,6 +133,7 @@ function validateExpirationTimestamp(timestamp: number) {
       `expirationTimestamp is bigger than ${(MAX_EXPIRATION_PERIOD / RedstoneCommon.daysToMs(1)).toFixed(0)} days`
     );
   }
+
   return timestamp;
 }
 

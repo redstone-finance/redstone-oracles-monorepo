@@ -52,6 +52,7 @@ export class MovePriceAdapterContractWriter {
 
   private async makeWritePriceTransactionData(feedId: string, payload: Promise<string>) {
     const fun = `${this.priceAdapterPackageAddress.toString()}::price_adapter::write_price`;
+
     return {
       identifier: `Write ${feedId} price: ${fun}`,
       function: fun as MoveFunctionId,
@@ -65,6 +66,7 @@ export class MovePriceAdapterContractWriter {
 
   private async makeWritePricesTransactionData(feedIds: string[], payload: Promise<string>) {
     const fun = `${this.priceAdapterPackageAddress.toString()}::price_adapter::write_prices`;
+
     return {
       identifier: `Write [${[...feedIds].sort().toString()}] price: ${fun}`,
       function: fun as MoveFunctionId,

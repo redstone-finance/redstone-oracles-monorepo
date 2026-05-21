@@ -93,6 +93,7 @@ export const limitWeights = (weightedValues: WeightedValue[]): WeightedValue[] =
         `Capping weight from ${weightedValue.weight.toString()} to ${maxWeight.toString()} for value ${weightedValue.value.toString()}`
       );
     }
+
     return {
       value: weightedValue.value,
       weight,
@@ -125,6 +126,7 @@ function getLimitRatio(count: number): ISafeNumber {
 
 export const normalizeWeightedValues = (weightedValues: WeightedValue[]): WeightedValue[] => {
   const sum = calculateSum(weightedValues.map((value) => value.weight));
+
   return weightedValues.map((weightedValue) => ({
     value: weightedValue.value,
     weight: weightedValue.weight.div(sum),

@@ -90,6 +90,7 @@ export class Eip1559GasEstimatorV1 implements GasEstimator<Eip1559Fee> {
         await provider.send("eth_maxPriorityFeePerGas", [])
       );
       this.opts.logger(`Fallback to eth_maxPriorityFeePerGas=${ethMaxPriorityFeePerGasResult}`);
+
       return ethMaxPriorityFeePerGasResult;
     }
 

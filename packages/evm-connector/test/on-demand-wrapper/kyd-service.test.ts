@@ -83,5 +83,6 @@ const getContract = async (isValidSigner: boolean = true): Promise<SampleKydServ
   );
   const contract = await ContractFactory.deploy();
   await contract.deployed();
+
   return contract;
 };

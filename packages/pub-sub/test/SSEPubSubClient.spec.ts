@@ -18,6 +18,7 @@ class MockHttpClientAndEventSource {
   post(urlSuffix: string, msg: unknown, config: { headers: Record<string, string> }) {
     if (msg instanceof Object && "session_id" in msg) {
       this.postMock(urlSuffix, msg, config);
+
       return Promise.resolve({ data: {} });
     }
 
@@ -38,6 +39,7 @@ class MockHttpClientAndEventSource {
     }));
 
     this.postMock(urlSuffix, dataRaw, config);
+
     return Promise.resolve({ data: {} });
   }
 

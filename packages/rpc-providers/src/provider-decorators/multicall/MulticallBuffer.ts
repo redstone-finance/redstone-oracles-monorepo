@@ -45,6 +45,7 @@ export class MulticallBuffer {
     if (!this._state.has(blockId)) {
       return false;
     }
+
     return this._state.get(blockId)!.length === this.maxCallsCount;
   }
 
@@ -58,6 +59,7 @@ export class MulticallBuffer {
 
   isEmpty(blockTag: BlockTag | undefined): boolean {
     const blockId = blockTagToBlockId(blockTag);
+
     return !this._state.has(blockId);
   }
 
@@ -76,6 +78,7 @@ export class MulticallBuffer {
 
   pickAll(): IterableIterator<[number, CallEntry[]]> {
     const iter = this._state.entries();
+
     return iter;
   }
 

@@ -37,6 +37,7 @@ export class ApiKeysUsageTracker {
   private initializeTelemetryService() {
     if (!this.config.influxUrl || !this.config.influxToken) {
       logger.info("InfluxDB configuration not provided, metrics will not be sent");
+
       return;
     }
 
@@ -65,6 +66,7 @@ export class ApiKeysUsageTracker {
   trackBulkRequest(apiKey: string, nodeIdentifier: string) {
     if (!apiKey) {
       logger.warn("Attempted to track request without API key");
+
       return;
     }
 
@@ -102,6 +104,7 @@ export class ApiKeysUsageTracker {
   private async reportAndResetMetrics() {
     if (!this.influxService || Object.keys(this.requestMetrics).length === 0) {
       logger.debug("No metrics to report");
+
       return;
     }
 
@@ -121,6 +124,7 @@ export class ApiKeysUsageTracker {
             logger.debug(
               `Creating point for key hash: ${hashedKey}, node: ${nodeAddress}, count: ${count}, service: ${this.config.serviceName}`
             );
+
             return point;
           })
       );

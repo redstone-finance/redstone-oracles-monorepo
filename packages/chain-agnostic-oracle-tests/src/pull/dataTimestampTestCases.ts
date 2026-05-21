@@ -58,6 +58,7 @@ export const dataTimestampTestCases = {
                 timestampMilliseconds:
                   dpIndexWithDifferentTimestamp === i ? timestamp + 1 : timestamp, // changing timestamp for the selected package
               });
+
               return SignedDataPackage.fromObj(mdp);
             });
 
@@ -76,6 +77,7 @@ export const dataTimestampTestCases = {
             mockSignerIndex: i as MockSignerIndex,
             timestampMilliseconds: timestamp + i, // changing timestamp
           });
+
           return SignedDataPackage.fromObj(mdp);
         });
 

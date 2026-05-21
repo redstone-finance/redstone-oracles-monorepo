@@ -60,6 +60,7 @@ export abstract class BaseDataPackagesController implements OnModuleDestroy {
   ): Promise<DataPackagesResponse> {
     BaseDataPackagesController.validateAllFeedsAccess(req);
     await BaseDataPackagesController.validateDataServiceId(dataServiceId);
+
     return await this.dataPackagesService.getLatestDataPackagesWithSameTimestampWithCache(
       dataServiceId,
       true,
@@ -75,6 +76,7 @@ export abstract class BaseDataPackagesController implements OnModuleDestroy {
   ): Promise<DataPackagesResponse> {
     BaseDataPackagesController.validateAllFeedsAccess(req);
     await BaseDataPackagesController.validateDataServiceId(dataServiceId);
+
     return await this.dataPackagesService.getLatestDataPackagesWithCache(
       dataServiceId,
       true,
@@ -112,6 +114,7 @@ export abstract class BaseDataPackagesController implements OnModuleDestroy {
     @Query("dataFeedIds") dataFeedIdsParam: string | string[]
   ): Promise<DataPackagesResponse> {
     const dataFeedIds = await this.parseAndValidateRequestParams(dataServiceId, dataFeedIdsParam);
+
     return await this.dataPackagesService.getLatestDataPackagesByFeedIdsWithCache(
       dataServiceId,
       dataFeedIds,
@@ -129,6 +132,7 @@ export abstract class BaseDataPackagesController implements OnModuleDestroy {
   ): Promise<DataPackagesResponse> {
     BaseDataPackagesController.validateMetadataAccess(req);
     const dataFeedIds = await this.parseAndValidateRequestParams(dataServiceId, dataFeedIdsParam);
+
     return await this.dataPackagesService.getLatestDataPackagesByFeedIdsWithCache(
       dataServiceId,
       dataFeedIds,
@@ -150,6 +154,7 @@ export abstract class BaseDataPackagesController implements OnModuleDestroy {
       );
     }
     const dataFeedIds = await this.parseAndValidateRequestParams(dataServiceId, dataFeedIdsParam);
+
     return await this.dataPackagesService.getDataPackagesByTimestampAndFeedIds(
       dataServiceId,
       Number(timestamp),
@@ -174,6 +179,7 @@ export abstract class BaseDataPackagesController implements OnModuleDestroy {
     }
     BaseDataPackagesController.validateMetadataAccess(req);
     const dataFeedIds = await this.parseAndValidateRequestParams(dataServiceId, dataFeedIdsParam);
+
     return await this.dataPackagesService.getDataPackagesByTimestampAndFeedIds(
       dataServiceId,
       Number(timestamp),
@@ -214,10 +220,11 @@ export abstract class BaseDataPackagesController implements OnModuleDestroy {
         HttpStatus.BAD_REQUEST
       );
     }
+
     return dataFeedIds;
   }
 
-  protected static validateAllFeedsAccess(req: Request): void {
+  protected static validateAllFeedsAccess(req: Request) {
     if (!config.allFeedsAccessApiKeyRegex) {
       return;
     }
@@ -233,7 +240,7 @@ export abstract class BaseDataPackagesController implements OnModuleDestroy {
     }
   }
 
-  protected static validateMetadataAccess(req: Request): void {
+  protected static validateMetadataAccess(req: Request) {
     if (!config.metadataAccessApiKeyRegex) {
       return;
     }

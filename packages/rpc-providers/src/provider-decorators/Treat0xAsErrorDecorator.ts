@@ -19,6 +19,7 @@ export function Treat0xAsErrorDecorator(factory: () => providers.Provider) {
 
       return result;
     };
+
     return provider;
   };
 

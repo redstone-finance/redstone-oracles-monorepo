@@ -7,11 +7,13 @@ const MIN_RPC_URLS_FOR_REPEAT_DOMAIN_CHECK = 4;
 
 const getDomain = (hostname: string): string => {
   const match = hostname.match(/([a-zA-Z0-9-]+\.[a-zA-Z]+)$/);
+
   return match?.[0] ?? hostname;
 };
 
 const isTestNetworkOrKnownNetworkWithIssue = (name: string): boolean => {
   const testnetKeywords = ["testnet", "sepolia"];
+
   return testnetKeywords.some((keyword) => name.toLowerCase().includes(keyword));
 };
 
@@ -29,7 +31,7 @@ const addProblematicNetwork = (
   }
 };
 
-const printRpcUrls = async (): Promise<void> => {
+const printRpcUrls = async () => {
   try {
     const [mainRpcUrlsPerChain, fallbackRpcUrlsPerChain] = await Promise.all([
       readSsmRpcUrls(false),

@@ -26,6 +26,7 @@ export class AuctionModelGasEstimatorV2 implements GasEstimator<AuctionModelFee>
     }
 
     const index = Math.min(attempt, multipliers.length - 1);
+
     return { gasPrice: Math.round(currentFees.gasPrice * multipliers[index]) };
   }
 }

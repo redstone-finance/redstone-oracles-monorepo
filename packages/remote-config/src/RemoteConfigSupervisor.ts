@@ -148,6 +148,7 @@ export class RemoteConfigSupervisor {
         logger.error(`Got ${code} error code, trying to restore previous config`);
         this.configUpdater.history.blacklistConfigHash(configHash);
         this.restartOnPrevConfig();
+
         return;
       }
       RemoteConfigSupervisor.propagateChildProcessErrors(signal, code);

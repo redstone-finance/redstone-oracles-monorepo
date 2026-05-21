@@ -346,6 +346,7 @@ describe("TxDelivery", () => {
             return Promise.resolve({ reward: [["0x77359400"]] }); // 2000000000 in hex (p99)
           }
         }
+
         return hardhat.ethers.provider.send(method, params);
       });
 
@@ -400,6 +401,7 @@ describe("TxDelivery", () => {
       const capturedAttempts: number[] = [];
       const mockGasOracle = Sinon.stub().callsFake((_opts: TxDeliveryOpts, attempt: number) => {
         capturedAttempts.push(attempt);
+
         return Promise.resolve({
           maxFeePerGas: 2000000000,
           maxPriorityFeePerGas: 1000000000,

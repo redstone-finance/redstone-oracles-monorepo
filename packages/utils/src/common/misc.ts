@@ -48,6 +48,7 @@ export function JSONstringify(
     value,
     (key, val: unknown) => {
       const next = replacer ? replacer(key, val) : val;
+
       return typeof next === "bigint" ? next.toString() : next;
     },
     space
@@ -91,6 +92,7 @@ export function stringify<R>(result: R): string {
           } else if (typeof value === "function") {
             value = "[Function]";
           }
+
           return `${key}: ${value}`;
         });
 
@@ -106,6 +108,7 @@ export function stringify<R>(result: R): string {
 
 export function jitter(minSeconds: number, maxSeconds: number): number {
   const randomSeconds = Math.floor(Math.random() * (maxSeconds - minSeconds + 1)) + minSeconds;
+
   return randomSeconds * 1000;
 }
 

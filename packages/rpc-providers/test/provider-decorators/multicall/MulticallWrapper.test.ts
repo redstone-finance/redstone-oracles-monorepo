@@ -172,6 +172,7 @@ const describeMultiWrapperSuite = (
         () => {
           const provider = providerFabric();
           provider.call = () => Promise.reject(new Error("error"));
+
           return provider;
         },
         2
@@ -348,6 +349,7 @@ const describeMultiWrapperSuite = (
         provider.call = callStub;
         // Native getBalance on the underlying provider must still work.
         getBalanceSpy = Sinon.spy(provider, "getBalance");
+
         return provider;
       };
 
@@ -456,6 +458,7 @@ const describeMultiWrapperSuite = (
       // our funding tx — neither check alone catches "both providers vacuously returned 0".
       expect(multicallBalance.eq(directBalance)).to.eq(true);
       expect(multicallBalance.gte(fundedAmount)).to.eq(true);
+
       return { wallet, blockTag, multicallBalance };
     }
   });

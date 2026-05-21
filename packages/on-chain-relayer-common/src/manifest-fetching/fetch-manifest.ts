@@ -110,5 +110,6 @@ async function fetchAndParseRelayerManifest<O, I>(
       );
     }
   }
+
   throw new Error(`failed to fetch  relayer manifest from all URLs: ${String(manifestUrls)}`);
 }

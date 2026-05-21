@@ -49,6 +49,7 @@ export class RedstonePayload extends Serializable {
       unsignedMetadataBytes.length,
       UNSIGNED_METADATA_BYTE_SIZE_BS
     );
+
     return concat([unsignedMetadataBytes, unsignedMetadataByteSizeBytes]);
   }
 

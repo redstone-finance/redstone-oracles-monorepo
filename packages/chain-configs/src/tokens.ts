@@ -20,6 +20,7 @@ export function getTokenInfo(networkName: SupportedNetworkNames, symbol: string)
     symbol,
     ...token,
   };
+
   return tokenInfo;
 }
 

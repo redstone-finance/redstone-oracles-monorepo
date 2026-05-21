@@ -34,6 +34,7 @@ export class MegaProviderBuilder {
     if (addIf) {
       this.factories = this.factories.map(decorator);
     }
+
     return this;
   }
 
@@ -45,6 +46,7 @@ export class MegaProviderBuilder {
       );
       this.factories = [() => agreementProvider];
     }
+
     return this;
   }
 
@@ -56,6 +58,7 @@ export class MegaProviderBuilder {
       );
       this.factories = [() => fallbackProvider];
     }
+
     return this;
   }
 
@@ -89,6 +92,7 @@ export class MegaProviderBuilder {
           undefined,
           this.options.blockNumberCacheOpts
         );
+
         return provider;
       } else {
         const url = new URL(rpcUrl);
@@ -106,6 +110,7 @@ export class MegaProviderBuilder {
         if (this.options.pollingInterval) {
           provider.pollingInterval = this.options.pollingInterval;
         }
+
         return provider;
       }
     });

@@ -24,6 +24,7 @@ export const includeFeedsCloseToDeviation = (
       dataFeedsToUpdate.push(dataFeedId);
     }
   }
+
   return {
     dataFeedsToUpdate,
     message: messages.join("; "),

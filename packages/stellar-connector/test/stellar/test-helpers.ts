@@ -51,7 +51,7 @@ export class FakeDelegate implements IStellarCallerDelegate {
   simulateInvocationCalls: { method: string; block?: number }[] = [];
 
   // eslint-disable-next-line @typescript-eslint/require-await -- mirrors interface
-  async waitForBlockNumber(blockNumber?: number): Promise<void> {
+  async waitForBlockNumber(blockNumber?: number) {
     this.waitForBlockNumberCalls.push(blockNumber);
   }
 

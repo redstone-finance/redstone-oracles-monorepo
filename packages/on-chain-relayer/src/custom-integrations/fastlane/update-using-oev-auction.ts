@@ -111,9 +111,11 @@ const runOevAuction = async (
         ...(oevAuctionApiKey && { "x-api-key": oevAuctionApiKey }),
       },
     });
+
     return response.data;
   } catch (error) {
     logOevAuctionError(error);
+
     throw new Error(`OEV auction failed: ${RedstoneCommon.stringifyError(error)}`);
   }
 };
@@ -129,11 +131,13 @@ const verifyFastlaneResponse = async (
   const waitForTransactionToMintPromise = waitForTransactionMint(provider, decodedTx).catch(
     (error) => {
       logger.log(`Failed to wait for transaction mint: ${RedstoneCommon.stringifyError(error)}`);
+
       throw error;
     }
   );
   const checkGasPricePromise = verifyGasPrice(relayerConfig, provider, decodedTx).catch((error) => {
     logger.log(`Failed to verify gas price: ${RedstoneCommon.stringifyError(error)}`);
+
     throw error;
   });
   await Promise.all([waitForTransactionToMintPromise, checkGasPricePromise]);
@@ -167,7 +171,7 @@ const verifyGasPrice = async (
   relayerConfig: RelayerConfig,
   provider: JsonRpcProvider,
   decodedTx: Transaction
-): Promise<void> => {
+) => {
   if (relayerConfig.oevVerifyGasPriceDisabled) {
     return await Promise.resolve();
   } else {

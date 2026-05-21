@@ -59,6 +59,7 @@ export function encodeLegacyDataPackageTopic({
   nodeAddress,
 }: DataPackageTopic) {
   const parts = [PackagesTypes.DataPackage, dataServiceId, dataPackageId, nodeAddress];
+
   return parts.map((part) => (WILDCARDS.has(part) ? part : encodeURIComponent(part))).join("/");
 }
 

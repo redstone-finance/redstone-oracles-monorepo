@@ -29,6 +29,7 @@ export const getFromEnv: GetFromEnvType = <T = string>(
   } catch (e) {
     // eslint-disable-next-line no-console -- we cannot use logger here to avoid cyclic dependency between logger and env modules
     console.error(`failed to parse ${name} env variable, value ${envValue}`);
+
     throw new Error(`failed to parse ${name} env variable`, { cause: e });
   }
 };

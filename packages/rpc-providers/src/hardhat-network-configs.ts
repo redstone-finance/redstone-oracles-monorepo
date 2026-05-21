@@ -41,12 +41,14 @@ const maybeReadPrivateRpcUrlsFromFile = (): FetchRpcUrlsFromSsmResult => {
     const rpcUrls = JSON.parse(
       readFileSync("private-rpc-urls.json", "utf8")
     ) as FetchRpcUrlsFromSsmResult;
+
     return rpcUrls;
   } catch (e) {
     logger.warn(
       "Failed to read or parse `private-rpc-urls.json` file. Public RPC URLs will be used",
       e
     );
+
     return {};
   }
 };

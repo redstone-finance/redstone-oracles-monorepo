@@ -42,5 +42,6 @@ export const readSsmRpcUrls = async (
       );
     }
   }
+
   return rpcUrlsPerChain;
 };

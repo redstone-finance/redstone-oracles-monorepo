@@ -56,6 +56,7 @@ export function verifyAndComputeMedian(
   const verifiedPackages = packages.filter((pkg) => {
     try {
       const signer = SignedDataPackage.fromObjLazy(pkg).getSignerAddress();
+
       return whitelistSet.has(signer.toLowerCase());
     } catch {
       return false;

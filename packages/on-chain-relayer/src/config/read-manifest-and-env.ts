@@ -29,6 +29,7 @@ const readManifest = () => {
       remoteConfigPath = RedstoneRemoteConfig.findRelayerRemoteConfigOrThrow();
     }
     const manifestObject = readJsonFile(`${remoteConfigPath}/${manifestPath}`);
+
     return AnyOnChainRelayerManifestSchema.parse(manifestObject);
   } catch (error) {
     return terminateWithRemoteConfigError(RedstoneCommon.stringifyError(error));

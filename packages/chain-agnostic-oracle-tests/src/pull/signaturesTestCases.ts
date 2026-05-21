@@ -20,6 +20,7 @@ const generateTestConfigWithSignerIndexes = (signerIndexes: number[], expectedSu
           })
         )
         .map((mdp) => SignedDataPackage.fromObj(mdp));
+
       return RedstonePayload.prepare(signedMockdataPackages, UNSIGNED_METADATA);
     },
   };
@@ -40,6 +41,7 @@ export const signaturesTestCases = {
       [0, 1, 2].map((i) => {
         const signerIndexes = [0, 1, 2];
         signerIndexes[i] = 11;
+
         return [
           `${toOrdinal(i + 1)} data package has an invalid signature (unauthorised signer), rest is good`,
           basicPullModelTestConfig,
@@ -77,6 +79,7 @@ export const signaturesTestCases = {
       [0, 1, 2].map((i) => {
         const signerIndexes = i > 0 ? [0, 0, 0] : [1, 1, 1];
         signerIndexes[i] = i;
+
         return [
           `Should fail if only ${toOrdinal(i + 1)} data package has unique signature, rest - the same (${signerIndexes.join(", ")})`,
           generateTestConfigWithSignerIndexes(signerIndexes, false),
@@ -87,6 +90,7 @@ export const signaturesTestCases = {
       [0, 1, 2].map((i) => {
         const signerIndexes = [0, 1, 2];
         signerIndexes.push(i);
+
         return [
           `Should fail if 4th data package has the same signature as ${toOrdinal(i + 1)} data package (${signerIndexes.join(", ")})`,
           generateTestConfigWithSignerIndexes(signerIndexes, false),
@@ -98,6 +102,7 @@ export const signaturesTestCases = {
         const signerIndexes = [0, 1, 2];
         signerIndexes.push(i);
         signerIndexes.push(i);
+
         return [
           `Should fail if 4th and 5th data packages have the same signatures as ${toOrdinal(i + 1)} data package (${signerIndexes.join(", ")})`,
           generateTestConfigWithSignerIndexes(signerIndexes, false),

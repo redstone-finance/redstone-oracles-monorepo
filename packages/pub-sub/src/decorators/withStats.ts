@@ -26,7 +26,7 @@ export class PubSubStatsTracker {
     logger.info(`PubSub stats tracker started, will log every ${this.logIntervalMs / 1000}s`);
   }
 
-  recordMessage(topicName: string, clientName: string): void {
+  recordMessage(topicName: string, clientName: string) {
     const now = Date.now();
     const currentSecond = Math.floor(now / 1000);
 
@@ -38,7 +38,7 @@ export class PubSubStatsTracker {
     statsMap: Map<string, Map<number, number>>,
     key: string,
     currentSecond: number
-  ): void {
+  ) {
     let countsPerSecond = statsMap.get(key);
 
     if (!countsPerSecond) {
@@ -70,12 +70,13 @@ export class PubSubStatsTracker {
     };
   }
 
-  private logAndClearStatistics(): void {
+  private logAndClearStatistics() {
     const topicMetrics = this.getTopicMetrics();
     const clientMetrics = this.getClientMetrics();
 
     if (topicMetrics.length === 0 && clientMetrics.length === 0) {
       logger.info("PubSub Stats: No messages received in the last interval");
+
       return;
     }
 
@@ -94,7 +95,7 @@ export class PubSubStatsTracker {
     this.clearStats();
   }
 
-  private clearStats(): void {
+  private clearStats() {
     this.topicStats.clear();
     this.clientStats.clear();
   }

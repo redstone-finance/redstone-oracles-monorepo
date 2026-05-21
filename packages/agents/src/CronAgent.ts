@@ -41,6 +41,7 @@ export class CronAgent<R> {
 
     if (this.schedulerTask) {
       this.logger.warn("Prevent from creating setInterval twice for same agent");
+
       return true;
     }
 
@@ -70,6 +71,7 @@ export class CronAgent<R> {
         `Cached data is stale or not populated cachedAt=${this.cachedValue.cachedAt} maxDataTTL=${this.args.maxDataTTL} cacheAge=${Date.now() - this.cachedValue.cachedAt}`
       );
     }
+
     return this.cachedValue.value;
   }
 
@@ -90,6 +92,7 @@ export class CronAgent<R> {
     // it has to be outside of try/catch block to avoid getting in finally block
     if (this.inProgress) {
       this.logger.debug("skipping deferredFetchData, because previous is still in progress");
+
       return;
     }
 

@@ -11,6 +11,7 @@ export function readKeypairBytes() {
     "PRIVATE_KEY",
     z.array(z.number().gte(0).lte(255)).or(z.string())
   );
+
   return arrayify(keypair, { allowMissingPrefix: true });
 }
 

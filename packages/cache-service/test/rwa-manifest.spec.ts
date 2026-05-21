@@ -74,6 +74,7 @@ describe("RwaFeedIdsProvider", () => {
           })
         );
       }
+
       return Promise.resolve(
         makeManifest({
           ETH: {},
