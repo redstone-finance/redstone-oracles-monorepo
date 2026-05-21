@@ -13,6 +13,10 @@ type IterationStack = {
   logger: IterationLogger;
 };
 
+export type IterationResult =
+  | { result: "OK"; didUpdatePrices: boolean }
+  | { result: "Error"; reason: string };
+
 export async function runManyIterations(
   configPromises: Record<string, Promise<RelayerConfig>>,
   makeStack: (name: string, config: RelayerConfig) => IterationStack,
@@ -31,13 +35,17 @@ export async function runManyIterations(
       : Promise.reject(new Error(RedstoneCommon.stringifyError(settledConfig.reason)))
   );
 
-  const results = (await Promise.allSettled(Object.values(iterations))).map((result) =>
-    result.status === "fulfilled"
-      ? { result: "OK", didRun: result.value }
-      : { result: "Error", reason: RedstoneCommon.stringifyError(result.reason) }
+  const results: IterationResult[] = (await Promise.allSettled(Object.values(iterations))).map(
+    (result) =>
+      result.status === "fulfilled"
+        ? { result: "OK", didUpdatePrices: result.value }
+        : {
+            result: "Error",
+            reason: RedstoneCommon.stringifyError(result.reason),
+          }
   );
 
-  return _.zipObject(Object.keys(iterations), results);
+  return Object.fromEntries(Object.entries(_.zipObject(Object.keys(iterations), results)));
 }
 
 export async function runSingleIteration(
