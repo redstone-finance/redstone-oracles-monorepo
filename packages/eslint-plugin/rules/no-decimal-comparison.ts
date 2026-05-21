@@ -15,7 +15,7 @@ const operatorsMap: Record<string, string> = {
 
 const suspiciousOperators = Object.keys(operatorsMap);
 
-export const noDecimalComparison = createRule({
+export default createRule({
   create(context: TSESLint.RuleContext<"noDecimalCompare", unknown[]>) {
     return {
       BinaryExpression(node: TSESTree.BinaryExpression) {

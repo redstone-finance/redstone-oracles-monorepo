@@ -1,5 +1,5 @@
 import type { FlatConfig } from "typescript-eslint";
-import { noDecimalComparison } from "./rules/no-decimal-comparison";
+import noDecimalComparison from "./rules/no-decimal-comparison";
 import noRedundantVoid from "./rules/no-redundant-void-return";
 
 const redstonePlugin = {
