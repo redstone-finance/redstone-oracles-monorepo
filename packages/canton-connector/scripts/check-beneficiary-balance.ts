@@ -4,7 +4,7 @@ import "dotenv/config";
 import * as AllDefs from "../src/canton-defs.json";
 import { makeDefaultClientWithValidator, readNetwork } from "./utils";
 
-const BENEFICIARY_BALANCE_LIMIT = 100000;
+const BENEFICIARY_BALANCE_LIMIT = 1_000_000;
 
 /**
  * Checks the balance of the beneficiary wallet and transfers excess funds to źródełko
@@ -12,13 +12,11 @@ const BENEFICIARY_BALANCE_LIMIT = 100000;
  */
 async function main() {
   const network = readNetwork();
-  const { walletPartyId, zrodelkoPartyId } = AllDefs[network].node as {
-    walletPartyId: string;
-    zrodelkoPartyId: string;
-  };
+  const { zrodelkoPartyId } = AllDefs[network].node;
 
   const { client, validatorClient } = makeDefaultClientWithValidator(true);
 
+  const walletPartyId = await validatorClient.getWalletPartyId();
   const beneficiaryBalanceStr = await client.getAmuletBalance(walletPartyId);
   const beneficiaryBalance = new Decimal(beneficiaryBalanceStr);
 
@@ -35,12 +33,8 @@ async function main() {
   const transferAmount = beneficiaryBalance.minus(BENEFICIARY_BALANCE_LIMIT / 2).toNumber();
   console.log(`Transferring ${transferAmount} CC from ${walletPartyId} to ${zrodelkoPartyId}...`);
 
-  const result = await validatorClient.sendCC(zrodelkoPartyId, transferAmount);
-  if (result.status === "success") {
-    console.log(`Transfer successful: ${String(result.amount)} CC sent to ${zrodelkoPartyId}`);
-  } else {
-    console.error(`Transfer failed: ${String(result.error)}`);
-  }
+  await validatorClient.sendCC(zrodelkoPartyId, transferAmount);
+  console.log(`Transfer successful: ${transferAmount} CC sent to ${zrodelkoPartyId}`);
 }
 
 main().catch((error: unknown) => {
