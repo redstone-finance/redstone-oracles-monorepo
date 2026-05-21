@@ -50,6 +50,7 @@ export const ensureInitialized = <T>(
   if (!(key in o)) {
     o[key] = initializer();
   }
+
   return true;
 };
 

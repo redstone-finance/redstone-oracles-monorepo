@@ -19,6 +19,7 @@ export class SquadsMultisig {
       this.connection,
       this.multisigPda
     );
+
     return BigInt(Number(multisigInfo.transactionIndex));
   }
 

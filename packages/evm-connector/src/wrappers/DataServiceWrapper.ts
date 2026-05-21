@@ -30,6 +30,7 @@ export class DataServiceWrapper<T extends Contract> extends BaseWrapper<T> {
   async getDataPackagesForPayload(): Promise<SignedDataPackage[]> {
     const dataPackagesRequestParams = await this.resolveDataPackagesRequestParams();
     const dpResponse = await requestDataPackages(dataPackagesRequestParams);
+
     return Object.values(dpResponse).flat() as SignedDataPackage[];
   }
 
@@ -60,6 +61,7 @@ export class DataServiceWrapper<T extends Contract> extends BaseWrapper<T> {
     try {
       // eslint-disable-next-line @typescript-eslint/no-unsafe-call -- add reason here, please
       const dataServiceId = (await this.contract.getDataServiceId()) as string;
+
       return dataServiceId;
     } catch (e) {
       throw new Error(

@@ -7,16 +7,19 @@ export abstract class Serializable {
 
   toBytesHex(): string {
     const serializedBytes = this.toBytes();
+
     return ethers.utils.hexlify(serializedBytes);
   }
 
   toBytesHexWithout0xPrefix(): string {
     const serializedBytes = this.toBytes();
+
     return hexlifyWithout0xPrefix(serializedBytes);
   }
 
   toJSON() {
     const serializedPlainObj = this.toObj();
+
     return JSON.stringify(serializedPlainObj);
   }
 }

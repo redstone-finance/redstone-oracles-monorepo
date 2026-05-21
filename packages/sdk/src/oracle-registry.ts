@@ -49,6 +49,7 @@ export const getDataServiceIdForSigner = (
       return nodeDetails.dataServiceId;
     }
   }
+
   throw new Error(`Data service not found for ${signerAddress}`);
 };
 

@@ -221,5 +221,6 @@ export function collectAll<R, E>(results: Result<R, E>[]) {
   if (error) {
     return error;
   }
+
   return ok(results.map(unwrapSuccess));
 }

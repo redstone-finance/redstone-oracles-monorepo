@@ -5,6 +5,7 @@ const getMockResponseObject = (url: string) => {
   if (url.includes("sorted-asc-only-eth")) {
     const signedDataPackagesObjects = mockSignedDataPackages.ETH;
     const [dataPackage1, dataPackage2] = signedDataPackagesObjects;
+
     return {
       ETH: [
         {
@@ -36,6 +37,7 @@ export const handlers = [
       return new HttpResponse(null, { status: 400 });
     } else {
       const responseObject = getMockResponseObject(url);
+
       return HttpResponse.json(responseObject);
     }
   })

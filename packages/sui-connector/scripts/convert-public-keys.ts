@@ -7,6 +7,7 @@ export function convertSecp256k1PublicKeyToSuiAddress(secp256k1PublicKey: string
 
   const suiPublicKey = new Secp256k1PublicKey(compressedPublicKey);
   const suiAddress = suiPublicKey.toSuiAddress();
+
   return {
     secp256k1PublicKey,
     compressedPublicKey: hexlify(compressedPublicKey),

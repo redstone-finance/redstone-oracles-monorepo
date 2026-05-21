@@ -50,6 +50,7 @@ export class PriceAdapterRadixContractAdapter extends RadixContractAdapter {
     });
 
     const proofBadge = await this.getTrustedUpdaterProofBadge();
+
     return proofBadge
       ? new WritePricesTrustedRadixMethod(
           this.componentId,

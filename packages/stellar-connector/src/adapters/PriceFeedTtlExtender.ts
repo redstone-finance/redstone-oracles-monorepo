@@ -18,6 +18,7 @@ export class PriceFeedTtlExtender {
   async extendTtlIfNeeded() {
     if (this.addresses.length === 0) {
       PriceFeedTtlExtender.logger.warn("No price-feed addresses to monitor");
+
       return;
     }
 
@@ -25,6 +26,7 @@ export class PriceFeedTtlExtender {
 
     if (addressesToExtend.length === 0) {
       PriceFeedTtlExtender.logger.info("No price-feed contracts need TTL extension");
+
       return;
     }
 

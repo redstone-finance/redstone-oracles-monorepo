@@ -44,6 +44,7 @@ export class MultiAgreementExecutor<R extends unknown[]> extends AgreementExecut
       this.logger.debug(
         `Returning, still doesn't have enough of ${quorum} results: ${successfulResults.length} successes + ${errorResults.length} errors`
       );
+
       return false;
     }
 

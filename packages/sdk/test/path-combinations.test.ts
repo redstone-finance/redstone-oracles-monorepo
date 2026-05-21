@@ -68,6 +68,7 @@ describe("Path construction in requestDataPackages", () => {
           let calledUrl: string | undefined;
           jest.spyOn(axios, "get").mockImplementation((url: string) => {
             calledUrl = url;
+
             throw new Error("Request failed");
           });
 

@@ -92,6 +92,7 @@ export class SuiContractUpdater implements ContractUpdater {
     } catch (e) {
       this.logger.warn("Reinitializing gas objects...");
       await this.initializeExecutor();
+
       throw e;
     }
   }

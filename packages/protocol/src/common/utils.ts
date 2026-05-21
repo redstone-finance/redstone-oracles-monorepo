@@ -21,6 +21,7 @@ export type ConvertibleToBytes32 = string;
 export const assert = (condition: boolean, errMsg?: string) => {
   if (!condition) {
     const errText = `Assertion failed` + (errMsg ? `: ${errMsg}` : "");
+
     throw new Error(errText);
   }
 };
@@ -32,6 +33,7 @@ export const convertStringToBytes32 = (str: string): Uint8Array => {
   } else {
     bytes32Str = formatBytes32String(str);
   }
+
   return arrayify(bytes32Str);
 };
 
@@ -59,6 +61,7 @@ export const convertNumberToString = (value: NumberLike, decimals: number): stri
     // for all types, but implementing it would break
     // compatibility with existing clients
     const decimalValue = new Decimal(value);
+
     return decimalValue.toFixed(decimals);
   }
 
@@ -67,6 +70,7 @@ export const convertNumberToString = (value: NumberLike, decimals: number): stri
   if (!stringifiedNumber.includes("e")) {
     return stringifiedNumber;
   }
+
   // js for numbers >1e20 uses scientific notation,
   // which is not supported by BigNumber.js
   return Number(stringifiedNumber).toLocaleString("fullwide", {
@@ -77,6 +81,7 @@ export const convertNumberToString = (value: NumberLike, decimals: number): stri
 export const convertIntegerNumberToBytes = (value: NumberLike, byteSize: number): Uint8Array => {
   assert(Number.isInteger(Number(value)), "convertIntegerNumberToBytes expects integer as input");
   const decimals = 0; // 0 digits after comma
+
   return convertNumberToBytes(value, decimals, byteSize);
 };
 
@@ -97,6 +102,7 @@ export const concat = (items: Uint8Array[]): Uint8Array => {
 
   items.reduce((offset, item) => {
     result.set(item, offset);
+
     return offset + item.length;
   }, 0);
 

@@ -26,6 +26,7 @@ async function waitForSuccess(
   const waitForSuccessPromise = new Promise<void>((resolve) => {
     page.on("pageerror", (error: Error) => {
       console.error(`${url} [error]: ${error.message}`);
+
       throw error;
     });
 
@@ -66,6 +67,7 @@ export async function testInBrowser(
     await RedstoneCommon.retry({
       fn: async () => {
         const page = await browser.newPage();
+
         return await waitForSuccess(page, expectedMessage, port);
       },
       maxRetries: 4,

@@ -63,6 +63,7 @@ export class CubicInterpolation {
         }
         tries--;
       }
+
       throw new Error(`X was not found for Y = ${y.toString()}`);
     }
   }
@@ -86,6 +87,7 @@ export class CubicInterpolation {
  */
 export const monotoneCubicInterpolation = (xs: number[], ys: number[]): CubicInterpolation => {
   const { fun, firstSlope, lastSlope, sortedXs, sortedYs } = createInterpolant(xs, ys);
+
   return new CubicInterpolation(sortedXs, sortedYs, firstSlope, lastSlope, fun);
 };
 
@@ -180,6 +182,7 @@ const sortPoints = (xs: number[], ys: number[]): [number[], number[]] => {
     sortedXs[i] = xs[indexes[i]];
     sortedYs[i] = ys[indexes[i]];
   }
+
   return [sortedXs, sortedYs];
 };
 
@@ -239,6 +242,7 @@ const createInterpolantFunction =
 
     // interpolate
     const diff = x - xs[i];
+
     return ys[i] + diff * (c1s[i] + diff * (c2s[i] + diff * c3s[i]));
   };
 
@@ -251,5 +255,6 @@ const findIntervalIndex = (point: number, points: number[]) => {
   if (point === points[points.length - 1]) {
     return points.length - 1;
   }
+
   throw new Error(`The point (${point}) is outside the point list [${points.join(",")}]`);
 };

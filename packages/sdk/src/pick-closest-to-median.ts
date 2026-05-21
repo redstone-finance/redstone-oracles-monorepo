@@ -29,6 +29,7 @@ const getMaxDistanceFromMedian = (
         .unsafeToNumber()
     );
   }
+
   return maxDistanceFromMedian;
 };
 
@@ -52,5 +53,6 @@ const getAllValues = (dataPackages: SignedDataPackagePlainObj[]) => {
       allValues[dataPoint.dataFeedId]!.push(Number(dataPoint.value));
     }
   }
+
   return allValues as Record<string, number[]>;
 };

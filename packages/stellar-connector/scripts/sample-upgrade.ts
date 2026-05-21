@@ -27,6 +27,7 @@ export async function getSampleUpgradeTx(contractId: string) {
 
   const contractName = loadContractName();
   const wasmHash = await deployer.upload(wasmFilePath(contractName));
+
   return { ops, wasmHash };
 }
 

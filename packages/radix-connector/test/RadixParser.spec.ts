@@ -58,6 +58,7 @@ describe("RadixParser tests", () => {
       values.map((value) => {
         expectToBe(value, ValueKind.Tuple);
         expectToBe(value.fields[0], ValueKind.Blob);
+
         return BigNumber.from(value.fields[0].value);
       })
     ).toStrictEqual(priceValues.map((value) => BigNumber.from(value)));

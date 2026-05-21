@@ -35,7 +35,7 @@ export class StellarTestEnvironment implements PushTestEnvironment, PullTestEnvi
     dataFeedIds: string[],
     payloadGenerator: (context: PushModelTestContext) => string,
     instructionsContext: PushModelTestContext[]
-  ): Promise<void> {
+  ) {
     const info = getLedgerInfo(this.rover);
 
     const paramsProvider = new ContractParamsProviderMock(dataFeedIds, "", () => {

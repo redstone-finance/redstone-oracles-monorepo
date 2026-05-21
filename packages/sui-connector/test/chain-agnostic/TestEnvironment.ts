@@ -58,7 +58,7 @@ export class SuiTestEnvironment implements PushTestEnvironment, PullTestEnvironm
     return await this.read(dataFeedIds);
   }
 
-  async configure(configuration: ContractConfiguration): Promise<void> {
+  async configure(configuration: ContractConfiguration) {
     const tx = new Transaction();
     tx.setSender(this.keypair.toSuiAddress());
 
@@ -90,7 +90,7 @@ export class SuiTestEnvironment implements PushTestEnvironment, PullTestEnvironm
     dataFeedIds: string[],
     payloadGenerator: (context: PushModelTestContext) => string,
     instructionsContext: PushModelTestContext[]
-  ): Promise<void> {
+  ) {
     const paramsProvider = new ContractParamsProviderMock(dataFeedIds, "", () => {
       const payload = payloadGenerator({
         timestamp: this.sandbox.clockApi().getTimeMs(),

@@ -31,7 +31,7 @@ export class CantonBlockchainServiceWithTransfer
     return Promise.resolve(this.partyId);
   }
 
-  async transfer(toAddress: string, amount: number): Promise<void> {
+  async transfer(toAddress: string, amount: number) {
     const nonce = Date.now();
     const expiresAt = new Date(Date.now() + SEND_EXPIRY_MS);
     const ccAmount = normalizedToCC(amount);

@@ -16,6 +16,7 @@ export const connectPricesContract = async (
   provider?: Provider
 ) => {
   const wallet = await getWallet(provider);
+
   return new (forGasUsageOnly ? GasUsageFuelPricesContractConnector : FuelPricesContractConnector)(
     wallet,
     contractId

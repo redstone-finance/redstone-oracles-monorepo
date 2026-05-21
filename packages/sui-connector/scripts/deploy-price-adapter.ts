@@ -87,6 +87,7 @@ async function executeSuiPublish(network: SuiNetworkName): Promise<CliTransactio
     return JSON.parse(json.split("Transaction digest:")[0]) as CliTransactionResult;
   } catch (error) {
     console.error("Error executing sui client publish:", error);
+
     throw error;
   } finally {
     rmSync("Pub.localnet.toml");

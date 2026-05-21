@@ -45,6 +45,7 @@ export class TestRequestCollector extends Collector.RequestCollector<string, Val
     if (this.rejectNext) {
       const err = this.rejectNext;
       this.rejectNext = undefined;
+
       throw err;
     }
 

@@ -162,11 +162,13 @@ export const getMockSignerPrivateKey = (mockSignerAddress: MockSignerAddress) =>
       return privateKey;
     }
   }
+
   throw new Error(`Invalid mock signer address: ${mockSignerAddress}`);
 };
 
 export const getMockSignerAddress = (signerIndex: MockSignerIndex): MockSignerAddress => {
   const address = new ethers.Wallet(MOCK_PRIVATE_KEYS[signerIndex]).address;
+
   return address as MockSignerAddress;
 };
 
@@ -175,6 +177,7 @@ export const getMockPackage = (
   dataPoints: DataPoint[]
 ): MockDataPackageConfig => {
   const timestampMilliseconds = opts.timestampMilliseconds || DEFAULT_TIMESTAMP_FOR_TESTS;
+
   return {
     signer: MOCK_SIGNERS[opts.mockSignerIndex].address as MockSignerAddress,
     dataPackage: new DataPackage(dataPoints, timestampMilliseconds, "__TEST__"),
@@ -186,6 +189,7 @@ export const getMockSignedDataPackageObj = (
 ): SignedDataPackagePlainObj => {
   const numericDataPoints = args.dataPoints.map((dp) => new NumericDataPoint(dp));
   const mockPackage = getMockPackage(args, numericDataPoints);
+
   return {
     ...mockPackage.dataPackage.sign(MOCK_SIGNERS[args.mockSignerIndex].privateKey).toObj(),
   };
@@ -193,11 +197,13 @@ export const getMockSignedDataPackageObj = (
 
 export const getMockNumericPackage = (args: MockNumericPackageArgs): MockDataPackageConfig => {
   const numericDataPoints = args.dataPoints.map((dp) => new NumericDataPoint(dp));
+
   return getMockPackage(args, numericDataPoints);
 };
 
 export const getMockStringPackage = (args: MockStringPackageArgs): MockDataPackageConfig => {
   const stringDataPoints = args.dataPoints.map((dp) => new StringDataPoint(dp));
+
   return getMockPackage(args, stringDataPoints);
 };
 
@@ -208,6 +214,7 @@ export const getMockPackageWithOneNumericDataPoint = (
     ...args,
     dataFeedId: args.dataFeedId || DEFAULT_DATA_FEED_ID,
   });
+
   return getMockPackage(args, [numericDataPoint]);
 };
 
@@ -215,6 +222,7 @@ export const getMockPackageWithOneBytesDataPoint = (
   args: MockPackageWithOneBytesDataPointArgs
 ): MockDataPackageConfig => {
   const dataPoint = new DataPoint(args.dataFeedId || DEFAULT_DATA_FEED_ID, arrayify(args.hexValue));
+
   return getMockPackage(args, [dataPoint]);
 };
 

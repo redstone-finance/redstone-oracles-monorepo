@@ -39,6 +39,7 @@ export class CantonTxDeliveryMan extends TxDeliveryMan<CantonTxResultExt> {
       this.logger.warn(
         `Failed to fetch total consumed traffic: ${RedstoneCommon.stringifyError(e)}`
       );
+
       return undefined;
     }
   }

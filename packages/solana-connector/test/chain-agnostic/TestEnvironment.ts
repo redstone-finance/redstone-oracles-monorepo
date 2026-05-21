@@ -30,7 +30,7 @@ export class SolanaTestEnvironment implements PushTestEnvironment, PullTestEnvir
     dataFeedIds: string[],
     payloadGenerator: (context: PushModelTestContext) => string,
     instructionsContext: PushModelTestContext[]
-  ): Promise<void> {
+  ) {
     const paramsProvider = new ContractParamsProviderMock(dataFeedIds, "", () => {
       const currentTimeMs = RedstoneCommon.secsToMs(Number(this.svm.getClock().unixTimestamp));
 
@@ -57,7 +57,7 @@ export class SolanaTestEnvironment implements PushTestEnvironment, PullTestEnvir
     ).map((bn) => Number(bn));
   }
 
-  async waitForNewBlock(): Promise<void> {
+  async waitForNewBlock() {
     this.svm.expireBlockhash();
     const clock = this.svm.getClock();
     clock.slot += BigInt(1);

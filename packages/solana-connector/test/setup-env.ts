@@ -9,6 +9,7 @@ function programPath() {
 
 function publicToDummyKeypair(publicKey: Uint8Array) {
   const secretKey = Buffer.from([...Array(32).keys(), ...publicKey]);
+
   return new Keypair({ publicKey, secretKey });
 }
 

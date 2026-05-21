@@ -153,6 +153,7 @@ async function promptSigner(): Promise<Signer> {
   }
 
   const signer = readKeypair();
+
   return {
     type: "local",
     signer,
@@ -283,6 +284,7 @@ async function handleCreateVaultTx(
   const tx = await getTx(connection, ix, member);
 
   await sign(signer, tx);
+
   return tx;
 }
 
@@ -298,6 +300,7 @@ async function handlePropose(
   const tx = await getTx(connection, ix, member);
 
   await sign(signer, tx);
+
   return tx;
 }
 
@@ -313,6 +316,7 @@ async function handleApprove(
   const tx = await getTx(connection, ix, member);
 
   await sign(signer, tx);
+
   return tx;
 }
 
@@ -328,6 +332,7 @@ async function handleExecute(
   const tx = await getTx(connection, ixInfo.instruction, member, ixInfo.lookupTableAccounts);
 
   await sign(signer, tx);
+
   return tx;
 }
 
