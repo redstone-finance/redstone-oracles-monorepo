@@ -6,11 +6,12 @@ export const includeSynchronizedHeartbeatUpdates = (
   heartbeatUpdates: number[],
   config: RelayerConfig
 ) => {
+  const extraFeedsFromHeartbeat: string[] = [];
   const { multiFeedSyncHeartbeats } = config;
   const filteredHeartbeatUpdates = heartbeatUpdates.filter((hb) => hb !== 0);
   if (!multiFeedSyncHeartbeats || filteredHeartbeatUpdates.length === 0) {
     return {
-      dataFeedsToUpdate,
+      extraFeedsFromHeartbeat,
       message: "",
     };
   }
@@ -31,14 +32,14 @@ export const includeSynchronizedHeartbeatUpdates = (
         messages.push(
           `DataFeed: ${dataFeedId} included due to heartbeat syncing (${heartbeat} [ms])`
         );
-        dataFeedsToUpdate.push(dataFeedId);
+        extraFeedsFromHeartbeat.push(dataFeedId);
         break;
       }
     }
   }
 
   return {
-    dataFeedsToUpdate,
+    extraFeedsFromHeartbeat,
     message: messages.join("; "),
   };
 };
