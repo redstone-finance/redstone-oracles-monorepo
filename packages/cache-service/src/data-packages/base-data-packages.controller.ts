@@ -224,33 +224,41 @@ export abstract class BaseDataPackagesController implements OnModuleDestroy {
     return dataFeedIds;
   }
 
-  protected static validateAllFeedsAccess(req: Request) {
-    if (!config.allFeedsAccessApiKeyRegex) {
+  private static validateAdminApiKeyAccess(
+    req: Request,
+    apiKeyRegex: RegExp | undefined,
+    errorMessage: string
+  ) {
+    if (!apiKeyRegex) {
       return;
     }
     const apiKey = (req.headers as Record<string, string | undefined>)["x-api-key"];
-    if (!apiKey || !config.allFeedsAccessApiKeyRegex.test(apiKey)) {
+    if (!apiKey || !apiKeyRegex.test(apiKey)) {
       throw new HttpException(
-        {
-          status: HttpStatus.FORBIDDEN,
-          error: "Access to all-feeds endpoints requires a valid API key",
-        },
+        { status: HttpStatus.FORBIDDEN, error: errorMessage },
         HttpStatus.FORBIDDEN
       );
     }
   }
 
+  private static adminApiKeyRequiredMessage(endpointName: string) {
+    return `Access to ${endpointName} endpoints requires an admin API key.`;
+  }
+
+  protected static validateAllFeedsAccess(req: Request) {
+    BaseDataPackagesController.validateAdminApiKeyAccess(
+      req,
+      config.allFeedsAccessApiKeyRegex,
+      `${BaseDataPackagesController.adminApiKeyRequiredMessage("all-feeds")} Provide specific feed IDs in your request.`
+    );
+  }
+
   protected static validateMetadataAccess(req: Request) {
-    if (!config.metadataAccessApiKeyRegex) {
-      return;
-    }
-    const apiKey = (req.headers as Record<string, string | undefined>)["x-api-key"];
-    if (!apiKey || !config.metadataAccessApiKeyRegex.test(apiKey)) {
-      throw new HttpException(
-        { status: HttpStatus.FORBIDDEN, error: "Access to metadata requires a valid API key" },
-        HttpStatus.FORBIDDEN
-      );
-    }
+    BaseDataPackagesController.validateAdminApiKeyAccess(
+      req,
+      config.metadataAccessApiKeyRegex,
+      BaseDataPackagesController.adminApiKeyRequiredMessage("metadata")
+    );
   }
 
   @Post("bulk")

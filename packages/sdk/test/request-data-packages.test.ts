@@ -9,6 +9,11 @@ import {
   requestRedstonePayload,
 } from "../src";
 import {
+  DEV_AUTHENTICATED_GATEWAY_URLS,
+  PROD_AUTHENTICATED_GATEWAY_URLS,
+  resolveAuthenticatedGatewayUrls,
+} from "../src/data-services-urls";
+import {
   MOCK_TIMESTAMP,
   mockSignedDataPackages,
   mockSignedDataPackagesResponse,
@@ -814,6 +819,135 @@ describe("request-data-packages", () => {
 
       expect(result["ETH"]).toBeDefined();
       expect(result["BTC"]).toBeDefined();
+    });
+  });
+
+  describe("resolveAuthenticatedGatewayUrls", () => {
+    it("should return PROD URLs for known prod data services", () => {
+      expect(resolveAuthenticatedGatewayUrls("redstone-primary-prod")).toEqual(
+        PROD_AUTHENTICATED_GATEWAY_URLS
+      );
+      expect(resolveAuthenticatedGatewayUrls("redstone-avalanche-prod")).toEqual(
+        PROD_AUTHENTICATED_GATEWAY_URLS
+      );
+    });
+
+    it("should return DEV URLs for known demo data services", () => {
+      expect(resolveAuthenticatedGatewayUrls("redstone-primary-demo")).toEqual(
+        DEV_AUTHENTICATED_GATEWAY_URLS
+      );
+      expect(resolveAuthenticatedGatewayUrls("redstone-main-demo")).toEqual(
+        DEV_AUTHENTICATED_GATEWAY_URLS
+      );
+    });
+
+    it("should fall back to PROD URLs for unknown data service", () => {
+      expect(resolveAuthenticatedGatewayUrls("unknown-service")).toEqual(
+        PROD_AUTHENTICATED_GATEWAY_URLS
+      );
+    });
+  });
+
+  describe("authenticatedGateways", () => {
+    const mockAxiosGetWithSignedPackages = () => {
+      const spy = jest.spyOn(axios, "get");
+      spy.mockResolvedValueOnce({ data: mockSignedDataPackages });
+
+      return spy;
+    };
+
+    const getAxiosCall = (spy: jest.SpyInstance, callIndex = 0) => {
+      const [url, config] = spy.mock.calls[callIndex] as [
+        string,
+        { headers?: Record<string, string> } | undefined,
+      ];
+
+      return {
+        url,
+        apiKey: config?.headers?.["x-api-key"],
+      };
+    };
+
+    it("should use by-data-feeds endpoint with x-api-key header", async () => {
+      const axiosGetSpy = mockAxiosGetWithSignedPackages();
+
+      await requestDataPackages({
+        ...getReqParams(),
+        authenticatedGateways: [{ url: "https://auth-gw.test", apiKey: "my-secret-key" }],
+      });
+
+      expect(axiosGetSpy).toHaveBeenCalledTimes(1);
+      const { url, apiKey } = getAxiosCall(axiosGetSpy);
+      expect(url).toMatch(/\/v2\/data-packages\/latest-by-data-feeds\//);
+      expect(url).toContain("dataFeedIds=");
+      expect(apiKey).toBe("my-secret-key");
+    });
+
+    it("should fall back to public gateways when authenticated gateway fails", async () => {
+      const axiosGetSpy = jest.spyOn(axios, "get");
+      axiosGetSpy
+        .mockRejectedValueOnce(new Error("auth gw error"))
+        .mockResolvedValueOnce({ data: mockSignedDataPackages });
+
+      const result = await requestDataPackages({
+        ...getReqParams(),
+        authenticatedGateways: [{ url: "https://auth-gw.test", apiKey: "my-secret-key" }],
+        urls: ["https://public-gw.test"],
+      });
+
+      expect(result["ETH"]).toBeDefined();
+      expect(axiosGetSpy).toHaveBeenCalledTimes(2);
+      expect(getAxiosCall(axiosGetSpy, 1).url).toContain("public-gw.test");
+    });
+
+    it("should try next authenticated gateway when first one fails", async () => {
+      const axiosGetSpy = jest.spyOn(axios, "get");
+      axiosGetSpy
+        .mockRejectedValueOnce(new Error("first auth gw error"))
+        .mockResolvedValueOnce({ data: mockSignedDataPackages });
+
+      const result = await requestDataPackages({
+        ...getReqParams(),
+        authenticatedGateways: [
+          { url: "https://auth-gw-1.test", apiKey: "key-1" },
+          { url: "https://auth-gw-2.test", apiKey: "key-2" },
+        ],
+      });
+
+      expect(result["ETH"]).toBeDefined();
+      expect(axiosGetSpy).toHaveBeenCalledTimes(2);
+      expect(getAxiosCall(axiosGetSpy, 1).url).toContain("auth-gw-2.test");
+    });
+
+    it("should use regular path (not by-data-feeds) when returnAllPackages is true", async () => {
+      const axiosGetSpy = mockAxiosGetWithSignedPackages();
+
+      await requestDataPackages({
+        dataServiceId: "mock-data-service-tests",
+        uniqueSignersCount: 1,
+        authorizedSigners: ["0x4fE51A2963a44Cd3DABB05AEe14b9F9A4652fF6b"],
+        skipSignatureVerification: true,
+        returnAllPackages: true,
+        authenticatedGateways: [{ url: "https://auth-gw.test", apiKey: "admin-key" }],
+      });
+
+      const { url, apiKey } = getAxiosCall(axiosGetSpy);
+      expect(url).toMatch(/\/v2\/data-packages\/latest\//);
+      expect(url).not.toContain("by-data-feeds");
+      expect(apiKey).toBe("admin-key");
+    });
+
+    it("should use default URL from resolveAuthenticatedGatewayUrls when url is not provided", async () => {
+      const axiosGetSpy = mockAxiosGetWithSignedPackages();
+
+      await requestDataPackages({
+        ...getReqParams(),
+        dataServiceId: "redstone-primary-prod",
+        authenticatedGateways: [{ apiKey: "my-key" }],
+      });
+
+      expect(axiosGetSpy).toHaveBeenCalledTimes(1);
+      expect(getAxiosCall(axiosGetSpy).url).toContain(PROD_AUTHENTICATED_GATEWAY_URLS[0]);
     });
   });
 });

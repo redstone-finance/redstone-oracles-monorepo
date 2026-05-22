@@ -1,14 +1,15 @@
 import { SignedDataPackage, SignedDataPackagePlainObj } from "@redstone-finance/protocol";
-import { RedstoneCommon } from "@redstone-finance/utils";
+import { RedstoneCommon, loggerFactory } from "@redstone-finance/utils";
 import { z } from "zod";
 import { RequestDataPackagesLogger } from "./RequestDataPackagesLogger";
-import { resolveDataServiceUrls } from "./data-services-urls";
+import { resolveAuthenticatedGatewayUrls, resolveDataServiceUrls } from "./data-services-urls";
 import { filterAndSelectDataPackages } from "./filter-and-select-data-packages";
 import type { DataPackagesRequestParams } from "./request-data-packages";
 import { DataPackagesResponse, getResponseTimestamp } from "./request-data-packages-common";
 
 const GET_REQUEST_TIMEOUT = RedstoneCommon.secsToMs(5);
 const DEFAULT_WAIT_FOR_ALL_GATEWAYS_TIME_MS = 500;
+const logger = loggerFactory("fetch-data-packages");
 
 export const SignedDataPackageSchema = z.object({
   dataPoints: z
@@ -42,7 +43,8 @@ const pendingPromises: Record<
 > = {};
 
 export async function fetchDataPackagesDedup(reqParams: DataPackagesRequestParams) {
-  const key = getPathComponents(reqParams).join("/");
+  const key = getPathComponents(reqParams).join("/") + getFeedsKey(reqParams);
+
   pendingPromises[key] ??= fetchInStages(reqParams);
 
   try {
@@ -54,45 +56,66 @@ export async function fetchDataPackagesDedup(reqParams: DataPackagesRequestParam
 
 const FIRST_GATEWAY_WAIT_TIME_MS = 1_000;
 
+type GatewayTarget = {
+  url: string;
+  headers?: Record<string, string>;
+  byDataFeeds?: boolean;
+};
+
 async function fetchInStages(reqParams: DataPackagesRequestParams) {
-  const urls = getUrlsForDataServiceId(reqParams);
-  if (urls.length === 0) {
+  const authTargets = getAuthGatewayTargets(reqParams);
+  if (authTargets.length) {
+    try {
+      return await fetchStaged(reqParams, authTargets);
+    } catch (e) {
+      logger.warn(
+        `All authenticated gateways failed, falling back to public gateways. Error: ${RedstoneCommon.stringifyError(e)}`
+      );
+    }
+  }
+
+  const publicTargets = getUrlsForDataServiceId(reqParams).map<GatewayTarget>((url) => ({ url }));
+
+  return await fetchStaged(reqParams, publicTargets);
+}
+
+async function fetchStaged(reqParams: DataPackagesRequestParams, targets: GatewayTarget[]) {
+  if (targets.length === 0) {
     throw new Error(`Empty urls array provided. Cannot fetch data packages.`);
   }
   if (reqParams.disableMultiPhaseFetching) {
-    return await fetchWithLogger(reqParams, urls);
+    return await fetchWithLogger(reqParams, targets);
   }
   // first try a single gateway for 1 sec or the provided timeout. If it fails, try all gateways with the provided timeout
   try {
-    const stageUrls = [urls[0]];
     const stageReqParams = { ...reqParams, singleGatewayTimeoutMs: FIRST_GATEWAY_WAIT_TIME_MS };
 
-    return await fetchWithLogger(stageReqParams, stageUrls);
+    return await fetchWithLogger(stageReqParams, [targets[0]]);
   } catch (e) {
-    const stageUrls = urls.slice(1);
-    if (stageUrls.length === 0) {
+    const stageTargets = targets.slice(1);
+    if (stageTargets.length === 0) {
       throw e;
     }
 
-    return await fetchWithLogger(reqParams, stageUrls);
+    return await fetchWithLogger(reqParams, stageTargets);
   }
 }
 
-async function fetchWithLogger(reqParams: DataPackagesRequestParams, urls: string[]) {
+async function fetchWithLogger(reqParams: DataPackagesRequestParams, targets: GatewayTarget[]) {
   const requestDataPackagesLogger = reqParams.enableEnhancedLogs
-    ? new RequestDataPackagesLogger(urls.length, !!reqParams.historicalTimestamp)
+    ? new RequestDataPackagesLogger(targets.length, !!reqParams.historicalTimestamp)
     : undefined;
-  const { response } = await fetchDataPackages(reqParams, urls, requestDataPackagesLogger);
+  const { response } = await fetchDataPackages(reqParams, targets, requestDataPackagesLogger);
 
   return { requestDataPackagesLogger, response };
 }
 
 async function fetchDataPackages(
   reqParams: DataPackagesRequestParams,
-  urls: string[],
+  targets: GatewayTarget[],
   requestDataPackagesLogger?: RequestDataPackagesLogger
 ) {
-  const promises = prepareDataPackagePromises(reqParams, urls);
+  const promises = prepareDataPackagePromises(reqParams, targets);
 
   const response = await getTheMostRecentDataPackages(
     reqParams,
@@ -179,13 +202,10 @@ const getTheMostRecentDataPackages = (
   });
 };
 
-function getPathComponents(reqParams: DataPackagesRequestParams) {
-  const pathComponents = [
-    "v2",
-    "data-packages",
-    reqParams.historicalTimestamp ? "historical" : "latest",
-    reqParams.dataServiceId,
-  ];
+function getPathComponents(reqParams: DataPackagesRequestParams, byDataFeeds = false) {
+  const baseType = reqParams.historicalTimestamp ? "historical" : "latest";
+  const type = byDataFeeds ? `${baseType}-by-data-feeds` : baseType;
+  const pathComponents = ["v2", "data-packages", type, reqParams.dataServiceId];
   if (reqParams.historicalTimestamp) {
     pathComponents.push(`${reqParams.historicalTimestamp}`);
   }
@@ -196,22 +216,40 @@ function getPathComponents(reqParams: DataPackagesRequestParams) {
   return pathComponents;
 }
 
+function getFeedsKey(reqParams: DataPackagesRequestParams): string {
+  if (!reqParams.authenticatedGateways?.length || reqParams.returnAllPackages) {
+    return "";
+  }
+
+  return "|" + [...reqParams.dataPackagesIds].sort().join(",");
+}
+
 const prepareDataPackagePromises = (
   reqParams: DataPackagesRequestParams,
-  urls: string[]
-): Promise<DataPackagesResponse>[] => {
-  const pathComponents = getPathComponents(reqParams);
+  targets: GatewayTarget[]
+): Promise<DataPackagesResponse>[] => targets.map((t) => fetchFromGateway(t, reqParams));
 
-  return urls.map(async (url) => {
-    const response = await sendRequestToGateway(
+function getAuthGatewayTargets(reqParams: DataPackagesRequestParams): GatewayTarget[] {
+  if (!reqParams.authenticatedGateways?.length) {
+    return [];
+  }
+  const defaultUrls = resolveAuthenticatedGatewayUrls(reqParams.dataServiceId);
+
+  return reqParams.authenticatedGateways.map((gateway, i) => {
+    const url = gateway.url ?? defaultUrls[i];
+    if (!url) {
+      throw new Error(
+        `No URL for authenticated gateway at index ${i}. Either provide a url or ensure authenticatedGateways length does not exceed the number of default URLs for this data service.`
+      );
+    }
+
+    return {
       url,
-      pathComponents,
-      reqParams.singleGatewayTimeoutMs
-    );
-
-    return parseGwResponse(response.data);
+      headers: { "x-api-key": gateway.apiKey },
+      byDataFeeds: !reqParams.returnAllPackages,
+    };
   });
-};
+}
 
 const maybeGetSignedDataPackage = (dataPackagePlainObj: SignedDataPackagePlainObj) => {
   try {
@@ -248,12 +286,32 @@ const getUrlsForDataServiceId = (reqParams: DataPackagesRequestParams): string[]
 function sendRequestToGateway(
   url: string,
   pathComponents: string[],
-  timeout = GET_REQUEST_TIMEOUT
+  timeout = GET_REQUEST_TIMEOUT,
+  headers?: Record<string, string>,
+  queryParams?: Record<string, string>
 ) {
-  const sanitizedUrl = [url.replace(/\/+$/, "")].concat(pathComponents).join("/");
+  const base = [url.replace(/\/+$/, "")].concat(pathComponents).join("/");
+  const fullUrl = queryParams ? `${base}?${new URLSearchParams(queryParams).toString()}` : base;
 
   return RedstoneCommon.Fetcher.get<Record<string, SignedDataPackagePlainObj[]>>(
-    sanitizedUrl,
-    timeout
+    fullUrl,
+    timeout,
+    headers
   );
+}
+
+async function fetchFromGateway(
+  target: GatewayTarget,
+  reqParams: DataPackagesRequestParams
+): Promise<DataPackagesResponse> {
+  const { url, byDataFeeds = false, headers } = target;
+  const response = await sendRequestToGateway(
+    url,
+    getPathComponents(reqParams, byDataFeeds),
+    reqParams.singleGatewayTimeoutMs,
+    headers,
+    byDataFeeds ? { dataFeedIds: [...reqParams.dataPackagesIds!].sort().join(",") } : undefined
+  );
+
+  return parseGwResponse(response.data);
 }
