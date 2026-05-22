@@ -40,6 +40,9 @@
     },
     "sUSDe": {
       "priceFeedAddress": "0x573BB572049ff50156E94823BB99920D406e96F8"
+    },
+    "BTC": {
+      "priceFeedAddress": "0x89621c11aAD52C1535E36EB9Dbf43E638E9A3E9a"
     }
   }
 }
