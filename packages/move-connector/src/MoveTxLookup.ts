@@ -4,20 +4,19 @@ import { MoveClient } from "./MoveClient";
 import { parseMoveWritePriceTx } from "./MoveTxParsing";
 
 const MICROSECS_PER_SEC = 1_000_000n;
-const logger = loggerFactory("movement-tx-lookup");
+const logger = loggerFactory("move-tx-lookup");
 
-export class MovementTxLookup implements TxLookup {
+export class MoveTxLookup implements TxLookup {
   constructor(private readonly client: MoveClient) {}
 
   async fetchPage({ adapterContractPackageId, startBlock, endBlock }: TxLookupArgs) {
     if (!adapterContractPackageId) {
-      throw new Error("MovementTxLookup requires adapterContractPackageId in manifest");
+      throw new Error("move-tx-lookup requires adapterContractPackageId in manifest");
     }
-
-    const data: ReturnType<typeof parseMoveWritePriceTx>[] = [];
+    const data: NonNullable<ReturnType<typeof parseMoveWritePriceTx>>[] = [];
 
     for (let blockHeight = startBlock; blockHeight <= endBlock; blockHeight++) {
-      const block = await this.tryGetBlock(blockHeight);
+      const block = await tryGetBlock(this.client, blockHeight);
       if (!block?.transactions) {
         continue;
       }
@@ -37,24 +36,21 @@ export class MovementTxLookup implements TxLookup {
       }
     }
 
-    return {
-      data: data.filter((tx): tx is NonNullable<typeof tx> => tx !== undefined),
-      hasNextPage: false,
-    };
+    return { data, hasNextPage: false };
   }
+}
 
-  private async tryGetBlock(blockHeight: number) {
-    try {
-      return await this.client.getMultiAptos().getBlockByHeight({
-        blockHeight,
-        options: { withTransactions: true },
-      });
-    } catch (error) {
-      logger.error(
-        `Error while fetching block #${blockHeight}: ${RedstoneCommon.stringifyError(error)}`
-      );
+async function tryGetBlock(client: MoveClient, blockHeight: number) {
+  try {
+    return await client.getMultiAptos().getBlockByHeight({
+      blockHeight,
+      options: { withTransactions: true },
+    });
+  } catch (error) {
+    logger.error(
+      `Error while fetching block #${blockHeight}: ${RedstoneCommon.stringifyError(error)}`
+    );
 
-      return undefined;
-    }
+    return undefined;
   }
 }
