@@ -175,6 +175,13 @@
     },
     "MYR_FX": {
       "source": ["ws-twelve-data", "ws-polygon-massive-commodities", "metal-price-api-deferred"],
+      "priceAggregator": "primarySource",
+      "primarySourceAggregatorConfig": {
+        "primarySource": "ws-polygon-massive-commodities",
+        "maxAcceptableDeviation": 1.5,
+        "lowerClampPercent": 0.1,
+        "upperClampPercent": 0.1
+      },
       "denomination": "USD",
       "rateFeed": false,
       "types": ["rwa"]
