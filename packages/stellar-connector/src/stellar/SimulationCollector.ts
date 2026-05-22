@@ -3,7 +3,7 @@ import { Collector, loggerFactory, RedstoneCommon } from "@redstone-finance/util
 import { scValToNative } from "@stellar/stellar-sdk";
 import { IStellarCallerDelegate, StellarInvocation } from "../IStellarCaller";
 
-const MAX_NUMBER_OF_CALLS = 16;
+const MAX_NUMBER_OF_CALLS = 15;
 
 export type StellarKey = {
   baseInvocation: StellarInvocation;
