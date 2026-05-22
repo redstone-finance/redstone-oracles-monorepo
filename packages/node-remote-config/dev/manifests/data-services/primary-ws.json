@@ -1170,6 +1170,20 @@
       "rateFeed": false,
       "types": ["rwa"]
     },
+    "XBR_CURRENT": {
+      "source": ["databento-ice-futures"],
+      "skipBroadcasting": true,
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": ["rwa"]
+    },
+    "XBR_FRONT": {
+      "source": ["databento-ice-futures"],
+      "skipBroadcasting": true,
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": ["rwa"]
+    },
     "CURR": {
       "source": [
         "ws-aleno",
