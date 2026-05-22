@@ -5,7 +5,7 @@ import {
   TransactionResponseType,
   UserTransactionResponse,
 } from "@aptos-labs/ts-sdk";
-import type { NormalizedContractTx } from "@redstone-finance/multichain-kit";
+import { type NormalizedContractTx } from "@redstone-finance/multichain-kit";
 
 const WRITE_PRICE_FUNCTIONS = ["write_price", "write_prices"];
 const PRICE_ADAPTER_MODULE = "price_adapter";
