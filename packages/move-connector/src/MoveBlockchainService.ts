@@ -3,11 +3,11 @@ import {
   BlockchainServiceWithTxLookup,
 } from "@redstone-finance/multichain-kit";
 import { RedstoneCommon } from "@redstone-finance/utils";
-import { AptosTxLookup } from "./AptosTxLookup";
 import { MoveClient } from "./MoveClient";
 import { MoveContractConnector } from "./MoveContractConnector";
+import { MoveTxLookup } from "./MoveTxLookup";
 
-export class AptosBlockchainService
+export class MoveBlockchainService
   extends MoveContractConnector
   implements BlockchainServiceWithTransfer, BlockchainServiceWithTxLookup
 {
@@ -16,6 +16,6 @@ export class AptosBlockchainService
   }
 
   get txLookup() {
-    return new AptosTxLookup(this.client);
+    return new MoveTxLookup(this.client);
   }
 }
