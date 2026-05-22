@@ -5,11 +5,7 @@ import {
   chainIdToNetwork,
   getCantonNodeConfig,
 } from "@redstone-finance/canton-connector";
-import {
-  AptosBlockchainService,
-  MoveClientBuilder,
-  MovementBlockchainService,
-} from "@redstone-finance/move-connector";
+import { MoveBlockchainService, MoveClientBuilder } from "@redstone-finance/move-connector";
 import { BlockchainService, BlockchainServiceWithTxLookup } from "@redstone-finance/multichain-kit";
 import { RadixBlockchainService, RadixClientBuilder } from "@redstone-finance/radix-connector";
 import {
@@ -38,8 +34,6 @@ import {
   RedstoneCommon,
 } from "@redstone-finance/utils";
 import { getCantonAuth } from "../utils";
-export { CantonBlockchainService } from "@redstone-finance/canton-connector";
-export { SuiBlockchainService } from "@redstone-finance/sui-connector";
 
 export async function getNonEvmBlockchainService(
   networkId: number,
@@ -67,21 +61,14 @@ export async function getNonEvmBlockchainService(
 
       return new SuiBlockchainService(suiClient);
     }
-    case ChainTypeEnum.enum.aptos: {
-      const moveClient = MoveClientBuilder.getInstance(chainType)
-        .withNetworkId(networkId)
-        .withRpcUrls(rpcUrls)
-        .build();
-
-      return new AptosBlockchainService(moveClient);
-    }
+    case ChainTypeEnum.enum.aptos:
     case ChainTypeEnum.enum.movement: {
       const moveClient = MoveClientBuilder.getInstance(chainType)
         .withNetworkId(networkId)
         .withRpcUrls(rpcUrls)
         .build();
 
-      return new MovementBlockchainService(moveClient);
+      return new MoveBlockchainService(moveClient);
     }
     case ChainTypeEnum.enum.radix: {
       const radixClient = new RadixClientBuilder()
@@ -148,22 +135,16 @@ export async function getNonEvmBlockchainServiceWithTransfer(
 
       return new SuiBlockchainServiceWithTransfer(suiClient, keypair);
     }
-    case ChainTypeEnum.enum.aptos: {
-      const moveClient = MoveClientBuilder.getInstance(chainType)
-        .withNetworkId(networkId)
-        .withRpcUrls(rpcUrls)
-        .build();
-
-      return new AptosBlockchainService(moveClient, privateKey);
-    }
+    case ChainTypeEnum.enum.aptos:
     case ChainTypeEnum.enum.movement: {
       const moveClient = MoveClientBuilder.getInstance(chainType)
         .withNetworkId(networkId)
         .withRpcUrls(rpcUrls)
         .build();
 
-      return new MovementBlockchainService(moveClient, privateKey);
+      return new MoveBlockchainService(moveClient, privateKey);
     }
+
     case ChainTypeEnum.enum.radix: {
       const radixClient = new RadixClientBuilder()
         .withNetworkId(networkId)
