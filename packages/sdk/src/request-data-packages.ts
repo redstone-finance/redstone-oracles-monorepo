@@ -90,6 +90,13 @@ type DataPackagesRequestParamsInternal = {
    * temporary flag to allow disabling multi-phase fetching mechanism. This should be removed after the mechanism is fully tested and stable, which should happen in the next few months.
    */
   disableMultiPhaseFetching?: boolean;
+  /**
+   * Authenticated gateways to query first, each with its own API key sent as x-api-key header.
+   * On failure the SDK falls back to the public gateways.
+   * url defaults to resolveAuthenticatedGatewayUrls(dataServiceId)[i] — only override for internal/staging deployments.
+   * When returnAllPackages is true, the old (non-feeds) path format is used and the key must be an admin API key.
+   */
+  authenticatedGateways?: { url?: string; apiKey: string }[];
 };
 
 type DataPackagesQuery =
