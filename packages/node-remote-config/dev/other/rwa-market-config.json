@@ -122,6 +122,8 @@
   "XAU_LR": "CmeMetals",
   "XPT_LR": "CmeMetals",
 
+  "XBR": "Ice",
+
   "GAS": "CmeEnergy",
   "WTI": "CmeEnergy",
   "NG": "CmeEnergy",
