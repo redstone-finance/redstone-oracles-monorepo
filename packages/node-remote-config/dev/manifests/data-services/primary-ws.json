@@ -1052,6 +1052,24 @@
         "rwa"
       ]
     },
+    "XBR_CURRENT": {
+      "source": [],
+      "skipBroadcasting": true,
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
+    },
+    "XBR_FRONT": {
+      "source": [],
+      "skipBroadcasting": true,
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
+    },
     "CURR": {
       "source": [],
       "denomination": "USD",
