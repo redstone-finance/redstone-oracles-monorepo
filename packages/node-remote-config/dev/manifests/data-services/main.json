@@ -1288,14 +1288,12 @@
     },
     "XVS": {
       "source": [
-        "binance-btc",
         "binance-usdt",
         "bingx-usdt",
         "bitrue-usdt",
         "gate-usdt",
         "lbank-usdt",
-        "mexc-usdt",
-        "xt-usdt"
+        "mexc-usdt"
       ],
       "denomination": "USD",
       "rateFeed": false
@@ -7644,7 +7642,6 @@
         "bybit-usdt",
         "coinbase-usd",
         "gate-usdt",
-        "gemini-usd",
         "kraken-eur",
         "kraken-usd",
         "kucoin-usdt",
@@ -8756,7 +8753,6 @@
         "bitget-usdt",
         "bitmart-usdt",
         "bybit-usdt",
-        "coinbase-usd",
         "gate-usdt",
         "htx-usdt",
         "kraken-usd",
