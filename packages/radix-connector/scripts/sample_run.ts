@@ -1,9 +1,5 @@
-import {
-  describeContractData,
-  describeTimestamp,
-  ForwardCompatibleWriteContractAdapter,
-  sampleRun,
-} from "@redstone-finance/multichain-kit";
+import { describeContractData, describeTimestamp } from "@redstone-finance/multichain-kit";
+import { sampleRun } from "@redstone-finance/multichain-kit-legacy";
 import { ContractParamsProvider, getSignersForDataServiceId } from "@redstone-finance/sdk";
 import { RedstoneCommon } from "@redstone-finance/utils";
 import { PriceAdapterRadixContractConnector, PriceFeedRadixContractAdapter } from "../src";
@@ -39,8 +35,7 @@ async function main() {
     await loadAddress(`component`, PROXY_NAME, FEED_ID)
   );
 
-  const adapter = await ForwardCompatibleWriteContractAdapter.fromConnector(connector);
-  await sampleRun(paramsProvider, adapter, connector, priceFeedAdapter);
+  await sampleRun(paramsProvider, priceAdapter, connector, priceFeedAdapter);
 
   priceAdapter.readMode = "CallReadMethod";
   const timestampRead = await priceAdapter.readTimestampFromContract(

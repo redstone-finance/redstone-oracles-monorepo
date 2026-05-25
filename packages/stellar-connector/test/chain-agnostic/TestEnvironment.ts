@@ -5,7 +5,7 @@ import {
   PushTestEnvironment,
 } from "@redstone-finance/chain-agnostic-oracle-tests";
 import { getLedgerInfo, makeSandbox, MarsRover } from "@redstone-finance/mars-rover";
-import { ContractParamsProviderMock } from "@redstone-finance/sdk";
+import { ContractParamsProviderMock, getLastRoundDetails } from "@redstone-finance/sdk";
 import { Keypair } from "@stellar/stellar-sdk";
 import { execSync } from "child_process";
 import {
@@ -51,11 +51,9 @@ export class StellarTestEnvironment implements PushTestEnvironment, PullTestEnvi
   }
 
   async read(dataFeedIds: string[]): Promise<number[]> {
-    return (
-      await this.adapter.readPricesFromContract(
-        new ContractParamsProviderMock(dataFeedIds, "", () => Buffer.from([]))
-      )
-    ).map((bn) => Number(bn));
+    const contractData = await this.adapter.readContractData(dataFeedIds);
+
+    return dataFeedIds.map((feedId) => Number(getLastRoundDetails(contractData, feedId).lastValue));
   }
 
   waitForNewBlock(): Promise<void> {

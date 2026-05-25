@@ -1,4 +1,4 @@
-import { IContractConnector } from "@redstone-finance/sdk";
+import { IContractConnector } from "@redstone-finance/multichain-kit-legacy";
 import { loggerFactory } from "@redstone-finance/utils";
 import { utils } from "ethers";
 import { RadixClient } from "./RadixClient";
