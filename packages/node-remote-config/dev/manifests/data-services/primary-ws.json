@@ -1557,7 +1557,6 @@
         "bitget_deferred-usdt",
         "bitmart_deferred-usdt",
         "bybit_deferred-usdt",
-        "coinbase_deferred-usd",
         "gate_deferred-usdt",
         "htx_deferred-usdt",
         "kraken_deferred-usd",
