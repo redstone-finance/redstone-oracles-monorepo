@@ -1,4 +1,4 @@
-import { ForwardCompatibleWriteContractAdapter, sampleRun } from "@redstone-finance/multichain-kit";
+import { sampleRun } from "@redstone-finance/multichain-kit-legacy";
 import { CasperConfig, makeCasperConnection, PriceAdapterCasperContractConnector } from "../../src";
 import { PriceFeedCasperContractAdapter } from "../../src/contracts/price_feed/PriceFeedCasperContractAdapter";
 import { config } from "./config";
@@ -11,7 +11,7 @@ async function main(config: CasperConfig) {
     RELAY_ADAPTER_ADDRESS
   );
   const paramsProvider = makeContractParamsProvider();
-  const adapter = await ForwardCompatibleWriteContractAdapter.fromConnector(pricesConnector);
+  const adapter = await pricesConnector.getAdapter();
 
   await sampleRun(
     paramsProvider,

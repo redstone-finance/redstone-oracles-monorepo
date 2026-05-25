@@ -8,7 +8,7 @@ export abstract class MultiFeedEvmContractAdapterBase<
 > extends EvmContractAdapter<Contract> {
   override async readLatestRoundContractData(
     feedIds: string[],
-    blockNumber: number
+    blockNumber?: number
   ): Promise<ContractData> {
     const dataFromContract: ContractData = {};
 
@@ -26,13 +26,13 @@ export abstract class MultiFeedEvmContractAdapterBase<
 
   private async getLastUpdateDetailsForManyFromContract(
     feedIds: string[],
-    blockNumber: number
+    blockTag?: number
   ): Promise<LastRoundDetails[]> {
     const dataFeedsAsBytes32 = feedIds.map(utils.formatBytes32String);
     const contractOutput = await this.adapterContract.getLastUpdateDetailsUnsafeForMany(
       dataFeedsAsBytes32,
       {
-        blockTag: blockNumber,
+        blockTag,
       }
     );
 

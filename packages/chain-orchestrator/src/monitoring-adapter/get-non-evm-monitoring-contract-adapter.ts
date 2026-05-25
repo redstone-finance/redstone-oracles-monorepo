@@ -3,13 +3,8 @@ import {
   CantonClientBuilder,
   PricesCantonReadOnlyAdapter,
 } from "@redstone-finance/canton-connector";
-import { MoveClientBuilder, MovePricesContractConnector } from "@redstone-finance/move-connector";
-import { ForwardCompatibleContractAdapter } from "@redstone-finance/multichain-kit";
+import { MoveClientBuilder, MovePricesContractAdapter } from "@redstone-finance/move-connector";
 import { AnyOnChainRelayerManifest } from "@redstone-finance/on-chain-relayer-common";
-import {
-  PriceAdapterRadixContractConnector,
-  RadixClientBuilder,
-} from "@redstone-finance/radix-connector";
 import { SolanaConnectionBuilder, SolanaContractAdapter } from "@redstone-finance/solana-connector";
 import {
   Sep40StellarContractAdapter,
@@ -32,20 +27,19 @@ export async function getNonEvmMonitoringContractAdapter(
   const { chainType } = deconstructNetworkId(relayerManifest.chain.id);
 
   switch (chainType) {
-    case ChainTypeEnum.enum.radix:
-      return await getRadixContractAdapter(rpcUrls, relayerManifest);
     case ChainTypeEnum.enum.sui:
       return getSuiContractAdapter(rpcUrls, relayerManifest);
     case ChainTypeEnum.enum.aptos:
     case ChainTypeEnum.enum.movement:
-      return await getMoveContractAdapter(rpcUrls, relayerManifest, chainType);
+      return getMoveContractAdapter(rpcUrls, relayerManifest, chainType);
     case ChainTypeEnum.enum.solana:
       return getSolanaContractAdapter(rpcUrls, relayerManifest);
     case ChainTypeEnum.enum.stellar:
       return getStellarContractAdapter(rpcUrls, relayerManifest, withRounds);
-    case ChainTypeEnum.enum.fuel:
     case ChainTypeEnum.enum.canton:
       return await getCantonContractAdapter(rpcUrls, relayerManifest);
+    case ChainTypeEnum.enum.fuel:
+    case ChainTypeEnum.enum.radix:
     case ChainTypeEnum.enum.evm:
       throw new Error(
         `Evm relayer config with networkId: ${relayerManifest.chain.id} got passed to non-evm blockchain service builder.`
@@ -53,20 +47,6 @@ export async function getNonEvmMonitoringContractAdapter(
     default:
       return RedstoneCommon.throwUnsupportedParamError(chainType);
   }
-}
-
-async function getRadixContractAdapter(
-  rpcUrls: string[],
-  relayerManifest: AnyOnChainRelayerManifest
-) {
-  const client = new RadixClientBuilder()
-    .withNetworkId(relayerManifest.chain.id)
-    .withRpcUrls(rpcUrls)
-    .build();
-
-  const connector = new PriceAdapterRadixContractConnector(client, relayerManifest.adapterContract);
-
-  return await ForwardCompatibleContractAdapter.fromConnector(connector);
 }
 
 function getSolanaContractAdapter(rpcUrls: string[], relayerManifest: AnyOnChainRelayerManifest) {
@@ -100,7 +80,7 @@ function getSuiContractAdapter(rpcUrls: string[], relayerManifest: AnyOnChainRel
   return new SuiContractAdapter(suiClient, config);
 }
 
-async function getMoveContractAdapter(
+function getMoveContractAdapter(
   rpcUrls: string[],
   relayerManifest: AnyOnChainRelayerManifest,
   adapterType: "aptos" | "movement"
@@ -113,12 +93,10 @@ async function getMoveContractAdapter(
     .withRpcUrls(rpcUrls)
     .build();
 
-  const connector = new MovePricesContractConnector(aptosClient, {
+  return MovePricesContractAdapter.create(aptosClient, {
     packageObjectAddress: relayerManifest.adapterContractPackageId,
     priceAdapterObjectAddress: relayerManifest.adapterContract,
   });
-
-  return await ForwardCompatibleContractAdapter.fromConnector(connector);
 }
 
 function getStellarContractAdapter(

@@ -61,18 +61,6 @@ export class PricesCantonReadOnlyAdapter extends CantonContractAdapter implement
     return Promise.resolve(this.config.uniqueSignerThreshold);
   }
 
-  async readLatestUpdateBlockTimestamp(feedId: string, offset?: number) {
-    const contractData = await this.readContractData([feedId], offset);
-
-    return contractData[feedId].lastBlockTimestampMS;
-  }
-
-  async readTimestampFromContract(feedId: string, offset?: number) {
-    const contractData = await this.readContractData([feedId], offset);
-
-    return contractData[feedId].lastDataPackageTimestampMS;
-  }
-
   async readContractData(
     feedIds: string[],
     offset?: number,
@@ -96,23 +84,6 @@ export class PricesCantonReadOnlyAdapter extends CantonContractAdapter implement
     });
 
     return Object.fromEntries(data) as ContractData;
-  }
-
-  async readPricesFromContract(
-    paramsProvider: ContractParamsProvider,
-    offset?: number
-  ): Promise<bigint[]> {
-    const feedData = await this.readFeedData(offset);
-
-    return paramsProvider.getDataFeedIds().map((feedId) => {
-      const priceData = newestPriceData(feedData, feedId);
-
-      if (!RedstoneCommon.isDefined(priceData)) {
-        throw new Error(`Value not found for ${feedId}`);
-      }
-
-      return convertDecimalValue(priceData.value);
-    });
   }
 
   async getPricesFromPayload(paramsProvider: ContractParamsProvider) {

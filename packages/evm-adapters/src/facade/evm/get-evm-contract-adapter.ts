@@ -6,6 +6,7 @@ import {
   PriceFeedsAdapterWithRounds,
   RedstoneAdapterBase,
 } from "../../../typechain-types";
+import { EvmContractAdapter } from "../../core/contract-interactions/EvmContractAdapter";
 import { MentoEvmContractAdapter } from "../../core/contract-interactions/MentoEvmContractAdapter";
 import { MultiFeedEvmContractAdapter } from "../../core/contract-interactions/MultiFeedEvmContractAdapter";
 import { PriceFeedsEvmContractAdapter } from "../../core/contract-interactions/PriceFeedsEvmContractAdapter";
@@ -29,7 +30,7 @@ export function getEvmContractAdapter(
   },
   adapterContract: RedstoneEvmContract,
   txDeliveryMan = emptyTxDeliveryMan
-) {
+): EvmContractAdapter<RedstoneEvmContract> {
   switch (config.adapterContractType) {
     case "multi-feed":
       return new MultiFeedEvmContractAdapter(

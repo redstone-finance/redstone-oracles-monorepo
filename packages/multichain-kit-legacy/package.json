@@ -1,18 +1,16 @@
 {
-  "name": "@redstone-finance/starknet-connector",
+  "name": "@redstone-finance/multichain-kit-legacy",
   "version": "0.9.0",
-  "description": "A tool to inject RedStone data into Starknet compatible smart contracts",
-  "license": "MIT",
   "main": "dist/src/index.js",
   "exports": "./dist/src/index.js",
   "types": "dist/src/index.d.ts",
+  "license": "MIT",
   "scripts": {
     "clean": "yarn global:ts-clean",
     "build": "yarn global:tsc -p tsconfig.build.json",
     "build:turbo": "yarn global:turbo build",
     "typecheck": "yarn global:tsc --noEmit",
     "typecheck:turbo": "yarn global:turbo typecheck",
-    "sample-run": "yarn global:ts-node test/sample-run.ts",
     "preversion": "yarn build",
     "pack-package": "yarn build && cd dist && npm pack",
     "lint": "yarn global:eslint .",
@@ -20,19 +18,9 @@
   },
   "dependencies": {
     "@redstone-finance/multichain-kit": "workspace:*",
-    "@redstone-finance/multichain-kit-legacy": "workspace:*",
+    "@redstone-finance/protocol": "workspace:*",
     "@redstone-finance/sdk": "workspace:*",
-    "@redstone-finance/utils": "workspace:*",
-    "dotenv": "^16.0.3",
-    "ethers": "^5.7.2",
-    "starknet": "^6.6.6",
-    "zod": "^4.1.12"
-  },
-  "overrides": {
-    "elliptic": "^6.6.1"
-  },
-  "resolutions": {
-    "elliptic": "^6.6.1"
+    "@redstone-finance/utils": "workspace:*"
   },
   "files": [
     "src",

@@ -1,4 +1,4 @@
-import { ContractAdapter } from "@redstone-finance/multichain-kit";
+import { LegacyPricesContractAdapter } from "@redstone-finance/multichain-kit-legacy";
 import {
   ContractData,
   ContractParamsProvider,
@@ -8,7 +8,7 @@ import { BigNumber } from "ethers";
 import { zip } from "lodash";
 
 export async function getContractDataFromExtendedPricesContractAdapter(
-  adapter: ContractAdapter,
+  adapter: LegacyPricesContractAdapter,
   feedIds: string[]
 ) {
   const [timestamp, latestUpdateBlockTimestamp, prices] = await Promise.all([

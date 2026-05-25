@@ -19,16 +19,6 @@ export class StellarBlockchainService implements BlockchainServiceWithTxLookup {
     return await this.client.getBlockNumber();
   }
 
-  async waitForTransaction(txId: string) {
-    try {
-      await this.client.waitForTx(txId);
-
-      return true;
-    } catch {
-      return false;
-    }
-  }
-
   async getNormalizedBalance(address: string) {
     const balance = await this.client.getAccountBalance(address);
 

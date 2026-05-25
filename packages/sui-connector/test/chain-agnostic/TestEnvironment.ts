@@ -8,7 +8,7 @@ import {
   PushModelTestContext,
   PushTestEnvironment,
 } from "@redstone-finance/chain-agnostic-oracle-tests";
-import { ContractParamsProviderMock } from "@redstone-finance/sdk";
+import { ContractParamsProviderMock, getLastRoundDetails } from "@redstone-finance/sdk";
 import { createSandboxGrpcClient, SandboxClient } from "@redstone-finance/suiangria";
 import { RedstoneCommon } from "@redstone-finance/utils";
 import {
@@ -104,11 +104,9 @@ export class SuiTestEnvironment implements PushTestEnvironment, PullTestEnvironm
   }
 
   async read(dataFeedIds: string[]): Promise<number[]> {
-    return (
-      await this.adapter.readPricesFromContract(
-        new ContractParamsProviderMock(dataFeedIds, "", () => Buffer.from([]))
-      )
-    ).map((bn) => Number(bn));
+    const contractData = await this.adapter.readContractData(dataFeedIds);
+
+    return dataFeedIds.map((feedId) => Number(getLastRoundDetails(contractData, feedId).lastValue));
   }
 
   waitForNewBlock(): Promise<void> {

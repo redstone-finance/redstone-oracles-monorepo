@@ -2,13 +2,11 @@ import {
   configFromOptionals,
   makeAptosAccount,
   MoveClientBuilder,
-  MovePricesContractConnector,
+  MovePricesContractAdapter,
 } from "@redstone-finance/move-connector";
-
-import { ForwardCompatibleWriteContractAdapter } from "@redstone-finance/multichain-kit";
 import { PartialRelayerConfig } from "./partial-relayer-config";
 
-export const getMoveContractAdapter = async (
+export const getMoveContractAdapter = (
   relayerConfig: PartialRelayerConfig,
   adapterType: "aptos" | "movement"
 ) => {
@@ -25,23 +23,19 @@ export const getMoveContractAdapter = async (
     throw new Error("adapterContractPackageId is required");
   }
 
-  const aptosClient = MoveClientBuilder.getInstance(adapterType)
+  const client = MoveClientBuilder.getInstance(adapterType)
     .withNetworkId(networkId)
     .withRpcUrls(rpcUrls)
     .withQuarantineEnabled()
     .build();
 
-  const account = makeAptosAccount(privateKey);
-
-  const connector = new MovePricesContractConnector(
-    aptosClient,
+  return MovePricesContractAdapter.create(
+    client,
     {
       packageObjectAddress: adapterContractPackageId,
       priceAdapterObjectAddress: adapterContractAddress,
     },
-    account,
+    makeAptosAccount(privateKey),
     configFromOptionals(gasLimit, maxTxSendAttempts)
   );
-
-  return await ForwardCompatibleWriteContractAdapter.fromConnector(connector);
 };
