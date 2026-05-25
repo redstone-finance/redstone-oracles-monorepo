@@ -42,6 +42,8 @@ export enum LogMonitoringType {
   FALLBACK_MANIFEST_HASH_SAVE_FAILED = "FALLBACK_MANIFEST_HASH_SAVE_FAILED",
   // Merger
   MERGER_API_KEYS_UPDATE = "MERGER_API_KEYS_UPDATE",
+  // Relayer
+  FUNDAMENTAL_RATE_DEPENDENT_DEPEG = "FUNDAMENTAL_RATE_DEPENDENT_DEPEG",
 }
 
 const defaultLogger = loggerFactory("LogMonitoring");

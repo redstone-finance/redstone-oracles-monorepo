@@ -7,7 +7,11 @@ import { NetworkId } from "@redstone-finance/utils";
 
 export type RelayerConfig = OnChainRelayerEnv & ManifestConfig;
 
-export type ConditionCheckNames = "time" | "value-deviation" | "cron";
+export type ConditionCheckNames =
+  | "time"
+  | "value-deviation"
+  | "cron"
+  | "fundamental-rate-dependent";
 export enum PubSubDataProcessingStrategyType {
   Base = "base",
   Timestamp = "timestamp",

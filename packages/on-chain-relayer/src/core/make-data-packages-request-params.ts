@@ -1,4 +1,4 @@
-import { isMultiFeedAdapterType } from "@redstone-finance/on-chain-relayer-common";
+import { isMultiFeedAdapterType, UpdateTriggers } from "@redstone-finance/on-chain-relayer-common";
 import {
   DataPackagesRequestParams,
   DataPackagesResponseStorage,
@@ -28,6 +28,7 @@ export function makeDataPackagesRequestParams(
     enableEnhancedRequestDataPackagesLogs,
     authorizedSigners,
     disableMultiPhaseFetching,
+    updateTriggers,
   } = relayerConfig;
 
   let signers: string[] = authorizedSigners ?? [];
@@ -39,12 +40,14 @@ export function makeDataPackagesRequestParams(
     latestTtlMs: relayerConfig.dataPackagesResponseStorageLatestTtlMs,
   });
 
+  const fundamentalDataFeedIds = collectFundamentalDataFeedIds(updateTriggers);
+
+  const baseFeeds = dataFeedIds ?? [...new Set([...dataFeeds, ...fundamentalDataFeedIds])];
+
   return {
     dataServiceId,
     uniqueSignersCount: uniqueSignerThreshold,
-    dataPackagesIds: dataPackagesNames?.length
-      ? [...dataPackagesNames, ...(dataFeedIds ?? dataFeeds)]
-      : (dataFeedIds ?? dataFeeds),
+    dataPackagesIds: dataPackagesNames?.length ? [...dataPackagesNames, ...baseFeeds] : baseFeeds,
     urls: cacheServiceUrls,
     maxTimestampDeviationMS: RedstoneCommon.minToMs(3),
     authorizedSigners: signers,
@@ -57,3 +60,11 @@ export function makeDataPackagesRequestParams(
     disableMultiPhaseFetching,
   };
 }
+
+const collectFundamentalDataFeedIds = (updateTriggers: Record<string, UpdateTriggers>) => [
+  ...new Set(
+    Object.values(updateTriggers)
+      .filter((t) => t.fundamentalRateDependent)
+      .map((t) => t.fundamentalRateDependent!.fundamentalToken)
+  ),
+];
