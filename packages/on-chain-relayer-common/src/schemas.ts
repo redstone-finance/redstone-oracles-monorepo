@@ -15,11 +15,18 @@ export const ChainSchema = z.object({
   id: NetworkIdSchema,
 });
 
+export const FundamentalRateDependentSchema = z.object({
+  fundamentalToken: z.string(),
+  acceptableDepegPercentage: z.number(),
+  heartbeatInDepegModeInMs: z.number(),
+});
+
 export const UpdateTriggersSchema = z.object({
   cron: z.array(z.string()).optional(),
   deviationPercentage: z.number().optional(),
   timeSinceLastUpdateInMilliseconds: z.number().optional(),
   priceFeedsDeviationOverrides: z.record(z.string(), z.number()).optional(),
+  fundamentalRateDependent: FundamentalRateDependentSchema.optional(),
 });
 
 export type UpdateTriggers = z.infer<typeof UpdateTriggersSchema>;

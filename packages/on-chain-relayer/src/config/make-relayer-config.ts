@@ -68,6 +68,7 @@ export const makePriceFeedsUpdateConditions = (
     deviationPercentage,
     cron,
     priceFeedsDeviationOverrides,
+    fundamentalRateDependent,
   } = manifest.updateTriggers;
   const dataFeeds = Object.keys(manifest.priceFeeds);
 
@@ -79,6 +80,7 @@ export const makePriceFeedsUpdateConditions = (
       deviationPercentage: priceFeedsDeviationOverrides?.[dataFeedId] ?? deviationPercentage,
       timeSinceLastUpdateInMilliseconds,
       cron,
+      fundamentalRateDependent,
     });
   }
 
@@ -115,10 +117,15 @@ export const makeMultiFeedUpdateConditions = (
       ? dataFeedUpdateTriggers.cron
       : manifest.updateTriggers.cron;
 
+    const fundamentalRateDependent = dataFeedUpdateTriggers
+      ? dataFeedUpdateTriggers.fundamentalRateDependent
+      : manifest.updateTriggers.fundamentalRateDependent;
+
     updateConditionsAndTriggersForFeed(dataFeedId, updateConditions, updateTriggers, {
       deviationPercentage,
       timeSinceLastUpdateInMilliseconds,
       cron,
+      fundamentalRateDependent,
     });
   }
 
@@ -134,7 +141,8 @@ function updateConditionsAndTriggersForFeed(
   updateTriggers: Record<string, UpdateTriggers>,
   feedUpdateTriggers: UpdateTriggers
 ) {
-  const { deviationPercentage, timeSinceLastUpdateInMilliseconds, cron } = feedUpdateTriggers;
+  const { deviationPercentage, timeSinceLastUpdateInMilliseconds, cron, fundamentalRateDependent } =
+    feedUpdateTriggers;
 
   if (deviationPercentage) {
     updateConditions[dataFeedId].push("value-deviation");
@@ -150,5 +158,10 @@ function updateConditionsAndTriggersForFeed(
   if (cron && cron.length > 0) {
     updateConditions[dataFeedId].push("cron");
     updateTriggers[dataFeedId].cron = cron;
+  }
+
+  if (fundamentalRateDependent) {
+    updateConditions[dataFeedId].push("fundamental-rate-dependent");
+    updateTriggers[dataFeedId].fundamentalRateDependent = fundamentalRateDependent;
   }
 }

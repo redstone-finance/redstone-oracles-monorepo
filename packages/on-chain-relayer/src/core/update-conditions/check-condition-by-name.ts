@@ -9,6 +9,7 @@ import { ConditionCheckNames, RelayerConfig } from "../../config/RelayerConfig";
 import { ConditionCheckResponse, ShouldUpdateContext } from "../../types";
 import { makeDataPackagesRequestParams } from "../make-data-packages-request-params";
 import { cronCondition } from "./cron-condition";
+import { fundamentalRateDependentCondition } from "./fundamental-rate-dependent-condition";
 import { timeUpdateCondition } from "./time-condition";
 import { valueDeviationCondition } from "./value-deviation-condition";
 
@@ -34,6 +35,14 @@ export const checkConditionByName = async (
         lastRoundDetails,
         config,
         () => fetchHistoricalDataPackages(dataFeedId, context, config)
+      );
+
+    case "fundamental-rate-dependent":
+      return fundamentalRateDependentCondition(
+        dataFeedId,
+        context.dataPackages,
+        lastRoundDetails.lastBlockTimestampMS,
+        config
       );
 
     default:
