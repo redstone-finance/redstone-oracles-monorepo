@@ -26,7 +26,7 @@ export async function sampleRun(
   logHeader("FINISHING");
 }
 
-function logHeader(text: string, lineSize = 80) {
+export function logHeader(text: string, lineSize = 80) {
   console.log("");
   console.log("=".repeat(lineSize));
   console.log(text.toUpperCase());
@@ -37,6 +37,10 @@ async function executePullModel(
   adapter: WriteContractAdapter,
   paramsProvider: ContractParamsProvider
 ) {
+  if (!adapter.getPricesFromPayload) {
+    return;
+  }
+
   logHeader("Pulling values using core model");
   try {
     const coreValues = await adapter.getPricesFromPayload(paramsProvider);
@@ -64,19 +68,9 @@ async function executePushModel(
   console.log(`Current block number: ${blockNumber}`);
 
   logHeader("Viewing values from contract");
-  const [values, readTimestamp, uniqueSignerThreshold] = await Promise.all([
-    adapter.readPricesFromContract(paramsProvider, blockNumber),
-    adapter.readTimestampFromContract(paramsProvider.getDataFeedIds()[0], blockNumber),
-    adapter.getUniqueSignerThreshold(blockNumber),
-  ]);
+  const uniqueSignerThreshold = await adapter.getUniqueSignerThreshold(blockNumber);
 
   console.log(`Unique signer count: ${uniqueSignerThreshold}`);
-  console.log(
-    `Values read from contract: ${String(values.map((v) => RedstoneCommon.convertValueDec(v, consts.DEFAULT_NUM_VALUE_DECIMALS)))}`
-  );
-  console.log(
-    `Timestamp read from contract: ${readTimestamp} (${describeTimestamp(readTimestamp)})`
-  );
 
   return blockNumber;
 }
@@ -87,20 +81,14 @@ export async function readFromContractAdapter(
   blockNumber?: number
 ) {
   try {
-    const [lastUpdateBlockTimestamp, contractData] = await Promise.all([
-      adapter.readLatestUpdateBlockTimestamp(feedIds[0], blockNumber),
-      adapter.readContractData(feedIds, blockNumber),
-    ]);
-    console.log(
-      `Last update block timestamp: ${lastUpdateBlockTimestamp} (${describeTimestamp(lastUpdateBlockTimestamp!)})`
-    );
+    const contractData = await adapter.readContractData(feedIds, blockNumber);
     console.log(`Price data: \n${describeContractData(contractData)}`);
   } catch (e) {
     console.error(e);
   }
 }
 
-async function readFromPriceFeed(
+export async function readFromPriceFeed(
   feedAdapter: PriceFeedAdapter,
   blockNumber?: number,
   defaultFeedId = "ETH(???)"

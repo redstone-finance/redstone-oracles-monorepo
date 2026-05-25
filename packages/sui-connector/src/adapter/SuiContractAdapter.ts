@@ -5,7 +5,7 @@ import {
   TxDeliveryMan,
   WriteContractAdapter,
 } from "@redstone-finance/multichain-kit";
-import { ContractData, ContractParamsProvider, getLastRoundDetails } from "@redstone-finance/sdk";
+import { ContractData, ContractParamsProvider } from "@redstone-finance/sdk";
 import { FP, loggerFactory, RedstoneCommon } from "@redstone-finance/utils";
 import _ from "lodash";
 import { SuiClient } from "../client/SuiClient";
@@ -49,34 +49,6 @@ export class SuiContractAdapter implements ContractAdapter {
       await this.getPriceAdapterObjectDataContentMemoized(blockNumber);
 
     return priceAdapterDataContent.config.signer_count_threshold;
-  }
-
-  getPricesFromPayload(_paramsProvider: ContractParamsProvider): Promise<bigint[]> {
-    throw new Error("Pull model not supported");
-  }
-
-  async readPricesFromContract(
-    paramsProvider: ContractParamsProvider,
-    blockNumber?: number
-  ): Promise<bigint[]> {
-    const contractData = await this.readContractData(paramsProvider.getDataFeedIds(), blockNumber);
-
-    return paramsProvider
-      .getDataFeedIds()
-      .map((feedId) => getLastRoundDetails(contractData, feedId))
-      .map((data) => data.lastValue);
-  }
-
-  async readLatestUpdateBlockTimestamp(feedId: string, blockNumber?: number): Promise<number> {
-    return (await this.readAnyRoundDetails(feedId, blockNumber)).lastBlockTimestampMS;
-  }
-
-  async readTimestampFromContract(feedId: string, blockNumber?: number): Promise<number> {
-    return (await this.readAnyRoundDetails(feedId, blockNumber)).lastDataPackageTimestampMS;
-  }
-
-  private async readAnyRoundDetails(feedId: string, blockNumber?: number) {
-    return getLastRoundDetails(await this.readContractData([feedId], blockNumber), feedId);
   }
 }
 

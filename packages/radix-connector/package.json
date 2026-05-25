@@ -42,6 +42,7 @@
     "@radixdlt/babylon-gateway-api-sdk": "^1.10.1",
     "@radixdlt/radix-engine-toolkit": "^1.0.5",
     "@redstone-finance/multichain-kit": "workspace:*",
+    "@redstone-finance/multichain-kit-legacy": "workspace:*",
     "@redstone-finance/sdk": "workspace:*",
     "axios": "^1.15.2",
     "ethers": "^5.7.2",

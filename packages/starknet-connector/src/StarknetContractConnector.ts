@@ -1,4 +1,4 @@
-import { IContractConnector } from "@redstone-finance/sdk";
+import { IContractConnector } from "@redstone-finance/multichain-kit-legacy";
 import { Abi, BlockTag, Contract, ProviderInterface, TransactionFinalityStatus } from "starknet";
 
 export const FEE_MULTIPLIER = 1000000000000000000;

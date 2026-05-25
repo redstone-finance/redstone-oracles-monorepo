@@ -8,12 +8,7 @@ import "dotenv/config";
 import { PRICE_ADAPTER } from "../scripts/contract-name-enum";
 import { readObjectAddress } from "../scripts/deploy-utils";
 import { makeAptos } from "../scripts/utils";
-import {
-  makeAptosAccount,
-  MoveClient,
-  MovePricesContractAdapter,
-  MovePricesContractConnector,
-} from "../src";
+import { makeAptosAccount, MoveClient, MovePricesContractAdapter } from "../src";
 import { FAKE_PRIVKEY_SECP256K1, NETWORK, REST_NODE_LOCALNET_URL } from "./helpers";
 
 const TEST_FILE_TIMEOUT = 60_000;
@@ -31,40 +26,21 @@ jest.setTimeout(TEST_FILE_TIMEOUT);
 describe("MovePricesContractAdapter", () => {
   let priceAdapter: MovePricesContractAdapter;
   let contractParamsProviderMultiple: ContractParamsProvider;
-  let connector: MovePricesContractConnector;
   let aptos: Aptos;
   let test_start_ts: number;
 
-  beforeAll(async () => {
+  beforeAll(() => {
     test_start_ts = Date.now();
     aptos = makeAptos(NETWORK as Network, REST_NODE_LOCALNET_URL);
     const { contractAddress, objectAddress } = readObjectAddress(PRICE_ADAPTER, NETWORK);
     const account = makeAptosAccount(FAKE_PRIVKEY_SECP256K1);
     const packageObjectAddress = contractAddress.toString();
     const priceAdapterObjectAddress = objectAddress!.toString();
-    connector = new MovePricesContractConnector(
+    priceAdapter = MovePricesContractAdapter.create(
       new MoveClient(aptos),
       { packageObjectAddress, priceAdapterObjectAddress },
       account
     );
-
-    priceAdapter = await connector.getAdapter();
-  });
-
-  describe("getPricesFromPayload", () => {
-    it("should throw an error, is not implemented", async () => {
-      let error: undefined | Error;
-      try {
-        await priceAdapter.getPricesFromPayload(contractParamsProviderMultiple);
-      } catch (e) {
-        error = e as Error;
-      }
-      expect(error).toBeDefined();
-      expect(error).toBeInstanceOf(Error);
-      if (error) {
-        expect(error.message).toEqual("Pull model not supported");
-      }
-    });
   });
 
   describe("getUniqueSignerThreshold", () => {
@@ -98,7 +74,7 @@ describe("MovePricesContractAdapter", () => {
     );
   });
 
-  describe("readPricesFromContract", () => {
+  describe("readContractData", () => {
     beforeEach(() => {
       contractParamsProviderMultiple = new ContractParamsProvider({
         dataServiceId: DATA_SERVICE_ID,
@@ -108,46 +84,20 @@ describe("MovePricesContractAdapter", () => {
       });
     });
 
-    it("should read prices from contract with multiple feed IDs", async () => {
-      const result = await priceAdapter.readPricesFromContract(contractParamsProviderMultiple);
+    it("should return prices, timestamps and block timestamps for multiple feed IDs", async () => {
+      const result = await priceAdapter.readContractData(
+        contractParamsProviderMultiple.getDataFeedIds()
+      );
 
-      expect(result.length).toBe(DATA_PACKAGES_IDS.length);
-      result.forEach((price) => {
-        expect(typeof price === "bigint");
-      });
+      expect(Object.keys(result).length).toBe(DATA_PACKAGES_IDS.length);
+      for (const feed of DATA_PACKAGES_IDS) {
+        expect(typeof result[feed].lastValue).toBe("bigint");
+        expect(result[feed].lastDataPackageTimestampMS).toBeGreaterThan(test_start_ts - HOUR_MS);
+        expect(result[feed].lastBlockTimestampMS).toBeGreaterThan(test_start_ts - HOUR_MS);
+      }
 
       // this would fail if ETH flipped BTC
-      expect(BigInt(String(result[0])) < BigInt(String(result[1]))).toBeTruthy();
-    });
-  });
-
-  describe("readLatestUpdateBlockTimestamp", () => {
-    it("should read the latest update block timestamp", async () => {
-      for (const feed of DATA_PACKAGES_IDS) {
-        const result = await priceAdapter.readLatestUpdateBlockTimestamp(feed);
-        expect(result).toBeGreaterThanOrEqual(0);
-        expect(result).toBeGreaterThan(test_start_ts - HOUR_MS);
-      }
-    });
-  });
-
-  describe("readTimestampFromContract", () => {
-    it("should read contract timestamp", async () => {
-      for (const feed of DATA_PACKAGES_IDS) {
-        const result = await priceAdapter.readTimestampFromContract(feed);
-        expect(result).toBeGreaterThanOrEqual(0);
-        expect(result).toBeGreaterThan(test_start_ts - HOUR_MS);
-      }
-    });
-  });
-
-  describe("readContractData", () => {
-    it("should read contract data", async () => {
-      for (const feed of DATA_PACKAGES_IDS) {
-        const result = await priceAdapter.readTimestampFromContract(feed);
-        expect(result).toBeGreaterThanOrEqual(0);
-        expect(result).toBeGreaterThan(test_start_ts - HOUR_MS);
-      }
+      expect(result[FEED_ETH].lastValue < result[FEED_BTC].lastValue).toBeTruthy();
     });
   });
 

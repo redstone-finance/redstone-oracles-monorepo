@@ -1,5 +1,10 @@
 # 🔗 @redstone-finance/ton-connector
 
+> ⚠️ **Legacy connector — unmaintained.** This package depends on the legacy
+> `IContractConnector` / `LegacyPricesContractAdapter` interfaces from
+> `@redstone-finance/multichain-kit-legacy`. It is no longer actively developed and is not
+> covered by the modern `@redstone-finance/multichain-kit` contract. **Use at your own risk.**
+
 [![Discord](https://img.shields.io/discord/786251205008949258?logo=discord)](https://discord.gg/2CT6hN6C)
 [![Twitter](https://img.shields.io/twitter/follow/redstone_defi?style=flat&logo=twitter)](https://twitter.com/intent/follow?screen_name=redstone_defi)
 
