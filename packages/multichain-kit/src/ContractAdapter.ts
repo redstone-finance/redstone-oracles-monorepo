@@ -1,4 +1,4 @@
-import { ContractData, ContractParamsProvider } from "@redstone-finance/sdk";
+import { ContractData } from "@redstone-finance/sdk";
 
 export interface ContractAdapter {
   readContractData(
@@ -7,15 +7,6 @@ export interface ContractAdapter {
     withDataFeedValues?: boolean
   ): Promise<ContractData>;
   getDataFeedIds?(blockNumber?: number): Promise<string[] | undefined>;
-  readPricesFromContract(
-    paramsProvider: ContractParamsProvider,
-    blockNumber?: number
-  ): Promise<bigint[]>;
-  readTimestampFromContract(feedId?: string, blockNumber?: number): Promise<number>;
-  readLatestUpdateBlockTimestamp(
-    feedId?: string,
-    blockNumber?: number
-  ): Promise<number | undefined>;
 
   getLatestRoundIds?(
     feedIds: string[],

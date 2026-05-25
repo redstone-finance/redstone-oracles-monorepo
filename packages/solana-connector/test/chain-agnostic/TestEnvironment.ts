@@ -4,7 +4,7 @@ import {
   PushModelTestContext,
   PushTestEnvironment,
 } from "@redstone-finance/chain-agnostic-oracle-tests";
-import { ContractParamsProviderMock } from "@redstone-finance/sdk";
+import { ContractParamsProviderMock, getLastRoundDetails } from "@redstone-finance/sdk";
 import { RedstoneCommon } from "@redstone-finance/utils";
 import { execSync } from "child_process";
 import { LiteSVM } from "litesvm";
@@ -50,11 +50,9 @@ export class SolanaTestEnvironment implements PushTestEnvironment, PullTestEnvir
   }
 
   async read(dataFeedIds: string[]): Promise<number[]> {
-    return (
-      await this.adapter.readPricesFromContract(
-        new ContractParamsProviderMock(dataFeedIds, "", () => Buffer.from([]))
-      )
-    ).map((bn) => Number(bn));
+    const contractData = await this.adapter.readContractData(dataFeedIds);
+
+    return dataFeedIds.map((feedId) => Number(getLastRoundDetails(contractData, feedId).lastValue));
   }
 
   async waitForNewBlock() {

@@ -20,6 +20,7 @@
   },
   "dependencies": {
     "@redstone-finance/multichain-kit": "workspace:*",
+    "@redstone-finance/multichain-kit-legacy": "workspace:*",
     "@redstone-finance/sdk": "workspace:*",
     "@redstone-finance/utils": "workspace:*",
     "dotenv": "^16.0.3",

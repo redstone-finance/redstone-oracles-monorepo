@@ -4,7 +4,6 @@ export * from "./compute-median";
 export * from "./contracts/ContractData";
 export * from "./contracts/ContractParamsProvider";
 export * from "./contracts/ContractParamsProviderMock";
-export * from "./contracts/IContractConnector";
 export * from "./contracts/UpdatePricesOptions";
 export * from "./data-feed-values";
 export * from "./data-services-urls";

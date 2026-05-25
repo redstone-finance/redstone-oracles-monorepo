@@ -100,38 +100,24 @@ for (const [name, makeClient] of Object.entries(makeClients)) {
       );
     });
 
-    describe("readLatestUpdateBlockTimestamp", () => {
-      it("should read the latest update block timestamp", async () => {
-        const result = await adapter.readLatestUpdateBlockTimestamp("ETH");
-        expect(result).toBeGreaterThanOrEqual(0);
-        const fullYear = new Date(result).getFullYear();
-        expect(fullYear).toBeGreaterThan(2024);
-      });
-    });
-
-    describe("readPricesFromContract", () => {
-      it("should read prices from contract", async () => {
-        const result = await adapter.readPricesFromContract(contractParamsProvider);
-        expect(result.length).toBeGreaterThan(0);
-        expect(typeof result[0] === "bigint");
-      });
-
-      it("should read prices with multiple feed IDs", async () => {
+    describe("readContractData", () => {
+      it("should read prices, timestamps and block timestamps for multiple feed IDs", async () => {
+        const feedIds = ["LBTC", "ETH", "BTC"];
         contractParamsProvider = new ContractParamsProvider({
           dataServiceId: DATA_SERVICE_ID,
-          dataPackagesIds: ["LBTC", "ETH", "BTC"],
+          dataPackagesIds: feedIds,
           uniqueSignersCount: 3,
           authorizedSigners: getSignersForDataServiceId(DATA_SERVICE_ID),
         });
 
-        const result = await adapter.readPricesFromContract(contractParamsProvider);
+        const result = await adapter.readContractData(feedIds);
 
-        expect(result.length).toBe(3);
-        result.forEach((price) => {
-          expect(typeof price === "bigint");
-        });
-
-        expect(result[1] < result[2]).toBeTruthy();
+        expect(Object.keys(result).length).toBe(feedIds.length);
+        for (const feed of feedIds) {
+          expect(typeof result[feed].lastValue).toBe("bigint");
+          expect(new Date(result[feed].lastBlockTimestampMS).getFullYear()).toBeGreaterThan(2024);
+        }
+        expect(result["ETH"].lastValue < result["BTC"].lastValue).toBeTruthy();
       });
     });
 

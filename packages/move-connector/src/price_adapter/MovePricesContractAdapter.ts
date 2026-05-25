@@ -1,23 +1,50 @@
-import { ContractData, ContractParamsProvider } from "@redstone-finance/sdk";
+import { Account } from "@aptos-labs/ts-sdk";
+import { WriteContractAdapter } from "@redstone-finance/multichain-kit";
+import { ContractParamsProvider } from "@redstone-finance/sdk";
+import { MoveClient } from "../MoveClient";
+import { MoveTxDeliveryMan } from "../MoveTxDeliveryMan";
+import { TransactionConfig } from "../types";
 import { MovePriceAdapterContractViewer } from "./MovePriceAdapterContractViewer";
 import { MovePriceAdapterContractWriter } from "./MovePriceAdapterContractWriter";
 
-export class MovePricesContractAdapter {
+export class MovePricesContractAdapter implements WriteContractAdapter {
   constructor(
     private readonly viewer: MovePriceAdapterContractViewer,
     private readonly writer?: MovePriceAdapterContractWriter
   ) {}
 
+  static create(
+    client: MoveClient,
+    args: { packageObjectAddress: string; priceAdapterObjectAddress: string },
+    account?: Account,
+    txConfig?: TransactionConfig
+  ) {
+    const { packageObjectAddress, priceAdapterObjectAddress } = args;
+    const viewer = new MovePriceAdapterContractViewer(
+      client,
+      packageObjectAddress,
+      priceAdapterObjectAddress
+    );
+    const writer = account
+      ? new MovePriceAdapterContractWriter(
+          new MoveTxDeliveryMan(client, account, txConfig),
+          packageObjectAddress,
+          priceAdapterObjectAddress
+        )
+      : undefined;
+
+    return new MovePricesContractAdapter(viewer, writer);
+  }
+
   getSignerAddress() {
-    return Promise.resolve(this.writer?.getSignerAddress().toString());
+    if (!this.writer) {
+      throw new Error("Adapter not set up for writes");
+    }
+
+    return Promise.resolve(this.writer.getSignerAddress().toString());
   }
 
-  // eslint-disable-next-line @typescript-eslint/class-methods-use-this -- .
-  getPricesFromPayload(_paramsProvider: ContractParamsProvider): Promise<bigint[]> {
-    throw new Error("Pull model not supported");
-  }
-
-  async writePricesFromPayloadToContract(paramsProvider: ContractParamsProvider): Promise<string> {
+  async writePricesFromPayloadToContract(paramsProvider: ContractParamsProvider) {
     if (!this.writer) {
       throw new Error("Adapter not set up for writes");
     }
@@ -34,29 +61,11 @@ export class MovePricesContractAdapter {
     );
   }
 
-  async getUniqueSignerThreshold(): Promise<number> {
+  async getUniqueSignerThreshold() {
     return await this.viewer.viewUniqueSignerThreshold();
   }
 
-  async readPricesFromContract(paramsProvider: ContractParamsProvider): Promise<bigint[]> {
-    const contractData = await this.readContractData(paramsProvider.getDataFeedIds());
-
-    return paramsProvider.getDataFeedIds().map((feedId) => contractData[feedId].lastValue);
-  }
-
-  async readLatestUpdateBlockTimestamp(feedId: string): Promise<number> {
-    return (await this.readAnyRoundDetails(feedId)).lastBlockTimestampMS;
-  }
-
-  async readTimestampFromContract(feedId: string): Promise<number> {
-    return (await this.readAnyRoundDetails(feedId)).lastDataPackageTimestampMS;
-  }
-
-  async readContractData(feedIds: string[]): Promise<ContractData> {
+  async readContractData(feedIds: string[]) {
     return await this.viewer.viewContractData(feedIds);
-  }
-
-  private async readAnyRoundDetails(feedId: string) {
-    return Object.values(await this.readContractData([feedId]))[0];
   }
 }

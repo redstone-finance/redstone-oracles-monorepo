@@ -25,10 +25,6 @@ export class SuiBlockchainService implements BlockchainServiceWithTxLookup {
     return balance * (10n ** 18n / MIST_PER_SUI);
   }
 
-  async waitForTransaction(txId: string): Promise<boolean> {
-    return await this.client.waitForTransaction(txId);
-  }
-
   async getBalance(address: string) {
     return await this.getNormalizedBalance(address);
   }
