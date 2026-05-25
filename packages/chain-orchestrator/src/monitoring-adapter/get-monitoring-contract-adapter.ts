@@ -1,12 +1,5 @@
-import {
-  getEvmContract,
-  getEvmContractAdapter,
-  getEvmContractConnector,
-} from "@redstone-finance/evm-adapters";
-import {
-  ContractAdapter,
-  ForwardCompatibleFromRedstoneAdapter,
-} from "@redstone-finance/multichain-kit";
+import { getEvmContract, getEvmContractAdapter } from "@redstone-finance/evm-adapters";
+import { ContractAdapter } from "@redstone-finance/multichain-kit";
 import { AnyOnChainRelayerManifest } from "@redstone-finance/on-chain-relayer-common";
 import { isNonEvmNetworkId } from "@redstone-finance/utils";
 import {
@@ -51,9 +44,6 @@ async function getEvmMonitoringContractAdapter(
     },
     provider
   );
-  const adapter = getEvmContractAdapter({ ...relayerManifest, withRounds }, adapterContract);
 
-  const connector = getEvmContractConnector(provider, adapter);
-
-  return await ForwardCompatibleFromRedstoneAdapter.fromConnector(connector);
+  return getEvmContractAdapter({ ...relayerManifest, withRounds }, adapterContract);
 }

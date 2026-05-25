@@ -7,7 +7,7 @@ export type LastRoundTimestamps = {
 
 export const getLatestTimestampsFromContract = async (
   adapterContract: IRedstoneAdapter,
-  blockTag: number
+  blockTag?: number
 ): Promise<LastRoundTimestamps> => {
   const timestamps = await adapterContract.getTimestampsFromLatestUpdate({
     blockTag,

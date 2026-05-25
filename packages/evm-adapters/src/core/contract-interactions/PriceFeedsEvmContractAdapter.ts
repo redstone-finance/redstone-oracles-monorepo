@@ -14,7 +14,7 @@ import { getLatestTimestampsFromContract } from "./get-latest-timestamps-from-co
 export class PriceFeedsEvmContractAdapter<
   Contract extends RedstoneAdapterBase,
 > extends EvmContractAdapter<Contract> {
-  async getDataFeedIds(blockTag: number) {
+  async getDataFeedIds(blockTag?: number) {
     return (await this.adapterContract.getDataFeedIds({ blockTag })).map(utils.parseBytes32String);
   }
 
@@ -38,8 +38,8 @@ export class PriceFeedsEvmContractAdapter<
 
   override async readLatestRoundContractData(
     feedIds: string[],
-    blockNumber: number,
-    withDataFeedValues: boolean
+    blockNumber?: number,
+    withDataFeedValues = true
   ): Promise<ContractData> {
     const { lastUpdateTimestamps, valuesFromContract } = await RedstoneCommon.waitForAllRecord({
       lastUpdateTimestamps: getLatestTimestampsFromContract(this.adapterContract, blockNumber),
@@ -60,7 +60,7 @@ export class PriceFeedsEvmContractAdapter<
     return lastRoundParams;
   }
 
-  async getValuesForDataFeeds(dataFeeds: string[], blockTag: number) {
+  async getValuesForDataFeeds(dataFeeds: string[], blockTag?: number) {
     const dataFeedsAsBytes32 = dataFeeds.map(utils.formatBytes32String);
     const valuesFromContractAsBigNumber = await this.adapterContract.getValuesForDataFeeds(
       dataFeedsAsBytes32,

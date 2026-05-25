@@ -1,4 +1,4 @@
-import { IContractConnector } from "@redstone-finance/sdk";
+import { IContractConnector } from "@redstone-finance/multichain-kit-legacy";
 import { VersionedCasperContract } from "../contracts/VersionedCasperContract";
 import { ICasperConnection } from "./ICasperConnection";
 

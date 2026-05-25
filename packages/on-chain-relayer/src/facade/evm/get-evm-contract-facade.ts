@@ -2,11 +2,9 @@ import { Provider } from "@ethersproject/providers";
 import {
   getEvmContract,
   getEvmContractAdapter,
-  getEvmContractConnector,
   MultiFeedAdapterWithoutRounds,
   RedstoneEvmContract,
 } from "@redstone-finance/evm-adapters";
-import { ForwardCompatibleFromRedstoneAdapter } from "@redstone-finance/multichain-kit";
 import { TxDeliveryManSupportedProviders } from "@redstone-finance/rpc-providers";
 import { DataPackagesResponseCache } from "@redstone-finance/sdk";
 import { Tx } from "@redstone-finance/utils";
@@ -32,14 +30,8 @@ export const getEvmContractFacade = (
   const txDeliveryMan = makeTxDeliveryMan(relayerConfig, signer, provider, adapterContract);
 
   const adapter = getEvmContractAdapter(relayerConfig, adapterContract, txDeliveryMan);
-  const connector = getEvmContractConnector(provider, adapter);
 
-  return new ContractFacade(
-    new ForwardCompatibleFromRedstoneAdapter(adapter, connector.getBlockNumber.bind(connector)),
-    provider,
-    relayerConfig,
-    cache
-  );
+  return new ContractFacade(adapter, provider, relayerConfig, cache);
 };
 
 function makeTxDeliveryMan(

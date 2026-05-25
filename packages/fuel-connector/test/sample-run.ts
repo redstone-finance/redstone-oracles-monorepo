@@ -1,4 +1,4 @@
-import { ForwardCompatibleWriteContractAdapter, sampleRun } from "@redstone-finance/multichain-kit";
+import { sampleRun } from "@redstone-finance/multichain-kit-legacy";
 import { ContractParamsProvider, getSignersForDataServiceId } from "@redstone-finance/sdk";
 import { provider } from "./common/provider";
 import { readProxyContractId } from "./common/read-proxy-contract-id";
@@ -20,9 +20,9 @@ async function main() {
     await provider(IS_LOCAL)
   );
 
-  const connector = await ForwardCompatibleWriteContractAdapter.fromConnector(pricesConnector);
+  const adapter = await pricesConnector.getAdapter();
 
-  await sampleRun(paramsProvider, connector, await pricesConnector.getAdapter());
+  await sampleRun(paramsProvider, adapter, pricesConnector);
 }
 
 void main();

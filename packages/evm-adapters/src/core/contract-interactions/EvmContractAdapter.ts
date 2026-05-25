@@ -1,8 +1,11 @@
+import { WriteContractAdapter } from "@redstone-finance/multichain-kit";
 import { ContractData, ContractParamsProvider, UpdatePricesOptions } from "@redstone-finance/sdk";
 import { Tx } from "@redstone-finance/utils";
 import { RedstoneEvmContract } from "../../facade/evm/RedstoneEvmContract";
 
-export abstract class EvmContractAdapter<Contract extends RedstoneEvmContract> {
+export abstract class EvmContractAdapter<Contract extends RedstoneEvmContract>
+  implements WriteContractAdapter
+{
   constructor(
     public adapterContract: Contract,
     protected txDeliveryMan: Tx.ITxDeliveryMan<
@@ -13,8 +16,8 @@ export abstract class EvmContractAdapter<Contract extends RedstoneEvmContract> {
     >
   ) {}
 
-  getSignerAddress(): Promise<string | undefined> {
-    return this.adapterContract.signer.getAddress();
+  async getSignerAddress() {
+    return await this.adapterContract.signer.getAddress();
   }
 
   abstract makeUpdateTx(
@@ -24,19 +27,15 @@ export abstract class EvmContractAdapter<Contract extends RedstoneEvmContract> {
 
   abstract readLatestRoundContractData(
     feedIds: string[],
-    blockNumber: number,
-    withDataFeedValues: boolean
+    blockNumber?: number,
+    withDataFeedValues?: boolean
   ): Promise<ContractData>;
 
-  async readContractData(
-    feedIds: string[],
-    blockNumber: number,
-    withDataFeedValues: boolean
-  ): Promise<ContractData> {
+  async readContractData(feedIds: string[], blockNumber?: number, withDataFeedValues = true) {
     return await this.readLatestRoundContractData(feedIds, blockNumber, withDataFeedValues);
   }
 
-  async getUniqueSignerThreshold(blockTag?: number): Promise<number> {
+  async getUniqueSignerThreshold(blockTag?: number) {
     return await this.adapterContract.getUniqueSignersThreshold({ blockTag });
   }
 
@@ -48,15 +47,14 @@ export abstract class EvmContractAdapter<Contract extends RedstoneEvmContract> {
     const baseParamsProvider = this.getBaseIterationTxParamsProvider(paramsProvider, options);
     const updateTx = await this.makeUpdateTx(baseParamsProvider, metadataTimestamp);
 
-    return await this.txDeliveryMan.deliver(updateTx, {
+    return (await this.txDeliveryMan.deliver(updateTx, {
       deferredCallData: () =>
         this.makeUpdateTx(paramsProvider, metadataTimestamp).then((tx) => tx.data),
       paramsProvider: baseParamsProvider,
       canOmitFallbackAfterFailing: options?.canOmitFallbackAfterFailing,
-    });
+    })) as string;
   }
 
-  // eslint-disable-next-line @typescript-eslint/class-methods-use-this -- abstract class base method
   protected getBaseIterationTxParamsProvider(
     paramsProvider: ContractParamsProvider,
     _options?: UpdatePricesOptions

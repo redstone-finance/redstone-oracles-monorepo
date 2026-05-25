@@ -10,10 +10,8 @@ export async function getNonEvmContractFacade(
   relayerConfig: RelayerConfig,
   cache?: DataPackagesResponseCache
 ) {
-  const [blockProvider, adapter] = await Promise.all([
-    forceGetBlockProvider(relayerConfig.networkId, relayerConfig.rpcUrls),
-    getWritableNonEvmContractAdapter(relayerConfig),
-  ]);
+  const blockProvider = await forceGetBlockProvider(relayerConfig.networkId, relayerConfig.rpcUrls);
+  const adapter = getWritableNonEvmContractAdapter(relayerConfig);
 
   return new ContractFacade(adapter, blockProvider, relayerConfig, cache);
 }

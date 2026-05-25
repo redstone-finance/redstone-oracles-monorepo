@@ -81,14 +81,21 @@ await adapter.getPricesFromPayload(paramsProvider);
 ### Reading individual price feeds (PricePill)
 
 ```ts
-import { PricePillCantonContractConnector } from "@redstone-finance/canton-connector";
+import {
+  makePartyId,
+  PricePillCantonContractAdapter,
+} from "@redstone-finance/canton-connector";
 
 const client = makeDefaultClient("RedStoneOracleViewer");
 const ADAPTER_ID = "RedStoneAdapter-v12-0.4.0";
 
-const ethFeedConnector = new PricePillCantonContractConnector(client, ADAPTER_ID, "ETH");
-const adapter = await ethFeedConnector.getAdapter();
-const price = await adapter.readLatestRoundDetails();
+const ethFeed = new PricePillCantonContractAdapter(
+  client,
+  makePartyId("RedStoneOracleViewer"),
+  ADAPTER_ID,
+  "ETH"
+);
+const { value, timestamp } = await ethFeed.getPriceAndTimestamp();
 ```
 
 ### Installing the dependencies

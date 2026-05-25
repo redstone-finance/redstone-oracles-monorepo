@@ -1,0 +1,3 @@
+{
+  "extends": "@redstone-finance/typescript-config/tsconfig-common.json"
+}

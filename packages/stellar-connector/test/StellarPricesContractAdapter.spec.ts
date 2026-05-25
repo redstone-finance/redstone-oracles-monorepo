@@ -156,41 +156,4 @@ describe("StellarPricesContractAdapter", () => {
       expect(fullYearPackage1).toBeGreaterThan(2024);
     });
   });
-
-  describe("readLatestUpdateBlockTimestamp", () => {
-    it("should read the latest update block timestamp", async () => {
-      const result = await adapter.readLatestUpdateBlockTimestamp("BTC");
-      expect(result).toBeGreaterThan(0);
-      const fullYear = new Date(result).getFullYear();
-      expect(fullYear).toBeGreaterThan(2024);
-    });
-  });
-
-  describe("readPricesFromContract", () => {
-    it("should read prices from contract", async () => {
-      const result = await adapter.readPricesFromContract(paramsOneFeed);
-      expect(result.length).toBe(1);
-      expect(result[0]).toBeGreaterThan(0);
-    });
-
-    it("should read prices with multiple feed IDs", async () => {
-      const result = await adapter.readPricesFromContract(paramsTwoFeeds);
-
-      expect(result.length).toBe(2);
-
-      expect(result[0]).toBeGreaterThan(0);
-      expect(result[1]).toBeGreaterThan(0);
-      // this would fail if BTC and ETH switch places
-      expect(result[0] > result[1]).toBeTruthy();
-    });
-  });
-
-  describe("readTimestampFromContract", () => {
-    it("should read the latest package timestamp", async () => {
-      const result = await adapter.readTimestampFromContract("BTC");
-      expect(result).toBeGreaterThan(0);
-      const fullYear = new Date(result).getFullYear();
-      expect(fullYear).toBeGreaterThan(2024);
-    });
-  });
 });

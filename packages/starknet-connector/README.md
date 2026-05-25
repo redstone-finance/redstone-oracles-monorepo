@@ -1,5 +1,10 @@
 # 🔗 @redstone-finance/starknet-connector
 
+> ⚠️ **Legacy connector — unmaintained.** This package depends on the legacy
+> `IContractConnector` / `LegacyPricesContractAdapter` interfaces from
+> `@redstone-finance/multichain-kit-legacy`. It is no longer actively developed and is not
+> covered by the modern `@redstone-finance/multichain-kit` contract. **Use at your own risk.**
+
 [![License](https://img.shields.io/badge/license-MIT-green)](https://choosealicense.com/licenses/mit/)
 [![Discord](https://img.shields.io/discord/786251205008949258?logo=discord)](https://discord.gg/2CT6hN6C)
 [![NPM](https://img.shields.io/npm/v/@redstone-finance/starknet-connector)](https://www.npmjs.com/package/@redstone-finance/starknet-connector)

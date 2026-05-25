@@ -1,8 +1,8 @@
-import { ForwardCompatibleWriteContractAdapter, sampleRun } from "@redstone-finance/multichain-kit";
+import { sampleRun } from "@redstone-finance/multichain-kit";
 import { ContractParamsProvider, getSignersForDataServiceId } from "@redstone-finance/sdk";
 import { RedstoneCommon } from "@redstone-finance/utils";
 import { z } from "zod";
-import { makeAptosAccount, MoveClientBuilder, MovePricesContractConnector } from "../src";
+import { makeAptosAccount, MoveClientBuilder, MovePricesContractAdapter } from "../src";
 import { MovePriceFeedContractAdapter } from "../src/price_feed/MovePriceFeedContractAdapter";
 import { PRICE_ADAPTER, PRICE_FEED } from "./contract-name-enum";
 import { readObjectAddress } from "./deploy-utils";
@@ -32,15 +32,18 @@ async function main() {
     `CONTRACT: ${packageObjectAddress}; OBJECT: ${priceAdapterObjectAddress}; FEED: ${feedAddress.toString()}`
   );
 
-  const moveContractConnector = new MovePricesContractConnector(
+  const adapter = MovePricesContractAdapter.create(
     client,
     { packageObjectAddress, priceAdapterObjectAddress },
     account
   );
-
-  const adapter = await ForwardCompatibleWriteContractAdapter.fromConnector(moveContractConnector);
   const ethPriceFeedAdapter = new MovePriceFeedContractAdapter(client, feedAddress.toString());
-  await sampleRun(paramsProvider, adapter, moveContractConnector, ethPriceFeedAdapter);
+  await sampleRun(
+    paramsProvider,
+    adapter,
+    { getBlockNumber: () => client.getBlockNumber() },
+    ethPriceFeedAdapter
+  );
 }
 
 void main();
