@@ -840,13 +840,6 @@
       "rateFeed": false,
       "types": ["rwa"]
     },
-    "XAG_LR": {
-      "source": ["lease-rate"],
-      "broadcasters": ["influx"],
-      "denomination": "USD",
-      "rateFeed": false,
-      "types": ["rwa"]
-    },
     "XAG": {
       "source": [
         "alltick-api-deferred",
@@ -915,13 +908,6 @@
       "rateFeed": false,
       "types": ["rwa"]
     },
-    "XAU_LR": {
-      "source": ["lease-rate"],
-      "broadcasters": ["influx"],
-      "denomination": "USD",
-      "rateFeed": false,
-      "types": ["rwa"]
-    },
     "XAU": {
       "source": [
         "rollover-time-blend-implied-spot",
@@ -986,13 +972,6 @@
     "XPT_FRONT": {
       "source": ["databento-cme-futures", "ws-polygon-massive-nymex-futures"],
       "skipBroadcasting": true,
-      "denomination": "USD",
-      "rateFeed": false,
-      "types": ["rwa"]
-    },
-    "XPT_LR": {
-      "source": ["lease-rate"],
-      "broadcasters": ["influx"],
       "denomination": "USD",
       "rateFeed": false,
       "types": ["rwa"]
