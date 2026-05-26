@@ -29,6 +29,7 @@ export function makeDataPackagesRequestParams(
     authorizedSigners,
     disableMultiPhaseFetching,
     updateTriggers,
+    authenticatedGateways,
   } = relayerConfig;
 
   let signers: string[] = authorizedSigners ?? [];
@@ -58,6 +59,7 @@ export function makeDataPackagesRequestParams(
       ? storageInstance
       : undefined,
     disableMultiPhaseFetching,
+    authenticatedGateways,
   };
 }
 

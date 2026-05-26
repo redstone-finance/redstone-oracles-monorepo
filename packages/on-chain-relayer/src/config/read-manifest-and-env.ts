@@ -13,6 +13,23 @@ import { isFallbackConfig } from "./config-checks";
 
 const DEFAULT_WAIT_FOR_ALL_GATEWAYS_TIME = 1000;
 
+const AuthenticatedGatewaySchema = z
+  .object({
+    url: z.url(),
+    apiKeyEnvPath: z
+      .string()
+      .min(1)
+      .superRefine((path, ctx) => {
+        if (!RedstoneCommon.isDefined(process.env[path])) {
+          ctx.addIssue(`Expected ENV ${path} for authenticated gateway apiKeyEnvPath`);
+        }
+      }),
+  })
+  .transform((cfg) => ({
+    url: cfg.url,
+    apiKey: RedstoneCommon.getFromEnv(cfg.apiKeyEnvPath, z.string().min(1)),
+  }));
+
 let remoteConfigPath: string | null = null;
 
 const readManifest = () => {
@@ -312,6 +329,10 @@ export const readManifestAndEnv = () => {
     disableMultiPhaseFetching: RedstoneCommon.getFromEnv(
       "DISABLE_MULTI_PHASE_DATA_PACKAGES_FETCHING",
       z.boolean().default(true)
+    ),
+    authenticatedGateways: RedstoneCommon.getFromEnv(
+      "AUTHENTICATED_GATEWAYS",
+      z.array(AuthenticatedGatewaySchema).nonempty().optional()
     ),
   };
 
