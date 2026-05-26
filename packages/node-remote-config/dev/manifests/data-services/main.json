@@ -9388,6 +9388,20 @@
       "denomination": "iTRY",
       "rateFeed": true
     },
+    "wiTRY_FUNDAMENTAL/USD": {
+      "source": [
+        "usd-based"
+      ],
+      "denomination": "USD",
+      "rateFeed": true
+    },
+    "wiTRY_FUNDAMENTAL/USDm": {
+      "source": [
+        "non-usd-based"
+      ],
+      "denomination": "USDm",
+      "rateFeed": false
+    },
     "MEGA": {
       "source": [
         "binance-usdc",
