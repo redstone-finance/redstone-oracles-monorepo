@@ -1948,6 +1948,78 @@
       "source": ["kilo-price"],
       "denomination": "USD",
       "rateFeed": false
+    },
+    "USDe": {
+      "source": [
+        "binance_deferred-usdc",
+        "binance_deferred-usdt",
+        "bitget_deferred-usdc",
+        "bitmart_deferred-usdt",
+        "bybit_deferred-usdc",
+        "bybit_deferred-usdt",
+        "gate_deferred-usdt",
+        "htx_deferred-usdt",
+        "kucoin_deferred-usdt",
+        "lbank_deferred-usdt",
+        "mexc_deferred-usdt",
+        "curve-ethereum-dai-deferred",
+        "curve-ethereum-usdc-deferred",
+        "curve-ethereum-usdt-deferred",
+        "fluid-ethereum-usdt-deferred",
+        "uniswap-v3-ethereum-usdc-100-deferred",
+        "uniswap-v4-ethereum-usdt-45-deferred",
+        "uniswap-v4-ethereum-usdt-10-deferred",
+        "xt_deferred-usdt"
+      ],
+      "deviationCheck": {
+        "deviationWithRecentValues": {
+          "maxPercent": 2,
+          "maxDelayMilliseconds": 120000
+        }
+      },
+      "broadcasters": ["influx"],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "USDm": {
+      "source": [
+        "kumbaya-megaeth-usdt0-100-deferred",
+        "kumbaya-megaeth-btc.b-3000-deferred",
+        "kumbaya-megaeth-usde-100-deferred",
+        "kumbaya-megaeth-weth-3000-deferred"
+      ],
+      "priceAggregator": "primarySource",
+      "primarySourceAggregatorConfig": {
+        "primarySource": "kumbaya-megaeth-usdt0-100-deferred",
+        "lowerClampPercent": 0.1,
+        "upperClampPercent": 0.1
+      },
+      "broadcasters": ["influx"],
+      "denomination": "USD",
+      "rateFeed": false,
+      "deviationCheck": {
+        "deviationWithRecentValues": {
+          "maxPercent": 2,
+          "maxDelayMilliseconds": 120000
+        }
+      }
+    },
+    "wiTRY_FUNDAMENTAL": {
+      "source": ["ethereum-evm-fetcher-brix-deferred"],
+      "broadcasters": ["influx"],
+      "denomination": "iTRY",
+      "rateFeed": true
+    },
+    "wiTRY_FUNDAMENTAL/USD": {
+      "source": ["usd-based-deferred"],
+      "broadcasters": ["influx"],
+      "denomination": "USD",
+      "rateFeed": true
+    },
+    "wiTRY_FUNDAMENTAL/USDm": {
+      "source": ["non-usd-based-deferred"],
+      "denomination": "USDm",
+      "rateFeed": false
     }
   },
   "multiPointPackages": {
