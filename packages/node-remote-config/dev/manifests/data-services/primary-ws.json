@@ -788,17 +788,6 @@
         "rwa"
       ]
     },
-    "XAG_LR": {
-      "source": [],
-      "broadcasters": [
-        "influx"
-      ],
-      "denomination": "USD",
-      "rateFeed": false,
-      "types": [
-        "rwa"
-      ]
-    },
     "XAG": {
       "source": [],
       "priceAggregator": "primarySource",
@@ -850,17 +839,6 @@
         "rwa"
       ]
     },
-    "XAU_LR": {
-      "source": [],
-      "broadcasters": [
-        "influx"
-      ],
-      "denomination": "USD",
-      "rateFeed": false,
-      "types": [
-        "rwa"
-      ]
-    },
     "XAU": {
       "source": [],
       "priceAggregator": "primarySource",
@@ -906,17 +884,6 @@
     "XPT_FRONT": {
       "source": [],
       "skipBroadcasting": true,
-      "denomination": "USD",
-      "rateFeed": false,
-      "types": [
-        "rwa"
-      ]
-    },
-    "XPT_LR": {
-      "source": [],
-      "broadcasters": [
-        "influx"
-      ],
       "denomination": "USD",
       "rateFeed": false,
       "types": [
