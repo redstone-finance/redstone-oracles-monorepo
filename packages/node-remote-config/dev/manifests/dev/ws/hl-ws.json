@@ -26,7 +26,7 @@
       "denomination": "USD",
       "rateFeed": true
     },
-    "ORACLE_sekaw:BTC": {
+    "ORACLE_rrrrr:BTC": {
       "source": ["hyperliquid-testnet-perps-ws-fetcher"],
       "denomination": "USD",
       "rateFeed": true
@@ -36,7 +36,7 @@
       "denomination": "USD",
       "rateFeed": true
     },
-    "MARK_sekaw:BTC": {
+    "MARK_rrrrr:BTC": {
       "source": ["hyperliquid-testnet-perps-ws-fetcher"],
       "denomination": "USD",
       "rateFeed": true
@@ -46,7 +46,7 @@
       "denomination": "USD",
       "rateFeed": true
     },
-    "MID_sekaw:BTC": {
+    "MID_rrrrr:BTC": {
       "source": ["hyperliquid-testnet-perps-ws-fetcher"],
       "denomination": "USD",
       "rateFeed": true
@@ -56,12 +56,12 @@
       "denomination": "USD",
       "rateFeed": true
     },
-    "IMPACT_BUY_flxn:TSLA": {
+    "IMPACT_BUY_rrrrr:TSLA": {
       "source": ["hyperliquid-testnet-perps-ws-fetcher"],
       "denomination": "USD",
       "rateFeed": true
     },
-    "IMPACT_SELL_flxn:TSLA": {
+    "IMPACT_SELL_rrrrr:TSLA": {
       "source": ["hyperliquid-testnet-perps-ws-fetcher"],
       "denomination": "USD",
       "rateFeed": true
