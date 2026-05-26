@@ -8710,6 +8710,11 @@
       "denomination": "USD",
       "rateFeed": true
     },
+    "NGI+_FUNDAMENTAL": {
+      "source": ["sync-nav-api"],
+      "denomination": "USD",
+      "rateFeed": true
+    },
     "CHECK": {
       "source": [
         "bingx-usdt",
