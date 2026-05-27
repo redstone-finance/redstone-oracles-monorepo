@@ -1044,6 +1044,18 @@
         "rwa"
       ]
     },
+    "XBR.Y": {
+      "source": [],
+      "denomination": "USD",
+      "priceAggregator": "redstoneX",
+      "redstoneXAggregatorConfig": {
+        "priceDiscoverySources": []
+      },
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
+    },
     "CURR": {
       "source": [],
       "denomination": "USD",
