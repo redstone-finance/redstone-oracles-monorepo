@@ -7899,6 +7899,7 @@ __metadata:
   resolution: "@redstone-finance/agents@workspace:packages/agents"
   dependencies:
     "@jest/globals": "npm:^29.7.0"
+    "@redstone-finance/internal-utils": "workspace:*"
     "@redstone-finance/utils": "workspace:*"
     "@types/node-schedule": "npm:^2.1.0"
     node-schedule: "npm:^2.1.1"

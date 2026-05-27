@@ -1,3 +1,4 @@
+import { LogMonitoring, LogMonitoringType } from "@redstone-finance/internal-utils";
 import { loggerFactory, RedstoneCommon, RedstoneLogger } from "@redstone-finance/utils";
 import { Job, scheduleJob } from "node-schedule";
 
@@ -9,6 +10,7 @@ export type CronAgentArgs<R> = {
   cronExpression: string;
   maxDataTTL: number;
   timeout: number;
+  logMonitoring?: { dataTtlToError: number; type: LogMonitoringType };
 };
 
 export class CronAgent<R> {
@@ -50,6 +52,12 @@ export class CronAgent<R> {
         await this.executeJobAndSaveResults();
       } catch (e) {
         this.logger.warn(`Agent job failed error=${RedstoneCommon.stringifyError(e)}`);
+        if (this.shouldErrorLogMonitoring()) {
+          LogMonitoring.error(
+            this.args.logMonitoring!.type,
+            `Agent job failed, will still use cached value till ${new Date(this.cachedValue.cachedAt + this.args.maxDataTTL).toISOString()}, error: ${RedstoneCommon.stringifyError(e)}`
+          );
+        }
       }
     });
 
@@ -86,6 +94,14 @@ export class CronAgent<R> {
 
   private isStale() {
     return Date.now() - this.cachedValue.cachedAt > this.args.maxDataTTL;
+  }
+
+  private shouldErrorLogMonitoring() {
+    if (!this.args.logMonitoring) {
+      return false;
+    }
+
+    return Date.now() - this.cachedValue.cachedAt > this.args.logMonitoring.dataTtlToError;
   }
 
   private async executeJobAndSaveResults() {
