@@ -1,42 +1,70 @@
-import type { TxLookup, TxLookupArgs } from "@redstone-finance/multichain-kit";
+import { TransactionResponse } from "@aptos-labs/ts-sdk";
+import {
+  NormalizedContractTx,
+  RangeScanTxLookup,
+  TxLookupAddresses,
+} from "@redstone-finance/multichain-kit";
 import { loggerFactory, RedstoneCommon } from "@redstone-finance/utils";
 import { MoveClient } from "./MoveClient";
 import { parseMoveWritePriceTx } from "./MoveTxParsing";
 
 const MICROSECS_PER_SEC = 1_000_000n;
+const RPC_CALL_BATCH_SIZE = 25;
+const RPC_CALL_MS_BETWEEN_BATCHES = 100;
 const logger = loggerFactory("move-tx-lookup");
 
-export class MoveTxLookup implements TxLookup {
-  constructor(private readonly client: MoveClient) {}
+interface MoveTxItem {
+  tx: TransactionResponse;
+  blockHeight: number;
+  blockTimestamp: number;
+}
 
-  async fetchPage({ adapterContractPackageId, startBlock, endBlock }: TxLookupArgs) {
-    if (!adapterContractPackageId) {
+export class MoveTxLookup extends RangeScanTxLookup<MoveTxItem> {
+  constructor(private readonly client: MoveClient) {
+    super();
+  }
+
+  protected async fetchItemsInRange(startBlock: number, endBlock: number) {
+    const heights = Array.from({ length: endBlock - startBlock + 1 }, (_, i) => startBlock + i);
+
+    const blocks = await RedstoneCommon.batchPromises(
+      RPC_CALL_BATCH_SIZE,
+      RPC_CALL_MS_BETWEEN_BATCHES,
+      heights.map((blockHeight) => () => tryGetBlock(this.client, blockHeight)),
+      true
+    );
+
+    const items: MoveTxItem[] = [];
+    blocks.forEach((block, i) => {
+      if (!block?.transactions) {
+        return;
+      }
+      const blockTimestamp = Number(BigInt(block.block_timestamp) / MICROSECS_PER_SEC);
+      for (const tx of block.transactions) {
+        items.push({ tx, blockHeight: heights[i], blockTimestamp });
+      }
+    });
+
+    return items;
+  }
+
+  protected override normalizeMany(items: MoveTxItem[], addresses: TxLookupAddresses) {
+    if (!addresses.packageIds.size) {
       throw new Error("move-tx-lookup requires adapterContractPackageId in manifest");
     }
-    const data: NonNullable<ReturnType<typeof parseMoveWritePriceTx>>[] = [];
 
-    for (let blockHeight = startBlock; blockHeight <= endBlock; blockHeight++) {
-      const block = await tryGetBlock(this.client, blockHeight);
-      if (!block?.transactions) {
-        continue;
-      }
-
-      const blockTimestamp = Number(BigInt(block.block_timestamp) / MICROSECS_PER_SEC);
-
-      for (const tx of block.transactions) {
-        const parsed = parseMoveWritePriceTx(
-          tx,
-          adapterContractPackageId,
-          blockHeight,
-          blockTimestamp
-        );
+    const data: NormalizedContractTx[] = [];
+    for (const { tx, blockHeight, blockTimestamp } of items) {
+      for (const packageId of addresses.packageIds) {
+        const parsed = parseMoveWritePriceTx(tx, packageId, blockHeight, blockTimestamp);
         if (parsed) {
           data.push(parsed);
+          break;
         }
       }
     }
 
-    return { data, hasNextPage: false };
+    return Promise.resolve(data);
   }
 }
 

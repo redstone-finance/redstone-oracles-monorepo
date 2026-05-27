@@ -3,13 +3,16 @@ import {
   SuiTransactionBlockResponse,
   TransactionBlockData,
 } from "@mysten/sui/jsonRpc";
-import type { TxLookup, TxLookupArgs } from "@redstone-finance/multichain-kit";
+import { ManifestRef, PerManifestTxLookup } from "@redstone-finance/multichain-kit";
 import { RedstoneCommon } from "@redstone-finance/utils";
 import {
+  buildNormalizedSuiTx,
+  computeOldestBlockInPage,
   computeSuiGasUsed,
   computeSuiIsFailed,
   extractSharedObjectId,
   extractWritePricePayloads,
+  filterSuiTxsAndCheckHasNextPage,
 } from "./SuiTxParsing";
 
 const RETRY_CONFIG: Omit<RedstoneCommon.RetryConfig, "fn"> = {
@@ -27,25 +30,46 @@ const INPUT_TYPE_OBJECT = "object";
 const OBJECT_TYPE_SHARED = "sharedObject";
 const ARG_DISCRIMINATOR_INPUT = "Input";
 
-export class LegacySuiTxLookup implements TxLookup {
-  constructor(private readonly client: SuiJsonRpcClient) {}
+export class LegacySuiTxLookup extends PerManifestTxLookup {
+  constructor(private readonly client: SuiJsonRpcClient) {
+    super();
+  }
 
-  async fetchPage({ adapterContract, cursor }: TxLookupArgs) {
+  protected override async fetchForManifest(
+    manifest: ManifestRef,
+    startBlock: number,
+    endBlock: number,
+    cursor?: string
+  ) {
     const response = await RedstoneCommon.retry({
       ...RETRY_CONFIG,
       fn: async () =>
         await this.client.queryTransactionBlocks({
-          filter: { InputObject: adapterContract },
+          filter: { InputObject: manifest.adapterContract },
           cursor: cursor ?? null,
           options: { showInput: true, showEffects: true, showEvents: true },
         }),
     })();
 
-    return {
-      data: response.data.flatMap((tx) => LegacySuiTxLookup.normalize(tx)),
-      hasNextPage: response.hasNextPage,
-      nextCursor: response.nextCursor ?? undefined,
-    };
+    const allFromPage = response.data.flatMap((tx) => LegacySuiTxLookup.normalize(tx));
+
+    const oldestRawBlockInPage = computeOldestBlockInPage(response.data, (tx) =>
+      Number(tx.checkpoint ?? 0)
+    );
+
+    const { data, hasMoreInRange } = filterSuiTxsAndCheckHasNextPage(
+      allFromPage,
+      startBlock,
+      endBlock,
+      response.hasNextPage,
+      oldestRawBlockInPage
+    );
+
+    if (hasMoreInRange && response.nextCursor) {
+      return { data, hasNextPage: true as const, nextCursor: response.nextCursor };
+    }
+
+    return { data, hasNextPage: false as const };
   }
 
   private static normalize(tx: SuiTransactionBlockResponse) {
@@ -53,7 +77,7 @@ export class LegacySuiTxLookup implements TxLookup {
     const inputs = LegacySuiTxLookup.parseInputs(transactionData);
     const moveCalls = LegacySuiTxLookup.parseMoveCalls(transactionData);
     const payloads = extractWritePricePayloads(inputs, moveCalls);
-    const targetObjectId = extractSharedObjectId(inputs);
+    const targetObjectId = extractSharedObjectId(inputs, moveCalls);
 
     if (!payloads.length || !targetObjectId) {
       return [];
@@ -67,18 +91,18 @@ export class LegacySuiTxLookup implements TxLookup {
     const checkpoint = Number(tx.checkpoint ?? "0");
     const timestampSec = RedstoneCommon.msToSecs(Number(tx.timestampMs ?? "0"));
 
-    return payloads.map((payload) => ({
+    return buildNormalizedSuiTx({
       blockNumber: checkpoint,
       blockTimestamp: timestampSec,
       hash: tx.digest,
-      from: transactionData.sender,
-      to: targetObjectId,
-      data: payload,
+      sender: transactionData.sender,
+      targetObjectId,
+      payloads,
       gasLimit: transactionData.gasData.budget,
       gasPrice: transactionData.gasData.price,
       isFailed,
       gasUsed,
-    }));
+    });
   }
 
   private static parseInputs(transactionData: TransactionBlockData) {

@@ -8287,6 +8287,7 @@ __metadata:
   dependencies:
     "@chainlink/contracts": "npm:1.2.0"
     "@ethersproject/abi": "npm:^5.6.3"
+    "@ethersproject/abstract-provider": "npm:^5.7.0"
     "@ethersproject/providers": "npm:^5.6.8"
     "@nomicfoundation/hardhat-chai-matchers": "npm:^1.0.6"
     "@nomicfoundation/hardhat-network-helpers": "npm:^1.0.9"
@@ -8298,6 +8299,7 @@ __metadata:
     "@openzeppelin/contracts-upgradeable": "npm:^4.8.3"
     "@openzeppelin/hardhat-upgrades": "npm:^1.26.0"
     "@redstone-finance/evm-connector": "workspace:*"
+    "@redstone-finance/evm-multicall": "workspace:*"
     "@redstone-finance/multichain-kit": "workspace:*"
     "@redstone-finance/protocol": "workspace:*"
     "@redstone-finance/sdk": "workspace:*"
@@ -9536,12 +9538,9 @@ __metadata:
   resolution: "@redstone-finance/lambda-redstone-txs-indexer@workspace:packages/lambda/lambda-redstone-txs-indexer"
   dependencies:
     "@aws-sdk/client-ssm": "npm:^3.696.0"
-    "@ethersproject/abstract-provider": "npm:^5.7.0"
-    "@ethersproject/transactions": "npm:^5.7.0"
     "@influxdata/influxdb-client": "npm:^1.35.0"
     "@redstone-finance/chain-configs": "workspace:*"
     "@redstone-finance/chain-orchestrator": "workspace:*"
-    "@redstone-finance/evm-multicall": "workspace:*"
     "@redstone-finance/internal-utils": "workspace:*"
     "@redstone-finance/monitoring-manifests": "workspace:*"
     "@redstone-finance/multichain-kit": "workspace:*"

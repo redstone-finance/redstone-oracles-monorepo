@@ -995,6 +995,8 @@
       "networkId": "sui/1282977196",
       "currencySymbol": "SUI",
       "publicRpcUrls": [
+        "https://fullnode.testnet.sui.io:443#type=grpc",
+        "https://graphql.testnet.sui.io/graphql#type=graphql",
         "https://sui-testnet.gateway.tatum.io/",
         "https://sui-testnet.api.onfinality.io/public"
       ],
@@ -1012,6 +1014,8 @@
       "networkId": "sui/897796746",
       "currencySymbol": "SUI",
       "publicRpcUrls": [
+        "https://fullnode.mainnet.sui.io:443#type=grpc",
+        "https://graphql.mainnet.sui.io/graphql#type=graphql",
         "https://rpc.ankr.com/sui",
         "https://1rpc.io/sui",
         "https://sui.blockpi.network/v1/rpc/public",
