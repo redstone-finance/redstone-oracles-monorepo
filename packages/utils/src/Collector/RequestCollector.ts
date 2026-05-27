@@ -26,8 +26,13 @@ export abstract class RequestCollector<TKey, TResult> {
     this.logger = loggerFactory(`request-collector-${label}`);
   }
 
+  private batchSupported = true;
+
   protected abstract keyToString(key: TKey): string;
   protected abstract fetchBatch(keys: TKey[]): Promise<TResult[]>;
+
+  protected fetchSingle?(key: TKey): Promise<TResult>;
+  protected isBatchUnsupportedError?(error: unknown): boolean;
 
   dispose() {
     this.clearTimer();
@@ -128,7 +133,7 @@ export abstract class RequestCollector<TKey, TResult> {
 
           this.logger.info(`${this.label} calling for ${chunk.length} key${getS(chunk.length)}`);
 
-          return this.fetchBatch(chunk);
+          return this.fetchChunk(chunk);
         })
       );
       const all = chunkResults.flat();
@@ -140,6 +145,33 @@ export abstract class RequestCollector<TKey, TResult> {
       }
     } catch (err) {
       entries.forEach((entry) => entry.reject(err));
+    }
+  }
+
+  private async fetchChunk(keys: TKey[]) {
+    const fetchSingle = this.fetchSingle?.bind(this);
+    if (!fetchSingle) {
+      return await this.fetchBatch(keys);
+    }
+    if (keys.length === 1) {
+      return [await fetchSingle(keys[0])];
+    }
+    if (!this.batchSupported) {
+      return await Promise.all(keys.map(fetchSingle));
+    }
+
+    try {
+      return await this.fetchBatch(keys);
+    } catch (error) {
+      if (!this.isBatchUnsupportedError?.(error)) {
+        throw error;
+      }
+      this.logger.warn(
+        `${this.label}: endpoint rejected batch request, falling back to individual requests`
+      );
+      this.batchSupported = false;
+
+      return await Promise.all(keys.map(fetchSingle));
     }
   }
 

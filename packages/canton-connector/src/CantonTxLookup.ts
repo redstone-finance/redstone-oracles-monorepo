@@ -1,39 +1,41 @@
-import type { TxLookup, TxLookupArgs } from "@redstone-finance/multichain-kit";
+import {
+  ManifestRef,
+  MULTI_FEED_RELAYER_UPDATE_FUNCTION_TYPE,
+  PerManifestTxLookup,
+} from "@redstone-finance/multichain-kit";
 import { WRITE_PRICES_CHOICE } from "./adapters/PricesCantonContractAdapter";
 import { IADAPTER_TEMPLATE_NAME } from "./adapters/PricesCantonReadOnlyAdapter";
 import { CantonClient } from "./client/CantonClient";
 import { combineIntoId } from "./utils/utils";
 
-export class CantonTxLookup implements TxLookup {
-  constructor(private readonly cantonClient: CantonClient) {}
+export class CantonTxLookup extends PerManifestTxLookup {
+  constructor(private readonly cantonClient: CantonClient) {
+    super();
+  }
 
-  async fetchPage({
-    adapterContractPackageId,
-    walletAddresses,
-    startBlock,
-    endBlock,
-  }: TxLookupArgs) {
-    if (!adapterContractPackageId) {
+  protected override async fetchForManifest(
+    manifest: ManifestRef,
+    startBlock: number,
+    endBlock: number
+  ) {
+    if (!manifest.adapterContractPackageId) {
       throw new Error("CantonTxLookup requires adapterContractPackageId in manifest");
     }
+    const interfaceId = combineIntoId(manifest.adapterContractPackageId, IADAPTER_TEMPLATE_NAME);
 
-    const interfaceId = combineIntoId(adapterContractPackageId, IADAPTER_TEMPLATE_NAME);
-
-    const updates = (
-      await Promise.all(
-        walletAddresses.map((partyId) =>
-          this.cantonClient.getTransactionsForInterface(
-            partyId,
-            interfaceId,
-            startBlock,
-            endBlock,
-            WRITE_PRICES_CHOICE
-          )
+    const perWallet = await Promise.all(
+      manifest.walletAddresses.map((partyId) =>
+        this.cantonClient.getTransactionsForInterface(
+          partyId,
+          interfaceId,
+          startBlock,
+          endBlock,
+          WRITE_PRICES_CHOICE
         )
       )
-    ).flat();
+    );
 
-    updates.sort((a, b) => a.block - b.block);
+    const updates = perWallet.flat().sort((a, b) => a.block - b.block);
 
     return {
       data: updates.map((update) => ({
@@ -47,9 +49,9 @@ export class CantonTxLookup implements TxLookup {
         gasPrice: "0",
         isFailed: false,
         gasUsed: Number(update.cost ?? 0),
+        functionType: MULTI_FEED_RELAYER_UPDATE_FUNCTION_TYPE,
         events: update.priceEvents,
       })),
-      hasNextPage: false,
     };
   }
 }

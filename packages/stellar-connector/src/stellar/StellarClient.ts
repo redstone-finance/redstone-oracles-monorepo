@@ -410,17 +410,20 @@ export class StellarClient implements IStellarCaller {
       currentCursor = cursor;
     } while (hasMoreEvents && RedstoneCommon.isDefined(currentCursor));
 
-    const txsPromises = allEvents.map(async ({ id, txHash }) => {
-      const tx = await this.server.getTransaction(txHash);
-      if (tx.status === rpc.Api.GetTransactionStatus.NOT_FOUND) {
-        throw new Error(`Transaction ${txHash} not found for event ${id}`);
-      }
+    const uniqueHashes = [...new Set(allEvents.map((e) => e.txHash))];
+    const txEntries = await Promise.all(
+      uniqueHashes.map(async (txHash) => {
+        const tx = await this.server.getTransaction(txHash);
+        if (tx.status === rpc.Api.GetTransactionStatus.NOT_FOUND) {
+          throw new Error(`Transaction ${txHash} not found`);
+        }
 
-      return tx;
-    });
-    const txs = await Promise.all(txsPromises);
+        return [txHash, tx] as const;
+      })
+    );
+    const txByHash = new Map(txEntries);
 
-    return _.zipWith(allEvents, txs, (event, tx) => ({ event, tx }));
+    return allEvents.map((event) => ({ event, tx: txByHash.get(event.txHash)! }));
   }
 
   private async fixLedgerVersions(startLedger: number, endLedger: number) {
