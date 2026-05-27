@@ -1170,6 +1170,16 @@
       "rateFeed": false,
       "types": ["rwa"]
     },
+    "XBR.Y": {
+      "source": ["rollover-blend", "alltick-api-deferred"],
+      "denomination": "USD",
+      "priceAggregator": "redstoneX",
+      "redstoneXAggregatorConfig": {
+        "priceDiscoverySources": ["alltick-api-deferred"]
+      },
+      "rateFeed": false,
+      "types": ["rwa"]
+    },
     "CURR": {
       "source": [
         "ws-aleno",
