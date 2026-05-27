@@ -1,13 +1,16 @@
 import { SuiGraphQLClient } from "@mysten/sui/graphql";
-import type { TxLookup, TxLookupArgs } from "@redstone-finance/multichain-kit";
+import { ManifestRef, PerManifestTxLookup } from "@redstone-finance/multichain-kit";
 import { loggerFactory, RedstoneCommon } from "@redstone-finance/utils";
 import type { RawGqlInput, RawGqlTx, RawGqlTxn } from "../graphql-types";
 import { AFFECTED_OBJECT_TRANSACTIONS_QUERY } from "../queries";
 import {
+  buildNormalizedSuiTx,
+  computeOldestBlockInPage,
   computeSuiGasUsed,
   computeSuiIsFailed,
   extractSharedObjectId,
   extractWritePricePayloads,
+  filterSuiTxsAndCheckHasNextPage,
 } from "./SuiTxParsing";
 
 const logger = loggerFactory("grpc-sui-tx-lookup");
@@ -22,13 +25,27 @@ const GQL_TYPENAME_INPUT_ARG = "Input";
 
 const GQL_STATUS_FAILURE = "FAILURE";
 
-export class GraphQLSuiTxLookup implements TxLookup {
-  constructor(private readonly graphqlClient: SuiGraphQLClient) {}
+export class GraphQLSuiTxLookup extends PerManifestTxLookup {
+  constructor(private readonly graphqlClient: SuiGraphQLClient) {
+    super();
+  }
 
-  async fetchPage({ adapterContract, cursor }: TxLookupArgs) {
+  protected override async fetchForManifest(
+    manifest: ManifestRef,
+    startBlock: number,
+    endBlock: number,
+    cursor?: string
+  ) {
+    const { adapterContract } = manifest;
     const result = await this.graphqlClient.query({
       query: AFFECTED_OBJECT_TRANSACTIONS_QUERY,
-      variables: { objectId: adapterContract, last: PAGE_SIZE, before: cursor },
+      variables: {
+        objectId: adapterContract,
+        last: PAGE_SIZE,
+        before: cursor,
+        afterCheckpoint: startBlock > 0 ? startBlock - 1 : undefined,
+        beforeCheckpoint: endBlock + 1,
+      },
     });
 
     if (result.errors?.length) {
@@ -42,26 +59,38 @@ export class GraphQLSuiTxLookup implements TxLookup {
       throw new Error(`GraphQL returned no transactions for objectId=${adapterContract}`);
     }
 
-    const data = [...transactions.nodes]
-      .reverse()
-      .flatMap((tx) => GraphQLSuiTxLookup.normalize(tx as unknown as RawGqlTx));
+    const rawNodes = transactions.nodes as unknown as RawGqlTx[];
+    const allFromPage = rawNodes.flatMap((tx) => GraphQLSuiTxLookup.normalize(tx));
 
-    logger.debug(
-      `Fetched ${data.length} txs for objectId=${adapterContract} cursor=${cursor ?? "<none>"} hasPrev=${transactions.pageInfo.hasPreviousPage} startCursor=${transactions.pageInfo.startCursor ?? "<none>"}`
+    const oldestRawBlockInPage = computeOldestBlockInPage(rawNodes, (tx) =>
+      Number(tx.effects?.checkpoint?.sequenceNumber ?? 0)
     );
 
-    return {
-      data,
-      hasNextPage: transactions.pageInfo.hasPreviousPage,
-      nextCursor: transactions.pageInfo.startCursor ?? undefined,
-    };
+    const { data, hasMoreInRange } = filterSuiTxsAndCheckHasNextPage(
+      allFromPage,
+      startBlock,
+      endBlock,
+      transactions.pageInfo.hasPreviousPage,
+      oldestRawBlockInPage
+    );
+
+    logger.debug(
+      `Fetched ${data.length}/${allFromPage.length} in-range txs for objectId=${adapterContract} cursor=${cursor ?? "<none>"} hasPrev=${transactions.pageInfo.hasPreviousPage} startCursor=${transactions.pageInfo.startCursor ?? "<none>"}`
+    );
+
+    const nextCursor = transactions.pageInfo.startCursor;
+    if (hasMoreInRange && nextCursor) {
+      return { data, hasNextPage: true as const, nextCursor };
+    }
+
+    return { data, hasNextPage: false as const };
   }
 
   private static normalize(tx: RawGqlTx) {
     const inputs = GraphQLSuiTxLookup.parseInputs(tx.kind?.inputs?.nodes ?? []);
     const moveCalls = GraphQLSuiTxLookup.parseMoveCalls(tx.kind?.commands?.nodes ?? []);
     const payloads = extractWritePricePayloads(inputs, moveCalls);
-    const targetObjectId = extractSharedObjectId(inputs);
+    const targetObjectId = extractSharedObjectId(inputs, moveCalls);
 
     if (!payloads.length || !targetObjectId) {
       return [];
@@ -87,18 +116,18 @@ export class GraphQLSuiTxLookup implements TxLookup {
       ? RedstoneCommon.msToSecs(new Date(tx.effects.checkpoint.timestamp).getTime())
       : 0;
 
-    return payloads.map((payload) => ({
+    return buildNormalizedSuiTx({
       blockNumber,
       blockTimestamp,
       hash: tx.digest ?? "",
-      from: tx.sender?.address ?? "",
-      to: targetObjectId,
-      data: payload,
+      sender: tx.sender?.address ?? "",
+      targetObjectId,
+      payloads,
       gasLimit: String(tx.gasInput?.gasBudget ?? "0"),
       gasPrice: String(tx.gasInput?.gasPrice ?? "0"),
       isFailed,
       gasUsed,
-    }));
+    });
   }
 
   private static parseInputs(rawInputs: RawGqlInput[]) {

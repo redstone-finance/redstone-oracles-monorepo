@@ -175,8 +175,8 @@ export class SolanaClient {
     return new Date((timestamp || 0) * 1000);
   }
 
-  async getTransactions(fromSlot: number, toSlot: number, addresses: string[]) {
-    let fromSlotSignature, toSlotSignature;
+  async getTransactions(fromSlot: number, toSlot: number, addresses: Set<string>) {
+    let fromSlotSignature: string | undefined, toSlotSignature: string | undefined;
     try {
       const [fromSlotSignatures, toSlotSignatures] = await Promise.all([
         this.connection.getBlockSignatures(fromSlot),
@@ -190,14 +190,13 @@ export class SolanaClient {
       );
     }
 
-    const allSignatures: ConfirmedSignatureInfo[] = [];
-    for (const address of addresses) {
-      allSignatures.push(
-        ...(await this.getAllSignatureInfos(address, fromSlotSignature, toSlotSignature))
-      );
-    }
+    const perAddress = await Promise.all(
+      [...addresses].map((address) =>
+        this.getAllSignatureInfos(address, fromSlotSignature, toSlotSignature)
+      )
+    );
 
-    const filtered = allSignatures.filter((sig) => sig.slot >= fromSlot && sig.slot <= toSlot);
+    const filtered = perAddress.flat().filter((sig) => sig.slot >= fromSlot && sig.slot <= toSlot);
 
     return await Promise.all(
       filtered.map((sig) =>
@@ -217,8 +216,9 @@ export class SolanaClient {
       until: minTxSig,
     });
 
-    if (result.length === TX_FETCHING_BATCH_SIZE && minTxSig && maxTxSig) {
-      const previous = await this.getAllSignatureInfos(address, minTxSig, result[0].signature);
+    const oldest = result.at(-1);
+    if (result.length === TX_FETCHING_BATCH_SIZE && minTxSig && oldest) {
+      const previous = await this.getAllSignatureInfos(address, minTxSig, oldest.signature);
       result.push(...previous);
     }
 
