@@ -58,3 +58,19 @@ export class TestRequestCollector extends Collector.RequestCollector<string, Val
     return result;
   }
 }
+
+export const BATCH_UNSUPPORTED_MARKER = "batch";
+
+export class FallbackTestRequestCollector extends TestRequestCollector {
+  singleCalls: string[] = [];
+
+  protected override fetchSingle(key: string) {
+    this.singleCalls.push(key);
+
+    return Promise.resolve(this.results.get(key) ?? null);
+  }
+
+  protected override isBatchUnsupportedError(error: unknown) {
+    return (error as Error).message.toLowerCase().includes(BATCH_UNSUPPORTED_MARKER);
+  }
+}

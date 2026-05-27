@@ -1,5 +1,6 @@
 import { RedstoneCommon } from "../../src";
 import {
+  FallbackTestRequestCollector,
   HALF_WINDOW_WAIT_MS,
   makeValue,
   MAX,
@@ -13,6 +14,10 @@ import {
 
 function setUp(maxBatchSize = MAX, collectingIntervalMs = QUICK_FLUSH_MS * 2) {
   return new TestRequestCollector(maxBatchSize, collectingIntervalMs);
+}
+
+function setUpWithFallback(maxBatchSize = MAX, collectingIntervalMs = QUICK_FLUSH_MS) {
+  return new FallbackTestRequestCollector(maxBatchSize, collectingIntervalMs);
 }
 
 describe("RequestCollector", () => {
@@ -221,6 +226,73 @@ describe("RequestCollector", () => {
 
       const result = RedstoneCommon.timeout(promise, 100, "timeout");
       await expect(result).rejects.toThrowError("TestRequestCollector disposed");
+    });
+  });
+
+  describe("batch-unsupported fallback (fetchSingle)", () => {
+    it("uses fetchSingle for a single key and skips the batch call", async () => {
+      const sut = setUpWithFallback();
+      sut.results.set("k1", makeValue(1));
+
+      const result = await sut.collectMany(["k1"]);
+
+      expect(result).toEqual([makeValue(1)]);
+      expect(sut.calls).toEqual([]);
+      expect(sut.singleCalls).toEqual(["k1"]);
+    });
+
+    it("still batches multiple keys while batching is supported", async () => {
+      const sut = setUpWithFallback(MAX, SHORT_WINDOW_MS);
+      ["k1", "k2"].forEach((k, i) => sut.results.set(k, makeValue(i + 1)));
+
+      const [r1, r2] = await Promise.all([sut.collectMany(["k1"]), sut.collectMany(["k2"])]);
+
+      expect(r1).toEqual([makeValue(1)]);
+      expect(r2).toEqual([makeValue(2)]);
+      expect(sut.calls).toEqual([["k1", "k2"]]);
+      expect(sut.singleCalls).toEqual([]);
+    });
+
+    it("falls back to individual requests on a batch-unsupported error and stays on singles", async () => {
+      const sut = setUpWithFallback(MAX, SHORT_WINDOW_MS);
+      ["k1", "k2", "k3", "k4"].forEach((k, i) => sut.results.set(k, makeValue(i + 1)));
+
+      sut.rejectNext = new Error("Batch calls are available for paid plans only");
+
+      const [r1, r2] = await Promise.all([sut.collectMany(["k1"]), sut.collectMany(["k2"])]);
+
+      expect(r1).toEqual([makeValue(1)]);
+      expect(r2).toEqual([makeValue(2)]);
+      expect(sut.calls).toEqual([["k1", "k2"]]);
+      expect(sut.singleCalls).toEqual(["k1", "k2"]);
+
+      const [r3, r4] = await Promise.all([sut.collectMany(["k3"]), sut.collectMany(["k4"])]);
+
+      expect(r3).toEqual([makeValue(3)]);
+      expect(r4).toEqual([makeValue(4)]);
+      expect(sut.calls).toEqual([["k1", "k2"]]);
+      expect(sut.singleCalls).toEqual(["k1", "k2", "k3", "k4"]);
+    });
+
+    it("rethrows non-batch errors without falling back and keeps batching enabled", async () => {
+      const sut = setUpWithFallback(MAX, SHORT_WINDOW_MS);
+      ["k1", "k2"].forEach((k, i) => sut.results.set(k, makeValue(i + 1)));
+
+      sut.rejectNext = new Error("429 Too Many Requests");
+
+      await expect(Promise.all([sut.collectMany(["k1"]), sut.collectMany(["k2"])])).rejects.toThrow(
+        "429 Too Many Requests"
+      );
+      expect(sut.singleCalls).toEqual([]);
+
+      const result = await sut.collectMany(["k1", "k2"]);
+
+      expect(result).toEqual([makeValue(1), makeValue(2)]);
+      expect(sut.calls).toEqual([
+        ["k1", "k2"],
+        ["k1", "k2"],
+      ]);
+      expect(sut.singleCalls).toEqual([]);
     });
   });
 });

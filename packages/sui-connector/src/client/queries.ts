@@ -37,8 +37,22 @@ export const RECEIVED_TRANSACTIONS_QUERY = graphql(`
 `);
 
 export const AFFECTED_OBJECT_TRANSACTIONS_QUERY = graphql(`
-  query AffectedObjectTransactions($objectId: SuiAddress!, $last: Int, $before: String) {
-    transactions(last: $last, before: $before, filter: { affectedObject: $objectId }) {
+  query AffectedObjectTransactions(
+    $objectId: SuiAddress!
+    $last: Int
+    $before: String
+    $afterCheckpoint: UInt53
+    $beforeCheckpoint: UInt53
+  ) {
+    transactions(
+      last: $last
+      before: $before
+      filter: {
+        affectedObject: $objectId
+        afterCheckpoint: $afterCheckpoint
+        beforeCheckpoint: $beforeCheckpoint
+      }
+    ) {
       pageInfo {
         hasPreviousPage
         startCursor
