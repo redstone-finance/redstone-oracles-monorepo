@@ -1,7 +1,7 @@
 import { Env, fetchParsedRpcUrlsFromSsmByNetworkId } from "@redstone-finance/chain-configs";
+import { EvmBlockchainService } from "@redstone-finance/evm-adapters";
 import { BalanceProvider, BlockProvider } from "@redstone-finance/multichain-kit";
 import { isNonEvmNetworkId, NetworkId, RedstoneCommon } from "@redstone-finance/utils";
-import { EvmBlockchainService } from "../blockchain-service/EvmBlockchainService";
 import { getNonEvmBlockchainService } from "../blockchain-service/get-non-evm-blockchain-service";
 import {
   DEFAULT_PROVIDER_CONFIG,

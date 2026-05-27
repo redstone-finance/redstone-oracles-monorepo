@@ -62,6 +62,7 @@ export async function getNonEvmBlockchainService(
       const connection = new SolanaConnectionBuilder()
         .withNetworkId(networkId)
         .withRpcUrls(rpcUrls)
+        .withRedStoneConnection()
         .build();
 
       return new SolanaBlockchainService(new SolanaClient(connection));

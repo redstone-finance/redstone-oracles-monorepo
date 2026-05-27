@@ -8,7 +8,11 @@ import {
   GetEpochInfoConfig,
   GetMultipleAccountsConfig,
   GetSlotConfig,
+  GetTransactionConfig,
+  GetVersionedTransactionConfig,
   PublicKey,
+  TransactionResponse,
+  VersionedTransactionResponse,
 } from "@solana/web3.js";
 import {
   CollectableCommitmentOrConfig,
@@ -16,15 +20,24 @@ import {
   GetAccountsInfoRequestCollectorDelegate,
   getCommitmentOrConfigKey,
 } from "./GetAccountsInfoRequestCollector";
+import {
+  getTransactionConfigKey,
+  GetTransactionsRequestCollector,
+  GetTransactionsRequestCollectorDelegate,
+} from "./GetTransactionsRequestCollector";
 
 export class RedStoneConnection
   extends Connection
-  implements GetAccountsInfoRequestCollectorDelegate
+  implements GetAccountsInfoRequestCollectorDelegate, GetTransactionsRequestCollectorDelegate
 {
   private logger = loggerFactory("redstone-solana-connection");
   private readonly getAccountsInfoRequestCollectors = new Collector.CollectorRegistry(
     getCommitmentOrConfigKey,
     this.createCollector.bind(this)
+  );
+  private readonly getTransactionsRequestCollectors = new Collector.CollectorRegistry(
+    getTransactionConfigKey,
+    this.createTransactionsCollector.bind(this)
   );
   private getEpochInfoPromise?: Promise<EpochInfo>;
   private getSlotPromise?: Promise<number>;
@@ -51,6 +64,26 @@ export class RedStoneConnection
       .collectMany([publicKey]);
 
     return result;
+  }
+
+  override getTransaction(
+    signature: string,
+    rawConfig?: GetTransactionConfig
+  ): Promise<TransactionResponse | null>;
+  override getTransaction(
+    signature: string,
+    rawConfig: GetVersionedTransactionConfig
+  ): Promise<VersionedTransactionResponse | null>;
+  override async getTransaction(
+    signature: string,
+    rawConfig?: GetTransactionConfig | GetVersionedTransactionConfig
+  ) {
+    if (!rawConfig || !("maxSupportedTransactionVersion" in rawConfig)) {
+      // eslint-disable-next-line @typescript-eslint/no-deprecated -- preserves base behavior for non-versioned callers
+      return await super.getTransaction(signature, rawConfig as GetTransactionConfig);
+    }
+
+    return await this.getTransactionsRequestCollectors.get(rawConfig).collect(signature);
   }
 
   override async getEpochInfo(
@@ -94,6 +127,13 @@ export class RedStoneConnection
     return collector;
   }
 
+  private createTransactionsCollector(config: GetVersionedTransactionConfig) {
+    const collector = new GetTransactionsRequestCollector(config);
+    collector.delegate = new WeakRef(this);
+
+    return collector;
+  }
+
   /// GetAccountsInfoRequestCollectorDelegate
 
   getAccountsInfoRequestCollectorGetMultipleAccountsInfo(
@@ -105,5 +145,23 @@ export class RedStoneConnection
 
   getAccountsInfoRequestCollectorDispose(commitmentOrConfig?: CollectableCommitmentOrConfig) {
     this.getAccountsInfoRequestCollectors.delete(commitmentOrConfig);
+  }
+
+  /// GetTransactionsRequestCollectorDelegate
+
+  getTransactionsRequestCollectorGetTransactions(
+    signatures: string[],
+    config: GetVersionedTransactionConfig
+  ) {
+    // eslint-disable-next-line @typescript-eslint/no-deprecated -- versioned config picks the non-deprecated overload at runtime
+    return super.getTransactions(signatures, config);
+  }
+
+  getTransactionsRequestCollectorGetTransaction(
+    signature: string,
+    config: GetVersionedTransactionConfig
+  ) {
+    // eslint-disable-next-line @typescript-eslint/no-deprecated -- versioned config picks the non-deprecated overload at runtime
+    return super.getTransaction(signature, config);
   }
 }

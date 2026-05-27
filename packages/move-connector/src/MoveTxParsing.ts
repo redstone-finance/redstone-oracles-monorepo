@@ -5,7 +5,7 @@ import {
   TransactionResponseType,
   UserTransactionResponse,
 } from "@aptos-labs/ts-sdk";
-import { type NormalizedContractTx } from "@redstone-finance/multichain-kit";
+import { MULTI_FEED_RELAYER_UPDATE_FUNCTION_TYPE } from "@redstone-finance/multichain-kit";
 
 const WRITE_PRICE_FUNCTIONS = ["write_price", "write_prices"];
 const PRICE_ADAPTER_MODULE = "price_adapter";
@@ -17,7 +17,7 @@ export function parseMoveWritePriceTx(
   packageAddress: string,
   blockHeight: number,
   blockTimestamp: number
-): NormalizedContractTx | undefined {
+) {
   if (!isUserTransaction(tx) || !isEntryFunction(tx.payload)) {
     return undefined;
   }
@@ -41,6 +41,7 @@ export function parseMoveWritePriceTx(
     gasPrice: String(tx.gas_unit_price),
     isFailed: !tx.success,
     gasUsed: Number(tx.gas_used),
+    functionType: MULTI_FEED_RELAYER_UPDATE_FUNCTION_TYPE,
   };
 }
 

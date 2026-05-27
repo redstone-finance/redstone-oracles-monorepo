@@ -1,4 +1,3 @@
-export * from "./blockchain-service/EvmBlockchainService";
 export * from "./blockchain-service/get-blockchain-service";
 export * from "./blockchain-service/get-non-evm-blockchain-service";
 export * from "./get-zrodelko-private-key";

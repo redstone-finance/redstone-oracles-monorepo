@@ -21,6 +21,7 @@ export type {
   PriceFeedWithRoundsMock,
   RedstoneAdapterBase,
 } from "../typechain-types";
+export { EvmBlockchainService } from "./blockchain-service/EvmBlockchainService";
 export { type EvmContractAdapter } from "./core/contract-interactions/EvmContractAdapter";
 export { MentoEvmContractAdapter } from "./core/contract-interactions/MentoEvmContractAdapter";
 export { getSortedOraclesContractAtAddress } from "./custom-integrations/mento/get-sorted-oracles-contract-at-address";
