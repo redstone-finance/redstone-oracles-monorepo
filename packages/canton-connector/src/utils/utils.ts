@@ -134,13 +134,13 @@ export function makeActiveContractData<T = unknown>(
 
 export function readPartyIds() {
   return {
-    viewerPartyId: RedstoneCommon.getFromEnv("VIEWER_PARTY_ID"),
-    updaterPartyId: RedstoneCommon.getFromEnv("UPDATER_PARTY_ID", z.string().optional()),
+    viewerPartyId: RedstoneCommon.getFromEnv("CANTON_VIEWER_PARTY_ID"),
+    updaterPartyId: RedstoneCommon.getFromEnv("CANTON_UPDATER_PARTY_ID", z.string().optional()),
   };
 }
 
 export function readPartySuffix() {
-  return RedstoneCommon.getFromEnv("PARTY_SUFFIX");
+  return RedstoneCommon.getFromEnv("CANTON_PARTY_SUFFIX");
 }
 
 export function combineIntoId(interfaceId: string, templateName: string) {
