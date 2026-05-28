@@ -132,7 +132,7 @@ async function getCantonContractAdapter(
     client,
     {
       ...CANTON_CONTRACT_ADAPTER_DEFAULT_CONFIG,
-      viewerPartyId: RedstoneCommon.getFromEnv("VIEWER_PARTY_ID"),
+      viewerPartyId: RedstoneCommon.getFromEnv("CANTON_VIEWER_PARTY_ID"),
       adapterId: relayerManifest.adapterContract,
     },
     relayerManifest.adapterContractPackageId

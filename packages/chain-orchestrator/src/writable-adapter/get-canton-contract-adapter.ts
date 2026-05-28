@@ -30,8 +30,8 @@ export const getCantonContractAdapter = (relayerConfig: PartialRelayerConfig) =>
     client,
     {
       ...CANTON_CONTRACT_ADAPTER_DEFAULT_CONFIG,
-      viewerPartyId: RedstoneCommon.getFromEnv("VIEWER_PARTY_ID"),
-      updaterPartyId: RedstoneCommon.getFromEnv("UPDATER_PARTY_ID"),
+      viewerPartyId: RedstoneCommon.getFromEnv("CANTON_VIEWER_PARTY_ID"),
+      updaterPartyId: RedstoneCommon.getFromEnv("CANTON_UPDATER_PARTY_ID"),
       additionalPillViewers: readAdditionalPillViewers(),
       adapterId: adapterContractAddress,
       maxTxSendAttempts:
