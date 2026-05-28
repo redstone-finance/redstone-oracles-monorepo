@@ -12,7 +12,7 @@ import {
 import { consts } from "@redstone-finance/protocol";
 import { RedstoneCommon } from "@redstone-finance/utils";
 import { providers } from "ethers";
-import { parseLogEvent } from "./abi-utils";
+import { parseLogEvent } from "./event-utils";
 import { extractTopUpEntries, Multicall3Config } from "./extract-top-ups";
 import { BlockWithTipPercentiles, fillTipPercentiles } from "./fill-tip-percentiles";
 
