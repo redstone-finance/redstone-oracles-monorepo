@@ -25,7 +25,7 @@ export class GetTransactionsRequestCollector extends Collector.RequestCollector<
     private readonly config: GetVersionedTransactionConfig,
     collectingIntervalMs = DEFAULT_COLLECTING_INTERVAL_MS
   ) {
-    super("solana-transactions", MAX_NUMBER_OF_TRANSACTIONS_TO_FETCH, collectingIntervalMs);
+    super("solana-get-transactions", MAX_NUMBER_OF_TRANSACTIONS_TO_FETCH, collectingIntervalMs);
   }
 
   protected override keyToString(signature: string) {

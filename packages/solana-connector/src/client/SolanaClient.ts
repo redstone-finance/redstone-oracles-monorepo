@@ -199,9 +199,16 @@ export class SolanaClient {
     const filtered = perAddress.flat().filter((sig) => sig.slot >= fromSlot && sig.slot <= toSlot);
 
     return await Promise.all(
-      filtered.map((sig) =>
-        this.connection.getTransaction(sig.signature, { maxSupportedTransactionVersion: 0 })
-      )
+      filtered.map(async (sig) => {
+        const tx = await this.connection.getTransaction(sig.signature, {
+          maxSupportedTransactionVersion: 0,
+        });
+        if (!RedstoneCommon.isDefined(tx)) {
+          throw new Error(`Could not fetch transaction ${sig.signature} in slot ${sig.slot}`);
+        }
+
+        return tx;
+      })
     );
   }
 
