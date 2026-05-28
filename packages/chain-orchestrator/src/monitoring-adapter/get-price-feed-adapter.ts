@@ -62,7 +62,7 @@ export async function getPriceFeedAdapter(
 
       return new PricePillCantonContractAdapter(
         client,
-        RedstoneCommon.getFromEnv("VIEWER_PARTY_ID"),
+        RedstoneCommon.getFromEnv("CANTON_VIEWER_PARTY_ID"),
         address,
         feedId
       );
