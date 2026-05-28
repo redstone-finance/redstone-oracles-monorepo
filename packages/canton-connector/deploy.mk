@@ -36,11 +36,11 @@ endif
 
 TOKEN=$(shell cat token.txt)
 
-PARTY_UPDATER=RedStoneOracleUpdater::$(PARTY_SUFFIX)
-PARTY_VIEWER=RedStoneOracleViewer::$(PARTY_SUFFIX)
-PARTY_OWNER=RedStoneOracleOwner::$(PARTY_SUFFIX)
-PARTY_CLIENT=Client::$(PARTY_SUFFIX)
-PARTY_BENEFICIARY=$(BENEFICIARY)::$(PARTY_SUFFIX)
+PARTY_UPDATER=RedStoneOracleUpdater::$(CANTON_PARTY_SUFFIX)
+PARTY_VIEWER=RedStoneOracleViewer::$(CANTON_PARTY_SUFFIX)
+PARTY_OWNER=RedStoneOracleOwner::$(CANTON_PARTY_SUFFIX)
+PARTY_CLIENT=Client::$(CANTON_PARTY_SUFFIX)
+PARTY_BENEFICIARY=$(BENEFICIARY)::$(CANTON_PARTY_SUFFIX)
 
 get-token:
 	@test -n "$(KEYCLOAK_USERNAME)" || (echo "Set KEYCLOAK_USERNAME env variable" && exit 1)
@@ -106,7 +106,7 @@ deploy-core-client: get-token
 				"templateId": "$(CORE_CLIENT_TEMPLATE_ID)", \
 				"createArguments": { \
 					"owner": "$(PARTY_OWNER)", \
-					"viewers": ["Client::$(PARTY_SUFFIX)"]}}}], \
+					"viewers": ["Client::$(CANTON_PARTY_SUFFIX)"]}}}], \
 		"actAs": ["$(PARTY_OWNER)"], \
 		"commandId": "deploy-core-client-$(shell date +%s)"}' | jq '.'
 
