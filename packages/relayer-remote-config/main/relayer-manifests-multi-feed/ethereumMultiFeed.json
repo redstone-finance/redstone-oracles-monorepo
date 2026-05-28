@@ -461,6 +461,16 @@
         "deviationPercentage": 0.05,
         "timeSinceLastUpdateInMilliseconds": 86400000
       }
+    },
+    "NGI+_FUNDAMENTAL": {
+      "priceFeedAddress": "0x7391452a90ddA26892Bc52FeF3eF42f92F19fC61",
+      "updateTriggersOverrides": {
+        "deviationPercentage": 0.000001,
+        "timeSinceLastUpdateInMilliseconds": 86400000
+      }
+    },
+    "ETHFI": {
+      "priceFeedAddress": "0xc03b2a75620277927b4F0Fc2f56CDE0D0065e42b"
     }
   }
 }
