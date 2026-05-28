@@ -2926,7 +2926,6 @@
     "UBTC": {
       "source": [
         "hyperliquid-api-fetcher-usdc",
-        "hyperliquid-api-fetcher-usdh",
         "hyperswap-hyperevm-whype-3000",
         "kittenswap-hyperevm-whype",
         "nest-hyperevm-whype",
