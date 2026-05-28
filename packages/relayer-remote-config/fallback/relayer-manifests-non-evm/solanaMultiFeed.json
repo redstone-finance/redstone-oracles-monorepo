@@ -12,10 +12,18 @@
   "dataServiceId": "redstone-primary-prod",
   "priceFeeds": {
     "ETH": {
-      "priceFeedAddress": "HPmPoq3eUTPePsDB5U4G6msu5RpeZHhMemc5VnqxQ9Lx"
+      "priceFeedAddress": "HPmPoq3eUTPePsDB5U4G6msu5RpeZHhMemc5VnqxQ9Lx",
+      "updateTriggersOverrides": {
+        "deviationPercentage": 0.1,
+        "timeSinceLastUpdateInMilliseconds": 60000
+      }
     },
     "BTC": {
-      "priceFeedAddress": "74o5fhuMC33HgfUqvv2TdpYiKvEWfcRTS1E8zxK6ESjN"
+      "priceFeedAddress": "74o5fhuMC33HgfUqvv2TdpYiKvEWfcRTS1E8zxK6ESjN",
+      "updateTriggersOverrides": {
+        "deviationPercentage": 0.1,
+        "timeSinceLastUpdateInMilliseconds": 60000
+      }
     },
     "BUIDL_SOLANA_FUNDAMENTAL": {
       "priceFeedAddress": "ESxdEASDcYRN4ybnYNCJJuPHcF2SGJN1MypQq1yfY9Kz",
@@ -108,14 +116,14 @@
       "priceFeedAddress": "6sX9HsaAPhAT1MCskQFTjreuNCqFgkJWKJ4hfdvTbJET",
       "updateTriggersOverrides": {
         "deviationPercentage": 0.1,
-        "timeSinceLastUpdateInMilliseconds": 21600000
+        "timeSinceLastUpdateInMilliseconds": 60000
       }
     },
     "SOL": {
       "priceFeedAddress": "9FboGHATJTgJA7fzG3fKeV1VuLqDsV5HtCGUR2PqZor3",
       "updateTriggersOverrides": {
         "deviationPercentage": 0.1,
-        "timeSinceLastUpdateInMilliseconds": 21600000
+        "timeSinceLastUpdateInMilliseconds": 60000
       }
     },
     "NUSD_FUNDAMENTAL": {
