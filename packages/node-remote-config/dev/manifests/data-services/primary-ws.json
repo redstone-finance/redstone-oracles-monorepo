@@ -32,7 +32,10 @@
       },
       "skipBroadcasting": true,
       "denomination": "USD",
-      "rateFeed": false
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
     },
     "USDC": {
       "source": [
@@ -70,7 +73,10 @@
       },
       "skipBroadcasting": true,
       "denomination": "USD",
-      "rateFeed": false
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
     },
     "DAI": {
       "source": [
@@ -92,6 +98,9 @@
       },
       "skipBroadcasting": true,
       "denomination": "USD",
+      "types": [
+        "crypto"
+      ],
       "rateFeed": false
     },
     "EUR": {
@@ -140,6 +149,14 @@
         "upperClampPercent": 0.1
       },
       "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
+    },
+    "USDJPY_FX": {
+      "source": [],
+      "denomination": "JPY",
       "rateFeed": false,
       "types": [
         "rwa"
@@ -366,6 +383,22 @@
       ]
     },
     "STRC": {
+      "source": [],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
+    },
+    "BRKB": {
+      "source": [],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
+    },
+    "CBRS": {
       "source": [],
       "denomination": "USD",
       "rateFeed": false,
