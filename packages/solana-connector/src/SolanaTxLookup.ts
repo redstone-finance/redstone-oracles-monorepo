@@ -4,7 +4,6 @@ import {
   RangeScanTxLookup,
 } from "@redstone-finance/multichain-kit";
 import { consts } from "@redstone-finance/protocol";
-import { RedstoneCommon } from "@redstone-finance/utils";
 import { VersionedTransactionResponse } from "@solana/web3.js";
 import { hexlify } from "ethers/lib/utils";
 import { SolanaClient } from "./client/SolanaClient";
@@ -22,9 +21,7 @@ export class SolanaTxLookup extends RangeScanTxLookup<VersionedTransactionRespon
     endBlock: number,
     adapters: Set<string>
   ) {
-    const raw = await this.client.getTransactions(startBlock, endBlock, adapters);
-
-    return raw.filter(RedstoneCommon.isDefined);
+    return await this.client.getTransactions(startBlock, endBlock, adapters);
   }
 
   protected override normalizeMany(txs: VersionedTransactionResponse[]) {

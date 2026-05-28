@@ -24,7 +24,7 @@ export abstract class RangeScanTxLookup<BlockItem> implements TxLookup {
 
     if (dataSettled.status === "rejected") {
       throw new Error(
-        `Failed to fetch items in range ${startBlock}..${endBlock}: ${RedstoneCommon.stringifyError(dataSettled.reason)}`
+        `Failed to fetch items in range [${startBlock}...${endBlock}]: ${RedstoneCommon.stringifyError(dataSettled.reason)}`
       );
     }
 
