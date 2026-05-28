@@ -23,7 +23,7 @@ export function readNetwork(): CantonNetwork {
 }
 
 export function readPartySuffix() {
-  return RedstoneCommon.getFromEnv("PARTY_SUFFIX");
+  return RedstoneCommon.getFromEnv("CANTON_PARTY_SUFFIX");
 }
 
 export function readRpcUrls() {
