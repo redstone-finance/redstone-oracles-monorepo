@@ -32,7 +32,8 @@
       },
       "skipBroadcasting": true,
       "denomination": "USD",
-      "rateFeed": false
+      "rateFeed": false,
+      "types": ["crypto"]
     },
     "USDC": {
       "source": [
@@ -70,7 +71,8 @@
       },
       "skipBroadcasting": true,
       "denomination": "USD",
-      "rateFeed": false
+      "rateFeed": false,
+      "types": ["crypto"]
     },
     "DAI": {
       "source": [
@@ -92,6 +94,7 @@
       },
       "skipBroadcasting": true,
       "denomination": "USD",
+      "types": ["crypto"],
       "rateFeed": false
     },
     "EUR": {
@@ -170,6 +173,12 @@
         "upperClampPercent": 0.1
       },
       "denomination": "USD",
+      "rateFeed": false,
+      "types": ["rwa"]
+    },
+    "USDJPY_FX": {
+      "source": ["inverse-price"],
+      "denomination": "JPY",
       "rateFeed": false,
       "types": ["rwa"]
     },
@@ -453,6 +462,32 @@
         "financialmodelingprep-deferred",
         "ws-dx-feed",
         "ws-polygon-massive",
+        "ws-twelve-data"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": ["rwa"]
+    },
+    "BRKB": {
+      "source": [
+        "databento",
+        "ws-polygon-massive",
+        "alltick-stocks-api-deferred",
+        "financialmodelingprep-deferred",
+        "ws-dx-feed",
+        "ws-twelve-data"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": ["rwa"]
+    },
+    "CBRS": {
+      "source": [
+        "databento",
+        "ws-polygon-massive",
+        "alltick-stocks-api-deferred",
+        "financialmodelingprep-deferred",
+        "ws-dx-feed",
         "ws-twelve-data"
       ],
       "denomination": "USD",
