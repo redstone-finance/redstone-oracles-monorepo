@@ -1,4 +1,4 @@
-import { Collector, loggerFactory } from "@redstone-finance/utils";
+import { Collector, loggerFactory, RedstoneCommon } from "@redstone-finance/utils";
 import {
   Commitment,
   Connection,
@@ -73,7 +73,7 @@ export class RedStoneConnection
   override getTransaction(
     signature: string,
     rawConfig: GetVersionedTransactionConfig
-  ): Promise<VersionedTransactionResponse | null>;
+  ): Promise<VersionedTransactionResponse>;
   override async getTransaction(
     signature: string,
     rawConfig?: GetTransactionConfig | GetVersionedTransactionConfig
@@ -83,7 +83,12 @@ export class RedStoneConnection
       return await super.getTransaction(signature, rawConfig as GetTransactionConfig);
     }
 
-    return await this.getTransactionsRequestCollectors.get(rawConfig).collect(signature);
+    const tx = await this.getTransactionsRequestCollectors.get(rawConfig).collect(signature);
+    if (!RedstoneCommon.isDefined(tx)) {
+      throw new Error(`Transaction ${signature} not found on this RPC`);
+    }
+
+    return tx;
   }
 
   override async getEpochInfo(
