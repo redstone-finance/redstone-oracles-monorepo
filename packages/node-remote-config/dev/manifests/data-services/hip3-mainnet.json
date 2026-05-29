@@ -94,6 +94,12 @@
       "denomination": "USD",
       "rateFeed": false
     },
+    "ORACLE_flx:USDE_EMA_600S": {
+      "source": ["ema"],
+      "broadcasters": ["influx"],
+      "denomination": "USD",
+      "rateFeed": false
+    },
     "MARK_flx:USDE": {
       "source": ["ws-hyperliquid-perps-flx", "ws-hydromancer-perps-flx"],
       "customWeightsForWeightedMedian": {
@@ -182,6 +188,12 @@
       "rateFeed": false
     },
     "ORACLE_flx:XMR_EMA_150S": {
+      "source": ["ema"],
+      "broadcasters": ["influx"],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "ORACLE_flx:XMR_EMA_600S": {
       "source": ["ema"],
       "broadcasters": ["influx"],
       "denomination": "USD",
