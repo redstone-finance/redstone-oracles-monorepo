@@ -2042,6 +2042,102 @@
       ],
       "denomination": "USDm",
       "rateFeed": false
+    },
+    "TENCENT": {
+      "source": [],
+      "denomination": "HKD",
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
+    },
+    "XIAOMI": {
+      "source": [],
+      "denomination": "HKD",
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
+    },
+    "POPMART": {
+      "source": [],
+      "denomination": "HKD",
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
+    },
+    "MINIMAX": {
+      "source": [],
+      "denomination": "HKD",
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
+    },
+    "TSMC": {
+      "source": [],
+      "denomination": "TWD",
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
+    },
+    "KIOXIA": {
+      "source": [],
+      "denomination": "JPY",
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
+    },
+    "FUJIKURA": {
+      "source": [],
+      "denomination": "JPY",
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
+    },
+    "SOFTBANK": {
+      "source": [],
+      "denomination": "JPY",
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
+    },
+    "SAMSUNG": {
+      "source": [],
+      "denomination": "KRW",
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
+    },
+    "SK_HYNIX": {
+      "source": [],
+      "denomination": "KRW",
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
+    },
+    "HYUNDAI": {
+      "source": [],
+      "denomination": "KRW",
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
+    },
+    "KODEX200": {
+      "source": [],
+      "denomination": "KRW",
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
     }
   },
   "multiPointPackages": {
