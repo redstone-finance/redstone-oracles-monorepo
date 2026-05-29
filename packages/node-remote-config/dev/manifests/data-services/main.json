@@ -9099,22 +9099,6 @@
         "upperClampPercent": 0.1
       }
     },
-    "SAMSUNG": {
-      "source": [],
-      "denomination": "KRW",
-      "rateFeed": false,
-      "types": [
-        "rwa"
-      ]
-    },
-    "SK_HYNIX": {
-      "source": [],
-      "denomination": "KRW",
-      "rateFeed": false,
-      "types": [
-        "rwa"
-      ]
-    },
     "LBXAUAM": {
       "source": [],
       "denomination": "USD",
