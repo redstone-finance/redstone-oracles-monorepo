@@ -8391,18 +8391,6 @@
         "upperClampPercent": 0.1
       }
     },
-    "SAMSUNG": {
-      "source": ["ws-aleno"],
-      "denomination": "KRW",
-      "rateFeed": false,
-      "types": ["rwa"]
-    },
-    "SK_HYNIX": {
-      "source": ["ws-aleno"],
-      "denomination": "KRW",
-      "rateFeed": false,
-      "types": ["rwa"]
-    },
     "LBXAUAM": {
       "source": ["metals-api"],
       "denomination": "USD",
