@@ -761,6 +761,18 @@
         "rwa"
       ]
     },
+    "GAS.Y": {
+      "source": [],
+      "denomination": "USD",
+      "priceAggregator": "redstoneX",
+      "redstoneXAggregatorConfig": {
+        "priceDiscoverySources": []
+      },
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
+    },
     "WTI_CURRENT": {
       "source": [],
       "skipBroadcasting": true,
@@ -821,6 +833,15 @@
         "rwa"
       ]
     },
+    "XAG_NEXT_FRONT": {
+      "source": [],
+      "skipBroadcasting": true,
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
+    },
     "XAG": {
       "source": [],
       "priceAggregator": "primarySource",
@@ -864,6 +885,15 @@
       ]
     },
     "XAU_FRONT": {
+      "source": [],
+      "skipBroadcasting": true,
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
+    },
+    "XAU_NEXT_FRONT": {
       "source": [],
       "skipBroadcasting": true,
       "denomination": "USD",
@@ -923,6 +953,15 @@
         "rwa"
       ]
     },
+    "XPT_NEXT_FRONT": {
+      "source": [],
+      "skipBroadcasting": true,
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
+    },
     "XPT": {
       "source": [],
       "priceAggregator": "primarySource",
@@ -974,7 +1013,28 @@
         "rwa"
       ]
     },
+    "XCU_NEXT_FRONT": {
+      "source": [],
+      "skipBroadcasting": true,
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
+    },
     "XCU.T": {
+      "source": [],
+      "priceAggregator": "redstoneX",
+      "redstoneXAggregatorConfig": {
+        "priceDiscoverySources": []
+      },
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
+    },
+    "XCU.Y": {
       "source": [],
       "priceAggregator": "redstoneX",
       "redstoneXAggregatorConfig": {
@@ -1029,6 +1089,18 @@
         "rwa"
       ]
     },
+    "USA100.Y": {
+      "source": [],
+      "priceAggregator": "redstoneX",
+      "redstoneXAggregatorConfig": {
+        "priceDiscoverySources": []
+      },
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
+    },
     "USA500_CURRENT": {
       "source": [],
       "skipBroadcasting": true,
@@ -1048,6 +1120,18 @@
       ]
     },
     "USA500.T": {
+      "source": [],
+      "priceAggregator": "redstoneX",
+      "redstoneXAggregatorConfig": {
+        "priceDiscoverySources": []
+      },
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
+    },
+    "USA500.Y": {
       "source": [],
       "priceAggregator": "redstoneX",
       "redstoneXAggregatorConfig": {
