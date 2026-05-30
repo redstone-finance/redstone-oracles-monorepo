@@ -1,3 +1,4 @@
+import type { ErrorCode } from "@ethersproject/logger";
 import axios, { AxiosError } from "axios";
 import { LogLevels } from "consola";
 import { ethers } from "ethers";
@@ -187,4 +188,15 @@ export function simplifyErrorMessage(error: unknown) {
   } else {
     return stringifyError(error);
   }
+}
+
+export interface EthersError {
+  code: ErrorCode;
+  message: string;
+}
+
+export function isEthersError(e: unknown): e is EthersError {
+  const error = e as Partial<EthersError>;
+
+  return !!error.code && !!error.message;
 }
