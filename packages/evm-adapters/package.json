@@ -27,6 +27,7 @@
   "dependencies": {
     "@chainlink/contracts": "1.2.0",
     "@ethersproject/abstract-provider": "^5.7.0",
+    "@ethersproject/logger": "^5.7.0",
     "@openzeppelin/contracts": "^4.8.1",
     "@openzeppelin/contracts-upgradeable": "^4.8.3",
     "@redstone-finance/evm-connector": "workspace:*",

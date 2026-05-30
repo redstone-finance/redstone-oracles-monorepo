@@ -1,5 +1,4 @@
 import { BlockTag } from "@ethersproject/abstract-provider";
-import { ErrorCode } from "@ethersproject/logger";
 import { TelemetryPoint } from "@redstone-finance/internal-utils";
 import { MathUtils, NetworkId } from "@redstone-finance/utils";
 import { providers } from "ethers";
@@ -7,7 +6,6 @@ import { RedstoneEthers5Provider } from "./providers/RedstoneProvider";
 
 export type ReportMetricFn = (message: TelemetryPoint) => void;
 export type ContractCallOverrides = { blockTag: BlockTag };
-export type EthersError = { code: ErrorCode; message: string };
 
 export const HARDHAT_CHAIN_ID = 31337;
 
@@ -22,12 +20,6 @@ export const convertHexToNumber = (hex: string): number => {
   }
 
   return number;
-};
-
-export const isEthersError = (e: unknown): e is EthersError => {
-  const error = e as Partial<EthersError>;
-
-  return !!error.code && !!error.message;
 };
 
 export function getProviderNetworkInfo(

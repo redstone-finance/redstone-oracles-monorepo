@@ -3,6 +3,7 @@ import {
   TransactionReceipt,
   TransactionResponse,
 } from "@ethersproject/abstract-provider";
+import { ErrorCode } from "@ethersproject/logger";
 import {
   getFunctionSignature,
   normalizeRedStoneTxData,
@@ -10,7 +11,7 @@ import {
   TxLookupAddresses,
 } from "@redstone-finance/multichain-kit";
 import { consts } from "@redstone-finance/protocol";
-import { RedstoneCommon } from "@redstone-finance/utils";
+import { loggerFactory, RedstoneCommon } from "@redstone-finance/utils";
 import { providers } from "ethers";
 import { parseLogEvent } from "./event-utils";
 import { extractTopUpEntries, Multicall3Config } from "./extract-top-ups";
@@ -23,6 +24,8 @@ const BLACKLISTED_FUNCTION_SIGNATURES = [
   "0xf7a57904", // MegaEth Transfer
 ];
 
+const logger = loggerFactory("evm-tx-lookup");
+
 export class EvmTxLookup extends RangeScanTxLookup<BlockWithTipPercentiles> {
   constructor(
     private readonly provider: providers.Provider,
@@ -34,7 +37,7 @@ export class EvmTxLookup extends RangeScanTxLookup<BlockWithTipPercentiles> {
   protected override async fetchItemsInRange(startBlock: number, endBlock: number) {
     const blockPromises: (() => Promise<BlockWithTransactions>)[] = [];
     for (let blockNumber = startBlock; blockNumber <= endBlock; blockNumber++) {
-      blockPromises.push(() => this.provider.getBlockWithTransactions(blockNumber));
+      blockPromises.push(() => this.fetchBlockResilient(blockNumber));
     }
     const blocks = await RedstoneCommon.batchPromises(
       RPC_CALL_BATCH_SIZE,
@@ -44,6 +47,41 @@ export class EvmTxLookup extends RangeScanTxLookup<BlockWithTipPercentiles> {
     );
 
     return blocks.map(fillTipPercentiles);
+  }
+
+  private async fetchBlockResilient(blockNumber: number) {
+    try {
+      return await this.provider.getBlockWithTransactions(blockNumber);
+    } catch (e) {
+      if (!RedstoneCommon.isEthersError(e) || e.code !== ErrorCode.INVALID_ARGUMENT) {
+        throw e;
+      }
+
+      try {
+        const block = await this.provider.getBlock(blockNumber);
+
+        if (block.transactions.length === 1) {
+          // If there's only one transaction, and that's a RedStone tx, it's parseable
+          return <BlockWithTransactions>{ ...block, transactions: [] };
+        }
+
+        logger.warn(
+          `Block ${blockNumber} has unparseable txs - that's probably ok for TEMPO networks; falling back to per-tx fetch: ${RedstoneCommon.stringifyError(e)}`
+        );
+
+        const settled = await Promise.allSettled(
+          block.transactions.map((hash) => this.provider.getTransaction(hash))
+        );
+        const { results } = RedstoneCommon.splitSettlements(settled);
+        const transactions = results.filter(RedstoneCommon.isDefined);
+
+        return <BlockWithTransactions>{ ...block, transactions };
+      } catch (e) {
+        logger.error(`Failed to fetch block ${blockNumber}: ${RedstoneCommon.stringifyError(e)}`);
+
+        throw e;
+      }
+    }
   }
 
   protected override async normalizeMany(
