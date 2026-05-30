@@ -14,6 +14,7 @@ const KNOWN_EVENTS_MULTI_FEED = [
 const KNOWN_EVENTS_OTHER = [
   "AnswerUpdated(int256 indexed,uint256 indexed,uint256)", // MergedPriceAdapter
   "CannotUpdateMoreThanOneDataFeed()",
+  "Transfer(address indexed,address indexed,uint256)", // Tempo networks
 ];
 const eventsInterface = new Interface(
   [...KNOWN_EVENTS_MULTI_FEED, ...KNOWN_EVENTS_OTHER].map((sig) => `event ${sig}`)

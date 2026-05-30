@@ -3,7 +3,6 @@ import { TransactionRequest, TransactionResponse } from "@ethersproject/provider
 import { loggerFactory, RedstoneCommon, RedstoneLogger, Tx } from "@redstone-finance/utils";
 import { providers, utils } from "ethers";
 import _ from "lodash";
-import { EthersError, isEthersError } from "../common";
 import { AuctionModelGasEstimator } from "./AuctionModelGasEstimator";
 import { AuctionModelGasEstimatorV2 } from "./AuctionModelGasEstimatorV2";
 import {
@@ -218,7 +217,7 @@ export class TxDelivery {
     result: TransactionResponse | undefined,
     nonce: number
   ) {
-    RedstoneCommon.assert(isEthersError(ethersError), "Unknown non ethers error");
+    RedstoneCommon.assert(RedstoneCommon.isEthersError(ethersError), "Unknown non ethers error");
 
     if (TxDelivery.isAlreadyKnownError(ethersError)) {
       this.opts.logger(`Transaction ${result?.hash} already known, nonce: ${nonce}`);
@@ -325,7 +324,7 @@ export class TxDelivery {
     return messages.some((message) => e.message.includes(message));
   }
 
-  private static isUnderpricedError(e: EthersError) {
+  private static isUnderpricedError(e: RedstoneCommon.EthersError) {
     return (
       (this.messageContainsAny(e, "maxFeePerGas", "baseFeePerGas", "underpriced") ||
         e.code === ErrorCode.REPLACEMENT_UNDERPRICED ||
@@ -335,7 +334,7 @@ export class TxDelivery {
     );
   }
 
-  private static isNonceExpiredError(e: EthersError) {
+  private static isNonceExpiredError(e: RedstoneCommon.EthersError) {
     return (
       this.messageContainsAny(
         e,
@@ -346,14 +345,14 @@ export class TxDelivery {
     );
   }
 
-  private static isAlreadyKnownError(e: EthersError) {
+  private static isAlreadyKnownError(e: RedstoneCommon.EthersError) {
     return (
       e.code === ErrorCode.SERVER_ERROR &&
       this.messageContainsAny(e, "already known", "existing transaction had higher priority")
     );
   }
 
-  private static isInsufficientFundsError(e: EthersError) {
+  private static isInsufficientFundsError(e: RedstoneCommon.EthersError) {
     return e.code === ErrorCode.INSUFFICIENT_FUNDS;
   }
 

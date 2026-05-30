@@ -8289,6 +8289,7 @@ __metadata:
     "@chainlink/contracts": "npm:1.2.0"
     "@ethersproject/abi": "npm:^5.6.3"
     "@ethersproject/abstract-provider": "npm:^5.7.0"
+    "@ethersproject/logger": "npm:^5.7.0"
     "@ethersproject/providers": "npm:^5.6.8"
     "@nomicfoundation/hardhat-chai-matchers": "npm:^1.0.6"
     "@nomicfoundation/hardhat-network-helpers": "npm:^1.0.9"
@@ -10420,6 +10421,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@redstone-finance/utils@workspace:packages/utils"
   dependencies:
+    "@ethersproject/logger": "npm:^5.7.0"
     "@ethersproject/providers": "npm:^5.6.8"
     "@types/lodash": "npm:^4.14.195"
     "@types/sinon": "npm:^10.0.15"
