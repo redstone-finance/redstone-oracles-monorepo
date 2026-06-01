@@ -5879,6 +5879,15 @@
       ],
       "denomination": "USD",
       "rateFeed": false
+    },
+    "JupUSD": {
+      "source": [
+        "meteora-solana-mainnet-usdc",
+        "orca-solana-mainnet-usdc",
+        "raydium-clmm-solana-mainnet-usdc"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
     }
   },
   "multiPointPackages": {
