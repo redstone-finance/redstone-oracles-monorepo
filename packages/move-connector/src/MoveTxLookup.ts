@@ -5,12 +5,14 @@ import {
   TxLookupAddresses,
 } from "@redstone-finance/multichain-kit";
 import { loggerFactory, RedstoneCommon } from "@redstone-finance/utils";
+import {
+  MICROSECS_PER_SEC,
+  RPC_CALL_BATCH_SIZE,
+  RPC_CALL_MS_BETWEEN_BATCHES,
+} from "./lookup-tx-common";
 import { MoveClient } from "./MoveClient";
 import { parseMoveWritePriceTx } from "./MoveTxParsing";
 
-const MICROSECS_PER_SEC = 1_000_000n;
-const RPC_CALL_BATCH_SIZE = 25;
-const RPC_CALL_MS_BETWEEN_BATCHES = 100;
 const logger = loggerFactory("move-tx-lookup");
 
 interface MoveTxItem {

@@ -1,5 +1,6 @@
 import { Aptos, AptosConfig } from "@aptos-labs/ts-sdk";
 import { ChainType, ChainTypeEnum, MultiExecutor, RedstoneCommon } from "@redstone-finance/utils";
+import { API_TYPE_INDEXER, MoveApi } from "./MoveApi";
 import { MoveClient } from "./MoveClient";
 import {
   AptosAndMovementNetwork,
@@ -25,11 +26,15 @@ export abstract class MoveClientBuilder extends MultiExecutor.ClientBuilder<Move
       throw new Error("Network not set");
     }
 
-    if (!this.urls.length) {
+    const network = chainIdToNetwork(this.chainId);
+    const indexerApi = this.getIndexerApi();
+    const indexerConfig = indexerApi?.apiKey
+      ? { HEADERS: { Authorization: `Bearer ${indexerApi.apiKey}` } }
+      : undefined;
+
+    if (!this.getEligibleUrls().length) {
       this.urls.push(chainIdtoUrl(this.chainId));
     }
-
-    const network = chainIdToNetwork(this.chainId);
 
     return this.makeMultiExecutor(
       (url) =>
@@ -37,7 +42,9 @@ export abstract class MoveClientBuilder extends MultiExecutor.ClientBuilder<Move
           new Aptos(
             new AptosConfig({
               network,
-              fullnode: url,
+              fullnode: MoveApi.parseUrl(url).baseUrl,
+              indexer: indexerApi?.baseUrl,
+              indexerConfig,
             })
           )
         ),
@@ -55,6 +62,16 @@ export abstract class MoveClientBuilder extends MultiExecutor.ClientBuilder<Move
 
   withNetwork(network: AptosAndMovementNetwork) {
     return this.withChainId(networkToChainId(network));
+  }
+
+  protected override getEligibleUrls() {
+    return this.urls.filter((url) => MoveApi.parseUrl(url).type !== API_TYPE_INDEXER);
+  }
+
+  private getIndexerApi() {
+    return this.urls
+      .map((url) => MoveApi.parseUrl(url))
+      .find((api) => api.type === API_TYPE_INDEXER);
   }
 }
 
