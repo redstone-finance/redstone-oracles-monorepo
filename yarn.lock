@@ -7894,6 +7894,29 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@raydium-io/raydium-sdk-v2@npm:^0.2.48-alpha":
+  version: 0.2.48-alpha
+  resolution: "@raydium-io/raydium-sdk-v2@npm:0.2.48-alpha"
+  dependencies:
+    "@solana/buffer-layout": "npm:^4.0.1"
+    "@solana/spl-token": "npm:^0.4.8"
+    "@solana/web3.js": "npm:^1.95.3"
+    axios: "npm:^1.1.3"
+    big.js: "npm:^6.2.1"
+    bn.js: "npm:^5.2.1"
+    bs58: "npm:^6.0.0"
+    dayjs: "npm:^1.11.5"
+    decimal.js: "npm:^10.4.2"
+    decimal.js-light: "npm:^2.5.1"
+    js-sha256: "npm:^0.11.1"
+    jsonfile: "npm:^6.1.0"
+    lodash: "npm:^4.17.21"
+    toformat: "npm:^2.0.0"
+    tsconfig-paths: "npm:^4.2.0"
+  checksum: 10c0/cd46d8225f13950a87f461e87d02761bf80df2fec1ff6f71f904a17acfb3ead51473bf618143997de62bb6b6583b9d63b41f2486fb2173fbffb19279d79d385d
+  languageName: node
+  linkType: hard
+
 "@redstone-finance/agents@workspace:*, @redstone-finance/agents@workspace:packages/agents":
   version: 0.0.0-use.local
   resolution: "@redstone-finance/agents@workspace:packages/agents"
@@ -8411,6 +8434,7 @@ __metadata:
     "@meteora-ag/dlmm": "npm:^1.9.3"
     "@orca-so/common-sdk": "npm:^0.7.0"
     "@orca-so/whirlpools-sdk": "npm:^0.19.0"
+    "@raydium-io/raydium-sdk-v2": "npm:^0.2.48-alpha"
     "@redstone-finance/chain-configs": "workspace:*"
     "@redstone-finance/hl-hip3": "workspace:*"
     "@redstone-finance/http-client": "workspace:*"
@@ -11794,7 +11818,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@solana/spl-token@npm:^0.4.14, @solana/spl-token@npm:^0.4.6":
+"@solana/spl-token@npm:^0.4.14, @solana/spl-token@npm:^0.4.6, @solana/spl-token@npm:^0.4.8":
   version: 0.4.14
   resolution: "@solana/spl-token@npm:0.4.14"
   dependencies:
@@ -11809,7 +11833,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@solana/web3.js@npm:^1.32.0, @solana/web3.js@npm:^1.56.2, @solana/web3.js@npm:^1.68.0, @solana/web3.js@npm:^1.69.0, @solana/web3.js@npm:^1.70.3, @solana/web3.js@npm:^1.91.6, @solana/web3.js@npm:^1.95.2, @solana/web3.js@npm:^1.98.2":
+"@solana/web3.js@npm:^1.32.0, @solana/web3.js@npm:^1.56.2, @solana/web3.js@npm:^1.68.0, @solana/web3.js@npm:^1.69.0, @solana/web3.js@npm:^1.70.3, @solana/web3.js@npm:^1.91.6, @solana/web3.js@npm:^1.95.2, @solana/web3.js@npm:^1.95.3, @solana/web3.js@npm:^1.98.2":
   version: 1.98.4
   resolution: "@solana/web3.js@npm:1.98.4"
   dependencies:
@@ -15793,6 +15817,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"big.js@npm:^6.2.1":
+  version: 6.2.2
+  resolution: "big.js@npm:6.2.2"
+  checksum: 10c0/58d204f6a1a92508dc2eb98d964e2cc6dabb37a3d9fc8a1f0b77a34dead7c11e17b173d9a6df2d5a7a0f78d5c80853a9ce6df29852da59ab10b088e981195165
+  languageName: node
+  linkType: hard
+
 "bigint-buffer@npm:^1.1.5":
   version: 1.1.5
   resolution: "bigint-buffer@npm:1.1.5"
@@ -17979,6 +18010,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"dayjs@npm:^1.11.5":
+  version: 1.11.20
+  resolution: "dayjs@npm:1.11.20"
+  checksum: 10c0/8af525e2aa100c8db9923d706c42b2b2d30579faf89456619413a5c10916efc92c2b166e193c27c02eb3174b30aa440ee1e7b72b0a2876b3da651d204db848a0
+  languageName: node
+  linkType: hard
+
 "death@npm:^1.1.0":
   version: 1.1.0
   resolution: "death@npm:1.1.0"
@@ -18056,6 +18094,13 @@ __metadata:
   version: 4.0.0
   resolution: "decamelize@npm:4.0.0"
   checksum: 10c0/e06da03fc05333e8cd2778c1487da67ffbea5b84e03ca80449519b8fa61f888714bbc6f459ea963d5641b4aa98832130eb5cd193d90ae9f0a27eee14be8e278d
+  languageName: node
+  linkType: hard
+
+"decimal.js-light@npm:^2.5.1":
+  version: 2.5.1
+  resolution: "decimal.js-light@npm:2.5.1"
+  checksum: 10c0/4fd33f535aac9e5bd832796831b65d9ec7914ad129c7437b3ab991b0c2eaaa5a57e654e6174c4a17f1b3895ea366f0c1ab4955cdcdf7cfdcf3ad5a58b456c020
   languageName: node
   linkType: hard
 
@@ -24525,6 +24570,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"js-sha256@npm:^0.11.1":
+  version: 0.11.1
+  resolution: "js-sha256@npm:0.11.1"
+  checksum: 10c0/ef8e294b6f38f218e4834cb653471dd1a76808cea93dc66eaffcb04124116bc36d6cebc4e8866753e184ab4e57892b6ef21918e8ab0450179a7e093ea962d974
+  languageName: node
+  linkType: hard
+
 "js-sha256@npm:^0.9.0":
   version: 0.9.0
   resolution: "js-sha256@npm:0.9.0"
@@ -24759,6 +24811,19 @@ __metadata:
     graceful-fs:
       optional: true
   checksum: 10c0/4f95b5e8a5622b1e9e8f33c96b7ef3158122f595998114d1e7f03985649ea99cb3cd99ce1ed1831ae94c8c8543ab45ebd044207612f31a56fd08462140e46865
+  languageName: node
+  linkType: hard
+
+"jsonfile@npm:^6.1.0":
+  version: 6.2.1
+  resolution: "jsonfile@npm:6.2.1"
+  dependencies:
+    graceful-fs: "npm:^4.1.6"
+    universalify: "npm:^2.0.0"
+  dependenciesMeta:
+    graceful-fs:
+      optional: true
+  checksum: 10c0/e1abf000ecee9942d4d028a8e02dc752617face227d72afd1cfb2187e2433079e625bf82b807a313689db71b6472c6b2b389a2340d2798737b1199a39631c28a
   languageName: node
   linkType: hard
 
@@ -32581,6 +32646,13 @@ __metadata:
   dependencies:
     croner: "npm:^8.1.2"
   checksum: 10c0/0a9fe6deb7e60ab1fed98d3e92525aa8a47587e8d130084db624b2d9a5985e3cc193d2323345b981d5385d041a25ee15590d00f63b6ca7dc89b9b932e91a28aa
+  languageName: node
+  linkType: hard
+
+"toformat@npm:^2.0.0":
+  version: 2.0.0
+  resolution: "toformat@npm:2.0.0"
+  checksum: 10c0/3b8938d6f171eed5b74e645e29a597c1785194e4e816a94c3d5ac7ed83fea9610983587fff77daab278cd24a84d53c17a20f33cc9ea18bc5f8f7378684007b93
   languageName: node
   linkType: hard
 
