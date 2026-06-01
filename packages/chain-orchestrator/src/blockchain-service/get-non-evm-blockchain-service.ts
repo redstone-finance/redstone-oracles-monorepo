@@ -56,7 +56,7 @@ export async function getNonEvmBlockchainService(
         .withRpcUrls(rpcUrls)
         .build();
 
-      return new MoveBlockchainService(moveClient);
+      return MoveBlockchainService.getInstance(chainType, moveClient);
     }
     case ChainTypeEnum.enum.solana: {
       const connection = new SolanaConnectionBuilder()
@@ -123,7 +123,7 @@ export async function getNonEvmBlockchainServiceWithTransfer(
         .withRpcUrls(rpcUrls)
         .build();
 
-      return new MoveBlockchainService(moveClient, privateKey);
+      return MoveBlockchainService.getInstance(chainType, moveClient, privateKey);
     }
     case ChainTypeEnum.enum.solana: {
       const connection = new SolanaConnectionBuilder()
