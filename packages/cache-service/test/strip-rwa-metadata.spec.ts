@@ -31,7 +31,18 @@ describe("stripRwaMetadata", () => {
       RWA_FEED: [
         {
           dataPoints: [
-            { dataFeedId: "RWA_FEED", value: "100", metadata: { sources: { ex: "100" } } },
+            {
+              dataFeedId: "RWA_FEED",
+              value: "100",
+              metadata: {
+                nodeLabel: "node-1",
+                value: "100",
+                sourceMetadata: {
+                  exchange_1: { value: "99", slippage: [{ isSuccess: true }] },
+                  exchange_2: { value: "101" },
+                },
+              },
+            },
           ],
         },
       ],
@@ -44,7 +55,7 @@ describe("stripRwaMetadata", () => {
 
     const result = stripRwaMetadata(response, new Set(["RWA_FEED"]));
 
-    expect(result.RWA_FEED![0].dataPoints[0].metadata).toBeUndefined();
+    expect(result.RWA_FEED![0].dataPoints[0].metadata).toEqual({ nodeLabel: "node-1" });
     expect(result.ETH![0].dataPoints[0].metadata).toEqual({ sources: { ex: "3000" } });
   });
 
@@ -59,7 +70,7 @@ describe("stripRwaMetadata", () => {
 
     const result = stripRwaMetadata(response, new Set());
 
-    expect(result).toBe(response); // same reference — no-op
+    expect(result).toEqual(response);
     expect(result.ETH![0].dataPoints[0].metadata).toEqual({ sources: { ex: "3000" } });
   });
 
@@ -68,7 +79,14 @@ describe("stripRwaMetadata", () => {
       ___ALL_FEEDS___: [
         {
           dataPoints: [
-            { dataFeedId: "RWA_FEED", value: "100", metadata: { sources: { ex: "100" } } },
+            {
+              dataFeedId: "RWA_FEED",
+              value: "100",
+              metadata: {
+                nodeLabel: "node-1",
+                sourceMetadata: { ex: { value: "100" } },
+              },
+            },
             { dataFeedId: "ETH", value: "3000", metadata: { sources: { ex: "3000" } } },
           ],
         },
@@ -78,7 +96,7 @@ describe("stripRwaMetadata", () => {
     const result = stripRwaMetadata(response, new Set(["RWA_FEED"]));
 
     const points = result["___ALL_FEEDS___"]![0].dataPoints;
-    expect(points[0].metadata).toBeUndefined();
+    expect(points[0].metadata).toEqual({ nodeLabel: "node-1" });
     expect(points[1].metadata).toEqual({ sources: { ex: "3000" } });
   });
 
@@ -86,5 +104,44 @@ describe("stripRwaMetadata", () => {
     const response: DataPackagesResponse = { ETH: undefined };
     const result = stripRwaMetadata(response, new Set(["ETH"]));
     expect(result.ETH).toBeUndefined();
+  });
+
+  it("strips all fields except nodeLabel", () => {
+    const response = makeResponse({
+      RWA_FEED: [
+        {
+          dataPoints: [
+            {
+              dataFeedId: "RWA_FEED",
+              value: "100",
+              metadata: {
+                nodeLabel: "node-1",
+                value: "100",
+                sourceMetadata: { exchange_1: { value: "99.5" } },
+              },
+            },
+          ],
+        },
+      ],
+    });
+
+    const result = stripRwaMetadata(response, new Set(["RWA_FEED"]));
+    const meta = result.RWA_FEED![0].dataPoints[0].metadata as Record<string, unknown>;
+
+    expect(meta).toEqual({ nodeLabel: "node-1" });
+  });
+
+  it("leaves metadata undefined when RWA data point has no metadata", () => {
+    const response = makeResponse({
+      RWA_FEED: [
+        {
+          dataPoints: [{ dataFeedId: "RWA_FEED", value: "100" }],
+        },
+      ],
+    });
+
+    const result = stripRwaMetadata(response, new Set(["RWA_FEED"]));
+
+    expect(result.RWA_FEED![0].dataPoints[0].metadata).toBeUndefined();
   });
 });

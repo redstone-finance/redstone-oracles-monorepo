@@ -1,6 +1,6 @@
 import { CronAgent } from "@redstone-finance/agents";
 import { fetchNodeManifest } from "@redstone-finance/internal-utils";
-import { loggerFactory, RedstoneCommon } from "@redstone-finance/utils";
+import { loggerFactory, RedstoneCommon, RedstoneTypes } from "@redstone-finance/utils";
 import config from "../config";
 import { DataPackagesResponse } from "../data-packages/data-packages.interface";
 
@@ -157,8 +157,9 @@ export function stripRwaMetadata(
     }
     for (const pkg of packages) {
       for (const point of pkg.dataPoints) {
-        if (rwaFeedIds.has(point.dataFeedId)) {
-          delete point.metadata;
+        if (rwaFeedIds.has(point.dataFeedId) && point.metadata) {
+          const meta = point.metadata as RedstoneTypes.MetadataForRedstonePrice;
+          point.metadata = { nodeLabel: meta.nodeLabel };
         }
       }
     }
