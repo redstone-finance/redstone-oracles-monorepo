@@ -132,7 +132,7 @@ export class ApiKeysUsageTracker {
       await this.influxService.insert(dataPoints);
 
       logger.debug(
-        `Successfully reported ${dataPoints.length} metrics to InfluxDB for ${Object.keys(this.requestMetrics).length} API keys (service: ${this.config.serviceName})`
+        `Successfully reported ${RedstoneCommon.getNS(dataPoints.length, "metric")} to InfluxDB for ${RedstoneCommon.getNS(Object.keys(this.requestMetrics).length, "API key")} (service: ${this.config.serviceName})`
       );
 
       // Reset metrics for next reporting period

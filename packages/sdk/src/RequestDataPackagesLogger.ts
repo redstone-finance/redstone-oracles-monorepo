@@ -50,7 +50,7 @@ export class RequestDataPackagesLogger {
     const collectedErrors = RequestDataPackagesLogger.filterOutUndefined(this.particularErrors);
 
     this.logger[timeout ? "info" : "debug"](
-      `${timeout ? "Timed out with" : "Checking"} ${collectedResponses.length} response(s) / ${collectedErrors.length} error(s),` +
+      `${timeout ? "Timed out with" : "Checking"} ${RedstoneCommon.getNS(collectedResponses.length, "response")} / ${RedstoneCommon.getNS(collectedErrors.length, "error")},` +
         ` didResolveOrReject before: ${didResolveOrReject}`,
       {
         particularTimestamps,
@@ -72,7 +72,7 @@ export class RequestDataPackagesLogger {
 
     this.logger.log(
       `Resolving with the ${this.isHistorical ? "historical" : "newest"} package for ${dataServiceId}, ` +
-        `timestamp: ${responseTimestamp} of ${collectedResponses.length} response(s)` +
+        `timestamp: ${responseTimestamp} of ${RedstoneCommon.getNS(collectedResponses.length, "response")}` +
         `, ${RedstoneCommon.msToSecs(timestampDelta)} [s] ago`,
       {
         responseTimestamps: particularTimestamps,
