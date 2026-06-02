@@ -1,5 +1,5 @@
 import _ from "lodash";
-import { getS, stringifyError } from "../common";
+import { getNS, stringifyError } from "../common";
 import { loggerFactory } from "../logger";
 
 export abstract class RequestCollector<TKey, TResult> {
@@ -131,7 +131,7 @@ export abstract class RequestCollector<TKey, TResult> {
         chunks.map((chunk) => {
           this.actualCalls++;
 
-          this.logger.info(`${this.label} calling for ${chunk.length} key${getS(chunk.length)}`);
+          this.logger.info(`${this.label} calling for ${getNS(chunk.length, "key")}`);
 
           return this.fetchChunk(chunk);
         })

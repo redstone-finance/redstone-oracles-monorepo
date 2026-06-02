@@ -1,5 +1,5 @@
 import { SignedDataPackage, type SignedDataPackagePlainObj } from "@redstone-finance/protocol";
-import { MathUtils } from "@redstone-finance/utils";
+import { MathUtils, RedstoneCommon } from "@redstone-finance/utils";
 
 /**
  * Computes the median value from a set of signed data packages.
@@ -18,7 +18,7 @@ export function computeMedian(packages: SignedDataPackagePlainObj[]): number {
   const values = packages.map((pkg) => {
     if (pkg.dataPoints.length !== 1) {
       throw new Error(
-        `computeMedian: package "${pkg.dataPackageId}" has ${pkg.dataPoints.length} data points – ` +
+        `computeMedian: package "${pkg.dataPackageId}" has ${RedstoneCommon.getNS(pkg.dataPoints.length, "data point")} – ` +
           "MultiFeedPackages are not supported; each package must have exactly 1 data point"
       );
     }
