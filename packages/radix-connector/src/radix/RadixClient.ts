@@ -78,7 +78,7 @@ export class RadixClient {
     }
 
     throw new Error(
-      `No transaction success found in ${this.config.maxTxSendAttempts} iteration${RedstoneCommon.getS(this.config.maxTxSendAttempts)}`
+      `No transaction success found in ${RedstoneCommon.getNS(this.config.maxTxSendAttempts, "iteration")}`
     );
   }
 

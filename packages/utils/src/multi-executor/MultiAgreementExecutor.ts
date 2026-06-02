@@ -1,5 +1,5 @@
 import _ from "lodash";
-import { getS } from "../common";
+import { getNS } from "../common";
 import { AgreementExecutor } from "./AgreementExecutor";
 
 /* That class is used to execute multiple agreements in parallel and then aggregate the result point by point.
@@ -36,7 +36,7 @@ export class MultiAgreementExecutor<R extends unknown[]> extends AgreementExecut
     if (successfulResults.length < quorum) {
       if (successfulResults.length + errorResults.length === totalLength) {
         throw new Error(
-          `MultiAgreement failed: got ${successfulResults.length} successful result${getS(successfulResults.length)}, ` +
+          `MultiAgreement failed: got ${getNS(successfulResults.length, "successful result")}, ` +
             `needed at least ${quorum}`
         );
       }

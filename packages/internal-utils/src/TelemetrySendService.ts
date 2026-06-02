@@ -140,7 +140,7 @@ export class TelemetrySendService implements ITelemetrySendService {
       if (this.metrics.length === 0) {
         return;
       }
-      logger.info(`Sending batch with ${this.metrics.length} metrics`);
+      logger.info(`Sending batch with ${RedstoneCommon.getNS(this.metrics.length, "metric")}`);
 
       const writeApi = this.getWriteApi();
       writeApi.writePoints(this.metrics.map(telemetryPointToInfluxPoint));
@@ -158,7 +158,9 @@ export class TelemetrySendService implements ITelemetrySendService {
       if (this.metrics.length === 0) {
         return;
       }
-      logger.info(`Sending aggregated batch with ${this.metrics.length} metrics`);
+      logger.info(
+        `Sending aggregated batch with ${RedstoneCommon.getNS(this.metrics.length, "metric")}`
+      );
       const aggregatedPoints = telemetryPointsToAggregatedInfluxPoints(this.metrics);
 
       const writeApi = this.getWriteApi();

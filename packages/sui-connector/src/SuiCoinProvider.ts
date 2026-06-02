@@ -50,9 +50,7 @@ export class SuiCoinProvider {
       return;
     }
 
-    this.logger.log(
-      `Purging ${coinsToPurge.length} set${RedstoneCommon.getS(coinsToPurge.length)} of coins...`
-    );
+    this.logger.log(`Purging ${RedstoneCommon.getNS(coinsToPurge.length, "set")} of coins...`);
 
     await RedstoneCommon.batchPromises(
       MERGE_COINS_BATCH_SIZE,
@@ -71,7 +69,7 @@ export class SuiCoinProvider {
       signAndExecute: MultiExecutor.ExecutionMode.FALLBACK,
     });
 
-    this.logger.log(`Purging ${coins.length} coin${RedstoneCommon.getS(coins.length)}`);
+    this.logger.log(`Purging ${RedstoneCommon.getNS(coins.length, "coin")}`);
 
     try {
       this.logger.debug(`Merging ${coins.map((c) => c.objectId).toString()} `);

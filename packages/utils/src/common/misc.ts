@@ -24,6 +24,14 @@ export function getS(value: number, s = "s") {
   return value !== 1 ? s : "";
 }
 
+export function getNS(count: number, singular: string, pluralSuffix = "s", toCut?: number) {
+  if (count === 1) {
+    return `${count} ${singular}`;
+  }
+
+  return `${count} ${singular.slice(0, toCut)}${pluralSuffix}`;
+}
+
 export function toOrdinal(n: number): string {
   const lastDigit = n % 10;
   const rem100 = n % 100;

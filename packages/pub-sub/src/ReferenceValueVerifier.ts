@@ -133,7 +133,7 @@ export class ReferenceValueVerifier {
     });
 
     this.logger.debug(
-      `Calculated deviationPercent: ${deviationPercent} ${logDescription} of ${values.length} reference signer${RedstoneCommon.getS(values.length)}`,
+      `Calculated deviationPercent: ${deviationPercent} ${logDescription} of ${RedstoneCommon.getNS(values.length, "reference signer")}`,
       { deviationPercent }
     );
 

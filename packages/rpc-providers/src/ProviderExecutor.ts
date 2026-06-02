@@ -38,7 +38,7 @@ export class ProviderExecutor<T, I extends ProviderWithIdentifier = ProviderWith
 
     ProviderExecutor.runningCount++;
     this.logger.debug(
-      `Calling op=${this.opName} for ${identifier} (currently: ${ProviderExecutor.runningCount} run${RedstoneCommon.getS(ProviderExecutor.runningCount)}` +
+      `Calling op=${this.opName} for ${identifier} (currently: ${RedstoneCommon.getNS(ProviderExecutor.runningCount, "run")}` +
         `, total skipped: ${ProviderExecutor.skippedRuns}/${ProviderExecutor.totalRuns})`,
       {
         start: true,

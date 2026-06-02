@@ -1,5 +1,5 @@
 import { ContentTypes } from "@redstone-finance/internal-utils";
-import { loggerFactory } from "@redstone-finance/utils";
+import { loggerFactory, RedstoneCommon } from "@redstone-finance/utils";
 import { Mutex } from "async-mutex";
 import _ from "lodash";
 import { PubSubClient, PubSubPayload, SubscribeCallback } from "./PubSubClient";
@@ -69,7 +69,7 @@ export class PooledMqttClient implements PubSubClient {
     try {
       await this._subscribe(topics);
       this.logger.info(
-        `Requested ${topics.length} topics, subscribed to ${topics.length} topics, active ${this.clientToTopics.length} connections`
+        `Requested ${RedstoneCommon.getNS(topics.length, "topic")}, subscribed to ${RedstoneCommon.getNS(topics.length, "topic")}, active ${RedstoneCommon.getNS(this.clientToTopics.length, "connection")}`
       );
     } finally {
       this.subscribeMutex.release();
@@ -101,7 +101,7 @@ export class PooledMqttClient implements PubSubClient {
     }
 
     this.logger.info(
-      `Unsubscribed from ${topics.length} topics, active ${this.clientToTopics.length} connections`
+      `Unsubscribed from ${RedstoneCommon.getNS(topics.length, "topic")}, active ${RedstoneCommon.getNS(this.clientToTopics.length, "connection")}`
     );
   }
 

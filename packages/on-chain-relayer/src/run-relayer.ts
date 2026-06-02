@@ -58,7 +58,7 @@ export const runRelayer = () => {
   );
 
   logger.log(
-    `Splitting relayer config into ${configs.length} configs: [${configs.map((config) => `[${config.dataFeeds.toString()}]`).toString()}]`
+    `Splitting relayer config into ${RedstoneCommon.getNS(configs.length, "config")}: [${configs.map((config) => `[${config.dataFeeds.toString()}]`).toString()}]`
   );
 
   configs.forEach((config, index) =>
