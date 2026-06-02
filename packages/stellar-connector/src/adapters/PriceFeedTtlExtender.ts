@@ -31,7 +31,7 @@ export class PriceFeedTtlExtender {
     }
 
     PriceFeedTtlExtender.logger.info(
-      `Extending TTL for ${addressesToExtend.length} price-feed contract(s): [${addressesToExtend.join(", ")}]`
+      `Extending TTL for ${RedstoneCommon.getNS(addressesToExtend.length, "price-feed contract")}: [${addressesToExtend.join(", ")}]`
     );
 
     await RedstoneCommon.runWithPartialFailure(

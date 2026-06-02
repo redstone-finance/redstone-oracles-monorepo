@@ -1,5 +1,5 @@
 import _ from "lodash";
-import { getS, stringify, throwUnsupportedParamError, timeoutOrResult } from "../common";
+import { getNS, stringify, throwUnsupportedParamError, timeoutOrResult } from "../common";
 import { loggerFactory } from "../logger";
 import { AgreementExecutor } from "./AgreementExecutor";
 import { AllEqualConsensusExecutor, MedianConsensusExecutor } from "./ConsensusExecutor";
@@ -141,7 +141,7 @@ export class MultiExecutorFactory<T extends object> {
   private async performExecuting<R>(key: keyof T, functions: FnBox<R>[]) {
     const mode = this.getMethodMode(key);
     this.logger.debug(
-      `[${stringify(key)}] Executing ${functions.length} promise${getS(functions.length)}` +
+      `[${stringify(key)}] Executing ${getNS(functions.length, "promise")}` +
         ` with ${typeof mode === "string" ? mode : typeof mode}` +
         (this.config.allExecutionsTimeoutMs
           ? ` and totalExecutionTimeout: ${this.config.allExecutionsTimeoutMs} [ms]`

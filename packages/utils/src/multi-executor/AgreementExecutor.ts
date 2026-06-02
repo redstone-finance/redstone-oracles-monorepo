@@ -1,4 +1,4 @@
-import { getS, stringify } from "../common";
+import { getNS, stringify } from "../common";
 import { ParallelExecutor } from "./ParallelExecutor";
 
 export class AgreementExecutor<R> extends ParallelExecutor<R> {
@@ -59,8 +59,8 @@ export class AgreementExecutor<R> extends ParallelExecutor<R> {
 
     throw new AggregateError(
       errorResults,
-      `Agreement failed: got max ${maxCount} equal result${getS(maxCount)}, needed at least ${quorum}` +
-        (failedCount > 0 ? `; ${failedCount} fail${getS(failedCount)}` : "")
+      `Agreement failed: got max ${getNS(maxCount, "equal result")}, needed at least ${quorum}` +
+        (failedCount > 0 ? `; ${getNS(failedCount, "fail")}` : "")
     );
   }
 
