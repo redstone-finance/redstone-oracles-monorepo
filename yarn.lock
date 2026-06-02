@@ -9799,6 +9799,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@redstone-finance/merger@workspace:packages/merger"
   dependencies:
+    "@aws-sdk/client-ssm": "npm:^3.696.0"
     "@redstone-finance/agents": "workspace:*"
     "@redstone-finance/internal-utils": "workspace:*"
     "@redstone-finance/protocol": "workspace:*"
