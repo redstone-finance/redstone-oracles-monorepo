@@ -596,7 +596,14 @@ describe("Data packages (e2e)", () => {
             {
               dataFeedId: "RWA_FEED",
               value: "100",
-              metadata: { sources: { exchange_1: "99", exchange_2: "101" } },
+              metadata: {
+                nodeLabel: "node-1",
+                value: "100",
+                sourceMetadata: {
+                  exchange_1: { value: "99", slippage: [] },
+                  exchange_2: { value: "101" },
+                },
+              },
             },
           ],
         },
@@ -627,7 +634,9 @@ describe("Data packages (e2e)", () => {
         .get(`/v2/data-packages/latest/mock-data-service-1/show-metadata`)
         .expect(200);
 
-      expect(response.body.RWA_FEED[0].dataPoints[0]).not.toHaveProperty("metadata");
+      expect(response.body.RWA_FEED[0].dataPoints[0].metadata).toEqual({
+        nodeLabel: "node-1",
+      });
     });
 
     it("should preserve non-RWA feed metadata on show-metadata endpoint", async () => {
