@@ -139,9 +139,13 @@ export class Sep40ContractReader {
   }
 
   async closestTtlToDeadline() {
-    const ttls = (await this.getEntryTtls()).values().filter(RedstoneCommon.isDefined);
+    const [instanceTtl, entryTtls] = await Promise.all([
+      this.client.getInstanceTtl(this.contract),
+      this.getEntryTtls(),
+    ]);
+    const ttls = entryTtls.values().filter(RedstoneCommon.isDefined);
 
-    return Math.min(...ttls);
+    return Math.min(instanceTtl ?? 0, ...ttls);
   }
 
   async getEntryTtls(blockNumber?: number) {
