@@ -53,14 +53,22 @@ describe("RwaFeedIdsProvider", () => {
 
     const result = provider.getRwaFeedIds("redstone-primary-demo");
     expect(result).toEqual(new Set(["USDY/USD", "ONDO/USD"]));
-    expect(mockFetchNodeManifest).toHaveBeenCalledWith("redstone-primary-demo", [
-      "https://d3cu28sut4ahjk.cloudfront.net/redstone-finance/redstone-monorepo-priv/${main}/packages/node-remote-config/dev/manifests/data-services/primary.json",
-      "https://d13fu63cj82rby.cloudfront.net/redstone-finance/redstone-monorepo-priv/${main}/packages/node-remote-config/dev/manifests/data-services/primary.json",
-    ]);
-    expect(mockFetchNodeManifest).toHaveBeenCalledWith("redstone-primary-demo", [
-      "https://d3cu28sut4ahjk.cloudfront.net/redstone-finance/redstone-monorepo-priv/${main}/packages/node-remote-config/dev/manifests/data-services/primary-ws.json",
-      "https://d13fu63cj82rby.cloudfront.net/redstone-finance/redstone-monorepo-priv/${main}/packages/node-remote-config/dev/manifests/data-services/primary-ws.json",
-    ]);
+    expect(mockFetchNodeManifest).toHaveBeenCalledWith(
+      "redstone-primary-demo",
+      [
+        "https://d3cu28sut4ahjk.cloudfront.net/redstone-finance/redstone-monorepo-priv/${main}/packages/node-remote-config/dev/manifests/data-services/primary.json",
+        "https://d13fu63cj82rby.cloudfront.net/redstone-finance/redstone-monorepo-priv/${main}/packages/node-remote-config/dev/manifests/data-services/primary.json",
+      ],
+      "primary"
+    );
+    expect(mockFetchNodeManifest).toHaveBeenCalledWith(
+      "redstone-primary-demo",
+      [
+        "https://d3cu28sut4ahjk.cloudfront.net/redstone-finance/redstone-monorepo-priv/${main}/packages/node-remote-config/dev/manifests/data-services/primary-ws.json",
+        "https://d13fu63cj82rby.cloudfront.net/redstone-finance/redstone-monorepo-priv/${main}/packages/node-remote-config/dev/manifests/data-services/primary-ws.json",
+      ],
+      "primary"
+    );
   });
 
   it("merges RWA feed IDs from multiple manifests", async () => {
@@ -102,10 +110,14 @@ describe("RwaFeedIdsProvider", () => {
 
     const result = provider.getRwaFeedIds("redstone-hip3-demo");
     expect(result).toEqual(new Set(["RWA_TOKEN/USD"]));
-    expect(mockFetchNodeManifest).toHaveBeenCalledWith("redstone-hip3-demo", [
-      "https://d3cu28sut4ahjk.cloudfront.net/redstone-finance/redstone-monorepo-priv/${main}/packages/node-remote-config/dev/manifests/data-services/hip3-testnet.json",
-      "https://d13fu63cj82rby.cloudfront.net/redstone-finance/redstone-monorepo-priv/${main}/packages/node-remote-config/dev/manifests/data-services/hip3-testnet.json",
-    ]);
+    expect(mockFetchNodeManifest).toHaveBeenCalledWith(
+      "redstone-hip3-demo",
+      [
+        "https://d3cu28sut4ahjk.cloudfront.net/redstone-finance/redstone-monorepo-priv/${main}/packages/node-remote-config/dev/manifests/data-services/hip3-testnet.json",
+        "https://d13fu63cj82rby.cloudfront.net/redstone-finance/redstone-monorepo-priv/${main}/packages/node-remote-config/dev/manifests/data-services/hip3-testnet.json",
+      ],
+      "hip3-node"
+    );
   });
 
   it("returns undefined when agent start fails (fail-closed)", async () => {

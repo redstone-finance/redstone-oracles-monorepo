@@ -37,7 +37,7 @@ export const writeDownloadableS3Object = async (
   await getS3(region).putObject(params);
 };
 
-export const readS3ObjectWithMetadata = async <T>(
+export const readS3Text = async (
   bucketName: string,
   bucketKey: string,
   region = DEFAULT_AWS_REGION
@@ -48,6 +48,19 @@ export const readS3ObjectWithMetadata = async <T>(
   };
   const data = await getS3(region).getObject(params);
   const contentAsString = await data.Body?.transformToString("utf-8");
+
+  return {
+    ...data,
+    contentAsString,
+  };
+};
+
+export const readS3ObjectWithMetadata = async <T>(
+  bucketName: string,
+  bucketKey: string,
+  region = DEFAULT_AWS_REGION
+) => {
+  const { contentAsString, ...data } = await readS3Text(bucketName, bucketKey, region);
   const content = contentAsString ? (JSON.parse(contentAsString) as T) : undefined;
 
   return {

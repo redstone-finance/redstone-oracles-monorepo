@@ -2,6 +2,11 @@ import { RedstoneCommon } from "@redstone-finance/utils";
 import { z } from "zod";
 import { LogMonitoring, LogMonitoringType } from "./LogMonitoring";
 
+type NodesVersions = {
+  main: string;
+  fallback?: string;
+};
+
 export type NodeManifest = {
   tokens: Partial<
     Record<
@@ -20,9 +25,20 @@ export type NodeManifest = {
   };
 };
 
-type NodesVersions = {
-  main: string;
-  fallback?: string;
+export type NodeClass = "primary" | "bolt" | "bolt-megaeth" | "hip3-node" | "hip3-proposer";
+
+export type NodeType = "normal" | "fast" | "ws";
+
+export const FILENAME_TO_NODE_TYPE: Record<string, NodeType> = {
+  "primary-ws.json": "ws",
+  "primary-fast.json": "fast",
+  "megaeth-fast-multi-feed.json": "normal",
+  "main.json": "normal",
+  "primary.json": "normal",
+  "arbitrum.json": "normal",
+  "avalanche.json": "normal",
+  "hip3-testnet.json": "normal",
+  "hip3-mainnet.json": "normal",
 };
 
 const FETCH_CACHE_TTL = 120_000;
@@ -58,7 +74,25 @@ const getNodesVersionsPrefixUrl = () => {
   return nodesVersionsPrefixUrl;
 };
 
-export const fetchNodeManifest = async <ManifestType = NodeManifest>(
+const getDefaultNodeClassForDataServiceId = (dataServiceId: string): NodeClass =>
+  dataServiceId.includes("hip3") ? "hip3-node" : "primary";
+
+const getNodeTypeFromFilename = (manifestUrl: string): NodeType => {
+  const filename = manifestUrl.match(/[^/]+\.json$/)?.[0];
+  if (!filename) {
+    throw new Error(`Could not extract manifest filename from URL ${manifestUrl}`);
+  }
+
+  return FILENAME_TO_NODE_TYPE[filename] ?? "normal";
+};
+
+const substituteVersion = (url: string, version: string) =>
+  url
+    .replaceAll("${nodeVersion}", version)
+    .replaceAll("${main}", version)
+    .replaceAll("${fallback}", version);
+
+const fetchNodeManifestOld = async <ManifestType = NodeManifest>(
   dataServiceId: string,
   manifestUrls: string[],
   headers?: Record<string, string>,
@@ -91,5 +125,48 @@ export const fetchNodeManifest = async <ManifestType = NodeManifest>(
 
   throw new Error(
     `failed to fetch node manifest for ${dataServiceId}, URLs ${String(manifestUrls)}, node versions ${JSON.stringify(nodeVersion)}`
+  );
+};
+
+export const fetchNodeManifest = async <ManifestType = NodeManifest>(
+  dataServiceId: string,
+  manifestUrls: string[],
+  nodeClassOverride?: NodeClass,
+  headers?: Record<string, string>,
+  nodesVersionsPrefixUrlOverride?: string
+): Promise<ManifestType> => {
+  const versionsPrefixUrl = nodesVersionsPrefixUrlOverride ?? getNodesVersionsPrefixUrl();
+  if (!versionsPrefixUrl) {
+    LogMonitoring.throw(
+      LogMonitoringType.UNEXPECTED_ERROR,
+      "NODES_VERSIONS_PREFIX_URL must be set to fetch node manifests"
+    );
+  }
+
+  const nodeClass = nodeClassOverride ?? getDefaultNodeClassForDataServiceId(dataServiceId);
+
+  for (const manifestUrl of manifestUrls) {
+    try {
+      const nodeType = getNodeTypeFromFilename(manifestUrl);
+      const nodeVersionUrl = `${versionsPrefixUrl}${nodeClass}/${nodeType}-resolved`;
+      const nodeVersion = await fetchWithCache<string>(nodeVersionUrl);
+      const resolvedUrl = substituteVersion(manifestUrl, nodeVersion);
+
+      return await fetchWithCache<ManifestType>(resolvedUrl, headers);
+    } catch (e) {
+      console.log(
+        `failed to fetch node manifest for ${dataServiceId} (nodeClass=${nodeClass}), URL ${manifestUrl}, ${RedstoneCommon.stringifyError(e)}`
+      );
+    }
+  }
+
+  // ToDo after fully migrating to new setup, throw rather than trying to use old version
+  console.warn("Failed to fetch the node manifest using new method, fallback to old");
+
+  return await fetchNodeManifestOld(
+    dataServiceId,
+    manifestUrls,
+    headers,
+    nodesVersionsPrefixUrlOverride
   );
 };

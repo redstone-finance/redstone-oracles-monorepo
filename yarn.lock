@@ -9405,6 +9405,20 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@redstone-finance/lambda-node-versions@workspace:packages/lambda/lambda-node-versions":
+  version: 0.0.0-use.local
+  resolution: "@redstone-finance/lambda-node-versions@workspace:packages/lambda/lambda-node-versions"
+  dependencies:
+    "@redstone-finance/internal-utils": "workspace:*"
+    "@redstone-finance/monitoring-manifests": "workspace:*"
+    "@redstone-finance/utils": "workspace:*"
+    "@types/aws-lambda": "npm:^8.10.145"
+    axios: "npm:^1.15.2"
+    dotenv: "npm:^16.0.3"
+    zod: "npm:^4.1.12"
+  languageName: unknown
+  linkType: soft
+
 "@redstone-finance/lambda-on-chain-relayer-update@workspace:packages/lambda/lambda-on-chain-relayer-update":
   version: 0.0.0-use.local
   resolution: "@redstone-finance/lambda-on-chain-relayer-update@workspace:packages/lambda/lambda-on-chain-relayer-update"
