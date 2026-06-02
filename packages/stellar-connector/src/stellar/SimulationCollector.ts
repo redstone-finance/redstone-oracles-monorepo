@@ -60,7 +60,7 @@ export class SimulationCollector extends Collector.RequestCollector<StellarKey, 
     });
 
     this.chunkLogger.debug(
-      `Simulating call for ${chunk.length} invocation${RedstoneCommon.getS(chunk.length)} at block ${this.blockNumber ?? "latest"} on ${this.rpcUrl}`,
+      `Simulating call for ${RedstoneCommon.getNS(chunk.length, "invocation")} at block ${this.blockNumber ?? "latest"} on ${this.rpcUrl}`,
       { invocations }
     );
   }

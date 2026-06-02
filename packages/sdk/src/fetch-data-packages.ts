@@ -66,7 +66,7 @@ async function fetchInStages(reqParams: DataPackagesRequestParams) {
   const authTargets = getAuthGatewayTargets(reqParams);
   if (authTargets.length) {
     logger.info(
-      `Fetching data packages using ${authTargets.length} authenticated gateway(s) for ${reqParams.dataServiceId}`
+      `Fetching data packages using ${RedstoneCommon.getNS(authTargets.length, "authenticated gateway")} for ${reqParams.dataServiceId}`
     );
     try {
       return await fetchStaged(reqParams, authTargets);

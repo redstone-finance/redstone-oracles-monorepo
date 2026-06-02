@@ -1,6 +1,6 @@
 import { BigNumberish } from "ethers";
 import _ from "lodash";
-import { getS } from "../common";
+import { getNS } from "../common";
 import { getMedian, getMedianOfBigNumbers } from "../math";
 import { ParallelExecutor } from "./ParallelExecutor";
 
@@ -35,8 +35,8 @@ export abstract class ConsensusExecutor<R> extends ParallelExecutor<R> {
 
     throw new AggregateError(
       errorResults,
-      `Consensus failed: got ${successfulResults.length} successful result${getS(successfulResults.length)}, needed at least ${quorum}` +
-        `; ${failedCount} fail${getS(failedCount)}`
+      `Consensus failed: got ${getNS(successfulResults.length, "successful result")}, needed at least ${quorum}` +
+        `; ${getNS(failedCount, "fail")}`
     );
   }
 
