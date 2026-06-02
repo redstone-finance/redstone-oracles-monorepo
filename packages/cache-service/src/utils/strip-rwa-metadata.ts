@@ -1,5 +1,5 @@
 import { CronAgent } from "@redstone-finance/agents";
-import { fetchNodeManifest } from "@redstone-finance/internal-utils";
+import { fetchNodeManifest, NodeClass } from "@redstone-finance/internal-utils";
 import { loggerFactory, RedstoneCommon, RedstoneTypes } from "@redstone-finance/utils";
 import config from "../config";
 import { DataPackagesResponse } from "../data-packages/data-packages.interface";
@@ -75,13 +75,29 @@ const MANIFEST_URLS: Record<string, Record<string, string[][]>> = {
 
 const logger = loggerFactory("rwa-feed-ids");
 
+const DATA_SERVICE_NODE_CLASS: Partial<Record<string, NodeClass>> = {
+  "redstone-primary-prod": "primary",
+  "redstone-arbitrum-prod": "primary",
+  "redstone-avalanche-prod": "primary",
+  "redstone-hip3-prod": "hip3-node",
+  "redstone-primary-demo": "primary",
+  "redstone-arbitrum-demo": "primary",
+  "redstone-avalanche-demo": "primary",
+  "redstone-main-demo": "primary",
+  "redstone-hip3-demo": "hip3-node",
+};
+
 async function fetchRwaFeedIdsForDataService(
   dataServiceId: string,
   manifestUrlGroups: string[][]
 ): Promise<Set<string>> {
+  const nodeClass = DATA_SERVICE_NODE_CLASS[dataServiceId];
+  if (!nodeClass) {
+    logger.warn(`No node_class mapping for data service ${dataServiceId}`);
+  }
   const rwaFeeds = new Set<string>();
   for (const manifestUrls of manifestUrlGroups) {
-    const manifest = await fetchNodeManifest(dataServiceId, manifestUrls);
+    const manifest = await fetchNodeManifest(dataServiceId, manifestUrls, nodeClass ?? "primary");
     for (const [feedId, tokenConfig] of Object.entries(manifest.tokens)) {
       if (tokenConfig?.types?.includes("rwa")) {
         rwaFeeds.add(feedId);
