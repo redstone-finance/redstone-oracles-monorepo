@@ -4,5 +4,5 @@ export { ContractFacade } from "./facade/ContractFacade";
 export { type IterationArgsProvider } from "./facade/get-iteration-args-provider";
 export { fetchOrParseManifest } from "./fetch-or-parse-manifest";
 export { runIteration, type IterationLogger } from "./runner/run-iteration";
-export { runManyIterations, type IterationResult } from "./runner/run-many-iterations";
+export { runManyIterations } from "./runner/run-many-iterations";
 export type { IterationArgsMessage } from "./types";

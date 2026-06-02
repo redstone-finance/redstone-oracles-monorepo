@@ -1,4 +1,5 @@
 import { BlockProvider, WriteContractAdapter } from "@redstone-finance/multichain-kit";
+import { Compose } from "@redstone-finance/on-chain-relayer-common";
 import { DataPackagesResponseCache } from "@redstone-finance/sdk";
 import { RedstoneCommon } from "@redstone-finance/utils";
 import _ from "lodash";
@@ -12,10 +13,6 @@ type IterationStack = {
   blockProvider: BlockProvider;
   logger: IterationLogger;
 };
-
-export type IterationResult =
-  | { result: "OK"; didUpdatePrices: boolean }
-  | { result: "Error"; reason: string };
 
 export async function runManyIterations(
   configPromises: Record<string, Promise<RelayerConfig>>,
@@ -35,14 +32,15 @@ export async function runManyIterations(
       : Promise.reject(new Error(RedstoneCommon.stringifyError(settledConfig.reason)))
   );
 
-  const results: IterationResult[] = (await Promise.allSettled(Object.values(iterations))).map(
-    (result) =>
-      result.status === "fulfilled"
-        ? { result: "OK", didUpdatePrices: result.value }
-        : {
-            result: "Error",
-            reason: RedstoneCommon.stringifyError(result.reason),
-          }
+  const results: Compose.IterationResult[] = (
+    await Promise.allSettled(Object.values(iterations))
+  ).map((result) =>
+    result.status === "fulfilled"
+      ? { result: "OK", didUpdatePrices: result.value }
+      : {
+          result: "Error",
+          reason: RedstoneCommon.stringifyError(result.reason),
+        }
   );
 
   return Object.fromEntries(Object.entries(_.zipObject(Object.keys(iterations), results)));
