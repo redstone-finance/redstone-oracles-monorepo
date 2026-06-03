@@ -471,6 +471,13 @@
     },
     "ETHFI": {
       "priceFeedAddress": "0xc03b2a75620277927b4F0Fc2f56CDE0D0065e42b"
+    },
+    "AVLT_FUNDAMENTAL/USD": {
+      "priceFeedAddress": "0x28b82a7feE03281DC63f02570560d1F4690b7520",
+      "updateTriggersOverrides": {
+        "deviationPercentage": 0.001,
+        "timeSinceLastUpdateInMilliseconds": 7200000
+      }
     }
   }
 }
