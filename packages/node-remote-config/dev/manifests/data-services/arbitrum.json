@@ -553,7 +553,6 @@
         "binance-usdc",
         "binance-usdt",
         "bingx-usdt",
-        "bitget-usdt",
         "gate-usdt",
         "kraken-usd",
         "kucoin-usdt",
@@ -1202,7 +1201,8 @@
         "curve-fraxtal-crvusd",
         "curve-fraxtal-susde",
         "curve-fraxtal-usdt",
-        "fraxswap-fraxtal-wfrax"
+        "fraxswap-fraxtal-wfrax",
+        "uniswap-v4-ethereum-usde-100"
       ],
       "deviationCheck": {
         "deviationWithRecentValues": {

@@ -128,7 +128,7 @@
       "priceAggregator": "primarySource",
       "primarySourceAggregatorConfig": {
         "primarySource": "ws-lmax",
-        "maxAcceptableDeviation": 1.0,
+        "maxAcceptableDeviation": 1,
         "lowerClampPercent": 0.1,
         "upperClampPercent": 0.1
       },
@@ -168,7 +168,7 @@
       "priceAggregator": "primarySource",
       "primarySourceAggregatorConfig": {
         "primarySource": "ws-lmax",
-        "maxAcceptableDeviation": 1.0,
+        "maxAcceptableDeviation": 1,
         "lowerClampPercent": 0.1,
         "upperClampPercent": 0.1
       },
@@ -912,7 +912,7 @@
       "priceAggregator": "primarySource",
       "primarySourceAggregatorConfig": {
         "primarySource": "ws-polygon-massive-commodities",
-        "maxAcceptableDeviation": 1.0,
+        "maxAcceptableDeviation": 1,
         "lowerClampPercent": 0.1,
         "upperClampPercent": 0.1
       },
@@ -985,7 +985,7 @@
       "priceAggregator": "primarySource",
       "primarySourceAggregatorConfig": {
         "primarySource": "ws-polygon-massive-commodities",
-        "maxAcceptableDeviation": 1.0,
+        "maxAcceptableDeviation": 1,
         "lowerClampPercent": 0.1,
         "upperClampPercent": 0.1
       },
@@ -1058,7 +1058,7 @@
       "priceAggregator": "primarySource",
       "primarySourceAggregatorConfig": {
         "primarySource": "ws-lmax",
-        "maxAcceptableDeviation": 1.0,
+        "maxAcceptableDeviation": 1,
         "lowerClampPercent": 0.1,
         "upperClampPercent": 0.1
       },
