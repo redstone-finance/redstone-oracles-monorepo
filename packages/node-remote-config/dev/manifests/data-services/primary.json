@@ -413,7 +413,9 @@
         "curve-ethereum-usde",
         "curve-ethereum-weth",
         "fluid-ethereum-susde",
-        "fluid-ethereum-usdc"
+        "fluid-ethereum-usdc",
+        "uniswap-v4-ethereum-usdc-500",
+        "uniswap-v4-ethereum-usdt-100"
       ],
       "deviationCheck": {
         "deviationWithRecentValues": {
@@ -1142,7 +1144,6 @@
         "binance-usdc",
         "binance-usdt",
         "bingx-usdt",
-        "bitget-usdt",
         "gate-usdt",
         "kraken-usd",
         "kucoin-usdt",
@@ -1861,6 +1862,7 @@
     "cbETH": {
       "source": [
         "coinbase-usd",
+        "aerodrome-cl-base-cbbtc",
         "aerodrome-cl-base-weth",
         "curve-base-weth",
         "curve-ethereum-weth",
@@ -1922,7 +1924,8 @@
         "curve-ethereum-eusd",
         "curve-ethereum-frxusd",
         "curve-ethereum-gho",
-        "curve-ethereum-usdc"
+        "curve-ethereum-usdc",
+        "fluid-ethereum-usdc"
       ],
       "deviationCheck": {
         "deviationWithRecentValues": {
@@ -2866,6 +2869,7 @@
         "kodiak-berachain-susde-500",
         "kodiak-berachain-usdc.e-100",
         "kodiak-berachain-usde-500",
+        "kodiak-berachain-usdt0-100",
         "kodiak-berachain-wbera-3000",
         "kodiak-berachain-wbtc-3000",
         "kodiak-berachain-weth-3000"
@@ -3060,7 +3064,8 @@
         "curve-fraxtal-crvusd",
         "curve-fraxtal-susde",
         "curve-fraxtal-usdt",
-        "fraxswap-fraxtal-wfrax"
+        "fraxswap-fraxtal-wfrax",
+        "uniswap-v4-ethereum-usde-100"
       ],
       "deviationCheck": {
         "deviationWithRecentValues": {
@@ -3221,7 +3226,9 @@
         "hyperliquid-api-fetcher-usdc",
         "hyperswap-hyperevm-whype-3000",
         "kittenswap-hyperevm-whype",
+        "nest-hyperevm-usdc",
         "nest-hyperevm-whype",
+        "project-x-hyperevm-usdc-3000",
         "project-x-hyperevm-usdt0-500",
         "project-x-hyperevm-whype-3000"
       ],
@@ -4074,7 +4081,9 @@
       "source": [
         "hyperliquid-api-fetcher-usdc",
         "nest-hyperevm-usdc",
+        "nest-hyperevm-usdt0",
         "nest-hyperevm-whype",
+        "project-x-hyperevm-usdc-100",
         "project-x-hyperevm-usdt0-100",
         "project-x-hyperevm-whype-3000"
       ],
