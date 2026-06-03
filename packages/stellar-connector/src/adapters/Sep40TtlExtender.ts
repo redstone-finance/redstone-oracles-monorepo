@@ -6,7 +6,7 @@ import { StellarSigner } from "../stellar/StellarSigner";
 import { StellarTxDeliveryManConfig } from "../stellar/StellarTxDeliveryManConfig";
 import { Sep40ContractReader } from "./Sep40ContractReader";
 
-const BLOCK_COUNT_THRESHOLD = LEDGERS_PER_DAY;
+const BLOCK_COUNT_THRESHOLD = LEDGERS_PER_DAY * 2.5;
 const EXTEND_FN = "extend_entries_ttl";
 
 export class Sep40TtlExtender {
