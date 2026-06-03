@@ -72,6 +72,12 @@
         "timeSinceLastUpdateInMilliseconds": 60000
       }
     },
-    "MEGA": {}
+    "MEGA": {},
+    "wiTRY_FUNDAMENTAL/USDm": {
+      "updateTriggersOverrides": {
+        "deviationPercentage": 0.000001,
+        "timeSinceLastUpdateInMilliseconds": 60000
+      }
+    }
   }
 }
