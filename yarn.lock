@@ -10187,6 +10187,7 @@ __metadata:
     "@types/chai": "npm:^4.3.4"
     "@types/lodash": "npm:^4.14.195"
     "@types/mocha": "npm:^10.0.1"
+    "@types/ws": "npm:^8.18.1"
     axios: "npm:^1.15.2"
     axios-debug-log: "npm:^1.0.0"
     bignumber.js: "npm:^9.3.0"
@@ -10200,6 +10201,7 @@ __metadata:
     redstone-api: "npm:^0.4.13"
     solidity-coverage: "npm:^0.8.12"
     typechain: "npm:^8.1.1"
+    ws: "npm:^8.18.3"
     zod: "npm:^4.1.12"
   languageName: unknown
   linkType: soft
