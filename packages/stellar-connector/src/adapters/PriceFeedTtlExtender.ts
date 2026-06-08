@@ -1,6 +1,6 @@
 import { loggerFactory, RedstoneCommon } from "@redstone-finance/utils";
 import { Keypair } from "@stellar/stellar-sdk";
-import { StellarClient } from "../stellar/StellarClient";
+import { StellarClient } from "../client/StellarClient";
 import { StellarSigner } from "../stellar/StellarSigner";
 
 export class PriceFeedTtlExtender {
@@ -22,7 +22,11 @@ export class PriceFeedTtlExtender {
       return;
     }
 
-    const addressesToExtend = await this.client.getAddressesToExtendInstanceTtl(this.addresses);
+    const blockNumber = await this.client.getBlockNumber();
+    const addressesToExtend = await this.client.getAddressesToExtendInstanceTtl(
+      this.addresses,
+      blockNumber
+    );
 
     if (addressesToExtend.length === 0) {
       PriceFeedTtlExtender.logger.info("No price-feed contracts need TTL extension");

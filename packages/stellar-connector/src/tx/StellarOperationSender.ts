@@ -6,9 +6,9 @@ import {
 import { ContractParamsProvider } from "@redstone-finance/sdk";
 import { FP, RedstoneCommon } from "@redstone-finance/utils";
 import { Operation, xdr } from "@stellar/stellar-sdk";
-import { MULTI_TX_DELIVERY_MAN_CONFIG } from "../split-params-into-batches";
-import { StellarClient } from "./StellarClient";
-import { StellarSigner } from "./StellarSigner";
+import { StellarClient } from "../client/StellarClient";
+import { StellarSigner } from "../stellar/StellarSigner";
+import { MULTI_TX_DELIVERY_MAN_CONFIG } from "./split-params-into-batches";
 import { StellarTransactionExecutor } from "./StellarTransactionExecutor";
 import { configFromPartial, StellarTxDeliveryManConfig } from "./StellarTxDeliveryManConfig";
 
