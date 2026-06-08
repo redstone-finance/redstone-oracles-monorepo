@@ -4,6 +4,7 @@ import { NetworkId } from "@redstone-finance/utils";
 export type PartialRelayerConfig = {
   networkId: NetworkId;
   chainName: string;
+  dataFeeds: string[];
   adapterContractAddress: string;
   adapterContractType: AdapterType;
   adapterContractPackageId?: string;

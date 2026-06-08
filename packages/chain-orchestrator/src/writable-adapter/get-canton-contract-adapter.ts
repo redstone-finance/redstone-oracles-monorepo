@@ -3,6 +3,7 @@ import {
   CantonClientBuilder,
   PricesCantonContractAdapter,
   readAdditionalPillViewers,
+  readUseConstTrafficMeter,
 } from "@redstone-finance/canton-connector";
 import { RedstoneCommon } from "@redstone-finance/utils";
 import { PartialRelayerConfig } from "./partial-relayer-config";
@@ -17,6 +18,7 @@ export const getCantonContractAdapter = (relayerConfig: PartialRelayerConfig) =>
     expectedTxDeliveryTimeInMS,
     maxTxSendAttempts,
     fallbackOffsetInMilliseconds,
+    dataFeeds,
   } = relayerConfig;
 
   const client = new CantonClientBuilder()
@@ -40,6 +42,8 @@ export const getCantonContractAdapter = (relayerConfig: PartialRelayerConfig) =>
         expectedTxDeliveryTimeInMS ??
         CANTON_CONTRACT_ADAPTER_DEFAULT_CONFIG.expectedTxDeliveryTimeInMs,
       shouldAccumulateTraffic: fallbackOffsetInMilliseconds === 0,
+      useConstTrafficMeter: readUseConstTrafficMeter(),
+      totalFeedCount: dataFeeds.length,
     },
     adapterContractPackageId
   );
