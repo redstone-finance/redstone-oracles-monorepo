@@ -5,13 +5,14 @@ import { CantonClient } from "../client/CantonClient";
 import { CantonChoiceExerciser, CantonContractUpdater } from "../tx/CantonContractUpdater";
 import { CantonTrafficMeter } from "../tx/CantonTrafficMeter";
 import { CantonTxDeliveryMan } from "../tx/CantonTxDeliveryMan";
+import { ConstCantonTrafficMeter } from "../tx/ConstCantonTrafficMeter";
+import { RealCantonTrafficMeter } from "../tx/RealCantonTrafficMeter";
 import { ActiveContractData } from "../utils/utils";
 import { CantonContractAdapterConfig } from "./CantonContractAdapterConfig";
 import { DEFS_KEY_FEATURED_APP_RIGHT } from "./CoreClientCantonContractAdapter";
 import { IADAPTER_TEMPLATE_NAME, PricesCantonReadOnlyAdapter } from "./PricesCantonReadOnlyAdapter";
 
 export const WRITE_PRICES_CHOICE = "WritePrices";
-const MIN_TRAFFIC_COST_TO_SEND = 1;
 
 export class PricesCantonContractAdapter
   extends PricesCantonReadOnlyAdapter
@@ -31,12 +32,13 @@ export class PricesCantonContractAdapter
     super(client, config, interfaceId, templateName);
 
     this.additionalPillViewers = config.additionalPillViewers;
-    this.trafficMeter = new CantonTrafficMeter(config.shouldAccumulateTraffic);
-    this.txDeliveryMan = new CantonTxDeliveryMan(
-      config,
-      this.trafficMeter,
-      this.client.getTotalConsumedTraffic.bind(this.client)
-    );
+    this.trafficMeter = config.useConstTrafficMeter
+      ? new ConstCantonTrafficMeter(config.shouldAccumulateTraffic, config.totalFeedCount)
+      : new RealCantonTrafficMeter(
+          config.shouldAccumulateTraffic,
+          this.client.getTotalConsumedTraffic.bind(this.client)
+        );
+    this.txDeliveryMan = new CantonTxDeliveryMan(config, this.trafficMeter);
     this.contractUpdater = new CantonContractUpdater(this, config.updaterPartyId);
   }
 
@@ -45,12 +47,11 @@ export class PricesCantonContractAdapter
   }
 
   async exerciseWritePricesChoice(actAs: string, argument: object) {
-    let paidTrafficCost = this.trafficMeter.consumeAccumulated();
-    paidTrafficCost = Math.max(paidTrafficCost ?? 0, MIN_TRAFFIC_COST_TO_SEND);
+    const paidTrafficCost = this.trafficMeter.consumeAccumulated();
 
     const context = {
       context: {
-        additionalPillViewers: this.additionalPillViewers,
+        additionalPillViewers: this.additionalPillViewers ?? [],
         paidTrafficCost: paidTrafficCost.toString(),
       },
     };
@@ -71,9 +72,9 @@ export class PricesCantonContractAdapter
       }
     );
 
-    if (typeof result === "string") {
+    if (typeof result === "string" && paidTrafficCost) {
       // no update was performed — return the consumed cost back to the meter
-      this.trafficMeter.register(undefined, undefined, { paidTrafficCost });
+      this.trafficMeter.refund(paidTrafficCost);
     }
 
     return { result, metadata };

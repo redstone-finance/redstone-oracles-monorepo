@@ -1,8 +1,8 @@
 import { ContractParamsProvider } from "@redstone-finance/sdk";
 import { FP } from "@redstone-finance/utils";
-import { CantonChoiceExerciser, CantonContractUpdater } from "../src/tx/CantonContractUpdater";
-import { getCantonFeedId } from "../src/utils/conversions";
-import { BASE_TS, CID, SIGNATORY, TX_HASH } from "./test-helpers";
+import { CantonChoiceExerciser, CantonContractUpdater } from "../../src/tx/CantonContractUpdater";
+import { getCantonFeedId } from "../../src/utils/conversions";
+import { BASE_TS, CID, SIGNATORY, TX_HASH } from "../test-helpers";
 
 const ACT_AS = SIGNATORY;
 const CONTEXT = { updateStartTimeMs: BASE_TS };

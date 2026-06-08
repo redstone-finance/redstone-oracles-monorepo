@@ -24,15 +24,6 @@ async function main() {
     console.error(RedstoneCommon.stringifyError(error));
   }
 
-  const adapter = new PricesCantonContractAdapter(client, {
-    ...CANTON_CONTRACT_ADAPTER_DEFAULT_CONFIG,
-    viewerPartyId: makePartyId(VIEWER_PARTY_NAME),
-    updaterPartyId: makePartyId(UPDATER_PARTY_NAME),
-    adapterId: ADAPTER_ID,
-    additionalPillViewers: readAdditionalPillViewers(),
-  });
-  const service = new CantonBlockchainService(client);
-
   const SUFFIX_24_7 = "---24_7";
   const dataPackagesIds =
     client.network === "mainnet"
@@ -41,6 +32,16 @@ async function main() {
           ...["AAPL", "TSLA", "NVDA", "GOOGL"].map((feed) => `${feed}${SUFFIX_24_7}`),
         ]
       : ["ETH", "BTC", "CC"];
+
+  const adapter = new PricesCantonContractAdapter(client, {
+    ...CANTON_CONTRACT_ADAPTER_DEFAULT_CONFIG,
+    viewerPartyId: makePartyId(VIEWER_PARTY_NAME),
+    updaterPartyId: makePartyId(UPDATER_PARTY_NAME),
+    adapterId: ADAPTER_ID,
+    additionalPillViewers: readAdditionalPillViewers(),
+    totalFeedCount: dataPackagesIds.length,
+  });
+  const service = new CantonBlockchainService(client);
   const paramsProvider = new ContractParamsProvider({
     dataPackagesIds,
     dataServiceId: "redstone-primary-prod",
