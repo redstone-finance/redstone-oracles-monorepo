@@ -145,7 +145,7 @@
 
   "USA100": "CmeEquities",
   "USA500": "CmeEquities",
-  "ESM6": "CmeEquities",
+  "ESU6": "CmeEquities",
 
   "DNMR": "AlwaysOpen",
   "FTSE100": "AlwaysOpen",
