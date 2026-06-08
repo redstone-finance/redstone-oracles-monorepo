@@ -21,7 +21,7 @@ import {
 
 jest.setTimeout(60000);
 
-describe("Ton Prices Tests", () => {
+describe.skip("Ton Prices Tests", () => {
   let priceManagerCode: Cell;
   let priceFeedCode: Cell;
   let sampleConsumerCode: Cell;

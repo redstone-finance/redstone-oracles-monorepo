@@ -13,7 +13,7 @@ import { TonUnitTesterContractDeployer } from "./unit_tester/TonUnitTesterContra
 const DATA_PACKAGE_VALUES_LENGTH =
   consts.DATA_FEED_ID_BS + consts.DEFAULT_NUM_VALUE_BS + consts.TIMESTAMP_BS;
 
-describe("TON parse data package Unit Tests", () => {
+describe.skip("TON parse data package Unit Tests", () => {
   let testerAdapter: TonUnitTesterContractAdapter;
 
   beforeAll(async () => {

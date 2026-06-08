@@ -1,7 +1,7 @@
 import { LastRoundDetails } from "@redstone-finance/sdk";
 import { RedstoneCommon } from "@redstone-finance/utils";
 import _ from "lodash";
-import { StellarClient } from "../stellar/StellarClient";
+import { StellarClient } from "../client/StellarClient";
 import { Sep40ContractReader } from "./Sep40ContractReader";
 import { StellarContractAdapter } from "./StellarContractAdapter";
 

@@ -1,4 +1,4 @@
-import { loggerFactory, RedstoneCommon } from "@redstone-finance/utils";
+import { Collector, loggerFactory, RedstoneCommon } from "@redstone-finance/utils";
 import {
   Account,
   Address,
@@ -15,12 +15,14 @@ import {
   xdr,
 } from "@stellar/stellar-sdk";
 import _ from "lodash";
-import { IStellarCaller, StellarInvocation } from "../IStellarCaller";
+import { StellarSigner } from "../stellar/StellarSigner";
 import { getLedgerCloseDate } from "../utils";
 import * as XdrUtils from "../XdrUtils";
 import { parseSimValAs } from "../XdrUtils";
+import { BlockNumberProvider } from "./BlockNumberProvider";
 import { HorizonClient } from "./HorizonClient";
-import { StellarSigner } from "./StellarSigner";
+import { IStellarCaller, StellarInvocation } from "./IStellarCaller";
+import { LedgerEntriesCollector, LedgerEntriesCollectorDelegate } from "./LedgerEntriesCollector";
 
 export const SECS_PER_LEDGER = 5;
 export const LEDGERS_PER_DAY = RedstoneCommon.hourToSecs(24) / SECS_PER_LEDGER;
@@ -30,12 +32,19 @@ const DAYS_TO_EXTEND_TTL_THRESHOLD = 7;
 const DAYS_TO_EXTEND_TTL = 30;
 const BASE_EXTEND_TTL_FEE = 1e7;
 const RANDOM_ACCOUNT_FOR_SIMULATION = new Account(Keypair.random().publicKey(), "1");
-const MAX_LEDGER_ENTRIES_PER_REQUEST = 195;
 
-export class StellarClient implements IStellarCaller {
+export class StellarClient implements IStellarCaller, LedgerEntriesCollectorDelegate {
   private readonly logger = loggerFactory("stellar-client");
-  private lastBlockNumber = 0;
-  private getBlockNumberPromise?: Promise<number>;
+  private readonly blockNumberProvider: BlockNumberProvider;
+  private readonly ledgerEntriesCollector = new Collector.CollectorRegistry(
+    (blockNumber?: number) => String(blockNumber ?? "latest"),
+    (blockNumber?: number) => {
+      const collector = new LedgerEntriesCollector(blockNumber);
+      collector.delegate = new WeakRef(this);
+
+      return collector;
+    }
+  );
 
   private getNetwork = RedstoneCommon.memoize({
     functionToMemoize: () => this.server.getNetwork(),
@@ -52,42 +61,33 @@ export class StellarClient implements IStellarCaller {
     private readonly server: rpc.Server,
     private readonly horizon?: HorizonClient,
     private readonly multicall?: IStellarCaller
-  ) {}
+  ) {
+    this.blockNumberProvider = new BlockNumberProvider(server);
+  }
 
-  private async getAccount(publicKey: string): Promise<Account> {
+  dispose() {
+    this.ledgerEntriesCollector.disposeAll();
+  }
+
+  private async getAccount(publicKey: string) {
     return await this.server.getAccount(publicKey);
   }
 
   async getAccountBalance(address: string) {
     const ledgerKey = XdrUtils.ledgerKeyFromAddress(address);
 
-    const response = await this.server.getLedgerEntries(ledgerKey);
+    const response = await this.fetchEntriesByKey([ledgerKey]);
 
-    return XdrUtils.accountFromResponse(response).balance().toBigInt();
+    const entry = response.at(0);
+    if (!entry) {
+      throw new Error("Empty response");
+    }
+
+    return XdrUtils.accountFromEntry(entry).balance().toBigInt();
   }
 
   async getBlockNumber() {
-    if (this.getBlockNumberPromise) {
-      return await this.getBlockNumberPromise;
-    }
-
-    this.getBlockNumberPromise = this.server.getLatestLedger().then((value) => value.sequence);
-
-    try {
-      const blockNumber = await this.getBlockNumberPromise;
-
-      if (blockNumber < this.lastBlockNumber) {
-        throw new Error(
-          `Compromised block number: ${blockNumber} when ${this.lastBlockNumber} was previously set`
-        );
-      }
-
-      this.lastBlockNumber = blockNumber;
-
-      return blockNumber;
-    } finally {
-      this.getBlockNumberPromise = undefined;
-    }
+    return await this.blockNumberProvider.getBlockNumber();
   }
 
   async getTransaction<T>(hash: string, valueTransform?: (returnValue: xdr.ScVal) => T) {
@@ -171,15 +171,7 @@ export class StellarClient implements IStellarCaller {
   }
 
   async waitForBlockNumber(blockNumber?: number) {
-    if (!RedstoneCommon.isDefined(blockNumber)) {
-      return;
-    }
-
-    if (this.lastBlockNumber >= blockNumber) {
-      return;
-    }
-
-    await RedstoneCommon.waitForBlockNumber(this.getBlockNumber.bind(this), blockNumber);
+    await this.blockNumberProvider.waitForBlockNumber(blockNumber);
   }
 
   async call<T>(
@@ -227,9 +219,14 @@ export class StellarClient implements IStellarCaller {
     durability?: rpc.Durability,
     blockNumber?: number
   ) {
-    await this.waitForBlockNumber(blockNumber);
+    const ledgerKey = contractDataKey(contract, key, toXdrDurability(durability));
+    const [entry] = await this.fetchEntriesByKey([ledgerKey], blockNumber);
 
-    return transform(await this.server.getContractData(contract, key, durability));
+    if (!entry) {
+      throw new Error(`No contract data entry for key ${key.toXDR("base64")}`);
+    }
+
+    return transform(entry);
   }
 
   async getContractEntries(
@@ -237,31 +234,37 @@ export class StellarClient implements IStellarCaller {
     feeds: xdr.ScVal[],
     blockNumber?: number
   ) {
-    await this.waitForBlockNumber(blockNumber);
-
     const keys = feeds.map((feed) => contractDataKey(contract, feed));
-    const entries = await this.fetchEntriesByKey(keys);
+    const entries = await this.fetchEntriesByKey(keys, blockNumber);
 
     return entries.map((entry) =>
       entry ? XdrUtils.maybeParsePriceDataFromContractData(entry) : undefined
     );
   }
 
-  async fetchEntriesByKey(keys: xdr.LedgerKey[]) {
+  async fetchEntriesByKey(keys: xdr.LedgerKey[], blockNumber?: number) {
+    return await this.ledgerEntriesCollector.get(blockNumber).collectMany(keys);
+  }
+
+  /// LedgerEntriesCollectorDelegate
+
+  async ledgerEntriesCollectorGetLedgerEntries(keys: xdr.LedgerKey[], blockNumber?: number) {
     if (keys.length === 0) {
       return [];
     }
 
-    const batches = _.chunk(keys, MAX_LEDGER_ENTRIES_PER_REQUEST).map(
-      (batch) => () => this.server.getLedgerEntries(...batch)
-    );
-    const results = await RedstoneCommon.batchPromises(1, 0, batches, true);
+    await this.blockNumberProvider.waitForBlockNumber(blockNumber);
 
-    const entriesByXdr = new Map(
-      results.flatMap(({ entries = [] }) => entries.map((e) => [e.key.toXDR("base64"), e]))
-    );
+    const { entries = [] } = await this.server.getLedgerEntries(...keys);
+    const byKey = new Map(entries.map((entry) => [entry.key.toXDR("base64"), entry]));
 
-    return keys.map((key) => entriesByXdr.get(key.toXDR("base64")));
+    return keys.map((key) => byKey.get(key.toXDR("base64")));
+  }
+
+  ledgerEntriesCollectorDispose(blockNumber?: number) {
+    if (RedstoneCommon.isDefined(blockNumber)) {
+      this.ledgerEntriesCollector.delete(blockNumber);
+    }
   }
 
   async sendTransaction(tx: Transaction) {
@@ -342,10 +345,12 @@ export class StellarClient implements IStellarCaller {
     }
 
     const FETCHING_LIMIT = 200;
-    let { transactions, cursor } = await this.server.getTransactions({
+    let { transactions, cursor } = await this.server.getTransactions(<
+      rpc.Api.GetTransactionsRequest
+    >{
       startLedger,
       pagination: { limit: FETCHING_LIMIT },
-    } as unknown as rpc.Api.GetTransactionsRequest);
+    });
     let lastLedger = transactions.at(-1)?.ledger;
 
     while (lastLedger !== undefined && lastLedger <= endLedger) {
@@ -447,14 +452,10 @@ export class StellarClient implements IStellarCaller {
     return { startLedger, endLedger, inRange: true };
   }
 
-  async getInstanceTtl(contract: string | Address | Contract) {
-    return (
-      await this.getContractData(
-        contract,
-        xdr.ScVal.scvLedgerKeyContractInstance(),
-        (result) => result
-      )
-    ).liveUntilLedgerSeq;
+  async getInstanceTtl(contract: string | Address | Contract, blockNumber?: number) {
+    const [ttl] = await this.getInstanceTtls([contract], blockNumber);
+
+    return ttl;
   }
 
   async getInstanceTtls(contracts: (string | Address | Contract)[], blockNumber?: number) {
@@ -462,11 +463,9 @@ export class StellarClient implements IStellarCaller {
       contractDataKey(contract, xdr.ScVal.scvLedgerKeyContractInstance())
     );
 
-    await this.waitForBlockNumber(blockNumber);
+    const response = await this.fetchEntriesByKey(keys, blockNumber);
 
-    const response = await this.server.getLedgerEntries(...keys);
-
-    return response.entries.map((entry) => entry.liveUntilLedgerSeq);
+    return response.map((entry) => entry?.liveUntilLedgerSeq);
   }
 
   async getEntriesTtls(
@@ -474,16 +473,13 @@ export class StellarClient implements IStellarCaller {
     keys: (xdr.ScVal | "instance")[],
     blockNumber?: number
   ) {
-    await this.waitForBlockNumber(blockNumber);
-
     const ledgerKeys = keys.map((key) =>
       contractDataKey(contract, key === "instance" ? xdr.ScVal.scvLedgerKeyContractInstance() : key)
     );
 
-    const { entries = [] } = await this.server.getLedgerEntries(...ledgerKeys);
-    const byXdr = new Map(entries.map((e) => [e.key.toXDR("base64"), e.liveUntilLedgerSeq]));
+    const entries = await this.fetchEntriesByKey(ledgerKeys, blockNumber);
 
-    return ledgerKeys.map((key) => byXdr.get(key.toXDR("base64")));
+    return entries.map((entry) => entry?.liveUntilLedgerSeq);
   }
 
   async extendInstanceTtl(
@@ -513,9 +509,9 @@ export class StellarClient implements IStellarCaller {
 
   async getAddressesToExtendInstanceTtl(
     addresses: string[],
+    currentLedger: number,
     updateTtlThreshold = LEDGERS_PER_DAY * DAYS_TO_EXTEND_TTL_THRESHOLD
   ) {
-    const currentLedger = await this.getBlockNumber();
     const ttls = await this.getInstanceTtls(addresses, currentLedger);
 
     return _.zip(addresses, ttls)
@@ -527,6 +523,16 @@ export class StellarClient implements IStellarCaller {
 
   async getNetworkStats(force = false): Promise<Horizon.HorizonApi.FeeStatsResponse | undefined> {
     return await this.horizon?.getNetworkStats(force);
+  }
+}
+
+function toXdrDurability(durability?: rpc.Durability) {
+  switch (durability) {
+    case rpc.Durability.Temporary:
+      return xdr.ContractDataDurability.temporary();
+    case rpc.Durability.Persistent:
+    case undefined:
+      return xdr.ContractDataDurability.persistent();
   }
 }
 

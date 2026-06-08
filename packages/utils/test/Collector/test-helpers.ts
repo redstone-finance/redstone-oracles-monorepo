@@ -59,6 +59,14 @@ export class TestRequestCollector extends Collector.RequestCollector<string, Val
   }
 }
 
+export class IdleTrackingTestRequestCollector extends TestRequestCollector {
+  idleCount = 0;
+
+  protected override onIdle() {
+    this.idleCount++;
+  }
+}
+
 export const BATCH_UNSUPPORTED_MARKER = "batch";
 
 export class FallbackTestRequestCollector extends TestRequestCollector {

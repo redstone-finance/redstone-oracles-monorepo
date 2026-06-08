@@ -1,38 +1,44 @@
 import _ from "lodash";
-import { getNS, stringifyError } from "../common";
+import { getNS, stringify, stringifyError } from "../common";
 import { loggerFactory } from "../logger";
 
-export abstract class RequestCollector<TKey, TResult> {
+export abstract class RequestCollector<Key, Result> {
   private readonly logger;
 
   private requestedCalls = 0;
   private actualCalls = 0;
   private timer?: NodeJS.Timeout;
+  private activeRegisterCalls = 0;
+  private activeConsumeCalls = 0;
+  protected readonly label: string;
 
   private pending: {
-    [keyStr: string]: { promise: Promise<TResult[]>; index: number } | undefined;
+    [keyStr: string]: { promise: Promise<Result[]>; index: number } | undefined;
   } = {};
   private waitingEntries: {
-    keys: TKey[];
-    resolve: (results: TResult[]) => void;
+    keys: Key[];
+    resolve: (results: Result[]) => void;
     reject: (err: unknown) => void;
   }[] = [];
 
-  constructor(
-    protected readonly label: string,
+  protected constructor(
+    label: string,
     private readonly maxBatchSize: number,
-    private readonly collectingIntervalMs: number
+    private readonly collectingIntervalMs: number,
+    readonly variant?: unknown
   ) {
-    this.logger = loggerFactory(`request-collector-${label}`);
+    this.label = `${label}${variant ? `[${stringify(variant)}]` : ""}`;
+    this.logger = loggerFactory(`request-collector-${this.label}`);
   }
 
   private batchSupported = true;
 
-  protected abstract keyToString(key: TKey): string;
-  protected abstract fetchBatch(keys: TKey[]): Promise<TResult[]>;
+  protected abstract keyToString(key: Key): string;
+  protected abstract fetchBatch(keys: Key[]): Promise<Result[]>;
 
-  protected fetchSingle?(key: TKey): Promise<TResult>;
+  protected fetchSingle?(key: Key): Promise<Result>;
   protected isBatchUnsupportedError?(error: unknown): boolean;
+  protected onIdle?(): void;
 
   dispose() {
     this.clearTimer();
@@ -51,10 +57,10 @@ export abstract class RequestCollector<TKey, TResult> {
     this.pending = {};
   }
 
-  async collectMany(keys: TKey[]) {
+  async collectMany(keys: Key[]) {
     const remaining = keys.filter((k) => !this.pending[this.keyToString(k)]);
 
-    let myPromise: Promise<TResult[]> | undefined;
+    let myPromise: Promise<Result[]> | undefined;
 
     if (remaining.length) {
       const call = this.registerCall(remaining);
@@ -79,7 +85,7 @@ export abstract class RequestCollector<TKey, TResult> {
     try {
       const result = await Promise.all(promises);
 
-      this.logger.debug(
+      this.logger.trace(
         `${this.label} made ${this.actualCalls} of ${++this.requestedCalls} requested calls`
       );
 
@@ -93,32 +99,39 @@ export abstract class RequestCollector<TKey, TResult> {
     }
   }
 
-  async collect(key: TKey) {
+  async collect(key: Key) {
     const [result] = await this.collectMany([key]);
 
     return result;
   }
 
-  private async registerCall(keys: TKey[]) {
-    const waitingKeysCount = this.waitingEntries.reduce((sum, e) => sum + e.keys.length, 0);
+  private async registerCall(keys: Key[]) {
+    this.activeRegisterCalls++;
+    try {
+      const waitingKeysCount = this.waitingEntries.reduce((sum, e) => sum + e.keys.length, 0);
 
-    if (keys.length + waitingKeysCount > this.maxBatchSize) {
-      await this.consumeWaitingEntries();
+      if (waitingKeysCount > 0 && keys.length + waitingKeysCount > this.maxBatchSize) {
+        await this.consumeWaitingEntries();
+      }
+
+      return await new Promise<Result[]>((resolve, reject) => {
+        this.waitingEntries.push({ keys, resolve, reject });
+        this.timer ??= setTimeout(
+          () =>
+            void this.consumeWaitingEntries().catch((e) =>
+              this.logger.error(`consumeWaitingEntries failed: ${stringifyError(e)}`)
+            ),
+          this.collectingIntervalMs
+        );
+      });
+    } finally {
+      this.activeRegisterCalls--;
+      this.maybeFireOnIdle();
     }
-
-    return await new Promise<TResult[]>((resolve, reject) => {
-      this.waitingEntries.push({ keys, resolve, reject });
-      this.timer ??= setTimeout(
-        () =>
-          void this.consumeWaitingEntries().catch((e) =>
-            this.logger.error(`consumeWaitingEntries failed: ${stringifyError(e)}`)
-          ),
-        this.collectingIntervalMs
-      );
-    });
   }
 
   private async consumeWaitingEntries() {
+    this.activeConsumeCalls++;
     const entries = this.waitingEntries;
     this.waitingEntries = [];
     this.clearTimer();
@@ -145,10 +158,23 @@ export abstract class RequestCollector<TKey, TResult> {
       }
     } catch (err) {
       entries.forEach((entry) => entry.reject(err));
+    } finally {
+      this.activeConsumeCalls--;
+      this.maybeFireOnIdle();
     }
   }
 
-  private async fetchChunk(keys: TKey[]) {
+  private maybeFireOnIdle() {
+    if (
+      this.activeConsumeCalls === 0 &&
+      this.activeRegisterCalls === 0 &&
+      this.waitingEntries.length === 0
+    ) {
+      this.onIdle?.();
+    }
+  }
+
+  private async fetchChunk(keys: Key[]) {
     const fetchSingle = this.fetchSingle?.bind(this);
     if (!fetchSingle) {
       return await this.fetchBatch(keys);

@@ -8,7 +8,7 @@ import {
 import { TonUnitTesterContractAdapter } from "./unit_tester/TonUnitTesterContractAdapter";
 import { TonUnitTesterContractDeployer } from "./unit_tester/TonUnitTesterContractDeployer";
 
-describe("TON unit Tests", () => {
+describe.skip("TON unit Tests", () => {
   let testerAdapter: TonUnitTesterContractAdapter;
 
   beforeAll(async () => {

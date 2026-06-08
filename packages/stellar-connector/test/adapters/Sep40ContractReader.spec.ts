@@ -1,8 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import { Address, Contract } from "@stellar/stellar-sdk";
-import { Sep40ContractReader } from "../../src/adapters/Sep40ContractReader";
+import { Sep40ContractReader, StellarClient } from "../../src";
 import { assetToScVal, Sep40Asset } from "../../src/sep-40-types";
-import { StellarClient } from "../../src/stellar/StellarClient";
 
 function contractIdFromSeed(seed: number) {
   return Address.contract(Buffer.alloc(32, seed)).toString();
