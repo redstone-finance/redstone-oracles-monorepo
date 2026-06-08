@@ -23,18 +23,14 @@ export function ledgerKeyFromAddress(address: string) {
   );
 }
 
-export function accountFromResponse(response: rpc.Api.GetLedgerEntriesResponse) {
-  if (response.entries.length === 0) {
-    throw new Error("Empty response");
-  }
+export function accountFromEntry(entry: rpc.Api.LedgerEntryResult) {
+  const val = entry.val;
 
-  const entry = response.entries[0].val;
-
-  if (entry.switch().name !== "account") {
+  if (val.switch().name !== "account") {
     throw new Error("Unexpected response type");
   }
 
-  return entry.account();
+  return val.account();
 }
 
 export function numbersToScvBytes(val: number[]) {

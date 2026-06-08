@@ -1,7 +1,7 @@
 import { Address, Operation, xdr } from "@stellar/stellar-sdk";
 import { readFileSync } from "fs";
-import { StellarClient } from "./StellarClient";
-import { StellarOperationSender } from "./StellarOperationSender";
+import { StellarClient } from "../client/StellarClient";
+import { StellarOperationSender } from "../tx/StellarOperationSender";
 
 export class StellarContractDeployer {
   constructor(

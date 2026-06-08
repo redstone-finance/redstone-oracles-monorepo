@@ -1,6 +1,6 @@
 import { PriceFeedAdapter } from "@redstone-finance/multichain-kit";
 import { Contract } from "@stellar/stellar-sdk";
-import { StellarClient } from "../stellar/StellarClient";
+import { StellarClient } from "../client/StellarClient";
 import * as XdrUtils from "../XdrUtils";
 
 const DECIMALS_METHOD = "decimals";
