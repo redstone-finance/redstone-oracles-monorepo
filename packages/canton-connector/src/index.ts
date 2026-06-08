@@ -14,6 +14,4 @@ export * from "./client/CantonClientBuilder";
 export * from "./client/CantonValidatorClient";
 export * from "./client/keycloak-token-provider";
 export * from "./client/KeycloakTokenProviderParams";
-export * from "./tx/CantonTrafficMeter";
-export * from "./tx/CantonTxDeliveryMan";
 export * from "./utils/utils";
