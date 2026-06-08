@@ -1,4 +1,4 @@
-import { LEDGER_TIME_MS, STROOPS_IN_XLM } from "./StellarConstants";
+import { LEDGER_TIME_MS, STROOPS_IN_XLM } from "../stellar/StellarConstants";
 
 const DEFAULT_GAS_LIMIT_STROOPS = 1 * STROOPS_IN_XLM;
 const DEFAULT_MAX_TX_SEND_ATTEMPTS = 5;

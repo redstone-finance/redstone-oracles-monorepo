@@ -1,5 +1,6 @@
 import { RedstoneCommon } from "@redstone-finance/utils";
 import { Contract, nativeToScVal, xdr } from "@stellar/stellar-sdk";
+import { contractDataKey, StellarClient } from "../client/StellarClient";
 import { assetToFeedKey, feedToAssetKey, getEntriesKeysWithLabels } from "../sep-40-keys";
 import {
   assetFromScVal,
@@ -11,7 +12,6 @@ import {
   parseOptionalPriceDataVec,
   Sep40Asset,
 } from "../sep-40-types";
-import { contractDataKey, StellarClient } from "../stellar/StellarClient";
 
 const BASE_METHOD = "base";
 const ASSETS_METHOD = "assets";
@@ -138,10 +138,10 @@ export class Sep40ContractReader {
     );
   }
 
-  async closestTtlToDeadline() {
+  async closestTtlToDeadline(blockNumber?: number) {
     const [instanceTtl, entryTtls] = await Promise.all([
-      this.client.getInstanceTtl(this.contract),
-      this.getEntryTtls(),
+      this.client.getInstanceTtl(this.contract, blockNumber),
+      this.getEntryTtls(blockNumber),
     ]);
     const ttls = entryTtls.values().filter(RedstoneCommon.isDefined);
 
@@ -152,7 +152,8 @@ export class Sep40ContractReader {
     const assets = await this.assets(blockNumber);
 
     const assetEntries = await this.client.fetchEntriesByKey(
-      assets.map((asset) => contractDataKey(this.contract, assetToFeedKey(asset)))
+      assets.map((asset) => contractDataKey(this.contract, assetToFeedKey(asset))),
+      blockNumber
     );
 
     const feeds = assetEntries.map((entry, i) => {

@@ -1,4 +1,4 @@
-import { StellarMulticall } from "../../src/stellar/StellarMulticall";
+import { StellarMulticall } from "../../src/client/StellarMulticall";
 import {
   FakeDelegate,
   makeBaseInvocation,

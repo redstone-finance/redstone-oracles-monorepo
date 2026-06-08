@@ -3,7 +3,7 @@ import { ContractData, LastRoundDetails } from "@redstone-finance/sdk";
 import { loggerFactory } from "@redstone-finance/utils";
 import { Contract } from "@stellar/stellar-sdk";
 import _ from "lodash";
-import { StellarClient } from "../stellar/StellarClient";
+import { StellarClient } from "../client/StellarClient";
 import * as XdrUtils from "../XdrUtils";
 
 export class StellarContractAdapter implements ContractAdapter {

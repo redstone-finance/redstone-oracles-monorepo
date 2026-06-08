@@ -1,5 +1,5 @@
 import { Horizon } from "@stellar/stellar-sdk";
-import { LEDGER_TIME_MS } from "./StellarConstants";
+import { LEDGER_TIME_MS } from "../stellar/StellarConstants";
 
 export class HorizonClient {
   private cachedNetworkStats?: { value: Horizon.HorizonApi.FeeStatsResponse; timestamp: number };

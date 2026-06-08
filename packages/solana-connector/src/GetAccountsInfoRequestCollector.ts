@@ -27,7 +27,12 @@ export class GetAccountsInfoRequestCollector extends Collector.RequestCollector<
     private readonly commitmentOrConfig?: CollectableCommitmentOrConfig,
     collectingIntervalMs = DEFAULT_COLLECTING_INTERVAL_MS
   ) {
-    super("solana-accounts-info", MAX_NUMBER_OF_ACCOUNTS_TO_FETCH, collectingIntervalMs);
+    super(
+      "solana-accounts-info",
+      MAX_NUMBER_OF_ACCOUNTS_TO_FETCH,
+      collectingIntervalMs,
+      commitmentOrConfig
+    );
   }
 
   protected override keyToString(publicKey: PublicKey) {

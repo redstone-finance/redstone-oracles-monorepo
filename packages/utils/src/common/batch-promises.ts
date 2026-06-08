@@ -75,9 +75,7 @@ export async function runWithPartialFailure<T>(
     throw new AggregateError(errors, allFailedMessage);
   }
 
-  for (const error of errors) {
-    onError(error);
-  }
+  errors.forEach(onError);
 }
 
 export function splitSettlementsAndAssert<T>(

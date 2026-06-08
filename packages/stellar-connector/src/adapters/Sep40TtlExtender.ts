@@ -1,9 +1,9 @@
 import { loggerFactory, RedstoneCommon } from "@redstone-finance/utils";
 import { Contract, Keypair } from "@stellar/stellar-sdk";
-import { LEDGERS_PER_DAY, SECS_PER_LEDGER, StellarClient } from "../stellar/StellarClient";
-import { StellarOperationSender } from "../stellar/StellarOperationSender";
+import { LEDGERS_PER_DAY, SECS_PER_LEDGER, StellarClient } from "../client/StellarClient";
 import { StellarSigner } from "../stellar/StellarSigner";
-import { StellarTxDeliveryManConfig } from "../stellar/StellarTxDeliveryManConfig";
+import { StellarOperationSender } from "../tx/StellarOperationSender";
+import { StellarTxDeliveryManConfig } from "../tx/StellarTxDeliveryManConfig";
 import { Sep40ContractReader } from "./Sep40ContractReader";
 
 const BLOCK_COUNT_THRESHOLD = LEDGERS_PER_DAY * 2.5;
@@ -29,10 +29,8 @@ export class Sep40TtlExtender {
 
   async extendTtlIfNeeded() {
     const contractId = this.contract.address().toString();
-    const [blockNumber, oldestTtl] = await Promise.all([
-      this.client.getBlockNumber(),
-      this.reader.closestTtlToDeadline(),
-    ]);
+    const blockNumber = await this.client.getBlockNumber();
+    const oldestTtl = await this.reader.closestTtlToDeadline(blockNumber);
 
     const blocksRemaining = oldestTtl - blockNumber;
     const shouldExtend = oldestTtl <= blockNumber + BLOCK_COUNT_THRESHOLD;

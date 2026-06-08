@@ -1,7 +1,7 @@
 import { PriceFeedAdapter } from "@redstone-finance/multichain-kit";
 import { Contract } from "@stellar/stellar-sdk";
+import { StellarClient } from "../client/StellarClient";
 import { Sep40Asset } from "../sep-40-types";
-import { StellarClient } from "../stellar/StellarClient";
 import { Sep40ContractReader } from "./Sep40ContractReader";
 
 export class Sep40PriceFeedStellarContractAdapter implements PriceFeedAdapter {

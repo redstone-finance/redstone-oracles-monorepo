@@ -1,14 +1,14 @@
 import { RequestCollector } from "./RequestCollector";
 
-export class CollectorRegistry<TInput, TKey, TResult> {
-  private readonly collectors = new Map<string, RequestCollector<TKey, TResult>>();
+export class CollectorRegistry<Input, Key, Result> {
+  private readonly collectors = new Map<string, RequestCollector<Key, Result>>();
 
   constructor(
-    private readonly keyOf: (input: TInput) => string,
-    private readonly factory: (input: TInput) => RequestCollector<TKey, TResult>
+    private readonly keyOf: (input: Input) => string,
+    private readonly factory: (input: Input) => RequestCollector<Key, Result>
   ) {}
 
-  get(input: TInput) {
+  get(input: Input) {
     const key = this.keyOf(input);
     let collector = this.collectors.get(key);
     if (!collector) {
@@ -19,7 +19,7 @@ export class CollectorRegistry<TInput, TKey, TResult> {
     return collector;
   }
 
-  delete(input: TInput) {
+  delete(input: Input) {
     const key = this.keyOf(input);
     this.collectors.get(key)?.dispose();
     this.collectors.delete(key);

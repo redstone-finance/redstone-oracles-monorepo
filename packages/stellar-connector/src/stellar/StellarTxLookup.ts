@@ -7,7 +7,7 @@ import {
 import { consts } from "@redstone-finance/protocol";
 import { Address, rpc, xdr } from "@stellar/stellar-sdk";
 import { hexlify } from "ethers/lib/utils";
-import { StellarClient } from "./StellarClient";
+import { StellarClient } from "../client/StellarClient";
 
 export class StellarTxLookup extends RangeScanTxLookup<rpc.Api.TransactionInfo> {
   constructor(private readonly client: StellarClient) {

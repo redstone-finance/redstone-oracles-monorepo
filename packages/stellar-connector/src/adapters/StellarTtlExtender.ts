@@ -1,7 +1,7 @@
 import { loggerFactory, RedstoneCommon } from "@redstone-finance/utils";
 import { Keypair } from "@stellar/stellar-sdk";
-import { StellarClient } from "../stellar/StellarClient";
-import { StellarTxDeliveryManConfig } from "../stellar/StellarTxDeliveryManConfig";
+import { StellarClient } from "../client/StellarClient";
+import { StellarTxDeliveryManConfig } from "../tx/StellarTxDeliveryManConfig";
 import { PriceFeedTtlExtender } from "./PriceFeedTtlExtender";
 import { Sep40TtlExtender } from "./Sep40TtlExtender";
 
