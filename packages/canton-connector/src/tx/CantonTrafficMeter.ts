@@ -1,11 +1,11 @@
+import { TxDeliveryManUpdateStatus } from "@redstone-finance/multichain-kit";
 import { loggerFactory, RedstoneCommon } from "@redstone-finance/utils";
-import { TransactionMetadata } from "../client/CantonClient";
+import { CantonTxResultExt } from "./CantonContractUpdater";
 
-export class CantonTrafficMeter {
-  private static logger = loggerFactory("canton-traffic-meter");
-  private lastRegisteredConsumed?: number;
+export abstract class CantonTrafficMeter {
+  protected static logger = loggerFactory("canton-traffic-meter");
   private accumulatedPaidTrafficCost?: number;
-  private static accumulatingInstance?: CantonTrafficMeter;
+  protected static accumulatingInstance?: CantonTrafficMeter;
 
   constructor(private readonly shouldAccumulateTraffic: boolean) {
     if (!shouldAccumulateTraffic) {
@@ -21,39 +21,15 @@ export class CantonTrafficMeter {
     CantonTrafficMeter.accumulatingInstance = this;
   }
 
-  register(
-    initial: number | undefined,
-    totalConsumed: number | undefined,
-    metadata?: TransactionMetadata & { feedCount?: number }
-  ) {
-    if (RedstoneCommon.isDefined(initial) && RedstoneCommon.isDefined(totalConsumed)) {
-      const base =
-        RedstoneCommon.isDefined(this.lastRegisteredConsumed) &&
-        initial < this.lastRegisteredConsumed
-          ? this.lastRegisteredConsumed
-          : initial;
+  abstract beforeUpdate(): void;
 
-      const usedTraffic = totalConsumed - base;
-
-      CantonTrafficMeter.logger.info(
-        `Traffic used: ${usedTraffic} bytes (initial: ${initial}, base: ${base}, total: ${totalConsumed}); ` +
-          `metadata paidTrafficCost: ${metadata?.paidTrafficCost}`,
-        { usedTraffic, initial, base, totalConsumed, metadata }
-      );
-
-      this.lastRegisteredConsumed = totalConsumed;
-      this.addPaidTrafficCost(usedTraffic);
-    } else {
-      CantonTrafficMeter.logger.warn(
-        `Traffic measurement incomplete, using metadata paidTrafficCost: ${metadata?.paidTrafficCost}`,
-        { metadata }
-      );
-      this.addPaidTrafficCost(metadata?.paidTrafficCost);
-    }
-  }
+  abstract afterUpdate(
+    feedCount: number,
+    result: TxDeliveryManUpdateStatus<CantonTxResultExt>
+  ): Promise<void> | void;
 
   consumeAccumulated() {
-    const paidTrafficCost = this.accumulatedPaidTrafficCost;
+    const paidTrafficCost = Math.round(this.accumulatedPaidTrafficCost ?? 0);
     this.accumulatedPaidTrafficCost = 0;
 
     if (paidTrafficCost) {
@@ -65,7 +41,11 @@ export class CantonTrafficMeter {
     return paidTrafficCost;
   }
 
-  private addPaidTrafficCost(paidTrafficCost?: number) {
+  refund(paidTrafficCost: number) {
+    this.addPaidTrafficCost(paidTrafficCost);
+  }
+
+  protected addPaidTrafficCost(paidTrafficCost?: number) {
     if (
       !this.shouldAccumulateTraffic ||
       !RedstoneCommon.isDefined(paidTrafficCost) ||
@@ -74,8 +54,9 @@ export class CantonTrafficMeter {
       return;
     }
 
-    CantonTrafficMeter.logger.info(`Used paidTrafficCost: ${paidTrafficCost}`, {
-      paidTrafficCost,
+    const rounded = Math.round(paidTrafficCost);
+    CantonTrafficMeter.logger.info(`Used paidTrafficCost: ${rounded}`, {
+      paidTrafficCost: rounded,
     });
 
     this.accumulatedPaidTrafficCost ??= 0;
