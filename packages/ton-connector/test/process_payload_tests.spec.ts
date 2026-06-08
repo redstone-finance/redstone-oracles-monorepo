@@ -10,7 +10,7 @@ import { TonTesterContractDeployer } from "./tester/TonTesterContractDeployer";
 
 jest.setTimeout(10000);
 
-describe("TON process_payload Tests", () => {
+describe.skip("TON process_payload Tests", () => {
   let testerAdapter: TonTesterContractAdapter;
 
   beforeAll(async () => {

@@ -1,7 +1,7 @@
 import { ChainTypeEnum, MultiExecutor, RedstoneCommon } from "@redstone-finance/utils";
 import { Horizon, rpc } from "@stellar/stellar-sdk";
+import { getStellarChainId, NETWORK_NAMES, StellarNetwork } from "../stellar/network-ids";
 import { HorizonClient } from "./HorizonClient";
-import { getStellarChainId, NETWORK_NAMES, StellarNetwork } from "./network-ids";
 import { StellarClient } from "./StellarClient";
 import { StellarMulticall } from "./StellarMulticall";
 
@@ -50,7 +50,6 @@ export class StellarClientBuilder extends MultiExecutor.ClientBuilder<StellarCli
         getContractEntries: MultiExecutor.ExecutionMode.MULTI_AGREEMENT,
         getTransaction: MultiExecutor.ExecutionMode.AGREEMENT,
         waitForTx: MultiExecutor.ExecutionMode.AGREEMENT,
-        getInstanceTtl: MultiExecutor.ExecutionMode.AGREEMENT,
         call: MultiExecutor.ExecutionMode.AGREEMENT,
       }
     );

@@ -4,7 +4,7 @@ import {
 } from "@redstone-finance/multichain-kit";
 import { RedstoneCommon } from "@redstone-finance/utils";
 import { Keypair } from "@stellar/stellar-sdk";
-import { SECS_PER_LEDGER, StellarClient } from "./StellarClient";
+import { SECS_PER_LEDGER, StellarClient } from "../client/StellarClient";
 import { StellarSigner } from "./StellarSigner";
 import { StellarTxLookup } from "./StellarTxLookup";
 

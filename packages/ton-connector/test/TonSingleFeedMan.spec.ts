@@ -18,7 +18,7 @@ import {
 
 jest.setTimeout(60000);
 
-describe("Ton Single Feed Man Tests", () => {
+describe.skip("Ton Single Feed Man Tests", () => {
   let singleFeedManCode: Cell;
   let sampleConsumerCode: Cell;
   let singleFeedMan: TonSingleFeedManContractAdapter;

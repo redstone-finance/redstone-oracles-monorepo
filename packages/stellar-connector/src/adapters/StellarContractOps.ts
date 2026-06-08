@@ -1,6 +1,6 @@
 import { BASE_FEE, Contract, xdr } from "@stellar/stellar-sdk";
-import { StellarClient } from "../stellar/StellarClient";
-import { StellarOperationSender } from "../stellar/StellarOperationSender";
+import { StellarClient } from "../client/StellarClient";
+import { StellarOperationSender } from "../tx/StellarOperationSender";
 import * as XdrUtils from "../XdrUtils";
 
 const TIMEOUT_SEC = 3600;

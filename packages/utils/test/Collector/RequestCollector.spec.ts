@@ -2,6 +2,7 @@ import { RedstoneCommon } from "../../src";
 import {
   FallbackTestRequestCollector,
   HALF_WINDOW_WAIT_MS,
+  IdleTrackingTestRequestCollector,
   makeValue,
   MAX,
   NEVER_FIRES_WITHIN_TEST_MS,
@@ -226,6 +227,54 @@ describe("RequestCollector", () => {
 
       const result = RedstoneCommon.timeout(promise, 100, "timeout");
       await expect(result).rejects.toThrowError("TestRequestCollector disposed");
+    });
+  });
+
+  describe("onIdle hook", () => {
+    it("fires once after a batch resolves", async () => {
+      const sut = new IdleTrackingTestRequestCollector(MAX, QUICK_FLUSH_MS);
+      sut.results.set("k1", makeValue(1));
+
+      await sut.collectMany(["k1"]);
+
+      expect(sut.idleCount).toBe(1);
+    });
+
+    it("fires once per flush even when the batch overflows into multiple chunks", async () => {
+      const sut = new IdleTrackingTestRequestCollector(MAX, NEVER_FIRES_WITHIN_TEST_MS);
+      const overflowing = seedKeys(sut, "k", MAX + 50);
+
+      await sut.collectMany(overflowing);
+
+      expect(sut.calls.length).toBe(2);
+      expect(sut.idleCount).toBe(1);
+    });
+
+    it("fires onIdle once when two consume calls overlap concurrently", async () => {
+      const sut = new IdleTrackingTestRequestCollector(MAX, QUICK_FLUSH_MS);
+      sut.delay = SLOW_BACKEND_DELAY_MS;
+      sut.results.set("a", makeValue(1));
+      sut.results.set("b", makeValue(2));
+
+      const promiseA = sut.collectMany(["a"]);
+      await RedstoneCommon.sleep(QUICK_FLUSH_MS * 2);
+      const promiseB = sut.collectMany(["b"]);
+      await RedstoneCommon.sleep(QUICK_FLUSH_MS * 2);
+
+      await Promise.all([promiseA, promiseB]);
+
+      expect(sut.calls).toEqual([["a"], ["b"]]);
+      expect(sut.idleCount).toBe(1);
+    });
+
+    it("does not fire onIdle between an overflow flush and the subsequent push", async () => {
+      const sut = new IdleTrackingTestRequestCollector(MAX, QUICK_FLUSH_MS);
+      const keys1 = seedKeys(sut, "k1", 60);
+      const keys2 = seedKeys(sut, "k2", 50, 100);
+
+      await Promise.all([sut.collectMany(keys1), sut.collectMany(keys2)]);
+
+      expect(sut.idleCount).toBe(1);
     });
   });
 

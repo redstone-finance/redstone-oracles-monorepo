@@ -1,9 +1,9 @@
 import { ContractUpdateContext } from "@redstone-finance/multichain-kit";
 import { loggerFactory, RedstoneCommon } from "@redstone-finance/utils";
 import { Operation, rpc, xdr } from "@stellar/stellar-sdk";
+import { StellarClient } from "../client/StellarClient";
+import { StellarSigner } from "../stellar/StellarSigner";
 import { getLedgerCloseDate } from "../utils";
-import { StellarClient } from "./StellarClient";
-import { StellarSigner } from "./StellarSigner";
 
 const SLEEP_TIME_MS = 1_000;
 

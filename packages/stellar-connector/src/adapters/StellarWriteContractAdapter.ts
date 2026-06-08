@@ -3,12 +3,12 @@ import { ContractParamsProvider } from "@redstone-finance/sdk";
 import { FP } from "@redstone-finance/utils";
 import { Keypair } from "@stellar/stellar-sdk";
 import * as XdrUtils from "../XdrUtils";
-import { splitParamsIntoBatches } from "../split-params-into-batches";
-import { StellarClient } from "../stellar/StellarClient";
-import { StellarContractUpdater } from "../stellar/StellarContractUpdater";
-import { StellarOperationSender } from "../stellar/StellarOperationSender";
+import { StellarClient } from "../client/StellarClient";
 import { StellarSigner } from "../stellar/StellarSigner";
-import { StellarTxDeliveryManConfig } from "../stellar/StellarTxDeliveryManConfig";
+import { StellarContractUpdater } from "../tx/StellarContractUpdater";
+import { StellarOperationSender } from "../tx/StellarOperationSender";
+import { StellarTxDeliveryManConfig } from "../tx/StellarTxDeliveryManConfig";
+import { splitParamsIntoBatches } from "../tx/split-params-into-batches";
 import { StellarContractAdapter } from "./StellarContractAdapter";
 
 const GET_PRICES_METHOD = "get_prices";

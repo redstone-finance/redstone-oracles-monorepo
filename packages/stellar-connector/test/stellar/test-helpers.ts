@@ -1,7 +1,5 @@
-import { InvocationV0, StellarRouterSdk } from "@creit-tech/stellar-router-sdk";
 import { Contract, xdr } from "@stellar/stellar-sdk";
 import { IStellarCallerDelegate, StellarInvocation } from "../../src";
-import { StellarKey } from "../../src/stellar/SimulationCollector";
 
 export const TEST_CONTRACT_ID = "CBM4TX2P6JAKDJ3RJEYZUXDQVGMYRFX5KGW2XMVHTZ4E3RF7D54F3TMD";
 export const RPC_URL = "http://localhost";
@@ -15,35 +13,6 @@ export function makeBaseInvocation(method: string, argValue = 1): StellarInvocat
     method,
     args: [xdr.ScVal.scvU32(argValue)],
   };
-}
-
-export function makeKey(method: string, argValue = 1): StellarKey {
-  const baseInvocation = makeBaseInvocation(method, argValue);
-  const invocation = new InvocationV0({
-    contract: baseInvocation.contract.contractId(),
-    method,
-    args: baseInvocation.args ?? [],
-  });
-
-  return { baseInvocation, invocation };
-}
-
-export class FakeRouter {
-  simResultCalls: { invocations: number; ids: string[] }[] = [];
-
-  // eslint-disable-next-line @typescript-eslint/require-await -- mirrors SDK shape
-  async simResult<T>(invocations: InvocationV0[]): Promise<T> {
-    this.simResultCalls.push({
-      invocations: invocations.length,
-      ids: invocations.map((i) => i.method),
-    });
-
-    return invocations.map((i) => `router:${i.method}`) as unknown as T;
-  }
-
-  asSdk() {
-    return this as unknown as StellarRouterSdk;
-  }
 }
 
 export class FakeDelegate implements IStellarCallerDelegate {
