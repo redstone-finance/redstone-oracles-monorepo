@@ -1605,7 +1605,7 @@
       "rateFeed": false,
       "types": ["rwa"]
     },
-    "ESM6": {
+    "ESU6": {
       "source": ["databento-cme"],
       "broadcasters": ["influx"],
       "denomination": "USD",

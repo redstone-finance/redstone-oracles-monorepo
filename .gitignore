@@ -135,3 +135,4 @@ tmp
 *.zip
 *.tsbuildinfo
 *.cpuprofile
+.claude/worktrees
