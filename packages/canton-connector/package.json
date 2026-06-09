@@ -22,11 +22,14 @@
     "clear-old-pills": "yarn global:ts-node scripts/clear-old-pills.ts"
   },
   "dependencies": {
+    "@canton-network/core-token-standard-service": "^1.2.3",
+    "@canton-network/wallet-sdk": "1.2.1",
     "@redstone-finance/multichain-kit": "workspace:*",
     "@redstone-finance/sdk": "workspace:*",
     "@redstone-finance/utils": "workspace:*",
     "decimal.js": "^10.4.3",
     "ethers": "^5.7.2",
+    "jose": "^6.1.3",
     "lodash": "^4.17.23"
   },
   "devDependencies": {
