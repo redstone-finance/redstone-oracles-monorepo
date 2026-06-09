@@ -1351,11 +1351,23 @@
       "types": ["rwa"]
     },
     "XBR.Y": {
-      "source": ["rollover-blend-xyz", "alltick-api-deferred"],
+      "source": [
+        "rollover-blend-xyz",
+        "alltick-api-deferred",
+        "finhub_pepperstone_deferred",
+        "metal-price-api-deferred",
+        "ws-hyperliquid-perps-xyz",
+        "ws-hydromancer-perps-xyz"
+      ],
       "denomination": "USD",
       "priceAggregator": "redstoneX",
       "redstoneXAggregatorConfig": {
-        "priceDiscoverySources": ["alltick-api-deferred"]
+        "priceDiscoverySources": [
+          "rollover-blend-xyz",
+          "alltick-api-deferred",
+          "finhub_pepperstone_deferred",
+          "metal-price-api-deferred"
+        ]
       },
       "rateFeed": false,
       "types": ["rwa"]
@@ -2004,6 +2016,19 @@
         "mexc_deferred-usdt",
         "okx_deferred-usdt",
         "xt_deferred-usdt"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "INIT": {
+      "source": [
+        "binance_deferred-usdt",
+        "bybit_deferred-usdt",
+        "bitget_deferred-usdt",
+        "gate_deferred-usdt",
+        "kucoin_deferred-usdt",
+        "mexc_deferred-usdt",
+        "htx_deferred-usdt"
       ],
       "denomination": "USD",
       "rateFeed": false
