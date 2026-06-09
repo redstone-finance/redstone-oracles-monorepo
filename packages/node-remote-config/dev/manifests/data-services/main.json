@@ -226,6 +226,8 @@
       "source": [
         "camelot-v3-arbitrumone-usdc",
         "curve-arbitrumone-usdt",
+        "kodiak-berachain-weth-500",
+        "sushiswap-v3-arbitrumone-weth-3000",
         "uniswap-v3-arbitrumone-arb-500",
         "uniswap-v3-arbitrumone-dai-500",
         "uniswap-v3-arbitrumone-usdc-100",
@@ -1008,8 +1010,11 @@
         "aerodrome-cl-base-usdc",
         "aerodrome-cl-base-usdc-2",
         "aerodrome-cl-base-weth",
+        "aerodrome-cl-base-weth-2",
+        "pancake-swap-base-usdc-100",
         "trader-joe-v2-avalanche-usdc",
         "uniswap-v3-ethereum-usdc-500",
+        "uniswap-v4-ethereum-usdc-400",
         "uniswap-v4-ethereum-usdc-500"
       ],
       "denomination": "USD",
@@ -1266,14 +1271,15 @@
     },
     "rETH": {
       "source": [
+        "balancer-v3-arbitrumone-waarbweth",
+        "balancer-v3-ethereum-waethweth",
         "curve-ethereum-weth",
         "curve-ethereum-wsteth",
         "curve-ethereum-wsteth-2",
         "uniswap-v3-ethereum-weth-100",
         "uniswap-v3-ethereum-weth-500",
-        "uniswap-v4-ethereum-eth-200",
-        "balancer-v3-arbitrumone-waarbweth",
-        "balancer-v3-ethereum-waethweth"
+        "uniswap-v4-ethereum-eth-100",
+        "uniswap-v4-ethereum-eth-200"
       ],
       "denomination": "USD",
       "rateFeed": false
@@ -1746,6 +1752,7 @@
         "curve-arbitrumone-wbtc",
         "curve-arbitrumone-weth",
         "curve-ethereum-cbbtc",
+        "curve-ethereum-cbbtc-2",
         "curve-ethereum-crv",
         "curve-ethereum-frax",
         "curve-ethereum-pyusd",
@@ -1754,7 +1761,8 @@
         "curve-ethereum-usde",
         "curve-ethereum-usdt",
         "curve-ethereum-weth",
-        "curve-ethereum-weth-2"
+        "curve-ethereum-weth-2",
+        "curve-ethereum-weth-3"
       ],
       "denomination": "USD",
       "rateFeed": false
@@ -2176,7 +2184,9 @@
         "trader-joe-v2-avalanche-wavax",
         "trader-joe-v2-monad-usdc",
         "uniswap-v3-ethereum-usdc-100",
-        "uniswap-v4-ethereum-usdc-100"
+        "uniswap-v4-ethereum-usdc-100",
+        "uniswap-v4-monad-mon-500",
+        "uniswap-v4-monad-usdc-50"
       ],
       "deviationCheck": {
         "deviationWithRecentValues": {
