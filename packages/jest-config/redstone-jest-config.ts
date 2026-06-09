@@ -12,7 +12,7 @@ const config: Config.InitialOptions = {
     "^.+\\.m?js$": "@swc/jest",
   },
   transformIgnorePatterns: [
-    "node_modules/(?!(@mysten|@scure|@noble|@creit-tech/stellar-router-sdk)/)",
+    "node_modules/(?!(@mysten|@scure|@noble|@creit-tech/stellar-router-sdk|jose|uuid|@canton-network)/)",
   ],
 };
 

@@ -151,22 +151,25 @@ export async function getNonEvmBlockchainServiceWithTransfer(
       if (!auth) {
         throw new Error(`Canton auth not configured for chain ${chainId}`);
       }
+
       const { zrodelkoPartyId } = getCantonNodeConfig(network);
-      const cantonClientBuilder = new CantonClientBuilder()
+      const builder = new CantonClientBuilder()
         .withRpcUrls(rpcUrls)
         .withNetworkId(networkId)
         .withDefaultAuth(auth);
-      const client = cantonClientBuilder.build();
-      const validatorClient = cantonClientBuilder.buildValidatorClient();
-      if (!validatorClient) {
-        throw new Error(`Canton validatorClient not configured for chain ${chainId}`);
+
+      const transferService = builder.buildTransferService();
+      if (!transferService) {
+        throw new Error(
+          `Canton transfer requires walletClientId, validator-api and scan-api-proxy URLs for chain ${chainId}`
+        );
       }
 
       return new CantonBlockchainServiceWithTransfer(
-        client,
-        validatorClient,
+        builder.build(),
         zrodelkoPartyId,
-        privateKey.value
+        privateKey.value,
+        transferService
       );
     }
     case ChainTypeEnum.enum.fuel:
