@@ -21,7 +21,7 @@ export type DisclosedContract = {
      * If provided, used to validate the contract id of the contract serialized in the created_event_blob.
      * Optional
      */
-    contractId: string;
+    contractId?: string;
     /**
      * Opaque byte string containing the complete payload required by the Daml engine
      * to reconstruct a contract not known to the receiving participant.
@@ -32,6 +32,6 @@ export type DisclosedContract = {
      * The ID of the synchronizer where the contract is currently assigned
      * Optional
      */
-    synchronizerId: string;
+    synchronizerId?: string;
 };
 

@@ -10,6 +10,7 @@ import {
 } from "./CantonApi";
 import { CantonClient, JsonCantonApi } from "./CantonClient";
 import { ScanCantonApi } from "./CantonScanApiClient";
+import { CantonTransferService } from "./CantonTransferService";
 import { CantonValidatorClient, ValidatorCantonApi } from "./CantonValidatorClient";
 import { KeycloakTokenProvider } from "./keycloak-token-provider";
 import { KeycloakTokenProviderParams, makeKeycloakParams } from "./KeycloakTokenProviderParams";
@@ -21,6 +22,7 @@ export class CantonClientBuilder extends MultiExecutor.ClientBuilder<CantonClien
   protected override chainType = ChainTypeEnum.enum.canton;
   private tokenProviders: Record<string, TokenProvider | undefined> = {};
   private defaultClientId?: string;
+  private walletClientId?: string;
 
   withDefaultAuth(opts?: KeycloakTokenProviderParams | string) {
     return this.chainId !== networkToChainId("localnet") ? this.withKeycloakAuth(opts) : this;
@@ -43,6 +45,7 @@ export class CantonClientBuilder extends MultiExecutor.ClientBuilder<CantonClien
       const walletTokenProvider = KeycloakTokenProvider.getInstance(walletParsedOpts);
       this.tokenProviders[walletParsedOpts.clientId] =
         walletTokenProvider.getToken.bind(walletTokenProvider);
+      this.walletClientId = walletParsedOpts.clientId;
     }
 
     return this;
@@ -72,6 +75,7 @@ export class CantonClientBuilder extends MultiExecutor.ClientBuilder<CantonClien
 
     const scanApi = apis[API_TYPE_SCAN]?.at(0);
     const scanApiProxy = apis[API_TYPE_SCAN_PROXY]?.at(0);
+    const validatorApi = apis[API_TYPE_VALIDATOR]?.at(0);
 
     const scanApiClient =
       scanApi && scanApiProxy?.clientId
@@ -82,6 +86,10 @@ export class CantonClientBuilder extends MultiExecutor.ClientBuilder<CantonClien
           )
         : undefined;
 
+    const walletTokenProvider = this.walletClientId
+      ? this.tokenProviders[this.walletClientId]
+      : undefined;
+
     return this.makeMultiExecutor(
       (url) => {
         const jsonApi = CantonApi.parseUrl(url); // is eligible
@@ -90,14 +98,26 @@ export class CantonClientBuilder extends MultiExecutor.ClientBuilder<CantonClien
           throw new Error(`Client id is required for ${RedstoneCommon.stringify(jsonApi)}`);
         }
 
+        const transferService =
+          validatorApi && walletTokenProvider
+            ? new CantonTransferService({
+                ledgerJsonApiUrl: jsonApi.baseUrl,
+                validatorApiUrl: validatorApi.baseUrl,
+                getLedgerToken: this.tokenProviders[clientId] ?? walletTokenProvider,
+                getWalletToken: walletTokenProvider,
+              })
+            : undefined;
+
         return new CantonClient(
           new JsonCantonApi(jsonApi.baseUrl, this.tokenProviders[clientId]),
           chainIdToNetwork(chainId),
-          scanApiClient
+          scanApiClient,
+          transferService
         );
       },
       {
         exerciseChoices: MultiExecutor.ExecutionMode.FALLBACK,
+        sendAmulet: MultiExecutor.ExecutionMode.FALLBACK,
         // the following use scan-api:
         getRemainingTraffic: MultiExecutor.ExecutionMode.FALLBACK,
         getTotalConsumedTraffic: MultiExecutor.ExecutionMode.FALLBACK,
@@ -122,5 +142,33 @@ export class CantonClientBuilder extends MultiExecutor.ClientBuilder<CantonClien
     return new CantonValidatorClient(
       new ValidatorCantonApi(validatorApi.baseUrl, this.tokenProviders[validatorApi.clientId])
     );
+  }
+
+  buildTransferService(): CantonTransferService | undefined {
+    if (!this.walletClientId) {
+      return undefined;
+    }
+
+    const walletTokenProvider = this.tokenProviders[this.walletClientId];
+    if (!walletTokenProvider) {
+      return undefined;
+    }
+
+    const apis = this.splitUrls();
+    const jsonApi = apis[API_TYPE_JSON]?.at(0);
+    const validatorApi = apis[API_TYPE_VALIDATOR]?.at(0);
+
+    if (!jsonApi || !validatorApi) {
+      return undefined;
+    }
+
+    const clientId = jsonApi.clientId ?? this.defaultClientId;
+
+    return new CantonTransferService({
+      ledgerJsonApiUrl: jsonApi.baseUrl,
+      validatorApiUrl: validatorApi.baseUrl,
+      getLedgerToken: (clientId ? this.tokenProviders[clientId] : undefined) ?? walletTokenProvider,
+      getWalletToken: walletTokenProvider,
+    });
   }
 }
