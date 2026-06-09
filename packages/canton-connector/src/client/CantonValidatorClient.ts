@@ -4,23 +4,10 @@ import { CantonApi } from "./CantonApi";
 const DEFAULT_HEADERS = { "Content-Type": "application/json" };
 const MAX_RETRIES = 3;
 
-type SendCCResponse = Record<string, unknown>;
-
 type UserStatusResponse = {
   party_id: string;
   user_onboarded: boolean;
   user_wallet_feature_app_right: boolean;
-};
-
-type PrepareSendResponse = {
-  transaction: string;
-  tx_hash: string;
-  transfer_command_contract_id_prefix: string;
-  hashing_details?: string;
-};
-
-type SubmitSendResponse = {
-  update_id: string;
 };
 
 type SetupProposalResponse = {
@@ -45,50 +32,8 @@ export class CantonValidatorClient {
     return party_id;
   }
 
-  async sendCC(receiverPartyId: string, amount: number, deduplicationId?: string) {
-    return await this.api.post<SendCCResponse>("/v0/wallet/transfer-preapproval/send", {
-      receiver_party_id: receiverPartyId,
-      amount: amount.toString(),
-      deduplication_id: deduplicationId ?? `send-cc-${Date.now()}`,
-    });
-  }
-
-  async prepareSend(
-    senderPartyId: string,
-    receiverPartyId: string,
-    amount: number,
-    expiresAt: Date,
-    nonce: number
-  ): Promise<PrepareSendResponse> {
-    return await this.api.post<PrepareSendResponse>(
-      "/v0/admin/external-party/transfer-preapproval/prepare-send",
-      {
-        sender_party_id: senderPartyId,
-        receiver_party_id: receiverPartyId,
-        amount: amount.toString(),
-        expires_at: expiresAt.toISOString(),
-        nonce,
-      }
-    );
-  }
-
-  async submitSend(
-    partyId: string,
-    transaction: string,
-    signedTxHash: string,
-    publicKey: string
-  ): Promise<SubmitSendResponse> {
-    return await this.api.post<SubmitSendResponse>(
-      "/v0/admin/external-party/transfer-preapproval/submit-send",
-      {
-        submission: {
-          party_id: partyId,
-          transaction,
-          signed_tx_hash: signedTxHash,
-          public_key: publicKey,
-        },
-      }
-    );
+  async createWalletTransferPreapproval() {
+    return await this.api.post<{ contract_id: string }>("/v0/wallet/transfer-preapproval", {});
   }
 
   async setupProposal(userPartyId: string): Promise<SetupProposalResponse> {

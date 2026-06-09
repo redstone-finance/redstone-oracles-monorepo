@@ -3146,9 +3146,7 @@ components:
         contract & contract key lookups.
       type: object
       required:
-      - contractId
       - createdEventBlob
-      - synchronizerId
       properties:
         templateId:
           description: |-
@@ -5424,6 +5422,12 @@ components:
             signed by the external party. Can be used to correlate an external submission with a committed transaction.
             Optional
           type: string
+        paidTrafficCost:
+          description: |-
+            The traffic cost paid for the transaction.
+            Optional
+          type: number
+          format: double
     JsTransactionTree:
       title: JsTransactionTree
       description: |-

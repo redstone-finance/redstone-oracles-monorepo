@@ -27,15 +27,18 @@ async function main() {
 
     return;
   }
+
+  const transferAmount = beneficiaryBalance.minus(BENEFICIARY_BALANCE_LIMIT / 2);
   console.log(
-    `Beneficiary balance (${beneficiaryBalance.toString()} CC) exceeds the limit (${BENEFICIARY_BALANCE_LIMIT} CC). `
+    `Beneficiary balance (${beneficiaryBalance.toString()} CC) exceeds the limit (${BENEFICIARY_BALANCE_LIMIT} CC). ` +
+      `Transferring ${transferAmount.toString()} CC to ${zrodelkoPartyId}...`
   );
 
-  const transferAmount = beneficiaryBalance.minus(BENEFICIARY_BALANCE_LIMIT / 2).toNumber();
-  console.log(`Transferring ${transferAmount} CC from ${walletPartyId} to ${zrodelkoPartyId}...`);
+  const result = await client.sendAmulet(walletPartyId, zrodelkoPartyId, transferAmount.toNumber());
 
-  await validatorClient.sendCC(zrodelkoPartyId, transferAmount);
-  console.log(`Transfer successful: ${transferAmount} CC sent to ${zrodelkoPartyId}`);
+  console.log(
+    `Transfer successful: ${transferAmount.toString()} CC sent to ${zrodelkoPartyId}. updateId=${result.updateId}`
+  );
 }
 
 main().catch((error: unknown) => {
