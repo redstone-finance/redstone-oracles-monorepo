@@ -268,8 +268,11 @@
         "aerodrome-cl-base-usdc",
         "aerodrome-cl-base-usdc-2",
         "aerodrome-cl-base-weth",
+        "aerodrome-cl-base-weth-2",
+        "pancake-swap-base-usdc-100",
         "trader-joe-v2-avalanche-usdc",
         "uniswap-v3-ethereum-usdc-500",
+        "uniswap-v4-ethereum-usdc-400",
         "uniswap-v4-ethereum-usdc-500"
       ],
       "deviationCheck": {
@@ -576,7 +579,9 @@
         "trader-joe-v2-avalanche-wavax",
         "trader-joe-v2-monad-usdc",
         "uniswap-v3-ethereum-usdc-100",
-        "uniswap-v4-ethereum-usdc-100"
+        "uniswap-v4-ethereum-usdc-100",
+        "uniswap-v4-monad-mon-500",
+        "uniswap-v4-monad-usdc-50"
       ],
       "deviationCheck": {
         "deviationWithRecentValues": {
@@ -630,6 +635,27 @@
         "mexc-usdt",
         "xt-usdt",
         "uniswap-v3-ethereum-usde-3000"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "skipBroadcasting": true
+    },
+    "MON": {
+      "source": [
+        "bitget-usdt",
+        "bitmart-usdt",
+        "bitrue-usdt",
+        "bybit-usdt",
+        "coinbase-usd",
+        "gate-usdt",
+        "kraken-eur",
+        "kraken-usd",
+        "kucoin-usdt",
+        "lbank-usdt",
+        "mexc-usdc",
+        "mexc-usdt",
+        "okx-usdt",
+        "xt-usdt"
       ],
       "denomination": "USD",
       "rateFeed": false,
