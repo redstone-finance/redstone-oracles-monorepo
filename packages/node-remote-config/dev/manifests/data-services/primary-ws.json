@@ -668,6 +668,51 @@
       "denomination": "timestamp",
       "rateFeed": false
     },
+    "CME_METALS_CURRENT_STATUS": {
+      "source": ["cme-metals-market-timeline"],
+      "denomination": "enum",
+      "rateFeed": false
+    },
+    "CME_METALS_NEXT_STATUS": {
+      "source": ["cme-metals-market-timeline"],
+      "denomination": "enum",
+      "rateFeed": false
+    },
+    "CME_METALS_NEXT_CHANGE_TIME": {
+      "source": ["cme-metals-market-timeline"],
+      "denomination": "timestamp",
+      "rateFeed": false
+    },
+    "CME_ENERGY_CURRENT_STATUS": {
+      "source": ["cme-energy-market-timeline"],
+      "denomination": "enum",
+      "rateFeed": false
+    },
+    "CME_ENERGY_NEXT_STATUS": {
+      "source": ["cme-energy-market-timeline"],
+      "denomination": "enum",
+      "rateFeed": false
+    },
+    "CME_ENERGY_NEXT_CHANGE_TIME": {
+      "source": ["cme-energy-market-timeline"],
+      "denomination": "timestamp",
+      "rateFeed": false
+    },
+    "ICE_MARKET_CURRENT_STATUS": {
+      "source": ["ice-market-timeline"],
+      "denomination": "enum",
+      "rateFeed": false
+    },
+    "ICE_MARKET_NEXT_STATUS": {
+      "source": ["ice-market-timeline"],
+      "denomination": "enum",
+      "rateFeed": false
+    },
+    "ICE_MARKET_NEXT_CHANGE_TIME": {
+      "source": ["ice-market-timeline"],
+      "denomination": "timestamp",
+      "rateFeed": false
+    },
     "TSLA---PERP": {
       "source": ["ws-hyperliquid-perps-xyz", "ws-hydromancer-perps-xyz"],
       "denomination": "USD",
@@ -2264,6 +2309,21 @@
       "JPX_MARKET_CURRENT_STATUS",
       "JPX_MARKET_NEXT_STATUS",
       "JPX_MARKET_NEXT_CHANGE_TIME"
+    ],
+    "CME_METALS_MARKET_STATUS": [
+      "CME_METALS_CURRENT_STATUS",
+      "CME_METALS_NEXT_STATUS",
+      "CME_METALS_NEXT_CHANGE_TIME"
+    ],
+    "CME_ENERGY_MARKET_STATUS": [
+      "CME_ENERGY_CURRENT_STATUS",
+      "CME_ENERGY_NEXT_STATUS",
+      "CME_ENERGY_NEXT_CHANGE_TIME"
+    ],
+    "ICE_MARKET_STATUS": [
+      "ICE_MARKET_CURRENT_STATUS",
+      "ICE_MARKET_NEXT_STATUS",
+      "ICE_MARKET_NEXT_CHANGE_TIME"
     ]
   }
 }
