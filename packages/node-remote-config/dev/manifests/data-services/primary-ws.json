@@ -1879,6 +1879,19 @@
       "denomination": "USD",
       "rateFeed": false
     },
+    "INIT": {
+      "source": [
+        "binance_deferred-usdt",
+        "bybit_deferred-usdt",
+        "bitget_deferred-usdt",
+        "gate_deferred-usdt",
+        "kucoin_deferred-usdt",
+        "mexc_deferred-usdt",
+        "htx_deferred-usdt"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
     "BTC/USDT0": {
       "source": [
         "non-usd-based"
