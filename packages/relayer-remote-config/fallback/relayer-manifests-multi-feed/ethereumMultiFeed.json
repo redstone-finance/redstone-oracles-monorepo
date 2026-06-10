@@ -476,6 +476,13 @@
         "deviationPercentage": 0.001,
         "timeSinceLastUpdateInMilliseconds": 7200000
       }
+    },
+    "XRP": {
+      "priceFeedAddress": "0x64775db2ac856843E1f900f6249687d6D803B22d",
+      "updateTriggersOverrides": {
+        "deviationPercentage": 0.1,
+        "timeSinceLastUpdateInMilliseconds": 21600000
+      }
     }
   }
 }
