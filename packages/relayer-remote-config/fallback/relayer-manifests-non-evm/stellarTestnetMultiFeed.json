@@ -17,8 +17,18 @@
     "BTC": {
       "priceFeedAddress": "CA4ANRUJLWRNEY6JT46LP2O7YM2R7HJWYWWIQUPW3WQEYXTV7GHIPC3L"
     },
-    "SolvBTC": {},
-    "xSolvBTC": {},
+    "SolvBTC.BBN_FUNDAMENTAL": {
+      "updateTriggersOverrides": {
+        "deviationPercentage": 0.5,
+        "timeSinceLastUpdateInMilliseconds": 21600000
+      }
+    },
+    "SolvBTC_FUNDAMENTAL": {
+      "updateTriggersOverrides": {
+        "deviationPercentage": 0.01,
+        "timeSinceLastUpdateInMilliseconds": 86400000
+      }
+    },
     "XLM": {},
     "USDC": {
       "updateTriggersOverrides": {
