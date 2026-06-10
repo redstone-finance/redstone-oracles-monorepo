@@ -12,10 +12,10 @@
   "dataServiceId": "redstone-primary-prod",
   "isHidden": true,
   "priceFeeds": {
-    "SolvBTC": {
+    "SolvBTC.BBN_FUNDAMENTAL": {
       "priceFeedAddress": "CA7MY6TYNL5Z5H5FYGMN7YWSY3JIZG7LFY3DZ26EEGRBQ2UKTFWHD4ZJ"
     },
-    "xSolvBTC": {
+    "SolvBTC_FUNDAMENTAL": {
       "priceFeedAddress": "CA7MY6TYNL5Z5H5FYGMN7YWSY3JIZG7LFY3DZ26EEGRBQ2UKTFWHD4ZJ"
     },
     "XLM": {
