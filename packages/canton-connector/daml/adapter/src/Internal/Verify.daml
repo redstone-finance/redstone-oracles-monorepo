@@ -8,19 +8,21 @@ where
 import DA.List as L
 import DA.Map as M
 import RedStone.Result
+import RedStone.ProcessorTypes (ProcessorError(..))
 import RedStoneTypes
+import IRedStonePricePillFactory (PillInput(..))
 
 verify (currentTimestamp, currentFeedData) (feedId, value, timestamp) =
     case value of
-    Error t -> Error $ t <> " for " <> show feedId
+    Error t -> Error $ ProcessorError (t.message <> " for " <> show feedId)
     Ok v -> case M.lookup feedId currentFeedData of
         None -> value
         Some [] -> value
         Some (newest :: _)
             | verifyPriceData currentTimestamp newest.priceData timestamp -> value
-            | otherwise -> Error $ "Wrong timestamps for " <> show feedId
+            | otherwise -> Error $ ProcessorError ("Wrong timestamps for " <> show feedId)
 
-verifyPriceData currentTimestamp priceData newDataTimestamp = priceData.timestamp < newDataTimestamp && priceData.writeTimestamp < currentTimestamp
+verifyPriceData currentTimestamp priceData newDataTimestamp = priceData.packageTimestamp < newDataTimestamp && priceData.writeTimestamp < currentTimestamp
 
 determineNewValues (currentTimestamp, currentFeedData) feedIds (values, timestamp) =
     let
@@ -34,4 +36,4 @@ determineNewValues (currentTimestamp, currentFeedData) feedIds (values, timestam
     in (newValues, timestamp, rejectedValues)
 
 entriesFromValues currentTimestamp timestamp newValues =
-    map (\(feedId, value) -> (feedId, RedStonePriceData with value, timestamp, writeTimestamp = currentTimestamp)) newValues
+    map (\(feedId, value) -> PillInput with feedId, priceData = (RedStonePriceData with value, packageTimestamp = timestamp, writeTimestamp = currentTimestamp)) newValues

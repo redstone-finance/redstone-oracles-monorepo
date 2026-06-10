@@ -17,7 +17,7 @@ ethFeed = [69, 84, 72]
 mkData : Int -> RedStonePriceData RedStoneValue
 mkData ts = RedStonePriceData with
   value = 0.0
-  timestamp = ts
+  packageTimestamp = ts
   writeTimestamp = ts
 
 linked cid ts demoted = PillRecord with

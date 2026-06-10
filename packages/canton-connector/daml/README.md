@@ -109,11 +109,7 @@ See more about the [RedStone SDK](./sdk/README.md) library.
       payloadHex : PayloadHex
     controller caller
     do
-      if iRedStoneCore_ShouldVerifyViewer this caller then
-         iRedStoneCore_VerifyViewer this caller
-      else
-         pure ()
-
+      iRedStoneCore_VerifyViewer this caller
       iRedStoneCore_GetPricesImpl this caller feedIds currentTime payloadHex
 ```
 
@@ -141,7 +137,7 @@ See more about the Push model, PricePill lifecycle and all choices [here](./adap
       feedIds : [RedStoneFeedId]
       currentTime : Time
       payloadHex : Text
-      additionalPillViewers : Optional [Party]
+      context : WritePricesContext
     controller caller
 
   nonconsuming choice ReadPrices : [RedStoneValue]

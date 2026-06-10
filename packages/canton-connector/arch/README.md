@@ -105,9 +105,9 @@ u256ToDecimalValue → Numeric 8
 ```text
 1. Viewer/Client calls GetPrices on IRedStoneCore
    |
-2. iRedStoneCore_ShouldVerifyViewer → decision whether to verify
-   |  - RedStoneCore: configurable via shouldVerifyViewer
-   |  - RedStoneAdapter: always True
+2. iRedStoneCore_VerifyViewer → enforces (or skips) viewer authorization
+   |  - RedStoneCore: skips when its shouldVerifyViewer flag is False
+   |  - RedStoneAdapter: always enforces
    |
 3. iRedStoneCore_VerifyViewer → assert caller in viewers
    |
@@ -115,7 +115,7 @@ u256ToDecimalValue → Numeric 8
    |  - RedStoneCore: takeReward + getPricesNumeric (process from payload)
    |  - RedStoneAdapter: maybeCreateRewardsWithoutState + getPricesNumeric
    |
-5. Returns RedStoneResult = ([Numeric 8], Int)
+5. Returns RedStoneResult { prices : [Numeric 8], packageTimestamp : Int }
 ```
 
 ### 3.1 GetPrices via RedStoneCoreClient (disclosed)
@@ -221,8 +221,8 @@ New RewardState{accumulatedPillCount=0, lastCreateTimestamp}
 | Constant | Value | Location |
 |----------|-------|----------|
 | signerCountThreshold | 3 | Config.daml |
-| maxDelayMs | 180,000 (3 min) | RedStone.Config |
-| maxAheadMs | 60,000 (1 min) | RedStone.Config |
+| maxAllowedPackageTimestampDelayMs | 180,000 (3 min) | RedStone.Config |
+| maxAllowedPackageTimestampAheadMs | 60,000 (1 min) | RedStone.Config |
 | pill_staleness_ms | 86,400,000 (1 day) | adapter/Config |
 | pill_keep_ms | 60,000 (1 min) | adapter/Config |
 | min_reward_creation_ms | 420,000 (7 min) | adapter/Config |

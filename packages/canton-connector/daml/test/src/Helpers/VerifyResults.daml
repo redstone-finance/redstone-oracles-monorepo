@@ -22,7 +22,7 @@ verifyResults currentTime readResult = verifyOneResult currentTime (fromSome . h
 verifyWithResult currentTime readResult result = do
   let feedResult = RedStonePriceData with
         writeTimestamp = timeToMillis currentTime
-        value = head . fst $ result
-        timestamp = snd result
+        value = head result.prices
+        packageTimestamp = result.packageTimestamp
 
   verifyResults currentTime readResult feedResult

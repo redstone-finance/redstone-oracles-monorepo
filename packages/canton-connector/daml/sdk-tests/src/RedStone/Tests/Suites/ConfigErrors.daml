@@ -32,8 +32,8 @@ data CfgInput = CfgInput with
     feedIds : [[Int]]
     signers : [Text]
     threshold : Int
-    maxAheadMs : Int
-    maxDelayMs : Int
+    maxAllowedPackageTimestampAheadMs : Int
+    maxAllowedPackageTimestampDelayMs : Int
     currentTime : Time
   deriving (Eq, Show)
 
@@ -41,16 +41,16 @@ defaultInput = CfgInput with
   feedIds = okFeedIds
   signers = okSigners
   threshold = 2
-  maxAheadMs = 60_000
-  maxDelayMs = 180_000
+  maxAllowedPackageTimestampAheadMs = 60_000
+  maxAllowedPackageTimestampDelayMs = 180_000
   currentTime = okTime
 
 mkConfig inp =
   let
     base = (defaultBaseConfig inp.signers)
       { signerCountThreshold = inp.threshold
-      , maxAheadMs = inp.maxAheadMs
-      , maxDelayMs = inp.maxDelayMs
+      , maxAllowedPackageTimestampAheadMs = inp.maxAllowedPackageTimestampAheadMs
+      , maxAllowedPackageTimestampDelayMs = inp.maxAllowedPackageTimestampDelayMs
       }
   in config base inp.feedIds inp.currentTime
 
@@ -105,13 +105,13 @@ configErrorSuite = ErrorTestSuite with
         input = defaultInput { threshold = -1 }
         expectedSubstring = "signerCountThreshold must be positive"
     , ErrorTestCase with
-        name = "negative maxAheadMs rejected"
-        input = defaultInput { maxAheadMs = -1 }
-        expectedSubstring = "maxAheadMs must be non-negative"
+        name = "negative maxAllowedPackageTimestampAheadMs rejected"
+        input = defaultInput { maxAllowedPackageTimestampAheadMs = -1 }
+        expectedSubstring = "maxAllowedPackageTimestampAheadMs must be non-negative"
     , ErrorTestCase with
-        name = "negative maxDelayMs rejected"
-        input = defaultInput { maxDelayMs = -1 }
-        expectedSubstring = "maxDelayMs must be non-negative"
+        name = "negative maxAllowedPackageTimestampDelayMs rejected"
+        input = defaultInput { maxAllowedPackageTimestampDelayMs = -1 }
+        expectedSubstring = "maxAllowedPackageTimestampDelayMs must be non-negative"
     , ErrorTestCase with
         name = "currentTime before min_acceptable_timestamp rejected"
         input = defaultInput { currentTime = preMinTime }

@@ -8,7 +8,7 @@ interface IRedStoneAdapter where
 
   iRedStoneAdapter_VerifyViewer : Party -> Update ()
   iRedStoneAdapter_VerifyUpdater : Party -> Update ()
-  iRedStoneAdapter_WritePricesImpl : Party -> (ContractId IRedStoneAdapter) -> [RedStoneFeedId] -> Time -> PayloadHex -> Optional WritePricesContext -> Update (ContractId IRedStoneAdapter)
+  iRedStoneAdapter_WritePricesImpl : Party -> (ContractId IRedStoneAdapter) -> [RedStoneFeedId] -> Time -> PayloadHex -> WritePricesContext -> Update (ContractId IRedStoneAdapter)
   iRedStoneAdapter_ReadPriceDataImpl : [RedStoneFeedId] -> Update [Optional (RedStonePriceData RedStoneValue)]
   iRedStoneAdapter_ReadPricesImpl : [RedStoneFeedId] -> Update [RedStoneValue]
   iRedStoneAdapter_GetUniqueSignerThresholdImpl: () -> Update Int
@@ -19,9 +19,10 @@ interface IRedStoneAdapter where
       feedIds : [RedStoneFeedId]
       currentTime : Time
       payloadHex : PayloadHex
-      context : Optional WritePricesContext
+      context : WritePricesContext
     controller caller
     do
+      assertMsg "WritePrices: paidTrafficCost must be non-negative" (context.paidTrafficCost >= 0)
       iRedStoneAdapter_VerifyUpdater this caller
         >> iRedStoneAdapter_WritePricesImpl this caller self feedIds currentTime payloadHex context
 

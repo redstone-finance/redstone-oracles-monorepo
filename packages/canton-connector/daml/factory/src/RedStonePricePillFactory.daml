@@ -19,15 +19,15 @@ template RedStonePricePillFactory
       iRedStonePricePillFactory_VerifyCreator caller =  assertMsg "Caller must be a creator" $ caller `elem` creators
       iRedStonePricePillFactory_VerifyArchiver caller = assertMsg "Caller must be a creator" $ caller `elem` creators
         
-      iRedStonePricePillFactory_CreatePricePillsImpl viewers adapterId stalenessMs inputData = do
-        forA inputData \(feedId, priceData) ->
+      iRedStonePricePillFactory_CreatePricePillsImpl params inputData = do
+        forA inputData \input ->
           (toInterfaceContractId @IRedStonePricePill <$> create RedStonePricePill
             with
               owner
-              viewers
+              viewers = params.viewers
               creators
-              feedId
-              priceData
-              stalenessMs
-              adapterId
+              feedId = input.feedId
+              priceData = input.priceData
+              stalenessMs = params.stalenessMs
+              adapterId = params.adapterId
           )
