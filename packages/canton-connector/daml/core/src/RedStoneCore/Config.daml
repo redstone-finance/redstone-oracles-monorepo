@@ -1,4 +1,4 @@
-module Config where
+module RedStoneCore.Config where
 
 import RedStone.Config
 

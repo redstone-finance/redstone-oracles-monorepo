@@ -2,7 +2,6 @@ import { ContractParamsProvider } from "@redstone-finance/sdk";
 import { CantonClient } from "../client/CantonClient";
 import { convertDecimalValue, getCantonFeedId } from "../utils/conversions";
 import { ContractFilter } from "../utils/price-feed-utils";
-import { DamlTuple2 } from "../utils/utils";
 import { CantonContractAdapter } from "./CantonContractAdapter";
 
 export const ICORE_TEMPLATE_NAME = `IRedStoneCore:IRedStoneCore`;
@@ -33,7 +32,7 @@ export class CoreCantonContractAdapter extends CantonContractAdapter {
       { withCurrentTime: true, withCaller: true, withRetry: true }
     );
 
-    return (result as DamlTuple2<string[]>)._1.map(convertDecimalValue);
+    return (result as { prices: string[] }).prices.map(convertDecimalValue);
   }
 
   public static async getPayloadArguments(

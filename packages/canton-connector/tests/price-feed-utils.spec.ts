@@ -28,7 +28,7 @@ const pillEvent = (feedId: CantonFeedId, value: string, timestamp: string): Even
     templateId: getPackageTemplateName(PRICE_PILL_TEMPLATE_NAME),
     createArgument: {
       feedId: feedId.map(String),
-      priceData: { value, timestamp, writeTimestamp: timestamp },
+      priceData: { value, packageTimestamp: timestamp, writeTimestamp: timestamp },
     },
   }),
 });
@@ -44,7 +44,7 @@ describe("parsePriceData", () => {
   it("maps BTC price ($75_000) into LastRoundDetails", () => {
     const result = parsePriceData({
       value: "75000",
-      timestamp: String(BASE_TS),
+      packageTimestamp: String(BASE_TS),
       writeTimestamp: String(BASE_TS + 5_000),
     });
 
@@ -58,7 +58,7 @@ describe("parsePriceData", () => {
   it("maps CC sub-dollar price ($0.15)", () => {
     const result = parsePriceData({
       value: "0.15",
-      timestamp: String(BASE_TS),
+      packageTimestamp: String(BASE_TS),
       writeTimestamp: String(BASE_TS),
     });
 
@@ -74,11 +74,11 @@ describe("findNewestContract", () => {
   it("picks the event with the highest priceData.timestamp", () => {
     const oldEth = makeCreatedEvent({
       contractId: CID.ethOld,
-      createArgument: { priceData: { timestamp: String(BASE_TS) } },
+      createArgument: { priceData: { packageTimestamp: String(BASE_TS) } },
     });
     const newEth = makeCreatedEvent({
       contractId: CID.ethNew,
-      createArgument: { priceData: { timestamp: String(BASE_TS + 60_000) } },
+      createArgument: { priceData: { packageTimestamp: String(BASE_TS + 60_000) } },
     });
 
     expect(findNewestContract([oldEth, newEth])?.contractId).toBe(CID.ethNew);
@@ -87,7 +87,7 @@ describe("findNewestContract", () => {
   it("treats missing priceData as timestamp 0", () => {
     const withTs = makeCreatedEvent({
       contractId: CID.btcFresh,
-      createArgument: { priceData: { timestamp: "1" } },
+      createArgument: { priceData: { packageTimestamp: "1" } },
     });
     const withoutTs = makeCreatedEvent({ contractId: CID.btcBlank, createArgument: {} });
 

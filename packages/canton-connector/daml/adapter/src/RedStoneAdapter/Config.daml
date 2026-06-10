@@ -1,4 +1,4 @@
-module Config where
+module RedStoneAdapter.Config where
 
 import Time
 import RedStone.Config

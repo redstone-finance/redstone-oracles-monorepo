@@ -30,7 +30,7 @@ main input = script do
 
   currentTime <- getTime
 
-  let paidTrafficCost = Some 23000
+  let paidTrafficCost = 23000
   let verifier = verifyResult input.feedIds (beneficiary,dso,viewer)
 
   featuredCid <- submit (actAs dso <> readAs beneficiary) do
@@ -72,7 +72,7 @@ main input = script do
       payloadHex = input.payload
       feedIds = input.feedIds
       currentTime
-      context = Some $ empty_write_prices_context with additionalPillViewers = Some [client], paidTrafficCost
+      context = empty_write_prices_context with additionalPillViewers = [client], paidTrafficCost
 
   debug $ "New CID: " <> show newCid
 
@@ -83,7 +83,7 @@ main input = script do
 
   debug $ "Read result Viewer: " <> show readResult
 
-  verifier (intToDecimal $ fromSome paidTrafficCost) currentTime
+  verifier (intToDecimal paidTrafficCost) currentTime
 
   readResult <- submit client do
     exerciseCmd newCid ReadPriceData with
@@ -92,7 +92,7 @@ main input = script do
 
   debug $ "Read result Client: " <> show readResult
 
-  verifier (intToDecimal $ fromSome paidTrafficCost) currentTime
+  verifier (intToDecimal paidTrafficCost) currentTime
 
 verifyResult feedIds (beneficiary,dso,viewer) cost currentTime = do
   markers <- queryInterface @FeaturedAppActivityMarker beneficiary

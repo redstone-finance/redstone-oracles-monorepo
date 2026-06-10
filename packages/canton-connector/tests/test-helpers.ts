@@ -13,7 +13,7 @@ export const TEMPLATE_ID = Defs.core.templateId;
 export const getPackageTemplateName = (name: string) => `${PKG_ID}:${name}`;
 
 export const SIGNATORY = Defs.signatory;
-export const PRICE_ADAPTER_ID = "RedStoneAdapter-v18-0.4.0";
+export const PRICE_ADAPTER_ID = "RedStoneAdapter-v19-0.4.0";
 
 export const ETH_ARR = getCantonFeedId("ETH");
 export const BTC_ARR = getCantonFeedId("BTC");

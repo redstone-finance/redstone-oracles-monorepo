@@ -4,6 +4,7 @@ import Daml.Script
 import Splice.Api.FeaturedAppRightV2
 import IRedStoneCore
 import IRedStoneAdapter
+import WritePricesContext
 import Input
 import Helpers.FindContract
 import Helpers.MockFeatured
@@ -39,7 +40,7 @@ main input = script do
       payloadHex = input.payload
       feedIds = input.feedIds
       currentTime
-      context = None
+      context = empty_write_prices_context
 
   adapterCid <- findOneAdapter Input.adapterId viewer
 
