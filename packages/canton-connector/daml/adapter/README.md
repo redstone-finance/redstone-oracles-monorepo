@@ -74,8 +74,8 @@ nonconsuming choice GetPrices : RedStoneResult
   controller caller
 ```
 
-The choice processes on-chain the `payloadHex` passed as an argument and returns a `RedStoneResult` tuple
-representing the aggregated values (of each feed passed inside `feedIds`) and the data timestamp.
+The choice processes on-chain the `payloadHex` passed as an argument and returns a `RedStoneResult` record
+(`prices`, `packageTimestamp`) representing the aggregated values (of each feed passed inside `feedIds`) and the data timestamp.
 
 The method doesn't modify the contract.
 
@@ -88,7 +88,7 @@ nonconsuming choice WritePrices : ContractId IRedStoneAdapter
     feedIds : [RedStoneFeedId]
     currentTime : Time
     payloadHex : PayloadHex
-    additionalPillViewers : Optional [Party]
+    context : WritePricesContext
   controller caller
 ```
 
@@ -170,7 +170,7 @@ nonconsuming choice CreatePricePills : [ContractId IRedStonePricePill]
     viewers : [Party]
     stalenessMs : Int
     adapterId : Text
-    inputData : [(RedStoneFeedId, RedStonePriceData RedStoneValue)]
+    inputData : [PillInput]
   controller caller
 ```
 

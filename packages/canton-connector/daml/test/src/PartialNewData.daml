@@ -4,6 +4,7 @@ import Daml.Script
 import DA.Assert
 import DA.Map as M
 import IRedStoneAdapter
+import WritePricesContext
 import IRedStonePricePill
 import Input
 import Helpers.Setup
@@ -29,7 +30,7 @@ main input = script do
           payloadHex = input.payload
           feedIds
           currentTime
-          context = None
+          context = empty_write_prices_context
 
   debug "=== Write #1: feedA only ==="
   cid1 <- write [feedA] adapterCid

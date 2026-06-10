@@ -19,15 +19,21 @@ export type CreatedArgumentCallback<R = unknown> = (
 ) => R;
 export type ContractFilter = CreatedArgumentCallback<boolean>;
 
+// `packageTimestamp` is the v19 field name; `timestamp` is the pre-v19 one still
+// live on mainnet. Read whichever is present so the indexer handles both.
 export type PriceData = {
   value: string;
-  timestamp: string;
+  packageTimestamp?: string;
+  timestamp?: string;
   writeTimestamp: string;
 };
 
+export const packageTimestampOf = (priceData?: PriceData) =>
+  priceData?.packageTimestamp ?? priceData?.timestamp;
+
 export function parsePriceData(result: PriceData): LastRoundDetails {
   return {
-    lastDataPackageTimestampMS: Number.parseInt(result.timestamp),
+    lastDataPackageTimestampMS: Number.parseInt(packageTimestampOf(result) ?? "0"),
     lastBlockTimestampMS: Number.parseInt(result.writeTimestamp),
     lastValue: convertDecimalValue(result.value),
   };
@@ -39,7 +45,10 @@ export function findNewestContract(events: CreatedEvent[]): CreatedEvent | undef
   }
 
   return _.maxBy(events, (e) =>
-    Number((e.createArgument as { priceData?: PriceData } | undefined)?.priceData?.timestamp ?? 0)
+    Number(
+      packageTimestampOf((e.createArgument as { priceData?: PriceData } | undefined)?.priceData) ??
+        0
+    )
   );
 }
 
@@ -93,7 +102,7 @@ type PriceEvent = {
 function extractPricePillEvent(createArgument: unknown): PriceEvent {
   const { feedId, priceData } = createArgument as {
     feedId: CantonFeedId;
-    priceData: { value: string; timestamp: string; writeTimestamp: string };
+    priceData: PriceData;
   };
 
   const feedIdStr = decodeCantonFeedId(feedId);
@@ -108,18 +117,26 @@ function extractPricePillEvent(createArgument: unknown): PriceEvent {
 }
 
 function extractPriceUpdateEvent(createArgument: unknown): PriceEvent | undefined {
-  const { feedId, isSkipped, error } = createArgument as {
+  const { feedId, isSkipped, error, update } = createArgument as {
     feedId: CantonFeedId;
     isSkipped: boolean;
-    error?: string;
+    error?: string | { message: string }; // pre-v19
+    update?: { tag: "Updated" } | { tag: "Skipped"; value: { message: string } }; // v19+
   };
 
-  if (!isSkipped || error === undefined) {
+  if (!isSkipped) {
+    return undefined;
+  }
+
+  const errorMessage = typeof error === "string" ? error : error?.message;
+  const message = update?.tag === "Skipped" ? update.value.message : errorMessage;
+
+  if (message === undefined) {
     return undefined;
   }
 
   const feedIdStr = decodeCantonFeedId(feedId);
-  const name = classifySkipReason(error);
+  const name = classifySkipReason(message);
 
   return {
     name,

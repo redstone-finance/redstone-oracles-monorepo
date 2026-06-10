@@ -45,7 +45,8 @@ write-prices: prepare_data get-adapter-id-by-interface get-token
 					"caller": "$(PARTY_UPDATER)", \
 	      			"feedIds": $(FEED_IDS), \
 	      			"currentTime": "$(CURRENT_TIME)", \
-					"payloadHex": "$(PAYLOAD)"}}}], \
+					"payloadHex": "$(PAYLOAD)", \
+					"context": {"additionalPillViewers": [], "paidTrafficCost": "0"}}}}], \
 	    "actAs": ["$(PARTY_UPDATER)"], \
 	    "disclosedContracts": [{"synchronizerId": "global-domain::1220be58c29e65de40bf273be1dc2b266d43a9a002ea5b18955aeef7aac881bb471a","contractId": "00deaaad88568938379d75d095961036688c49cca81efa596de41f578fe1ac1c2fca121220a86ed774b5e19df71fe79139d3fbb08e603db71977437cd997c7e1771efab2cc", "templateId": "3ca1343ab26b453d38c8adb70dca5f1ead8440c42b59b68f070786955cbf9ec1:Splice.Amulet:FeaturedAppRight", \
                                  "createdEventBlob": "CgMyLjES7QQKRQDeqq2IVok4N5110JWWEDZojEnMqB76WW3kH1eP4awcL8oSEiCobtd0teGd9x/nkTnT+7COYD23GXdDfNmXx+F3HvqyzBINc3BsaWNlLWFtdWxldBpkCkAzY2ExMzQzYWIyNmI0NTNkMzhjOGFkYjcwZGNhNWYxZWFkODQ0MGM0MmI1OWI2OGYwNzA3ODY5NTVjYmY5ZWMxEgZTcGxpY2USBkFtdWxldBoQRmVhdHVyZWRBcHBSaWdodCLCAWq/AQpNCks6SURTTzo6MTIyMGJlNThjMjllNjVkZTQwYmYyNzNiZTFkYzJiMjY2ZDQzYTlhMDAyZWE1YjE4OTU1YWVlZjdhYWM4ODFiYjQ3MWEKbgpsOmo4YjQzOTliYS1jNDAxLTRhOTctYTFmZS01OTA3N2E4YjNiMTQ6OjEyMjBhMDI0Mjc5N2E4NGUxZDhjNDkyZjEyNTliM2Y4N2Q1NjFmY2JkZTJlNGIyY2ViYzQ1NzJkZGZjNTE1YjQ0YzI4KklEU086OjEyMjBiZTU4YzI5ZTY1ZGU0MGJmMjczYmUxZGMyYjI2NmQ0M2E5YTAwMmVhNWIxODk1NWFlZWY3YWFjODgxYmI0NzFhMmo4YjQzOTliYS1jNDAxLTRhOTctYTFmZS01OTA3N2E4YjNiMTQ6OjEyMjBhMDI0Mjc5N2E4NGUxZDhjNDkyZjEyNTliM2Y4N2Q1NjFmY2JkZTJlNGIyY2ViYzQ1NzJkZGZjNTE1YjQ0YzI4OaJKB7zfRwYAQioKJgokCAESIDbsB7rbjoydLFC0bpT+Y3ewtwAOap/7GeGh4zIhX0aUEB4=", \

@@ -6,6 +6,7 @@ import DA.Map as M
 import RedStoneAdapter
 import IRedStoneCore
 import IRedStoneAdapter
+import WritePricesContext
 import Input
 import Helpers.VerifyResults
 
@@ -49,7 +50,7 @@ main input = script do
       payloadHex = input.payload
       feedIds = input.feedIds
       currentTime
-      context = None
+      context = empty_write_prices_context
 
   readResult <- submit viewer do
     exerciseCmd newCid ReadPriceData with
