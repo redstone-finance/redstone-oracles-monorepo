@@ -24,7 +24,7 @@ main input = script do
   TestSetup{adapterCid, featuredDisclosure, factoryDisclosure} <-
     setUpAdapter "RewardsBatching" True parties
 
-  let paidTrafficCost = Some 23000
+  let paidTrafficCost = 23000
   let (feedA :: feedB :: _) = input.feedIds
 
   let write feedIds currentTime cid =
@@ -34,7 +34,7 @@ main input = script do
             payloadHex = input.payload
             feedIds
             currentTime
-            context = Some $ empty_write_prices_context with paidTrafficCost
+            context = empty_write_prices_context with paidTrafficCost
 
   let countMarkers = length <$> queryInterface @FeaturedAppActivityMarker parties.beneficiary
 
@@ -62,7 +62,7 @@ main input = script do
 
   (_, state2) <- getRewardState parties.updater
   debug $ "rewardState after batched write: " <> show state2
-  state2.paidTrafficCost === fromSome paidTrafficCost
+  state2.paidTrafficCost === paidTrafficCost
   state2.lastCreateTimestamp === state1.lastCreateTimestamp
 
   debug "=== RewardsBatching test passed ==="

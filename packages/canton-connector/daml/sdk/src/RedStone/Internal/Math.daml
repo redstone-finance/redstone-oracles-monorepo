@@ -12,19 +12,19 @@ import RedStone.Internal.Trim
 
 -- Public
 
-leByteListToInt list = leByteListToIntAcc identity 1 0 (trimTrailingZeros list)
+leByteListToInt list = leByteListToIntAcc identity byte_range 1 0 (trimTrailingZeros list)
 beByteListToInt list = leByteListToInt $ L.reverse list
 
 leByteListToNumeric: [Int] -> Numeric 0
-leByteListToNumeric list = leByteListToIntAcc intToNumeric 1.0 0.0 (trimTrailingZeros list)
+leByteListToNumeric list = leByteListToIntAcc intToNumeric (intToNumeric byte_range) 1.0 0.0 (trimTrailingZeros list)
 beByteListToNumeric list = leByteListToNumeric $ L.reverse list
 
 -- Private
 
-leByteListToIntAcc : Number a => (Int -> a) -> a -> a -> [Int] -> a
-leByteListToIntAcc _ _ acc [] = acc
-leByteListToIntAcc f mul acc (b::bs) =
+leByteListToIntAcc : Number a => (Int -> a) -> a -> a -> a -> [Int] -> a
+leByteListToIntAcc _ _ _ acc [] = acc
+leByteListToIntAcc f fRange mul acc (b::bs) =
   let acc' = acc + f b * mul
   in case bs of
        [] -> acc'
-       _  -> leByteListToIntAcc f (mul * f byte_range) acc' bs
+       _  -> leByteListToIntAcc f fRange (mul * fRange) acc' bs

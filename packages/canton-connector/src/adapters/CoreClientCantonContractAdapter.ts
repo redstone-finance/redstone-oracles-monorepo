@@ -2,7 +2,7 @@ import { ContractParamsProvider } from "@redstone-finance/sdk";
 import { CantonClient } from "../client/CantonClient";
 import { convertDecimalValue } from "../utils/conversions";
 import { ContractFilter } from "../utils/price-feed-utils";
-import { DamlTuple2, DisclosedContractData } from "../utils/utils";
+import { DisclosedContractData } from "../utils/utils";
 import { CantonContractAdapter, ExerciseChoiceOptions } from "./CantonContractAdapter";
 import { CoreCantonContractAdapter } from "./CoreCantonContractAdapter";
 
@@ -60,6 +60,6 @@ export class CoreClientCantonContractAdapter extends CantonContractAdapter {
       options
     );
 
-    return (result as DamlTuple2<string[]>)._1.map(convertDecimalValue);
+    return (result as { prices: string[] }).prices.map(convertDecimalValue);
   }
 }

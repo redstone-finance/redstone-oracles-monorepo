@@ -8,12 +8,12 @@
     "deviationPercentage": 0.2,
     "timeSinceLastUpdateInMilliseconds": 7000
   },
-  "adapterContract": "RedStoneAdapter-v18-0.4.0",
-  "adapterContractPackageId": "#redstone-interface-v18",
+  "adapterContract": "RedStoneAdapter-v19-0.4.0",
+  "adapterContractPackageId": "#redstone-interface-v19",
   "dataServiceId": "redstone-primary-prod",
   "priceFeeds": {
-    "CC": { "priceFeedAddress": "RedStoneAdapter-v18-0.4.0" },
-    "ETH": { "priceFeedAddress": "RedStoneAdapter-v18-0.4.0" },
-    "BTC": { "priceFeedAddress": "RedStoneAdapter-v18-0.4.0" }
+    "CC": { "priceFeedAddress": "RedStoneAdapter-v19-0.4.0" },
+    "ETH": { "priceFeedAddress": "RedStoneAdapter-v19-0.4.0" },
+    "BTC": { "priceFeedAddress": "RedStoneAdapter-v19-0.4.0" }
   }
 }

@@ -5,19 +5,19 @@ sinclude .env
 CANTON_API=$(API)
 PACKAGE_IDS=$(DEPLOY_DIR)/package-ids.json
 
-ADAPTER_NAME=RedStoneAdapter-v18-0.4.0
+ADAPTER_NAME=RedStoneAdapter-v19-0.4.0
 ADAPTER_TEMPLATE_ID=$(shell jq -r '.templates.adapter' $(PACKAGE_IDS))
 
-CORE_NAME=RedStoneCore-v18-0.4.0
+CORE_NAME=RedStoneCore-v19-0.4.0
 CORE_TEMPLATE_ID=$(shell jq -r '.templates.core' $(PACKAGE_IDS))
 CORE_CLIENT_TEMPLATE_ID=$(shell jq -r '.templates.core_client' $(PACKAGE_IDS))
 
-FACTORY_NAME=RedStonePricePillFactory-v18-0.4.0
+FACTORY_NAME=RedStonePricePillFactory-v19-0.4.0
 FACTORY_TEMPLATE_ID=$(shell jq -r '.templates.factory' $(PACKAGE_IDS))
 
 FACTORY_ID=$(shell cat $(DEPLOY_DIR)/factory_id.txt 2>/dev/null)
 
-REWARD_FACTORY_NAME=RedStoneRewardFactory-v18-0.4.0
+REWARD_FACTORY_NAME=RedStoneRewardFactory-v19-0.4.0
 REWARD_FACTORY_TEMPLATE_ID=$(shell jq -r '.templates.reward_factory' $(PACKAGE_IDS))
 
 REWARD_FACTORY_ID=$(shell cat $(DEPLOY_DIR)/reward_factory_id.txt 2>/dev/null)

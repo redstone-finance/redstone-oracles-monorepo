@@ -7,7 +7,7 @@ where
 import RedStone.Tests.Test
 import RedStone.Tests.Run
 import RedStone.U256
-import RedStone.ProcessorResult
+import RedStone.ProcessorTypes
 
 runTests : (Action m, ActionFail m, CanAbort m) => m ()
 runTests = do

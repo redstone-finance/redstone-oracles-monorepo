@@ -23,9 +23,9 @@
 - To process payload use `processPayload` or `processPayloadNumeric` function defined in the module.
 
 ```haskell
-processPayloadNumeric: Config -> Text -> ProcessorResult
+processPayloadNumeric: Config -> Text -> ProcessorOutcome
 
-processPayload: Config -> Text -> ProcessorRawResult
+processPayload: Config -> Text -> ProcessorRawOutcome
 ```
 
 #### Parameters
@@ -34,7 +34,7 @@ processPayload: Config -> Text -> ProcessorRawResult
 - The `payload` argument is hex-`Text` type representing the data bytes
   - the whole encoding is described in the RedStone Finance Docs:
     [data formatting](https://docs.redstone.finance/docs/architecture/#how-data-is-encoded-before-being-put-on-the-blockchain).
-- The result of `processPayload` - [`ProcessorResult/ProcessorRawResult`](./src/RedStone/ProcessorResult.daml) contains a validated payload consisting of:
+- The result of `processPayload` - [`ProcessorOutcome/ProcessorRawOutcome`](./src/RedStone/ProcessorTypes.daml) contains a validated payload consisting of:
   - `values` -  each element in the array represents a processed `Result`-value corresponding to the `data_feed` item in the `config` (or an error message)
   - `timestampMs` - which is the data timestamp encountered during processing
 - The values are in raw [`U256`](./src/RedStone/U256.daml) format or `DecimalValue` (`Numeric 8`) denominated by default RedStone decimals denominator (`10^8`)
@@ -84,14 +84,14 @@ The [`Config`](./src/RedStone/Config.daml) uses a two-level approach:
 * `BaseConfig` holds signer-related settings:
   * `signers` - the authorized signers of the data
   * `signerCountThreshold` - the threshold of different signers for the data to use it
-  * `maxDelayMs`/`maxAheadMs` - the acceptable data timestamp window, in relation to the `currentTimestamp`
+  * `maxAllowedPackageTimestampDelayMs`/`maxAllowedPackageTimestampAheadMs` - the acceptable data timestamp window, in relation to the `currentTimestamp`
 * `Config` is the full configuration including:
   * `feedIds` to be processed by the `Processor`
     * Represented as ascii-numbers of particular letters, for example `ETH = [69,84,72]` and `BTC=[66,84,67]`
   * `currentTimestamp`
     * The ledger doesn't have access to real world timestamp, so it's necessary to pass off-chain `currentTimestamp`
       where later the methods like [`isLedgerTimeLE/LT/GE/GT`](https://docs.digitalasset.com/build/3.4/reference/daml/stdlib/DA-Time.html#function-da-time-isledgertimelt-78120) or [`assertWithDeadline`](https://docs.digitalasset.com/build/3.4/reference/daml/stdlib/DA-Assert.html#function-da-assert-assertwithindeadline-85580`) are used to have it verified
-  * All fields from `BaseConfig` (signers, signerCountThreshold, maxDelayMs, maxAheadMs)
+  * All fields from `BaseConfig` (signers, signerCountThreshold, maxAllowedPackageTimestampDelayMs, maxAllowedPackageTimestampAheadMs)
 * `config baseConfig feedIds currentTime` creates a `Config` from a `BaseConfig`
 
 ### Supporting functions
@@ -110,8 +110,8 @@ default_signer_count_threshold = 3
 defaultBaseConfig signers = BaseConfig with
     signers
     signerCountThreshold = default_signer_count_threshold
-    maxDelayMs = 3 * one_min_ms
-    maxAheadMs = 1 * one_min_ms
+    maxAllowedPackageTimestampDelayMs = 3 * one_min_ms
+    maxAllowedPackageTimestampAheadMs = 1 * one_min_ms
 ```
 
 Complete config for `redstone-primary-prod` dataServiceId, to use with passing only `feedIds` and `currentTimestamp`

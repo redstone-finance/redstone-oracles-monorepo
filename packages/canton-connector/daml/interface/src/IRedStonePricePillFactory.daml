@@ -4,12 +4,25 @@ import DA.Foldable (forA_)
 import RedStoneTypes
 import IRedStonePricePill
 
+data PillInput = PillInput
+  with
+    feedId : RedStoneFeedId
+    priceData : RedStonePriceData RedStoneValue
+  deriving (Eq, Show, Ord)
+
+data PillCreationParams = PillCreationParams
+  with
+    viewers : [Party]
+    adapterId : Text
+    stalenessMs : Int
+  deriving (Eq, Show)
+
 interface IRedStonePricePillFactory where
   viewtype RedStonePricePillFactoryView
 
   iRedStonePricePillFactory_VerifyCreator: Party -> Update ()
   iRedStonePricePillFactory_VerifyArchiver: Party -> Update ()
-  iRedStonePricePillFactory_CreatePricePillsImpl: [Party] -> Text -> Int -> [(RedStoneFeedId, RedStonePriceData RedStoneValue)] -> Update [ContractId IRedStonePricePill]
+  iRedStonePricePillFactory_CreatePricePillsImpl: PillCreationParams -> [PillInput] -> Update [ContractId IRedStonePricePill]
 
   nonconsuming choice CreatePricePills : [ContractId IRedStonePricePill]
     with
@@ -17,11 +30,11 @@ interface IRedStonePricePillFactory where
       viewers : [Party]
       stalenessMs : Int
       adapterId : Text
-      inputData : [(RedStoneFeedId, RedStonePriceData RedStoneValue)]
+      inputData : [PillInput]
     controller caller
     do
       iRedStonePricePillFactory_VerifyCreator this caller
-        >> iRedStonePricePillFactory_CreatePricePillsImpl this viewers adapterId stalenessMs inputData
+        >> iRedStonePricePillFactory_CreatePricePillsImpl this (PillCreationParams with viewers, adapterId, stalenessMs) inputData
 
   nonconsuming choice ArchivePricePills : ()
     with
