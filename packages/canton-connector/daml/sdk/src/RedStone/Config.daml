@@ -2,6 +2,7 @@ module RedStone.Config
   (
     Config
     , BaseConfig
+    , PublicKey
     , config
     , defaultBaseConfig
     , redstonePrimaryProdDefaultBaseConfig
@@ -20,22 +21,24 @@ import Time
 
 -- Public
 
+type PublicKey = Text
+
 data BaseConfig = BaseConfig
   with
-    signers : [Text]
+    signers : [PublicKey]
     signerCountThreshold : Int
-    maxDelayMs : Int
-    maxAheadMs : Int
+    maxAllowedPackageTimestampDelayMs : Int
+    maxAllowedPackageTimestampAheadMs : Int
   deriving (Eq, Show)
 
 data Config = Config
   with
     feedIds : [[Int]]
     currentTimestamp : Int
-    signers : [Text]
+    signers : [PublicKey]
     signerCountThreshold : Int
-    maxDelayMs : Int
-    maxAheadMs : Int
+    maxAllowedPackageTimestampDelayMs : Int
+    maxAllowedPackageTimestampAheadMs : Int
   deriving (Eq, Show)
 
 redstone_primary_prod_public_keys = ["049a0e6cada7938a0fc616578aff2b11337d90ec4e99e9fee95e57e9d8371562b31698225fb73c666ba586842b913e67ad289f374f7a46fc873342f805a8683d4e"
@@ -46,42 +49,40 @@ redstone_primary_prod_public_keys = ["049a0e6cada7938a0fc616578aff2b11337d90ec4e
 
 config baseConfig feedIds currentTime =
   let
-    BaseConfig{signers, signerCountThreshold, maxDelayMs, maxAheadMs} = baseConfig
-
-    _ = unique feedIds && feedIds /= [] ??? configError "feedIds are empty or not unique" feedIds
-    _ = L.length feedIds <= max_feed_ids ??? configError "Too many feedIds" (L.length feedIds, max_feed_ids)
-    _ = L.all isValidFeedId feedIds ??? configError "Malformed feedId (length > 32 or byte out of range)" feedIds
-    _ = unique signers && signers /= [] ??? configError "signers are empty or not unique" signers
-    _ = signerCountThreshold <= L.length signers ??? configError "signerCountThreshold exceeds signer length" (signerCountThreshold, L.length signers)
-    _ = signerCountThreshold > 0 ??? configError "signerCountThreshold must be positive" signerCountThreshold
-    _ = maxAheadMs >= 0 ??? configError "maxAheadMs must be non-negative" maxAheadMs
-    _ = maxDelayMs >= 0 ??? configError "maxDelayMs must be non-negative" maxDelayMs
-
+    BaseConfig{signers, signerCountThreshold, maxAllowedPackageTimestampDelayMs, maxAllowedPackageTimestampAheadMs} = baseConfig
     currentTimestamp = timeToMillis currentTime
-
-    _ = currentTimestamp > min_acceptable_timestamp ??? configError "Wrong currentTimestamp" currentTimestamp
-  in Config{feedIds, currentTimestamp,signers, signerCountThreshold, maxDelayMs, maxAheadMs}
+  in (!!!) $ do
+    _ <- unique feedIds && feedIds /= [] ??? configError "feedIds are empty or not unique" feedIds
+    _ <- L.length feedIds <= max_feed_ids ??? configError "Too many feedIds" (L.length feedIds, max_feed_ids)
+    _ <- L.all isValidFeedId feedIds ??? configError "Malformed feedId (length out of range or byte out of range)" feedIds
+    _ <- unique signers && signers /= [] ??? configError "signers are empty or not unique" signers
+    _ <- signerCountThreshold <= L.length signers ??? configError "signerCountThreshold exceeds signer length" (signerCountThreshold, L.length signers)
+    _ <- signerCountThreshold > 0 ??? configError "signerCountThreshold must be positive" signerCountThreshold
+    _ <- maxAllowedPackageTimestampAheadMs >= 0 ??? configError "maxAllowedPackageTimestampAheadMs must be non-negative" maxAllowedPackageTimestampAheadMs
+    _ <- maxAllowedPackageTimestampDelayMs >= 0 ??? configError "maxAllowedPackageTimestampDelayMs must be non-negative" maxAllowedPackageTimestampDelayMs
+    _ <- currentTimestamp > min_acceptable_timestamp ??? configError "Wrong currentTimestamp" currentTimestamp
+    pure Config{feedIds, currentTimestamp, signers, signerCountThreshold, maxAllowedPackageTimestampDelayMs, maxAllowedPackageTimestampAheadMs}
 
 defaultBaseConfig signers = BaseConfig
   with
     signers
     signerCountThreshold = default_signer_count_threshold
-    maxDelayMs = 3 * one_min_ms
-    maxAheadMs = 1 * one_min_ms
+    maxAllowedPackageTimestampDelayMs = 3 * one_min_ms
+    maxAllowedPackageTimestampAheadMs = 1 * one_min_ms
 
 redstonePrimaryProdDefaultBaseConfig = defaultBaseConfig redstone_primary_prod_public_keys
 redstonePrimaryProdDefaultConfig = config redstonePrimaryProdDefaultBaseConfig
 
 verifyCurrentTimeVsLedger config = do
-  notIde <- isNotIDE
-  if notIde then do
+  hasLedger <- hasLedgerTime
+  if hasLedger then do
     let currentTime = millisToTime config.currentTimestamp
 
-    let maxLedgerFutureTime = addRelTime currentTime $ milliseconds (- (config.maxAheadMs))
-    let maxLedgerOldTime = addRelTime currentTime $ milliseconds config.maxDelayMs
+    let maxLedgerFutureTime = addRelTime currentTime $ milliseconds (- (config.maxAllowedPackageTimestampAheadMs))
+    let maxLedgerOldTime = addRelTime currentTime $ milliseconds config.maxAllowedPackageTimestampDelayMs
 
-    assertWithinDeadline  "currentTimestamp too old"  maxLedgerOldTime  --- ledgerTime - maxDelayMs < currentTime
-    assertDeadlineExceeded  "currentTimestamp too future"  maxLedgerFutureTime --- ledgerTime + maxAheadMs >= currentTime
+    assertWithinDeadline  "currentTimestamp too old"  maxLedgerOldTime  --- ledgerTime - maxAllowedPackageTimestampDelayMs < currentTime
+    assertDeadlineExceeded  "currentTimestamp too future"  maxLedgerFutureTime --- ledgerTime + maxAllowedPackageTimestampAheadMs >= currentTime
 
     pure config
   else pure config
@@ -89,12 +90,12 @@ verifyCurrentTimeVsLedger config = do
 -- Private
 
 isValidFeedId feedId =
-  L.length feedId <= feed_id_bs && L.all (\b -> b >= 0 && b <= byte_max) feedId
+  not (null feedId) && L.length feedId <= feed_id_bs && L.all (\b -> b >= 0 && b <= byte_max) feedId
 
 default_signer_count_threshold = 3
 
 configError = RedStoneError Configuration
 
-isNotIDE = isLedgerTimeGT unix_epoch_start
+hasLedgerTime = isLedgerTimeGT unix_epoch_start
 
 verifyConfigAgainstLedger config = verifyCurrentTimeVsLedger config

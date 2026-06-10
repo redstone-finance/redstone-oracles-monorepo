@@ -17,12 +17,9 @@ data_packages_bs = 2
 decimals = 8
 
 
-trimMetadata bytes =
-  let
-    (markerRest, marker) = bytesTrim redstone_marker_size bytes
-
-    _ = marker == redstone_marker ??? RedStoneError Processing "Wrong RedStone marker" marker
-
-    (unsMetadataByteCountRest, unsignedMetadataByteCount) = bytesTrimNum uns_metadata_count_bs markerRest
-    (unsMetadataRest, _) = bytesTrim unsignedMetadataByteCount unsMetadataByteCountRest
-  in bytesTrimNum data_packages_bs unsMetadataRest
+trimMetadata bytes = (!!!) $ do
+  let (markerRest, marker) = bytesTrim redstone_marker_size bytes
+  _ <- marker == redstone_marker ??? RedStoneError Processing "Wrong RedStone marker" marker
+  let (unsMetadataByteCountRest, unsignedMetadataByteCount) = bytesTrimNum uns_metadata_count_bs markerRest
+  let (unsMetadataRest, _) = bytesTrim unsignedMetadataByteCount unsMetadataByteCountRest
+  pure $ bytesTrimNum data_packages_bs unsMetadataRest

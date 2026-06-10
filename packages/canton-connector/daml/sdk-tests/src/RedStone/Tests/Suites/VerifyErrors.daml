@@ -23,14 +23,14 @@ testMaxAheadMs = 180_000
 
 data ConfigLike = ConfigLike with
   currentTimestamp : Int
-  maxDelayMs : Int
-  maxAheadMs : Int
+  maxAllowedPackageTimestampDelayMs : Int
+  maxAllowedPackageTimestampAheadMs : Int
     deriving (Eq, Show)
 
 mkConfig ts = ConfigLike with
   currentTimestamp = ts
-  maxDelayMs = testMaxDelayMs
-  maxAheadMs = testMaxAheadMs
+  maxAllowedPackageTimestampDelayMs = testMaxDelayMs
+  maxAllowedPackageTimestampAheadMs = testMaxAheadMs
 
 data DataPackageLike = DataPackageLike with
   timestamp : Int

@@ -6,7 +6,7 @@ module Internal.Rewards (
 
 import DA.Optional(fromOptional)
 import IRedStoneRewardFactory
-import Config
+import RedStoneAdapter.Config
 
 data RewardState = RewardState
   with

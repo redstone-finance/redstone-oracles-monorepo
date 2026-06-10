@@ -1,14 +1,9 @@
 import { ContractAdapter } from "@redstone-finance/multichain-kit";
-import { ContractData, ContractParamsProvider, LastRoundDetails } from "@redstone-finance/sdk";
+import { ContractData, ContractParamsProvider } from "@redstone-finance/sdk";
 import { RedstoneCommon } from "@redstone-finance/utils";
 import { CantonClient } from "../client/CantonClient";
-import {
-  CantonFeedId,
-  convertDecimalValue,
-  decodeCantonFeedId,
-  getCantonFeedId,
-} from "../utils/conversions";
-import { ContractFilter } from "../utils/price-feed-utils";
+import { CantonFeedId, decodeCantonFeedId, getCantonFeedId } from "../utils/conversions";
+import { ContractFilter, parsePriceData, PriceData } from "../utils/price-feed-utils";
 import { CantonContractAdapter } from "./CantonContractAdapter";
 import { CantonContractAdapterConfig } from "./CantonContractAdapterConfig";
 import { CoreCantonContractAdapter } from "./CoreCantonContractAdapter";
@@ -71,16 +66,7 @@ export class PricesCantonReadOnlyAdapter extends CantonContractAdapter implement
     const data = feedIds.map((feedId) => {
       const priceData = newestPriceData(feedData, feedId);
 
-      return [
-        feedId,
-        RedstoneCommon.isDefined(priceData)
-          ? ({
-              lastDataPackageTimestampMS: Number(priceData.timestamp),
-              lastBlockTimestampMS: Number(priceData.writeTimestamp),
-              lastValue: convertDecimalValue(priceData.value),
-            } as LastRoundDetails)
-          : undefined,
-      ];
+      return [feedId, RedstoneCommon.isDefined(priceData) ? parsePriceData(priceData) : undefined];
     });
 
     return Object.fromEntries(data) as ContractData;
@@ -91,14 +77,8 @@ export class PricesCantonReadOnlyAdapter extends CantonContractAdapter implement
   }
 }
 
-interface DamlPriceData {
-  value: string;
-  timestamp: string;
-  writeTimestamp: string;
-}
-
 interface DamlPillRecord {
-  priceData: DamlPriceData;
+  priceData: PriceData;
 }
 
 type DamlFeedData = [CantonFeedId, DamlPillRecord[]][];
@@ -125,7 +105,7 @@ function feedDataEntryByFeedId(
   return entry?.[1];
 }
 
-function newestPriceData(feedData: DamlFeedData, feedId: string): DamlPriceData | undefined {
+function newestPriceData(feedData: DamlFeedData, feedId: string) {
   const records = feedDataEntryByFeedId(feedData, feedId);
 
   if (!records || records.length === 0) {

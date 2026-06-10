@@ -3,7 +3,8 @@ module RedStoneCore where
 import RedStone.GetPrices as G
 import Featured
 import IRedStoneCore
-import Config
+import RedStoneTypes
+import RedStoneCore.Config
 
 template RedStoneCore
   with
@@ -20,9 +21,7 @@ template RedStoneCore
     interface instance IRedStoneCore for RedStoneCore where
       view = RedStoneCoreView with coreId
 
-      iRedStoneCore_ShouldVerifyViewer caller = shouldVerifyViewer
-
-      iRedStoneCore_VerifyViewer caller = assertMsg "GetPrices: caller must be a viewer" $ caller `elem` viewers
+      iRedStoneCore_VerifyViewer caller = if shouldVerifyViewer then assertMsg "GetPrices: caller must be a viewer" (caller `elem` viewers) else pure ()
 
       iRedStoneCore_GetPricesImpl caller feedIds currentTime payloadHex = do
           case (featuredCid, beneficiary) of
@@ -30,4 +29,4 @@ template RedStoneCore
             _ -> pure ()
 
           let config = adapter_config_fun feedIds currentTime
-          G.getPricesNumeric config payloadHex
+          uncurry RedStoneResult <$> G.getPricesNumeric config payloadHex
