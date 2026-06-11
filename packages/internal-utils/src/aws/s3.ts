@@ -1,5 +1,8 @@
+import { _Object } from "@aws-sdk/client-s3";
 import { getS3 } from "./aws-clients";
 import { DEFAULT_AWS_REGION } from "./region";
+
+export type S3ObjectWithKey = _Object & { Key: string };
 
 export const writeS3Object = async (
   bucketName: string,
@@ -79,11 +82,11 @@ export const readS3Object = async <T>(
   return content;
 };
 
-export const listS3Objects = async (
+export const listS3ObjectsWithMetadata = async (
   bucketName: string,
   prefix: string,
   region = DEFAULT_AWS_REGION
-): Promise<string[]> => {
+): Promise<S3ObjectWithKey[]> => {
   const params = {
     Bucket: bucketName,
     Prefix: prefix,
@@ -91,5 +94,15 @@ export const listS3Objects = async (
 
   const data = await getS3(region).listObjectsV2(params);
 
-  return data.Contents?.map((obj) => obj.Key).filter((key): key is string => !!key) ?? [];
+  return data.Contents?.filter((obj): obj is S3ObjectWithKey => !!obj.Key) ?? [];
+};
+
+export const listS3Objects = async (
+  bucketName: string,
+  prefix: string,
+  region = DEFAULT_AWS_REGION
+): Promise<string[]> => {
+  const contents = await listS3ObjectsWithMetadata(bucketName, prefix, region);
+
+  return contents.map((obj) => obj.Key);
 };
