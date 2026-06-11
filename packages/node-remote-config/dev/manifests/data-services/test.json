@@ -2,6 +2,7 @@
   "interval": 10000,
   "priceAggregator": "median",
   "defaultSource": ["kraken-usd"],
+  "defaultBroadcasters": ["redstone-packages", "influx"],
   "sourceTimeout": 7000,
   "minValidSourcesPercentage": 1,
   "deviationCheck": {

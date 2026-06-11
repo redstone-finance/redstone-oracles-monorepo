@@ -12,6 +12,10 @@
   "defaultSource": [
     "coingecko"
   ],
+  "defaultBroadcasters": [
+    "redstone-packages",
+    "influx"
+  ],
   "tokens": {
     "ETH": {
       "source": [
@@ -9360,6 +9364,7 @@
         "fixed-value"
       ],
       "fixedValue": 1,
+      "broadcasters": [],
       "skipBroadcasting": true,
       "denomination": "USD",
       "rateFeed": false
@@ -9432,6 +9437,7 @@
       ],
       "denomination": "ETH",
       "rateFeed": false,
+      "broadcasters": [],
       "skipBroadcasting": true
     },
     "waArbWETH_FUNDAMENTAL": {
@@ -9440,6 +9446,7 @@
       ],
       "denomination": "ETH",
       "rateFeed": false,
+      "broadcasters": [],
       "skipBroadcasting": true
     },
     "AI": {

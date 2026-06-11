@@ -2,6 +2,7 @@
   "interval": 10000,
   "priceAggregator": "median",
   "defaultSource": ["mock"],
+  "defaultBroadcasters": ["redstone-packages", "influx"],
   "sourceTimeout": 50000,
   "deviationCheck": {
     "deviationWithRecentValues": {
