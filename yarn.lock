@@ -9780,6 +9780,21 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@redstone-finance/lambda-node-version-deviation-monitoring@workspace:packages/lambda/lambda-node-version-deviation-monitoring":
+  version: 0.0.0-use.local
+  resolution: "@redstone-finance/lambda-node-version-deviation-monitoring@workspace:packages/lambda/lambda-node-version-deviation-monitoring"
+  dependencies:
+    "@redstone-finance/internal-utils": "workspace:*"
+    "@redstone-finance/utils": "workspace:*"
+    "@types/aws-lambda": "npm:^8.10.145"
+    "@types/lodash": "npm:^4.14.195"
+    axios: "npm:^1.15.2"
+    dotenv: "npm:^16.0.3"
+    lodash: "npm:^4.17.23"
+    zod: "npm:^4.1.12"
+  languageName: unknown
+  linkType: soft
+
 "@redstone-finance/lambda-node-versions@workspace:packages/lambda/lambda-node-versions":
   version: 0.0.0-use.local
   resolution: "@redstone-finance/lambda-node-versions@workspace:packages/lambda/lambda-node-versions"
