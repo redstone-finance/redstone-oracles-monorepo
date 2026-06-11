@@ -7158,6 +7158,7 @@
         "influx"
       ],
       "denomination": "USD",
+      "localCacheTTL": "60m",
       "rateFeed": false
     },
     "ORACLE_hyna:IP_EMA_150S": {
@@ -7184,6 +7185,7 @@
         "influx"
       ],
       "denomination": "USD",
+      "localCacheTTL": "61m",
       "rateFeed": false
     },
     "MID_hyna:IP": {
@@ -7265,6 +7267,20 @@
           "maxDelayMilliseconds": 1000
         }
       }
+    },
+    "IP-TWAP": {
+      "source": [
+        "hyna-twap-local"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "ORACLE_hyna:IP-TWAP-60": {
+      "source": [
+        "twap-local"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
     },
     "ADA_PERP": {
       "source": [
@@ -7780,6 +7796,7 @@
         "influx"
       ],
       "denomination": "USD",
+      "localCacheTTL": "60m",
       "rateFeed": false
     },
     "ORACLE_hyna:LTC_EMA_150S": {
@@ -7806,6 +7823,7 @@
         "influx"
       ],
       "denomination": "USD",
+      "localCacheTTL": "61m",
       "rateFeed": false
     },
     "MID_hyna:LTC": {
@@ -7887,6 +7905,20 @@
           "maxDelayMilliseconds": 1000
         }
       }
+    },
+    "LTC-TWAP": {
+      "source": [
+        "hyna-twap-local"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "ORACLE_hyna:LTC-TWAP-60": {
+      "source": [
+        "twap-local"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
     },
     "BCH_PERP": {
       "source": [
@@ -8618,6 +8650,7 @@
         "influx"
       ],
       "denomination": "USD",
+      "localCacheTTL": "60m",
       "rateFeed": false
     },
     "ORACLE_hyna:BASED_EMA_150S": {
@@ -8644,6 +8677,7 @@
         "influx"
       ],
       "denomination": "USD",
+      "localCacheTTL": "61m",
       "rateFeed": false
     },
     "MID_hyna:BASED": {
@@ -8725,6 +8759,20 @@
           "maxDelayMilliseconds": 1000
         }
       }
+    },
+    "BASED-TWAP": {
+      "source": [
+        "hyna-twap-local"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "ORACLE_hyna:BASED-TWAP-60": {
+      "source": [
+        "twap-local"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
     }
   }
 }
