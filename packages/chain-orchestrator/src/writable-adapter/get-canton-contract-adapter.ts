@@ -3,6 +3,7 @@ import {
   CantonClientBuilder,
   PricesCantonContractAdapter,
   readAdditionalPillViewers,
+  readCantonPartyIds,
   readUseConstTrafficMeter,
 } from "@redstone-finance/canton-connector";
 import { RedstoneCommon } from "@redstone-finance/utils";
@@ -28,12 +29,17 @@ export const getCantonContractAdapter = (relayerConfig: PartialRelayerConfig) =>
     .withQuarantineEnabled()
     .build();
 
+  const { viewerPartyId, updaterPartyId } = readCantonPartyIds();
+
   return new PricesCantonContractAdapter(
     client,
     {
       ...CANTON_CONTRACT_ADAPTER_DEFAULT_CONFIG,
-      viewerPartyId: RedstoneCommon.getFromEnv("CANTON_VIEWER_PARTY_ID"),
-      updaterPartyId: RedstoneCommon.getFromEnv("CANTON_UPDATER_PARTY_ID"),
+      viewerPartyId,
+      updaterPartyId: RedstoneCommon.assertThenReturn(
+        updaterPartyId,
+        "Canton updater party id is required"
+      ),
       additionalPillViewers: readAdditionalPillViewers(),
       adapterId: adapterContractAddress,
       maxTxSendAttempts:

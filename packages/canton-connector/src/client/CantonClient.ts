@@ -25,7 +25,7 @@ import {
 } from "../utils/utils";
 import { CantonApi } from "./CantonApi";
 import { CantonScanApiClient, ScanCantonApi } from "./CantonScanApiClient";
-import { CantonTransferService } from "./CantonTransferService";
+import { CantonTransferService, TransferSigner } from "./CantonTransferService";
 
 const DEFAULT_DELTA_OFFSET = 1000;
 const LOCAL_USER = "redstone-canton-connector";
@@ -127,18 +127,22 @@ export class CantonClient {
     return summary?.total_available_coin ?? "0";
   }
 
-  async sendAmulet(
-    actAs: string,
-    recipient: string,
-    amount: number
-  ): Promise<{ updateId: string }> {
+  async sendAmulet(actAs: string, recipient: string, amount: number) {
+    return await this.requireTransferService().sendAmulet(actAs, recipient, amount);
+  }
+
+  async transfer(toAddress: string, amount: number, signer: TransferSigner) {
+    return await this.requireTransferService().transfer(toAddress, amount, signer);
+  }
+
+  private requireTransferService() {
     if (!this.transferService) {
       throw new Error(
-        "sendAmulet requires walletClientId and a validator URL configured in CantonClientBuilder."
+        "Transfer requires walletClientId and a validator URL configured in CantonClientBuilder."
       );
     }
 
-    return await this.transferService.sendAmulet(actAs, recipient, amount);
+    return this.transferService;
   }
 
   private requireScanApiClient(): CantonScanApiClient {

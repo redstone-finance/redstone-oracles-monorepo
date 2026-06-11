@@ -29,7 +29,6 @@
     "@redstone-finance/utils": "workspace:*",
     "decimal.js": "^10.4.3",
     "ethers": "^5.7.2",
-    "jose": "^6.1.3",
     "lodash": "^4.17.23"
   },
   "devDependencies": {

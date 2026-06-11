@@ -1,5 +1,6 @@
 import { loggerFactory, RedstoneCommon } from "@redstone-finance/utils";
 import { createHash } from "node:crypto";
+import { decodeJwtPayload } from "../utils/utils";
 import { KeycloakTokenProviderParams, makeKeycloakParams } from "./KeycloakTokenProviderParams";
 
 const EXPIRATION_MARGIN_MS = RedstoneCommon.secsToMs(30);
@@ -183,11 +184,7 @@ export class KeycloakTokenProvider {
 
   private static logToken(context: string, token: string) {
     try {
-      const payload = JSON.parse(Buffer.from(token.split(".")[1], "base64url").toString()) as {
-        jti: string;
-        exp: string;
-        iat: string;
-      };
+      const payload = decodeJwtPayload<{ jti: string; exp: string; iat: string }>(token);
       KeycloakTokenProvider.logger.debug(
         `[${context}] jti=${payload.jti} exp=${payload.exp} iat=${payload.iat}`
       );
