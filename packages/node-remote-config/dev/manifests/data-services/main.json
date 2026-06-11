@@ -10,6 +10,7 @@
     }
   },
   "defaultSource": ["coingecko"],
+  "defaultBroadcasters": ["redstone-packages", "influx"],
   "tokens": {
     "ETH": {
       "source": [
@@ -8623,6 +8624,7 @@
     "pathUSD_FV": {
       "source": ["fixed-value"],
       "fixedValue": 1,
+      "broadcasters": [],
       "skipBroadcasting": true,
       "denomination": "USD",
       "rateFeed": false
@@ -8681,12 +8683,14 @@
       "source": ["ethereum-evm-fetcher-aave-waeth"],
       "denomination": "ETH",
       "rateFeed": false,
+      "broadcasters": [],
       "skipBroadcasting": true
     },
     "waArbWETH_FUNDAMENTAL": {
       "source": ["arbitrum-evm-fetcher-aave-waeth"],
       "denomination": "ETH",
       "rateFeed": false,
+      "broadcasters": [],
       "skipBroadcasting": true
     },
     "AI": {

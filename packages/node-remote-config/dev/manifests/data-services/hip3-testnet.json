@@ -2,6 +2,7 @@
   "interval": 1000,
   "priceAggregator": "median",
   "defaultSource": [],
+  "defaultBroadcasters": ["hyperliquid-hip3", "influx"],
   "sourceTimeout": 1000,
   "minValidSourcesPercentage": 30,
   "deviationCheck": {

@@ -2,6 +2,7 @@
   "interval": 500,
   "priceAggregator": "median",
   "defaultSource": [],
+  "defaultBroadcasters": ["redstone-packages", "influx"],
   "sourceTimeout": 300,
   "minValidSourcesPercentage": 1,
   "useCustomScheduler": true,
@@ -30,6 +31,7 @@
           "maxDelayMilliseconds": 120000
         }
       },
+      "broadcasters": [],
       "skipBroadcasting": true,
       "denomination": "USD",
       "rateFeed": false,
@@ -69,6 +71,7 @@
           "maxDelayMilliseconds": 120000
         }
       },
+      "broadcasters": [],
       "skipBroadcasting": true,
       "denomination": "USD",
       "rateFeed": false,
@@ -92,6 +95,7 @@
           "maxDelayMilliseconds": 120000
         }
       },
+      "broadcasters": [],
       "skipBroadcasting": true,
       "denomination": "USD",
       "types": ["crypto"],
@@ -110,6 +114,7 @@
         "kraken_deferred-usdt-reversed",
         "okx_deferred-btc-reversed"
       ],
+      "broadcasters": [],
       "skipBroadcasting": true,
       "denomination": "USD",
       "rateFeed": false
@@ -270,6 +275,7 @@
         "xt_deferred-usdc",
         "xt_deferred-usdt"
       ],
+      "broadcasters": [],
       "skipBroadcasting": true,
       "denomination": "USD",
       "rateFeed": false
@@ -297,6 +303,7 @@
         "okx_deferred-usdt",
         "xt_deferred-usdt"
       ],
+      "broadcasters": [],
       "skipBroadcasting": true,
       "denomination": "USD",
       "rateFeed": false
@@ -324,6 +331,7 @@
         "okx_deferred-usdt",
         "xt_deferred-usdt"
       ],
+      "broadcasters": [],
       "skipBroadcasting": true,
       "denomination": "USD",
       "rateFeed": false
@@ -805,6 +813,7 @@
     },
     "GAS_CURRENT": {
       "source": ["databento-cme-futures", "ws-polygon-massive-nymex-futures"],
+      "broadcasters": [],
       "skipBroadcasting": true,
       "denomination": "USD",
       "rateFeed": false,
@@ -812,6 +821,7 @@
     },
     "GAS_FRONT": {
       "source": ["databento-cme-futures", "ws-polygon-massive-nymex-futures"],
+      "broadcasters": [],
       "skipBroadcasting": true,
       "denomination": "USD",
       "rateFeed": false,
@@ -865,6 +875,7 @@
     },
     "WTI_CURRENT": {
       "source": ["databento-cme-futures", "ws-polygon-massive-nymex-futures"],
+      "broadcasters": [],
       "skipBroadcasting": true,
       "denomination": "USD",
       "rateFeed": false,
@@ -872,6 +883,7 @@
     },
     "WTI_FRONT": {
       "source": ["databento-cme-futures", "ws-polygon-massive-nymex-futures"],
+      "broadcasters": [],
       "skipBroadcasting": true,
       "denomination": "USD",
       "rateFeed": false,
@@ -925,6 +937,7 @@
     },
     "XAG_CURRENT": {
       "source": ["databento-cme-futures", "ws-polygon-massive-comex-futures"],
+      "broadcasters": [],
       "skipBroadcasting": true,
       "denomination": "USD",
       "rateFeed": false,
@@ -932,6 +945,7 @@
     },
     "XAG_FRONT": {
       "source": ["databento-cme-futures", "ws-polygon-massive-comex-futures"],
+      "broadcasters": [],
       "skipBroadcasting": true,
       "denomination": "USD",
       "rateFeed": false,
@@ -939,6 +953,7 @@
     },
     "XAG_NEXT_FRONT": {
       "source": ["databento-cme-futures", "ws-polygon-massive-comex-futures"],
+      "broadcasters": [],
       "skipBroadcasting": true,
       "denomination": "USD",
       "rateFeed": false,
@@ -998,6 +1013,7 @@
     },
     "XAU_CURRENT": {
       "source": ["databento-cme-futures", "ws-polygon-massive-comex-futures"],
+      "broadcasters": [],
       "skipBroadcasting": true,
       "denomination": "USD",
       "rateFeed": false,
@@ -1005,6 +1021,7 @@
     },
     "XAU_FRONT": {
       "source": ["databento-cme-futures", "ws-polygon-massive-comex-futures"],
+      "broadcasters": [],
       "skipBroadcasting": true,
       "denomination": "USD",
       "rateFeed": false,
@@ -1012,6 +1029,7 @@
     },
     "XAU_NEXT_FRONT": {
       "source": ["databento-cme-futures", "ws-polygon-massive-comex-futures"],
+      "broadcasters": [],
       "skipBroadcasting": true,
       "denomination": "USD",
       "rateFeed": false,
@@ -1071,6 +1089,7 @@
     },
     "XPT_CURRENT": {
       "source": ["databento-cme-futures", "ws-polygon-massive-nymex-futures"],
+      "broadcasters": [],
       "skipBroadcasting": true,
       "denomination": "USD",
       "rateFeed": false,
@@ -1078,6 +1097,7 @@
     },
     "XPT_FRONT": {
       "source": ["databento-cme-futures", "ws-polygon-massive-nymex-futures"],
+      "broadcasters": [],
       "skipBroadcasting": true,
       "denomination": "USD",
       "rateFeed": false,
@@ -1085,6 +1105,7 @@
     },
     "XPT_NEXT_FRONT": {
       "source": ["databento-cme-futures", "ws-polygon-massive-nymex-futures"],
+      "broadcasters": [],
       "skipBroadcasting": true,
       "denomination": "USD",
       "rateFeed": false,
@@ -1144,6 +1165,7 @@
     },
     "XCU_CURRENT": {
       "source": ["databento-cme-futures", "ws-polygon-massive-comex-futures"],
+      "broadcasters": [],
       "skipBroadcasting": true,
       "denomination": "USD",
       "rateFeed": false,
@@ -1151,6 +1173,7 @@
     },
     "XCU_FRONT": {
       "source": ["databento-cme-futures", "ws-polygon-massive-comex-futures"],
+      "broadcasters": [],
       "skipBroadcasting": true,
       "denomination": "USD",
       "rateFeed": false,
@@ -1158,6 +1181,7 @@
     },
     "XCU_NEXT_FRONT": {
       "source": ["databento-cme-futures", "ws-polygon-massive-comex-futures"],
+      "broadcasters": [],
       "skipBroadcasting": true,
       "denomination": "USD",
       "rateFeed": false,
@@ -1222,6 +1246,7 @@
     },
     "USA100_CURRENT": {
       "source": ["databento-cme-futures", "ws-polygon-massive-cme-futures"],
+      "broadcasters": [],
       "skipBroadcasting": true,
       "denomination": "USD",
       "rateFeed": false,
@@ -1229,6 +1254,7 @@
     },
     "USA100_FRONT": {
       "source": ["databento-cme-futures", "ws-polygon-massive-cme-futures"],
+      "broadcasters": [],
       "skipBroadcasting": true,
       "denomination": "USD",
       "rateFeed": false,
@@ -1282,6 +1308,7 @@
     },
     "USA500_CURRENT": {
       "source": ["databento-cme-futures", "ws-polygon-massive-cme-futures"],
+      "broadcasters": [],
       "skipBroadcasting": true,
       "denomination": "USD",
       "rateFeed": false,
@@ -1289,6 +1316,7 @@
     },
     "USA500_FRONT": {
       "source": ["databento-cme-futures", "ws-polygon-massive-cme-futures"],
+      "broadcasters": [],
       "skipBroadcasting": true,
       "denomination": "USD",
       "rateFeed": false,
@@ -1338,6 +1366,7 @@
     },
     "XBR_CURRENT": {
       "source": ["databento-ice-futures"],
+      "broadcasters": [],
       "skipBroadcasting": true,
       "denomination": "USD",
       "rateFeed": false,
@@ -1345,6 +1374,7 @@
     },
     "XBR_FRONT": {
       "source": ["databento-ice-futures"],
+      "broadcasters": [],
       "skipBroadcasting": true,
       "denomination": "USD",
       "rateFeed": false,

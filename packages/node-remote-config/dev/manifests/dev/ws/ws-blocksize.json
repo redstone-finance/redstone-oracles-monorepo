@@ -2,6 +2,7 @@
   "interval": 2000,
   "priceAggregator": "median",
   "defaultSource": ["coingecko"],
+  "defaultBroadcasters": ["redstone-packages", "influx"],
   "sourceTimeout": 8000,
   "deviationCheck": {
     "deviationWithRecentValues": {

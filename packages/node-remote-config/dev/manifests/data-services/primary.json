@@ -2,6 +2,7 @@
   "interval": 10000,
   "priceAggregator": "median",
   "defaultSource": [],
+  "defaultBroadcasters": ["redstone-packages", "influx"],
   "sourceTimeout": 7000,
   "minValidSourcesPercentage": 1,
   "deviationCheck": {
@@ -349,12 +350,14 @@
       "source": ["ethereum-evm-fetcher-aave-waeth"],
       "denomination": "ETH",
       "rateFeed": false,
+      "broadcasters": [],
       "skipBroadcasting": true
     },
     "waArbWETH_FUNDAMENTAL": {
       "source": ["arbitrum-evm-fetcher-aave-waeth"],
       "denomination": "ETH",
       "rateFeed": false,
+      "broadcasters": [],
       "skipBroadcasting": true
     },
     "crvFRAX": {
@@ -5085,6 +5088,7 @@
     "pathUSD_FV": {
       "source": ["fixed-value"],
       "fixedValue": 1,
+      "broadcasters": [],
       "skipBroadcasting": true,
       "denomination": "USD",
       "rateFeed": false

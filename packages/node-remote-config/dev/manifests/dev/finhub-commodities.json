@@ -9,6 +9,7 @@
       "maxDelayMilliseconds": 120000
     }
   },
+  "defaultBroadcasters": ["redstone-packages", "influx"],
   "tokens": {
     "NG": {
       "source": [
