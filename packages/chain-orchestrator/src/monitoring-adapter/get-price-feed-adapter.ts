@@ -1,6 +1,7 @@
 import {
   CantonClientBuilder,
   PricePillCantonContractAdapter,
+  readCantonPartyIds,
 } from "@redstone-finance/canton-connector";
 import { PriceFeedAdapter } from "@redstone-finance/multichain-kit";
 import {
@@ -62,7 +63,7 @@ export async function getPriceFeedAdapter(
 
       return new PricePillCantonContractAdapter(
         client,
-        RedstoneCommon.getFromEnv("CANTON_VIEWER_PARTY_ID"),
+        readCantonPartyIds().viewerPartyId,
         address,
         feedId
       );

@@ -6,7 +6,6 @@ import {
   getCantonNodeConfig,
 } from "@redstone-finance/canton-connector";
 import { MoveBlockchainService, MoveClientBuilder } from "@redstone-finance/move-connector";
-
 import { BlockchainServiceWithTxLookup } from "@redstone-finance/multichain-kit";
 import {
   makeKeypair as makeSolanaKeypair,
@@ -78,9 +77,7 @@ export async function getNonEvmBlockchainService(
     }
     case ChainTypeEnum.enum.canton: {
       const chainId = deconstructNetworkId(networkId).chainId;
-
       const auth = await getCantonAuth(chainId);
-
       const client = new CantonClientBuilder()
         .withRpcUrls(rpcUrls)
         .withNetworkId(networkId)
@@ -153,24 +150,17 @@ export async function getNonEvmBlockchainServiceWithTransfer(
       }
 
       const { zrodelkoPartyId } = getCantonNodeConfig(network);
-      const builder = new CantonClientBuilder()
+      const client = new CantonClientBuilder()
         .withRpcUrls(rpcUrls)
         .withNetworkId(networkId)
-        .withDefaultAuth(auth);
+        .withDefaultAuth(auth)
+        .withTransferService()
+        .build();
 
-      const transferService = builder.buildTransferService();
-      if (!transferService) {
-        throw new Error(
-          `Canton transfer requires walletClientId, validator-api and scan-api-proxy URLs for chain ${chainId}`
-        );
-      }
-
-      return new CantonBlockchainServiceWithTransfer(
-        builder.build(),
-        zrodelkoPartyId,
-        privateKey.value,
-        transferService
-      );
+      return new CantonBlockchainServiceWithTransfer(client, {
+        partyId: zrodelkoPartyId,
+        privateKeyHex: privateKey.value,
+      });
     }
     case ChainTypeEnum.enum.fuel:
     case ChainTypeEnum.enum.radix:
