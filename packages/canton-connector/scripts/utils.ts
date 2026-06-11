@@ -47,14 +47,15 @@ export function makeDefaultClientWithValidator(mustValidatorClientBeDefined: tru
 };
 export function makeDefaultClientWithValidator(mustValidatorClientBeDefined?: false): {
   client: CantonClient;
-  validatorClient: CantonValidatorClient | undefined;
+  validatorClient?: CantonValidatorClient;
 };
 export function makeDefaultClientWithValidator(mustValidatorClientBeDefined = false) {
   const builder = new CantonClientBuilder()
     .withChainId(networkToChainId(readNetwork()))
     .withDefaultAuth()
     .withRpcUrls(readRpcUrls())
-    .withQuarantineEnabled();
+    .withQuarantineEnabled()
+    .withTransferService();
 
   const validatorClient = builder.buildValidatorClient();
 

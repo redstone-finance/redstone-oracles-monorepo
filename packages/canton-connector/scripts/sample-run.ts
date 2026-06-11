@@ -33,9 +33,10 @@ async function main() {
         ]
       : ["ETH", "BTC", "CC"];
 
+  const viewerPartyId = makePartyId(VIEWER_PARTY_NAME);
   const adapter = new PricesCantonContractAdapter(client, {
     ...CANTON_CONTRACT_ADAPTER_DEFAULT_CONFIG,
-    viewerPartyId: makePartyId(VIEWER_PARTY_NAME),
+    viewerPartyId,
     updaterPartyId: makePartyId(UPDATER_PARTY_NAME),
     adapterId: ADAPTER_ID,
     additionalPillViewers: readAdditionalPillViewers(),
@@ -51,7 +52,7 @@ async function main() {
 
   const feedAdapter = new PricePillCantonContractAdapter(
     client,
-    makePartyId(VIEWER_PARTY_NAME),
+    viewerPartyId,
     ADAPTER_ID,
     dataPackagesIds[0]
   );
