@@ -9,7 +9,10 @@ import { CantonClient } from "./client/CantonClient";
 import { combineIntoId } from "./utils/utils";
 
 export class CantonTxLookup extends PerManifestTxLookup {
-  constructor(private readonly cantonClient: CantonClient) {
+  constructor(
+    private readonly cantonClient: CantonClient,
+    private readonly updaterPartyId?: string
+  ) {
     super();
   }
 
@@ -21,21 +24,20 @@ export class CantonTxLookup extends PerManifestTxLookup {
     if (!manifest.adapterContractPackageId) {
       throw new Error("CantonTxLookup requires adapterContractPackageId in manifest");
     }
+    if (!this.updaterPartyId) {
+      throw new Error("CantonTxLookup requires updaterPartyId in env");
+    }
     const interfaceId = combineIntoId(manifest.adapterContractPackageId, IADAPTER_TEMPLATE_NAME);
 
-    const perWallet = await Promise.all(
-      manifest.walletAddresses.map((partyId) =>
-        this.cantonClient.getTransactionsForInterface(
-          partyId,
-          interfaceId,
-          startBlock,
-          endBlock,
-          WRITE_PRICES_CHOICE
-        )
+    const updates = (
+      await this.cantonClient.getTransactionsForInterface(
+        this.updaterPartyId,
+        interfaceId,
+        startBlock,
+        endBlock,
+        WRITE_PRICES_CHOICE
       )
-    );
-
-    const updates = perWallet.flat().sort((a, b) => a.block - b.block);
+    ).sort((a, b) => a.block - b.block);
 
     return {
       data: updates.map((update) => ({

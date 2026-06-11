@@ -23,6 +23,7 @@ export class CantonClientBuilder extends MultiExecutor.ClientBuilder<CantonClien
   private tokenProviders: Record<string, TokenProvider | undefined> = {};
   private defaultClientId?: string;
   private walletClientId?: string;
+  private shouldBuildTransferService = false;
 
   withDefaultAuth(opts?: KeycloakTokenProviderParams | string) {
     return this.chainId !== networkToChainId("localnet") ? this.withKeycloakAuth(opts) : this;
@@ -47,6 +48,12 @@ export class CantonClientBuilder extends MultiExecutor.ClientBuilder<CantonClien
         walletTokenProvider.getToken.bind(walletTokenProvider);
       this.walletClientId = walletParsedOpts.clientId;
     }
+
+    return this;
+  }
+
+  withTransferService() {
+    this.shouldBuildTransferService = true;
 
     return this;
   }
@@ -99,7 +106,7 @@ export class CantonClientBuilder extends MultiExecutor.ClientBuilder<CantonClien
         }
 
         const transferService =
-          validatorApi && walletTokenProvider
+          this.shouldBuildTransferService && validatorApi && walletTokenProvider
             ? new CantonTransferService({
                 ledgerJsonApiUrl: jsonApi.baseUrl,
                 validatorApiUrl: validatorApi.baseUrl,
@@ -118,6 +125,7 @@ export class CantonClientBuilder extends MultiExecutor.ClientBuilder<CantonClien
       {
         exerciseChoices: MultiExecutor.ExecutionMode.FALLBACK,
         sendAmulet: MultiExecutor.ExecutionMode.FALLBACK,
+        transfer: MultiExecutor.ExecutionMode.FALLBACK,
         // the following use scan-api:
         getRemainingTraffic: MultiExecutor.ExecutionMode.FALLBACK,
         getTotalConsumedTraffic: MultiExecutor.ExecutionMode.FALLBACK,
@@ -142,33 +150,5 @@ export class CantonClientBuilder extends MultiExecutor.ClientBuilder<CantonClien
     return new CantonValidatorClient(
       new ValidatorCantonApi(validatorApi.baseUrl, this.tokenProviders[validatorApi.clientId])
     );
-  }
-
-  buildTransferService(): CantonTransferService | undefined {
-    if (!this.walletClientId) {
-      return undefined;
-    }
-
-    const walletTokenProvider = this.tokenProviders[this.walletClientId];
-    if (!walletTokenProvider) {
-      return undefined;
-    }
-
-    const apis = this.splitUrls();
-    const jsonApi = apis[API_TYPE_JSON]?.at(0);
-    const validatorApi = apis[API_TYPE_VALIDATOR]?.at(0);
-
-    if (!jsonApi || !validatorApi) {
-      return undefined;
-    }
-
-    const clientId = jsonApi.clientId ?? this.defaultClientId;
-
-    return new CantonTransferService({
-      ledgerJsonApiUrl: jsonApi.baseUrl,
-      validatorApiUrl: validatorApi.baseUrl,
-      getLedgerToken: (clientId ? this.tokenProviders[clientId] : undefined) ?? walletTokenProvider,
-      getWalletToken: walletTokenProvider,
-    });
   }
 }

@@ -32,7 +32,7 @@ export class SuiObjectsClient {
   }
 
   async getObject(objectId: string, include: SuiClientTypes.ObjectInclude = OBJECT_INCLUDE) {
-    const { object } = await this.core.getObject({ objectId, include });
+    const [object] = await this.getObjects([objectId], include);
 
     return object;
   }
