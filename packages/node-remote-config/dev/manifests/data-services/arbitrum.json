@@ -2,6 +2,10 @@
   "interval": 10000,
   "priceAggregator": "median",
   "defaultSource": [],
+  "defaultBroadcasters": [
+    "redstone-packages",
+    "influx"
+  ],
   "sourceTimeout": 7000,
   "minValidSourcesPercentage": 1,
   "deviationCheck": {
@@ -386,6 +390,7 @@
         "uniswap-v3-ethereum-weth-500",
         "uniswap-v4-ethereum-usdt-3000"
       ],
+      "broadcasters": [],
       "skipBroadcasting": true,
       "denomination": "USD",
       "rateFeed": false
@@ -1093,6 +1098,7 @@
       },
       "denomination": "USD",
       "rateFeed": false,
+      "broadcasters": [],
       "skipBroadcasting": true
     },
     "sUSDe": {
@@ -1101,6 +1107,7 @@
       ],
       "denomination": "USD",
       "rateFeed": true,
+      "broadcasters": [],
       "skipBroadcasting": true
     },
     "USDe": {
@@ -1128,6 +1135,7 @@
       ],
       "denomination": "USD",
       "rateFeed": false,
+      "broadcasters": [],
       "skipBroadcasting": true
     },
     "MNT": {
@@ -1149,6 +1157,7 @@
       ],
       "denomination": "USD",
       "rateFeed": false,
+      "broadcasters": [],
       "skipBroadcasting": true
     },
     "AVAX": {
@@ -1176,6 +1185,7 @@
       ],
       "denomination": "USD",
       "rateFeed": false,
+      "broadcasters": [],
       "skipBroadcasting": true
     },
     "CRV": {
@@ -1203,6 +1213,7 @@
       ],
       "denomination": "USD",
       "rateFeed": false,
+      "broadcasters": [],
       "skipBroadcasting": true
     },
     "PYUSD": {
@@ -1228,6 +1239,7 @@
       },
       "denomination": "USD",
       "rateFeed": false,
+      "broadcasters": [],
       "skipBroadcasting": true
     },
     "frxUSD": {
@@ -1249,6 +1261,7 @@
       },
       "denomination": "USD",
       "rateFeed": false,
+      "broadcasters": [],
       "skipBroadcasting": true
     },
     "sUSDS_FUNDAMENTAL": {
@@ -1257,6 +1270,7 @@
       ],
       "denomination": "USDS",
       "rateFeed": true,
+      "broadcasters": [],
       "skipBroadcasting": true
     },
     "sUSDS_FUNDAMENTAL/USD": {
@@ -1265,6 +1279,7 @@
       ],
       "denomination": "USD",
       "rateFeed": true,
+      "broadcasters": [],
       "skipBroadcasting": true
     },
     "waEthWETH_FUNDAMENTAL": {
@@ -1273,6 +1288,7 @@
       ],
       "denomination": "ETH",
       "rateFeed": false,
+      "broadcasters": [],
       "skipBroadcasting": true
     },
     "waArbWETH_FUNDAMENTAL": {
@@ -1281,6 +1297,7 @@
       ],
       "denomination": "ETH",
       "rateFeed": false,
+      "broadcasters": [],
       "skipBroadcasting": true
     }
   },

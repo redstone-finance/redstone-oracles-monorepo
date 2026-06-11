@@ -2,6 +2,10 @@
   "interval": 10000,
   "priceAggregator": "median",
   "defaultSource": [],
+  "defaultBroadcasters": [
+    "redstone-packages",
+    "influx"
+  ],
   "sourceTimeout": 7000,
   "minValidSourcesPercentage": 1,
   "deviationCheck": {
@@ -594,6 +598,7 @@
       },
       "denomination": "USD",
       "rateFeed": false,
+      "broadcasters": [],
       "skipBroadcasting": true
     },
     "aUSD": {
@@ -647,6 +652,7 @@
       ],
       "denomination": "USD",
       "rateFeed": false,
+      "broadcasters": [],
       "skipBroadcasting": true
     },
     "MNT": {
@@ -668,6 +674,7 @@
       ],
       "denomination": "USD",
       "rateFeed": false,
+      "broadcasters": [],
       "skipBroadcasting": true
     },
     "MON": {
@@ -689,6 +696,7 @@
       ],
       "denomination": "USD",
       "rateFeed": false,
+      "broadcasters": [],
       "skipBroadcasting": true
     }
   },

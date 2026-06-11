@@ -10,6 +10,7 @@
       "maxDelayMilliseconds": 120000
     }
   },
+  "defaultBroadcasters": ["redstone-packages", "influx"],
   "tokens": {
     "LBTC_FUNDAMENTAL": {
       "source": ["lbtc"],

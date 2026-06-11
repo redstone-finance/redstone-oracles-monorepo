@@ -4,6 +4,10 @@
   "defaultSource": [
     "coingecko"
   ],
+  "defaultBroadcasters": [
+    "redstone-packages",
+    "influx"
+  ],
   "sourceTimeout": 50000,
   "minValidSourcesPercentage": 10,
   "deviationCheck": {
