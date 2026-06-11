@@ -141,6 +141,27 @@
       "rateFeed": false,
       "types": ["rwa"]
     },
+    "GBP_FX": {
+      "source": [
+        "ws-twelve-data",
+        "alltick-api-deferred",
+        "ws-polygon-massive-commodities",
+        "finhub_forex_deferred",
+        "ws-lmax",
+        "ws-blocksize",
+        "metal-price-api-deferred"
+      ],
+      "priceAggregator": "primarySource",
+      "primarySourceAggregatorConfig": {
+        "primarySource": "ws-lmax",
+        "maxAcceptableDeviation": 1,
+        "lowerClampPercent": 0.1,
+        "upperClampPercent": 0.1
+      },
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": ["rwa"]
+    },
     "KRW_FX": {
       "source": [
         "ws-twelve-data",

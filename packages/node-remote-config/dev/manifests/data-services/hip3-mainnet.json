@@ -1176,7 +1176,7 @@
       "source": ["alltick-api-deferred", "ws-itick-indices", "ws-lmax", "rollover-blend"],
       "priceAggregator": "redstoneX",
       "redstoneXAggregatorConfig": {
-        "priceDiscoverySources": ["alltick-api-deferred", "futures-implied-spot-price", "ws-lmax"]
+        "priceDiscoverySources": ["alltick-api-deferred", "ws-itick-indices", "ws-lmax"]
       },
       "broadcasters": ["influx"],
       "denomination": "USD",
