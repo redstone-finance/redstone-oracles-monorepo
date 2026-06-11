@@ -132,6 +132,21 @@
         "rwa"
       ]
     },
+    "GBP_FX": {
+      "source": [],
+      "priceAggregator": "primarySource",
+      "primarySourceAggregatorConfig": {
+        "primarySource": "",
+        "maxAcceptableDeviation": 1,
+        "lowerClampPercent": 0.1,
+        "upperClampPercent": 0.1
+      },
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
+    },
     "KRW_FX": {
       "source": [],
       "priceAggregator": "primarySource",
