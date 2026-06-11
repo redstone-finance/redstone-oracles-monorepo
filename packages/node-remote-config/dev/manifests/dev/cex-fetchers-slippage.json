@@ -12,6 +12,10 @@
   "defaultSource": [
     "coingecko"
   ],
+  "defaultBroadcasters": [
+    "redstone-packages",
+    "influx"
+  ],
   "tokens": {
     "ETH": {
       "source": [

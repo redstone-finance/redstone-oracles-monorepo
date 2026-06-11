@@ -10,6 +10,10 @@
     }
   },
   "defaultSource": [],
+  "defaultBroadcasters": [
+    "redstone-packages",
+    "influx"
+  ],
   "tokens": {
     "KOSPI200": {
       "source": [],

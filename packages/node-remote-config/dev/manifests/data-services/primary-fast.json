@@ -2,6 +2,10 @@
   "interval": 2000,
   "priceAggregator": "median",
   "defaultSource": [],
+  "defaultBroadcasters": [
+    "redstone-packages",
+    "influx"
+  ],
   "sourceTimeout": 2000,
   "minValidSourcesPercentage": 1,
   "deviationCheck": {
