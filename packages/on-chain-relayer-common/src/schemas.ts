@@ -51,6 +51,7 @@ export const CommonManifestSchema = z.object({
       message: "dataPackagesNames should contain only multi-point data package names",
     })
     .optional(),
+  feedsToBeUpdatedTogether: z.array(z.array(z.string())).optional(),
 });
 
 export const CommonManifestSchemaStrict = CommonManifestSchema.extend({
