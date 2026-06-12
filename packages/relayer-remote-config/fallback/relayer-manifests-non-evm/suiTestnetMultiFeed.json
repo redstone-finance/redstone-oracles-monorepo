@@ -15,6 +15,29 @@
     "LBTC": {},
     "LBTC_FUNDAMENTAL": {},
     "ETH": {},
-    "BTC": {}
+    "BTC": {},
+    "USDT": {},
+    "USDC": {},
+    "SOL": {},
+    "WBTC": {},
+    "USDe": {
+      "updateTriggersOverrides": {
+        "deviationPercentage": 0.2,
+        "timeSinceLastUpdateInMilliseconds": 86400000
+      }
+    },
+    "sUSDe": {
+      "updateTriggersOverrides": {
+        "deviationPercentage": 0.2,
+        "timeSinceLastUpdateInMilliseconds": 86400000
+      }
+    },
+    "weETH_FUNDAMENTAL": {},
+    "wstETH/stETH": {
+      "updateTriggersOverrides": {
+        "deviationPercentage": 0.5,
+        "timeSinceLastUpdateInMilliseconds": 21600000
+      }
+    }
   }
 }

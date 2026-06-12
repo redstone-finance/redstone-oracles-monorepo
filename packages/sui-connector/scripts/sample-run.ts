@@ -107,6 +107,7 @@ async function main() {
     uniqueSignersCount: 3,
     dataPackagesIds: useSmallFeedSet ? SMALL_FEED_SET : BIG_FEED_SET,
     authorizedSigners: getSignersForDataServiceId("redstone-primary-prod"),
+    ignoreMissingFeed: true,
   });
 
   const suiClient = new SuiClientBuilder().withSuiNetwork(network).withRpcUrls(rpcUrls).build();
