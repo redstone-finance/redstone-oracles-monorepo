@@ -1,5 +1,6 @@
 import { Module, Provider } from "@nestjs/common";
 import { MongooseModule } from "@nestjs/mongoose";
+import { maskSensitiveValue, SENSITIVE_KEYS } from "@redstone-finance/utils";
 import mongoose from "mongoose";
 import { LoggerModule } from "nestjs-pino";
 import { AppController } from "./app.controller";
@@ -12,7 +13,16 @@ import { DataPackagesService } from "./data-packages/data-packages.service";
 import { OracleRegistryStateController } from "./oracle-registry-state/oracle-registry-state.controller";
 
 const providers: Provider[] = [DataPackagesService];
-const imports = [LoggerModule.forRoot()];
+const imports = [
+  LoggerModule.forRoot({
+    pinoHttp: {
+      redact: {
+        paths: [...SENSITIVE_KEYS].map((key) => `req.headers["${key}"]`),
+        censor: maskSensitiveValue,
+      },
+    },
+  }),
+];
 
 if (config.mongoDbUrl) {
   providers.push(MongoBroadcaster);

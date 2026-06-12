@@ -20,6 +20,8 @@ const WHITELISTED_HOSTNAMES = new Set([
   "api.github.com",
 ]);
 
+export const SENSITIVE_KEYS = new Set(["apiKey", "x-api-key"]);
+
 export type RedstoneLogger = ConsolaInstance | Console;
 
 const LogTypeToLevel: { [key: string]: LogLevel } = {
@@ -177,7 +179,9 @@ function sanitize(val: unknown, seen: WeakSet<object>, depth: number = 0): unkno
     seen.add(val);
     const result: Record<string, unknown> = {};
     for (const [key, item] of Object.entries(val)) {
-      result[key] = sanitize(item, seen, depth + 1);
+      result[key] = SENSITIVE_KEYS.has(key)
+        ? maskSensitiveValue(item)
+        : sanitize(item, seen, depth + 1);
     }
     seen.delete(val);
 
@@ -195,6 +199,10 @@ export function sanitizeValue<T>(value: T): T {
 
 function sanitizePathComponent(value: string) {
   return value.length > 4 ? `...${value.slice(-4)}` : value;
+}
+
+export function maskSensitiveValue(value: unknown): string {
+  return typeof value === "string" && value.length > 16 ? `${value.slice(0, 4)}...` : "[Redacted]";
 }
 
 export function sanitizeLogMessage(message: string): string {
