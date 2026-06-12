@@ -44,7 +44,7 @@ export class GrpcSuiClient extends SuiClient {
     return Number(response.checkpoint!.sequenceNumber);
   }
 
-  async getReferenceGasPrice() {
+  protected async fetchReferenceGasPrice() {
     const { referenceGasPrice } = await this.client.getReferenceGasPrice();
 
     return BigInt(referenceGasPrice);

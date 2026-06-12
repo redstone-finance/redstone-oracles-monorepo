@@ -136,3 +136,4 @@ tmp
 *.tsbuildinfo
 *.cpuprofile
 .claude/worktrees
+.claude/settings.json
