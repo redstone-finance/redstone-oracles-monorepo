@@ -8,7 +8,7 @@ import { formatTime, groupDataPackagesByField, queryDataPackages } from "./commo
 
 const START_TIMESTAMP = Date.now() - 3 * 60 * 1000;
 const END_TIMESTAMP = Date.now();
-const DATA_SERVICE_ID = "redstone-avalanche-prod";
+const DATA_SERVICE_ID = "redstone-primary-prod";
 const MIN_DEVIATION_PERCENTAGE_TO_LOG = 0.1;
 
 const EXPECTED_DATA_FEEDS = [

@@ -27,8 +27,8 @@ interface TimestampIntervals {
 const DAYS = 7;
 const BATCH_SIZE_MILLISECONDS = 24 * 60 * 60 * 1000;
 const START_TIMESTAMP = Date.now();
-const FIRST_DATA_SERVICE_ID = "redstone-avalanche-demo";
-const SECOND_DATA_SERVICE_ID = "redstone-avalanche-prod";
+const FIRST_DATA_SERVICE_ID = "redstone-primary-demo";
+const SECOND_DATA_SERVICE_ID = "redstone-primary-prod";
 const MIN_DEVIATION_PERCENTAGE_TO_LOG = 1;
 
 const TOKENS_ONLY_IN_ONE_DB = ["stETH", "USDT.e", "YAK", "gmdUSDC", "gmdETH", "EUROC", "CRV"];

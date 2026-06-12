@@ -24,11 +24,11 @@ export const SAMPLE_PACKAGES_TIMESTAMP = 1678113540;
 export const ETH_BIG_NUMBER = 4543560n;
 
 export const SIGNERS = [
-  "0x109B4A318A4F5DDCBCA6349B45F881B4137DEAFB",
-  "0x12470F7ABA85C8B81D63137DD5925D6EE114952B",
-  "0x1EA62D73EDF8AC05DFCEA1A34B9796E937A29EFF",
-  "0x2C59617248994D12816EE1FA77CE0A64EEB456BF",
-  "0x83CBA8C619FB629B81A65C2E67FE15CF3E3C9747",
+  "0x8BB8F32Df04c8b654987DAaeD53D6B6091e3B774",
+  "0xdEB22f54738d54976C4c0fe5ce6d408E40d88499",
+  "0x51Ce04Be4b3E32572C4Ec9135221d0691Ba7d202",
+  "0xDD682daEC5A90dD295d14DA4b0bec9281017b5bE",
+  "0x9c5AE89C4Af6aA32cE58588DBaF90d18a855B6de",
 ];
 
 export async function createTesterContractEnv(name: string) {
@@ -49,10 +49,10 @@ export function createContractParamsProviderMock(
 
 export function getContractParamsProvider(dataFeeds = ["ETH", "BTC", "AVAX", "USDT"]) {
   return new ContractParamsProvider({
-    dataServiceId: "redstone-avalanche-prod",
+    dataServiceId: "redstone-primary-prod",
     uniqueSignersCount: 4,
     dataPackagesIds: dataFeeds,
-    authorizedSigners: getSignersForDataServiceId("redstone-avalanche-prod"),
+    authorizedSigners: getSignersForDataServiceId("redstone-primary-prod"),
   });
 }
 
