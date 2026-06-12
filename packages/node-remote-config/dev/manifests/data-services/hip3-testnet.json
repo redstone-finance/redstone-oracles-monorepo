@@ -2,7 +2,10 @@
   "interval": 1000,
   "priceAggregator": "median",
   "defaultSource": [],
-  "defaultBroadcasters": [],
+  "defaultBroadcasters": [
+    "hyperliquid-hip3",
+    "influx"
+  ],
   "sourceTimeout": 1000,
   "minValidSourcesPercentage": 30,
   "deviationCheck": {
@@ -212,7 +215,9 @@
       "source": [
         "ws-hyperliquid-perps-flx"
       ],
-      "broadcasters": [],
+      "broadcasters": [
+        "influx"
+      ],
       "denomination": "USD",
       "rateFeed": false,
       "deviationCheck": {
@@ -364,7 +369,9 @@
       "source": [
         "ws-hyperliquid-perps-flx"
       ],
-      "broadcasters": [],
+      "broadcasters": [
+        "influx"
+      ],
       "denomination": "USD",
       "rateFeed": false,
       "deviationCheck": {
@@ -519,7 +526,9 @@
       "source": [
         "ws-hyperliquid-perps-flx"
       ],
-      "broadcasters": [],
+      "broadcasters": [
+        "influx"
+      ],
       "denomination": "USD",
       "rateFeed": false,
       "deviationCheck": {
@@ -674,7 +683,9 @@
       "source": [
         "ws-hyperliquid-perps-flx"
       ],
-      "broadcasters": [],
+      "broadcasters": [
+        "influx"
+      ],
       "denomination": "USD",
       "rateFeed": false,
       "deviationCheck": {
@@ -868,7 +879,9 @@
       "source": [
         "ws-hyperliquid-perps-flx"
       ],
-      "broadcasters": [],
+      "broadcasters": [
+        "influx"
+      ],
       "denomination": "USD",
       "rateFeed": false,
       "deviationCheck": {
@@ -1062,7 +1075,9 @@
       "source": [
         "ws-hyperliquid-perps-flx"
       ],
-      "broadcasters": [],
+      "broadcasters": [
+        "influx"
+      ],
       "denomination": "USD",
       "rateFeed": false,
       "deviationCheck": {
@@ -1287,7 +1302,9 @@
       "source": [
         "ws-hyperliquid-perps-flx"
       ],
-      "broadcasters": [],
+      "broadcasters": [
+        "influx"
+      ],
       "denomination": "USD",
       "rateFeed": false,
       "deviationCheck": {
@@ -1487,7 +1504,9 @@
       "source": [
         "ws-hyperliquid-perps-flx"
       ],
-      "broadcasters": [],
+      "broadcasters": [
+        "influx"
+      ],
       "denomination": "USD",
       "rateFeed": false,
       "deviationCheck": {
@@ -1684,7 +1703,9 @@
       "source": [
         "ws-hyperliquid-perps-flx"
       ],
-      "broadcasters": [],
+      "broadcasters": [
+        "influx"
+      ],
       "denomination": "USD",
       "rateFeed": false,
       "deviationCheck": {
@@ -1835,7 +1856,9 @@
       "source": [
         "ws-hyperliquid-perps-flx"
       ],
-      "broadcasters": [],
+      "broadcasters": [
+        "influx"
+      ],
       "denomination": "USD",
       "rateFeed": false,
       "deviationCheck": {
@@ -2024,7 +2047,9 @@
       "source": [
         "ws-hyperliquid-perps-flx"
       ],
-      "broadcasters": [],
+      "broadcasters": [
+        "influx"
+      ],
       "denomination": "USD",
       "rateFeed": false,
       "deviationCheck": {
@@ -2166,7 +2191,9 @@
       "source": [
         "ws-hyperliquid-perps-flx"
       ],
-      "broadcasters": [],
+      "broadcasters": [
+        "influx"
+      ],
       "denomination": "USD",
       "rateFeed": false,
       "deviationCheck": {
@@ -2308,7 +2335,9 @@
       "source": [
         "ws-hyperliquid-perps-flx"
       ],
-      "broadcasters": [],
+      "broadcasters": [
+        "influx"
+      ],
       "denomination": "USD",
       "rateFeed": false,
       "deviationCheck": {
@@ -2450,7 +2479,9 @@
       "source": [
         "ws-hyperliquid-perps-flx"
       ],
-      "broadcasters": [],
+      "broadcasters": [
+        "influx"
+      ],
       "denomination": "USD",
       "rateFeed": false,
       "deviationCheck": {
@@ -2594,7 +2625,9 @@
       "source": [
         "ws-hyperliquid-perps-flx"
       ],
-      "broadcasters": [],
+      "broadcasters": [
+        "influx"
+      ],
       "denomination": "USD",
       "rateFeed": false,
       "deviationCheck": {
@@ -2752,7 +2785,9 @@
       "source": [
         "ws-hyperliquid-perps-flx"
       ],
-      "broadcasters": [],
+      "broadcasters": [
+        "influx"
+      ],
       "denomination": "USD",
       "rateFeed": false,
       "deviationCheck": {
@@ -2905,7 +2940,9 @@
       "source": [
         "ws-hyperliquid-perps-flx"
       ],
-      "broadcasters": [],
+      "broadcasters": [
+        "influx"
+      ],
       "denomination": "USD",
       "rateFeed": false,
       "deviationCheck": {
@@ -3060,7 +3097,9 @@
       "source": [
         "ws-hyperliquid-perps-flx"
       ],
-      "broadcasters": [],
+      "broadcasters": [
+        "influx"
+      ],
       "denomination": "USD",
       "rateFeed": false,
       "deviationCheck": {
@@ -3307,7 +3346,9 @@
       "source": [
         "ws-hyperliquid-perps-flx"
       ],
-      "broadcasters": [],
+      "broadcasters": [
+        "influx"
+      ],
       "denomination": "USD",
       "rateFeed": false,
       "deviationCheck": {
@@ -3482,7 +3523,9 @@
       "source": [
         "ws-hyperliquid-perps-rrrrr"
       ],
-      "broadcasters": [],
+      "broadcasters": [
+        "influx"
+      ],
       "denomination": "USD",
       "rateFeed": false,
       "deviationCheck": {
@@ -3654,7 +3697,9 @@
       "source": [
         "ws-hyperliquid-perps-rrrrr"
       ],
-      "broadcasters": [],
+      "broadcasters": [
+        "influx"
+      ],
       "denomination": "USD",
       "rateFeed": false,
       "deviationCheck": {
@@ -3826,7 +3871,9 @@
       "source": [
         "ws-hyperliquid-perps-rrrrr"
       ],
-      "broadcasters": [],
+      "broadcasters": [
+        "influx"
+      ],
       "denomination": "USD",
       "rateFeed": false,
       "deviationCheck": {
@@ -3998,7 +4045,9 @@
       "source": [
         "ws-hyperliquid-perps-rrrrr"
       ],
-      "broadcasters": [],
+      "broadcasters": [
+        "influx"
+      ],
       "denomination": "USD",
       "rateFeed": false,
       "deviationCheck": {
@@ -4170,7 +4219,9 @@
       "source": [
         "ws-hyperliquid-perps-rrrrr"
       ],
-      "broadcasters": [],
+      "broadcasters": [
+        "influx"
+      ],
       "denomination": "USD",
       "rateFeed": false,
       "deviationCheck": {
@@ -4342,7 +4393,9 @@
       "source": [
         "ws-hyperliquid-perps-hyna"
       ],
-      "broadcasters": [],
+      "broadcasters": [
+        "influx"
+      ],
       "denomination": "USD",
       "rateFeed": false,
       "deviationCheck": {
@@ -4550,7 +4603,9 @@
       "source": [
         "ws-hyperliquid-perps-hyna"
       ],
-      "broadcasters": [],
+      "broadcasters": [
+        "influx"
+      ],
       "denomination": "USD",
       "rateFeed": false,
       "deviationCheck": {
@@ -4758,7 +4813,9 @@
       "source": [
         "ws-hyperliquid-perps-hyna"
       ],
-      "broadcasters": [],
+      "broadcasters": [
+        "influx"
+      ],
       "denomination": "USD",
       "rateFeed": false,
       "deviationCheck": {
@@ -4966,7 +5023,9 @@
       "source": [
         "ws-hyperliquid-perps-hyna"
       ],
-      "broadcasters": [],
+      "broadcasters": [
+        "influx"
+      ],
       "denomination": "USD",
       "rateFeed": false,
       "deviationCheck": {
@@ -5174,7 +5233,9 @@
       "source": [
         "ws-hyperliquid-perps-hyna"
       ],
-      "broadcasters": [],
+      "broadcasters": [
+        "influx"
+      ],
       "denomination": "USD",
       "rateFeed": false,
       "deviationCheck": {
@@ -5382,7 +5443,9 @@
       "source": [
         "ws-hyperliquid-perps-hyna"
       ],
-      "broadcasters": [],
+      "broadcasters": [
+        "influx"
+      ],
       "denomination": "USD",
       "rateFeed": false,
       "deviationCheck": {
@@ -5590,7 +5653,9 @@
       "source": [
         "ws-hyperliquid-perps-hyna"
       ],
-      "broadcasters": [],
+      "broadcasters": [
+        "influx"
+      ],
       "denomination": "USD",
       "rateFeed": false,
       "deviationCheck": {
@@ -5798,7 +5863,9 @@
       "source": [
         "ws-hyperliquid-perps-hyna"
       ],
-      "broadcasters": [],
+      "broadcasters": [
+        "influx"
+      ],
       "denomination": "USD",
       "rateFeed": false,
       "deviationCheck": {
@@ -6006,7 +6073,9 @@
       "source": [
         "ws-hyperliquid-perps-hyna"
       ],
-      "broadcasters": [],
+      "broadcasters": [
+        "influx"
+      ],
       "denomination": "USD",
       "rateFeed": false,
       "deviationCheck": {
@@ -6214,7 +6283,9 @@
       "source": [
         "ws-hyperliquid-perps-hyna"
       ],
-      "broadcasters": [],
+      "broadcasters": [
+        "influx"
+      ],
       "denomination": "USD",
       "rateFeed": false,
       "deviationCheck": {
@@ -6422,7 +6493,9 @@
       "source": [
         "ws-hyperliquid-perps-hyna"
       ],
-      "broadcasters": [],
+      "broadcasters": [
+        "influx"
+      ],
       "denomination": "USD",
       "rateFeed": false,
       "deviationCheck": {
@@ -6629,7 +6702,9 @@
       "source": [
         "ws-hyperliquid-perps-hyna"
       ],
-      "broadcasters": [],
+      "broadcasters": [
+        "influx"
+      ],
       "denomination": "USD",
       "rateFeed": false,
       "deviationCheck": {
@@ -6837,7 +6912,9 @@
       "source": [
         "ws-hyperliquid-perps-hyna"
       ],
-      "broadcasters": [],
+      "broadcasters": [
+        "influx"
+      ],
       "denomination": "USD",
       "rateFeed": false,
       "deviationCheck": {
@@ -7045,7 +7122,9 @@
       "source": [
         "ws-hyperliquid-perps-hyna"
       ],
-      "broadcasters": [],
+      "broadcasters": [
+        "influx"
+      ],
       "denomination": "USD",
       "rateFeed": false,
       "deviationCheck": {
@@ -7255,7 +7334,9 @@
       "source": [
         "ws-hyperliquid-perps-hyna"
       ],
-      "broadcasters": [],
+      "broadcasters": [
+        "influx"
+      ],
       "denomination": "USD",
       "rateFeed": false,
       "deviationCheck": {
@@ -7477,7 +7558,9 @@
       "source": [
         "ws-hyperliquid-perps-hyna"
       ],
-      "broadcasters": [],
+      "broadcasters": [
+        "influx"
+      ],
       "denomination": "USD",
       "rateFeed": false,
       "deviationCheck": {
@@ -7683,7 +7766,9 @@
       "source": [
         "ws-hyperliquid-perps-hyna"
       ],
-      "broadcasters": [],
+      "broadcasters": [
+        "influx"
+      ],
       "denomination": "USD",
       "rateFeed": false,
       "deviationCheck": {
@@ -7893,7 +7978,9 @@
       "source": [
         "ws-hyperliquid-perps-hyna"
       ],
-      "broadcasters": [],
+      "broadcasters": [
+        "influx"
+      ],
       "denomination": "USD",
       "rateFeed": false,
       "deviationCheck": {
@@ -8115,7 +8202,9 @@
       "source": [
         "ws-hyperliquid-perps-hyna"
       ],
-      "broadcasters": [],
+      "broadcasters": [
+        "influx"
+      ],
       "denomination": "USD",
       "rateFeed": false,
       "deviationCheck": {
@@ -8323,7 +8412,9 @@
       "source": [
         "ws-hyperliquid-perps-hyna"
       ],
-      "broadcasters": [],
+      "broadcasters": [
+        "influx"
+      ],
       "denomination": "USD",
       "rateFeed": false,
       "deviationCheck": {
@@ -8531,7 +8622,9 @@
       "source": [
         "ws-hyperliquid-perps-hyna"
       ],
-      "broadcasters": [],
+      "broadcasters": [
+        "influx"
+      ],
       "denomination": "USD",
       "rateFeed": false,
       "deviationCheck": {
@@ -8747,7 +8840,9 @@
       "source": [
         "ws-hyperliquid-perps-hyna"
       ],
-      "broadcasters": [],
+      "broadcasters": [
+        "influx"
+      ],
       "denomination": "USD",
       "rateFeed": false,
       "deviationCheck": {
