@@ -13,6 +13,7 @@ import {
 import { consts } from "@redstone-finance/protocol";
 import { loggerFactory, RedstoneCommon } from "@redstone-finance/utils";
 import { providers } from "ethers";
+import { expandUserOpTxs, extractUserOpReceipt, isUserOpTx } from "./erc4337-utils";
 import { parseLogEvent } from "./event-utils";
 import { extractTopUpEntries, Multicall3Config } from "./extract-top-ups";
 import { BlockWithTipPercentiles, fillTipPercentiles } from "./fill-tip-percentiles";
@@ -91,13 +92,16 @@ export class EvmTxLookup extends RangeScanTxLookup<BlockWithTipPercentiles> {
     const interesting = blocks.flatMap((b) => filterRedStoneTxs(b, addresses));
     const receipts = await fetchReceiptsBatched(this.provider, interesting);
 
-    return interesting.map((entry, i) => {
+    return interesting.flatMap((entry, i) => {
       const receipt = receipts[i];
       if (!receipt) {
         throw new Error(`Missing receipt for tx ${entry.tx.hash} in block ${entry.block.number}`);
       }
+      const effectiveReceipt = isUserOpTx(entry.tx)
+        ? extractUserOpReceipt(entry.tx, receipt)
+        : receipt;
 
-      return buildNormalizedTx(entry, receipt);
+      return effectiveReceipt ? [buildNormalizedTx(entry, effectiveReceipt)] : [];
     });
   }
 
@@ -126,6 +130,7 @@ function filterRedStoneTxs(enriched: BlockWithTipPercentiles, addresses: TxLooku
   };
 
   return block.transactions
+    .flatMap(expandUserOpTxs)
     .filter((tx) => looksLikeRedStone(tx, normalizedAddresses))
     .map(
       (tx) =>
