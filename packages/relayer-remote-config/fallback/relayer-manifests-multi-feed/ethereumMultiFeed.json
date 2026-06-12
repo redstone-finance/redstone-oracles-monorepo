@@ -427,13 +427,13 @@
     "mzUSD_FUNDAMENTAL": {
       "priceFeedAddress": "0x33062364438b61A4fff3623A7cD4A2BA1Ad817E4",
       "updateTriggersOverrides": {
-        "cron": ["0 10 * * 1"]
+        "cron": ["0 10 * * *"]
       }
     },
     "mzUSD_TOTAL_SUPPLY": {
       "priceFeedAddress": "0x2A69dc28f8Ca9184f33bCa0e7c049E6307828887",
       "updateTriggersOverrides": {
-        "cron": ["0 10 * * 1"]
+        "cron": ["0 10 * * *"]
       }
     },
     "AMCASH+_FUNDAMENTAL": {
