@@ -1,10 +1,8 @@
-import { ScoreType } from "@redstone-finance/protocol";
 import { DataPackagesResponse } from "@redstone-finance/sdk";
 import { Contract } from "ethers";
 import { DataPackagesWrapper } from "./wrappers/DataPackagesWrapper";
 import { DataPackagesRequestInput, DataServiceWrapper } from "./wrappers/DataServiceWrapper";
 import { MockDataPackageConfig, MockWrapper } from "./wrappers/MockWrapper";
-import { OnDemandRequestWrapper } from "./wrappers/OnDemandRequestWrapper";
 import {
   SimpleNumericMockConfig,
   SimpleNumericMockWrapper,
@@ -31,16 +29,6 @@ export class WrapperBuilder<T extends Contract> {
     return new SimpleNumericMockWrapper<T>(simpleNumericMockConfig).overwriteEthersContract(
       this.baseContract
     );
-  }
-
-  usingOnDemandRequest(nodeUrls: string[], scoreType: ScoreType): T {
-    return new OnDemandRequestWrapper<T>(
-      {
-        signer: this.baseContract.signer,
-        scoreType,
-      },
-      nodeUrls
-    ).overwriteEthersContract(this.baseContract);
   }
 
   usingDataPackages(dataPackages: DataPackagesResponse) {
