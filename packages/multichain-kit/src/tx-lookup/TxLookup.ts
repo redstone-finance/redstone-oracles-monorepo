@@ -6,13 +6,18 @@ export const MULTI_FEED_RELAYER_UPDATE_FUNCTION_SIGNATURE = "0xb7a16251";
 
 export const SELECTOR_SIG_SIZE_BYTES = 4;
 
-export function normalizeRedStoneTxData(data: string): string {
+export function normalizeRedStoneTxData(data: string) {
+  const marker = consts.REDSTONE_MARKER_HEX_PURE;
+  if (!data.includes(marker)) {
+    return data;
+  }
+
   const stripped = data.startsWith("0x") ? data.slice(2) : data;
-  if (stripped.endsWith(consts.REDSTONE_MARKER_HEX_PURE)) {
+  if (stripped.endsWith(marker)) {
     return stripped;
   }
 
-  return stripped.replace(/0+$/, "") + "0000";
+  return stripped.slice(0, stripped.lastIndexOf(marker) + marker.length);
 }
 
 export function getFunctionSignature(tx: { data: string }) {
