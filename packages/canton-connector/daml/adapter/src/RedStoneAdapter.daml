@@ -2,7 +2,7 @@ module RedStoneAdapter where
 
 import DA.List(dedup)
 import DA.Map as M
-import DA.Optional(fromOptional, mapOptional)
+import DA.Optional(mapOptional)
 import RedStone.GetPrices as G
 import RedStoneTypes
 import IRedStoneCore
