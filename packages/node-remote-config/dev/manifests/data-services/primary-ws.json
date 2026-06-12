@@ -1281,6 +1281,22 @@
       "rateFeed": false,
       "types": ["rwa"]
     },
+    "USA100_CURRENT_SYMBOL": {
+      "source": ["databento-cme-futures", "ws-polygon-massive-cme-futures"],
+      "broadcasters": [],
+      "skipBroadcasting": true,
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": ["rwa"]
+    },
+    "USA100_FRONT_SYMBOL": {
+      "source": ["databento-cme-futures", "ws-polygon-massive-cme-futures"],
+      "broadcasters": [],
+      "skipBroadcasting": true,
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": ["rwa"]
+    },
     "USA100.T": {
       "source": [
         "rollover-time-blend-implied-spot",
@@ -1336,6 +1352,22 @@
       "types": ["rwa"]
     },
     "USA500_FRONT": {
+      "source": ["databento-cme-futures", "ws-polygon-massive-cme-futures"],
+      "broadcasters": [],
+      "skipBroadcasting": true,
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": ["rwa"]
+    },
+    "USA500_CURRENT_SYMBOL": {
+      "source": ["databento-cme-futures", "ws-polygon-massive-cme-futures"],
+      "broadcasters": [],
+      "skipBroadcasting": true,
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": ["rwa"]
+    },
+    "USA500_FRONT_SYMBOL": {
       "source": ["databento-cme-futures", "ws-polygon-massive-cme-futures"],
       "broadcasters": [],
       "skipBroadcasting": true,
