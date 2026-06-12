@@ -10,7 +10,7 @@ import { SuiConfig } from "../config";
 import { SuiCoinProvider } from "../SuiCoinProvider";
 import { SuiPricesContractWriter } from "./SuiPricesContractWriter";
 
-const MAX_PARALLEL_TRANSACTION_COUNT = 5;
+export const MAX_PARALLEL_TRANSACTION_COUNT = 8;
 const SPLIT_COIN_INITIAL_BALANCE_MULTIPLIER = 2n;
 const SPLIT_COIN_TX_COST = MIST_PER_SUI / 100n;
 
@@ -22,6 +22,8 @@ export class SuiContractUpdater implements ContractUpdater {
   protected readonly logger = loggerFactory("sui-contract-updater");
   private readonly writer: SuiPricesContractWriter;
   private readonly coinProvider: SuiCoinProvider;
+  private inFlightCount = 0;
+  private reinitPromise?: Promise<ParallelTransactionExecutor>;
 
   constructor(
     private readonly client: SuiClient,
@@ -80,25 +82,56 @@ export class SuiContractUpdater implements ContractUpdater {
       }
     );
 
+    if (!txData.effects.status.success) {
+      throw new Error(
+        `Transaction ${txData.digest} executed but failed: ${RedstoneCommon.stringify(txData.effects.status.error)}`
+      );
+    }
+
     return txData.digest;
   }
 
   private async executeTxWithExecutor(tx: Transaction, executor: ParallelTransactionExecutor) {
+    this.inFlightCount += 1;
     try {
       return await executor.executeTransaction(tx, {
         effects: true,
         events: true,
       });
     } catch (e) {
-      this.logger.warn("Reinitializing gas objects...");
-      await this.initializeExecutor();
+      await this.maybeReinitializeExecutor();
 
       throw e;
+    } finally {
+      this.inFlightCount -= 1;
+    }
+  }
+
+  private async maybeReinitializeExecutor() {
+    if (this.inFlightCount > 1 && !this.reinitPromise) {
+      this.logger.warn("Skipping gas objects reinitialization, other transactions are in flight");
+
+      return;
+    }
+
+    this.logger.warn("Reinitializing gas objects...");
+    try {
+      await this.initializeExecutorOnce();
+    } catch (e) {
+      this.logger.warn(`Failed to reinitialize gas objects: ${RedstoneCommon.stringifyError(e)}`);
     }
   }
 
   private async getExecutor() {
-    return this.executor ?? (await this.initializeExecutor());
+    return this.executor ?? (await this.initializeExecutorOnce());
+  }
+
+  private async initializeExecutorOnce() {
+    this.reinitPromise ??= this.initializeExecutor().finally(() => {
+      this.reinitPromise = undefined;
+    });
+
+    return await this.reinitPromise;
   }
 
   private async initializeExecutor() {

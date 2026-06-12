@@ -125,7 +125,9 @@ export class SuiCoinProvider {
       }
     }
 
-    return undefined;
+    const masterCoin = _.maxBy(coins, (coin) => BigInt(coin.balance));
+
+    return masterCoin?.objectId;
   }
 
   private async getCoinsWithSufficientBalance(
