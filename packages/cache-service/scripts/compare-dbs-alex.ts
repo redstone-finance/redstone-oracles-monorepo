@@ -14,8 +14,8 @@ const ENABLE_DATA_PACKAGES_COUNT_CHECK: boolean = false;
 const MIN_DEVIATION_FOR_WARNING = 1; // 1%
 const PAGE_SIZE_MILLISECONDS = 24 * 3600 * 1000;
 const EXCEPTIONAL_DEVIATION = 4242;
-const DATA_SERVICE_ID_1 = "redstone-avalanche-demo";
-const DATA_SERVICE_ID_2 = "redstone-avalanche-prod";
+const DATA_SERVICE_ID_1 = "redstone-primary-demo";
+const DATA_SERVICE_ID_2 = "redstone-primary-prod";
 const DB_URL_1 = getRequiredEnv("MONGO_DB_DEV");
 const DB_URL_2 = getRequiredEnv("MONGO_DB_PROD");
 

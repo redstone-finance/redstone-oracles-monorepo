@@ -16,18 +16,6 @@ const MANIFEST_URLS: Record<string, Record<string, string[][]>> = {
         "https://d3ps2laf13blkb.cloudfront.net/redstone-finance/redstone-monorepo-priv/${fallback}/packages/node-remote-config/dev/manifests/data-services/primary-ws.json",
       ],
     ],
-    "redstone-arbitrum-prod": [
-      [
-        "https://d33bwqmghwdcx3.cloudfront.net/redstone-finance/redstone-monorepo-priv/${fallback}/packages/node-remote-config/dev/manifests/data-services/arbitrum.json",
-        "https://d3ps2laf13blkb.cloudfront.net/redstone-finance/redstone-monorepo-priv/${fallback}/packages/node-remote-config/dev/manifests/data-services/arbitrum.json",
-      ],
-    ],
-    "redstone-avalanche-prod": [
-      [
-        "https://d33bwqmghwdcx3.cloudfront.net/redstone-finance/redstone-monorepo-priv/${fallback}/packages/node-remote-config/dev/manifests/data-services/avalanche.json",
-        "https://d3ps2laf13blkb.cloudfront.net/redstone-finance/redstone-monorepo-priv/${fallback}/packages/node-remote-config/dev/manifests/data-services/avalanche.json",
-      ],
-    ],
     "redstone-hip3-prod": [
       [
         "https://d33bwqmghwdcx3.cloudfront.net/redstone-finance/redstone-monorepo-priv/${fallback}/packages/node-remote-config/dev/manifests/data-services/hip3-mainnet.json",
@@ -44,18 +32,6 @@ const MANIFEST_URLS: Record<string, Record<string, string[][]>> = {
       [
         "https://d3cu28sut4ahjk.cloudfront.net/redstone-finance/redstone-monorepo-priv/${main}/packages/node-remote-config/dev/manifests/data-services/primary-ws.json",
         "https://d13fu63cj82rby.cloudfront.net/redstone-finance/redstone-monorepo-priv/${main}/packages/node-remote-config/dev/manifests/data-services/primary-ws.json",
-      ],
-    ],
-    "redstone-arbitrum-demo": [
-      [
-        "https://d3cu28sut4ahjk.cloudfront.net/redstone-finance/redstone-monorepo-priv/${main}/packages/node-remote-config/dev/manifests/data-services/arbitrum.json",
-        "https://d13fu63cj82rby.cloudfront.net/redstone-finance/redstone-monorepo-priv/${main}/packages/node-remote-config/dev/manifests/data-services/arbitrum.json",
-      ],
-    ],
-    "redstone-avalanche-demo": [
-      [
-        "https://d3cu28sut4ahjk.cloudfront.net/redstone-finance/redstone-monorepo-priv/${main}/packages/node-remote-config/dev/manifests/data-services/avalanche.json",
-        "https://d13fu63cj82rby.cloudfront.net/redstone-finance/redstone-monorepo-priv/${main}/packages/node-remote-config/dev/manifests/data-services/avalanche.json",
       ],
     ],
     "redstone-main-demo": [

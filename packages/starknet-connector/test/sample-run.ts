@@ -6,10 +6,10 @@ import { PRICE_ADAPTER_ADDRESS, PRICE_FEED_ADDRESS, config } from "./config";
 
 async function main(config: StarknetConfig) {
   const paramsProvider = new ContractParamsProvider({
-    dataServiceId: "redstone-avalanche-prod",
+    dataServiceId: "redstone-primary-prod",
     uniqueSignersCount: 1,
     dataPackagesIds: ["ETH", "BTC"],
-    authorizedSigners: getSignersForDataServiceId("redstone-avalanche-prod"),
+    authorizedSigners: getSignersForDataServiceId("redstone-primary-prod"),
   });
   const account = getAccount(config);
   const pricesConnector = new PriceAdapterStarknetContractConnector(account, PRICE_ADAPTER_ADDRESS);
