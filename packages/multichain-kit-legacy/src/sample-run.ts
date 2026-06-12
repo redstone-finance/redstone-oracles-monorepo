@@ -1,11 +1,11 @@
 import {
+  convertValueDec,
   describeContractData,
   describeTimestamp,
   logHeader,
   PriceFeedAdapter,
   readFromPriceFeed,
 } from "@redstone-finance/multichain-kit";
-import { consts } from "@redstone-finance/protocol";
 import { ContractParamsProvider } from "@redstone-finance/sdk";
 import { RedstoneCommon } from "@redstone-finance/utils";
 import { IContractConnector } from "./IContractConnector";
@@ -38,9 +38,7 @@ async function executePullModel(
   logHeader("Pulling values using core model");
   try {
     const coreValues = await adapter.getPricesFromPayload(paramsProvider);
-    console.log(
-      `Core values: ${String(coreValues.map((v) => RedstoneCommon.convertValueDec(v, consts.DEFAULT_NUM_VALUE_DECIMALS)))}`
-    );
+    console.log(`Core values: ${String(coreValues.map((v) => convertValueDec(v)))}`);
   } catch (e) {
     console.error(RedstoneCommon.stringifyError(e));
   }
@@ -69,9 +67,7 @@ async function executePushModel(
   ]);
 
   console.log(`Unique signer count: ${uniqueSignerThreshold}`);
-  console.log(
-    `Values read from contract: ${String(values.map((v) => RedstoneCommon.convertValueDec(v, consts.DEFAULT_NUM_VALUE_DECIMALS)))}`
-  );
+  console.log(`Values read from contract: ${String(values.map((v) => convertValueDec(v)))}`);
   console.log(
     `Timestamp read from contract: ${readTimestamp} (${describeTimestamp(readTimestamp)})`
   );

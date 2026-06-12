@@ -28,7 +28,7 @@ export class LegacySuiClient extends SuiClient {
     return Number(await this.client.getLatestCheckpointSequenceNumber());
   }
 
-  async getReferenceGasPrice() {
+  protected async fetchReferenceGasPrice() {
     return await this.client.getReferenceGasPrice();
   }
 
