@@ -131,6 +131,39 @@ describe("Logger Sanitization Logic", () => {
       const sanitized = sanitizeValue(message);
       expect(sanitized).toBe(message);
     });
+
+    test("should redact values of apiKey keys", () => {
+      const obj = {
+        apiKey: "super-secret-api-key-1234",
+        dataServiceId: "redstone-primary-prod",
+      };
+      const sanitized = sanitizeValue(obj);
+      expect(sanitized.apiKey).toBe("supe...");
+      expect(sanitized.dataServiceId).toBe("redstone-primary-prod");
+    });
+
+    test("should redact api keys in nested objects and arrays", () => {
+      const requestParams = {
+        dataServiceId: "redstone-primary-prod",
+        authenticatedGateways: [
+          { url: "https://gateway.example.com", apiKey: "secret-api-key-abcd" },
+          { url: "https://gateway2.example.com", apiKey: "short" },
+        ],
+      };
+      const sanitized = sanitizeValue(requestParams);
+      expect(sanitized.authenticatedGateways[0].apiKey).toBe("secr...");
+      expect(sanitized.authenticatedGateways[1].apiKey).toBe("[Redacted]");
+      expect(sanitized.authenticatedGateways[0].url).toBe("https://gateway.example.com");
+      expect(sanitized.dataServiceId).toBe("redstone-primary-prod");
+    });
+
+    test("should redact non-string and short values of apiKey keys", () => {
+      const obj = { apiKey: ["key-number-one", "key-number-two"] };
+      const sanitized = sanitizeValue(obj);
+      expect(sanitized.apiKey).toBe("[Redacted]");
+      expect(sanitizeValue({ apiKey: "short" }).apiKey).toBe("[Redacted]");
+      expect(sanitizeValue({ apiKey: "16-chars-api-key" }).apiKey).toBe("[Redacted]");
+    });
   });
 
   describe("createSanitizedLogger", () => {
