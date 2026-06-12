@@ -6,8 +6,8 @@ one_kb = 1000 -- or 1024, to test
 one_mb = one_kb * one_kb
 one_mb_price = 60
 
-reward_factor_frac_num = one_mb_price * 11
-reward_factor_frac_den = one_mb * 10
+reward_factor_frac_num = one_mb_price * 115
+reward_factor_frac_den = one_mb * 100
 reward_min_count = 5 * one_kb -- estimated cost of creating marker
 
 rewardWeight total =
