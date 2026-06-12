@@ -10,7 +10,7 @@ export class RequestDataPackagesLogger {
 
   constructor(
     requestsLength: number,
-    private readonly isHistorical: boolean,
+    private readonly historicalTimestamp?: number,
     protected readonly logger = loggerFactory("request-data-packages")
   ) {
     this.initialDate = Date.now();
@@ -31,10 +31,12 @@ export class RequestDataPackagesLogger {
 
   didReceiveResponse(response: DataPackagesResponse, index: number) {
     const packageTimestamp = getResponseTimestamp(response);
-    const timestampDelta = Date.now() - packageTimestamp;
+    const baseTimestamp = this.historicalTimestamp ?? Date.now();
+    const timestampDelta = baseTimestamp - packageTimestamp;
     if (timestampDelta > PACKAGE_STALENESS_WARN_THRESHOLD) {
       this.logger.warn(
-        `Received stale package: timestampDelta=${timestampDelta} ms for response index ${index}`
+        `Received stale package: timestampDelta=${timestampDelta} ms ` +
+          `vs ${this.historicalTimestamp ? "historicalTimestamp" : "Date.now()"}=${baseTimestamp} for response index ${index}`
       );
     }
 
@@ -71,7 +73,7 @@ export class RequestDataPackagesLogger {
     const particularTimestamps = this.particularTimestamps();
 
     this.logger.log(
-      `Resolving with the ${this.isHistorical ? "historical" : "newest"} package for ${dataServiceId}, ` +
+      `Resolving with the ${this.historicalTimestamp ? "historical" : "newest"} package for ${dataServiceId}, ` +
         `timestamp: ${responseTimestamp} of ${RedstoneCommon.getNS(collectedResponses.length, "response")}` +
         `, ${RedstoneCommon.msToSecs(timestampDelta)} [s] ago`,
       {
