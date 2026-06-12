@@ -2,7 +2,7 @@
   "interval": 1000,
   "priceAggregator": "median",
   "defaultSource": [],
-  "defaultBroadcasters": [],
+  "defaultBroadcasters": ["hyperliquid-hip3", "influx"],
   "sourceTimeout": 1000,
   "minValidSourcesPercentage": 30,
   "deviationCheck": {
@@ -155,7 +155,7 @@
     },
     "OPEN_INTEREST_flx:USDE": {
       "source": ["ws-hyperliquid-perps-flx"],
-      "broadcasters": [],
+      "broadcasters": ["influx"],
       "denomination": "USD",
       "rateFeed": false,
       "deviationCheck": {
@@ -254,7 +254,7 @@
     },
     "OPEN_INTEREST_flx:XMR": {
       "source": ["ws-hyperliquid-perps-flx"],
-      "broadcasters": [],
+      "broadcasters": ["influx"],
       "denomination": "USD",
       "rateFeed": false,
       "deviationCheck": {
@@ -359,7 +359,7 @@
     },
     "OPEN_INTEREST_flx:USA100": {
       "source": ["ws-hyperliquid-perps-flx"],
-      "broadcasters": [],
+      "broadcasters": ["influx"],
       "denomination": "USD",
       "rateFeed": false,
       "deviationCheck": {
@@ -464,7 +464,7 @@
     },
     "OPEN_INTEREST_flx:GAS": {
       "source": ["ws-hyperliquid-perps-flx"],
-      "broadcasters": [],
+      "broadcasters": ["influx"],
       "denomination": "USD",
       "rateFeed": false,
       "deviationCheck": {
@@ -613,7 +613,7 @@
     },
     "OPEN_INTEREST_flx:TSLA": {
       "source": ["ws-hyperliquid-perps-flx"],
-      "broadcasters": [],
+      "broadcasters": ["influx"],
       "denomination": "USD",
       "rateFeed": false,
       "deviationCheck": {
@@ -740,7 +740,7 @@
     },
     "OPEN_INTEREST_flx:NVDA": {
       "source": ["ws-hyperliquid-perps-flx"],
-      "broadcasters": [],
+      "broadcasters": ["influx"],
       "denomination": "USD",
       "rateFeed": false,
       "deviationCheck": {
@@ -889,7 +889,7 @@
     },
     "OPEN_INTEREST_flx:HOOD": {
       "source": ["ws-hyperliquid-perps-flx"],
-      "broadcasters": [],
+      "broadcasters": ["influx"],
       "denomination": "USD",
       "rateFeed": false,
       "deviationCheck": {
@@ -1033,7 +1033,7 @@
     },
     "OPEN_INTEREST_flx:CRCL": {
       "source": ["ws-hyperliquid-perps-flx"],
-      "broadcasters": [],
+      "broadcasters": ["influx"],
       "denomination": "USD",
       "rateFeed": false,
       "deviationCheck": {
@@ -1171,7 +1171,7 @@
     },
     "OPEN_INTEREST_flx:COIN": {
       "source": ["ws-hyperliquid-perps-flx"],
-      "broadcasters": [],
+      "broadcasters": ["influx"],
       "denomination": "USD",
       "rateFeed": false,
       "deviationCheck": {
@@ -1281,7 +1281,7 @@
     },
     "OPEN_INTEREST_flx:AVGO": {
       "source": ["ws-hyperliquid-perps-flx"],
-      "broadcasters": [],
+      "broadcasters": ["influx"],
       "denomination": "USD",
       "rateFeed": false,
       "deviationCheck": {
@@ -1416,7 +1416,7 @@
     },
     "OPEN_INTEREST_flx:GOLD": {
       "source": ["ws-hyperliquid-perps-flx"],
-      "broadcasters": [],
+      "broadcasters": ["influx"],
       "denomination": "USD",
       "rateFeed": false,
       "deviationCheck": {
@@ -1521,7 +1521,7 @@
     },
     "OPEN_INTEREST_flx:SILVER": {
       "source": ["ws-hyperliquid-perps-flx"],
-      "broadcasters": [],
+      "broadcasters": ["influx"],
       "denomination": "USD",
       "rateFeed": false,
       "deviationCheck": {
@@ -1627,7 +1627,7 @@
     },
     "OPEN_INTEREST_flx:PALLADIUM": {
       "source": ["ws-hyperliquid-perps-flx"],
-      "broadcasters": [],
+      "broadcasters": ["influx"],
       "denomination": "USD",
       "rateFeed": false,
       "deviationCheck": {
@@ -1727,7 +1727,7 @@
     },
     "OPEN_INTEREST_flx:PLATINUM": {
       "source": ["ws-hyperliquid-perps-flx"],
-      "broadcasters": [],
+      "broadcasters": ["influx"],
       "denomination": "USD",
       "rateFeed": false,
       "deviationCheck": {
@@ -1828,7 +1828,7 @@
     },
     "OPEN_INTEREST_flx:EUR": {
       "source": ["ws-hyperliquid-perps-flx"],
-      "broadcasters": [],
+      "broadcasters": ["influx"],
       "denomination": "USD",
       "rateFeed": false,
       "deviationCheck": {
@@ -1945,7 +1945,7 @@
     },
     "OPEN_INTEREST_flx:OIL": {
       "source": ["ws-hyperliquid-perps-flx"],
-      "broadcasters": [],
+      "broadcasters": ["influx"],
       "denomination": "USD",
       "rateFeed": false,
       "deviationCheck": {
@@ -2052,7 +2052,7 @@
     },
     "OPEN_INTEREST_flx:USA500": {
       "source": ["ws-hyperliquid-perps-flx"],
-      "broadcasters": [],
+      "broadcasters": ["influx"],
       "denomination": "USD",
       "rateFeed": false,
       "deviationCheck": {
@@ -2168,7 +2168,7 @@
     },
     "OPEN_INTEREST_flx:COPPER": {
       "source": ["ws-hyperliquid-perps-flx"],
-      "broadcasters": [],
+      "broadcasters": ["influx"],
       "denomination": "USD",
       "rateFeed": false,
       "deviationCheck": {
@@ -2322,7 +2322,7 @@
     },
     "OPEN_INTEREST_flx:BTC": {
       "source": ["ws-hyperliquid-perps-flx"],
-      "broadcasters": [],
+      "broadcasters": ["influx"],
       "denomination": "USD",
       "rateFeed": false,
       "deviationCheck": {
@@ -2435,7 +2435,7 @@
     },
     "OPEN_INTEREST_rrrrr:BTC": {
       "source": ["ws-hyperliquid-perps-rrrrr"],
-      "broadcasters": [],
+      "broadcasters": ["influx"],
       "denomination": "USD",
       "rateFeed": false,
       "deviationCheck": {
@@ -2546,7 +2546,7 @@
     },
     "OPEN_INTEREST_rrrrr:ETH": {
       "source": ["ws-hyperliquid-perps-rrrrr"],
-      "broadcasters": [],
+      "broadcasters": ["influx"],
       "denomination": "USD",
       "rateFeed": false,
       "deviationCheck": {
@@ -2657,7 +2657,7 @@
     },
     "OPEN_INTEREST_rrrrr:HYPE": {
       "source": ["ws-hyperliquid-perps-rrrrr"],
-      "broadcasters": [],
+      "broadcasters": ["influx"],
       "denomination": "USD",
       "rateFeed": false,
       "deviationCheck": {
@@ -2768,7 +2768,7 @@
     },
     "OPEN_INTEREST_rrrrr:SOL": {
       "source": ["ws-hyperliquid-perps-rrrrr"],
-      "broadcasters": [],
+      "broadcasters": ["influx"],
       "denomination": "USD",
       "rateFeed": false,
       "deviationCheck": {
@@ -2879,7 +2879,7 @@
     },
     "OPEN_INTEREST_rrrrr:BASED": {
       "source": ["ws-hyperliquid-perps-rrrrr"],
-      "broadcasters": [],
+      "broadcasters": ["influx"],
       "denomination": "USD",
       "rateFeed": false,
       "deviationCheck": {
@@ -2991,7 +2991,7 @@
     },
     "OPEN_INTEREST_hyna:BTC": {
       "source": ["ws-hyperliquid-perps-hyna"],
-      "broadcasters": [],
+      "broadcasters": ["influx"],
       "denomination": "USD",
       "rateFeed": false,
       "deviationCheck": {
@@ -3132,7 +3132,7 @@
     },
     "OPEN_INTEREST_hyna:ETH": {
       "source": ["ws-hyperliquid-perps-hyna"],
-      "broadcasters": [],
+      "broadcasters": ["influx"],
       "denomination": "USD",
       "rateFeed": false,
       "deviationCheck": {
@@ -3273,7 +3273,7 @@
     },
     "OPEN_INTEREST_hyna:BNB": {
       "source": ["ws-hyperliquid-perps-hyna"],
-      "broadcasters": [],
+      "broadcasters": ["influx"],
       "denomination": "USD",
       "rateFeed": false,
       "deviationCheck": {
@@ -3414,7 +3414,7 @@
     },
     "OPEN_INTEREST_hyna:HYPE": {
       "source": ["ws-hyperliquid-perps-hyna"],
-      "broadcasters": [],
+      "broadcasters": ["influx"],
       "denomination": "USD",
       "rateFeed": false,
       "deviationCheck": {
@@ -3555,7 +3555,7 @@
     },
     "OPEN_INTEREST_hyna:SOL": {
       "source": ["ws-hyperliquid-perps-hyna"],
-      "broadcasters": [],
+      "broadcasters": ["influx"],
       "denomination": "USD",
       "rateFeed": false,
       "deviationCheck": {
@@ -3696,7 +3696,7 @@
     },
     "OPEN_INTEREST_hyna:XRP": {
       "source": ["ws-hyperliquid-perps-hyna"],
-      "broadcasters": [],
+      "broadcasters": ["influx"],
       "denomination": "USD",
       "rateFeed": false,
       "deviationCheck": {
@@ -3837,7 +3837,7 @@
     },
     "OPEN_INTEREST_hyna:1000PEPE": {
       "source": ["ws-hyperliquid-perps-hyna"],
-      "broadcasters": [],
+      "broadcasters": ["influx"],
       "denomination": "USD",
       "rateFeed": false,
       "deviationCheck": {
@@ -3978,7 +3978,7 @@
     },
     "OPEN_INTEREST_hyna:ZEC": {
       "source": ["ws-hyperliquid-perps-hyna"],
-      "broadcasters": [],
+      "broadcasters": ["influx"],
       "denomination": "USD",
       "rateFeed": false,
       "deviationCheck": {
@@ -4119,7 +4119,7 @@
     },
     "OPEN_INTEREST_hyna:FARTCOIN": {
       "source": ["ws-hyperliquid-perps-hyna"],
-      "broadcasters": [],
+      "broadcasters": ["influx"],
       "denomination": "USD",
       "rateFeed": false,
       "deviationCheck": {
@@ -4260,7 +4260,7 @@
     },
     "OPEN_INTEREST_hyna:LINK": {
       "source": ["ws-hyperliquid-perps-hyna"],
-      "broadcasters": [],
+      "broadcasters": ["influx"],
       "denomination": "USD",
       "rateFeed": false,
       "deviationCheck": {
@@ -4401,7 +4401,7 @@
     },
     "OPEN_INTEREST_hyna:SUI": {
       "source": ["ws-hyperliquid-perps-hyna"],
-      "broadcasters": [],
+      "broadcasters": ["influx"],
       "denomination": "USD",
       "rateFeed": false,
       "deviationCheck": {
@@ -4541,7 +4541,7 @@
     },
     "OPEN_INTEREST_hyna:XMR": {
       "source": ["ws-hyperliquid-perps-hyna"],
-      "broadcasters": [],
+      "broadcasters": ["influx"],
       "denomination": "USD",
       "rateFeed": false,
       "deviationCheck": {
@@ -4682,7 +4682,7 @@
     },
     "OPEN_INTEREST_hyna:DOGE": {
       "source": ["ws-hyperliquid-perps-hyna"],
-      "broadcasters": [],
+      "broadcasters": ["influx"],
       "denomination": "USD",
       "rateFeed": false,
       "deviationCheck": {
@@ -4823,7 +4823,7 @@
     },
     "OPEN_INTEREST_hyna:XPL": {
       "source": ["ws-hyperliquid-perps-hyna"],
-      "broadcasters": [],
+      "broadcasters": ["influx"],
       "denomination": "USD",
       "rateFeed": false,
       "deviationCheck": {
@@ -4966,7 +4966,7 @@
     },
     "OPEN_INTEREST_hyna:IP": {
       "source": ["ws-hyperliquid-perps-hyna"],
-      "broadcasters": [],
+      "broadcasters": ["influx"],
       "denomination": "USD",
       "rateFeed": false,
       "deviationCheck": {
@@ -5117,7 +5117,7 @@
     },
     "OPEN_INTEREST_hyna:ADA": {
       "source": ["ws-hyperliquid-perps-hyna"],
-      "broadcasters": [],
+      "broadcasters": ["influx"],
       "denomination": "USD",
       "rateFeed": false,
       "deviationCheck": {
@@ -5252,7 +5252,7 @@
     },
     "OPEN_INTEREST_hyna:PUMP": {
       "source": ["ws-hyperliquid-perps-hyna"],
-      "broadcasters": [],
+      "broadcasters": ["influx"],
       "denomination": "USD",
       "rateFeed": false,
       "deviationCheck": {
@@ -5395,7 +5395,7 @@
     },
     "OPEN_INTEREST_hyna:LTC": {
       "source": ["ws-hyperliquid-perps-hyna"],
-      "broadcasters": [],
+      "broadcasters": ["influx"],
       "denomination": "USD",
       "rateFeed": false,
       "deviationCheck": {
@@ -5546,7 +5546,7 @@
     },
     "OPEN_INTEREST_hyna:BCH": {
       "source": ["ws-hyperliquid-perps-hyna"],
-      "broadcasters": [],
+      "broadcasters": ["influx"],
       "denomination": "USD",
       "rateFeed": false,
       "deviationCheck": {
@@ -5687,7 +5687,7 @@
     },
     "OPEN_INTEREST_hyna:ENA": {
       "source": ["ws-hyperliquid-perps-hyna"],
-      "broadcasters": [],
+      "broadcasters": ["influx"],
       "denomination": "USD",
       "rateFeed": false,
       "deviationCheck": {
@@ -5828,7 +5828,7 @@
     },
     "OPEN_INTEREST_hyna:LIGHTER": {
       "source": ["ws-hyperliquid-perps-hyna"],
-      "broadcasters": [],
+      "broadcasters": ["influx"],
       "denomination": "USD",
       "rateFeed": false,
       "deviationCheck": {
@@ -5980,7 +5980,7 @@
     },
     "OPEN_INTEREST_hyna:BASED": {
       "source": ["ws-hyperliquid-perps-hyna"],
-      "broadcasters": [],
+      "broadcasters": ["influx"],
       "denomination": "USD",
       "rateFeed": false,
       "deviationCheck": {
