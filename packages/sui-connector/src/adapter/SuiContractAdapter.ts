@@ -1,7 +1,9 @@
 import { Keypair } from "@mysten/sui/cryptography";
 import { Transaction } from "@mysten/sui/transactions";
+import { MIST_PER_SUI } from "@mysten/sui/utils";
 import {
   ContractAdapter,
+  MultiTxDeliveryMan,
   TxDeliveryMan,
   WriteContractAdapter,
 } from "@redstone-finance/multichain-kit";
@@ -10,8 +12,11 @@ import { FP, loggerFactory, RedstoneCommon } from "@redstone-finance/utils";
 import _ from "lodash";
 import { SuiClient } from "../client/SuiClient";
 import { SuiConfig } from "../config";
-import { SuiContractUpdater } from "./SuiContractUpdater";
+import { MAX_PARALLEL_TRANSACTION_COUNT, SuiContractUpdater } from "./SuiContractUpdater";
 import { SuiPricesContractReader } from "./SuiPricesContractReader";
+
+const ESTIMATED_GROSS_COST_PER_SIGNATURE_SUI = 0.005;
+const MAX_SIGNATURES_PER_TRANSACTION = 12;
 
 export class SuiContractAdapter implements ContractAdapter {
   private readonly reader: SuiPricesContractReader;
@@ -62,7 +67,15 @@ export class SuiWriteContractAdapter extends SuiContractAdapter implements Write
   constructor(client: SuiClient, keypair: Keypair, config: SuiConfig) {
     super(client, config);
 
-    this.txDeliveryMan = new TxDeliveryMan(config);
+    this.txDeliveryMan = new MultiTxDeliveryMan(
+      {
+        ...config,
+        batchSizePerRequestParams: ({ uniqueSignersCount }) =>
+          feedsPerTransaction(config.writePricesTxGasBudget, uniqueSignersCount),
+        maxParallelTxCount: MAX_PARALLEL_TRANSACTION_COUNT,
+      },
+      "sui-tx-delivery-man"
+    );
     this.contractUpdater = SuiWriteContractAdapter.getContractUpdater(keypair, client, config);
   }
 
@@ -105,4 +118,12 @@ export class SuiWriteContractAdapter extends SuiContractAdapter implements Write
 
     return updater;
   }
+}
+
+function feedsPerTransaction(gasBudget: bigint, signerCount: number) {
+  const costPerFeedMist =
+    ESTIMATED_GROSS_COST_PER_SIGNATURE_SUI * signerCount * Number(MIST_PER_SUI);
+  const feedCount = Math.floor(Number(gasBudget) / costPerFeedMist);
+
+  return _.clamp(feedCount, 1, Math.floor(MAX_SIGNATURES_PER_TRANSACTION / signerCount));
 }

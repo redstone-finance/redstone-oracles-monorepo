@@ -44,9 +44,7 @@ async function executePullModel(
   logHeader("Pulling values using core model");
   try {
     const coreValues = await adapter.getPricesFromPayload(paramsProvider);
-    console.log(
-      `Core values: ${String(coreValues.map((v) => RedstoneCommon.convertValueDec(v, consts.DEFAULT_NUM_VALUE_DECIMALS)))}`
-    );
+    console.log(`Core values: ${String(coreValues.map((v) => convertValueDec(v)))}`);
   } catch (e) {
     console.error(RedstoneCommon.stringifyError(e));
   }
@@ -104,7 +102,7 @@ export async function readFromPriceFeed(
   ]);
 
   console.log(
-    `${feedId ?? defaultFeedId} price: $${RedstoneCommon.convertValueDec(value, decimals ?? consts.DEFAULT_NUM_VALUE_DECIMALS)} (${describeTimestamp(timestamp)}) (${decimals} decimals)`
+    `${feedId ?? defaultFeedId} price: $${convertValueDec(value, decimals)} (${describeTimestamp(timestamp)}) (${decimals} decimals)`
   );
 }
 
@@ -112,11 +110,24 @@ export function describeTimestamp(timestamp: number) {
   return `${(Date.now() - timestamp) / 1000} sec. ago`;
 }
 
+export function convertValueDec(
+  value: { toString(): string },
+  decimals = consts.DEFAULT_NUM_VALUE_DECIMALS
+) {
+  const divisor = 10n ** BigInt(decimals);
+  const v = BigInt(value.toString());
+  const abs = v < 0n ? -v : v;
+  const whole = `${v < 0n ? "-" : ""}${abs / divisor}`;
+  const fraction = (abs % divisor).toString().padStart(decimals, "0").replace(/0+$/, "");
+
+  return fraction ? `${whole}.${fraction}` : whole;
+}
+
 export function describeContractData(data: ContractData) {
   return Object.entries(data)
     .map(
       ([key, value]) =>
-        `${key}: ${RedstoneCommon.convertValueDec(value.lastValue, consts.DEFAULT_NUM_VALUE_DECIMALS)} of ${describeTimestamp(value.lastDataPackageTimestampMS)} / block: ${describeTimestamp(value.lastBlockTimestampMS)}`
+        `${key}: ${convertValueDec(value.lastValue)} of ${describeTimestamp(value.lastDataPackageTimestampMS)} / block: ${describeTimestamp(value.lastBlockTimestampMS)}`
     )
     .join("\n");
 }
