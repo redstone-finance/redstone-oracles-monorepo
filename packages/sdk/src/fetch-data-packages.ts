@@ -106,7 +106,7 @@ async function fetchStaged(reqParams: DataPackagesRequestParams, targets: Gatewa
 
 async function fetchWithLogger(reqParams: DataPackagesRequestParams, targets: GatewayTarget[]) {
   const requestDataPackagesLogger = reqParams.enableEnhancedLogs
-    ? new RequestDataPackagesLogger(targets.length, !!reqParams.historicalTimestamp)
+    ? new RequestDataPackagesLogger(targets.length, reqParams.historicalTimestamp)
     : undefined;
   const { response } = await fetchDataPackages(reqParams, targets, requestDataPackagesLogger);
 
