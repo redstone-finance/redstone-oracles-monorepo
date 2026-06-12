@@ -14,10 +14,10 @@ export async function run(provider: NetworkProvider) {
   const contract = await connector.getAdapter();
 
   const paramsProvider = new ContractParamsProvider({
-    dataServiceId: "redstone-avalanche-prod",
+    dataServiceId: "redstone-primary-prod",
     uniqueSignersCount: 4,
     dataPackagesIds: ["ETH"],
-    authorizedSigners: getSignersForDataServiceId("redstone-avalanche-prod"),
+    authorizedSigners: getSignersForDataServiceId("redstone-primary-prod"),
   });
 
   console.log(await contract.writePriceFromPayloadToContract(paramsProvider));

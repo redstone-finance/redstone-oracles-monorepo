@@ -3,7 +3,7 @@ import { BigNumber, BigNumberish } from "ethers";
 import fs from "fs";
 import path from "path";
 
-const DATA_SERVICE_ID = "redstone-avalanche-prod";
+const DATA_SERVICE_ID = "redstone-primary-prod";
 const DATA_FEEDS = ["ETH", "BTC", "AVAX"];
 const UNIQUE_SIGNER_COUNT = 3;
 export const RELAY_ADAPTER_ADDRESS = readDeployedHex("price_relay_adapter");

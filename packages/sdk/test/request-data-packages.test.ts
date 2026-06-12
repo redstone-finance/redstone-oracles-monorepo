@@ -827,9 +827,6 @@ describe("request-data-packages", () => {
       expect(resolveAuthenticatedGatewayUrls("redstone-primary-prod")).toEqual(
         PROD_AUTHENTICATED_GATEWAY_URLS
       );
-      expect(resolveAuthenticatedGatewayUrls("redstone-avalanche-prod")).toEqual(
-        PROD_AUTHENTICATED_GATEWAY_URLS
-      );
     });
 
     it("should return DEV URLs for known demo data services", () => {
