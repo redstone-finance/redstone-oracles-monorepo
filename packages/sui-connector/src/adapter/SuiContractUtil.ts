@@ -5,7 +5,7 @@ import { loggerFactory } from "@redstone-finance/utils";
 import Decimal from "decimal.js";
 import { SuiClient } from "../client/SuiClient";
 
-export const DEFAULT_GAS_BUDGET = MIST_PER_SUI / 10n; // 0.1 SUI
+export const DEFAULT_GAS_BUDGET = (12n * MIST_PER_SUI) / 100n; // 0.12 SUI
 
 export class SuiContractUtil {
   protected static readonly logger = loggerFactory("sui-contract-util");

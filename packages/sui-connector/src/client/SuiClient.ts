@@ -2,8 +2,10 @@ import type { ClientWithCoreApi, CoreClient, SuiClientTypes } from "@mysten/sui/
 import type { Keypair } from "@mysten/sui/cryptography";
 import type { Transaction } from "@mysten/sui/transactions";
 import type { TxLookup } from "@redstone-finance/multichain-kit";
-import { MultiExecutor } from "@redstone-finance/utils";
+import { MultiExecutor, RedstoneCommon } from "@redstone-finance/utils";
 import { SuiObjectsClient } from "./SuiObjectsClient";
+
+const REFERENCE_GAS_PRICE_TTL_MS = 60_000;
 
 const CORE_SUB_INSTANCE_MODES = {
   getBalance: MultiExecutor.ExecutionMode.AGREEMENT,
@@ -32,6 +34,11 @@ export const SUB_INSTANCE_MODES = {
 export abstract class SuiClient {
   readonly objects: SuiObjectsClient;
 
+  private readonly getReferenceGasPriceMemoized = RedstoneCommon.memoize({
+    functionToMemoize: () => this.fetchReferenceGasPrice(),
+    ttl: REFERENCE_GAS_PRICE_TTL_MS,
+  });
+
   constructor(readonly core: CoreClient) {
     this.objects = new SuiObjectsClient(core);
   }
@@ -40,7 +47,6 @@ export abstract class SuiClient {
   abstract get txLookup(): TxLookup;
 
   abstract getBlockNumber(): Promise<number>;
-  abstract getReferenceGasPrice(): Promise<bigint>;
   abstract getTimeForBlock(block: number): Promise<Date>;
 
   abstract getReceivedCoinObjectIds(params: {
@@ -52,6 +58,12 @@ export abstract class SuiClient {
     objectIds: string[];
     cursor?: string;
   }>;
+
+  protected abstract fetchReferenceGasPrice(): Promise<bigint>;
+
+  async getReferenceGasPrice() {
+    return await this.getReferenceGasPriceMemoized();
+  }
 
   async getChainIdentifier() {
     return (await this.core.getChainIdentifier()).chainIdentifier;
