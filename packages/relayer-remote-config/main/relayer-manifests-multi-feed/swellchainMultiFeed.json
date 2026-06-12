@@ -53,7 +53,7 @@
     "SWELL/ETH": {
       "priceFeedAddress": "0x24eDD61cdA334bFf871A80DEB135073a7d7a9187",
       "updateTriggersOverrides": {
-        "deviationPercentage": 1,
+        "deviationPercentage": 3,
         "timeSinceLastUpdateInMilliseconds": 86400000
       }
     },
