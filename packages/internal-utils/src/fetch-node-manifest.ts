@@ -128,14 +128,25 @@ const fetchNodeManifestOld = async <ManifestType = NodeManifest>(
   );
 };
 
-export const fetchNodeManifest = async <ManifestType = NodeManifest>(
-  dataServiceId: string,
-  manifestUrls: string[],
-  nodeClassOverride?: NodeClass,
-  headers?: Record<string, string>,
-  nodesVersionsPrefixUrlOverride?: string
+export type FetchNodeManifestConfig = {
+  dataServiceId: string;
+  manifestUrls: string[];
+  nodeClassOverride?: NodeClass;
+  headers?: Record<string, string>;
+  nodesVersionsPrefixUrlOverride?: string;
+  nodeName?: string;
+  nodeMode?: "main" | "fallback" | "hotfix";
+};
+
+export const fetchAnyNodeManifest = async <ManifestType = NodeManifest>(
+  fetchConfig: FetchNodeManifestConfig
 ): Promise<ManifestType> => {
-  const versionsPrefixUrl = nodesVersionsPrefixUrlOverride ?? getNodesVersionsPrefixUrl();
+  RedstoneCommon.assert(
+    (fetchConfig.nodeName === undefined) === (fetchConfig.nodeMode === undefined),
+    "nodeName and nodeMode needs to be always provider together: both or none"
+  );
+  const versionsPrefixUrl =
+    fetchConfig.nodesVersionsPrefixUrlOverride ?? getNodesVersionsPrefixUrl();
   if (!versionsPrefixUrl) {
     LogMonitoring.throw(
       LogMonitoringType.UNEXPECTED_ERROR,
@@ -143,24 +154,49 @@ export const fetchNodeManifest = async <ManifestType = NodeManifest>(
     );
   }
 
-  const nodeClass = nodeClassOverride ?? getDefaultNodeClassForDataServiceId(dataServiceId);
+  const nodeClass =
+    fetchConfig.nodeClassOverride ?? getDefaultNodeClassForDataServiceId(fetchConfig.dataServiceId);
 
-  for (const manifestUrl of manifestUrls) {
+  for (const manifestUrl of fetchConfig.manifestUrls) {
     try {
       const nodeType = getNodeTypeFromFilename(manifestUrl);
-      const nodeVersionUrl = `${versionsPrefixUrl}${nodeClass}/${nodeType}-resolved`;
+      const nodeVersionUrl = fetchConfig.nodeName
+        ? `${versionsPrefixUrl}${nodeClass}/${fetchConfig.nodeName}/${nodeType}/${fetchConfig.nodeMode}`
+        : `${versionsPrefixUrl}${nodeClass}/${nodeType}-resolved`;
       const nodeVersion = await fetchWithCache<string>(nodeVersionUrl);
       const resolvedUrl = substituteVersion(manifestUrl, nodeVersion);
 
-      return await fetchWithCache<ManifestType>(resolvedUrl, headers);
+      return await fetchWithCache<ManifestType>(resolvedUrl, fetchConfig.headers);
     } catch (e) {
       console.log(
-        `failed to fetch node manifest for ${dataServiceId} (nodeClass=${nodeClass}), URL ${manifestUrl}, ${RedstoneCommon.stringifyError(e)}`
+        `failed to fetch node manifest for ${fetchConfig.dataServiceId} (nodeClass=${nodeClass}), URL ${manifestUrl}, ${RedstoneCommon.stringifyError(e)}`
       );
     }
   }
 
-  // ToDo after fully migrating to new setup, throw rather than trying to use old version
+  throw new Error(`failed to fetch node manifest for params ${JSON.stringify(fetchConfig)}`);
+};
+
+export const fetchNodeManifest = async <ManifestType = NodeManifest>(
+  dataServiceId: string,
+  manifestUrls: string[],
+  nodeClassOverride?: NodeClass,
+  headers?: Record<string, string>,
+  nodesVersionsPrefixUrlOverride?: string
+): Promise<ManifestType> => {
+  const fetchConfig: FetchNodeManifestConfig = {
+    dataServiceId,
+    manifestUrls,
+    nodeClassOverride,
+    headers,
+    nodesVersionsPrefixUrlOverride,
+  };
+  try {
+    return await fetchAnyNodeManifest<ManifestType>(fetchConfig);
+  } catch {
+    // ToDo after fully migrating to new setup, throw rather than trying to use old version
+  }
+
   console.warn("Failed to fetch the node manifest using new method, fallback to old");
 
   return await fetchNodeManifestOld(
