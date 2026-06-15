@@ -95,7 +95,10 @@ describe("RealCantonTrafficMeter", () => {
       );
 
       sut.beforeUpdate();
-      await sut.afterUpdate(3, FP.ok({ transactionHash: TX_HASH.eth, metadata: {} }));
+      await sut.afterUpdate(
+        ["ETH", "BTC", "CC"],
+        FP.ok({ transactionHash: TX_HASH.eth, metadata: {} })
+      );
 
       expect(sut.consumeAccumulated()).toBe(4_000);
     });
@@ -112,7 +115,10 @@ describe("RealCantonTrafficMeter", () => {
       );
 
       sut.beforeUpdate();
-      const measured = sut.afterUpdate(3, FP.ok({ transactionHash: TX_HASH.eth, metadata: {} }));
+      const measured = sut.afterUpdate(
+        ["ETH", "BTC", "CC"],
+        FP.ok({ transactionHash: TX_HASH.eth, metadata: {} })
+      );
       resolveInitial(BASE);
       await measured;
 
@@ -125,7 +131,7 @@ describe("RealCantonTrafficMeter", () => {
 
       sut.beforeUpdate();
       await sut.afterUpdate(
-        1,
+        ["BTC"],
         FP.ok({ transactionHash: TX_HASH.btc, metadata: { paidTrafficCost: 2_000 } })
       );
 
@@ -138,7 +144,7 @@ describe("RealCantonTrafficMeter", () => {
 
       sut.beforeUpdate();
       await sut.afterUpdate(
-        1,
+        ["BTC"],
         FP.ok({ transactionHash: TX_HASH.btc, metadata: { paidTrafficCost: 2_000 } })
       );
 
