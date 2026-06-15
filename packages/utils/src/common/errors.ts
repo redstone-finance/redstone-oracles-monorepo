@@ -154,10 +154,11 @@ export function stringifyError(e: unknown, noStack = false): string {
           ? `cause: ${stringifyError(error.cause, noStack)}`
           : stringify(error.cause)
         : "";
+      const stackString = noStack ? "" : showStack(error.stack);
+      // in node Error.stack already contains Error.message
+      const messageString = stackString.length > 0 ? "" : error.message;
 
-      return [error.message, noStack ? "" : showStack(error.stack), causeString]
-        .filter((str) => str.length > 0)
-        .join(" ");
+      return [messageString, stackString, causeString].filter((str) => str.length > 0).join(" ");
     } else if (typeof error.toJSON === "function") {
       return JSONstringify(error.toJSON());
     } else {
