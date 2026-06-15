@@ -131,25 +131,25 @@
     },
     "flx:USDE_MARK_0": {
       "source": ["hip3-felix-crypto-spot-mainnet-fetcher"],
-      "broadcasters": ["hyperliquid-hip3"],
+      "broadcasters": ["hyperliquid-hip3", "influx"],
       "denomination": "USD",
       "rateFeed": false
     },
     "flx:USDE_MARK_1": {
       "source": ["hip3-felix-crypto-spot-mainnet-fetcher"],
-      "broadcasters": ["hyperliquid-hip3"],
+      "broadcasters": ["hyperliquid-hip3", "influx"],
       "denomination": "USD",
       "rateFeed": false
     },
     "flx:USDE_EXT": {
       "source": ["hip3-felix-crypto-spot-mainnet-fetcher"],
-      "broadcasters": ["hyperliquid-hip3"],
+      "broadcasters": ["hyperliquid-hip3", "influx"],
       "denomination": "USD",
       "rateFeed": false
     },
     "flx:USDE": {
       "source": ["hip3-felix-crypto-spot-mainnet-fetcher"],
-      "broadcasters": ["hyperliquid-hip3"],
+      "broadcasters": ["hyperliquid-hip3", "influx"],
       "denomination": "USD",
       "rateFeed": false
     },
@@ -230,25 +230,25 @@
     },
     "flx:XMR_MARK_0": {
       "source": ["hip3-felix-crypto-spot-mainnet-fetcher"],
-      "broadcasters": ["hyperliquid-hip3"],
+      "broadcasters": ["hyperliquid-hip3", "influx"],
       "denomination": "USD",
       "rateFeed": false
     },
     "flx:XMR_MARK_1": {
       "source": ["hip3-felix-crypto-spot-mainnet-fetcher"],
-      "broadcasters": ["hyperliquid-hip3"],
+      "broadcasters": ["hyperliquid-hip3", "influx"],
       "denomination": "USD",
       "rateFeed": false
     },
     "flx:XMR_EXT": {
       "source": ["hip3-felix-crypto-spot-mainnet-fetcher"],
-      "broadcasters": ["hyperliquid-hip3"],
+      "broadcasters": ["hyperliquid-hip3", "influx"],
       "denomination": "USD",
       "rateFeed": false
     },
     "flx:XMR": {
       "source": ["hip3-felix-crypto-spot-mainnet-fetcher"],
-      "broadcasters": ["hyperliquid-hip3"],
+      "broadcasters": ["hyperliquid-hip3", "influx"],
       "denomination": "USD",
       "rateFeed": false
     },
@@ -335,25 +335,25 @@
     },
     "flx:USA100_MARK_0": {
       "source": ["hip3-felix-usa100-mainnet-fetcher"],
-      "broadcasters": ["hyperliquid-hip3"],
+      "broadcasters": ["hyperliquid-hip3", "influx"],
       "denomination": "USD",
       "rateFeed": false
     },
     "flx:USA100_MARK_1": {
       "source": ["hip3-felix-usa100-mainnet-fetcher"],
-      "broadcasters": ["hyperliquid-hip3"],
+      "broadcasters": ["hyperliquid-hip3", "influx"],
       "denomination": "USD",
       "rateFeed": false
     },
     "flx:USA100_EXT": {
       "source": ["hip3-felix-usa100-mainnet-fetcher"],
-      "broadcasters": ["hyperliquid-hip3"],
+      "broadcasters": ["hyperliquid-hip3", "influx"],
       "denomination": "USD",
       "rateFeed": false
     },
     "flx:USA100": {
       "source": ["hip3-felix-usa100-mainnet-fetcher"],
-      "broadcasters": ["hyperliquid-hip3"],
+      "broadcasters": ["hyperliquid-hip3", "influx"],
       "denomination": "USD",
       "rateFeed": false
     },
@@ -440,25 +440,25 @@
     },
     "flx:GAS_MARK_0": {
       "source": ["hip3-felix-energy-mainnet-fetcher"],
-      "broadcasters": ["hyperliquid-hip3"],
+      "broadcasters": ["hyperliquid-hip3", "influx"],
       "denomination": "USD",
       "rateFeed": false
     },
     "flx:GAS_MARK_1": {
       "source": ["hip3-felix-energy-mainnet-fetcher"],
-      "broadcasters": ["hyperliquid-hip3"],
+      "broadcasters": ["hyperliquid-hip3", "influx"],
       "denomination": "USD",
       "rateFeed": false
     },
     "flx:GAS_EXT": {
       "source": ["hip3-felix-energy-mainnet-fetcher"],
-      "broadcasters": ["hyperliquid-hip3"],
+      "broadcasters": ["hyperliquid-hip3", "influx"],
       "denomination": "USD",
       "rateFeed": false
     },
     "flx:GAS": {
       "source": ["hip3-felix-energy-mainnet-fetcher"],
-      "broadcasters": ["hyperliquid-hip3"],
+      "broadcasters": ["hyperliquid-hip3", "influx"],
       "denomination": "USD",
       "rateFeed": false
     },
@@ -625,25 +625,25 @@
     },
     "flx:TSLA_MARK_0": {
       "source": ["hip3-felix-stocks-mainnet-fetcher"],
-      "broadcasters": ["hyperliquid-hip3"],
+      "broadcasters": ["hyperliquid-hip3", "influx"],
       "denomination": "USD",
       "rateFeed": false
     },
     "flx:TSLA_MARK_1": {
       "source": ["hip3-felix-stocks-mainnet-fetcher"],
-      "broadcasters": ["hyperliquid-hip3"],
+      "broadcasters": ["hyperliquid-hip3", "influx"],
       "denomination": "USD",
       "rateFeed": false
     },
     "flx:TSLA_EXT": {
       "source": ["hip3-felix-stocks-mainnet-fetcher"],
-      "broadcasters": ["hyperliquid-hip3"],
+      "broadcasters": ["hyperliquid-hip3", "influx"],
       "denomination": "USD",
       "rateFeed": false
     },
     "flx:TSLA": {
       "source": ["hip3-felix-stocks-mainnet-fetcher"],
-      "broadcasters": ["hyperliquid-hip3"],
+      "broadcasters": ["hyperliquid-hip3", "influx"],
       "denomination": "USD",
       "rateFeed": false
     },
@@ -716,25 +716,25 @@
     },
     "flx:NVDA_MARK_0": {
       "source": ["hip3-felix-stocks-mainnet-fetcher"],
-      "broadcasters": ["hyperliquid-hip3"],
+      "broadcasters": ["hyperliquid-hip3", "influx"],
       "denomination": "USD",
       "rateFeed": false
     },
     "flx:NVDA_MARK_1": {
       "source": ["hip3-felix-stocks-mainnet-fetcher"],
-      "broadcasters": ["hyperliquid-hip3"],
+      "broadcasters": ["hyperliquid-hip3", "influx"],
       "denomination": "USD",
       "rateFeed": false
     },
     "flx:NVDA_EXT": {
       "source": ["hip3-felix-stocks-mainnet-fetcher"],
-      "broadcasters": ["hyperliquid-hip3"],
+      "broadcasters": ["hyperliquid-hip3", "influx"],
       "denomination": "USD",
       "rateFeed": false
     },
     "flx:NVDA": {
       "source": ["hip3-felix-stocks-mainnet-fetcher"],
-      "broadcasters": ["hyperliquid-hip3"],
+      "broadcasters": ["hyperliquid-hip3", "influx"],
       "denomination": "USD",
       "rateFeed": false
     },
@@ -861,28 +861,28 @@
     },
     "flx:HOOD_MARK_0": {
       "source": ["hip3-felix-stocks-mainnet-fetcher"],
-      "broadcasters": ["hyperliquid-hip3"],
+      "broadcasters": ["hyperliquid-hip3", "influx"],
       "denomination": "USD",
       "rateFeed": false,
       "types": ["snoozed"]
     },
     "flx:HOOD_MARK_1": {
       "source": ["hip3-felix-stocks-mainnet-fetcher"],
-      "broadcasters": ["hyperliquid-hip3"],
+      "broadcasters": ["hyperliquid-hip3", "influx"],
       "denomination": "USD",
       "rateFeed": false,
       "types": ["snoozed"]
     },
     "flx:HOOD_EXT": {
       "source": ["hip3-felix-stocks-mainnet-fetcher"],
-      "broadcasters": ["hyperliquid-hip3"],
+      "broadcasters": ["hyperliquid-hip3", "influx"],
       "denomination": "USD",
       "rateFeed": false,
       "types": ["snoozed"]
     },
     "flx:HOOD": {
       "source": ["hip3-felix-stocks-mainnet-fetcher"],
-      "broadcasters": ["hyperliquid-hip3"],
+      "broadcasters": ["hyperliquid-hip3", "influx"],
       "denomination": "USD",
       "rateFeed": false,
       "types": ["snoozed"]
@@ -1009,25 +1009,25 @@
     },
     "flx:CRCL_MARK_0": {
       "source": ["hip3-felix-stocks-mainnet-fetcher"],
-      "broadcasters": ["hyperliquid-hip3"],
+      "broadcasters": ["hyperliquid-hip3", "influx"],
       "denomination": "USD",
       "rateFeed": false
     },
     "flx:CRCL_MARK_1": {
       "source": ["hip3-felix-stocks-mainnet-fetcher"],
-      "broadcasters": ["hyperliquid-hip3"],
+      "broadcasters": ["hyperliquid-hip3", "influx"],
       "denomination": "USD",
       "rateFeed": false
     },
     "flx:CRCL_EXT": {
       "source": ["hip3-felix-stocks-mainnet-fetcher"],
-      "broadcasters": ["hyperliquid-hip3"],
+      "broadcasters": ["hyperliquid-hip3", "influx"],
       "denomination": "USD",
       "rateFeed": false
     },
     "flx:CRCL": {
       "source": ["hip3-felix-stocks-mainnet-fetcher"],
-      "broadcasters": ["hyperliquid-hip3"],
+      "broadcasters": ["hyperliquid-hip3", "influx"],
       "denomination": "USD",
       "rateFeed": false
     },
@@ -1147,25 +1147,25 @@
     },
     "flx:COIN_MARK_0": {
       "source": ["hip3-felix-stocks-mainnet-fetcher"],
-      "broadcasters": ["hyperliquid-hip3"],
+      "broadcasters": ["hyperliquid-hip3", "influx"],
       "denomination": "USD",
       "rateFeed": false
     },
     "flx:COIN_MARK_1": {
       "source": ["hip3-felix-stocks-mainnet-fetcher"],
-      "broadcasters": ["hyperliquid-hip3"],
+      "broadcasters": ["hyperliquid-hip3", "influx"],
       "denomination": "USD",
       "rateFeed": false
     },
     "flx:COIN_EXT": {
       "source": ["hip3-felix-stocks-mainnet-fetcher"],
-      "broadcasters": ["hyperliquid-hip3"],
+      "broadcasters": ["hyperliquid-hip3", "influx"],
       "denomination": "USD",
       "rateFeed": false
     },
     "flx:COIN": {
       "source": ["hip3-felix-stocks-mainnet-fetcher"],
-      "broadcasters": ["hyperliquid-hip3"],
+      "broadcasters": ["hyperliquid-hip3", "influx"],
       "denomination": "USD",
       "rateFeed": false
     },
@@ -1294,28 +1294,28 @@
     },
     "flx:AVGO_MARK_0": {
       "source": ["hip3-felix-stocks-mainnet-fetcher"],
-      "broadcasters": ["hyperliquid-hip3"],
+      "broadcasters": ["hyperliquid-hip3", "influx"],
       "denomination": "USD",
       "rateFeed": false,
       "types": ["snoozed"]
     },
     "flx:AVGO_MARK_1": {
       "source": ["hip3-felix-stocks-mainnet-fetcher"],
-      "broadcasters": ["hyperliquid-hip3"],
+      "broadcasters": ["hyperliquid-hip3", "influx"],
       "denomination": "USD",
       "rateFeed": false,
       "types": ["snoozed"]
     },
     "flx:AVGO_EXT": {
       "source": ["hip3-felix-stocks-mainnet-fetcher"],
-      "broadcasters": ["hyperliquid-hip3"],
+      "broadcasters": ["hyperliquid-hip3", "influx"],
       "denomination": "USD",
       "rateFeed": false,
       "types": ["snoozed"]
     },
     "flx:AVGO": {
       "source": ["hip3-felix-stocks-mainnet-fetcher"],
-      "broadcasters": ["hyperliquid-hip3"],
+      "broadcasters": ["hyperliquid-hip3", "influx"],
       "denomination": "USD",
       "rateFeed": false,
       "types": ["snoozed"]
@@ -1392,25 +1392,25 @@
     },
     "flx:GOLD_MARK_0": {
       "source": ["hip3-felix-gold-mainnet-fetcher"],
-      "broadcasters": ["hyperliquid-hip3"],
+      "broadcasters": ["hyperliquid-hip3", "influx"],
       "denomination": "USD",
       "rateFeed": false
     },
     "flx:GOLD_MARK_1": {
       "source": ["hip3-felix-gold-mainnet-fetcher"],
-      "broadcasters": ["hyperliquid-hip3"],
+      "broadcasters": ["hyperliquid-hip3", "influx"],
       "denomination": "USD",
       "rateFeed": false
     },
     "flx:GOLD_EXT": {
       "source": ["hip3-felix-gold-mainnet-fetcher"],
-      "broadcasters": ["hyperliquid-hip3"],
+      "broadcasters": ["hyperliquid-hip3", "influx"],
       "denomination": "USD",
       "rateFeed": false
     },
     "flx:GOLD": {
       "source": ["hip3-felix-gold-mainnet-fetcher"],
-      "broadcasters": ["hyperliquid-hip3"],
+      "broadcasters": ["hyperliquid-hip3", "influx"],
       "denomination": "USD",
       "rateFeed": false
     },
@@ -1497,25 +1497,25 @@
     },
     "flx:SILVER_MARK_0": {
       "source": ["hip3-felix-lmax-mainnet-fetcher"],
-      "broadcasters": ["hyperliquid-hip3"],
+      "broadcasters": ["hyperliquid-hip3", "influx"],
       "denomination": "USD",
       "rateFeed": false
     },
     "flx:SILVER_MARK_1": {
       "source": ["hip3-felix-lmax-mainnet-fetcher"],
-      "broadcasters": ["hyperliquid-hip3"],
+      "broadcasters": ["hyperliquid-hip3", "influx"],
       "denomination": "USD",
       "rateFeed": false
     },
     "flx:SILVER_EXT": {
       "source": ["hip3-felix-lmax-mainnet-fetcher"],
-      "broadcasters": ["hyperliquid-hip3"],
+      "broadcasters": ["hyperliquid-hip3", "influx"],
       "denomination": "USD",
       "rateFeed": false
     },
     "flx:SILVER": {
       "source": ["hip3-felix-lmax-mainnet-fetcher"],
-      "broadcasters": ["hyperliquid-hip3"],
+      "broadcasters": ["hyperliquid-hip3", "influx"],
       "denomination": "USD",
       "rateFeed": false
     },
@@ -1603,25 +1603,25 @@
     },
     "flx:PALLADIUM_MARK_0": {
       "source": ["hip3-felix-lmax-mainnet-fetcher"],
-      "broadcasters": ["hyperliquid-hip3"],
+      "broadcasters": ["hyperliquid-hip3", "influx"],
       "denomination": "USD",
       "rateFeed": false
     },
     "flx:PALLADIUM_MARK_1": {
       "source": ["hip3-felix-lmax-mainnet-fetcher"],
-      "broadcasters": ["hyperliquid-hip3"],
+      "broadcasters": ["hyperliquid-hip3", "influx"],
       "denomination": "USD",
       "rateFeed": false
     },
     "flx:PALLADIUM_EXT": {
       "source": ["hip3-felix-lmax-mainnet-fetcher"],
-      "broadcasters": ["hyperliquid-hip3"],
+      "broadcasters": ["hyperliquid-hip3", "influx"],
       "denomination": "USD",
       "rateFeed": false
     },
     "flx:PALLADIUM": {
       "source": ["hip3-felix-lmax-mainnet-fetcher"],
-      "broadcasters": ["hyperliquid-hip3"],
+      "broadcasters": ["hyperliquid-hip3", "influx"],
       "denomination": "USD",
       "rateFeed": false
     },
@@ -1703,25 +1703,25 @@
     },
     "flx:PLATINUM_MARK_0": {
       "source": ["hip3-felix-lmax-mainnet-fetcher"],
-      "broadcasters": ["hyperliquid-hip3"],
+      "broadcasters": ["hyperliquid-hip3", "influx"],
       "denomination": "USD",
       "rateFeed": false
     },
     "flx:PLATINUM_MARK_1": {
       "source": ["hip3-felix-lmax-mainnet-fetcher"],
-      "broadcasters": ["hyperliquid-hip3"],
+      "broadcasters": ["hyperliquid-hip3", "influx"],
       "denomination": "USD",
       "rateFeed": false
     },
     "flx:PLATINUM_EXT": {
       "source": ["hip3-felix-lmax-mainnet-fetcher"],
-      "broadcasters": ["hyperliquid-hip3"],
+      "broadcasters": ["hyperliquid-hip3", "influx"],
       "denomination": "USD",
       "rateFeed": false
     },
     "flx:PLATINUM": {
       "source": ["hip3-felix-lmax-mainnet-fetcher"],
-      "broadcasters": ["hyperliquid-hip3"],
+      "broadcasters": ["hyperliquid-hip3", "influx"],
       "denomination": "USD",
       "rateFeed": false
     },
@@ -1800,28 +1800,28 @@
     },
     "flx:EUR_MARK_0": {
       "source": ["hip3-felix-fx-mainnet-fetcher"],
-      "broadcasters": ["hyperliquid-hip3"],
+      "broadcasters": ["hyperliquid-hip3", "influx"],
       "denomination": "USD",
       "rateFeed": false,
       "types": ["snoozed"]
     },
     "flx:EUR_MARK_1": {
       "source": ["hip3-felix-fx-mainnet-fetcher"],
-      "broadcasters": ["hyperliquid-hip3"],
+      "broadcasters": ["hyperliquid-hip3", "influx"],
       "denomination": "USD",
       "rateFeed": false,
       "types": ["snoozed"]
     },
     "flx:EUR_EXT": {
       "source": ["hip3-felix-fx-mainnet-fetcher"],
-      "broadcasters": ["hyperliquid-hip3"],
+      "broadcasters": ["hyperliquid-hip3", "influx"],
       "denomination": "USD",
       "rateFeed": false,
       "types": ["snoozed"]
     },
     "flx:EUR": {
       "source": ["hip3-felix-fx-mainnet-fetcher"],
-      "broadcasters": ["hyperliquid-hip3"],
+      "broadcasters": ["hyperliquid-hip3", "influx"],
       "denomination": "USD",
       "rateFeed": false,
       "types": ["snoozed"]
@@ -1921,25 +1921,25 @@
     },
     "flx:OIL_MARK_0": {
       "source": ["hip3-felix-wti-mainnet-fetcher"],
-      "broadcasters": ["hyperliquid-hip3"],
+      "broadcasters": ["hyperliquid-hip3", "influx"],
       "denomination": "USD",
       "rateFeed": false
     },
     "flx:OIL_MARK_1": {
       "source": ["hip3-felix-wti-mainnet-fetcher"],
-      "broadcasters": ["hyperliquid-hip3"],
+      "broadcasters": ["hyperliquid-hip3", "influx"],
       "denomination": "USD",
       "rateFeed": false
     },
     "flx:OIL_EXT": {
       "source": ["hip3-felix-wti-mainnet-fetcher"],
-      "broadcasters": ["hyperliquid-hip3"],
+      "broadcasters": ["hyperliquid-hip3", "influx"],
       "denomination": "USD",
       "rateFeed": false
     },
     "flx:OIL": {
       "source": ["hip3-felix-wti-mainnet-fetcher"],
-      "broadcasters": ["hyperliquid-hip3"],
+      "broadcasters": ["hyperliquid-hip3", "influx"],
       "denomination": "USD",
       "rateFeed": false
     },
@@ -2028,25 +2028,25 @@
     },
     "flx:USA500_MARK_0": {
       "source": ["hip3-felix-usa500-mainnet-fetcher"],
-      "broadcasters": ["hyperliquid-hip3"],
+      "broadcasters": ["hyperliquid-hip3", "influx"],
       "denomination": "USD",
       "rateFeed": false
     },
     "flx:USA500_MARK_1": {
       "source": ["hip3-felix-usa500-mainnet-fetcher"],
-      "broadcasters": ["hyperliquid-hip3"],
+      "broadcasters": ["hyperliquid-hip3", "influx"],
       "denomination": "USD",
       "rateFeed": false
     },
     "flx:USA500_EXT": {
       "source": ["hip3-felix-usa500-mainnet-fetcher"],
-      "broadcasters": ["hyperliquid-hip3"],
+      "broadcasters": ["hyperliquid-hip3", "influx"],
       "denomination": "USD",
       "rateFeed": false
     },
     "flx:USA500": {
       "source": ["hip3-felix-usa500-mainnet-fetcher"],
-      "broadcasters": ["hyperliquid-hip3"],
+      "broadcasters": ["hyperliquid-hip3", "influx"],
       "denomination": "USD",
       "rateFeed": false
     },
@@ -2144,25 +2144,25 @@
     },
     "flx:COPPER_MARK_0": {
       "source": ["hip3-felix-metals-mainnet-fetcher"],
-      "broadcasters": ["hyperliquid-hip3"],
+      "broadcasters": ["hyperliquid-hip3", "influx"],
       "denomination": "USD",
       "rateFeed": false
     },
     "flx:COPPER_MARK_1": {
       "source": ["hip3-felix-metals-mainnet-fetcher"],
-      "broadcasters": ["hyperliquid-hip3"],
+      "broadcasters": ["hyperliquid-hip3", "influx"],
       "denomination": "USD",
       "rateFeed": false
     },
     "flx:COPPER_EXT": {
       "source": ["hip3-felix-metals-mainnet-fetcher"],
-      "broadcasters": ["hyperliquid-hip3"],
+      "broadcasters": ["hyperliquid-hip3", "influx"],
       "denomination": "USD",
       "rateFeed": false
     },
     "flx:COPPER": {
       "source": ["hip3-felix-metals-mainnet-fetcher"],
-      "broadcasters": ["hyperliquid-hip3"],
+      "broadcasters": ["hyperliquid-hip3", "influx"],
       "denomination": "USD",
       "rateFeed": false
     },
@@ -2294,28 +2294,28 @@
     },
     "flx:BTC_MARK_0": {
       "source": ["hip3-felix-crypto-mainnet-fetcher"],
-      "broadcasters": ["hyperliquid-hip3"],
+      "broadcasters": ["hyperliquid-hip3", "influx"],
       "denomination": "USD",
       "rateFeed": false,
       "types": ["snoozed"]
     },
     "flx:BTC_MARK_1": {
       "source": ["hip3-felix-crypto-mainnet-fetcher"],
-      "broadcasters": ["hyperliquid-hip3"],
+      "broadcasters": ["hyperliquid-hip3", "influx"],
       "denomination": "USD",
       "rateFeed": false,
       "types": ["snoozed"]
     },
     "flx:BTC_EXT": {
       "source": ["hip3-felix-crypto-mainnet-fetcher"],
-      "broadcasters": ["hyperliquid-hip3"],
+      "broadcasters": ["hyperliquid-hip3", "influx"],
       "denomination": "USD",
       "rateFeed": false,
       "types": ["snoozed"]
     },
     "flx:BTC": {
       "source": ["hip3-felix-crypto-mainnet-fetcher"],
-      "broadcasters": ["hyperliquid-hip3"],
+      "broadcasters": ["hyperliquid-hip3", "influx"],
       "denomination": "USD",
       "rateFeed": false,
       "types": ["snoozed"]
@@ -2411,25 +2411,25 @@
     },
     "rrrrr:BTC_MARK_0": {
       "source": ["hip3-hyena-crypto-testnet-fetcher"],
-      "broadcasters": ["hyperliquid-hip3"],
+      "broadcasters": ["hyperliquid-hip3", "influx"],
       "denomination": "USD",
       "rateFeed": false
     },
     "rrrrr:BTC_MARK_1": {
       "source": ["hip3-hyena-crypto-testnet-fetcher"],
-      "broadcasters": ["hyperliquid-hip3"],
+      "broadcasters": ["hyperliquid-hip3", "influx"],
       "denomination": "USD",
       "rateFeed": false
     },
     "rrrrr:BTC_EXT": {
       "source": ["hip3-hyena-crypto-testnet-fetcher"],
-      "broadcasters": ["hyperliquid-hip3"],
+      "broadcasters": ["hyperliquid-hip3", "influx"],
       "denomination": "USD",
       "rateFeed": false
     },
     "rrrrr:BTC": {
       "source": ["hip3-hyena-crypto-testnet-fetcher"],
-      "broadcasters": ["hyperliquid-hip3"],
+      "broadcasters": ["hyperliquid-hip3", "influx"],
       "denomination": "USD",
       "rateFeed": false
     },
@@ -2522,25 +2522,25 @@
     },
     "rrrrr:ETH_MARK_0": {
       "source": ["hip3-hyena-crypto-testnet-fetcher"],
-      "broadcasters": ["hyperliquid-hip3"],
+      "broadcasters": ["hyperliquid-hip3", "influx"],
       "denomination": "USD",
       "rateFeed": false
     },
     "rrrrr:ETH_MARK_1": {
       "source": ["hip3-hyena-crypto-testnet-fetcher"],
-      "broadcasters": ["hyperliquid-hip3"],
+      "broadcasters": ["hyperliquid-hip3", "influx"],
       "denomination": "USD",
       "rateFeed": false
     },
     "rrrrr:ETH_EXT": {
       "source": ["hip3-hyena-crypto-testnet-fetcher"],
-      "broadcasters": ["hyperliquid-hip3"],
+      "broadcasters": ["hyperliquid-hip3", "influx"],
       "denomination": "USD",
       "rateFeed": false
     },
     "rrrrr:ETH": {
       "source": ["hip3-hyena-crypto-testnet-fetcher"],
-      "broadcasters": ["hyperliquid-hip3"],
+      "broadcasters": ["hyperliquid-hip3", "influx"],
       "denomination": "USD",
       "rateFeed": false
     },
@@ -2633,25 +2633,25 @@
     },
     "rrrrr:HYPE_MARK_0": {
       "source": ["hip3-hyena-crypto-testnet-fetcher"],
-      "broadcasters": ["hyperliquid-hip3"],
+      "broadcasters": ["hyperliquid-hip3", "influx"],
       "denomination": "USD",
       "rateFeed": false
     },
     "rrrrr:HYPE_MARK_1": {
       "source": ["hip3-hyena-crypto-testnet-fetcher"],
-      "broadcasters": ["hyperliquid-hip3"],
+      "broadcasters": ["hyperliquid-hip3", "influx"],
       "denomination": "USD",
       "rateFeed": false
     },
     "rrrrr:HYPE_EXT": {
       "source": ["hip3-hyena-crypto-testnet-fetcher"],
-      "broadcasters": ["hyperliquid-hip3"],
+      "broadcasters": ["hyperliquid-hip3", "influx"],
       "denomination": "USD",
       "rateFeed": false
     },
     "rrrrr:HYPE": {
       "source": ["hip3-hyena-crypto-testnet-fetcher"],
-      "broadcasters": ["hyperliquid-hip3"],
+      "broadcasters": ["hyperliquid-hip3", "influx"],
       "denomination": "USD",
       "rateFeed": false
     },
@@ -2744,25 +2744,25 @@
     },
     "rrrrr:SOL_MARK_0": {
       "source": ["hip3-hyena-crypto-testnet-fetcher"],
-      "broadcasters": ["hyperliquid-hip3"],
+      "broadcasters": ["hyperliquid-hip3", "influx"],
       "denomination": "USD",
       "rateFeed": false
     },
     "rrrrr:SOL_MARK_1": {
       "source": ["hip3-hyena-crypto-testnet-fetcher"],
-      "broadcasters": ["hyperliquid-hip3"],
+      "broadcasters": ["hyperliquid-hip3", "influx"],
       "denomination": "USD",
       "rateFeed": false
     },
     "rrrrr:SOL_EXT": {
       "source": ["hip3-hyena-crypto-testnet-fetcher"],
-      "broadcasters": ["hyperliquid-hip3"],
+      "broadcasters": ["hyperliquid-hip3", "influx"],
       "denomination": "USD",
       "rateFeed": false
     },
     "rrrrr:SOL": {
       "source": ["hip3-hyena-crypto-testnet-fetcher"],
-      "broadcasters": ["hyperliquid-hip3"],
+      "broadcasters": ["hyperliquid-hip3", "influx"],
       "denomination": "USD",
       "rateFeed": false
     },
@@ -2855,25 +2855,25 @@
     },
     "rrrrr:BASED_MARK_0": {
       "source": ["hip3-hyena-crypto-spot-testnet-fetcher"],
-      "broadcasters": ["hyperliquid-hip3"],
+      "broadcasters": ["hyperliquid-hip3", "influx"],
       "denomination": "USD",
       "rateFeed": false
     },
     "rrrrr:BASED_MARK_1": {
       "source": ["hip3-hyena-crypto-spot-testnet-fetcher"],
-      "broadcasters": ["hyperliquid-hip3"],
+      "broadcasters": ["hyperliquid-hip3", "influx"],
       "denomination": "USD",
       "rateFeed": false
     },
     "rrrrr:BASED_EXT": {
       "source": ["hip3-hyena-crypto-spot-testnet-fetcher"],
-      "broadcasters": ["hyperliquid-hip3"],
+      "broadcasters": ["hyperliquid-hip3", "influx"],
       "denomination": "USD",
       "rateFeed": false
     },
     "rrrrr:BASED": {
       "source": ["hip3-hyena-crypto-spot-testnet-fetcher"],
-      "broadcasters": ["hyperliquid-hip3"],
+      "broadcasters": ["hyperliquid-hip3", "influx"],
       "denomination": "USD",
       "rateFeed": false
     },
@@ -2967,25 +2967,25 @@
     },
     "hyna:BTC_MARK_0": {
       "source": ["hip3-hyena-crypto-mainnet-fetcher"],
-      "broadcasters": ["hyperliquid-hip3"],
+      "broadcasters": ["hyperliquid-hip3", "influx"],
       "denomination": "USD",
       "rateFeed": false
     },
     "hyna:BTC_MARK_1": {
       "source": ["hip3-hyena-crypto-mainnet-fetcher"],
-      "broadcasters": ["hyperliquid-hip3"],
+      "broadcasters": ["hyperliquid-hip3", "influx"],
       "denomination": "USD",
       "rateFeed": false
     },
     "hyna:BTC_EXT": {
       "source": ["hip3-hyena-crypto-mainnet-fetcher"],
-      "broadcasters": ["hyperliquid-hip3"],
+      "broadcasters": ["hyperliquid-hip3", "influx"],
       "denomination": "USD",
       "rateFeed": false
     },
     "hyna:BTC": {
       "source": ["hip3-hyena-crypto-mainnet-fetcher"],
-      "broadcasters": ["hyperliquid-hip3"],
+      "broadcasters": ["hyperliquid-hip3", "influx"],
       "denomination": "USD",
       "rateFeed": false
     },
@@ -3108,25 +3108,25 @@
     },
     "hyna:ETH_MARK_0": {
       "source": ["hip3-hyena-crypto-mainnet-fetcher"],
-      "broadcasters": ["hyperliquid-hip3"],
+      "broadcasters": ["hyperliquid-hip3", "influx"],
       "denomination": "USD",
       "rateFeed": false
     },
     "hyna:ETH_MARK_1": {
       "source": ["hip3-hyena-crypto-mainnet-fetcher"],
-      "broadcasters": ["hyperliquid-hip3"],
+      "broadcasters": ["hyperliquid-hip3", "influx"],
       "denomination": "USD",
       "rateFeed": false
     },
     "hyna:ETH_EXT": {
       "source": ["hip3-hyena-crypto-mainnet-fetcher"],
-      "broadcasters": ["hyperliquid-hip3"],
+      "broadcasters": ["hyperliquid-hip3", "influx"],
       "denomination": "USD",
       "rateFeed": false
     },
     "hyna:ETH": {
       "source": ["hip3-hyena-crypto-mainnet-fetcher"],
-      "broadcasters": ["hyperliquid-hip3"],
+      "broadcasters": ["hyperliquid-hip3", "influx"],
       "denomination": "USD",
       "rateFeed": false
     },
@@ -3249,25 +3249,25 @@
     },
     "hyna:BNB_MARK_0": {
       "source": ["hip3-hyena-crypto-mainnet-fetcher"],
-      "broadcasters": ["hyperliquid-hip3"],
+      "broadcasters": ["hyperliquid-hip3", "influx"],
       "denomination": "USD",
       "rateFeed": false
     },
     "hyna:BNB_MARK_1": {
       "source": ["hip3-hyena-crypto-mainnet-fetcher"],
-      "broadcasters": ["hyperliquid-hip3"],
+      "broadcasters": ["hyperliquid-hip3", "influx"],
       "denomination": "USD",
       "rateFeed": false
     },
     "hyna:BNB_EXT": {
       "source": ["hip3-hyena-crypto-mainnet-fetcher"],
-      "broadcasters": ["hyperliquid-hip3"],
+      "broadcasters": ["hyperliquid-hip3", "influx"],
       "denomination": "USD",
       "rateFeed": false
     },
     "hyna:BNB": {
       "source": ["hip3-hyena-crypto-mainnet-fetcher"],
-      "broadcasters": ["hyperliquid-hip3"],
+      "broadcasters": ["hyperliquid-hip3", "influx"],
       "denomination": "USD",
       "rateFeed": false
     },
@@ -3390,25 +3390,25 @@
     },
     "hyna:HYPE_MARK_0": {
       "source": ["hip3-hyena-crypto-mainnet-fetcher"],
-      "broadcasters": ["hyperliquid-hip3"],
+      "broadcasters": ["hyperliquid-hip3", "influx"],
       "denomination": "USD",
       "rateFeed": false
     },
     "hyna:HYPE_MARK_1": {
       "source": ["hip3-hyena-crypto-mainnet-fetcher"],
-      "broadcasters": ["hyperliquid-hip3"],
+      "broadcasters": ["hyperliquid-hip3", "influx"],
       "denomination": "USD",
       "rateFeed": false
     },
     "hyna:HYPE_EXT": {
       "source": ["hip3-hyena-crypto-mainnet-fetcher"],
-      "broadcasters": ["hyperliquid-hip3"],
+      "broadcasters": ["hyperliquid-hip3", "influx"],
       "denomination": "USD",
       "rateFeed": false
     },
     "hyna:HYPE": {
       "source": ["hip3-hyena-crypto-mainnet-fetcher"],
-      "broadcasters": ["hyperliquid-hip3"],
+      "broadcasters": ["hyperliquid-hip3", "influx"],
       "denomination": "USD",
       "rateFeed": false
     },
@@ -3531,25 +3531,25 @@
     },
     "hyna:SOL_MARK_0": {
       "source": ["hip3-hyena-crypto-mainnet-fetcher"],
-      "broadcasters": ["hyperliquid-hip3"],
+      "broadcasters": ["hyperliquid-hip3", "influx"],
       "denomination": "USD",
       "rateFeed": false
     },
     "hyna:SOL_MARK_1": {
       "source": ["hip3-hyena-crypto-mainnet-fetcher"],
-      "broadcasters": ["hyperliquid-hip3"],
+      "broadcasters": ["hyperliquid-hip3", "influx"],
       "denomination": "USD",
       "rateFeed": false
     },
     "hyna:SOL_EXT": {
       "source": ["hip3-hyena-crypto-mainnet-fetcher"],
-      "broadcasters": ["hyperliquid-hip3"],
+      "broadcasters": ["hyperliquid-hip3", "influx"],
       "denomination": "USD",
       "rateFeed": false
     },
     "hyna:SOL": {
       "source": ["hip3-hyena-crypto-mainnet-fetcher"],
-      "broadcasters": ["hyperliquid-hip3"],
+      "broadcasters": ["hyperliquid-hip3", "influx"],
       "denomination": "USD",
       "rateFeed": false
     },
@@ -3672,25 +3672,25 @@
     },
     "hyna:XRP_MARK_0": {
       "source": ["hip3-hyena-crypto-mainnet-fetcher"],
-      "broadcasters": ["hyperliquid-hip3"],
+      "broadcasters": ["hyperliquid-hip3", "influx"],
       "denomination": "USD",
       "rateFeed": false
     },
     "hyna:XRP_MARK_1": {
       "source": ["hip3-hyena-crypto-mainnet-fetcher"],
-      "broadcasters": ["hyperliquid-hip3"],
+      "broadcasters": ["hyperliquid-hip3", "influx"],
       "denomination": "USD",
       "rateFeed": false
     },
     "hyna:XRP_EXT": {
       "source": ["hip3-hyena-crypto-mainnet-fetcher"],
-      "broadcasters": ["hyperliquid-hip3"],
+      "broadcasters": ["hyperliquid-hip3", "influx"],
       "denomination": "USD",
       "rateFeed": false
     },
     "hyna:XRP": {
       "source": ["hip3-hyena-crypto-mainnet-fetcher"],
-      "broadcasters": ["hyperliquid-hip3"],
+      "broadcasters": ["hyperliquid-hip3", "influx"],
       "denomination": "USD",
       "rateFeed": false
     },
@@ -3813,25 +3813,25 @@
     },
     "hyna:1000PEPE_MARK_0": {
       "source": ["hip3-hyena-crypto-mainnet-fetcher"],
-      "broadcasters": ["hyperliquid-hip3"],
+      "broadcasters": ["hyperliquid-hip3", "influx"],
       "denomination": "USD",
       "rateFeed": false
     },
     "hyna:1000PEPE_MARK_1": {
       "source": ["hip3-hyena-crypto-mainnet-fetcher"],
-      "broadcasters": ["hyperliquid-hip3"],
+      "broadcasters": ["hyperliquid-hip3", "influx"],
       "denomination": "USD",
       "rateFeed": false
     },
     "hyna:1000PEPE_EXT": {
       "source": ["hip3-hyena-crypto-mainnet-fetcher"],
-      "broadcasters": ["hyperliquid-hip3"],
+      "broadcasters": ["hyperliquid-hip3", "influx"],
       "denomination": "USD",
       "rateFeed": false
     },
     "hyna:1000PEPE": {
       "source": ["hip3-hyena-crypto-mainnet-fetcher"],
-      "broadcasters": ["hyperliquid-hip3"],
+      "broadcasters": ["hyperliquid-hip3", "influx"],
       "denomination": "USD",
       "rateFeed": false
     },
@@ -3954,25 +3954,25 @@
     },
     "hyna:ZEC_MARK_0": {
       "source": ["hip3-hyena-crypto-mainnet-fetcher"],
-      "broadcasters": ["hyperliquid-hip3"],
+      "broadcasters": ["hyperliquid-hip3", "influx"],
       "denomination": "USD",
       "rateFeed": false
     },
     "hyna:ZEC_MARK_1": {
       "source": ["hip3-hyena-crypto-mainnet-fetcher"],
-      "broadcasters": ["hyperliquid-hip3"],
+      "broadcasters": ["hyperliquid-hip3", "influx"],
       "denomination": "USD",
       "rateFeed": false
     },
     "hyna:ZEC_EXT": {
       "source": ["hip3-hyena-crypto-mainnet-fetcher"],
-      "broadcasters": ["hyperliquid-hip3"],
+      "broadcasters": ["hyperliquid-hip3", "influx"],
       "denomination": "USD",
       "rateFeed": false
     },
     "hyna:ZEC": {
       "source": ["hip3-hyena-crypto-mainnet-fetcher"],
-      "broadcasters": ["hyperliquid-hip3"],
+      "broadcasters": ["hyperliquid-hip3", "influx"],
       "denomination": "USD",
       "rateFeed": false
     },
@@ -4095,25 +4095,25 @@
     },
     "hyna:FARTCOIN_MARK_0": {
       "source": ["hip3-hyena-crypto-mainnet-fetcher"],
-      "broadcasters": ["hyperliquid-hip3"],
+      "broadcasters": ["hyperliquid-hip3", "influx"],
       "denomination": "USD",
       "rateFeed": false
     },
     "hyna:FARTCOIN_MARK_1": {
       "source": ["hip3-hyena-crypto-mainnet-fetcher"],
-      "broadcasters": ["hyperliquid-hip3"],
+      "broadcasters": ["hyperliquid-hip3", "influx"],
       "denomination": "USD",
       "rateFeed": false
     },
     "hyna:FARTCOIN_EXT": {
       "source": ["hip3-hyena-crypto-mainnet-fetcher"],
-      "broadcasters": ["hyperliquid-hip3"],
+      "broadcasters": ["hyperliquid-hip3", "influx"],
       "denomination": "USD",
       "rateFeed": false
     },
     "hyna:FARTCOIN": {
       "source": ["hip3-hyena-crypto-mainnet-fetcher"],
-      "broadcasters": ["hyperliquid-hip3"],
+      "broadcasters": ["hyperliquid-hip3", "influx"],
       "denomination": "USD",
       "rateFeed": false
     },
@@ -4236,25 +4236,25 @@
     },
     "hyna:LINK_MARK_0": {
       "source": ["hip3-hyena-crypto-mainnet-fetcher"],
-      "broadcasters": ["hyperliquid-hip3"],
+      "broadcasters": ["hyperliquid-hip3", "influx"],
       "denomination": "USD",
       "rateFeed": false
     },
     "hyna:LINK_MARK_1": {
       "source": ["hip3-hyena-crypto-mainnet-fetcher"],
-      "broadcasters": ["hyperliquid-hip3"],
+      "broadcasters": ["hyperliquid-hip3", "influx"],
       "denomination": "USD",
       "rateFeed": false
     },
     "hyna:LINK_EXT": {
       "source": ["hip3-hyena-crypto-mainnet-fetcher"],
-      "broadcasters": ["hyperliquid-hip3"],
+      "broadcasters": ["hyperliquid-hip3", "influx"],
       "denomination": "USD",
       "rateFeed": false
     },
     "hyna:LINK": {
       "source": ["hip3-hyena-crypto-mainnet-fetcher"],
-      "broadcasters": ["hyperliquid-hip3"],
+      "broadcasters": ["hyperliquid-hip3", "influx"],
       "denomination": "USD",
       "rateFeed": false
     },
@@ -4377,25 +4377,25 @@
     },
     "hyna:SUI_MARK_0": {
       "source": ["hip3-hyena-crypto-mainnet-fetcher"],
-      "broadcasters": ["hyperliquid-hip3"],
+      "broadcasters": ["hyperliquid-hip3", "influx"],
       "denomination": "USD",
       "rateFeed": false
     },
     "hyna:SUI_MARK_1": {
       "source": ["hip3-hyena-crypto-mainnet-fetcher"],
-      "broadcasters": ["hyperliquid-hip3"],
+      "broadcasters": ["hyperliquid-hip3", "influx"],
       "denomination": "USD",
       "rateFeed": false
     },
     "hyna:SUI_EXT": {
       "source": ["hip3-hyena-crypto-mainnet-fetcher"],
-      "broadcasters": ["hyperliquid-hip3"],
+      "broadcasters": ["hyperliquid-hip3", "influx"],
       "denomination": "USD",
       "rateFeed": false
     },
     "hyna:SUI": {
       "source": ["hip3-hyena-crypto-mainnet-fetcher"],
-      "broadcasters": ["hyperliquid-hip3"],
+      "broadcasters": ["hyperliquid-hip3", "influx"],
       "denomination": "USD",
       "rateFeed": false
     },
@@ -4517,25 +4517,25 @@
     },
     "hyna:XMR_MARK_0": {
       "source": ["hip3-hyena-crypto-mainnet-fetcher"],
-      "broadcasters": ["hyperliquid-hip3"],
+      "broadcasters": ["hyperliquid-hip3", "influx"],
       "denomination": "USD",
       "rateFeed": false
     },
     "hyna:XMR_MARK_1": {
       "source": ["hip3-hyena-crypto-mainnet-fetcher"],
-      "broadcasters": ["hyperliquid-hip3"],
+      "broadcasters": ["hyperliquid-hip3", "influx"],
       "denomination": "USD",
       "rateFeed": false
     },
     "hyna:XMR_EXT": {
       "source": ["hip3-hyena-crypto-mainnet-fetcher"],
-      "broadcasters": ["hyperliquid-hip3"],
+      "broadcasters": ["hyperliquid-hip3", "influx"],
       "denomination": "USD",
       "rateFeed": false
     },
     "hyna:XMR": {
       "source": ["hip3-hyena-crypto-mainnet-fetcher"],
-      "broadcasters": ["hyperliquid-hip3"],
+      "broadcasters": ["hyperliquid-hip3", "influx"],
       "denomination": "USD",
       "rateFeed": false
     },
@@ -4658,25 +4658,25 @@
     },
     "hyna:DOGE_MARK_0": {
       "source": ["hip3-hyena-crypto-mainnet-fetcher"],
-      "broadcasters": ["hyperliquid-hip3"],
+      "broadcasters": ["hyperliquid-hip3", "influx"],
       "denomination": "USD",
       "rateFeed": false
     },
     "hyna:DOGE_MARK_1": {
       "source": ["hip3-hyena-crypto-mainnet-fetcher"],
-      "broadcasters": ["hyperliquid-hip3"],
+      "broadcasters": ["hyperliquid-hip3", "influx"],
       "denomination": "USD",
       "rateFeed": false
     },
     "hyna:DOGE_EXT": {
       "source": ["hip3-hyena-crypto-mainnet-fetcher"],
-      "broadcasters": ["hyperliquid-hip3"],
+      "broadcasters": ["hyperliquid-hip3", "influx"],
       "denomination": "USD",
       "rateFeed": false
     },
     "hyna:DOGE": {
       "source": ["hip3-hyena-crypto-mainnet-fetcher"],
-      "broadcasters": ["hyperliquid-hip3"],
+      "broadcasters": ["hyperliquid-hip3", "influx"],
       "denomination": "USD",
       "rateFeed": false
     },
@@ -4799,25 +4799,25 @@
     },
     "hyna:XPL_MARK_0": {
       "source": ["hip3-hyena-crypto-mainnet-fetcher"],
-      "broadcasters": ["hyperliquid-hip3"],
+      "broadcasters": ["hyperliquid-hip3", "influx"],
       "denomination": "USD",
       "rateFeed": false
     },
     "hyna:XPL_MARK_1": {
       "source": ["hip3-hyena-crypto-mainnet-fetcher"],
-      "broadcasters": ["hyperliquid-hip3"],
+      "broadcasters": ["hyperliquid-hip3", "influx"],
       "denomination": "USD",
       "rateFeed": false
     },
     "hyna:XPL_EXT": {
       "source": ["hip3-hyena-crypto-mainnet-fetcher"],
-      "broadcasters": ["hyperliquid-hip3"],
+      "broadcasters": ["hyperliquid-hip3", "influx"],
       "denomination": "USD",
       "rateFeed": false
     },
     "hyna:XPL": {
       "source": ["hip3-hyena-crypto-mainnet-fetcher"],
-      "broadcasters": ["hyperliquid-hip3"],
+      "broadcasters": ["hyperliquid-hip3", "influx"],
       "denomination": "USD",
       "rateFeed": false
     },
@@ -4942,25 +4942,25 @@
     },
     "hyna:IP_MARK_0": {
       "source": ["hip3-hyena-crypto-mainnet-fetcher"],
-      "broadcasters": ["hyperliquid-hip3"],
+      "broadcasters": ["hyperliquid-hip3", "influx"],
       "denomination": "USD",
       "rateFeed": false
     },
     "hyna:IP_MARK_1": {
       "source": ["hip3-hyena-crypto-mainnet-fetcher"],
-      "broadcasters": ["hyperliquid-hip3"],
+      "broadcasters": ["hyperliquid-hip3", "influx"],
       "denomination": "USD",
       "rateFeed": false
     },
     "hyna:IP_EXT": {
       "source": ["hip3-hyena-crypto-mainnet-fetcher"],
-      "broadcasters": ["hyperliquid-hip3"],
+      "broadcasters": ["hyperliquid-hip3", "influx"],
       "denomination": "USD",
       "rateFeed": false
     },
     "hyna:IP": {
       "source": ["hip3-hyena-crypto-mainnet-fetcher"],
-      "broadcasters": ["hyperliquid-hip3"],
+      "broadcasters": ["hyperliquid-hip3", "influx"],
       "denomination": "USD",
       "rateFeed": false
     },
@@ -5093,25 +5093,25 @@
     },
     "hyna:ADA_MARK_0": {
       "source": ["hip3-hyena-crypto-mainnet-fetcher"],
-      "broadcasters": ["hyperliquid-hip3"],
+      "broadcasters": ["hyperliquid-hip3", "influx"],
       "denomination": "USD",
       "rateFeed": false
     },
     "hyna:ADA_MARK_1": {
       "source": ["hip3-hyena-crypto-mainnet-fetcher"],
-      "broadcasters": ["hyperliquid-hip3"],
+      "broadcasters": ["hyperliquid-hip3", "influx"],
       "denomination": "USD",
       "rateFeed": false
     },
     "hyna:ADA_EXT": {
       "source": ["hip3-hyena-crypto-mainnet-fetcher"],
-      "broadcasters": ["hyperliquid-hip3"],
+      "broadcasters": ["hyperliquid-hip3", "influx"],
       "denomination": "USD",
       "rateFeed": false
     },
     "hyna:ADA": {
       "source": ["hip3-hyena-crypto-mainnet-fetcher"],
-      "broadcasters": ["hyperliquid-hip3"],
+      "broadcasters": ["hyperliquid-hip3", "influx"],
       "denomination": "USD",
       "rateFeed": false
     },
@@ -5228,25 +5228,25 @@
     },
     "hyna:PUMP_MARK_0": {
       "source": ["hip3-hyena-crypto-mainnet-fetcher"],
-      "broadcasters": ["hyperliquid-hip3"],
+      "broadcasters": ["hyperliquid-hip3", "influx"],
       "denomination": "USD",
       "rateFeed": false
     },
     "hyna:PUMP_MARK_1": {
       "source": ["hip3-hyena-crypto-mainnet-fetcher"],
-      "broadcasters": ["hyperliquid-hip3"],
+      "broadcasters": ["hyperliquid-hip3", "influx"],
       "denomination": "USD",
       "rateFeed": false
     },
     "hyna:PUMP_EXT": {
       "source": ["hip3-hyena-crypto-mainnet-fetcher"],
-      "broadcasters": ["hyperliquid-hip3"],
+      "broadcasters": ["hyperliquid-hip3", "influx"],
       "denomination": "USD",
       "rateFeed": false
     },
     "hyna:PUMP": {
       "source": ["hip3-hyena-crypto-mainnet-fetcher"],
-      "broadcasters": ["hyperliquid-hip3"],
+      "broadcasters": ["hyperliquid-hip3", "influx"],
       "denomination": "USD",
       "rateFeed": false
     },
@@ -5371,25 +5371,25 @@
     },
     "hyna:LTC_MARK_0": {
       "source": ["hip3-hyena-crypto-mainnet-fetcher"],
-      "broadcasters": ["hyperliquid-hip3"],
+      "broadcasters": ["hyperliquid-hip3", "influx"],
       "denomination": "USD",
       "rateFeed": false
     },
     "hyna:LTC_MARK_1": {
       "source": ["hip3-hyena-crypto-mainnet-fetcher"],
-      "broadcasters": ["hyperliquid-hip3"],
+      "broadcasters": ["hyperliquid-hip3", "influx"],
       "denomination": "USD",
       "rateFeed": false
     },
     "hyna:LTC_EXT": {
       "source": ["hip3-hyena-crypto-mainnet-fetcher"],
-      "broadcasters": ["hyperliquid-hip3"],
+      "broadcasters": ["hyperliquid-hip3", "influx"],
       "denomination": "USD",
       "rateFeed": false
     },
     "hyna:LTC": {
       "source": ["hip3-hyena-crypto-mainnet-fetcher"],
-      "broadcasters": ["hyperliquid-hip3"],
+      "broadcasters": ["hyperliquid-hip3", "influx"],
       "denomination": "USD",
       "rateFeed": false
     },
@@ -5522,25 +5522,25 @@
     },
     "hyna:BCH_MARK_0": {
       "source": ["hip3-hyena-crypto-mainnet-fetcher"],
-      "broadcasters": ["hyperliquid-hip3"],
+      "broadcasters": ["hyperliquid-hip3", "influx"],
       "denomination": "USD",
       "rateFeed": false
     },
     "hyna:BCH_MARK_1": {
       "source": ["hip3-hyena-crypto-mainnet-fetcher"],
-      "broadcasters": ["hyperliquid-hip3"],
+      "broadcasters": ["hyperliquid-hip3", "influx"],
       "denomination": "USD",
       "rateFeed": false
     },
     "hyna:BCH_EXT": {
       "source": ["hip3-hyena-crypto-mainnet-fetcher"],
-      "broadcasters": ["hyperliquid-hip3"],
+      "broadcasters": ["hyperliquid-hip3", "influx"],
       "denomination": "USD",
       "rateFeed": false
     },
     "hyna:BCH": {
       "source": ["hip3-hyena-crypto-mainnet-fetcher"],
-      "broadcasters": ["hyperliquid-hip3"],
+      "broadcasters": ["hyperliquid-hip3", "influx"],
       "denomination": "USD",
       "rateFeed": false
     },
@@ -5663,25 +5663,25 @@
     },
     "hyna:ENA_MARK_0": {
       "source": ["hip3-hyena-crypto-mainnet-fetcher"],
-      "broadcasters": ["hyperliquid-hip3"],
+      "broadcasters": ["hyperliquid-hip3", "influx"],
       "denomination": "USD",
       "rateFeed": false
     },
     "hyna:ENA_MARK_1": {
       "source": ["hip3-hyena-crypto-mainnet-fetcher"],
-      "broadcasters": ["hyperliquid-hip3"],
+      "broadcasters": ["hyperliquid-hip3", "influx"],
       "denomination": "USD",
       "rateFeed": false
     },
     "hyna:ENA_EXT": {
       "source": ["hip3-hyena-crypto-mainnet-fetcher"],
-      "broadcasters": ["hyperliquid-hip3"],
+      "broadcasters": ["hyperliquid-hip3", "influx"],
       "denomination": "USD",
       "rateFeed": false
     },
     "hyna:ENA": {
       "source": ["hip3-hyena-crypto-mainnet-fetcher"],
-      "broadcasters": ["hyperliquid-hip3"],
+      "broadcasters": ["hyperliquid-hip3", "influx"],
       "denomination": "USD",
       "rateFeed": false
     },
@@ -5804,25 +5804,25 @@
     },
     "hyna:LIGHTER_MARK_0": {
       "source": ["hip3-hyena-crypto-mainnet-fetcher"],
-      "broadcasters": ["hyperliquid-hip3"],
+      "broadcasters": ["hyperliquid-hip3", "influx"],
       "denomination": "USD",
       "rateFeed": false
     },
     "hyna:LIGHTER_MARK_1": {
       "source": ["hip3-hyena-crypto-mainnet-fetcher"],
-      "broadcasters": ["hyperliquid-hip3"],
+      "broadcasters": ["hyperliquid-hip3", "influx"],
       "denomination": "USD",
       "rateFeed": false
     },
     "hyna:LIGHTER_EXT": {
       "source": ["hip3-hyena-crypto-mainnet-fetcher"],
-      "broadcasters": ["hyperliquid-hip3"],
+      "broadcasters": ["hyperliquid-hip3", "influx"],
       "denomination": "USD",
       "rateFeed": false
     },
     "hyna:LIGHTER": {
       "source": ["hip3-hyena-crypto-mainnet-fetcher"],
-      "broadcasters": ["hyperliquid-hip3"],
+      "broadcasters": ["hyperliquid-hip3", "influx"],
       "denomination": "USD",
       "rateFeed": false
     },
@@ -5956,25 +5956,25 @@
     },
     "hyna:BASED_MARK_0": {
       "source": ["hip3-hyena-crypto-spot-mainnet-fetcher"],
-      "broadcasters": ["hyperliquid-hip3"],
+      "broadcasters": ["hyperliquid-hip3", "influx"],
       "denomination": "USD",
       "rateFeed": false
     },
     "hyna:BASED_MARK_1": {
       "source": ["hip3-hyena-crypto-spot-mainnet-fetcher"],
-      "broadcasters": ["hyperliquid-hip3"],
+      "broadcasters": ["hyperliquid-hip3", "influx"],
       "denomination": "USD",
       "rateFeed": false
     },
     "hyna:BASED_EXT": {
       "source": ["hip3-hyena-crypto-spot-mainnet-fetcher"],
-      "broadcasters": ["hyperliquid-hip3"],
+      "broadcasters": ["hyperliquid-hip3", "influx"],
       "denomination": "USD",
       "rateFeed": false
     },
     "hyna:BASED": {
       "source": ["hip3-hyena-crypto-spot-mainnet-fetcher"],
-      "broadcasters": ["hyperliquid-hip3"],
+      "broadcasters": ["hyperliquid-hip3", "influx"],
       "denomination": "USD",
       "rateFeed": false
     },
