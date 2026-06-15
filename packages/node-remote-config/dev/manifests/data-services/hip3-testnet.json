@@ -7412,7 +7412,6 @@
         "influx"
       ],
       "denomination": "USD",
-      "localCacheTTL": "61m",
       "rateFeed": false
     },
     "MID_hyna:IP": {
@@ -8068,7 +8067,6 @@
         "influx"
       ],
       "denomination": "USD",
-      "localCacheTTL": "61m",
       "rateFeed": false
     },
     "MID_hyna:LTC": {
@@ -8946,7 +8944,6 @@
         "influx"
       ],
       "denomination": "USD",
-      "localCacheTTL": "61m",
       "rateFeed": false
     },
     "MID_hyna:BASED": {
