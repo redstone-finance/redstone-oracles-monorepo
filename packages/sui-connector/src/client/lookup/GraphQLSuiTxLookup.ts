@@ -3,15 +3,14 @@ import { ManifestRef, PerManifestTxLookup } from "@redstone-finance/multichain-k
 import { loggerFactory, RedstoneCommon } from "@redstone-finance/utils";
 import type { RawGqlInput, RawGqlTx, RawGqlTxn } from "../graphql-types";
 import { AFFECTED_OBJECT_TRANSACTIONS_QUERY } from "../queries";
+import { parseSuiEvents } from "./SuiEventParsing";
 import {
   buildNormalizedSuiTx,
   computeOldestBlockInPage,
   computeSuiGasUsed,
-  computeSuiIsFailed,
-  extractSharedObjectId,
-  extractWritePricePayloads,
   filterSuiTxsAndCheckHasNextPage,
 } from "./SuiTxParsing";
+import { extractSharedObjectId, extractWritePriceCalls } from "./SuiWriteCallParsing";
 
 const logger = loggerFactory("grpc-sui-tx-lookup");
 
@@ -89,19 +88,19 @@ export class GraphQLSuiTxLookup extends PerManifestTxLookup {
   private static normalize(tx: RawGqlTx) {
     const inputs = GraphQLSuiTxLookup.parseInputs(tx.kind?.inputs?.nodes ?? []);
     const moveCalls = GraphQLSuiTxLookup.parseMoveCalls(tx.kind?.commands?.nodes ?? []);
-    const payloads = extractWritePricePayloads(inputs, moveCalls);
+    const writes = extractWritePriceCalls(inputs, moveCalls);
     const targetObjectId = extractSharedObjectId(inputs, moveCalls);
 
-    if (!payloads.length || !targetObjectId) {
+    if (!writes.length || !targetObjectId) {
       return [];
     }
 
-    const events = (tx.effects?.events?.nodes ?? []).map((node) => ({
+    const rawEvents = (tx.effects?.events?.nodes ?? []).map((node) => ({
       type: node.contents?.type?.repr ?? "",
+      json: node.contents?.json,
     }));
-    const isFailure = (tx.effects?.status ?? "") === GQL_STATUS_FAILURE;
-    const effectStatus = isFailure ? "failure" : "success";
-    const isFailed = computeSuiIsFailed(effectStatus, events);
+    const events = parseSuiEvents(rawEvents);
+    const effectFailed = tx.effects?.status === GQL_STATUS_FAILURE;
 
     const gas = tx.effects?.gasEffects?.gasSummary ?? {};
     const gasUsed = computeSuiGasUsed({
@@ -122,11 +121,12 @@ export class GraphQLSuiTxLookup extends PerManifestTxLookup {
       hash: tx.digest ?? "",
       sender: tx.sender?.address ?? "",
       targetObjectId,
-      payloads,
+      writes,
       gasLimit: String(tx.gasInput?.gasBudget ?? "0"),
       gasPrice: String(tx.gasInput?.gasPrice ?? "0"),
-      isFailed,
+      effectFailed,
       gasUsed,
+      events,
     });
   }
 
