@@ -29,7 +29,6 @@ export function getFunctionSignature(tx: { data: string }) {
 export type EventEntry = {
   name: string;
   feedId: string;
-  args: unknown;
 } & ({ updated: true; value: number } | { updated: false });
 
 export type Events = { [p: string]: EventEntry | undefined };
