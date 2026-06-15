@@ -61,6 +61,14 @@ const SAMPLE_RESPONSE = {
   },
 };
 
+async function flattenErrors<T>(promise: Promise<T>): Promise<T> {
+  try {
+    return await promise;
+  } catch (e) {
+    throw new Error(RedstoneCommon.stringifyError(e));
+  }
+}
+
 describe("request-data-packages", () => {
   beforeAll(() => server.listen());
   beforeEach(() => jest.restoreAllMocks());
@@ -97,24 +105,26 @@ describe("request-data-packages", () => {
 
   test("Should fail if all urls fail", async () => {
     const defaultReqParams = getReqParams(["https://bad-url-1.com", "https://bad-url-2.com"]);
-    await expect(requestDataPackages(defaultReqParams)).rejects.toThrow(
+    await expect(flattenErrors(requestDataPackages(defaultReqParams))).rejects.toThrow(
       /Request failed with status code 400/
     );
   });
 
   test("Should fail for missing data feed id", async () => {
     const defaultReqParams = getReqParams(["https://good-url-sorted-asc-only-eth.com"]);
-    await expect(() => requestDataPackages(defaultReqParams)).rejects.toThrow(
+    await expect(flattenErrors(requestDataPackages(defaultReqParams))).rejects.toThrow(
       "Requested data feed id is not included in response: BTC"
     );
   });
 
   test("Should fail for too few unique signers", async () => {
-    await expect(() =>
-      requestDataPackages({
-        ...getReqParams(),
-        uniqueSignersCount: 5,
-      })
+    await expect(
+      flattenErrors(
+        requestDataPackages({
+          ...getReqParams(),
+          uniqueSignersCount: 5,
+        })
+      )
     ).rejects.toThrow(
       "Too few data packages with unique signers for the data feed: BTC. Expected: 5. Received: 4"
     );
@@ -340,14 +350,16 @@ describe("request-data-packages", () => {
     ];
 
     await expect(
-      requestDataPackages({
-        ...getReqParams(),
-        authorizedSigners: signerAddresses,
-        uniqueSignersCount: 2,
-        dataPackagesIds: ["ETH"],
-        returnAllPackages: false,
-        maxTimestampDeviationMS: 20_000,
-      })
+      flattenErrors(
+        requestDataPackages({
+          ...getReqParams(),
+          authorizedSigners: signerAddresses,
+          uniqueSignersCount: 2,
+          dataPackagesIds: ["ETH"],
+          returnAllPackages: false,
+          maxTimestampDeviationMS: 20_000,
+        })
+      )
     ).rejects.toThrowError(/Timestamps do not have the same value: 1732724591163, 1732724591165/);
   });
 
@@ -392,14 +404,16 @@ describe("request-data-packages", () => {
     ];
 
     await expect(
-      requestDataPackages({
-        ...getReqParams(),
-        authorizedSigners: signerAddresses,
-        uniqueSignersCount: 2,
-        dataPackagesIds: ["ETH"],
-        returnAllPackages: false,
-        maxTimestampDeviationMS: 20_000,
-      })
+      flattenErrors(
+        requestDataPackages({
+          ...getReqParams(),
+          authorizedSigners: signerAddresses,
+          uniqueSignersCount: 2,
+          dataPackagesIds: ["ETH"],
+          returnAllPackages: false,
+          maxTimestampDeviationMS: 20_000,
+        })
+      )
     ).rejects.toThrowError(/Timestamp deviation exceeded/);
   });
 
@@ -428,13 +442,15 @@ describe("request-data-packages", () => {
     });
 
     await expect(
-      requestDataPackages({
-        ...getReqParams(),
-        uniqueSignersCount: 1,
-        dataPackagesIds: ["ETH"],
-        returnAllPackages: false,
-        authorizedSigners: ["fake_signer"],
-      })
+      flattenErrors(
+        requestDataPackages({
+          ...getReqParams(),
+          uniqueSignersCount: 1,
+          dataPackagesIds: ["ETH"],
+          returnAllPackages: false,
+          authorizedSigners: ["fake_signer"],
+        })
+      )
     ).rejects.toThrowError(/No data packages for the data feed: ETH/);
   });
 
@@ -569,13 +585,15 @@ describe("request-data-packages", () => {
     expect(result["ETH"]![0].dataPackage.dataPoints[0].toObj().value).toEqual(20_000);
 
     await expect(
-      requestDataPackages({
-        ...getReqParams(),
-        uniqueSignersCount: 2,
-        dataPackagesIds: ["ETH"],
-        returnAllPackages: false,
-        authorizedSigners: [MOCK_WALLET.address],
-      })
+      flattenErrors(
+        requestDataPackages({
+          ...getReqParams(),
+          uniqueSignersCount: 2,
+          dataPackagesIds: ["ETH"],
+          returnAllPackages: false,
+          authorizedSigners: [MOCK_WALLET.address],
+        })
+      )
     ).rejects.toThrowError(/Too few data packages with unique signers/);
   });
 
@@ -598,12 +616,14 @@ describe("request-data-packages", () => {
     });
 
     await expect(
-      requestDataPackages({
-        ...getReqParams(),
-        uniqueSignersCount: 4,
-        dataPackagesIds: ["ETH"],
-        returnAllPackages: false,
-      })
+      flattenErrors(
+        requestDataPackages({
+          ...getReqParams(),
+          uniqueSignersCount: 4,
+          dataPackagesIds: ["ETH"],
+          returnAllPackages: false,
+        })
+      )
     ).rejects.toThrowError(/Zod validation error/);
   });
 
@@ -710,13 +730,15 @@ describe("request-data-packages", () => {
 
       const start = performance.now();
       void jest.advanceTimersByTimeAsync(timeout1 + timeout2 + 1_000);
-      const packagesPromise = requestDataPackages({
-        ...getReqParams(),
-        urls: ["1", "2", "3"],
-        uniqueSignersCount: 1,
-        dataPackagesIds: ["ETH"],
-        returnAllPackages: false,
-      });
+      const packagesPromise = flattenErrors(
+        requestDataPackages({
+          ...getReqParams(),
+          urls: ["1", "2", "3"],
+          uniqueSignersCount: 1,
+          dataPackagesIds: ["ETH"],
+          returnAllPackages: false,
+        })
+      );
 
       await expect(packagesPromise).rejects.toThrowError(/timeout/);
       const timePassed = performance.now() - start;

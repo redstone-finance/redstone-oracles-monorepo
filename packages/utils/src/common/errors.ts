@@ -169,28 +169,6 @@ export function stringifyError(e: unknown, noStack = false): string {
   }
 }
 
-export function simplifyErrorMessage(error: unknown) {
-  if (error instanceof AggregateError) {
-    const errorMessages: Set<string> = new Set();
-    for (const err of error.errors) {
-      const errorString = String(err);
-
-      const pattern = "Original error: AggregateError: <no message>, errors:";
-      const patternPos = errorString.indexOf(pattern);
-      const startIndex = patternPos !== -1 ? patternPos + pattern.length : 0;
-      const endPos = errorString.indexOf("\n", startIndex);
-      const endIndex = endPos === -1 ? errorString.length : endPos;
-      const shortenedError = errorString.substring(startIndex, endIndex).trim();
-
-      errorMessages.add(shortenedError);
-    }
-
-    return Array.from(errorMessages).join("\n");
-  } else {
-    return stringifyError(error);
-  }
-}
-
 export interface EthersError {
   code: ErrorCode;
   message: string;
