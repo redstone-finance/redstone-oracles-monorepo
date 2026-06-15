@@ -133,25 +133,25 @@
     },
     "hyna:LIGHTER_MARK_0": {
       "source": ["hip3-hyena-crypto-mainnet-fetcher"],
-      "broadcasters": ["hyperliquid-hip3"],
+      "broadcasters": ["hyperliquid-hip3", "influx"],
       "denomination": "USD",
       "rateFeed": false
     },
     "hyna:LIGHTER_MARK_1": {
       "source": ["hip3-hyena-crypto-mainnet-fetcher"],
-      "broadcasters": ["hyperliquid-hip3"],
+      "broadcasters": ["hyperliquid-hip3", "influx"],
       "denomination": "USD",
       "rateFeed": false
     },
     "hyna:LIGHTER_EXT": {
       "source": ["hip3-hyena-crypto-mainnet-fetcher"],
-      "broadcasters": ["hyperliquid-hip3"],
+      "broadcasters": ["hyperliquid-hip3", "influx"],
       "denomination": "USD",
       "rateFeed": false
     },
     "hyna:LIGHTER": {
       "source": ["hip3-hyena-crypto-mainnet-fetcher"],
-      "broadcasters": ["hyperliquid-hip3"],
+      "broadcasters": ["hyperliquid-hip3", "influx"],
       "denomination": "USD",
       "rateFeed": false
     },
