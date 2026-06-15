@@ -1,28 +1,33 @@
 import {
+  Events,
   MULTI_FEED_RELAYER_UPDATE_FUNCTION_TYPE,
   NormalizedContractTx,
 } from "@redstone-finance/multichain-kit";
-import { hexlify } from "ethers/lib/utils";
-
-export const WRITE_PRICE_FUNCTIONS = ["write_price", "try_write_price"];
-export const PAYLOAD_ARG_ID = 2;
-// write_price(adapter, _, payload): the shared price-adapter object is argument 0 of the call
-export const SHARED_OBJECT_ARG_ID = 0;
+import { RedstoneCommon } from "@redstone-finance/utils";
+import { SuiWriteCall } from "./SuiWriteCallParsing";
 
 export const SUI_UPDATE_ERROR_EVENT_FRAGMENT = "price_adapter::UpdateError";
-export const SUI_EFFECT_STATUS_FAILURE = "failure";
+export const SUI_PRICE_WRITE_EVENT_FRAGMENT = "price_adapter::PriceWrite";
 
-export interface SuiNormalizedGas {
+interface SuiNormalizedGas {
   computationCost: string;
   storageCost: string;
   storageRebate: string;
   nonRefundableStorageFee: string;
 }
 
-export function computeSuiIsFailed(effectStatus: string, events: { type: string }[]) {
-  const hasErrorEvent = events.some((e) => e.type.includes(SUI_UPDATE_ERROR_EVENT_FRAGMENT));
-
-  return effectStatus === SUI_EFFECT_STATUS_FAILURE || hasErrorEvent;
+interface NormalizedSuiTxBase {
+  blockNumber: number;
+  blockTimestamp: number;
+  hash: string;
+  sender: string;
+  targetObjectId: string;
+  writes: SuiWriteCall[];
+  gasLimit: string;
+  gasPrice: string;
+  effectFailed: boolean;
+  gasUsed: number;
+  events?: Events;
 }
 
 export function computeSuiGasUsed(gas: SuiNormalizedGas) {
@@ -34,65 +39,10 @@ export function computeSuiGasUsed(gas: SuiNormalizedGas) {
   );
 }
 
-export type ParsedInput =
-  | { kind: "pure"; rawValue: unknown }
-  | { kind: "shared"; objectId: string }
-  | { kind: "other" };
+export function buildNormalizedSuiTx(params: NormalizedSuiTxBase) {
+  const isFailed = params.effectFailed || hasSkippedFeed(params.events);
 
-export interface ParsedMoveCall {
-  functionName: string;
-  argInputIxs: (number | undefined)[];
-}
-
-export function extractWritePricePayloads(inputs: ParsedInput[], moveCalls: ParsedMoveCall[]) {
-  return moveCalls
-    .filter((mc) => WRITE_PRICE_FUNCTIONS.includes(mc.functionName))
-    .map((mc) => mc.argInputIxs[PAYLOAD_ARG_ID])
-    .filter((ix): ix is number => typeof ix === "number")
-    .map((ix) => inputs[ix])
-    .filter((input): input is Extract<ParsedInput, { kind: "pure" }> => input.kind === "pure")
-    .map((input) => pureValueToHex(input.rawValue))
-    .filter((hex): hex is string => hex !== undefined);
-}
-
-function pureValueToHex(value: unknown) {
-  if (typeof value === "string") {
-    return hexlify(Uint8Array.from(value, (c) => c.charCodeAt(0)));
-  }
-  if (Array.isArray(value) || value instanceof Uint8Array) {
-    return hexlify(value);
-  }
-
-  return undefined;
-}
-
-export function extractSharedObjectId(inputs: ParsedInput[], moveCalls: ParsedMoveCall[]) {
-  const writeCall = moveCalls.find((mc) => WRITE_PRICE_FUNCTIONS.includes(mc.functionName));
-  const inputIx = writeCall?.argInputIxs[SHARED_OBJECT_ARG_ID];
-  if (inputIx === undefined) {
-    return undefined;
-  }
-
-  const input = inputs[inputIx] as ParsedInput | undefined;
-
-  return input?.kind === "shared" ? input.objectId : undefined;
-}
-
-export interface BuildNormalizedTxParams {
-  blockNumber: number;
-  blockTimestamp: number;
-  hash: string;
-  sender: string;
-  targetObjectId: string;
-  payloads: string[];
-  gasLimit: string;
-  gasPrice: string;
-  isFailed: boolean;
-  gasUsed: number;
-}
-
-export function buildNormalizedSuiTx(params: BuildNormalizedTxParams) {
-  return params.payloads.map((payload) => ({
+  return params.writes.map(({ feedId, payload }) => ({
     blockNumber: params.blockNumber,
     blockTimestamp: params.blockTimestamp,
     hash: params.hash,
@@ -101,10 +51,23 @@ export function buildNormalizedSuiTx(params: BuildNormalizedTxParams) {
     data: payload,
     gasLimit: params.gasLimit,
     gasPrice: params.gasPrice,
-    isFailed: params.isFailed,
-    gasUsed: params.gasUsed,
+    isFailed,
+    gasUsed: params.gasUsed / params.writes.length,
+    events: pickFeedEvents(feedId, params.events),
     functionType: MULTI_FEED_RELAYER_UPDATE_FUNCTION_TYPE,
   }));
+}
+
+function hasSkippedFeed(events?: Events) {
+  return Object.values(events ?? {})
+    .filter(RedstoneCommon.isDefined)
+    .some((entry) => !entry.updated);
+}
+
+function pickFeedEvents(feedId: string, events?: Events) {
+  const entry = events?.[feedId];
+
+  return entry ? { [feedId]: entry } : undefined;
 }
 
 export function filterSuiTxsAndCheckHasNextPage(

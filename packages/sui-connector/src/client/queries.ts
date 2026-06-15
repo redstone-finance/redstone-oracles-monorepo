@@ -82,6 +82,7 @@ export const AFFECTED_OBJECT_TRANSACTIONS_QUERY = graphql(`
                 type {
                   repr
                 }
+                json
               }
             }
           }
