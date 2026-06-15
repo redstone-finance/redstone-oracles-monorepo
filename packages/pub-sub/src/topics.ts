@@ -87,7 +87,7 @@ const WILDCARDS = new Set(["+", "#", "*", ">"]);
 // '.' is the NATS subject separator — encodeURIComponent leaves it unencoded,
 // so we encode it explicitly to survive the MQTT↔NATS conversion.
 const encodePart = (part: string) => {
-  return encodeURIComponent(part).replace(/\./g, "%2E");
+  return encodeURIComponent(part).replaceAll(".", "%2E");
 };
 
 export const encodeTopic = (parts: string[]) => {
