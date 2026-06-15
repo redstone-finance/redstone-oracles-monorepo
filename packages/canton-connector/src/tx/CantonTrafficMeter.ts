@@ -24,7 +24,7 @@ export abstract class CantonTrafficMeter {
   abstract beforeUpdate(): void;
 
   abstract afterUpdate(
-    feedCount: number,
+    feedIds: string[],
     result: TxDeliveryManUpdateStatus<CantonTxResultExt>
   ): Promise<void> | void;
 

@@ -19,7 +19,7 @@ export class RealCantonTrafficMeter extends CantonTrafficMeter {
     this.initialConsumedTrafficPromise = this.getTotalConsumedTrafficSafe();
   }
 
-  override afterUpdate(feedCount: number, result: TxDeliveryManUpdateStatus<CantonTxResultExt>) {
+  override afterUpdate(feedIds: string[], result: TxDeliveryManUpdateStatus<CantonTxResultExt>) {
     const metadata = FP.unwrapOr(result, undefined)?.metadata;
     const initialPromise = this.initialConsumedTrafficPromise ?? Promise.resolve(undefined);
 
@@ -30,7 +30,7 @@ export class RealCantonTrafficMeter extends CantonTrafficMeter {
         } else {
           CantonTrafficMeter.logger.warn(
             `Traffic used: measurement incomplete, using metadata paidTrafficCost: ${metadata?.paidTrafficCost}`,
-            { feedCount, initial, totalConsumed, metadata }
+            { feedCount: feedIds.length, initial, totalConsumed, metadata }
           );
           this.addPaidTrafficCost(metadata?.paidTrafficCost);
         }

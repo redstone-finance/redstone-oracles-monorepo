@@ -22,7 +22,7 @@ const makeUpdater = (result: FP.Result<{ transactionHash: string } & CantonTxRes
 describe("CantonTxDeliveryMan", () => {
   beforeEach(ResetableCantonTrafficMeter.resetAccumulatingInstance);
 
-  it("brackets the send with beforeUpdate and afterUpdate(feedCount, result)", async () => {
+  it("brackets the send with beforeUpdate and afterUpdate(feedIds, result)", async () => {
     const meter = new ConstCantonTrafficMeter(true, 3);
     const before = jest.spyOn(meter, "beforeUpdate");
     const after = jest.spyOn(meter, "afterUpdate");
@@ -35,7 +35,7 @@ describe("CantonTxDeliveryMan", () => {
     );
 
     expect(before).toHaveBeenCalledTimes(1);
-    expect(after).toHaveBeenCalledWith(3, result);
+    expect(after).toHaveBeenCalledWith(["ETH", "BTC", "CC"], result);
     expect(before.mock.invocationCallOrder[0]).toBeLessThan(after.mock.invocationCallOrder[0]);
     expect(FP.unwrapOr(result, undefined)?.transactionHash).toBe(TX_HASH.eth);
   });
@@ -50,7 +50,7 @@ describe("CantonTxDeliveryMan", () => {
       makeParamsProvider(["ETH"])
     );
 
-    expect(after).toHaveBeenCalledWith(1, result);
+    expect(after).toHaveBeenCalledWith(["ETH"], result);
     expect(FP.isErr(result)).toBe(true);
   });
 });
