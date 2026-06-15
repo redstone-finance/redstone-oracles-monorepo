@@ -3,7 +3,6 @@
   "priceAggregator": "median",
   "defaultSource": [],
   "defaultBroadcasters": [
-    "hyperliquid-hip3",
     "influx"
   ],
   "sourceTimeout": 1000,
