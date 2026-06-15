@@ -176,7 +176,8 @@
         "hip3-felix-crypto-spot-mainnet-fetcher"
       ],
       "broadcasters": [
-        "hyperliquid-hip3"
+        "hyperliquid-hip3",
+        "influx"
       ],
       "denomination": "USD",
       "rateFeed": false
@@ -186,7 +187,8 @@
         "hip3-felix-crypto-spot-mainnet-fetcher"
       ],
       "broadcasters": [
-        "hyperliquid-hip3"
+        "hyperliquid-hip3",
+        "influx"
       ],
       "denomination": "USD",
       "rateFeed": false
@@ -196,7 +198,8 @@
         "hip3-felix-crypto-spot-mainnet-fetcher"
       ],
       "broadcasters": [
-        "hyperliquid-hip3"
+        "hyperliquid-hip3",
+        "influx"
       ],
       "denomination": "USD",
       "rateFeed": false
@@ -206,7 +209,8 @@
         "hip3-felix-crypto-spot-mainnet-fetcher"
       ],
       "broadcasters": [
-        "hyperliquid-hip3"
+        "hyperliquid-hip3",
+        "influx"
       ],
       "denomination": "USD",
       "rateFeed": false
@@ -328,7 +332,8 @@
         "hip3-felix-crypto-spot-mainnet-fetcher"
       ],
       "broadcasters": [
-        "hyperliquid-hip3"
+        "hyperliquid-hip3",
+        "influx"
       ],
       "denomination": "USD",
       "rateFeed": false
@@ -338,7 +343,8 @@
         "hip3-felix-crypto-spot-mainnet-fetcher"
       ],
       "broadcasters": [
-        "hyperliquid-hip3"
+        "hyperliquid-hip3",
+        "influx"
       ],
       "denomination": "USD",
       "rateFeed": false
@@ -348,7 +354,8 @@
         "hip3-felix-crypto-spot-mainnet-fetcher"
       ],
       "broadcasters": [
-        "hyperliquid-hip3"
+        "hyperliquid-hip3",
+        "influx"
       ],
       "denomination": "USD",
       "rateFeed": false
@@ -358,7 +365,8 @@
         "hip3-felix-crypto-spot-mainnet-fetcher"
       ],
       "broadcasters": [
-        "hyperliquid-hip3"
+        "hyperliquid-hip3",
+        "influx"
       ],
       "denomination": "USD",
       "rateFeed": false
@@ -532,7 +540,8 @@
         "hip3-felix-stocks-mainnet-fetcher"
       ],
       "broadcasters": [
-        "hyperliquid-hip3"
+        "hyperliquid-hip3",
+        "influx"
       ],
       "denomination": "USD",
       "rateFeed": false
@@ -542,7 +551,8 @@
         "hip3-felix-stocks-mainnet-fetcher"
       ],
       "broadcasters": [
-        "hyperliquid-hip3"
+        "hyperliquid-hip3",
+        "influx"
       ],
       "denomination": "USD",
       "rateFeed": false
@@ -552,7 +562,8 @@
         "hip3-felix-stocks-mainnet-fetcher"
       ],
       "broadcasters": [
-        "hyperliquid-hip3"
+        "hyperliquid-hip3",
+        "influx"
       ],
       "denomination": "USD",
       "rateFeed": false
@@ -562,7 +573,8 @@
         "hip3-felix-stocks-mainnet-fetcher"
       ],
       "broadcasters": [
-        "hyperliquid-hip3"
+        "hyperliquid-hip3",
+        "influx"
       ],
       "denomination": "USD",
       "rateFeed": false
@@ -708,7 +720,8 @@
         "hip3-felix-stocks-mainnet-fetcher"
       ],
       "broadcasters": [
-        "hyperliquid-hip3"
+        "hyperliquid-hip3",
+        "influx"
       ],
       "denomination": "USD",
       "rateFeed": false
@@ -718,7 +731,8 @@
         "hip3-felix-stocks-mainnet-fetcher"
       ],
       "broadcasters": [
-        "hyperliquid-hip3"
+        "hyperliquid-hip3",
+        "influx"
       ],
       "denomination": "USD",
       "rateFeed": false
@@ -728,7 +742,8 @@
         "hip3-felix-stocks-mainnet-fetcher"
       ],
       "broadcasters": [
-        "hyperliquid-hip3"
+        "hyperliquid-hip3",
+        "influx"
       ],
       "denomination": "USD",
       "rateFeed": false
@@ -738,7 +753,8 @@
         "hip3-felix-stocks-mainnet-fetcher"
       ],
       "broadcasters": [
-        "hyperliquid-hip3"
+        "hyperliquid-hip3",
+        "influx"
       ],
       "denomination": "USD",
       "rateFeed": false
@@ -917,7 +933,8 @@
         "hip3-felix-stocks-mainnet-fetcher"
       ],
       "broadcasters": [
-        "hyperliquid-hip3"
+        "hyperliquid-hip3",
+        "influx"
       ],
       "denomination": "USD",
       "rateFeed": false,
@@ -930,7 +947,8 @@
         "hip3-felix-stocks-mainnet-fetcher"
       ],
       "broadcasters": [
-        "hyperliquid-hip3"
+        "hyperliquid-hip3",
+        "influx"
       ],
       "denomination": "USD",
       "rateFeed": false,
@@ -943,7 +961,8 @@
         "hip3-felix-stocks-mainnet-fetcher"
       ],
       "broadcasters": [
-        "hyperliquid-hip3"
+        "hyperliquid-hip3",
+        "influx"
       ],
       "denomination": "USD",
       "rateFeed": false,
@@ -956,7 +975,8 @@
         "hip3-felix-stocks-mainnet-fetcher"
       ],
       "broadcasters": [
-        "hyperliquid-hip3"
+        "hyperliquid-hip3",
+        "influx"
       ],
       "denomination": "USD",
       "rateFeed": false,
@@ -1125,7 +1145,8 @@
         "hip3-felix-stocks-mainnet-fetcher"
       ],
       "broadcasters": [
-        "hyperliquid-hip3"
+        "hyperliquid-hip3",
+        "influx"
       ],
       "denomination": "USD",
       "rateFeed": false
@@ -1135,7 +1156,8 @@
         "hip3-felix-stocks-mainnet-fetcher"
       ],
       "broadcasters": [
-        "hyperliquid-hip3"
+        "hyperliquid-hip3",
+        "influx"
       ],
       "denomination": "USD",
       "rateFeed": false
@@ -1145,7 +1167,8 @@
         "hip3-felix-stocks-mainnet-fetcher"
       ],
       "broadcasters": [
-        "hyperliquid-hip3"
+        "hyperliquid-hip3",
+        "influx"
       ],
       "denomination": "USD",
       "rateFeed": false
@@ -1155,7 +1178,8 @@
         "hip3-felix-stocks-mainnet-fetcher"
       ],
       "broadcasters": [
-        "hyperliquid-hip3"
+        "hyperliquid-hip3",
+        "influx"
       ],
       "denomination": "USD",
       "rateFeed": false
@@ -1318,7 +1342,8 @@
         "hip3-felix-stocks-mainnet-fetcher"
       ],
       "broadcasters": [
-        "hyperliquid-hip3"
+        "hyperliquid-hip3",
+        "influx"
       ],
       "denomination": "USD",
       "rateFeed": false
@@ -1328,7 +1353,8 @@
         "hip3-felix-stocks-mainnet-fetcher"
       ],
       "broadcasters": [
-        "hyperliquid-hip3"
+        "hyperliquid-hip3",
+        "influx"
       ],
       "denomination": "USD",
       "rateFeed": false
@@ -1338,7 +1364,8 @@
         "hip3-felix-stocks-mainnet-fetcher"
       ],
       "broadcasters": [
-        "hyperliquid-hip3"
+        "hyperliquid-hip3",
+        "influx"
       ],
       "denomination": "USD",
       "rateFeed": false
@@ -1348,7 +1375,8 @@
         "hip3-felix-stocks-mainnet-fetcher"
       ],
       "broadcasters": [
-        "hyperliquid-hip3"
+        "hyperliquid-hip3",
+        "influx"
       ],
       "denomination": "USD",
       "rateFeed": false
@@ -1453,7 +1481,8 @@
         "hip3-felix-gold-mainnet-fetcher"
       ],
       "broadcasters": [
-        "hyperliquid-hip3"
+        "hyperliquid-hip3",
+        "influx"
       ],
       "denomination": "USD",
       "rateFeed": false
@@ -1463,7 +1492,8 @@
         "hip3-felix-gold-mainnet-fetcher"
       ],
       "broadcasters": [
-        "hyperliquid-hip3"
+        "hyperliquid-hip3",
+        "influx"
       ],
       "denomination": "USD",
       "rateFeed": false
@@ -1473,7 +1503,8 @@
         "hip3-felix-gold-mainnet-fetcher"
       ],
       "broadcasters": [
-        "hyperliquid-hip3"
+        "hyperliquid-hip3",
+        "influx"
       ],
       "denomination": "USD",
       "rateFeed": false
@@ -1483,7 +1514,8 @@
         "hip3-felix-gold-mainnet-fetcher"
       ],
       "broadcasters": [
-        "hyperliquid-hip3"
+        "hyperliquid-hip3",
+        "influx"
       ],
       "denomination": "USD",
       "rateFeed": false
@@ -1595,7 +1627,8 @@
         "hip3-felix-lmax-mainnet-fetcher"
       ],
       "broadcasters": [
-        "hyperliquid-hip3"
+        "hyperliquid-hip3",
+        "influx"
       ],
       "denomination": "USD",
       "rateFeed": false
@@ -1605,7 +1638,8 @@
         "hip3-felix-lmax-mainnet-fetcher"
       ],
       "broadcasters": [
-        "hyperliquid-hip3"
+        "hyperliquid-hip3",
+        "influx"
       ],
       "denomination": "USD",
       "rateFeed": false
@@ -1615,7 +1649,8 @@
         "hip3-felix-lmax-mainnet-fetcher"
       ],
       "broadcasters": [
-        "hyperliquid-hip3"
+        "hyperliquid-hip3",
+        "influx"
       ],
       "denomination": "USD",
       "rateFeed": false
@@ -1625,7 +1660,8 @@
         "hip3-felix-lmax-mainnet-fetcher"
       ],
       "broadcasters": [
-        "hyperliquid-hip3"
+        "hyperliquid-hip3",
+        "influx"
       ],
       "denomination": "USD",
       "rateFeed": false
@@ -1750,7 +1786,8 @@
         "hip3-felix-usa100-mainnet-fetcher"
       ],
       "broadcasters": [
-        "hyperliquid-hip3"
+        "hyperliquid-hip3",
+        "influx"
       ],
       "denomination": "USD",
       "rateFeed": false
@@ -1760,7 +1797,8 @@
         "hip3-felix-usa100-mainnet-fetcher"
       ],
       "broadcasters": [
-        "hyperliquid-hip3"
+        "hyperliquid-hip3",
+        "influx"
       ],
       "denomination": "USD",
       "rateFeed": false
@@ -1770,7 +1808,8 @@
         "hip3-felix-usa100-mainnet-fetcher"
       ],
       "broadcasters": [
-        "hyperliquid-hip3"
+        "hyperliquid-hip3",
+        "influx"
       ],
       "denomination": "USD",
       "rateFeed": false
@@ -1780,7 +1819,8 @@
         "hip3-felix-usa100-mainnet-fetcher"
       ],
       "broadcasters": [
-        "hyperliquid-hip3"
+        "hyperliquid-hip3",
+        "influx"
       ],
       "denomination": "USD",
       "rateFeed": false
@@ -1905,7 +1945,8 @@
         "hip3-felix-energy-mainnet-fetcher"
       ],
       "broadcasters": [
-        "hyperliquid-hip3"
+        "hyperliquid-hip3",
+        "influx"
       ],
       "denomination": "USD",
       "rateFeed": false
@@ -1915,7 +1956,8 @@
         "hip3-felix-energy-mainnet-fetcher"
       ],
       "broadcasters": [
-        "hyperliquid-hip3"
+        "hyperliquid-hip3",
+        "influx"
       ],
       "denomination": "USD",
       "rateFeed": false
@@ -1925,7 +1967,8 @@
         "hip3-felix-energy-mainnet-fetcher"
       ],
       "broadcasters": [
-        "hyperliquid-hip3"
+        "hyperliquid-hip3",
+        "influx"
       ],
       "denomination": "USD",
       "rateFeed": false
@@ -1935,7 +1978,8 @@
         "hip3-felix-energy-mainnet-fetcher"
       ],
       "broadcasters": [
-        "hyperliquid-hip3"
+        "hyperliquid-hip3",
+        "influx"
       ],
       "denomination": "USD",
       "rateFeed": false
@@ -2037,7 +2081,8 @@
         "hip3-felix-fx-mainnet-fetcher"
       ],
       "broadcasters": [
-        "hyperliquid-hip3"
+        "hyperliquid-hip3",
+        "influx"
       ],
       "denomination": "USD",
       "rateFeed": false,
@@ -2050,7 +2095,8 @@
         "hip3-felix-fx-mainnet-fetcher"
       ],
       "broadcasters": [
-        "hyperliquid-hip3"
+        "hyperliquid-hip3",
+        "influx"
       ],
       "denomination": "USD",
       "rateFeed": false,
@@ -2063,7 +2109,8 @@
         "hip3-felix-fx-mainnet-fetcher"
       ],
       "broadcasters": [
-        "hyperliquid-hip3"
+        "hyperliquid-hip3",
+        "influx"
       ],
       "denomination": "USD",
       "rateFeed": false,
@@ -2076,7 +2123,8 @@
         "hip3-felix-fx-mainnet-fetcher"
       ],
       "broadcasters": [
-        "hyperliquid-hip3"
+        "hyperliquid-hip3",
+        "influx"
       ],
       "denomination": "USD",
       "rateFeed": false,
@@ -2207,7 +2255,8 @@
         "hip3-felix-wti-mainnet-fetcher"
       ],
       "broadcasters": [
-        "hyperliquid-hip3"
+        "hyperliquid-hip3",
+        "influx"
       ],
       "denomination": "USD",
       "rateFeed": false
@@ -2217,7 +2266,8 @@
         "hip3-felix-wti-mainnet-fetcher"
       ],
       "broadcasters": [
-        "hyperliquid-hip3"
+        "hyperliquid-hip3",
+        "influx"
       ],
       "denomination": "USD",
       "rateFeed": false
@@ -2227,7 +2277,8 @@
         "hip3-felix-wti-mainnet-fetcher"
       ],
       "broadcasters": [
-        "hyperliquid-hip3"
+        "hyperliquid-hip3",
+        "influx"
       ],
       "denomination": "USD",
       "rateFeed": false
@@ -2237,7 +2288,8 @@
         "hip3-felix-wti-mainnet-fetcher"
       ],
       "broadcasters": [
-        "hyperliquid-hip3"
+        "hyperliquid-hip3",
+        "influx"
       ],
       "denomination": "USD",
       "rateFeed": false
@@ -2360,7 +2412,8 @@
         "hip3-felix-usa500-mainnet-fetcher"
       ],
       "broadcasters": [
-        "hyperliquid-hip3"
+        "hyperliquid-hip3",
+        "influx"
       ],
       "denomination": "USD",
       "rateFeed": false
@@ -2370,7 +2423,8 @@
         "hip3-felix-usa500-mainnet-fetcher"
       ],
       "broadcasters": [
-        "hyperliquid-hip3"
+        "hyperliquid-hip3",
+        "influx"
       ],
       "denomination": "USD",
       "rateFeed": false
@@ -2380,7 +2434,8 @@
         "hip3-felix-usa500-mainnet-fetcher"
       ],
       "broadcasters": [
-        "hyperliquid-hip3"
+        "hyperliquid-hip3",
+        "influx"
       ],
       "denomination": "USD",
       "rateFeed": false
@@ -2390,7 +2445,8 @@
         "hip3-felix-usa500-mainnet-fetcher"
       ],
       "broadcasters": [
-        "hyperliquid-hip3"
+        "hyperliquid-hip3",
+        "influx"
       ],
       "denomination": "USD",
       "rateFeed": false
@@ -2515,7 +2571,8 @@
         "hip3-felix-metals-mainnet-fetcher"
       ],
       "broadcasters": [
-        "hyperliquid-hip3"
+        "hyperliquid-hip3",
+        "influx"
       ],
       "denomination": "USD",
       "rateFeed": false
@@ -2525,7 +2582,8 @@
         "hip3-felix-metals-mainnet-fetcher"
       ],
       "broadcasters": [
-        "hyperliquid-hip3"
+        "hyperliquid-hip3",
+        "influx"
       ],
       "denomination": "USD",
       "rateFeed": false
@@ -2535,7 +2593,8 @@
         "hip3-felix-metals-mainnet-fetcher"
       ],
       "broadcasters": [
-        "hyperliquid-hip3"
+        "hyperliquid-hip3",
+        "influx"
       ],
       "denomination": "USD",
       "rateFeed": false
@@ -2545,7 +2604,8 @@
         "hip3-felix-metals-mainnet-fetcher"
       ],
       "broadcasters": [
-        "hyperliquid-hip3"
+        "hyperliquid-hip3",
+        "influx"
       ],
       "denomination": "USD",
       "rateFeed": false
@@ -2750,7 +2810,8 @@
         "hip3-felix-crypto-mainnet-fetcher"
       ],
       "broadcasters": [
-        "hyperliquid-hip3"
+        "hyperliquid-hip3",
+        "influx"
       ],
       "denomination": "USD",
       "rateFeed": false,
@@ -2763,7 +2824,8 @@
         "hip3-felix-crypto-mainnet-fetcher"
       ],
       "broadcasters": [
-        "hyperliquid-hip3"
+        "hyperliquid-hip3",
+        "influx"
       ],
       "denomination": "USD",
       "rateFeed": false,
@@ -2776,7 +2838,8 @@
         "hip3-felix-crypto-mainnet-fetcher"
       ],
       "broadcasters": [
-        "hyperliquid-hip3"
+        "hyperliquid-hip3",
+        "influx"
       ],
       "denomination": "USD",
       "rateFeed": false,
@@ -2789,7 +2852,8 @@
         "hip3-felix-crypto-mainnet-fetcher"
       ],
       "broadcasters": [
-        "hyperliquid-hip3"
+        "hyperliquid-hip3",
+        "influx"
       ],
       "denomination": "USD",
       "rateFeed": false,
@@ -2907,7 +2971,8 @@
         "hip3-felix-lmax-mainnet-fetcher"
       ],
       "broadcasters": [
-        "hyperliquid-hip3"
+        "hyperliquid-hip3",
+        "influx"
       ],
       "denomination": "USD",
       "rateFeed": false
@@ -2917,7 +2982,8 @@
         "hip3-felix-lmax-mainnet-fetcher"
       ],
       "broadcasters": [
-        "hyperliquid-hip3"
+        "hyperliquid-hip3",
+        "influx"
       ],
       "denomination": "USD",
       "rateFeed": false
@@ -2927,7 +2993,8 @@
         "hip3-felix-lmax-mainnet-fetcher"
       ],
       "broadcasters": [
-        "hyperliquid-hip3"
+        "hyperliquid-hip3",
+        "influx"
       ],
       "denomination": "USD",
       "rateFeed": false
@@ -2937,7 +3004,8 @@
         "hip3-felix-lmax-mainnet-fetcher"
       ],
       "broadcasters": [
-        "hyperliquid-hip3"
+        "hyperliquid-hip3",
+        "influx"
       ],
       "denomination": "USD",
       "rateFeed": false
@@ -3049,7 +3117,8 @@
         "hip3-felix-lmax-mainnet-fetcher"
       ],
       "broadcasters": [
-        "hyperliquid-hip3"
+        "hyperliquid-hip3",
+        "influx"
       ],
       "denomination": "USD",
       "rateFeed": false
@@ -3059,7 +3128,8 @@
         "hip3-felix-lmax-mainnet-fetcher"
       ],
       "broadcasters": [
-        "hyperliquid-hip3"
+        "hyperliquid-hip3",
+        "influx"
       ],
       "denomination": "USD",
       "rateFeed": false
@@ -3069,7 +3139,8 @@
         "hip3-felix-lmax-mainnet-fetcher"
       ],
       "broadcasters": [
-        "hyperliquid-hip3"
+        "hyperliquid-hip3",
+        "influx"
       ],
       "denomination": "USD",
       "rateFeed": false
@@ -3079,7 +3150,8 @@
         "hip3-felix-lmax-mainnet-fetcher"
       ],
       "broadcasters": [
-        "hyperliquid-hip3"
+        "hyperliquid-hip3",
+        "influx"
       ],
       "denomination": "USD",
       "rateFeed": false
@@ -3221,7 +3293,8 @@
         "hip3-hyena-crypto-mainnet-fetcher"
       ],
       "broadcasters": [
-        "hyperliquid-hip3"
+        "hyperliquid-hip3",
+        "influx"
       ],
       "denomination": "USD",
       "rateFeed": false
@@ -3231,7 +3304,8 @@
         "hip3-hyena-crypto-mainnet-fetcher"
       ],
       "broadcasters": [
-        "hyperliquid-hip3"
+        "hyperliquid-hip3",
+        "influx"
       ],
       "denomination": "USD",
       "rateFeed": false
@@ -3241,7 +3315,8 @@
         "hip3-hyena-crypto-mainnet-fetcher"
       ],
       "broadcasters": [
-        "hyperliquid-hip3"
+        "hyperliquid-hip3",
+        "influx"
       ],
       "denomination": "USD",
       "rateFeed": false
@@ -3251,7 +3326,8 @@
         "hip3-hyena-crypto-mainnet-fetcher"
       ],
       "broadcasters": [
-        "hyperliquid-hip3"
+        "hyperliquid-hip3",
+        "influx"
       ],
       "denomination": "USD",
       "rateFeed": false
@@ -3429,7 +3505,8 @@
         "hip3-hyena-crypto-mainnet-fetcher"
       ],
       "broadcasters": [
-        "hyperliquid-hip3"
+        "hyperliquid-hip3",
+        "influx"
       ],
       "denomination": "USD",
       "rateFeed": false
@@ -3439,7 +3516,8 @@
         "hip3-hyena-crypto-mainnet-fetcher"
       ],
       "broadcasters": [
-        "hyperliquid-hip3"
+        "hyperliquid-hip3",
+        "influx"
       ],
       "denomination": "USD",
       "rateFeed": false
@@ -3449,7 +3527,8 @@
         "hip3-hyena-crypto-mainnet-fetcher"
       ],
       "broadcasters": [
-        "hyperliquid-hip3"
+        "hyperliquid-hip3",
+        "influx"
       ],
       "denomination": "USD",
       "rateFeed": false
@@ -3459,7 +3538,8 @@
         "hip3-hyena-crypto-mainnet-fetcher"
       ],
       "broadcasters": [
-        "hyperliquid-hip3"
+        "hyperliquid-hip3",
+        "influx"
       ],
       "denomination": "USD",
       "rateFeed": false
@@ -3637,7 +3717,8 @@
         "hip3-hyena-crypto-mainnet-fetcher"
       ],
       "broadcasters": [
-        "hyperliquid-hip3"
+        "hyperliquid-hip3",
+        "influx"
       ],
       "denomination": "USD",
       "rateFeed": false
@@ -3647,7 +3728,8 @@
         "hip3-hyena-crypto-mainnet-fetcher"
       ],
       "broadcasters": [
-        "hyperliquid-hip3"
+        "hyperliquid-hip3",
+        "influx"
       ],
       "denomination": "USD",
       "rateFeed": false
@@ -3657,7 +3739,8 @@
         "hip3-hyena-crypto-mainnet-fetcher"
       ],
       "broadcasters": [
-        "hyperliquid-hip3"
+        "hyperliquid-hip3",
+        "influx"
       ],
       "denomination": "USD",
       "rateFeed": false
@@ -3667,7 +3750,8 @@
         "hip3-hyena-crypto-mainnet-fetcher"
       ],
       "broadcasters": [
-        "hyperliquid-hip3"
+        "hyperliquid-hip3",
+        "influx"
       ],
       "denomination": "USD",
       "rateFeed": false
@@ -3845,7 +3929,8 @@
         "hip3-hyena-crypto-mainnet-fetcher"
       ],
       "broadcasters": [
-        "hyperliquid-hip3"
+        "hyperliquid-hip3",
+        "influx"
       ],
       "denomination": "USD",
       "rateFeed": false
@@ -3855,7 +3940,8 @@
         "hip3-hyena-crypto-mainnet-fetcher"
       ],
       "broadcasters": [
-        "hyperliquid-hip3"
+        "hyperliquid-hip3",
+        "influx"
       ],
       "denomination": "USD",
       "rateFeed": false
@@ -3865,7 +3951,8 @@
         "hip3-hyena-crypto-mainnet-fetcher"
       ],
       "broadcasters": [
-        "hyperliquid-hip3"
+        "hyperliquid-hip3",
+        "influx"
       ],
       "denomination": "USD",
       "rateFeed": false
@@ -3875,7 +3962,8 @@
         "hip3-hyena-crypto-mainnet-fetcher"
       ],
       "broadcasters": [
-        "hyperliquid-hip3"
+        "hyperliquid-hip3",
+        "influx"
       ],
       "denomination": "USD",
       "rateFeed": false
@@ -4053,7 +4141,8 @@
         "hip3-hyena-crypto-mainnet-fetcher"
       ],
       "broadcasters": [
-        "hyperliquid-hip3"
+        "hyperliquid-hip3",
+        "influx"
       ],
       "denomination": "USD",
       "rateFeed": false
@@ -4063,7 +4152,8 @@
         "hip3-hyena-crypto-mainnet-fetcher"
       ],
       "broadcasters": [
-        "hyperliquid-hip3"
+        "hyperliquid-hip3",
+        "influx"
       ],
       "denomination": "USD",
       "rateFeed": false
@@ -4073,7 +4163,8 @@
         "hip3-hyena-crypto-mainnet-fetcher"
       ],
       "broadcasters": [
-        "hyperliquid-hip3"
+        "hyperliquid-hip3",
+        "influx"
       ],
       "denomination": "USD",
       "rateFeed": false
@@ -4083,7 +4174,8 @@
         "hip3-hyena-crypto-mainnet-fetcher"
       ],
       "broadcasters": [
-        "hyperliquid-hip3"
+        "hyperliquid-hip3",
+        "influx"
       ],
       "denomination": "USD",
       "rateFeed": false
@@ -4261,7 +4353,8 @@
         "hip3-hyena-crypto-mainnet-fetcher"
       ],
       "broadcasters": [
-        "hyperliquid-hip3"
+        "hyperliquid-hip3",
+        "influx"
       ],
       "denomination": "USD",
       "rateFeed": false
@@ -4271,7 +4364,8 @@
         "hip3-hyena-crypto-mainnet-fetcher"
       ],
       "broadcasters": [
-        "hyperliquid-hip3"
+        "hyperliquid-hip3",
+        "influx"
       ],
       "denomination": "USD",
       "rateFeed": false
@@ -4281,7 +4375,8 @@
         "hip3-hyena-crypto-mainnet-fetcher"
       ],
       "broadcasters": [
-        "hyperliquid-hip3"
+        "hyperliquid-hip3",
+        "influx"
       ],
       "denomination": "USD",
       "rateFeed": false
@@ -4291,7 +4386,8 @@
         "hip3-hyena-crypto-mainnet-fetcher"
       ],
       "broadcasters": [
-        "hyperliquid-hip3"
+        "hyperliquid-hip3",
+        "influx"
       ],
       "denomination": "USD",
       "rateFeed": false
@@ -4469,7 +4565,8 @@
         "hip3-hyena-crypto-mainnet-fetcher"
       ],
       "broadcasters": [
-        "hyperliquid-hip3"
+        "hyperliquid-hip3",
+        "influx"
       ],
       "denomination": "USD",
       "rateFeed": false
@@ -4479,7 +4576,8 @@
         "hip3-hyena-crypto-mainnet-fetcher"
       ],
       "broadcasters": [
-        "hyperliquid-hip3"
+        "hyperliquid-hip3",
+        "influx"
       ],
       "denomination": "USD",
       "rateFeed": false
@@ -4489,7 +4587,8 @@
         "hip3-hyena-crypto-mainnet-fetcher"
       ],
       "broadcasters": [
-        "hyperliquid-hip3"
+        "hyperliquid-hip3",
+        "influx"
       ],
       "denomination": "USD",
       "rateFeed": false
@@ -4499,7 +4598,8 @@
         "hip3-hyena-crypto-mainnet-fetcher"
       ],
       "broadcasters": [
-        "hyperliquid-hip3"
+        "hyperliquid-hip3",
+        "influx"
       ],
       "denomination": "USD",
       "rateFeed": false
@@ -4677,7 +4777,8 @@
         "hip3-hyena-crypto-mainnet-fetcher"
       ],
       "broadcasters": [
-        "hyperliquid-hip3"
+        "hyperliquid-hip3",
+        "influx"
       ],
       "denomination": "USD",
       "rateFeed": false
@@ -4687,7 +4788,8 @@
         "hip3-hyena-crypto-mainnet-fetcher"
       ],
       "broadcasters": [
-        "hyperliquid-hip3"
+        "hyperliquid-hip3",
+        "influx"
       ],
       "denomination": "USD",
       "rateFeed": false
@@ -4697,7 +4799,8 @@
         "hip3-hyena-crypto-mainnet-fetcher"
       ],
       "broadcasters": [
-        "hyperliquid-hip3"
+        "hyperliquid-hip3",
+        "influx"
       ],
       "denomination": "USD",
       "rateFeed": false
@@ -4707,7 +4810,8 @@
         "hip3-hyena-crypto-mainnet-fetcher"
       ],
       "broadcasters": [
-        "hyperliquid-hip3"
+        "hyperliquid-hip3",
+        "influx"
       ],
       "denomination": "USD",
       "rateFeed": false
@@ -4885,7 +4989,8 @@
         "hip3-hyena-crypto-mainnet-fetcher"
       ],
       "broadcasters": [
-        "hyperliquid-hip3"
+        "hyperliquid-hip3",
+        "influx"
       ],
       "denomination": "USD",
       "rateFeed": false
@@ -4895,7 +5000,8 @@
         "hip3-hyena-crypto-mainnet-fetcher"
       ],
       "broadcasters": [
-        "hyperliquid-hip3"
+        "hyperliquid-hip3",
+        "influx"
       ],
       "denomination": "USD",
       "rateFeed": false
@@ -4905,7 +5011,8 @@
         "hip3-hyena-crypto-mainnet-fetcher"
       ],
       "broadcasters": [
-        "hyperliquid-hip3"
+        "hyperliquid-hip3",
+        "influx"
       ],
       "denomination": "USD",
       "rateFeed": false
@@ -4915,7 +5022,8 @@
         "hip3-hyena-crypto-mainnet-fetcher"
       ],
       "broadcasters": [
-        "hyperliquid-hip3"
+        "hyperliquid-hip3",
+        "influx"
       ],
       "denomination": "USD",
       "rateFeed": false
@@ -5093,7 +5201,8 @@
         "hip3-hyena-crypto-mainnet-fetcher"
       ],
       "broadcasters": [
-        "hyperliquid-hip3"
+        "hyperliquid-hip3",
+        "influx"
       ],
       "denomination": "USD",
       "rateFeed": false
@@ -5103,7 +5212,8 @@
         "hip3-hyena-crypto-mainnet-fetcher"
       ],
       "broadcasters": [
-        "hyperliquid-hip3"
+        "hyperliquid-hip3",
+        "influx"
       ],
       "denomination": "USD",
       "rateFeed": false
@@ -5113,7 +5223,8 @@
         "hip3-hyena-crypto-mainnet-fetcher"
       ],
       "broadcasters": [
-        "hyperliquid-hip3"
+        "hyperliquid-hip3",
+        "influx"
       ],
       "denomination": "USD",
       "rateFeed": false
@@ -5123,7 +5234,8 @@
         "hip3-hyena-crypto-mainnet-fetcher"
       ],
       "broadcasters": [
-        "hyperliquid-hip3"
+        "hyperliquid-hip3",
+        "influx"
       ],
       "denomination": "USD",
       "rateFeed": false
@@ -5301,7 +5413,8 @@
         "hip3-hyena-crypto-mainnet-fetcher"
       ],
       "broadcasters": [
-        "hyperliquid-hip3"
+        "hyperliquid-hip3",
+        "influx"
       ],
       "denomination": "USD",
       "rateFeed": false
@@ -5311,7 +5424,8 @@
         "hip3-hyena-crypto-mainnet-fetcher"
       ],
       "broadcasters": [
-        "hyperliquid-hip3"
+        "hyperliquid-hip3",
+        "influx"
       ],
       "denomination": "USD",
       "rateFeed": false
@@ -5321,7 +5435,8 @@
         "hip3-hyena-crypto-mainnet-fetcher"
       ],
       "broadcasters": [
-        "hyperliquid-hip3"
+        "hyperliquid-hip3",
+        "influx"
       ],
       "denomination": "USD",
       "rateFeed": false
@@ -5331,7 +5446,8 @@
         "hip3-hyena-crypto-mainnet-fetcher"
       ],
       "broadcasters": [
-        "hyperliquid-hip3"
+        "hyperliquid-hip3",
+        "influx"
       ],
       "denomination": "USD",
       "rateFeed": false
@@ -5508,7 +5624,8 @@
         "hip3-hyena-crypto-mainnet-fetcher"
       ],
       "broadcasters": [
-        "hyperliquid-hip3"
+        "hyperliquid-hip3",
+        "influx"
       ],
       "denomination": "USD",
       "rateFeed": false
@@ -5518,7 +5635,8 @@
         "hip3-hyena-crypto-mainnet-fetcher"
       ],
       "broadcasters": [
-        "hyperliquid-hip3"
+        "hyperliquid-hip3",
+        "influx"
       ],
       "denomination": "USD",
       "rateFeed": false
@@ -5528,7 +5646,8 @@
         "hip3-hyena-crypto-mainnet-fetcher"
       ],
       "broadcasters": [
-        "hyperliquid-hip3"
+        "hyperliquid-hip3",
+        "influx"
       ],
       "denomination": "USD",
       "rateFeed": false
@@ -5538,7 +5657,8 @@
         "hip3-hyena-crypto-mainnet-fetcher"
       ],
       "broadcasters": [
-        "hyperliquid-hip3"
+        "hyperliquid-hip3",
+        "influx"
       ],
       "denomination": "USD",
       "rateFeed": false
@@ -5716,7 +5836,8 @@
         "hip3-hyena-crypto-mainnet-fetcher"
       ],
       "broadcasters": [
-        "hyperliquid-hip3"
+        "hyperliquid-hip3",
+        "influx"
       ],
       "denomination": "USD",
       "rateFeed": false
@@ -5726,7 +5847,8 @@
         "hip3-hyena-crypto-mainnet-fetcher"
       ],
       "broadcasters": [
-        "hyperliquid-hip3"
+        "hyperliquid-hip3",
+        "influx"
       ],
       "denomination": "USD",
       "rateFeed": false
@@ -5736,7 +5858,8 @@
         "hip3-hyena-crypto-mainnet-fetcher"
       ],
       "broadcasters": [
-        "hyperliquid-hip3"
+        "hyperliquid-hip3",
+        "influx"
       ],
       "denomination": "USD",
       "rateFeed": false
@@ -5746,7 +5869,8 @@
         "hip3-hyena-crypto-mainnet-fetcher"
       ],
       "broadcasters": [
-        "hyperliquid-hip3"
+        "hyperliquid-hip3",
+        "influx"
       ],
       "denomination": "USD",
       "rateFeed": false
@@ -5924,7 +6048,8 @@
         "hip3-hyena-crypto-mainnet-fetcher"
       ],
       "broadcasters": [
-        "hyperliquid-hip3"
+        "hyperliquid-hip3",
+        "influx"
       ],
       "denomination": "USD",
       "rateFeed": false
@@ -5934,7 +6059,8 @@
         "hip3-hyena-crypto-mainnet-fetcher"
       ],
       "broadcasters": [
-        "hyperliquid-hip3"
+        "hyperliquid-hip3",
+        "influx"
       ],
       "denomination": "USD",
       "rateFeed": false
@@ -5944,7 +6070,8 @@
         "hip3-hyena-crypto-mainnet-fetcher"
       ],
       "broadcasters": [
-        "hyperliquid-hip3"
+        "hyperliquid-hip3",
+        "influx"
       ],
       "denomination": "USD",
       "rateFeed": false
@@ -5954,7 +6081,8 @@
         "hip3-hyena-crypto-mainnet-fetcher"
       ],
       "broadcasters": [
-        "hyperliquid-hip3"
+        "hyperliquid-hip3",
+        "influx"
       ],
       "denomination": "USD",
       "rateFeed": false
@@ -6132,7 +6260,8 @@
         "hip3-hyena-crypto-mainnet-fetcher"
       ],
       "broadcasters": [
-        "hyperliquid-hip3"
+        "hyperliquid-hip3",
+        "influx"
       ],
       "denomination": "USD",
       "rateFeed": false
@@ -6142,7 +6271,8 @@
         "hip3-hyena-crypto-mainnet-fetcher"
       ],
       "broadcasters": [
-        "hyperliquid-hip3"
+        "hyperliquid-hip3",
+        "influx"
       ],
       "denomination": "USD",
       "rateFeed": false
@@ -6152,7 +6282,8 @@
         "hip3-hyena-crypto-mainnet-fetcher"
       ],
       "broadcasters": [
-        "hyperliquid-hip3"
+        "hyperliquid-hip3",
+        "influx"
       ],
       "denomination": "USD",
       "rateFeed": false
@@ -6162,7 +6293,8 @@
         "hip3-hyena-crypto-mainnet-fetcher"
       ],
       "broadcasters": [
-        "hyperliquid-hip3"
+        "hyperliquid-hip3",
+        "influx"
       ],
       "denomination": "USD",
       "rateFeed": false
@@ -6340,7 +6472,8 @@
         "hip3-hyena-crypto-mainnet-fetcher"
       ],
       "broadcasters": [
-        "hyperliquid-hip3"
+        "hyperliquid-hip3",
+        "influx"
       ],
       "denomination": "USD",
       "rateFeed": false
@@ -6350,7 +6483,8 @@
         "hip3-hyena-crypto-mainnet-fetcher"
       ],
       "broadcasters": [
-        "hyperliquid-hip3"
+        "hyperliquid-hip3",
+        "influx"
       ],
       "denomination": "USD",
       "rateFeed": false
@@ -6360,7 +6494,8 @@
         "hip3-hyena-crypto-mainnet-fetcher"
       ],
       "broadcasters": [
-        "hyperliquid-hip3"
+        "hyperliquid-hip3",
+        "influx"
       ],
       "denomination": "USD",
       "rateFeed": false
@@ -6370,7 +6505,8 @@
         "hip3-hyena-crypto-mainnet-fetcher"
       ],
       "broadcasters": [
-        "hyperliquid-hip3"
+        "hyperliquid-hip3",
+        "influx"
       ],
       "denomination": "USD",
       "rateFeed": false
@@ -6546,7 +6682,8 @@
         "hip3-hyena-crypto-mainnet-fetcher"
       ],
       "broadcasters": [
-        "hyperliquid-hip3"
+        "hyperliquid-hip3",
+        "influx"
       ],
       "denomination": "USD",
       "rateFeed": false
@@ -6556,7 +6693,8 @@
         "hip3-hyena-crypto-mainnet-fetcher"
       ],
       "broadcasters": [
-        "hyperliquid-hip3"
+        "hyperliquid-hip3",
+        "influx"
       ],
       "denomination": "USD",
       "rateFeed": false
@@ -6566,7 +6704,8 @@
         "hip3-hyena-crypto-mainnet-fetcher"
       ],
       "broadcasters": [
-        "hyperliquid-hip3"
+        "hyperliquid-hip3",
+        "influx"
       ],
       "denomination": "USD",
       "rateFeed": false
@@ -6576,7 +6715,8 @@
         "hip3-hyena-crypto-mainnet-fetcher"
       ],
       "broadcasters": [
-        "hyperliquid-hip3"
+        "hyperliquid-hip3",
+        "influx"
       ],
       "denomination": "USD",
       "rateFeed": false
@@ -6754,7 +6894,8 @@
         "hip3-hyena-crypto-mainnet-fetcher"
       ],
       "broadcasters": [
-        "hyperliquid-hip3"
+        "hyperliquid-hip3",
+        "influx"
       ],
       "denomination": "USD",
       "rateFeed": false
@@ -6764,7 +6905,8 @@
         "hip3-hyena-crypto-mainnet-fetcher"
       ],
       "broadcasters": [
-        "hyperliquid-hip3"
+        "hyperliquid-hip3",
+        "influx"
       ],
       "denomination": "USD",
       "rateFeed": false
@@ -6774,7 +6916,8 @@
         "hip3-hyena-crypto-mainnet-fetcher"
       ],
       "broadcasters": [
-        "hyperliquid-hip3"
+        "hyperliquid-hip3",
+        "influx"
       ],
       "denomination": "USD",
       "rateFeed": false
@@ -6784,7 +6927,8 @@
         "hip3-hyena-crypto-mainnet-fetcher"
       ],
       "broadcasters": [
-        "hyperliquid-hip3"
+        "hyperliquid-hip3",
+        "influx"
       ],
       "denomination": "USD",
       "rateFeed": false
@@ -6962,7 +7106,8 @@
         "hip3-hyena-crypto-mainnet-fetcher"
       ],
       "broadcasters": [
-        "hyperliquid-hip3"
+        "hyperliquid-hip3",
+        "influx"
       ],
       "denomination": "USD",
       "rateFeed": false
@@ -6972,7 +7117,8 @@
         "hip3-hyena-crypto-mainnet-fetcher"
       ],
       "broadcasters": [
-        "hyperliquid-hip3"
+        "hyperliquid-hip3",
+        "influx"
       ],
       "denomination": "USD",
       "rateFeed": false
@@ -6982,7 +7128,8 @@
         "hip3-hyena-crypto-mainnet-fetcher"
       ],
       "broadcasters": [
-        "hyperliquid-hip3"
+        "hyperliquid-hip3",
+        "influx"
       ],
       "denomination": "USD",
       "rateFeed": false
@@ -6992,7 +7139,8 @@
         "hip3-hyena-crypto-mainnet-fetcher"
       ],
       "broadcasters": [
-        "hyperliquid-hip3"
+        "hyperliquid-hip3",
+        "influx"
       ],
       "denomination": "USD",
       "rateFeed": false
@@ -7170,7 +7318,8 @@
         "hip3-hyena-crypto-mainnet-fetcher"
       ],
       "broadcasters": [
-        "hyperliquid-hip3"
+        "hyperliquid-hip3",
+        "influx"
       ],
       "denomination": "USD",
       "rateFeed": false
@@ -7180,7 +7329,8 @@
         "hip3-hyena-crypto-mainnet-fetcher"
       ],
       "broadcasters": [
-        "hyperliquid-hip3"
+        "hyperliquid-hip3",
+        "influx"
       ],
       "denomination": "USD",
       "rateFeed": false
@@ -7190,7 +7340,8 @@
         "hip3-hyena-crypto-mainnet-fetcher"
       ],
       "broadcasters": [
-        "hyperliquid-hip3"
+        "hyperliquid-hip3",
+        "influx"
       ],
       "denomination": "USD",
       "rateFeed": false
@@ -7200,7 +7351,8 @@
         "hip3-hyena-crypto-mainnet-fetcher"
       ],
       "broadcasters": [
-        "hyperliquid-hip3"
+        "hyperliquid-hip3",
+        "influx"
       ],
       "denomination": "USD",
       "rateFeed": false
@@ -7378,7 +7530,8 @@
         "hip3-hyena-crypto-mainnet-fetcher"
       ],
       "broadcasters": [
-        "hyperliquid-hip3"
+        "hyperliquid-hip3",
+        "influx"
       ],
       "denomination": "USD",
       "rateFeed": false
@@ -7388,7 +7541,8 @@
         "hip3-hyena-crypto-mainnet-fetcher"
       ],
       "broadcasters": [
-        "hyperliquid-hip3"
+        "hyperliquid-hip3",
+        "influx"
       ],
       "denomination": "USD",
       "rateFeed": false
@@ -7398,7 +7552,8 @@
         "hip3-hyena-crypto-mainnet-fetcher"
       ],
       "broadcasters": [
-        "hyperliquid-hip3"
+        "hyperliquid-hip3",
+        "influx"
       ],
       "denomination": "USD",
       "rateFeed": false
@@ -7408,7 +7563,8 @@
         "hip3-hyena-crypto-mainnet-fetcher"
       ],
       "broadcasters": [
-        "hyperliquid-hip3"
+        "hyperliquid-hip3",
+        "influx"
       ],
       "denomination": "USD",
       "rateFeed": false
@@ -7592,7 +7748,8 @@
         "hip3-hyena-crypto-spot-mainnet-fetcher"
       ],
       "broadcasters": [
-        "hyperliquid-hip3"
+        "hyperliquid-hip3",
+        "influx"
       ],
       "denomination": "USD",
       "rateFeed": false
@@ -7602,7 +7759,8 @@
         "hip3-hyena-crypto-spot-mainnet-fetcher"
       ],
       "broadcasters": [
-        "hyperliquid-hip3"
+        "hyperliquid-hip3",
+        "influx"
       ],
       "denomination": "USD",
       "rateFeed": false
@@ -7612,7 +7770,8 @@
         "hip3-hyena-crypto-spot-mainnet-fetcher"
       ],
       "broadcasters": [
-        "hyperliquid-hip3"
+        "hyperliquid-hip3",
+        "influx"
       ],
       "denomination": "USD",
       "rateFeed": false
@@ -7622,7 +7781,8 @@
         "hip3-hyena-crypto-spot-mainnet-fetcher"
       ],
       "broadcasters": [
-        "hyperliquid-hip3"
+        "hyperliquid-hip3",
+        "influx"
       ],
       "denomination": "USD",
       "rateFeed": false
