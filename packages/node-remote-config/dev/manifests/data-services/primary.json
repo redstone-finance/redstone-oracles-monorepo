@@ -4077,6 +4077,13 @@
       "denomination": "USD",
       "rateFeed": true
     },
+    "AA_FalconXUSDC": {
+      "source": [
+        "ethereum-evm-fetcher-pareto"
+      ],
+      "denomination": "USD",
+      "rateFeed": true
+    },
     "HEMI": {
       "source": [
         "binance-usdc",
