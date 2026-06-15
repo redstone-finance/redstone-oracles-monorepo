@@ -5,15 +5,14 @@ import {
 } from "@mysten/sui/jsonRpc";
 import { ManifestRef, PerManifestTxLookup } from "@redstone-finance/multichain-kit";
 import { RedstoneCommon } from "@redstone-finance/utils";
+import { parseSuiEvents } from "./SuiEventParsing";
 import {
   buildNormalizedSuiTx,
   computeOldestBlockInPage,
   computeSuiGasUsed,
-  computeSuiIsFailed,
-  extractSharedObjectId,
-  extractWritePricePayloads,
   filterSuiTxsAndCheckHasNextPage,
 } from "./SuiTxParsing";
+import { extractSharedObjectId, extractWritePriceCalls } from "./SuiWriteCallParsing";
 
 const RETRY_CONFIG: Omit<RedstoneCommon.RetryConfig, "fn"> = {
   maxRetries: 6,
@@ -76,16 +75,17 @@ export class LegacySuiTxLookup extends PerManifestTxLookup {
     const transactionData = tx.transaction!.data;
     const inputs = LegacySuiTxLookup.parseInputs(transactionData);
     const moveCalls = LegacySuiTxLookup.parseMoveCalls(transactionData);
-    const payloads = extractWritePricePayloads(inputs, moveCalls);
+    const writes = extractWritePriceCalls(inputs, moveCalls);
     const targetObjectId = extractSharedObjectId(inputs, moveCalls);
 
-    if (!payloads.length || !targetObjectId) {
+    if (!writes.length || !targetObjectId) {
       return [];
     }
 
     const effects = tx.effects;
-    const events = (tx.events ?? []).map((e) => ({ type: e.type }));
-    const isFailed = computeSuiIsFailed(effects?.status.status ?? "", events);
+    const rawEvents = (tx.events ?? []).map((e) => ({ type: e.type, json: e.parsedJson }));
+    const events = parseSuiEvents(rawEvents);
+    const effectFailed = effects?.status.status === "failure";
     const gasUsed = effects?.gasUsed ? computeSuiGasUsed(effects.gasUsed) : 0;
 
     const checkpoint = Number(tx.checkpoint ?? "0");
@@ -97,11 +97,12 @@ export class LegacySuiTxLookup extends PerManifestTxLookup {
       hash: tx.digest,
       sender: transactionData.sender,
       targetObjectId,
-      payloads,
+      writes,
       gasLimit: transactionData.gasData.budget,
       gasPrice: transactionData.gasData.price,
-      isFailed,
+      effectFailed,
       gasUsed,
+      events,
     });
   }
 

@@ -31,7 +31,6 @@ export function parseLogEvent(log: { topics: string[]; data: string }): EventEnt
     const found = parsed.args.find((elt) => isHexString(elt)) as string | undefined;
     const base = {
       name: parsed.name,
-      args: parsed.args,
       feedId: parseBytes32String(found ?? "0x"),
     };
 
