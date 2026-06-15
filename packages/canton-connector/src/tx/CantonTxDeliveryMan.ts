@@ -15,11 +15,11 @@ export class CantonTxDeliveryMan extends TxDeliveryMan<CantonTxResultExt> {
     updater: CantonContractUpdater,
     paramsProvider: ContractParamsProvider
   ) {
-    const feedCount = paramsProvider.getDataFeedIds().length;
+    const feedIds = paramsProvider.getDataFeedIds();
 
     this.trafficMeter.beforeUpdate();
     const result = await super.updateContract(updater, paramsProvider);
-    void this.trafficMeter.afterUpdate(feedCount, result);
+    void this.trafficMeter.afterUpdate(feedIds, result);
 
     return result;
   }
