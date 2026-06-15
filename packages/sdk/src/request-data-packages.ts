@@ -1,4 +1,3 @@
-import { RedstoneCommon } from "@redstone-finance/utils";
 import { type DataPackagesResponseStorage } from "./DataPackagesResponseStorage";
 import { fetchDataPackagesDedup } from "./fetch-data-packages";
 import {
@@ -155,22 +154,9 @@ export const requestDataPackages = async (
     }
   }
 
-  try {
-    const { requestDataPackagesLogger, response } = await fetchDataPackagesDedup(reqParams);
+  const { requestDataPackagesLogger, response } = await fetchDataPackagesDedup(reqParams);
 
-    return filterAndSelectDataPackages(response, reqParams, requestDataPackagesLogger);
-  } catch (e) {
-    const errMessage = `Request failed: ${JSON.stringify({
-      reqParams,
-    })}, Original error: ${RedstoneCommon.stringifyError(e)}`;
-    if (e instanceof AggregateError) {
-      e.message = errMessage;
-
-      throw e;
-    }
-
-    throw new Error(errMessage);
-  }
+  return filterAndSelectDataPackages(response, reqParams, requestDataPackagesLogger);
 };
 
 export const getDataPackagesTimestamp = (
