@@ -3,6 +3,7 @@ import dayjs from "dayjs";
 import _ from "lodash";
 import { z } from "zod";
 import { getSSMParamWithEnvFallback } from "./aws/params";
+import type { NodeType } from "./fetch-node-manifest";
 
 export type GenericMonitoringManifest<T = unknown> = {
   defaultConfig: T;
@@ -143,4 +144,17 @@ export function getManifestUrls(defaultUrls: string[], manifestFilename?: string
   }
 
   return defaultUrls.map((url) => url.replace(/[^/]+\.json$/, manifestFilename));
+}
+
+export function getManifestUrlsForType(defaultUrls: string[], nodeType: NodeType) {
+  switch (nodeType) {
+    case "normal":
+      return defaultUrls;
+    case "fast":
+      return defaultUrls.map((url) => url.replace(/([^/]+)\.json$/, "$1-fast.json"));
+    case "ws":
+      return defaultUrls.map((url) => url.replace(/([^/]+)\.json$/, "$1-ws.json"));
+    default:
+      RedstoneCommon.throwUnsupportedParamError(nodeType);
+  }
 }
