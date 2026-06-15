@@ -35,7 +35,7 @@ export type RawGqlGasSummary = {
 };
 
 export type RawGqlEventNode = {
-  contents?: { type?: { repr?: string | null } | null } | null;
+  contents?: { type?: { repr?: string | null } | null; json?: unknown } | null;
 };
 
 export type RawGqlEffects = {
