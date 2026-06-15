@@ -4920,7 +4920,6 @@
       "priceAggregator": "constantWeightMedian",
       "broadcasters": ["influx"],
       "denomination": "USD",
-      "localCacheTTL": "61m",
       "rateFeed": false
     },
     "MID_hyna:IP": {
@@ -5349,7 +5348,6 @@
       "priceAggregator": "constantWeightMedian",
       "broadcasters": ["influx"],
       "denomination": "USD",
-      "localCacheTTL": "61m",
       "rateFeed": false
     },
     "MID_hyna:LTC": {
@@ -5934,7 +5932,6 @@
       "priceAggregator": "constantWeightMedian",
       "broadcasters": ["influx"],
       "denomination": "USD",
-      "localCacheTTL": "61m",
       "rateFeed": false
     },
     "MID_hyna:BASED": {
