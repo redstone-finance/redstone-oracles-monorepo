@@ -20,7 +20,13 @@ const WHITELISTED_HOSTNAMES = new Set([
   "api.github.com",
 ]);
 
-export const SENSITIVE_KEYS = new Set(["apiKey", "x-api-key"]);
+export const SENSITIVE_KEYS = new Set([
+  "apiKey",
+  "x-api-key",
+  "privateKey",
+  "telemetryUrl",
+  "telemetryAuthorizationToken",
+]);
 
 export type RedstoneLogger = ConsolaInstance | Console;
 
