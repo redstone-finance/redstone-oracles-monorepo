@@ -2302,6 +2302,4124 @@
       "types": [
         "rwa"
       ]
+    },
+    "ORDI": {
+      "source": [
+        "ws-spot-binance-usdt",
+        "ws-spot-okx-usdt",
+        "ws-spot-kucoin-usdt",
+        "ws-spot-bybit-usdt",
+        "lbank_deferred-usdt",
+        "htx_deferred-usdt",
+        "bitmart_deferred-usdt"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "BSB": {
+      "source": [
+        "ws-spot-bybit-usdt",
+        "binancealpha_deferred-usdt",
+        "bitget_deferred-usdt",
+        "mexc_deferred-usdt",
+        "lbank_deferred-usdt"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "BILL": {
+      "source": [
+        "ws-spot-bybit-usdt",
+        "ws-spot-kucoin-usdt",
+        "binancealpha_deferred-usdt",
+        "bingx_deferred-usdt",
+        "coinbase_deferred-usd",
+        "bitget_deferred-usdt"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "ENJ": {
+      "source": [
+        "ws-spot-binance-usdt",
+        "ws-spot-bybit-usdt",
+        "ws-spot-okx-usdt",
+        "ws-spot-kucoin-usdt",
+        "bitmart_deferred-usdt",
+        "mexc_deferred-usdt"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "ORCA": {
+      "source": [
+        "ws-spot-binance-usdt",
+        "ws-spot-kucoin-usdt",
+        "lbank_deferred-usdt",
+        "htx_deferred-usdt",
+        "bitmart_deferred-usdt"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "BASED": {
+      "source": [
+        "ws-spot-okx-usdt",
+        "ws-spot-bybit-usdt",
+        "ws-spot-kucoin-usdt",
+        "binancealpha_deferred-usdt",
+        "htx_deferred-usdt",
+        "coinbase_deferred-usd"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "APE": {
+      "source": [
+        "ws-spot-binance-usdt",
+        "ws-spot-bybit-usdt",
+        "ws-spot-okx-usdt",
+        "ws-spot-kucoin-usdt",
+        "ws-spot-kraken-usd",
+        "bitmart_deferred-usdt",
+        "htx_deferred-usdt"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "FIL": {
+      "source": [
+        "ws-spot-binance-usdt",
+        "ws-spot-okx-usdt",
+        "ws-spot-kucoin-usdt",
+        "ws-spot-bybit-usdt",
+        "htx_deferred-usdt",
+        "bitmart_deferred-usdt"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "PAXG": {
+      "source": [
+        "ws-spot-binance-usdt",
+        "ws-spot-okx-usdt",
+        "ws-spot-kucoin-usdt",
+        "ws-spot-kraken-usd",
+        "lbank_deferred-usdt",
+        "coinbase_deferred-usd"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "KAT": {
+      "source": [
+        "ws-spot-binance-usdt",
+        "ws-spot-okx-usdt",
+        "ws-spot-kucoin-usdt",
+        "lbank_deferred-usdt",
+        "coinbase_deferred-usd",
+        "binance_deferred-usdc"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "AIOT": {
+      "source": [
+        "binancealpha_deferred-usdt",
+        "bitmart_deferred-usdt",
+        "mexc_deferred-usdt",
+        "gate_deferred-usdt",
+        "xt_deferred-usdt"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "UB": {
+      "source": [
+        "ws-spot-kucoin-usdt",
+        "binancealpha_deferred-usdt",
+        "gate_deferred-usdt",
+        "mexc_deferred-usdt",
+        "xt_deferred-usdt",
+        "bingx_deferred-usdt"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "ZBT": {
+      "source": [
+        "ws-spot-binance-usdt",
+        "ws-spot-bybit-usdt",
+        "ws-spot-kucoin-usdt",
+        "htx_deferred-usdt",
+        "bitmart_deferred-usdt",
+        "xt_deferred-usdt"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "DASH": {
+      "source": [
+        "ws-spot-binance-usdt",
+        "ws-spot-kucoin-usdt",
+        "ws-spot-okx-usdt",
+        "xt_deferred-usdt",
+        "bitrue_deferred-usdt",
+        "mexc_deferred-usdt"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "B": {
+      "source": [
+        "binancealpha_deferred-usdt",
+        "lbank_deferred-usdt",
+        "gate_deferred-usdt",
+        "xt_deferred-usdt",
+        "bitget_deferred-usdt",
+        "mexc_deferred-usdt",
+        "bingx_deferred-usdt"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "SAGA": {
+      "source": [
+        "ws-spot-binance-usdt",
+        "lbank_deferred-usdt",
+        "htx_deferred-usdt",
+        "gate_deferred-usdt",
+        "xt_deferred-usdt",
+        "bitmart_deferred-usdt"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "DOGS": {
+      "source": [
+        "ws-spot-binance-usdt",
+        "ws-spot-kucoin-usdt",
+        "ws-spot-okx-usdt",
+        "ws-spot-bybit-usdt",
+        "lbank_deferred-usdt",
+        "bitmart_deferred-usdt"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "MOVR": {
+      "source": [
+        "ws-spot-binance-usdt",
+        "ws-spot-bybit-usdt",
+        "ws-spot-kucoin-usdt",
+        "lbank_deferred-usdt",
+        "htx_deferred-usdt",
+        "mexc_deferred-usdt"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "SPK": {
+      "source": [
+        "ws-spot-binance-usdt",
+        "ws-spot-okx-usdt",
+        "ws-spot-bybit-usdt",
+        "ws-spot-kucoin-usdt",
+        "htx_deferred-usdt",
+        "lbank_deferred-usdt"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "GIGGLE": {
+      "source": [
+        "ws-spot-binance-usdt",
+        "ws-spot-kucoin-usdt",
+        "htx_deferred-usdt",
+        "bitmart_deferred-usdt",
+        "lbank_deferred-usdt",
+        "binance_deferred-usdc",
+        "xt_deferred-usdt"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "SOON": {
+      "source": [
+        "ws-spot-kucoin-usdt",
+        "binancealpha_deferred-usdt",
+        "lbank_deferred-usdt",
+        "htx_deferred-usdt",
+        "bitget_deferred-usdt",
+        "bitmart_deferred-usdt"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "AXS": {
+      "source": [
+        "ws-spot-binance-usdt",
+        "ws-spot-okx-usdt",
+        "ws-spot-bybit-usdt",
+        "ws-spot-kucoin-usdt",
+        "lbank_deferred-usdt",
+        "htx_deferred-usdt"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "LUNC": {
+      "source": [
+        "ws-spot-binance-usdt",
+        "ws-spot-bybit-usdt",
+        "ws-spot-kucoin-usdt",
+        "lbank_deferred-usdt",
+        "bitmart_deferred-usdt",
+        "mexc_deferred-usdt"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "kLUNC": {
+      "source": [
+        "kilo-price"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "TST": {
+      "source": [
+        "ws-spot-binance-usdt",
+        "htx_deferred-usdt",
+        "lbank_deferred-usdt",
+        "bitmart_deferred-usdt",
+        "xt_deferred-usdt",
+        "binance_deferred-usdc"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "PRL": {
+      "source": [
+        "binancealpha_deferred-usdt",
+        "lbank_deferred-usdt",
+        "bitget_deferred-usdt",
+        "bitmart_deferred-usdt",
+        "mexc_deferred-usdt",
+        "mexc_deferred-usdc",
+        "coinbase_deferred-usd"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "NIL": {
+      "source": [
+        "ws-spot-binance-usdt",
+        "ws-spot-kucoin-usdt",
+        "lbank_deferred-usdt",
+        "htx_deferred-usdt",
+        "xt_deferred-usdt",
+        "mexc_deferred-usdt"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "FET": {
+      "source": [
+        "ws-spot-binance-usdt",
+        "ws-spot-bybit-usdt",
+        "ws-spot-kucoin-usdt",
+        "ws-spot-okx-usdt",
+        "lbank_deferred-usdt",
+        "gate_deferred-usdt"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "PLAY": {
+      "source": [
+        "ws-spot-kucoin-usdt",
+        "mexc_deferred-usdt",
+        "kraken_deferred-eur"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "FF": {
+      "source": [
+        "ws-spot-binance-usdt",
+        "ws-spot-bybit-usdt",
+        "ws-spot-kucoin-usdt",
+        "htx_deferred-usdt",
+        "bitget_deferred-usdt",
+        "bitmart_deferred-usdt"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "SAHARA": {
+      "source": [
+        "ws-spot-binance-usdt",
+        "ws-spot-bybit-usdt",
+        "ws-spot-okx-usdt",
+        "ws-spot-kucoin-usdt",
+        "gate_deferred-usdt",
+        "xt_deferred-usdt"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "NAORIS": {
+      "source": [
+        "binancealpha_deferred-usdt",
+        "gate_deferred-usdt",
+        "mexc_deferred-usdt",
+        "bitget_deferred-usdt",
+        "bingx_deferred-usdt"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "ZEREBRO": {
+      "source": [
+        "ws-spot-bybit-usdt",
+        "ws-spot-kucoin-usdt",
+        "binancealpha_deferred-usdt",
+        "lbank_deferred-usdt",
+        "htx_deferred-usdt",
+        "gate_deferred-usdt"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "GALA": {
+      "source": [
+        "ws-spot-binance-usdt",
+        "ws-spot-bybit-usdt",
+        "ws-spot-okx-usdt",
+        "htx_deferred-usdt",
+        "gate_deferred-usdt"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "SWARMS": {
+      "source": [
+        "ws-spot-kucoin-usdt",
+        "binancealpha_deferred-usdt",
+        "lbank_deferred-usdt",
+        "htx_deferred-usdt",
+        "mexc_deferred-usdt",
+        "gate_deferred-usdt"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "TAG": {
+      "source": [
+        "binancealpha_deferred-usdt",
+        "bitmart_deferred-usdt",
+        "bitget_deferred-usdt",
+        "gate_deferred-usdt",
+        "mexc_deferred-usdt",
+        "xt_deferred-usdt",
+        "bingx_deferred-usdt"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "LAYER": {
+      "source": [
+        "ws-spot-binance-usdt",
+        "ws-spot-okx-usdt",
+        "ws-spot-bybit-usdt",
+        "lbank_deferred-usdt",
+        "htx_deferred-usdt"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "TRUTH": {
+      "source": [
+        "ws-spot-kucoin-usdt",
+        "binancealpha_deferred-usdt",
+        "lbank_deferred-usdt",
+        "mexc_deferred-usdt",
+        "xt_deferred-usdt",
+        "bingx_deferred-usdt"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "GENIUS": {
+      "source": [
+        "ws-spot-binance-usdt",
+        "ws-spot-kucoin-usdt",
+        "lbank_deferred-usdt",
+        "htx_deferred-usdt",
+        "binance_deferred-usdc",
+        "gate_deferred-usdt"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "GWEI": {
+      "source": [
+        "ws-spot-kucoin-usdt",
+        "binancealpha_deferred-usdt",
+        "bitget_deferred-usdt",
+        "gate_deferred-usdt",
+        "coinbase_deferred-usd",
+        "lbank_deferred-usdt"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "STORJ": {
+      "source": [
+        "ws-spot-kucoin-usdt",
+        "ws-spot-okx-usdt",
+        "lbank_deferred-usdt",
+        "htx_deferred-usdt",
+        "bitmart_deferred-usdt"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "AIA": {
+      "source": [
+        "binancealpha_deferred-usdt",
+        "bitmart_deferred-usdt",
+        "gate_deferred-usdt",
+        "lbank_deferred-usdt",
+        "bitget_deferred-usdt",
+        "mexc_deferred-usdt"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "CHZ": {
+      "source": [
+        "ws-spot-binance-usdt",
+        "ws-spot-okx-usdt",
+        "ws-spot-bybit-usdt",
+        "ws-spot-kucoin-usdt",
+        "lbank_deferred-usdt",
+        "bitmart_deferred-usdt"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "BAS": {
+      "source": [
+        "ws-spot-kucoin-usdt",
+        "binancealpha_deferred-usdt",
+        "mexc_deferred-usdt",
+        "gate_deferred-usdt",
+        "xt_deferred-usdt"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "ICP": {
+      "source": [
+        "ws-spot-binance-usdt",
+        "ws-spot-okx-usdt",
+        "ws-spot-kucoin-usdt",
+        "ws-spot-bybit-usdt",
+        "coinbase_deferred-usd",
+        "bitget_deferred-usdt"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "Q": {
+      "source": [
+        "ws-spot-kucoin-usdt",
+        "binancealpha_deferred-usdt",
+        "bitmart_deferred-usdt",
+        "gate_deferred-usdt",
+        "bitget_deferred-usdt",
+        "mexc_deferred-usdt"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "HBAR": {
+      "source": [
+        "ws-spot-binance-usdt",
+        "ws-spot-bybit-usdt",
+        "ws-spot-kucoin-usdt",
+        "ws-spot-okx-usdt",
+        "htx_deferred-usdt",
+        "coinbase_deferred-usd"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "PNUT": {
+      "source": [
+        "ws-spot-binance-usdt",
+        "ws-spot-bybit-usdt",
+        "ws-spot-okx-usdt",
+        "ws-spot-kucoin-usdt",
+        "htx_deferred-usdt",
+        "binance_deferred-usdc"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "BABY": {
+      "source": [
+        "ws-spot-binance-usdt",
+        "ws-spot-okx-usdt",
+        "ws-spot-kucoin-usdt",
+        "ws-spot-kraken-usd",
+        "lbank_deferred-usdt",
+        "xt_deferred-usdt"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "H": {
+      "source": [
+        "ws-spot-kucoin-usdt",
+        "ws-spot-bybit-usdt",
+        "binancealpha_deferred-usdt",
+        "gate_deferred-usdt",
+        "bitget_deferred-usdt"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "OPG": {
+      "source": [
+        "ws-spot-binance-usdt",
+        "ws-spot-bybit-usdt",
+        "lbank_deferred-usdt",
+        "htx_deferred-usdt",
+        "mexc_deferred-usdt",
+        "coinbase_deferred-usd",
+        "binance_deferred-usdc"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "BEAT": {
+      "source": [
+        "binancealpha_deferred-usdt",
+        "gate_deferred-usdt",
+        "mexc_deferred-usdt",
+        "lbank_deferred-usdt",
+        "xt_deferred-usdt",
+        "bingx_deferred-usdt"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "IRYS": {
+      "source": [
+        "ws-spot-okx-usdt",
+        "ws-spot-kucoin-usdt",
+        "binancealpha_deferred-usdt",
+        "bitmart_deferred-usdt",
+        "bitget_deferred-usdt",
+        "lbank_deferred-usdt",
+        "coinbase_deferred-usd"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "RENDER": {
+      "source": [
+        "ws-spot-binance-usdt",
+        "ws-spot-kucoin-usdt",
+        "ws-spot-bybit-usdt",
+        "ws-spot-okx-usdt",
+        "coinbase_deferred-usd",
+        "bitmart_deferred-usdt"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "BOME": {
+      "source": [
+        "ws-spot-binance-usdt",
+        "ws-spot-okx-usdt",
+        "ws-spot-bybit-usdt",
+        "ws-spot-kucoin-usdt",
+        "bitmart_deferred-usdt",
+        "xt_deferred-usdt",
+        "lbank_deferred-usdt"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "TAC": {
+      "source": [
+        "ws-spot-bybit-usdt",
+        "binancealpha_deferred-usdt",
+        "xt_deferred-usdt",
+        "bitget_deferred-usdt",
+        "mexc_deferred-usdt",
+        "bingx_deferred-usdt"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "ETC": {
+      "source": [
+        "ws-spot-binance-usdt",
+        "ws-spot-okx-usdt",
+        "ws-spot-bybit-usdt",
+        "ws-spot-kucoin-usdt",
+        "bitmart_deferred-usdt",
+        "htx_deferred-usdt"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "ALGO": {
+      "source": [
+        "ws-spot-binance-usdt",
+        "ws-spot-kraken-usd",
+        "ws-spot-bybit-usdt",
+        "ws-spot-okx-usdt",
+        "ws-spot-kucoin-usdt",
+        "htx_deferred-usdt",
+        "bitmart_deferred-usdt"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "AGT": {
+      "source": [
+        "ws-spot-kucoin-usdt",
+        "binancealpha_deferred-usdt",
+        "lbank_deferred-usdt",
+        "bitmart_deferred-usdt",
+        "xt_deferred-usdt",
+        "mexc_deferred-usdt",
+        "bingx_deferred-usdt"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "ZEN": {
+      "source": [
+        "ws-spot-binance-usdt",
+        "ws-spot-bybit-usdt",
+        "ws-spot-kucoin-usdt",
+        "ws-spot-okx-usdt",
+        "htx_deferred-usdt",
+        "bitmart_deferred-usdt",
+        "binance_deferred-usdc"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "INJ": {
+      "source": [
+        "ws-spot-binance-usdt",
+        "ws-spot-bybit-usdt",
+        "ws-spot-okx-usdt",
+        "ws-spot-kucoin-usdt",
+        "htx_deferred-usdt",
+        "lbank_deferred-usdt"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "DYM": {
+      "source": [
+        "ws-spot-binance-usdt",
+        "ws-spot-bybit-usdt",
+        "ws-spot-kucoin-usdt",
+        "lbank_deferred-usdt",
+        "htx_deferred-usdt"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "CFG": {
+      "source": [
+        "ws-spot-binance-usdt",
+        "ws-spot-bybit-usdt",
+        "ws-spot-okx-usdt",
+        "ws-spot-kucoin-usdt",
+        "lbank_deferred-usdt",
+        "binance_deferred-usdc",
+        "coinbase_deferred-usd"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "AIGENSYN": {
+      "source": [
+        "ws-spot-binance-usdt",
+        "binance_deferred-usdc",
+        "lbank_deferred-usdt"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "FHE": {
+      "source": [
+        "ws-spot-bybit-usdt",
+        "binancealpha_deferred-usdt",
+        "lbank_deferred-usdt",
+        "htx_deferred-usdt",
+        "bitget_deferred-usdt",
+        "mexc_deferred-usdt"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "POL": {
+      "source": [
+        "ws-spot-binance-usdt",
+        "ws-spot-bybit-usdt",
+        "ws-spot-okx-usdt",
+        "ws-spot-kucoin-usdt",
+        "ws-spot-kraken-usd",
+        "htx_deferred-usdt",
+        "bitmart_deferred-usdt"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "IO": {
+      "source": [
+        "ws-spot-binance-usdt",
+        "ws-spot-bybit-usdt",
+        "ws-spot-kucoin-usdt",
+        "lbank_deferred-usdt",
+        "xt_deferred-usdt",
+        "mexc_deferred-usdt",
+        "bitmart_deferred-usdt"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "GTC": {
+      "source": [
+        "ws-spot-kucoin-usdt",
+        "lbank_deferred-usdt",
+        "kraken_deferred-eur"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "JTO": {
+      "source": [
+        "ws-spot-binance-usdt",
+        "ws-spot-bybit-usdt",
+        "ws-spot-okx-usdt",
+        "ws-spot-kucoin-usdt",
+        "coinbase_deferred-usd",
+        "lbank_deferred-usdt"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "INX": {
+      "source": [
+        "ws-spot-kucoin-usdt",
+        "binancealpha_deferred-usdt",
+        "htx_deferred-usdt",
+        "mexc_deferred-usdt",
+        "mexc_deferred-usdc",
+        "gate_deferred-usdt"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "FIDA": {
+      "source": [
+        "ws-spot-binance-usdt",
+        "ws-spot-bybit-usdt",
+        "ws-spot-kraken-usd",
+        "ws-spot-kucoin-usdt",
+        "lbank_deferred-usdt",
+        "coinbase_deferred-usd",
+        "bingx_deferred-usdt"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "KITE": {
+      "source": [
+        "ws-spot-binance-usdt",
+        "ws-spot-okx-usdt",
+        "ws-spot-kucoin-usdt",
+        "htx_deferred-usdt",
+        "lbank_deferred-usdt",
+        "bitmart_deferred-usdt",
+        "gate_deferred-usdt"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "DYDX": {
+      "source": [
+        "ws-spot-binance-usdt",
+        "ws-spot-okx-usdt",
+        "ws-spot-kucoin-usdt",
+        "htx_deferred-usdt",
+        "binance_deferred-usdc",
+        "gate_deferred-usdt",
+        "okx_deferred-usd"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "NOT": {
+      "source": [
+        "ws-spot-binance-usdt",
+        "ws-spot-kucoin-usdt",
+        "ws-spot-bybit-usdt",
+        "ws-spot-okx-usdt",
+        "bitmart_deferred-usdt",
+        "xt_deferred-usdt"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "ATOM": {
+      "source": [
+        "ws-spot-binance-usdt",
+        "ws-spot-kucoin-usdt",
+        "ws-spot-bybit-usdt",
+        "ws-spot-okx-usdt",
+        "bitmart_deferred-usdt",
+        "xt_deferred-usdt"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "COS": {
+      "source": [
+        "ws-spot-binance-usdt",
+        "gate_deferred-usdt"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "COLLECT": {
+      "source": [
+        "binancealpha_deferred-usdt",
+        "xt_deferred-usdt",
+        "bitget_deferred-usdt",
+        "mexc_deferred-usdt",
+        "bingx_deferred-usdt"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "SAND": {
+      "source": [
+        "ws-spot-binance-usdt",
+        "ws-spot-okx-usdt",
+        "ws-spot-bybit-usdt",
+        "ws-spot-kucoin-usdt",
+        "htx_deferred-usdt",
+        "bitmart_deferred-usdc"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "AR": {
+      "source": [
+        "ws-spot-binance-usdt",
+        "ws-spot-okx-usdt",
+        "ws-spot-kucoin-usdt",
+        "ws-spot-bybit-usdt",
+        "htx_deferred-usdt",
+        "bitmart_deferred-usdt"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "GUA": {
+      "source": [
+        "binancealpha_deferred-usdt",
+        "mexc_deferred-usdt",
+        "lbank_deferred-usdt",
+        "gate_deferred-usdt",
+        "bingx_deferred-usdt"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "CGPT": {
+      "source": [
+        "ws-spot-binance-usdt",
+        "ws-spot-kucoin-usdt",
+        "ws-spot-bybit-usdt",
+        "htx_deferred-usdt",
+        "bitmart_deferred-usdt",
+        "lbank_deferred-usdt",
+        "xt_deferred-usdt"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "USELESS": {
+      "source": [
+        "ws-spot-kucoin-usdt",
+        "binancealpha_deferred-usdt",
+        "coinbase_deferred-usd",
+        "lbank_deferred-usdt",
+        "gate_deferred-usdt",
+        "xt_deferred-usdt"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "ARC": {
+      "source": [
+        "binancealpha_deferred-usdt",
+        "htx_deferred-usdt",
+        "gate_deferred-usdt",
+        "xt_deferred-usdt",
+        "lbank_deferred-usdt"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "ESPORTS": {
+      "source": [
+        "binancealpha_deferred-usdt",
+        "gate_deferred-usdt",
+        "lbank_deferred-usdt",
+        "mexc_deferred-usdt",
+        "bingx_deferred-usdt"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "HIVE": {
+      "source": [
+        "xt_deferred-usdt",
+        "bitmart_deferred-usdt",
+        "binance_deferred-usdc",
+        "mexc_deferred-usdt",
+        "bitget_deferred-usdt",
+        "mexc_deferred-usdc"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "STX": {
+      "source": [
+        "ws-spot-binance-usdt",
+        "ws-spot-kucoin-usdt",
+        "ws-spot-okx-usdt",
+        "ws-spot-bybit-usdt",
+        "xt_deferred-usdt"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "VIC": {
+      "source": [
+        "ws-spot-binance-usdt",
+        "ws-spot-bybit-usdt",
+        "mexc_deferred-usdt",
+        "bingx_deferred-usdt",
+        "gate_deferred-usdt",
+        "bitget_deferred-usdt",
+        "htx_deferred-usdt"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "OPEN": {
+      "source": [
+        "ws-spot-kucoin-usdt",
+        "lbank_deferred-usdt",
+        "htx_deferred-usdt",
+        "bitmart_deferred-usdt",
+        "bitget_deferred-usdt"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "CFX": {
+      "source": [
+        "ws-spot-binance-usdt",
+        "ws-spot-okx-usdt",
+        "ws-spot-kucoin-usdt",
+        "htx_deferred-usdt",
+        "lbank_deferred-usdt",
+        "gate_deferred-usdt"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "ETHFI": {
+      "source": [
+        "ws-spot-binance-usdt",
+        "ws-spot-bybit-usdt",
+        "ws-spot-okx-usdt",
+        "ws-spot-kucoin-usdt",
+        "bitmart_deferred-usdt",
+        "mexc_deferred-usdt"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "RECALL": {
+      "source": [
+        "ws-spot-bybit-usdt",
+        "ws-spot-kucoin-usdt",
+        "bitmart_deferred-usdt",
+        "gate_deferred-usdt",
+        "mexc_deferred-usdt"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "KSM": {
+      "source": [
+        "ws-spot-binance-usdt",
+        "ws-spot-okx-usdt",
+        "ws-spot-bybit-usdt",
+        "ws-spot-kucoin-usdt",
+        "htx_deferred-usdt",
+        "bitmart_deferred-usdt"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "LYN": {
+      "source": [
+        "ws-spot-kucoin-usdt",
+        "binancealpha_deferred-usdt",
+        "bitmart_deferred-usdt",
+        "mexc_deferred-usdt",
+        "bingx_deferred-usdt"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "PARTI": {
+      "source": [
+        "ws-spot-binance-usdt",
+        "ws-spot-bybit-usdt",
+        "ws-spot-okx-usdt",
+        "ws-spot-kucoin-usdt",
+        "lbank_deferred-usdt",
+        "htx_deferred-usdt"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "RUNE": {
+      "source": [
+        "ws-spot-binance-usdt",
+        "ws-spot-kucoin-usdt",
+        "ws-spot-bybit-usdt",
+        "binance_deferred-usdc",
+        "bitmart_deferred-usdt",
+        "mexc_deferred-usdt"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "AKT": {
+      "source": [
+        "ws-spot-kucoin-usdt",
+        "htx_deferred-usdt",
+        "bitmart_deferred-usdt",
+        "gate_deferred-usdt"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "STABLE": {
+      "source": [
+        "ws-spot-bybit-usdt",
+        "ws-spot-kraken-usd",
+        "ws-spot-kucoin-usdt",
+        "binancealpha_deferred-usdt",
+        "lbank_deferred-usdt",
+        "htx_deferred-usdt",
+        "bitmart_deferred-usdt"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "PTB": {
+      "source": [
+        "ws-spot-kucoin-usdt",
+        "binancealpha_deferred-usdt",
+        "bitmart_deferred-usdt",
+        "gate_deferred-usdt",
+        "mexc_deferred-usdt",
+        "bingx_deferred-usdt"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "US": {
+      "source": [
+        "binancealpha_deferred-usdt",
+        "bitget_deferred-usdt",
+        "gate_deferred-usdt",
+        "mexc_deferred-usdt",
+        "xt_deferred-usdt"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "XEC": {
+      "source": [
+        "ws-spot-kucoin-usdt",
+        "htx_deferred-usdt",
+        "lbank_deferred-usdt",
+        "mexc_deferred-usdt",
+        "bingx_deferred-usdt"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "kXEC": {
+      "source": [
+        "kilo-price"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "TRIA": {
+      "source": [
+        "ws-spot-bybit-usdt",
+        "binancealpha_deferred-usdt",
+        "lbank_deferred-usdt",
+        "bitget_deferred-usdt",
+        "mexc_deferred-usdt"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "JELLYJELLY": {
+      "source": [
+        "ws-spot-kucoin-usdt",
+        "binancealpha_deferred-usdt",
+        "lbank_deferred-usdt",
+        "bitmart_deferred-usdt",
+        "gate_deferred-usdt",
+        "mexc_deferred-usdt",
+        "mexc_deferred-usdc"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "HMSTR": {
+      "source": [
+        "ws-spot-binance-usdt",
+        "ws-spot-bybit-usdt",
+        "ws-spot-okx-usdt",
+        "ws-spot-kucoin-usdt",
+        "lbank_deferred-usdt",
+        "bitget_deferred-usdt"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "EVAA": {
+      "source": [
+        "binancealpha_deferred-usdt",
+        "gate_deferred-usdt",
+        "bitmart_deferred-usdt",
+        "xt_deferred-usdt"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "FLOKI": {
+      "source": [
+        "ws-spot-binance-usdt",
+        "ws-spot-kucoin-usdt",
+        "ws-spot-okx-usdt",
+        "ws-spot-bybit-usdt",
+        "htx_deferred-usdt",
+        "lbank_deferred-usdt"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "kFLOKI": {
+      "source": [
+        "kilo-price"
+      ],
+      "denomination": "USD",
+      "rateFeed": false
+    },
+    "ENS": {
+      "source": [
+        "ws-spot-binance-usdt",
+        "ws-spot-okx-usdt",
+        "ws-spot-bybit-usdt",
+        "ws-spot-kucoin-usdt",
+        "htx_deferred-usdt",
+        "bitmart_deferred-usdt"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "TURBO": {
+      "source": [
+        "ws-spot-binance-usdt",
+        "ws-spot-okx-usdt",
+        "ws-spot-kucoin-usdt",
+        "htx_deferred-usdt",
+        "lbank_deferred-usdt"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "SAPIEN": {
+      "source": [
+        "ws-spot-binance-usdt",
+        "ws-spot-kucoin-usdt",
+        "bitmart_deferred-usdt",
+        "lbank_deferred-usdt",
+        "binance_deferred-usdc"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "W": {
+      "source": [],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "DUSK": {
+      "source": [
+        "ws-spot-binance-usdt",
+        "ws-spot-kucoin-usdt",
+        "htx_deferred-usdt",
+        "mexc_deferred-usdt",
+        "xt_deferred-usdt",
+        "binance_deferred-btc"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "KAIA": {
+      "source": [
+        "ws-spot-binance-usdt",
+        "ws-spot-bybit-usdt",
+        "ws-spot-okx-usdt",
+        "ws-spot-kucoin-usdt",
+        "bitget_deferred-usdt",
+        "bitmart_deferred-usdt"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "DEEP": {
+      "source": [
+        "ws-spot-bybit-usdt",
+        "ws-spot-kucoin-usdt",
+        "binancealpha_deferred-usdt",
+        "bitmart_deferred-usdt",
+        "gate_deferred-usdt",
+        "bitget_deferred-usdt"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "MOVE": {
+      "source": [
+        "ws-spot-binance-usdt",
+        "ws-spot-okx-usdt",
+        "ws-spot-bybit-usdt",
+        "ws-spot-kucoin-usdt",
+        "lbank_deferred-usdt",
+        "gate_deferred-usdt",
+        "bitmart_deferred-usdt"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "JASMY": {
+      "source": [
+        "ws-spot-binance-usdt",
+        "ws-spot-bybit-usdt",
+        "ws-spot-kucoin-usdt",
+        "htx_deferred-usdt",
+        "lbank_deferred-usdt"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "POLYX": {
+      "source": [
+        "ws-spot-binance-usdt",
+        "ws-spot-kucoin-usdt",
+        "htx_deferred-usdt",
+        "bitmart_deferred-usdt",
+        "gate_deferred-usdt",
+        "mexc_deferred-usdt",
+        "bitget_deferred-usdt"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "VELVET": {
+      "source": [
+        "ws-spot-kucoin-usdt",
+        "binancealpha_deferred-usdt",
+        "gate_deferred-usdt",
+        "bitget_deferred-usdt",
+        "bitmart_deferred-usdt",
+        "mexc_deferred-usdt"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "MORPHO": {
+      "source": [
+        "ws-spot-binance-usdt",
+        "ws-spot-kraken-usd",
+        "ws-spot-okx-usdt",
+        "ws-spot-bybit-usdt",
+        "ws-spot-kucoin-usdt",
+        "coinbase_deferred-usd",
+        "htx_deferred-usdt"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "ORDI_INDEX.BE": {
+      "source": [
+        "ws-extended-rfq"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "ORDI_MARK.BE": {
+      "source": [
+        "ws-extended-rfq"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "BSB_INDEX.BE": {
+      "source": [
+        "ws-extended-rfq"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "BSB_MARK.BE": {
+      "source": [
+        "ws-extended-rfq"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "BILL_INDEX.BE": {
+      "source": [
+        "ws-extended-rfq"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "BILL_MARK.BE": {
+      "source": [
+        "ws-extended-rfq"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "ENJ_INDEX.BE": {
+      "source": [
+        "ws-extended-rfq"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "ENJ_MARK.BE": {
+      "source": [
+        "ws-extended-rfq"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "ORCA_INDEX.BE": {
+      "source": [
+        "ws-extended-rfq"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "ORCA_MARK.BE": {
+      "source": [
+        "ws-extended-rfq"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "BASED_INDEX.BE": {
+      "source": [
+        "ws-extended-rfq"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "BASED_MARK.BE": {
+      "source": [
+        "ws-extended-rfq"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "APE_INDEX.BE": {
+      "source": [
+        "ws-extended-rfq"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "APE_MARK.BE": {
+      "source": [
+        "ws-extended-rfq"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "FIL_INDEX.BE": {
+      "source": [
+        "ws-extended-rfq"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "FIL_MARK.BE": {
+      "source": [
+        "ws-extended-rfq"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "PAXG_INDEX.BE": {
+      "source": [
+        "ws-extended-rfq"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "PAXG_MARK.BE": {
+      "source": [
+        "ws-extended-rfq"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "KAT_INDEX.BE": {
+      "source": [
+        "ws-extended-rfq"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "KAT_MARK.BE": {
+      "source": [
+        "ws-extended-rfq"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "AIOT_INDEX.BE": {
+      "source": [
+        "ws-extended-rfq"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "AIOT_MARK.BE": {
+      "source": [
+        "ws-extended-rfq"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "UB_INDEX.BE": {
+      "source": [
+        "ws-extended-rfq"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "UB_MARK.BE": {
+      "source": [
+        "ws-extended-rfq"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "ZBT_INDEX.BE": {
+      "source": [
+        "ws-extended-rfq"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "ZBT_MARK.BE": {
+      "source": [
+        "ws-extended-rfq"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "DASH_INDEX.BE": {
+      "source": [
+        "ws-extended-rfq"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "DASH_MARK.BE": {
+      "source": [
+        "ws-extended-rfq"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "B_INDEX.BE": {
+      "source": [
+        "ws-extended-rfq"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "B_MARK.BE": {
+      "source": [
+        "ws-extended-rfq"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "SAGA_INDEX.BE": {
+      "source": [
+        "ws-extended-rfq"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "SAGA_MARK.BE": {
+      "source": [
+        "ws-extended-rfq"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "DOGS_INDEX.BE": {
+      "source": [
+        "ws-extended-rfq"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "DOGS_MARK.BE": {
+      "source": [
+        "ws-extended-rfq"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "MOVR_INDEX.BE": {
+      "source": [
+        "ws-extended-rfq"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "MOVR_MARK.BE": {
+      "source": [
+        "ws-extended-rfq"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "SPK_INDEX.BE": {
+      "source": [
+        "ws-extended-rfq"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "SPK_MARK.BE": {
+      "source": [
+        "ws-extended-rfq"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "GIGGLE_INDEX.BE": {
+      "source": [
+        "ws-extended-rfq"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "GIGGLE_MARK.BE": {
+      "source": [
+        "ws-extended-rfq"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "SOON_INDEX.BE": {
+      "source": [
+        "ws-extended-rfq"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "SOON_MARK.BE": {
+      "source": [
+        "ws-extended-rfq"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "AXS_INDEX.BE": {
+      "source": [
+        "ws-extended-rfq"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "AXS_MARK.BE": {
+      "source": [
+        "ws-extended-rfq"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "LUNC_INDEX.BE": {
+      "source": [
+        "ws-extended-rfq"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "LUNC_MARK.BE": {
+      "source": [
+        "ws-extended-rfq"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "kLUNC_INDEX.BE": {
+      "source": [
+        "ws-extended-rfq"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "kLUNC_MARK.BE": {
+      "source": [
+        "ws-extended-rfq"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "TST_INDEX.BE": {
+      "source": [
+        "ws-extended-rfq"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "TST_MARK.BE": {
+      "source": [
+        "ws-extended-rfq"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "PRL_INDEX.BE": {
+      "source": [
+        "ws-extended-rfq"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "PRL_MARK.BE": {
+      "source": [
+        "ws-extended-rfq"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "NIL_INDEX.BE": {
+      "source": [
+        "ws-extended-rfq"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "NIL_MARK.BE": {
+      "source": [
+        "ws-extended-rfq"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "FET_INDEX.BE": {
+      "source": [
+        "ws-extended-rfq"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "FET_MARK.BE": {
+      "source": [
+        "ws-extended-rfq"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "PLAY_INDEX.BE": {
+      "source": [
+        "ws-extended-rfq"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "PLAY_MARK.BE": {
+      "source": [
+        "ws-extended-rfq"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "FF_INDEX.BE": {
+      "source": [
+        "ws-extended-rfq"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "FF_MARK.BE": {
+      "source": [
+        "ws-extended-rfq"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "SAHARA_INDEX.BE": {
+      "source": [
+        "ws-extended-rfq"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "SAHARA_MARK.BE": {
+      "source": [
+        "ws-extended-rfq"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "NAORIS_INDEX.BE": {
+      "source": [
+        "ws-extended-rfq"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "NAORIS_MARK.BE": {
+      "source": [
+        "ws-extended-rfq"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "ZEREBRO_INDEX.BE": {
+      "source": [
+        "ws-extended-rfq"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "ZEREBRO_MARK.BE": {
+      "source": [
+        "ws-extended-rfq"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "GALA_INDEX.BE": {
+      "source": [
+        "ws-extended-rfq"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "GALA_MARK.BE": {
+      "source": [
+        "ws-extended-rfq"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "SWARMS_INDEX.BE": {
+      "source": [
+        "ws-extended-rfq"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "SWARMS_MARK.BE": {
+      "source": [
+        "ws-extended-rfq"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "TAG_INDEX.BE": {
+      "source": [
+        "ws-extended-rfq"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "TAG_MARK.BE": {
+      "source": [
+        "ws-extended-rfq"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "LAYER_INDEX.BE": {
+      "source": [
+        "ws-extended-rfq"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "LAYER_MARK.BE": {
+      "source": [
+        "ws-extended-rfq"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "TRUTH_INDEX.BE": {
+      "source": [
+        "ws-extended-rfq"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "TRUTH_MARK.BE": {
+      "source": [
+        "ws-extended-rfq"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "GENIUS_INDEX.BE": {
+      "source": [
+        "ws-extended-rfq"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "GENIUS_MARK.BE": {
+      "source": [
+        "ws-extended-rfq"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "GWEI_INDEX.BE": {
+      "source": [
+        "ws-extended-rfq"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "GWEI_MARK.BE": {
+      "source": [
+        "ws-extended-rfq"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "STORJ_INDEX.BE": {
+      "source": [
+        "ws-extended-rfq"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "STORJ_MARK.BE": {
+      "source": [
+        "ws-extended-rfq"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "AIA_INDEX.BE": {
+      "source": [
+        "ws-extended-rfq"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "AIA_MARK.BE": {
+      "source": [
+        "ws-extended-rfq"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "CHZ_INDEX.BE": {
+      "source": [
+        "ws-extended-rfq"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "CHZ_MARK.BE": {
+      "source": [
+        "ws-extended-rfq"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "BAS_INDEX.BE": {
+      "source": [
+        "ws-extended-rfq"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "BAS_MARK.BE": {
+      "source": [
+        "ws-extended-rfq"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "ICP_INDEX.BE": {
+      "source": [
+        "ws-extended-rfq"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "ICP_MARK.BE": {
+      "source": [
+        "ws-extended-rfq"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "Q_INDEX.BE": {
+      "source": [
+        "ws-extended-rfq"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "Q_MARK.BE": {
+      "source": [
+        "ws-extended-rfq"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "HBAR_INDEX.BE": {
+      "source": [
+        "ws-extended-rfq"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "HBAR_MARK.BE": {
+      "source": [
+        "ws-extended-rfq"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "PNUT_INDEX.BE": {
+      "source": [
+        "ws-extended-rfq"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "PNUT_MARK.BE": {
+      "source": [
+        "ws-extended-rfq"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "BABY_INDEX.BE": {
+      "source": [
+        "ws-extended-rfq"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "BABY_MARK.BE": {
+      "source": [
+        "ws-extended-rfq"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "H_INDEX.BE": {
+      "source": [
+        "ws-extended-rfq"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "H_MARK.BE": {
+      "source": [
+        "ws-extended-rfq"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "OPG_INDEX.BE": {
+      "source": [
+        "ws-extended-rfq"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "OPG_MARK.BE": {
+      "source": [
+        "ws-extended-rfq"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "BEAT_INDEX.BE": {
+      "source": [
+        "ws-extended-rfq"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "BEAT_MARK.BE": {
+      "source": [
+        "ws-extended-rfq"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "IRYS_INDEX.BE": {
+      "source": [
+        "ws-extended-rfq"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "IRYS_MARK.BE": {
+      "source": [
+        "ws-extended-rfq"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "RENDER_INDEX.BE": {
+      "source": [
+        "ws-extended-rfq"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "RENDER_MARK.BE": {
+      "source": [
+        "ws-extended-rfq"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "BOME_INDEX.BE": {
+      "source": [
+        "ws-extended-rfq"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "BOME_MARK.BE": {
+      "source": [
+        "ws-extended-rfq"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "TAC_INDEX.BE": {
+      "source": [
+        "ws-extended-rfq"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "TAC_MARK.BE": {
+      "source": [
+        "ws-extended-rfq"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "ETC_INDEX.BE": {
+      "source": [
+        "ws-extended-rfq"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "ETC_MARK.BE": {
+      "source": [
+        "ws-extended-rfq"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "ALGO_INDEX.BE": {
+      "source": [
+        "ws-extended-rfq"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "ALGO_MARK.BE": {
+      "source": [
+        "ws-extended-rfq"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "AGT_INDEX.BE": {
+      "source": [
+        "ws-extended-rfq"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "AGT_MARK.BE": {
+      "source": [
+        "ws-extended-rfq"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "ZEN_INDEX.BE": {
+      "source": [
+        "ws-extended-rfq"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "ZEN_MARK.BE": {
+      "source": [
+        "ws-extended-rfq"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "INJ_INDEX.BE": {
+      "source": [
+        "ws-extended-rfq"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "INJ_MARK.BE": {
+      "source": [
+        "ws-extended-rfq"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "DYM_INDEX.BE": {
+      "source": [
+        "ws-extended-rfq"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "DYM_MARK.BE": {
+      "source": [
+        "ws-extended-rfq"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "CFG_INDEX.BE": {
+      "source": [
+        "ws-extended-rfq"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "CFG_MARK.BE": {
+      "source": [
+        "ws-extended-rfq"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "AIGENSYN_INDEX.BE": {
+      "source": [
+        "ws-extended-rfq"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "AIGENSYN_MARK.BE": {
+      "source": [
+        "ws-extended-rfq"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "FHE_INDEX.BE": {
+      "source": [
+        "ws-extended-rfq"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "FHE_MARK.BE": {
+      "source": [
+        "ws-extended-rfq"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "POL_INDEX.BE": {
+      "source": [
+        "ws-extended-rfq"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "POL_MARK.BE": {
+      "source": [
+        "ws-extended-rfq"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "IO_INDEX.BE": {
+      "source": [
+        "ws-extended-rfq"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "IO_MARK.BE": {
+      "source": [
+        "ws-extended-rfq"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "GTC_INDEX.BE": {
+      "source": [
+        "ws-extended-rfq"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "GTC_MARK.BE": {
+      "source": [
+        "ws-extended-rfq"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "JTO_INDEX.BE": {
+      "source": [
+        "ws-extended-rfq"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "JTO_MARK.BE": {
+      "source": [
+        "ws-extended-rfq"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "INX_INDEX.BE": {
+      "source": [
+        "ws-extended-rfq"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "INX_MARK.BE": {
+      "source": [
+        "ws-extended-rfq"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "FIDA_INDEX.BE": {
+      "source": [
+        "ws-extended-rfq"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "FIDA_MARK.BE": {
+      "source": [
+        "ws-extended-rfq"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "KITE_INDEX.BE": {
+      "source": [
+        "ws-extended-rfq"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "KITE_MARK.BE": {
+      "source": [
+        "ws-extended-rfq"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "DYDX_INDEX.BE": {
+      "source": [
+        "ws-extended-rfq"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "DYDX_MARK.BE": {
+      "source": [
+        "ws-extended-rfq"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "NOT_INDEX.BE": {
+      "source": [
+        "ws-extended-rfq"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "NOT_MARK.BE": {
+      "source": [
+        "ws-extended-rfq"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "ATOM_INDEX.BE": {
+      "source": [
+        "ws-extended-rfq"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "ATOM_MARK.BE": {
+      "source": [
+        "ws-extended-rfq"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "COS_INDEX.BE": {
+      "source": [
+        "ws-extended-rfq"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "COS_MARK.BE": {
+      "source": [
+        "ws-extended-rfq"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "COLLECT_INDEX.BE": {
+      "source": [
+        "ws-extended-rfq"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "COLLECT_MARK.BE": {
+      "source": [
+        "ws-extended-rfq"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "SAND_INDEX.BE": {
+      "source": [
+        "ws-extended-rfq"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "SAND_MARK.BE": {
+      "source": [
+        "ws-extended-rfq"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "AR_INDEX.BE": {
+      "source": [
+        "ws-extended-rfq"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "AR_MARK.BE": {
+      "source": [
+        "ws-extended-rfq"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "GUA_INDEX.BE": {
+      "source": [
+        "ws-extended-rfq"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "GUA_MARK.BE": {
+      "source": [
+        "ws-extended-rfq"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "CGPT_INDEX.BE": {
+      "source": [
+        "ws-extended-rfq"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "CGPT_MARK.BE": {
+      "source": [
+        "ws-extended-rfq"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "USELESS_INDEX.BE": {
+      "source": [
+        "ws-extended-rfq"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "USELESS_MARK.BE": {
+      "source": [
+        "ws-extended-rfq"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "ARC_INDEX.BE": {
+      "source": [
+        "ws-extended-rfq"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "ARC_MARK.BE": {
+      "source": [
+        "ws-extended-rfq"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "ESPORTS_INDEX.BE": {
+      "source": [
+        "ws-extended-rfq"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "ESPORTS_MARK.BE": {
+      "source": [
+        "ws-extended-rfq"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "HIVE_INDEX.BE": {
+      "source": [
+        "ws-extended-rfq"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "HIVE_MARK.BE": {
+      "source": [
+        "ws-extended-rfq"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "STX_INDEX.BE": {
+      "source": [
+        "ws-extended-rfq"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "STX_MARK.BE": {
+      "source": [
+        "ws-extended-rfq"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "VIC_INDEX.BE": {
+      "source": [
+        "ws-extended-rfq"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "VIC_MARK.BE": {
+      "source": [
+        "ws-extended-rfq"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "OPEN_INDEX.BE": {
+      "source": [
+        "ws-extended-rfq"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "OPEN_MARK.BE": {
+      "source": [
+        "ws-extended-rfq"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "CFX_INDEX.BE": {
+      "source": [
+        "ws-extended-rfq"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "CFX_MARK.BE": {
+      "source": [
+        "ws-extended-rfq"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "ETHFI_INDEX.BE": {
+      "source": [
+        "ws-extended-rfq"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "ETHFI_MARK.BE": {
+      "source": [
+        "ws-extended-rfq"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "RECALL_INDEX.BE": {
+      "source": [
+        "ws-extended-rfq"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "RECALL_MARK.BE": {
+      "source": [
+        "ws-extended-rfq"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "KSM_INDEX.BE": {
+      "source": [
+        "ws-extended-rfq"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "KSM_MARK.BE": {
+      "source": [
+        "ws-extended-rfq"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "LYN_INDEX.BE": {
+      "source": [
+        "ws-extended-rfq"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "LYN_MARK.BE": {
+      "source": [
+        "ws-extended-rfq"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "PARTI_INDEX.BE": {
+      "source": [
+        "ws-extended-rfq"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "PARTI_MARK.BE": {
+      "source": [
+        "ws-extended-rfq"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "RUNE_INDEX.BE": {
+      "source": [
+        "ws-extended-rfq"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "RUNE_MARK.BE": {
+      "source": [
+        "ws-extended-rfq"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "AKT_INDEX.BE": {
+      "source": [
+        "ws-extended-rfq"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "AKT_MARK.BE": {
+      "source": [
+        "ws-extended-rfq"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "STABLE_INDEX.BE": {
+      "source": [
+        "ws-extended-rfq"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "STABLE_MARK.BE": {
+      "source": [
+        "ws-extended-rfq"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "PTB_INDEX.BE": {
+      "source": [
+        "ws-extended-rfq"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "PTB_MARK.BE": {
+      "source": [
+        "ws-extended-rfq"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "US_INDEX.BE": {
+      "source": [
+        "ws-extended-rfq"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "US_MARK.BE": {
+      "source": [
+        "ws-extended-rfq"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "XEC_INDEX.BE": {
+      "source": [
+        "ws-extended-rfq"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "XEC_MARK.BE": {
+      "source": [
+        "ws-extended-rfq"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "kXEC_INDEX.BE": {
+      "source": [
+        "ws-extended-rfq"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "kXEC_MARK.BE": {
+      "source": [
+        "ws-extended-rfq"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "TRIA_INDEX.BE": {
+      "source": [
+        "ws-extended-rfq"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "TRIA_MARK.BE": {
+      "source": [
+        "ws-extended-rfq"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "JELLYJELLY_INDEX.BE": {
+      "source": [
+        "ws-extended-rfq"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "JELLYJELLY_MARK.BE": {
+      "source": [
+        "ws-extended-rfq"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "HMSTR_INDEX.BE": {
+      "source": [
+        "ws-extended-rfq"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "HMSTR_MARK.BE": {
+      "source": [
+        "ws-extended-rfq"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "EVAA_INDEX.BE": {
+      "source": [
+        "ws-extended-rfq"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "EVAA_MARK.BE": {
+      "source": [
+        "ws-extended-rfq"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "FLOKI_INDEX.BE": {
+      "source": [
+        "ws-extended-rfq"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "FLOKI_MARK.BE": {
+      "source": [
+        "ws-extended-rfq"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "kFLOKI_INDEX.BE": {
+      "source": [
+        "ws-extended-rfq"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "kFLOKI_MARK.BE": {
+      "source": [
+        "ws-extended-rfq"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "ENS_INDEX.BE": {
+      "source": [
+        "ws-extended-rfq"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "ENS_MARK.BE": {
+      "source": [
+        "ws-extended-rfq"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "TURBO_INDEX.BE": {
+      "source": [
+        "ws-extended-rfq"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "TURBO_MARK.BE": {
+      "source": [
+        "ws-extended-rfq"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "SAPIEN_INDEX.BE": {
+      "source": [
+        "ws-extended-rfq"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "SAPIEN_MARK.BE": {
+      "source": [
+        "ws-extended-rfq"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "W_INDEX.BE": {
+      "source": [
+        "ws-extended-rfq"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "W_MARK.BE": {
+      "source": [
+        "ws-extended-rfq"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "DUSK_INDEX.BE": {
+      "source": [
+        "ws-extended-rfq"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "DUSK_MARK.BE": {
+      "source": [
+        "ws-extended-rfq"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "KAIA_INDEX.BE": {
+      "source": [
+        "ws-extended-rfq"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "KAIA_MARK.BE": {
+      "source": [
+        "ws-extended-rfq"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "DEEP_INDEX.BE": {
+      "source": [
+        "ws-extended-rfq"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "DEEP_MARK.BE": {
+      "source": [
+        "ws-extended-rfq"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "MOVE_INDEX.BE": {
+      "source": [
+        "ws-extended-rfq"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "MOVE_MARK.BE": {
+      "source": [
+        "ws-extended-rfq"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "JASMY_INDEX.BE": {
+      "source": [
+        "ws-extended-rfq"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "JASMY_MARK.BE": {
+      "source": [
+        "ws-extended-rfq"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "POLYX_INDEX.BE": {
+      "source": [
+        "ws-extended-rfq"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "POLYX_MARK.BE": {
+      "source": [
+        "ws-extended-rfq"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "VELVET_INDEX.BE": {
+      "source": [
+        "ws-extended-rfq"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "VELVET_MARK.BE": {
+      "source": [
+        "ws-extended-rfq"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "MORPHO_INDEX.BE": {
+      "source": [
+        "ws-extended-rfq"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "MORPHO_MARK.BE": {
+      "source": [
+        "ws-extended-rfq"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
     }
   },
   "multiPointPackages": {
