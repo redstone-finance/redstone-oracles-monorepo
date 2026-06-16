@@ -9103,7 +9103,7 @@
     },
     "DLF_PUBLICATION_TS": {
       "source": [
-        "accountable-dlf"
+        "accountable-dlf-publication-ts"
       ],
       "denomination": "other",
       "rateFeed": false
