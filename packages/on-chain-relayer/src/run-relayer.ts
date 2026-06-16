@@ -23,16 +23,8 @@ export const runRelayer = () => {
   const logger = loggerFactory("relayer/run");
 
   logger.log(
-    `Starting ${relayerConfig.adapterContractType} contract prices updater with relayer config ${JSON.stringify(
-      {
-        ...relayerConfig,
-        privateKey: "********",
-        telemetryAuthorizationToken: relayerConfig.telemetryAuthorizationToken
-          ? "********"
-          : "undefined",
-        telemetryUrl: relayerConfig.telemetryUrl ? "********" : "undefined",
-      }
-    )}`
+    `Starting ${relayerConfig.adapterContractType} contract prices updater with relayer config`,
+    relayerConfig
   );
 
   const configs = splitRelayerConfig(relayerConfig);
