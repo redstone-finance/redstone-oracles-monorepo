@@ -244,8 +244,6 @@ export class PubSubRunner implements PubSubDataProcessingStrategyDelegate<Relaye
       maxReferenceValueDeviationPercent: pubSubMaxReferenceValueDeviationPercent,
       maxReferenceValueDelayInSeconds: pubSubMaxReferenceValueDelayInSeconds,
       minReferenceValues: pubSubMinReferenceValues,
-      // TODO: remove once all prod nodes publish with %2E-encoded topics and relayers are updated to support those topics
-      subscribeLegacyTopics: true,
     };
   }
 }

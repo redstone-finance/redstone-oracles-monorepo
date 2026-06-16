@@ -215,63 +215,6 @@ describe("subscribe-data-packages", () => {
         subscriber.topics
       );
     });
-
-    it("should also subscribe to legacy topics when subscribeLegacyTopics is true", async () => {
-      const pubSub = createMockPubSubClient();
-      const subscriber = new DataPackageSubscriber(
-        pubSub,
-        createMockParams({ dataPackageIds: ["USDC.e"], subscribeLegacyTopics: true })
-      );
-      await subscriber.subscribe(() => {});
-
-      expect(subscriber.topics).toEqual([
-        `data-package/data-service-1/USDC%2Ee/${MOCK_WALLET_1.address}`,
-        `data-package/data-service-1/USDC.e/${MOCK_WALLET_1.address}`,
-        `data-package/data-service-1/USDC%2Ee/${MOCK_WALLET_2.address}`,
-        `data-package/data-service-1/USDC.e/${MOCK_WALLET_2.address}`,
-      ]);
-    });
-
-    it("should not duplicate topics for feed IDs without dots when subscribeLegacyTopics is true", async () => {
-      const pubSub = createMockPubSubClient();
-      const subscriber = new DataPackageSubscriber(
-        pubSub,
-        createMockParams({ dataPackageIds: ["ETH"], subscribeLegacyTopics: true })
-      );
-      await subscriber.subscribe(() => {});
-
-      expect(subscriber.topics).toEqual([
-        `data-package/data-service-1/ETH/${MOCK_WALLET_1.address}`,
-        `data-package/data-service-1/ETH/${MOCK_WALLET_2.address}`,
-      ]);
-    });
-
-    it("should process packages arriving on legacy topic", async () => {
-      const pubSub = createMockPubSubClient();
-      const subscriber = new DataPackageSubscriber(
-        pubSub,
-        createMockParams({
-          dataPackageIds: ["USDC.e"],
-          authorizedSigners: [MOCK_WALLET_1.address],
-          uniqueSignersCount: 1,
-          minimalOffChainSignersCount: 1,
-          subscribeLegacyTopics: true,
-        })
-      );
-      const callback = jest.fn();
-      await subscriber.subscribe(callback);
-
-      const dataPackage = createDataPackage("USDC.e", 1, Date.now(), MOCK_WALLET_1);
-      (pubSub as unknown as MockPubSubClient).publish([
-        {
-          topic: `data-package/data-service-1/USDC.e/${MOCK_WALLET_1.address}`,
-          data: dataPackage.toObj(),
-        },
-      ]);
-
-      jest.advanceTimersByTime(200);
-      expect(callback).toBeCalledTimes(1);
-    });
   });
 
   describe("single package validation", () => {
