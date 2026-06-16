@@ -101,11 +101,4 @@ export type DataPackageSubscriberParams = {
    * Instance of the storage to be used for caching responses
    */
   storageInstance?: DataPackagesResponseStorage;
-
-  /**
-   * If true, also subscribes to legacy (pre-%2E) topic format where dots in feed IDs are not
-   * encoded. Use during transition periods when some nodes still publish on old topics.
-   * After that period this functionality would be removed.
-   */
-  subscribeLegacyTopics?: boolean;
 };
