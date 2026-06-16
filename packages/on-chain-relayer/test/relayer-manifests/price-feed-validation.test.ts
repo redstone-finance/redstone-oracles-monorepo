@@ -20,7 +20,6 @@ import { describe, test } from "mocha";
 import { z } from "zod";
 
 const INTEGRATIONS_NOT_FOR_TESTING = [
-  "westendHubMultiFeed", // remove it when the network is stable
   "stylusSepoliaMultiFeed", // non supported in stylus
   "stellarTestnetSep40", // price adapter, not price feed
   "stellarSep40", // price adapter, not price feed
