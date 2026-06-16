@@ -11,7 +11,6 @@ import { skipIfDisabledOrNotSupported } from "./rpc-urls/common";
 const CHAINS_TO_SKIP_REDSTONE_MULTICALL_ADDRESS_CHECK: string[] = [
   "Arbitrum Sepolia",
   "TAC Turin",
-  "Westend Asset Hub",
   "Corn Maizenet",
   "zkLink",
   "zkSync",

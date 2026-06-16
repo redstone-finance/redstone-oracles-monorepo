@@ -26,20 +26,17 @@ export class Sep40StellarContractAdapter extends StellarContractAdapter {
     const latestData = await Promise.allSettled(promises);
 
     const data = latestData.map((result, index) => {
-      if (result.status === "rejected" || !RedstoneCommon.isDefined(result.value)) {
-        StellarContractAdapter.logger.warn(
-          `Couldn't find SEP-40 data for ${feedIds[index]} ${RedstoneCommon.stringify(result)}`
-        );
-
+      const value = Sep40StellarContractAdapter.settledValueOrWarn(result, feedIds[index]);
+      if (!RedstoneCommon.isDefined(value)) {
         return undefined;
       }
 
-      const timestampMS = RedstoneCommon.secsToMs(result.value.timestamp);
+      const timestampMS = RedstoneCommon.secsToMs(value.timestamp);
 
       return {
         lastDataPackageTimestampMS: timestampMS,
         lastBlockTimestampMS: timestampMS,
-        lastValue: result.value.price,
+        lastValue: value.price,
       };
     });
 
@@ -57,15 +54,9 @@ export class Sep40StellarContractAdapter extends StellarContractAdapter {
     const results = await Promise.allSettled(promises);
 
     return results.map((result, index) => {
-      if (result.status === "rejected" || !RedstoneCommon.isDefined(result.value)) {
-        StellarContractAdapter.logger.warn(
-          `Couldn't find SEP-40 data for ${feedIds[index]} ${RedstoneCommon.stringify(result)}`
-        );
+      const value = Sep40StellarContractAdapter.settledValueOrWarn(result, feedIds[index]);
 
-        return undefined;
-      }
-
-      return result.value.map((data) => BigInt(data.timestamp));
+      return value?.map((data) => BigInt(data.timestamp));
     });
   }
 
@@ -80,5 +71,20 @@ export class Sep40StellarContractAdapter extends StellarContractAdapter {
     }
 
     return data.price;
+  }
+
+  private static settledValueOrWarn<T>(
+    result: PromiseSettledResult<T | undefined>,
+    feedId: string
+  ) {
+    if (result.status === "rejected" || !RedstoneCommon.isDefined(result.value)) {
+      StellarContractAdapter.logger.warn(
+        `Couldn't find SEP-40 data for ${feedId} ${RedstoneCommon.stringify(result)}`
+      );
+
+      return undefined;
+    }
+
+    return result.value;
   }
 }
