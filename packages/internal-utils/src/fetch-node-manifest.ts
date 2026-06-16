@@ -128,6 +128,31 @@ const fetchNodeManifestOld = async <ManifestType = NodeManifest>(
   );
 };
 
+/**
+ * Fetches a node manifest at an explicit version, resolving `${main}`/`${fallback}`
+ * placeholders directly instead of looking the version up in the nodes-versions
+ * pointer. Use when the running version is already known (e.g. from telemetry).
+ */
+export const fetchNodeManifestAtVersion = async <ManifestType = NodeManifest>(
+  manifestUrls: string[],
+  main: string,
+  headers?: Record<string, string>
+): Promise<ManifestType> => {
+  for (const manifestUrl of manifestUrls) {
+    try {
+      const manifestUrlWithHash = substituteVersion(manifestUrl, main);
+
+      return await fetchWithCache<ManifestType>(manifestUrlWithHash, headers);
+    } catch (e) {
+      console.log(
+        `failed to fetch node manifest at version ${main}, URL ${manifestUrl}, ${RedstoneCommon.stringifyError(e)}`
+      );
+    }
+  }
+
+  throw new Error(`failed to fetch node manifest at version ${main}, URLs ${String(manifestUrls)}`);
+};
+
 export type FetchNodeManifestConfig = {
   dataServiceId: string;
   manifestUrls: string[];
