@@ -7769,6 +7769,21 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@openpgp/web-stream-tools@npm:^0.3.1":
+  version: 0.3.1
+  resolution: "@openpgp/web-stream-tools@npm:0.3.1"
+  peerDependencies:
+    "@types/node": ">=18.0.0"
+    typescript: ">=4.7"
+  peerDependenciesMeta:
+    "@types/node":
+      optional: true
+    typescript:
+      optional: true
+  checksum: 10c0/8fb6913edf2326bc5bb162919ca9e9924d7ea8c03f890b7ce4d377a1a975af12b15ee13765ccdca3150451093e1e6c6f39f0cdceda92cd952764b5efadaf01af
+  languageName: node
+  linkType: hard
+
 "@openzeppelin/contracts-upgradeable@npm:4.9.3, @openzeppelin/contracts-upgradeable@npm:^4.8.3":
   version: 4.9.3
   resolution: "@openzeppelin/contracts-upgradeable@npm:4.9.3"
@@ -10023,6 +10038,7 @@ __metadata:
   resolution: "@redstone-finance/lambda-unsnooze-networks@workspace:packages/lambda/lambda-unsnooze-networks"
   dependencies:
     "@aws-sdk/client-dynamodb": "npm:^3.696.0"
+    "@openpgp/web-stream-tools": "npm:^0.3.1"
     "@redstone-finance/chain-configs": "workspace:*"
     "@redstone-finance/internal-utils": "workspace:*"
     "@redstone-finance/monitoring-manifests": "workspace:*"
@@ -10031,6 +10047,7 @@ __metadata:
     axios: "npm:^1.15.2"
     dotenv: "npm:^16.0.3"
     mongodb: "npm:^5.9.0"
+    openpgp: "npm:^6.1.0"
     prettier: "npm:^3.6.2"
     redstone-prettier-config: "npm:^1.1.0"
     zod: "npm:^4.1.12"
@@ -28610,6 +28627,13 @@ __metadata:
   bin:
     opener: bin/opener-bin.js
   checksum: 10c0/dd56256ab0cf796585617bc28e06e058adf09211781e70b264c76a1dbe16e90f868c974e5bf5309c93469157c7d14b89c35dc53fe7293b0e40b4d2f92073bc79
+  languageName: node
+  linkType: hard
+
+"openpgp@npm:^6.1.0":
+  version: 6.3.0
+  resolution: "openpgp@npm:6.3.0"
+  checksum: 10c0/0528cb57d7cfd10ef4ab8ce868a0244a4930019d50feed9158028debfd85e5e1a621a4cc5ae254a0b1820a355b12fc7adbe04c950c731d9bb63ca9a9ed44a948
   languageName: node
   linkType: hard
 
