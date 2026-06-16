@@ -164,6 +164,22 @@ describe("Logger Sanitization Logic", () => {
       expect(sanitizeValue({ apiKey: "short" }).apiKey).toBe("[Redacted]");
       expect(sanitizeValue({ apiKey: "16-chars-api-key" }).apiKey).toBe("[Redacted]");
     });
+
+    test("should redact privateKey, telemetryUrl and telemetryAuthorizationToken", () => {
+      const config = {
+        chainName: "corn",
+        privateKey: "0xdeadbeef1234567890abcdef1234567890abcdef1234567890abcdef12345678",
+        telemetryUrl: "https://telemetry.internal.example.com/ingest",
+        telemetryAuthorizationToken: "secret-telemetry-token-abcdef",
+        dataServiceId: "redstone-primary-prod",
+      };
+      const sanitized = sanitizeValue(config);
+      expect(sanitized.privateKey).toBe("0xde...");
+      expect(sanitized.telemetryUrl).toBe("http...");
+      expect(sanitized.telemetryAuthorizationToken).toBe("secr...");
+      expect(sanitized.chainName).toBe("corn");
+      expect(sanitized.dataServiceId).toBe("redstone-primary-prod");
+    });
   });
 
   describe("createSanitizedLogger", () => {
