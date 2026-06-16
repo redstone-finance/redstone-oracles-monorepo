@@ -66,6 +66,10 @@ function resolvePureValue(inputs: ParsedInput[], moveCall: ParsedMoveCall, argId
 }
 
 function decodeFeedId(rawValue: unknown) {
+  if (typeof rawValue === "string") {
+    return rawValue.replace(/\0+$/, "");
+  }
+
   try {
     return ContractParamsProvider.unhexlifyFeedId(
       bcs.vector(bcs.u8()).parse(arrayify(rawValue as BytesLike))
