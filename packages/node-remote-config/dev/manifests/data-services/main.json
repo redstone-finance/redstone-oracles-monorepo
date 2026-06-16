@@ -8395,7 +8395,7 @@
       "rateFeed": true
     },
     "DLF_PUBLICATION_TS": {
-      "source": ["accountable-dlf"],
+      "source": ["accountable-dlf-publication-ts"],
       "denomination": "other",
       "rateFeed": false
     },
