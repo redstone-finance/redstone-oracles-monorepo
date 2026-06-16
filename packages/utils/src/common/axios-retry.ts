@@ -5,6 +5,7 @@ export type AxiosWithRetriesConfig = {
   timeout?: number;
   headers?: RawAxiosRequestHeaders;
   params?: unknown;
+  axiosRequestConfig?: axios.AxiosRequestConfig<unknown>;
 } & Omit<RetryConfig, "fn">;
 
 const AXIOS_FN_BY_METHOD = {
@@ -36,6 +37,7 @@ async function axiosRequestWithRetries<T>(
         headers: config.headers,
         params: config.params,
         ...(hasBody ? { data } : {}),
+        ...config.axiosRequestConfig,
       }),
     ...config,
   })();
