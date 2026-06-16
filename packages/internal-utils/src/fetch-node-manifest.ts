@@ -1,4 +1,5 @@
 import { RedstoneCommon } from "@redstone-finance/utils";
+import type axios from "axios";
 import { z } from "zod";
 import { LogMonitoring, LogMonitoringType } from "./LogMonitoring";
 
@@ -48,13 +49,18 @@ const FETCH_CACHE_TTL = 120_000;
  * Cache key is the url
  */
 const fetchWithCache = RedstoneCommon.memoize({
-  functionToMemoize: async <T>(url: string, headers?: Record<string, string>) => {
+  functionToMemoize: async <T>(
+    url: string,
+    headers?: Record<string, string>,
+    axiosRequestConfig?: axios.AxiosRequestConfig
+  ) => {
     return (
       await RedstoneCommon.axiosGetWithRetries<T>(url, {
         maxRetries: 3,
         waitBetweenMs: 0,
         timeout: 5000,
         headers,
+        axiosRequestConfig,
       })
     ).data;
   },
@@ -186,7 +192,10 @@ export const fetchAnyNodeManifest = async <ManifestType = NodeManifest>(
       const nodeVersionUrl = fetchConfig.nodeName
         ? `${versionsPrefixUrl}${nodeClass}/${fetchConfig.nodeName}/${nodeType}/${fetchConfig.nodeMode}`
         : `${versionsPrefixUrl}${nodeClass}/${nodeType}-resolved`;
-      const nodeVersion = await fetchWithCache<string>(nodeVersionUrl);
+      const nodeVersion = await fetchWithCache<string>(nodeVersionUrl, undefined, {
+        // disable JSON.parse done by axios by default, some sha are parsable as a number
+        responseType: "text",
+      });
       const resolvedUrl = substituteVersion(manifestUrl, nodeVersion);
 
       return await fetchWithCache<ManifestType>(resolvedUrl, fetchConfig.headers);
