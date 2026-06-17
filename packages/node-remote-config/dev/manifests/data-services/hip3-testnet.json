@@ -271,7 +271,21 @@
       "rateFeed": false,
       "types": ["rwa"]
     },
+    "USA100_CURRENT_SYMBOL": {
+      "source": ["databento-cme-futures", "ws-polygon-massive-cme-futures"],
+      "broadcasters": ["influx"],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": ["rwa"]
+    },
     "USA100_FRONT": {
+      "source": ["databento-cme-futures", "ws-polygon-massive-cme-futures"],
+      "broadcasters": ["influx"],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": ["rwa"]
+    },
+    "USA100_FRONT_SYMBOL": {
       "source": ["databento-cme-futures", "ws-polygon-massive-cme-futures"],
       "broadcasters": ["influx"],
       "denomination": "USD",
@@ -376,7 +390,21 @@
       "rateFeed": false,
       "types": ["rwa"]
     },
+    "GAS_CURRENT_SYMBOL": {
+      "source": ["databento-cme-futures", "ws-polygon-massive-nymex-futures"],
+      "broadcasters": ["influx"],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": ["rwa"]
+    },
     "GAS_FRONT": {
+      "source": ["databento-cme-futures", "ws-polygon-massive-nymex-futures"],
+      "broadcasters": ["influx"],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": ["rwa"]
+    },
+    "GAS_FRONT_SYMBOL": {
       "source": ["databento-cme-futures", "ws-polygon-massive-nymex-futures"],
       "broadcasters": ["influx"],
       "denomination": "USD",
@@ -1846,7 +1874,21 @@
       "rateFeed": false,
       "types": ["rwa"]
     },
+    "WTI_CURRENT_SYMBOL": {
+      "source": ["databento-cme-futures", "ws-polygon-massive-nymex-futures"],
+      "broadcasters": ["influx"],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": ["rwa"]
+    },
     "WTI_FRONT": {
+      "source": ["databento-cme-futures", "ws-polygon-massive-nymex-futures"],
+      "broadcasters": ["influx"],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": ["rwa"]
+    },
+    "WTI_FRONT_SYMBOL": {
       "source": ["databento-cme-futures", "ws-polygon-massive-nymex-futures"],
       "broadcasters": ["influx"],
       "denomination": "USD",
@@ -2069,7 +2111,21 @@
       "rateFeed": false,
       "types": ["rwa"]
     },
+    "XCU_FELIX_CURRENT_SYMBOL": {
+      "source": ["databento-cme-futures", "ws-polygon-massive-comex-futures"],
+      "broadcasters": ["influx"],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": ["rwa"]
+    },
     "XCU_FELIX_FRONT": {
+      "source": ["databento-cme-futures", "ws-polygon-massive-comex-futures"],
+      "broadcasters": ["influx"],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": ["rwa"]
+    },
+    "XCU_FELIX_FRONT_SYMBOL": {
       "source": ["databento-cme-futures", "ws-polygon-massive-comex-futures"],
       "broadcasters": ["influx"],
       "denomination": "USD",

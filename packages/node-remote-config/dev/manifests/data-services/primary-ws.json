@@ -840,7 +840,23 @@
       "rateFeed": false,
       "types": ["rwa"]
     },
+    "GAS_CURRENT_SYMBOL": {
+      "source": ["databento-cme-futures", "ws-polygon-massive-nymex-futures"],
+      "broadcasters": [],
+      "skipBroadcasting": true,
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": ["rwa"]
+    },
     "GAS_FRONT": {
+      "source": ["databento-cme-futures", "ws-polygon-massive-nymex-futures"],
+      "broadcasters": [],
+      "skipBroadcasting": true,
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": ["rwa"]
+    },
+    "GAS_FRONT_SYMBOL": {
       "source": ["databento-cme-futures", "ws-polygon-massive-nymex-futures"],
       "broadcasters": [],
       "skipBroadcasting": true,
@@ -902,7 +918,23 @@
       "rateFeed": false,
       "types": ["rwa"]
     },
+    "WTI_CURRENT_SYMBOL": {
+      "source": ["databento-cme-futures", "ws-polygon-massive-nymex-futures"],
+      "broadcasters": [],
+      "skipBroadcasting": true,
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": ["rwa"]
+    },
     "WTI_FRONT": {
+      "source": ["databento-cme-futures", "ws-polygon-massive-nymex-futures"],
+      "broadcasters": [],
+      "skipBroadcasting": true,
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": ["rwa"]
+    },
+    "WTI_FRONT_SYMBOL": {
       "source": ["databento-cme-futures", "ws-polygon-massive-nymex-futures"],
       "broadcasters": [],
       "skipBroadcasting": true,
@@ -964,6 +996,14 @@
       "rateFeed": false,
       "types": ["rwa"]
     },
+    "XAG_CURRENT_SYMBOL": {
+      "source": ["databento-cme-futures", "ws-polygon-massive-comex-futures"],
+      "broadcasters": [],
+      "skipBroadcasting": true,
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": ["rwa"]
+    },
     "XAG_FRONT": {
       "source": ["databento-cme-futures", "ws-polygon-massive-comex-futures"],
       "broadcasters": [],
@@ -972,7 +1012,23 @@
       "rateFeed": false,
       "types": ["rwa"]
     },
+    "XAG_FRONT_SYMBOL": {
+      "source": ["databento-cme-futures", "ws-polygon-massive-comex-futures"],
+      "broadcasters": [],
+      "skipBroadcasting": true,
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": ["rwa"]
+    },
     "XAG_NEXT_FRONT": {
+      "source": ["databento-cme-futures", "ws-polygon-massive-comex-futures"],
+      "broadcasters": [],
+      "skipBroadcasting": true,
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": ["rwa"]
+    },
+    "XAG_NEXT_FRONT_SYMBOL": {
       "source": ["databento-cme-futures", "ws-polygon-massive-comex-futures"],
       "broadcasters": [],
       "skipBroadcasting": true,
@@ -1040,6 +1096,14 @@
       "rateFeed": false,
       "types": ["rwa"]
     },
+    "XAU_CURRENT_SYMBOL": {
+      "source": ["databento-cme-futures", "ws-polygon-massive-comex-futures"],
+      "broadcasters": [],
+      "skipBroadcasting": true,
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": ["rwa"]
+    },
     "XAU_FRONT": {
       "source": ["databento-cme-futures", "ws-polygon-massive-comex-futures"],
       "broadcasters": [],
@@ -1048,7 +1112,23 @@
       "rateFeed": false,
       "types": ["rwa"]
     },
+    "XAU_FRONT_SYMBOL": {
+      "source": ["databento-cme-futures", "ws-polygon-massive-comex-futures"],
+      "broadcasters": [],
+      "skipBroadcasting": true,
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": ["rwa"]
+    },
     "XAU_NEXT_FRONT": {
+      "source": ["databento-cme-futures", "ws-polygon-massive-comex-futures"],
+      "broadcasters": [],
+      "skipBroadcasting": true,
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": ["rwa"]
+    },
+    "XAU_NEXT_FRONT_SYMBOL": {
       "source": ["databento-cme-futures", "ws-polygon-massive-comex-futures"],
       "broadcasters": [],
       "skipBroadcasting": true,
@@ -1116,6 +1196,14 @@
       "rateFeed": false,
       "types": ["rwa"]
     },
+    "XPT_CURRENT_SYMBOL": {
+      "source": ["databento-cme-futures", "ws-polygon-massive-nymex-futures"],
+      "broadcasters": [],
+      "skipBroadcasting": true,
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": ["rwa"]
+    },
     "XPT_FRONT": {
       "source": ["databento-cme-futures", "ws-polygon-massive-nymex-futures"],
       "broadcasters": [],
@@ -1124,7 +1212,23 @@
       "rateFeed": false,
       "types": ["rwa"]
     },
+    "XPT_FRONT_SYMBOL": {
+      "source": ["databento-cme-futures", "ws-polygon-massive-nymex-futures"],
+      "broadcasters": [],
+      "skipBroadcasting": true,
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": ["rwa"]
+    },
     "XPT_NEXT_FRONT": {
+      "source": ["databento-cme-futures", "ws-polygon-massive-nymex-futures"],
+      "broadcasters": [],
+      "skipBroadcasting": true,
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": ["rwa"]
+    },
+    "XPT_NEXT_FRONT_SYMBOL": {
       "source": ["databento-cme-futures", "ws-polygon-massive-nymex-futures"],
       "broadcasters": [],
       "skipBroadcasting": true,
@@ -1192,6 +1296,14 @@
       "rateFeed": false,
       "types": ["rwa"]
     },
+    "XCU_CURRENT_SYMBOL": {
+      "source": ["databento-cme-futures", "ws-polygon-massive-comex-futures"],
+      "broadcasters": [],
+      "skipBroadcasting": true,
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": ["rwa"]
+    },
     "XCU_FRONT": {
       "source": ["databento-cme-futures", "ws-polygon-massive-comex-futures"],
       "broadcasters": [],
@@ -1200,7 +1312,23 @@
       "rateFeed": false,
       "types": ["rwa"]
     },
+    "XCU_FRONT_SYMBOL": {
+      "source": ["databento-cme-futures", "ws-polygon-massive-comex-futures"],
+      "broadcasters": [],
+      "skipBroadcasting": true,
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": ["rwa"]
+    },
     "XCU_NEXT_FRONT": {
+      "source": ["databento-cme-futures", "ws-polygon-massive-comex-futures"],
+      "broadcasters": [],
+      "skipBroadcasting": true,
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": ["rwa"]
+    },
+    "XCU_NEXT_FRONT_SYMBOL": {
       "source": ["databento-cme-futures", "ws-polygon-massive-comex-futures"],
       "broadcasters": [],
       "skipBroadcasting": true,
@@ -1425,7 +1553,23 @@
       "rateFeed": false,
       "types": ["rwa"]
     },
+    "XBR_CURRENT_SYMBOL": {
+      "source": ["databento-ice-futures"],
+      "broadcasters": [],
+      "skipBroadcasting": true,
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": ["rwa"]
+    },
     "XBR_FRONT": {
+      "source": ["databento-ice-futures"],
+      "broadcasters": [],
+      "skipBroadcasting": true,
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": ["rwa"]
+    },
+    "XBR_FRONT_SYMBOL": {
       "source": ["databento-ice-futures"],
       "broadcasters": [],
       "skipBroadcasting": true,
