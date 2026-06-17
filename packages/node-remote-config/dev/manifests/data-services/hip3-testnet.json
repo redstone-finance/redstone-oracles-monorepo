@@ -399,7 +399,29 @@
         "rwa"
       ]
     },
+    "USA100_CURRENT_SYMBOL": {
+      "source": [],
+      "broadcasters": [
+        "influx"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
+    },
     "USA100_FRONT": {
+      "source": [],
+      "broadcasters": [
+        "influx"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
+    },
+    "USA100_FRONT_SYMBOL": {
       "source": [],
       "broadcasters": [
         "influx"
@@ -560,7 +582,29 @@
         "rwa"
       ]
     },
+    "GAS_CURRENT_SYMBOL": {
+      "source": [],
+      "broadcasters": [
+        "influx"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
+    },
     "GAS_FRONT": {
+      "source": [],
+      "broadcasters": [
+        "influx"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
+    },
+    "GAS_FRONT_SYMBOL": {
       "source": [],
       "broadcasters": [
         "influx"
@@ -2710,7 +2754,29 @@
         "rwa"
       ]
     },
+    "WTI_CURRENT_SYMBOL": {
+      "source": [],
+      "broadcasters": [
+        "influx"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
+    },
     "WTI_FRONT": {
+      "source": [],
+      "broadcasters": [
+        "influx"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
+    },
+    "WTI_FRONT_SYMBOL": {
       "source": [],
       "broadcasters": [
         "influx"
@@ -3030,7 +3096,29 @@
         "rwa"
       ]
     },
+    "XCU_FELIX_CURRENT_SYMBOL": {
+      "source": [],
+      "broadcasters": [
+        "influx"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
+    },
     "XCU_FELIX_FRONT": {
+      "source": [],
+      "broadcasters": [
+        "influx"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
+    },
+    "XCU_FELIX_FRONT_SYMBOL": {
       "source": [],
       "broadcasters": [
         "influx"
