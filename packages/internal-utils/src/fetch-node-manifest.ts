@@ -8,13 +8,16 @@ type NodesVersions = {
   fallback?: string;
 };
 
+export type TokenConfig = {
+  skipBroadcasting?: boolean;
+  source?: string[];
+  broadcasters?: string[];
+  types?: string[];
+};
+
 export type NodeManifest = {
-  tokens: Partial<
-    Record<
-      string,
-      { skipBroadcasting?: boolean; source?: string[]; broadcasters?: string[]; types?: string[] }
-    >
-  >;
+  tokens: Partial<Record<string, TokenConfig>>;
+  defaultBroadcasters: string[];
   interval: number;
   defaultSource: string[];
   multiPointPackages?: Record<string, string[]>;
@@ -171,9 +174,11 @@ export const fetchAnyNodeManifest = async <ManifestType = NodeManifest>(
   fetchConfig: FetchNodeManifestConfig
 ): Promise<ManifestType> => {
   RedstoneCommon.assert(
-    (fetchConfig.nodeName === undefined) === (fetchConfig.nodeMode === undefined),
-    "nodeName and nodeMode needs to be always provider together: both or none"
+    RedstoneCommon.isDefined(fetchConfig.nodeName) ===
+      RedstoneCommon.isDefined(fetchConfig.nodeMode),
+    "nodeName and nodeMode need to be always provided together: both or none"
   );
+
   const versionsPrefixUrl =
     fetchConfig.nodesVersionsPrefixUrlOverride ?? getNodesVersionsPrefixUrl();
   if (!versionsPrefixUrl) {

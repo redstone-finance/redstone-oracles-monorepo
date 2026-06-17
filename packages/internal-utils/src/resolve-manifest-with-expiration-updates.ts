@@ -151,9 +151,8 @@ export function getManifestUrlsForType(defaultUrls: string[], nodeType: NodeType
     case "normal":
       return defaultUrls;
     case "fast":
-      return defaultUrls.map((url) => url.replace(/([^/]+)\.json$/, "$1-fast.json"));
     case "ws":
-      return defaultUrls.map((url) => url.replace(/([^/]+)\.json$/, "$1-ws.json"));
+      return defaultUrls.map((url) => url.replace(/([^/]+)\.json$/, `$1-${nodeType}.json`));
     default:
       RedstoneCommon.throwUnsupportedParamError(nodeType);
   }
