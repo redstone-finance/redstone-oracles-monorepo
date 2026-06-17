@@ -19,6 +19,7 @@ const makeManifest = (tokens: Record<string, { types?: string[] }>): NodeManifes
   tokens,
   interval: 10000,
   defaultSource: ["test"],
+  defaultBroadcasters: ["redstone-packages"],
 });
 
 describe("RwaFeedIdsProvider", () => {
