@@ -830,7 +830,27 @@
         "rwa"
       ]
     },
+    "GAS_CURRENT_SYMBOL": {
+      "source": [],
+      "broadcasters": [],
+      "skipBroadcasting": true,
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
+    },
     "GAS_FRONT": {
+      "source": [],
+      "broadcasters": [],
+      "skipBroadcasting": true,
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
+    },
+    "GAS_FRONT_SYMBOL": {
       "source": [],
       "broadcasters": [],
       "skipBroadcasting": true,
@@ -874,7 +894,27 @@
         "rwa"
       ]
     },
+    "WTI_CURRENT_SYMBOL": {
+      "source": [],
+      "broadcasters": [],
+      "skipBroadcasting": true,
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
+    },
     "WTI_FRONT": {
+      "source": [],
+      "broadcasters": [],
+      "skipBroadcasting": true,
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
+    },
+    "WTI_FRONT_SYMBOL": {
       "source": [],
       "broadcasters": [],
       "skipBroadcasting": true,
@@ -918,6 +958,16 @@
         "rwa"
       ]
     },
+    "XAG_CURRENT_SYMBOL": {
+      "source": [],
+      "broadcasters": [],
+      "skipBroadcasting": true,
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
+    },
     "XAG_FRONT": {
       "source": [],
       "broadcasters": [],
@@ -928,7 +978,27 @@
         "rwa"
       ]
     },
+    "XAG_FRONT_SYMBOL": {
+      "source": [],
+      "broadcasters": [],
+      "skipBroadcasting": true,
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
+    },
     "XAG_NEXT_FRONT": {
+      "source": [],
+      "broadcasters": [],
+      "skipBroadcasting": true,
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
+    },
+    "XAG_NEXT_FRONT_SYMBOL": {
       "source": [],
       "broadcasters": [],
       "skipBroadcasting": true,
@@ -981,6 +1051,16 @@
         "rwa"
       ]
     },
+    "XAU_CURRENT_SYMBOL": {
+      "source": [],
+      "broadcasters": [],
+      "skipBroadcasting": true,
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
+    },
     "XAU_FRONT": {
       "source": [],
       "broadcasters": [],
@@ -991,7 +1071,27 @@
         "rwa"
       ]
     },
+    "XAU_FRONT_SYMBOL": {
+      "source": [],
+      "broadcasters": [],
+      "skipBroadcasting": true,
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
+    },
     "XAU_NEXT_FRONT": {
+      "source": [],
+      "broadcasters": [],
+      "skipBroadcasting": true,
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
+    },
+    "XAU_NEXT_FRONT_SYMBOL": {
       "source": [],
       "broadcasters": [],
       "skipBroadcasting": true,
@@ -1044,6 +1144,16 @@
         "rwa"
       ]
     },
+    "XPT_CURRENT_SYMBOL": {
+      "source": [],
+      "broadcasters": [],
+      "skipBroadcasting": true,
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
+    },
     "XPT_FRONT": {
       "source": [],
       "broadcasters": [],
@@ -1054,7 +1164,27 @@
         "rwa"
       ]
     },
+    "XPT_FRONT_SYMBOL": {
+      "source": [],
+      "broadcasters": [],
+      "skipBroadcasting": true,
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
+    },
     "XPT_NEXT_FRONT": {
+      "source": [],
+      "broadcasters": [],
+      "skipBroadcasting": true,
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
+    },
+    "XPT_NEXT_FRONT_SYMBOL": {
       "source": [],
       "broadcasters": [],
       "skipBroadcasting": true,
@@ -1107,6 +1237,16 @@
         "rwa"
       ]
     },
+    "XCU_CURRENT_SYMBOL": {
+      "source": [],
+      "broadcasters": [],
+      "skipBroadcasting": true,
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
+    },
     "XCU_FRONT": {
       "source": [],
       "broadcasters": [],
@@ -1117,7 +1257,27 @@
         "rwa"
       ]
     },
+    "XCU_FRONT_SYMBOL": {
+      "source": [],
+      "broadcasters": [],
+      "skipBroadcasting": true,
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
+    },
     "XCU_NEXT_FRONT": {
+      "source": [],
+      "broadcasters": [],
+      "skipBroadcasting": true,
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
+    },
+    "XCU_NEXT_FRONT_SYMBOL": {
       "source": [],
       "broadcasters": [],
       "skipBroadcasting": true,
@@ -1302,7 +1462,27 @@
         "rwa"
       ]
     },
+    "XBR_CURRENT_SYMBOL": {
+      "source": [],
+      "broadcasters": [],
+      "skipBroadcasting": true,
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
+    },
     "XBR_FRONT": {
+      "source": [],
+      "broadcasters": [],
+      "skipBroadcasting": true,
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "rwa"
+      ]
+    },
+    "XBR_FRONT_SYMBOL": {
       "source": [],
       "broadcasters": [],
       "skipBroadcasting": true,
