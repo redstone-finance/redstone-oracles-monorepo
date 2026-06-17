@@ -19,6 +19,8 @@
     "XRP": { "isBolt": true },
     "ADA": { "isBolt": true },
     "SOL": { "isBolt": true },
-    "DOGE": { "isBolt": true }
+    "DOGE": { "isBolt": true },
+    "HYPE": { "isBolt": true },
+    "MEGA": { "isBolt": true }
   }
 }
