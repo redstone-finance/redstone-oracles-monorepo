@@ -1,11 +1,35 @@
+import { BaseContract } from "@ethersproject/contracts";
+import { DataPackagesWrapper } from "@redstone-finance/evm-connector";
 import { WriteContractAdapter } from "@redstone-finance/multichain-kit";
-import { ContractData, ContractParamsProvider, UpdatePricesOptions } from "@redstone-finance/sdk";
+import {
+  ContractData,
+  ContractParamsProvider,
+  getDataPackagesTimestamp,
+  UpdatePricesOptions,
+} from "@redstone-finance/sdk";
 import { Tx } from "@redstone-finance/utils";
 import { RedstoneEvmContract } from "../../facade/evm/RedstoneEvmContract";
 
 export abstract class EvmContractAdapter<Contract extends RedstoneEvmContract>
   implements WriteContractAdapter
 {
+  static async wrapContract<C extends BaseContract>(
+    adapterContract: C,
+    paramsProvider: ContractParamsProvider,
+    metadataTimestamp?: number
+  ) {
+    const packageResponse = await paramsProvider.requestDataPackagesWithFeedsInfo();
+    const dataPackagesWrapper = new DataPackagesWrapper<C>(packageResponse.dataPackages);
+    const proposedTimestamp = getDataPackagesTimestamp(packageResponse.dataPackages);
+
+    if (metadataTimestamp) {
+      dataPackagesWrapper.setMetadataTimestamp(metadataTimestamp);
+    }
+    const wrappedContract = dataPackagesWrapper.overwriteEthersContract(adapterContract);
+
+    return { proposedTimestamp, wrappedContract, dataPackagesWrapper, packageResponse };
+  }
+
   constructor(
     public adapterContract: Contract,
     protected txDeliveryMan: Tx.ITxDeliveryMan<

@@ -1,9 +1,4 @@
-import { DataPackagesWrapper } from "@redstone-finance/evm-connector";
-import {
-  ContractParamsProvider,
-  getDataPackagesTimestamp,
-  ValuesForDataFeeds,
-} from "@redstone-finance/sdk";
+import { ContractParamsProvider, ValuesForDataFeeds } from "@redstone-finance/sdk";
 import { Tx } from "@redstone-finance/utils";
 import { MentoAdapterBase } from "../../../typechain-types";
 import { getSortedOraclesContractAtAddress } from "../../custom-integrations/mento/get-sorted-oracles-contract-at-address";
@@ -39,8 +34,13 @@ export class MentoEvmContractAdapter extends PriceFeedsEvmContractAdapter<MentoA
   }
 
   override async makeUpdateTx(paramsProvider: ContractParamsProvider, metadataTimestamp: number) {
-    const dataPackagesPromise = paramsProvider.requestDataPackages();
-    const blockTag = await this.adapterContract.provider.getBlockNumber();
+    const [
+      blockTag,
+      { proposedTimestamp, wrappedContract: wrappedMentoContract, dataPackagesWrapper },
+    ] = await Promise.all([
+      this.adapterContract.provider.getBlockNumber(),
+      MentoEvmContractAdapter.wrapContract(this.adapterContract, paramsProvider, metadataTimestamp),
+    ]);
 
     const sortedOraclesAddress = await this.adapterContract.getSortedOracles({
       blockTag,
@@ -49,9 +49,6 @@ export class MentoEvmContractAdapter extends PriceFeedsEvmContractAdapter<MentoA
       sortedOraclesAddress,
       this.adapterContract.provider
     );
-
-    const dataPackages = await dataPackagesPromise;
-    const dataPackagesWrapper = new DataPackagesWrapper<MentoAdapterBase>(dataPackages);
 
     const linkedListPositions = await prepareLinkedListLocationsForMentoAdapterReport(
       {
@@ -67,11 +64,6 @@ export class MentoEvmContractAdapter extends PriceFeedsEvmContractAdapter<MentoA
         `Prices in Sorted Oracles deviated more than ${this.maxDeviationAllowed}% from RedStone prices`
       );
     }
-
-    dataPackagesWrapper.setMetadataTimestamp(metadataTimestamp);
-    const wrappedMentoContract = dataPackagesWrapper.overwriteEthersContract(this.adapterContract);
-
-    const proposedTimestamp = getDataPackagesTimestamp(dataPackages);
 
     const txCall = Tx.convertToTxDeliveryCall(
       await wrappedMentoContract.populateTransaction["updatePriceValuesAndCleanOldReports"](
