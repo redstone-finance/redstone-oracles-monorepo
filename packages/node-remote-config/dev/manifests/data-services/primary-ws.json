@@ -3763,8 +3763,7 @@
         "mexc_deferred-usdt",
         "bingx_deferred-usdt",
         "gate_deferred-usdt",
-        "bitget_deferred-usdt",
-        "htx_deferred-usdt"
+        "bitget_deferred-usdt"
       ],
       "denomination": "USD",
       "rateFeed": false,
@@ -4106,7 +4105,7 @@
         "htx_deferred-usdt",
         "mexc_deferred-usdt",
         "xt_deferred-usdt",
-        "binance_deferred-btc"
+        "binance_deferred-usdt"
       ],
       "denomination": "USD",
       "rateFeed": false,
@@ -4133,7 +4132,6 @@
       "source": [
         "ws-spot-bybit-usdt",
         "ws-spot-kucoin-usdt",
-        "binancealpha_deferred-usdt",
         "bitmart_deferred-usdt",
         "gate_deferred-usdt",
         "bitget_deferred-usdt"
@@ -4547,6 +4545,8 @@
       ],
       "denomination": "USD",
       "rateFeed": false,
+      "broadcasters": [],
+      "skipBroadcasting": true,
       "types": [
         "crypto"
       ]
@@ -4557,6 +4557,8 @@
       ],
       "denomination": "USD",
       "rateFeed": false,
+      "broadcasters": [],
+      "skipBroadcasting": true,
       "types": [
         "crypto"
       ]
@@ -4652,26 +4654,6 @@
       ]
     },
     "AXS_MARK.BE": {
-      "source": [
-        "ws-extended-rfq"
-      ],
-      "denomination": "USD",
-      "rateFeed": false,
-      "types": [
-        "crypto"
-      ]
-    },
-    "LUNC_INDEX.BE": {
-      "source": [
-        "ws-extended-rfq"
-      ],
-      "denomination": "USD",
-      "rateFeed": false,
-      "types": [
-        "crypto"
-      ]
-    },
-    "LUNC_MARK.BE": {
       "source": [
         "ws-extended-rfq"
       ],
@@ -5307,6 +5289,8 @@
       ],
       "denomination": "USD",
       "rateFeed": false,
+      "broadcasters": [],
+      "skipBroadcasting": true,
       "types": [
         "crypto"
       ]
@@ -5317,6 +5301,8 @@
       ],
       "denomination": "USD",
       "rateFeed": false,
+      "broadcasters": [],
+      "skipBroadcasting": true,
       "types": [
         "crypto"
       ]
@@ -5687,6 +5673,8 @@
       ],
       "denomination": "USD",
       "rateFeed": false,
+      "broadcasters": [],
+      "skipBroadcasting": true,
       "types": [
         "crypto"
       ]
@@ -5697,6 +5685,8 @@
       ],
       "denomination": "USD",
       "rateFeed": false,
+      "broadcasters": [],
+      "skipBroadcasting": true,
       "types": [
         "crypto"
       ]
@@ -6167,6 +6157,8 @@
       ],
       "denomination": "USD",
       "rateFeed": false,
+      "broadcasters": [],
+      "skipBroadcasting": true,
       "types": [
         "crypto"
       ]
@@ -6177,6 +6169,8 @@
       ],
       "denomination": "USD",
       "rateFeed": false,
+      "broadcasters": [],
+      "skipBroadcasting": true,
       "types": [
         "crypto"
       ]
@@ -6192,26 +6186,6 @@
       ]
     },
     "US_MARK.BE": {
-      "source": [
-        "ws-extended-rfq"
-      ],
-      "denomination": "USD",
-      "rateFeed": false,
-      "types": [
-        "crypto"
-      ]
-    },
-    "XEC_INDEX.BE": {
-      "source": [
-        "ws-extended-rfq"
-      ],
-      "denomination": "USD",
-      "rateFeed": false,
-      "types": [
-        "crypto"
-      ]
-    },
-    "XEC_MARK.BE": {
       "source": [
         "ws-extended-rfq"
       ],
@@ -6287,6 +6261,8 @@
       ],
       "denomination": "USD",
       "rateFeed": false,
+      "broadcasters": [],
+      "skipBroadcasting": true,
       "types": [
         "crypto"
       ]
@@ -6297,6 +6273,8 @@
       ],
       "denomination": "USD",
       "rateFeed": false,
+      "broadcasters": [],
+      "skipBroadcasting": true,
       "types": [
         "crypto"
       ]
@@ -6312,26 +6290,6 @@
       ]
     },
     "EVAA_MARK.BE": {
-      "source": [
-        "ws-extended-rfq"
-      ],
-      "denomination": "USD",
-      "rateFeed": false,
-      "types": [
-        "crypto"
-      ]
-    },
-    "FLOKI_INDEX.BE": {
-      "source": [
-        "ws-extended-rfq"
-      ],
-      "denomination": "USD",
-      "rateFeed": false,
-      "types": [
-        "crypto"
-      ]
-    },
-    "FLOKI_MARK.BE": {
       "source": [
         "ws-extended-rfq"
       ],
@@ -6594,6 +6552,106 @@
     "MORPHO_MARK.BE": {
       "source": [
         "ws-extended-rfq"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "kDOGS_INDEX.BE": {
+      "source": [
+        "kilo-price"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "kDOGS_MARK.BE": {
+      "source": [
+        "kilo-price"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "kBOME_INDEX.BE": {
+      "source": [
+        "kilo-price"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "kBOME_MARK.BE": {
+      "source": [
+        "kilo-price"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "kNOT_INDEX.BE": {
+      "source": [
+        "kilo-price"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "kNOT_MARK.BE": {
+      "source": [
+        "kilo-price"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "kPTB_INDEX.BE": {
+      "source": [
+        "kilo-price"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "kPTB_MARK.BE": {
+      "source": [
+        "kilo-price"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "kHMSTR_INDEX.BE": {
+      "source": [
+        "kilo-price"
+      ],
+      "denomination": "USD",
+      "rateFeed": false,
+      "types": [
+        "crypto"
+      ]
+    },
+    "kHMSTR_MARK.BE": {
+      "source": [
+        "kilo-price"
       ],
       "denomination": "USD",
       "rateFeed": false,
