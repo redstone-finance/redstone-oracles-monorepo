@@ -12,8 +12,8 @@ import { CantonClient, JsonCantonApi } from "./CantonClient";
 import { ScanCantonApi } from "./CantonScanApiClient";
 import { CantonTransferService } from "./CantonTransferService";
 import { CantonValidatorClient, ValidatorCantonApi } from "./CantonValidatorClient";
-import { KeycloakTokenProvider } from "./keycloak-token-provider";
-import { KeycloakTokenProviderParams, makeKeycloakParams } from "./KeycloakTokenProviderParams";
+import { KeycloakTokenProvider, KeycloakTokenProviderOptions } from "./keycloak-token-provider";
+import { makeKeycloakParams } from "./KeycloakTokenProviderParams";
 
 const SINGLE_EXECUTION_TIMEOUT_MS = 20_000;
 const ALL_EXECUTIONS_TIMEOUT_MS = 45_000;
@@ -25,12 +25,13 @@ export class CantonClientBuilder extends MultiExecutor.ClientBuilder<CantonClien
   private walletClientId?: string;
   private shouldBuildTransferService = false;
 
-  withDefaultAuth(opts?: KeycloakTokenProviderParams | string) {
+  withDefaultAuth(opts?: KeycloakTokenProviderOptions | string) {
     return this.chainId !== networkToChainId("localnet") ? this.withKeycloakAuth(opts) : this;
   }
 
-  withKeycloakAuth(opts?: KeycloakTokenProviderParams | string) {
-    const parsedOpts = makeKeycloakParams(opts);
+  withKeycloakAuth(opts?: KeycloakTokenProviderOptions | string) {
+    const parsedOpts: KeycloakTokenProviderOptions =
+      typeof opts === "string" || opts === undefined ? makeKeycloakParams(opts) : opts;
 
     const tokenProvider = KeycloakTokenProvider.getInstance(parsedOpts);
     this.tokenProviders[parsedOpts.clientId] = tokenProvider.getToken.bind(tokenProvider);
@@ -39,6 +40,7 @@ export class CantonClientBuilder extends MultiExecutor.ClientBuilder<CantonClien
     if (parsedOpts.walletClientId) {
       const walletParsedOpts = {
         ...parsedOpts,
+        getTotp: parsedOpts.walletGetTotp ?? parsedOpts.getTotp,
         clientId: parsedOpts.walletClientId,
         username: parsedOpts.walletUsername ?? parsedOpts.username,
         password: parsedOpts.walletPassword ?? parsedOpts.password,
