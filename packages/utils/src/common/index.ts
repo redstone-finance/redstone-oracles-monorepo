@@ -1,4 +1,5 @@
 export * from "./array";
+export * from "./AutoCleanupCacheWithTtl";
 export * from "./axios-retry";
 export * from "./base64";
 export * from "./batch-promises";
