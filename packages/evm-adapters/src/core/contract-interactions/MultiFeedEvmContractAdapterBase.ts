@@ -6,10 +6,7 @@ import { EvmContractAdapter } from "./EvmContractAdapter";
 export abstract class MultiFeedEvmContractAdapterBase<
   Contract extends MultiFeedAdapterWithoutRounds,
 > extends EvmContractAdapter<Contract> {
-  override async readLatestRoundContractData(
-    feedIds: string[],
-    blockNumber?: number
-  ): Promise<ContractData> {
+  override async readLatestRoundContractData(feedIds: string[], blockNumber?: number) {
     const dataFromContract: ContractData = {};
 
     const lastRoundDetails = await this.getLastUpdateDetailsForManyFromContract(

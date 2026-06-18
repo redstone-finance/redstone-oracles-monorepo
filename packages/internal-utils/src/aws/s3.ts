@@ -1,4 +1,5 @@
 import { _Object } from "@aws-sdk/client-s3";
+import { gzipSync } from "node:zlib";
 import { getS3 } from "./aws-clients";
 import { DEFAULT_AWS_REGION } from "./region";
 
@@ -20,6 +21,21 @@ export const writeS3Object = async (
     Body: parsedData,
   };
   await getS3(region).putObject(params);
+};
+
+export const writeCompressedS3Object = async (
+  bucketName: string,
+  path: string,
+  data: unknown,
+  region?: string
+) => {
+  await getS3(region).putObject({
+    Bucket: bucketName,
+    Key: path,
+    Body: gzipSync(Buffer.from(JSON.stringify(data), "utf-8")),
+    ContentType: "application/json",
+    ContentEncoding: "gzip",
+  });
 };
 
 export const writeDownloadableS3Object = async (

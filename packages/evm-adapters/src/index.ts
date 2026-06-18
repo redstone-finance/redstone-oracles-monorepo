@@ -7,8 +7,10 @@ import PriceFeedsAdapterWithRoundsOneSignerMockArtifact from "../artifacts/contr
 import PriceFeedWithRoundsMockArtifact, {
   abi as PriceFeedWithRoundsMockAbi,
 } from "../artifacts/contracts/mocks/PriceFeedWithRoundsMock.sol/PriceFeedWithRoundsMock.json";
+import { PrimaryDemoExample__factory, PrimaryProdExample__factory } from "../typechain-types";
 
 export type {
+  ExampleBase,
   IRedstoneAdapter,
   ISortedOracles,
   IStylusAdapter,
@@ -39,8 +41,11 @@ export {
   createNumberFromContract,
   performWritePricesTests,
 } from "./perform-write-prices.tests";
+export { getExampleBaseContract, verifyCoreSetup } from "./verify-core-setup";
 export {
   PriceFeedsAdapterWithRoundsOneSignerMockArtifact,
   PriceFeedWithRoundsMockAbi,
   PriceFeedWithRoundsMockArtifact,
+  PrimaryDemoExample__factory,
+  PrimaryProdExample__factory,
 };

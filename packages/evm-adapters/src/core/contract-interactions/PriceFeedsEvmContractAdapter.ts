@@ -1,10 +1,4 @@
-import { DataPackagesWrapper } from "@redstone-finance/evm-connector";
-import {
-  ContractData,
-  ContractParamsProvider,
-  getDataPackagesTimestamp,
-  ValuesForDataFeeds,
-} from "@redstone-finance/sdk";
+import { ContractData, ContractParamsProvider, ValuesForDataFeeds } from "@redstone-finance/sdk";
 import { RedstoneCommon, Tx } from "@redstone-finance/utils";
 import { utils } from "ethers";
 import { RedstoneAdapterBase } from "../../../typechain-types";
@@ -22,12 +16,11 @@ export class PriceFeedsEvmContractAdapter<
     paramsProvider: ContractParamsProvider,
     metadataTimestamp: number
   ): Promise<Tx.TxDeliveryCall> {
-    const dataPackages = await paramsProvider.requestDataPackages();
-    const dataPackagesWrapper = new DataPackagesWrapper<RedstoneAdapterBase>(dataPackages);
-    const proposedTimestamp = getDataPackagesTimestamp(dataPackages);
-
-    dataPackagesWrapper.setMetadataTimestamp(metadataTimestamp);
-    const wrappedContract = dataPackagesWrapper.overwriteEthersContract(this.adapterContract);
+    const { proposedTimestamp, wrappedContract } = await EvmContractAdapter.wrapContract(
+      this.adapterContract,
+      paramsProvider,
+      metadataTimestamp
+    );
 
     const txCall = Tx.convertToTxDeliveryCall(
       await wrappedContract.populateTransaction["updateDataFeedsValues"](proposedTimestamp)

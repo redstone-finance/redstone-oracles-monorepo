@@ -1,4 +1,3 @@
-import { DataPackagesWrapper } from "@redstone-finance/evm-connector";
 import { ContractParamsProvider, UpdatePricesOptions } from "@redstone-finance/sdk";
 import { loggerFactory, Tx } from "@redstone-finance/utils";
 import { utils } from "ethers";
@@ -20,9 +19,38 @@ export class MultiFeedEvmContractAdapter extends MultiFeedEvmContractAdapterBase
     paramsProvider: ContractParamsProvider,
     metadataTimestamp: number
   ): Promise<Tx.TxDeliveryCall> {
-    const { feedsFromResponse, missingFeeds, dataPackages, requestedFeedIds } =
-      await paramsProvider.requestDataPackagesWithFeedsInfo();
+    const {
+      wrappedContract,
+      packageResponse: { feedsFromResponse, missingFeeds, requestedFeedIds },
+    } = await MultiFeedEvmContractAdapter.wrapContract(
+      this.adapterContract,
+      paramsProvider,
+      metadataTimestamp
+    );
+    MultiFeedEvmContractAdapter.logResponseFeeds(missingFeeds, feedsFromResponse, requestedFeedIds);
 
+    const dataFeedsAsBytes32 = feedsFromResponse.map(utils.formatBytes32String);
+    const txCall = Tx.convertToTxDeliveryCall(
+      await wrappedContract.populateTransaction["updateDataFeedsValuesPartial"](dataFeedsAsBytes32)
+    );
+
+    return txCall;
+  }
+
+  protected override getBaseIterationTxParamsProvider(
+    paramsProvider: ContractParamsProvider,
+    options?: UpdatePricesOptions
+  ): ContractParamsProvider {
+    return options && this.shouldUpdateAllFeedsInBaseIteration
+      ? paramsProvider.copyForFeedIds(options.allFeedIds)
+      : super.getBaseIterationTxParamsProvider(paramsProvider, options);
+  }
+
+  private static logResponseFeeds(
+    missingFeeds: string[],
+    feedsFromResponse: string[],
+    requestedFeedIds: string[]
+  ) {
     if (missingFeeds.length) {
       logger.log(
         `Missing some feeds in the response: [${missingFeeds.toString()}], will update only for [${feedsFromResponse.toString()}]`,
@@ -41,28 +69,5 @@ export class MultiFeedEvmContractAdapter extends MultiFeedEvmContractAdapterBase
         }
       );
     }
-
-    const dataFeedsAsBytes32 = feedsFromResponse.map(utils.formatBytes32String);
-    const dataPackagesWrapper = new DataPackagesWrapper<MultiFeedAdapterWithoutRounds>(
-      dataPackages
-    );
-
-    dataPackagesWrapper.setMetadataTimestamp(metadataTimestamp);
-    const wrappedContract = dataPackagesWrapper.overwriteEthersContract(this.adapterContract);
-
-    const txCall = Tx.convertToTxDeliveryCall(
-      await wrappedContract.populateTransaction["updateDataFeedsValuesPartial"](dataFeedsAsBytes32)
-    );
-
-    return txCall;
-  }
-
-  protected override getBaseIterationTxParamsProvider(
-    paramsProvider: ContractParamsProvider,
-    options?: UpdatePricesOptions
-  ): ContractParamsProvider {
-    return options && this.shouldUpdateAllFeedsInBaseIteration
-      ? paramsProvider.copyForFeedIds(options.allFeedIds)
-      : super.getBaseIterationTxParamsProvider(paramsProvider, options);
   }
 }
