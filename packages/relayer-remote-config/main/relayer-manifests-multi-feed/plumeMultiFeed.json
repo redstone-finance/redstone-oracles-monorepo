@@ -17,6 +17,13 @@
         "deviationPercentage": 0.01,
         "timeSinceLastUpdateInMilliseconds": 86400000
       }
+    },
+    "AA_FalconXUSDC": {
+      "priceFeedAddress": "0xF7D662F3FA1f9a07837b7A7Fe48ECE45bEc7e4D8",
+      "updateTriggersOverrides": {
+        "deviationPercentage": 0.1,
+        "timeSinceLastUpdateInMilliseconds": 86400000
+      }
     }
   }
 }

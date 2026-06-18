@@ -223,6 +223,13 @@
     },
     "SolvBTC_FUNDAMENTAL/USD": {
       "priceFeedAddress": "0x9a7FAe39f78f7711d46F28E9fd2271ECdca58f9a"
+    },
+    "sthUSD_FUNDAMENTAL": {
+      "priceFeedAddress": "0xA7404B0e2140f7bC6727D4d4523F84C43A37848B",
+      "updateTriggersOverrides": {
+        "deviationPercentage": 0.5,
+        "timeSinceLastUpdateInMilliseconds": 43200000
+      }
     }
   }
 }
