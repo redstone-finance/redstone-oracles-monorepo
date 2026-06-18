@@ -67,9 +67,7 @@ export type OnChainRelayerEnv = {
   oevVerifyGasPriceDisabled: boolean;
   enableEnhancedRequestDataPackagesLogs?: boolean;
   waitForAllGatewaysTimeMs?: number;
-  dryRunWithInflux?: boolean;
-  influxUrl?: string;
-  influxToken?: string;
+  dryRunWithMemory?: boolean;
   ethersPollingIntervalInMs?: number;
   runWithPubSub?: boolean;
   pubSubEndpoint?: string;
