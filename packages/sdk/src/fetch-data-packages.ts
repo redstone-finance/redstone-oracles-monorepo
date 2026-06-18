@@ -43,7 +43,8 @@ const pendingPromises: Record<
 > = {};
 
 export async function fetchDataPackagesDedup(reqParams: DataPackagesRequestParams) {
-  const key = getPathComponents(reqParams).join("/") + getFeedsKey(reqParams);
+  const urlsKey = reqParams.urls ? Array.from(new Set(reqParams.urls)).sort().join(",") : "";
+  const key = urlsKey + getPathComponents(reqParams).join("/") + getFeedsKey(reqParams);
 
   pendingPromises[key] ??= fetchInStages(reqParams);
 
@@ -219,7 +220,7 @@ function getPathComponents(reqParams: DataPackagesRequestParams, byDataFeeds = f
   return pathComponents;
 }
 
-function getFeedsKey(reqParams: DataPackagesRequestParams): string {
+function getFeedsKey(reqParams: DataPackagesRequestParams) {
   if (!reqParams.authenticatedGateways?.length || reqParams.returnAllPackages) {
     return "";
   }

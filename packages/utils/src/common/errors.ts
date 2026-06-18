@@ -6,20 +6,16 @@ import { getLogLevel, loggerFactory, sanitizeLogMessage } from "../logger";
 import { JSONstringify, stringify } from "./misc";
 
 export class UnrecoverableError extends Error {
-  unrecoverable?: boolean = true;
+  unrecoverable? = true;
 }
 
-export function assert(
-  value: unknown,
-  errMsg: string,
-  unrecoverable: boolean = false
-): asserts value {
+export function assert(value: unknown, errMsg: string, unrecoverable = false): asserts value {
   if (!value) {
     throw new (unrecoverable ? UnrecoverableError : Error)(`Assertion failed: ${errMsg}`);
   }
 }
 
-export function assertThenReturn<T>(value: T | undefined, errMsg: string): T {
+export function assertThenReturn<T>(value: T | undefined, errMsg: string) {
   if (!value) {
     throw new Error(`Assertion failed: ${errMsg}`);
   }
@@ -69,7 +65,7 @@ export const throwIfErrorsPresent = (
 
 let trace: boolean | undefined;
 
-const showStack = (stack: string | undefined): string => {
+const showStack = (stack?: string) => {
   if (!stack) {
     return "";
   }
