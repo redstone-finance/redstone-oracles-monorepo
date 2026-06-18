@@ -80,6 +80,7 @@ export type OnChainRelayerEnv = {
   pubSubMaxReferenceValueDeviationPercent?: number;
   pubSubMaxReferenceValueDelayInSeconds?: number;
   pubSubMinReferenceValues?: number;
+  pubSubAcceptedTimestampGranularityMs?: number;
   authorizedSigners?: string[];
   includeAdditionalFeedsForGasOptimization: boolean;
   percentileOfPriorityFee?: number | number[];

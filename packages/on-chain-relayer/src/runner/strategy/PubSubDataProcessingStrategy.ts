@@ -7,33 +7,33 @@ import {
 } from "@redstone-finance/sdk";
 import { OperationQueue, RedstoneCommon, RedstoneLogger } from "@redstone-finance/utils";
 
-export interface PubSubDataProcessingStrategyDelegate<C> {
+export interface PubSubDataProcessingStrategyDelegate<Config> {
   strategyRunIteration(
-    strategy: PubSubDataProcessingStrategy<C, unknown>,
-    config: C
+    strategy: PubSubDataProcessingStrategy<Config, unknown>,
+    config: Config
   ): Promise<void>;
 
   logger: RedstoneLogger;
 }
 
-export abstract class PubSubDataProcessingStrategy<C, Q = string> {
-  delegate?: WeakRef<PubSubDataProcessingStrategyDelegate<C>>;
+export abstract class PubSubDataProcessingStrategy<Config, Key = string> {
+  delegate?: WeakRef<PubSubDataProcessingStrategyDelegate<Config>>;
 
   constructor(
     protected facadeCache: DataPackagesResponseCache,
-    protected readonly queue = new OperationQueue<Q>()
+    protected readonly queue = new OperationQueue<Key>()
   ) {}
 
   abstract processResponse(
-    relayerConfig: C,
+    relayerConfig: Config,
     requestParams: DataPackagesRequestParams,
     dataPackagesResponse: DataPackagesResponse
   ): void;
 
   abstract runIteration(
-    relayerConfig: C,
+    relayerConfig: Config,
     dataPackagesResponse: DataPackagesResponse,
-    _requestParams: DataPackagesRequestParams
+    requestParams: DataPackagesRequestParams
   ): Promise<void>;
 
   protected getDelegate() {
@@ -45,14 +45,14 @@ export abstract class PubSubDataProcessingStrategy<C, Q = string> {
     const dataPackageIds = getResponseFeedIds(dataPackagesResponse);
     dataPackageIds.sort();
 
-    return dataPackageIds.toString() as Q;
+    return dataPackageIds.toString() as Key;
   }
 
   protected enqueue(
-    relayerConfig: C,
+    relayerConfig: Config,
     requestParams: DataPackagesRequestParams,
     dataPackagesResponse: DataPackagesResponse,
-    canAddWhenIsRunning: boolean = false
+    canAddWhenIsRunning = false
   ) {
     const key = this.makeKey(dataPackagesResponse);
 

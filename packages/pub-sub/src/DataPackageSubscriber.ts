@@ -269,6 +269,15 @@ export class DataPackageSubscriber {
       return;
     }
 
+    const { acceptedTimestampGranularityMs } = this.params;
+    if (acceptedTimestampGranularityMs && packageTimestamp % acceptedTimestampGranularityMs !== 0) {
+      this.logger.debug(
+        `Package from ${dataPackageId} rejected: timestamp=${packageTimestamp} not divisible by acceptedTimestampGranularityMs=${acceptedTimestampGranularityMs}`
+      );
+
+      return;
+    }
+
     const packageSigner = signedDataPackage.getSignerAddress();
 
     //authorized signer

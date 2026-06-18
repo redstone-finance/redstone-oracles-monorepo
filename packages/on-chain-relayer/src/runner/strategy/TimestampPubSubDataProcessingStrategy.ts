@@ -9,11 +9,13 @@ import { PubSubDataProcessingStrategy } from "./PubSubDataProcessingStrategy";
 
 const NOT_PROCESSED_KEY_WARNING_MS = RedstoneCommon.secsToMs(60);
 
-export class TimestampPubSubDataProcessingStrategy<C> extends PubSubDataProcessingStrategy<C> {
+export class TimestampPubSubDataProcessingStrategy<
+  Config,
+> extends PubSubDataProcessingStrategy<Config> {
   private readonly timestampCaches: { [p: number]: DataPackagesResponseCache | undefined } = {};
 
   override processResponse(
-    relayerConfig: C,
+    relayerConfig: Config,
     requestParams: DataPackagesRequestParams,
     dataPackagesResponse: DataPackagesResponse
   ) {
@@ -36,7 +38,7 @@ export class TimestampPubSubDataProcessingStrategy<C> extends PubSubDataProcessi
   }
 
   override async runIteration(
-    relayerConfig: C,
+    relayerConfig: Config,
     dataPackagesResponse: DataPackagesResponse,
     requestParams: DataPackagesRequestParams
   ) {
@@ -67,7 +69,7 @@ export class TimestampPubSubDataProcessingStrategy<C> extends PubSubDataProcessi
       const delta = now - Number(key);
       if (delta > NOT_PROCESSED_KEY_WARNING_MS) {
         this.getDelegate()?.logger.warn(
-          `Key ${key} was not processed during ${NOT_PROCESSED_KEY_WARNING_MS / 1000} [s]!`,
+          `Key ${key} was not processed during ${RedstoneCommon.msToSecs(NOT_PROCESSED_KEY_WARNING_MS)} [s]!`,
           delta
         );
       }

@@ -1,7 +1,7 @@
 import { isDefined } from "./objects";
 
 export class CacheWithTtl<K, V> {
-  private readonly cache: Map<K, { value: V; setOn: number }>;
+  protected readonly cache: Map<K, { value: V; setOn: number }>;
 
   constructor(private readonly ttlMs: number) {
     this.cache = new Map();
@@ -29,5 +29,15 @@ export class CacheWithTtl<K, V> {
     const setOn = Date.now();
 
     this.cache.set(key, { value, setOn });
+  }
+
+  clearStale() {
+    const now = Date.now();
+
+    for (const [key, entry] of this.cache.entries()) {
+      if (now - entry.setOn >= this.ttlMs) {
+        this.cache.delete(key);
+      }
+    }
   }
 }

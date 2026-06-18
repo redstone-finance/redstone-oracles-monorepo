@@ -1,12 +1,12 @@
 import { DataPackagesRequestParams, DataPackagesResponse } from "@redstone-finance/sdk";
 import { PubSubDataProcessingStrategy } from "./PubSubDataProcessingStrategy";
 
-export class BasePubSubDataProcessingStrategy<C, Q = string> extends PubSubDataProcessingStrategy<
-  C,
-  Q
-> {
+export class BasePubSubDataProcessingStrategy<
+  Config,
+  Key = string,
+> extends PubSubDataProcessingStrategy<Config, Key> {
   processResponse(
-    relayerConfig: C,
+    relayerConfig: Config,
     requestParams: DataPackagesRequestParams,
     dataPackagesResponse: DataPackagesResponse
   ) {
@@ -18,7 +18,7 @@ export class BasePubSubDataProcessingStrategy<C, Q = string> extends PubSubDataP
   }
 
   async runIteration(
-    relayerConfig: C,
+    relayerConfig: Config,
     dataPackagesResponse: DataPackagesResponse,
     requestParams: DataPackagesRequestParams
   ) {

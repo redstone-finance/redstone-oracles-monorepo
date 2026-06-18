@@ -237,6 +237,10 @@ export const readManifestAndEnv = () => {
       "PUB_SUB_MIN_REFERENCE_VALUES",
       z.number().optional()
     ),
+    pubSubAcceptedTimestampGranularityMs: RedstoneCommon.getFromEnv(
+      "PUB_SUB_ACCEPTED_TIMESTAMP_GRANULARITY_MS",
+      z.number().optional()
+    ),
     includeAdditionalFeedsForGasOptimization: RedstoneCommon.getFromEnv(
       "INCLUDE_ADDITIONAL_FEEDS_FOR_GAS_OPTIMIZATION",
       z.boolean().default(true)

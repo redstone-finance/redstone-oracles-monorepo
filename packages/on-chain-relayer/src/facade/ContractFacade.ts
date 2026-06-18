@@ -10,9 +10,12 @@ import { RelayerConfig } from "../config/RelayerConfig";
 import { makeDataPackagesRequestParams } from "../core/make-data-packages-request-params";
 import { ContractData, ShouldUpdateContext, UpdatePricesArgs } from "../types";
 
+const CONTRACT_DATA_CACHE_TTL_MS = RedstoneCommon.minToMs(5);
+
 export class ContractFacade {
   private readonly logger = loggerFactory("contract-facade");
   private readonly getUniqueSignerThresholdMemoized: (blockTag?: number) => Promise<number>;
+  private readonly contractDataCache: RedstoneCommon.CacheWithTtl<string, ContractData>;
 
   constructor(
     protected readonly adapter: WriteContractAdapter,
@@ -29,14 +32,8 @@ export class ContractFacade {
           ? RedstoneCommon.reportMemoizeCacheUsage(isMissing, "uniqueSignerThreshold", this.logger)
           : undefined,
     });
-  }
 
-  async getLatestRoundContractData(
-    feedIds: string[],
-    blockTag: number,
-    withDataFeedValues: boolean
-  ): Promise<ContractData> {
-    return await this.adapter.readContractData(feedIds, blockTag, withDataFeedValues);
+    this.contractDataCache = new RedstoneCommon.AutoCleanupCacheWithTtl(CONTRACT_DATA_CACHE_TTL_MS);
   }
 
   async getShouldUpdateContext(relayerConfig: RelayerConfig): Promise<ShouldUpdateContext> {
@@ -81,10 +78,28 @@ export class ContractFacade {
     const blockTag = await this.getBlockNumber();
     const [uniqueSignerThreshold, dataFromContract] = await Promise.all([
       this.getUniqueSignerThresholdMemoized(blockTag),
-      this.getLatestRoundContractData(dataFeeds, blockTag, shouldCheckValueDeviation),
+      this.getContractDataByBlock(dataFeeds, blockTag, shouldCheckValueDeviation),
     ]);
 
     return { blockTag, uniqueSignerThreshold, dataFromContract };
+  }
+
+  protected async getContractDataByBlock(
+    feedIds: string[],
+    blockTag: number,
+    withDataFeedValues: boolean
+  ) {
+    const sortedUniqueFeedIds = [...new Set(feedIds)].sort();
+    const cacheKey = `${blockTag}-${withDataFeedValues}-${sortedUniqueFeedIds.join(",")}`;
+    const cached = this.contractDataCache.get(cacheKey);
+    if (RedstoneCommon.isDefined(cached)) {
+      return cached;
+    }
+
+    const value = await this.adapter.readContractData(feedIds, blockTag, withDataFeedValues);
+    this.contractDataCache.set(cacheKey, value);
+
+    return value;
   }
 
   async getUniqueSignerThresholdFromContract(blockTag?: number) {
@@ -123,9 +138,5 @@ export class ContractFacade {
       !fallbackOffsetInMilliseconds;
 
     return { shouldCheckValueDeviation, canOmitFetchingDataFromContract };
-  }
-
-  async getDataFeedIds(blockNumber: number) {
-    return await this.adapter.getDataFeedIds?.(blockNumber);
   }
 }
