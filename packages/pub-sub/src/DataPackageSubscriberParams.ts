@@ -98,6 +98,15 @@ export type DataPackageSubscriberParams = {
   skipSignatureVerification?: boolean;
 
   /**
+   * If set (> 0), only packages whose timestamp is divisible by this value (in ms) are accepted;
+   * others are dropped before processing. Lets the subscriber downsample to aligned timestamps
+   * (e.g. 2000 → only timestamps at full 2s).
+   *
+   * @default 0 (no filtering)
+   */
+  acceptedTimestampGranularityMs?: number;
+
+  /**
    * Instance of the storage to be used for caching responses
    */
   storageInstance?: DataPackagesResponseStorage;

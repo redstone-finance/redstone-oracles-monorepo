@@ -16,7 +16,7 @@ export class SetOperationQueue extends OperationQueue<Set<string>> {
     }
   }
 
-  protected override expandQueueEntry(entry: QueueEntry<Set<string>>, now: number = Date.now()) {
+  protected override expandQueueEntry(entry: QueueEntry<Set<string>>, now = Date.now()) {
     return {
       ...super.expandQueueEntry(entry, now),
       keys: Array.from(entry.id.keys()),

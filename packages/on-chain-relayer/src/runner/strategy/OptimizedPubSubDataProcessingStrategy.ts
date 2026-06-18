@@ -6,8 +6,8 @@ import {
 import { SetOperationQueue } from "@redstone-finance/utils";
 import { BasePubSubDataProcessingStrategy } from "./BasePubSubProcessingStrategy";
 
-export class OptimizedPubSubDataProcessingStrategy<C> extends BasePubSubDataProcessingStrategy<
-  C,
+export class OptimizedPubSubDataProcessingStrategy<Config> extends BasePubSubDataProcessingStrategy<
+  Config,
   Set<string>
 > {
   constructor(facadeCache: DataPackagesResponseCache) {

@@ -218,6 +218,7 @@ export class PubSubRunner implements PubSubDataProcessingStrategyDelegate<Relaye
       pubSubMaxReferenceValueDeviationPercent,
       pubSubMaxReferenceValueDelayInSeconds,
       pubSubMinReferenceValues,
+      pubSubAcceptedTimestampGranularityMs,
     } = relayerConfig;
 
     if (
@@ -244,6 +245,7 @@ export class PubSubRunner implements PubSubDataProcessingStrategyDelegate<Relaye
       maxReferenceValueDeviationPercent: pubSubMaxReferenceValueDeviationPercent,
       maxReferenceValueDelayInSeconds: pubSubMaxReferenceValueDelayInSeconds,
       minReferenceValues: pubSubMinReferenceValues,
+      acceptedTimestampGranularityMs: pubSubAcceptedTimestampGranularityMs,
     };
   }
 }

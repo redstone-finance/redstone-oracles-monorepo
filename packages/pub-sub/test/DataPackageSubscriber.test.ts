@@ -129,7 +129,7 @@ function createMockPubSubClient(): PooledMqttClient {
   return new MockPubSubClient() as unknown as PooledMqttClient;
 }
 
-async function singleSignerSetUp() {
+async function singleSignerSetUp(override: Partial<DataPackageSubscriberParams> = {}) {
   const pubSub = createMockPubSubClient();
   const subscriber = new DataPackageSubscriber(
     pubSub,
@@ -138,6 +138,7 @@ async function singleSignerSetUp() {
       authorizedSigners: [MOCK_WALLET_1.address],
       uniqueSignersCount: 1,
       minimalOffChainSignersCount: 1,
+      ...override,
     })
   );
 
@@ -214,6 +215,47 @@ describe("subscribe-data-packages", () => {
       expect([...(pubSub as unknown as MockPubSubClient).topicToCallback.keys()]).toEqual(
         subscriber.topics
       );
+    });
+  });
+
+  describe("acceptedTimestampGranularityMs", () => {
+    const GRANULARITY_MS = 2000;
+    const alignedTimestamp = Math.ceil(Date.now() / GRANULARITY_MS) * GRANULARITY_MS;
+    const notAlignedTimestamp = alignedTimestamp + GRANULARITY_MS / 4;
+    const VALUE = 12;
+
+    it("drops packages whose timestamp is not divisible by the granularity", async () => {
+      const { pubSub, callback } = await singleSignerSetUp({
+        acceptedTimestampGranularityMs: GRANULARITY_MS,
+      });
+
+      await publishToPubSub(pubSub, {
+        signer: MOCK_WALLET_1,
+        value: VALUE,
+        timestamp: notAlignedTimestamp,
+        dataPackageId: "ETH",
+      });
+      expect(callback).not.toHaveBeenCalled();
+
+      await publishToPubSub(pubSub, {
+        signer: MOCK_WALLET_1,
+        value: VALUE,
+        timestamp: alignedTimestamp,
+        dataPackageId: "ETH",
+      });
+      expect(callback).toHaveBeenCalledTimes(1);
+    });
+
+    it("does not filter when granularity is unset (default)", async () => {
+      const { pubSub, callback } = await singleSignerSetUp();
+
+      await publishToPubSub(pubSub, {
+        signer: MOCK_WALLET_1,
+        value: VALUE,
+        timestamp: notAlignedTimestamp,
+        dataPackageId: "ETH",
+      });
+      expect(callback).toHaveBeenCalledTimes(1);
     });
   });
 
