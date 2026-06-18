@@ -11,15 +11,19 @@ const SIGNING_ALGORITHM = "SIGNING_ALGORITHM_SPEC_ED25519";
 
 async function main() {
   const client = makeDefaultClient();
-  const privateKey = makeEd25519PrivateKey(await readZrodelkoPrivateKeyHex());
+  const partyHint = RedstoneCommon.getFromEnv("PARTY_HINT", z.string().default("zrodelko"));
+
+  const [privateKeyHex, synchronizer] = await Promise.all([
+    readZrodelkoPrivateKeyHex(),
+    client.getSynchronizerId(),
+  ]);
+
+  const privateKey = makeEd25519PrivateKey(privateKeyHex);
 
   const exportedPublicKey = createPublicKey(privateKey).export({
     format: "der",
     type: "spki",
   }) as Buffer;
-
-  const synchronizer = await client.getSynchronizerId();
-  const partyHint = RedstoneCommon.getFromEnv("PARTY_HINT", z.string().default("zrodelko"));
 
   const generated = await client.generateExternalPartyTopology({
     synchronizer,
