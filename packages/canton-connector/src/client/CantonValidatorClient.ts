@@ -14,6 +14,11 @@ type SetupProposalResponse = {
   contract_id: string;
 };
 
+type SetupProposalListItem = {
+  contract_id: string;
+  user_party_id: string;
+};
+
 type PrepareAcceptResponse = {
   transaction: string;
   tx_hash: string;
@@ -34,6 +39,35 @@ export class CantonValidatorClient {
 
   async createWalletTransferPreapproval() {
     return await this.api.post<{ contract_id: string }>("/v0/wallet/transfer-preapproval", {});
+  }
+
+  async lookupTransferPreapproval(receiverPartyId: string): Promise<string | undefined> {
+    try {
+      const { transfer_preapproval } = await this.api.get<{
+        transfer_preapproval: { contract: { contract_id: string } };
+      }>(`/v0/admin/transfer-preapprovals/by-party/${encodeURIComponent(receiverPartyId)}`);
+
+      return transfer_preapproval.contract.contract_id;
+    } catch (e) {
+      const inner: unknown = e instanceof AggregateError ? e.errors[0] : e;
+      const status = (inner as { response?: { status?: number } }).response?.status;
+      if (status === 404) {
+        return undefined;
+      }
+
+      throw e;
+    }
+  }
+
+  async listSetupProposals(): Promise<SetupProposalListItem[]> {
+    const { contracts } = await this.api.get<{
+      contracts: { contract: { contract_id: string; payload: { user: string } } }[];
+    }>("/v0/admin/external-party/setup-proposal");
+
+    return contracts.map(({ contract }) => ({
+      contract_id: contract.contract_id,
+      user_party_id: contract.payload.user,
+    }));
   }
 
   async setupProposal(userPartyId: string): Promise<SetupProposalResponse> {

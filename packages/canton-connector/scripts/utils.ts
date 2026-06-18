@@ -1,6 +1,7 @@
 import { getSSMParameterValue } from "@redstone-finance/internal-utils";
 import { RedstoneCommon } from "@redstone-finance/utils";
 import "dotenv/config";
+import { execSync } from "node:child_process";
 import { z } from "zod";
 import {
   CantonClient,
@@ -9,10 +10,30 @@ import {
   CantonNetworks,
   CantonValidatorClient,
   KeycloakTokenProvider,
+  KeycloakTokenProviderOptions,
   makeKeycloakParams,
   networkToChainId,
   TokenProvider,
 } from "../src";
+
+function promptTotpSync(username: string): string {
+  process.stderr.write(`\n[MFA] Enter TOTP code for ${username}: `);
+
+  return execSync("read -r code && echo $code", { stdio: ["inherit", "pipe", "inherit"] })
+    .toString()
+    .trim();
+}
+
+function makeScriptKeycloakOptions(): KeycloakTokenProviderOptions {
+  const params = makeKeycloakParams();
+  const walletUsername = params.walletUsername ?? params.username;
+
+  return {
+    ...params,
+    getTotp: () => Promise.resolve(promptTotpSync(params.username)),
+    walletGetTotp: () => Promise.resolve(promptTotpSync(walletUsername)),
+  };
+}
 
 export function readApiUrl() {
   return RedstoneCommon.getFromEnv("API", z.url());
@@ -50,9 +71,10 @@ export function makeDefaultClientWithValidator(mustValidatorClientBeDefined?: fa
   validatorClient?: CantonValidatorClient;
 };
 export function makeDefaultClientWithValidator(mustValidatorClientBeDefined = false) {
+  const keycloakOptions = makeScriptKeycloakOptions();
   const builder = new CantonClientBuilder()
     .withChainId(networkToChainId(readNetwork()))
-    .withDefaultAuth()
+    .withDefaultAuth(keycloakOptions)
     .withRpcUrls(readRpcUrls())
     .withQuarantineEnabled()
     .withTransferService();
@@ -67,9 +89,10 @@ export function makeDefaultClientWithValidator(mustValidatorClientBeDefined = fa
 }
 
 export function makeWalletTokenProvider(): TokenProvider {
-  const params = makeKeycloakParams();
+  const params = makeScriptKeycloakOptions();
   const tokenProvider = KeycloakTokenProvider.getInstance({
     ...params,
+    getTotp: params.walletGetTotp ?? params.getTotp,
     clientId: params.walletClientId ?? params.clientId,
     username: params.walletUsername ?? params.username,
     password: params.walletPassword ?? params.password,
