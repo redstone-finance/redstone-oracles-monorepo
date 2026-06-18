@@ -102,6 +102,12 @@
         "deviationPercentage": 0.5,
         "timeSinceLastUpdateInMilliseconds": 43200000
       }
+    },
+    "AA_FalconXUSDC": {
+      "updateTriggersOverrides": {
+        "deviationPercentage": 0.1,
+        "timeSinceLastUpdateInMilliseconds": 86400000
+      }
     }
   }
 }
