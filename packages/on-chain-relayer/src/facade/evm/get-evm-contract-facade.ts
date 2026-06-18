@@ -16,7 +16,7 @@ import { OevMultiAuctionsTxDeliveryMan } from "../../core/contract-interactions/
 import { OevTxDeliveryMan } from "../../core/contract-interactions/OevTxDeliveryMan";
 import { getTxDeliveryMan } from "../../core/TxDeliveryManSingleton";
 import { ContractFacade } from "../ContractFacade";
-import { RelayerDataInfluxService } from "../RelayerDataInfluxService";
+import { MemoryTxDeliveryMan } from "../MemoryTxDeliveryMan";
 
 export const getEvmContractFacade = (
   relayerConfig: RelayerConfig,
@@ -46,8 +46,8 @@ function makeTxDeliveryMan(
     provider as TxDeliveryManSupportedProviders
   );
 
-  if (relayerConfig.dryRunWithInflux) {
-    txDeliveryMan = new RelayerDataInfluxService(relayerConfig);
+  if (relayerConfig.dryRunWithMemory) {
+    txDeliveryMan = new MemoryTxDeliveryMan(relayerConfig);
   }
 
   if (isOevRelayerConfig(relayerConfig)) {
