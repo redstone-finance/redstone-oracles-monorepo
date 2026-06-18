@@ -10303,7 +10303,6 @@ __metadata:
   resolution: "@redstone-finance/on-chain-relayer@workspace:packages/on-chain-relayer"
   dependencies:
     "@ethersproject/providers": "npm:^5.6.8"
-    "@influxdata/influxdb-client": "npm:^1.35.0"
     "@nomicfoundation/hardhat-chai-matchers": "npm:^1.0.6"
     "@nomicfoundation/hardhat-network-helpers": "npm:^1.0.9"
     "@nomicfoundation/hardhat-toolbox": "npm:^2.0.2"
