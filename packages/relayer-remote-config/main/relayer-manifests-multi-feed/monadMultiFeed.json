@@ -138,6 +138,13 @@
         "deviationPercentage": 0.5,
         "timeSinceLastUpdateInMilliseconds": 43200000
       }
+    },
+    "AA_FalconXUSDC": {
+      "priceFeedAddress": "0x2e7ba0d5f476539417b769fF3849E9346045Aa98",
+      "updateTriggersOverrides": {
+        "deviationPercentage": 0.1,
+        "timeSinceLastUpdateInMilliseconds": 86400000
+      }
     }
   },
   "transactionAdapters": ["monadBoltMultiFeed", "monadReferenceMultiFeed"]
