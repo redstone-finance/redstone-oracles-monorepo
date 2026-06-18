@@ -78,6 +78,9 @@
     "toml": "^3.0.0",
     "ts-mocha": "^10.0.0"
   },
+  "resolutions": {
+    "form-data@npm:4.0.0": "^4.0.4"
+  },
   "files": [
     "dist/src/**/*"
   ],
