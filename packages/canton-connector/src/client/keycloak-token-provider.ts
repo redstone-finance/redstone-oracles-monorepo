@@ -18,6 +18,7 @@ type GetTokenRequest = {
       grant_type: typeof GRANT_TYPE_PASSWORD;
       username: string;
       password: string;
+      totp?: string;
     }
   | {
       grant_type: typeof GRANT_TYPE_REFRESH_TOKEN;
@@ -32,6 +33,13 @@ type GetTokenResponse = {
   refresh_expires_in?: number;
 };
 
+export type GetTotpFn = () => Promise<string | undefined>;
+
+export type KeycloakTokenProviderOptions = KeycloakTokenProviderParams & {
+  getTotp?: GetTotpFn;
+  walletGetTotp?: GetTotpFn;
+};
+
 export class KeycloakTokenProvider {
   private static logger = loggerFactory("keycloak-token-provider");
   private static instances: { [key: string]: KeycloakTokenProvider | undefined } = {};
@@ -44,8 +52,9 @@ export class KeycloakTokenProvider {
   private timer?: NodeJS.Timeout;
   private refreshingPromise?: Promise<string>;
 
-  static getInstance(opts?: KeycloakTokenProviderParams) {
-    const { url, realm, clientId, username, password } = opts ?? makeKeycloakParams();
+  static getInstance(opts?: KeycloakTokenProviderOptions) {
+    const resolvedOpts: KeycloakTokenProviderOptions = opts ?? makeKeycloakParams();
+    const { url, realm, clientId, username, password, getTotp } = resolvedOpts;
 
     const tokenUrl = `${url}/auth/realms/${realm}/protocol/openid-connect/token`;
 
@@ -54,9 +63,16 @@ export class KeycloakTokenProvider {
       clientId,
       username,
       createHash("sha256").update(password).digest("hex"),
+      getTotp ? "interactive-totp" : "",
     ].join("#");
 
-    this.instances[key] ??= new KeycloakTokenProvider(tokenUrl, clientId, username, password);
+    this.instances[key] ??= new KeycloakTokenProvider(
+      tokenUrl,
+      clientId,
+      username,
+      password,
+      getTotp
+    );
 
     return this.instances[key];
   }
@@ -65,7 +81,8 @@ export class KeycloakTokenProvider {
     private readonly tokenUrl: string,
     private readonly clientId: string,
     private readonly username: string,
-    private readonly password: string
+    private readonly password: string,
+    private readonly getTotp?: GetTotpFn
   ) {}
 
   async getToken() {
@@ -122,11 +139,14 @@ export class KeycloakTokenProvider {
       }
     }
 
+    const totp = await this.getTotp?.();
+
     return await this.requestToken({
       grant_type: GRANT_TYPE_PASSWORD,
       client_id: this.clientId,
       username: this.username,
       password: this.password,
+      ...(totp ? { totp } : {}),
     });
   }
 
