@@ -1,6 +1,7 @@
 import { loggerFactory } from "../logger";
 import { stringifyError, type UnrecoverableError } from "./errors";
-import { sleep } from "./time";
+import { getNS } from "./misc";
+import { msToSecs, sleep } from "./time";
 
 const logger = loggerFactory("retry");
 
@@ -23,10 +24,6 @@ export class UnrecoverableAggregateError extends AggregateError {
 }
 
 export function retry<P extends unknown[], R extends Promise<unknown>>(config: RetryConfig<P, R>) {
-  if (config.maxRetries === 0) {
-    throw new Error(`Setting 'config.maxRetries' to 0 will never call the underlying function`);
-  }
-
   return async (...args: P): Promise<Awaited<R>> => {
     return await executeWithRetries(config, args);
   };
@@ -36,10 +33,10 @@ export async function executeWithRetries<P extends unknown[], R extends Promise<
   config: RetryConfig<P, R>,
   args: P
 ) {
-  if (config.maxRetries === 0) {
-    throw new Error(`Setting 'config.maxRetries' to 0 will never call the underlying function`);
-  }
   const fnName = config.fnName ?? config.fn.name;
+  if (config.maxRetries === 0) {
+    throw new Error(`Setting 'config.maxRetries' to 0 will never call the function ${fnName}`);
+  }
   const errors = [];
   let i = 0;
   while (i < config.maxRetries) {
@@ -50,7 +47,7 @@ export async function executeWithRetries<P extends unknown[], R extends Promise<
       errors.push(e);
 
       config.logger?.(
-        `Retry ${i}/${config.maxRetries}; Function ${fnName} failed. ${stringifyError(e)}`
+        `Retry ${i}/${config.maxRetries}; function ${fnName} failed: ${stringifyError(e)}`
       );
 
       if (isErrorUnrecoverable(e as Error)) {
@@ -62,14 +59,16 @@ export async function executeWithRetries<P extends unknown[], R extends Promise<
           ? Math.pow(config.backOff.backOffBase, i - 1)
           : 1;
         const sleepTime = config.waitBetweenMs * sleepTimeBackOffMultiplier;
-        config.logger?.(`Waiting ${sleepTime / 1000} s. for the next retry...`);
+        config.logger?.(
+          `Waiting ${msToSecs(sleepTime)} [s] for the next retry of function ${fnName}`
+        );
 
         await sleep(sleepTime);
       }
     }
   }
 
-  throw new AggregateError(errors, `Retry failed after ${i} attempts of ${fnName}`);
+  throw new AggregateError(errors, `Retry failed after ${getNS(i, "attempt")} of ${fnName}`);
 }
 
 export const waitForSuccess = async (
