@@ -182,6 +182,16 @@ function sanitize(val: unknown, seen: WeakSet<object>, depth: number = 0): unkno
     if (seen.has(val)) {
       return "[Circular]";
     }
+
+    const maybeToJson = (val as { toJSON?: () => unknown }).toJSON;
+    if (typeof maybeToJson === "function") {
+      seen.add(val);
+      const json = sanitize(maybeToJson.call(val), seen, depth + 1);
+      seen.delete(val);
+
+      return json;
+    }
+
     seen.add(val);
     const result: Record<string, unknown> = {};
     for (const [key, item] of Object.entries(val)) {
