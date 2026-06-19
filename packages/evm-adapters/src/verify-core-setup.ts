@@ -5,6 +5,8 @@ import { BigNumber } from "ethers";
 import { ExampleBase, ExampleBase__factory } from "../typechain-types";
 import { EvmContractAdapter } from "./core/contract-interactions/EvmContractAdapter";
 
+export const getExampleBaseContract = ExampleBase__factory.connect;
+
 const RETRY_CONFIG: Omit<RedstoneCommon.RetryConfig, "fn"> = {
   maxRetries: 3,
   waitBetweenMs: 1000,
@@ -12,25 +14,7 @@ const RETRY_CONFIG: Omit<RedstoneCommon.RetryConfig, "fn"> = {
     backOffBase: 2,
   },
 };
-
-const feedNotPresentOrWithoutEnoughSigners = /InsufficientNumberOfUniqueSigners/;
-
-export const getExampleBaseContract = ExampleBase__factory.connect;
-
-async function possiblyUnrecoverableError<T>(
-  promise: Promise<T>,
-  unrecoverablePattern = feedNotPresentOrWithoutEnoughSigners
-) {
-  try {
-    return await promise;
-  } catch (e) {
-    if (unrecoverablePattern.test(RedstoneCommon.stringifyError(e))) {
-      (e as RedstoneCommon.UnrecoverableError).unrecoverable = true;
-    }
-
-    throw e;
-  }
-}
+const unrecoverableErrorRegExp = /InsufficientNumberOfUniqueSigners/;
 
 export async function verifyCoreSetup<Contract extends ExampleBase>(
   checkName: string,
@@ -77,4 +61,19 @@ export async function verifyCoreSetup<Contract extends ExampleBase>(
   }
 
   return undefined;
+}
+
+async function possiblyUnrecoverableError<T>(
+  promise: Promise<T>,
+  unrecoverablePattern = unrecoverableErrorRegExp
+) {
+  try {
+    return await promise;
+  } catch (e) {
+    if (unrecoverablePattern.test(RedstoneCommon.stringifyError(e))) {
+      (e as RedstoneCommon.UnrecoverableError).unrecoverable = true;
+    }
+
+    throw e;
+  }
 }

@@ -92,6 +92,7 @@ function isEthers_5_7_Error(error: unknown): error is Ethers_5_7_Error {
 
 const ethers_5_7_ErrorProps = [
   "code",
+  "error",
   "reason",
   "url",
   "requestBody",
