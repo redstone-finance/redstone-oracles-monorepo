@@ -1,4 +1,5 @@
 export * from "./array";
+export * from "./authenticated-gateway";
 export * from "./AutoCleanupCacheWithTtl";
 export * from "./axios-retry";
 export * from "./base64";
