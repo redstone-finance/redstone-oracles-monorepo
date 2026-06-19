@@ -11,6 +11,13 @@ export class DataPackagesResponseCache {
     private requestParams?: DataPackagesRequestParams
   ) {}
 
+  toJSON() {
+    return {
+      dataServiceId: this.requestParams?.dataServiceId,
+      feedIds: this.response ? getResponseFeedIds(this.response) : [],
+    };
+  }
+
   update(dataPackagesResponse: DataPackagesResponse, requestParams: DataPackagesRequestParams) {
     this.response = dataPackagesResponse;
     this.requestParams = requestParams;
