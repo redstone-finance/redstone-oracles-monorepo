@@ -2487,6 +2487,12 @@
       "source": ["hip3-hyena-crypto-testnet-fetcher"],
       "broadcasters": ["hyperliquid-hip3", "influx"],
       "denomination": "USD",
+      "localCacheTTL": "60m",
+      "rateFeed": false
+    },
+    "rrrrr:BTC-TWAP-60": {
+      "source": ["twap-local"],
+      "denomination": "USD",
       "rateFeed": false
     },
     "OPEN_INTEREST_rrrrr:BTC": {
@@ -2597,6 +2603,12 @@
     "rrrrr:ETH": {
       "source": ["hip3-hyena-crypto-testnet-fetcher"],
       "broadcasters": ["hyperliquid-hip3", "influx"],
+      "denomination": "USD",
+      "localCacheTTL": "60m",
+      "rateFeed": false
+    },
+    "rrrrr:ETH-TWAP-60": {
+      "source": ["twap-local"],
       "denomination": "USD",
       "rateFeed": false
     },
@@ -2709,6 +2721,12 @@
       "source": ["hip3-hyena-crypto-testnet-fetcher"],
       "broadcasters": ["hyperliquid-hip3", "influx"],
       "denomination": "USD",
+      "localCacheTTL": "60m",
+      "rateFeed": false
+    },
+    "rrrrr:HYPE-TWAP-60": {
+      "source": ["twap-local"],
+      "denomination": "USD",
       "rateFeed": false
     },
     "OPEN_INTEREST_rrrrr:HYPE": {
@@ -2820,6 +2838,12 @@
       "source": ["hip3-hyena-crypto-testnet-fetcher"],
       "broadcasters": ["hyperliquid-hip3", "influx"],
       "denomination": "USD",
+      "localCacheTTL": "60m",
+      "rateFeed": false
+    },
+    "rrrrr:SOL-TWAP-60": {
+      "source": ["twap-local"],
+      "denomination": "USD",
       "rateFeed": false
     },
     "OPEN_INTEREST_rrrrr:SOL": {
@@ -2930,6 +2954,12 @@
     "rrrrr:BASED": {
       "source": ["hip3-hyena-crypto-spot-testnet-fetcher"],
       "broadcasters": ["hyperliquid-hip3", "influx"],
+      "denomination": "USD",
+      "localCacheTTL": "60m",
+      "rateFeed": false
+    },
+    "rrrrr:BASED-TWAP-60": {
+      "source": ["twap-local"],
       "denomination": "USD",
       "rateFeed": false
     },
@@ -4958,7 +4988,6 @@
       "priceAggregator": "constantWeightMedian",
       "broadcasters": ["influx"],
       "denomination": "USD",
-      "localCacheTTL": "60m",
       "rateFeed": false
     },
     "ORACLE_hyna:IP_EMA_150S": {
@@ -5030,16 +5059,6 @@
           "maxDelayMilliseconds": 1000
         }
       }
-    },
-    "IP-TWAP": {
-      "source": ["hyna-twap-local"],
-      "denomination": "USD",
-      "rateFeed": false
-    },
-    "ORACLE_hyna:IP-TWAP-60": {
-      "source": ["twap-local"],
-      "denomination": "USD",
-      "rateFeed": false
     },
 
     "ADA_PERP": {
@@ -5386,7 +5405,6 @@
       "priceAggregator": "constantWeightMedian",
       "broadcasters": ["influx"],
       "denomination": "USD",
-      "localCacheTTL": "60m",
       "rateFeed": false
     },
     "ORACLE_hyna:LTC_EMA_150S": {
@@ -5458,16 +5476,6 @@
           "maxDelayMilliseconds": 1000
         }
       }
-    },
-    "LTC-TWAP": {
-      "source": ["hyna-twap-local"],
-      "denomination": "USD",
-      "rateFeed": false
-    },
-    "ORACLE_hyna:LTC-TWAP-60": {
-      "source": ["twap-local"],
-      "denomination": "USD",
-      "rateFeed": false
     },
 
     "BCH_PERP": {
@@ -5970,7 +5978,6 @@
       "priceAggregator": "constantWeightMedian",
       "broadcasters": ["influx"],
       "denomination": "USD",
-      "localCacheTTL": "60m",
       "rateFeed": false
     },
     "ORACLE_hyna:BASED_EMA_150S": {
@@ -6042,16 +6049,6 @@
           "maxDelayMilliseconds": 1000
         }
       }
-    },
-    "BASED-TWAP": {
-      "source": ["hyna-twap-local"],
-      "denomination": "USD",
-      "rateFeed": false
-    },
-    "ORACLE_hyna:BASED-TWAP-60": {
-      "source": ["twap-local"],
-      "denomination": "USD",
-      "rateFeed": false
     }
   }
 }
