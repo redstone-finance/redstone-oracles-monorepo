@@ -1,11 +1,18 @@
 import { loggerFactory, RedstoneCommon } from "@redstone-finance/utils";
 import { z } from "zod";
+import { PollingHttpClient, SSEPubSubClient } from "./light-gateway-clients";
 import { MultiPubSubClient, MultiPubSubConfig } from "./MultiPubSubClient";
-import { MultiPubSubEnvConfig, MultiPubSubEnvConfigs } from "./MultiPubSubEnvConfigs";
+import {
+  createMultiPubSubEnvConfigs,
+  MultiPubSubEnvConfig,
+  MultiPubSubEnvConfigs,
+  PubSubSecrets,
+} from "./MultiPubSubEnvConfigs";
 import { NatsClient } from "./NatsClient";
 import { PooledMqttClient } from "./PooledMqttClient";
+import { PubSubClient } from "./PubSubClient";
 import { createMqtt5ClientFactory, PubSubClientFactory } from "./PubSubClientFactory";
-import { PollingHttpClient, SSEPubSubClient } from "./light-gateway-clients";
+import { resolveSecretsFromSsm } from "./resolve-secrets-from-ssm";
 
 const logger = loggerFactory("create-multi-pub-sub-client");
 
@@ -14,22 +21,36 @@ type MqttConfig = Extract<
   { type: "mqttAWSV4Sig" | "mqttCert" | "mqttUnauthenticated" }
 >;
 
-export function createMultiPubSubClientFromEnv(
-  envPath = "PUB_SUB_CONFIGS"
-): MultiPubSubClient | undefined {
+export function createMultiPubSubClientFromEnv(envPath = "PUB_SUB_CONFIGS") {
   const configs = RedstoneCommon.getFromEnv(envPath, MultiPubSubEnvConfigs.optional());
-  if (!configs || configs.length === 0) {
+  if (!configs?.length) {
     return undefined;
   }
 
   return createMultiPubSubClient(configs);
 }
 
-export function createMultiPubSubClient(configs: z.infer<typeof MultiPubSubEnvConfigs>) {
+export async function createMultiPubSubClientFromEnvWithSsm(envPath = "PUB_SUB_CONFIGS") {
+  const secrets = await resolveSecretsFromSsm(envPath);
+  const configs = RedstoneCommon.getFromEnv(
+    envPath,
+    createMultiPubSubEnvConfigs(secrets).optional()
+  );
+  if (!configs?.length) {
+    return undefined;
+  }
+
+  return createMultiPubSubClient(configs, secrets);
+}
+
+export function createMultiPubSubClient(
+  configs: z.infer<typeof MultiPubSubEnvConfigs>,
+  secrets?: PubSubSecrets
+) {
   const multiPubSubConfigs: MultiPubSubConfig[] = configs.map((config) => {
     logger.info("Creating PubSubClient for MultiPubSubClient", { config });
 
-    const client = resolvePubSubClient(config);
+    const client = resolvePubSubClient(config, secrets);
 
     return {
       client,
@@ -40,7 +61,10 @@ export function createMultiPubSubClient(configs: z.infer<typeof MultiPubSubEnvCo
   return new MultiPubSubClient(multiPubSubConfigs);
 }
 
-export function resolvePubSubClient(config: z.infer<typeof MultiPubSubEnvConfig>) {
+export function resolvePubSubClient(
+  config: z.infer<typeof MultiPubSubEnvConfig>,
+  secrets?: PubSubSecrets
+): PubSubClient {
   switch (config.type) {
     case "sse":
       return new SSEPubSubClient(config.host);
@@ -55,22 +79,18 @@ export function resolvePubSubClient(config: z.infer<typeof MultiPubSubEnvConfig>
         reconnectBaseDelayMs: config.reconnectBaseDelayMs,
         reconnectMaxDelayMs: config.reconnectMaxDelayMs,
         nkeySeed: config.nkeySeedEnvPath
-          ? RedstoneCommon.getFromEnv(config.nkeySeedEnvPath)
+          ? readEnvValue(config.nkeySeedEnvPath, secrets)
           : undefined,
-        caCert: config.caCertEnvPath ? RedstoneCommon.getFromEnv(config.caCertEnvPath) : undefined,
-        clientCert: config.clientCertEnvPath
-          ? RedstoneCommon.getFromEnv(config.clientCertEnvPath)
-          : undefined,
-        clientKey: config.clientKeyEnvPath
-          ? RedstoneCommon.getFromEnv(config.clientKeyEnvPath)
-          : undefined,
+        caCert: readEnvCert(config.caCertEnvPath, secrets),
+        clientCert: readEnvCert(config.clientCertEnvPath, secrets),
+        clientKey: readEnvCert(config.clientKeyEnvPath, secrets),
       });
 
     case "mqttAWSV4Sig":
     case "mqttCert":
     case "mqttUnauthenticated":
       return new PooledMqttClient(
-        resolveMqttClientFactory(config),
+        resolveMqttClientFactory(config, secrets),
         config.topicCountPerConnection,
         config.host
       );
@@ -80,7 +100,10 @@ export function resolvePubSubClient(config: z.infer<typeof MultiPubSubEnvConfig>
   }
 }
 
-function resolveMqttClientFactory(config: MqttConfig): PubSubClientFactory {
+function resolveMqttClientFactory(
+  config: MqttConfig,
+  secrets?: PubSubSecrets
+): PubSubClientFactory {
   const configType = config.type;
   switch (configType) {
     case "mqttAWSV4Sig": {
@@ -94,8 +117,8 @@ function resolveMqttClientFactory(config: MqttConfig): PubSubClientFactory {
       return createMqtt5ClientFactory({
         authorization: {
           type: "Cert",
-          privateKey: RedstoneCommon.getFromEnv(config.privateKeyEnvPath),
-          cert: RedstoneCommon.getFromEnv(config.certEnvPath),
+          privateKey: readEnvValue(config.privateKeyEnvPath, secrets),
+          cert: readEnvValue(config.certEnvPath, secrets),
         },
         endpoint: config.host,
       });
@@ -114,4 +137,22 @@ function resolveMqttClientFactory(config: MqttConfig): PubSubClientFactory {
     default:
       return RedstoneCommon.throwUnsupportedParamError(configType);
   }
+}
+
+function readEnvValue(envPath: string, secrets?: PubSubSecrets) {
+  return secrets?.[envPath] ?? RedstoneCommon.getFromEnv(envPath);
+}
+
+function readEnvCert(envPath?: string, secrets?: PubSubSecrets) {
+  if (!envPath) {
+    return;
+  }
+
+  const value = readEnvValue(envPath, secrets);
+  const LINE_SEP = "\n";
+
+  return value
+    .split(LINE_SEP)
+    .map((line) => line.trim())
+    .join(LINE_SEP);
 }

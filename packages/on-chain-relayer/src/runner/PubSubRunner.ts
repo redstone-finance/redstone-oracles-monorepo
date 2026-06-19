@@ -63,7 +63,7 @@ export class PubSubRunner implements PubSubDataProcessingStrategyDelegate<Relaye
     const contractFacade = await getContractFacade(relayerConfig, cache);
     const strategy = new (this.getStrategyClass(relayerConfig.pubSubDataProcessingStrategy))(cache);
 
-    const pubSubClient = createPubSubClient(relayerConfig);
+    const pubSubClient = await createPubSubClient(relayerConfig);
     const runner = new PubSubRunner(
       pubSubClient,
       contractFacade,

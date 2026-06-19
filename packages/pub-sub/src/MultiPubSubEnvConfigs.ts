@@ -2,6 +2,8 @@ import { RedstoneCommon } from "@redstone-finance/utils";
 import { z } from "zod";
 import { calculateTopicCountPerConnection } from "./topics";
 
+export type PubSubSecrets = Record<string, string>;
+
 export const MqttPubSubEnvConfigBase = z.object({
   host: z.string(),
   // important only in the context of reader
@@ -10,20 +12,6 @@ export const MqttPubSubEnvConfigBase = z.object({
 
 const MqttV4Sig = MqttPubSubEnvConfigBase.extend({
   type: z.enum(["mqttAWSV4Sig"]),
-});
-
-const MqttCert = MqttPubSubEnvConfigBase.extend({
-  type: z.enum(["mqttCert"]),
-  privateKeyEnvPath: z.string().superRefine((path, ctx) => {
-    if (!RedstoneCommon.isDefined(process.env[path])) {
-      ctx.addIssue(`Expected ENV ${path} by mqtt cert authorization - privateKeyEnvPath`);
-    }
-  }),
-  certEnvPath: z.string().superRefine((path, ctx) => {
-    if (!RedstoneCommon.isDefined(process.env[path])) {
-      ctx.addIssue(`Expected ENV ${path} by mqtt cert authorization - certEnvPath`);
-    }
-  }),
 });
 
 const MqttUnauthenticated = MqttPubSubEnvConfigBase.extend({
@@ -43,52 +31,87 @@ const Polling = z.object({
   pollingIntervalMs: z.number().optional(),
 });
 
-const NatsConfig = z.object({
-  type: z.enum(["nats"]),
-  host: z.string(),
-  connectionTimeoutMs: z.number().optional(),
-  reconnectBaseDelayMs: z.number().optional(),
-  reconnectMaxDelayMs: z.number().optional(),
-  nkeySeedEnvPath: z
-    .string()
-    .optional()
-    .superRefine((path, ctx) => {
-      if (path !== undefined && !RedstoneCommon.isDefined(process.env[path])) {
-        ctx.addIssue(`Expected ENV ${path} by nats nkey authentication - nkeySeedEnvPath`);
-      }
-    }),
-  caCertEnvPath: z
-    .string()
-    .optional()
-    .superRefine((path, ctx) => {
-      if (path !== undefined && !RedstoneCommon.isDefined(process.env[path])) {
-        ctx.addIssue(`Expected ENV ${path} by nats TLS - caCertEnvPath`);
-      }
-    }),
-  clientCertEnvPath: z
-    .string()
-    .optional()
-    .superRefine((path, ctx) => {
-      if (path !== undefined && !RedstoneCommon.isDefined(process.env[path])) {
-        ctx.addIssue(`Expected ENV ${path} by nats mTLS - clientCertEnvPath`);
-      }
-    }),
-  clientKeyEnvPath: z
-    .string()
-    .optional()
-    .superRefine((path, ctx) => {
-      if (path !== undefined && !RedstoneCommon.isDefined(process.env[path])) {
-        ctx.addIssue(`Expected ENV ${path} by nats mTLS - clientKeyEnvPath`);
-      }
-    }),
-});
+export const MultiPubSubEnvConfig = createMultiPubSubEnvConfig();
+export const MultiPubSubEnvConfigs = createMultiPubSubEnvConfigs();
 
-export const MultiPubSubEnvConfig = z.discriminatedUnion("type", [
-  MqttV4Sig,
-  MqttCert,
-  MqttUnauthenticated,
-  SSE,
-  Polling,
-  NatsConfig,
-]);
-export const MultiPubSubEnvConfigs = MultiPubSubEnvConfig.array();
+export function createMultiPubSubEnvConfig(secrets?: PubSubSecrets) {
+  return buildMultiPubSubEnvConfig(isSecretSomewhereAvailable(secrets));
+}
+
+export function createMultiPubSubEnvConfigs(secrets?: PubSubSecrets) {
+  return createMultiPubSubEnvConfig(secrets).array();
+}
+
+export function getReferencedSecretEnvPaths(envPath = "PUB_SUB_CONFIGS") {
+  const configs = RedstoneCommon.getFromEnv(
+    envPath,
+    buildMultiPubSubEnvConfig().array().optional()
+  );
+
+  if (!RedstoneCommon.isDefined(configs)) {
+    return [];
+  }
+
+  const referenced = configs.flatMap((config) =>
+    Object.entries(config)
+      .filter(
+        (entry): entry is [string, string] =>
+          entry[0].endsWith("EnvPath") && typeof entry[1] === "string"
+      )
+      .map(([, envPathName]) => envPathName)
+  );
+
+  return [...new Set(referenced)];
+}
+
+function buildMultiPubSubEnvConfig(isAvailable = (_path: string) => true) {
+  const requiredEnvPath = (label: string) =>
+    z.string().superRefine((path, ctx) => {
+      if (!isAvailable(path)) {
+        ctx.addIssue(`Expected ENV ${path} ${label}`);
+      }
+    });
+
+  const optionalEnvPath = (label: string) =>
+    z
+      .string()
+      .optional()
+      .superRefine((path, ctx) => {
+        if (RedstoneCommon.isDefined(path) && !isAvailable(path)) {
+          ctx.addIssue(`Expected ENV ${path} ${label}`);
+        }
+      });
+
+  const MqttCert = MqttPubSubEnvConfigBase.extend({
+    type: z.enum(["mqttCert"]),
+    privateKeyEnvPath: requiredEnvPath("by mqtt cert authorization - privateKeyEnvPath"),
+    certEnvPath: requiredEnvPath("by mqtt cert authorization - certEnvPath"),
+  });
+
+  const NatsConfig = z.object({
+    type: z.enum(["nats"]),
+    host: z.string(),
+    connectionTimeoutMs: z.number().optional(),
+    reconnectBaseDelayMs: z.number().optional(),
+    reconnectMaxDelayMs: z.number().optional(),
+    nkeySeedEnvPath: optionalEnvPath("by nats nkey authentication - nkeySeedEnvPath"),
+    caCertEnvPath: optionalEnvPath("by nats TLS - caCertEnvPath"),
+    clientCertEnvPath: optionalEnvPath("by nats mTLS - clientCertEnvPath"),
+    clientKeyEnvPath: optionalEnvPath("by nats mTLS - clientKeyEnvPath"),
+  });
+
+  return z.discriminatedUnion("type", [
+    MqttV4Sig,
+    MqttCert,
+    MqttUnauthenticated,
+    SSE,
+    Polling,
+    NatsConfig,
+  ]);
+}
+
+function isSecretSomewhereAvailable(secrets?: PubSubSecrets) {
+  return (path: string) =>
+    RedstoneCommon.isDefined(secrets?.[path]) ||
+    RedstoneCommon.isDefined(RedstoneCommon.getFromEnv(path, z.string().optional()));
+}

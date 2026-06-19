@@ -1,6 +1,6 @@
 import {
   createMqtt5ClientFactory,
-  createMultiPubSubClientFromEnv,
+  createMultiPubSubClientFromEnvWithSsm,
   PooledMqttClient,
   PubSubClient,
   PubSubTopics,
@@ -9,8 +9,8 @@ import { RelayerConfig } from "../config/RelayerConfig";
 
 const PUB_SUB_CONFIGS_ENV_PATH = "PUB_SUB_CONFIGS";
 
-export function createPubSubClient(relayerConfig: RelayerConfig): PubSubClient {
-  const client = createMultiPubSubClientFromEnv(PUB_SUB_CONFIGS_ENV_PATH);
+export async function createPubSubClient(relayerConfig: RelayerConfig): Promise<PubSubClient> {
+  const client = await createMultiPubSubClientFromEnvWithSsm(PUB_SUB_CONFIGS_ENV_PATH);
   if (client) {
     return client;
   }
