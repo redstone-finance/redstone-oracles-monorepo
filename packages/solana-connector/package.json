@@ -79,7 +79,7 @@
     "ts-mocha": "^10.0.0"
   },
   "resolutions": {
-    "form-data@npm:4.0.0": "^4.0.4"
+    "form-data@npm:4.0.0": "^4.0.6"
   },
   "files": [
     "dist/src/**/*"
