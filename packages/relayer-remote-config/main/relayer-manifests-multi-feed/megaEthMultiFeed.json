@@ -111,6 +111,13 @@
         "deviationPercentage": 0.000001,
         "timeSinceLastUpdateInMilliseconds": 60000
       }
+    },
+    "XAUt/USDT": {
+      "priceFeedAddress": "0x97A75897d073A75aE6dF694FBB8511D9755Dae32",
+      "updateTriggersOverrides": {
+        "deviationPercentage": 0.1,
+        "timeSinceLastUpdateInMilliseconds": 21600000
+      }
     }
   },
   "transactionAdapters": ["megaEthBoltMultiFeed", "megaEthReferenceMultiFeed"]
