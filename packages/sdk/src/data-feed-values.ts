@@ -7,6 +7,7 @@ export interface GetDataFeedValuesInput {
   aggregationAlgorithm?: "median" | "min" | "max"; // median by default
   dataServiceId?: string; // "redstone-main-demo" by default
   gatewayUrls?: string[]; // if not specified, use default for dataServiceId
+  authenticatedGateways?: { url?: string; apiKey: string }[];
 }
 
 export type GetDataFeedValuesOutput = Record<string, number | undefined>;
@@ -28,6 +29,7 @@ export const getDataFeedValues = async (
     urls: gatewayUrls,
     returnAllPackages: true,
     skipSignatureVerification: true,
+    authenticatedGateways: args.authenticatedGateways,
   });
 
   const result: GetDataFeedValuesOutput = {};
