@@ -360,7 +360,7 @@ describe("request-data-packages", () => {
           maxTimestampDeviationMS: 20_000,
         })
       )
-    ).rejects.toThrowError(/Timestamps do not have the same value: 1732724591163, 1732724591165/);
+    ).rejects.toThrow(/Timestamps do not have the same value: 1732724591163, 1732724591165/);
   });
 
   test("Should throw error for deviated timestamp", async () => {
@@ -414,7 +414,7 @@ describe("request-data-packages", () => {
           maxTimestampDeviationMS: 20_000,
         })
       )
-    ).rejects.toThrowError(/Timestamp deviation exceeded/);
+    ).rejects.toThrow(/Timestamp deviation exceeded/);
   });
 
   test("Should throw error for all packages signed by not authorized", async () => {
@@ -451,7 +451,7 @@ describe("request-data-packages", () => {
           authorizedSigners: ["fake_signer"],
         })
       )
-    ).rejects.toThrowError(/No data packages for the data feed: ETH/);
+    ).rejects.toThrow(/No data packages for the data feed: ETH/);
   });
 
   test("Should not throw an error if ignoreMissingFeed set", async () => {
@@ -594,7 +594,7 @@ describe("request-data-packages", () => {
           authorizedSigners: [MOCK_WALLET.address],
         })
       )
-    ).rejects.toThrowError(/Too few data packages with unique signers/);
+    ).rejects.toThrow(/Too few data packages with unique signers/);
   });
 
   test("Should reject when payload does not follow schema", async () => {
@@ -624,7 +624,7 @@ describe("request-data-packages", () => {
           returnAllPackages: false,
         })
       )
-    ).rejects.toThrowError(/Zod validation error/);
+    ).rejects.toThrow(/Zod validation error/);
   });
 
   describe("requestDataPackages time handling", () => {
@@ -740,7 +740,7 @@ describe("request-data-packages", () => {
         })
       );
 
-      await expect(packagesPromise).rejects.toThrowError(/timeout/);
+      await expect(packagesPromise).rejects.toThrow(/timeout/);
       const timePassed = performance.now() - start;
       expect(timePassed).toBe(timeout1 + timeout2);
     });

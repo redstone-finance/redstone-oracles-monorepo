@@ -10,8 +10,8 @@ describe("Utils", () => {
   test("Should assert correctly", () => {
     assert(true);
     assert(true, "Some message");
-    expect(() => assert(false)).toThrowError("Assertion failed");
-    expect(() => assert(false, "Custom msg")).toThrowError("Assertion failed: Custom msg");
+    expect(() => assert(false)).toThrow("Assertion failed");
+    expect(() => assert(false, "Custom msg")).toThrow("Assertion failed: Custom msg");
   });
 
   test("Should correctly convert strings to bytes32", () => {
@@ -40,7 +40,7 @@ describe("Utils", () => {
     expect(hexlify(convertIntegerNumberToBytes(15, 2))).toBe("0x000f");
     expect(hexlify(convertIntegerNumberToBytes(9, 3))).toBe("0x000009");
     expect(hexlify(convertIntegerNumberToBytes(65535, 2))).toBe("0xffff");
-    expect(() => convertIntegerNumberToBytes(65536, 2)).toThrowError(
+    expect(() => convertIntegerNumberToBytes(65536, 2)).toThrow(
       "Overflow: value: 65536, decimals: 0, byteSize: 2"
     );
   });
@@ -48,7 +48,7 @@ describe("Utils", () => {
   test("Should correctly convert integer number strings to bytes", () => {
     expect(hexlify(convertIntegerNumberToBytes("9", 3))).toBe("0x000009");
     expect(hexlify(convertIntegerNumberToBytes("65535", 2))).toBe("0xffff");
-    expect(() => convertIntegerNumberToBytes("65536", 2)).toThrowError(
+    expect(() => convertIntegerNumberToBytes("65536", 2)).toThrow(
       "Overflow: value: 65536, decimals: 0, byteSize: 2"
     );
   });

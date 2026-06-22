@@ -65,7 +65,7 @@ describe("MoveOptionContractUtil", () => {
           TEST_DEFAULT_LOCALNET_GAS_BUDGET,
           DEFAULT_BROADCAST_BUCKETS.length
         )
-      ).rejects.toThrowError("Failed to compute gas price");
+      ).rejects.toThrow("Failed to compute gas price");
     });
   });
 });

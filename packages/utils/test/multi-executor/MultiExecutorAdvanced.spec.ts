@@ -94,7 +94,7 @@ describe("MultiExecutor Advanced Concepts", () => {
       mode,
       instances.map((_, index) => index)
     );
-    await expect(sut.someAsyncFunction(234)).rejects.toThrowError(expectedError);
+    await expect(sut.someAsyncFunction(234)).rejects.toThrow(expectedError);
 
     instances.forEach((instance) => {
       expect(instance.calledArgs).toStrictEqual([]);

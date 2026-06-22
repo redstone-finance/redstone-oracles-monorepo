@@ -179,7 +179,7 @@ describe("subscribe-data-packages", () => {
               authorizedSigners: [MOCK_WALLET_3.address],
             })
           )
-      ).toThrowError(/Misconfiguration authorizedSigners/);
+      ).toThrow(/Misconfiguration authorizedSigners/);
     });
 
     it("should throw offChainMinimalSignersCount < uniqueSignersCount", () => {
@@ -195,7 +195,7 @@ describe("subscribe-data-packages", () => {
               authorizedSigners: [MOCK_WALLET_3.address, MOCK_WALLET_1.address],
             })
           )
-      ).toThrowError(/Misconfiguration uniqueSignersCount/);
+      ).toThrow(/Misconfiguration uniqueSignersCount/);
     });
   });
 
@@ -279,8 +279,8 @@ describe("subscribe-data-packages", () => {
         "deflate+json"
       );
 
-      expect(callback).toBeCalledTimes(1);
-      expect(callback).toBeCalledWith({
+      expect(callback).toHaveBeenCalledTimes(1);
+      expect(callback).toHaveBeenCalledWith({
         ETH: [dataPackage],
       });
     });
@@ -303,8 +303,8 @@ describe("subscribe-data-packages", () => {
         "deflate+json"
       );
 
-      expect(callback).toBeCalledTimes(0);
-      expect(logger).toBeCalledWith(expect.stringContaining("Zod validation error"));
+      expect(callback).toHaveBeenCalledTimes(0);
+      expect(logger).toHaveBeenCalledWith(expect.stringContaining("Zod validation error"));
     });
 
     it("should reject package wrong signer", async () => {
@@ -325,8 +325,8 @@ describe("subscribe-data-packages", () => {
         "deflate+json"
       );
 
-      expect(callback).toBeCalledTimes(0);
-      expect(logger).toBeCalledWith(expect.stringContaining("Failed to verify signature"));
+      expect(callback).toHaveBeenCalledTimes(0);
+      expect(logger).toHaveBeenCalledWith(expect.stringContaining("Failed to verify signature"));
     });
 
     it("should reject package if it is older or the same timestamp as last published", async () => {
@@ -342,7 +342,7 @@ describe("subscribe-data-packages", () => {
         signer: MOCK_WALLET_1,
       });
 
-      expect(callback).toBeCalledTimes(1);
+      expect(callback).toHaveBeenCalledTimes(1);
       subscriber.params.authorizedSigners.push(MOCK_WALLET_2.address);
 
       // the same
@@ -354,8 +354,8 @@ describe("subscribe-data-packages", () => {
       });
 
       jest.advanceTimersByTime(500);
-      expect(callback).toBeCalledTimes(1);
-      expect(loggerDebug).toBeCalledWith(
+      expect(callback).toHaveBeenCalledTimes(1);
+      expect(loggerDebug).toHaveBeenCalledWith(
         expect.stringContaining(
           `Package from ${MOCK_WALLET_2.address} timestamp=${timestamp} dataPackageId=ETH was rejected because packageTimestamp`
         )
@@ -370,8 +370,8 @@ describe("subscribe-data-packages", () => {
       });
 
       jest.advanceTimersByTime(500);
-      expect(callback).toBeCalledTimes(1);
-      expect(loggerDebug).toBeCalledWith(
+      expect(callback).toHaveBeenCalledTimes(1);
+      expect(loggerDebug).toHaveBeenCalledWith(
         expect.stringContaining(
           `Package from ${MOCK_WALLET_2.address} timestamp=${timestamp - 1} dataPackageId=ETH was rejected because packageTimestamp`
         )
@@ -413,8 +413,8 @@ describe("subscribe-data-packages", () => {
         signer: MOCK_WALLET_1,
       });
 
-      expect(callback).toBeCalledTimes(0);
-      expect(logger).toBeCalledWith(
+      expect(callback).toHaveBeenCalledTimes(0);
+      expect(logger).toHaveBeenCalledWith(
         expect.stringContaining(
           `Package from ${MOCK_WALLET_1.address} timestamp=${timestamp} dataPackageId=ETH was rejected because already have package from this signer`
         )
@@ -440,8 +440,8 @@ describe("subscribe-data-packages", () => {
         "deflate+json"
       );
 
-      expect(callback).toBeCalledTimes(0);
-      expect(loggerDebug).toBeCalledWith(
+      expect(callback).toHaveBeenCalledTimes(0);
+      expect(loggerDebug).toHaveBeenCalledWith(
         expect.stringContaining("Received package with unexpected id=ETH2")
       );
     });
@@ -456,8 +456,8 @@ describe("subscribe-data-packages", () => {
         signer: MOCK_WALLET_1,
       });
 
-      expect(callback).toBeCalledTimes(1);
-      expect(callback).toBeCalledWith({
+      expect(callback).toHaveBeenCalledTimes(1);
+      expect(callback).toHaveBeenCalledWith({
         ETH: [dataPackage],
       });
 
@@ -493,7 +493,7 @@ describe("subscribe-data-packages", () => {
 
       // doesn't publish cause still only one signer
       jest.advanceTimersByTime(500);
-      expect(callback).toBeCalledTimes(0);
+      expect(callback).toHaveBeenCalledTimes(0);
 
       await publishToPubSub(pubSub, {
         dataPackageId: "ETH",
@@ -503,7 +503,7 @@ describe("subscribe-data-packages", () => {
       });
 
       jest.advanceTimersByTime(500);
-      expect(callback).toBeCalledTimes(1);
+      expect(callback).toHaveBeenCalledTimes(1);
     });
 
     it("should publish after delay when received data from minimalOffChainSignersCount", async () => {
@@ -530,12 +530,12 @@ describe("subscribe-data-packages", () => {
         signer: MOCK_WALLET_1,
       });
 
-      expect(callback).toBeCalledTimes(0);
+      expect(callback).toHaveBeenCalledTimes(0);
       // doesn't publish cause still only one signer
       jest.advanceTimersByTime(
         subscriber.params.waitMsForOtherSignersAfterMinimalSignersCountSatisfied + 1
       );
-      expect(callback).toBeCalledTimes(1);
+      expect(callback).toHaveBeenCalledTimes(1);
     });
 
     it("should publish immediately when received data from minimalOffChainSignersCount and waitMsForOtherSignersAfterMinimalSignersCountSatisfied is set to 0", async () => {
@@ -563,7 +563,7 @@ describe("subscribe-data-packages", () => {
         signer: MOCK_WALLET_1,
       });
 
-      expect(callback).toBeCalledTimes(1);
+      expect(callback).toHaveBeenCalledTimes(1);
     });
 
     it("should publish even one feed of two required when ignoreMissingFeeds enabled and minimalOffChainSignersCount satisfied", async () => {
@@ -591,7 +591,7 @@ describe("subscribe-data-packages", () => {
       });
 
       jest.advanceTimersByTime(500);
-      expect(callback).toBeCalledTimes(0);
+      expect(callback).toHaveBeenCalledTimes(0);
 
       const secondPackage = await publishToPubSub(pubSub, {
         dataPackageId: "ETH",
@@ -600,13 +600,13 @@ describe("subscribe-data-packages", () => {
         signer: MOCK_WALLET_2,
       });
 
-      expect(callback).toBeCalledTimes(0);
+      expect(callback).toHaveBeenCalledTimes(0);
 
       jest.advanceTimersByTime(
         subscriber.params.waitMsForOtherSignersAfterMinimalSignersCountSatisfied + 1
       );
-      expect(callback).toBeCalledTimes(1);
-      expect(callback).toBeCalledWith({
+      expect(callback).toHaveBeenCalledTimes(1);
+      expect(callback).toHaveBeenCalledWith({
         ETH: [firstPackage, secondPackage],
       });
     });
@@ -639,7 +639,7 @@ describe("subscribe-data-packages", () => {
       });
 
       jest.advanceTimersByTime(200);
-      expect(callback).toBeCalledTimes(1);
+      expect(callback).toHaveBeenCalledTimes(1);
 
       const secondPackage = await publishToPubSub(pubSub, {
         dataPackageId: "BTC",
@@ -649,7 +649,7 @@ describe("subscribe-data-packages", () => {
       });
 
       jest.advanceTimersByTime(200);
-      expect(callback).toBeCalledTimes(2);
+      expect(callback).toHaveBeenCalledTimes(2);
 
       const result = storageInstance.get({
         historicalTimestamp: packageTimestamp,
@@ -707,7 +707,7 @@ describe("subscribe-data-packages", () => {
         );
       }
 
-      expect(callback).toBeCalledWith({
+      expect(callback).toHaveBeenCalledWith({
         ETH: [publishedPackagesEth[2], publishedPackagesEth[1]],
         BTC: [publishedPackagesBtc[2], publishedPackagesBtc[1]],
       });
@@ -752,7 +752,7 @@ describe("subscribe-data-packages", () => {
         signer: NODES[4],
       });
 
-      expect(callback).toBeCalledWith({
+      expect(callback).toHaveBeenCalledWith({
         ETH: [publishedPackagesEth[1], publishedPackagesEth[2]],
       });
       expect(Date.now() - callbackCalledAt).toEqual(
@@ -793,7 +793,7 @@ describe("subscribe-data-packages", () => {
 
       jest.advanceTimersByTime(2_000);
 
-      expect(callback).toBeCalledWith({
+      expect(callback).toHaveBeenCalledWith({
         ETH: [publishedPackagesEth[1], publishedPackagesEth[2]],
       });
       expect(Date.now() - callbackCalledAt).toEqual(
@@ -866,7 +866,7 @@ describe("subscribe-data-packages", () => {
         200 + subscriber.params.waitMsForOtherSignersAfterMinimalSignersCountSatisfied
       );
 
-      expect(callback).toBeCalledWith({
+      expect(callback).toHaveBeenCalledWith({
         BTC: [publishedPackagesBtc[2], publishedPackagesBtc[1]],
         ETH: [publishedPackagesEth[1], publishedPackagesEth[0]],
       });
@@ -892,14 +892,14 @@ describe("subscribe-data-packages", () => {
         dataPackageId: "ETH",
       });
 
-      expect(callback).toBeCalledTimes(1);
+      expect(callback).toHaveBeenCalledTimes(1);
 
       await jest.advanceTimersByTimeAsync(1_200);
       subscriber.disableFallback();
 
-      expect(fallbackFn).toBeCalledTimes(1);
-      expect(callback).toBeCalledTimes(2);
-      expect(callback).toBeCalledWith({ ETH: [fallbackPackage] });
+      expect(fallbackFn).toHaveBeenCalledTimes(1);
+      expect(callback).toHaveBeenCalledTimes(2);
+      expect(callback).toHaveBeenCalledWith({ ETH: [fallbackPackage] });
     });
 
     it("fallback mode should NOT be triggered if maxDelayerBetweenPublishes doesn't pass", async () => {
@@ -918,13 +918,13 @@ describe("subscribe-data-packages", () => {
         dataPackageId: "ETH",
       });
 
-      expect(callback).toBeCalledTimes(1);
+      expect(callback).toHaveBeenCalledTimes(1);
 
       await jest.advanceTimersByTimeAsync(1_200);
       subscriber.disableFallback();
 
-      expect(fallbackFn).toBeCalledTimes(0);
-      expect(callback).toBeCalledTimes(1);
+      expect(fallbackFn).toHaveBeenCalledTimes(0);
+      expect(callback).toHaveBeenCalledTimes(1);
     });
   });
 
@@ -935,7 +935,7 @@ describe("subscribe-data-packages", () => {
       subscriber.enableCircuitBreaker(new RateLimitsCircuitBreaker(1000, 2));
       const unsubSpy = jest.spyOn(subscriber, "unsubscribe");
 
-      expect(unsubSpy).toBeCalledTimes(0);
+      expect(unsubSpy).toHaveBeenCalledTimes(0);
 
       await publishToPubSub(pubSub, {
         dataPackageId: "ETH",
@@ -943,7 +943,7 @@ describe("subscribe-data-packages", () => {
         timestamp: Date.now() + 1,
         signer: MOCK_WALLET_1,
       });
-      expect(unsubSpy).toBeCalledTimes(0);
+      expect(unsubSpy).toHaveBeenCalledTimes(0);
 
       await publishToPubSub(pubSub, {
         dataPackageId: "ETH",
@@ -951,7 +951,7 @@ describe("subscribe-data-packages", () => {
         timestamp: Date.now() + 2,
         signer: MOCK_WALLET_1,
       });
-      expect(unsubSpy).toBeCalledTimes(0);
+      expect(unsubSpy).toHaveBeenCalledTimes(0);
 
       await publishToPubSub(pubSub, {
         dataPackageId: "ETH",
@@ -959,7 +959,7 @@ describe("subscribe-data-packages", () => {
         timestamp: Date.now() + 3,
         signer: MOCK_WALLET_1,
       });
-      expect(unsubSpy).toBeCalledTimes(1);
+      expect(unsubSpy).toHaveBeenCalledTimes(1);
     });
   });
 });

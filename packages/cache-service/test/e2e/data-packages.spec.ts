@@ -483,13 +483,13 @@ describe("Data packages (e2e)", () => {
             .expect(200);
 
           await Promise.all([firstRequest, secondConcurrentRequest]);
-          expect(getLatestSpy).toBeCalledTimes(1);
+          expect(getLatestSpy).toHaveBeenCalledTimes(1);
 
           await request(httpServer)
             .get(`${version}/data-packages/latest/mock-data-service-1`)
             .expect(200);
 
-          expect(getLatestSpy).toBeCalledTimes(1);
+          expect(getLatestSpy).toHaveBeenCalledTimes(1);
         });
 
         it("/data-packages/latest (GET) - should be called twice for different data-service-id", async () => {
@@ -511,13 +511,13 @@ describe("Data packages (e2e)", () => {
             .expect(200);
 
           await Promise.all([firstRequest, secondConcurrentRequest]);
-          expect(getLatestSpy).toBeCalledTimes(2);
+          expect(getLatestSpy).toHaveBeenCalledTimes(2);
 
           await request(httpServer)
             .get(`${version}/data-packages/latest/mock-data-service-1`)
             .expect(200);
 
-          expect(getLatestSpy).toBeCalledTimes(2);
+          expect(getLatestSpy).toHaveBeenCalledTimes(2);
         });
       });
     });
@@ -897,7 +897,7 @@ describe("Data packages (e2e)", () => {
           .expect(200);
 
         await Promise.all([firstRequest, secondConcurrentRequest]);
-        expect(getLatestSpy).toBeCalledTimes(1);
+        expect(getLatestSpy).toHaveBeenCalledTimes(1);
       });
 
       it("should call DB separately for different data services", async () => {
@@ -918,7 +918,7 @@ describe("Data packages (e2e)", () => {
             .get(`/data-packages/latest-by-data-feeds/mock-data-service-2?dataFeedIds=ETH`)
             .expect(200),
         ]);
-        expect(getLatestSpy).toBeCalledTimes(2);
+        expect(getLatestSpy).toHaveBeenCalledTimes(2);
       });
     });
   });
@@ -993,7 +993,7 @@ describe("Data packages (e2e)", () => {
           .expect(200);
 
         await Promise.all([firstRequest, secondConcurrentRequest]);
-        expect(getTimestampSpy).toBeCalledTimes(1);
+        expect(getTimestampSpy).toHaveBeenCalledTimes(1);
       });
     });
   });
