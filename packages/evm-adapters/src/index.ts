@@ -1,6 +1,4 @@
 export { abi as RedstoneAdapterBaseAbi } from "../artifacts/contracts/core/RedstoneAdapterBase.sol/RedstoneAdapterBase.json";
-export { abi as ISortedOraclesAbi } from "../artifacts/contracts/custom-integrations/mento/ISortedOracles.sol/ISortedOracles.json";
-export { abi as MentoAdapterBaseAbi } from "../artifacts/contracts/custom-integrations/mento/MentoAdapterBase.sol/MentoAdapterBase.json";
 export { abi as IPriceFeedAbi } from "../artifacts/contracts/price-feeds/interfaces/IPriceFeed.sol/IPriceFeed.json";
 export { abi as MultiFeedAdapterWithoutRoundsAbi } from "../artifacts/contracts/price-feeds/without-rounds/MultiFeedAdapterWithoutRounds.sol/MultiFeedAdapterWithoutRounds.json";
 import PriceFeedsAdapterWithRoundsOneSignerMockArtifact from "../artifacts/contracts/mocks/PriceFeedsAdapterWithRoundsOneSignerMock.sol/PriceFeedsAdapterWithRoundsOneSignerMock.json";
@@ -12,9 +10,7 @@ import { PrimaryDemoExample__factory, PrimaryProdExample__factory } from "../typ
 export type {
   ExampleBase,
   IRedstoneAdapter,
-  ISortedOracles,
   IStylusAdapter,
-  MentoAdapterBase,
   MultiFeedAdapterWithoutRounds,
   PriceFeedBase,
   PriceFeedsAdapterWithRounds,
@@ -25,14 +21,11 @@ export type {
 } from "../typechain-types";
 export { EvmBlockchainService } from "./blockchain-service/EvmBlockchainService";
 export { type EvmContractAdapter } from "./core/contract-interactions/EvmContractAdapter";
-export { MentoEvmContractAdapter } from "./core/contract-interactions/MentoEvmContractAdapter";
-export { getSortedOraclesContractAtAddress } from "./custom-integrations/mento/get-sorted-oracles-contract-at-address";
 export { EvmPriceFeedContractAdapter } from "./facade/evm/EvmPriceFeedContractAdapter";
 export { getEvmContract } from "./facade/evm/get-evm-contract";
 export { getEvmContractAdapter } from "./facade/evm/get-evm-contract-adapter";
 export { type RedstoneEvmContract } from "./facade/evm/RedstoneEvmContract";
 export {
-  deployMentoAdapterWithSortedOraclesMock,
   deployMultiFeedAdapterWithoutRoundsMock,
   deployPriceFeedsAdapterWithoutRoundsMock,
 } from "./helpers";

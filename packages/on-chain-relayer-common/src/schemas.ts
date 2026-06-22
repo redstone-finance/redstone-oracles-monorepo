@@ -2,11 +2,10 @@ import { NetworkIdSchema, RedstoneCommon } from "@redstone-finance/utils";
 import { z } from "zod";
 
 export const PRICE_FEEDS = "price-feeds";
-export const MENTO = "mento";
 export const STYLUS = "stylus";
 export const MULTI_FEED = "multi-feed";
 
-export const AdapterTypesEnum = z.enum([PRICE_FEEDS, MENTO, STYLUS, MULTI_FEED]);
+export const AdapterTypesEnum = z.enum([PRICE_FEEDS, STYLUS, MULTI_FEED]);
 
 export type AdapterType = z.infer<typeof AdapterTypesEnum>;
 
