@@ -12,6 +12,7 @@ export * from "./aws/region";
 export * from "./aws/s3";
 export * from "./config-checks";
 export * from "./crypto";
+export * from "./ecs-metadata";
 export * from "./fallback-manifests";
 export * from "./fetch-node-manifest";
 export * from "./hash-utils";
