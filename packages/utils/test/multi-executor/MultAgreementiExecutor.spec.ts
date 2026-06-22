@@ -169,7 +169,7 @@ describe("MultiAgreementExecutor", () => {
     ];
     const sut = makeSut(instances, config);
 
-    await expect(sut.someArrayFunction()).rejects.toThrowError(
+    await expect(sut.someArrayFunction()).rejects.toThrow(
       "Agreement failed: got max 1 equal result, needed at least 2"
     );
   });
@@ -182,7 +182,7 @@ describe("MultiAgreementExecutor", () => {
     ];
     const sut = makeSut(instances, config);
 
-    await expect(sut.someArrayFunction()).rejects.toThrowError(
+    await expect(sut.someArrayFunction()).rejects.toThrow(
       "MultiAgreement failed: got 0 successful results, needed at least 2"
     );
   });
@@ -198,7 +198,7 @@ describe("MultiAgreementExecutor", () => {
       multiAgreementShouldResolveUnagreedToUndefined: true,
     });
 
-    await expect(sut.someArrayFunction()).rejects.toThrowError(
+    await expect(sut.someArrayFunction()).rejects.toThrow(
       "MultiAgreement failed: got 0 successful results, needed at least 2"
     );
   });
@@ -214,7 +214,7 @@ describe("MultiAgreementExecutor", () => {
       multiAgreementShouldResolveUnagreedToUndefined: true,
     });
 
-    await expect(sut.someArrayFunction()).rejects.toThrowError(
+    await expect(sut.someArrayFunction()).rejects.toThrow(
       "MultiAgreement failed: got 1 successful result, needed at least 2"
     );
   });
@@ -230,7 +230,7 @@ describe("MultiAgreementExecutor", () => {
       multiAgreementShouldResolveUnagreedToUndefined: true,
     });
 
-    await expect(sut.someArrayFunction()).rejects.toThrowError(
+    await expect(sut.someArrayFunction()).rejects.toThrow(
       "MultiAgreement failed: got 1 successful result, needed at least 2"
     );
   });

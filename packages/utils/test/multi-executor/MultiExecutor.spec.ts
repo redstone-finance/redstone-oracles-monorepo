@@ -267,7 +267,7 @@ describe("MultiExecutor", () => {
       someHexFunction: ExecutionMode.CONSENSUS_ALL_EQUAL,
     });
 
-    await expect(sut.someHexFunction("1234")).rejects.toThrowError(
+    await expect(sut.someHexFunction("1234")).rejects.toThrow(
       `Results are not equal. Found 2 different results ["123401","123402"]`
     );
   });
@@ -275,13 +275,13 @@ describe("MultiExecutor", () => {
   it("Consensus should fail when all functions fail", async () => {
     const sut = makeSut([new MockClient(1, 3 * EXEC_TIME, true), new MockClient(3, 0, true)]);
 
-    await expect(sut.someHexFunction("1234")).rejects.toThrowError(`All promises failed`);
+    await expect(sut.someHexFunction("1234")).rejects.toThrow(`All promises failed`);
   });
 
   it("Consensus should fail when only existing function fails", async () => {
     const sut = makeSut([new MockClient(1, 3 * EXEC_TIME, true)]);
 
-    await expect(sut.someHexFunction("1234")).rejects.toThrowError(`All promises failed`);
+    await expect(sut.someHexFunction("1234")).rejects.toThrow(`All promises failed`);
   });
 
   it("Consensus should fail with all execution timeouts", async () => {
@@ -290,7 +290,7 @@ describe("MultiExecutor", () => {
       singleExecutionTimeoutMs: EXEC_TIME - 2,
     });
 
-    await expect(sut.someHexFunction("1234")).rejects.toThrowError(
+    await expect(sut.someHexFunction("1234")).rejects.toThrow(
       `Consensus failed: got 0 successful results`
     );
   });
@@ -301,7 +301,7 @@ describe("MultiExecutor", () => {
       allExecutionsTimeoutMs: EXEC_TIME + 2,
     });
 
-    await expect(sut.someHexFunction("1234")).rejects.toThrowError(`Timeout error 22 [MS]`);
+    await expect(sut.someHexFunction("1234")).rejects.toThrow(`Timeout error 22 [MS]`);
   });
 
   it("Race should fail with total executions timeout", async () => {
@@ -310,7 +310,7 @@ describe("MultiExecutor", () => {
       allExecutionsTimeoutMs: EXEC_TIME - 2,
     });
 
-    await expect(sut.someAsyncFunction("xxx")).rejects.toThrowError(`Timeout error 18 [MS]`);
+    await expect(sut.someAsyncFunction("xxx")).rejects.toThrow(`Timeout error 18 [MS]`);
   });
 
   it("Fallback should fail with total executions timeout", async () => {
@@ -323,7 +323,7 @@ describe("MultiExecutor", () => {
       }
     );
 
-    await expect(sut.someAsyncFunction("xxx")).rejects.toThrowError(`Timeout error 22 [MS]`);
+    await expect(sut.someAsyncFunction("xxx")).rejects.toThrow(`Timeout error 22 [MS]`);
   });
 
   it("Agreement should fail with total executions timeout", async () => {
@@ -337,7 +337,7 @@ describe("MultiExecutor", () => {
       }
     );
 
-    await expect(sut.someNumberFunction(234)).rejects.toThrowError(`Timeout error 18 [MS]`);
+    await expect(sut.someNumberFunction(234)).rejects.toThrow(`Timeout error 18 [MS]`);
   });
 
   it("Custom executor should pick proper value", async () => {
@@ -480,7 +480,7 @@ describe("MultiExecutor", () => {
       someHexFunction: ExecutionMode.AGREEMENT,
     });
 
-    await expect(sut.someHexFunction("1234")).rejects.toThrowError(
+    await expect(sut.someHexFunction("1234")).rejects.toThrow(
       `Agreement failed: got max 1 equal result, needed at least 2`
     );
   });
