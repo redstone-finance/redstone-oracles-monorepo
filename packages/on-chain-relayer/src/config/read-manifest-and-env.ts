@@ -124,10 +124,6 @@ export const readManifestAndEnv = () => {
       "AUCTION_MODEL_GAS_MULTIPLIERS",
       z.number().gt(0).array().min(1).default([1, 1.5, 2, 2.5, 3, 4, 5, 8])
     ),
-    mentoMaxDeviationAllowed: RedstoneCommon.getFromEnv(
-      "MENTO_MAX_DEVIATION_ALLOWED",
-      z.number().gt(0).optional()
-    ),
     isNotLazy: RedstoneCommon.getFromEnv("IS_NOT_LAZY", z.boolean().default(false)),
     fallbackSkipDeviationBasedFrequentUpdates: RedstoneCommon.getFromEnv(
       "SKIP_TX_SENDING_IF_OFFSET_MINUTES_DID_NOT_PASS",

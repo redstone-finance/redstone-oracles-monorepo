@@ -14,7 +14,7 @@ export const createNumberFromContract = (number: number, decimals = 8) =>
 
 export async function performWritePricesTests(
   provider: ethers.providers.Provider,
-  config: { adapterContractType: EvmAdapterType; mentoMaxDeviationAllowed?: number },
+  config: { adapterContractType: EvmAdapterType },
   deployer: (signer?: Wallet) => Promise<RedstoneEvmContract>,
   txDeliveryManCreator: (adapterContract: RedstoneEvmContract) => Tx.ITxDeliveryMan,
   paramsProvider: ContractParamsProvider

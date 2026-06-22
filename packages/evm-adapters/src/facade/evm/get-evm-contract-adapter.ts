@@ -1,13 +1,11 @@
 import { NetworkId, RedstoneCommon, Tx } from "@redstone-finance/utils";
 import {
   IStylusAdapter,
-  MentoAdapterBase,
   MultiFeedAdapterWithoutRounds,
   PriceFeedsAdapterWithRounds,
   RedstoneAdapterBase,
 } from "../../../typechain-types";
 import { EvmContractAdapter } from "../../core/contract-interactions/EvmContractAdapter";
-import { MentoEvmContractAdapter } from "../../core/contract-interactions/MentoEvmContractAdapter";
 import { MultiFeedEvmContractAdapter } from "../../core/contract-interactions/MultiFeedEvmContractAdapter";
 import { PriceFeedsEvmContractAdapter } from "../../core/contract-interactions/PriceFeedsEvmContractAdapter";
 import { PriceFeedsEvmContractAdapterWithRounds } from "../../core/contract-interactions/PriceFeedsEvmContractAdapterWithRounds";
@@ -24,7 +22,6 @@ export function getEvmContractAdapter(
   config: {
     networkId?: NetworkId;
     adapterContractType: EvmAdapterType;
-    mentoMaxDeviationAllowed?: number;
     oevAuctionUrl?: string;
     withRounds?: boolean;
   },
@@ -52,13 +49,6 @@ export function getEvmContractAdapter(
         txDeliveryMan
       );
     }
-
-    case "mento":
-      return new MentoEvmContractAdapter(
-        adapterContract as MentoAdapterBase,
-        txDeliveryMan,
-        config.mentoMaxDeviationAllowed
-      );
 
     case "stylus":
       return new StylusContractAdapter(

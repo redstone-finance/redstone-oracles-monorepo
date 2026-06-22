@@ -47,7 +47,6 @@ export type OnChainRelayerEnv = {
   maxTxSendAttempts?: number;
   isAuctionModel?: boolean;
   isAuctionModelV2?: boolean;
-  mentoMaxDeviationAllowed?: number;
   singleProviderOperationTimeout: number;
   allProvidersOperationTimeout: number;
   isNotLazy: boolean;
