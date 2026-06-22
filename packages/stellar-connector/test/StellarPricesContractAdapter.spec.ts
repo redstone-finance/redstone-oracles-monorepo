@@ -58,7 +58,7 @@ describe("StellarPricesContractAdapter", () => {
 
   describe("init", () => {
     it("should not be allowed to be called again", async () => {
-      await expect(contractOps.initContract(keypair.publicKey())).rejects.toThrowError();
+      await expect(contractOps.initContract(keypair.publicKey())).rejects.toThrow();
     });
   });
 

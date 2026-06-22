@@ -226,7 +226,7 @@ describe("RequestCollector", () => {
       sut.dispose();
 
       const result = RedstoneCommon.timeout(promise, 100, "timeout");
-      await expect(result).rejects.toThrowError("TestRequestCollector disposed");
+      await expect(result).rejects.toThrow("TestRequestCollector disposed");
     });
   });
 
