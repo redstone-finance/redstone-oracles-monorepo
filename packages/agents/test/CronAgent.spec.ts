@@ -1,7 +1,6 @@
-import { jest } from "@jest/globals";
 import { CronAgent, CronAgentArgs } from "../src/CronAgent";
 
-const createMockFn = () => jest.fn<() => Promise<number>>().mockResolvedValue(42);
+const createMockFn = () => jest.fn().mockResolvedValue(42);
 
 describe("IntervalAgent", () => {
   let now: number;

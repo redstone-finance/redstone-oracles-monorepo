@@ -1,4 +1,4 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
 
 exports[`Data packages (e2e) API  /data-packages/historical/mock-data-service-1 (GET): historical-data 1`] = `
 [

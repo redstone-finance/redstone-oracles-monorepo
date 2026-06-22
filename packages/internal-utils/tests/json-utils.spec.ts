@@ -16,7 +16,7 @@ describe("checkForDuplicateKeys", () => {
       },
       "tokens": {}
     }`;
-    expect(() => checkForDuplicateKeys(jsonWithDuplicateKey)).toThrowError(
+    expect(() => checkForDuplicateKeys(jsonWithDuplicateKey)).toThrow(
       'Duplicate key "priceAggregator" found in JSON'
     );
   });
@@ -41,7 +41,7 @@ describe("checkForDuplicateKeys", () => {
         }
       }
     }`;
-    expect(() => checkForDuplicateKeys(jsonWithDuplicateKey)).toThrowError(
+    expect(() => checkForDuplicateKeys(jsonWithDuplicateKey)).toThrow(
       'Duplicate key "source" found in JSON'
     );
   });
@@ -61,7 +61,7 @@ describe("checkForDuplicateKeys", () => {
       },
       "tokens": {}
     }`;
-    expect(() => checkForDuplicateKeys(jsonWithDuplicateKey)).toThrowError(
+    expect(() => checkForDuplicateKeys(jsonWithDuplicateKey)).toThrow(
       'Duplicate key "maxPercent" found in JSON'
     );
   });
@@ -89,7 +89,7 @@ describe("checkForDuplicateKeys", () => {
         }
       }
     }`;
-    expect(() => checkForDuplicateKeys(jsonWithDuplicateKey)).toThrowError(
+    expect(() => checkForDuplicateKeys(jsonWithDuplicateKey)).toThrow(
       'Duplicate key "BTC" found in JSON'
     );
   });
@@ -119,7 +119,7 @@ describe("checkForDuplicateKeys", () => {
         }
       }
     }`;
-    expect(() => checkForDuplicateKeys(jsonWithDuplicateKey)).toThrowError(
+    expect(() => checkForDuplicateKeys(jsonWithDuplicateKey)).toThrow(
       'Duplicate key "value" found in JSON'
     );
   });
@@ -187,7 +187,7 @@ describe("checkForDuplicateKeys", () => {
       "description": "Another value",
       "tokens": {}
     }`;
-    expect(() => checkForDuplicateKeys(jsonWithDuplicateKey)).toThrowError(
+    expect(() => checkForDuplicateKeys(jsonWithDuplicateKey)).toThrow(
       'Duplicate key "description" found in JSON'
     );
   });
@@ -199,7 +199,7 @@ describe("checkForDuplicateKeys", () => {
       "keyWith\\"Quote": "value3",
       "tokens": {}
     }`;
-    expect(() => checkForDuplicateKeys(jsonWithDuplicateKey)).toThrowError(
+    expect(() => checkForDuplicateKeys(jsonWithDuplicateKey)).toThrow(
       'Duplicate key "keyWith\\"Quote" found in JSON'
     );
   });

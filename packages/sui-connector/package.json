@@ -51,7 +51,6 @@
     "@redstone-finance/chain-agnostic-oracle-tests": "workspace:*",
     "@redstone-finance/chain-configs": "workspace:*",
     "@redstone-finance/suiangria": "git+https://github.com/redstone-finance/suiangria.git#v0.0.3",
-    "@swc/jest": "^0.2.39",
     "secp256k1": "^5.0.1"
   },
   "files": [
