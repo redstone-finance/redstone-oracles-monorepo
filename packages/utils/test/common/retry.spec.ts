@@ -64,7 +64,7 @@ describe("retry", () => {
         waitBetweenMs: 1000,
         backOff: { backOffBase: 2 },
       })()
-    ).rejects.toThrowError();
+    ).rejects.toThrow();
     await timePassPromise;
 
     expect(mockFunction).toHaveBeenCalledTimes(3);

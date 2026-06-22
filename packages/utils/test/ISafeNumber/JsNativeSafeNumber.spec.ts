@@ -63,23 +63,17 @@ describe("JsNativePreciseNumber", () => {
       if (typeof expected === "number") {
         expect(JsNativeSafeNumber.from(value).eq(expected)).toBe(true);
       } else {
-        expect(() => JsNativeSafeNumber.from(value)).toThrowError(expected);
+        expect(() => JsNativeSafeNumber.from(value)).toThrow(expected);
       }
     });
   });
 
   it("assert positive", () => {
-    expect(() => JsNativeSafeNumber.from(-10).assertPositive()).toThrowError(
-      /Assert positive failed/
-    );
+    expect(() => JsNativeSafeNumber.from(-10).assertPositive()).toThrow(/Assert positive failed/);
 
-    expect(() => JsNativeSafeNumber.from(0).assertPositive()).toThrowError(
-      /Assert positive failed/
-    );
+    expect(() => JsNativeSafeNumber.from(0).assertPositive()).toThrow(/Assert positive failed/);
 
-    expect(() => JsNativeSafeNumber.from(-0).assertPositive()).toThrowError(
-      /Assert positive failed/
-    );
+    expect(() => JsNativeSafeNumber.from(-0).assertPositive()).toThrow(/Assert positive failed/);
 
     expect(() => JsNativeSafeNumber.from(10).assertPositive()).not.toThrow();
   });
@@ -113,7 +107,7 @@ describe("JsNativePreciseNumber", () => {
           JsNativeSafeNumber.from(JsNativeSafeNumberConfig.MAX_NUMBER / 2).add(
             JsNativeSafeNumberConfig.MAX_NUMBER / 2 + 1
           )
-        ).toThrowError();
+        ).toThrow();
       });
     });
 
@@ -147,7 +141,7 @@ describe("JsNativePreciseNumber", () => {
           JsNativeSafeNumber.from(-JsNativeSafeNumberConfig.MAX_NUMBER / 2).sub(
             JsNativeSafeNumberConfig.MAX_NUMBER
           )
-        ).toThrowError();
+        ).toThrow();
       });
     });
 
@@ -160,13 +154,13 @@ describe("JsNativePreciseNumber", () => {
       it("should fail on overflow", () => {
         expect(() =>
           JsNativeSafeNumber.from(1.1).mul(JsNativeSafeNumberConfig.MAX_NUMBER)
-        ).toThrowError();
+        ).toThrow();
       });
 
       it("should fail on underflow", () => {
         expect(() =>
           JsNativeSafeNumber.from(0.99).mul(JsNativeSafeNumberConfig.MIN_NUMBER)
-        ).toThrowError();
+        ).toThrow();
       });
 
       it("should work big numbers", () => {
@@ -184,13 +178,13 @@ describe("JsNativePreciseNumber", () => {
       it("should fail on overflow", () => {
         expect(() =>
           JsNativeSafeNumber.from(1.1).div(JsNativeSafeNumberConfig.MAX_NUMBER)
-        ).toThrowError();
+        ).toThrow();
       });
 
       it("should fail on underflow", () => {
         expect(() =>
           JsNativeSafeNumber.from(JsNativeSafeNumberConfig.MIN_NUMBER).div(1.00001)
-        ).toThrowError();
+        ).toThrow();
       });
 
       it("should work big numbers", () => {
@@ -224,7 +218,7 @@ describe("JsNativePreciseNumber", () => {
     });
     describe("log2", () => {
       it("should throw for zero", () => {
-        expect(() => JsNativeSafeNumber.from(0).log2()).toThrowError();
+        expect(() => JsNativeSafeNumber.from(0).log2()).toThrow();
       });
       it("should work for one", () => {
         const result = JsNativeSafeNumber.from(1).log2();
@@ -263,9 +257,7 @@ describe("JsNativePreciseNumber", () => {
         expect(result.toString()).toBe(JsNativeSafeNumberConfig.MIN_NUMBER.toString());
       });
       it("should fail on underflow", () => {
-        expect(() =>
-          JsNativeSafeNumber.from(1).mod(JsNativeSafeNumberConfig.MIN_NUMBER)
-        ).toThrowError();
+        expect(() => JsNativeSafeNumber.from(1).mod(JsNativeSafeNumberConfig.MIN_NUMBER)).toThrow();
       });
     });
     describe("round", () => {
