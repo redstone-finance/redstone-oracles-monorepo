@@ -785,7 +785,6 @@
         "binance-usdc",
         "binance-usdt",
         "bingx-usdt",
-        "bitget-usdc",
         "bitget-usdt",
         "bitmart-usdt",
         "bybit-usdt",
@@ -1119,7 +1118,6 @@
         "binance-usdt",
         "bingx-usdc",
         "bingx-usdt",
-        "bitget-usdc",
         "bitget-usdt",
         "bitmart-usdt",
         "bitrue-usdt",
@@ -1494,7 +1492,6 @@
         "mexc-usdc",
         "mexc-usdt",
         "okx-usdt",
-        "xt-usdt",
         "curve-ethereum-weth"
       ],
       "denomination": "USD",
@@ -2968,7 +2965,6 @@
     },
     "LSK": {
       "source": [
-        "binance-usdc",
         "binance-usdt",
         "bingx-usdt",
         "bitrue-usdt",
@@ -7362,7 +7358,6 @@
     },
     "DEGEN": {
       "source": [
-        "bingx-usdt",
         "bitget-usdt",
         "bybit-usdt",
         "gate-usdt",
@@ -7452,7 +7447,6 @@
         "bitrue-usdt",
         "bybit-usdt",
         "gate-usdt",
-        "htx-usdt",
         "kraken-usd",
         "kraken-usdc",
         "kucoin-usdt",
@@ -8129,7 +8123,6 @@
         "bybit-usdt",
         "coinbase-usd",
         "gate-usdt",
-        "htx-usdt",
         "kraken-usd",
         "kucoin-usdt",
         "lbank-usdt",
@@ -8563,7 +8556,6 @@
         "bingx-usdt",
         "bitget-usdt",
         "bitmart-usdt",
-        "coinbase-usd",
         "kraken-usd",
         "kucoin-usdt",
         "lbank-usdt",
@@ -8637,7 +8629,6 @@
     },
     "IR": {
       "source": [
-        "bingx-usdt",
         "bitget-usdt",
         "bitmart-usdt",
         "gate-usdt",
@@ -9481,7 +9472,6 @@
         "kraken-usdc",
         "kucoin-usdt",
         "okx-usdt",
-        "xt-usdt",
         "curve-ethereum-usdc",
         "orca-solana-mainnet-usdc",
         "orca-solana-mainnet-wsol",
