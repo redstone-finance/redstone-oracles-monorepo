@@ -24,16 +24,13 @@ export class SquadsMultisig {
   }
 
   async addMembers(feePayer: PublicKey, newMembers: PublicKey[], newThreshold: number) {
-    const actions = newMembers.map(
-      (newMember) =>
-        ({
-          __kind: "AddMember",
-          newMember: {
-            key: newMember,
-            permissions: types.Permissions.all(),
-          },
-        }) as types.ConfigAction
-    );
+    const actions: types.ConfigAction[] = newMembers.map((newMember) => ({
+      __kind: "AddMember",
+      newMember: {
+        key: newMember,
+        permissions: types.Permissions.all(),
+      },
+    }));
     actions.push({ __kind: "ChangeThreshold", newThreshold });
 
     const transactionIndex = (await this.multisigTransactionIndex()) + 1n;
@@ -50,13 +47,10 @@ export class SquadsMultisig {
   }
 
   async removeMembers(feePayer: PublicKey, oldMembers: PublicKey[], newThreshold: number) {
-    const actions = oldMembers.map(
-      (oldMember) =>
-        ({
-          __kind: "RemoveMember",
-          oldMember,
-        }) as types.ConfigAction
-    );
+    const actions: types.ConfigAction[] = oldMembers.map((oldMember) => ({
+      __kind: "RemoveMember",
+      oldMember,
+    }));
     actions.push({ __kind: "ChangeThreshold", newThreshold });
 
     const transactionIndex = (await this.multisigTransactionIndex()) + 1n;

@@ -44,7 +44,8 @@ async function getOrCreateSetupProposal(
 
       throw new Error(
         `No active setup proposal or TransferPreapproval found for ${partyId}. ` +
-          `Active proposals: ${proposals.map((p) => `${p.contract_id} (party=${p.user_party_id})`).join(", ") || "none"}`
+          `Active proposals: ${proposals.map((p) => `${p.contract_id} (party=${p.user_party_id})`).join(", ") || "none"}`,
+        { cause: e }
       );
     }
 

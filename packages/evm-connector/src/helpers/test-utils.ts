@@ -207,17 +207,6 @@ export const getMockStringPackage = (args: MockStringPackageArgs): MockDataPacka
   return getMockPackage(args, stringDataPoints);
 };
 
-export const getMockPackageWithOneNumericDataPoint = (
-  args: MockPackageWithOneNumericDataPointArgs
-): MockDataPackageConfig => {
-  const numericDataPoint = new NumericDataPoint({
-    ...args,
-    dataFeedId: args.dataFeedId || DEFAULT_DATA_FEED_ID,
-  });
-
-  return getMockPackage(args, [numericDataPoint]);
-};
-
 export const getMockPackageWithOneBytesDataPoint = (
   args: MockPackageWithOneBytesDataPointArgs
 ): MockDataPackageConfig => {
@@ -228,5 +217,5 @@ export const getMockPackageWithOneBytesDataPoint = (
 
 // Prepares an array with sequential numbers
 export const getRange = (rangeArgs: { start: number; length: number }): number[] => {
-  return [...Array(rangeArgs.length).keys()].map((i) => (i += rangeArgs.start));
+  return [...new Array(rangeArgs.length).keys()].map((i) => i + rangeArgs.start);
 };
