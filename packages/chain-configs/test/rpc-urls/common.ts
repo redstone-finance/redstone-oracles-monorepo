@@ -93,7 +93,8 @@ export const validateBlockNumberAgreementBetweenRpcs = (
               });
 
               throw new Error(
-                `Failed to fetch block number for RPC: ${sanitizeLogMessage(rpcUrl)}`
+                `Failed to fetch block number for RPC: ${sanitizeLogMessage(rpcUrl)}`,
+                { cause: error }
               );
             }
           })

@@ -345,9 +345,7 @@ export class StellarClient implements IStellarCaller, LedgerEntriesCollectorDele
     }
 
     const FETCHING_LIMIT = 200;
-    let { transactions, cursor } = await this.server.getTransactions(<
-      rpc.Api.GetTransactionsRequest
-    >{
+    let { transactions, cursor } = await this.server.getTransactions({
       startLedger,
       pagination: { limit: FETCHING_LIMIT },
     });
@@ -386,7 +384,7 @@ export class StellarClient implements IStellarCaller, LedgerEntriesCollectorDele
     const FETCHING_LIMIT = 10000;
     const allEvents = [];
     let currentCursor = undefined;
-    let hasMoreEvents = false;
+    let hasMoreEvents;
 
     do {
       this.logger.log(`Getting events with ${currentCursor ?? `limit: ${FETCHING_LIMIT}`}`);
@@ -435,7 +433,7 @@ export class StellarClient implements IStellarCaller, LedgerEntriesCollectorDele
     const { oldestLedger, latestLedger } = await this.server.getTransactions({
       startLedger: await this.getBlockNumber(),
       pagination: { limit: 0 },
-    } as unknown as rpc.Api.GetTransactionsRequest);
+    });
 
     if (oldestLedger > startLedger) {
       const end = Math.min(endLedger, oldestLedger);

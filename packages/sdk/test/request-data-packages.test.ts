@@ -65,7 +65,7 @@ async function flattenErrors<T>(promise: Promise<T>): Promise<T> {
   try {
     return await promise;
   } catch (e) {
-    throw new Error(RedstoneCommon.stringifyError(e));
+    throw new Error(RedstoneCommon.stringifyError(e), { cause: e });
   }
 }
 

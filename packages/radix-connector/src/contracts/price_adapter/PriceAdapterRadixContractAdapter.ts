@@ -140,7 +140,9 @@ export class PriceAdapterRadixContractAdapter extends RadixContractAdapter {
 
   /// Badges
 
-  async getTrustedUpdaterResourceBadge(accountAddress: string) {
+  async getTrustedUpdaterResourceBadge(
+    accountAddress: string
+  ): Promise<NonFungibleGlobalIdInput | undefined> {
     const resourceAddress: string | undefined = await this.client.readValue(
       this.componentId,
       "trusted_updater_resource"
@@ -154,7 +156,7 @@ export class PriceAdapterRadixContractAdapter extends RadixContractAdapter {
     return {
       resourceAddress,
       localId: `<${accountDataHex}>`,
-    } as NonFungibleGlobalIdInput;
+    };
   }
 
   private async getTrustedUpdaterProofBadge() {

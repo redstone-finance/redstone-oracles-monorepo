@@ -50,7 +50,7 @@ export class EvmTxLookup extends RangeScanTxLookup<BlockWithTipPercentiles> {
     return blocks.map(fillTipPercentiles);
   }
 
-  private async fetchBlockResilient(blockNumber: number) {
+  private async fetchBlockResilient(blockNumber: number): Promise<BlockWithTransactions> {
     try {
       return await this.provider.getBlockWithTransactions(blockNumber);
     } catch (e) {
@@ -63,7 +63,7 @@ export class EvmTxLookup extends RangeScanTxLookup<BlockWithTipPercentiles> {
 
         if (block.transactions.length === 1) {
           // If there's only one transaction, and that's a RedStone tx, it's parseable
-          return <BlockWithTransactions>{ ...block, transactions: [] };
+          return { ...block, transactions: [] };
         }
 
         logger.warn(
@@ -76,7 +76,7 @@ export class EvmTxLookup extends RangeScanTxLookup<BlockWithTipPercentiles> {
         const { results } = RedstoneCommon.splitSettlements(settled);
         const transactions = results.filter(RedstoneCommon.isDefined);
 
-        return <BlockWithTransactions>{ ...block, transactions };
+        return { ...block, transactions };
       } catch (e) {
         logger.error(`Failed to fetch block ${blockNumber}: ${RedstoneCommon.stringifyError(e)}`);
 
@@ -120,7 +120,10 @@ interface InterestingTx {
   blockTipPercentiles?: bigint[];
 }
 
-function filterRedStoneTxs(enriched: BlockWithTipPercentiles, addresses: TxLookupAddresses) {
+function filterRedStoneTxs(
+  enriched: BlockWithTipPercentiles,
+  addresses: TxLookupAddresses
+): InterestingTx[] {
   const { block, txTip, txTipPercentile, tipPercentiles } = enriched;
 
   const normalizedAddresses = {
@@ -132,16 +135,13 @@ function filterRedStoneTxs(enriched: BlockWithTipPercentiles, addresses: TxLooku
   return block.transactions
     .flatMap(expandUserOpTxs)
     .filter((tx) => looksLikeRedStone(tx, normalizedAddresses))
-    .map(
-      (tx) =>
-        <InterestingTx>{
-          tx,
-          block,
-          tip: txTip.get(tx.hash),
-          tipPercentile: txTipPercentile.get(tx.hash),
-          blockTipPercentiles: tipPercentiles,
-        }
-    );
+    .map((tx) => ({
+      tx,
+      block,
+      tip: txTip.get(tx.hash),
+      tipPercentile: txTipPercentile.get(tx.hash),
+      blockTipPercentiles: tipPercentiles,
+    }));
 }
 
 function looksLikeRedStone(tx: TransactionResponse, addresses: TxLookupAddresses) {

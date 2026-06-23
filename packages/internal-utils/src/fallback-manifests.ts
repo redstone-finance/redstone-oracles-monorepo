@@ -69,7 +69,7 @@ export class ManifestFallbackService<ManifestType extends string> extends Dynamo
       const errorMessage = `Error while getting manifest hash for type ${type} in table ${this.tableName}: ${RedstoneCommon.stringifyError(e)}`;
       console.error(errorMessage);
 
-      throw new Error(errorMessage);
+      throw new Error(errorMessage, { cause: e });
     }
   }
 

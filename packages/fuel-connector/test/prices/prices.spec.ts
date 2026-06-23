@@ -68,7 +68,7 @@ describe("Prices contract", () => {
       performPayloadTest(async (adapter, paramsProvider) => {
         await adapter.writePricesFromPayloadToContract(paramsProvider);
 
-        return (await adapter.writePricesFromPayloadToContract(paramsProvider)) as BigNumberish[];
+        return await adapter.writePricesFromPayloadToContract(paramsProvider);
       })
     ).rejects.toThrow();
   });

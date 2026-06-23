@@ -1,4 +1,3 @@
-import { arrayify } from "@ethersproject/bytes";
 import {
   DataPackage,
   DataPoint,
@@ -6,7 +5,6 @@ import {
   IStringDataPoint,
   NumericDataPoint,
   SignedDataPackagePlainObj,
-  StringDataPoint,
   utils,
 } from "@redstone-finance/protocol";
 import { ethers } from "ethers";
@@ -159,23 +157,6 @@ MOCK_PRIVATE_KEYS[19] = "0xdf57089febbacf7ba0bc227dafbffa9fc08a93fdc68e1e42411a1
 
 export const MOCK_SIGNERS = MOCK_PRIVATE_KEYS.map((privateKey) => new ethers.Wallet(privateKey));
 
-export const getMockSignerPrivateKey = (mockSignerAddress: MockSignerAddress) => {
-  for (const privateKey of MOCK_PRIVATE_KEYS) {
-    const address = new ethers.Wallet(privateKey).address;
-    if (address === mockSignerAddress) {
-      return privateKey;
-    }
-  }
-
-  throw new Error(`Invalid mock signer address: ${mockSignerAddress}`);
-};
-
-export const getMockSignerAddress = (signerIndex: MockSignerIndex): MockSignerAddress => {
-  const address = new ethers.Wallet(MOCK_PRIVATE_KEYS[signerIndex]).address;
-
-  return address as MockSignerAddress;
-};
-
 export const getMockPackage = (
   opts: MockPackageArgs,
   dataPoints: DataPoint[]
@@ -197,40 +178,4 @@ export const getMockSignedDataPackageObj = (
   return {
     ...mockPackage.dataPackage.sign(MOCK_SIGNERS[args.mockSignerIndex].privateKey).toObj(),
   };
-};
-
-export const getMockNumericPackage = (args: MockNumericPackageArgs): MockDataPackageConfig => {
-  const numericDataPoints = args.dataPoints.map((dp) => new NumericDataPoint(dp));
-
-  return getMockPackage(args, numericDataPoints);
-};
-
-export const getMockStringPackage = (args: MockStringPackageArgs): MockDataPackageConfig => {
-  const stringDataPoints = args.dataPoints.map((dp) => new StringDataPoint(dp));
-
-  return getMockPackage(args, stringDataPoints);
-};
-
-export const getMockPackageWithOneNumericDataPoint = (
-  args: MockPackageWithOneNumericDataPointArgs
-): MockDataPackageConfig => {
-  const numericDataPoint = new NumericDataPoint({
-    ...args,
-    dataFeedId: args.dataFeedId || DEFAULT_DATA_FEED_ID,
-  });
-
-  return getMockPackage(args, [numericDataPoint]);
-};
-
-export const getMockPackageWithOneBytesDataPoint = (
-  args: MockPackageWithOneBytesDataPointArgs
-): MockDataPackageConfig => {
-  const dataPoint = new DataPoint(args.dataFeedId || DEFAULT_DATA_FEED_ID, arrayify(args.hexValue));
-
-  return getMockPackage(args, [dataPoint]);
-};
-
-// Prepares an array with sequential numbers
-export const getRange = (rangeArgs: { start: number; length: number }): number[] => {
-  return [...Array(rangeArgs.length).keys()].map((i) => (i += rangeArgs.start));
 };

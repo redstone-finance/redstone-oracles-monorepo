@@ -50,7 +50,7 @@ export default defineConfig([
   tseslint.configs.recommendedTypeChecked,
   comments.recommended,
   prettierEslintRecommended,
-  workspaces.configs["flat/recommended"],
+  workspaces.configs["recommended"],
   redstoneConfig,
 
   {
@@ -85,7 +85,9 @@ export default defineConfig([
         },
       ],
       "@typescript-eslint/return-await": ["error", "always"],
-      "workspaces/require-dependency": "error",
+      // no exceptions can be configured and we need jest-config as an exception
+      // import-x plugins covers most of the problems
+      "workspaces/require-dependency": "off",
       "no-unused-vars": "off",
       "@typescript-eslint/no-unused-vars": [
         "error",

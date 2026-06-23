@@ -160,7 +160,7 @@ export class RadixParser {
         value: {
           fields: obj.value.map(RadixParser.makeSerializableManifestValue),
         },
-      } as SerializableManifestValue;
+      };
     }
 
     if (!["string", "undefined"].includes(typeof obj.value)) {

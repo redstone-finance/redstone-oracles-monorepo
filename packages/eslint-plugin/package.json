@@ -8,20 +8,20 @@
   },
   "license": "MIT",
   "dependencies": {
-    "@eslint-community/eslint-plugin-eslint-comments": "^4.5.0",
-    "@eslint/js": "^9.39.2",
+    "@eslint-community/eslint-plugin-eslint-comments": "^4.7.2",
+    "@eslint/js": "^10.0.1",
     "@stylistic/eslint-plugin": "^5.10.0",
-    "@typescript-eslint/eslint-plugin": "^8.46.4",
-    "@typescript-eslint/parser": "^8.46.4",
-    "@typescript-eslint/utils": "^8.46.4",
-    "eslint": "^9.39.2",
+    "@typescript-eslint/eslint-plugin": "^8.61.1",
+    "@typescript-eslint/parser": "^8.61.1",
+    "@typescript-eslint/utils": "^8.61.1",
+    "eslint": "^10.5.0",
     "eslint-config-prettier": "^10.1.8",
     "eslint-import-resolver-typescript": "^4.4.4",
     "eslint-plugin-array-func": "^5.1.0",
     "eslint-plugin-import-x": "^4.16.1",
     "eslint-plugin-prettier": "^5.5.4",
-    "eslint-plugin-workspaces": "^0.11.0",
-    "typescript-eslint": "^8.46.4"
+    "eslint-plugin-workspaces": "^0.12.1",
+    "typescript-eslint": "^8.61.1"
   },
   "scripts": {
     "clean": "yarn global:ts-clean",

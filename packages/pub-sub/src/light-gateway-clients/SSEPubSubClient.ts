@@ -150,8 +150,9 @@ export class SSEPubSubClient implements PubSubClient {
 
     if (!this.sessionId) {
       this.logger.info("No active session, initiating connection");
+      this.connect();
 
-      return this.connect();
+      return;
     }
 
     if (this.sessionId && newTopics.length > 0) {
@@ -179,7 +180,8 @@ export class SSEPubSubClient implements PubSubClient {
         );
 
         throw new Error(
-          `Subscription failed for topics=${topics.join(", ")} error=${RedstoneCommon.stringifyError(e)}`
+          `Subscription failed for topics=${topics.join(", ")} error=${RedstoneCommon.stringifyError(e)}`,
+          { cause: e }
         );
       }
     } else {

@@ -66,7 +66,8 @@ export class DataServiceWrapper<T extends Contract> extends BaseWrapper<T> {
     } catch (e) {
       throw new Error(
         `DataServiceId not provided and failed to get it from underlying contract. Error: ` +
-          RedstoneCommon.stringifyError(e)
+          RedstoneCommon.stringifyError(e),
+        { cause: e }
       );
     }
   }
@@ -78,7 +79,8 @@ export class DataServiceWrapper<T extends Contract> extends BaseWrapper<T> {
     } catch (e) {
       throw new Error(
         `UniqueSignersCount not provided and failed to get it from underlying contract. Error: ` +
-          RedstoneCommon.stringifyError(e)
+          RedstoneCommon.stringifyError(e),
+        { cause: e }
       );
     }
   }

@@ -44,7 +44,7 @@ describe("includeSynchronizedHeartbeatUpdates", () => {
       multiFeedSyncHeartbeats: true,
       dataFeeds: ["ETH", "BTC"],
       updateTriggers: {
-        ETH: {} as never,
+        ETH: {},
         BTC: { timeSinceLastUpdateInMilliseconds: 6000 },
       },
     });

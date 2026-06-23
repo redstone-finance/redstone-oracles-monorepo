@@ -27,6 +27,6 @@ export async function sendErrorLog(
   try {
     await invokeLambda(functionName, { message: errorLog, severity }, region);
   } catch (e) {
-    throw new Error(`Error sending error log: ${RedstoneCommon.stringifyError(e)}`);
+    throw new Error(`Error sending error log: ${RedstoneCommon.stringifyError(e)}`, { cause: e });
   }
 }

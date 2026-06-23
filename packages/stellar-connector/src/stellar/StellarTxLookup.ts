@@ -29,7 +29,7 @@ function normalizeStellarTx(
   tx: rpc.Api.TransactionInfo,
   adapterContracts: Set<string>
 ): NormalizedContractTx[] {
-  let ops: xdr.Operation[] = [];
+  let ops: xdr.Operation[];
   try {
     ops = tx.envelopeXdr.v1().tx().operations();
   } catch {
