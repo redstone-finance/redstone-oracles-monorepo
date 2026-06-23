@@ -212,6 +212,30 @@ export async function getEnvWithSSMParamFallback(
   return undefined;
 }
 
+async function resolveAuthenticatedGateways(
+  rawGateways: RedstoneCommon.RawAuthenticatedGateway[]
+): Promise<RedstoneCommon.AuthenticatedGateway[]> {
+  return await Promise.all(
+    rawGateways.map(async ({ url, apiKeyEnvPath }) => {
+      const envValue = RedstoneCommon.getFromEnv(apiKeyEnvPath, z.string().min(1));
+      const apiKey = ArnParser.validate(envValue) ? await getSSMParameterValue(envValue) : envValue;
+
+      return { url, apiKey: z.string().min(1).parse(apiKey) };
+    })
+  );
+}
+
+export async function resolveAuthenticatedGatewaysFromEnv(): Promise<
+  RedstoneCommon.AuthenticatedGateway[] | undefined
+> {
+  const rawGateways = RedstoneCommon.getFromEnv(
+    "AUTHENTICATED_GATEWAYS",
+    z.array(RedstoneCommon.RawAuthenticatedGatewaySchema).nonempty().optional()
+  );
+
+  return rawGateways ? await resolveAuthenticatedGateways(rawGateways) : undefined;
+}
+
 const getRegionFromArn = (arnOrName: string) => {
   if (!ArnParser.validate(arnOrName)) {
     return undefined;
