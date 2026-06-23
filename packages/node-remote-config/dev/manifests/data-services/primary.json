@@ -2135,7 +2135,7 @@
     },
     "stTON_FUNDAMENTAL": {
       "source": [
-        "ton-staked"
+        "ton-staked-deferred"
       ],
       "denomination": "TON",
       "rateFeed": true,
@@ -2148,7 +2148,7 @@
     },
     "tsTON_FUNDAMENTAL": {
       "source": [
-        "ton-staked"
+        "ton-staked-deferred"
       ],
       "denomination": "TON",
       "rateFeed": true,
@@ -2161,7 +2161,7 @@
     },
     "tsUSDe_FUNDAMENTAL": {
       "source": [
-        "ton-staked"
+        "ton-staked-deferred"
       ],
       "denomination": "USDe",
       "rateFeed": true,
@@ -2174,7 +2174,7 @@
     },
     "bmTON_FUNDAMENTAL": {
       "source": [
-        "ton-staked"
+        "ton-staked-deferred"
       ],
       "denomination": "TON",
       "rateFeed": true,
