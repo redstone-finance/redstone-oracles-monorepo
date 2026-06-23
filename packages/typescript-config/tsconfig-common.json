@@ -20,6 +20,7 @@
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "outDir": "${configDir}/dist",
+    "rootDir": "${configDir}",
     "tsBuildInfoFile": "${configDir}/tsconfig.tsbuildinfo",
     "removeComments": true,
     "resolveJsonModule": true,
@@ -27,7 +28,8 @@
     "sourceMap": true,
     "strict": true,
     "target": "es2022",
-    "lib": ["ES2024", "ESNext.Iterator", "ESNext.Collection"]
+    "lib": ["ES2025"],
+    "types": ["node", "jest"]
   },
   "ts-node": {
     "files": true

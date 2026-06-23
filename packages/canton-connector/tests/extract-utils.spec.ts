@@ -99,7 +99,7 @@ describe("extractCreatedEvents", () => {
           recordTime: "2026-04-22T00:00:00Z",
         },
       },
-    } as never,
+    },
   });
 
   it("collects CreatedEvents across transactions", () => {
@@ -163,20 +163,19 @@ describe("extractCreatedEvents", () => {
 });
 
 describe("extractUpdateMetadata", () => {
-  const makeTransaction = (events: Event[], paidTrafficCost?: number): Transaction =>
-    ({
-      value: {
-        updateId: "update-ETH-BTC",
-        commandId: "c",
-        workflowId: "w",
-        effectiveAt: "2026-04-22T00:00:00Z",
-        events,
-        offset: 42,
-        synchronizerId: "sync-1",
-        recordTime: "2026-04-22T00:00:00Z",
-        paidTrafficCost,
-      },
-    }) as Transaction;
+  const makeTransaction = (events: Event[], paidTrafficCost?: number): Transaction => ({
+    value: {
+      updateId: "update-ETH-BTC",
+      commandId: "c",
+      workflowId: "w",
+      effectiveAt: "2026-04-22T00:00:00Z",
+      events,
+      offset: 42,
+      synchronizerId: "sync-1",
+      recordTime: "2026-04-22T00:00:00Z",
+      paidTrafficCost,
+    },
+  });
 
   it("collects one update per matching ExercisedEvent with the chosen method and payloadHex", () => {
     const adapterCreated: Event = {

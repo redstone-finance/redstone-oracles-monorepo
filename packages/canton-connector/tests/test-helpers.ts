@@ -56,35 +56,33 @@ export const TX_HASH = {
   generic: "0x9f4b2c1e5d3a7b8c0f1e2d3a4b5c6d7e8f9a0b1c2d3e4f5a6b7c8d9e0f1a2b3c",
 } as const;
 
-export const makeCreatedEvent = (overrides: Partial<CreatedEvent> = {}): CreatedEvent =>
-  ({
-    offset: 1,
-    nodeId: 1,
-    contractId: CID.generic,
-    templateId: TEMPLATE_ID,
-    createdEventBlob: "",
-    createdAt: "2026-04-22T00:00:00Z",
-    packageName: PKG_NAME,
-    representativePackageId: PKG_ID,
-    acsDelta: true,
-    ...overrides,
-  }) as CreatedEvent;
+export const makeCreatedEvent = (overrides: Partial<CreatedEvent> = {}): CreatedEvent => ({
+  offset: 1,
+  nodeId: 1,
+  contractId: CID.generic,
+  templateId: TEMPLATE_ID,
+  createdEventBlob: "",
+  createdAt: "2026-04-22T00:00:00Z",
+  packageName: PKG_NAME,
+  representativePackageId: PKG_ID,
+  acsDelta: true,
+  ...overrides,
+});
 
-export const makeExercisedEvent = (overrides: Partial<ExercisedEvent> = {}): ExercisedEvent =>
-  ({
-    offset: 10,
-    nodeId: 10,
-    contractId: CID.exGeneric,
-    templateId: TEMPLATE_ID,
-    choice: WRITE_PRICES_CHOICE,
-    choiceArgument: {},
-    consuming: false,
-    lastDescendantNodeId: 20,
-    exerciseResult: undefined,
-    packageName: PKG_NAME,
-    acsDelta: true,
-    ...overrides,
-  }) as ExercisedEvent;
+export const makeExercisedEvent = (overrides: Partial<ExercisedEvent> = {}): ExercisedEvent => ({
+  offset: 10,
+  nodeId: 10,
+  contractId: CID.exGeneric,
+  templateId: TEMPLATE_ID,
+  choice: WRITE_PRICES_CHOICE,
+  choiceArgument: {},
+  consuming: false,
+  lastDescendantNodeId: 20,
+  exerciseResult: undefined,
+  packageName: PKG_NAME,
+  acsDelta: true,
+  ...overrides,
+});
 
 export const makeArchivedEvent = (overrides: Partial<ArchivedEvent> = {}): ArchivedEvent => ({
   offset: 1,

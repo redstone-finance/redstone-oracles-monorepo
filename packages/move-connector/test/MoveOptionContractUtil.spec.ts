@@ -1,4 +1,3 @@
-import { Network } from "@aptos-labs/ts-sdk";
 import { makeAptos } from "../scripts/utils";
 import { DEFAULT_BROADCAST_BUCKETS, MoveClient, TRANSACTION_DEFAULT_CONFIG } from "../src";
 import { MoveOptionsContractUtil } from "../src/MoveOptionsContractUtil";
@@ -8,7 +7,7 @@ const TEST_DEFAULT_LOCALNET_MOVE_PRICE = 100;
 const TEST_DEFAULT_LOCALNET_GAS_BUDGET = 100_000;
 
 describe("MoveOptionContractUtil", () => {
-  const client = new MoveClient(makeAptos(NETWORK as Network, REST_NODE_LOCALNET_URL));
+  const client = new MoveClient(makeAptos(NETWORK, REST_NODE_LOCALNET_URL));
 
   describe("prepareTransactionOptions", () => {
     it("should prepare transaction option for default settings with required parameters", async () => {

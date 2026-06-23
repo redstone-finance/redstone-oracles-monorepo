@@ -1,7 +1,7 @@
 // NOTE: tests in this file depend on the order in which they are performed,
 //       therefore shall be run sequentially with `-runInBand` flag.
 
-import { Aptos, Network } from "@aptos-labs/ts-sdk";
+import { Aptos } from "@aptos-labs/ts-sdk";
 import { ContractParamsProvider, getSignersForDataServiceId } from "@redstone-finance/sdk";
 import { RedstoneCommon } from "@redstone-finance/utils";
 import "dotenv/config";
@@ -31,7 +31,7 @@ describe("MovePricesContractAdapter", () => {
 
   beforeAll(() => {
     test_start_ts = Date.now();
-    aptos = makeAptos(NETWORK as Network, REST_NODE_LOCALNET_URL);
+    aptos = makeAptos(NETWORK, REST_NODE_LOCALNET_URL);
     const { contractAddress, objectAddress } = readObjectAddress(PRICE_ADAPTER, NETWORK);
     const account = makeAptosAccount(FAKE_PRIVKEY_SECP256K1);
     const packageObjectAddress = contractAddress.toString();
