@@ -61,6 +61,7 @@ export async function unwrapResponse<T>(promise: Promise<T | JsCantonError>) {
     return response;
   } catch (error) {
     if (isApiError(error)) {
+      // eslint-disable-next-line preserve-caught-error -- todo
       throw new Error(error.body.code, { cause: error.body.cause });
     }
 

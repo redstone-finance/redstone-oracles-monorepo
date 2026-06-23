@@ -66,7 +66,7 @@ export class MedianConsensusExecutor<R> extends ConsensusExecutor<R> {
   static getMedian<R>(results: R[]) {
     const hasOnlyNumbers = results.every((n) => typeof n === "number");
     if (hasOnlyNumbers) {
-      return getMedian(results as number[]) as R;
+      return getMedian(results) as R;
     }
 
     return getMedianOfBigNumbers(results as BigNumberish[]) as R;
