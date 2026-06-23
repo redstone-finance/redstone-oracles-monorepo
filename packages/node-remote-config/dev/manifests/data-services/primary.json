@@ -1656,8 +1656,8 @@
     },
     "ETH_CLE": {
       "source": [
-        "beaconchain-api",
-        "rated-network"
+        "rated-network",
+        "p2p-api"
       ],
       "denomination": "ETH",
       "rateFeed": false,
@@ -1671,8 +1671,8 @@
     },
     "ETH_ELE": {
       "source": [
-        "beaconchain-api",
-        "flashbots-data-api"
+        "flashbots-data-api",
+        "p2p-api"
       ],
       "denomination": "ETH",
       "rateFeed": false,
