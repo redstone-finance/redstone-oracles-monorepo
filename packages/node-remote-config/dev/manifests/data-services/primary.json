@@ -1994,7 +1994,7 @@
       "rateFeed": false
     },
     "stTON_FUNDAMENTAL": {
-      "source": ["ton-staked"],
+      "source": ["ton-staked-deferred"],
       "denomination": "TON",
       "rateFeed": true,
       "deviationCheck": {
@@ -2005,7 +2005,7 @@
       }
     },
     "tsTON_FUNDAMENTAL": {
-      "source": ["ton-staked"],
+      "source": ["ton-staked-deferred"],
       "denomination": "TON",
       "rateFeed": true,
       "deviationCheck": {
@@ -2016,7 +2016,7 @@
       }
     },
     "tsUSDe_FUNDAMENTAL": {
-      "source": ["ton-staked"],
+      "source": ["ton-staked-deferred"],
       "denomination": "USDe",
       "rateFeed": true,
       "deviationCheck": {
@@ -2027,7 +2027,7 @@
       }
     },
     "bmTON_FUNDAMENTAL": {
-      "source": ["ton-staked"],
+      "source": ["ton-staked-deferred"],
       "denomination": "TON",
       "rateFeed": true,
       "deviationCheck": {
