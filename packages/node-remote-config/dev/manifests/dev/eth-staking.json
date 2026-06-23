@@ -19,10 +19,10 @@
       "source": ["puffer-oracle"]
     },
     "ETH_CLE": {
-      "source": ["rated-network", "beaconchain-api"]
+      "source": ["rated-network", "p2p-api"]
     },
     "ETH_ELE": {
-      "source": ["flashbots-data-api", "beaconchain-api"]
+      "source": ["flashbots-data-api", "p2p-api"]
     }
   }
 }
