@@ -71,6 +71,8 @@
   "MSCI": "UsEquity",
   "CURR": "UsEquity",
   "AVGO": "UsEquity",
+  "FGNX": "UsEquity",
+  "FGNXP": "UsEquity",
 
   "KOSPI": "Krx",
   "KOSPI200": "Krx",
