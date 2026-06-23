@@ -75,7 +75,7 @@ export const hardhatNetworksConfig = (accounts: string[] = []): NetworksUserConf
       url: rpcUrl,
       etherScanApi: config.etherScanApi,
       accounts,
-    } as NetworkUserConfig;
+    };
   }
 
   return networks;

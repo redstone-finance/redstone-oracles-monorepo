@@ -2,7 +2,6 @@ import * as fs from "node:fs";
 import path from "node:path";
 import {
   convertDataPackagesResponse,
-  DataServiceIds,
   getSignersForDataServiceId,
   requestDataPackages,
   requestRedstonePayload,
@@ -19,7 +18,7 @@ async function requestPayloads(format: string, filenamePrefix?: string) {
     dataPackagesIds: DATA_FEEDS,
     dataServiceId: DATA_SERVICE_ID,
     uniqueSignersCount: UNIQUE_SIGNER_COUNT,
-    authorizedSigners: getSignersForDataServiceId(DATA_SERVICE_ID as DataServiceIds),
+    authorizedSigners: getSignersForDataServiceId(DATA_SERVICE_ID),
   };
 
   if (format === "all" && filenamePrefix) {

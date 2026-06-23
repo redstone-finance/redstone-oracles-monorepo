@@ -250,8 +250,8 @@ export class RedstoneProvider {
 
     const message: EthereumRpcRequest = {
       jsonrpc: "2.0",
-      method: method,
-      params: params,
+      method,
+      params,
       id: newId,
     };
     this.id = newId;
@@ -312,7 +312,7 @@ export class RedstoneEthers5Provider implements ethers.providers.Provider {
       return RedstoneCommon.memoize({
         functionToMemoize: this.getBlockNumberImpl.bind(this),
         ttl: ttl ?? RedstoneEthers5Provider.DEFAULT_BLOCK_NUMBER_CACHE_TTL_MS,
-      }) as () => Promise<number>;
+      });
     }
 
     return this.getBlockNumberImpl.bind(this);

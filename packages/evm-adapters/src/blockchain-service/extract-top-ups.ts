@@ -57,7 +57,7 @@ function decodeMulticallTopUp(
   tx: TransactionResponse,
   blockTimestamp: number,
   multicall3: Multicall3Config
-) {
+): NormalizedTopUpEntry[] {
   const abi = multicall3.type === "RedstoneMulticall3" ? RedstoneMulticall3Abi : Multicall3Abi;
   try {
     const decoded = new utils.Interface(abi).decodeFunctionData(
@@ -65,15 +65,12 @@ function decodeMulticallTopUp(
       tx.data
     ) as unknown as TopUpMulticallCalldata;
 
-    return decoded.calls.map(
-      ({ target, value }) =>
-        <NormalizedTopUpEntry>{
-          walletAddress: target,
-          sender: tx.from,
-          value: value.toBigInt(),
-          blockTimestamp,
-        }
-    );
+    return decoded.calls.map(({ target, value }) => ({
+      walletAddress: target,
+      sender: tx.from,
+      value: value.toBigInt(),
+      blockTimestamp,
+    }));
   } catch {
     return [];
   }

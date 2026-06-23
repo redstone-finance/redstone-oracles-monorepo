@@ -98,7 +98,7 @@ const runOevAuction = async (
         signature: await signer.signMessage(
           `${chainIdHex}:${adapterContractAddress}:${txDeliveryCalldata}:${earlyReturn}`
         ),
-        earlyReturn: earlyReturn,
+        earlyReturn,
         chainId: chainIdHex,
       },
     ],
@@ -116,7 +116,9 @@ const runOevAuction = async (
   } catch (error) {
     logOevAuctionError(error);
 
-    throw new Error(`OEV auction failed: ${RedstoneCommon.stringifyError(error)}`);
+    throw new Error(`OEV auction failed: ${RedstoneCommon.stringifyError(error)}`, {
+      cause: error,
+    });
   }
 };
 

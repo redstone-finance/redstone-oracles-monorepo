@@ -62,7 +62,7 @@
     "@ledgerhq/hw-transport-node-hid-singleton": "^6.35.1",
     "@redstone-finance/chain-agnostic-oracle-tests": "workspace:*",
     "@redstone-finance/chain-configs": "workspace:*",
-    "@redstone-finance/mars-rover": "git+https://github.com/redstone-finance/mars-rover.git#v0.0.3",
+    "@redstone-finance/mars-rover": "git+https://github.com/redstone-finance/mars-rover.git#v0.0.4",
     "@types/urijs": "^1.19.25",
     "dotenv": "^16.0.3",
     "ethers": "^5.7.2"

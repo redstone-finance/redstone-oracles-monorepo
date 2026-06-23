@@ -93,7 +93,8 @@ export async function fetchChainConfigs(): Promise<ChainConfigs> {
       return parsedManifest;
     } catch (fallbackManifestError) {
       throw new Error(
-        `Parsing manifest from main failed: ${RedstoneCommon.stringifyError(e)}. Fallback to last working version failed: ${RedstoneCommon.stringifyError(fallbackManifestError)}.`
+        `Parsing manifest from main failed: ${RedstoneCommon.stringifyError(e)}. Fallback to last working version failed: ${RedstoneCommon.stringifyError(fallbackManifestError)}.`,
+        { cause: fallbackManifestError }
       );
     }
   }

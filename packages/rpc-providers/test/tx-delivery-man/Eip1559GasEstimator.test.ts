@@ -78,7 +78,7 @@ describe("Eip1559GasEstimatorV2", () => {
             percentileOfPriorityFee: scenario.percentiles,
             multiplier: scenario.multiplier,
           });
-          const scaled = estimator.scaleFees(scenario.baseFee as Eip1559Fee, attempt);
+          const scaled = estimator.scaleFees(scenario.baseFee, attempt);
 
           expect(scaled.maxPriorityFeePerGas).to.equal(
             expectedPriority,

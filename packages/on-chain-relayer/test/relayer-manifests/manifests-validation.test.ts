@@ -30,7 +30,8 @@ function tryParseManifests(type: keyof typeof RELAYERS_DATA) {
       schema.strict().parse(manifest);
     } catch (e) {
       throw new Error(
-        `Manifest for relayer ${relayerName} failed schema validation: ${RedstoneCommon.stringifyError(e)}`
+        `Manifest for relayer ${relayerName} failed schema validation: ${RedstoneCommon.stringifyError(e)}`,
+        { cause: e }
       );
     }
   }
