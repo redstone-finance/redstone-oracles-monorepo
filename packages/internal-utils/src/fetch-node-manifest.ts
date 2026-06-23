@@ -192,8 +192,9 @@ export const fetchAnyNodeManifest = async <ManifestType = NodeManifest>(
     fetchConfig.nodeClassOverride ?? getDefaultNodeClassForDataServiceId(fetchConfig.dataServiceId);
 
   for (const manifestUrl of fetchConfig.manifestUrls) {
+    let nodeType = "unknown";
     try {
-      const nodeType = getNodeTypeFromFilename(manifestUrl);
+      nodeType = getNodeTypeFromFilename(manifestUrl);
       const nodeVersionUrl = fetchConfig.nodeName
         ? `${versionsPrefixUrl}${nodeClass}/${fetchConfig.nodeName}/${nodeType}/${fetchConfig.nodeMode}`
         : `${versionsPrefixUrl}${nodeClass}/${nodeType}-resolved`;
@@ -203,10 +204,16 @@ export const fetchAnyNodeManifest = async <ManifestType = NodeManifest>(
       });
       const resolvedUrl = substituteVersion(manifestUrl, nodeVersion);
 
-      return await fetchWithCache<ManifestType>(resolvedUrl, fetchConfig.headers);
+      const result = await fetchWithCache<ManifestType>(resolvedUrl, fetchConfig.headers);
+
+      console.debug(
+        `Successfully fetched node manifest (nodeClass=${nodeClass}, nodeType=${nodeType}) for version ${nodeVersion}`
+      );
+
+      return result;
     } catch (e) {
       console.log(
-        `failed to fetch node manifest for ${fetchConfig.dataServiceId} (nodeClass=${nodeClass}), URL ${manifestUrl}, ${RedstoneCommon.stringifyError(e)}`
+        `failed to fetch node manifest for ${fetchConfig.dataServiceId} (nodeClass=${nodeClass}), nodeType=${nodeType}), URL ${manifestUrl}, ${RedstoneCommon.stringifyError(e)}`
       );
     }
   }
