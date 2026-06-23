@@ -642,7 +642,6 @@
         "binance-usdt",
         "bingx-usdc",
         "bingx-usdt",
-        "bitget-usdc",
         "bitget-usdt",
         "bitmart-usdt",
         "bitrue-usdt",
@@ -1095,7 +1094,6 @@
         "mexc-usdc",
         "mexc-usdt",
         "okx-usdt",
-        "xt-usdt",
         "curve-ethereum-weth"
       ],
       "denomination": "USD",
@@ -1542,7 +1540,6 @@
         "binance-usdc",
         "binance-usdt",
         "bingx-usdt",
-        "bitget-usdc",
         "bitget-usdt",
         "bitmart-usdt",
         "bybit-usdt",
@@ -1946,7 +1943,6 @@
     },
     "LSK": {
       "source": [
-        "binance-usdc",
         "binance-usdt",
         "bingx-usdt",
         "bitrue-usdt",
@@ -2968,7 +2964,6 @@
         "bitrue-usdt",
         "bybit-usdt",
         "gate-usdt",
-        "htx-usdt",
         "kraken-usd",
         "kraken-usdc",
         "kucoin-usdt",
@@ -3635,7 +3630,6 @@
         "bybit-usdt",
         "coinbase-usd",
         "gate-usdt",
-        "htx-usdt",
         "kraken-usd",
         "kucoin-usdt",
         "lbank-usdt",
@@ -4154,7 +4148,6 @@
         "bingx-usdt",
         "bitget-usdt",
         "bitmart-usdt",
-        "coinbase-usd",
         "kraken-usd",
         "kucoin-usdt",
         "lbank-usdt",
@@ -4368,7 +4361,6 @@
     },
     "IR": {
       "source": [
-        "bingx-usdt",
         "bitget-usdt",
         "bitmart-usdt",
         "gate-usdt",
@@ -4792,15 +4784,7 @@
       "rateFeed": false
     },
     "DEGEN": {
-      "source": [
-        "bingx-usdt",
-        "bitget-usdt",
-        "bybit-usdt",
-        "gate-usdt",
-        "kucoin-usdt",
-        "lbank-usdt",
-        "okx-usdt"
-      ],
+      "source": ["bitget-usdt", "bybit-usdt", "gate-usdt", "kucoin-usdt", "lbank-usdt", "okx-usdt"],
       "denomination": "USD",
       "rateFeed": false
     },
@@ -5163,7 +5147,6 @@
         "kraken-usdc",
         "kucoin-usdt",
         "okx-usdt",
-        "xt-usdt",
         "curve-ethereum-usdc",
         "orca-solana-mainnet-usdc",
         "orca-solana-mainnet-wsol",
