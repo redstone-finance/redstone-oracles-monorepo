@@ -330,6 +330,10 @@
     },
     "SPXU": {
       "source": [],
+      "priceAggregator": "redstoneX",
+      "redstoneXAggregatorConfig": {
+        "priceValidationSources": []
+      },
       "denomination": "USD",
       "rateFeed": false,
       "types": [
@@ -338,6 +342,10 @@
     },
     "TSLA": {
       "source": [],
+      "priceAggregator": "redstoneX",
+      "redstoneXAggregatorConfig": {
+        "priceValidationSources": []
+      },
       "denomination": "USD",
       "rateFeed": false,
       "types": [
@@ -346,6 +354,10 @@
     },
     "MSFT": {
       "source": [],
+      "priceAggregator": "redstoneX",
+      "redstoneXAggregatorConfig": {
+        "priceValidationSources": []
+      },
       "denomination": "USD",
       "rateFeed": false,
       "types": [
@@ -354,6 +366,10 @@
     },
     "AAPL": {
       "source": [],
+      "priceAggregator": "redstoneX",
+      "redstoneXAggregatorConfig": {
+        "priceValidationSources": []
+      },
       "denomination": "USD",
       "rateFeed": false,
       "types": [
@@ -362,6 +378,10 @@
     },
     "NVDA": {
       "source": [],
+      "priceAggregator": "redstoneX",
+      "redstoneXAggregatorConfig": {
+        "priceValidationSources": []
+      },
       "denomination": "USD",
       "rateFeed": false,
       "types": [
@@ -370,6 +390,10 @@
     },
     "PLTR": {
       "source": [],
+      "priceAggregator": "redstoneX",
+      "redstoneXAggregatorConfig": {
+        "priceValidationSources": []
+      },
       "denomination": "USD",
       "rateFeed": false,
       "types": [
@@ -378,6 +402,10 @@
     },
     "AMD": {
       "source": [],
+      "priceAggregator": "redstoneX",
+      "redstoneXAggregatorConfig": {
+        "priceValidationSources": []
+      },
       "denomination": "USD",
       "rateFeed": false,
       "types": [
@@ -386,6 +414,10 @@
     },
     "GOOGL": {
       "source": [],
+      "priceAggregator": "redstoneX",
+      "redstoneXAggregatorConfig": {
+        "priceValidationSources": []
+      },
       "denomination": "USD",
       "rateFeed": false,
       "types": [
@@ -394,6 +426,10 @@
     },
     "META": {
       "source": [],
+      "priceAggregator": "redstoneX",
+      "redstoneXAggregatorConfig": {
+        "priceValidationSources": []
+      },
       "denomination": "USD",
       "rateFeed": false,
       "types": [
@@ -402,6 +438,10 @@
     },
     "AMZN": {
       "source": [],
+      "priceAggregator": "redstoneX",
+      "redstoneXAggregatorConfig": {
+        "priceValidationSources": []
+      },
       "denomination": "USD",
       "rateFeed": false,
       "types": [
@@ -410,6 +450,10 @@
     },
     "STRC": {
       "source": [],
+      "priceAggregator": "redstoneX",
+      "redstoneXAggregatorConfig": {
+        "priceValidationSources": []
+      },
       "denomination": "USD",
       "rateFeed": false,
       "types": [
@@ -418,6 +462,10 @@
     },
     "BRKB": {
       "source": [],
+      "priceAggregator": "redstoneX",
+      "redstoneXAggregatorConfig": {
+        "priceValidationSources": []
+      },
       "denomination": "USD",
       "rateFeed": false,
       "types": [
@@ -426,6 +474,10 @@
     },
     "CBRS": {
       "source": [],
+      "priceAggregator": "redstoneX",
+      "redstoneXAggregatorConfig": {
+        "priceValidationSources": []
+      },
       "denomination": "USD",
       "rateFeed": false,
       "types": [
@@ -516,7 +568,7 @@
       "source": [],
       "priceAggregator": "redstoneX",
       "redstoneXAggregatorConfig": {
-        "priceDiscoverySources": []
+        "priceValidationSources": []
       },
       "denomination": "USD",
       "rateFeed": false,
@@ -865,7 +917,7 @@
       "denomination": "USD",
       "priceAggregator": "redstoneX",
       "redstoneXAggregatorConfig": {
-        "priceDiscoverySources": []
+        "priceValidationSources": []
       },
       "rateFeed": false,
       "types": [
@@ -877,7 +929,7 @@
       "denomination": "USD",
       "priceAggregator": "redstoneX",
       "redstoneXAggregatorConfig": {
-        "priceDiscoverySources": []
+        "priceValidationSources": []
       },
       "rateFeed": false,
       "types": [
@@ -928,7 +980,7 @@
       "source": [],
       "priceAggregator": "redstoneX",
       "redstoneXAggregatorConfig": {
-        "priceDiscoverySources": []
+        "priceValidationSources": []
       },
       "denomination": "USD",
       "rateFeed": false,
@@ -940,7 +992,7 @@
       "source": [],
       "priceAggregator": "redstoneX",
       "redstoneXAggregatorConfig": {
-        "priceDiscoverySources": []
+        "priceValidationSources": []
       },
       "denomination": "USD",
       "rateFeed": false,
@@ -1033,7 +1085,7 @@
       "source": [],
       "priceAggregator": "redstoneX",
       "redstoneXAggregatorConfig": {
-        "priceDiscoverySources": []
+        "priceValidationSources": []
       },
       "denomination": "USD",
       "rateFeed": false,
@@ -1126,7 +1178,7 @@
       "source": [],
       "priceAggregator": "redstoneX",
       "redstoneXAggregatorConfig": {
-        "priceDiscoverySources": []
+        "priceValidationSources": []
       },
       "denomination": "USD",
       "rateFeed": false,
@@ -1219,7 +1271,7 @@
       "source": [],
       "priceAggregator": "redstoneX",
       "redstoneXAggregatorConfig": {
-        "priceDiscoverySources": []
+        "priceValidationSources": []
       },
       "denomination": "USD",
       "rateFeed": false,
@@ -1291,7 +1343,7 @@
       "source": [],
       "priceAggregator": "redstoneX",
       "redstoneXAggregatorConfig": {
-        "priceDiscoverySources": []
+        "priceValidationSources": []
       },
       "denomination": "USD",
       "rateFeed": false,
@@ -1303,7 +1355,7 @@
       "source": [],
       "priceAggregator": "redstoneX",
       "redstoneXAggregatorConfig": {
-        "priceDiscoverySources": []
+        "priceValidationSources": []
       },
       "denomination": "USD",
       "rateFeed": false,
@@ -1368,7 +1420,7 @@
       "source": [],
       "priceAggregator": "redstoneX",
       "redstoneXAggregatorConfig": {
-        "priceDiscoverySources": []
+        "priceValidationSources": []
       },
       "denomination": "USD",
       "rateFeed": false,
@@ -1380,7 +1432,7 @@
       "source": [],
       "priceAggregator": "redstoneX",
       "redstoneXAggregatorConfig": {
-        "priceDiscoverySources": []
+        "priceValidationSources": []
       },
       "denomination": "USD",
       "rateFeed": false,
@@ -1432,7 +1484,7 @@
       "source": [],
       "priceAggregator": "redstoneX",
       "redstoneXAggregatorConfig": {
-        "priceDiscoverySources": []
+        "priceValidationSources": []
       },
       "denomination": "USD",
       "rateFeed": false,
@@ -1444,7 +1496,7 @@
       "source": [],
       "priceAggregator": "redstoneX",
       "redstoneXAggregatorConfig": {
-        "priceDiscoverySources": []
+        "priceValidationSources": []
       },
       "denomination": "USD",
       "rateFeed": false,
@@ -1497,7 +1549,7 @@
       "denomination": "USD",
       "priceAggregator": "redstoneX",
       "redstoneXAggregatorConfig": {
-        "priceDiscoverySources": []
+        "priceValidationSources": []
       },
       "rateFeed": false,
       "types": [
