@@ -8005,6 +8005,7 @@
     },
     "SPXU": {
       "source": [
+        "databento",
         "financialmodelingprep-deferred",
         "ws-dx-feed",
         "ws-polygon-massive",

@@ -451,7 +451,7 @@
       ],
       "priceAggregator": "redstoneX",
       "redstoneXAggregatorConfig": {
-        "priceDiscoverySources": ["ws-aleno", "ws-blocksize", "ws-twelve-data"]
+        "priceValidationSources": ["databento", "ws-polygon-massive", "ws-dx-feed"]
       },
       "broadcasters": [],
       "skipBroadcasting": true,

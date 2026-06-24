@@ -362,8 +362,13 @@
         "financialmodelingprep-deferred",
         "ws-dx-feed",
         "ws-polygon-massive",
-        "ws-twelve-data"
+        "ws-twelve-data",
+        "databento"
       ],
+      "priceAggregator": "redstoneX",
+      "redstoneXAggregatorConfig": {
+        "priceValidationSources": ["databento", "ws-polygon-massive", "ws-dx-feed"]
+      },
       "denomination": "USD",
       "rateFeed": false,
       "types": ["rwa"]
@@ -377,6 +382,10 @@
         "ws-polygon-massive",
         "ws-twelve-data"
       ],
+      "priceAggregator": "redstoneX",
+      "redstoneXAggregatorConfig": {
+        "priceValidationSources": ["databento", "ws-polygon-massive", "ws-dx-feed"]
+      },
       "denomination": "USD",
       "rateFeed": false,
       "types": ["rwa"]
@@ -390,6 +399,10 @@
         "ws-polygon-massive",
         "ws-twelve-data"
       ],
+      "priceAggregator": "redstoneX",
+      "redstoneXAggregatorConfig": {
+        "priceValidationSources": ["databento", "ws-polygon-massive", "ws-dx-feed"]
+      },
       "denomination": "USD",
       "rateFeed": false,
       "types": ["rwa"]
@@ -403,6 +416,10 @@
         "ws-polygon-massive",
         "ws-twelve-data"
       ],
+      "priceAggregator": "redstoneX",
+      "redstoneXAggregatorConfig": {
+        "priceValidationSources": ["databento", "ws-polygon-massive", "ws-dx-feed"]
+      },
       "denomination": "USD",
       "rateFeed": false,
       "types": ["rwa"]
@@ -416,6 +433,10 @@
         "ws-polygon-massive",
         "ws-twelve-data"
       ],
+      "priceAggregator": "redstoneX",
+      "redstoneXAggregatorConfig": {
+        "priceValidationSources": ["databento", "ws-polygon-massive", "ws-dx-feed"]
+      },
       "denomination": "USD",
       "rateFeed": false,
       "types": ["rwa"]
@@ -429,6 +450,10 @@
         "ws-polygon-massive",
         "ws-twelve-data"
       ],
+      "priceAggregator": "redstoneX",
+      "redstoneXAggregatorConfig": {
+        "priceValidationSources": ["databento", "ws-polygon-massive", "ws-dx-feed"]
+      },
       "denomination": "USD",
       "rateFeed": false,
       "types": ["rwa"]
@@ -442,6 +467,10 @@
         "ws-polygon-massive",
         "ws-twelve-data"
       ],
+      "priceAggregator": "redstoneX",
+      "redstoneXAggregatorConfig": {
+        "priceValidationSources": ["databento", "ws-polygon-massive", "ws-dx-feed"]
+      },
       "denomination": "USD",
       "rateFeed": false,
       "types": ["rwa"]
@@ -455,6 +484,10 @@
         "ws-polygon-massive",
         "ws-twelve-data"
       ],
+      "priceAggregator": "redstoneX",
+      "redstoneXAggregatorConfig": {
+        "priceValidationSources": ["databento", "ws-polygon-massive", "ws-dx-feed"]
+      },
       "denomination": "USD",
       "rateFeed": false,
       "types": ["rwa"]
@@ -468,6 +501,10 @@
         "ws-polygon-massive",
         "ws-twelve-data"
       ],
+      "priceAggregator": "redstoneX",
+      "redstoneXAggregatorConfig": {
+        "priceValidationSources": ["databento", "ws-polygon-massive", "ws-dx-feed"]
+      },
       "denomination": "USD",
       "rateFeed": false,
       "types": ["rwa"]
@@ -481,6 +518,10 @@
         "ws-polygon-massive",
         "ws-twelve-data"
       ],
+      "priceAggregator": "redstoneX",
+      "redstoneXAggregatorConfig": {
+        "priceValidationSources": ["databento", "ws-polygon-massive", "ws-dx-feed"]
+      },
       "denomination": "USD",
       "rateFeed": false,
       "types": ["rwa"]
@@ -493,6 +534,10 @@
         "ws-polygon-massive",
         "ws-twelve-data"
       ],
+      "priceAggregator": "redstoneX",
+      "redstoneXAggregatorConfig": {
+        "priceValidationSources": ["databento", "ws-polygon-massive", "ws-dx-feed"]
+      },
       "denomination": "USD",
       "rateFeed": false,
       "types": ["rwa"]
@@ -506,6 +551,10 @@
         "ws-dx-feed",
         "ws-twelve-data"
       ],
+      "priceAggregator": "redstoneX",
+      "redstoneXAggregatorConfig": {
+        "priceValidationSources": ["databento", "ws-polygon-massive", "ws-dx-feed"]
+      },
       "denomination": "USD",
       "rateFeed": false,
       "types": ["rwa"]
@@ -519,6 +568,10 @@
         "ws-dx-feed",
         "ws-twelve-data"
       ],
+      "priceAggregator": "redstoneX",
+      "redstoneXAggregatorConfig": {
+        "priceValidationSources": ["databento", "ws-polygon-massive", "ws-dx-feed"]
+      },
       "denomination": "USD",
       "rateFeed": false,
       "types": ["rwa"]
@@ -610,7 +663,7 @@
       ],
       "priceAggregator": "redstoneX",
       "redstoneXAggregatorConfig": {
-        "priceDiscoverySources": ["ws-aleno", "ws-blocksize", "ws-twelve-data"]
+        "priceValidationSources": ["databento", "ws-polygon-massive", "ws-dx-feed"]
       },
       "denomination": "USD",
       "rateFeed": false,
@@ -876,13 +929,7 @@
       "denomination": "USD",
       "priceAggregator": "redstoneX",
       "redstoneXAggregatorConfig": {
-        "priceDiscoverySources": [
-          "ws-twelve-data",
-          "alltick-api-deferred",
-          "financialmodelingprep-deferred",
-          "ws-lmax",
-          "ws-hyperliquid-perps-xyz"
-        ]
+        "priceValidationSources": ["rollover-time-hourly"]
       },
       "rateFeed": false,
       "types": ["rwa"]
@@ -899,13 +946,7 @@
       "denomination": "USD",
       "priceAggregator": "redstoneX",
       "redstoneXAggregatorConfig": {
-        "priceDiscoverySources": [
-          "ws-twelve-data",
-          "alltick-api-deferred",
-          "financialmodelingprep-deferred",
-          "ws-lmax",
-          "ws-hyperliquid-perps-xyz"
-        ]
+        "priceValidationSources": ["rollover-blend-xyz"]
       },
       "rateFeed": false,
       "types": ["rwa"]
@@ -953,13 +994,7 @@
       ],
       "priceAggregator": "redstoneX",
       "redstoneXAggregatorConfig": {
-        "priceDiscoverySources": [
-          "alltick-api-deferred",
-          "ws-lmax",
-          "ws-twelve-data",
-          "ws-blocksize",
-          "ws-hyperliquid-perps-xyz"
-        ]
+        "priceValidationSources": ["rollover-time-hourly"]
       },
       "denomination": "USD",
       "rateFeed": false,
@@ -976,13 +1011,7 @@
       ],
       "priceAggregator": "redstoneX",
       "redstoneXAggregatorConfig": {
-        "priceDiscoverySources": [
-          "alltick-api-deferred",
-          "ws-lmax",
-          "ws-twelve-data",
-          "ws-blocksize",
-          "ws-hyperliquid-perps-xyz"
-        ]
+        "priceValidationSources": ["rollover-blend-xyz"]
       },
       "denomination": "USD",
       "rateFeed": false,
@@ -1075,14 +1104,7 @@
       ],
       "priceAggregator": "redstoneX",
       "redstoneXAggregatorConfig": {
-        "priceDiscoverySources": [
-          "alltick-api-deferred",
-          "financialmodelingprep-deferred",
-          "ws-blocksize",
-          "ws-lmax",
-          "ws-polygon-massive-commodities",
-          "ws-hyperliquid-perps-xyz"
-        ]
+        "priceValidationSources": ["rollover-time-blend-implied-spot"]
       },
       "denomination": "USD",
       "rateFeed": false,
@@ -1175,14 +1197,7 @@
       ],
       "priceAggregator": "redstoneX",
       "redstoneXAggregatorConfig": {
-        "priceDiscoverySources": [
-          "alltick-api-deferred",
-          "financialmodelingprep-deferred",
-          "ws-lmax",
-          "ws-blocksize",
-          "ws-polygon-massive-commodities",
-          "ws-hyperliquid-perps-xyz"
-        ]
+        "priceValidationSources": ["rollover-time-blend-implied-spot"]
       },
       "denomination": "USD",
       "rateFeed": false,
@@ -1275,14 +1290,7 @@
       ],
       "priceAggregator": "redstoneX",
       "redstoneXAggregatorConfig": {
-        "priceDiscoverySources": [
-          "financialmodelingprep-deferred",
-          "finhub_deriv_deferred",
-          "ws-blocksize",
-          "ws-lmax",
-          "ws-twelve-data",
-          "ws-hyperliquid-perps-xyz"
-        ]
+        "priceValidationSources": ["rollover-time-blend-implied-spot"]
       },
       "denomination": "USD",
       "rateFeed": false,
@@ -1347,13 +1355,7 @@
       ],
       "priceAggregator": "redstoneX",
       "redstoneXAggregatorConfig": {
-        "priceDiscoverySources": [
-          "ws-lmax",
-          "alltick-api-deferred",
-          "ws-blocksize",
-          "finhub_oanda_deferred",
-          "ws-hyperliquid-perps-xyz"
-        ]
+        "priceValidationSources": ["rollover-time-hourly"]
       },
       "denomination": "USD",
       "rateFeed": false,
@@ -1370,13 +1372,7 @@
       ],
       "priceAggregator": "redstoneX",
       "redstoneXAggregatorConfig": {
-        "priceDiscoverySources": [
-          "ws-lmax",
-          "alltick-api-deferred",
-          "ws-blocksize",
-          "finhub_oanda_deferred",
-          "ws-hyperliquid-perps-xyz"
-        ]
+        "priceValidationSources": ["rollover-blend-xyz"]
       },
       "denomination": "USD",
       "rateFeed": false,
@@ -1436,13 +1432,7 @@
       ],
       "priceAggregator": "redstoneX",
       "redstoneXAggregatorConfig": {
-        "priceDiscoverySources": [
-          "alltick-api-deferred",
-          "ws-itick-indices",
-          "financialmodelingprep-deferred",
-          "ws-lmax",
-          "ws-hyperliquid-perps-xyz"
-        ]
+        "priceValidationSources": ["rollover-time-blend-implied-spot"]
       },
       "denomination": "USD",
       "rateFeed": false,
@@ -1459,13 +1449,7 @@
       ],
       "priceAggregator": "redstoneX",
       "redstoneXAggregatorConfig": {
-        "priceDiscoverySources": [
-          "alltick-api-deferred",
-          "ws-itick-indices",
-          "financialmodelingprep-deferred",
-          "ws-lmax",
-          "ws-hyperliquid-perps-xyz"
-        ]
+        "priceValidationSources": ["rollover-hardcoded-implied-spot"]
       },
       "denomination": "USD",
       "rateFeed": false,
@@ -1513,12 +1497,7 @@
       ],
       "priceAggregator": "redstoneX",
       "redstoneXAggregatorConfig": {
-        "priceDiscoverySources": [
-          "alltick-api-deferred",
-          "financialmodelingprep-deferred",
-          "ws-lmax",
-          "ws-hyperliquid-perps-xyz"
-        ]
+        "priceValidationSources": ["rollover-time-blend-implied-spot"]
       },
       "denomination": "USD",
       "rateFeed": false,
@@ -1534,12 +1513,7 @@
       ],
       "priceAggregator": "redstoneX",
       "redstoneXAggregatorConfig": {
-        "priceDiscoverySources": [
-          "alltick-api-deferred",
-          "financialmodelingprep-deferred",
-          "ws-lmax",
-          "ws-hyperliquid-perps-xyz"
-        ]
+        "priceValidationSources": ["rollover-hardcoded-implied-spot"]
       },
       "denomination": "USD",
       "rateFeed": false,
@@ -1589,12 +1563,7 @@
       "denomination": "USD",
       "priceAggregator": "redstoneX",
       "redstoneXAggregatorConfig": {
-        "priceDiscoverySources": [
-          "rollover-blend-xyz",
-          "alltick-api-deferred",
-          "finhub_pepperstone_deferred",
-          "metal-price-api-deferred"
-        ]
+        "priceValidationSources": ["ws-hyperliquid-perps-xyz", "ws-hydromancer-perps-xyz"]
       },
       "rateFeed": false,
       "types": ["rwa"]
