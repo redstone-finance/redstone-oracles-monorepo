@@ -2463,73 +2463,102 @@
       "rateFeed": false
     },
     "TENCENT": {
-      "source": ["ws-itick-stocks-hk", "ws-twelve-data", "finhub_pepperstone_deferred", "ws-aleno"],
+      "source": ["ws-lseg", "ws-itick-stocks", "finhub_pepperstone_deferred"],
+      "priceAggregator": "primarySource",
+      "primarySourceAggregatorConfig": {
+        "primarySource": "ws-lseg",
+        "maxAcceptableDeviation": 1,
+        "lowerClampPercent": 0.1,
+        "upperClampPercent": 0.1
+      },
       "denomination": "HKD",
       "rateFeed": false,
       "types": ["rwa"]
     },
     "XIAOMI": {
-      "source": ["ws-itick-stocks-hk", "ws-twelve-data", "finhub_pepperstone_deferred", "ws-aleno"],
+      "source": ["ws-lseg", "ws-itick-stocks", "finhub_pepperstone_deferred"],
+      "priceAggregator": "primarySource",
+      "primarySourceAggregatorConfig": {
+        "primarySource": "ws-lseg",
+        "maxAcceptableDeviation": 1,
+        "lowerClampPercent": 0.1,
+        "upperClampPercent": 0.1
+      },
       "denomination": "HKD",
       "rateFeed": false,
       "types": ["rwa"]
     },
     "POPMART": {
-      "source": ["ws-itick-stocks-hk", "ws-twelve-data", "finhub_pepperstone_deferred", "ws-aleno"],
+      "source": ["ws-lseg", "ws-itick-stocks", "finhub_pepperstone_deferred"],
+      "priceAggregator": "primarySource",
+      "primarySourceAggregatorConfig": {
+        "primarySource": "ws-lseg",
+        "maxAcceptableDeviation": 1,
+        "lowerClampPercent": 0.1,
+        "upperClampPercent": 0.1
+      },
       "denomination": "HKD",
       "rateFeed": false,
       "types": ["rwa"]
     },
     "MINIMAX": {
-      "source": ["ws-itick-stocks-hk", "ws-twelve-data", "ws-aleno"],
+      "source": ["ws-lseg", "ws-itick-stocks"],
+      "priceAggregator": "primarySource",
+      "primarySourceAggregatorConfig": {
+        "primarySource": "ws-lseg",
+        "maxAcceptableDeviation": 1,
+        "lowerClampPercent": 0.1,
+        "upperClampPercent": 0.1
+      },
       "denomination": "HKD",
       "rateFeed": false,
       "types": ["rwa"]
     },
     "TSMC": {
-      "source": ["ws-itick-stocks-tw", "ws-aleno", "ws-twelve-data"],
+      "source": ["ws-lseg", "ws-itick-stocks"],
+      "priceAggregator": "primarySource",
+      "primarySourceAggregatorConfig": {
+        "primarySource": "ws-lseg",
+        "maxAcceptableDeviation": 1,
+        "lowerClampPercent": 0.1,
+        "upperClampPercent": 0.1
+      },
       "denomination": "TWD",
       "rateFeed": false,
       "types": ["rwa"]
     },
     "KIOXIA": {
-      "source": ["ws-itick-stocks-jp", "ws-aleno", "ws-twelve-data"],
+      "source": ["ws-itick-stocks"],
       "denomination": "JPY",
       "rateFeed": false,
       "types": ["rwa"]
     },
     "FUJIKURA": {
-      "source": ["ws-itick-stocks-jp", "ws-aleno", "ws-twelve-data"],
+      "source": ["ws-itick-stocks"],
       "denomination": "JPY",
       "rateFeed": false,
       "types": ["rwa"]
     },
     "SOFTBANK": {
-      "source": ["ws-itick-stocks-jp", "ws-aleno", "ws-twelve-data"],
+      "source": ["ws-itick-stocks"],
       "denomination": "JPY",
       "rateFeed": false,
       "types": ["rwa"]
     },
     "SAMSUNG": {
-      "source": ["ws-itick-stocks", "ws-aleno", "ws-twelve-data"],
+      "source": ["ws-itick-stocks"],
       "denomination": "KRW",
       "rateFeed": false,
       "types": ["rwa"]
     },
     "SK_HYNIX": {
-      "source": ["ws-itick-stocks", "ws-aleno", "ws-twelve-data"],
+      "source": ["ws-itick-stocks"],
       "denomination": "KRW",
       "rateFeed": false,
       "types": ["rwa"]
     },
     "HYUNDAI": {
-      "source": ["ws-itick-stocks", "ws-aleno", "ws-twelve-data"],
-      "denomination": "KRW",
-      "rateFeed": false,
-      "types": ["rwa"]
-    },
-    "KODEX200": {
-      "source": ["ws-aleno", "ws-twelve-data"],
+      "source": ["ws-itick-stocks"],
       "denomination": "KRW",
       "rateFeed": false,
       "types": ["rwa"]
