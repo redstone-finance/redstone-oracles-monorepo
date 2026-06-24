@@ -393,7 +393,7 @@
       "source": [],
       "priceAggregator": "redstoneX",
       "redstoneXAggregatorConfig": {
-        "priceDiscoverySources": []
+        "priceValidationSources": []
       },
       "broadcasters": [],
       "skipBroadcasting": true,
