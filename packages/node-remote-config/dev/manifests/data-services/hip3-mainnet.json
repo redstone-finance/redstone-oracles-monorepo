@@ -55,7 +55,6 @@
       "denomination": "USD",
       "rateFeed": false
     },
-
     "BTC_PERP": {
       "source": [
         "ws-perp-binance-usdt",
@@ -196,7 +195,6 @@
         }
       }
     },
-
     "ETH_PERP": {
       "source": [
         "ws-perp-binance-usdt",
@@ -337,7 +335,6 @@
         }
       }
     },
-
     "BNB_PERP": {
       "source": [
         "ws-perp-binance-usdt",
@@ -478,7 +475,6 @@
         }
       }
     },
-
     "HYPE_PERP": {
       "source": [
         "ws-perp-binance-usdt",
@@ -619,7 +615,6 @@
         }
       }
     },
-
     "SOL_PERP": {
       "source": [
         "ws-perp-binance-usdt",
@@ -760,7 +755,6 @@
         }
       }
     },
-
     "XRP_PERP": {
       "source": [
         "ws-perp-binance-usdt",
@@ -901,7 +895,6 @@
         }
       }
     },
-
     "1000PEPE_PERP": {
       "source": [
         "ws-perp-binance-usdt",
@@ -1042,7 +1035,6 @@
         }
       }
     },
-
     "ZEC_PERP": {
       "source": [
         "ws-perp-binance-usdt",
@@ -1183,7 +1175,6 @@
         }
       }
     },
-
     "FARTCOIN_PERP": {
       "source": [
         "ws-perp-binance-usdt",
@@ -1324,7 +1315,6 @@
         }
       }
     },
-
     "LINK_PERP": {
       "source": [
         "ws-perp-binance-usdt",
@@ -1465,7 +1455,6 @@
         }
       }
     },
-
     "SUI_PERP": {
       "source": [
         "ws-perp-binance-usdt",
@@ -1606,7 +1595,6 @@
         }
       }
     },
-
     "XMR_PERP": {
       "source": [
         "ws-perp-binance-usdt",
@@ -1746,7 +1734,6 @@
         }
       }
     },
-
     "DOGE_PERP": {
       "source": [
         "ws-perp-binance-usdt",
@@ -1887,7 +1874,6 @@
         }
       }
     },
-
     "XPL_PERP": {
       "source": [
         "ws-perp-binance-usdt",
@@ -2028,7 +2014,6 @@
         }
       }
     },
-
     "IP_PERP": {
       "source": [
         "ws-perp-binance-usdt",
@@ -2169,7 +2154,6 @@
         }
       }
     },
-
     "ADA_PERP": {
       "source": [
         "ws-perp-binance-usdt",
@@ -2310,7 +2294,6 @@
         }
       }
     },
-
     "PUMP_PERP": {
       "source": ["ws-perp-binance-usdt", "ws-perp-gate-usdt", "ws-perp-okx-usdt"],
       "priceAggregator": "constantWeightMedian",
@@ -2445,7 +2428,6 @@
         }
       }
     },
-
     "LTC_PERP": {
       "source": [
         "ws-perp-binance-usdt",
@@ -2586,7 +2568,6 @@
         }
       }
     },
-
     "BCH_PERP": {
       "source": [
         "ws-perp-binance-usdt",
@@ -2727,7 +2708,6 @@
         }
       }
     },
-
     "ENA_PERP": {
       "source": [
         "ws-perp-binance-usdt",
@@ -2868,7 +2848,6 @@
         }
       }
     },
-
     "LIGHTER_PERP": {
       "source": [
         "ws-perp-binance-usdt",
@@ -3009,7 +2988,6 @@
         }
       }
     },
-
     "BASED": {
       "source": [
         "okx-usdt",
